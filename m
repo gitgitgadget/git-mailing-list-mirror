@@ -1,198 +1,118 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CF438A702
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 23:47:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789170450; cv=pass; b=D3U3KV44TkwoL2vWiHpKgXAyVzNc1D59TBlXG3DR/E8XPW+n5v4Ya/qaQi34YdoTMT1bMF9yu5nudQSPirZzEDnomUdTsmpP/qeLQpmezoOg9zKLzH2fpO3yXLLUdQ45f2ZdcxtjV7HJ4sjl1mSLZZ5XaU1NrwYUrjdFOCzQZ6s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789170450; c=relaxed/simple;
-	bh=dji3XmCB5+m9UvZbb6SpnoqPhuYkuNA0ZVTEE3Ck/mE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UZKH3u1WtzvwfSxvR4fRot44LzHwOUiDpzy4I0VvYKqvY9r31P/dgRw4/5gHw8oUuuSUmT2iQq7tbUd88axlzid09IC2cUaCPvQ+w3j0vsantuutx4CD/974Q7vZr5GGaP6YkbVA5tq3FyaRaU5tp60OjCo+NVyDPwl9ABEtQik=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com; spf=none smtp.mailfrom=tylercipriani.com; dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b=ggZU9rWn; arc=pass smtp.client-ip=209.85.161.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tylercipriani.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2262AD03
+	for <git@vger.kernel.org>; Sat, 12 Sep 2026 00:12:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789171958; cv=none; b=kPZX81HRcS/JW6TP9utkDpmehMxn806U/R4rukqqHgZSdQgJ67pBWTWb3k07WR4roQQ7BrwrIc2QX3r1co9nN2djmkDI313OoLOwWMi6+QMVQFbzxJGpUtRukRuoqBMvYe3Q/+ZND21JRK6YRqwZe3GY44tbIXA1HDU2ZD1iNbc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789171958; c=relaxed/simple;
+	bh=uA64la/oTxA1FXrGNgAeAORAT3CbCSmKi1PNO1u0q4I=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=s4gt/5DLlAaMR3oRgiQtOgN4+LihV2ZRCErr9IJMItEJ6cnjWS+OYw2ijssemRO7Tahn/dsgpELNVUO/kU0F+P/GHmNRJV1awYdrW2J1FcrCxvLr20pbi2j6XiVtck2+JreYOmacsuzy1zj44j0WHy0AQeEe+4ZflgQjLbgMooY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ckgl1xpK; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b="ggZU9rWn"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-6b34face6d0so668679eaf.0
-        for <git@vger.kernel.org>; Fri, 11 Sep 2026 16:47:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789170446; cv=none;
-        d=google.com; s=arc-20260327;
-        b=euqFqCwdRVLe2soBJxjftLSl/8u7ewF1fIKppqU4CYxij0Jfq+fJeJTntOqd8NyoUW
-         qI+WjYFPlOgIQMa7UdHeQSDzlNJIokeEzUS0PEY+auylxPYo3n9ILJL+bKstSDa8B7T2
-         CyMlyyuDVHNTRiWP0yic8e8mTi2zjGXROXb6K8Vz38hrOLm9JiB1KqJpuk5XA3HyA7ru
-         Hs/Q/oYMAIh31SPqjyLbwkhabq2vitdHXxlVD1m5p75G2uQiOBYeWeaRXEtl9qwOao2q
-         P4MLkmEqBSgK8aQXjjx9lhNoVPOZxmaJCuXDjRxJ0Iig6hXIbkK180uOQO6gBEzV07SF
-         YSKg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=SJ1t+lcUKDzixdwGmd+q4xQyyvxXv1Fu0WJrAZqYeYo=;
-        fh=7on8cIw3NIZWw4JuZrn4//f1JrEE7LsGYupBvUWTs8g=;
-        b=SG3QpVlFaPyAaGxOaXrwxliG+Ax3Invok3bekUpRD3k3eDM5VrxiU9peUm+Wz1GAuY
-         maa8iJdCK9vzfAHnXDqRnK2UrZqvq1HwZH1eE6MlbquVl0X1nvlqwTrMn1Or0PsGKSLR
-         N2OXysq8YrCOfdqRNHlx1eXv607fBqQU9zxNULMFkTWorbKB0LcSMLsaKWYYylEvtyw9
-         1kVxBPTJOUI6DD2Wirg1ARFoxBd/S3t9H6EdSZ+ctgY042m21lMbh4VlEExmFZfXb4gW
-         G3ZIiobdH5FNTFKqf1da0hEDXs4He8veCzIFnLnb82KxMelalVzxQ9N82gAJgPQvMwvy
-         j+FA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ckgl1xpK"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-38ea87caafeso1579888a91.3
+        for <git@vger.kernel.org>; Fri, 11 Sep 2026 17:12:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tylercipriani-com.20251104.gappssmtp.com; s=20251104; t=1789170446; x=1789775246; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=SJ1t+lcUKDzixdwGmd+q4xQyyvxXv1Fu0WJrAZqYeYo=;
-        b=ggZU9rWnGdceZN9WAxvqjLzokdDwZ7SF2DcVaqwoAiwyFPa9xJJSEE61PZqaaQ8pJx
-         urv88Ih9Vq/5fKSvTWC0K1f9hdcxF9rUc9KFNKObqbplFFzgEI4Obi7U/ZVQdBga0epT
-         tlOn9W3MBlCebMlx+mkkMWhce3L66X1JoyUj4Dq2q9Rgqjd5kY3nMnANpLQ91ZZ9T83X
-         boyr6BN5S24JdO2NAOu+v0Af4pxoimytpehLQqzz7ittyEHYvm421+ehIEDhd5h5yd/f
-         o2rbmW+xugYMwztuGLIfrAq/zCfXHrKuwx9X6R5gttvZMDZ4Jw/0ZonoQUPpF/1Uuhvf
-         gPgw==
+        d=gmail.com; s=20251104; t=1789171957; x=1789776757; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=z1TYzfBdbvhws2RYf8Wzpirx6yvCP/zCwes/ecC3R+s=;
+        b=Ckgl1xpKyvFdM0Mfypr4BgMWsZk5v94Nze2fXQuOrrl5EHSPIWRA9X+4vzAdTUFUNw
+         u+EtmGh4eBWFwZeOlJIJd8cIMxKZCe1rG9hrnlYoPCQB8HypIjK3FvK1CD+LPiNSvjvV
+         4/YHmCvOCMtMoI3ioBd1Wmdw5nyLqryqwuzBwNkGxj0SSVs4ckuNPy7qO4W7VAwMOss+
+         Ca+ceD/P8zQSaiYt04/lEHsDwzf01VDECecmEnjbeDW1wKiz7Wst7EVANpvQMtXBADNH
+         jM2TcrKHCxRZR/KY0MgvfXT2GsWp/O5SaLP/NxQ0Hp/2/berWbA6yVIGwbsprkIzKBbk
+         ieIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789170446; x=1789775246;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=SJ1t+lcUKDzixdwGmd+q4xQyyvxXv1Fu0WJrAZqYeYo=;
-        b=QH31g+4Qy+oLOoaume8IbAD//c8XmS8BiTZEyqx7oF7ZPo0ED2m2b+UhRkEWAV2+fM
-         e2s//GuxfMywbttcDhGv7B5y49zUQYVG/6MXe+ExbHZd1SFJkIym4K4+cULiEoLAm978
-         k0ES6mp1qaOBLCsOWtgnOIphaytqxkLJ9NBOnHaPa4Escv4Fo17jTG404N8V6noZ+hf8
-         AQ3xyxrrTVNeYY0+u25f7puGM3qw7Fuv3T2NHWI17ZT8I5je5w1XuueXn4LqCo4k5OpH
-         02/lkFbdgxk7se/SNL8OJcdp0raslH7Rq+6peaYIRdiwcbIOYXfVyItoQm20rRLwzAi8
-         hlgw==
-X-Gm-Message-State: AFuF++kaTqhD6HT5jKozDuORc7jlFZt1XKRNDAAlV1KUu+Vi7O2FmAN2
-	je+8A3rfUCgw0mA95gZIzJQZ8XuI12pVUKN3AagUuIwlgrhPgtPHNbyW+pl3rfYPtTqTZ7bziS3
-	+9groc4Xoz73xrScT8EJ8EahS0cVT5IG/Mt9nU8OVSLpJ1X22orhkebMwTw==
-X-Gm-Gg: AYBFou3nQZHpd2IBKDYre67iygyvczwBVMdf7Xd8XxRPC4OFIlbOuE2Sz3Z02WxsRtx
-	MsVbyo7golbf5LXK/jKkUMzx256Bq62SZqPQI2r9sHNPGbC1k29cJhTXokrMmBkpjK17LNAl5eb
-	zIxfjPEqsRIeAtVeDyrpQ+FAqoZhtKvl4sh/rfiGVzQr4T8jGpWGHEXX+K0zW5DsGTJgd1QGCvq
-	PdB7wvClDNxDaFUzVKQRBzxKbf8FYMGbcS7WX3MOOWgi4mejT6pYcZZ3WMtz2jK8oQ39OXMFFVh
-	RbIRaeTaaViJugboARS1cZNrihA9zdxYplZFIbWGJsDr5MrdfUBjeAc=
-X-Received: by 2002:a05:6820:81d7:b0:6b1:9b72:213c with SMTP id
- 006d021491bc7-6bf43d77c6amr5663531eaf.3.1789170445940; Fri, 11 Sep 2026
- 16:47:25 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1789171957; x=1789776757;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=z1TYzfBdbvhws2RYf8Wzpirx6yvCP/zCwes/ecC3R+s=;
+        b=NtO+MqZftMuE8fOHv3n4yz61S9Ju/5eWXh0xUARjc9bB8bgQ0xXWLspOhalCuPvPTQ
+         cXDMxpbnMW9FSrtfK9qy90JV3e88h/lrOPjofxBj03jlyAcByYtYt9x28Un+EinlhkV0
+         7iBs7msIVNXVqkRX6xKF/n5+bU8v6bAYm/hHLoi/6LP2P2LugsGTSI4paJ0vlKVt8SYC
+         1o+rjAoldW5aQhAQGS3njg3c1a1JFJ06CZvWuqgA/mUEJkLcoEoVLl5ICvIBqR5/Udye
+         +yXk3B8XpRJ/M31nhc9lNFAEWFIsRODcp5AxeQdhAGNd0v71tlnPiYCB+LXKB1BgQyQ+
+         Qyyw==
+X-Gm-Message-State: AFuF++k+IjzeaGoU79BFoYGUxRJMECOS1jYY+q5Ms370WeKCSqDSiNaD
+	s4Ns1zA7yrOVvJ7msdsRNUk2WujYNg+m5VjRFJ1EOwoDiTQbCiTbKioNyEoYdQ==
+X-Gm-Gg: AYBFou1RSNuNYfQQdFCk//2Ys2CXewWP3Or/8HhaVvGnOES2F4Nz3qc/nY3I17tgVHL
+	o7P3slx3EHXO51LQ3O2GSKxvN3b3xjvuDTZJvSKQFirr8jmjiFAFt8+3ZIgdgyxVzrxHBmgU8AU
+	ACAnTeUPExRj4M27rjHDHl1irqZN6WNF6g/schddsoKiav/oGq+hdjZ/k+/SNTlROPhJcqRMPXx
+	dmz3Z0igFV/QTERR43eDiS3C5/rDsntpG5hKUSKQwc28NqnAMFj4eg9VMsLqP9AU5rh2f1rkrwj
+	WUOaLiXbewZerunvy1MvPaYXDEZrWWmwnXh5gotcYFcRoAvLGt0BWGthHk/I4O+IkMzaCeWLbCC
+	/M1Sy6OxXvdGYH40kwxLAgUHjRdCGgalHOJ90b7dr7VyayKHihcejSwKurJ4LSkR9BXYUIl3NKB
+	9IuPq/Ci9P7JYFtS8bphgovxA6mtnWNp67xYjHsMFyeIZsqTLMw7IATbO5/57QRgFNE0Q4cVT2
+X-Received: by 2002:a17:90b:5887:b0:38e:524:8797 with SMTP id 98e67ed59e1d1-39d9c1b60damr8928942a91.13.1789171956640;
+        Fri, 11 Sep 2026 17:12:36 -0700 (PDT)
+Received: from [127.0.0.1] ([20.168.94.28])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33ba4ee07f2sm8486800eec.18.2026.09.11.17.12.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Sep 2026 17:12:36 -0700 (PDT)
+Message-Id: <pull.2218.git.1789171955370.gitgitgadget@gmail.com>
+From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 12 Sep 2026 00:12:35 +0000
+Subject: [PATCH] completion: complete 'git worktree repair'
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260904210122.431757-1-tyler@tylercipriani.com>
- <20260910230506.1631656-1-tyler@tylercipriani.com> <20260910230506.1631656-2-tyler@tylercipriani.com>
- <xmqq4ifverdh.fsf@gitster.g>
-In-Reply-To: <xmqq4ifverdh.fsf@gitster.g>
-From: Tyler Cipriani <tyler@tylercipriani.com>
-Date: Fri, 11 Sep 2026 17:47:15 -0600
-X-Gm-Features: AcwNN1VG4smcwpB15wqHrmVjbR3d9R8FEPBGmfcp_urRWtFwuex3WjgHDMMZ8uA
-Message-ID: <CAHLx=Om0-2J2ibJT+VeX3eEYsmsjY20QQcV_sns==7qOKLN7DA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] push: check pushed ref for --force-if-includes
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>, 
-	Stefan Haller <lists@haller-berlin.de>, "D . Ben Knoble" <ben.knoble@gmail.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
+    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-On Fri, Sep 11, 2026 at 9:31=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Tyler Cipriani <tyler@tylercipriani.com> writes:
->
-> >  static void check_if_includes_upstream(struct ref *remote)
-> >  {
-> > -     struct ref *local =3D get_local_ref(remote->name);
-> > +     struct ref *local;
-> > +     const char *name;
-> > +     int flag;
-> > +
-> > +     if (!remote->peer_ref)
-> > +             return;
->
-> This function signals its displeasure by setting remote->unreachble
-> to true, so any early return means it is OK to force the push, right?
+From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-That's true, for each ref that will be pushed. But this return does
-not imply it's OK to force push; refs with no peer_ref are not part of
-the push. The caller (apply_push_cas) walks every ref in remote_refs,
-then this function gets called for each ref that has check_reachable,
-regardless of whether it will later be pushed.
+Added completion support for the 'repair' subcommand of worktree. It
+optionally receives a list of paths to linked worktrees or paths to
+worktrees with broken links.
 
-We could move this check to apply_push_cas to winnow what
-check_if_includes_upstream is responsible for checking and make every
-bare return mean "OK to force"; i.e., change apply_push_cas from:
+Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+---
+    completion: complete 'git worktree repair'
 
-if (ref->check_reachable)
-    check_if_includes_upstream(ref);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2218%2Fyoichi%2Fcomplete-worktree-repair-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2218/yoichi/complete-worktree-repair-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2218
 
-to:
+ contrib/completion/git-completion.bash | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-if (ref->peer_ref && ref->check_reachable)
-    check_if_includes_upstream(ref);
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 9f8b9b50ff..c3a49e2e22 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3816,7 +3816,7 @@ __git_complete_worktree_paths ()
+ 
+ _git_worktree ()
+ {
+-	local subcommands="add list lock move prune remove unlock"
++	local subcommands="add list lock move prune remove repair unlock"
+ 	local subcommand subcommand_idx
+ 
+ 	subcommand="$(__git_find_on_cmdline --show-idx "$subcommands")"
+@@ -3866,7 +3866,7 @@ _git_worktree ()
+ 			;;
+ 		esac
+ 		;;
+-	lock,*|remove,*|unlock,*)
++	lock,*|remove,*|repair,*|unlock,*)
+ 		__git_complete_worktree_paths
+ 		;;
+ 	move,*)
 
-And drop this return (and probably add a comment). I like that better.
-
-> What is the significance of remote not having peer_ref?  Is it a
-> usage error (i.e., push is not updating anything over there, and it
-> makes me wonder what the command line to do so looks like)?  Is it a
-> programming error (i.e., if we are pushing to update no remote ref,
-> this function should never be called)?  If the latter, I wonder if
-> BUG() is more appropriate.
-
-This is an ordinary path vs. BUG(). For the command:
-
-git --force-with-lease --force-if-includes origin main
-
-apply_push_cas checks all advertised refs. If there's no peer_ref,
-then remote.c's set_ref_status_for_push skips the ref before even
-checking ref->unreachable. When I ran the coverage report, this guard
-was hit regularly.
-
-> > +     /* A deletion has no local history to check against. */
-> > +     if (is_null_oid(&remote->peer_ref->new_oid))
-> > +             return;
->
-> The comment for this condition is clear.  If we are pushing to
-> delete, checking if our side once used to build on top of theirs
-> does not guarantee us anything, so we accept the loss of history.
-
-Agreed.
-
-> > +     name =3D remote->peer_ref->name;
-> > +     if (!strcmp(name, "HEAD")) {
-> > +             name =3D refs_resolve_ref_unsafe(get_main_ref_store(the_r=
-epository),
-> > +                                            "HEAD", 0, NULL, &flag);
-> > +             if (!name || !(flag & REF_ISSYMREF)) {
-> > +                     /* detached HEAD: no per-branch reflog to consult=
- */
-> > +                     remote->unreachable =3D 1;
-> > +                     return;
-> > +             }
-> > +     }
-> > +
-> > +     local =3D get_local_ref(name);
-> >       if (!local)
-> >               return;
->
-> The same question here.
-
-get_local_ref should not return null. And when I ran the coverage
-report, this guard never ran. I'd be happy to remove it in v4.
-
-> Are any of these silent "punt" returns tested below?  It does not
-> seem to add a new test about pushing-to-delete.
-
-There is an existing test for push-to-delete that this patch set kept.
-
-> Thanks.
-
-Thanks for the review!
-
-Patrick suggested generalizing away from checking "HEAD" and I think
-that's the right call. I'll try that, plus adding your feedback (plus
-some additional detail in comments) in a v4.
+base-commit: 47ce80527c56f462cb97db4ca8125342204d3783
+-- 
+gitgitgadget
