@@ -1,79 +1,79 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689F437A856
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7C8361977
 	for <git@vger.kernel.org>; Sat, 12 Sep 2026 19:15:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240538; cv=none; b=g6DDb2xEEj5CiBTF5YJBNID5iYrgk3SKYsQHezKPkvVq7eth9BnOOK/2ARbKOp7m8um/UGz+bGZOCQ1xU6SeAzE/Z90havO9yXL0n+8FIFkJtXVxTbNiJmHuzNEpJdgWrI9Z3tUyiKk8igKMk2zUyjXYP3o4Msn4URa0x+BlNro=
+	t=1789240538; cv=none; b=kh/mcy6xTJWy3XQ9Cq90wB/T6CA5/bZRj/VgDB6OFqiHbwGvLPCicqHqGE8bk9GdMcBVlHqkKfZxwYbyoImfYMMdjocbaOqWVy52l9S3z/fnv3TL7bgReVAnrFw9hKbU9jr+z3xqJiwxZLkTaQM0vmMyMwcPbLUgURpr+6cqNI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789240538; c=relaxed/simple;
-	bh=Vn2kdfcS4g27Z6t6OF3zehDnkD6JpiJKP0cFiHcjZpk=;
+	bh=ORBlZW0RFfVAwbotQhn+MGy6zhnUIFNeu5Xnw9LHt/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DYcQ2msLRbfIX+ufiEZCyXBOgFCQWuMlj3yuINVyapxcRvT5M2j9QuM/qbCoFraWCERDTk72MTV7btGCMkSc7CdmLulzAlGZKx9i3suYslV+OgoEtpQ746/LYdCF+pwWJGlsGSYRtna544EIhcDtmYkv7SU3Q/s1OsWlqAiBYy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bvKzlUzL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xyXtv+F7; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version; b=sppYgejKs2sF41PeaOzYQjJ1LbcsUOqcVb3k6j3YkxVqB895iI7vi7dU/mGR+IvLjep1Uz0OBesoMO/ok/2abxk9jMurS07dIFyNkwEpN4KSI07JcLdnZX2TtyhNfyGlq1bVUOVBMmy4Z4MU2kMKFEZUCNR0iGCPaQmRvlX2OGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wGyY7B8H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kKDYDotM; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bvKzlUzL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xyXtv+F7"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wGyY7B8H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kKDYDotM"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id B74461D000B2;
-	Sat, 12 Sep 2026 15:15:35 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7004E7A006B;
+	Sat, 12 Sep 2026 15:15:36 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Sat, 12 Sep 2026 15:15:35 -0400
+  by phl-compute-04.internal (MEProxy); Sat, 12 Sep 2026 15:15:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1789240535; x=
-	1789326935; bh=CC9Bq6eg4MgsyxCGl8n9t5tddR8yjnRgU54Jxg9NAk0=; b=b
-	vKzlUzLRjVB9qaDIhHv+Yp0APrssq/erC0B8dsBY60KnjA9lcZHJJBvDAIGf29zk
-	+GsegwoVFReZGFipYUga5TB3/AtK94Ja78zaZASoZW8DPXOR+6C95rQRN24ltfDd
-	igwHV9IKNV61XCKEDJSoEoM7YGHYVWyGMV1zBAd3U7EOmmVcy9EyIheavq7YPJlm
-	U14xfxm0X0EZ1ezxoeleBr/nps6irVBUEuVIfiNocbZKae9MCvalOYWHPezXzpP9
-	8VJFbQ+Lz74uW0QBjtsW4zxg2RdvW9Kfq6DVWs/x3YOK5fBH3MVQwFJEgR8cg/Zi
-	PcgvKhOBkGmHn+hNK2+Gg==
+	:reply-to:subject:subject:to:to; s=fm3; t=1789240536; x=
+	1789326936; bh=w94+GoJdGrZT3tZ/E81U5mu1FLS9cHt6GJu6WjpF5pA=; b=w
+	GyY7B8HGMMAd3XX/QLyHIjrfyg/ggI1h2BrYPx1HYTmCwO7BWxSrNH15q/eYh+s8
+	LwwfLvJOI/EgLjj6bjE1vxXjZn2LBtqKR+DBPEehpNe2TnRhcl9qkqfG6GkoK9Hn
+	+umXWChs2N+Gl8lPJCKuuHk+S8LpKye1vjKp2T3uytwrBwK0vw+tueBmqWjiPWqN
+	Ie5eiEU9/W5n7gRFq7jxT+9MR1dY7dZZDeQPeW18FufHoKb6DZmD/diTe2PE+naS
+	Bi38yM3Oxwhv9wvuwkHR0DHCY3hTWZZulrKxKqD7RWMa/0vSXIdSQLEL4AOx0Z7s
+	2Id7bcTbt1HnzyqJtPeBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1789240535; x=1789326935; bh=C
-	C9Bq6eg4MgsyxCGl8n9t5tddR8yjnRgU54Jxg9NAk0=; b=xyXtv+F7RBQ6lji9t
-	Ka7l1D8+eVGasy0ux6iV7EQr9uX5ZWuQYLDrh+C8NRGgGZg0zw0OkRwVEPTKY0ql
-	DTj3y01JEMMHuH52+8VWRF4umr283Duy6NtIe30ZV4BzTKJNR+PtH9Dduo+7oq/a
-	ApLYig7FpHqZSopKJhip+dboGHwCr1fBe1j2VhyDYel9CRRQ1S3KqJcfEQTtBaJw
-	EqzV34pErscNc+OtwhuGJ48wSiHgAStmG1rhyMwG4FglXN9D30aEPastyASEWPYo
-	EWgbSFt/FNy7klufnsdeDb9FJHWMRq2LLxZB1PZ7ZjnaDm7v8skqs/QDe/HEJLPO
-	V5wSQ==
-X-ME-Sender: <xms:16SlatSdLbMvKLou1DerAt9lEelz2ION3HKzei7bkwJSNXhuRStO6A>
-    <xme:16SlasxKPHb5-RDMTv1I805FBsN0xH_Sj5eltMZnJaOKyOUBuvI2x6L3dHwi5dwJa
-    kK57p3XkWuaFrEM1i9L6jz68NSlssIRlG7H3QpzaFmY4FMGjjPUcQI>
-X-ME-Received: <xmr:16SlagcXOJN7ALJ4BUBt4qZLTu5Frix8YnpjYaF-Os2JzjHYudksK2sFW743Z9sj6pf-pRSaEjBQBfqFCTWxDUjjVBL70nM35YS3HneAmrDz01C-lW-SIHzi5QsAj_1xz9hRvFxOkpzDVR9A>
+	:x-me-sender:x-sasl-enc; s=fm1; t=1789240536; x=1789326936; bh=w
+	94+GoJdGrZT3tZ/E81U5mu1FLS9cHt6GJu6WjpF5pA=; b=kKDYDotMdVoOjuCZt
+	virime15cc2hLRvwE3g33oXU9sNaeeIc5DM8HaSl/3hYt0t/VVoYbkWPTyrCp23A
+	FJlA7BxJBRc5IQHi3aVK0DaMlydzWxxX6YfXIa8JH2bAxo1QIXDcih6JcmJH/L/r
+	xYWHFiWjToIgF/zUnMYJcWyLRNv6BVuAcGxLAe9uLogTu22jV49caRFx9u25gukd
+	lnHxfyq2pxeHGUGdEcUxVO2oTNB4hSfuLNJlLkJTpmyu1IyBdAoSuMqyzwVK2nEl
+	q/iRW7KBeZ74NJMIhVptWLXUtrfLMxhi0+0cTNy0dcUPwqUvh7E72IUTbrAsCxsw
+	Wj7dA==
+X-ME-Sender: <xms:2KSlapYuuCgB0sUWB_39O-RwSi6nvEB2t5HfIz03mKOEWDtfgxlaSQ>
+    <xme:2KSlamY5Iq8sOUhREJ2iL5ulLJqZvHThlILafyLsIu3nBg0jgqH4vv3E8Q5T21QQ_
+    gCiV30ERaVLFLkP45NJTOVIRexN6K6kIiGlHmAvjsKpom1tFlxV4Wk>
+X-ME-Received: <xmr:2KSlapkKdeP5pAwpV5XlA4DwmGJa4eswomT4E7AiIdzoJMwzCVkawLJgyyHGCczP1O76ju8WcZxI-QErfjiNBpCEium69tiGFfyGzQmF_Yg1u-1BLeoqAJ9Xks-7uMfKaqdJtxBjpL4onmVQ>
 X-ME-Proxy-Cause: dmFkZTGgyrv9fjfBch5r9WuS8+zty/bjEUQ6PaD63JJ4DuNno0NbLlCnET6SGYjDe3R38f
     6/RwmRC12sygsP78n6IjBBPYMkex2sawFiCauIIYRGPN/5Zzi/IJtwGP0zBTOYnLIPO9V2
     tJ/Ef8xZMhJZ5N9VgGKVtI4IOw5zHhPqMAlTJoq2ZwO/GSdBcd3o7AtWm4P+U6O7rbDp9p
     jNBn6lzp2udmip570jZPEyu2h9XBwUlqXOq/g7WSuBICk03YEh+OE5Iqp/HHtmhuiYWLMt
-    03xAZlbtGUQG0t50uGh3bDzJxf2urZfK8452c84rTg6QtaNuAUMFi7uyIxgK01qeAIr+Yw
-    6tHLxbRhe5kve772dWtj0oEK47axRcADK7XhgpyvnFR0WJNlf1xByhNygaHqJiz8uDBmhA
-    J/oW5l9O9WL6beL3+cLpdB7FBpLPQHH5NPIQ22B8LGUx2nr4+TLalj71a2JJz2yo92vbQi
-    vklViKeRAuJOt77H7XH+Nz3G/m+NxDETwk1IuBK3S9PhWZJx0YOoWrEy3b6rjkEMgP4At3
-    9hr6kpwCACAHQxrq5qGfn+MFDWLKBjJTLV+aJ5jN7gcutn48rnzNfIHuUf65DeWDVzhd4Q
-    gUhGJ93JcxLGpUMCDhmwiGyeLJ292gFzvmUUPBRTgAkvlLayguIIf1rgPnSQ
-X-ME-Proxy: <xmx:16SlagJh4IeGJwGNUrM0-grxT7cRKLxJSUsMBwZiDlSUo_hcuEUaeg>
-    <xmx:16SlapGXT4Wfnb6h2JdID7S8OAZSkbFGRFeD0M2LE_Yeu3QSL5nd8A>
-    <xmx:16Slaiq6U1rH-6oVXbj7GQp7TrCm3XJvJnWSuyXViUMxLBeln0j87Q>
-    <xmx:16SlaqSyNJWtUs0DMzgPYcfvTYcS2t7BW2H0sbX1xkHXBspazilVkQ>
-    <xmx:16Slagom6uVT3pws-a0vycOnDR4HV_BQbUTVXiPPAn2UqKmyxtzC4hEe>
+    03xAZlbtGUQG0t50uGh3bDzJxf2urZfK8452c84rTg6QtaNuAUMFi7uyIxgK01qeAIr+C+
+    IgbFfKcvNTSDZFAQwOWy49FIzMmhuK7MwvBGtWdPW0J9aSYk+nFypgvEbvyxhhA8YgPGoh
+    D7KtrIdbPzd6Q86abCHpBCeeT0+wHwQYjDWB2/aZ/SeRY2IMTIll4WCy6ar3FXDu5O2k5o
+    hmg3e+a+rVrdRd0hnYZGpiy7pBkNVb5cNvEol981QV6pl6DTlxKahxx4SksC5RjLNsn5KE
+    pqZ3AyDt0LFZKzAm7nyYpUSG+bowPd5E9j4MVsL/95qTshp2s0ln/wXXGUqK72dfBtSUjo
+    RJXeNB11vzSWoYw8zQdw0iCAAWJ1PlXK8bnQHQIfUptO3I0RqFt6vebdX3cg
+X-ME-Proxy: <xmx:2KSlaixCQZtNtKpGch7VOb4EyZHq8L5Z-1peACPwaXtXgWIp1Z0JDg>
+    <xmx:2KSlanMyk85L_GjOVFd_TSwfRzcZOFfoHGJPDLH4J0U4FqFO0CWkeQ>
+    <xmx:2KSlamS4mw2LHIB9SStMrnBP1frSHcmJQ-jS-Ej1-gp9RmzeaWwGkg>
+    <xmx:2KSlalYNvEIWVyGZhY7MMLvdHaHuXomW-fUKZPh7xdlxeIgc71Yn_w>
+    <xmx:2KSlasw_pgtk1LWhdwjToEceXYT7XmCVkG1lMhEnsmNChvKdoLCEFv0w>
 Feedback-ID: ia13843cf:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
  12 Sep 2026 15:15:35 -0400 (EDT)
 From: Todd Zullinger <tmz@pobox.com>
 To: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 Cc: git@vger.kernel.org
-Subject: [PATCH 2/3] doc/pack-refs: convert synopsis and options to new style
-Date: Sat, 12 Sep 2026 15:15:01 -0400
-Message-ID: <20260912191509.844954-3-tmz@pobox.com>
+Subject: [PATCH 3/3] doc/refs: backtick-quote commands and options consistently
+Date: Sat, 12 Sep 2026 15:15:02 -0400
+Message-ID: <20260912191509.844954-4-tmz@pobox.com>
 X-Mailer: git-send-email 2.56.0.rc0
 In-Reply-To: <20260912191509.844954-1-tmz@pobox.com>
 References: <20260912191509.844954-1-tmz@pobox.com>
@@ -85,90 +85,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Replace [verse] with [synopsis] in the SYNOPSIS block and remove
-single-quote formatting from the command name.
+The git-refs doc was converted to the synopsis style in 89be7d2774
+(builtin/refs: add '--no-reflog' flag to drop reflogs, 2025-02-21).  The
+commands and options were not backtick-quoted at that time.  84f3d6e11e
+(doc lint: check that synopsis manpages have synopsis inlines,
+2025-08-11) applied backtick-quotes to the existing commands and
+options.
 
-Backtick-quote all option terms in the OPTIONS section and convert
-the standalone placeholder _<branch>_ in prose.
-
-Update the included pack-refs-options.adoc to backtick-quote all
-configuration key terms.
+Subsequently, a number of commands and options were added without such
+quoting, leaving the documentation rendered inconsistently.  Apply
+backtick-quotes to all entries.
 
 Signed-off-by: Todd Zullinger <tmz@pobox.com>
 ---
- Documentation/git-pack-refs.adoc     |  8 ++++----
- Documentation/pack-refs-options.adoc | 10 +++++-----
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ Documentation/git-refs.adoc | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git-pack-refs.adoc b/Documentation/git-pack-refs.adoc
-index fde9f2f294..69e018d07e 100644
---- a/Documentation/git-pack-refs.adoc
-+++ b/Documentation/git-pack-refs.adoc
-@@ -7,8 +7,8 @@ git-pack-refs - Pack heads and tags for efficient repository access
+diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
+index 9063892651..9dc08cbca9 100644
+--- a/Documentation/git-refs.adoc
++++ b/Documentation/git-refs.adoc
+@@ -54,40 +54,40 @@ These limitations may eventually be lifted.
+ `verify`::
+ 	Verify reference database consistency.
  
- SYNOPSIS
- --------
--[verse]
--'git pack-refs' [--all] [--no-prune] [--auto] [--include <pattern>] [--exclude <pattern>]
-+[synopsis]
-+git pack-refs [--all] [--no-prune] [--auto] [--include <pattern>] [--exclude <pattern>]
+-list::
++`list`::
+ 	List references in the repository with support for filtering,
+ 	formatting, and sorting. This subcommand is an alias for
+ 	linkgit:git-for-each-ref[1] and offers identical functionality.
  
- DESCRIPTION
- -----------
-@@ -52,8 +52,8 @@ BUGS
- ----
+-exists::
++`exists`::
+ 	Check whether the given reference exists. Returns an exit code of 0 if
+ 	it does, 2 if it is missing, and 1 in case looking up the reference
+ 	failed with an error other than the reference being missing. This does
+ 	not verify whether the reference resolves to an actual object.
  
- Older documentation written before the packed-refs mechanism was
--introduced may still say things like ".git/refs/heads/<branch> file
--exists" when it means "branch <branch> exists".
-+introduced may still say things like ".git/refs/heads/_<branch>_ file
-+exists" when it means "branch _<branch>_ exists".
+-optimize::
++`optimize`::
+ 	Optimizes references to improve repository performance and reduce disk
+ 	usage. This subcommand is an alias for linkgit:git-pack-refs[1] and
+ 	offers identical functionality.
  
+-create::
++`create`::
+ 	Create the given reference, which must not already exist, pointing at
+ 	`<new-value>`.
  
- GIT
-diff --git a/Documentation/pack-refs-options.adoc b/Documentation/pack-refs-options.adoc
-index 0b11282941..2263648b39 100644
---- a/Documentation/pack-refs-options.adoc
-+++ b/Documentation/pack-refs-options.adoc
-@@ -1,4 +1,4 @@
----all::
-+`--all`::
+-delete::
++`delete`::
+ 	Delete the given reference. This subcommand mirrors `git update-ref -d`
+ 	(see linkgit:git-update-ref[1]). When `<old-value>` is given, the
+ 	reference is only deleted after verifying that it currently contains
+ 	`<old-value>`.
  
- The command by default packs all tags and refs that are already
- packed, and leaves other refs
-@@ -8,12 +8,12 @@ This option causes all refs to be packed as well, with the exception
- of hidden refs, broken refs, and symbolic refs. Useful for a repository
- with many branches of historical interests.
+-update::
++`update`::
+ 	Update the given reference to point at `<new-value>`. If `<old-value>`
+ 	is given, the reference is only updated after verifying that it
+ 	currently contains `<old-value>`. As a special case, an all-zeroes
+ 	`<new-value>` deletes the branch, whereas an all-zeroes `<old-value>`
+ 	ensures that the branch does not yet exist.
  
----no-prune::
-+`--no-prune`::
- 
- The command usually removes loose refs under `$GIT_DIR/refs`
- hierarchy after packing them.  This option tells it not to.
- 
----auto::
-+`--auto`::
- 
- Pack refs as needed depending on the current state of the ref database. The
- behavior depends on the ref format used by the repository and may change in the
-@@ -29,7 +29,7 @@ future.
- 	  maintains the property that N is at least twice as big as N+1. Only
- 	  tables that violate this property are compacted.
- 
----include <pattern>::
-+`--include <pattern>`::
- 
- Pack refs based on a `glob(7)` pattern. Repetitions of this option
- accumulate inclusion patterns. If a ref is both included in `--include` and
-@@ -38,7 +38,7 @@ tags from being included by default. Symbolic refs and broken refs will never
- be packed. When used with `--all`, it will be a noop. Use `--no-include` to clear
- and reset the list of patterns.
- 
----exclude <pattern>::
-+`--exclude <pattern>`::
- 
- Do not pack refs matching the given `glob(7)` pattern. Repetitions of this option
- accumulate exclusion patterns. Use `--no-exclude` to clear and reset the list of
+-rename::
++`rename`::
+ 	Rename the reference `<oldref>` to `<newref>`. The old reference must
+ 	exist and the new reference must not yet exist, and both must have a
+ 	well-formed name (see linkgit:git-check-ref-format[1]).
 -- 
 2.56.0.rc0
 
