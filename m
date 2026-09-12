@@ -1,138 +1,123 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A299463
-	for <git@vger.kernel.org>; Sat, 12 Sep 2026 19:07:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079B535C69C
+	for <git@vger.kernel.org>; Sat, 12 Sep 2026 19:15:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240072; cv=none; b=pb6ZqWokQ+gMx/pz4/aeY5kch9YIMSWQnWDiHrXj/nuLGeUc3CI9IiPur8sAM2DOa31K+ZBfOo/Ar9gywP/EwN6tyTEfdCpRlO535FPbB3QG1GtLybTWUzbj1fLoQe+KdU7J3zbH8aYyp0HvpwEP/3ObBUqIrFLwy+INzx3Ig2g=
+	t=1789240536; cv=none; b=JU5Agxlj0hlAGk4StW01h2DXvYA7pOvFeZFI798aG3Y9L5fAt95nJ2cqWXuN4sYx1EWiYufZ/3avr3StM6B2m0yS5+sSFbpxG4Fif15IJVg2IMFA7k7hvBRyjxxBnnsjhJCL6g4E9rISPDJTG+Zx/8oiOZHMskDm8sqG4hPDxgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240072; c=relaxed/simple;
-	bh=WI9CqmiJK6A1kXiFZHck7yQHjTbRzltMZ7pk0h7VdsY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IoTgFmfnqbwZbDLHKH4pKrHYLoGrSLHv2rAkYQhoYT8Bt0aC1lc8Um+CbutI91yatObhkLgeyUoQicnqLIcEFEuDFA+Q3CQp4/NpHnzXmbrz84oRrSa7GHcWo/R5RlIvL9Rw0X99RCwkDGJl95d8lKObCy5E1v5lCFPU/hyuKJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sANC75xQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b+QzkUaG; arc=none smtp.client-ip=103.168.172.157
+	s=arc-20240116; t=1789240536; c=relaxed/simple;
+	bh=oN5bHxTc+/6JzEi/UFCPNXUR1MF/V4B+qzNlzIB42Vw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rZMhH+mOqEHQcnXxTa4OvDIPprZHDIq3A5Z6CMB/yWsxSsqWNqcNgsJtMIVptRCFl4/D17VOGPG/MNUFubqmIfKCIHCpRJKhZ0Fw+/TKliyolQeocoLL9W6YKdVMFCQ6v64JVcGXjZA8cGaYGvz3Ppl1qKoEUX56Lcn9LxfGT6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bau6uS6k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=onAjp2HZ; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sANC75xQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b+QzkUaG"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bau6uS6k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="onAjp2HZ"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3C6FD1400032;
-	Sat, 12 Sep 2026 15:07:49 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sat, 12 Sep 2026 15:07:49 -0400
+	by mailfout.stl.internal (Postfix) with ESMTP id 46FC81D000AB;
+	Sat, 12 Sep 2026 15:15:34 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Sat, 12 Sep 2026 15:15:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1789240069;
-	 x=1789326469; bh=jXcXChSXMWLGFbvzQDWpeRm01ecXJ2YI78VAqMTWVcI=; b=
-	sANC75xQ7dc/yfWkx6Q9jlivTO0BcElvo48oNCdQ4t4M4QOdpv9CB3aQwaSXU9mM
-	7X9fTmNJVCb0z3BAx10xAkjg7uHc6OrozOZ+YTt9o9Vthnn3IyKAqhM+TWtXQ3ma
-	RYNANIvL4S5Ay2pzvWECrw6NqqXBfhAfvRT74OZ4uT1pCdHpgcMcDA8lsS2yFfQK
-	4cDYM0cuCmDIfX0R87jsgSbE26T2DYtXGTUz5h/JzIbfV5gQvCzp0kiCXHkPvSQO
-	Ej7Dfl5Lm7bPdCsOFT7HKlc1mWHpQVCFO90eF35TAFjcdxQ7BVMsmlPh2RZUPfk4
-	hw1uQRWl+w+Ggsi+SV1nGw==
+	:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm3; t=1789240534; x=1789326934; bh=c7iBb3wigsqDXW5hB4kHJ
+	VquYNnFxrXWsopK/0kaTZg=; b=bau6uS6kxVJk7FzhPx22/KObE3bmY4df99HKI
+	iqADMaYjiJl3i1b0oJrJAvBMiiXAhYBjrBY7+3RPIJycdf893v2IWGMqmFGvELZX
+	OSa5OhfHHNxKirE1ig2xqYplJH21DXtOfIiNkPQjklme7owsfzeFusPIcX4fKh4l
+	GaL80HBoMPU/MfhXcpm2Fn4GEOFXz3+lTQYCebZnNoYNPdY2MMOUaYHZLuJnvXSX
+	Q90rwHyr/u1AUZTTDVj5js+fxHDAUSfMoUEj2zE/WZ539yFj2XsvWtcUhjnrs4R4
+	0EVYXpHTEOg6QXrOMREibbbs7UgSukeIMhaUnhKXXw3QUfbKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789240069; x=
-	1789326469; bh=jXcXChSXMWLGFbvzQDWpeRm01ecXJ2YI78VAqMTWVcI=; b=b
-	+QzkUaGcKEU55LOvJwIlrxprGOEfnVaN5x7G8mWnjY18CjrcZCTCYVuVHNiy48N8
-	nADZMtjOsuV456pRw2Vkjy0TU1mVdBYsO/4+go7XIe6YGpNRA+i904xRAnvp6e7m
-	1Dn7D5p9z4ZQOJKGiTB7NEuC7WvfLJdek8VVXtj42pqkKJXSSaH6wlSvf7JYIhBw
-	b0j8okdTHfM/24cFvaNNnmfuKBsp72SN4mcluEuDe/mQZQoBhyOHv2SPUZ3J/T/C
-	+rDOTnEiQoojdVnaJejMUUMX2+Me4heNS2UYnhY/UqAHSI6Mee1TIVb9vPM0sNuq
-	L3CFMX4DeXJmIHKQZXwAQ==
-X-ME-Sender: <xms:BaOlapuDaE2LqZGmzw9Nea2GJTfRurDWj02ZM7FHfCceIhAyd6VWGw>
-    <xme:BaOlap5Cc0qQbN7gaaPVvotQAJlUw5jbgWXOhzqMCr1ld8guOZz-XC4URGfIuKori
-    NJRk6tHDSQvBw4LbPoR5HYkL2cnGIoQW_JRcUCG-W_2SLAVY4ijYgs>
-X-ME-Received: <xmr:BaOlaqJZE-M2uTnyO3aHY2aceldpV_hagcKB5jERK4vts5at6D0P6BRtMAXRwFrGi_dFNYX_Pm7kH4CaXtFUeSSu3YE8f_UOo8ks>
-X-ME-Proxy-Cause: dmFkZTGGa7p5g9/qUcWAnuiVJepWbTITMw7dGpi2n/KlM3vHBu8ludVhBPDMoHr5SCBcqL
-    5i/CKgSaQfxRiz8tL7eOo3OC5Qlap/44RyYMFDBWsf0N70KcfPwZUgeQbbau6KgTDTjBPo
-    hG3HbbL/p2VRBodqcTEipwAqhVpTrlxfwRJGhVFkkJAzlq4XN2kSMj4CeI8qLKSmJ6jJ08
-    z+H0jhfH4lY7aPxMpm2hozz8GLDt6Ru2ClI4klzLL7fuaFdrILq9xbQK2mPRWDgmRlqZaa
-    6EV3uQH0tG2526JIVGLNTpk0EZ6hzcuJEfYGOGKVgCnabSsBE7HQAGO03MKhtSbboMSZjS
-    +/V1l8Hn3vcEesNfoVQQEqUQcCGNU614Uh2QDHnxyXJyDjqYsK5M7AlKMc6b0FaTPvE3R5
-    EqLe08EORB06dHhJBTpzPMwU5EtNopTv/LR9ksUzDDjBzInloVY9+6wq4N3xKS9AlRuDxF
-    bRqHGx3Mh8WipJeuQfp3ho0u3+zhXpmyXkmaoST7rMlE6fHqAyfGgfIiTEfP5BHSWkP3NC
-    6CcyKeKKixzfRNj+CxnLFYGUzSkUdbm2FZLLqya59YzFT39MkwOb1FYfUMAKQE8EC1cWY0
-    aSpQ0L/Z/FqMyiCGmkpw/6ueQS0KvB8jJIqyrAcmjOpHn59yXwAXQbWYUjlg
-X-ME-Proxy: <xmx:BaOlap455xe23k0Sgxrocn02lorT0Y3Js5G8zp85pmc5seSlV5Xo1Q>
-    <xmx:BaOlatz3QHcbTBX4LmYoDEsbrT7VPKQW0qMsA1JhBFa1JqaFTL-UPg>
-    <xmx:BaOlataxunahQ6ke84QcmwGsX3McMj9AkH9e-Pr2j-m4YnOMw_FAVw>
-    <xmx:BaOlavQFXzzHmzgKQYnijpDu0mslbcUvWk0GKM8IbDAgPm25AxrcGw>
-    <xmx:BaOlahh9yA0bT4qfKDUzCqyJo_SXOu7zFCbeaQEKjQxHs4rQZmGj6BYz>
-Feedback-ID: if26b431b:Fastmail
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789240534; x=1789326934; bh=c7iBb3wigsqDXW5hB4kHJVquYNnFxrXWsop
+	K/0kaTZg=; b=onAjp2HZS6Q6Pt02iVRTAcB/vWTVceCIe8ZchHkJw7+xjWK4kiY
+	swnwYWM6W0OMwQcxRt+VXEUeCahcZskr9WWmtjpehB3VwIuPiMvnKmkpWcumGFeA
+	eCWYrBvPUDa5zSg6ldAdtwa6w8RbvkrL7q7iGQ7SxVnsKJkF9N4nQirrP3dBQx9T
+	4PcBLa2HhATJQPHcEsX9GaOsVdmvzoucvWdYS/FbVAqzRXyZ9pyqSDe3IBZcK8LP
+	gb50xo6Qed3Q2sl4nN/AOyOoMss/iGeKjmP5wovIFeh1xC8a22Vy4gx2n3fiGbOJ
+	cJ83Ld0tTg/OjIANcn5Et/UOYLjP9cPXlUA==
+X-ME-Sender: <xms:1qSlaqFAw2cE39koj5RaymKMLq68qM2B259p2I3q8kmfv67mqOPxJg>
+    <xme:1qSlahXKMqVo2NB3SBUzS71QdTbooS7kza4k97M-IyNTGu2c6HOxrvZ4-tTg8SiKw
+    Hdn-LbpxmGlfEYZSdXRepYwOPqE9I1EjpgpM-okLJUkEXbYTh3HqyE>
+X-ME-Received: <xmr:1qSlahzf061vOyG2VWNGW1PUap52qHUNJo8O_rUsuyepihPxWpnKhxdFnB8DUpOlOc2-RMsDfLtIfdNrsv3qLTAJ5sAqBoyKNk6Ytq3532rJIJEm9o-0UAhrMp25lDwNJuzMhu2kdIkGvabX>
+X-ME-Proxy-Cause: dmFkZTEmatd864Co5gxv065DPBLhe0NpHEeejRQ0IQZF9eA9aSytTP9rgEBA6DeohgAinE
+    xsqjemKmCvE1dhI7MTBVmbVPayzjKxkOESVgf5RiqHUzbQE/wIsIFpY5f6oTv2k8OQpxAi
+    fcsV6dd1/D0wYuoZUUft+6MW7wHcTPCzpCpL6lX2R/FFgufEXAma5RTS8I8Y8+OtDB+EeN
+    qE6or8q8hKC2S+25so3TTpYkiZk+pJd58KoZcQ/RugIXh+y+5oT8k78+X+oHdzOjLduo3j
+    b31VPINDeHwIMCSfzojVmi1sF73My1OyxWo3CQ6lePONZ8xDhlxWWC2zi+mwKcoSJy6ghZ
+    kNnvP3zbKKQzKDSHQKNwEWiGcf2M2qa0fCWoGnQuVyIGJ9sBhLYycFYSxzP2mjGJFc0jnJ
+    DK+yJETxFkWLaX+7euaPloRC+byD+hGHiTyGUGiK7kYPgYHgKCTnvVIo+BbmZXFhosPTiv
+    WglEf2y+gjimUC42xwPPYXqQXGe7JB6D5otvGbQ/mF1QPA5XNuOl1DbF9U/JW/y6CtB7jx
+    21vIIKdeg6QtvlAZXxvTVX/08hT9D8bIaZqOSM9phifTToJPBvI4hVaRvqSs1H8tihExZq
+    pXTrWNYfZ2Ni265crOQVbw41S39mDr8rDTBou4SgvP6QuKBsvdyRY7plnVHA
+X-ME-Proxy: <xmx:1qSlavNvU3u4OnU-bKKCLheTNbHeBNnV7q7-hvuFhYQD7FlT5e6WxA>
+    <xmx:1qSlai565VD7740gLZcZVThy698mmPHm363dB6ivGyAAMYc3ij05gg>
+    <xmx:1qSlagNFesGjButqze0bG118weC-ZCWFEIH8I5-mKzCWz58wzWnN1w>
+    <xmx:1qSlagnHaE-uvE1Gd8J0TPJxKjHdM-lxfDEzHP0GhBo-hs7-oCNXeA>
+    <xmx:1qSlaj50g-s7SvNibmNALpuN7SdotwhV_dZsGb7WxPSrG5MKm6MpA5D9>
+Feedback-ID: ia13843cf:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 12 Sep 2026 15:07:48 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+ 12 Sep 2026 15:15:33 -0400 (EDT)
+From: Todd Zullinger <tmz@pobox.com>
+To: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH] cocci: remove risky "if (!E) free(E)" conversion
-In-Reply-To: <caa39ca4-b35e-4fff-80fb-af6856cb2098@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Sat, 12 Sep 2026 09:13:29 +0200")
-References: <xmqqld978mok.fsf@gitster.g>
-	<caa39ca4-b35e-4fff-80fb-af6856cb2098@web.de>
-Date: Sat, 12 Sep 2026 12:07:47 -0700
-Message-ID: <xmqqcxui8f0c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: [PATCH 0/3] doc lint fixes for pack-refs and refs
+Date: Sat, 12 Sep 2026 15:14:59 -0400
+Message-ID: <20260912191509.844954-1-tmz@pobox.com>
+X-Mailer: git-send-email 2.56.0.rc0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-René Scharfe <l.s.r@web.de> writes:
+I was reading git-refs(1) after noticing it learned some new tricks in the
+2.56.0 release notes.  The formatting stood out because the first two commands,
+migrate and verify are bold (in the man pages) but subsequent commands are not.
+The HTML is similarly affected, with those commands colored differently than
+the rest in our online documentation:
 
-> On 9/12/26 12:09 AM, Junio C Hamano wrote:
->> The current cocci patches try to convert
->> 
->> 	if (!E)
->> 		free(E);
->> 
->> into an unconditional call to free(E), with the rationale
->> 
->>     cocci: detect useless free(3) calls
->> 
->>     Add a semantic patch for removing checks that cause free(3) to only be
->>     called with a NULL pointer, as that must be a programming mistake.
->> 
->> which came from ec6cd14c7a (cocci: detect useless free(3) calls,
->> 2017-02-11).
->> 
->> Leaving _something_ in ALL.patch output to draw programmers'
->> attention is a good thing, but this changes a piece of code that is
->> originally a no-op to do something else, which may be even worse.
->
-> Good point.  It's likely that the programmer just wanted to release the
-> object in question and got the check wrong, but it's also possible that
-> the free(3) call is wrong as well, and that could do real damage.
->> We could change it to
->> 
->> 	if (!E)
->> 		BUG("free(E) is certainly not what we meant to write");
->> 
->> to force programmers to think.  But it probably is safer to just
->> rewrite one form of no-op into a simpler form of no-op.
->
-> With that last sentence I expected the patch to also remove the free(3)
-> or commit_list_free() call, replacing the no-op with nothing, which is
-> safe and simple.
+    https://git-scm.com/docs/git-refs
 
-You mean
+This is due to inconsistent backtick-quotes.
 
-	 if (!E)
-	-  free(E);
-	+  ; /* no op free(E) */
+This led me to the lint check, which I think might benefit from the small
+change here to match commands as well as options.  Running something like this
+reports a number of files which could also use some tweaks:
 
-or something?  I guess we could do so, but I feared that a compiler
-that is smart enough complain and trip -Werror on us when E is too
-obviously a side-effect free expression such as a reference to a
-simple variable.
+    cd Documentation && for i in *.adoc; do
+        output=$(perl lint-documentation-style.perl <$i 2>&1)
+        [[ -n $output ]] && printf '\n%s:\n%s\n' $i "$output"
+    done
+
+I _think_ we want to backtick-quote those when using the synopsis style.  (If
+not, then the change is wrong and we should remove the backticks from the two
+commands in git-refs.adoc and other places.)
+
+As git-refs.adoc includes pack-refs-options.adoc, I updated it to consistently
+use backtick quoting and converted the only other file which includes it,
+git-pack-refs.adoc.
+
+Todd Zullinger (3):
+  doc lint: match commands as well as options for synopsis style check
+  doc/pack-refs: convert synopsis and options to new style
+  doc/refs: backtick-quote commands and options consistently
+
+ Documentation/git-pack-refs.adoc            |  8 ++++----
+ Documentation/git-refs.adoc                 | 14 +++++++-------
+ Documentation/lint-documentation-style.perl |  4 ++--
+ Documentation/pack-refs-options.adoc        | 10 +++++-----
+ 4 files changed, 18 insertions(+), 18 deletions(-)
+
+-- 
+2.56.0.rc0
+
