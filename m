@@ -1,125 +1,115 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8015936828B
-	for <git@vger.kernel.org>; Sun, 13 Sep 2026 19:11:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F008C381AF4
+	for <git@vger.kernel.org>; Sun, 13 Sep 2026 20:26:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789326676; cv=none; b=LhlikKc1rcUS2Ird8ZwP8Z5D81h1NdO14KaLP0E0frHXIgRHwuntL9mmInAmxbprU/L3S4NRwd+tC6h3HWAOMjqQ62JDNobHP3nL//yi9B8mBksuDzuAW6SqPvyZH7CihJBcc3K49nbKYXqPYVzOC9+jmgJ5vDTRYTTcmXYcCx0=
+	t=1789331197; cv=none; b=PTZXM5vc3igOJpDyeb35Jp8U296JN9+HL4AxYSQ9rvR56/40o+b+Ku9nwT8sJninoHyxzLpnfcRQAVPfm2PPHQS3DzivX+Q+hpmKHXzGFGLy9ZjWA21IPqKaO0Q/2t4s9BS/tmwyIICo6D9qN92AYKuLs5cfTcCYUI+2o3FN2HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789326676; c=relaxed/simple;
-	bh=Y9dmJJ9BodHKfigvrGCmLdtS/nmbfEJ0ccK8bxCQtXM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=LDn99IrZ87z+l2AADb0ZZZydpyvaEh43h1lfIbVvSswvtUahOoTjJ7BJpJrT0+Biq+ddZ4kJVCJxF/+E4m5FNd2eGfrXoSdQCIHM8Kf4Gt5FwihQk+m/VxvhadtB4Zh0FrwS1OHWyZL0pwbscpkPd4ocaOkfdKhdS/SpXDkY6v4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HXQP769n; arc=none smtp.client-ip=209.85.219.44
+	s=arc-20240116; t=1789331197; c=relaxed/simple;
+	bh=8Rfnj10QYYe6+JEzrwMp97zehC7lZ9YXhUKaFt2ExNM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=vCebK9RFPxBdYlN4UWawNdY97yfPLQN3bJKneWnwtaHhfCojhU06Q9HJ/oZjcAWx0hU5kc/mS5eScsRXcCLXYdMANL+i/k0JbJcS7wDS226p60qU2RseksO2LLV7SBxq1dyvyRvJkcfMGpyLIRcL+4iZC+p8G17Cp2I0Hhr2Z58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hQeisYJY; arc=none smtp.client-ip=74.125.224.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HXQP769n"
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-90e9e042ee1so29974816d6.1
-        for <git@vger.kernel.org>; Sun, 13 Sep 2026 12:11:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hQeisYJY"
+Received: by mail-yx2-f12.google.com with SMTP id 00721157ae682-85d46e4cdcbso9643857b3.0
+        for <git@vger.kernel.org>; Sun, 13 Sep 2026 13:26:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789326673; x=1789931473; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ON9c9TKY4MNUZwbIHzrMaWzEBuXram4HuIBT1PWicHM=;
-        b=HXQP769nct7aU0igvumyyM+if05qZxPBOdi5aEsJGCRvuMD92in+8IaPvptSjJ1DyE
-         opEcH0WdO7xYGA5uQ6lyGAzfCROgqYrvAikVvT/1doJrNLGrJdWjAI8bE+Mm6ZIYkrQx
-         X744nMd2aExZaYsAZ9xpKGd82MYnSpfEEkbDvUVb5iH7oW0+paWAiAczwTY8eBcBaXmv
-         xEkDmCQs6kYa01AVqw4Oq63XMr4ngu8H4BWy4+r0enjVMXiqEIZsY+VUQPnOTHj8mdQj
-         XT/xeJOm7oEXM7TjVEz3Cohx2Bgai8MUolEzQ/DtN05P6ABxvcZvTno5LIBeB758kRVC
-         5clw==
+        d=gmail.com; s=20251104; t=1789331195; x=1789935995; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=agIqxkFxd5STp9oXSdS57wfZ3WgZXRTfy9A04gGl1Ug=;
+        b=hQeisYJYcj38S26yUzAfXaOfwn4pT1K6ly1hesddCsB2jfHzlr4oPBloLVhpAcIVaj
+         oi6wNpS+Y1mkN95521jDnQZqPok6dl0oHRb+BAUpmFAPfCq7Hds0t4OgSz5TyDfP41oi
+         9dXkOCXn4xWqqE5N+GiyoJWZ7vpbhGBCjP0R9QZ6HXkdI+yqlMcv3c2a3y9G/da8bqYE
+         R/iteTEP7XqJaayGLjQr694+cIEkfz6u8v9jmpPSbFXHoZsb899ufRnMapisb1lwPBzx
+         ctbHNbwjIqL73dcXKZ9bkNu5UCY5qjYATXNQw7MbevzkPy+z029k4bNS8bh+jyGojg0a
+         NP2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789326673; x=1789931473;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ON9c9TKY4MNUZwbIHzrMaWzEBuXram4HuIBT1PWicHM=;
-        b=C/Oop6+SoCvKgTzSJeoUWvhWpMyEjCd6xY7ZsRPS94zXt3LaypBwFe8uRC7klN0kow
-         XZCZVncEHWYWUXvR6YsSAHm5KHbVqh3M2TLikSE0yz9sfuWsWeFmRvacw9Q3+ODozJ/B
-         P6XG0o+fmaQhjm3qiwV7PrZnrOjdindDtGK2sXw2xBNiC5TJ/0O+FDKvouJQ+4IKpwI6
-         nVdwkmQqzgr914qq4GGwJqqWCEq7ucme6HzxlK6n1ZAyG3M2A7aVY5bPaBikB9jbg67E
-         VvvYpagxlfIHSr0UN0BQUM+u93CMINdY9srdVUvZHFj09PtJKQSjVQQAPqrbdTVmgAJH
-         T4xA==
-X-Gm-Message-State: AFuF++lgjfJpW4NT7ICd5v9CQTjkjtIUyGWpBh3CGRzXX4oX/qeg7yN3
-	P5o9kISjlJDvhhQGxKtgJaKhbov6kb/BoUWKfeGOPtVyaYvHvSrf9uSfHY/d8Q==
-X-Gm-Gg: AYBFou2qw78n4DlnsW3Qb3SDfwbwzzx1irlqWjyamkCj2F0WcMusb02lIqHgtn+G7e6
-	vl+z5Q0HY4jlp/w/AlLjr8cw2kxz2f1T/hhalsj4J98QE010fxQMOL5AnF7hJ45VBqLj1pSez4+
-	TgPLcMVHLymiONkPlHxIeUQVAQY3vRQSutTS9qFYkg2AMLaU5o/2P+hOOphUd5Uhn1BpAOIMTr0
-	bCd6TpH6yObOw/clymHjda2j1vFeVAlLzuHXHnEg3NPV72+IZrgXuqsxlPwe/4Sow6z+K7ej+N6
-	rUJJcNB6Y/JMFe1vm8N09tOZnadM/zD0GuXf8MipmgxB1gW9jDC5U98i4mms4XWSL8QTapvXw9R
-	2bOXJgAybNQOWFC6RHFtMYfH8+32ytJWGgAIy2liYX0mi63uhpLoqJn9kWcVaRTut8BQu3mfQCF
-	WhdtJWsW+3XCWgBNxHuq9l6iq+O4v4S40wIArcsJKWcS0F45793ZCpypBGJbF0V+RZHRlSXIFAu
-	cY=
-X-Received: by 2002:a05:622a:c4:b0:530:fc4d:7348 with SMTP id d75a77b69052e-530fc4d7405mr47606811cf.48.1789326673333;
-        Sun, 13 Sep 2026 12:11:13 -0700 (PDT)
-Received: from [127.0.0.1] ([172.214.44.146])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-530f9b99fc7sm26294151cf.30.2026.09.13.12.11.11
+        d=1e100.net; s=20251104; t=1789331195; x=1789935995;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=agIqxkFxd5STp9oXSdS57wfZ3WgZXRTfy9A04gGl1Ug=;
+        b=JSBrb4ugpUBcVMDrzHSOJAgnrMMhXR6gZGluV+VbWARqmjTZy+3/ytIXjVVwiKKc8u
+         Zo9ebQh0Xj614soC1PKLosMSeULlXu7ccNuu1Ywm/5oWly5Rd5c9q0MPwkwfvN/2Q13w
+         QvHevmKwGVAP8WiPXN9/lCly/ACAx1RvNbxvVV+jyPZNZ076oMjKR9dGBkkG01uZPPH2
+         5O5eOw2LkdnTIpGhn3p2PROdz/0F7+KdtTNlINZPrB470rLO7KZFasTjKiZ8sOBPcWm8
+         Fe5/YufVSZM+PwWIjEi5HwrDWlr52lzDd4HVCZYkAg9FzBvOscf/VyP8G3DZXJTQUF+W
+         Sosg==
+X-Gm-Message-State: AFuF++lbJ28n+TV1rrQk2YPYdOyjeceRERDlNIGrRN0yF6P8JGP/zNWo
+	s58Nf5P05UeJil2xt1vDcvcciB+PK0uccMps3xOJLapXPoD/LNdeEDgLy91FTD25
+X-Gm-Gg: AYBFou355mvFpDrS2yVB0OZjGhoQ6SjI/qf9BYnANtFeJ1xrp8MvSxfZXgHEbEnyR00
+	95XaEp/hkB1AZ6ZakYwToKzwuXECKUsy7moocbOxBNruWZ33lLsF1z6Vk0EoWaFPXjueVptSIz1
+	Ju3oxsE6XX4lZtfjjVnthuHHzCpQ77Sc14Ydz6ApOb5d4MqudRcm4isoZvdctB2/O6UQa5bceQz
+	1cKInH4lKCNf6waaPQygIwsxyYu6/vhSvjooTyUvj0lryVtqVI3hQEBtvI7a3E9wev4kH2Pg5s0
+	aWJ6jMkZZRk6NJmDrCFDzZGPi6qbRAlrNrOOBXAuELycSVNAowzf/R0AtyyBhq3ux0g1tnoQTAX
+	fiD8AI+EiEaPfB+216G/j4GTt+4AoyD+r6wlrjEZbKRCuUw53lX6Ffv0fvqkZf03QybCQeC+u5q
+	f7fFQQUBV0kCcwzhzr2WATjnLY8U44TtO7v8eKn+BuAza9dE8b3T9g/3M+Pgnvh2RlrZqS6YoyT
+	1kVRY3Omx+BDtqZ4RVMmxI6PkQTdGZu3kSi5IvWO2XrYWooOq2wYWA=
+X-Received: by 2002:a05:690c:6610:b0:888:7a02:2800 with SMTP id 00721157ae682-8887a0228a6mr24916917b3.16.1789331194943;
+        Sun, 13 Sep 2026 13:26:34 -0700 (PDT)
+Received: from jtobler--20250820-SHC54 ([12.86.123.90])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8847db4476bsm30317047b3.5.2026.09.13.13.26.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Sep 2026 12:11:12 -0700 (PDT)
-Message-Id: <8d065f1b4f6f2a40cd9154cac460ef9dbc959488.1789326667.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2227.git.1789326667.gitgitgadget@gmail.com>
-References: <pull.2227.git.1789326667.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 13 Sep 2026 19:11:07 +0000
-Subject: [PATCH 2/2] t9129: skip UTF-8 tests on Windows
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sun, 13 Sep 2026 13:26:34 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH 0/2] object-file: fix packfile flush during transaction commit
+Date: Sun, 13 Sep 2026 15:26:20 -0500
+Message-ID: <cover.1789328612.git.jltobler@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Transfer-Encoding: 8bit
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Greetings,
 
-The assumption of this test is that Perl and Git have the same idea how
-to perform encoding conversions.
+This short series fixes a bug I found related to committing an ODB
+transaction that contains both a loose object and "large" blob when also
+configured to batch fsync loose objects. The issue can be reproduced
+with the following:
 
-However, in Git for Windows, Git is a native Win32 program, and such
-programs have a very different concept of encodings (called "Code
-Pages", and they are not controlled via environment variables at all),
-whereas the Perl interpreter used in Git for Windows is a pseudo-Unix
-one that uses the MSYS2 runtime (which _does_ try very much to abide by
-Unix' `LC_ALL` and friends, and totally ignores Windows' current or
-active code pages).
+	git init
+	git config core.fsync loose-object
+	git config core.fsyncMethod batch
+	git config core.bigFileThreshold 5
+	echo foo >1-foo && echo foobar >2-foobar
+	git add 1-foo 2-foobar
 
-As such, these test cases _cannot_ work with Git for Windows. So let's
-just skip them on that platform.
+and produces the following error:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t9129-git-svn-i18n-commitencoding.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+	error: unable to write file .git/objects/pack/pack-2b7c2470289822070687e8d64186093a710eaed3.pack: No such file or directory
+	fatal: unable to rename temporary file to '.git/objects/pack/pack-2b7c2470289822070687e8d64186093a710eaed3.pack'
 
-diff --git a/t/t9129-git-svn-i18n-commitencoding.sh b/t/t9129-git-svn-i18n-commitencoding.sh
-index 01e1e8a8f7..f72a425dc1 100755
---- a/t/t9129-git-svn-i18n-commitencoding.sh
-+++ b/t/t9129-git-svn-i18n-commitencoding.sh
-@@ -71,7 +71,7 @@ do
- 	'
- done
- 
--test_expect_success UTF8 'ISO-8859-1 should match UTF-8 in svn' '
-+test_expect_success UTF8,!MINGW 'ISO-8859-1 should match UTF-8 in svn' '
- 	(
- 		cd ISO8859-1 &&
- 		compare_svn_head_with "$TEST_DIRECTORY"/t3900/1-UTF-8.txt
-@@ -80,7 +80,7 @@ test_expect_success UTF8 'ISO-8859-1 should match UTF-8 in svn' '
- 
- for H in eucJP ISO-2022-JP
- do
--	test_expect_success UTF8 "$H should match UTF-8 in svn" '
-+	test_expect_success UTF8,!MINGW "$H should match UTF-8 in svn" '
- 		(
- 			cd $H &&
- 			compare_svn_head_with "$TEST_DIRECTORY"/t3900/2-UTF-8.txt
+If a "large" blob packfile is written to the transaction temporary
+directory, it is unable to be flushed during transaction commit because
+the underlying transaction is migrated to the main ODB before the
+packfile is finalized. To avoid this, this series ensures any pending
+packfile in the transaction is flushed first.
+
+Thanks,
+-Justin
+
+Justin Tobler (2):
+  object-file: lift ODB reprepare out of packfile flush
+  object-file: flush transaction packfile before migrating objects
+
+ object-file.c    | 12 ++++++++----
+ t/t1050-large.sh | 16 ++++++++++++++++
+ 2 files changed, 24 insertions(+), 4 deletions(-)
+
+
+base-commit: 47ce80527c56f462cb97db4ca8125342204d3783
 -- 
-gitgitgadget
+2.55.0
+
