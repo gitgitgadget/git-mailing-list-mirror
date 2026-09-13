@@ -1,116 +1,164 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C84C3939C1
-	for <git@vger.kernel.org>; Sun, 13 Sep 2026 14:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8A036C5BB
+	for <git@vger.kernel.org>; Sun, 13 Sep 2026 15:57:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789308850; cv=none; b=Keo5wyq0i2bWmkR3WoWFpsBTxAoYr3s2L6UuTRej6tQ3b5Et9xPu7T/FKHXrmprCDgWymiN6+KScvnlxTYD6aBv7rHDjlCKRVwJtTZ0Pnh/ga0m9r5OpPg9jNPSA7UWAzcn6xTRD3R2YKKVfp9sIQZLfzDxM53+Up+MyrNHAqt0=
+	t=1789315036; cv=none; b=M/uBfN2VAKWhxPkvFnHFr/5pxZqORzN0eAm/LmzWBpqyViV8BEqocQKS4jI8rgFkhMrImPGrlgPKGfYU11aQqebvAaTt76YsLlLEww2XxvZ5te4XJVunaBSXnuNknDko4weA8Lh3IwE/lTCXDWziS2vQVKbK38RDgn1hsadA5LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789308850; c=relaxed/simple;
-	bh=qHWaRflvSvpgrxR/xi9XHcIS3mUADYOMnPru6rRYHW8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VlYDRTVFpmYQArIB7X1obuk2giUcUEdHxLraZ5GYpyVdvE2VwQjRbyP/kMQqaU/wAc4POHXcave657wvaea297SuMwkHVADGrqZ9iNXuwUV0Pn55RnfRY+ZUVIFttZzeCiPlwZaMsST5qBFU1wFRXtwZHobmBOHqVCSflBduiIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EzMfmFjp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EU8I5FGw; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1789315036; c=relaxed/simple;
+	bh=PiP8YCeskq8t3KDOhpr+G0/q6Yp1YoqSwQgWGNq+jgo=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=S4BU+S22lEIiI3OwPaznxYHJnV6RbJAzNVcFTm230rOV4MvluHPH+0B+GK/87nboL5z8FC9yHHE2vrHKnXQMd9q6wqtlh5ppYXQGuQ1kUSoFQsVG3fPOJ2/IhjTuTX/yejdTCUql7UCNNIFvUzzr0n42Dx0xA706cVQkVHvGpQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nhGb6X45; arc=none smtp.client-ip=74.125.227.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EzMfmFjp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EU8I5FGw"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9D131140008F;
-	Sun, 13 Sep 2026 10:14:07 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Sun, 13 Sep 2026 10:14:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1789308847;
-	 x=1789395247; bh=BJix5kat3oB6A+kg4hWFaix8d8zagEZqRU8Ds5uQnfg=; b=
-	EzMfmFjp3uDxrGdlJzdp/iip9JpOC4CisDbPmKOZtLw1sBZMtAyCOaUuEAg5x+8S
-	9PeHZdUTQN1z6QxI5rbJykv/yQ4ieukO2kqVE5+KYbBqeF6YESkzofONeGh47udt
-	/2XoZiAYV6TucgRchK8z4bxn0519j0nCNwtBzGC0eZ3oyXtmaNkTYvIplKsqEYy9
-	mBA0fqrYyjUHlgmnRhanc00+HfnBY2dHaT2PsXj7Z/0qK3oa9Sr9ouAYslZVJeCK
-	9ZbljBxs3Arr72F7cWAIk6MOGi8IB0OhOKExFCWjP+UKsN8SzhXLOPZZHEdAfqzk
-	qyGXmAP+0JrPxukvJwMdaA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789308847; x=
-	1789395247; bh=BJix5kat3oB6A+kg4hWFaix8d8zagEZqRU8Ds5uQnfg=; b=E
-	U8I5FGw+fS4LKXD5G8zdntneWLLJlPpniNJCaSw1zZ6M+9lYA9i8zTxgGUJtiZaw
-	2mQ1Ls0ErcTFz/cXrdbe1PZKpcQlVrn25d4IlREwIQ5lbndlIYEJX2NVuXKvJYNs
-	ma7tIBOCLLZp9z/tzRgvCtEUS75mR6Ffk28nv/SzuyAc2Cg5QwH6fX56mmfXbh/L
-	HCqERy+j6aaWiUMsaJrn178OMJJZkCvcmmcCBz9e6waH4bhEWDS+1gHlk7+/aHNo
-	397yIcMUBQX3ImG+ZHTDPph+J2gB5r1QzTS4JaLVcbWyRpfx5Ysvuh0FMblq0Jzg
-	AHMOZIDrL931Ohyk6T9JQ==
-X-ME-Sender: <xms:r6-malORMXkKhwjIVJQc_cE04ZzE3IS32XMYlBq8z1efGKisHOaJdw>
-    <xme:r6-maoJoeEkWlTFVv0-iWE4ikv1p2jd2i9nOahqYrdRtB1cZbGewRzpe44B5JrcRJ
-    TxctYPMRGRJFHv5o7LsIp2IsJiPH8PTlc2ETACQjz-DvybQFZpNfnc>
-X-ME-Received: <xmr:r6-mamGU27EaoElMqLLAtuJHnMQfXfuTZ1G-00q6cRXZ7rSmcPsz6Vl6jEgg9lRd4Xpp_E5ltLDoIEEDY0K7M5Dx2GnfyGI5mM0QKYNDjhBHy9Mac55qC_s>
-X-ME-Proxy-Cause: dmFkZTGKoTWScxBCAsblTXvwkjVkw57mw3hIGyPx79bEVR/yfD6OdJ4gOG2gXMKUtWDdom
-    8NuvkTNrdy1DXO0tRWIgJqpSrVRxCgAA8S0t5QTn8w5qsKhrM2JDwGycVl62IYkChdorJT
-    s8m7B7CzETKwG3+i7z42IcxJrN5Twc62ZQ18L07ml/+LIq7l2Zbu/UHPXqwYyRyLRnmusa
-    EL+9mfucw0Wng8IkynClopWri7/J0XxJWL57boIxCBtxC38apaR5YoYRYa7ilMessvU8NN
-    uZFNSQcig8ftmNkEmXk0Xo8YRbgfjEzX474581tQAlHvGFhYKs/rhKliep15SDo6fGierX
-    T2R1K8N6fO/F3l6EaeGSPVJgtiLrbOr6/lfuDUyVf5hAbnTcJHEsIiX4wmXVsPH0OgSDdz
-    luo1GuMW42EhLMZ0HUtzriDF1TPq6Apb3uwuDYCk44MDxhuNIq0MJrrmAteRG5tVnEkWBg
-    dlhPvIsf9g87r1rropj2exzMf00TanPlrN9E0Ew4z7z0/PET8jQWJ/ZAEUquo34UEUd7UT
-    y9WKJyu6hrD1MuQk07TpcOAX+Huw+FcXY7/1dco+hzgmMwwY44MgWVMEqUS73n5O0yyl8r
-    xmpmTpFvgipJwCEDexkzXs6acJz9EwmcQ7kHhvh3puTYW9O/eyMs2rMiwtJQ
-X-ME-Proxy: <xmx:r6-magTR_9I0Ht5NSf5TuL3D2bIHvLKhnDeouCVuLaLbm9JRR2DhQg>
-    <xmx:r6-maiGC_XGu0QCf4Gn-NPp6y8S_G_kPTTCcRUWwoLdhYHFIyMZDmg>
-    <xmx:r6-mas_A2rvO1-h1XbA7MQTqvDvGq1snQOOEI2Bu2aaMOLvahAWGbA>
-    <xmx:r6-masIJBHim_NmF5ACgDlIAPIy5XIg5VRX_XnxBdS06Cx2lUQDV4g>
-    <xmx:r6-manyy3AZrRCa7pAODBiWOQNFsdhLkSsCxBTCnUQAyK6C5IzwLl-6r>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 13 Sep 2026 10:14:07 -0400 (EDT)
-Date: Sun, 13 Sep 2026 10:14:05 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: =?iso-8859-1?Q?Jean-No=EBl?= AVILA <jn.avila@free.fr>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/3] doc lint fixes for pack-refs and refs
-Message-ID: <20260913141405.Dcx5xbe-@teonanacatl.net>
-References: <20260912191509.844954-1-tmz@pobox.com>
- <Uds1uZlUTZi1p6vFK4zhWg@free.fr>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nhGb6X45"
+Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396ccafb751so1263915a91.2
+        for <git@vger.kernel.org>; Sun, 13 Sep 2026 08:57:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789315034; x=1789919834; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=xe1I5qbpgojxlxGpVRTMNTQbLO1llVPN8D1dRd7iMWQ=;
+        b=nhGb6X45VHP6oWLGH7mo4KKrZkKsoBdPyMxNmRruVXC/2tHNwPwd1TyevFix3FBRIc
+         YeojF8Pbbd8T5S2M3C2WEeetbC3xcSfXj4GWYjKTUIlJm2ov3MNlRXrC+n/80imbXc3d
+         1tPu7s+GaOWBdyMSq749XswiyMswDsLqrZ/HVUxQqAknoVWUuF4DLNdz8J3Gq1ucgOBs
+         DaZB7d9Fl2cFXCjG7H3TupAiO6vExaspFJpxculjaa3Bojy4Rzzb7erhF1pKWOLc2gWF
+         glBy4ncz5NbtHx4ZtQaaRGNAIjplOfv4TAVWuT/WHwmbb2Gl5phObqwM4OrZNu6b7Cug
+         yP0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789315034; x=1789919834;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=xe1I5qbpgojxlxGpVRTMNTQbLO1llVPN8D1dRd7iMWQ=;
+        b=PQTpa935qGHQSBqLFZlmHB8Ol/k3PN5mGpTdXlRR/TlUQcuxYjyIohCRHE0n5EvF2W
+         KC7ZFIH//oh+segAi8HvUYLQYqP8XS53HfqFTSpfQlRzct4tPqtpf9g23hp79im8kbUp
+         OleLoAe7SAT6a4SHmgHXLfHfmbrN/Xwfppd4SW7FDCMxQfN3Q6PR0/t4tINd8xPv1rQb
+         XzXL0W/NDfz0IRs2QXPhVO3hyE6TCikBrEQT9ncM4u4BWQONvufif9ohkQVQ9pZoQqUp
+         a+plW2jS6Nmpy4KrLFojZPFSN6RFC7UKypM9CvZhxYYdSY5g2x0yyXPfyIq2fgt3NCFX
+         kEHg==
+X-Gm-Message-State: AFuF++kwOCn/A6aejc0tHQTeqXkGvUXvQ0NB/gWW4rR4f7hJT9w9jYbl
+	9FGpv+ITKyKmTWyfIxo9kNFAJmp+bX8MCLAWym1vJgfn+q8gGsklEB2Ih3R3cg==
+X-Gm-Gg: AYBFou0CgGO3PK9QZhUK6VR9KQ5u60Polp+TO6oO5o/bUxEQXOI619mUk9sw/fqPXtc
+	Q/90u4krGeB2yNQVfe6p6EvbpbBEhBt4gjyrwX+4RpiNLltN82ZpE74z9l2rZPsXYr/fydaXSWf
+	S2WvsarahKCRSFIQSCG504bTTgvzOZz4iFMa1GLcYp+sdY0XHNNlWYlyPSK3EcA9NCGxkQFnFoF
+	5heqqZzwnejIS4WtVjaEjgA8yiqRP3MkjvAKlHmjD0D/vFXsMGbBG2lf15iFRk6P1x8QbLoPHpP
+	IDh7bXQIdE06v+xz43FEj2ZZbMLwmTzGK0dSyne/v27NW9Inay28Jpj9GPO85W2NZ7FNafkqbC8
+	MnPF1mAp4zSLstFUp11JiOgKJlIH/isTa6zOcz7MwokbsP9K/r2PnfiNd+tmODaClHfcNLfINf7
+	+SfOjluKTYihLF3GcxHq0mw6Hwls2Vo0wa8WPSCSlEGORE38jj7dFINfOrHGl6X0v1nZdJ57LCC
+	fg=
+X-Received: by 2002:a17:90b:5383:b0:390:8361:a532 with SMTP id 98e67ed59e1d1-39d9bc44d58mr27805413a91.7.1789315034354;
+        Sun, 13 Sep 2026 08:57:14 -0700 (PDT)
+Received: from [127.0.0.1] ([172.182.225.130])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d95091214sm16799656a91.3.2026.09.13.08.57.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 13 Sep 2026 08:57:13 -0700 (PDT)
+Message-Id: <pull.2213.v4.git.1789315032.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2213.git.1788272509.gitgitgadget@gmail.com>
+References: <pull.2213.git.1788272509.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 13 Sep 2026 15:57:10 +0000
+Subject: [PATCH v4 0/2] Use Rust in the Windows CI jobs
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Uds1uZlUTZi1p6vFK4zhWg@free.fr>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    James Le Cuirot <chewi@gentoo.org>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Hi,
+With v2.55.0, Git requires Rust by default, with an opt-out that is intended
+to be dropped in one of the next versions.
 
-Jean-Noël AVILA wrote:
-> When I put this linting in place, I was specifically targeting the options. 
-> The other cases of use of definition list could range from commands to real 
-> definitions of words (see gitglossary.adoc and git-add.adoc), and extending 
-> the match can trigger false positives. Backticked terms are supposed to be 
-> immutable for translators, so this formatting should not be used for real 
-> definitions. 
-> For this reason, the regex is restricted on purpose, but selecting the files 
-> to check to allow to extend the range of checks.
-> , 
-> FWIW, the proposed change triggers false positives for git-add.adoc, git-
-> push.adoc, git-difftool.adoc, git-daemon.adoc and git-fetch.adoc.
+Due to the special circumstances in the Windows part of the CI builds, each
+Windows build job first downloads a "minimal Git for Windows SDK" that
+contains the GCC toolchain required to build and test Git. As a consequence,
+brian m. carlson opted out of Rust in Git's CI definition in 32d5b905909e
+(Enable Rust by default, 2026-04-09).
 
-That's fine, I don't mind dropping that patch if the false
-positives will be more annoying than skipping the checks for
-commands and missing some of them.
+So: How could we stop opting out? Notably, Rust is not part of that minimal
+Git for Windows SDK, and including it would more than double that payload,
+which I consider prohibitive. Yet including Rust in the minimal Git for
+Windows SDK is not actually necessary, at least not for the GitHub workflow:
+The runners on which this workflow is defined to run come with Rust
+pre-installed.
 
-I'll wait a little before sending a re-roll with that
-dropped, in case anyone spots issues in the main patches to
-the pack-refs and refs docs.
+Granted, this Rust installation is configured to target the Windows-native C
+compiler, Visual C. To accommodate for the Windows CI job building with GCC,
+this patch series adds a step to the workflow that ensures that the needed
+Rust bits are installed and configured.
 
-Thanks,
+GitLab peeps, I still would love to ask for your help: I haven't been able
+to confirm that GitLab's Windows runners come with Rust preinstalled,
+https://docs.gitlab.com/ci/runners/hosted_runners/windows/#available-runtimes
+did not clarify that for me. Patrick (or anyone else with access to GitLab
+CI), could you see whether this patch series builds on
+saas-windows-medium-amd64 without need for further changes?
+
+Changes since v3:
+
+ * Now including the "Changes since v2"... (I thought I had edited the PR
+   comment, but either I forgot to press the "Update comment" button, or I
+   missed one of the many issues I had today with PR comments, caused by
+   many a 500).
+ * Removed the now-incorrect paragraph from the commit message that still
+   talks about --target.
+ * Sending my humblest apologies for such a quick succession (but I really
+   think that v3 is ready for next).
+
+Changes since v2:
+
+ * Now using CARGO_BUILD_TARGET; Reworded the commit message accordingly.
+ * Dropped the now-unnecessary --target option.
+
+Changes since v1:
+
+ * The inconsistency pointed out by Junio, that UCRT64 was once marked as
+   using clang and once as using gcc was fixed by clarifying that UCRT64
+   uses GCC.
+
+Johannes Schindelin (2):
+  rust: pick a GCC-compatible Cargo target under MSYS2/MinGW
+  ci(windows): build with Rust
+
+ .github/workflows/main.yml | 24 ++++++++++++++++++++++++
+ Makefile                   |  2 +-
+ ci/lib.sh                  |  3 ---
+ config.mak.uname           | 25 ++++++++++++++++++++++++-
+ 4 files changed, 49 insertions(+), 5 deletions(-)
+
+
+base-commit: f4742f3165d096130c39a71feb26374da37620f2
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2213%2Fdscho%2Fuse-rust-in-windows-ci-builds-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2213/dscho/use-rust-in-windows-ci-builds-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/2213
+
+Range-diff vs v3:
+
+ 1:  b70b001f62 ! 1:  6e8648b21c rust: pick a GCC-compatible Cargo target under MSYS2/MinGW
+     @@ Commit message
+          not defined in Git for Windows' minimal SDK that Git uses in its CI
+          runs.
+      
+     -    Note that this _still_ requires an explicit `--target` option to be
+     -    picked up in the way Git's build process calls cargo.
+     -
+          Assisted-by: Claude Opus 4.7
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+ 2:  76469029ff = 2:  f6c2f52fb3 ci(windows): build with Rust
 
 -- 
-Todd
+gitgitgadget
