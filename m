@@ -1,66 +1,70 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-qk2-f12.google.com (mail-qk2-f12.google.com [74.125.230.204])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25572AD03
-	for <git@vger.kernel.org>; Sun, 13 Sep 2026 19:11:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1FD3B8105
+	for <git@vger.kernel.org>; Sun, 13 Sep 2026 19:11:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789326672; cv=none; b=m1H8ZzBr46/sn6wwYSA/L7MiJnBoFVcJOAnYdCZtkq5YWEpQQxXQQHNfm3CFwQfPcAxxf4cZBZECFFQC8HP+smFoFoEiht8hG3v/U4pzt/NasZZjCbycPIIGmJwD0prb/qIiFPyBHZQp1nUKucUTEdpizZr/AfN8yhJPyFyh6D0=
+	t=1789326674; cv=none; b=lW1Wq0Li2lUJP1wykOyM2x9a9HV9t67zMxM5ysQnyMWo4HaZ1n1GSPfb1CTAD0xRrp5nDya+vrfZIRCQGhd26tyuJq7jqBb6IsnQrmvXR8yZB6YPN9sEvES4arVSBgKZg2n0PsL20+jLK+mEhOmPW1QWNiN/Sg5UFPGksgp48fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789326672; c=relaxed/simple;
-	bh=lk1lDUarZailUi2NthTvfiATMVC9KYiqHH/KfhoPitM=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=OayelDj2nY1JIRzMjciGATTWWG6+BoX+8dRY+QjqEncpAYsKRg106uvBQkKqQ9U2CGsunLVmYHajWs0PUQ3r7ER5Y4O3oHuYYA3YIhAKgwiP7ys4ys9NBsf+Qfn3d4ML8PgUE68vaOcgOR0FasbxE7SZzIFvLHt2AEQOTPGg0Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ItItTH+q; arc=none smtp.client-ip=209.85.222.177
+	s=arc-20240116; t=1789326674; c=relaxed/simple;
+	bh=DBKkuQWS5O+l80UPN9khzbMcMCl2R0hBZsorume1d2M=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=kzKUVh/62W+vmIyfjH6i3MzvjB+PaTRb9n7EpsgXTpeZTBzG0eO/Go3YBx7d2suEGQN1KEC6cTSBeBQim8aP1vL6ymO3iEqoGA9Ih5AxZiL96yT9v9hYiVLYSaIPcxJaS2V+mqSk7zlwK0IKT6JPGWYSAEe9OCASYR53lOf+dVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=exu2FFio; arc=none smtp.client-ip=74.125.230.204
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ItItTH+q"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-93a1118fbb8so100733885a.2
-        for <git@vger.kernel.org>; Sun, 13 Sep 2026 12:11:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="exu2FFio"
+Received: by mail-qk2-f12.google.com with SMTP id af79cd13be357-93910ca5aa7so164171385a.1
+        for <git@vger.kernel.org>; Sun, 13 Sep 2026 12:11:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789326670; x=1789931470; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789326671; x=1789931471; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=SD+gj3+pNE14j+roAhwloPdQ1CnMPdigWG6yfJs3wu4=;
-        b=ItItTH+qwQQRIcI/KOMEqZq7S03MqnygEG4TAyKeFw8NIqf/t+TCYOlpkkJsk8f4wq
-         Le6cyOv2ul1i3Fi43uP0FzrY6U8r3zLYTNvWrwUbBrgfGsxhN8UsB6vx4bDhLOInMnqQ
-         7Z6snW1Ptfm73m27Z5W/q6utZj2+TNHqysgeMdZoW+oSufj/9idqwHGPbiLt3zbHk2OK
-         CUBH7kCiHSmazsYO3h3Svw7keqCTk7RSduG8du1fOCTOo1LtDINjNcW9Sq6WYZq9xQrm
-         R/ad2bFrZI1sUX2NVHZQashVPubG+ZHW6phBnZsaJzNFfSSVUkBqeWKqWlbyhp4efV6a
-         sdrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789326670; x=1789931470;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=SD+gj3+pNE14j+roAhwloPdQ1CnMPdigWG6yfJs3wu4=;
-        b=otGAZh2nCGbZ8zwXYJ2Y9VHZ+eyzDdnBBrrgJo/w7lxU2Mui9huabejkuE4yjp/SFj
-         W+O9n5DEFLmZrDH0CmJ6pm8f2fP7SV6H95TEDn+im80rH0d9ERfZXdN8iYJXbDeIGMwf
-         c9oslc0ibandl6E+Gszp3djCWUpTpbI/J/fKD3v4TNPUlhQpcamy2gIyNnKaW5udwX9C
-         K/HwPQYKR7/eWl0LMB2OZhrUyuiy8qPcabihy28JRXenLf+1XfeAlHcj0LaZaLl8hVYk
-         dMQ4+6nx/Y9LregG0n86Ihx/K3juXuU3+OdMM1UORoI7bThnUsf+7sUJjngZmPeFXWgT
-         u/9A==
-X-Gm-Message-State: AFuF++mosija0MlCMp7cjYYZNZ4nb+zbAWC/jhVxSl+K+c+yIGLr9xRZ
-	6ZraSmJEsnf/Iz55/eRlc4lznluj7W6fU8vXvMdFXeqrWE7pVHxrczZxCAoT2g==
-X-Gm-Gg: AYBFou138VZiV1R1n1RkpXCDL44nvmHiBq+/3LOt4qB3Tl3Fe9IQ9ztNandQNazUVQ4
-	tF0AxaHil1SZ7dVH0U6cSxN0HevRtLuy4wy6owqnkHAxpPJyMjA0ratDiBOTwCKi4ef6CwqDopi
-	nrMtihkWZJaOpg1bbnpqwq6pqt/oG+ci39np+7IqMBXet5DUS0qXxluE2A3FIn8hEzhUNqRKvXf
-	EiyIN1aK/XEDcKRgzDmoeDIzKIjLmCo2wM7JJWkWTHIYgXkrhKgSeHOVsKMGJdifDslf6zNeCKj
-	OkjLx7zb7dG27MpPP/4F8u+ikU2N1AN8wgXd+/M92ol+zQs4DzrzPMts7WpXoBJylGlS34F6E60
-	S6VTWaWqFjhH5R3bJi/0PhJPKpy7THlalx3F+lRfpR7XFNYUhUrst16LaKvefjt8M822m1UJKcV
-	un6fkq0AcCY3a7+DCnEowatPow/BbI91mFrdNMw4T54/EacLDl1kW/9pbah1R5l2KDHD4WlaXU8
-	ko=
-X-Received: by 2002:a05:620a:19a4:b0:939:6dea:4f1a with SMTP id af79cd13be357-939ea2af38amr1839450985a.48.1789326669808;
-        Sun, 13 Sep 2026 12:11:09 -0700 (PDT)
+        bh=6zbCi46d8jVC2g+YWvoI1JaOS7GvydR1ESNAGFDg6kI=;
+        b=exu2FFioE5vNaUbSR7jUoXuqZTgMLMj13+nTWkH3xkVNwAmwKEBZUeXnBW/aEEN4kR
+         Qj1UBDWGKlDikSD9/n6D60eAqwJMQVWYxEOgigTHP/bOL0Jg0FJD1md/kh80dNxA5688
+         dle8jumiyhy2EWilKa2fUcJLui6fv1iYJv96G9zUXPFtOdb8y/dptFOrgYvmfNjvWJ0e
+         76xNI7n6h8W9eSKPTlNynOHUkG4KJqD2RjouHgpD5sz9GuHtkGx6l18KQiI7qr0ORBJz
+         u7MlMjSBF9F7q+ycbcXNCs7CyaATwWor4qiQU6ylPmkFVKewlOJ1mwT7LdKoMBU3xmnC
+         ov+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789326671; x=1789931471;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=6zbCi46d8jVC2g+YWvoI1JaOS7GvydR1ESNAGFDg6kI=;
+        b=T0y2mF1TgHftoWFF7sZRj8+Hj/6pAC7DQOIJ9DsdtOV+jJ0uEIZR77LB8SpICljity
+         Tqs8SFECaTL0CX2wRFiw6XsqnnZWsme8ZeF6CN01FPeMDc1udYORLi5V/774ylYvDpUM
+         GV4dtwy1hCRXzSGJnDCDo+2cIEZT6FaYozVIO45VF5O5mA3f5q4naWC1c6fTqtFUwSwX
+         xX0zhsQnVEa/aF5jYPtotVDriFKmHMIr7pDAx+yZtd1s4vkdIjm1vBeBaiVnJoK81sW8
+         AC66X13JPX+p5f6IxUt1ziiF55h+9lmDvEfV+X+GbQJPR7SpESC7YuU2aWwyVoYNmlFF
+         PNdA==
+X-Gm-Message-State: AFuF++lUAckvq7TUQ8/3Sll1C8Bsnsz7tlslsgExQupI/aiv8pSu28Md
+	9sZHg/CpaniSmHjvp+ueHJb6lhgcIXJImOWpaO6dvZhKiNtl83/zfTa7bd0G4w==
+X-Gm-Gg: AYBFou2IIu5nn2azugm0ohM2BHtW6bPG4I3dc9+DTeoeoiY+KRe4LbnyMkPayS+3LIL
+	JNDfjmJMA3kW83ygLC8bD+5wHXFLl6FmUZkL6f4XfKP1TubJkbSxlbPNaUcAjXQIk1KjplL6BJE
+	6B8jM+oGmE+pvx7tQovE55TQHHoCkCUO1MSYzrFEXCRdRyokbR3dm5wLdi1/kSOOrWGZnhPq5UK
+	NF4mK4XyvHZ3InjFp9Mgru2X6uTI4HANdJRUgDrr/0hxAo1Sm/hy9BOMlZF+zKIKeoA578mkhlB
+	9z7+FItPTYTmMFC0pezisnMoz20mUZbzRvNEQcJ8qgb/vzxqwnDIPIzxkJW5YsPvaz5pkX2uVMD
+	U9N96CaIjpXXy5dwGRCxiPsoQV9IqEDKs04hiCC8o+qgZV2o9ISmX8VsVJfW2je2CiOm89Avte/
+	LuELJAhQcj8OWoCjXDVs1ty0aTBhaChoWt4T4uC9xP5/SJn1MW5gpqCIwMzXJQ2O+9HfDQSwMzs
+	8c=
+X-Received: by 2002:a05:620a:a405:10b0:93a:1489:c57d with SMTP id af79cd13be357-93a1489d45dmr465212685a.35.1789326671509;
+        Sun, 13 Sep 2026 12:11:11 -0700 (PDT)
 Received: from [127.0.0.1] ([172.214.44.146])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-939e80bc225sm787373385a.36.2026.09.13.12.11.07
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-939e8047a4dsm809948985a.23.2026.09.13.12.11.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Sep 2026 12:11:08 -0700 (PDT)
-Message-Id: <pull.2227.git.1789326667.gitgitgadget@gmail.com>
+        Sun, 13 Sep 2026 12:11:11 -0700 (PDT)
+Message-Id: <516441dd13710d5ea016fe1905e702314933e89a.1789326667.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2227.git.1789326667.gitgitgadget@gmail.com>
+References: <pull.2227.git.1789326667.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 13 Sep 2026 19:11:05 +0000
-Subject: [PATCH 0/2] mingw: fix perl related test failures
+Date: Sun, 13 Sep 2026 19:11:06 +0000
+Subject: [PATCH 1/2] t9700: accommodate for MSYS2 Perl reporting as `cygwin`
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,28 +75,46 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-For performance reasons (and also because we retired support for git svn in
-Git for Windows), Perl-related tests are skipped from the CI builds. As can
-be expected, this caused some bit-rot.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-While this is not exactly -rc1 material, in preparing for Git for Windows
-v2.56.0-rc0 I did run the entire test suite on Windows/ARM64 and these were
-the only two bugs that needed fixing.
+As of a year or two ago, there is this push to align MSYS2 more closely
+with Cygwin, so as to benefit from a closer collaboration. Part of that
+is that the triplet `x86_64-pc-cygwin` is used nowadays, whereas it had
+been `x86_64-pc-msys` previously. Likewise, Perl now reports `$^O` as
+`cygwin` instead of `msys`.
 
-Johannes Schindelin (2):
-  t9700: accommodate for MSYS2 Perl reporting as `cygwin`
-  t9129: skip UTF-8 tests on Windows
+The Perl module test used `msys` as tell-tale when to accommodate for a
+native Windows version of `git.exe` which would report absolute
+_Windows_ paths rather than those pseudo-Unix paths. We cannot use that
+tell-tale anymore, and we also cannot adjust it to `cygwin` because that
+would break in Cygwin (where `git.exe` reports absolute pseudo-Unix
+paths).
 
- t/t9129-git-svn-i18n-commitencoding.sh | 4 ++--
- t/t9700/test.pl                        | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+Let's use the environment variable `MSYSTEM` instead (being mindful that
+the `MSYSTEM=MSYS` variant would _also_ reflect a setup where `git.exe`
+won't report absolute _Windows_ paths).
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t9700/test.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-base-commit: b8242b093d9e941a34460d715e3ce616a34ac3fe
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2227%2Fdscho%2Ffix-perl-related-test-failures-on-windows-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2227/dscho/fix-perl-related-test-failures-on-windows-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2227
+diff --git a/t/t9700/test.pl b/t/t9700/test.pl
+index f83e6169e2..43a6dc266e 100755
+--- a/t/t9700/test.pl
++++ b/t/t9700/test.pl
+@@ -118,7 +118,7 @@ unlink $tmpfile;
+ 
+ # paths
+ my $abs_git_dir = $abs_repo_dir . "/.git";
+-if ($^O eq 'msys') {
++if (defined $ENV{MSYSTEM} && $ENV{MSYSTEM} ne 'MSYS') {
+   $abs_git_dir = `cygpath -am "$abs_repo_dir/.git"`;
+   $abs_git_dir =~ s/\r?\n?$//;
+ }
 -- 
 gitgitgadget
+
