@@ -1,70 +1,70 @@
-Received: from mail-yx2-f13.google.com (mail-yx2-f13.google.com [74.125.224.141])
+Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E1638D6A2
-	for <git@vger.kernel.org>; Sun, 13 Sep 2026 20:26:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883473F327B
+	for <git@vger.kernel.org>; Sun, 13 Sep 2026 20:26:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789331198; cv=none; b=qC7tGl6yfoRP96bTIyxKivHDbaLFrlbrmfrGxa8Uvm6Rco7ckWPdid7TB96uSWWQj95reD+GxIVz/dGsDNagRNpkkMcd+Q4j4dDHAOvfVD/sHUEOAUVspYRyuee8QJXDe93Vh5aRwD2Fn/+Bsj6RVbw2vsePOfCf9P9keLQA7cg=
+	t=1789331198; cv=none; b=DOx5AxBOG3Q2bNr6n+wQsLAPXsEjSDlvZbPhsApzM1cxRIjifhUY8Sc8+46n2zJyb1gAy7Srb5tQTApgw2anwJAOypv/iTEuLHQYqxF5Q2OUIjsZN4PqJ7UYDviUtkrginiXP9sj3nLPgf6Vidl6B+dpsWDuwLW+RLsXV7TAFkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789331198; c=relaxed/simple;
-	bh=56Efp5+Dw4/sFn7J4dQTe0PGgj9YgXOWR8LNq583OVs=;
+	bh=of93voeNMq9BZLIbir606XJYMW1qFaIOWCB2B2fwhj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cZ0Rch5AFsT1I3mMV115a8vnxLYeeyiXjmMPPgZBAhdkyu/psPshMlWPRiMl9+C1MISOpwvKi32jdTo+skmbnnfbAkFob/NvZS0XXSrv0rRboaxafYG/BO96pAB2go8/1B8cTKN2ilPwukUcLa3ES1eqEJXMd5k3FigzIIEmW7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TnA2HYo8; arc=none smtp.client-ip=74.125.224.141
+	 MIME-Version; b=HjBOyrbiHPp4d+Hf7n4ZZAH01iPFv1WAtYrID3zf8Cq7Xr4mq8b7Bj1HHHZs8GStJ11qO4cW7itPHyYwayRJS/TiYDsIBM0Vo+IlXyAtkqlpfwRojYxkHRhLCUzvS0WhyOv91FbdotkysogDpir7S2/jSGJJHquILjWnkos+/T8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NUZ1coKu; arc=none smtp.client-ip=74.125.224.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TnA2HYo8"
-Received: by mail-yx2-f13.google.com with SMTP id 956f58d0204a3-66e4ab20a32so1034819d50.2
-        for <git@vger.kernel.org>; Sun, 13 Sep 2026 13:26:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NUZ1coKu"
+Received: by mail-yx2-f12.google.com with SMTP id 00721157ae682-85d46e4cdcaso10109997b3.3
+        for <git@vger.kernel.org>; Sun, 13 Sep 2026 13:26:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20251104; t=1789331196; x=1789935996; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=W3vMGi6Kfl7IKSaJFcF8z47ZTv3cIrUQeufWU2YTq0o=;
-        b=TnA2HYo8s1ye0zeOj3VfzCneChy6KiSixLvSskk8A4ghU5pVJxxF4YCh/hqtfeZ40q
-         Tt9mcJLGw/w2KCpCMldB5QK1VlqmqsU6NBknucHWQlxj0VwBlruZABEI0aRugQDBj6Co
-         8tT8n0JQVTbTXuQgly4I6dEgHMPUnRSDhDewn6j+twOwfJprF0bLhgPiB40OXfDLp4aC
-         xe2gvkeH6TKZw7crvHXrsKn6lXHOlKGB/844Vao1xSOygWGrVKIeCuqMtn4C/1kAx8K4
-         Vxz8DLlM16Y0iCAKPxyETxS1YvCR6SSaB7wUinyUTTZv7TbfGpXKfjPCbyta4pdoXSjk
-         VBbQ==
+        bh=7aqns7bstEKF/9L6/SUUIxXvje1ZLiycovjty6eGDmo=;
+        b=NUZ1coKuIZ1zqc91mXdjd2L5vSm1apjjT9pxHGRA0yvxpNfnrNF8rxpzUHfvRE2fPM
+         E4bIQcaEPOVSc4Efu81OROv1cKlL+L//9E7he/lAtM2kE5Br6RY5r/xHyL8D2uuPjYz8
+         08hwW2mnnuUyZgK64M/Az/1F8DNAEP7p94fOszoSyxILD/V0LrZ8GN1GRXOHRgDPpf8U
+         ArkxqQYi4bZrkYRAWR0MKyqR/o8MF2CquvFjIGBbvdCQ142AgQ7zrnKb9h9ioyVKpHuC
+         yf6LVKLfZWcc8kKfvxtpe1b06tP0veyAlQ+HZDjt29el4eW87FXgGq6iGvIxSlruJn3O
+         xkZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20251104; t=1789331196; x=1789935996;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=W3vMGi6Kfl7IKSaJFcF8z47ZTv3cIrUQeufWU2YTq0o=;
-        b=XE8Q5uomqbUmfFlVGJfzdhPdpJtOUzR3uBb4RHyCS3xFDRd0mLOt0+XsezMX1JsAB3
-         cWcsC90TXtg10ywFE7PRW8RJgnr/IHehhg8L6KGoLx8mgG18eXTDU9E/3wA0cszhcGzq
-         tU6Iysw2LO0u3XDw2eEYbET2SAhtMGLbyDXFhbyR5Y8AqNqNmrzmuGgsiIIQpRaH9x8h
-         FGoxcrt+ZtSfK7bT1/2EmuZXGn6+8306BMnacD/2oe8ZGq96QKm65Y5IW3Xgd7JJCy4R
-         ap6npC7HnAX8D1nJboLVSwhbfOHb6mz27jkXIpDLzp8KpUIgT9bSpiRgh5mtiR8Xbmo5
-         nZXg==
-X-Gm-Message-State: AFuF++lyUWjOxEg1rAtYdpd4I4tueHzvM0fcRdy4gZixxiY/bJJFzZD0
-	q8ERXI+2jln1ZlpeZ68KRPA6DvxLjFug/7jARKTibfUQcWqIDBntpbAi1AVQt0lL
-X-Gm-Gg: AYBFou2PTU/+PII+PDPWfN0xl4gfzBiQf/JWRwKxfS9wEPvEF2bBuDBr0uzUx/0ToYe
-	ZTsK9rehtpx3XcCTJbuVg3X1pv4EU87eLlR0eYcOCSN4NFx74/C3AJZXFT+UZxoYHkAUXHwBcff
-	v83OYoFDty/m32GS2gXj9B8Qvme3ZggqXxYbXBAU/gtdb/n+YraHCKP2TNnZq1qqZuC1zvKdf4B
-	huTW7MbtUkZ6jInnloRxgSOZRrG+iduAW0P/oPqOqJ9qBGzt9nhOlfqwxVW5jWenD2F0FsWW33a
-	VqktSJ6SlaGKlidKXuhEC0rKOfAfvNdOv9ZG3yj5VHi7FF5K9LQSxROFqfJz7zi5ybcNWRbt1AS
-	5TBSolgOnwnsCVcN9ebY6QkyjE1rPN29gOmGUCgFJo0eBM8sVh3qJLOiZsnJhzC9QUr6Fqw4V80
-	cJ9fQG3sylvVtTuuMH+DMEbNl66sUzhkAmZTC3zf7fyF4Sw5qkvqrL+Rgz80LZIob0ugOg/zz9H
-	wDUz1V7HmBTfkZKm/Sc1+4OXOeWNuarwevl6aljwt3pfnAZsVvUNA==
-X-Received: by 2002:a05:690e:1303:b0:671:33f6:721e with SMTP id 956f58d0204a3-67135aa5a9cmr1592296d50.54.1789331195637;
-        Sun, 13 Sep 2026 13:26:35 -0700 (PDT)
+        bh=7aqns7bstEKF/9L6/SUUIxXvje1ZLiycovjty6eGDmo=;
+        b=mDkB5UsFeKiDlRa2c3a5JmU4H9E7prJxsm3458NphMXi0vRI+teMECWEfleQjO4roa
+         QMXL8HZrKUCYQWklkXaBYAwkM/cF2xIBFFTvcp8OxiWgM/06FvF7Nox8wG/T5BDIjkdf
+         cTJWmvAi3Dl9qAZB5mUdUnUbNyWbf0Db0p1DO4lVmszBj2hDkVu2UUYTN4MLgNbUW/tv
+         vRIljVoVeyKJqwCy0QolBKZqySMI/rZGeaabACNVhodvwwmyBC0e8yGOD4dKj9ZOZBkj
+         WliG5d3U7Ml+QXSxs9cOW1NIbwKCUmsNXQDMG4XupzaygU15uw6g1IxERmhR5ved8+tR
+         EBcA==
+X-Gm-Message-State: AFuF++l8ZXOjd/ZQ2+KCmqXQ8gTCAli7n+kyHH7zjCGsawI0wbEfD4Ko
+	7OCdaTuhnlBDhG5VB/xrTKPqm1STkr/OKjoq7AKn7FONLAkY2twLwG3i/XH3W+7v
+X-Gm-Gg: AYBFou0ydlF7Ha6F4q2tKo7FJ+19xQUIpFwBJrNAw15OQ52xH4NNMfVhoPQ4Hb3P9WI
+	jo66/s7pXD5qMMlFL/aYQ1e1hrFbDuAv4/c/khhkimF2Z7Nvv64mXYq4pgNLxc0ovA6dihEwiFm
+	oO/Wk+MiSpBGXMKoQRE8zbGv2GVzMeWstocdH7E8j87xUMBa0ZgP2Va66/STE3K2RaKY7RYqH/2
+	mwj+qUv42bWNuDxJoCTLbVlluXfgU/cUG6l6egjwPygDdxLEKEXZq+GPDV77JpeJjC55LdwaLel
+	8o7Sjp1qiUWDKfnNazAoFRL21+7q5MUCAv4YKML7hIFOd5z1j2LgGpf6ANezb/VnKHT9bUkguxg
+	hEQwPitree/h3hhqIDLALVBDSaBMkTOo9+qcPhnvSYuVHl0cXc8zrTq7L1HGEicBHeL0cfaYRXo
+	1R/DnVrOv0tMeDOrvg3k6K5rTBcpSgQdW66QJ3xtYeKmchv4PTrbtZJHne8PBYhcYv3BnFI2KtA
+	sZhaklla2uv1xQSeM4iln76WHJgpj8zadkjY9pvqXs5
+X-Received: by 2002:a05:690c:e1db:10b0:87a:db19:ab5e with SMTP id 00721157ae682-884afc193ddmr39418887b3.10.1789331196413;
+        Sun, 13 Sep 2026 13:26:36 -0700 (PDT)
 Received: from jtobler--20250820-SHC54 ([12.86.123.90])
         by smtp.gmail.com with ESMTPSA id 00721157ae682-8847db4476bsm30317047b3.5.2026.09.13.13.26.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Sep 2026 13:26:35 -0700 (PDT)
+        Sun, 13 Sep 2026 13:26:36 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 1/2] object-file: lift ODB reprepare out of packfile flush
-Date: Sun, 13 Sep 2026 15:26:21 -0500
-Message-ID: <cf14416f224f48475dfc9f79d8ec62756b9fdedf.1789328612.git.jltobler@gmail.com>
+Subject: [PATCH 2/2] object-file: flush transaction packfile before migrating objects
+Date: Sun, 13 Sep 2026 15:26:22 -0500
+Message-ID: <18a1798d958d7f089614ec588346096c10b0666a.1789328612.git.jltobler@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1789328612.git.jltobler@gmail.com>
 References: <cover.1789328612.git.jltobler@gmail.com>
@@ -76,62 +76,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When flushing a packfile via `flush_packfile_transaction()`,
-`odb_reprepare()` is invoked so the written packfile becomes visible in
-the current process. In a subsequent commit, repreparing the ODB is
-slightly deferred when committing a "files" ODB transaction.
+A "files" ODB transaction creates a temporary directory to stage newly
+written objects in when configured to batch fsync loose objects. Once
+the temporary directory is created, it is configured as the primary ODB
+and all object are written to it accordingly. This also includes
+packfiles containing blobs that exceed `core.bigFileThreshold` written
+via `odb_transaction_files_write_object_stream()`.
 
-Lift ODB reprepare out of `flush_packfile_transaction()` and instead
-require callers to explicitly invoke `odb_reprepare()` if required.
+If a "large" blob packfile is written to the ODB transaction temporary
+directory after other loose objects, the ODB transaction fails to commit
+as a result of the temporary directory being migrated prior to the
+packfile being flushed. Fix this bug by always flushing the packfile
+transaction before objects are migrated to the main ODB.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- object-file.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ object-file.c    |  4 ++--
+ t/t1050-large.sh | 16 ++++++++++++++++
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index a4cbf8b081df..0f123b79fad1 100644
+index 0f123b79fad1..210984f82532 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -857,8 +857,6 @@ static void flush_packfile_transaction(struct odb_transaction_files *transaction
- 	memset(state, 0, sizeof(*state));
- 
- 	strbuf_release(&packname);
--	/* Make objects we just wrote available to ourselves */
--	odb_reprepare(repo->objects);
- }
- 
- /*
-@@ -909,8 +907,10 @@ static int odb_transaction_files_write_object_stream(struct odb_transaction *bas
- 	 * to zlib compression and is sufficient for this check.
- 	 */
- 	if (state->nr_written && pack_size_limit_cfg &&
--	    pack_size_limit_cfg < state->offset + stream->size)
-+	    pack_size_limit_cfg < state->offset + stream->size) {
- 		flush_packfile_transaction(transaction);
-+		odb_reprepare(transaction->base.source->odb);
-+	}
- 
- 	CALLOC_ARRAY(idx, 1);
- 	prepare_packfile_transaction(transaction);
-@@ -1260,6 +1260,7 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
- {
- 	struct odb_transaction_files *transaction =
+@@ -1262,6 +1262,8 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
  		container_of(base, struct odb_transaction_files, base);
-+	int have_packfile = !!transaction->packfile.f;
+ 	int have_packfile = !!transaction->packfile.f;
  
++	flush_packfile_transaction(transaction);
++
  	if (transaction->objdir) {
  		struct strbuf temp_path = STRBUF_INIT;
-@@ -1293,6 +1294,9 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
+ 		struct tempfile *temp;
+@@ -1292,8 +1294,6 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
+ 		transaction->objdir = NULL;
+ 	}
  
- 	flush_packfile_transaction(transaction);
+-	flush_packfile_transaction(transaction);
+-
+ 	if (have_packfile)
+ 		odb_reprepare(transaction->base.source->odb);
  
-+	if (have_packfile)
-+		odb_reprepare(transaction->base.source->odb);
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index d295c265c75c..fb83c8fba619 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -87,6 +87,22 @@ test_expect_success 'add a large file or two' '
+ 	test $count = 1
+ '
+ 
++test_expect_success 'add large file with loose object in batch fsync' '
++	test_when_finished "rm -rf batch" &&
++	git init batch &&
 +
- 	return 0;
- }
- 
++	git -C batch config core.bigFileThreshold 5 &&
++	echo foo >batch/1-small &&
++	echo foobar >batch/2-large &&
++
++	git -C batch -c core.fsync=loose-object -c core.fsyncMethod=batch \
++		add 1-small 2-large &&
++
++	# Neither object may be left behind in a temporary location.
++	git -C batch cat-file -e :1-small &&
++	git -C batch cat-file -e :2-large
++'
++
+ test_expect_success 'checkout a large file' '
+ 	large1=$(git rev-parse :large1) &&
+ 	git update-index --add --cacheinfo 100644 $large1 another &&
 -- 
 2.55.0
 
