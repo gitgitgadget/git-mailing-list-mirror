@@ -1,355 +1,347 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66EF93A7593
-	for <git@vger.kernel.org>; Mon, 14 Sep 2026 20:52:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789419141; cv=pass; b=PwNMaEtJrbuua2nBPWV7l+xtCsapoDt+fQWu+UBgO0QvxTvkCJ5rhVuMRJtUC0z/nHR5PgZRwKErvagkU1EP9BWM6SMhGEpBjuTH/LiGMmT5HkZ0Zaek4zhj8eKNBsJBE5A25DdewITN00V7JKFMlTcSEaYgOxGgYrVIF5p2FYA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789419141; c=relaxed/simple;
-	bh=cUG+b+m92M+pxLPvjsf3i+K1xYQaIljlY7M+jTNQjKg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WVxY9UAZ4tnsfN7td3b491uQ2j1DOBiJzVlX8jZH/noLiDggdYh4pHY/GALJ1t81N+8502Ek0gRIVQxjT46C8wEbtgCiKgDV8UkMFmff/yP0nqkFm6S1gUzuWj4f69gpFOnDA6hd/B7yT2FJ5oQ9OCl4rvtZG5Ma9So3pvajwqI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZqVMAnEc; arc=pass smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE6C39280A
+	for <git@vger.kernel.org>; Mon, 14 Sep 2026 22:01:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789423315; cv=none; b=gp184EjLE1TXApPkRIg6hDVLJcNW1v50dn2FRC5o0sJzGYfnjUPQwRbIuh+G75pNZiThYhKpAEla1YCyOLKLh13wa/7sy85MvTL8jdsFWXxLYfilFHWa+1EyVeHhNdAMe1MPWbsaPMdpFXf1qTG6kQ97voHzm+nsl2lAqBDbatw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789423315; c=relaxed/simple;
+	bh=gD6+atvNYqbnxYBELACwmt+qMlAcjEycn3zsgPNTb4I=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gjNKl9KEvOT8S5Z6gssyFxr5xXoMvuoM/EmM/e3G3jTNQYFkG+3yOhY+76wURZTKMfIy1v+w7epYd03IdczUsh7WT0qwu0tcvI69yjdDa7kYm8LsCPn1f0PKQg90qV/0whdD3kgUwPk3hOhvRU/zUvRT65ZZ/b+WfBKWYGKc9nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j8ry4IPM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F93TIxKx; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZqVMAnEc"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2dd020a2e44so35244695ad.1
-        for <git@vger.kernel.org>; Mon, 14 Sep 2026 13:52:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789419139; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YAix7Tvx1W67uWWDP5VBWkOZdj+FiUYwWNthcXip11MvzFK1cHbcSvqdBzLQnwVDT/
-         D0a6KgYzj7FDCgGtb6Mh3ippHAGHLS5fFtRP23YKxnJ2Wzry1iGubyBWZxxVdHxS8vUX
-         oRbGOmZq96pAXt5NoyLfcBTTJje5Z7vC8STtiPqIaTMjj/iSxdorlfCO0XeAXA5B4pev
-         GfHoxw/xwk2U4rkCkECDNH9RRdUONFoGyFlr+MdwpdsBQZLJjd930yIMGiAbf/LeLU+e
-         E47gUgN4XWEn6vN/LAm90CCE954oJ6JfOcWpGbFKRnMNUSFhPyNewo9bqAlRNozawLFl
-         1oAA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=jamIKpUchTvTEBamMVX0xuoSuugiUNDUusi33LH9Sqc=;
-        fh=7SnmKOQODkq4e20rl3LLSfm6mhdBKxnqqO99/bzjX3U=;
-        b=d7MBl65/RYzNH6+gVHCgea5MZ8qobMi5iw6Khi/OrsUjeDO6xwVhkO90WrdO3FOSjK
-         HXO2bJGgQS9TBcyg8gRIx15osFk8oQShr6OveXGuvnIMXYXkAWHYPhS+ZSG5vwh8TY3o
-         KJ3rq7o7pXkaHdlb+QftZoqUxtp05I2DYe+X7FbewYZDwfTa8svGzqa15FbQ79pUB0yN
-         vfdGSKvQhrMMQUap6lYFSgqgVDEjVr9L7WEJOHRHvnMWL8xIBFykMHjBUXS7egYtXkiK
-         pbzVYTKCYhHMVYdutBi5KJeKEaIw6sgDGZYm+4K/UwFyZtAwL/KSy1CMyoeqWSZSRe/R
-         nx2g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789419139; x=1790023939; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=jamIKpUchTvTEBamMVX0xuoSuugiUNDUusi33LH9Sqc=;
-        b=ZqVMAnEcwY8d/Cd+mlCjEPyf6kApwARbyq6w9m69aK5bV4vrhOoxSe1nCfLuSSsp/f
-         ActpV4eTbQUdVPvp8yD94+/GK9Giwk1NteeCiFVGJLfPduA5iE8NTO9AaSU4LyKtdVe4
-         JdOOVO6s1yU6W6mxleJi5rd41c8g91UIoK2LqC6nliKyuCjcQM9iElahC7sBX+jX5Dba
-         gYgsz42IOGU0BtWPLcohPqr1eXVGqnzOMjKmx7++mu9eJRoQ27woJC5rG7AhYLJ8RInJ
-         GZ4o2/64wC3q7QADT70SAGxqPotLmzDUboWSkcXslRvi4F4gcBiHQ5JYvpPq0To7MQy4
-         wnPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789419139; x=1790023939;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=jamIKpUchTvTEBamMVX0xuoSuugiUNDUusi33LH9Sqc=;
-        b=vmqZI+MFac0iMnmY4pUJczPBubYw/9ijqT0JkaTuxRcxq5tu+5omx5IDM5SqMk2cYP
-         pvhc12igy3fjPTCkqOy1j1W/rKJCFw+OUxJyAYA9ioYg+qdP1zWTcGiNTmxzamrAzcJs
-         IuNkSVT5s4LXegewvXB0fdmeiB53gdUvnqAmt60Qr3P6FuAKbGaGn2PMJwAGIBL4Uqmv
-         JR0UfCeuwwF1IOd2EeA8k7Dcm/dKiiPahEoFXvF2vOxdmeKgNRpNn+lJIpBQNzt/H3No
-         2qcFuwgZPRsztVmJ5nv1aSbCyoFTYWbqk19+ACdm51CJH3i/+a/HFP/uDQKN+UxlbmUO
-         UABQ==
-X-Gm-Message-State: AFuF++nsY8Wyn3ExC5kQPmPSa3lBfU+oNMO2S3LrEcsJHZjJ6z0IMcuf
-	JFwBLv2TLp9HM+bHqCfmhBBT/MjPJTY6edBJeLtyRf//qihUhwX/yUcQ3KwdCv1indO29QwHOhP
-	Laocm6uKsfHKGD5sE0Pa0IhdZm54P3bU=
-X-Gm-Gg: AYBFou0bq93dbTiCLKeMf0A81j1/OCM6qZ52MWdkCM4JD+yLD49iurgvOnBsqndyZfg
-	oAgoAEGIMM6wMg/qki65gRCMpNni3sJp73uxLU0V6KnRydeNIY+XnND7BgVlVV4Jb8p7JbNpd4L
-	GYk1nduPvvAj2CZixsIMYMFxtVz+jaEXvQKmW8ggtS5werF0mg82swma4afxjmeNj8hjyLFLjCk
-	+28/LrZ69uzmxw2yhXbD8kGrLJUEWreroQyQW1WekYCaqdCVbxIv52zWfU/IUS1olHrlDxVpyWi
-	6yvWwVQ9DaNMpYamuIqwys0N2Gv4wxLuy712Y8FuW88tzEhUM/w+WMzi0RxatNv3q5HCcsSNICp
-	BoiCvqerNK8t4Wu/lz6N1jXnm4FwNVwZVN2njmEWmEiR2uVP9q8n3c71M3Kd2PvNZvauQK1OW+N
-	2vUEqpg1c=
-X-Received: by 2002:a17:903:458f:b0:2d8:d4ce:9f32 with SMTP id
- d9443c01a7336-2dd6c70a474mr74715205ad.16.1789419136355; Mon, 14 Sep 2026
- 13:52:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j8ry4IPM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F93TIxKx"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 00AB17A0088;
+	Mon, 14 Sep 2026 18:01:51 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Mon, 14 Sep 2026 18:01:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1789423311; x=1789509711; bh=tNjJhDxvz8
+	GUs532OghpXtz/iQSq5CWIYSeDcAtBjEY=; b=j8ry4IPMiTR6dXWCeuga19H77+
+	Zajv2dVG+RkECZUkw/i/hgB5shcIECLCsOg4zSPHXYCswHcUf3WpJBzuzuykbG87
+	+5Jg6DBSqCPzSJSn2ek4pVtrraSvttsBgTmuwRnTncunanvto3N1oXXzAQYdKJyb
+	iMamrva5Q3A8+HbcwPSPc3JPSMsijKEzhr+zEXvo0vK5/X5xGUtTUustI8mVT+PL
+	chUyo8t4vvTOnU7Nymf3Vjc6STgKCZ3SNhw30NDSO6OX0U27dW0/coPPjhjoA6ni
+	yFyFFLRrSnlnC0IYoqztrbfugPOJFSWlbRu+yGWGVow1F2jIxJRVBzH8iwTw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789423311; x=1789509711; bh=tNjJhDxvz8GUs532OghpXtz/iQSq5CWIYSe
+	DcAtBjEY=; b=F93TIxKxslVYaRcdlmzAwFD5olYROlLOc6opDLsDMFR3vVX5Gux
+	+FbAZhYr3Oc8tNT/8sJKGKm0r7/sbwtJSaZT9HSz7wZmx2Qn5Z5iX3Vq28yvlOcn
+	/SA5fv/EpSlcciKDcBEeDga9/2K8Gqm1TcJ8/cyLPx6bXe7rvlLjKDCVWCBhnjZ7
+	SD2JiKyVfQ/DRCGVlJFWA2Eq32aXhQnHAgrqMPIPtvjebYP2sr+htG+G1hMvfPwE
+	qgWv2eqgmLWHzjW/en1ee3UNx4Kf0y7ZoJHsprz/oQgLPketPHfuNUvjNuTeJmtx
+	N815mcBZTQHfYPcog8xj270k1ZD5fXMateQ==
+X-ME-Sender: <xms:z26oajnwGFB0Ccmwmzi_X-4_nLLNnTR8DqggMkh_8xgU2O-Ty33sQA>
+    <xme:z26oaqi_blyQHPxIjLqfcwrbWUZYA31g46uAA0WZgTGu4JJkAsLl2ySJwyxjt1n58
+    8gasX8O4cSSsDxgBSxVdJTtx0Tm-nGxJSw0Xrw2lzGH60Mc1ooIgEs>
+X-ME-Received: <xmr:z26oajfl-4IV5DhXxVDXhxM49sbTPDQY7u2hUJ6AE2SShh1BoxIJL1_wCNlROpAfyNMjGQ1C2VgD9YwsSBI9Gld3Dsu0SC61i3R5>
+X-ME-Proxy-Cause: dmFkZTEZzxiQC6NVcaPdhmWzkY/mNWoNMbl1ljZA7l330K/I9f3lyCGfNPt48B7B5JWdAa
+    faJenfbQTs7iinTY0GnXwdLeVkjxxgcTtAePbcPb2+vOY/ST1HRCaD2YiVYg+wZCZcBWwW
+    BEIwwc0EVvwgeE9+RnUuILnA604h4SWBNXx3lMURdFoVNc+nNwmlsqMnPExQA9t6x3t3/Y
+    52VUDaN5z4xfeh1i40MKjn/sh+/G4yki7ovGMhFANPSPnuWLO4uQ6gA0g41nq34T/koE27
+    Uhz9qAK5BuDBpIXFhIwKKYgM6b/l8jZVG12xEqmJtxVKLK/GdENhqGbcwnfXorxas0j2Vc
+    ABWoGKuX82jNRYwko1WSEbs85LZK7oSv9mPYUNGgsB4RHJ6hP4LDOba4ipNCqzXzm57mJ5
+    kJCxV/ZKxNDLSpEfI5/te4cu6VD26lQ+WbGRgs9HCKy0Z92EX1JQI0Qwcf1w3dWMfNFKyt
+    TU0xD4b2tbNnZVwJwRQV8Zjtnsfb0wYDqaO7fYwYMVElWO7kBvE9oyNJG5rHAvIHhdA/Nk
+    T1w3GtyVL7MvthsOP/yp8l1XV3zg1hYSh2R0+ngkj2UZQ2+1aiYupSSYX4KW/re72n2Phb
+    UHm/dJKKWhOLz8yneELsdvutoKS6iDb2LN0JKEt4Vsdm45Buu3R8T8ug2BeQ
+X-ME-Proxy: <xmx:z26oaihy0fnImGdFEA7Q80DMlD7dr-Z6oF6W00Ntvc45jvJOaYjcYg>
+    <xmx:z26oajxaE959XqruvnRYLoZIIzdXsKf-eb_3h3eBwFZqFStt-j6CGA>
+    <xmx:z26oamNyz7fD-NYl2nGGVHoPzafu7Wu8BCtKned92kTLj-B4LWlIYA>
+    <xmx:z26oasUcZf9lZhUQwN_KeWjrTs8TLsC_8SKXc502sk-trQcmoejXXQ>
+    <xmx:z26oagiTeZYpomLNvkI_Nh4tCNvey6yZlbjGvl_8Ex074oqxgUnuMsTZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 14 Sep 2026 18:01:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Vsevolod Myalitsin <ub4nal@mail.ru>,  Jeff King <peff@peff.net>
+Cc: ben.knoble@gmail.com,  git@vger.kernel.org,  gitster@pobox.net
+Subject: Re: [PATCH v4 2/3] advice: introduce advice scoping mechanism
+In-Reply-To: <xmqqqziv4nk7.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	14 Sep 2026 12:53:28 -0700")
+References: <xmqqcxuketuz.fsf@gitster.g>
+	<20260912081246.133514-1-ub4nal@mail.ru> <xmqq8q55863e.fsf@gitster.g>
+	<20260914170034.GE32247@peff.net> <xmqqqziv4nk7.fsf@gitster.g>
+Date: Mon, 14 Sep 2026 15:01:49 -0700
+Message-ID: <xmqq33vb4hma.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260904210122.431757-1-tyler@tylercipriani.com>
- <20260914040018.76111-1-tyler@tylercipriani.com> <CALnO6CDz8QBcBojmhjgwgWzi4oUbs+V4KVQ1h0+JgN7k0v-SYQ@mail.gmail.com>
- <CAHLx=O=eH=7g=JUn5dOJgatv2xJVbQygK4C7zCA0Uv=BpzMkxQ@mail.gmail.com>
-In-Reply-To: <CAHLx=O=eH=7g=JUn5dOJgatv2xJVbQygK4C7zCA0Uv=BpzMkxQ@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 14 Sep 2026 16:52:04 -0400
-X-Gm-Features: AcwNN1X3jbRKKQ3ke1f5y7Opb841ddiPtcPmzWMPEPY7mTIphur-J55zXHVLjac
-Message-ID: <CALnO6CAaoNjGmU267j_OnMErxK=vjH-sy9hAMO-WvUFOk9_vMA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/2] push: check pushed ref for --force-if-includes
-To: Tyler Cipriani <tyler@tylercipriani.com>
-Cc: git@vger.kernel.org, Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>, 
-	Stefan Haller <lists@haller-berlin.de>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Sep 14, 2026 at 3:27=E2=80=AFPM Tyler Cipriani <tyler@tylercipriani=
-.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
-> On Mon, Sep 14, 2026 at 7:03=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.c=
-om> wrote:
-> > Hi Tyler,
->
-> Hi Ben!
->
-> > On Mon, Sep 14, 2026 at 12:00=E2=80=AFAM Tyler Cipriani <tyler@tylercip=
-riani.com> wrote:
-> > >
-> > > Changes since v3:
-> > >
-> > > - check_if_includes_upstream unconditionally resolves peer_ref with
-> > >   RESOLVE_REF_READING, now all non-branch ref pushes will be rejected
-> > >   when using --force-if-includes
-> > > - add test for --force-if-includes tag push 1/2
-> >
-> > This is intriguing and seems like a significant behavior change, let's =
-read on=E2=80=A6
->
-> It's definitely true that this is a behavior change and it'll add some
-> friction to your process. And it's also true that the current behavior
-> is failing to provide the guarantees it claims.
->
-> > > Range-diff against v3:
-> > > 1:  da27c421ed ! 1:  e7912c3fd0 push: check pushed ref for --force-if=
--includes
-> > >     @@ Commit message
-> > >     -    Find local reflog using ref->peer_ref. When using a refspec =
-like
-> > >     -    HEAD:refs/heads/main, we resolve HEAD. If HEAD is a branch, =
-use that
-> > >     -    branch's reflog.
-> > >     +    Instead, use ref->peer_ref to locate a branch with a reflog.=
- But if ref
-> > >     +    does not resolve to a branch (e.g., a detached HEAD, a tag, =
-an oid),
-> > >     +    then we reject the push. The alternative would be to use HEA=
-D's reflog,
-> > >     +    which is too broad to tell us if the history being pushed in=
-cludes the
-> > >     +    tip of the remote. We need a per-branch reflog, which means =
-that pushes
-> > >     +    of a ref that do not resolve to a branch are rejected. Rejec=
-ting the
-> > >     +    push of a ref like a detached HEAD already happens today (if=
- the
-> > >     +    same-named local branch lacks the remote tip); now the detac=
-hed HEAD and
-> > >     +    other non-branch pushes are explicitly rejected.
-> >
-> > So, we would now reject a force-push whose source is anything but a bra=
-nch (with
-> > force-if-includes, and that presumably includes push.useForceIfIncludes=
-)?
->
-> I should clarify, reject the force-push of any source not ultimately
-> resolvable to a branch; e.g., HEAD will work if resolves to a branch.
->
-> > >     ++test_expect_success '"--force-if-includes" should reject forced=
- update from tag' '
-> > >     ++  setup_src_dup_dst &&
-> > >     ++  test_when_finished "rm -fr dst src dup" &&
-> > >     ++  (
-> > >     ++          cd src &&
-> > >     ++          git fetch &&
-> > >     ++          git switch main &&
-> > >     ++          git reset --hard origin/main &&
-> > >     ++          git switch -c newbranch origin/main &&
-> > >     ++          git checkout HEAD^ &&
-> > >     ++          git tag stable &&
-> > >     ++          test_must_fail git push --force-if-includes --force-w=
-ith-lease origin stable:main
-> > >     ++  )
-> > >     ++'
-> >
-> > Which is what I think this test says.
-> >
-> > I think this would break a common thing I do at work (although this is =
-soon to
-> > be deprecated, so take my anecdote with appropriate salt; I can't claim=
- that no
-> > one else relies on it, of course):
-> >
-> > As I think I described in the message you linked, I have an alias "pf =
-=3D push
-> > --force-with-lease" and push.useForceIfIncludes=3Dtrue in config. Our t=
-eam has a
-> > "main" release branch and a "hotfix" release branch for emergencies. Wh=
-en
-> > hotfixing, we first reset the hotfix branch to the last tag to go out t=
-o our
-> > production environment, which I typically do like this:
-> >
-> >     # validate that we won't lose any interesting commits (no regressio=
-ns) with
-> >     # something like
-> >     git log --oneline --graph --boundary --cherry-mark --left-right
-> > origin/hotfix...<TAG>
-> >     # push
-> >     git pf origin <TAG>:hotfix
-> >
-> > (On a second pass before sending, I can't recall if this works as-is wh=
-en I
-> > don't have a local hotfix branch tracking origin/hotfix.)
->
-> Yes, this workflow will break. And it will not work today without a
-> local branch named "hotfix". It's broken today, insofar as this is a
-> false pass since push.useForceIfIncludes is unable to say anything
-> about whether you've integrated origin's hotfix branch into the <TAG>,
-> you're pushing so it only incidentally works.
->
-> Today, git pf is actually checking that your refs/heads/hotfix's
-> reflog has the tip of origin's refs/heads/hotfix. But it makes no
-> promises about <TAG>. That is, you could:
->
->     git checkout hotfix && git pull # This line is what makes it work tod=
-ay
->     git checkout --orphan junk
->     git commit -m --allow-empty 'Totally unrelated empty commit'
->     git tag <TAG>
->     git pf origin <TAG>:hotfix
->
-> And pf will allow that to happen since origin/hotfix's tip has been
-> integrated with your local refs/heads/hotfix, which is what it's
-> checking today.
->
-> > If I'm reading this version right, I would now have to say
-> >
-> >     git pf --no-force-if-includes origin <TAG>:hotfix
-> >
-> > or perhaps better
-> >
-> >     git pf --no-force-if-includes --force-with-lease=3Dhotfix[:origin/h=
-otfix] =E2=80=A6
-> >
-> > probably after seeing a (hopefully improved?) message after the origina=
-l
-> > command. (Do I need to disable force-if-includes in the more-specific l=
-ease
-> > command?)
->
->     git pf --force-with-lease=3Dhotfix:origin/hotfix origin <TAG>:hotfix
->
-> Should be sufficient and as I understand your process, that's what
-> you're after. The explicit --force-with-lease argument makes
-> --force-if-includes a no-op, so --no-force-if-includes should be
-> unnecessary.
+>> Yeah, I was hinting that I think suggesting --global for all advice
+>> would be fine. It's possible some particular advice would be better set
+>> within a repo, but I kind of doubt it. And if we do find one, I think it
+>> would be the exception, and then we could introduce a hint flag for that
+>> one bit of advice in the other direction. :)
 
-Thanks, I think this answers my questions=E2=80=A6
+So to conclude the topic, we would only need this?
 
-> > Now, on the one hand, enshrining existing behavior is good for backward=
-s
-> > compatibility but has earned us a bit of a reputation for not innovatin=
-g in
-> > useful ways ;) On the other, I wonder if the description of force-if-in=
-cludes
-> > allows some latitude to break with existing behavior here.
-> >
-> > The relevant docs say
-> >
-> >        --force-if-includes, --no-force-if-includes
-> >            Force an update only if the tip of the remote-tracking ref h=
-as been
-> >            integrated locally.
-> >
-> >            This option enables a check that verifies if the tip of the
-> >            remote-tracking ref is reachable from one of the "reflog" en=
-tries of
-> >            the local branch based in it for a rewrite. The check ensure=
-s that
-> >            any updates from the remote have been incorporated locally b=
-y
-> >            rejecting the forced update if that is not the case.
-> >
-> > It is unclear to me what "one of the 'reflog' entries of the local bran=
-ch based
-> > in it" means! Ignoring that, the surrounding text only talks about whet=
-her the
-> > remote-tracking ref's tip (or "updates from the remote") have been "int=
-egrated
-> > locally."
-> >
-> > So I think we *could* say that, in this case, we don't have enough info=
-rmation
-> > from "<TAG>:hotfix" to check whether "origin/hotfix" has been integrate=
-d locally
-> > or not, and we should tighten the meaning of the check. (Perhaps when
-> > "--force-with-lease=3Dhotfix" is given, though, we now have more inform=
-ation
-> > available to check---but that could be outside the scope of this series=
- if we
-> > don't mind breaking backwards compatibility now.)
->
-> From my perspective, this is similar to the detached HEAD discussion
-> from 2020[0] where "[the reflog of HEAD not attached to a branch]
-> _does_ answer a different question from what we actually asked."
->
-> [0]: <https://lore.kernel.org/git/nycvar.QRO.7.76.6.2009161214030.56@tvgs=
-bejvaqbjf.bet/>
->
-> I opted for a direction requiring explicit arguments to express
-> intent, since that's the only way to ensure --force-if-includes aligns
-> with (how I read) the documentation and the previous discussions.
->
-> Specifically, with tags:
->
-> - tags may have a reflog, but it answers a different question vs. "has
-> this tag integrated changes from an upstream" it answers what oid/ref
-> does this tag point to
-> - tags may incidentally point at oids referenced by branches with
-> reflogs, but there may also be several branches pointed to the same
-> oid, so which would we choose?
+----- >8 -----
+Subject: [PATCH v5 1/1] advice: give cut-and-pasteable advice to squelch
 
-=E2=80=A6and I think this makes a good case for the change (but let's see w=
-hat
-others think).
+Advice messages that the advise_if_enabled() helper emits tell
+the user how to squelch a particular piece of advice by setting a
+configuration variable.  The message it gives says:
 
-> BUT I just realized there is existing, more fundamental breakage with
-> --force-if-includes here that I'm making worse.
->
-> There is one case where we do have enough information to say whether
-> <TAG> has integrated the tip of the remote-ref locally: fast-forward
-> push. And that's actually broken today, too :)
->
->     git --version
->     git version 2.47.3
->     git clone repo.git repo && cd repo
->     git commit --allow-empty -m 'Normal, no-force-needed fast forward com=
-mit'
->     git reflog expire --expire=3Dall --all
->     # Regular fast-forward push fails, even though it does not require
-> --force to begin with
->     git push --force-with-lease --force-if-includes origin main
->     ! [rejected]        main -> main (remote ref updated since checkout)
->
-> Checking for fast-forward happens after --force-if-includes checks the
-> reflog. So that will need a fix=E2=80=A6
->
-> My change makes an existing problem more acute, and probably requires
-> a fix before other fixes can merge. Otherwise, --force-if-includes
-> will always fail when pushing tags and detached heads, even when
-> they're fast forward changes, adding needless friction to otherwise
-> safe pushes (e.g., for tags that fast-forward a branch). So v5 will
-> require a third change that touches other functions in remote.c. :/
+    hint: Disable this message with "git config set advice.FOO false"
 
-Personally, why --force at all then? ;) A bad habit to force things
-that don't need it.
+However, cutting and pasting the given hint would set the
+configuration variable in the per-repository configuration file
+(which is the default behavior for 'git config set').  As the user
+most likely sets it after seeing advice and understanding its
+ramifications, the choice of squelching or continuing to see the
+advice message is better controlled per-user, not per-repository.
 
-Best,
---=20
-D. Ben Knoble
+In addition, some advice, such as advice.defaultBranchName, is
+applicable only once before a new repository is created, so setting
+it in the per-repository configuration file is far too late.
+
+Add '--global' to the 'git config set' command line so that the
+configuration is set for the user rather than per repository.
+
+Initial-work-by: Vsevolod Myalitsin <ub4nal@mail.ru>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ advice.c                        | 2 +-
+ t/t0018-advice.sh               | 2 +-
+ t/t3200-branch.sh               | 2 +-
+ t/t3404-rebase-interactive.sh   | 6 +++---
+ t/t3501-revert-cherry-pick.sh   | 2 +-
+ t/t3507-cherry-pick-conflict.sh | 4 ++--
+ t/t3602-rm-sparse-checkout.sh   | 2 +-
+ t/t3700-add.sh                  | 6 +++---
+ t/t3705-add-sparse-checkout.sh  | 2 +-
+ t/t7002-mv-sparse-checkout.sh   | 4 ++--
+ t/t7004-tag.sh                  | 2 +-
+ t/t7400-submodule-basic.sh      | 2 +-
+ 12 files changed, 18 insertions(+), 18 deletions(-)
+
+diff --git c/advice.c w/advice.c
+index 63bf8b0c5f..d81afc80d1 100644
+--- c/advice.c
++++ w/advice.c
+@@ -96,7 +96,7 @@ static struct {
+ 
+ static const char turn_off_instructions[] =
+ N_("\n"
+-   "Disable this message with \"git config set advice.%s false\"");
++   "Disable this message with \"git config set --global advice.%s false\"");
+ 
+ static void vadvise(const char *advice, int display_instructions,
+ 		    const char *key, va_list params)
+diff --git c/t/t0018-advice.sh w/t/t0018-advice.sh
+index f68e08d0b1..8f05b5ae6c 100755
+--- c/t/t0018-advice.sh
++++ w/t/t0018-advice.sh
+@@ -10,7 +10,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ test_expect_success 'advice should be printed when config variable is unset' '
+ 	cat >expect <<-\EOF &&
+ 	hint: This is a piece of advice
+-	hint: Disable this message with "git config set advice.nestedTag false"
++	hint: Disable this message with "git config set --global advice.nestedTag false"
+ 	EOF
+ 	test-tool advise "This is a piece of advice" 2>actual &&
+ 	test_cmp expect actual
+diff --git c/t/t3200-branch.sh w/t/t3200-branch.sh
+index cdb6c6a634..0d7d9d3957 100755
+--- c/t/t3200-branch.sh
++++ w/t/t3200-branch.sh
+@@ -1751,7 +1751,7 @@ test_expect_success 'errors if given a bad branch name' '
+ 	cat <<-EOF >expect &&
+ 	fatal: ${SQ}foo..bar${SQ} is not a valid branch name
+ 	hint: See ${SQ}git help check-ref-format${SQ}
+-	hint: Disable this message with "git config set advice.refSyntax false"
++	hint: Disable this message with "git config set --global advice.refSyntax false"
+ 	EOF
+ 	test_must_fail git branch foo..bar >actual 2>&1 &&
+ 	test_cmp expect actual
+diff --git c/t/t3404-rebase-interactive.sh w/t/t3404-rebase-interactive.sh
+index 8c63682b7f..7dc6328502 100755
+--- c/t/t3404-rebase-interactive.sh
++++ w/t/t3404-rebase-interactive.sh
+@@ -2461,20 +2461,20 @@ test_expect_success 'non-merge commands reject merge commits' '
+ 	error: ${SQ}pick${SQ} does not accept merge commits
+ 	hint: ${SQ}pick${SQ} does not take a merge commit. If you wanted to
+ 	hint: replay the merge, use ${SQ}merge -C${SQ} on the commit.
+-	hint: Disable this message with "git config set advice.rebaseTodoError false"
++	hint: Disable this message with "git config set --global advice.rebaseTodoError false"
+ 	error: invalid line 1: pick $oid
+ 	error: ${SQ}reword${SQ} does not accept merge commits
+ 	hint: ${SQ}reword${SQ} does not take a merge commit. If you wanted to
+ 	hint: replay the merge and reword the commit message, use
+ 	hint: ${SQ}merge -c${SQ} on the commit
+-	hint: Disable this message with "git config set advice.rebaseTodoError false"
++	hint: Disable this message with "git config set --global advice.rebaseTodoError false"
+ 	error: invalid line 2: reword $oid
+ 	error: ${SQ}edit${SQ} does not accept merge commits
+ 	hint: ${SQ}edit${SQ} does not take a merge commit. If you wanted to
+ 	hint: replay the merge, use ${SQ}merge -C${SQ} on the commit, and then
+ 	hint: ${SQ}break${SQ} to give the control back to you so that you can
+ 	hint: do ${SQ}git commit --amend && git rebase --continue${SQ}.
+-	hint: Disable this message with "git config set advice.rebaseTodoError false"
++	hint: Disable this message with "git config set --global advice.rebaseTodoError false"
+ 	error: invalid line 3: edit $oid
+ 	error: cannot squash merge commit into another commit
+ 	error: invalid line 4: fixup $oid
+diff --git c/t/t3501-revert-cherry-pick.sh w/t/t3501-revert-cherry-pick.sh
+index 939e7a16a6..2abbf071ce 100755
+--- c/t/t3501-revert-cherry-pick.sh
++++ w/t/t3501-revert-cherry-pick.sh
+@@ -177,7 +177,7 @@ test_expect_success 'advice from failed revert' '
+ 	hint: You can instead skip this commit with "git revert --skip".
+ 	hint: To abort and get back to the state before "git revert",
+ 	hint: run "git revert --abort".
+-	hint: Disable this message with "git config set advice.mergeConflict false"
++	hint: Disable this message with "git config set --global advice.mergeConflict false"
+ 	EOF
+ 	test_commit --append --no-tag "double-add dream" dream dream &&
+ 	test_must_fail git revert HEAD^ 2>actual &&
+diff --git c/t/t3507-cherry-pick-conflict.sh w/t/t3507-cherry-pick-conflict.sh
+index c767e4ad3d..5be94493c1 100755
+--- c/t/t3507-cherry-pick-conflict.sh
++++ w/t/t3507-cherry-pick-conflict.sh
+@@ -60,7 +60,7 @@ test_expect_success 'advice from failed cherry-pick' '
+ 	hint: You can instead skip this commit with "git cherry-pick --skip".
+ 	hint: To abort and get back to the state before "git cherry-pick",
+ 	hint: run "git cherry-pick --abort".
+-	hint: Disable this message with "git config set advice.mergeConflict false"
++	hint: Disable this message with "git config set --global advice.mergeConflict false"
+ 	EOF
+ 	test_must_fail git cherry-pick picked 2>actual &&
+ 
+@@ -75,7 +75,7 @@ test_expect_success 'advice from failed cherry-pick --no-commit' "
+ 	error: could not apply \$picked... picked
+ 	hint: after resolving the conflicts, mark the corrected paths
+ 	hint: with 'git add <paths>' or 'git rm <paths>'
+-	hint: Disable this message with \"git config set advice.mergeConflict false\"
++	hint: Disable this message with \"git config set --global advice.mergeConflict false\"
+ 	EOF
+ 	test_must_fail git cherry-pick --no-commit picked 2>actual &&
+ 
+diff --git c/t/t3602-rm-sparse-checkout.sh w/t/t3602-rm-sparse-checkout.sh
+index 252df28bbf..bccb31a5a1 100755
+--- c/t/t3602-rm-sparse-checkout.sh
++++ w/t/t3602-rm-sparse-checkout.sh
+@@ -20,7 +20,7 @@ test_expect_success 'setup' "
+ 	hint: If you intend to update such entries, try one of the following:
+ 	hint: * Use the --sparse option.
+ 	hint: * Disable or modify the sparsity rules.
+-	hint: Disable this message with \"git config set advice.updateSparsePath false\"
++	hint: Disable this message with \"git config set --global advice.updateSparsePath false\"
+ 	EOF
+ 
+ 	echo b | cat sparse_error_header - >sparse_entry_b_error &&
+diff --git c/t/t3700-add.sh w/t/t3700-add.sh
+index 2947bf9a6b..59e48482a2 100755
+--- c/t/t3700-add.sh
++++ w/t/t3700-add.sh
+@@ -31,7 +31,7 @@ test_expect_success 'Test with no pathspecs' '
+ 	cat >expect <<-EOF &&
+ 	Nothing specified, nothing added.
+ 	hint: Maybe you wanted to say ${SQ}git add .${SQ}?
+-	hint: Disable this message with "git config set advice.addEmptyPathspec false"
++	hint: Disable this message with "git config set --global advice.addEmptyPathspec false"
+ 	EOF
+ 	git add 2>actual &&
+ 	test_cmp expect actual
+@@ -386,7 +386,7 @@ test_expect_success '"git add" a embedded repository' '
+ 		hint: 	git rm --cached inner1
+ 		hint:
+ 		hint: See "git help submodule" for more information.
+-		hint: Disable this message with "git config set advice.addEmbeddedRepo false"
++		hint: Disable this message with "git config set --global advice.addEmbeddedRepo false"
+ 		warning: adding embedded git repository: inner2
+ 		EOF
+ 		test_cmp expect actual
+@@ -425,7 +425,7 @@ cat >expect.err <<\EOF
+ The following paths are ignored by one of your .gitignore files:
+ ignored-file
+ hint: Use -f if you really want to add them.
+-hint: Disable this message with "git config set advice.addIgnoredFile false"
++hint: Disable this message with "git config set --global advice.addIgnoredFile false"
+ EOF
+ cat >expect.out <<\EOF
+ add 'track-this'
+diff --git c/t/t3705-add-sparse-checkout.sh w/t/t3705-add-sparse-checkout.sh
+index 975f9218b0..2e97e3c003 100755
+--- c/t/t3705-add-sparse-checkout.sh
++++ w/t/t3705-add-sparse-checkout.sh
+@@ -54,7 +54,7 @@ test_expect_success 'setup' "
+ 	hint: If you intend to update such entries, try one of the following:
+ 	hint: * Use the --sparse option.
+ 	hint: * Disable or modify the sparsity rules.
+-	hint: Disable this message with \"git config set advice.updateSparsePath false\"
++	hint: Disable this message with \"git config set --global advice.updateSparsePath false\"
+ 	EOF
+ 
+ 	echo sparse_entry | cat sparse_error_header - >sparse_entry_error &&
+diff --git c/t/t7002-mv-sparse-checkout.sh w/t/t7002-mv-sparse-checkout.sh
+index 9c0e82ba31..666317fdf9 100755
+--- c/t/t7002-mv-sparse-checkout.sh
++++ w/t/t7002-mv-sparse-checkout.sh
+@@ -32,7 +32,7 @@ test_expect_success 'setup' "
+ 	hint: If you intend to update such entries, try one of the following:
+ 	hint: * Use the --sparse option.
+ 	hint: * Disable or modify the sparsity rules.
+-	hint: Disable this message with \"git config set advice.updateSparsePath false\"
++	hint: Disable this message with \"git config set --global advice.updateSparsePath false\"
+ 	EOF
+ 
+ 	cat >dirty_error_header <<-EOF &&
+@@ -45,7 +45,7 @@ test_expect_success 'setup' "
+ 	hint: To correct the sparsity of these paths, do the following:
+ 	hint: * Use \"git add --sparse <paths>\" to update the index
+ 	hint: * Use \"git sparse-checkout reapply\" to apply the sparsity rules
+-	hint: Disable this message with \"git config set advice.updateSparsePath false\"
++	hint: Disable this message with \"git config set --global advice.updateSparsePath false\"
+ 	EOF
+ "
+ 
+diff --git c/t/t7004-tag.sh w/t/t7004-tag.sh
+index 8c795d7218..49cdb6fdb0 100755
+--- c/t/t7004-tag.sh
++++ w/t/t7004-tag.sh
+@@ -1887,7 +1887,7 @@ test_expect_success 'recursive tagging should give advice' '
+ 	hint: already a tag. If you meant to tag the object that it points to, use:
+ 	hint:
+ 	hint: 	git tag -f nested annotated-v4.0^{}
+-	hint: Disable this message with "git config set advice.nestedTag false"
++	hint: Disable this message with "git config set --global advice.nestedTag false"
+ 	EOF
+ 	git tag -m nested nested annotated-v4.0 2>actual &&
+ 	test_cmp expect actual
+diff --git c/t/t7400-submodule-basic.sh w/t/t7400-submodule-basic.sh
+index eefdecb0bd..36ff5b9546 100755
+--- c/t/t7400-submodule-basic.sh
++++ w/t/t7400-submodule-basic.sh
+@@ -231,7 +231,7 @@ test_expect_success 'submodule add to .gitignored path fails' '
+ 		The following paths are ignored by one of your .gitignore files:
+ 		submod
+ 		hint: Use -f if you really want to add them.
+-		hint: Disable this message with "git config set advice.addIgnoredFile false"
++		hint: Disable this message with "git config set --global advice.addIgnoredFile false"
+ 		EOF
+ 		# Does not use test_commit due to the ignore
+ 		echo "*" > .gitignore &&
