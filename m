@@ -1,43 +1,46 @@
-Received: from mta0.migadu.com (out-115.mta0.migadu.com [91.218.175.115])
+Received: from mta0.migadu.com (out-234.mta0.migadu.com [91.218.175.234])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02196332601
-	for <git@vger.kernel.org>; Mon, 14 Sep 2026 05:01:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.115
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D017F2BD00C
+	for <git@vger.kernel.org>; Mon, 14 Sep 2026 05:09:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.234
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789362105; cv=none; b=IXJiDVL3PzfaiLhsfc67JENtJGXnglVzRP8ycqFf2yzeOcQYYmRhHZiuXA9up9/x7ifPMq7Cz2WxKtIs9rbbIvBbNzQAFqRGenYhRhqkacI/m8cfT3bkHIKqvRSe9JgjDz6zG2RMSE2O6LOgQsaI5yXv0j45p1F9HBGnbwZz8y4=
+	t=1789362589; cv=none; b=iXZDsDfFB+J9V/gTSJb1+5dU8b5HfHvD1KRufOluFt+M5wqPfcsv/HeVLDre0yq/v9LiuASe2AfMcjZDUHseBjtKBAhOWg8tW+oZjFXe05KXBfMbzB6oC1rGtn08Otb2Cv+Ctg6gP3kcsUchqsEumAtq/JtpK3QjWDbsb7T8+fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789362105; c=relaxed/simple;
-	bh=msOldb2hnfef+uU2IdG0B5h//XSaPaiG52VXCXveKT0=;
+	s=arc-20240116; t=1789362589; c=relaxed/simple;
+	bh=LlVcnkrKZGxb5u3fRTx7O0ob9DaPzO4u/zIdkampXVY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l6INvaIw/loc+0mEtKPxeuHA0/Gt8xcSMyzJbPzJmktauUKXBP6+khHbC3zS0P3xvQww0b/yO1HYteLPd83qMjx+MVl6VWLoR2w0EYyTQRQWPdI2Vbiiv0+K8jqKWbwRkyvsXzgvl2XYDwg8Yn4AaI0mlOI+synP042hgN6bnGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=eBCfNPaV; arc=none smtp.client-ip=91.218.175.115
+	 Content-Type:Content-Disposition:In-Reply-To; b=SbKGkEXspP5+Vafgbx1rNVuV486mq+ECsfPbplg/zmh5iCN95ivgKN23IbZiM1sM0zKRaEOcg3bcpquuQ5knrsADK7pL8B2hufy37fg9ibO4sUbkMnfj02QuAmSuiR0Zo3OaalY8kbdNgEAKlNbmidaWcVc/6y5zMCY7OmkiQ3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=xUdyW1yC; arc=none smtp.client-ip=91.218.175.234
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="eBCfNPaV"
+	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="xUdyW1yC"
 X-Envelope-To: git@vger.kernel.org
-DKIM-Signature: a=rsa-sha256; bh=msOldb2hnfef+uU2IdG0B5h//XSaPaiG52VXCXveKT0=;
+DKIM-Signature: a=rsa-sha256; bh=LlVcnkrKZGxb5u3fRTx7O0ob9DaPzO4u/zIdkampXVY=;
  c=simple/simple; d=wyuan.org;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789362100; v=1; x=1789966900;
- b=eBCfNPaVdDgX2EU6k5NHjWXyfTD7ylg0c1++gfP4fKKE441GtGettd8K5Mcp9qilMkjLL83d
- yG0VM4rDjANlChCOOsbdoTbW6/FW86TFMYgKQYUUq8Dsu7yGzlyPU53FEQ1207geW+HbmcISMxA
- e8FaJT2zQKcqobeLprz3b0GrzlzpdA0xyME6LzWhbj7txAmivkXYvxacnJzc4RQ9jEFMwPhzkNQ
- BpqQcgvcvzE4mL2V3x/l+XTNMN1dSUWiI3g7sY543ytZD8SvOuedsfVf0GWVxJaFE5ePPUi0t1j
- 9ugnpboNJO8tWuoM5LK28+rD9W88yphlxkrc++XlrdT5A==
+ t=1789362584; v=1; x=1789967384;
+ b=xUdyW1yCV5rN5esTts+w7CrK44TqEaC4pfbLMuubQr/3SZY/nB6fKSx09Xj0jYipKj/0dBO2
+ ft846aJa1PSHwvFVa0411rv74TutIopxr+WqLYFmlu/z32mOM5XfPp+TFHcJlGJTLkhi+3rIJnz
+ oQ5mAhE9tRYDG4+bqueK8ftkXwTIZs4vYqieUMNkE5l/nlpHoZRvsctT/p/QqUa+UdgZ4M8IXSF
+ 1xdbbVhvR7Nddm4zk/So1ryMv7puC+o+v8S+8AnibgLLBbuGnGiodU6uUedaBCi2AKsvjH3/l0g
+ 0g3bDPbigIwvpAYHzzuOKUfatAj8NJH4/s79lpNqSepxA==
 X-Envelope-To: git@vger.kernel.org
-Received: by smtp.migadu.com with ESMTPS id 1948113763ba879a;
-	Mon, 14 Sep 2026 05:01:30 +0000
-X-Mizu-Trace-ID: 1948113763ba879a
+Received: by smtp.migadu.com with ESMTPS id a347d1cca9ce4fa9;
+	Mon, 14 Sep 2026 05:09:34 +0000
+X-Mizu-Trace-ID: a347d1cca9ce4fa9
 X-Migadu-Flow: FLOW_OUT
-Date: Mon, 14 Sep 2026 13:01:26 +0800
+Date: Mon, 14 Sep 2026 13:09:31 +0800
 From: Weijie Yuan <wy@wyuan.org>
 To: 15935225213 <15935225213@163.com>
-Cc: git@vger.kernel.org
-Subject: Re: =?utf-8?B?Z2l05a6J6KOF5oql6ZSZ?=
-Message-ID: <aqd_pkajmGGNPxnb@wyuan.org>
+Cc: git <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: =?utf-8?B?5Zue5aSN77yaUmU6IGdpdOWuiQ==?= =?utf-8?B?6KOF5oql6ZSZ?=
+Message-ID: <aqeBi4qFurY9Pfww@wyuan.org>
 References: <abe5f52.3f36.1a09e09e7c8.Coremail.15935225213@163.com>
+ <aqd_pkajmGGNPxnb@wyuan.org>
+ <6f88fc6.92c3.1a09e4d1b91.Coremail.15935225213@163.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,27 +50,14 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <abe5f52.3f36.1a09e09e7c8.Coremail.15935225213@163.com>
+In-Reply-To: <6f88fc6.92c3.1a09e4d1b91.Coremail.15935225213@163.com>
 
+On Mon, Sep 14, 2026 at 01:04:08PM +0800, 15935225213 wrote:
+> git安装不上也能使用这个命令吗
 
-On Mon, Sep 14, 2026 at 11:50:44AM +0800, 15935225213 wrote:
-> 安装git 2.55.0.3版本报错 直接报错Runtime error 255 at 00D658B7,
-> 请问一下是什么原因
+Oops, I don't know. But I guess you can not. Sorry for the useless info,
+as I actually didn't use it before.
 
-... approximately means:
+Hmm, should I Cc Johannes? Then I'm sorry to disturb you. :)
 
-When installing version 2.55.0.3 of Git, an error occurred. The error
-message was "Runtime error 255 at 00D658B7". I wonder what the cause of
-this error is?
-
-And, the image in the attachment shows a window, displaying "Error:
-Runtime error 255 at 00D658B7"
-
----
-
-I guess it's Git for Windows? I'm not sure if this is just a
-Windows-related issue. If so, a better place to address it might be on
-its GitHub issue page? Or you can use git-bugreport to provide more
-information.
-
-Thanks.
+Thanks!
