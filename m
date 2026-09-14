@@ -1,197 +1,200 @@
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+Received: from mail-ua2-f12.google.com (mail-ua2-f12.google.com [74.125.226.204])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97933393DF5
-	for <git@vger.kernel.org>; Mon, 14 Sep 2026 09:33:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A4441F344
+	for <git@vger.kernel.org>; Mon, 14 Sep 2026 09:37:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.226.204
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789378416; cv=pass; b=tPJxruPB6lhy64nAd5+wJdOIYRZ/gLsjv2kkj26u3nQSYiC6Z3kMacvPufxhCkP6Ov5KXA3xRj7yU5SHkIwzgRPKS9iaU8NzzF17hxD3Oyc8za1aipZsp1SfBjtXYKhN9YNyU8+q20ACfFgPMZ+u17qaxReOuRuGUswpwTrq01c=
+	t=1789378650; cv=pass; b=eqhaJg47LpejqL0UhBtTWVYOOc+XBIx6dVA/EeOPxcLhWo30og7fEI3yll1f8mq7A4EsMgazeJusilVzZgysYWR6O+GIcW7sAy84iY6+5k24BAi0OHgOZDrRk5ffJKBw88DHlualX2B0NESZXdG0likW8HXfeRyEbmFzcQ4Qm0E=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789378416; c=relaxed/simple;
-	bh=3xQrJg1JFXjI1zzD+hAXdtfOEjzOeKR2Os/v7hCNHQA=;
+	s=arc-20240116; t=1789378650; c=relaxed/simple;
+	bh=SRpbMTohHGnhgSThQWnvoA7wz0933z+StgMtIlj9lw8=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eTkO1jJTWJJbkQ6R3BgngsvBJnlOCJKWVJXbJVxWyLHLFHMXOjemXSMQO6wvMG8RppPOrXgLMh9vEUi/RYTy+Kwikv4/TEU83uLDaOvqzq7Av14SdgxsW18QD0I0ifBM5vmb6xHsJ4uTLd/CVwBchc1BwXQYw6BD7uqYHyntVS0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jVAuLHTA; arc=pass smtp.client-ip=209.85.222.44
+	 To:Cc:Content-Type; b=j/962HK/7OETfK1V1tFDacyiibWpIw8wFfQOGw3fSQAismTNg/w38GF7pSpIQ92+G62ZgfnFx27msnaRlpUTyXpHMwa+7RqpmlRjOR7cHfzAmhhfqJU0trrwzNpMl0GwRLFaoNdLmvYC9ZVL9fN5cNmCr0S4PtZnWfxVWr1C70Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AbNGGxpc; arc=pass smtp.client-ip=74.125.226.204
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jVAuLHTA"
-Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-97e9c0da212so2294641241.1
-        for <git@vger.kernel.org>; Mon, 14 Sep 2026 02:33:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789378413; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AbNGGxpc"
+Received: by mail-ua2-f12.google.com with SMTP id a1e0cc1a2514c-97e9af41731so308357241.3
+        for <git@vger.kernel.org>; Mon, 14 Sep 2026 02:37:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789378648; cv=none;
         d=google.com; s=arc-20260327;
-        b=eKRYXWng+8ffC8zqc90aQiPKgfkjGw8cI1IInqRlXVLFM5SOt5J/HsrKnznAS+8S7h
-         5VE83npkQ7OJJm2RjGgKqXrQtACF5wi+VXP4/pgiwR4qSZ7TX7+6SevwFGzfkCY7tBtd
-         Gb6o7Ah5Us4AAUAyZ/OqjwQNX/3738A21xa5Xtley1AiH7Gh18nRYqMw1GPskaYJ199t
-         zODZRBb5t7VWapYr/EdYW4q2YDDReLbeMzjqo6PP52KEONwGKLf5saJ4g1YH9xAtRap6
-         HCz99zK3g7ewrWBzTPaumUBriN+W5OOk7WgkOFkz4vU7UkU/Zy32DqBKcWZQt4SKJ5Fv
-         f3ew==
+        b=hFvSK3dl2LZXUjhPy/LDs86PM4CkW/J1B2ItftT2FYBf8SUHezjY6aZdJ9up8v5Fef
+         eejtJvBXSWSmEWzJRG1xLDhyYNHsuelsPFLXzSvHNtUHlCmtm83TkMY7lrTs+FufrEn4
+         9/QNPeFD3yVX+oOAvmUef5Xzw2rCqb9F1FiWQyKuceJIe1siQFXZHjbrYAk2fZHgCF0/
+         Wc5ipuyMNk/JF2WLqMmwFBQy9igZqtzNbMRj9PhAw1cGwY2Vm4rn6HnAWEBIfnnTkbWv
+         rjzDcKowYRGMTqd37CCqf7sEjecLSxYj4Vl3mIUFgZ4Vo52sw3iUtLaJ2hxRROWwPobb
+         nFKg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=M8eQZTHylVGQHyxADbV/rOg1eY6uctTKMzonL3asdP0=;
-        fh=UV1BlsTLw2hHMmVQ2ZGEDOjtt6DUSydkhzg23YSixo8=;
-        b=OVpo27NRCB6dr545244b9p11kqA1EgtCzzhkiDjGr8EIjgIBaGYmg5z4dLSwPp5AvS
-         o14WyJD4VCwc4QfnOfPZhfQo56ZJlx3qp9/oIDtRFt6TbAST1BXuX/qQs5ILNKm0wFja
-         Dwqmk4nTjHK9fdzQqi1h8SLRKbhN4OLzBGu3bhlKqadu9KTprTgnBWznTBB/e6HiUVPR
-         jmZmJeU98k+fXUHSD9KvHdvvFkZoo0bstNGAFjNi8rL0OVwCc34E7hZ4Haaza+Kq1YdT
-         dgRxPYbhrDeC9eciolxFru1zVHDEu2YVGeRcVykfyOeMeRqGULoNTxY2FKosYGrPcv/S
-         305w==;
+        bh=3DvcJqsuKii7AHiXerEVmCyh1o/nwZnIcjC2VRHvzcc=;
+        fh=ijZexiaW1xrZ+K4uEnEuMQhOSrFV/EQObaDJ2BipXAM=;
+        b=P36iAOo55aFNne87WYzMxn3ybnJu4YGSk8+uxxEqJSMrSA9Y8Y4XnwhGCtPhlkwV/L
+         fHofHnr3wCaBTHRdZSSgLbSfPzD7Cqn6+f88ZDXOO4p3h1v7cSHH+o0jDp0FrAf80+wN
+         HXQq8X6xm5DBCUji38SeBKf1MUaF/O8PVQA417pOqeSTXXVKzRDYmn5npvIygW+5z5Ls
+         deF4w6n7ZL/cRn5ln6KGDiQxJVj1AFxqR0s2i9vZTaiHli1J5GJTQbAx91YvxkWu25io
+         rwre+Ssa2pbxRDy1ILuIYIs0w5leuGkF9uGhLwNEqmIDzdc+ifYEn+/LPiV51JpEViuG
+         eGVQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789378413; x=1789983213; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789378648; x=1789983448; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=M8eQZTHylVGQHyxADbV/rOg1eY6uctTKMzonL3asdP0=;
-        b=jVAuLHTAIb8EXCuWhfOfk6nqHMdOxfdxKIOFwhC1ripxkdxbOs6Kh91nkTSlxJoEYm
-         CCK9fMkXTmBaCSycuuX0HKGVNRzFu1tH/9Cv4mX+8fDGY2pUwrfMyqUhqGMT7nIiKJIZ
-         tzvpNV4vA7vH9NDwJIHxYNC1QtawTFHeoSVCuNTOQCbbEtWw9NxHbvilG/a4gJsNVIMY
-         URhP5Wb+I0B0XnJpirQf1jwJq6lMhWV/tIo91GUeShxjxd3W+FGK/O46TD2D16xLjrYz
-         gaCRmTy04Kd83O0YjXUbo23LVGNo9WUakfGjvSnr73EowQYwAw/knocYRIxPLgzNpzg+
-         1QJA==
+        bh=3DvcJqsuKii7AHiXerEVmCyh1o/nwZnIcjC2VRHvzcc=;
+        b=AbNGGxpc6tjUCAVkodmkbUc+U0aFEkJLCvOqUKyU+wEUaDfmqaRY9B4PjNrg1Wh17d
+         YUgAyR+QA6FoWqo/x/l3rOgCL1WupvrL/soFIlf2GPAzw09paAqkvco97eF3wW+wDpNS
+         gHB2PIGSDJ2oC5HhIXtWaBk74GmsUKtX3hI+5xmJYwzLiiXIcAQB7O2vGw1s+XJzpzEf
+         5ty7l8Da823FcB/dREyEq0xi4iqduSrU3ovo8YY9U9/BPXwvayHp6cQBQSgmlP5UBKWF
+         Aryss8kuEr0rLLVz8BjWASEy13dDhUH+FU94cKVrxHKuAHLVxNxfyVZ1o+g5qiddn5Vy
+         pGGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789378413; x=1789983213;
+        d=1e100.net; s=20251104; t=1789378648; x=1789983448;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=M8eQZTHylVGQHyxADbV/rOg1eY6uctTKMzonL3asdP0=;
-        b=RyD9ZQlLMpFYiVErM51NQ+9rDEf8/Ur0VSTa2kpIRtB/wceGQvfgQLZ8D40837aRhW
-         ej1Dl1/5f/fi43ASszdy041VpAYuye+EjbUMsLM/6P9JojOA+5OKY/QZm3IgqMves39G
-         2ZwcqYcd8L3547dWdRY/AzVvM70VQz3DdsIquGYWMvxK14rehfDzQsAzj8iBj0HKF1wH
-         gqJGpm952vKC2q/Q9ueBKsZP52Jcp6SfU/q41XOCCZiHIXxAkCQCv5Y6UltQ1C26mfwI
-         2Jc3YL6hSyQ5KvdtTcYiJIda+1UIae+MQdJ/FgcfiWIKasOVPg400IVTnUNVjbghtXyC
-         I5BA==
-X-Forwarded-Encrypted: i=1; AKwUvBySwqxrkfWVAqyVFndm8h0So+40Wi9SV9ppswu+UgPqvCbRN2K/O3lUs8+1ujnrNKTRgJA=@vger.kernel.org
-X-Gm-Message-State: AFuF++lHLcTBcU3dh+A9uYouRRg1yb+gBYvGES8K1pBJLPRP0KWbF3xX
-	FyJzycvVkEEcegRbf8oBl0AbRaiU6CksqM5RWx/Z6P6QYumoZR2lz+p1g7pudbY8Q0gRhV0DrK9
-	Q2y4Dy53CPIbOJHjDmMwZMQ5anhUOll8=
-X-Gm-Gg: AYBFou0emOoReY/H2JnUT+vpNmoK8s70HJKatR7HjGi8S0u8X4ry1k3rnnhgt8V94jn
-	RC3pd8mXx+lSeLVA1VBQ3kkOJkC8/q7ZIDB1moyN1JJOHwkpvHHlu9yko8OrR2j9aFcCPDZwIsW
-	T4ZVqHM4Sgvm/4FiIBvRf5e7fnNLvbFKkKv0YitZwA+fbw+jETERiALiQi+k/MrrSoGVGf8C1Rr
-	WXOH+dQonwfBdq4tW8JO8MFv4CCRzDed1b6aBEUocQxmxV+w2BrsGhkSHjzDOWmPip3eyfeWDVV
-	/anRK5YnQ6DdN9CliXF8YqrklliNHIxZsk1ZqPYewaKFPJcxodJsAVKwz/pdS+XMFUT3KkK8sqb
-	EiDspZCWkKA9q+3xbOsqNZtdSMxpGdoi4RWk7TULq+sSVOw==
-X-Received: by 2002:a05:6102:54aa:b0:785:c960:ff85 with SMTP id
- ada2fe7eead31-79b5915afb9mr876160137.7.1789378413328; Mon, 14 Sep 2026
- 02:33:33 -0700 (PDT)
+        bh=3DvcJqsuKii7AHiXerEVmCyh1o/nwZnIcjC2VRHvzcc=;
+        b=m1OQ+zqWmNBYtumVCIkP8o5i/NHnBkh7pgeCGYBzLmxU5I9FM+rC/mmbyvf9hknvxS
+         8aBpX3nBP3yivUbqVcqe8J3R0AMHYsSD8HE2oP4Gb38kVjAxqNVAs+Qb/xVTWknj3ApE
+         vFUf2ITji5/wewDj3ZQ5Wqi0wfW/ofFgZ/6qmwMCKVVK4tipGksxFnxQ6oZ6rd83ctY3
+         2tYRoR7ZMKFBpbb0t6bO1P3Xr1UkZ3dGcnI5c/cIkzdAwCYHzT5HqAEXAYzLm05g99NA
+         fEKbwGQLo2puathAgW056MzQq1b6M+Mb5Yf6kYk764z+uwjAp7lLV3IJqiY9SqKj9PkM
+         P8/Q==
+X-Forwarded-Encrypted: i=1; AKwUvByaO/HgTkl2ZHUecwAByqxoG0x/ailZs1GIVDKReLdXG02ziF9Fqhj7EhYI8M+ycnAETXA=@vger.kernel.org
+X-Gm-Message-State: AFuF++kNhSfXl7ZWSgabNFnzH2v9hjQxqnGc7wYv2UbqrmcDXUQkoxd0
+	7ddUAUhQ7M95XIYfD3ACpz+krTtFv0gyo1csz8u1ps/MgDS/PyJUf/WoaZXBcLVhyJ9pzw8rlrT
+	jNz4BIFELxTCcYLGjkcZQ0bsAYEVst5k=
+X-Gm-Gg: AYBFou2QUaMvssWulLcSH7gE6E3G1AvrkJ64beYkBdg+JAT6ASBMH8UnLWvuL2c2nDO
+	byV4+zkETFEV0gqjcXOQnwSkNbZhBoI1kcoZI22tvje25QupeQsK62NOWvdy4edMoYr+z2wuIKc
+	px+jwK/foFZHegIKSJXUJ5qTHnc+Xr4TxSXjgmzLK++YusrHHNQgynyTVk3/yI5H4DqZKXpRhbg
+	ESsO4aQ2EKHrL8VRksKLPBjyBHV4M99Yt6Bq2/7KdhgpgiIFp8ZmdfaIU6nIeJ6eeF1YN7JGiG3
+	l0pq67Fkp37p1ozYhDZjfOoeMPDfNiDjiRuq2Fi4n9nwVEDCNjQ8kj6HzZFSBdr9aLbbf/x4SFf
+	LAzG7HcG43vdsv2XcaA4gAWvK+Cok4vSScbNmgcDIHkrS0A==
+X-Received: by 2002:a05:6102:3588:b0:79c:6276:4cdb with SMTP id
+ ada2fe7eead31-79c6285a9bemr41445137.4.1789378647780; Mon, 14 Sep 2026
+ 02:37:27 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 14 Sep 2026 02:33:32 -0700
+ HTTPREST; Mon, 14 Sep 2026 09:37:26 +0000
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 14 Sep 2026 02:33:32 -0700
+ HTTPREST; Mon, 14 Sep 2026 09:37:26 +0000
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260909-b4-pks-unify-ref-storage-format-v3-1-ca041fb40ad8@pks.im>
-References: <20260909-b4-pks-unify-ref-storage-format-v3-0-ca041fb40ad8@pks.im>
- <20260909-b4-pks-unify-ref-storage-format-v3-1-ca041fb40ad8@pks.im>
+In-Reply-To: <20260909-b4-pks-unify-ref-storage-format-v3-0-ca041fb40ad8@pks.im>
+References: <20260904-b4-pks-unify-ref-storage-format-v1-0-08144e5004ff@pks.im>
+ <20260909-b4-pks-unify-ref-storage-format-v3-0-ca041fb40ad8@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 14 Sep 2026 02:33:32 -0700
-X-Gm-Features: AcwNN1W88Q787KFqs-ru8M75x2p_4v_BU_t7foBNh4dhH2RIWHKJYDSCJL-xgDI
-Message-ID: <CAOLa=ZSh_H9tjnjEsRrmGXm1Ht+3a=gRaGibO6BKZvvkEabesQ@mail.gmail.com>
-Subject: Re: [PATCH v3 01/13] parse-options: allow for hidden aliases
+Date: Mon, 14 Sep 2026 09:37:26 +0000
+X-Gm-Features: AcwNN1WEr7on4kuMeQ1QKelYfyTFGAZRlf_gQ2J8VH6AWYwxKlq0fjKbv7DHzSU
+Message-ID: <CAOLa=ZRxXimh8W-QBJB3VhbHOZWMEfWXB0ST0a=dOi+PNiR6sQ@mail.gmail.com>
+Subject: Re: [PATCH v3 00/13] Fix inconsistent ref storage format terminology
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000b222da065b6e2061"
+Content-Type: multipart/mixed; boundary="000000000000ab8f16065b6e2e9b"
 
---000000000000b222da065b6e2061
+--000000000000ab8f16065b6e2e9b
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-TPatrick Steinhardt <ps@pks.im> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> The `OPT_ALIAS()` option can be used to create an exact alias that maps
-> one option name to the same semantics as another option name. This
-> option type is especially useful when deprecating an old name in favor
-> of a new one. But curiously enough, we don't have the infrastructure in
-> place to properly support this use case because we don't expose the
-> ability to hide the alias via `PARSE_OPT_HIDDEN`.
+> Hi,
+>
+> back when we gained support for reftables we of course introduced the
+> ability to control the reference storage format that is used by newly
+> created repositories. This infrastructure has grown over time, and
+> unfortunately without a lot of consistency:
+>
+>   - The command line parameter to specify the ref storage format is
+>     called "--ref-format=", while the corresponding repository extension
+>     is called "refStorage".
+>
+>   - In most cases we refer to the "ref storage format" in our docs, so
+>     calling it "--ref-format=" is inconsistent with them.
+>
+>   - It is possible to override the ref storage format via an environment
+>     variable that is called "GIT_REFERENCE_BACKEND", which is not even
+>     remotely consistent with anything else.
+>
+>   - There is also an "object format", but that format does not control
+>     how we store objects but rather whether we use SHA1 or SHA256.
+>
+> So in summary, it's a huge mess.
+>
+> This problem is about to become even worse though, as we're soon going
+> to introduce an object storage extension. This extension is the
+> equivalent to the ref storage extension, and of course we also want
+> users to be able to control which object storage format new repositories
+> are using. But we cannot properly name that parameter without creating
+> even more inconsistencies:
+>
+>   - "--object-format=" would match "--ref-format=", but that parameter
+>     name is already taken to specify the hash function.
+>
+>   - "--object-storage=" would be a good fit, but be inconsistent with
+>     "--ref-format=". Asking the user to execute `git init
+>     --ref-format=reftable --object-format=sha256 --object-storage=foo`
+>     just feels extremely awkward.
+>
+> So this patch series aims to clean up this huge mess that we (well, to a
+> large extent I) have created, by bringing consistency to our command
+> line switches, environment variables and config options to all use "ref
+> storage format" instead. And that also paves the way for the eventual
+> "object storage format" switches.
+>
+> As a cherry on top, this patch series also extends the
+> "--ref-storage-format=" switch to allow URIs in the form of
+> "files://foo/bar" to bring it in line with all the other ways to specify
+> the ref storage format that already allow for URIs.
+>
+> Changes in v3:
+>   - Add breadcrumbs for the old names to our documentation.
+>   - Use `OPT_ALIAS()` instead of manually aliasing the options.
+>   - Fix a comment in one of our tests that still referred to the v1
+>     "--ref-storage=" option.
+>   - Print the correct environment variables in error messages.
+>   - Also rename GIT_TEST_DEFAULT_REF_FORMAT.
+>   - Don't adapt "ref-storage-format.adoc", as that documentation is also
+>     shared with commands that don't support URIs yet.
+>   - Link to v2: https://patch.msgid.link/20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im
+>
+> Changes in v2:
+>   - Based on Junio's feedback I've renamed all of this to instead be
+>     called "ref storage format".
+>   - Link to v1: https://patch.msgid.link/20260904-b4-pks-unify-ref-storage-format-v1-0-08144e5004ff@pks.im
+>
+> Thanks!
+>
+> Patrick
 >
 
-If we're going to hide the alias, do we need to even use an alias?
+The new changes look good, I only had a comment regarding the use of
+OPT_ALIAS. But I think we can ignore that.
 
-=E2=9D=AF ~/code/git/build/bin-wrappers/git.thisseries init --foo
-error: unknown option `foo'
-usage: git init [-q | --quiet] [--bare] [--template=3D<template-directory>]
-                [--separate-git-dir <git-dir>] [--object-format=3D<format>]
-                [--ref-storage-format=3D<format>]
-                [-b <branch-name> | --initial-branch=3D<branch-name>]
-                [--shared[=3D<permissions>]] [<directory>]
+Thanks
 
-    --[no-]template <template-directory>
-                          directory from which templates will be used
-    --[no-]bare           create a bare repository
-    --shared[=3D<permissions>]
-                          specify that the git repository is to be
-shared amongst several users
-    -q, --[no-]quiet      be quiet
-    --[no-]separate-git-dir <gitdir>
-                          separate git dir from working tree
-    -b, --[no-]initial-branch <name>
-                          override the name of the initial branch
-    --[no-]object-format <hash>
-                          specify the hash algorithm to use
-    --[no-]ref-storage-format <format>
-                          specify the reference storage format to use
-
-
-=E2=9D=AF ~/code/git/build/bin-wrappers/git.withouthide init --foo
-error: unknown option `foo'
-usage: git init [-q | --quiet] [--bare] [--template=3D<template-directory>]
-                [--separate-git-dir <git-dir>] [--object-format=3D<format>]
-                [--ref-storage-format=3D<format>]
-                [-b <branch-name> | --initial-branch=3D<branch-name>]
-                [--shared[=3D<permissions>]] [<directory>]
-
-    --[no-]template <template-directory>
-                          directory from which templates will be used
-    --[no-]bare           create a bare repository
-    --shared[=3D<permissions>]
-                          specify that the git repository is to be
-shared amongst several users
-    -q, --[no-]quiet      be quiet
-    --[no-]separate-git-dir <gitdir>
-                          separate git dir from working tree
-    -b, --[no-]initial-branch <name>
-                          override the name of the initial branch
-    --[no-]object-format <hash>
-                          specify the hash algorithm to use
-    --[no-]ref-storage-format <format>
-                          specify the reference storage format to use
-    --[no-]ref-format <format>
-                          alias of --ref-storage-format
-
-Perhaps it doesn't make sense to add flags to OPT_ALIAS() at all? But
-this is indeed an alias and seems like the correct option to use, but
-feels wasted. I'm okay to keep it as is.
-
-> Introduce a new `OPT_ALIAS_F()` function that allows the user to pass
-> flags and propagate these flags when rewriting aliases to match their
-> respective source options.
-
-[snip]
-
---000000000000b222da065b6e2061
+--000000000000ab8f16065b6e2e9b
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: c775b4a1ee91a194_0.1
+X-Attachment-Id: ace439d305f7682_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xbnYyb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meUZzQy80eU1YZkNnbTRNWVp3MTVxRDR2M052L0h3UApDeGpKOXRWbjZS
-aFhuYVRJUWJGK3Bpa0VXR3Bhcm9FNE9aK0dWa1V6WVJmZWE2NXBjdjQ5MHNKZm1jblp2WWx5CmtB
-KytZTnlsNXI0M3R6NVE2ZTFzTS9FVk5rS3JlMlZFaHF0MWVhS0p2aURsZXJyK3ZiMXhScWg5YXZY
-bmxNU3YKRWRBN1ZHRTdQdjNZTmM5aCt2NmNQbTVUQ0NlSG4wSkZyaTAzNHp0bXZoempwR1BoOVlQ
-K2k1c0pjdjZyQ1NCMwo4WEk4MCtKYzM5OVVhRXlyMXVPZ1hocFFZVnVLWWJpNi82eEZ6QUdEMyt0
-cFlRQk5IZnNObjRwa0R1a1B0bTVRCjRKVU5QSjl1RmFLbW95aEFaZGc5RCtxYjM5Ukh3U1doSHBn
-SGx2QURzVVFjMmh3Z1RBY2Y5SzVML1ZDbFBQa2kKdXFnRFdUVUZXMVNWQ3Zqd2VSb0JCSEJreDdT
-MExxQldHMFQyVU9DUmxoSzkwdDFHSzBCWS93SUorKytxckpsRgo3VHFOTTE2cEJrL3hiVjNtWWJ4
-blVVV3lJZndOM1h0bGpHTXd3UnEyV3NFbVZCQkhnS0JVaFFWbFl4UCszMlk2Ckt4SjljSVMwL0o5
-K094QnJuRTFwUkV2V2FQUktXUkdDWmpTQ3JNbz0KPVVDWHUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xbndGVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNjVnQy9vREdvZTd5Q2hJMW96K3FHVHNLSXE2ZDNKTwpyVWdybkNJRkJL
+bjh1eHVpc2RXZUZ5TkNaYTlpbkJFTUZhVElRWk9BTS9wSTRRY2owZWIyQ21xNk1mdWpiUDBNClZK
+dnJDeWxMTVlZSUZiN1krdXR5NHFWM2lqVVhxS1JiUXNza0FYSjdWeWo3U1FDRldyYU5WaXZiNWt0
+eUMrby8KSiszQXdBU1hKbjIwVGxOekpzbVNlS25RUXFZQUxQZDRlNWQ5YTI3OXlMTS9EYkptSUky
+QlUwVm5iSXB0NlNPdgpkRmVvMktUbFVaeWVXZnVSR2R3dVhtR1lmK3ZFdnVzWm16eml0REM5cXht
+MVE1V1lQbUpsK3g4VXlNQjVJUnkzCldxZlpWNmtFWDJDblR1ZlJpbkkzTlplb2tBRElsK3ltSkFU
+V2poREJlU1dIRS9KcXdwM0VEU3NQUGJ2VE8rVVQKdkZMSkpQd3ZTbHlKTmNkZWo1SExTQUpqakln
+RnZBNW4wU1BTUkZaYXhKeENFaUJwS0Rncm1WWnd6dmNJdUlJVAppbFp1M0lJbE9oQk93aVdoRzZm
+b0ZOZXlCSGdybFNjNHFQU2lkNnpxQ1k2SVlXSWJZV2ZYaHVRSG5HUURra2FxCkxVSzlKdGFqR2Vm
+Qk9pQ1JodDNQcWxDVUkzTW5nRnBkZk82V2xXRT0KPTBKMmEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000b222da065b6e2061--
+--000000000000ab8f16065b6e2e9b--
