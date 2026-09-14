@@ -1,212 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E366341441F
-	for <git@vger.kernel.org>; Mon, 14 Sep 2026 14:49:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D6B492515
+	for <git@vger.kernel.org>; Mon, 14 Sep 2026 15:08:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789397395; cv=none; b=sQkPV9PanyqAd3BN0NQWhQNEXRMLO4j8tdFe1ew9hvrhudmj1V1FJDvXBZ78D7bGFKQH0l+/TpVf8hQnu2nFvZWs7SJ/kUmGMpjAj/y08JjJj2RHU+Q5uTNG1flymNr9dbBCsss79C1Su5wsTFrEGYtbIOxAS0FATAsJcm8bRiI=
+	t=1789398508; cv=none; b=pw3pRuh1M0PhPLtSRBatvrWeJBXooP5FFrr6VdLABVreeiFGcwiMhJV3npl2VB7esbBzDx67Fzpvovdt81rOudznYMGYiMXHjP8HOAIh72s6Xx4C9DEM4jpZANJOnRWYTmgQ80ssfuyD5wf9/ZmINy/vjHtDuQ2DIMbqgGlc1NU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789397395; c=relaxed/simple;
-	bh=iqQ/ZV+tnWSWYLfQid6pmirlpAFenn0k4Ceclzvc4D0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=fYCo6XjFSZS+iEJmsYx6gIsMfHglYGraiQqWFgkOFV+5p/720oOmzxatTQVUyjrn5TZe2lP1Emc1dOFHjpi3aoRu6zDqDLKhvzfcWODb1ddawLFG7tXdo247yejFRD+rjnP/XkXO/N8Nv4MhwVKpG0yN5dKRnBRWpfQeQu9PHuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DOkWV9rc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1789398508; c=relaxed/simple;
+	bh=Tr0kb1KHa1bjo2HgdBP3j1ltM3EGN5BkPIpe1GD+CGI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=krDxaZgdTRmQS6K61KBEV7kkJYo4k4xvBWd5c+5Z832QEygnLWe+K3O9J42CgTDDD6mCdDKpIPg8uv5GoaYD+s5r+EERJDkRn6k8jes4TyeRMJh/wP5UrWdzLJWrrc8UBIydn65stGfrb9sxIUgQLoW0rgjuPRMIxPh477vCpMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=svCMfinT; arc=none smtp.client-ip=74.125.227.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DOkWV9rc"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 74D14C2BCB8;
-	Mon, 14 Sep 2026 14:49:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1789397394;
-	bh=iqQ/ZV+tnWSWYLfQid6pmirlpAFenn0k4Ceclzvc4D0=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=DOkWV9rc085WPWgrkPy5OgSCuUWHzulsHILKruTO5eJFCWCqm+3hSTwbrtG0SoBGU
-	 cJge3/hGikSOXr0NyP18nYJcuN91qfhKy5gyzHs243ISEz6zR00lk/tVrZpz6GKEcc
-	 J8+y34LA5p57vGPLCTFLd64/RLYfkN+HOpKjhM34QEb7S4ofgPIpjmkZxzpe33VCA8
-	 PBgGHJftiBts0f33rIXsysejRkcNa/lqkSa20zBAu/+GRHeBJ0PocoseHcY2PTFqj3
-	 Bae9v04h50bzwb1T/WXfYmTiVmkD0ZRNieOa9g83G7uq+uPbVraqwWWhTmX5iP+pPy
-	 ZUhCRAxaN09YA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FD0AC88E75;
-	Mon, 14 Sep 2026 14:49:54 +0000 (UTC)
-From: Tanishq Singh via B4 Relay <devnull+hello.tanishqsingh.com@kernel.org>
-Date: Mon, 14 Sep 2026 20:19:48 +0530
-Subject: [PATCH] t7610: use test_path_is_* helpers
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="svCMfinT"
+Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-398c066106cso1789314a91.1
+        for <git@vger.kernel.org>; Mon, 14 Sep 2026 08:08:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789398505; x=1790003305; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=vJD3IQp9GifzMeBj1oz+7P9ajAUT3TnOU84twGgeDmw=;
+        b=svCMfinTv/UWWnzPJVEBa7hMK4p5bNkUuvcZerCnpDlEzydV0ejM06AcQEpFrM0b5R
+         JkaUYdCUfg/uZyYnN1DQG7R51RRPtZDjkfJsWP2dHzq//WpekqsZff4fpki32VQgIrzz
+         Kqs1EPSaiOvre+Bs7RM/xnQt2CWpwM7FZ2/HbJ7seuLJaSJiDMFnroZ43YC7DTOeJYDy
+         23mh5UC213l942LhxTE7335EWP1MYbaOrfaggXMM7gfO40ndBlkU4FIiSqKqz3LjYHvv
+         yB0otyvjjfPxyWPT6/KoMQL9ZRF0nkmrEALsYo5+3Y+iya3cWMHml8IoBvfKo4nXQrjm
+         IX7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789398505; x=1790003305;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=vJD3IQp9GifzMeBj1oz+7P9ajAUT3TnOU84twGgeDmw=;
+        b=LqwQMRe+ZWXRHF4R0c8d6lDet/qFccQ8EOiayw4MHXxcDocx2zuGXbvpEzY/2a5DRl
+         Tz8wiJtkyXBDWEfiDa/ghkCbgrJ2rYS/l5kF7wz+WLUu4vaalZcr3HGgTAwvlEkMvAoK
+         ILPrNm0vDs5UIkwiWg7Ad6RTVY/WQ0M92rEDRxFBX/zjY6Tfe6myfEWA5X/I/ZjiyBXq
+         elYDjbLdD55QH/eSeJdWRFG4scrVFi5b3PXJpAKuyvNlwcI7QzotiPUIk3R16AjaSJUP
+         zWaNchPJ9xAoWk9Va0uhTVmzHQutQtPVjWSo5RMyyFRsMX23hjzpsDygfamL6pEUsZHn
+         B39A==
+X-Forwarded-Encrypted: i=1; AKwUvBytFDq+cEq8H9QvyJLfm6j+RA//g/IPkCduDbqFGscnc2VOjUxuJndI1ppxRb+lzUVEjQ0=@vger.kernel.org
+X-Gm-Message-State: AFuF++n7KNdZEiVEXOyVLNtVSVJkdmKJwKQpKnStcMRNK9Bz5TS/TLO/
+	rbhZPLxnd7JfNNdLp9g383XQl2eTIkH3yH1H/7cN9nUFbM5yHUicW6QE
+X-Gm-Gg: AYBFou0Xezuh5Pvz/RaCztgcdciOA50lYEa5AxiFCK5tELyO6RRFSAZO2+MUXJ7tlC/
+	P9rH7d5ev/cSR0lQAW00Awo4AJzEYd023CNs5eed4VNvWCRJNY3ffCNZqJ1pnpJGDUhB5zc6QrT
+	nayKWmmZt82dkahSRB4GbJeeFsGZnBSz34HClNUy7gh5aPR+Lr1j8XQfAVKrsx9vcMFXB1v5W1C
+	NTT1rD76lgBeFaOBWrbjz30ZLhL0L5pg6qaW6jdRUw3cbLSlJRvalMn520xcFfTqzuUWzX2CKRl
+	q6BwBoNR8TdqCYOOO/lQoqlefYaeBLf2vtQwqEWgV1QTqDnL2Xtdg3vTiLbxiGYJbiQVuIl2BKo
+	LhCcHdyVGlEaNCt0By9h1J0LGQr2iVY74nCYH5O8Mmo4ytY3Gjx42Vw88n2y6ngz7j74Qa3R6id
+	JbPg4TXeulAajIFra6ORgumiF4c+FzGpfC/7Z+9/YyfCqKqalTij4SWoTbXw9O5ZKKEzM+mijmP
+	BTa5ZutuDO7x8owb4WxgwFyBRDe/02GxHPvpVlCu63vSnQoWUz05XCFGtcwt/XOYg==
+X-Received: by 2002:a17:90b:2803:b0:39d:ef3e:9035 with SMTP id 98e67ed59e1d1-39def3e96e0mr6109884a91.10.1789398505452;
+        Mon, 14 Sep 2026 08:08:25 -0700 (PDT)
+Received: from ?IPV6:2406:7400:12b:61a6:bd88:c038:9fa0:eb21? ([2406:7400:12b:61a6:bd88:c038:9fa0:eb21])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39dfba7d166sm286117a91.3.2026.09.14.08.08.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Sep 2026 08:08:24 -0700 (PDT)
+Message-ID: <5e062976-d584-496d-84e0-e4b59c8f6876@gmail.com>
+Date: Mon, 14 Sep 2026 20:38:19 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/13] Fix inconsistent ref storage format terminology
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <20260904-b4-pks-unify-ref-storage-format-v1-0-08144e5004ff@pks.im>
+ <20260909-b4-pks-unify-ref-storage-format-v3-0-ca041fb40ad8@pks.im>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <20260909-b4-pks-unify-ref-storage-format-v3-0-ca041fb40ad8@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260914-t7610-test-path-helpers-v1-1-4824812314c7@tanishqsingh.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQrCMBBG4auUWTuQ1NJSryIuYuevGZEaMqkIp
- Xc36vJbvLeRISuMTs1GGS81fS4V/tDQFMNyA6tUU+va3o2+4zL03nGBFU6hRI54JGRjf+wEMkg
- YZaZap4xZ37/z+fK3rdc7pvLd0b5/AIBU8Ft7AAAA
-X-Change-ID: 20260914-t7610-test-path-helpers-134ded7da9df
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, 
- Tanishq Singh <hello@tanishqsingh.com>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5179;
- i=hello@tanishqsingh.com; h=from:subject:message-id;
- bh=SstEsXkP2a1L90sd/7PbUtydVPOMrk5Ds/4WWNG3HSw=;
- b=owEBCQL2/ZANAwAIAWLjgbfwh9eVAcsmYgBqqAmQJiRw03/ZzUDDtNruxWI00xzUlXK/GMS3X
- ARXKWkxwHCJAc8EAAEIADkWIQSEk2fht6OHepjEk9Ji44G38IfXlQUCaqgJkBsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwwLDMACgkQYuOBt/CH15VPIAwAiSjwzV1Ys+CVFaWORP3xJFCboSPJdkY
- vt1N2KZrVHSYIkZiMdO6nWl3KmDpbwdPkw59MQc2O2iapXIOh8PzOuZSh9yAufBAsmugWshsGLR
- jbEcf71kHFxXxv2UYXMDhXkLyMgpZbcX0yPvP+ndW7A8LJT9Xi574bwVADL14Ac72K2SlAqejZb
- K7DKbgC3NuZFszaC3PZw8+PkRs9k5PAUuuTPkN+gu3gotR8grLpJgtuKtMMHd+uCC0j4UkvYIdF
- 9fACef7kyy6D4pdJaNsYAQADVqCmCe94CzMeE271/IMf7i6ofrA0agoRjCk2LCOQFwqB6qIjITG
- jB6U5KMWyavDaa0lCwtoy2Mj9LPOHUdW55ddtX3NgvP5Tf+hRCbzm8Fqw4UCxQBw969b04HHQat
- q0HLN1VImQf+jiuy9bd1YOI0PrTXYsgD7cQoZvoYOSh/ASedLw4+uIpGKLLi15YzxgMBb5AN4U6
- Cx/WvYhDpJuJ5E8z1tAVZPBAeiYBZPV
-X-Developer-Key: i=hello@tanishqsingh.com; a=openpgp;
- fpr=849367E1B7A3877A98C493D262E381B7F087D795
-X-Endpoint-Received: by B4 Relay for hello@tanishqsingh.com/default with
- auth_id=1031
-X-Original-From: Tanishq Singh <hello@tanishqsingh.com>
-Reply-To: hello@tanishqsingh.com
 
-From: Tanishq Singh <hello@tanishqsingh.com>
+On 9/9/26 16:42, Patrick Steinhardt wrote:
+> 
+> Changes in v3:
+>    - Add breadcrumbs for the old names to our documentation.
+>    - Use `OPT_ALIAS()` instead of manually aliasing the options.
+>    - Fix a comment in one of our tests that still referred to the v1
+>      "--ref-storage=" option.
+>    - Print the correct environment variables in error messages.
+>    - Also rename GIT_TEST_DEFAULT_REF_FORMAT.
+>    - Don't adapt "ref-storage-format.adoc", as that documentation is also
+>      shared with commands that don't support URIs yet.
+>    - Link to v2: https://patch.msgid.link/20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im
+>
 
-Replace 'test -f', 'test -d' and 'test ! -e' with the
-test_path_is_file(), test_path_is_dir() and test_path_is_missing()
-helpers. The helpers print the directory listing on failure, which
-makes diagnosing a broken test easier than non-zero exit status
-offered by 'test'.
 
-Signed-off-by: Tanishq Singh <hello@tanishqsingh.com>
----
-Verified with `cd t && ./t7610-mergetool.sh`,
-and all tests pass.
----
- t/t7610-mergetool.sh | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+This version does look good to me too. I just had one though while going 
+through the patches. We appear to be rewritten the tests using only the 
+newer variant of the arguments / environment variables. I wonder if we 
+might also need a test or two to ensure the deprecated variants work as 
+expected too.
 
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 0128b14452..92ac8f3fb6 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -382,15 +382,15 @@ test_expect_success 'mergetool delete/delete conflict' '
- 	git checkout -b test$test_count move-to-c &&
- 	test_must_fail git merge move-to-b &&
- 	echo d | git mergetool a/a/file.txt &&
--	! test -f a/a/file.txt &&
-+	! test_path_is_file a/a/file.txt &&
- 	git reset --hard &&
- 	test_must_fail git merge move-to-b &&
- 	echo m | git mergetool a/a/file.txt &&
--	test -f b/b/file.txt &&
-+	test_path_is_file b/b/file.txt &&
- 	git reset --hard &&
- 	test_must_fail git merge move-to-b &&
- 	! echo a | git mergetool a/a/file.txt &&
--	! test -f a/a/file.txt
-+	! test_path_is_file a/a/file.txt
- '
- 
- test_expect_success 'mergetool produces no errors when keepBackup is used' '
-@@ -400,7 +400,7 @@ test_expect_success 'mergetool produces no errors when keepBackup is used' '
- 	test_must_fail git merge move-to-b &&
- 	echo d | git mergetool a/a/file.txt 2>actual &&
- 	test_must_be_empty actual &&
--	! test -d a
-+	! test_path_is_dir a
- '
- 
- test_expect_success 'mergetool honors tempfile config for deleted files' '
-@@ -409,7 +409,7 @@ test_expect_success 'mergetool honors tempfile config for deleted files' '
- 	test_config mergetool.keepTemporaries false &&
- 	test_must_fail git merge move-to-b &&
- 	echo d | git mergetool a/a/file.txt &&
--	! test -d a
-+	! test_path_is_dir a
- '
- 
- test_expect_success 'mergetool keeps tempfiles when aborting delete/delete' '
-@@ -419,7 +419,7 @@ test_expect_success 'mergetool keeps tempfiles when aborting delete/delete' '
- 	test_config mergetool.keepTemporaries true &&
- 	test_must_fail git merge move-to-b &&
- 	! test_write_lines a n | git mergetool a/a/file.txt &&
--	test -d a/a &&
-+	test_path_is_dir a/a &&
- 	cat >expect <<-\EOF &&
- 	file_BASE_.txt
- 	file_LOCAL_.txt
-@@ -462,7 +462,7 @@ test_expect_success 'deleted vs modified submodule' '
- 	yes "" | git mergetool both &&
- 	yes "d" | git mergetool file11 file12 &&
- 	yes "l" | git mergetool submod &&
--	test ! -e submod &&
-+	test_path_is_missing submod &&
- 	output="$(git mergetool --no-prompt)" &&
- 	test "$output" = "No files need merging" &&
- 	git commit -m "Merge resolved by deleting module" &&
-@@ -476,8 +476,8 @@ test_expect_success 'deleted vs modified submodule' '
- 	yes "" | git mergetool both &&
- 	yes "d" | git mergetool file11 file12 &&
- 	yes "r" | git mergetool submod &&
--	test ! -e submod &&
--	test -d submod.orig &&
-+	test_path_is_missing submod &&
-+	test_path_is_dir submod.orig &&
- 	git submodule update -N &&
- 	output="$(git mergetool --no-prompt)" &&
- 	test "$output" = "No files need merging" &&
-@@ -547,7 +547,7 @@ test_expect_success 'file vs modified submodule' '
- 
- 	git checkout -b test$test_count.c main &&
- 	rmdir submod && mv submod-movedaside submod &&
--	test ! -e submod.orig &&
-+	test_path_is_missing submod.orig &&
- 	git submodule update -N &&
- 	test_must_fail git merge test$test_count &&
- 	test -n "$(git ls-files -u)" &&
-@@ -558,7 +558,7 @@ test_expect_success 'file vs modified submodule' '
- 	git rm --cached submod &&
- 	yes "c" | git mergetool submod~test19 &&
- 	git mv submod~test19 submod &&
--	test -d submod.orig &&
-+	test_path_is_dir submod.orig &&
- 	git submodule update -N &&
- 	echo "not a submodule" >expect &&
- 	test_cmp expect submod &&
-@@ -672,11 +672,11 @@ test_expect_success 'directory vs modified submodule' '
- 	git reset --hard &&
- 	test_must_fail git merge main &&
- 	test -n "$(git ls-files -u)" &&
--	test ! -e submod.orig &&
-+	test_path_is_missing submod.orig &&
- 	yes "r" | git mergetool submod~main &&
- 	git mv submod submod.orig &&
- 	git mv submod~main submod &&
--	test -d submod.orig &&
-+	test_path_is_dir submod.orig &&
- 	echo "not a submodule" >expect &&
- 	test_cmp expect submod.orig/file16 &&
- 	rm -r submod.orig &&
-@@ -701,7 +701,7 @@ test_expect_success 'directory vs modified submodule' '
- 	git submodule update -N &&
- 	test_must_fail git merge test$test_count &&
- 	test -n "$(git ls-files -u)" &&
--	test ! -e submod.orig &&
-+	test_path_is_missing submod.orig &&
- 	yes "r" | git mergetool submod &&
- 	echo "not a submodule" >expect &&
- 	test_cmp expect submod/file16 &&
-@@ -743,7 +743,7 @@ test_expect_success 'filenames seen by tools start with ./' '
- 
- test_lazy_prereq MKTEMP '
- 	tempdir=$(mktemp -d -t foo.XXXXXX) &&
--	test -d "$tempdir" &&
-+	test_path_is_dir "$tempdir" &&
- 	rmdir "$tempdir"
- '
- 
-
----
-base-commit: 47ce80527c56f462cb97db4ca8125342204d3783
-change-id: 20260914-t7610-test-path-helpers-134ded7da9df
-
+-- 
+Sivaraam
 
