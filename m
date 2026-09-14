@@ -1,83 +1,83 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C2B49C4A0
-	for <git@vger.kernel.org>; Mon, 14 Sep 2026 15:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FDA483817
+	for <git@vger.kernel.org>; Mon, 14 Sep 2026 15:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789399614; cv=none; b=NJ0aa5FVyniIj01LlXOugbh1XMCGSQbi19HpHneU2u81/2Dx6ApIG4i+FlC1CuW68aoywVgkEuLPNvJWA64itIrmWYR6NItlMnepZ3L30wAvvwA949hcwGbkftH+Hx5CBEtmT/8crcCQ2figmzp1P/NcOXEB6KKcMfvIqBxavaM=
+	t=1789399823; cv=none; b=NzBKFMTeP490BBoYaf5ou6pZCFa0OVXTF5LwEn4dk1a8H5jwZDIOBBQp+HntnAFjjQZE96fe5g3f+ZsyCspupkTpLTFMXjVEG7nnjLFg4ZrotBCQe0s8f1/9IJygMq+RB+b7eyaWFt2hzrIrsTFypj8raQdjaGsTNd6k7lzF4gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789399614; c=relaxed/simple;
-	bh=wF9/dsMuRrUkNcucLuscixqKcYxj+GPtyWdsygfFy9M=;
+	s=arc-20240116; t=1789399823; c=relaxed/simple;
+	bh=SKzkjZj3sYuHlxtQ7WjkFmhApPYaVA+iPiOt4WyJj3Q=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gzjh+zFMJY1QubeGmNfLEK6gHcFa9yigo9wBVgh6lK0WUkxItnspwC2dWG0Wlwndw4kiPD9/7QTUARbfoBUgZ7FATXHob+0yYRubiEoggKZpGmZt0J4766XJ1+Y9QeLGGoU+et2L8ZbgmnaE5Mp5U4Az+2dvmS0CXktVX15/bnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OmQRgi8V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CRFGO9zi; arc=none smtp.client-ip=202.12.124.152
+	 MIME-Version:Content-Type; b=EgfgUufP9uv2H6TNlZ7cSQOnEAhpxqTsvws3Br6QPuoaHSTfaJiENFYmcvi/s9ZRmv0poXLCTKTf7dZn9pckdkuGb5SBG7bXn9v+aeSONivpO+eg/jYMS5rt+CeRgpNR0NELhU5tNEA/eTjZbyXJa9Hk7ZTB8fKKlnF0TdXiiYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UcSUxtU1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EnO5HQRy; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OmQRgi8V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CRFGO9zi"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3DDAD7A0070;
-	Mon, 14 Sep 2026 11:26:52 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 14 Sep 2026 11:26:52 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UcSUxtU1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EnO5HQRy"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D754B7A0133;
+	Mon, 14 Sep 2026 11:30:20 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 14 Sep 2026 11:30:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789399612; x=1789486012; bh=XYkVk93aBO
-	ImpIYzo8Fl3M9ssQINFqwj1ewFCzsSMRU=; b=OmQRgi8VIsgtbT5ObYdjtUsqWq
-	wTUTwZi8qlmGz8KGMpWrxR6ZLoOyDLE03GorOGw/Gyv8KTqYkmE4LsGss99kWxqj
-	AAfh+vO/McU2yqcZvCYu4HRDO4Q2qzr9C9q2zVXbjN9V9O2U4VggLDdvbeHvRNQN
-	MkvmpZBLSJgHWiZjHShGIVTRus+Tr9LDWVm1AI+FEswvPt9pWFV+bKcG05aZcbGG
-	RVpHi1lKGiK0AJQsDOEqyXbgoyr+r+xDQ53D3Bo/z6Ufx9bYr3JMmFO2qah0YQvo
-	jMeMq1xAGOH4/5zZjxiWUSQeuYXzUrdtJAGS3A6kx7LNS/0Gj7F/msLYfzMA==
+	:subject:to:to; s=fm3; t=1789399820; x=1789486220; bh=J5c4w8DCCg
+	x1tVE/4CQ0kgyqDzE+N03iFoI8hJNUkBE=; b=UcSUxtU186YiGh5LKTPA9HSql8
+	PW8OSaB4EwTwWFarSMxBGIhkVl0uq6haCZp5SU0OGPtZFF6YvQMFZCztqIaPGCHE
+	uInGumfoZveYsyn4CuLr4nj3vmEZJGyp4Zo811y10DwFk66x4rsgwz0tnK1w9E7t
+	cN8nH43by/bu2qDu4J3zbkkcXl6fVU4lNCLDREsHCOUhRkeFP6LxoUm4RAJD0M7b
+	zD3eINs4kmUWbx8jsieQ8CVsKLoddqwo7OkIlq/AoA/VqQ9Ah+kHLMsx09SjGkuj
+	ROAruuA48q5AjU9QX+D/vk/XgwBkhhflid0JAOoPC98rCi/qXLLga8xtg6Fw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789399612; x=1789486012; bh=XYkVk93aBOImpIYzo8Fl3M9ssQINFqwj1ew
-	FCzsSMRU=; b=CRFGO9zi82oLTr/J/4fH6pTDkJQmGdX8MVaEtS2VozvEDwkKCyA
-	uK6GrCBQOp/S08iOR36BoCa6wQPsBB63VUEjd0Sp8ECRfITbOzV0OVsUtJQ0CPvK
-	mjDp26c+NoFimH2cqxHMgLCJI0lUqatA8mISVY7OMtndiGcTtlZasSyVqh7jyrUC
-	zQgNoLYIWrFd7/SgEtsZu+mce8Sau3vMbShW7o0y3QVxIGk+1+hael3tzPm7j8OG
-	tir9IbYGIve40TwdwqP2ULkyFwTNqb5gORJikwI6/ik2JCHC1yxsAhrER0c/0HqY
-	pgL8ctF+4AfwkGLihEa79k7GbF2TshoTvmQ==
-X-ME-Sender: <xms:PBKoajTVtoa71LZnvsZiFQdqp4N80azVZ5vXropVkjKOjCDCuxexwg>
-    <xme:PBKoarw_hKaBetAUapMTmMmno0dqebOlf5jp1fjg3wlGl3KN_AMbhs4TAX4sbc5B6
-    V_GslTJb1WkfFV8za_U-N0xgfk64tI-B8QBXDZ0cZrfKi4O3DHzSKA>
-X-ME-Received: <xmr:PBKoat0YzO47r8EYly7TNo2h3ww-QKSfILpgpbunkqkNYNmzJ-mM6a9a8r3jaBOmmKHQpkuIswgsYdE3p_7ylL8t-SxuhFJswEjV>
+	1789399820; x=1789486220; bh=J5c4w8DCCgx1tVE/4CQ0kgyqDzE+N03iFoI
+	8hJNUkBE=; b=EnO5HQRy2fwTVDhrYL5k8J23SShe9b/yMYze9VW7qjXKo9ReYu+
+	PxyaH4mh1RTzGHTEOJnBCdqReI9AoeQD830sJ+aYWCQdxvZohFfkwA9ewJTNeePS
+	yNpvyETXgYnphuZc85eWlLRp4DhEcv1jjFg8yHb1AmEyOlO1y5Iv5ikRy6DWZk7F
+	8DQvdHWNPnW2KpVYMpaxOGWv/K1+EXF4o6XMgzcLa7iTi35y2dro366CbKa8TwHx
+	kDR9Yoa7rZoYppNittKQ15lA8VJxF/c/5hvOZnQTXxllAN2J19vxR06qoFj2BoiI
+	XgF/HGZra5Dt+qZqXXnvt6gkXGPwlubsmmw==
+X-ME-Sender: <xms:DBOoajMDWhxZtCBkoLnUfSB1h1mUhBd3CLrww9bQJqllXEn6UWv_CQ>
+    <xme:DBOoak_vZYEPPKJZgvp-WEMXitHgh0XDPbPh3_Nbm5VcXC6I6wYEc8Os1EWLg-w03
+    VEEmuS7zgPkipdYyoYTDUUrbUa8WmtyoYTNMp5afQxAHCs-OgFwKM4>
+X-ME-Received: <xmr:DBOoanTsJToQVs0haBoluxJ_41zWXXfAO1UvHL1LDQjKm7ePS4agsT5Jq47J0vW1pfPM3BvK8kElGydW7kbBIqaCpOUmA3LqGRTP>
 X-ME-Proxy-Cause: dmFkZTFqhlUmncHLsIOQNSVriuCGaGX+9/2BAFXyYJosYYlzZ3zJjiSLdi/Ibp5A/pGDQh
     GwTmA1PMAHc9nartG4pD99SXqEX4sQ9WJPAbPOLOpyhLmvcfrma0KBKD5jgg+WNmXa3m1e
     1FYS70N5QDOqCxM5NSGSxYsLK8geUZDP2OpGrNa/goqU5VKEjKoR7b9Foa2UYrqhGEDFy2
     QtcL9AEk/fdKcZb3GIafsqTK4NCyAe9otdn/QgsmouYHJyEut5QXctzY/76U6QAAvUe/+i
-    EpJwBEhjDpwDUw3QZfqhjZ+HBTragVV/PM+cF3IMe4Z13Zo+Jbvo5aYrKufsNdx8ZMYknT
-    2bhC5YOOnZYtb2PPo4cOmUZwqVBqCcv2lzcnUMZW9W7IVsO0f7ZNS98Gxok8nN7Y8RAGZD
-    mKcyrMrGyat5MyHX8F9xa/Rq1eQUSoWVaQayuJHcG9/0ZCdDTo9HKX3MKwLx+EZY6+272W
-    roEbGCl10iTtf07Ly/4XUQPCZx1h54mCOhyW3rnp6YCyyLpeYQsf+d1eYA1qwTbpaGrN6q
-    d23S2BVdl7c60oOUi5TsBF1bQAKqpFSE+slVbLz+JcsomYRI/73ZzPb9aEtOuN+2yZ7WHf
-    ObN0JQaueiHersdzXQvIWxsScgYeu3JOIad3c2mq/xRX+e3TGEemkn9NY6FQ
-X-ME-Proxy: <xmx:PBKoah4yGXbliFhhjQ-cEnxESm4t0E-i9jmMyHOX2EO1HIkIERIBAw>
-    <xmx:PBKoaoWAqtCvS8H__iKuwVr_U_Lyl5WybbiwOPyALH-EwlOSZPERRQ>
-    <xmx:PBKoaoCEQidBs-5iR5IsZClvflbfwb8lleN8RlzobpZv2p1GncInDQ>
-    <xmx:PBKoav59SCiPVMcZRYnFVcUbILPXeGcYfytDODCKk1QYs5zdSrJl7Q>
-    <xmx:PBKoao-NXjeDFOvtDVL4DoOCpt8vpd2Ql6VE8dbwAqZ4lGTkNya9gRh0>
+    EpJwBEhjDpwDUw3QZfqhjZ+HBTragVV/PM+cF3IMe4Z13Zo+Jbvo5aYrKufsNdx8ZMYkSx
+    8LKluIcEv00Gw9GV0byEeXouCSqY5HjovQdF38X+dcCvWj3RNkX2MH3A2+X1sYq4NaQ/Hx
+    c+SoyPJuW5fujqTux/SHtr+V/VleRmvfeQsihF7rru+ePDuARJUWUCu0GNfUZxQpL0Q6b1
+    zFGpnY5qECt0xQqd8baBLTsf16D0le6HA7832SsVUyE4wfAEs/h94TFYvcQRyyPlNT93Vm
+    tgzkfGMnkgBKbUyvGqI/1qQawwfOJbmAE1x9+A85DLlqwp/ftZhTLYLfRKvoRbCyzvkL6j
+    93ELsUuDkLbug+fLCfczgyg33c7cZR4U03BD4lqKMobfcjK2iCV3FjxMffbw
+X-ME-Proxy: <xmx:DBOoamnzpUAY5reYtW6LjCAsu5IPSsKfEbcVqm1IZB3dBZ6rwMPTug>
+    <xmx:DBOoanQvZr-et3gnA_A58Us6KzCcED-nOFQbOEn8A3GRHFTMCLiVow>
+    <xmx:DBOoakO6qvIq5sGCQFEfINd1_eY6AQvJ8bJu5TBQut0SNPFZc0SRlA>
+    <xmx:DBOoagWUuA1luDYe6m_avfo7J-11tSdvFobFHWSP-7CXUhV5hKKUzA>
+    <xmx:DBOoaoPWrZN8hxs5JCdXw7MTXsgbC9tYb1imWrxd5axL8_2xe-Wha1EI>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Sep 2026 11:26:51 -0400 (EDT)
+ 14 Sep 2026 11:30:20 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristofer Karlsson <krka@spotify.com>
-Subject: Re: [PATCH 2/2] connected: add incremental connectivity check via
- rev-list
-In-Reply-To: <ebe6c90cc58b9e1f64c9bec4a18e8cb3ce9be1b2.1789379276.git.gitgitgadget@gmail.com>
-	(Kristofer Karlsson via GitGitGadget's message of "Mon, 14 Sep 2026
-	09:47:56 +0000")
-References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
-	<ebe6c90cc58b9e1f64c9bec4a18e8cb3ce9be1b2.1789379276.git.gitgitgadget@gmail.com>
-Date: Mon, 14 Sep 2026 08:26:50 -0700
-Message-ID: <xmqqh5jr7t1h.fsf@gitster.g>
+To: Todd Zullinger <tmz@pobox.com>
+Cc: =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] doc/pack-refs: convert synopsis and options to
+ new style
+In-Reply-To: <20260914124630.154107-2-tmz@pobox.com> (Todd Zullinger's message
+	of "Mon, 14 Sep 2026 08:46:27 -0400")
+References: <20260912191509.844954-1-tmz@pobox.com>
+	<20260914124630.154107-2-tmz@pobox.com>
+Date: Mon, 14 Sep 2026 08:30:18 -0700
+Message-ID: <xmqqcxuf7svp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,69 +87,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Todd Zullinger <tmz@pobox.com> writes:
 
-> +static void verify_blob(struct repository *repo,
-> +			const struct object_id *oid,
-> +			struct verify_state *vs)
-> +{
-> +	int type;
-> +
-> +	if (oidset_contains(&vs->trusted_blobs, oid))
-> +		return;
-> +
-> +	vs->blobs_checked++;
-> +	type = odb_read_object_info(repo->objects, oid, NULL);
-> +	if (type == OBJ_BLOB) {
-> +		oidset_insert(&vs->trusted_blobs, oid);
-> +		return;
-> +	}
-> +	if (type >= 0)
-> +		die(_("object %s is a %s, not a blob"),
-> +		    oid_to_hex(oid), type_name(type));
-> +	if (vs->exclude_promisor_objects &&
-> +	    is_promisor_object(repo, oid))
-> +		return;
-> +	die(_("missing blob object '%s'"), oid_to_hex(oid));
-> +}
+> Replace [verse] with [synopsis] in the SYNOPSIS block and remove
+> single-quote formatting from the command name.
+>
+> Backtick-quote all option terms in the OPTIONS section and convert
+> the standalone placeholder _<branch>_ in prose.
+>
+> Update the included pack-refs-options.adoc to backtick-quote all
+> configuration key terms.
 
-I wonder if this is_promisor_object() call comes a bit too late, as
-we earlier already have called odb_read_object_info() which may have
-fetched it lazily from the promisor remote?  Or do we globally
-disable promisor_remote_get_direct() call somehow without having to
-pass OBJECT_INFO_SKIP_FETCH_OBJECT flag?
+Micronit.  I think you backtick-quoted `--all`, `--no-prune`, and
+friends, that are not configuration keyu terms but command line
+options.
 
-> +static void verify_commit_tree(struct repository *repo,
-> +			       struct commit *commit,
-> +			       struct verify_state *vs)
-> +{
-> +	struct oid_array base_trees = OID_ARRAY_INIT;
-> +	struct commit_list *p;
-> +
-> +	/*
-> +	 * Parent trees are trusted: boundary parents are already
-> +	 * connected, and earlier incoming parents were verified
-> +	 * first due to the topological processing order.
-> +	 */
-> +	for (p = commit->parents; p; p = p->next) {
-> +		const struct object_id *tree_oid;
-> +		parse_commit_or_die(p->item);
-> +		tree_oid = get_commit_tree_oid(p->item);
-> +		tree_map_add(vs->trees, tree_oid, TREE_TRUSTED);
-> +		oid_array_append(&base_trees, tree_oid);
-> +	}
-> +
-> +	verify_tree(repo, get_commit_tree_oid(commit),
-> +		    &base_trees, vs, 0);
-> +	oid_array_clear(&base_trees);
-> +}
-
-Do we assume that we do not have to deal with repository corruption
-in any graceful way?  I am just wondering what happens when
-get_commit_tree_oid() yields NULL after parse_commit_or_die() finds
-p->item is a valid-looking commit object but the tree within it is
-not, and we end up passing NULL to tree_map_add(), perhaps?
-
-The same potential issue may exist in the get_commit_tree_oid() call
-outside the look at the end on the incoming commit's tree.
+> diff --git a/Documentation/pack-refs-options.adoc b/Documentation/pack-refs-options.adoc
+> index 0b11282941..2263648b39 100644
+> --- a/Documentation/pack-refs-options.adoc
+> +++ b/Documentation/pack-refs-options.adoc
+> @@ -1,4 +1,4 @@
+> ---all::
+> +`--all`::
+>  
+>  The command by default packs all tags and refs that are already
+>  packed, and leaves other refs
+> @@ -8,12 +8,12 @@ This option causes all refs to be packed as well, with the exception
+>  of hidden refs, broken refs, and symbolic refs. Useful for a repository
+>  with many branches of historical interests.
+>  
+> ---no-prune::
+> +`--no-prune`::
+>  
+>  The command usually removes loose refs under `$GIT_DIR/refs`
+>  hierarchy after packing them.  This option tells it not to.
+>  
+> ---auto::
+> +`--auto`::
+>  
+>  Pack refs as needed depending on the current state of the ref database. The
+>  behavior depends on the ref format used by the repository and may change in the
+> @@ -29,7 +29,7 @@ future.
+>  	  maintains the property that N is at least twice as big as N+1. Only
+>  	  tables that violate this property are compacted.
+>  
+> ---include <pattern>::
+> +`--include <pattern>`::
+>  
+>  Pack refs based on a `glob(7)` pattern. Repetitions of this option
+>  accumulate inclusion patterns. If a ref is both included in `--include` and
+> @@ -38,7 +38,7 @@ tags from being included by default. Symbolic refs and broken refs will never
+>  be packed. When used with `--all`, it will be a noop. Use `--no-include` to clear
+>  and reset the list of patterns.
+>  
+> ---exclude <pattern>::
+> +`--exclude <pattern>`::
+>  
+>  Do not pack refs matching the given `glob(7)` pattern. Repetitions of this option
+>  accumulate exclusion patterns. Use `--no-exclude` to clear and reset the list of
