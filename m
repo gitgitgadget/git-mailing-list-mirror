@@ -1,66 +1,70 @@
-Received: from mail-pz2-f43.google.com (mail-pz2-f43.google.com [74.125.228.43])
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E96423E87
-	for <git@vger.kernel.org>; Mon, 14 Sep 2026 09:47:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A524248C9
+	for <git@vger.kernel.org>; Mon, 14 Sep 2026 09:48:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789379281; cv=none; b=S+WcLBx0bFuxkguwtpdFhxPi9nkIDHQFCq64cFNB4iKwOjqaGaqOLtUOxICEVDGU3fxb/c4lqwHawnnbqJx3/k8Ijvxun1sRssI1fUo7pzHcBpb02CQSd8JdMkgMrxxk5WH9z1JUZy6hANhQyd3RGx219AU7Zt0Bbe+XhtL1lP0=
+	t=1789379284; cv=none; b=SVvot7kUjknbabUVYEj5AMcAED9X8OUHWoG45US9DEesS4FvPcq0QnDNGAbDgl/XLof9N5/PJ43VoQiX6pBkY7lRgyvSRoRol960h8VZEQlmW/yiucNfSL9p+6opKvLK4WiUEolxu6YDmYtjACs4gMZKHKMXlUF2veLNiJOY/gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789379281; c=relaxed/simple;
-	bh=nlEQuLbt/KmdO8CUVi8E+dBx9+PR6ujwY8QFlV7zC68=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=F9emMSf+IPclr7M3dWsX3Gc0V0IXWWLtbB6LuWG676llS4EqWMRl6YWm+bcdDCiubMM8uD+eeDJpRDlppJWihYYKcWTdi0LnwLpmzvHEqnL57JFcTsvfshRriARnN9FZcnF1cvTFIxx5kplM6B7zB3EILeAO+Bu7b/GHVy3z3+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ArD86ziK; arc=none smtp.client-ip=74.125.228.43
+	s=arc-20240116; t=1789379284; c=relaxed/simple;
+	bh=gAQJ4Xqp8l+T3L7N+40TPwrGWe3oiPAAJHIVXemm9m4=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=rMwQGRAbxPFRdp9bC+A2F/9MQWvtslfkq3SdTqYad2Vd4F5YxwVri258SFxCLO+YRLC9bFO0lt/pU9KYpWGCUqvMxtgcqcTbLrdDIX5OhN4arf22CW7ZVUTwM/2wwwhcXvT0Z/2tvzWFkHvYaw4Usnd8vzYwpDQux36Co4mEunk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EXm091CP; arc=none smtp.client-ip=74.125.227.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ArD86ziK"
-Received: by mail-pz2-f43.google.com with SMTP id d2e1a72fcca58-85469e211a0so1564535b3a.1
-        for <git@vger.kernel.org>; Mon, 14 Sep 2026 02:47:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EXm091CP"
+Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396ccda24afso1313388a91.3
+        for <git@vger.kernel.org>; Mon, 14 Sep 2026 02:48:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789379279; x=1789984079; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789379280; x=1789984080; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=j43bv1CVmiqKsDyyZ+xHCkHe02yZd5oVCPWQ/NnL6JE=;
-        b=ArD86ziKx58UZYDwz1A+X2tw4GM1LZtQG4w6GmsiuUcVN0J4b1anRrX7M7E7QiG5/r
-         /yCKg21FRr454IB8L7NhpiOg6X04sllxbjso7hqaWW+2YSnZ4WyoJ1uZIo8sWOmsxr1A
-         pUt8MwFiMWn7FsPMl3Q56SDug47Qe6BzD6jlBK5ddPHlJSXiph73KhrISd82HDrBR1+P
-         rhLmhCFjV3SeP5MhYYKgFAbveFad2ODhnLg1JesGDp2eCRJjHDnJC9N5De3fyRKy0egc
-         RNEaHp1TiPX57avU8+CpHCQ9h5u3ZiSJvyMXy4sAb06jKKbNnIPRgmlHWt+qMA7ZpfXE
-         EKJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789379279; x=1789984079;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=j43bv1CVmiqKsDyyZ+xHCkHe02yZd5oVCPWQ/NnL6JE=;
-        b=BpjuN7IrPxyIp1PHwUGE+Jc3xubvVuSuSLgn89pHPEfwJwNJAAoaobIF8ShdYR+VJJ
-         l/zuzEGq4U4CDll3TkxvZ6gC4qmTVovO1sdBv7JZJ+m4YuWdFYYUHR6fu48w/A8zHvbv
-         wZVNPK+vkPLOSE5Jm4qG0x+UC679Xpy8oHOyvE1G2X3i0NDBYjMHU7iS8aqyxJCUHB7i
-         eAjzkjRDFjsBzd6ip+v+GXG0OJkhyduNythqZNAnncKDLhJhGHnE/gKAzEdyD2QS9J/N
-         9qw6bE1vhZGdnysWzgC5iZpfuER8WSjJbqksGMAJY5/yDcwM1IuLqB3I1WrtjpUrZ3eR
-         74Qw==
-X-Gm-Message-State: AFuF++lZAzO/2kXVOy99MJl0pnRBi2ODS+AhwFQDK9dDewVRuAC73876
-	XOmKPZwV36Ay1D728z8/O1weEO5DanOcR15qZTzvm05i5jz3igg1nsD39k9W4Q==
-X-Gm-Gg: AYBFou2KlpsIZXy/RsZn49cJ4+/w+k3yj2r2Ku9/x6Btr+ARSw5dN1PUPxSq7laBhQv
-	+mI7J0uPZHNE59eygT0FkLjXRjHHzLBQet/D5+g9HxeArUAFX19oXZnhA5qTLf6f/19Agv1Wwc2
-	frcQSovjKCe419n9Ud5dASa5Q596qeSbCFl9QEIv2QqbbWJ7QaRmJjxNbZLJaDYwohYewtnvekK
-	JZLL1CobN4Gd1hnHddAxYwli/pcFp0WoEs2d4neISIymgcJLUhxRvIAb2ZZVknhOZdfSxPYUGbs
-	kbSQwfDeDhY7e8l0SgnveP/pXbrL1sTSbmbA93y4OVRuYVM6/3+A9arn/6tUkMWUQxjTe5M34yB
-	J5fFFk/k0J3alHIvxbXZwxqQgmnPfc8PluZjaBzeCFEQkfZ3UclxQ7xCehkq/Fq879zA8CjI68N
-	WOR0nYFclOndACxQkj4RfzENWN8c/tVhG1lxyyFrraU+OW5f+Uu/oipgtgwsESx37i9tMAP/F7T
-	0fz
-X-Received: by 2002:a05:6a21:7009:b0:3c4:46ca:334b with SMTP id adf61e73a8af0-3db4043dd86mr4274591637.9.1789379278514;
-        Mon, 14 Sep 2026 02:47:58 -0700 (PDT)
+        bh=Q+O6PK2EUa17RHITADJNUCSmA7pnZCYmr4Mln7xMYXg=;
+        b=EXm091CPdaJMjHZwqvFKSGqBOWGBclGQQ3/gXHmA1xZDdwpFclf3Eb+QIXSW7rc70X
+         ooQYNmiFshZoZyXOeZ+hY+loIDICBbz7qygLgimNQ2O1T3LYqPtbdba5EVgaCmZg+XCr
+         E6hgbMO12TgS0f52q/WxfxdsC6JvrW9ZYgVeENVhPQ1CvCh2MjtkSEE83bZRZDFZyr35
+         Wbz2GZC4AHOXUY2ZR4Z6Yps1wxnjBwfhs1pg3iEWNnEFkZsSSZUPcPNk+bm9Nmt0Ysk7
+         eaLGCBO8WkDtc+V8Rz55RPvDOc/GpkU5Lv3SatO5yLg7WPxD5aEdH1KMr1XbywzDmfee
+         4y8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789379280; x=1789984080;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Q+O6PK2EUa17RHITADJNUCSmA7pnZCYmr4Mln7xMYXg=;
+        b=Y4shCovI95mbi29JXEgnrA0EDpUT2uRxXO+kQgm4T1L48L9220/vT9tvP0Pitn9jWQ
+         R59U+7Ivrd3c3yC1eMZRLjIMAnFnC0Sww1YBUhyYCWlnPNYLBuqqu7qMr673eqxPvTDf
+         u/BD3nUNRF4OU3yMrABMTu+ahwEPJSkxvHa/6agqvDgX455zKiq+F1dFm0n5d+TTc1ey
+         BlVcq3TEx0DGYscvkr/pha6eK9/sCmNQoUWcYr4QqSEzbkt1jadQaawAcqcqUrT/aEaP
+         AsmASaTer3UjpnDu8cE9Y0ATvmwfsE4hUHly5hH9FCPxV9KLeTVHQuPAseW1l3gmT6G3
+         kqfA==
+X-Gm-Message-State: AFuF++m0UVjlEM+dneozOFJOMUf09noB0rouRFHyvT73RwDUARYW6NyT
+	aS9H9yCFLQl16wa8T4Wu4+cgIK/EAz40fCByiGX8cPRXYOGUcZ3vd2sqByQ7gw==
+X-Gm-Gg: AYBFou02kehWxBDn3PcmBYqBvs05cWZW26kUx/8KPUUXbmgb29PTfoZSF7M+qGB74Fj
+	HoQnNCeX8LqvXeuPpDurVX6Qr/d7Ibs35i7Ulkh3P7E6jfnhv3eWCkLCWtZ82omBcaS2YOeVddc
+	OE4wQnP6PCZt83RCOFg7qEM+MkIX0HyXKIW+dxaXfT3paD4l/VOMf19atamp0PyBS73y77iWRBb
+	88TkMI8WIiunKLyCEUZGA1TteXFgVinsXegEaRksRTCroxmG5wPO2NVqtRQBSkNucRZrokSxwgh
+	cDFvJA5yb1TVIU4oAW+jClDv2Ke2PpMskf3zEi/JyA4UdnCKWjg5DyrpRFhWJ9JZrVuWz351n23
+	bhb4f16wSy3J8Z/krD6WP7ePsRD2tPIdImhmb4RKfClEo6A3mMEW1I1FwYukWkOm1SP7Rz7YAOu
+	d/ZIL/CYg6lfAtjCWuoH3NwGH9QBXYWociBgwmpFWSRqvonFVb4umwIMP5hstOUuMSBXwDUMci/
+	Kr79w==
+X-Received: by 2002:a17:90b:2885:b0:39d:f15b:589f with SMTP id 98e67ed59e1d1-39df15b5965mr2013682a91.5.1789379280060;
+        Mon, 14 Sep 2026 02:48:00 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.209.178])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14365bb6ba0sm23653390c88.15.2026.09.14.02.47.57
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14365b759d0sm26006747c88.7.2026.09.14.02.47.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2026 02:47:57 -0700 (PDT)
-Message-Id: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
+        Mon, 14 Sep 2026 02:47:59 -0700 (PDT)
+Message-Id: <e55c5452db0b7cb683d4e2ad51cd8f44046c23bd.1789379276.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
+References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
 From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 14 Sep 2026 09:47:54 +0000
-Subject: [PATCH 0/2] connected: add incremental connectivity check
+Date: Mon, 14 Sep 2026 09:47:55 +0000
+Subject: [PATCH 1/2] Documentation: describe connectivity checking
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,180 +75,135 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Kristofer Karlsson <krka@spotify.com>
+Cc: Kristofer Karlsson <krka@spotify.com>,
+    Kristofer Karlsson <krka@spotify.com>
 
-This series adds an incremental mode for the connectivity check, gated
-behind transfer.connectivityCheck=incremental (no expected changes unless
-you opt in).
+From: Kristofer Karlsson <krka@spotify.com>
 
-The intent is to solve the problem of the connectivity check slowing down as
-the number of reachable objects from the boundary grows.
+Add Documentation/technical/connectivity-check.adoc describing
+the connectivity invariant and the full connectivity check.
 
-It relates to the RFC I sent out earlier:
-
-[RFC] check_connected: toward incoming-proportional cost
-https://lore.kernel.org/git/CAL71e4Nf=-zCrfN7ghEVGq11irajJhtdxYZgKe0Ycux0qs1ZvQ@mail.gmail.com/
-
-
-
-Design
-======
-
-The verifier runs inside the same rev-list subprocess that check_connected()
-already spawns, triggered by a new internal flag --verify-trees-incremental.
-After get_revision() collects the incoming commits, the verifier processes
-them in topological order (ancestors before descendants).
-
-The idea is to keep a set of trusted objects, shared across the incoming
-commits, that grows over time. We visit the new/untrusted commit trees and
-do a comparison walk over the trees of their parents. Entries discovered on
-the trusted parent side are remembered as trusted, which lets later
-verification skip matching objects and avoid descending into unchanged
-subtrees.
-
-More algorithmic details are in
-Documentation/technical/connectivity-check.adoc.
-
-
-Benchmarks
-==========
-
-I'll just mention a short summary here, to avoid repeating what's already in
-the commit message. The incremental mode is faster than the full mode when
-there are few commits to verify and when the active object tree is large. In
-the happy case, the work tracks the changed paths and their comparison trees
-rather than the full reachable object closure, which substantially reduces
-the dependence on total repository size. I've seen speedups up to around 20x
-for the synthetic perf tests.
-
-Running against a large real-world repo (3.4 GB boundary closure), the
-numbers are more dramatic. All timings use rev-list directly with --not
-HEADN, isolating the tree verification cost from the boundary-finding cost:
-
-commits    full  incr.  speedup   full RSS  incr. RSS
-      1    1.9s  0.01s    190x      3.4 GB     14 MB
-     10    1.9s  0.04s     48x      3.4 GB    125 MB
-    100    1.9s  0.37s      5x      3.4 GB    1.1 GB
-
-
-The full mode takes ~1.9s regardless of commit count because it is dominated
-by walking the boundary closure. Incremental scales with the number of
-incoming commits and the paths they touch. Memory follows the same pattern:
-incremental uses a fraction of the full mode's RSS for small pushes,
-converging only when many commits are verified.
-
-There are also regression cases in the synthetic fixtures. With long
-incoming histories, the extra parent-tree scans accumulate; in the synthetic
-fixture incremental is about 1.5x slower at 10000 commits. Per-commit
-changes have less impact than expected: even when every directory is
-touched, incremental remains competitive; bypassing the object cache for
-tree reads likely helps here.
-
-I cannot establish how common these regression cases are. In the cases I
-have tested, however, the regression has remained modest; I have not been
-able to provoke a substantially larger slowdown. My feeling is that this is
-an acceptable tradeoff behind the opt-in config, since the target case
-(small pushes to large repos) sees the largest speedup, while the regression
-appears with long incoming histories.
-
-A safety net for this regression could be to dynamically disable the
-incremental mode if the number of incoming commits is too large, but this is
-left out of the initial version to avoid overly speculative code.
-
-Deepening fetches currently fall back to the full check because the full
-check omits --not --all for deepening -- there is no existing-reference
-boundary at which the walk can stop. An incremental approach is possible
-here too -- using the old shallow roots as the trusted boundary and walking
-the deepened ancestry forward -- but that is a separate change and left for
-future work. Deepening is also less common than regular fetch and
-receive-pack, where the speedup matters most.
-
-
-Test coverage
-=============
-
-Most correctness cases in t5412-connectivity-check.sh are run in both full
-and incremental modes to check semantic equivalence. Selected cases
-additionally assert trace2 tree/blob counts for the incremental mode, to
-verify that unchanged portions of the object graph are actually skipped. It
-covers:
-
- * Corruption detection: missing blobs, missing trees, type mismatches,
-   malformed trees (unparseable, mid-tree corruption)
- * Tree optimization: trace2 assertions confirm unchanged subtrees are
-   skipped, subtree moves, merge parent boundaries
- * Root commits (no parents -- verifies full tree closure)
- * Partial clones: missing promised blobs, missing promised trees,
-   verification of local commits
- * Replacement objects (with and without GIT_NO_REPLACE_OBJECTS)
- * Shallow boundaries
- * Deepening fetches (falls back to full check)
- * Integration: real push, fetch, and clone
-
-Most tests call git rev-list directly with the appropriate flags;
-integration tests exercise the full check_connected() path through push,
-fetch, and clone.
-
-
-Alternatives considered
-=======================
-
-My first prototype ran the verifier in-process inside connected.c. This
-required a second rev-list subprocess just for boundary finding, _nofetch
-variants of several object-reading functions to prevent lazy fetches in
-partial clones, explicit shallow-file plumbing, and careful avoidance of
-die() in all code paths reachable from the verifier. The result worked but
-was fragile and touched many files.
-
-Moving the verifier into the rev-list subprocess eliminated all of those
-problems: in partial clones the existing --exclude-promisor-objects handling
-already disables lazy fetching, die() is isolated by the process boundary,
-shallow and replacement semantics are established before the verifier runs,
-and error routing comes for free via stderr.
-
-So while I liked the idea of being less reliant on checking within a
-subprocess, making that work ended up being a lot more complex.
-
-
-Next steps
-==========
-
-This series only addresses tree verification; the other significant cost is
-finding the commit boundary, especially for repos with many refs. I already
-have some prototypes for optimizing that too, and if this ends up landing,
-that would be something I would start polishing up.
-
-Thanks, Kristofer
-
-Kristofer Karlsson (2):
-  Documentation: describe connectivity checking
-  connected: add incremental connectivity check via rev-list
-
- Documentation/config/transfer.adoc            |  20 +
- Documentation/rev-list-options.adoc           |   6 +
- .../technical/connectivity-check.adoc         | 243 +++++++
- Makefile                                      |   1 +
- builtin/rev-list.c                            |  18 +
- connected.c                                   |  24 +
- meson.build                                   |   1 +
- t/meson.build                                 |   1 +
- ...enerate-repo-p5412-connectivity-check.perl |  44 ++
- t/perf/p5412-connectivity-check.sh            |  92 +++
- t/t5412-connectivity-check.sh                 | 655 ++++++++++++++++++
- tree-verify.c                                 | 306 ++++++++
- tree-verify.h                                 |  15 +
- 13 files changed, 1426 insertions(+)
+Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+---
+ .../technical/connectivity-check.adoc         | 109 ++++++++++++++++++
+ 1 file changed, 109 insertions(+)
  create mode 100644 Documentation/technical/connectivity-check.adoc
- create mode 100644 t/perf/generate-repo-p5412-connectivity-check.perl
- create mode 100755 t/perf/p5412-connectivity-check.sh
- create mode 100755 t/t5412-connectivity-check.sh
- create mode 100644 tree-verify.c
- create mode 100644 tree-verify.h
 
-
-base-commit: 47ce80527c56f462cb97db4ca8125342204d3783
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2211%2Fspkrka%2Ftree-diff-connectivity-v1-clean-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2211/spkrka/tree-diff-connectivity-v1-clean-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2211
+diff --git a/Documentation/technical/connectivity-check.adoc b/Documentation/technical/connectivity-check.adoc
+new file mode 100644
+index 0000000000..d20bff6af6
+--- /dev/null
++++ b/Documentation/technical/connectivity-check.adoc
+@@ -0,0 +1,109 @@
++Connectivity checking
++=====================
++
++After receiving new objects via fetch, push (receive-pack), clone,
++or bundle, Git verifies that the new reference tips do not leave
++the repository in a state where reachable objects are missing.
++This verification is called the connectivity check.
++
++Connectivity invariant
++----------------------
++
++A repository is connected when every object reachable from its
++references is available locally (with exceptions noted below).
++
++The connectivity check maintains this invariant when references
++are updated.  It trusts the existing connected state and verifies
++that the new reference tips do not introduce references to
++unavailable objects.  Verification is permitted to stop when it
++reaches objects already reachable from trusted existing
++references, since their closure is already connected.  These
++trusted references include local references and references from
++alternate object stores.
++
++Without this check, a truncated or corrupted transfer could leave
++a repository in a state where later history walks encounter
++missing objects.
++
++Exceptions
++~~~~~~~~~~
++
++Gitlink entries (submodule references) are excluded from
++connectivity checking.  Their target objects belong to a separate
++repository.
++
++In partial clones, objects promised by a promisor remote are
++accepted as connected without requiring local existence.  The
++check excludes promisor objects from traversal so that it does
++not trigger on-demand fetches for them.
++
++Full connectivity check
++-----------------------
++
++`check_connected()` (see `connected.c`) normally performs the
++connectivity check using a `rev-list` subprocess, feeding the
++new reference tips via stdin.  A normal invocation is roughly:
++
++    git rev-list --objects --stdin --not --all --quiet
++        --alternate-refs [--exclude-promisor-objects]
++
++When promisor remotes are configured, `check_connected()` first
++attempts a fast path based on promisor packfiles.  If it falls
++back to the `rev-list` check, `--exclude-promisor-objects` is
++added so that the traversal does not trigger on-demand fetches.
++
++Consider the following graph after a fetch, where all reference
++tips point directly to commits.  For simplicity, only local
++references appear on the already-connected side; alternate refs
++play the same role.  N3 is a merge commit:
++
++            /-------------L2
++           /
++    C1---B1---C2---B2-----L1
++          \         \
++           N1        N3---T2
++            \       /
++             N2-----------T1
++
++    L1, L2:         local refs
++    T1, T2:         incoming tips (new refs)
++    N1, N2, N3:     incoming commits (N3 is a merge)
++    B1, B2:         boundary commits (already connected)
++    C1, C2:         already connected (but not boundary)
++
++The incoming set is the commits reachable from the incoming
++tips but not from the already-connected side.  Boundary commits
++are the already-connected commits at the edge of that set.  Here
++B1 is an ancestor of B2, which happens when incoming branches
++fork at different depths in the existing history.
++
++The check proceeds in three phases:
++
++1. Walk from the incoming tips (T1, T2) against the trusted
++   refs (L1, L2) to find the incoming set ({N1, N2, N3, T1, T2}).
++
++2. Walk the trees of the boundary commits (B1, B2) and mark
++   those objects uninteresting.  These trees are already trusted
++   because their commits are on the already-connected side.
++
++3. Walk the trees of each incoming commit and verify that every
++   referenced object is connected, stopping at objects already
++   marked uninteresting in phase 2.
++
++Deepening fetches
++~~~~~~~~~~~~~~~~~
++
++For deepening fetches (where the shallow boundary moves), the
++full check omits `--not --all`.  There is no existing-reference
++boundary at which the walk can stop.  Instead, traversal follows
++the effective shallow boundary supplied for the deepened
++repository.  The new content may be below the old shallow
++boundary even when the tips themselves have not changed.
++
++Non-commit tips
++~~~~~~~~~~~~~~~
++
++When a new reference points to a non-commit object, such as a
++tag, tree, or blob, that object is not part of the commit walk.
++These non-commit tips are handled by the subsequent object
++traversal.
 -- 
 gitgitgadget
+
