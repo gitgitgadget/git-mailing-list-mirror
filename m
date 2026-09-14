@@ -1,70 +1,70 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76E3443A81
-	for <git@vger.kernel.org>; Mon, 14 Sep 2026 11:31:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682D14446FA
+	for <git@vger.kernel.org>; Mon, 14 Sep 2026 11:31:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789385489; cv=none; b=rPAYhKhZjPWVSUc120tJBvIhS8eeNFEr0WFsoQUhT3j0kGfJKwKsheHzc4LSVNapQrrJfrXsphskjlJY8pPzgYq9e81qm+qaFYIfIldTWlckzP7r6gfLnB+m9zLT27wvAu07Q4FrKqMILgsALwBTftMTyvqhB9VgZKxKw8DwyjU=
+	t=1789385490; cv=none; b=jAyy6xIh+SmV8Ini2pZLN9RDIc10OPWr4cqjNiLFsjXbjTQm7MXzRxAZwkY6498eOyZKUHdDAj/08enHU9zd5M1QZK/DC9CmUwDRuLyWh1iu3W3tfDj5wMCjvCD4yEqWelCZUIvDRmjSJ6N45qbTS6NI/0tppZkl7/4/uwcmZs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789385489; c=relaxed/simple;
-	bh=sttCLbjb/wEiNVZQFNac2ymoerqTwp7Zmm/SrpKXyew=;
+	s=arc-20240116; t=1789385490; c=relaxed/simple;
+	bh=7FQAv0xilKM7BMUM0aO7Fp0DEYdLipfXCdSd2TSOJxc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=KJQXlJtQkTf9QgNSuBucB0NVDBAKke6/f5epixGtmo2Eb0scDkNuMgbK5Ax+CT2n9cfMP+PANrS1JRSq6p7IU9Nzoq52R68dK9S5g/uW5UOSHW6guK5Q5HQIHAxn51rKLLxRD2wyTJEH1oVuJzXzlkyOjjn8VUagbl8dB3bb04U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pU83r6+N; arc=none smtp.client-ip=74.125.227.141
+	 MIME-Version:To:Cc; b=JESnxwwOoGWQXGCSLkMj/RybyZ3oHYSPUcRlg1MrkOFe77cd2+RpjsEURdIhsBNc58L2fgDvVSeGZHrZyFS4mbTGG56HHOjXPUXGlQl6LovPuGUSR77V99zuSRBSC8koAUY41S27UcVfUSKWvKgVyENNQ7U+9bcEBVMkpTvF+iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OeCYwYwY; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pU83r6+N"
-Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2d8fb334e72so18679035ad.1
-        for <git@vger.kernel.org>; Mon, 14 Sep 2026 04:31:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OeCYwYwY"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-86ec25cf7ecso704822b3a.1
+        for <git@vger.kernel.org>; Mon, 14 Sep 2026 04:31:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789385487; x=1789990287; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789385489; x=1789990289; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=e/ZQ+39pj/JR1447+kEqiotTW6ixt7z5+q+Eg/HI/IQ=;
-        b=pU83r6+Ne5MjLelhuF0eXVRl05CT7kuZGRAhvW/tP4l5KIMOkgXcAoyVVLpYpjgO1z
-         KoQbVkUDokvkT1F5zbP07q0K5vwBV6ff7Z+jcooOsTxLQmx81OqIHuYclf8fE9sel1sm
-         P4zx2V6ceiGUEvK6K9NpCNx0WEU5+I7cpIv7Nh0PLDKwyCTSt147Zq++lRuVVOFPDKFS
-         iCsFD35BFTvEVBY7nqRjr5dOjTLrXV6xptyFvbTGSKpkkA6/ROGyzIF/L07MoLi8K00r
-         8ak3x48iTzvsGdLNdZBNff1bbyNFBDGnTZheBntfJucO3YoJDCV/Hwm/2WFOc73ExDQb
-         K7uw==
+        bh=s0kLvt0TiJhwJWZ30oqJfPT3F0Eu8GP8xiOBtyQM3TU=;
+        b=OeCYwYwYLLWVScGy7XvmaZvYiAebg5NR32AWXvxs3HWbTDINBefPKX0OFBXiHl9IsS
+         xmJ3Q9pOsi3G+K0sQfh9BGAuJ2FLYzCwPb8VzbMu98yqvz6xhATi0VfUrUfM6dsTTHu4
+         omfUJ48nlHFCsFrQVhhZnhsvQa2vq0bw3Ifm9txglqyxDDlgvDUch9ukEIQdl3l4+W7v
+         bltZ9PdH3BiYG07UvnIyJSnFTwGCYKvVxLgzeHV/2JfdoaxAfwMoIOeOwtQBJ2TkcLKK
+         8LJeQd4oK4C0vXxU8n/bK4vWKwjzbyovn6HaocjuxSWpAcuhfZCXKFub8WJQXKzA6Wl4
+         ECdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789385487; x=1789990287;
+        d=1e100.net; s=20251104; t=1789385489; x=1789990289;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=e/ZQ+39pj/JR1447+kEqiotTW6ixt7z5+q+Eg/HI/IQ=;
-        b=Wlw/UoD8Fgo/yQecl0or61geqf5Jw8EkoQexUO5ZZ7RVQK9WlOI5Y6IyKL7ljYk1sC
-         DCFvVeY1j0D1+95FNP/w0OSF8LXR6FHyHtk2ZBZqvKNFIcB9mQ2+BvvzLPkTyhHHDPBC
-         fSna37tZ/ED4faRpv8V5mqT49Z3azeDZsOPB6xDQpulAX8bQ7l11Q/muBl9NVgrM0mFM
-         OxjfprwZgqHjzWktPNJoF9UfiWx7VHUIYgNqyhM2ALXYBzh7ivMrjf9JLlhI0hsldtze
-         G3DuRiyvZhytcfxEO4OMjVjpzbix2lfB9zgYsjSvVZiplyofJlN93KPIcL8gH0TbBy6k
-         9m0A==
-X-Gm-Message-State: AFuF++mmXpgGRbtDcZlci1vPue0x/QXU3Y1ytGcwJiA+re3d2uaCluPx
-	mECobK8j6F45e7JACk/deDQ5GNp7ayC/sU8XHQGN472Ofs4YTI5JqE0+W14sRQ==
-X-Gm-Gg: AYBFou2+hMfwu7JMMHMKD5iXxwXtwSWUcXi1/lB/sDiiszbX5FKQF5HI2bYxvdjxqLx
-	epGPfSGse97KRePKcHIikeW3LuTuOYWTFLME4JHDaqfAMl3zMEDio9sNdXGMKcrcQ+s0Qg2p1YY
-	M62k0q2XftBr7FnYx9CyuRCu+yO+6Jnxd6tpoAG571Y10xCIr4Z8Dh+IQTJXFaxwcBK0I49MwST
-	eiAPlcrPRfZNE5+SR47qhLRafOxl4CPxnXQDgQ2R5pGMiKBdFOpuVliG2RKwl07C6xLRaVmdhL5
-	0ac+EgGhd9E7X81hhh4swMlTIRbSjrfQoRnXjloDrSqP0ZyJJEu7ITx4YbyOubg8g7dOgmqcVIC
-	D818/GoekmkQqFzYq/ngfEDtVV0pU2w4JkogwL2K6ulHvHqebsk9LKygcwntefwzfBZMm6/xB+S
-	DMUsvI4UpSSK3OBVE+4jv1UHTmy2cic2aRuVYvN7HlYNxQWQvLWXOuvSryifpKfNqtog0ayuEFB
-	CNn
-X-Received: by 2002:a17:90b:39cc:b0:39d:e54c:8658 with SMTP id 98e67ed59e1d1-39debf547abmr5074038a91.5.1789385487078;
-        Mon, 14 Sep 2026 04:31:27 -0700 (PDT)
+        bh=s0kLvt0TiJhwJWZ30oqJfPT3F0Eu8GP8xiOBtyQM3TU=;
+        b=ggtvl48UuEXRd2zxxVogkTyfh4Wp1TtHHd9RBdr1i9YXZRdQnfwbFDY5bC2GebSGwe
+         Kl1x5nDgovS08CbuOfQKpFahX9lwPDKx7KTVWJ6Z35jOM0Ch1bOi4bn6LDqQRgU0GbDA
+         1sZ1edMwHnoRDgqVCQP5LdWKzlemyaSQbyi1gtCNpG0BlW7m36dVZxRyQrQirMSKy8al
+         WQlxgxF5WQTZDPRxi50OL3CcvrSP3RBp8qMpIdm0v3TjmGVX+zGFp2BFmT454I8GCmHl
+         Idf7ZRLGYMeO9h3+zybFUL0Bl8WLQRNcBTDxG39AQ/GUXBL7kUapXxji/vVYxDc8jm3b
+         0uIg==
+X-Gm-Message-State: AFuF++lJbNrLt+g18h9tkxNzkImbHKvajUIXJq13PjEKZfay21/ERDe1
+	rn6dP12CVumrZbHMPxSClCvQE2Mzs43FMOI+yfjpBq/ZeTOvMnJNfqL75tKYyQ==
+X-Gm-Gg: AYBFou2A5dTXz0MQa1wrN11Lja/6Op8bGxKa52s6YCH4kgzejixCrYb+3ZagbRLdi28
+	Gt2tSRlWoNiSyWXdLQ0jZjoqpF7gzeMOLFJ46YarENSL2LoLM1lFwSNUJzJMs/z3MjLh+nt3rR7
+	oAKhCraVv8/gmVyqgQAsBL1U2qS6JCK1SyJxPQv/NhbF17wiCPTHYdHj4dEC+tI26lzrkPXikvb
+	9tzVS280BL6uiVoR7YCtWBb70uFErRRzJpEpzHM5VH6rGUiN5dqS4D3MDqZ1DrYRBaxczP5wXup
+	CDQFctwSF213FbgHZs9wLdBu8yGYZv2/t778ul8im5eNmd+KNqX+3ZxJc+zkwu1/T2fG0WJOTO9
+	Tfxq9yceCFabOIF7wJgI7o8rNQpi3gzWu+zU3T96BpDqVlyi7q0n3vJ0A3kpmoDbEkOATpYRGC8
+	3EJTwGz7IpFBYZ90cnFvwz8FpPCg6o7iZhqhdoJ0O5njFXgDSAVlqa8K9/zxStL290rTIcRR/+v
+	xwG
+X-Received: by 2002:a05:6a00:240c:b0:854:b3d3:8631 with SMTP id d2e1a72fcca58-86e2acce598mr6425699b3a.12.1789385488673;
+        Mon, 14 Sep 2026 04:31:28 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.219.146])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d9d58adb5sm6399000a91.3.2026.09.14.04.31.26
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-86b5674bc2dsm4427220b3a.59.2026.09.14.04.31.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2026 04:31:26 -0700 (PDT)
-Message-Id: <932e8e425aecfbd33c1e5caf66c80a0226abacba.1789385483.git.gitgitgadget@gmail.com>
+        Mon, 14 Sep 2026 04:31:28 -0700 (PDT)
+Message-Id: <9349ea48b09347eff5da8a8862268d63605af690.1789385483.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2219.git.1789385483.gitgitgadget@gmail.com>
 References: <pull.2219.git.1789385483.gitgitgadget@gmail.com>
 From: "Qin ShiCheng via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 14 Sep 2026 11:31:18 +0000
-Subject: [PATCH 1/6] odb: don't remove a ".keep" we never installed
+Date: Mon, 14 Sep 2026 11:31:19 +0000
+Subject: [PATCH 2/6] pack-objects: keep --keep-pack open when following
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,315 +84,128 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Qin ShiCheng <qeesung@live.com>
 
-receive-pack runs index-pack with "--keep" over the quarantine, which
-writes a "pack-XXX.keep" there. The path we register as a tempfile is
-a different one: where that ".keep" will land once the quarantine is
-migrated into the main object database.
+"--stdin-packs=follow" distinguishes excluded packs that are closed
+under reachability ("^") from those that are not ("!"). The traversal
+stops at objects in the former, and goes on through the latter to
+rescue whatever they depend on that would otherwise be left out.
 
-Nothing of ours is at that path yet, and something else may be. Two
-pushes of identical content produce identical thin packs, index-pack
-names a pack after its contents, and so both want the same ".keep" in
-the main object database. If the other push still holds it, that file
-is what keeps its pack from being repacked away, and we remove it at
-exit regardless -- even when pre-receive rejected our push and nothing
-was migrated at all.
+A pack named with "--keep-pack" gets the same in-core flag as a "^"
+pack, so the traversal stops at it too. Nothing warrants that: the
+caller said not to repack it, not that it is self-contained. When it
+holds a commit but not that commit's tree, the tree is never rescued,
+and writing a bitmap over the result fails for lack of closure.
 
-Register the path right before the migration instead, and once the
-migration has returned, read the files back. index-pack wrote the
-message we handed it; a file that says something else was not written
-for us, so let go of it without removing it. tempfile gains
-unregister_tempfile() for that.
+In follow mode, mark such a pack as kept-open instead, the way repack
+already lists the packs it cannot vouch for as "!" on stdin. Its
+objects stay out of the result, and the traversal can go through it.
 
-Registering only after the migration would leave a window: the ".keep"
-is the first thing migrated, and for a push that duplicates a large
-pack the migration then spends a while comparing the two packfiles. A
-signal in between would leave our ".keep" behind, with our message in
-it, and every later push of the same content would fail to migrate
-over it. Registering first keeps that window closed, as it is today.
-
-Reading the files back also covers a migration that fails partway
-through with our ".keep" already in place: we go by what is there, not
-by whether the migration succeeded, and still remove it.
+This matters more once repack names its ".keep" packs this way instead
+of passing "--honor-pack-keep": on-disk kept packs never were a
+boundary, and they should not become one.
 
 Signed-off-by: Qin ShiCheng <qeesung@live.com>
 ---
- object-file.c              | 95 +++++++++++++++++++++++++++++---------
- t/t5547-push-quarantine.sh | 52 +++++++++++++++++++++
- tempfile.c                 | 12 +++++
- tempfile.h                 |  9 ++++
- 4 files changed, 147 insertions(+), 21 deletions(-)
+ builtin/pack-objects.c        | 20 +++++++++++++----
+ t/t5331-pack-objects-stdin.sh | 41 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 57 insertions(+), 4 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index a4cbf8b081..21513ee535 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -29,6 +29,7 @@
- #include "read-cache-ll.h"
- #include "run-command.h"
- #include "setup.h"
-+#include "string-list.h"
- #include "strvec.h"
- #include "tempfile.h"
- #include "tmp-objdir.h"
-@@ -492,9 +493,13 @@ struct odb_transaction_files {
- 	struct transaction_packfile packfile;
- 	const char *prefix;
- 
--	struct tempfile **pack_lockfiles;
--	size_t pack_lockfiles_nr;
--	size_t pack_lockfiles_alloc;
-+	/*
-+	 * The message index-pack writes into its ".keep" files, and where
-+	 * those files end up once the quarantine is migrated. Each "util"
-+	 * holds a tempfile for as long as we consider that file ours.
-+	 */
-+	char *keep_msg;
-+	struct string_list pack_lockfiles;
- };
- 
- int odb_transaction_files_prepare(struct odb_transaction *base)
-@@ -1256,6 +1261,45 @@ out:
- 	return ret;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 708b719f40..6f579173b0 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4999,7 +4999,8 @@ static void get_object_list(struct rev_info *revs, struct strvec *argv)
+ 	oid_array_clear(&recent_objects);
  }
  
-+/*
-+ * Track the ".keep" files before the migration moves them into place, so
-+ * that a signal in the middle of it removes ours.
-+ */
-+static void register_pack_lockfiles(struct odb_transaction_files *transaction)
-+{
-+	struct string_list_item *item;
-+
-+	for_each_string_list_item(item, &transaction->pack_lockfiles)
-+		item->util = register_tempfile(item->string);
-+}
-+
-+/*
-+ * The migration stops at the first file that differs from what is already
-+ * at its destination, and a ".keep" left by somebody else's push is one
-+ * such file. Rather than work out what got installed, read the files
-+ * back: one that does not carry our message is not ours to remove.
-+ */
-+static void disown_foreign_pack_lockfiles(struct odb_transaction_files *transaction)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct string_list_item *item;
-+
-+	for_each_string_list_item(item, &transaction->pack_lockfiles) {
-+		struct tempfile *lockfile = item->util;
-+
-+		strbuf_reset(&buf);
-+		if (strbuf_read_file(&buf, item->string, 0) >= 0) {
-+			strbuf_trim_trailing_newline(&buf);
-+			if (!strcmp(buf.buf, transaction->keep_msg))
-+				continue;
-+		}
-+		unregister_tempfile(&lockfile);
-+		item->util = NULL;
-+	}
-+
-+	strbuf_release(&buf);
-+}
-+
- static int odb_transaction_files_commit(struct odb_transaction *base)
+-static void add_extra_kept_packs(const struct string_list *names)
++static void add_extra_kept_packs(const struct string_list *names,
++				 enum stdin_packs_mode stdin_packs)
  {
- 	struct odb_transaction_files *transaction =
-@@ -1264,6 +1308,7 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
- 	if (transaction->objdir) {
- 		struct strbuf temp_path = STRBUF_INIT;
- 		struct tempfile *temp;
-+		int ret;
+ 	struct packed_git *p;
  
- 		/*
- 		 * Issue a full hardware flush against a temporary file to ensure
-@@ -1285,7 +1330,10 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
- 		 * Make the object files visible in the primary ODB after their data is
- 		 * fully durable.
- 		 */
--		if (tmp_objdir_migrate(transaction->objdir))
-+		register_pack_lockfiles(transaction);
-+		ret = tmp_objdir_migrate(transaction->objdir);
-+		disown_foreign_pack_lockfiles(transaction);
-+		if (ret)
- 			return error(_("unable to migrate temporary objects"));
+@@ -5018,8 +5019,19 @@ static void add_extra_kept_packs(const struct string_list *names)
+ 				break;
  
- 		transaction->objdir = NULL;
-@@ -1393,10 +1441,10 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
+ 		if (i < names->nr) {
+-			p->pack_keep_in_core = 1;
+-			ignore_packed_keep_in_core = 1;
++			/*
++			 * When following, treat the pack like a "!" pack, not
++			 * a "^" one: nobody said it is closed under
++			 * reachability, so the traversal must be able to go
++			 * through it.
++			 */
++			if (stdin_packs == STDIN_PACKS_MODE_FOLLOW) {
++				p->pack_keep_in_core_open = 1;
++				ignore_packed_keep_in_core_open = 1;
++			} else {
++				p->pack_keep_in_core = 1;
++				ignore_packed_keep_in_core = 1;
++			}
+ 			continue;
+ 		}
+ 	}
+@@ -5443,7 +5455,7 @@ int cmd_pack_objects(int argc,
+ 	if (progress && all_progress_implied)
+ 		progress = 2;
  
- 		if (xgethostname(hostname, sizeof(hostname)))
- 			xsnprintf(hostname, sizeof(hostname), "localhost");
--		strvec_pushf(&child.args,
--			     "--keep=receive-pack %"PRIuMAX" on %s",
--			     (uintmax_t)getpid(),
--			     hostname);
-+		free(transaction->keep_msg);
-+		transaction->keep_msg = xstrfmt("receive-pack %"PRIuMAX" on %s",
-+						(uintmax_t)getpid(), hostname);
-+		strvec_pushf(&child.args, "--keep=%s", transaction->keep_msg);
+-	add_extra_kept_packs(&keep_pack_list);
++	add_extra_kept_packs(&keep_pack_list, stdin_packs);
+ 	if (ignore_packed_keep_on_disk) {
+ 		struct packed_git *p;
  
- 		if (!opts->quiet && err_fd)
- 			strvec_push(&child.args, "--show-resolving-progress");
-@@ -1423,18 +1471,13 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
- 		/*
- 		 * The lockfile filepath is expected to be the final location of
- 		 * the ".keep" file after being migrated to the main ODB source.
--		 * This ensures the lockfile can be found and removed later
--		 * after the ODB transaction has been committed.
-+		 * We start tracking it right before that migration; see
-+		 * odb_transaction_files_commit().
- 		 */
- 		lockfile = index_pack_lockfile(base->source, child.out, NULL);
--		if (lockfile) {
--			ALLOC_GROW(transaction->pack_lockfiles,
--				   transaction->pack_lockfiles_nr + 1,
--				   transaction->pack_lockfiles_alloc);
--			transaction->pack_lockfiles[transaction->pack_lockfiles_nr++] =
--				register_tempfile(lockfile);
--			free(lockfile);
--		}
-+		if (lockfile)
-+			string_list_append_nodup(&transaction->pack_lockfiles,
-+						 lockfile);
- 		close(child.out);
- 
- 		status = finish_command(&child);
-@@ -1454,12 +1497,21 @@ static int odb_transaction_files_finalize(struct odb_transaction *base)
- {
- 	struct odb_transaction_files *transaction =
- 		container_of(base, struct odb_transaction_files, base);
-+	struct string_list_item *item;
- 	int ret = 0;
- 
--	for (size_t i = 0; i < transaction->pack_lockfiles_nr; i++)
--		ret |= delete_tempfile(&transaction->pack_lockfiles[i]);
-+	/*
-+	 * Only the ".keep" files that turned out to be ours still have a
-+	 * tempfile attached; delete_tempfile() does nothing for the rest.
-+	 */
-+	for_each_string_list_item(item, &transaction->pack_lockfiles) {
-+		struct tempfile *lockfile = item->util;
-+
-+		ret |= delete_tempfile(&lockfile);
-+	}
- 
--	free(transaction->pack_lockfiles);
-+	string_list_clear(&transaction->pack_lockfiles, 0);
-+	FREE_AND_NULL(transaction->keep_msg);
- 
- 	return ret;
- }
-@@ -1492,6 +1544,7 @@ int odb_transaction_files_begin(struct odb_source *source,
- 	transaction->base.write_pack = odb_transaction_files_write_pack;
- 	transaction->base.env = odb_transaction_files_env;
- 	transaction->flags = flags;
-+	string_list_init_dup(&transaction->pack_lockfiles);
- 
- 	transaction->prefix = "bulk-fsync";
- 	if (flags & ODB_TRANSACTION_RECEIVE) {
-diff --git a/t/t5547-push-quarantine.sh b/t/t5547-push-quarantine.sh
-index 1b7097179e..8623d2d6c1 100755
---- a/t/t5547-push-quarantine.sh
-+++ b/t/t5547-push-quarantine.sh
-@@ -101,4 +101,56 @@ test_expect_success '.keep file is removed after push' '
- 	test_path_is_missing "$keep"
+diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
+index c74b5861af..4e1fde1b08 100755
+--- a/t/t5331-pack-objects-stdin.sh
++++ b/t/t5331-pack-objects-stdin.sh
+@@ -483,6 +483,47 @@ test_expect_success '--stdin-packs=follow with open-excluded packs' '
+ 	)
  '
  
-+test_expect_success 'a rejected push does not remove a foreign ".keep"' '
-+	test_when_finished rm -rf foreign.git &&
-+	git init --bare foreign.git &&
-+	git -C foreign.git config set receive.unpackLimit 0 &&
++test_expect_success '--stdin-packs=follow walks through a --keep-pack pack' '
++	test_when_finished "rm -fr repo" &&
 +
-+	# Get a packfile into the main object database without updating any
-+	# ref, so that pushing the same objects again reuses its name.
-+	test_hook -C foreign.git update <<-\EOF &&
-+	exit 1
-+	EOF
-+	test_commit foreign &&
-+	test_must_fail git push foreign.git HEAD:refs/heads/one &&
++	git init repo &&
++	(
++		cd repo &&
++		git config set maintenance.auto false &&
 +
-+	pack="$(ls foreign.git/objects/pack/pack-*.pack)" &&
-+	keep="${pack%.pack}.keep" &&
++		test_commit A &&
++		test_commit B &&
++		test_commit C &&
 +
-+	# Pretend somebody else holds the lock on that packfile, and let the
-+	# next push be rejected before its objects are ever migrated.
-+	>"$keep" &&
-+	test_hook -C foreign.git pre-receive <<-\EOF &&
-+	exit 1
-+	EOF
-+	test_must_fail git push foreign.git HEAD:refs/heads/two &&
-+	test_path_is_file "$keep"
++		A="$(echo A | git pack-objects --revs $packdir/pack)" &&
++		B="$(echo A..B | git pack-objects --revs $packdir/pack)" &&
++		C="$(echo B..C | git pack-objects --revs $packdir/pack)" &&
++		B_ONLY="$(git rev-parse B | git pack-objects $packdir/pack)" &&
++		git prune-packed &&
++
++		# Pack C is included and pack A is excluded and closed. The
++		# commit B is in the kept pack B_ONLY, but its tree and blob
++		# are only in pack B, which pack-objects is not told about.
++		# The kept pack keeps B out of the result, and the walk has
++		# to go through it to rescue the tree and the blob.
++		P=$(git pack-objects --stdin-packs=follow \
++			--keep-pack=pack-$B_ONLY.pack $packdir/pack <<-EOF
++		pack-$C.pack
++		^pack-$A.pack
++		EOF
++		) &&
++
++		{
++			objects_in_packs $C &&
++			git rev-parse "B^{tree}" B:B.t
++		} >expect.raw &&
++		sort expect.raw >expect &&
++
++		objects_in_packs $P >actual &&
++		test_cmp expect actual
++	)
 +'
 +
-+test_expect_success 'a ".keep" installed by a failed migration is removed' '
-+	test_when_finished rm -rf partial.git &&
-+	git init --bare partial.git &&
-+	git -C partial.git config set receive.unpackLimit 0 &&
-+	git -C partial.git config set pack.indexVersion 1 &&
-+
-+	# Leave the objects in the main object database without a ref, so
-+	# that pushing them again produces a pack with the same name.
-+	test_hook -C partial.git update <<-\EOF &&
-+	exit 1
-+	EOF
-+	test_commit partial &&
-+	test_must_fail git push partial.git HEAD:refs/heads/one &&
-+
-+	# The same pack now arrives with a differently formatted index. The
-+	# ".keep" is migrated first and goes in fine; the index then collides
-+	# with the one already there, and the migration fails with our
-+	# ".keep" already installed.
-+	git -C partial.git config set pack.indexVersion 2 &&
-+	test_must_fail git push partial.git HEAD:refs/heads/two 2>err &&
-+	test_grep "unable to migrate" err &&
-+
-+	pack="$(ls partial.git/objects/pack/pack-*.pack)" &&
-+	test_path_is_missing "${pack%.pack}.keep"
-+'
-+
- test_done
-diff --git a/tempfile.c b/tempfile.c
-index dc9ca4e645..10db4fbc7f 100644
---- a/tempfile.c
-+++ b/tempfile.c
-@@ -373,6 +373,18 @@ int delete_tempfile(struct tempfile **tempfile_p)
- 	return err ? -1 : 0;
- }
+ test_expect_success '--stdin-packs with !-delimited pack without follow' '
+ 	test_when_finished "rm -fr repo" &&
  
-+void unregister_tempfile(struct tempfile **tempfile_p)
-+{
-+	struct tempfile *tempfile = *tempfile_p;
-+
-+	if (!is_tempfile_active(tempfile))
-+		return;
-+
-+	close_tempfile_gently(tempfile);
-+	deactivate_tempfile(tempfile);
-+	*tempfile_p = NULL;
-+}
-+
- void reassign_tempfile_ownership(pid_t from, pid_t to)
- {
- 	volatile struct volatile_list_head *pos;
-diff --git a/tempfile.h b/tempfile.h
-index f571f3c609..b439066a30 100644
---- a/tempfile.h
-+++ b/tempfile.h
-@@ -275,6 +275,15 @@ int reopen_tempfile(struct tempfile *tempfile);
-  */
- int delete_tempfile(struct tempfile **tempfile_p);
- 
-+/*
-+ * Stop tracking `tempfile` without removing the file: close the file
-+ * descriptor and/or file pointer if they are still open, and leave the
-+ * file where it is, no longer to be removed at exit or on a signal. It
-+ * is a NOOP to call `unregister_tempfile()` for a `tempfile` object
-+ * that is not currently active.
-+ */
-+void unregister_tempfile(struct tempfile **tempfile_p);
-+
- /*
-  * Close the file descriptor and/or file pointer if they are still
-  * open, and atomically rename the temporary file to `path`. `path`
 -- 
 gitgitgadget
 
