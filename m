@@ -1,183 +1,150 @@
-Received: from mail-vs2-f12.google.com (mail-vs2-f12.google.com [74.125.227.12])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9A54334B9
-	for <git@vger.kernel.org>; Mon, 14 Sep 2026 10:22:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789381366; cv=pass; b=YlDZPJiX3KLnfWWvreEQCA3Upl8SImYMoCpYjKSa54FD1gUNS1um0HM6tEc7cjIWtn9GiKaeHpv7MFN0hbkeAdEEo0lnYPqXQg/IcyZq2kmdHrJvoKwZFWOwWPeLXS8lGUzxXUu9RibtsbBqv7zHerRVmOxoXf7NTSN/x6plCcA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789381366; c=relaxed/simple;
-	bh=J7M0HUIXuOIWK3ydNaAxyqJmT1QNx0XdF+a5+LSLKms=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EBq/TY0UrXpGXLKQSjjLAPnmIsKkqNCXt+vLZw5auhxjMHvTcpeYA+HOXITR84jXhaFfwQcPmHyI3N1r6EbJD6nhgUDKA/uF1bnJPdP+z5U4+Vjd/TWRQk8EURxS7cT8BQOyE/SZboXV3YKuBMrIpz49mZg8bUBlMykyemkbT+g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cO0MLQmj; arc=pass smtp.client-ip=74.125.227.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4142B3BBFD4
+	for <git@vger.kernel.org>; Mon, 14 Sep 2026 11:31:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789385487; cv=none; b=a1batzfeYzTLEqFZi8mudi4CJKHBDT2X3rgKqpnGzZm2XDpKrSx1XM8ZvKrszNRcWf6PH2rBaFDruL1k247hDqyXvMLfm0fnQTTFELjphg5WfFrgDJ0+VTzNJyiotEflZqscYsHIua8+W6ddpLYg4AjnpHuhXhEQ7h0JZQrYDfA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789385487; c=relaxed/simple;
+	bh=Vv0uWPxJ9ZHy0G8nO3N+4R4MCuRZhqwulSYpBQoxT90=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=tLKhSICfI7nNRvWIQWQzvKNHmmfTPGpeaFtAbeV+ETlOdbiu6NXSeK9WvWTvZ73EEUmbdc9XfhiXpX/1ESMMEAhA5hGVZXOTN4xS7jUBE3hgrt7yTtESW31bBxYyMK3Im5YSA5pCQQoua9Iv5wmvnDraPwCj8Kq0b3FHEEGMevU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZIIfy6fQ; arc=none smtp.client-ip=209.85.210.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cO0MLQmj"
-Received: by mail-vs2-f12.google.com with SMTP id ada2fe7eead31-78564421fdbso505958137.1
-        for <git@vger.kernel.org>; Mon, 14 Sep 2026 03:22:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789381362; cv=none;
-        d=google.com; s=arc-20260327;
-        b=T3yHfA/P4DhyRYX32Gnw9bjJS6M8rdfOfWjnbSpwC6rHKzKpWmWVqwja2zpFuICgj3
-         nV3gF03EWxCk5HANt6JnM4NRJ+AmeKW661ARZ4uDF4R7UiIJlA4qItk+m69ZnnQRhkYw
-         fbDMY2HnD6dx14FdhaoY92dOYdg/bkpFS1+3VF5U3QVuEZZegpIU9glfW5r9uLQlEOtH
-         PNTd+fVI2Oej5IMGH9C8bGjWPQw0JWmqr5kI3JM8wGK3y8QVXuPOvGt2x3OVTw2oQyyI
-         +fkHsh2bTP0qfEjdEJFKgLUyu07WfusSuzTV5Q8yGdBSRPTf9ozmlS7yMEj0bdHG51w8
-         BXfA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=mDyMwFjhScjE6kE9SaTP+aV1RSEGbeFFacbgIcxiHVA=;
-        fh=LmYxIBxl0FwhuMoxoKINDHd8NB3fHmAKDSEyT4ikUsY=;
-        b=O18y/gwVDsUAJYlyycDfJCDsdGgzeNGo+u+JKqeSGxcGegcZEfzTLO/rxDsopkWO39
-         Kxv7MN3wGMdq3iZmOnZgZRLmW5ChVA98EeD6sPBBh34lFjtfcKaTOvE4giZR6Ld3WiQo
-         YAsy7OT3RJRDpA4jzwCzUzdsvdYrp7D4aUWAvlPAN3p3BOv3Y+QB/7nn9vZGcPgiv/hT
-         7S0MXPaa7S+Ego8BLWukZVlBO77WXYtqW0E86z5SrV9Y3z0QGxQOYNna/4949oAobm/q
-         87CHNG152Kio61vfjs0Q/d/wpGj7y1jC8+NjNGAb/J+q7mGxT5tgjnic58XHmM8cntGJ
-         r9Xg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZIIfy6fQ"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-86a25369f16so2415760b3a.3
+        for <git@vger.kernel.org>; Mon, 14 Sep 2026 04:31:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789381362; x=1789986162; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=mDyMwFjhScjE6kE9SaTP+aV1RSEGbeFFacbgIcxiHVA=;
-        b=cO0MLQmjepESPzR6EVLZr8jXP7LfpM7LMxPkTIgvHTL7KCQBQ6tTkDT1dAgLo7YKdh
-         /AAOzpJrtCwnV40RLE/LA/Ih/WREDuZK93XeyxnA6CV47eOHmt/n8KaS45e+e/nzIrp/
-         lhEm3eHgbXZCIIWUNP8HTtT5Ac0Yv3RkjL3NqjVDSV46XPsmkopLL83FevKwJftzvwMo
-         H6ASHE/472VS3FuL/jeoFu+lVK4I7lHyFibOgzPXDJWeNuorCa6i/Fm6wcYBssjXDobE
-         HJZ0R7BJKU/L+vJqydPdmQYfdJ6jqCf8m3wCU29lr7RQmzR/FH7IRQ4IiNShBkC/p8md
-         TElw==
+        d=gmail.com; s=20251104; t=1789385486; x=1789990286; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=yHxB6x6ZX/Tcg9GcNB1BrUvgyQvIRhDKTgN66uP/v1U=;
+        b=ZIIfy6fQPqGBRIpufjQuPLs2c3QtetUbyEbrzC2ZdZqshvOdfRs5+SE+CJkUZ1Vtmw
+         8CMuDGRlQOk4d9qO9/tZNeN9TXk7GyyfEg6vtNQYivbgN6xxjBVo3c+WLFb+3tOBLTin
+         pApNUN9MHVVeEPFIM4axrlmzexPIhwaa4PogOzL0ST6xPRvqXM5yhhYN2FkWDmn0gZCP
+         dJPyozihfcX0oiNXcU5k3JtQr1qePG/IR/QmYdYWZmScORTz6LfFjNEMYoPHVJuyl0UM
+         MjjQ/5JhCtHQXy1prE7lyqEti3M+7P7OfBjWGSpqU3kiaS3nxdKeT6FrQYjPQ2xTh9K7
+         oeqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789381362; x=1789986162;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=mDyMwFjhScjE6kE9SaTP+aV1RSEGbeFFacbgIcxiHVA=;
-        b=B3+AzozcYnsvnsKA7yp62omNBrUgtYYEdmzgKlYDW010EjbcHGh8bj5WdEjWKgS1Zb
-         havpbVdI1W8yNTd3mE3cVxAj67+VxO+Ec/rG8EzoqJ3kM3VU/8s0BrZhBNO441j0ul//
-         a3FR5X2Vb/zluTjfKkifIj+hudovxqFFuECoGIgBWJZHPOOnfLT1YRQApNiAeeLruoBP
-         vfN1JlqTLuIBwn3Jrm0GWTrCDX/YPGV6IZFTgxEXSy5GnkK1GxjUPMNx+HMKFontQZft
-         CAThafbnSTJiZWLOBwbdTQqyTfCVZQBGbB4JPLtrAjqovrZBWaxMu4uO5r+o744xJDFZ
-         jyCw==
-X-Gm-Message-State: AFuF++kxnOY2v3hCl6pHK2YA+7lSII3CpJTrzngp34i45MrPv6lHNVJ0
-	Z5IbUd6nsPrZ4b3V/YoNEb4TaPnqSSVctGH8oiJunW+sbch98TzwGhfLrbXbW0yISzVQWY3T8LS
-	cFFAcConijITV2eA/UFAzu4XZlGyze5M=
-X-Gm-Gg: AYBFou3x40U3C+5Z3D+X4GSSuxlN04d1sb7KRzQUmN4vSHWI0IX74Mem37A4p9kK29+
-	Zh6DEhyX2W2I2FuUaWOt08N/FTsSheqwatB6Ens0T7KPROR1+aNrswB/rujhW88VNfcch6na04Z
-	DyF8kHENI2fQNPv0yGPax3v0SvuNAgrBHK502KO66Lkif1Kq0aZjvPRX6UZZtAbWUBXQrihtCaQ
-	sw8fKSpizXS2L5XUFIywbThlceQgL/D2NZusk8Enu3leks2zMUsLtSsAtn7tOkgnaY4ELXIfuWb
-	CEKh1z6Sv8vL1jQWXBaEcmfwV7INyvff0xYKVUz0bnJ/lyAKLVprhOPBnQJlOkMSUK7e8xCCuw1
-	9v5+3dvhBb7XOmhx6ZMKA/ZtZ4hTYTOFVC+Oe0NXfQbp0dSg=
-X-Received: by 2002:a05:6102:a4d:b0:79c:2e36:a4fb with SMTP id
- ada2fe7eead31-79c2e36ab48mr188526137.9.1789381357459; Mon, 14 Sep 2026
- 03:22:37 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 14 Sep 2026 03:22:36 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 14 Sep 2026 03:22:36 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aqOOZB0wQ8FNGVE6@pks.im>
-References: <20260825-pks-odb-write-alternates-at-creation-time-v1-0-911513ba95c3@pks.im>
- <20260910-pks-odb-write-alternates-at-creation-time-v5-0-8d10c4238edc@pks.im>
- <CAOLa=ZRYsJL_0sKnfHD0PJO+5c+BKSMiuN20PeQHKJin82TJDw@mail.gmail.com> <aqOOZB0wQ8FNGVE6@pks.im>
+        d=1e100.net; s=20251104; t=1789385486; x=1789990286;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=yHxB6x6ZX/Tcg9GcNB1BrUvgyQvIRhDKTgN66uP/v1U=;
+        b=jhPgywDc0SURWjJ4OyIlBwnTHmoJDq18Xux2CFyfv7X6VIjEmWVsuYuXbjNveS6RwY
+         +3S8hwQPZ0mcGxAoqgY5s39aHVoo4CmPArptw+7YCBy+GI5pBTgVxHIsHs+R0+VRAw00
+         2RjhKVLPQXJ4H5Lm7e646gDO+0oHXoQgv9fGTOQsOOlcoRJYy7o+3/1m4a2ji+BIorYO
+         nwDg3PT6328+GWMpa5hvF9eU9DQHvxAdh51wvzlzq4Nwy3ECm0oXWvg7+hEjFCZFfsX3
+         B3MpwHSYg+PvDc+mYEtRrB2ZeSW6B2ao3lImwGhr7C91dmfO7Jm9pnbK2zFmGa+8y0PT
+         /sJw==
+X-Gm-Message-State: AFuF++nPHt04hS/MzCDr611xX+0ND09rDOYqRU5JmrTv0XTEvqfk5N7o
+	6vE/iNoIpcz0IMe3+kSirTikQBvyNXtG1eeRtaCh0AFqsb5F8VTry+pRUIyM6w==
+X-Gm-Gg: AYBFou3mjje3eDtJL7Usp3ZnI24jE6cic1US7MZRxkSJICcNZhH5y5p8dhAvBTB7ENn
+	RN7jcnG7bIa2TBTVeZq3fGry2Y4Tnbzeovhv06MJAxvsCIYETFnfo25Q+/tTF/uoC+U8JnK4zEJ
+	iLdgKoG03R1XDh0jGXFqHhUSYEObVWvMGaa8JtGzTVZ8VwAskDuIPMf9fJQ+LAphaFzRn2DB2y5
+	39yUmCpUxa003AbW7PgxwoJvLYKfAr20AyEQZfwG0wf/7GXWrjgHJG0NFM0iJr7ySBY4ak8yVRY
+	vP2NM/FNwGWy48GMnyG2STcbCC9VVOUo4u46N1CCYj+TbLNIlFhBA6THvyumneQqDRH4gt6h4bK
+	NNZ8lHPuWwt2EulDTfHXRs8/LZ5bXaxt2pbQIKw2JhBMI53qYnXrl7+n5kjPyrW/zDilmNJDL/M
+	8m3x5/+ufDMit0hnP+hxwlPrz9FG9yYLrPG/GoRO9RLnPm0q3fiX2x+4KoOPFggJrCyloSQ2YnV
+	1mkIA==
+X-Received: by 2002:a05:6a00:1c90:b0:868:7a65:d92d with SMTP id d2e1a72fcca58-86f867baaaemr4249175b3a.26.1789385485458;
+        Mon, 14 Sep 2026 04:31:25 -0700 (PDT)
+Received: from [127.0.0.1] ([172.184.219.146])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-86b29cbb0d3sm4384905b3a.42.2026.09.14.04.31.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Sep 2026 04:31:24 -0700 (PDT)
+Message-Id: <pull.2219.git.1789385483.gitgitgadget@gmail.com>
+From: "qeesung via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 14 Sep 2026 11:31:17 +0000
+Subject: [PATCH 0/6] repack: don't lose objects to a ".keep" that appears mid-run
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 14 Sep 2026 03:22:36 -0700
-X-Gm-Features: AcwNN1U3h2CmM_s9vJ5zvdkQqfQFRqAm93eOeQ0640qdv_xJUqKSEfU_z--p9M8
-Message-ID: <CAOLa=ZSH=Ozzk-870-wfQ7zYhgKcUnmLVOcHxCv1n7NVm8QTcA@mail.gmail.com>
-Subject: Re: [PATCH v5 0/9] odb: write alternates at creation time
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>, Junio C Hamano <gitster@pobox.com>, 
-	Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000002dfbc0065b6ed0c4"
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Taylor Blau <ttaylorr@openai.com>,
+    Junio C Hamano <gitster@pobox.com>,
+    Justin Tobler <jltobler@gmail.com>,
+    qeesung <qeesung@live.com>
 
---0000000000002dfbc0065b6ed0c4
-Content-Type: text/plain; charset="UTF-8"
+A concurrent push can make "git repack -d" delete a pack whose objects were
+never copied anywhere, and exit 0. We hit this in production: a ref pointing
+at a commit that no longer exists, on git 2.43, and it reproduces on master.
 
-Patrick Steinhardt <ps@pks.im> writes:
+What happens:
 
-> On Thu, Sep 10, 2026 at 12:53:21PM -0700, Karthik Nayak wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->> > Hi,
->> >
->> > writing alternates into the object database currently happens via
->> > `odb_source_write_alternate()`. But while that creates the ability to
->> > create alternates at arbitrary points of a source's lifetime, we don't
->> > use that functionality in the first place. Instead, we only ever write
->> > alternates when creating a new repository.
->> >
->> > This design is suboptimal due to a couple of reasons:
->> >
->> >   - It requires us to have a `write_alternates()` callback, which is
->> >     overblown as we never even write alternates to an object database
->> >     after it has been created.
->> >
->> >   - We're about to make alternates an implementation detail of the
->> >     object database's backend in a future patch series, so alternate
->> >     implementations may not even support them.
->> >
->> >   - The backend has more flexibility with how exactly alternates are
->> >     configured when it itself is in full control over their setup at the
->> >     time where it creates the object database itself.
->> >
->> > This patch series thus refactors how we handle alternates so that we
->> > don't write them ad-hoc anymore. Instead, the series introduces a new
->> > option for `odb_source_create_on_disk()` that makes it handle those
->> > alternates at creation time.
->> >
->> > This is part of the bigger goal of moving handling of alternates into
->> > the "files" backend.
->> >
->> > This series is built on top of 2c3adbb2c4 (The 18th batch, 2026-08-24)
->> > with ps/odb-eagerly-load-alternates at 0076dc9f81 (odb: drop
->> > `alternates_db` field, 2026-08-17) merged into it.
->> >
->> > Changes in v5:
->> >   - Rename `add_one_alternate` and `add_one_alternate_data` to
->> >     `collect_one_alternate` and `collect_alternates_data` to clarify
->> >     their intent a bit.
->> >   - Drop extra parameter in `collect_alternates()`.
->> >   - Clarify why we compute `commondir` even though it's unused.
->> >   - Link to v4: https://patch.msgid.link/20260909-pks-odb-write-alternates-at-creation-time-v4-0-d8a78ffc32e4@pks.im
->> >
->>
->> Looks like you missed my comment/question in
->> CAOLa=ZQaPstiQmXm9=TyWPUxL6X2=Lcqeg6y2XeXzSJDpq-GBA@mail.gmail.com, but
->> otherwise looks good :)
->
-> Oh, indeed, I somehow overlooked that mail. Replied to it now, but I
-> don't think it requires further changes. Thanks!
->
-> Patrick
+ * repack scans for ".keep" files and decides which packs to delete, then
+   spawns pack-objects with --honor-pack-keep, which scans again;
+ * in between, a push of content identical to an earlier one finishes
+   migrating its quarantine. Its pack is a duplicate and is dropped, but its
+   ".keep" is linked into place, onto the old pack;
+ * pack-objects sees that ".keep" and leaves the pack's objects out; repack
+   deletes the pack by its earlier list, with force_delete.
 
-With your response, I have nothing more to add! Thanks
+Two things are wrong, and each is fixed on its own:
 
---0000000000002dfbc0065b6ed0c4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 291bfbf64465a8d8_0.1
+ * 1/6: receive-pack removes a ".keep" it never installed -- the one it
+   linked onto somebody else's pack, or a foreign one when its own push was
+   rejected before any migration. Only remove a ".keep" that carries our own
+   message.
+ * 6/6: repack and pack-objects each scan for ".keep" files. Hand
+   pack-objects the snapshot repack took at startup instead.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xbnl1b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meDhnQy93SWNzRm4rMzhONWowTUNJL3NXU3dnYTR5NQpJSkR3V2t4MTVv
-QVE1eGEvRVdTWlE4YzZHN2d2UHZaZ2hQc3pRYi9kKzQ4UUlMc2hQNDlBbjMwdWJYcmJqSU9CCndQ
-c2h5RWZSUlM5QmlyVEhQcWlsZ2pvbDQ0aTlMSVpud0xvcGhrekFBRVhnaHBEUnJ0V2xDU0R4R0k1
-clc5UHYKRW84Qzk4M2ZHNjl2c3EwMDhmUzVUTTVtazJHeE9Fekl2bkpKa3JzbGZiR3lMc2JWMkZq
-Slk0TzFXKzNRNFlHRwpPcU16T2Z1b1BuaGdYNldJYVFQS3VnTFRxVmNKM09qRmtJang1NTZIVTl0
-R0xDQ05mRk9LWnluNEYrTnlIUzVsCnBCVFQrRk5ydHNURTVmTGRJWE9rWVQ4MzN5emhWU2JxbXB4
-UmFaM0hIeXVKSjZua1RtdFVJRlptb2hoRkx1WTQKSVdWeVptVFhLVklEOG8rUkNQZUl3bGxwNG1a
-ajdyUlIrOWRlTUZMVmZSRU9wMUd2b05Fa25SdFJSaE00UWdnaApKNitDWDZtdTRVV082QWllNllM
-NWZKRS9tY04xcE10b2VoN2x3Tk5QODVFNHkzTDBKVEpjRTFOcksxa0laa3p0Cll0SDlUVlJiai9S
-S0tYR0wyRkx5eVo0N0pZUHMzTDhXcE1nQ3lpVT0KPTBuYzEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000002dfbc0065b6ed0c4--
+Patches 2-5 are what 6/6 needs to be safe:
+
+ * 2/6: under --stdin-packs=follow, a --keep-pack pack stops the traversal
+   like a "^" pack; on-disk ".keep" packs never did.
+ * 3/6: the cruft walk goes by a stale kept-pack cache, which
+   --honor-pack-keep happened to mask. Pre-existing, reproducible today.
+ * 4/6: look --keep-pack names up in a sorted list; it gets long.
+ * 5/6: --keep-pack-from-file, since a repository can have more kept packs
+   than fit on a command line (32K characters on Windows).
+
+Every fix comes with a test that fails without it; the race itself is
+reproduced in t7703 by having a ".keep" appear as pack-objects starts. The
+full suite passes, and the series merges cleanly into next and seen.
+
+Qin ShiCheng (6):
+  odb: don't remove a ".keep" we never installed
+  pack-objects: keep --keep-pack open when following
+  pack-objects: reset kept-pack cache for cruft walk
+  pack-objects: sort --keep-pack list for lookup
+  pack-objects: add --keep-pack-from-file
+  repack: tell pack-objects which packs are kept
+
+ Documentation/git-pack-objects.adoc |  8 +++
+ builtin/pack-objects.c              | 71 +++++++++++++++++----
+ builtin/repack.c                    | 15 +++++
+ object-file.c                       | 95 ++++++++++++++++++++++-------
+ odb/source-packed.h                 |  3 +-
+ packfile.c                          |  9 ++-
+ packfile.h                          |  7 +++
+ repack-filtered.c                   |  3 -
+ repack.c                            | 34 ++++++++++-
+ repack.h                            | 17 +++++-
+ t/t5329-pack-objects-cruft.sh       | 40 ++++++++++++
+ t/t5331-pack-objects-stdin.sh       | 87 ++++++++++++++++++++++++++
+ t/t5547-push-quarantine.sh          | 52 ++++++++++++++++
+ t/t7700-repack.sh                   | 43 +++++++++++++
+ t/t7703-repack-geometric.sh         | 72 ++++++++++++++++++++++
+ tempfile.c                          | 12 ++++
+ tempfile.h                          |  9 +++
+ 17 files changed, 533 insertions(+), 44 deletions(-)
+
+
+base-commit: 3cb9185f65410273787f74333cc027d2ea5daada
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2219%2Fqeesung%2Frepack-kept-packs-snapshot-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2219/qeesung/repack-kept-packs-snapshot-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2219
+-- 
+gitgitgadget
