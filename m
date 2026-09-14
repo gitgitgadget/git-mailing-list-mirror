@@ -1,162 +1,335 @@
-Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
+Received: from mail-oi2-f13.google.com (mail-oi2-f13.google.com [74.125.231.205])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D064963CA
-	for <git@vger.kernel.org>; Mon, 14 Sep 2026 17:46:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6643BE14D
+	for <git@vger.kernel.org>; Mon, 14 Sep 2026 19:27:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.205
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789407981; cv=pass; b=pHkbxWCJ6jL+j+r0W08X48+V+i3CuJ2vlibsIAQUtzlfH6Z3ms3CHutosZaVaDNMLD9Vnj1OwjkV3Mq7ujpBbIcL/o02WuOemenuW2Pcxp6fOQOioqMJd5KM05ZMwH6UlVlTWU4CXcOpCDYRasB6o6vkz4yT5ipgFNCWLuCjhE8=
+	t=1789414062; cv=pass; b=OPqxI6QSp+peRpapr5nRW/jWSM2kWn87LAeY8Bfu4CcPYrAMO8WWWdsQV+8fzC7bHzBa22gBasRQ6k8Gk3GcodOk3cIOsTuTZmyA77W24A0XOjGx25BY/Uigd9DD4+leWqIhkCEjNt8Kw4TU2Hgd0Rh1d4Tp9vgt1XIQL2VZuNA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789407981; c=relaxed/simple;
-	bh=6mUq6zpiCzlaDuGStoj5XQ5OUCXWmQlNIU46xgQFUTU=;
+	s=arc-20240116; t=1789414062; c=relaxed/simple;
+	bh=2ypifzPFquCTYohA1CRnUWQtq9Cg+46hysNTDCK1npM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=buGkbTDhJyzk9agEDWSFkbXBOKwcYZUGmDeZ5nqw8u3PasZNRerm+UF/eR7hUaqKueLe+LccPID1Wt/2gVBBkmhlCrAt9eMt4pyYak4Rjx5lxYHHm96fV94KL/cdMo/rKSLiXZyhUmkZpsimVHJCcYpq0tnrbl7zGSG9745v1fo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=cQcWRWkN; arc=pass smtp.client-ip=74.125.224.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	 To:Cc:Content-Type; b=JwzjTFCQtONqQkCJi9G3QHRUZ4PEVc0JHNkJJVPAheQNlTZYP6BZq3v1YJsF9wKzhdC02tfDUMw14vXripI5t0QAjvt2gjuPeiU/h0wue/ZQH1stNHZaliBdYoub+8H9GIWnAGxGRp2ueIBG0HAYwXE+aDATfhX/3hLQNpYco9Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com; spf=none smtp.mailfrom=tylercipriani.com; dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b=TttbOGdn; arc=pass smtp.client-ip=74.125.231.205
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tylercipriani.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="cQcWRWkN"
-Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-67149cfbcb7so1391574d50.0
-        for <git@vger.kernel.org>; Mon, 14 Sep 2026 10:46:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789407978; cv=none;
+	dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b="TttbOGdn"
+Received: by mail-oi2-f13.google.com with SMTP id 5614622812f47-4c13f2685f2so1645135b6e.1
+        for <git@vger.kernel.org>; Mon, 14 Sep 2026 12:27:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789414052; cv=none;
         d=google.com; s=arc-20260327;
-        b=VMCN8UiodLkEAAvJopa2O2p/t/lvINPNX/wWWShHkhUuKXDSnNWYbS/qMC2/KEU4yN
-         D15XsvHJaLU7Wyq9m5Dy6jd07fSyoeVNBRZ/OP+NKNlNX2wOjEIenzVU2y11nvZIUI/H
-         j1JdnGBMsSQhzYuGzIlphS2z8euS7/5HuwNvNyKUzJe3RFZfx8LBzC65OzSF+L6uNMke
-         ySZxvE60PgZG+SolO1DmRZAVxoy5prbAFNwgW+rHHjKkK864HbSWwXgkbxkB9IUMLiVy
-         F+m57KYsff+qee7ycY9nRxE4iL6Vm6gCrezqS9XjpDGFwlKrR5Nqbidx6nBkfc3D7WC+
-         Jp9A==
+        b=TQsBtXmj5XyTPcDIDer2sgMKXfz1Q04vzepRrD3JVnO7ZtsjudHl7bosURVicAXLiW
+         uT7mCIu3C2/SSf2xu2v+LHtf1SgynDIwYFCYO/35bt/mmH0PYqCAKGBKNBlZcSB8UXCA
+         5F5sxF3UxjaCjnHlBiUXoNrz4Liu7invpseH09CodMytN2xfdrLRH3EU9NSr84XGbq2K
+         AQpBlGcRPNP7GF77FyLWEpEef/1PyLirOvsNTiysopg+o5hpkBz4myPRl5gqusS5I5I/
+         KKa8MQCSR+QAdxmseH73a58sVV6aq0gO5koHfj392ibkiCQh3jRhzmuSrDjC2dt5QLsX
+         jjNw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=89F5UafHvJQawzzn2U/gKFg1qBTASPFfWwucRiEvGfo=;
-        fh=zP/Hr7pwuqfiYK8Q+Eaa97o/hzC/ALqcfnzDTWvAC/s=;
-        b=Bcd3BMUCQ5T1fu0kaiSlHeswTcQhrODXz8itaejgPMUMF77A9fb82fJM447fBORs/u
-         714d0jzaoVKTt5/P+7VvzGEfsa7wibLvYBfdTbTtbgGmuzB3pr47FqAwI3178VM6Lsxy
-         +35PRDGGRbEvXId4xKhmiptmibHDyEAI1kKfXQ8SPQk6Uu9RgxDBpNE7vDIOnyo0apcA
-         o0/B0hZ1l08zwE35Q2OYr4Y4d5aiBhK5elv2DDYIsonfH2Mga6lwfqPEkxbyWXTnYLXA
-         W2sH12ry8lXGGrf8vdVk/fFc76jEz5iVEDn7W/HMl5nuVYJALW05EUD8VuKslWXtDlx1
-         tEUA==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=oXx/j3OYLxppJfmPW68fa+LVxQrX93+LLGft63aIrvk=;
+        fh=qDHfzpnmgk+oijmCQwGUEgWfso2tkQtByiWMMPH7tgE=;
+        b=EG+1wNf/ve5pIRc6NNW/SeOGyNKusweV9m9sMdlU5MMrSkgGPlxJDTSi7vkVod0fcq
+         6HVAXdc4zyBAqNiOVuaZo25bOwGGGy67lABglUV6r5UlEZa2GFACTlcmbuB5vhcJLAza
+         V7CjLydUXzRmNntQ3gms0dl/BdG6QUkox1s4WAWNOMYHmI3YIP/+5+5GGJFgzgrnZTwY
+         6mDfZ9JAMzk0aFXRsfXvXU73MxQ1dkOd3kr/bjFJSDN0IViow7MlahaaO0nJzzx8fwhY
+         5AeuVhF5AxpV3UN+OvCIYqQQhjELf3xJ6+THluf23YreZOlxokB3Pqs9zd1wPK7tveU2
+         nGMw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1789407978; x=1790012778; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=89F5UafHvJQawzzn2U/gKFg1qBTASPFfWwucRiEvGfo=;
-        b=cQcWRWkNyLIj7mTT1hUIjRhjJpZswoVQO+b1tjAR/TIfHF4X2I7L9wibJxU+Y5m3vF
-         KMwbU80oplzgYvjr0PKnQIZ9DTIqsH5TQei1oooBV1VY5mBFSXuSAnRMn9djiAac4y6g
-         LM1qoy3DuOXafHd3jFHckISS+6eatwQyYe0L4=
+        d=tylercipriani-com.20251104.gappssmtp.com; s=20251104; t=1789414052; x=1790018852; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=oXx/j3OYLxppJfmPW68fa+LVxQrX93+LLGft63aIrvk=;
+        b=TttbOGdnD03ITd5anu+sZb+Qt0lFDRM2fa0Gul6AA4JPS2MAY9Pa4Hm7RHteijMc1Z
+         +qCW88Q1UGyK8YfGoSUveg3Bz/DjAbnaWCI3YumK5We4Hq5POlO2wwVIxsSZAuFOubbL
+         YqA2XB2BCGlH3pGhN66EYTrgxMzR423bpdNBdKJl5UL926tpXuSFaiYm94eDE+RfZXj/
+         I6gEtNCNYZ/5VAZ+I0Q4B2IWt7/VZoUfi82pbGZBFIqIW+bgE4TESQoaiPvX3eCnmLpu
+         xKMHXx03233X6mkrRqGR5aVhJ3WIQ5cWCP2CSONlViH/tfnHfGPxlTEUS8j3l12Zgj1c
+         XfPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789407978; x=1790012778;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=89F5UafHvJQawzzn2U/gKFg1qBTASPFfWwucRiEvGfo=;
-        b=XAp4z7c2fEDVg+TR/09MipoX9pAmgx5EEAwYHo/6Ls0B2fo9KNRzrRt8Y8yGcq467u
-         ciodFyoxeyhSAOkGptw4RfujEKhFXbI0VEgaEORJBKnOCsqfj+DQiiEJkWPfrogV+k2L
-         jkRfLf7FoYKE92+8u2iynE/hjv6seg1lQrZq5BfvJqazJitq4Ko6nU3c/t7Wx7Yuyzea
-         uzQ8O7isrdQbjmtmVzGXL/Amrm7hPu1TgINKTFInb/tzB0UcCVBf0g3ik/vBkBQQRMOY
-         wZ7+gUXB48b479OAu7q3CruHC09PZsW2Oht6zqRFKHCdDHxCzW1S6LTda9hTL5r5xjic
-         AfVw==
-X-Forwarded-Encrypted: i=1; AKwUvBxb8Qcjk/z9OVinUpYT62snApKwL+JDEre+0Sk5ofR3+k7pjECdspn5FxRCYmYG6HvLIdQ=@vger.kernel.org
-X-Gm-Message-State: AFuF++lYd54vQmdlY/kQ4arhrys+8fXhMrSg2MEfFWUWdBBpP7PxVKl8
-	aa/X/FlcVHgG/qynvsRbyOcEbBsyBh/Y3wpkPStr105qtBD3jmrpI0vcrx9ujCXFY7R5NZWithj
-	a/uVeQvvaSBX7i5RjOsVJT+19DLgRaf/EYkuT+iQThQ==
-X-Gm-Gg: AYBFou1xw7v9DbsMYhKJlazKqesEEvU5aiLvc3zi69fRRAZCcUPUEjybsYSPJK8IvG0
-	1KyrZXOIHh5ulqZ2ynE6VFO4lNvT2TqROAbOcC/Q/OIjxkc820gU5VdleVFbnWSD/hIWYkkTQ0O
-	C/u/iv0Y6dFpLexdyw9q4K7TeVpUckTDMvjSOlFFq0NmvhEuI3VTShh0xVH7AKJshctnrFtet0S
-	7+JPY+q1HdnyDMPBIThRk99harHW3XUtvO0gKzyAi8OoXcTB2NKhntu7xncepmJfbcVnpvqc6mg
-	FYuOQHmYzjd/R0uTJNJZVrQjrgPn/cSjb+5vwZQOy+6pt5ES6WhhmNAv+dONL3ie1A==
-X-Received: by 2002:a05:690e:4385:b0:671:230c:e752 with SMTP id
- 956f58d0204a3-6714e188b77mr851753d50.61.1789407978480; Mon, 14 Sep 2026
- 10:46:18 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1789414052; x=1790018852;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=oXx/j3OYLxppJfmPW68fa+LVxQrX93+LLGft63aIrvk=;
+        b=Ywd+zG9mYMa5FlVzntoyw+HZnQkDQC3IUkD0egXeI7zJHM330TQGsK2huDTk5Cgssr
+         ONgSiZDf3z/NwcMvYy5O2pRfAGGHgY+qKrV9EwywxEdb7XR6zyiKYJL0+kxvvZxr3po9
+         wIloT5ODJO8dR24G50vax21byhGwTRvGXrWFM10WTGfiQdFAvRNomMN0+NbkI3USBrL/
+         1pa8kgi2ODuIGYV2f0BP81SI4EfWuXI1X/q+QBzVQulLdCAAAkKufanIMg4HDeo/Eaqz
+         RYBRpkKbI7BpXfwFam9LWOsTCMiO27fsZ0sr6s5ZO/ppVoO5Gv0VbCRJfh10kI8irujo
+         Nw2Q==
+X-Gm-Message-State: AFuF++m7YtFb6NkOJhmzz/c+/rBkCCdNDnoiE7kvDPeZ57PYDIIv3Glm
+	tpTPsRNgX8crJZ1sZ+nsBoWyHH3aZyouhblnA56aLfHql+z/KjzrSojAKZboKUXVZKoGcW7JgAz
+	7gOsdIItAgqOoiwIT8FZ0glGAOA5r3QsmnUK1Tc1lkw==
+X-Gm-Gg: AYBFou1/Cs/kyVIMkLFj3TvVsBwF/K4EzzjSBYB6EtWJu+JePw/frKDZVKnmnzjIStw
+	Lmbp6dp2zmCJDpkOH0hou829AUNrpbD1cMZAFpdYUFnkBtebtq7cP5adL6C9BjQDnJRp9q5mNPo
+	OHHAkVf/W/CRQEFdaGXosuWS9Rb+lszOT1dh4Jfp/KmikHaRMNrfc+vyzBwd3SlQ5KRrOGLWlJ6
+	2FCa/dlAM1r2ns8OYcrG7X5G/vwlOdEXLCXsVLj23GzeVutWqr9qNGluipLk9yozxqnfW9kLQEv
+	FRNq6s08w2MRm3IV4uISim2NDINpWjN+bF/Okp2fuupsP2zOR5YTdWA=
+X-Received: by 2002:a05:6808:3a13:b0:4b9:a8ac:47e with SMTP id
+ 5614622812f47-4c7b579f6c7mr2891207b6e.28.1789414051707; Mon, 14 Sep 2026
+ 12:27:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
- <ebe6c90cc58b9e1f64c9bec4a18e8cb3ce9be1b2.1789379276.git.gitgitgadget@gmail.com>
- <xmqqh5jr7t1h.fsf@gitster.g>
-In-Reply-To: <xmqqh5jr7t1h.fsf@gitster.g>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Mon, 14 Sep 2026 19:46:05 +0200
-X-Gm-Features: AcwNN1XGN0xFZIyyyTxJZEyYZarguQUR49ewxHIEzBI02sdckw5JUHnfr8juA30
-Message-ID: <CAL71e4My+maYAtWbkoHXvsm=qhCmao7K_7mLV5wg1FyKTa3u8A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] connected: add incremental connectivity check via rev-list
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <20260904210122.431757-1-tyler@tylercipriani.com>
+ <20260914040018.76111-1-tyler@tylercipriani.com> <CALnO6CDz8QBcBojmhjgwgWzi4oUbs+V4KVQ1h0+JgN7k0v-SYQ@mail.gmail.com>
+In-Reply-To: <CALnO6CDz8QBcBojmhjgwgWzi4oUbs+V4KVQ1h0+JgN7k0v-SYQ@mail.gmail.com>
+From: Tyler Cipriani <tyler@tylercipriani.com>
+Date: Mon, 14 Sep 2026 13:27:19 -0600
+X-Gm-Features: AcwNN1W3qa7Jqh3NYEhC_HgYI4MQ4VuQqA0dXPDSpwEVCxMENAjFAWfYGyLQKQI
+Message-ID: <CAHLx=O=eH=7g=JUn5dOJgatv2xJVbQygK4C7zCA0Uv=BpzMkxQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/2] push: check pushed ref for --force-if-includes
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>, 
+	Stefan Haller <lists@haller-berlin.de>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 14 Sept 2026 at 17:26, Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Sep 14, 2026 at 7:03=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.com=
+> wrote:
+> Hi Tyler,
+
+Hi Ben!
+
+> On Mon, Sep 14, 2026 at 12:00=E2=80=AFAM Tyler Cipriani <tyler@tylercipri=
+ani.com> wrote:
+> >
+> > Changes since v3:
+> >
+> > - check_if_includes_upstream unconditionally resolves peer_ref with
+> >   RESOLVE_REF_READING, now all non-branch ref pushes will be rejected
+> >   when using --force-if-includes
+> > - add test for --force-if-includes tag push 1/2
 >
-> "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+> This is intriguing and seems like a significant behavior change, let's re=
+ad on=E2=80=A6
+
+It's definitely true that this is a behavior change and it'll add some
+friction to your process. And it's also true that the current behavior
+is failing to provide the guarantees it claims.
+
+> > Range-diff against v3:
+> > 1:  da27c421ed ! 1:  e7912c3fd0 push: check pushed ref for --force-if-i=
+ncludes
+> >     @@ Commit message
+> >     -    Find local reflog using ref->peer_ref. When using a refspec li=
+ke
+> >     -    HEAD:refs/heads/main, we resolve HEAD. If HEAD is a branch, us=
+e that
+> >     -    branch's reflog.
+> >     +    Instead, use ref->peer_ref to locate a branch with a reflog. B=
+ut if ref
+> >     +    does not resolve to a branch (e.g., a detached HEAD, a tag, an=
+ oid),
+> >     +    then we reject the push. The alternative would be to use HEAD'=
+s reflog,
+> >     +    which is too broad to tell us if the history being pushed incl=
+udes the
+> >     +    tip of the remote. We need a per-branch reflog, which means th=
+at pushes
+> >     +    of a ref that do not resolve to a branch are rejected. Rejecti=
+ng the
+> >     +    push of a ref like a detached HEAD already happens today (if t=
+he
+> >     +    same-named local branch lacks the remote tip); now the detache=
+d HEAD and
+> >     +    other non-branch pushes are explicitly rejected.
 >
-> I wonder if this is_promisor_object() call comes a bit too late, as
-> we earlier already have called odb_read_object_info() which may have
-> fetched it lazily from the promisor remote?  Or do we globally
-> disable promisor_remote_get_direct() call somehow without having to
-> pass OBJECT_INFO_SKIP_FETCH_OBJECT flag?
+> So, we would now reject a force-push whose source is anything but a branc=
+h (with
+> force-if-includes, and that presumably includes push.useForceIfIncludes)?
 
-Yes, I think it's safe due to the following mechanism:
+I should clarify, reject the force-push of any source not ultimately
+resolvable to a branch; e.g., HEAD will work if resolves to a branch.
 
-1. If promisors exist, the connectivity-check will invoke
-   rev-list with --exclude-promisor-objects.
-2. rev-list in turn sets repo->fetch_if_missing = 0 on startup.
-3. Then the odb read goes down into do_oid_object_info_extended()
-   which respects that flag.
-
-However, my paranoia kicked in so I re-ran my test for this,
-after adding some temporary code inside
-verify_commits_incremental():
-
-    repo->fetch_if_missing = 1;
-
-And fortunately, one of the tests failed as expected.
-
-    Exactly 1 failure out of 62 tests: test 53
-      "incremental: verifies new subtree when parent subtree is
-       promised".
-
-And the relevant assertion is this one:
-
-    test_must_fail env GIT_NO_LAZY_FETCH=1 \
-        git cat-file -e "$parent_subtree"
-
-which ensures that the object was never fetched.
-
-However, the test only catches this scenario for trees,
-not blobs -- that's an oversight, I will add a matching
-test for blobs too.
-
-I think the code technically works as-is, but I could also try
-to rewrite the code to stop depending on odb_read_object_info()
-and instead use odb_read_object_info_extended() which allows
-me to pass the flags.  That gives us belts and suspenders, which
-may be nicer here.
-
-> Do we assume that we do not have to deal with repository corruption
-> in any graceful way?  I am just wondering what happens when
-> get_commit_tree_oid() yields NULL after parse_commit_or_die() finds
-> p->item is a valid-looking commit object but the tree within it is
-> not, and we end up passing NULL to tree_map_add(), perhaps?
+> >     ++test_expect_success '"--force-if-includes" should reject forced u=
+pdate from tag' '
+> >     ++  setup_src_dup_dst &&
+> >     ++  test_when_finished "rm -fr dst src dup" &&
+> >     ++  (
+> >     ++          cd src &&
+> >     ++          git fetch &&
+> >     ++          git switch main &&
+> >     ++          git reset --hard origin/main &&
+> >     ++          git switch -c newbranch origin/main &&
+> >     ++          git checkout HEAD^ &&
+> >     ++          git tag stable &&
+> >     ++          test_must_fail git push --force-if-includes --force-wit=
+h-lease origin stable:main
+> >     ++  )
+> >     ++'
 >
-> The same potential issue may exist in the get_commit_tree_oid() call
-> outside the look at the end on the incoming commit's tree.
+> Which is what I think this test says.
+>
+> I think this would break a common thing I do at work (although this is so=
+on to
+> be deprecated, so take my anecdote with appropriate salt; I can't claim t=
+hat no
+> one else relies on it, of course):
+>
+> As I think I described in the message you linked, I have an alias "pf =3D=
+ push
+> --force-with-lease" and push.useForceIfIncludes=3Dtrue in config. Our tea=
+m has a
+> "main" release branch and a "hotfix" release branch for emergencies. When
+> hotfixing, we first reset the hotfix branch to the last tag to go out to =
+our
+> production environment, which I typically do like this:
+>
+>     # validate that we won't lose any interesting commits (no regressions=
+) with
+>     # something like
+>     git log --oneline --graph --boundary --cherry-mark --left-right
+> origin/hotfix...<TAG>
+>     # push
+>     git pf origin <TAG>:hotfix
+>
+> (On a second pass before sending, I can't recall if this works as-is when=
+ I
+> don't have a local hotfix branch tracking origin/hotfix.)
 
-You're right, this is an oversight.
-I think I incorrectly assumed that parse_commit_or_die()
-would catch any malformed commit.
+Yes, this workflow will break. And it will not work today without a
+local branch named "hotfix". It's broken today, insofar as this is a
+false pass since push.useForceIfIncludes is unable to say anything
+about whether you've integrated origin's hotfix branch into the <TAG>,
+you're pushing so it only incidentally works.
 
-I will add a NULL check and a die()-exit at the two call sites
-in verify_commit_tree()
+Today, git pf is actually checking that your refs/heads/hotfix's
+reflog has the tip of origin's refs/heads/hotfix. But it makes no
+promises about <TAG>. That is, you could:
 
-    die(_("unable to load root tree for commit %s"),
-        oid_to_hex(&commit->object.oid));
+    git checkout hotfix && git pull # This line is what makes it work today
+    git checkout --orphan junk
+    git commit -m --allow-empty 'Totally unrelated empty commit'
+    git tag <TAG>
+    git pf origin <TAG>:hotfix
 
-Thanks for spotting these errors,
-Kristofer
+And pf will allow that to happen since origin/hotfix's tip has been
+integrated with your local refs/heads/hotfix, which is what it's
+checking today.
+
+> If I'm reading this version right, I would now have to say
+>
+>     git pf --no-force-if-includes origin <TAG>:hotfix
+>
+> or perhaps better
+>
+>     git pf --no-force-if-includes --force-with-lease=3Dhotfix[:origin/hot=
+fix] =E2=80=A6
+>
+> probably after seeing a (hopefully improved?) message after the original
+> command. (Do I need to disable force-if-includes in the more-specific lea=
+se
+> command?)
+
+    git pf --force-with-lease=3Dhotfix:origin/hotfix origin <TAG>:hotfix
+
+Should be sufficient and as I understand your process, that's what
+you're after. The explicit --force-with-lease argument makes
+--force-if-includes a no-op, so --no-force-if-includes should be
+unnecessary.
+
+> Now, on the one hand, enshrining existing behavior is good for backwards
+> compatibility but has earned us a bit of a reputation for not innovating =
+in
+> useful ways ;) On the other, I wonder if the description of force-if-incl=
+udes
+> allows some latitude to break with existing behavior here.
+>
+> The relevant docs say
+>
+>        --force-if-includes, --no-force-if-includes
+>            Force an update only if the tip of the remote-tracking ref has=
+ been
+>            integrated locally.
+>
+>            This option enables a check that verifies if the tip of the
+>            remote-tracking ref is reachable from one of the "reflog" entr=
+ies of
+>            the local branch based in it for a rewrite. The check ensures =
+that
+>            any updates from the remote have been incorporated locally by
+>            rejecting the forced update if that is not the case.
+>
+> It is unclear to me what "one of the 'reflog' entries of the local branch=
+ based
+> in it" means! Ignoring that, the surrounding text only talks about whethe=
+r the
+> remote-tracking ref's tip (or "updates from the remote") have been "integ=
+rated
+> locally."
+>
+> So I think we *could* say that, in this case, we don't have enough inform=
+ation
+> from "<TAG>:hotfix" to check whether "origin/hotfix" has been integrated =
+locally
+> or not, and we should tighten the meaning of the check. (Perhaps when
+> "--force-with-lease=3Dhotfix" is given, though, we now have more informat=
+ion
+> available to check---but that could be outside the scope of this series i=
+f we
+> don't mind breaking backwards compatibility now.)
+
+From my perspective, this is similar to the detached HEAD discussion
+from 2020[0] where "[the reflog of HEAD not attached to a branch]
+_does_ answer a different question from what we actually asked."
+
+[0]: <https://lore.kernel.org/git/nycvar.QRO.7.76.6.2009161214030.56@tvgsbe=
+jvaqbjf.bet/>
+
+I opted for a direction requiring explicit arguments to express
+intent, since that's the only way to ensure --force-if-includes aligns
+with (how I read) the documentation and the previous discussions.
+
+Specifically, with tags:
+
+- tags may have a reflog, but it answers a different question vs. "has
+this tag integrated changes from an upstream" it answers what oid/ref
+does this tag point to
+- tags may incidentally point at oids referenced by branches with
+reflogs, but there may also be several branches pointed to the same
+oid, so which would we choose?
+
+BUT I just realized there is existing, more fundamental breakage with
+--force-if-includes here that I'm making worse.
+
+There is one case where we do have enough information to say whether
+<TAG> has integrated the tip of the remote-ref locally: fast-forward
+push. And that's actually broken today, too :)
+
+    git --version
+    git version 2.47.3
+    git clone repo.git repo && cd repo
+    git commit --allow-empty -m 'Normal, no-force-needed fast forward commi=
+t'
+    git reflog expire --expire=3Dall --all
+    # Regular fast-forward push fails, even though it does not require
+--force to begin with
+    git push --force-with-lease --force-if-includes origin main
+    ! [rejected]        main -> main (remote ref updated since checkout)
+
+Checking for fast-forward happens after --force-if-includes checks the
+reflog. So that will need a fix=E2=80=A6
+
+My change makes an existing problem more acute, and probably requires
+a fix before other fixes can merge. Otherwise, --force-if-includes
+will always fail when pushing tags and detached heads, even when
+they're fast forward changes, adding needless friction to otherwise
+safe pushes (e.g., for tags that fast-forward a branch). So v5 will
+require a third change that touches other functions in remote.c. :/
+
+> Thanks,
+> D. Ben Knoble
+
+Thank you for all the review and thoughts!
