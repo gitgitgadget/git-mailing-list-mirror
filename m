@@ -1,236 +1,105 @@
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250A73B19D6
-	for <git@vger.kernel.org>; Mon, 14 Sep 2026 07:27:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36483F4DE6
+	for <git@vger.kernel.org>; Mon, 14 Sep 2026 07:53:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789370851; cv=none; b=EkFiOmKVXnqmL+Yg5HiTsSFsD1bdPc6LlGQqFfidULr1wMucqTUk7MqgTesDCRzLTfPTY+VcBrkrIVYuCVL4XsxH9Y02jLb75So3JlCZs2eZ95YzgIXXLMM+8VeKuC8i7GyX+WQOY9x4zE5Tr8N1bRBscceQcAetR6zxGs1okjo=
+	t=1789372391; cv=none; b=LcBE9NH3+CXDyzR8tlqJGWTsLTOQWnjpVVciZ2HCWWr8ITf1ypy2A/xdh3AMaIyYhNIC34lFwzP3N1w1ncBzFDCTi6jefngsPjjiIas5PNhr12glwr2vVMI8R0r6OVAuAnWXrlDSVVbt6gbHN530z4wKm2VjdGu3vQLlxkm/gVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789370851; c=relaxed/simple;
-	bh=KG4btxfATa1KDjQ1c1Db7tlU8u0n6I6SRC4ewnHge54=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=RTUPFtv8boxJ4ay0Pf6UzyWD/iNrJo086hyYzgIfTG8E3vpscNE61uKTNjJYXJ+8cYmXWgqdpXMd7eC+5+n0YxOb2RQEWXoAm40sOlysJRpQyUJpweTB05luQGAqok5dgMyz3W99DmrSxcEeT/dLMT6WW4ddHS5HLjicdbAyc6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de; spf=pass smtp.mailfrom=ytausch.de; dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b=usEf4k0g; arc=none smtp.client-ip=80.241.56.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ytausch.de
+	s=arc-20240116; t=1789372391; c=relaxed/simple;
+	bh=X5YIB2dsK+DZEqJp2gzZNS99wPcQhoBYjMX/GRmlZQ0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C8rFbTANpIyhGfmpEewCymd0N7ostFN3h+b22nxNcS3kU4NQMe6n2YJyznkj0O2xO9IqkbrAqh+FblcB4JfGhKBv3UDmbPqRzbL2cSG5gue8aV2IFL/YUkeErKSY+a4rCw04Unm1pQDqJglpUeTx1C9/BZFpP0pDU5eoAGiy3rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eJ22d5ye; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fK63aSfz; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b="usEf4k0g"
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4hjxYd3Bz8zKm7S;
-	Mon, 14 Sep 2026 09:27:17 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ytausch.de; s=MBO0001;
-	t=1789370837;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QS7yk02RDuIrdgbg80+3CrgbKoF1bCh21jcAcninA74=;
-	b=usEf4k0gAhLZhI4hHPss5yRFf+KABIH//MK46WBOJIBnHURbrk1MD6Y70Q6oo9WBmlS3nN
-	qPSGMyf7/v/VCYDt8x4qH7ualbL1/LTgVwfSr9c/m8URxHg2LnIkSc34/zeEzj4LOGCb0U
-	IXcSLvLLUkA9LBxOz0Xc6w7gMeEVf6nke+TJWmZHdm3FaQNpU5wymhCw3oGPtDW/I8NNnM
-	nJ0dZVoFtYCE+46658BAw5JlH34qmyWG8yrPRazOGxRuaQ05d32o/Xhc7q7FV+/zG32Cdo
-	IOClF3ixotpNpHCI6PWdQT0DvfSqExTcEBKTi/Qn79gGs3Qe3Yy8/RvsWzh1LQ==
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eJ22d5ye";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fK63aSfz"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9CBDA1D000B0;
+	Mon, 14 Sep 2026 03:53:08 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 14 Sep 2026 03:53:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1789372388; x=1789458788; bh=ntZqRyUu4S
+	TLZ17KlvJwdTmEgEPPESKxWiS6aE6bedI=; b=eJ22d5yeTqZgNHRzq2kyTAvuTk
+	+lrmQBRdI4oWDMt38zJ8Ogo6k4MUWTLR98WuUNLIbx69XwAPzrtYPwf4XeUesXDz
+	AtQto1ol1U9ItBHPmf+Ac4lM0NCIUZL5vWpppIsiSbml8s8fo7bFxc9JHKQCOmFj
+	t5ZbbF6NfBRVXAQ715LID+3QEO5kgmYXz/3gHk8h98yz69N0UDd4IeVZv+h20pal
+	UFFit2Y/lWhuqnrHH0+hSdQOZJi1soN9tTJj8RQX/9QyVkUS/h7OjM2KQVVGH6O9
+	FJhZOnnXuvP51w7stB/MZV6fihnTFNU2HIGu7vrq4d4N5ER+9LPy958+nEaA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789372388; x=1789458788; bh=ntZqRyUu4STLZ17KlvJwdTmEgEPPESKxWiS
+	6aE6bedI=; b=fK63aSfz7KimL6/ajq/Qp2HjkBt5ojBjk9B963chJRO9xhOzYjv
+	zBFatkzQnZ17A4fBxg/moBvChlHQmLbMyAptl71ESJ8XM2ykLXoM0zd4quTxkvVV
+	FKCS6281kzV3mz4D4ULjI2HFOoiGRrzRJdR9X2hWfyvM1vxQtR8+zcv1wqJVyAmp
+	CEOlkorBnkHai7fF+JkZ37o3XsAiSI37G49axT5peGNTxE8628G6tljE6/xrkLIz
+	dFxBbHxOA4NkMNFwrs+e/2dT+i+BFcjhiJ8KFfjbg3n2RWsLqJDoyxRKY19X8XRu
+	K8dR4+jCeoZzwgZNvPJmP3334fvkCu8qn4A==
+X-ME-Sender: <xms:5Kenam8G0c15Nz0AcjuZ4LzFOx4TMc8lVvL2vL-MEtVEotFyXWvLZg>
+    <xme:5KenauJu7U-BduFDs1nyGO8STfexYeriXnD-XZiFX81FDJSp6PAQGagnN3GnBYoZD
+    O9pPJ-POw-5olVUM3b3Zs1IyYJLTe62J0KILoByqvnVs77MRWyCJDQ>
+X-ME-Received: <xmr:5KenapZKjcLWPeECByNXCyqV8bvqQKDiN-nQT6KO_TSklkoWbbGD6reduLVk3egzxtsilA>
+X-ME-Proxy-Cause: dmFkZTFOKBzKNfWCUjTUil7FqIOf8WXq15Nlw9+VzWGhrpQeBgrvkEWprXF3fYxb/OVdNr
+    ztJqGx0VShfEiPPkHKzerPloWxWEXMOhsgmc32ZKGnQ9ZEBzVxncI5KILcaa+ZyckkRkmN
+    nF0sQ+CXaZyE6REPCda0scxOQebTKEBL4SBYQwMrHLsXc3guvug9Mf1ThS0Hn/3uq25mVA
+    Idpb4r/xkBCYaChqn2d7ubIz9DzIA4HMkLvpsk7CDEuS/PEIIU9GFWZ9oAUDm8PGxunlTA
+    Mb0kRyHPJ3Opr0OxLBxaoNF3mUHnzz7XzAqqPailUlD26+vd2WNXpzjnpw/aOnVlnUhmBx
+    ZJ2PYVQWbjAVb/BelCgx8zosJ78vZ7NF9UyEhiQTkdVtg9gjLqp6Y+I4ZDbp4D0A5oHl/a
+    Ks8zZ1YctXvDPWCoAXv/0RZe7nQJ/gxXQ3e5LSaaCCnk71izQnAOH9WomCu2w+Qe419vfb
+    ijQNfVJKikRcabfgGOlQyyTOqQ3ddKUgSW41vRTD3bb6YO4gBenali3TzmIoD5Y8Tj6OnK
+    TKvoHSWJ+to+unsp0uR7+khWe+p0uKC2D0wleal1OeVyBOYmsl+Hf9EkMyjo4fwaYOaJWg
+    zFl95+BT2w6T/Wm4R3v4Azs93TxfW7ZMJy9Kidb2KrZT3OsW24KEK3r27YKw
+X-ME-Proxy: <xmx:5KenaoIJPoaEVohsULg1p_Wy2mg4Pc4Gi7H29wAaMlbDiShsskB_hg>
+    <xmx:5KenavBTLs9HZfjf4CPVwUIcLLS6n5ISZ2sa26sFAc1p8dJdEoumGg>
+    <xmx:5Kenalre9GFCcj6p0sF72RYLoQDTpUO7CCfaBkeYoYz_aUCcLtDB0A>
+    <xmx:5KenaiiS0imqYyDlGnhpqToGsWDgXYImGBDa63KYdcp2gJG3v-J0QA>
+    <xmx:5KenaknlAbys8cNX2xxVA4SvhHSRUEaEFu_951J_aJM0DaEDVM1tLTxs>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 14 Sep 2026 03:53:07 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 975acb78 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 14 Sep 2026 07:53:05 +0000 (UTC)
+Date: Mon, 14 Sep 2026 09:53:02 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH] ci: drop no-op gettext link on macOS
+Message-ID: <aqen3lVdecDqo89w@pks.im>
+References: <pull.2402.git.git.1789199739368.gitgitgadget@gmail.com>
+ <aqeTas30Vs3aGE9D@pks.im>
+ <CAHwyqnUG_ta=m5e7rk-35D0Dve+GeQX3eNuFf_U4kSd5+Sqy+g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Subject: [PATCH v4 2/2] dir: preserve pathspec prefix optimization with
- leading excludes
-From: Yannik Tausch <dev@ytausch.de>
-In-Reply-To: <7CB757FB-1F2D-4EE6-8C31-8C2CD6D42397@ytausch.de>
-Date: Mon, 14 Sep 2026 09:27:05 +0200
-Cc: Junio C Hamano <gitster@pobox.com>,
- newren@gmail.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B90E7FCE-0A5F-4629-A2BE-37F2CAC5F3B1@ytausch.de>
-References: <AA085B7A-F528-458A-8AA9-7664480997AE@ytausch.de>
- <xmqqecfbk2eb.fsf@gitster.g>
- <81EC0E28-13E7-4D10-BD07-3601124CBD77@ytausch.de>
- <886A25E6-8854-4AF6-BF0B-CFB57B673026@ytausch.de>
- <7CB757FB-1F2D-4EE6-8C31-8C2CD6D42397@ytausch.de>
-To: git@vger.kernel.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHwyqnUG_ta=m5e7rk-35D0Dve+GeQX3eNuFf_U4kSd5+Sqy+g@mail.gmail.com>
 
-Directory walks use the common directory prefix of non-exclude
-pathspec items to avoid scanning unrelated portions of the working
-tree or index. Exclude items only remove paths from that candidate
-set, so they do not need to widen the traversal.
+On Mon, Sep 14, 2026 at 08:57:49AM +0200, Harald Nordgren wrote:
+> > So I'm still left wondering whether it really isn't required anymore,
+> > and if so why it stopped being required. Links to passing GitHub and
+> > GitLab pipelines with that change would've in this case also helped to
+> > demonstrate that it works without that line.
+> 
+> It passed on GitHub: https://github.com/git/git/pull/2402
+> 
+> I'll take a look at the rest of your comments as well, thanks for the help!
 
-When an exclude item is the first pathspec item, common_prefix_len()
-fails to establish a comparison base and returns a zero-length prefix.
-The result is correct, but Git unnecessarily traverses from a broader
-starting point even when all non-exclude items share a directory.
+If you look at the pipeline though you can see that almost all of the
+jobs were skippped. And in particular, macOS wasn't tested at all.
 
-Use the first non-exclude item as the comparison base and return its
-string together with the prefix length, allowing callers to start from
-the recovered directory prefix. Exclude matching continues to use full
-paths, so this restores the optimization without changing which paths
-are selected. Add a unit test covering an exclude item before two
-non-exclude items with a common directory.
-
-Signed-off-by: Yannik Tausch <dev@ytausch.de>
----
- dir.c                | 37 +++++++++++++++++++++----------------
- t/unit-tests/u-dir.c | 28 ++++++++++++++++++++++++++++
- 2 files changed, 49 insertions(+), 16 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index 5f42c992d3..abc4a78f31 100644
---- a/dir.c
-+++ b/dir.c
-@@ -212,9 +212,10 @@ static int fnmatch_icase_mem(const char *pattern, =
-int patternlen,
- 	return match_status;
- }
-=20
--static size_t common_prefix_len(const struct pathspec *pathspec)
-+static size_t common_prefix_len(const struct pathspec *pathspec,
-+				const char **matched_prefix)
- {
--	int n;
-+	int n, first =3D -1;
- 	size_t max =3D 0;
-=20
- 	/*
-@@ -237,43 +238,47 @@ static size_t common_prefix_len(const struct =
-pathspec *pathspec)
- 		size_t i =3D 0, len =3D 0, item_len;
- 		if (pathspec->items[n].magic & PATHSPEC_EXCLUDE)
- 			continue;
-+		if (first < 0)
-+			first =3D n;
- 		if (pathspec->items[n].magic & PATHSPEC_ICASE)
- 			item_len =3D pathspec->items[n].prefix;
- 		else
- 			item_len =3D pathspec->items[n].nowildcard_len;
--		while (i < item_len && (n =3D=3D 0 || i < max)) {
-+		while (i < item_len && (n =3D=3D first || i < max)) {
- 			char c =3D pathspec->items[n].match[i];
--			if (c !=3D pathspec->items[0].match[i])
-+			if (c !=3D pathspec->items[first].match[i])
- 				break;
- 			if (c =3D=3D '/')
- 				len =3D i + 1;
- 			i++;
- 		}
--		if (n =3D=3D 0 || len < max) {
-+		if (n =3D=3D first || len < max) {
- 			max =3D len;
- 			if (!max)
- 				break;
- 		}
- 	}
-+	*matched_prefix =3D first < 0 ? NULL : =
-pathspec->items[first].match;
- 	return max;
- }
-=20
- /*
-- * Returns a copy of the longest leading path common among all
-- * pathspecs.
-+ * Returns a copy of the longest leading path common among all pathspec
-+ * items that are not excluded.
-  */
- char *common_prefix(const struct pathspec *pathspec)
- {
--	unsigned long len =3D common_prefix_len(pathspec);
-+	const char *matched_prefix;
-+	size_t len =3D common_prefix_len(pathspec, &matched_prefix);
-=20
--	return len ? xmemdupz(pathspec->items[0].match, len) : NULL;
-+	return len ? xmemdupz(matched_prefix, len) : NULL;
- }
-=20
- int fill_directory(struct dir_struct *dir,
- 		   struct index_state *istate,
- 		   const struct pathspec *pathspec)
- {
--	const char *prefix;
-+	const char *matched_prefix;
- 	size_t prefix_len;
-=20
- 	unsigned exclusive_flags =3D DIR_SHOW_IGNORED | =
-DIR_SHOW_IGNORED_TOO;
-@@ -284,11 +289,11 @@ int fill_directory(struct dir_struct *dir,
- 	 * Calculate common prefix for the pathspec, and
- 	 * use that to optimize the directory walk
- 	 */
--	prefix_len =3D common_prefix_len(pathspec);
--	prefix =3D prefix_len ? pathspec->items[0].match : "";
-+	prefix_len =3D common_prefix_len(pathspec, &matched_prefix);
-=20
- 	/* Read the directory and prune it */
--	read_directory(dir, istate, prefix, prefix_len, pathspec);
-+	read_directory(dir, istate, prefix_len ? matched_prefix : "",
-+		       prefix_len, pathspec);
-=20
- 	return prefix_len;
- }
-@@ -394,7 +399,7 @@ static int match_pathspec_item(struct index_state =
-*istate,
-=20
- 	/*
- 	 * The normal call pattern is:
--	 * 1. prefix =3D common_prefix_len(ps);
-+	 * 1. prefix =3D common_prefix_len(ps, &matched_prefix);
- 	 * 2. prune something, or fill_directory
- 	 * 3. match_pathspec()
- 	 *
-@@ -414,8 +419,8 @@ static int match_pathspec_item(struct index_state =
-*istate,
- 	 * Normally the caller (common_prefix_len() in fact) does
- 	 * _exact_ matching on name[-prefix+1..-1] and we do not need
- 	 * to check that part. Be defensive and check it anyway, in
--	 * case common_prefix_len is changed, or a new caller is
--	 * introduced that does not use common_prefix_len.
-+	 * case common_prefix_len() is changed, or a new caller is
-+	 * introduced that does not use common_prefix_len().
- 	 *
- 	 * If the penalty turns out too high when prefix is really
- 	 * long, maybe change it to
-diff --git a/t/unit-tests/u-dir.c b/t/unit-tests/u-dir.c
-index 2d0adaa39e..a3442c3d3c 100644
---- a/t/unit-tests/u-dir.c
-+++ b/t/unit-tests/u-dir.c
-@@ -45,3 +45,31 @@ void test_dir__within_depth(void)
-=20
-=20
- }
-+
-+void test_dir__common_prefix_skips_excluded_pathspec_items(void)
-+{
-+	struct pathspec_item items[] =3D {
-+		{
-+			.match =3D "unrelated/path",
-+			.magic =3D PATHSPEC_EXCLUDE,
-+			.nowildcard_len =3D 14,
-+		},
-+		{
-+			.match =3D "foo/bar",
-+			.nowildcard_len =3D 7,
-+		},
-+		{
-+			.match =3D "foo/baz",
-+			.nowildcard_len =3D 7,
-+		},
-+	};
-+	struct pathspec pathspec =3D {
-+		.nr =3D ARRAY_SIZE(items),
-+		.magic =3D PATHSPEC_EXCLUDE,
-+		.items =3D items,
-+	};
-+	char *prefix =3D common_prefix(&pathspec);
-+
-+	cl_assert_equal_s(prefix, "foo/");
-+	free(prefix);
-+}
---=20
-2.55.0
-
+Patrick
