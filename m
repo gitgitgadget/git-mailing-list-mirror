@@ -1,111 +1,183 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A313E49CD
-	for <git@vger.kernel.org>; Mon, 14 Sep 2026 06:29:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F122D7380
+	for <git@vger.kernel.org>; Mon, 14 Sep 2026 06:39:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789367395; cv=none; b=Q7CrSUuXLpxu6XfrQjTdklNWfS1KjfWkxIn1eNlnOkMnfnadFZhivU0CSC9NGO+scEkGUn7bv5Sb7i4Sn8KjAv5iOD9xdCiFtEDh9ICm8J96Xnt9PTJR+scVrWrCfWjtdJcmeAJ6EHZRJHGTnL0JSi/4UDfmVmeK4o42xZxH3s4=
+	t=1789367941; cv=none; b=LIRLjoEwTkDzaZtNqMDOQJNyYNaKlSIOrVZMIASWS/z0Bne9t6d3ekqYEZxZmdZotd1FQo/Ul+6iiGQzBPUwqP9Urw1JRT0PSCdlg3BDkHd0Wnh0nBVvQ9qfoqWAnOqZ8Nz3vjg6V98cWn8O/+ODVp6IwYAlLhhRhh11eXOVyV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789367395; c=relaxed/simple;
-	bh=MqPjA5H87WS1xx/CYPWHVDVuZ0HeqVUC+z1SPg6H7AE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hyn9Y5fj33Nhc3lcRqPNDXWGhAYAyB9+JmverrbCCaYo6lNOLLQ8MI015GzeG0S+4kl7r5C/vE+8L+ynOdE4mQrM6VniC8/K0C3gL1eGN8mNPyKUIX8hdLrtxLa73usy18pldU46E9Z8WXUEl+zkFFdG82jXUZZN8Qk1WP3JI5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EdfFPzzh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=agMFu7YW; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1789367941; c=relaxed/simple;
+	bh=3NrfYZ4v1Ty9PdQEABh9qPOFORs55O/ljXDCCtOLzV0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NTPHqm7+lfKDNnYoPeFIlBx7zNCy0dvSpn3dMFL8OvjfIjHs/5jIcLQXoy95GeU5Y8HlYQMzktHwVX/RYqKcX0w3RRpJFkyeQdXRKXC/LQOR01SQZF1ulfztv/dvC5WxpbKtWRdaH2m0HE5d6P1md2h/Si+H8gBrgQ2zjYLvMYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gkes31bs; arc=none smtp.client-ip=74.125.227.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EdfFPzzh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="agMFu7YW"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id C69651D000B4;
-	Mon, 14 Sep 2026 02:29:51 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 14 Sep 2026 02:29:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1789367391; x=1789453791; bh=4vrVDksBPl
-	RGA0M1Sd1CgUng5Ndb4ojskY7SaW3M8JM=; b=EdfFPzzhzXktiF5UKcRPVJa2+D
-	d0jIwopRfj8BbMZ4D7o/QomialTm3sYz8ZE8CWkV3bkYlbI3kXLQc3DtIVC+z2rs
-	xqvcBfGX9USTWqBC56s/hl86tjejgEgup+Fx3iIOsLN9xdVEe1sEoy+ChP/RNGk0
-	kFa+qOUEkzSGkaamXFnYraVZOGPYIsFrCZsyH4q1vULzPc+JtBEUxtwjkoTgLzBg
-	MZcvZ5o27+x8lRq4OxUc0sJB4UQyvgonXC0Q2ODrhVDaQQkgu+m92VKISmV/C4VR
-	O60IfXJ2EITf8hmG6+scg4GFtYTQXpEoj3gT9s64NEGSstWwnf5elGh/R0Hw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789367391; x=1789453791; bh=4vrVDksBPlRGA0M1Sd1CgUng5Ndb4ojskY7
-	SaW3M8JM=; b=agMFu7YWFDc3UxEwlQPeb6R/j1uUV3f1zBfyZq92+S9n27EF1F9
-	WN8rywhxXYaKWPChxjKsh212CY+nFg8FEkxtt1vrKeuVnJdq8rT9Zp7YaoXkr6sy
-	8gjCom0Nds3RKmWzlBSCJfS6r/OQq56d/MtUmkUcYyfddkGF16gZ1l/wr3v8SSMe
-	ou8HKeupAg1KEcK7DmIUmEZxR+UzdDGTnz/zaHs63t+5LFGBwciKb6m7vIrmizk3
-	FN19Ua8HI6wiC9Y16TKUPlct9GCyTKKMxdLrEQnC+LgDKyL82c5+o83Ygo5zkcDi
-	n7tPyMwH79cHgBTF5XiWSroX7JTW4ZmJtGA==
-X-ME-Sender: <xms:X5SnanHZNN9LGnTT60C9vvehDrrCSYFC0xI4g0embchr4ULUM1x3qA>
-    <xme:X5SnarwS2qjvjNbnIzBi3DsNplAxD4LCU4MM_sTFNZed_yIjansUW_xG5zpzQ_HFt
-    G51J7dS--wGqueNczgCnil7A_FUAzdSB9kqKvL_MJE2hOJMcWTIrw0>
-X-ME-Received: <xmr:X5SnamjqfFNx64pbD3-jkYChmqvJffOA0pScyJ2E0AeN-_wB_UzWVCERZXQoYtxCID9iWA>
-X-ME-Proxy-Cause: dmFkZTFL1gQ0t3KcCNFzwypEyliJOi6F2e9gnSwUZRscWCAjQmv13lbYny85P4KUGDrcwN
-    bdHu7LUHo4hFTka48pLT7aYIAJivYWAlGUpSiRQ63VT2yXJGChijrbNbF9MONd5mA0s43o
-    3FZE4StgP1Pdc878GFObP7Iz66TwEFJR5Yl5bgUhGD33ySJyvgbG5KrUjJ/6NC/1UkszZ2
-    OzeZZaT2gdIhL1Fwp8RN0nyjxWsM9xStOD02Ne6JcjsOqU1+GH9u7UKQAlnXHySAJ9aErY
-    NQYJhoNXQL4wIPV0KWEJPDEtrhnDLXaLpvEr4X4rDNjb7D5y2uLlH9cH2uGPhm4bICp4jA
-    wa8OaIp/XEuTTgu8mW5iTbs+/Co58cFBnY/UMxvyFxTfWlUfog/RgysUZDtQjH/0kaVmZe
-    /vgVH/83mJVif9uMgji2nDg6suVm5OrSuibhnZcgMao3/8g0Rqy6aYNu7rz+fyI64oJKk2
-    PbYzGJMMhuHg7AXGzoNxq39gVZQq+Yl1MOnmcv2jKKnSnpbtidhKvcEHNj20KhzWsoqDhk
-    vgGLK7asShsgk5Ou3yGEqP2LAov6GNFEjwCmQ4vSlBShKgpP8YdybUjCc4sOU5GvOrFsHw
-    QaHFeqqv/oKRL6tmjlVA1Je6FaCs891HKSAeQQfswnj8bGhGKM0RWN3/KjMg
-X-ME-Proxy: <xmx:X5SnauzBc_em6C7ZcD-sutLOz58pTlv6vtcy3PFaXEEniD2nZp-tIw>
-    <xmx:X5SnahIVdTRcR3vZgsinonpaFMZqdOle5AI_HjMSRtINe4b1ZMb6zA>
-    <xmx:X5SnatSl8ZnYa6epmFbUxD1rQOI3CHGDrNNooUJnF8yRVRuJtJIFIw>
-    <xmx:X5SnahodI8yDJNpxxY_Smzh7H9nXKjmvgHTRrDMUAR0HZ1CXHTRQng>
-    <xmx:X5SnasO224eWDSaH2boKZWuqy41t3eTZn4dRUpHgHomb8HeWacpoW5W5>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Sep 2026 02:29:50 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bb6bcd18 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 14 Sep 2026 06:29:49 +0000 (UTC)
-Date: Mon, 14 Sep 2026 08:29:46 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-Subject: Re: [PATCH] completion: complete 'git worktree repair'
-Message-ID: <aqeUWrx7pbzDVbVt@pks.im>
-References: <pull.2218.git.1789171955370.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gkes31bs"
+Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2d8fb334e72so16664365ad.1
+        for <git@vger.kernel.org>; Sun, 13 Sep 2026 23:39:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789367939; x=1789972739; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=3BTyKUv83XPCfJ5ML93dgfSjPgOMf/X2gW2NV+Hl+nI=;
+        b=Gkes31bsCXYDhUU+371vd24Y3P54KmszuASiMnIzT87RlHyaXiICmHXm+QBBOZS/SM
+         p9t1MHC1ALja/vqJ/9fdfOdh4eqdb/V8YGRUqW22vAPdWwVoE0KslnWoFA2jBvmIDoV6
+         Qb2WY7gxsn94BdIP9h5IpDsmX9G/i8+426pqEJw1/qu+UZ5Taqe40Ta4Evi8U0V5Mc1J
+         HV+PebZ+KdEn6Y4oZKeoO8GeTRe9RjENvU0hQ4V/EokdVbhMIrhzkZndP4Ul4aJUVvBK
+         RSGHGxRHz8kk4Cn8jsC+X7bulDf4UD5AT3SVEOKm91iTqTshisvr4zsgFInB387y84Hb
+         jVHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789367939; x=1789972739;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=3BTyKUv83XPCfJ5ML93dgfSjPgOMf/X2gW2NV+Hl+nI=;
+        b=bLsX4w4rOLrIvkcHXD1fHywOQo5UfN8p5A50V2cS2N0+Ot4d01BDshLrArX/UpzOWu
+         wLI55Ey6fUWwzKG6/qGsPzVJ4qoq28Cwpi3E9fQTqC7aKKd/rcaEHyV6EwcI8ZpcHJg1
+         D2gY2iftkRjPKg9xZjcYFLBAE4JQwIrgy38gVElfUHtlfG+weAORxVbWv1wnTS9yV0PX
+         ljiI5qF0p2Zxe5CMWV1ta+LuUkgFc2/P57dm3bFE0vc5jVeLTIY4kMG57gQz7UkC+O/7
+         z7z7o9cRZbaorNkL9lOXwMVOuRuf7Q3xdIHlfc1NW/HEzvxjLZc2LKhqT4bh9Uql+ZHV
+         /vTQ==
+X-Forwarded-Encrypted: i=1; AKwUvBz4+WdLg6fBRpv0hVwAz74k+l3svK84MJ8IADKAuAS3F/epQ0QkCwT8I98F40Qnr3sbzN8=@vger.kernel.org
+X-Gm-Message-State: AFuF++k5h9RiZTxX2Cuo5jJKftYga3LkDWMu057cD7c9IWIw9BuiUCmG
+	XISz54PuasrD8o5YE7pdQnVdHDk9ANkHCNGcFradXAZe6S738CYfoVmL
+X-Gm-Gg: AYBFou1/MifsIZbWjxq1/fbOqbiwPHBdJSekIlctvtwue74A2iyhkp0YuLoy7lnimLa
+	ZQYeApuXcJsQbLskjp4530rwc0xHke+FZD8+IcbuIB7BkHh9m5KY6nitzjSLNeSu8o7JGHuqSFN
+	oP0WYEzmvk0iLpVAJM8xBgr0ePFDORn1kMbQLyua9zJRReRlyDhi0Yiy4KpvQ8ahHixq/pQup7e
+	4pAiIb5Ui25tUzlU2QDjpgiQcFo8jQcp/g7u5/sLT/a8aXXL8iVduqmsmTbB7ETcSDAmRvZcU2x
+	PRbl3hn8a9G3xo7Bd1CxugExJ9dJn4NGQAYZ1cEHWsf+Kxt+qLCUka+x+Cwwp++qXP/LhTpST5D
+	5ibGhrsY2dUfAHe1mowd5dVY5DZQNS0ajJ+tarSgj7oJ5BdfoigEnK3805VO3nW8GJll02v2sqr
+	ETOsS1ugMcaRCaJFcw8njdk7RWPjXCuayfg2xN49Ge6Ej0802j0AbIVb8JkS78ece+TsCgxH/dR
+	WoDBs4DdtthFZ4ycOp1DZ1J5eI7CSrRxok6f57Xk7SMqgtZdwZ36i/CjZ7JviTYknrgh/KfMBMF
+	aJXerUh6Ig2rdAKF2gwJM7+x7R5JmHiHYOgUPkiBaAjI9T8jJ+MZeRTH+KnxYq4DRXKPeNuZXhO
+	ZJqXz5Esjq4AzMwz8jfHsbnW31JY=
+X-Received: by 2002:a17:90b:2f8b:b0:39d:f259:3351 with SMTP id 98e67ed59e1d1-39df25936a9mr450376a91.0.1789367939475;
+        Sun, 13 Sep 2026 23:38:59 -0700 (PDT)
+Received: from ?IPV6:2409:40e3:40e3:cdf9:c527:9f06:6e83:e614? ([2409:40e3:40e3:cdf9:c527:9f06:6e83:e614])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d951d6b08sm19582679a91.8.2026.09.13.23.38.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 13 Sep 2026 23:38:59 -0700 (PDT)
+Message-ID: <080f0485-3cf7-481a-8c39-c69afc81fbd8@gmail.com>
+Date: Mon, 14 Sep 2026 12:08:54 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2218.git.1789171955370.gitgitgadget@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Participating in Outreachy's December 2026 cohort
+To: Christian Couder <christian.couder@gmail.com>, git <git@vger.kernel.org>
+Cc: Git at SFC <git@sfconservancy.org>,
+ Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+ Pablo <pabloosabaterr@gmail.com>, Usman Akinyemi
+ <usmanakinyemi202@gmail.com>, Tian Yuchen <cat@malon.dev>
+References: <CAP8UFD367UD=AomNVHEBnhY-2DQmqTNRcBX6NW7YZywWgOmxTQ@mail.gmail.com>
+ <CAP8UFD0oYnoXgQ84wHbGg3+QhX78Ucn_CXXYOe8uFpReb7X1Ng@mail.gmail.com>
+ <CAP8UFD1hAjtPuWL8asZ2LzEMJKHGh2oO73n_tsUSADtEHh9b-g@mail.gmail.com>
+Content-Language: en-GB
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <CAP8UFD1hAjtPuWL8asZ2LzEMJKHGh2oO73n_tsUSADtEHh9b-g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Sat, Sep 12, 2026 at 12:12:35AM +0000, Yoichi NAKAYAMA via GitGitGadget wrote:
-> From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+
+
+On 09/09/26 14:42, Christian Couder wrote:
+> On Sat, Sep 5, 2026 at 10:26 AM Christian Couder
+> <christian.couder@gmail.com> wrote:
 > 
-> Added completion support for the 'repair' subcommand of worktree. It
-> optionally receives a list of paths to linked worktrees or paths to
-> worktrees with broken links.
+>> Thank you Usman, Kaartic and Pablo for volunteering to co-mentor!
+>>
+>> As no one objected to Git participating in Outreachy, I will submit a
+>> Community Application for Git very soon.
+> 
+> I have submitted a Community Application for Git, see:
+> 
+> https://www.outreachy.org/communities/cfp/git/
+> 
+> It says that we are willing to mentor and sponsor 2 interns. Hopefully
+> we can have two (co-)mentors for each intern.
+> 
+>> We will still have to sign up as mentors and find and submit projects
+>> for interns to work on soon. We have until September 11, 2026, at 4 pm
+>> UTC, which is less than one week from now.
+>>
+>> I have been thinking about the following projects:
+>>
+>> 1. Continue removing global state (and perhaps start libifying some
+>> parts of the code base).
+>>
+>> I think Tian Yuchen said there is not much work left related to
+>> "environment.{c,h}". So maybe we need to adjust the project compared
+>> to its previous description or maybe make it about actually libifying
+>> some parts of the code base.
+>>
+>> 2. Improve how command arguments and options are scanned and parsed.
+>>
+>> There are still a number of places in the code base where command
+>> arguments are scanned or parsed using ad hoc hand-rolled code instead
+>> of an existing API like the parse-options API or the early-scan API I
+>> recently proposed in
+>> https://lore.kernel.org/git/20260902161047.476753-1-christian.couder@gmail.com/.
+>> Those pieces of ad hoc parsing or scanning code are often buggy and
+>> difficult to maintain. I think porting them to an API while improving
+>> that API if necessary can be an interesting project and bring a lot of
+>> long term benefits to the project. As the parse-options API is already
+>> quite feature-full, there are likely some areas where porting the
+>> parsing code to it should be relatively easy which is newcomer
+>> friendly.
+>>
+>> Let me know your opinion about these and if you have other project ideas.
+> 
+> As no other project ideas were suggested, I submitted the project
+> ideas I mentioned above. You can see them in the "Approved Projects
+> for Git" section of the above mentioned page
+> (https://www.outreachy.org/communities/cfp/git/) as:
+> 
+> - Improve how command arguments and options are scanned and parsed
+> (https://www.outreachy.org/outreachy-dec-2026-internship-cohort/communities/git/#improve-how-command-arguments-and-options-are-scan)
+> - Reduce Git’s global state to enable Git's libification
+> (https://www.outreachy.org/outreachy-dec-2026-internship-cohort/communities/git/#reduce-gits-global-state-to-enable-gits-libificati)
+> 
+> The links to these projects are currently only available to approved
+> mentors and coordinators. I applied to mentor both of these projects
+> as this was required to submit the projects, but I am very much
+> willing to remove myself from mentoring one of these projects.
+> 
+> So please apply to (co-)mentor one of these projects, or submit other
+> projects you are willing to mentor if you prefer.
 
-We typically write commit messages in imperative mood, as if instructing
-the code to change. We also briefly describe the status quo, even though
-it's not as important in this particular case. An example could be:
 
-  Our Bash completion does not know to complete the "repair" subcommand
-  for git-worktree(1). Add support for it.
+Applied as co-mentor on the parse-options / early-scan one.
 
-One could also try to add in your bit about worktree paths, but that's
-something that's quite obviously visible from the diff anyway. So this
-may or may not be valuable.
+Thanks,
+Siddharth
 
-Other than that the patch looks good to me.
 
-Thanks!
+> 
+> Also let me know if you see things that could be improved in these
+> projects or the Community Application for Git.
+> 
+>>> Last year the Git community mentored a single intern. For a long time
+>>> GitHub or GitLab used to sponsor Outreachy interns working on Git, but
+>>> last year both declined to do it, so the intern was sponsored by the
+>>> Git project itself.
+>>
+>> I will start poking people at GitLab about this, but it would be nice
+>> if we could get some kind of help with this regarding other companies
+>> too.
+> 
+> I have mentioned GitLab, GitHub and OpenAI as organizations that could
+> potentially sponsor Outreachy interns. I have also proposed an
+> "Outreachy sponsoring" topic to be discussed at the Git Contributor's
+> Summit 2026 next week.
+> 
+> Thanks.
 
-Patrick
