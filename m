@@ -1,139 +1,124 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE2D3DDDAA
-	for <git@vger.kernel.org>; Mon, 14 Sep 2026 12:08:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789387709; cv=pass; b=G7aeeH8PwzoUqfwKyMUIfRHuyUKI6X0CANWZk2XFwfNpEouBh5kKOKIhsDmZG8RFYRALBRDaWzKxlcdWbodDfzjt4QGeQ0MZPquOKrRU7K5SXTiKoxkpd+uUXSjROUlu2CoO0HMiXORfOLofjsbxlEyZA832gk8PjNxk6guXV6U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789387709; c=relaxed/simple;
-	bh=t4V1RrgANQrowHd1XJgyfn0SGdZzk+qr5iGsEgwhwfc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DLGge2SYhgifyQqtT7wwt5XTYKAp33vh98CxXRhCoTs2LLEpVVTNfoBqx9Y5iV1o/ORQYhB2KGNAFpe5jNAOReFjwwfDNefAJ+YSL717CppJ6fEpMrG0GVi2IZyWnWFdzHKQgLJGqUhWcsuhfoplXyIH4hlGPTPMY24IwEZ+eng=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MXIFUBez; arc=pass smtp.client-ip=209.85.217.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF9645A2B9
+	for <git@vger.kernel.org>; Mon, 14 Sep 2026 12:46:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789389996; cv=none; b=CfOvNOe8ot97M1PV1233fpctLGI8nULga7J3zraTbZyP73j8RetTXAoBY9oKWYZkT7g3yZRMUYATD5s+KB0L0pBV+lXvRO8d4WHeZGtpjCqFwxWUL8ifvwHBFueeX646yo7zifjOZt8A1LCXgEksk71LPzcAFvZmIjjbX00Wsn4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789389996; c=relaxed/simple;
+	bh=p6WB0N0cg7215ykPlek5e4AW/njuYC2t4zcfuJyexPQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=DeVQUKIx5dxd8Zb5x4nGSEO8bK6QgjJX1CjepoI06sWC5LVmUZT2j0HoqCh28hNcJc7/MIrmZMCrn4zKpKaGZTSVZwGILP2qg9VM7YhlwkOgsV4jl2NDNbDbfF7Gq/WZs74ypGkEPm4Fyurn51FgvUTRR3hKaBySJyXpDqjGvmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OJ9rEPhy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FKJGQ3Oz; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MXIFUBez"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-779d18ef706so2415933137.2
-        for <git@vger.kernel.org>; Mon, 14 Sep 2026 05:08:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789387706; cv=none;
-        d=google.com; s=arc-20260327;
-        b=aQ7GIefIBNruN2jM0W4tY+LlDorUvlpZOagqKNWjYuRkty49Nm6Lf+CgnsQqjdliIy
-         jxffyxYRft6YmdOAmu7JJH4UeO9FcZyIrx2rGqObOM3fgLezdtsjv+BBXvi91lyfeyxy
-         kCilMe3l4zYZkNhn8wr3qw4Mjc6hk7zBg4EtIwRdizCznVJq3vq/cXzl0/F4hukb2ftx
-         2zTWizx8AxiEEWcDQ8/5FzI/5Yw8CWrPZdvkJBxcphLES+yoT5IIyd7r9rfQdYeIjtbL
-         Lq03zA5kGDrp/oppZqyNAcUTQUnh59r/sRQHWwaCuOaxf4Sipa7LGc3bhJzbipTJ4yvc
-         gYIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=SsyG0TSoA4B/C79nQvesqvLI08R0zYUdmfIIKGwhAeo=;
-        fh=s4EacBjiek327frWMiVBFWRr5BoeLYnPjbgIwexBVBM=;
-        b=b/Ov4wnqsLtt17Zhx5CybsGZV24KygSKGNDL/jBvh3Dj2wFrCuKA0FZprVOF5gtdcA
-         Lhy3waFtZmvxk98arbKacUnLtn9xR4bBkIdTtOH2t6V4AwSefs6fTY6YoaeuyEwJa8gW
-         mvOdZIsx0ioHUfi8Lczu6E1VOgWk6SE01KeOUYdCl1c68deClpHasP3IKhfwXiTdJK6n
-         5M+J2nbKKSrpm3ZWFoDhnrPtEflUHbzd76BAG2UNNcRwZKhuFLqsdLjhlJr6M3CMeyOE
-         bWqNLXirShls7senlwYWlYO26kUSn+o36MNTjboY3lyWC3wNuiHQQ9hR9s6dezpCSqP8
-         eB0g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789387706; x=1789992506; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=SsyG0TSoA4B/C79nQvesqvLI08R0zYUdmfIIKGwhAeo=;
-        b=MXIFUBezm+zu6qyqdMIt0lZ7DmnWunL5KeccVtw84W8Xpo4T04wTGTm7XlhEHGDAdz
-         dRtWsUma5rUFv2CVujPPG4W5937oX3tBPni+MbXYH26LXQcE2l8uh5T5Q4x/egZ58wBs
-         tduilJvoQ6C0B4DatTHZsrPMucgKXmO3rTd16B1KgcFyXS3g2JHqBFijNV7kX0qsroY1
-         JzVuwdoZZ4Qvydpa6mIjxJY+imReAYVmUACXR6nm6kaT9nxj3ghyzKznXNDvxA5Km3J/
-         hU3Q7ROWp8vabQBIHUSDMOym36/lfqe8tNvbIJUhI8FvMIQYK0OK/QVYzGR+rjF4iHhC
-         GIjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789387706; x=1789992506;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=SsyG0TSoA4B/C79nQvesqvLI08R0zYUdmfIIKGwhAeo=;
-        b=YJ40uiUoyiQWdsDPc6SPWeO/Wx4r9lbY8iz6SquXmwuLnS5ruX0vZTmk3NJDgozDIn
-         QiyjOVOATLqcfV+0ZsYP5qdCnGLzRrjcs3cTNFb1xZHLDUPLh6JtRTVnv0dIFIEkrq37
-         hsdYFGSazk/4yzfBKmsY8uYXWSYVKXzCkQxMjw8DgkNiPQbb3Jze4qXpGOYA7vtgeDe6
-         TLu76gaAR8fxtw9g8DeNxblHIvCfDI0kxM3+idKrFatfNCrGJTShdz6Er0z4aeCGIP3E
-         5UiQqJh75f/R//Utoy4hOioRETUlfnetZ7L6SLdC2D/wY8cR6NiTBMEmHrkjbtHqCRU3
-         zbow==
-X-Forwarded-Encrypted: i=1; AKwUvBwHVvkIo9RoYvZxFwxhfGXeLXdUcq4sta4viErxtO1xqpShX0uMZA3XHCPTI1wL+veNybU=@vger.kernel.org
-X-Gm-Message-State: AFuF++lEDH34NV/HG/gqwMcu0CnotiySt66t7oFYqEchnrOY6UGk++EO
-	u9LVrLv0zUQbnesk2lXfh5OSKGoioemIx5N750hQG7n3h7Nivl2SlRsIZ6kksxFl1kT4T2gNFHJ
-	I5wexOj5zB8IyfYy/yVvDRYXjCL051z+TlPIP
-X-Gm-Gg: AYBFou27Mq80EwgZhjAQ/x2BlA8Eu8bqKHdLPbw05PrdtjFKz+M2MlnGd0HgjYHN9Pk
-	lPJCVXDO6UCxyBN0TgSd1xiA2TEF5XHnkF/xYTJXp0HGO1bIgXQCUaNrE1+jsOq+wK/wj2+oNZ+
-	PgSjOWErFp5QZqWurjIRnolcYMHqOev7JtxsXMFcC9VrcOUKTCME3vxhPUAhW7LfHE0ST9/+6h8
-	ZHN0Bpblld3wC+RAvIm0I45yfkMwMv1mtvaoaLZ4Eq/v67+GNUa0CkEp2Hv7So0drxAVYqvVmMd
-	558hSeDjaBWwnpzMjYnTsKzo2ldgSTyiokjszmcOYg25TStIT37Ou4+1JYH8TMyjEfW1x30UulB
-	GggUITOYke29zu7+Ww0FmE26zh/oE2HW8R/sgVwSEVHE=
-X-Received: by 2002:a05:6102:3712:b0:79b:f106:4eca with SMTP id
- ada2fe7eead31-79bf115925amr857594137.13.1789387706573; Mon, 14 Sep 2026
- 05:08:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OJ9rEPhy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FKJGQ3Oz"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id DD4DE1D000BC;
+	Mon, 14 Sep 2026 08:46:33 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Mon, 14 Sep 2026 08:46:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm3; t=1789389993; x=
+	1789476393; bh=aV/sizMZHpvM+tID80ZQr+UgEkC8+hiPrxelSUbeYMs=; b=O
+	J9rEPhyyXo2xbDI7DZ6Nz8uYNmAIa9PgXijO2aDTMkSpJBAxJNHajKdc1+phIrmg
+	iS6Jr9f/Ty5mbKd2PRV92QsyVtFof3zJBw0xN5bSCctXxF5Ybmv/7fuQ4LPWrl0D
+	DeoswVlN00GJZ7CBwHqf2cBiFeFcpX8NdY02sRinnU6BCaMFczTjtMO29I4RTCSx
+	UcOnW1e8yiGOvFHNImsCGH9au0Rjga4SKob8ERL9q4NsN/dI9adycda+Qvl7b8xK
+	88ONLtmTsTGKcos7gXbfR0STpU7ks42qZsOqQfMQ+sof8Q/58TYeiPIovr9s4rpJ
+	n/3ynAEY6zs3IDIoW09wQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1789389993; x=1789476393; bh=a
+	V/sizMZHpvM+tID80ZQr+UgEkC8+hiPrxelSUbeYMs=; b=FKJGQ3OzczNFEQZVJ
+	65oJJrP68r0Q14ODLkOEwV5u4cZ0Un8DXE8MGURamS3EKOT+YwvNPUZM9Jda+Ph5
+	FE4utXZvsjm3uaMQs9fr6PcfnwZwcnvLtjObOnO3KhuoiPk0q/3xWMq9zsgD0hhN
+	VXkGX332REmxxuagccKcWEgv1GUOGvxw5H+bMwz6kOYEd3G5kWJEdIxXtWyoDUTu
+	etkkaYMguNQwK5OpzSWJxmkxfyVTwlIgbf8K92p3HJooM6zSBzvp14Clf/1buMzm
+	2/aF+lazEhAF/KNB9qivrpZZMsT3Qz9SDjg6h9qqafmZ3TiEPlf8safjNAMSdZVk
+	A7c9Q==
+X-ME-Sender: <xms:qeynamG_U-Edg83RKgj_r2nbK7TyarZWBk30XKhY7xTOuBSIszijYQ>
+    <xme:qeynatVBmZLufWQAICkhtPMuvB-lnkVkzCiNCN66XOMUjY0K8lOJea53UzLlrncEC
+    EFi1TtIw2KZCBm3qSZwi_koU0jniymHt17_GknWIDMPU-RJEa3onE8>
+X-ME-Received: <xmr:qeynatxbC7d-CwN4GxQ85ft04iZSuhbgGoCOCir3-VbSNFy_gFOXjZS_fXtZjukS-Nd97zqXFrlNErM5v-DDhdoaD06g1IHIS8sieCc41vNJANXzARk3PNZiKGbe30iOFUA8NkkM5qQHBsfa>
+X-ME-Proxy-Cause: dmFkZTGnfaKz5Osj/WJico4NA/8vK1J6z2u0njVxAJAzdkhMABBszXaNWDb3sBkER8h8RR
+    rOzD2c7Q0Lhk7EvlBQXJyw738iJpOKQI09lZgz5i/zFosHV35wiV49b2jq2GhMlRm+TFb1
+    a5NkQ//IVSpOmY75uQcPzTzdP0KWMo6cZZcFCJq631Kq5VtChCFQwJ4EUzdn2Iz1A1pT1G
+    Jatp6WQlSkKWfsEMY/LLl/GtB0ioaQg06esp+iH2Y0LPAT4LEmN5jxGm5hLJJ814Je0WkU
+    cd1hk0iIFWs+sHByZkVRN6XUzOb1SIofcbuQBrciZ3vqmbvTReLOiL54k1Mj1u17Jg8/nd
+    GhRYS7G8KnILPyVJoW2cEtudh9+4mZlS9XbDooq5akZ9gkM2Zs6iTIB5L/e3nc3NBbV17F
+    3WNFdcG0/GfjkVb8yIAlF52aMg+ySeQgMhoIJtvjpdTS3AFl6AGJ6B8IdbEqY+r7tD6A7E
+    LC/73mnDsZ6KqACxi8tgc7oo5doxj6W1TVHuRPEFxCNrz9nhOL7k8droFcwZrU9V92oJ2j
+    o0UVm1ulkvxhSz0L1ENAyZPkeb9eoNdyhmsuTh6xNFafy3xsTu0Q1DrvwthRZ1IhG8ECRA
+    Sd6IaTMIve2P7K0SiK/YTk5dgSupqGB/Kogb5a93UFYGiNk0x8Jf7tj5u8Mg
+X-ME-Proxy: <xmx:qeynarMNCMNrbTXfZLddlMFtgQgcEhsR9OwdaJv1k1JZR_YnuR69Pg>
+    <xmx:qeynau4khwsYP2xKu-nNJa5nmZEqCVLomXkwr1xto-CvFnw_Gu3qrA>
+    <xmx:qeynasN4uGCHNeMzsXy05gDJNLyPN8tvMKVdqZKQCAwo8Dkjd8OqBA>
+    <xmx:qeynaslPYzSNkbj7tzI2DypQbAbcDvNh-HyLBQmz4ZcqJZeGgmO4pA>
+    <xmx:qeynahcSSXOl2jooFW_3VcLenZB-EnYseroC2t36NtMsfBQKCel4PKzd>
+Feedback-ID: ia13843cf:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 14 Sep 2026 08:46:33 -0400 (EDT)
+From: Todd Zullinger <tmz@pobox.com>
+To: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Cc: git@vger.kernel.org
+Subject: [PATCH v2 0/2] doc lint fixes for pack-refs and refs
+Date: Mon, 14 Sep 2026 08:46:26 -0400
+Message-ID: <20260914124630.154107-1-tmz@pobox.com>
+X-Mailer: git-send-email 2.56.0.rc0
+In-Reply-To: <20260912191509.844954-1-tmz@pobox.com>
+References: <20260912191509.844954-1-tmz@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2218.git.1789171955370.gitgitgadget@gmail.com> <aqeUWrx7pbzDVbVt@pks.im>
-In-Reply-To: <aqeUWrx7pbzDVbVt@pks.im>
-From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
-Date: Mon, 14 Sep 2026 21:08:15 +0900
-X-Gm-Features: AcwNN1UwASnmTmN9Np6KfK-ZHCTDoAkIdTdnVoR3iRIT8SUAIRVKiHfvqBNkbKg
-Message-ID: <CAF5D8-v2FSJX_dHFmNzaudAtPu76pVX0n5GhMnGjjnT2f3g3Ng@mail.gmail.com>
-Subject: Re: [PATCH] completion: complete 'git worktree repair'
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 14, 2026 at 3:29=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Sat, Sep 12, 2026 at 12:12:35AM +0000, Yoichi NAKAYAMA via GitGitGadge=
-t wrote:
-> > From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-> >
-> > Added completion support for the 'repair' subcommand of worktree. It
-> > optionally receives a list of paths to linked worktrees or paths to
-> > worktrees with broken links.
->
-> We typically write commit messages in imperative mood, as if instructing
-> the code to change. We also briefly describe the status quo, even though
-> it's not as important in this particular case. An example could be:
->
->   Our Bash completion does not know to complete the "repair" subcommand
->   for git-worktree(1). Add support for it.
->
-> One could also try to add in your bit about worktree paths, but that's
-> something that's quite obviously visible from the diff anyway. So this
-> may or may not be valuable.
+I was reading git-refs(1) after noticing it learned some new tricks
+in the 2.56.0 release notes.  The formatting stood out because the
+first two commands, migrate and verify are bold (in the man pages)
+but subsequent commands are not.  The HTML is similarly affected,
+with those commands colored differently than the rest in our online
+documentation:
 
-Thank you for your comment.
-Since this is not limited to bash, it also adds completion support
-for zsh and tcsh via git-completion.{zsh,tcsh}.
-So I'd like to modify the body of the commit message as follows:
+    https://git-scm.com/docs/git-refs
 
-  The completion scripts do not complete the "repair" subcommand for
-  git-worktree(1). Add support for it.
+This is due to inconsistent backtick-quotes.
 
-Thanks
+As git-refs.adoc includes pack-refs-options.adoc, I updated it to
+consistently use backtick quoting and converted the only other file
+which includes it, git-pack-refs.adoc.
 
-> Other than that the patch looks good to me.
->
-> Thanks!
->
-> Patrick
+Changes since v1:
 
+    * Drop Documentation/lint-documentation-style.perl change.  It
+      is likely to cause more false positives than we want.
 
+Todd Zullinger (2):
+  doc/pack-refs: convert synopsis and options to new style
+  doc/refs: backtick-quote commands and options consistently
 
---=20
-Yoichi NAKAYAMA
+ Documentation/git-pack-refs.adoc     |  8 ++++----
+ Documentation/git-refs.adoc          | 14 +++++++-------
+ Documentation/pack-refs-options.adoc | 10 +++++-----
+ 3 files changed, 16 insertions(+), 16 deletions(-)
+
+Range-diff against v1:
+1:  03c1e8c073 < -:  ---------- doc lint: match commands as well as options for synopsis style check
+2:  eb3b95c7a7 = 1:  3de9d9a6bf doc/pack-refs: convert synopsis and options to new style
+3:  7af3718a71 = 2:  b3789f7591 doc/refs: backtick-quote commands and options consistently
+
+-- 
+2.56.0.rc0
+
