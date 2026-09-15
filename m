@@ -1,176 +1,145 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo2-f28.google.com (mail-oo2-f28.google.com [74.125.231.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1184A4A1E0D
-	for <git@vger.kernel.org>; Tue, 15 Sep 2026 17:21:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5D44BD789
+	for <git@vger.kernel.org>; Tue, 15 Sep 2026 18:25:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789492918; cv=none; b=oR+8Mnmm3+ZkHtWOdRRdQtWCHctqlNcB/YM3mQpwfiWnArIulQKEygigHNegvaLU/KsDkfu1nWpCGI30RxH1cHtwturR6kRGXfnbrJ38IRsxQ4nbzhk7UdHDSWcMPMciv1CrxLl8I9pEZ5uUf2LkxZrrV0jUXIth0UevhQLK+b8=
+	t=1789496729; cv=none; b=kU6km2NNPN9uO4NSEipmfcngPefvvAd9xdxdGxdgFiLS21QRDNeQGdYe8Cow7R3nqLbjYPyveTu7wP0OAC5SU4zuGyoEkwP+7XALQQWMwka7zRL+cd04lt/+N5R8s9d2Cv6YeUvp6wswRTwGiL4g/RrarQ9SSknqIkXLaSllSMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789492918; c=relaxed/simple;
-	bh=sYAk2IU7umtyhoQm2nfIxCjc8dCYeS8uKL1Vu9xvlXo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=itp6ccoVBInR3Bc5kgcjWOC1UEMIAhm4xplZM1cCla6PBBkylu8RKRLfVuccxiDBMqycnOtZNMApCDL7+2pU9ufacmGARZDmXSiT6K6d9QjHL+rc4E2smeK8oK7hw2KcFOn/YsZ1cpjgD3s6hP9G5DKsUP+J5Mtk5yK+dHF8PRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dMQlkJkZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wbr29GJb; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1789496729; c=relaxed/simple;
+	bh=k3uaxufYfobKhoQ9dWP1HdshsXbRS0WXKpbDo1lPSQo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RUHiTQu6IiRg9NwhW6+yM2NUrs7noPH6RE+ljYF5UbRArHepFJrfXJzCfIz5jvlqSy8oMzJXoHH+FjvB8AzS1JNRDx4cJ+CIouGpWvt/IDqYIKFVSkY3JJuiRiwoyZU/MFo/L+RK4LsW5Soi4swCKU6IQI9ug09F1HShlT8x8Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jj9A9PnF; arc=none smtp.client-ip=74.125.231.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dMQlkJkZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wbr29GJb"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 99B9C1D0020E;
-	Tue, 15 Sep 2026 13:21:53 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 15 Sep 2026 13:21:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789492913; x=1789579313; bh=bW88hW5+f0
-	up8ZUGwo+UdhlwWwQt5TP3qNwbpa4SbTg=; b=dMQlkJkZxTBidq4wkbSRcQdCEb
-	a51aae4eqQcNHFySjsMjmLerpyBVK/x+fYfiQh0CN0e3icIa/Ae4pH99KgTVdzfV
-	tjNamRZMfyNZlBOK5s/CidzB4cLYhksi2GIKkq53vVkA+y4KogYDkJIpCs7ZXiw1
-	N4G8i23VT2NCQERh6Z02IAH++h0inxQTfzwdBVoPpMwjPXLRb/xhS3kh6wA4LXGz
-	sCa5B7YQ2J0EG94kOFx4YDEYvnlY5jJwy0lVRdnMDf4cegid+d84Elr4ZJGuSB/h
-	QV918iVEX6LA6lwLcOmIWPUyp2hBsgufgRbO90C6GYly25Mbekkss55SMQQA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789492913; x=1789579313; bh=bW88hW5+f0up8ZUGwo+UdhlwWwQt5TP3qNw
-	bpa4SbTg=; b=wbr29GJbQfMCmAbxdgmOijqiE5NypjnbEW76q4IBbq7maewLq1H
-	fWn7NyIPNQ4Lmj4LdshaRsECJ0e2n2LxhyAV0d8GAXwQ6CsNzNoJzz1P21EFrgum
-	QFZs501ij8JVD1smtiOVGjS7h9VKC+MFY4rHOr8Rma4nhEcWNxP4/LTXHWJZiFdn
-	Kj0P7fiW62KypYD+gGZ02O7eAtMfL3LHo90//s1gDS1+f6Oy9EYLv8vVE5mBFmC1
-	Fvx6TRwpdAPZ5nkNuyico4vcNGsTW1oe0R8h1DX5TTBFtb5zpWY83sVThsLDrB/F
-	qXVN0E7G2RKvh72Sp6QiRAOawa7HRzwej4Q==
-X-ME-Sender: <xms:sX6palugokiLQxZop4MhAVWWApJ87EIUUZRxRWAcwCRFg2bYQ4Sp5A>
-    <xme:sX6patgDnVUiUV6jEripxC39690WX1jnJkaJWoz5ZgF2lALY02aJ5gHkBuDDkzT9p
-    6774fpEAcNVUcQSRyW1bHpfGpXtIfcZFylH8heHa5yP0Kbnwb8NVQM>
-X-ME-Received: <xmr:sX6pau9w-_OzVJYSyUvIHxcO-N345kSdyZ3AY9iy6kpRuPPJGRGudppMryw5eh620TtL1e8Ac8vg-OwSoJWjnD88gaRG48BQ0xcw>
-X-ME-Proxy-Cause: dmFkZTF6jJuSSvbMxbK93Lu5lj/AutvJNg4U3t2r941oYpDF5JJ9S1dO3THBjs9KQFY4yB
-    i+0bE7el7j5itWyol8mzadzftT+8AluWMPA8isSwNGS0ubkD2eF7wAv8P5gQcGihYQN2Gf
-    JcpYyPrzWnHei0X4pQ0vVWwKJe2/QGtFg6Bky6DwbiS0BxeV1pCcCMmoAiUWUR7ioVlzpl
-    2KNc3+FtQ2MXtgD0RZLXoVNNXzij6Cw5pU9BOjzUiuhzaHi/17hJ9D0iSeNwHu4A2Jp8nJ
-    lZTrtMY9gHiM5ene37WwubutM+stRDGQog3snH8NeWb+fFC0WeV8XbEru5OY/zT158DrRF
-    og+iWfGQgumNkInGsi6sdYnP4+1Px6+fx1AcRIT2KZokv8CfpXW0pPCymnRki03KRCL2zv
-    taPAzEFAoIia2ckQp1FNsmCt7wxJMPs/yIwydAII6oQOPth/VSojjH+sENJAYVYg+0Cii1
-    J15x7NvRw4x4dVhiZIsN+hihI5GvaPToyrJVs4B3ZKGlr7vZX6gApzjvm9gg8vTHwvFTCx
-    tTGjedkKZ8BA/Ggnn3udJgFFePGLQB3uum+v89pzQ9X/JsP4tWyVrJj+0pSu/D2pqyjcC/
-    +4yhCHnDGLArq0RCcphkjPB9oVZPjnpPznPgU+coQb79QG2Xk2hXdpt96+dw
-X-ME-Proxy: <xmx:sX6paovtwpxYk0ioG7vUgFmkglziX-oz--pYhbztbA70mxa1NV4DGQ>
-    <xmx:sX6paqqUzI56cRL3vbD56bBPTlpgyVTFKAnVTHPAoVMd4FxOSOp6uA>
-    <xmx:sX6pakoGHPRgb0ADDwx3J-n3wpd_aAW78Vmfh86ffmIbFug0YgDjBw>
-    <xmx:sX6pahZ6kJhWGn0R_JH7JmQrNtoVdwKtVUtaT-BBb7vh4-NipPp71A>
-    <xmx:sX6paszm3v4i84bWZ49u8mj3KZbNx4N1A1kgpXm_G7BHBwqVDK2Ci7Ke>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Sep 2026 13:21:52 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Andrew Pleeter via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Jeff King <peff@peff.net>,  Ben Knoble <ben.knoble@gmail.com>,  Phillip
- Wood <phillip.wood123@gmail.com>,  Andrew Pleeter
- <andrewpleeter@gmail.com>
-Subject: Re: [PATCH v8] var: support broken-down idents, signing key,
- multiple args, and -z
-In-Reply-To: <pull.2388.v8.git.git.1789426226860.gitgitgadget@gmail.com>
-	(Andrew Pleeter via GitGitGadget's message of "Mon, 14 Sep 2026
-	22:50:26 +0000")
-References: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
-	<pull.2388.v8.git.git.1789426226860.gitgitgadget@gmail.com>
-Date: Tue, 15 Sep 2026 10:21:51 -0700
-Message-ID: <xmqq33va1lcg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jj9A9PnF"
+Received: by mail-oo2-f28.google.com with SMTP id 46e09a7af769-7f4f0d1778eso32681a34.0
+        for <git@vger.kernel.org>; Tue, 15 Sep 2026 11:25:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789496726; x=1790101526; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=H7gjkeb6C3Nn2mv3f7kV3B8VRD9U87ePpBZd7669gAE=;
+        b=jj9A9PnFubwVsL6YVvLldW/ZP5vsZAKoO8I2ssYfBwttQxxdlqUkUGW+rBxc30eFUZ
+         eqnm8xzXgdPdk4K4o7dX247UoV0O91SVGKjkMYcc1LmkYIcaImc6k3viGc/004J88NCr
+         QOvbetVyPJBLlUtKUuLrRwA4aGe52itBrs8c8uDwIKIXW7vW/jUmkpVdwL5jEXtUjaSA
+         0Tmr2FpE0vEWDTyU/jQl41dABNp2F3FCg/osXw7Dvfm9cvku/rM63NnVrjvaK6zNqZdh
+         XsrRS2gFeofDrZVGsi815VgfqW+/0g+rrOtsfUCT+sH5b89N0G5rV5jKk481dWir+W/9
+         fE4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789496726; x=1790101526;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=H7gjkeb6C3Nn2mv3f7kV3B8VRD9U87ePpBZd7669gAE=;
+        b=nDjpt1RdmOAIE7KkXXLqO3rxQJyk3TP3QRji0vtfO+rUqzssgez7rQCARtrzEJTJou
+         nAOyhBFPmS2/JJ6ExxXvxXV/ptIvhKIczE4szNb1wXJXkYgTUeW4710T/I6Mn2HGQAKJ
+         k0qIcceufcTbeVx0l4MBGik4VRijZeKiZ9MZKa/JunV7QwGvqv1LI5lY4SzcuB9FY3Tv
+         OnBaUeWzFeVTokC86p4gDTcLVn6NlziHc/qQa1h8KijvIIqr4uMwTlbLZ42HjF1I+k1F
+         bvL7Xm6CpJD8i/eJQNTdwoChpMHVqGOErO2ZYvQ6wZD7opTNBdQEGp1+za8mNG6/mqoo
+         +CfA==
+X-Gm-Message-State: AFuF++n24XzwEvdgrjtibH8TmWWK3VW/4rqFf4G+plGO78Uju+Zmotof
+	SsIWjbz+CsD2SzdUOVmtnETKrmpgtLuWymj1B3rbUdTWfzlJt2Cq9994PsggGpvt
+X-Gm-Gg: AYBFou2Eq/rNm1sfhFvG9B5UXYWqippVrZFRrzydBm87jN6eoVP6HpiAC4kCPrH7oCl
+	jSVCIIlPfRSQOIB8W7rY1KZgASKSIjhuf1N7ICmfq05PQa15wj/Tdj75/Khor3VbqSpdpGLna6g
+	Wi9FGU54rb5pkj7pzpaEk7WdpRCbgJkcN49YW/n/N3tYgMcHizE2TrBqmpOzkVFix+Y2jWosOUv
+	cewx6F1IpRtNxwUxp+BVhB/B1PE0eOhenDyHjg2h1GsUxo3ueQ7mBQjfL9H5JDGmwBWlrsSJclg
+	G84pC6RXuouC87qq6t7+6sBmBYKDrfjDarQyhzcm/SJrvcaZ4vwdZCah7+1DCZYqXF7y6j15ffb
+	5pFpcGBb1ZXFR0jyzzFqMiJlu3u26BzMJfIjG844C1ZE5nhZwVbpFyLQ/7R2OXbQglU5JrtCUGo
+	4jcnbPPUPVxEuslTPaN911BXF+7nZW+BqVeTO+Q1einQ/2YOioolrHq6GXLTmMCDWXyuYtRSdD7
+	Vm01Y67xA2hN16F1MK7Gh7x++mU
+X-Received: by 2002:a05:6830:64ca:b0:801:d2f7:9e74 with SMTP id 46e09a7af769-80a74d7a92fmr2594042a34.3.1789496726333;
+        Tue, 15 Sep 2026 11:25:26 -0700 (PDT)
+Received: from localhost ([2600:381:4412:b8de:4644:b965:1819:a1da])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-80b07ad0373sm84266a34.26.2026.09.15.11.25.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2026 11:25:25 -0700 (PDT)
+Date: Tue, 15 Sep 2026 13:25:19 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Qin ShiCheng via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Taylor Blau <ttaylorr@openai.com>, Junio C Hamano <gitster@pobox.com>, qeesung <qeesung@live.com>
+Subject: Re: [PATCH 1/6] odb: don't remove a ".keep" we never installed
+Message-ID: <aql8Wt2q9RnQpjEC@jtobler--20250820-SHC54>
+References: <pull.2219.git.1789385483.gitgitgadget@gmail.com>
+ <932e8e425aecfbd33c1e5caf66c80a0226abacba.1789385483.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <932e8e425aecfbd33c1e5caf66c80a0226abacba.1789385483.git.gitgitgadget@gmail.com>
 
-"Andrew Pleeter via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Andrew Pleeter <andrewpleeter@gmail.com>
+On 26/09/14 11:31AM, Qin ShiCheng via GitGitGadget wrote:
+>From: Qin ShiCheng <qeesung@live.com>
 >
-> While 'git var' exposes GIT_AUTHOR_IDENT and GIT_COMMITTER_IDENT,
-> extracting individual components (name, email, or date) currently
-> requires callers to manually parse the composite string. Furthermore,
-> there is no way to query the resolved commit signing key through
-> 'git var', and the command only accepts a single variable at a time.
->
-> Teach 'git var' to expose individual identity components and commit
-> signing configuration, and allow querying multiple variables with
-> optional NUL-termination:
+>receive-pack runs index-pack with "--keep" over the quarantine, which
+>writes a "pack-XXX.keep" there. The path we register as a tempfile is
+>a different one: where that ".keep" will land once the quarantine is
+>migrated into the main object database.
 
-The huge laundary list (below) strongly tells us that this single
-patch is doing too many things at once and it is better done as a
-multi-patch series.  Also, some descriptions seem to hint how the
-implementation evolved during the development of this patch, which
-nobody is interested when they read "git log" output (which is the
-ultimate target audience we write our commit log messages for).
+Yup, when the ".keep" file gets registered as a tempfile, it needs to
+know where it will eventually be located post-migration. That way it can
+be deleted after the references have been updated or if the process
+exits early. This is a bit awkward, but its a result of use relying on
+git-index-pack(1) to create the ".keep" file for us and it gets written
+to the quaratine directory.
 
-I would say this should be split into at least 3 patches.
+>Nothing of ours is at that path yet, and something else may be. Two
+>pushes of identical content produce identical thin packs, index-pack
+>names a pack after its contents, and so both want the same ".keep" in
+>the main object database. If the other push still holds it, that file
+>is what keeps its pack from being repacked away, and we remove it at
+>exit regardless -- even when pre-receive rejected our push and nothing
+>was migrated at all.
 
- (1) Add "-z" output mode.
+Interesting, for a pair of identical concurrent pushes, if one exits
+early it could end of deleting the other processes packfile out from
+under it. Really the process should probably only delete a ".keep" file
+that itself created.
 
-     To allow reading scripts to unambiguously parse output from
-     "git var (-l | <var>)" command, implement a NUL terminated
-     output mode, similar to how "git config -l -z" shows list of
-     configuration variables and their values.  When showing the
-     value of a single variable this only makes difference for
-     variable with multiple values, but in the next step in this
-     series, we will introduce a mode where multiple variables are
-     queried.
+Something worth noting, if there are two concurrent identical pushes,
+both will generate the same ".keep", but the keep message contained will
+differ. In such cases, when the quarantined files are migrated to the
+ODB, the ".keep" file that gets migrated first "wins" and the other push
+will fail because the competing ".keep" fails the collision check and
+consequently the push fails. I mention this because the current behavior
+for how Git handles concurrent identical pushes is to reject one of
+them. So if a process encounters an already existing ".keep" file in the
+main ODB, it may be sufficient to abort early anyways.
 
- (2) Add (2 <= argc) mode that displays like "var -l" mode on top.
+>Register the path right before the migration instead, and once the
+>migration has returned, read the files back. index-pack wrote the
+>message we handed it; a file that says something else was not written
+>for us, so let go of it without removing it. tempfile gains
+>unregister_tempfile() for that.
 
-     To allow reading values for multiple variables with a single
-     command invocation, teach "var" to take more than one variable,
-     and show output the same way as "git var -l [-z]", giving list
-     of "var=value" but only for variables requested by the user.
+Right, registering the temporary ".keep" files doesn't really need to
+happen prior to the ODB transaction commit anyways. In fact, we could go
+a step further and stop using git-index-pack(1) to prematurely create
+".keep" files altogether in favor of letting the commit phase of the ODB
+transaction create it explicitly. This has a couple of benefits:
 
- (3) Add new variables.
+	- It avoids the already awkward tracking of ".keep" files in ODB
+	  transaction pre-commit.
+	- It would also make fixing the issue in question a bit easier
+	  by allowing us to simply try to create the ".keep" file and if
+	  it already exists, unregister the tempfile and abort early.
 
-     Scripts reading from "git var GIT_AUTHOR_IDENT" needs to parse
-     the output if they want to extract only the author name.  
+Completely unrelated to this bug as part of another series I'm working
+on locally, I've already have some patches that start creating ".keep"
+files explicitly during the ODB commit phase in the "files" backend. I
+would be happy to pick these patches out and send them upstream with
+some small adjustments to also fix the issue here in your first patch.
+Just let me know what you would perfer. :)
 
-     To allow scripts to easily access broken-out fields of
-     GIT_{AUTHOR,COMMITTER}_IDENT, add a GIT_AUTHOR_NAME variable
-     and its friends, as well as GIT_SIGNING_KEY.
-
-After you receive a review, you should respond and try to engage in
-a dialog with reviewers, before sending a new iteration of a patch.
-
-When your new iteration is different from what reviewer suggested,
-without such an exchange beforehand, reviewers cannot tell if that
-is merely due to miscommunication, or you had a good reason to do
-things differently.  Don't make reviewers feel as if they are
-talking to silent machine that takes an earlier iteration of the
-patch with their input and spits out a new iteration.
-
-Thanks.
-
-> - Add GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and GIT_AUTHOR_DATE.
-> - Add GIT_COMMITTER_NAME, GIT_COMMITTER_EMAIL, and GIT_COMMITTER_DATE.
-> - Add GIT_SIGNING_KEY to resolve the key that would be used to sign
->   the resulting commit if you were to run 'git commit' right now.
-> - Allow passing multiple variable arguments (e.g., 'git var
->   GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL').
-> - When a single variable is requested, print its bare value for backward
->   compatibility.
-> - When multiple variables are requested, model the output after
->   'git var -l' by printing 'VARIABLE=value' pairs (or 'VARIABLE\nvalue\0'
->   when '-z' is given).
-> - Format multi-valued variables in multi-variable mode as repeated
->   'VARIABLE=value' entries (or 'VARIABLE\nvalue\0' with '-z'),
->   eliminating stream ambiguity without extra trailing delimiters.
-> - When querying multiple variables, omit any variable that has no value,
->   continue processing remaining variables, and exit with code 1.
-> - Support '-z' to terminate variable outputs with NUL bytes.
-> - Format 'git var -l -z' using the same convention as 'git config
->   list -z' (newline separating key and value, NUL separating entries).
-> - Use parse_options() to strictly require options before arguments.
-> - Update Documentation/git-var.adoc and t/t0007-git-var.sh.
-
+Thanks,
+-Justin
