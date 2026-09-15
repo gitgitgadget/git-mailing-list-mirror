@@ -1,372 +1,338 @@
-Received: from mail-ed2-f12.google.com (mail-ed2-f12.google.com [74.125.228.76])
+Received: from mail-qv2-f12.google.com (mail-qv2-f12.google.com [74.125.230.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CE81FB1
-	for <git@vger.kernel.org>; Tue, 15 Sep 2026 06:10:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0420A37F8AF
+	for <git@vger.kernel.org>; Tue, 15 Sep 2026 07:51:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789452627; cv=none; b=Qp+pnNWQxgicVQEypB9JI5CuWKPWziCuqmUu6RgUWyoAmszEibmjHUDerktRO98x9NNawfah2hcfNdNI9ztwEa6SZtd/K6osa8OdakPu2vk4mF0bAz2xKyM+j3PmpPMuv38qvlfgwTfI6L8sDsG1QtdiyiDhs3x16otnT+Xxs7U=
+	t=1789458707; cv=none; b=bl/mlZPPGb462lHXqZZuKxySyAZr2YiksA+pn4fbdwYPQlBfswJbOaFDGa1pEinJ3RriHw96owMf9Sojnjza3xCCoPEKl7YPs0rUwjceQWskN0GiK3XwTi4ZP9j7LT8Qo4oNmOneaPpWXMs6LRUv/ldSuiWZrzZ943/j4Alq0sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789452627; c=relaxed/simple;
-	bh=9vzq1YqMbjCRK6FNCuA2A6h+jJp1ewT2JIulsjT9MuQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gw8xpEwnVNDkh7YGiKvAwn3f1y2y0VNPxFl2vjtpzF1Wy6vfXqQBIQ/TKopjqDmhTjXCcF61oUnB7xU3qGJmIDhrlhUh3HL8qqtH5vIgK+Xw//rsOVpI+WLFlWqTf/F5XcBEDEs3SDvfxIQNwl4+XMjAfEatDFoDs6r//LxXbKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TwpB8Ogj; arc=none smtp.client-ip=74.125.228.76
+	s=arc-20240116; t=1789458707; c=relaxed/simple;
+	bh=mdKcQPRRrQic5zEWcNSV0zp1xap15Hm+H8vfCEPaWxM=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Azm3Vappm4q6SZc78e3BPd2FVrJDMRd+YiihGefrGfPYuulCgANzmyDsE/2cWdalmNeKSkyAXqLtyX8UpoUk8tWK5Hirqs40DyhWooFS8nDXH/7aRdknViPFCterLuAa99AxS2FAPN6Nv0hEtmoMz/cZIao/ZfpzNc25aJweCyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ko9zTxFM; arc=none smtp.client-ip=74.125.230.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TwpB8Ogj"
-Received: by mail-ed2-f12.google.com with SMTP id 4fb4d7f45d1cf-6a6063d7daaso4486891a12.1
-        for <git@vger.kernel.org>; Mon, 14 Sep 2026 23:10:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ko9zTxFM"
+Received: by mail-qv2-f12.google.com with SMTP id 6a1803df08f44-9105d241693so30655016d6.0
+        for <git@vger.kernel.org>; Tue, 15 Sep 2026 00:51:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789452624; x=1790057424; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Z797o/cPrtzlsPCV4fOVjj1gboacfVxUP2vBmOg8nPE=;
-        b=TwpB8Ogj8JLvv2I63xvxSJBaBgNe4kAKCkIaAzezmQSKzRWQHGpgTP/DdINxzBYk6a
-         WImhGlYLVy2RwMnaRyylRNbrTejdtmzQ3vwqEmW5ydHgC+gigx3tb2S0M99bkYWkD8DV
-         SOgDw8q90KFG/bOx798oVOOptQ1o8e7eJpGllQrFNPh8nhUC9479NdhuziVCb/1tGyKc
-         0KEyRWxQPIxUmd8Vk1843FBIq/nAuxcxvMms2ypuG3Nu1CWgulV/qBY6zJUqdBG59ruS
-         BHDXPjO9UF+oc+wKvZUqFZ1iI5p/vODgiVeuQfee3aZ3DuOotYVwAKjnzTn0pX4eDG3C
-         c5pg==
+        d=gmail.com; s=20251104; t=1789458705; x=1790063505; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=4SBw15FWxLjwbREPlvFvufLEUNLiF4QWGdSD2qtAgo8=;
+        b=ko9zTxFMR+f2+f2HPSPxdJ2n76Pg0wxqoMw02gftORYlQX59gI5cAaBkq/tf3BlEfs
+         nDjVKBpUBTZJWy+MmJvFqE77XRvPs5wo1QyJwVq0ToD2YV3HvGDIdYgiPrxm55jFNN1D
+         BFrK20cr612ICOQa4qF3Jlq4B+lca9SYgwHibflQVkrOtimgY+cURdWTxIxD13xDkWBV
+         yHo+9oAQ2UoX0Yboy4qd1i4cQX0I2DP0+5Xhi63QJGvauWoW5Fyeyf3I6aAJuvw/KQPR
+         aemlKnRBUqDaidX+wcC6y8gON5ehDXfG1Bpsm3kXslPR7x8YLlDYi0TR3eTv2yfa/ze0
+         ZVmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789452624; x=1790057424;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+        d=1e100.net; s=20260707; t=1789458705; x=1790063505;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Z797o/cPrtzlsPCV4fOVjj1gboacfVxUP2vBmOg8nPE=;
-        b=aBR3NjR+xb6d8Gn9caxWsgeekB4wyqcxZ6QPhOQHAXc8qk3x8h8Wtx+mXm+NWNX55+
-         ASh4pMhur6Flm8XIKiHK5oy5GX9ysXabo1o8QWfGSxahupxNQ0le9NoFMzvM73gcQCiw
-         xhTGtNm0fKS8O7LfGLgGBW+O1R75QPN2ezMcnD1VgS83Dx7RsB1LTNlfQBjFi5OTbKmm
-         +Q2A6SSx586wuZKmOhfY7kzuRAIOuweBGwZbchGhiC6KzB5y+9axQLIh1F+nyPiUMYgL
-         4s1nShAtY1G0fyErpik5wIL7JIJmKOlzHelhnEax3UT+PhGNDycdLp9DLf+Ap3Ws3YIy
-         uWWA==
-X-Gm-Message-State: AFuF++nQWFheSJh9CLNwmisCiMT4tatcGj27Qjxi5wcmy4ZqGUjFgGqA
-	Yj50UySLy4gcfyV7n4r9zuzjKjbFv0Zcy6rZ5ds+gO3txdAsIIDj+o/xysliJA==
-X-Gm-Gg: AYBFou0FYvahgndlqbM8uiRir41q6WafYTd0Zxn0msCQUFdObOIB0cEt1AHx1s54Mey
-	X/cjf7gzVyarRAhBoPTmT5MUNnLiRw7Pm2uqzaDtcDyDDQ+jX2PgKaEIXoxHgYR+H0QyP1Bkccc
-	TIloX/5A/OMbTRnyt8Oa2rGjHuWSVQVJCkRtzSbgGEYSUjFMmEfXEGykJ6C08TYQqA1kY+ocpmq
-	nrVAhQ4fP3pp0XTu4vy2xQwGCjtpZ2LUtSiB5nrb15S75NJ+hxxQBlUetdKktnQ6XDuZGan2eHE
-	UOIdS4xQs7e96aYEPZpKJ9E8T81lVN8Zn/RZWJtE5LVBcKx+CD1gLWdTyWN9eP9O6qxyu88Ayjo
-	zyHlJtd40Wz89JHrT6BiWmKRUe/yQso6fLbJEzTjVmwejLsPVHkn7jeo5ChZrTgq/KYgAs8Z7ds
-	SZqfsM2Yl7LyH8Fg7lpZU97cWCq82CKMWZVZ8q0UYQzJ6XeTxVt4RvJ7kjoa9j2TMsOx9AdGoh1
-	9x2iiEQbmBBNY1hwFhpWDohk5pn
-X-Received: by 2002:a05:6402:28ca:b0:6a4:21c6:1d14 with SMTP id 4fb4d7f45d1cf-6a9f6158395mr7442177a12.0.1789452623299;
-        Mon, 14 Sep 2026 23:10:23 -0700 (PDT)
-Received: from localhost (78-131-17-112.pool.digikabel.hu. [78.131.17.112])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6a9b5920f4asm5054267a12.16.2026.09.14.23.10.20
+        bh=4SBw15FWxLjwbREPlvFvufLEUNLiF4QWGdSD2qtAgo8=;
+        b=Q6t1PlROvS80/Ta4bdGQ/bhSXHe3g+PxKTVk5igPUUFAGBNqg/6K7GZguLNrKXWNHv
+         QwJ5699DJqdb2wcKZgixYjNZub/AFPHs4GUeT+AgaxSFrV5SQpJYs+EmTlj++x3i2EER
+         4NqwE9yfHBgBC6IOGzdV3FUWmpLPyBUZ0RtB2fNPv/Z7lt0KnaEo2XKKDMsbPfCiipxi
+         7I/64vYTldkM5pfP2b3q2ICMsnn8vWRF4BWoqHNhon6WXYCamrQ6jioFVdmyw573JOlt
+         q6Ecp1ZeE+KgJHE1zX97P1N9c8VkSt/kfIRbW2tIJhn/Hzenujd0Me8uUY7xWgu5DcgY
+         X6LQ==
+X-Gm-Message-State: AFuF++m2nW3goMDgIYMjwyhSghLQg3CWxWgR0o/FERrPs7eXytwC/eOY
+	pxjSZLTicYp5h6CIDPDkIulwno8PSMHy8RTQuppCPi3iGh8gSZQ/iM1JMd6LjQ==
+X-Gm-Gg: AYBFou3lLCv9U6ZMYckq5D8WBmvJlzYltftnJEPuAkxtNsH3Tqh6cuT4CG6zdirGdTy
+	mvdyiEI4VYTq8aYobHK2BwVNFB3Lxk+jZzYlHLnCROYQ2k5e1J/jPwYb3HmLPMJ2/n7xYt2vUaI
+	xTDBgfqYRUeVO3rTVXBw0X11sQ88Encjzb5ICJrH9S7RiV/cvjGsOP9snt8n88kRhJD4zAhKqVe
+	qGch415mAM64dkD1kpG3i2Thnxav266zl8Hk3hd+hE2/MFs94L6jSfj7CyEmXZHROcHEVE5+Fbp
+	jqyFuvmk+WYCFOxZ0Rm0rZ4yJkEtK4n/XV655BD0g+QEpZwIoQGXYV34YtOP/WDniEp+TJ1D1lx
+	mgugSqabP/WpJRL0+6+oTaX0Ms5rwsVNodj9myE+7Q+Sa941B5yqOzfp1e9P3dA54mB+F8h+vp7
+	2hB01UUhzjEaOcXXD6/FapQTVxfKwzJa0vpLyWJcmjfBUd4Izb508ZEu7t//dDej9nEswX57ENc
+	g==
+X-Received: by 2002:a05:6214:226a:b0:912:16df:a5a5 with SMTP id 6a1803df08f44-9122e4eb48cmr111752586d6.9.1789458704634;
+        Tue, 15 Sep 2026 00:51:44 -0700 (PDT)
+Received: from [127.0.0.1] ([20.102.46.147])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9120f4963fcsm115142726d6.33.2026.09.15.00.51.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2026 23:10:21 -0700 (PDT)
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 4/4] Makefile: precompile "git-compat-util.h"
-Date: Tue, 15 Sep 2026 08:09:52 +0200
-Message-ID: <20260915060952.569535-5-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.56.0.rc0.467.ge054dd0dd6
-In-Reply-To: <20260915060952.569535-1-szeder.dev@gmail.com>
-References: <20260909195006.2179119-1-szeder.dev@gmail.com>
- <20260915060952.569535-1-szeder.dev@gmail.com>
+        Tue, 15 Sep 2026 00:51:43 -0700 (PDT)
+Message-Id: <pull.2401.v3.git.git.1789458703432.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2401.git.git.1789144877632.gitgitgadget@gmail.com>
+References: <pull.2401.git.git.1789144877632.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 15 Sep 2026 07:51:43 +0000
+Subject: [PATCH v3] range-diff: add --matched-only to skip one-sided commits
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-This patch follows the idea of 671df48df8 (meson: precompile
-"git-compat-util.h", 2026-03-19) to make it faster to build Git using
-"make".  The notable differences are the boilerplate needed to wire up
-the precompiled header with "make", and the selection of object files
-that are built using the precompiled header:
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-  - Add a new rule to precompile "tools/precompiled.h" into
-    "tools/precompiled.h.gch".
+Reviewing a range-diff often means scrolling past commits that were
+simply added or dropped, when only the ones that correspond between
+the two ranges are of interest.
 
-    This rule and its dependencies are basically the same as our
-    existing rule and its dependencies for compiling object files from
-    our source files and, except that in this rule we don't use the
-    EXTRA_CPPFLAGS target-specific variable.  This is partly because
-    any compiler flags in that target-specific variable can't possibly
-    make sense for the project-wide "git-compat-util.h", and partly
-    because it could run afoul of "make"'s quirks with target-specific
-    variables and GCC's "-Winvalid-pch" compiler option [1].
+--left-only and --right-only already each suppress one of those
+one-sided groups, but they are defined as "only show this side" and
+so cannot be given together, which is exactly why show_range_diff()
+already rejected that combination. Give the "show only the commits
+that correspond on both sides" behavior its own name, --matched-only,
+instead of asking users to reach for a combination that errors out.
 
-    Our Makefile always writes object files next to the source files
-    they were compiled from.  Since a precompiled header is in many
-    ways similar to an object file, let's follow suit and write it
-    next to the header file it was created from as well.  671df48df8
-    doesn't mention why "precompiled.h" was placed in "tools/".
+Extend the existing '--left-only'/'--right-only' conflict check to
+also reject any combination with --matched-only, since all three
+narrow the output in ways that cannot be combined.
 
-    Use the ".gch" suffix for the precompiled header file, because
-    that's the only suffix GCC looks for when searching for a
-    precompiled header.  Clang apparently looks for both ".pch" and
-    ".gch" suffixes.  If we ever encounter a compiler which only
-    supports a different precompiled header suffix, then we might make
-    the suffix configurable via a Makefile knob; but until then it
-    remains hard-coded for the sake of simplicity.
-
-  - Declare the precompiled header's dependencies, so it gets rebuilt
-    when any of our header files it includes is modified.
-
-    When using computed header dependencies, then the compiler can
-    generate the Makefile snippet containing the header files inlcuded
-    by the precompiled header, just like when compiling a C source
-    file into an object file.
-
-    When not using computed header dependencies, then make the
-    precompiled header depend on the same header files that our object
-    files depend on, i.e. those listed in LIB_H and GENERATED_H.  This
-    is not ideal, because the precompiled header will be rebuilt even
-    when a header file it doesn't actually depend on changes; but in
-    that case all object files will be rebuilt as well anyway.
-
-  - List the object files that are built using the precompiled header
-    in the PRECOMPILED_HEADER_USERS variable:
-
-    - The precompiled header should not change what actually gets
-      compiled.  Therefore, use the precompiled header only when
-      compiling source files that start with including
-      "git-compat-util.h" (directly or indirectly, e.g. via
-      "builtin.h"), or its inclusion is only preceeded by #define
-      directives that don't influence "git-compat-util.h" between its
-      include guards [2] (currently DISABLE_SIGN_COMPARE_WARNINGS,
-      USE_THE_REPOSITORY_VARIABLE or GIT_TEST_PROGRESS_ONLY). [3]
-
-      Several (but not all) object or source files listed in the
-      COMPAT_OBJS, REFTABLE_OBJS and THIRD_PARTY_SOURCES variables
-      don't include "git-compat-util.h", therefore, for the sake of
-      simplicity, none of the files listed in these variables are
-      built with the precompiled header. [4]
-
-      Since 671df48df8 the Meson build uses the precompiled header
-      even when compiling those reftable source files that don't
-      include "git-compat-util.h" at all, although this change is not
-      mentioned in the commit message.
-
-    - But other than that, use the precompiled header when compiling
-      all other source files, including e.g. source files for
-      standalone executables (e.g. "daemon.c" for "git-daemon"), or
-      those in the directories "t/helper/" and "t/unit-tests/" as
-      well.
-
-      The Meson build, however, only uses the precompiled header for
-      compiling objects in "libgit_sources" and "builtin_sources",
-      despite 671df48df8 giving the impression that the precompiled
-      header is included in all compilation units.
-
-    - In short, PRECOMPILED_HEADER_USERS contains all object files
-      listed in OBJECTS, except those that are listed in COMPAT_OBJS,
-      REFTABLE_OBJS or THIRD_PARTY_SOURCES as well.
-
-  - Add a new rule to build object files listed in
-    PRECOMPILED_HEADER_USERS with the precompiled header.
-
-    This rule and its dependencies are basically the same as our
-    existing rule and its dependencies compiling object files from our
-    source files, except:
-
-    - This rule depends on the precompiled header as well, to make
-      sure that it's built before it is used.
-
-    - Use the "-include tools/precompiled.h" option to make the
-      precompiled header the first header in the compilation unit,
-      because only then is it used to speed things up.
-
-    - Use the "-Winvalid-pch" option to catch any issues when the
-      precompiled header is present but can't be used for whatever
-      reason.  While being unable to use the precompiled header would
-      normally only result in a slower build, it is probably better
-      that developers are made aware that simething is not quite
-      right.  Meson uses this option as well when compiling a source
-      file using the precompiled header.
-
-      Note, that in case of such an issue with "-Winvalid-pch" we
-      would get a warning for each object file that is build using the
-      precompiled header, but together with "-Werror" (e.g. with
-      DEVELOPER=1) it would fail the build.
-
-    Object files not listed in PRECOMPILED_HEADER_USERS are built with
-    the existing (and unchanged) rule for object files.
-
-  - This way the precompiled header is compiled only once during
-    the whole build process.
-
-    The Meson build, however, currently compiles the precompiled
-    header twice: once for "libgit_sources" and once for
-    "builtin_sources", despite 671df48df8 giving the impression that
-    it's compiled only once.  And, by the looks of it, it would have
-    to be compiled once more for each new library or executable where
-    we declare the use of the precompiled header.
-
-  - Add the Makefile knob NO_PRECOMPILED_HEADER to make it possible to
-    build without using the precompiled header for testing purposes,
-    or for any compiler that might be out there that doesn't support
-    the "-Winvalid-pch" option.
-
-    Note, that when this knob is set then we merely leave
-    PRECOMPILED_HEADER_USERS empty: this way nothing is built with the
-    precompiled header, but "make clean NO_PRECOMPILED_HEADER=1" would
-    still remove a leftover precompiled header file.
-
-With this patch series on top of v2.55.0 I got the following build
-time improvement:
-
-  Benchmark 1: make -j12 (rev = v2.55.0)
-    Time (mean ± σ):     29.414 s ±  0.031 s    [User: 254.786 s, System: 47.447 s]
-    Range (min … max):   29.370 s … 29.470 s    10 runs
-
-  Benchmark 2: make -j12 (rev = precompile)
-    Time (mean ± σ):     21.725 s ±  0.047 s    [User: 186.047 s, System: 35.109 s]
-    Range (min … max):   21.643 s … 21.768 s    10 runs
-
-  Summary
-    'make -j12 (rev = precompile)' ran
-      1.35 ± 0.00 times faster than 'make -j12 (rev = v2.55.0)'
-
-[1] "make" applies target-specific variables to the first target's
-    dependencies as well.  So, if the rule creating the precompiled
-    header included $(EXTRA_CPPFLAGS) as well, then we could get this:
-
-      $ make -s clean
-      $ make V=1 git
-      gcc -o tools/precompiled.h.gch -c -MF [...] -DSHELL_PATH='"/bin/sh"' '-DGIT_HTML_PATH="share/doc/git-doc"' '-DGIT_MAN_PATH="share/man"' '-DGIT_INFO_PATH="share/info"' tools/precompiled.h
-      gcc -o git.o -c -include tools/precompiled.h -Winvalid-pch -MF [...] -DSHELL_PATH='"/bin/sh"' '-DGIT_HTML_PATH="share/doc/git-doc"' '-DGIT_MAN_PATH="share/man"' '-DGIT_INFO_PATH="share/info"' git.c
-      gcc -o builtin/add.o -c -include tools/precompiled.h -Winvalid-pch -MF [...] -DSHELL_PATH='"/bin/sh"'  builtin/add.c
-      cc1: error: ./tools/precompiled.h.gch: not used because `GIT_MAN_PATH' not defined [-Werror=invalid-pch]
-      cc1: all warnings being treated as errors
-      make: *** [Makefile:2940: builtin/add.o] Error 1
-
-    So in this case "git.o" is the first object file to be build, and
-    since it has a target-specific EXTRA_CPPFLAGS and since it depends
-    on the precompiled header, the precompiled header is built with
-    the same EXTRA_CPPFLAGS as well.  But then "builtin/add.o" is
-    built with empty EXTRA_CPPFLAGS, and GCC's sanity checks for the
-    -Winvalid-pch option complain.  Clang apparently doesn't consider
-    this to be an issue, and builds "git" just fine.
-
-    Note, however, that if the first object file to be built is not
-    "git.o" (or one of the other object files with target-specific
-    EXTRA_CPPFLAGS), which is usually the case with e.g. "make all",
-    then the precompiled header is built with empty EXTRA_CPPFLAGS,
-    and then all is well.  Weird.  We already had issues with "make"
-    and target-specific variables in the past, see a673cfede6
-    (Makefile: Fix occasional GIT-CFLAGS breakage, 2010-03-19).
-    The Meson build doesn't use target-specific variables, and the
-    whole project needs to be rebuilt when e.g. "mandir" is changed,
-    although this is not mentioned in 904339edbd (Introduce support
-    for the Meson build system, 2024-12-06).
-
-[2] See baa61e46da (git-compat-util.h: move warning infra to prepare
-    for PCHs, 2026-03-19).
-
-[3] This can be verified by simply scanning through the output of:
-
-    {
-            printf '%s\n' 'print-%:'
-            printf '\t%s\n' '@printf "%s\n" $($*)'
-    } >/tmp/printvars.mak
-    for f in $(make -f /tmp/printvars.mak -f Makefile print-PRECOMPILED_HEADER_USERS)
-    do
-            f="${f%o}c"
-            sed -n -E -e "s%# *(define|include).*%&    $f%p" -e '/# *include/q' "$f"
-    done | sort
-
-[4] "make"'s flexibility would allow us to separately list those
-    object files that don't include "git-compat-util.h", but then on
-    my (I assume fairly typical) Linux box the number of object files
-    built using the precompiled header increases only by 9 (from 536
-    to 545), which reduces the build time by about 1% (0.2s).
-    Therefore, I don't think it's worth the churn.
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- .gitignore |  1 +
- Makefile   | 26 +++++++++++++++++++++-----
- 2 files changed, 22 insertions(+), 5 deletions(-)
+    range-diff: add --matched-only to skip one-sided commits
+    
+    Add git range-diff --matched-only to only show commits that correspond
+    between the two ranges, skipping ones that were only added or only
+    removed.
+    
+    Changes in v2:
+    
+     * Update docs and commit message.
+     * Use die_for_incompatible_opt3.
 
-diff --git a/.gitignore b/.gitignore
-index 4da58c6754..0209bd16f2 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -233,6 +233,7 @@
- /.vscode/
- /tags
- /TAGS
-+/tools/precompiled.h.gch
- /cscope*
- /compile_commands.json
- /.cache/
-diff --git a/Makefile b/Makefile
-index 2c4d6f4d4a..02162719db 100644
---- a/Makefile
-+++ b/Makefile
-@@ -321,6 +321,9 @@ include shared.mak
- # dependency rules.  The default is "auto", which means to use computed header
- # dependencies if your compiler is detected to support it.
- #
-+# Define NO_PRECOMPILED_HEADER if you want to build Git without precompiling
-+# "git-compat-util.h".
-+#
- # Define NATIVE_CRLF if your platform uses CRLF for line endings.
- #
- # Define GIT_USER_AGENT if you want to change how git identifies itself during
-@@ -2905,8 +2908,15 @@ endif
- .PHONY: objects
- objects: $(OBJECTS)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2401%2FHaraldNordgren%2Frange-diff-matched-only-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2401/HaraldNordgren/range-diff-matched-only-v3
+Pull-Request: https://github.com/git/git/pull/2401
+
+Range-diff vs v2:
+
+ 1:  6d392249a2 ! 1:  ee195c14fc range-diff: add --matched-only to skip one-sided commits
+     @@ builtin/range-diff.c: int cmd_range_diff(int argc,
+       	strvec_clear(&log_arg);
+      
+       ## range-diff.c ##
+     -@@
+     - #include "userdiff.h"
+     - #include "apply.h"
+     - #include "revision.h"
+     -+#include "parse-options.h"
+     - 
+     - struct patch_util {
+     - 	/* For the search for an exact match */
+      @@ range-diff.c: int show_range_diff(const char *range1, const char *range2,
+       	struct string_list branch2 = STRING_LIST_INIT_DUP;
+       	unsigned int include_merges = range_diff_opts->include_merges;
+       
+      -	if (range_diff_opts->left_only && range_diff_opts->right_only)
+      -		res = error(_("options '%s' and '%s' cannot be used together"), "--left-only", "--right-only");
+     -+	die_for_incompatible_opt3(range_diff_opts->left_only, "--left-only",
+     -+				  range_diff_opts->right_only, "--right-only",
+     -+				  range_diff_opts->matched_only, "--matched-only");
+     - 
+     --	if (!res && read_patches(range1, &branch1, range_diff_opts->log_arg, include_merges))
+     ++	if (range_diff_opts->left_only + range_diff_opts->right_only +
+     ++	    range_diff_opts->matched_only > 1)
+     ++		res = error(_("options '%s', '%s', or '%s' cannot be used together"),
+     ++			    "--left-only", "--right-only", "--matched-only");
+     ++
+      +	if (range_diff_opts->matched_only) {
+      +		range_diff_opts->left_only = 1;
+      +		range_diff_opts->right_only = 1;
+      +	}
+     -+
+     -+	if (read_patches(range1, &branch1, range_diff_opts->log_arg, include_merges))
+     + 
+     + 	if (!res && read_patches(range1, &branch1, range_diff_opts->log_arg, include_merges))
+       		res = error(_("could not parse log for '%s'"), range1);
+     - 	if (!res && read_patches(range2, &branch2, range_diff_opts->log_arg, include_merges))
+     - 		res = error(_("could not parse log for '%s'"), range2);
+      
+       ## range-diff.h ##
+      @@
+
+
+ Documentation/git-range-diff.adoc |  9 ++++-
+ builtin/range-diff.c              |  5 ++-
+ range-diff.c                      | 11 +++++-
+ range-diff.h                      |  2 +-
+ t/t3206-range-diff.sh             | 63 +++++++++++++++++++++++++++++++
+ 5 files changed, 85 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-range-diff.adoc b/Documentation/git-range-diff.adoc
+index 5cc5e2ed56..d448f897d6 100644
+--- a/Documentation/git-range-diff.adoc
++++ b/Documentation/git-range-diff.adoc
+@@ -10,7 +10,8 @@ SYNOPSIS
+ [synopsis]
+ git range-diff [--color=[<when>]] [--no-color] [<diff-options>]
+ 	[--no-dual-color] [--creation-factor=<factor>]
+-	[--left-only | --right-only] [--diff-merges=<format>]
++	[--left-only | --right-only | --matched-only]
++	[--diff-merges=<format>]
+ 	[--remerge-diff] [--no-notes | --notes[=<ref>]]
+ 	( <range1> <range2> | <rev1>...<rev2> | <base> <rev1> <rev2> )
+ 	[[--] <path>...]
+@@ -82,6 +83,12 @@ to revert to color all lines according to the outer diff markers
+ 	Suppress commits that are missing from the second specified range
+ 	(or the "right range" when using the `<rev1>...<rev2>` form).
  
--dep_files := $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
--dep_dirs := $(addsuffix .depend,$(sort $(dir $(OBJECTS))))
-+PRECOMPILED_HEADER := tools/precompiled.h
-+PRECOMPILED_HEADER_GCH := $(addsuffix .gch,$(PRECOMPILED_HEADER))
++`--matched-only`::
++	Only emit commits that have a corresponding commit in the other
++	range, suppressing any commit that exists on only one side. Useful
++	to skip added or removed commits when reviewing how the commits
++	that survived a rebase changed.
 +
-+ifndef NO_PRECOMPILED_HEADER
-+PRECOMPILED_HEADER_USERS := $(filter-out $(COMPAT_OBJS) $(REFTABLE_OBJS) $(patsubst %.c,%.o,$(THIRD_PARTY_SOURCES)),$(OBJECTS))
-+endif
+ `--diff-merges=<format>`::
+ 	Instead of ignoring merge commits, generate diffs for them using the
+ 	corresponding `--diff-merges=<format>` option of linkgit:git-log[1],
+diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+index e54c0f7fe1..8059f92eaa 100644
+--- a/builtin/range-diff.c
++++ b/builtin/range-diff.c
+@@ -46,7 +46,7 @@ int cmd_range_diff(int argc,
+ 		.diffopt = &diffopt,
+ 		.log_arg = &log_arg
+ 	};
+-	int simple_color = -1, left_only = 0, right_only = 0;
++	int simple_color = -1, left_only = 0, right_only = 0, matched_only = 0;
+ 	struct option range_diff_options[] = {
+ 		OPT_INTEGER(0, "creation-factor",
+ 			    &range_diff_opts.creation_factor,
+@@ -68,6 +68,8 @@ int cmd_range_diff(int argc,
+ 			 N_("only emit output related to the first range")),
+ 		OPT_BOOL(0, "right-only", &right_only,
+ 			 N_("only emit output related to the second range")),
++		OPT_BOOL(0, "matched-only", &matched_only,
++			 N_("only emit commits that have a corresponding commit in the other range")),
+ 		OPT_END()
+ 	};
+ 	struct option *options;
+@@ -186,6 +188,7 @@ int cmd_range_diff(int argc,
+ 	range_diff_opts.dual_color = simple_color < 1;
+ 	range_diff_opts.left_only = left_only;
+ 	range_diff_opts.right_only = right_only;
++	range_diff_opts.matched_only = matched_only;
+ 	res = show_range_diff(range1.buf, range2.buf, &range_diff_opts);
+ 
+ 	strvec_clear(&log_arg);
+diff --git a/range-diff.c b/range-diff.c
+index 8e2dd2eb19..fa895f5760 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -591,8 +591,15 @@ int show_range_diff(const char *range1, const char *range2,
+ 	struct string_list branch2 = STRING_LIST_INIT_DUP;
+ 	unsigned int include_merges = range_diff_opts->include_merges;
+ 
+-	if (range_diff_opts->left_only && range_diff_opts->right_only)
+-		res = error(_("options '%s' and '%s' cannot be used together"), "--left-only", "--right-only");
++	if (range_diff_opts->left_only + range_diff_opts->right_only +
++	    range_diff_opts->matched_only > 1)
++		res = error(_("options '%s', '%s', or '%s' cannot be used together"),
++			    "--left-only", "--right-only", "--matched-only");
 +
-+dep_files := $(foreach f,$(OBJECTS) $(PRECOMPILED_HEADER_GCH),$(dir $f).depend/$(notdir $f).d)
-+dep_dirs := $(addsuffix .depend,$(sort $(dir $(OBJECTS) $(PRECOMPILED_HEADER_GCH))))
++	if (range_diff_opts->matched_only) {
++		range_diff_opts->left_only = 1;
++		range_diff_opts->right_only = 1;
++	}
  
- ifeq ($(uname_S),Darwin)
- 	dep_dirs += $(addsuffix .depend,$(sort $(dir contrib/credential/osxkeychain/git-credential-osxkeychain.o)))
-@@ -2940,7 +2950,13 @@ missing_compdb_dir =
- compdb_args =
- endif
+ 	if (!res && read_patches(range1, &branch1, range_diff_opts->log_arg, include_merges))
+ 		res = error(_("could not parse log for '%s'"), range1);
+diff --git a/range-diff.h b/range-diff.h
+index 9b70a80009..effd10b9b8 100644
+--- a/range-diff.h
++++ b/range-diff.h
+@@ -19,7 +19,7 @@
+ struct range_diff_options {
+ 	int creation_factor;
+ 	unsigned dual_color:1;
+-	unsigned left_only:1, right_only:1;
++	unsigned left_only:1, right_only:1, matched_only:1;
+ 	unsigned include_merges:1;
+ 	size_t max_memory;
+ 	const struct diff_options *diffopt; /* may be NULL */
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index ef92704de3..f85fd0c4ad 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -860,6 +860,69 @@ test_expect_success '--left-only/--right-only' '
+ 	test_cmp expect actual
+ '
  
--$(OBJECTS): %.o: %.c GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
-+$(PRECOMPILED_HEADER_GCH): %.gch: % GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
-+	$(QUIET_CC)$(CC) -o $@ -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $<
++test_expect_success '--left-only, --right-only and --matched-only are incompatible' '
++	test_must_fail git range-diff --left-only --right-only ...common 2>err &&
++	test_grep "cannot be used together" err &&
 +
-+$(PRECOMPILED_HEADER_USERS): %.o: %.c $(PRECOMPILED_HEADER_GCH) GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
-+	$(QUIET_CC)$(CC) -o $*.o -c -include $(PRECOMPILED_HEADER) -Winvalid-pch $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
++	test_must_fail git range-diff --left-only --matched-only ...common 2>err &&
++	test_grep "cannot be used together" err &&
 +
-+$(filter-out $(PRECOMPILED_HEADER_USERS),$(OBJECTS)): %.o: %.c GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
- 	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
- 
- %.s: %.c GIT-CFLAGS FORCE
-@@ -2954,7 +2970,7 @@ ifneq ($(dep_files_present),)
- include $(dep_files_present)
- endif
- else
--$(OBJECTS): $(LIB_H) $(GENERATED_H)
-+$(OBJECTS) $(PRECOMPILED_HEADER_GCH): $(LIB_H) $(GENERATED_H)
- endif
- 
- ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
-@@ -3908,7 +3924,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) GIT-TEST-SUITES
- 	$(RM) po/git.pot po/git-core.pot
- 	$(RM) git.rc git.res
--	$(RM) $(OBJECTS)
-+	$(RM) $(OBJECTS) $(PRECOMPILED_HEADER_GCH)
- 	$(RM) headless-git.o
- 	$(RM) $(LIB_FILE)
- 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS)
++	test_must_fail git range-diff --right-only --matched-only ...common 2>err &&
++	test_grep "cannot be used together" err &&
++
++	test_must_fail git range-diff --left-only --right-only --matched-only \
++		...common 2>err &&
++	test_grep "cannot be used together" err
++'
++
++test_expect_success '--left-only, --right-only and --matched-only each suppress one-sided commits' '
++	test_create_repo matched-only &&
++	(
++		cd matched-only &&
++		git switch --orphan combined-old &&
++		test_commit c-first &&
++		test_commit c-old-only &&
++		test_commit c-common &&
++		git switch -C combined-new c-first &&
++		test_commit c-new-only &&
++		git cherry-pick c-common &&
++
++		old_only_oid=$(git rev-parse --short=7 c-old-only) &&
++		new_only_oid=$(git rev-parse --short=7 c-new-only) &&
++		common_old_oid=$(git rev-parse --short=7 c-common) &&
++		common_new_oid=$(git rev-parse --short=7 HEAD) &&
++
++		git range-diff -s --abbrev=7 combined-old...combined-new >actual &&
++		cat >expect <<-EOF &&
++		1:  $old_only_oid < -:  ------- c-old-only
++		-:  ------- > 1:  $new_only_oid c-new-only
++		2:  $common_old_oid = 2:  $common_new_oid c-common
++		EOF
++		test_cmp expect actual &&
++
++		git range-diff -s --abbrev=7 --left-only combined-old...combined-new \
++			>actual &&
++		cat >expect <<-EOF &&
++		1:  $old_only_oid < -:  ------- c-old-only
++		2:  $common_old_oid = 2:  $common_new_oid c-common
++		EOF
++		test_cmp expect actual &&
++
++		git range-diff -s --abbrev=7 --right-only combined-old...combined-new \
++			>actual &&
++		cat >expect <<-EOF &&
++		-:  ------- > 1:  $new_only_oid c-new-only
++		2:  $common_old_oid = 2:  $common_new_oid c-common
++		EOF
++		test_cmp expect actual &&
++
++		git range-diff -s --abbrev=7 --matched-only combined-old...combined-new \
++			>actual &&
++		echo "2:  $common_old_oid = 2:  $common_new_oid c-common" >expect &&
++		test_cmp expect actual
++	)
++'
++
+ test_expect_success 'ranges with pathspecs' '
+ 	git range-diff topic...mode-only-change -- other-file >actual &&
+ 	test_line_count = 2 actual &&
+
+base-commit: 3699d22b59a6ea467ce13edb81b6bdea0398c803
 -- 
-2.56.0.rc0.467.ge054dd0dd6
-
+gitgitgadget
