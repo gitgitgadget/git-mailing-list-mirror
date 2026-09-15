@@ -1,71 +1,71 @@
 Received: from mail-ej2-f12.google.com (mail-ej2-f12.google.com [74.125.228.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F991FB1
-	for <git@vger.kernel.org>; Tue, 15 Sep 2026 06:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B2A43F8DF
+	for <git@vger.kernel.org>; Tue, 15 Sep 2026 06:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789452618; cv=none; b=D1qoundS096zB8yDE3k0rJyEXaKAfJ8pn3Vdaxq7Ip7LeVGQl9g6MkMyfsXbPsuugpEIIbDpFeU2corvOEO7g/89cQF3MQaXPOH6BvS4SJ8CXJAymSOmDcsCDKk/R19IfYSQRe3sOyBKFmKQ8M4nK+5Ag9IA2DzQ4lRNPQl8XrI=
+	t=1789452620; cv=none; b=f5g2rI0bESaZGaEba6lcSIsp3nqwgOy+E5FoaKxPCXuSZJF5z9LQSXwjP0NsDT65VfSB9Gkn1z1IPY7XB/bp78yzb9GKSapMqrnC1fgVz+65jOcKyNO5Uj4BhieSMeQDDWIjAaBDUx7EhQ30adbPvVGwGQaEryEeIh7iRMC34lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789452618; c=relaxed/simple;
-	bh=yX/sC3kB/tMT3q6qt0OBsLZ9tqZ+OUq/CuVrVUDgEe8=;
+	s=arc-20240116; t=1789452620; c=relaxed/simple;
+	bh=FgDsqByZjiB5jZr/tmtJCuVdF8LD3/q2jm18tHlbwOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VxtovoupQQHHQYehrBu2tzpoDSKVq29EQOK45hd24SAM2toIu4nwV1xnIA5Bl90+vhqm7ns+fnaT1hNdTVOMbp2kuTn1zUJ7gNNdK7pt/8dDtn193txfNxsfjPjuKkzFhtDk4i7Oa7pibvBhMa08n7hkRvFkEaG8ck72nrfRk70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ImdAslx6; arc=none smtp.client-ip=74.125.228.140
+	 MIME-Version:Content-Type; b=ZtrlX6Gqq/NqZG3wi5YNRoVUPX774Kfm/707bIHtS6cdIRRbq0PpzJycNm2CVwaqlAn9liqPn7hyxNQZdMFbEGzAN+vYFv/RpKvD7XvHKv38donh22aDrEaR93AeKizbtwwF9xL+AC1mrmsuhK5dOf1mIfSHLiGo+lpH/lzupnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ox9/cFNr; arc=none smtp.client-ip=74.125.228.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ImdAslx6"
-Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c2940ff2313so210483566b.1
-        for <git@vger.kernel.org>; Mon, 14 Sep 2026 23:10:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ox9/cFNr"
+Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c254f70553dso489509566b.0
+        for <git@vger.kernel.org>; Mon, 14 Sep 2026 23:10:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789452615; x=1790057415; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789452617; x=1790057417; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=pjQ1jw+Pcry5yOyKdQcVCVtQw/hIvnPEcF+7tCe4ycU=;
-        b=ImdAslx6K8QmjvzJV5CjWDwhjgMznlYEfcJSg+04NdlDQfmYO7wWu30NqZdIpzsf+8
-         YcLOD2hK/h+VUg/0yUVv9S2sn7GaoOFLlm3KC2lOzSYx1ladp42LyE+h9EJQzqVvlyFw
-         1fAd87WZiDzjo8EBI3LN6gYUwDnwJEWvy9kuLnnpdV7fnluO04i0K3FV0bWf5rgtGOg1
-         SaH6YGNUCz6Y89WEzbI0aALZIXP2CLaThScdW2CadhVwLm1KGobptHOAccrk1p/iumi1
-         LMv/lElOBaDDiegCsTqCVsnT/NI9841vwBwiiTg8e1FLRk/uNshTa87k6bobv0pa6Rm/
-         E56Q==
+        bh=U4267tsd2HAGjTObLhQb0euxvj7vWe7qO8wYbKlTzwI=;
+        b=ox9/cFNrVsBRcQ1YRGc6vaDdRBlYLygiAIuK4X+yTIwsLBHoFVSkNKoadC8SRGtyom
+         zhEzu9V9VLf0EpRrrXifvUWi2fzEYvs/CAYsFKGcgerquswRb6o2TVgF0RA76ldyzPGZ
+         j/+Y6Bceegj+PD9nzF0CcDmF3G7WXlJMvthvpNkYAcl6Sl1VJDrUzgULdVRBhfINS60V
+         x+7euehaQoFPCqtNJU/18ESKmGHWJS0XCDJka/nAt/6ZJlme+Palve7OO+ycf1bEOI6z
+         vqczTCYvDEZqvUX/QHVMRkrxPginsBXykmPqTYVpqill9nTI1BBJIWaHE/ASYSNurjF/
+         SHlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789452615; x=1790057415;
+        d=1e100.net; s=20260707; t=1789452617; x=1790057417;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=pjQ1jw+Pcry5yOyKdQcVCVtQw/hIvnPEcF+7tCe4ycU=;
-        b=PwI+1KKLGJIj09qbFG2RDpxjGtfcipi8+PFMO7fq3ZSmGcxdn5epVEP5HGkOqLnb1t
-         uYJLo+RtqAlKKTmtr1NFx8F3EbgheaqHNstjZ9/55RDsDISFZKEqdefxtuXEgI//BVJe
-         zvCOF73Tapf10+Rud+HQeMnxOwIoVASPgbswbGBQg6qp+6HKpraqOEWxoxejn+8mvMFN
-         RD0IiOXi4KAvBid/jvaKqMrXAp+L+9ODFAzEmHzSe3LCBhAtRadfk2JANuIE9zxFrvBV
-         DSrD+ZmzecJiVqj/ZrUv2t+WRU0yoxTJ+ujPTgJyF+5JnziBMw02Mw+H/URY1nUm7gVW
-         whbQ==
-X-Gm-Message-State: AFuF++lcwWqe6L4VqZ3XLgxzYZdmyBqsAQYCH5zZTnWWbaK2gayu2wmq
-	yuiHfjI9cQD8ufhp475FnGYb8N7WGCvvuH0uST6mdLOPq4vdy8dQ2THfysdm9Q==
-X-Gm-Gg: AYBFou2q0xmKk5I8NAyRdMGDx+rczmeYViTKo2KPkIL74ShB4lHrwTDi4BXvC6yXDa8
-	wln+RXqlX5+UZokOnEFZxX2xB9OX0pDBIEc2hbTnhqK8o5jNiNt+M1OXvIK108hYve/UiJ5FCeb
-	Kijf/UkTOu6z5SVJzWrFnZe9wP2SkOmLmTnowSMHBUAGZnLEj5gPIqEyACA0CD0JYKCld8zPeav
-	lnfatMpw4NCUhGLqNmYhxYpnEVTYgH94nkv67rR9Wc1EVNVo5xLUf+7MV+fuJ89eyuKcl47S85U
-	pPiml+G6zHI0j2uFRwi9Ss/DIIMrNmqB/9NJG5B1v0pp17pKVWvA1Hr+sasop9bgrFXYnEZNQZ7
-	Y1OZEOUU0nt7/owRhdpQFDMa9dfRjrbPsTo2nzAnkrwtGpo+YTqrk3HsWONOu98hNYR/S4PoVCs
-	GzJ6YGhzyI4HkLuf3fj9N79Aq0fRoDrM7/Wzf6S4r8HcY2RFdCsM0lPxJAq6VJUsr0tnP2Al6na
-	wsVaGv9R63oU4wTSxG6d1+OBHd2
-X-Received: by 2002:a17:907:3e02:b0:c24:d6f0:aa0 with SMTP id a640c23a62f3a-c29c89d1344mr186846766b.11.1789452614975;
-        Mon, 14 Sep 2026 23:10:14 -0700 (PDT)
+        bh=U4267tsd2HAGjTObLhQb0euxvj7vWe7qO8wYbKlTzwI=;
+        b=S/zrAz7HOUaFYS/5wQJXMfMfgwiTMjQV/FZQwWx7oO0tEccCaeEzatbvQ5qd8s9UJU
+         xo+QJvntv3x/bKKLXSsJVO9f9XJR8CMXpdHbSv4QnNpxrxKYmnGnrSlQz3u+7CYAZUf3
+         CyEEOmSULo+KGvDU4mbUiTZ8j/1W+aVkQrAydiJgAJr0BADJq52zpIQhQXiBcsjB2ymp
+         uUgZ7lHBpVewVM34yhfTSTEWAFphQTndmIwcYOMDx1j+x6ehCaU0Z/9uCppDbMwhFO8V
+         vXZhNVziHJRRyNjkYDDff/ytoBd/3IHdk83AYJSky2tIIaor5gL3ElPEqvRTyInKLog7
+         S84w==
+X-Gm-Message-State: AFuF++mvLLkZvh0w4InQM/yEgVHo4jMxGOWC8k4J1a1ctF16wTzX+sWy
+	qKgBTUpcMa9DfFqa7Gjppf27spX8Ba52zulbTBRLHmmXaO24f8+L/Albp3Or7w==
+X-Gm-Gg: AYBFou0jJBMlcZVejCyenYGTMMU9zVarGo9tOWzi2YOs/6RR2wujqTeLLZUiBOAI9AB
+	9vxYhy9zXgooobkN3ebApkj+gc6eSjkghqivO1Ts9YPLVZMNqXDI6nknSM7HJ7gmyeOlAYv6EsF
+	wNBhqCQ5mWyz8d6WjvJHiBrh/wk+Q+lcluDDDlN3CpKD1uUO0YFC8gWS7Jc09pR7mAsH0GREZEz
+	4fWyQWYgl45QxDAUz4laK2xRYm1H2hI0btBaJCToofPAb7pLv1CEK1ZoZBwZzJSlr1jC8hMAULl
+	5BmDyzIMNvoFcgYqfzT0H4XuZ66Ld7ASF1Ka+u0VyLMuBuCBShVem0q12pdv+LCOEYz7Y+bM8hy
+	HxkWOWBUllGtogqDAFCTvRFpr7QIFS6FKfNxdNDiq+uVdA6/CAmqkmcdeRdqRw4JEUj/9Bewi7w
+	Ss0IZWy1NZvXpTdw1t2pXgk2CVd28MXSb99r7lVAaWQg+hKOqtLEXBGckkrPHhKiJzVZqmCVYPr
+	OpZ7DVtCO1auYvGOWTRu4ziXfU=
+X-Received: by 2002:a17:906:478f:b0:c26:1648:a061 with SMTP id a640c23a62f3a-c29b8723fe4mr352480366b.28.1789452616729;
+        Mon, 14 Sep 2026 23:10:16 -0700 (PDT)
 Received: from localhost (78-131-17-112.pool.digikabel.hu. [78.131.17.112])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c296605c2bbsm510430866b.24.2026.09.14.23.10.14
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2965c4f77asm523777766b.8.2026.09.14.23.10.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2026 23:10:14 -0700 (PDT)
+        Mon, 14 Sep 2026 23:10:16 -0700 (PDT)
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 1/4] Makefile: remove XDIFF_OBJS initialization
-Date: Tue, 15 Sep 2026 08:09:49 +0200
-Message-ID: <20260915060952.569535-2-szeder.dev@gmail.com>
+Subject: [PATCH v2 2/4] cmake: remove any "$(*_OBJS)" variables when parsing Makefile for sources
+Date: Tue, 15 Sep 2026 08:09:50 +0200
+Message-ID: <20260915060952.569535-3-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.56.0.rc0.467.ge054dd0dd6
 In-Reply-To: <20260915060952.569535-1-szeder.dev@gmail.com>
 References: <20260909195006.2179119-1-szeder.dev@gmail.com>
@@ -79,32 +79,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Object files under 'xlib/' used to be listed in the XDIFF_OBJS
-Makefile variable so we could build a static library from them.  This
-static library was removed in cf680cdb95 (make: delete XDIFF_LIB, add
-xdiff to LIB_OBJS, 2025-10-02), along with filling XDIFF_OBJS with
-object files.
+To get various lists of files, CMake parses our Makefile looking for
+lines matching e.g. "list_var += ...".  In case of LIB_OBJS this
+picks up the line "LIB_OBJS += $(COMPAT_OBJS)" as well, so the parsing
+macro has a specific instruction to remove "$(COMPAT_OBJS)" from the
+resulting list.
 
-But the initial empty initalization of XDIFF_OBJS remained, so remove
-it now.
+Currently this is the only such Makefile variable to be removed from
+the list, but the next patches will (re)introduce more variables
+containing lists of object files, so let's generalize that removing
+instruction to remove any "$(*_OBJS)" Makefile variable as well.
+
+Note that we can't make the pattern matching the Makefile variable too
+general, e.g. to match any "$(VARIABLE)", because some lines of our
+Makefile do contain variables as directory prefixes, e.g.
+"UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o", and we must
+definitely keep those.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- Makefile | 1 -
- 1 file changed, 1 deletion(-)
+ contrib/buildsystems/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index d4b775953d..7d9ac15c74 100644
---- a/Makefile
-+++ b/Makefile
-@@ -695,7 +695,6 @@ BUILTIN_OBJS =
- BUILT_INS =
- COMPAT_CFLAGS =
- COMPAT_OBJS =
--XDIFF_OBJS =
- GENERATED_H =
- EXTRA_CPPFLAGS =
- FUZZ_OBJS =
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 8f56203f34..241da0d43a 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -102,7 +102,7 @@ project(git
+ macro(parse_makefile_for_sources list_var makefile regex)
+ 	file(STRINGS ${makefile} ${list_var} REGEX "^${regex} \\+=(.*)")
+ 	string(REPLACE "${regex} +=" "" ${list_var} ${${list_var}})
+-	string(REPLACE "$(COMPAT_OBJS)" "" ${list_var} ${${list_var}}) #remove "$(COMPAT_OBJS)" This is only for libgit.
++	string(REGEX REPLACE "\\$\\([^)]*_OBJS\\)" "" ${list_var} ${${list_var}}) # remove any "$(*_OBJS)" variables
+ 	string(STRIP ${${list_var}} ${list_var}) #remove trailing/leading whitespaces
+ 	string(REPLACE ".o" ".c;" ${list_var} ${${list_var}}) #change .o to .c, ; is for converting the string into a list
+ 	list(TRANSFORM ${list_var} STRIP) #remove trailing/leading whitespaces for each element in list
 -- 
 2.56.0.rc0.467.ge054dd0dd6
 
