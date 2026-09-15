@@ -1,106 +1,175 @@
-Received: from mail-yx2-f13.google.com (mail-yx2-f13.google.com [74.125.224.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5090331EC0
-	for <git@vger.kernel.org>; Tue, 15 Sep 2026 22:02:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3086235839C
+	for <git@vger.kernel.org>; Tue, 15 Sep 2026 22:13:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789509752; cv=none; b=m3K3TcaGpzAcZqjwGjh4Wr0AYaQGTAFij0qjQttXzKzB6f78WI2jaQaiwIqGgQ74HixIYi1yao0v19KfAGM3yxMXGJccEemYanUhWNsJlynsgtpBu2N3fx+3WrZK70uh4JOdv9COUELHH/SNftGqKDt1NMKMAWZJuWlYoDnGrNw=
+	t=1789510390; cv=none; b=rKpymo+12CT50seQ7k4FYN7kIcsO1HDavmS2J+tbL7Y4HVppVbkFPQ+Y3O2vDwhjNGYFTyWzvOeEEGlensQ2vqTpksjyzT+K0hlx4sUfGPLkz2r7yQfR/iYSQNmTpNF/a22eoJVsWTvGQRi4PSdpJCRo6ejp7FS55WwwcRZMLXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789509752; c=relaxed/simple;
-	bh=fxpiutgLyfOuoaPX3z5u+lKvrwvn7aHPp6QZHM0hG/4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qWjcWuxXNlMEBpmQfSkpwHZ5AtslqxdWEl70NhemJRSNSxQKfs4mX5QsTEbFHqziTXpVK96+JMuY/9WlMTon9cBmsyF3zvJofZBlAh3SlsNhO9ORE3/OPQ4UcFTT6OmBMSvd961a+KeN6n2N/QZPETR1Gcf2UcUTRjhq7+bJbRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cEtYBlpY; arc=none smtp.client-ip=74.125.224.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789510390; c=relaxed/simple;
+	bh=pDb6Tto5ukI6MYsN/hA32mcpQ+qHlMPBDFPv7+Pg1h0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=knQoO5CYngS7XyMFF6mj8+ueMMRGTMNFQKQQlGBQGKh4HJFGnXjxEYn6jGru++apD7Azr4PZk5z698EZl+hDDDFq7JjpkxHK3ttnZDaDl5MiFjo7dN1MN5O0S7xLKPHk0hiDqUSajTyZKokIKjI1O9r2Rchh+Xkxa6VCrrzaaEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NBuEJDxB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wy8eNfl+; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cEtYBlpY"
-Received: by mail-yx2-f13.google.com with SMTP id 00721157ae682-8716a5baf64so2452487b3.3
-        for <git@vger.kernel.org>; Tue, 15 Sep 2026 15:02:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789509750; x=1790114550; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=0qFbq4XTc/6PKP+0AB4mzYIWHZzPoknpDAF9fTBlXoI=;
-        b=cEtYBlpYqsGaNnu2rR996SRuAtcqXAoEaUat9mgCnlYtuWBu8dlnnk6EtdCa4efzhl
-         ktxQdb5XE7xXGFFhcWkiA1P8tpLP3kvKOaaFkA/saU5wDUAMNcI2HsqtTb8cX7fA5Ev7
-         1ETsE04GkzVAznLrXrQgbMEYZruz53EmK8Th1ueeAOfcq8vm1Clw7ZYrF+Mb9ftERa8T
-         Dj5hGq51FMyTOGIkzuMBR5uaagC9+a03VVnF2j2Z17nMtPM18QWH2vLwjR3ET0RiwidD
-         h1aslVMkMjPuJunugzEX7Nln/PPIRxGKyfEs3mohOqyUn2NyDVX4nPYObcslQHgEgFth
-         kkyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789509750; x=1790114550;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=0qFbq4XTc/6PKP+0AB4mzYIWHZzPoknpDAF9fTBlXoI=;
-        b=v6HuDPa6bmdAogJvwN29mXHOPV5qDpsoo2NTOaRfikiQr1UlzZqtuNZht/yiVPLr1h
-         Lw1YzdnfCpRe6G7nl2lwyIxOEiuMP3HDwTuW42QUb4/3mEQVuBRPGQubT7roEwNBpeSv
-         WeW5vdn+o2D2LAoePRSqPT2MacPt1dQeFA/9dV/XRml4ss+FFBnZ8A+mloZoV1x98XDp
-         LCfWPW4flmRuM0vYLMNzOGYl4eny3VrgNDBWUpbCMNoaF9aD097FLiJaupMWIS69FGry
-         ZSu38tgiSh7LrtZerPMkqYnNmQ+vWHneWODXWVi3YphVqkHgyeTs4d4fq2gCQYNBeGpr
-         iVaQ==
-X-Gm-Message-State: AFuF++mH1fNdbQc9uKi/1o6vKm+z1BIpLHJ4isHPo8mzuzz3U48WWP7f
-	AIUz5MAbBulcNCyUXnnFjAOS7D5oP081Y9SxzRLLyoI1ifqJkRpyxrpg2XJrjljJfbI=
-X-Gm-Gg: AYBFou1BCmkmcgfgwvQLvj/Ot+2CHdQIQqQHiFIoGTWop2NOUatsdS+xA3/M6YqylaG
-	khCV3VzCwpcb4EqP7i9STyDmPGUAmGLDdQEfMctjp45hyeYY3bXpkWQMBYD5AAzznhfrKh0Bv3R
-	urV6VhEndGrVtKYcsuYuOXArsz8bpix12VVTRYHrDkSJBRtH4Lx/q/w6SiZALB/1WSfuSj/kJ9S
-	PLf8Uu4xkWY+u/mFtV5P7CHT92ZEth9zmRcI5pCryTn3lbnaGrlbsUhfr+EsGeTIu6sZtlAWRcO
-	y6wl7Xtgb7IxtU5qw4O+lWMK77uOsZa8TYjV4IeZoBmVWQ96FBZvMrWQ4Hu9vkCcL6BBsof19QN
-	GD16wOZkme4bxdu262/A7Dk/4stKJkmUM6uk+4ssSqQkAuRExAp2FwzVjDDrFqb/HRRwPHOG3cu
-	8d1qHUprXxti9xpni/G2fL8GuOTnMyuhlzKP5yX1r+qV/NGpnEhRMma3NAI/RDni2Q9wjPRus5N
-	S6WF2MBZWJ/97LagjVBs7xl2/s54OZUJKWlwZkf1BDm0vagGWH2LvVVH18CCzpK2bIXA4c+rdpO
-	/eU679NJ/a13ryC4wR90vKe3mRP4V2OjRuOqjfsoIvBtGPsCNA==
-X-Received: by 2002:a05:690c:6d82:b0:873:5bb2:6c26 with SMTP id 00721157ae682-89228add246mr1340547b3.45.1789509749543;
-        Tue, 15 Sep 2026 15:02:29 -0700 (PDT)
-Received: from localhost.localdomain ([2603:7002:a00:5733:a91f:bcfb:6325:9373])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93b81cefc98sm58345585a.33.2026.09.15.15.02.28
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 15 Sep 2026 15:02:29 -0700 (PDT)
-From: Andrew Pleeter <andrewpleeter@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v8] var: support broken-down idents, signing key, multiple args, and -z
-Date: Tue, 15 Sep 2026 18:02:28 -0400
-Message-ID: <20260915220228.42819-1-andrewpleeter@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <xmqq33va1lcg.fsf@gitster.g>
-References: <xmqq33va1lcg.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NBuEJDxB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wy8eNfl+"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3C4947A0169;
+	Tue, 15 Sep 2026 18:13:07 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 15 Sep 2026 18:13:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1789510387; x=1789596787; bh=CPhIboR/6j
+	iC/2ObCG0ETaEavKBSVmvZDKjp5GbeK9M=; b=NBuEJDxBjKlgfmR27YZZ0bpvvA
+	kWBaolG7+FJExBh/37iYLKdAyLvtP3dQQTL1WDEARtfgYCCTpoy1wrwDH+Q5m6hZ
+	90Vz6K8GRQ7rcB9G0HJpnVGmLPb+lUg5hmMeL5MkePGa9i5YEfcCVo7KNEYVC1Ua
+	r7n8aZXov9ANOLiN4EWlpSUDRcBAf/ZdXxzHQWcQJIWgao2K2AyhqXNVJicxowAs
+	A6veuHx6RgITlcjiBHWHgx2Ik7nEdDtBf0xmLTSMV7RoTs2yl5vdySMQV9dMhxz5
+	2cYheTBJR8P7Oo6F1lgzWq3zSfKDhIBOSZaYMdbuMj5HNwl8l1F3DuWs+M1w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789510387; x=1789596787; bh=CPhIboR/6jiC/2ObCG0ETaEavKBSVmvZDKj
+	p5GbeK9M=; b=Wy8eNfl+E7eO9rNLiD5YWwa+8jvBitHko67n+9PUUZVYHzi0yyi
+	tdwkG2RzaegN2yqUxTzdJD8ydKkTkvbXvuTBCtv2Imx6oaacDlV/BuHOhMFhPe6y
+	JAzYxrP8Hw3PCf6B85UN0IFIYxo8ibWVdSLmzcttFFGyLpOKMAh1ud8ABS8/Y96X
+	I7O2KKG38rAf/uuB6UM3cxsAp4bQyeX1ormZkHcSvbyYAuOGGSD+YQX6n4H9Wnq0
+	XTzpjTfleF5Gh2zu6QMtO2JOjMts/ot//buCY++y5lmisi1qbisJNpczOGlhfhLU
+	J0GKNccFVLcoo62EmLe0JWtzoYUGp4nZFfA==
+X-ME-Sender: <xms:8sKpal5HdJLQgmwQFNiU_SUAGG-u-yig6jLBzGPUwV5hCDCw3E1yWg>
+    <xme:8sKpapy9dT3xoxVV4uqCKUBENrPIMV-b099VjmMts3BukhJTHl3p7TUwYR9q4QwJ4
+    tjbe4yw6rVjCab5_3BWbVcAb8SeOzGGPz5nMxljncWnmnu_kOYuCQ>
+X-ME-Received: <xmr:8sKpakx2Xqr1Lku2PfvNSWqZcam5nqhSRBc1j3QNaOlk0-LHcV6-IObpbj32HKmSxcDZA6Hd_TgOdq-_HN4_R_xxXvo7hSWp_lMw>
+X-ME-Proxy-Cause: dmFkZTFDkK7IKjxVnr580rYUmwc2xi/xmkODdQdXti6Om7E4Aa7mmslUCFAPvNN1vZE5mR
+    xP11ZZHp0+CSS+tuj+SPBWalwGcQdiA6T61EPc7MYBlIs+vMg2Kom016gw3yHgcma/wmIc
+    BnM9oXQY4XLTHcJQdHLKlBs7wKaYGwDfI9JfWEB3S4zl696A/ySp9XXT/L1tQ+Had803nA
+    s5tvEm6sjfMoye9Fu0bjnG9gIbbKTO00F04PEqbpcK9eXJYq+0p451hNhBh3CcJIBNN26D
+    PBP/JVi2SGEuv1Q6+nAwVdV6++7G10rI24dTHXYuO6P3Rp2dA50L9dAhdH4sNLkdG3ydgR
+    7BFCVVKn2OHUYLifQ3ZviTHpgYauRqUNyUGGCmGCJxgAbG9rswRaBsUo1YnxLvvRgSpJyh
+    svpEaC3YeRiRZdc9vNWDUGNQcS/H34s+tMKyM5SlNLPNlsPG6tPieMOgI7OfjOsBGvzUiD
+    RbHi7XfvrV3L3heFH6aBjfiZtoKadcgyJ/thD/hg4h7dso4B6Hn1F21XHOGaZ6FEmqrtMT
+    4uWjz95c/NEcarvb0W3/Im9+BNb+71PJwJN4nromUxxbxzzoFad4gdao0o1mENS/Z006OS
+    TnXIuBYbBvzw6xEejpxjFf8ucaczW3EFgVjIdnTTvURMaCnO/QdVmgaok8qw
+X-ME-Proxy: <xmx:8sKpapzQMeSHgCJbU8lRdH0Inm1nYCRCc9N0hJPhE39PkzMZMALzdQ>
+    <xmx:8sKpama3h7dtfv_QlLr1Jf3wOShBCj3QChpWDwBAZxInsH0ThESFUA>
+    <xmx:8sKpaiUUk52leCoghiMihqgU4T37at0gvB-tKKacgVTGJb_tV0EgPA>
+    <xmx:8sKpasgZDjrbgaHiPIJSi_KrfMn5Ffawi42X8lL0pNaIbs35-3zetw>
+    <xmx:88KpatP0IMW7wgYS3IhELNhNK3wNVLWtLQdN4qbLaRU2pSB7zU7KLgFl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Sep 2026 18:13:06 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Jiri Kuncar via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Jiri Kuncar <jiri@kuncar.dev>,  Jiri Kuncar
+ <jiri.kuncar@gmail.com>
+Subject: Re: [PATCH] pull: avoid crash of invalid merge head
+In-Reply-To: <pull.2223.git.1789252459520.gitgitgadget@gmail.com> (Jiri Kuncar
+	via GitGitGadget's message of "Sat, 12 Sep 2026 22:34:19 +0000")
+References: <pull.2223.git.1789252459520.gitgitgadget@gmail.com>
+Date: Tue, 15 Sep 2026 15:13:05 -0700
+Message-ID: <xmqqld92xixa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Hi Junio,
+"Jiri Kuncar via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Thank you for the guidance, and I sincerely apologize for the lack of
-communication. I had posted replies on the GitHub pull request and did
-not realize until now that GitGitGadget does not mirror PR comments back
-to the mailing list. I certainly did not intend to be silent or ignore
-your reviews.
+> From: Jiri Kuncar <jiri.kuncar@gmail.com>
+>
+> Adds NULL guards for lookup_commit_reference() to avoid segfaults.
+>
+> Those invalid references are possibly caused by parallel fetches or
+> gc racing on the same repository.
+>
+> This effectively treats failed lookup as "not up to date" so caller
+> falls to a normal merge, which reports the broken object instead of
+> crashing.
+>
+> Signed-off-by: Jiri Kuncar <jiri.kuncar@gmail.com>
+> ---
+>     pull: avoid crash of invalid merge head
 
-I completely agree with your feedback. Packing all of these features into
-a single commit makes the patch difficult to review and overcomplicates
-the history.
+The log message sounds a bit unusual from our norm (see
+Documentation/SubmittingPatches).
 
-I will restructure the series for v9 into three separate patches as you
-suggested:
+It is of course good to deal with a corrupt state more gracefully
+rather than crashing.  From a cursory look, the particular solution
+chosen, to drive the caller to perform a merge and have it fail, may
+smell a bit like cheating, in that we could diagnose the breakage
+better by reporting what was broken at each place, but it probably
+is a good choice.
 
-1. Add the -z output mode to git var (-l and single-variable).
-2. Teach git var to accept multiple variables (argc >= 2) with var=value
-   output.
-3. Expose the broken-out identity components and GIT_SIGNING_KEY.
+If we really want to improve the situation for 'orig_head', for
+example, we would probably want to turn it into a commit object
+instance a lot earlier and pass the commit object instance around in
+the call chain.  Passing around many struct object_id instances
+instead of object instances is an unnatural consequence of how this
+program evolved.  It was originally written as a shell script, and
+of course passing hexadecimal object names was the only way the
+script could drive 'git merge-base' and other programs to see if the
+commit recorded as the current 'HEAD' will fast-forward to the
+commit that is fetched from the remote to be merged in, for example.
+Once we go that route to resolve object names early to object
+instances, we will not have multiple lookup_commit_reference() calls
+on the same object name (which require us to watch out for failures)
+to begin with.
 
-I will send v9 shortly. Thank you again for your patience and direction.
+The above is a long-winded way to say that it is a good improvement
+that does not do more than it needs to do and we will not have to
+spend too much effort to undo when we revamp the internals to do
+"the right thing" later.
 
-Best regards,
-Andrew
+
+> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+> index 27f38ab3c8..7a3eadddd3 100755
+> --- a/t/t5520-pull.sh
+> +++ b/t/t5520-pull.sh
+> @@ -888,4 +888,30 @@ test_expect_success 'git pull --rebase against local branch' '
+>  	test_cmp expect file2
+>  '
+>  
+> +test_expect_success 'pull does not crash when a merge head does not resolve' '
+> +	test_when_finished "rm -rf up dn" &&
+> +	git init up &&
+> +	(
+> +		cd up &&
+> +		test_commit base &&
+> +		git switch -c sideA &&
+> +		test_commit a &&
+> +		git switch -c sideB base &&
+> +		test_commit b
+> +	) &&
+> +	git clone up dn &&
+> +	(
+> +		cd dn &&
+> +		git -c fetch.unpackLimit=1000 fetch origin \
+> +			"+refs/heads/*:refs/remotes/origin/*" &&
+> +		git commit-graph write --reachable &&
+> +		oid=$(git rev-parse refs/remotes/origin/sideA) &&
+> +		obj=.git/objects/$(test_oid_to_path "$oid") &&
+> +		test -f "$obj" &&
+> +		chmod u+w "$obj" &&
+> +		>"$obj" &&
+> +		test_must_fail git pull --no-rebase origin sideA sideB
+> +	)
+> +'
+
+The "test -f" there smells more like a debugging aid for this test
+than making sure the fixed program works as expected.  I wonder if
+it is simpler (and more portable to non-POSIX environments) if we
+replace the "corrupt $obj" step with 'rm -f "$obj"'.
+
+Thanks.
