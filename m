@@ -1,111 +1,102 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6106C3D567F
-	for <git@vger.kernel.org>; Tue, 15 Sep 2026 16:25:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A254B2056
+	for <git@vger.kernel.org>; Tue, 15 Sep 2026 16:41:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789489537; cv=none; b=NJNplXyzR2OjEOiczQmeKPWQrEnCKRhXQD55WKAfHHSvKNVfSUiDhjKM12vlGNs8dUF15LXJxlf+VS/swqsQThiFlGfgQhDBSAw3Uwt1P/eqyHZRYm5fKHQZwvoZv7SR8mqr1Q0bxIAf9cPKec4MutrlfTeV43Pq2hw6aWqwsjM=
+	t=1789490493; cv=none; b=I3K03tJ7RE2eTgoq9i902TwAQD2QRyVEfsDvFkbM0pw9vt6e7IkP81oi4udGzQsRV6Jge6SU5WRqteaHyUQWmgD4vJRfHyXESNpC+9Xz6RoaNWCCJ6n8cjHuU+6JH4wU6a3KuEjSthlBeNcB7z3nxi/OKAlAbqYFW392XycLOjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789489537; c=relaxed/simple;
-	bh=dJsqMPQN3ngYG5qZTgXyqqu7b6/sT+NEqi5kfg59e/I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Jc0GWNQW6knjPaORJt8MNMCZ9nLdQGbqdfqhs1IeRCHxlo9SCVki9e4F9dzIl6Ol0v2zR7THrH2oaTeZ4RRtImzL8twkrvTSDFyxRNsIMFX71CQ3kG/leY5W8r25zOkua/loSHEOGK+b4hHlGH7WpJ8UYAcONKfkFdUfP61MFkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gluV725z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wUTSMDab; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1789490493; c=relaxed/simple;
+	bh=UfFkf3LpwggFfMVRbW23la458ajIq3bUK62/P83TVYo=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=HTJdcaJqpap2NkHY4Y/aXfd25d6rYG7BWZ4IyC8ItOsmGjSpaKXCmln1v8trjqLVXl1RTQM5kNOyyzLhFUFPYxlFLxVfs1F4tmWvhMgdZvACVZooMFSCQoCxkE6SuBjG7RQGMawbV76y3D/BtVXbNsJpOBYFi0yl06Hr6MHV3rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WuDGA6pv; arc=none smtp.client-ip=74.125.224.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gluV725z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wUTSMDab"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 387BA1D00233;
-	Tue, 15 Sep 2026 12:25:34 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 15 Sep 2026 12:25:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789489534; x=1789575934; bh=pJ1HpEJv5Z
-	YWDuMhWJD7eL9U8DBjhCNX2+dUPOuiHz8=; b=gluV725z0VslOCjKu6Wrb36Sre
-	r5trkxe7WXMAkci07wzxGIcrbtzDU6H46doN98BiyQBaBMSippJLZLHjFBI1gbjG
-	E9RWBNaZ2fuHtEkd8pF/MWwBQ47UFTuqC8pXUTLT01T2mg5bYEkJj7v82kgAQcFc
-	07KVBSbhWWaER/jxhHcnT5SIc9fqKI690hfXx/1ThBo2QCgDlGKqoXMSjozEuXOg
-	5xKG5kACeLsWE9I8LjIJtsaU+eiesQkJ2Xo2W9i5Et1Q5QyIpx5RRZvFUmHivx10
-	pkG6xpRe2j4QFKcg1YZTazjQ/SznSjrR4xDXJ/TIFiDEdEWoZIpTTjJ/cFLg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789489534; x=1789575934; bh=pJ1HpEJv5ZYWDuMhWJD7eL9U8DBjhCNX2+d
-	UPOuiHz8=; b=wUTSMDabgZpCj/O41zOpwBLZcHnCbVBpTnj0lGa0HTMJ2tjiy4/
-	9Z+BpC9aUj1aeTuyfueFTQludVGMbPg6Dx/8zfSUJGUKgfzwlyU9QRlO43YJWNUm
-	+wlJPLUrfHTWpuA8u7RybXU6BViygSwxI3ai3V/ko1ciqaPRAMW8vBdK2UUuU7BX
-	eY7Ckj0faGRPqEdrrDJNOx5CefL3UAxBZRYGD2wh5EesvC6B/ufYXNSZI6bgx5Xp
-	z36F4JpxZEmqBvXYhvUJsHEbIkLZorIo9K5hd5UKzJg6UY3HPx87Mnn32uVaOmd5
-	Uv1Dxunf2KDGDWam1GFVQ45dhLVeGx12/eA==
-X-ME-Sender: <xms:fXGpat2jhwUS8MTKsWF1aQo7pI-fHCcLnEfy98LLh5xUk88vuZsvUQ>
-    <xme:fXGparET5FBybHJV_umgdgcQhhlwcqeWld6MAxAEq1eOK1NXeFnvHxXDYMpfBSnL5
-    4JkbDl0VxW01NCgJRO3ayjxULvJ0wLPsfrBxZepT5OfP4QvXy50Dw>
-X-ME-Received: <xmr:fXGpai52422uXVseqZtmefyiy8Qnzl1Li30R8iq-KzXkAFdHkYGc71eZQpD-lrTpAgsiTUPAGwHOjhJIpoqmesVp3ztfDBG4bVbX>
-X-ME-Proxy-Cause: dmFkZTESWEpRvZFS2kx6B7tO1kLxmTy31V3FARIORbMcTZay4ap2PbxQEUsz9NVk70y1sP
-    lcWpDBzxbi9uCbHi0q5LoIwIVosFQgx1ktR5AqSUu3AXOrjXvh5qD75OW6RwK5G09Mx0Ji
-    HFTO10uDPPl22iDa3jdlMcEUbbKqm1fJsLjMx77qenxq4u874xWUt0i1YeDaoYAX4rxl6p
-    f/RGB9T7ILlMXBAQMzDU/iqWwW6xhCByUY7ytc62I0Ah0KGt1x0N/6I4qHghwNMMI5LU4m
-    rZqXsxXbKmRgceRVHaU8GZfSmPFGcab2AijSrwyD8giCIDvf1YZnMa0xPvz+jnGoBqPJHg
-    URspHA/s0QDjFiOUfruMyv1NgEfMfucG56DchwDZMPoVM7dQrMTncR5LrnkADUfHiCQqx1
-    mUnhxFlarzGyA9aPt+60oB98WAYQC/rXWPe6R+4pDaa5QMUIGiQgJobcey+h+ZG4DM7U/W
-    OmMCPcUwTRnCHIealbd5FlBrldEiMt7HcU48gQPR3OqH7ggXmdunrfYdQjQTE6uTAqjbQ1
-    bsuSG4xrQoxIMFdQnXL3JFLycVWaO7WZ44ArBNXXBb68RNSHBUrLUL/PSKuY47KbWxmf44
-    D5GxyecuX+RRQRDrKjGE7yJjEHULXUc6odKl6DRYNzNu/vrYzxL+go7A4BIg
-X-ME-Proxy: <xmx:fXGpapuzjtXROemX35_ZNGaqjbigOIPeR4L0k3od8JkakwCqCVoS6Q>
-    <xmx:fXGpar7wRM3aqUSKMouJqzn4YJEZUPPSXnzYiIiCngMeoVyesjAEqg>
-    <xmx:fXGpasWCY1i95Fp0sD1zQWUzAoLh2yP3N8ACJHL0d0rxeKJCmkgK2w>
-    <xmx:fXGpal-_YvXRbbU09sB8ypxt25MS8QAPx3EYWYZsu8c5rgeE1at-JQ>
-    <xmx:fnGpah2oGHsN0-k-6zBdkW3TDZGOLY-qElPqguK2fyMSdkHH6_eMQZxK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Sep 2026 12:25:33 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Todd Zullinger <tmz@pobox.com>
-Cc: =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] doc lint fixes for pack-refs and refs
-In-Reply-To: <20260915131036.393249-1-tmz@pobox.com> (Todd Zullinger's message
-	of "Tue, 15 Sep 2026 09:10:30 -0400")
-References: <20260912191509.844954-1-tmz@pobox.com>
-	<20260915131036.393249-1-tmz@pobox.com>
-Date: Tue, 15 Sep 2026 09:25:32 -0700
-Message-ID: <xmqqpkye1nyb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WuDGA6pv"
+Received: by mail-yx2-f12.google.com with SMTP id 00721157ae682-85d43f9b11aso6961007b3.1
+        for <git@vger.kernel.org>; Tue, 15 Sep 2026 09:41:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789490489; x=1790095289; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=UfFkf3LpwggFfMVRbW23la458ajIq3bUK62/P83TVYo=;
+        b=WuDGA6pvvKXu8WD3UAawMjviAHLGdb4EtUOeckcfXUb6ptWhTA+LgCGjY560rGaKHx
+         Vu7WRJI6K1X4esGnf/FNRtMTMiDVa0gUcCx5fjWjcoKjISy1W3YOekuhBdlj1g/xeYZY
+         omjRgkHvYUm/5/PCVn4oJJYPnSYOe0yZeWa0B8vTrlxFp6h63AFmPOVUGsdfIldsxBC0
+         kMiOZlh90RZ415l1vmY4Jt2S9dkF2habmkaHLp1gocXzDE/Vtpo9CjIKE2Gk+dzZDdV1
+         bggLtaBgPy/Y58pC65PrnKqMKjNz8MZXtbClzLpV5gg3Q638KGARnyfsImGaCQ0aMOG7
+         UDSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789490489; x=1790095289;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=UfFkf3LpwggFfMVRbW23la458ajIq3bUK62/P83TVYo=;
+        b=GZX97mvmMlmOWfG51vY8VpIrwhqLqXyaDk0PH6cvq/Hxe3YDXHIPTU3mznnWroNA+V
+         ntzsERMwfvQKJPmd0Wdd+f1c1bq/wRFFNwK1VMcih/1pVQWMGaQd5VqywVhg7M6JIWzl
+         mA5UVzEqrJfv9r+iy6YGQZkIH0haWoqfIQUCjxR3WwuVtSirLM2la9vmOteggJ50XKHI
+         SNRJDaPurE6oig9qQFX7uVPuQbDi4b1dEZEs7/5wvm1lBCoS7X4nksSr6Rk1DbA+PQha
+         QpCMpfCt87udQvhkHoT5dVG/CZ6WpXlMO+lOAV6YymGRzBUR2U6dXSMC4TlfTeKb2tFM
+         /kRw==
+X-Gm-Message-State: AFuF++mdp6IHqILbuRd2ZB8TGMDMyyGjEg+F4s2+asmjGExbI4TT6LMU
+	+YXJl5vQtecyaPsnTqwXZETW4gOmSIuHUnbrlLZ1l981medMd/XYdPuKKEeqLg==
+X-Gm-Gg: AYBFou0MIg+/X6udOiaGbLO1xdgUfJtZ3Az4zz3eEQ56kEeNN3SCfZCjLItoyxHP6ow
+	QqpO6204MG+RnFfXfyyjjYBZE1jOWKuzRI1nKc1kP5clM/cH23xzAZoCIHe5kL82biGq0JBWZIL
+	NdDT3gQwwgY6BA3y6YBi/tk6ood4ETwOiqyo1Bdltczluq4BmVTnMBlfbP5iTPN3CMG7kE+MAXi
+	7s+V9vh82hpSdb1piFXFWJAOpPbgi7YwuYO4GDFE3IyeoB5+Bhtb0KpauUOMug5YI67t7yIXHk8
+	QIjuogIu5qnSXdLEVMEaFebIVrik+1S3CnOGdFUULhNRb7RE+dA55sOUX0H78yg9kmZEqSDJLEx
+	bC8tYpTF9mAYXmGLK5VAjLVy240z47sXw9h6Buiuk4mTOFldOa+1UPKFIsLYO8gZKAuMAtfuaGd
+	19W0R237U0JvzMgr5YsNnrvC566eF0xVt0MIuNu7ea0nSQ7mWARVcCxD7j5jdogfxp4GiC6rDjc
+	5ZL0PTJKmNqpJwaKw+NuXLzwHCYscnpOgsgfHXxC0ru1V5/hcPB7Npg2lV1YQuKi1I51ItdQ7hQ
+	/i25smcQlmZdgm1kOIMbi4zqpritlUn4lALo+BkZbf1NDcUD
+X-Received: by 2002:a05:690c:16:b0:873:5ddf:d874 with SMTP id 00721157ae682-890f5afa6afmr7817557b3.63.1789490488731;
+        Tue, 15 Sep 2026 09:41:28 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:9092:700:4c98:2196:42e8:e905])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-88f90aebca5sm8478547b3.0.2026.09.15.09.41.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2026 09:41:28 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: Bug!?: Refspec '+' should be same as '--force' but is not
+Date: Tue, 15 Sep 2026 12:41:17 -0400
+Message-Id: <DF50C11C-44E1-4BEC-A446-8C27F165478F@gmail.com>
+References: <1bcb043e-e744-4e01-8569-4da5669d25fc@carneios.de>
+Cc: git@vger.kernel.org
+In-Reply-To: <1bcb043e-e744-4e01-8569-4da5669d25fc@carneios.de>
+To: =?utf-8?Q?Andr=C3=A9_Kie=C3=9Fling?= <akiessling@carneios.de>
+X-Mailer: iPhone Mail (23D8133)
 
-Todd Zullinger <tmz@pobox.com> writes:
 
-> I was reading git-refs(1) after noticing it learned some new tricks
-> in the 2.56.0 release notes.  The formatting stood out because the
-> first two commands, migrate and verify are bold (in the man pages)
-> but subsequent commands are not.  The HTML is similarly affected,
-> with those commands colored differently than the rest in our online
-> documentation:
->
->     https://git-scm.com/docs/git-refs
->
-> This is due to inconsistent backtick-quotes.
->
-> As git-refs.adoc includes pack-refs-options.adoc, I updated it to
-> consistently use backtick quoting and converted the only other file
-> which includes it, git-pack-refs.adoc.
->
-> Changes since v2:
->
->     * improve wording of pack-refs commit message and change
->       "configuration key" to "options".
+> Le 15 sept. 2026 =C3=A0 11:33, Andr=C3=A9 Kie=C3=9Fling <akiessling@carnei=
+os.de> a =C3=A9crit :
+>=20
+> =EF=BB=BFHi there, think I found a bug...
+>=20
+> In https://git-scm.com/docs/git-push I find:
+> > The + is optional and does the same thing as --force.
+>=20
+> The fetch documentation refers to push for the details of <refspec> so I a=
+ssume, the statement also holds for fetch refspecs.
+> However, this is not true:
+> When I run `git fetch origin --tags --force` it will force update tags tha=
+t changed on remote (as expected) but will NOT delete local tags.
+> When I run `git fetch origin` with config set to `remote.origin.fetch =3D +=
+refs/tags/*:refs/tags/*` it will delete my local tags as if prune was set.
+>=20
+> I'm using Git 2.54.0.windows.1
 
-Thanks, will replace.
+I think this behavior is described in git-fetch(1) in the PRUNING
+section. It=E2=80=99s a bit opaque to me :) Still, you might take a look
+there and see what you find.=20=
