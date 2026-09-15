@@ -1,354 +1,144 @@
-Received: from mail-ej2-f12.google.com (mail-ej2-f12.google.com [74.125.228.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E813BBFAA
-	for <git@vger.kernel.org>; Tue, 15 Sep 2026 14:25:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.140
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789482321; cv=pass; b=cJRaSEEkFJDb+9fiyHOKfV6QLAvbPX8m+qLWCyl7g2X3F46MKkBQTpzgI8cg9qEJsh/0p+IBbeGip0hWw8X3wQLnDRUHATrBZ1zMNfPQ4fq22JuBKe4iNXadQptNg9rKEZW5OqZpftE5aPjZaQDAxa2uRR5otOkQSfXRrnzXaZE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789482321; c=relaxed/simple;
-	bh=AWXnuIz2WygQdcuaazySplK8+phpUvQ6AJPbSd+Jrco=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pzes1RswuElYf18mY8xr4xW4URNhI2slyy7pTr6GJUAC5IvN6Kz3JSK7y9rUb/LqnepbfJbbQNmsB6tcDMUnch+GVQ4EMt/tWuOQfsrazNripDsFduMDnhUKkouGl/DIdfTb7dU0rHDeQ5PVHqH72D1dx/1naZJXrAPDKi5+wr4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pierre.co; spf=pass smtp.mailfrom=pierre.co; dkim=pass (2048-bit key) header.d=pierre.co header.i=@pierre.co header.b=EHYZJQSU; arc=pass smtp.client-ip=74.125.228.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pierre.co
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pierre.co
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09E23D5C3C
+	for <git@vger.kernel.org>; Tue, 15 Sep 2026 14:41:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789483312; cv=none; b=m+MvC6EyPmJ5gVoZScCuIBgdWh1MxVonMp5yHa5di5tYMWbGB9eSiJNsHTm2iBOHd9plQkk1YMuWLzN58tYDSgclTJ+fJnsIHPlY3nXc2UJKQAW1DgYI3hnuBsw67ZvUvp6CAqqpAFcQ+3RTKxe0cp/3NjMzbnf/f3u+8Rg9EOM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789483312; c=relaxed/simple;
+	bh=tiiAPqXxrCXC+z+z6skWc5qAFs/XiwStFr+ZiK/elIw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pPdUkSOH/qC7eJQo1482n+y1uqzSTk0+13pF6K6FYuJPxuTqfLeMUsYlOApo0I4IHR9xqwzpujmdSbBUjB1ltSKMoHnu+yoULTn9qjqx1qzmMB0r3Fc3Y13+34FKTCbpwhY8lgNe2pjFpDZjz+E4NOcEp06pevF13qP7GA5yVVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rGPTcwJz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=luOTq0g8; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pierre.co header.i=@pierre.co header.b="EHYZJQSU"
-Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c254f55efebso545647966b.1
-        for <git@vger.kernel.org>; Tue, 15 Sep 2026 07:25:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789482318; cv=none;
-        d=google.com; s=arc-20260327;
-        b=RW04cvOUMZs5LfRlr72nKMlqE9ufZuX/tgZf+5mPWDSL0Fn9p/SlpUImzAPN44S6ya
-         JsLwI2D+B2GWSJTsL+TRyZhAi8DbBm75boQYv0N2iDb3kzsEmGapAD4+oH/g7ujuFo+O
-         O2j0bZMZjyBIWpVoyx3Uj8haBECbEq0R8yQIcpQvxj9A8PpINuccRh8k/zaKxCtLZsbH
-         NIuVQQfFBtmv4PqvXBpjeqKrlek3zTZ4eeIygj4TEcOKqf8Dh9axEtk1+KGw4qiOqfBc
-         cDnSUmwoKgqUSx8MoKUTjdy+IY+rlIUt0MkOUS1KmGMswknHSwCDqd7QHuva3n5pVT0i
-         168w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Qqtc0ikTSLQs0OoJVaTZFuGMYoHrYekiDJqDlgnj1jc=;
-        fh=hMJsXBiRhLsba2x+1TjFWUqY1DZYbC4TAZeioTFruN8=;
-        b=WADVhjKPVkNjhw5R/vC8nK3eZFWVb6mRaJun97XVMi+xMQhyUm+EYAMWkPBRlz9aCJ
-         voI99sxsbNpO6u9FUEsZGyIftDVpJiiFZhcH4iYHaTKMSSZkriOpAHyO4sNkYOS1a8wW
-         +3VpTAc4CAw6kV6IX/RP1zTDUT7CD0koJt5XhBCptTjudWYPh7G95GJD7xBdAoB2s5Zk
-         wn1YkhEmMTjAUz5qVVeJMKm0/5up86BkTrUpwso32Tt5vb1hvbyKf3DNzMXQg5kM+vny
-         1h91dy2LedkhKxaJgxORrLSb18s1lMgZXC95obANO5ZsAVzMtCBdZy8m3E89Jkr/gT89
-         zUug==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=pierre.co; s=google; t=1789482318; x=1790087118; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Qqtc0ikTSLQs0OoJVaTZFuGMYoHrYekiDJqDlgnj1jc=;
-        b=EHYZJQSUyyGr1K1cX+Npwo4WvAdR+loQTzxduKblqsmDHaimbiLQ44s7GRRq+K7uzV
-         6xSvl/imcXDHF826stqAsk1zgmrlBUcUR8k8vWuexEWzPiKzYNStKCGDtu+qk4lTW4Tw
-         Q4ATwsZ2ZLs3QyYqVu02N2l+8Hcxf96lxJrJv/gCS8zRcCbTTPYYhkpG2t7E5M4LiIuV
-         5CWCBY47ZhTpn3j8H2tpTwDwe/CnM7Tlyd7cND4my7UnD7t0hCkNgOMnXfA/6FEvZ2sS
-         nF+heae5Kxgt557AOpZ/cRtH50svYhtdtRyZQf1iK4M0/NCZuxBFZwX7GUMyCudRafL+
-         zrWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789482318; x=1790087118;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Qqtc0ikTSLQs0OoJVaTZFuGMYoHrYekiDJqDlgnj1jc=;
-        b=koIV92tNef6HWm6bT6p5lMlRCixwjvdgvIamyb+8rmybtShF44f2wIY5zFcKWt75RC
-         5/MVtlNBQUn+/GBjbmpqpbH3BhAte953VQ2HgWFs6t6yafXdjY4ne1pIZMdUUYEDzjLS
-         C0mJXF/4CcQ4W3q+hE/PBzbaBCGqN1guWPqFkPTsPvTtFb2wyGn0NqLRUXRQKQgGuSXS
-         eBcbuH18EImcLqGkBVRYSl6MoL5iXd/v+3yf0KyLbk/NmmhAE0HbWwOzpcHZrSH2HlkZ
-         VDhM9oZUpYyUjMuLX4OyHzDlCGX27dYZAkuUYDvfKb7qUEP3vSmskLvIGosz7mhl3wJf
-         ShBQ==
-X-Gm-Message-State: AFuF++m5oM4Zm5j8fIxehgV+VCHLGkY4ALyau6uUo4XT+KRL0UqlVhp7
-	frMOJNJX/fz64Fb+S6b/FS9trnpiRz/0dsCBDI8HqhaT+FdP/igeXMUfr2bRpw9EetY7Yk2Ow4l
-	i8/fNQ/Pa42FEy83nvTS7m9lsGiFRn8ocFRUCiH0mcg==
-X-Gm-Gg: AYBFou3jvEUnO46NcKBG+fJclAQ15HkNIxz1IOKuzVShvP3Vndli2efW0l95KlQdrwi
-	GXmFuv/IsG4MCnMRjWtd2nWM8T3nch7zh+Rao8u8dQhAQejtUHgQ+198p/tqPZx9XEH8WZWL2as
-	weEVOMHOKZ7IM3PTxlTNAGVegiINW9l6wc0ffSzvVl3BlDjE9mdAb+kR8a6FpMtPM8rWwUDllDF
-	1jOVY1/3OKYMsIkGtyObtS3fDqNZrcPqdkJ0gHHh1fxQVnrY8SmBtnLYVWBS3EW5ZTj4csLY3NX
-	wgvXIl9q3B1+UsZvmC9d16PyblHvQAZnRq4jfuB3D+kFPZ7cpaFjpXiU
-X-Received: by 2002:a17:906:730e:b0:c26:2eee:ffc7 with SMTP id
- a640c23a62f3a-c29b870b484mr470943866b.35.1789482317363; Tue, 15 Sep 2026
- 07:25:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rGPTcwJz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="luOTq0g8"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7B65A7A027D;
+	Tue, 15 Sep 2026 10:41:49 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 15 Sep 2026 10:41:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1789483309; x=1789569709; bh=8BIYc8FmzP
+	F8qJ81EtigTcPT5u+Sx+4NBeB0GVY5WQg=; b=rGPTcwJzuTYvZhddPozJ9Siutq
+	7cj/ocLu2luDtkCw0t6ufzaGDzU5umW6zSGfurcxK4fI8sERUvUcN/wRYqkvz9n7
+	1sLoTlHllu3CQwoD0MMnzr6AyKDiv55azDiJOl1D9PCrgKQ0lRqcjYcD6oTDo6bw
+	5lTqtlqLpL2JFvuviZSOuUog9wtgnfNNe64MsjEriIT6/3NZbC4Q8n/MrIMXHDMj
+	tQ9hQu/0FNnmLS9/0NZieV+Wr/KGjbiCGE61ik6rqdymg7RVaWgyLWlUjfEMVIgU
+	JnXbMNZG2K+HBlXKEQi+67Xb3d2WcDo2m/0Jh9u60XJ+9eqilZ2moFeY0A0A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789483309; x=1789569709; bh=8BIYc8FmzPF8qJ81EtigTcPT5u+Sx+4NBeB
+	0GVY5WQg=; b=luOTq0g8AJNH4r0Ox3nUnLMxES7Bz7pGSiONZ00fA7VpqHVZxLS
+	y6WgCC14+rD4xEDjHszYB78SMMVoncZn2vkznsidQAeOnmUzLp5JXWxJlWR9ES9x
+	IwzhreQKtkqoWMBA62FRK1SkLj3uBSn2mhB007nN6Fz11K0QTtqucrqRXtdyM+em
+	CNd0fZB6ftGgn7KjK5ZgIY+U8HEbcDnCl7gh0ljptld1/3xhWBfT//BdFiuQtDDs
+	FaZBjj9au6mi7DvooguSkJFCW0xbhG5I45T9urSETW7SaIHr0e2Xcghv6ZNklR/N
+	6OpQyxZ1Uf+nWJ4cZF7glMrbNTpE01AISVw==
+X-ME-Sender: <xms:LVmpajDECpWjv4diPe1aBgVlyfcuXTUG_wmy0pPDhlnmWOsOnQvMWw>
+    <xme:LVmpagaPRbklsTVulXqI-xcFu_NXskErwhyFjsj_rl3x9xGLfJl1WQV5zr5uYyxgU
+    NnybgKGarAwm2H4D-9BJDr5rke9LIMVD9vUj33xWYyvXGJ7gxI4xfbL>
+X-ME-Received: <xmr:LVmpam7ctxH8IJHU8Kact1ZSNi48tP9Q8Lkq1iwwa552Gvwm3fNLSaDfJCEEJv_Oq6BTJ6CASt-cJwF1kDZYfu0NINtlslGEVd2w>
+X-ME-Proxy-Cause: dmFkZTETOS2kkBTbihxun4iNBHJGg7aUPlNlVR4LNhTGw6GS0os44xPyd3RX17hFEf2eds
+    k7v0SfWGGE58WaVJT/0doMwIVgWOkvwssTaLi9shNqfj9GSF1cLeA3mni49gYiFvl7S3zj
+    8A9+XbFWOoBft35Dn77y+NjobmZUM7Cc1gcny1/KN0UIDMe8Gm/4kI/Cf+FtuMs/V1rWVv
+    +1Ze+HTGQviluhcYNaLc17ZWfmE5RAsQR6Z3C+QGbi2KndqzGsWqNiP5e/6EJ+mu8u25Bm
+    WNkdk+KXDefYQGeBIdAM/x8+/NRkXIO2nOdNJmXOBpE2ZpqVjhYzediQ9UtYzJ9qypeWSh
+    5r9NmqFxu25J9BsOuE4AoNkPP5NY1pxG6LcpTWMaDu0LT1txbwos1ua2CGk1E0KC0PmIjo
+    bzWcduWijySxj+CWAMKeyXsfMGk9FadwqT1CSWdAyg1ElBO/pwPUOC+4MdaJdSDbEcr/XI
+    kGcl5ri0CyuMDFPaGRkP42Ch6BiC/MXmoH9h1neZ4Y2y/CmDwOFo7qeWYK/mX8r3LA8qUm
+    h10920rDNKLkmynavEQvrkG+InfrEiUd2wpiu74DHf4Jtta/pABKsGQR6mmcWXtLWUfby1
+    US+jlaIJjFHUV+0tl32bD5LRYu8URLcvFxh7VMXDbCaO2XpuiRUE1ir16rfQ
+X-ME-Proxy: <xmx:LVmpahbZXNpRrMVvigVxu8LroDAqEOhtY1sQq4MtK2wSZ7gkJYLRzw>
+    <xmx:LVmpaljv781t7FdlxWe6onucQyxYX6GxS5hZW55Ic0vpGA2DP0F5Ww>
+    <xmx:LVmpai9STjkTYLgxHFvx4EQzNolewTY7JHb9h8DvX-aNhBOSE7jh2A>
+    <xmx:LVmpagqAvJ92wwOYR-rOhI2ZBCcJs_NEWkEBJ7lAJGfJ64AvbPifTw>
+    <xmx:LVmpasoyx2Xml2HqPmY8Fw7RAJsB2bfCkf3QF4mNQnV88rj0_EdwpLYg>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Sep 2026 10:41:48 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v3 01/13] parse-options: allow for hidden aliases
+In-Reply-To: <c5266fff-8247-48d2-9679-3fc1f649cf34@gmail.com> (Kaartic
+	Sivaraam's message of "Tue, 15 Sep 2026 15:02:21 +0530")
+References: <20260909-b4-pks-unify-ref-storage-format-v3-0-ca041fb40ad8@pks.im>
+	<20260909-b4-pks-unify-ref-storage-format-v3-1-ca041fb40ad8@pks.im>
+	<CAOLa=ZSh_H9tjnjEsRrmGXm1Ht+3a=gRaGibO6BKZvvkEabesQ@mail.gmail.com>
+	<c5266fff-8247-48d2-9679-3fc1f649cf34@gmail.com>
+Date: Tue, 15 Sep 2026 07:41:47 -0700
+Message-ID: <xmqq1pau37bo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <ap-KYtsDXXwbBzDM@com-79390> <eef33827000cf106544174ed000129c2989af1cd.1788851232.git.pia@pierre.co>
- <aqAkfGZtLJ97nG1m@com-79390> <CAOWp8q6uCcVL-0cLxvf-ncydSiapheYTDnFhom3CnKiMWyfJ=w@mail.gmail.com>
-In-Reply-To: <CAOWp8q6uCcVL-0cLxvf-ncydSiapheYTDnFhom3CnKiMWyfJ=w@mail.gmail.com>
-From: Pia Park <pia@pierre.co>
-Date: Tue, 15 Sep 2026 15:25:06 +0100
-X-Gm-Features: AcwNN1UVXlzYnQ_B5FFwSwtSjqFLlQa_RzsoG-c5Ow0hKXY57FRFhB_7oIYAKGg
-Message-ID: <CAOWp8q5UqPrJQosjypdcq=KX1TKcVenAOoZUYfTBDKbRUwazTw@mail.gmail.com>
-Subject: Re: [PATCH v2] midx-write: skip writes with no object entries
-To: Taylor Blau <ttaylorr@openai.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi! Just following up on Stolee=E2=80=99s suggestion to return silent succe=
-ss
-in the no-pack case. I=E2=80=99m happy to prepare v3 if there=E2=80=99s agr=
-eement on
-that approach.
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
-I=E2=80=99ll also be at Git Merge in Lisbon this week and would be happy to
-chat in person if there=E2=80=99s a chance :)
+>> Perhaps it doesn't make sense to add flags to OPT_ALIAS() at all?
+>> ...
+>
+> Just some food for thought. There are a couple of other instances where 
+> we are currently using OPT_ALIAS to represent the deprecated variant of 
+> an option. They are:
+>
+>    1. `--recursive` is a deprecated alias of  `--recurse-submodule` in
+>       `git clone`
+>
+>       cf. bb62e0a99f (clone: teach --recurse-submodules to optionally
+>       take a pathspec, 2017-03-17) and 5c387428f1 (parse-options: don't
+>       emit "ambiguous option" for aliases, 2019-04-29)
+>
+>    2.  `--negotiation-tip` is a deprecated alias of
+>        `--negotiation-restrict` in `git fetch`
+>
+>        cf. 1a445fc60b (fetch: add --negotiation-restrict option,
+>        2026-05-19)
+>
+>        Note: The documentation clarifies that --negotiation-restrict is
+>        the preferred variant but does not mention about deprecation.
+>
+> Since they are not hidden, the deprecated variants still show up in the 
+> help output of those commands. So, we appear to be doing fine with a 
+> public alias so far. So, may be it is not a big deal if we expose the 
+> deprecated option publicly?
 
-On Tue, Sep 15, 2026 at 12:40=E2=80=AFPM Pia Park <pia@pierre.co> wrote:
->
-> Hi! I=E2=80=99d like to ping on Stolee=E2=80=99s thoughts on returning si=
-lent success on the no-pack case. Happy to prepare v3 if there=E2=80=99s ag=
-reement on here.
->
-> Plus, I=E2=80=99ll be in Git Merge Lisbon this week and would be happy to=
- chat in person if theres chance :)
->
-> On Tue, Sep 8, 2026 at 4:06=E2=80=AFPM Taylor Blau <ttaylorr@openai.com> =
-wrote:
->>
->> On Tue, Sep 08, 2026 at 12:10:16AM -0700, Pia Park wrote:
->> > Return success silently. Empty-object writes already return 0, includi=
-ng
->> > when --bitmap warns, so preserve that exit status for existing callers
->> > while omitting the warning and empty MIDX.
->>
->> I think that this is OK, and it matches the behavior of other builtins,
->> e.g., running "git repack -d" twice in a row such that the second
->> invocation has no objects to pack. However, I think that if we want to
->> make this case return successfully when no objects are present, we
->> should apply the same treatment to the case where no packs are present.
->>
->> But I want to make sure that others are on the same page. I would be
->> curious to hear Stolee's (CC'd) opinion on whether returning silent
->> success in both cases makes sense.
->>
->> > diff --git a/midx-write.c b/midx-write.c
->> > index 8537102254..3038bbfad2 100644
->> > --- a/midx-write.c
->> > +++ b/midx-write.c
->> > @@ -1617,9 +1617,8 @@ static int write_midx_internal(struct write_midx=
-_opts *opts)
->> >       }
->> >
->> >       if (!ctx.entries_nr) {
->> > -             if (opts->flags & MIDX_WRITE_BITMAP)
->> > -                     warning(_("refusing to write multi-pack .bitmap =
-without any objects"));
->> > -             opts->flags &=3D ~(MIDX_WRITE_REV_INDEX | MIDX_WRITE_BIT=
-MAP);
->> > +             result =3D 0;
->> > +             goto cleanup;
->>
->> Looks good, though let's make sure others agree that this is the right
->> approach. If they do, I'd recommend changing the no packs case to also
->> return zero either in a small preparatory patch.
->>
->> > diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
->> > index 68143cb5b7..c239a87d10 100755
->> > --- a/t/t5319-multi-pack-index.sh
->> > +++ b/t/t5319-multi-pack-index.sh
->> > @@ -54,6 +54,41 @@ test_expect_success "don't write midx with no packs=
-" '
->> >       test_path_is_missing pack/multi-pack-index
->> >  '
->> >
->> > +test_expect_success 'skip non-incremental MIDX with no objects' '
->> > +     git init --bare empty.git &&
->> > +     (
->> > +             cd empty.git &&
->> > +             git pack-objects objects/pack/pack </dev/null &&
->> > +             ls objects/pack >files.expect &&
->>
->> I think it's fine to drop files.expect and files.actual here. Testing
->> that the MIDX write does nothing should be sufficient here.
->>
->> > +
->> > +             for bitmap in "" --bitmap
->> > +             do
->> > +                     git multi-pack-index write $bitmap >out 2>&1 &&
->> > +                     test_must_be_empty out &&
->>
->> I think it's fine to write "git multi-pack-index write $bitmap" without
->> the redirection, so that this is:
->>
->>     for opt in "" --bitmap
->>     do
->>         git multi-pack-index write $opt &&
->>         test_path_is_missing $objdir/pack/multi-pack-index || return 1
->>     done &&
->>
->>
->> > +             git multi-pack-index write --incremental --bitmap &&
->> > +             test_dir_is_empty objects/pack/multi-pack-index.d &&
->>
->> I was going to ask whether we wanted to test this case with and without
->> the "--bitmap" option as well, and likewise recommend that tthis test go
->> in t5334 instead. But such a pair of tests already exists in t5334, so I
->> think we can safely drop this hunk.
->>
->> > +             echo blob | git hash-object -w --stdin >in &&
->> > +             git pack-objects objects/pack/pack <in &&
->> > +             git multi-pack-index write --incremental --bitmap &&
->> > +             test_line_count =3D 1 objects/pack/multi-pack-index.d/mu=
-lti-pack-index-chain &&
->> > +             git multi-pack-index verify &&
->> > +
->> > +             echo another | git hash-object -w --stdin >in &&
->> > +             git pack-objects objects/pack/pack <in &&
->> > +             git multi-pack-index write --bitmap &&
->> > +             test_path_is_file objects/pack/multi-pack-index &&
->> > +             midx=3D"$(midx_checksum objects)" &&
->> > +             test_path_is_file objects/pack/multi-pack-index-$midx.bi=
-tmap &&
->> > +             git multi-pack-index verify
->>
->> These two blocks are testing normal MIDX operations that are well
->> covered elsewhere in the test suite. I think we can drop these safely.
->>
->> > +     )
->> > +'
->> > +
->> >  test_expect_success SHA1 'warn if a midx contains no oid' '
->> >       cp "$TEST_DIRECTORY"/t5319/no-objects.midx $objdir/pack/multi-pa=
-ck-index &&
->> >       test_must_fail git multi-pack-index verify &&
->> > diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmap=
-s.sh
->> > index 86beab1dae..490008d1d7 100755
->> > --- a/t/t5326-multi-pack-bitmaps.sh
->> > +++ b/t/t5326-multi-pack-bitmaps.sh
->> > @@ -305,7 +305,7 @@ test_midx_bitmap_cases () {
->> >               )
->> >       '
->> >
->> > -     test_expect_success 'no .bitmap is written without any objects' =
-'
->> > +     test_expect_success 'no MIDX or .bitmap is written without any o=
-bjects' '
->> >               rm -fr repo &&
->> >               git init repo &&
->> >               test_when_finished "rm -fr repo" &&
->> > @@ -318,13 +318,14 @@ test_midx_bitmap_cases () {
->> >                       pack-$empty.idx
->> >                       EOF
->> >
->> > +                     ls $objdir/pack >files.expect &&
->>
->> Similar comments here. It should be fine to drop the assertion on
->> files.expect, along with the content out stdout.
->>
->> >                       git multi-pack-index write --bitmap --stdin-pack=
-s \
->> > -                             <packs 2>err &&
->> > +                             <packs >out 2>&1 &&
->> >
->> > -                     test_grep "bitmap without any objects" err &&
->> > -
->> > -                     test_path_is_file $midx &&
->> > -                     test_path_is_missing $midx-$(midx_checksum $objd=
-ir).bitmap
->> > +                     test_must_be_empty out &&
->> > +                     test_path_is_missing $midx &&
->> > +                     ls $objdir/pack >files.actual &&
->> > +                     test_cmp files.expect files.actual
->> >               )
->> >       '
->> >
->> > diff --git a/t/t5334-incremental-multi-pack-index.sh b/t/t5334-increme=
-ntal-multi-pack-index.sh
->> > index f0b82b5f65..fbcc19feeb 100755
->> > --- a/t/t5334-incremental-multi-pack-index.sh
->> > +++ b/t/t5334-incremental-multi-pack-index.sh
->> > @@ -195,4 +195,79 @@ test_expect_success 'non-incremental write with e=
-xisting incremental chain' '
->> >       )
->> >  '
->> >
->> > +test_expect_success 'skip initial MIDX layer with no objects' '
->> > +     git init empty &&
->> > +     (
->> > +             cd empty &&
->> > +             git config maintenance.auto false &&
->> > +             git pack-objects $packdir/pack </dev/null &&
->> > +
->> > +             for bitmap in --bitmap --no-bitmap
->> > +             do
->> > +                     git multi-pack-index write --incremental "$bitma=
-p" >out 2>&1 &&
->> > +                     test_must_be_empty out &&
->>
->> Same comment about asserting the contents of stdout here as well. I am a
->> little confused by this test, though, since there are no packs present
->> in "empty". Shouldn't we be hitting the "no pack files to index" error
->> here?
->>
->> > +                     test_dir_is_empty "$midxdir" || return 1
->> > +             done &&
->> > +
->> > +             write_midx_layer &&
->> > +             test_line_count =3D 1 "$midx_chain" &&
->> > +             git multi-pack-index verify
->>
->> We can drop this last block as well.
->>
->> > +     )
->> > +'
->> > +
->> > +test_expect_success 'skip MIDX layer with empty pack' '
->>
->> Perhaps s/skip/& intermediate/ to distinguish from the previous test?
->>
->> > +     git init empty-pack &&
->> > +     (
->> > +             cd empty-pack &&
->> > +             git config maintenance.auto false &&
->> > +             write_midx_layer &&
->> > +
->> > +             git pack-objects $packdir/pack </dev/null &&
->> > +             cp "$midx_chain" chain.expect &&
->> > +             ls "$packdir" "$midxdir" >files.expect &&
->>
->> I think testing that the MIDX chain file is unmodified makes sense, but
->> no need to test the content of $packdir and $midxdir itself. If there is
->> a reason to test those as well, please ensure to sort them first before
->> comparison.
->>
->> > +
->> > +             for bitmap in --bitmap --no-bitmap
->> > +             do
->> > +                     git multi-pack-index write --incremental "$bitma=
-p" >out 2>&1 &&
->> > +                     test_must_be_empty out &&
->>
->> Same comment as above.
->>
->> > +                     test_cmp chain.expect "$midx_chain" &&
->> > +                     ls "$packdir" "$midxdir" >files.actual &&
->> > +                     test_cmp files.expect files.actual || return 1
->> > +             done &&
->> > +
->> > +             write_midx_layer &&
->> > +             test_line_count =3D 2 "$midx_chain" &&
->> > +             git multi-pack-index verify &&
->> > +             git rev-list --test-bitmap 2.2
->>
->> Likewise.
->>
->> > +     )
->> > +'
->> > +
->> > +test_expect_success 'skip MIDX layer with duplicate pack' '
->>
->> Same comments as above, though otherwise this test looks good.
->>
->> Thanks,
->> Taylor
+The OPT_HIDDEN bit for an option indeed is a mechanism for
+deprecation and it is not limited to alias.
+
+When an option has a clearly better alternative, we would want to
+eventually remove the old one and have everybody use the new one.
+For that to happen, we need to let people know that the old thing is
+on its way out, and "git cmd -h" is a good place to do so.  We do
+not want to use OPT_HIDDEN in earlier half of the deprecation.
+After sufficient time passes, there will be a lot of new users who
+are equally unfamiliar with old and new options.  Telling them about
+old way that is on its way out does not help them at all.  So at
+some point, we want to start using OPT_HIDDEN for such options.
+
+When nobody uses the old option, we can remove the entry from the
+options[] array, or we can keep it and use it only to cause an error
+message (i.e., "This option used to do something, but no longer. Do
+not use it anymore").
+
+If OPT_ALIAS() does not allow using OPT_HIDDEN, that is a bug in the
+infrastructure.  It does not have to block a new topic that uses
+OPT_ALIAS(), but we can leave a #leftoverbit mark to invite
+interested parties to work on fixing it.
+
+Thanks.
