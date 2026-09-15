@@ -1,211 +1,106 @@
-Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
+Received: from mail-yx2-f13.google.com (mail-yx2-f13.google.com [74.125.224.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FE74A2A5E
-	for <git@vger.kernel.org>; Tue, 15 Sep 2026 21:16:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789507009; cv=pass; b=GeANA36IGhqE9me6xok7fctp+QbNmvWGIBj3rGQK9Ts4zHD5EIognb/AaVCGz1CQ/OGZ0JLfiACueIxnhIMTLK2Y0NBHCIcnYC6LSV95A3voufz1x/t32+s2mxWx54dh3dr0MXh2lQm1tz96A8Jj5+wgJXudF/jMkjonenFj9Ng=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789507009; c=relaxed/simple;
-	bh=E3rxDOj1yZS7b0almveJChiNGr3XO+lFJ2g20htoEG0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IkkjxbykjWfvj91UwyQUkOjYjemGsH9BXQJmcIBgmWmFlctEwhQHuxoikS9APz55d8RfO7iLlJc8DGQHhz6+NrDpmI7WbxgMMo5EPX5JhvtC1+Y5/43Wx9aR8bvPOHNcHthGWYgz5Np7+6H5PZV8IADHDSrwAV8ZqP7C+Fg6ZlE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FwX71t9h; arc=pass smtp.client-ip=74.125.228.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5090331EC0
+	for <git@vger.kernel.org>; Tue, 15 Sep 2026 22:02:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.141
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789509752; cv=none; b=m3K3TcaGpzAcZqjwGjh4Wr0AYaQGTAFij0qjQttXzKzB6f78WI2jaQaiwIqGgQ74HixIYi1yao0v19KfAGM3yxMXGJccEemYanUhWNsJlynsgtpBu2N3fx+3WrZK70uh4JOdv9COUELHH/SNftGqKDt1NMKMAWZJuWlYoDnGrNw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789509752; c=relaxed/simple;
+	bh=fxpiutgLyfOuoaPX3z5u+lKvrwvn7aHPp6QZHM0hG/4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qWjcWuxXNlMEBpmQfSkpwHZ5AtslqxdWEl70NhemJRSNSxQKfs4mX5QsTEbFHqziTXpVK96+JMuY/9WlMTon9cBmsyF3zvJofZBlAh3SlsNhO9ORE3/OPQ4UcFTT6OmBMSvd961a+KeN6n2N/QZPETR1Gcf2UcUTRjhq7+bJbRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cEtYBlpY; arc=none smtp.client-ip=74.125.224.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FwX71t9h"
-Received: by mail-pz2-f12.google.com with SMTP id 41be03b00d2f7-cc1cea34ef4so267550a12.3
-        for <git@vger.kernel.org>; Tue, 15 Sep 2026 14:16:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789507002; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Prp0tFJYXUz8N1BuEV48KafQjl4gf4+7Y9/ny5NBd5N7E1kriIZ7Ormt3pFaqoTe08
-         1JKlzfZ2CSzxbbD9QQrjUvR/U+UTiWdxekMcZ+WaSgxPaoyv4JlyjvTsJnVmv7E1MpUR
-         hrJMKvmO8bfEpoljpvcQABnn/F7nalKVF+wrlTLdFuBVRTNa45RnARWmZcwP5hYM0oIk
-         nN8jIciB4cV+lr3q0VOdcR0XbpGO/vPE0AGlU2dEjGwZtbjxgI8ehGwW3/PFhKGoeUwX
-         CjekhDRGnPzboyFeSYBuQb2OKJNP7pOvC1goPEu0YlQH/gniUjVOB9GCeteZOe2fETV2
-         dmyg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=DLt3hXawaqrrykYM9RhNWjQc75ia7qYe6OGWFUyMQGk=;
-        fh=tPyVAz2hHRRK+OU1fR5ewJzzf6KzpP1ID4VCGld4488=;
-        b=fK2Z2CzMwsGcMlu3CGWnuyvXvBrmaOJxcolsTDFNMgTzAGLFFUoI1gXhlhZ2/xkjL9
-         17zs9NtVRwTy3FnKoQFxclO6utm8PtgxAd/nosG6DfziYLGEKaGtvFSw8Tawe+0jiXbB
-         yVnI3y5tQMvcewkui6vsnPSGS6UZBFqo5UVe3VGDzkQqVflP3cn9u/58NTTkO8zqo30Z
-         eTXvtuXgYQUDtSSsiPaufkvAFfJ2XvkOc1+4BOhsiCRQpvUstPAgencXNzMnMFjpDT2T
-         +pE+YWF7cZsKxrCPQ8yfuye12P/PEsJaMjcUKGUwGSYlL8wEjVfmlHzlCM3AFQWnYvn5
-         8j1A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cEtYBlpY"
+Received: by mail-yx2-f13.google.com with SMTP id 00721157ae682-8716a5baf64so2452487b3.3
+        for <git@vger.kernel.org>; Tue, 15 Sep 2026 15:02:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789507002; x=1790111802; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=DLt3hXawaqrrykYM9RhNWjQc75ia7qYe6OGWFUyMQGk=;
-        b=FwX71t9h0hLM4bm/3Rh6z5zE+NiJyxUXFOFUIYkGFtPcq2ju34H7OJnWkBXzqAdXCY
-         SkFEwCTdxUDXF4m4Y4IKFKMYH9DFR3M4Jxte22PAuQ1V/zxMV2tEj2o2OulGQnDrD2jZ
-         YD9AHhKD1puJH/OTAtl9KLr/xrA3r31Rt8RabU82/IAUycMvs87Rzbhvmeybo8gbmEEh
-         DauHFPzqadPBk30rmdfHyxsDlYpwXLLPC/IngYfm7RYXj2FKaCFssmzJ1CQk2izjpxN+
-         VfuxZaPCXVbrcvep8IJx0ITu1IKpOpnd6TKf59VnE6fJt7McBZkr3pwh85fomXIwG2S5
-         JPSg==
+        d=gmail.com; s=20251104; t=1789509750; x=1790114550; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=0qFbq4XTc/6PKP+0AB4mzYIWHZzPoknpDAF9fTBlXoI=;
+        b=cEtYBlpYqsGaNnu2rR996SRuAtcqXAoEaUat9mgCnlYtuWBu8dlnnk6EtdCa4efzhl
+         ktxQdb5XE7xXGFFhcWkiA1P8tpLP3kvKOaaFkA/saU5wDUAMNcI2HsqtTb8cX7fA5Ev7
+         1ETsE04GkzVAznLrXrQgbMEYZruz53EmK8Th1ueeAOfcq8vm1Clw7ZYrF+Mb9ftERa8T
+         Dj5hGq51FMyTOGIkzuMBR5uaagC9+a03VVnF2j2Z17nMtPM18QWH2vLwjR3ET0RiwidD
+         h1aslVMkMjPuJunugzEX7Nln/PPIRxGKyfEs3mohOqyUn2NyDVX4nPYObcslQHgEgFth
+         kkyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789507002; x=1790111802;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=DLt3hXawaqrrykYM9RhNWjQc75ia7qYe6OGWFUyMQGk=;
-        b=biTdFgHUKMR3be4i9xeDJJhg5poir56t5Q9LKmr3RioHi3JVAEMYFjlwVRWJzh90qN
-         9lJNt4X8G4euZ4NM9WamupNXsBdCWRpZmuNfR3113mLIhH6WLgPbS7bH9U0yWWehSAoj
-         3X5onzJm+z2KhgqUmB3jdq2ToQbWcyRGWxFaHCV8DUujkyB7ocpPle+AHOUbUc4VhCvm
-         86iFPBiWsDYrBAJPypd65DKxsceVF3bEMHALrly1ol+HP5Nnzvqf8x/CYUijrHpRUT6+
-         aqXs8QtPAnoNvKlFWALXY2y65F9DLlNm9kl7wb982VyGfWvNd8NoL6YmecEsmuI4kzRn
-         xHYA==
-X-Gm-Message-State: AFuF++mGqIfru+vh5kIfBkQz43xa7N6eMjf5dI+wi0tlC8LGMr3n84Yl
-	dBznEMbdLkJU7BavoiJMf262gn6JPeXQnPaq1Vi5NKzgaKqNDlrAc1ZViKDDeLGSep7oODNU5SS
-	LRqgWmFhanRDB2g1bfq0oAfS33eKD7e8bFQ==
-X-Gm-Gg: AYBFou3eA8qs5llWPa/0UAMVAYXatA5eDHR5xUSynFH6jlon6jQBWkyL5yQsM8M2tR2
-	9gxujBABlyc3XbsLcFxgy67Ey5nr5uVD+QqV6h+7xfFAX400WqsT/i03O8KapLM/fA+s7sSYEMt
-	wCIdBewQvAWI6AJQhPdiPa8b4Epva266fDakojG6R+rIrVxS4Fx3J17sXUUfFvJn7fMVhc1/zVR
-	+J/5Mk/cHxMtN2nLn7LVNK1VvJfxAPKQ8H168kWX6pFp47Fwu5jXa4sZJaOc48fKr89/qF18PpK
-	bNIgU88o0HwG2AlZ9wGOCRGnFuuSNlXTXri5vTo/APNbgmW73wnXR3fFupHiqafDNeLkl0UZk5i
-	TEHO13qMw2IIfFaT+jaNm3HALc49YcYIMEATVGYnrYcWbk+SNaDCi549TIf9wbkQsRjIWnYe77k
-	ID7KoIjn4=
-X-Received: by 2002:a05:6a21:7a45:b0:3da:f21a:23ca with SMTP id
- adf61e73a8af0-3dd5f7a9cb9mr297065637.22.1789507002121; Tue, 15 Sep 2026
- 14:16:42 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1789509750; x=1790114550;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=0qFbq4XTc/6PKP+0AB4mzYIWHZzPoknpDAF9fTBlXoI=;
+        b=v6HuDPa6bmdAogJvwN29mXHOPV5qDpsoo2NTOaRfikiQr1UlzZqtuNZht/yiVPLr1h
+         Lw1YzdnfCpRe6G7nl2lwyIxOEiuMP3HDwTuW42QUb4/3mEQVuBRPGQubT7roEwNBpeSv
+         WeW5vdn+o2D2LAoePRSqPT2MacPt1dQeFA/9dV/XRml4ss+FFBnZ8A+mloZoV1x98XDp
+         LCfWPW4flmRuM0vYLMNzOGYl4eny3VrgNDBWUpbCMNoaF9aD097FLiJaupMWIS69FGry
+         ZSu38tgiSh7LrtZerPMkqYnNmQ+vWHneWODXWVi3YphVqkHgyeTs4d4fq2gCQYNBeGpr
+         iVaQ==
+X-Gm-Message-State: AFuF++mH1fNdbQc9uKi/1o6vKm+z1BIpLHJ4isHPo8mzuzz3U48WWP7f
+	AIUz5MAbBulcNCyUXnnFjAOS7D5oP081Y9SxzRLLyoI1ifqJkRpyxrpg2XJrjljJfbI=
+X-Gm-Gg: AYBFou1BCmkmcgfgwvQLvj/Ot+2CHdQIQqQHiFIoGTWop2NOUatsdS+xA3/M6YqylaG
+	khCV3VzCwpcb4EqP7i9STyDmPGUAmGLDdQEfMctjp45hyeYY3bXpkWQMBYD5AAzznhfrKh0Bv3R
+	urV6VhEndGrVtKYcsuYuOXArsz8bpix12VVTRYHrDkSJBRtH4Lx/q/w6SiZALB/1WSfuSj/kJ9S
+	PLf8Uu4xkWY+u/mFtV5P7CHT92ZEth9zmRcI5pCryTn3lbnaGrlbsUhfr+EsGeTIu6sZtlAWRcO
+	y6wl7Xtgb7IxtU5qw4O+lWMK77uOsZa8TYjV4IeZoBmVWQ96FBZvMrWQ4Hu9vkCcL6BBsof19QN
+	GD16wOZkme4bxdu262/A7Dk/4stKJkmUM6uk+4ssSqQkAuRExAp2FwzVjDDrFqb/HRRwPHOG3cu
+	8d1qHUprXxti9xpni/G2fL8GuOTnMyuhlzKP5yX1r+qV/NGpnEhRMma3NAI/RDni2Q9wjPRus5N
+	S6WF2MBZWJ/97LagjVBs7xl2/s54OZUJKWlwZkf1BDm0vagGWH2LvVVH18CCzpK2bIXA4c+rdpO
+	/eU679NJ/a13ryC4wR90vKe3mRP4V2OjRuOqjfsoIvBtGPsCNA==
+X-Received: by 2002:a05:690c:6d82:b0:873:5bb2:6c26 with SMTP id 00721157ae682-89228add246mr1340547b3.45.1789509749543;
+        Tue, 15 Sep 2026 15:02:29 -0700 (PDT)
+Received: from localhost.localdomain ([2603:7002:a00:5733:a91f:bcfb:6325:9373])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93b81cefc98sm58345585a.33.2026.09.15.15.02.28
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 15 Sep 2026 15:02:29 -0700 (PDT)
+From: Andrew Pleeter <andrewpleeter@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Jeff King <peff@peff.net>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v8] var: support broken-down idents, signing key, multiple args, and -z
+Date: Tue, 15 Sep 2026 18:02:28 -0400
+Message-ID: <20260915220228.42819-1-andrewpleeter@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <xmqq33va1lcg.fsf@gitster.g>
+References: <xmqq33va1lcg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALO-guvbk2TcrVwzdNQ3yRpzHr0HHZ3h1wite0Xp0sUyAT4otA@mail.gmail.com>
-In-Reply-To: <CALO-guvbk2TcrVwzdNQ3yRpzHr0HHZ3h1wite0Xp0sUyAT4otA@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 15 Sep 2026 17:16:30 -0400
-X-Gm-Features: AcwNN1UTCwVTVVOpFxV4580Nq_4eI0eBqn-YTj-mQTzBFepXo013AW-w0FBJ8_M
-Message-ID: <CALnO6CCkq7mjBUKxOYcwKX8=SrH441FuWopoGZutPk99JRTGUA@mail.gmail.com>
-Subject: Re: [BUG] stash.index=true leaves a redundant stash entry after an
- autostash fast-forward
-To: Eli Barzilay <eli@barzilay.org>
-Cc: git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Eli,
+Hi Junio,
 
-Since I added stash.index configuration, thought I'd take a look. I'm
-out of my depth, but let's persevere anyway!
+Thank you for the guidance, and I sincerely apologize for the lack of
+communication. I had posted replies on the GitHub pull request and did
+not realize until now that GitGitGadget does not mirror PR comments back
+to the mailing list. I certainly did not intend to be silent or ignore
+your reviews.
 
-On Mon, Sep 7, 2026 at 12:47=E2=80=AFAM Eli Barzilay <eli@barzilay.org> wro=
-te:
->
-> Disclaimer, the following is written by an agent, but the bug is a
-> real problem that I have.
->
->
-> With stash.index=3Dtrue, an autostash that is applied successfully is
-> nevertheless stored as a stash entry, and deleting MERGE_AUTOSTASH
-> fails.  A staged change at the time of the merge is required to
-> trigger it.
->
-> Reproduction (independent of the reporter's configuration):
->
->     #!/bin/sh
->     set -e
->     export GIT_AUTHOR_NAME=3DA GIT_AUTHOR_EMAIL=3Da@b \
->            GIT_COMMITTER_NAME=3DA GIT_COMMITTER_EMAIL=3Da@b
->     rm -rf /tmp/gitbug && mkdir /tmp/gitbug && cd /tmp/gitbug
->     git init -q -b main up
->     cd up && echo a >u && echo z >z && git add . &&
->         git commit -qm base && cd ..
->     git clone -q up dn
->     cd up && echo more >>u && git commit -qam up2 && cd ../dn
->     echo staged >>z && git add z          # a STAGED change is required
->     git fetch -q origin
->     git -c stash.index=3Dtrue merge --ff-only --autostash origin/main
->     echo "--- git stash list:"; git stash list
->
-> Actual output:
->
->     Updating 34a5e40..84ccd9d
->     Created autostash: 71d4617
->     Fast-forward
->      u | 1 +
->      1 file changed, 1 insertion(+)
->     Applied autostash.
->     error: cannot lock ref 'MERGE_AUTOSTASH': unable to resolve
-> reference 'MERGE_AUTOSTASH'
->     --- git stash list:
->     stash@{0}: autostash
->
-> Expected: the same without the error and with an empty stash list, as
-> happens with stash.index=3Dfalse (the only change to the script).
+I completely agree with your feedback. Packing all of these features into
+a single commit makes the patch difficult to review and overcomplicates
+the history.
 
-I can reproduce this locally. Thanks for the helpful script. For some
-extra tweaking, I've put a "PATH=3D=E2=80=A6:$PATH" assignment at the top t=
-hat
-prepends my local Git build's bin-wrappers, then put "GIT_DEBUGGER=3D$1
-GIT_TRACE2=3D$2" in front of the merge command; that way I can debug a
-few things.
+I will restructure the series for v9 into three separate patches as you
+suggested:
 
-> Analysis
-> --------
->
-> Merge keeps its autostash in the MERGE_AUTOSTASH ref
-> (builtin/merge.c:1675) and applies it from finish()
-> (builtin/merge.c:540).  apply_save_autostash_ref() resolves the ref,
-> applies it, and then deletes it (sequencer.c:4821-4848).
->
-> The apply is a child process, `git stash apply <oid>`
-> (sequencer.c:4737-4751).  stash.index turns that into an --index
-> apply, which takes the index-restoring branch of do_apply_stash() and
-> calls reset_head() (builtin/stash.c:684-691), i.e. a
-> `git reset --quiet --refresh` child (builtin/stash.c:455-467).
->
-> That reset has no pathspec, so it calls remove_branch_state()
-> (builtin/reset.c:543) -> remove_merge_branch_state()
-> (branch.c:829-838), whose last statement is
->
->     save_autostash_ref(r, "MERGE_AUTOSTASH");
->
-> which stores the autostash into refs/stash and deletes the ref -- in
-> the middle of the very apply that was about to consume it.  Control
-> returns to apply_save_autostash_ref(), the apply reports success
-> ("Applied autostash."), and its refs_delete_ref() then fails on a ref
-> that is already gone, producing the error line.
+1. Add the -z output mode to git var (-l and single-variable).
+2. Teach git var to accept multiple variables (argc >= 2) with var=value
+   output.
+3. Expose the broken-out identity components and GIT_SIGNING_KEY.
 
-And this lines up with the code, I think. I find it a bit odd that
-"git stash apply --index" ends up getting to a reset mode that tries
-to throw away a bunch of branch state!
+I will send v9 shortly. Thank you again for your patience and direction.
 
-Ideally that would be simpler, I think, but I don't see an easy way to
-do it with the existing "git reset" subprocess.
-
-I'm experimenting with something that swaps that out for a call to
-reset_working_tree(), but I don't think I've gotten it quite right for
-this bug yet (let alone run other test cases that might be affected by
-this change).
-
-BTW, it's really weird to me that the reset manual doesn't mention all
-these "extra" cleanups reset does via remove_merge_branch_state()!
-
-> Possible directions, in case they are useful: remove_merge_branch_state()
-> is about ending a merge, and `git stash apply --index` is not ending
-> one -- having stash's reset_head() avoid the branch-state cleanup, or
-> teaching an in-flight autostash apply to shield MERGE_AUTOSTASH, would
-> both close it.  Making apply_save_autostash_ref() tolerate a missing
-> ref would silence the error but leave the duplicate entry.
-
-I also thought briefly about disabling stash.index for a merge
-autostash, but that's really papering over things, I think.
-
-I'll keep noodling on this (hopefully tomorrow morning), but in the
-meantime input from others welcome :)
-
---=20
-D. Ben Knoble
+Best regards,
+Andrew
