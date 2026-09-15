@@ -1,64 +1,63 @@
-Received: from mail-oo2-f34.google.com (mail-oo2-f34.google.com [74.125.231.162])
+Received: from mail-oo2-f29.google.com (mail-oo2-f29.google.com [74.125.231.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008BA4418F0
-	for <git@vger.kernel.org>; Tue, 15 Sep 2026 23:33:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD634772A1
+	for <git@vger.kernel.org>; Tue, 15 Sep 2026 23:33:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789515225; cv=none; b=hWuGLOAyW4vadmI4C6JP2lZN41+PG9QxpRCvkZdnrCvqNBodMKy4NnSXEnkINmgnIoVMPHIJNAwlM2PGSxSlGIW3RIHHStFp2tqxx5jjQ3w+Tk8ACEsWCmnA8f+IxfQ9N7Bf22RSxDL/K6OlVnPXQUrMCMRPxzymAAOFYiOdLi0=
+	t=1789515229; cv=none; b=NZ3UiIwJM2RI4E+2Hj2J8VSAodkvXr5k7XowNGhZarpst9kBwyL22+BuzR11RK8UhKfBQhjl03i2TYmdtIyBuUkIBEPpQqJxUJt+3BPHaQau/kPndRrgINom9O5dvrUAwlnjW6CYENejHPlpfhQPZqs/Ldu6EV07sosiP6QFHHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789515225; c=relaxed/simple;
-	bh=AWN+OO2Xzs0mt1GYJKmiymzFf5qLJi57VJf/gcWJBKQ=;
+	s=arc-20240116; t=1789515229; c=relaxed/simple;
+	bh=ZopxqhEUe88i/prO4X/PJ5fu5MfCorFZarnmSoHuJeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k7E59TMh8IogeAXiVjVD+jX0LJLgw6E+gI5S59HNwP/KX50HI8waBxusRqBPKCdKf6HzcH+/9lIgIeEl912cpD1Cc6r6fxcAKGdWo2UHHgnD+ZPiLL14usParovKlB7Kp3QbIiF4fldkoDU6EX+WlefyCRewqaqnTDrmuYtzgeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com; spf=none smtp.mailfrom=tylercipriani.com; dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b=M6KvO/Pq; arc=none smtp.client-ip=74.125.231.162
+	 MIME-Version; b=ckW8s7qBkj80z/LTPE6Nvzeu3rTKpOIYLngdLfAup9MpjV9FFCy+aanU9s+e+eurUacZriV/YUX6zP/O07XMMkSoDVCsVtjT/C2DTQ0CO2VLmUb74xZAlkzqYtBGLjYDz4asktyEpeUdpyIVmrKdO1SwgdJg/VeRgdQdPxzsF3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com; spf=none smtp.mailfrom=tylercipriani.com; dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b=q/wmBO3N; arc=none smtp.client-ip=74.125.231.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tylercipriani.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b="M6KvO/Pq"
-Received: by mail-oo2-f34.google.com with SMTP id 46e09a7af769-80032c08611so181411a34.3
-        for <git@vger.kernel.org>; Tue, 15 Sep 2026 16:33:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b="q/wmBO3N"
+Received: by mail-oo2-f29.google.com with SMTP id 46e09a7af769-805cc8b4231so178759a34.2
+        for <git@vger.kernel.org>; Tue, 15 Sep 2026 16:33:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tylercipriani-com.20251104.gappssmtp.com; s=20251104; t=1789515223; x=1790120023; darn=vger.kernel.org;
+        d=tylercipriani-com.20251104.gappssmtp.com; s=20251104; t=1789515227; x=1790120027; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=4fmSwscboGQN8PVZ/HFYnJHf9LxTgjhgVSZJG44O4XM=;
-        b=M6KvO/Pq8m1mIAgFQNlzEwIQyILhgTFeVfG0m1h27228WA9zC8IprgTyNGHSq6WpQE
-         kcfEDiSgPxXANPah3kd7SEXVXFOyXRddmT7mfvM4EhOwtN2S3GxbdCWLYhWBTOS3i1eX
-         JsHClgYTNcnotMEO1jCzwhfMXze6xLk+SlWFC9o9r7hNGEw93NQpEzz9Ic/jt2breGUZ
-         lLNqP4SV+gOMyIzDEWW9WnpOySjEgfj+WJCTTSvRkLwXrOfIREVOzEZ9i5FklgL7qo7v
-         FuWSoJ1HovXoXLwHe/TxRfGBbZW73VkBlMNVz8GAE4YvGvFWwa7CTBUa1Oaxa4ScdHEB
-         zVLg==
+        bh=j17Cn//xKNZFBUsfcYOsYGMrWOuMdBInnoLQs1IqLkw=;
+        b=q/wmBO3NF2xMUXgnyHel3tDKrkNfEL/E8ufgLlJSjge//0wsWTelORrzy42VRqgzJG
+         t1oOmKTfKXwZM+SkqwMPVK9KthMwonJViQxUajjLVdkcYGXBLAF5w5QyrgUzayM2HT8B
+         4Vx1xy+f/Nm8TBOrigre6INDXoiVgigpCf/6/cBof14w9WfyzKMTI/x20Jdoh/b8jkTI
+         P8VPYeMWFvNGfdIo/etNW2T+DQm3kwsU65izfLOAe1FoLhvTxGv6ZyYn+W0klZ+Nj2kg
+         PJM0uHEtU7U2ODyOp6ZRHTH8wTt1xiX256bLADUEhDybhs2wRo44iNAQ5y3UYL/T5TEa
+         NRsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789515223; x=1790120023;
+        d=1e100.net; s=20260707; t=1789515227; x=1790120027;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=4fmSwscboGQN8PVZ/HFYnJHf9LxTgjhgVSZJG44O4XM=;
-        b=0qZjm3rQ8MdV19FNVJ/4OEuCnHIoWd5e2vk8XWtVRbagZQUcw3/eZBPguJ3Lri2Y9H
-         4TzOc/noPn+MaNMu4XHbO6g1ZE4ydkR/q9wRF/d5PDoBg3N9XOCU4hhMZCH4prV3ljWE
-         3eKVTnVwXiqs1B657ymKlp69W34TLd2mItUu/jFxJRe+hs8M6IWzw2tG0CNf2qW2uGig
-         bmAIllP2u5zMm3jAF38WECvN7+zmWzsowy9kEWy47UdlE8/OTu9G2wS1mbW0TcoJSRGN
-         rxPArYY1eqOdlEkydHmAX8Ohy+vt4zBvJ7KWg+rQnGgcSJCfDbgnvhroomjOrFsl1pSt
-         pXag==
-X-Gm-Message-State: AFuF++l0XxGkUsL+LW+bezIgcTFxNXJvpbwnIdqrfRJiD4stpKwneUtI
-	uskangQffEALlUxQa/W3M5+U5Qb8kK4btN/qeGwlKHcnt4VyH+PWQMorUvvorxkNGzzlqjdS6s8
-	u2fPdklQ=
-X-Gm-Gg: AYBFou1zw725BpUxRB7AI3yZhS0dNyrS+/QgZ0pToqetUWGZ00nlBNVIMg1lI/mIM5w
-	ZdvaoyaUQMqGKtVYRnYlE40yGq/E1OHl2UaGx+V5nDtHoNrMrkbnNbf2JB60Rux/XPpeVA2Rfm7
-	aZlVoesnQ+lLjcLfTwCgBDnXSoPrmaLvGWr5RPl2x19htzAIYX/UkvYMWyYdEbAAhDZLm7afWnG
-	LR3jLpkr572KfOFzeWpgm27wMxm1yIdyyenh+Hmej1EjMYPWT0n6vqK1faAW+BXat40luklBi0O
-	DT02vaTCWhiicAux3PKk6e8juZ7g16VyydDF+2v4DW8aIFMFPOV3gd4siexg702C6GMrxV4htyo
-	WQQmPvecS9f08nLbnm8JXdrAx/UFZ1eH09C89kD14nKqK/DsAYfXMHZc+Gz9zi3BomQnuHWK53n
-	PuzpZUJb3qZAVtISyDW634hHA5FoxxR7M0tGSZbjazh+xomATyoCFzXmy1GosAc+1hSi/oOH2jp
-	vqrAMyzFg==
-X-Received: by 2002:a05:6830:6503:b0:7e6:d0ad:5254 with SMTP id 46e09a7af769-80b2cfc865fmr1438587a34.8.1789515222684;
-        Tue, 15 Sep 2026 16:33:42 -0700 (PDT)
+        bh=j17Cn//xKNZFBUsfcYOsYGMrWOuMdBInnoLQs1IqLkw=;
+        b=O778LRPf+PGTiBnIfgvgQJYwczi5DJibZAmdBG3oQ0nDY1R3+ydAmpwdCs2BdxuViB
+         +yAKWoD21vk3NMarCEgcU+GugGIwvwPpS5cWuo79LYSTbwxTgNQEqPNN9Vfq6KE5dPs0
+         61yFDT8rNlEqOTba1axAzXLn4UXakP830zg4tyVg90/CjPDuysrmVXurCWkMrdiz8T2+
+         NNBRkRJMH0YnYTccVoIE0x0CpePcEsq4ChygvHWBX2a/vyUeG77pIGU7UHuZGjHI4nXX
+         n4yyu2+LwQ5mDpFJJ/TnjLg3cAQaXgkk2PbsFqvPVUW4A/ZFrp+4A1P4xOETTRichZ2Y
+         BurA==
+X-Gm-Message-State: AFuF++n085relBKIQc/9ACGYdIfjgp0gOdxi33gn10skk+ECt/+It0xp
+	MSnre3UnSOCpIPgY4qBV9UvFBdLqKHhKfGnnmPx2rUNYpgj/CmcoGs53GctfL8/nmwqf2XO0ivs
+	zBLV5LDU=
+X-Gm-Gg: AYBFou0hnYG7eqvgC3kYZKt6BnnM8l+B2zvt+lATxL0PMEPo/oocR1uVw9Z1kJ3wtjs
+	Z/HYVgDWGggrKPD3UriKSouR2TaLF3cQpAJf18UDnsaLamofKupDxn+i2M7heSUOHmuWIOumkIg
+	4fBgzJFMPs1aF49szvGTbtZMRXRMvjHwjlCBoUXw18zS2pbsE9a4dQ8yrpRII5wWbycsjVWJ1Cs
+	rj6UoQo0Ga6YrUSDVep3JAfY997sghdPx8h7YwueOuRVpr3NxK67THNOCG0KGTCYi7ecG2NatJG
+	jm2JCs8L7K/z3N0iHBPqJURrpcV6BDVku7n1k2VukDZsVj6deywzDuy5tIfOU+S/szH4yO4MENN
+	j9CUeNQZ0Ycom+g20FkbwqCQEyFXDo59N0ec1HKsM9b3Xlc4vAmDyVQjiwZaQpF63Q94ahkQugU
+	7OpaztHu8+fNM3ekcZ1CxTwrrpCIjWxjFaF0jvp8ti+X8tU4b9sfc8AoeFFYFM4nTu7GzgGEc=
+X-Received: by 2002:a05:6830:81d7:b0:7f8:4b8d:d93f with SMTP id 46e09a7af769-80b2c6b363cmr653596a34.13.1789515226722;
+        Tue, 15 Sep 2026 16:33:46 -0700 (PDT)
 Received: from localhost ([161.97.221.21])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-80b073c9195sm921274a34.19.2026.09.15.16.33.41
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-80b06685250sm957111a34.7.2026.09.15.16.33.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2026 16:33:42 -0700 (PDT)
+        Tue, 15 Sep 2026 16:33:46 -0700 (PDT)
 From: Tyler Cipriani <tyler@tylercipriani.com>
 To: git@vger.kernel.org
 Cc: Tyler Cipriani <tyler@tylercipriani.com>,
@@ -68,9 +67,9 @@ Cc: Tyler Cipriani <tyler@tylercipriani.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 2/3] push: fix --force-if-includes non-branch advice
-Date: Tue, 15 Sep 2026 17:33:04 -0600
-Message-ID: <20260915233305.334115-3-tyler@tylercipriani.com>
+Subject: [PATCH v5 3/3] push: --force-if-includes should allow fast-forward
+Date: Tue, 15 Sep 2026 17:33:05 -0600
+Message-ID: <20260915233305.334115-4-tyler@tylercipriani.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260915233305.334115-1-tyler@tylercipriani.com>
 References: <20260904210122.431757-1-tyler@tylercipriani.com>
@@ -83,309 +82,121 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When a --force-if-includes push is rejected due lacking reflog to
-consult, the advice is misleading:
+In set_ref_status_for_push, we verify --force-if-includes's reflog
+reachability checks before fast-forward rules. As a result, valid
+fast-forward pushes may be rejected when a force push is unneeded; like
+when the reflog is expired:
 
-     ! [rejected] HEAD -> main (remote ref updated since checkout)
-    error: failed to push some refs to '<remote>'
-    hint: Updates were rejected because the tip of the remote-tracking
-    hint: branch has been updated since the last checkout. If you want
-    hint: to integrate the remote changes, use 'git pull' before
-    hint: pushing again. See the 'Note about fast-forwards' in 'git
-    hint: push --help' for details.
+    git clone repo.git repo
+    git commit --allow-empty -m 1
+    git reflog expire --expire=all --all
+    git push --force-with-lease --force-if-includes origin main
+    ! [rejected]    main -> main (remote ref updated since checkout)
 
-But a `git pull` will not fix this rejection. What is required is either
+Rejecting fast-forwards is a mismatch with the --force-if-includes
+documentation "Force an update only if the tip of the remote-tracking
+ref has been integrated locally."
 
-- Specify the expected remote tip with --force-with-lease=<ref>:<expect>
-- Ignore the error with --no-force-if-includes
+Instead, defer check for --force-if-includes until after determining if
+a push force is needed.
 
-Add ref->unverifiable to differentiate pushing something without a
-reflog to consult vs. a remote update rejection.
+Opted to create a deferred_reject_reason in set_ref_status_for_push
+rather than move the computation of reachability or verifiability to
+winnow scope of changes in this patch. Lazily checking for reachability
+or verifiability is a valid followup.
 
-Ensure tests check the rejection message.
-
-Reported-by: D. Ben Knoble <ben.knoble@gmail.com>
 Signed-off-by: Tyler Cipriani <tyler@tylercipriani.com>
 ---
- Documentation/config/advice.adoc |  4 ++++
- advice.c                         |  1 +
- advice.h                         |  1 +
- builtin/push.c                   | 17 +++++++++++++++++
- builtin/send-pack.c              |  5 +++++
- remote.c                         |  5 ++++-
- remote.h                         | 10 +++++++---
- send-pack.c                      |  1 +
- t/t5533-push-cas.sh              | 11 ++++++++---
- transport-helper.c               |  5 +++++
- transport.c                      |  8 ++++++++
- transport.h                      |  1 +
- 12 files changed, 62 insertions(+), 7 deletions(-)
+ remote.c            | 16 +++++++++++++---
+ t/t5533-push-cas.sh | 27 +++++++++++++++++++++++++++
+ 2 files changed, 40 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/config/advice.adoc b/Documentation/config/advice.adoc
-index 257db58918..8d258980ff 100644
---- a/Documentation/config/advice.adoc
-+++ b/Documentation/config/advice.adoc
-@@ -90,6 +90,10 @@ all advice messages.
- 		Shown when linkgit:git-push[1] rejects a forced update of
- 		a branch when its remote-tracking ref has updates that we
- 		do not have locally.
-+	pushRefUnverifiable::
-+		Shown when linkgit:git-push[1] rejects a forced update of
-+		a branch when we are unable to verify the remote-tracking
-+		ref is integrated locally.
- 	pushUnqualifiedRefname::
- 		Shown when linkgit:git-push[1] gives up trying to
- 		guess based on the source and destination refs what
-diff --git a/advice.c b/advice.c
-index 0018501b7b..08842deb66 100644
---- a/advice.c
-+++ b/advice.c
-@@ -69,6 +69,7 @@ static struct {
- 	[ADVICE_PUSH_NON_FF_CURRENT]			= { "pushNonFFCurrent" },
- 	[ADVICE_PUSH_NON_FF_MATCHING]			= { "pushNonFFMatching" },
- 	[ADVICE_PUSH_REF_NEEDS_UPDATE]			= { "pushRefNeedsUpdate" },
-+	[ADVICE_PUSH_REF_UNVERIFIABLE]			= { "pushRefUnverifiable" },
- 	[ADVICE_PUSH_UNQUALIFIED_REF_NAME]		= { "pushUnqualifiedRefName" },
- 	[ADVICE_PUSH_UPDATE_REJECTED]			= { "pushUpdateRejected" },
- 	[ADVICE_PUSH_UPDATE_REJECTED_ALIAS]		= { "pushNonFastForward" }, /* backwards compatibility */
-diff --git a/advice.h b/advice.h
-index 8def280688..189eadc089 100644
---- a/advice.h
-+++ b/advice.h
-@@ -36,6 +36,7 @@ enum advice_type {
- 	ADVICE_PUSH_NON_FF_CURRENT,
- 	ADVICE_PUSH_NON_FF_MATCHING,
- 	ADVICE_PUSH_REF_NEEDS_UPDATE,
-+	ADVICE_PUSH_REF_UNVERIFIABLE,
- 	ADVICE_PUSH_UNQUALIFIED_REF_NAME,
- 	ADVICE_PUSH_UPDATE_REJECTED,
- 	ADVICE_PUSH_UPDATE_REJECTED_ALIAS,
-diff --git a/builtin/push.c b/builtin/push.c
-index 6021b71d66..679d9cee83 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -319,6 +319,13 @@ static const char message_advice_ref_needs_update[] =
- 	   "remote changes, use 'git pull' before pushing again.\n"
- 	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
- 
-+static const char message_advice_ref_unverifiable[] =
-+	N_("Updates were rejected because what you are pushing is not a branch,\n"
-+	   "so there is no reflog to check against the tip of the remote-tracking\n"
-+	   "branch. If you want to push anyway, specify the expected value with\n"
-+	   "'--force-with-lease=<ref>:<expect>' or use '--no-force-if-includes'\n"
-+	   "to skip this check.");
-+
- static void advise_pull_before_push(void)
- {
- 	if (!advice_enabled(ADVICE_PUSH_NON_FF_CURRENT) || !advice_enabled(ADVICE_PUSH_UPDATE_REJECTED))
-@@ -361,6 +368,14 @@ static void advise_ref_needs_update(void)
- 	advise(_(message_advice_ref_needs_update));
- }
- 
-+static void advise_ref_unverifiable(void)
-+{
-+	if (!advice_enabled(ADVICE_PUSH_REF_UNVERIFIABLE) ||
-+			!advice_enabled(ADVICE_PUSH_UPDATE_REJECTED))
-+		return;
-+	advise(_(message_advice_ref_unverifiable));
-+}
-+
- static int push_with_options(struct transport *transport, struct refspec *rs,
- 			     int flags)
- {
-@@ -412,6 +427,8 @@ static int push_with_options(struct transport *transport, struct refspec *rs,
- 		advise_ref_needs_force();
- 	} else if (reject_reasons & REJECT_REF_NEEDS_UPDATE) {
- 		advise_ref_needs_update();
-+	} else if (reject_reasons & REJECT_REF_UNVERIFIABLE) {
-+		advise_ref_unverifiable();
- 	}
- 
- 	return 1;
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 1412b49bc8..07accb6e6b 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -76,6 +76,11 @@ static void print_helper_status(struct ref *ref)
- 			msg = "remote ref updated since checkout";
- 			break;
- 
-+		case REF_STATUS_REJECT_UNVERIFIABLE:
-+			res = "error";
-+			msg = "remote ref unverifiable";
-+			break;
-+
- 		case REF_STATUS_REJECT_ALREADY_EXISTS:
- 			res = "error";
- 			msg = "already exists";
 diff --git a/remote.c b/remote.c
-index 887c7ec00c..b7b5ac0d28 100644
+index b7b5ac0d28..db0b50b030 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -1701,6 +1701,9 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+@@ -1669,6 +1669,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 	for (ref = remote_refs; ref; ref = ref->next) {
+ 		int force_ref_update = ref->force || force_update;
+ 		int reject_reason = 0;
++		int deferred_reject_reason = 0;
+ 
+ 		if (ref->peer_ref)
+ 			oidcpy(&ref->new_oid, &ref->peer_ref->new_oid);
+@@ -1693,16 +1694,17 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 		 *
+ 		 * If the tip of the remote-tracking ref is unreachable
+ 		 * from any reflog entry of its local ref indicating a
+-		 * possible update since checkout; reject the push.
++		 * possible update since checkout, then remember the
++		 * rejection in case the push is non-fast-forward.
+ 		 */
+ 		if (ref->expect_old_sha1) {
+ 			if (!oideq(&ref->old_oid, &ref->old_oid_expect))
+ 				reject_reason = REF_STATUS_REJECT_STALE;
  			else if (ref->check_reachable && ref->unreachable)
- 				reject_reason =
+-				reject_reason =
++				deferred_reject_reason =
  					REF_STATUS_REJECT_REMOTE_UPDATED;
-+			else if (ref->check_reachable && ref->unverifiable)
-+				reject_reason =
-+					REF_STATUS_REJECT_UNVERIFIABLE;
+ 			else if (ref->check_reachable && ref->unverifiable)
+-				reject_reason =
++				deferred_reject_reason =
+ 					REF_STATUS_REJECT_UNVERIFIABLE;
  			else
  				/*
- 				 * If the ref isn't stale, and is reachable
-@@ -2826,7 +2829,7 @@ static void check_if_includes_upstream(struct ref *remote)
- 	 * then there is no reliable reflog to check
- 	 */
- 	if (!name || !starts_with(name, "refs/heads/")) {
--		remote->unreachable = 1;
-+		remote->unverifiable = 1;
- 		return;
- 	}
+@@ -1746,6 +1748,14 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 				reject_reason = REF_STATUS_REJECT_NONFASTFORWARD;
+ 		}
  
-diff --git a/remote.h b/remote.h
-index 54b17e4b02..8e2d56c2c2 100644
---- a/remote.h
-+++ b/remote.h
-@@ -169,10 +169,13 @@ struct ref {
- 		/* Need to check if local reflog reaches the remote tip. */
- 		check_reachable:1,
++		/*
++		 * If push is non-fast-forward and we were asked to
++		 * verify the reflog but were unable to, then reflog
++		 * verification is the right reject_reason.
++		 */
++		if (deferred_reject_reason && reject_reason)
++			reject_reason = deferred_reject_reason;
++
  		/*
--		 * Store the result of the check enabled by "check_reachable";
--		 * implies the local reflog does not reach the remote tip.
-+		 * Store the result of the check enabled by "check_reachable".
-+		 * "unreachable" implies the local reflog does not reach the remote
-+		 * tip. "unverifiable" implies no local branch reflog to check; i.e.,
-+		 * detached HEAD.
- 		 */
--		unreachable:1;
-+		unreachable:1,
-+		unverifiable:1;
- 
- 	enum {
- 		REF_NOT_MATCHED = 0, /* initial value */
-@@ -203,6 +206,7 @@ struct ref {
- 		REF_STATUS_REJECT_STALE,
- 		REF_STATUS_REJECT_SHALLOW,
- 		REF_STATUS_REJECT_REMOTE_UPDATED,
-+		REF_STATUS_REJECT_UNVERIFIABLE,
- 		REF_STATUS_UPTODATE,
- 		REF_STATUS_REMOTE_REJECT,
- 		REF_STATUS_EXPECTING_REPORT,
-diff --git a/send-pack.c b/send-pack.c
-index 3bb5afc687..6b78470f37 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -322,6 +322,7 @@ static int check_to_send_update(const struct ref *ref, const struct send_pack_ar
- 	case REF_STATUS_REJECT_NEEDS_FORCE:
- 	case REF_STATUS_REJECT_STALE:
- 	case REF_STATUS_REJECT_REMOTE_UPDATED:
-+	case REF_STATUS_REJECT_UNVERIFIABLE:
- 	case REF_STATUS_REJECT_NODELETE:
- 		return CHECK_REF_STATUS_REJECTED;
- 	case REF_STATUS_UPTODATE:
+ 		 * "--force" will defeat any rejection implemented
+ 		 * by the rules above.
 diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-index 265be6a84c..38576917e4 100755
+index 38576917e4..53e241c5b1 100755
 --- a/t/t5533-push-cas.sh
 +++ b/t/t5533-push-cas.sh
-@@ -311,7 +311,8 @@ test_expect_success 'background updates to remote can be mitigated with "--force
- 		git switch main &&
- 		test_commit J &&
- 		git fetch --all &&
--		test_must_fail git push --force-with-lease --force-if-includes --all
-+		test_must_fail git push --force-with-lease --force-if-includes --all 2>err &&
-+		test_grep "remote ref updated since checkout" err
- 	) &&
- 	git ls-remote dst refs/heads/main >actual.main &&
- 	git ls-remote dst refs/heads/branch >actual.branch &&
-@@ -458,7 +459,9 @@ test_expect_success '"--force-if-includes" should reject forced update from deta
- 		git reset --hard origin/main &&
- 		git switch -c newbranch origin/main &&
- 		git checkout HEAD^ &&
--		test_must_fail git push --force-if-includes --force-with-lease origin HEAD:main
-+		test_must_fail git push --force-if-includes --force-with-lease origin HEAD:main 2>err &&
-+		test_grep "remote ref unverifiable" err &&
-+		test_grep "no-force-if-includes" err
+@@ -421,6 +421,33 @@ test_expect_success '"--force-if-includes" should allow forced update from HEAD'
  	)
  '
  
-@@ -473,7 +476,9 @@ test_expect_success '"--force-if-includes" should reject forced update from tag'
- 		git switch -c newbranch origin/main &&
- 		git checkout HEAD^ &&
- 		git tag stable &&
--		test_must_fail git push --force-if-includes --force-with-lease origin stable:main
-+		test_must_fail git push --force-if-includes --force-with-lease origin stable:main 2>err &&
-+		test_grep "remote ref unverifiable" err &&
-+		test_grep "no-force-if-includes" err
- 	)
- '
- 
-diff --git a/transport-helper.c b/transport-helper.c
-index 80f90eb7ba..1763570352 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -893,6 +893,10 @@ static int push_update_ref_status(struct strbuf *buf,
- 			status = REF_STATUS_REJECT_REMOTE_UPDATED;
- 			FREE_AND_NULL(msg);
- 		}
-+		else if (!strcmp(msg, "remote ref unverifiable")) {
-+			status = REF_STATUS_REJECT_UNVERIFIABLE;
-+			FREE_AND_NULL(msg);
-+		}
- 		else if (!strcmp(msg, "forced update")) {
- 			forced = 1;
- 			FREE_AND_NULL(msg);
-@@ -1046,6 +1050,7 @@ static int push_refs_with_push(struct transport *transport,
- 		case REF_STATUS_REJECT_STALE:
- 		case REF_STATUS_REJECT_ALREADY_EXISTS:
- 		case REF_STATUS_REJECT_REMOTE_UPDATED:
-+		case REF_STATUS_REJECT_UNVERIFIABLE:
- 			if (atomic) {
- 				reject_atomic_push(remote_refs, mirror);
- 				string_list_clear(&cas_options, 0);
-diff --git a/transport.c b/transport.c
-index 0f5ec30247..3d60d6de54 100644
---- a/transport.c
-+++ b/transport.c
-@@ -779,6 +779,11 @@ static int print_one_push_report(struct ref *ref, const char *dest, int count,
- 				 "remote ref updated since checkout",
- 				 report, porcelain, summary_width);
- 		break;
-+	case REF_STATUS_REJECT_UNVERIFIABLE:
-+		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
-+				 "remote ref unverifiable",
-+				 report, porcelain, summary_width);
-+		break;
- 	case REF_STATUS_REJECT_SHALLOW:
- 		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
- 				 "new shallow roots not allowed",
-@@ -893,6 +898,8 @@ void transport_print_push_status(const char *dest, struct ref *refs,
- 			*reject_reasons |= REJECT_NEEDS_FORCE;
- 		} else if (ref->status == REF_STATUS_REJECT_REMOTE_UPDATED) {
- 			*reject_reasons |= REJECT_REF_NEEDS_UPDATE;
-+		} else if (ref->status == REF_STATUS_REJECT_UNVERIFIABLE) {
-+			*reject_reasons |= REJECT_REF_UNVERIFIABLE;
- 		}
- 	}
- 	free(head);
-@@ -1348,6 +1355,7 @@ static int pre_push_hook_feed_stdin(int hook_stdin_fd, void *pp_cb UNUSED, void
- 	switch (r->status) {
- 	case REF_STATUS_REJECT_NONFASTFORWARD:
- 	case REF_STATUS_REJECT_REMOTE_UPDATED:
-+	case REF_STATUS_REJECT_UNVERIFIABLE:
- 	case REF_STATUS_REJECT_STALE:
- 	case REF_STATUS_UPTODATE:
- 		return 0; /* skip refs which won't be pushed */
-diff --git a/transport.h b/transport.h
-index 7e5867cffa..eaa3b616ee 100644
---- a/transport.h
-+++ b/transport.h
-@@ -256,6 +256,7 @@ void transport_set_verbosity(struct transport *transport, int verbosity,
- #define REJECT_FETCH_FIRST      0x08
- #define REJECT_NEEDS_FORCE      0x10
- #define REJECT_REF_NEEDS_UPDATE 0x20
-+#define REJECT_REF_UNVERIFIABLE 0x40
- 
- int transport_push(struct repository *repo,
- 		   struct transport *connection,
++test_expect_success '"--force-if-includes" should allow fast-forward push without local reflog' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	(
++		cd src &&
++		git fetch &&
++		git switch main &&
++		git reset --hard origin/main &&
++		test_commit I &&
++		git reflog expire --expire=all --all &&
++		git push --force-with-lease --force-if-includes origin main
++	)
++'
++
++test_expect_success '"--force-if-includes" should allow fast-forward push from tag' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	(
++		cd src &&
++		git fetch &&
++		git switch -c newbranch origin/main &&
++		test_commit I &&
++		git tag T &&
++		git push --force-with-lease --force-if-includes origin T:main
++	)
++'
++
+ test_expect_success '"--force-if-includes" should reject forced update from differently named branches when local lacks remote ref' '
+ 	setup_src_dup_dst &&
+ 	test_when_finished "rm -fr dst src dup" &&
 -- 
 2.47.3
 
