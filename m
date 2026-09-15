@@ -1,74 +1,75 @@
 Received: from mail-ej2-f12.google.com (mail-ej2-f12.google.com [74.125.228.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC9335E1A8
-	for <git@vger.kernel.org>; Tue, 15 Sep 2026 06:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F991FB1
+	for <git@vger.kernel.org>; Tue, 15 Sep 2026 06:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789452617; cv=none; b=KMvrx5DUcibjI79Ap5RzsGcA2EY4+90XWFAHOnyimw+s77mw8E5uns2vTB1hk0QZgrcl/mYtxMRTrDlF6MjpgvHKrHwrIzH7jFvi+ZL/JOfBrPKSMF46hh/nll0N4e+YnrQLKhrtbNaEp41WoZLc5giofK+Xc1j6Vl+xvCr+QbU=
+	t=1789452618; cv=none; b=D1qoundS096zB8yDE3k0rJyEXaKAfJ8pn3Vdaxq7Ip7LeVGQl9g6MkMyfsXbPsuugpEIIbDpFeU2corvOEO7g/89cQF3MQaXPOH6BvS4SJ8CXJAymSOmDcsCDKk/R19IfYSQRe3sOyBKFmKQ8M4nK+5Ag9IA2DzQ4lRNPQl8XrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789452617; c=relaxed/simple;
-	bh=OtTZDFRuWUPI5XE9NGxWjw6eqyt5JU925pMlKb0e7wQ=;
+	s=arc-20240116; t=1789452618; c=relaxed/simple;
+	bh=yX/sC3kB/tMT3q6qt0OBsLZ9tqZ+OUq/CuVrVUDgEe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p2aOR5NWkZoBujx7pt6FToPjiMWoZXe2suidlckva51nUQw96mLfhRdSN8GLMOeiX3UGMNcxkLVW99lIwxqTSVDKK4KZnkdyxc1e03Tr7QeHvh1Wz6XXuQ2n7mayDhD3im0r+38Oqwsg7AO22TmHnRErsY+1p/0NCgEwu3F8ViU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CUnxb1Cx; arc=none smtp.client-ip=74.125.228.140
+	 MIME-Version:Content-Type; b=VxtovoupQQHHQYehrBu2tzpoDSKVq29EQOK45hd24SAM2toIu4nwV1xnIA5Bl90+vhqm7ns+fnaT1hNdTVOMbp2kuTn1zUJ7gNNdK7pt/8dDtn193txfNxsfjPjuKkzFhtDk4i7Oa7pibvBhMa08n7hkRvFkEaG8ck72nrfRk70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ImdAslx6; arc=none smtp.client-ip=74.125.228.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CUnxb1Cx"
-Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c2940ff2313so210482266b.1
-        for <git@vger.kernel.org>; Mon, 14 Sep 2026 23:10:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ImdAslx6"
+Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c2940ff2313so210483566b.1
+        for <git@vger.kernel.org>; Mon, 14 Sep 2026 23:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789452613; x=1790057413; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789452615; x=1790057415; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=y4QrU+O7iWwD/h2D59FZsKeoUayCXgAqa/oL77GJuCY=;
-        b=CUnxb1Cx6ZM69jAQeWhNZ7YYppJCSLh2WZl4t0k74yteXIieyiotbk4mxYRjvCe4sb
-         mgn7MAt7LEt/sO3msuUDBVGZzY+rXZxnalBV3y7vnU78p3Er8QiERreNDwnNkR09We2S
-         gyfpUei2iZ1N1XZhDOZ7B6e+pjET4lQaCEV/yYqoT5jtmsy3jQOErUDZGotXARDQdelJ
-         Ohefriv3jo4+wU7xMi1sHFx/5KQPk6vBZ/FLCeC8aHzoYa3T/Y60AhFUOwHa4UMoAGkF
-         QQ1LiD/MdvE2aMbpS7zHmRje8uNkp54RABXfYuHfDsCtVXl0uo6jHhHSOXJKBJrTfeQB
-         CL9Q==
+        bh=pjQ1jw+Pcry5yOyKdQcVCVtQw/hIvnPEcF+7tCe4ycU=;
+        b=ImdAslx6K8QmjvzJV5CjWDwhjgMznlYEfcJSg+04NdlDQfmYO7wWu30NqZdIpzsf+8
+         YcLOD2hK/h+VUg/0yUVv9S2sn7GaoOFLlm3KC2lOzSYx1ladp42LyE+h9EJQzqVvlyFw
+         1fAd87WZiDzjo8EBI3LN6gYUwDnwJEWvy9kuLnnpdV7fnluO04i0K3FV0bWf5rgtGOg1
+         SaH6YGNUCz6Y89WEzbI0aALZIXP2CLaThScdW2CadhVwLm1KGobptHOAccrk1p/iumi1
+         LMv/lElOBaDDiegCsTqCVsnT/NI9841vwBwiiTg8e1FLRk/uNshTa87k6bobv0pa6Rm/
+         E56Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789452613; x=1790057413;
+        d=1e100.net; s=20260707; t=1789452615; x=1790057415;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=y4QrU+O7iWwD/h2D59FZsKeoUayCXgAqa/oL77GJuCY=;
-        b=i21Z2b3QE1T7yD35ATecslm9kHmDBTo6db6kh0TWynDsCX8JX9cYQw3ok+cKXYJ4hT
-         hczD/MELVOAz5EPES0TOOMMINPd1NrJMI/uUEbD6Awd5IgRgu1MFznTLFB+P13im32av
-         ZDmm2LwMQkRp6UOO96EQYI98R7BUHQlh3CbT81INOP1PeWHAYZyQuDw6Lxj1clsdvNOY
-         /J0Qx2/LW2ShLCW4oGQyiorsLhnYVvNt7XmHL92UOmmGeQb76zIQVRXInghAHR0EKNPE
-         4WSJvoLlwrIwzIgli+GJCHDveKywbxg5Eb+mW2C3xmkKm1rqUawlFqEMHkYUVpkd1ncO
-         1ePg==
-X-Gm-Message-State: AFuF++ldotJ4B5FcUvtvAEyPvMmAhHCT1ElZytd3u4rgDyFMbF4swjis
-	0/OcB4JqDMiN1LhSp69H9sZ7bpFDYZ2MrkJbgwd6gA+oIeNjDy2A6kNqTnkLWA==
-X-Gm-Gg: AYBFou2I2gagsPv3JmD6CRaSeZ/z4PT8nEY9tKdG8Y6o4Uv8dLGV8y3KI3T8Tkftl1s
-	+2dy9aNNDyDrbBFlH5ffXM66kkeBThZaEyiCzeYqV1K0tYXMVpMBMxdlDsnhnjHe258Canu0eh9
-	KiVjgFiTz3F/I6H40V+dOrtB9VwmEAH94QWOphFkTwy5GRMcTiqL6bughX7fgbkUZ1MAdcYqLmk
-	Bk4rV4mlUMJ8fBpQPtIzCVWljjknn/1/06NnULbVReOHv+myxiCcY+jp8J8BGAWaBQIsYn8P+fs
-	KL1BVjkdpHrmaoZluwU/Ovx6KSCC6YRH1+pZOnRpy5dlkOUDb2Ib/u1tl38M0JUMGd2ewBR5lLk
-	n7GCONWXc85AbuaWe+KcemqF+1G6DBA1Pi/fSgoAoxNmKpgI9HFYznnZQgGYWlE5i4D0CmMNPfM
-	NEqUBZ7w4UeIKnAk+TyboeXMUXOs7n6kNd8o1ww2NwfmBhLLf8lODliucqpD7d8/jsD3N0LB5MD
-	hmekx6DjDtwMEQB2tN/Q7NwzM5i
-X-Received: by 2002:a17:906:6a06:b0:c25:35cd:fdb2 with SMTP id a640c23a62f3a-c29c8973785mr157602966b.7.1789452613278;
-        Mon, 14 Sep 2026 23:10:13 -0700 (PDT)
+        bh=pjQ1jw+Pcry5yOyKdQcVCVtQw/hIvnPEcF+7tCe4ycU=;
+        b=PwI+1KKLGJIj09qbFG2RDpxjGtfcipi8+PFMO7fq3ZSmGcxdn5epVEP5HGkOqLnb1t
+         uYJLo+RtqAlKKTmtr1NFx8F3EbgheaqHNstjZ9/55RDsDISFZKEqdefxtuXEgI//BVJe
+         zvCOF73Tapf10+Rud+HQeMnxOwIoVASPgbswbGBQg6qp+6HKpraqOEWxoxejn+8mvMFN
+         RD0IiOXi4KAvBid/jvaKqMrXAp+L+9ODFAzEmHzSe3LCBhAtRadfk2JANuIE9zxFrvBV
+         DSrD+ZmzecJiVqj/ZrUv2t+WRU0yoxTJ+ujPTgJyF+5JnziBMw02Mw+H/URY1nUm7gVW
+         whbQ==
+X-Gm-Message-State: AFuF++lcwWqe6L4VqZ3XLgxzYZdmyBqsAQYCH5zZTnWWbaK2gayu2wmq
+	yuiHfjI9cQD8ufhp475FnGYb8N7WGCvvuH0uST6mdLOPq4vdy8dQ2THfysdm9Q==
+X-Gm-Gg: AYBFou2q0xmKk5I8NAyRdMGDx+rczmeYViTKo2KPkIL74ShB4lHrwTDi4BXvC6yXDa8
+	wln+RXqlX5+UZokOnEFZxX2xB9OX0pDBIEc2hbTnhqK8o5jNiNt+M1OXvIK108hYve/UiJ5FCeb
+	Kijf/UkTOu6z5SVJzWrFnZe9wP2SkOmLmTnowSMHBUAGZnLEj5gPIqEyACA0CD0JYKCld8zPeav
+	lnfatMpw4NCUhGLqNmYhxYpnEVTYgH94nkv67rR9Wc1EVNVo5xLUf+7MV+fuJ89eyuKcl47S85U
+	pPiml+G6zHI0j2uFRwi9Ss/DIIMrNmqB/9NJG5B1v0pp17pKVWvA1Hr+sasop9bgrFXYnEZNQZ7
+	Y1OZEOUU0nt7/owRhdpQFDMa9dfRjrbPsTo2nzAnkrwtGpo+YTqrk3HsWONOu98hNYR/S4PoVCs
+	GzJ6YGhzyI4HkLuf3fj9N79Aq0fRoDrM7/Wzf6S4r8HcY2RFdCsM0lPxJAq6VJUsr0tnP2Al6na
+	wsVaGv9R63oU4wTSxG6d1+OBHd2
+X-Received: by 2002:a17:907:3e02:b0:c24:d6f0:aa0 with SMTP id a640c23a62f3a-c29c89d1344mr186846766b.11.1789452614975;
+        Mon, 14 Sep 2026 23:10:14 -0700 (PDT)
 Received: from localhost (78-131-17-112.pool.digikabel.hu. [78.131.17.112])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c29660234e7sm516215166b.15.2026.09.14.23.10.12
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c296605c2bbsm510430866b.24.2026.09.14.23.10.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2026 23:10:12 -0700 (PDT)
+        Mon, 14 Sep 2026 23:10:14 -0700 (PDT)
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 0/4] make: precompile "git-compat-util.h"
-Date: Tue, 15 Sep 2026 08:09:48 +0200
-Message-ID: <20260915060952.569535-1-szeder.dev@gmail.com>
+Subject: [PATCH v2 1/4] Makefile: remove XDIFF_OBJS initialization
+Date: Tue, 15 Sep 2026 08:09:49 +0200
+Message-ID: <20260915060952.569535-2-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.56.0.rc0.467.ge054dd0dd6
-In-Reply-To: <20260909195006.2179119-1-szeder.dev@gmail.com>
+In-Reply-To: <20260915060952.569535-1-szeder.dev@gmail.com>
 References: <20260909195006.2179119-1-szeder.dev@gmail.com>
+ <20260915060952.569535-1-szeder.dev@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,75 +79,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update our Makefile to make use of the recently introduced precompiled
-header to make builds faster (on my setup by about 35%).
+Object files under 'xlib/' used to be listed in the XDIFF_OBJS
+Makefile variable so we could build a static library from them.  This
+static library was removed in cf680cdb95 (make: delete XDIFF_LIB, add
+xdiff to LIB_OBJS, 2025-10-02), along with filling XDIFF_OBJS with
+object files.
 
-Changes since v1:
-  - Update the commit message of patch 3/4 per Junio's suggestion.
+But the initial empty initalization of XDIFF_OBJS remained, so remove
+it now.
 
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ Makefile | 1 -
+ 1 file changed, 1 deletion(-)
 
-SZEDER Gábor (4):
-  Makefile: remove XDIFF_OBJS initialization
-  cmake: remove any "$(*_OBJS)" variables when parsing Makefile for
-    sources
-  Makefile: reintroduce REFTABLE_OBJS
-  Makefile: precompile "git-compat-util.h"
-
- .gitignore                          |  1 +
- Makefile                            | 59 +++++++++++++++++++----------
- contrib/buildsystems/CMakeLists.txt |  6 ++-
- 3 files changed, 45 insertions(+), 21 deletions(-)
-
-Range-diff against v1:
-1:  d52a1476d1 = 1:  d52a1476d1 Makefile: remove XDIFF_OBJS initialization
-2:  5d60181efd = 2:  5d60181efd cmake: remove any "$(*_OBJS)" variables when parsing Makefile for sources
-3:  0296c6cffc ! 3:  cfc77c0b2c Makefile: reintroduce REFTABLE_OBJS
-    @@ Metadata
-      ## Commit message ##
-         Makefile: reintroduce REFTABLE_OBJS
-     
-    -    Object files under "reftable/" used to be listed in the REFTABLE_OBJS
-    -    Makefile variable so we could build a static library from them.  This
-    -    static library was removed in f3b4c89d59 (make: delete REFTABLE_LIB,
-    -    add reftable to LIB_OBJS, 2025-10-02), along with filling
-    -    REFTALBE_OBJS with object files.
-    +    In the next commit we are about to precompile "git-compat-util.h" with
-    +    "make" to reduce build times.  But using the precompiled header should
-    +    not change what actually gets compiled, therefore a source file can
-    +    only be compiled using the precompiled header if the first included
-    +    header file is "git-compat-util.h".
-     
-    -    However, the reftable source files are kind of special, because the
-    -    reftable implementation is supposed to be easily includable in other
-    -    projects.  Therefore, the reftable source files don't include
-    +    The reftable source files are kind of special, because the reftable
-    +    implementation is supposed to be easily includable in other projects.
-    +    Therefore, the reftable source files don't include
-         "git-compat-util.h", with the sole exception of the purposefully
-         project-specific "reftable/system.c".  Consequently, they shouldn't be
-    -    compiled with our precompiled header, as it does include
-    -    "git-compat-util.h".
-    +    compiled with our precompiled header.
-    +
-    +    List object files under "reftable" in the REFTABLE_OBJS Makefile
-    +    variable, so in the next commit we'll be able to easily filter them
-    +    out and keep building them the old way, without the precompiled
-    +    header.
-     
-    -    Resurrect listing object files under "reftable/" in REFTABLE_OBJS (but
-    -    not the static library), so in the next commit we'll be able to easily
-    -    filter them out and keep building them the old way, without the
-    -    precompiled header.
-    +    Note that object files under "reftable/" used to be listed in
-    +    REFTABLE_OBJS so we could build a static library from them.  This
-    +    static library was removed in f3b4c89d59 (make: delete REFTABLE_LIB,
-    +    add reftable to LIB_OBJS, 2025-10-02), along with filling
-    +    REFTALBE_OBJS with object files.  This change essentially reverts the
-    +    removal of REFTABLE_OBJS, but not the building of that static library.
-     
-         Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-     
-4:  ce9fd91413 = 4:  a933be0664 Makefile: precompile "git-compat-util.h"
+diff --git a/Makefile b/Makefile
+index d4b775953d..7d9ac15c74 100644
+--- a/Makefile
++++ b/Makefile
+@@ -695,7 +695,6 @@ BUILTIN_OBJS =
+ BUILT_INS =
+ COMPAT_CFLAGS =
+ COMPAT_OBJS =
+-XDIFF_OBJS =
+ GENERATED_H =
+ EXTRA_CPPFLAGS =
+ FUZZ_OBJS =
 -- 
 2.56.0.rc0.467.ge054dd0dd6
 
