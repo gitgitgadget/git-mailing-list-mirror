@@ -1,175 +1,177 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi2-f13.google.com (mail-oi2-f13.google.com [74.125.231.205])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3086235839C
-	for <git@vger.kernel.org>; Tue, 15 Sep 2026 22:13:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8888C41685A
+	for <git@vger.kernel.org>; Tue, 15 Sep 2026 23:33:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.205
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789510390; cv=none; b=rKpymo+12CT50seQ7k4FYN7kIcsO1HDavmS2J+tbL7Y4HVppVbkFPQ+Y3O2vDwhjNGYFTyWzvOeEEGlensQ2vqTpksjyzT+K0hlx4sUfGPLkz2r7yQfR/iYSQNmTpNF/a22eoJVsWTvGQRi4PSdpJCRo6ejp7FS55WwwcRZMLXM=
+	t=1789515215; cv=none; b=o3591ncYMigRB3wrLpmCyXHtQEsRo975onqHlIni4KOYdIVAkDwMRWvO7VwVKfFEOx/GAfAJp+A4DyZHu3KDVCjGyI4VVsAKJjqYezyoX94bIO2TH2B/JBJPXpnZcoQ1hiUYC9eqaUUqolvMzEIkuPRE0/7Qtg3gvl4H7pkHjyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789510390; c=relaxed/simple;
-	bh=pDb6Tto5ukI6MYsN/hA32mcpQ+qHlMPBDFPv7+Pg1h0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=knQoO5CYngS7XyMFF6mj8+ueMMRGTMNFQKQQlGBQGKh4HJFGnXjxEYn6jGru++apD7Azr4PZk5z698EZl+hDDDFq7JjpkxHK3ttnZDaDl5MiFjo7dN1MN5O0S7xLKPHk0hiDqUSajTyZKokIKjI1O9r2Rchh+Xkxa6VCrrzaaEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NBuEJDxB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wy8eNfl+; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1789515215; c=relaxed/simple;
+	bh=nFbny1HZEAC9TRacbTlzd8FAhKwi5ahriyPLjNVUH3E=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fLebPWfcL0dGKCH/KOtyLN2xGtB5kY7W5uO+7BDcJtxVINcIwVsVNFCKu18MgDJ9PwXOfOTYUdmd5qjqSXq8ztGoVw/znav5KbIBGxxGx9UYz5dxzXfKVjECBdMTxWi1ZBmYSTXDJhlHqMxx85kAxecfefUAqhtDUmQ+Q53HZHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com; spf=none smtp.mailfrom=tylercipriani.com; dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b=auNUIVMw; arc=none smtp.client-ip=74.125.231.205
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tylercipriani.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NBuEJDxB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wy8eNfl+"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3C4947A0169;
-	Tue, 15 Sep 2026 18:13:07 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 15 Sep 2026 18:13:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789510387; x=1789596787; bh=CPhIboR/6j
-	iC/2ObCG0ETaEavKBSVmvZDKjp5GbeK9M=; b=NBuEJDxBjKlgfmR27YZZ0bpvvA
-	kWBaolG7+FJExBh/37iYLKdAyLvtP3dQQTL1WDEARtfgYCCTpoy1wrwDH+Q5m6hZ
-	90Vz6K8GRQ7rcB9G0HJpnVGmLPb+lUg5hmMeL5MkePGa9i5YEfcCVo7KNEYVC1Ua
-	r7n8aZXov9ANOLiN4EWlpSUDRcBAf/ZdXxzHQWcQJIWgao2K2AyhqXNVJicxowAs
-	A6veuHx6RgITlcjiBHWHgx2Ik7nEdDtBf0xmLTSMV7RoTs2yl5vdySMQV9dMhxz5
-	2cYheTBJR8P7Oo6F1lgzWq3zSfKDhIBOSZaYMdbuMj5HNwl8l1F3DuWs+M1w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789510387; x=1789596787; bh=CPhIboR/6jiC/2ObCG0ETaEavKBSVmvZDKj
-	p5GbeK9M=; b=Wy8eNfl+E7eO9rNLiD5YWwa+8jvBitHko67n+9PUUZVYHzi0yyi
-	tdwkG2RzaegN2yqUxTzdJD8ydKkTkvbXvuTBCtv2Imx6oaacDlV/BuHOhMFhPe6y
-	JAzYxrP8Hw3PCf6B85UN0IFIYxo8ibWVdSLmzcttFFGyLpOKMAh1ud8ABS8/Y96X
-	I7O2KKG38rAf/uuB6UM3cxsAp4bQyeX1ormZkHcSvbyYAuOGGSD+YQX6n4H9Wnq0
-	XTzpjTfleF5Gh2zu6QMtO2JOjMts/ot//buCY++y5lmisi1qbisJNpczOGlhfhLU
-	J0GKNccFVLcoo62EmLe0JWtzoYUGp4nZFfA==
-X-ME-Sender: <xms:8sKpal5HdJLQgmwQFNiU_SUAGG-u-yig6jLBzGPUwV5hCDCw3E1yWg>
-    <xme:8sKpapy9dT3xoxVV4uqCKUBENrPIMV-b099VjmMts3BukhJTHl3p7TUwYR9q4QwJ4
-    tjbe4yw6rVjCab5_3BWbVcAb8SeOzGGPz5nMxljncWnmnu_kOYuCQ>
-X-ME-Received: <xmr:8sKpakx2Xqr1Lku2PfvNSWqZcam5nqhSRBc1j3QNaOlk0-LHcV6-IObpbj32HKmSxcDZA6Hd_TgOdq-_HN4_R_xxXvo7hSWp_lMw>
-X-ME-Proxy-Cause: dmFkZTFDkK7IKjxVnr580rYUmwc2xi/xmkODdQdXti6Om7E4Aa7mmslUCFAPvNN1vZE5mR
-    xP11ZZHp0+CSS+tuj+SPBWalwGcQdiA6T61EPc7MYBlIs+vMg2Kom016gw3yHgcma/wmIc
-    BnM9oXQY4XLTHcJQdHLKlBs7wKaYGwDfI9JfWEB3S4zl696A/ySp9XXT/L1tQ+Had803nA
-    s5tvEm6sjfMoye9Fu0bjnG9gIbbKTO00F04PEqbpcK9eXJYq+0p451hNhBh3CcJIBNN26D
-    PBP/JVi2SGEuv1Q6+nAwVdV6++7G10rI24dTHXYuO6P3Rp2dA50L9dAhdH4sNLkdG3ydgR
-    7BFCVVKn2OHUYLifQ3ZviTHpgYauRqUNyUGGCmGCJxgAbG9rswRaBsUo1YnxLvvRgSpJyh
-    svpEaC3YeRiRZdc9vNWDUGNQcS/H34s+tMKyM5SlNLPNlsPG6tPieMOgI7OfjOsBGvzUiD
-    RbHi7XfvrV3L3heFH6aBjfiZtoKadcgyJ/thD/hg4h7dso4B6Hn1F21XHOGaZ6FEmqrtMT
-    4uWjz95c/NEcarvb0W3/Im9+BNb+71PJwJN4nromUxxbxzzoFad4gdao0o1mENS/Z006OS
-    TnXIuBYbBvzw6xEejpxjFf8ucaczW3EFgVjIdnTTvURMaCnO/QdVmgaok8qw
-X-ME-Proxy: <xmx:8sKpapzQMeSHgCJbU8lRdH0Inm1nYCRCc9N0hJPhE39PkzMZMALzdQ>
-    <xmx:8sKpama3h7dtfv_QlLr1Jf3wOShBCj3QChpWDwBAZxInsH0ThESFUA>
-    <xmx:8sKpaiUUk52leCoghiMihqgU4T37at0gvB-tKKacgVTGJb_tV0EgPA>
-    <xmx:8sKpasgZDjrbgaHiPIJSi_KrfMn5Ffawi42X8lL0pNaIbs35-3zetw>
-    <xmx:88KpatP0IMW7wgYS3IhELNhNK3wNVLWtLQdN4qbLaRU2pSB7zU7KLgFl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Sep 2026 18:13:06 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Jiri Kuncar via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Jiri Kuncar <jiri@kuncar.dev>,  Jiri Kuncar
- <jiri.kuncar@gmail.com>
-Subject: Re: [PATCH] pull: avoid crash of invalid merge head
-In-Reply-To: <pull.2223.git.1789252459520.gitgitgadget@gmail.com> (Jiri Kuncar
-	via GitGitGadget's message of "Sat, 12 Sep 2026 22:34:19 +0000")
-References: <pull.2223.git.1789252459520.gitgitgadget@gmail.com>
-Date: Tue, 15 Sep 2026 15:13:05 -0700
-Message-ID: <xmqqld92xixa.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b="auNUIVMw"
+Received: by mail-oi2-f13.google.com with SMTP id 5614622812f47-4c0766cbe64so216710b6e.3
+        for <git@vger.kernel.org>; Tue, 15 Sep 2026 16:33:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tylercipriani-com.20251104.gappssmtp.com; s=20251104; t=1789515212; x=1790120012; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=YcpTFNJfXj0uYld22B85sbpIvKqo1YZz0i+mj5DQCww=;
+        b=auNUIVMw5yUrG9qZfVNZB6C+Wm9MhrkJgGOgCOusOWjwMkjNUBMME24F2LEO2QHII9
+         C1nipE5h4nvvggHVqKZ2sdvcSCwJHhG8+f5owuDJfOF62gapU7U7OWn4Q502f0Ra2Za0
+         wncuMQtri6linfsGzdqiunz38a7GZtwcF4hFsu2mMFB4w2nujkFpenck1Q94jA6a7DGx
+         RigXnuVE1vqIqGHSChcOCUvSV423+NnAjwsET0jXv+ZRN/Vz1H9XcWVVY8rQKBlqZU0V
+         lqg2bRUhMkY24qgMIJSqaN6beW6PIKm66L4zqmBNqAjr+ZcefxhB4xZV1sF4+E9nCYUH
+         a1DA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789515212; x=1790120012;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=YcpTFNJfXj0uYld22B85sbpIvKqo1YZz0i+mj5DQCww=;
+        b=XFOVZ8s1ObSK+hbeidmm9QH2hA+whHMH+IFn/BkMgVyFDVILcg9DMhn59TCLO//mBw
+         nrskuZN9su4EfxiKH5ZHZvbygv2Bv8dGU6kPxOEtL7/DGLlVDgV8P9esa0Z1VxE/Uzhv
+         4ihH1gQNrHVsX8eZac7qsA+6URvdt+YxlsGD5hgFF0uVOPjsQhDvzSSDA4pom+b36VNK
+         XscrUtf0a41An7emu6h5wp+D7fM5mwrME2FIfrHeMmmbK43YYAGV3vxDcjN6SY33Wx/i
+         TaEmfVdh40JcqFD3Aiz8kmAGv2kb1ZTMmNvqZ3itNbKqhuU5ecVgG5Rl5O9AJeI1PWYg
+         qfaw==
+X-Gm-Message-State: AFuF++nDq0Kee32iVfSMkmT3yi06mQkrIjb0QaroZLSXpBk+8P7D9lMK
+	/iKtcrAyyJ7V/snPN4ooyzjYhVJPDK9QnVcyQUV6OGAxLqCRmUdhSDEzqgJbCz/KEYmZdxPzUb1
+	NPVI31UE=
+X-Gm-Gg: AYBFou2rtevOhXad04SMdfsVja799lpbRSfrPNGUUcGuI/ENqMhBtd+BUkH+gSNBEW/
+	VinpEVd/6CQsT9q5Lkd7hW7YsukD/FfWBn2icdwe4k3pLpVNeYbi44J0UyusCMlv9mZ+1ewcnyx
+	OXJehckR/kuDqxHp851ni2qtvSKrRgK1HHCB7lgKQpIjXiyZ54y0dKplVruAHykX/jxRcxXLvqE
+	7zjaxPtooO+4r6o35iqd0KwQZMoBsTe3dKRkhfG+TSCux3V6uGky1dDyBt7+MjXSspoSCWhMWiy
+	EIppNzhdLmjVka0ZCejeaaTqGzXCTIPVt1dLz7+aiA1HawpT73s1jmrDDETXNw/zCagVCFzanWH
+	v2hb2s5EefvqWOOrX3fCC6naS6ftwhVHrvk6ydLWai3dbJfEDpYeTO5HRXSWbHilTUrS1bmtswE
+	mVPJqzp06EFPHVWC0UmFvWClWPkjWYKOuQg5LcDi7brCGZyc0GiqLk1JVTMrJF4fM9YodntFo=
+X-Received: by 2002:a05:6808:1242:b0:4c5:a75f:c5e1 with SMTP id 5614622812f47-4ca4bf7b68fmr1109939b6e.13.1789515212390;
+        Tue, 15 Sep 2026 16:33:32 -0700 (PDT)
+Received: from localhost ([161.97.221.21])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-4ca242e7034sm879819b6e.15.2026.09.15.16.33.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2026 16:33:31 -0700 (PDT)
+From: Tyler Cipriani <tyler@tylercipriani.com>
+To: git@vger.kernel.org
+Cc: Tyler Cipriani <tyler@tylercipriani.com>,
+	Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>,
+	Stefan Haller <lists@haller-berlin.de>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v5 0/3] push: check pushed ref for --force-if-includes
+Date: Tue, 15 Sep 2026 17:33:02 -0600
+Message-ID: <20260915233305.334115-1-tyler@tylercipriani.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260904210122.431757-1-tyler@tylercipriani.com>
+References: <20260904210122.431757-1-tyler@tylercipriani.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Jiri Kuncar via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Changes since v4:
 
-> From: Jiri Kuncar <jiri.kuncar@gmail.com>
->
-> Adds NULL guards for lookup_commit_reference() to avoid segfaults.
->
-> Those invalid references are possibly caused by parallel fetches or
-> gc racing on the same repository.
->
-> This effectively treats failed lookup as "not up to date" so caller
-> falls to a normal merge, which reports the broken object instead of
-> crashing.
->
-> Signed-off-by: Jiri Kuncar <jiri.kuncar@gmail.com>
-> ---
->     pull: avoid crash of invalid merge head
+- Add patch to series: Fix case where fast-forward pushes are being
+  rejected by --force-if-includes: an existing bug that I made worse
+  with the previous changes in my series.
+- Add tests to cover allowed fast-forward merges when using
+  --force-if-includes
 
-The log message sounds a bit unusual from our norm (see
-Documentation/SubmittingPatches).
+Changes since v3:
 
-It is of course good to deal with a corrupt state more gracefully
-rather than crashing.  From a cursory look, the particular solution
-chosen, to drive the caller to perform a merge and have it fail, may
-smell a bit like cheating, in that we could diagnose the breakage
-better by reporting what was broken at each place, but it probably
-is a good choice.
+- check_if_includes_upstream unconditionally resolves peer_ref with
+  RESOLVE_REF_READING, now all non-branch ref pushes will be rejected
+  when using --force-if-includes
+- add test for --force-if-includes tag push 1/3
+- clarify log message problem example 1/3
+- clarify deletion in log message 1/3
+- add missing blank line between test cases
+- shorten long line in builtin/push.c
+- reword advice-message wording 2/3
+- rename 2/2 from "detached HEAD" to "non-branch"
 
-If we really want to improve the situation for 'orig_head', for
-example, we would probably want to turn it into a commit object
-instance a lot earlier and pass the commit object instance around in
-the call chain.  Passing around many struct object_id instances
-instead of object instances is an unnatural consequence of how this
-program evolved.  It was originally written as a shell script, and
-of course passing hexadecimal object names was the only way the
-script could drive 'git merge-base' and other programs to see if the
-commit recorded as the current 'HEAD' will fast-forward to the
-commit that is fetched from the remote to be merged in, for example.
-Once we go that route to resolve object names early to object
-instances, we will not have multiple lookup_commit_reference() calls
-on the same object name (which require us to watch out for failures)
-to begin with.
+Changes since v2:
 
-The above is a long-winded way to say that it is a good improvement
-that does not do more than it needs to do and we will not have to
-spend too much effort to undo when we revamp the internals to do
-"the right thing" later.
+- Correct patch threading of 1/3 and 2/3 to reply to cover letter of
+  current patchset vs. cover letter of the initial iteration.
 
+Changes since v1:
 
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> index 27f38ab3c8..7a3eadddd3 100755
-> --- a/t/t5520-pull.sh
-> +++ b/t/t5520-pull.sh
-> @@ -888,4 +888,30 @@ test_expect_success 'git pull --rebase against local branch' '
->  	test_cmp expect file2
->  '
->  
-> +test_expect_success 'pull does not crash when a merge head does not resolve' '
-> +	test_when_finished "rm -rf up dn" &&
-> +	git init up &&
-> +	(
-> +		cd up &&
-> +		test_commit base &&
-> +		git switch -c sideA &&
-> +		test_commit a &&
-> +		git switch -c sideB base &&
-> +		test_commit b
-> +	) &&
-> +	git clone up dn &&
-> +	(
-> +		cd dn &&
-> +		git -c fetch.unpackLimit=1000 fetch origin \
-> +			"+refs/heads/*:refs/remotes/origin/*" &&
-> +		git commit-graph write --reachable &&
-> +		oid=$(git rev-parse refs/remotes/origin/sideA) &&
-> +		obj=.git/objects/$(test_oid_to_path "$oid") &&
-> +		test -f "$obj" &&
-> +		chmod u+w "$obj" &&
-> +		>"$obj" &&
-> +		test_must_fail git pull --no-rebase origin sideA sideB
-> +	)
-> +'
+- Clarify in log message 1/3 that --force-if-includes will reject a
+  detached HEAD today (when the same-named local branch lacks the remote
+  tip). And note that this change makes it explicit to always reject
+  the detached HEAD case.
 
-The "test -f" there smells more like a debugging aid for this test
-than making sure the fixed program works as expected.  I wonder if
-it is simpler (and more portable to non-POSIX environments) if we
-replace the "corrupt $obj" step with 'rm -f "$obj"'.
+--force-if-includes has been checking the reflog of the local branch named
+after the destination branch regardless of what's being pushed. This can cause
+false rejections or unintended data loss.
 
-Thanks.
+False rejection has been reported twice that I could find:
+
+- 2023-07-26 - Stefan Haller reported local branch with a different name
+               false rejection[0]
+- 2025-05-08 - D. Ben Knoble reported detached HEAD false rejection[1]
+
+The same root cause can result in data loss: when a same-name local branch
+contains the remote tip but you --force-if-includes push an unrelated branch,
+clobbering the remote repo. PoCs are in t/t5533-push-cas.sh -- new test cases
+fail against maint, but pass with patches applied.
+
+Existing tests covered refspecs with different names for --force-with-lease,
+but missed --force-if-includes. New patches cover:
+
+- allow fast-forward push using --force-if-includes with an expired
+  reflog
+- allow fast-forward push of a tag on a different-named local branch
+- allow forced-update using refspec with different-named local branch
+- allow same as above, but with HEAD
+- reject force-update using refspec with different-named local branch lacking
+  branch tip
+- reject same as above using HEAD
+- reject detached HEAD
+
+Resolved question: the detached HEAD case; HEAD's reflog was considered
+and rejected as too broad for purpose in the original review. cf. [2]
+
+[0]: <https://lore.kernel.org/git/f51c73ed-eb03-83ca-fb31-d3e2645c9a63@haller-berlin.de>
+[1]: <https://lore.kernel.org/git/CALnO6CCk0SgwObQRnpd5Pt_DvCKF8dBmyVHivU6Nr_O-GusGLA@mail.gmail.com>
+[2]: <https://lore.kernel.org/git/CAHLx=O=tVhtiZpaRP9TpfiBfOMS2xPe3c3=mC3VNEdBrLOioFg@mail.gmail.com>
+
+Tyler Cipriani (3):
+  push: check pushed ref for --force-if-includes
+  push: fix --force-if-includes non-branch advice
+  push: --force-if-includes should allow fast-forward
+
+ Documentation/config/advice.adoc |   4 ++
+ advice.c                         |   1 +
+ advice.h                         |   1 +
+ builtin/push.c                   |  17 +++++
+ builtin/send-pack.c              |   5 ++
+ remote.c                         |  43 ++++++++++--
+ remote.h                         |  10 ++-
+ send-pack.c                      |   1 +
+ t/t5533-push-cas.sh              | 115 ++++++++++++++++++++++++++++++-
+ transport-helper.c               |   5 ++
+ transport.c                      |   8 +++
+ transport.h                      |   1 +
+ 12 files changed, 203 insertions(+), 8 deletions(-)
+
+Range-diff against v4:
+1:  e7912c3fd0 = 1:  e7912c3fd0 push: check pushed ref for --force-if-includes
+2:  2a455d8a76 = 2:  2a455d8a76 push: fix --force-if-includes non-branch advice
+-:  ---------- > 3:  1776f8d572 push: --force-if-includes should allow fast-forward
+-- 
+2.47.3
+
