@@ -1,116 +1,104 @@
-Received: from smtp-1.orcon.net.nz (smtp-1.orcon.net.nz [60.234.4.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F4B45FFB0
-	for <git@vger.kernel.org>; Tue, 15 Sep 2026 08:50:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=60.234.4.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6163A4749E1
+	for <git@vger.kernel.org>; Tue, 15 Sep 2026 08:54:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789462215; cv=none; b=gSrHOVsw9o7EncaScljN5kiGkg0NN4g5eNdieuQOVTbmM3cOxt5d5pfGzXiFmTKV9o72cMyEU7xsG0b2VDgmSbWM1i1QlBYFxp/kz5Ty7TZjVLZd3wB694GgqlifUb6yOtqrRKhyH+boTTwUSNbY+DQz84yhhe2P2JJETvAX+9w=
+	t=1789462445; cv=none; b=Xv/pO/ELqxu8C9uIBgESwQtuwsd84czX5eXbCezRm+tRGnEhAUVBn/daF3GKQ/Ni689wVv/acR8acJTJJ9wC+zXHBQGO+S/Y3kiALI/6umgk+WxwFpOYDTJhjsP+iustL22kCWfDs8yAgl/08x/MkQjptPhSxvv5gvxuLUUIrS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789462215; c=relaxed/simple;
-	bh=F8fyFsg43pU90NT5FvZEmD1RZoqFBGv/JOY82h4wCS0=;
-	h=MIME-Version:Date:From:To:Subject:Message-ID:Content-Type; b=p0TYzKe7e/2ULh9nhL8wpblDYolm139P3gASlBhHODi97CDo0qZO9GVYN4I3mn2LJHKHHxd8osh4DbntSHI8KfrF7jmKL2TN+1Md8dPquC/4XwtP0pjCB4IcRV74s24qGJxO5dP4g/DtLMKQlNyFMRl9yMAYOeJJmEIPfKx/K5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=orcon.net.nz; spf=pass smtp.mailfrom=orcon.net.nz; dkim=pass (2048-bit key) header.d=orcon.net.nz header.i=@orcon.net.nz header.b=GXVDYMRD; arc=none smtp.client-ip=60.234.4.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=orcon.net.nz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=orcon.net.nz
+	s=arc-20240116; t=1789462445; c=relaxed/simple;
+	bh=XmvFvcewaQI/D2VslL12ei5rZeVQ7uQ7FqqkDaCLHFM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QxxmwHzc6PHe2mlcfrkqVBTKyWt0pj5oW2DrSaqs8wA8L7YJn4cEpGVtz55PYVe1FqMOEGMu5BkFXSRpZfnrZRWXvgnAEDFXDM802dL0B1tDCJoMPiu0C2U6tbUy6jcesBnb/YANfTiFhPNym8UpanjVrOoUu5xhvcme0Ec2Vos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H31UnlMK; arc=none smtp.client-ip=74.125.227.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=orcon.net.nz header.i=@orcon.net.nz header.b="GXVDYMRD"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=orcon.net.nz; s=s1; h=Content-Transfer-Encoding:Content-Type:Message-ID:
-	Subject:To:From:Date:MIME-Version:Sender:Reply-To:Cc:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=S2G+MRyn3o7BmkK1D3kbK7yzpeSGocCs8FSex4Gwytw=; b=GXVDYMRDMe1rPC7Covg8eNHfGR
-	p7dL+7zbnP+cNE4aG+chhwdy4cFF0QfqbDVLQj+VmdRe37dQsrIUZMSQN7YIOfQ8aFehAYOdx1olf
-	XXD9g+rFwYYPU1kfi/eKC+5jjo8TIVhYLzGte1yp+AExSM8rbxgTpRj6xFzQUZIxKFObA5VhOGvM/
-	4BPenfL8SbM9mjPM90vKRPXlUl8pzV5jWxoEpGedjakkkykkT0FxatoxA2Mj4sC0JusIhXqp481H+
-	r/mkpA7enDH+izsgqmpFOi7cMR6JemlWCRV9TFApSJxmX4goVwY67nJs6sA6aRsr8pUqKn8IOh0Iv
-	JAqFhaOA==;
-Received: from [10.253.37.70] (port=16050 helo=webmail.orcon.net.nz)
-	by smtp-1.orcon.net.nz with esmtpa (Exim 4.90_1)
-	(envelope-from <psainty@orcon.net.nz>)
-	id 1x6OSt-0004cc-Iq
-	for git@vger.kernel.org; Tue, 15 Sep 2026 20:24:32 +1200
-Received: from ip-180-148-114-126.as55850.net ([180.148.114.126])
- via [10.253.37.253]
- by webmail.orcon.net.nz
- with HTTP (HTTP/1.1 POST); Tue, 15 Sep 2026 20:24:31 +1200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H31UnlMK"
+Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-398a147688bso24703a91.1
+        for <git@vger.kernel.org>; Tue, 15 Sep 2026 01:54:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789462444; x=1790067244; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=+Lw8vGQd27L03dbV0jlQXUPsApyWOwz39MvDk2IuaBg=;
+        b=H31UnlMK9trMNV6dzZfntiR62AXcnnZ2cSdMh0aWWSfoE/2gWexobrTEMMY4oT2170
+         1J8JG+1xC65UHrtwX2Snsv3ZKOLmg1pu0s9t1i3E22KgvpihsE7IbRqINpe5fIpSOjzg
+         XKDy77dDXlHWmE+JXGIsyi8LSby3kq96ef1mwcE1m+3iBTUthX2dgcOREQkbnrC0z4LX
+         9iqI41hExX46GVV6KPVtf6TvmF/wCq+LHCFzz+vOGgZLas6sWgu5bVIp8WzYLuAErCTu
+         ZVlhSMAjPQwIkHRzcQg2EQCXUUER/gx1iyolaCeUp+JRK+B0w9NkiYX9SdBRoQ9ZECc4
+         JFhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789462444; x=1790067244;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+Lw8vGQd27L03dbV0jlQXUPsApyWOwz39MvDk2IuaBg=;
+        b=MGh50kfkbmCiPZhQAymXug+vImgwm2FbzPMe//RSvi5feDS2vCrbhr+I285lFF5vGt
+         TsohbEOJo5Po6Tvoe+ureftqtitn9GN4ykuELkovnCv1UkGvWN/pv+G3iixOtC3XClpI
+         Aq2A2MBpvjYSqM81P8RMN3l9TYAyvf4FEX82HWnj6ufF8b1EKB3uHpiQ2z17vtnaJvzs
+         /EXCYzQxTAhVX0QQYB3zf3F4m+p3l0U4uXuXo1oA9iwBnE6BUSzN18NvtmrwJ0jFMf9t
+         wyjsuc7cdn4T5laWfJrDT+0ZTv+sUUFe+zZH/V85QbJI0UK89UlGE1fvWr+NklEXWw5r
+         uJIg==
+X-Gm-Message-State: AFuF++m2lze8zsNVPJCPBDuniOFmZr2lsqvzTw0uI9iVI2nK2PgAumYE
+	ncntG8BBH3pQRuJpVYoiW6q7d/2GmqJy/4IpoLsJdH3ONET7s2X+T33DD1gCCEOz
+X-Gm-Gg: AYBFou0B+NYqLO1o+RDEVpQjJ5fdhlsY/Fce8iIFh05iG3jDVRRuZRVEZRs4cAq5AMM
+	sQIjDris4NGPKIxWTfWC886J7LiNCeMbDiYi0HQCP4v/eanouh5TIcLZBQmZonwAST5Uz3S/hcN
+	ixSLFeMbmj7RVHjUuXDHDICQ9pUH8jcXeUFqJySb8TjOlYzvh2ZwLsW6S+mIcJc51J/OGKRNcce
+	avEdjd1N4JIj87nAODsGBKBaHZc685Ebx9rgNt2PNGtQ6nzqaiHPly1d2HiwkRIUCy9h1L6odCB
+	UGhC3T8z0uHWzsb+Tu6UWAU9ybD77YjZOscb9L2bmZyxOdvi4AiwBN5vVLNCPJOpM8/IpDvnd5m
+	V8RyGjmVP422H7NwgvZ+K+eHwHbgtNAdZa/kM7+ybJwOScG55k366zoUEgOBfmeblu8tSfTXdMj
+	zX5zAwRhOs8tUBHTMWsKjZ2BxWYipL4fr8E5To11PSRaCNoSLs0uykrOkgVTxmnIbuRYI7i5xoJ
+	4W5LRU5jnz6J9xHuNjoBuq7lW8u
+X-Received: by 2002:a17:903:2288:b0:2da:eba4:b640 with SMTP id d9443c01a7336-2dd837dbe9emr2561105ad.6.1789462443586;
+        Tue, 15 Sep 2026 01:54:03 -0700 (PDT)
+Received: from localhost ([2600:381:bf13:b4f1:fa05:dff4:a430:6b5e])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33be92873b7sm4042308eec.21.2026.09.15.01.54.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2026 01:54:03 -0700 (PDT)
+Date: Tue, 15 Sep 2026 03:54:00 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH 1/2] object-file: lift ODB reprepare out of packfile flush
+Message-ID: <aqkGPcJdw3QagN0B@jtobler--20250820-SHC54>
+References: <cover.1789328612.git.jltobler@gmail.com>
+ <cf14416f224f48475dfc9f79d8ec62756b9fdedf.1789328612.git.jltobler@gmail.com>
+ <CAOLa=ZQBo5ZyHtx4yLvjJXzJYgGieeuX2g0mycPKOPt+VqJ93Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 15 Sep 2026 20:24:31 +1200
-From: Phil Sainty <psainty@orcon.net.nz>
-To: git@vger.kernel.org
-Subject: GIT_WORK_TREE is not exported for post-checkout-hook
-User-Agent: Orcon Webmail
-Message-ID: <17f331aef833b34fbddbefd66c330465@orcon.net.nz>
-X-Sender: psainty@orcon.net.nz
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-GeoIP: --
-X-Spam_score: -2.9
-X-Spam_score_int: -28
-X-Spam_bar: --
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQBo5ZyHtx4yLvjJXzJYgGieeuX2g0mycPKOPt+VqJ93Q@mail.gmail.com>
 
-I have a post-checkout-hook shell script which indirectly calls
-"git rev-parse --show-toplevel", and I've found that when that hook
-runs for a checkout within a worktree directory, GIT_DIR is set but
-GIT_WORK_TREE is not set, which leads to the CWD being returned
-instead of the genuine toplevel value.
+On 26/09/15 12:40AM, Karthik Nayak wrote:
+>Justin Tobler <jltobler@gmail.com> writes:
+>> @@ -1260,6 +1260,7 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
+>>  {
+>>  	struct odb_transaction_files *transaction =
+>>  		container_of(base, struct odb_transaction_files, base);
+>> +	int have_packfile = !!transaction->packfile.f;
+>>
+>>  	if (transaction->objdir) {
+>>  		struct strbuf temp_path = STRBUF_INIT;
+>> @@ -1293,6 +1294,9 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
+>>
+>>  	flush_packfile_transaction(transaction);
+>>
+>
+>Earlier this would unconditionally call `odb_reprepare()` within, now we
+>only call if needed. Which makes sense. Would it also make sense to only
+>call `flush_packfile_transaction(transaction)` if we have a packfile?
 
-The script is seeing a GIT_DIR value like this:
+`flush_packfile_transaction()` already returns early if there is nothing
+to do. We could make it more explicit here, but I think it is probably
+fine to leave it as-is.
 
-     GIT_DIR=/path/to/repo/.git/worktrees/name
-
-The only other git variables in the environment are GIT_EXEC_PATH
-and GIT_PREFIX.
-
-The outcome I'm seeing is explained by
-https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables#_repository_locations
-which says:
-
-     "If --git-dir or GIT_DIR is specified but none of --work-tree,
-     GIT_WORK_TREE or core.worktree is specified, the current working
-     directory is regarded as the top level of your working tree."
-
-The current githooks(5) man page talks about this somewhat:
-
-     "Environment variables, such as GIT_DIR, GIT_WORK_TREE, etc., are
-     exported so that Git commands run by the hook can correctly locate
-     the repository.  If your hook needs to invoke Git commands in a
-     foreign repository or in a different working tree of the same
-     repository, then it should clear these environment variables so
-     they do not interfere with Git operations at the foreign
-     location."
-
-Unsetting GIT_DIR certainly fixes the problem, but I don't think that
-ought to be necessary in my case, as my hook script is calling git in
-the *same* working copy where the checkout happens.  It is not dealing
-with "a foreign" repository [or] a different working tree".
-
-My impression is that GIT_WORK_TREE should also be set for this hook
-when dealing with a worktree.  I have tested this in git version 2.34
-and 2.55 (maint) and also 2.56.0.rc0.355.g945ea7012d (next).
-
-I have only tested post-checkout-hook, so I do not know if this
-applies to other hooks as well.
-
-
-[System Info]
-git version:
-git version 2.34.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 6.8.0-138-generic #138~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC 
-Fri Aug  7 13:43:15 UTC  x86_64
-compiler info: gnuc: 11.4
-libc info: glibc: 2.35
-$SHELL (typically, interactive shell): /bin/bash
+-Justin
