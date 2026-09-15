@@ -1,102 +1,176 @@
-Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A254B2056
-	for <git@vger.kernel.org>; Tue, 15 Sep 2026 16:41:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1184A4A1E0D
+	for <git@vger.kernel.org>; Tue, 15 Sep 2026 17:21:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789490493; cv=none; b=I3K03tJ7RE2eTgoq9i902TwAQD2QRyVEfsDvFkbM0pw9vt6e7IkP81oi4udGzQsRV6Jge6SU5WRqteaHyUQWmgD4vJRfHyXESNpC+9Xz6RoaNWCCJ6n8cjHuU+6JH4wU6a3KuEjSthlBeNcB7z3nxi/OKAlAbqYFW392XycLOjo=
+	t=1789492918; cv=none; b=oR+8Mnmm3+ZkHtWOdRRdQtWCHctqlNcB/YM3mQpwfiWnArIulQKEygigHNegvaLU/KsDkfu1nWpCGI30RxH1cHtwturR6kRGXfnbrJ38IRsxQ4nbzhk7UdHDSWcMPMciv1CrxLl8I9pEZ5uUf2LkxZrrV0jUXIth0UevhQLK+b8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789490493; c=relaxed/simple;
-	bh=UfFkf3LpwggFfMVRbW23la458ajIq3bUK62/P83TVYo=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=HTJdcaJqpap2NkHY4Y/aXfd25d6rYG7BWZ4IyC8ItOsmGjSpaKXCmln1v8trjqLVXl1RTQM5kNOyyzLhFUFPYxlFLxVfs1F4tmWvhMgdZvACVZooMFSCQoCxkE6SuBjG7RQGMawbV76y3D/BtVXbNsJpOBYFi0yl06Hr6MHV3rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WuDGA6pv; arc=none smtp.client-ip=74.125.224.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789492918; c=relaxed/simple;
+	bh=sYAk2IU7umtyhoQm2nfIxCjc8dCYeS8uKL1Vu9xvlXo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=itp6ccoVBInR3Bc5kgcjWOC1UEMIAhm4xplZM1cCla6PBBkylu8RKRLfVuccxiDBMqycnOtZNMApCDL7+2pU9ufacmGARZDmXSiT6K6d9QjHL+rc4E2smeK8oK7hw2KcFOn/YsZ1cpjgD3s6hP9G5DKsUP+J5Mtk5yK+dHF8PRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dMQlkJkZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wbr29GJb; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WuDGA6pv"
-Received: by mail-yx2-f12.google.com with SMTP id 00721157ae682-85d43f9b11aso6961007b3.1
-        for <git@vger.kernel.org>; Tue, 15 Sep 2026 09:41:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789490489; x=1790095289; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=UfFkf3LpwggFfMVRbW23la458ajIq3bUK62/P83TVYo=;
-        b=WuDGA6pvvKXu8WD3UAawMjviAHLGdb4EtUOeckcfXUb6ptWhTA+LgCGjY560rGaKHx
-         Vu7WRJI6K1X4esGnf/FNRtMTMiDVa0gUcCx5fjWjcoKjISy1W3YOekuhBdlj1g/xeYZY
-         omjRgkHvYUm/5/PCVn4oJJYPnSYOe0yZeWa0B8vTrlxFp6h63AFmPOVUGsdfIldsxBC0
-         kMiOZlh90RZ415l1vmY4Jt2S9dkF2habmkaHLp1gocXzDE/Vtpo9CjIKE2Gk+dzZDdV1
-         bggLtaBgPy/Y58pC65PrnKqMKjNz8MZXtbClzLpV5gg3Q638KGARnyfsImGaCQ0aMOG7
-         UDSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789490489; x=1790095289;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=UfFkf3LpwggFfMVRbW23la458ajIq3bUK62/P83TVYo=;
-        b=GZX97mvmMlmOWfG51vY8VpIrwhqLqXyaDk0PH6cvq/Hxe3YDXHIPTU3mznnWroNA+V
-         ntzsERMwfvQKJPmd0Wdd+f1c1bq/wRFFNwK1VMcih/1pVQWMGaQd5VqywVhg7M6JIWzl
-         mA5UVzEqrJfv9r+iy6YGQZkIH0haWoqfIQUCjxR3WwuVtSirLM2la9vmOteggJ50XKHI
-         SNRJDaPurE6oig9qQFX7uVPuQbDi4b1dEZEs7/5wvm1lBCoS7X4nksSr6Rk1DbA+PQha
-         QpCMpfCt87udQvhkHoT5dVG/CZ6WpXlMO+lOAV6YymGRzBUR2U6dXSMC4TlfTeKb2tFM
-         /kRw==
-X-Gm-Message-State: AFuF++mdp6IHqILbuRd2ZB8TGMDMyyGjEg+F4s2+asmjGExbI4TT6LMU
-	+YXJl5vQtecyaPsnTqwXZETW4gOmSIuHUnbrlLZ1l981medMd/XYdPuKKEeqLg==
-X-Gm-Gg: AYBFou0MIg+/X6udOiaGbLO1xdgUfJtZ3Az4zz3eEQ56kEeNN3SCfZCjLItoyxHP6ow
-	QqpO6204MG+RnFfXfyyjjYBZE1jOWKuzRI1nKc1kP5clM/cH23xzAZoCIHe5kL82biGq0JBWZIL
-	NdDT3gQwwgY6BA3y6YBi/tk6ood4ETwOiqyo1Bdltczluq4BmVTnMBlfbP5iTPN3CMG7kE+MAXi
-	7s+V9vh82hpSdb1piFXFWJAOpPbgi7YwuYO4GDFE3IyeoB5+Bhtb0KpauUOMug5YI67t7yIXHk8
-	QIjuogIu5qnSXdLEVMEaFebIVrik+1S3CnOGdFUULhNRb7RE+dA55sOUX0H78yg9kmZEqSDJLEx
-	bC8tYpTF9mAYXmGLK5VAjLVy240z47sXw9h6Buiuk4mTOFldOa+1UPKFIsLYO8gZKAuMAtfuaGd
-	19W0R237U0JvzMgr5YsNnrvC566eF0xVt0MIuNu7ea0nSQ7mWARVcCxD7j5jdogfxp4GiC6rDjc
-	5ZL0PTJKmNqpJwaKw+NuXLzwHCYscnpOgsgfHXxC0ru1V5/hcPB7Npg2lV1YQuKi1I51ItdQ7hQ
-	/i25smcQlmZdgm1kOIMbi4zqpritlUn4lALo+BkZbf1NDcUD
-X-Received: by 2002:a05:690c:16:b0:873:5ddf:d874 with SMTP id 00721157ae682-890f5afa6afmr7817557b3.63.1789490488731;
-        Tue, 15 Sep 2026 09:41:28 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:9092:700:4c98:2196:42e8:e905])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-88f90aebca5sm8478547b3.0.2026.09.15.09.41.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2026 09:41:28 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dMQlkJkZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wbr29GJb"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 99B9C1D0020E;
+	Tue, 15 Sep 2026 13:21:53 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 15 Sep 2026 13:21:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1789492913; x=1789579313; bh=bW88hW5+f0
+	up8ZUGwo+UdhlwWwQt5TP3qNwbpa4SbTg=; b=dMQlkJkZxTBidq4wkbSRcQdCEb
+	a51aae4eqQcNHFySjsMjmLerpyBVK/x+fYfiQh0CN0e3icIa/Ae4pH99KgTVdzfV
+	tjNamRZMfyNZlBOK5s/CidzB4cLYhksi2GIKkq53vVkA+y4KogYDkJIpCs7ZXiw1
+	N4G8i23VT2NCQERh6Z02IAH++h0inxQTfzwdBVoPpMwjPXLRb/xhS3kh6wA4LXGz
+	sCa5B7YQ2J0EG94kOFx4YDEYvnlY5jJwy0lVRdnMDf4cegid+d84Elr4ZJGuSB/h
+	QV918iVEX6LA6lwLcOmIWPUyp2hBsgufgRbO90C6GYly25Mbekkss55SMQQA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789492913; x=1789579313; bh=bW88hW5+f0up8ZUGwo+UdhlwWwQt5TP3qNw
+	bpa4SbTg=; b=wbr29GJbQfMCmAbxdgmOijqiE5NypjnbEW76q4IBbq7maewLq1H
+	fWn7NyIPNQ4Lmj4LdshaRsECJ0e2n2LxhyAV0d8GAXwQ6CsNzNoJzz1P21EFrgum
+	QFZs501ij8JVD1smtiOVGjS7h9VKC+MFY4rHOr8Rma4nhEcWNxP4/LTXHWJZiFdn
+	Kj0P7fiW62KypYD+gGZ02O7eAtMfL3LHo90//s1gDS1+f6Oy9EYLv8vVE5mBFmC1
+	Fvx6TRwpdAPZ5nkNuyico4vcNGsTW1oe0R8h1DX5TTBFtb5zpWY83sVThsLDrB/F
+	qXVN0E7G2RKvh72Sp6QiRAOawa7HRzwej4Q==
+X-ME-Sender: <xms:sX6palugokiLQxZop4MhAVWWApJ87EIUUZRxRWAcwCRFg2bYQ4Sp5A>
+    <xme:sX6patgDnVUiUV6jEripxC39690WX1jnJkaJWoz5ZgF2lALY02aJ5gHkBuDDkzT9p
+    6774fpEAcNVUcQSRyW1bHpfGpXtIfcZFylH8heHa5yP0Kbnwb8NVQM>
+X-ME-Received: <xmr:sX6pau9w-_OzVJYSyUvIHxcO-N345kSdyZ3AY9iy6kpRuPPJGRGudppMryw5eh620TtL1e8Ac8vg-OwSoJWjnD88gaRG48BQ0xcw>
+X-ME-Proxy-Cause: dmFkZTF6jJuSSvbMxbK93Lu5lj/AutvJNg4U3t2r941oYpDF5JJ9S1dO3THBjs9KQFY4yB
+    i+0bE7el7j5itWyol8mzadzftT+8AluWMPA8isSwNGS0ubkD2eF7wAv8P5gQcGihYQN2Gf
+    JcpYyPrzWnHei0X4pQ0vVWwKJe2/QGtFg6Bky6DwbiS0BxeV1pCcCMmoAiUWUR7ioVlzpl
+    2KNc3+FtQ2MXtgD0RZLXoVNNXzij6Cw5pU9BOjzUiuhzaHi/17hJ9D0iSeNwHu4A2Jp8nJ
+    lZTrtMY9gHiM5ene37WwubutM+stRDGQog3snH8NeWb+fFC0WeV8XbEru5OY/zT158DrRF
+    og+iWfGQgumNkInGsi6sdYnP4+1Px6+fx1AcRIT2KZokv8CfpXW0pPCymnRki03KRCL2zv
+    taPAzEFAoIia2ckQp1FNsmCt7wxJMPs/yIwydAII6oQOPth/VSojjH+sENJAYVYg+0Cii1
+    J15x7NvRw4x4dVhiZIsN+hihI5GvaPToyrJVs4B3ZKGlr7vZX6gApzjvm9gg8vTHwvFTCx
+    tTGjedkKZ8BA/Ggnn3udJgFFePGLQB3uum+v89pzQ9X/JsP4tWyVrJj+0pSu/D2pqyjcC/
+    +4yhCHnDGLArq0RCcphkjPB9oVZPjnpPznPgU+coQb79QG2Xk2hXdpt96+dw
+X-ME-Proxy: <xmx:sX6paovtwpxYk0ioG7vUgFmkglziX-oz--pYhbztbA70mxa1NV4DGQ>
+    <xmx:sX6paqqUzI56cRL3vbD56bBPTlpgyVTFKAnVTHPAoVMd4FxOSOp6uA>
+    <xmx:sX6pakoGHPRgb0ADDwx3J-n3wpd_aAW78Vmfh86ffmIbFug0YgDjBw>
+    <xmx:sX6pahZ6kJhWGn0R_JH7JmQrNtoVdwKtVUtaT-BBb7vh4-NipPp71A>
+    <xmx:sX6paszm3v4i84bWZ49u8mj3KZbNx4N1A1kgpXm_G7BHBwqVDK2Ci7Ke>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Sep 2026 13:21:52 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Andrew Pleeter via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Jeff King <peff@peff.net>,  Ben Knoble <ben.knoble@gmail.com>,  Phillip
+ Wood <phillip.wood123@gmail.com>,  Andrew Pleeter
+ <andrewpleeter@gmail.com>
+Subject: Re: [PATCH v8] var: support broken-down idents, signing key,
+ multiple args, and -z
+In-Reply-To: <pull.2388.v8.git.git.1789426226860.gitgitgadget@gmail.com>
+	(Andrew Pleeter via GitGitGadget's message of "Mon, 14 Sep 2026
+	22:50:26 +0000")
+References: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
+	<pull.2388.v8.git.git.1789426226860.gitgitgadget@gmail.com>
+Date: Tue, 15 Sep 2026 10:21:51 -0700
+Message-ID: <xmqq33va1lcg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: Bug!?: Refspec '+' should be same as '--force' but is not
-Date: Tue, 15 Sep 2026 12:41:17 -0400
-Message-Id: <DF50C11C-44E1-4BEC-A446-8C27F165478F@gmail.com>
-References: <1bcb043e-e744-4e01-8569-4da5669d25fc@carneios.de>
-Cc: git@vger.kernel.org
-In-Reply-To: <1bcb043e-e744-4e01-8569-4da5669d25fc@carneios.de>
-To: =?utf-8?Q?Andr=C3=A9_Kie=C3=9Fling?= <akiessling@carneios.de>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+"Andrew Pleeter via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Le 15 sept. 2026 =C3=A0 11:33, Andr=C3=A9 Kie=C3=9Fling <akiessling@carnei=
-os.de> a =C3=A9crit :
->=20
-> =EF=BB=BFHi there, think I found a bug...
->=20
-> In https://git-scm.com/docs/git-push I find:
-> > The + is optional and does the same thing as --force.
->=20
-> The fetch documentation refers to push for the details of <refspec> so I a=
-ssume, the statement also holds for fetch refspecs.
-> However, this is not true:
-> When I run `git fetch origin --tags --force` it will force update tags tha=
-t changed on remote (as expected) but will NOT delete local tags.
-> When I run `git fetch origin` with config set to `remote.origin.fetch =3D +=
-refs/tags/*:refs/tags/*` it will delete my local tags as if prune was set.
->=20
-> I'm using Git 2.54.0.windows.1
+> From: Andrew Pleeter <andrewpleeter@gmail.com>
+>
+> While 'git var' exposes GIT_AUTHOR_IDENT and GIT_COMMITTER_IDENT,
+> extracting individual components (name, email, or date) currently
+> requires callers to manually parse the composite string. Furthermore,
+> there is no way to query the resolved commit signing key through
+> 'git var', and the command only accepts a single variable at a time.
+>
+> Teach 'git var' to expose individual identity components and commit
+> signing configuration, and allow querying multiple variables with
+> optional NUL-termination:
 
-I think this behavior is described in git-fetch(1) in the PRUNING
-section. It=E2=80=99s a bit opaque to me :) Still, you might take a look
-there and see what you find.=20=
+The huge laundary list (below) strongly tells us that this single
+patch is doing too many things at once and it is better done as a
+multi-patch series.  Also, some descriptions seem to hint how the
+implementation evolved during the development of this patch, which
+nobody is interested when they read "git log" output (which is the
+ultimate target audience we write our commit log messages for).
+
+I would say this should be split into at least 3 patches.
+
+ (1) Add "-z" output mode.
+
+     To allow reading scripts to unambiguously parse output from
+     "git var (-l | <var>)" command, implement a NUL terminated
+     output mode, similar to how "git config -l -z" shows list of
+     configuration variables and their values.  When showing the
+     value of a single variable this only makes difference for
+     variable with multiple values, but in the next step in this
+     series, we will introduce a mode where multiple variables are
+     queried.
+
+ (2) Add (2 <= argc) mode that displays like "var -l" mode on top.
+
+     To allow reading values for multiple variables with a single
+     command invocation, teach "var" to take more than one variable,
+     and show output the same way as "git var -l [-z]", giving list
+     of "var=value" but only for variables requested by the user.
+
+ (3) Add new variables.
+
+     Scripts reading from "git var GIT_AUTHOR_IDENT" needs to parse
+     the output if they want to extract only the author name.  
+
+     To allow scripts to easily access broken-out fields of
+     GIT_{AUTHOR,COMMITTER}_IDENT, add a GIT_AUTHOR_NAME variable
+     and its friends, as well as GIT_SIGNING_KEY.
+
+After you receive a review, you should respond and try to engage in
+a dialog with reviewers, before sending a new iteration of a patch.
+
+When your new iteration is different from what reviewer suggested,
+without such an exchange beforehand, reviewers cannot tell if that
+is merely due to miscommunication, or you had a good reason to do
+things differently.  Don't make reviewers feel as if they are
+talking to silent machine that takes an earlier iteration of the
+patch with their input and spits out a new iteration.
+
+Thanks.
+
+> - Add GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and GIT_AUTHOR_DATE.
+> - Add GIT_COMMITTER_NAME, GIT_COMMITTER_EMAIL, and GIT_COMMITTER_DATE.
+> - Add GIT_SIGNING_KEY to resolve the key that would be used to sign
+>   the resulting commit if you were to run 'git commit' right now.
+> - Allow passing multiple variable arguments (e.g., 'git var
+>   GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL').
+> - When a single variable is requested, print its bare value for backward
+>   compatibility.
+> - When multiple variables are requested, model the output after
+>   'git var -l' by printing 'VARIABLE=value' pairs (or 'VARIABLE\nvalue\0'
+>   when '-z' is given).
+> - Format multi-valued variables in multi-variable mode as repeated
+>   'VARIABLE=value' entries (or 'VARIABLE\nvalue\0' with '-z'),
+>   eliminating stream ambiguity without extra trailing delimiters.
+> - When querying multiple variables, omit any variable that has no value,
+>   continue processing remaining variables, and exit with code 1.
+> - Support '-z' to terminate variable outputs with NUL bytes.
+> - Format 'git var -l -z' using the same convention as 'git config
+>   list -z' (newline separating key and value, NUL separating entries).
+> - Use parse_options() to strictly require options before arguments.
+> - Update Documentation/git-var.adoc and t/t0007-git-var.sh.
+
