@@ -1,147 +1,146 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+Received: from mail-pz2-f43.google.com (mail-pz2-f43.google.com [74.125.228.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D5D4B0E2F
-	for <git@vger.kernel.org>; Wed, 16 Sep 2026 20:32:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789590767; cv=none; b=ktyGs4obwKARB2ZVwErxRNPAOKEIVPKL66EebPrj5rY1Fj2S8nI4WAeoWHBvbrEh1o2S1OfCz+j0kuVb0K08cn975+HtK5rwxHHJLUnEFPL/lyATw6lo3v9VXW4EsUwSG/H2+g5jF14t1y6BlwR2qXm+xqnFm5FSIgsYKppbBcU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789590767; c=relaxed/simple;
-	bh=evo4oNT9VblbohzMAEFMVuwlT3Z8FBc5/V0fEYU5ZQw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LxzhPy5ng78S0snA3YyWnJG2vH6ihdgPFGPerldrd3k/qBWdlirJRayF3tbzlG8caxCCWeuaceLOBbqlUMtgBrbYFjsqiCKusy0/+AlOUor0Za7e8hMsxpmjRRN5tcfOpiNeeO74DsHrKrCilakAbdtqaMz9uq6vtWRwTF/s4gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L3v4jBlJ; arc=none smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D33849B44F
+	for <git@vger.kernel.org>; Wed, 16 Sep 2026 20:58:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789592322; cv=pass; b=tX1Qm9/aakPjxVvuchVbHRjvCn7qwkpe5v0Go49XRdq3YBeS67Mf47hXuCuCca9ms4P/gFjsxxDpxIlO5b5blh0My6pYV28Vee2f0UYucQPhTRKFEE+7O+ct02fEts0hPNvK5jYwsli05l1v34m79xFWkH2JxE/heLo8NiSGHEY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789592322; c=relaxed/simple;
+	bh=InqphX1ilThtT5B3SVoMr69QixuTclhwu5rR0TSUxXA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HY4tjyuHqdOWrDzJb59ymCdDPF+d44x77rC9/3QJvS/zGQjNqYtcjvILDUN3buoETm0ubq5KFa5N+aeUG2G8PwZOW1JRu78aWcZT8zERIbw6BJvHyMhCfKrZIn9nDFRJ6B2ur6bNf9Gkwv5YHwTBIh/QVUClppoOnIbZrSjHKl4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zx7/2ojI; arc=pass smtp.client-ip=74.125.228.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L3v4jBlJ"
-Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2d747eb79f6so992105ad.0
-        for <git@vger.kernel.org>; Wed, 16 Sep 2026 13:32:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zx7/2ojI"
+Received: by mail-pz2-f43.google.com with SMTP id 41be03b00d2f7-cc1cea4bfb6so51795a12.3
+        for <git@vger.kernel.org>; Wed, 16 Sep 2026 13:58:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789592303; cv=none;
+        d=google.com; s=arc-20260327;
+        b=WI2QR1lO7d4ul+OgbLX6Z5xBYOy2g35UR52YvaUZUafn1Qw/RnFvfPUhAT9vjlst3Y
+         ihLanhRyRY15Cdf60VrVMj6UptfoD/jgvvUHweojkwixlcFF5Z9UVgu3JOaAeaTkNmkT
+         B3GHP7sk1ycyv5VDGKHtiJtw2ivTUcFxyv5Ady5qeYoLsCG0VX+132YQ6UR4Kp1GnrjN
+         KLHXlgt0RUOfTrxuazwSXL8ZdHaGDfXKcnjPUHae6VGpstRhebMpQR9QnHzgWeVzNYsM
+         u+YPBz3CKcjReUVcSO+tvoYAcGCbOMIVJGjqVclNwXMKr+Ea39Uz2CFCPGdMNvofu6PM
+         iVCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=adNA6tMqLyZB1EpwDfqXPXBJGN9e4c8wWLKgxwPcimc=;
+        fh=ujg3ymYPqnpL5IJaWDx4CQZVnr/PAxBNqtebAzGDWDY=;
+        b=DjaCkTaUY9kBHzw/70XYrYliSQOP/mNQNvH7tlvu39rhT22NRPYatnigiGfmm18MbP
+         saSMlDYBYVuJGckZQSclRMovDfO61ofyZ6IcAVaQjBi5I7exCPkCKrYCJ254Mo9Pq51X
+         2bbbgC6zF66eG8/lUpWVyGw3ink9+e0y/hd/1jqoJvBErxS5QAYaGyhHCRNhzVmzJe53
+         wseQSylVJiamODwRTn+sccSNtBtp0u59+55WWFpbmSPY3EREjuAzfJwXuwKj8RQcObzv
+         93nB+g6yC53+w3nZl5GETJZX5vIqBnamDP0iNDJFlStGWeAMNetrqK4G+IojNqhMXMqM
+         cnKQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789590756; x=1790195556; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Igvo9ZEMFWSyoL3iUr7E0RijZhz1IOlDi4Ti6NwzVsU=;
-        b=L3v4jBlJE+06ghtJMqx6tLE1iKNr80YUXdN9wPBYmoQQ0CcNowpQKQf39a33NcbV6t
-         z0PQcdwLDiUwsdpW7zMOQPtEmx2Bqwe3sNIpzo9wV65hJdR/2gZO9wcbET0khVabsXlU
-         063mp2FMhP4Vp9DHcI0UvKjEz68b6LA9NG0rbwDwfRAqCanft9txNMegl1klsT51F/6f
-         9dqqwfBZdgSGaVsS7RLJFMiV9DABwUQId/UUw4hLGU1Y/gAzC8l9n7GCg4xrGnD+tujy
-         Y1UevYBs9eXhgmkGVm1gqZK1mwZvyajx0CLxPYVIY7NRSuyMb8iKuXMepZ3oByFHsOvb
-         7d0A==
+        d=gmail.com; s=20251104; t=1789592303; x=1790197103; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=adNA6tMqLyZB1EpwDfqXPXBJGN9e4c8wWLKgxwPcimc=;
+        b=Zx7/2ojIhGxMBn9hqlyLTQjw1Vz9TpVxmtAJwQrfeKbc9Q/VwoAjSh6LkAvu7O/r9R
+         5n+3l/Y/pmDVEh9hFd2zWWG+h9YgGbMAPQrIOoyE7UencnYv3Exn+n3eejPWYBUgh5Fd
+         8XEPHEFnOljCseA7OWEVTgmfTo8o+lArVSLlOuN+qtHLIcG19vTOeEHsPdy9RApAhq4O
+         PyFC8DwLtqxRBbRS3l30FECDVH7kyUNYEBOg7LYkyusRDv2U2UXc4hV1+a+Aqm1x2muI
+         W+6uUa4/sGoJ8LtbhLpXbq3iSNljbveSzSZMJ/tTql5Cba6GUVYp1nIXQfN+eMcg6nL7
+         RTnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789590756; x=1790195556;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Igvo9ZEMFWSyoL3iUr7E0RijZhz1IOlDi4Ti6NwzVsU=;
-        b=rXi32h7cc049Q97WpQUUHvrK+WMqsK9s6906wdfLv9new4SiIIVd9s8TUCgWm7ErWc
-         jnwO9xgPNn/uDElucqD7Q2+LfJGKm0Q+BpE4TeVJ85NH3yVfEMZGkEQVMUqzYYH6dDGQ
-         HKmqVPWSs6JAP5EPQH9HZVf2Tl4y00DHa/P6AMTVWr4kWQw0N0AtJBuk08anmdMeMPOi
-         +hZ09n++7hn2YgPCljx+z4ZuN808ZfaAVdf27vBylZLFAeO2WyzuBaom9v4rjY9YmZyV
-         XbnEwV40p084oIlJlSn5HiA0NHw2AKdXiqApb/z8NczbA5Aqd8t7GULmYDH66dA16Xnf
-         Em2Q==
-X-Gm-Message-State: AFuF++m2MpSwYxzHl790rnETvOeZTwG6HyaZvyTXnVid1qJI9RXW2JaL
-	QrDyEGT2vl0iQpB6xO05oO5qNmZmkm3FbHEIV9tuHwCqVX+qCH646tVDcfN2LQ==
-X-Gm-Gg: AYBFou2kvjAVFaMl5jHL/HaRwWqi8w4g3JVKT8CQLujryT/g4wXgm4l2b1qh/xm95F/
-	sbEAhqIhSutXqnrvwoSEBYp4LY2NCAcDwNgsGFHeIYvjUkgaTalcHcUZrvIkjsY08VJxDTHDvb/
-	hLGo1oklkQ2lUZIpl7vCvcf6uWMM0A4jvHoBDHSyJPojI7n9WrnOtr6pYlRZ0PqmlH0K61yTVYu
-	9zG3VCzvh3lny2ywwyYbbp45ZHTGAd5LuhnvUScXJdQvMzS2VozcxhM0dT+thExbiokwp87tvg0
-	2whCrjQqQ+jAoNg39UnkRMrN75e4i1jM8hjNVLA5IkZjFu0Y/n/Z+Z5J1AZ84Vb9nTU65RHx7yO
-	TutDY4Jm1pVvCVUgt3hJEsye8bXnybUyJkQeXlYDJBj0sRdtpSNwHSFMjp+Tz9/khXgkiH0A5Sw
-	7sTBxcpfkIP/RZcnQM1Yj2/woxmVB7WyufhmVfA8wdXs/Iraul+vcico1DBOGVpjoWDmdF9xCG/
-	89jQ8bn+chDHPzsemyc5i3tcWmrHiiPAfrMZQ==
-X-Received: by 2002:a17:90b:56cc:b0:39d:eac2:7bb1 with SMTP id 98e67ed59e1d1-39e1e26378amr11050354a91.4.1789590756337;
-        Wed, 16 Sep 2026 13:32:36 -0700 (PDT)
-Received: from royce-MS-7D09.lan (76-14-104-130.rk.wavecable.com. [76.14.104.130])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33bf56d7e5bsm9837881eec.0.2026.09.16.13.32.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2026 13:32:35 -0700 (PDT)
-From: Royce Remer <royceremer@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Royce Remer <royceremer@gmail.com>
-Subject: [PATCH v2] upload-pack: swap wanted-ref/shallow-info responses
-Date: Wed, 16 Sep 2026 13:32:21 -0700
-Message-ID: <20260916203221.5265-1-royceremer@gmail.com>
-X-Mailer: git-send-email 2.55.0.1.ga30d533ec0
-In-Reply-To: <20260915193009.222678-1-royceremer@gmail.com>
-References: <20260915193009.222678-1-royceremer@gmail.com>
+        d=1e100.net; s=20260707; t=1789592303; x=1790197103;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=adNA6tMqLyZB1EpwDfqXPXBJGN9e4c8wWLKgxwPcimc=;
+        b=MkhUmyYFZ0l/PXR6yLMSvg7AyxSHR6yQTYuJEs9/8VqMdTTjmqFhHMOyO1V5yI5ntA
+         y5HfdBHMa2TeIkNzqF4JVzDykFJYUZOCVvHueJxNQ7WR1kHwbQIHsjTPbJu0Kwbf3jAI
+         Ff34nt3WvuPWrQtAvpEXibBFP9SmXwxXgzp74Km6pnoKMQzOlRj5DWKuaFeyNMq+2Ckz
+         ueP+sI8FpmNyeASWHhaK/ET8LU72aCtL1d8NhTEYHS4y1yiPfwblexSTEKR3Z51IEhxl
+         lyZKHOQf/1VzhD3xBuLeAnGvQxrxxGPGHwvRmG4eIrtgan95Jru6uXvchgzEfNA9x1HL
+         nuZA==
+X-Forwarded-Encrypted: i=1; AKwUvBwLAil2YUYwMkA3T4Kip6Yy83h4//Gy3HLzaseVlJRKnDiDItGx+mnl504ZHGySAKbHH58=@vger.kernel.org
+X-Gm-Message-State: AFuF++kPac3nrxTcDgbGgkwy6nal8HpwcNRk1DZdX91UXrCDxiCDcqcE
+	N5MMV94PhEkpTeDGFEKTWUwFDq6IifXaYdnuZo5WrGGH27ZYpsU6kk6Tl2+LnRHFKlOGt12p+ph
+	L5I5n1no6ESZmc6gyOzkutklVoJViMQs=
+X-Gm-Gg: AYBFou2wPtq3m49URboBOPAJHaAJST+V/aDavCkQ/GqRkNSZttDZYPjgYjNizlAUtlk
+	FZAYkHw3D3CHpEjGRBx7htNzp+92TSJDE9IDoWmHkGByQCW1YTiWf4yV0DAifRaHBF1Iq93IIAh
+	L0yfpguEqIR8QKu9Q9m0vZeEfTi6wlaT7Y6bKySJF4c0035FkYayKyXJNdnk5E+Qha9alnq2W3m
+	OsdrccQy3EZdPo6T6fT2dtprPVCxmsNp4CTgAQDXgk7Vwf+wmFfvPe5Nin02Fs9WPnUrUL7MME9
+	Jf7zX2aJHSrLOkv53xDkySmsBxLfcea2vp8KNN/BJjeYJ7oa1BnEe2JIc50SnLDohqGjyNsobT6
+	MnGKClsy1Fe+71e0+YebMGllNw93nty5dN8cAY3AFiX8S0hLBQaDJqmuXp82Cf/WvE1fCQGm3dy
+	aUlWx3hSs0/hbT0YbbaYVZlCm5cYR8292V3Us5
+X-Received: by 2002:a17:90b:280a:b0:39d:f60b:8121 with SMTP id
+ 98e67ed59e1d1-39e1e4d39damr13015049a91.17.1789592303103; Wed, 16 Sep 2026
+ 13:58:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAP8UFD367UD=AomNVHEBnhY-2DQmqTNRcBX6NW7YZywWgOmxTQ@mail.gmail.com>
+ <CAP8UFD0oYnoXgQ84wHbGg3+QhX78Ucn_CXXYOe8uFpReb7X1Ng@mail.gmail.com>
+ <CAP8UFD1hAjtPuWL8asZ2LzEMJKHGh2oO73n_tsUSADtEHh9b-g@mail.gmail.com>
+ <DLEWITFIKFFK.NSANTRY5XBCB@gmail.com> <1b904e64-e681-4744-b83e-690f3ca94ea1@gmail.com>
+In-Reply-To: <1b904e64-e681-4744-b83e-690f3ca94ea1@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 16 Sep 2026 22:58:11 +0200
+X-Gm-Features: AcwNN1VWohLtui7vNI9qmUb9vWjacQ-4392_Vu6KTI8pCgZ8dqMEqORN4tgFJqA
+Message-ID: <CAP8UFD3kd=6QHp2oB+t+g-2D8bY-Oe5+_Vk+RJeaCa_xhxGrsA@mail.gmail.com>
+Subject: Re: Participating in Outreachy's December 2026 cohort
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>, git <git@vger.kernel.org>, 
+	Git at SFC <git@sfconservancy.org>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
+	Tian Yuchen <cat@malon.dev>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When a server enables uploadpack.allowRefInWant, upload_pack_v2()
-sends wanted-ref info before shallow-info.  The fetch-pack client
-expects shallow-info first; receiving them out of order causes it
-to exit:
+On Mon, Sep 14, 2026 at 11:41=E2=80=AFAM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+>
+> On 9/14/26 14:07, Pablo Sabater wrote:
+> >
+> > I've applied as co-mentor for the libification one, this way we have at
+> > least one mentor for each project.
+> >
+>
+> Cool, Pablo. I've approved your application and also Usman's. Right now
+> we appear to have 2 mentors per project:
+>
+>    - Reduce Git=E2=80=99s global state to enable Git's libification
+>
+>      - Usman Akinyemi
+>      - Pablo Sabater
+>
+>    - Improve how command arguments and options are scanned and parsed
+>
+>      - Christian Couder
+>      - Siddarth Asthana
 
-    fatal: expected 'packfile', received 'shallow-info'
+Great, thanks!
 
-This error condition only applies to protocol v2 clients performs
-a shallow fetch (--depth) against servers with allowRefInWant
-configured.
+> Given that we already have enough mentors for both the projects and I
+> have some bandwidth, I wonder if it would make sense to also propose the
+> projects that we proposed for GSoC but were not actually taken up by
+> anyone. The following are the projects:
+>
+>    - Implement promisor remote fetch ordering
 
-Swap the send order so that upload_pack_v2() sends shallow-info
-before wanted-ref info.  This is a server-side-only change and is
-compatible with all existing client versions.
+I think it's indeed a good idea to propose this project, even if it
+seems more difficult than the other projects we already propose.
 
-Signed-off-by: Royce Remer <royceremer@gmail.com>
----
- t/t5703-upload-pack-ref-in-want.sh | 18 ++++++++++++++++++
- upload-pack.c                      |  2 +-
- 2 files changed, 19 insertions(+), 1 deletion(-)
+>    - Enhance promisor-remote protocol for better-connected remotes
 
-diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
-index 249137b467..9e2a090c9e 100755
---- a/t/t5703-upload-pack-ref-in-want.sh
-+++ b/t/t5703-upload-pack-ref-in-want.sh
-@@ -295,6 +295,24 @@ test_expect_success 'fetching with wildcard that matches multiple refs' '
- 	grep "want-ref refs/heads/o/bar" log
- '
- 
-+test_expect_success 'shallow clone with ref-in-want' '
-+       rm -rf local &&
-+       GIT_TEST_PROTOCOL_VERSION=2 git clone --depth=1 "file://$REPO" local &&
-+       git -C "$REPO" rev-parse main >expected &&
-+       git -C local rev-parse refs/remotes/origin/main >actual &&
-+       test_cmp expected actual &&
-+       git -C local log --oneline refs/remotes/origin/main >log &&
-+       test_line_count = 1 log
-+'
-+
-+test_expect_success 'incremental shallow fetch with ref-in-want' '
-+       rm -rf local &&
-+       GIT_TEST_PROTOCOL_VERSION=2 git clone --depth=1 "file://$REPO" local &&
-+       GIT_TEST_PROTOCOL_VERSION=2 git -C local fetch --depth=2 origin main &&
-+       git -C local log --oneline refs/remotes/origin/main >log &&
-+       test_line_count = 2 log
-+'
-+
- REPO="$(pwd)/repo-ns"
- 
- test_expect_success 'setup namespaced repo' '
-diff --git a/upload-pack.c b/upload-pack.c
-index a52856d869..a70d237ad3 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1812,8 +1812,8 @@ int upload_pack_v2(struct repository *r, struct packet_reader *request)
- 				state = UPLOAD_DONE;
- 			break;
- 		case UPLOAD_SEND_PACK:
--			send_wanted_ref_info(&data);
- 			send_shallow_info(&data);
-+			send_wanted_ref_info(&data);
- 
- 			if (data.uri_protocols.nr) {
- 				create_pack_file(&data, &data.uri_protocols);
+This one seems even more risky and difficult to me. I would suggest
+only proposing the previous one.
 
-base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
--- 
-2.55.0.1.ga30d533ec0
+Anyway as you will mentor it, feel free to propose the project you prefer.
 
+Thanks,
+Christian.
