@@ -1,171 +1,147 @@
-Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A7644C66D
-	for <git@vger.kernel.org>; Wed, 16 Sep 2026 19:57:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.225.76
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789588678; cv=pass; b=iJQyNdgA9rZB9M7oEh39vWkn8VBxlnWtUuMoPAGu9ccJtnZ0zr3r6Mqrl2DQ6grSXoJcYGJztE9PDlhTNLlFk4atdxuQ6RURrCDGo2wXq/YYaIoSPFfCfSeMtgCgTt3D2IodwScx1e65CyZxSy0nTd2mkhJIu28+6y9LrA9eNYE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789588678; c=relaxed/simple;
-	bh=2a87W/ubEbF0nuwvU2Mv3VkBPMU9GLREsVI+l2BztII=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ebj/ELKXcEvqrnrljZI7DBLTH6BH5gb/GAkG8Oqy1VFiNTe1dL1e3COvODg5j6cqPlFQhMobMDyn9zdrI+j0O5b2Q15iWDShSIKXpgG4iU3fizWWw60lRi44Sie8CpBd3QpFa1g7d4v6TYwh63SEqpxDNjZdrUqcrkKvv1vrli4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barzilay.org; spf=none smtp.mailfrom=barzilay.org; dkim=pass (2048-bit key) header.d=barzilay-org.20251104.gappssmtp.com header.i=@barzilay-org.20251104.gappssmtp.com header.b=ThTaV4AN; arc=pass smtp.client-ip=74.125.225.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barzilay.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=barzilay.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D5D4B0E2F
+	for <git@vger.kernel.org>; Wed, 16 Sep 2026 20:32:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789590767; cv=none; b=ktyGs4obwKARB2ZVwErxRNPAOKEIVPKL66EebPrj5rY1Fj2S8nI4WAeoWHBvbrEh1o2S1OfCz+j0kuVb0K08cn975+HtK5rwxHHJLUnEFPL/lyATw6lo3v9VXW4EsUwSG/H2+g5jF14t1y6BlwR2qXm+xqnFm5FSIgsYKppbBcU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789590767; c=relaxed/simple;
+	bh=evo4oNT9VblbohzMAEFMVuwlT3Z8FBc5/V0fEYU5ZQw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=LxzhPy5ng78S0snA3YyWnJG2vH6ihdgPFGPerldrd3k/qBWdlirJRayF3tbzlG8caxCCWeuaceLOBbqlUMtgBrbYFjsqiCKusy0/+AlOUor0Za7e8hMsxpmjRRN5tcfOpiNeeO74DsHrKrCilakAbdtqaMz9uq6vtWRwTF/s4gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L3v4jBlJ; arc=none smtp.client-ip=74.125.227.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=barzilay-org.20251104.gappssmtp.com header.i=@barzilay-org.20251104.gappssmtp.com header.b="ThTaV4AN"
-Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-4838dbf1bbeso20391f8f.0
-        for <git@vger.kernel.org>; Wed, 16 Sep 2026 12:57:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789588667; cv=none;
-        d=google.com; s=arc-20260327;
-        b=os50oiOjso8w2j0p/izocWNH15RGMMadrRnFybeYT1AwbwQhJ7SS6TaVqRAmZWyo7o
-         nLI1meaRgODzYKJPseIhOxi7q2ABDKxfwOMxefNRlaD8PSCJFhnc41bK1WqRBr2k57qE
-         iSZOP3n0JvKTbGJg4AASzfLJ8GpdujvUi/xgaEeNeqiSbx3YzZw+Z6mnqwqpJa4MLPZS
-         XrMH1gUjwO2zUXZLOXlki/zZvzk/5DtmeHH9S5DKDCLn7r8RY99cH1+Hzn/ll1M6+rx0
-         rwie5VjXSe5it8j7IiuHwKsVrUvivN1EHFzsUocFzuaZlxA1qAkrcVhSMGnLzpsA+L/f
-         tzDw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=zwo2sCEL83huURbAlNfYEaf6Ot/kqJaofYrBA+e6aGo=;
-        fh=RtiEkbZKYfhrdOcn7h2i8sV3us4qXUJ0hO3+vIOMUEM=;
-        b=RsFwforg2DIVGIQk4oYzkoGudij36Cji3hg+BGDyycH6+Au9lrnUENDAp4PcmCevQC
-         ieq9/4B4HqkIHPkbZU9rP6sPMUQDFoSVyYq9XU2TUNcq5Z20XeaVxYYI3CDtzh8X9g17
-         hGYAFL0EMBeYq3c2NeZur75Rkb9YZtGbtcJW4zCLp5xiYxWykVkyR7yBNPGew5sCwyjL
-         Ryh32eLSv6s9rCyKhNs9A9JAa9L54Izih1gqO4wrA2bZA+4vsPbSfNinU+Uwgmeddzoe
-         kReMTxqJ6Kk2Wv9UR6yxg+9a3fAgZ0DhSwyRUiHgyVS4KRf6KAJABJXcawtmWHQYlo1c
-         i/Fg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L3v4jBlJ"
+Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2d747eb79f6so992105ad.0
+        for <git@vger.kernel.org>; Wed, 16 Sep 2026 13:32:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=barzilay-org.20251104.gappssmtp.com; s=20251104; t=1789588667; x=1790193467; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=zwo2sCEL83huURbAlNfYEaf6Ot/kqJaofYrBA+e6aGo=;
-        b=ThTaV4ANN3cDVAoe1gW5ejR8NsuNLxCW5u2DqCIbonETP2YmY6PeWrJTldI41Vetg9
-         84t5oclCJq9kWOoNIMuTOt9qmk2aXASQPcfsB3j157CfkQDjJK29euKO0GA5WwV1ILDz
-         Ag68KnhhUCE+UrrW0Y6porr8cDNf20b0Zq3TdIrKOq/cYy2jw9077p4Aj2Ja2Zj9ucit
-         fi8no8/2L1yXZNgdPlWpVTIys+g1cnaCpf0/q3qVrgb5DP39J3j6ahysk88j04fVTqRZ
-         HA2Ue5Pux5pCAw/te3YKzN1/uqi9ZCLO+BvS9fSFJLak8PVNSZVkL5nEKRU6Zq3MB9/L
-         2eEg==
+        d=gmail.com; s=20251104; t=1789590756; x=1790195556; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Igvo9ZEMFWSyoL3iUr7E0RijZhz1IOlDi4Ti6NwzVsU=;
+        b=L3v4jBlJE+06ghtJMqx6tLE1iKNr80YUXdN9wPBYmoQQ0CcNowpQKQf39a33NcbV6t
+         z0PQcdwLDiUwsdpW7zMOQPtEmx2Bqwe3sNIpzo9wV65hJdR/2gZO9wcbET0khVabsXlU
+         063mp2FMhP4Vp9DHcI0UvKjEz68b6LA9NG0rbwDwfRAqCanft9txNMegl1klsT51F/6f
+         9dqqwfBZdgSGaVsS7RLJFMiV9DABwUQId/UUw4hLGU1Y/gAzC8l9n7GCg4xrGnD+tujy
+         Y1UevYBs9eXhgmkGVm1gqZK1mwZvyajx0CLxPYVIY7NRSuyMb8iKuXMepZ3oByFHsOvb
+         7d0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789588667; x=1790193467;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=zwo2sCEL83huURbAlNfYEaf6Ot/kqJaofYrBA+e6aGo=;
-        b=cI7DC4Vxr8u/Z+aKYC3vDZJy+VS8pvDt9IiJoeq5BHK1Dy0iwj4frsWHa0QawVDEAI
-         u8at6hbQStFK8n0YAP6NZ4smHWqlHInwikTvoaYW0DdR3YqMC7U2fGs8rElY5WmFAjqM
-         R7YPm5FiUfEtWUjQQiegAaG0QnKoqozsBNd1Kt3SZRl4VkZ45F8efwzvRASncVHqLQnT
-         pnzWQ/eErA7NTcNmJzoHfbnsT0dLMuzGxeoqaDjQqTNRGxyYXHd81OCZEOTsH8DSV2GJ
-         YBBeL8Fq7dWzxGAcwt76sswTfts+QdVPq7oOn2LLEYUQkYYmdBWHgqxYCCm/qCRaJF83
-         0p1Q==
-X-Forwarded-Encrypted: i=1; AKwUvByjH/HI7e289mf6g2hNUs1xqodPPM9yPFO1ECLu2FIwzTTpiIysKJosK2ssqRCUjZzIYCg=@vger.kernel.org
-X-Gm-Message-State: AFuF++mVlakIC4Mi0TUYru2N28Nkx7joLbl6IMYE3VptJID6mAk/RAPT
-	4k1kwc9N7LD7waumXht/B3yBTYejNo9xCdZHhCfQTD2qKPvLu1f2imo7+/AgUNcV1sp/a2UcYLb
-	T/p/sEjf+EGWvbb+jqpgKLQ96un0FbmLUFXF2Y0ayJXShwTExU/xD8xJSEdw=
-X-Gm-Gg: AYBFou1V58Tz35PCvTFPOYyl5oINaVDp/EoX/nH9DHbpPTd76NW0mcGYETki1z4gMRO
-	qKdTxKxPv40mHB30d0Pg+fS7Ra0Y6kpPmAE9s2jrGLILIPytABg4RF20jCKrvDM8Sq9/N5Ac0+3
-	yMZzDfsT1fI+W/L/lYBVRli2iP6JsoX/9tLXPpxQPuueqF+trCceUXnhyYQgc1c7p3hfclhdc3U
-	zx5QDlWdajvlx2amyI0ovQFVsD4Ebn8+rdZBvv3BosmjQJvAWtu0fsU20qmzm9CFebaZteqysBG
-	aGR30jo89NpetBnFrE6xy6ZXxIJ/icdl6p3qKdWSeXcUhxsXws04G8eofYL3+yX4YJGEQWEKr5J
-	sVVm55Bw7liWz7O3JgemocQ5HIvwxb0Tf4WgcP/LcUR4A8AqQ
-X-Received: by 2002:a05:600c:4ec7:b0:49b:9241:7ff0 with SMTP id
- 5b1f17b1804b1-49f1d516b6fmr43350495e9.0.1789588667234; Wed, 16 Sep 2026
- 12:57:47 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1789590756; x=1790195556;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Igvo9ZEMFWSyoL3iUr7E0RijZhz1IOlDi4Ti6NwzVsU=;
+        b=rXi32h7cc049Q97WpQUUHvrK+WMqsK9s6906wdfLv9new4SiIIVd9s8TUCgWm7ErWc
+         jnwO9xgPNn/uDElucqD7Q2+LfJGKm0Q+BpE4TeVJ85NH3yVfEMZGkEQVMUqzYYH6dDGQ
+         HKmqVPWSs6JAP5EPQH9HZVf2Tl4y00DHa/P6AMTVWr4kWQw0N0AtJBuk08anmdMeMPOi
+         +hZ09n++7hn2YgPCljx+z4ZuN808ZfaAVdf27vBylZLFAeO2WyzuBaom9v4rjY9YmZyV
+         XbnEwV40p084oIlJlSn5HiA0NHw2AKdXiqApb/z8NczbA5Aqd8t7GULmYDH66dA16Xnf
+         Em2Q==
+X-Gm-Message-State: AFuF++m2MpSwYxzHl790rnETvOeZTwG6HyaZvyTXnVid1qJI9RXW2JaL
+	QrDyEGT2vl0iQpB6xO05oO5qNmZmkm3FbHEIV9tuHwCqVX+qCH646tVDcfN2LQ==
+X-Gm-Gg: AYBFou2kvjAVFaMl5jHL/HaRwWqi8w4g3JVKT8CQLujryT/g4wXgm4l2b1qh/xm95F/
+	sbEAhqIhSutXqnrvwoSEBYp4LY2NCAcDwNgsGFHeIYvjUkgaTalcHcUZrvIkjsY08VJxDTHDvb/
+	hLGo1oklkQ2lUZIpl7vCvcf6uWMM0A4jvHoBDHSyJPojI7n9WrnOtr6pYlRZ0PqmlH0K61yTVYu
+	9zG3VCzvh3lny2ywwyYbbp45ZHTGAd5LuhnvUScXJdQvMzS2VozcxhM0dT+thExbiokwp87tvg0
+	2whCrjQqQ+jAoNg39UnkRMrN75e4i1jM8hjNVLA5IkZjFu0Y/n/Z+Z5J1AZ84Vb9nTU65RHx7yO
+	TutDY4Jm1pVvCVUgt3hJEsye8bXnybUyJkQeXlYDJBj0sRdtpSNwHSFMjp+Tz9/khXgkiH0A5Sw
+	7sTBxcpfkIP/RZcnQM1Yj2/woxmVB7WyufhmVfA8wdXs/Iraul+vcico1DBOGVpjoWDmdF9xCG/
+	89jQ8bn+chDHPzsemyc5i3tcWmrHiiPAfrMZQ==
+X-Received: by 2002:a17:90b:56cc:b0:39d:eac2:7bb1 with SMTP id 98e67ed59e1d1-39e1e26378amr11050354a91.4.1789590756337;
+        Wed, 16 Sep 2026 13:32:36 -0700 (PDT)
+Received: from royce-MS-7D09.lan (76-14-104-130.rk.wavecable.com. [76.14.104.130])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33bf56d7e5bsm9837881eec.0.2026.09.16.13.32.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Sep 2026 13:32:35 -0700 (PDT)
+From: Royce Remer <royceremer@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	Royce Remer <royceremer@gmail.com>
+Subject: [PATCH v2] upload-pack: swap wanted-ref/shallow-info responses
+Date: Wed, 16 Sep 2026 13:32:21 -0700
+Message-ID: <20260916203221.5265-1-royceremer@gmail.com>
+X-Mailer: git-send-email 2.55.0.1.ga30d533ec0
+In-Reply-To: <20260915193009.222678-1-royceremer@gmail.com>
+References: <20260915193009.222678-1-royceremer@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <56991232-5d16-41d1-9c7d-ca7ebdd9fce7@gmail.com> <0BCA251B-9536-46E3-A6C5-7F917366F92D@gmail.com>
-In-Reply-To: <0BCA251B-9536-46E3-A6C5-7F917366F92D@gmail.com>
-From: Eli Barzilay <eli@barzilay.org>
-Date: Wed, 16 Sep 2026 15:57:37 -0400
-X-Gm-Features: AcwNN1W5MLbFNJKqd9xAUKQ8Xjyh117PVZ-2rLbzsm-rjtMMftlvpLtRNU1VbZc
-Message-ID: <CALO-guua8fcRq5n_M8=r9GMZ-aW4LaddXxS9rz0YhpAQ9TL3mA@mail.gmail.com>
-Subject: Re: [BUG] stash.index=true leaves a redundant stash entry after an
- autostash fast-forward
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: phillip.wood@dunelm.org.uk, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-[Note from the peanut gallery since I can't spend time diving into the
-code -- that's result of collecting dead autostashes is the only thorn
-in my joy of discovering `stash.index` + `rebase.autoStash`.  So while
-I can't spend time in the code, I'll be happy to try patches or
-whatever if it helps...]
+When a server enables uploadpack.allowRefInWant, upload_pack_v2()
+sends wanted-ref info before shallow-info.  The fetch-pack client
+expects shallow-info first; receiving them out of order causes it
+to exit:
 
-On Wed, Sep 16, 2026 at 10:30=E2=80=AFAM Ben Knoble <ben.knoble@gmail.com> =
-wrote:
->
-> Hi Phillip,
->
-> > Le 16 sept. 2026 =C3=A0 09:35, Phillip Wood <phillip.wood123@gmail.com>=
- a =C3=A9crit :
-> >
-> > =EF=BB=BFHi Ben
-> >
-> >> On 15/09/2026 22:16, D. Ben Knoble wrote:
-> >> I'm experimenting with something that swaps that out for a call to
-> >> reset_working_tree(), but I don't think I've gotten it quite right for
-> >> this bug yet (let alone run other test cases that might be affected by
-> >> this change).
-> >
-> > It looks like stash has its own unpack_trees() wrapper, so I think the =
-simplest fix is to replace reset_head() with
-> >
-> >    reset_tree(&c_tree, 0, 1);
-> >
-> > Taking a step back, this code applies the stashed index changes into th=
-e current index, writes the result to a tree and then resets the index to H=
-EAD. We could avoid touching the index at all if we used merge_incore_nonre=
-cursive() to cherry pick the index changes instead. That way we'd get a pro=
-per three-way merge and avoid spawning subprocesses for "git diff-tree", "g=
-it apply --cached", and "git reset". We're already using merge_ort_nonrecur=
-sive() to merge the working tree changes in that function so we have nearly=
- everything we need already set up to merge the index changes as well. Esse=
-ntially, when merging the index, we just need to call merge_incore_nonrecur=
-sive() instead of merge_ort_nonrecursive() and use info->i_tree instead of =
-info->w_tree.
->
-> Wow, I wish I=E2=80=99d had this info this morning! I spent a couple hour=
-s trying to understand this flow and still don=E2=80=99t have it in my head=
- :) Thanks for the pointers.
->
-> With the way I batch my side project time, it=E2=80=99ll be tomorrow befo=
-re I get to trying to make and test patches for this, but I=E2=80=99 excite=
-d now.
->
-> I may try to summarize my own notes (=3D questions about the existing cod=
-e) and send those out later today, though, since I=E2=80=99d love to make m=
-y understanding line up with yours!
->
-> >> BTW, it's really weird to me that the reset manual doesn't mention all
-> >> these "extra" cleanups reset does via remove_merge_branch_state()!
-> >
-> > Agreed, I think it comes from "git foo --abort" calling "git reset (--m=
-erge|--hard)" though that doesn't really explain why a mixed reset also rem=
-oves the branch state.
->
-> Yeah, that abort bit makes sense. I wonder if we should have had a better=
- side-channel for communicating that, but I=E2=80=99m a bit too afraid to t=
-ouch that for now ;)
->
-> > Thanks
-> >
-> > Phillip
->
-> Thank *you*!
+    fatal: expected 'packfile', received 'shallow-info'
 
+This error condition only applies to protocol v2 clients performs
+a shallow fetch (--depth) against servers with allowRefInWant
+configured.
 
+Swap the send order so that upload_pack_v2() sends shallow-info
+before wanted-ref info.  This is a server-side-only change and is
+compatible with all existing client versions.
 
---=20
-                 ((x=3D>x(x))(x=3D>x(x)))                  Eli Barzilay:
-                 http://barzilay.org/                  Maze is Life!
+Signed-off-by: Royce Remer <royceremer@gmail.com>
+---
+ t/t5703-upload-pack-ref-in-want.sh | 18 ++++++++++++++++++
+ upload-pack.c                      |  2 +-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+index 249137b467..9e2a090c9e 100755
+--- a/t/t5703-upload-pack-ref-in-want.sh
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -295,6 +295,24 @@ test_expect_success 'fetching with wildcard that matches multiple refs' '
+ 	grep "want-ref refs/heads/o/bar" log
+ '
+ 
++test_expect_success 'shallow clone with ref-in-want' '
++       rm -rf local &&
++       GIT_TEST_PROTOCOL_VERSION=2 git clone --depth=1 "file://$REPO" local &&
++       git -C "$REPO" rev-parse main >expected &&
++       git -C local rev-parse refs/remotes/origin/main >actual &&
++       test_cmp expected actual &&
++       git -C local log --oneline refs/remotes/origin/main >log &&
++       test_line_count = 1 log
++'
++
++test_expect_success 'incremental shallow fetch with ref-in-want' '
++       rm -rf local &&
++       GIT_TEST_PROTOCOL_VERSION=2 git clone --depth=1 "file://$REPO" local &&
++       GIT_TEST_PROTOCOL_VERSION=2 git -C local fetch --depth=2 origin main &&
++       git -C local log --oneline refs/remotes/origin/main >log &&
++       test_line_count = 2 log
++'
++
+ REPO="$(pwd)/repo-ns"
+ 
+ test_expect_success 'setup namespaced repo' '
+diff --git a/upload-pack.c b/upload-pack.c
+index a52856d869..a70d237ad3 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -1812,8 +1812,8 @@ int upload_pack_v2(struct repository *r, struct packet_reader *request)
+ 				state = UPLOAD_DONE;
+ 			break;
+ 		case UPLOAD_SEND_PACK:
+-			send_wanted_ref_info(&data);
+ 			send_shallow_info(&data);
++			send_wanted_ref_info(&data);
+ 
+ 			if (data.uri_protocols.nr) {
+ 				create_pack_file(&data, &data.uri_protocols);
+
+base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+-- 
+2.55.0.1.ga30d533ec0
+
