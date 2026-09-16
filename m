@@ -1,106 +1,139 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx2-f13.google.com (mail-yx2-f13.google.com [74.125.224.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C054519928
-	for <git@vger.kernel.org>; Wed, 16 Sep 2026 14:25:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEF4521202
+	for <git@vger.kernel.org>; Wed, 16 Sep 2026 14:30:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789568761; cv=none; b=euXFzQKuQ7bFpTDU9udedIQszp1k9hmqzuCnRzlht3SlxrdBXpJxfXCisKxUARp9V8aY+EC7qgKfbILB0dafq7VdOdGMybgx+YZbhVmz5vfT/TNetMdFAc6DqgB+Tz5MzG2ykSX0pXKdTwYf2vmUKlf7Hf/Qfo7VkiTVhWIcpxk=
+	t=1789569047; cv=none; b=aJz0V4Y5bkD8Ka7AR9jM0WJ4tisboUOSG8hfyMmYLBhsMLtxcvaBjWMpRObhU926CIMwjTIeVkpQ7olHS2Ws/MpYrmliiLD/aFYGhkg0Pswd7kSuvzymx1kxg17gWuVgHemEL1PkLxy6psHdgBc46ELAwgW9qq8IF6Tgc4RCHpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789568761; c=relaxed/simple;
-	bh=3cATPuqI595eiRsLQtjP8iRqZokSFWAJ9WtgpOn6yuk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KghBIHTp+qNUxYIuNaD5Q3swo7uwA6L6nA8xILZlFZyjobAG5KNDmhN3l9PVu8FR4V/DRzwKecdaeaUDSjrfD8kGuKVSj+MHUBt7VK1cCjIb1oYkJc0Dt5EId5Hddus8+miT9fzNpVG9RXzLeyvPMzcgtQd+X7aF4qiMhLNX3TY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=n1Pvcd1S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=po2PuAcn; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1789569047; c=relaxed/simple;
+	bh=19f6lH1dNgOWe2dgzeIiA90WF+wKyx6jQfuD7FQjr3s=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=P8yIVlz08/MPAL7CgjzZtkYHazRzPxCkJYUd/ogrONG6Od9TTDl8KHcj2AqyPZYVJfwnU0UwjgKBxeQQI4AzUUAng4noAJM1p2A4/GRaU6j/nFBiTYUAe1O1sWTrRrgZfKqrX2uHzIqz4/vLLcEKiiCwBlXImupSSn60Ja/KI+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pJWVAfQK; arc=none smtp.client-ip=74.125.224.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="n1Pvcd1S";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="po2PuAcn"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9B26414000AE;
-	Wed, 16 Sep 2026 10:25:57 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Wed, 16 Sep 2026 10:25:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789568757; x=1789655157; bh=IylYeONnzc
-	+Ofa4qASvyPkiXgO5j3cChNlqHfNrz1qY=; b=n1Pvcd1SyWtXH3toli9R+d2Klq
-	EEgVkHdtZaaMXLwbLgUUXiCEw8Ech1vy9a/nTdnWggnxNn0UZcFN1+QVmgd41U3s
-	LWGpEof4ttlVIrhiRT/3iILPEGRq11PHJ11U+hTk4f5vnJFx7C7uSLv44Sw2jqIm
-	lWZ0Uy/36tQZS3GnnHO4JosLorXJgY1ljr7AP3jF6zM8eV4tW+CNuCZ0tEV2NYy9
-	w0XCY/xk3MW8G1VBDMNgKdykev4rA4KVjAidNiBBC7/JwNybMdqeqoleYVGk0+df
-	70d5gBCxg0wP3z3aHy3qOEDUmt2UBHyGZQw7LPiXM4bHHuQLfXqxrmh1fgZg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789568757; x=1789655157; bh=IylYeONnzc+Ofa4qASvyPkiXgO5j3cChNlq
-	HfNrz1qY=; b=po2PuAcnHYjxt91kR3C48pcMRbyD3W7+/2tj5mPKbzztQk5+V2S
-	lIuwku7ifjPVS07jgnWhe9BI9KHWnujn0piA0+WbrIfirFyJg/hPhebi53akShQF
-	C377rG74vCnfYfQf0kMwORHvDKue6KRBtqb3hBMY3iO5rFSFaTibji9FiQJwT0l2
-	ZbrUPMSNUPOLwx5jZrHpdWFTqfDevwMYhqDxeuJmgafuX8UWJaSdq3R3/wxRSIn8
-	GN6gyWnz7/1IJPjal+1g2w+I3GONd9fl61nv86WgOZnIMYNSeVlVls82KZLbXnfU
-	6jbkprtA9WoWcN+JThHvrHGP6OBai6sf0gA==
-X-ME-Sender: <xms:9aaqagqQVcRA8E_V1hEXaJXaPzxYdcjVEE06W8hKO6MNcrNDFq1kpw>
-    <xme:9aaqatoQPlAZMXgD7dFrbtZjsHgPgRher9JpGD73_81DcXK8QTmCiO5dD8S-5P1Ka
-    mo8Zjx2HiXgorIs_XBB_dQaefwSC862c66ibycYGiil5WzVED6E7Slb>
-X-ME-Received: <xmr:9aaqaqMWc_DWOref_NPQ395S-g4a0Tn6U8ftQ-NnEv4cAOmZ-9Ndv_u9LQSAW6CU3t-KY35YmX8jaX-z9KI2mLQ4O03s4LKA3xiT>
-X-ME-Proxy-Cause: dmFkZTEJV2wfmYnbDRuUTXKR84mrIOnD/G9xJSPgDWyHW2U4H6IfLy21XnDQZkPp6z9jME
-    /MtE8nRsDxjjBRd6KzIawXiS7T9GWzQOMFVqZkbb78GfWqP/cxAmTAzEbEuhmfOUE+HWNG
-    +vecn7qXmq/O+7VbUc4LqPdESm1qVyAJ1PQLpQ5H+RIF0ImPgjpwcrvDpsuy0WGNOrv/LD
-    vlVBQBl/fgA7sJJgy144vOXyUTBvvvoPrJ41Dj7dk9WhMzxp/YIJwCshlnN576j3myaH78
-    hiZ7SwKsNCkVaQGCMHukEKe8lKhLMJJX/o7/TH5Rvuhf+Njc3UHUDFRNRAjLiET5tHK5DK
-    SlozHX1x/BnqLK5OaquBAJeBuTC7GnRUOnk9mf6BZmJuIXrVf+ihXWtL0oXOWhCtfYu2V5
-    cdPwxIEve9UgMEO6GbOHZiskgZTQF1r7GPYdAz/+Hjtr+eBHyTdfVKsGaS0JhQVafeTLQL
-    w5/bNlPAim2gU3OJr+IAmrBVmrM/NsDEPIdfyXrcyLqBxKyqGZfAmPP7WIckLYBxd/O0ZT
-    JzLydV3Ln2Ye66STcOOXR5GzjwRHVu0zx8/KV2ndi8Og9rrHEkDQyN9b0tCNU3ok7CE8m5
-    K4plAesifpC0hllLuxi8CimPfw/sUmRsNm06YZgfYjjRv/KYDpLMHRiS0Ykw
-X-ME-Proxy: <xmx:9aaqamwju9gqIm4KW8XLsdDrRY3zRkoKwiQBa7HQVtZExYMfLVBnqQ>
-    <xmx:9aaqartSUmYE0W7ikIFePMCAlyHNPqdvKbXdojuKI_xk6Ey4Zgg-VQ>
-    <xmx:9aaqan6JW0SJo8DWo9KrNgbreujZladSdUF62I0F88XvGTjvbCsG7g>
-    <xmx:9aaqaiTSk-QxdUUvPRyGdo6BsIYvVYUUpP01HwkCUUU0gM4qAJ0wFw>
-    <xmx:9aaqagxF2vxiNLezjl3trv8JX1LTVjRjK6i71dMRuJHSxT6jXGXrvPUV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Sep 2026 10:25:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Brigham Campbell <me@brighamcampbell.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2] git-contacts: allow inputting patch via stdin
-In-Reply-To: <20260915-git-contacts-stdin-v2-1-2005061d907a@brighamcampbell.com>
-	(Brigham Campbell's message of "Tue, 15 Sep 2026 22:52:23 -0600")
-References: <20260914-git-contacts-stdin-v1-1-9ac628e6fd20@brighamcampbell.com>
-	<20260915-git-contacts-stdin-v2-1-2005061d907a@brighamcampbell.com>
-Date: Wed, 16 Sep 2026 07:25:55 -0700
-Message-ID: <xmqqa4phxogc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pJWVAfQK"
+Received: by mail-yx2-f13.google.com with SMTP id 00721157ae682-85d4ddd179eso9046877b3.3
+        for <git@vger.kernel.org>; Wed, 16 Sep 2026 07:30:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789569043; x=1790173843; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=zOByfHuQTN3sulZ8oKGma6Up3di30Td/9HvwdxO+x8s=;
+        b=pJWVAfQKGhq/3MGfNaqIiKDCzyVlXEhyFqkGMZe9vdRXs3Pva0i98b7+yZh+mi4Y0E
+         TbJC71pM4W9oDLG6qP8GYldI9J37r/SjzofdOgVsy0c8o3PT5zPEdYrcAWDkpTZ41rNI
+         rmVmw8MyeT3R4JGyZN3E6R1Tqq7P3kCCeH4yXC/Q2JoWiBpMLhoPass22iW/Wx5+FNdE
+         kRDqaZCehG7eg9CHr6J4eM2urNmSLqdMnscUSyEbPjb5Jy1Elz0oeVAJSfHZPWLVueOe
+         nD9HigzPdLrJ4F/xDNHaYnJRWsHLsXC/WRNlHcCoX+ipxwp+oyar4f2Pw4xNgi+YfhXG
+         /L+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789569043; x=1790173843;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=zOByfHuQTN3sulZ8oKGma6Up3di30Td/9HvwdxO+x8s=;
+        b=oxB5e9ZefLnk+U5g+8C/dASRGZTVQj+6A+70boBqXn1mO+HbwP/WQYeNTHUGnv5D10
+         Sbw7SkqBVA9Fzb4dig9cSazN+l9D+jwh/ZqRZVcwdV0sYoM8/UUQU7Oa2Zqub3dHT4ze
+         p7lGAl20247QWhMCNx3SHklxRIuh8ZNxgXIbYZHjozfj9qsWAG8eAVj7tZpEX0r9RRaH
+         ZanWsRe/ZvxjyioAMNeB4IaHPZXjiHaV+YKTsHkMrN2rRqXBHGMG+k8Hv5Uynvs48fwQ
+         wD/M32QsmT3cD2BYCuHJa1MXGnIAkbWtWeyX6ughIL7kNZgWW4SLDYu4W2fCw6jQ4U+b
+         WAJA==
+X-Forwarded-Encrypted: i=1; AKwUvBxPnKkKkp4/3XS2gjfD8Uv3chmj/f/zbz4Ix3hMdH73d9FPH08N8n5JRG9BPRpYn5ws6/I=@vger.kernel.org
+X-Gm-Message-State: AFuF++lmecMLYYnKl8X4S81J74i39X/8g/KJRemS6raDUI2XSlPt7dT3
+	xXFHmlGxqsgIgk5nQ/NRvZ0eN+h3Pz+QompGEp+Stnjh6oXeuEgntWVEN6DLew==
+X-Gm-Gg: AYBFou2G+nXSZJKcpHivYcJS8m/Jmdh4DGPaHxKmwXVk9B2FGif1VKeL2/Os2V8OZlP
+	UUy67i6Em8Is4b0G9jlt9TLKbxjX9wBcKq1GOB0eoZscsSNEsK8OMqdWsiDbYka7NC4f2EuHBvo
+	CY6+dQ34q1WodpylpOXM0hU2vkZBjMnYN5sE1bC8bDIFqW4djSZ4LjN+AM1s0E5HCqOXo/pnQuT
+	QX+kLBuNkAJasEitM9DlMWTY0Txad+QphgpATGYqiiQFffNNSqcgC1CsdTdsbl1JAYQf9kElyLU
+	gmwTrON9k9vwe28tsH0+fget0mfA0qIWL7VahjI5FIzHw+OfVuZ23sy0YgKyypFNjXVRYWFsZgG
+	IdIGxWwAnRWWEsPdniwXZ0r4l9y/jhp5rbtrr4+BJ9q/2ZTzfrl52jiEIYx3FMQHZSlmp+/Ua81
+	ziZ0Y4CyzDTqe8Twn1yTO4XvMx5UXZW4/64wpciGJJg3ag5mB517zhxLL/Df79c2A0RD/3pXHiB
+	Pm/g2CksaKgkJ24+6FBlZOJ6Y1aRhVDjdgqQNrP7PCLlOFcG4m+GGFn+dUDvpJeXmNFF2/RAlBD
+	xTG6mW9mi6ZVtzBsjjUsu6qKDxk6aKpquak1EExoEc3xvg5v
+X-Received: by 2002:a05:690c:d94:b0:88f:62ba:5121 with SMTP id 00721157ae682-892292a8999mr13299157b3.26.1789569042528;
+        Wed, 16 Sep 2026 07:30:42 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:9092:700:6d47:c103:6361:3de9])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-891efc0f6e9sm8564897b3.27.2026.09.16.07.30.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Sep 2026 07:30:42 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [BUG] stash.index=true leaves a redundant stash entry after an autostash fast-forward
+Date: Wed, 16 Sep 2026 10:30:30 -0400
+Message-Id: <0BCA251B-9536-46E3-A6C5-7F917366F92D@gmail.com>
+References: <56991232-5d16-41d1-9c7d-ca7ebdd9fce7@gmail.com>
+Cc: Eli Barzilay <eli@barzilay.org>, git <git@vger.kernel.org>
+In-Reply-To: <56991232-5d16-41d1-9c7d-ca7ebdd9fce7@gmail.com>
+To: phillip.wood@dunelm.org.uk
+X-Mailer: iPhone Mail (23D8133)
 
-Brigham Campbell <me@brighamcampbell.com> writes:
+Hi Phillip,
 
->  # git-send-email --cc-cmd option, and in other situations.
->  #
->  # Usage: git contacts <file | rev-list option> ...
-> +#        git contacts < <patch>
+> Le 16 sept. 2026 =C3=A0 09:35, Phillip Wood <phillip.wood123@gmail.com> a =C3=
+=A9crit :
+>=20
+> =EF=BB=BFHi Ben
+>=20
+>> On 15/09/2026 22:16, D. Ben Knoble wrote:
+>> I'm experimenting with something that swaps that out for a call to
+>> reset_working_tree(), but I don't think I've gotten it quite right for
+>> this bug yet (let alone run other test cases that might be affected by
+>> this change).
+>=20
+> It looks like stash has its own unpack_trees() wrapper, so I think the sim=
+plest fix is to replace reset_head() with
+>=20
+>    reset_tree(&c_tree, 0, 1);
+>=20
+> Taking a step back, this code applies the stashed index changes into the c=
+urrent index, writes the result to a tree and then resets the index to HEAD.=
+ We could avoid touching the index at all if we used merge_incore_nonrecursi=
+ve() to cherry pick the index changes instead. That way we'd get a proper th=
+ree-way merge and avoid spawning subprocesses for "git diff-tree", "git appl=
+y --cached", and "git reset". We're already using merge_ort_nonrecursive() t=
+o merge the working tree changes in that function so we have nearly everythi=
+ng we need already set up to merge the index changes as well. Essentially, w=
+hen merging the index, we just need to call merge_incore_nonrecursive() inst=
+ead of merge_ort_nonrecursive() and use info->i_tree instead of info->w_tree=
+.
 
-Not necessarily a suggestion to change what you already added, but a
-mere food for thought.
+Wow, I wish I=E2=80=99d had this info this morning! I spent a couple hours t=
+rying to understand this flow and still don=E2=80=99t have it in my head :) T=
+hanks for the pointers.
 
-An obvious (and UNIX-y) alternative design would have been to follow
-the popular convention to tell the command to read from the standard
-input stream when "-" is used instead of a filename.  Then this line
-did not have to change, and the command would have allowed arguments
-like:
+With the way I batch my side project time, it=E2=80=99ll be tomorrow before I=
+ get to trying to make and test patches for this, but I=E2=80=99 excited now=
+.
 
-	$ git contacts patch1 patch2 - <patch3
-	$ git contacts patch1 - patch3 <patch2
+I may try to summarize my own notes (=3D questions about the existing code) a=
+nd send those out later today, though, since I=E2=80=99d love to make my und=
+erstanding line up with yours!
 
+>> BTW, it's really weird to me that the reset manual doesn't mention all
+>> these "extra" cleanups reset does via remove_merge_branch_state()!
+>=20
+> Agreed, I think it comes from "git foo --abort" calling "git reset (--merg=
+e|--hard)" though that doesn't really explain why a mixed reset also removes=
+ the branch state.
+
+Yeah, that abort bit makes sense. I wonder if we should have had a better si=
+de-channel for communicating that, but I=E2=80=99m a bit too afraid to touch=
+ that for now ;)
+
+> Thanks
+>=20
+> Phillip
+
+Thank *you*!=
