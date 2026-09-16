@@ -1,245 +1,105 @@
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9304AAC64
-	for <git@vger.kernel.org>; Wed, 16 Sep 2026 15:52:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789573972; cv=pass; b=ASMi2X77MqxSIjTFARHPF2A3TN9nfMoBI4WooO9gBTjIgFKu66X2AeW/r9Rq9wG3iNrrrhnAJxDLzgbxZgtHx13KKjQxq0hAgNiFvcyyG0Moj6ZNIMowFjpmFMQz7ZuOZg56rO2yqoVikIEZokORaKKP3pEA//kVG/lD2x8gCWc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789573972; c=relaxed/simple;
-	bh=uvYwBV/2gzMyoRaqMHR9o9bk65JgpEy2PyAD8vX9iAs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=F5ejNUtUr4ItqGVKg1ISuwYueBXr1HP2vmNTe8vlG0TQT0Ufz8hhm7P41oWREcQRzvu7Qn+btSU3R6MjSDvVBv2qJ7lYGPbuuIO6dy0oY6Wcut6MxXE567a5t0Y4VBiTqM9nwI5LWTFaQ5HSxsPXJ4zToFlS/LBmThj/XC8S1xI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com; spf=none smtp.mailfrom=tylercipriani.com; dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b=d+m5IdAF; arc=pass smtp.client-ip=209.85.161.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tylercipriani.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24B534D3B9
+	for <git@vger.kernel.org>; Wed, 16 Sep 2026 16:07:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789574853; cv=none; b=bQRxAI2hCXPo6mrfQw0DeoHn2Yik0PEiMn8iVZVGkWXKrIyqrEK9EyGccQUswjUPfzSTINlTYLQUK3bGS17huEQLmL971BUERZRvGxeCffRla/426I1wCKZZhTwLs4Y2+8Phd7iwMXJZNdjkO194U4dNCampwa23+UJFK8PUPdU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789574853; c=relaxed/simple;
+	bh=08knu9cwuNSDy9wzpxWFu8z3RJR/6I6YQesEzve5EZE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ViAd+r+kAcnez0acG3alX57mLJgYaMlwsPFCIjEwlPuNPRLoXUmzwfVBvIG3ghfpAI4hrA1ksdyoeKevDu3G2FsXCqxDJs3rvx6KyZ/SXVzBOyiPvkT7vp+fYS5KXDLQQbJe4muusM7c8L1+FJ+p+NutwFqbTL+qeUo8bAOS2s0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wwMSUdcR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=obMrEmI9; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b="d+m5IdAF"
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-6b1b1d128a0so1079750eaf.0
-        for <git@vger.kernel.org>; Wed, 16 Sep 2026 08:52:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789573967; cv=none;
-        d=google.com; s=arc-20260327;
-        b=jGFjNRRtb36zwqklr7stcSSUoBjoIJgYNTwvs1soQ5gl7lN6gXm5CFcjKY0UJE1L8a
-         SaKwya4gJS8JLHBAqMDp11u/cP35FfMvdYgukWrHumicfbSjbNwT26B32WM5f4q+CwNM
-         XJBpFpn7Z7ZLB/vhOrcCATQn2JRjUX5rbQ0DSrWJ1c0ycFCRUXxFpV5omd17lZnSVwx2
-         q8Qsja2PW0VF5li0Vfobf3liYg58nK8xWmrpJgIv4babDAx9Mbt0atwDeN8/KVikwvtW
-         o/KqcoNW3fi14NrJfG0IFtjdZvBPsl3wkaR93ONTCS5KwEhqyaaV5hn56mGpBBMUR0oY
-         A/4g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=keNB5yl8o+hBeLfvkwxTj5wlyjk6UU9bZBrGZcR+c10=;
-        fh=pQNJC67sjjTM1IZf5x4FN1CTVfZR4Ud1kyS93PgzpdU=;
-        b=m/7w3Yl3kkeTzzQILJ2UcI4cxM6TOCm4uS2OFgpMB+SE3EqDxR8O2htpC8+eNCHzer
-         tKewLotK0GpB/pB7N5dt+J11vMHJ8NzuW7fLgPCLON6iIGatAw7KfFoeB5SEEti8VDvt
-         ddz94kA6Wt2DDRYZTKPD0HXNg4BaLQEBzikN4K8z0TNx9qgizbsoqe2BqjoDZLnpCatL
-         zZeI721LqBBqPiQogvz3dkdGcq/OVbEclJSdPnhJOhNwmYud182wCIUKEIUCCpP/xNoB
-         ClLsq4f5xjRmU8dtlTIdvr50LuvQvPKbkYVFq9xznWR9P6RMdXlGoD2TYv9/i4MrWU20
-         aDng==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tylercipriani-com.20251104.gappssmtp.com; s=20251104; t=1789573967; x=1790178767; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=keNB5yl8o+hBeLfvkwxTj5wlyjk6UU9bZBrGZcR+c10=;
-        b=d+m5IdAFMdOAo5u7ebGRvXK9bF60a11znA50EN/JYY5Qxxyut0NWuOTNgwQppm1KtH
-         SU2bR3UHhT1oPLsWCV/U/EznqSZqPA57s23+OdHw29FD1pU/bZ30O5tbM8EWMjgxeKWg
-         9bkYYvJJOtyNunyfp5owtUFQSwh+pu+WGQq9Ci2Tl4eNKuL3pg+Md/lhKQON5C/nd34W
-         DF07WTPZCZdZxHMbrtG1lG0fhuNp9RWPH9sQFccv97FUtTOaeGRo6ayXlgJF67I3Qzcv
-         j5bF6Q2+982+WWYdu66Os7kCoF09sN2VDpWceGX4qJAiHW3t4KYw68Xe+niV4OHH9IRl
-         Cjmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789573967; x=1790178767;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=keNB5yl8o+hBeLfvkwxTj5wlyjk6UU9bZBrGZcR+c10=;
-        b=2LlcbAoZsGhUJ8JFvLl23Euz1a4+vBAgcyfiUdfxMFvg7WvO23WoPkZU9EQHd9+6fG
-         kKa8M8C+kBkbYsVoKEfZf9lFJeFjOmbw9htK+o+qkhTXEPJW/VfL5OivMMb5fxBRwrMB
-         o43+Ry59YQqHv+QsjJgqNLI3ge8jobHuv5AnLJw5y219mwAuDKx0HZzq6NEpCcvu8KOw
-         GBOooYfeGthmsVdPz/5iFM97GblFGqFkkXNnsRGJEATOzu6ZST40kBZDHE7OQmWXZqVD
-         ivHvrWDqPGc557VPt17BK+V1VonCJ/wiUUVSI71Q7n81+/wkOZh47cIUOUAEmbjiRmgu
-         u+ig==
-X-Gm-Message-State: AFuF++nn7DgXb98FSqrD0hSvkm3pOLMm4yVndzNJUpCD2vBrD3gyTIqb
-	JvWz8DQoYCDiRSfgtcqqm/fWFevkN5PHAlHDHDqaN+n9V/2TFQwwXb1DWlo8sf2UB304pXyCD9m
-	vXkEkQJTb2lGVFFfYLkw8Vb5vlXWnlYf9r1Z5gswp0A==
-X-Gm-Gg: AYBFou2d/JuxPT6En8XDMvYtEmO//QAFBwNtDFI7kgqkoaOTirx9O5SZJeDXwUsx1+N
-	MRMg/rAkUAuOX7JiNs3cxmvbMKqMPf61+hc3aygTCBwBgbzXr10Dhj1antteYFYLEsTVHGB69qS
-	8p/qZcK7UuoVglFB2p0eqszlNN8lacy5pC9vY7Nd+K4MdABhYKNk1igMPukH7A6HLvRDqdCxK/T
-	jqPwH80YSSDzykfnCTKgDoOcZhbURxlok0o3ZYaffH7qgWfJCQCIrpl/Ndg7eHVzVVxDNoRYZs2
-	aZV2If9Yn8ojyKBYAHw2J+gp39Mj0N68ZJSV0cPREzwLov1Rmhzpc4I=
-X-Received: by 2002:a05:6808:6508:b0:4b2:8dbf:ffd with SMTP id
- 5614622812f47-4cb67bea838mr71510b6e.1.1789573966814; Wed, 16 Sep 2026
- 08:52:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wwMSUdcR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="obMrEmI9"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7FCD7EC04E0;
+	Wed, 16 Sep 2026 12:07:29 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 16 Sep 2026 12:07:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1789574849; x=1789661249; bh=BB8HG2tTWj
+	eAN7LW3wvfj6RS/2jJO/vRnbzP+WDW2rA=; b=wwMSUdcR2R6kwffwBBD+NRl58m
+	OJtwMGPeKs8JATBMqRoNdCbSDkaSnp0acnd7Mbrr9c+fclQfX+4OMd0ZWkby0np4
+	ddbpKWdulGh2o+hLebmaeIg9ElucTh4KnN3kZLnnsIl7ujFlVNc3WN+W/zOSzgi7
+	HDzFgabpaKKNSR5ALsdwk5+Bi/ntcQBBtamD8Gyn3yWkO6jnVRXNEsmlXTjREKYx
+	CPsAnqIUGzO75xR8ieTln4Teu7C2CGQKfgQZSRlu+cHxH9xfDkbe4K5/KBc0tpZx
+	fZQA8SCi3jgCiZGm6T6FRVlXc/xK3yhan47357KBZ5LdIFVapaP9+NkD09tg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789574849; x=1789661249; bh=BB8HG2tTWjeAN7LW3wvfj6RS/2jJO/vRnbz
+	P+WDW2rA=; b=obMrEmI9uEdjVO+maxaVHt8GTo30FqNxCGmMy5kUBX+Xk5cLPYm
+	DIDe+09yBx+mWnMWtRgLcEJS5/TAMD68QsDNhtYrhOyr5PpR3doRPmse/Ycp7NZi
+	aW7uyTwqCqlIGsxqM1vx90fABLE/TZiMC3SPb4YVM1VWYYLo0hid+ivRFju8Za5t
+	kL/bb+2AKnVKM6BIFHs6aaVYVwu82QpQwNyEdqYPzSYV3XiDsLsD8bCc3Ghqf7V1
+	+5Z+bMvCED/CGfzjqo7EunVqg3fltXdSiDYcOgr2u34LPHPqRNIC193KDKVPmsiJ
+	3rzwvmi3Gj5Be01IbNMcfI70eFyKWXlVf+Q==
+X-ME-Sender: <xms:wb6qak_US14y4vKxoT7HDX0r3L6DxIgGxk9yvyJC6gPUzg9btLWLUw>
+    <xme:wb6qajsgC-WQbA6DkNRjtHMal5IEkNs9oaZdLqyspBcq0U_EKJLfbCJC88aLSHtL4
+    UFSLWabQHjDgGYz_ClN5ECpRvOK9SVNiwI3zumS0jTp6Y9qZ1tc_g>
+X-ME-Received: <xmr:wb6qavDI_9Ki_TSfhZ7zVy_0I5K9q0hBIWzXtVmDxJQnZ_-qGXejEbItY0G0-YgjeSOKr9mleXm-3lxxAcIEcLHi6UXl6N8tvYrD>
+X-ME-Proxy-Cause: dmFkZTGPZrnJfMNtlF4XEoo1R1fmMjm51mubMPaKCXO3lCtZgQo0R45h/RgFuvIM8j1Scs
+    A/fglx1I5/Kr+zhj8DFKW8IFloa89CARmi/ytV1/6Q/j81apD2VjoTEPfirlRQgkMLByrS
+    cgzYeVYnuADXHt7LwDzRx4dYyCHx6wKp3xSzInV8hC6Ja+UBI+1TR74pJf2njAlq3vf7ec
+    0Q/D5OFLdopBJs6NRBLQBNcuLM6J1wfHR1OTV+0COAMCBYOcdYfF7fAOuCO3dkxljqQD2p
+    Pr0mDFlsyu/u77Cl20kxBlumNIRvwnrjXw6YuxLfywUK6XmCkAEZ6TNc0FmHdrZmPjT4l4
+    tVC/so1GTobA9XTfEe8OkIQG28/VTkypglZr5crW+X5mwLLiw89hVwgMO8wScB32TBLkMd
+    h9khHNlPwkp91fwFZLPCiz+r8Ci/T/qyTgKcfNPIiANkj2T7AO15HTk8le+mbpxHQ/m+8f
+    8rxj7zjVbUrG5mb82/Xz3pwfFexJvITSdvdkkML9QTMrtLQ+LF53RLoQYyW7miw/m1KHSo
+    QpKF67iUv3A4VlqyhXPmblkAmlCJWVVM/vMVdwqD6h+PpwQr+Q8gLmxm/XbPPhxTsCljHe
+    8IA2ERBd9AwfmDEws3l4Xg8vAi8CN3doMrkVh1tZO889FOu86KUx14iVAL8A
+X-ME-Proxy: <xmx:wb6qajU80Ntrp1umOTahAjtSj1XjyWtKW-_uwjpW_vajyudz6F-veg>
+    <xmx:wb6qalB23tFHSQbGbUNJSVcbFiPjllMAsEYX_14P8SjxmUPWexxEnw>
+    <xmx:wb6qau-NWvqrILotTOrHLy1xusqGtJtD2ssCqzbL9AX-OEjgQpIElQ>
+    <xmx:wb6qakE8UpYeNhKEe27UkggOUHdMyk_YuXfE9rIo-6ZLOqGvD0ORwA>
+    <xmx:wb6qanBnj1n1qs0z2ZqaXxK356Zv7vocMIvvdqPEcQjoTauiMdai5xo8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 16 Sep 2026 12:07:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Yannik Tausch <dev@ytausch.de>
+Cc: git@vger.kernel.org,  newren@gmail.com
+Subject: Re: [PATCH v4 0/2] dir: fix pathspec prefixes with exclusions
+In-Reply-To: <7CB757FB-1F2D-4EE6-8C31-8C2CD6D42397@ytausch.de> (Yannik
+	Tausch's message of "Mon, 14 Sep 2026 09:24:45 +0200")
+References: <AA085B7A-F528-458A-8AA9-7664480997AE@ytausch.de>
+	<xmqqecfbk2eb.fsf@gitster.g>
+	<81EC0E28-13E7-4D10-BD07-3601124CBD77@ytausch.de>
+	<886A25E6-8854-4AF6-BF0B-CFB57B673026@ytausch.de>
+	<7CB757FB-1F2D-4EE6-8C31-8C2CD6D42397@ytausch.de>
+Date: Wed, 16 Sep 2026 09:07:27 -0700
+Message-ID: <xmqq5x05xjr4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260904210122.431757-1-tyler@tylercipriani.com>
- <20260915233305.334115-1-tyler@tylercipriani.com> <20260915233305.334115-4-tyler@tylercipriani.com>
- <CALnO6CCpxwenphyZvEX7gjvAmLPidv+4iT98uh95mXj_MvshQg@mail.gmail.com>
-In-Reply-To: <CALnO6CCpxwenphyZvEX7gjvAmLPidv+4iT98uh95mXj_MvshQg@mail.gmail.com>
-From: Tyler Cipriani <tyler@tylercipriani.com>
-Date: Wed, 16 Sep 2026 09:52:34 -0600
-X-Gm-Features: AcwNN1XRjQ5k7SK575TIemafQghI70C41FItHV2ep1ddv5XtuBcdvW0RpNsRwWc
-Message-ID: <CAHLx=On9sSTR+Ei2FmV7YSDtJ85SAzL3x=ALns1vsotn6c8Fiw@mail.gmail.com>
-Subject: Re: [PATCH v5 3/3] push: --force-if-includes should allow fast-forward
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org, Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>, 
-	Stefan Haller <lists@haller-berlin.de>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Sep 16, 2026 at 6:29=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.com=
-> wrote:
->
-> Hi Tyler,
->
-> On Tue, Sep 15, 2026 at 7:33=E2=80=AFPM Tyler Cipriani <tyler@tylercipria=
-ni.com> wrote:
-> >
-> > In set_ref_status_for_push, we verify --force-if-includes's reflog
-> > reachability checks before fast-forward rules. As a result, valid
-> > fast-forward pushes may be rejected when a force push is unneeded; like
-> > when the reflog is expired:
-> >
-> >     git clone repo.git repo
-> >     git commit --allow-empty -m 1
-> >     git reflog expire --expire=3Dall --all
-> >     git push --force-with-lease --force-if-includes origin main
-> >     ! [rejected]    main -> main (remote ref updated since checkout)
-> >
-> > Rejecting fast-forwards is a mismatch with the --force-if-includes
-> > documentation "Force an update only if the tip of the remote-tracking
-> > ref has been integrated locally."
-> >
-> > Instead, defer check for --force-if-includes until after determining if
-> > a push force is needed.
->
-> "push force" ? :)
+Yannik Tausch <dev@ytausch.de> writes:
 
-Whoops, good catch, thanks!
+> Pathspec prefix optimization must account for exclude items separately.
+> The prefix is derived from non-exclude items, so applying it while
+> matching an exclude item can compare the wrong portions of the paths.
+> Conversely, an exclude item at the start of the pathspec currently
+> prevents finding a common prefix among the remaining items.
+> ...
+> Yannik Tausch (2):
+>   dir: do not apply prefix to negative pathspecs
+>   dir: preserve pathspec prefix optimization with leading excludes
 
-> > Opted to create a deferred_reject_reason in set_ref_status_for_push
-> > rather than move the computation of reachability or verifiability to
-> > winnow scope of changes in this patch. Lazily checking for reachability
-> > or verifiability is a valid followup.
->
-> This paragraph does not match our usual style
-> (Documentation/SubmittingPatches[[imperative-mood]]) and feels
-> somewhat artificial to me.
+Thnaks.  This round looks ready for 'next'.
 
-Ack, I can update the mood. My goal was to make a note that moving the
-reachability check seems possible and might be a decent idea, but it's
-a lot of change in one patch.
 
-> > diff --git a/remote.c b/remote.c
-> > index b7b5ac0d28..db0b50b030 100644
-> > --- a/remote.c
-> > +++ b/remote.c
-> > @@ -1669,6 +1669,7 @@ void set_ref_status_for_push(struct ref *remote_r=
-efs, int send_mirror,
-> >         for (ref =3D remote_refs; ref; ref =3D ref->next) {
-> >                 int force_ref_update =3D ref->force || force_update;
-> >                 int reject_reason =3D 0;
-> > +               int deferred_reject_reason =3D 0;
-> >
-> >                 if (ref->peer_ref)
-> >                         oidcpy(&ref->new_oid, &ref->peer_ref->new_oid);
-> > @@ -1693,16 +1694,17 @@ void set_ref_status_for_push(struct ref *remote=
-_refs, int send_mirror,
-> >                  *
-> >                  * If the tip of the remote-tracking ref is unreachable
-> >                  * from any reflog entry of its local ref indicating a
-> > -                * possible update since checkout; reject the push.
-> > +                * possible update since checkout, then remember the
-> > +                * rejection in case the push is non-fast-forward.
-> >                  */
-> >                 if (ref->expect_old_sha1) {
-> >                         if (!oideq(&ref->old_oid, &ref->old_oid_expect)=
-)
-> >                                 reject_reason =3D REF_STATUS_REJECT_STA=
-LE;
-> >                         else if (ref->check_reachable && ref->unreachab=
-le)
-> > -                               reject_reason =3D
-> > +                               deferred_reject_reason =3D
-> >                                         REF_STATUS_REJECT_REMOTE_UPDATE=
-D;
-> >                         else if (ref->check_reachable && ref->unverifia=
-ble)
-> > -                               reject_reason =3D
-> > +                               deferred_reject_reason =3D
-> >                                         REF_STATUS_REJECT_UNVERIFIABLE;
-> >                         else
-> >                                 /*
->
-> From these 2 hunks, I haven't yet seen the connection to avoiding a
-> rejected force-push in the fast-forward case, but my read is: we
-> remember why we might reject a force-push for refs whose reachability
-> we are supposed to check.
->
-> > @@ -1746,6 +1748,14 @@ void set_ref_status_for_push(struct ref *remote_=
-refs, int send_mirror,
-> >                                 reject_reason =3D REF_STATUS_REJECT_NON=
-FASTFORWARD;
-> >                 }
->
-> Then in unshown code, in those 2 "remembered" cases, we check the must
-> fast-forward rules. If any fail, we set reject_reason=E2=80=A6
->
-> > +               /*
-> > +                * If push is non-fast-forward and we were asked to
-> > +                * verify the reflog but were unable to, then reflog
-> > +                * verification is the right reject_reason.
-> > +                */
-> > +               if (deferred_reject_reason && reject_reason)
-> > +                       reject_reason =3D deferred_reject_reason;
-> > +
->
-> =E2=80=A6which we now overwrite with our remembered reason in the rejecte=
-d
-> case. I think that makes sense.
->
-> At first I thought the unshown code above, conditional on
-> !reject_reason, would collude to make it so "deferred_reject_reason &&
-> reject_reason" could never be true, but I was misreading the results
-> of this patch. There are some arms in which we set both (namely,
-> because those remembered cases don't set reject_reason, allowing the
-> fast-forward rules checks).
->
-> I still wonder a bit about cases where we remember
-> deferred_reject_reason and never set reject_reason, but I think those
-> are supposed to only be the fast-forward cases.
-
-That's correct to me, too.
-
-I hemmed and hawed a bit about whether to only check _some of_ the
-reject_reasons from the fast-forward check. But decided that the
-advice in 2/3 would get people to the right outcome in cases I could
-think of.
-
-> Perhaps we want to
-> make "deferred_reject_reason" more clearly indicate that to save
-> future readers headache if they insert code around here? I'm not sure
-> the best way to do that, though, so maybe blaming to the log message
-> will suffice.
-
-I tried to indicate the rationale with comments, but I'm open to
-changing the variable name, too. I felt that the "deferred" in the
-name captured it, but the name also feels a little broad vs. what it
-does.
-
-Before I take a stab at a reroll for commit message updates + variable
-names, I'd like to gather more feedback on the direction and
-implementation of this series.
-
-Thanks you for your thoughtful comments, Ben! I've appreciated how
-you've helped me think about this feature.
