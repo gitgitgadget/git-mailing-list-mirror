@@ -1,139 +1,143 @@
-Received: from mail-yx2-f13.google.com (mail-yx2-f13.google.com [74.125.224.141])
+Received: from mail-yx2-f43.google.com (mail-yx2-f43.google.com [74.125.224.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEF4521202
-	for <git@vger.kernel.org>; Wed, 16 Sep 2026 14:30:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.141
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789569047; cv=none; b=aJz0V4Y5bkD8Ka7AR9jM0WJ4tisboUOSG8hfyMmYLBhsMLtxcvaBjWMpRObhU926CIMwjTIeVkpQ7olHS2Ws/MpYrmliiLD/aFYGhkg0Pswd7kSuvzymx1kxg17gWuVgHemEL1PkLxy6psHdgBc46ELAwgW9qq8IF6Tgc4RCHpU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789569047; c=relaxed/simple;
-	bh=19f6lH1dNgOWe2dgzeIiA90WF+wKyx6jQfuD7FQjr3s=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=P8yIVlz08/MPAL7CgjzZtkYHazRzPxCkJYUd/ogrONG6Od9TTDl8KHcj2AqyPZYVJfwnU0UwjgKBxeQQI4AzUUAng4noAJM1p2A4/GRaU6j/nFBiTYUAe1O1sWTrRrgZfKqrX2uHzIqz4/vLLcEKiiCwBlXImupSSn60Ja/KI+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pJWVAfQK; arc=none smtp.client-ip=74.125.224.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B356F314A65
+	for <git@vger.kernel.org>; Wed, 16 Sep 2026 14:55:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789570548; cv=pass; b=cyGTW9ovHGxEgOqQtovSBNZS8lwK9/KF1s5evaXOkBUuyNuuoi8USN9iAsv5mKE1BLbBd/tuEo2rflwIm4Z0gsCDdVzLmnwBS5/MYJNMcP8cqJWnO0Vzg+H0bXZdr3bEVQqqNFSMmYf7eAOrwlr/Zp3orFwa5OfALxk1bA0xtBE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789570548; c=relaxed/simple;
+	bh=DuKicLmeweBCkp0n2XUsPCsqiKz0rlNrCUqeS6nm0m4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IWUn1ZKLKoMo8IZRJFGQZCbXPmILQ5htX5H6MC4HnTGmEHNNHMY96P8weBBCeVJlEatYFWx+6L21alV4aAZPEmgD3JawqttthyzEtOGOCqKhMFNnkV8VDtNp3G7WhV7j3Cz/xFfMc443N1AuZUIekGGfV4UOkCsjnFfx/3GAuNo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=Df2TljGl; arc=pass smtp.client-ip=74.125.224.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pJWVAfQK"
-Received: by mail-yx2-f13.google.com with SMTP id 00721157ae682-85d4ddd179eso9046877b3.3
-        for <git@vger.kernel.org>; Wed, 16 Sep 2026 07:30:43 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="Df2TljGl"
+Received: by mail-yx2-f43.google.com with SMTP id 956f58d0204a3-67109935888so921218d50.3
+        for <git@vger.kernel.org>; Wed, 16 Sep 2026 07:55:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789570545; cv=none;
+        d=google.com; s=arc-20260327;
+        b=hxIGM6H0Ysn8NoeP8MqkmhXECpGdrPzAw/HsHixReasp5iF8SPefTciK4nASi5oCtk
+         X0zaUtpDrRQRjfbGLCIu3PDv+TJ8rzgGEv5BjJWl7gB/mzeCDoDnBTNtDJeHnS5GSSBg
+         K3SgMbmtnN2x5C33UaygCmOOJD2+QbByV0KbAL2uGg1XaVFM/BnaA7/U4nFgH0IntosY
+         C5OrGxeCanqhwzAaI2Tyu1uQTsEdYMrtrmZLl9n1gFSlG0Kr1/DEmjP1KGrzRh//OZ+3
+         nPmpw+GQTT222Q3LuqGVQ7saXrF2CMOsDkC/1/s5Tmjc1yVcyBJ5CqvdWk3vBt85+DSt
+         jvtQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=JSrvedWdO+/kMgrjMUMjEu484S68RaABb6ClZ33ZSEE=;
+        fh=GOPyqHvR65W7w/c+jMlXCg/At6sIZ9LtftFB5OH3X6M=;
+        b=rt7XOs0N5P+zl3WdvhjqGIjnyww/1s1mCEWxgfP2mL+t0vUSszo+ezJe9KfKRg+eQn
+         rUJygozAr/38v/+19KLE6jQIMXh8dqZmCWFys7KL3+bOSEYKuc/VSpQakgYVw82Myja7
+         ENsknn8EZk0wzLCormv/21RUcKqJ6JIiyuPkQ1bSlvYaNW1Tq3Dp+1o7oxC74jcPEAui
+         x3FYti+hn8GFfZ6c8sOfppV/QyZqZGZRthchGK14rWmkVyIZfj+dS7Z0MuP8EklojBnt
+         I8ovONNONDvNPhOC2/CIc0Uvs3/Lh3MJm2WpAJEEX/D1kCvF0/5xr2UivH5w3jWdMeMy
+         Fjzw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789569043; x=1790173843; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=zOByfHuQTN3sulZ8oKGma6Up3di30Td/9HvwdxO+x8s=;
-        b=pJWVAfQKGhq/3MGfNaqIiKDCzyVlXEhyFqkGMZe9vdRXs3Pva0i98b7+yZh+mi4Y0E
-         TbJC71pM4W9oDLG6qP8GYldI9J37r/SjzofdOgVsy0c8o3PT5zPEdYrcAWDkpTZ41rNI
-         rmVmw8MyeT3R4JGyZN3E6R1Tqq7P3kCCeH4yXC/Q2JoWiBpMLhoPass22iW/Wx5+FNdE
-         kRDqaZCehG7eg9CHr6J4eM2urNmSLqdMnscUSyEbPjb5Jy1Elz0oeVAJSfHZPWLVueOe
-         nD9HigzPdLrJ4F/xDNHaYnJRWsHLsXC/WRNlHcCoX+ipxwp+oyar4f2Pw4xNgi+YfhXG
-         /L+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789569043; x=1790173843;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=spotify.com; s=google; t=1789570545; x=1790175345; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zOByfHuQTN3sulZ8oKGma6Up3di30Td/9HvwdxO+x8s=;
-        b=oxB5e9ZefLnk+U5g+8C/dASRGZTVQj+6A+70boBqXn1mO+HbwP/WQYeNTHUGnv5D10
-         Sbw7SkqBVA9Fzb4dig9cSazN+l9D+jwh/ZqRZVcwdV0sYoM8/UUQU7Oa2Zqub3dHT4ze
-         p7lGAl20247QWhMCNx3SHklxRIuh8ZNxgXIbYZHjozfj9qsWAG8eAVj7tZpEX0r9RRaH
-         ZanWsRe/ZvxjyioAMNeB4IaHPZXjiHaV+YKTsHkMrN2rRqXBHGMG+k8Hv5Uynvs48fwQ
-         wD/M32QsmT3cD2BYCuHJa1MXGnIAkbWtWeyX6ughIL7kNZgWW4SLDYu4W2fCw6jQ4U+b
-         WAJA==
-X-Forwarded-Encrypted: i=1; AKwUvBxPnKkKkp4/3XS2gjfD8Uv3chmj/f/zbz4Ix3hMdH73d9FPH08N8n5JRG9BPRpYn5ws6/I=@vger.kernel.org
-X-Gm-Message-State: AFuF++lmecMLYYnKl8X4S81J74i39X/8g/KJRemS6raDUI2XSlPt7dT3
-	xXFHmlGxqsgIgk5nQ/NRvZ0eN+h3Pz+QompGEp+Stnjh6oXeuEgntWVEN6DLew==
-X-Gm-Gg: AYBFou2G+nXSZJKcpHivYcJS8m/Jmdh4DGPaHxKmwXVk9B2FGif1VKeL2/Os2V8OZlP
-	UUy67i6Em8Is4b0G9jlt9TLKbxjX9wBcKq1GOB0eoZscsSNEsK8OMqdWsiDbYka7NC4f2EuHBvo
-	CY6+dQ34q1WodpylpOXM0hU2vkZBjMnYN5sE1bC8bDIFqW4djSZ4LjN+AM1s0E5HCqOXo/pnQuT
-	QX+kLBuNkAJasEitM9DlMWTY0Txad+QphgpATGYqiiQFffNNSqcgC1CsdTdsbl1JAYQf9kElyLU
-	gmwTrON9k9vwe28tsH0+fget0mfA0qIWL7VahjI5FIzHw+OfVuZ23sy0YgKyypFNjXVRYWFsZgG
-	IdIGxWwAnRWWEsPdniwXZ0r4l9y/jhp5rbtrr4+BJ9q/2ZTzfrl52jiEIYx3FMQHZSlmp+/Ua81
-	ziZ0Y4CyzDTqe8Twn1yTO4XvMx5UXZW4/64wpciGJJg3ag5mB517zhxLL/Df79c2A0RD/3pXHiB
-	Pm/g2CksaKgkJ24+6FBlZOJ6Y1aRhVDjdgqQNrP7PCLlOFcG4m+GGFn+dUDvpJeXmNFF2/RAlBD
-	xTG6mW9mi6ZVtzBsjjUsu6qKDxk6aKpquak1EExoEc3xvg5v
-X-Received: by 2002:a05:690c:d94:b0:88f:62ba:5121 with SMTP id 00721157ae682-892292a8999mr13299157b3.26.1789569042528;
-        Wed, 16 Sep 2026 07:30:42 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:9092:700:6d47:c103:6361:3de9])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-891efc0f6e9sm8564897b3.27.2026.09.16.07.30.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2026 07:30:42 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        bh=JSrvedWdO+/kMgrjMUMjEu484S68RaABb6ClZ33ZSEE=;
+        b=Df2TljGlafosucPOcTjYEFOG33r4CSC8vdAmrxgbVlBs143eTfLNm1tAoe2Hm/8Lxv
+         q/5JQTtpmQNS/A56O9vfftOYLsNgJfuegaGfLtULv6TEB5v8K9eFOWqDZtjkMG4dlVDt
+         tcEsNir+dR3GoA2UvrGBZexjRawE0htXIWOZQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789570545; x=1790175345;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=JSrvedWdO+/kMgrjMUMjEu484S68RaABb6ClZ33ZSEE=;
+        b=PHLzkdc6i6REBII9YwMgFivWwGtv2xUyHgKFlun2nHdZD6ucNuIniV5ZWixO2J33o3
+         Gk1XFmKbSPWgKp2WTu2EkSmNuRLZvA/HE9jHCgmClYLL1rYbYFYFzFj0IzphPUIfSpPl
+         qrOaQkQMJHYldV786DtM2EXzcx3lcotFYDXZ+k5CIVQw2XQhakH0gF35n7ca/RJ2UeV4
+         3BI1nIURDm92HbGk7mnyHmOeLXc5ozUjkzCL0sKSJ5qLTY8doGoB1sUhNWiroVmiZvma
+         KIriXlOhzPlB3OxLbbmJSZQuadvxbilWXyrV6p38z++PCfRyzpvMGdbqx81AW1CY8o+L
+         7/6g==
+X-Gm-Message-State: AFuF++kCMTsVKHepNyQ+izxN4fEpBYWytPKj/iHDyA8gPIGHUTIcZbIY
+	20F5JbifnGpXH0uiYztAp5uqYNSZF09lrx0Onqfx93oeJeAMZWoUZSJ8yqbSp4vNwCp2tOC2Onk
+	cQSG1NQ4b4fcBvg70cZlqCgCp3Lf2HzV7W8BLtgxn/Q==
+X-Gm-Gg: AYBFou1bHnIr/mi6Df93Jh3BORYVflhE0JNUMzc1uJaVj+uQjyPQRVdClpYFcvaOchO
+	RYMF5QvOrZQSykF6DvVPOK2GmxyoeNo1BTPi51GYQ0YkX5lOCGyDdbJ6k9z6Tr3adld29Vl/qGi
+	3S/Hc4kY1IRbTnnr7s8xwhEmS1SUin37Held/+vwHPlFe/n6qLYWQg+NMV9A4juw/RUOXFA3DYi
+	g9Py/5cVS631OkPEST90P+ur5nMjnjFgXhwlOtCy0iJ4UbhF8M1ejHVG9dNB9PeNuqiGCdq9IFy
+	hdWXzmcMmgO1kn+egfq+/2CHGCsusJ9ug/L79uCz79wZg3INsVeXMFo=
+X-Received: by 2002:a05:690e:d0a:b0:66f:c1d8:19db with SMTP id
+ 956f58d0204a3-67163300f53mr1450560d50.51.1789570545389; Wed, 16 Sep 2026
+ 07:55:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [BUG] stash.index=true leaves a redundant stash entry after an autostash fast-forward
-Date: Wed, 16 Sep 2026 10:30:30 -0400
-Message-Id: <0BCA251B-9536-46E3-A6C5-7F917366F92D@gmail.com>
-References: <56991232-5d16-41d1-9c7d-ca7ebdd9fce7@gmail.com>
-Cc: Eli Barzilay <eli@barzilay.org>, git <git@vger.kernel.org>
-In-Reply-To: <56991232-5d16-41d1-9c7d-ca7ebdd9fce7@gmail.com>
-To: phillip.wood@dunelm.org.uk
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+References: <d3241733-d015-4646-88e0-06e56a04e77b@nutanix.com> <20260916134632.1424829-1-orestisflo@gmail.com>
+In-Reply-To: <20260916134632.1424829-1-orestisflo@gmail.com>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Wed, 16 Sep 2026 16:55:33 +0200
+X-Gm-Features: AcwNN1Xmio16d-1Qp4nu-wEARLwN6WtRrgYJ4tdfxxQjs9RxAEF6Nr5XKQRqlXQ
+Message-ID: <CAL71e4PRqawd=2DfLELLXR2g0PFz2ehXf05uLXJKF92WiztO9w@mail.gmail.com>
+Subject: Re: [PATCH] commit-reach: parse commits in the given repository
+To: Orestis Floros <orestisflo@gmail.com>
+Cc: git@vger.kernel.org, Florian Schmidt <flosch@nutanix.com>, Patrick Steinhardt <ps@pks.im>, 
+	Philippe Blain <levraiphilippeblain@gmail.com>, Elijah Newren <newren@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Phillip,
+On Wed, 16 Sept 2026 at 16:00, Orestis Floros <orestisflo@gmail.com> wrote:
+> +test_expect_success 'setup for commit-graphs in superproject and submodule' '
+> +       git init commit-graph &&
+> +       (cd commit-graph &&
+> +       git init sub &&
+> +       for i in 1 2 3 4 5 6 7 8 9 10
+> +       do
+> +               test_commit -C sub "sub-$i" || return 1
+> +       done &&
+> +
+> +       git -C sub checkout --detach sub-1 &&
+> +       git add sub &&
+> +       git commit -m base &&
+> +
+> +       # Write the commit-graph of the superproject while it only
+> +       # contains a single commit. Any commit-graph position of the
+> +       # submodule is thus out of bounds for the superproject.
+> +       git commit-graph write --reachable &&
+> +
+> +       git checkout -b side &&
+> +       git -C sub checkout --detach sub-5 &&
+> +       git add sub &&
+> +       git commit -m side &&
+> +
+> +       git checkout main &&
+> +       git -C sub checkout --detach sub-10 &&
+> +       git add sub &&
+> +       git commit -m main &&
+> +
+> +       git -C sub commit-graph write --reachable)
+> +'
+> +
+> +test_expect_success 'merge does not mix up superproject and submodule commit-graphs' '
+> +       (cd commit-graph &&
+> +       git merge side &&
+> +       git rev-parse HEAD:sub >actual &&
+> +       git -C sub rev-parse sub-10^{commit} >expect &&
+> +       test_cmp expect actual)
+> +'
+> +
+>  test_done
 
-> Le 16 sept. 2026 =C3=A0 09:35, Phillip Wood <phillip.wood123@gmail.com> a =C3=
-=A9crit :
->=20
-> =EF=BB=BFHi Ben
->=20
->> On 15/09/2026 22:16, D. Ben Knoble wrote:
->> I'm experimenting with something that swaps that out for a call to
->> reset_working_tree(), but I don't think I've gotten it quite right for
->> this bug yet (let alone run other test cases that might be affected by
->> this change).
->=20
-> It looks like stash has its own unpack_trees() wrapper, so I think the sim=
-plest fix is to replace reset_head() with
->=20
->    reset_tree(&c_tree, 0, 1);
->=20
-> Taking a step back, this code applies the stashed index changes into the c=
-urrent index, writes the result to a tree and then resets the index to HEAD.=
- We could avoid touching the index at all if we used merge_incore_nonrecursi=
-ve() to cherry pick the index changes instead. That way we'd get a proper th=
-ree-way merge and avoid spawning subprocesses for "git diff-tree", "git appl=
-y --cached", and "git reset". We're already using merge_ort_nonrecursive() t=
-o merge the working tree changes in that function so we have nearly everythi=
-ng we need already set up to merge the index changes as well. Essentially, w=
-hen merging the index, we just need to call merge_incore_nonrecursive() inst=
-ead of merge_ort_nonrecursive() and use info->i_tree instead of info->w_tree=
-.
+I ran the new tests with and without the code change and can
+confirm it reproduces the bug.
 
-Wow, I wish I=E2=80=99d had this info this morning! I spent a couple hours t=
-rying to understand this flow and still don=E2=80=99t have it in my head :) T=
-hanks for the pointers.
+The code makes sense to me.  As a bonus, this brings
+commit-reach.c down from 17 to 11 the_repository references,
+getting us slightly closer to eventually dropping
+USE_THE_REPOSITORY_VARIABLE there.
 
-With the way I batch my side project time, it=E2=80=99ll be tomorrow before I=
- get to trying to make and test patches for this, but I=E2=80=99 excited now=
-.
-
-I may try to summarize my own notes (=3D questions about the existing code) a=
-nd send those out later today, though, since I=E2=80=99d love to make my und=
-erstanding line up with yours!
-
->> BTW, it's really weird to me that the reset manual doesn't mention all
->> these "extra" cleanups reset does via remove_merge_branch_state()!
->=20
-> Agreed, I think it comes from "git foo --abort" calling "git reset (--merg=
-e|--hard)" though that doesn't really explain why a mixed reset also removes=
- the branch state.
-
-Yeah, that abort bit makes sense. I wonder if we should have had a better si=
-de-channel for communicating that, but I=E2=80=99m a bit too afraid to touch=
- that for now ;)
-
-> Thanks
->=20
-> Phillip
-
-Thank *you*!=
+- Kristofer
