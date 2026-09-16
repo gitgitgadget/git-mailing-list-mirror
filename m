@@ -1,79 +1,70 @@
-Received: from mail-oo2-f29.google.com (mail-oo2-f29.google.com [74.125.231.157])
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD634772A1
-	for <git@vger.kernel.org>; Tue, 15 Sep 2026 23:33:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858A213A258
+	for <git@vger.kernel.org>; Wed, 16 Sep 2026 04:23:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789515229; cv=none; b=NZ3UiIwJM2RI4E+2Hj2J8VSAodkvXr5k7XowNGhZarpst9kBwyL22+BuzR11RK8UhKfBQhjl03i2TYmdtIyBuUkIBEPpQqJxUJt+3BPHaQau/kPndRrgINom9O5dvrUAwlnjW6CYENejHPlpfhQPZqs/Ldu6EV07sosiP6QFHHM=
+	t=1789532599; cv=none; b=FGAXsVvIGFiQtnNeIRhyXC7jEoh0GNDfzYrxxQl7CYcO3e1ZF/Hp6qaLUFdxLPhoPv4rUHJdGQGo2ejnO2pv7igKhlw2hu3s7hbnwrVdVq99rsbubc0U7/ngFa/e+4+NipEWcwndkRi0LyKhY8x7ZCgOkFRLiyzmCxsdwBkUNW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789515229; c=relaxed/simple;
-	bh=ZopxqhEUe88i/prO4X/PJ5fu5MfCorFZarnmSoHuJeo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckW8s7qBkj80z/LTPE6Nvzeu3rTKpOIYLngdLfAup9MpjV9FFCy+aanU9s+e+eurUacZriV/YUX6zP/O07XMMkSoDVCsVtjT/C2DTQ0CO2VLmUb74xZAlkzqYtBGLjYDz4asktyEpeUdpyIVmrKdO1SwgdJg/VeRgdQdPxzsF3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com; spf=none smtp.mailfrom=tylercipriani.com; dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b=q/wmBO3N; arc=none smtp.client-ip=74.125.231.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tylercipriani.com
+	s=arc-20240116; t=1789532599; c=relaxed/simple;
+	bh=qy43RNYaISEEYRIx/c+gl3BFKv+R7PKoA58PPxlZH+c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=O1QFo47i39eFibuDdYw8iDKs5WZSZDxxzJbJJTo0d59GTvVR9y60wAYgyvd6WVD86X0HkLlmC4DaLqRCa6WMsfdyobC8QoeSxT3YmrFjMozpmoDWCr1YGbCUw0tNmbEyV9SB+TNHeKymALW6Wi9Va112li9XrWj29sprM4j4FBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gtD+4/Gz; arc=none smtp.client-ip=74.125.227.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b="q/wmBO3N"
-Received: by mail-oo2-f29.google.com with SMTP id 46e09a7af769-805cc8b4231so178759a34.2
-        for <git@vger.kernel.org>; Tue, 15 Sep 2026 16:33:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gtD+4/Gz"
+Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-396ccd4f99dso417626a91.2
+        for <git@vger.kernel.org>; Tue, 15 Sep 2026 21:23:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tylercipriani-com.20251104.gappssmtp.com; s=20251104; t=1789515227; x=1790120027; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=j17Cn//xKNZFBUsfcYOsYGMrWOuMdBInnoLQs1IqLkw=;
-        b=q/wmBO3NF2xMUXgnyHel3tDKrkNfEL/E8ufgLlJSjge//0wsWTelORrzy42VRqgzJG
-         t1oOmKTfKXwZM+SkqwMPVK9KthMwonJViQxUajjLVdkcYGXBLAF5w5QyrgUzayM2HT8B
-         4Vx1xy+f/Nm8TBOrigre6INDXoiVgigpCf/6/cBof14w9WfyzKMTI/x20Jdoh/b8jkTI
-         P8VPYeMWFvNGfdIo/etNW2T+DQm3kwsU65izfLOAe1FoLhvTxGv6ZyYn+W0klZ+Nj2kg
-         PJM0uHEtU7U2ODyOp6ZRHTH8wTt1xiX256bLADUEhDybhs2wRo44iNAQ5y3UYL/T5TEa
-         NRsQ==
+        d=gmail.com; s=20251104; t=1789532598; x=1790137398; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=2lgZq2N7YcT+icZTSD5aPy1rn3VenP5dMmgZEn54Pa8=;
+        b=gtD+4/GzuYLa3QfoCmn19LK/0zUjczd7KaytoJb1qNG1nNZbJghCW3g5ZO4B1rMLs8
+         d1tz6GVx36NZ9mLpv5K511HNDDtMY03ZDvsGrKOhy1TFM8H3AjQ+BDqJ1Lp+L7NjPjxp
+         Q7A+f9RHH6qTCk3BpffzVZMvZzGEdmHe0g7I0FABSm+z4P/IiAcV7TpSht+2nyj1m0oD
+         yegNDelFnEQS8LE+5ezoGx+5EFhcpwkYoS6st3DfAvqWvXAyiA4KaJ9nMev3pc+H/EF8
+         Q+ZQBBz4B4pf4tG7x1/2Z/DYI2SZ974Z6oQ8pe9F4ZK0lTNb9JlrBTnGDhEv96zUtvDM
+         c1Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789515227; x=1790120027;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=j17Cn//xKNZFBUsfcYOsYGMrWOuMdBInnoLQs1IqLkw=;
-        b=O778LRPf+PGTiBnIfgvgQJYwczi5DJibZAmdBG3oQ0nDY1R3+ydAmpwdCs2BdxuViB
-         +yAKWoD21vk3NMarCEgcU+GugGIwvwPpS5cWuo79LYSTbwxTgNQEqPNN9Vfq6KE5dPs0
-         61yFDT8rNlEqOTba1axAzXLn4UXakP830zg4tyVg90/CjPDuysrmVXurCWkMrdiz8T2+
-         NNBRkRJMH0YnYTccVoIE0x0CpePcEsq4ChygvHWBX2a/vyUeG77pIGU7UHuZGjHI4nXX
-         n4yyu2+LwQ5mDpFJJ/TnjLg3cAQaXgkk2PbsFqvPVUW4A/ZFrp+4A1P4xOETTRichZ2Y
-         BurA==
-X-Gm-Message-State: AFuF++n085relBKIQc/9ACGYdIfjgp0gOdxi33gn10skk+ECt/+It0xp
-	MSnre3UnSOCpIPgY4qBV9UvFBdLqKHhKfGnnmPx2rUNYpgj/CmcoGs53GctfL8/nmwqf2XO0ivs
-	zBLV5LDU=
-X-Gm-Gg: AYBFou0hnYG7eqvgC3kYZKt6BnnM8l+B2zvt+lATxL0PMEPo/oocR1uVw9Z1kJ3wtjs
-	Z/HYVgDWGggrKPD3UriKSouR2TaLF3cQpAJf18UDnsaLamofKupDxn+i2M7heSUOHmuWIOumkIg
-	4fBgzJFMPs1aF49szvGTbtZMRXRMvjHwjlCBoUXw18zS2pbsE9a4dQ8yrpRII5wWbycsjVWJ1Cs
-	rj6UoQo0Ga6YrUSDVep3JAfY997sghdPx8h7YwueOuRVpr3NxK67THNOCG0KGTCYi7ecG2NatJG
-	jm2JCs8L7K/z3N0iHBPqJURrpcV6BDVku7n1k2VukDZsVj6deywzDuy5tIfOU+S/szH4yO4MENN
-	j9CUeNQZ0Ycom+g20FkbwqCQEyFXDo59N0ec1HKsM9b3Xlc4vAmDyVQjiwZaQpF63Q94ahkQugU
-	7OpaztHu8+fNM3ekcZ1CxTwrrpCIjWxjFaF0jvp8ti+X8tU4b9sfc8AoeFFYFM4nTu7GzgGEc=
-X-Received: by 2002:a05:6830:81d7:b0:7f8:4b8d:d93f with SMTP id 46e09a7af769-80b2c6b363cmr653596a34.13.1789515226722;
-        Tue, 15 Sep 2026 16:33:46 -0700 (PDT)
-Received: from localhost ([161.97.221.21])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-80b06685250sm957111a34.7.2026.09.15.16.33.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2026 16:33:46 -0700 (PDT)
-From: Tyler Cipriani <tyler@tylercipriani.com>
+        d=1e100.net; s=20260707; t=1789532598; x=1790137398;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=2lgZq2N7YcT+icZTSD5aPy1rn3VenP5dMmgZEn54Pa8=;
+        b=o3L+aW/Gebf8HWHqe1wEm1cLc+z5QmH0HZmPr2PPFC/Rzosp25ouT7bYL+mR82TsWT
+         kwwyhL213GwqCU5gTxo2qlwAPjd2vkMSIkc2Ln+AUF1No+Azp6HekHx9GX7Xwhi6oG2O
+         vlnuTXu3+wPEXjfDDgjT1gtGBf5dwi0qM+tDH5s/Q50qVzNi07SedXDwtlJwZQPmqV2H
+         s2Eg0peYW+NtqXllmnWsYAymDcPnsudUfwxowvBeHroz9QhqtOLyvL6nN0VD1mQncSWm
+         if1UE2JoqicUxbtqCKLPd9fy50q2lOLcij3R+7fM9RBRh0/1gIlmLS6baTvoB/5pgHiu
+         yUUQ==
+X-Gm-Message-State: AFuF++n3aQZtICl7xzK0edm15dlPFel76lYas+xdh+gl5ADMjK0dDc9f
+	jHw8wtjB/AQJhUEkPdR0HL8N7bTxYtLvlDjkPpCCRmOIk1nMglcbzw2HT563+A==
+X-Gm-Gg: AYBFou33DmEktchLme0VQLZoozDitARKOlqFYnKeA7xsjgxTJlBj79TsGuJVAvmx34v
+	qJE9ilHCo5xnJyddKLVN8k4Y+N8oD0HBbYcBg2o0uzolDT+D2xs3TnU/TeuIYSOZiB/hw1xYGSe
+	HHuo9QQGdTb6NdhpFiY5NaN2flIi31adNWTyzKSXKNqE/vIo9GQKZsfL3NnUUff5uEAQ8SdgqhE
+	6oJYH4mdnPiFLXx7JYrY5tGgDSITavrhC4D3kTenIxg5Xb3rMyaUBdpEYN2BcsO5GJUsEgLWNH9
+	oXCWke2uksZ0Ej36u4kxpr043u7Fl1lUzYSDgtgoTdIJKbAwMVfiQxWUKvIUV+OZN6/WEXUEaSj
+	B+LbatQiCmA0bFGAUockH5mgKtpB8qZ4Jjdy6zp/3Bt4BUQkeRexxEd/DEkx4aHWaGm3EEZD9dq
+	iYOK9LrezvTZ8ImO19tUJTEo9khJkZVIGdrxrm6C5c0a7vlJEt5g4mCYs4EgyUvyHSnv4HdD1Hu
+	z3ejVSY0HA3Kplt/7pHm/hDIYF8RA3avLPY5psF5Ln/8E/Qmxy929ZYtfn9riumteGV5olLxjyc
+	EPTk43NZIh4F1dzKXvxbOLY=
+X-Received: by 2002:a17:90b:3b86:b0:39e:d2a:e2dc with SMTP id 98e67ed59e1d1-39e1e4849a4mr2651245a91.12.1789532597620;
+        Tue, 15 Sep 2026 21:23:17 -0700 (PDT)
+Received: from MU00187702X.monash.edu.au (dyn-49-127-70-83.its.monash.edu.au. [49.127.70.83])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e1b90a5a0sm2123356a91.2.2026.09.15.21.23.15
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 15 Sep 2026 21:23:17 -0700 (PDT)
+From: Yongqiang Tian <yqtian668@gmail.com>
 To: git@vger.kernel.org
-Cc: Tyler Cipriani <tyler@tylercipriani.com>,
-	Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>,
-	Stefan Haller <lists@haller-berlin.de>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc: Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 3/3] push: --force-if-includes should allow fast-forward
-Date: Tue, 15 Sep 2026 17:33:05 -0600
-Message-ID: <20260915233305.334115-4-tyler@tylercipriani.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260915233305.334115-1-tyler@tylercipriani.com>
-References: <20260904210122.431757-1-tyler@tylercipriani.com>
- <20260915233305.334115-1-tyler@tylercipriani.com>
+Subject: [PATCH] compat/winansi: fix die_lasterr() argument formatting
+Date: Wed, 16 Sep 2026 14:23:12 +1000
+Message-ID: <20260916042312.35891-1-yqtian668@gmail.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,121 +73,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In set_ref_status_for_push, we verify --force-if-includes's reflog
-reachability checks before fast-forward rules. As a result, valid
-fast-forward pushes may be rejected when a force push is unneeded; like
-when the reflog is expired:
+During WinANSI initialization, duplicate_handle() reports the handle
+when DuplicateHandle() fails:
 
-    git clone repo.git repo
-    git commit --allow-empty -m 1
-    git reflog expire --expire=all --all
-    git push --force-with-lease --force-if-includes origin main
-    ! [rejected]    main -> main (remote ref updated since checkout)
+    die_lasterr("DuplicateHandle(%li) failed", ...);
 
-Rejecting fast-forwards is a mismatch with the --force-if-includes
-documentation "Force an update only if the tip of the remote-tracking
-ref has been integrated locally."
+die_lasterr() collects the formatting arguments in a va_list, but
+passes that va_list to die_errno() as an ordinary variadic argument.
+die_errno() consequently formats the representation of the va_list
+instead of the supplied handle, producing an incorrect fatal message.
+The other current callers pass fixed strings and are unaffected.
 
-Instead, defer check for --force-if-includes until after determining if
-a push force is needed.
+Git does not provide a va_list-taking variant of die_errno(), so format
+the caller's arguments separately with strbuf_vaddf(). This consumes the
+original va_list correctly and produces the complete diagnostic prefix,
+including the handle supplied by duplicate_handle().
 
-Opted to create a deferred_reject_reason in set_ref_status_for_push
-rather than move the computation of reachability or verifiability to
-winnow scope of changes in this patch. Lazily checking for reachability
-or verifiability is a valid followup.
+Save GetLastError() before formatting because calls made while growing
+the strbuf may change the thread's Windows error value. Convert the
+saved value to errno only after formatting, then pass the completed
+message to die_errno() through a literal "%s". This prevents any percent
+characters in the formatted message from being interpreted a second
+time, while allowing die_errno() to append the corresponding system
+error and terminate as before.
 
-Signed-off-by: Tyler Cipriani <tyler@tylercipriani.com>
+The updated compat/winansi.c compiles with MinGW GCC 13. A Win64 probe
+under Wine prints a value derived from the va_list before this change
+and the supplied integer afterward.
+
+Signed-off-by: Yongqiang Tian <yqtian668@gmail.com>
 ---
- remote.c            | 16 +++++++++++++---
- t/t5533-push-cas.sh | 27 +++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+), 3 deletions(-)
+ compat/winansi.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index b7b5ac0d28..db0b50b030 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1669,6 +1669,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 	for (ref = remote_refs; ref; ref = ref->next) {
- 		int force_ref_update = ref->force || force_update;
- 		int reject_reason = 0;
-+		int deferred_reject_reason = 0;
+diff --git a/compat/winansi.c b/compat/winansi.c
+index 3ce190093..5547192a2 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -7,6 +7,7 @@
+ #define DISABLE_SIGN_COMPARE_WARNINGS
  
- 		if (ref->peer_ref)
- 			oidcpy(&ref->new_oid, &ref->peer_ref->new_oid);
-@@ -1693,16 +1694,17 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 		 *
- 		 * If the tip of the remote-tracking ref is unreachable
- 		 * from any reflog entry of its local ref indicating a
--		 * possible update since checkout; reject the push.
-+		 * possible update since checkout, then remember the
-+		 * rejection in case the push is non-fast-forward.
- 		 */
- 		if (ref->expect_old_sha1) {
- 			if (!oideq(&ref->old_oid, &ref->old_oid_expect))
- 				reject_reason = REF_STATUS_REJECT_STALE;
- 			else if (ref->check_reachable && ref->unreachable)
--				reject_reason =
-+				deferred_reject_reason =
- 					REF_STATUS_REJECT_REMOTE_UPDATED;
- 			else if (ref->check_reachable && ref->unverifiable)
--				reject_reason =
-+				deferred_reject_reason =
- 					REF_STATUS_REJECT_UNVERIFIABLE;
- 			else
- 				/*
-@@ -1746,6 +1748,14 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 				reject_reason = REF_STATUS_REJECT_NONFASTFORWARD;
- 		}
+ #include "../git-compat-util.h"
++#include "../strbuf.h"
+ #include <wingdi.h>
+ #include <winreg.h>
+ #include "win32.h"
+@@ -438,11 +439,15 @@ static void winansi_exit(void)
  
-+		/*
-+		 * If push is non-fast-forward and we were asked to
-+		 * verify the reflog but were unable to, then reflog
-+		 * verification is the right reject_reason.
-+		 */
-+		if (deferred_reject_reason && reject_reason)
-+			reject_reason = deferred_reject_reason;
+ static void die_lasterr(const char *fmt, ...)
+ {
++	DWORD err = GetLastError();
++	struct strbuf message = STRBUF_INIT;
+ 	va_list params;
 +
- 		/*
- 		 * "--force" will defeat any rejection implemented
- 		 * by the rules above.
-diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-index 38576917e4..53e241c5b1 100755
---- a/t/t5533-push-cas.sh
-+++ b/t/t5533-push-cas.sh
-@@ -421,6 +421,33 @@ test_expect_success '"--force-if-includes" should allow forced update from HEAD'
- 	)
- '
+ 	va_start(params, fmt);
+-	errno = err_win_to_posix(GetLastError());
+-	die_errno(fmt, params);
++	strbuf_vaddf(&message, fmt, params);
+ 	va_end(params);
++	errno = err_win_to_posix(err);
++	die_errno("%s", message.buf);
+ }
  
-+test_expect_success '"--force-if-includes" should allow fast-forward push without local reflog' '
-+	setup_src_dup_dst &&
-+	test_when_finished "rm -fr dst src dup" &&
-+	(
-+		cd src &&
-+		git fetch &&
-+		git switch main &&
-+		git reset --hard origin/main &&
-+		test_commit I &&
-+		git reflog expire --expire=all --all &&
-+		git push --force-with-lease --force-if-includes origin main
-+	)
-+'
-+
-+test_expect_success '"--force-if-includes" should allow fast-forward push from tag' '
-+	setup_src_dup_dst &&
-+	test_when_finished "rm -fr dst src dup" &&
-+	(
-+		cd src &&
-+		git fetch &&
-+		git switch -c newbranch origin/main &&
-+		test_commit I &&
-+		git tag T &&
-+		git push --force-with-lease --force-if-includes origin T:main
-+	)
-+'
-+
- test_expect_success '"--force-if-includes" should reject forced update from differently named branches when local lacks remote ref' '
- 	setup_src_dup_dst &&
- 	test_when_finished "rm -fr dst src dup" &&
+ #undef dup2
 -- 
-2.47.3
+2.34.1
 
