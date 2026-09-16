@@ -1,84 +1,83 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24B534D3B9
-	for <git@vger.kernel.org>; Wed, 16 Sep 2026 16:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FED4B829D
+	for <git@vger.kernel.org>; Wed, 16 Sep 2026 16:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789574853; cv=none; b=bQRxAI2hCXPo6mrfQw0DeoHn2Yik0PEiMn8iVZVGkWXKrIyqrEK9EyGccQUswjUPfzSTINlTYLQUK3bGS17huEQLmL971BUERZRvGxeCffRla/426I1wCKZZhTwLs4Y2+8Phd7iwMXJZNdjkO194U4dNCampwa23+UJFK8PUPdU=
+	t=1789577050; cv=none; b=MmDjDtHS3gsZH6pTdKfzYk+7TzIaBhM02TTyV0L46NUt1MD905Oqjfg+zxUWp8SAMQHcjjXwWi8YlaMNuMPUSxf/va51wk7PRgQZcczxBGlWcjq4wfUgTUBOzfbUFtxeT89g6AYGWvsQcnR2hIzi9EGPFKr6oZbND3854AoWQKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789574853; c=relaxed/simple;
-	bh=08knu9cwuNSDy9wzpxWFu8z3RJR/6I6YQesEzve5EZE=;
+	s=arc-20240116; t=1789577050; c=relaxed/simple;
+	bh=avQCZj8CLbAdtyL7n6QUFIZ5d+FL9zDyNjpZX6Mbs6E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ViAd+r+kAcnez0acG3alX57mLJgYaMlwsPFCIjEwlPuNPRLoXUmzwfVBvIG3ghfpAI4hrA1ksdyoeKevDu3G2FsXCqxDJs3rvx6KyZ/SXVzBOyiPvkT7vp+fYS5KXDLQQbJe4muusM7c8L1+FJ+p+NutwFqbTL+qeUo8bAOS2s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wwMSUdcR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=obMrEmI9; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=je7HtmwjFsrns0jEOrZzkqE+SlqykFnTc9mBem5YKp/5lXEeFfCbNMHbZeOTOV+iGqWtB2LtdbI5kHGewAG7hUnn7Y7zAPpQoNLRtQ9T3nMxo4IBM5PUakScS76Yn2l5/WU3GwA6dN4rMNs+OOWW8sbC6sbkBfIiO+S/EsOwn8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qsVGw2MI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OQUp4IpF; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wwMSUdcR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="obMrEmI9"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7FCD7EC04E0;
-	Wed, 16 Sep 2026 12:07:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qsVGw2MI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OQUp4IpF"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6F6E3EC04C3;
+	Wed, 16 Sep 2026 12:43:51 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 16 Sep 2026 12:07:29 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 16 Sep 2026 12:43:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789574849; x=1789661249; bh=BB8HG2tTWj
-	eAN7LW3wvfj6RS/2jJO/vRnbzP+WDW2rA=; b=wwMSUdcR2R6kwffwBBD+NRl58m
-	OJtwMGPeKs8JATBMqRoNdCbSDkaSnp0acnd7Mbrr9c+fclQfX+4OMd0ZWkby0np4
-	ddbpKWdulGh2o+hLebmaeIg9ElucTh4KnN3kZLnnsIl7ujFlVNc3WN+W/zOSzgi7
-	HDzFgabpaKKNSR5ALsdwk5+Bi/ntcQBBtamD8Gyn3yWkO6jnVRXNEsmlXTjREKYx
-	CPsAnqIUGzO75xR8ieTln4Teu7C2CGQKfgQZSRlu+cHxH9xfDkbe4K5/KBc0tpZx
-	fZQA8SCi3jgCiZGm6T6FRVlXc/xK3yhan47357KBZ5LdIFVapaP9+NkD09tg==
+	:subject:to:to; s=fm3; t=1789577031; x=1789663431; bh=QSE4zma7Fw
+	DAn5n+z+XUpMSPY8zbR05Wjx3vUSa+zJA=; b=qsVGw2MIyWi1lD8QMveopPi2XN
+	Dt3AqB4murU2IiFyzE/Ye/ksbvVUIvn1+HYDMmZSksnwj1UHhLNlDGywO1REiqSZ
+	1RjQvMkLyokoLnGiH1b8jU34Bdl+C5DbzN1iofbk1MUudMPoqLcB/Ni5QyK9m0os
+	Q56Njtc2qT+I+cLOQ3Br8de4RXcpAXVBqWyZJa46t9ohBeK2XG0iI5u9BODxYpkB
+	VIprAHDNFEbd9VUxyMOapxjgR5mqev++XNUzfYWD26h4BcE24ZbyZmLAegj8MtC2
+	Lff3oK7AleZEo8HEREBzFxBaPnhF1OIyTqIQC06d6XOOBv/Zj2rS0Qi4fhLg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789574849; x=1789661249; bh=BB8HG2tTWjeAN7LW3wvfj6RS/2jJO/vRnbz
-	P+WDW2rA=; b=obMrEmI9uEdjVO+maxaVHt8GTo30FqNxCGmMy5kUBX+Xk5cLPYm
-	DIDe+09yBx+mWnMWtRgLcEJS5/TAMD68QsDNhtYrhOyr5PpR3doRPmse/Ycp7NZi
-	aW7uyTwqCqlIGsxqM1vx90fABLE/TZiMC3SPb4YVM1VWYYLo0hid+ivRFju8Za5t
-	kL/bb+2AKnVKM6BIFHs6aaVYVwu82QpQwNyEdqYPzSYV3XiDsLsD8bCc3Ghqf7V1
-	+5Z+bMvCED/CGfzjqo7EunVqg3fltXdSiDYcOgr2u34LPHPqRNIC193KDKVPmsiJ
-	3rzwvmi3Gj5Be01IbNMcfI70eFyKWXlVf+Q==
-X-ME-Sender: <xms:wb6qak_US14y4vKxoT7HDX0r3L6DxIgGxk9yvyJC6gPUzg9btLWLUw>
-    <xme:wb6qajsgC-WQbA6DkNRjtHMal5IEkNs9oaZdLqyspBcq0U_EKJLfbCJC88aLSHtL4
-    UFSLWabQHjDgGYz_ClN5ECpRvOK9SVNiwI3zumS0jTp6Y9qZ1tc_g>
-X-ME-Received: <xmr:wb6qavDI_9Ki_TSfhZ7zVy_0I5K9q0hBIWzXtVmDxJQnZ_-qGXejEbItY0G0-YgjeSOKr9mleXm-3lxxAcIEcLHi6UXl6N8tvYrD>
-X-ME-Proxy-Cause: dmFkZTGPZrnJfMNtlF4XEoo1R1fmMjm51mubMPaKCXO3lCtZgQo0R45h/RgFuvIM8j1Scs
-    A/fglx1I5/Kr+zhj8DFKW8IFloa89CARmi/ytV1/6Q/j81apD2VjoTEPfirlRQgkMLByrS
-    cgzYeVYnuADXHt7LwDzRx4dYyCHx6wKp3xSzInV8hC6Ja+UBI+1TR74pJf2njAlq3vf7ec
-    0Q/D5OFLdopBJs6NRBLQBNcuLM6J1wfHR1OTV+0COAMCBYOcdYfF7fAOuCO3dkxljqQD2p
-    Pr0mDFlsyu/u77Cl20kxBlumNIRvwnrjXw6YuxLfywUK6XmCkAEZ6TNc0FmHdrZmPjT4l4
-    tVC/so1GTobA9XTfEe8OkIQG28/VTkypglZr5crW+X5mwLLiw89hVwgMO8wScB32TBLkMd
-    h9khHNlPwkp91fwFZLPCiz+r8Ci/T/qyTgKcfNPIiANkj2T7AO15HTk8le+mbpxHQ/m+8f
-    8rxj7zjVbUrG5mb82/Xz3pwfFexJvITSdvdkkML9QTMrtLQ+LF53RLoQYyW7miw/m1KHSo
-    QpKF67iUv3A4VlqyhXPmblkAmlCJWVVM/vMVdwqD6h+PpwQr+Q8gLmxm/XbPPhxTsCljHe
-    8IA2ERBd9AwfmDEws3l4Xg8vAi8CN3doMrkVh1tZO889FOu86KUx14iVAL8A
-X-ME-Proxy: <xmx:wb6qajU80Ntrp1umOTahAjtSj1XjyWtKW-_uwjpW_vajyudz6F-veg>
-    <xmx:wb6qalB23tFHSQbGbUNJSVcbFiPjllMAsEYX_14P8SjxmUPWexxEnw>
-    <xmx:wb6qau-NWvqrILotTOrHLy1xusqGtJtD2ssCqzbL9AX-OEjgQpIElQ>
-    <xmx:wb6qakE8UpYeNhKEe27UkggOUHdMyk_YuXfE9rIo-6ZLOqGvD0ORwA>
-    <xmx:wb6qanBnj1n1qs0z2ZqaXxK356Zv7vocMIvvdqPEcQjoTauiMdai5xo8>
+	1789577031; x=1789663431; bh=QSE4zma7FwDAn5n+z+XUpMSPY8zbR05Wjx3
+	vUSa+zJA=; b=OQUp4IpFl96WBOhTRpSG9M2eUajqj87Bup+ohoB8AThmhXU+ilO
+	StQ34VssSOJyxIsM1h8e/WhPwoMLBrIJovNc75hGjw+uZy3dVuUJ9FdkII1o+tQp
+	30V5UCp9Z0wpDd23+cLA2CMGWW+wT3/GcnkPysVA3zTrZwN4XkQ/nEPQi31LqWSh
+	b2Jf80nMrXSZxbHxInrX/+frLmJZJFjPKO+AAPMYOBHJ/JjOzNFQPrQfXT74uE6O
+	/LH5/deV9aT/Xmsf4UnevFbwKNnR8BeQrfCbsmZV1d/W8rncrCeMMMaE1ERFNa6O
+	geKW/bXxG2bTb+avASn9ekyI5jDeg3BldBg==
+X-ME-Sender: <xms:R8eqahhTwqUcUNjMqV-6lQaqGZCfr0wEY9heqMrs07EFmr0duk2dXA>
+    <xme:R8eqatfoVkZSlbv1bOcJFhZSbxBf8pQK7IidU4RffBr1sBLxtFA_ALOo25ywDzZCY
+    Tdc6GfZWXsyrn-RsVUSmbcetT3SbdAEmSz4xqxBcfwaK1FFquEe>
+X-ME-Received: <xmr:R8eqaudV5FSx-QdJkevxU38SGXwXSLR5W_Y-aahbH4BTJA6Fp1jFXztGzPN1qK_tOYxqCA79gbxvFf84FMafL_JDPnPbmgZelDPV>
+X-ME-Proxy-Cause: dmFkZTFpK+xN4jsSmwP4v8CQQbodhkcDxybKCu1qRgLNAkyWVTzFfs5j6eKnESymfrjEOa
+    EnXA7e5CuCnlEueaHbf4BouqQVZxeWbO0cElmXurmAemCe/EVI9owuXIe4spmNAx5lYagg
+    x3BGnwwH8RL4aFPMVxf5jjw4vyPctmEgeq6C9cFav1QK61BUHUogTNu7fR7tD3s7P7YTGd
+    umh202v/qDMvMEot1He1tn2Hm3KFZ+LAyaFnzQXOkeHXORmrw2u6rmRgJQCMfv276XVTfl
+    ZgqyQHvLFSGgL7H+AEw3V+H/6UexcFUpTqQUIjdifzOgaKT+hFZa+39Gos62ItcDBO2idE
+    UPxV0HHvPSHMMFKPw6GBSKNb43c8KUl9OnIgdFwSByLuQNm6Dd630eB9zLVXbCyGEy+Sep
+    JtxT5NhN8lGZZsqqW/xMw4T2ts09B9ajTVH9abRPScUpwZJrDSpPETvYNhnet8Vs3vz4+t
+    uWubcUsQy+Ytz2F/NGc+M0NqKKroXgztG5rIFJWCJhx88IvZ1tnOMBHbeXOLpObGI79jRp
+    RBSjebG8o0FihH9exj9t2EFbpSlfCCVzN5ExxA/L/5XcRraRjptlGyzjeMj1wLLTXv+frY
+    y/MR7HDncPJn6F06po8Gl1i5jS8NcI8FWj80WBV63SWBfEsEUIEefsL2fxOw
+X-ME-Proxy: <xmx:R8eqav-gJLZGP_nL6mrkWk3ScqW5SAHmrytImjclp5vgYX0Zru-wpA>
+    <xmx:R8eqaikis23TGfEMsbF_VrhwCe2V_itNvZ8snAKd6oL-3RcKyoZPmw>
+    <xmx:R8eqap_iU7zJxZys0qWQ5EaJPeSOXNINfIaY7nbemdw71NHapxz6EA>
+    <xmx:R8eqaolhucfgaPXTPPL_G5Z08rISsadHLBIiKa-6SaabtnfLM7ybYw>
+    <xmx:R8eqatdluBUaIilakGBSW7NRFRGkA1v2S7f-kdIcwDlAFyml3C-G1VfX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Sep 2026 12:07:28 -0400 (EDT)
+ 16 Sep 2026 12:43:50 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Yannik Tausch <dev@ytausch.de>
-Cc: git@vger.kernel.org,  newren@gmail.com
-Subject: Re: [PATCH v4 0/2] dir: fix pathspec prefixes with exclusions
-In-Reply-To: <7CB757FB-1F2D-4EE6-8C31-8C2CD6D42397@ytausch.de> (Yannik
-	Tausch's message of "Mon, 14 Sep 2026 09:24:45 +0200")
-References: <AA085B7A-F528-458A-8AA9-7664480997AE@ytausch.de>
-	<xmqqecfbk2eb.fsf@gitster.g>
-	<81EC0E28-13E7-4D10-BD07-3601124CBD77@ytausch.de>
-	<886A25E6-8854-4AF6-BF0B-CFB57B673026@ytausch.de>
-	<7CB757FB-1F2D-4EE6-8C31-8C2CD6D42397@ytausch.de>
-Date: Wed, 16 Sep 2026 09:07:27 -0700
-Message-ID: <xmqq5x05xjr4.fsf@gitster.g>
+To: Royce Gerard Remer <royceremer@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] [PATCH] Fix upload_pack_v2 response ordering for
+ shallow fetch when server has uploadpack.allowRefInWant=true
+In-Reply-To: <CAH5QBqzG2BQMotUmwrzUc-m6oXE9C1LZPtRyeFQsCBbcMNppbQ@mail.gmail.com>
+	(Royce Gerard Remer's message of "Tue, 15 Sep 2026 14:03:33 -0700")
+References: <20260915193009.222678-1-royceremer@gmail.com>
+	<xmqqa4piz3pn.fsf@gitster.g> <xmqq1pauz2ru.fsf@gitster.g>
+	<CAH5QBqzG2BQMotUmwrzUc-m6oXE9C1LZPtRyeFQsCBbcMNppbQ@mail.gmail.com>
+Date: Wed, 16 Sep 2026 09:43:49 -0700
+Message-ID: <xmqq1patxi2i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,18 +87,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Yannik Tausch <dev@ytausch.de> writes:
+Royce Gerard Remer <royceremer@gmail.com> writes:
 
-> Pathspec prefix optimization must account for exclude items separately.
-> The prefix is derived from non-exclude items, so applying it while
-> matching an exclude item can compare the wrong portions of the paths.
-> Conversely, an exclude item at the start of the pathspec currently
-> prevents finding a common prefix among the remaining items.
-> ...
-> Yannik Tausch (2):
->   dir: do not apply prefix to negative pathspecs
->   dir: preserve pathspec prefix optimization with leading excludes
+> Apologies, clearly struggling with using git send-email for the first
+> time (and thank you for the reply). Here's the missing context from my
+> cover:
+>
+> On my fleet of git severs (running Gitea, although it just shells out
+> to the git cli and uses this client verbatim), I enabled this in the
+> upload-pack config:
+> uploadpack.allowRefInWant=true
+>
+> Clients performing fetches and clones all worked as normal unless they
+> attempted a clone with the --depth parameter, where the client would
+> get this error:
+> fatal: expected 'packfile', received 'shallow-info'
+>
+> Looking at Documentation/gitprotocol-v2.adoc, it seems like when this
+> feature was added, the ordering was just incorrect server-side. You
+> wouldn't notice unless:
+> 1) the server enabled the config above (I suspect it's not a heavily
+> used feature in the wild)
+> 2) the client performed a fetch operation with --depth
+>
+> That's what the new test cases in t/t5703-upload-pack-ref-in-want.sh
+> are, those were written to prove the failure before the fix. I've been
+> running this in my dev fleet of servers for a day now, trying various
+> combinations of clone, with/without --depth, and fetches with
+> --unshallow-since . This is purely server-side to honor the existing
+> documented contract when these two features are in use together.
+>
+>> If a new version of "git upload-pack" suddenly swapped the order of
+> them, would it break existing "git fetch" and "git clone"?
+>
+> I think this is a question about backwards-compatibility? This
+> combination of features appears to have never worked, so clients which
+> were receiving failures would no longer. If servers were previously
+> configured to advertise allowRefInWant, clients could not have shallow
+> cloned. If they did not have this feature configured, shallow clones
+> would work the same way (the ordering of packets is unchanged).
 
-Thnaks.  This round looks ready for 'next'.
+Yes, all of the above are good material to be distilled into an
+excellent commit log message.  The way how the problematic packet
+sequence is produced, how the server and the client would behave and
+cause reliable breakage on the client, how recent the features
+involved in the bug are, and that apparently the combination are
+rarely used, which would all explain why this breakage hasn't been
+reported and diagnosed so far.
 
 
