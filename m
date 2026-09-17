@@ -1,69 +1,70 @@
-Received: from mail-pz2-f41.google.com (mail-pz2-f41.google.com [74.125.228.41])
+Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1964E36F6
-	for <git@vger.kernel.org>; Thu, 17 Sep 2026 17:52:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01E64E4C50
+	for <git@vger.kernel.org>; Thu, 17 Sep 2026 17:52:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667570; cv=none; b=ah3c/7h01NgulFynL3My1eOHEuFZ6XWJuJ9EqA9j4CMb/hUEv5HnhxR++v22WH3wR6o6F8N31WJLPnyIzRPXYlnyxzBG3IWxN2jPRrsbya3l/vrtwo3PROL4nlvjrBzXztedsw8hb8ohoB13mL4sMH4GX0jFVA4cOFth7t0dQYQ=
+	t=1789667572; cv=none; b=vFWPIClSQ9aUQUHeVsGwCh3aER54I0qlcEQXuD1KaOl2QT5CQh4v4UrL1pcjA22cC3awg9QkY+ao2WzQfY2BEX606vhs0DEDT39rj47Zs7pZq/ARj2G0d2mkFTeakCw5kcY1F9l9qvTgKECBpEhQOt4jZgnWzf8JIKGjRDfiw3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667570; c=relaxed/simple;
-	bh=xL+Bh4gaWBZcEzSLCcDVnqOi6gxWqeSkv+JLlTy4HiE=;
+	s=arc-20240116; t=1789667572; c=relaxed/simple;
+	bh=IjlqQnKT9q9IBZpIznfaSrEEAnjGJHkuGWzkhdM2zLI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Fp9XQw2/nUUMZ+b2+YvY7Nec3iYWUKZ7BmtXvuwQW6z7wvIsH8WMKYpj7DmhZEOzHvnnGKpwAlJ4LGl7VMpxCnbaBcXkrL8ZCDFCNgTOUPAw3Egupc62E8FR8qcsDUYYwiWwQAANurAPc8va99b0W4sfvplsTeV/F206aVVzkb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e4hcSHAE; arc=none smtp.client-ip=74.125.228.41
+	 MIME-Version:To:Cc; b=DO9i/A5v6boVpQbdzDFzZwTJ9OR7ZksdlJoV74JnMt8F0u8AGKKJEXsPvXDPOWdSMRSxQcSjSCtYl4H3fE/bYpDaHfQgbr8AFslHKqVX3s8rKYP7qJqEPoijxd0QvLHomaXfTjg/MevoS1cR0GQHrpwJMn1WFA0JpvPUpNJ503k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HsWWTvrF; arc=none smtp.client-ip=74.125.228.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e4hcSHAE"
-Received: by mail-pz2-f41.google.com with SMTP id d2e1a72fcca58-8693af0d7c4so1374380b3a.3
-        for <git@vger.kernel.org>; Thu, 17 Sep 2026 10:52:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HsWWTvrF"
+Received: by mail-pz2-f12.google.com with SMTP id 41be03b00d2f7-cc1ceb47d55so215082a12.1
+        for <git@vger.kernel.org>; Thu, 17 Sep 2026 10:52:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789667568; x=1790272368; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789667570; x=1790272370; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=lfj2hALrPLGdjKy3pvwKqVTGpOcfUbbPETQZNAuWqDA=;
-        b=e4hcSHAEctO376uNGigVF9YnuFfZHCe9dJM/2NYv8eoEIPI1oax48GrzyUWQAcIA4q
-         8R/DQQNm4i+nt9m/VkIpr4nfFbjDTtTgp4xd2hfyp5fat7pwt2U/TtIC1/PdZmOBAaaE
-         JLZkf1Gbi5L9lAXjcBhL0z58cPjTYi0bYWfNReL/uft9uDaPXSnVD9ysNG0Q4Xj63pL0
-         J5qjEundnkutoyJOYJQBthS6wnXcwW0VnTaXil5hf0qTL27iySvCFBXkUHjbGQ5V/ytA
-         oc777xlrYr/I/4fUDGjb7F1heLnhLFHzRFdsLZzwSCJ//AGI8yVdBIl9/1MVl1mScdpX
-         BWaw==
+        bh=doKbbj6lnaGG4v7IJBFHmF1eAnuBlVQtWAlCMe/7l7A=;
+        b=HsWWTvrFK72NUxiykuJqV3SwkL+54DZCN/0syXae/n9psTwOu3o7o6GDcVGN+o67Sj
+         Xp8W9/BnxXAT9ZyZhpDVKuxPF0iAjt/SoXG7+hHy+ZSPY8gYRvlM19CNPLdw1g3hO2so
+         YNU1jI1joove7L8S+fRqjqkEOeCUm3EKpgjlu2J1Z48Qt0zqip7eDRNkvrH7zHFsDe5h
+         Wg3ir3UOVpbv5ODGa5PV2YA9OvYiB/tNRn2jjy/N4vsckNwA5UTKJ0Fwp3FuQWhFnNyc
+         X7nYAqT6/5MPnQx3bxzmeCt5cUEZbsRMDaXPxTEI0o6O4NAY412BvwWssyr/cF2auJhN
+         Qh/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789667568; x=1790272368;
+        d=1e100.net; s=20260707; t=1789667570; x=1790272370;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=lfj2hALrPLGdjKy3pvwKqVTGpOcfUbbPETQZNAuWqDA=;
-        b=bfkjrvfuUGwjMbj8DizoDcAzycEzDLOTPQ85veUDnD8JTNxIZLg7HIjckMB9FhJk/L
-         L4jNmilU8Mst9ixAZpN7dxcKD3eCFK9yHC61SDaPtigvaXlPaxTVji6VbPDPOWENL5g3
-         MYxf5hzpryNW93P27J4Zh9EvCxioQAMtGQPfvMouaoIg8/N50jDzwh7cQ0SlnT875SZg
-         bFrRoO9tP0CXy0s7UQC2SxQqnzgoBwb8b5g8wie+8wsU0fajTaKkGli9niy/p7jeSvOO
-         /Tg49PGMODS3BMIcbcpl/7l9Vc/ms++vmr9oYd53BC0TbAUbB5SfAoTid9uzGhot7T15
-         alyg==
-X-Gm-Message-State: AFuF++l9hPHvjUROj5xz/+ROVpJ6T5wwSu4pKRCkotjQsN/v2pW7dK5T
-	bJkcjwUiHhHM+T1ErLV/Kr+RXqMKMl+30hXx7f+JfJci3s6xSUw9syxuh0qgsA==
-X-Gm-Gg: AYBFou1NNJ1Waflc1JHV5SPm3laFW936I5NJ9a53bPGl/sqfDbMn7DuwTJL/XzwZC+W
-	kP8VwNvfw4ohyQC+4a3tohL9LdPTKY+c1zz56gQ1X2JNWZKKY2gNdVO/Ywl0LSSIcT1KAsfBLZP
-	P06GsbQEljy6tJkwuM0hDvgdvezolAVbA6UoHSdKiXv4MGqXFhQEW5hYrkkY5ymLrydb5cH324Q
-	tYNCvwtLNLLw8KIUimylXFLflT92O/1fdkt6BwQ004wXbM1Boe38GkjSN978JbRsD3q1H97BhTW
-	1nN8tguMV8bCIc+HrquWjomJ3LYS9e7/rRQcmUj1ur5XP5rhXZFLk87DQlSz8g9RGWoKvgI0IxN
-	e74iePJ2Ava807tGGkW6R5BUKr4W4NLBbshOQbx6f3j+gmJL/fZNzkPdARjVuTSMcuwJF6lTB3I
-	OLDXd5hj8jqDN3COgA+6/ebJZXphocMzjN7i3KLNqNN+STS79M9AlNUCPt/vhDrQXD3rhL5U+U
-X-Received: by 2002:a05:6a00:3926:b0:874:705d:f655 with SMTP id d2e1a72fcca58-874705dfb9dmr1716882b3a.35.1789667567492;
-        Thu, 17 Sep 2026 10:52:47 -0700 (PDT)
+        bh=doKbbj6lnaGG4v7IJBFHmF1eAnuBlVQtWAlCMe/7l7A=;
+        b=i7OVmRGnEGOD3EVUlyKI/n3QSfYKz4VzmW74Ips4zTPbWyplyEeTPbB8NGAzAJlHS0
+         a02enE+ybK8TXwhPnB1Bv4H4jkRniG0e6kkXW55lklvfaQDN6JLXpYwiwIqeuS+5rLnv
+         6LwYyR7FLvOsVe7YDm6vL9BrmeELKBiGaxqkkMYVqlR36KvxEEHhQuCO8yUVcfaMTSj+
+         PpacMt8DIifj8b3puSEc41qbr/bpWi/c804npsJcRRrF55WZ1k2s37kn51xFjMDXeE3u
+         akHYeNYvsev4Ulpu53dBlX2njrtuqqr4klmDPt0xderMy/aKUa3yJVrjjr814iOKV8rf
+         wwYA==
+X-Gm-Message-State: AFuF++kT8GagxmaCaKujkrGww8Krml67GD23wPkKfDD4IJmP1lX9nYlX
+	g+yRIhbK2eF007S2yqn9JHVkstaijL4oDUn9P2JXTgQFxjGGMCapdAOa4yYf0g==
+X-Gm-Gg: AYBFou2CImTHhzz2L3D+3ojCKN1gj/lz1XHs/4LW4kghlh8uJILhE4OzA3EpzIApxUL
+	ZY+Gk2EG8udYcwFMbrsBVUyk4sRc8+i89FypPTHfObTYLp1puRAx21EXWFdEGF9g6EuWkcTa9/T
+	+Hkax8Q08ppy8t1GRTMVaATX2HkNcOrpu4qt6h6sHatzT4TlPSgnf7QqH/6Pdn3+39uBHBLBmDA
+	65d8q3Q4AjSzohVnki4mlm8lZr7rBrzk3MTzBre6DO1kDr8mYC+JypLU5XdjcFlxufyD2sOqzmH
+	MRXEW/JeJFhPRsULokjR/OO71kdPvpLL8PgTM3qelhyLH5TYmnxWLWAKSetqDhv8972Qbn0ZrpZ
+	tzC2cui8S7c/ukP6low8Qaa46bmYpis5YFUOgBEDXnt51k87k8ag5i2S16phVw2mk7xFdeuiK7e
+	vCWVYHL12KlCm8VsPVDjrdCItiQI9ROcsrYGwF6tFD32FBTDEQ1+5ifsqXyXxN/0yOcyW1z+Yk
+X-Received: by 2002:a17:90b:3881:b0:395:8124:ac53 with SMTP id 98e67ed59e1d1-39e35f71c5bmr4855749a91.6.1789667569908;
+        Thu, 17 Sep 2026 10:52:49 -0700 (PDT)
 Received: from [127.0.0.1] ([52.157.33.34])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8720123e374sm3104853b3a.24.2026.09.17.10.52.46
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e3c06423esm5188125a91.15.2026.09.17.10.52.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Sep 2026 10:52:46 -0700 (PDT)
-Message-Id: <bc67ad3b05a221fce939c8a4c6071769b949599b.1789667556.git.gitgitgadget@gmail.com>
+        Thu, 17 Sep 2026 10:52:48 -0700 (PDT)
+Message-Id: <de28e72d5f5e3fe59666919510242daf82845337.1789667556.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2231.git.1789667556.gitgitgadget@gmail.com>
 References: <pull.2231.git.1789667556.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 17 Sep 2026 17:52:34 +0000
-Subject: [PATCH 5/7] t/unit-tests: check reftable iterator initialization
+Date: Thu, 17 Sep 2026 17:52:35 +0000
+Subject: [PATCH 6/7] oss-fuzz: handle reftable iterator initialization
+ failures
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,36 +80,60 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Coverity pointed out that the
-`test_reftable_table__seek_invalid_log_offset()` test, which was
-introduced by a1c085df8dcb (reftable/table: fix NULL pointer access when
-seeking to bogus offsets, 2026-07-03), ignores the result of
-`reftable_table_init_log_iterator()` and proceeds to
-`reftable_iterator_seek_log()`, although initialization can return
-`REFTABLE_OUT_OF_MEMORY_ERROR` without installing an ops table. Under
-allocation failure, the test then dereferences a NULL function table.
+The reftable fuzzer introduced by adf45165e65b (oss-fuzz: add fuzzer for
+parsing reftables, 2026-07-03) ignored failures from
+`reftable_table_init_ref_iterator()` and
+`reftable_table_init_log_iterator()`. Coverity reported that under
+allocation failure, either constructor can return
+`REFTABLE_OUT_OF_MEMORY_ERROR` without installing an ops table, allowing
+a subsequent seek to dereference NULL.
 
-Assert successful iterator initialization before seeking.
+Treat iterator initialization failure as a reason to skip the
+corresponding seek and iteration while retaining safe destruction for an
+uninitialized iterator.
 
 Assisted-by: GPT-5.6 Luna
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/unit-tests/u-reftable-table.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ oss-fuzz/fuzz-reftable.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/t/unit-tests/u-reftable-table.c b/t/unit-tests/u-reftable-table.c
-index bd04b477a3..1e4378b2eb 100644
---- a/t/unit-tests/u-reftable-table.c
-+++ b/t/unit-tests/u-reftable-table.c
-@@ -257,7 +257,7 @@ void test_reftable_table__seek_invalid_log_offset(void)
- 	 * know that the table is corrupt, so the seek must report a format
- 	 * error instead of pretending that the section is empty.
- 	 */
--	reftable_table_init_log_iterator(table, &it);
-+	cl_assert_equal_i(reftable_table_init_log_iterator(table, &it), 0);
- 	cl_assert_equal_i(reftable_iterator_seek_log(&it, ""),
- 			  REFTABLE_FORMAT_ERROR);
+diff --git a/oss-fuzz/fuzz-reftable.c b/oss-fuzz/fuzz-reftable.c
+index c46eac2c6b..75b8ad0c3d 100644
+--- a/oss-fuzz/fuzz-reftable.c
++++ b/oss-fuzz/fuzz-reftable.c
+@@ -33,10 +33,11 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
+ 		struct reftable_ref_record ref = { 0 };
+ 		struct reftable_iterator it = { 0 };
  
+-		reftable_table_init_ref_iterator(table, &it);
+-		if (!reftable_iterator_seek_ref(&it, ""))
+-			while (!reftable_iterator_next_ref(&it, &ref))
+-				;
++		if (!reftable_table_init_ref_iterator(table, &it)) {
++			if (!reftable_iterator_seek_ref(&it, ""))
++				while (!reftable_iterator_next_ref(&it, &ref))
++					;
++		}
+ 
+ 		reftable_ref_record_release(&ref);
+ 		reftable_iterator_destroy(&it);
+@@ -46,10 +47,11 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
+ 		struct reftable_log_record log = { 0 };
+ 		struct reftable_iterator it = { 0 };
+ 
+-		reftable_table_init_log_iterator(table, &it);
+-		if (!reftable_iterator_seek_log(&it, ""))
+-			while (!reftable_iterator_next_log(&it, &log))
+-				;
++		if (!reftable_table_init_log_iterator(table, &it)) {
++			if (!reftable_iterator_seek_log(&it, ""))
++				while (!reftable_iterator_next_log(&it, &log))
++					;
++		}
+ 
+ 		reftable_log_record_release(&log);
+ 		reftable_iterator_destroy(&it);
 -- 
 gitgitgadget
 
