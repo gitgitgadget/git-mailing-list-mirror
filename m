@@ -1,71 +1,69 @@
-Received: from mail-pj2-f17.google.com (mail-pj2-f17.google.com [74.125.227.145])
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A203B3BFE
-	for <git@vger.kernel.org>; Thu, 17 Sep 2026 17:52:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEBE4E0B6D
+	for <git@vger.kernel.org>; Thu, 17 Sep 2026 17:52:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667565; cv=none; b=WY5MIbnkRy7W/CNAAH2WDM4a6bH2TPREgP8uUv6YJKOeCTNbsGf7Y0y55yJBmlFbH2mewQZV1e0SBjKqWg5JDtS7Gk5ibfX2SDdETalcqf8v7Hv8K1CXOiWHSo2OyKga1Cdd/nnffiDElPjkWM/USWRQ1j5navkx6M8I5vlOMJk=
+	t=1789667566; cv=none; b=ePWt8h7oJFm8ahiGU4IKhhlmKfn2pSa+0IxFwRTH4+uKESrTfdjd0AmdmTXP078WOI+IETc1wUvO+hayTM09s4T3EJ7scIZrVTEwdCcua6avqdbPhxJMuprXVRMiJOV8bE1bI4felDreowkoPlGfvBr1b4Gujr+yg1uuk9AGWjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667565; c=relaxed/simple;
-	bh=GUg0iyxlboTsZdylsUkv4/J5GQ6QKceZG+U9KxImwbE=;
+	s=arc-20240116; t=1789667566; c=relaxed/simple;
+	bh=wwaW04L50v3DfC0xE9aJyrV+15ncpC2JUhM34tMmjc8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=VkPx1ZuoZwvHm5JSfIyjm10wIMmVL4R5lsX2s1c3oZjkCydoSKv61w4T1fpGITKG+CmgQ/DmuoUFjdNekZYYqKosa/DRzMnlQ8WKAcsIgxjfXSJ9XkWQes0rltKQWt9VK7lvgXtWyWnhrJrtn2TdtjZo9H9sfCcilG3FyPjNzoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y+SC9R5B; arc=none smtp.client-ip=74.125.227.145
+	 MIME-Version:To:Cc; b=T/cxIdJcv4eSkUPr0fB6WarlFtsomsa2dxCBgCmYnZDjuG62W3PtyTP/RYmlc0VuALMRjmmK4a4Afs3kEXeEqtOivpPSThfkflP+1eb4Tw3nQhrSzJEd0jiazHM09zMAAsfJEUC5gkJrUdIqmziymS3uz01O2ChrCHn+JwUPFm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jqw136y9; arc=none smtp.client-ip=74.125.227.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y+SC9R5B"
-Received: by mail-pj2-f17.google.com with SMTP id d9443c01a7336-2db1ca06a25so8723935ad.2
-        for <git@vger.kernel.org>; Thu, 17 Sep 2026 10:52:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jqw136y9"
+Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396cccbba92so1038429a91.0
+        for <git@vger.kernel.org>; Thu, 17 Sep 2026 10:52:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789667563; x=1790272363; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789667564; x=1790272364; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=qauVpZE3XaZi7Wee+e2S9UXo1yKeRws7MWXu/5Ex0b0=;
-        b=Y+SC9R5B5zpF/bCykBAcN8T++fiJ17Wtd9hvQsNvm+3DkLhikOXft6ZBbgTAI/Xv1C
-         /y+TgTPDJMEsBCv+sZ3E0+bLK1DU/oTq8UWsjTnfXILt4yhXfh+5pWmoWifZWPZGW6Nw
-         sN7SsB46QEC4zSgoaBMwpL/WxxY4UUKc8YDcU7qs7D/HMtdvKcIhhZEMaDBIUFQ7rvAm
-         Kf+CWVlnJmV7caS5UgsPvj+ctWplAsljWxIQCAelJFRRia/x50tD8DiBdGtsu3wY7Yiz
-         CHLj0biT/hSHq61bKjttTFlFZYBGnlzl09R4zP3f/HvEfK3DiEBcYiPxHMNAeohBmbHm
-         TYhg==
+        bh=5OnMKj8X3qgLypUYUyTT0RuP7tJKvSefQJi1iED/32A=;
+        b=Jqw136y9QUZd3r7HdY3L24rPnC06eO68gEaGcotXnGbk0FK6WjZN5Uf8kpf1hbUFcI
+         tH2rzBRNjdCWv1xnhrrwV7ZN1iaw6C7EocgI8Efs1fj6XvTRux15YCheLLcZUKbFku/a
+         J/uzLsSsjs7SoxhpPxpaAZ9ODrCAxWWfDK3UpLnyePcfALw+r7HZ7uxR3lDvfKqMke4m
+         YqrhBHLcNvy2HxYrzqkgISNwU20+wuDwPGsjT4MG3pMtaHus0wBQ5wJUPVZFhYnyPDAO
+         i4XNYj7YjUhkunvz3LSpyBtOvouMMkKFrFiSAeO2oZ8VsiqWiBb3luC+w6HIn0Ah08iD
+         tCIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789667563; x=1790272363;
+        d=1e100.net; s=20260707; t=1789667564; x=1790272364;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=qauVpZE3XaZi7Wee+e2S9UXo1yKeRws7MWXu/5Ex0b0=;
-        b=nLjXIXue+Sa2OoURDn8X3M+Az0h7a5VuHX1a1n4NQvpM2YdPnzZWc1TedvoD2JotsN
-         3tRkN9LziVj2e8Wr+M+rv+4PqsjK0XCOAj6GE5SUGOhoOC4iPpNXRuKWiFOHhdzMMHH1
-         yAfaN3AhDfGAo6/2gaouSP0wnQmGiExZW4NaOrkh641yyqoCjsYtDVt4zz7pJZLyN6sQ
-         XltSoKoe+mnpiQiiPIgIkTXoAFYQJ+D/ooWqW+1fxZZc4xWhMNtMCndTDVXNUAhyUOog
-         9AGnPfxzUUbPbUx8lKIV4JwLRCsWLhVUNK8WaDgNTdX7YYm8CrAHimgaboii2Qn0YST0
-         GOzw==
-X-Gm-Message-State: AFuF++nR1O0VT4pcP8yJeuAHyfaosoNAH7KnHu7agvy85XFDJykQVdL5
-	kzA4wKdlryxEdNKzwX952rolEeHDTMpBRLaocA/PgMSNjQyd9/SX50cvBs0SuQ==
-X-Gm-Gg: AYBFou3JP2GcZ0QX7lmzzlF1ib3K2bZCTd15UhahntKHx8WFs3K55+4u1RPwWXuCOFU
-	2XvscuEIN+fxus1XcctH9SzI+uvgqK+KHseVlKZF9VxMNDICbGmI2zz2udEvolfB9JkG5eeC3rX
-	HDzb+jnqV510E7sxZwhUmMPlq9rsS+09a4mlOXln4sFiMtV6cxN0uV+Dyx8pHV5v945G/1VOPKn
-	yqO9JlK16LJQuAfV0xXUbMGnXnm5Wgc9xCYnc7ZIacdT0NVvoiF1BtTVcLBFn8OqX90Kw3DcfcF
-	++SVnEzFTX7IrOTaXEqsB3/+Dra58zBYLn86RyHNdrR8bcKPgfdgcpIdauWdIz9HmixjgstrBzu
-	Hwgk6pgiDOn+TsE8G6xR0XaXIH6PD8VHOFtasZ8zv4TUwvX7pQmzAEgGlTKI1dPhHEAh9dL2NNN
-	Aa61cdnjH1p/bUZ1kRVSYknXNqGZYUPfiZv+jc92BaRvJMznXu1o7bd2FengttF29F4N30r7DUa
-	QDHHQq0rPg=
-X-Received: by 2002:a17:902:ed45:b0:2dd:ad74:ac2c with SMTP id d9443c01a7336-2ddad74ade4mr15808075ad.30.1789667562651;
-        Thu, 17 Sep 2026 10:52:42 -0700 (PDT)
+        bh=5OnMKj8X3qgLypUYUyTT0RuP7tJKvSefQJi1iED/32A=;
+        b=Y+yd4bpeODh72iMaljmdwB+84Gyw/ajBSM8Yy7Lto3SNcTE4jXl/Pyn0ARug8MWeXP
+         LyFisN1U9funMN0uuLv8Wpm9t6uwBsaNd5mkqpyE0lcVnFb/1zjPaoJPeyJN9gdQ6mZy
+         7SVyrGN9thU92SZULdzvCtXjxEeTSO2XehCzrB2EcDM/W6T2A81Y+5pa6/Ub5Y8uKTuE
+         lX/dzHoVCCe/kgh8yXefBaGXCRWwJU5hOGJ0O1d2k/hVgoO9ADpW8vEsKpvBp85lT8GA
+         z7VVsQOeK/ZOCXZmd/Do6O/yyxwMZDP6PaWqaWNcsWlIuDLswNcrANZucTpnPhfb6Vac
+         fBNA==
+X-Gm-Message-State: AFuF++lEWhPYuTlxQ+tT61DqCHtUaS/4gb0Tf5Tq08zv/84mQB5k/xdW
+	mk1gp7dKsRiZImTwsbzWIKWES58z3Z3Lhp7GTzg2/24YEq3P9OthD+wmnr9n+Q==
+X-Gm-Gg: AYBFou2kq4sL5v2pkvBrR+WdwJle1NTIF/Y+rNZNQHJQbnUqpzmkGRTOwh7crfVXmea
+	CAJgZD2QLi7Jni7SQ32V0wYyZF9eWOofN6HeLrpl/Ah7ua6s8IXPYh8j7zAWjpY4tdevVrJ5Y59
+	KjnPEzkxTW3/yatYGkbPrSH6u9dLvvvKi/7+7ocKd/j5YJX9r/FWyGhxfHEbY/kk8SFNdldkd9w
+	Cqjej5OiVy60JK1QrXEc+7Ia9DBq34EDu+fur0xUwFShOlPy5MDc/ptKpdB/0ZKxzReLYiYOoSY
+	FwDfPwQUWfwigV6sBRY/vpUWrNBBitL4MZ6fzA9LmN5sN0JAs4+t3tyhY5hNGBjzXvmGzpp6Be0
+	baEpjj436ITeqrBycTaiEanvwb2bCEpZbc1UrWnyMmmVwCGNVE+bswirjRs4lZ1lwI/pzoRiDZH
+	As67ruxSgX82fUn9PCnhO9fGimlKjVGcSKiUZfijeQQulHQJEp1Nqq8PrLOtLDkPASmSgQvVzU
+X-Received: by 2002:a17:90b:57c7:b0:39e:34d6:7eb5 with SMTP id 98e67ed59e1d1-39e34d6800dmr9506011a91.9.1789667564181;
+        Thu, 17 Sep 2026 10:52:44 -0700 (PDT)
 Received: from [127.0.0.1] ([52.157.33.34])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd89e9345dsm30840835ad.24.2026.09.17.10.52.41
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e3618ab38sm6229765a91.10.2026.09.17.10.52.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Sep 2026 10:52:42 -0700 (PDT)
-Message-Id: <3fc7774ba867a10f35f7a74424baa4527f038232.1789667556.git.gitgitgadget@gmail.com>
+        Thu, 17 Sep 2026 10:52:43 -0700 (PDT)
+Message-Id: <1cf4e5ddb5996423478b7543f7978e58cfcc4eb1.1789667556.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2231.git.1789667556.gitgitgadget@gmail.com>
 References: <pull.2231.git.1789667556.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 17 Sep 2026 17:52:31 +0000
-Subject: [PATCH 2/7] gpg-interface: make signature-prefix matching
- length-aware
+Date: Thu, 17 Sep 2026 17:52:32 +0000
+Subject: [PATCH 3/7] midx: validate incremental MIDX pack IDs
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,114 +79,65 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-After merging v2.56.0-rc0 into Git for Windows, its Coverity run
-reported the following issue: The `parse_signed_buffer()` function
-accepts object buffers with an explicit size, while
-`get_format_by_sig()` uses `starts_with()`, i.e. it expects a
-NUL-terminated buffer. A tag object with a non-NUL-terminated payload
-ending in a partial signature prefix, such as a final '-' byte, could
-therefore cause an invalid read past the object buffer.
+Incremental MIDX support made object-offset pack IDs local to each layer
+and then converted them to chain-global IDs by adding
+`num_packs_in_base`. The conversion was introduced by 19419821bac5
+(midx: teach `nth_midxed_pack_int_id()` about incremental MIDXs,
+2024-08-06). Chain-aware pack preparation followed in 1820bd878c62
+(midx: teach `prepare_midx_pack()` about incremental MIDXs, 2024-08-06),
+but the final `midx_fill_entry()` lookup remained tied to the original
+layer. Only with 8f909ff4e9e8 (packfile: recover when a multi-pack-index
+names a removed pack, 2026-08-29) did Coverity point out this issue: a
+local ID such as `UINT32_MAX` could wrap when the base-pack count was
+added, producing a plausible but incorrect global ID. After
+`prepare_midx_pack()` resolved the chain, `midx_fill_entry()` could then
+underflow or address the wrong layer while indexing the current layer's
+pack array, causing an invalid memory access and crashing Git.
 
-The observable consequences are limited to reading past the allocation.
-In practice it can crash Git if the read enters an unmapped page. It can
-also misplace the payload/signature split, corrupting the compat-hash
-object being written.
-
-The older unbounded matcher predates this path, but c8762c30df5b
-(object-file-convert: convert tag objects when writing, 2023-10-01)
-exposed the defect by passing exact-sized converted tag buffers to
-`parse_signed_buffer()`. That commit first shipped in v2.45.0, so the
-defect has been latent in every release since.
-
-This pattern was noticed on the mailing list in February 2024. Reviewing
-a patch for a very similar issue in commit.c's find_header_mem(), Jeff
-King observed in
-https://lore.kernel.org/git/20240208214137.GB1090198@coredump.intra.peff.net/:
-
-  But more interestingly: even though we pass a buf/len pair to
-  parse_signed_buffer(), it then calls get_format_by_sig() which takes
-  only a NUL-terminated string. [...] That raises the question of
-  whether parse_signed_buffer() has a similar walk-too-far problem. ;)
-  The answer is no, because we feed it from a strbuf. But it's not a
-  great pattern overall.
-
-That reasoning surveyed the callers that existed at the time and missed
-c8762c30df5b (object-file-convert: convert tag objects when writing,
-2023-10-01), which was four months old at that time, and does not feed
-from a strbuf; `convert_tag_object()` hands `parse_signed_buffer()` an
-exact-sized `xmalloc()` buffer, and the concern flagged and dismissed in
-that thread is exactly the defect Coverity now reports.
-
-Jeff went on to add `starts_with_mem()` a month later, in
-https://lore.kernel.org/git/20240307092638.GK2080210@coredump.intra.peff.net/,
-precisely for "cases where the buffer is not NUL-terminated (and we
-instead have an explicit size or end pointer)", so the tool for this fix
-has been in the tree since v2.45.0.
-
-Even though the issue had been latent, it most likely surfaced via
-Coverity because of 215d305f450f (odb: compute compat object ID in
-`odb_write_object_ext()`, 2026-07-17), which moved
-`convert_object_file()` out of the `source->write_object` function
-pointer into a direct call in `odb_write_object_ext()`.
-
-Preserve the existing NUL-terminated behavior for callers that provide
-strings while making signature-prefix matching honor the known buffer
-lengths, via the `starts_with_mem()` helper. This keeps reads within the
-object data without implying exploitability beyond the observed invalid
-read.
+Validate each local pack ID against its layer's pack count before adding
+the base count, and obtain the final pack through `nth_midxed_pack()`,
+which resolves the correct MIDX layer. This prevents an invalid local ID
+from wrapping during conversion and ensures that the lookup uses the
+layer identified by the resolved chain-global ID.
 
 Assisted-by: GPT-5.6 Luna
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- gpg-interface.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ midx.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 95abf1ef4e..60c315fba9 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -133,20 +133,20 @@ static struct gpg_format *get_format_by_name(const char *str)
- 	return NULL;
- }
+diff --git a/midx.c b/midx.c
+index 6d1c548e3d..6968fc1c00 100644
+--- a/midx.c
++++ b/midx.c
+@@ -583,10 +583,16 @@ off_t nth_midxed_offset(struct multi_pack_index *m, uint32_t pos)
  
--static struct gpg_format *get_format_by_sig(const char *sig)
-+static struct gpg_format *get_format_by_sig(const char *sig, size_t len)
+ uint32_t nth_midxed_pack_int_id(struct multi_pack_index *m, uint32_t pos)
  {
- 	int j;
++	uint32_t pack_int_id;
++
+ 	pos = midx_for_object(&m, pos);
++	pack_int_id = get_be32(m->chunk_object_offsets +
++			       (off_t)pos * MIDX_CHUNK_OFFSET_WIDTH);
++	if (pack_int_id >= m->num_packs)
++		die(_("bad pack-int-id: %"PRIu32" (%"PRIu32" total packs)"),
++		    pack_int_id, m->num_packs);
  
- 	for (size_t i = 0; i < ARRAY_SIZE(gpg_format); i++)
- 		for (j = 0; gpg_format[i].sigs[j]; j++)
--			if (starts_with(sig, gpg_format[i].sigs[j]))
-+			if (starts_with_mem(sig, len, gpg_format[i].sigs[j]))
- 				return gpg_format + i;
- 	return NULL;
+-	return m->num_packs_in_base + get_be32(m->chunk_object_offsets +
+-					       (off_t)pos * MIDX_CHUNK_OFFSET_WIDTH);
++	return m->num_packs_in_base + pack_int_id;
  }
  
- const char *get_signature_format(const char *buf)
- {
--	struct gpg_format *format = get_format_by_sig(buf);
-+	struct gpg_format *format = get_format_by_sig(buf, strlen(buf));
- 	return format ? format->name : "unknown";
- }
+ enum midx_fill_result midx_fill_entry(struct multi_pack_index *m,
+@@ -606,7 +612,7 @@ enum midx_fill_result midx_fill_entry(struct multi_pack_index *m,
  
-@@ -669,7 +669,7 @@ int check_signature(struct signature_check *sigc,
- 	sigc->result = 'N';
- 	sigc->trust_level = TRUST_UNDEFINED;
+ 	if (prepare_midx_pack(m, pack_int_id))
+ 		return MIDX_FILL_OWNER_UNAVAILABLE;
+-	p = m->packs[pack_int_id - m->num_packs_in_base];
++	p = nth_midxed_pack(m, pack_int_id);
  
--	fmt = get_format_by_sig(signature);
-+	fmt = get_format_by_sig(signature, slen);
- 	if (!fmt)
- 		die(_("bad/incompatible signature '%s'"), signature);
- 
-@@ -706,7 +706,7 @@ size_t parse_signed_buffer(const char *buf, size_t size)
- 	while (len < size) {
- 		const char *eol;
- 
--		if (get_format_by_sig(buf + len))
-+		if (get_format_by_sig(buf + len, size - len))
- 			match = len;
- 
- 		eol = memchr(buf + len, '\n', size - len);
+ 	/*
+ 	* We are about to tell the caller where they can locate the
 -- 
 gitgitgadget
 
