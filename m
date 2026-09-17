@@ -1,69 +1,69 @@
 Received: from mail-pz2-f41.google.com (mail-pz2-f41.google.com [74.125.228.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE6B4E36EC
-	for <git@vger.kernel.org>; Thu, 17 Sep 2026 17:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1964E36F6
+	for <git@vger.kernel.org>; Thu, 17 Sep 2026 17:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667568; cv=none; b=Ih0aJiSD0IRz3xTQYAkqPEuAAsK51fLtHREbl7DGGMHGyClQzapeK9FqSBWJ8BmMP3N2pKr4PY5YdUFiDxi2kHcEWNKa8kbLaxcFDRyqW5IlKxOin/7/G2nVAAUbe2cFyCdg5Glsah4EGN6gweF6ZaJGA05YyEZ4og3i0UWJse4=
+	t=1789667570; cv=none; b=ah3c/7h01NgulFynL3My1eOHEuFZ6XWJuJ9EqA9j4CMb/hUEv5HnhxR++v22WH3wR6o6F8N31WJLPnyIzRPXYlnyxzBG3IWxN2jPRrsbya3l/vrtwo3PROL4nlvjrBzXztedsw8hb8ohoB13mL4sMH4GX0jFVA4cOFth7t0dQYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667568; c=relaxed/simple;
-	bh=evcLcDPTiOmM6TYcsmqgACTVip2UD/w2q6az0+eAbL0=;
+	s=arc-20240116; t=1789667570; c=relaxed/simple;
+	bh=xL+Bh4gaWBZcEzSLCcDVnqOi6gxWqeSkv+JLlTy4HiE=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=GXuuEtXeWnZFKAd1/Go8vV4Xf0W81sPSg/ynmej4Ie1Xj/uizp5Q3+bTO7Yg63jrcpxond8p4TWNu7BqgK0Sa/G3jQpOaMU9/bUvkZtaXagSiYZ/3vs9bPzqvPMoTLVNp90s36Hkg6WOwiLBuoSNWjbTln6cYSdmBDIBk3gmhtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AsTEusyD; arc=none smtp.client-ip=74.125.228.41
+	 MIME-Version:To:Cc; b=Fp9XQw2/nUUMZ+b2+YvY7Nec3iYWUKZ7BmtXvuwQW6z7wvIsH8WMKYpj7DmhZEOzHvnnGKpwAlJ4LGl7VMpxCnbaBcXkrL8ZCDFCNgTOUPAw3Egupc62E8FR8qcsDUYYwiWwQAANurAPc8va99b0W4sfvplsTeV/F206aVVzkb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e4hcSHAE; arc=none smtp.client-ip=74.125.228.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AsTEusyD"
-Received: by mail-pz2-f41.google.com with SMTP id d2e1a72fcca58-85469a34908so1010003b3a.0
-        for <git@vger.kernel.org>; Thu, 17 Sep 2026 10:52:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e4hcSHAE"
+Received: by mail-pz2-f41.google.com with SMTP id d2e1a72fcca58-8693af0d7c4so1374380b3a.3
+        for <git@vger.kernel.org>; Thu, 17 Sep 2026 10:52:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789667566; x=1790272366; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789667568; x=1790272368; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=FAU+4ADF2ZuPLQu0elnjSuSxCk0wm3bZyiWbmN4GkPo=;
-        b=AsTEusyDkp91obnkTxOI1D/uBOFRVWp4mX8PrrNA1Gj3QOjlLnkjB7jU5inh/DLCyB
-         SQkwNCaZPmdxfcfl7hOV/FHnQAmtNl3e0JrFLOwVXFg61zclEdYiD4XOB+s18wysLTcS
-         W+LKDoelO4EY8HnXES4Kxdje2ipl7xKHauSKI1wprV5jNbIePiOn7NsPz0QMWnQtH3yt
-         GrnWLTSp7hxVBnbqwMidpnYYgxXdf2X+kuoAs5p0M9Yoqi2/jQtjbCKQlSj7xbr+F5CC
-         JfwSl1YLHF7pAVskFrv2qag/1d8BW2JlfsG/UzZBMtccQTqvUovJ0Bg4A6u+UuqCXC5+
-         nxPw==
+        bh=lfj2hALrPLGdjKy3pvwKqVTGpOcfUbbPETQZNAuWqDA=;
+        b=e4hcSHAEctO376uNGigVF9YnuFfZHCe9dJM/2NYv8eoEIPI1oax48GrzyUWQAcIA4q
+         8R/DQQNm4i+nt9m/VkIpr4nfFbjDTtTgp4xd2hfyp5fat7pwt2U/TtIC1/PdZmOBAaaE
+         JLZkf1Gbi5L9lAXjcBhL0z58cPjTYi0bYWfNReL/uft9uDaPXSnVD9ysNG0Q4Xj63pL0
+         J5qjEundnkutoyJOYJQBthS6wnXcwW0VnTaXil5hf0qTL27iySvCFBXkUHjbGQ5V/ytA
+         oc777xlrYr/I/4fUDGjb7F1heLnhLFHzRFdsLZzwSCJ//AGI8yVdBIl9/1MVl1mScdpX
+         BWaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789667566; x=1790272366;
+        d=1e100.net; s=20260707; t=1789667568; x=1790272368;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=FAU+4ADF2ZuPLQu0elnjSuSxCk0wm3bZyiWbmN4GkPo=;
-        b=H8myA5yNamaVyUaP3VhDJNbvmuYEXWk+e19UIow39wj5bOyfbSBHJbk9osnR4WzbRC
-         EgRHsuJSkW5CNG68RBkVIAMmt1KD6JT6cYP8MS01RFshUfYtnttAcr+ZFuc0RVGbFgbl
-         +Zl80xgpS8BSMTGJhdErKM6JVcz/VxSLsC8KcwHNi1kDfkrw5ihsNs5v+o4Y05z9zH3u
-         JPBvVJS6b6yvozoCrYREysExzmOYOe9+JIovPkk0JvIoSXeHffD+Yv4h9B4Y5xUdyBKp
-         zZ4R4F8n3UB8EDvr1nnahP1WVL8y7X2EZc2OWc7kjJ4CxUOSPQ+WjYyUuuiEWPH7t+n5
-         Jw3A==
-X-Gm-Message-State: AFuF++mEq0mjzfUgUS6UTO7R7NCPyvLcKktYu71bDaA6/nob+hIX/Yfo
-	Sr7EK5uVD9lYOPpqfxK+NshoIMZcZ7JiR88ka1goTuz/q8vNCIAm9tWIQm6qoQ==
-X-Gm-Gg: AYBFou02ABpxcvX9iTMq5wwC353Emzb+usnSlOoDDZD8IlJdtQrI10VXS14SG0G294U
-	hg65k1dc3tGAYSvv2eePxnqzqz+khJpD8Zfa+LPGX+DNoYhQxmx1nOK2OSLrUAdQXiKlcMBB2Ix
-	72sOfMMSoudsGNkGAJ6DJmxHR2lL45GUGO212QBEJQaZeWXfa5uJsd50XRVku1M5LwbLhG9PS0B
-	JmP+xw8cMyv3ls5MkHAd4q3GmtuzDPR26symRIbIy61Wj7y1FWSwtONx6G9Xsi1hrTXgGqF3kx4
-	1x4qKVUZjriB2cbt777ErneGAlzdiC/jlSoGPtOq4zoU7tFGfl+YCxLCDvFF+eJHPRp/fDriPKj
-	XTCa+Yw3rZNQbTsqmz24GZghFeY+S9nMev1H7vjgxEoHO9jNNQfK3HYMnmuYfsa71Ovqb0qZZZT
-	nK4AuHpTGVpxpiXvbw8wvJQMTaTX6Um+BNXFQuiNkVBP6cMiaSnQXkZNyqWHBHGBykE4VGBsD1
-X-Received: by 2002:a05:6a00:299a:b0:871:fcff:e904 with SMTP id d2e1a72fcca58-8723d432cccmr16352588b3a.25.1789667565968;
-        Thu, 17 Sep 2026 10:52:45 -0700 (PDT)
+        bh=lfj2hALrPLGdjKy3pvwKqVTGpOcfUbbPETQZNAuWqDA=;
+        b=bfkjrvfuUGwjMbj8DizoDcAzycEzDLOTPQ85veUDnD8JTNxIZLg7HIjckMB9FhJk/L
+         L4jNmilU8Mst9ixAZpN7dxcKD3eCFK9yHC61SDaPtigvaXlPaxTVji6VbPDPOWENL5g3
+         MYxf5hzpryNW93P27J4Zh9EvCxioQAMtGQPfvMouaoIg8/N50jDzwh7cQ0SlnT875SZg
+         bFrRoO9tP0CXy0s7UQC2SxQqnzgoBwb8b5g8wie+8wsU0fajTaKkGli9niy/p7jeSvOO
+         /Tg49PGMODS3BMIcbcpl/7l9Vc/ms++vmr9oYd53BC0TbAUbB5SfAoTid9uzGhot7T15
+         alyg==
+X-Gm-Message-State: AFuF++l9hPHvjUROj5xz/+ROVpJ6T5wwSu4pKRCkotjQsN/v2pW7dK5T
+	bJkcjwUiHhHM+T1ErLV/Kr+RXqMKMl+30hXx7f+JfJci3s6xSUw9syxuh0qgsA==
+X-Gm-Gg: AYBFou1NNJ1Waflc1JHV5SPm3laFW936I5NJ9a53bPGl/sqfDbMn7DuwTJL/XzwZC+W
+	kP8VwNvfw4ohyQC+4a3tohL9LdPTKY+c1zz56gQ1X2JNWZKKY2gNdVO/Ywl0LSSIcT1KAsfBLZP
+	P06GsbQEljy6tJkwuM0hDvgdvezolAVbA6UoHSdKiXv4MGqXFhQEW5hYrkkY5ymLrydb5cH324Q
+	tYNCvwtLNLLw8KIUimylXFLflT92O/1fdkt6BwQ004wXbM1Boe38GkjSN978JbRsD3q1H97BhTW
+	1nN8tguMV8bCIc+HrquWjomJ3LYS9e7/rRQcmUj1ur5XP5rhXZFLk87DQlSz8g9RGWoKvgI0IxN
+	e74iePJ2Ava807tGGkW6R5BUKr4W4NLBbshOQbx6f3j+gmJL/fZNzkPdARjVuTSMcuwJF6lTB3I
+	OLDXd5hj8jqDN3COgA+6/ebJZXphocMzjN7i3KLNqNN+STS79M9AlNUCPt/vhDrQXD3rhL5U+U
+X-Received: by 2002:a05:6a00:3926:b0:874:705d:f655 with SMTP id d2e1a72fcca58-874705dfb9dmr1716882b3a.35.1789667567492;
+        Thu, 17 Sep 2026 10:52:47 -0700 (PDT)
 Received: from [127.0.0.1] ([52.157.33.34])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-872025dd04csm3256682b3a.60.2026.09.17.10.52.44
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8720123e374sm3104853b3a.24.2026.09.17.10.52.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Sep 2026 10:52:45 -0700 (PDT)
-Message-Id: <bd9e06e46c6debb5a8fc8f1d3821250ca110d5ef.1789667556.git.gitgitgadget@gmail.com>
+        Thu, 17 Sep 2026 10:52:46 -0700 (PDT)
+Message-Id: <bc67ad3b05a221fce939c8a4c6071769b949599b.1789667556.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2231.git.1789667556.gitgitgadget@gmail.com>
 References: <pull.2231.git.1789667556.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 17 Sep 2026 17:52:33 +0000
-Subject: [PATCH 4/7] rerere: do not record failed conflict resolution data
+Date: Thu, 17 Sep 2026 17:52:34 +0000
+Subject: [PATCH 5/7] t/unit-tests: check reftable iterator initialization
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,82 +79,36 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-`rerere` can mark a conflict variant as resolved even when writing its
-preimage or postimage fails. A later invocation may then replay
-incomplete data from the cache, turning a local filesystem failure into
-an incorrect working-tree change.
+Coverity pointed out that the
+`test_reftable_table__seek_invalid_log_offset()` test, which was
+introduced by a1c085df8dcb (reftable/table: fix NULL pointer access when
+seeking to bogus offsets, 2026-07-03), ignores the result of
+`reftable_table_init_log_iterator()` and proceeds to
+`reftable_iterator_seek_log()`, although initialization can return
+`REFTABLE_OUT_OF_MEMORY_ERROR` without installing an ops table. Under
+allocation failure, the test then dereferences a NULL function table.
 
-629716d256a7 (rerere: do use multiple variants, 2015-07-30) introduced
-the code paths without checks for those I/O results. Treat such failures
-as failures, report them, and leave the rerere status unchanged unless
-the corresponding data was recorded successfully.
-
-The defect has been latent since 2015. Git for Windows' Coverity run
-only reported it after merging v2.56.0-rc0, for reasons that could not
-be figured out in a reasonable amount of time.
+Assert successful iterator initialization before seeking.
 
 Assisted-by: GPT-5.6 Luna
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- rerere.c | 30 ++++++++++++++++++++++++++----
- 1 file changed, 26 insertions(+), 4 deletions(-)
+ t/unit-tests/u-reftable-table.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rerere.c b/rerere.c
-index 1c3745d9e3..45bbe6ab2c 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -476,8 +476,11 @@ static int handle_file(struct index_state *istate,
- 			unlink_or_warn(output);
- 		return error(_("could not parse conflict hunks in '%s'"), path);
- 	}
--	if (io.io.wrerror)
-+	if (io.io.wrerror) {
-+		if (output)
-+			unlink_or_warn(output);
- 		return -1;
-+	}
- 	return has_conflicts;
- }
+diff --git a/t/unit-tests/u-reftable-table.c b/t/unit-tests/u-reftable-table.c
+index bd04b477a3..1e4378b2eb 100644
+--- a/t/unit-tests/u-reftable-table.c
++++ b/t/unit-tests/u-reftable-table.c
+@@ -257,7 +257,7 @@ void test_reftable_table__seek_invalid_log_offset(void)
+ 	 * know that the table is corrupt, so the seek must report a format
+ 	 * error instead of pretending that the section is empty.
+ 	 */
+-	reftable_table_init_log_iterator(table, &it);
++	cl_assert_equal_i(reftable_table_init_log_iterator(table, &it), 0);
+ 	cl_assert_equal_i(reftable_iterator_seek_log(&it, ""),
+ 			  REFTABLE_FORMAT_ERROR);
  
-@@ -729,8 +732,25 @@ static void do_rerere_one_path(struct index_state *istate,
- 
- 	/* Has the user resolved it already? */
- 	if (variant >= 0) {
--		if (!handle_file(istate, path, NULL, NULL)) {
--			copy_file(the_repository, rerere_path(&buf, id, "postimage"), path, 0666);
-+		int ret = handle_file(istate, path, NULL, NULL);
-+
-+		if (ret < 0)
-+			goto out;
-+		if (!ret) {
-+			const int had_postimage =
-+				id->collection->status[variant] & RR_HAS_POSTIMAGE;
-+			const char *postimage =
-+				rerere_path(&buf, id, "postimage");
-+
-+			if (copy_file(the_repository,
-+				      postimage,
-+				      path, 0666)) {
-+				if (!had_postimage)
-+					unlink_or_warn(postimage);
-+				error_errno(_("could not copy resolution for '%s'"),
-+					    path);
-+				goto out;
-+			}
- 			id->collection->status[variant] |= RR_HAS_POSTIMAGE;
- 			fprintf_ln(stderr, _("Recorded resolution for '%s'."), path);
- 			free_rerere_id(rr_item);
-@@ -778,7 +798,9 @@ static void do_rerere_one_path(struct index_state *istate,
- 	assign_variant(id);
- 
- 	variant = id->variant;
--	handle_file(istate, path, NULL, rerere_path(&buf, id, "preimage"));
-+	if (handle_file(istate, path, NULL,
-+			rerere_path(&buf, id, "preimage")) < 0)
-+		goto out;
- 	if (id->collection->status[variant] & RR_HAS_POSTIMAGE) {
- 		const char *path = rerere_path(&buf, id, "postimage");
- 		if (unlink(path))
 -- 
 gitgitgadget
 
