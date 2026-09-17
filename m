@@ -1,166 +1,110 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f42.google.com (mail-pz2-f42.google.com [74.125.228.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6463A4E50AF
-	for <git@vger.kernel.org>; Thu, 17 Sep 2026 06:20:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD1230100E
+	for <git@vger.kernel.org>; Thu, 17 Sep 2026 06:56:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789626056; cv=none; b=utWuDgTIa29MC2phU43gzoyPWTSBdX1wFBI70guhS93rwGz24/10ITh6VILuat4cmYEJjhgvBOsxIcE224w8P58zU01WprIA9WMNs5uWWKKf1L0f/WKaEWjYMt9ThDId6DvUmXeTjOJnwMMgAvFnnpSho0N8uknLkp3nwFz+MV8=
+	t=1789628218; cv=none; b=QzMpeEqUMiG8TozuNFNX1KIhI+TcdU4axcQf3wG892owqbJX8Ub2tq/Wy0blo3HNY4+JzhjVINQ2jLzKCU680Wifg7uclR4GfFA1N5ux87fAr4BhjPbOAdAwwYLttkgVkGAxitWpM5bYWRpIO+gTXD89SIHFfUiOgwxmzMvc6wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789626056; c=relaxed/simple;
-	bh=sKfQz5yy29IpqCEGxLrk9oOzzRLeDk2aKwwrwt++UpI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LLMGihSVBSc8Ajj52vcLWM4+tyrca1h9KpjbFw+gKsxgCJU98OnA6rx8Wfgbp18C3jUvvS7RQAmnYJQ0D3cb35QVG8d7CkA+DVntmpYAFquBbefx6+r+3fDFPSYEeB/Lt5sVniwGEXQFcj0YcdUf3+sZ8CyM17N/WZpSO7sxXW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wLEYhAZA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hDNnXcw2; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1789628218; c=relaxed/simple;
+	bh=Xfp5wtdg1P9XOhc57PD01L3582uacZ6EQZ28ntHGcvY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=s2Wf4FG9/EIZGdANXSLzFSCDCrlmfQaOFzEJYAyXg3f1xIx0ibu07dHKwDSalDqawR0LceSRTOq2Him14cIHAHAxEO/MNOz0slReMvrDxT5ttjKMFsJrxKfcMZFOtjkI8R1+gve+q/rY0Jvka1VwzQEBAu40uzUJiZIALjJeHz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=brighamcampbell.com; spf=pass smtp.mailfrom=brighamcampbell.com; dkim=pass (2048-bit key) header.d=brighamcampbell.com header.i=@brighamcampbell.com header.b=gOTk6tvP; arc=none smtp.client-ip=74.125.228.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=brighamcampbell.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=brighamcampbell.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wLEYhAZA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hDNnXcw2"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A64977A00D0;
-	Thu, 17 Sep 2026 02:20:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 17 Sep 2026 02:20:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789626053; x=1789712453; bh=DXXrlW+6A+
-	baWNFW6CivBNL9CnGCdRFRUmpJsArDIbo=; b=wLEYhAZAuZxLwH37hS8PLkYbgB
-	0SXMwQ+LTqd6e59I5MKNvPVigIBJLkHaKlU6Hzp1DbWeZXAf9/Qq+/jHN5AkzSsa
-	Y2U5aTtSGGH2LOLE4cUSY2UrqmYwR2LAgf7noweh2ABxeo5dDnRmHAUyfyGfnose
-	4vINdKDJCmqeiTQMIHDjtt5oi/nQWLg38n/C54uwvBUyzDzuzLhspPfbATsM2WSI
-	UGMn3Yo/5tVT8a4e2+bK5wmUHNYBB8bnIDS/PGYWuJ4lG2mHT7Khi7q6ShKawI9B
-	Nm1jgFbo0CuO2mngEqQrjxOojfVb14GnpKMfUwPhicWXIN3QhvLNRaNpb8EQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789626053; x=1789712453; bh=DXXrlW+6A+baWNFW6CivBNL9CnGCdRFRUmp
-	JsArDIbo=; b=hDNnXcw2AALHR67oOWOt8E2VSA4D4tI+5W/G7y0Dczee6z3H/hY
-	rSmDES+rbtgd0ALn+4M9sjOvA21viT5Y1/evKyqlbv9dhRChpu00YT2z9AZfWwrV
-	yz6zTenv5hHK78djqnUU32Bsw2WE/aZNTCAVG/ktJnsN31HRDxryiCyhkDMZlYep
-	8UYbUFJBtyAGXR+Bm4IYQvEqkYSa3GfeLuih1fkoQvgXDEtYYSiFXngD5JIc5TfN
-	e/lG7mNsDLphhZOZiQBAEO/38OQWhbiSfHERGfWiQDk0g48PvDJwuBMikDU3uLpI
-	PBh00m1Js7Y9v8S820Pq897q5y7iJcBNHJQ==
-X-ME-Sender: <xms:xYaralc78kvJRGyJlBJ_t9JAT2yjWVrXdyB7cQQ8TOFr4QAQqLAlbg>
-    <xme:xYaraqplec-BIyX9_LxvmDEib8jPsdybilY3wfrNbm3DzWtIx1PiYAnyH3Yl9hmlH
-    GtsqNM-7_AEkFGlXYgFSqW2N78Nt5DLvJS74anPlJAaH4N7Ggu6uA>
-X-ME-Received: <xmr:xYarar4NPcEPnwmGvxvd_E0NZqVJ3K738v6GUQtDQcC7cxPqJuZtzQ-BbxuRhFsasoImVDQ6mWdfX8oB3vI9Eo1NLSPSy-zHKZc2>
-X-ME-Proxy-Cause: dmFkZTE5Byix/1+dYlouTFJY9CLjy4cwsRL3LI4ppp2wZB/sNMQn2uB3orViZ1iFgY/yR6
-    Pu6JtSfKed1v7ZL8cWG/WYzwIXaWY3GXS1r/DJDBA9pG3NU49K9X4A32JWi0Z4zqatnFuZ
-    b8tlZ6qjaQypYEwrKD50n/RD9oEch2UpNJ9D1wgemgvdzuvRI3QHqB01u9kESKNBdsgkI0
-    xahZx2of0DqNniSsaJ0QxtHoMuZmru2Wo/7ch2e4ZWeknsvQKqICjAbvpYGsQHaFNWFMYi
-    Jp1S9RoKMnqDaQDpwF/PaXxBTcDVWhroMyovsTilKbcNmd95M9Bu4F8rqE7yDKWxGWwJSO
-    TEXnpioy/c44e00IpNQtOo6ryAFD73vBaW87Xu3ajEzCY2CtKnOJykV0BviDQSsZLrQ4jv
-    z98rcKpcxvY03cIqCu0P4m7LBt3MNd07BenPgaW8sz0jjFEBrZ6OD9kQlox89uToMnLppq
-    DXnjp+/lnyoiQ9lqsF420ToT7SmoYfDTjaKrveZ1N0nTmzf6TcffuZHJdsZZ9xAmq2C9wO
-    rQM/7ENWJadTuQ/6ICYDybV91PZnmesBXNO9rPx9bPwt9XI8p996mKlv3DCMveKoKYBnwV
-    65lms107Rg8TAAYfPrG/DK0AcFx22XjFGHbkfuGlYItKxqaqk7LV01EtJvEw
-X-ME-Proxy: <xmx:xYaraooRSnm7rtYirf1T39A5-VAkuS8NuJDXuYtkhXXeUJVDXSmnHg>
-    <xmx:xYaraljv5HGWPZD3PZIJdV5qE07oYLYfBj0sIrWQj74qhwESM3JBWQ>
-    <xmx:xYaraqJ5NC00xg2pUEuLhi5q8mOg7ZMmVvQ5MqHsGXL5Wa0gJEVn0w>
-    <xmx:xYaratBfym_VcnCKpssrecsH5y6vcjk7HYGskUw23wM1paeQscivHA>
-    <xmx:xYarasjbJnteBdA9AovVijpgreK_7EpWmD5L7P8v3deG-wbz_04cP5ef>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Sep 2026 02:20:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Royce Remer <royceremer@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] upload-pack: swap wanted-ref/shallow-info responses
-In-Reply-To: <20260916203221.5265-1-royceremer@gmail.com> (Royce Remer's
-	message of "Wed, 16 Sep 2026 13:32:21 -0700")
-References: <20260915193009.222678-1-royceremer@gmail.com>
-	<20260916203221.5265-1-royceremer@gmail.com>
-Date: Wed, 16 Sep 2026 23:20:51 -0700
-Message-ID: <xmqqa4pgv1oc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=brighamcampbell.com header.i=@brighamcampbell.com header.b="gOTk6tvP"
+Received: by mail-pz2-f42.google.com with SMTP id 41be03b00d2f7-cc433d52421so274759a12.3
+        for <git@vger.kernel.org>; Wed, 16 Sep 2026 23:56:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=brighamcampbell.com; s=google; t=1789628217; x=1790233017; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=+3L29UFC/e0kXO+VAhWZOFgQsQpkCjuzIMho3ABoWnI=;
+        b=gOTk6tvPEPvkHT60ZbCT/X8RdYNRJHEMKoc4f7a/i84SYXlaaFeEtJmhfQGSeVlscz
+         uva8HqpCaclavoZIgpnicZzDU+dKDrBQROTrpzGuEgxKemY/T16K2kbprOAB2PTDW1fC
+         CcIxbU0YxdiRJkkCL/EaUsddhiOsyIybQGjVrX+32dUCIKpofa/4i7OgB6+sXu8E189g
+         8xR5SmfTOwecurbKh8d+QD1wKUjeslCVDT9OAEHL6VpzrAnWdFTapMsIfmbMOB7VSn1N
+         jhESMR2CKhApb3SIeeRhUeCkWqKKvTFsWDBnWiEv5a+SJYSQ2x6ijPTJkSaTcKzLTEpM
+         2DTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789628217; x=1790233017;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+3L29UFC/e0kXO+VAhWZOFgQsQpkCjuzIMho3ABoWnI=;
+        b=HEnhgKWkspnTXjHY6DrxhUU5LzjpOzdZhK4eeC7NufGAVrGgh9k/5GW7u5czmg+mpy
+         q4WlTR5jZU4krfev9rF/n3m0eEqx7OBE5sAPTYb5GwRcKKbO6puwLuV/HQ99B1BiKKD/
+         A+AZBNQ3bzfOlRy7Wx5y69EvEjeECt67JuBDUTPPyEAAYiAHLORi2lxTywTb0prcl0lF
+         H17CLOed06KBmxZjDhNPMU6BPpedkshyEBFIuBxgGUi01RLmowmP9NaRUuhl5oGqhlEv
+         Usjc4dltVH2U/RmICRq/FnLLZ3M8c3qRNWC2K8ogpvZ48Y+TAJbnG4/u0XSSqvCgOc0X
+         s6XA==
+X-Gm-Message-State: AFuF++mFdpbfpIi+xeVe4uRLKOfjaVh1SbNUx0Gxp700kcXmp7VXrSaj
+	PTwit+3JYAzTQE7cQbETPgtHkx5+gqGZyIMa0V/+iDCWQYDVjqzSD0plSwZq5+0y6po=
+X-Gm-Gg: AYBFou1FmnRD5Q0vWgd7OMlcp4VGdJs80BwQy3hSgJo1kAz+33LBD+04eIBg2S9BXgV
+	HddKqsr4KSy8v6v+paw08ZRPUy5ztVFkVQKO3u7ZV4zgJxwFTjHyZuvEqmp6o8eFhBTsMu2YZGp
+	ppgWWkkG0Lgkw0Rvn3jzu2KGiw6ahieb3MvJDLeV1RZa4z4z1+2G6TCknkmFZ3exZ4z4rG6N+9b
+	/DE3jpR7jdHY42lEUDbwdzn6ji8MHrIPOuteOBXdCZVyYeugqFVMWGAXYbp7VOQmhzSsB4Bj8w1
+	JBw9IiZonZO4y0UmeGJGFxrGpe+EXedtEh9LYAuk0OjQBGqZGHznUxfTLQ4N3AhcMtkPLsBZHoI
+	lK2W68QzRKuco8QjwJX1bvAzS4AYPbi5cLjHsOmi8mkngpbUubh3n1U0d5l4HaBBLEfHi53HNo/
+	RXqzd05IV8MSn07YsWEEwQUkUdlCmoD526YTWZT4sfnsXtqfVLIM0AOjZ1mKRe8EZ2t3DS9ZB/s
+	r0r3c9jAPx2MDR9bja7cOJjAWEYLSHdClYH1xQ=
+X-Received: by 2002:a05:6a20:4313:b0:3d0:88f5:f812 with SMTP id adf61e73a8af0-3dd5f455d67mr14148695637.10.1789628216637;
+        Wed, 16 Sep 2026 23:56:56 -0700 (PDT)
+Received: from brighamcampbell.com ([73.3.69.70])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33bf5aca3fbsm14342766eec.20.2026.09.16.23.56.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Sep 2026 23:56:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 17 Sep 2026 00:56:54 -0600
+Message-Id: <DLHE97Z5RDVA.168ZY5Q3TG8YJ@brighamcampbell.com>
+Cc: <git@vger.kernel.org>, "Patrick Steinhardt" <ps@pks.im>
+Subject: Re: [PATCH v2] git-contacts: allow inputting patch via stdin
+From: "Brigham Campbell" <me@brighamcampbell.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Brigham Campbell"
+ <me@brighamcampbell.com>
+X-Mailer: aerc 0.22.0-0-gc2f86b7abde3
+References: <20260914-git-contacts-stdin-v1-1-9ac628e6fd20@brighamcampbell.com> <20260915-git-contacts-stdin-v2-1-2005061d907a@brighamcampbell.com> <xmqqa4phxogc.fsf@gitster.g>
+In-Reply-To: <xmqqa4phxogc.fsf@gitster.g>
 
-Royce Remer <royceremer@gmail.com> writes:
+On Wed Sep 16, 2026 at 8:25 AM MDT, Junio C Hamano wrote:
+> Not necessarily a suggestion to change what you already added, but a
+> mere food for thought.
+>
+> An obvious (and UNIX-y) alternative design would have been to follow
+> the popular convention to tell the command to read from the standard
+> input stream when "-" is used instead of a filename.  Then this line
+> did not have to change, and the command would have allowed arguments
+> like:
+>
+> 	$ git contacts patch1 patch2 - <patch3
+> 	$ git contacts patch1 - patch3 <patch2
 
-> When a server enables uploadpack.allowRefInWant, upload_pack_v2()
-> sends wanted-ref info before shallow-info.  The fetch-pack client
-> expects shallow-info first; receiving them out of order causes it
-> to exit:
->
->     fatal: expected 'packfile', received 'shallow-info'
->
-> This error condition only applies to protocol v2 clients performs
-> a shallow fetch (--depth) against servers with allowRefInWant
-> configured.
->
-> Swap the send order so that upload_pack_v2() sends shallow-info
-> before wanted-ref info.  This is a server-side-only change and is
-> compatible with all existing client versions.
+I considered this approach as well. I may as well have flipped a coin.
+My approach to choosing hyphen or no wasn't very scientific.
 
+Naturally, if you'd prefer that I change the approach to instead allow
+the user to pass "-" to indicate that a patch should be read via stdin,
+I'm happy to send out another revision. I understand why we would rather
+get the interface right on the first try, even for something small like
+this.
 
-It seems that this bug existed in the very first set of patches that
-introduced the ref-in-want feature, namely, 733020517a (fetch-pack:
-implement ref-in-want, 2018-06-27) and 516e2b76bd (upload-pack:
-implement ref-in-want, 2018-06-27).  There were a few changes on the
-code around that area, but on-the-wire protocol never changed, so it
-never worked correctly, but the ref-in-want feature is a rather
-exotic thing to want in the first place, so it is not all that
-unexpected.
+Until you ask me to work a revision that uses "-", I'll await further
+review on this v2.
 
->
-> Signed-off-by: Royce Remer <royceremer@gmail.com>
-> ---
->  t/t5703-upload-pack-ref-in-want.sh | 18 ++++++++++++++++++
->  upload-pack.c                      |  2 +-
->  2 files changed, 19 insertions(+), 1 deletion(-)
->
-> diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
-> index 249137b467..9e2a090c9e 100755
-> --- a/t/t5703-upload-pack-ref-in-want.sh
-> +++ b/t/t5703-upload-pack-ref-in-want.sh
-> @@ -295,6 +295,24 @@ test_expect_success 'fetching with wildcard that matches multiple refs' '
->  	grep "want-ref refs/heads/o/bar" log
->  '
->  
-> +test_expect_success 'shallow clone with ref-in-want' '
-> +       rm -rf local &&
-> +       GIT_TEST_PROTOCOL_VERSION=2 git clone --depth=1 "file://$REPO" local &&
-> +       git -C "$REPO" rev-parse main >expected &&
-> +       git -C local rev-parse refs/remotes/origin/main >actual &&
-> +       test_cmp expected actual &&
-> +       git -C local log --oneline refs/remotes/origin/main >log &&
-> +       test_line_count = 1 log
-> +'
-> +
-> +test_expect_success 'incremental shallow fetch with ref-in-want' '
-> +       rm -rf local &&
-> +       GIT_TEST_PROTOCOL_VERSION=2 git clone --depth=1 "file://$REPO" local &&
-> +       GIT_TEST_PROTOCOL_VERSION=2 git -C local fetch --depth=2 origin main &&
-> +       git -C local log --oneline refs/remotes/origin/main >log &&
-> +       test_line_count = 2 log
-> +'
-> +
->  REPO="$(pwd)/repo-ns"
->  
->  test_expect_success 'setup namespaced repo' '
-> diff --git a/upload-pack.c b/upload-pack.c
-> index a52856d869..a70d237ad3 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -1812,8 +1812,8 @@ int upload_pack_v2(struct repository *r, struct packet_reader *request)
->  				state = UPLOAD_DONE;
->  			break;
->  		case UPLOAD_SEND_PACK:
-> -			send_wanted_ref_info(&data);
->  			send_shallow_info(&data);
-> +			send_wanted_ref_info(&data);
->  
->  			if (data.uri_protocols.nr) {
->  				create_pack_file(&data, &data.uri_protocols);
->
-> base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+Thanks again for your time!
+--=20
+Brigham Campbell
+https://brighamcampbell.com
+
