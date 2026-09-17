@@ -1,92 +1,285 @@
-Received: from mail-ej2-f12.google.com (mail-ej2-f12.google.com [74.125.228.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A273F1AAD
-	for <git@vger.kernel.org>; Thu, 17 Sep 2026 05:49:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2552D7DFE
+	for <git@vger.kernel.org>; Thu, 17 Sep 2026 06:04:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789624182; cv=none; b=ABUbXnkAajSsyffTMn2dNQliU+NWGSKwei6ugKb8QXiQZRN2e8A73Wqn3nLW/x96D03Rg4EjiGP0IU7EhQAbTSAAX5QKgdbgOucJbMTVb95fDvNX+DiWiROFuTB1jrLSWWrK7K3lgW8FA2/l/gvTdyD7tTo+eOQdUKm+gXkpaec=
+	t=1789625089; cv=none; b=t8iq356vyr5m/AwgjRW6Z4tTnkmT0g08xTXDDMfRg+qNswcGxt8KE3wS+RV8kZKH6yjZB0QZperAnzV3+F6aWtZcXcj32mBFRSuIIUGsXsirlD6NFo2vhTJ3TPLfNtAzMe31UoDAz9CAXOAF/X+riiQSNf/WPeIm8Zmxb+toTh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789624182; c=relaxed/simple;
-	bh=tReoqWIHmoXrMz6orLI6piwdF96iV/JY2gLVp65/QGQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eNh/hCL0xnVbU3xyYklryoO2AdboxyqIOJ4YJ4C3vqw/wvcMoYMYZV73bzBCaTcnolXcdDlSWrrjeIMIr9ztFQyfISm/qZGVL2BtPRcVONRoi4Mo1pUTyITcwx5uO1bH9nk4IagIzJQFJMcn0TMhgLyL0VtcWOCdO+x5S/ayDC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dInZvCWo; arc=none smtp.client-ip=74.125.228.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dInZvCWo"
-Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c254f55efe5so72189166b.2
-        for <git@vger.kernel.org>; Wed, 16 Sep 2026 22:49:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789624179; x=1790228979; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=7zjM3WpW4q3U0rNgTwXCFH7zO5TMg3FCjqpP+BLR3F8=;
-        b=dInZvCWo1/CSp2VonOjy3IpmraTB+pDyePm8JE6aGrUXlOk3gkrv6vMWjLE4QuZ3aL
-         bIP8CNb4RDFEiCJ0rBdiHfCXY2cBureVCP31YwOfFKzbFxw0KozDYM+tLZtMsEmxiZUm
-         ivX9g+mDmlWPxPpP5CMBj7koArBkLoGnlF8ALockqnY1x7uViHWsVu/5Q9Em/M9n21zu
-         IKCFAklku+26vwTphmpXcXJm6Fig48atixzTn9V2lGxisVQ1pVue4bnqZyRWzSQSPCXV
-         3A8WCSQURnH6D0hnIqVftL2P6jXqCXawpYqktZdPMW103ocoP6yhcGVVOn9WwQsqbzHZ
-         kDjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789624179; x=1790228979;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=7zjM3WpW4q3U0rNgTwXCFH7zO5TMg3FCjqpP+BLR3F8=;
-        b=GlqgqjMuiS3VyZJgY1G2smyddhWEweu8JBusSXQ/vcp2jjBT7QK8NzYtk3rBrxwSmo
-         qMRYlOk9rMMwnAprW+7Bk3oXvMSVjSlHhQqIyCfU/H/UMfRuiLHhRYLMEBtmD+36uazr
-         xqpkaO7aFrdNQg2L8d6pIKEwyRC71nP8uzWunditHw0AWAHAyVLcyK4Gtq2qkLSHYXfN
-         tGlj1EL2bFFCEhL/i+NMnXQaxFBzYXVxetOS3BR6HQmg8NShxaUMpjgrqwl+RVIIKvdh
-         xGSJM22nPQN1jJfrFA1M43R1OJV5ll47dZR8rs3s8KPyg7MWfFSF9yw+VM8p07NhYc21
-         8+hA==
-X-Gm-Message-State: AFuF++kuoE6FOOiGF7wwAW55fTaK/wGFwQ4l6PJsjy35fo5TCsnBUedO
-	OaaPmHAZ9EM+gxuMVOWqsqVuM+y/X7IpxJIaxCm0H3V9ncZvomxw44Hv1qMU7Q==
-X-Gm-Gg: AYBFou1/tZa9V4dqHA8S9aZwNaElHHZhbETuTmau7M4UiMfGCm1oP1NbtN9ym/caHyJ
-	7IM0lswFoh7FHOhSK6bJn66t5igFzScyhTmv9X/9jtboLwi/hjSYuMwUeZSJtJHbUo0ofdoxeZi
-	CAfOPDz+ebhoowfgt4CXHZiga6HIAuk8jptXOulaj9UkDOl5G6zAIrv0VCefps7m4mjZjyyZItC
-	D76Bzpzq4cRvH2KUN22pcecUt9+qHBFWhbl8+pa3XrjHR34SAdOkBuA9ljD+LMlIZMmW4vT2tXv
-	W0sdOizQ5FHhm5KF9B7k/N2upjZLSXe8OosWlvEGI0bMrx8Oqw0Km8XKOuQMpionsceXP9L1q9z
-	vfpMYj8RrkU9M2AERN7zvnhEG0XIuyF9UhFEliACKPetbl2S4kFe9C4hwUoyRfYDdyiKTj8OpEm
-	ldYL01ehUMEuERssqjpiE7twlfwQsbr3YajuO3mf5md+/pQfi8yVBFnsyIrhp19sFNyhzkAXzBM
-	lpiED0Qg2M2be5qGd7siO98VVt3zUlsWY/22g5yVJBkKtUYsimwnGQNHOGaRhj5Qjuf
-X-Received: by 2002:a17:907:3cd4:b0:c25:5faf:b207 with SMTP id a640c23a62f3a-c29e51cc690mr342021966b.3.1789624178994;
-        Wed, 16 Sep 2026 22:49:38 -0700 (PDT)
-Received: from localhost (20014C4D24E59B00EDB70D4029CC4D29.dsl.pool.telekom.hu. [2001:4c4d:24e5:9b00:edb7:d40:29cc:4d29])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c29de667f38sm234490066b.56.2026.09.16.22.49.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2026 22:49:38 -0700 (PDT)
-Date: Thu, 17 Sep 2026 07:49:37 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2026, #07)
-Message-ID: <aqt/ceazKbzzmZBC@szeder.dev>
-References: <xmqqzexhuia0.fsf@gitster.g>
+	s=arc-20240116; t=1789625089; c=relaxed/simple;
+	bh=m4hMgaytaCN89bIWN7qouOymIxopT7CCSmv3Xi013Uw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=M2Ntk2jd3FYxT9VXz/LZ2Ek7mpWRRHwMmcMa/YEFjd4eq4E4fl0orrnlzQIT4pIFR+KdKPMy3DZ9qQG29NXQ//aoXINK2HzQ9CMxaRWnOMfck42wZplPyCQ5oO5tMaKSyHeJvauVs4PVLar1jO84Cv7h5CLXYVO9aRP7HuGxAgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
+Received: from [2001:3b0:22:ba05:3c99:5d75:c899:ae5e] (helo=glandium.org)
+	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <glandium@glandium.org>)
+	id 1x75EV-0000000FfvN-0rd6;
+	Thu, 17 Sep 2026 06:04:35 +0000
+Received: from glandium by goemon with local (Exim 4.98.2)
+	(envelope-from <glandium@goemon>)
+	id 1x75EL-0000000CWsF-2Nrq;
+	Thu, 17 Sep 2026 15:04:21 +0900
+From: Mike Hommey <mh@glandium.org>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	sandals@crustytoothpaste.net,
+	Mike Hommey <mh@glandium.org>
+Subject: [PATCH v5] move rust gitcore crate to a different subdirectory
+Date: Thu, 17 Sep 2026 15:04:15 +0900
+Message-ID: <20260917060415.2986259-1-mh@glandium.org>
+X-Mailer: git-send-email 2.55.0.807.gc06c3eb732
+In-Reply-To: <xmqq5x0df19l.fsf@gitster.g>
+References: <xmqq5x0df19l.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqzexhuia0.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Sep 16, 2026 at 12:07:35PM -0700, Junio C Hamano wrote:
-> * sg/precompile-git-compat-util (2026-09-14) 4 commits
->  - Makefile: precompile "git-compat-util.h"
->  - Makefile: reintroduce REFTABLE_OBJS
->  - cmake: remove any "$(*_OBJS)" variables when parsing Makefile for sources
->  - Makefile: remove XDIFF_OBJS initialization
-> 
->  The 'Makefile' has been taught to precompile 'git-compat-util.h'
->  with GCC to speed up overall compilation, while excluding sources
->  that do not include the compatibility header.
+Having `Cargo.toml` at the top-level of the repository implies that one
+can run `cargo build` directly, but this doesn't produce anything useful
+on its own.
 
-It works with Clang (and probably with other LLVM-based compilers; I
-tried the Intel oneAPI compiler) as well.
+Additionally, when including the git source as a submodule of a Rust
+project, it prevents the git source from being included at all in the
+crate package because cargo skips directories that contain a Cargo.toml,
+assuming that everything in the directory is relevant to the crate.
+
+Move all Rust-specific files into a dedicated `rust/` subdirectory.
+
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
+ .gitignore                     |  4 ++--
+ Makefile                       | 24 ++++++++++++------------
+ ci/run-rust-checks.sh          |  6 +++---
+ meson.build                    |  2 +-
+ Cargo.toml => rust/Cargo.toml  |  0
+ build.rs => rust/build.rs      |  0
+ {src => rust}/cargo-meson.sh   |  0
+ {src => rust}/meson.build      | 16 ++++++++--------
+ {src => rust/src}/csum_file.rs |  0
+ {src => rust/src}/hash.rs      |  0
+ {src => rust/src}/lib.rs       |  0
+ {src => rust/src}/loose.rs     |  0
+ {src => rust/src}/varint.rs    |  0
+ 13 files changed, 26 insertions(+), 26 deletions(-)
+ rename Cargo.toml => rust/Cargo.toml (100%)
+ rename build.rs => rust/build.rs (100%)
+ rename {src => rust}/cargo-meson.sh (100%)
+ rename {src => rust}/meson.build (81%)
+ rename {src => rust/src}/csum_file.rs (100%)
+ rename {src => rust/src}/hash.rs (100%)
+ rename {src => rust/src}/lib.rs (100%)
+ rename {src => rust/src}/loose.rs (100%)
+ rename {src => rust/src}/varint.rs (100%)
+
+diff --git a/.gitignore b/.gitignore
+index 4da58c6754..add6597643 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,6 +1,4 @@
+ /fuzz_corpora
+-/target/
+-/Cargo.lock
+ /GIT-BUILD-DIR
+ /GIT-BUILD-OPTIONS
+ /GIT-CFLAGS
+@@ -261,3 +259,5 @@ Release/
+ /contrib/buildsystems/out
+ /contrib/libgit-rs/target
+ /contrib/libgit-sys/target
++/rust/target
++/rust/Cargo.lock
+diff --git a/Makefile b/Makefile
+index c649c93c51..67e74c30cc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -959,7 +959,7 @@ RUST_LIB_NAME = gitcore.lib
+ else
+ RUST_LIB_NAME = libgitcore.a
+ endif
+-RUST_LIB = target$(if $(CARGO_BUILD_TARGET),/$(CARGO_BUILD_TARGET))/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME)
++RUST_LIB = rust/target$(if $(CARGO_BUILD_TARGET),/$(CARGO_BUILD_TARGET))/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME)
+ endif
+ 
+ GITLIBS = common-main.o $(LIB_FILE)
+@@ -1571,11 +1571,11 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+ 
+ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+ 
+-RUST_SOURCES += src/csum_file.rs
+-RUST_SOURCES += src/hash.rs
+-RUST_SOURCES += src/lib.rs
+-RUST_SOURCES += src/loose.rs
+-RUST_SOURCES += src/varint.rs
++RUST_SOURCES += rust/src/csum_file.rs
++RUST_SOURCES += rust/src/hash.rs
++RUST_SOURCES += rust/src/lib.rs
++RUST_SOURCES += rust/src/loose.rs
++RUST_SOURCES += rust/src/varint.rs
+ 
+ GIT-VERSION-FILE: FORCE
+ 	@OLD=$$(cat $@ 2>/dev/null || :) && \
+@@ -3038,8 +3038,8 @@ $(LIB_FILE): $(LIB_OBJS)
+ 
+ ifndef NO_RUST
+ ifeq ($(RUST_TARGETS),)
+-$(RUST_LIB): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+-	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
++$(RUST_LIB): rust/Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
++	$(QUIET_CARGO)cargo build --manifest-path rust/Cargo.toml $(CARGO_ARGS)
+ else
+ ifneq ($(words $(RUST_TARGETS)),1)
+ ifneq ($(uname_S),Darwin)
+@@ -3047,9 +3047,9 @@ $(error Building universal Rust libraries requires macOS (lipo is not available
+ endif
+ endif
+ 
+-RUST_MEMBER_LIBS = $(foreach target,$(RUST_TARGETS),target/$(target)/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
+-$(RUST_MEMBER_LIBS): target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+-	$(QUIET_CARGO)cargo build $(CARGO_ARGS) --target $*
++RUST_MEMBER_LIBS = $(foreach target,$(RUST_TARGETS),rust/target/$(target)/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
++$(RUST_MEMBER_LIBS): rust/target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): rust/Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
++	$(QUIET_CARGO)cargo build --manifest-path rust/Cargo.toml $(CARGO_ARGS) --target $*
+ 
+ $(RUST_LIB): $(RUST_MEMBER_LIBS)
+ 	$(call mkdir_p_parent_template)
+@@ -3913,7 +3913,7 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) $(FUZZ_PROGRAMS)
+ 	$(RM) $(SP_OBJ)
+ 	$(RM) $(HCC)
+-	$(RM) -r Cargo.lock target/
++	$(RM) -r rust/Cargo.lock rust/target/
+ 	$(RM) version-def.h
+ 	$(RM) -r $(dep_dirs) $(compdb_dir) compile_commands.json
+ 	$(RM) $(test_bindir_programs)
+diff --git a/ci/run-rust-checks.sh b/ci/run-rust-checks.sh
+index b5ad9e8dc6..47fccc3a02 100755
+--- a/ci/run-rust-checks.sh
++++ b/ci/run-rust-checks.sh
+@@ -4,17 +4,17 @@
+ 
+ set +x
+ 
+-if ! group "Check Rust formatting" cargo fmt --all --check
++if ! group "Check Rust formatting" cargo fmt --manifest-path rust/Cargo.toml --all --check
+ then
+ 	RET=1
+ fi
+ 
+-if ! group "Check for common Rust mistakes" cargo clippy --all-targets --all-features -- -Dwarnings
++if ! group "Check for common Rust mistakes" cargo clippy --manifest-path rust/Cargo.toml --all-targets --all-features -- -Dwarnings
+ then
+ 	RET=1
+ fi
+ 
+-if ! group "Check for minimum required Rust version" cargo msrv verify
++if ! group "Check for minimum required Rust version" cargo msrv --path rust verify
+ then
+ 	RET=1
+ fi
+diff --git a/meson.build b/meson.build
+index 0a95d90d21..432e306b21 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1795,7 +1795,7 @@ libgit_sources += version_def_h
+ 
+ rust_option = get_option('rust')
+ if rust_option.allowed()
+-  subdir('src')
++  subdir('rust')
+   libgit_c_args += '-DWITH_RUST'
+ 
+   if host_machine.system() == 'windows'
+diff --git a/Cargo.toml b/rust/Cargo.toml
+similarity index 100%
+rename from Cargo.toml
+rename to rust/Cargo.toml
+diff --git a/build.rs b/rust/build.rs
+similarity index 100%
+rename from build.rs
+rename to rust/build.rs
+diff --git a/src/cargo-meson.sh b/rust/cargo-meson.sh
+similarity index 100%
+rename from src/cargo-meson.sh
+rename to rust/cargo-meson.sh
+diff --git a/src/meson.build b/rust/meson.build
+similarity index 81%
+rename from src/meson.build
+rename to rust/meson.build
+index 41a4b231e6..4c617371a5 100644
+--- a/src/meson.build
++++ b/rust/meson.build
+@@ -1,9 +1,9 @@
+ libgit_rs_sources = [
+-  'csum_file.rs',
+-  'hash.rs',
+-  'lib.rs',
+-  'loose.rs',
+-  'varint.rs',
++  'src/csum_file.rs',
++  'src/hash.rs',
++  'src/lib.rs',
++  'src/loose.rs',
++  'src/varint.rs',
+ ]
+ 
+ # Unfortunately we must use a wrapper command to move the output file into the
+@@ -13,7 +13,7 @@ libgit_rs_sources = [
+ cargo_command = [
+   shell,
+   meson.current_source_dir() / 'cargo-meson.sh',
+-  meson.project_source_root(),
++  meson.current_source_dir(),
+   meson.current_build_dir(),
+ ]
+ if get_option('buildtype') == 'release'
+@@ -22,7 +22,7 @@ endif
+ 
+ libgit_rs = custom_target('git_rs',
+   input: libgit_rs_sources + [
+-    meson.project_source_root() / 'Cargo.toml',
++    meson.current_source_dir() / 'Cargo.toml',
+   ],
+   output: 'libgitcore.a',
+   command: cargo_command,
+@@ -35,7 +35,7 @@ if get_option('tests')
+     args: [
+       'test',
+       '--manifest-path',
+-      meson.project_source_root() / 'Cargo.toml',
++      meson.current_source_dir() / 'Cargo.toml',
+       '--target-dir',
+       meson.current_build_dir() / 'target',
+     ],
+diff --git a/src/csum_file.rs b/rust/src/csum_file.rs
+similarity index 100%
+rename from src/csum_file.rs
+rename to rust/src/csum_file.rs
+diff --git a/src/hash.rs b/rust/src/hash.rs
+similarity index 100%
+rename from src/hash.rs
+rename to rust/src/hash.rs
+diff --git a/src/lib.rs b/rust/src/lib.rs
+similarity index 100%
+rename from src/lib.rs
+rename to rust/src/lib.rs
+diff --git a/src/loose.rs b/rust/src/loose.rs
+similarity index 100%
+rename from src/loose.rs
+rename to rust/src/loose.rs
+diff --git a/src/varint.rs b/rust/src/varint.rs
+similarity index 100%
+rename from src/varint.rs
+rename to rust/src/varint.rs
+-- 
+2.55.0.807.gc06c3eb732
 
