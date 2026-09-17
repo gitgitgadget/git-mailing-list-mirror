@@ -1,285 +1,166 @@
-Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2552D7DFE
-	for <git@vger.kernel.org>; Thu, 17 Sep 2026 06:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6463A4E50AF
+	for <git@vger.kernel.org>; Thu, 17 Sep 2026 06:20:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789625089; cv=none; b=t8iq356vyr5m/AwgjRW6Z4tTnkmT0g08xTXDDMfRg+qNswcGxt8KE3wS+RV8kZKH6yjZB0QZperAnzV3+F6aWtZcXcj32mBFRSuIIUGsXsirlD6NFo2vhTJ3TPLfNtAzMe31UoDAz9CAXOAF/X+riiQSNf/WPeIm8Zmxb+toTh4=
+	t=1789626056; cv=none; b=utWuDgTIa29MC2phU43gzoyPWTSBdX1wFBI70guhS93rwGz24/10ITh6VILuat4cmYEJjhgvBOsxIcE224w8P58zU01WprIA9WMNs5uWWKKf1L0f/WKaEWjYMt9ThDId6DvUmXeTjOJnwMMgAvFnnpSho0N8uknLkp3nwFz+MV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789625089; c=relaxed/simple;
-	bh=m4hMgaytaCN89bIWN7qouOymIxopT7CCSmv3Xi013Uw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M2Ntk2jd3FYxT9VXz/LZ2Ek7mpWRRHwMmcMa/YEFjd4eq4E4fl0orrnlzQIT4pIFR+KdKPMy3DZ9qQG29NXQ//aoXINK2HzQ9CMxaRWnOMfck42wZplPyCQ5oO5tMaKSyHeJvauVs4PVLar1jO84Cv7h5CLXYVO9aRP7HuGxAgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
-Received: from [2001:3b0:22:ba05:3c99:5d75:c899:ae5e] (helo=glandium.org)
-	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <glandium@glandium.org>)
-	id 1x75EV-0000000FfvN-0rd6;
-	Thu, 17 Sep 2026 06:04:35 +0000
-Received: from glandium by goemon with local (Exim 4.98.2)
-	(envelope-from <glandium@goemon>)
-	id 1x75EL-0000000CWsF-2Nrq;
-	Thu, 17 Sep 2026 15:04:21 +0900
-From: Mike Hommey <mh@glandium.org>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	ps@pks.im,
-	sandals@crustytoothpaste.net,
-	Mike Hommey <mh@glandium.org>
-Subject: [PATCH v5] move rust gitcore crate to a different subdirectory
-Date: Thu, 17 Sep 2026 15:04:15 +0900
-Message-ID: <20260917060415.2986259-1-mh@glandium.org>
-X-Mailer: git-send-email 2.55.0.807.gc06c3eb732
-In-Reply-To: <xmqq5x0df19l.fsf@gitster.g>
-References: <xmqq5x0df19l.fsf@gitster.g>
+	s=arc-20240116; t=1789626056; c=relaxed/simple;
+	bh=sKfQz5yy29IpqCEGxLrk9oOzzRLeDk2aKwwrwt++UpI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LLMGihSVBSc8Ajj52vcLWM4+tyrca1h9KpjbFw+gKsxgCJU98OnA6rx8Wfgbp18C3jUvvS7RQAmnYJQ0D3cb35QVG8d7CkA+DVntmpYAFquBbefx6+r+3fDFPSYEeB/Lt5sVniwGEXQFcj0YcdUf3+sZ8CyM17N/WZpSO7sxXW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wLEYhAZA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hDNnXcw2; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wLEYhAZA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hDNnXcw2"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A64977A00D0;
+	Thu, 17 Sep 2026 02:20:53 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 17 Sep 2026 02:20:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1789626053; x=1789712453; bh=DXXrlW+6A+
+	baWNFW6CivBNL9CnGCdRFRUmpJsArDIbo=; b=wLEYhAZAuZxLwH37hS8PLkYbgB
+	0SXMwQ+LTqd6e59I5MKNvPVigIBJLkHaKlU6Hzp1DbWeZXAf9/Qq+/jHN5AkzSsa
+	Y2U5aTtSGGH2LOLE4cUSY2UrqmYwR2LAgf7noweh2ABxeo5dDnRmHAUyfyGfnose
+	4vINdKDJCmqeiTQMIHDjtt5oi/nQWLg38n/C54uwvBUyzDzuzLhspPfbATsM2WSI
+	UGMn3Yo/5tVT8a4e2+bK5wmUHNYBB8bnIDS/PGYWuJ4lG2mHT7Khi7q6ShKawI9B
+	Nm1jgFbo0CuO2mngEqQrjxOojfVb14GnpKMfUwPhicWXIN3QhvLNRaNpb8EQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789626053; x=1789712453; bh=DXXrlW+6A+baWNFW6CivBNL9CnGCdRFRUmp
+	JsArDIbo=; b=hDNnXcw2AALHR67oOWOt8E2VSA4D4tI+5W/G7y0Dczee6z3H/hY
+	rSmDES+rbtgd0ALn+4M9sjOvA21viT5Y1/evKyqlbv9dhRChpu00YT2z9AZfWwrV
+	yz6zTenv5hHK78djqnUU32Bsw2WE/aZNTCAVG/ktJnsN31HRDxryiCyhkDMZlYep
+	8UYbUFJBtyAGXR+Bm4IYQvEqkYSa3GfeLuih1fkoQvgXDEtYYSiFXngD5JIc5TfN
+	e/lG7mNsDLphhZOZiQBAEO/38OQWhbiSfHERGfWiQDk0g48PvDJwuBMikDU3uLpI
+	PBh00m1Js7Y9v8S820Pq897q5y7iJcBNHJQ==
+X-ME-Sender: <xms:xYaralc78kvJRGyJlBJ_t9JAT2yjWVrXdyB7cQQ8TOFr4QAQqLAlbg>
+    <xme:xYaraqplec-BIyX9_LxvmDEib8jPsdybilY3wfrNbm3DzWtIx1PiYAnyH3Yl9hmlH
+    GtsqNM-7_AEkFGlXYgFSqW2N78Nt5DLvJS74anPlJAaH4N7Ggu6uA>
+X-ME-Received: <xmr:xYarar4NPcEPnwmGvxvd_E0NZqVJ3K738v6GUQtDQcC7cxPqJuZtzQ-BbxuRhFsasoImVDQ6mWdfX8oB3vI9Eo1NLSPSy-zHKZc2>
+X-ME-Proxy-Cause: dmFkZTE5Byix/1+dYlouTFJY9CLjy4cwsRL3LI4ppp2wZB/sNMQn2uB3orViZ1iFgY/yR6
+    Pu6JtSfKed1v7ZL8cWG/WYzwIXaWY3GXS1r/DJDBA9pG3NU49K9X4A32JWi0Z4zqatnFuZ
+    b8tlZ6qjaQypYEwrKD50n/RD9oEch2UpNJ9D1wgemgvdzuvRI3QHqB01u9kESKNBdsgkI0
+    xahZx2of0DqNniSsaJ0QxtHoMuZmru2Wo/7ch2e4ZWeknsvQKqICjAbvpYGsQHaFNWFMYi
+    Jp1S9RoKMnqDaQDpwF/PaXxBTcDVWhroMyovsTilKbcNmd95M9Bu4F8rqE7yDKWxGWwJSO
+    TEXnpioy/c44e00IpNQtOo6ryAFD73vBaW87Xu3ajEzCY2CtKnOJykV0BviDQSsZLrQ4jv
+    z98rcKpcxvY03cIqCu0P4m7LBt3MNd07BenPgaW8sz0jjFEBrZ6OD9kQlox89uToMnLppq
+    DXnjp+/lnyoiQ9lqsF420ToT7SmoYfDTjaKrveZ1N0nTmzf6TcffuZHJdsZZ9xAmq2C9wO
+    rQM/7ENWJadTuQ/6ICYDybV91PZnmesBXNO9rPx9bPwt9XI8p996mKlv3DCMveKoKYBnwV
+    65lms107Rg8TAAYfPrG/DK0AcFx22XjFGHbkfuGlYItKxqaqk7LV01EtJvEw
+X-ME-Proxy: <xmx:xYaraooRSnm7rtYirf1T39A5-VAkuS8NuJDXuYtkhXXeUJVDXSmnHg>
+    <xmx:xYaraljv5HGWPZD3PZIJdV5qE07oYLYfBj0sIrWQj74qhwESM3JBWQ>
+    <xmx:xYaraqJ5NC00xg2pUEuLhi5q8mOg7ZMmVvQ5MqHsGXL5Wa0gJEVn0w>
+    <xmx:xYaratBfym_VcnCKpssrecsH5y6vcjk7HYGskUw23wM1paeQscivHA>
+    <xmx:xYarasjbJnteBdA9AovVijpgreK_7EpWmD5L7P8v3deG-wbz_04cP5ef>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 17 Sep 2026 02:20:53 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Royce Remer <royceremer@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] upload-pack: swap wanted-ref/shallow-info responses
+In-Reply-To: <20260916203221.5265-1-royceremer@gmail.com> (Royce Remer's
+	message of "Wed, 16 Sep 2026 13:32:21 -0700")
+References: <20260915193009.222678-1-royceremer@gmail.com>
+	<20260916203221.5265-1-royceremer@gmail.com>
+Date: Wed, 16 Sep 2026 23:20:51 -0700
+Message-ID: <xmqqa4pgv1oc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Having `Cargo.toml` at the top-level of the repository implies that one
-can run `cargo build` directly, but this doesn't produce anything useful
-on its own.
+Royce Remer <royceremer@gmail.com> writes:
 
-Additionally, when including the git source as a submodule of a Rust
-project, it prevents the git source from being included at all in the
-crate package because cargo skips directories that contain a Cargo.toml,
-assuming that everything in the directory is relevant to the crate.
+> When a server enables uploadpack.allowRefInWant, upload_pack_v2()
+> sends wanted-ref info before shallow-info.  The fetch-pack client
+> expects shallow-info first; receiving them out of order causes it
+> to exit:
+>
+>     fatal: expected 'packfile', received 'shallow-info'
+>
+> This error condition only applies to protocol v2 clients performs
+> a shallow fetch (--depth) against servers with allowRefInWant
+> configured.
+>
+> Swap the send order so that upload_pack_v2() sends shallow-info
+> before wanted-ref info.  This is a server-side-only change and is
+> compatible with all existing client versions.
 
-Move all Rust-specific files into a dedicated `rust/` subdirectory.
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
- .gitignore                     |  4 ++--
- Makefile                       | 24 ++++++++++++------------
- ci/run-rust-checks.sh          |  6 +++---
- meson.build                    |  2 +-
- Cargo.toml => rust/Cargo.toml  |  0
- build.rs => rust/build.rs      |  0
- {src => rust}/cargo-meson.sh   |  0
- {src => rust}/meson.build      | 16 ++++++++--------
- {src => rust/src}/csum_file.rs |  0
- {src => rust/src}/hash.rs      |  0
- {src => rust/src}/lib.rs       |  0
- {src => rust/src}/loose.rs     |  0
- {src => rust/src}/varint.rs    |  0
- 13 files changed, 26 insertions(+), 26 deletions(-)
- rename Cargo.toml => rust/Cargo.toml (100%)
- rename build.rs => rust/build.rs (100%)
- rename {src => rust}/cargo-meson.sh (100%)
- rename {src => rust}/meson.build (81%)
- rename {src => rust/src}/csum_file.rs (100%)
- rename {src => rust/src}/hash.rs (100%)
- rename {src => rust/src}/lib.rs (100%)
- rename {src => rust/src}/loose.rs (100%)
- rename {src => rust/src}/varint.rs (100%)
+It seems that this bug existed in the very first set of patches that
+introduced the ref-in-want feature, namely, 733020517a (fetch-pack:
+implement ref-in-want, 2018-06-27) and 516e2b76bd (upload-pack:
+implement ref-in-want, 2018-06-27).  There were a few changes on the
+code around that area, but on-the-wire protocol never changed, so it
+never worked correctly, but the ref-in-want feature is a rather
+exotic thing to want in the first place, so it is not all that
+unexpected.
 
-diff --git a/.gitignore b/.gitignore
-index 4da58c6754..add6597643 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -1,6 +1,4 @@
- /fuzz_corpora
--/target/
--/Cargo.lock
- /GIT-BUILD-DIR
- /GIT-BUILD-OPTIONS
- /GIT-CFLAGS
-@@ -261,3 +259,5 @@ Release/
- /contrib/buildsystems/out
- /contrib/libgit-rs/target
- /contrib/libgit-sys/target
-+/rust/target
-+/rust/Cargo.lock
-diff --git a/Makefile b/Makefile
-index c649c93c51..67e74c30cc 100644
---- a/Makefile
-+++ b/Makefile
-@@ -959,7 +959,7 @@ RUST_LIB_NAME = gitcore.lib
- else
- RUST_LIB_NAME = libgitcore.a
- endif
--RUST_LIB = target$(if $(CARGO_BUILD_TARGET),/$(CARGO_BUILD_TARGET))/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME)
-+RUST_LIB = rust/target$(if $(CARGO_BUILD_TARGET),/$(CARGO_BUILD_TARGET))/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME)
- endif
- 
- GITLIBS = common-main.o $(LIB_FILE)
-@@ -1571,11 +1571,11 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
- 
- UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
- 
--RUST_SOURCES += src/csum_file.rs
--RUST_SOURCES += src/hash.rs
--RUST_SOURCES += src/lib.rs
--RUST_SOURCES += src/loose.rs
--RUST_SOURCES += src/varint.rs
-+RUST_SOURCES += rust/src/csum_file.rs
-+RUST_SOURCES += rust/src/hash.rs
-+RUST_SOURCES += rust/src/lib.rs
-+RUST_SOURCES += rust/src/loose.rs
-+RUST_SOURCES += rust/src/varint.rs
- 
- GIT-VERSION-FILE: FORCE
- 	@OLD=$$(cat $@ 2>/dev/null || :) && \
-@@ -3038,8 +3038,8 @@ $(LIB_FILE): $(LIB_OBJS)
- 
- ifndef NO_RUST
- ifeq ($(RUST_TARGETS),)
--$(RUST_LIB): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
--	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
-+$(RUST_LIB): rust/Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
-+	$(QUIET_CARGO)cargo build --manifest-path rust/Cargo.toml $(CARGO_ARGS)
- else
- ifneq ($(words $(RUST_TARGETS)),1)
- ifneq ($(uname_S),Darwin)
-@@ -3047,9 +3047,9 @@ $(error Building universal Rust libraries requires macOS (lipo is not available
- endif
- endif
- 
--RUST_MEMBER_LIBS = $(foreach target,$(RUST_TARGETS),target/$(target)/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
--$(RUST_MEMBER_LIBS): target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
--	$(QUIET_CARGO)cargo build $(CARGO_ARGS) --target $*
-+RUST_MEMBER_LIBS = $(foreach target,$(RUST_TARGETS),rust/target/$(target)/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
-+$(RUST_MEMBER_LIBS): rust/target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): rust/Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
-+	$(QUIET_CARGO)cargo build --manifest-path rust/Cargo.toml $(CARGO_ARGS) --target $*
- 
- $(RUST_LIB): $(RUST_MEMBER_LIBS)
- 	$(call mkdir_p_parent_template)
-@@ -3913,7 +3913,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) $(FUZZ_PROGRAMS)
- 	$(RM) $(SP_OBJ)
- 	$(RM) $(HCC)
--	$(RM) -r Cargo.lock target/
-+	$(RM) -r rust/Cargo.lock rust/target/
- 	$(RM) version-def.h
- 	$(RM) -r $(dep_dirs) $(compdb_dir) compile_commands.json
- 	$(RM) $(test_bindir_programs)
-diff --git a/ci/run-rust-checks.sh b/ci/run-rust-checks.sh
-index b5ad9e8dc6..47fccc3a02 100755
---- a/ci/run-rust-checks.sh
-+++ b/ci/run-rust-checks.sh
-@@ -4,17 +4,17 @@
- 
- set +x
- 
--if ! group "Check Rust formatting" cargo fmt --all --check
-+if ! group "Check Rust formatting" cargo fmt --manifest-path rust/Cargo.toml --all --check
- then
- 	RET=1
- fi
- 
--if ! group "Check for common Rust mistakes" cargo clippy --all-targets --all-features -- -Dwarnings
-+if ! group "Check for common Rust mistakes" cargo clippy --manifest-path rust/Cargo.toml --all-targets --all-features -- -Dwarnings
- then
- 	RET=1
- fi
- 
--if ! group "Check for minimum required Rust version" cargo msrv verify
-+if ! group "Check for minimum required Rust version" cargo msrv --path rust verify
- then
- 	RET=1
- fi
-diff --git a/meson.build b/meson.build
-index 0a95d90d21..432e306b21 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1795,7 +1795,7 @@ libgit_sources += version_def_h
- 
- rust_option = get_option('rust')
- if rust_option.allowed()
--  subdir('src')
-+  subdir('rust')
-   libgit_c_args += '-DWITH_RUST'
- 
-   if host_machine.system() == 'windows'
-diff --git a/Cargo.toml b/rust/Cargo.toml
-similarity index 100%
-rename from Cargo.toml
-rename to rust/Cargo.toml
-diff --git a/build.rs b/rust/build.rs
-similarity index 100%
-rename from build.rs
-rename to rust/build.rs
-diff --git a/src/cargo-meson.sh b/rust/cargo-meson.sh
-similarity index 100%
-rename from src/cargo-meson.sh
-rename to rust/cargo-meson.sh
-diff --git a/src/meson.build b/rust/meson.build
-similarity index 81%
-rename from src/meson.build
-rename to rust/meson.build
-index 41a4b231e6..4c617371a5 100644
---- a/src/meson.build
-+++ b/rust/meson.build
-@@ -1,9 +1,9 @@
- libgit_rs_sources = [
--  'csum_file.rs',
--  'hash.rs',
--  'lib.rs',
--  'loose.rs',
--  'varint.rs',
-+  'src/csum_file.rs',
-+  'src/hash.rs',
-+  'src/lib.rs',
-+  'src/loose.rs',
-+  'src/varint.rs',
- ]
- 
- # Unfortunately we must use a wrapper command to move the output file into the
-@@ -13,7 +13,7 @@ libgit_rs_sources = [
- cargo_command = [
-   shell,
-   meson.current_source_dir() / 'cargo-meson.sh',
--  meson.project_source_root(),
-+  meson.current_source_dir(),
-   meson.current_build_dir(),
- ]
- if get_option('buildtype') == 'release'
-@@ -22,7 +22,7 @@ endif
- 
- libgit_rs = custom_target('git_rs',
-   input: libgit_rs_sources + [
--    meson.project_source_root() / 'Cargo.toml',
-+    meson.current_source_dir() / 'Cargo.toml',
-   ],
-   output: 'libgitcore.a',
-   command: cargo_command,
-@@ -35,7 +35,7 @@ if get_option('tests')
-     args: [
-       'test',
-       '--manifest-path',
--      meson.project_source_root() / 'Cargo.toml',
-+      meson.current_source_dir() / 'Cargo.toml',
-       '--target-dir',
-       meson.current_build_dir() / 'target',
-     ],
-diff --git a/src/csum_file.rs b/rust/src/csum_file.rs
-similarity index 100%
-rename from src/csum_file.rs
-rename to rust/src/csum_file.rs
-diff --git a/src/hash.rs b/rust/src/hash.rs
-similarity index 100%
-rename from src/hash.rs
-rename to rust/src/hash.rs
-diff --git a/src/lib.rs b/rust/src/lib.rs
-similarity index 100%
-rename from src/lib.rs
-rename to rust/src/lib.rs
-diff --git a/src/loose.rs b/rust/src/loose.rs
-similarity index 100%
-rename from src/loose.rs
-rename to rust/src/loose.rs
-diff --git a/src/varint.rs b/rust/src/varint.rs
-similarity index 100%
-rename from src/varint.rs
-rename to rust/src/varint.rs
--- 
-2.55.0.807.gc06c3eb732
-
+>
+> Signed-off-by: Royce Remer <royceremer@gmail.com>
+> ---
+>  t/t5703-upload-pack-ref-in-want.sh | 18 ++++++++++++++++++
+>  upload-pack.c                      |  2 +-
+>  2 files changed, 19 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+> index 249137b467..9e2a090c9e 100755
+> --- a/t/t5703-upload-pack-ref-in-want.sh
+> +++ b/t/t5703-upload-pack-ref-in-want.sh
+> @@ -295,6 +295,24 @@ test_expect_success 'fetching with wildcard that matches multiple refs' '
+>  	grep "want-ref refs/heads/o/bar" log
+>  '
+>  
+> +test_expect_success 'shallow clone with ref-in-want' '
+> +       rm -rf local &&
+> +       GIT_TEST_PROTOCOL_VERSION=2 git clone --depth=1 "file://$REPO" local &&
+> +       git -C "$REPO" rev-parse main >expected &&
+> +       git -C local rev-parse refs/remotes/origin/main >actual &&
+> +       test_cmp expected actual &&
+> +       git -C local log --oneline refs/remotes/origin/main >log &&
+> +       test_line_count = 1 log
+> +'
+> +
+> +test_expect_success 'incremental shallow fetch with ref-in-want' '
+> +       rm -rf local &&
+> +       GIT_TEST_PROTOCOL_VERSION=2 git clone --depth=1 "file://$REPO" local &&
+> +       GIT_TEST_PROTOCOL_VERSION=2 git -C local fetch --depth=2 origin main &&
+> +       git -C local log --oneline refs/remotes/origin/main >log &&
+> +       test_line_count = 2 log
+> +'
+> +
+>  REPO="$(pwd)/repo-ns"
+>  
+>  test_expect_success 'setup namespaced repo' '
+> diff --git a/upload-pack.c b/upload-pack.c
+> index a52856d869..a70d237ad3 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -1812,8 +1812,8 @@ int upload_pack_v2(struct repository *r, struct packet_reader *request)
+>  				state = UPLOAD_DONE;
+>  			break;
+>  		case UPLOAD_SEND_PACK:
+> -			send_wanted_ref_info(&data);
+>  			send_shallow_info(&data);
+> +			send_wanted_ref_info(&data);
+>  
+>  			if (data.uri_protocols.nr) {
+>  				create_pack_file(&data, &data.uri_protocols);
+>
+> base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
