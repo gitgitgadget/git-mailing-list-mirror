@@ -1,150 +1,213 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA5A34E764
-	for <git@vger.kernel.org>; Fri, 18 Sep 2026 07:19:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C44A23E334
+	for <git@vger.kernel.org>; Fri, 18 Sep 2026 08:20:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789715950; cv=none; b=tqNbfNMHp0jHHBnKLAjDcH8kwPDYlnOVG1BVLtwPH4TtFyjsfibEs9vg+XEmcTFY/Dc47H9Hl4CM1B2wcl91lQToUT1/T5OCa80pGmL7ghtQTPij249SdQWmkL8TAIxhrUaQpIP7uTtAb1mzLB66QJnXXgKRGPvtPet5f1Mrnbc=
+	t=1789719660; cv=none; b=Dr3S0XFSWHvLtc7wlx8q08TuDv45S08zw2NteDg+Tk2SZmfAj2Urqns03MFpsfD4X8RQJx6Dk0UPCg5kOiZLzMOCL1jWhRRBYOopg2SKdhjgyocwkyQgUztgZdPl5N9hD1F7RkscEFIkGLEw16aKgqTfSWpEPF9F0O3voNZQ2S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789715950; c=relaxed/simple;
-	bh=BtyXtFC3JMtgqtasTR2IkAiAkmJtcdDOWPlj4Lp9+tA=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=fniS8aHXQ6ZNd+tfcwjUyLwuhiBibNefzbVBkIMCiSoigD9dFOEtWYSh45RCXObMtamuPX6SW/P9tQH/EKNUqyBtjPguDENam9/VGQT9Dsmn7Z5euYRzghH43JCtu1JxsYAMK18CFtaP5dbCtHMEBUV1M9njdap4f+EK7QS39MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XgDPdgPS; arc=none smtp.client-ip=74.125.227.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789719660; c=relaxed/simple;
+	bh=oUEtkWY7dT09G+2j/1WupAqPDl5EjcQPpFZs0tNfL/g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oDH8IDX0uhJxfKpwHhROOIld5zEaTnVbnmgk0OFf9pGI/jX34rkT7inCQpoZShibdO8+ad1WyBFBqYoa1hZrZ6U7v0oeRIJsrVVKshFTG5UxAriuFvfD/msRSF6jk0f912wwH7omrpc6Ym+r1cecTJ2f4b0OGFXkajzHWltTm0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BmOec011; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pWnEw8or; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XgDPdgPS"
-Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-39b350c69b4so386312a91.2
-        for <git@vger.kernel.org>; Fri, 18 Sep 2026 00:19:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789715949; x=1790320749; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=iD/JrO5wExFJN9AsIAO8TbyQA+UjT3bOrcDr20wIUi8=;
-        b=XgDPdgPSPxAoS3HO0j4uX1hFXH+RAiKkBz8FxZL19neiDgGpyOkkv165NJ1ufWAS+v
-         Xk1zdg8XFxpsHbA1Ade7FBqjAZIjzhn1M9cGzJ3iy00gL4ZM/t5Xncmx509S8R677vLu
-         QRaOG7ZSYozTf1z6bKV1Jr2r/irIzLt35nviA1GNPHAmU51UWWAwDiM2pV6O4pDSWdAE
-         Lbesa5tWiX8Zo1ShYrZFpakzYEC4tvrhECXVfcqv0fnybizjslIuiiXI9bTpfWKzo/jf
-         AD6qVgs6cWTcAEDY2nXwVTazgIWkFKNcSg+ORHk9/37biNOlwcAuLqeXhx4f6nlERjmk
-         TcMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789715949; x=1790320749;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=iD/JrO5wExFJN9AsIAO8TbyQA+UjT3bOrcDr20wIUi8=;
-        b=ivADo3kmuD0z/v9HsUYONfDZ+UrMb7l7+Uf/vPPSy6e2C2QyNqXATbJw3QJ2l9qybU
-         BYfFJFYVN+ZXXoo1JPLk6UbG0ZJhRQ9qUd5tfAWtKUPWmR2AKm8vZWkZ5gXN9+N0SkrR
-         EdJMO5JprLDKtqlHG2fT6wCnc7l2e06/cS379setMl/3ixzc0dWsjJcNGCRls2kSg3Dc
-         t+1EOrc0jRvcyYgqLecYxBg0PrF5MN71dBhS4jPFXQPpoLNBEOKKLMXeqNKyD5/3sE2o
-         5VLKkxpdG0SXjipnl0lATm2k7EJvwTeHjWoz+L68gfPNp9oixfYRi7FOgnFc7Bke6e+u
-         94dg==
-X-Gm-Message-State: AFuF++l2RIyIArkpBPc7kQUpY+yZZr+eHXf+aDFGjBMhG8VregN2HTFy
-	V+ojGRKuXdRhk1hXoHDQ0c6K02bMNCRvV6JZVHXAZ41EAaas1imvTRiJLqF8qA==
-X-Gm-Gg: AYBFou2o7VhTUAPzjaWvUaH1zF6DWODaMFEiJCOXqHzNifkUuZr6ZT3LwhZsivCyQ+K
-	8IJnJ1DyRl0EmUX9SKeTGMyBukNFk3yO3i3vvIjlke8faz/OHfZgXAP1ZjAto3+jDZXalSuEQbp
-	TmS3drKAuvwuHxmKGfnFMJO9l01o7dsZhQd/WbTdrrtHLQ6SkXLqTwNJhsliVsjBSONtyVOntm4
-	+3bM1/Zk1KpTdKM3Srs5xcWm3yWjAv13Rip5ZsEIjYTwTQlAfBK/eWNpvOzruqQl2JbUfKjvMg9
-	DfYt5VPLjfTAvtBeEPwm7SjYmbd6ueEl1lJTChB9aGSzDq0nZAC2DqUPNboJm0FP3yOlqBq3/Vq
-	/gk5GhnPFJp1wNPjWj54yBMttk6w5zISXRV4d/9hSe/L4B6FHfu9Lqcm4iGAmFekmEMmHo3Ua/u
-	O7hvQt3DlQc9NCU7r7ei4qFuGeukF4o1BYY6woWXxFj/FA3ZctYC3JN4t7dRg6ih0J7i/zSBQ=
-X-Received: by 2002:a17:90b:558e:b0:39e:4c80:44bc with SMTP id 98e67ed59e1d1-39e54df6d7fmr3701422a91.31.1789715948613;
-        Fri, 18 Sep 2026 00:19:08 -0700 (PDT)
-Received: from [127.0.0.1] ([20.168.103.5])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33c286d98e7sm2341748eec.9.2026.09.18.00.19.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2026 00:19:07 -0700 (PDT)
-Message-Id: <pull.2232.git.1789715946888.gitgitgadget@gmail.com>
-From: "Haokai Ding via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 18 Sep 2026 07:19:06 +0000
-Subject: [PATCH] diff --no-index: fix -R with file/directory conflicts
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BmOec011";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pWnEw8or"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 62A5C7A00FE;
+	Fri, 18 Sep 2026 04:20:54 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Fri, 18 Sep 2026 04:20:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1789719654; x=1789806054; bh=eYxlWShuVs
+	OBjCrpOvtx0KVI4IJff9NKT1vymAC0R7Q=; b=BmOec011ToPjF3mHQTL97aTmHV
+	8KvQ2DZBQgntgSMvnOO+J8h/1bMyq43As6Tu0lsWKEIfGqUDlnnLLIkRZLANIQ7x
+	uedwbBhVFLBgD9Fkb66jIyk1rsiz020ax45qumfSX+PE3zZG9MzEvOi88i82LioM
+	kyDajIVltyVy9fd8cUM+BNa+C08ZxMKTsj+FdObV6m3O5zZGKN/suT3vMPTbH7ff
+	/E72kPjMBezdyuCvZ9Bhzu23nAZJCOY+51J9aYXXHs0ENzkylcDCZ/zSyOwfmu78
+	ICTRR580kNwhThsZeOeoF4v2UizPFy98HaQsHgPC5nkHU4SILCaikCcVr6zw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789719654; x=1789806054; bh=eYxlWShuVsOBjCrpOvtx0KVI4IJff9NKT1v
+	ymAC0R7Q=; b=pWnEw8orys8fD6+rqqo8X1kJkg4obeN4+KAMmcXa8ru4LT6GyHM
+	p42fhWl4taSdtMd0Rlj7sXDnEmDSTQ4KOqvGus7ajLQPG2yZI0O4HdDMQePNuH6o
+	AQBrLCzqg8dyKun2++ab6J1hYw7P9yMWyFd8C04DN2IDmiOQWAgdxrfdpQkDwZGm
+	Mbr+XHgriRUGYV1tFDPjkgLS9Iacl63HnvFyBh/XQTeWmucGWPHg+mmidrDOHZG5
+	FfBQCW89fCs31ErhRSbnHJchg+7i/cNbj7yoXIgp9tfSJyJy+GrI+EcSrHmtNrFJ
+	rQYKQjIvKcKR1gq7uPrUsvi5p/cBmhivjAw==
+X-ME-Sender: <xms:ZfSsanrauMJjOclGOcZASzX2jjwBsom1CC71Jm7G9Qv5QYmxCTAxuw>
+    <xme:ZfSsaoiIo0xixXK3C9AUHiZBT0yjqus0zcKHDPf-uogx2HBkabux_XadB5HYDPzh3
+    TYRMAJSh8KgyRfCxFCu_-vQE0Mf2w0xBCJUVLEKPT9zlV_Gz91KgCU>
+X-ME-Received: <xmr:ZfSsasjkvf74pCRJeYxmz92Vv_UwMGlMoYTsonGpA_2PUlmeRfIT7gPZeqbIpIu9qXiVOTTk1p7UMn-l4yfaB9gkBpsjecLLPTpw>
+X-ME-Proxy-Cause: dmFkZTFjY/EB74l8X4SI7j+gQMsPF0boRUDNEcc1hCXpSSZUiUPgpwA8UyoN54l6hvnr/f
+    RvbDWsPufLnOr01vIEbQSRlGGwI4bhWTdVUL5ufAMEPMtQHshj6/Xz2biUtpm5hSrDwa23
+    eSqxPN4wt0K2VmFSUMC3E5FG4VdCqprcBEV0P9QyTLSn42TwZle+Pj8O2d656i0Kt1VX3h
+    oH7tnc3mO/TpqwDpZx28wecCCEytNoPPCI56HnEG+lJU3i+JdcbSjd/5fnn73lS1kRdUlb
+    4H58UXIIM7Pa+bj3yr7LdLeTiNq8pD5Zuzc/vsPnnF5x45YGLvghTGkVYz3b1Gh4c8wwEb
+    v4OOnGtssfdKsgKYqCTcnvEGjjsDYzlnUOkgGPsknWkOLjYllD/HKGbSSPbhBubwHanh1i
+    Z64YJmzhfFAYCsYvZPu3IdqUJ2eF27B9G8d5mPysEXKNGP5s0n+v70SHO7FYeYPvqyFld6
+    rPXNvVCd7req4tXJEg7EP0O3RtcaYKYU9kjnGJ5/Nlod4bSAXXdP2+tChlYm/D52Rl9teF
+    KrHD3JSBLBCUvlKoWuWBca9BXh7zj/KEuqfDHSpNAPE1EIFaE8K0mvUjC4lQP3hpZE9Ajd
+    qoS7I+oZC7bP6AS6wyiXpID+QuWs9LlKJTTXs+3Q8rXv5hnr2q4fjwfTJCDw
+X-ME-Proxy: <xmx:ZfSsamhDZ_B7cBc7UUwgne-klUSJCGZ6MEvMRAoFLqnFFFQfHDd0Sg>
+    <xmx:ZfSsakLgfKuGfcPuKMRAIDlDVWRfSKmgGYQFFgNhmUP98X3Z8bhSPQ>
+    <xmx:ZfSsatEhezLU77z1Ic8ik_MBR1pjuDbEi9w3_5dIxx7Xda1mW3gtzA>
+    <xmx:ZfSsagR0tN98z4Jij8vMuN8a_RbrAd4FrQcKJxzeVs5KCea5Gqa7_w>
+    <xmx:ZvSsams50z9l3fuKcXPCPXGXeEQjnUxjt3WEm3Vs54Wmb8KaZPIWyah5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 18 Sep 2026 04:20:53 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Mike Hommey <mh@glandium.org>
+Cc: git@vger.kernel.org,  ps@pks.im,  sandals@crustytoothpaste.net
+Subject: Re: [PATCH v5] move rust gitcore crate to a different subdirectory
+In-Reply-To: <20260917060415.2986259-1-mh@glandium.org> (Mike Hommey's message
+	of "Thu, 17 Sep 2026 15:04:15 +0900")
+References: <xmqq5x0df19l.fsf@gitster.g>
+	<20260917060415.2986259-1-mh@glandium.org>
+Date: Fri, 18 Sep 2026 01:20:51 -0700
+Message-ID: <xmqqfqz7otr0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-    Jacob Keller <jacob.e.keller@intel.com>,
-    Haokai Ding <hk_ding@outlook.com>,
-    Haokai Ding <hk_ding@outlook.com>
+Content-Type: text/plain
 
-From: Haokai Ding <hk_ding@outlook.com>
+Mike Hommey <mh@glandium.org> writes:
 
-When a path is a file on one side and a directory on the other,
-queue_diff() queues the file separately before recursing into the
-directory. This early queue entry bypasses the reverse_diff handling
-used for ordinary files.
+> Having `Cargo.toml` at the top-level of the repository implies that one
+> can run `cargo build` directly, but this doesn't produce anything useful
+> on its own.
+>
+> Additionally, when including the git source as a submodule of a Rust
+> project, it prevents the git source from being included at all in the
+> crate package because cargo skips directories that contain a Cargo.toml,
+> assuming that everything in the directory is relevant to the crate.
+>
+> Move all Rust-specific files into a dedicated `rust/` subdirectory.
+>
+> Signed-off-by: Mike Hommey <mh@glandium.org>
+> ---
 
-As a result, comparing directories d and e where d/sub is a file and
-e/sub/file is another file reports both paths as deleted with -R.
-Reversing the operands reports both paths as added instead.
+It would have been a friendly thing to do to describe what base was
+chosen, especially with a few other topics in flight that touch the
+build procedure for Rust part of the system recently, here below the
+three-dash line.  
 
-Swap the filespecs of the early queue entry when reverse_diff is set,
-so that -R reverses the file change as well as the directory contents.
-Add regression tests for both directions.
+It seems that this patch is designed to apply cleanly on top of Git
+2.56-rc1, which already has these topics merged, so I do not have to
+worry about conflicts with them when queueing this patch, which is
+good.
 
-Signed-off-by: Haokai Ding <hk_ding@outlook.com>
----
-    diff --no-index: fix -R with file/directory conflicts
+>  .gitignore                     |  4 ++--
+>  Makefile                       | 24 ++++++++++++------------
+>  ci/run-rust-checks.sh          |  6 +++---
+>  meson.build                    |  2 +-
+>  Cargo.toml => rust/Cargo.toml  |  0
+>  build.rs => rust/build.rs      |  0
+>  {src => rust}/cargo-meson.sh   |  0
+>  {src => rust}/meson.build      | 16 ++++++++--------
+>  {src => rust/src}/csum_file.rs |  0
+>  {src => rust/src}/hash.rs      |  0
+>  {src => rust/src}/lib.rs       |  0
+>  {src => rust/src}/loose.rs     |  0
+>  {src => rust/src}/varint.rs    |  0
+>  13 files changed, 26 insertions(+), 26 deletions(-)
+>  rename Cargo.toml => rust/Cargo.toml (100%)
+>  rename build.rs => rust/build.rs (100%)
+>  rename {src => rust}/cargo-meson.sh (100%)
+>  rename {src => rust}/meson.build (81%)
+>  rename {src => rust/src}/csum_file.rs (100%)
+>  rename {src => rust/src}/hash.rs (100%)
+>  rename {src => rust/src}/lib.rs (100%)
+>  rename {src => rust/src}/loose.rs (100%)
+>  rename {src => rust/src}/varint.rs (100%)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2232%2FHaokaiDing%2Ffix%2Fno-index-reverse-file-directory-mail-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2232/HaokaiDing/fix/no-index-reverse-file-directory-mail-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2232
+So things in src/ move to either rust/ directory or rust/src/
+directory.
 
- diff-no-index.c          |  2 ++
- t/t4053-diff-no-index.sh | 18 ++++++++++++++++++
- 2 files changed, 20 insertions(+)
+> diff --git a/Makefile b/Makefile
+> index c649c93c51..67e74c30cc 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -959,7 +959,7 @@ RUST_LIB_NAME = gitcore.lib
+>  else
+>  RUST_LIB_NAME = libgitcore.a
+>  endif
+> -RUST_LIB = target$(if $(CARGO_BUILD_TARGET),/$(CARGO_BUILD_TARGET))/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME)
+> +RUST_LIB = rust/target$(if $(CARGO_BUILD_TARGET),/$(CARGO_BUILD_TARGET))/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME)
+>  endif
 
-diff --git a/diff-no-index.c b/diff-no-index.c
-index f320424f05..a9151cc27a 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -188,6 +188,8 @@ static int queue_diff(struct diff_options *o, const struct git_hash_algo *algop,
- 			mode1 = 0;
- 		}
- 		/* emit that file */
-+		if (o->flags.reverse_diff)
-+			SWAP(d1, d2);
- 		diff_queue(&diff_queued_diff, d1, d2);
- 
- 		/* and then let the entire directory be created or deleted */
-diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
-index 8e0394cf5a..c3c703f4f4 100755
---- a/t/t4053-diff-no-index.sh
-+++ b/t/t4053-diff-no-index.sh
-@@ -120,6 +120,24 @@ test_expect_success 'turning a file into a directory' '
- 	)
- '
- 
-+test_expect_success 'reverse diff when turning a file into a directory' '
-+	(
-+		cd non/git &&
-+		printf "A\td/sub\nD\te/sub/file\n" >expect &&
-+		test_expect_code 1 git diff --no-index -R --name-status d e >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'reverse diff when turning a directory into a file' '
-+	(
-+		cd non/git &&
-+		printf "D\td/sub\nA\te/sub/file\n" >expect &&
-+		test_expect_code 1 git diff --no-index -R --name-status e d >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'diff from repo subdir shows real paths (explicit)' '
- 	echo "diff --git a/../../non/git/a b/../../non/git/b" >expect &&
- 	test_expect_code 1 \
+This part was touched by a few topics in the recent past and I
+didn't want to resolve conflicts there.  This patch being on top of
+these two topics makes my life easier and is very much appreciated.
 
-base-commit: d38352cd43ab9745686d697872408bc3249a153f
--- 
-gitgitgadget
+> @@ -1571,11 +1571,11 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+>  
+>  UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+>  
+> -RUST_SOURCES += src/csum_file.rs
+> -RUST_SOURCES += src/hash.rs
+> -RUST_SOURCES += src/lib.rs
+> -RUST_SOURCES += src/loose.rs
+> -RUST_SOURCES += src/varint.rs
+> +RUST_SOURCES += rust/src/csum_file.rs
+> +RUST_SOURCES += rust/src/hash.rs
+> +RUST_SOURCES += rust/src/lib.rs
+> +RUST_SOURCES += rust/src/loose.rs
+> +RUST_SOURCES += rust/src/varint.rs
+
+So the sources are all in rust/src/ directory now.
+
+> -$(RUST_LIB): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+> -	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
+> +$(RUST_LIB): rust/Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+> +	$(QUIET_CARGO)cargo build --manifest-path rust/Cargo.toml $(CARGO_ARGS)
+> ...
+> -RUST_MEMBER_LIBS = $(foreach target,$(RUST_TARGETS),target/$(target)/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
+> -$(RUST_MEMBER_LIBS): target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+> -	$(QUIET_CARGO)cargo build $(CARGO_ARGS) --target $*
+> +RUST_MEMBER_LIBS = $(foreach target,$(RUST_TARGETS),rust/target/$(target)/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
+> +$(RUST_MEMBER_LIBS): rust/target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): rust/Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+> +	$(QUIET_CARGO)cargo build --manifest-path rust/Cargo.toml $(CARGO_ARGS) --target $*
+
+Is the reason why we now need to sprinkle --manifest-path all over
+is because rust/Cargo.toml is a non-standard place for cargo tool?
+Not complaining, but am wondering if it is simpler to set and export
+CARGO_MANIFEST_DIR from the Makefile.
+
+> diff --git a/meson.build b/meson.build
+> index 0a95d90d21..432e306b21 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1795,7 +1795,7 @@ libgit_sources += version_def_h
+>  
+>  rust_option = get_option('rust')
+>  if rust_option.allowed()
+> -  subdir('src')
+> +  subdir('rust')
+
+Not 'rust/src'?  Just double-checking.
+
+> @@ -13,7 +13,7 @@ libgit_rs_sources = [
+>  cargo_command = [
+>    shell,
+>    meson.current_source_dir() / 'cargo-meson.sh',
+> -  meson.project_source_root(),
+> +  meson.current_source_dir(),
+>    meson.current_build_dir(),
+>  ]
+
+What is this change about?
