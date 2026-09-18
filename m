@@ -1,240 +1,176 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2424E06E7
-	for <git@vger.kernel.org>; Fri, 18 Sep 2026 11:04:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EB222157B
+	for <git@vger.kernel.org>; Fri, 18 Sep 2026 12:30:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789729472; cv=none; b=lNvx1fvCz3rPwfv9LNoh3ZkNCHLIDqyXrcRRR2AxMTjK5H4679TV3hogwmfswDBhSaECSitRMZ7+4LzrggFjETcO+5oqUrztHviRvKEk6hkL9O3uJXyab2esUWY2ctpYww/GcpOW3ISpHRrf0XH52LPQqmzOb5Y/hUkkUg4SQoQ=
+	t=1789734656; cv=none; b=hV8W/vP6VpUsQkVA4u+tlYiVGKSlen7YqGH8QF5RWFXjn8yS08zykGPWB6IEDbggBJy3G2afIJUf3ck1svQDIZXY/6zgfnZH2ljSyb6v6GEQB1G9SeD3nx+4a6L7fmu53NVwF11p74/EhWMJgDlSSHL+PLzzYPI1hGU+7+tz/PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789729472; c=relaxed/simple;
-	bh=IJgib8gp9JPx1+Q0pJ3+s+RUN6vx47LHoXnsGHgQfYs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SCv8gMMUIymoIDQyxqlumd8xt6ihs3ueLyJ+UfkeOdE0YAcynhojlYfgLcRVuz6GOl3vlh84hpz8zX5lWkEgNvTXpUaaa2/hUZ0AmJxt7p443jvOPiFsrbu4N0XHvp24HJxgNjOLb7ICmI4VgCuOj8PNCvax31lh4Dyi60s+3wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=eZFKCWg2; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1789734656; c=relaxed/simple;
+	bh=mq3bPciCV8KHoEEzkqYUwZ9ZiYrSJKZ6KB6V2K7QCY0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iPztmcfPZInGjAtxd0skcFjzGJ5vKWuy0dkh0jMxfQCNdtdUClH3LKLaK1HcEbMEZipTK6FJoEWE6V0DAXRHh+YXcVQb8GxpUbl5isg65vw0vaZ45hwWnPrOEJtiv0qHtKs3JJkeHTc82U7pNwkksg3il/BKvcbs1eKUlo3OqgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jiDgI7av; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xN8JIrtB; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="eZFKCWg2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1789729447; x=1790334247; i=l.s.r@web.de;
-	bh=r/w8SUApG1Srh46l5uj2qbbU2El/cN2dQ9E++NeSvMY=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=eZFKCWg2PRF8QDzTgnyhpVfBIal3XQZdidqPEl1y1Tnchs3D5I7Z6yceFFbf0WtA
-	 otJvmmVtOfY1rSIOxYY6Rvt3kLNmJfwX5/1AFyfP5QM+Iu0MArz5QItxTmc161KnN
-	 z1RP2ot7qtJ0nvG0UCcjvv1DTIZ+R/b+Uyc9rWyl/uniGz8it7Gy2UUEFkeXXHgyA
-	 4n1pbCnp2ioEH2fkAK2PLDlaNesprz4UcN2CH0Z+GkJs+9d13+J7aI27hG7dnMP0A
-	 i0OBBJrTZQ8NZXFmfbXQJrNufDfkcYlzJH4NZ6s17UqkHSHcERyiC/AHaVgxSDK9w
-	 n1BGUCgt19AwY619Vw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MBB86-1ww03V31DS-000qbK; Fri, 18
- Sep 2026 13:04:07 +0200
-Message-ID: <be53c379-b0e1-4242-8504-e96c2c49d294@web.de>
-Date: Fri, 18 Sep 2026 13:04:06 +0200
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jiDgI7av";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xN8JIrtB"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id F20F61D000ED;
+	Fri, 18 Sep 2026 08:30:53 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Fri, 18 Sep 2026 08:30:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1789734653; x=1789821053; bh=4/wbX1W/On
+	fRCGFyrAQS0O+GKkM//U8UeGf3/K89FmI=; b=jiDgI7aviztxdocZSlzs3Dv6GH
+	YqUIslpRxMEOBhJ9ub1w4lAvcpG7mlBqkU4A1FXXBS4RKu2RT6RtJtLONSEtLVt+
+	RZ3ziBalJycKPYpZEpqqWzC3F1heC3jwF5McVYaLRKJmk2T1Sgar4NnIjWZZl78I
+	nIuD/wF6alF2dJIv30WmCfWQrGbdWRnpYT38773v23uOy3xeeNjddyr0G0Sg748j
+	PQtDQ1zt1HUhyFoMDzmrP3HQObZwG2fjNOewnjT9aSq22pNQDUAAuiAlqRqN3Ise
+	MJirVpPrvGUUDnA7wwswYjQQA5ss96ug8xjWDp3FhMC+l04CFGkx73E12XOA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789734653; x=1789821053; bh=4/wbX1W/OnfRCGFyrAQS0O+GKkM//U8UeGf
+	3/K89FmI=; b=xN8JIrtBPBM2r0K0sN6GOR2FFN7z+CJqtcJRH7mRk67HblEfidc
+	31ndSMS8CzXbRgeYCxBMs86oIGxAz5RgcWH+kz0lJa0hORoVLmxw2kcxNnB+qilp
+	lPKQ9n9RKl9djzwF2itbNpqiSRMVrgmPhGu+hvCUo7Jx+BNk7HUwU1LBJL2Ey+2l
+	XAOZrXVz3p6lQ1R9faY/Xrr50A3kh4i/wKw/xKULeQG29H+sWh7K1Yd8PVbCFKl1
+	Wu3gJkYtEJqROd/+Smpmp1fONcX1yGwYLxhmqqsgtvZbvWHQIaE2utesYmw0cqGE
+	WCt3GU8vDY4JafeaKkSl3pYv7WBinL8Jeqw==
+X-ME-Sender: <xms:_S6taq55bSvlylbAws4u4yEHsw-O4OsSgCzAfpj8Ybe86oRdGrIfQw>
+    <xme:_S6tarUaKZtL8aK8tPLB7qmdBeB4Q8gKhjo2FcMClv6V8qGqgs4bjHV_cKubaZx70
+    8qn9S-g3ZLfryT2aAEyckswY0NMLE1cYnBUrw7eaVmrTljsFi_GVwY>
+X-ME-Received: <xmr:_S6tam0F2ceo_AsC3-9qNCbI9B_QhH0K7E2m-C_rTQ0-m7l2hbouCGo4SOVGz_tLL6Ra-EytFRgfxdhxT1QSxVepcONHNJFas9pm>
+X-ME-Proxy-Cause: dmFkZTGe9TOB+yR0VO3G/hVX9hyOdKwGe9BCv1fyhvA6RN251X6sMZh1TEQ/zkASTvs/Ii
+    iRf166QiWmOCDa5kC8VXvFw/j/0636u8zSfvzk5KWqWL6VXc5w1p0fsREe8ZOrSqKQIS+p
+    IjhLiOo1aUxFaxcWknDQU6QNb/t78ZPNjZQnw0thH3JKSgoR6YPzCWPb8/SrvMmi4+cv+B
+    TmDFiNarKuDD/L4XGD2yPSHNOGazVRKedCCMeFLvGgdJI47N8sjoZTSpENTsYzCyEhiIn5
+    p548lV6R68ENcwLwZWAg/2fXPi8x/c5Cfv2VMo+9Y1qvjMzfqTAXYKnmhQW43JKxk2uAZv
+    14+OKyfsLgz9h+sJVjpN2oTrzHH5kR9e/0cE5d/VKNJ5ayjkHqH4z/PAEt42Rjrvs5Qery
+    fRcPKQdZyWJt+Ova4tB1c7b9XcjXcui9b7R2s1VRuJg/Tt3TTln6ju0QMbwE4mGRAFw7bH
+    nHMQsd7kkJlhAf8+g3iB2wa0IXgi3Mvshk9twQkHPTDkm3GRsEmM17wBIZnkKWRWv7vLHa
+    RpdxpbCskXXvi5hV/nct9hMxmca7gFxz9meXEeHWDkV5OZ2xl3yoRuKYQ8SsSZubOgcHiG
+    9mKm+DfRYx3r64ryCshSTdKesu/SsLZD4aaYuKrkZO4HKprhRXXP3rXJ+Jqg
+X-ME-Proxy: <xmx:_S6tag3BjYGl7ltv7AIK9DUfiH_UBhVO-NTx5BkruPrKy4fceZzKWA>
+    <xmx:_S6tah9cKi1LskoSFMB8w-gXqPQMkXY9njGHZmj7bwPl2OMJkpOJ3w>
+    <xmx:_S6tal2U8iJKQZ_YAcIfIivN42Fv_euHyhUem-6u7WmmSBLh3fdTKA>
+    <xmx:_S6tam_DI6xuSloQmKxZskgjsx9p_QUtRyCCBVoJ6f0Naj3VPyzzjQ>
+    <xmx:_S6tav_ICjiaxEjUjnm8Dnr53z9ifyoBXwfcTNIHyB8hYLDkhPv3ljaY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 18 Sep 2026 08:30:53 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Mikko Rantalainen <mikko.rantalainen@peda.net>
+Cc: git@vger.kernel.org
+Subject: Re: [BUG] `rerere remaining` skips consecutive conflicted paths
+In-Reply-To: <32062ff9-6dfc-4452-b8f3-66881c3957cd@peda.net> (Mikko
+	Rantalainen's message of "Thu, 17 Sep 2026 11:56:49 +0300")
+References: <32062ff9-6dfc-4452-b8f3-66881c3957cd@peda.net>
+Date: Fri, 18 Sep 2026 05:30:51 -0700
+Message-ID: <xmqqwlsioi6c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH] dir: skip excluded directory with nested repo on prefix match
-To: git@vger.kernel.org
-Cc: 81625@debbugs.gnu.org, Lester Longley <lester@ieee.org>,
- Sean Whitton <spwhitton@spwhitton.name>, Elijah Newren <newren@gmail.com>,
- =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-References: <87ld94klhf.fsf@athena.silentflame.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <87ld94klhf.fsf@athena.silentflame.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:JcwQmr2r/7mUvd+ibG038jn9+dtRAYcd6Khkdwhy6Are8Vb4U7k
- OzdDIpMLbZzKlamE0UoKwyiNd47/73fkvPd4BU8D+kusPpcBBxEHOWWlEJnyAt7d3uTz7Xp
- 3r5WHz/uPhthnz2Ujoi2jA3ryU6EM6v63zBWkAncuZm+VSWzuR0ZphSPyD34vyE61lV/HYo
- y9HOqP6HQQcrLgW41i0hA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:DKts2+EnuD0=;ucEeqB/Xy7THfFXdr2117UPvkwM
- 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
- 4=
+Content-Type: text/plain
 
-95c11ecc73 (Fix error-prone fill_directory() API; make it only return
-matches, 2020-04-01) optimized away pathspec matching too eagerly and
-cada7308ad (dir: check pathspecs before returning `path_excluded`,
-2020-07-20) fixed that for files and symlinks.
+Mikko Rantalainen <mikko.rantalainen@peda.net> writes:
 
-A corner case remained unaddressed: Ignored directories that contain a
-nested repository.  Make sure to run match_pathspec_with_flags() for it
-if necessary.
+> The issue is probably  caused by `check_one_conflict()` in `rerere.c.
+> There is currently a loop of the form:
+>
+> ```
+> *type = PUNTED;
+> while (i < istate->cache_nr && ce_stage(istate->cache[i]) == 1)
+>          i++;
+> ```
+>
+> According to ChatGPT, this is probably intended to skip multiple stage-1
+> entries belonging to the same conflicted pathname, but it also skips a
+> stage-1 entry belonging to the next pathname.
+>
+> The loop may need an additional same-path check, maybe
+> something like:
+>
+> ```
+> while (i < istate->cache_nr &&
+>         ce_stage(istate->cache[i]) == 1 &&
+>         ce_same_name(e, istate->cache[i]))
+>          i++;
+> ```
+>
+> I have not checked whether `ce_same_name()` is necessarily the
+> preferred helper here, so this is only a possible fix rather than
+> a proposed patch.
 
-Reported-by: Sean Whitton <spwhitton@spwhitton.name>
-Reported-by: Lester Longley <lester@ieee.org>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- dir.c                      | 25 ++++++++++++++++++-------
- t/t7061-wtstatus-ignore.sh |  5 +++++
- 2 files changed, 23 insertions(+), 7 deletions(-)
+Spot on, I would say, even though I find that it is a bit iffy for
+the merge machinery to leave a "delete-delete" conflict in the first
+place.
 
-diff --git a/dir.c b/dir.c
-index 95d8a1cce9..0557a59d5e 100644
-=2D-- a/dir.c
-+++ b/dir.c
-@@ -1930,6 +1930,16 @@ static enum exist_status directory_exists_in_index(=
-struct index_state *istate,
- 	return index_nonexistent;
- }
-=20
-+static int dir_match(struct index_state *istate,
-+		     const struct pathspec *pathspec,
-+		     const char *dirname, int len)
-+{
-+	return match_pathspec_with_flags(istate, pathspec, dirname, len,
-+					 0 /* prefix */,
-+					 NULL /* seen */,
-+					 DO_MATCH_LEADING_PATHSPEC);
-+}
-+
- /*
-  * When we find a directory when traversing the filesystem, we
-  * have three distinct cases:
-@@ -1996,11 +2006,7 @@ static enum path_treatment treat_directory(struct d=
-ir_struct *dir,
- 	 * for matching patterns.
- 	 */
- 	if (pathspec && !excluded) {
--		matches_how =3D match_pathspec_with_flags(istate, pathspec,
--							dirname, len,
--							0 /* prefix */,
--							NULL /* seen */,
--							DO_MATCH_LEADING_PATHSPEC);
-+		matches_how =3D dir_match(istate, pathspec, dirname, len);
- 		if (!matches_how)
- 			return path_none;
+The idea of that function is to return for the current path if we
+(1) don't need to do anything as it is cleanly resolved (RESOLVED),
+(2) know it is conflicting but we cannot handle (PUNTED), or (3)
+know it is conflicting and we are willing to handle (THREE_STAGED).
+
+For (1), we only need to see that the current entry is resolved
+(because in istate->cache[], resolved entry for a single path
+appears only once) and return, telling the caller that we consumed
+only one entry.  For THREE_STAGED, we would want to see a stage 2
+(i.e., ours) entry followed by a stage 3 (i.e., theirs) entry, and
+the way the code does so is to skip over stage 1 entries for the
+same path, and we must see stage 2 and then stage 3 entries after
+that.  Again in istate->cache[], by definition more than one stage 2
+entries (i.e., "ours") cannot exist for a single path, so we check
+if the first entry after skipping over the stage 1 entries (i.e.,
+"common") is a stage 2 entry and immediately after that is a stage 3
+entry, and the stage 3 entry has the same name as the first entry
+we started looking at upon entry to the function.  And to conclude
+one iteration, we skip the entries of the same name at the end.
+
+And as you pointed out, the same "must be the same name" check must
+be done also while we are skipping over stage 1 entries.  If you
+have a sequence of stage 1 entries for different paths, all of them
+would probably be skipped over at once.
+
+Note that the low-level merge machinery and rerere machinery are
+both prepared to see multiple stage #1 and stage #3 entries for a
+same path, even though multiple stage #0 and stage #2 entries is a
+sign of index corruption.  The "resolve" merge strategy will use
+multiple stage #1 entries when dealing with a criss-cross merges,
+where multiple merge-bases exist.  Being prepared for multiple stage
+#3 entries is purely for philosophical consistency---an Octopus merge
+ought to be representing more than one "their" branches as stage #3
+entries, even though the current implementation of octopus merge of
+N branches happens to do N pair-wise merges and do not require
+multiple stage #3 entries.
+
+ rerere.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git c/rerere.c w/rerere.c
+index 1c3745d9e3..296f254c1e 100644
+--- c/rerere.c
++++ w/rerere.c
+@@ -499,7 +499,11 @@ static int check_one_conflict(struct index_state *istate, int i, int *type)
  	}
-@@ -2034,8 +2040,13 @@ static enum path_treatment treat_directory(struct d=
-ir_struct *dir,
- 		strbuf_release(&sb);
-=20
- 		if (nested_repo) {
--			if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
--				(matches_how =3D=3D MATCHED_RECURSIVELY_LEADING_PATHSPEC))
-+			if (dir->flags & DIR_SKIP_NESTED_GIT)
-+				return path_none;
-+			if (!matches_how)
-+				matches_how =3D dir_match(istate, pathspec,
-+							dirname, len);
-+			if (!matches_how ||
-+			    matches_how =3D=3D MATCHED_RECURSIVELY_LEADING_PATHSPEC)
- 				return path_none;
- 			return excluded ? path_excluded : path_untracked;
- 		}
-diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-index 14ddaba2f3..182933471f 100755
-=2D-- a/t/t7061-wtstatus-ignore.sh
-+++ b/t/t7061-wtstatus-ignore.sh
-@@ -340,4 +340,9 @@ test_expect_success 'status ignores submodule in exclu=
-ded directory' '
- 	test_cmp expected actual
- '
-=20
-+test_expect_success 'status omits excluded directory with submodule on pr=
-efix match' '
-+	git status --porcelain --ignored -u tracke >actual &&
-+	test_must_be_empty actual
-+'
+ 
+ 	*type = PUNTED;
+-	while (i < istate->cache_nr && ce_stage(istate->cache[i]) == 1)
 +
- test_done
-=2D-=20
-2.55.0
++	/* First ignore stage #1 entries */
++	while (i < istate->cache_nr &&
++	       ce_same_name(e, istate->cache[i]) &&
++	       ce_stage(istate->cache[i]) == 1)
+ 		i++;
+ 
+ 	/* Only handle regular files with both stages #2 and #3 */
