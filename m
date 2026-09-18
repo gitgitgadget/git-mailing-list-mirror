@@ -1,69 +1,69 @@
-Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
+Received: from mail-pj2-f43.google.com (mail-pj2-f43.google.com [74.125.227.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A112849F10A
-	for <git@vger.kernel.org>; Fri, 18 Sep 2026 13:02:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7C24AAC63
+	for <git@vger.kernel.org>; Fri, 18 Sep 2026 13:02:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789736549; cv=none; b=oIUCCVlFKuQ9YoWcPdLLMYs3AQ9gsf/iAg4C+byfvlv67HPC55rBYnsQgUui7YBRBaTHOax08hnkhkmNKn/UI0xsdKerfosMSX4FeAmqAlh/urXZs3aqLyk9kO8tB3CrGVUJsyzj6xVueJPzwchIcOw7VRhbcwdTxm/P0Gs/tU8=
+	t=1789736552; cv=none; b=dcfcqmP7O1+77YYGutBmLwrn0ofTfjYf6DtW+K4PmpgzZ3NY7O9vyBpZYM1SZPyrTmRnaF3TdzEzdVZVKDsPjo95vq5BBI5KzKeVYYQNbReFj7wiAWZoZYVrgvmZ2pSQiKv+lAZIS+FlHYJFkTQq4+YFz/4XLnw6PaCKQF4gRuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789736549; c=relaxed/simple;
-	bh=usgNzh6O9VGqkPRJ26dlfCua+v6owo/tbQwE3a/2D0g=;
+	s=arc-20240116; t=1789736552; c=relaxed/simple;
+	bh=JnewqM0kGafcXeERMwJZpm6PfehPhklOqpXSRp4MJCU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=BnA9MUXWN56RAUPZwWDqcOgEb2+90cdz63Odx0lMCN1EOJeVGceEH+/LfZd90PCNo4lKGAMmINmvNGekxjOJ3uzRO3EAvrgzuP/pSUNDLVFWtddoWA6+/+BouAxEIbXuOwdRhwCUjwFQ/+FL6fCvS+97H6W47aYTM8zC0h7b2EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EJNdWnBn; arc=none smtp.client-ip=74.125.228.12
+	 MIME-Version:To:Cc; b=rk8JFo3JkLs9Rx3DBauaFCK5CLa0kXkGF+VeAYZu9GGTPV4fZUaNRSIMgfvmCcEkDL8zu/J7gtMrs9VWkjB3YngQwgHb04EM1Vsy+UViOTsgcxSxlxZYZMLenMlKEQ7fK8ceV/0YzxV5zUX6JleIGLXePjwHLFl/qfq3aLE1kH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SYUg75sf; arc=none smtp.client-ip=74.125.227.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EJNdWnBn"
-Received: by mail-pz2-f12.google.com with SMTP id 41be03b00d2f7-cc1cebad4aeso525655a12.2
-        for <git@vger.kernel.org>; Fri, 18 Sep 2026 06:02:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SYUg75sf"
+Received: by mail-pj2-f43.google.com with SMTP id d9443c01a7336-2d747ed6d6eso6916095ad.2
+        for <git@vger.kernel.org>; Fri, 18 Sep 2026 06:02:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789736547; x=1790341347; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789736550; x=1790341350; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=mjNeB5X5AnxVwbeYyuIi0gysO7viQTYLmXYqYaAxuTs=;
-        b=EJNdWnBnmmknGO6lHWXxwInTCG+EDcjqbOOVq0tCI69uwvUQ404plO3v48sAAeH6UJ
-         3STXATvVg0NmAqIErcQimQuAubEYTy6PBJetGjypo2GdWhcsZDRCWIP9dTYMfkQI+uTs
-         EzRZwChfRo7a9ZNzPiVwmyKT3VIi2RAf0H1s5oK5q2cukZ0pqFyWHerEzima8pYMaF7b
-         /deq2IbNuNmu6EHbC/B4O0/mastJ4LhFHUABbcrtTTO6U1PTe+/dtH9TYP66BX+1HIo4
-         70CEt4540ntsFoHIqA7PJU/ppio852H2ofQ41ee7xfPjI1eHmdYMhqrU9bwmJNGcNdJh
-         mytw==
+        bh=NZ8LyeSS3VkcrvmzTTvL6D250Wxk7XUzGHY3Ojkt4es=;
+        b=SYUg75sfimB+lGB/h8rky7T9bLjMEB+h8xH/Nn9wPKtYfseQITEnNqHMg+byWJu/gE
+         8mfR5GD8T6b/p4MWhQlr92zkEbFERFihvcQW0MIF+8/oVIJ6/jEe+F4tA9MWni3xlHWU
+         yISJ6/0O+NeuVQ9Up8pwBC0TkyOcTt3zqXompzgldB1leGbwcFSAvP7sttEue5759rPE
+         NIEHmdZHOAnvWrTQZIIDb5rOdsCusnkhaTZqfRUoiN4cLbIZO99BY9VQuyS+v5dMqmlJ
+         c/trwf1fV/wXPpt0892lA8X1F46fz5WbeCpEy4A3zrstFivIrpdXGG6gldFeA2jOj4OW
+         Ep0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789736547; x=1790341347;
+        d=1e100.net; s=20260707; t=1789736550; x=1790341350;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=mjNeB5X5AnxVwbeYyuIi0gysO7viQTYLmXYqYaAxuTs=;
-        b=rvqyzkVb/CJ7vLA9Ob06IP++k1sYiNYZg9opa9MwvoJLE5oLCL+/+AqPnvQmjUoo0b
-         3WqAD1h5r6Q0QMLrW44RPewdpftkh81XjN+IntThakZY0TCL6raR5j8dB2DdzEjmCW6M
-         lqz/7QYd9krQ5wlnWS+x0rUiv7RdTHjHraonEBrkhUnGEmctI6JXWxOxGCwebQmrPImL
-         RIUOHcjnQwhVqy1lY5287bwqrGgvJgwX4JwuEr8MR5ybryyonXm+7ocEN6aCQnTZBYHu
-         2+xqdhqvBzD+OlL69Upykygh9QTwiDLUBkhKtZk82lRWxCAyuYwN7679j9mMvjYxuVD9
-         R8dQ==
-X-Gm-Message-State: AFuF++ne7wCd1cxpkOSaHtUl+bIT0RCk4ZRHJivjDQLqboKeD0k7qoIE
-	qqtTOJsbpUlTIYRq4TVB0tIs/DNsU5dPxR6nNqFPC9JKrquWnX8ywSEs/U6EEesS
-X-Gm-Gg: AYBFou0cQiVtt1Dzh2SjaBn+0f0HsBmyW5n3ptraPFbRC6HEi4P0JWEF/SsUDqt4+iJ
-	+hM8/GG66v1LFjP/RmV/2dvh0GcGC5PPTBoz/oqkfSe4STSOZfIs9Q1ZlFal5ZXfweAGCu4gAog
-	6CQwU51L7jIjts1flukbZbYstFLLVw8500BV4qB+8OVtCj4l/1NEMSmbkoEamwd53YvTw0nhgfj
-	H9Hz3OQeKrpWLlndtrwFLnNru7R9LdO4bNIRMlAn2+mV+0Qu6uunM6weanYVL77lVS9ib/HMclx
-	fPyUbu6FSES/IdgjJ3/DvfzH3H2d5iFykjKm8YsrtNgPkM5acNwPzSm9gQX+aysji3+Deapu+HC
-	SVkiXlnr4pz5r4G0T/WU7tUPF239Idn/q56IQ7TrRdJx30M14VZgj3O7Kc2ZMv2RvUo+DA7nL4t
-	1REvyLKDW17Gbje9fseKVvsy1lBQPoyxatoLKxgSJzhjQP++wv1pn0pWZQuLC0q7F2MPsZwx1y
-X-Received: by 2002:a17:90b:1647:b0:39e:4498:4863 with SMTP id 98e67ed59e1d1-39e54f4187emr8543021a91.10.1789736546761;
-        Fri, 18 Sep 2026 06:02:26 -0700 (PDT)
+        bh=NZ8LyeSS3VkcrvmzTTvL6D250Wxk7XUzGHY3Ojkt4es=;
+        b=cnVxXDuur1Gmj3WFZOKCfd12CPX/P/oz0HcUdpahBXDq5Q4zus+iqXY6djizODMr5d
+         or/kTkdXIMpi2mIsXj5FWp86/b/otCZ3MBJ1BnuxdcieRxxY1jEf7B4mifWOSXqUijou
+         kvEPps/0r3kELS0BlThSxG1zOvkevZjRO/K72TVhSEc3YZe1bq3EUaC2agZiKF1qVF0C
+         G9Ayn4Y5ycBq+qdnnWdB3rU9YbZ9jYOMB8g62wSZdbFPHfg79OwNHP/gPeTQl2U9Usau
+         mhq2XiFpOdg7wB1FjIk0X7/FUwcoBWG9uCGMRlrQmQynXGpPGgf70S3XvE5eZWAL7hdG
+         LBsQ==
+X-Gm-Message-State: AFuF++kFmMWrDvh8+vvNWPEUdrrLAln4/AVTlYWJhm/+cN5jozzNSD9d
+	nTYDFkMF6cG6n57krcb7doNVqRUocnEjQW9gK0v5lQUMLcKF4cyZhyeREqYCzXK4
+X-Gm-Gg: AYBFou3zdZyC/CWKMHsm6zllGKkkZ4iU+J/lHe8u/zmKekdxMHc2qxJkQ6tqUcLABUc
+	VBuwhYfVY61R/ve238b0QtUe8bPPwYGdy3qJsoc7zLm6nlWIqOrmu2VcWSt42wm7OD1piJBvqPC
+	QWqvM1BERnX/UZBGdlm881HP/ado+WJELX16fVanMs2gL4SGLdfbS5ZiM50QUYFXmibuPbZibuK
+	JhpQmiAtqeBL3IHzVHrIwNuZJIA9vblBTFXQ/Hlr6FHm7xnXxSH4Arx/iSE6ah9y67RJg0CcruR
+	KJ9tLbmdlB/66Iy3CoYhYfyVblVhbgaIgVdmopgN/oGc6G99A7AUx4qrqJWfE9MKiTowFecxtU1
+	DxbOwRT5VFPMaJSh7MN1VU37hJBYueetp6jHOQC4TggxLE2e9cjN89cvhBTU6+gEZbsmIGVeu9L
+	6q8ns89gIUmmZ5dzWoCGMJfwtgfbjyk9xTilOHIw6ebcxAEnxg2HgVI/3kVLGhmPwJIf8n/paJ
+X-Received: by 2002:a17:902:ecc4:b0:2dd:ad74:6d20 with SMTP id d9443c01a7336-2ddb1bc62afmr57456105ad.29.1789736549852;
+        Fri, 18 Sep 2026 06:02:29 -0700 (PDT)
 Received: from [127.0.0.1] ([20.168.95.135])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e361b7266sm10498815a91.13.2026.09.18.06.02.25
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ddb7549682sm7352465ad.31.2026.09.18.06.02.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2026 06:02:26 -0700 (PDT)
-Message-Id: <3b3c67243d200a42aa105981b64228e2cbb35a6c.1789736540.git.gitgitgadget@gmail.com>
+        Fri, 18 Sep 2026 06:02:29 -0700 (PDT)
+Message-Id: <ebd91b95209d778727dca1bfcce17dcb76b3151f.1789736540.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2230.git.1789736540.gitgitgadget@gmail.com>
 References: <pull.2230.git.1789736540.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 18 Sep 2026 13:02:17 +0000
-Subject: [PATCH 3/6] wrapper: create safe_memory_limit_check()
+Date: Fri, 18 Sep 2026 13:02:18 +0000
+Subject: [PATCH 4/6] strbuf-safe: add sstrbuf_grow()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,73 +82,203 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-The existing memory_limit_check() is used in many places within wrapper.c,
-but because it initializes the GIT_ALLOC_LIMIT environment variable _and_
-can call die() when not in gentle mode, this method isn't appropriate for a
-safe API.
+After a few changes in preparation, we are now ready to create our first
+'safe' strbuf API method: sstrbuf_grow(). This is a safe version of
+strbuf_grow().
 
-Modify the implementation to be safe_memory_limit_check() and to keep
-calling error() when there is an allocation problem. The original method
-calls that version but will die() instead when failing and not gentle.
+On naming: For safe equivalents of existing methods, I'm prepending a single
+'s' character. The intention is to make the safe API non-intrusive.
+Alternatives could be to append '_gentle' like many other APIs that avoid a
+die() on malformed user data, but we need to be even safer than these gentle
+methods, which still die() on allocation failures or other system-level
+errors. This 's' prefix is similar to the 'x' prefix used by git-compat-util
+helpers.
 
-The one potential behavior change is that when git_alloc_limit is unset we
-must assume SIZE_MAX instead of loading the environment variable. Since we
-load this environment variable proactively in setup_environment(), this
-should only matter for that brief window before setup_environment() and the
-safe APIs that call this version. If such safe APIs are used in that window,
-then they should allocate small enough amounts of memory to fit under any
-reasonable values of GIT_ALLOC_LIMIT.
+I selected strbuf_grow() as the first method to move because it doesn't
+depend on any other strbuf API method, but is called by many other strbuf
+API calls, including strbuf_release() or strbuf_init(). Thus, this will be a
+helper to several other implementations that are coming in upcoming changes.
+
+No callers directly depend on sstrbuf_grow(), but the non-safe strbuf_grow()
+now uses it as declared in strbuf-safe.h.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- wrapper.c | 27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ Makefile      |  1 +
+ meson.build   |  1 +
+ strbuf-safe.c | 34 ++++++++++++++++++++++++++++++++++
+ strbuf-safe.h |  7 +++++++
+ strbuf.c      | 11 ++++-------
+ wrapper.c     | 26 +++++++++++++++++---------
+ wrapper.h     |  3 +++
+ 7 files changed, 67 insertions(+), 16 deletions(-)
+ create mode 100644 strbuf-safe.c
 
+diff --git a/Makefile b/Makefile
+index d4b775953d..5943853219 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1327,6 +1327,7 @@ LIB_OBJS += sparse-index.o
+ LIB_OBJS += split-index.o
+ LIB_OBJS += stable-qsort.o
+ LIB_OBJS += statinfo.o
++LIB_OBJS += strbuf-safe.o
+ LIB_OBJS += strbuf.o
+ LIB_OBJS += string-list.o
+ LIB_OBJS += strmap.o
+diff --git a/meson.build b/meson.build
+index d86f2acd2b..368fdd00d5 100644
+--- a/meson.build
++++ b/meson.build
+@@ -532,6 +532,7 @@ libgit_sources = [
+   'split-index.c',
+   'stable-qsort.c',
+   'statinfo.c',
++  'strbuf-safe.c',
+   'strbuf.c',
+   'string-list.c',
+   'strmap.c',
+diff --git a/strbuf-safe.c b/strbuf-safe.c
+new file mode 100644
+index 0000000000..e4a0707d63
+--- /dev/null
++++ b/strbuf-safe.c
+@@ -0,0 +1,34 @@
++#include "git-compat-util.h"
++#include "strbuf-safe.h"
++#include "banned-die.h"
++
++/*
++ * A safe version of ALLOC_GROW from git-compat-util.h and
++ * xrealloc() from wrapper.c.
++ */
++#define SAFE_ALLOC_GROW(x, nr, alloc) \
++	do { \
++		if ((nr) > alloc) { \
++			if (alloc_nr(alloc) < (nr)) \
++				alloc = (nr); \
++			else \
++				alloc = alloc_nr(alloc); \
++			if (srealloc((void **)&(x), alloc)) \
++				return MEMORY_ERROR; \
++		} \
++	} while (0)
++
++enum safe_result sstrbuf_grow(struct strbuf *sb, size_t extra)
++{
++	int new_buf = !sb->alloc;
++	size_t new_len = st_add3(sb->len, extra, 1);
++	if (new_buf)
++		sb->buf = NULL;
++
++	SAFE_ALLOC_GROW(sb->buf, new_len, sb->alloc);
++
++	if (new_buf)
++		sb->buf[0] = '\0';
++
++	return SUCCESS;
++}
+diff --git a/strbuf-safe.h b/strbuf-safe.h
+index 3cf14545bb..f6adf7434b 100644
+--- a/strbuf-safe.h
++++ b/strbuf-safe.h
+@@ -85,4 +85,11 @@ struct strbuf {
+ extern char strbuf_slopbuf[];
+ #define STRBUF_INIT  { .buf = strbuf_slopbuf }
+ 
++enum safe_result {
++	SUCCESS = 0,
++	MEMORY_ERROR,
++};
++
++enum safe_result sstrbuf_grow(struct strbuf *sb, size_t extra);
++
+ #endif /* STRBUF_SAFE_H */
+diff --git a/strbuf.c b/strbuf.c
+index 44955669e8..d005666a07 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -8,6 +8,8 @@
+ #include "utf8.h"
+ #include "date.h"
+ 
++#define STRBUF_DIE(f) die(_("unexpected error during string manipulation: %s"), f)
++
+ bool starts_with(const char *str, const char *prefix)
+ {
+ 	for (; ; str++, prefix++)
+@@ -105,13 +107,8 @@ void strbuf_attach(struct strbuf *sb, void *buf, size_t len, size_t alloc)
+ 
+ void strbuf_grow(struct strbuf *sb, size_t extra)
+ {
+-	int new_buf = !sb->alloc;
+-	size_t new_len = st_add3(sb->len, extra, 1);
+-	if (new_buf)
+-		sb->buf = NULL;
+-	ALLOC_GROW(sb->buf, new_len, sb->alloc);
+-	if (new_buf)
+-		sb->buf[0] = '\0';
++	if (sstrbuf_grow(sb, extra))
++		STRBUF_DIE("strbuf_grow");
+ }
+ 
+ void strbuf_trim(struct strbuf *sb)
 diff --git a/wrapper.c b/wrapper.c
-index 3de6b21cc2..97a29bda75 100644
+index 97a29bda75..69ff9a8ff6 100644
 --- a/wrapper.c
 +++ b/wrapper.c
-@@ -30,22 +30,31 @@ void initialize_git_alloc_limit(void)
- 	}
+@@ -144,20 +144,28 @@ int xstrncmpz(const char *s, const char *t, size_t len)
+ 	return s[len] == '\0' ? 0 : 1;
  }
  
--static int memory_limit_check(size_t size, int gentle)
-+static int safe_memory_limit_check(size_t size, int verbose)
+-void *xrealloc(void *ptr, size_t size)
++int srealloc(void **ptr, size_t size)
  {
--	initialize_git_alloc_limit();
+-	void *ret;
 -
--	if (size > git_alloc_limit) {
--		if (gentle) {
-+	size_t limit = git_alloc_limit ? git_alloc_limit : SIZE_MAX;
-+	if (size > limit) {
-+		if (verbose)
- 			error("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
- 			      (uintmax_t)size, (uintmax_t)git_alloc_limit);
--			return -1;
--		} else
--			die("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
--			    (uintmax_t)size, (uintmax_t)git_alloc_limit);
+ 	if (!size) {
+-		free(ptr);
+-		return xmalloc(0);
++		free(*ptr);
++		if ((*ptr = malloc(1)))
++			return 0;
 +		return -1;
  	}
- 	return 0;
- }
  
-+static int memory_limit_check(size_t size, int gentle)
-+{
-+	int res;
-+	initialize_git_alloc_limit();
+-	memory_limit_check(size, 0);
+-	ret = realloc(ptr, size);
+-	if (!ret)
++	if (safe_memory_limit_check(size, 0))
++		return -1;
++	if ((*ptr = realloc(*ptr, size)))
++		return 0;
 +
-+	res = safe_memory_limit_check(size, gentle);
-+	if (res && !gentle) {
-+		die("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
-+		    (uintmax_t)size, (uintmax_t)git_alloc_limit);
-+	}
-+	return res;
++	return -1;
 +}
 +
- char *xstrdup(const char *str)
- {
- 	char *ret = strdup(str);
++void *xrealloc(void *ptr, size_t size)
++{
++	if (srealloc(&ptr, size))
+ 		die("Out of memory, realloc failed");
+-	return ret;
++	return ptr;
+ }
+ 
+ void *xcalloc(size_t nmemb, size_t size)
+diff --git a/wrapper.h b/wrapper.h
+index 69df68ee7a..956de2c534 100644
+--- a/wrapper.h
++++ b/wrapper.h
+@@ -27,6 +27,9 @@ char *xgetcwd(void);
+ FILE *fopen_for_writing(const char *path);
+ FILE *fopen_or_warn(const char *path, const char *mode);
+ 
++/* safe versions of helpers above. */
++int srealloc(void **ptr, size_t size);
++
+ /*
+  * Like strncmp, but only return zero if s is NUL-terminated and exactly len
+  * characters long.  If it is not, consider it greater than t.
 -- 
 gitgitgadget
 
