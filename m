@@ -1,181 +1,122 @@
-Received: from flow-b5-smtp.messagingengine.com (flow-b5-smtp.messagingengine.com [202.12.124.140])
+Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C814E9C2D
-	for <git@vger.kernel.org>; Fri, 18 Sep 2026 14:54:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4C34ED198
+	for <git@vger.kernel.org>; Fri, 18 Sep 2026 15:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789743263; cv=none; b=jz6vFqGjcCFvP87JevVlg3BY7gm+394pkdR4HDD/XbjUNqtgjARvZ5c5LFFq+CnI78IFLeUSuq9YpufdSmRWwfoXjn4eaL+N34KavCxvEPR+JvCUIbIIugeArC63kL8rOZDSiovsML7DHLKqo9IJtTGl5OPD7UauavPreCER91k=
+	t=1789743783; cv=none; b=OWXPuXHRCilfnwlDZnKFACgOrln+oX0Uo735AIPqfDt2D9UhmCc6Yv4UtUsBGe6wec1kbd98lKCKU4ErZmDYQkzE4CDyYEKnTSM8dx79zr0UPOqoNYrSVx0Ihrz2O9CKB1T41wVaC3jy4WrYylOekkNTGUlAaHy05cuuwfVCMaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789743263; c=relaxed/simple;
-	bh=8gPeV9MPvq8fk21X+al6+DTp/G+ug29O+KzrSkt1B2Q=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=V+chwyqF0Fz9lwsJ7XAnc3kEzx7XxbEI7t4DI21NeMuwOlJDI/U6VqY5O+KbYV/9/h/MsPGWB/RoNdxftKOEEHuIazwdu4AZPW94I24U8iLZlmBgXYQ1VWnIVH0SZtb5CK5/jir4UGglmLWiNgjxCHkPKuGEXWPOSBBoTjrzrYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=fpMKsZ4G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ftxPWow9; arc=none smtp.client-ip=202.12.124.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="fpMKsZ4G";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ftxPWow9"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailflow.stl.internal (Postfix) with ESMTP id 0555E1300446;
-	Fri, 18 Sep 2026 10:54:16 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Fri, 18 Sep 2026 10:54:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1789743256;
-	 x=1789746856; bh=ScDZ96NfDOsQESF2nKCjl+Vp9ovaCwDM+DNU2lKS0Os=; b=
-	fpMKsZ4Gjv9MII2eJtBRKKsHA82LTY7BtRllWMid+Bkhctjf6u1/GBB7Y/bfM08S
-	K4xNYIbK4O0GvYzqwdWU45B3RNCWKmJjerjlaAZurAPietXkb6Sr4DNZjoKZlaJE
-	LwzcnkFVxNbWFOFSBwuJ/8E911k9KB05OEviWruApsgn/RDydaEWWiAUHaVnrMMk
-	yQC7TT/6AiwO3AXP1w8XPCW07r0DKH17yLbxxeh24ytxX1ccRKWEl2qmR/OQc0CW
-	nFG4Gv7mN/KnV5D+rDLT/uwfPpWhss2jgks0Yo1Mwq0EkOd4JcJ4ViJJIduEvQ7a
-	cmdieL5WjZIxbYE3aQMMNA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789743256; x=
-	1789746856; bh=ScDZ96NfDOsQESF2nKCjl+Vp9ovaCwDM+DNU2lKS0Os=; b=f
-	txPWow9JdCZhsiBhtnb9ymfSXx2IEmrS07vqd1cDE1jyMru5gU8cjN+szhIPclmK
-	rSmyZN2sibLHbtOP0w+rtybPeuIv2Ej82pYs1P+a45eUSRj9+3WxZNVhKgxCsljt
-	zNwD0uAqNOd2UfHTg9ORlNndrxOjByOn3aEKa5958uQpNQ1J4zcW4PUV5rfFW7V0
-	q7gaBg6jucYCjogOTdWAFNMX1k6WpX0I3/ajM8qjC77tssAcj2+5CxWAuKb/WrzR
-	CjiWd7l4CB2CC0A3SWi4Jh7P6PP5Orz49fmQyOR6Wn3SIGMWxBTnRPJpuRyIeL0S
-	4ew7zEKp8zDT+3LFMcHEw==
-X-ME-Sender: <xms:mFCtao6l3e9HvsmD8WmFexQ-x8WWZe1_ClLQn1GelqP6Q6Z4Ba_33Q>
-    <xme:mFCtahUJ17igDya764WSV1OpQ3dtjBo_Nl9hZfJQOA_VRK-DFLfrsNBzVOIjVsRbA
-    DvXODUX9Zcnc1xaYJpR8tJiSF1tI7RfKUzPBbJigz8qtTcGBGm5oe61>
-X-ME-Received: <xmr:mFCtak3Eka9DJztYnL7G1Rn9Ct1HFw9O0Hw921l2fcaMnkb31FNwPm7jbsURnB9dgqSuDxSK0aJkwU-Go7FpeceZcg>
-X-ME-Proxy-Cause: dmFkZTELmlSWGZztvUxhtVC3Arm9EWc1Ygq/8sDDqumaUqNvem0dmHgyMV84Ll03XNdoCW
-    2cHZrJdxsG8So1e4EtOShTiGEEWO6eGkSO/3CKkV6azIsWATwYlcJhC7asjqF/nb7i0sWc
-    xxjY5VlN9pE/ydIcG6jSQdEoYn7zHOow+sf5vjderBYW0oe91Kjcl5kvk+ODXDDilHEPDk
-    9gscOOvOsmVAmvqUv9L9FTRNQekkCYoIgbQ7yivYEX0tzJhBf79l1EVTNCqBWrAsW8tKqK
-    TsGHW8pkXufiFtDU4J7P8RM0YvThK+qyZiE69fp+IT/XorgpmvU2pwBSWiHmggpSr4nUei
-    g0afrYcKXWcBolbkmL1uOrbJ5m7S/AnfEBMzLrcYJXRlfnqXZz5LzkxvT2HJimkr5CkjId
-    NgT8g513C9FKOCi8O4sJJYfaC1hjWkIYDaM3recHDXD6L9633xrCFKgV/PEE5fI6COw9IM
-    fI2hdNOzzYyL1zmx/7yAlPfoMx2VuELjXJsw6pjOKXBKPrpx9UlmmIguGhSGa5WQfb69qr
-    BFEjwxaXe3MR5fgK545zPkZwvszAzJghZPDGCBVlFCKW/jlw1i8/Ic8HMwuA03qS1GM85U
-    EGtbQ0AJbMHuutWiFkW05EJG+mg3ScEW9OAhHC+R+nsEycRGcIdoprxlUJPQ
-X-ME-Proxy: <xmx:mFCtam1GNF2oCaaDL3ivfWcjaOCZQawsaZbqBQaSCV0nvrwueFx4NA>
-    <xmx:mFCtav9lZYNw5vbyND_BUHSeD5MhAJjDS658XE3srFk2TGVB2BNmsw>
-    <xmx:mFCtar0IdT_NIVDwpOQaUrAhd7OkxndepRh87tm8u-1My7J6PmFkHA>
-    <xmx:mFCtak-QvYyU2TjO7dF8ZgeWnn6UA9xEYhCLMC6b-rgR6AZJme51Hg>
-    <xmx:mFCtarfrETZCHn6O1h8RiYpSzpClYtytd3kddjJjonlYGTrH-etRS9dM>
-Feedback-ID: id2564aa6:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 18 Sep 2026 10:54:16 -0400 (EDT)
+	s=arc-20240116; t=1789743783; c=relaxed/simple;
+	bh=4zGA4i5/PdUKzMDFpp5WEx6Yfhpbn10juz7U49w3btk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aIGxthoedBbBF6hWelnejX73XKUZ2Xe3cNnNm2jPk+wBUYnYWcYRlVlH/iLpNyHIIJAI8Yug1UQQp/mCx1HwA7/y7t4JkYxeVSvDUqLtqatsUTNQSME9SAhDJA1+D+1lih5PteFzWQbNxqQVkys2NEfcHOhvYqiXp3Ol8OPiVtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
+Received: from [2001:3b0:22:ba05:3c99:5d75:c899:ae5e] (helo=glandium.org)
+	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <mh@glandium.org>)
+	id 1x7a6z-00000001MV1-2KgY;
+	Fri, 18 Sep 2026 15:02:50 +0000
+Received: from glandium by goemon with local (Exim 4.98.2)
+	(envelope-from <mh@glandium.org>)
+	id 1x7a6o-0000000GMr2-3SDe;
+	Sat, 19 Sep 2026 00:02:38 +0900
+Date: Sat, 19 Sep 2026 00:02:38 +0900
+From: Mike Hommey <mh@glandium.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, sandals@crustytoothpaste.net
+Subject: Re: [PATCH v5] move rust gitcore crate to a different subdirectory
+Message-ID: <yc4bgjoyxnm6o7q4gwols4d6zvdrq3ydw2c65wjdwof3hjyde6@2osv37jtuxx3>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+References: <xmqq5x0df19l.fsf@gitster.g>
+ <20260917060415.2986259-1-mh@glandium.org>
+ <xmqqfqz7otr0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 18 Sep 2026 10:54:15 -0400
-Message-Id: <DLIJ195ABVQL.3OD6QX7D3VNBE@fastmail.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH v3 1/3] Update t/t4001-diff-rename.sh to modern style.
-From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Mark C. Chu-Carroll"
- <markchucarroll@fastmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260917195436.1102981-1-markchucarroll@fastmail.com>
- <20260917195436.1102981-2-markchucarroll@fastmail.com>
- <xmqqjyojowzo.fsf@gitster.g>
-In-Reply-To: <xmqqjyojowzo.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqfqz7otr0.fsf@gitster.g>
 
-On Fri Sep 18, 2026 at 3:10 AM EDT, Junio C Hamano wrote:
-> "Mark C. Chu-Carroll" <markchucarroll@fastmail.com> writes:
->
->> Subject: Re: [PATCH v3 1/3] Update t/t4001-diff-rename.sh to modern styl=
-e.
->
-> Documentation/SubmittingPatches::[[summary-section]]
->
-> Perhaps
->
->     Subject: [PATCH v3 1/3] t4001: modernize
+On Fri, Sep 18, 2026 at 01:20:51AM -0700, Junio C Hamano wrote:
+> It would have been a friendly thing to do to describe what base was
+> chosen, especially with a few other topics in flight that touch the
+> build procedure for Rust part of the system recently, here below the
+> three-dash line.  
+> 
+> It seems that this patch is designed to apply cleanly on top of Git
+> 2.56-rc1, which already has these topics merged, so I do not have to
+> worry about conflicts with them when queueing this patch, which is
+> good.
 
-Good suggestion, thanks.
+I must admit I hadn't given much thought about where this would be
+applied, but it was based off master at the time of refreshing the
+patch, which was, indeed, v2.56.0-rc1.
 
->
->> Old tests were written in a different style than modern
->> ones; for better readability and test error messages,
->> update t4001 to the modern style.
->
-> That is a laudable goal, but enumerate the rules you followed to
-> achieve that goal.  For example, a few of them may have been
->
->  * Run everything inside test_expect_success block.
->
->  * Write the title on the same line as test_expect_success and end
->    that line with a singul quote that opens the body of the test; a
->    line with a sole single quote then closes the body.
->
->
->> Signed-off-by: Mark C. Chu-Carroll <markchucarroll@fastmail.com>
->> ---
->
->> -test_expect_success 'setup' '
->> +initial_setup () {
->
-> Why a shell function that is called only once by a test titled "Diff
-> shows path0 ..." below?  It is customary to perform the setup in the
-> very first test_expect_success whose title is 'setup'.  I doubt it
-> would contribute to better readability to change that.
+> So things in src/ move to either rust/ directory or rust/src/
+> directory.
 
-I went back and forth on that in terms of readability. I'll switch
-it back.
+Correct. Mostly rs files (except build.rs) move to rust/src/, and the
+rest to rust/.
 
->
->> -test_expect_success 'test diff.renames=3Dtrue' '
->> +test_expect_success 'With diff.renames=3Dtrue, patch includes rename of=
- path0 to path1' '
->> -test_expect_success 'test diff.renames=3Dfalse' '
->> +test_expect_success 'With diff.renames=3Dfalse, patch does not include =
-rename' '
->> ...
->> =20
->> -test_expect_success 'favour same basenames even with minor differences'=
- '
->> +test_expect_success 'rename logic favours same basenames even with mino=
-r differences' '
->
-> Here you are failing to follow your own renaming rules to start test
-> titles in uppercase letters.  I personally wouldn't have chosen to
-> upcase many of them; rather, the majority of tests in this file seem
-> to be named in lowercase so I would have instead made sure I'd start
-> them in lowercase as well.  In any case, please be consistent.
+> > -$(RUST_LIB): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+> > -	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
+> > +$(RUST_LIB): rust/Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+> > +	$(QUIET_CARGO)cargo build --manifest-path rust/Cargo.toml $(CARGO_ARGS)
+> > ...
+> > -RUST_MEMBER_LIBS = $(foreach target,$(RUST_TARGETS),target/$(target)/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
+> > -$(RUST_MEMBER_LIBS): target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+> > -	$(QUIET_CARGO)cargo build $(CARGO_ARGS) --target $*
+> > +RUST_MEMBER_LIBS = $(foreach target,$(RUST_TARGETS),rust/target/$(target)/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
+> > +$(RUST_MEMBER_LIBS): rust/target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): rust/Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+> > +	$(QUIET_CARGO)cargo build --manifest-path rust/Cargo.toml $(CARGO_ARGS) --target $*
+> 
+> Is the reason why we now need to sprinkle --manifest-path all over
+> is because rust/Cargo.toml is a non-standard place for cargo tool?
+> Not complaining, but am wondering if it is simpler to set and export
+> CARGO_MANIFEST_DIR from the Makefile.
 
-Good eye - I didn't even see that.
+It's non-standard in the sense that it's not Cargo.toml is $PWD. An
+alternative could be to `cd rust` before running cargo commands.
 
->> -test_expect_success 'rename pretty print with common prefix' '
->> +test_expect_success 'rename pretty prints paths with common prefix' '
->
-> Meh.
->
-> Neither way, it is grammatical at all 'rename' may not be plural, so
-> the verb 'print' may want 's' for third-person-singular, but it does
-> not make sense to use 'rename' as the subject for "pretty-print"
-> anyway.  It is not that 'rename' is the one that prints something.
->
+> > diff --git a/meson.build b/meson.build
+> > index 0a95d90d21..432e306b21 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -1795,7 +1795,7 @@ libgit_sources += version_def_h
+> >  
+> >  rust_option = get_option('rust')
+> >  if rust_option.allowed()
+> > -  subdir('src')
+> > +  subdir('rust')
+> 
+> Not 'rust/src'?  Just double-checking.
 
-I'll try to come up with something better.
+Not rust/src because the rust meson.build was moved to rust/, not
+rust/src. It felt like it was in src/ along the .rs files just because
+there was no other place for it in the first place.
 
-Thanks for the review! I'll send an update later today.
+> > @@ -13,7 +13,7 @@ libgit_rs_sources = [
+> >  cargo_command = [
+> >    shell,
+> >    meson.current_source_dir() / 'cargo-meson.sh',
+> > -  meson.project_source_root(),
+> > +  meson.current_source_dir(),
+> >    meson.current_build_dir(),
+> >  ]
+> 
+> What is this change about?
 
-         -Mark
+IIRC project_source_root is the git top-level directory, and
+current_source_dir is the one containing meson.build. Keeping
+project_source_root would put the target directory at the git top-level,
+which would be different from what the Makefile does (since it doesn't
+pass a --target-dir)
 
-
---=20
-Mark Craig Chu-Carroll (@MarkChuCarroll at gitlab)
-*** Software Tools/Math Geek - Software Engineer at Gitlab
-*** Work Email: mcarroll@gitlab.com / markchucarroll@fastmail.com
-*** Personal Blog: http://goodmath.org/blog / Personal email: markcc@gmail.=
-com
-
+Mike
