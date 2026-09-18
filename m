@@ -1,65 +1,70 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+Received: from mail-pz2-f42.google.com (mail-pz2-f42.google.com [74.125.228.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA0B3A9638
-	for <git@vger.kernel.org>; Fri, 18 Sep 2026 13:02:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3DFD330D43
+	for <git@vger.kernel.org>; Fri, 18 Sep 2026 13:02:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789736544; cv=none; b=N74dZ5bHS+bin5FgdKPoelkOf4Qua3BAIIV1uS9EMWU4Ejj4HNrahD02pjsv2aOz+igg96DR+i+sUJLMVIEa+sBqZs/jh+eLWs3xX4sl2BF7EykIlMqA8o/BrZYLmBcydAKy7uRTJdr0bs9XvyqQOAJnJiJlnAM8F8iiAgDBup8=
+	t=1789736546; cv=none; b=AmpBVnrMkB0gIgwuFtwdrg33WC/WJzpzh1vPSBefR4J6iaXvFgHae30d90BsdZ3kMD7bwd3SFjZaeoLdsDDJYUgdAps8HwvFwGfp1KS09UVglcoQPQOedL1+wZyqCC5xFEOIve0ffX4ombcOh+AlACLIrV5aq9EsBlcYt3QczlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789736544; c=relaxed/simple;
-	bh=5igJnPFZ5HVMTivG8lSBUsxPf58uYkxseab1G6f+NsU=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=LIPBmVXiR84z0HqZpxmBS7iWFltTILSYMc0ON+CdV2uPxn3cdfWTT3hQkAvERXBfrRnGrfF91xSYq5gzOkOvBv0kgfbXAdhnDseEdbemSos4/7SKezKi/PbShP+aijC/E1vPrMvSUja+4WG9thWMP1m74LKSfVwmYQgm3RbnIlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l6iykcdm; arc=none smtp.client-ip=74.125.227.140
+	s=arc-20240116; t=1789736546; c=relaxed/simple;
+	bh=1T9u7FE1qhaRLZkUdJhRy4ITroOrftY9qIRW+wRBNXw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=XoirpQbxGdo9e7k1wp+b3kWYkqpe4d59Cqvsv+zLvFRpp4k1n0TNBe2bCLAc3O0gA4rTHuWczXCDGGsTb/j+b3Q23+dILlWlKo1Uz6/FoZUFVmd0uOuNp4BFH/aTMISBGuNoQDcPvdoaixOXWZuZ22QOiWOZ15d9rHdZla1ZYs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mB5fqGI/; arc=none smtp.client-ip=74.125.228.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l6iykcdm"
-Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-396ccd4f99dso715223a91.2
-        for <git@vger.kernel.org>; Fri, 18 Sep 2026 06:02:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mB5fqGI/"
+Received: by mail-pz2-f42.google.com with SMTP id 41be03b00d2f7-cc50bcf87b2so394619a12.1
+        for <git@vger.kernel.org>; Fri, 18 Sep 2026 06:02:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789736543; x=1790341343; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789736544; x=1790341344; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=ooLtbzfQYjgnQUI/6w75JqmNTb0zUjct5qjjeTEdYvo=;
-        b=l6iykcdmIxZrMA/vvFrl7BXDjfIMAOiBGNhZq+Q/85Qmblpw30fZ55muMYZgqdAIY0
-         mmsLxsSuZUD26Yoc0vsrQ8H1kkcIygN0M8eNNU445RWJeiS4m/eO24u1hV+vOwhAB3V/
-         geBP/NUyCU0Bi3YUtD/BIx4xlchh9zdmC35N5+cb5dYzoRropYZuXEsmAQwr5lpMM6eh
-         uXGv6mPXcKyRP19ZsFBf4jBSTr2L59ZpdBe5akNn0Te1bD0FcfBmJWWFR0XvQ4dcdXBn
-         whuzJgFVXD3RQ+Zn7j1OM+Pac7gUXPFUAlRu3wo4soidlyV0VQgt2cywsF2kPXMBs8S5
-         +cZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789736543; x=1790341343;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=ooLtbzfQYjgnQUI/6w75JqmNTb0zUjct5qjjeTEdYvo=;
-        b=vWhi/l33Dx9eCWfLxhCmz8XR4NvwGvTMK/NkYNqIJWzleJKqzJycm56leMDn1pdAeh
-         j9vNDNaqfrb6xCW/DAdPnBj8+PjaDt4zAtPHCUZn97XmUPVX/my7Zu3tWpUsfgoOFv3a
-         rYTAQ4nbOC/s+QUzvqwfjnz5q0zVXX+YyEDMiltLPGol3BdINzk+uj81w6DTcgepggZG
-         ZCZ9IZFttntF7BLUHp9yETGdtoyBc53ASoEQSFc8KYJ9xtn/HJhfb1l5U6JzVJr6zN6K
-         fUh6n0MwG1qAQOgvCL2nWoaUxoh1CuNQ8di9VSO+9GH3dCKqNtKRhHE+IXsHO0U3gkFj
-         JlBA==
-X-Gm-Message-State: AFuF++n3uy6dX2LzPelaVzCQsCzZVTjXfhT7FyuCgVMxJL1mzodOoGjI
-	kuMNcUQDtqs81WkmNqIoEOXBqBuUu/Lrfv2ZK4h2iS0ZUGZtv/K7z10mSMq23A==
-X-Gm-Gg: AYBFou1UKGYhuM+7T/eim2S22VpQ6JxIF3nAW12GPYgueY1tuocURhHQMvPlOqgXh8R
-	EuAA6p91U7QtnaK9amV6Kya2a7kVNOzZM78uHscRZRaM6AXJqjECzxEmJrs/TlVc2RsvYTpIiJ5
-	k8SDux7xZDFMO4IaI0QypSbIUpkhS/i6cjdT56V3s2lD+mqQeNKawHl2ZG789F67GeiWHkKNqsG
-	pKb6AYgLGvQOyxVJO27UCqx/Vo7PMSBJYeGN1ZpZbi5wztdJ2wsZstba0KxP6+eH25CUfKqWzle
-	Jcn2SpU/GMYYoZ+3mQgp5NLlAw+ne8DWB1vZv30yi2AgVCHk8rs1ljyNZgkXZJuurFxQfuefNTm
-	gmFgqP/8pj+1qM/Jjvqxir7Gqyz3xBjLIzZoL8w6Z2f28IlqoqH40Cgwr20ZcL3BdKQGoQ2CH2I
-	QtuA/Runn0pVl5k78j3vSeccHgC0O1kF3emRyXHif6Vp1j3mTQbfwmUqQxqiWuO6PgBzbdcgw3
-X-Received: by 2002:a17:90b:4c50:b0:39d:fd60:caba with SMTP id 98e67ed59e1d1-39e54d21a31mr5279950a91.14.1789736542191;
-        Fri, 18 Sep 2026 06:02:22 -0700 (PDT)
+        bh=ZTfm3stzB5eYOuQqey9L97wxKbHdK7KdoWQe+TWlFHM=;
+        b=mB5fqGI/u2pVkzc1+BLxLuDo7E6BL0ngG23qXTOHUXFIqVOEa+/elaRCGpFhzK1ljS
+         +0gVWgjgweVJeAm610HEVhbJF8emjnxpJYZNI6k4kRvntJH0TuSTEKQSx39MPwZTZzNv
+         LhWWJRYip3MlfyDo/P595SGq013pWbpmJh/z8PFScGuv4Le1rshgJ51gMvjIAxx6Y2Hn
+         ddDbMGey1axs+elTYJccyFCRxLxDQkCsRFRcB6MiHUz1QPazAE4zkXj8/tkzcWnVYsEo
+         Vefro5e2rtkUi/083ACLvB1BLRjI4dxG25r4Ke5lXH/fdRyPMxPNz/Wdi4z/+xh2ho5A
+         BSmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789736544; x=1790341344;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ZTfm3stzB5eYOuQqey9L97wxKbHdK7KdoWQe+TWlFHM=;
+        b=BGg+qmcACYPKoja1ICWWqJ49zj571TaeqvFx2/XOZm+utNl0XwTct3zekXux0VSFMz
+         H0JKYhHX6K4V9jMlLr1JA0inDOpuQFyxd8RSqZLiWfkYfTYoDnti0a/qJ2bcUhjrq9dx
+         MotL2G2LKIpJrz9EqkSU5l97/5d9Jg8A8TF6d92sNCni1FoqRXS3AmfXXAZLHb2QF6Hp
+         jIncYhcaR6iNnOY5X4ARIdWKrJu/mnDYGCLrJoNmRkgQLL92JrED+G8auEq1gmAX/14H
+         2Nu1WNFmI0VPf5OoRbcaA1S/F5ebtLRFZvpbGAb+28j/ZdKDxkDvSKSv0Abbh0G8wHWE
+         qW6A==
+X-Gm-Message-State: AFuF++nv/9X0rH3W/m6sm7nmXZXIwkuVjB5uE/8PZxPSN4MQD+np+z65
+	1qCKkr8gHjxb9wqiKZEOU2tbwtZsuSG+0vFzVzfty+Gt2IxVI0PAoDM7DSVn2g==
+X-Gm-Gg: AYBFou3oLI4LX6Nv8gTh9bkwqfMfZNFZ/BTe+d7XF7bTG9VxOgtZpBBH3eOML/BudHZ
+	bRnCrWzbJgRZJs8gQSYflkQ4fICeWjusnxIyNaKJ2/xvY6kr+ER3eEtrpZPY/g1NzkU/aRYoWm4
+	MyzLDR5qTx3YgQzDnNxLi0tKOYrRs1pfuzsaI9Glfp96gn6oH9e7LgZ/a00kZecCZrKoZAZN5CP
+	8PjZuUxXXlWr7QqJCjSml7eP2L1zFU6lYWJSKpbNfF5rm0gmP8D7+tAy3nXQs1q10QZxCvIO5zq
+	uxWoQjwTH4o5TiK1Kkhqre+Mcbv0XPZxsz4SNXNyRTTouQccoCS+lIvP+2QXqxAlUXgH9pliLDq
+	AutvIME5zo4rzMy1mQ1jXRGD2DWi1nqhxuCi/8jjkalO89nZLTRx3Y7kxH0UiphTpN1gJlcIxLJ
+	dWkw3MD57EArZLSPJ7FODkyYPMLLUiVIMsYfaUzLdWdV7s2CjBI7b7AGgLRH1d3JTzY3szamCTI
+	tVfvy/2nGM=
+X-Received: by 2002:a05:6300:220d:b0:3dd:85a8:cac6 with SMTP id adf61e73a8af0-3dd8c419610mr4574240637.29.1789736543688;
+        Fri, 18 Sep 2026 06:02:23 -0700 (PDT)
 Received: from [127.0.0.1] ([20.168.95.135])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e36116920sm10789124a91.5.2026.09.18.06.02.21
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-875ddce1677sm774336b3a.58.2026.09.18.06.02.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2026 06:02:21 -0700 (PDT)
-Message-Id: <pull.2230.git.1789736540.gitgitgadget@gmail.com>
+        Fri, 18 Sep 2026 06:02:23 -0700 (PDT)
+Message-Id: <b1779709120adc9c1df40c7210481d6bed9791c5.1789736540.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2230.git.1789736540.gitgitgadget@gmail.com>
+References: <pull.2230.git.1789736540.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 18 Sep 2026 13:02:14 +0000
-Subject: [PATCH 0/6] [RFC] Create a 'safe' strbuf API
+Date: Fri, 18 Sep 2026 13:02:15 +0000
+Subject: [PATCH 1/6] strbuf: add header for 'safe' API
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,127 +78,223 @@ To: git@vger.kernel.org
 Cc: gitster@pobox.com,
     peff@peff.net,
     newren@gmail.com,
+    Derrick Stolee <stolee@gmail.com>,
     Derrick Stolee <stolee@gmail.com>
 
-This is based on ds/trace2-tolerate-failed-timestamps [1] [2].
+From: Derrick Stolee <stolee@gmail.com>
 
-[1]
-https://lore.kernel.org/git/pull.2178.v3.git.1788197143.gitgitgadget@gmail.com/
+The strbuf library is an important API used all over the Git codebase.
+Contributors use it in nearly any string-manipulating action. However, the
+implementation uses other helping functions that die() on failure instead of
+returning an error code. Thus, the strbuf API isn't _safe_.
 
-[2] https://github.com/gitgitgadget/git/pull/2178
+In particular, we cannot include 'banned-die.h' in 'strbuf.c'.
 
-While investigating the fact that the trace2 API can trigger recursive die()
-loops if allocation fails, Peff pointed out [3] that trace2 uses json-writer
-which in turn uses the strbuf API. If a strbuf fails to allocate, grow, or
-otherwise mutate the given strings, then trace2 can hit this problem!
+To start the creation of a safe strbuf API, move the struct definition into
+a new 'strbuf-safe.h' header file. All consumers of 'strbuf.h' will consume
+that header transitively.
 
-[3]
-https://lore.kernel.org/git/20260901050129.GB1075462@coredump.intra.peff.net/
+In the future, we will hope to have consumers that need a 'safe' API will
+include 'strbuf-safe.h' instead of 'strbuf.h'.
 
-The goal of this short RFC, such as it is, is to get some feedback on
-whether this is a worthwhile direction to pursue or if I should abandon this
-idea of having this definition of "safe" for some APIs. This decision may
-also determine if we should abandon ds/trace2-tolerate-failed-timestamps or
-leave the existing behavior as-is.
+We will see in future changes the inclusion of new implementations that
+return an error code instead of halting.
 
-I had discussed earlier that what we'd really need is a guarantee that we
-can't transitively reach die() from any "safe" API. The eventual goal would
-be to include json-writer.c and the trace2 code files into the "safe"
-bucket, but for now I'm making sure that strbuf-safe.c satisfies this CodeQL
-query:
-
-import cpp
-
-class SafeFunction extends Function {
-  SafeFunction() {
-    getFile().getRelativePath() = "strbuf-safe.c"
-  }
-}
-
-predicate directlyCalls(Function caller, Function callee) {
-  exists(FunctionCall call |
-    call.getEnclosingFunction() = caller and
-    call.getTarget() = callee
-  )
-}
-
-
-from SafeFunction source, Function sink
-where
-  (sink.getName() = "die" or sink.getName() = "exit") and
-  directlyCalls+(source, sink)
-select source,
-  "This safe function can transitively reach " + sink.getName() + "()."
-
-
-If we went with this approach, then I'd explore how to make this a
-build-time requirement during CI.
-
-In regards to the structure of this RFC:
-
- 1. The safe API needs the same structures, but shouldn't import more than
-    necessary. Some movement of structs across headers is done before
-    anything else.
- 2. In order to make even the smallest safe method work, we first need to
-    figure out how to handle GIT_ALLOC_LIMIT, which is an undocumented
-    environment variable. I explain that I think this should be
-    GIT_TEST_ALLOC_LIMIT, but maybe the ship has sailed due to Hyrum's Law.
-    So I make an effort to document it but also to initialize it proactively
-    within the process startup instead of implicitly at the lowest level.
-    This allows us to avoid a die() when checking the environment variable.
- 3. Thus, we get a 'safe' version of a memory allocation size check. This is
-    our first example of creating a safe version that is then called by the
-    non-safe version to prevent repeated code.
- 4. We can then create our first safe strbuf method: sstrbuf_grow(). I
-    explain why I prepend with s instead of appending _gently in the commit.
- 5. Some trace2 code implicitly depends on strbuf.h through json-writer.h,
-    so we drop that in favor of strbuf-safe.h to keep the dependence on the
-    full struct definition without forever having the non-safe methods
-    reachable. The goal eventually is to drop the strbuf.h include from
-    json-writer.c, but that isn't accomplished in this RFC.
- 6. Finally, create safe init and release methods and use them in
-    json-writer.c. This does show some of the "transition risk" where some
-    json-writer methods become "safe" but I haven't done the hard work to
-    make sure the callers of those methods respond to the new return values.
-    If we proceed with the RFC, then I'd split this into a creation of the
-    safe strbuf methods and then the refactoring required to respond
-    correctly to errors in json-writer.c
-
-Thanks in advance for your thoughts!
-
-Thanks, -Stolee
-
-Derrick Stolee (6):
-  strbuf: add header for 'safe' API
-  wrapper: initialize GIT_ALLOC_LIMIT proactively
-  wrapper: create safe_memory_limit_check()
-  strbuf-safe: add sstrbuf_grow()
-  json-writer: include strbuf-safe.h
-  strbuf-safe: add init and release methods
-
- Documentation/git.adoc |  6 +++
- Makefile               |  1 +
- common-init.c          |  2 +
- environment.h          |  1 +
- json-writer.c          | 32 ++++++++------
- json-writer.h          |  7 +--
- meson.build            |  1 +
- strbuf-safe.c          | 52 ++++++++++++++++++++++
- strbuf-safe.h          | 97 ++++++++++++++++++++++++++++++++++++++++++
- strbuf.c               | 23 ++++------
- strbuf.h               | 74 ++------------------------------
- trace2/tr2_tgt_event.c |  1 +
- trace2/tr2_tgt_perf.c  |  1 +
- wrapper.c              | 67 ++++++++++++++++++++---------
- wrapper.h              |  9 ++++
- 15 files changed, 253 insertions(+), 121 deletions(-)
- create mode 100644 strbuf-safe.c
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+ strbuf-safe.h | 88 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ strbuf.h      | 74 +++----------------------------------------
+ 2 files changed, 92 insertions(+), 70 deletions(-)
  create mode 100644 strbuf-safe.h
 
-
-base-commit: a80c36bda0e5aff1c9945d08f43079a6aa85ccad
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2230%2Fderrickstolee%2Fstrbuf-safe-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2230/derrickstolee/strbuf-safe-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2230
+diff --git a/strbuf-safe.h b/strbuf-safe.h
+new file mode 100644
+index 0000000000..3cf14545bb
+--- /dev/null
++++ b/strbuf-safe.h
+@@ -0,0 +1,88 @@
++#ifndef STRBUF_SAFE_H
++#define STRBUF_SAFE_H
++
++/*
++ * NOTE FOR STRBUF DEVELOPERS
++ *
++ * strbuf is a low-level primitive; as such it should interact only
++ * with other low-level primitives. Do not introduce new functions
++ * which interact with higher-level APIs.
++ *
++ * This header file specifically conatins the "safe" API surface for
++ * working with strbufs. The implementations of these methods avoid
++ * using die() and other exits. Thus, these methods are appropriate
++ * for use within lower-level APIs such as trace2.
++ */
++
++struct string_list;
++
++/**
++ * strbufs are meant to be used with all the usual C string and memory
++ * APIs. Given that the length of the buffer is known, it's often better to
++ * use the mem* functions than a str* one (e.g., memchr vs. strchr).
++ * Though, one has to be careful about the fact that str* functions often
++ * stop on NULs and that strbufs may have embedded NULs.
++ *
++ * A strbuf is NUL terminated for convenience, but no function in the
++ * strbuf API actually relies on the string being free of NULs.
++ *
++ * strbufs have some invariants that are very important to keep in mind:
++ *
++ *  - The `buf` member is never NULL, so it can be used in any usual C
++ *    string operations safely. strbufs _have_ to be initialized either by
++ *    `strbuf_init()` or by `= STRBUF_INIT` before the invariants, though.
++ *
++ *    Do *not* assume anything on what `buf` really is (e.g. if it is
++ *    allocated memory or not), use `strbuf_detach()` to unwrap a memory
++ *    buffer from its strbuf shell in a safe way. That is the sole supported
++ *    way. This will give you a malloced buffer that you can later `free()`.
++ *
++ *    However, it is totally safe to modify anything in the string pointed by
++ *    the `buf` member, between the indices `0` and `len-1` (inclusive).
++ *
++ *  - The `buf` member is a byte array that has at least `len + 1` bytes
++ *    allocated. The extra byte is used to store a `'\0'`, allowing the
++ *    `buf` member to be a valid C-string. All strbuf functions ensure this
++ *    invariant is preserved.
++ *
++ *    NOTE: It is OK to "play" with the buffer directly if you work it this
++ *    way:
++ *
++ *        strbuf_grow(sb, SOME_SIZE); <1>
++ *        strbuf_setlen(sb, sb->len + SOME_OTHER_SIZE);
++ *
++ *    <1> Here, the memory array starting at `sb->buf`, and of length
++ *    `strbuf_avail(sb)` is all yours, and you can be sure that
++ *    `strbuf_avail(sb)` is at least `SOME_SIZE`.
++ *
++ *    NOTE: `SOME_OTHER_SIZE` must be smaller or equal to `strbuf_avail(sb)`.
++ *
++ *    Doing so is safe, though if it has to be done in many places, adding the
++ *    missing API to the strbuf module is the way to go.
++ *
++ *    WARNING: Do _not_ assume that the area that is yours is of size `alloc
++ *    - 1` even if it's true in the current implementation. Alloc is somehow a
++ *    "private" member that should not be messed with. Use `strbuf_avail()`
++ *    instead.
++*/
++
++/**
++ * Data Structures
++ * ---------------
++ */
++
++/**
++ * This is the string buffer structure. The `len` member can be used to
++ * determine the current length of the string, and `buf` member provides
++ * access to the string itself.
++ */
++struct strbuf {
++	size_t alloc;
++	size_t len;
++	char *buf;
++};
++
++extern char strbuf_slopbuf[];
++#define STRBUF_INIT  { .buf = strbuf_slopbuf }
++
++#endif /* STRBUF_SAFE_H */
+diff --git a/strbuf.h b/strbuf.h
+index 1089ae687b..b41f8ef901 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -1,85 +1,19 @@
+ #ifndef STRBUF_H
+ #define STRBUF_H
+ 
++#include "strbuf-safe.h"
++
+ /*
+  * NOTE FOR STRBUF DEVELOPERS
+  *
+  * strbuf is a low-level primitive; as such it should interact only
+  * with other low-level primitives. Do not introduce new functions
+  * which interact with higher-level APIs.
+- */
+-
+-struct string_list;
+-
+-/**
+- * strbufs are meant to be used with all the usual C string and memory
+- * APIs. Given that the length of the buffer is known, it's often better to
+- * use the mem* functions than a str* one (e.g., memchr vs. strchr).
+- * Though, one has to be careful about the fact that str* functions often
+- * stop on NULs and that strbufs may have embedded NULs.
+- *
+- * A strbuf is NUL terminated for convenience, but no function in the
+- * strbuf API actually relies on the string being free of NULs.
+- *
+- * strbufs have some invariants that are very important to keep in mind:
+- *
+- *  - The `buf` member is never NULL, so it can be used in any usual C
+- *    string operations safely. strbufs _have_ to be initialized either by
+- *    `strbuf_init()` or by `= STRBUF_INIT` before the invariants, though.
+- *
+- *    Do *not* assume anything on what `buf` really is (e.g. if it is
+- *    allocated memory or not), use `strbuf_detach()` to unwrap a memory
+- *    buffer from its strbuf shell in a safe way. That is the sole supported
+- *    way. This will give you a malloced buffer that you can later `free()`.
+- *
+- *    However, it is totally safe to modify anything in the string pointed by
+- *    the `buf` member, between the indices `0` and `len-1` (inclusive).
+- *
+- *  - The `buf` member is a byte array that has at least `len + 1` bytes
+- *    allocated. The extra byte is used to store a `'\0'`, allowing the
+- *    `buf` member to be a valid C-string. All strbuf functions ensure this
+- *    invariant is preserved.
+- *
+- *    NOTE: It is OK to "play" with the buffer directly if you work it this
+- *    way:
+  *
+- *        strbuf_grow(sb, SOME_SIZE); <1>
+- *        strbuf_setlen(sb, sb->len + SOME_OTHER_SIZE);
+- *
+- *    <1> Here, the memory array starting at `sb->buf`, and of length
+- *    `strbuf_avail(sb)` is all yours, and you can be sure that
+- *    `strbuf_avail(sb)` is at least `SOME_SIZE`.
+- *
+- *    NOTE: `SOME_OTHER_SIZE` must be smaller or equal to `strbuf_avail(sb)`.
+- *
+- *    Doing so is safe, though if it has to be done in many places, adding the
+- *    missing API to the strbuf module is the way to go.
+- *
+- *    WARNING: Do _not_ assume that the area that is yours is of size `alloc
+- *    - 1` even if it's true in the current implementation. Alloc is somehow a
+- *    "private" member that should not be messed with. Use `strbuf_avail()`
+- *    instead.
+-*/
+-
+-/**
+- * Data Structures
+- * ---------------
++ * Also see strbuf-safe.h for the struct definitions and safe versions
++ * of some methods declared in this header file.
+  */
+ 
+-/**
+- * This is the string buffer structure. The `len` member can be used to
+- * determine the current length of the string, and `buf` member provides
+- * access to the string itself.
+- */
+-struct strbuf {
+-	size_t alloc;
+-	size_t len;
+-	char *buf;
+-};
+-
+-extern char strbuf_slopbuf[];
+-#define STRBUF_INIT  { .buf = strbuf_slopbuf }
+-
+ struct object_id;
+ 
+ /**
 -- 
 gitgitgadget
+
