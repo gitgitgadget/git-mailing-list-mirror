@@ -1,79 +1,79 @@
 Received: from flow-b6-smtp.messagingengine.com (flow-b6-smtp.messagingengine.com [202.12.124.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF5B511194
-	for <git@vger.kernel.org>; Fri, 18 Sep 2026 17:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826405013DF
+	for <git@vger.kernel.org>; Fri, 18 Sep 2026 17:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789751938; cv=none; b=iGmMf55AWYW1N+jtnQy/6IznkpQAjm74chVT74i5x8ESMK7bb/4jaX4sZHNxatcnH1leKK7HVI0+wPfySj4sryy2Pp5HzH+J6nbSvOpn6I95ECTsCrTdGrxrM7orSegdOmvsK8vPtDZRbsT5gDHH+xTULQOuFY56s3dZaPNUr/8=
+	t=1789751940; cv=none; b=sLRDptMndGgtc2zGyXY4hC0a5BaO5roiW9qfxyFR8GWGJMc8dQINpAyFEsHpUNkXT7G+J2VhxDURiLXr69ExXSP6FJ5Y5BdBENslCqAjvktWMdHVdxByRe9Yt2mKhanmzBnc+LH8i3wgLVJFyF+u7b7013Oe/QYZjH5oNDP7xI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789751938; c=relaxed/simple;
-	bh=8ex8Ba0bx2gehdpEJBIrY9S7IhshU+JBTLU2FIPEF2o=;
+	s=arc-20240116; t=1789751940; c=relaxed/simple;
+	bh=rOb5dYVJDwxhnWBmpshDpeCHTkWSNEswlcdnikH+F3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jbVMAwjk2cQhDfh0z6vWatdKjdj//aKnkdYT+KmtH51I19F4LQI99ruHWMt+2KaZibKnQnYSr0FClA4EV688Y4cD115gxoB+CfTHLx6sI1+R7HgWFeYdlWYlLrhcYbAI0C+IDY2TBlioSIe1wYzHUG260PJK8uM7381IsR8iYZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=b5/piRuX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W+LhYc6H; arc=none smtp.client-ip=202.12.124.141
+	 MIME-Version; b=Xw42bm3IqkoTgQMJrC2fdhvGm3wZqwdSOjya57AAu/egL1Bm3SH1Df9NVUjze3UYsCehY/xLC9AlirolZ1H35AqAAayC6OLDJYFMrc1q0t9MrZwpCY3387Vu1chZi8GeCe3hoAse2vLDRziVsgWsdCBYNkLHmRcAROfmOKzqGio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=HpA3Ag3P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HlJ/7nfA; arc=none smtp.client-ip=202.12.124.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="b5/piRuX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W+LhYc6H"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="HpA3Ag3P";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HlJ/7nfA"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailflow.stl.internal (Postfix) with ESMTP id 2935A1300278;
-	Fri, 18 Sep 2026 13:18:56 -0400 (EDT)
+	by mailflow.stl.internal (Postfix) with ESMTP id BD3F1130027E;
+	Fri, 18 Sep 2026 13:18:57 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 18 Sep 2026 13:18:56 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 18 Sep 2026 13:18:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1789751936; x=
-	1789755536; bh=sWNFtLG8e3n7dXIiIrigSB1f1BRT6zV5Z6CiuU9BADU=; b=b
-	5/piRuXDs2BeY9wkgOdgIhIDKMqKjpAq4o6p7y9t4ExYKt7lAWUrOBFh5QiyiaT9
-	XUWIuddGiR7Sb/fEk0dTz5kCeuU5bFI1OYBT8582J2F90fuUP9aCzpGSLxn1aXBU
-	mT9SM8QEbRDVJRsjt7PlbCIjVocysPsCL0yHNjG0Forv8hHuWPtG+mNKuvf6ckVC
-	2Q2S6THNWoh3F1uEKhuc8N6A2c1Mr5OEzTcWZlF5mx/X+dcZj/c+QNKlzkAt9/n4
-	q7EmqYTAXynj40KvKGGL0NAVASyEJwNE5ohJXF7TAJWw1r5TkQYGzhkPxeAxgjxA
-	9tCK8EYJyZdTQOZNWGGvg==
+	:reply-to:subject:subject:to:to; s=fm1; t=1789751937; x=
+	1789755537; bh=JpK9S2QJC35Itp+P41eSO2Cjf303se77sqL1HHOZhFc=; b=H
+	pA3Ag3P3MWoVuVjlZnyBfOa2fGThtJPoUIix8s/qMjeI42Z6fqx0S+WSKVQMe+/2
+	taXkUzH1i4jmLiuMjDfr7dJDqi8XlN72tenqbvTBcJYTKB5tkprzThJv5c8XyOji
+	sR5pJSKy6YinRCcY1zOo70+bXrFIM0xAoF+5PdiQY/p4nWguQF7wQEy9Ra3k/bc3
+	MXw40st2SBznWOJI1CheRbKvER2Ad9e5HbUNPInaD0OWhEhhhVA16yLke397UV9m
+	NrXDwvf3oXcoBgWd5yoQCh56qGHbim4Rm3Bp/EHTafVxvR2xKIK3SF0mwotmg6pf
+	27JCirC8wk8HdxwTPIugQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1789751936; x=1789755536; bh=s
-	WNFtLG8e3n7dXIiIrigSB1f1BRT6zV5Z6CiuU9BADU=; b=W+LhYc6Hvxz1WztmX
-	+Du9vcwsiuFWhAZvXxhxtaKnH4makR0hTKc52EhJp5M2BvkPmbOYZ/zufRwa3BBq
-	Twm5ImiDO2FNzTc1TjAgbRrHyVQjy21DmPMvRQJUahyMG7Os1s+RbewjH3T7zNSl
-	caWbE+r3dLlbQPxFhq8aiCf05bl52f9oZrq8y4X1LFyC3li42oyHT7OLtDONCWZv
-	Zkxthvwp3k38DuTtmI6kK15Gqr7TANwKPTLxex479Wbhnkq7/1eYbrItKHUPEjqg
-	kt2pR1xlSMYTHDZUS/AArneY9EYVRAU1y5b2fB7yGv4V/pF3vro468D5KA5mTCl6
-	6/7Cg==
-X-ME-Sender: <xms:f3KtakZn472HKVSTP3ahEuWMjRnpU69DI8AuF_RfspEMbtNbSRIaqg>
-    <xme:f3KtalZ8t-nEUBgFy17utytYWlxyMAlr10oBxI1CTqi6QZlgAtFC_Gi9L4xuun9ZS
-    79ER5F840COJLrY20pp55kyI2b1gYzkankOr0zyZ_rjFH6X1E1yTbHO>
-X-ME-Received: <xmr:f3KtaskqZsQL9KY-nxM-SuMVV0gnKshittrGlefn77Nzu1cRkNz7Y2kpV9fHCer4tIp_rN7nvo_-ItS1Mxmrm0bCBLqnGJOm2GDJg4hzKghtHA>
-X-ME-Proxy-Cause: dmFkZTGmPTOGm99l02Hig6CYd3+V4H+UU3rFiUYklZHnfcmDoG4wv30i20PxVboKfblbPN
-    ZwgIP0sCDCf84gSs5itRv9GE9Mcf0FatjYZ7fuVPe6IOtO1jLKcxeYyX1IYPBYXxRNUCed
-    ySozJV4qlmC6Trzd38rUNy26VdSO0x0GoVINZRXOhizA8zklXQIBqQkh0HmAQKtdNtDXEx
-    fK5WnLr8KMWbdhd5+U9kayg4o2SeOjsvH9nCWocQPEhu3bka4G2mgBiYLyw2w/u187dAqw
-    lDn2quWrGavE6/YA6OfrcaX+/6jwG32BFkG6cXsw9WDV3v3Z28DMgOTngE6MGk9djFnwQU
-    WR5aNO+FjI0Jfu7HwsEc1cP3dBg6VWoZ9CcmssvZOGu34SPK6+xz43WEdstxjSLN5iZgnV
-    m2L0NPxVYRQ7OZ8D92aOP1vKUT7jrJCO22vHrcxXc2EWreojtAK1u45LWKdDEb2uLVVWBU
-    GmsXb8ptjwcTx2R/KaBl7OB+oLsN+pFH9K0N19evW1GFral5N6cwBdhDk1QsBeNbp8oqtV
-    UacJfqbvlNQx62CMtw/uKJLooyCMkiDuc4x7Wq7/XUo5zMxwDEzwuE6MPjMf/QRxJbT5RX
-    lx0RaAhK+eTGWomA+qAnz++WEJxBCwJNHj5nOoj2Ta06G7HsI3D5jBkTCIaA
-X-ME-Proxy: <xmx:f3KtapwWF1HU-2LjItRFG9dhWPl2avvvzhQcs881247byHxnN7fZ9A>
-    <xmx:f3KtaiNGu04hWAys_GMp-sJHQkQdtTpBkwFwGZdfjTpY4LqFojTqBg>
-    <xmx:f3KtalQ6nGarE2oP-wiFN3-gMdUEpUbGDJMiT9T6xM4tCxWhELeQ9g>
-    <xmx:f3KtaoYA8YUnaoQO8kIxm1nyn68QHzOP0ob2mF2vhtioddhrq55l2Q>
-    <xmx:f3Ktaq3b79Y1dmwUoney7cMmfGtQsGVogoo3KuSOCTb4Q0QSgdP3_zs->
+	:x-me-sender:x-sasl-enc; s=fm1; t=1789751937; x=1789755537; bh=J
+	pK9S2QJC35Itp+P41eSO2Cjf303se77sqL1HHOZhFc=; b=HlJ/7nfAEC1+AUm+g
+	/n4f7x/E+wnhl41CrIOhWMHWbzYKZS8d9t60ON/stIekG75D/a/UOxPjvg6wB6oX
+	RXEotCXskHENHk1EpVtctD21JW6jOyROFV7ksTwI2sy7I8Z7Mo4NM8PTRoaEvZ6o
+	jyMnIKourv2XQ6Rfva78ddDP50VQNC3V6vvdn4fZqi/J/jdbYGjibsl94goRG+2a
+	dTgtBLIezWJE0yxGpyd7Ns9tdoS/rmqaWOJKg4zhCS3veAk9uWtPeCXmU3NQL2Gd
+	tXVG/b7AANkuO7gqxcP0vu+h0p5zQmA7W3yyU1S+VbPvIWjOJ0Mx6br6eyBpFSvP
+	JQKzQ==
+X-ME-Sender: <xms:gXKtavr1J9hLKL3ux3MoyiuU04gprq3AEXxaUxLlMSLy_pI1QU9Wbg>
+    <xme:gXKtavr2DVejzJUtRoq3CBmexM5ANnBFIc8mokh6jNLFL341CfHQ6yceVU9EguAtn
+    bz1lWbyavTpHUmTEHgSgWYlhbUSsDO-CsOH2SyJFUdxaB9JcSQKbOPC>
+X-ME-Received: <xmr:gXKtap26l0uG55eJtTS4IbthMnql85I3EBVgPgFgoz8mKq9w7BW7cN-Xhnv4_d_bXxNI43SzmpiYOdm3IhgnQSisBrvUWATA9ukKx75Onk61zA>
+X-ME-Proxy-Cause: dmFkZTGSm/Sx6JqmBiK2EmU/sXENm1X7hzGoBZoamrrBqmwe/9mnZPS30pHjqMzN2N9StX
+    bkE5p+/SCCFaDu/f6H/G+I9OoJmmi711bctQVDIPGQ+wn1G9eRRgPp1rD3FvXKo1g07VRm
+    wqivqu/mh+invTF/hnVRicExtE2EHXOAZdweRn9xRrXuOkIX1EAYejC51OWu80pPY8ftHs
+    zByHO+RJ+8BkeAHGUeytcSDMaVm3uelbJcKpluUOw0wBzx3V/WcI2Ti/fRo11DQ1LFQcHx
+    pN8CziddeDaJo6CTQLeKy6e9qQLAtrknzUaQhruAHiK6Q1kLxmq6AX1ehUm7vsyM/RUQh0
+    4muDmu8MABJOhWQAQJ71uSzxf1u91vLv0HC/+i9ixGJZRRymMMXOrL1cRzxVjqINHdDECm
+    OeInDsddcGUaY6vGO1qodX9s+nBTIF4t1slf+PUwGmrablYOgGyzw94Mug77bLiBUN8v3r
+    zQRdnN11ty+w4kT6WyCRlyzclKaauL5FIA9qtHy7N6WOZ4pZCTdaGYxUp/gn8hRO/RAaEG
+    y78f/LTJzdsrswOzhEgAMOtJs1L+3uAzu3vDV598QMl+X0JO4bjtHYponUDIiV8w7DV30j
+    bRnu626kSE8ISRTqk0pVO72uCkyOQDlENCrJKJ8LIdaUyl3W851zIJ4nbveg
+X-ME-Proxy: <xmx:gXKtauDL2dewa5S3-fTTNjMJ0JDa6szqVo4g-QD_qKz8qoCOdzKMNA>
+    <xmx:gXKtaheMLbENlQGpdH5T9Y-7W5FMvEzy9vvVAW3cbCwbMBsC3Xyuig>
+    <xmx:gXKtajg7DRF6Y1cUD8DW4gFqkZdV0Rm5ec9s6DnMblSXpPf-XjE0Ww>
+    <xmx:gXKtapo5Cym6223h4HuiyK7h-3-8AsWPaK76zBlLBN9ouNQM58zS1w>
+    <xmx:gXKtahG2c6eS8Xef4vtbmiM8R9sjzisb1Sno1MDx7KZSYYfmPA_sJ3H7>
 Feedback-ID: id2564aa6:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 18 Sep 2026 13:18:55 -0400 (EDT)
+ 18 Sep 2026 13:18:57 -0400 (EDT)
 From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
 To: git@vger.kernel.org
 Cc: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-Subject: [PATCH v4 2/3] t4009: modernize
-Date: Fri, 18 Sep 2026 13:18:46 -0400
-Message-ID: <20260918171847.2670739-3-markchucarroll@fastmail.com>
+Subject: [PATCH v4 3/3] t4010: modernize
+Date: Fri, 18 Sep 2026 13:18:47 -0400
+Message-ID: <20260918171847.2670739-4-markchucarroll@fastmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260918171847.2670739-1-markchucarroll@fastmail.com>
 References: <20260918171847.2670739-1-markchucarroll@fastmail.com>
@@ -87,7 +87,7 @@ Content-Transfer-Encoding: 8bit
 
 Old tests were written in a different style than modern
 ones; for better readability and test error messages,
-update t4009 to the modern style.
+update t4010 to the modern style.
 
 * run everything inside of a test_expect_success block.
 * write title line on the same line as test_expect_success,
@@ -102,162 +102,140 @@ update t4009 to the modern style.
 
 Signed-off-by: Mark C. Chu-Carroll <markchucarroll@fastmail.com>
 ---
- t/t4009-diff-rename-4.sh | 126 +++++++++++++++++++--------------------
- 1 file changed, 60 insertions(+), 66 deletions(-)
+ t/t4010-diff-pathspec.sh | 120 +++++++++++++++++++--------------------
+ 1 file changed, 59 insertions(+), 61 deletions(-)
 
-diff --git a/t/t4009-diff-rename-4.sh b/t/t4009-diff-rename-4.sh
-index 198de5d039..e42891ee5a 100755
---- a/t/t4009-diff-rename-4.sh
-+++ b/t/t4009-diff-rename-4.sh
-@@ -10,67 +10,63 @@ test_description='Same rename detection as t4003 but testing diff-raw -z.
+diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
+index c84c3fa05b..34d53e7496 100755
+--- a/t/t4010-diff-pathspec.sh
++++ b/t/t4010-diff-pathspec.sh
+@@ -13,67 +13,65 @@ Prepare:
  . ./test-lib.sh
  . "$TEST_DIRECTORY"/lib-diff.sh ;# test-lib chdir's into trash
  
--test_expect_success  'prepare reference tree' '
--    COPYING_test_data >COPYING &&
--    echo frotz >rezrov &&
--    git update-index --add COPYING rezrov &&
--    orig=$(git hash-object COPYING) &&
--    tree=$(git write-tree) &&
--    echo $tree
-+test_expect_success 'setup' '
-+	# prepare reference tree
-+	COPYING_test_data >COPYING &&
-+	echo frotz >rezrov &&
-+	git update-index --add COPYING rezrov &&
-+	orig=$(git hash-object COPYING) &&
+-test_expect_success \
+-    setup \
+-    'echo frotz >file0 &&
+-     mkdir path1 &&
+-     echo rezrov >path1/file1 &&
+-     before0=$(git hash-object file0) &&
+-     before1=$(git hash-object path1/file1) &&
+-     git update-index --add file0 path1/file1 &&
+-     tree=$(git write-tree) &&
+-     echo "$tree" &&
+-     echo nitfol >file0 &&
+-     echo yomin >path1/file1 &&
+-     after0=$(git hash-object file0) &&
+-     after1=$(git hash-object path1/file1) &&
+-     git update-index file0 path1/file1'
+-
+-cat >expected <<\EOF
+-EOF
+-test_expect_success \
+-    'limit to path should show nothing' \
+-    'git diff-index --cached $tree -- path >current &&
+-     compare_diff_raw current expected'
+-
+-cat >expected <<EOF
+-:100644 100644 $before1 $after1 M	path1/file1
+-EOF
+-test_expect_success \
+-    'limit to path1 should show path1/file1' \
+-    'git diff-index --cached $tree -- path1 >current &&
+-     compare_diff_raw current expected'
+-
+-cat >expected <<EOF
+-:100644 100644 $before1 $after1 M	path1/file1
+-EOF
+-test_expect_success \
+-    'limit to path1/ should show path1/file1' \
+-    'git diff-index --cached $tree -- path1/ >current &&
+-     compare_diff_raw current expected'
+-
+-cat >expected <<EOF
+-:100644 100644 $before1 $after1 M	path1/file1
+-EOF
+-test_expect_success \
+-    '"*file1" should show path1/file1' \
+-    'git diff-index --cached $tree -- "*file1" >current &&
+-     compare_diff_raw current expected'
+-
+-cat >expected <<EOF
+-:100644 100644 $before0 $after0 M	file0
+-EOF
+-test_expect_success \
+-    'limit to file0 should show file0' \
+-    'git diff-index --cached $tree -- file0 >current &&
+-     compare_diff_raw current expected'
+-
+-cat >expected <<\EOF
+-EOF
+-test_expect_success \
+-    'limit to file0/ should emit nothing.' \
+-    'git diff-index --cached $tree -- file0/ >current &&
+-     compare_diff_raw current expected'
++
++test_expect_success 'limit to path should show nothing' '
++	echo frotz >file0 &&
++	mkdir path1 &&
++	echo rezrov >path1/file1 &&
++	before0=$(git hash-object file0) &&
++	before1=$(git hash-object path1/file1) &&
++	git update-index --add file0 path1/file1 &&
 +	tree=$(git write-tree) &&
-+	echo $tree &&
-+	# prepare work tree
-+	sed -e "s/HOWEVER/However/" <COPYING >COPYING.1 &&
-+	sed -e "s/GPL/G.P.L/g" <COPYING >COPYING.2 &&
-+	rm -f COPYING &&
-+	c1=$(git hash-object COPYING.1) &&
-+	c2=$(git hash-object COPYING.2) &&
-+	git update-index --add --remove COPYING COPYING.?
- '
- 
--test_expect_success 'prepare work tree' '
--    sed -e "s/HOWEVER/However/" <COPYING >COPYING.1 &&
--    sed -e "s/GPL/G.P.L/g" <COPYING >COPYING.2 &&
--    rm -f COPYING &&
--    c1=$(git hash-object COPYING.1) &&
--    c2=$(git hash-object COPYING.2) &&
--    git update-index --add --remove COPYING COPYING.?
--'
--
--# tree has COPYING and rezrov.  work tree has COPYING.1 and COPYING.2,
--# both are slightly edited, and unchanged rezrov.  We say COPYING.1
--# and COPYING.2 are based on COPYING, and do not say anything about
--# rezrov.
--
--git diff-index -z -C $tree >current
--
--cat >expected <<EOF
--:100644 100644 $orig $c1 C1234
--COPYING
--COPYING.1
--:100644 100644 $orig $c2 R1234
--COPYING
--COPYING.2
--EOF
--
- test_expect_success 'validate output from rename/copy detection (#1)' '
--    compare_diff_raw_z current expected
-+	# tree has COPYING and rezrov.  work tree has COPYING.1 and COPYING.2,
-+	# both are slightly edited, and unchanged rezrov.  We say COPYING.1
-+	# and COPYING.2 are based on COPYING, and do not say anything about
-+	# rezrov.
-+	cat >expect <<-EOF &&
-+	:100644 100644 $orig $c1 C1234
-+	COPYING
-+	COPYING.1
-+	:100644 100644 $orig $c2 R1234
-+	COPYING
-+	COPYING.2
++	echo nitfol >file0 &&
++	echo yomin >path1/file1 &&
++	after0=$(git hash-object file0) &&
++	after1=$(git hash-object path1/file1) &&
++	git update-index file0 path1/file1 &&
++	: >expected &&
++	git diff-index --cached $tree -- path >current &&
++	compare_diff_raw current expected
++'
++
++test_expect_success 'limit to path1 should show path1/file1' '
++	cat >expected <<-EOF &&
++	:100644 100644 $before1 $after1 M	path1/file1
 +	EOF
 +
-+	git diff-index -z -C $tree >actual &&
-+	compare_diff_raw_z actual expect
- '
- 
- ################################################################
- 
--test_expect_success 'prepare work tree again' '
--    mv COPYING.2 COPYING &&
--    git update-index --add --remove COPYING COPYING.1 COPYING.2
--'
--
--# tree has COPYING and rezrov.  work tree has COPYING and COPYING.1,
--# both are slightly edited, and unchanged rezrov.  We say COPYING.1
--# is based on COPYING and COPYING is still there, and do not say anything
--# about rezrov.
--
--git diff-index -z -C $tree >current
--cat >expected <<EOF
--:100644 100644 $orig $c2 M
--COPYING
--:100644 100644 $orig $c1 C1234
--COPYING
--COPYING.1
--EOF
--
- test_expect_success 'validate output from rename/copy detection (#2)' '
--    compare_diff_raw_z current expected
-+	# prepare work tree again
-+	mv COPYING.2 COPYING &&
-+	git update-index --add --remove COPYING COPYING.1 COPYING.2 &&
++	git diff-index --cached $tree -- path1 >current &&
++	compare_diff_raw current expected
++'
 +
-+	# tree has COPYING and rezrov.  work tree has COPYING and COPYING.1,
-+	# both are slightly edited, and unchanged rezrov.  We say COPYING.1
-+	# is based on COPYING and COPYING is still there, and do not say anything
-+	# about rezrov.
-+
-+	git diff-index -z -C $tree >actual &&
-+	cat >expect <<-EOF &&
-+	:100644 100644 $orig $c2 M
-+	COPYING
-+	:100644 100644 $orig $c1 C1234
-+	COPYING
-+	COPYING.1
++test_expect_success 'limit to path1/ should show path1/file1' '
++	cat >expected <<-EOF &&
++	:100644 100644 $before1 $after1 M	path1/file1
 +	EOF
 +
-+	compare_diff_raw_z actual expect
- '
- 
- ################################################################
-@@ -80,20 +76,18 @@ test_expect_success 'validate output from rename/copy detection (#2)' '
- # anything about rezrov or COPYING, since the revised again diff-raw
- # nows how to say Copy.
- 
--test_expect_success 'prepare work tree once again' '
--    COPYING_test_data >COPYING &&
--    git update-index --add --remove COPYING COPYING.1
--'
--
--git diff-index -z -C --find-copies-harder $tree >current
--cat >expected <<EOF
--:100644 100644 $orig $c1 C1234
--COPYING
--COPYING.1
--EOF
--
- test_expect_success 'validate output from rename/copy detection (#3)' '
--    compare_diff_raw_z current expected
-+	# prepare work tree once again
-+	COPYING_test_data >COPYING &&
-+	git update-index --add --remove COPYING COPYING.1 &&
-+	git diff-index -z -C --find-copies-harder $tree >actual &&
-+	cat >expect <<-EOF &&
-+	:100644 100644 $orig $c1 C1234
-+	COPYING
-+	COPYING.1
++	git diff-index --cached $tree -- path1/ >current &&
++	compare_diff_raw current expected
++'
++test_expect_success '"*file1" should show path1/file1' '
++	cat >expected <<-EOF &&
++	:100644 100644 $before1 $after1 M	path1/file1
 +	EOF
 +
-+	compare_diff_raw_z actual expect
- '
++	git diff-index --cached $tree -- "*file1" >current &&
++	compare_diff_raw current expected
++'
++
++test_expect_success 'limit to file0 should show file0' '
++	cat >expected <<-EOF &&
++	:100644 100644 $before0 $after0 M	file0
++	EOF
++
++	git diff-index --cached $tree -- file0 >current &&
++	compare_diff_raw current expected
++'
++
++test_expect_success 'limit to file0/ should emit nothing.' '
++	: >expected &&
++	git diff-index --cached $tree -- file0/ >current &&
++	compare_diff_raw current expected
++'
  
- test_done
+ test_expect_success 'diff-tree pathspec' '
+ 	tree2=$(git write-tree) &&
 -- 
 2.53.0
 
