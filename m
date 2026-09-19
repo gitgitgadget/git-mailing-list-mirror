@@ -1,154 +1,140 @@
-Received: from mail-vs2-f42.google.com (mail-vs2-f42.google.com [74.125.227.42])
+Received: from mail-pz2-f41.google.com (mail-pz2-f41.google.com [74.125.228.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726F42931F7
-	for <git@vger.kernel.org>; Sat, 19 Sep 2026 13:37:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE2725B08D
+	for <git@vger.kernel.org>; Sat, 19 Sep 2026 13:43:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.41
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789825069; cv=pass; b=gXfv9MJhWEmiiGK91oS+hRUBIMTzJurifGBHD099yxz/KZLqRwA+6XRB5osTT4lk5h70l0/zdHK7iwTYqkJYTcKy5a/GG4sAGyxUeMQrBUXg35CBVW7LsnR6zYBlb6w5HrYxLvC2YeSTRJ9w/SB3yO4+Nc4GmbJDsq55S0Rpen4=
+	t=1789825439; cv=pass; b=u+IigcCQXLtP055nwaPk2u7KxZ2TKrpHoQ++R/DzhXUAfwyuic4L8r+5c5je/qgrBm8RXtTLs8CX7Anu1sAAWw6M+f1uZQfD2w2v1a3BloehVW5FHLdoMCkmH1j9TELCHk8ZWnDlT2NCUqP0K0WtRPSluyPjC86OvAaRCuvxIF8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789825069; c=relaxed/simple;
-	bh=LW/VX07jzudxQHb/HdVxbyRqNpGOAAzeMSyYd+wapZ8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=clobLePS7mcYkIfq7KpY5dmNryK394gqL9R+1O3xD5G34FIL3YfXU8ibQK8cIXYOyAn9HFhdazfH1kh7hh9M7HGHVNWet6fwdmgIAhUNDj00gW5GxGztvlzXgVDPvco/UlgiRNbC3I6uqfZ23UlNanoJy6N1xF9XgcUGXKz0xcw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ijKSo1/6; arc=pass smtp.client-ip=74.125.227.42
+	s=arc-20240116; t=1789825439; c=relaxed/simple;
+	bh=rEUvoKYDr3ttl9w01HdeOyju0wgLxIYMs0iFK0OnP0o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HAr+dx27V9dsBadE7GWwLxNoDdL7Nf1piDai7AclgiXjH1voaMq1OI1r9nV60ggqzyWSaj305erx286/Vp6r6C0iEPuEHT61Yc0b33nmrcQWt4J7b59art852H17/9YnsPe1thVqGMjCTPYGBONCHbO8UEMhq4Ca6mBfKnPbSn0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DUutDY7Z; arc=pass smtp.client-ip=74.125.228.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ijKSo1/6"
-Received: by mail-vs2-f42.google.com with SMTP id ada2fe7eead31-798396c2ec0so918725137.2
-        for <git@vger.kernel.org>; Sat, 19 Sep 2026 06:37:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789825064; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DUutDY7Z"
+Received: by mail-pz2-f41.google.com with SMTP id d2e1a72fcca58-8693af0d7c4so1859247b3a.3
+        for <git@vger.kernel.org>; Sat, 19 Sep 2026 06:43:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789825437; cv=none;
         d=google.com; s=arc-20260327;
-        b=Fj1044GE8qKbgfmjx8j++p8z9PGwashnQtiijrcYUgr2DPZ+3uJX9NbZFHnfmMJcan
-         51QMVesXFe0YWacfPXH0qeUxbBWRHxg99XeAElwDShm1dPL1pN5lQdKOdEbx9iShEk0u
-         MpFC+7FVe7CfUU0FyDRUmmMyxqA3wwFGPAvKUWJe1ngPApIGfyT+kT6Dvx/mSKrYgiTU
-         3i4QeJ8WcDlXpbDICVlyG5roxDQe+yomO7VBF9jY47N7z+LB+34ATuIu6RHj4NdGV7bQ
-         Q0zr8kzqeVvThaMDLVitThcIRqGvNKiqYD9AQE5MfHDSLlFBRT/zG5F6mMzFdQQL2A3a
-         hX7A==
+        b=Hm1Qk6V4bS8BXuBud7rJSHLXIoi3Ru0PRcas/QuCd9r8IgYpG3V1WST8NrXAbhMTjm
+         +S6a1A94C1T4cWd/GDjzyHtQcPSsSs+3+wl9989o57kPWppqDbuJfEKAeJIuLUial459
+         ZrqhQeJgI4MQ1fxBBUUxkAPnW2Hqhlq0fBiHwW534tlZ5pdXiNMZIfFJ/oARsFeDe0hv
+         iUbzPJdY5NE0t7kjFcCqUmTT58yLttUNS2lHvXQX7TZf8Be9V5+jq8AfS52kU++mXg5m
+         JJYdRV/1v7tLGjge/ZZOdAtwV9S+CvX8wCJ7DA4slpVg0pQr48hLQxdS/OWiaubexItF
+         nFUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=978u9r8BPazSzRQeIRRQptZXLb5NjTD20pp5wpwmsQs=;
-        fh=AtArL3ewF/76w11aAwbL0Z+W0x+FiBX99+At/SbvRoI=;
-        b=TTNwjPnGh404Vj7VwbuBkh6WliAi/lNBc4U4KdXydw6dNSsl2K6HjPnHS4fWfq0HgY
-         DYOt3jTJkCoIIrmLxUq3lrpToMhUz+bYyaOH48W5bYS8n58UrKnFzddFi33uT9I+l50h
-         4IBa46pO3m+t69qHsgheeorL0LIToxEvXSEdx9D/GPUzH+9yKMxW4UBS+yBF2DuG8xGu
-         BHACYzMjJ+9xZPHu9y91MOawEd1t77CKG9nq/iHm69nq7dYdY5aS6SF8IrkDmxD1V00F
-         vNJZVFXk6KutMqtOXc6Afpgi7INnyNyhuOVTzH8kMnRHnkeinYROse+ll4sNzRynRWig
-         rn5g==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=qjTNmt7za0XJix7fSaDGft3ipRqNOjIng2kNs4jZDPQ=;
+        fh=m7TaPQMiPZzT1+1oMINfQdWD00G0VND1ezOoostBefQ=;
+        b=nao5yrsarEa5jY06u0rni39+i9/yINIsqh1XPjZqDQyGzOYFvB+nyt0kMcuA9tB4cJ
+         EG038iYa+gPnJR3f4QlVBOVn+ukyhM8l2KIJpKr65UQtYl+zPcf2E8FlVtXCIwflyP0R
+         5mSz52fX/tBXToyJ+MN4Yz0XLRHle7DiYNaWe67ORqvlrQK4KAlAcsXRIc/2EMYgW24C
+         Knu5yWMYcEn8n++8pODuxoEpYRQLf02PCM9B8HzIyDQr8ICBmNyPeNYY7glSDcX1knBF
+         Jf4fXol1wA4vHeiNNKpgPbPkxDw1cdSOiT1dC1vNoeuBhCmA9tuCD+k68HudpTamk8/z
+         nrIQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789825064; x=1790429864; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=978u9r8BPazSzRQeIRRQptZXLb5NjTD20pp5wpwmsQs=;
-        b=ijKSo1/6A42nfpZOaIz6YjzMOscUadE35nTw2a0H/qNWJLjRzz2H9g36OFnKh6gwcY
-         ZE4tz9dgv3qLkZ4n8epnnaVR+mIBjH5kZGbk4PY7U4TCYKrJ9iPStJNb3X82jwHw6wFH
-         Dr4b+ePrGmFaPBtKvAX0Re08gQFmI7dgWNJqAof9QbOUOggF661B6KZDdk0+olikWGPN
-         khHpwm1ntnStgE8gV+nQEBxgxtPVJ6pPNkAA1HKREFy2P1A3QqMNWAh+lzSql1xy2LUM
-         4n/tzySP1E0SVeX+1Ls98XVnsCfaMzyvDqGa5RxMeMsVJejujzNYOlvpMir/JedHbQJT
-         w8jw==
+        d=gmail.com; s=20251104; t=1789825437; x=1790430237; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=qjTNmt7za0XJix7fSaDGft3ipRqNOjIng2kNs4jZDPQ=;
+        b=DUutDY7ZtPa90sm0bWHqRgXFjmbW3Yo2CxaWBKqhwQe6GMSzNZOQ2Z3axe0Cpf1dnD
+         YQhfzrPjrzj9tEOkWWUEbPkToZ5PTv0W8gPEbDVCqp0pkRPdj8CMcyqjQq4zC++7+Yrs
+         cKxmxDoLtfHpWObkOoPd4dx/UoJ4SbPuJ/GWdRZZGuBdLxz+mziLX3FmGWjW/BTfD9w0
+         4E5hQ9mb6BMnd1aC4avAfMwPEyUvuB3uVmHt4XlzzUDcU+B7uVyc8/kuQkTZKUt1Jkfo
+         JwHSASOzj5h0TRl/j2UHz4d/hAv9UPaw8AVxx0PirO9FcIhYaiOeEhxlzsruc/Smsmdw
+         AnMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789825064; x=1790429864;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=978u9r8BPazSzRQeIRRQptZXLb5NjTD20pp5wpwmsQs=;
-        b=U6GgQHLj4dPge2Q+DagFwc0P280ogSc4uutvliQHcI5FuXuDQ5tyRravFE/D7Ql8Mm
-         FcFvKDyb1nv6wNkylE98uXpH53GVHCr29IUjgO20wNQe+pWO+WOKm20kNnbUYoSBUjSz
-         rz02HnPK6q4EKvPbLWhuX4f9tSpYS6cVKWn9t4gl091sG/+0of9rIr9gsrzVI2ulYQZG
-         p4M8rjzXdvkMzqez2ioZIMblt1n3LkTnSFJ4PwhF9a+pdORGHajjrF1mQD38MiOO3HmV
-         YfVfzTvNK2CXnRguw/gH7SR//+lmbIUiXdmCJjuCjXInX34zhVXe5jSbzfscID9GnzkE
-         b4iw==
-X-Forwarded-Encrypted: i=1; AKwUvBxZmpH5+vMsv9oiOeB5T6gTiXQ6y1qmMnUyj2fOqeW/Pj0xkTG/5Jgz8N1e7GoqHfZg1ZQ=@vger.kernel.org
-X-Gm-Message-State: AFuF++nYQZ28K47ZBSGKNGFBomATp9RSSCm9udNZ5QAez24qIHQjgarK
-	eTc1qFLbqBuCR4KlIoxrCY0dwXPEHmrwtd9xrD4gSrkiuswamWLbF8CA4FKJHll72Nz2HTeOvCw
-	laJFK7/305CSVaSjhb9Rv0vTKC37EaGG3ui9r
-X-Gm-Gg: AYBFou2UY2pwK4b/C0UssHPqW5cD81p/CBtLHQNKwqQOnauVo/MwqbRLNj6VMbWUNK8
-	QhJm1z3bz7dnriT1CqoV1xuyrCz2m5CPLgT9V+8eOAeriq6gh5almVLhV/0nmpGSXmVABrjHoDE
-	6TVGr0/hVwbHzSmoYxdiFgR3OjYtr4Sj8RR+OA3Zn6hmY21DwGW3G3b5pYp3me9Vux/rxVy9WqI
-	rQQELseS6LnoKHH3bfjEy4llSGdo++UGMA7opSuqru8ocW7ECLHzp3i7SI3hiCdEy+pqlMRLtSH
-	MHEDE2m70y4UIxuvWSjQAzOAgH8y82r3urnHZc4olU5cjjyCqrILDLzMfQYYqe+boFp2bmhxtxH
-	Enpv4kxxp7qIYQ7bYLi2LM9D3svcMCt6l9JZFl65wUl1eIw==
-X-Received: by 2002:a05:6102:2911:b0:7a7:198a:c2b8 with SMTP id
- ada2fe7eead31-7a7198adcfamr418112137.32.1789825064471; Sat, 19 Sep 2026
- 06:37:44 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 19 Sep 2026 06:37:43 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 19 Sep 2026 06:37:43 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <pull.2233.git.1789819933.gitgitgadget@gmail.com>
-References: <pull.2233.git.1789819933.gitgitgadget@gmail.com>
+        d=1e100.net; s=20260707; t=1789825437; x=1790430237;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=qjTNmt7za0XJix7fSaDGft3ipRqNOjIng2kNs4jZDPQ=;
+        b=snkPws93LR8m8aceWxdTrg+0k6XZGYqZjH7wRIKllnLfRmVQgZynYf2Rj0ll6pS9YF
+         86YfJmS+qLsv+7e++vGJKVhGjY9/7Ihq69jkHXJi6K9ZSW8yFqKF1pn40bZ5vTMI1msv
+         7zn178odsyVb1/yOtYZyQwNAOtwNG7r0UoOBBKxX60ZRd63jONWd6yVv1OaynNeqnX4n
+         p3CJeAxxKU1mKJ/kAHBjJDGDf1Tzv/LbHSbzOsmK8m0YOFgmM6Nx35/OIIA1hVa5IvFa
+         jxVh+EL3dIZuAYi3pxdKwFA/A8BEji3j7Cpib4KTcXKSnNG75jVzEAsbONYwNPrGsL5m
+         trEg==
+X-Forwarded-Encrypted: i=1; AKwUvBwU511V5EguJ3862wuv8RY8JAqEK7hoIjzmn8m0TAF3hrWmkvcLkthvljAp3vmruseYCK8=@vger.kernel.org
+X-Gm-Message-State: AFuF++meEO/s3mYjBAo//crdFC2rW5E8O116nzl5Q8LwARpXUEDDXTvY
+	/9OnjZETrWZ7UndR8IirpJheyDj3SL+IxTaH/AZcn0Z+Tx6WPPI8I18AsnUn4SyasHKlZsbrFqF
+	ZeFl9JeIpgRyPNsm6q1xHgxJmxFkAzKGGSjqNbzkr1A==
+X-Gm-Gg: AYBFou0KCMmsBesWqx7qT8trRXuGEg1dD2yrmoWoAy2G1AfFci5d2VaXfAiaVIUDqhN
+	m91gaIUYcbcvqP8FllIH9tWFWVz7p/NV7ZHKMv1FTuLFp/h9ffNyLc++qrCJwBPuXUEJSrLZnN1
+	dS6Qk3Y8cNjTaFfS709H59aFiTKknqlUdojzwSle0jwyi4tMi2TMr3gFqHzooYEdnRVWnIn5+ug
+	Dz7WS20sFA7HcuW1AZKDPhEwqTyaXMG0qN5u25EYQF2fG4fmBKv0SEmPj+FwFHIYfh4P8bwjpMu
+	rhqqUL3hE9jjiMK0EuiB9rioQnzzg0vW0csMyz+epj+pIr7cIu2N/k6d4AXgnSlfTo829Rc2NTl
+	NzlufByTH6+w7fIY2bnl8gfc8JuFS4M63YPsIpjVdLP3BOU3tDcgvHYbjPExtkz/2GG3EF3K2Bo
+	3vBUnOVa8lhwG6sZ8Nvo17Uft5Y/7lYvJ2CrvyEw==
+X-Received: by 2002:a05:6a21:387:b0:3dd:a197:cf34 with SMTP id
+ adf61e73a8af0-3dda197d87emr3398592637.88.1789825437248; Sat, 19 Sep 2026
+ 06:43:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 19 Sep 2026 06:37:43 -0700
-X-Gm-Features: AcwNN1UZA1xYV4hPogPcnw0gzUMiX1pzrb1TF6bQyQK8wsvXgnV1fcxAs54KWug
-Message-ID: <CAOLa=ZTgF+Qw_1FMUEF-YyBYo-gKnhPVk+qxd+gt1PMrt9GYqQ@mail.gmail.com>
-Subject: Re: [PATCH 0/4] gitlab-ci: fix the cargo invocation in the Windows job
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: multipart/mixed; boundary="0000000000002db1e2065bd61fb4"
-
---0000000000002db1e2065bd61fb4
+References: <CAP8UFD367UD=AomNVHEBnhY-2DQmqTNRcBX6NW7YZywWgOmxTQ@mail.gmail.com>
+ <CAP8UFD0oYnoXgQ84wHbGg3+QhX78Ucn_CXXYOe8uFpReb7X1Ng@mail.gmail.com>
+ <CAP8UFD1hAjtPuWL8asZ2LzEMJKHGh2oO73n_tsUSADtEHh9b-g@mail.gmail.com>
+ <DLEWITFIKFFK.NSANTRY5XBCB@gmail.com> <1b904e64-e681-4744-b83e-690f3ca94ea1@gmail.com>
+ <CAP8UFD3kd=6QHp2oB+t+g-2D8bY-Oe5+_Vk+RJeaCa_xhxGrsA@mail.gmail.com> <fbed7a60-57ab-439b-a550-2d2b76ff24c0@gmail.com>
+In-Reply-To: <fbed7a60-57ab-439b-a550-2d2b76ff24c0@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Sat, 19 Sep 2026 14:43:45 +0100
+X-Gm-Features: AcwNN1Wswjh-KbdlXV533KmGyQ6jv8TwwxaDr47w2L48jE4F2o91E5Cb6gVNL0M
+Message-ID: <CAP8UFD2VutDBA54c1e5uiCjFB8v3Y6yS3MTtY2P6sM5+Z9y7PA@mail.gmail.com>
+Subject: Re: Participating in Outreachy's December 2026 cohort
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>, git <git@vger.kernel.org>, 
+	Git at SFC <git@sfconservancy.org>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
+	Tian Yuchen <cat@malon.dev>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Sep 17, 2026 at 1:07=E2=80=AFPM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
 
-> In https://lore.kernel.org/git/xmqq8q4zosri.fsf@gitster.g/, Junio mentioned
-> that the GitLab CI seems broken since I enabled Rust in the Windows-based CI
-> jobs. This patch series should fix it (lightly tested, but I don't have a
-> whole lot of build minutes on GitLab).
+> Just for clarity, this is tentative mentor allocation. We may need to
+> shuffle it a little bit based on the applications we receive. We'll see
+> how it goes.
+
+Yeah, let's see later how it goes.
+
+> >> Given that we already have enough mentors for both the projects and I
+> >> have some bandwidth, I wonder if it would make sense to also propose t=
+he
+> >> projects that we proposed for GSoC but were not actually taken up by
+> >> anyone. The following are the projects:
+> >>
+> >>     - Implement promisor remote fetch ordering
+> >
+> > I think it's indeed a good idea to propose this project, even if it
+> > seems more difficult than the other projects we already propose.
+> >
 >
+> Thank you, Christian! I have proposed the project. Kindly check and
+> approve it at your convenience. We have until Oct. 5, 2026 at 4pm UTC to
+> approve it.
 
-I've created an MR [1] on our team repo for testing, I'll try to update
-with newer versions (if any). The pipeline for this version is here [2].
+I have just approved it. Thanks again for proposing it.
 
-[1]: https://gitlab.com/gitlab-org/git/-/merge_requests/671
-[2]: https://gitlab.com/gitlab-org/git/-/pipelines/2863888081
+> If anyone is willing to co-mentor it, please chime in.
 
-> Johannes Schindelin (4):
->   ci(gitlab,windows): provision GNU Rust for SDK-based MinGW builds
->   ci(gitlab,windows): preserve exclusions during dependency setup
->   ci(gitlab,windows): fix Rust setup for GitLab's MinGW build
->   ci(gitlab,windows): provide GNU Rust's host-linker support
->
->  .gitlab-ci.yml              |  5 ++++-
->  ci/install-dependencies.ps1 | 22 ++++++++++++++++------
->  2 files changed, 20 insertions(+), 7 deletions(-)
->
->
-> base-commit: d38352cd43ab9745686d697872408bc3249a153f
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2233%2Fdscho%2Ffix-cargo-in-windows-gitlab-ci-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2233/dscho/fix-cargo-in-windows-gitlab-ci-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2233
-> --
-> gitgitgadget
+Sure, it would be nice if we could get another co-mentor.
 
---0000000000002db1e2065bd61fb4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 10f93a70d2991bdf_0.1
+> I will mentor it but may need some help / guidance from you as you have
+> a more experience with this area of the code. I hope that's fine.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xdWtDVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMEZjREFDYjRyYXZxN29rQVZBYU5WQThvTVNZemlXVApZUkJ6YzNFZGRK
-a29jYUxxNTlRbVpTbFdRMjdjb0FlQnl0MnRERTZsK3dpMUp3UlhmR0llMjFLZlJuMC9SRk11CnBz
-b0NYa0c3S0RVLzgxRFRlT3FBRkRTVTFDeklYYnZRSllVSnVqQVh6VTNMcGY5V2RmTFhEemxpWjdq
-YmRUV2MKb3ZGajA4QVJnejRjazNkL2JvMEU0dVN5MStlOE9pblBTWVdUbGR1RFBaNjFBUkpqdERD
-SnIxUkFKOER3UjdqNApoZ1VTVVhrLzM1UlFTam9CejcybGt4N1ZLVFh6ZCtEdmlMV0ZsZDR0OVd3
-OFcxYWpWT2JuSzY4SjFScjlhQkRGCmljdVgvcW1VTzUxc3daTWZ3OXZ2QWJFT1BhaDdoK2o3LzdY
-Z3d3WXBrRXNMdEhuQk8rUVJKRk16KzVSTkZ2WTQKWm5ZYVJzYlBMRFplN2ZVWGtxMExQYkZuOENh
-SG53aHAyTVlDMEN2aWVEQ25WNUNJb2t2TXY4ZTVsZHNERnhyeQpwV2QvMFJFOGRoQW5iUEhjQkQ0
-aXdZTllWazN4RUxmWVlRNUxsaGozanVsZVUzSndESi8yZ2J6V085U0RISEpLCnYyMWl1eW1DRXZx
-bkMwQVdmeWE0cGNHOTY2QW9nbEFZL3ZYZ3VFST0KPThoQkMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000002db1e2065bd61fb4--
+Yeah, I will definitely help, and I can probably even co-mentor, but
+let's see if someone else is interested first.
