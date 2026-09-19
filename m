@@ -1,114 +1,211 @@
-Received: from mail-oi2-f43.google.com (mail-oi2-f43.google.com [74.125.231.235])
+Received: from mail-qv2-f12.google.com (mail-qv2-f12.google.com [74.125.230.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B4339A81B
-	for <git@vger.kernel.org>; Sat, 19 Sep 2026 12:12:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.235
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789819956; cv=none; b=lpZtZaTFERznAEwKXk6CEVdTG/psJmXhOmMf+IJ/6fT54jp/rJvcN47rgUApJsTfS7eQFmLqXcyF6+p4db4sAHHHPrvyacdeydngKP8UR+sMxy5xtJBpPb4+tezDNt8FgjB8o4/QBDDmJdcTZWlZcXsw2MFpk7Rloi2db3ffWSQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789819956; c=relaxed/simple;
-	bh=XEwuSU3r56lfC/nhryR5IM9x8dNfLZZ076jrcdQ6hIc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=qaD163519e5KNPrPh+pkJGVOihpml/NamWVxejpH8e8QxvHE6o7sBEP9/ANfcNPOrG0zTGGS52v17/XNOMGQQvDH17sKNa27Y91BfIUwiAO6MdaNUba4a50ShCN6FdBdiZJvGtIZ+oT+cneQ9GNw0WRUrilt9fEpB83MKuO61wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YrBuXots; arc=none smtp.client-ip=74.125.231.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6EB379EE4
+	for <git@vger.kernel.org>; Sat, 19 Sep 2026 12:20:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.140
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789820422; cv=pass; b=UWZZX5K7pfoglb+K+T6GYQptyCuqgu0FZqy9xv5dxyBXFnHOUVE7UpRpv2SfdhjwM5qTdEN9bBGIjB1Al7sUOCegDLY69Z4vL58ColbMj6G1SevL1zuSlMU/xz0yG183j6z6focsZj+B+ytFR9Tp0bO12ecK3lNnaYBbJPEU1+I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789820422; c=relaxed/simple;
+	bh=0ctvl4/IXnbS6LiOjN0v1amDg3l2ULm+9l0LzZ7T90s=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=kAoCnKfks9j3pjYkQJHVveDgJE0vGlqW5u+qYyfj9u8UsU/tfvnV3sVxqtlU3tPBVB4OJDARaTRy8ncAgRkAN9LTjeJOh2hDUDisZs/zPLbh4u0lgBVf+YKSAxZkTfISHUmlTPcsXHK7tMI6FL5yj9m1xZEDPIg0spHJkC7guck=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=q/A+Eoyw; arc=pass smtp.client-ip=74.125.230.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YrBuXots"
-Received: by mail-oi2-f43.google.com with SMTP id 46e09a7af769-805bf8c2661so1168753a34.3
-        for <git@vger.kernel.org>; Sat, 19 Sep 2026 05:12:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q/A+Eoyw"
+Received: by mail-qv2-f12.google.com with SMTP id 6a1803df08f44-9107051ba26so11127426d6.1
+        for <git@vger.kernel.org>; Sat, 19 Sep 2026 05:20:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789820420; cv=none;
+        d=google.com; s=arc-20260327;
+        b=qgmKIIaBE4HXjDOyfdkCb5AYQJWG6KuNqLtXY94kpLbzUbwaVYToKHHI20tMlExeIt
+         r8VVQLsMiN1fJKEJdZPjLjQ/lwQIn22n6REgloVFrv11GgiWbG6hKtH+dkagT+Ixn5wL
+         Hy3ZzUnCr3u/W6z60RHiJyQmHclcP0ax+08ShVzMxcNNoCSs20kI0MAQjLbl3MUAHiMg
+         NKpMXdmmfaPe/K28/osj83igYOtGCBJIvWUwC0mr46RdZWrXzjJajz2xJsCSbC9L7W2W
+         3kVVyPwrvC4UnpeefAlrZUhX+dbsufoB8l2OYhP9haMIAVreq/FICmOe2oxOuzeM5PRf
+         2ddg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=AiWAg8INKvoaKuZyI5LYoPGVS8sx1BE9z+AsBG5wsr4=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=ZLYZJZhfpckBKgiglW7hQ+nep697eaTex0z1cILcqg4AMkHDNhkjNVp5ApXmb+Rhis
+         3Lk05NpDIQ4VS0zaT9hTPn8q6GNuPirCq2PvRbPiIR8rkB5MRSR7ycYnpFJeK2EGyqMY
+         86Y6JRDdhflKzT3hMqVskMNLdC3rj9HoS60V13fU+G94y+2/2eeObIqJT6J0R1qsV/4o
+         SUp2cxnI8GDRsyGP75aO2du1CSKJ+gql0/AY+l0ta3fdt1mkJ9fQLynE1iDB+SGxsbEc
+         GyLlbK/cUxLccmB1o2YzxZSS71MjGPWz1nyJYOy3Qr6HcIWhhbz5dlx/gRnlAaDhR2G0
+         7uBQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789819947; x=1790424747; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=XbXmtcviNmYrGpBZTo9L3TGzaGolomMUf3RDCJLZWqg=;
-        b=YrBuXotsGPn2WxTcHGN1mWI7cnAH+89lymZOXZjAMkP4Q1j4ywGz2VVm+xdcYb+/qr
-         jVa3V2q4u8Zz633AgwA5IuiD0+TU5apt2OLxb98eMtjw9b0EVT7T9+DDLSqh64R/9CU9
-         KAoGhkHJW1pWx43Dtmau2azk6tLAFemgcoHFqJgeLVW51/oGGtPOqJ+bMJi5cp5L4QNF
-         7aoX8kr2/PGQ+4DkmMg5yYJFiRbUgTdF/zHkIm7BKylnyOpM8LC7UxKZv8LyUbX8EYrL
-         mcl6n4VvPhtVHI+2RSUe8E3kempztxgWSTUzOcqygQnijW1XgJ+R/gMfxc+Ti5SJcb7I
-         KXvQ==
+        d=gmail.com; s=20251104; t=1789820420; x=1790425220; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=AiWAg8INKvoaKuZyI5LYoPGVS8sx1BE9z+AsBG5wsr4=;
+        b=q/A+EoywBOJruZ9oB8QRyyLtGUGZuCbW7OZepikiu21tlEUtSFKvf7oyHxmkQVMkmx
+         mM4SLkedYAAFHij6e01qnjq7s1Qp85+Kcea7hw4xf2xZAdLXD6iAKmfNlTcf04BUCZiy
+         2qWes2N8q4NsZKh92fCbadFdHbmFtpwB1ASALTTH6yqgz51jLTeQ1J6FQ6OhbLULzcCr
+         yCshS0nXzeRmVr1ZVfWNxWwoeuPpHwogBsAbqcMbkTSIZoVIEvp/V0MHqXhvAisVsZKt
+         kMlpPi97NGTo//482YHmE5jBjUJM+oRI+9MGIfq48GZhfZIQF74RpN0erolCozS44a4D
+         OBDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789819947; x=1790424747;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+        d=1e100.net; s=20260707; t=1789820420; x=1790425220;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=XbXmtcviNmYrGpBZTo9L3TGzaGolomMUf3RDCJLZWqg=;
-        b=JFdbR7ZiQ8f1n5/Ow5x4vtT/PAY4DLCc4atEW9P2BehD7jSE0ftHZnwyHGAFWKikCn
-         EYB66eWh6beY/HmitjU7l61RMpz7XcXnAjisIThsf8qUNlJb9+/8myJo/ZrOVBzRVeLx
-         a1igvZO8wFB8DIhvjx3Yep6ELI8nQE1M0R+jSsknF1PVssOo4p1gD0OvxDPWNMzPJQnV
-         uTFV2zKdTNPeGsV2AZB2OHTG7mrwoT8a4kV14GXuCVssWsyJjmQVFpRqBjnd64Yx6Glz
-         NuuBS2uDQYEqKjyBLpNhOQaUtxBOpelhyQ8f3DLjeHQoAPcY7yvdfQ/Di4xNZH/V7/7R
-         LREw==
-X-Gm-Message-State: AFuF++mkI6K8lJtHMjxLIV0Iy/UjvubYxEILHo4Pqb0yhPmaDd0SJnHb
-	Wv9NXCvXvzexg+nEScOuWtvyIbPRYjhX8BR1fk3JVyZI2IKCWhoLQb4IqM8SVw==
-X-Gm-Gg: AYBFou3NvM3RReT1IYu86mh38qXfdxZcbuG4r7uSiGu2VdviiBA4waWCW4Krwd7E3c8
-	1uP0UrTkVOeiX0e9aoQz/vczmW+/cj5STMhcjIpsZXdqVAmWP7IOUs2ffU7ZUwBrhNq0mL9x/Um
-	3zp/ifM+H8pNg4mXxfKpr/ql0u78eJqhNl+0WlcZoFxZhgAdAt/bQ1DTxFTdir15wcqomLkQYlT
-	Bca6PcOJZ5P6TKTNQaFp/awATGYz4+3dTAJXIzq4MR9ulVO/HiBT6jDRfJmD8b+v/ZFiVn7J4AA
-	zErdwpp1/7KseU4g1hs6c/ciOQhc2+CW8Jci4KisadzJLzja757gXHydKCJ5UMXISWgqHhTzmpm
-	IlfyVuRrJMgjF+/99YyiLY12cNKEbgFjunTQFiYV9Ooiz7ZTt1HraHiaw34TyDI4QDvbhc70yFA
-	8G9f+zbgpIZy6MVz1fpxCTogfJX2sP+ZQ2gZVAi+inDIIbKHuoyUxCFbw22CriCPF1M2UsaH7mx
-	24=
-X-Received: by 2002:a05:6830:82e5:b0:806:6853:3e91 with SMTP id 46e09a7af769-80de2bd83d1mr6501311a34.16.1789819947011;
-        Sat, 19 Sep 2026 05:12:27 -0700 (PDT)
-Received: from [127.0.0.1] ([64.236.141.197])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-8107e89493bsm2050763a34.18.2026.09.19.05.12.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Sep 2026 05:12:25 -0700 (PDT)
-Message-Id: <1ed79f00cf72b2d5f2e5f55bb11de51dceeeb2bb.1789819933.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2233.git.1789819933.gitgitgadget@gmail.com>
-References: <pull.2233.git.1789819933.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 19 Sep 2026 12:12:13 +0000
-Subject: [PATCH 4/4] ci(gitlab,windows): provide GNU Rust's host-linker
- support
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=AiWAg8INKvoaKuZyI5LYoPGVS8sx1BE9z+AsBG5wsr4=;
+        b=A+Ii1Q6sypcYFYvpD3lAE+Qv0zsH064NelsQNoP4IpKYS1ii063RB0WS3hQ0SDOxdo
+         fwenK6SphlT4H2gX/i7/i2ZyFt/PibV3F4xoYsLbrxNafdPWhlNeyGbJz9cPntb8TIxd
+         uTWbrMduFz7kPaYIhtJfoUQMDGLEXYgmYB0pft8rOXiebhAnOpQPzrxlsdiBb8J8xlfW
+         OubRVSDpMJvtoXSzt7NzZTpnz2L8/O4OwyV36LUMG7tiWXyW/NqhUMz2+h0cHuFmh4Db
+         L3RvLFpXe21k8pYxUEcLX99juM7ezo3mBytlaK2xONlLVfAxBnnEk6PdeAzTaSfp3AUr
+         iMyw==
+X-Gm-Message-State: AFuF++ntWYzR9yxDB7F5pDHTMYMnzsYFTcBT+FdrueRH2nkz6MguuwWL
+	tqldtUQCZNfyqaiDuVUyiYdGmLdBpUmLYsZXJDjb3EdfYpHZXMljNZsvfbHxfUYlKAoZQnI9g6/
+	k84AYrUq/HKUNHKP9IXWOyESiHAdJrz1JkBcz1Rk=
+X-Gm-Gg: AYBFou3hGUPtaOMYeQYsPdqBJ7VPo0JjwggBg0tg0C4bsd4eTCCfwrqUmQeb8GvVZYy
+	Q8ldMYo473ugWmhec7V1JbaLvJV/Od+lntkc9qaqVsXaiXAdOetpEXHRDzQ/1IbyQ3QngffU9ZF
+	9ZPMf6JEuir8jg3nP3HVH2QWNXkzS2ZjvyEi+Ei4HamlZOMXgOvXOLpLhI0WPuo6+MZ2G4Vgk1x
+	g8NfBbBOWrfDg/WVWSPccebOfaKnYXh/k9HpD5vLMGjW+mOAYlpoMQlIHqvlaDLWG95mz+wpL/G
+	P3AMQHbw5y/+3vZLGZq0EDqbXRdPvJz82+WkvC+L3pljs10fE8Iq5rAnXUKcaCwMCAnQGj4WRNh
+	NNYZpsAVQ8cvGFT81lajwg5rJ
+X-Received: by 2002:a05:6214:4006:b0:912:5135:2a86 with SMTP id
+ 6a1803df08f44-9129c787f1dmr14571336d6.15.1789820419969; Sat, 19 Sep 2026
+ 05:20:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: Francisco Boni <boboniboni@gmail.com>
+Date: Sat, 19 Sep 2026 09:19:40 -0300
+X-Gm-Features: AcwNN1WYgxrGf8tKYJmqZhW_8U2xl7D0yS2NtQK5FrENDRLENv8IHg2HDLbvr_k
+Message-ID: <CAKNeS+mFS_VCs_tQeFb8jBx70FwQLW0LtuqhSk4xSdbWdqDR=g@mail.gmail.com>
+Subject: pager: consider revisiting automatic LESS=FRX with custom core.pager
 To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi,
 
-GitLab's MinGW job cannot find `x86_64-w64-mingw32-gcc` when linking
-gitcore's build script:
-https://gitlab.com/dscho/git1/-/jobs/16593470275
+I ran into a surprising interaction between Git's pager environment
+handling and a custom pager, and I think the longstanding automatic
+`LESS=FRX` behavior may be worth revisiting.
 
-Although gitcore is a static library, Cargo first links `build.rs`
-as a host executable. We omitted the GNU MSI's `Gcc` feature, which
-supplies the required linker and platform libraries:
-https://github.com/rust-lang/rust/blob/1.96.0/src/etc/installer/msi/rust.wxs
+My setup is roughly:
 
-Assisted-by: GPT-6
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- ci/install-dependencies.ps1 | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+[core]
+    pager = delta
+```
 
-diff --git a/ci/install-dependencies.ps1 b/ci/install-dependencies.ps1
-index f6868dc670..9b833b9370 100755
---- a/ci/install-dependencies.ps1
-+++ b/ci/install-dependencies.ps1
-@@ -49,7 +49,7 @@ $rustMsi = Get-Installer "rust-$rustTarget.msi" (
-     "https://static.rust-lang.org/dist/" +
-     "rust-$RustVersion-x86_64-pc-windows-$rustTarget.msi")
- Invoke-Installer msiexec.exe @('/i', $rustMsi, 'INSTALLDIR=C:\Rust',
--    'ADDLOCAL=Rustc,Cargo,Std', '/quiet', '/norestart')
-+    "ADDLOCAL=Rustc,Cargo,Std$(if ($Mingw) { ',Gcc' })", '/quiet', '/norestart')
- 
- if ($Mingw) {
-     return
--- 
-gitgitgadget
+with delta eventually invoking `less`.
+
+In my shell I had:
+
+```
+export PAGER="less"
+```
+
+but deliberately did not set `LESS`.
+
+I also configured delta's pager explicitly as:
+
+```
+less --RAW-CONTROL-CHARS --quit-if-one-screen --quit-on-intr --ignore-case
+```
+
+What surprised me was that:
+
+```
+git diff <commit1> <commit2>
+```
+
+caused the downstream `less` process to behave as though `-X` /
+`--no-init` had been specified: it did not use the alternate screen,
+and in my terminal Page Up / Page Down also stopped behaving normally.
+
+The `less` argv itself looked as expected and did not contain `-X`.
+
+Eventually I tracked this down to Git setting:
+
+```
+LESS=FRX
+```
+
+when `LESS` is absent from the environment.
+
+The particularly revealing test was:
+
+```
+LESS="" git diff <commit1> <commit2>
+```
+
+With that single change, the same delta -> less chain used the
+alternate screen normally and Page Up / Page Down worked again.
+
+I understand that Git's default `LESS=FRX` behavior is old,
+documented, and presumably exists to provide useful defaults when Git
+directly invokes `less`.
+
+What seems questionable to me is that it is also applied when
+`core.pager` is an arbitrary custom command.
+
+In this case the effective chain is:
+
+```
+git -> delta -> less
+```
+
+Git is not invoking `less` itself, but the `LESS=FRX` value injected
+by Git is inherited by delta and then by the `less` process launched
+by delta.
+As a result, Git ends up silently configuring an implementation detail
+of a pager wrapper. A user who explicitly configures:
+
+```
+core.pager = delta
+```
+
+would not necessarily expect Git to alter environment variables
+specific to another pager that delta may or may not use internally.
+
+There is also an unintuitive distinction between:
+
+```
+unset LESS
+```
+
+and:
+
+```
+LESS=""
+```
+
+The former causes Git to inject `FRX`, while the latter causes Git to
+leave the pager environment alone.
+
+I realize simply removing the default could have substantial
+compatibility consequences given how longstanding this behavior is.
+But perhaps it would be worth considering whether the automatic `LESS`
+default should:
+
+* apply only to Git's own default pager path;
+* be suppressible explicitly through configuration; or
+* otherwise avoid affecting arbitrary custom `core.pager` commands.
+
+For my own setup, explicitly setting:
+
+```
+export LESS="--RAW-CONTROL-CHARS --quit-if-one-screen --quit-on-intr
+--ignore-case"
+```
+
+solves the issue cleanly, because Git then leaves `LESS` untouched.
+
+So this is not primarily a request for a workaround; rather, I wanted
+to raise the broader behavior because the interaction with pager
+wrappers is quite surprising and difficult to diagnose.
+
+Thanks,
+Francisco Boni
