@@ -1,65 +1,67 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C565B257827
-	for <git@vger.kernel.org>; Sat, 19 Sep 2026 14:04:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1823D339395
+	for <git@vger.kernel.org>; Sat, 19 Sep 2026 14:47:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789826669; cv=none; b=MZKQILW463AWY9dWDZe1KaebahPjLLFvwXrimGbOXYFaO34FFALo0+bM7rnw8kpWihuSQqV8HH7+lW2mtRDhi8OnO7IHbzqIsTSjUa2inBuPe1x80zZTY7Wyli88ah86iIrf6seQ4p1XFOwROS1vjgBO94UL9q0JDhVeW2P72LY=
+	t=1789829250; cv=none; b=UMzI2wKzH4KGOR46CAOWmdIvMbhjiUkBZj2dfyhxy+kR5NnSjaQ1hyqmrce86JmPTwvfk/k+r3dYMpWz5Xg4yEJS/hqeMRTSTh42gl5NL2ncphYB/gZMfdy+y/Ae/i2NDWvGpLXjsr+3DnY72jELkRvU97rtpbxVLX9g2rcPCZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789826669; c=relaxed/simple;
-	bh=gQaBw/hc5PZJV3ycwKfKkCdH8JK6Xa7mDA6vUKnzIQY=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Tjb1gZSdfjYJj30T86yD2EN5z9qo8dipw4pOc474jqUaxfr8xhi4vc2cZc6F5hB9Kqzo6icl4HUeWxn9fHzK0lIUt7PYu17jB1FfEgsgGZqIziX2bt+Xe0aIyNamf7r7BC5Sh9YbDBvNJWu+nhxXY6EcJAPhRzp5gpsDtINpWpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kn9fo/vo; arc=none smtp.client-ip=74.125.227.141
+	s=arc-20240116; t=1789829250; c=relaxed/simple;
+	bh=13ojMzAOZIChMs1CcZlVaRDH0zeXLz0HEKduAV501yI=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=C3fyF6bHrDfpM447FMoa/E8gn3pgyZpa+9HhXXpTocgY+Zcx5TtHh0iVdI+co9GBryDOKhN7XJW9Q3ffxz7dDcyftnWVshla40sd8CoYPppUn85b23m/BJUIXv26dVX/X+lkhW1/01A3QTlqIlVbHl4jUnVbYvathz+ZIMoNK4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=isXwcWRI; arc=none smtp.client-ip=74.125.228.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kn9fo/vo"
-Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2dd88a115ebso13998515ad.2
-        for <git@vger.kernel.org>; Sat, 19 Sep 2026 07:04:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="isXwcWRI"
+Received: by mail-pz2-f12.google.com with SMTP id d2e1a72fcca58-85469b355ffso1051804b3a.1
+        for <git@vger.kernel.org>; Sat, 19 Sep 2026 07:47:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789826667; x=1790431467; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789829248; x=1790434048; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:message-id:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=8F+qScInsztD3H0Vdg3CiMOQWlnEK+Q77pq1lWhii9Y=;
-        b=Kn9fo/vo5MSwndC9eg+sBKuHXmtaXCYnxYd/Qn+GiRwjZDp+UMYkA0K91A4rCslnqt
-         vFaeE4BQED28d52eCGLsIkasFo9irP1+V6ZoXTcx814iciHT5sflk0YcZccSakEsMjOW
-         jyFZKHpE2IhLpb0ZWwPuCi0nHIUWvU0FUJgCLHX0qrBv36J7FXlm5jGFUhCA53BEOMEn
-         nMUcStzDj8ncvypjwz2N/AnMBJPjhECnnPOXbue+eBktp/JIdTjxv1+7DKA08Nz7JnkG
-         ReyOiRxOLdsgp+ycleSyagnrE/8msBRLQcDjRaEuvYERVhjvqBAeeWezY2slcm3KU/UJ
-         cYYw==
+        bh=OF3CLkjXtY8PdP3T/Xl9A00jYEkZ4DrXCvjPVBgOOs0=;
+        b=isXwcWRId9bgEvqCG32q7r8Ie3hmbPMElb/m8isxplR+GD0fw8eYlMlFJU1CNFec5z
+         25KjtrFZTvIeQU/Cm9bej4eHm2aQ1yeW7mFjXQyVRpsLUXWDvKl2N95OdEtANH0piNl7
+         cFBXcqJDjEtM4HI/DfIRyJBcp0Y+dQ4kby/terNbm0B5inPs7G9CHyBvZ/eXD5eJqBPC
+         rxgBOrgATpdY2oAuZraNdRRyCK4XiECsCOGhZo0vjPktXT8eDulFF7Vvr43TYusRwEXJ
+         /z0N0GOCFIK8W6l3MI+SFGvRknZC5Vf7IqMAO/+sllgEpVewZhrExcUiwa0peKj0Ph+r
+         eNGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789826667; x=1790431467;
+        d=1e100.net; s=20260707; t=1789829248; x=1790434048;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=8F+qScInsztD3H0Vdg3CiMOQWlnEK+Q77pq1lWhii9Y=;
-        b=nHPAGLu/KAGkF2qSy9wTr11voSXjPISmLp52+X3J8UXVvFm+nsloW+07czDbl3ALXo
-         W+WVek5am6M1NyqsmnxLa94xQTO0Jz5SJ5q8JlkyzPEWsKYeLqkbFuVuewdk6SfslCLS
-         kfPA+9WFeViB1K+TyQnFwBLoyrQsZWGP6UcWjAyMmo7cm47pmduZoyKxPwJRHSbNCooy
-         IMx8vAXVfqAz7sj+Es1qq407bNuFjar5BlBExnK5jKdHyvEpMkChSRRcuiag/dbLw+OD
-         MA+X+TmB4FviZkolhYkL/rDQxMYxV74fc0/047qM3cL33/K1LCgyUIX6RpgFCpjjwCDj
-         i3qQ==
-X-Gm-Message-State: AFuF++l2nZSxCr5IqYnyDldlBXMq9J2OPbKIllpUlmdxK0vrlcpYZnOb
-	H3doOArygmeqSu05eG4Vwd4smh2a9qI0f5lentc4HjJrv1Ufd/P7epMmyWkCOw==
-X-Gm-Gg: AYBFou1T/uzyYFqhw+4SooSFbjqaN2+Y32yn7MoZ6D1yhmnTWeSzHvA1M5TEaSQXP1N
-	6lFVZiAmGX/tfItmPgpcl2mBTb9031FdwcOgRWcrdVud0Xh/+LymOJopXRVAS92/5I8IhiB/eJu
-	YRdQLM4VOFvExYWjbDef2RmcbbGEuYYSVrKyB26REGL7c5a3CDoObWc9EnnZCnIjan2tM3t/hRT
-	gxF93ySaWw+NQ58iSDNWfuZnD7/yYRQ+0Lst8taMjCktAmTcHq36peK5XMCfXcxf127fu2MWYtI
-	yOTv7hBPKuaUSxEuwCRoZxWRtn9QqIrUwBBMJ5gS8TsLCUpg1giDwaYUhGJIdWLJb8jK6B26JZX
-	SBmyNLm/W/TMOnzqM4zBtlh1O8s8LzZJ0/FZtniKaR5LwJZ2S54iXPFUT5t46GXY/ZsW7g5OJZZ
-	CUUdf/s0QGi+KwnPHdvFi90Gvp2p4LaDAboJNflLMQx0flhULzj7v90mBP3odRXwFyb4nAcAs3
-X-Received: by 2002:a17:90b:4d09:b0:39e:6a81:f349 with SMTP id 98e67ed59e1d1-39e6a81fd25mr4196766a91.35.1789826666808;
-        Sat, 19 Sep 2026 07:04:26 -0700 (PDT)
-Received: from [127.0.0.1] ([172.182.244.0])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-144d55bf843sm10008279c88.8.2026.09.19.07.04.25
+        bh=OF3CLkjXtY8PdP3T/Xl9A00jYEkZ4DrXCvjPVBgOOs0=;
+        b=yGH2HACwTDnzh1klMN2hu9MjRRpT1I4egK1jzDQP/sLNAvJgSVfetgAe16WafiFmg0
+         MYT/DtoZgIIwxDtpayiQD8JrsTmLZQyJtazOoc9l4fNt9UWBKgEh48JB5a6H25bfPbLz
+         Ew590XJM0zpAS6BO7RqJJkUVTPrMVXUXSxNKOu7ezy4H1guUw31vDezvkXEurvLxaqBd
+         L123nIEmFNs77IwwfytKdFSqiPgXR1NFK3i6nSoHqgpmrC7BVBynfw+tozDn4qP55YtB
+         P7FjFbkkxQzo/01XI1alCKU5sO5lFHJPAmskBDAmgCypu+5YwNA4X/1GumYU8daCmSqu
+         lq6Q==
+X-Gm-Message-State: AFuF++lybFVP9rYil9PTR/FgalLvh0axA4boGO+gGngk9DPjVF9xwH7o
+	l0MpVF/PjqigP1vhFeuRQVNbLcVVXg/3QTR4FLLYAbI0wVz9o5IEsr+/IVf1Cw==
+X-Gm-Gg: AYBFou0IfI3IjJte7la1k0wL9PKmADVJ2zFMmrVlvNaqwGHDFlrRdP2qrKwI59fILx5
+	8OdOWDBUyTxvlId+WFkY5oqgjCwzeN9dZx4jKgZ1rMC9e+hu3JGKEu7NvHYFUerOG25lhOAMmOX
+	lo6nyeVgTJcUomOyWj1+oN+BJ0jktH0sIadLHwHWiSUBN45/9ShBjGJ1MCLxZ8sAN+vgDaDRS+6
+	8GhCFj2l8Fp50xSW9GRnLE3YUqhcoQkMxAeQ2SWyNrTcZXFtHnc4cGsERb7VPUihDP32+yDUdZM
+	08TvBgYYwt1DrEW7QfAiwtgc/nMVIiHPFSjl/ZzjKhE9G55OWmQLe7XyCAB5KFZAyZmu8vV9t8X
+	B9+00VLGEhbDprnswy//sI4yh3aUU6mhyjSRbT53/LLyNewagGbOh2vHUU9qaLRFwcudOF7bz2f
+	6JYprNxupI9TlsiZM4Nd1nlqwaFsBk2bu0OAWR7iAwQ56LY4LcjZe/8Y5t0QtNCvKzjJE7QfTj2
+	u5I3ySKnQQ=
+X-Received: by 2002:a05:6a20:144d:b0:3dd:a008:dc39 with SMTP id adf61e73a8af0-3dda008e131mr4964268637.39.1789829248181;
+        Sat, 19 Sep 2026 07:47:28 -0700 (PDT)
+Received: from [127.0.0.1] ([57.154.13.244])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33c331aef9bsm6669273eec.25.2026.09.19.07.47.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Sep 2026 07:04:25 -0700 (PDT)
-Message-Id: <pull.2226.git.1789826665188.gitgitgadget@gmail.com>
-From: "Yashwanth Sai via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 19 Sep 2026 14:04:25 +0000
-Subject: [PATCH/RFC] commit: warn when a new commit is dated before its parent
+        Sat, 19 Sep 2026 07:47:27 -0700 (PDT)
+Message-Id: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 19 Sep 2026 14:47:26 +0000
+Subject: [PATCH] fetch: add config to avoid fetching every branch in shallow
+ repo
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,299 +72,289 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Yashwanth Sai <ysaimuppineni789@gmail.com>,
-    Yashwanth Sai <ysaimuppineni789@gmail.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-From: Yashwanth Sai <ysaimuppineni789@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Git writes whatever the clock says into the commit object and validates
-nothing: a commit dated years in the future, or earlier than its own
-parent, is accepted silently. "git fsck --strict" does not object either,
-since fsck's badDate and badDateOverflow checks are purely syntactic.
+In a shallow, sparsely checked out clone of a repository with many
+branches, plain git pull can take minutes or hang outright, even
+though only one branch is actually being worked on.
 
-That would be harmless if history traversal did not assume commit dates
-are non-decreasing, but it does. "git log --since" stops walking at the
-first commit older than the cutoff, so a single out-of-order date hides
-every commit behind it:
+Add fetch.shallow, off by default. When enabled, a fetch or pull for
+a shallow repository that isn't already scoped to specific refs
+fetches only the current branch's tracked upstream, instead of every
+branch the remote has. git pull ultimately runs such a fetch under
+the hood, so this fixes pull the same way. It has no effect once the
+repository is no longer shallow, and no effect on a fetch of a remote
+the current branch doesn't track, both fall back to the existing
+behavior.
 
-	$ git log --pretty='%cd %s' --date=short
-	2026-09-25 C3 - inside the window
-	2026-09-01 C2 - outside the window
-	2026-09-20 C1 - inside the window
+This is opt-in rather than automatic because it changes what a plain
+fetch or pull leaves in refs/remotes/<name>/ for anyone who currently
+relies on it syncing every branch of a shallow remote, not just the
+one they are on. Scoping remote.<name>.fetch by hand already covers
+this for a single remote, but that requires knowing the config exists
+and applies it permanently, even to branches that are not currently
+checked out.
 
-	$ git log --pretty='%cd %s' --date=short --since=2026-09-13
-	2026-09-25 C3 - inside the window
+The remote's recorded default branch (remotes/<name>/HEAD) is kept up
+to date the same way it always is, only the other branches are
+skipped.
 
-C1 is inside the window and silently missing. This is understood --
-96697781e0 (revision: add "--since-as-filter" option, 2022-07-19) added
-an opt-in traversal mode for it -- but nothing tells the person whose
-clock caused it, at the moment they could still fix it cheaply.
-
-Warn at commit time when the new commit's date precedes a parent's, gated
-on a new advice.clockSkew setting. Warning rather than refusing is
-deliberate: only the committer can tell whether their clock or the
-parent's is the wrong one. Once the commit is published the date is part
-of its object name, and correcting it means rewriting every descendant,
-so the warning is worth little later and quite a lot now.
-
-The check looks at the commit being created and its parents and nothing
-else. Skew between different machines is ordinary in a distributed system
-and is not something to complain about; this fires only when one
-repository's own history steps backwards. It is limited to git commit --
-merges and replayed history go through other paths, where non-monotonic
-dates are often legitimate.
-
-A warning along these lines has been suggested more than once without
-landing; see for instance the discussion around clock skew in
-<CA+55aFw_XjWm+4XwsN6CRJnsrcEu5YEChOHSHN51UUBN6PynWw@mail.gmail.com>.
-
-Co-authored-by: Claude Opus 5 (1M context) <noreply@anthropic.com>
-Signed-off-by: Yashwanth Sai <ysaimuppineni789@gmail.com>
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
-    commit: warn when a new commit is dated before its parent
+    fetch: add fetch.shallow so pull doesn't fetch every branch on shallow
+    repo
     
-    This is an RFC: a warning of this shape has been suggested more than
-    once over the years without landing, so I would rather learn whether it
-    is wanted at all before polishing it.
-    
-    The reproduction that motivated it -- a commit inside the window is
-    silently skipped because traversal stops at an out-of-order parent:
-    
-    $ git log --pretty='%cd %s' --date=short
-    2026-09-25 C3 - inside the window
-    2026-09-01 C2 - outside the window
-    2026-09-20 C1 - inside the window
-    
-    $ git log --pretty='%cd %s' --date=short --since=2026-09-13
-    2026-09-25 C3 - inside the window
-    
-    
-    C1 is inside the window and missing. This is understood -- 96697781e0
-    (revision: add "--since-as-filter" option, 2022-07-19) added an opt-in
-    traversal mode for exactly it -- but nothing tells the person whose
-    clock caused it, at the point where it is still cheap to fix. I hit this
-    on a repository of my own after moving the system clock to test
-    date-dependent behaviour; by the time I noticed, the dates were part of
-    the object names.
-    
-    What the warning looks like:
-    
-    hint: the new commit is dated 2026-09-13 06:00:00 +0530,
-    hint: which is earlier than its parent, dated 2026-09-25 10:00:00 +0000.
-    hint: This usually means the system clock is wrong.
-    hint: Commands that walk history in date order, such as
-    hint: "git log --since", may skip commits as a result.
-    hint: Disable this message with "git config set advice.clockSkew false"
-    
-    
-    The scope is deliberately narrow:
-    
-     * Warn, never refuse. Only the committer can tell whether their clock
-       or the parent's is the wrong one.
-     * The commit being created and its parents, nothing else. Skew between
-       machines is ordinary in a distributed system; this fires only when
-       one repository's own history steps backwards.
-     * git commit only. Merges and replayed history go through other paths,
-       where non-monotonic dates are frequently legitimate.
-    
-    Questions I would most like answered:
-    
-     1. Is this wanted at all? Both conclusions -- that it is a good idea,
-        and that it may not be worth the effort -- appear in the archives.
-    
-     2. Is advice the right channel? There is a fair objection that hints on
-        stderr get buried among other output.
-    
-     3. Should fsck grow an INFO-tier check for the "far ahead of now" case
-        too? That cannot compare against parents, since fsck_commit()
-        deliberately never loads parent objects, so it would be a separate
-        and weaker check.
-    
-    t7502 gains three tests; t7502, t7501, t7500 and t0018 all pass.
+    Add fetch.shallow config for big shallow repo, so git fetch/pull doesn't
+    hang by fetching every branch.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2226%2Fysai258%2Fadvice-clock-skew-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2226/ysai258/advice-clock-skew-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2226
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2412%2FHaraldNordgren%2Ffetch-shallow-narrow-refspec-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2412/HaraldNordgren/fetch-shallow-narrow-refspec-v1
+Pull-Request: https://github.com/git/git/pull/2412
 
- Documentation/config/advice.adoc |  7 ++++
- advice.c                         |  1 +
- advice.h                         |  1 +
- builtin/commit.c                 | 61 ++++++++++++++++++++++++++++++++
- t/t7502-commit-porcelain.sh      | 27 ++++++++++++++
- 5 files changed, 97 insertions(+)
+ Documentation/config/fetch.adoc |  15 ++++
+ builtin/fetch.c                 |  18 +++-
+ t/t5537-fetch-shallow.sh        | 146 ++++++++++++++++++++++++++++++++
+ 3 files changed, 175 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/config/advice.adoc b/Documentation/config/advice.adoc
-index 81f80a9274..59b643d9d0 100644
---- a/Documentation/config/advice.adoc
-+++ b/Documentation/config/advice.adoc
-@@ -38,6 +38,13 @@ all advice messages.
- 		configuration variable for how to set a given remote
- 		to be used by default in some situations where this
- 		advice would be printed.
-+	clockSkew::
-+		Shown by linkgit:git-commit[1] when the commit being
-+		created is dated earlier than one of its parents, which
-+		usually means the system clock is wrong. History
-+		traversal assumes commit dates do not decrease, so such
-+		a commit can cause commands like `git log --since` to
-+		skip the commits behind it.
- 	commitBeforeMerge::
- 		Shown when linkgit:git-merge[1] refuses to
- 		merge to avoid overwriting local changes.
-diff --git a/advice.c b/advice.c
-index 63bf8b0c5f..3e14859de4 100644
---- a/advice.c
-+++ b/advice.c
-@@ -50,6 +50,7 @@ static struct {
- 	[ADVICE_AMBIGUOUS_FETCH_REFSPEC]		= { "ambiguousFetchRefspec" },
- 	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir" },
- 	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName" },
-+	[ADVICE_CLOCK_SKEW]				= { "clockSkew" },
- 	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge" },
- 	[ADVICE_DEFAULT_BRANCH_NAME]			= { "defaultBranchName" },
- 	[ADVICE_DETACHED_HEAD]				= { "detachedHead" },
-diff --git a/advice.h b/advice.h
-index 66f6cd6a77..43de2b19a2 100644
---- a/advice.h
-+++ b/advice.h
-@@ -17,6 +17,7 @@ enum advice_type {
- 	ADVICE_AMBIGUOUS_FETCH_REFSPEC,
- 	ADVICE_AM_WORK_DIR,
- 	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
-+	ADVICE_CLOCK_SKEW,
- 	ADVICE_COMMIT_BEFORE_MERGE,
- 	ADVICE_DEFAULT_BRANCH_NAME, /* To be retired sometime after Git 3.0 */
- 	ADVICE_DETACHED_HEAD,
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 28f6174503..70b9aa5ec5 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -11,6 +11,7 @@
- #include "builtin.h"
- #include "advice.h"
- #include "config.h"
-+#include "date.h"
- #include "lockfile.h"
- #include "cache-tree.h"
- #include "color.h"
-@@ -21,6 +22,7 @@
- #include "commit.h"
- #include "add-interactive.h"
- #include "gettext.h"
-+#include "ident.h"
- #include "revision.h"
- #include "wt-status.h"
- #include "run-command.h"
-@@ -1666,6 +1668,63 @@ struct repository *repo UNUSED)
- 	return 0;
- }
+diff --git a/Documentation/config/fetch.adoc b/Documentation/config/fetch.adoc
+index 00435e9a16..e63e54a463 100644
+--- a/Documentation/config/fetch.adoc
++++ b/Documentation/config/fetch.adoc
+@@ -145,3 +145,18 @@ remove the value for the `fetch.bundleCreationToken` value before fetching.
+ `never`;;
+ 	Never create or modify the `remotes/<name>/HEAD` symbolic-ref.
+ --
++
++`fetch.shallow`::
++	If true, and the repository is a shallow repository (see
++	linkgit:git-clone[1] `--depth`), a fetch or `git pull` that names no
++	explicit refspec and would otherwise fall back to the remote's
++	configured `remote.<name>.fetch` refspec instead fetches only the
++	current branch's upstream, when that upstream is on the remote being
++	fetched. This avoids negotiating history for every branch the remote
++	advertises, which can be slow on a shallow repository that tracks
++	many disjoint shallow histories. It has no effect on a fetch that
++	names an explicit remote or refspec, and no effect on a repository
++	that is not shallow. Defaults to false.
+++
++`remotes/<name>/HEAD` is still kept up to date per `fetch.followRemoteHEAD`
++while this is in effect, only the other branches are skipped.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 533fdfe7d8..b22f7fe5f4 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -111,6 +111,7 @@ struct fetch_config {
+ 	int recurse_submodules;
+ 	int parallel;
+ 	int submodule_fetch_jobs;
++	int shallow;
+ };
  
-+/*
-+ * Warn when the commit we are about to write is dated earlier than a parent.
-+ *
-+ * Git stores whatever the clock says, and history traversal assumes commit
-+ * dates do not decrease: "git log --since", for one, stops walking at the
-+ * first commit older than the cutoff, so an out-of-order date silently hides
-+ * the commits behind it. Only the person committing can tell whether their
-+ * clock or the parent's is the wrong one, so warn rather than refuse.
-+ *
-+ * This deliberately looks at nothing but the commit being created and its
-+ * parents. Skew between machines is normal in a distributed system and is not
-+ * something to complain about at commit time.
-+ */
-+static void warn_if_dated_before_parents(struct commit_list *parents)
-+{
-+	struct ident_split committer;
-+	struct strbuf ours = STRBUF_INIT;
-+	const char *info;
-+	timestamp_t date, newest = 0;
-+
-+	if (!advice_enabled(ADVICE_CLOCK_SKEW))
-+		return;
-+
-+	info = git_committer_info(IDENT_STRICT);
-+	if (split_ident_line(&committer, info, strlen(info)) ||
-+	    !committer.date_begin)
-+		return;
-+	date = parse_timestamp(committer.date_begin, NULL, 10);
-+
-+	for (; parents; parents = parents->next) {
-+		struct commit *parent = parents->item;
-+
-+		if (repo_parse_commit(the_repository, parent))
-+			continue;
-+		if (parent->date > newest)
-+			newest = parent->date;
-+	}
-+
-+	if (!newest || date >= newest)
-+		return;
-+
-+	/* show_date() reuses one buffer, so keep a copy of the first result. */
-+	strbuf_addstr(&ours, show_date(date, atoi(committer.date_end + 1),
-+				       DATE_MODE(ISO8601)));
-+
-+	advise_if_enabled(ADVICE_CLOCK_SKEW,
-+			  _("the new commit is dated %s,\n"
-+			    "which is earlier than its parent, dated %s.\n"
-+			    "This usually means the system clock is wrong.\n"
-+			    "Commands that walk history in date order, such as\n"
-+			    "\"git log --since\", may skip commits as a result."),
-+			  ours.buf,
-+			  /* A parsed commit keeps no timezone, so show UTC. */
-+			  show_date(newest, 0, DATE_MODE(ISO8601)));
-+	strbuf_release(&ours);
-+}
-+
- static int git_commit_config(const char *k, const char *v,
- 			     const struct config_context *ctx, void *cb)
- {
-@@ -1935,6 +1994,8 @@ int cmd_commit(int argc,
- 		append_merge_tag_headers(parents, &tail);
+ static int git_fetch_config(const char *k, const char *v,
+@@ -175,6 +176,11 @@ static int git_fetch_config(const char *k, const char *v,
+ 		return 0;
  	}
  
-+	warn_if_dated_before_parents(parents);
++	if (!strcmp(k, "fetch.shallow")) {
++		fetch_config->shallow = git_config_bool(k, v);
++		return 0;
++	}
 +
- 	if (commit_tree_extended(sb.buf, sb.len, &the_repository->index->cache_tree->oid,
- 				 parents, &oid, author_ident.buf, NULL,
- 				 sign_commit, extra)) {
-diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
-index 2adfe70b3d..fb611b191b 100755
---- a/t/t7502-commit-porcelain.sh
-+++ b/t/t7502-commit-porcelain.sh
-@@ -1003,4 +1003,31 @@ test_expect_success WITH_BREAKING_CHANGES 'core.commentChar=auto is rejected' '
+ 	if (!strcmp(k, "fetch.followremotehead")) {
+ 		if (!v)
+ 			return config_error_nonbool(k);
+@@ -1958,15 +1964,19 @@ static int do_fetch(struct transport *transport,
+ 		refspec_ref_prefixes(rs, &transport_ls_refs_options.ref_prefixes);
+ 	} else {
+ 		struct branch *branch = branch_get(NULL);
++		int tracks_this_remote = branch && branch_has_merge_config(branch) &&
++			!strcmp(branch->remote_name, transport->remote->name);
++		int narrow_to_tracked_ref = config->shallow &&
++			is_repository_shallow(the_repository) && tracks_this_remote;
+ 
+ 		if (transport->remote->fetch.nr) {
+-			refspec_ref_prefixes(&transport->remote->fetch,
+-					     &transport_ls_refs_options.ref_prefixes);
++			if (!narrow_to_tracked_ref)
++				refspec_ref_prefixes(&transport->remote->fetch,
++						     &transport_ls_refs_options.ref_prefixes);
+ 			if (follow_remote_head != FOLLOW_REMOTE_NEVER)
+ 				do_set_head = 1;
+ 		}
+-		if (branch && branch_has_merge_config(branch) &&
+-		    !strcmp(branch->remote_name, transport->remote->name)) {
++		if (tracks_this_remote) {
+ 			int i;
+ 			for (i = 0; i < branch->merge_nr; i++) {
+ 				strvec_push(&transport_ls_refs_options.ref_prefixes,
+diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+index f323ceebd2..8143af9fc3 100755
+--- a/t/t5537-fetch-shallow.sh
++++ b/t/t5537-fetch-shallow.sh
+@@ -13,6 +13,24 @@ commit() {
+ 	git commit -m "$1"
+ }
+ 
++check_upstream_refs () {
++	git for-each-ref --format="%(refname)" refs/remotes/upstream/ >actual &&
++	cat >expect &&
++	test_cmp expect actual
++}
++
++check_upstream_head () {
++	git symbolic-ref refs/remotes/upstream/HEAD >actual &&
++	echo "refs/remotes/upstream/$1" >expect &&
++	test_cmp expect actual
++}
++
++check_same_tip () {
++	git log --oneline -1 "$1" >expect &&
++	git -C "$2" log --oneline -1 "$3" >actual &&
++	test_cmp expect actual
++}
++
+ test_expect_success 'setup' '
+ 	commit 1 &&
+ 	commit 2 &&
+@@ -261,6 +279,134 @@ test_expect_success 'fetch --deepen does not truncate' '
  	test_cmp expect actual
  '
  
-+test_expect_success 'warn when a commit is dated before its parent' '
-+	test_when_finished "git checkout main 2>/dev/null || git checkout master" &&
-+	git checkout -b clock-skew &&
-+	test_commit --date "2026-09-25T10:00:00+0000" skew-parent &&
-+	echo skew >skew-child &&
-+	git add skew-child &&
-+	GIT_COMMITTER_DATE="2026-09-13T06:00:00+0000" \
-+		git commit -m "behind its parent" 2>actual &&
-+	test_grep "earlier than its parent" actual
++test_expect_success 'fetch.shallow setup' '
++	git branch narrow-side &&
++	git clone --no-local --depth=1 --branch main --single-branch \
++		.git narrow-default &&
++	git clone --no-local --depth=1 --branch main --single-branch \
++		.git narrow-enabled &&
++	(
++		cd narrow-default &&
++		git remote add upstream ../.git &&
++		git fetch --depth=1 upstream main:refs/remotes/upstream/main &&
++		git branch --set-upstream-to=upstream/main main
++	) &&
++	(
++		cd narrow-enabled &&
++		git remote add upstream ../.git &&
++		git fetch --depth=1 upstream main:refs/remotes/upstream/main &&
++		git branch --set-upstream-to=upstream/main main &&
++		git config fetch.shallow true
++	)
 +'
 +
-+test_expect_success 'no warning when commit dates increase' '
-+	echo forward >skew-forward &&
-+	git add skew-forward &&
-+	GIT_COMMITTER_DATE="2026-09-26T06:00:00+0000" \
-+		git commit -m "after its parent" 2>actual &&
-+	test_grep ! "earlier than its parent" actual
++test_expect_success 'a refspec-less fetch expands to the configured refspec by default' '
++	(
++		cd narrow-default &&
++		git fetch upstream &&
++		check_upstream_refs <<-\EOF
++		refs/remotes/upstream/HEAD
++		refs/remotes/upstream/main
++		refs/remotes/upstream/narrow-side
++		EOF
++	)
 +'
 +
-+test_expect_success 'advice.clockSkew silences the warning' '
-+	echo quiet >skew-quiet &&
-+	git add skew-quiet &&
-+	GIT_COMMITTER_DATE="2026-09-14T06:00:00+0000" \
-+		git -c advice.clockSkew=false commit -m quiet 2>actual &&
-+	test_grep ! "earlier than its parent" actual
++test_expect_success 'fetch.shallow=true limits a refspec-less fetch to the tracked branch' '
++	(
++		cd narrow-enabled &&
++		git fetch upstream &&
++		check_upstream_refs <<-\EOF
++		refs/remotes/upstream/HEAD
++		refs/remotes/upstream/main
++		EOF
++	)
 +'
 +
- test_done
++test_expect_success 'fetch.shallow=true still creates refs/remotes/<remote>/HEAD' '
++	(
++		cd narrow-enabled &&
++		git symbolic-ref -d refs/remotes/upstream/HEAD &&
++		git fetch upstream &&
++		check_upstream_head main
++	)
++'
++
++test_expect_success 'fetch.shallow=true with followRemoteHEAD=always corrects a stale HEAD' '
++	test_when_finished \
++		"git -C narrow-enabled update-ref -d refs/remotes/upstream/stale-branch" &&
++	(
++		cd narrow-enabled &&
++		git update-ref refs/remotes/upstream/stale-branch refs/remotes/upstream/main &&
++		git symbolic-ref refs/remotes/upstream/HEAD refs/remotes/upstream/stale-branch &&
++		git -c fetch.followRemoteHEAD=always fetch upstream &&
++		check_upstream_head main
++	)
++'
++
++test_expect_success 'fetch.shallow=true still updates the tracked branch' '
++	commit 5 &&
++	git -C narrow-enabled fetch upstream &&
++	check_same_tip main narrow-enabled refs/remotes/upstream/main
++'
++
++test_expect_success 'fetch.shallow=true keeps git pull narrowed too' '
++	test_when_finished "git branch -D narrow-side" &&
++	commit 6 &&
++	(
++		cd narrow-enabled &&
++		git pull &&
++		check_upstream_refs <<-\EOF
++		refs/remotes/upstream/HEAD
++		refs/remotes/upstream/main
++		EOF
++	) &&
++	check_same_tip main narrow-enabled HEAD
++'
++
++test_expect_success 'fetch.shallow=true has no effect on a non-shallow repository' '
++	git clone --no-local --branch main --single-branch .git narrow-full &&
++	(
++		cd narrow-full &&
++		git rev-parse --is-shallow-repository >actual &&
++		echo false >expect &&
++		test_cmp expect actual &&
++		git remote add upstream ../.git &&
++		git fetch upstream &&
++		git branch --set-upstream-to=upstream/main main &&
++		git config fetch.shallow true
++	) &&
++	test_when_finished "git branch -D narrow-full-side" &&
++	git branch narrow-full-side &&
++	(
++		cd narrow-full &&
++		git fetch upstream &&
++		check_upstream_refs <<-\EOF
++		refs/remotes/upstream/HEAD
++		refs/remotes/upstream/main
++		refs/remotes/upstream/narrow-full-side
++		EOF
++	)
++'
++
++test_expect_success 'fetch.shallow=true only narrows a fetch of the tracked remote' '
++	test_when_finished "git branch -D other-side" &&
++	git branch other-side &&
++	git clone --no-local --depth=1 --branch main --single-branch \
++		.git narrow-other-remote &&
++	(
++		cd narrow-other-remote &&
++		git remote add upstream ../.git &&
++		git config fetch.shallow true &&
++		git fetch upstream &&
++		check_upstream_refs <<-\EOF
++		refs/remotes/upstream/HEAD
++		refs/remotes/upstream/main
++		refs/remotes/upstream/other-side
++		EOF
++	)
++'
++
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+ 
 
-base-commit: 47ce80527c56f462cb97db4ca8125342204d3783
+base-commit: d38352cd43ab9745686d697872408bc3249a153f
 -- 
 gitgitgadget
