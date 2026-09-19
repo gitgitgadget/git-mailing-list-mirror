@@ -1,279 +1,210 @@
-Received: from mail-ua2-f32.google.com (mail-ua2-f32.google.com [74.125.226.224])
+Received: from mail-vs2-f40.google.com (mail-vs2-f40.google.com [74.125.227.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9FA379EDA
-	for <git@vger.kernel.org>; Sat, 19 Sep 2026 20:41:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.226.224
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A80035B650
+	for <git@vger.kernel.org>; Sat, 19 Sep 2026 20:52:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.40
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789850507; cv=pass; b=P/ZyClEkBZq5e8Eh7T7rkXrIU6ElTUIFgGU/SG/tvkxiBehS8+s/SUWc3KVoTLaFJiuGroMUszXn1oK1E5dNMaQ935STRDC8e0azDdK/oG4rYq2R6MwwUyoAgHN0JCGKkzLPLBIPn8/IRoMNVXy8/EqqfRNY/jLoeJzOGRnALmk=
+	t=1789851145; cv=pass; b=P3ZoMn3GR4qFav1ExOHQmZgkswET03Lz+wOJTzAMI/r7ZcO+IqBr2v4S5i2Tiu+dW6oi6xMGu1bPQ0uNQvtoszUSV7VEV01iJkdz30d99d1alQQJIBlzibNmUSeaziYzGC6nZRzskHlk+M8H1bSeAqB29e4LVKkyUvOUe/lWRzY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789850507; c=relaxed/simple;
-	bh=0DtdbGnv52E3dpvMQ4u6Cg8MPbWyICv3J/C0nvwgp9o=;
+	s=arc-20240116; t=1789851145; c=relaxed/simple;
+	bh=T4Pqc+3b4/IjkX2IOwUvg+y1zEy3NhjFHkaJvGOSWp8=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fO1VqZXKw3HGj+apAzcYqUgdOWQXtYDXWWuIDF+zdjx+cqiV2sWNsbQBTnIcZkQSCk8v/ytB/JvUty5+BL7Ca5JTGeOr0Dum5dUFFNr4WCMHTJ3J9e/dszRtGlqZtNlosDNMJzzLTnhH6u+ZI6v05koj9FmAjhL4HSg4PiJZQ2U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UtIYhCXi; arc=pass smtp.client-ip=74.125.226.224
+	 To:Content-Type; b=QdHp5KADVhWY+2j98r0bl7DIQC4g2cUeG3RgNGMWY9wxaaloU6+MgIFABISzWZ0owQLEbpW8BAET1FgrSg9HLr7TKd/JuGjAY4rysehQMzUD72H0oo2fuQBwaAiOTfk0M/rcBEL/qtRUnXs2DmK+PrJcNNcyDvbFqaq16ZXu0UM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LyljGQll; arc=pass smtp.client-ip=74.125.227.40
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UtIYhCXi"
-Received: by mail-ua2-f32.google.com with SMTP id a1e0cc1a2514c-97e97e2c7d4so981141241.1
-        for <git@vger.kernel.org>; Sat, 19 Sep 2026 13:41:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789850505; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LyljGQll"
+Received: by mail-vs2-f40.google.com with SMTP id ada2fe7eead31-7a4fb331cc0so606672137.3
+        for <git@vger.kernel.org>; Sat, 19 Sep 2026 13:52:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789851143; cv=none;
         d=google.com; s=arc-20260327;
-        b=r+zNNEU+PwwU7op6KACvownNPW3P37+LOMf49PrJUSFI0lIMu/QL7rgBt7H8Poh+MR
-         d/xI/0YeJhhdANJOjsvWOhPSoJgKBMYbdMF5iVZpxg2yp5Ova8yHAECQG7XVeZgNurCe
-         hLFjpameI9+rIDeyWIfPHNMzhOCLsy+yEMWM2hytRfKwOAyPqpDTDU98bcBcQo5iDqCD
-         VddIVrdMPs+RslnLMb69dIxBHjR3Mmin+Pv/x6iKy6XxbeLthZaZ+RGdJ3RmPNKyz7Vl
-         YrVzhl21GgmVOmTjvl/QJD9FL4OSw4meAdS27fkXRlriOrnmS4rD8KjwgptsJJnnM+vr
-         y9FQ==
+        b=fXzmOfsoIT95BuZ+Ir0/eLJF/6ICqETQ7pt6lW60akhIrNYDstvxsilH96wUpyS3oH
+         1mn/J+0cIguUWE02diLV+VBrep8/PhfjmI/OdApLXqyhKG1gqHte7fBGQjTE1sZwfEYw
+         Go04jPEzyKIbUj6Ft6RFELLlTJg7/ca3wz51BClroTxjRfR5fw2bMNzAETD+YExF1ZRX
+         hLss16cAQoh1ZjLPo2/GIMzPn+XPSUf9sZPt/53HHYYRoXlDG1ahzFzJqyEuXmcHfTz5
+         UpBMIqhbVgJt/DOgjtkuhUEmf2LpOw+UKsJDcFyZKtRm+KwuB1dqeceFRb9N8Zi2/cjd
+         OMvA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=3+WWbqqXLWWKjq0n3okc7NnC/tLDguhaeWWts1VBTYI=;
-        fh=YTN5K0KO8LF4par8ok7UF6jzQJrC2SqWzkCYNic8saE=;
-        b=SK/DrA/puoVNImZp07KoOpl60Ua0Li0YNnn0ShTywA5fsLzHbXQnGJE81hOIQWcl0j
-         Zbrc4m1HQ3tCqT9zMR6RqXBdMm4PjRmBECicWcSKYn6vlFlEz/hqBfXLaYe01bBZate9
-         x0SlXzTldFp5ZGqhzRWVruEze70MlFAYrX4AwI9Tk3zrsFcexKZbJS1TvyHBbKoNSUlH
-         YST2EdzlR0UoJKNZUXcFcNdMoX3wkO9RUvuz7d1TvVz5Lqyj22s6TOEb+Cuo1HMA9sP3
-         Fiw4gH8gF93WycHTaleUdCGEbbo4DgPXriIovJv3JXqEAXOu18Bi+nM+TKtKddCzBnKw
-         mYXQ==;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :dkim-signature;
+        bh=LhUPBUEw5ix3Sy1A8Zl+1hHTp6NS/NrcKOoBNzNS1EY=;
+        fh=vz0jbdUCoByp0NNEz5ix6tFQIfX7cVnZQPkMT5rXS3s=;
+        b=UoiR62KBNvct1WWOJt9gQt47w73pJsPEMOKTyR0jYxxL92TizNnzpMBN4EvpMVhwSe
+         8X7xzKrJl7o8I9/r3gCfKJO/Mze26wbwsGUcMfmOFMO6xgsxcMMAt+wwVOTxbJUfDtN5
+         4DiCx8AO9k3tDknOIDzUBf6Z6tNbizr28RtEiKXI+Doh4kiKKD331caIdbQgORDea2RD
+         RQ8BMd+ynbuLYIg9AjqXBXU50TpQ9xP/N9LwL6y0HB1IdZlmV3SZpU346KT6rne2Tgib
+         cUoNk2H2r9I/GdeVkoPpMsaOi+hIBJ8K+blP5l3uby1/5IDnKewo6AU02kRwDOR6RRhx
+         /rFw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789850505; x=1790455305; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
+        d=gmail.com; s=20251104; t=1789851143; x=1790455943; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=3+WWbqqXLWWKjq0n3okc7NnC/tLDguhaeWWts1VBTYI=;
-        b=UtIYhCXiXnrsvm5Alx6gvFrXw9S7BK/is4w/nlSfSUFRcx0ggfeuoVWq0lpuy8kOts
-         Y60xb2mA4mfQG3vIKhziCsVygzLmFMHn9CROSBwoETjx8hXNjHFhLTUAWuV2DNjcZrPR
-         PcCxquCx2Xnd99piz54XBPKcctGM6FSR0ljCV9d2gWehZfJakAZ7Ww5qjDKG/Bt1uVio
-         Odzk91SSQDSubUZzMqAk31khUItMGHKXZVsEPpedH4LsRG8s2R09VCKFWQWaSraFwRbc
-         xl3VShecI6OFCBh34AuzHdFU+zeVZ+vp5HWNmzFER5B6uuzQyWGeRWXXslLnwdIcz/I4
-         6Irg==
+        bh=LhUPBUEw5ix3Sy1A8Zl+1hHTp6NS/NrcKOoBNzNS1EY=;
+        b=LyljGQllakDgZUTjrYQe6tKSEnYA+HohUss5iy7bW9/x4MMOvWgUP7jj6M5sQRvgRW
+         yfpCev3JnjR9VjL+XbQRcfvob9pnMxRgs3YMqmFGBkiiK+evT6U8BikqxcdFbQ2w3Qrj
+         awTiXUEvojjCIU/Hxbx2O8zRz/PMJ4KiX3qACBS/naBB5vMF+eF4Zj3WDNFoA9SkCMP1
+         Hc4CtRD2Gq1+dIdlKjJoN4GH9WIOMXDlrlg/s7jGgQN6GfrtO7jvG8dJahcyFHqC6nzW
+         H+0Ey1mZtmWFvmSb+XFKc78bS7a6Jh2jQ4oHPr0mn46rmWO/2kCmeipvlD3AqbHA11BX
+         sK3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789850505; x=1790455305;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
+        d=1e100.net; s=20260707; t=1789851143; x=1790455943;
+        h=content-type:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=3+WWbqqXLWWKjq0n3okc7NnC/tLDguhaeWWts1VBTYI=;
-        b=HV9VjoVvWCh+ygTPKQ5zqZ8OuXeuwm4ssW2TJQBjzHH9TVMesKFUlsOi6Qrjqc/b7k
-         fQm/bOGQtLDuKUexO6D4jiwNsjzmywJJmyEGwLugRlSyw9cgzzn7ZKtLoN3PE/GTKiSr
-         hf2xLlXCd+XFqtoI8ShWCEt8An4/A8XfnnWYnTEbswMq3EjyCY8PiTuOGq4Ssf2xN5tp
-         Q+N4RJHL2L+Gl+bV26H7gMBhGkTwbyBJfVCKVxjKjHcOdMu+sxb/GyL9wPOs5aOt+QrU
-         RL+hxJ/xuYwsRnGXubqpfyveJe68nthMshqg+YpzXaN8kLK2Q6smDOGzFGvqJ8SFUPDQ
-         1nEQ==
-X-Forwarded-Encrypted: i=1; AKwUvBwh5wRWMnXcL5IE+SCOeoJElxTmjYq+6h/bH4rmog3dPC3Lp1kKVfA/QVerskG4pyJQnOs=@vger.kernel.org
-X-Gm-Message-State: AFuF++mIkUN/JtLwN/oCqSORvKaYdlGQjmK3imbKQEGXGP3lMfh/RoVv
-	cfXFJNtoJN8H/GNcZhlzdHL8N3yVRBl9ApIGOawBnrb45U9YK8Be+jF3nN0pL1oT5SGbXmC2lNP
-	prxbkWwtdUXuzXNZNcDv43dNUKjSahBQ=
-X-Gm-Gg: AYBFou3gNGyu5i25RYTCMj081TAKrFlg7p5jMe+U+1qBB6jeq3B2NNtv+OM2aoTCgi8
-	5p0XF2ktbhr6fygYX88+yipzx+nJxE+nZ3N5+FoPdGr8VjVVSUwzDb7rZyF1ICrBw7OvJqkuhSe
-	Fw201/Tv2U5B4wW7b0ETKbLUGjTm9f5g9KNVDEcdieLMv1msnjQSJg1WxjnV3WiHNIpOsMjq6gC
-	q1aV0DyfhsCIHF2TzB4O4roXAZQbLU3YUY5U/YjsGMg//MFyyCfjFaz1cNTFKVxccmTuj1YY2Zr
-	A3lCFIev4XM6rzutzvd5mtWyFuyMjB3YocLhP3uvxZT0krNrhBd9eB6CC/O1UOzY4rx9KZaU/8A
-	Ed2kJ2kFq9CQxJtOBz1Ac8lL6ExOlGhMcg9/GAR1zwRVZZQ==
-X-Received: by 2002:a05:6102:3314:b0:7a1:f7d2:e81f with SMTP id
- ada2fe7eead31-7a55d28b816mr2429013137.24.1789850504889; Sat, 19 Sep 2026
- 13:41:44 -0700 (PDT)
+        bh=LhUPBUEw5ix3Sy1A8Zl+1hHTp6NS/NrcKOoBNzNS1EY=;
+        b=0xL3IRT9dOfMw2nYvpjjbmdhHQluoPI+JNds/Bb7Fwtw4NwIVh3+nCp7DNPDhZv934
+         37DAb2bOkOFbXXi2pkxKHNYHK0PGvPnckx5VetghpydS29J4Ao/xo0LgTPvVtvekkc4C
+         Ay+RPv7DRV5sRPbWGCLa3Wb6jwsayNMO+92tGCPv1eycMtbBHiNOUfbLE+E+r9tdJ5Qs
+         bgyyjOK4BTuLMhzdDrC911P6HeTQZ9FFGDAAo1OJXeesLMWaGicaMxzjSAkxrBQlnSeu
+         NddSw1PVjbwgXJifGGfnPby2nWPUijfmbaHvVj/oBu65KuE6Y7xKVYb40IVuNUFDQgIP
+         YWhg==
+X-Forwarded-Encrypted: i=1; AKwUvBxnhMSs1AYPNqgXuhr50nmbL409//qQf1G2NxmqVTBzK1Jk1VAshwozs2xo0/qw1HNuP3Y=@vger.kernel.org
+X-Gm-Message-State: AFuF++mVKsEmuPIZI9ysZtLZZIAgjFEs9SRPKPMYAP7xGo8u6CjAW3Qv
+	zXe2rX7KDvuQ9N/DgYmlqH1XJ1nqvuPAwlW2GZ4PJMss5z35kC2TfJgIHgLj3j7IGO/0VM4jQl7
+	2I/nrod91GJfhyeH+fK5LQQKtr/IqpwxE6g==
+X-Gm-Gg: AYBFou3Cj0UghAruKUVwjlg/ZHsfsAdXS8MUVS5/rfs/TxdMDie3L43evdMJV8A7zHy
+	fwrjLO94HARkLQu+KXdHib/Z+J5pzXlhctSVb3MpGtAPh3xqLKozDjLVa28HejlIRdyaDTm3hso
+	Lvp+4CkycM66l5ACOIl4wz4apSvMIcPGt5OSixWxC/U+SYhHdE98v7eiZAaftOQTTZ7DEIuQz5M
+	x2kRWIB5RGwES++OOsSs85y+L+LcDT0cJcG+eZyoRIu7mvQkKnILYE2ygDZ4TTbveVG3n+R5tvF
+	tZi4DUr87DqOtbnTaZXUvwHvykg2oBmO63ClWy6eqLaHrdq2PRO4131jur+QYGCULB6ccKWrUnf
+	Mv1ONwpJaaOU8oIpesDOwUfdAcC9803p1PuLXQk4HK8ctPQ==
+X-Received: by 2002:a05:6102:5345:b0:7a7:195a:1b23 with SMTP id
+ ada2fe7eead31-7a7195a1f91mr757025137.29.1789851143197; Sat, 19 Sep 2026
+ 13:52:23 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 19 Sep 2026 13:41:43 -0700
+ HTTPREST; Sat, 19 Sep 2026 13:52:22 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 19 Sep 2026 13:41:43 -0700
+ HTTPREST; Sat, 19 Sep 2026 13:52:22 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260919201158.43415-2-maciej.ciemborowicz@gmail.com>
-References: <CACQ=SRHthWOLVXmY6wgknOPgpQ+oB1vV-Q0AL=mK9mXb2Xy9Nw@mail.gmail.com>
- <20260919201158.43415-1-maciej.ciemborowicz@gmail.com> <20260919201158.43415-2-maciej.ciemborowicz@gmail.com>
+In-Reply-To: <CACQ=SRHCOCcmVCgHqd+sjMsZ9LCdSHuXdCo0gkwxXwYgF7iwig@mail.gmail.com>
+References: <CACQ=SRHCOCcmVCgHqd+sjMsZ9LCdSHuXdCo0gkwxXwYgF7iwig@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 19 Sep 2026 13:41:43 -0700
-X-Gm-Features: AcwNN1VhIfZsPjZR75hcZLrkChaZr_kk1T-6uHw00emr5Q4Qbo_TPeW_yXkypXA
-Message-ID: <CAOLa=ZTWGJZCmZnPLt5az_w-6YkGuQhQUKyJq6X=VFQL1T_6ZQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] refs: allow callers to supply old OIDs for batch deletion
+Date: Sat, 19 Sep 2026 13:52:22 -0700
+X-Gm-Features: AcwNN1X7dkQIvKwER30mpJ3wAtD-kLULuVvIbasi44JmXUJTJnX3-pJJOXr4zHI
+Message-ID: <CAOLa=ZTN1TU2A1sgEhiw=ymMYr6Ge11cMEubSaeKqr4WNU=2EQ@mail.gmail.com>
+Subject: Re: [BUG] reference-transaction hook misses destination of git branch -m
 To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Phil Hord <phil.hord@gmail.com>, 
-	Elijah Newren <newren@gmail.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	"D . Ben Knoble" <ben.knoble@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000008ba4e9065bdc0b71"
+Content-Type: multipart/mixed; boundary="0000000000009781db065bdc3125"
 
---0000000000008ba4e9065bdc0b71
+--0000000000009781db065bdc3125
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
 Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com> writes:
 
-> refs_delete_refs() currently performs unconditional deletions. Thus callers
-> cannot preserve old values that they have already resolved, and
-> reference-transaction hooks consequently see a null old OID.
+> Hello,
 >
-> Add an optional oid_array whose entries correspond to the refnames. Pass each
-> non-null OID to ref_transaction_delete(). Existing callers retain the
-> unconditional behavior for now.
->
-> Signed-off-by: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-> ---
->  bisect.c                  |  2 +-
->  builtin/branch.c          |  3 ++-
->  builtin/fetch.c           |  2 +-
->  builtin/remote.c          |  5 +++--
->  builtin/tag.c             |  3 ++-
->  refs.c                    | 26 +++++++++++++++-----------
->  refs.h                    | 12 ++++++++++--
->  t/helper/test-ref-store.c |  2 +-
->  8 files changed, 35 insertions(+), 20 deletions(-)
+> `git branch -m old new` changes refs/heads/old into refs/heads/new,
+> but the reference-transaction hook does not report both ref changes.
 >
 
-[snip]
+My understanding without digging too deep is that both 'copy' and
+'rename' do not use a transaction, as such they don't trigger the
+'reference-transaction' hook. This is definitely absurd, since we would
+expect that all reference operations should use the transaction and
+trigger the hook.
 
-
-> diff --git a/refs.c b/refs.c
-> index d3caa9a633..a9c5397fd7 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -18,6 +18,7 @@
->  #include "refs/refs-internal.h"
->  #include "hook.h"
->  #include "object-name.h"
-> +#include "oid-array.h"
->  #include "odb.h"
->  #include "object.h"
->  #include "path.h"
-> @@ -3056,36 +3057,39 @@ void ref_transaction_for_each_rejected_update(struct ref_transaction *transactio
->  }
+> Observed with Git 2.55:
 >
->  int refs_delete_refs(struct ref_store *refs, const char *logmsg,
-> -		     struct string_list *refnames, unsigned int flags)
-> +		     struct string_list *refnames,
-> +		     const struct oid_array *old_oids,
-> +		     unsigned int flags)
->  {
->  	struct ref_transaction *transaction;
->  	struct strbuf err = STRBUF_INIT;
-> -	struct string_list_item *item;
-> +	size_t i;
->  	int ret = 0, failures = 0;
->  	char *msg;
->
-> +	if (old_oids && old_oids->nr != refnames->nr)
-> +		BUG("refname and old OID counts do not match");
->  	if (!refnames->nr)
->  		return 0;
->
->  	msg = normalize_reflog_message(logmsg);
->
-> -	/*
-> -	 * Since we don't check the references' old_oids, the
-> -	 * individual updates can't fail, so we can pack all of the
-> -	 * updates into a single transaction.
-> -	 */
+> * files backend: the hook reports deletion of refs/heads/old, but
+>   does not report creation of refs/heads/new;
 
-I understand that this is intended to fix a bug. With this change,
-`refs_delete_refs()`'s behavior has changed from unconditionally
-deleting all refs to now only deleting the refs if all old OIDs match.
+Yeah, because the files backend calls `refs_delete_ref()` on the old
+reference which is done within a transaction.
 
-Doesn't this introduce possibility of a race since callees of the
-function who checked the ref's OID before can now expect a failure when
-the transaction re-checks the old_oid?
+> * reftable backend: the hook reports no usable rename payload.
 
+Reftable doesn't call `refs_delete_ref()` and simply writes a TOMBSTONE
+entry to delete the old reference.
 
->  	transaction = ref_store_transaction_begin(refs, 0, &err);
->  	if (!transaction) {
->  		ret = error("%s", err.buf);
->  		goto out;
->  	}
+> The equivalent atomic operation performed with `git update-ref --stdin`
+> reports both updates correctly.
 >
-> -	for_each_string_list_item(item, refnames) {
-> -		ret = ref_transaction_delete(transaction, item->string,
-> -					     NULL, NULL, flags, msg, &err);
-> +	for (i = 0; i < refnames->nr; i++) {
-> +		const struct object_id *old_oid = old_oids ? &old_oids->oid[i] : NULL;
-> +
 
-Nit: we could add a `struct string_list_item *item =
-refnames->items[i];` for a nicer diff.
+By equivalent atomic operation do you a 'delete' and 'create' command?
 
-> +		if (old_oid && is_null_oid(old_oid))
-> +			old_oid = NULL;
-> +		ret = ref_transaction_delete(transaction, refnames->items[i].string,
-> +					     old_oid, NULL, flags, msg, &err);
->  		if (ret) {
->  			warning(_("could not delete reference %s: %s"),
-> -				item->string, err.buf);
-> +				refnames->items[i].string, err.buf);
->  			strbuf_reset(&err);
->  			failures = 1;
->  		}
-> diff --git a/refs.h b/refs.h
-> index 71d5c186d0..b76b556cf7 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -9,6 +9,7 @@
->  struct fsck_options;
->  struct object_id;
->  struct ref_store;
-> +struct oid_array;
->  struct strbuf;
->  struct string_list;
->  struct string_list_item;
-> @@ -613,13 +614,20 @@ int refs_delete_ref(struct ref_store *refs, const char *msg,
->  		    unsigned int flags);
+> I expected the transaction to include:
 >
->  /*
-> - * Delete the specified references. If there are any problems, emit
-> + * Delete the specified references. If old_oids is non-NULL, it must contain
-> + * an entry for each refname, in the same order. Each non-null entry is used
-> + * to verify the current value of the corresponding reference before deleting
-> + * it. A null entry disables verification for that reference.
-> + *
-> + * If there are any problems, emit
->   * errors but attempt to keep going (i.e., the deletes are not done in
->   * an all-or-nothing transaction). msg and flags are passed through to
->   * ref_transaction_delete().
->   */
->  int refs_delete_refs(struct ref_store *refs, const char *msg,
-> -		     struct string_list *refnames, unsigned int flags);
-> +		     struct string_list *refnames,
-> +		     const struct oid_array *old_oids,
-> +		     unsigned int flags);
+>     <oid> <zero> refs/heads/old
+>     <zero> <oid> refs/heads/new
 >
->  /** Delete a reflog */
->  int refs_delete_reflog(struct ref_store *refs, const char *refname);
-> diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-> index 3866d0aca4..c2c7dfb065 100644
-> --- a/t/helper/test-ref-store.c
-> +++ b/t/helper/test-ref-store.c
-> @@ -140,7 +140,7 @@ static int cmd_delete_refs(struct ref_store *refs, const char **argv)
->  	while (*argv)
->  		string_list_append(&refnames, *argv++);
+> Minimal reproducer:
 >
-> -	result = refs_delete_refs(refs, msg, &refnames, flags);
-> +	result = refs_delete_refs(refs, msg, &refnames, NULL, flags);
->  	string_list_clear(&refnames, 0);
->  	return result;
->  }
-> --
-> 2.39.3 (Apple Git-146)
+>     #!/bin/sh
+>     set -eu
+>
+>     format=3D${1:-files}
+>     root=3D$(mktemp -d)
+>     trap 'rm -rf "$root"' EXIT
+>
+>     repo=3D$root/repo
+>     hooks=3D$root/hooks
+>     log=3D$root/transactions
+>
+>     git init -q --ref-format=3D"$format" "$repo"
+>     git -C "$repo" config user.name Reproducer
+>     git -C "$repo" config user.email repro@example.com
+>     git -C "$repo" commit --allow-empty -qm initial
+>     git -C "$repo" branch old
+>
+>     mkdir "$hooks"
+>     cat >"$hooks/reference-transaction" <<'HOOK'
+>     #!/bin/sh
+>     printf '%s\n' "--- $1" >>"$HOOK_LOG"
+>     cat >>"$HOOK_LOG"
+>     HOOK
+>     chmod +x "$hooks/reference-transaction"
+>
+>     git -C "$repo" config core.hooksPath "$hooks"
+>     export HOOK_LOG=3D$log
+>     : >"$log"
+>
+>     git -C "$repo" branch -m old new
+>     cat "$log"
+>
+> The behavior was also tested across Git 2.28=E2=80=932.55:
+> https://github.com/ciembor/git-hooks-ext/blob/v0.2.0/tests/compat/README.=
+md
+>
+> The reference-transaction documentation says that the hook is invoked by
+> Git commands performing reference updates. A branch rename changes two re=
+fs,
+> but the destination update is not visible to the hook.
+>
 
---0000000000008ba4e9065bdc0b71
+Either ways, I think we should fix this, I could have a look if you
+aren't submitting a patch yourself :)
+
+> Thanks,
+> Maciej Ciemborowicz
+
+--0000000000009781db065bdc3125
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: c583da045a77d9c8_0.1
+X-Attachment-Id: 8dcdfb62b0af0de4_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xdTg0WVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1melZqQy80aVM5dXpaZHo4ZzhxVmZMdDZzcEFhbUhpRgpMN1UvakFKL0Ur
-RTZtM2xBcklxYi9DbXJXaDlib0JGQ3dHekdoUmRFb1U4c2RnZ1djYVk5QmNUdnVTOVRDdTZxCmZH
-cW8zbkRDVHN3OE14S1pPd1ZNMnR6WEJVTVAwQmQxRFlzYU9FOTV4SVR1VjgvdlVuUU9Bb2NiZ202
-ZWVSNWoKcmNCVFZaang0bHovR1pScXlTQkpBb3VtTTBueEgwVWZPSTlaOGM0cGtsblROdVVwQytO
-TVFXem4rU3VyaCtIVgowQ211ZEZpNzFDMElIWEgvb3Y3K1JDWHVNS1NBVktJVWlKNDdkM2VDbXIz
-RUlvT0Z1UU1TaUVWZW1FY3JmUVAvCjFiSmwwNm9WSERKWStsSm10ODdCZVhjcWMxOVR0cTA1NzQ5
-bzd6RHZkeFZIRDJramZIWVhxaEFtUWl2cXl6WkQKZWZHT1lxSE5MZkEvekJTb1ZlS0FlU2R1SnB1
-ZFdsMTM1L3FQU3Q5Nk1pbGp1b3FDQW5SYk02RDBsUFQrdWUxRgovaTJLbm1QK2Z3TTNoM0JCZFF3
-eStiYXd4YXFUNnA2WUozSE9zOUJodFdHNTFURi92d0N3bGJ5dThPclkwQ1VECncrNTdPM0tVSnlx
-QWJuUGxzbUlzbHFFMXRQbTQwZXgxK1RKQnk5WT0KPTRucGsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xdTlnUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNTFkQy80cUR3MHJtd0NBbk1DM2k4Y2UyVkg0b012QQpNOUdMU2NWVmJH
+K1hueml1dklCRU9RRzlWUEk0akM1U0Q4bk9ZY1hTek40WWxmbkduWUZwMUE3ZEFHTm1tSnpGCmJU
+bjAyRy81WStYTWRRT1I5bFN5Y1RDajcvYkM0dWhob2xaMWFYYk8xZGRMU2IrVERsUzRUKzNaaXJh
+MjVwYVcKOGxjSC90NTNtZGJhclE1byszTVZaMjZ4bitqcFFOZE16Q3R3aFlTTHZmaTRqV29LTUto
+dTU5eFdiMlZsZmxzcwpFdG5YTndaa2Rja0J2bCtTbFIyMFR2M0hraDViQXdDenhJandhd2VMdzlh
+cEZyTmFsdSsyMG9kL2F0VThKRkRLCm5lRWRjdXdXM0x0a3pLNkUxT0pGMXIzbFpLajcyT2Z3Yko0
+dXhERDg1NnQ3YWEwT1grcUptakNyYjl3dUVxVTYKbFlSK3VUSDlSVDdFWnN6eGRmMU5hN041dERW
+U0I4MnpweDUxK21Qa0lTd1Vpd1VMMnJ1U0J4YUJkbk1MSEVmZQpOeEtsQ1NnQ1RGMEtuNzI2WjhY
+dVhaRTIweGhLdkJGRlR1NUVIaUlzOHFtc3FMcE96ZTVGQ3M4Vnp6blNyU21sCjFtbmRkN1pYcUJ6
+QjBlbmJhaGJyTDZxT0FwVVVVT3Q5bXlzbUx3WT0KPS9ac20KLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000008ba4e9065bdc0b71--
+--0000000000009781db065bdc3125--
