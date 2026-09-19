@@ -1,211 +1,155 @@
-Received: from mail-qv2-f12.google.com (mail-qv2-f12.google.com [74.125.230.140])
+Received: from mail-lr2-f12.google.com (mail-lr2-f12.google.com [74.125.230.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6EB379EE4
-	for <git@vger.kernel.org>; Sat, 19 Sep 2026 12:20:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985F7267B89
+	for <git@vger.kernel.org>; Sat, 19 Sep 2026 13:33:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.76
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789820422; cv=pass; b=UWZZX5K7pfoglb+K+T6GYQptyCuqgu0FZqy9xv5dxyBXFnHOUVE7UpRpv2SfdhjwM5qTdEN9bBGIjB1Al7sUOCegDLY69Z4vL58ColbMj6G1SevL1zuSlMU/xz0yG183j6z6focsZj+B+ytFR9Tp0bO12ecK3lNnaYBbJPEU1+I=
+	t=1789824839; cv=pass; b=Sn+G2I76HVgnSvw1ZU/PIrlg3pe3RpQwwpHXJVtTYIpLLjqJleHvDudnUK/ZR3qQ3sIM2guwyejGUap4e0TywDL37W7kP717UiX41AfDdaEkxt5f7wtzvO4OfJfvOEKGyelSuHtK9els+vN4oRAHS33Z3xDk17kladvX6nE3ciY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789820422; c=relaxed/simple;
-	bh=0ctvl4/IXnbS6LiOjN0v1amDg3l2ULm+9l0LzZ7T90s=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=kAoCnKfks9j3pjYkQJHVveDgJE0vGlqW5u+qYyfj9u8UsU/tfvnV3sVxqtlU3tPBVB4OJDARaTRy8ncAgRkAN9LTjeJOh2hDUDisZs/zPLbh4u0lgBVf+YKSAxZkTfISHUmlTPcsXHK7tMI6FL5yj9m1xZEDPIg0spHJkC7guck=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=q/A+Eoyw; arc=pass smtp.client-ip=74.125.230.140
+	s=arc-20240116; t=1789824839; c=relaxed/simple;
+	bh=/d0TEAWb8+w74/PRRyhBwLBAOOkGSW1FLDO7lnTH0lU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=GezkWdAB5vS1GpE8gqJ7gij+ki3aBcawjgqtmgrfsMa0Ku03eIf1fwXOxwCjX5VX516RSHbkpk6KXF2C5r/VrEWpQhG/Cl1NQT4SGf8wCEk2xGOVRyswnugJsLH+UUO6BzGe6yl+JZU69x5rLXAIDn/AGaP6y5HBDSKth9ezjEc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V7557Hlm; arc=pass smtp.client-ip=74.125.230.76
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q/A+Eoyw"
-Received: by mail-qv2-f12.google.com with SMTP id 6a1803df08f44-9107051ba26so11127426d6.1
-        for <git@vger.kernel.org>; Sat, 19 Sep 2026 05:20:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789820420; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V7557Hlm"
+Received: by mail-lr2-f12.google.com with SMTP id 38308e7fff4ca-3a58fef219fso6441471fa.1
+        for <git@vger.kernel.org>; Sat, 19 Sep 2026 06:33:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789824835; cv=none;
         d=google.com; s=arc-20260327;
-        b=qgmKIIaBE4HXjDOyfdkCb5AYQJWG6KuNqLtXY94kpLbzUbwaVYToKHHI20tMlExeIt
-         r8VVQLsMiN1fJKEJdZPjLjQ/lwQIn22n6REgloVFrv11GgiWbG6hKtH+dkagT+Ixn5wL
-         Hy3ZzUnCr3u/W6z60RHiJyQmHclcP0ax+08ShVzMxcNNoCSs20kI0MAQjLbl3MUAHiMg
-         NKpMXdmmfaPe/K28/osj83igYOtGCBJIvWUwC0mr46RdZWrXzjJajz2xJsCSbC9L7W2W
-         3kVVyPwrvC4UnpeefAlrZUhX+dbsufoB8l2OYhP9haMIAVreq/FICmOe2oxOuzeM5PRf
-         2ddg==
+        b=hsUleWH0+VK1/oUWtzxhHC3UEnKQfBINCbfQhfe0nUW9WGRA05ILnk0paJFdmZAIJz
+         t/qK4g+e0N7O3ZXWCoE4mtm0RhtwI4t8RNGtqpB3DbbK4tsr+dHH5uzz8G5O+P4L9MeH
+         N3B1dVCw1lOCuKAbwdd7F6+RijUaKKtLbtNW8DedPzH4oiMBrvTWZhD7f6FIr+3/k/Cl
+         NBqdFO4+zgUy1YHNkbL66zeV9vSS512VLtMz0iRvF/vLe7QVHjM6D4mVlSQWwtFMcH6E
+         rGsxpP11M4xcvF/VgOJ5WqYA8SbYXxILL+R7Zcz6PsXhagEBlTK93vzTJ7Xxqt23rzXR
+         gMfw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=AiWAg8INKvoaKuZyI5LYoPGVS8sx1BE9z+AsBG5wsr4=;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:dkim-signature;
+        bh=5LEj1PTa0KS1INDtwYCXbdUTDPYUpXbXmygwQBEUvTw=;
         fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=ZLYZJZhfpckBKgiglW7hQ+nep697eaTex0z1cILcqg4AMkHDNhkjNVp5ApXmb+Rhis
-         3Lk05NpDIQ4VS0zaT9hTPn8q6GNuPirCq2PvRbPiIR8rkB5MRSR7ycYnpFJeK2EGyqMY
-         86Y6JRDdhflKzT3hMqVskMNLdC3rj9HoS60V13fU+G94y+2/2eeObIqJT6J0R1qsV/4o
-         SUp2cxnI8GDRsyGP75aO2du1CSKJ+gql0/AY+l0ta3fdt1mkJ9fQLynE1iDB+SGxsbEc
-         GyLlbK/cUxLccmB1o2YzxZSS71MjGPWz1nyJYOy3Qr6HcIWhhbz5dlx/gRnlAaDhR2G0
-         7uBQ==;
+        b=CjNudxflM0EC+jTEbJ7j7xzHuJq9ZUGrCcDi0iPU6eMBBKv/yZBc4/igIV7WFCTFUd
+         eR6Kf//tBXzuARA0rH7btRZD2HEui7vW+dEucXVJXOLokJv/w5/v7xWVOCfQxSja2+8V
+         K+3Xnb9vRft8kVyQikYZ8Bv7mrlVGGZOx2Fohl1l7wtuSxjh+Lu7nMETBau7peRGdN54
+         ad/o1yjZWPOT7YELQy2DJ8CL8+Poxutwg+elY+ka5HXtNlIxyye9CmH2Nurug5v/nv5o
+         nHF8xdON1nHVKYBH69XnVpzMHD1gSgCpzd+SKt85E7KO0nWQgxhZHSeV3frS1C5pU+HQ
+         vuZw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789820420; x=1790425220; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:mime-version:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=AiWAg8INKvoaKuZyI5LYoPGVS8sx1BE9z+AsBG5wsr4=;
-        b=q/A+EoywBOJruZ9oB8QRyyLtGUGZuCbW7OZepikiu21tlEUtSFKvf7oyHxmkQVMkmx
-         mM4SLkedYAAFHij6e01qnjq7s1Qp85+Kcea7hw4xf2xZAdLXD6iAKmfNlTcf04BUCZiy
-         2qWes2N8q4NsZKh92fCbadFdHbmFtpwB1ASALTTH6yqgz51jLTeQ1J6FQ6OhbLULzcCr
-         yCshS0nXzeRmVr1ZVfWNxWwoeuPpHwogBsAbqcMbkTSIZoVIEvp/V0MHqXhvAisVsZKt
-         kMlpPi97NGTo//482YHmE5jBjUJM+oRI+9MGIfq48GZhfZIQF74RpN0erolCozS44a4D
-         OBDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789820420; x=1790425220;
-        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1789824835; x=1790429635; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=AiWAg8INKvoaKuZyI5LYoPGVS8sx1BE9z+AsBG5wsr4=;
-        b=A+Ii1Q6sypcYFYvpD3lAE+Qv0zsH064NelsQNoP4IpKYS1ii063RB0WS3hQ0SDOxdo
-         fwenK6SphlT4H2gX/i7/i2ZyFt/PibV3F4xoYsLbrxNafdPWhlNeyGbJz9cPntb8TIxd
-         uTWbrMduFz7kPaYIhtJfoUQMDGLEXYgmYB0pft8rOXiebhAnOpQPzrxlsdiBb8J8xlfW
-         OubRVSDpMJvtoXSzt7NzZTpnz2L8/O4OwyV36LUMG7tiWXyW/NqhUMz2+h0cHuFmh4Db
-         L3RvLFpXe21k8pYxUEcLX99juM7ezo3mBytlaK2xONlLVfAxBnnEk6PdeAzTaSfp3AUr
-         iMyw==
-X-Gm-Message-State: AFuF++ntWYzR9yxDB7F5pDHTMYMnzsYFTcBT+FdrueRH2nkz6MguuwWL
-	tqldtUQCZNfyqaiDuVUyiYdGmLdBpUmLYsZXJDjb3EdfYpHZXMljNZsvfbHxfUYlKAoZQnI9g6/
-	k84AYrUq/HKUNHKP9IXWOyESiHAdJrz1JkBcz1Rk=
-X-Gm-Gg: AYBFou3hGUPtaOMYeQYsPdqBJ7VPo0JjwggBg0tg0C4bsd4eTCCfwrqUmQeb8GvVZYy
-	Q8ldMYo473ugWmhec7V1JbaLvJV/Od+lntkc9qaqVsXaiXAdOetpEXHRDzQ/1IbyQ3QngffU9ZF
-	9ZPMf6JEuir8jg3nP3HVH2QWNXkzS2ZjvyEi+Ei4HamlZOMXgOvXOLpLhI0WPuo6+MZ2G4Vgk1x
-	g8NfBbBOWrfDg/WVWSPccebOfaKnYXh/k9HpD5vLMGjW+mOAYlpoMQlIHqvlaDLWG95mz+wpL/G
-	P3AMQHbw5y/+3vZLGZq0EDqbXRdPvJz82+WkvC+L3pljs10fE8Iq5rAnXUKcaCwMCAnQGj4WRNh
-	NNYZpsAVQ8cvGFT81lajwg5rJ
-X-Received: by 2002:a05:6214:4006:b0:912:5135:2a86 with SMTP id
- 6a1803df08f44-9129c787f1dmr14571336d6.15.1789820419969; Sat, 19 Sep 2026
- 05:20:19 -0700 (PDT)
+        bh=5LEj1PTa0KS1INDtwYCXbdUTDPYUpXbXmygwQBEUvTw=;
+        b=V7557HlmjhsvnmeH0x/WBvvvikTG3aXz+jCVIOibbO2WlPGhssnVD6EaLKQ5h0oAZc
+         pW2imtbVSjP0gBmJ2N5ag//eQMJ3OK4eF/vaR5C76h0LEhOAD1l39HVPTOvbb3+DLmto
+         9rjF2npPNqDNCo1hAf2LpL3izoFJzqUc0BRIlqa/soRh6G6px3WfhvgyPey2pQH1866R
+         LyYSw0xL+RlGdNXA17tBIxoZVEx8cS5S3EZlObyie2Ltm9AoyFOP8e8Ksy1t/uCxlx85
+         MLLVwzX9Bs1R3hjwpzf1NK34pvqqsGgtjKgsUMzKVC8RiMhO4mtL435BlLIRAmnESGUM
+         +6dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789824835; x=1790429635;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=5LEj1PTa0KS1INDtwYCXbdUTDPYUpXbXmygwQBEUvTw=;
+        b=dfFPIxzHHS5NcK3PFram6XTtnwDqu+Ac3xkZJ+uHsT8EBulayIXqGt09JbQaR6YNZN
+         X91uz2v+N3OpZGDHBV+OlSB1CmI0v407K5tcj5rAI36yZm6+J0aFtrvWueUEjToOW5ro
+         i82piYsCtmRfhZvSerG4Vt8F9VK/tI5AysvFHxCO+oAodein49UlluUfsoympzsluibM
+         OwKLBOpPJt6Dy6w3EJebsK9F3O4S8Ux8LUmsypCX8O/hsj0X30rdSE0vAgAG9y5PywVW
+         EsMc2NEo8Bbyk7Pl2M3jn1z8YouLa8maNZBsMu2BqxGuloCUJ4enH44mlLCs/0rX4R2n
+         y4cg==
+X-Gm-Message-State: AFuF++nPHH0JJTj8m9+O8RxO3JpyVdQYzpHqhZPVeGxa+tdthn0HUa21
+	UQHc3pQbMtqkJ6rXe/SRXPKYxXE4vpnJdbcKYHly1XNxpJnulVn7/5xcy1fTIj6ohlZusJMjxQF
+	JWFWLDtTwTpJBqftZWjEYxqB2pJ/5Zt6tx18g
+X-Gm-Gg: AYBFou3IMbqZEi+iLn6GH0YqOicmArJ0JCZupJmOgOqx6/Y++zXGfgquP7FFLAIIDrH
+	Ti/HqgM+auldz+d+VObAphuJfAJf8Nnjt1au1ZoBTtjLbBQOwMYTc/FOXeBahJFkpfOoDMZv1xH
+	yHhOVgCQnGn9i/Ws4NZNj5I9l8AHH4FDgoEh3LPw9bwy2scWza5aAONSP5AjCrGTqnUVkRcF0eR
+	0pIcKBASe3dJkmJwlXOPPX0ZGys3bXn8LEf4VYrmqe6546qyXJev1W4hur6DG25bKzJaxcxJExx
+	c0IzvzkGUCvmNg3KxTs/VoIPZytSrmTvJIuUX0jDzdZTen/Ft8IaN2j0/FB1BrD/IhKWiVsvHxK
+	cu/OoKziBXBUA8RLmDWwYV0m04NozjF4vUwQ7r4Bl8bYvFmFUEDEmDPOdoOJ/Kda7dgVNEMr0XQ
+	==
+X-Received: by 2002:a2e:bc17:0:b0:3a1:fa0f:5d21 with SMTP id
+ 38308e7fff4ca-3a5fb15b8admr10951531fa.3.1789824835433; Sat, 19 Sep 2026
+ 06:33:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Francisco Boni <boboniboni@gmail.com>
-Date: Sat, 19 Sep 2026 09:19:40 -0300
-X-Gm-Features: AcwNN1WYgxrGf8tKYJmqZhW_8U2xl7D0yS2NtQK5FrENDRLENv8IHg2HDLbvr_k
-Message-ID: <CAKNeS+mFS_VCs_tQeFb8jBx70FwQLW0LtuqhSk4xSdbWdqDR=g@mail.gmail.com>
-Subject: pager: consider revisiting automatic LESS=FRX with custom core.pager
+From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+Date: Sat, 19 Sep 2026 15:33:44 +0200
+X-Gm-Features: AcwNN1V6zxXU112hq7YxLftMII28K4nVo1PYkvsCTwjn2Z12kvS7KOsyCsFz-bI
+Message-ID: <CACQ=SRHCOCcmVCgHqd+sjMsZ9LCdSHuXdCo0gkwxXwYgF7iwig@mail.gmail.com>
+Subject: [BUG] reference-transaction hook misses destination of git branch -m
 To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hello,
 
-I ran into a surprising interaction between Git's pager environment
-handling and a custom pager, and I think the longstanding automatic
-`LESS=FRX` behavior may be worth revisiting.
+`git branch -m old new` changes refs/heads/old into refs/heads/new,
+but the reference-transaction hook does not report both ref changes.
 
-My setup is roughly:
+Observed with Git 2.55:
 
-```
-[core]
-    pager = delta
-```
+* files backend: the hook reports deletion of refs/heads/old, but
+  does not report creation of refs/heads/new;
+* reftable backend: the hook reports no usable rename payload.
 
-with delta eventually invoking `less`.
+The equivalent atomic operation performed with `git update-ref --stdin`
+reports both updates correctly.
 
-In my shell I had:
+I expected the transaction to include:
 
-```
-export PAGER="less"
-```
+    <oid> <zero> refs/heads/old
+    <zero> <oid> refs/heads/new
 
-but deliberately did not set `LESS`.
+Minimal reproducer:
 
-I also configured delta's pager explicitly as:
+    #!/bin/sh
+    set -eu
 
-```
-less --RAW-CONTROL-CHARS --quit-if-one-screen --quit-on-intr --ignore-case
-```
+    format=3D${1:-files}
+    root=3D$(mktemp -d)
+    trap 'rm -rf "$root"' EXIT
 
-What surprised me was that:
+    repo=3D$root/repo
+    hooks=3D$root/hooks
+    log=3D$root/transactions
 
-```
-git diff <commit1> <commit2>
-```
+    git init -q --ref-format=3D"$format" "$repo"
+    git -C "$repo" config user.name Reproducer
+    git -C "$repo" config user.email repro@example.com
+    git -C "$repo" commit --allow-empty -qm initial
+    git -C "$repo" branch old
 
-caused the downstream `less` process to behave as though `-X` /
-`--no-init` had been specified: it did not use the alternate screen,
-and in my terminal Page Up / Page Down also stopped behaving normally.
+    mkdir "$hooks"
+    cat >"$hooks/reference-transaction" <<'HOOK'
+    #!/bin/sh
+    printf '%s\n' "--- $1" >>"$HOOK_LOG"
+    cat >>"$HOOK_LOG"
+    HOOK
+    chmod +x "$hooks/reference-transaction"
 
-The `less` argv itself looked as expected and did not contain `-X`.
+    git -C "$repo" config core.hooksPath "$hooks"
+    export HOOK_LOG=3D$log
+    : >"$log"
 
-Eventually I tracked this down to Git setting:
+    git -C "$repo" branch -m old new
+    cat "$log"
 
-```
-LESS=FRX
-```
+The behavior was also tested across Git 2.28=E2=80=932.55:
+https://github.com/ciembor/git-hooks-ext/blob/v0.2.0/tests/compat/README.md
 
-when `LESS` is absent from the environment.
-
-The particularly revealing test was:
-
-```
-LESS="" git diff <commit1> <commit2>
-```
-
-With that single change, the same delta -> less chain used the
-alternate screen normally and Page Up / Page Down worked again.
-
-I understand that Git's default `LESS=FRX` behavior is old,
-documented, and presumably exists to provide useful defaults when Git
-directly invokes `less`.
-
-What seems questionable to me is that it is also applied when
-`core.pager` is an arbitrary custom command.
-
-In this case the effective chain is:
-
-```
-git -> delta -> less
-```
-
-Git is not invoking `less` itself, but the `LESS=FRX` value injected
-by Git is inherited by delta and then by the `less` process launched
-by delta.
-As a result, Git ends up silently configuring an implementation detail
-of a pager wrapper. A user who explicitly configures:
-
-```
-core.pager = delta
-```
-
-would not necessarily expect Git to alter environment variables
-specific to another pager that delta may or may not use internally.
-
-There is also an unintuitive distinction between:
-
-```
-unset LESS
-```
-
-and:
-
-```
-LESS=""
-```
-
-The former causes Git to inject `FRX`, while the latter causes Git to
-leave the pager environment alone.
-
-I realize simply removing the default could have substantial
-compatibility consequences given how longstanding this behavior is.
-But perhaps it would be worth considering whether the automatic `LESS`
-default should:
-
-* apply only to Git's own default pager path;
-* be suppressible explicitly through configuration; or
-* otherwise avoid affecting arbitrary custom `core.pager` commands.
-
-For my own setup, explicitly setting:
-
-```
-export LESS="--RAW-CONTROL-CHARS --quit-if-one-screen --quit-on-intr
---ignore-case"
-```
-
-solves the issue cleanly, because Git then leaves `LESS` untouched.
-
-So this is not primarily a request for a workaround; rather, I wanted
-to raise the broader behavior because the interaction with pager
-wrappers is quite surprising and difficult to diagnose.
+The reference-transaction documentation says that the hook is invoked by
+Git commands performing reference updates. A branch rename changes two refs=
+,
+but the destination update is not visible to the hook.
 
 Thanks,
-Francisco Boni
+Maciej Ciemborowicz
