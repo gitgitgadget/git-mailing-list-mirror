@@ -1,71 +1,71 @@
-Received: from mail-oa2-f34.google.com (mail-oa2-f34.google.com [74.125.231.98])
+Received: from mail-oi2-f12.google.com (mail-oi2-f12.google.com [74.125.231.204])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C363AAF41
-	for <git@vger.kernel.org>; Sat, 19 Sep 2026 12:12:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F371339EF20
+	for <git@vger.kernel.org>; Sat, 19 Sep 2026 12:12:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789819943; cv=none; b=PCZstRE0Mew+GRoog/m3TpKssmJDvEEvJZ/8S21SKeI6O2bV394PwOZ3yM4X/cStpHoBV7lkZfUEnLJFFcHrSVOcMC7WNsVx7ADu1Za7/jYydfnQ2/1VhBi3vz+PAHTad+2DTmmbRUuK821UigekEUvSkE9bXijf3bMw8EGyg4M=
+	t=1789819946; cv=none; b=R4GzX8U73gmENbtDe015mdX2L+ctKTWbQrcmmBGDkgBOU9Baor4H/HXXFrqgwvqJ4VPzNyzbwkRathVW16OAo2sR0WsOKhyxM8fPAnfWkdh0eNd2ImbtY4WQ531qgZqwPmozstvsdZOg8TIZSzs4/eEoaXNa6IUlU3SBWJeIv3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789819943; c=relaxed/simple;
-	bh=HupuBkPAhXRq6Fy9jXFRXXp47HhIOQNp537+G3GqzEY=;
+	s=arc-20240116; t=1789819946; c=relaxed/simple;
+	bh=uigROy0QuvosDRebXqHsJeHk+vjz5eIh/3cpE26mArs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=HnOQU6/yiK5VEfqjIp43FaAkU2BtXMJkq1DnyhCrczwOZU4FtX9tTpYGiw6GbH5wxnC8E32K50CVTch4eg4XzK/XjkfO7zRuIcrXcI74Ip73xNEbwdZeUtg8OLvNwfZFL7qSBNgsw3uGCmIiUxnO3dQQNv1DsMaMPGWDOUJr268=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J0AIF7Gu; arc=none smtp.client-ip=74.125.231.98
+	 MIME-Version:To:Cc; b=gwd8sjJpzNnwXeuu8DUmYW7RzZVXyRH1DtMfssfFSEDR7EuxDD7WtDyimnHSO6jg4cGTPZh6ZAHOuvd4Mgt79xcuMcJ5ZK1YoVs2+ld71N4OC+QGj+ZpBHFf8e9fDkEkL43gAfVB8DFfbQNMzF5GoF4jbp46yGy3cgw294sRWHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q4UibzOI; arc=none smtp.client-ip=74.125.231.204
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J0AIF7Gu"
-Received: by mail-oa2-f34.google.com with SMTP id 586e51a60fabf-466ccde2ad9so1668797fac.1
-        for <git@vger.kernel.org>; Sat, 19 Sep 2026 05:12:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q4UibzOI"
+Received: by mail-oi2-f12.google.com with SMTP id 46e09a7af769-7f4f0cfb33cso944244a34.0
+        for <git@vger.kernel.org>; Sat, 19 Sep 2026 05:12:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789819938; x=1790424738; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789819941; x=1790424741; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=8qSz5ZMis4rdx+lwtBfpiOLYnKE1zn91r3q7YNttw+M=;
-        b=J0AIF7GuWMfh5L0vzsgD5I1Ma9PU8AmbG3wE4HU1AlKFVZrxLkancfiy+SB0oo9KS8
-         IoBd1AC90XQl0721Yo97DeZT1G+TPoSk7x3IBb3tjAa/zRFxOjFg3UHwD2h/Pzk4vOUQ
-         T+FZ3qe7a3O6bFV9NMt33KwPlQWBJDwHQMD1HJtDLF+b+3GOB56leZ8zLFt39HRHdP/N
-         G5b/SV9sQWbK5dRkOWhppUzS9KkFDIg6hyqAWrDZ2xuvsLLxH7DXsP1UjvBXEAmjtiAl
-         4RR6G14pg62p+DZVbJh1Fzg2Y/uXh/zjsEBkd7mxo0GD6F53Pc2e48ECq1eG30FSCOu7
-         +LvQ==
+        bh=dK/34v6th/YupG6bOyeQHyuBfgOC9wBdyc4skoSQF/E=;
+        b=Q4UibzOIKVN5aY9Bbu0fle8ODbio9gdc/BwMbQTmb04jIOR/axVdg77Hs/S3Axr/dd
+         o+3DGVwMEkzbr4BU8FkS+kGTQoHnZOCkHWjqudAFm7wikIxRdJjedRC29hD8Rq7uwzKM
+         T+HmIHCmVKUcF8/P9hEPUQapTau7ufDagMMX088VfJKgTb8mVpwL9clRepj2JqPWRp8/
+         4P8DUhpsLVrwSBT5jC/+R3KwLF5SU6IzqixCteZx5covpKp51l1MTKgJIBkfpwPZSx3b
+         aBW+Fj1PvQ1kOemLvZHD666rVxNoaMPofSUTAzX1paexs+AuQ22t0m+cu+eSjtkcHz9S
+         A14Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789819938; x=1790424738;
+        d=1e100.net; s=20260707; t=1789819941; x=1790424741;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=8qSz5ZMis4rdx+lwtBfpiOLYnKE1zn91r3q7YNttw+M=;
-        b=An70RAetL7IBbGZzozuH8rJZ+ZjaSNvAuIwQwK1k5NcnxOs04X42AwwPPb8HGCkATe
-         MHwuwZwWpE6SdoOq8yfBlbVJoccyKXsnHNFqmGqyfzT2r5xfNCIDMG5uh3MTqRh18XV0
-         tpdEmXa8TN67NIZfINYmjTD34UgDY7S50EQamJrL6ITi2/OVnCUuED/JfOiINSSVCSFs
-         64r0qrBBgJzQTMq6RRLWsht56zBjF9mnNa9M60Krrq+1ikHEq9RtVKVregh1zzhhaaps
-         Dtn43R2UdllpQUUX3V8gMpzE+HkcsjmthRGFDjHGdODq7mfLyG1fQe701zM4ivzAugKC
-         g5IQ==
-X-Gm-Message-State: AFuF++l9TVjypqwmlCvZjmXh2wbMk/mmnKBXtv0T2rHB1S0m8zfBWJYP
-	tfhi9EWkEpWHf32VdSbPhSCLz9bdAXtYcTLo6Wr47IJXxq2RKMaz8Ix1uxKeJw==
-X-Gm-Gg: AYBFou3EqK55LGOYWl3eG7DnbQxX8SzrjWrssTmQYhD4jdKqSUrmi9D7kRqPlDfhV5W
-	x1hNaZQ6kGGx9PHU7txuDjkHh6b+V+FXg/dkvMr13Qk1JuP21Xnyo/1XFr/IEKhZFftqYX4W+FI
-	oyHRk1z2w1pxxZQoFi2itBcdrZ1lQPCw07sSQ3cbDrQEbrviESLRvjhuC9WUTL/Zy2/DwgMkdir
-	5Q58mnud3KBn2CxhtZk+QAz5MJgHRcamzTJgARIoE8GvDKa/Fcb8hmwVlm7oA8rF1BA1Dc+MnPA
-	1wOMW3v9EHC5CwfxiNLPFmRf3i++o/Lk6waCOEXgk7s6FRSYFeFPUb1MlS33fCV6pqyrYfrcRjV
-	e4LI7fRSjJgYozEX3mEO/q4mzyKnzKRQVQ2+21RF+hxGqKwVB5cl3qiMj47ik7mSn5iQDPNrP0K
-	9GjLcAQ1uIMhqI41ADQq+mloXAnvKLqG+vNCMH3RUdpVQ5xBA2EOcKEuvjnaTSGmf0vsgpCQYHQ
-	d0=
-X-Received: by 2002:a05:6820:162a:b0:6be:4eb3:e1c6 with SMTP id 006d021491bc7-6ca9a74914cmr4965553eaf.19.1789819938372;
-        Sat, 19 Sep 2026 05:12:18 -0700 (PDT)
+        bh=dK/34v6th/YupG6bOyeQHyuBfgOC9wBdyc4skoSQF/E=;
+        b=y3CtsIoib3zNcz0zBQFo/MrxplTqHM8byOi1o4gOy2SvvFSNgE9xBmlsf9LuDxuMod
+         3zLt8GyBbysrtShvgjqRaW2J+FBOho5z9C+erBoNsfX5a7zvIHUS9oZ9qi51q/j9wosw
+         sOX6JsNJ8KbafAPE/agJwkJsWKqdsX1C6XLSp22RAKNWxNPJdmZVwzvM/lkAyx6xDa2a
+         qkoe28zON25QXj4oD7frS0pIlSXaVJUI26C/93Q2VKRCjGE1hjEjNqdC9e5TFl+ePovP
+         2I8CkJ8yYPz/bd0CSx5ArZulE5jtEguC7gXtUhVLBS27v2/SLiP8ll1TMboGKMa48ylY
+         bvag==
+X-Gm-Message-State: AFuF++k5DWablt1pLGEZd83cRMHGxWmvSrgOPLfNSuVMDlV4ukR3sOL6
+	jiZbm1bYKkrANaC8YjjlBONF6cHqD0knt5TFhrISenzXk0AqB7yh9woiub1xLw==
+X-Gm-Gg: AYBFou0mssY8MoxepVvAnIw+BbG/lC7KNK12HUYTWlQGmMLVPGIuZ/ZCY2gCatL2Qa+
+	vXep9dOqdTq06bBRhzIgkaUnebeG7DTVAVHiu7TiThMaA3Jlr9X85UO/+2/bQHuO1lPNGk+73Vi
+	2KAo2CRgzekzDriSvRPWIJU+zgGY1g5SvDUXAws87tW6bFa7YO5SmlBM+VSDW6ZGhUXhMw3Tt1y
+	OKeZy3yPK8A/u+/y7TxBsbZH45uzHRjS6soFAk9rjl8Hcm9694hPn2Pkq2PXq6jkgMN0woCbnoi
+	Br/7BYO0FB8WRC5fcbaOyz6to9V/hfd6tvoXMeHaecNEYWUuKwn2xJ4gdOwPvBlYxyrCR/5HeZh
+	+L5KDTE8/JTxEXYGjifEH8t0JzehtyWyS2jT8VwWJjAdSiFHGsp812BIml8WD4WQVrMTI7mzHrZ
+	vn3ZKZERSgcd0f6ySueICyuoFgFUjh4Nz6OJFpcVuO725EvIuiOelKR6o7fpsjnJlm6Ed+duzYD
+	J0=
+X-Received: by 2002:a05:6820:823:b0:6c9:82b3:f6f1 with SMTP id 006d021491bc7-6ca9ce4f514mr4845832eaf.60.1789819941231;
+        Sat, 19 Sep 2026 05:12:21 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.141.197])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-48820e35039sm1876634fac.5.2026.09.19.05.12.15
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4882178b8bdsm2008786fac.11.2026.09.19.05.12.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Sep 2026 05:12:17 -0700 (PDT)
-Message-Id: <6a389b2bad1653175bde2a767ffbb5b672e324e2.1789819933.git.gitgitgadget@gmail.com>
+        Sat, 19 Sep 2026 05:12:19 -0700 (PDT)
+Message-Id: <8855c25128d7bd91bd6514a259ef8165f2fd81ac.1789819933.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2233.git.1789819933.gitgitgadget@gmail.com>
 References: <pull.2233.git.1789819933.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 19 Sep 2026 12:12:10 +0000
-Subject: [PATCH 1/4] ci(gitlab,windows): provision GNU Rust for SDK-based
- MinGW builds
+Date: Sat, 19 Sep 2026 12:12:11 +0000
+Subject: [PATCH 2/4] ci(gitlab,windows): preserve exclusions during dependency
+ setup
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,57 +82,34 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The minimal Git for Windows SDK already supplies Git and GCC. The
-MinGW Makefile build needs the GNU Rust toolchain, not another Git
-installation or Meson.
+Creating .git/info/exclude as a file with `New-Item` and `-Force`
+truncates existing contents.
 
-Let the dependency installer serve this configuration while keeping
-the existing package set for MSVC builds.
+When install-dependencies.ps1 follows install-sdk.ps1, this discards
+the latter's /git-sdk exclusion and causes ci/lib.sh to reject SDK
+files as unignored build artifacts.
 
 Assisted-by: GPT-6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- ci/install-dependencies.ps1 | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ ci/install-dependencies.ps1 | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/ci/install-dependencies.ps1 b/ci/install-dependencies.ps1
-index e3b367fa54..8c68fb0cfc 100755
+index 8c68fb0cfc..f6868dc670 100755
 --- a/ci/install-dependencies.ps1
 +++ b/ci/install-dependencies.ps1
-@@ -1,5 +1,6 @@
- param(
--    [string]$DownloadDirectory = '.dependencies'
-+    [string]$DownloadDirectory = '.dependencies',
-+    [switch]$Mingw
- )
+@@ -12,7 +12,9 @@ $RustVersion = '1.96.0'
  
- $ErrorActionPreference = 'Stop'
-@@ -41,6 +42,17 @@ function Invoke-Installer {
-     }
- }
- 
-+$rustTarget = if ($Mingw) { 'gnu' } else { 'msvc' }
-+$rustMsi = Get-Installer "rust-$rustTarget.msi" (
-+    "https://static.rust-lang.org/dist/" +
-+    "rust-$RustVersion-x86_64-pc-windows-$rustTarget.msi")
-+Invoke-Installer msiexec.exe @('/i', $rustMsi, 'INSTALLDIR=C:\Rust',
-+    'ADDLOCAL=Rustc,Cargo,Std', '/quiet', '/norestart')
-+
-+if ($Mingw) {
-+    return
+ New-Item -Path $DownloadDirectory -ItemType Directory -Force | Out-Null
+ New-Item -Path .git/info -ItemType Directory -Force | Out-Null
+-New-Item -Path .git/info/exclude -ItemType File -Force | Out-Null
++if (-not (Test-Path .git/info/exclude)) {
++    New-Item -Path .git/info/exclude -ItemType File | Out-Null
 +}
-+
- $gitAssetVersion = $GitVersion -replace '\.windows\.\d+$', ''
- $gitInstaller = Get-Installer "Git-Installer.exe" `
-     "https://github.com/git-for-windows/git/releases/download/v$GitVersion/PortableGit-$gitAssetVersion-64-bit.7z.exe"
-@@ -49,7 +61,3 @@ Invoke-Installer $gitInstaller @('-y', '-o"C:\Program Files\Git"')
- $mesonMsi = Get-Installer "meson.msi" `
-     "https://github.com/mesonbuild/meson/releases/download/$MesonVersion/meson-$MesonVersion-64.msi"
- Invoke-Installer msiexec.exe @('/i', $mesonMsi, 'INSTALLDIR=C:\Meson', '/quiet', '/norestart')
--
--$rustMsi = Get-Installer "rust.msi" `
--    "https://static.rust-lang.org/dist/rust-$RustVersion-x86_64-pc-windows-msvc.msi"
--Invoke-Installer msiexec.exe @('/i', $rustMsi, 'INSTALLDIR=C:\Rust', 'ADDLOCAL=Rustc,Cargo,Std', '/quiet', '/norestart')
+ Add-Content -Path .git/info/exclude -Value "/$DownloadDirectory"
+ 
+ function Get-Installer {
 -- 
 gitgitgadget
 
