@@ -1,237 +1,181 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FB43783C7
-	for <git@vger.kernel.org>; Sun, 20 Sep 2026 15:24:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3709A3C3F4E
+	for <git@vger.kernel.org>; Sun, 20 Sep 2026 15:27:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789917848; cv=none; b=Gh6qYm/h/WcRUkGGMunr3mIQdnbp/Cnjik/LXwleoZoLGk8F03mJywXEUvE5teHquEXUGN4/mGDwdQSGFDvMixNu/A6D+baQkF7sHdXFGPzvTkx3YGa82uN6w8qRwSumns86YOFZHu8gf3pVhMyLLNLZIlx0pj5hnXaeEC5dVUQ=
+	t=1789918032; cv=none; b=bErSW/YaLkiWYv0sZ7TslWWwsk+vJXJDPp+DStJwW/S+oW0Anr/8CVgdxinw4pwkBWJpWLWmHbBDIHmfpzMDPPCIpVf/dmF2qNxFAYuptOVVYCYahJEfGSElow2FNE97v+P4mi3nzLn38DGpJVk7RZoT56XXi7usqX508XLBnro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789917848; c=relaxed/simple;
-	bh=Y8s0MIDE7IElF3qnPDYKw42YTukj+9bnMpkIPev5aew=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WxhSjVFcsy2ULl18NCZG/QKkItzQLyOeik93zo8H7F3KQKRweniC/N/s6E2oaIOq3XBVTIyZpjs0PLJKE2fO6Kr5DtA9g4Hcyw0+Ep/D6XLjgnDJ27x56KR1B5xUzKEKadFmSRKf/r70GPsTo/aPm+E++fQDvebrV3jsh0TVpmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=sIJiw/zS; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1789918032; c=relaxed/simple;
+	bh=6Yu47KpsEdDt7TmJfvPI4SE5FZTEOsTCoILsv24lgxA=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=f2+rcHhf78aQUUS2+YwilUJ2SQkXt/R/KVjnzKTKCl7YW95ZD99jcWRiWC4igMEq05TypniAFx7wZNDlGYl+tRIQiNCcm7Qq1VU1DHdOnThT/oMkZ9s7Gvb0HJx+n7+d8UoCDVoLyxOvSoL0WztFHX2p6jJ+Z9gKAU6k4zWYz6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=d0UwBKdq; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="sIJiw/zS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1789917826; x=1790522626; i=l.s.r@web.de;
-	bh=Gq6Tc2iQtOi8LcpdReaPnUUntJjc3J6T9X/pJk8LtRg=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=sIJiw/zSZb+4gixwDqcSvfoSvadBiPxB/wZI6OvB1aNGyqnEnL2iU0UsN1fNj4Ej
-	 At/KXeRJ/qqXx6RiU4FtNelmwIOpB4SrCPl6aAns0uRNSC03u5wEyjoY8laXk6cCd
-	 8AzkOVN/kWuFsiMJd75NC0hD5/6xVqXdsNxM3RPpAjnHgta8d3r/ZytVaLexVLmoY
-	 68LXm3jNF6x8lvDTH1h9Tp3Q+IdffbtDpKxd5WVMyRApyoFQ7E8Zy0pVEr18Imq9V
-	 waJ54WmdjxBkqiKkfgc8Im8jYX2g3p+ONHGCg8gD9E1eprtlH0uKc5JLUvrNGzElh
-	 5qBCsSFcC2vj+klJzg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mav2l-1wVwRF2Gkt-00jptc; Sun, 20
- Sep 2026 17:23:46 +0200
-Message-ID: <9b97c14b-1d25-409b-a72c-d8caf298bf87@web.de>
-Date: Sun, 20 Sep 2026 17:23:43 +0200
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="d0UwBKdq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1789918027; x=1790522827;
+	i=johannes.schindelin@gmx.de;
+	bh=6Yu47KpsEdDt7TmJfvPI4SE5FZTEOsTCoILsv24lgxA=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=d0UwBKdqLIQyoD/ACkVGYRHY7ao4AAEjQNoQIfuKeAOi81U7oJaON4wCqhxdypQ1
+	 BqCCdzzyw5B3BLvQGWaXhnRYcQy1uVwuPoQ2YiNFTypS7Oqf2onllaNwdyTrOyPnN
+	 n+XSUls+BwmMk+Cos7CrnOyyBBVslqXee0CCrKeqbMBdercEK4kNUkVPtieZRSvRV
+	 FOpsutyZ5/XBv9szy8iytLIwoe3RU3fxRTBFxFg+xRMsWd3pRR7qOrhB93iFB7gnb
+	 msuCvHyk6w1+uQiF/eClLCD9/ty6Hn1UKycojd339/y0S8ZXxTJjyyulno7XE+RpN
+	 fDBGUP++rcozveUoYg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N8ob6-1wkPPx3KBK-0155n4; Sun, 20
+ Sep 2026 17:27:07 +0200
+Date: Sun, 20 Sep 2026 17:27:06 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Karthik Nayak <karthik.188@gmail.com>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 0/4] gitlab-ci: fix the cargo invocation in the Windows
+ job
+In-Reply-To: <CAOLa=ZTgF+Qw_1FMUEF-YyBYo-gKnhPVk+qxd+gt1PMrt9GYqQ@mail.gmail.com>
+Message-ID: <6c2bba91-a1a9-3547-4be3-f4f9ce03e696@gmx.de>
+References: <pull.2233.git.1789819933.gitgitgadget@gmail.com> <CAOLa=ZTgF+Qw_1FMUEF-YyBYo-gKnhPVk+qxd+gt1PMrt9GYqQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] diff --no-index: fix -R with file/directory conflicts
-To: Haokai Ding via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Jacob Keller <jacob.e.keller@intel.com>, Haokai Ding <hk_ding@outlook.com>
-References: <pull.2232.git.1789715946888.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <pull.2232.git.1789715946888.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:S1f4KZNjTrkSFEhOlF4c1t6V33Ojz9oKjx9KrPbtSG5QZoVcMAL
- 37hdg6w3wTGSJIhCkZeVvT8JCp33InBBjjRQbw3AEw62AW+XFugwXJNSgLCRBkn+eVfqdde
- YPArDOqvblh+wyh4VZ/ll26hEMB5k09bpBuOt+ZTU4NhaBAGGLDlUzLMs905vRTBfkoJ0Jq
- 6q8r4CRJMPi9vBO/Gb3Eg==
+Content-Type: text/plain; charset=us-ascii
+X-Provags-ID: V03:K1:6NfANFOdEVBKloNFpePmKvsb3mrJgxWq9mY78vzTfg6720Y272I
+ +cpj7yKJOnIm30Axv8+60ZIClwh+uE52ASaf7XNImYxf3hg3XWENaalA69hmTpuYI1Gi05v
+ ZyIQiOvpVVFe10/WkgbybLJW5K3DeAmK0YhKCKhSX+HjC4ot6Z5G48246DMNTjry7BiM8Ej
+ ICtVMyVF8Sxvhb7WY8NvQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:E6leSROO6Cc=;ljUfeqD50NcoN8yN9rWHWE91wXb
- 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
+UI-OutboundReport: notjunk:1;M01:P0:RuBo5o3xwH0=;g8HwrxKCy/hq5oTxcPQ9rZpF4BC
+ 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
+ 0uvRCuLCitInR
+Content-Transfer-Encoding: quoted-printable
 
-On 9/18/26 9:19 AM, Haokai Ding via GitGitGadget wrote:
-> From: Haokai Ding <hk_ding@outlook.com>
->=20
-> When a path is a file on one side and a directory on the other,
-> queue_diff() queues the file separately before recursing into the
-> directory. This early queue entry bypasses the reverse_diff handling
-> used for ordinary files.
->=20
-> As a result, comparing directories d and e where d/sub is a file and
-> e/sub/file is another file reports both paths as deleted with -R.
-> Reversing the operands reports both paths as added instead.
->=20
-> Swap the filespecs of the early queue entry when reverse_diff is set,
-> so that -R reverses the file change as well as the directory contents.
-> Add regression tests for both directions.
->=20
-> Signed-off-by: Haokai Ding <hk_ding@outlook.com>
-> ---
->     diff --no-index: fix -R with file/directory conflicts
->=20
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2232%2=
-FHaokaiDing%2Ffix%2Fno-index-reverse-file-directory-mail-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2232/Haok=
-aiDing/fix/no-index-reverse-file-directory-mail-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2232
->=20
->  diff-no-index.c          |  2 ++
->  t/t4053-diff-no-index.sh | 18 ++++++++++++++++++
->  2 files changed, 20 insertions(+)
->=20
-> diff --git a/diff-no-index.c b/diff-no-index.c
-> index f320424f05..a9151cc27a 100644
-> --- a/diff-no-index.c
-> +++ b/diff-no-index.c
-> @@ -188,6 +188,8 @@ static int queue_diff(struct diff_options *o, const =
-struct git_hash_algo *algop,
->  			mode1 =3D 0;
->  		}
->  		/* emit that file */
-> +		if (o->flags.reverse_diff)
-> +			SWAP(d1, d2);
+Hi Karthik,
 
-Good find!
+On Sun, 20 Sep 2026, Karthik Nayak wrote:
 
->  		diff_queue(&diff_queued_diff, d1, d2);
-> =20
->  		/* and then let the entire directory be created or deleted */
-> diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
-> index 8e0394cf5a..c3c703f4f4 100755
-> --- a/t/t4053-diff-no-index.sh
-> +++ b/t/t4053-diff-no-index.sh
-> @@ -120,6 +120,24 @@ test_expect_success 'turning a file into a director=
-y' '
->  	)
->  '
-> =20
-> +test_expect_success 'reverse diff when turning a file into a directory'=
- '
-> +	(
-> +		cd non/git &&
-> +		printf "A\td/sub\nD\te/sub/file\n" >expect &&
-> +		test_expect_code 1 git diff --no-index -R --name-status d e >actual &=
-&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
-> +test_expect_success 'reverse diff when turning a directory into a file'=
- '
-> +	(
-> +		cd non/git &&
-> +		printf "D\td/sub\nA\te/sub/file\n" >expect &&
-> +		test_expect_code 1 git diff --no-index -R --name-status e d >actual &=
-&
-> +		test_cmp expect actual
-> +	)
-
-Looks good.  I like the explicit exit code expectation.
-
-> +'
-> +
->  test_expect_success 'diff from repo subdir shows real paths (explicit)'=
- '
->  	echo "diff --git a/../../non/git/a b/../../non/git/b" >expect &&
->  	test_expect_code 1 \
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >=20
-> base-commit: d38352cd43ab9745686d697872408bc3249a153f
+> > In https://lore.kernel.org/git/xmqq8q4zosri.fsf@gitster.g/, Junio ment=
+ioned
+> > that the GitLab CI seems broken since I enabled Rust in the Windows-ba=
+sed CI
+> > jobs. This patch series should fix it (lightly tested, but I don't hav=
+e a
+> > whole lot of build minutes on GitLab).
+> >
+>=20
+> I've created an MR [1] on our team repo for testing, I'll try to update
+> with newer versions (if any). The pipeline for this version is here [2].
+>=20
+> [1]: https://gitlab.com/gitlab-org/git/-/merge_requests/671
+> [2]: https://gitlab.com/gitlab-org/git/-/pipelines/2863888081
 
+Thank you!
+
+It looks as if the `build:mingw64` job succeeded, as planned (although it
+should now probably say `build:ucrt64`?).
+
+The `build:msvc-meson` job seems to have timed out trying to do something
+with credentials, though...
+
+Ciao,
+Johannes
