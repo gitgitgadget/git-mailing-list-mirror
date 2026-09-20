@@ -1,137 +1,105 @@
-Received: from mail-ej2-f12.google.com (mail-ej2-f12.google.com [74.125.228.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FCE2D9ECB
-	for <git@vger.kernel.org>; Sun, 20 Sep 2026 17:33:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E7C38B7DC
+	for <git@vger.kernel.org>; Sun, 20 Sep 2026 18:26:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789925617; cv=none; b=sW+Dn+FkUtTOdBJApt4nQdKR4TSIQctIZBeZfivz/baHKAyl1rmIJAwfHLndxzyOr1UA/7NUKxRlJH7xK+A1ksOrrLroYDn2OmMlKpIWxucAXWrZpOrHC9GXwgUC3Vynpk1FBtzDWmm8aiC7SCTabqqTRTo4VG4hQaCI8ETt71Q=
+	t=1789928773; cv=none; b=Jph2/6Xf4I8MfIy+s5YdwOdZw9T6U/BvsQa4KXA8L/DkbQVU7G9dFA12KyqWtaQ7CSi6AiwDr80bbQg2Iinz+wIqdpRtftsYPtuc52Jgp/U6S/lw8OcdaopUS4GPDBgzI1SUst+AZN+Z29ZRItOaXx0gxpXe0u0mgAT8P4oQK9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789925617; c=relaxed/simple;
-	bh=3IRJ8SIgCVSkTGmAXC9dTICGwhj7WqOAwxeJP10T3gw=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=KrQIrrhhvImuQ1nQnFdenlkBlnWxF/Vyg+si8epOe2VOiMBm2iIi2QK1en66ifZO6cWzAxgKSVrV9fQGBl0PUDAkVQNQnkxwodbzeGeBDHDxz4Krl6Wg7tu+bRQTPeN3ydFNI4oAO8yvyrXVZvNTEcIZVzTaJ8sAbrjrsb4RT/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aYJW44GW; arc=none smtp.client-ip=74.125.228.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789928773; c=relaxed/simple;
+	bh=jmbHR4KFGohnV3I9i2kT6sXltWVuBSWxuZL8E14xmD4=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=NOG/T1+dJZhNafISTXIlQg2xMvLMVXcU9FAzIaOllVlbYhZyrsJAy4YOuE/nyrRYRih1PFyFttzK3BOrWOpEXEm6KmGkfWeWZ8Z7itGK8w5UZz7qlrqno9R9yf5GyE+B6/ZxpkBNotlDS+6B7IdEKsI62UzQaNxTn9Qk/0zxqaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=XwepAaVI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iOVtIKSt; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aYJW44GW"
-Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c254f55efe5so359152666b.2
-        for <git@vger.kernel.org>; Sun, 20 Sep 2026 10:33:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789925614; x=1790530414; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=aZ2LpnBGe/+S+gp+6blEr8MRFiOvpR1cBlUSWXKoLX4=;
-        b=aYJW44GWNNwkoBskFBAP1sYmDESEgm5VJg0iWlXOtqgq7xcjOVa+gU4KoZW5s8r9Q+
-         G+93IWA0sx8Va8V0btqSwEUkTIlcqTHwPCF0HWGTeB6mXYHCU5Swv/Z1K7AgTewUh32H
-         N14wSsZgO+JVs9E5RO3eD0EmE4ZzAtsp//katoYDDZyP9LuzC9QfwfiBuLbm/25KPkwV
-         Da7atHx2YVQwJ3rD0oCptAA9P0gsW+C7kc2M42zX1cKLc6/8o3mGqclKcaqvLisnMcro
-         q2YFBZ+2Bt3OqwUAe0+lw4HgqqFLjW0z5H1tbmEI/rihlmeZrgGV4BcLR7iNKCITHlOn
-         dbjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789925614; x=1790530414;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=aZ2LpnBGe/+S+gp+6blEr8MRFiOvpR1cBlUSWXKoLX4=;
-        b=a20g9oIA4yxp4RkOj6/RDHwwg0ATyr9gkITi5ggPRH/4W3t0vXCDGgGKb3ltlRyDzV
-         TGLtnM/L0IEjMCNJiyxwkpQaAjnLDz666Gic+enRpETlF5wYKBTAAT61BLE0lq9ID6yB
-         zOB5FjQeN4VTXU/XXXjMuLVVNBNjlkrR/GaASmrOWtHqDqsWQZEhebacBWZqDPepoaG7
-         FGBVgwMxJ2VohGG2xL8+8om0RRyXNXmF28u8BMOs/QbAz5QWEneU4dk6x8nly4ZoWWQs
-         wWjU58WuUaTy9M9T0A1E/LXBfGATzsbvVERZc1a/BH+5VV1JaEI5J+a2b1tAkZlGRr1z
-         bO2Q==
-X-Gm-Message-State: AFuF++kSTrpcigIEdXqcJH8uTurfxxMLVOfh70CWT0qCEm9L0iR7xLT6
-	P4105nfexbLrotC+v1MCZfASIvCjFhdaOZhJIq2jdQiYWKY1V3QQpOI8ddzb+8B4
-X-Gm-Gg: AYBFou2sDgY7hrYgaMZVtUcUW/PFhby4f+ahNQZVYXldryDD1aBQykuDjP8sBQBDFMD
-	uoOK4xnytheFejUPO3MFMvlDk7L0eiAM78Bq80lT/x4WdVAfpVP1v/ZL5CVR4fHNaIvS3+b0RVa
-	76yGyWiEdjz/Bwr69cRb+mlsYiE3IrLHqlEbRnil9JTZ9WLkr104HI0sZKVb7Us5UW8FJewbF0W
-	9zR0C+4m9qU4tASvLpow1dg06owiy0NEvO6Xu6a3hUbw+384opZXKzD8ukVtRuos4D+j0ddrn2S
-	eDw1JcxJRdbDPtDXmEweYh4OVsuHrQKLzse8GOFuTc79ETrlSwQMS7EhlT6aZ4vLy98QNk0tdHF
-	gS9KSpVVzK1JXsIokhlCU6dj5nEP3VPCctq5skaz/tmdPZtrd+ZXsNWKy+KgqBtGFFtrmtJQrYE
-	Si7M2Q4XH37BBWhSCsBXCzBh6pSKu5AO8rfZfh3RbbSno15kHjeFXKS3c5rrrKw2OiScHmCvSdf
-	wt9wwaYOOOEnqUNxugCcxzz1kP1TDj0Wwtz7B4AUMNnqVBpf0bcVY3wN9MyiBQRQUUmUFVZYVj7
-	RIxhS1szMQuTeoqZGhLWZaFID1Q0pdfKmnN2D3NnYmgHnWbU
-X-Received: by 2002:a17:907:1c9f:b0:c26:1691:b372 with SMTP id a640c23a62f3a-c2a15827daamr777010866b.43.1789925614609;
-        Sun, 20 Sep 2026 10:33:34 -0700 (PDT)
-Received: from localhost.localdomain ([91.236.84.70])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2a3570d5a9sm201418066b.32.2026.09.20.10.33.33
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 20 Sep 2026 10:33:34 -0700 (PDT)
-From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-To: git@vger.kernel.org
-Cc: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-Subject: [RFC] worktree: add lifecycle hooks
-Date: Sun, 20 Sep 2026 19:33:33 +0200
-Message-Id: <20260920173333.1606-1-maciej.ciemborowicz@gmail.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="XwepAaVI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iOVtIKSt"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 280107A0075;
+	Sun, 20 Sep 2026 14:26:08 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Sun, 20 Sep 2026 14:26:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1789928767;
+	 x=1790015167; bh=lUDNARJdCZ9wc7mM78Xq9UZTsKL+IkErtwud/JxXVkM=; b=
+	XwepAaVID20C5ZeB7p9jfrU1PSr2zb+dhG5sSkS4HnflI9H0l9eopwbin6bvM+OE
+	yK87UvjAwecimlI2Y9AwYrYX7bJiKudbU/NLBUQ6HyWs0L/ppx8bOh9hMhYQBRmV
+	5RIGEXnDXTOuwgYZMOnGSg9EuhXCYK3lL7YrBt+h/SjrvK1Y7UMCPjkBvYl1346w
+	df3+e/rGwrr8Zky/W0pfvshlhUzciCmCtZfUVySIIlsFNGqVOTJS7+U6hBEXfxF5
+	56oA/Yn44anft0ES1vT/is/bDlxMSSF8AdcMBrPlFzjd+KOLUkVDdHvp2WMiYmRm
+	xDIkxAT+oQWd9RkRjwQbEQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1789928767; x=1790015167; bh=l
+	UDNARJdCZ9wc7mM78Xq9UZTsKL+IkErtwud/JxXVkM=; b=iOVtIKStBaBhkXXDb
+	n94/LFAgrS995KeMc5Q9/1pSdYGRIoshPjKFX8/4/4cDxu8dnhLVMnyh9UWBxt1b
+	qE3VNFtABpS9tHgQHZAPt/la529S2TGY5093kMZNs7+iybV5b0X66pFWHnWfbvTM
+	sJPdX9etlxGn6kgWVAy2g5X7CicMjuvZwpZI/FY35++bxVbkpE1aM8P3IsSSTI5T
+	bW9gfb4LP65d09cHfvt5Yg4B9lJZjhBBbaJGgniEJE0VfCWOIl6jzpmaaPmCH3b/
+	jO7UnhzM9UO5Z3+ptuK+xb+UguoE7jE9ZxSJwaPEcojzxyUIceIywVT8QFZszFc0
+	koxKQ==
+X-ME-Sender: <xms:PSWwamH8SU20UA9FzOBEkGRlEJ76d_T1ZluDqcbXqLCiwZuyK2QOVbg>
+    <xme:PSWwaiJvOgT1qELbQqC6SJpxfPkI-T-BLPhyJeG26ibcY3HopJu0i5P0HuR5TASBZ
+    g_TUyS046Fp35QnfxAuBnHIYRVxnubELA8GqhOVzHQqD7nXNUY_kbs>
+X-ME-Proxy-Cause: dmFkZTGLuPCxFi2yKhD0Ygvix3VG7vhWXOkluDlOW/ZTjXuW7OfBPCPVhTHsIR6LGSYwLn
+    RSXmYRCE7exOevGlfHLXTEKSlVhFz+t83MTpu/rgQx0nusgf/aWsb49JXoKcUf8dL2KMR3
+    7rstnbrW9U+AkZN8cQJxzWAZj+ZVR2O/dM5hLJhwldrF+6AHNqmMqTGEHLp2Bh5pgXMDet
+    rdZ0QfibB/YhZE6HRS652X9xgK7PTjyurRm+gl41HzlUADETI71ZYNg/0O0f+nRtZQSp5x
+    2V3TVkFuSnI99JWQwJTS7K5VO251rnPWWZ7OfMt6+RGHZ29A4jpxELnQdT8JApo6JE/FKy
+    Glc8ojvPLKU/0zYobafgLzIOEGS/SD+x1nwIAkXdpLSerRPCpf2WZQd4msRYLEGewlVujw
+    tbgHGUWhLOhioXk5EkLbCuRARXQGjdlTzX9AlcyYLyzYlHMVbPEIMaTM9s1OPUU/9LZYzz
+    Rf9YsdiX4yT61NqKo4Bn9E7wFfHrumXBueCfjHs4u0e5JBC4Kbd2bYGpi7KTAQoRFAF664
+    yl0Rzfui274sICPZK9bxDAQqG4b33fiPSpzWAo6wnTLqAyqpWtBIT+7ZFZwYT9Hd9LCD2h
+    5vov4LXCPVy6uhhEooEMNZQ1jcXAHXvKq3suMuvv1L0yewqkUjSZpm7m3gTw
+X-ME-Proxy: <xmx:PiWwasw9AOtRyfgEXE1yg3Il58SQoa2EAY0PMVW3i5AZB3fIOKOpdg>
+    <xmx:PiWwauPgiU5KWVhjWL66N3vFlHMgs4-IQax_cU3MJNjOyK_at881RQ>
+    <xmx:PiWwal4wy2Vq6ZRlEvy4qBOApDKxcLxDfRDFjRU6tRvFrCG-CWtXnw>
+    <xmx:PiWwanP3N50iD-5A33Vb1bLL2Sc0yU4MwjQQHhMQnFWIV2j0YlSfeA>
+    <xmx:PyWwau6tY9JHWFnvEMdJbHMPulrOCytMuBnoFbve3hm6CWUIeuoTMV46>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 4D0FA22C007F; Sun, 20 Sep 2026 14:26:05 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Date: Sun, 20 Sep 2026 20:25:45 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Maciej Ciemborowicz" <maciej.ciemborowicz@gmail.com>, git@vger.kernel.org
+Message-Id: <dd6815f4-30ac-4cc6-882e-e8c4eb0936cf@app.fastmail.com>
+In-Reply-To: <20260920173333.1606-1-maciej.ciemborowicz@gmail.com>
+References: <20260920173333.1606-1-maciej.ciemborowicz@gmail.com>
+Subject: Re: [RFC] worktree: add lifecycle hooks
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Hello,
+On Sun, Sep 20, 2026, at 19:33, Maciej Ciemborowicz wrote:
+> Hello,
+>
+> I'd like to discuss adding native hooks for worktree lifecycle events.
+>
+> Git currently invokes `post-checkout` after `git worktree add` when a
+> checkout is performed. This makes it possible to detect some worktree
+> creation cases indirectly. There does not appear to be a native hook for
+> other worktree lifecycle operations such as:
+>
+>     git worktree add
+>     git worktree remove
+>     git worktree move
+>     git worktree lock
+>     git worktree unlock
+>     git worktree prune
+>[snip]
 
-I'd like to discuss adding native hooks for worktree lifecycle events.
-
-Git currently invokes `post-checkout` after `git worktree add` when a
-checkout is performed. This makes it possible to detect some worktree
-creation cases indirectly. There does not appear to be a native hook for
-other worktree lifecycle operations such as:
-
-    git worktree add
-    git worktree remove
-    git worktree move
-    git worktree lock
-    git worktree unlock
-    git worktree prune
-
-As a result, tools which want to react to these operations have to wrap
-`git worktree` or compare the worktree state before and after a command.
-They cannot observe an invocation which bypasses their wrapper.
-
-One concrete use case is git-hooks-ext, which provides higher-level events
-for Git operations. It currently has to implement worktree events by
-wrapping `git worktree` and comparing the output of `git worktree list
---porcelain` before and after the command.
-
-Would it make sense for Git to expose worktree lifecycle events directly?
-
-One possibility would be separate post-operation hooks such as:
-
-    post-worktree-add
-    post-worktree-remove
-    post-worktree-move
-    post-worktree-lock
-    post-worktree-unlock
-
-Another possibility would be a single hook, similar in spirit to
-`reference-transaction`, which reports worktree lifecycle changes. An
-illustrative payload could look like:
-
-    add    <path>
-    remove <path>
-    move   <old-path> <new-path>
-    lock   <path>
-    unlock <path>
-    prune  <path>
-
-A single hook may be useful for operations such as `git worktree prune`,
-where one command can remove multiple administrative entries. It could
-also leave room for `git worktree repair`, although I am unsure whether
-repair belongs to the same interface.
-
-For the use case I have in mind, these hooks would only need to notify
-observers after a successful operation. They would not need to veto the
-operation.
-
-Before attempting an implementation, I'd like to know whether this would
-fit Git's hook model, and whether a single lifecycle hook or individual
-operation hooks would be preferable. I would also appreciate guidance on
-whether a stable worktree identifier should be exposed in addition to the
-path.
-
-Thanks,
-Maciej Ciemborowicz
+See https://lore.kernel.org/git/7c8b4673-37ac-45fa-ad8c-a1dc09afe5fe@mtasv.net/
