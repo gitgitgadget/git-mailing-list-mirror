@@ -1,81 +1,80 @@
 Received: from mail-ej2-f12.google.com (mail-ej2-f12.google.com [74.125.228.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B1E1FC0
-	for <git@vger.kernel.org>; Sun, 20 Sep 2026 10:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A99D36729C
+	for <git@vger.kernel.org>; Sun, 20 Sep 2026 10:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789900741; cv=none; b=KJ0LDNJzMJZmmGmbk/Jpndpv0C1s2e27Q7470IaCyeCCWACiAgjV+n6WfpZHWjxfA18eCgmkDa47RJIQbCzbAtjRGsHguoCdqiWiUrioDgY/A9i2Nwaha4TeARymRNmRZMxcUTFXls2VnXPLnmitM1CIlxVj/z2FPxDhHOpr6vg=
+	t=1789901668; cv=none; b=YxiUMhyUOxn7gQ2nPoZyieXYBCGnoDAmCXIqqhqCreqziDBlxCUVNKywRWh461TFyziMhKvpXJnZSAcTE3mxkGug+denqUt0QESQDD1ilxWtyIu+qhw+2Nsrcowra/BhL2v79JMqH3kXhgnY3nfG0Y6EU1lcQnINqm74iHOIqtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789900741; c=relaxed/simple;
-	bh=wlYFH8mmbNV4sY8dDvo3Zf2FBPYrqmt2exAT140dpX8=;
+	s=arc-20240116; t=1789901668; c=relaxed/simple;
+	bh=gP5lGTjSyDdgqTs4jsuvuu+gEYmhnx2bKc6rq5ALXx0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OaL6SFiBRr3HbjZ5gg+UULIDwWMvM1Gw67by/z2Wcx3AriRE000FsU3rIZNxg/hSFrWs3Vv7Uw1g7Mqkdxof+GeLpVXxephX4ASUNvUoYZ8GgE+HsRR7ubAvlsYL7Nb+R7ZaKV2MdAtLjEb8PNohkR8/N8QOM88CaAKpFF3/sfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K+i6WbMU; arc=none smtp.client-ip=74.125.228.140
+	 MIME-Version; b=bCSgIOo9wmZA+t79AaVON95MjOrfZ7BqyR564TDcZSQTOIbVqVeATZgkNlHsmJ276Ri4pi4vvYNuMx4U3jxu+OQ5NKWx+eye0Y6UxZX7YNVG3Q7yF2wNQm4BNvNCnKp+1UBjqi8wsJRiXM4L/ADVLYxNU6srRUaqBU/2tTcoDt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cz3JV7e2; arc=none smtp.client-ip=74.125.228.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K+i6WbMU"
-Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c254f9f7dbeso235916466b.0
-        for <git@vger.kernel.org>; Sun, 20 Sep 2026 03:38:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cz3JV7e2"
+Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c254fa663bfso322545566b.1
+        for <git@vger.kernel.org>; Sun, 20 Sep 2026 03:54:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789900738; x=1790505538; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789901664; x=1790506464; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=wlYFH8mmbNV4sY8dDvo3Zf2FBPYrqmt2exAT140dpX8=;
-        b=K+i6WbMUmD/i9SL6CwW1on/NFzcWnwiaiyx/+jgY6ZUFVsAph82Em1naUS81Ib7JsA
-         CRuEsncC6YS0/InE1jvoZxo3WT10EeTkPAyvGZYUTCY4tsZiL1rPlRIP4jK+Wlm4dakc
-         53IY1ytp0eTgltR5USc6fvIIs449kWuXB8T4lZxdPecawRg9JXy475QL6NIj/NwYR5zF
-         4uN7ad2pEikEEAzAIxcxxWajkufPAHZ03y04/8cfQewgD3kmvf6Hrmp++s3juo5PvMRK
-         KcDrG2pRdP1abd89WqIgEm46iQZtx0cx8UaLEE0D4SbnAJaYF0KKRp+ArKzDfgF3umk2
-         GSzg==
+        bh=JiJGnnuWw6GJes7oDoNrpm+xUElm+O7SAEAVRk8KvVA=;
+        b=cz3JV7e2HJ0hdNMTj4kqfTFec1+cTXM0YVjENBT52bIei2PxQtt2pnn1LTSG3YZC7x
+         mVsgegAyZVW+0F500w5X9dsryyFStu+IY66uiiiYP8Ls9ReNXKKH+F2StFmmgPtZRTQj
+         c3KzzUOxE9bHetDcQLBTnD3OXddJgZnnsMushMs7yeBynMxNz3QI2oBxGWn33Qfvwc6r
+         XenBF2DjR1FDL1OTxEISlc43gPt7NTLRej1wwjdLcNRWFA29uoPiFGisBs3nAeJIPN55
+         11FdBcZzv5IeIWfxwvjozsIkaD/LZ3eYCSl+AwQRfsPoPhnwtmVKk/zCelu3vAlYwmoC
+         jHsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789900738; x=1790505538;
+        d=1e100.net; s=20260707; t=1789901664; x=1790506464;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=wlYFH8mmbNV4sY8dDvo3Zf2FBPYrqmt2exAT140dpX8=;
-        b=OguOIaMs3GzL15PkICUhvnINQ9H4w6FlslE1+fHZU0AWdhfYlr8yqZmItyyI/Xzpu4
-         +kitsqh9DbjNKhzAi1rjTknHWwXi/HforCd7Ptyq5JGETmWNaK3TpbNo3FXZt/JuFoz+
-         kFOMD7uyKewoddLJQ/gXe0KodRAGSRev1OuOYhVxs06076y2N7m70N+IZEkGBWp/6gQP
-         Gh9z9Ugei7bOPNqAZtc6ZMis3HTvCL4nfRXm1MwmaCwo9wi/MyUgHEhGbmVnCkZ1pWUt
-         5uS1nx9k1i68V64LP8ikGGZ0CYY4wleS5jf4kVtDi1dOoKA2NmIh4TZ9eJKpyJdrtNsH
-         tVcg==
-X-Forwarded-Encrypted: i=1; AKwUvBxuEF12S1GWMzmtGcZwSLpmu1z4N1RLNnObAzqNptZJHMzRI3GoVfGqkQox1tRUzTlhGhw=@vger.kernel.org
-X-Gm-Message-State: AFuF++m0volAdh3F3XrkQiqdGyOC817SctPflBlc72FLLOp9mMUyXxm9
-	v9kq+3OTQNRyR3Xcy/JEcFkOaNEANSZ4cuTrDVSh3X4L5ilTerpHEGHF
-X-Gm-Gg: AYBFou0gqjF0e2mY5/uwe/ignz4JNYsLsxk83z1YHyqXp3vfs2M9OPGNP42/Bys7SjJ
-	CBkpAWmBAEAGihUMUDcj9cuFS9Un2MpmG0OqDPCn9wGF+I5eL7kxp1b1TrSLsISiwnWnOAvb2IP
-	uwTiLjU+LsRrYKrHmB88xZw3eIqrwbwcTwguGBhij3QIhr0qvDg6k+hL+6B40/TadkEBfKk2+aE
-	sMhGz4Eh64tLdFMwykzzXjY+TcBjPZSo3fq6TBSOR8dDjDcGDdnAtWgqKpLqo6k1pT9Hk8TJCx/
-	X1XrYikSYNNVl2qxZXwI5JeLe2wxCyeDKyS6tLu2vLJLV/QvQxdXN9bvlayZxtTL1EO3Joe0714
-	EEi4uDKxLxmM53dAfCzQBy5VqcGETjLIpbupoaAIGmb+IgKsNw0aHlvJlEP63etwx/gyGZmz0jv
-	UPWKYKTgwybvUBZxzypoDqkU52iw+6HAf2WhxOZ8/W/2bJY/m2+G+/JBGNo6BPgBHhyNeox2JlQ
-	15n81NGEgq8aZS2czSQU9jpW+qhRLcZRpMsHylR8Zu/w6im2nI8aJcIvgCsYizguigCYfSWY6RF
-	OPSF/TNoXwXJMxkrwSOUJRQhxtat2okBVqOkQYd8KzGbs76qdmkk+WOpBS2i5xnCDx5jMA==
-X-Received: by 2002:a17:906:9f91:b0:c29:4970:abec with SMTP id a640c23a62f3a-c2a156ec23cmr607450866b.19.1789900737654;
-        Sun, 20 Sep 2026 03:38:57 -0700 (PDT)
+        bh=JiJGnnuWw6GJes7oDoNrpm+xUElm+O7SAEAVRk8KvVA=;
+        b=UviryfyudLsL9uoomXbp3p+xjbMtG6u7s3t3vcY5mZfCB8my/TUesbxgq2qRNmtlkW
+         kCItotYZH5WKBGsCOQdWX4AIsrUL+psj/i4fPKlVpldFnC+7tt4zvb3sBumUNY/D4R0t
+         QFsrKy8NYfxolz30MP6sHDA+xZyX1qQ1ZrRVqXVMEeufGM1F6zWPDukpYiZaz5fC2Bqk
+         eogslKF9HQ7w4v2jJYtQWKcVHXrkRIP7KZTlpFTE3SKTkuRd3F+NAx2xmQY+4ExIWdC+
+         /mE2k5ip4SzqcwH2RMhP/x9SxGF/ItrCktRs19saRHmnCE3drEANRwWIloSHlmcTchfP
+         kJzg==
+X-Gm-Message-State: AFuF++lq7VPtFPZoPCxe+KuYn29++7VoD4J8o9u+jR/Def4l784QmmrR
+	D3xoj2ClSI2Spzho2V9FQSxCiuMzJYuW106POBk4CTxLUMdmqL/JqtmbSWiPUgND
+X-Gm-Gg: AYBFou36jisvIbhI7EyrMXyj8cTxsas0PWTzgcw+VS+ms7HXhsVau+NBZFDTXmfqOKh
+	cIE9yJUiW+aDBIfN0kQT+EAfu+rNZyRhQMV7imTdX6eJqG6vsrnnCMCj2UmtDykkn/hETN13lxw
+	IQ34+0Fq2NnoPqgH5/Y+/mPW6Qs569gXBZE4Px4ZEhcYmCxHTRQ/Ypx4asTiORauAzMbL97U58X
+	qERx/Li2jjydB2kqC8HdXVZ95dH1A7ifPtKoCDKvid8gYNBYXCrFD9ERqi6gEX14wr6dueqerV7
+	PBUDOOxg5BPIDYvsCpsko4SCsmtaDHIk0RmBlNsUX82YNGCCuAHQpeQwxvn4Vn5ki+GmzKdxG8O
+	FoQfZaTfcSP1k22X5EeZ9MGfNakZ5BxfZuz62B86vHBZlZQvKSXXh59ZuXzHM5rAeQDNKMTlkg1
+	cbawjX6yAI6glKo6R4DZ5zVvA+VyZCg16z3e8oHigywadoyM2n6t2CYUz72l/obaeDPGiL3COon
+	PX7iytyYugtuFruTRp7uT5ye0DMesBIZ63d40nwxVMLS43mRp3it4Rov4Jg03ZQg1Cuaz4kWJrn
+	v8WZbH8wWr0hpZJ4eGnU7afn1hAODUAk3luM6N9SJ5jLI/BBpqNmo91z43UP1jyVHmex
+X-Received: by 2002:a17:907:d08d:b0:c25:2e93:289e with SMTP id a640c23a62f3a-c2a156d8c65mr617261666b.16.1789901664166;
+        Sun, 20 Sep 2026 03:54:24 -0700 (PDT)
 Received: from localhost.localdomain (138.54.classcom.pl. [195.150.54.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2a35239716sm177477866b.3.2026.09.20.03.38.56
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2a35239469sm170989666b.6.2026.09.20.03.54.23
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 20 Sep 2026 03:38:57 -0700 (PDT)
+        Sun, 20 Sep 2026 03:54:23 -0700 (PDT)
 From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>,
-	git@vger.kernel.org
+To: git@vger.kernel.org
 Cc: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Phil Hord <phil.hord@gmail.com>,
 	Elijah Newren <newren@gmail.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH 1/3] refs: allow callers to supply old OIDs for batch deletion
-Date: Sun, 20 Sep 2026 12:38:55 +0200
-Message-Id: <20260920103855.19874-1-maciej.ciemborowicz@gmail.com>
+	"D . Ben Knoble" <ben.knoble@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v2 0/3] refs: report old OIDs for batched deletions
+Date: Sun, 20 Sep 2026 12:54:19 +0200
+Message-Id: <cover.1789901584.git.maciej.ciemborowicz@gmail.com>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 In-Reply-To: <CAOLa=ZTWGJZCmZnPLt5az_w-6YkGuQhQUKyJq6X=VFQL1T_6ZQ@mail.gmail.com>
-References: <CACQ=SRHthWOLVXmY6wgknOPgpQ+oB1vV-Q0AL=mK9mXb2Xy9Nw@mail.gmail.com> <20260919201158.43415-1-maciej.ciemborowicz@gmail.com> <20260919201158.43415-2-maciej.ciemborowicz@gmail.com> <CAOLa=ZTWGJZCmZnPLt5az_w-6YkGuQhQUKyJq6X=VFQL1T_6ZQ@mail.gmail.com>
+References: <CAOLa=ZTWGJZCmZnPLt5az_w-6YkGuQhQUKyJq6X=VFQL1T_6ZQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,31 +83,250 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Thanks. Yes, supplying old_oid changes these deletions from
-unconditional to compare-and-delete, so a concurrent ref change can make
-the transaction fail. I should have called that out explicitly.
+The reference-transaction hook receives zero as both the old and new OID
+when branch, tag, fetch, and remote delete refs through refs_delete_refs().
+Those callers already know the values that they selected for deletion.
 
-I think that failure is desirable here: otherwise the command can delete
-a value that it never examined. For branch and tag deletion this also
-restores the behavior from before 8198907795 (use delete_refs when
-deleting tags or branches, 2021-01-21), where delete_ref() was passed the
-OID that had been resolved by the caller. That commit batched the deletes
-through delete_refs(), but the expected OIDs were lost in the conversion.
+Teach refs_delete_refs() to accept aligned old OIDs and pass them into the
+transaction. Besides making the hook records useful, this makes the selected
+callers reject concurrent changes instead of deleting values that they did
+not inspect. For branch and tag, this restores the compare-and-delete
+behavior that existed before 8198907795 converted them to batched deletion.
+For pruning, it prevents a stale scan from deleting a ref updated by another
+process.
 
-I reproduced the race with a reference-transaction hook that updates the
-branch during the "preparing" phase, after delete_branches() has collected
-its OID. Current Git returns success and deletes the concurrently updated
-branch. With this series, the outer transaction fails its old-OID check and
-leaves the new value intact. The same check prevents pruning based on a
-stale scan from deleting a ref that another process updated meanwhile.
+The values are already available at every updated call site, so the series
+adds no ref reads and retains batched performance.
 
-I will make this behavior change explicit in the commit messages and add a
-regression test for the concurrent update. Your comment also exposed that
-remote prune can print "[pruned]" after such a deletion failure; I will fix
-that reporting in v2 as well.
+Changes since v1:
 
-And agreed on using a local item variable for the loop; I will include that
-in v2.
+ * Document the conditional deletion behavior and its race protection.
+ * Add tests that update refs from the hook's preparing phase and verify that
+   branch deletion and remote pruning preserve the concurrent update.
+ * Avoid printing deletion status when a non-atomic prune fails.
+ * Use a local string_list_item in refs_delete_refs(), as suggested by
+   Karthik.
 
-Thanks,
-Maciej
+Based on maint at e9019fcafe (Git 2.55).
+
+Tests:
+
+ * t1416-ref-transaction-hooks.sh (files and reftable)
+ * t3200-branch.sh
+ * t7004-tag.sh
+ * t5510-fetch.sh
+ * t5505-remote.sh
+
+Maciej Ciemborowicz (3):
+  refs: allow callers to supply old OIDs for batch deletion
+  branch, tag: retain old OIDs in batched deletions
+  fetch, remote: retain old OIDs when pruning refs
+
+ bisect.c                         |   2 +-
+ builtin/branch.c                 |   7 +-
+ builtin/fetch.c                  |  13 +++-
+ builtin/remote.c                 |  39 +++++++++--
+ builtin/tag.c                    |   7 +-
+ refs.c                           |  23 ++++---
+ refs.h                           |  12 +++-
+ t/helper/test-ref-store.c        |   2 +-
+ t/t1416-ref-transaction-hooks.sh | 110 +++++++++++++++++++++++++++++++
+ 9 files changed, 190 insertions(+), 25 deletions(-)
+
+Range-diff against v1:
+1:  e1c72cfba ! 1:  5c96a5a1e refs: allow callers to supply old OIDs for batch deletion
+    @@ Commit message
+         reference-transaction hooks consequently see a null old OID.
+     
+         Add an optional oid_array whose entries correspond to the refnames. Pass each
+    -    non-null OID to ref_transaction_delete(). Existing callers retain the
+    -    unconditional behavior for now.
+    +    non-null OID to ref_transaction_delete(). Supplying an OID makes the deletion
+    +    conditional: if the ref changed after the caller resolved it, the transaction
+    +    fails instead of deleting the new value. Existing callers that pass NULL
+    +    retain the unconditional behavior.
+     
+         Signed-off-by: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+     
+    @@ refs.c: void ref_transaction_for_each_rejected_update(struct ref_transaction *tr
+      	}
+      
+     -	for_each_string_list_item(item, refnames) {
+    --		ret = ref_transaction_delete(transaction, item->string,
+    --					     NULL, NULL, flags, msg, &err);
+     +	for (i = 0; i < refnames->nr; i++) {
+    ++		struct string_list_item *item = &refnames->items[i];
+     +		const struct object_id *old_oid = old_oids ? &old_oids->oid[i] : NULL;
+     +
+     +		if (old_oid && is_null_oid(old_oid))
+     +			old_oid = NULL;
+    -+		ret = ref_transaction_delete(transaction, refnames->items[i].string,
+    + 		ret = ref_transaction_delete(transaction, item->string,
+    +-					     NULL, NULL, flags, msg, &err);
+     +					     old_oid, NULL, flags, msg, &err);
+      		if (ret) {
+      			warning(_("could not delete reference %s: %s"),
+    --				item->string, err.buf);
+    -+				refnames->items[i].string, err.buf);
+    - 			strbuf_reset(&err);
+    - 			failures = 1;
+    - 		}
+    + 				item->string, err.buf);
+     
+      ## refs.h ##
+     @@
+2:  09e0b8557 ! 2:  d00fdeba2 branch, tag: retain old OIDs in batched deletions
+    @@ Metadata
+      ## Commit message ##
+         branch, tag: retain old OIDs in batched deletions
+     
+    -    Since 8198907795 (use delete_refs when deleting tags or branches,
+    -    2021-01-21), branch and tag deletion pass no old OIDs to the ref transaction.
+    -    As a result, reference-transaction hooks report zero as both the old and new
+    -    OID.
+    +    Before 8198907795 (use delete_refs when deleting tags or branches,
+    +    2021-01-21), branch and tag deletion passed each resolved old OID to
+    +    delete_ref(). This prevented the command from deleting a ref that another
+    +    process had changed after it was inspected.
+     
+    -    Both commands already resolve the old OIDs before starting the deletion. Pass
+    -    those values to refs_delete_refs() so hooks receive useful old values without
+    -    adding any ref reads.
+    +    The conversion to batched deletion dropped those old OIDs. Besides making the
+    +    deletions unconditional, this causes reference-transaction hooks to report
+    +    zero as both the old and new OID.
+    +
+    +    Both commands still resolve the old OIDs before starting the deletion. Pass
+    +    those values to refs_delete_refs(). This restores the old race protection and
+    +    lets hooks receive useful old values without adding any ref reads. If a ref
+    +    changes concurrently, the transaction fails and preserves the new value.
+     
+         Signed-off-by: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+     
+    @@ t/t1416-ref-transaction-hooks.sh: test_expect_success setup '
+     +	git tag -d delete-tag &&
+     +	test_cmp expect actual
+     +'
+    ++
+    ++test_expect_success 'branch deletion rejects a concurrent update' '
+    ++	git branch delete-race PRE &&
+    ++	test_hook reference-transaction <<-\EOF &&
+    ++		marker=$(git rev-parse --git-path delete-race-once)
+    ++		if test "$1" = preparing && test ! -e "$marker"
+    ++		then
+    ++			>"$marker"
+    ++			git update-ref refs/heads/delete-race POST
+    ++		fi
+    ++		exit 0
+    ++	EOF
+    ++	test_must_fail git branch -D delete-race 2>err &&
+    ++	test_grep "is at $POST_OID but expected $PRE_OID" err &&
+    ++	test_cmp_rev POST refs/heads/delete-race
+    ++'
+     +
+      test_expect_success 'hook allows updating ref if successful' '
+      	git reset --hard PRE &&
+3:  95c8abce3 ! 3:  461c36ccd fetch, remote: retain old OIDs when pruning refs
+    @@ Commit message
+         new_oid member. The pruning paths discard that value and request unconditional
+         deletion, so reference-transaction hooks receive a null old OID.
+     
+    -    Carry the recorded values into the deletion transactions. This reuses data
+    -    collected while finding stale refs and therefore requires no additional ref
+    -    reads.
+    +    Carry the recorded values into the deletion transactions. Besides giving the
+    +    hooks useful values, this stops a stale scan from deleting a ref that another
+    +    process updated before the transaction acquired its locks. A concurrent
+    +    change now makes the prune fail and preserves the new value.
+    +
+    +    This reuses data collected while finding stale refs and therefore requires no
+    +    additional ref reads. Do not print deletion status when a non-atomic prune
+    +    fails its old-OID check.
+     
+         Signed-off-by: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+     
+    @@ builtin/fetch.c: static int prune_refs(struct display_state *display_state,
+     -						  NULL, 0);
+     +						  &old_oids, 0);
+      		}
+    ++		if (result)
+    ++			goto cleanup;
+      	}
+      
+    + 	if (verbosity >= 0) {
+     @@ builtin/fetch.c: static int prune_refs(struct display_state *display_state,
+      
+      cleanup:
+    @@ builtin/remote.c: static int prune_remote(const char *remote, int dry_run)
+     +	for_each_string_list_item(item, &refs_to_prune)
+     +		oid_array_append(&old_oids, item->util);
+      
+    - 	if (!dry_run)
+    +-	if (!dry_run)
+    ++	if (!dry_run) {
+      		result |= refs_delete_refs(get_main_ref_store(the_repository),
+      					   "remote: prune", &refs_to_prune,
+     -					   NULL, 0);
+     +					   &old_oids, 0);
+    ++		if (result)
+    ++			goto cleanup;
+    ++	}
+      
+      	for_each_string_list_item(item, &states.stale) {
+     -		const char *refname = item->util;
+    @@ builtin/remote.c: static int prune_remote(const char *remote, int dry_run)
+      		if (dry_run)
+      			printf_ln(_(" * [would prune] %s"),
+     @@ builtin/remote.c: static int prune_remote(const char *remote, int dry_run)
+    + 	refs_warn_dangling_symrefs(get_main_ref_store(the_repository),
+      				   stdout, " ", dry_run, &refs_to_prune);
+      
+    ++cleanup:
+      	string_list_clear(&refs_to_prune, 0);
+     +	oid_array_clear(&old_oids);
+      	free_remote_ref_states(&states);
+    @@ builtin/remote.c: static int prune_remote(const char *remote, int dry_run)
+      }
+     
+      ## t/t1416-ref-transaction-hooks.sh ##
+    -@@ t/t1416-ref-transaction-hooks.sh: test_expect_success 'hook gets old values for batched branch/tag deletion' '
+    - 	test_cmp expect actual
+    +@@ t/t1416-ref-transaction-hooks.sh: test_expect_success 'branch deletion rejects a concurrent update' '
+    + 	test_cmp_rev POST refs/heads/delete-race
+      '
+      
+     +test_expect_success 'hook gets old values when pruning remote refs' '
+    @@ t/t1416-ref-transaction-hooks.sh: test_expect_success 'hook gets old values for
+     +		test_cmp expect actual
+     +	)
+     +'
+    ++
+    ++test_expect_success 'remote prune rejects a concurrent update' '
+    ++	test_when_finished "rm -rf race-empty.git race-prune" &&
+    ++	test_create_repo race-empty.git --bare &&
+    ++	test_create_repo race-prune &&
+    ++	test_commit -C race-prune one &&
+    ++	one=$(git -C race-prune rev-parse HEAD) &&
+    ++	test_commit -C race-prune two &&
+    ++	two=$(git -C race-prune rev-parse HEAD) &&
+    ++	git -C race-prune remote add origin ../race-empty.git &&
+    ++	git -C race-prune update-ref refs/remotes/origin/race "$one" &&
+    ++	test_hook -C race-prune reference-transaction <<-\EOF &&
+    ++		marker=$(git rev-parse --git-path prune-race-once)
+    ++		if test "$1" = preparing && test ! -e "$marker"
+    ++		then
+    ++			>"$marker"
+    ++			git update-ref refs/remotes/origin/race HEAD
+    ++		fi
+    ++		exit 0
+    ++	EOF
+    ++	test_must_fail git -C race-prune remote prune origin >out 2>err &&
+    ++	test "$two" = "$(git -C race-prune rev-parse refs/remotes/origin/race)" &&
+    ++	! grep "\[pruned\]" out
+    ++'
+     +
+      test_expect_success 'hook allows updating ref if successful' '
+      	git reset --hard PRE &&
+-- 
+2.39.3 (Apple Git-146)
+
