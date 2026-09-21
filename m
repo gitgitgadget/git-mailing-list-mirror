@@ -1,158 +1,277 @@
-Received: from mail-ua2-f43.google.com (mail-ua2-f43.google.com [74.125.226.235])
+Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7B845198C
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 14:03:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.226.235
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789999428; cv=pass; b=QgfsBH8WJr78trbh4o8q5GFnWKaja0nj7gi3CP2nMeNAjPJduNtsaF2ysIX1302au3HGWcqm8+YCs88ScddfreJvBbFK21prblLTbAmnIWNbRyu7rBJmtpHfvp7trkJkJXS0J3K11wVVQglzbu9xIFawVE8LonklUuCpVzN+Tk4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789999428; c=relaxed/simple;
-	bh=I1S57Yxcn3Ra2fCbgxqqvejX3A4i9S9fh7efvGOzUOY=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QXNWwgw7hPeF6PFGoBPIpBh/iWfTGnbLYdNYYoY6V4V1/OSQcQwbC4rIqrpDsdSOURmwSwnd0MKwjEvCfOSqiwmGERxorqZtZMCrRSWafwsI/pwduiyZh8zocwMVnEqx0RSBECyzgT5bslfDMIWiLUUajeDlITELEhe7Z5BEJXU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X/T/fFRy; arc=pass smtp.client-ip=74.125.226.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDB147044C
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 14:32:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790001170; cv=none; b=u0Dt1/IX19EcBx6cyCTiwEZsMQHjZ181lc3WpEiyq5zZTnb9tEd3qYLesB5nQpu2goM7x95RwZ2TGhmCcIBBWnG7l2+B+ndJa1eOjNR7F0VzejrhWZcD+/1pBfELVfEJd9lOomBgQNscEeRZkAeCDfHItwf0BQvJ21MnXceiwS0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790001170; c=relaxed/simple;
+	bh=OfOlEq1SW8KaJHABd5N7cjCopmf1leD5aSpOEopu3O8=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=jWb3sjpnQAK0/NwRpzL//spb5WA5w6DRL9I3mXV5dq7tgM3DM3gHBLAYXGNZGBq/N9Lr8wn5xRGVlltLxE9pCXIPmlgdSyO3VnU/qWUYpQhqJcqXN6VswmNQ8LNwunWJ09ps1rauMNX90joeTUOoEoKvdihPcdcUBe+Y3KWCtUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m/F6HQKG; arc=none smtp.client-ip=74.125.228.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X/T/fFRy"
-Received: by mail-ua2-f43.google.com with SMTP id a1e0cc1a2514c-97e7c62dde2so651072241.2
-        for <git@vger.kernel.org>; Mon, 21 Sep 2026 07:03:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789999426; cv=none;
-        d=google.com; s=arc-20260327;
-        b=l665ozXE0o6r3Fei0nSFjKMDBfS5hzwp+optG0olpLXoEY7Q5yaSDyt7u49ZCM8w1I
-         CMbHBsAeFgylIXibjZjiL8w4otsOuni4jU7WUtBKK9e5zqffrvXXXL9aepb+A17FFi6L
-         /nsxMI84x4+n3cgych61IkPcuKtcWb0J/zuGRm4M4jqMSOiYiPR9momZf2fwRJHM/Wz2
-         FqItUufn9CI6Wse9ydvCZfEv1QQAgl3N9WTI91Tys8tcO1NHYCLruQMiY16BC/aleeMg
-         MEyL5CarCLc7b7pcOFUAtuIZxfUNPMP5ec3sOzpFqGtuXnMJYjsKefRHkeFD9cTh840E
-         FsSA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=I1S57Yxcn3Ra2fCbgxqqvejX3A4i9S9fh7efvGOzUOY=;
-        fh=yPGiKH2JygXCvJx0ewcdh9yz8r4N6JSzAXk0Phu5AgM=;
-        b=gNaGGJWbsxg01G62wLEYjts8nqnckKfuZqFEIHxlO+VjeD/UtH9jb/YyS85dYYsQWU
-         /wXPw+smoyv1Lm5/+jQOyP2NbxlFNfTAMqVTPqpNhvn8IXf4LUXJWc2qbvPyw+SC9lan
-         gNc055/6QFG7t8vyPeDL/IlCkiC7PBoYSlmDYIWZJosEPQi6M+mvbEgy+CW2NRM0SeYh
-         vVEinoQxTgm0DEvxca2Bhi4O8REBviRpIkJygXhPC7u3dEKOZNQUHWJjdERrlRKTwTWK
-         wXaJSJ9MtcJ0K5WttjWNo0o0C5urZSfTxXsyV8yjqzSysAOCvZavGW+U4dBQcS0QNljM
-         7CQQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m/F6HQKG"
+Received: by mail-pz2-f12.google.com with SMTP id 41be03b00d2f7-cc1cea4ae2cso2529872a12.0
+        for <git@vger.kernel.org>; Mon, 21 Sep 2026 07:32:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789999426; x=1790604226; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=I1S57Yxcn3Ra2fCbgxqqvejX3A4i9S9fh7efvGOzUOY=;
-        b=X/T/fFRylXY6tNECIoUPmA3BisE37dYUYATvyWk9+12s4eWxhIgbaHtj7OsgWsti15
-         zWJI9ljXt0DyjBGS5yDaY6w3KVpdlvBWzDiuQ4avXWSWeq/y+SUpZUZQ7ahTEzfN8sRV
-         gnEh3COta4wyD6AVL7vQ+DyRs4srzgtjSLmYG4mbsXs/E8MmPdscKHnjcR/IjeCdJLLn
-         ro9+3yYDzOpI7dF+EK7CzN4tNGVS5qHcGgq9Z1uL4uJQ57yLX+j5NeCkBKBwWkggvVJj
-         qlydyNgmXLijPX3oR8gRqOoCtQlvikoOOt8FXHO6kbtTGiI2JDzip+3rcW+xieN6QOL8
-         CDDQ==
+        d=gmail.com; s=20251104; t=1790001168; x=1790605968; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=7fG0BzlxOQh59AMQiCsCWvS8KTHSXhVHzaIHhrwf6fI=;
+        b=m/F6HQKG+tADVDRlY/gAQloQmXXsYzNpUWdv886xTydepbDz3vxF+e2fb2Q1v140YD
+         koWeAZFpfRi3Sd1PLcJIGk/ZbMXMIlhqwaBiJFiCE6+7/4XZDK0yEMPA+pWww9Rg2nZw
+         0zcgLGIKrDNkWZIjjr5LzxASapxOLbe1BAWXzmcy1PmuNoxsJryK79Jj+0OoIPWCVLSs
+         Rsvql4f3g5yYI4tnqQcSY5j2M2i7BRYuNECK+5LEoZawEYVHWjtnF2vuuvrKzgouq3rq
+         lauAlfZ4eekllJmZQJMuRrehtwRlNX8mUgyhY2H10hrDZkydEouVRRupbe3zsHHl7S8h
+         DOKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789999426; x=1790604226;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=I1S57Yxcn3Ra2fCbgxqqvejX3A4i9S9fh7efvGOzUOY=;
-        b=qpnaIqWJH4840FP15DdPrhZrs4zPOEe2NHc4o6kiQ0KN4USK0BVoaoir6IR43NR/4X
-         IxJZvtjilLgokLGy+5PC/oc7RGBQGXKmMSCWGPQkBiBigots+lOSk5jVckDrH1Ad3fdv
-         onuTTbSxhM9F5CDZ+TXxYIEy9YjUBbs34mxs+1GuhRLKNnp++JGKCKAjnZj+pyGhd5Ld
-         wWuAclsZ8Xw381vYIFQXPNl/AtPv2kXUsITZ5hC8glkqy9Zv/mhqWBOjyVqRsWrKSwLY
-         1RdvHZfxewhsl53j8lNepuCcvI2XYVimlLB6+34dOJF0LnVhKBAj66y9K4/Kb90SUkIL
-         1SIg==
-X-Forwarded-Encrypted: i=1; AKwUvBz+3iUD33nL3GXuNI7aJzaTRHQmKzbLwHeupG8+SXl2NFtPXNd+dDAYJkkRDiklWkPVj/o=@vger.kernel.org
-X-Gm-Message-State: AFuF++nFxYi56XL17OtQXpbnsgZ9P+TPvTh0itqUfnvl5Hnm2TzkvwtY
-	q1D+CNT+un3flRjHUstg+e5ZX95iiGXcFyj7CpZok2xowPfiawjIUkqzF8V8dg3gIdVR2fcAEfU
-	TQ2XQi0Y2CsFH5NIoUDEqRHWlV/MJdhY=
-X-Gm-Gg: AYBFou1LlwQSV3VjVPhuHt9wSEs6b0+UsZ59ciaCeN6jzVVMP/YLiWMTIOtWhrMcsWP
-	gPA0X8pgBTdcZKscpAKnD/3kQQSebNZZl22H9oqq2+ZnELN5nVc+5lh9OKgW7lwfIi7akRHsD/D
-	5hMGk3CkFk3u6U8jq2ByGoSjR45BPLORSQH0jnC76MdBhATVUqfyNcclREDqktFjJ/lw4D2alpT
-	fsI8Y3OwFRS/xH1t3buZNqPLT+2jxNVfL7nDs9EK4hne260RipViDVpwumaSwjsfnfYEJbGzbtW
-	vOeU2j/5fUAfI0pVNvmfUIXWven4uyTwNnM9J7B9BENfeibmbKy6ZCtJo7XHN3tQTRE9C8B+Txk
-	kS3mHV3rybuUL1tjM3vxK+qvtNy4PVB6btmJtxermk0HDJw==
-X-Received: by 2002:a05:6102:4410:b0:7a7:3485:33d9 with SMTP id
- ada2fe7eead31-7a7348549edmr2339995137.24.1789999425570; Mon, 21 Sep 2026
- 07:03:45 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 21 Sep 2026 07:03:44 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 21 Sep 2026 07:03:44 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <6c2bba91-a1a9-3547-4be3-f4f9ce03e696@gmx.de>
-References: <pull.2233.git.1789819933.gitgitgadget@gmail.com>
- <CAOLa=ZTgF+Qw_1FMUEF-YyBYo-gKnhPVk+qxd+gt1PMrt9GYqQ@mail.gmail.com> <6c2bba91-a1a9-3547-4be3-f4f9ce03e696@gmx.de>
+        d=1e100.net; s=20260707; t=1790001168; x=1790605968;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=7fG0BzlxOQh59AMQiCsCWvS8KTHSXhVHzaIHhrwf6fI=;
+        b=CiqGvJ+57q0dyQukcTb0k5WnRzlZG5fAo8z/SFZiNIF8Xu5+yfYkrXvqfnMgioj5Gp
+         zq3NOopuhfBcD0ZvVyq4AGvDjZ0LVYvdkMUtlTr3v+wEbmZ3MoQVwuPF/TGAhy0iUW70
+         IBZ07RuS/2iwnajBwWeF6nBwXbJlFbdREbqJRPn3ZFO1jqGL5dxUlf5hmQUfmzfv542t
+         PuhsScG6PA3vx8OaSpkDdGVV6dG8vow3/Ai9/p6jfloU6GE7XnxrF+HybHoO4RwlX7jP
+         k55R84KAEFbQ2gsVwAdYXQnMnCCbTOPta2wz1Ikm1U1kOQBYDmgiCvI0TX1/GFInuuZ/
+         KOYA==
+X-Gm-Message-State: AFuF++nSRbrZbZYwofQ/JqvzAlDki18BasZQMMVxmHl4PkmzNdTpqoo5
+	J3ExXwoJJIVtjKB1Ntqdw4SXfRSOtHOZzu+UBdrbfktL/EA6DToOZEw8B91CoA==
+X-Gm-Gg: AYBFou1BqzMOK7CPFGZTcyn7U3vl3yNxw8M6DG8JKMEq1/0Bvg88tnJAfZ8BHsfTxET
+	BdL1uLvEdO72Pijxe9mg+uuPpGcOA/WjqL7wRbCe75Gb1Tg1Iv+36XT/sELaoai90FQbXVkkzHn
+	eKzyfUpKVw+o/cgQ4BvpYrtEILMMKa/swj8lsNavJQ1shBgyHZrAqG69grimbHJkGZqlQLE98Oq
+	8BjoKM+6urIoFQAGkwa2sjyPqCk/bsRHgCNlMqnlBeiPO1Eo62eO+C9PE0cN11VfqVCCvnfws5G
+	iYvSdzZ+D2gLSdiCoRIb++oKXWxasALtypZHleA9DOZtxAcnVufjql09+vXPhvZi2omgxEvD7CJ
+	Fa/1noPovVFN5UsBKVwKmpi3g7Mg5r76Qu5o+WF3DfaGxF+Hy9f5fd4cTIdVDrt2ub4F3wvd9FW
+	tKKeRH8tj4kVjxB8vS2G92f97ueLsYyjrMZ5gSb/NscP17dVj1i6wPKcGcL6Q0cTYA1T0KG2cCO
+	md0tngmcg==
+X-Received: by 2002:a17:90b:48c5:b0:39d:f247:bb3 with SMTP id 98e67ed59e1d1-39e54e7c1camr18022468a91.21.1790001168157;
+        Mon, 21 Sep 2026 07:32:48 -0700 (PDT)
+Received: from [127.0.0.1] ([20.169.67.60])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a063f33101sm346709a91.2.2026.09.21.07.32.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Sep 2026 07:32:47 -0700 (PDT)
+Message-Id: <pull.2223.v2.git.1790001166646.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2223.git.1789252459520.gitgitgadget@gmail.com>
+References: <pull.2223.git.1789252459520.gitgitgadget@gmail.com>
+From: "Jiri Kuncar via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 21 Sep 2026 14:32:46 +0000
+Subject: [PATCH v2] pull: avoid segfault when commit lookup fails
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 21 Sep 2026 07:03:44 -0700
-X-Gm-Features: AcwNN1UlDoZn8IxhvLn-6G_VJs0pYFStsCRhbt4QbdBDKZ4uuDpd83BXjdns8cQ
-Message-ID: <CAOLa=ZQkJui77Xz2HL4sAWsaYLAzU6EPvBk+RzKkKxoiY_8aKw@mail.gmail.com>
-Subject: Re: [PATCH 0/4] gitlab-ci: fix the cargo invocation in the Windows job
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="000000000000e9040c065bfeb7e0"
+To: git@vger.kernel.org
+Cc: Jiri Kuncar <jiri@kuncar.dev>,
+    Jiri Kuncar <jiri.kuncar@gmail.com>
 
---000000000000e9040c065bfeb7e0
-Content-Type: text/plain; charset="UTF-8"
+From: Jiri Kuncar <jiri.kuncar@gmail.com>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+get_can_ff() and already_up_to_date() pass the result of
+lookup_commit_reference() straight to commit_list_insert() and
+repo_is_descendant_of() without checking it.  When the object
+behind HEAD or one of the merge heads cannot be parsed, e.g. because
+a loose object was left truncated by a fetch or gc racing on the
+same repository, lookup_commit_reference() returns NULL and
+"git pull" segfaults instead of reporting the corruption.
 
-> Hi Karthik,
->
-> On Sun, 20 Sep 2026, Karthik Nayak wrote:
->
->> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->> > In https://lore.kernel.org/git/xmqq8q4zosri.fsf@gitster.g/, Junio mentioned
->> > that the GitLab CI seems broken since I enabled Rust in the Windows-based CI
->> > jobs. This patch series should fix it (lightly tested, but I don't have a
->> > whole lot of build minutes on GitLab).
->> >
->>
->> I've created an MR [1] on our team repo for testing, I'll try to update
->> with newer versions (if any). The pipeline for this version is here [2].
->>
->> [1]: https://gitlab.com/gitlab-org/git/-/merge_requests/671
->> [2]: https://gitlab.com/gitlab-org/git/-/pipelines/2863888081
->
-> Thank you!
->
-> It looks as if the `build:mingw64` job succeeded, as planned (although it
-> should now probably say `build:ucrt64`?).
->
-> The `build:msvc-meson` job seems to have timed out trying to do something
-> with credentials, though...
+Treat a failed lookup as "cannot fast-forward" and "not up to date",
+so that the caller falls through to the normal merge path, which
+already diagnoses the broken object and fails cleanly.
 
-Re-ran the job and it seems to now run as expected.
+An alternative would be to report the breakage at each lookup site,
+which could give a more precise diagnosis.  The minimal guards are
+preferred because they do no more than is needed to avoid the
+crash, and will be easy to drop once "git pull" is reworked to
+resolve object names into commit objects early and pass those
+around, at which point there will not be multiple lookups of the
+same object name to guard in the first place.
 
->
-> Ciao,
-> Johannes
+The test corrupts the loose object in place rather than removing
+it: a missing object that is still recorded in the commit-graph is
+caught by the consistency check in fetch-pack before "git pull"
+reaches the fast-forward check, so removing it would not exercise
+the crash.
 
---000000000000e9040c065bfeb7e0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 7a612506589ea2d9_0.1
+Signed-off-by: Jiri Kuncar <jiri.kuncar@gmail.com>
+---
+    pull: avoid segfault when commit lookup fails
+    
+    Changes since v1:
+    
+     * Rewrite the commit message per SubmittingPatches (imperative mood,
+       present-tense problem statement, alternatives considered), as pointed
+       out by Junio.
+     * Drop the "test -f"/"chmod"/truncate steps from the test in favour of
+       "rm -f && echo garbage >", the idiom already used in t1450. Plain "rm
+       -f" alone does not reproduce the crash: a missing object that is
+       still in the commit-graph is caught by fetch-pack's consistency check
+       before "git pull" reaches get_can_ff(), so the object has to remain
+       present but unparseable. Documented this in a test comment and in the
+       log message.
+     * Drop the redundant "git fetch" in the test setup; "git clone" already
+       populates refs/remotes/origin/*.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xeE9UNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMnhCQy85Vks0UkF0a04ycnMwbjlkZS9PTTV5MHc0LwowWWVVaFNSRWJI
-MWV2N3Njb1owU2U0OE0rckdheVpYVmZVUDFkbzVMbVNMZGNSUmRZT1oyY09pYUlXMXFPTjdiCkdI
-MU9BQTh3YThWSlZGRlpqVXE2Q2tOQTlQWHlwSXRkMHp3aU5oQWxPeWJtQTJaZzAzOE1mcVJ0NTRo
-dlN2MTEKNnFEemxjcFh3ZUlmazZWZ2JVQXJyRHBqSkl0NVF1aU04Z29rdDVFS1BTTEpxbjkwODV6
-ZWVJU3lVaFJtUE1xMAp3WStsM00wUHBKeFNES3lVaGRGWjhNSU5zbURHa3czZkpiSjErWnk1bnZr
-WDNtTUw3U2RqOWxFdmIyUGZkT2txCm1MTmY5Qi96cndXakFVRUM3Tkd0WjlKSTJhNytucDNlV3N3
-TFkwdHRpbkQrSXAwVjJyMlZGZjFsc0pzaHpNS2cKL2NWSUhWQktQeUdWUnJMT0JibWRZTm5SODFo
-NnR0ZlplWmx0b0QzeFRGdlIyTVd0MDNYTnRITDVjV2hkdTZVego3ZW9oTFFnSEhmVFMyVkhLSTln
-K1JlTGhOYlE0TFdyVEprdTBoZFFVUVdFWktkS1BOWld5YUU1ei83bVJnTEVBCmlTSFhZSFRYcE5S
-RERiYWwwUVltUUZ5UmliVzRwQW12am5oa21tND0KPXRZUlYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000e9040c065bfeb7e0--
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2223%2Fjirikuncar%2Fjk%2Fpull-null-merge-head-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2223/jirikuncar/jk/pull-null-merge-head-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2223
+
+Range-diff vs v1:
+
+ 1:  db6ecf62ec ! 1:  c00ae9d699 pull: avoid crash of invalid merge head
+     @@ Metadata
+      Author: Jiri Kuncar <jiri.kuncar@gmail.com>
+      
+       ## Commit message ##
+     -    pull: avoid crash of invalid merge head
+     +    pull: avoid segfault when commit lookup fails
+      
+     -    Adds NULL guards for lookup_commit_reference() to avoid segfaults.
+     +    get_can_ff() and already_up_to_date() pass the result of
+     +    lookup_commit_reference() straight to commit_list_insert() and
+     +    repo_is_descendant_of() without checking it.  When the object
+     +    behind HEAD or one of the merge heads cannot be parsed, e.g. because
+     +    a loose object was left truncated by a fetch or gc racing on the
+     +    same repository, lookup_commit_reference() returns NULL and
+     +    "git pull" segfaults instead of reporting the corruption.
+      
+     -    Those invalid references are possibly caused by parallel fetches or
+     -    gc racing on the same repository.
+     +    Treat a failed lookup as "cannot fast-forward" and "not up to date",
+     +    so that the caller falls through to the normal merge path, which
+     +    already diagnoses the broken object and fails cleanly.
+      
+     -    This effectively treats failed lookup as "not up to date" so caller
+     -    falls to a normal merge, which reports the broken object instead of
+     -    crashing.
+     +    An alternative would be to report the breakage at each lookup site,
+     +    which could give a more precise diagnosis.  The minimal guards are
+     +    preferred because they do no more than is needed to avoid the
+     +    crash, and will be easy to drop once "git pull" is reworked to
+     +    resolve object names into commit objects early and pass those
+     +    around, at which point there will not be multiple lookups of the
+     +    same object name to guard in the first place.
+     +
+     +    The test corrupts the loose object in place rather than removing
+     +    it: a missing object that is still recorded in the commit-graph is
+     +    caught by the consistency check in fetch-pack before "git pull"
+     +    reaches the fast-forward check, so removing it would not exercise
+     +    the crash.
+      
+          Signed-off-by: Jiri Kuncar <jiri.kuncar@gmail.com>
+      
+     @@ t/t5520-pull.sh: test_expect_success 'git pull --rebase against local branch' '
+      +	git clone up dn &&
+      +	(
+      +		cd dn &&
+     -+		git -c fetch.unpackLimit=1000 fetch origin \
+     -+			"+refs/heads/*:refs/remotes/origin/*" &&
+      +		git commit-graph write --reachable &&
+      +		oid=$(git rev-parse refs/remotes/origin/sideA) &&
+      +		obj=.git/objects/$(test_oid_to_path "$oid") &&
+     -+		test -f "$obj" &&
+     -+		chmod u+w "$obj" &&
+     -+		>"$obj" &&
+     ++
+     ++		# Corrupt the object instead of removing it: a missing
+     ++		# object that is still in the commit-graph is caught by
+     ++		# fetch before pull ever reaches the fast-forward check.
+     ++		rm -f "$obj" &&
+     ++		echo garbage >"$obj" &&
+      +		test_must_fail git pull --no-rebase origin sideA sideB
+      +	)
+      +'
+
+
+ builtin/pull.c  | 10 +++++++++-
+ t/t5520-pull.sh | 27 +++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/pull.c b/builtin/pull.c
+index db3ee0aab3..80e79daeb9 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -800,8 +800,12 @@ static int get_can_ff(struct object_id *orig_head,
+ 
+ 	orig_merge_head = &merge_heads->oid[0];
+ 	head = lookup_commit_reference(the_repository, orig_head);
+-	commit_list_insert(head, &list);
++	if (!head)
++		return 0;
+ 	merge_head = lookup_commit_reference(the_repository, orig_merge_head);
++	if (!merge_head)
++		return 0;
++	commit_list_insert(head, &list);
+ 	ret = repo_is_descendant_of(the_repository, merge_head, list);
+ 	commit_list_free(list);
+ 	if (ret < 0)
+@@ -820,12 +824,16 @@ static int already_up_to_date(struct object_id *orig_head,
+ 	struct commit *ours;
+ 
+ 	ours = lookup_commit_reference(the_repository, orig_head);
++	if (!ours)
++		return 0;
+ 	for (size_t i = 0; i < merge_heads->nr; i++) {
+ 		struct commit_list *list = NULL;
+ 		struct commit *theirs;
+ 		int ok;
+ 
+ 		theirs = lookup_commit_reference(the_repository, &merge_heads->oid[i]);
++		if (!theirs)
++			return 0;
+ 		commit_list_insert(theirs, &list);
+ 		ok = repo_is_descendant_of(the_repository, ours, list);
+ 		commit_list_free(list);
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 27f38ab3c8..b3ab8f4c94 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -888,4 +888,31 @@ test_expect_success 'git pull --rebase against local branch' '
+ 	test_cmp expect file2
+ '
+ 
++test_expect_success 'pull does not crash when a merge head does not resolve' '
++	test_when_finished "rm -rf up dn" &&
++	git init up &&
++	(
++		cd up &&
++		test_commit base &&
++		git switch -c sideA &&
++		test_commit a &&
++		git switch -c sideB base &&
++		test_commit b
++	) &&
++	git clone up dn &&
++	(
++		cd dn &&
++		git commit-graph write --reachable &&
++		oid=$(git rev-parse refs/remotes/origin/sideA) &&
++		obj=.git/objects/$(test_oid_to_path "$oid") &&
++
++		# Corrupt the object instead of removing it: a missing
++		# object that is still in the commit-graph is caught by
++		# fetch before pull ever reaches the fast-forward check.
++		rm -f "$obj" &&
++		echo garbage >"$obj" &&
++		test_must_fail git pull --no-rebase origin sideA sideB
++	)
++'
++
+ test_done
+
+base-commit: fa7f9290efe2bd22dd736689597b474b93798e11
+-- 
+gitgitgadget
