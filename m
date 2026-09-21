@@ -1,147 +1,131 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed2-f12.google.com (mail-ed2-f12.google.com [74.125.228.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E759A4B487D
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 21:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790027093; cv=none; b=h0JovXRVnSlhCyCLtfK31t3M/l81QjDiUBrXhJm6GDeB/n62mV/UAwh9DHf4oLPSXmpRmV6SyM/P0FbvEzATHrTea0R5PhFB/34iJ4pmQErXOKluaEZOucP+ar7Q05icrvH5GIz11+WVqhXJsM6fUUDhgmrxFxKkKcGrfvur3bQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790027093; c=relaxed/simple;
-	bh=lWHrZa5z4cMEKfUJc3dkGRy7L9uqOu4Ulz/ES343W5E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AG6JwGFvDaSgTULMVdvmeyL7SqW6niAaKVJSVrezuEUboKCxJQ3zd7nWrr1Bu2/XQdvgIL+JdBrn4ok9uS8XBEgVx5h4JEvV+J+uUQCVM746NJyS8md13kF3N04BrJ7F0eA9FBwbvSnCrKiNv8nhP7/FBY95rIExsCWljYVrq8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K9KyEmDw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vzsS/GSQ; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665304FC346
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 21:46:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.76
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790027185; cv=pass; b=mBuXDmy9yVnW6Jx+YTlwG0Y91dbfXNDaDD7GD0VuAPKKMOif+WMW8kpezK+SbJxcjj22xj/o40AiDTDt4ia+XXZlW7JtDKSVwbEBEGHT+EBvbP/aLfiZqrxmM0eVXoiIyld8pn8c0/N8jH+vR5h691I5k1ZD6GQKA5q76Bq8pz8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790027185; c=relaxed/simple;
+	bh=4f+kWoWFp/fIYcGnxNnazAKMKFKhfxRUIjLCeczxIMU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YB9bBnQnlOYi+aTTJJ0MDlvnKMs6ggxK7ys4eucZt0aQ+Sx2tcH6v8WCvCUtz+7HH3DvYX1uywU8sMIIauY6GSKQOE/qTiCl66IXNf7FSKfPUcckBi7ddQ2wgNqL5OTS7eBiYE5SXpIwBwgCjHSuvFr99HSrY8ZEDUnuGpoPi+g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A5Y8bGcE; arc=pass smtp.client-ip=74.125.228.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K9KyEmDw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vzsS/GSQ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1FBCD14001AC;
-	Mon, 21 Sep 2026 17:44:51 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 21 Sep 2026 17:44:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790027091; x=1790113491; bh=dd0oOb3K7H
-	YdhfYGBY2BP1OK241mMUKWD8t1QNf7GhE=; b=K9KyEmDwLcSF5jlPnCYRBcwLfE
-	b4I6sps6PZoGhqmJzHscmSa8xB22cTbYs1fIRfZmHovTt7b/JigFD011n28qX4m3
-	4orJkdjYMDaKCdh0w6YmV9lcf07qUDbsSX1qup+VtbegUrJ4xya4JTnDxNOMGr/L
-	DiEVfzBx8X/WG/82KK2zpmA2YnuTv8rIvSBDEEt7uxYSGNC9JF3S1Rl0taR2pn/O
-	Q8T2li1yG4kB9AL3yFC0gtR0zMigKDMNMK8rnwUIq6eh5gfs2vXdYTbwhwISOP7q
-	uR7J1kgCQ1TzJ1O+/3hVfV6Kn9N/MMZcEKF+FpPXzFkm7faZJ65QVqkqtv5Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790027091; x=1790113491; bh=dd0oOb3K7HYdhfYGBY2BP1OK241mMUKWD8t
-	1QNf7GhE=; b=vzsS/GSQmw7xUXe2iN076Vad3IvaxANWe3Gx+/8RW9gcAtrlE1m
-	lxEqAPeFm3GRpAgUP31JY71wBonEsraCgDBAkzTCHp5NzhhhVGnOH9frEMBKShWp
-	lcPBa75vqG+DTEmm15lLbeaObdt6g6D/kXun7tlb9Tj+g0LohaQ4rAwcZjhl9zuJ
-	e+V7uYY84Cfbcn1Lj4vOgDuZhjDYUcR4kvfeYd55j/zzsuIHWrL1cmHP9EYUlp40
-	QMbhoSR8yX6TJmJZ3sdli62S9dE3Ds39vlQKRzYB82P0qHoGQUl8y4hYuToOzipi
-	DlTYOybWxwwHTNzzcwu2f6umMu5NkVGgt1Q==
-X-ME-Sender: <xms:U6WxarXR2XQx-c8DMsPSIpkMqTvYpJKA3ssPn3JvXYOwiRsp6OfI_g>
-    <xme:U6WxanQpdLMkrbXEv2OK_BaPITRmDy1URMJMHPIMENRaXgLPsQhlozEXdBnZUqjja
-    VjwG9Tjyq9EPrX652psoKqrO1PB81ErXJZSnjCQmP4dhbJPUZLAK5k>
-X-ME-Received: <xmr:U6WxahM5Z90GT-yZZihIbjErJFrxjkMVMpOul_I27OCidXAdXTso412rLfN2NQGFbMuZ-hcdCOQla_RltwS6gvKCxDboJD6i8Slh>
-X-ME-Proxy-Cause: dmFkZTFh5Qxd/sWFvsNiPUkT32a0KbGyqd8axdlrLUUPynGnknioSUcXLM2qRtDTfvWlg3
-    P8NHSTG+f4fYoPcrobjISGm8SpllRWTsZcp1r9U9NsihUmQpRQlAbA341WM4iNfmLCtcTY
-    hMeb4RdVyzsP1+p2H8lrgs3edst//n4zeI98Qyi1jjRo5mHKIpRLwSdETcM9cYJizjsew4
-    6c+M6kRqob/wz79kFeTmbmURBFWTtEm/PVu5aSNs7uCMitpQqNrqjNLSeYBJ8IiVYXH7HO
-    Zh++z97aYUq340jOoAEdkNyVU7FqLELxsO9J8W7q4+eSHFvjBOt4Zhx44YC4ei5nzgreLm
-    Q/ZCGluwws3SOy6FuTZvFAZ9dCZ6TDKbM7rk4lGf6NnPhdRNRRH2yy64xEg8meBAb8kR6D
-    +qQzR/m7ZRIkrtPVpf2ZVosO13raCMRAOI413/OrTHZlF5W72jGdVD2GcDJndmEM4zSrsI
-    n6QT5yRYamha7hwshSq5BPbxpRyuJyfrr5MGjyH+x0NiJsOxuPW+xYck2XDknQQ11Fmfp9
-    Zq0hA2FZLrlsfBSBoqA6J/+IVm7UCeRxnf0dlal/aymVp5Y8+hZSlIwXhFl8Whmryk94pE
-    M45HZ7/IIQXq6kn0DHalXMCxmyAFVJ9YLCmgP/3jOSquufeLa18ACoLF2WiA
-X-ME-Proxy: <xmx:U6WxatTOq_0lamm7Mq7J_UB9_-v073BXzbHI9S7hYIWOGnLO7gE0YQ>
-    <xmx:U6WxanhX30c1XnEDxz2o9EHLvB1-oKFrchI5VKXxmozNDImirPyqeQ>
-    <xmx:U6Wxau8sfoROdmgPHVzG-rUtFTJ3JK1uCXDS4XOF7mVUgUxlKhiiYQ>
-    <xmx:U6WxamFSdIK8WSBP0VYbe7dO9IB18UPTUobk1b9ayOK5irq8D21irg>
-    <xmx:U6WxauGoSq2Utt6Pf_EPaSfx6hYe9ed5AJnYX5TvNsfxiViGPqBDC9aV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Sep 2026 17:44:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  peff@peff.net,  newren@gmail.com,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH 6/6] strbuf-safe: add init and release methods
-In-Reply-To: <dea925f31647e7c08f3fa467b8058351b463f593.1789736540.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Fri, 18 Sep 2026
-	13:02:20 +0000")
-References: <pull.2230.git.1789736540.gitgitgadget@gmail.com>
-	<dea925f31647e7c08f3fa467b8058351b463f593.1789736540.git.gitgitgadget@gmail.com>
-Date: Mon, 21 Sep 2026 14:44:49 -0700
-Message-ID: <xmqqld8ul1ny.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A5Y8bGcE"
+Received: by mail-ed2-f12.google.com with SMTP id 4fb4d7f45d1cf-6a605844571so4194207a12.3
+        for <git@vger.kernel.org>; Mon, 21 Sep 2026 14:46:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790027183; cv=none;
+        d=google.com; s=arc-20260327;
+        b=azWPKpLUzBgnUi1wYq5P30DKNG4pbUh1E2ZbwRyrNFh4BbUe3nejWMTygl/jUu3PeU
+         4XTdX3URZGX8jyf87oLD0+98eufsI4lIGFyn6WgdAF/uek9bKk7utk+ZFiPQBOaZQzyd
+         A6hLj+MVuYdtXvN8ODdtU2Yfxc9jDxxAH3lhq97r1gKtL/Vyy4bi9na9VIHfVSKrejL9
+         S8Ez5BtcyHI3YZ/OF+jrTXY94Q84148aAt5lQRBH+IlPEfpe0n5fRxchwfSO1U4Jje7Q
+         3gphcndIp7LCCQWcCYJ/B1Jnm149NRre/b9lF5NCqXIfVQ68mFua/OjTiylfyiAJKJyO
+         050Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=4f+kWoWFp/fIYcGnxNnazAKMKFKhfxRUIjLCeczxIMU=;
+        fh=aTGZ6jx5UyevNPha+iFlvG81us+fLqFwJH6RRvU7his=;
+        b=JvIIzA/M4xIyX/UU9YZbsKJQWPxJtjkGRTORazUDEfqV6Hvbc//7fdNlshq0afYrVT
+         UnSf/qX2r7hP8+W0Dn7QsRTKVZDhggAyNudSmRu009HT/m9LEdkMx+jlRS+1YdedYk/S
+         FrUgkrN99uDTGLGWdRbksgyDE7Zku3GyIds+UI8TxuKolZZSb3aL+OukvtGPMffjXa4d
+         wyvj3vC6IqcLAiGNNiubyX/36pMINS8j3qi54QLC1v5YQ0aYOSCV1OwnxDNPHjrWrw0O
+         C7airH3axR5o0oBMC0nlV9kUiSHPIzdKzld8W1C98gfgl4hH/3fsmhwuG5QW+gppnYa8
+         MHmA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790027183; x=1790631983; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=4f+kWoWFp/fIYcGnxNnazAKMKFKhfxRUIjLCeczxIMU=;
+        b=A5Y8bGcENB549hNhe7s5y5StrTEUjDRd+6IhiZxyrmWuJ3Ku/ojHLpZHoJ0FppIdFj
+         9Ni6fQWQ6K3yu5vZ0Y7DAzTFpQRest/vONcV6admH2ieIQsNaRDypb29Yenf01J/8SCN
+         NB8F98gOPLYb9SgKVkP1PYzjTFP/2157/ml572WbMLUQ+nk3+F9gTUOXIaIp85AHobwd
+         x9CqRM3PTcheOPlwt4+XZU7x32dPuFOffzmXazuREf6Eck0EfrNjveri5G6nFQHlaNei
+         K7hWkgooZUWp5k/eVL1nhwZ7VOQrMVsQlgOjMQjrD070JpVEaY93EJzKp5O2Op5ZhX79
+         0ATg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790027183; x=1790631983;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=4f+kWoWFp/fIYcGnxNnazAKMKFKhfxRUIjLCeczxIMU=;
+        b=qecolaT0LEg6KSBVb+Xg88hw5OElV3dRWNaYzjfePet2r1AL1H/4U1xLM+J5mI3RMz
+         VxgRhNq2wo8XnjWKMn8DDQh15eOkFa/whhV4HtFv8kHG1ZijZ4E2PVgMXYt0XkGR2YcB
+         e8PpJaw0Guo2MTLyA0YXZ4Y9CgUXwESWAixALsV40Gyh2rKsZtbsx4+7Q3BbO4k9MT/L
+         ZSzSSfDcpZLFsuQGZ4i5xaq3bsu06kpjSKQ3oZfPQfhhSJYTvTRVsVogR089TDi2gPKg
+         5YzaEKMMmgemw/J+W5od9QYkDy3jn8bNIQUcelST2PmLsOmBf3Gw3lW5IfNuWuL3OmO6
+         RUkw==
+X-Forwarded-Encrypted: i=1; AKwUvBz15pBeBTNy3WDPX6WmhjdY3qhP8vPeILEhn5aCgdO/RP2RCAlB5SVnQ0F2USFi0QfSQa4=@vger.kernel.org
+X-Gm-Message-State: AFuF++miVEofirC4cFwdU/QMweMkurR8LLt28kmKKqOksaSWs6QKMrGZ
+	es84gTKROT41XKsgCZ2BDGjyg8oWGFr2pmtNJQPokOxhbl+3NqpP/epbueMUZQc1uymFU2IPWbZ
+	4k+CT9qgYKJeUI+u/JTBfR3m+7RglBSRtQKf9
+X-Gm-Gg: AYBFou2yTgF0Dycl6AqCNJBn5WPbc/TnDA1CVSwdQLhIchtDFa9ug1KZnttHvyUJTHZ
+	gc4lqJehRtz4lvIsxokNBZEO5xmlBCd6mLYE95ZWqpar/RpHQGjSu5QdtSj1fWwqJzOLhjtMltg
+	Vn6eosAe1qIgPLtj95RCUYEFetLhKiLxOT1vkxfFtuze16KYQiPUbH9WnNcpVhd9ERUbceEZnKY
+	pq7UO4zvUdsBqWo8IqQJQSQFc1+smzO5hAshkK8mmj3nRKoH83l/aO7xqRoXkrg+m3C+zTh9CPM
+	4sxQd65pp3K1wVhqg/ds1romSbakeZ+1E5SjKEN3kgCchaV3D4J8AD4=
+X-Received: by 2002:a05:6402:28cc:b0:6a7:ea54:38c with SMTP id
+ 4fb4d7f45d1cf-6aa54891f0cmr8105497a12.29.1790027182399; Mon, 21 Sep 2026
+ 14:46:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com> <7f084e4d-f738-4bd4-9b4d-cad995f04be8@gmail.com>
+In-Reply-To: <7f084e4d-f738-4bd4-9b4d-cad995f04be8@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Mon, 21 Sep 2026 23:45:45 +0200
+X-Gm-Features: AcwNN1V6KOKVBJ6chT9Qr-ENeqqR6DQWTwwguMS38alcG1AhKBKeM5IhW_l_Yk0
+Message-ID: <CAHwyqnWbbCK40qAU1vhCFmN86J-dCY3tv_N_nBYgK2Bxf3o1fg@mail.gmail.com>
+Subject: Re: [PATCH] fetch: add config to avoid fetching every branch in
+ shallow repo
+To: phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Sep 21, 2026 at 3:28=E2=80=AFPM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+>
+> Hi Harald
+>
+> On 19/09/2026 15:47, Harald Nordgren via GitGitGadget wrote:
+> > From: Harald Nordgren <haraldnordgren@gmail.com>
+> >
+> > In a shallow, sparsely checked out clone of a repository with many
+> > branches, plain git pull can take minutes or hang outright, even
+> > though only one branch is actually being worked on.
+>
+> I think the sparse checkout is irrelevant? It is unclear to me if this
+> is talking about a case where there are many branches in the remote
+> repository and only one of them was cloned, then adding a second remote
+> created a wildcard fetch refspec
 
-> +int jw_release(struct json_writer *jw)
->  {
-> -	strbuf_release(&jw->json);
-> -	strbuf_release(&jw->open_stack);
-> +	enum safe_result result = SUCCESS;
-> +
-> +	/* attempt both removals without short-circuiting. */
-> +	result = sstrbuf_release(&jw->json) || result;
-> +	result = sstrbuf_release(&jw->open_stack) || result;
-> +
-> +	return result;
->  }
+Yeah likely. I cloned my fork of homebrew-core with `--depth=3D1` and
+then added real upstream as a remote. Then I made my work on a feature
+branch.
 
-This is puzzling in a few ways.
+Then tried to set my branch to track upstream, but it didn't work.
 
-"enum safe_result" so far has been SUCCESS==0 and MEMORY_ERROR==1.
-Presumably in some future we would gain other kind of error symbols,
-but when that happens is this meant to act as an enumeration of
-different kinds errors?  Or an enumeration of bitmasks that can
-signal different kinds of errors?
+Then 'git pull' and it hung.
 
-If we mean "enum safe_result" is an enumeration of different kinds
-of errors, then the "result" variable and the returned value from
-here would be able to report a *single* kind of error, and it may
-be common to report the first error we encounter, in which case
+> If it is the former then we should think
+> how we can improve the behavior of "git remote add" in a sparse
+> repository to prevent it adding a wildcard fetch refspec and instead
+> setup the new remote to fetch only the branch(es) we're interested in.
 
-    enum safe_result result = SUCCESS;
-    enum safe_result res;
+I didn't even consider that, that sounds like an interesting idea!
 
-    res = sstrbuf_release(&jw->json);
-    if (!result && res)
-	result = res;
-    res = sstrbuf_release(&jw->open_stack);
-    if (!result && res)
-	result = res;
-    return result;
 
-would be slightly longer, far easier to reason about, and is a lot
-more futureproof.  What you wrote, with "||", does not really allow
-anything other than "is it still zero, or coalesce any non-zero
-value to 1".
-
-On the other hand, if we mean "enum safe_result" is an enumeration
-of bitmasks, each bit representing different kind of error, then
-
-    enum safe_result result = 0;
-
-    result |= sstrbuf_release(&jw->json);
-    result |= sstrbuf_release(&jw->open_stack);
-    return result;
-
-would probably be what you want.  That way you can add different
-functions that returns different bit to signal a different kind of
-error and or it in.
-
-    result |= some_function();
+Harald
