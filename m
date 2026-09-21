@@ -1,81 +1,82 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8C633D6D6
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 16:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A3E4E0B8B
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 16:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790009415; cv=none; b=QeEUxsaz3OHuJzdzGeEd3vpVpUS0hsN/Yii5KvFMUjvuuTPNmbhb4O7vtrjxhjGpRuCCIb0VLclJ/zewFKvS9c6Jr+7AGm4sbwDPL3OcO/Id3moiCkNdWZymNC5gUUyFshaH/VnUDl4cR5W0tGQIjl7wpGqb+O2S12uZxtYCwj8=
+	t=1790009868; cv=none; b=JqmGUDkn6oPNGWzyeY2iYxU7CVdfB5J4CLmg4CCCvlWCuDWPyRI4F7Cy2SaFTFubrwL/LYuK/UDimvTPpKdkPRTNmzxlu5MPw4oFY1DajbUBuTtWFp3HGGU+4aXhudlFaZNIyOqjWyYoB+Y4B2zeWx86ejPbutsYbjM2ZSkncpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790009415; c=relaxed/simple;
-	bh=KexReKVcPdBR7wsi747EH2J+xg1uvHJrvvWmGKH5Eo8=;
+	s=arc-20240116; t=1790009868; c=relaxed/simple;
+	bh=0QYmk3FyTw7pUCW5/lVCnTR4M0OSgiwWN/HUyR+fbPs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fN8dngp3Cf2wP4OuxkXsYvB4P56yNKI7/dnlJhI+PzMhHjPHCDie6tprUNsCJuEXVcyp4HUKGa/BPqTd9averClJdRt5mLtxYVkt2t/pw231JmNXbanB/hUlzli0769P0ppOLn5OdRdlhQoI9QyYadRzZjt8bzfReW+fiNrqL7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uNgj+Moh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BicNfJPz; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=VZ/zd8X81ZVNkLdLadvasF1FGPgFFs3eDMqGLr5qNF+NgToeEQnjz/Y2IbEdT9koux784Gl/ZkHhoeo8zw3A3HuMu5WjOnlJlaUTxR+qj13cApkTS7P78e/5aiwNiKd7rBuzdoI5UP/tAQssaAf8xSB7pd5Wk9SVnefo7XYAe9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uXTsfxlL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g9iSqSYp; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uNgj+Moh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BicNfJPz"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uXTsfxlL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g9iSqSYp"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2FB22EC0264;
-	Mon, 21 Sep 2026 12:50:12 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id C25A9EC0249;
+	Mon, 21 Sep 2026 12:57:43 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 21 Sep 2026 12:50:12 -0400
+  by phl-compute-05.internal (MEProxy); Mon, 21 Sep 2026 12:57:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790009412; x=1790095812; bh=q8Yj1u0V+E
-	E+bAulXtBCSYM5Xz2Rnaej1RLg5LCJGOw=; b=uNgj+MohZa1jLql0R6iSgMJPb0
-	pOv5JtAYnu135NqcdbOYTJyEWAWTnH6h5Kn/Sese87viasP0nQa3XCdn6vFBSP06
-	x8MiBXum7u1FGCkuNyT942Hwe8RvetfxBFfudH9/ZJDRcOMNssmZgifv72J3s0dc
-	7kPayzp90fVnjosjoxIfLN9nbQms0OBYwdR8PJAKPAK3O4smb1TbRkDLoFA4h3Pv
-	z+9I396vwB1wX6FkpdEkdbzZq6MaQoLuwnNFMzOruq28MUha+oITdZCl84NmeAPD
-	Bzjib/zuUTAx9i6WEFi4pav59gJ2oIn8kwGLhg9qun7WA0+p5sKf+kPyfeDA==
+	:subject:to:to; s=fm3; t=1790009863; x=1790096263; bh=sZ4DtqhFnS
+	FW2Xi0Kpodc7F/DxkOgh2SWFb8Hph+DdM=; b=uXTsfxlLutNxsWxwO5AOUOIifp
+	jtHL/oZoEnE/Ug8eyeyeg68EQMBHyB+LRtoqK/2NpQQ1GJqiSdzdgOfRWVOPkfut
+	d6RZ0QzDb5aYzsp0pT6ZcXbnxn0WEPyg50X9zFRlTDn+kfcAqhO7RGWCc4c0eH0G
+	GVuvWDrkD6fnMSSZKlis8lQ7qWMqjFyY8eqYBnXROvaOZBFNESuBXOUo4mBIqdX6
+	EMirU5vLWPQqmVCJ2ZU79Ys6j7W/P7Pd325sqBrxgXsLCeDrz3fjOdFDoIpW3atq
+	2W3B6w+MgYnjtIumyBx8VhrFAm3nDkNn4URa0gttH34F3NM079Wn4RKcnCfw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790009412; x=1790095812; bh=q8Yj1u0V+EE+bAulXtBCSYM5Xz2Rnaej1RL
-	g5LCJGOw=; b=BicNfJPzlWvEbLSmLhtiNRlTaIYVa47AchgGnY+ZZIc2Uz6Uy+u
-	iVNP8FUNR98L7ljKjZuKtY7nL3ZHUaAmM4tuET+qHGIpcwH27T7xsAczNaByyb/Q
-	pvFu6ikIgmtuS4UX4XeCPDnXYLMbYfEe7mN/rIN0K8YEPnfoWbAOgz0GULbGl0Vl
-	wWPlYPVPYALbilB4cemx6cJufm2sWTimwT4318wlBSxv38pt2HxnKw5xQF97D4GH
-	zPmKD6PH+r3O9k9+fV7k6w+DvVVVn0kLO3znrPkw30BhK59SQSKBLHrmT11MkMKA
-	J6KN4T+XlJl2uqsHJwhhV/OAw0eujCFXFfQ==
-X-ME-Sender: <xms:RGCxatHXDzTus8ld0EBkfJduKm0A8DanHIXSftZ8fVsvYWQFxAvZHQ>
-    <xme:RGCxapVqf_wYsRg9-rYQCBhjrpv1yVPNsSMvGbTaf7YQS8mzWZsmYlVGe8WitxwuN
-    wz2FFzWb-tYwGlGznlxXdBVxngk1Avf_Qf3GVpSiCzSx_as9c0UCygP>
-X-ME-Received: <xmr:RGCxakJNSOFhcDS7k6Sh_C8QENIyuCn6MaoXYzCSflfseGGs3Y-YT4MtA-lWTtYrmW59DIDMjZeHx6RgiNBgL6Igb_SV8o3tJ8c1>
-X-ME-Proxy-Cause: dmFkZTGcd5jcnd6ukRGfA+bqkDS2zTF11GKdvhT+Wq+7pabJO0/LNWsPXNqQVMdWMW9qHq
-    b8eer3p5rrjvKsS0HxbwZkaic7+vsblU+kNuxudXc8HnXfJ1rbWytd4auUpCY99CXFoVVg
-    45W4UJ1sQjlk4+ASYRTm2Co9VkODnI7uY+MqUQ8IGl0UE9R0BkT/y6Zz9X08485H++eggB
-    A4sUyjFkaBGcYNAbi8dQ79CBklpUsK+qZZI5jBBR8LE2Dl/GAd3CJlbuxrAKIJdK3st7HY
-    tVJ7WBH7pPy6GZnZTuTkT5ip1zHDeM3SVlH2/iZUwszySiOmFOxemAA6gcCnJ/7WyMIxgH
-    e5v/gZy0GvBDuAHsxBy9giIwvxA9tkjBBNxRNCz8KYPpeCUWxQSl7E1kXwfLz2gHzFHfK7
-    +YT/Of7RruZ0xNgKMW9exhvJgnERDuHn4Speqs2dYaUcQO6aB+UuR2MRd/A76cnJJgb2rd
-    yXsLwkqT+OfP2KyPwTNOqge2ZijNotlg53UhYMoJMYPEDqhQYagA2NywSHC64KMlOFBLxA
-    huxuiWki9MgKfz4w00mdkAARyByf0DE+XiaeUmWlrVN8IqTfzdIIkdp87Kk/ju7tWeQMIs
-    eunBjQeUw4X110JSYo7OfHgBa/rJDTfFf4CPsG7kL276fxCjv0IKMpv+sX1Q
-X-ME-Proxy: <xmx:RGCxah8_Ki8AIe6XdjQxkWrzHP1fskwjFaazUnfEWPO4y75GBOd6OA>
-    <xmx:RGCxavLvh8kIZ--jMcG0XFlhUY0KDJGDTaJif6KFtBEQtzhA_-Po8Q>
-    <xmx:RGCxaunjIk6mFwPjOaAwnjpzpkqUtvoDq8nvah7VtVN9LWoAF2i_QA>
-    <xmx:RGCxarNzVU79H1uh_8z6rcINlFBx5efRr6MS-bocRVLVlyeyzKwuzg>
-    <xmx:RGCxavrZ1bEkOpnQrayZCuimZN2sui7vQrzf5bJ-Y06ibXy4Sr0YFcca>
+	1790009863; x=1790096263; bh=sZ4DtqhFnSFW2Xi0Kpodc7F/DxkOgh2SWFb
+	8Hph+DdM=; b=g9iSqSYpkHpWKkB0I1YEtCzlbsSLqQZ/I5SxSRDWke1Qq7YKYrj
+	1UFsP+/+P3ggBuLFT9TZFEBam4P1p+WidoMBobSZ6YV7idpYPb3JTAbYs187eZqk
+	w7Nr2C7gf6Xq78X+9aL6ci8AUf02L8GhptRmBlSTZuyWg6vKA+ZOsxQE/8aRcK6y
+	rKqD4B4QpecrQ/QJiwADNnYIuCFf9E4vvM4g7iVN7HTOuXGMon41MLahtgCvGlyl
+	BNPIESY7QgF4zlN/65EgBVga1ZtxofAtigsiySctgKHQ9mF+LkEIpIV3hjHUXb63
+	5O4QUkVvJgWfE3MF1IUvSC9tjSY90cRhPgw==
+X-ME-Sender: <xms:B2KxaqcmzfecYYuYou1-ZEd8mkewR0eFlHIqa_b05EnNi1565LROrA>
+    <xme:B2Kxarp22fj1eGCG2UA2ZPaRLnPTwQTe5xfHXYZCBEH88VwhOdiatw4c4LgKUo9uy
+    BPIMsBCAu3eRKRi7OHmMNOIQGNGdm82PAUY1z_QhZwXBl6_1KdF5-Q>
+X-ME-Received: <xmr:B2Kxao6xOEmtJFtr6BjfTG3QuFG-Sts_aU3mPjc3YfYL0lXTtQZSpKfAJHtMGFU0mnr80BCzbczl2_lD7GEV2S08vOFYSbJuEibz>
+X-ME-Proxy-Cause: dmFkZTEJmsYJAu4CV7y7bCoOKAWCn3J/4K1+aPJIcJNQ1/EdTUP0PwbWN6XV69NqDxGPFr
+    5xi+oD3tRbSfOjRim+CIeU1cf8wRLZ6DtSiIBR24JavdfrTQv5b6qEZ2Jx9+DyZfTXL2gx
+    tmQzS+Yitd1/9t33zaghE1W5EEB2Lc9qGLFH/j8SBCtdf9toabMeR0CEj9kFKeMdAZeE7U
+    Nfcmq7LUyWAz0hc91Ivixx5e69E6rkn/1JQvyyfao6xj2oVZSTmbLzJLWDo5ipIWQFbb1d
+    bXk5fVXkPKzeulx8JEvTb9kP34AW3TmS9hDToqgLhoh6y3iRD9H+Lc2RyxfvycUt/M8/Lu
+    169SVJwOIr+QCD8ROIlqULtNis1xD9A7lc6CP433p+o+doJ6PmZzUUcDQytMQO4PK4YeEp
+    /k/n2L1Vsku2jrJVI8EyDYSBigmg+2PKMb4OAtan2vi+fpN2FzLprrikbyFt4jw3flWAGp
+    e9Jg1C3YrS5aYSQVY35XU8/Slg/mMEBTpPmwN2hp603NWZQXXi3IxNXuHrD2D4QCUrYzKy
+    JEJfSOtKbSiyN6vZIoXa8XEp6GaILmS7htFn9c7Tx1GuPQZjuZXwyK5i9nyF99pdcnNI4S
+    1ZoyUeYPQNoHYt9ng0XP0hj4bgBrID7w7Ivu2y4S5zWNNrDxe4ItQK9529fg
+X-ME-Proxy: <xmx:B2KxahqxW9gFdmFxsx6yUzaFzDwRw-PavUqxEHyJH5JVmiRd7tdQMw>
+    <xmx:B2Kxaqg_gbrKJLTUCpp7fWtys9HcWywvI3M3sSbWhHXwIP0KKn-w2A>
+    <xmx:B2KxarKLqvFXbAeeThXcSD8KJu16FK0As2OezQZlBNyQ3vEEl5rMoQ>
+    <xmx:B2KxaqBwCrEcRdktboVLwHZZnb42DBvs4_w07EGQV8QpILNF8bgEMw>
+    <xmx:B2KxanQU07uW-ACbde8Zr67gk2nSVmbju5J29zOthKF31xnfeKKsdurl>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Sep 2026 12:50:11 -0400 (EDT)
+ 21 Sep 2026 12:57:43 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH] object-name: explain why <ref>~N fails in a shallow clone
-In-Reply-To: <pull.2413.git.git.1789898013916.gitgitgadget@gmail.com> (Harald
-	Nordgren via GitGitGadget's message of "Sun, 20 Sep 2026 09:53:33
-	+0000")
-References: <pull.2413.git.git.1789898013916.gitgitgadget@gmail.com>
-Date: Mon, 21 Sep 2026 09:50:10 -0700
-Message-ID: <xmqq8q4uo8fx.fsf@gitster.g>
+To: Brad Smith <brad@comstyle.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] exec_cmd: RUNTIME_PREFIX on OpenBSD systems
+In-Reply-To: <de116c51-b538-44b7-87d9-653b84a55088@comstyle.com> (Brad Smith's
+	message of "Sun, 20 Sep 2026 22:10:18 -0400")
+References: <aqthQ3u4eW1wHCn7@humpty.home.comstyle.com>
+	<xmqqy0d0t2j9.fsf@gitster.g>
+	<de116c51-b538-44b7-87d9-653b84a55088@comstyle.com>
+Date: Mon, 21 Sep 2026 09:57:42 -0700
+Message-ID: <xmqq4ifio83d.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,154 +86,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Brad Smith <brad@comstyle.com> writes:
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
+> On 2026-09-17 9:45 a.m., Junio C Hamano wrote:
+>> Brad Smith <brad@comstyle.com> writes:
+>>
+>>> Enable Git to resolve its own binary location using getexecpath().
+>> That may not be incorrect information per-se, but lacks critical
+>> bits.  Natural initial questions that come to my mind are...
+>>
+>>      Why would one want to use getexecpath() over whatever OpenBSD
+>>      ports of Git have been using happily?  Is the old way being
+>>      removed?  Is the new way being more accurate?  In what
+>>      situations does the difference matter?  Is everybody on OpenBSD
+>>      able to use this new function?  Do only certain, and/or
+>>      presumably later, verions of OpenBSD have it?  How widely is it
+>>      available?  How long has it been available?
 >
-> Asking for a commit's ancestor with <ref>~N or <ref>^N in a shallow
-> clone that does not have N commits of history locally fails with a
-> bare "is not a commit" error, with no indication that the repository
-> being shallow is the reason, or what to do about it.
+> It's a long awaited API for such functionality on OpenBSD. Otherwise there
+> hasn't really been a means of doing so and one which has been using happily.
+> The proper API I would say is one which works and is more accurate. One
+> which works the same everywhere where as the pile of hacks has different
+> results and not happily either.
+>
+> The API is new. The config.mak.uname check looks for 8.0 and newer.
 
-I am not sure if bringing up '^N' (the N-th parent of a merge) in an
-attempt to be more complete helps readers or confuses them.  Unlike
-'<rev>~N', where increasing N raises the required depth of a shallow
-clone to make the target revision available, both '<rev>^1' and
-'<rev>^43' of '<rev>' share the same depth.  If '<rev>' exists
-locally and its first parent '<rev>^1' also does, it is likely that
-'<rev>^2' is also available, as they are at the same depth from
-'<rev>'.
-
-The title of the commit does not share the problem, which is a good
-thing ;-).
-
-> Add a hint, shown when the walk runs out of parents exactly at a
-> recorded shallow boundary, explaining that history was intentionally
-> truncated there. When <ref> looks like <remote>/<branch> and <remote>
-> is configured, the suggested command names that remote and branch
-
-Good thinking.
-
-
-As branch 'B' of remote 'R' is not necessarily stored locally at
-'refs/remotes/R/B', implementing the semantics correctly and showing
-the correct remote name and their branch name by reverse mapping R/B
-back requires a bit of care, but it should not be impossibly hard.
-
-> directly. For <ref>~N it suggests the exact --deepen needed,
-> accounting for any history already present instead of just N. For
-> <ref>^N the suggestion is always --deepen=1, regardless of N: a
-> shallow boundary commit has no parents recorded locally at all, so
-> deepening by one generation fetches its complete real parent list in
-> one step, whether that commit turns out to have one parent or several.
-> The hint only fires when the search stops at an actual shallow
-> boundary, not merely because the repository happens to be shallow
-> elsewhere, so it does not misfire on a short history that is not
-> shallow-truncated.
-
-I think Ben also mentioned this, but <ref> is probably better
-written as <rev> in the above.  A ref(erence) like "master",
-"origin/next", or "refs/remotes/origin/topic" are all rev(ision)s,
-and this new advice feature is not limited to requests that are
-made using references.
-
-    When the revision <rev> is given as a remote-tracking branch,
-    the remote and branch are exactly named in the suggested
-    command.  For <rev>~N, it suggests ...
-
-> The advice is threaded through GET_OID_QUIETLY so it is not shown
-> during the internal re-resolution some commands do while building a
-> better error message, which would otherwise print it twice for the
-> same failing argument.
-
-Nice.
-
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> ---
->     object-name: explain why ~N fails in a shallow clone
->     
->     Asking for a commit's ancestor with <ref>~N in a shallow clone that
->     doesn't have N commits of history locally fails with a "is not a commit"
->     error, with no indication that the repository being shallow is the
->     reason.
-
-It may not be intuitive to new users that in a shallow clone "git
-log" stops in the middle, instead of going down to the beginning of
-the history, downloading necessary objects on demand.  But fixing it
-by adding such a feature is totally unrelated and outside the scope
-of this topic ;-).
-
-> diff --git a/Documentation/config/advice.adoc b/Documentation/config/advice.adoc
-> index 81f80a9274..5b44037fff 100644
-> --- a/Documentation/config/advice.adoc
-> +++ b/Documentation/config/advice.adoc
-> @@ -128,6 +128,10 @@ all advice messages.
->  		give directions on how to proceed from the current state.
->  	sequencerInUse::
->  		Shown when a sequencer command is already in progress.
-> +	shallowHistory::
-> +		Shown when `~<n>` or `^<n>` cannot resolve enough ancestors
-> +		because history stops at a shallow boundary, to suggest
-> +		fetching more history.
-
-It is obvious that users would see such a message when they say
-
-    $ git show HEAD~20
-    $ git log HEAD~20..HEAD
-
-but would they see the same when
-
-    $ git log -20 HEAD
-    $ git log --since=2.months HEAD
-
-and internally HEAD~20 fails to resolve?  Should they see the same
-hint?
-
-> +	test_must_fail git -C shallow-advice rev-parse origin/main~1 2>err &&
-> +	check_shallow_history_advice origin/main "$oid" \
-> +		"git fetch --deepen=1 origin main"
-
-This is very straight-forward.
-
-> +		test_must_fail git rev-parse origin/main~5 2>err &&
-> +		check_shallow_history_advice origin/main "$oid" \
-> +			"git fetch --deepen=3 origin main" &&
-
-Again, very straight-forward.
-
-> +	test_must_fail git -C shallow-advice-caret rev-parse origin/main^1 2>err &&
-> +	check_shallow_history_advice origin/main "$oid" \
-> +		"git fetch --deepen=1 origin main"
-
-Ditto.
-
-> +		test_must_fail git rev-parse origin/main^2 2>err &&
-> +		check_shallow_history_advice origin/main "$oid" \
-> +			"git fetch --deepen=1 origin main" &&
-
-Ditto.
-
-> +test_expect_success 'shallowHistory advice not shown for a non-shallow repository' '
-> +	test_must_fail git rev-parse HEAD~100000 2>err &&
-> +	test_grep ! "^hint:" err
-> +'
-
-OK.
-
-> +test_expect_success 'shallowHistory advice not shown when resolution succeeds' '
-> +	test_commit shallow_ok_1 &&
-> +	test_commit shallow_ok_2 &&
-> +	test_commit shallow_ok_3 &&
-> +	git clone --no-local --depth=3 --branch main --single-branch \
-> +		.git shallow-advice-ok &&
-> +	test_when_finished "rm -rf shallow-advice-ok" &&
-> +	git -C shallow-advice-ok rev-parse origin/main~1 >actual 2>err &&
-> +	test_grep ! "^hint:" err
-> +'
-
-OK.
-
-I guess the answer to my earlier "does internally failing to resolve
-due to graft point count?" is "no"?
+OK, all of the above were missing from the proposed log message that
+should be placed when v2 patch is prepared.  They've happily been
+using argv[0] as an approximate (which may be OK as long as we do
+not lie to ourselves but not as nice), and now they are going to
+have a proper syscall for the information, finally.  You would also
+need to answer the last few questions I asked in the proposed log
+message of v2, but I thought 8.0 is not yet released?
 
 Thanks.
