@@ -1,83 +1,83 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCA23D8902
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 21:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EF850B406
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 21:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790025872; cv=none; b=ix5j3tY8o5jbllY6okTQqntst2XLVTsbRpCHYa6+KL10rai7P+8fO2lqDMvbvvgJWuSBYwJC2SWRPsN90qJM3NRa+tOYjeTudwrZChPVYYT7RmOeNNcgWQpHQNLmjYBkHt6O6o1hv2BImvthmdtlye6aQ4nllf6xItkuga3dTJU=
+	t=1790026201; cv=none; b=RDBxOUyo08EL9T0qmkHhiQnxuSFXpSiQvsjtg93NbXi0+7/Zi+pPjdRKFXvf6OC/1oeSMvfzV/Edc5mxBtzssJRZS3QpFDYxd6rnrk6P54+HF9w7StBkcUdUqPZivioxXerTQbjMR4AEQjIYmjuc5Omvv9KsMPHn1Rr662ubS8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790025872; c=relaxed/simple;
-	bh=4pB24lJdgEFA1H+YdwNPbv1kaJhmxWRJs2+7RLnh3UA=;
+	s=arc-20240116; t=1790026201; c=relaxed/simple;
+	bh=kKdXsxyQ4fIuzlq/gKhrTI4yLOtVOApDJtaKJN0B9vk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=g/ixv1ZJtU+CMi4tHtzOE1WGwjmD9QjSt9tgh4N76s0lVXf8tyAi3hMiMY8Pwr0q7xtSQOZu014vCidy7SZwNtlavxyTCuNpGaIwx3iLZdQTHrGC/smRR4NRt3vep76c+VvIkvNBCTfkxRBzl65FAti0Hy9ztosOkiGNbpILGdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YNU0G644; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qhygwm/2; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=JeL9g7A0Aikf3WFL/Z4u161a6QInKaVJXTDXrzrCPs1QU93TFkcwgZ43at9cdQF5FckE13VyUIoZzF4LNGJW1v7N09Yx3uw1wX4epwPtuDuXpSghM42ZAJbsWQS+TbEkm/2CFDSWYrmHda+S5WBkvrVlZH2X4Qo9w8NUus1dEEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qSd83kc2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cYQtDpW1; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YNU0G644";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qhygwm/2"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 32FC7EC0212;
-	Mon, 21 Sep 2026 17:24:30 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 21 Sep 2026 17:24:30 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qSd83kc2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cYQtDpW1"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id EDEE1EC0279;
+	Mon, 21 Sep 2026 17:29:58 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 21 Sep 2026 17:29:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790025870; x=1790112270; bh=oZExTWDr7r
-	YA3sxA+8X1gPe2UOowl2F+/jy4Ur/SoUs=; b=YNU0G644MyC22WLFVByV9QG+D0
-	/0AzjEoFjGtfCHXnMHz48BVO/q5WGBZGUuLiSkfC59n7aQ0qVuG8wgMAwdi2Xrr8
-	yqJc/5fMCHBlWzhi243CF9Jome+TFB8oKRLe/l3ufrBOGaHTdXy7+SFrwYvloY2W
-	TlJccWHWnI5TrLtKJykTlCE4UTfxngw8z/mt7SYhLM3vAg9/Qq5ZTBFb8+GIYvkD
-	IU+LbjRHOAajEIetBJLAXewr+Syn7IY/Ytutck/kv2GmnPvRlpA1EoKamosmzTMD
-	ud4FNz/oeUnryAoW61vEu74xsiFJSXZ5b3yTlTSPIJ0+iX2dLdikdd7ImcFQ==
+	:subject:to:to; s=fm3; t=1790026198; x=1790112598; bh=89DKI9wscP
+	4sqkKyfYcsVu8vWnXpFuLmFwYce7tgoL4=; b=qSd83kc2YxdaXGADh8bGAoeDYs
+	Z2kofIrEgvD6fujqW+jM2mZVl7l3yTYFoIByv6pGQ3Vk1ZtG6hjfSGMx3nwOPkUE
+	v2y6kbgEWzRCVhFzq+NzlyyXte7eN4lQyOQQcglyHwM7p3vf3l39cpUoiygHl0IM
+	mWfPsjNDg7BwsNNwYUXi9g3Jfocf0JK6bbZ1EKh2miD1H73E+i0UdYiVV+rh+gmx
+	o7nm4CfAIxojdrKY9cmTA4u6hHh2e0mvuEUxn0V+VshDChsDqIMWmFjKxUW+ebJC
+	ocU4Bred51M4aJjbSVdACHTvPKqZ0yQ0Y4g0hlgWbwwBsm3nIllfJUNCHAwQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790025870; x=1790112270; bh=oZExTWDr7rYA3sxA+8X1gPe2UOowl2F+/jy
-	4Ur/SoUs=; b=Qhygwm/2YR3cDJgtdVA+wSM2LVcZxruo86hk+WmRv5DwLfiwUDP
-	icTfcxP2H56EWqr6Nwx2lXMVrk5pACgIhl/SAD4KVTt2YMHZzQZNAHdRnJXy0Ljf
-	U/VFeIii/eBX2yOre5AIdq5NL+eGH/5kpWT/VNQKomBb7Mlb648BxJTT2BwO8vxj
-	eBiEk8QolNR4RM5s31E4CVEqJmh9KBEiNwIMOjLxttAMrj3MNrGiz6hK0+InXzw0
-	nXnyjE2mR78mBUPHsuTX7tShw9Ik6f2VrwToU5gQ4QZiLly8p50AsoTM/n6FomjM
-	OfljAzsEOgLhRcPyfdTSW4Q0Xn6NdAbIMFw==
-X-ME-Sender: <xms:jqCxani1rD5PLR4kzunL0NobIgYrwXdXBgjyPE6AC0bKiF85K6zhKA>
-    <xme:jqCxantVpCydSLjsVRIkAEhr2kOiMX4xX_98t2rPPrsa23rD1yTXpzn2cpMlfLGMP
-    OPdlZZGHkrY27dnOFQ_Ha6wY99ByZ6ixG6D17JfMX2mXkcjH2VruzaW>
-X-ME-Received: <xmr:jqCxag5C7GZ3xQix4pBIgg1yDu_CeT0B9lLgCJm8GtHNun0ESR85ro8hpaZObeO-WiiILWf83sueSWJdsmczDLQVKqWtJmRBckF9>
-X-ME-Proxy-Cause: dmFkZTGWWBZQXIT5k7zXjQGdZRIAjiiLwQ9cpbZ4+558VVzE0gfl099m+ddXpezJDWxqtN
-    awAXejyj5wzEyX3hMia3cy/OyMRsvdAkM3JnVZ1D0OSkO1FOQQ4/IsGEecNJ7OCHR+QL+g
-    xRbzLh0KIZfMeZSzKV6s+SJZ/VuP4waI6gzH6OHU17rBuTWhjoZEENjIrL37s34RiLu0Kh
-    l4k9hPcSDbxvt47PUBNk7xKf1qgTmqZb8rNAyRHQ0CXwNpKyo4bcxjgBgHtB4Nl0rXDKuO
-    W3IJNLF9QxfGYhjins7XS7XKDC/ii8RoEtzS46KzAdSolO1T0dMAKg6CAtNStXZOuob/h1
-    njC+Df/A70RrJol14ZRYJqwb4hghHesYpQXx7ElOV/h/9+9FubnXqJJneDOF54d4/E69pO
-    XTCb3JDj7t/PQ+0O5sWu3FCWaqqMYdaVW5Elfiga14KRGXR0A8K7mqAIkA/bz8eaHB8CAc
-    2vTSmlGAbsnIxkzOEmWLcncB4HRe5LMf0ILnUmFS6idxSPMva+MqAX3BzV1TKxE70ZHmEE
-    5G/Wh99m+hgO8Krq0g1GZOTOCnaqd7CebBWTuIdwY4GpdpBysMLV7+XRYF+7JZvwSJeQMf
-    WIG96bQfA0aztG9Xn6kuz78hJzg3ywNipBfEsJCZSeK5n3muP+DB+jPkyzdw
-X-ME-Proxy: <xmx:jqCxarMjxgK9mmYVjCmB8rBsvuBMxFcYgFkIXGXCAuXChe9aTkYxGA>
-    <xmx:jqCxamvU6bvD2WA4_i_3fMqmARc0T_UiynacH-RlY0NE9UTxH2vBiw>
-    <xmx:jqCxamayO0Pgcxu5KUFv62c9r5YDH0xWn_ZjqUKAMbMGRmvx4aWv-g>
-    <xmx:jqCxagwQwzpwax3tzEOx77mKPzGVI5ZUoDNyMNeOi8LSCMquwMcLIQ>
-    <xmx:jqCxavQ2ar6WZB5-Tzpf4P8vXhyEWVetkZYba94732_MP2u2VEiU2TCe>
+	1790026198; x=1790112598; bh=89DKI9wscP4sqkKyfYcsVu8vWnXpFuLmFwY
+	ce7tgoL4=; b=cYQtDpW10e2QT/98phtpVjrGi2Ol/eB0szg7kBQ/QItM/gd1wn9
+	UTphjuoA7Qk3yiMzVePsP8C9KaImqgxnn7mn4hr/sOMNzrHv0qAWWeIJbmdofq7d
+	E72WCpSZ3nqVBmYNq6fNk47hurOHwiEhYhMJ8iNTve/Py/lb6k43lKJksMGHymUm
+	3P6EPQl9hPfu3QMwv7+EOClVFjeh1zujWLwXKgQ+OC0sOq2GAHMLxHZVn0qru/as
+	LLQodJx8tBYNBoMoxJpTtzoEAI1SY2uKFxhchYigAqd+U4UlWPJuraOV+qESgd1C
+	W2netKc82/KhbnIxUkuATV4ZmGY2k5hiv7Q==
+X-ME-Sender: <xms:1qGxak1D0vkixfWqNXkrwzyQn3IkgutLACdT7oMAaC9j8T4XmdZkjQ>
+    <xme:1qGxaiwXaw-IL4juqDdENrezCwOmnEKjg7FLo7Tfjroe114TNvrL0socYXRzlac7j
+    4Mvzq19i_lyWA-Ev5JEFskpB9FjNTquvanEay_Azgxf7hqaWZ0GNg>
+X-ME-Received: <xmr:1qGxamvAvZTQacIBaNVvzz8w6IYC7ESR54-M74D-2vXcL6CZV1tGwDta4e5NpBMe_qf0BD6l7tvLiLwdcGQbBwOgqUy-BKS0x4ZM>
+X-ME-Proxy-Cause: dmFkZTFg4xYDoLEozldaj2cKGKw9Rtm/XAncSeJRH+sN3c+uH60gkaO3TBZmGMEFLadQum
+    dWkS8GT/h+S3YmVPcWR2OpOcg97FpFM9VAcyqg/gIMXzVf4RUmP1mO+3QzWRoaA6RgkSpG
+    4Si0DAJnKcXg1REEh9OnXuxyL+C+MIILtWu3ws9gQK+GRteYtjK0hxzdsIjgrzu6V9RNob
+    si9iAkC/aHFhhupqq3vWbp4GcVcnnO3U3yGM9KvMyxcKeRYyC+yZ7YGAsfIzkiZY+1nFCA
+    D0LMXxQFSH39Of7k/OIhKlfSN68vc4wVnyTAjyaOWkVKM7z4u5oCzuOBbzgCbXxn3tm0ZY
+    Ruc8qEX4RkuaolUlmx5TvuS6J1ZK/rmWH1eH++VaS7b81quXnwsFbbrs2zVRl4kIQp7i87
+    Pykinw4VtMw5EFuFd5UeSSZohviIsphwJhF7a3O0LIM5B9SYO8jskT/VvXoR6w0zR14/Gg
+    yekjQrLv/9xD+6GyMaNV0jKNxeKN2DNSsdOfEECjW/3FposM/YeCwElGNNSWnxrM2aVw6i
+    GT2kht+v7JIv++qnxlV9WWXTPBGXZgcd3j8TdObke7OP+2kaWLZdXNBoCsZc+elfsM44J+
+    CeKhZZ2Ny2Zn+0apCvkmjbivdcriEzvUWDo9x+An+jUfvXusf/hv593y5CTw
+X-ME-Proxy: <xmx:1qGxakx_PODOGr-VpKDpgmjWLM-2uvETdL20ROwYDTkSVSvYJbHiiA>
+    <xmx:1qGxapBKpnw9dRodR4MqohMWj9qgcsBffb5xYK7SGW_5VlYhEYAI5A>
+    <xmx:1qGxaic-u6VXsEqo1pKjFXYCKtce98FmlYJjzbd-7s5P9JUbIw3ZYw>
+    <xmx:1qGxajn3jPan1pgwnaCFbXNLk1k6oYq_8nAVnzph5tKaxZPrhzf6NQ>
+    <xmx:1qGxavl0_b3aminKuxxCt9otRMlhWeSUFLKG_vnVRCh8UegqkGFrpIhz>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Sep 2026 17:24:29 -0400 (EDT)
+ 21 Sep 2026 17:29:58 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  peff@peff.net,  newren@gmail.com,  Derrick Stolee
  <stolee@gmail.com>
-Subject: Re: [PATCH 3/6] wrapper: create safe_memory_limit_check()
-In-Reply-To: <3b3c67243d200a42aa105981b64228e2cbb35a6c.1789736540.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 4/6] strbuf-safe: add sstrbuf_grow()
+In-Reply-To: <ebd91b95209d778727dca1bfcce17dcb76b3151f.1789736540.git.gitgitgadget@gmail.com>
 	(Derrick Stolee via GitGitGadget's message of "Fri, 18 Sep 2026
-	13:02:17 +0000")
+	13:02:18 +0000")
 References: <pull.2230.git.1789736540.gitgitgadget@gmail.com>
-	<3b3c67243d200a42aa105981b64228e2cbb35a6c.1789736540.git.gitgitgadget@gmail.com>
-Date: Mon, 21 Sep 2026 14:24:28 -0700
-Message-ID: <xmqqzexal2lv.fsf@gitster.g>
+	<ebd91b95209d778727dca1bfcce17dcb76b3151f.1789736540.git.gitgitgadget@gmail.com>
+Date: Mon, 21 Sep 2026 14:29:57 -0700
+Message-ID: <xmqqv77yl2cq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,23 +89,25 @@ Content-Type: text/plain
 
 "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> +static int safe_memory_limit_check(size_t size, int verbose)
+> +int srealloc(void **ptr, size_t size)
 >  {
-> +	size_t limit = git_alloc_limit ? git_alloc_limit : SIZE_MAX;
-> +	if (size > limit) {
-> +		if (verbose)
->  			error("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
->  			      (uintmax_t)size, (uintmax_t)git_alloc_limit);
+>  	if (!size) {
+> +		free(*ptr);
+> +		if ((*ptr = malloc(1)))
+> +			return 0;
 > +		return -1;
 >  	}
->  	return 0;
->  }
+>  
+> +	if (safe_memory_limit_check(size, 0))
+> +		return -1;
+> +	if ((*ptr = realloc(*ptr, size)))
+> +		return 0;
+> +
+> +	return -1;
+> +}
 
-The code is prepared for a case where git_alloc_limit is set to 0,
-in which case SIZE_MAX is used as a stand-in value.  When the check
-detects a request with overly large 'size', the error message tells
-us that 'size' is over 'git_alloc_limit', the latter is zero and any
-concrete value of 'size' certainly would be over that.  Which may be a
-bit confusing.
-
-Shouldn't we be giving the local "limit" instead in the message?
+This overrites *ptr with whatever realloc() returns, and then checks
+if we had an error, thereby losing whatever pointer *ptr originally
+had.  When realloc() does fail, we have already clobbered *ptr, and
+very likely have robbed our caller the pointer it had to the region
+of memory.  Aren't we leaking that piece of memory as the result?
