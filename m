@@ -1,287 +1,384 @@
-Received: from mail-ua2-f12.google.com (mail-ua2-f12.google.com [74.125.226.204])
+Received: from mail-ed2-f12.google.com (mail-ed2-f12.google.com [74.125.228.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE4549DB85
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 13:19:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.226.204
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789996794; cv=pass; b=A3Pjt/6bX0Sf32umCkZgtv3zNpqwbNew9wacJQ+tUSxmGlKMbthDSXFVIh2nbCM7skKMJKcJg3aUI9oS8Dde9uSiSlDOPWQn/gwCzWFRdC7yQBEG6KHKba2Z/JgDPZ377oZJi5NpbPh6ePlqNYzq6IOSmqhKJAxv43r0w3kQYDU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789996794; c=relaxed/simple;
-	bh=UzuQ88WCYA/QdFAU+ZUznBc0p3yUIrr2eXKYKLa+GD0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P1EwKAtE4cQQXa1jhrs5/khN8597C8uPgUAIZskLmP1ASpDBP5Skt7Cv24dNsIRToUeE3qK5R7tf7KWQ8W/w6ib+XxYBdmQ1kgJfSbpNTeHEgGddUZ6z0IHH/MO1G6Rdbl9Od0fpmD1v17JhCoebzCVRjHkAqBQSM1h+0Dre19k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=klbNdz+E; arc=pass smtp.client-ip=74.125.226.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C21B49E147
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 13:28:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.76
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789997295; cv=none; b=tWzdOod5f9b62KcGSjwvKNVsi9Xt4W+48Txkiz2HnzaJQy+EPT2CL9u0oo8bRZ0SEVRf1eEe7bJphE00fnHSTBlkoZb3OK5gSIHmyI0BrWSQP7BQF7F5s59VE9wo+4GERFwE8n95iD6YRIvXytQ2FbUVnMzfjJI6dEfU6kVS8WM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789997295; c=relaxed/simple;
+	bh=2clAwAIthPrzSAu16MFuvn079DTg7je+qZYao0oFZVo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IbIS2CyniPixavIMbL21qaxKgCVnvO8l9ObgCW8rTyPCqg2qwbWfnyWD22Q7P4B89ISv04ERFMwNn/G2D/JDUtlrPx4IpaOKKiz/ToRW/PE1y5myWvl95r2PDKQM9C2dy0DSn96KnweBpZyX2JqZ3fL+1ARtEaLDxrQdzv/BVaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LcvjZWUQ; arc=none smtp.client-ip=74.125.228.76
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="klbNdz+E"
-Received: by mail-ua2-f12.google.com with SMTP id a1e0cc1a2514c-97e7c72bfe9so628067241.2
-        for <git@vger.kernel.org>; Mon, 21 Sep 2026 06:19:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789996788; cv=none;
-        d=google.com; s=arc-20260327;
-        b=jHkDNuWIEW380GFYhVU2UBKdFykskhVHfgzUal2r1HFNjxzYu4VfDAGaiBG2cLYXKa
-         V4vHpJyzBW+xfrhJ3zke+CCwYAsJM6F0/xSH5BT7QXU5x8d0h2mB2rQBbRmq5m1uPzEu
-         Hvn9BQ0Si678CKh7s/73BMzIlaLZRyEXCziR66iP/TAd0JNmIW3aYsX0WWk+dpdV+6pb
-         CRCnn4gW0RU3LTCHW86RkKDuMDFlWGufnrSOXVpV75slV4e061x4SzEClNkPHoe8o47Y
-         UjZ+4cVW7/4zOUvUdO83oK4xiyNyeeXuX9/97/xVuFnwxGRSL5Rb35jz1LGuch2zP/HX
-         U7FA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=BJvotte/EPSdE7hbPIR/z5uS1nj8j/5J8EvZibTzOIM=;
-        fh=lRZ3tJbTT25zdH6OxD5LaTk4sRoYcDd+KJuK5KbfmjM=;
-        b=QUfTt/dmIPtA+IZ2i2dToPf9dxkeQWLsxMjdv/0ePHaITqv5a2IX0D+hMS8ipbMm8x
-         E8/hSdEXpRri6b1t05n31cA+MlR03yDEtBjANaA8zDbylJo+XddhmSIonqwiqhC+i95h
-         p/4clNVSZoqvu2k6O3Bw+/3g/dUZ/NiiwMaM4VQgJi42BFzgfEk4jWwAqEqKCr969ket
-         9tgmfjKkpvPuPWmq3lxtJwF932FH1iFbgE+/NW/8O1ux3CcYb+MHePeQFz1dNOegrKrK
-         ZMa3ciGYZ7D/WDoa55RaUxsTGCROj9t1M7AoOyTqz+9PMDPQXuY8F+MSfPLigq7ztp/C
-         93SA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LcvjZWUQ"
+Received: by mail-ed2-f12.google.com with SMTP id 4fb4d7f45d1cf-6a9adea43b6so3840228a12.0
+        for <git@vger.kernel.org>; Mon, 21 Sep 2026 06:28:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789996788; x=1790601588; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BJvotte/EPSdE7hbPIR/z5uS1nj8j/5J8EvZibTzOIM=;
-        b=klbNdz+EsvniauygXzziWVjFRwyLc9V/kVswUeP0Ebtfi8DtqXSOesePjahI2MweEE
-         E+fibs49mZkgJpMofL8d3EQQhbc4E1JT4wB/pm4Gw2/6hvO8Up1/6J9fNSqm0jgurPBw
-         J0GjcfeDN8vHfuTWDt/EX5cNFru8sOx6rrZfsVIrD1LJuX964+/rK64JVslqRwP+JTnp
-         49XkyZfOJUyMFBnMG1jQuVsGHZddu26FaOfkV+tZsX7NYT3YWkzPrNIicl7ddSjRPcR/
-         OsD4s6FN9oGlz26/DbBigB53e2MT7IU527qegTjY9pdkJv7SOfRf1cEeVyR5y3bBiM1/
-         BYHQ==
+        d=gmail.com; s=20251104; t=1789997292; x=1790602092; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=0AUMTkq560z3A58AtcK70sz/eFX3L0DlrhWgDZaAnOA=;
+        b=LcvjZWUQJhT3cCYNf3lpRaMonlOMK+GTnbiZ6pX+QgnmkTvRzZInh60ec4853Dijcg
+         QAXWiQvQ4y6IU6tZNrWNKJoFCg2re90flcBBMWIf0r9dpR0PbOUR+4TXLGU0zoF2Ewjo
+         heflJRjvHMnmounAyOSJh62QnY2bgQ9ySiRiuVQD8FfAfQGcPS6++A/rsNJWKiBO5m3W
+         IrJFQKbHw8f5nmq918zPM0LtefS6NNcdFSReVou+0jR8OReI5l3rm6oUMnpA2xbGg730
+         r38iJxfIiik4xX4bYk1YUAtYNXs3kFqjRBHEppF4HAtHsltfVWLDeCXzCI2ejNTGREnU
+         rm7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789996788; x=1790601588;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=BJvotte/EPSdE7hbPIR/z5uS1nj8j/5J8EvZibTzOIM=;
-        b=UxasPneONg/8NknZFcSdedmcucYyYpOFeWJHNqSkm9Jlkqhq/mCEENzIJT5fhwb+vz
-         pJp83MpUuxqa3zOlJwjahBKCAsvWf+MDVghOqPmH+A5s1YL7bndIgVqf/8ZIMi6ArC1d
-         Wk01Sq1R/IXXv/vWsQK1QfCg6EsKGOZOhEwGMf1enk3V4Tzrk2BUoV6qxeo+OZfzS1lR
-         wvrKJ9cZJ2CLqddpJQylb2unD+UF3JndQsjdmeN2goWDhRZhZMryDE7cLOUBWioNvm2t
-         okUwZTI/2Py9c3J6swFLh0bRmvrFKk5zUifLGYKH1hpepik1FP+xhqt6HXOBQysq6Xef
-         5Uwg==
-X-Forwarded-Encrypted: i=1; AKwUvBxOAW6wLrp34qxFfwXij3MijzTZ9cIAV8EvPsp1AIkUMjeAIh7VdapAVIRtqDzwbK6qyx0=@vger.kernel.org
-X-Gm-Message-State: AFuF++kXy0fq7FzXyJynbpEWnHC5t5eV9+j7+7Ed5JD8sPGuRA8skNPv
-	swQov+2wbtW2kwH7L1ShBNpJr1TwPXeA9yml8RqXkTGCWpNjbJWN5pJuZvUdgkLxxZD58VUn0A8
-	ZfjNws3AAzklA0J56Xo25uomR5FofUK8=
-X-Gm-Gg: AYBFou14SF/jYA+iW8oug6QOR0tW47K6nK5AeyyNp/RRdUdFGesWl7mp5JIjUd5W8QT
-	0DSHNeOPSeTa4QccT74xDG/W2hTo2LeF3ww9v0KJSU5rfwxAYhDacPCpmjhfrK1aNYAJesC8dG1
-	Ya+fv1Q6JEBtPg8iC7o91Ew/7Li0le7anaR//uGZzUshfjz09UMaU1CzZlML7z8KXAiPKnHOI4Q
-	gPhmUyMQ5KjdsjWuYjgZXVN4lCRxzEt5l6NRVe7EJ2JNNVg7WdqvxVdxE5kAbbRBgbPA6CPBfzx
-	ryEqBdYyQqOliwj84LlmsZK7I31vWY+A8oj0oPVO4biWO9a+b7DobQPIZcktwF/rM5nEym9r1yx
-	o5OD+oxIK0dJO+ko/4CtroMwx8zCB0ADIG3AvcNm7uEYAQaPkDGtEGnDH
-X-Received: by 2002:a05:6102:5e86:b0:7a2:2068:6b5e with SMTP id
- ada2fe7eead31-7a6cb885c08mr2010666137.24.1789996788421; Mon, 21 Sep 2026
- 06:19:48 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 21 Sep 2026 06:19:46 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 21 Sep 2026 06:19:46 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <d00fdeba2f673cf5a174f919452694c733736e84.1789901584.git.maciej.ciemborowicz@gmail.com>
-References: <cover.1789901584.git.maciej.ciemborowicz@gmail.com> <d00fdeba2f673cf5a174f919452694c733736e84.1789901584.git.maciej.ciemborowicz@gmail.com>
+        d=1e100.net; s=20260707; t=1789997292; x=1790602092;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=0AUMTkq560z3A58AtcK70sz/eFX3L0DlrhWgDZaAnOA=;
+        b=ivgKgQOgMvgiQ3ZQtdPTdsJfQd2UectiG9vGoLU8YjPHbmDIZZYPjCMozBGzIZLhQt
+         9RtWQsbU2cbYDkRK7nkuFBj1pLj+4z+uKMEibYifoFeX82B16xLCHcZpr4htcx//EXcs
+         PnkkrboWiqh2UT+nsqNHAT9LDSd6d5Or0XFuzmwan3r5XQMhPcFfc8Je377z6hmyOE3n
+         dDt4rjlu4SZ3mKgldaw7SvJSCloWHTMJPdjP1dZ2vDSN4Kxih5Ta/rTqBUC6DZSxKcoY
+         FwvRTxEtJ0h88/l27ac8JKdeRdMI+jUBxs7WaFB9PUuJ5grxsb2j6unt2cu7YIbUD7ti
+         vDRw==
+X-Forwarded-Encrypted: i=1; AKwUvBwf+DZDhUReSdg6F1Zfa1Q9xZqb3MoYcyjdp1kE+l6gF6jSl4LPsmcL2PbDPSeQDGqOer8=@vger.kernel.org
+X-Gm-Message-State: AFuF++lWX2HmdvJ6T6RHZnGyOiobQ/MYqDM2DZmNv9kyH8R7GWZAxCo/
+	yC2aKQj7ungi9cfD/QmJmEosO0WZwAPJOv5w3ZKRHh6pTANLRRR5mT1l
+X-Gm-Gg: AYBFou0lEDRh3cMq7Kvy04YkaPx0VFi4RGPTWtkZM/lxXY/KLWJos7uwr6jqbpipH2v
+	gSb8QMRaJV3+go7M+IYJhNyy7zd/x1qGl2tyacWU6IDRtpEbzYTwXIEaydo+stqzw/glAok+Seu
+	VRlR2laHZDZR4z5jZgwPmnMQs0+RiYhZAxRTg2qN1Hl6yBT2A9oRMeWlfAtQYrEN7aOSde3rK+A
+	0ppai0Ch9W5v3W7mR2hzKfA57A43+hf2zBuabDLclhjdpMQQ+fR4vY5/TJEy/XKL+vCrnw4wFu9
+	o4VNg7Mm1R20DeLO9HM9gO2FY4bLgHtbgRr3f67BmleTplY5DbJRSZCZWyXcan3gHMvuOTjtGLe
+	adB9GjDcGG8KQSVkqJSYzisfrSJp9X3xV2GovyBSSKaYW/G6gMFpD0HzEFu6sJf5k8efbU+Wiov
+	NQpXcVRdyH4wgmaQ4KkvGzc7NZ3AiazecU5NQG+cHh14D3pKsC3BFq+7HjxCSd7LPwkagXr230O
+	NOLUqXWWB+xMc+2xrgkJYQg8qu5BbA4JYLNdqnV8S4QC0AEu2XSng==
+X-Received: by 2002:a17:907:960d:b0:c29:d3ad:4f72 with SMTP id a640c23a62f3a-c2a157da677mr848194966b.16.1789997291681;
+        Mon, 21 Sep 2026 06:28:11 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2a3574c22bsm315782866b.39.2026.09.21.06.28.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Sep 2026 06:28:11 -0700 (PDT)
+Message-ID: <7f084e4d-f738-4bd4-9b4d-cad995f04be8@gmail.com>
+Date: Mon, 21 Sep 2026 14:28:08 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 21 Sep 2026 06:19:46 -0700
-X-Gm-Features: AcwNN1XNOcX-OkpBf6wxo5RNJHtR8nl8iy_wTtCTgwnWwrQWUplhCVM0HFXAsZE
-Message-ID: <CAOLa=ZRoNm_kS5CvUH3o208B7+2JSud8o5xAe2ikjYGNVwZiaw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] branch, tag: retain old OIDs in batched deletions
-To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Phil Hord <phil.hord@gmail.com>, 
-	Elijah Newren <newren@gmail.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	"D . Ben Knoble" <ben.knoble@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000b93086065bfe1a39"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] fetch: add config to avoid fetching every branch in
+ shallow repo
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---000000000000b93086065bfe1a39
-Content-Type: text/plain; charset="UTF-8"
+Hi Harald
 
-Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com> writes:
+On 19/09/2026 15:47, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+> 
+> In a shallow, sparsely checked out clone of a repository with many
+> branches, plain git pull can take minutes or hang outright, even
+> though only one branch is actually being worked on.
 
-> Before 8198907795 (use delete_refs when deleting tags or branches,
-> 2021-01-21), branch and tag deletion passed each resolved old OID to
-> delete_ref(). This prevented the command from deleting a ref that another
-> process had changed after it was inspected.
->
-> The conversion to batched deletion dropped those old OIDs. Besides making the
-> deletions unconditional, this causes reference-transaction hooks to report
-> zero as both the old and new OID.
->
-> Both commands still resolve the old OIDs before starting the deletion. Pass
-> those values to refs_delete_refs(). This restores the old race protection and
-> lets hooks receive useful old values without adding any ref reads. If a ref
-> changes concurrently, the transaction fails and preserves the new value.
->
-> Signed-off-by: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+I think the sparse checkout is irrelevant? It is unclear to me if this 
+is talking about a case where there are many branches in the remote 
+repository and only one of them was cloned, then adding a second remote 
+created a wildcard fetch refspec; or if there are intentionally lots of 
+remote tracking branches in the local repository and you don't want to 
+wait for them all to update. If it is the former then we should think 
+how we can improve the behavior of "git remote add" in a sparse 
+repository to prevent it adding a wildcard fetch refspec and instead 
+setup the new remote to fetch only the branch(es) we're interested in.
+
+Thanks
+
+Phillip
+
+> Add fetch.shallow, off by default. When enabled, a fetch or pull for
+> a shallow repository that isn't already scoped to specific refs
+> fetches only the current branch's tracked upstream, instead of every
+> branch the remote has. git pull ultimately runs such a fetch under
+> the hood, so this fixes pull the same way. It has no effect once the
+> repository is no longer shallow, and no effect on a fetch of a remote
+> the current branch doesn't track, both fall back to the existing
+> behavior.
+> 
+> This is opt-in rather than automatic because it changes what a plain
+> fetch or pull leaves in refs/remotes/<name>/ for anyone who currently
+> relies on it syncing every branch of a shallow remote, not just the
+> one they are on. Scoping remote.<name>.fetch by hand already covers
+> this for a single remote, but that requires knowing the config exists
+> and applies it permanently, even to branches that are not currently
+> checked out.
+> 
+> The remote's recorded default branch (remotes/<name>/HEAD) is kept up
+> to date the same way it always is, only the other branches are
+> skipped.
+> 
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 > ---
->  builtin/branch.c                 |  6 ++++-
->  builtin/tag.c                    |  6 ++++-
->  t/t1416-ref-transaction-hooks.sh | 44 ++++++++++++++++++++++++++++++++
->  3 files changed, 54 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index f1abeb681..9f03ebc09 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -16,6 +16,7 @@
->  #include "commit.h"
->  #include "gettext.h"
->  #include "object-name.h"
-> +#include "oid-array.h"
->  #include "remote.h"
->  #include "parse-options.h"
->  #include "branch.h"
-> @@ -230,6 +231,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->  	struct strbuf bname = STRBUF_INIT;
->  	enum interpret_branch_kind allowed_interpret;
->  	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
-> +	struct oid_array old_oids = OID_ARRAY_INIT;
->  	struct string_list_item *item;
->  	int branch_name_pos;
->  	const char *fmt_remotes = "refs/remotes/%s";
-> @@ -314,6 +316,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->  		}
->
->  		item = string_list_append(&refs_to_delete, name);
-> +		oid_array_append(&old_oids, &oid);
->  		item->util = xstrdup((flags & REF_ISBROKEN) ? "broken"
->  				    : (flags & REF_ISSYMREF) ? target
->  				    : repo_find_unique_abbrev(the_repository, &oid, DEFAULT_ABBREV));
-> @@ -323,7 +326,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->  	}
->
->  	if (refs_delete_refs(get_main_ref_store(the_repository), NULL,
-> -			     &refs_to_delete, NULL, REF_NO_DEREF))
-> +			     &refs_to_delete, &old_oids, REF_NO_DEREF))
->  		ret = 1;
->
->  	for_each_string_list_item(item, &refs_to_delete) {
-> @@ -342,6 +345,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->  		free(describe_ref);
->  	}
->  	string_list_clear(&refs_to_delete, 0);
-> +	oid_array_clear(&old_oids);
->
->  	free(name);
->  	strbuf_release(&bname);
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index 40874a292..0a3eb70fa 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -119,11 +119,14 @@ static int delete_tags(const char **argv)
->  {
->  	int result;
->  	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
-> +	struct oid_array old_oids = OID_ARRAY_INIT;
->  	struct string_list_item *item;
->
->  	result = for_each_tag_name(argv, collect_tags, (void *)&refs_to_delete);
-> +	for_each_string_list_item(item, &refs_to_delete)
-> +		oid_array_append(&old_oids, item->util);
-
-Nit: wouldn't it make sense to add the oid to `old_oids` within
-`collect_tags()` instead of iterating over all tags again?
-
-You would have to change the callback data sent. If not, we should call
-this out in the commit message at the least.
-
->  	if (refs_delete_refs(get_main_ref_store(the_repository), NULL,
-> -			     &refs_to_delete, NULL, REF_NO_DEREF))
-> +			     &refs_to_delete, &old_oids, REF_NO_DEREF))
->  		result = 1;
->
->  	for_each_string_list_item(item, &refs_to_delete) {
-> @@ -137,6 +140,7 @@ static int delete_tags(const char **argv)
->  		free(oid);
->  	}
->  	string_list_clear(&refs_to_delete, 0);
-> +	oid_array_clear(&old_oids);
->  	return result;
->  }
->
-> diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
-> index 4fe9d9b23..01b5ba8c4 100755
-> --- a/t/t1416-ref-transaction-hooks.sh
-> +++ b/t/t1416-ref-transaction-hooks.sh
-> @@ -14,6 +14,50 @@ test_expect_success setup '
->  	POST_OID=$(git rev-parse POST)
->  '
->
-> +test_expect_success 'hook gets old values for batched branch/tag deletion' '
-> +	test_when_finished "rm -f actual" &&
-> +	git branch to-delete PRE &&
-> +	git tag delete-tag POST &&
-> +	git pack-refs --all &&
-> +	test_hook reference-transaction <<-\EOF &&
-> +		if test "$1" = committed
-> +		then
-> +			# Ignore backend-internal zero-to-zero records.
-> +			while read -r old new ref
-> +			do
-> +				case "$old" in
-> +				*[!0]*)
-> +					echo "$old $new $ref"
-> +					;;
-> +				esac
-> +			done >>actual
-> +		fi
-> +	EOF
-> +	cat >expect <<-EOF &&
-> +		$PRE_OID $ZERO_OID refs/heads/to-delete
-> +		$POST_OID $ZERO_OID refs/tags/delete-tag
-> +	EOF
-> +	git branch -D to-delete &&
-> +	git tag -d delete-tag &&
+>      fetch: add fetch.shallow so pull doesn't fetch every branch on shallow
+>      repo
+>      
+>      Add fetch.shallow config for big shallow repo, so git fetch/pull doesn't
+>      hang by fetching every branch.
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2412%2FHaraldNordgren%2Ffetch-shallow-narrow-refspec-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2412/HaraldNordgren/fetch-shallow-narrow-refspec-v1
+> Pull-Request: https://github.com/git/git/pull/2412
+> 
+>   Documentation/config/fetch.adoc |  15 ++++
+>   builtin/fetch.c                 |  18 +++-
+>   t/t5537-fetch-shallow.sh        | 146 ++++++++++++++++++++++++++++++++
+>   3 files changed, 175 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/config/fetch.adoc b/Documentation/config/fetch.adoc
+> index 00435e9a16..e63e54a463 100644
+> --- a/Documentation/config/fetch.adoc
+> +++ b/Documentation/config/fetch.adoc
+> @@ -145,3 +145,18 @@ remove the value for the `fetch.bundleCreationToken` value before fetching.
+>   `never`;;
+>   	Never create or modify the `remotes/<name>/HEAD` symbolic-ref.
+>   --
+> +
+> +`fetch.shallow`::
+> +	If true, and the repository is a shallow repository (see
+> +	linkgit:git-clone[1] `--depth`), a fetch or `git pull` that names no
+> +	explicit refspec and would otherwise fall back to the remote's
+> +	configured `remote.<name>.fetch` refspec instead fetches only the
+> +	current branch's upstream, when that upstream is on the remote being
+> +	fetched. This avoids negotiating history for every branch the remote
+> +	advertises, which can be slow on a shallow repository that tracks
+> +	many disjoint shallow histories. It has no effect on a fetch that
+> +	names an explicit remote or refspec, and no effect on a repository
+> +	that is not shallow. Defaults to false.
+> ++
+> +`remotes/<name>/HEAD` is still kept up to date per `fetch.followRemoteHEAD`
+> +while this is in effect, only the other branches are skipped.
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 533fdfe7d8..b22f7fe5f4 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -111,6 +111,7 @@ struct fetch_config {
+>   	int recurse_submodules;
+>   	int parallel;
+>   	int submodule_fetch_jobs;
+> +	int shallow;
+>   };
+>   
+>   static int git_fetch_config(const char *k, const char *v,
+> @@ -175,6 +176,11 @@ static int git_fetch_config(const char *k, const char *v,
+>   		return 0;
+>   	}
+>   
+> +	if (!strcmp(k, "fetch.shallow")) {
+> +		fetch_config->shallow = git_config_bool(k, v);
+> +		return 0;
+> +	}
+> +
+>   	if (!strcmp(k, "fetch.followremotehead")) {
+>   		if (!v)
+>   			return config_error_nonbool(k);
+> @@ -1958,15 +1964,19 @@ static int do_fetch(struct transport *transport,
+>   		refspec_ref_prefixes(rs, &transport_ls_refs_options.ref_prefixes);
+>   	} else {
+>   		struct branch *branch = branch_get(NULL);
+> +		int tracks_this_remote = branch && branch_has_merge_config(branch) &&
+> +			!strcmp(branch->remote_name, transport->remote->name);
+> +		int narrow_to_tracked_ref = config->shallow &&
+> +			is_repository_shallow(the_repository) && tracks_this_remote;
+>   
+>   		if (transport->remote->fetch.nr) {
+> -			refspec_ref_prefixes(&transport->remote->fetch,
+> -					     &transport_ls_refs_options.ref_prefixes);
+> +			if (!narrow_to_tracked_ref)
+> +				refspec_ref_prefixes(&transport->remote->fetch,
+> +						     &transport_ls_refs_options.ref_prefixes);
+>   			if (follow_remote_head != FOLLOW_REMOTE_NEVER)
+>   				do_set_head = 1;
+>   		}
+> -		if (branch && branch_has_merge_config(branch) &&
+> -		    !strcmp(branch->remote_name, transport->remote->name)) {
+> +		if (tracks_this_remote) {
+>   			int i;
+>   			for (i = 0; i < branch->merge_nr; i++) {
+>   				strvec_push(&transport_ls_refs_options.ref_prefixes,
+> diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+> index f323ceebd2..8143af9fc3 100755
+> --- a/t/t5537-fetch-shallow.sh
+> +++ b/t/t5537-fetch-shallow.sh
+> @@ -13,6 +13,24 @@ commit() {
+>   	git commit -m "$1"
+>   }
+>   
+> +check_upstream_refs () {
+> +	git for-each-ref --format="%(refname)" refs/remotes/upstream/ >actual &&
+> +	cat >expect &&
 > +	test_cmp expect actual
+> +}
+> +
+> +check_upstream_head () {
+> +	git symbolic-ref refs/remotes/upstream/HEAD >actual &&
+> +	echo "refs/remotes/upstream/$1" >expect &&
+> +	test_cmp expect actual
+> +}
+> +
+> +check_same_tip () {
+> +	git log --oneline -1 "$1" >expect &&
+> +	git -C "$2" log --oneline -1 "$3" >actual &&
+> +	test_cmp expect actual
+> +}
+> +
+>   test_expect_success 'setup' '
+>   	commit 1 &&
+>   	commit 2 &&
+> @@ -261,6 +279,134 @@ test_expect_success 'fetch --deepen does not truncate' '
+>   	test_cmp expect actual
+>   '
+>   
+> +test_expect_success 'fetch.shallow setup' '
+> +	git branch narrow-side &&
+> +	git clone --no-local --depth=1 --branch main --single-branch \
+> +		.git narrow-default &&
+> +	git clone --no-local --depth=1 --branch main --single-branch \
+> +		.git narrow-enabled &&
+> +	(
+> +		cd narrow-default &&
+> +		git remote add upstream ../.git &&
+> +		git fetch --depth=1 upstream main:refs/remotes/upstream/main &&
+> +		git branch --set-upstream-to=upstream/main main
+> +	) &&
+> +	(
+> +		cd narrow-enabled &&
+> +		git remote add upstream ../.git &&
+> +		git fetch --depth=1 upstream main:refs/remotes/upstream/main &&
+> +		git branch --set-upstream-to=upstream/main main &&
+> +		git config fetch.shallow true
+> +	)
 > +'
 > +
-> +test_expect_success 'branch deletion rejects a concurrent update' '
-> +	git branch delete-race PRE &&
-> +	test_hook reference-transaction <<-\EOF &&
-> +		marker=$(git rev-parse --git-path delete-race-once)
-> +		if test "$1" = preparing && test ! -e "$marker"
-> +		then
-> +			>"$marker"
-> +			git update-ref refs/heads/delete-race POST
-> +		fi
-> +		exit 0
-> +	EOF
-> +	test_must_fail git branch -D delete-race 2>err &&
-> +	test_grep "is at $POST_OID but expected $PRE_OID" err &&
-> +	test_cmp_rev POST refs/heads/delete-race
+> +test_expect_success 'a refspec-less fetch expands to the configured refspec by default' '
+> +	(
+> +		cd narrow-default &&
+> +		git fetch upstream &&
+> +		check_upstream_refs <<-\EOF
+> +		refs/remotes/upstream/HEAD
+> +		refs/remotes/upstream/main
+> +		refs/remotes/upstream/narrow-side
+> +		EOF
+> +	)
 > +'
 > +
->  test_expect_success 'hook allows updating ref if successful' '
->  	git reset --hard PRE &&
->  	test_hook reference-transaction <<-\EOF &&
-> --
-> 2.39.3 (Apple Git-146)
+> +test_expect_success 'fetch.shallow=true limits a refspec-less fetch to the tracked branch' '
+> +	(
+> +		cd narrow-enabled &&
+> +		git fetch upstream &&
+> +		check_upstream_refs <<-\EOF
+> +		refs/remotes/upstream/HEAD
+> +		refs/remotes/upstream/main
+> +		EOF
+> +	)
+> +'
+> +
+> +test_expect_success 'fetch.shallow=true still creates refs/remotes/<remote>/HEAD' '
+> +	(
+> +		cd narrow-enabled &&
+> +		git symbolic-ref -d refs/remotes/upstream/HEAD &&
+> +		git fetch upstream &&
+> +		check_upstream_head main
+> +	)
+> +'
+> +
+> +test_expect_success 'fetch.shallow=true with followRemoteHEAD=always corrects a stale HEAD' '
+> +	test_when_finished \
+> +		"git -C narrow-enabled update-ref -d refs/remotes/upstream/stale-branch" &&
+> +	(
+> +		cd narrow-enabled &&
+> +		git update-ref refs/remotes/upstream/stale-branch refs/remotes/upstream/main &&
+> +		git symbolic-ref refs/remotes/upstream/HEAD refs/remotes/upstream/stale-branch &&
+> +		git -c fetch.followRemoteHEAD=always fetch upstream &&
+> +		check_upstream_head main
+> +	)
+> +'
+> +
+> +test_expect_success 'fetch.shallow=true still updates the tracked branch' '
+> +	commit 5 &&
+> +	git -C narrow-enabled fetch upstream &&
+> +	check_same_tip main narrow-enabled refs/remotes/upstream/main
+> +'
+> +
+> +test_expect_success 'fetch.shallow=true keeps git pull narrowed too' '
+> +	test_when_finished "git branch -D narrow-side" &&
+> +	commit 6 &&
+> +	(
+> +		cd narrow-enabled &&
+> +		git pull &&
+> +		check_upstream_refs <<-\EOF
+> +		refs/remotes/upstream/HEAD
+> +		refs/remotes/upstream/main
+> +		EOF
+> +	) &&
+> +	check_same_tip main narrow-enabled HEAD
+> +'
+> +
+> +test_expect_success 'fetch.shallow=true has no effect on a non-shallow repository' '
+> +	git clone --no-local --branch main --single-branch .git narrow-full &&
+> +	(
+> +		cd narrow-full &&
+> +		git rev-parse --is-shallow-repository >actual &&
+> +		echo false >expect &&
+> +		test_cmp expect actual &&
+> +		git remote add upstream ../.git &&
+> +		git fetch upstream &&
+> +		git branch --set-upstream-to=upstream/main main &&
+> +		git config fetch.shallow true
+> +	) &&
+> +	test_when_finished "git branch -D narrow-full-side" &&
+> +	git branch narrow-full-side &&
+> +	(
+> +		cd narrow-full &&
+> +		git fetch upstream &&
+> +		check_upstream_refs <<-\EOF
+> +		refs/remotes/upstream/HEAD
+> +		refs/remotes/upstream/main
+> +		refs/remotes/upstream/narrow-full-side
+> +		EOF
+> +	)
+> +'
+> +
+> +test_expect_success 'fetch.shallow=true only narrows a fetch of the tracked remote' '
+> +	test_when_finished "git branch -D other-side" &&
+> +	git branch other-side &&
+> +	git clone --no-local --depth=1 --branch main --single-branch \
+> +		.git narrow-other-remote &&
+> +	(
+> +		cd narrow-other-remote &&
+> +		git remote add upstream ../.git &&
+> +		git config fetch.shallow true &&
+> +		git fetch upstream &&
+> +		check_upstream_refs <<-\EOF
+> +		refs/remotes/upstream/HEAD
+> +		refs/remotes/upstream/main
+> +		refs/remotes/upstream/other-side
+> +		EOF
+> +	)
+> +'
+> +
+>   . "$TEST_DIRECTORY"/lib-httpd.sh
+>   start_httpd
+>   
+> 
+> base-commit: d38352cd43ab9745686d697872408bc3249a153f
 
-The rest of the patch looks good! :)
-
---000000000000b93086065bfe1a39
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: d41913ddf7bf7660_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xeEx2QVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNlhDQy85WWxDaDdibVppaWdMb01tcTNWMVVVZlVqcgpjaUE2ZTU3MGds
-aythVmFmK0xteGk5ZExPcEhNK2dsS01lcTY1QTdJd3cycXhGWWw1akI1T2NZM0ZCVldCa3lUCndJ
-eEpQR2tCcFRyN3BXZzNaUitvZkZyaTBLYlZlNC9RWi9CU1R3bldUc2VyN3BhK1hRMnJMRmp5RHI1
-TzBZSjkKQm5tZzFwUUNsQ0l2dHdmclNxamJWb01IajdJUDJ0eFUzQ21FOHZyQ1FqeGRkRHpKU0JB
-ZnhWNnBaUmVaWjgzcQo4M3hZOFpKUDBnNm02cDBoRXl6Yk9ab1pzT2VCazdUVW5qSUwyNUc0aytm
-RTdwa0lEcUZ1WHE1ajhDR0kzSENhCk9wdUwxZ0pPeU9wcmJxWXBQUi9jOFplVkU0TSsrdlo3MWl1
-OWMrK2NsNVZFeFoycFVBcGRQSGtUOWlyT3RYNkEKVFVxU1lXQkV5ZC8wa3hSa1p4ZW1QcVVnd1hk
-SVl6aDgwYzdkNXNmZjBaSVk4OWNSZnpIYWQzQ05BZGlyaVQ0Zwo4RkdkbVJFaVdHNkRZNENYUUhn
-V29ja1lXVlZIOEpnUG5adDAzUTc1b1lWcmpXMFY1a2VtWklVcVlhWEFMQWgvCmVtbVB4QWh2L29F
-Nk0vTmhlTkYrdlFjTlg1NGIrdy9sNHNGcWpRWT0KPTdVYVoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000b93086065bfe1a39--
