@@ -1,83 +1,82 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB9672630
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 23:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE45A51813F
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 23:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790031622; cv=none; b=Xx8SbTZ0odpLThIx/kJU5pVY0mDDo4ocTYH3T5DiJq4cHDXrF6Cb4jpTJXVqgvdZp1FYfL4O43xz22Ut0169vExmLVSE36bZrxUgp2x6toAa0Tkf4hSexwp1dlw9QiXQwFwuw+BJzJMXYfEymn30uqP/FO35VLJKoUuVku2evK4=
+	t=1790033322; cv=none; b=Xh1i2XaUIKwMJo7wJbzd5fCxwB3XzVoZ2zQphvJHWouOPkthRS1KeDir7MyhK1/Xk0q+nbl5CXWYbKzDL1hv+Gap8Vq807NQraAOWREE4zbazQ3TrgvLThvF+wjXZBF9nb4V5SbLNRe8jxyM8mtN92ftDnAe1aBn2x1S0CjyZ2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790031622; c=relaxed/simple;
-	bh=QUrFnqaFZD8R8V8ZFJU1nJy/DuCmpRrDgoU5Gk9fBAg=;
+	s=arc-20240116; t=1790033322; c=relaxed/simple;
+	bh=ZmfVn+CEqoO+9kkNsZmPkbLJKlOO8F9vNtl5ekpuDrs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Q6x+co1gWXXLfy3cB4z9LJKrWkR2uZRd2QXt4TfAS+MAYwI5I5Z0TleQ8uswJr0I9tHK5rosmn6czmQUPctzH+DGXUnlo+8E4b4tKmpST2ee5LZ0I5y853Qf5SkRFqnaeTKQnheSna2otAf2qH5H7YF9j5u2CbhA6R9/5WzAJpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Qu8Um/YQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YYqNAUuK; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=PSgpJ3gXiyff2oBWz82biIT1FzAF2i7eeplKhfgNmdsPZogqoX8FkgYw2BsHp546eiaLWqYwNa4xu0s2drVOpqpa6apCvYr2kitncI84Uj26eDrNlKPvRs5TFDQ+Ukgcd99utGlT2lIWObSM3uExvOqNkkJ1H0zuZLdtxQ9XfgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J3UeHt28; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dZ28nDyf; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Qu8Um/YQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YYqNAUuK"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0CAB7EC02D9;
-	Mon, 21 Sep 2026 19:00:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J3UeHt28";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dZ28nDyf"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 902F5EC02D9;
+	Mon, 21 Sep 2026 19:28:30 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 21 Sep 2026 19:00:20 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 21 Sep 2026 19:28:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790031620; x=1790118020; bh=wYt34JT7cU
-	GkfNybtetPOKa82VanPsADHXYCT+R/IPw=; b=Qu8Um/YQvS9mq4/doHUyICJvw0
-	6UF3Q7JssJmC8DskqJF/EszyGWjApyo9CM+tOpF7ptDvVdDfGsXwZMspLU8YpZEt
-	TyMep2nrd/W5A+yCS00qL7BDkvIlqfy0N2mlqVF1Ikc9MXO1lbvtFIMzFXn5i0Ee
-	cwkKU2rLorOn/1H6xT2zDCHCdptGMfQF8wPvrGTkZr2tpRYD09WUE1LNhr3ueFcl
-	V7J8ZtXPV7x9JC2GjE5q4FX7Qx8yetxLCpvCAslhrf+OmXhe1zNqrKK5sOWr6POM
-	unVy/KqCZ6hhlwDBxL4UT/UGB9Wl7sBiNQAMow6OfBi5jVeRZgey7PV4WmYA==
+	:subject:to:to; s=fm3; t=1790033310; x=1790119710; bh=KNBOBh39Xd
+	41wiw3JjMbiUwHPD9YNT5cJiZ6D5yEbjY=; b=J3UeHt28BOJ+cAabTv/wCFGmq/
+	keesixyBh24aHByBzdDOaQxkRtx2+ntKi6Z54fXQe4ancaGyzcNbEqQbKJZLn+nE
+	tL9UduC6oIug1MI15WjYQ2I3IDNoyUoxngTPsExSpLF7tYZL5ZLlzMlb60RzWFGL
+	ezPfweuPvZCI9dpQOxEMVtiLtNuKevsRI2Js9E4IzUDWYdPvCaHQvYm2M2qLgV1B
+	/mBwf9OozdpD4v4XbcX6ocGXFzFghlxy4mUvrMgm6OOyHC7ywPEW4vhNDW+fy1dB
+	IcdLzPO4puCPCTn9K5/HZpkuky2jL2Ya9GCATtsEnAb++/ybau9EemjGWEzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790031620; x=1790118020; bh=wYt34JT7cUGkfNybtetPOKa82VanPsADHXY
-	CT+R/IPw=; b=YYqNAUuKeWzU18ojJzIyZgxP7M7RapiK3w/OKhDCIpGhHKh9/4w
-	NMz2bEvtivQC+x7y3B/K+k3Lw6AJogfmwyPdZqNV+IAlLzNdTl7bCrgz/a3iye+i
-	92cCp6U1wchoyqFa+eKyVDewpudU/Z0wJKGSYqCHDSNa9XAHmu3dEDtC7qkcsmgk
-	BJyIY3nVZV5jDGpUZ9Ocal9BZX5Rv9+iLtsQVN9d6kW+EeWvzmJYyg9uGbdyiO2t
-	cLQgGmUG6cFiArw1YSDfQtDLGuDtxUj7/EI2Yj8R1OjIO1rzK/7il0I42Aw7359+
-	dzpTB1DU4dtlnL6QTSdeSbs7EK9omvetq1Q==
-X-ME-Sender: <xms:A7exajXpAxBLKovIbsaQDdgGx8ErgWEKt2Icc1oJb8asRp7hXSSaiA>
-    <xme:A7exaimqOquAD3zg3uX7ghH8ZbEMGF0_mNdYc8-GU5Nm_ZkVBgdmaO0UNgOfOE1Wi
-    7PAmxxCVne5MuO3I8rydN4e8KAE9JWO68FtkPMUXr4oPxp4bR7JzA>
-X-ME-Received: <xmr:A7exakZXkXbQKI2oJDXVkKhIpHuS424JehbBoMFyPdBSAtoAY3w0YiCJrG5hCPiwkVDnco0PFI0nzoDFg5hN7tFP4Jhp2KG76h2W>
-X-ME-Proxy-Cause: dmFkZTFThjfBYRPu3yAPCOph969Kgo9KFgOY8CNZsAQatGgbNwrSRpOaWd8D22CpCquCoI
-    X91dmz9mwiF0mJEbUx8kilNeyKVFpDTkm1PKCBvlZ1UJhSh/9SleBvbFQ+L+UnU0U7DOz8
-    YY2oYTlgqxAC7nzhEoKgyIplULWvS3i05+OjAT7wz+eK64P0NEH5kk4QyAPuKkKYOwL+kw
-    qfwi+HNL8OEupKrowx2uxQsmXMpdmlehvBDjq5r8zeCcl2vrpKWvEhJfi87EXwVE686tCQ
-    YBGPmCseai2RJFagT3a+SARXFQDxgLRMzRyLNV4s5M6bV4YITaVApPs3faqdXtzTFqUyZ6
-    NYbXXWpvIpCgMemlnqkKRlbiRaqNuI2Nqpdy2QZUQl/n7ePgpZD9Eg2RYQ6HDWtX7dNw+M
-    Hwh8sF12bsltd5JaDu2MVb1bakdsfStmQNVurJ2u4kWUxXJZO3NSrVNRUz2HWrPRoMBiRK
-    ggOr2iSx9yTR9Y2PIZWxHLdSX+/rGL7yiinnoa0Le+fpfkIi0h96lcqRtmGvroYYRrkGJj
-    eA1WGyUH7MOq0ldLAeWvZq+WkGlzdbf8s1ST8DliySIUaINgnCVN2AmIChMKzLopyQxE5r
-    ZbYItgGgVnFCcjUznmYXBD8WBtVw91pMtM6HgEbUko9uhhXg+a3XAEDzKayA
-X-ME-Proxy: <xmx:A7exatMa8xHNsAz_OYI_Gwxbft9vRmJL2n4i6jUP7320c9k1s2NZjQ>
-    <xmx:A7exapYzYXA4dd3ugoQKm5hwLOYunBGIJIrIlzqtdIHCzdw3Y8KEuA>
-    <xmx:A7exar0Imh5fRh1e5l84VH2_lQe9T09Edcn2zMa2gea0A-Y40tB60A>
-    <xmx:A7exaveZlucTQcUsfxlDJ8Grvua4hwjMxzHjwm_n6wFefnk_zK5CKA>
-    <xmx:BLexav4QioQo720ncDKDPlluArYrRmQdAfR7X84E1Orr_CsI_TYPtIcF>
+	1790033310; x=1790119710; bh=KNBOBh39Xd41wiw3JjMbiUwHPD9YNT5cJiZ
+	6D5yEbjY=; b=dZ28nDyfCnhQYbwdlrvsk9LgoBJSzku3NMwPpG7LtPsnhZQGIIi
+	kklli6lgYwYNJ8W3/W5jTnCiJ2dq/hKCl/ch1j7Uub37DRdMCmu8gdKfzXBaMLKl
+	WuKMeL2mgQu/03nmCNANrN0SFlGCBkO5OinnT8WZzFG6hO7+yb9vkAp722src4oX
+	w2s0Tb5kVXPmDWjtqhf3hzJEbdJKLu26RmoL3v79zVkRhSufWyYeC4jNXbV2c6ym
+	VJsjcrcOGYDjFDMU+Ggb6rAqI2LXPq2kOFi9mXRHNURipJA3FIqlKuikORmdEQMb
+	4oCk4/Ooi2mFm0Y2KAvJJkZQWE72/DdWCJg==
+X-ME-Sender: <xms:nr2xaph6S_WTTMWA3snEyApa4CB93NYMob_ElPXGAnBhP-X8Subi7w>
+    <xme:nr2xalCDlnhsb48aKufgKA7xZE7fVYkb52S-PrQ93iRksy5qngS7NUh69l3lYYYth
+    eegKCjsfp7eGj5ik0invpGDYg8PKjDhP2zzY8OrGBVosXCXbGnUXA>
+X-ME-Received: <xmr:nr2xauHWuW3pbUJn6Ea5kUQQLWOUgBrKLIQa-02RArJbSlHShO8tVXFpjvQ0oPQvFJ-FwnQaG61TAPkw2fpCUjHDWQ2F1p4MKmE8>
+X-ME-Proxy-Cause: dmFkZTFOTxhNggpRQ3jx0ja+GooO1vIBcDAiNl8OgNeQVrn9Jq75dzqoxMW+/VcXZLRE1r
+    Rx9ibJ1RxmF19zaSpmfSFiVeN1BqCCcOrdMQtEBkAkeGy/dnhcA7iiZTQbiW+vwYNdGF+s
+    LdSqngYYIYeU0pvcVTuUuVog9tLnItgnzVYFsYD6zzhw8CedE5IQC8kMX9SxIj2EFZMrJD
+    Y/dn92HdH0BH609oFkm/FCnRtgqSgF2I5scb8C80pLsiu9vzDVp7t6REy9SDwN4h6ot3ld
+    Kdz+N1K7uO1+QmtPhZN3n+XhRiMNQtwJ+Vy/FbWpqKIxjjjqMGbszCRvzSz95K+EnPKyJ0
+    MgTcQ5UrYXsHc5+PT6l2mG5CL/3aItl9EbDa8JJmPa/SYt6cpR2/3w3oJWuzAUGPgzIpTU
+    vlQuUxKfr9d/l/ljuKptFqUbK4lL3Nvmje8m20xlaZWQ0uIqjlZidikt4RiJ+vsdUwMIWt
+    S1piIxj1IjBWEjHxtr+J/aG71clH4CXq3wGyya3ouO45JjiKg9iNVO2EQKigGEBlrfAce6
+    QukxuTRkkWlWfR8FOepaHc9GPI/9K2dqg1iKtta45uueak7CwFjN26hrHO84HOCVteZboc
+    /gQLlUA6f7DkTUtQDRzIibeRgKl0er8iSf2JWNy9V8/kXBAyNeJNKJbcbrVQ
+X-ME-Proxy: <xmx:nr2xatKxur3ffr5u5DXfQN0T2ci9FjK3JsaOksXN4dP3lMH23igPNw>
+    <xmx:nr2xaimYGTvYgC2BnmVXLgsnuBkP40JCoyuZ14HbGhunBhmFlhVZsQ>
+    <xmx:nr2xalTt_Ep0w-7DgJF9EpYrB_JwjrNAGHnCa1ExFtaGHGWiuqs9rw>
+    <xmx:nr2xakKYRVTRYzI9ehojGM_WJFpqLEfdtnKAky7g3UIIKDJmn871zA>
+    <xmx:nr2xalkA-TyygwiHq0CspHFUkvBT2CkYQbDD3zIRdlyA0IjBED23og00>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Sep 2026 19:00:19 -0400 (EDT)
+ 21 Sep 2026 19:28:30 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] object-name: explain why <ref>~N fails in a shallow clone
-In-Reply-To: <CAHwyqnX77+qsstUmvvLw5Jvfdoi4V3YVagMddYxnWodHR9oq-g@mail.gmail.com>
-	(Harald Nordgren's message of "Tue, 22 Sep 2026 00:17:46 +0200")
-References: <pull.2413.git.git.1789898013916.gitgitgadget@gmail.com>
-	<xmqq8q4uo8fx.fsf@gitster.g>
-	<CAHwyqnX77+qsstUmvvLw5Jvfdoi4V3YVagMddYxnWodHR9oq-g@mail.gmail.com>
-Date: Mon, 21 Sep 2026 16:00:18 -0700
-Message-ID: <xmqqqzimjjlp.fsf@gitster.g>
+To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH] refs: run copy and rename through transactions
+In-Reply-To: <xmqqjyoemqvu.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	21 Sep 2026 10:54:45 -0700")
+References: <CAOLa=ZTN1TU2A1sgEhiw=ymMYr6Ge11cMEubSaeKqr4WNU=2EQ@mail.gmail.com>
+	<20260920165037.88524-1-maciej.ciemborowicz@gmail.com>
+	<xmqqjyoemqvu.fsf@gitster.g>
+Date: Mon, 21 Sep 2026 16:28:28 -0700
+Message-ID: <xmqqh5jijiar.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,39 +86,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> It is obvious that users would see such a message when they say
->>
->>     $ git show HEAD~20
->>     $ git log HEAD~20..HEAD
->>
->> but would they see the same when
->>
->>     $ git log -20 HEAD
->>     $ git log --since=2.months HEAD
->>
->> and internally HEAD~20 fails to resolve?  Should they see the same
->> hint?
+>> +struct files_copy_or_rename_transaction_data {
+>> +	struct ref_lock *lock;
+>> +	struct object_id orig_oid;
+>> +	struct object_id destination_oid;
+>> +	char *destination_target;
+>> +	int logmoved;
+>> +	int destination_exists;
+>> +	int destination_log_backed_up;
+>> +};
 >
-> But I think the 'log -20' doesn't even give an error, so where would
-> we show that message?
+> Good to have a type that can be used to hold pieces of information
+> specific to the operation.  Can't we do without rename/copy specific
+> addition to the generic ref_transaction struct by following the same
+> principle?
+>
+> The comment above the members does make it understandable, but ...
+>
+>> @@ -240,6 +253,21 @@ struct ref_transaction {
+>>  	void *backend_data;
+>>  	unsigned int flags;
+>>  	uint64_t max_index;
+>> +
+>> +	/*
+>> +	 * Rename and copy operations need backend-specific reflog handling.
+>> +	 * Their logical updates still live in `updates`, so hooks see the
+>> +	 * operation like any other reference transaction. The fields below
+>> +	 * retain the state that backends verify after taking their locks.
+>> +	 */
+>> +	enum ref_transaction_type type;
+>> +	char *old_refname;
+>> +	char *new_refname;
+>> +	char *logmsg;
+>> +	struct object_id source_oid;
+>> +	struct object_id destination_oid;
+>> +	char *destination_target;
+>> +	unsigned int destination_exists:1;
+>>  };
+>
+> ... is it the best we can do to contaminate a rather generic data
+> structure for such a details relevant only to one specific
+> operation?
 
-Where?  To their terminal ;-)?
-
-To end users, "git log -20 HEAD" that stops only after showing 2
-commits is just as puzzling as, if not more puzzling than, "git show
-HEAD~20" that complains "What commit are you talking about?"
-
-At least the latter has an error message that says the commit the
-user thought they gave (i.e., HEAD~20) was not interpreted as a
-commit, and that might give them enough clue to remind them that
-they are the responsible ones for the unexpected beahviour by
-initially cloning the repository with a "--depth" option.  On the
-other hand, "git log -20" that stops way before they expect it would
-does not even give them such a hint.
-
-I thought that helping that case would have much more benefit, hence
-my question.
-
-
+More importantly, this structure suggests to me that you can have a
+single rename (or copy) from one source to one destination in a
+single transaction.  Is that correct or am I misunderstanding the
+way this data structure is used?  How would one rename A, B and C
+to X, Y and Z in a single transaction?  Or perhaps rename A to B
+and copy C to D in a single transaction?
