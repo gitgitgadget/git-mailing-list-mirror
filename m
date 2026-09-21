@@ -1,205 +1,122 @@
-Received: from mail-lf2-f12.google.com (mail-lf2-f12.google.com [74.125.229.204])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD1B43DEDE
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 20:01:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.204
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790020889; cv=pass; b=lUNrxPjYQJ+H13My5OncRe7JVyC2YabtssVmlZpOR2d+ySQWJjKdCe5GIfC5Y3wj/UvRJtAqxKIb1saVOsoy1Lh7r5A8PsXIch8h8vYkS0qs7/fUWU/1T9of/chAppUD/eOIVFiJCurX5MsnGYYpNceohW5f6/ICvZesH9R/ALQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790020889; c=relaxed/simple;
-	bh=+t8w6hH2WrYVsDbwVEcedGSq9ZESL7oSkNHIhsbZdTQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Yyeq9Jaiu5tOZVrl2XPOk923V8+YAPsGbp8a+ZROvMz9FouRgVJoRlyfZfxNjrVntRS3hic5M/3zqqM82WLsNiIBdvS8arzPFYG2tDrvbcoZp5cBIEDYN+D1xg/eh/k+crB0JDYxYN19dnNQLyTqZYDcnwD0ASkk+n3cTj3fOLU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SmyNV0Wq; arc=pass smtp.client-ip=74.125.229.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E879E4FDA4A
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 21:18:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790025533; cv=none; b=L4K0DoCk+xkuqN1ye3ZTm0lDJqK09DIYN2/PYKkp5E3g+Crq/vxcvKqSfp9yZczBBRYftzOgTrQiPSy+xVtmjw63dYtE6+RKHEv1rIfnEZKCr5VVxeSRSbK8MAOA8JTE3jh4uXO68q0xXykmLVMbblhwmZd+PubwHUDXlilGLG0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790025533; c=relaxed/simple;
+	bh=Dr/pgxR0nIMevo45ZoEMlCzP/LIHEE9qGTc+mwcIiKI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DfUJkxaQeQXbHgae0h47A6lpTTh5Cw0zRxMooC6skN/KwfU1ylPxyPrO9pfYOVoRBThRPCWJ8vux/InT+Qtjc3xRVTuosM1hGnDy9G8+BnUzg0UFnAU+S+b72gV2fD3rHAi1lBGUS4IVdC7fztree1bfvdXV7Rd1YC5tqz9whP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nwjRMKH2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MIVbw6gL; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SmyNV0Wq"
-Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b5e4f1744fso5593572e87.2
-        for <git@vger.kernel.org>; Mon, 21 Sep 2026 13:01:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790020885; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ERBmJBL6wiJMpx/PTYNrOUTZIosgOGTEIKW88tySDfbiB284ATYOoOf3PJl56oR6Xk
-         h1QETODdzlJq9thBP3o3adt/J3B8Hp/DU3jdMqS/QA3/Od7bZQnt7lDkoNAQYEOnaf8H
-         a0ywKdh7TeD5fZRr8Y2nIQ2d4SAII9PpsmpLtE4Kf9Peda/qLcPF5MDl0kZrHNnEH1t5
-         /TBFGOaGAQNM5b0hstzmFpu7LqN4EJBGsR1fT0qCTXMST/Xha1ZjVmTqWJAyz4ORrvnS
-         BsdP8eezzPidmtzzkoooqxJHqpaYMK5mJ95dl0I1vqbbAfXMEqsFUFQgYRgy0sRRksfl
-         fY9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=0DEShmWKkFgHva7sw60c9905HiYY1fzaUl5d+mN2sVc=;
-        fh=Z7dcLEAaNB5WfDOIiuJHhuN2t/+UV8Jr3gL7ZRfiE5k=;
-        b=SlpJicEQnW5lgmQpeD000bIK9ytUzvN92/mJgkLxQRC+8i15U4fIvH9T9xzeOzqwzB
-         FmbE5c7WnFlpG44mQeCUsaDN+Wr320RjTJPt/QGbh2LkGobq2L2J3R9GYlPiUSYAfcyr
-         zpvM4J2oFV299VInJg9cLFxAmdRyiT4rg4uBHzpPxJyU8uDMAeArJKZvRfJ2aR9TwBCj
-         9wIr7sy4554zO63XXeiWvmYjQLCU8Pe+iKuZRywrKxD0nEo3jTEwf9wGLpf+oUWinBBy
-         xOq7zK9TwN2sRW1R6nVi2rvTPkOc5XdwOq3jfl56e4lqDAVZO1m7nR3OrjJRCb3xC5iL
-         yKnw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790020885; x=1790625685; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=0DEShmWKkFgHva7sw60c9905HiYY1fzaUl5d+mN2sVc=;
-        b=SmyNV0WqRySxIc2TBW4CHCNP6UVeHCp3tcHYl/a3Yl6J5Ovg6TzST6hNdr4rfIB+Bx
-         9V1AtrJkTXlxDQmUFCQXvpraak7QGZ3w/CyjNzQxVkeoINhwZ4apo0T6NDIkx88I5drL
-         Kf4j/taNfGc9pt3fEiI8Liq9PG832b17LUebDM223XUB0WkEzjVqClixE7bc9DWeq+A5
-         TLurKnaeH72FcVTWz4kS3jCorwQegaRj53hgyHWzG6ChIlnqtIX/LXNb8BwkwUhyXnbf
-         cvmqZkZ9pCgZ45bRfil6IOHLeLikeDFLUt2GAD/JZ27RCcDLk8HxqVmqVg/YOrjthexm
-         xsLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790020885; x=1790625685;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0DEShmWKkFgHva7sw60c9905HiYY1fzaUl5d+mN2sVc=;
-        b=V5A/rOhscFbeXHXD+H2+fVDx8uV6R/oVcvCxM2oWq/06ZQkNNwuXpCMkZ3kOf/c0cP
-         7T5BngqJN0DUwg//K8uwWkxlNxll2Cp8946L+TPEDBjnKt7xHxZ3DhQ/PeZbALbBVSmS
-         oIzoIWpqKMb7ZgjjhkZjt/pdJO2zC5hVLJb6DFtrl4Q9PuaXo3VSf4/RWdf0GSTZlgzV
-         BCX7P1+F1oIfPQLCoX3CFIkQGvJ7x4rnLiyzlCzx0IlpfLmByqiWODqlsOxyIaslNG5I
-         bipCx2uRoWzpuNVFOaRM07K0rr0hMVwRSFzDQTXHpCQPYZ3P/Th4+4XoJLhYK5hU/V3U
-         5MIg==
-X-Gm-Message-State: AFuF++kbW+HEmxmUaiZclCBlL0cGh6DZW4hsUcqZ+y7h6n2WmAManl1v
-	UtQY1H7PLFNqYN2ym+n3Zxafwf45kTxJzgmXY6rYM1TzHQn5ueqovz1JnmtNo8OU5CXQGHBjfK+
-	xb09xPGhODXqmJYxeTQeM+xqHI2NtZc0=
-X-Gm-Gg: AYBFou2CKD5n5x12Tvtf+KVoQCpYxDQOafBBrzqC/t6WCpcL55uQAuJX5B5eJseBazW
-	30EsTcQvIeq2v/05t2r2itvlYtBhPtuOk/3DkvLz33NaT+4eLB3xwkTu7uTpnKtDNqsk/iNVoUZ
-	ro/5rQ7Cgg/h2XApF7/hn0F9N5ZuZzlWEhCf77gjhQO1uTaRGSGFCHpZpeTB/mfnuqqNlLcNTa5
-	VFpoQq5ftNgFpniDqryhEyLd4uhPqnoxiZGVpChwP8q30xZNm3Z2DEw8bt0F93koZ9o+w3Prfke
-	Sb0S+rw4DfrV4DVjOYOAsyozvlIpCXyNPMvNnK5sseqzJuRRE7fE5qtGym3+hkbfE4Cr9IWJYbl
-	Ss7h8eH66otLqPTIV4oJbOBtV5EpKaEuPWT3vo1AAKCDE0zryjzFJGZbqY9+GMUGysqlMAu4=
-X-Received: by 2002:a05:6512:3b24:b0:5b6:183c:5c95 with SMTP id
- 2adb3069b0e04-5b8c18598damr3983292e87.51.1790020885117; Mon, 21 Sep 2026
- 13:01:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nwjRMKH2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MIVbw6gL"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 07FC8EC02BB;
+	Mon, 21 Sep 2026 17:18:50 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 21 Sep 2026 17:18:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790025530; x=1790111930; bh=AL/Guh6fCc
+	gfJKqv63J5ZPHySwkF5NHUQTOQO3vivy4=; b=nwjRMKH2NK3MoZiXha0rzHmrC1
+	Vado5/nutc2DDsigF5oGaQLx2GnS2bSjRtkU/g3FP/R8YZB0PZaRR4npH8RATZl0
+	YDJIEgqAgqF0kb6q6JMue211rvcPyfT9EjW8GPW6DeAILNSDqwqskgFVW/eXnnzo
+	ultc2D4nCjcMJuWncSyHBFfcbytIMH+NlyX0BDlaDKLTGEQSe7+KsTcLZrBYoKWw
+	jK5y1a4BswrPwheWGNBBasaZUFp/lgb3WZ91JKbcqqEvSvtV/glZcM3RmFW7J2g2
+	kTQRULVmCQIsKds8Svhpqy2r6yOQKfuskWhxBlOdrnBKq8WTDkMEbkv093gA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790025530; x=1790111930; bh=AL/Guh6fCcgfJKqv63J5ZPHySwkF5NHUQTO
+	QO3vivy4=; b=MIVbw6gLnObFfNe1vc+ApQSqgt7lJSDJFKVd4FIMx2S/KnJW67M
+	KrtteGsgio/5NzD/N25fV0Kq52QG/Hu8uEevBnVm3q1Gx736OL4lXNzFhnV5vsLZ
+	9ongKpocRtEQXpaKgl2H8F89F3xRuHdTMHE2Hac86GlMzW1XEkCXWM3Y83Kc/c/7
+	yX11lh/4OElZZiutNEiDDkRaLmu+pfWZg4xnVhnEYDfiGbHYWNQgltI5zUlEoC5n
+	w742YLq+nQEN89SV5ULRbDSFGNPC3E/KBNciGWO9woNM8uUVg71wgfytCQDSE5yr
+	CzkmMsFBER3+hKJgkVRE3sAqiN4zPa7ohEw==
+X-ME-Sender: <xms:OZ-xakjxCWfWWEGmkbcF8zHxW47L-zCaLVeEiByOQUU7KyQbigVSHg>
+    <xme:OZ-xagut06Mq7Lvm0s-7WIw0skAJh2_m9Ba8xC3UPT0aoxaFgpFKPcyyqUTx5B-Ay
+    DwfCL1J2QBAFr_I7NA_89tjD5mQkXs6evIrYzq40yzBdoV2CvTTPA>
+X-ME-Received: <xmr:OZ-xal7qf0eB5A6I17tKxCf85oafNfYxzCdTL52myvuU5vuD1jMpE3g0u7oR2ugDWZvTMcA6LDCN3RXKRBcuZ2THI5Dky6ya565A>
+X-ME-Proxy-Cause: dmFkZTEaLx6ffeDxO/e58T5Gap2ZSHe79LR8MMMH03VMD03JX1LlHB4MK9pj3Rny7GrVJE
+    +ybK0LTz7VskEGjrnucMT3Q2J0WIo6x7UuUp+2vZgpXWeUQD1K0xItC5zH9HUaUSZsZ77H
+    14xfJFYWyvP3iER5Q5R9GWTd31NRiJ1BArQZ3rOW1IxBFlY3AOWEdCvVHpUnjP2iclXCIr
+    4kV+YLdSAb0PVJ6uZ/iuSMw4ze6j3LeiztEfm8U63fpkiLY5vMfokgpjh9kxocd3FMo0ZP
+    xxlQ5GNKMb1C53ulsi9INfjLw/ACY8+Urg3Xsj01pZp/kdceucncFhBz1msEGI4b15T8Uo
+    /WUSdEpXabQPrP7nRXUpCJA2QyiwF8bNQLNW06kUgl/svT8YJREgYjHL7GBizo6jJwaiWd
+    n4hjTyOuD3smAwKVaWvuD7ExU35126U0Oy2Ie1rv/A+rnWlAQYpB0c/Z/cldjjdYueBIOo
+    /52bocQU3ejkspAY9JcyAp0DU/FxmMWF9JsUiCU+rnF9e6skBOemfs5O4fUn2wATOyhflg
+    OAxAzvOXbGfdNnYAUH834GMHbWCkIjQ9G4C6Xa9FNrv4pSOeJvXYWOk83uOtzBVGl59vj/
+    w6WtXA5TyF2aWgQoJY2ll/FSBvir+620pmR96mNlGVVRR2NQf2mw01Vjlcxg
+X-ME-Proxy: <xmx:OZ-xasOtnNTbk2p5lytkRgP09oCzR9SsC_ck1V4XV-sCRsKjEgMZ2g>
+    <xmx:OZ-xajv9DPvhmpgHc_3rbzC-oS7hd09bx8FWRmkVVDsVaQ613O-mag>
+    <xmx:OZ-xavbynrtG-g8qtXjalHv-ma0pA-JjWq-hFPCaGXjN8cPKl83N_w>
+    <xmx:OZ-xalztxg2KvCq9_XfN0-yuLLPI34idNrsNwdt45EhQxcybR97msQ>
+    <xmx:Op-xasRNycq-DO6q4AdK3bb9KQC9fkh1xiIShl1AjzBRuIw4c26X5gSS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 21 Sep 2026 17:18:49 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  peff@peff.net,  newren@gmail.com,  Derrick Stolee
+ <stolee@gmail.com>
+Subject: Re: [PATCH 1/6] strbuf: add header for 'safe' API
+In-Reply-To: <b1779709120adc9c1df40c7210481d6bed9791c5.1789736540.git.gitgitgadget@gmail.com>
+	(Derrick Stolee via GitGitGadget's message of "Fri, 18 Sep 2026
+	13:02:15 +0000")
+References: <pull.2230.git.1789736540.gitgitgadget@gmail.com>
+	<b1779709120adc9c1df40c7210481d6bed9791c5.1789736540.git.gitgitgadget@gmail.com>
+Date: Mon, 21 Sep 2026 14:18:48 -0700
+Message-ID: <xmqq4ifimhfr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOLa=ZTWGJZCmZnPLt5az_w-6YkGuQhQUKyJq6X=VFQL1T_6ZQ@mail.gmail.com>
- <cover.1789901584.git.maciej.ciemborowicz@gmail.com> <CAOLa=ZR4V45R0zST_gxb3FMSWCwbi2MFN=5sCzhTAQfuZrRH7g@mail.gmail.com>
-In-Reply-To: <CAOLa=ZR4V45R0zST_gxb3FMSWCwbi2MFN=5sCzhTAQfuZrRH7g@mail.gmail.com>
-From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-Date: Mon, 21 Sep 2026 22:01:12 +0200
-X-Gm-Features: AcwNN1Vd7xxJC9T0zg7xkQw2FL-PvUwQp9lgwyqDgBo_5u-Uw7yh0CAwvrMqz2w
-Message-ID: <CACQ=SRG0q6Ezre3Z2bv6JJw07KXnUn2SDxNLTt0FqbwEdcbOqw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] refs: report old OIDs for batched deletions
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	Phil Hord <phil.hord@gmail.com>, Elijah Newren <newren@gmail.com>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	"D . Ben Knoble" <ben.knoble@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> This does break user behavior though, previously we would never fail on
-> pruning refs, but now we would and in a all-or-nothing manner. So
-> perhaps a better way would be to use the REF_TRANSACTION_ALLOW_FAILURE?
+> +/*
+> + * NOTE FOR STRBUF DEVELOPERS
+> + *
+> + * strbuf is a low-level primitive; as such it should interact only
+> + * with other low-level primitives. Do not introduce new functions
+> + * which interact with higher-level APIs.
+> + *
+> + * This header file specifically conatins the "safe" API surface for
+> + * working with strbufs. The implementations of these methods avoid
+> + * using die() and other exits. Thus, these methods are appropriate
+> + * for use within lower-level APIs such as trace2.
+> + */
 
-That makes sense. I will use it.
+I have to wonder if this is somewhat backwards, in that the longer
+term goal for us should be to make most of the service routines like
+strbuf, string_list, csum_file, etc., free of die() and be "safe".
 
-> Here refnames is built, but below it is only used for the non-atomic
-> flow. Perhaps, we should move this into the else block?
+A recent trend under the label "libification" is to make the use of
+the_repository more explicit and pass a "struct repository *" as a
+parameter instead more widely throughout the code flow, but it would
+be equally if not more useful change to expand the "safe" API surface
+so that callers of more service routines take responsibility to act
+on errors.
 
-Yes, I will move construction of the refname and OID arrays into the
-non-atomic branch.
+And picking strbuf as the first instance of such generic service
+library certainly is a good idea.  Its interface is well defined.
 
-> Nit: the formatting seems off.
-
-Will fix.
-
-> Curiously, was an LLM used to create these patches? If so, please do
-> read our policy in 'Documentation/SubmittingPatches' regarding AI usage.
-
-Yes, I use an AI coding agent. Thank you for pointing me to the
-policy. I have now read
-it. I reviewed the resulting changes and tests, understand the
-implementation, so I take responsibility for the version I submit.
-
-> Seems like the other branch condition also does the same, we can extract
-> this out?
-
-Will do.
-
-> We do this in the previous block? We don't need a new iterator here.
-Right. I will append the refname and corresponding OID in the same loop.
-> test_create_repo is considered deprecated, let's use git init
-> directly. While we're at it, we should also cleanup the directories we
-> create here.
-
-Will do it.
-
-> Why do we need to pack-refs?
-It is not required to reproduce this problem. I will remove it.
-> All the commands above also run in the 'prune' directory, can we put all
-> of them in this subshell?
-
-Yes, I will move the repository operations into the subshell where
-possible.
-
-Thanks for the review. I hope tomorow I will prepare v3.
-
-Cheers,
-- Maciej Ciemborowicz
-
-On Mon, Sep 21, 2026 at 3:57=E2=80=AFPM Karthik Nayak <karthik.188@gmail.co=
-m> wrote:
->
-> Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com> writes:
->
-> > The reference-transaction hook receives zero as both the old and new OI=
-D
-> > when branch, tag, fetch, and remote delete refs through refs_delete_ref=
-s().
-> > Those callers already know the values that they selected for deletion.
-> >
-> > Teach refs_delete_refs() to accept aligned old OIDs and pass them into =
-the
-> > transaction. Besides making the hook records useful, this makes the sel=
-ected
-> > callers reject concurrent changes instead of deleting values that they =
-did
-> > not inspect. For branch and tag, this restores the compare-and-delete
-> > behavior that existed before 8198907795 converted them to batched delet=
-ion.
-> > For pruning, it prevents a stale scan from deleting a ref updated by an=
-other
-> > process.
-> >
-> > The values are already available at every updated call site, so the ser=
-ies
-> > adds no ref reads and retains batched performance.
->
-> I still have some concerns about backward comparability here, since we
-> go from a delete all without any checks to a all-or-nothing situation,
-> which can be an issue with commands like `git fetch --prune`.
->
-> Left some comments on the individual patches.
->
-> >
-> > Changes since v1:
-> >
-> >  * Document the conditional deletion behavior and its race protection.
-> >  * Add tests that update refs from the hook's preparing phase and verif=
-y that
-> >    branch deletion and remote pruning preserve the concurrent update.
-> >  * Avoid printing deletion status when a non-atomic prune fails.
-> >  * Use a local string_list_item in refs_delete_refs(), as suggested by
-> >    Karthik.
-> >
-> > Based on maint at e9019fcafe (Git 2.55).
->
-> Might be worthwhile to rebase on top of master. Seems like there are
-> conflicts with d38352cd43 (A few more fixes before -rc2, 2026-09-17).
->
-> [snip]
->
-> Thanks!
+We may want to rename functions that _happen_ to use a strbuf to
+return their results but otherwise has nothing to do with strbuf
+away from strbuf_ prefix (strbuf_realpath() etc. in abspath.h are
+prime examples) as part of this first step, though.
