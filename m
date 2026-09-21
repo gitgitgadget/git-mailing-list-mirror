@@ -1,83 +1,83 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E879E4FDA4A
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 21:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCA23D8902
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 21:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790025533; cv=none; b=L4K0DoCk+xkuqN1ye3ZTm0lDJqK09DIYN2/PYKkp5E3g+Crq/vxcvKqSfp9yZczBBRYftzOgTrQiPSy+xVtmjw63dYtE6+RKHEv1rIfnEZKCr5VVxeSRSbK8MAOA8JTE3jh4uXO68q0xXykmLVMbblhwmZd+PubwHUDXlilGLG0=
+	t=1790025872; cv=none; b=ix5j3tY8o5jbllY6okTQqntst2XLVTsbRpCHYa6+KL10rai7P+8fO2lqDMvbvvgJWuSBYwJC2SWRPsN90qJM3NRa+tOYjeTudwrZChPVYYT7RmOeNNcgWQpHQNLmjYBkHt6O6o1hv2BImvthmdtlye6aQ4nllf6xItkuga3dTJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790025533; c=relaxed/simple;
-	bh=Dr/pgxR0nIMevo45ZoEMlCzP/LIHEE9qGTc+mwcIiKI=;
+	s=arc-20240116; t=1790025872; c=relaxed/simple;
+	bh=4pB24lJdgEFA1H+YdwNPbv1kaJhmxWRJs2+7RLnh3UA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DfUJkxaQeQXbHgae0h47A6lpTTh5Cw0zRxMooC6skN/KwfU1ylPxyPrO9pfYOVoRBThRPCWJ8vux/InT+Qtjc3xRVTuosM1hGnDy9G8+BnUzg0UFnAU+S+b72gV2fD3rHAi1lBGUS4IVdC7fztree1bfvdXV7Rd1YC5tqz9whP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nwjRMKH2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MIVbw6gL; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=g/ixv1ZJtU+CMi4tHtzOE1WGwjmD9QjSt9tgh4N76s0lVXf8tyAi3hMiMY8Pwr0q7xtSQOZu014vCidy7SZwNtlavxyTCuNpGaIwx3iLZdQTHrGC/smRR4NRt3vep76c+VvIkvNBCTfkxRBzl65FAti0Hy9ztosOkiGNbpILGdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YNU0G644; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qhygwm/2; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nwjRMKH2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MIVbw6gL"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 07FC8EC02BB;
-	Mon, 21 Sep 2026 17:18:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YNU0G644";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qhygwm/2"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 32FC7EC0212;
+	Mon, 21 Sep 2026 17:24:30 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 21 Sep 2026 17:18:50 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 21 Sep 2026 17:24:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790025530; x=1790111930; bh=AL/Guh6fCc
-	gfJKqv63J5ZPHySwkF5NHUQTOQO3vivy4=; b=nwjRMKH2NK3MoZiXha0rzHmrC1
-	Vado5/nutc2DDsigF5oGaQLx2GnS2bSjRtkU/g3FP/R8YZB0PZaRR4npH8RATZl0
-	YDJIEgqAgqF0kb6q6JMue211rvcPyfT9EjW8GPW6DeAILNSDqwqskgFVW/eXnnzo
-	ultc2D4nCjcMJuWncSyHBFfcbytIMH+NlyX0BDlaDKLTGEQSe7+KsTcLZrBYoKWw
-	jK5y1a4BswrPwheWGNBBasaZUFp/lgb3WZ91JKbcqqEvSvtV/glZcM3RmFW7J2g2
-	kTQRULVmCQIsKds8Svhpqy2r6yOQKfuskWhxBlOdrnBKq8WTDkMEbkv093gA==
+	:subject:to:to; s=fm3; t=1790025870; x=1790112270; bh=oZExTWDr7r
+	YA3sxA+8X1gPe2UOowl2F+/jy4Ur/SoUs=; b=YNU0G644MyC22WLFVByV9QG+D0
+	/0AzjEoFjGtfCHXnMHz48BVO/q5WGBZGUuLiSkfC59n7aQ0qVuG8wgMAwdi2Xrr8
+	yqJc/5fMCHBlWzhi243CF9Jome+TFB8oKRLe/l3ufrBOGaHTdXy7+SFrwYvloY2W
+	TlJccWHWnI5TrLtKJykTlCE4UTfxngw8z/mt7SYhLM3vAg9/Qq5ZTBFb8+GIYvkD
+	IU+LbjRHOAajEIetBJLAXewr+Syn7IY/Ytutck/kv2GmnPvRlpA1EoKamosmzTMD
+	ud4FNz/oeUnryAoW61vEu74xsiFJSXZ5b3yTlTSPIJ0+iX2dLdikdd7ImcFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790025530; x=1790111930; bh=AL/Guh6fCcgfJKqv63J5ZPHySwkF5NHUQTO
-	QO3vivy4=; b=MIVbw6gLnObFfNe1vc+ApQSqgt7lJSDJFKVd4FIMx2S/KnJW67M
-	KrtteGsgio/5NzD/N25fV0Kq52QG/Hu8uEevBnVm3q1Gx736OL4lXNzFhnV5vsLZ
-	9ongKpocRtEQXpaKgl2H8F89F3xRuHdTMHE2Hac86GlMzW1XEkCXWM3Y83Kc/c/7
-	yX11lh/4OElZZiutNEiDDkRaLmu+pfWZg4xnVhnEYDfiGbHYWNQgltI5zUlEoC5n
-	w742YLq+nQEN89SV5ULRbDSFGNPC3E/KBNciGWO9woNM8uUVg71wgfytCQDSE5yr
-	CzkmMsFBER3+hKJgkVRE3sAqiN4zPa7ohEw==
-X-ME-Sender: <xms:OZ-xakjxCWfWWEGmkbcF8zHxW47L-zCaLVeEiByOQUU7KyQbigVSHg>
-    <xme:OZ-xagut06Mq7Lvm0s-7WIw0skAJh2_m9Ba8xC3UPT0aoxaFgpFKPcyyqUTx5B-Ay
-    DwfCL1J2QBAFr_I7NA_89tjD5mQkXs6evIrYzq40yzBdoV2CvTTPA>
-X-ME-Received: <xmr:OZ-xal7qf0eB5A6I17tKxCf85oafNfYxzCdTL52myvuU5vuD1jMpE3g0u7oR2ugDWZvTMcA6LDCN3RXKRBcuZ2THI5Dky6ya565A>
-X-ME-Proxy-Cause: dmFkZTEaLx6ffeDxO/e58T5Gap2ZSHe79LR8MMMH03VMD03JX1LlHB4MK9pj3Rny7GrVJE
-    +ybK0LTz7VskEGjrnucMT3Q2J0WIo6x7UuUp+2vZgpXWeUQD1K0xItC5zH9HUaUSZsZ77H
-    14xfJFYWyvP3iER5Q5R9GWTd31NRiJ1BArQZ3rOW1IxBFlY3AOWEdCvVHpUnjP2iclXCIr
-    4kV+YLdSAb0PVJ6uZ/iuSMw4ze6j3LeiztEfm8U63fpkiLY5vMfokgpjh9kxocd3FMo0ZP
-    xxlQ5GNKMb1C53ulsi9INfjLw/ACY8+Urg3Xsj01pZp/kdceucncFhBz1msEGI4b15T8Uo
-    /WUSdEpXabQPrP7nRXUpCJA2QyiwF8bNQLNW06kUgl/svT8YJREgYjHL7GBizo6jJwaiWd
-    n4hjTyOuD3smAwKVaWvuD7ExU35126U0Oy2Ie1rv/A+rnWlAQYpB0c/Z/cldjjdYueBIOo
-    /52bocQU3ejkspAY9JcyAp0DU/FxmMWF9JsUiCU+rnF9e6skBOemfs5O4fUn2wATOyhflg
-    OAxAzvOXbGfdNnYAUH834GMHbWCkIjQ9G4C6Xa9FNrv4pSOeJvXYWOk83uOtzBVGl59vj/
-    w6WtXA5TyF2aWgQoJY2ll/FSBvir+620pmR96mNlGVVRR2NQf2mw01Vjlcxg
-X-ME-Proxy: <xmx:OZ-xasOtnNTbk2p5lytkRgP09oCzR9SsC_ck1V4XV-sCRsKjEgMZ2g>
-    <xmx:OZ-xajv9DPvhmpgHc_3rbzC-oS7hd09bx8FWRmkVVDsVaQ613O-mag>
-    <xmx:OZ-xavbynrtG-g8qtXjalHv-ma0pA-JjWq-hFPCaGXjN8cPKl83N_w>
-    <xmx:OZ-xalztxg2KvCq9_XfN0-yuLLPI34idNrsNwdt45EhQxcybR97msQ>
-    <xmx:Op-xasRNycq-DO6q4AdK3bb9KQC9fkh1xiIShl1AjzBRuIw4c26X5gSS>
+	1790025870; x=1790112270; bh=oZExTWDr7rYA3sxA+8X1gPe2UOowl2F+/jy
+	4Ur/SoUs=; b=Qhygwm/2YR3cDJgtdVA+wSM2LVcZxruo86hk+WmRv5DwLfiwUDP
+	icTfcxP2H56EWqr6Nwx2lXMVrk5pACgIhl/SAD4KVTt2YMHZzQZNAHdRnJXy0Ljf
+	U/VFeIii/eBX2yOre5AIdq5NL+eGH/5kpWT/VNQKomBb7Mlb648BxJTT2BwO8vxj
+	eBiEk8QolNR4RM5s31E4CVEqJmh9KBEiNwIMOjLxttAMrj3MNrGiz6hK0+InXzw0
+	nXnyjE2mR78mBUPHsuTX7tShw9Ik6f2VrwToU5gQ4QZiLly8p50AsoTM/n6FomjM
+	OfljAzsEOgLhRcPyfdTSW4Q0Xn6NdAbIMFw==
+X-ME-Sender: <xms:jqCxani1rD5PLR4kzunL0NobIgYrwXdXBgjyPE6AC0bKiF85K6zhKA>
+    <xme:jqCxantVpCydSLjsVRIkAEhr2kOiMX4xX_98t2rPPrsa23rD1yTXpzn2cpMlfLGMP
+    OPdlZZGHkrY27dnOFQ_Ha6wY99ByZ6ixG6D17JfMX2mXkcjH2VruzaW>
+X-ME-Received: <xmr:jqCxag5C7GZ3xQix4pBIgg1yDu_CeT0B9lLgCJm8GtHNun0ESR85ro8hpaZObeO-WiiILWf83sueSWJdsmczDLQVKqWtJmRBckF9>
+X-ME-Proxy-Cause: dmFkZTGWWBZQXIT5k7zXjQGdZRIAjiiLwQ9cpbZ4+558VVzE0gfl099m+ddXpezJDWxqtN
+    awAXejyj5wzEyX3hMia3cy/OyMRsvdAkM3JnVZ1D0OSkO1FOQQ4/IsGEecNJ7OCHR+QL+g
+    xRbzLh0KIZfMeZSzKV6s+SJZ/VuP4waI6gzH6OHU17rBuTWhjoZEENjIrL37s34RiLu0Kh
+    l4k9hPcSDbxvt47PUBNk7xKf1qgTmqZb8rNAyRHQ0CXwNpKyo4bcxjgBgHtB4Nl0rXDKuO
+    W3IJNLF9QxfGYhjins7XS7XKDC/ii8RoEtzS46KzAdSolO1T0dMAKg6CAtNStXZOuob/h1
+    njC+Df/A70RrJol14ZRYJqwb4hghHesYpQXx7ElOV/h/9+9FubnXqJJneDOF54d4/E69pO
+    XTCb3JDj7t/PQ+0O5sWu3FCWaqqMYdaVW5Elfiga14KRGXR0A8K7mqAIkA/bz8eaHB8CAc
+    2vTSmlGAbsnIxkzOEmWLcncB4HRe5LMf0ILnUmFS6idxSPMva+MqAX3BzV1TKxE70ZHmEE
+    5G/Wh99m+hgO8Krq0g1GZOTOCnaqd7CebBWTuIdwY4GpdpBysMLV7+XRYF+7JZvwSJeQMf
+    WIG96bQfA0aztG9Xn6kuz78hJzg3ywNipBfEsJCZSeK5n3muP+DB+jPkyzdw
+X-ME-Proxy: <xmx:jqCxarMjxgK9mmYVjCmB8rBsvuBMxFcYgFkIXGXCAuXChe9aTkYxGA>
+    <xmx:jqCxamvU6bvD2WA4_i_3fMqmARc0T_UiynacH-RlY0NE9UTxH2vBiw>
+    <xmx:jqCxamayO0Pgcxu5KUFv62c9r5YDH0xWn_ZjqUKAMbMGRmvx4aWv-g>
+    <xmx:jqCxagwQwzpwax3tzEOx77mKPzGVI5ZUoDNyMNeOi8LSCMquwMcLIQ>
+    <xmx:jqCxavQ2ar6WZB5-Tzpf4P8vXhyEWVetkZYba94732_MP2u2VEiU2TCe>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Sep 2026 17:18:49 -0400 (EDT)
+ 21 Sep 2026 17:24:29 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  peff@peff.net,  newren@gmail.com,  Derrick Stolee
  <stolee@gmail.com>
-Subject: Re: [PATCH 1/6] strbuf: add header for 'safe' API
-In-Reply-To: <b1779709120adc9c1df40c7210481d6bed9791c5.1789736540.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 3/6] wrapper: create safe_memory_limit_check()
+In-Reply-To: <3b3c67243d200a42aa105981b64228e2cbb35a6c.1789736540.git.gitgitgadget@gmail.com>
 	(Derrick Stolee via GitGitGadget's message of "Fri, 18 Sep 2026
-	13:02:15 +0000")
+	13:02:17 +0000")
 References: <pull.2230.git.1789736540.gitgitgadget@gmail.com>
-	<b1779709120adc9c1df40c7210481d6bed9791c5.1789736540.git.gitgitgadget@gmail.com>
-Date: Mon, 21 Sep 2026 14:18:48 -0700
-Message-ID: <xmqq4ifimhfr.fsf@gitster.g>
+	<3b3c67243d200a42aa105981b64228e2cbb35a6c.1789736540.git.gitgitgadget@gmail.com>
+Date: Mon, 21 Sep 2026 14:24:28 -0700
+Message-ID: <xmqqzexal2lv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,34 +89,23 @@ Content-Type: text/plain
 
 "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> +/*
-> + * NOTE FOR STRBUF DEVELOPERS
-> + *
-> + * strbuf is a low-level primitive; as such it should interact only
-> + * with other low-level primitives. Do not introduce new functions
-> + * which interact with higher-level APIs.
-> + *
-> + * This header file specifically conatins the "safe" API surface for
-> + * working with strbufs. The implementations of these methods avoid
-> + * using die() and other exits. Thus, these methods are appropriate
-> + * for use within lower-level APIs such as trace2.
-> + */
+> +static int safe_memory_limit_check(size_t size, int verbose)
+>  {
+> +	size_t limit = git_alloc_limit ? git_alloc_limit : SIZE_MAX;
+> +	if (size > limit) {
+> +		if (verbose)
+>  			error("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
+>  			      (uintmax_t)size, (uintmax_t)git_alloc_limit);
+> +		return -1;
+>  	}
+>  	return 0;
+>  }
 
-I have to wonder if this is somewhat backwards, in that the longer
-term goal for us should be to make most of the service routines like
-strbuf, string_list, csum_file, etc., free of die() and be "safe".
+The code is prepared for a case where git_alloc_limit is set to 0,
+in which case SIZE_MAX is used as a stand-in value.  When the check
+detects a request with overly large 'size', the error message tells
+us that 'size' is over 'git_alloc_limit', the latter is zero and any
+concrete value of 'size' certainly would be over that.  Which may be a
+bit confusing.
 
-A recent trend under the label "libification" is to make the use of
-the_repository more explicit and pass a "struct repository *" as a
-parameter instead more widely throughout the code flow, but it would
-be equally if not more useful change to expand the "safe" API surface
-so that callers of more service routines take responsibility to act
-on errors.
-
-And picking strbuf as the first instance of such generic service
-library certainly is a good idea.  Its interface is well defined.
-
-We may want to rename functions that _happen_ to use a strbuf to
-return their results but otherwise has nothing to do with strbuf
-away from strbuf_ prefix (strbuf_realpath() etc. in abspath.h are
-prime examples) as part of this first step, though.
+Shouldn't we be giving the local "limit" instead in the message?
