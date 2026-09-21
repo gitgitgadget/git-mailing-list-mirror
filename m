@@ -1,167 +1,199 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+Received: from mail-oi2-f29.google.com (mail-oi2-f29.google.com [74.125.231.221])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162B942E423
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 23:48:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790034484; cv=none; b=AGYbmNOeHe7TebgQOePksEn4WFv5uTVbuDZnQgKQ7AgD/NX0dKqGUA6dLJkt24rDnCQOtwg26SAzkMovxNAwzTiSYE23TxYhppAKzzbtJdJEF9XCcs9TEWNkht1jUmy4VThTdtDXA2hdDv+831XKWodoT24t1ynDNh1ND4mWyw0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790034484; c=relaxed/simple;
-	bh=TvmeZj43Pb9tAYECHG5w5BNa5aWbn4VIboffESsA5sQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SvJd/y+zn3Yn8A3IpnjIB3TIFHJWDTCuVdGDM1JvRmIfvWsiLQormeYLIpn/GAE7XdYQSp+j0vIQD2PbQjxFqF3yqZjuzVm1RkmUEXkMsb+q6MwmxAQ3GCbrYGRsLSLFub5gCnV8GmOvW+tEoM5VAg0PdHAKgBppHQXt+Ai18jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VLK8CRDO; arc=none smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B85477E22
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 23:49:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.221
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790034594; cv=pass; b=PEYaNlE02Vi7jK5yoXA5qm3sNnfmpyOkmYgkdgu/FeDCK/UeYG9gVcxNGEs4bH82MIy8CJfzQZtxURVF8l6xnrAk973SiqQoem5qJPM2FYAUSZjkpdUARIkfwZfn/FjAx/h5RxLkBy7CqzA/CEDjVI9S8ER/IYAVeDpadV+iy48=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790034594; c=relaxed/simple;
+	bh=SmEJARNVVuy7dBbIvy3HBs49VTQzvoRq7JmMhT/Rhj8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Vyy22CZXYvNzTvscRLm3RY2XjgNmXtmzLjGDwDSwJ/nU3dHu7Rnlw6tqV3FdvcvIOkZ+kF7tGD4rOtHzglwGP6JJJsmK/1oHKJiAh6v4Gl8SvKQ3LnZ2LSpbtJpxJTOb4lfEAKvjN9FGeKMr6pkybC9DRnBmRl3ai3mJqRu47Uo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LtKPe7XA; arc=pass smtp.client-ip=74.125.231.221
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VLK8CRDO"
-Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396ccafb751so3002132a91.2
-        for <git@vger.kernel.org>; Mon, 21 Sep 2026 16:48:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LtKPe7XA"
+Received: by mail-oi2-f29.google.com with SMTP id 46e09a7af769-8144632e066so437841a34.0
+        for <git@vger.kernel.org>; Mon, 21 Sep 2026 16:49:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790034592; cv=none;
+        d=google.com; s=arc-20260327;
+        b=DNf0l0d7f8123PjTAoFbN4wJJxQ+4kdGuyZi8oPN0GpFu5eaO0LFMi3OsxNEBiuwoS
+         7kFjDVMtZTX7Ghvkg+WfglHwXh7LKW/he6NtILbHwwXXbaMbt40NbfK1MJ1h2wETtFFb
+         1zUAs8X8gyvFXILjk520wZQze3uz1liEM5nmes+3aLCMzw/SNfJOSmVD2NbJMNhwJ8Mg
+         4fcPrxnwdsyLHAdeNRcDwBeoeoiXC1gy1DEWQ5e6XRVsbX8BqnlFb7jovrRNRWz3HWrd
+         hqPpJ1mXlG57jabLvN+GP3e7jnNBUAGfmfGuoNxyU4JAyBJ0/QjZpH7qt2yMEf5jVHeH
+         EXeQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=nFyt0ZjMvlZZQENHQApMuQI5921FXMiXO5ScQStWCEo=;
+        fh=TKbqSx7BNcDF7NoaLKhy3nLXGdJ4sxL1HMtlq5mBFXU=;
+        b=MlrSR/rPgeKkMxBa9C3bR958gwZNX5g0nn70TzrVhoQri6uprEmtxkqRrqtGXdvXvU
+         pO1Ow9VFq0jTJsd5bbiflOKxC/5Ex5MxR83cPHb35HIsp0hs0Xt4uby7UnxZdXxj+LZM
+         BXKDYbQ/l27V/3prSiLFEI604pjdAXjjt+GMp1SDeEnY4JgJR895VFhSJ1BJQFkN8SPA
+         j3ZhU4qPn9rmAIVJ+JjGasU+RRXtu9ePAVEgYEGrsr0F+QajxS7RLg/LLw+zrZS4JWLn
+         TbrQQAkDIKUQfiJG3afucTqM1e47TARSVPHwzT7FbwYuCU8rkDEeEpJCPmjRx768Uo1y
+         D3Tw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790034482; x=1790639282; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1790034592; x=1790639392; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=4BhBQKfT9MU+2sDxvoD3dRPd3Vo0ajtdQLZ49+mdMsA=;
-        b=VLK8CRDORmfARzbLdTRl9WdQvnK5i5+orotzJ8nbH7ez6HBpgUL4Xt7S/W3KfOflN0
-         a0BMuZR+kpRaaogHwemMfbi61DsxCU9fDFAs+kuqVULha1m2Uy3jq0v9r32hzmsWJ05F
-         t+hAOJ+XuQbJqMTRonwCV7W+7g1oy/nBKZU8+4vznbn5P8ckAQwvwAWlWfvsiReuK6CT
-         nwXafANom2zh0/PuYKM5UszDnzXH0hwwsfoBE/DUQM4/fRmuM4Z0MwNXC3LogPiAGalP
-         caA99m6jyDlQkYkh2S2MbF1tX5K55GFByrdeil0QRU3KaBn95vk0Zk87Zo1hXP5rHmaL
-         V75w==
+        bh=nFyt0ZjMvlZZQENHQApMuQI5921FXMiXO5ScQStWCEo=;
+        b=LtKPe7XAi7sGEaK+fgnSP3okIxvqN/OJPUUt1S221R4Rvn4ieWUc6ZqN3wFPiyld2a
+         QOhbbHmO8quPOUU6e/Zoe2kUZAJbGjyLxq+9sf3ufb/ZnL9SXo4fmgRUmZENhvAWcfJj
+         Fu0vUNkZBjr5HW1LT6Nx+cOCXrrZ9QZ2oQrHMkLipR9JFBqlswTlvBcY665dQmv9iJFC
+         UEqmaL4fS/hIsNRkZaZ4F0aGwFE9wUAw144gUSiNxYGeNVaRlRfKb6bzpMqcGw2FvPMt
+         Gz1DAuMPKxcoEPlNHbbkMMq3+avZrt8rpy2597RBang0ncDahAASRBlVhx36/ld+zVbE
+         xhCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790034482; x=1790639282;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+        d=1e100.net; s=20260707; t=1790034592; x=1790639392;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=4BhBQKfT9MU+2sDxvoD3dRPd3Vo0ajtdQLZ49+mdMsA=;
-        b=MTnBRw6R3kVnogRi58QxLVlgowFWChhmvVm45WbYQPOnjvskRuVb30iY51s4Dco7YR
-         51C7RI7ph8KYQsURoXqrNnTEMPzQWglpJzDJneQQHDYaluT2x3U0RyeXGZ7sHLcimbu2
-         0ntxkKr/wOX/OBI6EvpegMb+Qw6CnfU3pc44+cqJ5BWQug0E8T8PCkmGaXH5aesVlAV7
-         kKZ+0D5nt/lBDUwDDREl7Tst3LzGbyzs8f5AnUv8KW+pTOKMlewX4Xvag8RMr16I3j63
-         /oqKtHJg5hptDQ79+3PJvZqBjddP/SZyRAJkx+SrWA4ukn5Na1/eyv4C3cMzwFF5B9cP
-         vdHw==
-X-Gm-Message-State: AFuF++nQTYKimKunCuW19KVwPfJfB8Y9bexwa/eH0v4u3PYYkbcaTi8t
-	Zdmrurxt1L1z7Ws7sUN9K5zzhasmVyAUTPblDdS5muXI3HmNCWlzREG/Kj80vmqN
-X-Gm-Gg: AYBFou1k9BBLz0xsXArWyceurjxpyeukosUZ6R+K65dObBuIPXeGZuxmARo8OjrYvc5
-	1wz2mDIr5RIEcAsoneOeoBP9dF3n07ZD2eY98G9cMxgHWY8ERKG+iz62KQUdWa2Js71fT3M0IVh
-	86wDGpT/DEa7DjFowRoIkwPHQEolu44jMuxdikrUKjKMRsA/SZhZmK/xtkbJweWeedYx9odxzCS
-	ufwSlQMiwHSOAfN5kqFRswqbJqDiVyA7pIAAgWzWwM5Kn5pwGJ6Ows8RzVhEpuaA9EJ9IqRaUF5
-	p7adzSu7qGscDyXbuLZhuhQScYAlwYSUnUbCf1v0WDzpAP+Yz+VplXaOBYim+69JsSm+zmmKtbB
-	HoMooZi+HCmhXJfyKplMgwXYp+b1JHfXlzh1C8X7+bkbDfIY92o7fQmWS9JajvPlcUDVtJ5jNJg
-	eMoEj/jOa9TcNX84DlefJCUrsZ+oJ0URRyfYNE+hOC84Vl5MMCUeD4P/ba1msitcPhDw2n1KCCw
-	21KVYAgAlvx25ahKXVHMBoW4jCHnPZCApT0O5gEH1b8yRtsmHLQg5KNoLNALQ9qTzM5Q4Nu5pBi
-	57TyIvL3fBNhpSWn4FmmST2NT+cBJLq+
-X-Received: by 2002:a17:90b:5305:b0:381:6c5:3f63 with SMTP id 98e67ed59e1d1-39e54dcd917mr24517125a91.6.1790034482105;
-        Mon, 21 Sep 2026 16:48:02 -0700 (PDT)
-Received: from MU00187702X.tailf3e3b4.ts.net (dyn-49-127-54-221.its.monash.edu.au. [49.127.54.221])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a067021ca6sm1453088a91.2.2026.09.21.16.48.00
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 21 Sep 2026 16:48:01 -0700 (PDT)
-From: Yongqiang Tian <yqtian668@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	j6t@kdbg.org,
-	l.s.r@web.de
-Subject: [PATCH v3] compat/winansi: fix die_lasterr() argument formatting
-Date: Tue, 22 Sep 2026 09:47:56 +1000
-Message-ID: <20260921234756.77997-1-yqtian668@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260921062114.14450-1-yqtian668@gmail.com>
-References: <20260916042312.35891-1-yqtian668@gmail.com> <20260921062114.14450-1-yqtian668@gmail.com>
+        bh=nFyt0ZjMvlZZQENHQApMuQI5921FXMiXO5ScQStWCEo=;
+        b=sRzcjm63AlZIfSFTNO+ei1sOdXYzEfeCgQhq56yZc3vbFH4+aDLHzdpaEo206oXlRb
+         uy/rOw0U6AYjllNc492MThRn50DXc5sxaJFHexOu9TRM+juWRlp+y99mbmYAJ3WTLJoz
+         it8rrDn3615WzvQcRAPqD6UhRxJJ/o9glr1C6mxq/CSXZJyvXQPVuSq0rnGAVo6+bt1f
+         FlKDzJJtPjspv+TD0cgAcnbHNtSyyMKe2hRge0wtsimR+mSajWIeAuYxo9nPYlpjdJS5
+         1/xAkLYMQMHlK65Jlt4/rZiU+8MW2HeyFuIVHrg4kmq1W0Ve3lJY39vUyQayv8IVB+6q
+         DGzQ==
+X-Gm-Message-State: AFuF++lRNcXN2+DnjKbEEH4opHCL2H3jKZZ04aKhNfIUxsi6tpKFQ4kg
+	wN5iZkioUuPpvRDHFFdyWc0HBlevbM4TkJq2kLjL+7rLKViKsg6EGUPv/Fc7zngV6MIlUIe7u5e
+	M/JmVx8vMRnJ8KLps6kLwIboTtN5npHY=
+X-Gm-Gg: AYBFou2fHsp6ENjSBd9vSSawGVEqPNFTvhTbP/pSHr4xzxyZnlr+ChJPPDkW+WJEycf
+	6wAHrmUtHFLrxz9YpbTn+Z3H2bLYJ5zPU+O+h1YpMiqhUnHgWHU/3CHwihfow2KqdaQvPB4ZbL0
+	DnQouI2zLSFi+VQyCjzaiaXPy3P9BhWxBhxVUgnFgiwEMEiaCG85lIg80HIG+zDPmIhutmHHrTR
+	+ifnE8cUeGnkKTTNzHRcNj2ti7BflrlEnG4/+KK9E67sdoX/kZegsQsX5da112H0kp2SqsuG+SN
+	lpN0lmNqwvhaP/lW4ex1adK3JcU3UzPX1kQdPNDvv8gSZ4ZA4S6awB3KFZwHcSIukZhztylk+Rv
+	7MrkXvP8k8HA=
+X-Received: by 2002:a05:6820:3393:10b0:6ce:7f39:7c32 with SMTP id
+ 006d021491bc7-6ce7f48cc26mr4328575eaf.80.1790034592106; Mon, 21 Sep 2026
+ 16:49:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20260916042312.35891-1-yqtian668@gmail.com> <20260921062114.14450-1-yqtian668@gmail.com>
+ <xmqqwlsemsjt.fsf@gitster.g>
+In-Reply-To: <xmqqwlsemsjt.fsf@gitster.g>
+From: Yongqiang Tian <yqtian668@gmail.com>
+Date: Tue, 22 Sep 2026 09:49:41 +1000
+X-Gm-Features: AcwNN1U1mNrRH2MK7buon45OnEbxWiTBBdLhA09HVdJV-y-c-lMmvSastl0bi-I
+Message-ID: <CAEs0Zp7M3qtAznHj_0yyab7e0xDLWjd3+Ja1Yr3GfEPJZQr+Vw@mail.gmail.com>
+Subject: Re: [PATCH v2] compat/winansi: fix die_lasterr() argument formatting
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Johannes Sixt <j6t@kdbg.org>, 
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-During WinANSI initialization, duplicate_handle() reports the handle
-when DuplicateHandle() fails. die_lasterr() collects the formatting
-arguments in a va_list, but passes that va_list to die_errno() as an
-ordinary variadic argument. die_errno() consequently formats part of
-the va_list representation instead of the supplied handle, producing
-an incorrect fatal message.
+Hi Junio,
 
-The helper also converts GetLastError() to errno, losing the exact
-Windows error code.
+Thank you very much for the suggestion.
 
-Remove die_lasterr() and report GetLastError() directly at its four
-call sites, following the existing Windows diagnostic style. This
-passes the handle to the formatter correctly and preserves the Windows
-error code. Keep the existing %li representation of the handle.
+> Unless the set-up to test this change needs some special care, we
+> usually do not write such a thing in our proposed log message.
 
-Helped-by: Johannes Sixt <j6t@kdbg.org>
-Helped-by: René Scharfe <l.s.r@web.de>
-Signed-off-by: Yongqiang Tian <yqtian668@gmail.com>
----
+Oh, I see. I'll follow this convention. I've moved the build validation
+details below the separator in v3.
 
-Changes since v2:
-- Add Helped-by trailers for Johannes Sixt and René Scharfe.
-- Move build validation details below the separator.
-- No code changes.
+> I would probably have added a Helped-by:
+> to credit j6t, though.
 
-Validation (performed for v2; the code is unchanged):
-- Built compat/winansi.o with DEVELOPER=1 using MinGW GCC 13.
-- Built and linked the complete git.exe.
+I've added Helped-by trailers for both Johannes Sixt and Ren=C3=A9 Scharfe.
+I'm grateful to both for their guidance on this fix.
 
- compat/winansi.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+> Is that a change, meaning v1 was sent without building, linking and
+> testing?
 
-diff --git a/compat/winansi.c b/compat/winansi.c
-index 3ce1900939..088734a1df 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -436,15 +436,6 @@ static void winansi_exit(void)
- 	CloseHandle(hthread);
- }
- 
--static void die_lasterr(const char *fmt, ...)
--{
--	va_list params;
--	va_start(params, fmt);
--	errno = err_win_to_posix(GetLastError());
--	die_errno(fmt, params);
--	va_end(params);
--}
--
- #undef dup2
- int winansi_dup2(int oldfd, int newfd)
- {
-@@ -462,8 +453,8 @@ static HANDLE duplicate_handle(HANDLE hnd)
- 	HANDLE hresult, hproc = GetCurrentProcess();
- 	if (!DuplicateHandle(hproc, hnd, hproc, &hresult, 0, TRUE,
- 			DUPLICATE_SAME_ACCESS))
--		die_lasterr("DuplicateHandle(%li) failed",
--			(long) (intptr_t) hnd);
-+		die("DuplicateHandle(%li) failed: %lu",
-+		    (long) (intptr_t) hnd, GetLastError());
- 	return hresult;
- }
- 
-@@ -609,16 +600,16 @@ void winansi_init(void)
- 	hwrite = CreateNamedPipeW(name, PIPE_ACCESS_OUTBOUND,
- 		PIPE_TYPE_BYTE | PIPE_WAIT, 1, BUFFER_SIZE, 0, 0, NULL);
- 	if (hwrite == INVALID_HANDLE_VALUE)
--		die_lasterr("CreateNamedPipe failed");
-+		die("CreateNamedPipe failed: %lu", GetLastError());
- 
- 	hread = CreateFileW(name, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL);
- 	if (hread == INVALID_HANDLE_VALUE)
--		die_lasterr("CreateFile for named pipe failed");
-+		die("CreateFile for named pipe failed: %lu", GetLastError());
- 
- 	/* start console spool thread on the pipe's read end */
- 	hthread = CreateThread(NULL, 0, console_thread, NULL, 0, NULL);
- 	if (!hthread)
--		die_lasterr("CreateThread(console_thread) failed");
-+		die("CreateThread(console_thread) failed: %lu", GetLastError());
- 
- 	/* schedule cleanup routine */
- 	if (atexit(winansi_exit))
--- 
-2.34.1
+Ah, sorry for the confusion. v1 was also compiled with MinGW and checked
+with a Win64 probe under Wine. I should have listed the v2 validation
+separately rather than under "Changes since v1".
+
+I've sent v3 separately with these message updates and no code changes.
+
+Thank you very much!
+
+Thanks,
+Yongqiang
+
+On Tue, 22 Sept 2026 at 03:18, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Yongqiang Tian <yqtian668@gmail.com> writes:
+>
+> > During WinANSI initialization, duplicate_handle() reports the handle
+> > when DuplicateHandle() fails. die_lasterr() collects the formatting
+> > arguments in a va_list, but passes that va_list to die_errno() as an
+> > ordinary variadic argument. die_errno() consequently formats part of
+> > the va_list representation instead of the supplied handle, producing
+> > an incorrect fatal message.
+>
+> Interesting.
+>
+> It's a shame that nobody noticed the broken calling sequence since
+> the bogosity was first introduced into the codebase at eac14f8909
+> (Win32: Thread-safe windows console output, 2012-01-14).
+>
+> > The helper also converts GetLastError() to errno, losing the exact
+> > Windows error code.
+> >
+> > Remove die_lasterr() and report GetLastError() directly at its four
+> > call sites, following the existing Windows diagnostic style. This
+> > passes the handle to the formatter correctly and preserves the Windows
+> > error code. Keep the existing %li representation of the handle.
+>
+> OK.
+>
+> > With MinGW GCC 13, compat/winansi.o builds with DEVELOPER=3D1 and the
+> > complete git.exe builds and links.
+>
+> I am puzzled here.  What's the relevance of these two lines?
+>
+> Are you telling us that how you have built and tested the patch?
+> Unless the set-up to test this change needs some special care, we
+> usually do not write such a thing in our proposed log message.
+>
+> > Signed-off-by: Yongqiang Tian <yqtian668@gmail.com>
+> > ---
+> >
+> > Changes since v1:
+> > - replace die_lasterr() with direct die() calls;
+> > - preserve exact GetLastError() values instead of mapping them to errno=
+;
+> > - follow the existing Windows diagnostic style and retain %li for the
+> >   handle;
+>
+> Good collaboration.  If I were doing this commit, judging from the
+> discussion on v1 iteration, I would probably have added a Helped-by:
+> to credit j6t, though.
+>
+> > - verify compat/winansi.o with DEVELOPER=3D1 and build and link the
+> >   complete git.exe with MinGW GCC 13.
+>
+> Is that a change, meaning v1 was sent without building, linking and
+> testing?  Improving on that is a very welcome thing ;-).
+>
+> >  compat/winansi.c | 19 +++++--------------
+> >  1 file changed, 5 insertions(+), 14 deletions(-)
+>
+> Nice.
+>
+> > -static void die_lasterr(const char *fmt, ...)
+> > -{
+> > -     va_list params;
+> > -     va_start(params, fmt);
+> > -     errno =3D err_win_to_posix(GetLastError());
+> > -     die_errno(fmt, params);
+> > -     va_end(params);
+> > -}
+>
+> Very good to see this go.
