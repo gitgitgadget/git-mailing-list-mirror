@@ -1,136 +1,150 @@
-Received: from mta-02.yadro.com (mta-02.yadro.com [185.162.94.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx2-f28.google.com (mail-yx2-f28.google.com [74.125.224.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3C04399C4
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 07:45:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.162.94.148
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789976730; cv=none; b=Lpx25P8T/phqw1qrKn3dV53oGqHLKIQBftRoJkNIydlAbccXU4ba7Lw37qFjMNPxz0ohCslvKbcqQJTyIl4SO7xqP4tx98PDKPODyBaW/DzCaHG6scAYfYtWEhUjSXpoez9gANQvewa6rXYGxG/Wnvst0Js7pw/nIdzb3EEmWpc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789976730; c=relaxed/simple;
-	bh=y0cu+5Es175vE62XcskxxZNl9O+jtuqiWNHK42vrcKQ=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=JNkbcjSIJf/WJCP1jcKptz/S8moz+Fr2pnEFriedgsS/a4puAy+Sd8InSMQqRL0HOWB0vvVbZ1+64ICH4Y9NIqgtTGb8CMlh6SPcqGn+IHMtu/1xYTFO0BMD2lnOBKiU0DpoayCPolQvgoeH9wiRnV9m7d0woroDqzX5iLDylpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yadro.com; spf=pass smtp.mailfrom=yadro.com; dkim=pass (2048-bit key) header.d=yadro.com header.i=@yadro.com header.b=AZS8+/yE; dkim=pass (2048-bit key) header.d=yadro.com header.i=@yadro.com header.b=orq4HG0B; arc=none smtp.client-ip=185.162.94.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yadro.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yadro.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAF045041A
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 09:49:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.156
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789984188; cv=pass; b=muAWf8pSTto27/8WOfHmP0uTwUWXyg6A3Idy3Cdm30iL67Mt4SHdVyXeAoD2Hb/kr5AtEzeVFV/H2qFAZs43CVCQvYGVG4Usg4gb2/W+87KJVj9WVHV0fDh6ZxKLs0FVYv1K0tEwcDR+Ad3QQnfuQ5EH97IcZPb5/dWvLW4kCdc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789984188; c=relaxed/simple;
+	bh=FocADL9+cv7Fvcja2Qaq0T69I4NyX/N4P39LeVXtvfs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u7U4dlDG5CiX1UJ9yrMv4y3TGBPpjA8Zbo74a3SyY5jyNGX2DjsB6yBWTI1ijyoptnT64ciomnT9lfGD3PZnfdq3vUTliS/ekOQgDjfMCAlNxKvi8b6ajXa+PCfkKTWn/Bd2RKp/scHH8B97yRLWvMiPr3eqvhIIevN6ki5ys4c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=h+et9bjY; arc=pass smtp.client-ip=74.125.224.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yadro.com header.i=@yadro.com header.b="AZS8+/yE";
-	dkim=pass (2048-bit key) header.d=yadro.com header.i=@yadro.com header.b="orq4HG0B"
-Received: from mta-02.yadro.com (localhost [127.0.0.1])
-	by mta-02.yadro.com (Postfix) with ESMTP id B4C48A000A
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 10:45:16 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-02.yadro.com B4C48A000A
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-02;
-	t=1789976716; bh=y0cu+5Es175vE62XcskxxZNl9O+jtuqiWNHK42vrcKQ=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:From;
-	b=AZS8+/yEKhkd2/FjtjUjO0qEQODk/yU4W6ae0jm9rQbZ9UChFvoejqmR7Jnrbjjxf
-	 WSWV/T0hWSRntJEYTwwvKaLhjMM8ePk8ZKfbubAKcOjddOGStK8kjNdQ5KeYFpJ+4b
-	 i5yDLHEjCHSUd1zqsCxSPcDd9kUo8Y2VxAtmHahHL56+0jVies2fQVQj9biDyyoXS/
-	 oShNU9eetr3ExGsm3r8SJhEmlyNN39tPmYkV1pmkfUY3w8K9wrQOsqkl5nGKk19N9z
-	 H3tDAXlqvQeB1KbcGlyDcsRIAcJ8Zqwrgy29WasYIin1uSc1ySaMnvX+N2xqLbPXqO
-	 PRHkNAYkOppsQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-03;
-	t=1789976716; bh=y0cu+5Es175vE62XcskxxZNl9O+jtuqiWNHK42vrcKQ=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:From;
-	b=orq4HG0Bogy82JDCqhlEbrk1iRXoFPOiGIvTdbtFOJPaaCgmiS7OmWenNfmbwT83I
-	 kmHMhbzvXE06QQfpO19qne7m/O9QSEH8dIMMMtdKuIfZP00mKrkgrWqs4ncnccVDOo
-	 J2JijK9CE6IpiNpiH+m73ifVgfkDCmErsBwOA10os1LF9/jUhZ1DatyqguvoPLEza5
-	 kL+84IubGDL8eZsFYL/HBM/ahRklsaVoqK1mredJXP/VrHpHLI7D/vk5ADITA5mscm
-	 ue6Hve+GygZVCYy1xPmv+nLXLiQwp/oMbWH1BzL/DkoTBQsXEyVmSb1iemBN6UeP+v
-	 auDpjn9W013yw==
-Received: from MRN-EXCH-01.corp.yadro.com (unknown [10.98.245.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mta-02.yadro.com (Postfix) with ESMTPS
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 10:45:16 +0300 (MSK)
-Received: from MRN-EXCH-05.corp.yadro.com (10.98.245.205) by
- MRN-EXCH-01.corp.yadro.com (10.98.245.201) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Mon, 21 Sep 2026 10:45:16 +0300
-Received: from MRN-EXCH-05.corp.yadro.com ([10.98.245.205]) by
- MRN-EXCH-05.corp.yadro.com ([10.98.245.205]) with mapi id 15.02.2562.049;
- Mon, 21 Sep 2026 10:45:16 +0300
-From: Nikita Makarov <n.makarov@yadro.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Bugreport: git log -L
-Thread-Topic: Bugreport: git log -L
-Thread-Index: AQHdSZzJRIzAWxJWNEWeE4qm17IBGA==
-Date: Mon, 21 Sep 2026 07:45:15 +0000
-Message-ID: <41c54b809eb1490fb467ba0fd4c5a8cf@yadro.com>
-Accept-Language: en-US, ru-RU
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="h+et9bjY"
+Received: by mail-yx2-f28.google.com with SMTP id 00721157ae682-85d43db0c16so19235847b3.1
+        for <git@vger.kernel.org>; Mon, 21 Sep 2026 02:49:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789984185; cv=none;
+        d=google.com; s=arc-20260327;
+        b=DaGezO8aJFHcoZi35Zb4arGJBH264sEtfdP7pyeJ+Lhg59VbfzwtjctsA5B8i8KbSs
+         1+6r5/8CvgmlNftT0kXn2wSRewH8Zt7mCXDSCePGa61hWQGRPAA+7ZPF9dHldUfRg1H9
+         4Aepmyz+5uA8ZkuPXxfc81WInRCndZAA5h6prys16TLY3cN1PdQLrP4qM+z8Bz5HmWMl
+         hSBlhqhCnYZT15EiP5XpdMhehUGHdirKyBPlP9+Kt+11H8zP6bafyQ6sawUZpBQREPM3
+         zzoRn7tR8o6sJBqLhl7PNZbtio/LCtibOIv0iL8hsIjwzbI5+fnywOXHXyj6qau8S1Iy
+         levw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=DNW8DrqXEtqz5NMdm78TVYgJLyOGCfgT2p6ZXhM0/60=;
+        fh=mqWBCh3U3mgaYsIUuBqKjOkYsg367vgLakhdNtAThW4=;
+        b=RkbtPpo0SMw72a874KlKEkK06x+dG9jdE6ybJh5wftXyKSdr4LgOonYmcBOy4zBQdV
+         ofchOUqkO2YLqUsh69i5Qh6pe1wpy6eH1+gJo4t+PkYYmoXVP1FGh4DOxC7RFSNiAIqX
+         nwelDO424ZHHB9DABKl5jlo9WRLlt9zjgiRcqKL29c/ERkopLj14uoQmkVo7QpMc9jfu
+         fbRMPubqAIgEAg8rLE8TrA3MzojSnIcRqCdFGcYBD/h5JcBrdZgUk0pxue/pUP9r6F8I
+         oomlb0zYmpOFs1ndLT1tAEWC8m7MVKksvmuCQUyyM3JMzt2svVDz21a3WQYK5jN94x1z
+         fsxQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1789984185; x=1790588985; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DNW8DrqXEtqz5NMdm78TVYgJLyOGCfgT2p6ZXhM0/60=;
+        b=h+et9bjY+GtX40qgq2w0UMbRPf+DeQUxpi3OBNK2fnt2aGDPoSRTO/+uWWS5Gxwed+
+         Vd9M+iYNmqcsMA3rzjDkmeDnOB9RddvbsFQ9RRPfDoyU05KamiQGjkW8m9iQ4iVXlhf4
+         Bpx3j46G7jOSHXGsfJ8c1lBv+s2m4qFHwzZB4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789984185; x=1790588985;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=DNW8DrqXEtqz5NMdm78TVYgJLyOGCfgT2p6ZXhM0/60=;
+        b=BBExnlqfPUDgt1p5mBQ8zz3EZ9+WXimFrahgl7Aynl6FnTwvl9FLFi6mRSiE74whpd
+         Sif4+NNu2dNlm0Ymw6Su9Q33MdRm7Xembl8jy6+Whk3jHYIRWGZRS2VbDajfqWxY1aWP
+         O73KgNEsqEscDvn4G0bEUsy50xS0P1UQH/p8OtBtKhZ8KmxAXBKEQHwWRTFRH9DuAYVq
+         c4TSDrSiCNkhoYf7WJ3RWKVKeXy2q8G71Kuv+ru+etzQxb3E6ben2qP7D5GoQS1Oy2ai
+         cRjTaTh86diMfhMzkeHDUucFHoJnHOinXDz/SB5pktUrwvdMLCypA/I3ohJJjueMjKZH
+         XuEA==
+X-Gm-Message-State: AFuF++lmEPSL9KJqrUHMn++K4dA+Y9Sgstekzh/kOhpbDyWjVADULAIN
+	V46hJKgN6otfcsR4NZBw9HoDicRCFZf52jtI7M30PVCjFpgbcfsJEeFCbvPSUO7VgeQLcuTDjUc
+	iqw2PYk/T350lXEqNo1FW0VWte5zIz3nDlKeMacAPhIFDdgfO4ILpmp7z+Q==
+X-Gm-Gg: AYBFou0mBBF1hNXsCMSQwyCcCGKZ5QGxCjIXgyT3tjEKthY/rAi7lWMoIMOcnOKkK+8
+	GPNHYsKBPAsKO4iKqUbj22aeUYkNPZWNGk9oNFbLDFKB7D6DIR4PIuNwTrIy5uestmZA4ehQ2Yt
+	EqP0RiGRJSSKMnwry94nykxaeujloekEjYICTHEsasO/cD1gEIK9nUQLiJVKwV9BQyp4zzAasGi
+	/0RgnI08gS5j7ltzvYYPYFnRH7Lv1Hxd8vP3QQMF3GCqxzz46L6YX417Caczn8jP3GnGnslMF3z
+	jqbKxP85hszQS8rJVtfk71qYeANQ3cbj8o0De5p1Ya96hwnwQ8jPIw==
+X-Received: by 2002:a05:690e:4511:20b0:66f:c1bc:408a with SMTP id
+ 956f58d0204a3-6717fdf1132mr1855826d50.77.1789984185094; Mon, 21 Sep 2026
+ 02:49:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-KSMG-AntiPhishing: NotDetected
-X-KSMG-AntiSpam-Interceptor-Info: not scanned
-X-KSMG-AntiSpam-Status: not scanned, disabled by settings
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.1.8310, bases: 2026/09/21 07:07:00 #28607019
-X-KSMG-AntiVirus-Status: NotDetected, skipped
-X-KSMG-KATA-Status: Not Scanned
-X-KSMG-LinksScanning: NotDetected
-X-KSMG-Message-Action: skipped
-X-KSMG-Rule-ID: 5
+References: <41c54b809eb1490fb467ba0fd4c5a8cf@yadro.com>
+In-Reply-To: <41c54b809eb1490fb467ba0fd4c5a8cf@yadro.com>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Mon, 21 Sep 2026 11:49:33 +0200
+X-Gm-Features: AcwNN1VmRe_hB1Qo4KmJPZAbSmlmpqHveLieS0612sMt9FpdiyLRbW9S85vYj54
+Message-ID: <CAL71e4Nw+-bmc0sCOC+L9VyxYG6MwRf-XbXDDWO1grOH=WbEOw@mail.gmail.com>
+Subject: Re: Bugreport: git log -L
+To: Nikita Makarov <n.makarov@yadro.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Hello, I have the found the strange behavior of "git log -L" command with p=
-ython function.
-It is counting a blank line that sits after a function's last statement as =
-part of that function.
-This happens only when the function is at the end of a file.=A0
+On Mon, 21 Sept 2026 at 09:49, Nikita Makarov <n.makarov@yadro.com> wrote:
+>
+> Hello, I have the found the strange behavior of "git log -L" command with python function.
+> It is counting a blank line that sits after a function's last statement as part of that function.
+> This happens only when the function is at the end of a file.
+>
+> The way to reproduce that
+>
+> git init repro && cd repro
+> git config user.email t@t && git config user.name t
+>
+> printf 'def foo():\n    return 1\n\n' > bug.py
+> git add bug.py && git commit -qm c1
+>
+> printf 'def foo():\n    return 1\n' > bug.py
+> git add bug.py && git commit -qm c2
+>
+> Then do
+>
+> git log -L :'foo':bug.py
+>
+> And you'll see
+>
+> Author: t <t@t>
+> Date:   Fri Sep 18 18:21:10 2026 +0300
+>
+>     c2
+>
+> diff --git a/bug.py b/bug.py
+> --- a/bug.py
+> +++ b/bug.py
+> @@ -1,2 +1,3 @@
+>  def foo():
+>      return 1
+> +
+>
+> Though I expect that commit "c2" should never appear in log, since the changes from it doesn't affect the functions body at all.
 
-The way to reproduce that
+I tried to reproduce this but failed to do so. I first started
+wondering if this meant the bug had been fixed in master already,
+but then I also failed to reproduce it on 2.43.
 
-git init repro && cd repro
-git config user.email t@t && git config user.name t
+I think the reproduction steps were wrong here, perhaps
+you meant to put the double newline in c2 instead of in c1?
+Because if I change that, I can reproduce it.
 
-printf 'def foo():\n=A0 =A0 return 1\n\n' > bug.py
-git add bug.py && git commit -qm c1
+So the steps should have:
 
-printf 'def foo():\n=A0 =A0 return 1\n' > bug.py
-git add bug.py && git commit -qm c2
+    printf 'def foo():\n    return 1\n' > bug.py
+    git add bug.py && git commit -qm c1
 
-Then do
+    printf 'def foo():\n    return 1\n\n' > bug.py
+    git add bug.py && git commit -qm c2
 
-git log -L :'foo':bug.py
+instead.
 
-And you'll see
+I think I should be able to submit a fix for this shortly.
 
-Author: t <t@t>
-Date:=A0 =A0Fri Sep 18 18:21:10 2026 +0300
-
-=A0 =A0 c2
-
-diff --git a/bug.py b/bug.py
---- a/bug.py
-+++ b/bug.py
-@@ -1,2 +1,3 @@
-=A0def foo():
-=A0 =A0 =A0return 1
-+
-
-Though I expect that commit "c2" should never appear in log, since the chan=
-ges from it doesn't affect the functions body at all.=A0
-
-[System Info]
-git version:
-git version 2.43.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 7.0.0-31-generic #31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Au=
-g 10 09:38:02 UTC 2 x86_64
-compiler info: gnuc: 13.3
-libc info: glibc: 2.39
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]=
+Thanks,
+Kristofer
