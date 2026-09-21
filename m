@@ -1,138 +1,167 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE45A51813F
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 23:28:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162B942E423
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 23:48:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790033322; cv=none; b=Xh1i2XaUIKwMJo7wJbzd5fCxwB3XzVoZ2zQphvJHWouOPkthRS1KeDir7MyhK1/Xk0q+nbl5CXWYbKzDL1hv+Gap8Vq807NQraAOWREE4zbazQ3TrgvLThvF+wjXZBF9nb4V5SbLNRe8jxyM8mtN92ftDnAe1aBn2x1S0CjyZ2k=
+	t=1790034484; cv=none; b=AGYbmNOeHe7TebgQOePksEn4WFv5uTVbuDZnQgKQ7AgD/NX0dKqGUA6dLJkt24rDnCQOtwg26SAzkMovxNAwzTiSYE23TxYhppAKzzbtJdJEF9XCcs9TEWNkht1jUmy4VThTdtDXA2hdDv+831XKWodoT24t1ynDNh1ND4mWyw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790033322; c=relaxed/simple;
-	bh=ZmfVn+CEqoO+9kkNsZmPkbLJKlOO8F9vNtl5ekpuDrs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PSgpJ3gXiyff2oBWz82biIT1FzAF2i7eeplKhfgNmdsPZogqoX8FkgYw2BsHp546eiaLWqYwNa4xu0s2drVOpqpa6apCvYr2kitncI84Uj26eDrNlKPvRs5TFDQ+Ukgcd99utGlT2lIWObSM3uExvOqNkkJ1H0zuZLdtxQ9XfgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J3UeHt28; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dZ28nDyf; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790034484; c=relaxed/simple;
+	bh=TvmeZj43Pb9tAYECHG5w5BNa5aWbn4VIboffESsA5sQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=SvJd/y+zn3Yn8A3IpnjIB3TIFHJWDTCuVdGDM1JvRmIfvWsiLQormeYLIpn/GAE7XdYQSp+j0vIQD2PbQjxFqF3yqZjuzVm1RkmUEXkMsb+q6MwmxAQ3GCbrYGRsLSLFub5gCnV8GmOvW+tEoM5VAg0PdHAKgBppHQXt+Ai18jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VLK8CRDO; arc=none smtp.client-ip=74.125.227.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J3UeHt28";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dZ28nDyf"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 902F5EC02D9;
-	Mon, 21 Sep 2026 19:28:30 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 21 Sep 2026 19:28:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790033310; x=1790119710; bh=KNBOBh39Xd
-	41wiw3JjMbiUwHPD9YNT5cJiZ6D5yEbjY=; b=J3UeHt28BOJ+cAabTv/wCFGmq/
-	keesixyBh24aHByBzdDOaQxkRtx2+ntKi6Z54fXQe4ancaGyzcNbEqQbKJZLn+nE
-	tL9UduC6oIug1MI15WjYQ2I3IDNoyUoxngTPsExSpLF7tYZL5ZLlzMlb60RzWFGL
-	ezPfweuPvZCI9dpQOxEMVtiLtNuKevsRI2Js9E4IzUDWYdPvCaHQvYm2M2qLgV1B
-	/mBwf9OozdpD4v4XbcX6ocGXFzFghlxy4mUvrMgm6OOyHC7ywPEW4vhNDW+fy1dB
-	IcdLzPO4puCPCTn9K5/HZpkuky2jL2Ya9GCATtsEnAb++/ybau9EemjGWEzQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790033310; x=1790119710; bh=KNBOBh39Xd41wiw3JjMbiUwHPD9YNT5cJiZ
-	6D5yEbjY=; b=dZ28nDyfCnhQYbwdlrvsk9LgoBJSzku3NMwPpG7LtPsnhZQGIIi
-	kklli6lgYwYNJ8W3/W5jTnCiJ2dq/hKCl/ch1j7Uub37DRdMCmu8gdKfzXBaMLKl
-	WuKMeL2mgQu/03nmCNANrN0SFlGCBkO5OinnT8WZzFG6hO7+yb9vkAp722src4oX
-	w2s0Tb5kVXPmDWjtqhf3hzJEbdJKLu26RmoL3v79zVkRhSufWyYeC4jNXbV2c6ym
-	VJsjcrcOGYDjFDMU+Ggb6rAqI2LXPq2kOFi9mXRHNURipJA3FIqlKuikORmdEQMb
-	4oCk4/Ooi2mFm0Y2KAvJJkZQWE72/DdWCJg==
-X-ME-Sender: <xms:nr2xaph6S_WTTMWA3snEyApa4CB93NYMob_ElPXGAnBhP-X8Subi7w>
-    <xme:nr2xalCDlnhsb48aKufgKA7xZE7fVYkb52S-PrQ93iRksy5qngS7NUh69l3lYYYth
-    eegKCjsfp7eGj5ik0invpGDYg8PKjDhP2zzY8OrGBVosXCXbGnUXA>
-X-ME-Received: <xmr:nr2xauHWuW3pbUJn6Ea5kUQQLWOUgBrKLIQa-02RArJbSlHShO8tVXFpjvQ0oPQvFJ-FwnQaG61TAPkw2fpCUjHDWQ2F1p4MKmE8>
-X-ME-Proxy-Cause: dmFkZTFOTxhNggpRQ3jx0ja+GooO1vIBcDAiNl8OgNeQVrn9Jq75dzqoxMW+/VcXZLRE1r
-    Rx9ibJ1RxmF19zaSpmfSFiVeN1BqCCcOrdMQtEBkAkeGy/dnhcA7iiZTQbiW+vwYNdGF+s
-    LdSqngYYIYeU0pvcVTuUuVog9tLnItgnzVYFsYD6zzhw8CedE5IQC8kMX9SxIj2EFZMrJD
-    Y/dn92HdH0BH609oFkm/FCnRtgqSgF2I5scb8C80pLsiu9vzDVp7t6REy9SDwN4h6ot3ld
-    Kdz+N1K7uO1+QmtPhZN3n+XhRiMNQtwJ+Vy/FbWpqKIxjjjqMGbszCRvzSz95K+EnPKyJ0
-    MgTcQ5UrYXsHc5+PT6l2mG5CL/3aItl9EbDa8JJmPa/SYt6cpR2/3w3oJWuzAUGPgzIpTU
-    vlQuUxKfr9d/l/ljuKptFqUbK4lL3Nvmje8m20xlaZWQ0uIqjlZidikt4RiJ+vsdUwMIWt
-    S1piIxj1IjBWEjHxtr+J/aG71clH4CXq3wGyya3ouO45JjiKg9iNVO2EQKigGEBlrfAce6
-    QukxuTRkkWlWfR8FOepaHc9GPI/9K2dqg1iKtta45uueak7CwFjN26hrHO84HOCVteZboc
-    /gQLlUA6f7DkTUtQDRzIibeRgKl0er8iSf2JWNy9V8/kXBAyNeJNKJbcbrVQ
-X-ME-Proxy: <xmx:nr2xatKxur3ffr5u5DXfQN0T2ci9FjK3JsaOksXN4dP3lMH23igPNw>
-    <xmx:nr2xaimYGTvYgC2BnmVXLgsnuBkP40JCoyuZ14HbGhunBhmFlhVZsQ>
-    <xmx:nr2xalTt_Ep0w-7DgJF9EpYrB_JwjrNAGHnCa1ExFtaGHGWiuqs9rw>
-    <xmx:nr2xakKYRVTRYzI9ehojGM_WJFpqLEfdtnKAky7g3UIIKDJmn871zA>
-    <xmx:nr2xalkA-TyygwiHq0CspHFUkvBT2CkYQbDD3zIRdlyA0IjBED23og00>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Sep 2026 19:28:30 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH] refs: run copy and rename through transactions
-In-Reply-To: <xmqqjyoemqvu.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	21 Sep 2026 10:54:45 -0700")
-References: <CAOLa=ZTN1TU2A1sgEhiw=ymMYr6Ge11cMEubSaeKqr4WNU=2EQ@mail.gmail.com>
-	<20260920165037.88524-1-maciej.ciemborowicz@gmail.com>
-	<xmqqjyoemqvu.fsf@gitster.g>
-Date: Mon, 21 Sep 2026 16:28:28 -0700
-Message-ID: <xmqqh5jijiar.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VLK8CRDO"
+Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396ccafb751so3002132a91.2
+        for <git@vger.kernel.org>; Mon, 21 Sep 2026 16:48:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790034482; x=1790639282; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=4BhBQKfT9MU+2sDxvoD3dRPd3Vo0ajtdQLZ49+mdMsA=;
+        b=VLK8CRDORmfARzbLdTRl9WdQvnK5i5+orotzJ8nbH7ez6HBpgUL4Xt7S/W3KfOflN0
+         a0BMuZR+kpRaaogHwemMfbi61DsxCU9fDFAs+kuqVULha1m2Uy3jq0v9r32hzmsWJ05F
+         t+hAOJ+XuQbJqMTRonwCV7W+7g1oy/nBKZU8+4vznbn5P8ckAQwvwAWlWfvsiReuK6CT
+         nwXafANom2zh0/PuYKM5UszDnzXH0hwwsfoBE/DUQM4/fRmuM4Z0MwNXC3LogPiAGalP
+         caA99m6jyDlQkYkh2S2MbF1tX5K55GFByrdeil0QRU3KaBn95vk0Zk87Zo1hXP5rHmaL
+         V75w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790034482; x=1790639282;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=4BhBQKfT9MU+2sDxvoD3dRPd3Vo0ajtdQLZ49+mdMsA=;
+        b=MTnBRw6R3kVnogRi58QxLVlgowFWChhmvVm45WbYQPOnjvskRuVb30iY51s4Dco7YR
+         51C7RI7ph8KYQsURoXqrNnTEMPzQWglpJzDJneQQHDYaluT2x3U0RyeXGZ7sHLcimbu2
+         0ntxkKr/wOX/OBI6EvpegMb+Qw6CnfU3pc44+cqJ5BWQug0E8T8PCkmGaXH5aesVlAV7
+         kKZ+0D5nt/lBDUwDDREl7Tst3LzGbyzs8f5AnUv8KW+pTOKMlewX4Xvag8RMr16I3j63
+         /oqKtHJg5hptDQ79+3PJvZqBjddP/SZyRAJkx+SrWA4ukn5Na1/eyv4C3cMzwFF5B9cP
+         vdHw==
+X-Gm-Message-State: AFuF++nQTYKimKunCuW19KVwPfJfB8Y9bexwa/eH0v4u3PYYkbcaTi8t
+	Zdmrurxt1L1z7Ws7sUN9K5zzhasmVyAUTPblDdS5muXI3HmNCWlzREG/Kj80vmqN
+X-Gm-Gg: AYBFou1k9BBLz0xsXArWyceurjxpyeukosUZ6R+K65dObBuIPXeGZuxmARo8OjrYvc5
+	1wz2mDIr5RIEcAsoneOeoBP9dF3n07ZD2eY98G9cMxgHWY8ERKG+iz62KQUdWa2Js71fT3M0IVh
+	86wDGpT/DEa7DjFowRoIkwPHQEolu44jMuxdikrUKjKMRsA/SZhZmK/xtkbJweWeedYx9odxzCS
+	ufwSlQMiwHSOAfN5kqFRswqbJqDiVyA7pIAAgWzWwM5Kn5pwGJ6Ows8RzVhEpuaA9EJ9IqRaUF5
+	p7adzSu7qGscDyXbuLZhuhQScYAlwYSUnUbCf1v0WDzpAP+Yz+VplXaOBYim+69JsSm+zmmKtbB
+	HoMooZi+HCmhXJfyKplMgwXYp+b1JHfXlzh1C8X7+bkbDfIY92o7fQmWS9JajvPlcUDVtJ5jNJg
+	eMoEj/jOa9TcNX84DlefJCUrsZ+oJ0URRyfYNE+hOC84Vl5MMCUeD4P/ba1msitcPhDw2n1KCCw
+	21KVYAgAlvx25ahKXVHMBoW4jCHnPZCApT0O5gEH1b8yRtsmHLQg5KNoLNALQ9qTzM5Q4Nu5pBi
+	57TyIvL3fBNhpSWn4FmmST2NT+cBJLq+
+X-Received: by 2002:a17:90b:5305:b0:381:6c5:3f63 with SMTP id 98e67ed59e1d1-39e54dcd917mr24517125a91.6.1790034482105;
+        Mon, 21 Sep 2026 16:48:02 -0700 (PDT)
+Received: from MU00187702X.tailf3e3b4.ts.net (dyn-49-127-54-221.its.monash.edu.au. [49.127.54.221])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a067021ca6sm1453088a91.2.2026.09.21.16.48.00
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 21 Sep 2026 16:48:01 -0700 (PDT)
+From: Yongqiang Tian <yqtian668@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	j6t@kdbg.org,
+	l.s.r@web.de
+Subject: [PATCH v3] compat/winansi: fix die_lasterr() argument formatting
+Date: Tue, 22 Sep 2026 09:47:56 +1000
+Message-ID: <20260921234756.77997-1-yqtian668@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260921062114.14450-1-yqtian668@gmail.com>
+References: <20260916042312.35891-1-yqtian668@gmail.com> <20260921062114.14450-1-yqtian668@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+During WinANSI initialization, duplicate_handle() reports the handle
+when DuplicateHandle() fails. die_lasterr() collects the formatting
+arguments in a va_list, but passes that va_list to die_errno() as an
+ordinary variadic argument. die_errno() consequently formats part of
+the va_list representation instead of the supplied handle, producing
+an incorrect fatal message.
 
->> +struct files_copy_or_rename_transaction_data {
->> +	struct ref_lock *lock;
->> +	struct object_id orig_oid;
->> +	struct object_id destination_oid;
->> +	char *destination_target;
->> +	int logmoved;
->> +	int destination_exists;
->> +	int destination_log_backed_up;
->> +};
->
-> Good to have a type that can be used to hold pieces of information
-> specific to the operation.  Can't we do without rename/copy specific
-> addition to the generic ref_transaction struct by following the same
-> principle?
->
-> The comment above the members does make it understandable, but ...
->
->> @@ -240,6 +253,21 @@ struct ref_transaction {
->>  	void *backend_data;
->>  	unsigned int flags;
->>  	uint64_t max_index;
->> +
->> +	/*
->> +	 * Rename and copy operations need backend-specific reflog handling.
->> +	 * Their logical updates still live in `updates`, so hooks see the
->> +	 * operation like any other reference transaction. The fields below
->> +	 * retain the state that backends verify after taking their locks.
->> +	 */
->> +	enum ref_transaction_type type;
->> +	char *old_refname;
->> +	char *new_refname;
->> +	char *logmsg;
->> +	struct object_id source_oid;
->> +	struct object_id destination_oid;
->> +	char *destination_target;
->> +	unsigned int destination_exists:1;
->>  };
->
-> ... is it the best we can do to contaminate a rather generic data
-> structure for such a details relevant only to one specific
-> operation?
+The helper also converts GetLastError() to errno, losing the exact
+Windows error code.
 
-More importantly, this structure suggests to me that you can have a
-single rename (or copy) from one source to one destination in a
-single transaction.  Is that correct or am I misunderstanding the
-way this data structure is used?  How would one rename A, B and C
-to X, Y and Z in a single transaction?  Or perhaps rename A to B
-and copy C to D in a single transaction?
+Remove die_lasterr() and report GetLastError() directly at its four
+call sites, following the existing Windows diagnostic style. This
+passes the handle to the formatter correctly and preserves the Windows
+error code. Keep the existing %li representation of the handle.
+
+Helped-by: Johannes Sixt <j6t@kdbg.org>
+Helped-by: René Scharfe <l.s.r@web.de>
+Signed-off-by: Yongqiang Tian <yqtian668@gmail.com>
+---
+
+Changes since v2:
+- Add Helped-by trailers for Johannes Sixt and René Scharfe.
+- Move build validation details below the separator.
+- No code changes.
+
+Validation (performed for v2; the code is unchanged):
+- Built compat/winansi.o with DEVELOPER=1 using MinGW GCC 13.
+- Built and linked the complete git.exe.
+
+ compat/winansi.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
+
+diff --git a/compat/winansi.c b/compat/winansi.c
+index 3ce1900939..088734a1df 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -436,15 +436,6 @@ static void winansi_exit(void)
+ 	CloseHandle(hthread);
+ }
+ 
+-static void die_lasterr(const char *fmt, ...)
+-{
+-	va_list params;
+-	va_start(params, fmt);
+-	errno = err_win_to_posix(GetLastError());
+-	die_errno(fmt, params);
+-	va_end(params);
+-}
+-
+ #undef dup2
+ int winansi_dup2(int oldfd, int newfd)
+ {
+@@ -462,8 +453,8 @@ static HANDLE duplicate_handle(HANDLE hnd)
+ 	HANDLE hresult, hproc = GetCurrentProcess();
+ 	if (!DuplicateHandle(hproc, hnd, hproc, &hresult, 0, TRUE,
+ 			DUPLICATE_SAME_ACCESS))
+-		die_lasterr("DuplicateHandle(%li) failed",
+-			(long) (intptr_t) hnd);
++		die("DuplicateHandle(%li) failed: %lu",
++		    (long) (intptr_t) hnd, GetLastError());
+ 	return hresult;
+ }
+ 
+@@ -609,16 +600,16 @@ void winansi_init(void)
+ 	hwrite = CreateNamedPipeW(name, PIPE_ACCESS_OUTBOUND,
+ 		PIPE_TYPE_BYTE | PIPE_WAIT, 1, BUFFER_SIZE, 0, 0, NULL);
+ 	if (hwrite == INVALID_HANDLE_VALUE)
+-		die_lasterr("CreateNamedPipe failed");
++		die("CreateNamedPipe failed: %lu", GetLastError());
+ 
+ 	hread = CreateFileW(name, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL);
+ 	if (hread == INVALID_HANDLE_VALUE)
+-		die_lasterr("CreateFile for named pipe failed");
++		die("CreateFile for named pipe failed: %lu", GetLastError());
+ 
+ 	/* start console spool thread on the pipe's read end */
+ 	hthread = CreateThread(NULL, 0, console_thread, NULL, 0, NULL);
+ 	if (!hthread)
+-		die_lasterr("CreateThread(console_thread) failed");
++		die("CreateThread(console_thread) failed: %lu", GetLastError());
+ 
+ 	/* schedule cleanup routine */
+ 	if (atexit(winansi_exit))
+-- 
+2.34.1
