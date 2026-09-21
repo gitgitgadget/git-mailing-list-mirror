@@ -1,81 +1,84 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E01F4DDB5D
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 17:54:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB184DDB41
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 18:01:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790013290; cv=none; b=mEaTkwioqGCdh6sHSFePLGkju/o7iCheJlJP+lVOiOs4ctjYNCWAbmTagHLd3FdeWx3PEzNHumDYRL/eVdXCBhz/tKMsh8fUQ4QHcGipvZMCFtEi5mtQ2T7I2kHPfO8fYdf3k4qz8q7oA/a1mMdIxST1rUcgGWaTBasaAsJ+8/4=
+	t=1790013682; cv=none; b=JSpuphhr8+SvBkSZ1k/N/128wN8khGzTgxA6tcSrBIVn6bYLRrTt9HHw5rdX0HUOXdI0h8Bw8E8AGw6eqBY8modFbvFNmLjxuwXrzEaGtxUGuGJaqEK8sccrfTzeqTbg9ybLUbbwevexUAwLVjSYtl07lf/dp561xoRlfV9a5xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790013290; c=relaxed/simple;
-	bh=Inwywfbs6anb8k872H/atWvZCW2cUIKdalU044+uNSo=;
+	s=arc-20240116; t=1790013682; c=relaxed/simple;
+	bh=SZsqAZFEEHG+l73TE+crl6oKVktY/jSnB/bOieRKp8s=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FZ9VRBRKLe8KMcLBC4KFs7U29tJXhOKHZCZCzJNGfl4zSPMmSU9Tj8RmZVi2hZJppKfPCI1kAlNFaSeePrmEpw8BO0OxtFe4Nx46XMnEaU9NENG1DA6vnTdIWIYXI4wdJBVG3+NEGoAsEaFa7mHjKJE4jqpYwXWYtEC27YTCDZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rxtuj99U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E7iYh4JP; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=TtpqoDAGINK+Wd0QHpGzAT1fHY8wJzVGwumZBmL9kQMbqqPx4LAEyRvdhGqcQ7UXuFG7c2oiWTwZiXPwzdIwsfjuHCYE/WVjiZe5rXA3+jkFyf6AcYNpScz6pkagYYC+MQB5Rqp31CgxBCvfRM9gum3bSPEO+w4paS/HkCJXMjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EXoFoUME; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SDpkK3gH; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rxtuj99U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E7iYh4JP"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 413191400172;
-	Mon, 21 Sep 2026 13:54:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EXoFoUME";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SDpkK3gH"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 07D4FEC02B0;
+	Mon, 21 Sep 2026 14:01:20 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 21 Sep 2026 13:54:47 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 21 Sep 2026 14:01:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790013287; x=1790099687; bh=zJ6U5RjATK
-	xTGx7EP90DXKV1anb3H51RY+vMsTI4LkQ=; b=rxtuj99UphmbseR76nFr+QKeOg
-	UnE6Ft0rZiv2+k7ceJ/SJlvuskTwKFg/9EEh62B5T8pk+0RNp6KC0me04KTi/bzB
-	NfhO9ETNFAtza3Iv6LkgyPEiGelYcCdab5Qi5RjicbcMP146yJk5w532aqDqQVH9
-	6fIAxLYwO+x4Gv9//sLWBKBn8wkJbQ0H4aSq5LdQ4ScO4FslA+3QwqOpFM6q2obu
-	sDdov10tuqhLusQFETdmqqsocUTGemLBx7RHKev/hduwNAtMLEyuf52UwGpe30Ce
-	yGTKfeQ619EvBrNXLJPwtGyYRMChv+ElM9VneQgr/g27OvJJbStq5LU7/80A==
+	:subject:to:to; s=fm3; t=1790013680; x=1790100080; bh=VNNOKQFgc1
+	oWwKrefCdv/TGDSuwbpsy9BawYgAG8gNw=; b=EXoFoUME7Qw59N+/xubskpkVkn
+	vcBIfaOE2uxms4rknvFFWAhNQR+q7GBNpHp1006Lbi19Aj0HaahfrXm12x6gdIzj
+	rDPfjkfc8rrjMUB8t1DQPIri4kPvR4VFt7GTzGjuOT0QDHchbYoKUUZpfKx0JxMC
+	q0X9bzaHpSM8sIft3leVofRFBK8/86NHuFmQuC/yBp4KjVFR3AR4elMqwG3FAuK9
+	EzyUMj4e8WHFtEbIQbxg69HgZYFJpuwIirIloPV1TlAvDnYuhO01e3fkFM4NtUEK
+	VPc+v+LTVGXVj+7BrI0cpxyJ4A5+nCCnvgAluoblZ7Ei1WQk7UM1btAq1qbg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790013287; x=1790099687; bh=zJ6U5RjATKxTGx7EP90DXKV1anb3H51RY+v
-	MsTI4LkQ=; b=E7iYh4JPFr3wL/K6ktpRML1ZjBYIx6vPNv6ilBcjg5en7RrLLcI
-	jbq6Dti71CNN+dJ+iuNcH7YZa8hwxVdwVm7XVv0QydR4+2G4bfxe40w8kGR6byW+
-	4n1xaou0VFkYCtxiPP/2XDqYyXJuAkLschVorA9R1pte7KXYQ5nKmy/oZC2NDBjz
-	ttNhVRZcLKaG+LAhnLjwPX0/zC7zK73WG6GA44GmJIilhsf4SnuIyP8Xi89LLOZi
-	cf8se+eql9vh/EEY25sUqv/sXbSpheoSwjffZ24grCvFYW+MksUqrtGOqHYKVBz8
-	97x1X5AheAr6YcDkHNIDexXypsNLQZ+x7qA==
-X-ME-Sender: <xms:Z2-xagSK-izth_3dR1O455I-oKcu-ghLv7h06QZv_x0cpVfNLK8GoA>
-    <xme:Z2-xakwci1Vu0l_wcz1p-WGqou1fJYn6f08stDv6BIvHJSP1tImIF4RNt6KWV3f6W
-    7ut82lgID2oMOptXhUQwtYZW7e864uAP63wsLQnYmeUIPDqle7s5ddR>
-X-ME-Received: <xmr:Z2-xai1iodOinJLhqUkY5-f3GBUreAnFQfl54NxEkujypGMiG9SXwJq7M0NlEzttymOXORyxqaHmq-wl06hJ63ywaeDA_3LoSRKB>
-X-ME-Proxy-Cause: dmFkZTGvPIgu0ZBIeYRrOpMsWDuR3MDpEO5iwkkux7B/uOjjyxkX+RYIWb6r/sCD6CVTBF
-    zsSqBQp1RG4P3DpnOSToHUbW5xZfvxCmQiKnJ4e/SI/q+VLZUH+tdzW2Zl8rDtDxrZsfv5
-    Sq8wJ9gCLg/Ovt40yfeDlAd1KIZyRiSrfTEZfbwEwel0k/7oDBZnWFJ/J464DAPk/oqGpp
-    2ptnVxxMVkMsGaSF20VZtSOlU1daeeHrsDg3+2x4+4Rl/f+MyFNmdEU8O7D61WDbtxH2d0
-    9O1JQNPafPl1dkGRFDH8xNCF1u9X0bqVFZr3IZqjEdD/9yfMT2+kvDg6Pq1dV3UZHPLEQi
-    WgrK5XycFCkdViLAF2BBy9oPEO30T5WddNsS/4eFnbm0x6PGE8uktMkMgVHaB98T369fOJ
-    oxTF7O6gZsCZPuX1AXidtsv4m4mt88bb0lDpKh0TErwCjtnyh+0ugAXVtLwWgwSBm7cC5m
-    LvJVCddcDIVU8CVdASS6zCzmRazK0KqEY7Hgwlnk+Mu3ew3W9jGFHf+SmKF4LIeK6InK1e
-    7DBrhbq/cagNpd7ZVGj5q51ogmnHiHX9GRB/F2/xPMt6OBnHS0DIxfjzoFA9udxcFKLWwu
-    HdZw07fLQCYT9jkSEiuEn4evwd2ZQMnhx82keOTEmUPRYaMC6iYbMpuOWaAw
-X-ME-Proxy: <xmx:Z2-xai5Jh3qSQR3JJA6snT4ea-x1dnviNKGDkt28K0E4-ryzY4417g>
-    <xmx:Z2-xalWyAr8f2rZVFRaV4ehQtu2bJPp1SkzkZTUzbCbDz8ZzPzxUDw>
-    <xmx:Z2-xahCaUCszj07FEA8wI6V40sxNmcQyWEkIg9NcUauX7n7dinNpoA>
-    <xmx:Z2-xak4MZ0rTJ2MT1r-d6pEpo7xGPSlQdZAFG-AlaKNDkSWWSOGYyA>
-    <xmx:Z2-xaqUit4ifrJwtLYiiWmtBXGrtIrqRshmVMTUM4TN0Gwb6UR9ngEuk>
+	1790013680; x=1790100080; bh=VNNOKQFgc1oWwKrefCdv/TGDSuwbpsy9Baw
+	YgAG8gNw=; b=SDpkK3gHMx/Ab8d5b2WbXHKIgpp0KomXAbcrCfFZcVMt8Yk+sWD
+	m040DAK9JHGk+q3Fq0dlhV5VLl2SDvmiRw/0zgcG67mUEjEr/KhlH7j5Hm054vGh
+	FD4YMv2EGyfy+QVnR9itMRa3y0aIaHl5j6c7VaPFRey4GlNGHeXtwlx39+bESZ62
+	t00E/sGwsSHkzvNN31bYH746OcphWOCVgbLaRv/rTVDSHkyBaOFw14RuuX/4ykyj
+	c7Q/LYFMHV7Ubhd2hJVlb1QqEouPG+7XbhG0h9sncVOBTe7oD8MdbN4o4ph6NaFr
+	ZEx3KaT+cJGLFRqjVEc6Nur4J2L63sos7Rg==
+X-ME-Sender: <xms:73Cxanln_V0tAOFchAjh7YZKGWL1rs81DqTKlxmY0H6Fg3NNUy-_Kw>
+    <xme:73CxaugF2fh5G7Nbacvc1Qv_jazNQitS8EwE7igVWsmB8nEQABhEgI8uD327e04iW
+    zrj3eRfGtHzZSiPxmt-Lb0gzhsRYED9ttFJFZz6kOQonOeE34K98DA>
+X-ME-Received: <xmr:73CxandOWdrbVUo7CU4Z0AY9SSnRaYux-0enBLm5xKa5b4d1NXyHxR7Mk9jr6mm3nR6F9buVzEf40ag8De_JhiUURMWzMsicl2Eg>
+X-ME-Proxy-Cause: dmFkZTE9uH+/hEeXFfMOZf4B2RCKnscFr/DQUo+mtA1tQBVJpSW+j/oUJo6J/51WZyzsbJ
+    fdX8udF3ndLdU6fPnxXCANBW2jdInK/iVxRrsys3KCgPC4LrUpTup62fryRoEulARZKFHo
+    cc21Ya3B1GtQIfcNHVoqFxaOpSsHGP70ErvbmnhLRQXcsCWe4zo8kcCr1aDwTBq5+hUOOJ
+    8Pw2tEmBgHAm8bEEXddnCW7TQR48kM/y2i2Y4RBMSjYS5zDShwGphjeOX6U9mQGEsXxhCo
+    WVwFaJ6WPj1PPag0QxhqsSvO6w78D9zEaukB1qZMX8fzA8Bt3WDY5ymXCAAH4FoupEV6m9
+    DO8CnSUKs7B6WQHK7efh6MgCfEGj44xKb6H6uPtq/Z68gmJp6Xs9iHfPEpBcMzzazEEIsp
+    bq13GglbPBzsEpVH7sZ04YRYgBn/EM7N+pJZARUTKZznQXsvbn6qvpTkQ+q/lA7OipwVtR
+    Z1Ol2SsZ/5gdcaIR0hepoAyt5nI6zVCIrBa41wltR5jAE28t1taUofTteyLT/BVGKZa2cw
+    IB5QdCqIqVXcYDrUCBh/XvmMmhSLNn7IahWdJZDAwAFN6QdkuooilXOEnxbx8IBFvIqzs5
+    kZIeru3qljUZQBQ44fjo+bxiRkUwytrI4jbocJPxjh7UOkfOFc0vZwnU2Jqw
+X-ME-Proxy: <xmx:73CxamjCJqAIPdSKa_a-i8Zo9tT4_M2q0ULWVQebgQ-9OiItqkTW8Q>
+    <xmx:73CxanwFgNG-swt-94gagzS0orve2TIOLXPtr0xvIby1agPL5ONWag>
+    <xmx:73CxaqPc710uPhO5JrBf2--CZOvSmT7nWGOodVsv3qoSQF8hfoW9ow>
+    <xmx:73CxagXap02CCDMBvHE5zVTW9ZLXYRYq0O8QCPcwFrhoHeisDesOhA>
+    <xmx:8HCxauJSftf_b3tMydbJQCaAXotCik_NjKF9Xnr2v94jdUkQViHOU8DF>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Sep 2026 13:54:46 -0400 (EDT)
+ 21 Sep 2026 14:01:19 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH] refs: run copy and rename through transactions
-In-Reply-To: <20260920165037.88524-1-maciej.ciemborowicz@gmail.com> (Maciej
-	Ciemborowicz's message of "Sun, 20 Sep 2026 18:50:37 +0200")
-References: <CAOLa=ZTN1TU2A1sgEhiw=ymMYr6Ge11cMEubSaeKqr4WNU=2EQ@mail.gmail.com>
-	<20260920165037.88524-1-maciej.ciemborowicz@gmail.com>
-Date: Mon, 21 Sep 2026 10:54:45 -0700
-Message-ID: <xmqqjyoemqvu.fsf@gitster.g>
+To: Jacob Keller <jacob.e.keller@intel.com>
+Cc: Haokai Ding via GitGitGadget <gitgitgadget@gmail.com>,
+  <git@vger.kernel.org>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+  Haokai Ding
+ <hk_ding@outlook.com>
+Subject: Re: [PATCH] diff --no-index: fix -R with file/directory conflicts
+In-Reply-To: <0c82d50e-f2c0-4db6-ade8-7a403cac73da@intel.com> (Jacob Keller's
+	message of "Sun, 20 Sep 2026 16:04:32 -0700")
+References: <pull.2232.git.1789715946888.gitgitgadget@gmail.com>
+	<0c82d50e-f2c0-4db6-ade8-7a403cac73da@intel.com>
+Date: Mon, 21 Sep 2026 11:01:18 -0700
+Message-ID: <xmqqfqz2mqkx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,294 +88,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com> writes:
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-> Reference copy and rename operations currently bypass the transaction API.
-> Consequently, the reference-transaction hook sees only the source deletion
-> with the files backend and no useful update with the reftable backend.
+> On 9/18/2026 12:19 AM, Haokai Ding via GitGitGadget wrote:
+>> From: Haokai Ding <hk_ding@outlook.com>
+>> 
+>> When a path is a file on one side and a directory on the other,
+>> queue_diff() queues the file separately before recursing into the
+>> directory. This early queue entry bypasses the reverse_diff handling
+>> used for ordinary files.
+>> 
+>> As a result, comparing directories d and e where d/sub is a file and
+>> e/sub/file is another file reports both paths as deleted with -R.
+>> Reversing the operands reports both paths as added instead.
+>> 
+>> Swap the filespecs of the early queue entry when reverse_diff is set,
+>> so that -R reverses the file change as well as the directory contents.
+>> Add regression tests for both directions.
+>> 
+>> Signed-off-by: Haokai Ding <hk_ding@outlook.com>
+>> ---
 >
-> Represent both operations as reference transactions containing their
-> logical updates. A rename is a deletion of the old reference and creation
-> of the new reference in the same transaction. Retain backend-specific
-> reflog handling: the files backend stages its existing rename procedure
-> across prepare, finish and abort, while reftable stages an addition while
-> holding the stack lock. Suppress hooks for the files backend's nested
-> deletion transactions so that callers observe one logical transaction.
+> Thanks for fixing!
 >
-> Record and verify the source and destination values after taking backend
-> locks. This rejects concurrent changes instead of applying a rename or copy
-> that differs from the payload shown to the preparing hook. Preserve D/F
-> renames and restore overwritten references and reflogs when a prepared hook
-> rejects the operation.
->
-> Add coverage for rename, copy, forced updates, both directions of D/F
-> conflicts, concurrent updates and prepared-hook rollback.
->
-> Helped-by: Karthik Nayak <karthik.188@gmail.com>
-> Signed-off-by: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-> ---
+> Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 
-Drop unnecessary "currently" to the first sentence, and add "test"
-to the laste sentence somewhere, and this would be perfect.
-
-Very pleasing to see an exceptionally well-written proposed commit
-log message by a new contributor.
-
->  refs.c                           | 137 ++++++++++++---
->  refs.h                           |   3 +
->  refs/debug.c                     |  25 ---
->  refs/files-backend.c             | 276 +++++++++++++++++++++++++++----
->  refs/packed-backend.c            |   2 -
->  refs/refs-internal.h             |  38 +++--
->  refs/reftable-backend.c          | 194 ++++++++++++++++------
->  t/t1416-ref-transaction-hooks.sh | 142 ++++++++++++++++
->  8 files changed, 679 insertions(+), 138 deletions(-)
->
-> diff --git a/refs.c b/refs.c
-> index 92d5df5b7..22c000f7f 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1004,15 +1004,17 @@ long get_files_ref_lock_timeout_ms(struct repository *repo)
->  	return timeout_ms;
->  }
->  
-> -int refs_delete_ref(struct ref_store *refs, const char *msg,
-> -		    const char *refname,
-> -		    const struct object_id *old_oid,
-> -		    unsigned int flags)
-> +int refs_delete_ref_with_transaction_flags(struct ref_store *refs,
-> +					   const char *msg,
-> +					   const char *refname,
-> +					   const struct object_id *old_oid,
-> +					   unsigned int flags,
-> +					   unsigned int transaction_flags)
->  {
->  	struct ref_transaction *transaction;
->  	struct strbuf err = STRBUF_INIT;
->  
-> -	transaction = ref_store_transaction_begin(refs, 0, &err);
-> +	transaction = ref_store_transaction_begin(refs, transaction_flags, &err);
->  	if (!transaction ||
->  	    ref_transaction_delete(transaction, refname, old_oid,
->  				   NULL, flags, msg, &err) ||
-> @@ -1027,6 +1029,15 @@ int refs_delete_ref(struct ref_store *refs, const char *msg,
->  	return 0;
->  }
->  
-> +int refs_delete_ref(struct ref_store *refs, const char *msg,
-> +		    const char *refname,
-> +		    const struct object_id *old_oid,
-> +		    unsigned int flags)
-> +{
-> +	return refs_delete_ref_with_transaction_flags(refs, msg, refname,
-> +						      old_oid, flags, 0);
-> +}
-> +
->  static void copy_reflog_msg(struct strbuf *sb, const char *msg)
->  {
->  	char c;
-> @@ -1270,6 +1281,10 @@ void ref_transaction_free(struct ref_transaction *transaction)
->  
->  	string_list_clear(&transaction->refnames, 0);
->  	free(transaction->updates);
-> +	free(transaction->old_refname);
-> +	free(transaction->new_refname);
-> +	free(transaction->logmsg);
-> +	free(transaction->destination_target);
->  	free(transaction);
->  }
->  
-> @@ -2710,7 +2725,8 @@ int ref_transaction_prepare(struct ref_transaction *transaction,
->  		return REF_TRANSACTION_ERROR_GENERIC;
->  
->  	/* Preparing checks before locking references */
-> -	ret = run_transaction_hook(transaction, "preparing");
-> +	ret = transaction->flags & REF_TRANSACTION_FLAG_SKIP_HOOK ? 0 :
-> +		run_transaction_hook(transaction, "preparing");
->  	if (ret) {
->  		ref_transaction_abort(transaction, err);
->  		die(_(abort_by_ref_transaction_hook), "preparing");
-> @@ -2720,7 +2736,8 @@ int ref_transaction_prepare(struct ref_transaction *transaction,
->  	if (ret)
->  		return ret;
->  
-> -	ret = run_transaction_hook(transaction, "prepared");
-> +	ret = transaction->flags & REF_TRANSACTION_FLAG_SKIP_HOOK ? 0 :
-> +		run_transaction_hook(transaction, "prepared");
->  	if (ret) {
->  		ref_transaction_abort(transaction, err);
->  		die(_(abort_by_ref_transaction_hook), "prepared");
-> @@ -2750,7 +2767,8 @@ int ref_transaction_abort(struct ref_transaction *transaction,
->  		break;
->  	}
->  
-> -	run_transaction_hook(transaction, "aborted");
-> +	if (!(transaction->flags & REF_TRANSACTION_FLAG_SKIP_HOOK))
-> +		run_transaction_hook(transaction, "aborted");
->  
->  	ref_transaction_free(transaction);
->  	return ret;
-> @@ -2781,7 +2799,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
->  	}
->  
->  	ret = refs->be->transaction_finish(refs, transaction, err);
-> -	if (!ret && !(transaction->flags & REF_TRANSACTION_FLAG_INITIAL))
-> +	if (!ret && !(transaction->flags & (REF_TRANSACTION_FLAG_INITIAL |
-> +					 REF_TRANSACTION_FLAG_SKIP_HOOK)))
->  		run_transaction_hook(transaction, "committed");
->  	return ret;
->  }
-> @@ -3123,28 +3142,100 @@ int refs_delete_refs(struct ref_store *refs, const char *logmsg,
->  	return ret;
->  }
->  
-> -int refs_rename_ref(struct ref_store *refs, const char *oldref,
-> -		    const char *newref, const char *logmsg)
-
-It is annoying that we have to give random callers an unrestricted
-way to skip calling hooks.  I suspect it may come from "this
-function should call hook when invoked as the top-level operation,
-but when it is used as a subroutine for a different top-level
-operation, we want to skip hooks" kind of reasoning, but is this
-something we can avoid by rearranging the call chain?
-
-> +static int refs_copy_or_rename_ref(struct ref_store *refs, const char *oldref,
-> +				   const char *newref, const char *logmsg,
-> +				   int copy)
-
-Will this function ever gain a third mode of operation other than
-copy or rename?  If not, perhaps "bool copy"?
-
->  {
-> -	char *msg;
-> -	int retval;
-> +	struct ref_transaction *transaction = NULL;
-> +	struct object_id old_oid, new_oid;
-> +	struct strbuf new_target = STRBUF_INIT;
-> +	struct strbuf err = STRBUF_INIT;
-> +	char *msg = normalize_reflog_message(logmsg);
-> +	int old_flags, new_flags = 0, new_exists = 0, ret = 1;
->  
-> -	msg = normalize_reflog_message(logmsg);
-> -	retval = refs->be->rename_ref(refs, oldref, newref, msg);
-> +	if (!strcmp(oldref, newref)) {
-> +		ret = 0;
-> +		goto out;
-> +	}
-> +
-> +	if (!refs_resolve_ref_unsafe(refs, oldref,
-> +				     RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
-> +				     &old_oid, &old_flags)) {
-> +		error("refname %s not found", oldref);
-> +		goto out;
-> +	}
-> +	if (old_flags & REF_ISSYMREF) {
-> +		error("refname %s is a symbolic ref, %s it is not supported",
-> +		      oldref, copy ? "copying" : "renaming");
-> +		goto out;
-> +	}
-> +
-> +	transaction = ref_store_transaction_begin(refs, 0, &err);
-> +	if (!transaction)
-> +		goto error;
-> +	transaction->type = copy ? REF_TRANSACTION_TYPE_COPY :
-> +		REF_TRANSACTION_TYPE_RENAME;
-> +	transaction->old_refname = xstrdup(oldref);
-> +	transaction->new_refname = xstrdup(newref);
-> +	transaction->logmsg = xstrdup(msg);
-> +	oidcpy(&transaction->source_oid, &old_oid);
-> +
-> +	if (!copy && ref_transaction_delete(transaction, oldref, &old_oid, NULL,
-> +					    REF_NO_DEREF, msg, &err))
-> +		goto error;
-> +
-> +	if (refs_resolve_ref_unsafe(refs, newref,
-> +				    RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
-> +				    &new_oid, &new_flags)) {
-> +		new_exists = 1;
-> +		if ((new_flags & REF_ISSYMREF) &&
-> +		    refs_read_symbolic_ref(refs, newref, &new_target) < 0) {
-> +			strbuf_addf(&err, "unable to read symbolic ref %s", newref);
-> +			goto error;
-> +		}
-> +	} else {
-> +		oidclr(&new_oid, refs->repo->hash_algo);
-> +	}
-> +	transaction->destination_exists = new_exists;
-> +	if (new_flags & REF_ISSYMREF)
-> +		transaction->destination_target = xstrdup(new_target.buf);
-> +	else if (transaction->destination_exists)
-> +		oidcpy(&transaction->destination_oid, &new_oid);
-> +
-> +	if (ref_transaction_update(transaction, newref, &old_oid,
-> +				   (new_flags & REF_ISSYMREF) ? NULL : &new_oid,
-> +				   NULL,
-> +				   (new_flags & REF_ISSYMREF) ? new_target.buf : NULL,
-> +				   REF_NO_DEREF | REF_SKIP_CREATE_REFLOG,
-> +				   NULL, &err))
-> +		goto error;
-> +
-> +	if (ref_transaction_commit(transaction, &err))
-> +		goto error;
-> +
-> +	ret = 0;
-> +	goto out;
-> +
-> +error:
-> +	error("%s", err.buf);
-> +out:
-> +	ref_transaction_free(transaction);
-> +	strbuf_release(&new_target);
-> +	strbuf_release(&err);
->  	free(msg);
-> -	return retval;
-> +	return ret;
->  }
-
-That's quite a lot of new code.  I see ref_transaction_delete(),
-ref_transaction_update() and others are already reused from existing
-code paths, which is good.
-
-> +struct files_copy_or_rename_transaction_data {
-> +	struct ref_lock *lock;
-> +	struct object_id orig_oid;
-> +	struct object_id destination_oid;
-> +	char *destination_target;
-> +	int logmoved;
-> +	int destination_exists;
-> +	int destination_log_backed_up;
-> +};
-
-Good to have a type that can be used to hold pieces of information
-specific to the operation.  Can't we do without rename/copy specific
-addition to the generic ref_transaction struct by following the same
-principle?
-
-The comment above the members does make it understandable, but ...
-
-> @@ -240,6 +253,21 @@ struct ref_transaction {
->  	void *backend_data;
->  	unsigned int flags;
->  	uint64_t max_index;
-> +
-> +	/*
-> +	 * Rename and copy operations need backend-specific reflog handling.
-> +	 * Their logical updates still live in `updates`, so hooks see the
-> +	 * operation like any other reference transaction. The fields below
-> +	 * retain the state that backends verify after taking their locks.
-> +	 */
-> +	enum ref_transaction_type type;
-> +	char *old_refname;
-> +	char *new_refname;
-> +	char *logmsg;
-> +	struct object_id source_oid;
-> +	struct object_id destination_oid;
-> +	char *destination_target;
-> +	unsigned int destination_exists:1;
->  };
-
-... is it the best we can do to contaminate a rather generic data
-structure for such a details relevant only to one specific
-operation?
-
-Thanks.
+Thanks, both.  Will queue.
