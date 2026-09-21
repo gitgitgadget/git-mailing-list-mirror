@@ -1,83 +1,90 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1965208BC
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 22:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C36515965
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 22:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790030088; cv=none; b=fjpxizdHDMjJJyQBx0NAIXOm3uPP4dJJ4+3wrx9KG6lL5P+52rmjmjWpuIHmJlHrTj1EqOxAeJnMz63+CF5SLp2la2R0fCBeqZ5ZegxNRjrQPjlJFfUS2SZiZH+v8ja622fxzJTx3wotW/vrf5gy1EZGoqr9noNco5GXgqzZw7A=
+	t=1790031154; cv=none; b=WMyBs0ABJas2hNfddqdTxxjrwEer1Ik3aW+2/6TTfZMVclz1IbYCKaSk4G3OmHfoOfaF7Xbhi4/VQ+nQEelOV/jIzHmx327SeeheyvhEipAMt7u38qAldwGmyGQjzwh5+ij2axmvuch2lZH0w77qc5fkZ+FRh3VYvhAGam3glD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790030088; c=relaxed/simple;
-	bh=G1tSlQQ7AH66Mdp3ijFGPTQmvH5OU5Axr+xJaSWbHOA=;
+	s=arc-20240116; t=1790031154; c=relaxed/simple;
+	bh=886UmToGhoCnm38U7UpROOlmjKP3N0pPqbm9wv8cRDQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JHh3WDmK5146jecLmbYnbNYJfqTkMUIzwfKN9TFBPzKvDdphm5yYL004ObufF5AI4PVfQW/XAWQ+vsZhQ44Df8bGKF/Xg8GNiH7G/yrYLtZUgdLXDVSCN5sSJdCfQZpBQwaFxHmNbkM54ucUSBfdFrUNsFqGe7VWi9o2ht3Gl5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GX3oRgp4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bYFzLYMC; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=CY1SA9nlIo8PFJ7wpfH2gj1GTk+/A4LiFtcfRCU5f8e6UIiFqttvIDQ+2YLJBkvPUl8eEU99+/on4mHnIXbt4Fsek9on3Yihoq7MrAq/5tT/euwZaMg+YCqiIIivEnvYfjL19ENJQLZPU+SuIvNgaDqHCHHxY/ZKiOucV/X6bCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=n+JS3PIn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VHG8y7yZ; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GX3oRgp4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bYFzLYMC"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id AF0E4EC02B6;
-	Mon, 21 Sep 2026 18:34:45 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 21 Sep 2026 18:34:45 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="n+JS3PIn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VHG8y7yZ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6A1CBEC02AF;
+	Mon, 21 Sep 2026 18:52:30 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 21 Sep 2026 18:52:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790030085; x=1790116485; bh=k5t8Z5wotM
-	F+3r3rH9UKFmoKXsN/sGW1bDsKFwclikk=; b=GX3oRgp4U7+Hyp+OOxRoj1Z+fS
-	alybiJKHO4dvHmTJsJRRvkbbazEj+IyVzR4e6ReK8LKrikE8EVoyu31irigToMpK
-	ZkrDjywGdIYcBtokJtqvFIXDQYNllmg4a+32Zpz+vpsF37UjHEQF8JHnK3cMeKHb
-	N+bt68jJGvVO6zdwU+V3R7n1pAGf/No3GBn1BtkcEcVjHGHWAEh1s64qoxFcuFbI
-	Vmteb1y0U8E/H7hWodz0BwwNIsGPmHyh5Y+GAHtr+qhnZztUmV1W5JcZHdAOMe9o
-	ukJ9fIDnePTnvSrb9YT6H0vei1cZglp+s4dR2+ntWCjcLqHJHKuER98IaQ9Q==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1790031150;
+	 x=1790117550; bh=Sa+VTfakiBS7q6qMZomKrq7H7CDEK/w47z1sttVoPw0=; b=
+	n+JS3PInDJiFBGRe7jtT7b1MrN04HCf3Y/2E6bXhqdvyP7P1Py9XD21IXJDi6R3U
+	PV284KjHgpg+ttog6AOdeSQ6BWOsxzZGvwfDU7AeiK3G9Kwj62667iGAUxazIC6V
+	hN0D9BV2KyHDfug1coBs+Wtk3xQHKdMf0j9iKjVJU5aqsNrS5Ze3smfTKfd/8xrv
+	8Nvuw1YY6+fkvcPUZ68C6HfT5ey4rlUHK2Im24w4ihY5Tr8HL6LpitVd01HLzgG7
+	xjQrz4lgnjlyEFp4kQX1HjBQu1gPXsYa4CWKcSw1eXKR/i4jP80P8xUuDHnmtJAw
+	x6Js2g9QpnHNNCTw6W2xFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790030085; x=1790116485; bh=k5t8Z5wotMF+3r3rH9UKFmoKXsN/sGW1bDs
-	KFwclikk=; b=bYFzLYMC5L0sRxc9yD8ZvRLIOMtzLdQ+vWFUwUwBSQnAsbvVJeX
-	EIgGYBlM7gT/R09EsA1qKjYTuACKHEYacwxfPtxuuEyL7rOrrAvVQ0IJuUvmK368
-	QLp+LCRsLbz7frRsyUxPgJJBWHrzR8I6jadwlVYJ9eIsgHAYHs5iaZGIM2cC9YOM
-	LefCyKfsVs2PrjvkIYc/fdSdA78mRDr9ZfAms4V+qaCChV067+kseFrZpupNCa/x
-	0Q3ZTjqFdNQO5FuD3uLqmk0W2LJK42dF88BkGmSdA32zkhFRyLSS5BoVPCH0rywo
-	93gkjDht/fjjsBJklKhURqzpU/gjgXiFqYA==
-X-ME-Sender: <xms:BbGxahyrINNKEYwPvZEShCLAu8LZhD-WqCKI7vC0d6js2KIsofEfqA>
-    <xme:BbGxak9E5TvsZvDTGGdbUpRE293DxCjVNjtEMxJu8maIklNrq1Lt_wzPCCaRj0LaU
-    g2kGTeoZXkJTcUyj5h_wfALx-VfPNYlx76tO-sQo70YHTxbJwwHsMc>
-X-ME-Received: <xmr:BbGxalJqlD_yMTx7sIkQU-mg1j2SHGNURO-hZc8lLUY3QtNTOM4cwcGgWglK0ypQJJ0L65LuvYVW9z6MPgikgjlggrzX1zRabpoP>
-X-ME-Proxy-Cause: dmFkZTG0tuRG9XrHhrwDfZvDDHxZiRGoY8l3930ykyHJgBzfGUIYsjF/RRiSINGePcfbbx
-    5TTvBj/svDsHPBXlajSbGPNzzP92HROngxtqtMr3wubeQbMe49CNuWsB4o4+Xen/ffpBMr
-    5L7lzoqGo487eMlP9G+K3V9rKxveGBjC6/GlPV4tiwpfqnskz8qzFc8uSfUDn+5pnCym3x
-    W7QloIRgbHbudx2rx+zogO6DutOvHyuQIa11MV9ekZR+PHIf9Xm+a3uM/3dyO7kqWJuba1
-    pBcfZXO/HlaLcdLA7U1PwLm82EqgC4VNMhQDEDp7VR9osklUIfTknwIQSi7KEB+3Sh4hrk
-    dbYwBhz1E3ScBUSWBlzy1k9sAH2XpdH03Uv7C4XMmjTGNgtLDRluzjlYtrGc1Wp2gc2et+
-    3IZ+vEVoS3k9llhtrPO0wC+i9x+5XSgTdZBe9nvA+zzt9qb1gGavQ+2mbjuXaWyAxslZHt
-    6Nle/bS7sUMVm70BT9NFsgsYxSfcjqKt/Btcz5SGxFAO3dULl7mtkmA9Kx5XlCTVq1MTp5
-    Nh3peX+R/ITdfAcKG7Xa3CgvhxfVdQp7vsNTh+xuCI5QfbZHESn5eBxoBpf2RsjA36QNW/
-    sqfPF/IXfHSfPAvE5mOgYWTFeCECVJIcaVZf8yPhBP3KGFbtJrgnt2V9CRKQ
-X-ME-Proxy: <xmx:BbGxaqdgPG31362dAYVkjeTv7ac3dvvTBluY9sgWsgcP6WXKzVmPhA>
-    <xmx:BbGxak8A9RNFjIcyybEqrzJPgKtnIkGwQx92lja63HPYQk82X72l_w>
-    <xmx:BbGxano6nPfUVXfHNHjwyX38aT8B3a9i5dDySvinz1R83h2jxNR_LQ>
-    <xmx:BbGxapD4joyrnunbc__I0N2Hv87XJEd_yDhQOoYkXvL9fb5ezpI73A>
-    <xmx:BbGxalhgSZEvClA4_DxWHC6NG--bCXM931XBp3JAGvdkFOJjcujbREG1>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790031150; x=
+	1790117550; bh=Sa+VTfakiBS7q6qMZomKrq7H7CDEK/w47z1sttVoPw0=; b=V
+	HG8y7yZDuUobCq8CZ4BwMXOfCT3RozwzDoXyfVXrWqmWq8SvDHsQtixnndHVkQZj
+	v3YM1AdEfktQQhj1efFB+YKtxvBMiYYGpqg3SqxsmYZvVWPkU1lA0Lw+7ASDyeQt
+	VFIiWCtfUGMRXVDc4ZTyL5lZlOWv+ZDSa79KFV164B9ksviH0sXMXQ2/wJ9DICzW
+	CbbL0sua/5Ac/iuZ0JVTU2Y7KHpY8+X122CkY1SM44MISoNDpAJTqVTc+U65ROGb
+	2R/V+raxw9v4cCaldzqLjJACvk7UNklnrvMyfTAEj8o+w7DMvHAEvLoI6p4DzqKK
+	997rD1r7WCSgh7WeODBDA==
+X-ME-Sender: <xms:LbWxalBYeNl0uzbtaA0uDZCmRPp5VcMD7Uv-VGZSxcfrW9tgwg1nxQ>
+    <xme:LbWxalx-I4CdyUplmJ342jprhjCEo8rxQ5cN2gA0CpJmix5ppKsr13PRGay8UrQLu
+    OWE__3kPgUl95eyCD4jatGOZq0V0rXWdRQGaR-v6-u0BO81RiTN6A>
+X-ME-Received: <xmr:LbWxai1Rt6L1xGEasvvMKgEgdUxsIwYe0d-jkPkFgXYwraIhahujqErn3mGi2FvG9CDEqufbBV1AdXMhwHfbYDpOxcD5nzg2hKTB>
+X-ME-Proxy-Cause: dmFkZTEY6GhTmUWqK5mOgWfapsrlAFO/dedyissvW+pLhrVwohQfABdjKmQcaJUz/PDUHI
+    pyRYZUA9odOksybbUX9cA4um+Kj5mBmnlLm4oiS814NJuz9r6vYksRHthyihN23Nbx9Ft1
+    lLqKYFD1X1u7cf2/+DVJrNDIoarwbtqpUhANmqjlmxN4ETAitBZesB4CD+7HATPeJ9H48K
+    2JMrRgCMcEY/0Hp5j1laHvKA4iPNJhkerJtAaWOJAUhSdcFxFIJ64nI92TrQ1Mu5hwvCPu
+    Lagg0zwB9QM5n5YEHfaE6J8qKVbVpWd6Eicpf2v9KPR2N/szwZp4WMVoZHWhJdXuDl7Bmh
+    RzzhOFDQl/Ply1ceBWJgh68fey+eYWV7fRJtwhOq5wVksDq77KQHmHo2+oThrZ1tGz/u+1
+    QX7UrBtn0XspRhLU6p49UZ+6wuAoPfeuWoJbwA8dzB+cGxX5EdEzWVdLOpf5REsGWQLRNN
+    iYmhVj4Z2zeVJZXHh82QM42gQsEq+5Zm8zjUvcDPWP/EOsTWnGuJ2DZWJ+DV7Dg8VxYs2F
+    bQ5YSC7AHTXVO4XAtoWva3yzrVCoNX4a7Efkwi45Nl55qAZu5PzOVRY5jDIoTi7KSTrsDY
+    CvhHf4r+0BOmFerW3jmJ9MzkzaX0rPjf89KnoBSxoJxz8dSeI5ijcSzJYChg
+X-ME-Proxy: <xmx:LbWxalxsJ2X5WF4xRfyYezIuXF6vtdDxgriq9ICPeS4v624G-u3phA>
+    <xmx:LbWxapGfqHGr-9sEArh0i7huILAwrbbzLa8zYEjY3-e_RqCKG7pJOg>
+    <xmx:LbWxaoaWIQ42dy_f67taTW-yqyLGJ5dHsAOsbJ64BGRe8tNtMRoXuQ>
+    <xmx:LbWxarDW65z9fAsfWgsyUZlTF9qsEQhsmAJwLKOeQHIbTHCzSPYH8Q>
+    <xmx:LrWxajZD_lCFGV-Xui1JSiUySkT4dN1GoAE1GOYDg9hOIeP2KbmkCC2c>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Sep 2026 18:34:45 -0400 (EDT)
+ 21 Sep 2026 18:52:29 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  peff@peff.net,  newren@gmail.com,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH 6/6] strbuf-safe: add init and release methods
-In-Reply-To: <xmqqld8ul1ny.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	21 Sep 2026 14:44:49 -0700")
-References: <pull.2230.git.1789736540.gitgitgadget@gmail.com>
-	<dea925f31647e7c08f3fa467b8058351b463f593.1789736540.git.gitgitgadget@gmail.com>
-	<xmqqld8ul1ny.fsf@gitster.g>
-Date: Mon, 21 Sep 2026 15:34:43 -0700
-Message-ID: <xmqq1pamkzcs.fsf@gitster.g>
+To: Daniel =?utf-8?Q?Mart=C3=AD?= <mvdan@mvdan.cc>
+Cc: Daniel =?utf-8?Q?Mart=C3=AD?= via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  M Hickford <mirth.hickford@gmail.com>,  Mantas
+ =?utf-8?Q?Mikul=C4=97nas?= <grawity@gmail.com>,  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [PATCH] credential/libsecret: load secrets explicitly
+In-Reply-To: <c3f51472-8dfa-42df-aa8b-b0f5bfd0aafe@mvdan.cc> ("Daniel
+ =?utf-8?Q?Mart=C3=AD=22's?=
+	message of "Mon, 21 Sep 2026 22:54:15 +0100")
+References: <pull.2372.git.git.1785883217733.gitgitgadget@gmail.com>
+	<331e94ec-c07a-4d56-938d-d12c9a0cc5c9@mvdan.cc>
+	<xmqq33w8sjcg.fsf@gitster.g>
+	<a60afe54-7059-4827-8c3b-dfe01a0cde9c@mvdan.cc>
+	<c3f51472-8dfa-42df-aa8b-b0f5bfd0aafe@mvdan.cc>
+Date: Mon, 21 Sep 2026 15:52:27 -0700
+Message-ID: <xmqqv77yjjys.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,47 +92,17 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+Daniel Martí <mvdan@mvdan.cc> writes:
 
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> +int jw_release(struct json_writer *jw)
->>  {
->> -	strbuf_release(&jw->json);
->> -	strbuf_release(&jw->open_stack);
->> +	enum safe_result result = SUCCESS;
->> +
->> +	/* attempt both removals without short-circuiting. */
->> +	result = sstrbuf_release(&jw->json) || result;
->> +	result = sstrbuf_release(&jw->open_stack) || result;
->> +
->> +	return result;
->>  }
->
-> This is puzzling in a few ways.
-> If we mean "enum safe_result" is an enumeration of different kinds
-> of errors, then the "result" variable and the returned value from
-> ...
-> On the other hand, if we mean "enum safe_result" is an enumeration
-> of bitmasks, each bit representing different kind of error, then
-> ...
+> Friendly nudge :) Happy to look into any tweaks or questions.
 
-I forgot the third possibility.  Regardless of which interpretation
-of "enum safe_result" we use, if jw_release() is designed to say "0
-for success, non-zero for failure", then almost as written but
-declaring "result" as a plain "int"
+We have had a review exchange.  A reviewer had to ask questions on
+the points where the code and the proposed log message weren't
+clear.  The ball is now in the author's court to improve the patch
+to the point that the next reviewer who did not see the first
+exchange would not have to ask the same questions.
 
-    int result = 0;
-
-    result = sstrbuf_release(&jw->json) || result;
-    result = sstrbuf_release(&jw->open_stack) || result;
-
-    return result;
-
-would probably make sense, even though the "|| result" construct is
-a bit unusual in C.
-
-Thanks.
-
+Thanks for working on this topic.
