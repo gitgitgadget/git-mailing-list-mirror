@@ -1,384 +1,403 @@
-Received: from mail-ed2-f12.google.com (mail-ed2-f12.google.com [74.125.228.76])
+Received: from mail-vs2-f41.google.com (mail-vs2-f41.google.com [74.125.227.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C21B49E147
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 13:28:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.76
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789997295; cv=none; b=tWzdOod5f9b62KcGSjwvKNVsi9Xt4W+48Txkiz2HnzaJQy+EPT2CL9u0oo8bRZ0SEVRf1eEe7bJphE00fnHSTBlkoZb3OK5gSIHmyI0BrWSQP7BQF7F5s59VE9wo+4GERFwE8n95iD6YRIvXytQ2FbUVnMzfjJI6dEfU6kVS8WM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789997295; c=relaxed/simple;
-	bh=2clAwAIthPrzSAu16MFuvn079DTg7je+qZYao0oFZVo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IbIS2CyniPixavIMbL21qaxKgCVnvO8l9ObgCW8rTyPCqg2qwbWfnyWD22Q7P4B89ISv04ERFMwNn/G2D/JDUtlrPx4IpaOKKiz/ToRW/PE1y5myWvl95r2PDKQM9C2dy0DSn96KnweBpZyX2JqZ3fL+1ARtEaLDxrQdzv/BVaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LcvjZWUQ; arc=none smtp.client-ip=74.125.228.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3644F49E159
+	for <git@vger.kernel.org>; Mon, 21 Sep 2026 13:56:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789998994; cv=pass; b=MBIPCIdwE/EjC6V2oTwTD36+q1hFVNpilSIqGH7Y7h0J3bZ2gJdWtyufhJTqv6pvhkWqrTNQKskIGY42lNOOcNSV3QgiaWsLGa8uDnT91TUEfZQ5AHoxlFcO/0mi71h8CtBivyYQ/bB4t8MNXkyoBHzx3+4NAhE87cASb5JDAnM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789998994; c=relaxed/simple;
+	bh=tRPBzipzLIVh15jzMeh+mShq+ZaERK5KxwKCD3gxyO0=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ddJXgKcm2k/4dL955TZ6uuOZIFRnlqkHlcC71wNzEedEEL59W63LLIzcXNDMh1zaq6k+2PQaCFnWbG0zOnTvxa+ZfpSota/T8ggZQsUPy9cQAwQsvzI4b6tr7P44rQaaqxq4Cv6tYb/b6BgNv/s4IZLtXQdqv/q8Q57zKDpvovc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qtMZzDFQ; arc=pass smtp.client-ip=74.125.227.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LcvjZWUQ"
-Received: by mail-ed2-f12.google.com with SMTP id 4fb4d7f45d1cf-6a9adea43b6so3840228a12.0
-        for <git@vger.kernel.org>; Mon, 21 Sep 2026 06:28:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qtMZzDFQ"
+Received: by mail-vs2-f41.google.com with SMTP id 71dfb90a1353d-5c979c5eca8so2059363e0c.2
+        for <git@vger.kernel.org>; Mon, 21 Sep 2026 06:56:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789998991; cv=none;
+        d=google.com; s=arc-20260327;
+        b=gN2zPrpI63weYuup+3mWOsNWVbGuTWUle6SOXRiA2ZkCRsv7YQzR5sA3DkbdqbOqBW
+         mwvuuYmw2NmMzn035YHJ19F9jo1rvgo1XygMAMMvmjdvL5DcpVQcp/lp5Ga0Z37zfmdI
+         kewBCIBeYL0QxFe+sov5L+53qtcqgD8PdKLUP8yr1fajrknGbzqpelGnYg94nzuq1PKd
+         nsE4PJ4wIvT/vpPGZ45+k6/WHuOAoOhwhylJ1v8bTheW1BG6Lh2CGo8s0fYor3s+Lhko
+         mOa9L7dLdLidDQj9+d26S0jGRn6LBk+LmhUgINCN0Es1EsZmuC9Mx9Af3tmvo3iCSOow
+         AY7g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=zcZEBOuuBy7K5zCb5c90Q+5KXmULZ2EGCzOzwE56O7E=;
+        fh=TeosiZGmdnKkH8ZfNe+sQiiP+21rEhZPwn8clUXYSi4=;
+        b=NwnGLjcGX2sm/9eHK1/0m64dKXOI9yLZDdWvit3S6WN9qTCGWo6M5eNbfnUVcJwdvE
+         ypzwnk7ka06JdD6BwSb037LxY9+8HEfhln8GHeEO8clkSEI+2ErSOulBZSpwjjYtW19I
+         q2viBMVmc5MGxx9ePHK9coT0yz1RKfTfLBsbth1J2WMLq2trbD3dz/IsmA7wmVSDzIr9
+         7N8HfPIucGqfKIzSJLAXMFg0VeFtI7x/X3PlHAXFU7XKrm/ltdtABH8x33Z3UzfSX+It
+         aIxIEe5+Rbow5XDiCNqNEVqfJDi8LQXRghrLJP+g2h2eFkggMRrDh/SVsiE4LpxvfgJP
+         BOuA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789997292; x=1790602092; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=0AUMTkq560z3A58AtcK70sz/eFX3L0DlrhWgDZaAnOA=;
-        b=LcvjZWUQJhT3cCYNf3lpRaMonlOMK+GTnbiZ6pX+QgnmkTvRzZInh60ec4853Dijcg
-         QAXWiQvQ4y6IU6tZNrWNKJoFCg2re90flcBBMWIf0r9dpR0PbOUR+4TXLGU0zoF2Ewjo
-         heflJRjvHMnmounAyOSJh62QnY2bgQ9ySiRiuVQD8FfAfQGcPS6++A/rsNJWKiBO5m3W
-         IrJFQKbHw8f5nmq918zPM0LtefS6NNcdFSReVou+0jR8OReI5l3rm6oUMnpA2xbGg730
-         r38iJxfIiik4xX4bYk1YUAtYNXs3kFqjRBHEppF4HAtHsltfVWLDeCXzCI2ejNTGREnU
-         rm7Q==
+        d=gmail.com; s=20251104; t=1789998991; x=1790603791; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=zcZEBOuuBy7K5zCb5c90Q+5KXmULZ2EGCzOzwE56O7E=;
+        b=qtMZzDFQfw48zqXG6rlC2qJmpU7x167zOCzmC1qNJk3dt1Z60v30vOb0rTnQ7sG1C4
+         bYT7Slu2ZVJWQzYrh8S2SSKtWTKr4ETvdJXgIGX+GLwbBGvOJFexz6j/xBMp3bxeyQJ3
+         wXsYOMxg6swoIKZT0izEV/6M9rRFRhl8E6z3Bw96eLQtcQmpY0CXSjmN97f1A9+7cXUb
+         1eRXRUqbeAtXDakXdi7bKd7o8zeUB9CG2ZrTw0CH/v3ed4UjWtXv34Z18xB/9+u9Arxf
+         BPupuKCp4dm0QWDtJ0jhal84+n3jgAb3iqkROaiDfMXcfV99jvFQ4qOYIByqRfwpNl/W
+         OlHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789997292; x=1790602092;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=0AUMTkq560z3A58AtcK70sz/eFX3L0DlrhWgDZaAnOA=;
-        b=ivgKgQOgMvgiQ3ZQtdPTdsJfQd2UectiG9vGoLU8YjPHbmDIZZYPjCMozBGzIZLhQt
-         9RtWQsbU2cbYDkRK7nkuFBj1pLj+4z+uKMEibYifoFeX82B16xLCHcZpr4htcx//EXcs
-         PnkkrboWiqh2UT+nsqNHAT9LDSd6d5Or0XFuzmwan3r5XQMhPcFfc8Je377z6hmyOE3n
-         dDt4rjlu4SZ3mKgldaw7SvJSCloWHTMJPdjP1dZ2vDSN4Kxih5Ta/rTqBUC6DZSxKcoY
-         FwvRTxEtJ0h88/l27ac8JKdeRdMI+jUBxs7WaFB9PUuJ5grxsb2j6unt2cu7YIbUD7ti
-         vDRw==
-X-Forwarded-Encrypted: i=1; AKwUvBwf+DZDhUReSdg6F1Zfa1Q9xZqb3MoYcyjdp1kE+l6gF6jSl4LPsmcL2PbDPSeQDGqOer8=@vger.kernel.org
-X-Gm-Message-State: AFuF++lWX2HmdvJ6T6RHZnGyOiobQ/MYqDM2DZmNv9kyH8R7GWZAxCo/
-	yC2aKQj7ungi9cfD/QmJmEosO0WZwAPJOv5w3ZKRHh6pTANLRRR5mT1l
-X-Gm-Gg: AYBFou0lEDRh3cMq7Kvy04YkaPx0VFi4RGPTWtkZM/lxXY/KLWJos7uwr6jqbpipH2v
-	gSb8QMRaJV3+go7M+IYJhNyy7zd/x1qGl2tyacWU6IDRtpEbzYTwXIEaydo+stqzw/glAok+Seu
-	VRlR2laHZDZR4z5jZgwPmnMQs0+RiYhZAxRTg2qN1Hl6yBT2A9oRMeWlfAtQYrEN7aOSde3rK+A
-	0ppai0Ch9W5v3W7mR2hzKfA57A43+hf2zBuabDLclhjdpMQQ+fR4vY5/TJEy/XKL+vCrnw4wFu9
-	o4VNg7Mm1R20DeLO9HM9gO2FY4bLgHtbgRr3f67BmleTplY5DbJRSZCZWyXcan3gHMvuOTjtGLe
-	adB9GjDcGG8KQSVkqJSYzisfrSJp9X3xV2GovyBSSKaYW/G6gMFpD0HzEFu6sJf5k8efbU+Wiov
-	NQpXcVRdyH4wgmaQ4KkvGzc7NZ3AiazecU5NQG+cHh14D3pKsC3BFq+7HjxCSd7LPwkagXr230O
-	NOLUqXWWB+xMc+2xrgkJYQg8qu5BbA4JYLNdqnV8S4QC0AEu2XSng==
-X-Received: by 2002:a17:907:960d:b0:c29:d3ad:4f72 with SMTP id a640c23a62f3a-c2a157da677mr848194966b.16.1789997291681;
-        Mon, 21 Sep 2026 06:28:11 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2a3574c22bsm315782866b.39.2026.09.21.06.28.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Sep 2026 06:28:11 -0700 (PDT)
-Message-ID: <7f084e4d-f738-4bd4-9b4d-cad995f04be8@gmail.com>
-Date: Mon, 21 Sep 2026 14:28:08 +0100
+        d=1e100.net; s=20260707; t=1789998991; x=1790603791;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=zcZEBOuuBy7K5zCb5c90Q+5KXmULZ2EGCzOzwE56O7E=;
+        b=D5gOPSdrO7/OMzuSoIuoznSIupN3750oImxa3zF3C8fAyxmoZ2UISF4Myb6KdHC3Sl
+         XelVWChEf98jcORDVKW9rG1IyBQoDoLtVYQS4cOfeSH2iAcsRpT+RNKR0RobeAr/O4vO
+         /Ohn+2mKxNwxku8l+Rtts7Rsp/fc001e/EK9odgQqYuwvM9UOgMOvS0asyYDkgGHw7WZ
+         /EauCgvgX2deh/H66BCXSCZ8FmCsjcMTXIjkGBcTTCUndqekT+8v/3c1tvcUNsVWazCc
+         M/oIUL+BmcD6JR6DUKlAe94HPbbEs7fSdKVv02+9iPCRFq8SHbZAWzD1ND9cXm0tFBp4
+         /pbw==
+X-Forwarded-Encrypted: i=1; AKwUvByntTbaZfWeqjD/3s7GfuWnDoMS+HDXw2C5tDlKsOYyoqWk8btvHPPOjdRWK5wjRZgPUhA=@vger.kernel.org
+X-Gm-Message-State: AFuF++mY76c4k6YyWCp35DuDGKIUveY+zhYYHjNVaN02aUiKzVaS4820
+	Rb+ZPFyv99Ey0mfgU3BVAPp9sv8llEBI6w24HRoc7obX4O75VDmI73+c7k9fI6+BMEHVEeUEwmW
+	2p1BFPpK/KmJ+a0qR/gAC1MvEJi2VIaU=
+X-Gm-Gg: AYBFou3OGtcEQFYr27KRX7Eg6iI5aV1eQmhAw3ZF/VwAefkgHDG+H3rhIYFT5arEhKp
+	OyWreM3kLRspgnFfqd6Y1WC1t0jU5xkUVkQifcHoNR7Uo+TkWbyoPwMS85pw0OyszbIgImXBd1z
+	5nhcCO6eitigEZfPEqjKUGqmSIZf9xaqXNm4szOlAA+RWVaQHSrrH4tzGIJePiC/UN2QAu6jlK0
+	TEmRkcx4c331NhGdw8r4bC1iwX9OJL94+tKf8PrPPaeoZGZd6iQec6+OsHWwK64aGf3DIA8hqQm
+	xPsToWdtTBsdCMcphiaKvRrOuMmAivEGvH/L0KywPXila/v0ltidGFUcogf87DjeRfSBjMXmCBW
+	s2vsxKkUchpfbVWOlk7H3DJVzznkujUvDikzEJCHpfN6upg==
+X-Received: by 2002:a05:6123:122:b0:5c9:983e:79e4 with SMTP id
+ 71dfb90a1353d-5c9b58b8cc6mr5375125e0c.7.1789998990831; Mon, 21 Sep 2026
+ 06:56:30 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 21 Sep 2026 06:56:29 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 21 Sep 2026 06:56:29 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <461c36ccdae09fb827a3c0efc7eed5aef072e09b.1789901584.git.maciej.ciemborowicz@gmail.com>
+References: <cover.1789901584.git.maciej.ciemborowicz@gmail.com> <461c36ccdae09fb827a3c0efc7eed5aef072e09b.1789901584.git.maciej.ciemborowicz@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] fetch: add config to avoid fetching every branch in
- shallow repo
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Mon, 21 Sep 2026 06:56:29 -0700
+X-Gm-Features: AcwNN1VA0rgw1ZPCisSXOp6tk5Bfi6sjpoxLR8muzUgMOFlo9PfQbJDRmt0N23k
+Message-ID: <CAOLa=ZRYTevU5SpkGBQu198Rbaemms4s03pFaZ4DOKCGMOV_vQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] fetch, remote: retain old OIDs when pruning refs
+To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Phil Hord <phil.hord@gmail.com>, 
+	Elijah Newren <newren@gmail.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	"D . Ben Knoble" <ben.knoble@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000ff80e2065bfe9dec"
 
-Hi Harald
+--000000000000ff80e2065bfe9dec
+Content-Type: text/plain; charset="UTF-8"
 
-On 19/09/2026 15:47, Harald Nordgren via GitGitGadget wrote:
-> From: Harald Nordgren <haraldnordgren@gmail.com>
-> 
-> In a shallow, sparsely checked out clone of a repository with many
-> branches, plain git pull can take minutes or hang outright, even
-> though only one branch is actually being worked on.
+Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com> writes:
 
-I think the sparse checkout is irrelevant? It is unclear to me if this 
-is talking about a case where there are many branches in the remote 
-repository and only one of them was cloned, then adding a second remote 
-created a wildcard fetch refspec; or if there are intentionally lots of 
-remote tracking branches in the local repository and you don't want to 
-wait for them all to update. If it is the former then we should think 
-how we can improve the behavior of "git remote add" in a sparse 
-repository to prevent it adding a wildcard fetch refspec and instead 
-setup the new remote to fetch only the branch(es) we're interested in.
+> get_stale_heads() records the current value of each stale local ref in its
+> new_oid member. The pruning paths discard that value and request unconditional
+> deletion, so reference-transaction hooks receive a null old OID.
+>
+> Carry the recorded values into the deletion transactions. Besides giving the
+> hooks useful values, this stops a stale scan from deleting a ref that another
+> process updated before the transaction acquired its locks. A concurrent
+> change now makes the prune fail and preserves the new value.
+>
+> This reuses data collected while finding stale refs and therefore requires no
+> additional ref reads. Do not print deletion status when a non-atomic prune
+> fails its old-OID check.
+>
 
-Thanks
+This does break user behavior though, previously we would never fail on
+pruning refs, but now we would and in a all-or-nothing manner. So
+perhaps a better way would be to use the `REF_TRANSACTION_ALLOW_FAILURE`?
 
-Phillip
-
-> Add fetch.shallow, off by default. When enabled, a fetch or pull for
-> a shallow repository that isn't already scoped to specific refs
-> fetches only the current branch's tracked upstream, instead of every
-> branch the remote has. git pull ultimately runs such a fetch under
-> the hood, so this fixes pull the same way. It has no effect once the
-> repository is no longer shallow, and no effect on a fetch of a remote
-> the current branch doesn't track, both fall back to the existing
-> behavior.
-> 
-> This is opt-in rather than automatic because it changes what a plain
-> fetch or pull leaves in refs/remotes/<name>/ for anyone who currently
-> relies on it syncing every branch of a shallow remote, not just the
-> one they are on. Scoping remote.<name>.fetch by hand already covers
-> this for a single remote, but that requires knowing the config exists
-> and applies it permanently, even to branches that are not currently
-> checked out.
-> 
-> The remote's recorded default branch (remotes/<name>/HEAD) is kept up
-> to date the same way it always is, only the other branches are
-> skipped.
-> 
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> Signed-off-by: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
 > ---
->      fetch: add fetch.shallow so pull doesn't fetch every branch on shallow
->      repo
->      
->      Add fetch.shallow config for big shallow repo, so git fetch/pull doesn't
->      hang by fetching every branch.
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2412%2FHaraldNordgren%2Ffetch-shallow-narrow-refspec-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2412/HaraldNordgren/fetch-shallow-narrow-refspec-v1
-> Pull-Request: https://github.com/git/git/pull/2412
-> 
->   Documentation/config/fetch.adoc |  15 ++++
->   builtin/fetch.c                 |  18 +++-
->   t/t5537-fetch-shallow.sh        | 146 ++++++++++++++++++++++++++++++++
->   3 files changed, 175 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/config/fetch.adoc b/Documentation/config/fetch.adoc
-> index 00435e9a16..e63e54a463 100644
-> --- a/Documentation/config/fetch.adoc
-> +++ b/Documentation/config/fetch.adoc
-> @@ -145,3 +145,18 @@ remove the value for the `fetch.bundleCreationToken` value before fetching.
->   `never`;;
->   	Never create or modify the `remotes/<name>/HEAD` symbolic-ref.
->   --
-> +
-> +`fetch.shallow`::
-> +	If true, and the repository is a shallow repository (see
-> +	linkgit:git-clone[1] `--depth`), a fetch or `git pull` that names no
-> +	explicit refspec and would otherwise fall back to the remote's
-> +	configured `remote.<name>.fetch` refspec instead fetches only the
-> +	current branch's upstream, when that upstream is on the remote being
-> +	fetched. This avoids negotiating history for every branch the remote
-> +	advertises, which can be slow on a shallow repository that tracks
-> +	many disjoint shallow histories. It has no effect on a fetch that
-> +	names an explicit remote or refspec, and no effect on a repository
-> +	that is not shallow. Defaults to false.
-> ++
-> +`remotes/<name>/HEAD` is still kept up to date per `fetch.followRemoteHEAD`
-> +while this is in effect, only the other branches are skipped.
+>  builtin/fetch.c                  | 13 +++++--
+>  builtin/remote.c                 | 36 ++++++++++++++---
+>  t/t1416-ref-transaction-hooks.sh | 66 ++++++++++++++++++++++++++++++++
+>  3 files changed, 106 insertions(+), 9 deletions(-)
+>
 > diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 533fdfe7d8..b22f7fe5f4 100644
+> index d202147b2..da413ace0 100644
 > --- a/builtin/fetch.c
 > +++ b/builtin/fetch.c
-> @@ -111,6 +111,7 @@ struct fetch_config {
->   	int recurse_submodules;
->   	int parallel;
->   	int submodule_fetch_jobs;
-> +	int shallow;
->   };
->   
->   static int git_fetch_config(const char *k, const char *v,
-> @@ -175,6 +176,11 @@ static int git_fetch_config(const char *k, const char *v,
->   		return 0;
->   	}
->   
-> +	if (!strcmp(k, "fetch.shallow")) {
-> +		fetch_config->shallow = git_config_bool(k, v);
-> +		return 0;
+> @@ -1452,14 +1452,18 @@ static int prune_refs(struct display_state *display_state,
+>  	struct ref *ref, *stale_refs = get_stale_heads(rs, ref_map);
+>  	struct strbuf err = STRBUF_INIT;
+>  	struct string_list refnames = STRING_LIST_INIT_NODUP;
+> +	struct oid_array old_oids = OID_ARRAY_INIT;
+>
+> -	for (ref = stale_refs; ref; ref = ref->next)
+> +	for (ref = stale_refs; ref; ref = ref->next) {
+>  		string_list_append(&refnames, ref->name);
+> +		oid_array_append(&old_oids, &ref->new_oid);
 > +	}
-> +
->   	if (!strcmp(k, "fetch.followremotehead")) {
->   		if (!v)
->   			return config_error_nonbool(k);
-> @@ -1958,15 +1964,19 @@ static int do_fetch(struct transport *transport,
->   		refspec_ref_prefixes(rs, &transport_ls_refs_options.ref_prefixes);
->   	} else {
->   		struct branch *branch = branch_get(NULL);
-> +		int tracks_this_remote = branch && branch_has_merge_config(branch) &&
-> +			!strcmp(branch->remote_name, transport->remote->name);
-> +		int narrow_to_tracked_ref = config->shallow &&
-> +			is_repository_shallow(the_repository) && tracks_this_remote;
->   
->   		if (transport->remote->fetch.nr) {
-> -			refspec_ref_prefixes(&transport->remote->fetch,
-> -					     &transport_ls_refs_options.ref_prefixes);
-> +			if (!narrow_to_tracked_ref)
-> +				refspec_ref_prefixes(&transport->remote->fetch,
-> +						     &transport_ls_refs_options.ref_prefixes);
->   			if (follow_remote_head != FOLLOW_REMOTE_NEVER)
->   				do_set_head = 1;
->   		}
-> -		if (branch && branch_has_merge_config(branch) &&
-> -		    !strcmp(branch->remote_name, transport->remote->name)) {
-> +		if (tracks_this_remote) {
->   			int i;
->   			for (i = 0; i < branch->merge_nr; i++) {
->   				strvec_push(&transport_ls_refs_options.ref_prefixes,
-> diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
-> index f323ceebd2..8143af9fc3 100755
-> --- a/t/t5537-fetch-shallow.sh
-> +++ b/t/t5537-fetch-shallow.sh
-> @@ -13,6 +13,24 @@ commit() {
->   	git commit -m "$1"
->   }
->   
-> +check_upstream_refs () {
-> +	git for-each-ref --format="%(refname)" refs/remotes/upstream/ >actual &&
-> +	cat >expect &&
-> +	test_cmp expect actual
-> +}
-> +
-> +check_upstream_head () {
-> +	git symbolic-ref refs/remotes/upstream/HEAD >actual &&
-> +	echo "refs/remotes/upstream/$1" >expect &&
-> +	test_cmp expect actual
-> +}
-> +
-> +check_same_tip () {
-> +	git log --oneline -1 "$1" >expect &&
-> +	git -C "$2" log --oneline -1 "$3" >actual &&
-> +	test_cmp expect actual
-> +}
-> +
->   test_expect_success 'setup' '
->   	commit 1 &&
->   	commit 2 &&
-> @@ -261,6 +279,134 @@ test_expect_success 'fetch --deepen does not truncate' '
->   	test_cmp expect actual
->   '
->   
-> +test_expect_success 'fetch.shallow setup' '
-> +	git branch narrow-side &&
-> +	git clone --no-local --depth=1 --branch main --single-branch \
-> +		.git narrow-default &&
-> +	git clone --no-local --depth=1 --branch main --single-branch \
-> +		.git narrow-enabled &&
-> +	(
-> +		cd narrow-default &&
-> +		git remote add upstream ../.git &&
-> +		git fetch --depth=1 upstream main:refs/remotes/upstream/main &&
-> +		git branch --set-upstream-to=upstream/main main
-> +	) &&
-> +	(
-> +		cd narrow-enabled &&
-> +		git remote add upstream ../.git &&
-> +		git fetch --depth=1 upstream main:refs/remotes/upstream/main &&
-> +		git branch --set-upstream-to=upstream/main main &&
-> +		git config fetch.shallow true
-> +	)
-> +'
-> +
-> +test_expect_success 'a refspec-less fetch expands to the configured refspec by default' '
-> +	(
-> +		cd narrow-default &&
-> +		git fetch upstream &&
-> +		check_upstream_refs <<-\EOF
-> +		refs/remotes/upstream/HEAD
-> +		refs/remotes/upstream/main
-> +		refs/remotes/upstream/narrow-side
-> +		EOF
-> +	)
-> +'
-> +
-> +test_expect_success 'fetch.shallow=true limits a refspec-less fetch to the tracked branch' '
-> +	(
-> +		cd narrow-enabled &&
-> +		git fetch upstream &&
-> +		check_upstream_refs <<-\EOF
-> +		refs/remotes/upstream/HEAD
-> +		refs/remotes/upstream/main
-> +		EOF
-> +	)
-> +'
-> +
-> +test_expect_success 'fetch.shallow=true still creates refs/remotes/<remote>/HEAD' '
-> +	(
-> +		cd narrow-enabled &&
-> +		git symbolic-ref -d refs/remotes/upstream/HEAD &&
-> +		git fetch upstream &&
-> +		check_upstream_head main
-> +	)
-> +'
-> +
-> +test_expect_success 'fetch.shallow=true with followRemoteHEAD=always corrects a stale HEAD' '
-> +	test_when_finished \
-> +		"git -C narrow-enabled update-ref -d refs/remotes/upstream/stale-branch" &&
-> +	(
-> +		cd narrow-enabled &&
-> +		git update-ref refs/remotes/upstream/stale-branch refs/remotes/upstream/main &&
-> +		git symbolic-ref refs/remotes/upstream/HEAD refs/remotes/upstream/stale-branch &&
-> +		git -c fetch.followRemoteHEAD=always fetch upstream &&
-> +		check_upstream_head main
-> +	)
-> +'
-> +
-> +test_expect_success 'fetch.shallow=true still updates the tracked branch' '
-> +	commit 5 &&
-> +	git -C narrow-enabled fetch upstream &&
-> +	check_same_tip main narrow-enabled refs/remotes/upstream/main
-> +'
-> +
-> +test_expect_success 'fetch.shallow=true keeps git pull narrowed too' '
-> +	test_when_finished "git branch -D narrow-side" &&
-> +	commit 6 &&
-> +	(
-> +		cd narrow-enabled &&
-> +		git pull &&
-> +		check_upstream_refs <<-\EOF
-> +		refs/remotes/upstream/HEAD
-> +		refs/remotes/upstream/main
-> +		EOF
-> +	) &&
-> +	check_same_tip main narrow-enabled HEAD
-> +'
-> +
-> +test_expect_success 'fetch.shallow=true has no effect on a non-shallow repository' '
-> +	git clone --no-local --branch main --single-branch .git narrow-full &&
-> +	(
-> +		cd narrow-full &&
-> +		git rev-parse --is-shallow-repository >actual &&
-> +		echo false >expect &&
-> +		test_cmp expect actual &&
-> +		git remote add upstream ../.git &&
-> +		git fetch upstream &&
-> +		git branch --set-upstream-to=upstream/main main &&
-> +		git config fetch.shallow true
-> +	) &&
-> +	test_when_finished "git branch -D narrow-full-side" &&
-> +	git branch narrow-full-side &&
-> +	(
-> +		cd narrow-full &&
-> +		git fetch upstream &&
-> +		check_upstream_refs <<-\EOF
-> +		refs/remotes/upstream/HEAD
-> +		refs/remotes/upstream/main
-> +		refs/remotes/upstream/narrow-full-side
-> +		EOF
-> +	)
-> +'
-> +
-> +test_expect_success 'fetch.shallow=true only narrows a fetch of the tracked remote' '
-> +	test_when_finished "git branch -D other-side" &&
-> +	git branch other-side &&
-> +	git clone --no-local --depth=1 --branch main --single-branch \
-> +		.git narrow-other-remote &&
-> +	(
-> +		cd narrow-other-remote &&
-> +		git remote add upstream ../.git &&
-> +		git config fetch.shallow true &&
-> +		git fetch upstream &&
-> +		check_upstream_refs <<-\EOF
-> +		refs/remotes/upstream/HEAD
-> +		refs/remotes/upstream/main
-> +		refs/remotes/upstream/other-side
-> +		EOF
-> +	)
-> +'
-> +
->   . "$TEST_DIRECTORY"/lib-httpd.sh
->   start_httpd
->   
-> 
-> base-commit: d38352cd43ab9745686d697872408bc3249a153f
+>
 
+Here `refnames` is built, but below it is only used for the non-atomic
+flow. Perhaps, we should move this into the `else` block?
+
+>  	if (!dry_run) {
+>  		if (transaction) {
+>  			for (ref = stale_refs; ref; ref = ref->next) {
+> -				result = ref_transaction_delete(transaction, ref->name, NULL,
+> +				result = ref_transaction_delete(transaction, ref->name,
+> +							&ref->new_oid,
+>  								NULL, 0, "fetch: prune", &err);
+
+Nit: the formatting seems off.
+
+Curiously, was an LLM used to create these patches? If so, please do
+read our policy in 'Documentation/SubmittingPatches' regarding AI usage.
+
+>  				if (result)
+>  					goto cleanup;
+> @@ -1467,8 +1471,10 @@ static int prune_refs(struct display_state *display_state,
+>  		} else {
+>  			result = refs_delete_refs(get_main_ref_store(the_repository),
+>  						  "fetch: prune", &refnames,
+> -						  NULL, 0);
+> +						  &old_oids, 0);
+>  		}
+> +		if (result)
+> +			goto cleanup;
+
+So, previously, we'd always prune all references without checking the
+old_oid. Now we should expect that this can fail. So we do need to check
+for the `result`.
+
+Seems like the other branch condition also does the same, we can extract
+this out?
+
+>  	}
+>
+>  	if (verbosity >= 0) {
+> @@ -1487,6 +1493,7 @@ static int prune_refs(struct display_state *display_state,
+>
+>  cleanup:
+>  	string_list_clear(&refnames, 0);
+> +	oid_array_clear(&old_oids);
+>  	strbuf_release(&err);
+>  	free_refs(stale_refs);
+>  	return result;
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 13d3cc52d..b899bec55 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -17,6 +17,7 @@
+>  #include "refs.h"
+>  #include "refspec.h"
+>  #include "odb.h"
+> +#include "oid-array.h"
+>  #include "strvec.h"
+>  #include "commit-reach.h"
+>  #include "progress.h"
+> @@ -380,6 +381,11 @@ struct ref_states {
+>  	int queried;
+>  };
+>
+> +struct stale_ref {
+> +	struct object_id oid;
+> +	char name[FLEX_ARRAY];
+> +};
+> +
+>  #define REF_STATES_INIT { \
+>  	.new_refs = STRING_LIST_INIT_DUP, \
+>  	.skipped = STRING_LIST_INIT_DUP, \
+> @@ -410,9 +416,13 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
+>  	}
+>  	stale_refs = get_stale_heads(&states->remote->fetch, fetch_map);
+>  	for (ref = stale_refs; ref; ref = ref->next) {
+> +		struct stale_ref *stale_ref;
+>  		struct string_list_item *item =
+>  			string_list_append(&states->stale, abbrev_branch(ref->name));
+> -		item->util = xstrdup(ref->name);
+> +
+> +		FLEX_ALLOC_STR(stale_ref, name, ref->name);
+> +		oidcpy(&stale_ref->oid, &ref->new_oid);
+> +		item->util = stale_ref;
+>  	}
+>  	free_refs(stale_refs);
+>  	free_refs(fetch_map);
+> @@ -1627,6 +1637,7 @@ static int prune_remote(const char *remote, int dry_run)
+>  	int result = 0;
+>  	struct ref_states states = REF_STATES_INIT;
+>  	struct string_list refs_to_prune = STRING_LIST_INIT_NODUP;
+> +	struct oid_array old_oids = OID_ARRAY_INIT;
+>  	struct string_list_item *item;
+>
+>  	get_remote_ref_states(remote, &states, GET_REF_STATES);
+> @@ -1639,17 +1650,28 @@ static int prune_remote(const char *remote, int dry_run)
+>  	printf_ln(_("Pruning %s"), remote);
+>  	printf_ln(_("URL: %s"), states.remote->url.v[0]);
+>
+> -	for_each_string_list_item(item, &states.stale)
+> -		string_list_append(&refs_to_prune, item->util);
+> +	for_each_string_list_item(item, &states.stale) {
+> +		struct stale_ref *stale_ref = item->util;
+> +		struct string_list_item *to_prune;
+> +
+> +		to_prune = string_list_append(&refs_to_prune, stale_ref->name);
+> +		to_prune->util = &stale_ref->oid;
+> +	}
+>  	string_list_sort(&refs_to_prune);
+> +	for_each_string_list_item(item, &refs_to_prune)
+> +		oid_array_append(&old_oids, item->util);
+>
+
+We do this in the previous block? We don't need a new iterator here.
+
+> -	if (!dry_run)
+> +	if (!dry_run) {
+>  		result |= refs_delete_refs(get_main_ref_store(the_repository),
+>  					   "remote: prune", &refs_to_prune,
+> -					   NULL, 0);
+> +					   &old_oids, 0);
+> +		if (result)
+> +			goto cleanup;
+> +	}
+>
+>  	for_each_string_list_item(item, &states.stale) {
+> -		const char *refname = item->util;
+> +		struct stale_ref *stale_ref = item->util;
+> +		const char *refname = stale_ref->name;
+>
+>  		if (dry_run)
+>  			printf_ln(_(" * [would prune] %s"),
+> @@ -1662,7 +1684,9 @@ static int prune_remote(const char *remote, int dry_run)
+>  	refs_warn_dangling_symrefs(get_main_ref_store(the_repository),
+>  				   stdout, " ", dry_run, &refs_to_prune);
+>
+> +cleanup:
+>  	string_list_clear(&refs_to_prune, 0);
+> +	oid_array_clear(&old_oids);
+>  	free_remote_ref_states(&states);
+>  	return result;
+>  }
+> diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
+> index 01b5ba8c4..2b51b216b 100755
+> --- a/t/t1416-ref-transaction-hooks.sh
+> +++ b/t/t1416-ref-transaction-hooks.sh
+> @@ -58,6 +58,72 @@ test_expect_success 'branch deletion rejects a concurrent update' '
+>  	test_cmp_rev POST refs/heads/delete-race
+>  '
+>
+> +test_expect_success 'hook gets old values when pruning remote refs' '
+> +	test_create_repo empty.git --bare &&
+> +	test_create_repo prune &&
+
+test_create_repo is considered deprecated, let's use `git init`
+directly. While we're at it, we should also cleanup the directories we
+create here.
+
+> +	git -C prune remote add origin ../empty.git &&
+> +	test_commit -C prune one &&
+> +	one=$(git -C prune rev-parse HEAD) &&
+> +	test_commit -C prune two &&
+> +	two=$(git -C prune rev-parse HEAD) &&
+> +	git -C prune update-ref refs/remotes/origin/remote-prune-z "$one" &&
+> +	git -C prune update-ref refs/remotes/origin/remote-prune-a "$two" &&
+> +	git -C prune pack-refs --all &&
+
+Why do we need to pack-refs?
+
+> +	test_hook -C prune reference-transaction <<-\EOF &&
+> +		if test "$1" = committed
+> +		then
+> +			# Ignore backend-internal zero-to-zero records.
+> +			while read -r old new ref
+> +			do
+> +				case "$old" in
+> +				*[!0]*)
+> +					echo "$old $new $ref"
+> +					;;
+> +				esac
+> +			done >>actual
+> +		fi
+> +	EOF
+> +	(
+> +		cd prune &&
+
+All the commands above also run in the 'prune' directory, can we put all
+of them in this subshell?
+
+> +		git remote prune origin &&
+> +		git update-ref refs/remotes/origin/fetch-prune "$one" &&
+> +		git fetch --prune origin &&
+> +		git update-ref refs/remotes/origin/atomic-prune "$one" &&
+> +		git fetch --atomic --prune origin &&
+> +		cat >expect <<-EOF &&
+> +			$two $ZERO_OID refs/remotes/origin/remote-prune-a
+> +			$one $ZERO_OID refs/remotes/origin/remote-prune-z
+> +			$one $ZERO_OID refs/remotes/origin/fetch-prune
+> +			$one $ZERO_OID refs/remotes/origin/atomic-prune
+> +		EOF
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+> +test_expect_success 'remote prune rejects a concurrent update' '
+> +	test_when_finished "rm -rf race-empty.git race-prune" &&
+> +	test_create_repo race-empty.git --bare &&
+> +	test_create_repo race-prune &&
+
+same as above.
+
+> +	test_commit -C race-prune one &&
+> +	one=$(git -C race-prune rev-parse HEAD) &&
+> +	test_commit -C race-prune two &&
+> +	two=$(git -C race-prune rev-parse HEAD) &&
+> +	git -C race-prune remote add origin ../race-empty.git &&
+> +	git -C race-prune update-ref refs/remotes/origin/race "$one" &&
+> +	test_hook -C race-prune reference-transaction <<-\EOF &&
+> +		marker=$(git rev-parse --git-path prune-race-once)
+> +		if test "$1" = preparing && test ! -e "$marker"
+> +		then
+> +			>"$marker"
+> +			git update-ref refs/remotes/origin/race HEAD
+> +		fi
+> +		exit 0
+> +	EOF
+> +	test_must_fail git -C race-prune remote prune origin >out 2>err &&
+> +	test "$two" = "$(git -C race-prune rev-parse refs/remotes/origin/race)" &&
+> +	! grep "\[pruned\]" out
+> +'
+> +
+>  test_expect_success 'hook allows updating ref if successful' '
+>  	git reset --hard PRE &&
+>  	test_hook reference-transaction <<-\EOF &&
+> --
+> 2.39.3 (Apple Git-146)
+
+--000000000000ff80e2065bfe9dec
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: fc7a8fc7176da452_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xeE40c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mM1RqQy85Zll5YXNjUVlwSkFZYitRM2NycEd6VXhFMwp5NEhTNHQ2cW5F
+bVZYYjJQdXMyckdseGZHZVhnejhnbE03eHhOS2pUTlk1VmJ2TFBSWmFkVDJFNjh4cWc5S0ltClNN
+bGtwQ09yRExmT2dJc0xrdk4wR3ZuTU9pQnVpeldTcHFtc0c0emhTVjExTkN1L29Qd2gvQ1Q0bldo
+MHN4azMKamdLTjlyS2IrWmtCek10dnpHdktnUld5cExKVGhuWVlaZ01RbVNVbktlTjhIL2V2NERF
+QUovcnJwdmJ3VU9QQgpkOFZoV2Y3VmJEZlkvUHdLTFBZdTQvVDgzRXkzckJRRkdIMWthMk1ieS9P
+MGg5bWppT1A1WDA3cis4TDlKcmRtCkJBVnd6aWQvbXFqUVMzYnJZb1pRRUhlbDdsODNpa004OStM
+UTNnTFlLMnA0Wkh3L0ZxRjFDN1Q4NlhMRWxLN1MKR1A1QmlyZlFqcFF3SEFpeTBOWU9lOHgrMVl6
+ZU9uSWU0akFYN1Vhekx5RVQ5RytNMkdPM3ZvRVQvQXBrTWY1dQppWG9hNlY3UG4yMklPK3h5UmRu
+TE50bzhObTQyMUZ0T0NVVnhOSklIZ1dId3l2S0pzUDVwdjdHdEliVk1SZldwClN6U0o3akdHL1JH
+dEl4VDZPbC9iaDZsVEQvY3FNTHM0UHZ6bmc5Zz0KPTN4bCsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000ff80e2065bfe9dec--
