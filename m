@@ -1,268 +1,145 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252D51A2C0B
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 05:32:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790055156; cv=none; b=BB70D62ZlviDq3sYrzlPy36V2npIDLiRGsVEpVEnZ2Hhf+Jw3xcb/624QxlCIw0tR1SNsZ/a6f2fJfCRQDRY4XijfpunOXqrf04aUw5gEsy/o6BvpDwnbz+8trF3vcIcuYUeEnJjj2yxjpUUu32yfxT2DbY89cF3lXRxRCQQ6MU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790055156; c=relaxed/simple;
-	bh=qTRKTidmSj1ofAIQX24GcAsqMxIHpAr/NkHQESKBEBE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=o1Byb75t0Sje2W7YJ4k9CF3D18WFcI6taaokSvYsyX4RWPyH9692nLRSVjmROVRj20QuUfyK0erCEQyXP4UowWMkEQEgHgWiXtPuGJN2V8ax3wFv6OXyC3FfL2cNKydh8pLe/0GDsZQv81FYIb1jkroXUykJEYFL7IeVU61/Uuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=o2CN2VTo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TtxE8owO; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478113A2E25
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 07:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.140
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790062707; cv=pass; b=GaoGHvvtAjWibv8CSwF0UBek7fRRS3wF/FsXBsZkreHQj1ybcPrCAI5BMUdvAc/lEDp76wpZzlyHCQsxy2+8Mh9FMN4AUFFu+6Ix1rTXlABWI3O3GPwoh2g9P2B/SPDECKmTAl0zAh+WcPQKbp5tcNxmSIRbDBBVyCXLvXgyrrU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790062707; c=relaxed/simple;
+	bh=2OvPf7G0mxZW8f1XoxxjE1mgpudNfFCaTlJLyRllMB4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MCcc6bMlE2o88+hFZXKuPY8BfZzzmY9y3ogG7Yc0/d0s2LQDceuj5xr/bkOi5sqKu6wuW7I2PwbJ8ZEyfvzgJYTOo3OAm1qfz6Kk8bU9gzeI/ySsosUhs6Jld7iDHfiFmHlCgpMZ4CvAWiSi+0/gQGNbM6g/ANmZ3bbGTfLHL8c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com; spf=pass smtp.mailfrom=thomasbachem.com; dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b=qGa/2y4o; arc=pass smtp.client-ip=74.125.224.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thomasbachem.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="o2CN2VTo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TtxE8owO"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2EA49EC00BA;
-	Tue, 22 Sep 2026 01:32:33 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 22 Sep 2026 01:32:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790055153; x=1790141553; bh=u43AXEn4e+
-	SCtup/9WMl7l58Fbiv4XJX+yH0Td8nXVs=; b=o2CN2VTo8NZBmOByYIfUMA/JX+
-	AHBVaqb+QHsYAg8v6TE0b830TukshQIvcTlSRhUmLqhABAMNLHLojGqc2uLnC2NZ
-	WjLZI5Lvb6zEY8qbGEdz4+hoVfj8fsFTci0BBbFsrwV/Qrv1qxBX6G551jRD2BA2
-	tW3Hn9+ENbRCRVDYqdcgzo/qxV8hB9yOr9DSfteyBMoFXcL671wut4F6HzPAJBif
-	MvmQFwCvMtN/dYb3QBFkeuwAhQcZY+O9kYl719avNGpEF+HVvWWwM7Bz76UB1CKy
-	eN7QJjgf1wsYGQkmjtUCCx/pvkH9xpV4EQ6DQ/k+EjeYEt2DxYgq6G4GQ4LQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790055153; x=1790141553; bh=u43AXEn4e+SCtup/9WMl7l58Fbiv4XJX+yH
-	0Td8nXVs=; b=TtxE8owO6diy/UX4UM3K8zmVL5/nHC0ZeifHzDGZ9dsrw+j1rOQ
-	ZyC09lPJcng3UKaZp11S46ogH+C0mNGHAVgO1c2TGNcFMbem7uTxkZ+cB5pJb0LR
-	pfQhl38i3vkznu8VtU8/dBYVuqjJTckQZIr+qewCmrmVYMU5GhKxujy5BJfabDBr
-	USlUGViRSYo92tt2eD5NNrf4TNEiNOdajLkkJj3FgqduTSNpaLq1pw+MA9wIqIfl
-	fQPOPPoYYcaflfA3jR/T2B7JrsBc4EusqTsMQ2oS7b2OWTjijISf9ZtHmKYzP1fj
-	UhZTX0tahxFuYOPrlWXvSTtSMNnVTzVWLog==
-X-ME-Sender: <xms:8RKyapRF0pNIRaADuVayAzPCvPk2PPXvKrCIDCR3QyFHBjy4e57JPA>
-    <xme:8RKyaqOPTAlHfCevmUX8X_WVrM3ltGyf47XYRK6skeYHpJeE13va9qgK_zQlosiMn
-    hSLsWl5FJ4uI8CxjVWbmdOiT4LG__i6OZRHDXeeDdnY5cr-SHJKgLo>
-X-ME-Received: <xmr:8RKyasOiZ7fb7pRNVwfqDhhKsf1dMpKu1kVWueaRsspKFgzz9N89QLTxYQVLwZ9-qTWaZHyNR6CFLbJViK4bAmYIWuS6oO-fjMS0>
-X-ME-Proxy-Cause: dmFkZTFUHBZDWa3IPVkJyi4DK6ZqjnuQfoLnKs4e7vd3yD7vL/Ml67T02/PFxVmlkCCdls
-    TnA8YP8i9k350d8vXvq5/o6Pl81WMRRHDq1K944vhW18WSpD1hr2SviVbzwA5I68xFPzps
-    6U9jiqITQKeQH7Hb/OxygdPiLoASq7FN6+QpiPSwKJANHmqmUHaTR/Uh3XKe5CpzhBJ3h8
-    yn3twTMPZ+Zf313s1nH0kIWu3dNYwEGYiZjw/d689iZpKvxqMWN+GS5fcAsUG0tBOAfuqH
-    n4cUE9G08BgkZ+atBQbqw94T121RYW5TlzyD/NGmuTweK1zJy+M2HaHKOgqeCuGryHJSds
-    5KTGEm/Nl7Fr7/A/3CoLyFqSaiYuef3O8yjZ8Zdf3b7PyR/LoGRBEr0DNQlD6SqrqjY+Iv
-    m8K2pq03M95KUgHpXBCKUEBs/PkDCBz7Wgh5M2+BvEZNWM/018dyYjIqp7RGldX5pnEk8u
-    5JVvw1H80mFxJ8rgLYlZv51KJivl0O9cL6TzeELP/vOJHOj/UNDdNs0DMILsLGobNBc6qD
-    ER5f96KHY0ROwGCrdzN4xbhvBxNWmLMbUYYqqWE+qHDMJQwDBpiONbqABquMSveug2sVE4
-    wi1XCI4YN3ay2hcFDpUOT9LycRN1PyEM4rjTNLmaKyK+PgSYyrrT45jEJtAQ
-X-ME-Proxy: <xmx:8RKyaqsC6kF5L8Oqymo75nUFSOUDmbNvGF7XfERQAfHEGqvBnuVV7A>
-    <xmx:8RKyamVADnkjU9OcDfIUZiCr8H6p892sVOqYWSIhD6SAv4xpqO33lA>
-    <xmx:8RKyaiuqmVYFvyXHAyg5Xaarhs2q6x4UWwHH5KTG0-76n5V5hrOFmw>
-    <xmx:8RKyaiUgx4XHTbaVM-0BeYU6B59rjO2p9nJjWqzWcpExOd9Euy9cSg>
-    <xmx:8RKyaqMDagdprCFNLQLApKAoAd58BEOpyIV9sfbCwrZBhr0SA07xYeJq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Sep 2026 01:32:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Colin Hinton <colinlewishinton@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] fetch.c: defer fetch.followRemoteHEAD validation
-In-Reply-To: <20260922040047.2567-1-colinlewishinton@gmail.com> (Colin
-	Hinton's message of "Mon, 21 Sep 2026 21:00:47 -0700")
-References: <20260922040047.2567-1-colinlewishinton@gmail.com>
-Date: Mon, 21 Sep 2026 22:32:31 -0700
-Message-ID: <xmqqwlsdhmvk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b="qGa/2y4o"
+Received: by mail-yx2-f12.google.com with SMTP id 00721157ae682-8716a5baf64so35406517b3.3
+        for <git@vger.kernel.org>; Tue, 22 Sep 2026 00:38:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790062703; cv=none;
+        d=google.com; s=arc-20260327;
+        b=CBeBCJfDU5bcrTb9IVbhAEdh3NLwBCt4xH4pcQBe+ErK6RnJdZ+n1lkUfKeI9Mj6O9
+         ansJvVlSD06UH1nPTO0CfMJ8Zgac7NcK/PANkyi7LWo8aKaRWgNeQuY01LLdF1Fb+dzG
+         zg49TN9FxbN01fRmbC/tdTDC1tc+d0dZvpfOPlQhjS+OzQIIWXuMPqW/tp1zCSsXuGru
+         nBEcbpgpoxD8TBXjsdUajEC4ego8VCjmXPH0J3fOn4z9bjawzu6AHtRHv/T+SqoGpsJH
+         upPrTWNLcZDIMe6jlxj+VMcdx9bl4VccH70GU0NZ390GwqrlwTf0VD31/gehlIYVSfW+
+         +CSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=2OvPf7G0mxZW8f1XoxxjE1mgpudNfFCaTlJLyRllMB4=;
+        fh=0futRCsuuruNF0YpbT0htzurjoYfr03ulKCYVbMNkHc=;
+        b=jrAHXUIPTkxc9z+pUYi/A51hAJCD15DmRWKXH2DiADztqoXpH5dDhiZzJtSghumEXK
+         vEHPg4hu4u/RQZRob1x0bdzt9I1uDCT757PvxTviVmmFak4c+H709hJwo05J1fKdjRJB
+         tRBKyqqjyIfJEuoYtKhWZOyNDoGXkoKKqDNXyL0YB1BYXfysJ46K80amb0TKykjdzMSY
+         v0BwZf2/0E2ARyIc8zwrgm9reZRK/+Hu+70nIE7R72pz62e1JuO7+FwNqV2EnU8LuywQ
+         a3u8eF20/H9nhqPSYBXAW/MOab0dSR6o1ONLqYnDHyZhXaqCRA99wFcWeS1jg2T0xlLK
+         PlPg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=thomasbachem.com; s=google; t=1790062703; x=1790667503; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=2OvPf7G0mxZW8f1XoxxjE1mgpudNfFCaTlJLyRllMB4=;
+        b=qGa/2y4oCjo+Bio2hPIcfdi1+evtqHMF2kVtlrjKCIv9UGSaDG8oQEqHNVi5qEByeg
+         O7oQzrfbgQkpyQPSea0VlA7hxuisZRRvQzOR+7dyX622wCDbFhaPYSx+49FjMSnZyjAC
+         hBmvQIXQ4c/mTElpOxjHHPXJufiFht3yrhXG9FTUjGHHzdbJT8zjYG69KwWBKmNZPEQm
+         4bVOpfLLIGs+7H2uYXYzAxjuKlXOK4Hdg7xghktviYEC9eN0uf/xWKShwAFJMmoifAN1
+         8+TwtlgtoWRqu23jAicLfSuTrREwFi2+h2uAzUjG+4K6qquI04lOzEFuWSCENbXFcGlq
+         MLkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790062703; x=1790667503;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=2OvPf7G0mxZW8f1XoxxjE1mgpudNfFCaTlJLyRllMB4=;
+        b=dZTzsS37FjT1Cl4JLLstmWNedt5myy9a7yoDNXRaBAJfHxIg4GL/56RgFQ2pNmFuMA
+         tMz7Y1bEw4kuCPs5u8AoongUZWXqb/kDS8eslVjqmiISAxXRM/bsCbgohSf4xUYydZ4e
+         bOtaaPqw4505fBLm1dh3ahtUHZuo8dy695FoukvfqhhsEhirf9QFfeddoWyyjSYqYGDD
+         QJU4Z0gcrYTAsxdvj5uE7RRnuOUwH/T6wf18S51sPZk18GA8qNnwD6RbPdowDtQWddKr
+         wHJByLVv16VED9s1XZ2aspqQZEaQLaRxg8SW+HwnN8c+7OKZUbXse5KYjWEDLxEXOov5
+         Cqww==
+X-Gm-Message-State: AFuF++lFowXcDc3B+A5ac9cW/VsAdwW2fUxmwFOKg9pvSRwDTxBK5WZ4
+	TzYQYBPVfi14EyZAvnb57s/JkosRAmRQMRd5kB5Y14PtMByyf8OLr50EdG8oNs7jvZsqT8spOJq
+	L9tjghk7m5yrz6dXjJVWQl3Pi5mWH+TCvRjmS1TI/wA==
+X-Gm-Gg: AYBFou3bVKAsPWIWxgJ1WNH56AC7GGAXA5obMIrzweTvpncWVvtRTRdPgPzQwhBr5qS
+	s6JNvE4AKy8s7SkQ6Vez1g59rRkE5m7KrDNzu2vd2E+21pCWDN1/nubXorlpUWd4kevUs7rNxE5
+	+XuYmTlmtjYNaD6HVEKfO1o4igJ3Sq8ZGbFpVDTriR6VGofKCx+vu/Ql7JxSHjI5YnH/hrpM9AG
+	floH30s2eRRSOQLfb+TYvd29yVQLX4o+9xGibZdTOUQ3Cum/8eGT7/Z7Dog8TpeNX5KgYr9BRkY
+	PmPqaR4Iyew+/ZBqd1H/p3aVOWMXBHHM5dGSpChr/woOWghVMlT2DATUQnwNLnV9iVPS+hifukB
+	765aeqF7Q0WmqkFe9QkjYsk63lLwMx7HL9Vb8qOml8DiCRg==
+X-Received: by 2002:a05:690c:5688:b0:886:b9a9:238 with SMTP id
+ 00721157ae682-89736d2ef33mr29537287b3.65.1790062702955; Tue, 22 Sep 2026
+ 00:38:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
+ <pull.2217.v4.git.1788942331.gitgitgadget@gmail.com> <b7b97262f27782f3271369115496c67f9774b8b2.1788942331.git.gitgitgadget@gmail.com>
+ <aqOvAttPrhUIP_7U@pks.im>
+In-Reply-To: <aqOvAttPrhUIP_7U@pks.im>
+From: Thomas Bachem <mail@thomasbachem.com>
+Date: Tue, 22 Sep 2026 09:38:10 +0200
+X-Gm-Features: AcwNN1U0AuPVcXbnUSQkCxSDIL-seHMulhg7DW9EIOXMK7GGqtSe-rpGzvWrtKQ
+Message-ID: <CAA0xjtpEXxuEkQRjwVACYfbk97WRdygi5W5ODaEF_5rfH5w+fQ@mail.gmail.com>
+Subject: Re: [PATCH v4 2/3] rebase, cherry-pick, revert: run auto maintenance
+ when done
+To: ps@pks.im
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk, gitster@pobox.com, 
+	johannes.schindelin@gmx.de, phillip.wood123@gmail.com, 
+	kristofferhaugsbakk@fastmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-Colin Hinton <colinlewishinton@gmail.com> writes:
+Hi Patrick,
 
-> Previously, fetch.followRemoteHEAD was validated and any invalid
-> value was warned about unconditionally during config parsing.
+On 11/09/2026 09:34, Patrick Steinhardt wrote:
+> The only exception that I could spot is when we abort the sequencer. But
+> I'd rather have us call auto-maintenance when `pick_commits()` is done
+> and when we abort rather than having every user of the sequencer do it
+> manually.
+>
+> Or am I missing something here?
 
-Early paragraphs that make observation on how the current system
-works should be written in present tense.  It is the status quo, so
-we shouldn't say "previously" and we do not need to say "currently".
+The single picks. "git cherry-pick <commit>" and "git revert <commit>"
+return from sequencer_pick_revisions() through single_pick(). Their
+"--continue" returns from sequencer_continue() through
+continue_single_pick() when there is no todo file, and their "--skip"
+from sequencer_skip() when there is no sequencer directory. None of the
+three reaches pick_commits().
 
-    The value of configuration variable "fetch.followRemoteHEAD is
-    validated while the configuration file is being parsed, which
-    lead to a warning, even when we do not need to know the value.
+The paragraph you proposed for 2/3 says it too:
 
-> Now store the raw config string instead, and resolve/validate it lazily
-> at the one call in do_fetch(), so an irrelevant fetch no longer warns about an unrelated
-> config value it never needed.
+> Unfortunately, there is no single exit point for this backend where we
+> could add a call to `run_auto_maintenance()`. While one might expect
+> that we could simply trigger auto-maintenance in `pick_commits()` and
+> call it a day, a single pick as it is performed by e.g. git-revert(1)
+> never executes that function. So instead, manually trigger
+> auto-maintenance at several sites.
 
-Well written, except that "an irrelevant fetch" is a bit awkward.
-"Irrelevant how, for whom, and why?" is a set of natural questions
-that come to readers' minds.  I am guessing that you wanted to say
-that "git fetch" does not always need to know the value of the
-fetch.followRemoteHEAD configuration variable, perhaps because a
-particular invocation of "git fetch" receives specific refspec.
-You'd need to find a concise way to say that and replace the
-"irrelevant" there.
+2/3 in v5 names those three returns. My answer went out under the 1/3
+subject by mistake [1].
 
-In any case, it is a very good discipline to avoid dying or making
-noises while reading the configuration file and instead complain
-only when we know we will use the bad value.
+Phillip's answer when I offered the move [2]:
 
->  struct fetch_config {
->  	enum display_format display_format;
-> -	enum follow_remote_head_settings follow_remote_head;
-> +	char *follow_remote_head_raw;
+> That works for we and means we don't have to sprinkle calls to
+> run_auto_maintenance() around to accommodate the different code paths
+> for single and multiple picks.
 
-OK.  So this is the read the value and keep it as-is.
+So inside the sequencer the call would go to the end of pick_commits(),
+to those three returns, and to the aborts. "git rebase --abort" already
+runs it from finish_rebase(), so that leaves the cherry-pick and revert
+aborts. The two builtins are the sequencer's only callers, which is why
+I moved it there. Both work for me, say which and I'll reroll.
 
->  	int all;
->  	int prune;
->  	int prune_tags;
-> @@ -178,22 +178,29 @@ static int git_fetch_config(const char *k, const char *v,
->  	if (!strcmp(k, "fetch.followremotehead")) {
->  		if (!v)
->  			return config_error_nonbool(k);
+Thanks,
+Thomas
 
-This error still triggers even when the configuration variable is
-irrelevant (e.g, "git fetch origin master", i.e., rs->nr != 0).
-Dealing with it is well within the scope of the topic, isn't it?
-You may be ignoring
-
-	[fetch]
-		followremotehead = bogus
-
-when the user runs "git fetch https://over.there/repo master" with
-this patch, which may be an improvement, but if the user has a
-valueless truth
-
-	[fetch]
-		followremotehead
-
-then the same command would die while parsing the configuration
-variable, which is not what you wanted to see, right?
-
-> -		else if (!strcmp(v, "never"))
-> -			fetch_config->follow_remote_head = FOLLOW_REMOTE_NEVER;
-> -		else if (!strcmp(v, "create"))
-> -			fetch_config->follow_remote_head = FOLLOW_REMOTE_CREATE;
-> -		else if (!strcmp(v, "warn"))
-> -			fetch_config->follow_remote_head = FOLLOW_REMOTE_WARN;
-> -		else if (!strcmp(v, "always"))
-> -			fetch_config->follow_remote_head = FOLLOW_REMOTE_ALWAYS;
-> -		else
-> -			warning(_("unrecognized fetch.followRemoteHEAD value '%s' ignored"), v);
-> +		free(fetch_config->follow_remote_head_raw);
-> +		fetch_config->follow_remote_head_raw = xstrdup(v);
-
-Good to see that the code is prepared to see the same variable
-defined multiple times in the configuration stream without leaking
-earlier values.
-
-> +static enum follow_remote_head_settings get_follow_remote_head(const char *setting)
-> +{
-> +	if (!strcmp(setting, "never"))
-> +		return FOLLOW_REMOTE_NEVER;
-> +	else if (!strcmp(setting, "create"))
-> +		return FOLLOW_REMOTE_CREATE;
-> +	else if (!strcmp(setting, "warn"))
-> +		return FOLLOW_REMOTE_WARN;
-> +	else if (!strcmp(setting, "always"))
-> +		return FOLLOW_REMOTE_ALWAYS;
-> +	warning(_("unrecognized fetch.followRemoteHEAD value '%s' ignored"), setting);
-> +	return FOLLOW_REMOTE_UNCONFIGURED;
-> +}
-
-OK.  So unrecognised are treated as unconfigured, just like before.
-
->  static int parse_refmap_arg(const struct option *opt, const char *arg, int unset)
->  {
->  	BUG_ON_OPT_NEG(unset);
-> @@ -1922,7 +1929,7 @@ static int do_fetch(struct transport *transport,
->  	struct ref_update_display_info_array display_array = { 0 };
->  	struct strmap rejected_refs = STRMAP_INIT;
->  	int summary_width = 0;
-> -	int follow_remote_head;
-> +	int follow_remote_head = 0;
->  
->  	if (tags == TAGS_DEFAULT) {
->  		if (transport->remote->fetch_tags == 2)
-> @@ -1938,22 +1945,6 @@ static int do_fetch(struct transport *transport,
->  			goto cleanup;
->  	}
->  
-> -	/*
-> -	 * NEEDSWORK: By the time this function executes, we have already parsed
-> -	 * all such followRemoteHEAD values from the external configuration,
-> -	 * potentially emitting warning messages for bogus values.  Ideally, if
-> -	 * this fetch ends up not needing to consult these values, then git would
-> -	 * not ever output a value warning. (eg: when pulling from a URL directly -
-> -	 * rather than a configured remote, or when a remote's followRemoteHEAD
-> -	 * overrides the fallback fetch setting)
-> -	 */
-
-Good write-up.  We should be able to steal some in our own description.
-
-> @@ -1962,6 +1953,14 @@ static int do_fetch(struct transport *transport,
->  		if (transport->remote->fetch.nr) {
->  			refspec_ref_prefixes(&transport->remote->fetch,
->  					     &transport_ls_refs_options.ref_prefixes);
-> +
-> +			if (transport->remote->follow_remote_head)
-> +				follow_remote_head = transport->remote->follow_remote_head;
-
-The code assumes that remote.*.followRemoteHEAD has been pre-parsed.
-Doesn't the code to do so in remote.c::handle_config() share exactly
-the same problem as you are fixing here?
-
-> +			else if (config->follow_remote_head_raw)
-> +				follow_remote_head = get_follow_remote_head(config->follow_remote_head_raw);
-> +			else
-> +				follow_remote_head = BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
-
-Make a mental note that do_set_head is flipped on ONLY here in this
-function.
-
->  			if (follow_remote_head != FOLLOW_REMOTE_NEVER)
->  				do_set_head = 1;
->  		}
-
-And later, do_set_head is referenced twice.  Once when preparing the
-transport options to first discover what refs they have (ls-refs)
-
-	if (do_set_head)
-		strvec_push(&transport_ls_refs_options.ref_prefixes,
-			    "HEAD");
-
-and then once more to make a set-head call using follow_remote_head.
-
-	if (do_set_head) {
-		/*
-		 * Way too many cases where this can go wrong so let's just
-		 * ignore errors and fail silently for now.
-		 */
-		set_head(remote_refs, transport->remote, follow_remote_head);
-	}
-
-Incidentally, after that "lazily turn configuration string into
-follow_remote_head variable" block is left, this is the only place
-that follow_remote_head variable is referenced.
-
-Which suggests to me that we can get rid of do_set_head variable, we
-can initialize follow_remote_head variable to FOLLOW_REMOTE_NEVER,
-and replace these two 
-
-	if (do_set_head)
-
-with
-
-	if (follow_remote_head != FOLLOW_REMOTE_NEVER)
-
-and the resulting code may become a tad easier to follow.
-
-Hmmm?
+[1] <CAA0xjtoW3JfSbuBot0ANFiDEhEv1N-Di4mSd5tYfgkFEeh07Nw@mail.gmail.com>
+[2] <1e9f7b72-9f77-46e9-950e-df60b5a0539f@gmail.com>
