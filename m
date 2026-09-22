@@ -1,143 +1,232 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9403748822D
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 20:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97103E8C78
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 21:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790110501; cv=none; b=aWTcLpljyaAOjGf3QNJ+mkyBQaHmYcgE9Tf1ML77SCHOQhDspKO+b0V7olt/iP3lcnOo2w8GvDI8aAW4d0tcl3wg7qUhbYa6i4rTwL2DT7B90lhup7L5JpOgS5083dgnBlmPXNurimtB2T8vLZlqxGIa5Sm+DWCjF/TNe1pGpgY=
+	t=1790112017; cv=none; b=u5nhZMFjTbm7yDL9WeiNq70FFL+/IXNO25ylF4IPfm1La+2/Hbn3doQWkdvfjPsB8ZwVslwU8pmmJfSBMDuQLLiYlDna4iZMogS5BiEaZfy81MO4bzQZB6uWBfqCgA4ypKL/y47cG7kaU2aDose8lUPJ9gftAzOyOpFf4nrB7Ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790110501; c=relaxed/simple;
-	bh=AoAhPHndRw8aH+RMhLDfMMqCxt+br/vRp7joiFCjpYI=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=ITgnxKOWD/1p0BcUvJQDjFpvFLBU5DZShnltPHTACHEfLCqxMe7SsHg8zRVqWjd1NURAJEdjuXDe9ZuvZxPaOq+7eIlyOoEss8/YxJqeEBGckPKUT+tPlzHpD+WS1ibt57RqENoO71OClOQZvmwPse4cF1uJ1lSzguWWQPfVYIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=j7N1sgkN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sRAyQnHM; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1790112017; c=relaxed/simple;
+	bh=vndFp5S32NTLYpDfMcXLnfHiXsOIS9FKu2KVko+ZVVU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MdZWIWderloZjA8wnbJdBpfxxNdSdK38R5AE5o4epWuy6u/pq5MiBEkkTeD+NIvhYu4sF84fE2L+cpGZ8mxjaHLJdgXn04I2yHkz9cP3B/t7Msn8VJcCiQ2kl9oOpw953CYAuw5OaiYR8rotuuy2554XSRQEfr0pvMg9fL+hcn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YhR99itj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jc04LE2R; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="j7N1sgkN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sRAyQnHM"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 86186EC013B;
-	Tue, 22 Sep 2026 16:54:37 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Tue, 22 Sep 2026 16:54:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790110477;
-	 x=1790196877; bh=5uaqR/URpiWckAlz8CcPHyRXl9yqt0siqFYYkX5F/Qw=; b=
-	j7N1sgkNsY70tlEl1Fword8FSb571sN03Ces+QM4vrUcoYHzKMGT9aZq3vOKAVaD
-	vLJ87P/ua8wb6/6jrGz1vuT/dZo1kNfrYtubncyNGxt0eDSTckHyx0m3lNYt+XZJ
-	DySguUhdlyqbWwCmnaaqoYDKY9/p/VjoA3uwKug5OgJCSBmimeA1j6b9fk9d0cIN
-	gbcO2XyqtxIvdaMwK1qgTyWcy7GAt5ETlAGFOoz+M2bsaW10OB8uU+yEHyXomhNo
-	u/4Yr9PCq8KIDmIbCXIELpV84zZxIINWgyVDX84S33ZlnZ0Ygh/fvBxn+hkj9uHf
-	oaU14YC8T+ftr6fACP6PhA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YhR99itj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jc04LE2R"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 89C9DEC0246;
+	Tue, 22 Sep 2026 17:20:07 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Tue, 22 Sep 2026 17:20:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790112007; x=1790198407; bh=irM3kqj7tA
+	WgBIqr0xuptn9d6zD345FVyM+AB3iRGIw=; b=YhR99itjyUePuj8cOd8U0vxFwR
+	2vOMT5E3C9gfcOGsR0feRQQh0PZ7Y8ap0fE0yFtgHlCNzunEqcKx3m+TyVikub5C
+	8cX0dwfJOtmrogmNDknfMgjjL0exDj+HgfJc8PlTYIGb0RJwxI7wtrefWxvm9OlY
+	ZYVaBD06FthiDheHwX6AZfuwSUxPmWFKxgvMDgdq+CY+eCwd90mea1AQ32N9MYXw
+	H6KXQGDM4PYPMpatv/CUetwgAsFO7EG6zNfwOyQn1sHrwDGiPDrVw+WiZvF9Z7tJ
+	RadeTvCcBQSVKss1maD6TLawf1wuBreBC36pL3C+DR9ZrTqIORr1E0GF6ZOQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790110477; x=
-	1790196877; bh=5uaqR/URpiWckAlz8CcPHyRXl9yqt0siqFYYkX5F/Qw=; b=s
-	RAyQnHMlReGEU9UGQLqkn0SNp88L1QI3nM46r3mNylU1hnpHululf9vG/agctxcb
-	fu4w2F9GKjatMA3oltv6DkNNjySzc+nm87iBJH9ENhxnv85fGL3cFQPL4Ot0ii63
-	93HjraGxrH3gszLmOT1WykadQ7OmE7ewURigyaklgBruXdQ0m9TgYtSJYKx/4w8Q
-	zPjCkHao0cE0K0K9UvtJzeUdUFIbOZ0Hq+4waqyO5QgEPhgc+VxQb5DiZZzd7YJM
-	+88IgnVfmlleUcM2k0HO9sZg6m92rfDlIG6PSqkrwf8h4LoV8x+7LeyBslgXaAD+
-	Gt3mA6TomPZ3NTFuAn/Vg==
-X-ME-Sender: <xms:DeuyavN29SZH2SafzrOo2AgZjIXnvXN_F-LMfpPxYN9QakGrM3QhEg>
-    <xme:DeuyakzL9Fzmge0Y6oamOeOrlGLUvYYbyBu8oHkaBKGtRJRoOIU1kku-GPbKTdcOB
-    Q_X7uHPblxYVw2z3wyDTo86ZAxCG8uiV-eoAiv_v79i1rcrDXiAZrOA>
-X-ME-Proxy-Cause: dmFkZTEQEkk1hgox4B7psGL7pF4ENWPZhjNiSU1CCbX6kpLQfMYl8HvsCZUHKiRte2sHNh
-    4X3NxJ0Vls8aUQQGIqnFzMqwWAPd7KpC5g0zIzzcJoM0Ezzb250aT1+aht6IvdA+Cz+OXP
-    ZQlL4LbbUvNx0aLVhdH7IwF+VBSSBobJYcUJGB5PK0/Thw9lNz1ILFpgC3KFCFIglLx7W9
-    Z4zsvDWEOyHz6m6EZCH4oSG59bqOKpLIwEklnU9l9rHlv0XcdPqfZ+5cpG5WvQq2idnL0f
-    atFenmEqAKX5Oq6qQjQ1YmPwtxftypSctJGkn9vWIZhhKnmDauoDajscz90ZykeqUdW/pV
-    oMI+YCIPdqfw4OngPVU1OkfGxk1s9MRXtFhogzQ7ywZr95clcRflkZZCN/KursNriK9j5P
-    aR+OmISb7MwdSwUR8mYie9VVucWG4/FLKg6uzt5QcaSghuTIjh8oJkm6FmSFPya60n6UuP
-    kWBZHN85uM0PjZDPAhuejLMChyMw/EdGbWoJ4nzkgrROMljusgPR4cMS5mmOU1YGcRWnY0
-    lDug+kudQKkIT6RvrSmygQ/b5mbf8NOO+m+KW7uRD3I4gIFA52BrT/mhDmusxGjseWnc6a
-    iHeiO0+OVVFmJlqz/jh6MT4fLFtQw+/QJQ4r9muSNWnvojikIa6AnVYyzR/g
-X-ME-Proxy: <xmx:DeuyanIxwRXZpdMlJk9bV5rOLtnkvE1QZd111UMD-KkueMEMuMq75g>
-    <xmx:Deuyai79kC-Ik8njAvm_tuV5xazzobX1_Xe1oi9_uGPVzs_gC8SnaQ>
-    <xmx:Deuyaiyc_DikAhW7N7Yx0zNFGKCgjY9Q4DK9IbObIsA_s_-eRAm8xQ>
-    <xmx:DeuyauaH_2K-BdtGOKOJ3y835swWpwGy0iLZ9SPGlHOHMXdBClPNYQ>
-    <xmx:DeuyauFafGB3w8QUDctwZxpj8J4i8h4shsMtnZlAjZ_qcEMKNqRQ6xse>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 6631E780076; Tue, 22 Sep 2026 16:54:37 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790112007; x=1790198407; bh=irM3kqj7tAWgBIqr0xuptn9d6zD345FVyM+
+	AB3iRGIw=; b=Jc04LE2R19zTNEfJp5iqu8XEMQnvchWqqQY7JoTcv3jiKpadCHQ
+	p8pYvCq0aiipIp8YZ2Gj8bWRdyCllb+rA8BAJFVtsudVHafMBWwLrRyxCpV7P+15
+	FRzOAAC0PNOKQEKGcTHGJlQnkhpXRJKoJIXbIgUAkjxOe22dPYZWIB1ab+0Ct1GC
+	smTc+2AASrO+Qsdts1BwAEDQgLhp+mDgnnyJH208z5CRfX8qRmqZrGu48Ah8Tgbi
+	f0yh0JaOAA93lS+dVC+/2npBrB+CiOaZ8up3C7Gq9kjis1LAubBkZzfqty8/dVKV
+	K3eQsfSFI3FVuSpR8rVKwLFfosT5dQPeupQ==
+X-ME-Sender: <xms:B_Gyat5MSSpYjbIdO4yEb4Su9I-Blt545rMyaKLiu5GBNJdDHSJH-g>
+    <xme:B_GyahwVGlhCFIb6sR0m6rLYKXDNIMtqLzFZiY61zqNNQRT5maKbO8DNQvM2KBkBX
+    UwwESQ4k829CzTs19UEvs_rJptDGbJF4xJlpvmmTrw4BaFPj4pZIIM>
+X-ME-Received: <xmr:B_Gyasy39FLTsX1Siyvol9VB8VbGxhiBAFiM1KmTIq_fJ38LQ9h3kCKeCDE5IysJteQJHLULSVVcV_ukhvYOz32OtYrlSAqqCuIc>
+X-ME-Proxy-Cause: dmFkZTFCMNtDeQznR67lHvNFfat36/z4+kRf4OWw0lGs0Ve4YjgeuJMR64+QiFDo8SzSoG
+    NOZYIVuEbd9mmU35RSmKf4UAm4czfKPC9OI/uW98rj4Yqn0/9yenwce/2iOiYzH7LUrq1C
+    98li2XsX7DZV8jEl78kR2Rm8lrG0S6YQz3h9RgiW6Y9j5H2KXKgWa+wcwFtWUmrpqj3GaC
+    oacC79fB8ZLT3Y4NGKx3GctNnrvS2tJl9B9ZhNSiF9WNvAXKmzVUTMNiB7iyXzD0Zy2CfD
+    rUQuJOxmJNRLmymNCyM6k/fHJsvZ5PxSKIEVhdrT/bzc5UfX4nylGRY7LFBFvgPH8My8A7
+    PXlf3bPRIjqmJOjlYnvdTPCqzz9V+u9dtuc/ggJrjDxyIOgl6ThNjvlUD4TpKyR14Q484L
+    Q62pzVaBNiT5edTKHzRCu+J9/aOtmTgHgjebd2VaJ6yo/y4pAyZCm2flTFUl0ddM4nJhtr
+    kgBTzzKe6x7jimJjx98yYAZXqtZc3ugLPwi2q/dfD0ob0KYgJZEJhsq5awNzOGotWJgu/l
+    +OvwTRG7qlau4Ka0ffIDVaCRTcblTRgOyVLvlkwxOz5uuakukZF9zs75Zkr0NJWMY7v2oI
+    cpELYmCOpSJGlpifPHmA/hS9Lh/lcQ0QzD9aT2tT0hbvP97f7lD0cIY1q8xw
+X-ME-Proxy: <xmx:B_Gyahy0BA3MoqWsvEjsyznzulVORvEwe-h8CkQDM41GEb0XCbeudQ>
+    <xmx:B_GyauaUt0s_5kXg59fASqI3N_quoV6FlQR4db20b44HP2RPZ7gsmw>
+    <xmx:B_GyaqVj9egpms25jtfFSUQVAhBQKLbF6sVXVZ5jFmRvC3CH4DW6lw>
+    <xmx:B_GyakjzVvBL-IwipRxjFeA2zlr1zPRMCi0qJ9F_dHTwCdS1Pu2mCA>
+    <xmx:B_GyalDR5nuJGSo6fU1BmpdmqJPTkrTq5E0xU9opAEvTrcXAIOM-CixV>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Sep 2026 17:20:07 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Harald
+ Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v2] shallow: advise when a walk stops at a shallow boundary
+In-Reply-To: <pull.2413.v2.git.git.1790084326913.gitgitgadget@gmail.com>
+	(Harald Nordgren via GitGitGadget's message of "Tue, 22 Sep 2026
+	13:38:46 +0000")
+References: <pull.2413.git.git.1789898013916.gitgitgadget@gmail.com>
+	<pull.2413.v2.git.git.1790084326913.gitgitgadget@gmail.com>
+Date: Tue, 22 Sep 2026 14:20:05 -0700
+Message-ID: <xmqqo6dpc7ay.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AFcAV8VPp38k
-Date: Tue, 22 Sep 2026 16:54:17 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-Message-Id: <665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
-In-Reply-To: <xmqq4ifhdon2.fsf@gitster.g>
-References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
- <xmqq4ifhdon2.fsf@gitster.g>
-Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Oh, I love a change that is so sharply focused on a single issue and
-> describes what the problem being solved is.
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 350b35c556..22a40c7d28 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -47,6 +47,7 @@
+>  #include "commit-reach.h"
+>  #include "promisor-remote.h"
+>  #include "range-diff.h"
+> +#include "shallow.h"
+>  #include "tmp-objdir.h"
+>  #include "tree.h"
+>  #include "userdiff.h"
+> @@ -396,9 +397,32 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+>  	cmd_log_init_finish(argc, argv, prefix, rev, opt, cfg);
+>  }
+>  
+> +static void advise_if_log_stopped_at_shallow_boundary(struct rev_info *rev,
+> +						       struct commit *last_shown)
+> +{
+> +	if (!last_shown)
+> +		return;
+> +	/* a plain "git log" running out of history is expected */
+> +	if (rev->max_count < 0 && rev->max_age == (timestamp_t)-1)
+> +		return;
 
-:)
+"git log -999" may run out of commits because the history genuinely
+may only have 20 commits, or the clone was made shallowly and we
+only happen to have 20 commits at hand.  The same is true for "git
+log" that does not get any count.  So I do not quite see the reason
+why we want to give an early return in this function.
 
->>      * I tested it by running this script
->>        (https://gist.github.com/jvns/039c8ed0add092f2179f0dba52ebb896) which
->>        builds the previous and current views of all the man pages. I looked
->>        at the output to make sure there were no differences. You can see the
->>        output in that gist.
->>      * I believe that asciidoctor will automatically make sure that there
->>        are no broken links.
->>      * I also spot checked some of the HTML output to make sure it looked
->>        reasonable.
->
->> diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
->> index 035f780e58..47dea1de8e 100644
->> --- a/Documentation/fetch-options.adoc
->> +++ b/Documentation/fetch-options.adoc
->> @@ -199,7 +199,7 @@ endif::git-pull[]
->>  	providing the tag refspec.
->>  ifndef::git-pull[]
->>  +
->> -See the PRUNING section below for more details.
->> +See the <<PRUNING,PRUNING>> section below for more details.
->
-> OK, we already see an example of the <<double,double>> reference
-> notation.  This needs to be in this form, intead of <<pruning>>,
-> because it refers to the named section of a different file, namely
-> git-fetch.adoc (I am just trying to make sure I understood your
-> explanation correctly).
+> +	if (!is_repository_shallow(the_repository))
+> +		return;
+> +	if (!commit_is_shallow_boundary(the_repository, &last_shown->object.oid))
+> +		return;
+> +	wait_for_pager();
+> +	advise_if_enabled(ADVICE_SHALLOW_HISTORY,
+> +			   _("'%s' stopped at %s because this repository is a shallow\n"
+> +			     "clone, and might have more history upstream that was never fetched."),
+> +			   "git log",
+> +			   repo_find_unique_abbrev(the_repository,
+> +						    &last_shown->object.oid,
+> +						    DEFAULT_ABBREV));
+> +}
+> +
 
-The reason I explained this in a bit of a confusing way is that I'm not
-100% sure in which exact cases we need to use <<double,double>
-instead of <<single>.
+Anyway, sorry, I regret opening this can of worms X-<.  It is not
+that your implementation and design is bad, it is the problem being
+solved that is bad.  But ...
 
-I double checked just now that if in `git-push.adoc`, I change:
+>  static int cmd_log_walk_no_free(struct rev_info *rev)
+>  {
+>  	struct commit *commit;
+> +	struct commit *last_shown = NULL;
+>  	int saved_nrl = 0;
+>  	int saved_dcctc = 0;
+>  	int result;
+> @@ -412,6 +436,7 @@ static int cmd_log_walk_no_free(struct rev_info *rev)
+>  	 * retain that state information if replacing rev->diffopt in this loop
+>  	 */
+>  	while ((commit = get_revision(rev)) != NULL) {
+> +		last_shown = commit;
+>  		if (!log_tree_commit(rev, commit) && rev->max_count >= 0)
+>  			/*
+>  			 * We decremented max_count in get_revision,
+> @@ -437,6 +462,7 @@ static int cmd_log_walk_no_free(struct rev_info *rev)
+>  		if (rev->diffopt.degraded_cc_to_c)
+>  			saved_dcctc = 1;
+>  	}
+> +	advise_if_log_stopped_at_shallow_boundary(rev, last_shown);
 
-	of a remote (see the section <<REMOTES,REMOTES>> below),
+... the "last shown" commit may or may not be at shallow boundary.
+It may be a normal root commit, yet there may be truncated side
+history that we stopped traversing during the above loop.  If for
+example we had a history like this (time flows from left to right):
 
-to:
+     ()---b---d---e	(side branch)
+                   \
+                    \
+  a---------c--------f------g	(trunk)
 
-	of a remote (see the section <<REMOTES>> below),
+where a side branch is much denser than the trunk, and shallow clone
+truncated the history, hiding the parents of 'b', we may see that
+our traversal goes 'g', 'f', 'e', 'd', 'c', 'b', 'a' and the last
+shown commit may be 'a', which is a genuine root commit.  But behind
+'b' there may be hundreds of commits on the side branch that
+eventually leads down to 'a'.  Doesn't the user want to be notified
+that they are missing tons of history behind 'b' in such a case when
+'b' is shown and we stop traversing its parents?
 
-Then there's a problem where in the HTML version it displays as
-"[REMOTES]" instead of just "REMOTES".
+That was the original motivation behind the issue I raised during
+the previous review, and that is why I say I regret opening this can
+of worms.  If the commit 'a' in the history had parentes hidden
+behind a shallow boundary (in other words, 'a' is not root), then
+from the same traversal, we would see the "traversal stopped at
+shallow boundary" advise, which means that we sometimes see it and
+sometimes we don't, even though in either case we are showing 'b' as
+if it were a root when it is not.
 
-But in the <<PRUNING,PRUNING>> example, just using <<PRUNING>>
-seems to work. I started working on this way back in December 2025 
-so I assume that something in this patch was affected by this issue
-and that's how I came across this problem but I'm not sure exactly
-what it was.
+I do not think of a good way to solve this, and showing "your
+traversal happened to have ended at the shallow boundary" only
+sometimes in an unreliable way is probably counter-productive, I am
+afraid.
+
+So please forget what I said in the previous review.  Even though it
+may be a good piece of information to have somehow for the user to
+know which commit has its parents hidden beyond a shallow boundary,
+a regular get_revision() traversal loop is probalby not a good place
+to do so.
+
+We might want to show the information by enriching "log --graph"
+output but that is totally unrelated to what you are doing with this
+<rev>~N topic.
+
+> +test_expect_success 'shallowHistory advice accounts for depth already present' '
+> +	test_commit shallow_partial_1 &&
+> +	test_commit shallow_partial_2 &&
+> +	test_commit shallow_partial_3 &&
+> +	test_commit shallow_partial_4 &&
+> +	test_commit shallow_partial_5 &&
+> +	test_commit shallow_partial_6 &&
+> +	git clone --no-local --depth=3 --branch main --single-branch \
+> +		.git shallow-advice-partial &&
+> +	test_when_finished "rm -rf shallow-advice-partial" &&
+> +	(
+> +		cd shallow-advice-partial &&
+> +		oid=$(git rev-parse --short origin/main~2) &&
+> +		test_must_fail git rev-parse origin/main~5 2>err &&
+> +		check_shallow_history_advice origin/main "$oid" \
+> +			"git fetch --deepen=3 origin main" &&
+
+Would wew see the same output if we asked for "origin/main^^^^^"?
+Just being curious.
+
+> +		git fetch --deepen=3 origin &&
+> +		git rev-parse origin/main~5 &&
+> +		test_must_fail git rev-parse origin/main~6
+> +	)
+> +'
+
+Thanks, and sorry about the ill-defined feature request.
