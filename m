@@ -1,343 +1,223 @@
-Received: from mail-ej2-f38.google.com (mail-ej2-f38.google.com [74.125.228.166])
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3698C53E316
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 12:26:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.166
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790079979; cv=none; b=uVaBX0MI52gWVbOE7OTGjBGk2WCKvRoOwHg5W238ZS6iSUvvERy/rp/RabkJn1PLWACrOwNOyUj1UBtJYhmIqVQ89nMu9V8Peb1Yy2Hrr6/thXTjI83jPkuzvA4Dmre/APuTEqw45nUkHIWCi8WoAuox5rWOozT2QMdajA/TNZ4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790079979; c=relaxed/simple;
-	bh=vZjfcEklxkyhH9z+/6EwL/lXnRRVeN/uFrwnY8M30gY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tN5V05TGxE6L0ginizqDGNFhZ9XDbc5fkEM+b0yTuQiIPDsihgeJW35VTBhHHd3YnN+Vg1X38aYEYLreO1cSLYxMu+uk247WD96FNJ+kmk0UZcTBiu3VooKWItev/80XybTc+49KJjWkBeMcrPiS9VoN/mbY93d4PMJYhEowYzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oMI2+Ujk; arc=none smtp.client-ip=74.125.228.166
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A0A548570
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 12:43:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.141
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790081041; cv=pass; b=m1HQnobJ8ni6tJejgct7s/DSg4DaRxoMpDwNO4MwQhp0E4KCZRSboPeJlcTqvREW9njcwHFl9b+LBOxvD5E5Z2Kbg4CrX09NAMF7A2kfU0nsTO+sw47NsVRFJp9PMYDtdk6XpG42zkZayDnuJGLN/y7c7CTA9wjd0n9Sv4xNjfk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790081041; c=relaxed/simple;
+	bh=KGTeTXlPI0In6sqzhNoRCjInj6rvjSjs7iThi0OZcD0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Z5a/RxxfbQECBVm9N00VSGsyNiZP9vdTdaZEun/DZHGKpfGmKpR8FKbpsfCg3QUyDi9M044sJmehn5FzBQ88JNKvuqBdM7zAqoCml/oh8Ax+vdLmGDv/M+SZ9sypOrrHFZDAFstzhXpWxCjFYgv8SNe5MTY/gKR8j7Kyo1DOo8o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OdniB+OD; arc=pass smtp.client-ip=74.125.227.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oMI2+Ujk"
-Received: by mail-ej2-f38.google.com with SMTP id a640c23a62f3a-c254f560398so614363766b.1
-        for <git@vger.kernel.org>; Tue, 22 Sep 2026 05:26:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OdniB+OD"
+Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2d747eb79f7so28066115ad.1
+        for <git@vger.kernel.org>; Tue, 22 Sep 2026 05:43:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790081039; cv=none;
+        d=google.com; s=arc-20260327;
+        b=MqRhKiYW2ngCv9mKbo0hD7baBsWkKng5bd0JyCwKYIf5S2WX7ayoq+/5HOz0Q5T0f3
+         HM2dA72uexZ/sqB8zZHQlWRteKzYepC5ULllzGyqALSJDDAtgPpYqXOvIEjb4iqAVtn2
+         6i9dkTE0py+UKVR0LcJF25TUPCnx8WjzaVhlNjcPSvYRHn9nnrA58DdI/wlxe61oXuhW
+         Y9z02W3IX7FQ8XEgS1IYO6D4wuBtoUoDcqRZJjQxIT0rJjo6IE44sUFKtk4gIayxOWZd
+         CodRG0KqC24RtFaERflFLUd/A5zCyxkt87ISrtESWcSagM+lON/FRrJE79ybzKlZQHRt
+         hGWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=slvyjc2CKKio0fPxeO+5Vbe4l9mOTNZR6ZYDLwKUM20=;
+        fh=JwKIycEK1A425YJY8qLMxO6Yc11i7Y5uCpj/+wYJcqw=;
+        b=mCgMCt1h6Yc3slMLfJMGbwvxbPxOKVOY1VZIKGInYmOfpRoZWeoBo42CTfVlCzNtPq
+         RvRGczAM39HbBSvSj0k3E1wiJg+IZpOJBf6jUUVEJdoBJPwgqRFupsR/jE+CzVA4tmfT
+         zEa3tiCY7ISOrKqE2K0zkzuj8Fm4TXlv+Vmo7Eo6aNpvfoWO3M8PQ7DE6JRjcOoUmyYu
+         i85Lw4ZZ31pGD8ojaHf1Zbz0Hg7Z07Ts6JAQsKeL8doGghrsY9EdMEoxv+p7GU0RvA5t
+         J48tKJtub3eW0WM/wFF+qysbeI6nEII8TCa0fJKbAPQn58/WbKyyQtcTX6EaDAWamtDH
+         lZRA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790079975; x=1790684775; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=1IuLuzObcu/JeyXqYW6DH4JuSp/9tCpvq4UNWOuKzNw=;
-        b=oMI2+UjkoBudyZzX2jmVujXlLJ/8/TMIlOG8/l1WngMxX8uxPHWVuYtHRUYjpP43wg
-         YKaAlDLymVnPdiTzUTGVKhJs0DmemqlPIC1QJhxW3iOCAZ7QFNDbtT7/8hpTVm7RlUN8
-         6YhIY/RS9jJ2bJBXsglj1qnBrjeZhsJoT3aVIRoIohbeVKhu5drmpcwJC/ohQ0eCRrHU
-         XUXFIQ6cWbPO8Vuwyo0HrbauW/qp9GHYDdG80XNo2P8Mom3hFe73fXyRx4RyEcSWdsjE
-         NjlAC1uvGAHzS4rLcKZioR1b6sH/GAcuM5FcWt3CplqUbnLbA6BsEwFtZEvuAPipWK06
-         v8Xg==
+        d=gmail.com; s=20251104; t=1790081039; x=1790685839; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=slvyjc2CKKio0fPxeO+5Vbe4l9mOTNZR6ZYDLwKUM20=;
+        b=OdniB+ODzsaMExvwh30JFNhKSdkG2QBF3ghepy5+pYMQleYzvSaJfXmtwxwylEsuDn
+         2X4sudUjA9sQdyFDNfFICCuUW2BBmRFMoBsu2819h2h4kqmGi45bI22+xrpApx7HzPhm
+         x3rh2p3sZb57qyMAlnX6/mMCkb/49PHBBycU2MMtwFinqiTrjWbBsNCPAR29t7OvGpds
+         WWHqS6kVI1LR9zAxsF1WIk89WKVqQ5hNYssklPjowzwkK6vDIXAG4GBEB8NyvKlYtl+y
+         xwXQhcXOhH1RaKAMB/oa2IooqVPcCqRWofJBuTzJHVEXaNJRPldFx2OaUXV3lCmxrYMK
+         J3eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790079975; x=1790684775;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=1IuLuzObcu/JeyXqYW6DH4JuSp/9tCpvq4UNWOuKzNw=;
-        b=aos2mDUZc1fvLGjoYiEA8jxKR+UZvkXy5BqqS081vLMmCGLdvEj1eWczfZz4eNklM9
-         6EzCJbZUMDdAD/VhMRa1dB1bG1Kd2+oinapEqC5MJHBlTmCQfBFRZPUZ/MuyNMmcAy4t
-         xn+AAFQd9Hmd9cZhGQreElxoQn8em734HIFSNqESW5sD8J2Cmk7LNTRc4ujD74hIkA9t
-         OeFpausie3I0OCuNohrS/RfXgEgOIMQE3r2K970vyO9DZCmdC34oUgGysksKct3LrfqU
-         1JJsZVITBMGi55exyII4vQmRwJ9JMVwNlqFv7O3UH0gz/ePzYVONzXa7KS5gi7GuWYEU
-         /ceA==
-X-Gm-Message-State: AFuF++m1zcsXm2nbqwXNHWKO9NaZKT0Mga9q+Qj+BT5AtbA7HXxpJ6sA
-	hOuYt4eiyFdae7q3P8iWGixVEp2DzgCfZ5NKZkjhQlDFQm+YzILC7e+MqSkLeDvj
-X-Gm-Gg: AYBFou3qAV5np3ttN82QM+8dH1EeCxvefRrrd/SI0tzHHq0IZkPPKudBvfncR/ZggS8
-	RP7yJbj7mgi45FT26a3oPnl+g445wETLW1ek1oPT8LXu5HaCJxgOJrLHDe2Mnl+S0IJ3luPQPw5
-	7MJ7IEOdIFIm2hJYQmRbPz7FRi+t+vANP9UM00HF+0n8CyZ7RL64Z2VpdZOPHtKIICTKkzOcl1H
-	IlInHfIAvR0nIGkt1MHP+x9xz1G1ATOs4NshN6tkMGA+BsC2gHQ/R1PfGtIKZ7ncrg8v4/Q+3Qu
-	euDUnV4jFOkTI4nDv0/pisYYX5Rl3MhBsMo0+3O8yIgebZ9QMvFI0P8pufzI66pgoTaTmG/cfee
-	DGNVdgINn/0s5WDYPJKDXZyOuMjK+E5Qytm5tAll4rDcFm02PhFdvX3wQgQW8Y3V+Z3VoNFgKzo
-	+2ygvOS3Bz6c7REYSkr4Vn8EtTgHm79LgwXHlxs6bGml/lgicvxPqfpffL1bnTI1ESP1CnGMv5+
-	Wzn42EKfzh+tOsJVR5SFlTQ4tHsRN4z+4ikjWTfv3Lk7ah/oxpxbZRrftlU+nfbwT1bqbwlgUcj
-	M6J4REuOFsahq7XjJquZyC2gr6DvjM6ot9cylgVd6kiRvNs6
-X-Received: by 2002:a17:907:3ea1:b0:c29:60c1:7e55 with SMTP id a640c23a62f3a-c2a157f77c3mr1209816066b.12.1790079974828;
-        Tue, 22 Sep 2026 05:26:14 -0700 (PDT)
-Received: from localhost.localdomain ([91.236.84.70])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2a9c54f30dsm77322566b.17.2026.09.22.05.26.13
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 22 Sep 2026 05:26:14 -0700 (PDT)
-From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Phil Hord <phil.hord@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	"D . Ben Knoble" <ben.knoble@gmail.com>,
-	Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-Subject: [PATCH v3 3/3] fetch, remote: retain old OIDs when pruning refs
-Date: Tue, 22 Sep 2026 14:26:09 +0200
-Message-Id: <3f3062252ac1aa057b9ee9a2dd9892e629ba7a82.1790079917.git.maciej.ciemborowicz@gmail.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <cover.1790079917.git.maciej.ciemborowicz@gmail.com>
-References: <cover.1789901584.git.maciej.ciemborowicz@gmail.com> <cover.1790079917.git.maciej.ciemborowicz@gmail.com>
+        d=1e100.net; s=20260707; t=1790081039; x=1790685839;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=slvyjc2CKKio0fPxeO+5Vbe4l9mOTNZR6ZYDLwKUM20=;
+        b=WVu+Mx47NsfgSw2dnucxjhzWSAqZpQXk8J7J/DyCdC1rS1zw0OXRw9Da8OQOsl3Z/0
+         mVflSQCGYQjrGAqgKcVjMuJ8TDIMI7pZgJ113m+0hH7Q3yiSQyH4LHQNNkJ1Q6sTJDaF
+         4nSbrk81cxQuKFlMI2CUYGNeugqHZpMwOwO4PxScxP1GYUBsXLx/McIFJ0LLMufZZbuK
+         DmHBPZ5pxk29tLdLZXiZwVasqrrfxWS7so98k1SLHvg4RchIB5zH7Y3dPw3RpjVEzb2H
+         plfbwvSXypry9aWv8nhDeb3qEBFN9edpqOHaMHhSxFN6n46MruxDxgBND2gD668OrVj1
+         m1Dg==
+X-Gm-Message-State: AFuF++l6P6GPWr85JURkVrJsHz7VSPB2qvsSIjRReFL1zQ7AtXNGLrKy
+	MCCNFYJdVBgFdaEj/x1K0WuQsSfpQnP/Yyc5hslJtNBhYFPTLCPKdnYNOu8mgnoonsfONd/etFg
+	mdTnpuAzG47lSVOSoW33u421mTrEqHsg=
+X-Gm-Gg: AYBFou0sINE/v7GjSr4dk183ZF9bbtCckbKnbRNGeIVYhuBKDDu+snVHhkZbu45OxfQ
+	pM0pnDQeqGNWOLsZGb/fnYqOnMEfGibuUuxUSarAJbDwQL9UOR8cr8o3vVF7/auklIZZWeADpcG
+	yOf47yysrXleGebLmip6pOlpLIAvejEoLOKilCq8eGGyvvEHhPtr0sHKOKl5RAyxNQnhlxcRmCb
+	MetFiztOtaYLP9IT2rCWptU3o5m6RwXOEZJBxW2ineUfvt3dOnC4We43mytgEc3e2jmso2EGjC9
+	mozAFeL4BA2uSCGlA1K2IzNvAf5NrxD3pO34yjj4YQOU5ahwGI6tn9/7H9syScIcOhSfADCLDyA
+	+HYRM+sCFA8Z0hovoplGpG0X0hDZ8CLohFiRxe+YRbFTDRGUfcIgoEvAi844OZfr7jQrLugAPFu
+	8SdBOXZJ6A
+X-Received: by 2002:a17:902:ec81:b0:2dd:c0ff:e723 with SMTP id
+ d9443c01a7336-2df60b66f9fmr13170205ad.53.1790081038707; Tue, 22 Sep 2026
+ 05:43:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1789853192.git.ben.knoble@gmail.com> <782fe91251111fbb28359574d860e4a6d2e45fc0.1789853192.git.ben.knoble@gmail.com>
+ <2551b801-4cb3-4880-ac01-7d14a188ddd4@gmail.com>
+In-Reply-To: <2551b801-4cb3-4880-ac01-7d14a188ddd4@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 22 Sep 2026 08:43:46 -0400
+X-Gm-Features: AcwNN1XNvhDbSi2Ydb8ssYYRNpiDBT9qbae8rNaC1ujuY-VqSlr528zb5eoytI8
+Message-ID: <CALnO6CDG4Emny7xESxN8GObaXb_P9gPHBZ857hrAvDjiMSqsKQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] builtin/stash: merge index in-core
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>, Taylor Blau <me@ttaylorr.com>, 
+	Patrick Steinhardt <ps@pks.im>, Derrick Stolee <stolee@gmail.com>, Adam Johnson <me@adamj.eu>, 
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Victoria Dye <vdye@github.com>, 
+	Elijah Newren <newren@gmail.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-get_stale_heads() records the current value of each stale local ref in its
-new_oid member. The pruning paths discard that value and request
-unconditional deletion, so reference-transaction hooks receive a null old
-OID.
+On Mon, Sep 21, 2026 at 9:17=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+>
+> Hi Ben
+>
+> On 19/09/2026 22:26, D. Ben Knoble wrote:
+> > Fortunately, we can achieve 2 goals at once: avoid round-tripping to th=
+e
+> > file-system (and invoking expensive subprocesses) by performing the
+> > merge in-core. Since the results are never seen, we don't need to set
+> > the usual branch and ancestor labels.
+>
+> When the merge succeeds without conflicts we use the result so it is
+> seen. It would be clearer to say that "If there are conflicts we discard
+> the result so ...". The rest of the commit message explains the problem
+> nicely.
 
-Pass the recorded values into the deletion transactions. If a ref changes
-after the stale scan, reject that deletion and preserve the new value.
-Non-atomic pruning uses refs_delete_refs(), whose partial-failure mode still
-deletes unaffected stale refs. An atomic fetch remains all-or-nothing.
+Indeed. This is what I get for (unusually) dashing off the commit
+message up against the clock. Thanks!
 
-Reuse values collected while finding stale refs, avoiding additional ref
-reads. Avoid reporting deletion status when pruning encounters a rejected
-update.
+> > @@ -669,29 +625,25 @@ static enum stash_apply_result do_apply_stash(con=
+st char *prefix,
+> >                   oideq(&c_tree, &info->i_tree)) {
+> >                       has_index =3D 0;
+> >               } else {
+> > -                     struct strbuf out =3D STRBUF_INIT;
+> > +                     struct merge_result result =3D { 0 };
+> >
+> > -                     if (diff_tree_binary(&out, &info->w_commit)) {
+> > -                             strbuf_release(&out);
+> > -                             return error(_("could not generate diff %=
+s^!."),
+> > -                                          oid_to_hex(&info->w_commit))=
+;
+> > -                     }
+> > +                     init_basic_merge_options(&o, the_repository);
+>
+> This means we potentially use different diff algorithms when merging the
+> index and when merging the work tree, let's use the _ui variant here
+> instead.
 
-Signed-off-by: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
----
- builtin/fetch.c                  | 21 ++++++---
- builtin/remote.c                 | 34 +++++++++++---
- t/t1416-ref-transaction-hooks.sh | 80 ++++++++++++++++++++++++++++++++
- 3 files changed, 122 insertions(+), 13 deletions(-)
+Yep, you know I'd spotted that and wasn't expecting it to make a
+meaningful difference. It's an easy swap, but I thought that (like
+above, since we don't show the conflict results) the diff algorithm
+wouldn't matter too much.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b662216bf..2a59ac10f 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1471,28 +1471,36 @@ static int prune_refs(struct display_state *display_state,
- 	struct ref *ref, *stale_refs = get_stale_heads(rs, ref_map);
- 	struct strbuf err = STRBUF_INIT;
- 	struct string_list refnames = STRING_LIST_INIT_NODUP;
--
--	for (ref = stale_refs; ref; ref = ref->next)
--		string_list_append(&refnames, ref->name);
-+	struct oid_array old_oids = OID_ARRAY_INIT;
- 
- 	if (!dry_run) {
- 		if (transaction) {
- 			for (ref = stale_refs; ref; ref = ref->next) {
--				result = ref_transaction_delete(transaction, ref->name, NULL,
--								NULL, 0, "fetch: prune", &err);
-+				result = ref_transaction_delete(transaction, ref->name,
-+							&ref->new_oid, NULL, 0,
-+							"fetch: prune", &err);
- 				if (result)
- 					goto cleanup;
- 			}
- 		} else {
-+			for (ref = stale_refs; ref; ref = ref->next) {
-+				string_list_append(&refnames, ref->name);
-+				oid_array_append(&old_oids, &ref->new_oid);
-+			}
- 			result = refs_delete_refs(get_main_ref_store(the_repository),
- 						  "fetch: prune", &refnames,
--						  NULL, 0);
-+						  &old_oids, 0);
- 		}
-+		if (result)
-+			goto cleanup;
- 	}
- 
- 	if (verbosity >= 0) {
- 		int summary_width = transport_summary_width(stale_refs);
- 
-+		if (!refnames.nr)
-+			for (ref = stale_refs; ref; ref = ref->next)
-+				string_list_append(&refnames, ref->name);
- 		for (ref = stale_refs; ref; ref = ref->next) {
- 			display_ref_update(display_state, '-', _("[deleted]"), NULL,
- 					   _("(none)"), ref->name,
-@@ -1506,6 +1514,7 @@ static int prune_refs(struct display_state *display_state,
- 
- cleanup:
- 	string_list_clear(&refnames, 0);
-+	oid_array_clear(&old_oids);
- 	strbuf_release(&err);
- 	free_refs(stale_refs);
- 	return result;
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 13d3cc52d..a99d18832 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -17,6 +17,7 @@
- #include "refs.h"
- #include "refspec.h"
- #include "odb.h"
-+#include "oid-array.h"
- #include "strvec.h"
- #include "commit-reach.h"
- #include "progress.h"
-@@ -380,6 +381,11 @@ struct ref_states {
- 	int queried;
- };
- 
-+struct stale_ref {
-+	struct object_id oid;
-+	char name[FLEX_ARRAY];
-+};
-+
- #define REF_STATES_INIT { \
- 	.new_refs = STRING_LIST_INIT_DUP, \
- 	.skipped = STRING_LIST_INIT_DUP, \
-@@ -410,9 +416,13 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 	}
- 	stale_refs = get_stale_heads(&states->remote->fetch, fetch_map);
- 	for (ref = stale_refs; ref; ref = ref->next) {
-+		struct stale_ref *stale_ref;
- 		struct string_list_item *item =
- 			string_list_append(&states->stale, abbrev_branch(ref->name));
--		item->util = xstrdup(ref->name);
-+
-+		FLEX_ALLOC_STR(stale_ref, name, ref->name);
-+		oidcpy(&stale_ref->oid, &ref->new_oid);
-+		item->util = stale_ref;
- 	}
- 	free_refs(stale_refs);
- 	free_refs(fetch_map);
-@@ -1627,6 +1637,7 @@ static int prune_remote(const char *remote, int dry_run)
- 	int result = 0;
- 	struct ref_states states = REF_STATES_INIT;
- 	struct string_list refs_to_prune = STRING_LIST_INIT_NODUP;
-+	struct oid_array old_oids = OID_ARRAY_INIT;
- 	struct string_list_item *item;
- 
- 	get_remote_ref_states(remote, &states, GET_REF_STATES);
-@@ -1639,17 +1650,24 @@ static int prune_remote(const char *remote, int dry_run)
- 	printf_ln(_("Pruning %s"), remote);
- 	printf_ln(_("URL: %s"), states.remote->url.v[0]);
- 
--	for_each_string_list_item(item, &states.stale)
--		string_list_append(&refs_to_prune, item->util);
--	string_list_sort(&refs_to_prune);
-+	for_each_string_list_item(item, &states.stale) {
-+		struct stale_ref *stale_ref = item->util;
-+
-+		string_list_append(&refs_to_prune, stale_ref->name);
-+		oid_array_append(&old_oids, &stale_ref->oid);
-+	}
- 
--	if (!dry_run)
-+	if (!dry_run) {
- 		result |= refs_delete_refs(get_main_ref_store(the_repository),
- 					   "remote: prune", &refs_to_prune,
--					   NULL, 0);
-+					   &old_oids, 0);
-+		if (result)
-+			goto cleanup;
-+	}
- 
- 	for_each_string_list_item(item, &states.stale) {
--		const char *refname = item->util;
-+		struct stale_ref *stale_ref = item->util;
-+		const char *refname = stale_ref->name;
- 
- 		if (dry_run)
- 			printf_ln(_(" * [would prune] %s"),
-@@ -1662,7 +1680,9 @@ static int prune_remote(const char *remote, int dry_run)
- 	refs_warn_dangling_symrefs(get_main_ref_store(the_repository),
- 				   stdout, " ", dry_run, &refs_to_prune);
- 
-+cleanup:
- 	string_list_clear(&refs_to_prune, 0);
-+	oid_array_clear(&old_oids);
- 	free_remote_ref_states(&states);
- 	return result;
- }
-diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
-index 01b5ba8c4..8b52f2366 100755
---- a/t/t1416-ref-transaction-hooks.sh
-+++ b/t/t1416-ref-transaction-hooks.sh
-@@ -58,6 +58,86 @@ test_expect_success 'branch deletion rejects a concurrent update' '
- 	test_cmp_rev POST refs/heads/delete-race
- '
- 
-+test_expect_success 'hook gets old values when pruning remote refs' '
-+	test_when_finished "rm -rf empty.git prune" &&
-+	git init --bare empty.git &&
-+	git init prune &&
-+	(
-+		cd prune &&
-+		git remote add origin ../empty.git &&
-+		git commit --allow-empty -m one &&
-+		one=$(git rev-parse HEAD) &&
-+		git commit --allow-empty -m two &&
-+		two=$(git rev-parse HEAD) &&
-+		git update-ref refs/remotes/origin/remote-prune-z "$one" &&
-+		git update-ref refs/remotes/origin/remote-prune-a "$two"
-+	) &&
-+	test_hook -C prune reference-transaction <<-\EOF &&
-+		if test "$1" = committed
-+		then
-+			# Ignore backend-internal zero-to-zero records.
-+			while read -r old new ref
-+			do
-+				case "$old" in
-+				*[!0]*)
-+					echo "$old $new $ref"
-+					;;
-+				esac
-+			done >>actual
-+		fi
-+	EOF
-+	(
-+		cd prune &&
-+		one=$(git rev-parse HEAD^) &&
-+		two=$(git rev-parse HEAD) &&
-+		git remote prune origin &&
-+		git update-ref refs/remotes/origin/fetch-prune "$one" &&
-+		git fetch --prune origin &&
-+		git update-ref refs/remotes/origin/atomic-prune "$one" &&
-+		git fetch --atomic --prune origin &&
-+		cat >expect <<-EOF &&
-+			$two $ZERO_OID refs/remotes/origin/remote-prune-a
-+			$one $ZERO_OID refs/remotes/origin/remote-prune-z
-+			$one $ZERO_OID refs/remotes/origin/fetch-prune
-+			$one $ZERO_OID refs/remotes/origin/atomic-prune
-+		EOF
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'remote prune rejects a concurrent update' '
-+	test_when_finished "rm -rf race-empty.git race-prune" &&
-+	git init --bare race-empty.git &&
-+	git init race-prune &&
-+	(
-+		cd race-prune &&
-+		git commit --allow-empty -m one &&
-+		one=$(git rev-parse HEAD) &&
-+		git commit --allow-empty -m two &&
-+		two=$(git rev-parse HEAD) &&
-+		git remote add origin ../race-empty.git &&
-+		git update-ref refs/remotes/origin/race "$one" &&
-+		git update-ref refs/remotes/origin/other "$one"
-+	) &&
-+	test_hook -C race-prune reference-transaction <<-\EOF &&
-+		marker=$(git rev-parse --git-path prune-race-once)
-+		if test "$1" = preparing && test ! -e "$marker"
-+		then
-+			>"$marker"
-+			git update-ref refs/remotes/origin/race HEAD
-+		fi
-+		exit 0
-+	EOF
-+	(
-+		cd race-prune &&
-+		two=$(git rev-parse HEAD) &&
-+		test_must_fail git remote prune origin >out 2>err &&
-+		test_cmp_rev "$two" refs/remotes/origin/race &&
-+		test_must_fail git rev-parse --verify refs/remotes/origin/other &&
-+		test_grep ! "\[pruned\]" out
-+	)
-+'
-+
- test_expect_success 'hook allows updating ref if successful' '
- 	git reset --hard PRE &&
- 	test_hook reference-transaction <<-\EOF &&
--- 
-2.39.3 (Apple Git-146)
+Maybe it affects the actual merge-ability, though, in which case I
+agree using the same is important?
 
+> > +                     o.verbosity =3D 0;
+>
+> Looking at the code in merge-ort.c it appears the verbosity option was
+> used by the recursive strategy but isn't used anymore so I think we
+> could drop this.
+
+Intriguing. (Assuming the default "2") There's a "< 5" check in
+path_msg() that wouldn't be affected by dropping this, and a "> 2"
+check in checkout() that=E2=80=A6 also wouldn't be affected?
+
+But it might matter if something is setting the verbosity elsewhere
+(config, GIT_MERGE_VERBOSITY), and I think we really want this merge
+to be quiet? I seem to remember reading commits in this area quieting
+"git reset" and so on to keep the noise down.
+
+So I'm inclined to leave it for now, especially in case it later does get u=
+sed.
+
+> > +                     oidcpy(&index_tree, &result.tree->object.oid);
+> > +                     clear_merge_options(&o);
+>
+> Looking at replay.c:replay_revisions() I think this should be
+>
+> merge_finalize(&opts, &result);
+
+Hm, possibly. It does look like that does more with the "result,"
+which is probably needed. But it doesn't actually clear the merge
+options.
+
+On one hand, I thought it could be important not to reuse that struct
+between merges. But if we do use the "ui" init, it might be ok?
+replay_revisions() does use the same struct between calls to
+merge_incore_nonrecursive().
+
+Oh, but one other thing: we unconditionally reinit the merge options
+later on in do_apply_stash(). We could conditionally initialize there
+("if (has_index)"), I suppose?
+
+> > diff --git a/merge-ort.c b/merge-ort.c
+> > index c410a5d353..f69a49d48a 100644
+> > --- a/merge-ort.c
+> > +++ b/merge-ort.c
+> > @@ -5035,8 +5035,6 @@ static void merge_start(struct merge_options *opt=
+, struct merge_result *result)
+> >       trace2_region_enter("merge", "sanity checks", opt->repo);
+> >       assert(opt->repo);
+> >
+> > -     assert(opt->branch1 && opt->branch2);
+>
+> This, and the hunk below, make me nervous. Normally assertions like this
+> exist because the pointers are unconditionally dereferenced later on.
+> Looking at merge_3way() it asserts opt->ancestor is non-NULL and
+> dereferences all three labels. t3903 does not appear to have test
+> coverage for the index merge failing (if it did I think we'd see a
+> SIGSEV), we should probably add a test that checks the command fails
+> leaving the index and work tree untouched, and verifies the message on
+> stderr.
+>
+> Lets set some simple, fixed, ancestor and branch names in
+> do_apply_stash() above.
+
+Funny, I was getting aborts before removing the asserts because I
+hadn't set the labels, aha. Looks like we've come back around to
+keeping the labels. I'll probably keep a similar structure as the
+working tree merge uses, I think.
+
+A fail-to-merge test also seems like a good idea. Let me mull on that.
+
+Thanks for the review.
+
+--=20
+D. Ben Knoble
