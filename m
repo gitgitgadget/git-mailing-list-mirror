@@ -1,176 +1,117 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lr2-f12.google.com (mail-lr2-f12.google.com [74.125.230.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59134A2065
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 19:16:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790104576; cv=none; b=ji7FQOMjr6ovgHB4yMvFU19BebNge1ArrRQoktt2nxkNCCYpI/3vwpVZ3aYDREw3Vg/wdyo9x5Vpziv2yWUkkluzqNlnPYPGHoQwUEkkhBQWYsnISr32zqjEDmTSCfRU2gjNAWZ+GtLuytLIGFBvncPuuC0xv0Zp/B1akrYIBog=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790104576; c=relaxed/simple;
-	bh=14MMSfHVRlQUpGDr2FDY16LHM4IIT7OzmEn3yZPuljU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aF7nK7N1mc5FSQgMtKEBkM6xe5TKw0QK5TsofJegruawuOpj7u2sSHMQ11Mc7R8IFATVWrEEuZH07qH0PdwVwYDWVTg2Eie8oRDjDTsVpWZLOWFxkXeeGiafGo6MTDCSBX9Tb/fW6tp5ri9TczxqBNKtFVKL1nCIjpV/NAeKzHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sf/GHMG8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eRoER856; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456C44A2617
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 19:22:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.76
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790104931; cv=pass; b=EnpifSpKgc65/vYwYOmzJm7XUTRs0zN7YyNZIPYjgrItCg9Huha6h0tlTfgB61L+b4tjTtR/wKovLdWsihFvSHdJJnqwspeL31d2zivv6qHhOtnHb7nzdLVbxPFZ35uIWyN/uaR7KVa5YMQoCSzpT19ovsfRAiW6DFLx3vNswH0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790104931; c=relaxed/simple;
+	bh=zPStDCBAHhAfYWZMJoeANvvUBhDlsF2kkEfjzP5id9A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=owpNMTL9aCq8w27jVuK9U9UhGYKKXfSoaQbwlGHVY55vjRhE6RbgrXhpZ90xl7MK4bY/WUxycdXRYeK+zar7da5ZwJGgguCkkvYIsIGTTPbN3YdExvn4D9opXi/CHOqy7AdttfT6PURMG+W0gN1x73LPzmx+gbpf5yROrkXZRLo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=n1PopzNe; arc=pass smtp.client-ip=74.125.230.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sf/GHMG8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eRoER856"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id AA9F3EC0123;
-	Tue, 22 Sep 2026 15:16:13 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 22 Sep 2026 15:16:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790104573; x=1790190973; bh=750SnI1fyQ
-	umrL87nu3KpcqDkHzWJrxdwAAGj+AT5qs=; b=Sf/GHMG8TD2uY4bClI9a3UpaOj
-	i5XfUA4PQaNgzHnC77zD+qoQN2REYMDg27qyDdVHCaugNTr7/Izi/hUvtHHChnIS
-	U4YMPQLrTHg7z7r1kjs3+zGf3xMGR3P5orDC37cEwNJMxDYI7+sXe7qGuh6e2E80
-	I1ySKi1T6an1ncnO/zFIlTjPOvsNj+SmDDdzfdpkjuWxMweqea9RLS3sbVzZArnp
-	9KaLyW5Sc1ggspeE2TLQ1rZO6LaaGQ5/sL+OvzXQtRc6zmTDwJj9uxtK2Q5OIqVn
-	hU+mPit2+H1Sa7XfBDg/yLhLiGqdW1pMXW5HrLZZbYKnKmaMy/x7Dc8ETCHA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790104573; x=1790190973; bh=750SnI1fyQumrL87nu3KpcqDkHzWJrxdwAA
-	Gj+AT5qs=; b=eRoER856xZ/FeYa51vZwDJiXamRHqBGdFZv0Yrqvtiwu+1dEXzd
-	0sSQ6rB4GamfQjmbpy1PwZfsN+nS0XyVfm+sWvhaUvTA8MNBQ0LrVb8iEhU2Aplt
-	GrE7fLRtgjbh94LtQE6tVFhUWpSsUktbecVf95P0WbP3ZmW1zdNjq5KDHYKLayAY
-	qcreaPx1M+aY2uD+/XGj519QOeJ1miny6HX3iiKZ/TOgYIXo+eOxS6lLEB9CLim1
-	yoQ/053py2kRZvMn6ccqyyIlA8Z206vhAsXoQRxUOZTMQiy+M1L37EoyW+a30VPW
-	FcwS3XgeheCyx+rrQsEHV+RtlEOxBFde06Q==
-X-ME-Sender: <xms:_dOyalhbVS-BBILNDjfX_un16HyBfOwI9Z_TKPNHfiyTSPXzc4R_iA>
-    <xme:_dOyasnUPI_Sa-r6TBkBJ20fqLi1W5sPucV5HvuQjBNeOzfdTA8per5q0Q9LKbfuh
-    5R2aH3ZaZNlqX_CubgGiMm0WmLa7Y_Q32y5XYcxzHC3cccWqkbAS-Y>
-X-ME-Received: <xmr:_dOyaosEfaJRWLB9JfNAeN2AwK2A4eEuXbUjltFod1QRFEPzHIWTLNPkD9EhQuQcoccuTHtHnd5gOjWkAIBeEYHi5ztMWo0NTyZt>
-X-ME-Proxy-Cause: dmFkZTGpHx9Bp4QtTwapZYEY4SnmxqedtVjnVsH4j/Samg03Qdoms0ul4QOf81z4hZ9gjh
-    8+ZBRPnX0aJbnAnDTYK6/BSN+qrIcrmXJXCPo1kg8JNdCJkEb/Z2ooB099Yw6Hsv9EQid3
-    TkWtVxcv5OdnRRDqcFZxEu/Jpzf3dgpyG/SvpwoPuM9Gx5+qxv3H++lirLhJBEWMSsSLu3
-    CeSwRfOGOj19UnKg7iF7q2xk/O8lULyQmIcqY6QR0Cu5nsW/M0T+StlxzcbDxK0ZVxTVqY
-    4WPFo5q1Vz4/o6FxhG9c2ikoJo/8EQyiu2fzoMkIS6X8ccRJKmxsXc+y8bf+0r0RtXSpei
-    3KP6epQsorFTp7pByN7q/Wb2WQbmBrHcJnu0Ncnv6jcrZxDAt44FpFaxDSmkGJ9cntz2EE
-    X6U9ElAd1K6bkzOgZOs03MxheLjikK41K7bTi4MWTODO5BVN1/WR/y8QAXY0ezdwndGY1C
-    SNLd0JS3iyRPa2HPGuDA3OLkZI2x+17+a5pd+fH+KsbDv6EEeApKY1JwIjDJ/e4vZwgEOk
-    HjgHJG7/oi1NQ0adanA5OKUDu+zeCsq20n2qhnZiiuXzugNZ13nMSMkEE1/8XVR8DaKD2R
-    85Ufa8hFXBMvVvWsNMsoouWAXvysQxBL2qVS6tE9UeOn9HJUfs9x4p1R8a1w
-X-ME-Proxy: <xmx:_dOyaqaGAEmnUmnOwNUBoqjz5KQydmScxIUN0Dp7De8wcMURODlOwA>
-    <xmx:_dOyaoCouiQ2-l0Mn1h1o1B3YvPh5DxEsO_aYpGl8IlzKdRf2XydBA>
-    <xmx:_dOyaq90fr4RWu3AodbcVyOxbRJCnnXg7Jaq6XI7bqR9grGmmuFRsw>
-    <xmx:_dOyasTkB9WDJ46kvQxor9Of5aPZfPN6ynCGWJ19SRj2lzcV_hJh7w>
-    <xmx:_dOyalMV-Bm93I9Gdb1nJ5ZGzy0LUxrCb_GW4y6LBagWbCNTvG4yW_5O>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Sep 2026 15:16:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>,  Phil Hord <phil.hord@gmail.com>,  Elijah Newren
- <newren@gmail.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>,  "D . Ben
- Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v3 3/3] fetch, remote: retain old OIDs when pruning refs
-In-Reply-To: <3f3062252ac1aa057b9ee9a2dd9892e629ba7a82.1790079917.git.maciej.ciemborowicz@gmail.com>
-	(Maciej Ciemborowicz's message of "Tue, 22 Sep 2026 14:26:09 +0200")
-References: <cover.1789901584.git.maciej.ciemborowicz@gmail.com>
-	<cover.1790079917.git.maciej.ciemborowicz@gmail.com>
-	<3f3062252ac1aa057b9ee9a2dd9892e629ba7a82.1790079917.git.maciej.ciemborowicz@gmail.com>
-Date: Tue, 22 Sep 2026 12:16:11 -0700
-Message-ID: <xmqqeceldrlw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n1PopzNe"
+Received: by mail-lr2-f12.google.com with SMTP id 38308e7fff4ca-3a2ff00b8d8so1453581fa.1
+        for <git@vger.kernel.org>; Tue, 22 Sep 2026 12:22:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790104928; cv=none;
+        d=google.com; s=arc-20260327;
+        b=nqdEn/hlGJBKtJ4f57Ze2u7P91G5dTKnIJsr3QjsN96FNxD83B943JzcBpa41SBi0E
+         SSGzzblw5IVCEFfogOnI7pSwWePnRZqQ1EjAiCoC2ps4S43oEyvYxWfQZbex4A0wvqNy
+         k27PLm80HZl24vubgJBmL/tLx9/jICCu7OjeohmfU/QHz4ULvI4zebpDvLvlPRMb4xng
+         AxtrTrqt9iqv2atibNKOm4A+6s8mrZLNGpOL8QkfCJVTr5RMZe6GANQl4RhM7jEvBqMo
+         5Lqvp17cJ6Be9cTbsOKcv8yPo8QVPQtD7LOt4ZQZtqg6Wt2fkYHpztB3M5sZvs+6ULsW
+         ZGNA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Y8+kDE1tTLlNm0ssPrVkRH3dWT8AnUjHekUOcP2INdQ=;
+        fh=jP6GnpT96CS5LDUFNHoKuqDubThNTnMLb4lp7T4VQJM=;
+        b=jQm4UN/KjAaiwsN4F+l+Q9oSEBhVFi6h6yJDbPM74Ps7+PclMKNXnsSvAe2wwXTrMX
+         ENg1ri6MicfyzGwfYrZSPvNEnK87hpnFDLzz7QIBFO3XEQ3yZBT8Qnf5FKEPa0p3EyXi
+         dD1dMZTRdB/w3aRDwLRCHAs5bpzf9E+M/LK/Pe13pylD7gl0DEacntFKJj/JBeMzq5At
+         bObeQvrxM2y2A5oRDgLnwu/a8ReEzt6dm/MlL4tnczsIRl0om8UEya5sqITEhMrq/1n6
+         ctDPptJfOq6m3JZL8ANgfdEDZzKWCaQ02ISbac2NaRSeeW4SVW+LQL816BSmhAID6VBh
+         UIpQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790104928; x=1790709728; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Y8+kDE1tTLlNm0ssPrVkRH3dWT8AnUjHekUOcP2INdQ=;
+        b=n1PopzNe43lQN2PPOvOGngXP5yWfpeBOybWAWvNOQD1aenN+x0RhhysXAsTOox8lXF
+         K9bhysZ+jJ0MSq2eRUeA6Fbc2JgVt5sUPZmZW2nWihragfFnRpkBSyiI6iSOCsCWzZRC
+         dInnQYUSrAy1XiIgZNhSZ6OtZ2voDnaQ0lGEX3qz855ErbAgqlgGP2lCVDf6U9pxjwhj
+         +neKV1g4U1+5j1CT6RkOCliasQT8/Og30e++6+pX3G+j8g/itOFOU67AGMDL1wLSVa1I
+         JuOnZE5ruBzkgrfeL3aYZ8PP0cZ2dlFGd9btf/Wh75S81Lex6AwY9cVdkrI6dfNn8Kc1
+         Bvig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790104928; x=1790709728;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Y8+kDE1tTLlNm0ssPrVkRH3dWT8AnUjHekUOcP2INdQ=;
+        b=1myYpohYu9qtFpos5A9v3NjAlWf8mdAu+jV+asi55O/Bii8BV56893L/mqieX3SOSG
+         O5MrGUfja3QcxwF3V9x3q4Q8gRH8yCSkIL8vWcANku64pl1ODjWYIfx22mInq48XWTme
+         6+cQD9VtmF/CWTilUF1V3CAv1I8Ue333KwbK7RuU+mFkhBsBQ8SOPPEIxNefyewe9tOY
+         o4PWnqD7ZDa6TurJ4dTxqGyFR9TV5sFmHJHSs6IRHyNIB2sJDNM0ZL7lA7+hICSrYFas
+         jgoztMnr0rZdvdMxycVxn8K2/Z1MFQJBo7ZEbv2btwgTyztjD9vwHLDLke1l7Vi1/wH5
+         9HPA==
+X-Gm-Message-State: AFuF++kts0f5s1ZTGE0iW2S5fywjTQ7oxADu8Zc7DwHvNbLf3ReNK5Lw
+	BGOctWWBroKXj32VJTWpfRsHwDdJixMqoe0cZmsC3AQfoY7CzC9qJZjvcbMOBJ2Zk1Itop4fMqa
+	yHLbeF2WRJBQMavJYSodyosZL9+pQsvo=
+X-Gm-Gg: AYBFou0m5Vb2uxNm0HFF6pZ5S7TeVxwq1JFMe/i86bqhrNNhIFjRSAxi5PdssBOtHAA
+	c0plcpkW1Xcysvd8XAgQwKWdjRvEe7aGpBcGrpfaHuxZ+972qykVwHGfIwUABAudFZwxrMyqEom
+	QAgGaf/nUP2S0G0Y+xhvhgV25qbPVGEaQyT15oo8HwbfrsEZyOpp/O7Rdj7c8Z9+8Fk3LU9Xlfa
+	/ozKwkzbQJ9oo4w+KrlIYajl6lzBnPstuZGmwtKSdAH4vC83eIVMSE4II+To/qDgOYR7iGOV5NO
+	gOpuqbGouzW/SpZAoPDPxK/Cgbuu13zREysZdxxo4tNOrvbqygxovQm5G1C5uufirfjYlc5gBUE
+	fJi2Cp76n7ajNJl8F/5bca9KibBAYhL1DubTTk/8L9uKZXMRoXG+4w6hA5V/nDHW0jYoL9uw=
+X-Received: by 2002:a05:651c:222c:b0:3a1:4b92:76b0 with SMTP id
+ 38308e7fff4ca-3a630615fc3mr516441fa.5.1790104927858; Tue, 22 Sep 2026
+ 12:22:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1789901584.git.maciej.ciemborowicz@gmail.com>
+ <cover.1790079917.git.maciej.ciemborowicz@gmail.com> <3315d5f47ad7d8bcdbeda90b161606507c7040ea.1790079917.git.maciej.ciemborowicz@gmail.com>
+ <xmqqjyoddsjy.fsf@gitster.g>
+In-Reply-To: <xmqqjyoddsjy.fsf@gitster.g>
+From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+Date: Tue, 22 Sep 2026 21:21:56 +0200
+X-Gm-Features: AcwNN1VmTygyIRgAkTPLIhTBUUzEV6OLP_yfI-KGZ_XhfN2mxk1t6PBXk8WF6ik
+Message-ID: <CACQ=SRGf=cKQooiSQD+ZsG8tCAdHkCrxoW5vyPSnT=UMjSajmw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] refs: allow callers to supply old OIDs for batch deletion
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Phil Hord <phil.hord@gmail.com>, Elijah Newren <newren@gmail.com>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	"D . Ben Knoble" <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com> writes:
+On Tue, Sep 22, 2026 at 8:55=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 
->  	if (!dry_run) {
->  		if (transaction) {
->  			for (ref = stale_refs; ref; ref = ref->next) {
-> -				result = ref_transaction_delete(transaction, ref->name, NULL,
-> -								NULL, 0, "fetch: prune", &err);
-> +				result = ref_transaction_delete(transaction, ref->name,
-> +							&ref->new_oid, NULL, 0,
-> +							"fetch: prune", &err);
->  				if (result)
->  					goto cleanup;
->  			}
->  		} else {
-> +			for (ref = stale_refs; ref; ref = ref->next) {
-> +				string_list_append(&refnames, ref->name);
-> +				oid_array_append(&old_oids, &ref->new_oid);
-> +			}
->  			result = refs_delete_refs(get_main_ref_store(the_repository),
->  						  "fetch: prune", &refnames,
-> -						  NULL, 0);
-> +						  &old_oids, 0);
->  		}
-> +		if (result)
-> +			goto cleanup;
->  	}
+> I think there was a comment by another reviewer on the previous
+> round around this area, which was never answered.  In general, it is
+> a polite thing to respond to review messages and see that your
+> response is acknowledged before you send an updated patch.
 
-Hmph, I may not be reading the code correctly, but the last "goto
-cleanup" in the above block can happen when refs_delete_refs() call
-that internally uses the best effort transaction sees an error.  If
-we were about to prune 30 refs but failed to prune one of them, and
-if we are running with non-negative verbosity, don't we still want
-to make the "[deleted]" report for the 29 of them and possibly
-report "[failed to delete]" for the one that failed?
+I'm very sorry, I didn't check my email before submitting the patch.
+I'll take a look at this. By the way, I expected the review process to
+be tough, but I'm starting to wonder if I'll ever get through it :).
+You mentioned earlier that you could prepare a patch. Is that offer
+still on the table?
 
->  
->  	if (verbosity >= 0) {
->  		int summary_width = transport_summary_width(stale_refs);
->  
-> +		if (!refnames.nr)
-> +			for (ref = stale_refs; ref; ref = ref->next)
-> +				string_list_append(&refnames, ref->name);
->  		for (ref = stale_refs; ref; ref = ref->next) {
->  			display_ref_update(display_state, '-', _("[deleted]"), NULL,
->  					   _("(none)"), ref->name,
-
-> @@ -1639,17 +1650,24 @@ static int prune_remote(const char *remote, int dry_run)
->  	printf_ln(_("Pruning %s"), remote);
->  	printf_ln(_("URL: %s"), states.remote->url.v[0]);
->  
-> -	for_each_string_list_item(item, &states.stale)
-> -		string_list_append(&refs_to_prune, item->util);
-> -	string_list_sort(&refs_to_prune);
-> +	for_each_string_list_item(item, &states.stale) {
-> +		struct stale_ref *stale_ref = item->util;
-> +
-> +		string_list_append(&refs_to_prune, stale_ref->name);
-> +		oid_array_append(&old_oids, &stale_ref->oid);
-> +	}
->  
-> -	if (!dry_run)
-> +	if (!dry_run) {
->  		result |= refs_delete_refs(get_main_ref_store(the_repository),
->  					   "remote: prune", &refs_to_prune,
-> -					   NULL, 0);
-> +					   &old_oids, 0);
-> +		if (result)
-> +			goto cleanup;
-> +	}
-
-Ditto.  Beyond the post context of this hunk ... 
-
->  	for_each_string_list_item(item, &states.stale) {
-> -		const char *refname = item->util;
-> +		struct stale_ref *stale_ref = item->util;
-> +		const char *refname = stale_ref->name;
->  
->  		if (dry_run)
->  			printf_ln(_(" * [would prune] %s"),
-
-... around here is a code that reports "* [pruned]" for the ones
-that we successfully removed, which is now ignored when even one of
-the bulk removal fails.
-
+Cheers,
+Maciej Ciemborowicz
