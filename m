@@ -1,67 +1,67 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47C7486439
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 14:53:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04763388E6F
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 14:57:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790088826; cv=none; b=ltMG0NF29xmLaCdjIv9aoogIHo5bsj9chiEOTqcZFiTyztxGIaA2sBHi5w8EWUfLnTooHaHCLpgwR/sGvGpQHY83vKF6LLeMl3+r/7JlyVk1NypHKXdNrNCwgD/VndPPUHZhAqypneOxA/Sy9liXepw+a69bInDKWOf1b1Csp4E=
+	t=1790089031; cv=none; b=YDJmJV3TO0MKEoK26VVcKxxAsDaMQge8K6EnTM65bKrQI8YkTRpQp2aNtsIF4h9sI+Nf74dOMWY0bdtkrWsj9OcVsMEQu87UPdkI3cCFMLARu5fFLDuz+qhTUpfdMbTsWOLxjzMynlIMpvRmQJwezWqyggUlHIhPQHwDon+Z58o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790088826; c=relaxed/simple;
-	bh=4H2UeenZKtzFqyPmmVUs4zl0/btKU/Sq6g4jU4uy1+s=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=JYOhzLjmfl1Hvw3daEi+VH6b5ht/YY2bXMcJ/VRICrt+NUJ+GlNLUJaPO01sS9TFNPjdUzWex8fSwHM6k8MRoy6ITMyMgYv17Uu7AyYDZ9As75TV77PQicEBS5pvRLH+YiGE6WmDN05z4/ZeD5RKiZ2dK2uMv6X8FhQ3ymRgisY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PxW8V924; arc=none smtp.client-ip=209.85.208.51
+	s=arc-20240116; t=1790089031; c=relaxed/simple;
+	bh=d1OEVshEMgm0I6nu070OZNYn9rZ2n09Wa3YlD6PRvuE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=X1kFBsi+d2Wbrd4pmnrN2oFHuMlPMkKVnvsMIoUxxVd3yXuXGpKkOsPf47ECUX9/eKOJD8gC/7cehEZMgYTMXn2540Yzx0l0SMs/D1G2ssNwkw2MdPmbYlLGb6b0oBaHc/oc649D2ZFkHDV/mv3III9NTdl40AGS9A0wkikaocM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AfwjlilE; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PxW8V924"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6a5e971c970so1250754a12.0
-        for <git@vger.kernel.org>; Tue, 22 Sep 2026 07:53:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AfwjlilE"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-4843e397f74so582383f8f.1
+        for <git@vger.kernel.org>; Tue, 22 Sep 2026 07:57:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790088823; x=1790693623; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=/RTfAVvBfqHbywHpPCwhK/vjcWkC77jHZVFYQO8evg8=;
-        b=PxW8V924AO237lrIYZadwUDLO5Po5G+22ZTuj09jHirVzWGUMNlhicyASvMeYHck/h
-         +VgihJS5dgHanEzo4jXzaIlRDl0HbwWj+6LaiTliitBPAqeHwB7iUAOpESE9RwEx2HQN
-         X1BA9H4kmKLO3iXELK28nxdk5/6kxfvbq3EYMwqIaQihuJKYshSYTtCjAi5iTCCT9LxM
-         ugqsnlThoPZtfvmZMrfCLeMr2PBZueGjCOVwsbnrvnE1ei1fQ5pHaAXZ29qJhTfJUwkl
-         Sm4Tz1GWQXn5RWStoB5AV+d8sfG1FWuRrutB0i0kUjrpm80xNnug3I8CUvj9oHE/CN7D
-         BlIQ==
+        d=gmail.com; s=20251104; t=1790089028; x=1790693828; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=VR9ZDTo7tvht+oHm9WbWV9f6xocdwnci19x20ddBwtk=;
+        b=AfwjlilEkbhN4I6J5YvKhNVci/QWM7rFdCTJt5OCFZRxosSEuj0DDBDyjFxhU+pdpJ
+         R4G+UmLWP/EqAIptoxfMMcuHp+AojcPA/f/SNFcnY9oBpZzEOhwrsVbMcVwpdFmz45Iq
+         VJ81ghh8H1O4/a9MwTyHWDa22LLUNWwFyyEcsiAQbNEJ0W/IgBfcnoxi+MYzH1qh2T6f
+         QClGtFfpjku/Cemsfgiiza1c5D32pDDEB+S0VR+Iw0Ci+9X9nNyLHZjj4Bb23HcEK5lo
+         F8I7L6gm3JvIxm4in7Id3/SzWqFc3QUCBrFaZ5KHVR3WStQwlFvAQaENTdi0o3wF9gPR
+         eaYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790088823; x=1790693623;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=/RTfAVvBfqHbywHpPCwhK/vjcWkC77jHZVFYQO8evg8=;
-        b=DN6sH3wz6/X4zgP78LTQVLnfdnPczgX2+p+ysX6dxBXl7NDyXE7bM2kwaMs7yZOBii
-         ntQHUYClUeNGkYny8DYOx6v4oBywUifEnBeQP2T+F3GYgaFzIPyoZ8U8gNklTjt5+4/K
-         QOrkcRPcI4W9AnrlSPcHJoPvO5K3i+1YAavN25fK4Ai0cQl0uVv1gpanjKQc5ckEA9Fm
-         AgTjVPia3nzK3a6Bk3NokbPRYqZPuWEDYHQGbC/YkfKuKSwKvPrZQgMYPlALW1pTxE19
-         y93t8VMhLmucREg/RbyzYQ/Srxa5mGO2qBhaMHS6t8qgU+vQojvVJ8jfdmYALtmBnjKA
-         fqyA==
-X-Forwarded-Encrypted: i=1; AKwUvBwSYlJ7A8F8tH2JOOWvETH/EEXOOIoN1b3PxqZafVQvRK9h27ivrqgKX9qPoODbySsp/JA=@vger.kernel.org
-X-Gm-Message-State: AFuF++kXxowOt5RsIDCROMPzizicE7sZUcHJch7wjAJsF5C4ODvSJO+X
-	eEPhBTRDluztJvT3qDj61iyNJPRZprp3POkgmPPhZ5aWEwDc/GJ1BOYj
-X-Gm-Gg: AYBFou0XR9JBo1KFYoevkPZ2LvqbN5f3AwkU2nc+qlwmYAxLK1tiSf+7GR0e+RXRzgo
-	rVq4i95hZmFcwM26k8FIucTZ8RQsss+JUWdQ08p8q6z0VafKKaoqpaU5i2FYcciPQGIVd28dGla
-	yBS6UgjeElqRx2pdILkeG+MTRu74Utau9m0d0gIumELtHIQVHRDRBn4ZxI2+97pqr/UdePEVZP+
-	Qr5VB2sV7qHod5FNM1/TpM47Huw6PKtMfbO/iuy0kSCLQa1UIJGbF29CBCc79zerMSR0Ys+7hPy
-	mHmsSMqzrxfMo47AUHS1s/MHE/pZiSiaOVs4fPxDET8CVfkY0g5JG8s8NYYR25bvaXoLDBKF0YX
-	VYOWJXfnRELE1nAahVnea+tnhbMIp3XGa9I+6wH3ebbZYaf4nX8Ta5N87+ynY+MnweyBfiySgpe
-	Neaj9Km7RATgUnEDa3u9IXO2r/+91fZU2ryZeBwz1Fu5Lx2S14TaSqKoqUVcOrNgEl/wswge6fl
-	e2TjWF5IH1e6sJr8sICxfKChWqD/j+qdMXkNCVWty1lOwBSpYqyPg==
-X-Received: by 2002:a05:6402:332:b0:6a9:a0ca:ea5c with SMTP id 4fb4d7f45d1cf-6aa9feb3b0amr2077295a12.5.1790088822476;
-        Tue, 22 Sep 2026 07:53:42 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1790089028; x=1790693828;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=VR9ZDTo7tvht+oHm9WbWV9f6xocdwnci19x20ddBwtk=;
+        b=PC+zyXy/YnLl1+S+SgWKa52i8bCAXubOec+Uo8Gu37ChecfIv2oC8OgpxSFwP5n3AV
+         ap8cwEsUzzLtocibYCZl3D3s7AjFqAJKdmJSM9OY3oZq09agePzjVaogzJXpR9Fmt6CM
+         DSiKqfVz4jMm6l/Jbt8MHeGOgE/cnGC2kD5FKZQR+j4msCSTmBHTWlNllCXwBkM2yDN+
+         5JqaK+wIYnqOnaeNDW2aozFi+f001norQo0RcVJ1gAcoEyLBNgVsUSmBTHuhKaz31bNi
+         Et1XCUrq1ZLi5boBsyo6uVJcP9OTeTAcXy6nBVnXuEEG2sz1po/Mrm985Fn9I4bRkSZ9
+         ANnw==
+X-Gm-Message-State: AFuF++mJN+/Uu0v8mg4KSGFcNBuuxAu+CTnuV60EDLstxIJPV1vFt9m7
+	Vd9JBA+tqrduXwnH7B0lxHLveD6WM1ooME9jUnoCHsZbFD05cAAugRuD5ElPlKPV
+X-Gm-Gg: AYBFou3Gr2K5XCnMzRgFn0/PutCPdJ1tI94y/RTByedDwPc++QnHp1Lgj5RYOypuGm+
+	TWLQ43m5jRi74CIvM31Fb44kOmBOHyaL18T7EWstCcwrojAyxuIJHZenWEWFOrpU5G1Xk4UAYLa
+	PGBUYPvMe470wmqHokpXZIHJvRL8vFm0jFbozDexi63dI2/ImtDwiAwwXY+otw/rgKAmv63OIci
+	3VPqyil2pYbJQlSbATMMzFUr0QQuRK3h3fQCgRbibiJazHSsRJEQvewLsjWo3hpvl7C3173lSNl
+	eovikzvN55D3zMXcT0cscCM8TQEzpKYBbaYfHOVbjS0dHv6QNDY3b8UMNx3ehg4tQ77rHmAnV56
+	M+QNSYIhhXZVp/Dko7ZrTZ7LfeVIn1i+mF7xCX1HLU+e40Wz/EE+gK2wGQCTyyjnHRVTb9+q44K
+	dNK/5mQ4ZVevYHgpnbhAewHEG44bek6ae4gUWP9O87lVHbKKD9IhRFxGk472HDwKlUugdex98gl
+	Z1ub+58xAgToom8Ka5umDnaPLqPwuzVYb2NlODA537ShI3jZNOuMQ==
+X-Received: by 2002:a05:6000:461e:b0:487:3c8:9675 with SMTP id ffacd0b85a97d-48860f8a898mr4826368f8f.8.1790089027652;
+        Tue, 22 Sep 2026 07:57:07 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6aaa44f9a77sm1255824a12.17.2026.09.22.07.53.41
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-488627314d2sm5770094f8f.2.2026.09.22.07.57.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Sep 2026 07:53:41 -0700 (PDT)
-Message-ID: <15c85d2d-4fb0-427d-b52e-8e4dd958dcb9@gmail.com>
-Date: Tue, 22 Sep 2026 15:53:36 +0100
+        Tue, 22 Sep 2026 07:57:06 -0700 (PDT)
+Message-ID: <ddfd5232-b832-476c-8614-268f8e4bbe28@gmail.com>
+Date: Tue, 22 Sep 2026 15:57:01 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,45 +69,55 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] fetch: add config to avoid fetching every branch in
- shallow repo
-To: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
- <7f084e4d-f738-4bd4-9b4d-cad995f04be8@gmail.com>
- <CAHwyqnWbbCK40qAU1vhCFmN86J-dCY3tv_N_nBYgK2Bxf3o1fg@mail.gmail.com>
- <CAHwyqnUVkVUjKCiN7YT3tkvHEVCQwb3jDGM0OTojPxptFKrsLQ@mail.gmail.com>
+Subject: Re: [PATCH v8] var: support broken-down idents, signing key, multiple
+ args, and -z
+To: Andrew Pleeter <andrewpleeter@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Ben Knoble <ben.knoble@gmail.com>,
+ Jeff King <peff@peff.net>, "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <xmqq33va1lcg.fsf@gitster.g>
+ <20260915220228.42819-1-andrewpleeter@gmail.com>
 Content-Language: en-US
-In-Reply-To: <CAHwyqnUVkVUjKCiN7YT3tkvHEVCQwb3jDGM0OTojPxptFKrsLQ@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20260915220228.42819-1-andrewpleeter@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 22/09/2026 14:00, Harald Nordgren wrote:
->>> If it is the former then we should think
->>> how we can improve the behavior of "git remote add" in a sparse
->>> repository to prevent it adding a wildcard fetch refspec and instead
->>> setup the new remote to fetch only the branch(es) we're interested in.
->>
->> I didn't even consider that, that sounds like an interesting idea!
+On 15/09/2026 23:02, Andrew Pleeter wrote:
+> Hi Junio,
 > 
-> Would you suggest we do that instead of this, or in addition to this
-> fix?
+> Thank you for the guidance, and I sincerely apologize for the lack of
+> communication. I had posted replies on the GitHub pull request and did
+> not realize until now that GitGitGadget does not mirror PR comments back
+> to the mailing list.
 
-I'd say instead - if we can fix "git remote add" then the problem 
-shouldn't arise in the first place which is better than having an opt-in 
-config option that most users are probably unaware of.
+Ah, that explains the silence! I had a quick look at the PR comments but 
+did not notice any response to my question about the use of GIT_SIGNING_KEY.
+> I certainly did not intend to be silent or ignore
+> your reviews.
+> 
+> I completely agree with your feedback. Packing all of these features into
+> a single commit makes the patch difficult to review and overcomplicates
+> the history.
+> 
+> I will restructure the series for v9 into three separate patches as you
+> suggested:
+> 
+> 1. Add the -z output mode to git var (-l and single-variable).
+> 2. Teach git var to accept multiple variables (argc >= 2) with var=value
+>     output.
+> 3. Expose the broken-out identity components and GIT_SIGNING_KEY.
+
+That sounds like a good direction
 
 Thanks
 
 Phillip
 
-> Seems maybe we only need the fix on "git remote add".
 > 
+> I will send v9 shortly. Thank you again for your patience and direction.
 > 
-> 
-> 
-> Harald
+> Best regards,
+> Andrew
 
