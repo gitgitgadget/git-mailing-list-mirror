@@ -1,83 +1,81 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F76A5632A3
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 17:11:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13B157269D
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 17:27:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790097067; cv=none; b=BebRPJQ0uslJ5bEcv/haKfKuLcm36MB1VvlRX5RhsHY7Sq7ZDEXPNp/TqGabMcBAMUQ+w0OfTckQNwmb8z0pgA7sFePnrYjeqr5ntGrjMEn7/7yI0hhe93dgk1mosXK3WCNbs7SROdNoycBYiLOcEbvLhtkZ4fNjV58Ave2EFvA=
+	t=1790098062; cv=none; b=EkWvkQC4FSIsrby1e8ppeUIGPwz0l/BxkpfdJShXtpqEAXpSJScLf3Nhj1UUIEhIiSLdPiko1ZnAf6xr/DF40S78ZwsAqnrI1FkVZ06e+JAN1GJU6aNrzst5XxAJiQ6URVeEmnPgFWyg+1johbBA1dDOPeWB7SgrldTHPWKIKBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790097067; c=relaxed/simple;
-	bh=1BfVA4x861vxQOI8Te3TOy+bpfrZaUTB5iK2uP1FO84=;
+	s=arc-20240116; t=1790098062; c=relaxed/simple;
+	bh=wmwmg53XUVecS7vvM7F27MVISU8wC2OqeuI6urNt8cM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jctBF+0OlUEw3ST94bvXqgm82mF9BOlZo3sG9x7GI1SIyFmQdVmI2tLnaWPwySFbB54L82VUHDVvDRfAYLaDPnq8r8ij2WdCexTuorhHiFk5pWpMm0h3xuA+7aucazJDS0CRHOH3mn6hgQhodu2kcon/dJGqWFX66Ix/v49D2/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GoyojoeZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O+1x1G8z; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=DYRnwMOlZBD4iWuMx2K5yndqfnsdFYj2xMPeuCdfd0hjQPZi2D0/n2zSXyAo7v7NaPccsTZIWLs8Grto7dQLW6ScfR1y+5jm7CezCEpHBuy1OlpXN+gJduMAn8rUzUlmE6Fh9cKJUcCqFr+w8MP0c8DwGGaDYoLZMPWSASUUzrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OwoS1tm/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pZtYvE68; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GoyojoeZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O+1x1G8z"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id C522DEC0173;
-	Tue, 22 Sep 2026 13:11:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OwoS1tm/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pZtYvE68"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EBB6A140014E;
+	Tue, 22 Sep 2026 13:27:39 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 22 Sep 2026 13:11:04 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 22 Sep 2026 13:27:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790097064; x=1790183464; bh=gDOn1/z0Qv
-	ulULGXAbc3McTao1IyGvqIPv6u5MR3Y0U=; b=GoyojoeZYh+4QIUZLNqwPXz3HM
-	xhBH4OqcbasIXDZZp2CwwMKdAsUSNL2zBoRoJfZ8oPLM7hZe++j3nv6dsnQ4thGT
-	yp5VcwuFKXFzQN1EnfqcW1U+5/Dc8TossVb5gv3j2GSWKLfmeqU+nwJpvRZLG71m
-	+fnqWM64AvT6bv+5AibcJoHjKMXhGTK4YVh9DLbn78iSS5q15F88iF+yuajTcYgH
-	5vDJNrQhnG3YrsqG4kpbDos1IrJVJ+VSY7fcseOXemgQTWWOrBDKoX8p5fJpccui
-	YXt1GQnD0KUhf8x90jz+L1Re0AoVS2DXrbsHg8QWQBpVN1Bfp8OmA5Gt/O7Q==
+	:subject:to:to; s=fm3; t=1790098059; x=1790184459; bh=kREVdz50I1
+	EjawnCmQIaiLpZk1KapyQspG/wEFpqE9A=; b=OwoS1tm/8d7mHHrUpFIyhXuXt9
+	ChpY59qYrcfH67gdT+JbCDQ0fV4umz/vlQ8wr/G9/H8jcGdRuoAr/HzEu45phDDY
+	MtTQJJLSrAxgCnr1yvbrZaVvJwRjUyBjmPXSWXbBtiOFJANM0EP8oY5EhDJlZvBv
+	HXxp0bMG1v0FcAoYGwikQT8mez4fe1zqBac+VYxItRc9Cnwt6g7wt2TferM1ZYLE
+	+jvdcTe/puHfEWwuWKQnm48Qx7aQjK1HH3h5QmI8OdafKjI3ZG6lei0NQ9Aozn5B
+	BfTszGNOnMzyntWRJoapBm7LNpCPMnwwxD8fGyrhROvslsOwrOL0FaZk1IEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790097064; x=1790183464; bh=gDOn1/z0QvulULGXAbc3McTao1IyGvqIPv6
-	u5MR3Y0U=; b=O+1x1G8zzeLMXcOZ13R+B4d14IKl41obXph5Y2xVtBZRNY3iNaq
-	7ftVsGe6eUJJeV3mkHxjpJqJU2rC2Nul7y5rmvu+Ml/+mOplDEyzHIl9MOpxutDL
-	/t3RaCyy0ybUG9/cGxbYxQ/PvaaaTEyYYJmrPIWQmeASprt2cV3KoZZDNDhRklT0
-	Duw0mP4iJt6T6iLuaHL4AuGS5m6qS0OSF3rwsg+bcs/BCrDumJKtA5GmbFev6lIP
-	lDgWjIvPUIs82HMXC/AAAUOPx/Ah7tPQ2776NSp4x0mQWdGno31DhOJlpFWPUQVn
-	d3fLH762+vOv0IL7G5WkeGcvBnYtWGI9Tug==
-X-ME-Sender: <xms:qLayaonpGZeItB3cVkPwOrBvccm4FDWny-B5ctJ9dzuIB9RQplB0cA>
-    <xme:qLayautrUtHz33_6x_HkZKEhSSxhBmsBSvFE5oM3PdEM6rgIc0ejCuvCLmGOUyvpE
-    ztHXKefek3sssPxywh_WR4Z4kUC7t4v3uX9VvJm0TGdg0jkLBtItIw3>
-X-ME-Received: <xmr:qLayau-nwxZIUtEks6Vrvrbyj9Xhb9Xpv36BL13jWCFUpUjh5GXLsD65V2-4svpAbkh4Zq3tgwjAJTTwiF3wQ9x5KJaGAcvHOy7C>
-X-ME-Proxy-Cause: dmFkZTEZfwtAqIWh9ooSR/7mLlwfbTLrTitSG+WdCfsfUNhvuL4pIxc6cH5v/t404zOHRr
-    jTlgH7LJt3gbYsP0ChZyNzcHTwsBoUd8vZlTPW4J3otwCt2M2nNF1aU6bkdaVYUzQceQe5
-    UmdBSa5VFsFT67sOMeJtISo5eHa7Amrp5IMwsw9+2EEzvxZarpeCCSXFIBMkmauC0q/lrf
-    CKjuhqP67x5sadJPxE88iqANjXIQPcRZPWfqpWdQkv37fYtrlemTzXQuOc/yKbRuJY2N2G
-    0EdSSzxOjsZWxlaA2hrMkZeu6s8Cfy3zY1/p05EFvRjUHfp21FdpSBmNZqqVy7Gxr7BoWD
-    HzROXdWD6+k+pzeTOCMU6008bFMUCnJ+3aBQJT8WpOhcEAqLBHC8mlXK8zE/oAw4hIX3cp
-    vcGuvWoveucBqeVqlELYPel/kcPi3/Lno8FW9fO8LvRuVYrZKa8ok0GIEQm5YIIvfgt9p1
-    OqI0gKtG0RnQyqDL1UiA6PSKdKYvcKXLUA+E2fefIlduqm79FT9BTeERLNyoXkbLunbWCW
-    fbGTg+JoQyLLwV+eYgwdhs6NYGogiWSyeFK06+B+K0huFIJ9vObhNf1N3o0WlCI7gLO1h7
-    2iAQu91p/OJJJWKK6DyCYnucecXm7HQ0MnaUr1iWB6IcRdMeFW65jMoAf1oA
-X-ME-Proxy: <xmx:qLayagNlJBK17bGisLt5ND_YxiGh1yDwi7yAn0mX73iHEQ6hYEVR0Q>
-    <xmx:qLayakFxGVqsEp_9psZ30da-ScPs5F0-DoAkvWtUZ9snI0_l1F11Tg>
-    <xmx:qLayamT4fQIgJa5cZRsS5l5zz-qx9g_d-ZBpc_xMOeICYLD9g1WnrQ>
-    <xmx:qLayapviNUc7KWK-vIMseKgoaRaBxGhHHGHU3CGBakW2KFYjgVy5mQ>
-    <xmx:qLayavcI75NeaJOoF5OH3rukjm9M5dogH8G-tLBgMgq4w-QElVYDMVeV>
+	1790098059; x=1790184459; bh=kREVdz50I1EjawnCmQIaiLpZk1KapyQspG/
+	wEFpqE9A=; b=pZtYvE68vGXB4c++uTgBaMMrbg9up71IFR8rd3xAvsY4mDml6pY
+	7VGUc9Ein9As+FVlWXVWDz7EMVSpEc+4KSjL2LUKA4ZpYG0YwqgriNdk8KJAvG+T
+	nfXNwHjvp1tZ+WQFzVMdbLvOBRVJqJdDxF8pFgRYej3faEpNxGgjggXExRmhJYhc
+	zbVAb4ad3vAr/ByGdTcZT3EPuN/fKWx5ik4rFTMrtBg5rGOnuCu59CQhOQ+asPlC
+	+GqcpP0OGjs2ogWPh32WQJpqs72Vf9PTG4CZjEO7DxEE6qzXN6XYtVpUEZrIV5wR
+	E3b6afuCwgMB7r9wJVmvmNpvsp3Hw6Y7/BA==
+X-ME-Sender: <xms:i7qyamaDOydLFuzHM4swV5qO9ySJFBOQKHsl7FvWpRPCzshS-U2Bfw>
+    <xme:i7qyatHX3bnoXCbjpu8DwY5WBjo68VcW94QcANW4DNW2-UkVaseXu1XKe0Y-JbZWR
+    5REDH-h7hbhUqbQHCSwh47HCGKRxmd3e33BHTa7iMhSbp0nPyPznMo>
+X-ME-Received: <xmr:i7qyaqwEyu7Dru33hRq74FncihgAPdQ5nmlPpDA6vYKZ1vSveRH4dWQFW-rfH5CBUQ7R074sfg5jp32R6i_9fGlLeL-TqkxuQWKs>
+X-ME-Proxy-Cause: dmFkZTFLcY+oHKyMcOB8sw9R2QQKPgRJjisgy3sbc9+mlh1ZVZwu+9+Re9aTEciMm9iUjq
+    aEG9uYVj1x5YqUGtgML6BqB1CLjc9XEOcqG8FswFd60pM0cYCrKkBZt15imUYvuq1HJE1P
+    SKA4RX+CvvXXNUhx8R9PZ2TqlP9WVhWP7cSvCIbzTvWNPy35FM6BMr2aqkMCCxHmDRE2Am
+    P7gncfCFfvzka/phR2SU8KanzAjwf7/dimQlIDvikZd6jBbga2TOoJI+KCYjN8R/ZNbZLT
+    7lU4wnvXe52iGVCciICgIMBp+hJInLXcHPFRsBNmDEV+cQgvzU+bwGtiOklatd2qGxmoOi
+    jDQRaJ5DxE7TrgIx8y4vJpWOVgd64ZuUJUc3J9VaelpZrhSaZmTXG0LSLkoPL+0s9PTuHc
+    pmKr2lNI9euhfCZK5EABxTyJeTycayhufzvRgEzJRBpJf4G0her0zdr4Wulci2qcT8tqqj
+    +yadAkM+lTXysYfKiddedSnvzv2MmqKf8EXDNOCfcn9YyIOEnSkJYpyHKkdDF67yFyojKe
+    sS4s6/HYzwUfAObl0SG794PHwm8lHvjxXeS0YfWIJhG4MPFIA8yw4YkwYIoiuJ1GAVm31S
+    YhlSXo7e/PM3tJUN84Cqd+AIL8OsU8WslZaPLb/SgOCs2gxSrJ2/mp4NCHcQ
+X-ME-Proxy: <xmx:i7qyavn0s4aoYDALp3nVJ44ldKyFtisiBr7_GFvE-I9Uy3DHxHR6zQ>
+    <xmx:i7qyajnTuDLTtCSzhQqaTkrEf22nhshPdp_DvjhskHQw_02QKqtotw>
+    <xmx:i7qyahxEM1xubixnoUO6kqYt38gDTyw5f8OtRM-5VM_LGFe81LdElA>
+    <xmx:i7qyaoqe3XAdx3Vw9UbkzCCXdCmdUCStJ7YPM2ub-6zQToyaj6Wxkg>
+    <xmx:i7qyalX-Tsvvvghs7WAE2W1Or1InPMfJMGzP89PrBi_5rQOQLl6vc2RA>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Sep 2026 13:11:04 -0400 (EDT)
+ 22 Sep 2026 13:27:39 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH] fetch: add config to avoid fetching every branch in
- shallow repo
-In-Reply-To: <7f084e4d-f738-4bd4-9b4d-cad995f04be8@gmail.com> (Phillip Wood's
-	message of "Mon, 21 Sep 2026 14:28:08 +0100")
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
-	<7f084e4d-f738-4bd4-9b4d-cad995f04be8@gmail.com>
-Date: Tue, 22 Sep 2026 10:11:03 -0700
-Message-ID: <xmqqh5jhfbyw.fsf@gitster.g>
+To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Cc: r.norouzi@proton.me,  git@vger.kernel.org,  ps@pks.im,  peff@peff.net
+Subject: Re: [PATCH] reflog: fix default expiry periods
+In-Reply-To: <20260922165433.591551-2-pushkarkumarsingh1970@gmail.com>
+	(Pushkar Singh's message of "Tue, 22 Sep 2026 16:54:34 +0000")
+References: <GZicFFe4cqB928v52ERTcEFaAFtAwL0rp8VaCKSMyYzJ48XbQ9XoduiDtsou0Qp4N2CGmCS49uRbxi9dUWwlFzgzlt0PkGzR7IkqysP9tVQ=@proton.me>
+	<20260922165433.591551-2-pushkarkumarsingh1970@gmail.com>
+Date: Tue, 22 Sep 2026 10:27:38 -0700
+Message-ID: <xmqq5wzxfb79.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,57 +85,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
 
-> I think the sparse checkout is irrelevant? It is unclear to me if this 
-> is talking about a case where there are many branches in the remote 
-> repository and only one of them was cloned, then adding a second remote 
-> created a wildcard fetch refspec; or if there are intentionally lots of 
-> remote tracking branches in the local repository and you don't want to 
-> wait for them all to update. If it is the former then we should think 
-> how we can improve the behavior of "git remote add" in a sparse 
-> repository to prevent it adding a wildcard fetch refspec and instead 
-> setup the new remote to fetch only the branch(es) we're interested in.
+> The default expiry periods for reflog entries are reversed in
+> REFLOG_EXPIRE_OPTIONS_INIT(). This causes reachable entries to
+> expire after 30 days instead of the documented 90 days.
+>
+> Restore the intended 90-day expiry for reachable entries and
+> 30-day expiry for unreachable entries.
+>
+> Add a regression test for a reachable reflog entry that is
+> 60 days old.
 
-Very good suggestions.  "Avoid wildcards" is easy, but designing a
-suitable alternative ("only the ones we are interested in") may be
-harder.
+Does this breakage date back to the beginning of the reflog expire
+feature, or was it working perfectly fine but was broken sometime
+ago?  Do we know where the breakge happened, and why?  Those are a
+lot more relevant things to describe in the first paragraph.  Once
+the problem is described clearly enough in a simple case like this,
+the solution to the problem is so obvious that latter two paragraphs
+do not need to be said.
 
-Perhaps we want to have something similar in spirit to the
-"matching" mode 'git push' has, where the set of local branches we
-have defines the set of branches we are interested in?  That is,
-when 'remote.*.fetch' is configured to signal that special mode,
-'git fetch' would:
+> Reported-by: r.norouzi <r.norouzi@proton.me>
+> Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+> ---
+>  reflog.h          |  4 ++--
+>  t/t1410-reflog.sh | 13 +++++++++++++
+>  2 files changed, 15 insertions(+), 2 deletions(-)
 
- - Find each local branch that has its '@{upstream}' set to a branch
-   at the remote we are fetching from.
+> diff --git a/reflog.h b/reflog.h
+> index b996712c00..3bdd1ca8a5 100644
+> --- a/reflog.h
+> +++ b/reflog.h
+> @@ -23,8 +23,8 @@ struct reflog_expire_options {
+>  	int recno;
+>  };
+>  #define REFLOG_EXPIRE_OPTIONS_INIT(now) { \
+> -	.default_expire_total = now - 30 * 24 * 3600, \
+> -	.default_expire_unreachable = now - 90 * 24 * 3600, \
+> +	.default_expire_total = now - 90 * 24 * 3600, \
+> +	.default_expire_unreachable = now - 30 * 24 * 3600, \
+>  }
+>  
+>  /*
+> diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+> index 8f78cf4b01..1239c078ef 100755
+> --- a/t/t1410-reflog.sh
+> +++ b/t/t1410-reflog.sh
+> @@ -153,6 +153,19 @@ test_expect_success 'reflog expire should not barf on an annotated tag' '
+>  	test_grep ! "error: [Oo]bject .* not a commit" err
+>  '
+>  
+> +test_expect_success 'reflog expire keeps reachable entries for 90 days' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		timestamp=$(test-tool date timestamp "60.days.ago") &&
+> +		timestamp=${timestamp#* -> } &&
+> +		test_commit --no-tag --date "$timestamp +0000" old &&
+> +		git reflog expire --all &&
+> +		test_stdout_line_count = 1 git reflog refs/heads/main
+> +	)
+> +'
 
- - Fetch these branches at the remote that our local branches care
-   about.
+Do you also want to see what happens to entries that point at
+unreachable objects that is say 20 days and 40 days old,
+respectively, plus an entry that points at a reachable object that
+is 100 days old?  "Keeping" is "not expiring" and driven by the same
+logic, so it is better to test both sides of the same coin, isn't it?
 
-I said "in spirit" above, and I find it tempting to use ':' and '+:'
-as the special '<refspec>' to trigger this mode, to mimic what 'git
-push' does when using the local branches we have as the set of
-branches we care about.  But there are important differences:
-
- (1) The correspondence between local and remote-tracking branches
-     is not one-to-one, as you can fork multiple local topics out
-     of the same upstream branch.  Maybe our 7 local branches build
-     on top of only 2 branches we fetch from the remote, for
-     example.
-
- (2) Corollary.  Unlike the matching mode in 'git push' where local
-     branch 'B' is used to update branch 'B' at the remote (if it
-     exists), this new mode in 'git fetch' only uses local branches
-     as a guide to determine which branches to fetch from the
-     remote.  If our local branch 'B' builds on top of branch 'U' at
-     the remote, it is branch 'U' we fetch and store as the
-     'refs/remotes/R/U' remote-tracking branch, where 'R' is the
-     remote, and 'B' as the name does not get anywhere in the
-     picture.
-
-In other words, this is not "matching" at all, even though it takes
-inspiration from it.  I do not know what it should be called, but I
-think it would be a useful addition.
+>  test_expect_success 'corrupt and check' '
+>  
+>  	corrupt $F &&
 
 Thanks.
