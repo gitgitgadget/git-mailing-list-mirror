@@ -1,86 +1,77 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6B43AEF4E
-	for <git@vger.kernel.org>; Mon, 21 Sep 2026 23:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178E123BD06
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 00:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790034908; cv=none; b=PqpOmwQguIl679Lqr2vnVPSZuYzf7723ny3q7Cnd3VdcthH1bmSDaH/QEAi+Yqy+Cp4I9ej7yfpDdD9WJ7rnrJohFoN9GvEfRYKXMJYrVMX7yXAZ1gV0etmDgtE/5jeTh+0W07GgdlPqJUXeXql8T/4JUmQNIFb5+LU0ligqSVM=
+	t=1790035923; cv=none; b=YtQndrTWV6VENyoYDmLThvS7AaMZKc+YkfAKOGYyAaQYjI3wW0CtDK7/0QndUpjb3JdudowcCeKBSWjBzSt/LTezXwIxAba5DxV1VM+19RYzRtbAAtGERsArupvY4lTkCSir3kuKrV/0A3mByvvZJ6WHLa/m+go3s9G8LqSruy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790034908; c=relaxed/simple;
-	bh=Zcd0tIhFVWBvnAcMP6c2lQro19xkRCGVUDB16wT1Ts0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QM8eBQ4IDVYlQcwH1VFvzUsR1SVTvFransZCZsJNIlIJaQcO012MOfz25ZqJccM05H3StQimrzvkifyzPPA3QdfjwfArY2UOmAz4Hxz8qvPwTEmKQuFhMUyC9EX6nRfLSUAtgrf09WGdB2CKZDWyxb5pwQA3geWaFMM8FdHp/jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Rgllev+h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ntl9o/bU; arc=none smtp.client-ip=103.168.172.158
+	s=arc-20240116; t=1790035923; c=relaxed/simple;
+	bh=nXG610a6LHo84mGqSASgwQB9b72orvfZT8cRWNOK5W8=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=O0av7qacLEciXNoyHBBC8m93OiGMH6Hv4LLpVttgKS3nRRsdOcxivK3yIX3y49GTx7voXWUiGtjNUcoxnV3ASkDU1BXJVwFPrJ1xMKYIyZ2Ktt+jTMQBo5gqsn25XJFXObLvg7hFeLywDDy6rz60+tDrSqQUU7XkzAxetQ65Bps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IPdq5tLt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ElSp5YzE; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Rgllev+h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ntl9o/bU"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IPdq5tLt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ElSp5YzE"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C598814000AD;
-	Mon, 21 Sep 2026 19:55:05 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 02F2B14000D0;
+	Mon, 21 Sep 2026 20:11:58 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 21 Sep 2026 19:55:05 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 21 Sep 2026 20:11:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790034905; x=1790121305; bh=YFwpbodWFb
-	1HdQ912a7XKm0aCVlwbKbulVbq1KmYidc=; b=Rgllev+hxa/TuN1WKWJEpOevIY
-	9+o3oE6JIfJiDZYRFYpCzAjeYGvEFSCOA/8P8fnVPSOx74DbdkALwMBw/U24v7TR
-	ojPg9t9lgGD58KX3YrJhTuIIjmEUv9mkJVGoFEgOL2guPGauPtMSRCfLm1VVY1Uc
-	2eBWSMrTckqikRqGFtCq6fJv77V6NHMu44f8MDLl8YwTG6kwUaEcFOG9XKYdi6t3
-	iwYg0c35wMXeuh8aF8VN6nNEKQ0UhzaQI4ooZYzuYi2Lk4mtm10+rARkzuBonAqu
-	rQ/XhO1hWdCwo38EPvjIqE98NHqNLu59CJBvlc/tn/fU8+bOtTPEUzP6mKMg==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1790035917; x=1790122317; bh=QktpOaRw4e5NevmA+/5oln4JZi1beZaT
+	KzQaOWCFNgY=; b=IPdq5tLtMBNDJpEWEJP3uakwcd84uLjk6y5cBXjrACpzanUY
+	9RV0jfoQn1NiKOF63wbhLyI/+cMAWjMlD3SHYJAoVSz7djHZXvRqQiVIskm+9CZ0
+	ah6q0gWWdZYzU2vrQxKnamlfn8jvE438vr098JXB7E4EzleAW9yIXZLlN3aGVUfc
+	C+0mIPJzBETp5Sn/P2KPjx+MBUSVS1iPLz9NRIlRAKdM07C7OVeHyc2atGOMX4sJ
+	1ZAPq1Rmem8aF1KBNNXI70uwKmMdiItPvKDQkFXaBnl/BZNDxf6O5CGgta1T+En/
+	36drzMtGZBHTkOGbQbFllrWzqhnTuEhosnVwpQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790034905; x=1790121305; bh=YFwpbodWFb1HdQ912a7XKm0aCVlwbKbulVb
-	q1KmYidc=; b=ntl9o/bU+9IMg8hEGzpCI2dPWfy30i93GPSKk49MrlUoecsmQ1n
-	m/nOelaa8W/+Ov+6qjPBC1aQGhOtWAQtZdShcPmx25S91gyZRqA+JmxNZwE7VPYb
-	bK2muKzfvfPBFP+BvtQT/hue6J2n/nsjagrp+j3FXuLSFbpgqb2urvpNxmh+38mv
-	cOiX5I/ZRH/7g+CWT+knapF6PJyGU5vrXVc91lEIpiVfU2fb2ItY+8ecVeQOahW8
-	P2i3D5XiiP4CDr+loe/yciV0cFlX5BVOGHds7BJ8AlZ3jMijebD6ev377+nQz7/k
-	x0CfU2XLQKQzjXLhtEajUtqGJFO4oeMLNFA==
-X-ME-Sender: <xms:2cOxapLMCkTraANGBRwmI2ixlyUdriXYFlDhTSCqtL0K2ebEF-e-Jg>
-    <xme:2cOxansmsBGxnr4boRQ4TOMNE_aY686PW0eZD5Pc1QXx1Z0ONk-zGwK2-7jyA2Wsb
-    UYCuMKiR_IrcZx0bk7ephQLdIzc7vUBl3kJL3-Y0X5hi23WFv5jfA>
-X-ME-Received: <xmr:2cOxalW5FHWpcd2LnU0I7am3eW3Z_jA8etZKwodXTdWtwbu2X0hadmC5o5Q7ENRlGdyz7VuzfGV9Z64PS8bHdWRB5TT0fmAVhpyd>
-X-ME-Proxy-Cause: dmFkZTEO1hsYJqueJpR2+ohcd6AmT8KAN2SpUKXUh096lwq5OWDdTYY1XVDE4G28Ooa1iX
-    VElGgOlngZs5MP0dv0QBQXMZbaB8FdQZz2z0vOElVZgmB+29BFGEKataybAAVri6/ZVntN
-    BJn/0YIZdjTxAg+qTvD43lgdVcMxa9cmIteIg1gUOpDO5wuTAL6fVs/0KK3BiFTBiDrMLr
-    8sg+xlQG8AyZ9mKZZMgC3UgYkt5lwiFgAOzzgiVIINHaHpKWRCj1TW4H7kv1xXHDeEB71W
-    qPGmr36XGxbiV3v1hmIxHx3Q1kiOH7sdVKVx2p0hdGT83kH5bVRMM30wzVPy71k4ebd1Ap
-    AKaWEbrtezfZCN5NnVuVVn4Bjqhf3x7US+R9HTd3EpjKCFoBmq5frpxhAJ4yILWrxQh1t6
-    MqJSDoS1TG4ulbehyY9jqH5t228oRAA5znrd2oUW3m0yAqJVHvm+57Jovq99QjCF/NX5JM
-    dMja1fTa0mrZF/WMZULiPHY2P9qCVQXovbSpnasiJH8zQLcwubsK55lB3YVzxpLgL0RESf
-    9Ag2aCEyeLjH/Yok5Qc9XhNIxVVBSVPhwJFFD93U3sLJMxkRS79mAqjJZfiN4ICHDP0Q5A
-    jI54Fa9Lw6AU7XHu7hx9+1Lk9YjpaQkd1fpxgomalAPcgy9tOQaIM6Mqmgwg
-X-ME-Proxy: <xmx:2cOxaqj8PRYo7sLqUR8OkMfN2pWxHZVst8gzfLEcixK8Fp_3ShGACQ>
-    <xmx:2cOxalqzw0WQQK818qIUhvMFHBd5aoJE3iISeFI7JAJYNUchsV9bTA>
-    <xmx:2cOxaoHvD_wLXUZzPOoNImy698A-elaPgPT8AUf9y-6YhAwWH49I7w>
-    <xmx:2cOxai7c6RVgfCDCcA-nuscfFc4I-JLe79d_EPhqVKaKiAXBfaTZ4g>
-    <xmx:2cOxavVng6wDSfYnV08B1bMoLtKX3iivvzbhyo3NBjrEmdzuVv_sBrCf>
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790035917; x=
+	1790122317; bh=QktpOaRw4e5NevmA+/5oln4JZi1beZaTKzQaOWCFNgY=; b=E
+	lSp5YzEY5ZIDb1gQ+GueVudWHPj3n7KnGPziwvmhF4p13Hblqe7BL61kM72b+AbB
+	DI8N1hxwn4Hmbqbl6+SFI2KsBcjsRWJfC+SX0hslAEtoKEULnwmtYdXXYVhYgUCi
+	Y/wLnaLqHm5knnfCRyPiwUe4FmZt0Bpki2qvWflQf+bp6vm6iAsxJRbGOJURg0r3
+	smbMWUVqgDAdJqKnYp4ehOT9DivZ28til59cwOeTHGi8qEAovkts6yPJ587Se6L6
+	ICsZO8NtAiiAprFBBuyUaEcEcl4LJIw3ZMTccLgGQadV9my27Z2V6XatMtAMJNUp
+	MQUL1Cm1slWE+h2V37Osw==
+X-ME-Sender: <xms:zcexaiYthS_ogCnrjZj0-TiKguhoH2_kONaGX6NwmcPtg69lYNAYCg>
+    <xme:zcexas1UHidmR5bCVf6FLtkk9QZkcRr6R6xbsecrLJl6QbXq27tflFXbYg66HCIZu
+    CMA2fwBZ3v0DB9KMu0k6Kmwc5Alb-8WUqafJQb_gf-iUiBFOBOUhA>
+X-ME-Received: <xmr:zcexaqVRlA8upOEnvSSMplyz90sO01pHNoiE20UNHGpwD402XfVkemuhYgQtGl6W_4_TX0ZM-f0oGOc4kK34C24ukskYamHcyrfx>
+X-ME-Proxy-Cause: dmFkZTGRzUNlIH319JbB+zF1OE9qPAkkz4JUX/FCaqHUEyzTURdorMWpv7X8tupK2Cm7I2
+    h3AEO/WNNM7dCf+6spb6dpjt4xsJ13dsbENFhTdJ8OYajxaGhnW2sla827QEuG4Emrno5C
+    JUvh8YFdR1E9aDVkGvuNFnlPX2TWzHV1o68k/g5beAnIMqAFimJDUxBSqaey6BhqTMF+ht
+    A3u5QKtxodgZj+oxfBKPC0Tv0am1yhwqrM9SQklPu8wcpDGXl/88ufbJZjpwnTrMO4NB9l
+    ZvxbSZ7rJWHsDbTSZ5jkoBDCSJFEvSjbc9LL5ssbwkp2GLMViqV0/jqU9En4y3yqQ9bzkt
+    b2aB8gycw96lCq1Urc09uWzeL+eXMdSxYVug2p7L9wvFsgGkuRF/3jzGbK0hMhWNTPqBLt
+    RMk3vJq0+TjT8IgAVCg5t/Y/mWv5snJFBAjEv3E5LgRkLA46f6zhBhdOvIpzh2Qi/udUof
+    SNdIVSuxyBUk7Qni6OGXML8swTQ4Ylc/wdFLX4Gb6TCJfe60M3s9bc2Tf7mLKhp+BObXkJ
+    aax55YrougZ3lxnH0atNSoHPLxOHuJ4J378U9i3ZFOxN7CTeCdddk432y5Q3aeR435pn+K
+    +hHrI5iqOipvqc/nyL4I9LdOz2KkxrisUCOCiVM4RHwLQYggYeyzoFf3afhA
+X-ME-Proxy: <xmx:zcexauWEZyZbh0KUKcvJ_TDOBnyBOjqgoBKOycMaIZWfGIs2NtG2uQ>
+    <xmx:zcexahfP9t721yAa33eLlvx9GeXNPpZS5cV6aN_F0XAVbmh-XPaSEA>
+    <xmx:zcexavVX6pIKKd4E4rpXPmCPtSGzkp423vRpZ3OXY3o5odTMQp8qeQ>
+    <xmx:zcexaiebfBIv-mY0cssXzg31FYQBtGeskF3Mh6G3zWcxkMnEixadsQ>
+    <xmx:zcexaqCcV9AqEYy0A9eBHvRoECj-G3CskH08JawUSbiXGW-uKyyVSfOi>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Sep 2026 19:55:05 -0400 (EDT)
+ 21 Sep 2026 20:11:57 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phil Hord
- <phil.hord@gmail.com>,  Elijah Newren <newren@gmail.com>,  =?utf-8?B?w4Z2?=
- =?utf-8?B?YXIgQXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>,  "D . Ben Knoble" <ben.knoble@gmail.com>,
-  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 1/3] refs: allow callers to supply old OIDs for batch
- deletion
-In-Reply-To: <5c96a5a1ebafd49a301c5c1dc77a2e19d6677ab0.1789901584.git.maciej.ciemborowicz@gmail.com>
-	(Maciej Ciemborowicz's message of "Sun, 20 Sep 2026 12:54:20 +0200")
-References: <cover.1789901584.git.maciej.ciemborowicz@gmail.com>
-	<5c96a5a1ebafd49a301c5c1dc77a2e19d6677ab0.1789901584.git.maciej.ciemborowicz@gmail.com>
-Date: Mon, 21 Sep 2026 16:55:03 -0700
-Message-ID: <xmqq4ifijh2g.fsf@gitster.g>
+To: git@vger.kernel.org
+Subject: What's cooking in git.git (Sep 2026, #08)
+X-master-at: d38352cd43ab9745686d697872408bc3249a153f
+X-next-at: 68acceee5b56a1e5e81e37e2678256663e5981dd
+Date: Mon, 21 Sep 2026 17:11:56 -0700
+Message-ID: <xmqqwlsei1pv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,115 +81,872 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com> writes:
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and is a candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all.  They may be annotated with a URL
+to a message that raises issues but they are by no means exhaustive.
+A topic without enough support may be discarded after a long period
+of no activity (of course, it can be resubmitted when new interest
+arises).
 
-> refs_delete_refs() currently performs unconditional deletions. Thus callers
-> cannot preserve old values that they have already resolved, and
-> reference-transaction hooks consequently see a null old OID.
->
-> Add an optional oid_array whose entries correspond to the refnames.
+Git 2.56-rc1 has been tagged.  We may merge last-minute fixes before
+the final Git 2.56 release, but otherwise I do not expect any new
+feature topics to be ready before the final, so most of the
+in-flight topics will stay cooking in 'next' until then.  As
+discussed at the Git Contributors' Summit, the version after the
+upcoming Git 2.56 will be Git 2.98, scheduled near the end of this
+year.
 
-I had to read this sentence three times and still couldn't guess
-what it wanted to say.  I _think_ the code is passing a list of
-refnames, and your new parameter that is oid_array serves as a
-parallel list, where the ref, identified by the Nth element of the
-list of refnames, is protected from deletion with the Nth element of
-the list of oids in such a way that ref is not removed unless it
-points at the specified object.  You'd need to find a concise way to
-tell that story instead of the above sentence that does not give
-readers any meaningful information.
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
->  int refs_delete_refs(struct ref_store *refs, const char *logmsg,
-> -		     struct string_list *refnames, unsigned int flags)
-> +		     struct string_list *refnames,
-> +		     const struct oid_array *old_oids,
-> +		     unsigned int flags)
->  {
->  	struct ref_transaction *transaction;
->  	struct strbuf err = STRBUF_INIT;
-> -	struct string_list_item *item;
-> +	size_t i;
->  	int ret = 0, failures = 0;
->  	char *msg;
->  
-> +	if (old_oids && old_oids->nr != refnames->nr)
-> +		BUG("refname and old OID counts do not match");
+With maint, master, next, seen, todo:
 
-OK.  So it is not end-users' but calling code's responsibility to
-ensure that the optional list of object names have exactly the same
-number of entries as the list of refs.
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
 
->  	if (!refnames->nr)
->  		return 0;
+With all the integration branches and topics broken out:
 
-And this is as before.  Shouldn't the new test above be placed below
-this?  After all, if we are removing no refs, we really do not care
-what garbage is in the old oids array---we won't even look at it.
+	https://github.com/gitster/git/
 
->  	msg = normalize_reflog_message(logmsg);
->  
-> -	/*
-> -	 * Since we don't check the references' old_oids, the
-> -	 * individual updates can't fail, so we can pack all of the
-> -	 * updates into a single transaction.
-> -	 */
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
 
-To me, this reads more like "We want to make sure that each deletion
-is independent and philosophically each of them should belong in
-separate transactions so that even when some fails the rest would
-proceed.  Luckily, the current API does not allow you to check the
-current value to protect refs from deletion, so we can cram all
-delete operations in a single transaction and still claim that we
-are not making it all-or-none!".  Natural continuation of that
-argument is "If we ever extend the API so that refs are optionally
-protected from deletion, we can get into a situation where some refs
-can be successfully removed while others cannot.  Keeping everything
-in a single transaction WILL BECOME A WRONG DESIGN CHOICE when it
-happens."
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
 
-And this new code is doing exactly that, making all the deletions,
-of possibly unrelated refs, into an all-or-none matter.
+Release tarballs are available at:
 
-Don't we need to have separate transactions to delete each ref to
-retain the "delete them independently" semantics?  If the caller
-(e.g., "git fetch --prune" without "--atomic") wants to delete 1000
-refs, and a single ref fails its old-oid check due to a concurrent
-update, none of the 1000 refs will be removed and the transaction
-would be aborted.  <refs.h> explains this function like so:
+	https://www.kernel.org/pub/software/scm/git/
 
-    /*
-     * Delete the specified references. If there are any problems, emit
-     * errors but attempt to keep going (i.e., the deletes are not done in
-     * an all-or-nothing transaction). msg and flags are passed through to
-     * ref_transaction_delete().
-     */
-    int refs_delete_refs(struct ref_store *refs, const char *msg,
-                         struct string_list *refnames, unsigned int flags);
+--------------------------------------------------
+[Graduated to 'master']
 
-because we want to avoid exactly such a failure mode.
+* tz/doc-pack-refs-and-refs-fixes (2026-09-15) 2 commits
+  (merged to 'next' on 2026-09-16 at 127f3b13fa)
+ + doc/refs: backtick-quote commands and options consistently
+ + doc/pack-refs: convert synopsis and options to new style
 
-I do not offhand remember if our ref transactions have a mode where
-it acts more like a glorified "batch" job and commit does not
-necessarily require everything succeeding, but if it do, then it is
-OK to keep using a single transaction but to run it in such a "best
-effort" mode.
+ Doc updates.
 
->  	transaction = ref_store_transaction_begin(refs, 0, &err);
->  	if (!transaction) {
->  		ret = error("%s", err.buf);
->  		goto out;
->  	}
->  
-> -	for_each_string_list_item(item, refnames) {
-> +	for (i = 0; i < refnames->nr; i++) {
-> +		struct string_list_item *item = &refnames->items[i];
-> +		const struct object_id *old_oid = old_oids ? &old_oids->oid[i] : NULL;
-> +
-> +		if (old_oid && is_null_oid(old_oid))
-> +			old_oid = NULL;
->  		ret = ref_transaction_delete(transaction, item->string,
-> -					     NULL, NULL, flags, msg, &err);
-> +					     old_oid, NULL, flags, msg, &err);
->  		if (ret) {
->  			warning(_("could not delete reference %s: %s"),
->  				item->string, err.buf);
+ Graduated to 'master'.
+ source: <20260912191509.844954-1-tmz@pobox.com>
+
+
+* yt/pathspec-negative-prefix (2026-09-14) 2 commits
+  (merged to 'next' on 2026-09-16 at f4f244ea28)
+ + dir: preserve pathspec prefix optimization with leading excludes
+ + dir: do not apply prefix to negative pathspecs
+ + Merge branch 'jc/pathspec-match-const' into yt/pathspec-negative-prefix
+
+ The pathspec matching logic has been updated to avoid out-of-bounds
+ memory accesses when a negative pathspec is shorter than the common
+ prefix of positive pathspecs.
+
+ Graduated to 'master'.
+ source: <7CB757FB-1F2D-4EE6-8C31-8C2CD6D42397@ytausch.de>
+
+--------------------------------------------------
+[New Topics]
+
+* rr/upload-pack-swap-shallow-wanted-ref (2026-09-16) 1 commit
+ - upload-pack: swap wanted-ref/shallow-info responses
+
+ The server-side protocol v2 response order for 'wanted-refs' and
+ 'shallow-info' has been swapped to match the client's expectation,
+ fixing a fetch failure when the server has 'uploadpack.allowRefInWant'
+ enabled and the client performs a shallow fetch.
+
+ Will merge to 'next'.
+ source: <20260916203221.5265-1-royceremer@gmail.com>
+
+
+* bs/runtime-prefix-obsd-getexecpath (2026-09-16) 1 commit
+ - exec_cmd: RUNTIME_PREFIX on OpenBSD systems
+
+ Git on OpenBSD historically lacked an authoritative mechanism to
+ resolve its executable path, as it doesn't support the
+ KERN_PROC_PATHNAME sysctl.  With OpenBSD 8.0 introducing
+ getexecpath(3), it is now utilized to provide proper RUNTIME_PREFIX
+ resolution instead of relying on argv[0] fallback.
+
+ Waiting for response.
+ cf. <xmqq4ifio83d.fsf@gitster.g>
+ source: <aqthQ3u4eW1wHCn7@humpty.home.comstyle.com>
+
+
+* js/coverity-fixes (2026-09-17) 7 commits
+ - test-read-midx: check midx_fill_entry() result
+ - oss-fuzz: handle reftable iterator initialization failures
+ - t/unit-tests: check reftable iterator initialization
+ - rerere: do not record failed conflict resolution data
+ - midx: validate incremental MIDX pack IDs
+ - gpg-interface: make signature-prefix matching length-aware
+ - wrapper: guard writev_in_full() against signed overflow
+
+ Assorted fixes for code paths that are not careful with boundary and
+ error conditions.
+
+ Will merge to 'next'?
+ cf. <xmqq5x03u0xz.fsf@gitster.g>
+ cf. <xmqq1parorz4.fsf@gitster.g>
+ source: <pull.2231.git.1789667556.gitgitgadget@gmail.com>
+
+
+* yt/winansi-die-lasterr-fix (2026-09-20) 1 commit
+ - compat/winansi: fix die_lasterr() argument formatting
+
+ The error reporting machinery in the WinANSI compatibility layer has
+ been simplified to pass the exact Windows error code and correctly
+ format arguments for fatal errors.
+
+ Waiting for response.
+ cf. <xmqqwlsemsjt.fsf@gitster.g>
+ source: <20260921062114.14450-1-yqtian668@gmail.com>
+
+
+* hd/diff-no-index-reverse-fix (2026-09-18) 1 commit
+ - diff --no-index: fix -R with file/directory conflicts
+
+ A bug in git diff --no-index that mishandled reverse (-R) output
+ when conflicts existed between a file and a directory has been
+ fixed.
+
+ Will merge to 'next'?
+ cf. <9b97c14b-1d25-409b-a72c-d8caf298bf87@web.de>
+ cf. <0c82d50e-f2c0-4db6-ade8-7a403cac73da@intel.com>
+ source: <pull.2232.git.1789715946888.gitgitgadget@gmail.com>
+
+
+* js/gitlab-ci-windows-rust (2026-09-19) 4 commits
+ - ci(gitlab,windows): provide GNU Rust's host-linker support
+ - ci(gitlab,windows): fix Rust setup for GitLab's MinGW build
+ - ci(gitlab,windows): preserve exclusions during dependency setup
+ - ci(gitlab,windows): provision GNU Rust for SDK-based MinGW builds
+
+ The Windows GitLab CI job has been updated to provision and use the
+ GNU Rust toolchain for MinGW builds, fixing job failures caused by
+ incomplete Rust setup and missing linker support.
+
+ Will merge to 'next'?
+ cf. <CAOLa=ZQkJui77Xz2HL4sAWsaYLAzU6EPvBk+RzKkKxoiY_8aKw@mail.gmail.com>
+ source: <pull.2233.git.1789819933.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[Cooking]
+
+* jc/advice-config-set-global (2026-09-14) 1 commit
+ - advice: give cut-and-pasteable advice to squelch
+
+ The advice subsystem has been updated to suggest using the
+ '--global' option when recommending a command snippet to squelch
+ future advice messages, since global configuration is generally
+ more appropriate for user-level preferences than per-repository
+ settings.
+
+ Needs review.
+ source: <xmqq33vb4hma.fsf@gitster.g>
+
+
+* sg/precompile-git-compat-util (2026-09-14) 4 commits
+  (merged to 'next' on 2026-09-21 at 68acceee5b)
+ + Makefile: precompile "git-compat-util.h"
+ + Makefile: reintroduce REFTABLE_OBJS
+ + cmake: remove any "$(*_OBJS)" variables when parsing Makefile for sources
+ + Makefile: remove XDIFF_OBJS initialization
+
+ The 'Makefile' has been taught to precompile 'git-compat-util.h' to
+ speed up overall compilation, while excluding sources that do not
+ include the compatibility header.
+
+ Will cook in 'next'.
+ source: <20260915060952.569535-1-szeder.dev@gmail.com>
+
+
+* of/commit-reach-repo-awareness (2026-09-16) 1 commit
+ - commit-reach: parse commits in the given repository
+
+ The can_all_from_reach() and can_all_from_reach_with_flag()
+ functions have been updated to accept a repository context,
+ preventing bugs where submodule merging incorrectly reads from the
+ superproject's commit-graph.
+
+ Will merge to 'next'.
+ source: <20260916134632.1424829-1-orestisflo@gmail.com>
+
+
+* hn/range-diff-matched-only (2026-09-15) 1 commit
+ - range-diff: add --matched-only to skip one-sided commits
+
+ The 'git range-diff' command has been augmented with a
+ '--matched-only' option to skip commits that are only present on
+ one side, allowing users to easily focus on only the commits that
+ have been retained.
+
+ Needs review.
+ source: <pull.2401.v3.git.git.1789458703432.gitgitgadget@gmail.com>
+
+
+* jc/cocci-free-updates (2026-09-11) 2 commits
+  (merged to 'next' on 2026-09-16 at 35b8bafa06)
+ + cocci: FREE_AND_NULL(E) is safe to call on NULL
+ + cocci: remove risky "if (!E) free(E)" conversion
+
+ Updates to Coccinelle semantic patches to correctly handle the
+ 'FREE_AND_NULL()' macro and avoid generating broken transformations
+ for negated pointer checks.
+
+ Will cook in 'next'.
+ cf. <96aca004-0df4-4e21-b60a-0288239122cc@web.de>
+ source: <xmqqld978mok.fsf@gitster.g>
+ source: <xmqqh5jv8m4w.fsf@gitster.g>
+
+
+* jt/object-file-batch-fsync-fix (2026-09-13) 2 commits
+ - object-file: flush transaction packfile before migrating objects
+ - object-file: lift ODB reprepare out of packfile flush
+
+ When 'core.fsyncMethod' is set to 'batch', the ODB transaction
+ failed to properly flush large blob packfiles residing in the
+ temporary directory before migrating the directory's contents to the
+ main object store.  The execution sequence has been corrected by
+ performing the packfile flush before the temporary directory
+ migration, averting failure.
+
+ Waiting for review.
+ cf. <CAOLa=ZRCyowPgMABwsQBYTbW1cEf8PBBSszOEYQ4TKwLVKQfFA@mail.gmail.com>
+ cf. <aqkGPcJdw3QagN0B@jtobler--20250820-SHC54>
+ source: <cover.1789328612.git.jltobler@gmail.com>
+
+
+* ak/refs-files-root-ref-lock (2026-09-11) 1 commit
+  (merged to 'next' on 2026-09-16 at c8568ea3e1)
+ + refs/files: avoid packed-refs lock for root ref deletion
+
+ The files backend has been updated to avoid unconditionally locking
+ the 'packed-refs' file when deleting a root ref (which are never
+ packed).
+
+ Will cook in 'next'.
+ cf. <aqeLMG7lTJy3bM-h@pks.im>
+ source: <20260912014609.535922-1-skariel@gmail.com>
+
+
+* tb/rerere-wait-for-merge-rr-lock (2026-09-14) 2 commits
+ - rerere: go on at a conflict when the lock stays busy
+ - rerere: wait for MERGE_RR.lock, and let the gc skip it
+
+ Instead of failing to record conflicts to be resolved immediately,
+ wait while "rerere gc" is ongoing.
+
+ Needs review.
+ source: <pull.2214.v4.git.1789373061.gitgitgadget@gmail.com>
+
+
+* pp/midx-write-skip-empty (2026-09-08) 1 commit
+ - midx-write: skip writes with no object entries
+
+ The `git multi-pack-index write` command has been updated to
+ silently return success when there are no object entries to index.
+ This avoids writing empty `multi-pack-index` layers, which
+ previously caused subsequent incremental midx writes using the
+ `--bitmap` option to fail when attempting to load the missing
+ reverse index.
+
+ Waiting for review.
+ cf. <aqAkfGZtLJ97nG1m@com-79390>
+ cf. <CAOWp8q5UqPrJQosjypdcq=KX1TKcVenAOoZUYfTBDKbRUwazTw@mail.gmail.com>
+ source: <eef33827000cf106544174ed000129c2989af1cd.1788851232.git.pia@pierre.co>
+
+
+* jk/merge-ll-tempfile-cleanup (2026-09-11) 3 commits
+ - merge-ll: use tempfile API for external driver files
+ - merge-ll: catch close() errors when writing external tempfiles
+ - merge-ll: use strbuf to read back external merge result
+
+ The external merge driver in 'git merge' now uses the tempfile API
+ to create its temporary files.  This ensures that these temporaries
+ are reliably cleaned up even when the merge driver or its parent Git
+ process is terminated abruptly.
+
+ Expecting a reroll.
+ cf. <20260914165350.GA32247@peff.net>
+ source: <20260911171044.GA1609692@coredump.intra.peff.net>
+
+
+* mh/rust-crate-subdir (2026-09-16) 1 commit
+ - move rust gitcore crate to a different subdirectory
+
+ The Rust code and its 'Cargo.toml' file have been moved from the
+ top-level repository root and 'src/' directory into a dedicated
+ 'rust/' subdirectory.  This avoids confusing Cargo's packaging
+ mechanism when the Git repository is included as a submodule in
+ other Rust projects.
+
+ Waiting for review.
+ cf. <yc4bgjoyxnm6o7q4gwols4d6zvdrq3ydw2c65wjdwof3hjyde6@2osv37jtuxx3>
+ source: <20260917060415.2986259-1-mh@glandium.org>
+
+
+* ps/ref-storage-format (2026-09-09) 13 commits
+  (merged to 'next' on 2026-09-16 at 8937a6240b)
+ + setup: allow "--ref-storage-format=" to specify a payload
+ + setup: rename "init.defaultRefFormat" to "init.defaultRefStorageFormat"
+ + t: rename GIT_TEST_DEFAULT_REF_FORMAT
+ + setup: rename ref storage format environment variables
+ + setup: refactor how we configure the ref storage format
+ + refs: expose function to parse reference URIs
+ + help: rename "default-ref-format" to "default-ref-storage-format"
+ + builtin/rev-parse: rename "--show-ref-format" to "--show-ref-storage-format"
+ + builtin/submodule: rename "--ref-format=" to "--ref-storage-format="
+ + builtin/refs: rename "--ref-format=" to "--ref-storage-format="
+ + builtin/clone: rename "--ref-format=" to "--ref-storage-format="
+ + builtin/init: rename "--ref-format=" to "--ref-storage-format="
+ + parse-options: allow for hidden aliases
+
+ The terminology regarding reference storage formats has been unified
+ across command-line options, environment variables, configuration
+ variables, and source code, standardizing on the phrase "ref storage
+ format" (e.g., `--ref-storage-format`, `'GIT_REF_STORAGE_FORMAT'`).
+ Additionally, the `--ref-storage-format` option has been updated to
+ accept payloads in the form `<format>://<payload>`.
+
+ Will cook in 'next'.
+ cf. <CAOLa=ZRxXimh8W-QBJB3VhbHOZWMEfWXB0ST0a=dOi+PNiR6sQ@mail.gmail.com>
+ cf. <5e062976-d584-496d-84e0-e4b59c8f6876@gmail.com>
+ source: <20260909-b4-pks-unify-ref-storage-format-v3-0-ca041fb40ad8@pks.im>
+
+
+* ta/command-list-guides-sync-lint (2026-09-10) 2 commits
+ - lint-docs: check the guide list in command-list.txt
+ - command-list.txt: add gitformat-loose(5) and gitpacking(7)
+ - Merge branch 'kh/doc-datamodel' into ta/command-list-guides-sync-lint
+
+ A new linter test has been added to Documentation/lint-manpages.sh
+ to ensure that all non-command manual pages (guides and developer
+ interfaces) listed in Documentation/Makefile are present in
+ command-list.txt, replacing an older comment that reminded
+ developers to keep them in sync.
+
+ Needs review.
+ cf. <xmqq1pb2s33e.fsf@gitster.g>
+ source: <20260910194351.20809-1-taahol@utu.fi>
+
+
+* ap/var-broken-down-idents (2026-09-14) 1 commit
+ - var: support broken-down idents, signing key, multiple args, and -z
+
+ The 'git var' command has been extended to expose individual
+ identity components ('GIT_AUTHOR_NAME', etc.) and the commit
+ signing key, and can now accept multiple variables to query at
+ once, safely formatting the output with a new '-z' option.
+
+ Expecting a reroll.
+ cf. <20260915220228.42819-1-andrewpleeter@gmail.com>
+ source: <pull.2388.v8.git.git.1789426226860.gitgitgadget@gmail.com>
+
+
+* tc/push-force-if-includes-fixes (2026-09-17) 3 commits
+ - push: --force-if-includes should allow fast-forward
+ - push: fix --force-if-includes non-branch advice
+ - push: check pushed ref for --force-if-includes
+
+ The '--force-if-includes' protection for 'git push' has been updated
+ to consult the reflog of the local branch being pushed, rather than
+ incorrectly checking the reflog of a local branch that shares the name
+ of the remote destination branch.  The push advice for detached HEAD
+ scenarios has also been adjusted to indicate that the remote ref
+ cannot be verified locally.  A regression that caused perfectly valid
+ fast-forward pushes to be rejected when reflogs were expired has been
+ fixed.
+
+ Needs review.
+ source: <20260917224351.57171-1-tyler@tylercipriani.com>
+
+
+* as/push-force-if-includes-no-reflog (2026-09-05) 1 commit
+ - push: fix --force-if-includes when remote-tracking ref has no reflog
+
+ The timestamp used for checking the reflog of a remote-tracking
+ branch during 'git push --force-if-includes' was left uninitialized
+ when the reflog was completely empty, which has been corrected.
+
+ Waiting for review.
+ cf. <xmqqjyowz9oq.fsf@gitster.g>
+ cf. <20260909065639.47316-1-f@lex.la>
+ source: <20260905171330.34646-1-f@lex.la>
+
+
+* tb/rerere-lock-grace (2026-09-17) 3 commits
+ - sequencer: disable auto maintenance in spawned commands
+ - rebase, cherry-pick, revert: run auto maintenance when done
+ - config: add git_config_append_parameter()
+
+ The sequencer machinery (used by 'git rebase', 'git cherry-pick', and
+ 'git revert') has been updated to defer automatic maintenance tasks
+ until the end of the operation, preventing nested 'git commit', 'git
+ merge', and 'exec' commands from triggering GC operations that could
+ contend for locks or delete open packs while the sequence is in
+ progress.
+
+ Needs review.
+ source: <pull.2217.v5.git.1789670534.gitgitgadget@gmail.com>
+
+
+* cc/lazy-fetch-trusted-bit (2026-09-08) 5 commits
+ - builtin/upload-pack: set GIT_NO_LAZY_FETCH to 0 on trusted repo
+ - promisor-remote: prevent infinite recursion when lazy fetching
+ - upload-pack: read uploadpack.lazyFetchTrusted
+ - setup: extract path_allowlist_apply()
+ - promisor-remote: factor out lazy_fetch_objects()
+
+ A new 'uploadpack.lazyFetchTrusted' configuration variable has been
+ introduced to allow 'upload-pack' to lazily fetch missing objects from
+ configured promisor remotes when serving trusted repositories.
+
+ Waiting for response.
+ cf. <xmqq7bkvy74h.fsf@gitster.g>
+ cf. <xmqqqzj3wr24.fsf@gitster.g>
+ cf. <xmqqmrtrwq0k.fsf@gitster.g>
+ source: <20260908164129.560396-1-christian.couder@gmail.com>
+
+
+* cc/early-scan-options (2026-09-02) 6 commits
+ - fast-import: use early_scan_options() for --allow-unsafe-features
+ - parse-options: build early scan options from a struct option array
+ - parse-options: add parse_options_takes_argument()
+ - rev-parse: fix "--" detection when it is an option value
+ - bisect: fix "--" detection when a term name is "--"
+ - parse-options: add early_scan_options()
+
+ The process of parsing command-line options in commands that
+ perform an early scan over their arguments (such as 'git bisect',
+ 'git rev-parse', and 'git fast-import') has been unified using a
+ new early-scan sub-API, which parses and skips known options taking
+ separate values to prevent logic bugs.
+
+ Waiting for response.
+ cf. <xmqqpkyviizc.fsf@gitster.g>
+ source: <20260902161047.476753-1-christian.couder@gmail.com>
+
+
+* ec/commit-fixup-options (2026-05-26) 2 commits
+ - commit: allow -c/-C for all kinds of --fixup
+ - commit: allow -m/-F for all kinds of --fixup
+
+ Support for '-m', '-F', '-c', or '-C' options to supply a commit log
+ message from outside the editor has been added for all 'git commit
+ --fixup' variations.
+
+ Expecting a reroll.
+ cf. <CA+JQ7M__GOnM9LHt0txry-G2z2CKhdZr0b-rU=Yd_A0gCEwmaQ@mail.gmail.com>
+ source: <cover.1779792311.git.erik@cervined.in>
+
+
+* jc/checkout-refactor (2026-08-30) 8 commits
+ - checkout: move post_checkout_hook() to checkout.c
+ - checkout: wrap overly long lines
+ - checkout: restructure switch, restore, and checkout entrypoints
+ - checkout: extract branch setup and tracking helpers
+ - checkout: extract option validation and pathspec helpers
+ - checkout: validate stage and merge option compatibility in checkout_paths()
+ - checkout: validate new branch name in checkout_branch()
+ - checkout: pass cb_option explicitly to branch name parsers
+
+ The front-end code for 'git checkout', 'git switch', and 'git
+ restore' has been restructured to cleanly separate their pathspec
+ and branch handling, eliminating a common bottleneck and paving the
+ way to libify utility helpers.
+
+ Waiting for response.
+ cf. <xmqqo6el1xz0.fsf@gitster.g>
+ cf. <xmqqse3x1y20.fsf@gitster.g>
+ source: <20260830204835.1040408-1-gitster@pobox.com>
+
+
+* ll/doc-pushcert-if-asked (2026-08-29) 1 commit
+ - doc: remote-helpers: option pushcert if-asked
+
+ The remote helper documentation for the 'pushcert' option has been
+ updated to mention that it can also take 'if-asked', reflecting the
+ existing implementation in the code.
+
+ Needs review.
+ source: <20260829183659.29947-1-lorenz.leutgeb@posteo.eu>
+
+
+* ws/squelch-svn-migrate (2026-08-27) 2 commits
+ - Makefile: add NO_GIT_SVN knob to skip building/installing git-svn
+ - git-svn: don't print v1-layout migration noise when there's nothing to migrate
+
+ Needs review.
+ source: <20260827234345.1037130-1-wesleys@opperschaap.net>
+
+
+* dw/config-read-both-global (2026-08-23) 3 commits
+ - config: read global scope via config_sequence
+ - config: let sequence require a successful file
+ - path: use forward slashes in XDG config on Windows
+
+ The git config --global read operations have been updated to respect
+ both $HOME/.gitconfig and $XDG_CONFIG_HOME/git/config, fixing an
+ inconsistency where only the former was read when both configuration
+ files are present.
+
+ Expecting a reroll.
+ cf. <aqIvJhLLcCSnyaL4-delilahwu@linux.microsoft.com>
+ source: <20260823-fix-config-list-global-home-and-xdg-v2-0-b29cc63f017b@microsoft.com>
+
+
+* vv/branch-recurse-no-start-ref (2026-08-21) 2 commits
+ - branch: allow recursion with no tracking name
+ - branch: do not track a start point with no ref
+
+ The --recurse-submodules option in 'git branch' has been fixed to
+ avoid a crash when the start point is not a reference (e.g., a raw
+ object ID).  The creation path now skips setting up tracking and
+ properly forwards the absent tracking name to the submodule helper.
+
+ Needs review.
+ source: <20260822-vv-branch-recurse-no-start-ref-v1-0-46dc140acaa8@zitro.id>
+
+
+* ps/odb-alternates-at-creation (2026-09-10) 9 commits
+  (merged to 'next' on 2026-09-15 at 4acaa6a8aa)
+ + odb/source: remove the ability to write alternates
+ + builtin/clone: write alternates via `odb_create_on_disk()`
+ + odb/source: support writing alternates when creating the database
+ + builtin/clone: move setup of alternates for non-shared local clones
+ + builtin/clone: move setup of alternates for shared local clones
+ + builtin/clone: refactor handling of "--reference{,-if-able}"
+ + builtin/clone: move around `setup_reference()`
+ + builtin/clone: defer setup of the object database
+ + setup: split up concerns of `init_db()`
+ + Merge branch 'ps/odb-eagerly-load-alternates' into ps/odb-alternates-at-creation
+
+ The setup of alternates has been deferred to object database
+ creation time during clone, which drops the unused ad-hoc alternate
+ writing API, simplifying the object database backend interface.
+
+ Will cook in 'next'.
+ cf. <CAOLa=ZRYsJL_0sKnfHD0PJO+5c+BKSMiuN20PeQHKJin82TJDw@mail.gmail.com>
+ source: <20260910-pks-odb-write-alternates-at-creation-time-v5-0-8d10c4238edc@pks.im>
+
+
+* as/utimensat-utimes (2026-08-21) 3 commits
+ - compat/posix: drop legacy <utime.h> header and shims
+ - treewide: use utimensat(2) instead of legacy utime(3p)
+ - compat/posix: introduce utimensat(2) wrapper
+
+ The codebase has been updated to use the newer utimensat() POSIX
+ function instead of the obsolescent utime(), allowing
+ high-precision timestamps while preserving fallback compatibility.
+
+ Waiting for response for too long, stalled
+ cf. <aonIVn-ZQoMKWCAd@fruit.crustytoothpaste.net>
+ source: <pull.2209.git.1787322203.gitgitgadget@gmail.com>
+
+
+* kn/receive-report-hook (2026-09-14) 5 commits
+  (merged to 'next' on 2026-09-15 at aa6cbdb87e)
+ + receive-pack: coccinelle fix
+ + hook: introduce the receive-report hook
+ + receive-pack: move message generation to separate function
+ + receive-pack: drop static variables to track report status version
+ + doc: add proc-receive hook info in 'git-receive-pack.adoc'
+
+ A new hook 'report' is added to 'git receive-pack', which runs after
+ reference updates and allows the server to filter or modify the
+ packet-line status report sent back to the client.
+
+ Will cook in 'next'.
+ source: <20260910-758-introduce-hook-v10-0-06f9c506631c@gmail.com>
+ source: <xmqqwlsn31gq.fsf_-_@gitster.g>
+
+
+* ap/http-preserve-wwwauth-redirect (2026-08-19) 1 commit
+ - http: preserve wwwauth_headers across redirects
+
+ When an HTTP request triggers a redirect and the target yields an
+ authentication challenge, the WWW-Authenticate headers received
+ during the redirect are now explicitly preserved across the
+ credential URL update, fixing an issue where they were incorrectly
+ cleared.
+
+ Needs review.
+ source: <20260819-http-preserve-wwwauth-redirect-v2-1-4c61039432b0@nvidia.com>
+
+
+* kh/format-rev-more-options (2026-08-18) 5 commits
+ - format-rev: learn --abbrev, --color, and --date
+ - doc: rev-list-options.adoc: factor out --date alts
+ - format-rev: factor option variables into a struct
+ - format-rev: place BUG calls first in callback
+ - format-rev: use lower case for opts description
+
+ The experimental 'git format-rev' has been taught a few more
+ formatting options.
+
+ Needs review.
+ source: <V2_CV_format-rev_three_more_opts.bd3@msgid.xyz>
+
+
+* gg/http-ssl-verify-status (2026-09-15) 1 commit
+ - http: add http.sslVerifyStatus to check stapled OCSP responses
+
+ The HTTP transport has been taught to check the revocation status of
+ the server certificate using the stapled OCSP response during the
+ TLS handshake via a new 'http.sslVerifyStatus' configuration
+ variable.
+
+ Will merge to 'next'?
+ cf. <xmqqv785uha7.fsf@gitster.g>
+ source: <20260915162348.97792-1-ggordon@gitlab.com>
+
+
+* ty/repo-config-cleanups (2026-08-07) 3 commits
+ - environment: remove inaccurate repo_config_values comments
+ - environment: clarify repository config getter documentation
+ - environment: drop redundant NULL checks in config getters
+
+ Repository configuration getters in 'environment.c' have been
+ simplified by removing redundant NULL checks.  The documentation for
+ these getters in 'environment.h' has been clarified, and inaccurate
+ section comments inside 'struct repo_config_values' have been removed.
+
+ Waiting for response for too long, stalled
+ cf. <aqOeHlPWer60LcoO@pks.im>
+ source: <20260807085932.3958759-1-cat@malon.dev>
+
+
+* dk/use-nsec-runtime (2026-09-11) 3 commits
+  (merged to 'next' on 2026-09-15 at 67ef6d82ef)
+ + core: convert build-time USE_NSEC into runtime core.useNanosec
+ + environment: align repo_config_values_init with struct declaration
+ + meson: expose knob for xmlto relative links in manuals
+
+ The build-time knob 'USE_NSEC' for nanosecond stat precision has been
+ converted to a runtime configuration 'core.useNanosec', allowing
+ distributions to bundle one binary that adapts to filesystem
+ capabilities dynamically.
+
+ Will cook in 'next'.
+ cf. <apVJCt4prIi2GgXp@pks.im>
+ source: <cover.1789129924.git.ben.knoble@gmail.com>
+
+
+* bc/restrict-hex-to-lowercase (2026-09-07) 7 commits
+ - hex: allow only lowercase object IDs in breaking changes mode
+ - t5324: adjust tests for corrupt commit-graph
+ - object-name: use hexval
+ - hex: label usages of hex parsing for object IDs
+ - hex: make hex_to_bytes accept kind of hex to use
+ - hex: allow specifying hex type with hex2chr
+ - hex: add functionality for lowercase-only hex
+
+ The parser for hex object names has been updated to reject uppercase
+ hexadecimal characters when running in the breaking changes mode, in
+ preparation for Git 3.0.
+
+ Needs review.
+ source: <20260907195941.1024289-1-sandals@crustytoothpaste.net>
+
+
+* kj/repo-info-more-path-keys (2026-09-11) 7 commits
+ - repo: add path.cdup
+ - repo: add path.git-prefix
+ - repo: add path.grafts with absolute and relative suffixes
+ - repo: add path.index with absolute and relative suffixes
+ - repo: add path.hooks with absolute and relative suffixes
+ - repo: add path.superproject-root with absolute and relative suffixes
+ - repo: add path.toplevel with absolute and relative suffix formatting
+
+ The 'git repo info' command has been taught more keys to output
+ paths of various repository components (such as the working tree
+ root, superproject working tree, object database, etc.), supporting
+ both absolute and relative path formats.
+
+ Waiting for response.
+ cf. <xmqqse3fbudk.fsf@gitster.g>
+ cf. <xmqqcxujbser.fsf@gitster.g>
+ source: <20260911144519.1011780-1-jayatheerthkulkarni2005@gmail.com>
+
+
+* tc/last-modified-bloom (2026-09-01) 6 commits
+ - last-modified: keep per-path Bloom filters for wildcard pathspecs
+ - last-modified: check pathspec against Bloom filter first
+ - revision: add Bloom check that includes parent directories
+ - bloom: add helper to check if any key in a vector is present
+ - revision: expose check for paths maybe changed in Bloom filter
+ - revision: move bloom keyvec precondition into function
+
+ The 'git last-modified' command has been optimized by using Bloom
+ filters.  It now reuses revision walk filtering logic from 'git log'
+ to pre-filter commits, and maintains per-path Bloom filters even when
+ wildcard pathspecs are used.
+
+ Waiting for response.
+ cf. <aqJWihcFmX7tPio5@pks.im>
+ cf. <aqJWX0INerT8F687@pks.im>
+ source: <20260901-toon-speed-up-last-modified-v4-0-a09949800404@iotcl.com>
+
+
+* ds/trace2-tolerate-failed-timestamp (2026-08-31) 7 commits
+ - trace2: remove use of xcalloc()
+ - trace2: remove use of ALLOC_GROW()
+ - trace2: remove use of xstrfmt()
+ - trace2: remove use of ALLOC_ARRAY()
+ - trace2: remove use of xstrdup()
+ - trace2: tolerate failed timestamp formatting
+ - banned-die: create header for banning of functions
+
+ Functions like `xstrfmt()` and `xcalloc()` have been banned from use
+ in the trace2 API codebase to prevent calls to `die()` which lead to
+ unwanted process exits and recursion when memory allocation fails.
+
+ Needs review.
+ source: <pull.2178.v3.git.1788197143.gitgitgadget@gmail.com>
+
+
+* pz/fetch-submodule-errors-config (2026-07-16) 2 commits
+ - fetch: add fetch.submoduleErrors to make submodule fetch errors non-fatal
+ - submodule: fix premature failure in recursive submodule fetch
+
+ The 'git fetch' command can now configure how submodule fetch errors
+ are handled via 'fetch.submoduleErrors' and '--submodule-errors',
+ making them non-fatal.  A premature failure during recursive submodule
+ fetches has been fixed by deferring the error until the OID-based
+ retry phase fails.
+
+ Needs review.
+ source: <20260716140956.1023740-1-paulius.zaleckas@gmail.com>
+
+
+* fz/rebase-autosquash-empty (2026-08-27) 1 commit
+ - sequencer: honor --empty when a fixup!/squash! empties its target
+
+ A commit that is emptied by melding a 'fixup!' or 'squash!' commit
+ during 'git rebase --autosquash' is now handled according to the
+ '--empty' option, allowing it to be dropped, kept, or to halt the
+ rebase.
+
+ Waiting for response.
+ cf. <511300fe-112d-4f20-bd3f-e401e68c4a27@gmail.com>
+ source: <20260827-fz-autosquash-empty-v4-1-f98ffd575780@gmail.com>
+
+
+* ij/subtree-reject-v2-config (2026-07-06) 2 commits
+ - git-subtree: Bail out if we find output from Rust rewrite (test)
+ - git-subtree: Bail out if we find output from Rust rewrite
+
+ The shell script implementation of 'git subtree' has been updated to
+ check for the presence of the configuration file of the new Rust
+ implementation, preventing users from accidentally running the old
+ script on repositories already managed by the new tool.
+
+ Expecting a reroll.
+ cf. <27219.20156.438730.881821@chiark.greenend.org.uk>
+ source: <20260706115816.20267-1-ijackson@chiark.greenend.org.uk>
+
+
+* mm/line-log-limited-ops (2026-09-02) 7 commits
+ - diffcore-pickaxe: limit -G to the -L tracked range
+ - diff: support --check with -L line ranges
+ - diff: support stat formats with -L
+ - diff: extract a line-range diff helper for reuse
+ - diff: emit -L hunk headers via xdiff's formatter
+ - diff: simplify the line-range filter by classifying removals immediately
+ - diff: rename line-range filter struct and clarify fields
+ (this branch is used by mm/diff-process-hunks.)
+
+ The 'git log -L<range>:<path>' command has been taught to limit
+ various 'diff' operations, such as '--stat', '--check', and '-G', to
+ the specified range and path.
+
+ Needs review.
+ source: <pull.2152.v3.git.1788411919.gitgitgadget@gmail.com>
+
+
+* hn/history-squash (2026-09-08) 8 commits
+  (merged to 'next' on 2026-09-15 at 28dd773b8b)
+ + history: support editing squashed commit messages
+ + history: create squashed commits without editing
+ + history: protect branches when squashing a range
+ + history: validate squash revision ranges
+ + history: add skeleton for squash subcommand
+ + sequencer: share the squash message marker helpers and flags
+ + history: give commit_tree_ext a message template
+ + history: extract helper for a commit's parent tree
+
+ The experimental 'git history' command has been taught a new 'squash'
+ subcommand to fold a range of commits into a single commit, with any
+ descendants replayed on top.
+
+ Will cook in 'next'.
+ cf. <xmqqik4fv4v1.fsf@gitster.g>
+ source: <pull.2337.v15.git.git.1788900119.gitgitgadget@gmail.com>
+
+
+* tb/midx-incremental-custom-base (2026-06-12) 3 commits
+ - midx-write: include packs above custom incremental base
+ - midx: pass custom '--base' through incremental writes
+ - t5334: expose shared `nth_line()` helper
+
+ The 'git multi-pack-index write --incremental' command has been
+ corrected to properly honor the '--base' option.  Previously, the
+ custom base was ignored by the normal write path; packs from layers
+ above the selected base were incorrectly skipped by the pack exclusion
+ logic, and reachability closure for bitmaps was broken.
+
+ Expecting a reroll.
+ cf. <an4uIQA09rDCwwBp@com-79390>
+ cf. <apUbQ4S-zJGtBeu2@pks.im>
+ source: <cover.1781294771.git.me@ttaylorr.com>
+
+
+* mm/diff-process-hunks (2026-08-13) 11 commits
+ - fixup! diff: consult oid-only hunk providers via diff.<driver>.process
+ - diff: consult oid-only hunk providers via diff.<driver>.process
+ - userdiff: add diff.<driver>.process config
+ - sub-process: add a gentle status read
+ - sub-process: separate process lifecycle from hashmap management
+ - blame: read precomputed hunks
+ - diff: read precomputed hunks for stat output
+ - diff: record precomputed hunks during stat output
+ - diff-hunks: add the store format, library, and command
+ - diff: introduce a hunk provider interface
+ - gitattributes: document how external diff drivers relate to diff features
+ - Merge branch 'mm/line-log-limited-ops' into mm/diff-process-hunks
+ (this branch uses mm/line-log-limited-ops.)
+
+ A new 'diff.<driver>.process' configuration has been introduced to
+ allow a long-running external process to act as a hunk provider,
+ enabling external tools to control which lines Git considers changed
+ while leaving all output formatting (word diff, color, blame, etc.) to
+ Git's standard pipeline.
+
+ Expecting a reroll.
+ cf. <CAC2Qwm+kzT_3_GKrpay=JLGYsxS10oWCg2MJPHrCVogFHA0OdA@mail.gmail.com>
+ source: <20260801174156.2998808-1-mmontalbo@gmail.com>
+
+
+* kh/format-patch-range-diff-notes (2026-08-24) 3 commits
+ . format-patch: learn --[no-]range-diff-notes
+ . revision.h: rename struct member to reflect notes role
+ . format-patch: simplify get_notes_arg parameters
+
+ The 'format-patch' command has been updated with options to
+ configure notes specifically for range-diff output, allowing them to
+ differ from the notes displayed on the patches themselves.
+
+ Expecting a reroll.
+ cf. <8f0a076b-4822-44e2-a842-cc1e39ae1c1d@app.fastmail.com>
+ source: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
