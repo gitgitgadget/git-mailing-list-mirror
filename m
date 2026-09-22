@@ -1,71 +1,71 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A8047A898
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 18:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59134A2065
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 19:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790103351; cv=none; b=jS/pbQBln7DaW1cjLRvehA4HGqDwL7tLMhjVhSvXYzOOmbUGFNrMHrFCGCpkTozoV+pv8jgq9BrAHM6vD4nFsHtbRyFKyCTUSvbPI5fczgxl7ZLnLEi3oi0XEZpnVL7mdOD6u86xIqAwNimQeq5OSjPTJq0BuVvvLhOIVLdBWQ8=
+	t=1790104576; cv=none; b=ji7FQOMjr6ovgHB4yMvFU19BebNge1ArrRQoktt2nxkNCCYpI/3vwpVZ3aYDREw3Vg/wdyo9x5Vpziv2yWUkkluzqNlnPYPGHoQwUEkkhBQWYsnISr32zqjEDmTSCfRU2gjNAWZ+GtLuytLIGFBvncPuuC0xv0Zp/B1akrYIBog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790103351; c=relaxed/simple;
-	bh=rB9LJ/+r7wRTq9r1ZJC2htvtaW2l94BqkEfzGSCoUyk=;
+	s=arc-20240116; t=1790104576; c=relaxed/simple;
+	bh=14MMSfHVRlQUpGDr2FDY16LHM4IIT7OzmEn3yZPuljU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=noFD2VQcNRbT8y573GLXm0P4/grnS0liTEfxzbmD37TmhKnEjHf29buSucTKqc5pb1+PVHeSooLluWjfU+6uMO4dwdmBcHXzoJ5khKpvNq4c2EeNb/oWqXBtB6jdYy/cqu5nQMqPdXbxB+mvklfe34QQJjweAFzCZ1nsi47Jma4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MPe2sQZL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cFChnjsN; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=aF7nK7N1mc5FSQgMtKEBkM6xe5TKw0QK5TsofJegruawuOpj7u2sSHMQ11Mc7R8IFATVWrEEuZH07qH0PdwVwYDWVTg2Eie8oRDjDTsVpWZLOWFxkXeeGiafGo6MTDCSBX9Tb/fW6tp5ri9TczxqBNKtFVKL1nCIjpV/NAeKzHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sf/GHMG8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eRoER856; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MPe2sQZL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cFChnjsN"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sf/GHMG8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eRoER856"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id E7524EC0171;
-	Tue, 22 Sep 2026 14:55:47 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id AA9F3EC0123;
+	Tue, 22 Sep 2026 15:16:13 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 22 Sep 2026 14:55:47 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 22 Sep 2026 15:16:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790103347; x=1790189747; bh=J6RNFV/s5y
-	FyXfGE1KqmrNB0QfQcnL8PYFAXNi90WJo=; b=MPe2sQZLQ36a2H2j9nGIuFJAF5
-	cXfzF20ofMML/qftZJnRjNuP2gWEA07/HwwbIlTc6ARsaOQMJYpsllAO7nimedJl
-	c2X5LchaCgfCOqHIOXDQHsCNi5ewP+AALue99ze3Tv4crmuuZ47iPP/z85TUguab
-	SjnfJ6LFGOJsYakex8I/RnyUYP4Un/vIt59e90zL+SRBuybjv1T7U5+RRstb9USf
-	muDlz35rpTYz9b06gvYdk2l4Hlm8uFfxUbVvwtITfZm4rcAOKejKeVT3DrTpNcyC
-	xkQyGJV1FGC+1uFIlW+gxIHM/kphWN++BB1oqNFMBIlMNEC66lrPWLHZT+ag==
+	:subject:to:to; s=fm3; t=1790104573; x=1790190973; bh=750SnI1fyQ
+	umrL87nu3KpcqDkHzWJrxdwAAGj+AT5qs=; b=Sf/GHMG8TD2uY4bClI9a3UpaOj
+	i5XfUA4PQaNgzHnC77zD+qoQN2REYMDg27qyDdVHCaugNTr7/Izi/hUvtHHChnIS
+	U4YMPQLrTHg7z7r1kjs3+zGf3xMGR3P5orDC37cEwNJMxDYI7+sXe7qGuh6e2E80
+	I1ySKi1T6an1ncnO/zFIlTjPOvsNj+SmDDdzfdpkjuWxMweqea9RLS3sbVzZArnp
+	9KaLyW5Sc1ggspeE2TLQ1rZO6LaaGQ5/sL+OvzXQtRc6zmTDwJj9uxtK2Q5OIqVn
+	hU+mPit2+H1Sa7XfBDg/yLhLiGqdW1pMXW5HrLZZbYKnKmaMy/x7Dc8ETCHA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790103347; x=1790189747; bh=J6RNFV/s5yFyXfGE1KqmrNB0QfQcnL8PYFA
-	XNi90WJo=; b=cFChnjsNtg9aPUFAjIKKkEEfrrJr0U7W3HI/t76xc7fUjTnL1q5
-	+WJD2YUjfr+nUcldrnDDK9geIQRaBqgpFxeu5ViQHDgcUsWzfjzz0e0iKnpFrogN
-	MwAWkGhicJ+m1tUOTCQPHRPYydBKJ67fzvaVlkPsQp/7blrYBPb/rK/8SYIkceMR
-	VYDoTVatiePNEFHetXb2aVzAqN9jc466V5Y4jWT2RPmx1KPgyHX5DbMbt3/6bvGc
-	3TtDaGZfe4f20j9FAvps9+nFemLsXiNlBJPMbThfCoFJx6X9IqQAU85/qIPJUzPS
-	Mb0aDVppwgYpIRx27RIY+BfAgf6l3wLyCNg==
-X-ME-Sender: <xms:M8-yajHzAhwsHRRb9Ti59Lt_KP-AF6zesi_ytXdbnyIDvMiyOBNMCA>
-    <xme:M8-yai5yn3Xmk3PazoMs2K32Gc5N8TNJ0uV7NX_TZidgyFuTEPwGoGvCEe6gNFlLE
-    dwWquXz17azAoxtNW_DWeWnO3a6XRa80ImP05Gt2iQlRUJPHsWIN64>
-X-ME-Received: <xmr:M8-yaozG_gK_s2k6GMn8j4zHG632TNJL0H1wCJWxGyaEnk6pjMg5qQgoqR_Vc5-PmLX5HxPEK0s-4l7QI0zthf-gFrBgqR6zyvQV>
-X-ME-Proxy-Cause: dmFkZTF9CNT01/1Hl6TINWWFL/3kCkRfMUs3eqENTgbT6LF64gfEeF8xYz2g0Wp5a+6N+G
-    J5PeUITpPj//q3Av3xenLgqA5IJ9OhO+EDNX/lcJcWNnDmTcRWvvrsML/v+VAX1KRpPvfU
-    EPkPyG/vY4EEdEK84aADM3JNQrI4CJWJflGv+mDeERKlrE9id0AgCnuC0HykH2EHgmZ/bX
-    SZIqEJqCLghyDAjHhalDGgcT8HrN5eKjedR4oVdRHHfeHgQXmOA8n3bELpXgx2TWFxGgyj
-    uKI2BTXYQFeOBVdNfz1xPVJsu6TmysJqxmlzenvLDGtHxGvj5q7+0uo+0W8RHPMsyxeYGE
-    9+f1kZAB2vfZqzW/7ZkGkVlHXwAB18E9K5MXZWetXO1TRhouO55zBUfmVA6R6wIvGIDZvW
-    oU+1mWGsjl/0qCRzQWrlFuZuZx1XhnqvHsMITdUuDpHo1O1ejQp7WAAxLiGC/nhhKqF3iq
-    phhcoU1F5QYS+APPk45bXcl8bltjO/6MmtRZ+B4YHG32pPqyV3aqj0RjGGSnGBSBM8GuBc
-    CcofSCGNj3EBPQJnyhLW14gp1+2bI/TQdos+6EJWxxryfFY1ce0OfGT1QELJnqpibtvoz6
-    1kJhoyXwumMT9T18T7I2u6xjTDmUJbyKYidMamCpXI5iUFbWa3I3ltzqQsLw
-X-ME-Proxy: <xmx:M8-yahMHeaunW5e3H6GeH22g1tk776BDSUqmieB-WZNVuG0qTGaoMQ>
-    <xmx:M8-yaulE5z_Z1nTo21AWDH9HrxGnS-5V8hvRkyN6qq4dAxBO20ZcEw>
-    <xmx:M8-yamRjz6Oka_nl3Oj_SbkM3M-_KWA5_PJQ4q48oA5FyKkbLVzyng>
-    <xmx:M8-yatUl0DPxsr_52cPwP2LIl01B7K2U_1f9nSxo3fxcTho3B3ReSw>
-    <xmx:M8-yatBdKLEPgUxz8jIuz_cop7P7MeU-beuk-pU6g9Jayi3pTdFQTJum>
+	1790104573; x=1790190973; bh=750SnI1fyQumrL87nu3KpcqDkHzWJrxdwAA
+	Gj+AT5qs=; b=eRoER856xZ/FeYa51vZwDJiXamRHqBGdFZv0Yrqvtiwu+1dEXzd
+	0sSQ6rB4GamfQjmbpy1PwZfsN+nS0XyVfm+sWvhaUvTA8MNBQ0LrVb8iEhU2Aplt
+	GrE7fLRtgjbh94LtQE6tVFhUWpSsUktbecVf95P0WbP3ZmW1zdNjq5KDHYKLayAY
+	qcreaPx1M+aY2uD+/XGj519QOeJ1miny6HX3iiKZ/TOgYIXo+eOxS6lLEB9CLim1
+	yoQ/053py2kRZvMn6ccqyyIlA8Z206vhAsXoQRxUOZTMQiy+M1L37EoyW+a30VPW
+	FcwS3XgeheCyx+rrQsEHV+RtlEOxBFde06Q==
+X-ME-Sender: <xms:_dOyalhbVS-BBILNDjfX_un16HyBfOwI9Z_TKPNHfiyTSPXzc4R_iA>
+    <xme:_dOyasnUPI_Sa-r6TBkBJ20fqLi1W5sPucV5HvuQjBNeOzfdTA8per5q0Q9LKbfuh
+    5R2aH3ZaZNlqX_CubgGiMm0WmLa7Y_Q32y5XYcxzHC3cccWqkbAS-Y>
+X-ME-Received: <xmr:_dOyaosEfaJRWLB9JfNAeN2AwK2A4eEuXbUjltFod1QRFEPzHIWTLNPkD9EhQuQcoccuTHtHnd5gOjWkAIBeEYHi5ztMWo0NTyZt>
+X-ME-Proxy-Cause: dmFkZTGpHx9Bp4QtTwapZYEY4SnmxqedtVjnVsH4j/Samg03Qdoms0ul4QOf81z4hZ9gjh
+    8+ZBRPnX0aJbnAnDTYK6/BSN+qrIcrmXJXCPo1kg8JNdCJkEb/Z2ooB099Yw6Hsv9EQid3
+    TkWtVxcv5OdnRRDqcFZxEu/Jpzf3dgpyG/SvpwoPuM9Gx5+qxv3H++lirLhJBEWMSsSLu3
+    CeSwRfOGOj19UnKg7iF7q2xk/O8lULyQmIcqY6QR0Cu5nsW/M0T+StlxzcbDxK0ZVxTVqY
+    4WPFo5q1Vz4/o6FxhG9c2ikoJo/8EQyiu2fzoMkIS6X8ccRJKmxsXc+y8bf+0r0RtXSpei
+    3KP6epQsorFTp7pByN7q/Wb2WQbmBrHcJnu0Ncnv6jcrZxDAt44FpFaxDSmkGJ9cntz2EE
+    X6U9ElAd1K6bkzOgZOs03MxheLjikK41K7bTi4MWTODO5BVN1/WR/y8QAXY0ezdwndGY1C
+    SNLd0JS3iyRPa2HPGuDA3OLkZI2x+17+a5pd+fH+KsbDv6EEeApKY1JwIjDJ/e4vZwgEOk
+    HjgHJG7/oi1NQ0adanA5OKUDu+zeCsq20n2qhnZiiuXzugNZ13nMSMkEE1/8XVR8DaKD2R
+    85Ufa8hFXBMvVvWsNMsoouWAXvysQxBL2qVS6tE9UeOn9HJUfs9x4p1R8a1w
+X-ME-Proxy: <xmx:_dOyaqaGAEmnUmnOwNUBoqjz5KQydmScxIUN0Dp7De8wcMURODlOwA>
+    <xmx:_dOyaoCouiQ2-l0Mn1h1o1B3YvPh5DxEsO_aYpGl8IlzKdRf2XydBA>
+    <xmx:_dOyaq90fr4RWu3AodbcVyOxbRJCnnXg7Jaq6XI7bqR9grGmmuFRsw>
+    <xmx:_dOyasTkB9WDJ46kvQxor9Of5aPZfPN6ynCGWJ19SRj2lzcV_hJh7w>
+    <xmx:_dOyalMV-Bm93I9Gdb1nJ5ZGzy0LUxrCb_GW4y6LBagWbCNTvG4yW_5O>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Sep 2026 14:55:47 -0400 (EDT)
+ 22 Sep 2026 15:16:13 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
 Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Patrick
@@ -73,15 +73,14 @@ Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Patrick
  <newren@gmail.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
  <avarab@gmail.com>,  "D . Ben
  Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v3 1/3] refs: allow callers to supply old OIDs for batch
- deletion
-In-Reply-To: <3315d5f47ad7d8bcdbeda90b161606507c7040ea.1790079917.git.maciej.ciemborowicz@gmail.com>
-	(Maciej Ciemborowicz's message of "Tue, 22 Sep 2026 14:26:07 +0200")
+Subject: Re: [PATCH v3 3/3] fetch, remote: retain old OIDs when pruning refs
+In-Reply-To: <3f3062252ac1aa057b9ee9a2dd9892e629ba7a82.1790079917.git.maciej.ciemborowicz@gmail.com>
+	(Maciej Ciemborowicz's message of "Tue, 22 Sep 2026 14:26:09 +0200")
 References: <cover.1789901584.git.maciej.ciemborowicz@gmail.com>
 	<cover.1790079917.git.maciej.ciemborowicz@gmail.com>
-	<3315d5f47ad7d8bcdbeda90b161606507c7040ea.1790079917.git.maciej.ciemborowicz@gmail.com>
-Date: Tue, 22 Sep 2026 11:55:45 -0700
-Message-ID: <xmqqjyoddsjy.fsf@gitster.g>
+	<3f3062252ac1aa057b9ee9a2dd9892e629ba7a82.1790079917.git.maciej.ciemborowicz@gmail.com>
+Date: Tue, 22 Sep 2026 12:16:11 -0700
+Message-ID: <xmqqeceldrlw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,197 +92,85 @@ Content-Type: text/plain
 
 Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com> writes:
 
-> refs_delete_refs() performs unconditional deletions, so callers cannot
-> preserve old values that they have already resolved. Consequently,
-> reference-transaction hooks see a null old OID.
->
-> Let callers provide an optional array of expected old OIDs in parallel with
-> the refname list. When the array is provided, delete the ref at position N
-> only if it still points at the OID at position N. A null OID requests an
-> unconditional deletion for refs whose old value cannot be resolved, such as
-> broken refs.
->
-> Use REF_TRANSACTION_ALLOW_FAILURE when old OIDs are supplied. This retains
-> the helper's best-effort behavior: an old-OID mismatch rejects that deletion
-> while independent deletions in the batch can still proceed.
-
-The history around this area seems to look like this (you can use
-"git blame" to figure this out yourself).
-
- * 98ffd5ff67 (delete_refs(): new function for the refs API,
-   2015-06-22) started the API function to allow multiple refs in
-   bulk.  The comment in refs.h that says refs_delete_refs() is not
-   done in an all-or-nothing transaction has been there ever since.
-
- * 2fb330ca72 (packed_delete_refs(): implement method, 2017-09-08)
-   started the "because these operations cannot fail, we can afford
-   to run bulk deletion in a transaction without having to worry
-   about making it all-or-none" for the packed backends.
-
- * e85e5dd78a (refs/files: use transactions to delete references,
-   2023-11-14) did the same for the files backends.
-
- * d6f8e72982 (refs: deduplicate code to delete references,
-   2023-11-14) consolidated the "because these cannot fail, we can
-   afford to run bulk deletion in a transaction without making it
-   all-or-none" codepaths between files and packed backends.
-
- * 23fc8e4f61 (refs: implement batch reference update support,
-   2025-04-08) introduced REF_TRANSACTION_ALLOW_FAILURE so that some
-   callers can take advantage of "ref transactions" as a batched
-   update mechanism, without having to roll everything back upon a
-   failure.
-
-Doesn't the above observation suggest us that we should always be
-passing to ref_store_transaction_begin() inside refs_delete_refs()
-the REF_TRANSACTION_ALLOW_FAILURE flag?  I would say that it was a
-missed clean-up opportunity at 23fc8e4f61 that we didn't do so back
-then.
-
-> diff --git a/refs.c b/refs.c
-> index 92d5df5b7..1e0f432ed 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -3069,34 +3070,60 @@ void ref_transaction_for_each_rejected_update(struct ref_transaction *transactio
+>  	if (!dry_run) {
+>  		if (transaction) {
+>  			for (ref = stale_refs; ref; ref = ref->next) {
+> -				result = ref_transaction_delete(transaction, ref->name, NULL,
+> -								NULL, 0, "fetch: prune", &err);
+> +				result = ref_transaction_delete(transaction, ref->name,
+> +							&ref->new_oid, NULL, 0,
+> +							"fetch: prune", &err);
+>  				if (result)
+>  					goto cleanup;
+>  			}
+>  		} else {
+> +			for (ref = stale_refs; ref; ref = ref->next) {
+> +				string_list_append(&refnames, ref->name);
+> +				oid_array_append(&old_oids, &ref->new_oid);
+> +			}
+>  			result = refs_delete_refs(get_main_ref_store(the_repository),
+>  						  "fetch: prune", &refnames,
+> -						  NULL, 0);
+> +						  &old_oids, 0);
+>  		}
+> +		if (result)
+> +			goto cleanup;
 >  	}
->  }
+
+Hmph, I may not be reading the code correctly, but the last "goto
+cleanup" in the above block can happen when refs_delete_refs() call
+that internally uses the best effort transaction sees an error.  If
+we were about to prune 30 refs but failed to prune one of them, and
+if we are running with non-negative verbosity, don't we still want
+to make the "[deleted]" report for the 29 of them and possibly
+report "[failed to delete]" for the one that failed?
+
 >  
-> +struct delete_refs_rejection_data {
-> +	int failures;
-> +};
+>  	if (verbosity >= 0) {
+>  		int summary_width = transport_summary_width(stale_refs);
+>  
+> +		if (!refnames.nr)
+> +			for (ref = stale_refs; ref; ref = ref->next)
+> +				string_list_append(&refnames, ref->name);
+>  		for (ref = stale_refs; ref; ref = ref->next) {
+>  			display_ref_update(display_state, '-', _("[deleted]"), NULL,
+>  					   _("(none)"), ref->name,
 
-This makes readers expect that we would be counting failures, e.g.,
-the caller may request deletion of 100 refs and we report 30 of them
-failed to be deleted.
-
-> +static void delete_refs_rejection_handler(const char *refname,
-> +					  const struct object_id *old_oid UNUSED,
-> +					  const struct object_id *new_oid UNUSED,
-> +					  const char *old_target UNUSED,
-> +					  const char *new_target UNUSED,
-> +					  enum ref_transaction_error err,
-> +					  const char *details,
-> +					  void *cb_data)
-> +{
-> +	struct delete_refs_rejection_data *data = cb_data;
+> @@ -1639,17 +1650,24 @@ static int prune_remote(const char *remote, int dry_run)
+>  	printf_ln(_("Pruning %s"), remote);
+>  	printf_ln(_("URL: %s"), states.remote->url.v[0]);
+>  
+> -	for_each_string_list_item(item, &states.stale)
+> -		string_list_append(&refs_to_prune, item->util);
+> -	string_list_sort(&refs_to_prune);
+> +	for_each_string_list_item(item, &states.stale) {
+> +		struct stale_ref *stale_ref = item->util;
 > +
-> +	warning(_("could not delete reference %s: %s"), refname,
-> +		details ? details : ref_transaction_error_msg(err));
-> +	data->failures = 1;
-> +}
-
-But that is not what is happening.  If we wanted to count, it is a
-simple matter of incrementing the data->failures member instead of
-assigning 1 to it, of course.
-
-It also might be annoying to see 30 warning messages in such a
-case---or it may be what the caller is asking.  I cannot tell.  If
-we wanted to squelch excessive warning messages, we could count and
-cut-off after N failures, of course.
-
->  int refs_delete_refs(struct ref_store *refs, const char *logmsg,
-> -		     struct string_list *refnames, unsigned int flags)
-> +		     struct string_list *refnames,
-> +		     const struct oid_array *old_oids,
-> +		     unsigned int flags)
->  {
-> +	struct delete_refs_rejection_data rejection_data = { 0 };
->  	struct ref_transaction *transaction;
->  	struct strbuf err = STRBUF_INIT;
-> -	struct string_list_item *item;
-> +	size_t i;
->  	int ret = 0, failures = 0;
->  	char *msg;
+> +		string_list_append(&refs_to_prune, stale_ref->name);
+> +		oid_array_append(&old_oids, &stale_ref->oid);
+> +	}
 >  
->  	if (!refnames->nr)
->  		return 0;
-> +	if (old_oids && old_oids->nr != refnames->nr)
-> +		BUG("refname and old OID counts do not match");
+> -	if (!dry_run)
+> +	if (!dry_run) {
+>  		result |= refs_delete_refs(get_main_ref_store(the_repository),
+>  					   "remote: prune", &refs_to_prune,
+> -					   NULL, 0);
+> +					   &old_oids, 0);
+> +		if (result)
+> +			goto cleanup;
+> +	}
+
+Ditto.  Beyond the post context of this hunk ... 
+
+>  	for_each_string_list_item(item, &states.stale) {
+> -		const char *refname = item->util;
+> +		struct stale_ref *stale_ref = item->util;
+> +		const char *refname = stale_ref->name;
 >  
->  	msg = normalize_reflog_message(logmsg);
->  
-> -	/*
-> -	 * Since we don't check the references' old_oids, the
-> -	 * individual updates can't fail, so we can pack all of the
-> -	 * updates into a single transaction.
-> -	 */
-> -	transaction = ref_store_transaction_begin(refs, 0, &err);
-> +	transaction = ref_store_transaction_begin(refs,
-> +			old_oids ? REF_TRANSACTION_ALLOW_FAILURE : 0, &err);
+>  		if (dry_run)
+>  			printf_ln(_(" * [would prune] %s"),
 
-This is the conditional/unconditional REF_TRANSACTION_ALLOW_FAILURE
-I discussed earlier.
-
->  	if (!transaction) {
->  		ret = error("%s", err.buf);
->  		goto out;
->  	}
->  
-> -	for_each_string_list_item(item, refnames) {
-> +	for (i = 0; i < refnames->nr; i++) {
-> +		struct string_list_item *item = &refnames->items[i];
-> +		const struct object_id *old_oid = old_oids ? &old_oids->oid[i] : NULL;
-> +
-> +		if (old_oid && is_null_oid(old_oid))
-> +			old_oid = NULL;
-
-I think there was a comment by another reviewer on the previous
-round around this area, which was never answered.  In general, it is
-a polite thing to respond to review messages and see that your
-response is acknowledged before you send an updated patch.
-
-I _think_ the reason why you need to treat null_oid specially is
-because you are using a flat array of object names, not an array of
-pointers to individual object names, but in that case, I wonder if
-ref_transaction_delete() should be the one who pays attention to the
-NULL-ness of its old_oid parameter?  The current code does detect
-and reject (old_oid && is_null_oid(old_oid)) case, but I am not sure
-what we are gaining by that limitation.  Rather I wonder if the
-first two lines of the function should read more like
-
-                if (old_oid && is_null_oid(old_oid))
-        -		BUG("delete called with old_oid set to zeros");
-        +		old_oid = NULL;
-
-not forcing the callers (like we see above) to do the same.
-
-> @@ -3112,9 +3139,14 @@ int refs_delete_refs(struct ref_store *refs, const char *logmsg,
->  			      refnames->items[0].string, err.buf);
->  		else
->  			error(_("could not delete references: %s"), err.buf);
-> -	}
-> +	} else if (old_oids)
-> +		ref_transaction_for_each_rejected_update(transaction,
-> +						 delete_refs_rejection_handler,
-> +						 &rejection_data);
-
-I personally feel that we should be weaning ourselves off of the
-assumption that presence of old_oids[] is the ONLY thing to cause
-rejection.  IOW, always call for-each-rejected-update here
-regardless of old_oids != NULL.
-
->  out:
-> +	if (rejection_data.failures)
-> +		failures = 1;
-
-This is quite roundabout thing to do.  rejection_data.failures,
-unlike my initial assumption, is not counting but is either 0 or 1,
-so failures here is also either 0 or 1, and then ...
-
->  	if (!ret && failures)
->  		ret = -1;
-
-... if we have the failures computed to non-zero, we make sure ret
-is not zero.  Shouldn't we at least get rid of the local variable
-failures?
-
-And if a variable FOO is not counting the number of FOO, do not name
-it FOOs.  If it is a Boolean recording if we got FOOed, call it as
-such.  My preference in this code path is to actually count failures
-in the member "int failures" of rejection_data structure, but if we
-are not counting, then call it "bool failed", perhaps.
-
-	out:
-		if (!ret && rejection_data.failed)
-			ret = -1;
+... around here is a code that reports "* [pruned]" for the ones
+that we successfully removed, which is now ignored when even one of
+the bulk removal fails.
 
