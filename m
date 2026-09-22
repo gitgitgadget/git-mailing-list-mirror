@@ -1,174 +1,127 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from flow-b1-smtp.messagingengine.com (flow-b1-smtp.messagingengine.com [202.12.124.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E817249BD70
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 20:20:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615944B95B3
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 20:22:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.136
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790108443; cv=none; b=Um2/wVRP7pP+dKBlyo6Pajk4LeLmoieNx6+7S/ktNQVj8ZY2xlsR05EPz7Bkciwhxh4zFc3Cobt3qa36lH66ZeJWnoFs1Jm0eRbZTEcztLqn7itfPAgAdnsdnyd2km5UAaikx04gtSMXFwQj3uTbsMgRhy8NF6Dm9sx0wJYorkA=
+	t=1790108537; cv=none; b=QF1PmXJp2xS4JJHN22v+MEvyy4WKI1w5Egxcy9NRjInDQfI/h7VevsuV3J0IQJWAQP+/J4A3U7dItKpjoYghm3vWwDNm3ibny40WpQQlHjvhUGSiQ2EvqyIbWJboPg0oN1hmohMtTIFHmH6ge/acInN7ZISgdNvLNHMVmGKV4Ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790108443; c=relaxed/simple;
-	bh=gPW9WjRD6QHV5oI8S2ptN3j7RvfiEkMvU6nrGyhPN3c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hGr665CLB5aSUTnIRIDTHiab8ntf/IndtFm/sAHkHVlV6POrd4Sxb5hSQunXYZA3gDXqlzlgQU6KyhWJocosmZmvETw5em8rREkw9ssINwssP8CeuRn2T5NUYSEjsn8eG5UxtiJXOOCrMuYuNJaORSHSOzoThSUaVz0JAliyrZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=r0JlWIaE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ckoIinBh; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790108537; c=relaxed/simple;
+	bh=IeNQHPUu8y7nDgIKJAYGpGS+iC9V5MPY9pec+20CNgI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YKr8CQ0fi1kWfHlIF2Zr7PGqsEtS1KYQ2qY6NK6ShYpOyl1p+FrICqUikSSeoiJOhHHbmFLjH837U7Ie+9EfgAKNmMCiKXoHk/Z8GSGAGAR0uhebG7+QtuUDbq7wfK8zj/qYI/ehyJr5CBsOvpTsXnajircdDpLrnW9fNB5g7TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=N7d3nWQI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eT9raanN; arc=none smtp.client-ip=202.12.124.136
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="r0JlWIaE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ckoIinBh"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 71A51EC01F2;
-	Tue, 22 Sep 2026 16:20:19 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 22 Sep 2026 16:20:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790108419; x=1790194819; bh=HkA4L5zGpS
-	RGWy88x2r1lU4lhSthhPx+MP68GxYeyDA=; b=r0JlWIaE4jm+Q1BsvKf25W3MUe
-	QHf2FChLUJVJ0ns9BRSyLAbKQHEUQgZtsqlQleK1+zv7fFy7yWgFoiXx4lT7DDKc
-	gLredLfXqvTAx6s3MAacOrs4teYzFneXX5Pnd/5NRS/KonABVFVIG5ukxcXNgTYy
-	xwGVDcp/UYPigiD+0r2U7cpD1V04JXOYx8fBviA47ASYw7YusYWx8r2OB8bgtBiX
-	fs4v39GyAxnmdKgLGeOYsnqQIyq83lwiOPNYJ2hbPzB1ZPDMbGyC+aPjyEM0Mf67
-	o6IHiU6dNmrwDr2ZTn6WVR5nWN7cX4hTlG0L9Rr4YkxsmJ2qLzXeLLaPljpw==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="N7d3nWQI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eT9raanN"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailflow.stl.internal (Postfix) with ESMTP id D873113000DE;
+	Tue, 22 Sep 2026 16:21:54 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Tue, 22 Sep 2026 16:21:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm1; t=1790108514; x=1790112114; bh=VzsESsx1zA5G9bXGcbs2O
+	rXu5aV4o9bA2Fz/39AVH8E=; b=N7d3nWQI1tVeLCtmOt+x4NUuFoJEnEBKoo9iI
+	x0J0PHJVlv9r7ETs0u/FOHdbHZpXLtgWm3V5T4x+ArNWQik2igni9sJcQsDWRl81
+	+cVVKAcX901UV+ZNZn2/uCIc4iSED4q+pEbfhmhujFH6Ofv3h8LvRrmSnPYExLSK
+	s8ba8szYS91I62N/eVAzISmicIHH6rKZEWivgs3Jbp7XcVipgqOsg8JMAAxycvlh
+	PyDw303Il8qDrFFVZIRc22UH3KQH5BUUN18u2C7CVzcnsyl6R+nGX6TP5EDdxx5j
+	sgDNrYDr2j1LQ/jXAQl6H3EBiuHo5GzPohWFOM9MWTRH4GBcg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790108419; x=1790194819; bh=HkA4L5zGpSRGWy88x2r1lU4lhSthhPx+MP6
-	8GxYeyDA=; b=ckoIinBhBpiGhPkiqABCjvsr4hTP7V7HOnqkj/gfwXd37CIuV1G
-	c/J8EWxm4Ls6ttbVFYwxBKNjmGFzX6c9ENLr6jHKeZ//7UKMSM6My8TYou4RkP5r
-	iWPQDPsVegIOsVdSvr7w1+MpVMVRE8PwlAcTbVGEdiGON77SJ91MfDNJ9sYxJEGq
-	c+Cf4VdaoWqbGU4tp6i810a3+MobYXyd+Etph3CnQHli6+yEr4TN5z/S+0WxkHao
-	f0xsHFOmZBYbnlXFUkK4SKKoVIyZ87F8qRgmiRJT0dpXCv6pk9u5ZRICgbxcQRg5
-	TOaNWJNc8nteIHeEYZ2U4GnmewF3KifOBBQ==
-X-ME-Sender: <xms:A-OyasqPz7LtRJBXOLt-3hYJY-l_MAgwAREtjQChZgl_RZcPkJsOyA>
-    <xme:A-Oyapp19rrJNVTRlsiHIuCxeCfqYnrAsIFLrrEzzdav5_p-7tj5NjsP3PPcIS4xW
-    vDhTZ7k-H0qAD3USsLDsosXmj4chPy-VZ4wloZqTOI9-jLA4Y8Pw-o>
-X-ME-Received: <xmr:A-OyamN8emx0SYZdqnzki0xlrMxWkWBPUz-KRnfh75Zzdh4gIzXRK74Xp3sdVCjO7JcYPFV1jNK3o4V-_sJjRos9h50FNFD6Qx01>
-X-ME-Proxy-Cause: dmFkZTEbs4eEwUfhCPeNrVe4Rf4VMoKLRX6Cp5PqjGMeeQcoHM43injNEXvIH+Bsb4i8Mv
-    JfsmohrOkOu6JB0w08S5QhAp1LvLdaajxvatEv+kUlt/UFBT8vHVg3bYqrvwTqznzKwAVk
-    COSQmXS6qXFNgbE1uOWT9noUDLq2MILu6pt/NTkpv3hvfkB1DVDbdWi42Fezk/ajx/ISXj
-    v0EA+cFObwHZI3p3lth6YazpK1EOFFAfUZH6AB1JQMwuu2kPOHrmsIQN3cF9FqloRqxfOA
-    QQeYPJRPeVYYJwmml9bXuDdq44Wg+TBr2oG/IdlmcU3g/84wEveJA+r1qJmcc5rw5bFUib
-    KNlfqs6RWvV9A9s1qXtGmg3ZRpb8QQzZ6quu0O9omDBitLi6Ex+PvgUoR3QulWKKgbAxoV
-    495VrYtXQ6d7RH2+/SUSETm3IF6F2OQdBYP1krY3BagXYcWIcdpm1sTlT4L60pHWz8DeI2
-    QmjZOel2aptAwvp3MT7ipEfCZlpMuXTpbgYOAOn4SnYAU13Njpru54UKjjP3gWNzGtdQ76
-    MudWx1pF+r37W4hLsxtZid9STU/wc6CRs0s0asm0M6LvT6huFM11KE+lpRxBgJFEcmGcYY
-    CrTvIJX6ySSc/Eii+0ZaRcHnAyzdhIJxz0UOwkP4RU+h6b23yVt9TiEquJdw
-X-ME-Proxy: <xmx:A-Oyaiz2S5r_E2D-652MeX-mX2M5q-_io1tgS3319EfoEb9xPNGIug>
-    <xmx:A-OyanuOVLf9vWNKgfgr4maqXehGXbmJ5l88m-E8jt8riMAnrCfb9g>
-    <xmx:A-Oyaj56_VgLY8IZZaOCfKuo-yQ8sVJstkArY-rK8eyeayQmXr5yJg>
-    <xmx:A-OyauTT05w9R2hNvttL-i26oW2xTQHpgb9a4OipEQqKiInj3DesOw>
-    <xmx:A-OyalvcLBoTWLOr68c-M_QzsBBuY86IaIQMNDAdriyiR7D-r9o54LV8>
-Feedback-ID: if26b431b:Fastmail
+	1790108514; x=1790112114; bh=VzsESsx1zA5G9bXGcbs2OrXu5aV4o9bA2Fz
+	/39AVH8E=; b=eT9raanNYhAl3Cx3TFg1zD2QJ5v0brAO0YZa0et2hiSQzoYTFKc
+	I2XB9k8BuOxq2eAr4RS9hRfb7r/YatbU7y80U6qyNXhU1sJoXOyCXlyU+sJHHiz9
+	zzGS0FKWGwI5uThA5CAvlF40TXydE2Z6eJJwe8AjqtYZyF47HFij7d0jZP4z8WSs
+	DTu/JYZnbvJ3/IZv2ZfNn1S86cZHwLWEo/2dHupwzNP7aqyh4MKrzgxatsyCdXgE
+	/lWVyzHDMLTxH+D/KQ/XA54WQcv0LWLQYDQYkhbLo2HPxBOXe90Yc5PA92HRZxlQ
+	Zp41gGfFhXHw2hMKUhBPBRaGeLKci9+R6ug==
+X-ME-Sender: <xms:YuOyaqoEd_vdS2mHpomLHe0Jdfwgzo2M-CNybV9zDC1FQgQd30IMvg>
+    <xme:YuOyaupXKZFVWtIv2-S35IAKD6XxxDUa5zeDUIn2JnlCviikVnYGQ0Kk7qj5zAoMg
+    uByYrFrKi4k3TJKovVHTP7qDAe0u0TjNfRXJ7xDjDiqtekWJ79aHYBs>
+X-ME-Received: <xmr:YuOyas2glx_H8wDmDL4-oQaboE_p_yYEaj7sCXx1BAYScyavhnrLrTHi2Gui2gGHQpDYi0Tb0ZH6yDNkqwHQ7u_OaVKBIxfdkooCZCTrrY9gTQ>
+X-ME-Proxy-Cause: dmFkZTFodfHVhT+HudPzyYCUDdTkMCSleyNHYTEK8kICfGyawLyJQEBVRMa9d5NBGt2kA6
+    Qkl8uJylRrNBqZhBhxhgVyF1o1xrR2/o5rjHSFD1s16x4i/GQxTCQKiVAZtwCp03pMKXKA
+    nDDmdRrpTWN7ksxFPKV05ChMhgMwJQTTzVZdZ+T3ydXTGwt6Ehnqauqac0wGUWUB7tk62W
+    ZerelYHdeCfDJUb7F5Im/jqXNPJPXOuPYU/9o0BRCGE5MgW4qpZ9st78N78/NJ3eLfp/+I
+    gx9fUjfLvA5sMWG7lvdCUrQUqw+/0nBP470OE7Aq/3xwTuo0/LEsIAXP4W4Vrx0N4Ve5jT
+    2thIhxf8K7ADvBA3L9e8mf4PyXCHIIfFXDcqii/YN/qMURrej/neWNQ4KzHcfrewjm08/k
+    liCQ2nAKEi7d2fVTspvPN3L/cCpvhjM8hwC6HNc5kKJ0q7ERKKZ958tsnVCPuh+USEJiVI
+    GF44MfMNpCsCUzmVLfHGdEERnYWlDP0ttTsCHxBLh0yGKUefK5fjfbOMvJdHQQNMAy5FtE
+    CK3hluXmAjk2+Qt753DDkJZraAvkWjbyDZDlTeyRjYybxiqfHAmJRHaTe4vcrEcLV1L5MN
+    mHBfzt3JUn68cD4fh5Nr1yJFy2yTlR9iLPWGTNDpgvpsxD1PpdTkM9mY+FHQ
+X-ME-Proxy: <xmx:YuOyalDu3dhnf8XNH4EJPzx4qrneip6jwsf2zkTwT3Tn6TQJzQLJhQ>
+    <xmx:YuOyasfVILZMPdWCp0Vh2osFa2s6UYd3oAe2E2mvhzUV3Gv1rZ617g>
+    <xmx:YuOyaii7F0_QnpXAIusTgxQHMUF-xAnnS2pkr5ylmqyaNsqImTGzJw>
+    <xmx:YuOyaspStRNegaGMBxZuVeRf2gWPK1FscMalWLkX-vORdMCyd7VKrg>
+    <xmx:YuOyagGg86sZeKDS_QYBe6zy9K_bEJ9xqcpyUe2HmV2rLjFvWIX1AGtc>
+Feedback-ID: id2564aa6:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Sep 2026 16:20:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
-In-Reply-To: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com> (Julia
-	Evans via GitGitGadget's message of "Tue, 22 Sep 2026 19:29:02 +0000")
-References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
-Date: Tue, 22 Sep 2026 13:20:17 -0700
-Message-ID: <xmqq4ifhdon2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 22 Sep 2026 16:21:54 -0400 (EDT)
+From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+To: git@vger.kernel.org
+Cc: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+Subject: [PATCH v6 0/3] t40*: modernize
+Date: Tue, 22 Sep 2026 16:21:49 -0400
+Message-ID: <20260922202152.842793-1-markchucarroll@fastmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Changes in v6:
+- Fix rebase error to separate commits correctly.
 
-> From: Julia Evans <julia@jvns.ca>
->
-> Instead of saying "see EXAMPLES below", say "see <<EXAMPLES,EXAMPLES>>
-> below" to make the man pages easier to navigate on the web.
->
-> The reason for using the more verbose <<EXAMPLES,EXAMPLES>>
-> (instead of <<EXAMPLES>>) is that if the header that `<<EXAMPLES>>`
-> is referring to is in an included page (for example `REMOTES` in the
-> `git-push` man page), then AsciiDoc will think it's a broken link even
-> though it isn't. So it's easier to just make all of the links use the
-> form with two parts.
->
-> Signed-off-by: Julia Evans <julia@jvns.ca>
-> ---
+- Link to v5: https://lore.kernel.org/git/20260922143119.3313620-1-markchucarroll@fastmail.com/T/#t
 
-Oh, I love a change that is so sharply focused on a single issue and
-describes what the problem being solved is.
+Changes in v5:
+- Update t4001.sh to the correct commit version. (Argh!)
 
->      * I tested it by running this script
->        (https://gist.github.com/jvns/039c8ed0add092f2179f0dba52ebb896) which
->        builds the previous and current views of all the man pages. I looked
->        at the output to make sure there were no differences. You can see the
->        output in that gist.
->      * I believe that asciidoctor will automatically make sure that there
->        are no broken links.
->      * I also spot checked some of the HTML output to make sure it looked
->        reasonable.
+- Link to v4: https://lore.kernel.org/git/20260918171847.2670739-1-markchucarroll@fastmail.com/
 
-> diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
-> index 035f780e58..47dea1de8e 100644
-> --- a/Documentation/fetch-options.adoc
-> +++ b/Documentation/fetch-options.adoc
-> @@ -199,7 +199,7 @@ endif::git-pull[]
->  	providing the tag refspec.
->  ifndef::git-pull[]
->  +
-> -See the PRUNING section below for more details.
-> +See the <<PRUNING,PRUNING>> section below for more details.
+Changes in v4:
+- use a "test_expect_success 'setup'" instead of setup functions
+- make capitalization in test assertions consistent.
+- improve naming of rename tests.
+- make all indentations use tabs correctly.
 
-OK, we already see an example of the <<double,double>> reference
-notation.  This needs to be in this form, intead of <<pruning>>,
-because it refers to the named section of a different file, namely
-git-fetch.adoc (I am just trying to make sure I understood your
-explanation correctly).
+- Link to v3: https://lore.kernel.org/all/20260917195436.1102981-1-markchucarroll@fastmail.com/
 
-> @@ -210,7 +210,7 @@ See the PRUNING section below for more details.
->  	a shorthand for providing the explicit tag refspec along with
->  	`--prune`, see the discussion about that in its documentation.
->  +
-> -See the PRUNING section below for more details.
-> +See the <<PRUNING,PRUNING>> section below for more details.
+Changes in v3:
+- Correct cover letter and commit message issues
 
-Ditto.
+- Link to v2: https://lore.kernel.org/all/20260910-modernize-t4001-v2-0-ac53e9f5d717@fastmail.com/
 
-> diff --git a/Documentation/git-bundle.adoc b/Documentation/git-bundle.adoc
-> index 03cd36fe8d..cd722bd674 100644
-> --- a/Documentation/git-bundle.adoc
-> +++ b/Documentation/git-bundle.adoc
-> @@ -94,7 +94,8 @@ unbundle <file>::
->  
->  <git-rev-list-args>::
->  	A list of arguments, acceptable to 'git rev-parse' and
-> -	'git rev-list' (and containing a named ref, see SPECIFYING REFERENCES
-> +	'git rev-list' (and containing a named ref, see
-> +	<<SPECIFYING_REFERENCES,SPECIFYING REFERENCES>>
->  	below), that specifies the specific objects and references
->  	to transport.  For example, `master~10..master` causes the
->  	current master reference to be packaged along with all objects
+Changes in v2:
+- Merged setups into main test bodies.
+- Removed unnecessary echos.
+- Cleaned up here-docs.
+- Updated names to modern style.
 
-This doubled reference is more for consistency (in other words, "it
-is easier to just make all of the links use the form") than the
-"cross references from/to included page" we saw earlier, since ...
+- Link to v1: https://patch.msgid.link/20260908-modernize-t4001-v1-0-cab3933a173f@fastmail.com
 
-> @@ -127,6 +128,7 @@ unbundle <file>::
->  	This flag makes the command not to report its progress
->  	on the standard error stream.
->  
-> +[[SPECIFYING_REFERENCES]]
->  SPECIFYING REFERENCES
->  ---------------------
 
-... the target happens to live in the same file.  It of course
-future-proofs the reference in case the section gets split out of
-the file into another included one.
+Mark C. Chu-Carroll (3):
+  t4001: modernize
+  t4009: modernize
+  t4010: modernize
 
-Thanks, will queue.
+ t/t4001-diff-rename.sh   |  89 +++++++++++-------------
+ t/t4009-diff-rename-4.sh | 142 +++++++++++++++++++--------------------
+ t/t4010-diff-pathspec.sh | 122 ++++++++++++++++-----------------
+ 3 files changed, 167 insertions(+), 186 deletions(-)
+
+-- 
+2.53.0
+
