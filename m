@@ -1,127 +1,139 @@
-Received: from mail-lr2-f12.google.com (mail-lr2-f12.google.com [74.125.230.76])
+Received: from mail-dl2-f20.google.com (mail-dl2-f20.google.com [74.125.229.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FC1566C49
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 16:54:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.76
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790096056; cv=pass; b=ArMQ6zL6xd1lHMz/P/8NHICAXEM354YNJE4kH57pHxa1UlO+ZUJCV4w1SYq3OAn2QTLWYQKAodjR3aOz2SHbiO0Yk+MQvN7ulDIf3sNhijIMNHvr4wKXd19VwXsPuu78aK8XoqOtoAxLtAXt+9CZLRwa6lBo9cY+mBWJb5Ai6ws=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790096056; c=relaxed/simple;
-	bh=Ank4Bl8S/MV67bxhgPNvpD61BhDACdEdxnMOouyq8tY=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=skhty7JgdaJ/ukjlUi3uIQ39EyUpBA6aFje0nZ4xt3I7bCzqZ45kMg4le86PasRBQfSSeXTq0vOe0FV+UV6eZkkjeWw9Crqof14FTh9nLH8qed5aV9eGGqVGdEslcluv+gNaxOl7tvdeAbYkDLcJWpt/Dbndv5l5Uf3GeHcFnhs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dYTPlj0c; arc=pass smtp.client-ip=74.125.230.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688A556E05F
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 16:55:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790096127; cv=none; b=ReQil5+NL77/srPji3NU180L0wZ4mTHzmbJegApYRBtZK6RNqxTGI/O+Xk08QN7e0UKa3MVTHvGQ+5HkKWIEYSRfOaaJo0lWZmj+E6RoFcR2tHW8FPIC1JLunt51pb5rjAY/5wFJRW7aqlsU8GQvkBROSHcSDgTGTl5bnNNPWNU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790096127; c=relaxed/simple;
+	bh=h6SpQzLY2/ApZdxFre+12/B4own0eWOvmNXsXLyTSz8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hQpFR0AqeC+ijJArbVhEshkSVbZnGBy9YV7lYXR3SIyPCvO5oPIiTdow+OgEOWKp+i3RaVPdBaUtqkC1tLyxDnhxElNwEjb5r9mKgWULoDjedxvj0c6/VNW6jkbk6grkPzFNckq7BNTn3eBCeDDEC1/bQYHiuUqb1a8sU6YJilM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QhN6ALHq; arc=none smtp.client-ip=74.125.229.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dYTPlj0c"
-Received: by mail-lr2-f12.google.com with SMTP id 38308e7fff4ca-3a2ff148dfdso29401fa.1
-        for <git@vger.kernel.org>; Tue, 22 Sep 2026 09:54:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790096053; cv=none;
-        d=google.com; s=arc-20260327;
-        b=jfFE8PA+eoNSSm3xeJKoTzBaINW5csFA6Q0IqOgi2C3gkjixIS/dZ1yHIJTASIJA0S
-         FE1NY5ITxyHeshoowTC8i8WaYjxuJawvFhrxCgQRE5cKvhWznv1GzqJgUAutZpQz0WyS
-         rIqxLlRcuYAwP6aEOD/w+kpiOzchn7BNVUX40Y1K7Qh3F3UwmVJpBc9z7wVxT7unE+qR
-         DCJGa/4nbI5CrsbWHNnZ2iCXMPxGfTuNjnv/VNTf4fokBBtVvv4JHMntIMacplWROxFN
-         zb/xhnOcAs/EMtMM9XJhWX2l9WibWBWfTkJ6pUDCsW2wiixJrZEW11WdvVE/hoSnJzrI
-         kyHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=Ank4Bl8S/MV67bxhgPNvpD61BhDACdEdxnMOouyq8tY=;
-        fh=KkvO+ySLzeJ/VR6kXLCkmdOWHvH55t2VxhB4rxnp/q4=;
-        b=ooueqHtyxF8I59izLKzYAXJpVDe4cQXZl1y3unl/AfwDXu8Rw3DKSy78cgEWIbpsn1
-         YkOzzTVrUqW2tODRSMlmwdkElhjXJ5NBBgyqZYTaVUGfLirHs6yHJsIUfuli/8jBGB3j
-         MCsB2tn5gbbeujcXDTrdLvFqTbBpMzHeUGbCA3yDH9801oPa9lZqtgYXZ8E0T6spVg3e
-         560qXbFo7Tt9eV05hBunavxYOoiUEHerkArW8pBq3yU0/4OfRfssDoboX7pLCBW0Nbq5
-         iYarHafybyH7wy/WVeswWaWRB9qg3g3UTfoMU85eMbGEFbo4VZJJ4bjhBQ7rUJnMw5aF
-         QrJA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QhN6ALHq"
+Received: by mail-dl2-f20.google.com with SMTP id a92af1059eb24-143875ac998so45221c88.0
+        for <git@vger.kernel.org>; Tue, 22 Sep 2026 09:55:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790096053; x=1790700853; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Ank4Bl8S/MV67bxhgPNvpD61BhDACdEdxnMOouyq8tY=;
-        b=dYTPlj0cBV3FQ65AnYYIMSajbzjoOmk3N8dmgomCl4iQFxMqiUf8hvwarTgczbvRtK
-         yM5fWPwdvuvvOXPjIIAObI/Q+9ZiRPz4t8E1D3pF350PI7zQshb/XiPYsW9RqMZ8fnUF
-         t31OYfxaNNzxLqohmYn1iHXq01R6HlbGhOSAud5DKyHlVf/ODz3dluyI/QYSO78YwZZW
-         AFjbVUUdohpV9fCxN9+ocvpzT//KZrbOYkkAvfMR1yjNW/HoVK5kpGoszSbOeuuwGyj9
-         KUyF3GgVLuapwwtnATUoLZZEXv5Rn3ejh+9lM3ytDeVtkLv89vZI1bX5GR1QDvxkoAHg
-         4F5g==
+        d=gmail.com; s=20251104; t=1790096125; x=1790700925; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=u34szW/NIDfFH5SWyBBI3YOt/UIxmMSsKL7+nh5jcsA=;
+        b=QhN6ALHqFxcLYIgLY+rry7ykJKYIrdd8UujW88aX+FhahqslM/wYro4xGMkAlSP5fo
+         wCX8/1+sjOXmYoaqGcQX6KyGi4f1uDnp2/Cy3gs0GjJsnma8Ptc15wc8bnOuWCuoJrBN
+         kFEVjF9rcRqQn8wChlawb0bmWjtwgvbNZ7u5cRoHaV9Trw3PpLL4dgn6hmbO40l271z4
+         43evwTHs/ub674SU76I82++N0I/kRwfJib1pOJRE6T1vRsnEd6HGdITly3B3txTut17K
+         t8GnHDU2twZ+0hzI8ChVI4ltvSgXRD9ncxx9jQ1sQHFqff8FIniMbJfWMkPiDVB/+Ng0
+         E77A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790096053; x=1790700853;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Ank4Bl8S/MV67bxhgPNvpD61BhDACdEdxnMOouyq8tY=;
-        b=hyUEeQOI4qunvF3Ltmy8qc7hcdFe+r78uzyIjAYqcjGt+kvLSKr9o6ZXhyGV8NTHdg
-         sVjoGSVw4ATeK9FOt9W8kqRj+RsRNuJqsSEyybiavJapE2fM/TWdQKLa98X58Rma1yM8
-         o+zgkbecLiYs9VGxd2t+IsyyqB+NgyX/hjf9PCcCo2ZF01DWEzB9I3XrwTcOiGTHWRV8
-         q3EyfwPx1PiRWivCd0N42pAzPdzFCSIZE1UMedC4Q9EjA+EPaUGGgTVBvV0F7hm7y828
-         Lc+CsIiQXDowXk7PTsAj7NhgRNI07OrjcPXflXiVv1j5Kw88xDyXIp69+5f/DRQgn4IV
-         1Eww==
-X-Gm-Message-State: AFuF++ktg1gK8G7NCwD/1LY+iQZmqtOQgozoHK6laLaxfJoBiFsLBlwZ
-	c3tOlXmwu9uYTEtBVPwDcKLrQFwOfB0yRS7EWe1XZhyvK0h6n+CNMikrUUaSzKfPlM68t0jRN6D
-	wTG+XHC8prDapJq8WvNDCPGsMMcD5rxM=
-X-Gm-Gg: AYBFou1CKhsxqBBkW4hKHNfEFRTewcqSe8uzwD2G+qH/AjRP5wzkFg87kEp13k1e/wz
-	HypaNv/JEhUQ/tlofP3Vfp5QHKJYhmm6LcB0kbCOnQAMD1b+hsi96Fz9Lss7C5/Z5+nmmUZ016K
-	fBcI/w9rVLtYqlhcNQE1vyKXi/P4s3SVxgRNxs0dDoPT69grEd5/gaZRqMu+zHO6gGg6mETI1DU
-	Ay+YF6CZvLecgF5LaL75EeW0a1+Xy7adszR2AvwVqp7bxjJAgGPEiOj+hArGJAcX9FjzjHasAdt
-	AUFZYgaFljAwsG9mAndqzZkhMLP59mFkmMg6AmOhTT9hXMbS84VaNVw=
-X-Received: by 2002:a05:651c:a20b:10b0:3a1:1181:b2e with SMTP id
- 38308e7fff4ca-3a5fbf067d4mr23183691fa.12.1790096052685; Tue, 22 Sep 2026
- 09:54:12 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1790096125; x=1790700925;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=u34szW/NIDfFH5SWyBBI3YOt/UIxmMSsKL7+nh5jcsA=;
+        b=GLtmFQp+xd9UaQl3WMiHicd7AVTcmfbSvci0a+6QozqFf5PnzpsxrSzEdLZK8fukfx
+         Ahdb23GBZBoCN1/ACeU6AnWhfpCBLj+xlUYdcwQNLY3DiM4wK07p3QpTK6wACmLpRIIu
+         Zg1EsaF+NvHnFLsrskPp5JEQoJsxkEmUBYeZk9nlG0pmlSs42O6JYoTDcfQF5ysliN8g
+         2CBu0mHc2mLJYLgf0IDqicoE5NbSZSZxA4Yk0Of9u1d2DuL1awqTySDmnpDmH3xszrjO
+         o9gNLkX/nJNBffQXhdyabyJ3GSdGH5fUXH9IVMA087Cp0RSegMY4xjGwUszaABme3Odg
+         q3FA==
+X-Gm-Message-State: AFuF++lQJntQnkaSKd3yqI2v5AO95Y/LIEET0E/HLS2FuxxFVa54PSFs
+	qC0p6dTuVZBezgtbQoZlbjDyoiSJ9H2+zhfu8OUUwZ6EJcvGhuUP2CPCWxZ0tMnU
+X-Gm-Gg: AYBFou120lFMp0nQfXDeNe7YC4uE1BMoU0p9eYiJWd4yihUXQw3LHz3tHvARKUzYyYk
+	o2NunoqpKp2EbRrPBc2RBnMirpig3D3OH1RHDzRqh+eh2wiGDqYwAMBQ6CzsuSYpZaDU4eAPlKY
+	kCuXTieeW37p3KOicZD4/eonLfs+8tZOIGd+HZuvAtULVfa9MkY9X/mtcwMfqs9UoWLEc308/mC
+	Kp86VWMH4Q1tZXJdEw89gUl6guYwdIkYoZdrmZZ2+Z0f+PV5ACVWWr5zAUjoEiT62NU7tyeC/ZJ
+	nx6QhnKhyuLcHdeveFso7tSLcfjkU/VxoAljxKlJGoVKEIZYrJsCguq7vMWpHx5v5/y0yb99qTO
+	wDa7NtT/s1J11r7z9HJdfU0csZfFKWj9xeCLxUMyGFU8zEWWaj+4u9HPPXdoO3FCNriDnyhM6rL
+	f3xu3bVA58b3Qw75KOLtUtGiqYwgAlqGnyouupmTDVSdppyQSm5ILsUslmbIG1Ev7CE/JRsMgGY
+	gLXg7/Ask3B6aZ+W+w=
+X-Received: by 2002:a05:7022:7e08:b0:143:f79:f679 with SMTP id a92af1059eb24-144f8d4c0c0mr117944c88.1.1790096125071;
+        Tue, 22 Sep 2026 09:55:25 -0700 (PDT)
+Received: from HP-V15.xu.edu.in ([125.22.10.135])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-144f8f43683sm39725c88.1.2026.09.22.09.55.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Sep 2026 09:55:24 -0700 (PDT)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: r.norouzi@proton.me
+Cc: git@vger.kernel.org,
+	ps@pks.im,
+	peff@peff.net,
+	Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Subject: [PATCH] reflog: fix default expiry periods
+Date: Tue, 22 Sep 2026 16:54:34 +0000
+Message-ID: <20260922165433.591551-2-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.55.0.1055.g20c0e7c0fb
+In-Reply-To: <GZicFFe4cqB928v52ERTcEFaAFtAwL0rp8VaCKSMyYzJ48XbQ9XoduiDtsou0Qp4N2CGmCS49uRbxi9dUWwlFzgzlt0PkGzR7IkqysP9tVQ=@proton.me>
+References: <GZicFFe4cqB928v52ERTcEFaAFtAwL0rp8VaCKSMyYzJ48XbQ9XoduiDtsou0Qp4N2CGmCS49uRbxi9dUWwlFzgzlt0PkGzR7IkqysP9tVQ=@proton.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?Q?Micha=C5=82_Papis?= <mpapis@gmail.com>
-Date: Tue, 22 Sep 2026 18:54:01 +0200
-X-Gm-Features: AcwNN1VXl8JrnMFBOcAdP7nBvFp1F0LsVyClRfe1zFJ9WpZVLOjRqFIvRYU5TCY
-Message-ID: <CAJtm2pzYE5bNbPMATXczCYCVRf3q1T=tyJ1asfSYk9widQmBvQ@mail.gmail.com>
-Subject: Re: [RFC] worktree: add lifecycle hooks
-To: maciej.ciemborowicz@gmail.com
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-The important piece for your use case is the pre-worktree-remove hook,
-not just post-operation hooks.
+The default expiry periods for reflog entries are reversed in
+REFLOG_EXPIRE_OPTIONS_INIT(). This causes reachable entries to
+expire after 30 days instead of the documented 90 days.
 
-Post-hooks fire after the worktree is already gone. That's fine when a
-tool's state lives entirely inside the worktree. It breaks when the
-worktree points at state outside it =E2=80=94 a docker container, a databas=
-e,
-sockets, volumes. Then the worktree itself is the registry: its config
-is the only mapping from worktree to external resources, and
-pre-remove is the only moment that mapping is still readable. After
-removal you're guessing =E2=80=94 hunting the disk for orphans, diffing
-against remaining worktrees, turning deterministic teardown into
-stale-data detection.
+Restore the intended 90-day expiry for reachable entries and
+30-day expiry for unreachable entries.
 
-Real example: with AI-generated worktrees (one per task, created and
-discarded faster than a human types), I was exhausting ~200GB of disk
-every week and ended up writing cleanup scripts to reverse-engineer,
-from what was left on disk, which containers and databases belonged to
-deleted worktrees. A pre-remove hook runs the same teardown with the
-config still present.
+Add a regression test for a reachable reflog entry that is
+60 days old.
 
-This is not about vetoing removal =E2=80=94 pre-remove needs no power to
-countermand anything. It's about doing cleanup with full information
-instead of reconstructing it afterward.
+Reported-by: r.norouzi <r.norouzi@proton.me>
+Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+---
+ reflog.h          |  4 ++--
+ t/t1410-reflog.sh | 13 +++++++++++++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-One limit, which is why post hooks still matter: pre-remove only
-applies to git worktree remove. For manual deletion + git worktree
-prune, the tree is already gone, so pre-remove can't see it. The two
-are complementary.
+diff --git a/reflog.h b/reflog.h
+index b996712c00..3bdd1ca8a5 100644
+--- a/reflog.h
++++ b/reflog.h
+@@ -23,8 +23,8 @@ struct reflog_expire_options {
+ 	int recno;
+ };
+ #define REFLOG_EXPIRE_OPTIONS_INIT(now) { \
+-	.default_expire_total = now - 30 * 24 * 3600, \
+-	.default_expire_unreachable = now - 90 * 24 * 3600, \
++	.default_expire_total = now - 90 * 24 * 3600, \
++	.default_expire_unreachable = now - 30 * 24 * 3600, \
+ }
+ 
+ /*
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 8f78cf4b01..1239c078ef 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -153,6 +153,19 @@ test_expect_success 'reflog expire should not barf on an annotated tag' '
+ 	test_grep ! "error: [Oo]bject .* not a commit" err
+ '
+ 
++test_expect_success 'reflog expire keeps reachable entries for 90 days' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		timestamp=$(test-tool date timestamp "60.days.ago") &&
++		timestamp=${timestamp#* -> } &&
++		test_commit --no-tag --date "$timestamp +0000" old &&
++		git reflog expire --all &&
++		test_stdout_line_count = 1 git reflog refs/heads/main
++	)
++'
++
+ test_expect_success 'corrupt and check' '
+ 
+ 	corrupt $F &&
+-- 
+2.56.0.rc1.320.g68acceee5b.dirty
 
-Cheers / Pozdrawiam,
-Michal
-
---
-Michal Papis
-phone. +48 603 751 266
