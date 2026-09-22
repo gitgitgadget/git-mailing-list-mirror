@@ -1,241 +1,113 @@
-Received: from flow-b4-smtp.messagingengine.com (flow-b4-smtp.messagingengine.com [202.12.124.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EFC5505D0
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 14:31:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47C7486439
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 14:53:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790087490; cv=none; b=bYjksUduuG+8LKWALpza6xlsJfOncpeqXijplGSLnChlCVubG4qNswgJR7khUX4Ed9XCTnx8XwqlFtFcBMqjc2oBnT8KXO/7vwkSjblB10FTGT+4D9NnutH/hiCwybt4Jg0N8pI0KlVxD5gZpIlJn19dHIzZ2TpGDdED0UQY8NE=
+	t=1790088826; cv=none; b=ltMG0NF29xmLaCdjIv9aoogIHo5bsj9chiEOTqcZFiTyztxGIaA2sBHi5w8EWUfLnTooHaHCLpgwR/sGvGpQHY83vKF6LLeMl3+r/7JlyVk1NypHKXdNrNCwgD/VndPPUHZhAqypneOxA/Sy9liXepw+a69bInDKWOf1b1Csp4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790087490; c=relaxed/simple;
-	bh=rOb5dYVJDwxhnWBmpshDpeCHTkWSNEswlcdnikH+F3E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iOeXtsTKrvZ/U1QOB2pRjVcnDNkm8hC8Jy+uZwaXjS2T8gqfTVcCkUAsExq37cZBbA3mVXIfclno/ykidJ6NspOTl6jCJ7//Qde5c9wyWQG0Q4msmvFrZVKUTltFWvIeGXH/Fkexvd92OV26C9x3IKvnUELEaa8HbD+C+/Isgr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=HTPvbhWR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=offFViIl; arc=none smtp.client-ip=202.12.124.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1790088826; c=relaxed/simple;
+	bh=4H2UeenZKtzFqyPmmVUs4zl0/btKU/Sq6g4jU4uy1+s=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=JYOhzLjmfl1Hvw3daEi+VH6b5ht/YY2bXMcJ/VRICrt+NUJ+GlNLUJaPO01sS9TFNPjdUzWex8fSwHM6k8MRoy6ITMyMgYv17Uu7AyYDZ9As75TV77PQicEBS5pvRLH+YiGE6WmDN05z4/ZeD5RKiZ2dK2uMv6X8FhQ3ymRgisY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PxW8V924; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="HTPvbhWR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="offFViIl"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailflow.stl.internal (Postfix) with ESMTP id 8354713003CD;
-	Tue, 22 Sep 2026 10:31:27 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Tue, 22 Sep 2026 10:31:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1790087487; x=
-	1790091087; bh=JpK9S2QJC35Itp+P41eSO2Cjf303se77sqL1HHOZhFc=; b=H
-	TPvbhWRk//++nVt3HuVHhDek7MalMA5myrP15GvlqSOGJl+DiAOj8rLYprsU1LSa
-	OhWPIMObfVFDVxaPJhsOm/BIZicVzFM1W7P5FH697rmGZ9C0TjS1DTzu6gfAXeN1
-	LCfvhAJeVdXtFj7VgxUCk2Aw4JDAu8+8dVqRvHPLb/bmc2cPc3afiGpfdynQHL/O
-	HMozXqU5HExzYptIk7G80+TEncKDyl2BKbj61D4ykhiNcdbaL9X09f8yDImGZnb0
-	4lh/vMxnWw1UvzDDKQwxOg/Adp2niUFZKux0ePQiP4DtdwqaFgsb/i6Pye+xo5bU
-	U3lfABdqa2Z/llmVi5TnA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1790087487; x=1790091087; bh=J
-	pK9S2QJC35Itp+P41eSO2Cjf303se77sqL1HHOZhFc=; b=offFViIla35r0m5fv
-	LMsIkMko0OaL0QUn5jvIp3DCuiD20ItY71pCq8y/pfaLqFCpLURBHtiv1KQyNLcL
-	5SNAzcr0Y2IdcUfaaw0rR+HYjO1yiKe1xkXEiKscCNKADsTVIbE0BRlNhz+LbnxM
-	x2APafY3daRQ5tiZl85MpFj7qXPMIHHosn10z84lmokLU/dbUa/v3h4S+UzVNCl1
-	RlFkDIWUaKUBG6A2lFPAkaOarpq42ZEQ8H/VXOyi+PkXXqXORyuxKU6EsqZP5GbV
-	rjpSb7p0q7NoCK1/Cy7u3qujciDmQHHyprq0TKu51bh4csNlOejaUwnhjTYg+rO/
-	SNsog==
-X-ME-Sender: <xms:P5GyapX8yVyA0ebHUTd33decCsTknGMzyTr0QNchLqat_2i7yhpMCg>
-    <xme:P5GyavkI3uIRxMhPwTG5I1on7qA2n_GXePcBtyIok6CWNWghBDocMzP8l7c4R4pe4
-    WiVjsML3of9hfLqlNH-3_CEWPGzPKuhKTmqPQLujCIncj6D1YzqJhuq>
-X-ME-Received: <xmr:P5GyajB-bnwbnqHcEAVKiayT5izb2i1pRq6Gm8lnWdurXPZaEudjRcFPE3KM2lCg-5B9rKg8_84QWrqD0rnlbcILue_pudHUZvF5vP1AQJ1mwg>
-X-ME-Proxy-Cause: dmFkZTGP46YC6q8ZS3oonxOjMTC8HCqj8daYDtrYqYmUEi+Bj7yDT49A11ucpAmi6NOwbE
-    bYPMC/PK7ijGEx3KCLyNJV4ENog/lKljYFCb7OmPy/6Ib0hckN1c0hOW408V2srDVEV37R
-    Wt0YOEqKR33HGn05ImrYjn2QJMTRlOtLICsR3jUVxfmA8isF4S8XeLrFnAvx+VV+e20GAQ
-    jLnaAe1yTYI09FIuCk2734LLj1Ad6e/2dKFMb/MjXw3+q8iVXlvQyU5vcXVWgdQKgLIHUO
-    xRCZEyn025iW7UlArYlUbnLpmBhthU8vvgiTwjzZiBB5En9g0LphA/i07BhhLkbsPEIKjn
-    wfTgw9ghgKyg+CabTayrYKdUkFYZNq67ywIbGs9Frc/Yr6OYo33FK2vF7NemFlnNG8WmYa
-    mt6Eo3ssLSVmLzAWMuSNKAB3uO6UdAXTUjOsyKmT9OFpVpO7mE46JI7feRHV2xGsKUoA0d
-    TfK+caPvtAMZAwFamE8HTbBBr8aNjoyaS6U2R7mCQaohmht0oGUVEvJyPQrAFeYiOW4v3b
-    0L6Az7PPypT/mKKmQ5HwF0A4DTCSaVjKjiN4uy5UDzyEle+kgsFQaREBDK2Ee4BBIdTuIi
-    11TOR675iNaogK2LTz9uvMNbsZt/Vp3E8j7Ba6d6Rb+f/zE/RYpiZppRxBaw
-X-ME-Proxy: <xmx:P5GyancjhVxfwiCbKcHTQHFSRy0V8oBDAIkOoqUBsFyglhxB_z2XEw>
-    <xmx:P5GyamKBB9AjZJYUnmSZ6G5SR-2NaQ2Yj5oU8gkYk4ATBxnDYV8neA>
-    <xmx:P5GyaicOYDGVma1H__CS3KXv5I4ajoa0E9sCM5APqLRp7g0Du_bwAg>
-    <xmx:P5Gyal3DJQzs35uP0cg1knGh7F-5F8-zBkeeEdtr8ctLvjwP3QOPAA>
-    <xmx:P5Gyar4vCUr2CMG9OjlzRpM-WqRfHvSYJ0IBGT_UexmjQ5BtbnpCzNAt>
-Feedback-ID: id2564aa6:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Sep 2026 10:31:26 -0400 (EDT)
-From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-To: git@vger.kernel.org
-Cc: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-Subject: [PATCH v5 3/3] t4010: modernize
-Date: Tue, 22 Sep 2026 10:31:19 -0400
-Message-ID: <20260922143119.3313620-4-markchucarroll@fastmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260922143119.3313620-1-markchucarroll@fastmail.com>
-References: <20260922143119.3313620-1-markchucarroll@fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PxW8V924"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6a5e971c970so1250754a12.0
+        for <git@vger.kernel.org>; Tue, 22 Sep 2026 07:53:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790088823; x=1790693623; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=/RTfAVvBfqHbywHpPCwhK/vjcWkC77jHZVFYQO8evg8=;
+        b=PxW8V924AO237lrIYZadwUDLO5Po5G+22ZTuj09jHirVzWGUMNlhicyASvMeYHck/h
+         +VgihJS5dgHanEzo4jXzaIlRDl0HbwWj+6LaiTliitBPAqeHwB7iUAOpESE9RwEx2HQN
+         X1BA9H4kmKLO3iXELK28nxdk5/6kxfvbq3EYMwqIaQihuJKYshSYTtCjAi5iTCCT9LxM
+         ugqsnlThoPZtfvmZMrfCLeMr2PBZueGjCOVwsbnrvnE1ei1fQ5pHaAXZ29qJhTfJUwkl
+         Sm4Tz1GWQXn5RWStoB5AV+d8sfG1FWuRrutB0i0kUjrpm80xNnug3I8CUvj9oHE/CN7D
+         BlIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790088823; x=1790693623;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/RTfAVvBfqHbywHpPCwhK/vjcWkC77jHZVFYQO8evg8=;
+        b=DN6sH3wz6/X4zgP78LTQVLnfdnPczgX2+p+ysX6dxBXl7NDyXE7bM2kwaMs7yZOBii
+         ntQHUYClUeNGkYny8DYOx6v4oBywUifEnBeQP2T+F3GYgaFzIPyoZ8U8gNklTjt5+4/K
+         QOrkcRPcI4W9AnrlSPcHJoPvO5K3i+1YAavN25fK4Ai0cQl0uVv1gpanjKQc5ckEA9Fm
+         AgTjVPia3nzK3a6Bk3NokbPRYqZPuWEDYHQGbC/YkfKuKSwKvPrZQgMYPlALW1pTxE19
+         y93t8VMhLmucREg/RbyzYQ/Srxa5mGO2qBhaMHS6t8qgU+vQojvVJ8jfdmYALtmBnjKA
+         fqyA==
+X-Forwarded-Encrypted: i=1; AKwUvBwSYlJ7A8F8tH2JOOWvETH/EEXOOIoN1b3PxqZafVQvRK9h27ivrqgKX9qPoODbySsp/JA=@vger.kernel.org
+X-Gm-Message-State: AFuF++kXxowOt5RsIDCROMPzizicE7sZUcHJch7wjAJsF5C4ODvSJO+X
+	eEPhBTRDluztJvT3qDj61iyNJPRZprp3POkgmPPhZ5aWEwDc/GJ1BOYj
+X-Gm-Gg: AYBFou0XR9JBo1KFYoevkPZ2LvqbN5f3AwkU2nc+qlwmYAxLK1tiSf+7GR0e+RXRzgo
+	rVq4i95hZmFcwM26k8FIucTZ8RQsss+JUWdQ08p8q6z0VafKKaoqpaU5i2FYcciPQGIVd28dGla
+	yBS6UgjeElqRx2pdILkeG+MTRu74Utau9m0d0gIumELtHIQVHRDRBn4ZxI2+97pqr/UdePEVZP+
+	Qr5VB2sV7qHod5FNM1/TpM47Huw6PKtMfbO/iuy0kSCLQa1UIJGbF29CBCc79zerMSR0Ys+7hPy
+	mHmsSMqzrxfMo47AUHS1s/MHE/pZiSiaOVs4fPxDET8CVfkY0g5JG8s8NYYR25bvaXoLDBKF0YX
+	VYOWJXfnRELE1nAahVnea+tnhbMIp3XGa9I+6wH3ebbZYaf4nX8Ta5N87+ynY+MnweyBfiySgpe
+	Neaj9Km7RATgUnEDa3u9IXO2r/+91fZU2ryZeBwz1Fu5Lx2S14TaSqKoqUVcOrNgEl/wswge6fl
+	e2TjWF5IH1e6sJr8sICxfKChWqD/j+qdMXkNCVWty1lOwBSpYqyPg==
+X-Received: by 2002:a05:6402:332:b0:6a9:a0ca:ea5c with SMTP id 4fb4d7f45d1cf-6aa9feb3b0amr2077295a12.5.1790088822476;
+        Tue, 22 Sep 2026 07:53:42 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6aaa44f9a77sm1255824a12.17.2026.09.22.07.53.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Sep 2026 07:53:41 -0700 (PDT)
+Message-ID: <15c85d2d-4fb0-427d-b52e-8e4dd958dcb9@gmail.com>
+Date: Tue, 22 Sep 2026 15:53:36 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] fetch: add config to avoid fetching every branch in
+ shallow repo
+To: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+ <7f084e4d-f738-4bd4-9b4d-cad995f04be8@gmail.com>
+ <CAHwyqnWbbCK40qAU1vhCFmN86J-dCY3tv_N_nBYgK2Bxf3o1fg@mail.gmail.com>
+ <CAHwyqnUVkVUjKCiN7YT3tkvHEVCQwb3jDGM0OTojPxptFKrsLQ@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAHwyqnUVkVUjKCiN7YT3tkvHEVCQwb3jDGM0OTojPxptFKrsLQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Old tests were written in a different style than modern
-ones; for better readability and test error messages,
-update t4010 to the modern style.
+On 22/09/2026 14:00, Harald Nordgren wrote:
+>>> If it is the former then we should think
+>>> how we can improve the behavior of "git remote add" in a sparse
+>>> repository to prevent it adding a wildcard fetch refspec and instead
+>>> setup the new remote to fetch only the branch(es) we're interested in.
+>>
+>> I didn't even consider that, that sounds like an interesting idea!
+> 
+> Would you suggest we do that instead of this, or in addition to this
+> fix?
 
-* run everything inside of a test_expect_success block.
-* write title line on the same line as test_expect_success,
-  end that line with a single quote that opens the body of the test,
-  and end the test with a single quote that closes the body.
-* write expected output of a test to a file named "expect",
-  and actual output to a file named "actual".
-* write here-docs using "<<-" syntax, so that they're indented
-  uniformly with the rest of the test.
-* make test names more clearly reflect the functionality that
-  they test.
+I'd say instead - if we can fix "git remote add" then the problem 
+shouldn't arise in the first place which is better than having an opt-in 
+config option that most users are probably unaware of.
 
-Signed-off-by: Mark C. Chu-Carroll <markchucarroll@fastmail.com>
----
- t/t4010-diff-pathspec.sh | 120 +++++++++++++++++++--------------------
- 1 file changed, 59 insertions(+), 61 deletions(-)
+Thanks
 
-diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
-index c84c3fa05b..34d53e7496 100755
---- a/t/t4010-diff-pathspec.sh
-+++ b/t/t4010-diff-pathspec.sh
-@@ -13,67 +13,65 @@ Prepare:
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-diff.sh ;# test-lib chdir's into trash
- 
--test_expect_success \
--    setup \
--    'echo frotz >file0 &&
--     mkdir path1 &&
--     echo rezrov >path1/file1 &&
--     before0=$(git hash-object file0) &&
--     before1=$(git hash-object path1/file1) &&
--     git update-index --add file0 path1/file1 &&
--     tree=$(git write-tree) &&
--     echo "$tree" &&
--     echo nitfol >file0 &&
--     echo yomin >path1/file1 &&
--     after0=$(git hash-object file0) &&
--     after1=$(git hash-object path1/file1) &&
--     git update-index file0 path1/file1'
--
--cat >expected <<\EOF
--EOF
--test_expect_success \
--    'limit to path should show nothing' \
--    'git diff-index --cached $tree -- path >current &&
--     compare_diff_raw current expected'
--
--cat >expected <<EOF
--:100644 100644 $before1 $after1 M	path1/file1
--EOF
--test_expect_success \
--    'limit to path1 should show path1/file1' \
--    'git diff-index --cached $tree -- path1 >current &&
--     compare_diff_raw current expected'
--
--cat >expected <<EOF
--:100644 100644 $before1 $after1 M	path1/file1
--EOF
--test_expect_success \
--    'limit to path1/ should show path1/file1' \
--    'git diff-index --cached $tree -- path1/ >current &&
--     compare_diff_raw current expected'
--
--cat >expected <<EOF
--:100644 100644 $before1 $after1 M	path1/file1
--EOF
--test_expect_success \
--    '"*file1" should show path1/file1' \
--    'git diff-index --cached $tree -- "*file1" >current &&
--     compare_diff_raw current expected'
--
--cat >expected <<EOF
--:100644 100644 $before0 $after0 M	file0
--EOF
--test_expect_success \
--    'limit to file0 should show file0' \
--    'git diff-index --cached $tree -- file0 >current &&
--     compare_diff_raw current expected'
--
--cat >expected <<\EOF
--EOF
--test_expect_success \
--    'limit to file0/ should emit nothing.' \
--    'git diff-index --cached $tree -- file0/ >current &&
--     compare_diff_raw current expected'
-+
-+test_expect_success 'limit to path should show nothing' '
-+	echo frotz >file0 &&
-+	mkdir path1 &&
-+	echo rezrov >path1/file1 &&
-+	before0=$(git hash-object file0) &&
-+	before1=$(git hash-object path1/file1) &&
-+	git update-index --add file0 path1/file1 &&
-+	tree=$(git write-tree) &&
-+	echo nitfol >file0 &&
-+	echo yomin >path1/file1 &&
-+	after0=$(git hash-object file0) &&
-+	after1=$(git hash-object path1/file1) &&
-+	git update-index file0 path1/file1 &&
-+	: >expected &&
-+	git diff-index --cached $tree -- path >current &&
-+	compare_diff_raw current expected
-+'
-+
-+test_expect_success 'limit to path1 should show path1/file1' '
-+	cat >expected <<-EOF &&
-+	:100644 100644 $before1 $after1 M	path1/file1
-+	EOF
-+
-+	git diff-index --cached $tree -- path1 >current &&
-+	compare_diff_raw current expected
-+'
-+
-+test_expect_success 'limit to path1/ should show path1/file1' '
-+	cat >expected <<-EOF &&
-+	:100644 100644 $before1 $after1 M	path1/file1
-+	EOF
-+
-+	git diff-index --cached $tree -- path1/ >current &&
-+	compare_diff_raw current expected
-+'
-+test_expect_success '"*file1" should show path1/file1' '
-+	cat >expected <<-EOF &&
-+	:100644 100644 $before1 $after1 M	path1/file1
-+	EOF
-+
-+	git diff-index --cached $tree -- "*file1" >current &&
-+	compare_diff_raw current expected
-+'
-+
-+test_expect_success 'limit to file0 should show file0' '
-+	cat >expected <<-EOF &&
-+	:100644 100644 $before0 $after0 M	file0
-+	EOF
-+
-+	git diff-index --cached $tree -- file0 >current &&
-+	compare_diff_raw current expected
-+'
-+
-+test_expect_success 'limit to file0/ should emit nothing.' '
-+	: >expected &&
-+	git diff-index --cached $tree -- file0/ >current &&
-+	compare_diff_raw current expected
-+'
- 
- test_expect_success 'diff-tree pathspec' '
- 	tree2=$(git write-tree) &&
--- 
-2.53.0
+Phillip
+
+> Seems maybe we only need the fix on "git remote add".
+> 
+> 
+> 
+> 
+> Harald
 
