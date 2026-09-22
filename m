@@ -1,81 +1,80 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E6F4A204E
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 19:41:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E817249BD70
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 20:20:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790106120; cv=none; b=gD4Qcz5j3RYXam4VXzjsOlsbeulpcUCGDr8bG37pKDFsblHRRYU3B6+X2g1XhfA2BJ5hwTFmI4yNxkGFhsi904vtPWDzCrwzWo2swHfkJ04tUvIWfnaPXJIOEPbnvPh9CSsAt1NsORtbD0dtrkKyX4bKJQ8CNuT6oXoanrLSflg=
+	t=1790108443; cv=none; b=Um2/wVRP7pP+dKBlyo6Pajk4LeLmoieNx6+7S/ktNQVj8ZY2xlsR05EPz7Bkciwhxh4zFc3Cobt3qa36lH66ZeJWnoFs1Jm0eRbZTEcztLqn7itfPAgAdnsdnyd2km5UAaikx04gtSMXFwQj3uTbsMgRhy8NF6Dm9sx0wJYorkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790106120; c=relaxed/simple;
-	bh=wr9Ay48VKOfO3UJAoELY+W0+Ni39WHzphSHqC6mlHPo=;
+	s=arc-20240116; t=1790108443; c=relaxed/simple;
+	bh=gPW9WjRD6QHV5oI8S2ptN3j7RvfiEkMvU6nrGyhPN3c=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ezRcNhJxZ73LHHUGbx0rhTXrpMJKIJCO1jUEVPwyPPgCwWGtsNqjG3epX7u+KRc4+LWdzV5uivRj8CIXE9cGx/OhkaLIzmxPs6/n1Efh4r5RdG1vrqZB2L35WiZeyVyjjPQPc6I53U128wXtOfOsyNg17LCmS0Ef6mxbYokpxME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jUQS8OAt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XYMLuZds; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=hGr665CLB5aSUTnIRIDTHiab8ntf/IndtFm/sAHkHVlV6POrd4Sxb5hSQunXYZA3gDXqlzlgQU6KyhWJocosmZmvETw5em8rREkw9ssINwssP8CeuRn2T5NUYSEjsn8eG5UxtiJXOOCrMuYuNJaORSHSOzoThSUaVz0JAliyrZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=r0JlWIaE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ckoIinBh; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jUQS8OAt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XYMLuZds"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 25BA9140008F;
-	Tue, 22 Sep 2026 15:41:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="r0JlWIaE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ckoIinBh"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 71A51EC01F2;
+	Tue, 22 Sep 2026 16:20:19 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 22 Sep 2026 15:41:58 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 22 Sep 2026 16:20:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790106118; x=1790192518; bh=x09MOoxD40
-	5bd67vixtxouzFJALSNvgELJ7hX+PUjwc=; b=jUQS8OAtdZsRaSWfwnv/tREtRC
-	Ff9iGaY5w+gwDt/6c610j3FoUBgjbk4pgsKLe4ZxGNfQzYZG589YT6TU0Y2ndW8D
-	1BtP2O5rtJgKpU1Fd0en44xZgTctaQfTDCRqsXkBOjL0zXcp2v8NwoWjiFl8TBh0
-	EPsMu7ORm5vlZeB3TM5X70O6NTUfAAdR6JCZe7YJwnM5HZfj2o5gVQhgwQpTGvYm
-	7TtWJ4hj6No9XRNW03yW1DC0B2Zy2ijHFjAIPQUlRPiCkPFImCMPVCgc1lj0gExW
-	fe/LP0cVfWMi2A7A5Hl32TNWJo/xOcUEIMgW32cCXt2feDGMBm7dx9jtH1zA==
+	:subject:to:to; s=fm3; t=1790108419; x=1790194819; bh=HkA4L5zGpS
+	RGWy88x2r1lU4lhSthhPx+MP68GxYeyDA=; b=r0JlWIaE4jm+Q1BsvKf25W3MUe
+	QHf2FChLUJVJ0ns9BRSyLAbKQHEUQgZtsqlQleK1+zv7fFy7yWgFoiXx4lT7DDKc
+	gLredLfXqvTAx6s3MAacOrs4teYzFneXX5Pnd/5NRS/KonABVFVIG5ukxcXNgTYy
+	xwGVDcp/UYPigiD+0r2U7cpD1V04JXOYx8fBviA47ASYw7YusYWx8r2OB8bgtBiX
+	fs4v39GyAxnmdKgLGeOYsnqQIyq83lwiOPNYJ2hbPzB1ZPDMbGyC+aPjyEM0Mf67
+	o6IHiU6dNmrwDr2ZTn6WVR5nWN7cX4hTlG0L9Rr4YkxsmJ2qLzXeLLaPljpw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790106118; x=1790192518; bh=x09MOoxD405bd67vixtxouzFJALSNvgELJ7
-	hX+PUjwc=; b=XYMLuZdsg8DoxSza4mdRxBStFjIX3fDce5yxQP/NuXu0+8BqEP1
-	xJ06qQh0FqqrrQAyAlT1uOh564plmADA9XGe4twzFQ17ZvYRE5cMaAMK5Kw/xYcv
-	daiXhGi1q+geAHt8723D+ZGWCInOXSxN5Bvu1RUayBM/TpDblGKHbPvFG3yIlaT3
-	+GcTbF8E+XUeCaVAiU7MPg1NpbRHSSssRcqYF82pCBTEKnEMTi2lYO6bwTdFWqr7
-	oSs7AkOzQcIbgIWTHF4FORc8HrUGJMvrJ6bqMO5sVHdWYTuou/N8RZt1RpRcUGfi
-	zLODH2RXknjdyXMNsNwToIf0vd9FlR67gRw==
-X-ME-Sender: <xms:BtqyaoGGsVU-U6ARvkl0Av1h-VTFgo5uiTwJChQs9UAnn635_RVl0A>
-    <xme:BtqyaowiLIoa4OxdQQi-Z_gqCLOFkJxIZdy37uElqgIGZP6u3Fosn1THI3MxYReRg
-    zf4EjcMWQXyhcWB2MocFawKSw5922mGZg0V_Yeinu54ZvwiXS-cOLI>
-X-ME-Received: <xmr:BtqyaviFYvG32Us6Pw3tIS9G3QhMuztQdkiDfQx4IyFSCEUyf2xtKYN0HDZxidF9BZRQec3PruOhEFguiz2bmYxFU614k0xyLuZZ>
-X-ME-Proxy-Cause: dmFkZTEpZFYsfDo1QPVcfflGjA+ZNQ+eAUwcXFEv5HfhuZJsAWqTS4duU+2ncVp7rVjMhk
-    abjQ/dQneZeGPbTdUPntZqMqdZVcV3Y/uzWLeHyucXPWsoRlEdiiAl2is58SLciCBeVbwf
-    iJhLGx4LjQ/PKpyhuNnqjWHo8LpmVnlqtGB4cUSjh7AupBIdnJHkFDvcxngYq+VNbkFYs6
-    JRUJuF3wyLzvqVWLv8yL3otmLdjqGR+86yiqt+9mGwtxjWOzJGbDOkdCP0ElOplk9uWGUv
-    zBrqLuZMOdR3ERGpfuKEJmPycdFI/93qDe7N1I8vqg9DIGs8LoMS3m87rQRmogBwrWfsdN
-    Sizic7w5X2TeCCKNsFiZwex5bnaYJSrVPE2bVvkqr0GJZR8Vcv3byF8eQTlbMMSdmyoAFv
-    mnz52KfWVnKKTECrObByLYD57EGPCVMvLDytHmokiaMjLXjOfs4ALPQKm0HOCZg8qiJ3p9
-    J+XrqIWyq9dSVZq7pcpXk6V6JA5e/w4PBFOIxupC23gwt4kINI0EBD9WW4w1tgXy3Z9LL1
-    70iYLhAd6002tmP/P6qgJnOvUWoQSyMXxjSk5L1WMn5tdr/oYuxjc5A+MljKcI9EkHWP3i
-    o6ObCY35zInIEu66Q1mUkTNKaA/wbWyqDLf1/qxEmDcObZpynBuFZAgOK/6w
-X-ME-Proxy: <xmx:BtqyajxeusSZOO_eNe1HHGYmmSL9eFWbgp2U5vrz-fEY1w9odg6RMw>
-    <xmx:BtqyaiKDtYW4Hl5fE56nhbEaHRYjbrdnzxZyArJHjoQT62zgnB7S6Q>
-    <xmx:BtqyaqTiAmzUqosrF1rgkFvjX54g1U1LRBWbGmT_BVDc2UXvw21hhQ>
-    <xmx:Btqyaqrh3Cm2EXub0-6F2RXolWfd9XQismrZKEC53MxajvAkvr2vJw>
-    <xmx:Btqyao7GxypaaRI2ylVbiqQ_HkpUlg7-YUfTO987Xi8KEUhe42fIgOvZ>
+	1790108419; x=1790194819; bh=HkA4L5zGpSRGWy88x2r1lU4lhSthhPx+MP6
+	8GxYeyDA=; b=ckoIinBhBpiGhPkiqABCjvsr4hTP7V7HOnqkj/gfwXd37CIuV1G
+	c/J8EWxm4Ls6ttbVFYwxBKNjmGFzX6c9ENLr6jHKeZ//7UKMSM6My8TYou4RkP5r
+	iWPQDPsVegIOsVdSvr7w1+MpVMVRE8PwlAcTbVGEdiGON77SJ91MfDNJ9sYxJEGq
+	c+Cf4VdaoWqbGU4tp6i810a3+MobYXyd+Etph3CnQHli6+yEr4TN5z/S+0WxkHao
+	f0xsHFOmZBYbnlXFUkK4SKKoVIyZ87F8qRgmiRJT0dpXCv6pk9u5ZRICgbxcQRg5
+	TOaNWJNc8nteIHeEYZ2U4GnmewF3KifOBBQ==
+X-ME-Sender: <xms:A-OyasqPz7LtRJBXOLt-3hYJY-l_MAgwAREtjQChZgl_RZcPkJsOyA>
+    <xme:A-Oyapp19rrJNVTRlsiHIuCxeCfqYnrAsIFLrrEzzdav5_p-7tj5NjsP3PPcIS4xW
+    vDhTZ7k-H0qAD3USsLDsosXmj4chPy-VZ4wloZqTOI9-jLA4Y8Pw-o>
+X-ME-Received: <xmr:A-OyamN8emx0SYZdqnzki0xlrMxWkWBPUz-KRnfh75Zzdh4gIzXRK74Xp3sdVCjO7JcYPFV1jNK3o4V-_sJjRos9h50FNFD6Qx01>
+X-ME-Proxy-Cause: dmFkZTEbs4eEwUfhCPeNrVe4Rf4VMoKLRX6Cp5PqjGMeeQcoHM43injNEXvIH+Bsb4i8Mv
+    JfsmohrOkOu6JB0w08S5QhAp1LvLdaajxvatEv+kUlt/UFBT8vHVg3bYqrvwTqznzKwAVk
+    COSQmXS6qXFNgbE1uOWT9noUDLq2MILu6pt/NTkpv3hvfkB1DVDbdWi42Fezk/ajx/ISXj
+    v0EA+cFObwHZI3p3lth6YazpK1EOFFAfUZH6AB1JQMwuu2kPOHrmsIQN3cF9FqloRqxfOA
+    QQeYPJRPeVYYJwmml9bXuDdq44Wg+TBr2oG/IdlmcU3g/84wEveJA+r1qJmcc5rw5bFUib
+    KNlfqs6RWvV9A9s1qXtGmg3ZRpb8QQzZ6quu0O9omDBitLi6Ex+PvgUoR3QulWKKgbAxoV
+    495VrYtXQ6d7RH2+/SUSETm3IF6F2OQdBYP1krY3BagXYcWIcdpm1sTlT4L60pHWz8DeI2
+    QmjZOel2aptAwvp3MT7ipEfCZlpMuXTpbgYOAOn4SnYAU13Njpru54UKjjP3gWNzGtdQ76
+    MudWx1pF+r37W4hLsxtZid9STU/wc6CRs0s0asm0M6LvT6huFM11KE+lpRxBgJFEcmGcYY
+    CrTvIJX6ySSc/Eii+0ZaRcHnAyzdhIJxz0UOwkP4RU+h6b23yVt9TiEquJdw
+X-ME-Proxy: <xmx:A-Oyaiz2S5r_E2D-652MeX-mX2M5q-_io1tgS3319EfoEb9xPNGIug>
+    <xmx:A-OyanuOVLf9vWNKgfgr4maqXehGXbmJ5l88m-E8jt8riMAnrCfb9g>
+    <xmx:A-Oyaj56_VgLY8IZZaOCfKuo-yQ8sVJstkArY-rK8eyeayQmXr5yJg>
+    <xmx:A-OyauTT05w9R2hNvttL-i26oW2xTQHpgb9a4OipEQqKiInj3DesOw>
+    <xmx:A-OyalvcLBoTWLOr68c-M_QzsBBuY86IaIQMNDAdriyiR7D-r9o54LV8>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Sep 2026 15:41:57 -0400 (EDT)
+ 22 Sep 2026 16:20:18 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v5 1/3] t4001: modernize
-In-Reply-To: <20260922143119.3313620-2-markchucarroll@fastmail.com> (Mark
-	C. Chu-Carroll's message of "Tue, 22 Sep 2026 10:31:17 -0400")
-References: <20260922143119.3313620-1-markchucarroll@fastmail.com>
-	<20260922143119.3313620-2-markchucarroll@fastmail.com>
-Date: Tue, 22 Sep 2026 12:41:56 -0700
-Message-ID: <xmqqa4p9dqez.fsf@gitster.g>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
+In-Reply-To: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com> (Julia
+	Evans via GitGitGadget's message of "Tue, 22 Sep 2026 19:29:02 +0000")
+References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
+Date: Tue, 22 Sep 2026 13:20:17 -0700
+Message-ID: <xmqq4ifhdon2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,28 +84,91 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Mark C. Chu-Carroll" <markchucarroll@fastmail.com> writes:
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Old tests were written in a different style than modern
-> ones; for better readability and test error messages,
-> update t4001 to the modern style.
+> From: Julia Evans <julia@jvns.ca>
 >
-> * run everything inside of a test_expect_success block.
-> * write title line on the same line as test_expect_success,
->   end that line with a single quote that opens the body of the test,
->   and end the test with a single quote that closes the body.
-> * write expected output of a test to a file named "expect",
->   and actual output to a file named "actual".
-> * write here-docs using "<<-" syntax, so that they're indented
->   uniformly with the rest of the test.
-> * make test names more clearly reflect the functionality that
->   they test.
+> Instead of saying "see EXAMPLES below", say "see <<EXAMPLES,EXAMPLES>>
+> below" to make the man pages easier to navigate on the web.
 >
-> Signed-off-by: Mark C. Chu-Carroll <markchucarroll@fastmail.com>
+> The reason for using the more verbose <<EXAMPLES,EXAMPLES>>
+> (instead of <<EXAMPLES>>) is that if the header that `<<EXAMPLES>>`
+> is referring to is in an included page (for example `REMOTES` in the
+> `git-push` man page), then AsciiDoc will think it's a broken link even
+> though it isn't. So it's easier to just make all of the links use the
+> form with two parts.
+>
+> Signed-off-by: Julia Evans <julia@jvns.ca>
 > ---
->  t/t4001-diff-rename.sh   | 91 +++++++++++++++++-----------------------
->  t/t4009-diff-rename-4.sh | 54 ++++++++++++------------
->  2 files changed, 66 insertions(+), 79 deletions(-)
 
-Rebase glitch?  The claim above is that this is about updating t4001
-but it seems that a half of t4009 updates are mixed in.
+Oh, I love a change that is so sharply focused on a single issue and
+describes what the problem being solved is.
+
+>      * I tested it by running this script
+>        (https://gist.github.com/jvns/039c8ed0add092f2179f0dba52ebb896) which
+>        builds the previous and current views of all the man pages. I looked
+>        at the output to make sure there were no differences. You can see the
+>        output in that gist.
+>      * I believe that asciidoctor will automatically make sure that there
+>        are no broken links.
+>      * I also spot checked some of the HTML output to make sure it looked
+>        reasonable.
+
+> diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
+> index 035f780e58..47dea1de8e 100644
+> --- a/Documentation/fetch-options.adoc
+> +++ b/Documentation/fetch-options.adoc
+> @@ -199,7 +199,7 @@ endif::git-pull[]
+>  	providing the tag refspec.
+>  ifndef::git-pull[]
+>  +
+> -See the PRUNING section below for more details.
+> +See the <<PRUNING,PRUNING>> section below for more details.
+
+OK, we already see an example of the <<double,double>> reference
+notation.  This needs to be in this form, intead of <<pruning>>,
+because it refers to the named section of a different file, namely
+git-fetch.adoc (I am just trying to make sure I understood your
+explanation correctly).
+
+> @@ -210,7 +210,7 @@ See the PRUNING section below for more details.
+>  	a shorthand for providing the explicit tag refspec along with
+>  	`--prune`, see the discussion about that in its documentation.
+>  +
+> -See the PRUNING section below for more details.
+> +See the <<PRUNING,PRUNING>> section below for more details.
+
+Ditto.
+
+> diff --git a/Documentation/git-bundle.adoc b/Documentation/git-bundle.adoc
+> index 03cd36fe8d..cd722bd674 100644
+> --- a/Documentation/git-bundle.adoc
+> +++ b/Documentation/git-bundle.adoc
+> @@ -94,7 +94,8 @@ unbundle <file>::
+>  
+>  <git-rev-list-args>::
+>  	A list of arguments, acceptable to 'git rev-parse' and
+> -	'git rev-list' (and containing a named ref, see SPECIFYING REFERENCES
+> +	'git rev-list' (and containing a named ref, see
+> +	<<SPECIFYING_REFERENCES,SPECIFYING REFERENCES>>
+>  	below), that specifies the specific objects and references
+>  	to transport.  For example, `master~10..master` causes the
+>  	current master reference to be packaged along with all objects
+
+This doubled reference is more for consistency (in other words, "it
+is easier to just make all of the links use the form") than the
+"cross references from/to included page" we saw earlier, since ...
+
+> @@ -127,6 +128,7 @@ unbundle <file>::
+>  	This flag makes the command not to report its progress
+>  	on the standard error stream.
+>  
+> +[[SPECIFYING_REFERENCES]]
+>  SPECIFYING REFERENCES
+>  ---------------------
+
+... the target happens to live in the same file.  It of course
+future-proofs the reference in case the section gets split out of
+the file into another included one.
+
+Thanks, will queue.
