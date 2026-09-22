@@ -1,79 +1,79 @@
 Received: from flow-b1-smtp.messagingengine.com (flow-b1-smtp.messagingengine.com [202.12.124.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE173C3F44
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 20:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738174BD10B
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 20:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.136
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790108559; cv=none; b=RlZ8WjCFuv+mZaK7tDgUdBbqMQr3kX+rkNbS9fIRl0+KEYYZ7cl1QuYSau/A83FCSEQ95FQpcK/Bp8TeH8ovNKQXW7Z3k8v/UHFyX+jiUQjCoLe2h8H+k9f7JXq2RwHIwxcJxPnVyzMce7R8qMr1wd/qznA0JIGSDi1sIvXm2dA=
+	t=1790108564; cv=none; b=IJF+TExOd8EeWHHmQwQQmcgxxG4452hEOo/EYnW+NwmN813B1IEkXBTCVp/Ks7B+WrUd3B9Sd5aQTpbxk9slH15G10tRNutYkSJTbbewZBcMrpQWGpS5+8/YNP6A3lv1HIXCapBsbDqFy3R+90cCvjrhRHi4vkAkHf/FJJ7byDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790108559; c=relaxed/simple;
-	bh=GufLPfo7IOSLB1Zw3ie3pxvaanRB7wrYVrw/hIHIKA8=;
+	s=arc-20240116; t=1790108564; c=relaxed/simple;
+	bh=Rvor9uwzQ7enRPAhlkqoyFaoLc54FEYuKY7lzOLYNfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yqbm+WdUeJqpYZIVkjQh5XLnTjHKBlmFTzDpC2O8v4jS6djqjEtvDow9Q862BO3J0fICle/hpV+m18mhyZD3A24c1nxy0isaLuBzawRfP/gFPR/MAiSrUEsAjMXuBg10St3kw07yJc4NU+KUOhG+11/I59Yhz6nnjU4OcQ1o4sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=KM8GxTtd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HyjBFOYM; arc=none smtp.client-ip=202.12.124.136
+	 MIME-Version; b=qsRlapfz2d1WuagUNHmmCi4mQwFkfU+GQ8gzbpvtsdzR7aDnAAkKqw+O9JmlHQR2liEPptVM0I5naztZ95mvglbJjpRWYyGkgRInOm90cYePREKAeweyyZVXx9WIEMi5g7LIL741EfofsMR443eEEn5Ief7PSJd0j7MOFDoF8SU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=e1eQ3ouP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dnP9wqph; arc=none smtp.client-ip=202.12.124.136
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="KM8GxTtd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HyjBFOYM"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailflow.stl.internal (Postfix) with ESMTP id 833C413000E0;
-	Tue, 22 Sep 2026 16:21:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="e1eQ3ouP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dnP9wqph"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailflow.stl.internal (Postfix) with ESMTP id D0A4B13000E5;
+	Tue, 22 Sep 2026 16:21:59 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 22 Sep 2026 16:21:56 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 22 Sep 2026 16:21:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1790108516; x=
-	1790112116; bh=TmYeCJdQ1jnnyqSJvARL7dPZJrG/vdGmdZ7g89nOxvw=; b=K
-	M8GxTtd6ljNP1Fd1dqjOa2rae4NN625l905vcRDAe14IIOou4At5snT4a3otO1W9
-	vCBFqyw25XHzCu21nuR1TqcMCjr1EyLFaGy4JzIb3399T+fmuUxMCL378UyRQ1gi
-	/o9Ch5X32xjLL8TF9fJTghpwybQhXjgNV+rXLLqxvzdQMKyJmZTvzNSy5uB3dJCY
-	yUxVXKmMyrj83tE7S8XFNXYnFBPh3i8a01xLdnGxFfrtAkysGXGMkbWCzJATrWeX
-	GeO+8V8auRCuBF9qLEIQBMBYDmoGqF3MDaHX+z+IKqlK4V6eRSpyo2yb/lZXlMch
-	gEBZHCAjNQlebPbx/Ooiw==
+	:reply-to:subject:subject:to:to; s=fm1; t=1790108519; x=
+	1790112119; bh=tCDaa6+nyViUUuDjNQQfnSoGMevJQhjjjEz9cdqUP64=; b=e
+	1eQ3ouP5gHtn16tTXrtjuLIPeB1LSD5E7XpIHl73X5vn63J4jsjSTkDtiX/9B3UC
+	UrDILbglVZ6jtehe2YvOH8kRHnPy6NfYUPFTOhDZwzm11YFc4wqzwRng/F0XYTu7
+	TI1oc0KsJn5zEoS2Z7UihkAwBBPlDI9zTKAvMXTRO0GTCf8I9S80FnSKNHElX7eu
+	yfbMy8OU6WKMdeTO8bT+mHdERg+WfGB6uIpprvQMA7tWd5b+QITJ4ckCiM4Wp2+a
+	+9Yj5Bwh6sjEAvmPu8D4v8+Qyp41VTzJZO/vbPSbgcf8FL+V2KZBz3+Q22rAbslp
+	CqMydkX05hJ6lnb7Kh+rg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1790108516; x=1790112116; bh=T
-	mYeCJdQ1jnnyqSJvARL7dPZJrG/vdGmdZ7g89nOxvw=; b=HyjBFOYM2+dUBaDln
-	XkZgfInXhf4aWeP7YgAW9TPb63J5RPrqSjHncMJIcp2Cpd6Vo11Ae5jpRrUA/f81
-	nU2bqzYwFPJDuqDXsqmNhI8Srx50z1K1JS7lw071b8cZZBpyh5HzKOARKcWwXi99
-	fAJkOTdUjmKlBSgW9x+zESYnhQheTHA/m6aanQtPThrDPwtZb99eWZ2tAF60yIPt
-	dsaMGDu92bofccGkFzrEfU38A5eTn0JlkDPd9jd1S7a0QpXwb9sxJHlIC4pSCDJK
-	a0PZWsQxpJkGXDXOvQsd34H2JHSB54lFfFDb/eXD2hop1+zljRwiqb9qWyoW8jWY
-	fJmQQ==
-X-ME-Sender: <xms:ZOOyakQCCJo9VCDqjkwFHVHQv4HowGNh4ZDEiXJVSkojdbLuV4PueQ>
-    <xme:ZOOyanyuta77IJEK7807csDbI6xy-iAb-OhVwmB9jjjljuXWAAYMaAHN2dzTEl8pS
-    XYGKIImu9l4vzjRPyu3bbllkm2Miiib6TG9GZz5BmF90t87YDmZsaIs>
-X-ME-Received: <xmr:ZOOyaveotzTpRXzcZY2RZBIXvKoLYQ17_BM_uDi4MV108WksuPm2PmJVX4rDMFUpKp0PyJju1-Ki0isIXs9K8eCFz5WtpqqCg2oPdkNurcRqWQ>
+	:x-me-sender:x-sasl-enc; s=fm1; t=1790108519; x=1790112119; bh=t
+	CDaa6+nyViUUuDjNQQfnSoGMevJQhjjjEz9cdqUP64=; b=dnP9wqph2CvF+gGE1
+	mk+wi9vqlk2l8IX8bz8Vc6bN3BYRk0Oxjz088p9Po/jZ/PwCS2gUbACQ69Zem/jD
+	59GCaZDHV8MIV7WDYpnSfHmwHd3g/l0JOccbSRgIImn9MHoxyx5On2wO1oo8BEoE
+	TyeYYLn5jUddlSuej0Ss4XahrptHPY6Iatlh8RAUxCzuoCcHWg1nzSLfk9DlP72u
+	oFDUyG5Gn8CqKgvBDiaBl+WeVPdI4DKqBZ5zGO3NDDYw7LU00+Mu/DoIOY+gn34B
+	I5Q89DITOxCHEqX2qa3AMD2M7LG8UusF0mnmrXgZ1KnZYft1j5QQDnCuUDMg8XxR
+	g4n9g==
+X-ME-Sender: <xms:Z-OyaslflLbd-Pm5JZvxuTi0uJe9HDVuT0fo_EvvDASV20W-F-Jc6w>
+    <xme:Z-Oyah3-Gn8iX7kb2B36cmAV-IGaRV4EMzek8IOwlm6n7woEZ4Qvj2gbiCnbyh8d3
+    BJ074jex1dBbLW5E7KVy59zgjCEDk_WayzBcvrJQHdQ9bzuH0sfjrjR>
+X-ME-Received: <xmr:Z-OyaoQ20ftixwpYSmPZfFrfOT47vVaA9VFfHQN3APtQ6Mim6h_dzHqXrl-7jEmBf-8LNcvQmqEH2Qa_7mM6yEvrss8d6O7OUkhYxGzqXdoBbw>
 X-ME-Proxy-Cause: dmFkZTGCYogreECxIvFvsaYuJwFw9zKXvYK/3LuFDw1I6XScytqA3DmIYi28PuUsLEdtBi
     DkuyipRnWjlzPZ5XdPDeK4dLAIz/MHdOVl/S7PUdtAa9+u9ElbebxHhsmqa5ir+bcMnOrG
     MTYZ0MpAsdVc2p4ShIvC5H6Vm6trk/af9xTcLbMvIgaHZQEyn7c6zL79tYTTpzL4W//0Wa
     0ykV/A4EwZvgPXX80OVtok5Lm15DK7Ay6gGv4KUWxANL0/0uj/ASF4+DO7CaNBziVaFL1Y
-    QEqkD/oe2jWozyA54GCEgYdUIKePAvSGu5VfOyaagqjSRvQ/Me6amtB5o4d0pMLchUe0ix
-    AaaIid5JEK5xf6D0TC4SNdcPG5mglox5y4eh7rfRtG3s6/gigLHtc2W0CqS0tszdJbkXOJ
-    /S+Dhz4Vu9us0NNoJGkKMlINaNAKqykmYghwhjiP3lzATX0e+pFxFOaBZkZL+CIkgCK17O
-    Y9Xz0dfxp9NJ/otZPpEwj5uLl60tgzIuRZZrwFka7Ruf8Yac+tStXYi5EoeBHdM0SCffrL
-    zvg9/jwQepiw/P5O4PTbuTXY+3zfqW/M0ObZhEsTHxfp4qK1bdwZNeJLuJNj4+hnFfwiA+
-    D4g+MUoEpBNwNw3az9Wf12dGmyqVyywLNO6NG6/va9ZCVv3fEVZMSOUC7rTA
-X-ME-Proxy: <xmx:ZOOyajIkj5Fni117S9kXLhPokpH3ftpT7orL55Q6jyg8RYnHccS6jQ>
-    <xmx:ZOOyagHTVTifQ54EhM1uAevjInwEGdUPHiXu57RB2ufekE-eKIKmFA>
-    <xmx:ZOOyatqooRiSVR-ppH5MYoooMKllBjYMycjycUxUkn_QNUIXaLFY9Q>
-    <xmx:ZOOyapRzFUsUHGFlpSoCtXHb2eB8g6bLw0guD7X-EAqB2EEgfnGoKQ>
-    <xmx:ZOOyanMy72qJRUSDNBlQLZLwa6h7ADTz4m9T9RnJmOQvXo88k4gWQ4aE>
+    QEqkD/oe2jWozyA54GCEgYdUIKePAvSGu5VfOyaagqjSRvQ/Me6amtB5o4d0pMLchUe0AX
+    XQ0t9KW98rrZV9ix8a+DvWZWd5kTxUzQ09ZgN1dku6pWnne8LfeGZklRnl8JOdGxqU2wnv
+    Dd40cwmZ3CnmGK9bLkVT5ODpf4MtnofPolRg7lWkhpizB2d6N29MP8Sqfh5Gpau107nR1p
+    GznDdCWS4Cldd0EqU1NsA6e3rPBfgvg/Yrem6Ai1qYXBgfPzucnCT/l/qUGVeuBRBqpnax
+    wsV8yqkHdy2AmIWYdFDLTlTyBY+AfK3CSwjmMFzhKgciDwznqK9MXwgE2QJN7H7XM9393R
+    QDMU7EQDKQwIxW9Mk7Ein7t56uxTl2PAnKI1klcR6U7wcFUmv7JyYeQQK05Q
+X-ME-Proxy: <xmx:Z-OyajsXmRCC4rYyLd_qRSs_cXMCBjVdOA4xC0rW1Qu2kPHzqBidQQ>
+    <xmx:Z-OyatZjOBoh7IRjMgTN1G2V1nr7RDF6uCYfYZoI-RQeQnY7dnjLuw>
+    <xmx:Z-OyaouxlA4Hb0aLxCm9UlqXSzyhuIHbyac3m-fV7Ji2ahCkIzg2TA>
+    <xmx:Z-OyavEsi96HBSgaWhRKKfgdVXHixr5raNg0gs1lYbTXYavpghcGcw>
+    <xmx:Z-OyaoRW0VZpkV_oqyRO35DCdukkJXg_gvoR4Wj-Cgdf3wc0ULHyTbKZ>
 Feedback-ID: id2564aa6:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Sep 2026 16:21:55 -0400 (EDT)
+ 22 Sep 2026 16:21:59 -0400 (EDT)
 From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
 To: git@vger.kernel.org
 Cc: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-Subject: [PATCH v6 1/3] t4001: modernize
-Date: Tue, 22 Sep 2026 16:21:50 -0400
-Message-ID: <20260922202152.842793-2-markchucarroll@fastmail.com>
+Subject: [PATCH v6 3/3] t4010: modernize
+Date: Tue, 22 Sep 2026 16:21:52 -0400
+Message-ID: <20260922202152.842793-4-markchucarroll@fastmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260922202152.842793-1-markchucarroll@fastmail.com>
 References: <20260922202152.842793-1-markchucarroll@fastmail.com>
@@ -85,248 +85,159 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-    Old tests were written in a different style than modern
-    ones; for better readability and test error messages,
-    update t4001 to the modern style.
+Old tests were written in a different style than modern
+ones; for better readability and test error messages,
+update t4010 to the modern style.
 
-    * run everything inside of a test_expect_success block.
-    * write title line on the same line as test_expect_success,
-      end that line with a single quote that opens the body of the test,
-      and end the test with a single quote that closes the body.
-    * write expected output of a test to a file named "expect",
-      and actual output to a file named "actual".
-    * write here-docs using "<<-" syntax, so that they're indented
-      uniformly with the rest of the test.
-    * make test names more clearly reflect the functionality that
-      they test.
+* run everything inside of a test_expect_success block.
+* write title line on the same line as test_expect_success,
+  end that line with a single quote that opens the body of the test,
+  and end the test with a single quote that closes the body.
+* write expected output of a test to a file named "expect",
+  and actual output to a file named "actual".
+* write here-docs using "<<-" syntax, so that they're indented
+  uniformly with the rest of the test.
+* make test names more clearly reflect the functionality that
+  they test.
 
 Signed-off-by: Mark C. Chu-Carroll <markchucarroll@fastmail.com>
 ---
- t/t4001-diff-rename.sh | 89 ++++++++++++++++++------------------------
- 1 file changed, 38 insertions(+), 51 deletions(-)
+ t/t4010-diff-pathspec.sh | 122 +++++++++++++++++++--------------------
+ 1 file changed, 61 insertions(+), 61 deletions(-)
 
-diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
-index ad474100af..1a2474af10 100755
---- a/t/t4001-diff-rename.sh
-+++ b/t/t4001-diff-rename.sh
-@@ -26,7 +26,7 @@ test_expect_success 'setup' '
- 	Line 14
- 	Line 15
- 	EOF
--	cat >expected <<-\EOF &&
-+	cat >expect <<-\EOF &&
- 	diff --git a/path0 b/path1
- 	rename from path0
- 	rename to path1
-@@ -42,7 +42,7 @@ test_expect_success 'setup' '
- 	 Line 13
- 	 Line 14
- 	EOF
--	cat >no-rename <<-\EOF
-+	cat >expect-no-rename <<-\EOF &&
- 	diff --git a/path0 b/path0
- 	deleted file mode 100644
- 	index fdbec44..0000000
-@@ -86,47 +86,34 @@ test_expect_success 'setup' '
- 	+Line 14
- 	+Line 15
- 	EOF
-+	git update-index --add path0
- '
+diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
+index c84c3fa05b..03b3023bee 100755
+--- a/t/t4010-diff-pathspec.sh
++++ b/t/t4010-diff-pathspec.sh
+@@ -13,67 +13,67 @@ Prepare:
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh ;# test-lib chdir's into trash
  
 -test_expect_success \
--    'update-index --add a file.' \
--    'git update-index --add path0'
+-    setup \
+-    'echo frotz >file0 &&
+-     mkdir path1 &&
+-     echo rezrov >path1/file1 &&
+-     before0=$(git hash-object file0) &&
+-     before1=$(git hash-object path1/file1) &&
+-     git update-index --add file0 path1/file1 &&
+-     tree=$(git write-tree) &&
+-     echo "$tree" &&
+-     echo nitfol >file0 &&
+-     echo yomin >path1/file1 &&
+-     after0=$(git hash-object file0) &&
+-     after1=$(git hash-object path1/file1) &&
+-     git update-index file0 path1/file1'
 -
+-cat >expected <<\EOF
+-EOF
 -test_expect_success \
--    'write that tree.' \
--    'tree=$(git write-tree) && echo $tree'
+-    'limit to path should show nothing' \
+-    'git diff-index --cached $tree -- path >current &&
+-     compare_diff_raw current expected'
 -
--sed -e 's/line/Line/' <path0 >path1
--rm -f path0
+-cat >expected <<EOF
+-:100644 100644 $before1 $after1 M	path1/file1
+-EOF
 -test_expect_success \
--    'renamed and edited the file.' \
--    'git update-index --add --remove path0 path1'
+-    'limit to path1 should show path1/file1' \
+-    'git diff-index --cached $tree -- path1 >current &&
+-     compare_diff_raw current expected'
 -
+-cat >expected <<EOF
+-:100644 100644 $before1 $after1 M	path1/file1
+-EOF
 -test_expect_success \
--    'git diff-index -p -M after rename and editing.' \
--    'git diff-index -p -M $tree >current'
+-    'limit to path1/ should show path1/file1' \
+-    'git diff-index --cached $tree -- path1/ >current &&
+-     compare_diff_raw current expected'
 -
--
+-cat >expected <<EOF
+-:100644 100644 $before1 $after1 M	path1/file1
+-EOF
 -test_expect_success \
--    'validate the output.' \
--    'compare_diff_patch current expected'
-+test_expect_success 'diff shows path0 renamed to path1 with edit' '
+-    '"*file1" should show path1/file1' \
+-    'git diff-index --cached $tree -- "*file1" >current &&
+-     compare_diff_raw current expected'
+-
+-cat >expected <<EOF
+-:100644 100644 $before0 $after0 M	file0
+-EOF
+-test_expect_success \
+-    'limit to file0 should show file0' \
+-    'git diff-index --cached $tree -- file0 >current &&
+-     compare_diff_raw current expected'
+-
+-cat >expected <<\EOF
+-EOF
+-test_expect_success \
+-    'limit to file0/ should emit nothing.' \
+-    'git diff-index --cached $tree -- file0/ >current &&
+-     compare_diff_raw current expected'
++test_expect_success 'setup' '
++	echo frotz >file0 &&
++	mkdir path1 &&
++	echo rezrov >path1/file1 &&
++	before0=$(git hash-object file0) &&
++	before1=$(git hash-object path1/file1) &&
++	git update-index --add file0 path1/file1 &&
 +	tree=$(git write-tree) &&
-+	sed -e "s/line/Line/" <path0 >path1 &&
-+	rm -f path0 &&
-+	git update-index --add --remove path0 path1 &&
-+	git diff-index -p -M $tree >actual &&
-+	compare_diff_patch actual expect
++	echo nitfol >file0 &&
++	echo yomin >path1/file1 &&
++	after0=$(git hash-object file0) &&
++	after1=$(git hash-object path1/file1) &&
++	git update-index file0 path1/file1 &&
++	: >expected
++'
++
++test_expect_success 'limit to path should show nothing' '
++	git diff-index --cached $tree -- path >current &&
++	compare_diff_raw current expected
++'
++
++test_expect_success 'limit to path1 should show path1/file1' '
++	cat >expected <<-EOF &&
++	:100644 100644 $before1 $after1 M	path1/file1
++	EOF
++
++	git diff-index --cached $tree -- path1 >current &&
++	compare_diff_raw current expected
++'
++
++test_expect_success 'limit to path1/ should show path1/file1' '
++	cat >expected <<-EOF &&
++	:100644 100644 $before1 $after1 M	path1/file1
++	EOF
++
++	git diff-index --cached $tree -- path1/ >current &&
++	compare_diff_raw current expected
++'
++test_expect_success '"*file1" should show path1/file1' '
++	cat >expected <<-EOF &&
++	:100644 100644 $before1 $after1 M	path1/file1
++	EOF
++
++	git diff-index --cached $tree -- "*file1" >current &&
++	compare_diff_raw current expected
++'
++
++test_expect_success 'limit to file0 should show file0' '
++	cat >expected <<-EOF &&
++	:100644 100644 $before0 $after0 M	file0
++	EOF
++
++	git diff-index --cached $tree -- file0 >current &&
++	compare_diff_raw current expected
++'
++
++test_expect_success 'limit to file0/ should emit nothing.' '
++	: >expected &&
++	git diff-index --cached $tree -- file0/ >current &&
++	compare_diff_raw current expected
 +'
  
--test_expect_success 'test diff.renames=true' '
--	git -c diff.renames=true diff --cached $tree >current &&
--	compare_diff_patch current expected
-+test_expect_success 'with diff.renames=true, patch includes rename of path0 to path1' '
-+	git -c diff.renames=true diff --cached $tree >actual &&
-+	compare_diff_patch actual expect
- '
- 
--test_expect_success 'test diff.renames=false' '
--	git -c diff.renames=false diff --cached $tree >current &&
--	compare_diff_patch current no-rename
-+test_expect_success 'with diff.renames=false, patch does not include rename' '
-+	git -c diff.renames=false diff --cached $tree >actual &&
-+	compare_diff_patch actual expect-no-rename
- '
- 
--test_expect_success 'test diff.renames unset' '
--	git diff --cached $tree >current &&
--	compare_diff_patch current expected
-+test_expect_success 'with no setting for diff.renames, patch includes rename' '
-+	git diff --cached $tree >actual &&
-+	compare_diff_patch actual expect
- '
- 
--test_expect_success 'favour same basenames over different ones' '
-+test_expect_success 'diff rename favours same basenames over different ones' '
- 	cp path1 another-path &&
- 	git add another-path &&
- 	git commit -m 1 &&
-@@ -137,25 +124,25 @@ test_expect_success 'favour same basenames over different ones' '
- 	test_grep "renamed: .*path1 -> subdir/path1" out
- '
- 
--test_expect_success 'test diff.renames=true for git status' '
-+test_expect_success 'with diff.renames=true, git status includes rename' '
- 	git -c diff.renames=true status >out &&
- 	test_grep "renamed: .*path1 -> subdir/path1" out
- '
- 
--test_expect_success 'test diff.renames=false for git status' '
-+test_expect_success 'with diff.renames=false, git status shows delete/add' '
- 	git -c diff.renames=false status >out &&
- 	test_grep ! "renamed: .*path1 -> subdir/path1" out &&
- 	test_grep "new file: .*subdir/path1" out &&
- 	test_grep "deleted: .*[^/]path1" out
- '
- 
--test_expect_success 'favour same basenames even with minor differences' '
-+test_expect_success 'rename logic favours same basenames even with minor differences' '
- 	git show HEAD:path1 | sed "s/15/16/" > subdir/path1 &&
- 	git status >out &&
- 	test_grep "renamed: .*path1 -> subdir/path1" out
- '
- 
--test_expect_success 'two files with same basename and same content' '
-+test_expect_success 'rename logic favors common path segments for files with the same basename and content' '
- 	git reset --hard &&
- 	mkdir -p dir/A dir/B &&
- 	cp path1 dir/A/file &&
-@@ -167,7 +154,7 @@ test_expect_success 'two files with same basename and same content' '
- 	test_grep "renamed: .*dir/A/file -> other-dir/A/file" out
- '
- 
--test_expect_success 'setup for many rename source candidates' '
-+test_expect_success 'rename with many candidates' '
- 	git reset --hard &&
- 	for i in 0 1 2 3 4 5 6 7 8 9;
- 	do
-@@ -184,7 +171,7 @@ test_expect_success 'setup for many rename source candidates' '
- 	git add new-path path1 &&
- 	git diff -l 4 -C -C --cached --name-status >actual 2>actual.err &&
- 	sed -e "s/^\([CM]\)[0-9]*	/\1	/" actual >actual.munged &&
--	cat >expect <<-EOF &&
-+	cat >expect <<-\EOF &&
- 	C	path1	new-path
- 	M	path1
- 	EOF
-@@ -192,7 +179,7 @@ test_expect_success 'setup for many rename source candidates' '
- 	test_grep warning actual.err
- '
- 
--test_expect_success 'rename pretty print with nothing in common' '
-+test_expect_success 'pretty-print paths with nothing in common after rename' '
- 	mkdir -p a/b/ &&
- 	: >a/b/c &&
- 	git add a/b/c &&
-@@ -206,7 +193,7 @@ test_expect_success 'rename pretty print with nothing in common' '
- 	test_grep " a/b/c => c/b/a " output
- '
- 
--test_expect_success 'rename pretty print with common prefix' '
-+test_expect_success 'pretty print paths with common prefix after rename' '
- 	mkdir -p c/d &&
- 	git mv c/b/a c/d/e &&
- 	git commit -m "c/b/a -> c/d/e" &&
-@@ -216,7 +203,7 @@ test_expect_success 'rename pretty print with common prefix' '
- 	test_grep " c/{b/a => d/e} " output
- '
- 
--test_expect_success 'rename pretty print with common suffix' '
-+test_expect_success 'pretty prints paths with common suffix after rename' '
- 	mkdir d &&
- 	git mv c/d/e d/e &&
- 	git commit -m "c/d/e -> d/e" &&
-@@ -226,7 +213,7 @@ test_expect_success 'rename pretty print with common suffix' '
- 	test_grep " {c/d => d}/e " output
- '
- 
--test_expect_success 'rename pretty print with common prefix and suffix' '
-+test_expect_success 'pretty prints paths with common prefix and suffix after rename' '
- 	mkdir d/f &&
- 	git mv d/e d/f/e &&
- 	git commit -m "d/e -> d/f/e" &&
-@@ -236,7 +223,7 @@ test_expect_success 'rename pretty print with common prefix and suffix' '
- 	test_grep " d/{ => f}/e " output
- '
- 
--test_expect_success 'rename pretty print common prefix and suffix overlap' '
-+test_expect_success 'pretty prints paths with common prefix and suffix overlap after rename' '
- 	mkdir d/f/f &&
- 	git mv d/f/e d/f/f/e &&
- 	git commit -m "d/f/e d/f/f/e" &&
-@@ -261,7 +248,7 @@ test_expect_success 'diff-tree -l0 defaults to a big rename limit, not zero' '
- 	test_grep "myotherfile.*myfile" actual
- '
- 
--test_expect_success 'basename similarity vs best similarity' '
-+test_expect_success 'rename prefers basename similarity over best similarity' '
- 	mkdir subdir &&
- 	test_write_lines line1 line2 line3 line4 line5 \
- 			 line6 line7 line8 line9 line10 >subdir/file.txt &&
-@@ -278,14 +265,14 @@ test_expect_success 'basename similarity vs best similarity' '
- 	git diff-tree -r -M --name-status HEAD^ HEAD >actual &&
- 	# subdir/file.txt is 88% similar to file.md, 78% similar to file.txt,
- 	# but since same basenames are checked first...
--	cat >expected <<-\EOF &&
-+	cat >expect <<-\EOF &&
- 	A	file.md
- 	R078	subdir/file.txt	file.txt
- 	EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
--test_expect_success 'last line matters too' '
-+test_expect_success 'file similarity handles missing trailing newline.' '
- 	{
- 		test_write_lines a 0 1 2 3 4 5 6 7 8 9 &&
- 		printf "git ignores final up to 63 characters if not newline terminated"
-@@ -303,10 +290,10 @@ test_expect_success 'last line matters too' '
- 	git commit -a -m "rename no-final-lf -> still-absent-final-lf" &&
- 	git diff-tree -r -M --name-status HEAD^ HEAD >actual &&
- 	sed -e "s/^R[0-9]*	/R	/" actual >actual.munged &&
--	cat >expected <<-\EOF &&
-+	cat >expect <<-\EOF &&
- 	R	no-final-lf	still-absent-final-lf
- 	EOF
--	test_cmp expected actual.munged
-+	test_cmp expect actual.munged
- '
- 
- test_done
+ test_expect_success 'diff-tree pathspec' '
+ 	tree2=$(git write-tree) &&
 -- 
 2.53.0
 
