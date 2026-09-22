@@ -1,243 +1,210 @@
-Received: from flow-b1-smtp.messagingengine.com (flow-b1-smtp.messagingengine.com [202.12.124.136])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f41.google.com (mail-pz2-f41.google.com [74.125.228.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738174BD10B
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 20:22:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.136
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790108564; cv=none; b=IJF+TExOd8EeWHHmQwQQmcgxxG4452hEOo/EYnW+NwmN813B1IEkXBTCVp/Ks7B+WrUd3B9Sd5aQTpbxk9slH15G10tRNutYkSJTbbewZBcMrpQWGpS5+8/YNP6A3lv1HIXCapBsbDqFy3R+90cCvjrhRHi4vkAkHf/FJJ7byDM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790108564; c=relaxed/simple;
-	bh=Rvor9uwzQ7enRPAhlkqoyFaoLc54FEYuKY7lzOLYNfc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qsRlapfz2d1WuagUNHmmCi4mQwFkfU+GQ8gzbpvtsdzR7aDnAAkKqw+O9JmlHQR2liEPptVM0I5naztZ95mvglbJjpRWYyGkgRInOm90cYePREKAeweyyZVXx9WIEMi5g7LIL741EfofsMR443eEEn5Ief7PSJd0j7MOFDoF8SU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=e1eQ3ouP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dnP9wqph; arc=none smtp.client-ip=202.12.124.136
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764904AD7FB
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 20:34:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790109274; cv=pass; b=MW0dxq//jPiyNTR+nuHrn2Zls/H9OXV3wgLccS79uHPcmVVu4KfOW/do/GWNWCYHVACtiJoj3nEqYtX7qnseGMsEfaT9Sud9NoYPTl0kD6Rhdrr7XpLE6gONNjS8kVAK+eflaXC0jX6l8K4HHDomBieZXT5IeKaXI3QD9mliC9Y=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790109274; c=relaxed/simple;
+	bh=gsgEXcbSoMoXjy8ZMrIj6wl7CKkRVliHR9fg5JIwdGA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IgQ+sBQM4R2RrizEYmzb5sEOAY99AhSEn3kXg2DE2ad7t6MO5YbFdBijw6n8oLvFrGkJrHMnIS13jy6h+m8U5K8CZKICOAWra3iCBQwOpAW9O1Z6jSymv21yb6kYfJPVhhCTiPtJ631o+VhhITXC7o+XKYF/xt5yeDPkGmjelLU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nRIZgE0U; arc=pass smtp.client-ip=74.125.228.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="e1eQ3ouP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dnP9wqph"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailflow.stl.internal (Postfix) with ESMTP id D0A4B13000E5;
-	Tue, 22 Sep 2026 16:21:59 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 22 Sep 2026 16:21:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1790108519; x=
-	1790112119; bh=tCDaa6+nyViUUuDjNQQfnSoGMevJQhjjjEz9cdqUP64=; b=e
-	1eQ3ouP5gHtn16tTXrtjuLIPeB1LSD5E7XpIHl73X5vn63J4jsjSTkDtiX/9B3UC
-	UrDILbglVZ6jtehe2YvOH8kRHnPy6NfYUPFTOhDZwzm11YFc4wqzwRng/F0XYTu7
-	TI1oc0KsJn5zEoS2Z7UihkAwBBPlDI9zTKAvMXTRO0GTCf8I9S80FnSKNHElX7eu
-	yfbMy8OU6WKMdeTO8bT+mHdERg+WfGB6uIpprvQMA7tWd5b+QITJ4ckCiM4Wp2+a
-	+9Yj5Bwh6sjEAvmPu8D4v8+Qyp41VTzJZO/vbPSbgcf8FL+V2KZBz3+Q22rAbslp
-	CqMydkX05hJ6lnb7Kh+rg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1790108519; x=1790112119; bh=t
-	CDaa6+nyViUUuDjNQQfnSoGMevJQhjjjEz9cdqUP64=; b=dnP9wqph2CvF+gGE1
-	mk+wi9vqlk2l8IX8bz8Vc6bN3BYRk0Oxjz088p9Po/jZ/PwCS2gUbACQ69Zem/jD
-	59GCaZDHV8MIV7WDYpnSfHmwHd3g/l0JOccbSRgIImn9MHoxyx5On2wO1oo8BEoE
-	TyeYYLn5jUddlSuej0Ss4XahrptHPY6Iatlh8RAUxCzuoCcHWg1nzSLfk9DlP72u
-	oFDUyG5Gn8CqKgvBDiaBl+WeVPdI4DKqBZ5zGO3NDDYw7LU00+Mu/DoIOY+gn34B
-	I5Q89DITOxCHEqX2qa3AMD2M7LG8UusF0mnmrXgZ1KnZYft1j5QQDnCuUDMg8XxR
-	g4n9g==
-X-ME-Sender: <xms:Z-OyaslflLbd-Pm5JZvxuTi0uJe9HDVuT0fo_EvvDASV20W-F-Jc6w>
-    <xme:Z-Oyah3-Gn8iX7kb2B36cmAV-IGaRV4EMzek8IOwlm6n7woEZ4Qvj2gbiCnbyh8d3
-    BJ074jex1dBbLW5E7KVy59zgjCEDk_WayzBcvrJQHdQ9bzuH0sfjrjR>
-X-ME-Received: <xmr:Z-OyaoQ20ftixwpYSmPZfFrfOT47vVaA9VFfHQN3APtQ6Mim6h_dzHqXrl-7jEmBf-8LNcvQmqEH2Qa_7mM6yEvrss8d6O7OUkhYxGzqXdoBbw>
-X-ME-Proxy-Cause: dmFkZTGCYogreECxIvFvsaYuJwFw9zKXvYK/3LuFDw1I6XScytqA3DmIYi28PuUsLEdtBi
-    DkuyipRnWjlzPZ5XdPDeK4dLAIz/MHdOVl/S7PUdtAa9+u9ElbebxHhsmqa5ir+bcMnOrG
-    MTYZ0MpAsdVc2p4ShIvC5H6Vm6trk/af9xTcLbMvIgaHZQEyn7c6zL79tYTTpzL4W//0Wa
-    0ykV/A4EwZvgPXX80OVtok5Lm15DK7Ay6gGv4KUWxANL0/0uj/ASF4+DO7CaNBziVaFL1Y
-    QEqkD/oe2jWozyA54GCEgYdUIKePAvSGu5VfOyaagqjSRvQ/Me6amtB5o4d0pMLchUe0AX
-    XQ0t9KW98rrZV9ix8a+DvWZWd5kTxUzQ09ZgN1dku6pWnne8LfeGZklRnl8JOdGxqU2wnv
-    Dd40cwmZ3CnmGK9bLkVT5ODpf4MtnofPolRg7lWkhpizB2d6N29MP8Sqfh5Gpau107nR1p
-    GznDdCWS4Cldd0EqU1NsA6e3rPBfgvg/Yrem6Ai1qYXBgfPzucnCT/l/qUGVeuBRBqpnax
-    wsV8yqkHdy2AmIWYdFDLTlTyBY+AfK3CSwjmMFzhKgciDwznqK9MXwgE2QJN7H7XM9393R
-    QDMU7EQDKQwIxW9Mk7Ein7t56uxTl2PAnKI1klcR6U7wcFUmv7JyYeQQK05Q
-X-ME-Proxy: <xmx:Z-OyajsXmRCC4rYyLd_qRSs_cXMCBjVdOA4xC0rW1Qu2kPHzqBidQQ>
-    <xmx:Z-OyatZjOBoh7IRjMgTN1G2V1nr7RDF6uCYfYZoI-RQeQnY7dnjLuw>
-    <xmx:Z-OyaouxlA4Hb0aLxCm9UlqXSzyhuIHbyac3m-fV7Ji2ahCkIzg2TA>
-    <xmx:Z-OyavEsi96HBSgaWhRKKfgdVXHixr5raNg0gs1lYbTXYavpghcGcw>
-    <xmx:Z-OyaoRW0VZpkV_oqyRO35DCdukkJXg_gvoR4Wj-Cgdf3wc0ULHyTbKZ>
-Feedback-ID: id2564aa6:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Sep 2026 16:21:59 -0400 (EDT)
-From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-To: git@vger.kernel.org
-Cc: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-Subject: [PATCH v6 3/3] t4010: modernize
-Date: Tue, 22 Sep 2026 16:21:52 -0400
-Message-ID: <20260922202152.842793-4-markchucarroll@fastmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260922202152.842793-1-markchucarroll@fastmail.com>
-References: <20260922202152.842793-1-markchucarroll@fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nRIZgE0U"
+Received: by mail-pz2-f41.google.com with SMTP id d2e1a72fcca58-85469f20513so230743b3a.0
+        for <git@vger.kernel.org>; Tue, 22 Sep 2026 13:34:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790109259; cv=none;
+        d=google.com; s=arc-20260327;
+        b=DwgCbzQTKgNy7/IZQRLriqFrnN3b1ycCJLH5hjyH+Ba3wtVOdC5x7kRR2xTfGqUuHM
+         L3P7pk5eS7bzISOa0GyEBDVKSEvv7sJKME+6h3yu57ktvxv3bImXFN4LAc7NYJguI4wo
+         bhMiuC+LH2zFJErBzxfor5tyM9qTwLqPbnvSTBCmkx+ux37feMveRog0adEBWPKfysNu
+         KANYyj9Cy46Zd7OpeBL1ThJZvi10RJMPfCQxCHdduMKow4ThkHSTWmTQeCJCWNKZMPT/
+         5qk9DJdia9KomNFPLoegUXKBTeTQG1+i+b/7zzb/p7Bim97VdBx3vS96CH9NXemPDkNd
+         Gb/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=yiEPpAVr9JAxc63+5jfzoOdojRjXMFRiN9NkZ/FSC5g=;
+        fh=JwKIycEK1A425YJY8qLMxO6Yc11i7Y5uCpj/+wYJcqw=;
+        b=YskojMXtm9DqEkQsibmdScwwRHiiBRxUjqZuppiz698pVdijmnK2nwysiYD88ho/AJ
+         phqiwbP2WRIFPv7ixTr8osUh7uMdw5YIs2L9WJbPuqMu4/RviGL4u+Q9l7Ntu3KUaOhp
+         GbXb7N5WOi/dN4xN4orjfvoSPi8E0Hi2BObnVRs0kGqHBdiU9/2Q/9g/MLoQi5wm8sp3
+         eNomgS9muF7/xrSNayRcU0+w6C4XSHgbdusnqA98dE40Nu3FOQ2P+oY2IYKmXvSbyrg1
+         XkgyDejNizzqWSeIEyr/MKsn3ZLQ0gV64Ij/x1vZ+cnSp9WYVwRGQwl77iP6DJ7uU/oe
+         z15A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790109259; x=1790714059; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=yiEPpAVr9JAxc63+5jfzoOdojRjXMFRiN9NkZ/FSC5g=;
+        b=nRIZgE0UtVsclPaOoAVT4iy9vxxAk4Otv4j6bl4bGZkcSGHPfg1X+gjUJspU8gW/gJ
+         zJBtQJ0G6iLp+jN72necxsF28ocHGH6pJ46LUXiGBKSO+0U4QyukiH+sn+wo/U0Kma9p
+         CEu3u8+q+Jf4Y0OWnKwbvpJqdm4m5W66Di4pqZ8dy1f7vRy5FeJDuTfSstUBx1xuFuAM
+         nELf8t9rBlCD/KRs9CZEfZfLx4ZN3Sj6nTFdq+gU1r27+e3mp8tR3UtF+b73cxEMz3dc
+         pBN8bGgl72KQ1PFx2Vqvgnvjp236ulk3pZTDxYgy9aLl2B5GppDSenntUaEi8iyD72nY
+         eQGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790109259; x=1790714059;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=yiEPpAVr9JAxc63+5jfzoOdojRjXMFRiN9NkZ/FSC5g=;
+        b=12nf8WkzUnDGvI8016sstoqBt0XtcgO/X/KuzAK2pI1s07CUHt/nhlPcFJlOL4Mun2
+         /EEJePJaQosFjDAvCFwY/R8tbHN/BB3bw2YPH9azr0bwFzZ2jhhXXCQhafKJCGyGjd0Z
+         1SVcekd1L/V50nyzH8amfOSRhe+LRS8jVWb96TuVg58ETqIz/CDf8Esb85YOZzqHAV3H
+         THmdjAZGQ7zwVNPerQTpXH1Ij40dHS26dcBJbNTxdqemjvm1rtZOTz1tlUKKUl4/RF5n
+         UPdEUNyNu9X7qSaYI3lPA1+8G97KClU3PBSiy1ZIpSMVbBgSGLcYz+fKUsN9+/uwsIQe
+         iUWw==
+X-Gm-Message-State: AFuF++mkQLV/OTsv6wtS1PCD0B5Y4cUSGxzXetXboTA5wcfjff/DiKiM
+	mHnvgk0JRwUOWxDu7ZYoZ0o4fDzJPl5ZD4/NzHomfv7EEfAfWFjM3btRt7BeIr+EJYxOg4kIhhg
+	20K/UJ6IiRaueSGyXPKSJCl+vLhg1kTw=
+X-Gm-Gg: AYBFou0Bdm4q7/+H/8ARNZcSZmc1galJ5ljxrGQMnqxazGsMyt8n9A9FclZcKwmXbDo
+	D7p3N+Jx+0zShgPAU8wrADNs/HH7OGyhcPvMOZ63/9CexJSuTT6rLljLTLIrTh6atW/pnXmeZZy
+	IgYezCY7LJRKs7RkTog7FoFdf7Tdc/2U3kVEoDVkYMeiUKH9gxzreZma5ueGMtjOmA2r1XiMB5g
+	WlGHhLAa+3ZmTL0aetxRcklKISralKsvCuzVm1jZeh9cLYdPMob7m2cguhe6c53/bbC2grhuYeG
+	30x/Uc3yDB/mSVauKUtrMufmwhTDq8nbUPKPa49W/WwVdIb2MpcuWBYEOHe6HFYVJL7K9F88vKl
+	d+gWSrQYudQZ8VIAENfUEI1kphZwU4WsAcovBFe/sCPeWQFnefR6/ERx8DcQZ+tfgIvqv30n77N
+	jvbdYkH3w=
+X-Received: by 2002:a05:6a20:958e:b0:3d3:ae1f:d7f8 with SMTP id
+ adf61e73a8af0-3ddf7e7a20bmr685858637.24.1790109258425; Tue, 22 Sep 2026
+ 13:34:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1789853192.git.ben.knoble@gmail.com> <782fe91251111fbb28359574d860e4a6d2e45fc0.1789853192.git.ben.knoble@gmail.com>
+ <2551b801-4cb3-4880-ac01-7d14a188ddd4@gmail.com> <CALnO6CDG4Emny7xESxN8GObaXb_P9gPHBZ857hrAvDjiMSqsKQ@mail.gmail.com>
+ <41d28f9d-b86a-4d65-9a85-656ea9d216e9@gmail.com>
+In-Reply-To: <41d28f9d-b86a-4d65-9a85-656ea9d216e9@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 22 Sep 2026 16:34:07 -0400
+X-Gm-Features: AclHuK_sD2RBCMkoBVl9pTkSJLG5dhFWbhpyn3qyfc23VrF3eOTnCEocPuLK4Q4
+Message-ID: <CALnO6CDxew2b0X+HMiT0Vai_hj+MaueV9Ht2BOB5zrsZ27QUwg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] builtin/stash: merge index in-core
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>, Taylor Blau <me@ttaylorr.com>, 
+	Patrick Steinhardt <ps@pks.im>, Derrick Stolee <stolee@gmail.com>, Adam Johnson <me@adamj.eu>, 
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Victoria Dye <vdye@github.com>, 
+	Elijah Newren <newren@gmail.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Old tests were written in a different style than modern
-ones; for better readability and test error messages,
-update t4010 to the modern style.
+Thanks again, Philip :)
 
-* run everything inside of a test_expect_success block.
-* write title line on the same line as test_expect_success,
-  end that line with a single quote that opens the body of the test,
-  and end the test with a single quote that closes the body.
-* write expected output of a test to a file named "expect",
-  and actual output to a file named "actual".
-* write here-docs using "<<-" syntax, so that they're indented
-  uniformly with the rest of the test.
-* make test names more clearly reflect the functionality that
-  they test.
+On Tue, Sep 22, 2026 at 9:57=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+>
+> Hi Ben
+>
+> On 22/09/2026 13:43, D. Ben Knoble wrote:
+> I think there are wierd cases where one diff algorithm results in
+> conflicts and another doesn't because they generate different (but
+> equally valid) diffs so allowing the user to tweak the algorithm we use
+> via init_ui_merge_options() is probably a good idea.
 
-Signed-off-by: Mark C. Chu-Carroll <markchucarroll@fastmail.com>
----
- t/t4010-diff-pathspec.sh | 122 +++++++++++++++++++--------------------
- 1 file changed, 61 insertions(+), 61 deletions(-)
+Gotcha; I've already queued this locally.
 
-diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
-index c84c3fa05b..03b3023bee 100755
---- a/t/t4010-diff-pathspec.sh
-+++ b/t/t4010-diff-pathspec.sh
-@@ -13,67 +13,67 @@ Prepare:
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-diff.sh ;# test-lib chdir's into trash
- 
--test_expect_success \
--    setup \
--    'echo frotz >file0 &&
--     mkdir path1 &&
--     echo rezrov >path1/file1 &&
--     before0=$(git hash-object file0) &&
--     before1=$(git hash-object path1/file1) &&
--     git update-index --add file0 path1/file1 &&
--     tree=$(git write-tree) &&
--     echo "$tree" &&
--     echo nitfol >file0 &&
--     echo yomin >path1/file1 &&
--     after0=$(git hash-object file0) &&
--     after1=$(git hash-object path1/file1) &&
--     git update-index file0 path1/file1'
--
--cat >expected <<\EOF
--EOF
--test_expect_success \
--    'limit to path should show nothing' \
--    'git diff-index --cached $tree -- path >current &&
--     compare_diff_raw current expected'
--
--cat >expected <<EOF
--:100644 100644 $before1 $after1 M	path1/file1
--EOF
--test_expect_success \
--    'limit to path1 should show path1/file1' \
--    'git diff-index --cached $tree -- path1 >current &&
--     compare_diff_raw current expected'
--
--cat >expected <<EOF
--:100644 100644 $before1 $after1 M	path1/file1
--EOF
--test_expect_success \
--    'limit to path1/ should show path1/file1' \
--    'git diff-index --cached $tree -- path1/ >current &&
--     compare_diff_raw current expected'
--
--cat >expected <<EOF
--:100644 100644 $before1 $after1 M	path1/file1
--EOF
--test_expect_success \
--    '"*file1" should show path1/file1' \
--    'git diff-index --cached $tree -- "*file1" >current &&
--     compare_diff_raw current expected'
--
--cat >expected <<EOF
--:100644 100644 $before0 $after0 M	file0
--EOF
--test_expect_success \
--    'limit to file0 should show file0' \
--    'git diff-index --cached $tree -- file0 >current &&
--     compare_diff_raw current expected'
--
--cat >expected <<\EOF
--EOF
--test_expect_success \
--    'limit to file0/ should emit nothing.' \
--    'git diff-index --cached $tree -- file0/ >current &&
--     compare_diff_raw current expected'
-+test_expect_success 'setup' '
-+	echo frotz >file0 &&
-+	mkdir path1 &&
-+	echo rezrov >path1/file1 &&
-+	before0=$(git hash-object file0) &&
-+	before1=$(git hash-object path1/file1) &&
-+	git update-index --add file0 path1/file1 &&
-+	tree=$(git write-tree) &&
-+	echo nitfol >file0 &&
-+	echo yomin >path1/file1 &&
-+	after0=$(git hash-object file0) &&
-+	after1=$(git hash-object path1/file1) &&
-+	git update-index file0 path1/file1 &&
-+	: >expected
-+'
-+
-+test_expect_success 'limit to path should show nothing' '
-+	git diff-index --cached $tree -- path >current &&
-+	compare_diff_raw current expected
-+'
-+
-+test_expect_success 'limit to path1 should show path1/file1' '
-+	cat >expected <<-EOF &&
-+	:100644 100644 $before1 $after1 M	path1/file1
-+	EOF
-+
-+	git diff-index --cached $tree -- path1 >current &&
-+	compare_diff_raw current expected
-+'
-+
-+test_expect_success 'limit to path1/ should show path1/file1' '
-+	cat >expected <<-EOF &&
-+	:100644 100644 $before1 $after1 M	path1/file1
-+	EOF
-+
-+	git diff-index --cached $tree -- path1/ >current &&
-+	compare_diff_raw current expected
-+'
-+test_expect_success '"*file1" should show path1/file1' '
-+	cat >expected <<-EOF &&
-+	:100644 100644 $before1 $after1 M	path1/file1
-+	EOF
-+
-+	git diff-index --cached $tree -- "*file1" >current &&
-+	compare_diff_raw current expected
-+'
-+
-+test_expect_success 'limit to file0 should show file0' '
-+	cat >expected <<-EOF &&
-+	:100644 100644 $before0 $after0 M	file0
-+	EOF
-+
-+	git diff-index --cached $tree -- file0 >current &&
-+	compare_diff_raw current expected
-+'
-+
-+test_expect_success 'limit to file0/ should emit nothing.' '
-+	: >expected &&
-+	git diff-index --cached $tree -- file0/ >current &&
-+	compare_diff_raw current expected
-+'
- 
- test_expect_success 'diff-tree pathspec' '
- 	tree2=$(git write-tree) &&
--- 
-2.53.0
+> >>> +                     o.verbosity =3D 0;
+> >>
+> >> Looking at the code in merge-ort.c it appears the verbosity option was
+> >> used by the recursive strategy but isn't used anymore so I think we
+> >> could drop this.
+> >
+> > Intriguing. (Assuming the default "2") There's a "< 5" check in
+> > path_msg() that wouldn't be affected by dropping this, and a "> 2"
+> > check in checkout() that=E2=80=A6 also wouldn't be affected?
+>
+> The former is not affected because we're cherry-picking so never have an
+> inner merge from merging multiple merge bases. The latter is not
+> affected because we don't checkout the result!
 
+That's very helpful; I find it challenging right now to navigate the
+various call-graphs here :)
+
+> > But it might matter if something is setting the verbosity elsewhere
+> > (config, GIT_MERGE_VERBOSITY), and I think we really want this merge
+> > to be quiet? I seem to remember reading commits in this area quieting
+> > "git reset" and so on to keep the noise down.
+> >
+> > So I'm inclined to leave it for now, especially in case it later does g=
+et used.
+>
+> merge ort does not print anything - it just adds messages to an strmap
+> in struct merge_result() which we ignore here. I guess setting it to
+> zero might avoid a little work generating the messages.
+
+Possibly! I still think it signals our intent to be quiet better this way, =
+too.
+> >>> +                     oidcpy(&index_tree, &result.tree->object.oid);
+> >>> +                     clear_merge_options(&o);
+> >>
+> >> Looking at replay.c:replay_revisions() I think this should be
+> >>
+> >> merge_finalize(&opts, &result);
+> >
+> > Hm, possibly. It does look like that does more with the "result,"
+> > which is probably needed.
+>
+> Oh, we definitely want to free the strmap in the merge result.
+>
+>  > But it doesn't actually clear the merge options.
+>
+> Isn't that because there are no allocations in that struct? (obuf is
+> unused - it looks like we could clean up the struct by removing the
+> members that were used by merge-recursive but are ignored by merge-ort)
+
+Maybe---I was more worried about un-reusable state, but it's true that
+the clear function is a no-op right now, heh. So it was a bit of "in
+case one day this is mandatory," perhaps.
+
+> > On one hand, I thought it could be important not to reuse that struct
+> > between merges. But if we do use the "ui" init, it might be ok?
+> > replay_revisions() does use the same struct between calls to
+> > merge_incore_nonrecursive().
+> >
+> > Oh, but one other thing: we unconditionally reinit the merge options
+> > later on in do_apply_stash(). We could conditionally initialize there
+> > ("if (has_index)"), I suppose?
+>
+> I'd just move the call to init_ui_merge_options() above "if (index)". As
+> far as I know it should be fine to reuse it - any state is stored in the
+> result
+
+Yeah, that's smarter. Locally I got tripped by the case where we said
+--index but skip some work; but it should be fine to unconditionally
+initialize those options earlier.
+
+> > Funny, I was getting aborts before removing the asserts because I
+> > hadn't set the labels, aha. Looks like we've come back around to
+> > keeping the labels.
+>
+> Sorry for that detour
+
+No worries.
+
+> > I'll probably keep a similar structure as the
+> > working tree merge uses, I think.
+>
+> I'd use fixed names and not bother with all the conditionals around the
+> label text to keep it simple.
+
+That's what I ended up with locally, yeah. I finally decided it was
+too complicated to do anything else for labels that would be really
+hard to find.
+
+I'll get v2 out in the morning, probably.
+
+--=20
+D. Ben Knoble
