@@ -1,232 +1,202 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97103E8C78
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 21:20:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3EA9544D5C
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 21:40:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790112017; cv=none; b=u5nhZMFjTbm7yDL9WeiNq70FFL+/IXNO25ylF4IPfm1La+2/Hbn3doQWkdvfjPsB8ZwVslwU8pmmJfSBMDuQLLiYlDna4iZMogS5BiEaZfy81MO4bzQZB6uWBfqCgA4ypKL/y47cG7kaU2aDose8lUPJ9gftAzOyOpFf4nrB7Ks=
+	t=1790113246; cv=none; b=Bj64uq+5uWeAWS7cfowOBwSiyRvcJfgc+AqShaSJehY0qH1IIiMBydP51P+EZO4TtBxma+EAhEYYbGkhzbQx+2jB9zbZ2mrpixewqQ3IYYf/+eCaUrr/LXOUKXAgdBRwIyMYRTc5mZz2p6pLiueDEo/37NArTjFKqSCUPwmLggw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790112017; c=relaxed/simple;
-	bh=vndFp5S32NTLYpDfMcXLnfHiXsOIS9FKu2KVko+ZVVU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MdZWIWderloZjA8wnbJdBpfxxNdSdK38R5AE5o4epWuy6u/pq5MiBEkkTeD+NIvhYu4sF84fE2L+cpGZ8mxjaHLJdgXn04I2yHkz9cP3B/t7Msn8VJcCiQ2kl9oOpw953CYAuw5OaiYR8rotuuy2554XSRQEfr0pvMg9fL+hcn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YhR99itj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jc04LE2R; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790113246; c=relaxed/simple;
+	bh=XA4r6TxM7b+p7/2owD2EtRA7ecBTq4k8IPdzwdHBhp0=;
+	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=oDSQwjswGLXk2JaY7jTH+DdQ5omDczUeY8FIVR3J1x+TIlaRYm/10fPEw3nq4Z2NnhuQzSvmwG13xFxgxGKnyB8DGmkm/NuTW4FoKvD/8Ba5Ey6qjLLCKzg67u2tp/hMmUEKRQ+C8frbWPKzfqQrysY4463VWem2g7RcMfS0fV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=VJu0XCJX; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YhR99itj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jc04LE2R"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 89C9DEC0246;
-	Tue, 22 Sep 2026 17:20:07 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Tue, 22 Sep 2026 17:20:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790112007; x=1790198407; bh=irM3kqj7tA
-	WgBIqr0xuptn9d6zD345FVyM+AB3iRGIw=; b=YhR99itjyUePuj8cOd8U0vxFwR
-	2vOMT5E3C9gfcOGsR0feRQQh0PZ7Y8ap0fE0yFtgHlCNzunEqcKx3m+TyVikub5C
-	8cX0dwfJOtmrogmNDknfMgjjL0exDj+HgfJc8PlTYIGb0RJwxI7wtrefWxvm9OlY
-	ZYVaBD06FthiDheHwX6AZfuwSUxPmWFKxgvMDgdq+CY+eCwd90mea1AQ32N9MYXw
-	H6KXQGDM4PYPMpatv/CUetwgAsFO7EG6zNfwOyQn1sHrwDGiPDrVw+WiZvF9Z7tJ
-	RadeTvCcBQSVKss1maD6TLawf1wuBreBC36pL3C+DR9ZrTqIORr1E0GF6ZOQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790112007; x=1790198407; bh=irM3kqj7tAWgBIqr0xuptn9d6zD345FVyM+
-	AB3iRGIw=; b=Jc04LE2R19zTNEfJp5iqu8XEMQnvchWqqQY7JoTcv3jiKpadCHQ
-	p8pYvCq0aiipIp8YZ2Gj8bWRdyCllb+rA8BAJFVtsudVHafMBWwLrRyxCpV7P+15
-	FRzOAAC0PNOKQEKGcTHGJlQnkhpXRJKoJIXbIgUAkjxOe22dPYZWIB1ab+0Ct1GC
-	smTc+2AASrO+Qsdts1BwAEDQgLhp+mDgnnyJH208z5CRfX8qRmqZrGu48Ah8Tgbi
-	f0yh0JaOAA93lS+dVC+/2npBrB+CiOaZ8up3C7Gq9kjis1LAubBkZzfqty8/dVKV
-	K3eQsfSFI3FVuSpR8rVKwLFfosT5dQPeupQ==
-X-ME-Sender: <xms:B_Gyat5MSSpYjbIdO4yEb4Su9I-Blt545rMyaKLiu5GBNJdDHSJH-g>
-    <xme:B_GyahwVGlhCFIb6sR0m6rLYKXDNIMtqLzFZiY61zqNNQRT5maKbO8DNQvM2KBkBX
-    UwwESQ4k829CzTs19UEvs_rJptDGbJF4xJlpvmmTrw4BaFPj4pZIIM>
-X-ME-Received: <xmr:B_Gyasy39FLTsX1Siyvol9VB8VbGxhiBAFiM1KmTIq_fJ38LQ9h3kCKeCDE5IysJteQJHLULSVVcV_ukhvYOz32OtYrlSAqqCuIc>
-X-ME-Proxy-Cause: dmFkZTFCMNtDeQznR67lHvNFfat36/z4+kRf4OWw0lGs0Ve4YjgeuJMR64+QiFDo8SzSoG
-    NOZYIVuEbd9mmU35RSmKf4UAm4czfKPC9OI/uW98rj4Yqn0/9yenwce/2iOiYzH7LUrq1C
-    98li2XsX7DZV8jEl78kR2Rm8lrG0S6YQz3h9RgiW6Y9j5H2KXKgWa+wcwFtWUmrpqj3GaC
-    oacC79fB8ZLT3Y4NGKx3GctNnrvS2tJl9B9ZhNSiF9WNvAXKmzVUTMNiB7iyXzD0Zy2CfD
-    rUQuJOxmJNRLmymNCyM6k/fHJsvZ5PxSKIEVhdrT/bzc5UfX4nylGRY7LFBFvgPH8My8A7
-    PXlf3bPRIjqmJOjlYnvdTPCqzz9V+u9dtuc/ggJrjDxyIOgl6ThNjvlUD4TpKyR14Q484L
-    Q62pzVaBNiT5edTKHzRCu+J9/aOtmTgHgjebd2VaJ6yo/y4pAyZCm2flTFUl0ddM4nJhtr
-    kgBTzzKe6x7jimJjx98yYAZXqtZc3ugLPwi2q/dfD0ob0KYgJZEJhsq5awNzOGotWJgu/l
-    +OvwTRG7qlau4Ka0ffIDVaCRTcblTRgOyVLvlkwxOz5uuakukZF9zs75Zkr0NJWMY7v2oI
-    cpELYmCOpSJGlpifPHmA/hS9Lh/lcQ0QzD9aT2tT0hbvP97f7lD0cIY1q8xw
-X-ME-Proxy: <xmx:B_Gyahy0BA3MoqWsvEjsyznzulVORvEwe-h8CkQDM41GEb0XCbeudQ>
-    <xmx:B_GyauaUt0s_5kXg59fASqI3N_quoV6FlQR4db20b44HP2RPZ7gsmw>
-    <xmx:B_GyaqVj9egpms25jtfFSUQVAhBQKLbF6sVXVZ5jFmRvC3CH4DW6lw>
-    <xmx:B_GyakjzVvBL-IwipRxjFeA2zlr1zPRMCi0qJ9F_dHTwCdS1Pu2mCA>
-    <xmx:B_GyalDR5nuJGSo6fU1BmpdmqJPTkrTq5E0xU9opAEvTrcXAIOM-CixV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Sep 2026 17:20:07 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Harald
- Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v2] shallow: advise when a walk stops at a shallow boundary
-In-Reply-To: <pull.2413.v2.git.git.1790084326913.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Tue, 22 Sep 2026
-	13:38:46 +0000")
-References: <pull.2413.git.git.1789898013916.gitgitgadget@gmail.com>
-	<pull.2413.v2.git.git.1790084326913.gitgitgadget@gmail.com>
-Date: Tue, 22 Sep 2026 14:20:05 -0700
-Message-ID: <xmqqo6dpc7ay.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="VJu0XCJX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1790113229; x=1790718029;
+	i=johannes.schindelin@gmx.de;
+	bh=zGkIjtKhvOYV9hEVaa5hH0yko15FAFPmb0RW8o6ymho=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
+	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
+	 message-id:mime-version:reply-to:subject:to;
+	b=VJu0XCJXMbwQtUisTlpwOMJY+vF6fXElguvVa2BP5508kI0BdXWboHDQwO+rzUpy
+	 yhy8yKFfZ2I9XeAeo1ahqg7q3Ee6Bv0L+tlZlxcbhju7OUB/h9/SIv4qBHGcY/VU8
+	 obm46eDQuSF55OlHatwAdeyRY6Or+fHj5cr6wMkOiROJq3uDfK1j7HWCMG4QKIBPT
+	 ILS6YQURqw5xuZhRvPgyWRME8X4O/LWKxr+8T//MhTmIfnFJr0OyHhuuoFGnUIbNi
+	 Dsa5mitWef4UddLIyrxUgqdZoLXlR/ZgEB4j+JI4u4mwgEd6oivRZ02ei+P35Ytlp
+	 mPSu4Yf2Cv5ERqby1A==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M1Ygz-1xB4AI2XyF-003rV8; Tue, 22
+ Sep 2026 23:40:29 +0200
+Date: Tue, 22 Sep 2026 23:40:29 +0200 (CEST)
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git for Windows 2.56.0-rc2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Message-ID: <1MRCK6-1xNLA12nEy-00MMUj@mail.gmx.net>
+X-Provags-ID: V03:K1:DfPCOggDGoortmSbwqprJUBVQpnSWvbdW5XvVB9ny1+CHBbAQs4
+ rZYR6snElbCnwsoyS5e9SVr4utrgb7Q7Dp4KktrzaZDXNPmrn67aEGZtMldqg7GKDAhCe/F
+ BWTUt+QEWonFofnqgEs0UX/51fDoKo2KyCKpe1qpBhYKij4vdgbPPFAA1QIhToPqphzXq06
+ k5hscmgHd3dcDp3BKIlrA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:c/lRWSjR2L0=;5xHJaptXmx7NydTHp+tfvWQLI9C
+ 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
+ jVgY2wzgbRFeek/WNSijIZYepDWLkev+7LA==
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Dear Git users,
 
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 350b35c556..22a40c7d28 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -47,6 +47,7 @@
->  #include "commit-reach.h"
->  #include "promisor-remote.h"
->  #include "range-diff.h"
-> +#include "shallow.h"
->  #include "tmp-objdir.h"
->  #include "tree.h"
->  #include "userdiff.h"
-> @@ -396,9 +397,32 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
->  	cmd_log_init_finish(argc, argv, prefix, rev, opt, cfg);
->  }
->  
-> +static void advise_if_log_stopped_at_shallow_boundary(struct rev_info *rev,
-> +						       struct commit *last_shown)
-> +{
-> +	if (!last_shown)
-> +		return;
-> +	/* a plain "git log" running out of history is expected */
-> +	if (rev->max_count < 0 && rev->max_age == (timestamp_t)-1)
-> +		return;
+I hereby announce that Git for Windows 2.56.0-rc2 is available from:
 
-"git log -999" may run out of commits because the history genuinely
-may only have 20 commits, or the clone was made shallowly and we
-only happen to have 20 commits at hand.  The same is true for "git
-log" that does not get any count.  So I do not quite see the reason
-why we want to give an early return in this function.
+    https://github.com/git-for-windows/git/releases/tag/v2.56.0-rc2.windows.1
 
-> +	if (!is_repository_shallow(the_repository))
-> +		return;
-> +	if (!commit_is_shallow_boundary(the_repository, &last_shown->object.oid))
-> +		return;
-> +	wait_for_pager();
-> +	advise_if_enabled(ADVICE_SHALLOW_HISTORY,
-> +			   _("'%s' stopped at %s because this repository is a shallow\n"
-> +			     "clone, and might have more history upstream that was never fetched."),
-> +			   "git log",
-> +			   repo_find_unique_abbrev(the_repository,
-> +						    &last_shown->object.oid,
-> +						    DEFAULT_ABBREV));
-> +}
-> +
+Changes since Git for Windows v2.55.0(5) (August 20th 2026)
 
-Anyway, sorry, I regret opening this can of worms X-<.  It is not
-that your implementation and design is bad, it is the problem being
-solved that is bad.  But ...
+Following the MSYS2 project, on which Git for Windows is based, Windows
+8.1 support was dropped; In doing so, internal paths changed (/mingw64/
+bin/git.exe does not exist anymore, /ucrt64/bin/git.exe takes its role;
+if this breaks your setups, consider switching to /cmd/git.exe instead,
+which is guaranteed to stay stable).
 
->  static int cmd_log_walk_no_free(struct rev_info *rev)
->  {
->  	struct commit *commit;
-> +	struct commit *last_shown = NULL;
->  	int saved_nrl = 0;
->  	int saved_dcctc = 0;
->  	int result;
-> @@ -412,6 +436,7 @@ static int cmd_log_walk_no_free(struct rev_info *rev)
->  	 * retain that state information if replacing rev->diffopt in this loop
->  	 */
->  	while ((commit = get_revision(rev)) != NULL) {
-> +		last_shown = commit;
->  		if (!log_tree_commit(rev, commit) && rev->max_count >= 0)
->  			/*
->  			 * We decremented max_count in get_revision,
-> @@ -437,6 +462,7 @@ static int cmd_log_walk_no_free(struct rev_info *rev)
->  		if (rev->diffopt.degraded_cc_to_c)
->  			saved_dcctc = 1;
->  	}
-> +	advise_if_log_stopped_at_shallow_boundary(rev, last_shown);
+An issue with the installer for the previous version
+(v2.55.0.windows.5) caused the "Use external OpenSSH" option to be
+disabled for some users. This caused the bundled version of OpenSSH to
+be installed and overwrote any previously-saved choice of external
+OpenSSH. If you rely on an external OpenSSH installation, and you
+updated to v2.55.0(5), you should consider re-running the latest
+installer with "Only show new options" unchecked so that you can
+re-enable the external OpenSSH option. The bundled version of OpenSSH
+will be uninstalled automatically. If you do not rely on an external
+OpenSSH installation, or you did not install v2.55.0(5) specifically,
+you can safely ignore this notice.
 
-... the "last shown" commit may or may not be at shallow boundary.
-It may be a normal root commit, yet there may be truncated side
-history that we stopped traversing during the above loop.  If for
-example we had a history like this (time flows from left to right):
+New Features
 
-     ()---b---d---e	(side branch)
-                   \
-                    \
-  a---------c--------f------g	(trunk)
+  * Comes with Git v2.56.0-rc2.
+  * Comes with Git LFS v3.8.0.
+  * Comes with cURL v8.22.0.
+  * Comes with OpenSSL v3.5.8.
 
-where a side branch is much denser than the trunk, and shallow clone
-truncated the history, hiding the parents of 'b', we may see that
-our traversal goes 'g', 'f', 'e', 'd', 'c', 'b', 'a' and the last
-shown commit may be 'a', which is a genuine root commit.  But behind
-'b' there may be hundreds of commits on the side branch that
-eventually leads down to 'a'.  Doesn't the user want to be notified
-that they are missing tons of history behind 'b' in such a case when
-'b' is shown and we stop traversing its parents?
+Bug Fixes
 
-That was the original motivation behind the issue I raised during
-the previous review, and that is why I say I regret opening this can
-of worms.  If the commit 'a' in the history had parentes hidden
-behind a shallow boundary (in other words, 'a' is not root), then
-from the same traversal, we would see the "traversal stopped at
-shallow boundary" advise, which means that we sometimes see it and
-sometimes we don't, even though in either case we are showing 'b' as
-if it were a root when it is not.
+  * The installer is now actually a 64-bit one, which fixes the problem
+    that the external OpenSSH option was broken in Git for Windows
+    v2.55.0(5) (see notice above).
+  * It is now finally possible to commit 4GB objects or larger in Git
+    for Windows.
+  * Fixes a bug where parallel checkouts could abort with "* stack
+    smashing detected *: terminated".
+  * A bug introduced in Git for Windows v2.55.0(5), which caused vim to
+    often open existing files with the first line missing, was fixed.
 
-I do not think of a good way to solve this, and showing "your
-traversal happened to have ended at the shallow boundary" only
-sometimes in an unreliable way is probably counter-productive, I am
-afraid.
+Git-2.56.0-rc2-64-bit.exe | 8e281eca0b4d911903ae6545016aa248d6a8322f0f794303d54039cfbe1707a2
+Git-2.56.0-rc2-arm64.exe | ee47e6b1706554c574875ab143584e323971ae6a2c2089fc0ecf14b679b30d5c
+PortableGit-2.56.0-rc2-64-bit.7z.exe | 81f2718f7110bafefaaa8a996ae2236115ab20eaca86e3b00688981f967b1d59
+PortableGit-2.56.0-rc2-arm64.7z.exe | b2ee9d4c4ebc260f798e40f02beaf9e0513675a10c97cd6f9470e53e73d41229
+MinGit-2.56.0-rc2-64-bit.zip | 30fb85a3fbdca441bbe9ec330f4ff0fa7a946f4ef6ade28ff8075ee16d584d47
+MinGit-2.56.0-rc2-arm64.zip | 3ad9ca61b8d69a4dd1e0e2abfce0f98dc261b0325038734d94997faa5af27f3d
+MinGit-2.56.0-rc2-32-bit.zip | 27d1e333008eb57b863a3b83f7f4f915397a52642d224faae658b109451ba698
+MinGit-2.56.0-rc2-busybox-64-bit.zip | d90c636e0665ecbc5efef8aee9b0c6981c495b41f543a51d40eb7a3882a8fb40
+MinGit-2.56.0-rc2-busybox-arm64.zip | f33b8f0603bf2f629eefa62bc8ed89490766f7a93946d62eebb84d38e1811716
+MinGit-2.56.0-rc2-busybox-32-bit.zip | ca6fe419616abdc3c6d0758f11eba1afdf57e10194f76d5171309f802273463c
+Git-2.56.0-rc2-64-bit.tar.bz2 | 1cf1e95599ff3534ae39bdb60d4fda2384382696148785b3c5e807ce0600b19d
+Git-2.56.0-rc2-arm64.tar.bz2 | 1b07b5e7fb3f57de51e076984933480fda23243b060ed6afa5f74b12bbc22683
 
-So please forget what I said in the previous review.  Even though it
-may be a good piece of information to have somehow for the user to
-know which commit has its parents hidden beyond a shallow boundary,
-a regular get_revision() traversal loop is probalby not a good place
-to do so.
-
-We might want to show the information by enriching "log --graph"
-output but that is totally unrelated to what you are doing with this
-<rev>~N topic.
-
-> +test_expect_success 'shallowHistory advice accounts for depth already present' '
-> +	test_commit shallow_partial_1 &&
-> +	test_commit shallow_partial_2 &&
-> +	test_commit shallow_partial_3 &&
-> +	test_commit shallow_partial_4 &&
-> +	test_commit shallow_partial_5 &&
-> +	test_commit shallow_partial_6 &&
-> +	git clone --no-local --depth=3 --branch main --single-branch \
-> +		.git shallow-advice-partial &&
-> +	test_when_finished "rm -rf shallow-advice-partial" &&
-> +	(
-> +		cd shallow-advice-partial &&
-> +		oid=$(git rev-parse --short origin/main~2) &&
-> +		test_must_fail git rev-parse origin/main~5 2>err &&
-> +		check_shallow_history_advice origin/main "$oid" \
-> +			"git fetch --deepen=3 origin main" &&
-
-Would wew see the same output if we asked for "origin/main^^^^^"?
-Just being curious.
-
-> +		git fetch --deepen=3 origin &&
-> +		git rev-parse origin/main~5 &&
-> +		test_must_fail git rev-parse origin/main~6
-> +	)
-> +'
-
-Thanks, and sorry about the ill-defined feature request.
+Ciao,
+Johannes
