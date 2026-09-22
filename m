@@ -1,129 +1,138 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk2-f42.google.com (mail-qk2-f42.google.com [74.125.230.234])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CC6420469
-	for <git@vger.kernel.org>; Tue, 22 Sep 2026 22:32:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4B048EC85
+	for <git@vger.kernel.org>; Tue, 22 Sep 2026 23:06:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.234
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790116334; cv=none; b=uagBmYtXREJdeslGlLTfbSbECuzZdMG0g9+8zFonFJjniGjTsvTl/+jIoIrYuLVUJ1VwLevMO71rlKKMwVXMZUWJ++AMNI2ky0B3hUxYzrAJ99mswTS1tVd88hXnfjVYVZkuI267UtVtCXUcyJU8TTzjzL4iPPzthh32EsuE/+8=
+	t=1790118377; cv=none; b=O2DFq3vsaeJHVc6W541iiVUJ7oI5s9GGz+Q9igpGlayamPB/lO+YblElEJYz+7IAgJy73mNvD0MdOyAvoDHMIpssa97cmp468N77uIgxzz16EvlbQjPnxWAc55nvnc4rx6wWdlbQjUWgjfjev9DhLuakaJHMzCWToPyZDqmNoMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790116334; c=relaxed/simple;
-	bh=rqmIQJfdVOyf6Sh/SZqR/gXxUn+TUvXovPVorXps9yk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DEPcYlRRqunbipsgET39j2UdgQauUtApitIprvLdy9ePwi7DysjBr8VT+obtgJkKGxNCmU2cXV08xsUIKsHo8L9fXgbX58ayPV+2sGU1aJLOBM4y4WJvqi83gP9E+lWybYIEh+WzgNzQsFcwMGBRvuMtgmf3HAByjzjp9HAH6mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ttbh2R7s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QxitJnlm; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790118377; c=relaxed/simple;
+	bh=+C5omdJnFyRwDl4Ks+7bw9LiL7YaYeLbRT+hX++27yw=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Pd7y9NogZ0xY96UdXkmsXJ6YcefYDGCWdLviE3FB5rFTBeKMj8lDvTqnBsla95gT7epa0X+UbQft57lcnLCRV+cv3yJucNmtL0LXt6n91gUPOHmfl0hq4O4rgDkTjFnRqmqj49enJAfg1IaOVnoqWrSMoHQNSGTghc6bognh+Bo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GDikOQh+; arc=none smtp.client-ip=74.125.230.234
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ttbh2R7s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QxitJnlm"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 30BB9EC0279;
-	Tue, 22 Sep 2026 18:31:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Tue, 22 Sep 2026 18:31:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790116318; x=1790202718; bh=k1hirF5KPE
-	gauDQmiVCJ4EGCB5f2q/9fW6g8Ox4XSjU=; b=Ttbh2R7sv/cF8Yf/1dWrjEmGf8
-	726lwf1vgR9X56XMaSdv8FRixotWpPxItDGXDtAS5biCnjHSff3/+8uoyYX1b8KZ
-	e30Ezeu3gQqn/R5tQNWvUtgtKHs6euwvhELQb2seF9eRTmtOumIjyaeA01L0fP+E
-	1zGWhrPHbGy43va0m1b66nx3/esVMElBR7J9AZ2dFw8nMBCrCXRBZY+RNmBB8bqe
-	T8WQQgAEj1LN3AvPyYUUOHKMbqtBpq1mTqBhIPpItmmTXX+iPXbYpY1k8Uf2hW3x
-	G87TfTFmg6cvd0ZqTo4AUp+75jZpdBPUeUDa/63g3p2assRpE0289wYXcrhg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790116318; x=1790202718; bh=k1hirF5KPEgauDQmiVCJ4EGCB5f2q/9fW6g
-	8Ox4XSjU=; b=QxitJnlmD7m7rsmTXPEPyQCFI34JFlGjliWfD3OCfWFYY7T9NJL
-	iHMowwIVlIXWrlMId5sv3Nj9UUbnsL/h+eqEZgjiTtVAFmoeC6SOYKu0dcbFlLtV
-	TJQE25SRUx2XJ7FvLms0RBTKPxasr+QRejewrf6TZbFCip6lPPjZbQ6/uuI0nPHl
-	3zXzMswe+NNBE3PlJtvwClAi40jY9dXszrnyfF+ZRf1v0FV740q7Q+ajszuOl0za
-	JjRLmvWVIpG+PB3FkXlHeponvBv0LoXr1Ell9ze/tfdH1U2JQoL16lgulS6eFFIK
-	bazXdFwljVzz3HheItnI+oWbrVlOYnxqyhg==
-X-ME-Sender: <xms:3gGzajnxm3e50PkD3JyQcbYVjjq3HIzeGPZY6ofO6pr2YzuVP4HL1w>
-    <xme:3gGzapHveNWdYJgbxaFTV2hjPKLOC0qsngBOBPA2pTtTxpSdjfH57pmTPzuM_lPKT
-    WnKmf2cv4Z18fzSbK9a_OEbFyniQOKY7qjbxgK1wwt--6WtqRW8bwA>
-X-ME-Received: <xmr:3gGzar4iqg5Evo2SNvU37juXWfAzEmC-DMFPuFcQJl6cqq-3QQxXZieeMq8n3TTKPHERtHkZm79Gw5NVcA9Ao6BfZ6UtU-i4uoNw>
-X-ME-Proxy-Cause: dmFkZTFv4srdiR2NFu1RlOGI4CsruzD+flhpzW6OK9cNaIpvOB4s7vuISRQC3QnSbpWKTZ
-    itye0YMC/PWxbAcM6VLeel3tsiHROd53HSv4stkNi520vS6pmfCbRHS2QKqkRGyXNybWjX
-    8JlbOM5E+rp9DC6JWV1r0XgbnJUBbxkI/z/BHaDbxw72w5uCIsACkBODnR/6H7ItHDVAL3
-    qtnTBuKEsjtPtroxVjrwCkqXzKVBBEWuTdnrnJumugWxx/auRvd5L9oXiqXyAybV22jlMh
-    jtZxjqvgaRjIJb9LPxT5IHTCLFvZJas7tNU0lk11Kcn83Hq+2EA+p1Jn/ymCItxbb9EZcZ
-    TVasHouiH4vpSG4rwCv27JmhFYKjICj339u+D25uBya50qWCD/SDQbRa5xLeJVm7o73MTH
-    ive6w1NRvLaOIzpJk0ylh3oildyfEvDf77yoWQDWnNdaSBHhLlR/pjKNZJqL7Nry23+XZ1
-    9xdc9eRadNN6QkBPL45jYcngcAe472N45mvbx5SeeMUSGZO9PRWqqC6PMB5drQvNsI9PYX
-    nNwxmTsghKVskZrLAWQ/bOtJErXodHA8OAgopu8PAoNmgwLbcEU+YfuwP9SkTOP6uew5O3
-    9Hz3KfygqkLD4MJMum44HRZNqx9sI6iKHm8sP3tiM3KS9Aop6IPHn+z+kbGQ
-X-ME-Proxy: <xmx:3gGzahntfnOfUF1XDnJyIC-vDqQIf-yg5oPdl3_cXvRrFn5YZJJsPA>
-    <xmx:3gGzago-0L7GxLhK5Hc-H7gpQG2ySVcLVgmqdcyMmNBErKwVMNtAiw>
-    <xmx:3gGzagvG7IVtHpQYPngvAmN1iZkq13UWgsAcXMo_KulBErRiIvdLvw>
-    <xmx:3gGzalGQvE_zU8bx8S8l3yw4K5FjksMJIYh0eesuxHzGrCMyWsztHw>
-    <xmx:3gGzapKX3KXPVm8Vdebjxs7Wb5ZIVGcFFb-1ElI841pV-w54GOBMLoP8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Sep 2026 18:31:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Qin ShiCheng via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
- <ttaylorr@openai.com>,  Justin Tobler <jltobler@gmail.com>,  qeesung
- <qeesung@live.com>
-Subject: Re: [PATCH v2 2/5] pack-objects: reset kept-pack cache for cruft walk
-In-Reply-To: <77aec8941f5d17654f58956c7c643b47dd5a8d93.1789700615.git.gitgitgadget@gmail.com>
-	(Qin ShiCheng via GitGitGadget's message of "Fri, 18 Sep 2026 03:03:32
-	+0000")
-References: <pull.2219.git.1789385483.gitgitgadget@gmail.com>
-	<pull.2219.v2.git.1789700615.gitgitgadget@gmail.com>
-	<77aec8941f5d17654f58956c7c643b47dd5a8d93.1789700615.git.gitgitgadget@gmail.com>
-Date: Tue, 22 Sep 2026 15:31:56 -0700
-Message-ID: <xmqqjyocdijn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GDikOQh+"
+Received: by mail-qk2-f42.google.com with SMTP id af79cd13be357-93be29bb454so60273985a.1
+        for <git@vger.kernel.org>; Tue, 22 Sep 2026 16:06:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790118375; x=1790723175; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=83vTg47ybMWvqpDccQK+QlEN35WRZWDqgRK5GmYeTmY=;
+        b=GDikOQh+2BOdufJhQpOAIx1owaLw9jkE0pydbYkRqv4sIEHN+c3rFHybTyFf9/YIEc
+         3G6PNn5l7tRfqfaEOHxHrtpfz3n6w6+sluZyR425bYBLoTJ1jSnwGUMIrwaN1zDhJ4JR
+         TH2G43US66lZ8CDIpoofShirUUaRnhYE6bnL+1H5KFpKY7g8sbU0RwbZSQD9qbA+eGEP
+         GmxWgjbP91KB4HUQ8Bo6C0r2PGHZC/13volDVDy2xTcDeRdWOuMUR5Jvq3Xnog5bOvek
+         Tb6xZflUOwKZys/m8V1jguxXsBssQV4g+Hfkj+QB0XXcS5wOiES8Czs3WNt0n5YIJGfI
+         khow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790118375; x=1790723175;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=83vTg47ybMWvqpDccQK+QlEN35WRZWDqgRK5GmYeTmY=;
+        b=ky3x2LuFZZprf3MqiBcWQK+joopNpjpFQw2QGw4x/9IDj+Pfufp1S4TA5UOeMXCk9A
+         9YcjtGrT/4iWuK/d2NybD9N1GxTHtHMatGJlTCMRPWvYpDCydd3rfTuRHhEw4zmw4V4a
+         SabnC4rMYDIL+xCKIHzR5fE0WjuC8IzmWsMg17ZzQrq39UnO17j1jz/0JzAkkk/Y2Xfn
+         BUpYzVKuQ0p/P/SMQGz2jcN5JKUx+Y3npHnuCmhxFYx7Krf5ITDiC+DbeT4635MLYex0
+         sj2daUbPPIvwjGDPvT8LTvOeEb0mSk3fsK/k66C1izDIJ99EM0f/3oKg3ZGzsiSrs4As
+         TSUg==
+X-Gm-Message-State: AFuF++nNHlljaqL9BleNSJpDoZPKlwFXYp28b4Mj06bCNTZ/KE/KDEQN
+	Tx8eEJW2QjD7kb4Kkg9C6gBXk7jp7Vj5wmU56QHSpfeGi0oe63VNmxAnBjrv4Q==
+X-Gm-Gg: AYBFou3AhHyzzqoMOGHBbrdT2srn1229zD8SBH2edhogrAH1SV7EOMRtIGfckQN1RS9
+	xPkc0qA7fCmhz79pquJDkYeUkQ7U/bZfiFbLAJox+hmIOzneL3A0jYmyv7i9Vhrvu+SaSIaBzRi
+	cRZjTwomtIINk1Z+uM4ffaEj9FaI2Wc9W1wrBRiQl6L885WUqLUnQntH7i0iXVAX3eFcjrHzHQC
+	cMnSbISUQAWd++IKdM6uwm3vFTEuw2FFoOQnU1r4poW2ytduLfTnTo+iEKCSwccKDunIjm2D9ZF
+	GjQYVVmbTjaiVkx1s3pGp3/Hc5skcwpngdndDjxRKwVMWqTl4aAUIzFIVpyXzour6vlopgm+kO1
+	3ukrgO8BM5hMp6ZSlEriFegkoIq/Uc1/KhmjLOe5z9lYocFhYRgnBUp82hnnO11qSVBy+K+a+VB
+	ECPhAiJ3xcDC5XSNn2+vcWCE5QUWYqg3PazkoXeEt9IQSdbDA8qb1B6j6HA40AU14caF72LtcMc
+	mjB
+X-Received: by 2002:a05:620a:40d5:b0:93c:73a:3996 with SMTP id af79cd13be357-93c2521be32mr141221485a.57.1790118374998;
+        Tue, 22 Sep 2026 16:06:14 -0700 (PDT)
+Received: from [127.0.0.1] ([172.178.119.115])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93c248dbf4asm87189785a.44.2026.09.22.16.06.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Sep 2026 16:06:13 -0700 (PDT)
+Message-Id: <pull.2236.git.1790118373340.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 22 Sep 2026 23:06:13 +0000
+Subject: [PATCH] ci: work around Debian 12's HTTP/2 authentication failures
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-"Qin ShiCheng via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> @@ -4301,10 +4302,17 @@ static void enumerate_and_traverse_cruft_objects(struct string_list *fresh_packs
->  	/*
->  	 * Re-mark only the fresh packs as kept so that objects in
->  	 * unknown packs do not halt the reachability traversal early.
-> +	 * The kept-pack cache was built while those packs were still
-> +	 * marked, so drop it too.
->  	 */
->  	repo_for_each_pack(the_repository, p)
->  		p->pack_keep_in_core = 0;
->  	mark_pack_kept_in_core(fresh_packs, 1);
-> +	for (source = the_repository->objects->sources; source;
-> +	     source = source->next) {
-> +		struct odb_source_files *files = odb_source_files_downcast(source);
-> +		packfile_store_invalidate_kept_pack_cache(files->packed);
-> +	}
+Since 00fa8502354 (ci: bump debian-11 job to debian-12, 2026-09-05), the
+`debian-12` job has intermittently failed t5559's half-auth clone with:
 
-This question is primarily meant for folks who are pushing different
-ODB backends, but I am not sure this is safe in the long term.
+  curl 92 Stream error in the HTTP/2 framing layer
 
-When downcasting finds that 'source' is not from the files backend,
-we immediately hit BUG().  Is checking the type of 'source' first
-and calling packfile_store_invalidate_kept_pack_cache() only when
-it is from the files backend a sensible workaround?  That sounds
-like a blatant layering violation.
+Anonymous discovery succeeds, but the upload-pack POST requires
+authentication. Apache can return an early 401 and close the HTTP/2
+stream before libcurl finishes sending the request body. Debian 12's
+curl 7.88.1 treats that closure as a transport error instead of allowing
+an authentication retry. Curl fixed this handling in 331b89a319d0
+(http2: polish things around POST), included in 8.3.0:
+https://github.com/curl/curl/pull/11756
 
-One of the recent design decisions, unrelated to this, was to make
-the concept of "alternate object store" an implementation detail of
-the files backend, if I recall correctly.  Do we need a similar
-rearchitecting of the code here, pushing details like packfile
-management down to the files backend layer, before we can properly
-fix this?
+This did not happen before switching to Debian 12 because Debian 11
+ships with libcurl 7.74.0-1.3+deb11u16, which does not have that bug.
 
-Of course, until an ODB backend other than files materializes, all
-of the above is merely academic and the proposed change might be
-sufficient.  However, relying on an unchecked downcast feels like
-laying mines for our future selves.
+Replacing the packaged libcurl with a modern build would defeat this
+job's purpose of testing older supported distributions. So let's simply
+exclude the flaky t5559.15 and its dependent t5559.16 on Debian 12 until
+the packaged curl carries the fix (or until the end of time, whichever
+comes first).
+
+Assisted-by: GPT-6 Astra
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    ci: work around Debian 12's HTTP/2 authentication failures
+    
+    While this is a regression in v2.56, it does not affect production code,
+    it's just working around a flaky test. In other words: This patch does
+    not need to be fast-tracked into v2.56.0, but it would be good to get it
+    into master pretty soon after that, to reduce developer friction.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2236%2Fdscho%2Fwork-around-debian-curl-stream-error-92-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2236/dscho/work-around-debian-curl-stream-error-92-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2236
+
+ ci/lib.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/ci/lib.sh b/ci/lib.sh
+index c6ccbf8c17..1cf31b5a2c 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -334,6 +334,12 @@ pull_request,*|push,*next*|push,*master*|push,*main*|push,*maint*)
+ esac
+ 
+ case "$distro" in
++debian-12)
++	# Debian 12's curl 7.88.1 mishandles early HTTP/2 responses; see
++	# https://github.com/curl/curl/pull/11756. Skip the half-auth
++	# clone and its dependent fetch until Debian has the fix.
++	export GIT_SKIP_TESTS="$GIT_SKIP_TESTS t5559.15 t5559.16"
++	;;
+ ubuntu-*)
+ 	# Python 2 is end of life, and Ubuntu 23.04 and newer don't actually
+ 	# have it anymore. We thus only test with Python 2 on older LTS
+
+base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
+-- 
+gitgitgadget
