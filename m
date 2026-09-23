@@ -1,221 +1,129 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5333B9DA8
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 21:38:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630ED476CE2
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 21:40:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790199522; cv=none; b=NScZOHYSptyo8i9OHNEp58a3fdcidqBcSb5juVTs41atbjJ2O/Dnpffo1Bj5Ned+ArksrK+FYQAt3RQKfcBp9zwY9SyKvM6WHI/uBXga6y4s6ZlHITYIxFL0OhLpvVtmSin4m3lJJVF5bymu7HUCt0Ll4nW27RXyCbTyGzq76D8=
+	t=1790199642; cv=none; b=rgcEEYvacTOskXu7OE70QBuqXpbkcY/59b39ypndAPNnEAL+2EPUJOVRpO9FjcxUrtm/tdq2jvHVKJvy4T3J9w7X9ys5dfqaucU32maKtM8GrlIejLrzuX1aKnmYcDarcdk1mJTGU6nb1itC3UxKsFTjj955NQoBi9NmSUFCKAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790199522; c=relaxed/simple;
-	bh=fKzbNNjAuoBHyu/zdxMw2ZqgeDq5hxiMr+t8ciHK4G8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DDPAdLATOwm4aht9Wil/T4ihwe2Frm8R5ygX5B5+B4bQHfHVJYN6BpvOfyt5IsxfT/wJKELqDbBp9JMhVSKrTZbOQbs/JLc2H9b306Qaq95GmtyfpQZooSzs7D3cmhDt99cixxx49tibiv+exTFeGg4p3KqKvvpNfi0p+7klirI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mMcq0whd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=in4Emu5l; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790199642; c=relaxed/simple;
+	bh=sNw/kJNfq+1BlQdSjYDJyk90cFXOWkNwu7BolK5DWjk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WTTBG2wwWEI9viWt51uV9dAtEyXEo5sZ9UcOQ936kJGfsfEx2AsF6XFnuQtyLHWVaNwdQL9KRu6W16sjYBe5rc1OJIEnIEjuRy0bkfuawM9mBfZidUf9lmTNaEd2jTx0MAgENrK6sZpk0FcWFpsxcFmitsGXp7smZuPuqQGKqh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SZFQuadd; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mMcq0whd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="in4Emu5l"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D217014000CA;
-	Wed, 23 Sep 2026 17:38:39 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Wed, 23 Sep 2026 17:38:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790199519; x=1790285919; bh=SBTBGvJ91I
-	6/cYYkU80gUwXucA2It5VQjzQWJ1qAFoE=; b=mMcq0whdQYjJV09aVEEFBCdhrl
-	mFX5qrHgwD29LvO8HMlDx8jGSSh+Adb8lTRgEuZJ6cp9n3Z3UTXwCTFSZeR544eC
-	q9LHgaJ8iXBRyF/fQAhRajS6dgTrmK7bC0macoAshvG3cS7TvRS/19/XrLIVdhWJ
-	HDJ7haatiKjxSYB2hrtoPp0oUlHc9suaf0NU5P5Y7O15X9rN/CsftO3f4CZenVAO
-	qsziicd6GCrQSq0226CYTRpOXOJ8a+Boph651Kuo7JjKqkG/4hyVXEsz62ULum/6
-	KW2yDUidJUeI+JGNvngsE8ufMcjRnzXLVIwScm7d8hvKSilc4rxcspmgR71A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790199519; x=1790285919; bh=SBTBGvJ91I6/cYYkU80gUwXucA2It5VQjzQ
-	WJ1qAFoE=; b=in4Emu5lnjgv1/oD/fSw2+6ZfYZLTUAs8idF+n31RSH4OwiOYLE
-	rWeZwJAZO0WTkidGQoQlriSQrKvBGtqKonXAChdLKkFB+HcoYhithKwTmii2xL+b
-	6MxC/yiKA4O0S6zxMMz/wpOvKHI5ib6h7JJMRc/VkNyBpp4YdkVXLosEa0oWphPL
-	vX4oFroOgLFI8pfWMArVPJE8SH9Hf/qUsNWskNXdKz8UtVGKZQS2VIJ8766gI/fa
-	S+8oj4ld/P/5pPCiZi72GOMFCFS8n+Nrg2AytfQhYFmB1bo4Qt7lZjCNNPKnrss1
-	bb8Ju0MF2tYkAJf0ZpVA+nw+MBmXD1C2HsQ==
-X-ME-Sender: <xms:30a0aoIYPEH1-WKTVOYjmp28S4oeqZSnoAEQY-VqVgm8zl75PMdt2w>
-    <xme:30a0ar185A8rXuioMS4mpyCEl17MzPrbrvxMZ5dEKw1CEyL_kxK9xFi9uttyUv8BF
-    WWrgNeGYSgtUp0zmBQu_XRKBUgPTiwlHeYYNmnQ8oIW0Skmsf8S1A>
-X-ME-Received: <xmr:30a0aihFWjmcFIzamJcpChnqGRjBX3nxNMTqU0QvPZQDxDsvSZ4OXZePdVMmq4CEZ9G0iEtRFrt_kHqozZK0oPBYvrRRCSsFYI6t>
-X-ME-Proxy-Cause: dmFkZTGspn42LSODoZh3E57s8hfkTwGaq7pE32Ra4Kg4ini0zGsOwpan44wJlo8NL+SzMs
-    ayrNAkn19wW2jgZICFFL6O7LEMiw08HLklYcYe+g1ZP2k8vkZomudJhc4nECtCaa4mrBJQ
-    Gq/FxJ9go0kQedl/Y7VtZQ0e7jENQ4d1gGm/k+6LxROQjTO3SLm5yA/72elGHWFVMNsv9b
-    czk56sqeEjcQA1VJa9EocOfm21MZkItHD5ZzQL5QALNdgFsqaLwnA8rRVySr4TpIOtCjbZ
-    vU+/OrTXn4Fj8piiZ9pokp+grnOgTYHGT0bOv9mbV41zCeNTIcWYsshZ2ZtmGnJl5L4xE9
-    kYsYSeMWspE+OYi02cpHNu3TxJKfubAs9z4Z96bGvQ0P6k1Fk5fK5QJF+ICaWu0fFpb25V
-    /UJUGV9GnEYtrgUfqJgn5szsc/S6MAdZ6lNM/dPv9MEDtpAngC9eTfGqgigIrk4F5u+86r
-    xiQr9oFREwdhL9s3Yww7mOS5ybdqzJlb2usHsU1aogbiYDLJJZnSrSr7Iq6two18WTa8sI
-    gELK9Im24wDFGvgGYdLowcmBLfMCl1LH8UJNV7+VCd+lzAnWeaYRKAA/MbVw3qBTawB/SJ
-    39cHUL4BxEq8mdkez9wtUjNuC/CewyuBaHCypvCLiUVowGKHXqZPfQdZhYLQ
-X-ME-Proxy: <xmx:30a0asXRXtraLgcrBjBHFA-aG9E-MQaybnT_LRthWBX_aeRLqd01LQ>
-    <xmx:30a0ahUe6Mh7I1dYc61Xa37zxyFgpRwu0KSLHgsNfYsSyR3BqVrMRA>
-    <xmx:30a0asjLZ5auDd1DdvIRxFihWNv_k17_knWzLBY9yWyYpqcRwyRV-w>
-    <xmx:30a0asbqr6UP784iBHsn1Vk5TyFdGMBEem8IvE-nKXiVDF8K4TpYPQ>
-    <xmx:30a0avZJZtJbeQMIwPr5u4Tz0Ej-HZP0MmwQhUUizV8jYwvIJFpQnvXU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Sep 2026 17:38:39 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  Harald Nordgren
- <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v2] fetch: avoid fetching every branch of a new remote
- in a shallow repo
-In-Reply-To: <pull.2412.v2.git.git.1790195720941.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Wed, 23 Sep 2026
-	20:35:20 +0000")
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
-	<pull.2412.v2.git.git.1790195720941.gitgitgadget@gmail.com>
-Date: Wed, 23 Sep 2026 14:38:38 -0700
-Message-ID: <xmqq7bkb7in5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SZFQuadd"
+Received: (qmail 38144 invoked by uid 106); 23 Sep 2026 21:40:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=sNw/kJNfq+1BlQdSjYDJyk90cFXOWkNwu7BolK5DWjk=; b=SZFQuaddO46CCgKblyGsnzPPoNwb4d1u/gvGPUiDPUvRWcw41LrBz+l0tslnVFeqddtQ0B2ck6xu41FOvONJSJmtlbpoHA09bkuiWhbi6DRWVT/Tlt7jJJpNAXSL9krlV2zDsTq7LuzDUmQY3ILuz2B91n16Xii37H7S/LDEnG1e1vIa/V95DD8qUqKIte0U/SuiEY/9n46dmx3OxI7lR2JS/2RDl8Rh++7nmqkaRACS1KKgKzDkkCSxJKxfnKxd9aRZYlZLZlqUQO6rfhKNGTnXGeyXr36fvEBTQADxdeYpKqxkaJQYXwGXlB5mBkl0aegerTHlBK+eJ/yaCUxMkA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 23 Sep 2026 21:40:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 184430 invoked by uid 111); 23 Sep 2026 21:40:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 23 Sep 2026 17:40:38 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 23 Sep 2026 17:40:38 -0400
+From: Jeff King <peff@peff.net>
+To: Julia Evans <julia@jvns.ca>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
+Message-ID: <20260923214038.GA49087@coredump.intra.peff.net>
+References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
+ <xmqq4ifhdon2.fsf@gitster.g>
+ <665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Sep 22, 2026 at 04:54:17PM -0400, Julia Evans wrote:
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
->
-> git remote add sets a new remote up to fetch every branch by default.
-> In an already shallow repository, that turns the next plain fetch or
-> pull into a slow or hanging one, even when only one or two branches
-> are ever used.
->
-> Add a special fetch refspec, "+:", that fetches only the branches our
-> local branches are built on, plus the remote's default branch so a
-> brand new remote is usable right away, without needing to first set
-> anything up to track it. git remote add now uses it instead of the
-> usual wildcard refspec whenever the repository is already shallow.
+> >> +See the <<PRUNING,PRUNING>> section below for more details.
+> >
+> > OK, we already see an example of the <<double,double>> reference
+> > notation.  This needs to be in this form, intead of <<pruning>>,
+> > because it refers to the named section of a different file, namely
+> > git-fetch.adoc (I am just trying to make sure I understood your
+> > explanation correctly).
+> 
+> The reason I explained this in a bit of a confusing way is that I'm not
+> 100% sure in which exact cases we need to use <<double,double>
+> instead of <<single>.
+> 
+> I double checked just now that if in `git-push.adoc`, I change:
+> 
+> 	of a remote (see the section <<REMOTES,REMOTES>> below),
+> 
+> to:
+> 
+> 	of a remote (see the section <<REMOTES>> below),
+> 
+> Then there's a problem where in the HTML version it displays as
+> "[REMOTES]" instead of just "REMOTES".
 
-That's way too much for a single patch.  It needs to be split into
-digestible chunks, but I offhand do not know how many pieces are
-appropriate, so let's think aloud together and try to refine the
-design while we do so.
+Reading the asciidoc docs, I'm not sure how this is affected by the
+location of the reference at all. AFAICT the syntax <<FOO,BAR>> just
+means "link to FOO, using the text BAR".
 
-The outline of our design so far should give something like this in
-our configuration file.
+The single-item <<FOO>> more or less means the same as "<<FOO,FOO>>",
+but as you noticed, vanilla asciidoc seems to pick the text "[FOO]"
+here, whereas asciidoctor uses "FOO". I'm using asciidoc 10.2.1 and
+asciidoctor 2.0.26 to test, and I see it even with the PRUNING examples,
+too.
 
-	[remote "second"]
-		fetch = :+
+Even weirder, in the manpage output both implementations actually expand
+this to: the section called "FOO". So changing your patch like this:
 
-	[branch "topic1"]
-		remote = second
-		merge = refs/heads/main
+  -See the <<PRUNING,PRUNING>> section below for more details.
+  +See the <<PRUNING>> section below for more details.
 
-	[branch "topic2"]
-		remote = second
-		merge = refs/heads/next
+gives doc-diff output like this:
 
-In the "fetch only what we build on" mode, we would collect local
-branches $X where branch.$X.remote == second and then collect
-branch.$X.merge for these local branches.  In this case, we would
-decide to fetch 'main' and 'next' branches in the end.
+  -         See the PRUNING section below for more details.
+  +         See the the section called “PRUNING” section below for more details.
 
-But notice that this does not give us sufficient information.  There
-is no explicit clue that tells that the remote-tracking branches for
-this remote 'second' should be stored under refs/remotes/second/
-hierarchy.  A normal remote that is defined like so:
+which is obviously nonsense.
 
-	[remote "origin"]
-		fetch = +refs/heads/*:refs/remotes/origin/*
+I could very well believe that some older versions did other weird
+things in the presence of includes. ;) But AFAICT the real need for the
+doubled text is to control what is in the expanded text (both because of
+differences between the versions, but also differences in output
+backends).
 
-does not have such a problem, as it makes it crystal clear that
-their branches go under refs/remotes/origin/ hierarchy.
+Which is kind of a shame, because writing just <<PRUNING>> makes the
+source a lot more readable. I wonder if we can configure these text
+fallbacks, which would let us use the single-item form reliably.
 
-So using "fetch = :+" is *not* a good idea, as I said.  Let's scrap
-that syntax.
+Alternatively, I think this is all syntactic sugar over "xref:FOO[BAR]".
+We already have our own linkgit: macro for linking to whole pages
+(which, btw, is something xref could do for us, too, though maybe not
+without the magic man section number). I wonder if it would be useful to
+have a section-link macro that would give us more control, but again,
+the syntax of <<PRUNING>> sure is nice.
 
-One thing we could do is probably to introduce
+> But in the <<PRUNING,PRUNING>> example, just using <<PRUNING>>
+> seems to work. I started working on this way back in December 2025 
+> so I assume that something in this patch was affected by this issue
+> and that's how I came across this problem but I'm not sure exactly
+> what it was.
 
-	[remote "second"]
-		refmap = +refs/heads/*:refs/remotes/second/*
+So I think using <<PRUNING,PRUNING>> is probably OK for a first pass
+here, rather than getting bogged down in trying to configure both
+asciidoc implementations. We can shrink them later if we come up with a
+good solution.
 
-instead to give this clue (see "git fetch --help" for what a refmap
-is; it looks similar to refspec but only defines how their refs are
-mapped to our namespace without specifying what to be fetched, which
-is exactly what we need here).  We do not use remote.second.fetch at
-all.
+I do think the explanation in the commit message might be misleading,
+though (at least from what I can gather from the asciidoc reference and
+from a few experiments).
 
-It would be an easy first step to teach that an explicit
-
-	$ git fetch second main next
-
-with such a remote.second.refmap should behave the same way as
-
-	$ git fetch --refmap='+refs/heads/*:refs/remotes/second/*' second \
-		main next
-
-in a repository without the refmote.second.refmap configuration.  As
-"git fetch --refmap=... second main next" should already work, it
-would be only the matter of supplementing the command line argument
-with configured default.
-
-Then teach "git fetch" to further treat
-
-	$ git fetch --refmap='+refs/heads/*:refs/remotes/second/*' second
-
-i.e., fetch with refmap but without specifying what exactly to
-fetch, as a request to fetch their branches we build on (and nothing
-else), using the refmap, in other words, the lack of "what to fetch"
-in the above command line signals "git fetch" to rewrite the above to
-
-	$ git fetch --refmap='+refs/heads/*:refs/remotes/second/*' second \
-		main next
-
-internally.  Since we have the previous remote.X.refmap step already,
-it means that with remote.second.refmap configured properly, the
-user can only say
-
-	$ git fetch second
-
-and it would do the right thing in our scenario.
-
-Another and final step would be to teach "git remote add" to add
-
-        [remote "second"]
-                refmap = +refs/heads/*:refs/remotes/second/*
-
-when you want to fetch only what you build on.  I am not sure what
-should trigger the decision.  Your initial message said something
-about shallow and sparse and an earlier review refuted one of them
-(I do not recall which offhand, but probably sparse).  It probably
-is a good idea to start with an explicit command line option to "git
-remote add --limited-fetch" in a single commit.
-
-And then add heuristics (like "in a shallow clone, this mode is
-turned on by default, but an explicit '--no-limited-fetch' can
-countermand it") in another commit.
-
-So far, we identified four distinct commits, each bite sized.
-
- - remote.X.refmap configuration acts as if --refmap=... command
-   line argument was passed.
-
- - passing refmap without saying what to fetch enumerates what their
-   branches we build on, and pretend as if the user listed these
-   branches on the command line to fetch.
-
- - "git remote add --limited-fetch" creates remote.X.refmap instead
-   of remote.X.fetch as necessary.
-
- - "git remote add" without explicit "--[no-]limited-fetch" uses
-   heuristics to enable it.
-
-Or something like that, perhaps?
+-Peff
