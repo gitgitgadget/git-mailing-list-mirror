@@ -1,77 +1,77 @@
-Received: from mail-yx2-f14.google.com (mail-yx2-f14.google.com [74.125.224.142])
+Received: from mail-yx2-f42.google.com (mail-yx2-f42.google.com [74.125.224.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A13E48034C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4444A2058
 	for <git@vger.kernel.org>; Wed, 23 Sep 2026 12:59:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.142
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790168357; cv=none; b=V283YvZaMXKV5xJ7yxuEBYsMdeS5ikhPg2mgaT24xKsBCxw5rFiF8DyLtfeX+EQH91fDF1UOJxx5a8EWdFV8dUzXdHfahY6Oax5iYul1wetFstmiHUid/Z3P+Jj7KSQen/QIrSok3PZNVkVJUhVrv0RWCQL6bPr8Ta0tW3AWDl4=
+	t=1790168358; cv=none; b=D3tEO9dDwqocEPh5y15LexJiRWeQM1Ot9Fti6/SM4EDfmm5GVR4g9Zi3b/RQNmmrJO6c7TKJ3GDEptZwS+tzX01aLllPuBwOS6jFlJoWRCCyCgIQMwu/3N2VRBTzT/h92pTcjOvj6VnzBLwq4xn6JZsUxH+QUvqL7ofBViE6QT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790168357; c=relaxed/simple;
-	bh=nmnT+BxbiKicnTMIzE0Yj8KI0BLjqIhI30o2ODkPOv0=;
+	s=arc-20240116; t=1790168358; c=relaxed/simple;
+	bh=OZ+s8du0KFoxd2eJvaA0IHd0ufY3oybcVB1+iuC3g2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JsrERiSxxr22XErQtL+VpvXCxOTJpgWG5/IRwA3wDi10VPEjxptaFyfB1l+VP9OKIfS5F+V/YXI5Ar2oDpYWgw1BkmHa20P/oasMtGLdYZOURyRSCDGzEHF+oN4KcKyYVQKSVioFQC9b+eeGsEzF1W4I0wBLj/YaBPl3/F5oysg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hoYKXnB8; arc=none smtp.client-ip=74.125.224.142
+	 MIME-Version; b=Cz3bDhJFIQkNZAUc1tqUv2E41SD9ZyPtTo4x58d1bQAXFah9mUHjeFjFx3EWqKKajNNhVuQ+DXHxNCQDJOL4tXQFoJi9ZJIy64vqGVK5d4N1GA3xGOfZIrhF9e7KFogt3aK2FQpLelxaoaD/3tfOFfmP74Z4SJiNSHkfCqau1BY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EipIPycF; arc=none smtp.client-ip=74.125.224.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hoYKXnB8"
-Received: by mail-yx2-f14.google.com with SMTP id 956f58d0204a3-66e4ab19127so1066177d50.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EipIPycF"
+Received: by mail-yx2-f42.google.com with SMTP id 00721157ae682-8a45b788a71so7605147b3.0
         for <git@vger.kernel.org>; Wed, 23 Sep 2026 05:59:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790168355; x=1790773155; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790168356; x=1790773156; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=66djkRtAq3SzNbU24/rC1d9K636KQEvK0LfSphyMTO0=;
-        b=hoYKXnB8+xiA4ZPHE7YKCytD6YasTNUh3yh08KVyxXjgH7BGlqXd13HT8YHAHst7J6
-         Ydp9wuCo89Odhm57YFZ3AmG6XQ4VPEKG6LdynTRSZ35o7LTco7ylrn3cirEH/zY9pTgt
-         vGJusFqMoLDxKdrC593PmQOLGk0znyD9zK7n7/sp3j+peGr8YGsuM3R/QO4ajV/0xhGF
-         alhUNCJCRoYuPyoD2XFEHWiDqCoZXYzNjvs+3AsFHj6GwF9ABHCSOKhprCQmpoKWCa+s
-         mJ6qsbeMUvGu5BvSVWhOgGeY2UW/YJQ1+W9OVbsWLbjz7EA7fkCkzTEBt9hLQEusp8wq
-         l8BQ==
+        bh=5j2hBrswZiTmOG7kXb4bKL+B5c79CylYMjcd4jkukAQ=;
+        b=EipIPycFBWXCmiklE8r2dDWUlJ1uX2Qc4Sz7HuWXsAZ9+vUVC/nvgNDccGT8ajy3Sv
+         yHKxVFbjiwMNVgscQsxToMREDnmBDbM98UNESAaBh4iC3UiXxXgOeG6nIUzK2GS37WB+
+         mmySHi1dH30bvOeE/RMaTkmrIXIyI5yWhEmo6S754jR9POKGuyG5AEV1A7FsjZE/7Lv2
+         5Tsl+F2u3E94DgC2Zg2BxxDIjSaZ+HwElsxbAXdwEStHseUs31mKhdHVRHP+T93E6aKZ
+         Fu9Rfo2PQejDgFPn1plBXffvHWheSV9MQKzM32ClKn6w0IBdmNDj4ukbRM0tS15IGMp5
+         w5Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790168355; x=1790773155;
+        d=1e100.net; s=20260707; t=1790168356; x=1790773156;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=66djkRtAq3SzNbU24/rC1d9K636KQEvK0LfSphyMTO0=;
-        b=pBPpI4L4g7/fjfhHivTkHKdtKDB3qnOzab0QYJjRPNII/zEA/NeoJJuQB5r/Es74NE
-         gTV2t249UlzQuTWtiozV01WRw0H7gbmunOpXEUbRUc1m+FyCsdFKZleRJLpALYRwl/Tq
-         Ly+9ChvbKztXmhdntFx+GqNvBZfPSvea7xN2JD6fm7XdDJFym4aeTLhnsuO2qTX+zEcJ
-         UblBQtMaBCLTK7VRCE1mpGOPW6iKQQYiwFIQqMVK+9YO5NFzeEFB6Av31y0EoBKelviy
-         SDSYx0DYrHVio+vy0yv75uyDYieOCNLsKdNSmde3CYgcpJtp2DA5hjL5uEUhH9sVl5A+
-         J2hw==
-X-Gm-Message-State: AFuF++kwiTdBLgTsw8aZA4p7PVpkryO6na4XD5BJC4HnWynUxRkWbU49
-	8tLtbERcXalTvVhwrWLZZRjaUUO2k4RIqFdgG+yzhBldfwmLUnmGbz9PplVa0Pw7
-X-Gm-Gg: AYBFou1GKgSDjwt+nl6pGhyavLupiiwjId307falLnHeHVObMyt/eCuqmfFsceZmPzP
-	Qx7S8tScELRNSKtQb9pYAi6Ezf54vv3hEABK8I/GBiTPe/qthYQzUGc5FUzfm0qxalgiiYTKgIh
-	FvnLxa9J8NTFTwc51foORHQ8raTOfIXvW3/JNAgKoUaVX4Q5L5L1DdgI+JHWG3k/8PbN+68bia3
-	9Sk4jXyXenYl32pcMzg25cY4jf9JgVvSjJJWrRvsODKq4ski+rspRemlwljTkPK+xYjx4SjHzPA
-	B592iTYAxn7JhVwfna+9vnbmqxjm1J55jiBrdXEFzNdT+AoE++SKyOw8bkZ1eetH4ecGsBDhB74
-	5u9CM2ue8lcQRx+Gm2mEyNOOv2hazGXLbnOXcIGktW3iHTMl4Ciflg0Buw1m44ie31s7PLOlaIi
-	P2W+/uPqV5ym6fO8EsvZPMkc+URC+CF26u6BSu8uCexe5nR4uNoX5RgHgrK6keUDvGel33xmpEL
-	TkLAqm1UCyeVF80dDU/xmR4cZU0yxs56T4sALVQwOxu4TKOvNMfALZpUg1SwtcbPEEGjxQFvPZf
-	Xgy8DASYyS6s/9hX+ISdfA==
-X-Received: by 2002:a05:690e:813:20b0:66e:461c:428b with SMTP id 956f58d0204a3-672d57982e6mr1101850d50.30.1790168355196;
+        bh=5j2hBrswZiTmOG7kXb4bKL+B5c79CylYMjcd4jkukAQ=;
+        b=TouzFEJyVnfhJSIavwTOQR5YXZ1tD7A85HrZdrpYwwJQwJzG4ztNz4CZ3gmT6NiQfw
+         d9sa9eij8i1C7yhpv9P6FSnN2iD/fn5ScRcNmMsL2Env1yIOUV5v25odODXkDf9sSIVW
+         vsLwRjyFpIbokjK3ND92Je9yVhCqgo8UoElA5Fz/NT5HUmPpS9w/IBK+KkKLMQP4Y1V4
+         Pc5hernHTEz6rR3fi6dYeP2TfrF5jYyvG6HrYgdggcrDi5gj3WsKsLM1027+L8Lcztl1
+         JNWLQSGzwDdvib990lPfZUCQwmiRXUSDi7vI1Q1pybzxvdy1e4bx1AVRB3Jh3sspW4+P
+         dklw==
+X-Gm-Message-State: AFuF++nnP25wJ7tZ9x0KZwEIOmLbH/YQBx3Czqe8ubIPQAu87ADGZIrt
+	d9x6QZEUASUHRhnzjeAZPSxwAsO+TrO36M1+Y7nNjRK5fwUaZ6Jp3L9Hg8JidXM9
+X-Gm-Gg: AYBFou3JxFUOeyBxHGHNnS5S0kjKDmDZ+GcIJtatn0miRlwViA0I3BbEC9lFDOJrgfX
+	MuYzo4OxKjo9CNpBoQ+TcKtcHucFXYH7vT3yJmpWFA/58uTDNeBrgnAWdlqHRE5FRKdjOTpsSPE
+	dH7IW0Y2EwfoJPov004QqIcbOQCTcg0TEtw/kSwYeIv40qUYA8yyV1NFJ94NpS3n5Pw+xbAhXdr
+	8x5qY/FbQm5hPUv+GDWddS+xR3mz5unvGADNs+elt6S+qZM3MUFsS4f/sX3ekaxpMEmskJuT+Hc
+	cCngrulzEbyXO7Q6Fbl6VEK/dWPOzi1tf10oyhafLrZiDd8+3iNKXB9KXCVHJravP5GHQZf9GFO
+	cycpYm49SKajxp0c8VzumkBp1k4KSIKlagFMt65MHbOcnh2DnGe2stm5R59w1MxDyfZpLQy2coJ
+	AKQAsdkCh+AcY3mtJfF6qyCLW/RkFa/uGMWiGbIvFgJIZC2yEKLddrgVVicMJ/BY6ud9ysF08Xh
+	frTZAzUV/+/0/SzkHGC0jJ09a8Wkk9I0+pYGMaN1Yy7FFMosQbhdxmpIVM0SlpMUaKd/rd1Byc0
+	vvi2MkGmp1vj8N+4lHd6yVHqC0s9WIL6
+X-Received: by 2002:a53:490c:0:b0:671:2081:e4b3 with SMTP id 956f58d0204a3-672d58b0a33mr1016471d50.62.1790168355929;
         Wed, 23 Sep 2026 05:59:15 -0700 (PDT)
 Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9092:700::6])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-672d81ce7dcsm833063d50.18.2026.09.23.05.59.14
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-672d81ce7dcsm833063d50.18.2026.09.23.05.59.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Sep 2026 05:59:14 -0700 (PDT)
+        Wed, 23 Sep 2026 05:59:15 -0700 (PDT)
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
 To: git@vger.kernel.org
 Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 	Eli Barzilay <eli@barzilay.org>,
 	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	John Cai <johncai86@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>,
+	Harald Nordgren <haraldnordgren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
-Subject: [PATCH v2 1/4] builtin/stash: remove unused header
-Date: Wed, 23 Sep 2026 08:58:04 -0400
-Message-ID: <b6798c8a25993913d2ba13b8f3b08d602364ca44.1790168285.git.ben.knoble@gmail.com>
+	Elijah Newren <newren@gmail.com>,
+	Antonin Delpeuch <antonin@delpeuch.eu>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 2/4] stash: prepare merge options earlier
+Date: Wed, 23 Sep 2026 08:58:05 -0400
+Message-ID: <1e2343c7fcb17137389d740701336f6c885ba928.1790168285.git.ben.knoble@gmail.com>
 X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7.dirty
 In-Reply-To: <cover.1790168285.git.ben.knoble@gmail.com>
 References: <cover.1789853192.git.ben.knoble@gmail.com> <cover.1790168285.git.ben.knoble@gmail.com>
@@ -83,28 +83,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Clang complains that oid-array.h is unused. Certainly none of the
-oid_array* functions, types, etc., are used, and the
-transitively-included hash.h declarations are used but covered by a
-pre-existing direct #include of hash.h.
+In a future commit, we will reuse these options for the index merge of
+"apply --index", not just for the worktree.
 
 Signed-off-by: D. Ben Knoble <ben.knoble@gmail.com>
 ---
- builtin/stash.c | 1 -
- 1 file changed, 1 deletion(-)
+ builtin/stash.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/stash.c b/builtin/stash.c
-index 7a9843413b..dfea2d2c4c 100644
+index dfea2d2c4c..043a38cc6d 100644
 --- a/builtin/stash.c
 +++ b/builtin/stash.c
-@@ -31,7 +31,6 @@
- #include "reflog.h"
- #include "reflog-walk.h"
- #include "add-interactive.h"
--#include "oid-array.h"
- #include "commit.h"
+@@ -664,6 +664,8 @@ static enum stash_apply_result do_apply_stash(const char *prefix,
+ 				repo_get_index_file(the_repository), 0, NULL))
+ 		return error(_("cannot apply a stash in the middle of a merge"));
  
- #define INCLUDE_ALL_FILES 2
++	init_ui_merge_options(&o, the_repository);
++
+ 	if (index) {
+ 		if (oideq(&info->b_tree, &info->i_tree) ||
+ 		    oideq(&c_tree, &info->i_tree)) {
+@@ -695,8 +697,6 @@ static enum stash_apply_result do_apply_stash(const char *prefix,
+ 		}
+ 	}
+ 
+-	init_ui_merge_options(&o, the_repository);
+-
+ 	o.branch1 = label_ours ? label_ours : "Updated upstream";
+ 	o.branch2 = label_theirs ? label_theirs : "Stashed changes";
+ 	o.ancestor = label_base ? label_base : "Stash base";
 -- 
 2.56.0.rc1.315.gc6ed9934b7.dirty
 
