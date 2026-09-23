@@ -1,69 +1,69 @@
-Received: from mail-oi2-f43.google.com (mail-oi2-f43.google.com [74.125.231.235])
+Received: from mail-oi2-f42.google.com (mail-oi2-f42.google.com [74.125.231.234])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCEC58038F
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 22:27:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BF0415F32
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 22:27:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.234
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790202443; cv=none; b=V6NHhApMYql+AcraK0w+V8pbsrqaYERQhf7Xz4jdRbhWYuMFydN1mzdvbAzFW5oRmlKXzS0Oqoj1RZnTSpvIK+Mvj+Pu/kb4EDenJHnCWyRFizYKJfE3jQBoO+Jk3BnSgl3Y2FRdY/6d3vHm/ry9WxXjST9M4BOKOPD5HAFB85E=
+	t=1790202445; cv=none; b=J3X6UMmZhhgqsiiw8TNw9j86Zuy1Zmwfz7+5djW4b1J/fZ5XgjzTPgD3bH347dMgN7KzUQihXQUfGX/lQ9A2jKNTyaIoknsREGOgqMo7HyJWfjd+2tAUjV70NDJiknR/jyI6iIjK/vr1fJNgbR2haikwfZ7jKgUX3bACfyPYGVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790202443; c=relaxed/simple;
-	bh=8gGWsPgsm+5secq8x3cC67vM9dw7qa7dbWks4flaZa0=;
+	s=arc-20240116; t=1790202445; c=relaxed/simple;
+	bh=3UxIRGaSPD7YjXy0istXND18uD8AL98I3O5VaqhHkvU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QM+pmWC9alSY4XVx3aoj2FGltMc5AB8rgWy3Y7yVGTE1bIKHQu7pVnqtTG8NWNjP587+o9KlCM9ZoylrddmS8kNR35nyBW7yD+7BVqxJd2qr6eik658J5RjsHcDKx7cDQla1HCIvAotO7vT+q+2HQpt+BKdGPt/R1SBcTHTN9JQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=InHF/zof; arc=none smtp.client-ip=74.125.231.235
+	 In-Reply-To:To:Cc; b=pUcksnkAfU0f3zYM6A1/oJaCio/ArpkEEmFKpc6x/8IV9X46viK1MwlVl1+GM44cLSSDmxlA2rmmcoqysrD91wHPVawXKvagIWZZhJZQ6wWbJc8dtTl1pt/aT3Y60fBLbq6+3miaKnAGS7P4EDTuNDIirXv9W7IHMWCFZtthTOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SRVudnPD; arc=none smtp.client-ip=74.125.231.234
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="InHF/zof"
-Received: by mail-oi2-f43.google.com with SMTP id 46e09a7af769-805bf8c2661so1109194a34.3
-        for <git@vger.kernel.org>; Wed, 23 Sep 2026 15:27:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SRVudnPD"
+Received: by mail-oi2-f42.google.com with SMTP id 46e09a7af769-8175f76732eso217880a34.3
+        for <git@vger.kernel.org>; Wed, 23 Sep 2026 15:27:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790202439; x=1790807239; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790202442; x=1790807242; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=jT7/UMoeMNw2k6kMhGuyP+n/IhGXAJoblJDOIlvSqpE=;
-        b=InHF/zofAMYoNmmCdN8JdzrXed1XnEymS2sq3TOfAe5to2z5g0refFog4+c99XR2A/
-         FCBDoJxG4x/F1NftZugvfuvpe+dWCTnjNa34xTjgdNofSJfPqm7tGZDJ+ec7/KZTnFMz
-         7mP6fZAdifjWoH2awMxXTcHAzMHdp+fWqffmVR9BFp0dTmkIUqYEY2n18MMusBVMwMYk
-         d7JmjPKsmgrbqOITwKQGFEK2glI7fx2O1jvTHcm/P+52B+RnDbIHOwtfOCAemo+ms7FI
-         3wpTMXMb7KTBEn3os1f7gDPdQcamFgr8xM1oLuqHYICt66OlKKXooXTJlf/b963vxAzY
-         SZJQ==
+        bh=tlEG5Gn+NgScsKyVfO89Ie4St+PeHzNOflIArwgV3So=;
+        b=SRVudnPDWqmst2KQWEaiCYT2JTAknIKBwsicZ/rktb1gfUetjzcmIxB++Hq96Oy6Fo
+         kRsdAdRamGhzRS7clHMRNrS3oTUmAqVgh7Ipl4bxhRDkc5N0xe+RVrWW+o6s9sPtHFxR
+         SdpLF+YP8rIPW4ouI8PvpGDjrxkhrAI9Na9HaRgdnrF75STGXrasfYmLMXVS9a30EfEz
+         BZyU3fB5CVVa0nsmyHCzdSeGk6oLEHhRuQK3nuujFHaxrhqpF2JrsK6s53JzCXK9QJbc
+         dBIbVm0O+WyCbz5L85vFsAi8KPzjP7oSgf8li1+7qjOsprfuSbxR8y+cWlKc5Nk1KcfI
+         RNQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790202439; x=1790807239;
+        d=1e100.net; s=20260707; t=1790202442; x=1790807242;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=jT7/UMoeMNw2k6kMhGuyP+n/IhGXAJoblJDOIlvSqpE=;
-        b=pxGvJVK4AHS/0jfhxpRJgz2/edb8Z+Fsc50R/6xhvKVi3oSccsD/58YVKonddTS4ip
-         IgEk5YUaG57jyi6NBBX+yhvvT1M2tsWUzWJdVExnghIh4+0l4qpHieehvjxA34c+ypr9
-         W5tuQSEchHrbhbkDTDx0uOn/lBT/U34hm0mSou4KUDmPyIrVPzzGCz78FLbg3tQpC6Uu
-         U4x7W3Pw1IP3+ALIiRmtJ3p1TrnwJvaWygPHpiPQJtpVvw8TNZp9pslZpEqlMY8IgvDx
-         idlgYQDNIyHEKNbKjxMRx1QZPxm6gE/A7vRVkwx60iM4lbtYuhNrOj469bX7DezaC0dg
-         hUrQ==
-X-Gm-Message-State: AFuF++meCB1WDdPeiGua4ttQhc1dSjQXswKtPHXNyNXzpUzxCNBQsB2j
-	prJXqLFQrqOywgRxSl6YWb+9jRUzJbeH7G0ubVOYZGnhQ6vBjad3iwu6
-X-Gm-Gg: AYBFou2GL4ZKHPddT3e5g+nQWBwrdSEN1exATtNs0bKuNPCeGhTXFarjPl3oRlx8rkU
-	GopHpACHdiYl50DdCXHK7yOgTHrf6H8ZFEOd0GSFJN/RwVZHupFLsAnNsasVR0Z3PJe8ekRU5NO
-	5E835MmBjt5dkNjJAhhK/cUWEEJyEGQtjVCF6aOewM84VK8XykqKpP9iRBloAd3iY3FVayzaTcA
-	wcytig0bXIpyM8yVWeAA8BRtx1VAxfVmgbJ4zT3TqC/YwQ5eUOS/ztDiAlrIqsmyHx96rK4weEF
-	wY+rcZNQDanaLsGvudaYhPdV3qsCFAHwqpK2J4lGk5Sz1i5c06P6V1NqXn0qJAXfB7XdfINHzsx
-	7drS2Lwx410OS/aoTE749SHg8Fj4cfAkVzCMI9WUk3XGK4qZeUUCy4rlWzOSRAwPyYvKn2/sbf1
-	D+QVUVFpz0f7YNmk0wwy2XDNw+LJU/C/S8LMz+BLKjG+Jh1dXSgT49cIDTKA3LDWEXlM8C5auT7
-	cFtPpfvAHQGn6wGEdKwDHfPJ8PA4B/ZP5ouPEm27Evk6y/MSmGcc5mddiiBLX2ML/QSKumnDx6P
-	FD3530KiJn6xqV6Z3f55oKLnnlD4f9ByeI7Qv2w0K/6v7Suon5yl6uUMm+402ZbYdMYRw27mbQu
-	VDGDNQlKT46VbUBOGpc3uqI3MWvDUxJLn6NCq/AhmJ87xb6xNHWeJW0AZPLeGH1hdFfjJeg==
-X-Received: by 2002:a05:6830:630c:b0:805:cd51:568a with SMTP id 46e09a7af769-8178059d3cemr782349a34.2.1790202439111;
-        Wed, 23 Sep 2026 15:27:19 -0700 (PDT)
+        bh=tlEG5Gn+NgScsKyVfO89Ie4St+PeHzNOflIArwgV3So=;
+        b=t51bv8sWZvMBu892DRR9cb+0TexVH1WsNp7C7JwLtmExoLRYy4slDMOBz5fF7dsf81
+         XoEQbiim3iGrF0lIcw1exHIUpPbbc3SAVnWW0hSVPNlchsJId6ovsEOz/hp3YgAgaqjh
+         GEsBIYKCvVOT04mNkPgwS21mbdoVopPfi1HuHKjZNZmO1B3xGjbqaGommVi9AJ8BQ5n0
+         lvGRBiYVYe82yGoDvwGZaMf4NBRUZKeQsoK6CD79qmnN/0EIOsJjwOWROUJghoM7pJkE
+         ZEuDLbS5sQXTWkntLepu6ej/aezGo8291oxaca3fWnKG/ngYCb8iFkmWdXrjzidbAwsE
+         G7Vw==
+X-Gm-Message-State: AFuF++lK429HJWk0eYNn8p5RaohysPKQkXGTnePW0/kpgQPUcFSou0GV
+	gYOKW2Uy4Y3g2Y5DgLKPLs0LIQDmgH1rIh63ZgNt86rDOh9BquemA8JE
+X-Gm-Gg: AYBFou0Jqk1XgZaZ3zWxoa7dhY7gixPL1drgxVGDcB5SNlVzfG/EK+5mHlv7rgslzdR
+	MhDM3o99bc4+RhOpX+i0Dsd8uc9woDiEcUwLZNbS9mKowEdKalFLbqoNGpAzotfM61NOhpx0/an
+	0CEq7tunoavZIGUau/rrwylsXDtBt5H2wR3FlxbsAKma4mrGOnk3S5FHPbTur6ONxj5MklWtOWJ
+	zXI1YztHFEA/Ku8BG6URGBiu6DO4d5l+QS6imsU5f0sM5ZkxjNc1IiD9VoM++hmM5H+0mG7BGJv
+	FQ2QD1H0z+r8vFA/WPoIjP6Tbkmld4P6gkkWEpJDQKLhqwP26dMbXVV9QgK+HOXMw/cadOjDSp0
+	azjtUFGl/MMTJoh7VSqKug/2ue2PLdijpqynBqLJgjYt+Xm1KjfCdhzWRyiIP2K3Q2z+wdw1Zw6
+	vn+sJmEo6W+C5yaVlxhsf3PGyW7K/0iJWiyQUIcDiD1L5wrdO0kIEQs0sf+Di7XGFIA//aiAoh0
+	z9UWptzO2ryZTrQNRmKVDydohDDlUiqj9152mCUjSuxPrv2+sRqopegZJjNLOxYn8AufPQkLmeC
+	K5tjzpBMPq/bJ6uyz+C9Le3tpsHiuvF4+H0ccSAwNO2LRybpEaP5pgDOSytW7SwJwRQ84TiSiSP
+	tmf4rVumaHU8R8K6zG2HBSntlvf0pIb4TUW1yh8OgJjANUnkAYsrHzQx0UrCNGwwo1IEBJ/c=
+X-Received: by 2002:a05:6830:638b:b0:806:1e7:4167 with SMTP id 46e09a7af769-8178327bb2fmr711785a34.13.1790202441869;
+        Wed, 23 Sep 2026 15:27:21 -0700 (PDT)
 Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa (vpn-centralus-02.tradc-corp.com. [20.98.136.114])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-81603ad0f20sm4727670a34.9.2026.09.23.15.27.17
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-81603ad0f20sm4727670a34.9.2026.09.23.15.27.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Sep 2026 15:27:18 -0700 (PDT)
+        Wed, 23 Sep 2026 15:27:20 -0700 (PDT)
 From: Tamir Duberstein <tamird@gmail.com>
-Date: Wed, 23 Sep 2026 18:26:59 -0400
-Subject: [PATCH v2 2/3] dir: share untracked caches across output modes
+Date: Wed, 23 Sep 2026 18:27:00 -0400
+Subject: [PATCH v2 3/3] ls-files: use and update the untracked cache
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,7 +72,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260923-ls-files-untracked-cache-v2-2-d7ee33476eb8@gmail.com>
+Message-Id: <20260923-ls-files-untracked-cache-v2-3-d7ee33476eb8@gmail.com>
 References: <20260923-ls-files-untracked-cache-v2-0-d7ee33476eb8@gmail.com>
 In-Reply-To: <20260923-ls-files-untracked-cache-v2-0-d7ee33476eb8@gmail.com>
 To: git@vger.kernel.org
@@ -81,855 +81,437 @@ Cc: Tao Klerks <tao@klerks.biz>, Junio C Hamano <gitster@pobox.com>,
  =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>, 
  Tamir Duberstein <tamird@gmail.com>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openssh-sha256; t=1790202426; l=30690;
+X-Developer-Signature: v=1; a=openssh-sha256; t=1790202426; l=16548;
  i=tamird@gmail.com; h=from:subject:message-id;
- bh=8gGWsPgsm+5secq8x3cC67vM9dw7qa7dbWks4flaZa0=;
+ bh=3UxIRGaSPD7YjXy0istXND18uD8AL98I3O5VaqhHkvU=;
  b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
  MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
- QKOV1Rn5PAd6RmZe5pRFrsJ5Q9puXykbBRVCQkRMx5y1cCTwZg5SdihTTVy8il0UlX2qkvq45RA
- zTaz9Df1KEQA=
+ QPnKLVVKkalszxsnCKMJyt6E44s4yht+e8Lkb40NYfqD9ozPZ7GWFzEVdlTWk8X1cnYYWuJCrZ7
+ V0HjSyKtSvQ8=
 X-Developer-Key: i=tamird@gmail.com; a=openssh;
  fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-The untracked cache stores different directory listings for
---untracked-files=normal and --untracked-files=all. Switching modes
-bypasses the cache or rebuilds it, even when complete listings could be
-used for either mode.
+Repeated 'git ls-files --cached --others --exclude-standard' calls scan
+the working tree even when 'git status' has populated an untracked cache.
+Reuse those listings and write pending untracked cache and fsmonitor
+updates back to the index when optional locking is enabled, so later
+commands can reuse the work.
 
-Use each directory's check_only bit to record an incomplete scan. Rescan
-it when all untracked files are requested, and retain complete listings
-when a later 'git status -unormal' stops early. If a partial listing loses
-its cached untracked entry, rescan the directory to find any remaining
-untracked files.
+Parse options before reading the index so eligible calls can take the
+optional lock first. With index.skipHash, the index checksum cannot be
+used to detect concurrent index changes. Record the object IDs of the
+standard exclude files before assigning dir->untracked, so the exclude
+options can be processed in the same order before reading the index.
 
-Call treat_directory() for cached directories as well. For wildcard
-pathspecs without a fixed prefix, cache complete listings and apply the
-pathspec afterward; retain traversal pruning for fixed-prefix, attribute
-and exclude pathspecs. This follows the cache reuse proposed in [1] while
-preserving the early exit for large untracked trees [2].
-
-Use a new value for dir_flags so older versions of Git rebuild the cache
-before using it to list untracked files. Retain DIR_SHOW_OTHER_DIRECTORIES
-so commands such as 'git add' in those versions still invalidate parent
-directories when updating the index. Reuse caches written for either
-'normal' or 'all' mode.
-
-[1]: https://lore.kernel.org/git/xmqqtucmag00.fsf@gitster.g/
-[2]: https://lore.kernel.org/git/CAPMMpoixi3x1PHrSHJPV1GRBzMpuOQ4meMr-fipXuDvz-96MEA@mail.gmail.com/
+A pathspec prefix can prune the in-memory index, and --with-tree can add
+entries to it. Do not write the index in those cases. Respect
+--no-optional-locks and continue without writing when the index lock is
+busy.
 
 Assisted-by: LLM
 Signed-off-by: Tamir Duberstein <tamird@gmail.com>
 ---
- Documentation/gitformat-index.adoc |  13 ++-
- dir.c                              | 217 ++++++++++++++++++++-----------------
- dir.h                              |  16 +--
- t/t7063-status-untracked-cache.sh  | 167 ++++++++++++++++++----------
- 4 files changed, 245 insertions(+), 168 deletions(-)
+ Documentation/git-ls-files.adoc    |  4 ++
+ builtin/ls-files.c                 | 40 +++++++++++++---
+ dir.c                              | 28 +++++------
+ t/perf/p3010-ls-files.sh           | 15 ++++++
+ t/t3001-ls-files-others-exclude.sh | 20 ++++++++
+ t/t7063-status-untracked-cache.sh  | 97 ++++++++++++++++++++++++++++++++++++++
+ t/t7519-status-fsmonitor.sh        | 44 +++++++++++++++++
+ 7 files changed, 227 insertions(+), 21 deletions(-)
 
-diff --git a/Documentation/gitformat-index.adoc b/Documentation/gitformat-index.adoc
-index f6a427cb49..d7596eb430 100644
---- a/Documentation/gitformat-index.adoc
-+++ b/Documentation/gitformat-index.adoc
-@@ -296,7 +296,13 @@ Git index format
+diff --git a/Documentation/git-ls-files.adoc b/Documentation/git-ls-files.adoc
+index 2b175388e1..11323b4ba9 100644
+--- a/Documentation/git-ls-files.adoc
++++ b/Documentation/git-ls-files.adoc
+@@ -127,6 +127,10 @@ OPTIONS
+ --exclude-standard::
+ 	Add the standard Git exclusions: .git/info/exclude, .gitignore
+ 	in each directory, and the user's global exclusion file.
+++
++With `--others`, an enabled untracked cache can be updated in the index
++after a complete traversal. Use `--no-optional-locks` (see linkgit:git[1])
++to disable this optional index update.
  
-   - Stat data of core.excludesFile
+ --error-unmatch::
+ 	If any <file> does not appear in the index, treat this as an
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index b044520f9e..e74ffa344d 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -15,6 +15,7 @@
+ #include "quote.h"
+ #include "dir.h"
+ #include "gettext.h"
++#include "lockfile.h"
+ #include "object-name.h"
+ #include "strbuf.h"
+ #include "parse-options.h"
+@@ -597,6 +598,8 @@ int cmd_ls_files(int argc,
+ 	struct dir_struct dir = DIR_INIT;
+ 	struct pattern_list *pl;
+ 	struct string_list exclude_list = STRING_LIST_INIT_NODUP;
++	struct lock_file index_lock = LOCK_INIT;
++	int index_fd = -1;
+ 	struct option builtin_ls_files_options[] = {
+ 		/* Think twice before adding "--nul" synonym to this */
+ 		OPT_SET_INT('z', NULL, &line_terminator,
+@@ -678,14 +681,13 @@ int cmd_ls_files(int argc,
+ 		prefix_len = strlen(prefix);
+ 	repo_config(repo, git_default_config, NULL);
  
--  - 32-bit dir_flags (see struct dir_struct)
-+  - 32-bit dir_flags. The values 0 and 6 store the flags from
-+    `struct dir_struct` for `--untracked-files=all` and
-+    `--untracked-files=normal`, respectively. The value 0x80000006 allows
-+    the same cache to be used for both modes. Older versions of Git
-+    rebuild this cache before using it to list untracked files. Its
-+    `DIR_SHOW_OTHER_DIRECTORIES` bit ensures that they still invalidate
-+    parent directories when updating the index.
+-	if (repo_read_index(repo) < 0)
+-		die("index file corrupt");
+-
+ 	argc = parse_options(argc, argv, prefix, builtin_ls_files_options,
+ 			ls_files_usage, 0);
+-	pl = add_pattern_list(&dir, EXC_CMDL, "--exclude option");
+-	for (i = 0; i < exclude_list.nr; i++) {
+-		add_pattern(exclude_list.items[i].string, "", 0, pl, --exclude_args);
++	/* Even an empty command-line exclude list would disable the cache. */
++	if (exclude_list.nr) {
++		pl = add_pattern_list(&dir, EXC_CMDL, "--exclude option");
++		for (i = 0; i < exclude_list.nr; i++)
++			add_pattern(exclude_list.items[i].string, "", 0, pl, --exclude_args);
+ 	}
  
-   - Hash of $GIT_COMMON_DIR/info/exclude. A null hash means the file
-     does not exist.
-@@ -327,8 +333,9 @@ The remaining data of each directory block is grouped by type:
-   - An ewah bitmap, the n-th bit marks whether the n-th directory has
-     valid untracked cache entries.
+ 	if (format && (show_stage || show_others || show_killed ||
+@@ -747,6 +749,25 @@ int cmd_ls_files(int argc,
+ 		max_prefix = common_prefix(&pathspec);
+ 	max_prefix_len = get_common_prefix_len(max_prefix);
  
--  - An ewah bitmap, the n-th bit records "check-only" bit of
--    read_directory_recursive() for the n-th directory.
-+  - An ewah bitmap, the n-th bit records the "check-only" bit for the
-+    n-th directory. With dir_flags 0x80000006, a set bit marks a directory
-+    listing that may be incomplete.
++	/*
++	 * Do not save an index pruned by a pathspec or changed by --with-tree.
++	 * With index.skipHash, the checksum cannot detect concurrent index
++	 * changes. Lock the index before reading it.
++	 */
++	if (show_others && !dir.flags && dir.exclude_per_dir &&
++	    !max_prefix && !with_tree && use_optional_locks() &&
++	    !dir.internal.unmanaged_exclude_files && !exclude_list.nr &&
++	    repo->settings.core_untracked_cache != UNTRACKED_CACHE_REMOVE)
++		index_fd = repo_hold_locked_index(repo, &index_lock, 0);
++	if (repo_read_index(repo) < 0)
++		die("index file corrupt");
++	if (show_others && !dir.flags && dir.exclude_per_dir && !with_tree)
++		dir.untracked = repo->index->untracked;
++	if (index_fd >= 0 && !dir.untracked) {
++		rollback_lock_file(&index_lock);
++		index_fd = -1;
++	}
++
+ 	prune_index(repo->index, max_prefix, max_prefix_len);
  
-   - An ewah bitmap, the n-th bit indicates whether hash and stat data
-     is valid for the n-th directory and exists in the next data.
+ 	/* Treat unmatching pathspec elements as errors */
+@@ -784,6 +805,13 @@ int cmd_ls_files(int argc,
+ 		ret = 1;
+ 	}
+ 
++	if (index_fd >= 0) {
++		if (!ret && dir.untracked)
++			repo_update_index_if_able(repo, &index_lock);
++		else
++			rollback_lock_file(&index_lock);
++	}
++
+ 	string_list_clear(&exclude_list, 0);
+ 	dir_clear(&dir);
+ 	free(max_prefix);
 diff --git a/dir.c b/dir.c
-index 5484eb1562..425fe2af67 100644
+index 425fe2af67..949f06c8f7 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -43,6 +43,15 @@
-   */
- #define PATTERN_MAX_FILE_SIZE (100 * 1024 * 1024)
+@@ -1209,7 +1209,8 @@ static int add_patterns(const char *fname, const char *base, int baselen,
+ 		close(fd);
+ 		if (oid_stat) {
+ 			int pos;
+-			if (oid_stat->valid &&
++			/* Racy stat checks need the index timestamp. */
++			if (istate && oid_stat->valid &&
+ 			    !match_stat_data_racy(istate, &oid_stat->stat, &st))
+ 				; /* no content change, oid_stat->oid still good */
+ 			else if (istate &&
+@@ -1321,18 +1322,15 @@ struct pattern_list *add_pattern_list(struct dir_struct *dir,
+ }
  
-+/*
-+ * Use the same cache for --untracked-files=normal and --untracked-files=all.
-+ * The high bit makes older versions of Git rebuild the cache before using
-+ * it to list untracked files. Keep DIR_SHOW_OTHER_DIRECTORIES so their
-+ * index updates still invalidate parent directories.
-+ */
-+#define UNTRACKED_CACHE_LAZY ((1U << 31) | DIR_SHOW_OTHER_DIRECTORIES | \
-+			      DIR_HIDE_EMPTY_DIRECTORIES)
-+
  /*
-  * Tells read_directory_recursive how a file or directory should be treated.
-  * Values are ordered by significance, e.g. if a directory contains both
-@@ -1057,7 +1066,7 @@ static void trim_trailing_spaces(char *buf)
- /*
-  * Given a subdirectory name and "dir" of the current directory,
-  * search the subdir in "dir" and return it, or create a new one if it
-- * does not exist in "dir".
-+ * does not exist in "dir". If "uc" is NULL, do not create a new entry.
-  *
-  * If "name" has the trailing slash, it'll be excluded in the search.
+- * Used to set up core.excludesfile and .git/info/exclude lists.
++ * Only the standard exclude files have object IDs saved in the untracked
++ * cache. Other files have no oid_stat and must disable use of the cache.
   */
-@@ -1088,6 +1097,8 @@ static struct untracked_cache_dir *lookup_untracked(struct untracked_cache *uc,
- 		first = next+1;
- 	}
+ static void add_patterns_from_file_1(struct dir_struct *dir, const char *fname,
+ 				     struct oid_stat *oid_stat)
+ {
+ 	struct pattern_list *pl;
+-	/*
+-	 * catch setup_standard_excludes() that's called before
+-	 * dir->untracked is assigned. That function behaves
+-	 * differently when dir->untracked is non-NULL.
+-	 */
+-	if (!dir->untracked)
++
++	if (!oid_stat)
+ 		dir->internal.unmanaged_exclude_files++;
+ 	pl = add_pattern_list(dir, EXC_FILE, fname);
+ 	if (add_patterns(fname, "", 0, pl, NULL, 0, oid_stat) < 0)
+@@ -1341,7 +1339,6 @@ static void add_patterns_from_file_1(struct dir_struct *dir, const char *fname,
  
-+	if (!uc)
-+		return NULL;
- 	uc->dir_created++;
- 	FLEX_ALLOC_MEM(d, name, name, len);
+ void add_patterns_from_file(struct dir_struct *dir, const char *fname)
+ {
+-	dir->internal.unmanaged_exclude_files++; /* see validate_untracked_cache() */
+ 	add_patterns_from_file_1(dir, fname, NULL);
+ }
  
-@@ -2410,26 +2421,19 @@ static enum path_treatment treat_path_fast(struct dir_struct *dir,
- 	strbuf_setlen(path, baselen);
- 	if (!cdir->ucd) {
- 		strbuf_addstr(path, cdir->file);
--		return path_untracked;
-+		if (!ends_with(cdir->file, "/"))
-+			return path_untracked;
-+	} else {
-+		strbuf_addstr(path, cdir->ucd->name);
-+		/* treat_directory() expects a trailing slash. */
-+		strbuf_complete(path, '/');
- 	}
--	strbuf_addstr(path, cdir->ucd->name);
--	/* treat_one_path() does this before it calls treat_directory() */
--	strbuf_complete(path, '/');
--	if (cdir->ucd->check_only)
--		/*
--		 * check_only is set as a result of treat_directory() getting
--		 * to its bottom. Verify again the same set of directories
--		 * with check_only set.
--		 */
--		return read_directory_recursive(dir, istate, path->buf, path->len,
--						cdir->ucd, 1, 0, pathspec);
+@@ -3009,10 +3006,7 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+ 
  	/*
--	 * We get path_recurse in the first run when
--	 * directory_exists_in_index() returns index_nonexistent. We
--	 * are sure that new changes in the index does not impact the
--	 * outcome. Return now.
-+	 * The output mode may have changed since this directory was cached,
-+	 * and a nested repository may have been created or removed.
+ 	 * We only support $GIT_COMMON_DIR/info/exclude and core.excludesfile
+-	 * as the global ignore rule files. Any other additions
+-	 * (e.g. from command line) invalidate the cache. This
+-	 * condition also catches running setup_standard_excludes()
+-	 * before setting dir->untracked!
++	 * as the global ignore rule files. Other exclude files bypass the cache.
  	 */
--	return path_recurse;
-+	return treat_directory(dir, istate, cdir->untracked, path->buf,
-+			       path->len, baselen, 0, pathspec);
- }
+ 	if (dir->internal.unmanaged_exclude_files)
+ 		return NULL;
+@@ -3511,17 +3505,21 @@ void setup_standard_excludes(struct dir_struct *dir)
  
- static enum path_treatment treat_path(struct dir_struct *dir,
-@@ -2556,7 +2560,8 @@ static int valid_cached_dir(struct dir_struct *dir,
- 		}
- 	}
+ 	dir->exclude_per_dir = ".gitignore";
  
--	if (untracked->check_only != !!check_only)
-+	/* A complete listing can also answer a check_only request. */
-+	if (untracked->check_only && !check_only)
- 		return 0;
- 
- 	/*
-@@ -2618,7 +2623,12 @@ static int read_cached_dir(struct cached_dir *cdir)
- 		cdir->d_type = DTYPE(de);
- 		return 0;
- 	}
--	while (cdir->nr_dirs < cdir->untracked->dirs_nr) {
 +	/*
-+	 * If a cached entry is no longer a nested repository, recursing into
-+	 * it can add it to dirs while we iterate over untracked. Do not visit
-+	 * it twice.
++	 * Option parsing may precede reading the index. Record the object IDs
++	 * even before the untracked cache is available for validation.
 +	 */
-+	while (!cdir->nr_files && cdir->nr_dirs < cdir->untracked->dirs_nr) {
- 		struct untracked_cache_dir *d = cdir->untracked->dirs[cdir->nr_dirs];
- 		if (!d->recurse) {
- 			cdir->nr_dirs++;
-@@ -2629,9 +2639,17 @@ static int read_cached_dir(struct cached_dir *cdir)
- 		return 0;
+ 	/* core.excludesfile defaulting to $XDG_CONFIG_HOME/git/ignore */
+ 	if (excludes_file && !access_or_warn(excludes_file, R_OK, 0))
+ 		add_patterns_from_file_1(dir, excludes_file,
+-					 dir->untracked ? &dir->internal.ss_excludes_file : NULL);
++					 &dir->internal.ss_excludes_file);
+ 
+ 	/* per repository user preference */
+ 	if (startup_info->have_repository) {
+ 		const char *path = git_path_info_exclude();
+ 		if (!access_or_warn(path, R_OK, 0))
+ 			add_patterns_from_file_1(dir, path,
+-						 dir->untracked ? &dir->internal.ss_info_exclude : NULL);
++						 &dir->internal.ss_info_exclude);
  	}
- 	cdir->ucd = NULL;
--	if (cdir->nr_files < cdir->untracked->untracked_nr) {
-+	while (cdir->nr_files < cdir->untracked->untracked_nr) {
- 		struct untracked_cache_dir *d = cdir->untracked;
- 		cdir->file = d->untracked[cdir->nr_files++];
-+		/* A directory may occur in both dirs and untracked. Return it once. */
-+		if (ends_with(cdir->file, "/")) {
-+			struct untracked_cache_dir *child =
-+				lookup_untracked(NULL, d, cdir->file,
-+						 strlen(cdir->file));
-+			if (child && child->recurse)
-+				continue;
-+		}
- 		return 0;
- 	}
- 	return -1;
-@@ -2641,10 +2659,7 @@ static void close_cached_dir(struct cached_dir *cdir)
- {
- 	if (cdir->fdir)
- 		closedir(cdir->fdir);
--	/*
--	 * We have gone through this directory and found no untracked
--	 * entries. Mark it valid.
--	 */
-+	/* The listing is valid even if check_only marks it as incomplete. */
- 	if (cdir->untracked) {
- 		cdir->untracked->valid = 1;
- 		cdir->untracked->recurse = 1;
-@@ -2717,6 +2732,7 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 	struct cached_dir cdir;
- 	enum path_treatment state, subdir_state, dir_state = path_none;
- 	struct strbuf path = STRBUF_INIT;
-+	int incomplete = 0;
- 
- 	strbuf_add(&path, base, baselen);
- 
-@@ -2724,9 +2740,6 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 		goto out;
- 	dir->internal.visited_directories++;
- 
--	if (untracked)
--		untracked->check_only = !!check_only;
--
- 	while (!read_cached_dir(&cdir)) {
- 		/* check how the file or directory should be treated */
- 		state = treat_path(dir, untracked, &cdir, istate, &path,
-@@ -2776,6 +2789,7 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 				 */
- 				if (dir_state >= path_excluded) {
- 					dir_state = path_excluded;
-+					incomplete = 1;
- 					break;
- 				}
- 			}
-@@ -2784,6 +2798,7 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 			if (dir_state == path_untracked) {
- 				if (cdir.fdir)
- 					add_untracked(untracked, path.buf + baselen);
-+				incomplete = 1;
- 				break;
- 			}
- 			/* skip the add_path_to_appropriate_result_list() */
-@@ -2794,7 +2809,27 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 						    istate, &path, baselen,
- 						    pathspec, state);
- 	}
--	close_cached_dir(&cdir);
-+	/*
-+	 * Only a filesystem scan replaces the saved completeness. Stopping
-+	 * early while reading a complete cache must not make it partial.
-+	 */
-+	if (cdir.fdir && untracked)
-+		untracked->check_only = incomplete;
-+	if (!cdir.fdir && untracked->check_only &&
-+	    dir_state != path_untracked) {
-+		/*
-+		 * Removing the last untracked file in a cached child need not
-+		 * change this directory's mtime. Other children may still have
-+		 * untracked files, so rescan the directory before returning.
-+		 */
-+		close_cached_dir(&cdir);
-+		invalidate_directory(dir->untracked, untracked);
-+		dir_state = read_directory_recursive(dir, istate, base, baselen,
-+						     untracked, check_only,
-+						     stop_at_first_file, pathspec);
-+	} else {
-+		close_cached_dir(&cdir);
-+	}
-  out:
- 	strbuf_release(&path);
- 
-@@ -2925,33 +2960,12 @@ static void set_untracked_ident(struct untracked_cache *uc)
- 	strbuf_addch(&uc->ident, 0);
  }
  
--static unsigned new_untracked_cache_flags(struct index_state *istate)
--{
--	struct repository *repo = istate->repo;
--	const char *val;
--
--	/*
--	 * This logic is coordinated with the setting of these flags in
--	 * wt-status.c#wt_status_collect_untracked(), and the evaluation
--	 * of the config setting in commit.c#git_status_config()
--	 */
--	if (!repo_config_get_string_tmp(repo, "status.showuntrackedfiles", &val) &&
--	    !strcmp(val, "all"))
--		return 0;
--
--	/*
--	 * The default, if "all" is not set, is "normal" - leading us here.
--	 * If the value is "none" then it really doesn't matter.
--	 */
--	return DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
--}
--
--static void new_untracked_cache(struct index_state *istate, int flags)
-+static void new_untracked_cache(struct index_state *istate)
- {
- 	struct untracked_cache *uc = xcalloc(1, sizeof(*uc));
- 	strbuf_init(&uc->ident, 100);
- 	uc->exclude_per_dir = ".gitignore";
--	uc->dir_flags = flags >= 0 ? flags : new_untracked_cache_flags(istate);
-+	uc->dir_flags = UNTRACKED_CACHE_LAZY;
- 	set_untracked_ident(uc);
- 	istate->untracked = uc;
- 	istate->cache_changed |= UNTRACKED_CHANGED;
-@@ -2960,11 +2974,11 @@ static void new_untracked_cache(struct index_state *istate, int flags)
- void add_untracked_cache(struct index_state *istate)
- {
- 	if (!istate->untracked) {
--		new_untracked_cache(istate, -1);
-+		new_untracked_cache(istate);
- 	} else {
- 		if (!ident_in_untracked(istate->untracked)) {
- 			free_untracked_cache(istate->untracked);
--			new_untracked_cache(istate, -1);
-+			new_untracked_cache(istate);
- 		}
- 	}
- }
-@@ -3004,10 +3018,9 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
- 		return NULL;
+diff --git a/t/perf/p3010-ls-files.sh b/t/perf/p3010-ls-files.sh
+index ae14449432..bdf398906f 100755
+--- a/t/perf/p3010-ls-files.sh
++++ b/t/perf/p3010-ls-files.sh
+@@ -28,4 +28,19 @@ test_perf 'ls-files --modified with pathspec' '
+ 		-- "$pathspec" >/dev/null
+ '
  
- 	/*
--	 * Optimize for the main use case only: whole-tree git
--	 * status. More work involved in treat_leading_path() if we
--	 * use cache on just a subset of the worktree. pathspec
--	 * support could make the matter even worse.
-+	 * The cache needs a whole-tree scan without pathspec pruning.
-+	 * read_directory() handles eligible pathspecs by filtering the results
-+	 * after the scan and passing NULL here.
- 	 */
- 	if (base_len || (pathspec && pathspec->nr))
- 		return NULL;
-@@ -3037,47 +3050,22 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
- 		return NULL;
- 	}
- 
--	/*
--	 * If the untracked structure we received does not have the same flags
--	 * as requested in this run, we're going to need to either discard the
--	 * existing structure (and potentially later recreate), or bypass the
--	 * untracked cache mechanism for this run.
--	 */
--	if (dir->flags != dir->untracked->dir_flags) {
--		/*
--		 * If the untracked structure we received does not have the same flags
--		 * as configured, then we need to reset / create a new "untracked"
--		 * structure to match the new config.
--		 *
--		 * Keeping the saved and used untracked cache consistent with the
--		 * configuration provides an opportunity for frequent users of
--		 * "git status -uall" to leverage the untracked cache by aligning their
--		 * configuration - setting "status.showuntrackedfiles" to "all" or
--		 * "normal" as appropriate.
--		 *
--		 * Previously using -uall (or setting "status.showuntrackedfiles" to
--		 * "all") was incompatible with untracked cache and *consistently*
--		 * caused surprisingly bad performance (with fscache and fsmonitor
--		 * enabled) on Windows.
--		 *
--		 * IMPROVEMENT OPPORTUNITY: If we reworked the untracked cache storage
--		 * to not be as bound up with the desired output in a given run,
--		 * and instead iterated through and stored enough information to
--		 * correctly serve both "modes", then users could get peak performance
--		 * with or without '-uall' regardless of their
--		 * "status.showuntrackedfiles" config.
--		 */
--		if (dir->untracked->dir_flags != new_untracked_cache_flags(istate)) {
-+	/* Only --untracked-files=normal and --untracked-files=all are supported. */
-+	if (dir->flags &&
-+	    dir->flags != (DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES))
-+		return NULL;
++test_perf 'ls-files --others with pathspec and no untracked cache' '
++	git -c core.fsmonitor=false -c core.untrackedCache=false \
++		ls-files --cached --others --exclude-standard -- "$pathspec" >/dev/null
++'
 +
-+	if (dir->untracked->dir_flags != UNTRACKED_CACHE_LAZY) {
-+		/* Reuse caches written for either mode by older versions of Git. */
-+		if (dir->untracked->dir_flags &&
-+		    dir->untracked->dir_flags !=
-+			    (DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES)) {
- 			free_untracked_cache(istate->untracked);
--			new_untracked_cache(istate, dir->flags);
-+			new_untracked_cache(istate);
- 			dir->untracked = istate->untracked;
--		}
--		else {
--			/*
--			 * Current untracked cache data is consistent with config, but not
--			 * usable in this request/run; just bypass untracked cache.
--			 */
--			return NULL;
-+		} else {
-+			dir->untracked->dir_flags = UNTRACKED_CACHE_LAZY;
-+			istate->cache_changed |= UNTRACKED_CHANGED;
- 		}
- 	}
- 
-@@ -3145,6 +3133,16 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
- 		   const char *path, int len, const struct pathspec *pathspec)
- {
- 	struct untracked_cache_dir *untracked;
-+	const struct pathspec *walk_pathspec = pathspec;
-+	/* Attribute and exclude pathspecs can prune a directory by its own name. */
-+	int filter = dir->untracked &&
-+		     !len && !dir->flags && pathspec && pathspec->nr &&
-+		     !(pathspec->magic & (PATHSPEC_ATTR | PATHSPEC_EXCLUDE));
++test_expect_success 'populate the untracked cache with ls-files' '
++	git config core.untrackedCache true &&
++	git -c core.fsmonitor=false ls-files --others --exclude-standard >/dev/null
++'
 +
-+	/* Keep the usual pruning for pathspecs with a fixed prefix. */
-+	for (int i = 0; filter && i < pathspec->nr; i++)
-+		if (pathspec->items[i].nowildcard_len)
-+			filter = 0;
- 
- 	trace2_region_enter("dir", "read_directory", istate->repo);
- 	dir->internal.visited_paths = 0;
-@@ -3155,15 +3153,34 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
- 		return dir->nr;
- 	}
- 
--	untracked = validate_untracked_cache(dir, len, pathspec, istate);
-+	untracked = validate_untracked_cache(dir, len,
-+					     filter ? NULL : pathspec, istate);
- 	if (!untracked)
- 		/*
- 		 * make sure untracked cache code path is disabled,
- 		 * e.g. prep_exclude()
- 		 */
- 		dir->untracked = NULL;
--	if (!len || treat_leading_path(dir, istate, path, len, pathspec))
--		read_directory_recursive(dir, istate, path, len, untracked, 0, 0, pathspec);
-+	else if (filter)
-+		walk_pathspec = NULL;
-+	if (!len || treat_leading_path(dir, istate, path, len, walk_pathspec))
-+		read_directory_recursive(dir, istate, path, len, untracked, 0, 0,
-+					 walk_pathspec);
-+	if (filter && untracked) {
-+		int dst = 0;
++test_perf 'ls-files --others with pathspec and untracked cache' '
++	git -c core.fsmonitor=false ls-files --cached --others \
++		--exclude-standard -- "$pathspec" >/dev/null
++'
 +
-+		/* Keep complete listings in the cache for later pathspecs. */
-+		for (int i = 0; i < dir->nr; i++) {
-+			struct dir_entry *ent = dir->entries[i];
-+
-+			if (match_pathspec(istate, pathspec, ent->name, ent->len,
-+					   0, NULL, 0))
-+				dir->entries[dst++] = dir->entries[i];
-+			else
-+				free(dir->entries[i]);
-+		}
-+		dir->nr = dst;
-+	}
- 	QSORT(dir->entries, dir->nr, cmp_dir_entry);
- 	QSORT(dir->ignored, dir->ignored_nr, cmp_dir_entry);
+ test_done
+diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
+index 29a0a25b30..5ca80932ac 100755
+--- a/t/t3001-ls-files-others-exclude.sh
++++ b/t/t3001-ls-files-others-exclude.sh
+@@ -306,4 +306,24 @@ test_expect_success 'ls-files with "**" patterns and no slashes' '
+ 	test_must_be_empty actual
+ '
  
-diff --git a/dir.h b/dir.h
-index 83e0f648a8..5cdad2bc45 100644
---- a/dir.h
-+++ b/dir.h
-@@ -152,13 +152,10 @@ struct oid_stat {
-  *
-  *   - The list of files and directories of the directory in question
-  *   - The $GIT_DIR/index
-- *   - dir_struct flags
-  *   - The content of $GIT_COMMON_DIR/info/exclude
-  *   - The content of core.excludesfile
-  *   - The content (or the lack) of .gitignore of all parent directories
-  *     from $GIT_WORK_TREE
-- *   - The check_only flag in read_directory_recursive (for
-- *     DIR_HIDE_EMPTY_DIRECTORIES)
-  *
-  *  The first input can be checked using directory mtime. In many
-  *  filesystems, directory mtime (stat_data field) is updated when its
-@@ -168,9 +165,10 @@ struct oid_stat {
-  *  Whenever a file (or a submodule) is added or removed from a
-  *  directory, we invalidate that directory.
-  *
-- *  The remaining inputs are easy, their SHA-1 could be used to verify
-- *  their contents (exclude_sha1[], info_exclude_sha1[] and
-- *  excludes_file_sha1[])
-+ *  Normal and all mode share these listings; other directory flags bypass
-+ *  the cache. Partial scans are marked check_only and completed when needed.
-+ *
-+ *  Ignore files are validated by their object IDs.
-  */
- struct untracked_cache_dir {
- 	struct untracked_cache_dir **dirs;
-@@ -178,6 +176,7 @@ struct untracked_cache_dir {
- 	struct stat_data stat_data;
- 	unsigned int untracked_alloc, dirs_nr, dirs_alloc;
- 	unsigned int untracked_nr;
-+	/* The directory scan stopped early; the listing may be incomplete. */
- 	unsigned int check_only : 1;
- 	/* all data except 'dirs' in this struct are good */
- 	unsigned int valid : 1;
-@@ -193,10 +192,7 @@ struct untracked_cache {
- 	const char *exclude_per_dir;
- 	char *exclude_per_dir_to_free;
- 	struct strbuf ident;
--	/*
--	 * dir_struct#flags must match dir_flags or the untracked
--	 * cache is ignored.
--	 */
-+	/* UNTRACKED_CACHE_LAZY, or dir_struct.flags from older versions of Git. */
- 	unsigned dir_flags;
- 	struct untracked_cache_dir *root;
- 	/* Statistics */
++test_expect_success 'ls-files preserves repeated and ordered exclude options' '
++	test_create_repo exclude-options &&
++	(
++		cd exclude-options &&
++		touch keep info-hidden global-hidden &&
++		echo info-hidden >.git/info/exclude &&
++		echo global-hidden >.git/global-ignore &&
++		git config core.excludesFile .git/global-ignore &&
++		echo "!info-hidden" >.git/custom-ignore &&
++		echo keep >../expect &&
++		git ls-files --others --exclude-from=.git/custom-ignore \
++			--exclude-standard --exclude-standard >../actual &&
++		test_cmp ../expect ../actual &&
++		git ls-files --others --exclude-standard \
++			--exclude-from=.git/custom-ignore >../actual &&
++		printf "%s\n" info-hidden keep >../expect &&
++		test_cmp ../expect ../actual
++	)
++'
++
+ test_done
 diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index 10d4850077..2efbb93b71 100755
+index 2efbb93b71..70eed91dd7 100755
 --- a/t/t7063-status-untracked-cache.sh
 +++ b/t/t7063-status-untracked-cache.sh
-@@ -115,7 +115,7 @@ test_expect_success 'untracked cache is empty' '
- info/exclude $ZERO_OID
- core.excludesfile $ZERO_OID
- exclude_per_dir .gitignore
--flags 00000006
-+flags 80000006
- EOF
- 	test_cmp ../expect-empty ../actual
- '
-@@ -133,7 +133,7 @@ cat >../dump.expect <<EOF &&
- info/exclude $EMPTY_BLOB
- core.excludesfile $ZERO_OID
- exclude_per_dir .gitignore
--flags 00000006
-+flags 80000006
- / $ZERO_OID recurse valid
- dthree/
- dtwo/
-@@ -200,11 +200,7 @@ A  two
- ?? three
- EOF
- 
--# Bypassing the untracked cache here is not desirable from an
--# end-user perspective, but is expected in the current design.
--# The untracked cache data stored for a -unormal run cannot be
--# correctly used in a -uall run - it would yield incorrect output.
--test_expect_success 'untracked cache is bypassed with -uall' '
-+test_expect_success 'untracked cache completes partial directory listings with -uall' '
- 	: >../trace.output &&
- 	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
- 	git status -uall --porcelain >../actual &&
-@@ -214,16 +210,21 @@ test_expect_success 'untracked cache is bypassed with -uall' '
- 	get_relevant_traces ../trace.output ../trace.relevant &&
- 	cat >../trace.expect <<EOF &&
-  ....path:
-+ ....node-creation:0
-+ ....gitignore-invalidation:0
-+ ....directory-invalidation:2
-+ ....opendir:2
- EOF
- 	test_cmp ../trace.expect ../trace.relevant
+@@ -1016,6 +1016,9 @@ test_expect_success 'untracked cache handles nested repository changes' '
+ 		echo "?? nested/" >../expect &&
+ 		test_cmp ../expect ../actual &&
+ 		rm -rf nested/.git &&
++		git ls-files --others --exclude-standard >../actual &&
++		echo nested/file >../expect &&
++		test_cmp ../expect ../actual &&
+ 		git status -uall --porcelain >../actual &&
+ 		echo "?? nested/file" >../expect &&
+ 		test_cmp ../expect ../actual &&
+@@ -1048,4 +1051,98 @@ test_expect_success 'filtered status retains complete untracked listings' '
+ 	)
  '
  
--test_expect_success 'untracked cache remains after bypass' '
-+test_expect_success 'untracked cache retains completed listings' '
-+	sed "s/check_only //" ../dump.expect >../dump_uall.expect &&
- 	test-tool dump-untracked-cache >../actual &&
--	test_cmp ../dump.expect ../actual
-+	test_cmp ../dump_uall.expect ../actual
- '
- 
--test_expect_success 'if -uall is configured, untracked cache gets populated by default' '
-+test_expect_success 'if -uall is configured, untracked cache is reused by default' '
- 	test_config status.showuntrackedfiles all &&
- 	: >../trace.output &&
- 	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
-@@ -234,28 +235,14 @@ test_expect_success 'if -uall is configured, untracked cache gets populated by d
- 	get_relevant_traces ../trace.output ../trace.relevant &&
- 	cat >../trace.expect <<EOF &&
-  ....path:
-- ....node-creation:3
-- ....gitignore-invalidation:1
-+ ....node-creation:0
-+ ....gitignore-invalidation:0
-  ....directory-invalidation:0
-- ....opendir:4
-+ ....opendir:0
- EOF
- 	test_cmp ../trace.expect ../trace.relevant
- '
- 
--cat >../dump_uall.expect <<EOF &&
--info/exclude $EMPTY_BLOB
--core.excludesfile $ZERO_OID
--exclude_per_dir .gitignore
--flags 00000000
--/ $ZERO_OID recurse valid
--three
--/done/ $ZERO_OID recurse valid
--/dthree/ $ZERO_OID recurse valid
--three
--/dtwo/ $ZERO_OID recurse valid
--two
--EOF
--
- test_expect_success 'if -uall was configured, untracked cache is populated' '
- 	test-tool dump-untracked-cache >../actual &&
- 	test_cmp ../dump_uall.expect ../actual
-@@ -280,12 +267,7 @@ EOF
- 	test_cmp ../trace.expect ../trace.relevant
- '
- 
--# Bypassing the untracked cache here is not desirable from an
--# end-user perspective, but is expected in the current design.
--# The untracked cache data stored for a -all run cannot be
--# correctly used in a -unormal run - it would yield incorrect
--# output.
--test_expect_success 'if -uall is configured, untracked cache is bypassed with -unormal' '
-+test_expect_success 'if -uall is configured, untracked cache is reused with -unormal' '
- 	test_config status.showuntrackedfiles all &&
- 	: >../trace.output &&
- 	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
-@@ -296,12 +278,18 @@ test_expect_success 'if -uall is configured, untracked cache is bypassed with -u
- 	get_relevant_traces ../trace.output ../trace.relevant &&
- 	cat >../trace.expect <<EOF &&
-  ....path:
-+ ....node-creation:0
-+ ....gitignore-invalidation:0
-+ ....directory-invalidation:0
-+ ....opendir:0
- EOF
- 	test_cmp ../trace.expect ../trace.relevant
- '
- 
--test_expect_success 'repopulate untracked cache for -unormal' '
--	git status --porcelain
-+test_expect_success 'normal status preserves completed untracked cache' '
-+	git status --porcelain &&
-+	test-tool dump-untracked-cache >../actual &&
-+	test_cmp ../dump_uall.expect ../actual
- '
- 
- test_expect_success 'modify in root directory, one dir invalidation' '
-@@ -340,16 +328,16 @@ test_expect_success 'verify untracked cache dump' '
- info/exclude $EMPTY_BLOB
- core.excludesfile $ZERO_OID
- exclude_per_dir .gitignore
--flags 00000006
-+flags 80000006
- / $ZERO_OID recurse valid
- dthree/
- dtwo/
- four
- three
- /done/ $ZERO_OID recurse valid
--/dthree/ $ZERO_OID recurse check_only valid
-+/dthree/ $ZERO_OID recurse valid
- three
--/dtwo/ $ZERO_OID recurse check_only valid
-+/dtwo/ $ZERO_OID recurse valid
- two
- EOF
- 	test_cmp ../expect ../actual
-@@ -390,7 +378,7 @@ test_expect_success 'verify untracked cache dump' '
- info/exclude $EMPTY_BLOB
- core.excludesfile $ZERO_OID
- exclude_per_dir .gitignore
--flags 00000006
-+flags 80000006
- / $(test_oid root) recurse valid
- .gitignore
- dthree/
-@@ -437,12 +425,12 @@ test_expect_success 'verify untracked cache dump' '
- info/exclude $(test_oid exclude)
- core.excludesfile $ZERO_OID
- exclude_per_dir .gitignore
--flags 00000006
-+flags 80000006
- / $(test_oid root) recurse valid
- .gitignore
- dtwo/
- /done/ $ZERO_OID recurse valid
--/dthree/ $ZERO_OID recurse check_only valid
-+/dthree/ $ZERO_OID recurse valid
- /dtwo/ $ZERO_OID recurse check_only valid
- two
- EOF
-@@ -456,10 +444,10 @@ test_expect_success 'move two from tracked to untracked' '
- info/exclude $(test_oid exclude)
- core.excludesfile $ZERO_OID
- exclude_per_dir .gitignore
--flags 00000006
-+flags 80000006
- / $(test_oid root) recurse
- /done/ $ZERO_OID recurse valid
--/dthree/ $ZERO_OID recurse check_only valid
-+/dthree/ $ZERO_OID recurse valid
- /dtwo/ $ZERO_OID recurse check_only valid
- two
- EOF
-@@ -497,13 +485,13 @@ test_expect_success 'verify untracked cache dump' '
- info/exclude $(test_oid exclude)
- core.excludesfile $ZERO_OID
- exclude_per_dir .gitignore
--flags 00000006
-+flags 80000006
- / $(test_oid root) recurse valid
- .gitignore
- dtwo/
- two
- /done/ $ZERO_OID recurse valid
--/dthree/ $ZERO_OID recurse check_only valid
-+/dthree/ $ZERO_OID recurse valid
- /dtwo/ $ZERO_OID recurse check_only valid
- two
- EOF
-@@ -517,10 +505,10 @@ test_expect_success 'move two from untracked to tracked' '
- info/exclude $(test_oid exclude)
- core.excludesfile $ZERO_OID
- exclude_per_dir .gitignore
--flags 00000006
-+flags 80000006
- / $(test_oid root) recurse
- /done/ $ZERO_OID recurse valid
--/dthree/ $ZERO_OID recurse check_only valid
-+/dthree/ $ZERO_OID recurse valid
- /dtwo/ $ZERO_OID recurse check_only valid
- two
- EOF
-@@ -558,12 +546,12 @@ test_expect_success 'verify untracked cache dump' '
- info/exclude $(test_oid exclude)
- core.excludesfile $ZERO_OID
- exclude_per_dir .gitignore
--flags 00000006
-+flags 80000006
- / $(test_oid root) recurse valid
- .gitignore
- dtwo/
- /done/ $ZERO_OID recurse valid
--/dthree/ $ZERO_OID recurse check_only valid
-+/dthree/ $ZERO_OID recurse valid
- /dtwo/ $ZERO_OID recurse check_only valid
- two
- EOF
-@@ -606,12 +594,12 @@ test_expect_success 'untracked cache correct after commit' '
- info/exclude $(test_oid exclude)
- core.excludesfile $ZERO_OID
- exclude_per_dir .gitignore
--flags 00000006
-+flags 80000006
- / $(test_oid root) recurse valid
- .gitignore
- dtwo/
- /done/ $ZERO_OID recurse valid
--/dthree/ $ZERO_OID recurse check_only valid
-+/dthree/ $ZERO_OID recurse valid
- /dtwo/ $ZERO_OID recurse check_only valid
- two
- EOF
-@@ -669,13 +657,13 @@ test_expect_success 'untracked cache correct after status' '
- info/exclude $(test_oid exclude)
- core.excludesfile $ZERO_OID
- exclude_per_dir .gitignore
--flags 00000006
-+flags 80000006
- / $(test_oid root) recurse valid
- .gitignore
- dtwo/
- /done/ $(test_oid done) recurse valid
- five
--/dthree/ $ZERO_OID recurse check_only valid
-+/dthree/ $ZERO_OID recurse valid
- /dtwo/ $ZERO_OID recurse check_only valid
- two
- EOF
-@@ -744,7 +732,7 @@ test_expect_success 'verify untracked cache dump (sparse/subdirs)' '
- info/exclude $(test_oid exclude)
- core.excludesfile $ZERO_OID
- exclude_per_dir .gitignore
--flags 00000006
-+flags 80000006
- / $(test_oid root) recurse valid
- .gitignore
- dtwo/
-@@ -755,7 +743,7 @@ sub/
- sub/
- /done/sub/sub/ $ZERO_OID recurse check_only valid
- file
--/dthree/ $ZERO_OID recurse check_only valid
-+/dthree/ $ZERO_OID recurse valid
- /dtwo/ $ZERO_OID recurse check_only valid
- two
- EOF
-@@ -991,4 +979,73 @@ test_expect_success 'empty repo (no index) and core.untrackedCache' '
- 	git -C emptyrepo -c core.untrackedCache=true write-tree
- '
- 
-+test_expect_success 'rescan a partial listing after removing the cached untracked file' '
-+	test_create_repo partial-cache &&
++test_expect_success 'ls-files expands cached directories and filters wildcard results' '
++	test_create_repo ls-files-cache &&
 +	(
-+		cd partial-cache &&
-+		touch tracked &&
-+		git add tracked &&
-+		git commit -m initial &&
++		cd ls-files-cache &&
 +		git config core.untrackedCache true &&
-+		mkdir -p d/a d/z &&
-+		touch d/a/file d/z/file &&
-+		test-tool chmtime =-300 . d d/a d/z &&
-+		git status --porcelain >../actual &&
-+		test-tool dump-untracked-cache >../dump &&
-+		cached_dir=$(sed -n "s|^/d/\([^/]*\)/ .*check_only valid$|\1|p" ../dump) &&
-+		test -n "$cached_dir" &&
-+		rm "d/$cached_dir/file" &&
-+		git status --porcelain >../actual &&
-+		echo "?? d/" >../expect &&
-+		test_cmp ../expect ../actual
++		mkdir tracked untracked empty ignored-only &&
++		touch tracked/pyproject.toml untracked/pyproject.toml &&
++		touch untracked/other ignored-only/file &&
++		echo ignored-only/file >.gitignore &&
++		echo "*.toml selected" >.gitattributes &&
++		git add .gitignore .gitattributes tracked &&
++		git init nested.git &&
++		test-tool chmtime =-300 . tracked untracked empty ignored-only &&
++		git status -unormal --porcelain >/dev/null &&
++		# Complete the partial listing, then reuse it without opening directories.
++		for opened in 1 0
++		do
++			: >"$TRASH_DIRECTORY/ls-files.trace" &&
++			GIT_TRACE2_PERF="$TRASH_DIRECTORY/ls-files.trace" \
++				git ls-files --cached --others --exclude-standard -z \
++				-- "**/pyproject.toml" >../actual &&
++			printf "%s\0" untracked/pyproject.toml tracked/pyproject.toml \
++				>../expect &&
++			test_cmp ../expect ../actual &&
++			test_grep "read_directo.*opendir:$opened\$" \
++				"$TRASH_DIRECTORY/ls-files.trace" &&
++			test_grep "read_directo.*gitignore-invalidation:0\$" \
++				"$TRASH_DIRECTORY/ls-files.trace" || return 1
++		done &&
++		for pathspec in "*.git/" ":(glob)**/*.toml" \
++			":(exclude)untracked/" ":(attr:selected)**/*.toml"
++		do
++			GIT_DISABLE_UNTRACKED_CACHE=1 git ls-files --others \
++				--exclude-standard -- "$pathspec" >../expect &&
++			git ls-files --others --exclude-standard \
++				-- "$pathspec" >../actual &&
++			test_cmp ../expect ../actual || return 1
++		done
 +	)
 +'
 +
-+test_expect_success 'untracked cache handles nested repository changes' '
-+	test_create_repo nested-cache &&
++test_expect_success 'ls-files cache is reused after status -unormal' '
++	test_create_repo persistent-cache &&
 +	(
-+		cd nested-cache &&
-+		touch tracked &&
++		cd persistent-cache &&
++		mkdir tracked untracked &&
++		touch tracked/a tracked/b untracked/a untracked/b &&
 +		git add tracked &&
 +		git commit -m initial &&
 +		git config core.untrackedCache true &&
-+		git init nested &&
-+		touch nested/file &&
-+		test-tool chmtime =-300 . nested &&
-+		git status -uall --porcelain >../actual &&
-+		echo "?? nested/" >../expect &&
++		test-tool chmtime =-300 . tracked untracked &&
++		git ls-files --others --exclude-standard >../actual &&
++		printf "%s\n" untracked/a untracked/b >../expect &&
 +		test_cmp ../expect ../actual &&
-+		rm -rf nested/.git &&
-+		git status -uall --porcelain >../actual &&
-+		echo "?? nested/file" >../expect &&
++		git status --porcelain >../actual &&
++		echo "?? untracked/" >../status-expect &&
++		test_cmp ../status-expect ../actual &&
++		GIT_TRACE2_PERF="$TRASH_DIRECTORY/persistent.trace" \
++			git ls-files --others --exclude-standard >../actual &&
 +		test_cmp ../expect ../actual &&
-+		git init nested &&
-+		git status -uall --porcelain >../actual &&
-+		echo "?? nested/" >../expect &&
-+		test_cmp ../expect ../actual
++		test_grep "read_directo.*opendir:0\$" "$TRASH_DIRECTORY/persistent.trace"
 +	)
 +'
 +
-+test_expect_success 'filtered status retains complete untracked listings' '
-+	test_create_repo filtered-cache &&
++test_expect_success 'ls-files respects optional locks and a busy index lock' '
++	test_when_finished "rm -f persistent-cache/.git/index.lock" &&
 +	(
-+		cd filtered-cache &&
++		cd persistent-cache &&
++		touch untracked/new &&
++		cp .git/index ../saved-index &&
++		git --no-optional-locks ls-files --others --exclude-standard >../actual &&
++		test_cmp_bin ../saved-index .git/index &&
++		printf "%s\n" untracked/a untracked/b untracked/new >../expect &&
++		test_cmp ../expect ../actual &&
++		touch .git/index.lock &&
++		git ls-files --others --exclude-standard >../actual &&
++		test_cmp ../expect ../actual &&
++		test_cmp_bin ../saved-index .git/index
++	)
++'
++
++test_expect_success 'ls-files does not write the index with a pathspec prefix or --with-tree' '
++	(
++		cd persistent-cache &&
++		cp .git/index ../saved-index &&
++		git ls-files --cached --others --exclude-standard -- tracked/a >../actual &&
++		test_cmp_bin ../saved-index .git/index &&
++		git rm --cached tracked/b &&
++		cp .git/index ../saved-index &&
++		git ls-files --cached --others --exclude-standard --with-tree=HEAD >../actual &&
++		test_cmp_bin ../saved-index .git/index
++	)
++'
++
+ test_done
+diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+index 93973ed25a..8feca101ab 100755
+--- a/t/t7519-status-fsmonitor.sh
++++ b/t/t7519-status-fsmonitor.sh
+@@ -477,4 +477,48 @@ test_expect_success 'status succeeds with sparse index' '
+ 	)
+ '
+ 
++test_expect_success UNTRACKED_CACHE 'ls-files saves the fsmonitor token with index.skipHash' '
++	test_create_repo ls-files-fsmonitor &&
++	(
++		# index.skipHash gives shared indexes a null OID, so they cannot
++		# be reloaded.
++		sane_unset GIT_TEST_SPLIT_INDEX &&
++		cd ls-files-fsmonitor &&
 +		touch tracked &&
 +		git add tracked &&
 +		git commit -m initial &&
 +		git config core.untrackedCache true &&
-+		mkdir d &&
-+		touch d/match.toml d/other &&
-+		test-tool chmtime =-300 . d &&
-+		git status -uall --porcelain -- "**/*.toml" >../actual &&
-+		echo "?? d/match.toml" >../expect &&
++		git config index.skipHash true &&
++		git config core.fsmonitor .git/hooks/fsmonitor-test &&
++		test_hook --setup fsmonitor-test <<-\EOF &&
++		printf "initial-token\0/\0"
++		EOF
++		mkdir untracked &&
++		touch untracked/first &&
++		git status --porcelain >/dev/null &&
++		test_hook --clobber fsmonitor-test <<-\EOF &&
++		test -f .git/index.lock || exit 1
++		printf "%s\n" "$2" >.git/query-token
++		printf "next-token\0"
++		if test "$2" != next-token
++		then
++			printf "untracked/second\0"
++		fi
++		EOF
++		touch untracked/second &&
++		git ls-files --others --exclude-standard >../actual &&
++		printf "%s\n" untracked/first untracked/second >../expect &&
 +		test_cmp ../expect ../actual &&
-+		GIT_TRACE2_PERF="$TRASH_DIRECTORY/filtered.trace" \
-+			git status -uall --porcelain >../actual &&
-+		printf "%s\n" "?? d/match.toml" "?? d/other" >../expect &&
++		echo initial-token >../token-expect &&
++		test_cmp ../token-expect .git/query-token &&
++		GIT_TRACE2_PERF="$TRASH_DIRECTORY/ls-files-fsmonitor.trace" \
++			git ls-files --others --exclude-standard >../actual &&
 +		test_cmp ../expect ../actual &&
-+		test_grep "read_directo.*opendir:0\$" "$TRASH_DIRECTORY/filtered.trace"
++		echo next-token >../token-expect &&
++		test_cmp ../token-expect .git/query-token &&
++		test_grep "read_directo.*opendir:0\$" \
++			"$TRASH_DIRECTORY/ls-files-fsmonitor.trace"
 +	)
 +'
 +
