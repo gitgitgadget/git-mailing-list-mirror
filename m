@@ -1,87 +1,85 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD7F47ACD0
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 21:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39416414433
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 21:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790200044; cv=none; b=VX1OGaUOqrFGbzepFMPMEzDHEj2VS7blCWTOnKJyp27QPuQKeHoLS5XlCwl2wGvLceuLVR6cH+l+HRVHz8dkLsWjEtoWBz5PFOXWy3oc9+Tbqq6ECvwoLgtplBa1MHcImZ6xzOsKJ9YDRKVB6/2bQKDxWnOUOimbpC2nE8PaYPk=
+	t=1790200535; cv=none; b=GfCYQDzFDQz3ezT/hjImlgdpDWQN/44gaio+aUq9a8eHdoVXowy0vJe1ZptH1FV2R1xQ1oaG/GR4fFAn0B2i+0NQEASllH9JM7zkbmAZgqUdSutIViszBP0hkv2Kj34z8sASgbDImQk4hNyb1s5lZlpxBclDLWrmyTHiAJlHeg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790200044; c=relaxed/simple;
-	bh=g+M5rvbMrt2oXmGoQZh2+sn9YGqGFyP+4PJT3dtSGO4=;
+	s=arc-20240116; t=1790200535; c=relaxed/simple;
+	bh=Dyr2NXYG8IIA0JWCsVZHfbKiwYoljxzhmpV4J8IQMO8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PnGug145Tn8gsj4iXhFOf5HGDqhiCwdi8hsZwMlIRzkNDhp7ZQynB/Ab3XMwBEcXyazTQmNjE4IzLTgNz9iJTte/Q8j/VZypMZBZv6JHrsd1ZQ9Noooah2sM49pswSDhcg66oNc+PoNOSxlqVqyjSQS2ZS2yeL1Jf7m43z+08e4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rhS5f442; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wj1J7d8Q; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=f3qJ8wm9ZqBtp91+O/N78XgOFIevL6HE0IU1PpNk0Mci9HPW9aPblEEgOICI8rI+IoeGzxgHVbKwOTiYEIS3cHrioF2AjyDPPP0hBYtS1B7XISdA/BC5So4rNbyK6L4FjSPqLpBgx8HkePqcsUitsXF5+RmGo38slbSlfn9iLXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S0hxvarn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ePKB8fas; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rhS5f442";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wj1J7d8Q"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 039E6EC00FF;
-	Wed, 23 Sep 2026 17:47:20 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 23 Sep 2026 17:47:20 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S0hxvarn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ePKB8fas"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id DB871EC0119;
+	Wed, 23 Sep 2026 17:55:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Wed, 23 Sep 2026 17:55:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1790200039;
-	 x=1790286439; bh=2YSFLuOLwOVeMXx7Ox9A4tBxkICqlbvO1z/rjcvckVc=; b=
-	rhS5f442h+83Jz6LK6toyotvwYOprxxi/GPdJay40IaCN4/XEsTbD0qXHcyY3zjd
-	QAWL4ktn7c1UOvIzo19vqGzysOI8m8DMj+hZCD/zq48mkJ1HrowsHy0Wwdm/vLaI
-	24jkdcA+HmyLjw2zJTRmIEwMzmBxwv9+zA3snkpvOvyz8sHyv5iLNjvVmP7lhlEl
-	mj9V1AhEcaP9+lQsN9W3YbQ4M62VaUKZjaLnhHe9UAvB8k+NMGfqmHksGx9jyqv3
-	9nmzlXKiQbs0hSm/utnrR1qoGBRHBegI0th+HAc3a3NUwR1nDIHYEQI15634gmWb
-	qEUBXovOyxb2jC6uV1R8eg==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790200532; x=1790286932; bh=3sAmZzb9Um
+	dFUe2Dedbw14Hf2m/d4c4iVUshR2EqG/o=; b=S0hxvarn1Ksanrkr0hU9aRP0Z6
+	XGaE8MhVD3m1PYhH3gLIvPOa3miNwMcwqMBMYmctkIUCViBsoLd2yn5QNY57xrZ8
+	tOat+77bSQv74aFeBnzRkolrepjhzmTiKh1PtV8ar5dQZw7l4rZkAjQbFE8nc0LZ
+	033IhcnKkPpzyCK8+U+7bkEhGnuFlii2Y8pFaP6rZIZ6K8zp6NNgilGcrjBBrk0T
+	FCqp6pg4HqrpNUoA6VbRosAY6l6kHe5oW51het1HQgay23aB6Q4OpN4C9I4Eoc5M
+	gxo+O9GQ/dBjUixLXZJUby5OgQ1YcRJQ+btlpVnkdyLtXVlUaDLfOK0h7HNw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790200039; x=
-	1790286439; bh=2YSFLuOLwOVeMXx7Ox9A4tBxkICqlbvO1z/rjcvckVc=; b=w
-	j1J7d8QD748SLlCw8+rKEy5mqRC8cCTKMok4c+cs0GvB9g2itiDsS0C0KFzaCYwd
-	nxfPsZezHYniCSr14iyAoN0I7jrvlRQe6pWEQHyUg3VY2ljl/zhECAKgrk9rSICe
-	2QiEe9nREAywwVRBBSzqxlq56m6z7dfN1glaXnUUEhg2siat9DTMJZZO0SfGJDm+
-	6Zx1zZWQIILyi39JaFF6f51oN8N3knqIbL7CLdEezAui087aMc/V+H+nAgrsTy04
-	+r+KlGzS84G1WGPey7YZaZbhNxas4nxwMHXxYEIh0ZBmF1XAAzIVbEyKQDOu5LBw
-	/RMiVCsaKBgUj5ZL+JwnA==
-X-ME-Sender: <xms:50i0athmpXcvB9psglOhSXNa--6YwEc4rr7jbLnHxtTNHBjtKQwBFQ>
-    <xme:50i0akTewKk3aFqRIvSvSanU7Ez_bhtFraLxTrqcAY4O43ZAuhPNrg9glD3R-H94j
-    qPavJGsAMfZQ5Wujd7Ou3TpAmZIqiWZxauD2VgZ995afv4dojNuC3g>
-X-ME-Received: <xmr:50i0avWWw1gSQbF3TNlMzZVhKgPBTC2FpLtaxnNbsEC8g8E8iTQ61JtxM2J0i9RLqeIvSKOsju00js8H5FSgaCWWLOc1OZjEtX0n>
-X-ME-Proxy-Cause: dmFkZTGEumRp68M0AggadBm1UFeOtEXFMbA3KAvVt1ahaRYigRMQ7YEVghT7n8y3p9mLbs
-    d4+LgbYE+PNV+cO3ZD2nnbc2PSTss+IPXEL3PlUO/u3flddpMw0zMYTVRty4F/zNBtV4hB
-    nqX9omI4adcRlwxivyPu+8u0QBKanat2892QN/L7QjxfTQ0BVMDnGlHaK+Zny27WhnXsR1
-    9uD63BaSbGhAPud2nmzsQfewt7NApLN0ZbdTqYInQ6u1OZIa97Yka4PjnxWyMDnBxD6Zwb
-    mjdGbtFs005Qz7xKmY9RaxpJFZ+5rWGaBinyg7+GDs8lc+euJ+ieu8o0X8E0NWXrQ+WRGd
-    f9ukLLElzqgeotuMQpFXUJ2Ipg+1EmdPom2Q3F8jdQp2ODhd1wNqJfu+udYfGQU7PiLQvw
-    OcAF7cjpUHiwhleBxRA8krSlIEfmsJkRt0KioPrEWUvNEq6G57az4JLKkVrvIId0t0wLUD
-    LWVGamqvkcmSiAh7qKthvibEiwiZri92ZNT+aK901cQsC4eKCE9eDvA/Z/EvLH9ZpuTcuQ
-    9bau9MkgPjJL37nlKxdq+52iJmp2JgUy6N3uFmBaUjZ5NZLyVyB6Z82HDBDTZyBq1nB3nW
-    sUD6XwAhsqV+k9sg+doX10fIf+tXyxZs2JEHo961yWPTs4s3vcQpnljZm06w
-X-ME-Proxy: <xmx:50i0aoTScrOOTThsps29p4O0rV28D7PUnxu1TrXkJdcK-CGDUw6crw>
-    <xmx:50i0apkOa2KffXEotI6wGJhRGCiQ7dXCARk8oSNwSkJJBumgObpPYg>
-    <xmx:50i0au4MDIzcPdqLp09rH5uZpqQZ74WfK7gAFGfZ28OcJzT5siklVg>
-    <xmx:50i0aviwATjEUSFSi6uqqIGRTROnPV0kxRDlKS89n8vb4Df0IfhmWg>
-    <xmx:50i0aqXkK6mX4TsPFOnyiJo2yqagpAgUDrjN2dXoHK4bgery11-jvKqw>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790200532; x=1790286932; bh=3sAmZzb9UmdFUe2Dedbw14Hf2m/d4c4iVUs
+	hR2EqG/o=; b=ePKB8faswW8DdYhYxAp/8LE3c1VxShiGP/QIAZnJ3peORweMuFa
+	ajGE+E09l3KVK8X3YkQ+A58o+7q+up+1s2K+6yLF36Z3GuvF31cMRmvnE9EjAZ7G
+	ZJYkTUU4KFlWt2Vff3Ajyuksb+V8jGRRcCvzwNnJ1rv9clJuPXdlorpt4dubkr/w
+	nFW7icMwiE/QlAuyV0Aw6f6jwdiCws+QegJ+bryq2PknFMzG92ZOAo3J8cz8xeWC
+	6y32l/1yppl7XP2OTMoz03RCmHVpSx02PtcEzqCcKNbfMjbQxf1nswVgGTArcnH1
+	uWcnxQSrW4GrqmwzKYKYUK9rl2np6Xb20qg==
+X-ME-Sender: <xms:1Eq0ahdT5V4golhyhMki9F4Wmq-TxktSDzV4fw1uf9MiuOGWWukz7Q>
+    <xme:1Eq0ahzrMi70bOnM2If3X9Rpb9MdjqZefefPRABZSBcz4_pDVscN4C0FyD1E1mH1t
+    DM0ZSXKzvzUJRO4gum9LNfS_Xn7HhkG4iVSX7qOnS11kvTHZniVWW0>
+X-ME-Received: <xmr:1Eq0auIX1_eya_RdByYM8OB7WBdlpRRyLt2nNNHVtJl4flGeYV3TLiuGyF89LgoOfYyrgZL6i7TClPYpPgAgM25jfIu6b9k860V0>
+X-ME-Proxy-Cause: dmFkZTFRbRjX748mfB0KGjJi2zo3rlso9ql4oChyap4DwySmasUMCIuAVJJHnEEaW9oano
+    zsP1Ua7e+tcLJVy0nVaraXQ8YfPbx6AjJKDIZIFGXaTe5lkrUPZD95u1GGbYNMcoPEX27g
+    QxVFTbTSBC1QVbO5h5lCNCVz8aBD2Q4UHnf4lrGsI5HlQQYo3Wo+yBYfu5rTiv+Kssg9Bl
+    h26CMr34FolqZGq5t3p7cdi40sJpAzRthar/S48JmAcm+9s6Bvwc7MPYKV2shKVyH7fs2N
+    05QyUOFjJR1sPNJMr3l+cbhHEGNMU2jCkQ5oLVdFq4T4NkXzJ4FJmOmMDdyLLsRq44e4oN
+    1XW37qH0QlED40vtSI55pRzB1vh8PeKdHNCBjAxtCJ/etWPTMiIUvnj6qUwW5bVNzxqLie
+    WgkWIksU4pTHWfGeWTFbuQXcg/YeFmT4rONoV1WNCgjM7bgvETMQPNA4bqlSEU0GvZb1sr
+    /ycnVpiDdTx2boe180l7iLzLpQWEzaMiRDjRDkDUE4L/pAMU+5vasSPHVAjbUE0S0ZkIzD
+    JlHK0WAt/dcno/Yz6p3avDW8wE2KsnKWEdhxfyPDmW0q1OVeklyN8lo38R12l1BgHr4hQc
+    MY9cFw7hkEs7WHVoeaaTi+0ozFyjf3KPF9IcFRjhxPQIv7TSqgrqcBLct04g
+X-ME-Proxy: <xmx:1Eq0arHs7tNA19AHiibhn4UeaNoL87ghKi9T1dmf42Wy-mQMq_i1pA>
+    <xmx:1Eq0ai_9DRgj0lKafpnRUeva3Xb0tkwjlBTyU6g_EVY0qYQQ6zg6yQ>
+    <xmx:1Eq0ajK9YgppvZK4SSpKmuLjzHRsBZE7cpeHinPGwoCiGwT3YeJAdw>
+    <xmx:1Eq0aot2JLFNw01NsSrfcAQIf6ZUkalDxEC_NmvOEsz7udMQMdkvEg>
+    <xmx:1Eq0as7Itbqf38GKLQRl97-wQhnE8e3SygbA71QoOstmvng0CVKiP9Ar>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Sep 2026 17:47:19 -0400 (EDT)
+ 23 Sep 2026 17:55:32 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: graysongordon-gl <graysongordon1@gmail.com>,  ps@pks.im,
-  git@vger.kernel.org,  peff@peff.net,  avarab@gmail.com
-Subject: Re: [PATCH v7] http: add http.sslVerifyStatus to check stapled OCSP
- responses
-In-Reply-To: <arQ/nOH+o3XwQFD/@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
- =?utf-8?Q?=22's?= message of "Wed,
-	23 Sep 2026 23:07:40 +0200")
-References: <xmqqecfez7ie.fsf@gitster.g>
-	<20260915162348.97792-1-ggordon@gitlab.com>
-	<arQ/nOH+o3XwQFD/@szeder.dev>
-Date: Wed, 23 Sep 2026 14:47:18 -0700
-Message-ID: <xmqqwlsb63o9.fsf@gitster.g>
+To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Phil Hord <phil.hord@gmail.com>,  Elijah Newren
+ <newren@gmail.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>,  "D . Ben
+ Knoble" <ben.knoble@gmail.com>
+Subject: Re: [PATCH v5 0/3] refs: report old OIDs for batched deletions
+In-Reply-To: <cover.1790196627.git.maciej.ciemborowicz@gmail.com> (Maciej
+	Ciemborowicz's message of "Wed, 23 Sep 2026 23:04:39 +0200")
+References: <cover.1790113781.git.maciej.ciemborowicz@gmail.com>
+	<cover.1790196627.git.maciej.ciemborowicz@gmail.com>
+Date: Wed, 23 Sep 2026 14:55:31 -0700
+Message-ID: <xmqqse2z63ak.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,61 +87,23 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com> writes:
 
-> On Tue, Sep 15, 2026 at 12:23:48PM -0400, graysongordon-gl wrote:
->> From: Grayson Gordon <graysongordon1@gmail.com>
->> 
->> git never sets CURLOPT_SSL_VERIFYSTATUS, so libcurl never requests the
->> OCSP "Certificate Status Request" extension and any stapled response a
->> server sends is ignored, including responses that explicitly state the
->> certificate has been revoked.
-> ...
-> This patch was merged to 'next' the other day, and the last test in
-> the new t5585 fails on my system.
-
-Sorry about a premature merge.  Since we are not in a hurry to take
-this topic in (or no new feature topic in general), let me revert it
-out of 'next' and give it a clean slate to try again.
-
-> ...
-> I added that 'cat err' to see the error message.  Turns out that 'git
-> ls-remote' can't even find the repository on the remote, but the
-> prereq is still considered fulfilled.  Is that right?
-> ...
-> This time the error message talks about missing OCSP response, but the
-> prereq is still considered fulfilled.  Again: is that right?!
+> Changes since v4:
 >
-> Instead of the lack of a certain string in the error message, is
-> there something positive that we can test instead?
-
-Oh, that is a very constructive and useful suggestion.  Greatly
-appreciated.
-
-> So this test case fails for me with the following trace output:
->
->   expecting success of 5585.5 'revoked certificate is accepted without http.sslVerifyStatus': 
->   	with_ssl_verification git ls-remote "$HTTPD_URL/smart/repo.git" >actual &&
->   	test_line_count -gt 0 actual
->   
->   + with_ssl_verification git ls-remote https://127.0.0.1:5585/smart/repo.git
->   + sane_unset GIT_SSL_NO_VERIFY
->   + unset GIT_SSL_NO_VERIFY
->   + return 0
->   + GIT_SSL_CAINFO=/home/szeder/src/git/t/trash directory.t5585-http-ssl-ocsp/httpd/ca.pem git ls-remote https://127.0.0.1:5585/smart/repo.git
->   fatal: unable to access 'https://127.0.0.1:5585/smart/repo.git/': server certificate verification failed. CAfile: /home/szeder/src/git/t/trash directory.t5585-http-ssl-ocsp/httpd/ca.pem CRLfile: none
->   error: last command exited with $?=128
->   not ok 5 - revoked certificate is accepted without http.sslVerifyStatus
->   #	
->   #		with_ssl_verification git ls-remote "$HTTPD_URL/smart/repo.git" >actual &&
->   #		test_line_count -gt 0 actual
->   #	
->  
-> libcurl is 7.81.0, apache is 2.4.52 (whatever is shipped in this
-> slowly aging LTS...)
+>  * Update all refs_delete_refs() call sites in 1/3 for the new signature.
+>  * Verify that 1/3, 1/3--2/3, and the complete series each build with
+>    DEVELOPER=1.
 
 Thanks.
+
+In the past few weeks, I've been trying a new element in my workflow
+to try compiling each and every step of a new round of patches (I
+cannot afford cycles to run full test suite on them, which would
+slow me down too much), after getting scolded by a long-time
+contributor for queuing a topic whose end state built OK but
+intermediate states did not compile.  This time three patches all
+built OK.
 
