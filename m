@@ -1,100 +1,204 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E072438330A
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 12:57:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715964E379B
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 12:59:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790168280; cv=none; b=eDg583CsC6rg3aJ8n8d1DlcXjUkEcID5XwjdOv552cylKYwddWRhJCTMnoVGDLE+93VgTMyf+q1dwJkYXIZtWNOBdrEeupF9+yGZ76c1GGSV1AU34j6VPxATXK9PhwrtAr89aMCBODW9NcYh++reJxBE7PVFRZFJGftLpk3pWSc=
+	t=1790168357; cv=none; b=DnVv997m+LVqVTNAd/GAjs5DNTS/6SyQ6fzqa7NA3rasCVcaTJpofpXWdAHXRGGuAFzpz81TRpNl1HS7ogLW+tVOZPa6SmOMHspMb9VbffEvLl17+GXGuSq9lHvuwKxuWHtTfqW/Q2CiQWc3s1Pe1PtrF23+n7so7KK/rOaQEdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790168280; c=relaxed/simple;
-	bh=q4MlR3X2ZfRS4orPILlccSc3v92UL0dSqzcdhBEtZEs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J+yt5Lg++VkkQNVVlzrKjwpxIXF7OHZzXQuZlrlQVibCqf8tI0f/jUg1vcDK66k0c0Vl1IQ7DwuZBbybzILugeo8rrHFVUBA78ytpIUJBcmVTc9j8k3kIqXl0qIZ+yA1LpRnauKV3rK0OySpkK1em/AvMD5ixS+JMUXhiGJGuT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LUNL2FN6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xo+GlIwU; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1790168357; c=relaxed/simple;
+	bh=kI3ScaxlVjE/h6slE3vXwsXzUtfCkCC1pHRnFecQIyc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=bjGLbawXJAXAVDkSeGq561TZV/M5miLVlVr+KuW1XkzwYO+jMXLCmjc9cX7nyfoVnNBwZfVcIrTatHFuR+CcK1pxgM9zKlc8pQdPzs5FLke98txJlTVsoWPoFwcMAT8OgCeM9DolIndRDtH7yB9lAXLYcmAyeeuky+d6krjT5Bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bfGiWYsA; arc=none smtp.client-ip=74.125.224.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LUNL2FN6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xo+GlIwU"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9EBCB1D0007C;
-	Wed, 23 Sep 2026 08:57:55 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 23 Sep 2026 08:57:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790168275; x=1790254675; bh=fRo56A/Vzj
-	AMoQeQF7KBlcAlh2NVHzFD5GEnjgSuKug=; b=LUNL2FN69tvxW811j1NnzNDjgC
-	oOdU6S4jDmUgYVjoi2MuNWQ6pby58fN1csCw0mQ5Y7Mo0bvI1bw65Wrnv82zWEt0
-	Qsh40BMjLbI/c7AZwVz+Zybd+j0DQTWcJ1CMwmlB/oTYZMDWI+rJGiWk2JvYsf7h
-	zgnCllvP+DWPX+L6iU6eyvEax7g+/+VEtQjkDEycoK+rpF8EY73+2/Wf44xnPvl0
-	QgRQvhIywkJ+ZpeH+wEbbvV3G9MdposJz5mswQrk1o8n7WdeTFM6wkuhfYvDjn1O
-	+bv8lX5d3Gadf3CB/gO7q82gLpG6YGOKbeAR4XFq9t0nxUk7qbWsRCclmpVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790168275; x=1790254675; bh=fRo56A/VzjAMoQeQF7KBlcAlh2NVHzFD5GE
-	njgSuKug=; b=Xo+GlIwUZuSJAa/B4J/MRK9Zt+7biBAekd+3HKa1KgOIf37ffkd
-	+XYmLzPqQ3QN17wkVhCf2MwejupZHsUGMo4oiLddrqMZBU7H4dcKm33uZhsjRCVh
-	JPmXGxLj32KYhf/lCGJ07KJPWmeqsqmkFSCK+/G1dHOudpBVnaoZAnVNBE+pZHhK
-	4tbJMEqysj+CAoYcS5aHj+AQzhbIrJpbQ4FqNIlEVN+YheCXoAUzoSG9Wz/KRltk
-	rV+oc1Epc3IrPvxTUEpe+RDaG2mRlcb3T+VxpZlrDJKBV4hE0BvVhnVEuRW7pRfd
-	moMUYI+Yh9G7tcGLRMi8t+KKi63IO909F1Q==
-X-ME-Sender: <xms:08yzaiL58Kzn3IFysNJ--lskmgSc-ZrhzT95NVVv5S3ILn0sHHboQA>
-    <xme:08yzahmXmPsrXtnLZ-LKowhduvjV3D2uwXYqWWY3d9jjSCVx6yRwac7vTtDHBPcsg
-    dpH7cLtA23u4txHypz3Em8sQ-QmqjxTb-Qc57JYZwdvYFdqWTfZ_Yc>
-X-ME-Received: <xmr:08yzagHUQmXvpYa2j0MTd3wxXdnjR9O1E9m4cbiax0_I_PR64E3j3Q>
-X-ME-Proxy-Cause: dmFkZTGncDsSIj9dUBmDJdNHkfWRL9WtZN7vKHbexiaEY9kDtOWMS1CzsoCzFeC+UjiMVA
-    LksUT7pzZjDsbltQoiDnb/V+rJzonWB19vBkgedO0mFgvl+PYJzW4wcLhoicHITDAqOCRv
-    GzeUDu9o1A4Zx3mRz/tWpxV2mbIIdDkLpYdwH1J3U5F1gCuUKcsbOu2t8+CqX65LVBz1kQ
-    wxYnEXX345gOBG5gmrzDL/3T5ouG+2L4yPAs9GkwVuecRLELiGlU1yqHIWk1MVpLyERwgI
-    56eJzPgIaoJt8ywoGu1f40FR9cS4tTIosqZsZw85T2YIdtjcSw2K+cH5X/xXDeXmOTKcRo
-    ZXMdR9TgkMEC19Lp4dfuc+1jL/2Z0YDtA8XHCaBfqpDDsUWdxlN8AXiMtJgOCukgBYN9V/
-    NBiMrurwIQjdWQ8CFbrv0vjx8BEizvXrlcDBPNDEd9iHGZMyXxJxRbatvp36LsvmNPRFUv
-    Rxkob6VMRAdIrWBHds9q0Cf7w755uRE6KWs6BMxiX646w9+xTj0CkkhwvzEA6jkAT8zKeW
-    LkbIFMPO2/LxwScCe5m15HdIXkcLNMH/VqsA2SSqhwIYeyjpQXAa8BUjc+KVNjsX62tg/7
-    JFoa1Ev5knml7XhxaFofZCLN8Zgpkr458p+1Rk6YDEBsCV9DqzDtxOqjdbbg
-X-ME-Proxy: <xmx:08yzahGuo18nOEwwT0ckapcJwt2ZwhxkmiiIaCSciPok7ji9k9uWRg>
-    <xmx:08yzatPeIWdQehMFzKvyFh8bktwyiEg4lKcvetewXuuFIALrsphcSA>
-    <xmx:08yzagHzssaLXWdkpZVCc5Gv-vXosILNA61uaPad8wsTx3FHzKibRg>
-    <xmx:08yzakNnQ7Fvk-kR5W1aETNVwQj87wg-nAEJ5sTLDNbwM9V5JPSMpA>
-    <xmx:08yzavB4apWe8GssAh3mGV8dGz-dfKyY7FSdGeAfEfnQK-MJ5CX8BL-k>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Sep 2026 08:57:54 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d05d71a7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 23 Sep 2026 12:57:53 +0000 (UTC)
-Date: Wed, 23 Sep 2026 14:57:40 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Yoichi Nakayama <yoichi.nakayama@gmail.com>
-Subject: Re: [PATCH v2] completion: complete 'git worktree repair'
-Message-ID: <arPMLIi7FL52CVJk@pks.im>
-References: <pull.2218.git.1789171955370.gitgitgadget@gmail.com>
- <pull.2218.v2.git.1789414536838.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bfGiWYsA"
+Received: by mail-yx2-f12.google.com with SMTP id 956f58d0204a3-66fb93aee5eso884001d50.1
+        for <git@vger.kernel.org>; Wed, 23 Sep 2026 05:59:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790168354; x=1790773154; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=kiivDX+mOq6N21iBPmaAL6ab8LO7HNHQ9Z298kURAUw=;
+        b=bfGiWYsAajDPAiW9CcUyL1JjshZnAqYHTzTK8qCnVoAMzsICdRTzJ18zqs/yGffiLk
+         7mPrs1nh5IcMl4bj13RiGq+9/EgNMCJ8ZUIhXsAvLe/DRqsacEK83A4ZfbVZxeG3U0AR
+         BlW2kDFj9G7g58rmg2mV7twHbAKMSb3njM7nMzphQJJcVVHIU12r1cgW+8A0QnBbEf23
+         tfPjrN/okcFmh4Aa09puAyhrHknEtDHojnvodN55zcAiUJmzlB7gcNXy7DkH8Ylr0Hia
+         1C70CXG7gBavc/F6YTuW0lOr5ZL7agISiqGeI1iZdjQgFPa3xaD2L9eiP7tmyphAhKax
+         JGvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790168354; x=1790773154;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kiivDX+mOq6N21iBPmaAL6ab8LO7HNHQ9Z298kURAUw=;
+        b=x0TNLubTYIo5FNRQZLrSOCc49pn38zVxRHzU2br9zRN6Ywk4AVjvzD3ui/LI+eJOZo
+         pvwGSqWPlKp985cnRLNwJwhZ1u9Bej+tXj8U68bYJescz5bjIlWSlReR+l6+7iWXI1vl
+         U5CwovdkPUMBFtOOyOS/AtzMn5lW+fptfW1BAEM9mTa1nwvNzPZCM/IZRAL8/pq7lFIM
+         jpYty0lOGrKWin2bc+WhJzE285qBYyb9udh5iI7hNGUKcXo2Y5/YwJiaoXwTdyIyXV/P
+         J4pSChgJwZs4nnCY1YMvAme+wYMPmHR8MvTGuBSfxQh6dW93DazjjrZsZ7y3KM80+3te
+         mMTw==
+X-Gm-Message-State: AFuF++kmobjn8nPxRPsCSwIwRsXb4UvPkckb6+eafIvArG4aPSufB8uZ
+	wx0wlLtHxlXL7OIMRFIx0J40r+l4AfcFfVI5p5wEvX2P4STm/D5Q7V9XyF69Cyar
+X-Gm-Gg: AYBFou24c2d6wzP1YDNMmMMPD8uOtqATWdebvBVQV3zdOnZ3GkW7oIwIYqyWvsU5cw4
+	HmKCOWvyCvp9VQ1Mddt5sXECQ/T3kdH6YWKXuCn8WVKBk0CBrZ+0ORWDi5NNveZpr/bFP87x8Ng
+	YUMI99pAEmBRQu8JjKvsALVwk6Q92ycEvAHpZi3pZVjmhddKUlpjfHa7BZD35t3aiqZSih1VGAA
+	kAgyyOurSvKy3F07v6Npfc1Vw/fSPYweedc6IY0lERMTKla9dCyo9ZSn+TPJa7KHBq3f1nPkUuk
+	CyM+Aqm4D3yH0e9HkRd42eDFTmYMk3rxmD6EbsQieJGndFRuvRNdUosy2p+D278sx6UlyVM2pH3
+	PRYgrCqCqFYIHJqeo4U022j576lXLg7aKMb2szfTl+ar/yYHUsvqtuMlbcXEJPgY+rOFD4ZtYH3
+	UHb/Yoz5N0pl9ywk3NAvrt8J5RsQ3V9AYhyhqLX3/e76yG/AOVAl7B/n65UtH7t1KNIo8maCwyp
+	7FfqeBhYwtZgSqu8NQgRNtrAvlY43MiCaiG9u+zGTZes050un2Zhp2KmXaUV0tZxfcqYImVSPSD
+	uuvXPculZ2+7ApNWxKx+qw==
+X-Received: by 2002:a05:690e:4142:b0:671:20d6:e1e6 with SMTP id 956f58d0204a3-672d585b4d9mr1206855d50.40.1790168354217;
+        Wed, 23 Sep 2026 05:59:14 -0700 (PDT)
+Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9092:700::6])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-672d81ce7dcsm833063d50.18.2026.09.23.05.59.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Sep 2026 05:59:13 -0700 (PDT)
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Eli Barzilay <eli@barzilay.org>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2 0/4] stash: clean up index-mode test merge
+Date: Wed, 23 Sep 2026 08:58:03 -0400
+Message-ID: <cover.1790168285.git.ben.knoble@gmail.com>
+X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7.dirty
+In-Reply-To: <cover.1789853192.git.ben.knoble@gmail.com>
+References: <cover.1789853192.git.ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2218.v2.git.1789414536838.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 14, 2026 at 07:35:36PM +0000, Yoichi NAKAYAMA via GitGitGadget wrote:
-> From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-> 
-> The completion scripts do not complete the "repair" subcommand for
-> git-worktree(1). Add support for it.
-> 
-> Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+Hi all,
 
-Thanks, this looks good to me!
+This small patch series fixes a bug reported by Eli Barzilay in the
+interaction between autostashing, staged index entries, and
+stash.index=true.
 
-Patrick
+The first patch is an incidental cleanup, and the second re-arranges one
+line to make the change easier. The third adds a new test, while the
+fourth holds the interesting bits.
+
+Changes in v2:
+
+• Do give branch labels for the incore merge, although they are never
+  seen (and clarify commit message as a result, also keeping the
+  merge-ort asserts). Phillip was right: without those, we do segfault
+  on conflicts.
+• Use the ui merge options to keep the same diff algorithm.
+• Use merge_finalize instead of clear_merge_options, and reuse the
+  options between merge calls if they are already initialized.
+• Add a new 2/4 to simplify merge options initialization.
+• Add a new 3/4 with a test case for conflicted index merges.
+
+v1: <cover.1789853192.git.ben.knoble@gmail.com>
+
+[1/4] builtin/stash: remove unused header
+[2/4] stash: prepare merge options earlier
+[3/4] t: test failed "stash apply --index"
+[4/4] builtin/stash: merge index in-core
+
+ builtin/stash.c  | 83 +++++++++++-------------------------------------
+ t/t3903-stash.sh | 18 +++++++++++
+ t/t7600-merge.sh |  9 ++++++
+ 3 files changed, 45 insertions(+), 65 deletions(-)
+
+Diff-intervalle contre v1 :
+1:  b6798c8a25 = 1:  b6798c8a25 builtin/stash: remove unused header
+-:  ---------- > 2:  1e2343c7fc stash: prepare merge options earlier
+-:  ---------- > 3:  5bd4b78cac t: test failed "stash apply --index"
+2:  782fe91251 ! 4:  e49936ee12 builtin/stash: merge index in-core
+    @@ Commit message
+     
+         Fortunately, we can achieve 2 goals at once: avoid round-tripping to the
+         file-system (and invoking expensive subprocesses) by performing the
+    -    merge in-core. Since the results are never seen, we don't need to set
+    -    the usual branch and ancestor labels.
+    +    merge in-core. If there are conflicts, we discard the resulting tree, so
+    +    we don't see the usual branch and ancestor labels, but the merge
+    +    subroutines insist on their presence, so use something simple.
+     
+         We *could* swap just the git-reset(1) subprocess with our internal
+         reset_tree() and refresh_index(), which would fix the bug. We'd much
+    @@ Commit message
+         Reported-by: Eli Barzilay <eli@barzilay.org>
+         Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+     
+    -
+    - ## Notes (benknoble/commits) ##
+    -    We *could* leave the asserts in, but then we somewhat uselessly set the
+    -    conflict labels, which I did in the original patch [1]. Phillip
+    -    suggested we don't need them, and I otherwise agree.
+    -
+    -    [1]: https://lore.kernel.org/git/CALnO6CDfwscMWZktBu3FtXOQVbcBRo76nqK07kMnrzC5cPyZiQ@mail.gmail.com/
+    -
+    -    In all the versions of 231e2dd49d (merge-ort: add some high-level
+    -    algorithm structure, 2020-12-13) I could find on the mailing list, the
+    -    "assert(opt->ancestor)" is present without explanation or comment, so
+    -    I'm not in a good place to assess the impact of removing it and its
+    -    compatriots.
+    -
+    -    Cc: Elijah Newren <newren@gmail.com>
+    -
+      ## builtin/stash.c ##
+     @@ builtin/stash.c: static int create_index_from_tree(const struct object_id *tree_id,
+      	return ret;
+    @@ builtin/stash.c: static enum stash_apply_result do_apply_stash(const char *prefi
+     -				return error(_("could not generate diff %s^!."),
+     -					     oid_to_hex(&info->w_commit));
+     -			}
+    -+			init_basic_merge_options(&o, the_repository);
+    ++			o.branch1 = "Upstream index";
+    ++			o.branch2 = "Stashed index changes";
+    ++			o.ancestor = "Stash base";
+      
+     -			ret = apply_cached(&out);
+     -			strbuf_release(&out);
+    @@ builtin/stash.c: static enum stash_apply_result do_apply_stash(const char *prefi
+     -			discard_index(the_repository->index);
+     -			repo_read_index(the_repository);
+     +			oidcpy(&index_tree, &result.tree->object.oid);
+    -+			clear_merge_options(&o);
+    ++			merge_finalize(&o, &result);
+      		}
+      	}
+      
+     
+    - ## merge-ort.c ##
+    -@@ merge-ort.c: static void merge_start(struct merge_options *opt, struct merge_result *result)
+    - 	trace2_region_enter("merge", "sanity checks", opt->repo);
+    - 	assert(opt->repo);
+    - 
+    --	assert(opt->branch1 && opt->branch2);
+    --
+    - 	assert(opt->detect_directory_renames >= MERGE_DIRECTORY_RENAMES_NONE &&
+    - 	       opt->detect_directory_renames <= MERGE_DIRECTORY_RENAMES_TRUE);
+    - 	assert(opt->rename_limit >= -1);
+    -@@ merge-ort.c: void merge_incore_nonrecursive(struct merge_options *opt,
+    - 	trace2_region_enter("merge", "incore_nonrecursive", opt->repo);
+    - 
+    - 	trace2_region_enter("merge", "merge_start", opt->repo);
+    --	assert(opt->ancestor != NULL);
+    - 	merge_check_renames_reusable(opt, result, merge_base, side1, side2);
+    - 	merge_start(opt, result);
+    - 	/*
+    -
+      ## t/t7600-merge.sh ##
+     @@ t/t7600-merge.sh: verify_no_mergehead () {
+      	test_cmp result.1-5 file
+
+base-commit: 339ab2a8f14c0c304ae2f28df1a859f3d2cf610c
+-- 
+2.56.0.rc1.315.gc6ed9934b7.dirty
+
