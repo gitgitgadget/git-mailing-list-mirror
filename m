@@ -1,82 +1,82 @@
-Received: from mail-dl2-f43.google.com (mail-dl2-f43.google.com [74.125.229.171])
+Received: from mail-dy2-f43.google.com (mail-dy2-f43.google.com [74.125.229.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31E63F0A85
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 08:10:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B51F331EB7
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 08:11:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790151052; cv=pass; b=Bm6XoxMia2bKxL+Y35kYYpKGUuCHKfyZea7aZWyUDWv3Cg/WvWiHvhS4W/wdgqw6MLZJEiARQJM3GD4HboCMQ5uOQU/HeSfIBH8uGJfq4rQTJK2r8icuHysDuQDjX2oSlHNu3XZSVkuBffBdC+B5npCyXYQ/j5WzktWgd9bfi1U=
+	t=1790151106; cv=pass; b=vD3LfdymEhkIszJDNin6f5rAMy8LCcelggw+f/lAK1E/Q3K26kgML2zSMUlrmPv7dsFna6a0bCrnxMnqr7tPQgh4SItKvI2gp+x0SRndK2xDlKqsSrJwsxRTPvIc1v31heVboe4ZuDxoBFb5T5oHNcmtOAEgjZ+g8bPIx/8mvcw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790151052; c=relaxed/simple;
-	bh=xh82fcqUmGMsKD1HZVnGPSzyfhihpBI/lAJlGcOEJkE=;
+	s=arc-20240116; t=1790151106; c=relaxed/simple;
+	bh=G0rCUMbFZa7sTaNQhmS5JXL9eHdh1L+5nWw3OCWnKbM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gMYqq4ehKkQpzMyNzTu+lFs3gv98dGgfNR+xK1Kj67AglOwc3s2JVifN5BjqZGSPFJ0jgsYcDawfUabz6DHiVvU4+lu4NP7VikL06yJjUwfuM2/fEYtu/6+whbpE6CqQkCTTDO78Ah9mWrzOZQsGUBA+ze0LtmI3lL6Qh1aEbIQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y+SGqITt; arc=pass smtp.client-ip=74.125.229.171
+	 To:Cc:Content-Type; b=juZJb7GiEynsbNEmhA5I2x3Z462NZtdiLXOGQKDuWhGKd4IbAJbuBu9j1lNIyRxw/0E7l73W71jeDvO/tjgnWsFOfd8/WGcYBcokb3ahMYyUrq6NA5Pik31KdCIp1z+qklcaThlUxeJlIWr7sAbW7nE4ZNPU1uHE/VOylBRI6fc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ee3/jYcR; arc=pass smtp.client-ip=74.125.229.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y+SGqITt"
-Received: by mail-dl2-f43.google.com with SMTP id a92af1059eb24-143859f5737so882083c88.2
-        for <git@vger.kernel.org>; Wed, 23 Sep 2026 01:10:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790151049; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ee3/jYcR"
+Received: by mail-dy2-f43.google.com with SMTP id 5a478bee46e88-33e62211987so739368eec.2
+        for <git@vger.kernel.org>; Wed, 23 Sep 2026 01:11:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790151104; cv=none;
         d=google.com; s=arc-20260327;
-        b=Fcdj2f4lmbgvEoCPw3ubWFBLVHcqIRg0SQBQN5H9ouNejOh6V9jyOOd5yG/TDumvqQ
-         abK1/6A8lzPYgt6bdVA+OtHZ542AgK2IGLq3HuT0E7y27z660E5HJANXgP0jW+qOK2B/
-         wcMyc+89SOUaDXyDTWtC2dgZ78MzzoTR0SkXaFArHmxVBx5Ep+sv6l/Mqrxfv7MbAo2P
-         dR16s0BC+ErYOuQK0Lk8ccapTFnILOYiZzjS2f8qxPiR3G5VmOGn68UbCK7J94TAt1Kv
-         SqQ9ZdJ+JMjNLJdiL2TTY3qToSFI6StudGFk8S6exdp3qNmJ71o96IyzD9rRXYxyIs4B
-         WDwg==
+        b=V09pmhru4d0C9pVDGxevyCSlspqJLABW8HKz7VkMwNjmJcmYQu0Cvi4pUgNfWsup3n
+         iJOFyT8OHDgV93+K2wDrl5Pe+JNca4/4b6TtMe2PB6tgIN83HavbivuZJRKsiJ5NmaW3
+         VDmxx0mEY4eHeLLBbeQrKS7tvEetFQnR4adW2VDmmlz/6dsmSibqwS9vjYRfKWI4VNes
+         CdHMxOcaRl2stjDz/sSyG81N+sjji4ZGIR70c0HcVs+R9vwHSmvIjLFOHIhWnAHm4E2U
+         AhF81iFBX0hR+nkFQ4425VsQwnkC/sPRKk2YJWSK9HXqSbtaJNo4Vo3+eKJz2TgPzAvd
+         L4iQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=SnJpNyHNUB6WDNYpt2EEOmpaBHoAcEgMo+mVNLhF+GI=;
+        bh=FcxapiMiwaLysIIp3BI4hNzqIVq6vT1dwCHjv2BP6GY=;
         fh=xgj+vSGq/gGUery/oIClRsu4cMrai2x0EL1nksSCsY4=;
-        b=pWVvL5nJHf7Nveq5eINe50zNPJ8yMuLn1G4xb8DsqTtnh/gvdtMlB3pc9o8EIZyNKD
-         uFN5oLAfxYK6AQmaPdl3aXaj91aHHFfl4NjROosZoPqN7Egii3YNI8dPf047P39blesE
-         IrT36/78k664lp1wyAtW645M6sviVqkMbV4eavHyZkRMkywIsgALlZvx4u+YLqwr+TjK
-         6ehHATkqebCq4V+8WK3U6YTUOurhRJKq/gcrELrZPvR6X4DK7l8i8iUd2lkt9YuTzKra
-         hwnDlDgPU9BXE6tosAITFy7dFyLiStWeXq7Uw58M79uDcpLAInmYwEpaFxsapFPU+CjA
-         E0uA==;
+        b=riCkXY6+ZcsgNHZFVRa1Kz8MnGB7EX60u5Md1EFjzblmPilTkdU6HTTmaS4hbPiPug
+         we82OlwDP1xR5k4xf0j0lWcwNruZ8+6eGTzWktKgDC3Lqe0mnCJx3fh2s7KO/fdZJ9uw
+         vAiI/nevZm73wXapt1vKLYKD8lRR4BxVYL7cVP4TOFkN6Io82RCPQInvDEOKL5DsuzxT
+         FFBm3dJAAMkE/KmXO+nbSUAJ9XxSHIhLHNThYyE2ByOOxfMpJtUrwg0BjuRlGEhQIUZb
+         sb/9BCy8qwDgDOaYwna3hOk+AvwrqUctX9VzmHEW7xHCtpww8B5h60hejixFhpWv70IO
+         Oc9Q==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790151049; x=1790755849; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790151104; x=1790755904; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=SnJpNyHNUB6WDNYpt2EEOmpaBHoAcEgMo+mVNLhF+GI=;
-        b=Y+SGqITtV+swlWpVcyCmnzY5Mql5TcTC9PBE/WE+oglbFTiOFUKVcwTt4xIqORiodZ
-         4rRTOALXy44xfaLnBKOcGCU/EORb+3zKXG1kdMD0effEOimIo1ETixpDJtzb6uZBOAyP
-         EeTwx37Omwd+EU+Pbhwd7fV9NrrP1P8TtB6QxU1ydlI606m7rkQuqI8VpmEv1D2AJY/4
-         LzmxfB9NiFn636fd/eRiS3LaYSZ+3jU2Pg6ZboL07p0L0Ue/tzn6XWzcErNVIUcEGw+O
-         E2Cyrp5/rK7SBDkBN8O4/dlMmIzZAHwVtfDO7dL+N9zOAGaNnOrZ9rS1Tz+VZ6sOvytF
-         bQOA==
+        bh=FcxapiMiwaLysIIp3BI4hNzqIVq6vT1dwCHjv2BP6GY=;
+        b=ee3/jYcRX+zxKb7PBKq5c7U3tr98A/uhj24Lw+5quqr7Iyg6d9Rj2Jex7VAac7mdpH
+         xqSfLBQz34aZRnk9LCSxk/J4+THJAyFVfKjxfhmpMjMGJ83sunDA0pIegq39i6S+Gj5D
+         lRYyNWLXqlMxOY0JlvGTkdDMZb1L49o2bWuZPz/WpOZBYpzRowDCLZ36F+vDI4T6A/Ix
+         dol7bDH2cVMkHEune1IbYAjHIDoGVChF6YeF33CdDUZqDIxMcCEoYmeMRWxCdyb0ENzF
+         bNEERvNbUm9p+AV2601qaHXHmdXGb11FgyfZCjEdjyvMdHwvfIcnocDGfJJaoNsH8dDJ
+         v72g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790151049; x=1790755849;
+        d=1e100.net; s=20260707; t=1790151104; x=1790755904;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=SnJpNyHNUB6WDNYpt2EEOmpaBHoAcEgMo+mVNLhF+GI=;
-        b=UjOAfUSe/pyIMI4Us0189vnucktX1SGnrYi+yiZsB8UFDjnB+DXKKx6lfIzXGH1TTr
-         9hxQsVtq5J36lC7ijO/rc8EPQ/iGPG9FJ5ZN2O1iTyxOU/jBnegZZpN6i1+YzZK9g5Ha
-         2iAfr1JOqRahsavKPV9X0MVmWqpLSoU/VkD7kNSNSMj/+6RkzcS1PiUZ7uHGE+E96XIr
-         diUWQQtqP82YRGVgNQxHvhOeHZUTPswtAt6J9ppNUiYglkfHmArnp+Z7rHBJDGOBJreN
-         8yBWunn373Vlx1G5E53j+i2I4VsBjqXkXrk3zKE2p2EBLbOEoQkFg97MtzptsBo1ntg8
-         IHfQ==
-X-Gm-Message-State: AFuF++mBLPGPgmEIoB8EB5RDUNUpKCH52dUqobEbmcfHOWEwJ0VvuU2i
-	Iei+qbrSt8HdCjlom2FBRDmvwXBxnLJmX80gds1cKiCcnLusG+RZcE94day7IH2x4vPcXldCxSI
-	MnloNUWBznM7p5EzzPUdqBahLJuNnx2g=
-X-Gm-Gg: AYBFou1WJj6kaC+OYDKN5nlPUy/EmmzMW1ch9OsLJUEy2zQjSnkovFMaYbc50w071Qx
-	SP1x9/22LvcINQI92NOOM32bXsECD8sshGHIuFnABJ8Sa00A0PdJNbX675QAx1fFkB459cGLFJ/
-	x2OgwvEtUJtI1iP2uzTYkxtcqQRE40DH+xIfjgfU+VtnhSPEbXFXrpAWC+2HABeuyFsjaBHFZpt
-	Jaf1wTBWkpQbY56pwa/2aUnTceusO9IdKLpgizmKJ05yK3oYLtIDzCUY5BEi0VBQz9pCO0BApsd
-	JXGcu3k6Etbpc0idLbECcC0rK77cOpJE78nW9tJdRszGD2Td/57RDrxDLYvwidDyzWkp3K0UVLi
-	esfOQpiCajizqB8uW4GISZHYUQSxd43UOueV6Q/yXUnoExpHUd6v31a7Gg4tCG1tmtvkvwajkSV
-	s9riRi8xQpBXflIRloA+KAASKiYoBaz9Ub3Jt5m48=
-X-Received: by 2002:a05:701b:42d3:20b0:144:c12b:dfc7 with SMTP id
- a92af1059eb24-144f91b1609mr2164436c88.45.1790151049268; Wed, 23 Sep 2026
- 01:10:49 -0700 (PDT)
+        bh=FcxapiMiwaLysIIp3BI4hNzqIVq6vT1dwCHjv2BP6GY=;
+        b=mHE2aWpFDFEcIo2Af1CBko3LZgRCAtsuNRV6NDRq5ggXdX7CtNYts/iwW7Le03U34k
+         AXWU6slbLKgHNGC8LdzqVtbBTKXMO97oy1mXt8XCl0KiNnaNY3yBW4F+Xlh8Qq2XP8sL
+         /3PWYw+hrcuomFW/fpTuMvLO0kvP8PSQuPglPiVoOORO8Oh6pP2b5ZOZqnyDPbF07NIh
+         8/stWaw9icja0kgBr7BeRXGJjDe7CPXoJgOFu+y7KdtLvvUJV1x5yUAW5PDeYhPkU0kj
+         Z8vPgv3jABCz+6lBKlqqyS6xtqsmo8CmlQYjdXdbNKSHTO9mH9Z6n0yDwaHJ6K7ItISo
+         xLxw==
+X-Gm-Message-State: AFuF++n4SIaSDKDsNRuzprXDofZ9dwRcR50Jrgz1PQlCH8K+TLE1VmZ6
+	z08BR+KY7SCCmAJSgaYjHwsx0yEtq0pldSBCUbU/TRStKn3MKAOOdGq5mgp/25DhjiAsWMWH0dl
+	c0GFisqvsNqtYmh15TXn9GnEWx0AFKsE=
+X-Gm-Gg: AYBFou1njLvV9OQ1EjZL5f/Kepb/83Ra2JnK67AYfQ8L8v/2envCHCRzL7jbjAY1JU6
+	IucRlpRuq/1qouia9LjItpBAUNoTaDt/6/3zvPGbRAg7IDKDvjZ7H56I7HzTKxn3flh597Ygkoi
+	SY9KsRYJWPzvAGV2vjETOQuwx0gOIyY2QU6pGgLwaNC4r7q5E2MA4B32iHXmoHewpSroF3FxZ6n
+	/G2veMDf6Y+xBXhjv2qcfZkT/poem5FhoTdE15cG6a9Tv2/BmXPmW7AsvdvFsCvsU1p6GZGkuud
+	UG5K78lG+/sIj+HqFunMtiskrG5G7SuNF+1hcV2mcfczMky69SG3iYtqpuWDDZfPYrL3cT9WIqO
+	QiDSlELkXtkJ1sVTbTwfF47Fat8PqJAtxrHU3TlaSKyVMb91GagyEK5NgkgZgdxUl7owj/jDnGi
+	Ik/Mef5Q6UHfT6VFHshwsJ7BbAApqM/CwNJ6rLxlY=
+X-Received: by 2002:a05:7022:43:b0:144:e0cd:76ad with SMTP id
+ a92af1059eb24-144f916a44cmr2867416c88.36.1790151104065; Wed, 23 Sep 2026
+ 01:11:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,13 +84,13 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260902161047.476753-1-christian.couder@gmail.com>
- <20260902161047.476753-2-christian.couder@gmail.com> <xmqqy0djfgmt.fsf@gitster.g>
-In-Reply-To: <xmqqy0djfgmt.fsf@gitster.g>
+ <20260902161047.476753-3-christian.couder@gmail.com> <xmqqse3rffr4.fsf@gitster.g>
+In-Reply-To: <xmqqse3rffr4.fsf@gitster.g>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 23 Sep 2026 10:10:37 +0200
-X-Gm-Features: AcwNN1X5Yjlj2JTLFf4-3d1QS1B8iqJxwEtA-RxiY8e5VbrDqtYU7M36eLHw09w
-Message-ID: <CAP8UFD0KP+e4EYVAKW1+6n3og1nzi_+Utr59Vgo8Fz0G=WZ-Qw@mail.gmail.com>
-Subject: Re: [PATCH 1/6] parse-options: add early_scan_options()
+Date: Wed, 23 Sep 2026 10:11:32 +0200
+X-Gm-Features: AclHuK_bZoxtTVNp8tBjxyM5BIEsiuqBxylROMEtCZFjSrTzwrk7SZxBwJWYMek
+Message-ID: <CAP8UFD3sh9Ejfgv7CB33LRU_z3i662_+tjdW7JqwRrzexWX_Ow@mail.gmail.com>
+Subject: Re: [PATCH 2/6] bisect: fix "--" detection when a term name is "--"
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
 	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
@@ -98,133 +98,33 @@ Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@g
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 3, 2026 at 12:11=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+On Thu, Sep 3, 2026 at 12:30=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
 wrote:
 >
 > Christian Couder <christian.couder@gmail.com> writes:
 >
-> > So users must spell these specific options in full. This restriction
-> > could be lifted in the future though, once the scanner is adapted to
-> > accept a command's full option array, as this would give it the
-> > complete context needed for safe abbreviation matching.
+> > `bisect_start()` walks its arguments twice. The second loop actually
+> > parses the options, and it knows that `--term-good`, `--term-old`,
+> > `--term-bad` and `--term-new` take their value as a separate argument,
+> > so it skips that value.
+> >
+> > The first loop, which only looks for the "--" separating revisions from
+> > paths, doesn't know about these options. So when such an option is give=
+n
+> > "--" as its value, that "--" is mistaken for the separator and
+> > `has_double_dash` is wrongly set.
 >
-> It is unfortunate that end-users cannot tell if they are dealing
-> with a system before of after "once the scanner is adapted"
-> happened, so they must be trained to always spell the options in
-> full to make use of the commands that use this feature.  It at least
-> does not regress relative to the ad-hoc early scanners these selected
-> commands have that do not even understand what they are parsing, so
-> it may not be too bad.
+> It may be theoretically true, but I wonder how much practical value
+> it has to correctly parse "--term-good --" as "Ah, the user wants to
+> mark good revisions as '--' instead of 'good' or 'old'"?  Even
+> though "refs/bisect/--" is *not* forbidden, how likely is it for
+> users to do that?
 >
-> Stepping back a bit, the burden on programmers to use this would be
-> to write in a separate notation what options there are in addition
-> to what they feed the real parse_options(), which cuts both ways in
-> the sense that because this does not take parse_options(), commands
-> that do not use parse_options() can still use it, but those that do
-> already use parse_options() need additional work to use eary_scan.
->
-> And then once the scanner is adapted to accept the full option array,
-> the programmers only need to discard the struct early_scan_option[]
-> they wrote and replace it with the struct option[] they already have?
-> Or would the calling convention to the scanner also change when it
-> happens (oother than replacing the pointer to struct early_scan_option[]
-> with another pointer to struct option[])?
+> This is not like "git grep -e --" which does have much more pracical
+> value.
 
-I agree that what was implemented in v1 (to be able to accommodate
-early scans that do not use parse_options()) didn't bring much
-practical value, was a bit complex and required some churn when the
-early scan would have been converted to use parse_options(). So, in
-the v2 I just sent, it addresses only the early scan where
-parse_options() is used, which simplifies a lot of things.
+Right, this patch and the next one have been removed from v2.
 
-> > +static const struct early_scan_option *
-> > +find_early_scan_option(const char *arg,
-> > +                    const struct early_scan_option *options,
-> > +                    const char **value)
->
-> Because you return one single element from the incoming array of
-> options, it is mildly misleading to call the variable/parameter
-> "options" here and everywhere else.  Let's stick to "arrays are
-> named singular, so that option[4] names 4th option" convention.
-
-Right, I have changed the argument to `const struct option *option`.
-
-> > +{
-> > +     if (!skip_prefix(arg, "--", &arg))
-> > +             return NULL;
-> > +
-> > +     for (; options->name; options++) {
-> > +             const char *rest;
-> > +
-> > +             if (!skip_prefix(arg, options->name, &rest))
-> > +                     continue;
->
-> "--option" on the command line, after getting stripped the leading
-> "--", may begin with "option", and that name may be in the option[]
-> table, in which case ...
->
-> > +             if (!*rest) {
-> > +                     *value =3D NULL;
-> > +                     return options;
-> > +             }
->
-> ... we found a hit.  But shouldn't option->takes_value be consulted
-> before we return to signal the caller that the next arg is an option
-> value before we return from here?  It looks a bit uneven as we do
-> that for stuck form "--option=3Dvalue" here.
-
-Yeah, we found that `arg` exactly matches this option whether or not
-it takes a value, but the value is not here.
-
-Whether the next argument has to be skipped is decided by the caller:
-
-  if (parse_options_takes_argument(opt) && !value && i + 1 < argc)
-      value =3D argv[++i];
-
-find_early_scan_option() cannot do that itself, as it has neither
-argv, argc nor the current index.
-
-So signalling to the caller would be redundant, because the caller
-already holds the matched option and can ask directly.
-
-But maybe I should add a comment on the line before `if (!*rest) {`
-saying that skipping a separate value is the caller's job?
-
-> > +             /* Only an option taking a value can be stuck to one. */
-> > +             if (*rest =3D=3D '=3D' && options->takes_value) {
-> > +                     *value =3D rest + 1;
-> > +                     return options;
-> > +             }
->
-> And if the option[] table had "opt", then "--option" on the command
-> line may begin with "--opt" but "ion" is an excess that is not a
-> stuck value, so we do not consider it as a match.  OK.
-
-Now using `takes_value` in the `*rest =3D=3D '=3D'` case wasn't quite right=
-,
-as parse_options_takes_argument() returns 0 for PARSE_OPT_OPTARG and
-PARSE_OPT_LASTARG_DEFAULT, but parse_options() does accept a stuck
-value for both.
-
-So in v2 we use the same condition parse_options() uses:
-
-  /* Only an option that can take a value may have one stuck to it. */
-  if (*rest =3D=3D '=3D' && !(opt->flags & PARSE_OPT_NOARG)) {
-      *value =3D rest + 1;
-      return opt;
-  }
-
-> > +     }
-> > +     return NULL;
-> > +}
->
-> If we are to write a separate function anyway, I wonder how much
-> more work to write a early_scan_option() parser that does take a
-> real "struct option[]" array.  Its elements already know if they
-> take a value or not.  For expediency, it may be OK to start by
-> simplified parser that does not handle unique prefix and other
-> complexities like callback functions of the real parser, but at
-> least it would reduce the burden on the programmers quite a bit if
-> we used the real struct option[] array, I suspect.
-
-This is what v2 does, and I agree that it simplifies things.
+In the future we can still convert bisect_start() to the parse-options
+API, and then use the early-scan API to look for "--" in a bit cleaner
+way.
