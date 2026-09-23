@@ -1,86 +1,84 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D003E1713
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 17:27:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412D13F86E0
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 17:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790184440; cv=none; b=LOJ7Bs0B4YvOZsMf/vW+tQDJG27M//satrssyORAoc9qWQbTn2Yy0tMTLM2V64xWYqkRvOGlxlL1yKlaxB/aVNmBEKVJYUMWI7SgPsOBloRveHvDmM8+yJGlr4rENauefh1PpEl29yWQP+Fzdv1a2NZ0waoms8BOQadAQBf368o=
+	t=1790184803; cv=none; b=SajBkeS9AKSdALpfALEomJyzUuu1Dkes4byNGUzghHCSHJKo92zgYdphyKufc8lAas11ABOHJes8RGyEnvzjiq2mmxGT4IeIWVovJbSM0I3nVf7nwD4TYqSmL/ygsYehQ9iv1vghvDGxsE9QHCuL37fGzAlQqH1cvVN+ohC1HNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790184440; c=relaxed/simple;
-	bh=ZgORGjioATfFAZXPCOaOyZwgmQEpeKDZ7+p1tJWlHi8=;
+	s=arc-20240116; t=1790184803; c=relaxed/simple;
+	bh=88uQEhxVcRoVLGVFrkOoGcdlCbAXLL6QCDWTOodqsoU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IBDo7QTD8u9wUs61lNZkHn3XGiDtOWF4H0H1f3JRKIo4fLUIdHtRjPLOUYEp94QUai9mqNM3bRNDIZI4GNJ+BbSNz0FLeh48LM8suG6kI8fw/i8atgPD7cDc2I+Hsu1UTkNE5XJYcKxgg9PZMwT60YSfSI4G6oDwZ7wH0KHxy+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HV4Z22vA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vl9eoRl0; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=E6TpetycFIEi9viOnAxAg3vYFtmnsYKF4tkIdkujwsQLnNbcwVzfBZytvsbWcCo96e5c+pvapswbJUJFzBhqj2EtfSWKTa/IQvQhfdP7B+LPGGkV5X3xQWvCZLdGBC+L21vTvvYm47u72mfvG1Eb4G5On0Ds2+3tJgPrMo6PVlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X9PTMIGq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=npqDbOGP; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HV4Z22vA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vl9eoRl0"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 51EAB1D0008A;
-	Wed, 23 Sep 2026 13:27:18 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 23 Sep 2026 13:27:18 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X9PTMIGq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="npqDbOGP"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6CE3A7A0124;
+	Wed, 23 Sep 2026 13:33:21 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Wed, 23 Sep 2026 13:33:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790184438; x=1790270838; bh=ZgORGjioAT
-	fFAZXPCOaOyZwgmQEpeKDZ7+p1tJWlHi8=; b=HV4Z22vADdD8PPoCn6pz7ReNaZ
-	CROOjM5TjWStf+ZFv93BqBLSvWX0DGwU3NG0V4cYbgahjCep/gSaN6ysDnt47UTS
-	Uij0ANiLKdi1r+SlYj5bGLFbW236AL7CUB59dr43Mt+Cb6eQPexESLD5cy3Zja44
-	J8yGFXWzpQYvsy9s5eKM3epKjtu12ZFwQEQghepfA2OcL7zO18u8PUvNQ5GLbL7L
-	HPggDjQHK/oDJiGvRmC3e+HjmVbQY1nn9ELIiBocayxK73FAu5vO3HMiVFNYoNkm
-	o5af8IqxmSWmsfGfwlOZ/TP+4r4Y1NSlRsEegi73NXBZ9s/5MiA/VHzXUx6g==
+	:subject:to:to; s=fm3; t=1790184801; x=1790271201; bh=FJV82jYIv1
+	QHbtgrCnIzre1NidZ8kMd6qwHsw0UehNs=; b=X9PTMIGqxOy5ZWsNhZwzEQK0eB
+	YBYRXJwd5KyA8AxJfngWoWRylIKQhSQzffUKcrsWeaWHjJEpTDpp/Cu2c8hWfM/L
+	JqhgwDNJO8DNo/ggNGhH5TJTe70YRC5OwG/4/ICoCDuaz6KKYruzODF+sCA1C2y3
+	t/M7mLovfaBSr1qe7MAqQpzX4z4YdRhkxrrAuthBXM/8TtYox6Gx5Ef1ir6rHUed
+	quWbIRjnoQJeKQPDe7Tb711QobNEy6ZLZA4TsXT0dFkjYgfrO2/Ve/KgCpC6Rwwq
+	Vao+/7BT+ao9mGw/FIdZpfloWEzEEf4j/SY+gsl2h2VA1oAS4a4QVJtqpoEw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790184438; x=1790270838; bh=ZgORGjioATfFAZXPCOaOyZwgmQEpeKDZ7+p
-	1tJWlHi8=; b=Vl9eoRl0umNY/T/Ml6yB5Tpp8nOH0Uke8PjtrqA08o9sgXohUMs
-	gh//nGjkPE10DQDAMZg4XbgmiCBX/zj6Zg5zc59PTXEZFP2X3nDx5ygO7chyUEbN
-	xuwwCKxw/hpNGXlsGVYx/diqyr3J3FbLm8ZCAdbrLp9DqiSchsQbT8xBAfyi42rD
-	vWwyVyxUSp6fYu+2EWPdIzXO7L4dStYEJTpWOJTM6dyjcavpbwctPzQYITQoC57S
-	487Wd0uOHXEk/M1pffqORTh1GewpDXeAIwZLqzmbbls9JS6B1OCIHJ7nS9SCnHHE
-	VUflH1NCnRVAB3Dk359fRlJeR5g9UP0NTrw==
-X-ME-Sender: <xms:9gu0agc3NRYsn0zFPV3nelnYzT5sQhLkMr82KorrIiTNior9PYyPvQ>
-    <xme:9gu0akyYQEOM6r8y4WsU-zI7b63MOFIWMpHpplVyooPKtGmhNh2satHxAOg5H79s7
-    88MEVeE9CkS_uJJ0MjIZmoZ0CUzY5hNI7oBgHb_kCBN1iXhp0KwBKg>
-X-ME-Received: <xmr:9gu0alL1goC1VnKrrKbDbDdfhGnLmx3B8xW2xwVg0ruKSdik8Tb8ppnHRq8OneNHmmN5G_EoS_dbMgYnZPUaQ1yvX4UIIRXxkRSF>
-X-ME-Proxy-Cause: dmFkZTEXg895MhX00wn6vlBU4YmdvyvX/yMba8Xn9MBinzSSVhk0clHzaq/59FBbf3XThD
-    IwUavo3bYWgGBJFd8Nml9usdCPlT/YI4bBLQzWfWhZR4fEm8UY8ouvI8iqhSTqSH0zqetn
-    Ez43/TnKTDWdOvMNkHgp/JmjKElq4RPWsWjA036ZW1OuWoyxsbcqoxaPyuGrX2jOwHEKK1
-    AjILz/aDTefJfMUW3B3A7RCcGJIxcmGNUj0DHeFiEeTeSHSLo5XXvCS0h6sepSwetbCQcv
-    MlyyvdaTdNEZpj3bkDagkKXf8SEytuSHS3jWIF9fdYf3nsUh4YtZpDVcZpcCtS2JLEoTsw
-    wbEV1QG6C0XkDhJ5tty0d+hozS4WTLKxtpRSO/eVYgVJYKHAFfH7Tgt0nD3YpxulXposrM
-    ogHZG5MsB5uMuacJEYXPxOkkhIobXCTyyjkAzWHl4+D+BvkKP9AKw29hYv3R+N/Rcg6MQP
-    MOSM2V1trLA4v6CrvVC9KljqWsET7NhrHu6mEJ/ID1Ll5XPJm5SrjPPZKvoBOqTej88PHu
-    wK8KG+jhiSFWplNve9RRPHNcRF0gMjuaF6iDsCoQZ3FOiYpaaYD4OM5yMGUCOTMmGJ5c2n
-    i2U5pUKMlx/Wt5lG0V67JCrEDBU4HmA3dXNJ1/DbMpZ3vRjHbW0XILv2X3oQ
-X-ME-Proxy: <xmx:9gu0amHVTrGOih_gj3e4actlksFZF2jgFsaXIggsmdRMGWgv-qpmJQ>
-    <xmx:9gu0ah8wMqfiIrbIoBCZRM7eiouazFRqz1W9qMbVCiqSw1wtai8wFw>
-    <xmx:9gu0amIN0JfAxPt3zRClmMagQkh3CLjZTWmSyfHXmfgF_pihGH-dFQ>
-    <xmx:9gu0avu6-qpbVIO_LGYZ9CD6JZ1P1yKRZACXMP0vP67RMRuripnYew>
-    <xmx:9gu0auyznRQilu9dwdWq4g1GV_DLC8UzJzL2ag0nl5onzgTYzFFu_sEr>
+	1790184801; x=1790271201; bh=FJV82jYIv1QHbtgrCnIzre1NidZ8kMd6qwH
+	sw0UehNs=; b=npqDbOGPWlbRhM4a6jiW1EemK6pSZpp2AzwRwynGuo59AlJWohQ
+	gTC8pDt3hdc5rZpUT8STUhihT3O6qdwK9CBeZ5HbZ/02C2m8C1kt00dSPV37IWYL
+	/nHIvBf72PPxMzwo1dKoA/UhQkq4wj4vnf3ZeEKTOkauH4Yb4JPWgi/iGEbMvgSW
+	VlXygSC8/B8P8nwSDNnkLece8cfNSpLgdcrVF62kzQNZJlXQ9zXRxuXbS4H1tAjL
+	lnC/RRxK0DD6vR9+KlAZIU2NPo1QFDXTKU+6iX0daFRGJFOHPcXTW9kLzgmPJyRw
+	9poNKCAU8De9n0+VBKtuQVBuFpobFFPIejA==
+X-ME-Sender: <xms:YQ20akgab2gzD7LCAFXtAZ4TwdNZmGqsnz4MoZD2fPAKsZdgE5El_w>
+    <xme:YQ20aj7Hdw6fVeZgCYlymz7T92oOCaOb3x2LYDUTu3TRmMkdZKfVFJfMroKDr8tHw
+    Kt-6tFkXofJJ31OvTCjF_r-_9hjZeIBSRTH0nA2wlFEQ-W7V9gMb0Q>
+X-ME-Received: <xmr:YQ20akYcPNoaZSJlh6Azglpim3n0FU3wfx3Hf-mPXbNaxkJhP8ab6WlsWKh0G2bk8a84RWMP2e0-23nnqR2WIQ7RavG-p6lyxZmn>
+X-ME-Proxy-Cause: dmFkZTG0i/lrlqjtSHoxh6cBwhcmAKSlK9QbjOMR/Qq5Wcqk1UvTYiPS6zkiVOyZOet6vC
+    +eYRM31PhecAz2sxg1CIyodVxCpd3Ha+QCHhxA6JBoNctFYR2LI/+MbG3NjFLRMfUE/TGz
+    J1n2oe4V7lTLi2rrd1QBgsHXFFwNywfMNJSHe8pLsFksFWRWNXI32MUqieE6xSI+KK+dRY
+    ldH/Wv2jaeopRDbABc5jrQrJ5Ya3jtHn7YigBrjDa22gOK3l1JmfGCR8FtR/rPkPA7quB4
+    tpYfl1vCKPMQNwKnHzy1QGG1CE8XSC7vScMSFfE0bpGY9EttjqgRFUa/a9gOpNJ+uNGdUJ
+    QoFGBtAcIisChfwanNJTdN7UV//jmsjW3wtVId+uIRTYFhgHowmiMiKLBZbsKXknPzMHeY
+    0PS76NvBZ4zcKMNR8I/OEZWjpxA/nuwdfaQtqdIaWYqJ+d43e6kFYo61x+meJ3JfbvevN/
+    ULMG/yorkinM9RChFGf6nUSywnCyu+VOKuhkCVKZogdWkyWL3Pxpmr6R8tQ82Bh8KezE1c
+    xt+jyLvOXxzUsL7zvn/eo+UGlllo8dRTn/HTaEUv/XMk2IldOGFe+zO1DSd/fRBzWuCKhE
+    YGCgWZd+jZFQk3aNA/yMioQout9TN7M25N3RtH38W67Z2gkbdyMg2p2dk3ig
+X-ME-Proxy: <xmx:YQ20ag4YKDe9skuxLJ6RwqPIuwg99j2LiEbANYn9cZcw_HbyGBh3Hg>
+    <xmx:YQ20avCOrAcGsFOjHWFobBcweZfrWahZvSEK9jiIPIW1V_QO1hNLXw>
+    <xmx:YQ20aufVIDY6EURX7JXiIXRhEEdN962pBGZj8g56Tnn33Pkcn46Qbw>
+    <xmx:YQ20amLlVWWSqenf22innzqFbzDxgSFSZSThlL-L3vHv1aaT1_YNpg>
+    <xmx:YQ20asLXge_6AUkoEUUKb-LHgwBL-4anOYP3U4OpnNoKH7nJsd6WhesI>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Sep 2026 13:27:17 -0400 (EDT)
+ 23 Sep 2026 13:33:20 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
- <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 2/6] bisect: fix "--" detection when a term name is "--"
-In-Reply-To: <CAP8UFD3sh9Ejfgv7CB33LRU_z3i662_+tjdW7JqwRrzexWX_Ow@mail.gmail.com>
-	(Christian Couder's message of "Wed, 23 Sep 2026 10:11:32 +0200")
-References: <20260902161047.476753-1-christian.couder@gmail.com>
-	<20260902161047.476753-3-christian.couder@gmail.com>
-	<xmqqse3rffr4.fsf@gitster.g>
-	<CAP8UFD3sh9Ejfgv7CB33LRU_z3i662_+tjdW7JqwRrzexWX_Ow@mail.gmail.com>
-Date: Wed, 23 Sep 2026 10:27:16 -0700
-Message-ID: <xmqqmrt7c1zf.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Elijah Newren
+ <newren@gmail.com>
+Subject: Re: [PATCH REGRESSION] builtin/rebase: allow user to amend
+ committed conflicts again
+In-Reply-To: <24cc4bcc-1d26-46f5-a502-ba673713f4f0@gmail.com> (Phillip Wood's
+	message of "Wed, 23 Sep 2026 15:22:32 +0100")
+References: <20260923-pks-rebase-conflict-bug-v1-1-3d3ccf5022bc@pks.im>
+	<c12d2ac3-5263-4301-aa64-a311a343dd40@gmail.com>
+	<24cc4bcc-1d26-46f5-a502-ba673713f4f0@gmail.com>
+Date: Wed, 23 Sep 2026 10:33:19 -0700
+Message-ID: <xmqqik3vc1pc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,13 +88,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> In the future we can still convert bisect_start() to the parse-options
-> API, and then use the early-scan API to look for "--" in a bit cleaner
-> way.
+> On 23/09/2026 15:02, Phillip Wood wrote:
+>> On 23/09/2026 14:16, Patrick Steinhardt wrote:
+>>> Instead, use the existence of "MERGE_MSG" to figure out whether the user
+>>> has already resolved and committed the conflict. It feels somewhat fishy
+>>> to base our decisions on the existence of that particular file, as it
+>>> really is only a proxy for what we are actually after. 
+>> 
+>> I think that's probably the best we can do. If, after committing a 
+>> conflict resolution from "git rebase", the user runs a merge/cherry- 
+>> pick/revert that has conflicts, then "MERGE_MSG" will also exist, but we 
+>> don't want them to amend that case either so it should be fine.
+>> 
+>> The code changes look good,
+>
+> Let me rephrase that. The code changes look good for "git rebase", but 
+> do we have a similar problem with "cherry-pick", "merge" and "revert"?
+>
+> Thanks
 
-Yeah, when that happens, I can imagine that we can make detection of
-"--" to come for free as a side effect of using parse_options().
-
-Thanks.
+Now, would it be a -rc2 material to just revert the regressing
+change out of the release and restart the effort post release?
