@@ -1,155 +1,215 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A879251DDE3
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 13:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9F251DAEC
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 13:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790169404; cv=none; b=JxU6L3A2B98G6dYcx5X/lfWGovzcfsTpfvlLzh44yahWmQq/NaSJaPb18E4LUCB8jNZBArEKywuDfxoJh3XHdHlavo/6XEvs8Nv+qa0n5cdzaDWDTPqRQ1tPTp571zv0PACuR3WqftF4+hwKOYuxDePHlxd9QmVrka1Xn5m10Gk=
+	t=1790169414; cv=none; b=TmR6YZSFN75kwXjyvafnK/U3B+emvSWtQ+jdxS+DpOt8GL5G715nQazmjaEaFNCQyizPaOdSazEk2egR3lS/eUk31PPZ02TIwY7WOGwyA6YK5krMIpljG7xRjgjJ+XiqrL38jEKGoO4Qt2+o2EhW9rp9BDvBTyHbabK7QY0rkC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790169404; c=relaxed/simple;
-	bh=u4CTYhAeo4rmJZfZwxj6ubPc9LfUwo5Z84NqeX2UYTU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sxU/ej7HoGXh6EZjfsrQD0yQHtQP9FM6yKKlsJGaEoyDQYAxKG4y2vcXyWOA4MVKcqQ1l9mU1ECGKTgRiStD48VDAeT1b8UDVU2tNAA/gqQfz/8wtKxVUOdQeaffWkdAoES+UrPbLE+JBs5L8z07u+Wi6SAK1jDFzcqlrNiPAYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jAL5mmEd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=re6q5DxU; arc=none smtp.client-ip=202.12.124.149
+	s=arc-20240116; t=1790169414; c=relaxed/simple;
+	bh=SzLUcKZ21kw+zeDaHlPhdH9EdTQab8Lp2V3uH/UlJN4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=eySASfN+/8OXjtG3+M5gmSWPznxyhdyuAVexHdB5tV2hDYERQBDJDEFvIfQjHQYXPAIhmHDIUqXr9atqD4JdYHOZn7hSoobL9iG85pUriIXfDuUlmBPNArLh+ASk1kklQ2g6V5izeUf2QRgQKOKVDCSvo+9m0PySN60EztXQ008=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=y6Ouo19u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cTGYpYyl; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jAL5mmEd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="re6q5DxU"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id BF6B91D000B0;
-	Wed, 23 Sep 2026 09:16:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="y6Ouo19u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cTGYpYyl"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id DF64B1D0007C;
+	Wed, 23 Sep 2026 09:16:51 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 23 Sep 2026 09:16:41 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 23 Sep 2026 09:16:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790169401; x=1790255801; bh=9dQ9Mcd/kz
-	uB4gKz8ooUFsKBpZwAv7kYbFbLY74K5CM=; b=jAL5mmEdo9r808BFlztKOhnwMO
-	QaiuOFaxmkzdrkpd5rVSchEJAHmPgshjptMAxuE7OqH15oYtQP1cWmBBTIVXyC03
-	SL5P4u73ewQGss3PDCAbzYsPb0/MIvZEM5D/wDn63lNsAxNozWTiZRH+t1RuNDvh
-	Rb3fg/8mzE6DLrZlW+XxP83f8944/rVOjbpYnSlxe8rcvq4Hw7ubQnwDstAchlza
-	hDhlzD2T7f60bM4Tc3edf5jNkwFXKXCVftxbkkI7gLpkBu5lcznV8hZajb3BGw2k
-	KOdqmXWlVw+PVOD1Qpo7TUDZjQfmaM3N5ja4UzObZedH6lkgLCnoRsI31qlQ==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1790169411; x=1790255811; bh=t6jfWh76UX
+	Vx9ItE7NSk3NWxfftmp031zUID17r08Tg=; b=y6Ouo19uvd9C9mBanlePNUIQR0
+	3tcIPzxkPNYnngis7vuM9cgfxHGYZsAW5xvsWTHMDeOuYmo8CSrQG3cVyA/3wXoU
+	4liTbNgE1vnlkbo1WCpuTu5hBTdnLgIKvbAPY/4k4vvd+tdquvdnWXzDRPnw2i6+
+	b2xTfBfd8rBHjXE9lIpRO3rVKHSqzihLTKPfDTezHmctKQHqlCwNnzmC9rioUslR
+	xXHSukR86NU80Yuk+WzQPHDvcyrHoJNpcjfOL1YUkiAPY4AFTXrs/6t01tD1dbFd
+	RR0Y4ZKfpYU21koQn12bGL2QFnrcfPIzhjSUGz4jrG6CkyVqNBIvE/7x32/g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790169401; x=1790255801; bh=9dQ9Mcd/kzuB4gKz8ooUFsKBpZwAv7kYbFb
-	LY74K5CM=; b=re6q5DxUEELNMU3mWPqK9mAp3cjda2/mt5uVHqE+0/2Tz5njIqF
-	YChOMkAbWJN62ajOFzTtISopovmDMOwE+5wSec7n+1ArwN13jkC0Jz8ycTViwg0p
-	SYQfk/2zL2AOf7dYtwVjwQU0USrSPpAoz8F6f5NytAgxfPhuDg4XuGtmKVaBafLl
-	hyT9bsYHeF+tSz/Hbt8UM/vW8g5ilxO5+dm1vwOLYZTeoDCC5cSGYaOSftxy3cXy
-	28mezro5A+V7wEGutTOqSEOqRmvk5sjgbEAADpy3ZxnuBnu7FjVGh2m4K53srIZj
-	UilOc9nJtg3KU9l1dJUeSApABgIQKcGcnrQ==
-X-ME-Sender: <xms:OdGzauUn4DJSnLYkxpEB1Z88qMW0iNJhlHLEOcgi8Vw6ZoewKMOv4w>
-    <xme:OdGzagla-EL6kXZ9ULyuWe3f231atAHum8NcJb9bMp9Ns2Byil7M1RYXSaPWM7jds
-    FAvOb5Oa-klhs5rSPZH80sR5mIvt_-XM1364A-Ia-AR7sXUwWhCOGg>
-X-ME-Received: <xmr:OdGzagBiN6fukJg36UMuwH9-wRASNn7pMpouYu2GdKY7yyqHTuX_wA>
-X-ME-Proxy-Cause: dmFkZTFa1hixJCekOmaJB6nWWd1s3QrVXiTY8NHwhWqFBzRieTg1OHaRdoWuNDZz2zskZb
-    rfrdf/bNe1nZIKP3Qj7z5lsT3DU/MDgJgg/vumkR3oBFEoycbYKKZjqkcEmkszlFI+6DvO
-    CKT/JAULBavls/72OmW2AGizQUUOYNe9ExeMXGbQCdvEpVnBvBuumuL9kXzQPCeMEDYiMO
-    wHpw3GAqPNPw7IAg4+hW2CORqN4pYwbHyJudTq1zBGxdEK1OwXVoKY1fPVJnQ5+Y4qjoel
-    6Z4UOfphnkoLzQ7oeFz37TpRJSX4xfioiueDKH+S5N8l2WuVlWJ4NNJcRWUZvdAS9629NG
-    AicW17NQJzOI/0yZ4gYypqzCvkpmBWc96OswvqzxMbSk4P42foYJkAJPHfdP+dDVimUDgc
-    ChiOhSHTIjFmGQIViXUKUFGLYkWQnQ7XtTweqCrKwBhmn8OrgT1E2S4sAY1jlSnHgnzaZS
-    o58cQqGdcNu0WyvBxEeZD6wCPW6R/z1qMhvIkWLXnKhQ2LjhtxN45R2Zblo1swGYsk9aLy
-    UozfgVzecihOOLMYH0+m1lAoEwa8fs+DN35/JH5KITfgHyuhJooUjYK2GvnUZ4wmCK+jwg
-    iZOn/vbwju2wwFSMpZGzAhoQkBSoVSdHo8cpinL5kOzXyEHI0dEE8Ok7ZMmg
-X-ME-Proxy: <xmx:OdGzagcDe3TXFimtAYwezHxBzpx-8bRRBe3Jft00DkNXBXi9GTMYwA>
-    <xmx:OdGzarIRU-Pzzahhqo8BA_CLLoyPQ_5JVR5qU9lxiTqHx0e0lm33Kw>
-    <xmx:OdGzajdg9LU4N-CfQNjjQQ7psLhYlSIYzcnD2OMcI43LuWFolVkj0A>
-    <xmx:OdGzai0Ux0dk-PGBxFjWCqkwnu8ZmbgAqJ80DwZmt99S2Vcn6raZzg>
-    <xmx:OdGzajFZWGv8qchRg9_t1fPJOoY-3iE3EMv3SyAKeEeyxtXRZvg72UfS>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1790169411; x=1790255811; bh=t6jfWh76UXVx9ItE7NSk3NWxfftm
+	p031zUID17r08Tg=; b=cTGYpYylGoZO6JFgt3ZIQ7ooNfkSWZBsrkxcG2QrpCgy
+	96xRvV6jwin4bsDm00gQeIUEWmuJJrNTiSnbUbZnFaFfdKXDoZLPLj7CxokXWfv1
+	EEsNh3KjhlkO/dhNGPxbT3q9yYWFuUZcwTkaCahC9kSnGolZQEgwhD1Rr4bjNZYy
+	mz05eYxhkV2K+PW07vxjuOJ3/Om1LOo+sbj9Ru3OGuddtdueu+A3224TVFBn7q2u
+	4g25ofv9APyuFOhyeLO5nvmwU2GEurhQZ/aJxr2f+5a5ndpUqY1QjK+wY6BfKEBa
+	HD7jXu3IjCdsUKVBOdq1TZ6OEYE68/NjkJO5ggEabw==
+X-ME-Sender: <xms:Q9GzaqnXNahC37yJNEcUlGYZ0StSdiWUuGmr8I2VvZXg9Vn9i2AlPQ>
+    <xme:Q9GzapSgTA4PGF7P_kc-aPed7zhBll7tmDhGWi1i2sHZviTZdXIzAninrvTzqw6HI
+    ci_ybCbX1PKNAo9r8w-A2qjR4XNujgdhEVzRL67PloShmYz_PwnWF8>
+X-ME-Received: <xmr:Q9GzamBf04NPkN0i5D-jM3zIsomqQTc3ugRVoOO7XtEdL0aIom0hfg>
+X-ME-Proxy-Cause: dmFkZTGm+qnOoUsABJZvVgIzcUWGn28vcttUh+T+TA2kQiybcPE7fA+0ssG64ITuWr36pN
+    1e1whxyTiN2pHATrNR0Mp5MgFbHnQO+i0pUnmoJxVuWc/n8+f+JZLs0cdTgkue2RHlPF2n
+    UsSTDspCJ+e5/WlAGtGqFrRPYMdM/y9BKKInwoB9r2QeZsDUjBIARYCBe3fRq1DfwALHwd
+    Tt/xlT95iNky8nu/0UTjNZjDYIZ36hryqyKfK2sE/HjwL7u71yC5XTkbnGFrX2/ABHhc54
+    Xgvt7ISkXmQjNeS4Wq3ZEgTLkQjvvy19AEuNe154XX5ygNLMvxxaBpvrInUuZk54UM3kqc
+    XkdtxDc8O+HEgjAd72cCUoEr299rOaxePlBroi1QMSiUnbmyCrxplZa4HbmGIrcRIDtl+R
+    KvPfwQ5fWxnp2IbUVotaWdL+IXiiXLEv5Ha1XGGcuMfT3pvXv1DekJ/2aiWJlm3Z7KR/MS
+    pZmAhfN0bpw4KPz7QGuCngfHfeVC5E4EfwapRYh/bk8eMqzwsJ8zd2+pTfGKsqXJeALQWP
+    G1mRB1NmjO4tYpqfu8i2RIY5z8+Jy/+iyJAWmTrznZubl5d1KrtJc44DUcVGpifbVHz8mu
+    svTA43cZxypYH42Wv94G39p6dHyYzwMcW+7dbcXMYNfwIeH2vIXdSKJ7KwZg
+X-ME-Proxy: <xmx:Q9GzaoRf-h1DEp7QEr8Xv6TBSyJLNFTDQ1i8TrxXITHHj-zAaq-ifw>
+    <xmx:Q9Gzasq-fKWYfAWRJAhtml1w9sHAhc17Re08scw2HET3k5EZOiO-ZA>
+    <xmx:Q9Gzaiw5UKJqb0IVRbzsc5c5ox_aJzUYqHWty5xtqLyHmmo0phYA6g>
+    <xmx:Q9GzapLp6HmTr0zs0PFX8_kzQ_nf4FS8tTpds1EDxierxrFyDkrSIQ>
+    <xmx:Q9GzatRLPV3e9M0qVXKhOvizPvrwBYX3mXl2iePzLIqbB-SLQNi4xJtT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Sep 2026 09:16:40 -0400 (EDT)
+ 23 Sep 2026 09:16:51 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0b2159ba (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 23 Sep 2026 13:16:40 +0000 (UTC)
-Date: Wed, 23 Sep 2026 15:16:35 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 64ee6ea2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 23 Sep 2026 13:16:49 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] object-file: flush transaction packfile before
- migrating objects
-Message-ID: <arPRM191URNQGu7V@pks.im>
-References: <cover.1789328612.git.jltobler@gmail.com>
- <18a1798d958d7f089614ec588346096c10b0666a.1789328612.git.jltobler@gmail.com>
+Date: Wed, 23 Sep 2026 15:16:43 +0200
+Subject: [PATCH REGRESSION] builtin/rebase: allow user to amend committed
+ conflicts again
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <18a1798d958d7f089614ec588346096c10b0666a.1789328612.git.jltobler@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260923-pks-rebase-conflict-bug-v1-1-3d3ccf5022bc@pks.im>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMwQqCQBBAf0Xm3MC6kmJ3iS4FeowOu+toY7HKj
+ kYg/ntbHR+P91YQCkwCh2SFQC8WHn2EdJeAuxvfE3IbGbTSuSp1htNDMJA1QuhG3z3ZzWiXHtM
+ ip0zvTauKEmI9Ber4/Ttfoa6OddU0p8sZbn8nix3Izd81bNsH4xEHQYcAAAA=
+X-Change-ID: 20260923-pks-rebase-conflict-bug-176e325ad079
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>
+X-Mailer: b4 0.15.2
 
-On Sun, Sep 13, 2026 at 03:26:22PM -0500, Justin Tobler wrote:
-> diff --git a/object-file.c b/object-file.c
-> index 0f123b79fad1..210984f82532 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1262,6 +1262,8 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
->  		container_of(base, struct odb_transaction_files, base);
->  	int have_packfile = !!transaction->packfile.f;
->  
-> +	flush_packfile_transaction(transaction);
-> +
->  	if (transaction->objdir) {
->  		struct strbuf temp_path = STRBUF_INIT;
->  		struct tempfile *temp;
-> @@ -1292,8 +1294,6 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
->  		transaction->objdir = NULL;
->  	}
->  
-> -	flush_packfile_transaction(transaction);
-> -
->  	if (have_packfile)
->  		odb_reprepare(transaction->base.source->odb);
->  
+In 6257588252 (commit: refuse to amend during conflict resolution,
+2026-09-01), we have introduced logic to git-commit(1) that makes it
+refuse creating a commit in some cases. This was done to remove a set of
+common foot guns.
 
-In the preceding commit you wrote:
+One of these foot guns is when the user is performing an interactive
+rebase that stops at a conflict. Most of the time when we stop at a
+specific commit we want the user to amend the HEAD commit, so they have
+been trained to use `git commit --amend`. But when there's a conflict,
+they are instead supposed to commit it directly without amending the
+HEAD commit. So to remove that common pit fall, git-commit(1) now
+refuses amending in that situation.
 
-    In a subsequent commit, repreparing the ODB is slightly deferred
-    when committing a "files" ODB transaction.
+The logic that detects this scenario checks whether the file
+"rebase-merge/stopped-sha" exists, while "rebase-merge/amend" doesn't.
+And this is exactly the case when git-rebase(1) has stopped at such a
+conflicting commit.
 
-But that's not really true -- you don't delay repreparing the object
-database, but instead only flush earlier. The reprepare still happens at
-the same point in time.
+But there's one problem here: this state persists even after the user
+has already committed the resolved conflict, and consequently they still
+cannot amend after they have done so. This is overly restrictive though,
+as it's quite likely that a user may want to change the resolved commit
+once again.
 
-> diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-> index d295c265c75c..fb83c8fba619 100755
-> --- a/t/t1050-large.sh
-> +++ b/t/t1050-large.sh
-> @@ -87,6 +87,22 @@ test_expect_success 'add a large file or two' '
->  	test $count = 1
->  '
->  
-> +test_expect_success 'add large file with loose object in batch fsync' '
-> +	test_when_finished "rm -rf batch" &&
-> +	git init batch &&
+Ideally, we'd be able to easily check whether HEAD has already been
+updated to have the resolved conflict. But it seems like we do not have
+sufficient information to determine the original state of HEAD when the
+interactive rebase has stopped, so this is not a workable solution.
 
-I feel like using a subshell might've helped here for readability. But,
-oh well, it saves us an extra process.
+Instead, use the existence of "MERGE_MSG" to figure out whether the user
+has already resolved and committed the conflict. It feels somewhat fishy
+to base our decisions on the existence of that particular file, as it
+really is only a proxy for what we are actually after. But the whole way
+that we track rebase state is somewhat iffy in the first place.
 
-> +	git -C batch config core.bigFileThreshold 5 &&
-> +	echo foo >batch/1-small &&
-> +	echo foobar >batch/2-large &&
-> +
-> +	git -C batch -c core.fsync=loose-object -c core.fsyncMethod=batch \
-> +		add 1-small 2-large &&
-> +
-> +	# Neither object may be left behind in a temporary location.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Hi,
 
-You don't really verify whether they are left behind, but rather verify
-that the can be read. Which is a bit of a different thing.
+this is a regression caused by 6257588252 (commit: refuse to amend
+during conflict resolution, 2026-09-01). Ideally, we should probably fix
+it before we release Git 2.56.
 
-Sorry, feels like I'm in a nitpicky mood today :)
+I'm not particularly happy with the proposed fix -- it feels quite fishy
+to use the existence of MERGE_MSG as a proxy for whether or not the user
+has already committed the resolved conflict. I couldn't come up with a
+better proxy though, so if you have one please let me know.
 
 Thanks!
 
 Patrick
+---
+ sequencer.c                   |  4 ++++
+ t/t3404-rebase-interactive.sh | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+)
+
+diff --git a/sequencer.c b/sequencer.c
+index e25ef5eb61..0f718c1d38 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -7045,9 +7045,13 @@ enum ongoing_operation sequencer_ongoing_operation(struct repository *r,
+ 	 * `amend` unless it stopped with HEAD already pointing at the commit
+ 	 * to be amended (a clean edit/reword stop); its absence therefore
+ 	 * marks a conflicted stop.
++	 *
++	 * Note that we also check for MERGE_MSG. This is to catch the case
++	 * where the user has already resolved and committed the conflict.
+ 	 */
+ 	if (file_exists(apply_dir()) ||
+ 	    (file_exists(rebase_path_stopped_sha()) &&
++	     file_exists(git_path_merge_msg(r)) &&
+ 	     !file_exists(rebase_path_amend())))
+ 		return ONGOING_REBASE_CONFLICT;
+ 
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 8c63682b7f..d55afaa113 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -2486,6 +2486,40 @@ test_expect_success 'non-merge commands reject merge commits' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'can amend after committing a conflict' '
++	test_when_finished rm -rf repo &&
++	git init repo &&
++	(
++		cd repo &&
++
++		test_commit original file &&
++		test_commit modified file &&
++		cat >todo <<-EOF &&
++		break
++		edit $(git rev-parse HEAD)
++		EOF
++		set_replace_editor todo &&
++		git rebase -i HEAD~ &&
++
++		# Modify "file" to cause a conflict.
++		echo conflict >file &&
++		git commit -a --message conflict &&
++		test_must_fail git rebase --continue 2>err &&
++		test_grep "Resolve all conflicts manually" err &&
++
++		# Resolve the conflict.
++		echo resolved >file &&
++		git add file &&
++		git commit --message resolve &&
++
++		# And now try to amend to the conflict. This operation should
++		# succeed.
++		echo change >file &&
++		git commit --amend -a --no-edit &&
++		git rebase --continue
++	)
++'
++
+ # This must be the last test in this file
+ test_expect_success '$EDITOR and friends are unchanged' '
+ 	test_editor_unchanged
+
+---
+base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
+change-id: 20260923-pks-rebase-conflict-bug-176e325ad079
+
