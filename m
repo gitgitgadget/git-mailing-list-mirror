@@ -1,94 +1,132 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D806535FC8
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 16:59:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDA84ACC8F
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 17:10:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790182766; cv=none; b=TX6ogtoBBGnE/vI7dlG7Neng9RjVH19QPz3r+l6TvhyGsqsTDz/PYzzZ5gS7Cv2gKypGk0NpSoJBS9eUlNSko05CFtgt7bFilHWDLVitGVpMLwLqU6Tb5U9f7y//VVKVlscz3HX51f5yDAB31afNXXQDIWFITD55nbl96K8bDXo=
+	t=1790183429; cv=none; b=qsSR6DS86rqzDPsuu3+4vk3Rzk5j90rCD8hub20wJXCF/tymNJ0jk/5EWxGb5qom4g7Aj7WmsD7gpTedW7hsIKZ77NGTK5PItzyLOjOAX7gAhZbHCwDF+TozAVeq0bV7p2TalvF4V7Cs0zfWzCA6E+qpxuNFA13bywZQUeovs8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790182766; c=relaxed/simple;
-	bh=FwNh/yw+DM0gYNpC65wmR7+I9OIdwlo656y17rGtm68=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NWGM47RO56fR+5PoUAcUFG/yMzBDDDUVlLPB3cLrMck5TWN4Zq8Ju14hi333iENaut9PhUp2p+/kNOvPgBS3vgpLckpviONksnwlhSEzzCgrlfIhLDtXpfS3dX++6BfoIEL+R0OmJmcMWKOrExT1mYpy9s74jxdw6/B9kz9s93k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=EwsEWcun; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1790183429; c=relaxed/simple;
+	bh=bunPtcoPQMtCJzCIR626OrBI3YfJFTYGa1B6hvAuXUE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Y1rk8dbCm6GP7mSeYzqesm06V8QiwoDzCXyiIxADTNJMXYuOsNvbj9dObJ5W945qVfivYuHApQDsNDL+igfhAQBnwCOTDtMkw/en87xD2xVDV4fos3i2fIbNwrXvZTY5nA95Y996/G+cyLz60QCsvZiIwm1ewhR4OgwfTGzrH08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KSBSxVra; arc=none smtp.client-ip=209.85.210.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="EwsEWcun"
-Received: (qmail 35114 invoked by uid 106); 23 Sep 2026 16:59:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=FwNh/yw+DM0gYNpC65wmR7+I9OIdwlo656y17rGtm68=; b=EwsEWcunm2Nbcnl72bwrHFhhTy9ZQPph/TJjTLKhV9J0NFSS59DPCf/Unpf9U/CL1LcUEGz/eKo1IQfFXsRbW9NQbuvW5m8rbqA40xSHI+5AJfldqJfgEqj5ERBJvFdQq7y6+NkNwaU+ornTb0rcGq4oT6NlZBMonneaH2mZ5DO3xFcLpqTN63MKHkC0JPcyRzgsmJzIUGCOzsjDPtox3Pe3r7xzVNZcF7cLk+u9am38KrlJzI5676Y8Tm33Wb6pqG37hcP98VbFwGMcRCvQV0dZwzVJWe/6ong2jFb39syKLju60Wv+H1iTcZTwsRVJN3122hInfVkygo6MKl6nFA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 23 Sep 2026 16:59:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 181581 invoked by uid 111); 23 Sep 2026 16:59:22 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 23 Sep 2026 12:59:22 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 23 Sep 2026 12:59:22 -0400
-From: Jeff King <peff@peff.net>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci: work around Debian 12's HTTP/2 authentication
- failures
-Message-ID: <20260923165922.GB29229@coredump.intra.peff.net>
-References: <pull.2236.git.1790118373340.gitgitgadget@gmail.com>
- <20260923164700.GA28538@coredump.intra.peff.net>
- <20260923165348.GA29229@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KSBSxVra"
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7f4df360cc9so80840a34.1
+        for <git@vger.kernel.org>; Wed, 23 Sep 2026 10:10:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790183426; x=1790788226; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=82+NEvmukOOLWIVmWYhEn83CfWVj7pNX4c6aKWzPLHg=;
+        b=KSBSxVraq1hI0z6ZDD3ZtUEHWI603F6xQ3uejhnf8LWvzuEKtjAqfbtSnSUMnCSiu6
+         qZQ89KANAzete3+QYvSrb+hpXWSX4xlBXyGJc8bV+AshO1WkWGGY/TmOQ5Z9Q1uZEDTk
+         5Ir7umCPb9Ja8dekL8lkTjHLaRo2UB/NgiBF4baufrIuOWklQpizU/tod6w8uTvpHMrX
+         2F6bM0W1C/v/K1C3V27wB2ZVnUX6oNtlO6ApQZuDcyYVX+hmqFc7iR7c8/ed9A9O3Xwe
+         Zhd4m0OKdQPXHZyoxsE51nPIb5md229l+QGw5Nz5anVSiVz0weRULiVItXfbsQdefJoM
+         YJQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790183426; x=1790788226;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=82+NEvmukOOLWIVmWYhEn83CfWVj7pNX4c6aKWzPLHg=;
+        b=aAN8CZ9fM6pImLVUuF4JGTj9/V7OzBKgtllho4550Q8SmQB0v27hLoMCgwrrpmiwtH
+         FU6d+xyxKxqYqy7s5bXoTP5j4QLBgN1e7D1QARoEwWVi2olTdqdP5O0OBzDkt+WcWcEH
+         wi+5EkjdZlYVh8G0+SaS5yeTyiCvpSw4cbx5LwXaw2wfMA4VOtj4H8DJoJPX5iYcbapp
+         02RpX+Ixh5ca1HQTjC/edqP8csUhfqf7ALBZeC0G738PVZBgTBw6tzdAo5FaJnXxcG5x
+         Mw+6mSsfTnOAy7iRJ4o+RWIryUWC+k7GVssizN0gfsP1V1Ti/wD20BbN9Fg4QH6oYrYA
+         tPAg==
+X-Gm-Message-State: AFuF++m5EKNrlJI3F9oT/gDxphesgprXD9YhuuDc817+r5HiddO7ElmM
+	igbo66U0DqQpRdziP9NTTKuGVApnJW2GSZZL5nzzqL7RrLzZVM4hieHs
+X-Gm-Gg: AYBFou1vPXr9Xd3Xu01g3LgmJsBNAIlLsvhmkq0c28zXW6po0dn0McyJBXpMHk8+aMm
+	3UovLKicyYVi2Cg+lcTyfHUNNJp8sHiGNFZFIqU0PrYx9dWGCgXOs9uJiNvVcLzFiU2FzhBtcbT
+	bveYeE4oKYgJU7Ta6q9/zYB7OoOD+VcdeQByOYK2moGd24+qRNujvI0+07MgdReLh1pcMyXJmEJ
+	PpHUT1k5D25edoN8tdaYi6D+x0lDRgngxhvogqU7ML/+hriDLxx2R+gspR9Rlxv3ZA3VmYcQ7p+
+	az3KVKvpe/k9BtnExva9ouOApL3LBqWIOU59N54kCFEh1PWONoZQZ2TghNOQ35walSof4tiJ2WB
+	kDpDCWDvAI+mvGrClQjeWTHrtQE0NZtdkiirQgquEWb7ADqDUEtgyJ2pMQKdfDk6Yxi2AxV5I2g
+	qHDwKdQ4YnGJ5PyUd6Vk+Y166eu9Z14ZSP40d8td1R3YuJhIx9bnP4/NNXONqJWIt+Mir2+P+yf
+	gUZKDfHSGF/4o8fQ261mPWf0oNuRnDyOi7hJnqWqtcEmL1nqlv8oBkgfZFgcg8F/Iad2wPYAYpO
+	YrdxE4NpIQJVwbvUd/rz/aPpUf+6+nolZIXpZyW2bp78S5J1jDbvnJugT99nOAzv8u93NJBqcdZ
+	caSa69bn5Awh3JbETjnrZAezrnXXvTZiazlJLSJkUemaQSSv5iPIVNKBq4S4=
+X-Received: by 2002:a9d:7342:0:b0:816:3195:be1e with SMTP id 46e09a7af769-8163195cd09mr1823493a34.23.1790183425909;
+        Wed, 23 Sep 2026 10:10:25 -0700 (PDT)
+Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa (vpn-centralus-02.tradc-corp.com. [20.98.136.114])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-816049b7b15sm3470670a34.24.2026.09.23.10.10.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Sep 2026 10:10:24 -0700 (PDT)
+From: Tamir Duberstein <tamird@gmail.com>
+Subject: [PATCH 0/2] ls-files: reuse the untracked cache
+Date: Wed, 23 Sep 2026 13:10:07 -0400
+Message-Id: <20260923-ls-files-untracked-cache-v1-0-08db4cc1efdb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260923165348.GA29229@coredump.intra.peff.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQrCMBBG4auUWTuQJlSoVxEX6eSvHS1RMq0Ip
+ Xc36vJbvLeRoSiMTs1GBS81feSK9tCQTDFfwZqqyTt/dL0PPBuPOsN4zUuJckdiiTKBQ9f1A5J
+ rYwDV/Fkw6vu3Pl/+tnW4QZbvj/b9A86sbKh8AAAA
+X-Change-ID: 20260923-ls-files-untracked-cache-3559bed01a3e
+To: git@vger.kernel.org
+Cc: Tao Klerks <tao@klerks.biz>, Junio C Hamano <gitster@pobox.com>, 
+ Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>, 
+ Tamir Duberstein <tamird@gmail.com>
+X-Mailer: b4 0.17-dev
 
-On Wed, Sep 23, 2026 at 12:53:48PM -0400, Jeff King wrote:
+Repeated queries such as
 
-> I guess our robot overlords^Whelpers could help with that. I passed your
-> patch and my email to Astra, which came up with this:
->
-> [...]
->
-> Not too bad. I had envisioned checking the range of versions, since you
-> found the fix (but we'd have to either use 7.88.1 as the start, or find
-> the actual bug introduction). But this covers at least as much as the
-> CI debian-12 specifier would.
+  git ls-files --cached --others --exclude-standard -z -- "**/pyproject.toml"
 
-OK, last email, I promise, since you could probably be feeding this to
-Astra just as easily as I am (and you did the actual interesting work on
-the patch of figuring out the problem, so I'll leave it to you decide
-which approach you like). The range version is something like this:
+walk the working tree even when status has already populated an untracked
+cache. This series lets ls-files reuse those directory listings. It
+expands partial scans and collapsed untracked directories as needed,
+without writing the converted cache back to the index.
 
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 805bec025c..3d18f98c9d 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -17,6 +17,21 @@ fi
- test "$HTTP_PROTO" = "HTTP/2" && enable_http2
- start_httpd
- 
-+# Curl 7.88.1 can fail to retry authentication after an early HTTP/2
-+# response. This was fixed in curl 8.3.0; see
-+# https://github.com/curl/curl/pull/11756. The first affected version is
-+# unknown, so conservatively assume that versions from 7.88.1 up to (but
-+# not including) 8.3.0 are broken.
-+test_lazy_prereq HAVE_CURL_HTTP2_BUG '
-+	test_have_prereq HTTP2 &&
-+	build_option libcurl |
-+	awk -F. '\''
-+		($1 == 7 && ($2 > 88 || ($2 == 88 && $3 >= 1))) ||
-+		($1 == 8 && $2 < 3) { broken = 1 }
-+		END { exit !broken }
-+	'\''
-+'
-+
- test_expect_success HTTP2 'enable client-side http/2' '
- 	git config --global http.version HTTP/2
- '
+The first patch fixes inconsistent ignore-file hashes that invalidate an
+unchanged cache. The second enables reuse for ls-files and filters complete
+listings after the walk. Fixed-prefix queries retain directory pruning;
+attribute and exclude pathspecs retain their existing traversal because
+matching a directory can differ from matching its children.
 
-which is not _too_ ugly.
+On macOS, a synthetic tree with 100,000 tracked files in 5,000 directories
+and a few untracked files averaged 361 ms before and 50 ms after in five
+hyperfine runs after one warmup. Directory opens fell from 5,058 to seven.
+With half the files untracked, five alternating runs averaged 659 ms
+before and 339 ms after; that case still expands 2,533 partially cached
+directories. A cache populated with status.showUntrackedFiles=all avoids
+directory opens in both cases. These measurements disable fsmonitor and
+use a populated cache with a warm filesystem.
 
--Peff
+Uncached controls were noisy; the apparent slowdown in the first batch
+did not recur. Literal-query results varied in both directions, with a
+separate five-run hyperfine check measuring 17 ms before and 20 ms after.
+
+Prepared with Codex, including code review and benchmark work by separate
+Codex agents.
+
+Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+---
+Tamir Duberstein (2):
+      dir: hash ignore files before adding parser LF
+      ls-files: reuse cached untracked listings
+
+ builtin/ls-files.c                | 11 +++++--
+ dir.c                             | 64 +++++++++++++++++++++++++++++++++---
+ dir.h                             |  2 ++
+ t/perf/p3010-ls-files.sh          | 15 +++++++++
+ t/t7063-status-untracked-cache.sh | 68 ++++++++++++++++++++++++++++++++++++---
+ 5 files changed, 149 insertions(+), 11 deletions(-)
+
+
+---
+base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
+change-id: 20260923-ls-files-untracked-cache-3559bed01a3e
+
