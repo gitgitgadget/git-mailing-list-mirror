@@ -1,129 +1,106 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630ED476CE2
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 21:40:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070791DF980
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 21:43:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790199642; cv=none; b=rgcEEYvacTOskXu7OE70QBuqXpbkcY/59b39ypndAPNnEAL+2EPUJOVRpO9FjcxUrtm/tdq2jvHVKJvy4T3J9w7X9ys5dfqaucU32maKtM8GrlIejLrzuX1aKnmYcDarcdk1mJTGU6nb1itC3UxKsFTjj955NQoBi9NmSUFCKAE=
+	t=1790199837; cv=none; b=ti4LL/pEPlaolIoIJOnB/kQJXlFsqbNu6Ae7Zn6WMqIMKGZB1nO2Zf8clYLQ0Bwm8Cfp38gQnRZIyK7ze+rgevJSZBjio9w4g48RnwaDLLXO1pQdDQOrZnwVxkfOsqQmgjGh+vwR7YOdN4yM10y0xWLqMb/cZBQVJMRFnu7yA/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790199642; c=relaxed/simple;
-	bh=sNw/kJNfq+1BlQdSjYDJyk90cFXOWkNwu7BolK5DWjk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WTTBG2wwWEI9viWt51uV9dAtEyXEo5sZ9UcOQ936kJGfsfEx2AsF6XFnuQtyLHWVaNwdQL9KRu6W16sjYBe5rc1OJIEnIEjuRy0bkfuawM9mBfZidUf9lmTNaEd2jTx0MAgENrK6sZpk0FcWFpsxcFmitsGXp7smZuPuqQGKqh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SZFQuadd; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1790199837; c=relaxed/simple;
+	bh=CmnSGkiD26jIXh1Opl+R4eBDHPyYkN9xqaenVQcsyaE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=olJM4U0XBmAUbmIHmegZXmT1W+kjAQXsIK9i8Vgn6Bk24KNZW3nDZGUkeg02tyqTlW7tWLnJVd8lteIbc/etWHAF6DLjoXANiACWM2Wq06LEjYO4EdXSBuR27PqO0Bo2//BsEkJGnfAfrRt/Ft8BNpe40JU3ZbApk50kMnbVMoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cs4uIy6o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wHXH3F7u; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SZFQuadd"
-Received: (qmail 38144 invoked by uid 106); 23 Sep 2026 21:40:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=sNw/kJNfq+1BlQdSjYDJyk90cFXOWkNwu7BolK5DWjk=; b=SZFQuaddO46CCgKblyGsnzPPoNwb4d1u/gvGPUiDPUvRWcw41LrBz+l0tslnVFeqddtQ0B2ck6xu41FOvONJSJmtlbpoHA09bkuiWhbi6DRWVT/Tlt7jJJpNAXSL9krlV2zDsTq7LuzDUmQY3ILuz2B91n16Xii37H7S/LDEnG1e1vIa/V95DD8qUqKIte0U/SuiEY/9n46dmx3OxI7lR2JS/2RDl8Rh++7nmqkaRACS1KKgKzDkkCSxJKxfnKxd9aRZYlZLZlqUQO6rfhKNGTnXGeyXr36fvEBTQADxdeYpKqxkaJQYXwGXlB5mBkl0aegerTHlBK+eJ/yaCUxMkA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 23 Sep 2026 21:40:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 184430 invoked by uid 111); 23 Sep 2026 21:40:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 23 Sep 2026 17:40:38 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 23 Sep 2026 17:40:38 -0400
-From: Jeff King <peff@peff.net>
-To: Julia Evans <julia@jvns.ca>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
-Message-ID: <20260923214038.GA49087@coredump.intra.peff.net>
-References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
- <xmqq4ifhdon2.fsf@gitster.g>
- <665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cs4uIy6o";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wHXH3F7u"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1A544EC0298;
+	Wed, 23 Sep 2026 17:43:55 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 23 Sep 2026 17:43:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790199835; x=1790286235; bh=NEN30aGhS5
+	z0jdvgaebmEMLdfpSHzSXyrUB6yX3yjFA=; b=cs4uIy6oNcgoLI3MrSZLMWNjm9
+	jo288ycpy4LnI1ZjljEw0KxzOJ4UPl0PgCUzaYupESSgmTuEMR4K1T36qPfsDZlc
+	56P3sfbXZg330blMzF7IKMkgmFxZ1gHzfDr3MsN4TJkxdoOwpCGUYhJjNgBGG80G
+	koW8LBwCze5ra9gr7nWzGnbuniQDFReDkPgbRrea5SYNxfbq6kn+e1wlB2t8IxQV
+	ZD0b70ny+yQPCvBAwMiSzNUkbG8N7Y2Kopkkfrq+QT73VW0cv8BbJ2iDWozktvzq
+	0a+AZENvxVi1McQj9DuY4hsq3sLuvHRuMDUrXVI7VWrOIwyJBMlUfR20rOQQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790199835; x=1790286235; bh=NEN30aGhS5z0jdvgaebmEMLdfpSHzSXyrUB
+	6yX3yjFA=; b=wHXH3F7uoCxwi+qyovyS05U/ZybAAR3LBQYY0LaXpDG4qDEeygV
+	juMA8bPmi7HzvmxJcK16fTxzRyQ7fWSJ1Y+C6pA05ugTHuiOZyh2lYQTgyn24ctl
+	hfkq0xwaRCodXTzSm4T/m4kTQJ3ycpPwIjaJ5DUmsDoj/L21aUd7SKSi+gycnE/y
+	E529FqgJb/X/zd6gnWnu6/fyKIfWE7zVpMV9aHqC7HZYtgu4C91QVa1ikUZtUuJE
+	m8Gf3jT0pmV8VJrVe5vqViXTKQCwsLoaBHVeWonKGCcpPDzft04VzdTNMT5ny0R1
+	NespmLmYeZifQQRciVytmiH8rLN3W1IsDdA==
+X-ME-Sender: <xms:Gki0auCp2z2NjjsPfIObuEmOQw-jOvuCEMg2clv4gY4Cz7drBqcI2w>
+    <xme:Gki0asPVF4P8Cey6rScZ1rx1wpE1LpnygwtpAqH5SL6GQ67Til3LYZnqhpI39nxTe
+    K1d0H9j9pGW8whOC8NGaGXoN_Q0CRz28O_1R378JtrcBjTfR1rTEQ>
+X-ME-Received: <xmr:Gki0araQuq15YTe-lxYm3ngNyiu0wgJQGk6pzAy7V0MySDdOxvshZ71OdZbo_alACMhhBFJoSpXHPMc4CokMsgzCk-nst5kTDYuL>
+X-ME-Proxy-Cause: dmFkZTFtS9mk4Fto7JlOkbgBSkBhvjz9SVuJedqA9cETnATDxuKvCID5j11DCFlSF5cPtd
+    AC573OJ6xD0jdromASu+yp6pKiTS9B0yHubsev28EEYoNUhcqVUz0TLNyAm5tpOjb4CZbk
+    2fwHeFZ9aDkoAHSGIsJ7NWgeYtCrXktrzDBWyX8gl182iHUU1uwTn+3+t2n+HjWfJFeJk2
+    eEYGsmEj2UoEEeX61Dt5oriZNbXhuZhHW+OjprQJ0pXsssP7RjnzDWIXjAhkT+yRCWmd7M
+    5C7YHOx40enE9sh6Zl+TEuPqQO05/XoclH1R23+p3+VePb1k013+rKt2qVv3UCdW54OfGE
+    R3EzpYE4Hi7CPQCvDaL+FzSP4Oi4U7UaNMNdoQ5xpQT57kdoY8GEbwmURNR5kw8scAkYF5
+    K7rgbig7RJOVGB/hDCnCP8dK9sH/6BgLJ3C9+BuN8Tc/BvafyqjxDu0AlPGYdJ0n8v+AQo
+    qpT0qg9aAj6gO5SUoW2E2ZOmb4HVso2GBNiFDbAjOVgFQWrlR24NHbVNtxiJZVAp1l/mui
+    TDxLzBdSEuAOx9T8tCqRl6+nKJUOF8MYtYLp1iv3V3vZE1TFlhen+Ik0VQfU64yz7mqvRn
+    i2ytxukMsDxt9+DKxivw8+DoJQqslB5WqayduTfGh1NrHvZOWuJ7nFQXD0Bg
+X-ME-Proxy: <xmx:Gki0ajuRKLZ3VR2ME8C29p7VqgekeNtHBiCVDg5LV1ussK6gdWR_oA>
+    <xmx:Gki0alOnmnR1U5NJe0MiKFjESRcIVJ_n6wCFWJ3P6ZScjhQH-iIy0Q>
+    <xmx:Gki0ai7v4WHNaszyomPTYug-1RRSSeJQdh-qu9Yf2St8hQY-aR6KGw>
+    <xmx:Gki0ajShhhq2kgD9aObCgNuGtH7vlZ_opk2YXP7q3kt0d7jXDVUuCw>
+    <xmx:G0i0atxwRUKABa6_C1Q2jeBy9n1TAGMsdrmFDOvbc4rM5uBUSoq70E6J>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Sep 2026 17:43:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: graysongordon-gl <graysongordon1@gmail.com>,  git@vger.kernel.org,
+  peff@peff.net,  avarab@gmail.com
+Subject: Re: [PATCH v7] http: add http.sslVerifyStatus to check stapled OCSP
+ responses
+In-Reply-To: <arPI8PfvsKUJSypg@pks.im> (Patrick Steinhardt's message of "Wed,
+	23 Sep 2026 14:42:47 +0200")
+References: <xmqqecfez7ie.fsf@gitster.g>
+	<20260915162348.97792-1-ggordon@gitlab.com> <arPI8PfvsKUJSypg@pks.im>
+Date: Wed, 23 Sep 2026 14:43:53 -0700
+Message-ID: <xmqq33uz7iee.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
+Content-Type: text/plain
 
-On Tue, Sep 22, 2026 at 04:54:17PM -0400, Julia Evans wrote:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> >> +See the <<PRUNING,PRUNING>> section below for more details.
-> >
-> > OK, we already see an example of the <<double,double>> reference
-> > notation.  This needs to be in this form, intead of <<pruning>>,
-> > because it refers to the named section of a different file, namely
-> > git-fetch.adoc (I am just trying to make sure I understood your
-> > explanation correctly).
-> 
-> The reason I explained this in a bit of a confusing way is that I'm not
-> 100% sure in which exact cases we need to use <<double,double>
-> instead of <<single>.
-> 
-> I double checked just now that if in `git-push.adoc`, I change:
-> 
-> 	of a remote (see the section <<REMOTES,REMOTES>> below),
-> 
-> to:
-> 
-> 	of a remote (see the section <<REMOTES>> below),
-> 
-> Then there's a problem where in the HTML version it displays as
-> "[REMOTES]" instead of just "REMOTES".
+> Nit: Likewise, this paragraph doesn't add much value.
+>
+> Other than that I'm happy with this patch. I'll leave it to you (or
+> others) to decide whether this requires another reroll to address the
+> two nits.
 
-Reading the asciidoc docs, I'm not sure how this is affected by the
-location of the reference at all. AFAICT the syntax <<FOO,BAR>> just
-means "link to FOO, using the text BAR".
+SZEDER reports breakages with this topic.
 
-The single-item <<FOO>> more or less means the same as "<<FOO,FOO>>",
-but as you noticed, vanilla asciidoc seems to pick the text "[FOO]"
-here, whereas asciidoctor uses "FOO". I'm using asciidoc 10.2.1 and
-asciidoctor 2.0.26 to test, and I see it even with the PRUNING examples,
-too.
+    https://lore.kernel.org/git/arQ%2FnOH+o3XwQFD%2F@szeder.dev/
 
-Even weirder, in the manpage output both implementations actually expand
-this to: the section called "FOO". So changing your patch like this:
+Since we are not in a hurry to take this topic, let me revert it out
+of 'next' and give it time to mature.  When the reroll comes, we can
+critique these overly verbose words without much meaning again.
 
-  -See the <<PRUNING,PRUNING>> section below for more details.
-  +See the <<PRUNING>> section below for more details.
-
-gives doc-diff output like this:
-
-  -         See the PRUNING section below for more details.
-  +         See the the section called “PRUNING” section below for more details.
-
-which is obviously nonsense.
-
-I could very well believe that some older versions did other weird
-things in the presence of includes. ;) But AFAICT the real need for the
-doubled text is to control what is in the expanded text (both because of
-differences between the versions, but also differences in output
-backends).
-
-Which is kind of a shame, because writing just <<PRUNING>> makes the
-source a lot more readable. I wonder if we can configure these text
-fallbacks, which would let us use the single-item form reliably.
-
-Alternatively, I think this is all syntactic sugar over "xref:FOO[BAR]".
-We already have our own linkgit: macro for linking to whole pages
-(which, btw, is something xref could do for us, too, though maybe not
-without the magic man section number). I wonder if it would be useful to
-have a section-link macro that would give us more control, but again,
-the syntax of <<PRUNING>> sure is nice.
-
-> But in the <<PRUNING,PRUNING>> example, just using <<PRUNING>>
-> seems to work. I started working on this way back in December 2025 
-> so I assume that something in this patch was affected by this issue
-> and that's how I came across this problem but I'm not sure exactly
-> what it was.
-
-So I think using <<PRUNING,PRUNING>> is probably OK for a first pass
-here, rather than getting bogged down in trying to configure both
-asciidoc implementations. We can shrink them later if we come up with a
-good solution.
-
-I do think the explanation in the commit message might be misleading,
-though (at least from what I can gather from the asciidoc reference and
-from a few experiments).
-
--Peff
+Thanks.
