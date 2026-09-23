@@ -1,69 +1,69 @@
-Received: from mail-oo2-f41.google.com (mail-oo2-f41.google.com [74.125.231.169])
+Received: from mail-oo2-f39.google.com (mail-oo2-f39.google.com [74.125.231.167])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5393B2FF6
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 17:13:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EF6542809
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 17:13:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790183628; cv=none; b=RaVzAxmQPp8Nz0npelTf87MaVEzihc+Uk9PaKHBL1/z1QzGxLrHcDoT0uSXY8zfCLgAcSwsjOkWXp7u8/G6FkykXwSMUD6sTiJVemEG8K4IaKP+wqn/DmxpEw/RAQ/+4oh+j/BSQCcvWlzCkD5XaqlzMuzrBQxJMnbMpPL+9T0A=
+	t=1790183629; cv=none; b=ijxI7hMa4f5kUsvTgLXPhmMfOjk/3iG8JhY2v0WwY4JIfs+rCPWnTMmorg6eAk1P7XtPecMqYFvGz3e6y5QM8fdK7pheiU06bYYVIPRWG2dljZAMAaIV2tipes1UDWNE2dqtlvgElBtMfhr3XJxjsNjBF4HA6kzua2TIgbU+7yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790183628; c=relaxed/simple;
-	bh=tmevsH4kA5k1UtupWoP98QGIg5xvD/JRQKTOQspt4Ig=;
+	s=arc-20240116; t=1790183629; c=relaxed/simple;
+	bh=KitIPCb9uaaZTpUibH4+gkRfNzZMGR44Z89VQhhbiXw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=umGQksfV6FKv12EP9rxw/loKydjFgUOOkXlayX+0SoddqCF9e/1olPC9KQ3WYcswlEffPJh3J6oF5PQfmco2eJ2+cKTM8E3bIkiZuLZn7CCmAbvNoop5hTFblx4Tf5yCGR34Og0oT5wokaRcwEsaOgeewYKb6HfsD8NCiZOgPEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=duTn3wqC; arc=none smtp.client-ip=74.125.231.169
+	 In-Reply-To:To:Cc; b=T91u9Etv3gHjnOqiQeT+Khpimv5SqR7clNaZuqurmO1U6MgDWeAe7kvmVTTEjp/wmQB9zDCPZ9mc4Rtc4T0k4jvi5LvqOyWi6i7jMUcc9eH2W5XPk5gFKYJ19AUFHRoPcH+Qelh7NVYvjuSPFgo3wP0/i7amrT9joVbjPruMkTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lES40yEn; arc=none smtp.client-ip=74.125.231.167
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="duTn3wqC"
-Received: by mail-oo2-f41.google.com with SMTP id 006d021491bc7-6b1ae721872so616186eaf.1
-        for <git@vger.kernel.org>; Wed, 23 Sep 2026 10:13:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lES40yEn"
+Received: by mail-oo2-f39.google.com with SMTP id 006d021491bc7-6b1ae721872so616195eaf.1
+        for <git@vger.kernel.org>; Wed, 23 Sep 2026 10:13:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790183625; x=1790788425; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790183627; x=1790788427; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=FUfsgV3ws3Fn0Zt39QKlIxxRv1T1cAtpjNvZi6lbk1Y=;
-        b=duTn3wqCgbuMauKVZ15B42dpUuZ75HTRLiXi4821JxHCqCzOjBE3UCfAGJWFRlLV7x
-         GmY5QNRCxdZBNd8RQEors00jLcsVlLxJN/W7v+rLENC302z8i69rPgaqYSCp+cFdgvsD
-         NDwo5aj9+D0yJdd4ZpJk+adY6QyJRKvdoZ8Gk93c0QixhyenzFmMT8ogkpcjx7okrdxW
-         Ug6PJphHCYp1TvbBgbY3i10cyloO7DWpqp9jESAbqXyLojy2yRwBAU6pw48JTvVWNB8x
-         HCxDC5NNJcne7qp8p+TCzpvg4HS1HWSGGsxt+ZankgRpyhVNqEs15slg2OP/3MHEh+B8
-         z0Sw==
+        bh=0cNk///Z+m9sJ4qX9imVkVbai0KAAiCPE0Ye3QSQuco=;
+        b=lES40yEnNfa9xZfUqZzU8XE4zBrYP81NRyw1a2iP6ubTQEGSzipdXVw9ZQus2m6tu5
+         Ef2e44dEJhLaj/p/Z87N28/V/H355qfvBKnB1kZeMERQJBrF0f1dGhc1m/vN8ky/bNJe
+         IkDdYIqN3IgSGOPPO69QHHLsYkilWxSVSu8k9Jf1QYcl+LKFjmNUBkjsRYiSlKfVIlHP
+         wtjQ1ms9WzcQ/1x0nWTjzLZWOmOyBRUKr8cehSWBW1xLbNj2ck8aWw5svOtyqvaz4xiN
+         ANTJjyjWKKHkbh2LxrEVsY/ayBq5HBwGEHb9Cop+ZSquy1umD1PmL2fpqYO05FL5MM1L
+         xU8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790183625; x=1790788425;
+        d=1e100.net; s=20260707; t=1790183627; x=1790788427;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=FUfsgV3ws3Fn0Zt39QKlIxxRv1T1cAtpjNvZi6lbk1Y=;
-        b=1vLHXbBlEIkepgZNvu8ZZwFoqFBSZJr+BOqnPkIH8mnnsegx5cgmDz/vtUjYrU9YlC
-         J81ZRwT71eqhDC+2KkzkXq1Sk9XXpp5LLJnKhu+cWNbsM+oJHXsdTHrP2f4ckVuQglKG
-         v/VGa+hk8BcQlOCkB1l1vpLGtP0Cspvc15HMgIQ+ysvTKqpPVeBWw/OgypQAJ2qyBCvS
-         u6YdipGdmsB3/gI4zcYp4gC1FWU5nK+XMy5sE4nYybXOvljf6D7OA4e2a3U25CUFpdzJ
-         Enaqbchl7jgGbxbY+ssdi6lqR2nGiZx+Df+g7d44/2khiqI9NQUtqs04jqg+RMI5qe2i
-         6fAA==
-X-Gm-Message-State: AFuF++me1RLr6QqdMfQg+0c2wzgyH55XDUC5utaiWpMZlPmC9C6mg2hM
-	R6jGDuIm4nAD4zI3Hgy/You0FkMMhaWRL9ihhLCy19YgthzuZc8LjozGVujnKaKJ
-X-Gm-Gg: AYBFou1uldKe/VZg/rmApOjWcbw3b4EMB2gMFyAztx9toMuG6QUAmfE3989Ds+gdeQc
-	zglhvppxpc62tSF0Xq2uIgR+ChQEDW29dr1o+bHRkxkXObsLRlUZ4FlXp/5ybtIKXi363uWSO1M
-	8ETItTyvkr79VDSbyLW6+hjo++7H0VY90Nu4szDLJ6lXbTlHeTxINNDv6zws+43gzr83brgn5Jh
-	vKqgBd9c50bKKXi3LINW0nrlvtoDA8ABQnrmlyXlnPr7rJ8zHafm4UtnSwJu0O5WNaL5xKzOE4G
-	lZWWhAxV0OCFg/Wt8k+zLxn18G/fSoX11G9EdbBykvUuZlmTNs/u2w0tiiDpueaobLWEBgvqq9O
-	yiGaR53s6Dk2IINvD3L0EWphJDhIsTbpQhmiC01TVXVfgDVPjXbZm+tWhA4YQotr5PoKV5uLVFF
-	r2hQM6T0Qr19XKPqn+8HMYj9ACq6sroXSurk8YlGMIhiKUeZxkYQCjck0QbcZH/QKnfodumarMr
-	Q/PD+VH+PX/3xcvMqX6rk+4CqvePaqRIrMZOL1EYm4vh8Oqya/6v05zK2hLv2jvwzYuym6xGvPe
-	xZsECILOhg5Ynkaswus6BdIrYJrlHHHJEE4QKOthZ3A4zbOW1UosKFq4pyADjx7UpIEh4SMfHEa
-	w73UmiFosqaVhWn7/pmsvAnvEk3CjTa3tnZaJAVdGkoNZZ6E9/etk/OexIolr6KXRgaMQxQ==
-X-Received: by 2002:a05:6820:4df3:b0:6c7:7668:a27e with SMTP id 006d021491bc7-6d2d092f302mr2712094eaf.28.1790183625508;
-        Wed, 23 Sep 2026 10:13:45 -0700 (PDT)
+        bh=0cNk///Z+m9sJ4qX9imVkVbai0KAAiCPE0Ye3QSQuco=;
+        b=GEaHlcHFGxka72yPQ9jG17ckYYskjhzM26cdWsVf7GpJiW/ljPy4COaB5ir6t+K0bI
+         nrN5PDjVV6XZ6yc6mAyCO9/jxKfQLd68s+JF/MX+P0076hTrUIPF0dIYqtE05ae7T/oe
+         vFPtn6CSxKNVeeVqkegSSSJERcu6Vd6tR/4sA55sAaI2/Y1YXZKjSBMoDN74vNhOYke6
+         szDe9aJfe4b+cKjXDiln3BJmEVXCEoLYsVRZcHP8j+i2D+vW55ue313LJRkNMSECXKBi
+         H87JedZ0ftE5hI/97ngMMHn8L9Hv0X5sTUMAHkn8hpaIl6tyen0go16FJtnhmo4P5SGl
+         eOGg==
+X-Gm-Message-State: AFuF++ks6xnj071XcMFLiI85+MKeMLk0NTn6DgNIPmWldFLTbEL1uw2J
+	iMxjXEHvavQ0rSBeSU4GgAv86cn+IiC3MGJyJFxn6PnQXU1s17y5x+BGZL1mnkS9
+X-Gm-Gg: AYBFou0Dnmv1kSw6sTO0m277+syQGK7T1GfNDmO0Hu9/yKPfN46WPtb46dxw63rjZRI
+	QkcmdKAI85Y/20BLjxD6u8jYR6GHgd2RtRKK3TclC2Y470/11raehhUAmeG6EISgyZfmMC7AnH5
+	ELt+j68FPqfa5b9GLmnoOo6uT0Uk4+cJalBo6nIpd3MHPT1V8kXm4a5F+BcPR24kU0VGlQpqlII
+	BaHKbvyhbRypxpapDp0K3NdaXzCJmP3p3R6KmDuJSJeU4xGZf/QNsGr/nBbMOSCAgPQsD0U1Pcy
+	i714d+qsyoQBUl2oe4k1VTbDam+9Q3Z345HL6qVAW0fmcoDHaiU45RSMkTIahNldiwH3+NwYM1X
+	HVt3SC1AtCgTGVFgrFMEkecUexadaxlaHWsry74XEV/Qxn+GLleKsWQ2ZnpH6d1HSWt+6Svn5Ll
+	JQqkyx8vNuijT7iN8YiijLeVxay9CpJpfdwUL7K01KoIw7dxCdzNARSxMzp/M6OEz6RvU558qjO
+	sYg0J5EyTzzIH48Fg3ZPx9kwlr4prrHa8Li1l0EvfupJdhfjYh/766MBKMQymvCETi3YOxEki5D
+	YvhaqMtr5tKzJ9CPzwaNdAr0/AVvs4Dx1hlIhgk7qUv5Msa69nxVF5y+KKd4s1/USD9ag8eoqfX
+	WBEyObE9uCMv/KwDrf7vR0LLdnsGhiRS3hlUey7zKKiG22p33ndSWYIqhYWZdSZj1+uq9Uw==
+X-Received: by 2002:a05:6820:220c:b0:6c9:e0d0:2064 with SMTP id 006d021491bc7-6d2d0837af1mr3161193eaf.27.1790183626928;
+        Wed, 23 Sep 2026 10:13:46 -0700 (PDT)
 Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa (vpn-centralus-02.tradc-corp.com. [20.98.136.114])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6d2ce763f94sm2972392eaf.8.2026.09.23.10.13.44
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6d2ce763f94sm2972392eaf.8.2026.09.23.10.13.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Sep 2026 10:13:45 -0700 (PDT)
+        Wed, 23 Sep 2026 10:13:46 -0700 (PDT)
 From: Tamir Duberstein <tamird@gmail.com>
-Date: Wed, 23 Sep 2026 13:13:28 -0400
-Subject: [PATCH 1/2] t4205: compare huge output without diff
+Date: Wed, 23 Sep 2026 13:13:29 -0400
+Subject: [PATCH 2/2] ci: match Linux jobs to available CPUs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,7 +72,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260923-ci-large-test-resources-v1-1-c28416d59475@gmail.com>
+Message-Id: <20260923-ci-large-test-resources-v1-2-c28416d59475@gmail.com>
 References: <20260923-ci-large-test-resources-v1-0-c28416d59475@gmail.com>
 In-Reply-To: <20260923-ci-large-test-resources-v1-0-c28416d59475@gmail.com>
 To: git@vger.kernel.org
@@ -80,33 +80,35 @@ Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
  Tamir Duberstein <tamird@gmail.com>
 X-Mailer: b4 0.17-dev
 
-The huge-commit test compares two files with a line larger than 2 GiB.
-In Linux GitHub Actions jobs, git log produces its huge output but
-its subsequent diff process is killed with SIGKILL.
+GitHub Actions runs ten Make test suites concurrently even on private
+Linux runners with two CPUs. Pull request runs enable the long tests.
+These runs hit ENOSPC while multiple multi-gigabyte clone and repack
+fixtures were active.
 
-Use test_cmp_bin to compare the output byte for byte without constructing
-a line-oriented diff. Remove the two large files after a successful
-comparison, releasing more than 4 GiB before subsequent tests.
+Use nproc to choose Make and prove parallelism, as the GitLab CI path
+already does. This reduces overlapping fixtures on small Linux runners
+while keeping the long tests enabled.
 
 Signed-off-by: Tamir Duberstein <tamird@gmail.com>
 ---
- t/t4205-log-pretty-formats.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ ci/lib.sh | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 4be5c51489..6279a7e9bc 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -1189,7 +1189,8 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'set up huge commit' '
- test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'log --pretty with huge commit message' '
- 	git log -1 --format="%B%<(1)%x30" $huge_commit >actual &&
- 	echo 0 >>expect &&
--	test_cmp expect actual
-+	test_cmp_bin expect actual &&
-+	rm expect actual
- '
+diff --git a/ci/lib.sh b/ci/lib.sh
+index c6ccbf8c17..0855026dad 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -228,6 +228,10 @@ then
  
- test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'log --pretty with huge commit message does not cause allocation failure' '
+ 	GIT_TEST_OPTS="--github-workflow-markup"
+ 	JOBS=10
++	if test linux = "$CI_OS_NAME"
++	then
++		JOBS=$(nproc)
++	fi
+ 
+ 	distro=$(echo "$CI_JOB_IMAGE" | tr : -)
+ elif test true = "$GITLAB_CI"
 
 -- 
 2.56.0.rc0.807.ga0c0929ce1.frankengit
