@@ -1,88 +1,86 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A7C563FDC
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 19:50:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95549572681
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 20:03:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790193009; cv=none; b=N+JsEh9NjY3AxyOkAFS5uLLk5956xVt/CIus+Oc55O3+Wv2z81DwEB2yobWRSNjLXixE/6nfpFt9vI7DevQQFOLhvEl53z1YjtetyZ3dLf5LkLq5x5yc4f6NkfgrcryL+Iwn93vZMsQM8JYqlt/cuSMdtxhXCgKygK3SL1TPdkY=
+	t=1790193816; cv=none; b=juqnvolzs50M1i1/s6kh9H5c6aHkc4q6P/qGtyoC4qgyU0Z6pE6EiocBI/cwPpECm6cc8C7khey0CQ2R+lx1PgJ1/YysOR+PNr1EKNetUci3TPlhwCll3BsJCZgCHay7hmcPT7WWLvLoKRc/xvgzUa+ciw8CXhTiBoWyubvIht0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790193009; c=relaxed/simple;
-	bh=/lavn9YK33CZ0Ur/OnNc8LtQOJ7XyaJSJ9qrP1zzz84=;
+	s=arc-20240116; t=1790193816; c=relaxed/simple;
+	bh=IQ7q1A55szdppVqn1GUe+anV8/h3GI9ks72hBrWpvlA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lRxGG7og+QHtLeKeI5Jj7qk4Cj2ybaeb90Xv6fuYQ0hTWST/z10Zxkb1NJ6d5zAc8ungdIk8LA4d9JGKn3lAHXfxy5/yoVyyPxKP0LV44HjNsX1z2EHraCDeAX0Qk6jL3ulI4qA/UVHGameZtQXktZQnXsYv938+8n0S/Ile6Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c4sPTlsm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j3qmJfpk; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=E7a2D2M4RLbcLRJB9QIdHcU/J2PT8qr5qjj+LJSPDAkpzDrWm1DpUdWQOu+te/VTGaq/bEa1M/el+KGgbPb+liB+Jf89et4GinqVVYtLCsJQlNV5Ba9ogQu20mMAebCm7F16HWw54BXBGZpfeGHP19bOXKc0WLVCW7PBTRdiwIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xm7nrNTw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GTw5Wsik; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c4sPTlsm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j3qmJfpk"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C7FA81400024;
-	Wed, 23 Sep 2026 15:50:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xm7nrNTw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GTw5Wsik"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9DA2EEC0123;
+	Wed, 23 Sep 2026 16:03:33 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 23 Sep 2026 15:50:04 -0400
+  by phl-compute-12.internal (MEProxy); Wed, 23 Sep 2026 16:03:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790193004; x=1790279404; bh=04R3JC+wTt
-	/YtHTsgwLjQNL3JuvTm5iqgLhTj9U8cRE=; b=c4sPTlsm1vEXoD+mheX+O9b4I2
-	jeeNbk1Q/GWb/jDbjqmJl/DbijKMyEaSBS9BzaDvH9XkG1RmSCnfUFtvFuz6gsaL
-	+FjurRD6hxuFNOJbL/c/l2OJnJ1xEf1/rBjyaza2dYzq9vcxevlFwPIyKmB+PZ+q
-	UTrXjZ/54jCcG3fhQnEQ2Wu/bc2xGN9Yp37/Gxku9sb7THT7GiDXmfsPi+o/adOg
-	v5gbaIGZISMQeQJvP03ghqycWd+r1IfKfNnzo1D6WJQaB0SvhUl0P3/XcaWWqzN7
-	qKidY9ySfZiUb+IXLpOSwALSocINRME4xDoJO4LJ5VhYKv02G/JB6+ycjvqQ==
+	:subject:to:to; s=fm3; t=1790193813; x=1790280213; bh=/GsRUGngvN
+	SfKu6awj8uUUxinTGgH8maFGZ2YilN5mM=; b=Xm7nrNTwO5e9dzfMajOHzdCIjv
+	Y5AKs0XGlc5c/kd9Ie7II075lw+OlN+EzQUJT/sDRKOjvrFyBfwSltasHgVOI+21
+	2AzysSjF1VUg+iDfWbYJVDhtBzsDG+YzqdMbMJO1OYEYZD9b8h3I/89qJo/e4H5j
+	d7IfEuGhQ/2JJ2IMpnH+eneL7QItkDc5yADlEvnGSSERnxTKsIke23JmZkPf0ujF
+	q1E7pE3lNJhAFCPu8LG9nPP4QPFU53r47fk87yJVjBDWdd064kjwAg/iMqJwcW8U
+	Fhy2mQinHD6mRertTHKRhlwy1fQAs8dQvmHedNKc5tJKWOkQWpL/x5eq6IWA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790193004; x=1790279404; bh=04R3JC+wTt/YtHTsgwLjQNL3JuvTm5iqgLh
-	Tj9U8cRE=; b=j3qmJfpkXo4AUA8ZqqVYyazouNEMrIHzuMZocfHfqfVuZH1u2OY
-	ZFKqrtS2+ZvKM224UHwHpHUqRQui5oxCB/dWLcVCIkY8Rad8nOad3cA/dRYf9C00
-	hpLtj5DrdDCBilDRlTC+01C1+RDx1HI3gtp7l0r0vs3ecMmApWR186SfsEli9qph
-	1C4PpCPkaPbBpyOjUyCsM5MvXNAGQwL5Re3fYq5Gfs8mKTt4SpSIiMJsZsM9jJuR
-	VlRv7/0yWl1fIHM/Y6U/NxHJ35ofKQ8ABXzzT6vVnIYdAiNtIAm1YcmZPFNbnVCv
-	GOsFqy1CitNJBX3Exse3pHj4bWgdGljRoyg==
-X-ME-Sender: <xms:bC20avWh4icuGHBB0UXvvk-ktybaTvuZt5dN0RbTyf9FRq9q2m-l6A>
-    <xme:bC20arRUTlTIP634mDJxsvA7oUFSGrwJXDMrAIrslssDRGFgxbZwcxXyl3e21zgiZ
-    DsWafpEXVJ8I09HODi9eWrGq8_qwArUxhkCe7i5DguFHMyD3H2oOw>
-X-ME-Received: <xmr:bC20alMjJ7wyBYwNsT04h2bi2K83VODP07sOeuel_BrG-tDhImQOncoJupTyZ4c_2tf0Nh4mNoZNJiiRbM8ILUP51TIOU1XsqCnR>
-X-ME-Proxy-Cause: dmFkZTFP5/c2RWc6DjbbyLb+2/dMjLYa66htXFSH+mABxWBpfZ0OG0IRAjtSSV+2xPUHke
-    5nVy4b6b8AqaR5q1k7jvf1p2TkaJQ/Opt3+aDtIBngBvaiC/Dzo8CeOgL+OZS9uYWH9WLX
-    x7ndNE/qzvBQkW1H1SwNlhQmQSIu6Asx9SMm0g0nSRNksh75Q2Hg2U/bzCBjnd2amm88jz
-    ECfAYQZczNSzC7hc/ZV07bO1UYKBCWRqLhRqiAcXeZdwoMR1gagBT6ZoBwmSGPysoR9EGc
-    ztwnUcMzVPp4oprRYVBB9EO2SgKf0fkSWrYY5HnZoKsf9FAByaekgaK0GZQTOJT4xiycUU
-    GZh04ElFLk1xqvBmsHfMLCrcyHX5i/vZxU6uXIbKDjDrZ9n2d3xDo7hvLz6cbMQ748yYrP
-    faAWXLiCTfdPa6Fvy+Hyp1CtQ+AhL/egohEjtB+im5xgD/e67l9KgWkf6/Q3YBGfankRAO
-    lqVbibntkCTM8HUXUwmxKr8ad+72TsUEGq2L+8ba9jEKPu3+6Ch7YqAu/eDXBzsVmJNfQD
-    pFrylxolmZPcuJHcvl1/7aMKibrH/mYpUCAoMhKBUzrtKsICGt+yulDbeTs5suro/mu2vd
-    fMHWZzYovObUBPNxMxGiC07W0WleXmWiOHzlKBCzDInrREWFEmDnpVxsJT9A
-X-ME-Proxy: <xmx:bC20ahQM2LQK9Qk9bjcrJpTDRmdcsYiCXqSlMqyoWz-8WHoim4MOAQ>
-    <xmx:bC20arjrvPtDTZMMOA_vsTLW2-abpaO6VmOjlF3tTcaHJA_NyO8DkA>
-    <xmx:bC20ai_MB1j80XbEa45rx95sdYIsm6snXQ2jYhiQzvOgRs96NtyYmg>
-    <xmx:bC20aqGgIIiiMvh34bAFEb_pOw9qhTGxj08Oy8_SSazpPNE0C2_Vmg>
-    <xmx:bC20at5lxTafgGYgYBjdT1SCYGqp3GstQPdcvVmBDsAhy0Knt6Th1KiD>
+	1790193813; x=1790280213; bh=/GsRUGngvNSfKu6awj8uUUxinTGgH8maFGZ
+	2YilN5mM=; b=GTw5WsiktMDJqHsvYPpzU3CAvWbw80FnJTTaneBUgJhkQRU1iBG
+	sSSUT+ihFcY8eB7nIgkZfB0vV11G0kX3SFe8JSfG1LMFN1jUs4+sKXzXzuP535w7
+	IYHibNL5fwFKYXeqXciQhqvmPLDZ3TV+0oBIjpusFir/Rbj2vfZpwLlNmYM4yu6S
+	V8QaNQo6VZO8/l5XXMt4Dylt3Zyg66Y5tfR86Dkx8CvmkxKsc28Uw7PRezXSWl/A
+	TV6/1VA4WTMiLbjDxV8LOsSv4OoQW23ZzMkfZ/Qh4iH3hvMNjuxKCi1yNBBUGUKH
+	FWExz3tGy1wU7xiFwz739u5pPTSHz0mdkjQ==
+X-ME-Sender: <xms:lTC0aijnj8DFn-skBW5TkxlUw7CE40OADjETApkH9C4heVh1ezoVPw>
+    <xme:lTC0alk8h0KmjgahnXuFbeE6aKbdSh9RyWw9bmcO9ZubseVzw1D8RttICLMoS83oa
+    jiSyOK4h-AZK8vjxrC2_f5VDrHmGH89kXkD_c19LIHQsgl6cPdCKUs>
+X-ME-Received: <xmr:lTC0att89iprK13fM4YkYAjZD8JKoCqMjzVE4w0bMtBf9I-_yrAlthffQzNTxki2PoTFAFU195oovCGQ-qDA3FeBRuxkNPiZY3Qx>
+X-ME-Proxy-Cause: dmFkZTEG6d7eUyjPxmZ5JY5G6LxfsObO7kn7pFoXdZFpHtBTPKGA9ITJQtNRAbz/OWX8Q/
+    iqnmlJWHVDbChPocPeDYQfCKd74yJcYHl9leWfKmgHEFvVK4DNjDrS0TKXIhrxXx1q0ECS
+    3hhwjR5gbrh4RzqBgjwYV0FGabDSFNSJeHFLHw6zfroH0+i70doGcF2RwojtEPiPZCKF0h
+    e8/TDTl7L8AgdJI6GWLzeKMpsEqUp5kiswHorU6cxPy/0zDgxiJCVJbTCBQNP7cDlKkGuD
+    Wg/qrSj1Xkf5+YlsQ6g2QvW7Pp7FWJUlFcDm28dzweUzgDNS0V37bYoROCvO0OX59/YiO5
+    38dRKS85pHshjJ+Z2i0bGZ4u1DD2g1ikJR3iu2ZQtM7wOivk9sxSYtJWR9//2qw3x/l+Zj
+    UM9/fokEVFzPxSvrSE1pgKAGSw3BkFaL6frs1bTo3cbZ0Bf9L0FOGw22q+URpMf0NYGhRc
+    jggYSFtj9bb8mn4+/aijb22dyf2J91sISbqzv82P/UGLQoz3SSMMJbkWKdrEnEj+bmpviJ
+    8IqAtUBE8LrMt7/NyIKXYpS/3oovTtwYV6CWpZIywN9rZTqs3vNPwYGSymCk/GU8fo1xeh
+    WvFhxLzqmIBCxV9hYQsCrHeCbkdr5QVSRwNLdUe1YuVZz8p4iX2PAQWFj1kg
+X-ME-Proxy: <xmx:lTC0aragkNBf_EW8eY6gKgfEXwjXCbeDlrnUci-ITSujwpXGcmSVbQ>
+    <xmx:lTC0alAhQDu82Z0bEMCNsABi52Qckko_zSrPd2tfAH7zbQb_VDbGFg>
+    <xmx:lTC0aj_Fnf9UcBsSx8g-nacxM8P3mmvyXsEJY2p_PYnXmZg3-7_HmA>
+    <xmx:lTC0ahSSftYuYTdYgwNDTRof7iePg2RP9NTOVNZaCNXRkGsM1ZjTdg>
+    <xmx:lTC0amM0hM-yZOd4U2GKOHU7S0hXb2vh-IYOAoTDEYS3qd4GgpJp04Md>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Sep 2026 15:50:03 -0400 (EDT)
+ 23 Sep 2026 16:03:32 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  Harald Nordgren via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Harald
- Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH] fetch: add config to avoid fetching every branch in
- shallow repo
-In-Reply-To: <CALnO6CA2DXvyOO+fu04sozg2=E0JoymAqyhs_heHzExgRSEzVw@mail.gmail.com>
-	(D. Ben Knoble's message of "Wed, 23 Sep 2026 12:55:07 -0400")
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
-	<7f084e4d-f738-4bd4-9b4d-cad995f04be8@gmail.com>
-	<xmqqh5jhfbyw.fsf@gitster.g>
-	<05d0e6e0-e156-4a2a-95a0-4986ab18ef49@gmail.com>
-	<xmqq5wzwc76w.fsf@gitster.g>
-	<CALnO6CA2DXvyOO+fu04sozg2=E0JoymAqyhs_heHzExgRSEzVw@mail.gmail.com>
-Date: Wed, 23 Sep 2026 12:50:01 -0700
-Message-ID: <xmqqbj9nagt2.fsf@gitster.g>
+To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Phil Hord <phil.hord@gmail.com>,  Elijah Newren
+ <newren@gmail.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>,  "D . Ben
+ Knoble" <ben.knoble@gmail.com>
+Subject: Re: [PATCH v4 3/3] fetch, remote: retain old OIDs when pruning refs
+In-Reply-To: <6f34853c79625794d2eb364d227660be57d1539b.1790113781.git.maciej.ciemborowicz@gmail.com>
+	(Maciej Ciemborowicz's message of "Wed, 23 Sep 2026 00:31:10 +0200")
+References: <cover.1790079917.git.maciej.ciemborowicz@gmail.com>
+	<cover.1790113781.git.maciej.ciemborowicz@gmail.com>
+	<6f34853c79625794d2eb364d227660be57d1539b.1790113781.git.maciej.ciemborowicz@gmail.com>
+Date: Wed, 23 Sep 2026 13:03:31 -0700
+Message-ID: <xmqq4iffag6k.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,42 +90,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com> writes:
 
->>     $ git fetch second main:refs/remotes/second/main
->
-> I've wanted something similar for notes, so allow me to interject from
-> the sidelines: it would be even nicer to still have the ability to map
-> fetches (so that "git fetch second main" did the right thing, creating
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index b662216bf..95789edb8 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1471,22 +1471,29 @@ static int prune_refs(struct display_state *display_state,
+> ...
+>  		} else {
+> +			for (ref = stale_refs; ref; ref = ref->next) {
+> +				string_list_append(&refnames, ref->name);
+> +				oid_array_append(&old_oids, &ref->new_oid);
+> +			}
+>  			result = refs_delete_refs(get_main_ref_store(the_repository),
+>  						  "fetch: prune", &refnames,
+> -						  NULL, 0);
+> +						  &old_oids, &failed_refs, 0);
 
-The thing is, the command line
+Isn't adding a new parameter to refs_delete_refs() needed before
+this step?  The corresponding changes to refs.[ch] was done in
+[1/3], and the fact that the callsite receives this update to add an
+extra parameter this late in the series means [1/3] and [2/3] does
+not even compile, right?
 
-    $ git fetch second main
-
-has been used for the past 20 years as a "single-shot fetch" syntax
-that expresses that the user does not intend to keep interacting
-with the same 'main' branch or even the same 'second' repository,
-and for the "single-shot fetch", it is absolutely the wrong thing to
-create a remote-tracking branch.
-
-It would be even worse if we created a remote 'second' and
-remote-tracking branch 'refs/remotes/second/main' when you ran
-
-    $ git fetch https://ho.st/second main
-
-Having said that, I suspect that the fact that you have the
-shorthand 'second' (i.e., you have "[remote "second"] url = ..."
-defined) may be a good enough sign that you expect to keep
-interacting with that repository, and some people might appreciate
-it if
-
-    $ git fetch second main
-
-created a remote-tracking branch "refs/remotes/second/main"
-automatically.
-
-But we cannot suddenly start doing so without breaking people's
-expectations, and without a good transition plan.  We need at least
-an escape hatch for users to say "No, this is a single-shot fetch;
-do not write the object anywhere other than FETCH_HEAD as we have
-always done".
+Thanks.
