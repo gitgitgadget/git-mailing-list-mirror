@@ -1,127 +1,131 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7B54A0929
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 13:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B20952CCFE
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 13:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790168817; cv=none; b=FVSvXfUF+zpuWtZ1HaljBFPtbkOPxR91J/qZ3mrUSqbxvBCaI+84fo1vKk4yhFvFjCygkZzXaLDPTvoUCknV9fcFVIepzeJiAQE9t7qnMXzKt5L2i79f88fxzn701cL2hmYbp+EfUv+MaLOogsqKnr2d9+fHII3m7zNulDAYVZk=
+	t=1790169395; cv=none; b=SIUGyjFH8Db+lwKwU19YAfqX7dRSGV25TNUyu2bF+mgZv7RbwmrDi2iv7Qqcah98ab12C4DEtBP1zt+MNDPMzF5CZMDivTbSy4MRXIP8gW55p5Rk+qI4HEP2G4iAqZKEURqK6ovHp67n82II2s9C7Nu4M3jEaBrER5bZAv1SMf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790168817; c=relaxed/simple;
-	bh=yLKMfhQMz8k9IPZVnwcERUTsvq+LKOfJfl7O5LUjhTo=;
+	s=arc-20240116; t=1790169395; c=relaxed/simple;
+	bh=4mY0KZGd/cXuW//gF5ELb/MjAv2r/j0m9ozwlDkfsi0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eGaMdmhzCBOENs4mYxmcOTJ62G4sF0UjW299ukzd6HIoF5x/Io36xmUWEFhFYDomWs/dwMvpzzqNYsAq8fPFZ6rqacSLZZOB25ugT/y1zesi+jPEFzNQIUtZR0JAtX3dLd66DAZJ5JbLkCmZDBqWu7Q7WnsnQESYyIcndqadVsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vuvYQ9Aj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GOXm/3c9; arc=none smtp.client-ip=202.12.124.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z1gCZ1tP9XvbCjmYQwHM4XJGy/dDotHu9Si8MUgVqDqvqDTL9AY6iDNJKDrUQPwyKNu+csSazXTubARVPc4CtzMXUG3tdcw9uwdqZQc7FC20wxjnhJUbWzQFeF7frDwoZrhJWfCD3jKE0xQjs9IeS4CxmjW3Yj3fNx1BZzGjkHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fMCUvdD1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VDJJjg2i; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vuvYQ9Aj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GOXm/3c9"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0EC997A007D;
-	Wed, 23 Sep 2026 09:06:55 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Wed, 23 Sep 2026 09:06:55 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fMCUvdD1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VDJJjg2i"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AF1607A0129;
+	Wed, 23 Sep 2026 09:16:33 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Wed, 23 Sep 2026 09:16:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790168814;
-	 x=1790255214; bh=CBatYl7IsTIhHCryEEeLYxLQq6N2EwBzPH42MYgBULE=; b=
-	vuvYQ9AjVr/e7s+4zXZBA6gdc2V/4xlWZrDUgzfNvcAYthSSWe92DLIfWooWkW6+
-	mDQxkrccsBsaUPYbe6JroSUgMZOFoDLlgAqLZUQj9UW+w3e8cbyElogvel5gFV37
-	4GUhKBiPl0xCvfsTGKxbDH45LYuluYkKJ8iDXsLWyWYg/yryctpdBoLbyDlb88Ld
-	Xn6yV4t5xxwDlrx6OA/GZSpqWompBgARq1we2RtUHVgv9WB1+QXG8nCABsdNExrb
-	rSVAtU+mwJMmc38xiSUioUrSzozqo1DRvdDu+qp96wdfwExm/fh23jEp++SfAsKA
-	7Am4EmxuqTgL0C9O2vVNnQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1790169393; x=1790255793; bh=trqz7UnDAS
+	e69cIr1z4T9HTZkigIRYTRbcfE7BBgKOY=; b=fMCUvdD1XZBiiT1jnogIpCGSfQ
+	z9E1zZZZ9bDIIWQx7EoydFpy47AzxQIHwQAjMN8pTCc5fgWM6cbnP1byIEdl1yZB
+	zeN0bg572EphjhI7UR/WW0ew0+KStCf7Ci2x9uJcNHwecFnjWxDXbLOzRh012QhS
+	L20+O0GGmLiyHY/0lSn41tmqEDdKQ3pSpDYj1L17UUvI1hH5eUWcV03PRtjiA419
+	xKNttT5XK05rAYuxsEX70+HA5avgc8hXBsjuwjf4vq/+AF4aHxrFqqGlgMNF1ldM
+	3yLsEb2JYTRqfC7116FIQcPGFGlsZdSxyY1v41LrtjeXE6fe8fEqmxUP/J+g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790168814; x=
-	1790255214; bh=CBatYl7IsTIhHCryEEeLYxLQq6N2EwBzPH42MYgBULE=; b=G
-	OXm/3c9JMJX7dR6lJastPnnpalGbwRknDfZCNRGJxqfrs7hn7fg+C63Dm76ufLjC
-	6e9Kb51KFHUPgu/DC8kVPhNFdxdoZmrY5uMmvOcBbgqAEZBJ7JNYmgjl9glF/Uzr
-	TYc/SQorzRaBBBwpXZSR2GYTxXKplYdSEVyXIUnjYl/Ek27zNAvdrYX83fu4+R+0
-	FEBWVg+1UBLOyJgwgSFXtXND2mZqwqsuVf2k5cPU/z6WjbYbZf9Kk2etHPnej6eC
-	q25qZpxRyc176/x9aX9iNAHgQVfZCujHjB2SugTnwh8jR51jO7WB71ZTpzBfeyOt
-	3csn6wnX+0WRBnKF7fdQA==
-X-ME-Sender: <xms:7s6zas807zXS1PtavMKY6d6BZLMugV29dpOUzwqQbDS352C_wsbuxg>
-    <xme:7s6zasJt8cKOYhW-rLQO5ddwu5fXx_TCd-BZbSyYZmbkgVDiEUB1lhTZEC6AWBm-_
-    InUGmwVT0cRO6vQ-QTnGVtLJ9LfPT38yfdVidT1T0BI_nwk04CHVOM>
-X-ME-Received: <xmr:7s6zavYPvohVgG3HTmBc3Mkb08TXi1WQTSRfYGN-8nwCGpNFmMbElg>
-X-ME-Proxy-Cause: dmFkZTE99K+rQ0yElREW1yi8nWWbpCV0UmtTbBqxmy3YkyunVAqrB9KWFFUtIgGRQ/cqcQ
-    7YsH2udnFaBx0Dgr6FTww+zr+dCL43Ua1CkjZoQk/7/g1WSBUo78LmSNq+KpXSx/dOOGoS
-    0VVxzafnPkCvPDjS0n1gDZuNoelxxIJwXChp+zdSRtb0VdGtQCLW3WiYSY0euQ+R9RSsKb
-    61uekNRcEG5GoXXah0eNiB/XHNmPJsBVih5OS/PfwKpJ40RrTlXq1Y02UHUzk2aLvLXT5g
-    N3XX6grwJfn5T8TV32ZEm/JBduBUgaNLesWhqEr8QDUU+ctN/+WWthQB8JEHrjDzdPMoi1
-    voXpaIdZCyz1kg6uK0QMh49F77npsptTuiM0J4rG/l7qPYIWGMmWLRiWQgeR5pDliA5ybm
-    CoHX17AF28nrEIxw6pJgTAS4DQASdzqIxWtZ0Jv54UPxZLoq9zjeOh70E3vZeuqkWAa3AW
-    s/De9LoJzv8tiufleGxayB81qdh2KqqsKBRUwBqBfZ+kyVyYZBM7V+Ty9uaWJNO2KSb32W
-    y3zSDu1Qj3QJWubwNOhbLclfbUBjBLJJcXreuw8zvj0WbjGEUR63FsOt8vUWRj3EvpI/Y2
-    t60Zh9KzzPtQ7v03CLlV8GgbI3TWFr1c5d20UzgY+e4bjuqvVSKDgaac9Nkw
-X-ME-Proxy: <xmx:7s6zamJT1u5luwpkyHZ4LOHuMjiE3Ld2zPPCUA1OQsFQtmCcM3PaRQ>
-    <xmx:7s6zalAI5YTEoBqZGJmddS8tbtsZp1snJx1eI_Rfyt8VY284Eyd2DQ>
-    <xmx:7s6zajrrTW9ABe6YznOM0vS5PGEkuQ1KGB57DQK3JBDP8Oxp7jho1A>
-    <xmx:7s6zaohNzvhx1F00RcKu0N9cDRxJ77mxvrwENKtP3KE1ijfL3M3zwg>
-    <xmx:7s6zainS4iW1FUJo9U69b656gDlBjS-j-rgzHCVU1zEVOUWiR6JYI4iY>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790169393; x=1790255793; bh=trqz7UnDASe69cIr1z4T9HTZkigIRYTRbcf
+	E7BBgKOY=; b=VDJJjg2iZ4ScxTLIT1z/Ftnf49bwDlT0IWKpLnkeBQerwUPIJ3s
+	T3mB6ZtRsY1F/LOaHQboNgGYqpOhXcwJ/1DxFPIe92eyHwckckzC1WF/YpW2/9im
+	dlnfoVs/XubuOJDWqBU1Lm2Hnp6P8upykZU2ktDczmB2RZKaC2K6pJ0EWZD1eYeH
+	TZXjPF9CXptwsksYT8fcB+DAB373VktFe6viDzb8jBMdVjkwKQk4WtTPOn4hF1L+
+	mTMfZyPWbgCqrYfHClCNCV6b1B/mdXjIdxo5dqMUoV+X3vmWP6GBTdO5PT3GLjm7
+	BOZH36M0tCSGSLZQkNl2C1WrzykjN6vn7lQ==
+X-ME-Sender: <xms:MdGzakUEmjH7K1Sp4IokSL-TzUNqo-jU7EFNB5C0k2v4JbZWjtMB3w>
+    <xme:MdGzaulumRzRt9VNDGkLx7VkM_cpujtMGRvzOBRUot6_K9C8LPPTfx5k_0qSFFxxa
+    ko9C8LSbgsxp824gsqhl52wf2CkihVB1AUO3E4hVxeky6EI_9TGCA>
+X-ME-Received: <xmr:MdGzamCFDojP11z7nGUHA_a_RRHUPNgwxSfFrPv4ocLb8nvmKzw67A>
+X-ME-Proxy-Cause: dmFkZTFa1hixJCekOmaJB6nWWd1s3QrVXiTY8NHwhWqFBzRieTg1OHaRdoWuNDZz2zskZb
+    rfrdf/bNe1nZIKP3Qj7z5lsT3DU/MDgJgg/vumkR3oBFEoycbYKKZjqkcEmkszlFI+6DvO
+    CKT/JAULBavls/72OmW2AGizQUUOYNe9ExeMXGbQCdvEpVnBvBuumuL9kXzQPCeMEDYiMO
+    wHpw3GAqPNPw7IAg4+hW2CORqN4pYwbHyJudTq1zBGxdEK1OwXVoKY1fPVJnQ5+Y4qjoel
+    6Z4UOfphnkoLzQ7oeFz37TpRJSX4xfioiueDKH+S5N8l2WuVlWJ4NNJcRWUZvdAS9629a1
+    yxJyO3utKWwMUOhj7YzcQAjqUnLy2NehAVKIKpLv3ZArzeXrEScjvHuZBVuvzF9f0lEQ/X
+    iz/Qmr3/r83nRBTreCtTmzRUVRO/Ud89eHiZukOLuvQ7z6YBHoOtMaHUk4KMIpTbsBbVdN
+    HaU99wAAzLXHbXOTAfNx1wiObaXU9EOMeQtKrzTdEWin2sQUe3lxD16NrmBWeaBGw6zlbX
+    RXYqA827/oOcPmAashzgDqPUyLidKVER7R8q+8/n+TKr6gy8FxzPcYtZcgj3ezOimhE2Fk
+    IOjHBgY6hAyQGlBAooid/N2WACcUxjsKpA7PNk0OM9QuNFKpnEl6J926vZ9g
+X-ME-Proxy: <xmx:MdGzaudSXVbtKp3-M40WXU09pbk0nkIvBotcHGrgFFeZfy29Z54HiA>
+    <xmx:MdGzahJU8kaKoe8HHh7MsNZ9zpsDmZddSwFFF-3HoDQZ3-UO2OIVuQ>
+    <xmx:MdGzahfj5aYtIn75JWCLBM1ktS7zriB7UEG288NppdELFjnycymSvA>
+    <xmx:MdGzao0NscDWtxKOv85NmJulC5dcv0vIcorccUsqYIglPPTN70Nt2g>
+    <xmx:MdGzapH7cEy4Q7JInOfbTx20ic9SUQylKEPNj4l3xwzpvV2JLR0BKpI0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Sep 2026 09:06:54 -0400 (EDT)
+ 23 Sep 2026 09:16:32 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5077097a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 23 Sep 2026 13:06:52 +0000 (UTC)
-Date: Wed, 23 Sep 2026 15:06:48 +0200
+	by mail (OpenSMTPD) with ESMTPSA id f6fe9a72 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 23 Sep 2026 13:16:31 +0000 (UTC)
+Date: Wed, 23 Sep 2026 15:16:21 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Yoichi Nakayama <yoichi.nakayama@gmail.com>
-Cc: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] completion: complete 'git worktree repair'
-Message-ID: <arPO6GzJVjjdndTN@pks.im>
-References: <pull.2218.git.1789171955370.gitgitgadget@gmail.com>
- <aqeUWrx7pbzDVbVt@pks.im>
- <CAF5D8-v2FSJX_dHFmNzaudAtPu76pVX0n5GhMnGjjnT2f3g3Ng@mail.gmail.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] object-file: lift ODB reprepare out of packfile flush
+Message-ID: <arPQrtYHen3UAvdk@pks.im>
+References: <cover.1789328612.git.jltobler@gmail.com>
+ <cf14416f224f48475dfc9f79d8ec62756b9fdedf.1789328612.git.jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF5D8-v2FSJX_dHFmNzaudAtPu76pVX0n5GhMnGjjnT2f3g3Ng@mail.gmail.com>
+In-Reply-To: <cf14416f224f48475dfc9f79d8ec62756b9fdedf.1789328612.git.jltobler@gmail.com>
 
-On Mon, Sep 14, 2026 at 09:08:15PM +0900, Yoichi Nakayama wrote:
-> On Mon, Sep 14, 2026 at 3:29 PM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > On Sat, Sep 12, 2026 at 12:12:35AM +0000, Yoichi NAKAYAMA via GitGitGadget wrote:
-> > > From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-> > >
-> > > Added completion support for the 'repair' subcommand of worktree. It
-> > > optionally receives a list of paths to linked worktrees or paths to
-> > > worktrees with broken links.
-> >
-> > We typically write commit messages in imperative mood, as if instructing
-> > the code to change. We also briefly describe the status quo, even though
-> > it's not as important in this particular case. An example could be:
-> >
-> >   Our Bash completion does not know to complete the "repair" subcommand
-> >   for git-worktree(1). Add support for it.
-> >
-> > One could also try to add in your bit about worktree paths, but that's
-> > something that's quite obviously visible from the diff anyway. So this
-> > may or may not be valuable.
-> 
-> Thank you for your comment.
-> Since this is not limited to bash, it also adds completion support
-> for zsh and tcsh via git-completion.{zsh,tcsh}.
-> So I'd like to modify the body of the commit message as follows:
-> 
->   The completion scripts do not complete the "repair" subcommand for
->   git-worktree(1). Add support for it.
+On Sun, Sep 13, 2026 at 03:26:21PM -0500, Justin Tobler wrote:
+> diff --git a/object-file.c b/object-file.c
+> index a4cbf8b081df..0f123b79fad1 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -909,8 +907,10 @@ static int odb_transaction_files_write_object_stream(struct odb_transaction *bas
+>  	 * to zlib compression and is sufficient for this check.
+>  	 */
+>  	if (state->nr_written && pack_size_limit_cfg &&
+> -	    pack_size_limit_cfg < state->offset + stream->size)
+> +	    pack_size_limit_cfg < state->offset + stream->size) {
+>  		flush_packfile_transaction(transaction);
+> +		odb_reprepare(transaction->base.source->odb);
+> +	}
+>  
+>  	CALLOC_ARRAY(idx, 1);
+>  	prepare_packfile_transaction(transaction);
+> @@ -1260,6 +1260,7 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
+>  {
+>  	struct odb_transaction_files *transaction =
+>  		container_of(base, struct odb_transaction_files, base);
+> +	int have_packfile = !!transaction->packfile.f;
+>  
+>  	if (transaction->objdir) {
+>  		struct strbuf temp_path = STRBUF_INIT;
+> @@ -1293,6 +1294,9 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
+>  
+>  	flush_packfile_transaction(transaction);
+>  
+> +	if (have_packfile)
+> +		odb_reprepare(transaction->base.source->odb);
+> +
+>  	return 0;
+>  }
 
-Ah, fair. We know to reuse the Bash completion scripts for both of
-these.
+One thing that I'm curious about: we don't have any error checking for
+flushing the object directory at alll. So there is actually a change in
+behaviour here, where we now also reprepare in case flushing has failed.
+It probably doesn't matter much, but it does raise the question whether
+we may want to start checking for errors.
 
 Patrick
