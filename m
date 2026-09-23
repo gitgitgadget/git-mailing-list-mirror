@@ -1,117 +1,127 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181D454281F
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 22:00:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7BD48663E
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 22:00:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790200834; cv=none; b=b5A70pNsK6BVMxePVIrOXAwMNnkxS+IeRJsE3zezm/9zM6WKdt1W6ymRct1SJtNDzm5JF6W0okrqRG7TBntyZClMPd87hyQ4IXuXByeHXUhGISrx+nlwMPQdG/Hrtr3U9CmHDkGmH5v7nNsBwsl0J1P3lr6nnwCR29le+3cOnL8=
+	t=1790200856; cv=none; b=XZXLs2s48+6lAIbmNbjRj+A9td++FXGeHjVnU5DGJn5uGtSMh146MPPHRzLrRbp2nVDItLEwJKezQ7CuK40Cv2ZzCHu4Kd5yQ037xcZI1r2Pv2/Sl8HwJeNe+bE1wzOwe6qwX22K3rM1AwdOolKFCUguXmS4sj6yeAZyTNPUhng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790200834; c=relaxed/simple;
-	bh=IRUY9g3fWrpQCAfxmehnnegrb2z28OYgynDn0uLTA0w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LCp217cU5oHUUyFTIOADbMAcgOtcM5CQvC2K5WlI+NKE7BqvRPxFo+CAsI3PMWRTwxXS9puI7MkTfo9GyyHqEwjp3k83a3K6mFBTNLzG50OvC/8038kCPmhmooHgyCBoE2l9WhAdiMQDnuMtD/j7Z41ztePaDUjvYqaQlsUwSiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kbV1rqvu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P0OYRjXC; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790200856; c=relaxed/simple;
+	bh=xninY55QUBeN9JzeArBrCFAH1XE6ZvM4j/+V6yX344k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JcO5mkIhkiVWMAmQfzGOPE9swzxWAfua8OuEFslKfVOdW63gimg2NYdtxqp7Yl5hFkycS/7jd6vJtag5SFUrclVZTIMSpBNmfdb/oK/93tr6VVKR/pyMJVFLqc0ulJTOwoh8iFN6XTCBROzbO8lvzriMFppvOPoLCRwsgQvaAtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=X04uNyt4; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kbV1rqvu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P0OYRjXC"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 24DF1EC01E0;
-	Wed, 23 Sep 2026 18:00:32 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 23 Sep 2026 18:00:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790200832; x=1790287232; bh=HSH+Y9BcEd
-	81TIvZ/HcETZbpagzPSH+hGmxFIjPbz38=; b=kbV1rqvucNl6BF5P1SrCffuo9s
-	ZnZCuqfJxq8wus79KlwkG9dsVe4xVEFBPlXx/JO/4F+h8PAUzDQAx6//6ApWB0r0
-	vAi/AAokKpHillbLStcToCFeVrmfyilXnwhoGQePhmWydAa/sO11sGiAVQGq3dIU
-	seTGENZssjU83Jhb26jWkl5IJWlB9R5n52R4yHu7QvTw4wzMZohYPBL9cYo29eko
-	/pkHF5mZWeYHhYal8uy1a7Z8ZnornMwTfxKS3N6d0SOqD5bDKo4+WrK/HwI2WGjN
-	ez7bwEpJcJIlq4dG1TjzkOklwSM8i6aZeWnXDvHLvJRFgEXWEVA2TCCKXwAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790200832; x=1790287232; bh=HSH+Y9BcEd81TIvZ/HcETZbpagzPSH+hGmx
-	FIjPbz38=; b=P0OYRjXCX9WNJHALpaavCzj+C2BS7bLb3MDUY2pAQmyYPqlphY7
-	zums0roziVjfj2EWUnZ7CHdI6N5NueV5P52oepzl0jS5BfH32U5+M03JNZq6nWzS
-	OZ1r0FeNr+P9CW18vczQGyb78+h7i+kI5tlrM4h99vazY2BvT++3F0VC15NYyvBz
-	kTW50G0DEQ4zt9wloirQiRPG/0QKYl97LW83b3V54T7q9ebMLPaxdzy9ZVITJQmB
-	rgyL11EBnO4ik/KOBm3zw3zrGDBAcWBwi/mZjFfbs+qpNOdaWMavcG2fIMXIc50d
-	3P9kxgy+pPCvf+4bV6+/0+okw6NzfXxtZUA==
-X-ME-Sender: <xms:AEy0apCC1F-eiNUyRH697PjDUPnmfToFR95xgEsTw77c9R7QF01W6Q>
-    <xme:AEy0au_uWqnKlWbH9xWyfrZWg3s-psd7NltwflXvTh-BI3p1QxkIwhoyymgYA9_zw
-    V9D-nj5Jn8YelqT9yBbtu-tqcNtJl6TJLEJw6v8FThxg1Bcy9IC2AU>
-X-ME-Received: <xmr:AEy0ah9-NInMDmXG3e7iS_fzHYuqgXViNyHxpan2GtKrIY7T6fW7I6k40KyhpVGrOpJ4c1-oe0KDMcWt53OtAzaTqOpwRtSmiQM0>
-X-ME-Proxy-Cause: dmFkZTF1FWiHTblUajC33KGQj3batX83EWzXt+ThdSFNvFk1AQ4fn2ZzKH+T0HLKuRi7Nq
-    yKOc3XAEF3fBI6pQ2jTYOd/yaRuZ8uXcR+wxgcTATH/j57gvmOKTQMCJsp/x9F1QrS1boj
-    blOP6CN4bzUENKZgiApa0VYsohBwLpJiPggOv4ePRmwF1ZMplahwKjOB5TwL2LHzsWKRDN
-    hwLktVzOT6cLdPqfKyzJEup3Vo0e3PSWTvCpwpvjLZYf3vyYcoWrr1Q6UN7JMCK7YW5kxN
-    1AhpAHjd3EWFIEZD1QsIZZZD3Q/fkbO/iflTj1y46egDTi/SEklWM1T9Nlnv9MMrmo9biF
-    FkhwgXKQw/Bo3zobXof+1hHK2ANd6d3fu4+YHxbhdf0mWr08ku5ZIUYPlUkM6wG0lmbYC5
-    Q/1ickVRNatGzfFGhtFmA8kAg9Nw4CoQDJgtVyLpoUGRL7bPdCaHuYOhvc0W8cnn7BwBXS
-    FZglRm4/HUrgNZyNbdSeUY+vxXJTffbyl93VNbW/kljs0lx2Vn+pSTK7PCEK7tS3cZb5k8
-    B+dkYGcgBC6m+2Bz7eBAwtWGQ5V5qEmaJSNv6Vmaw9+lI/rEJCdIWLAlAVMDwPTOnVlS8x
-    ZGiNNREEWh6MVJIKyHvfUoeQv8Bv82A7hu37hErMWDYXYRYAAR8O5VedGYMA
-X-ME-Proxy: <xmx:AEy0atcQCKQcxH6tZ0DrF6QjJDBjDFg-1KwnFG8cuIntKK8_gSeVqg>
-    <xmx:AEy0aiHRJXlbk4JOnmhsuHd0TEKLrsE-4qTIHOH6Qi_MOHCuVGUFrw>
-    <xmx:AEy0ajcy-wGjXAYp-GNEgCKMdHCvBAyzyf6-X8oVqj8v5mft2vTcqA>
-    <xmx:AEy0akHVmPET6VfSnbjWsMfOaymPlvzi-CQKgSixJJX_QacqEB6oLw>
-    <xmx:AEy0au_5n97W7N7u2Z2LANfd5yJQSC3WDmmBJf1vI4DJNH3ftIdt_wtE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Sep 2026 18:00:31 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: parovozik <kaliugov@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] doc: remove unnecessary comma in git-rm documentation
-In-Reply-To: <20260923213125.1316-1-kaliugov@gmail.com> (parovozik's message
-	of "Thu, 24 Sep 2026 01:31:25 +0400")
-References: <20260923213125.1316-1-kaliugov@gmail.com>
-Date: Wed, 23 Sep 2026 15:00:30 -0700
-Message-ID: <xmqqo6dn6329.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="X04uNyt4"
+Received: (qmail 39319 invoked by uid 106); 23 Sep 2026 22:00:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=xninY55QUBeN9JzeArBrCFAH1XE6ZvM4j/+V6yX344k=; b=X04uNyt4EM55j7nsJ5F6blWpRZFqbyifvZ3koRoc2fgi4TVyOI7DSSVLRGTmBXUAg9P3TuWv9cY92TQwpLcLw64xgi8gKswmOtyu7VPo+z09amnE143dKbAtAifKuGVlb8R1iPm2zcwfEEbqSXhwkjqeuv+IDQrH8NZwKvSRxI9HZ1YyebleGiMW8N1s5LtCaYPEccW7cipCH7/aLWm2wPAiW19EYuipB502o/pE0DgSo1jknOMfYq2wsv9/46stB8TaFefTg3nMriWA6KhMghxrBg/t4IcfEmPWqOZ6bsZSn+8yrfP4LXGn3tBJSYwYz+ZMGLIp3Kpdw7pfNgxU4Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 23 Sep 2026 22:00:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 184631 invoked by uid 111); 23 Sep 2026 22:00:53 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 23 Sep 2026 18:00:53 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 23 Sep 2026 18:00:53 -0400
+From: Jeff King <peff@peff.net>
+To: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
+Message-ID: <20260923220053.GB49087@coredump.intra.peff.net>
+References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
 
-parovozik <kaliugov@gmail.com> writes:
+On Tue, Sep 22, 2026 at 07:29:02PM +0000, Julia Evans via GitGitGadget wrote:
 
-> Signed-off-by: parovozik <kaliugov@gmail.com>
-
-Documentation/SubmittingPatches::[[real-name]]
-
-> ---
->  Documentation/git-rm.adoc | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-
-$ git grep -C1 'separate command-line' Documentation/
-
-shows that ...
-
-> diff --git a/Documentation/git-rm.adoc b/Documentation/git-rm.adoc
-> index b5ead86796..67061e961f 100644
-> --- a/Documentation/git-rm.adoc
-> +++ b/Documentation/git-rm.adoc
-> @@ -61,7 +61,7 @@ For more details, see the _<pathspec>_ entry in linkgit:gitglossary[7].
+> diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+> index 16b06e38e1..906db7ccf3 100644
+> --- a/Documentation/git-add.adoc
+> +++ b/Documentation/git-add.adoc
+> @@ -117,7 +117,7 @@ The intent of this option is to pick and choose lines of the patch to
+>  apply, or even to modify the contents of lines to be staged. This can be
+>  quicker and more flexible than using the interactive hunk selector.
+>  However, it is easy to confuse oneself and create a patch that does not
+> -apply to the index. See EDITING PATCHES below.
+> +apply to the index. See <<EDITING_PATCHES,EDITING PATCHES>> below.
 >  
->  `--`::
->  	This option can be used to separate command-line options from
-> -	the list of files, (useful when filenames might be mistaken
-> +	the list of files (useful when filenames might be mistaken
->  	for command-line options).
-
-... an identical text appears once more elsewhere.  It would be a
-good idea to keep them in sync.
-
+>  `-u`::
+>  `--update`::
+> @@ -375,6 +375,7 @@ diff::
+>    `HEAD` and index).
 >  
->  `--cached`::
+>  
+> +[[EDITING_PATCHES]]
+>  EDITING PATCHES
+>  ---------------
+
+I think we have section auto-ids enabled these days, so I don't think
+it's strictly necessary to make our own ids like this. But the generated
+ids are syntactically a little different, so you'd need:
+
+-apply to the index. See <<EDITING_PATCHES,EDITING PATCHES>> below.
++apply to the index. See <<_editing_patches,EDITING PATCHES>> below.
+
+The asciidoctor reference made some mention of linking to sections
+directly by title (a "Natural cross reference"). But it did not seem to
+work for me in this case, and anyway I think it only works with the
+single-argument form (which has other headaches).
+
+So we could probably get away with using the auto-generated ones, but
+it does mean using their syntax. Though there is another related issue
+there: these ids are also somewhat user-visible, because they end up in
+the final HTML documents and people link to them.
+
+Right now this works:
+
+  https://git-scm.com/docs/git-add#_editing_patches
+
+but after your patch, I think it will have to be spelled as:
+
+  https://git-scm.com/docs/git-add#EDITING_PATCHES
+
+I think I prefer the all-caps one, but it is kind of gross that as we
+change the docs we may break fragment links across the web. IIRC there
+are similar problems with linking to list items, where we auto-generate
+ids to allow linking to specific options (this is custom code on
+git-scm.com, not asciidoctor and not within git.git). The resulting
+fragment ids are long and gross and have changed a few times over the
+years (I think we had to add in some disambiguation because multiple
+lists in the same file might generate the same id).
+
+So I dunno what all that means. Your patch "breaks" existing links into
+the HTML by assigning a new (but IMHO prettier) id. At some point I
+don't know how much we want to care about that. But I thought it was
+worth ignoring consciously rather than accidentally. ;)
+
+> -See the "OBJECT PREREQUISITES" section below.
+> +See the <<OBJECT_PREREQUISITES,"OBJECT PREREQUISITES">> section below.
+
+I noticed a few interesting typographic bits, like this one. I'd have
+expected:
+
+  "<<OBJECT_PREREQUISITES,OBJECT PREREQUISITES>>"
+
+but I guess this is one of the inconsistencies you mentioned in the
+cover letter. I'm fine punting on those for now and fixing them later.
+
+Especially this one:
+
+> -	  `BATCH OUTPUT` below for details.
+> +	  <<BATCH_OUTPUT,`BATCH OUTPUT`>> below for details.
+
+which can't move the backticks out (because they'd suppress the xref
+syntax). But probably it ought to drop the backticks entirely (which
+again can come later).
+
+-Peff
