@@ -1,108 +1,187 @@
-Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1590C4477FD
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 07:10:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB6C45FFCB
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 08:09:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790147422; cv=none; b=EeIbuGOvHebcKRs+9jC2Rs/YEBtQdzxhvBRyDVXaDSDGUyf9OgiJ5/QicRWOkS+yj0SIEWOzt4ZsByS8TFHFzhpUKsxlmvMV/z2m5Ods9ZR8hx3gSNs/40Mw8/2tPNKde4uWHfVLTYKl2y+4Y9+/BBaCTwnCGv79j3kGm3qGjfM=
+	t=1790150990; cv=none; b=S8ObALcuTnnsT53HILorNWorwDQ1ga3ppjW26QFX8SZgJrrX85txXdxAX4TaYw5jIcq2is5vVXqeEXnlXyOGpcCWyjZxPBQD7d1qeQ3JyVUI9uhJD5kqsOg4aqNQiJ5EwHZBpnxUP4Dxop5g+547aU8GYbLYV9ATxKMlIxa9JQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790147422; c=relaxed/simple;
-	bh=ARF0lr77FGjvW/219hi7NDz5DBM4aG7OUTQYjQkKmUM=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=XW8E6v4GvnK5C1sGPiXwinI3x+tEkslknQAqwyg+REDVxvzkIymWv1n3+AsSwax6m7lLQe3VZ90EMdvM2QhGPt24hmz1QRIFGhMI9J/ixaORXZsHOn/EMhVWrtuW/YG77Na6lfAHb1bvjRqb3NplAhYUc1W3Ylcf/P9Y9v5CJ4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=odoo.com; spf=pass smtp.mailfrom=odoo.com; dkim=pass (2048-bit key) header.d=odoo.com header.i=@odoo.com header.b=RNGBlwuj; arc=none smtp.client-ip=74.125.225.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=odoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=odoo.com
+	s=arc-20240116; t=1790150990; c=relaxed/simple;
+	bh=mSVr8UREUeGBUt4bURV4sAp3Ih3Sos8xQEvx7lE0l+Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=VcEsQPPG286/cPs/1PaTfHi0UsalpPb6xQVsKYPrfZeBiLGl3evOCSVJ2UcqDHwlqIX0ldcm8FFb2aMvHm/xIM/PbF5b4sjxdFgD2u9zq8GidOpbOLwy8ZFpQMhteemU5YUMFaQ5gD0pGpKaukI1Te7ehIdX28bbZpfftrnnmFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EGemZGZo; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=odoo.com header.i=@odoo.com header.b="RNGBlwuj"
-Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49b912d3931so3904385e9.3
-        for <git@vger.kernel.org>; Wed, 23 Sep 2026 00:10:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EGemZGZo"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-4843e397f74so370245f8f.1
+        for <git@vger.kernel.org>; Wed, 23 Sep 2026 01:09:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=odoo.com; s=google; t=1790147412; x=1790752212; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:subject:from:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=yaAb/47oenXk96WzA6gfwyCWGzw5jTQ/nCnUG7tFnpU=;
-        b=RNGBlwujhSWYzzCrq9jffiIl1+rXklle8/yhP0cFg/6ltB6vf4+jabu4zAI40Ia24w
-         T9495NeN8ZeNlvyaoBCaVJ6L+ZnIBZY/KxKJxESyNusc6AXHdWwSiL63qzqFf+a3c6Cp
-         0dqvWMN1jEdULHOgQYA+1QRBJot7oQJXp1RMpXNrxLvzZ1/hTxVNKHg/uuQOotKfWNCR
-         HSJy9BLfHlB4Zf93pscqtXfo9uiyRimDuqrl6vSXyiAzlfNqC71HS+jgsy5AOrFXonrh
-         YPVIrk/HUCUjPsa83eOY5SKau3WqdCK4CTxBcoQefyR2EZH4nR/DtSn0fRjIhGwZGnoW
-         Iwtw==
+        d=gmail.com; s=20251104; t=1790150987; x=1790755787; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=f+6oTkmciTU+4eCBXybB9q9Ud6bl4DUR1ugdw2B2Djg=;
+        b=EGemZGZo+zl0E6S1icUm9A76KkpLO3OIjRTLAiIxoG4fHHZHh96EX48HLZJK2hF6sA
+         qMj1zUyJ3J4VRAG+rvG2eVUipdzvTARFcQplc9Q7r9FV4vYIJVY6Ujn45A2meW/MBmky
+         jOBnerv3Ed+exce4rT744emfp1Xwgn+MSmcrG1UREq450Aet4oVsDDXblGdgeoO9VDw2
+         Z7B8GXHpA3je6Q25LJVVTRSc+zSxWFZ14r7SpRSOukL8V4dJscjzF3uhYgIsus06dhzN
+         tsj8kROMJt0ObXLnoHm8GqxTIxWKUUVlfrIsvR+UaNRlnK3YxSrno5U7ECw5SDZvuXgF
+         2A5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790147412; x=1790752212;
-        h=content-transfer-encoding:content-type:subject:from:to
-         :content-language:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=yaAb/47oenXk96WzA6gfwyCWGzw5jTQ/nCnUG7tFnpU=;
-        b=gEc0TGEYLCKOlrWXb3B5NE7ZDAtMBZCSdUtb25JPdXmxIw98iriYmb8GyTrOy9wdLM
-         ZYNMuswek0/9W1iZDF2C/eywMSUNbFUZraZKw5lwwp885iE/R4qLDNlPyjrZVT4znLHB
-         jDL0n4jdyFqVtQP400u8qy+/sb2J7CjhNncIdyVVEmm1uOsS/HRVmsmPSKL/nQ4crfZm
-         oBYYKf6icvDltIb0KhsERNgjnnXRCinUgZFqsPjWnMlTUIoFlCLM4Hz+sZewcL/dMiud
-         2RvG9QKFa4+vZszt413A2sTQLAW897G/BSL/YtEGrIwsaIjzY7d9OZk6dHsKiWDtk7O6
-         8wRA==
-X-Gm-Message-State: AFuF++nhKYubC5jddAGg8PtgoeS9a9l0IQJgzvvhOuM5sIIYi9OaPZF2
-	C2gJJdFapYDsPcfQDz7A7BTL02Dvz3mRVMu3wH3xlM9C8daC1oEjWQC9nLPELijOjIVWkBf9arD
-	STjQI
-X-Gm-Gg: AYBFou3w7wmvDhzqeSft9M/fHpwdj7Wn0xVL171Tp/M2kN7k7dt/8UPV1hA7BWiMOM7
-	V6cLJ3bnc+kTT/WwUoA8G0MGD+X4daRiEjN/5fa/NZCmXoE4+A87E+ORpgkROjpPSOkCMiQC8mV
-	00Bmd4VRADQZXBCheM/ISIi9B3Vi/vQfhFQjzXD7jnkIb/Pxz9GHW10KpoWSqCztUKjzlgxNrsc
-	UxacJ5u50n4lsEd4Z+pJAzz3Lh1K1Amx/j7o7fgkFNgRz2Q1MQa2b6dspLZ28/KC83Nas73DSl3
-	cKwHplPQhsETiYQ7vtTNbE2i3Ow7XTnyefvgbHnN8fsAoHKP9ECeyl8zWnVDjfW3DgebIf3+Tbw
-	cr2Ixh2TGgVoYn8ih3CiQ+LIcLxiP51VIe6e5KEvURFJsSeGdpLdLOGsDfLhYGqsdAhITu8N3E/
-	khhF2dNk3teJ9WAK7sB2Y+1GGfIaEPzJcF3ra2JrdT4f6Fa3sqWyoMCfKXMM5/25ms9LvtENs1j
-	qB9kAkcDQEsuoe/r7SPiiQ/iTZTwefOfETLRsW+J3n0Z0Q=
-X-Received: by 2002:a05:600c:1f91:b0:49c:fc6c:be19 with SMTP id 5b1f17b1804b1-49fdf24fa11mr19598225e9.31.1790147412113;
-        Wed, 23 Sep 2026 00:10:12 -0700 (PDT)
-Received: from [192.168.0.4] (ptr-178-51-240-126.dyn.orange.be. [178.51.240.126])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fdf158147sm39373685e9.0.2026.09.23.00.10.11
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Sep 2026 00:10:11 -0700 (PDT)
-Message-ID: <6fa4c795-7f80-45e7-a42a-ee6e9cfc01cf@odoo.com>
-Date: Wed, 23 Sep 2026 09:10:11 +0200
+        d=1e100.net; s=20260707; t=1790150987; x=1790755787;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=f+6oTkmciTU+4eCBXybB9q9Ud6bl4DUR1ugdw2B2Djg=;
+        b=e9K92TmFgG1f3TLBkbALm8vEth6Nqtvyb9vukbHnu+l2jQaliA/As3jRY82L32l5l0
+         Z+tfWxmmd9kk+PhH83pe56ZxXNIQZ8hnlDsOenyPLcAHEA75Bv8Y4PIPjZBhowX8Tawn
+         zv2VoOU8L4OHUMuCFyx+Gqzs7SIqRQs/5E5fkSG2M8dL+W6EomTekw1H8Q2HJSMZq+gP
+         Jv2y+UA8mZmqyPwHpcLhSuK1jDLKM9qOmbaz83eY+rimF8wONq6oLmGYcoozLqTZezMI
+         3TU4ojiigQ9k5XIPidkbn5paEXbVBVKhiyKOemMU8UM78bPtjTSAa560kjZmfsjaLlWC
+         7V/A==
+X-Gm-Message-State: AFuF++mW1A2jZG3H8fB3Nqkt4RL1yJjP54pYOLNm5Rv2uR2ylDbJQ5gD
+	iovnP3jVa097e377QsiExFxXtkI7m1vutESvFaCLHu8UHWXx+n5MIkz2THKMQQ==
+X-Gm-Gg: AYBFou2KHfebPQUXb/tWkkEPa49aOwXcEykIEe2fNFzpSXmcMK20duEXKRwpL2V/PLU
+	f6kvQa/qZ+lGb5Z0jfw1Pa/Ut9ZSfyT0lSJ/w4NYe3MSFlwPdVeuBz8ztkR3ddTmRI9P2xz8Zea
+	/+h7J9ChECJckaiTI4htPdrxGr+6IRwwHKYEtMDtoTTOdqoHZc6Fmp/dKDJUqo9VjoftFPxcA/h
+	hyseVA4M21Od/tcrlRdUQwD8EcTuqmTeGWtCdPpN6yFYG01+Mlhqkn0PwsMkVVU6xP8PEQNkWRR
+	SrqPXC4BBNcjvyql3tjIREjav0v14KVd+6+3Qtwzk+VVcB3mcn/Syju/UsHcJ3+5+ZYYzp23wCn
+	57VWInd5NGGOPRCxxo8GVy9tmTVdhl4d3n+SlWGQX1c9Cw0of8W43vD5oJVYQ+JuUMcG8rYMeRF
+	uUux9mItt4TGcdYb/cNKchFApwJXQqKbOXjE3TEsVnRgqFUSRS1sFmqn3LGPIYl1bSDlpGyZgTE
+	JSl2EeubYoxaD9mnYtailO3iRz8b5QgJPOSod88ism4zdF/5RJyNxSKxAU9Q42LRsqdV2PSEp4A
+	BnRZrd4CRSL99dZsXmxQwNQJdpHMqD9qfun/D3SgfwqwGmtWfEHtgdfEVWqi1sH1KS3XrSK+OFq
+	qqUM9Y10MRQ7cSVtWPKY=
+X-Received: by 2002:a05:6000:65a:b0:487:25:71c7 with SMTP id ffacd0b85a97d-48860fc032bmr6532511f8f.12.1790150986922;
+        Wed, 23 Sep 2026 01:09:46 -0700 (PDT)
+Received: from christian--20230123--2G7D3 ([62.35.114.108])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-488682673bdsm5037470f8f.2.2026.09.23.01.09.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Sep 2026 01:09:46 -0700 (PDT)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Justin Tobler <jltobler@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v2 1/3] parse-options: add parse_options_takes_argument()
+Date: Wed, 23 Sep 2026 10:09:26 +0200
+Message-ID: <20260923080928.1534413-2-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.56.0.rc2
+In-Reply-To: <20260923080928.1534413-1-christian.couder@gmail.com>
+References: <20260902161047.476753-1-christian.couder@gmail.com>
+ <20260923080928.1534413-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: git@vger.kernel.org
-From: Xavier Morel <xmo@odoo.com>
-Subject: [BUG] basic auth not send on empty password in default configuration
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hit this issue playing with a custom credential helper:
+Whether an option takes a value, and therefore consumes the next
+argument when that value is not stuck to it with an '=', is decided by
+its type and its flags. That rule is currently open-coded in
+show_gitcomp(), which needs it to decide if it should append an '=' to
+the option it completes.
 
-- if the server requires authentication for an operation (returns 401 on
-   an un-authenticated request)
-- and the credential helper sets an empty username and a non-empty
-   password
-- the second request git sends is still un-authenticated instead of
-   having basic auth set
-- git then fails with an "authentication failed" error
+A following commit will need the same rule to find out which options an
+early scan of the command line has to skip along with their value.
 
-If proactiveAuth=basic is enabled, git doesn't mind the empty username
-and sends the request with basic auth set.
+So let's factor that rule out into a new parse_options_takes_argument()
+function, and let's use it in show_gitcomp().
 
-This was directly observed on git 2.47 and 2.55, with curl 8.5.0.
+Note that an option with PARSE_OPT_LASTARG_DEFAULT only consumes the
+next argument when it isn't the last one, so it is not considered as
+taking a value, which is what show_gitcomp() already did.
 
-The issue seems to come from init_curl_http_auth: if the username is
-unset *or empty*, it exits immediately unless proactive auth is enabled,
-which matches the symptoms. From this it looks like an other workaround
-would be for the credential helper to precompute the `credential` value
-and return that instead of username/password, as that is guaranteed to 
-be non-empty.
+Signed-off-by: Christian Couder <christian.couder@gmail.com>
+---
+ parse-options.c | 35 ++++++++++++++++++++++-------------
+ parse-options.h | 10 ++++++++++
+ 2 files changed, 32 insertions(+), 13 deletions(-)
 
-Either way the current behaviour is somewhat surprising as (AFAIK)
-nothing in basic auth requires non-empty usernames (or even passwords),
-and importantly git doesn't report anything odd except the connection
-failing, the lack of auth on the second attempt is only visible when
-enabling GIT_CURL_VERBOSE and comparing a successful auth with an
-unsuccessful one (or on the server side, but there if the server is
-bespoke one can easily chase ghosts assuming the error is obviously
-somewhere in the bespoke code because select isn't broken).
+diff --git a/parse-options.c b/parse-options.c
+index 4519ead9dc..a132c1ea12 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -841,6 +841,26 @@ static void show_negated_gitcomp(const struct option *opts, int show_all,
+ 	}
+ }
+ 
++int parse_options_takes_argument(const struct option *opt)
++{
++	switch (opt->type) {
++	case OPTION_STRING:
++	case OPTION_FILENAME:
++	case OPTION_INTEGER:
++	case OPTION_UNSIGNED:
++	case OPTION_CALLBACK:
++		break;
++	default:
++		return 0;
++	}
++
++	if (opt->flags & (PARSE_OPT_NOARG | PARSE_OPT_OPTARG |
++			  PARSE_OPT_LASTARG_DEFAULT))
++		return 0;
++
++	return 1;
++}
++
+ static int show_gitcomp(const struct option *opts, int show_all)
+ {
+ 	const struct option *original_opts = opts;
+@@ -862,20 +882,9 @@ static int show_gitcomp(const struct option *opts, int show_all)
+ 			break;
+ 		case OPTION_GROUP:
+ 			continue;
+-		case OPTION_STRING:
+-		case OPTION_FILENAME:
+-		case OPTION_INTEGER:
+-		case OPTION_UNSIGNED:
+-		case OPTION_CALLBACK:
+-			if (opts->flags & PARSE_OPT_NOARG)
+-				break;
+-			if (opts->flags & PARSE_OPT_OPTARG)
+-				break;
+-			if (opts->flags & PARSE_OPT_LASTARG_DEFAULT)
+-				break;
+-			suffix = "=";
+-			break;
+ 		default:
++			if (parse_options_takes_argument(opts))
++				suffix = "=";
+ 			break;
+ 		}
+ 		if (opts->flags & PARSE_OPT_COMP_ARG)
+diff --git a/parse-options.h b/parse-options.h
+index d7f896a933..f29e73f85c 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -420,6 +420,16 @@ int parse_options(int argc, const char **argv, const char *prefix,
+ 		  const char * const usagestr[],
+ 		  enum parse_opt_flags flags);
+ 
++/*
++ * Return non-zero if `opt` takes a value, which means that it consumes
++ * the next argument when that value is not stuck to it with an '='.
++ *
++ * Note that an option with PARSE_OPT_LASTARG_DEFAULT only consumes the
++ * next argument when it isn't the last one, so it is not considered as
++ * taking a value here.
++ */
++int parse_options_takes_argument(const struct option *opt);
++
+ NORETURN void usage_with_options(const char * const *usagestr,
+ 				 const struct option *options);
+ 
+-- 
+2.56.0.rc2
+
