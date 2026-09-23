@@ -1,68 +1,69 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+Received: from mail-oi2-f12.google.com (mail-oi2-f12.google.com [74.125.231.204])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDA84ACC8F
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 17:10:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58502397E9A
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 17:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790183429; cv=none; b=qsSR6DS86rqzDPsuu3+4vk3Rzk5j90rCD8hub20wJXCF/tymNJ0jk/5EWxGb5qom4g7Aj7WmsD7gpTedW7hsIKZ77NGTK5PItzyLOjOAX7gAhZbHCwDF+TozAVeq0bV7p2TalvF4V7Cs0zfWzCA6E+qpxuNFA13bywZQUeovs8s=
+	t=1790183431; cv=none; b=jj6gfXufJX3tUMEqNjzX/GQSxH5MEQN81uQ4Zp8NwqbAatt6ncv7EnEnKs/OxDIjgioQ1MCNUbCbd4gLE2SdShwBFrGg3YN0Vx7E5jOB19RL6Gu7TSrlG///au0dOmBkXBt8DqqSRNaMSaLxcVfr/dSlq9Gohx95uX6rj/JkQFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790183429; c=relaxed/simple;
-	bh=bunPtcoPQMtCJzCIR626OrBI3YfJFTYGa1B6hvAuXUE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Y1rk8dbCm6GP7mSeYzqesm06V8QiwoDzCXyiIxADTNJMXYuOsNvbj9dObJ5W945qVfivYuHApQDsNDL+igfhAQBnwCOTDtMkw/en87xD2xVDV4fos3i2fIbNwrXvZTY5nA95Y996/G+cyLz60QCsvZiIwm1ewhR4OgwfTGzrH08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KSBSxVra; arc=none smtp.client-ip=209.85.210.41
+	s=arc-20240116; t=1790183431; c=relaxed/simple;
+	bh=Gw4iw/D82Ap7QiwYwXHFOauf9HzTI4msKcmYYMENK2o=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=UqwIMMAGpnTaZ9yFisgjrIKyWL0L19IK52+BI7oSjepVIOEh3RpC3zKaoVIvoNSZYgNJGRICVGTexpK47BOf27KMctJYJeiHIG5aXumWU24UZQXuaB/HG+RCNypz1vlCnXkWqY7GQsnn5IPwRvGZZdBVCB2xVwBHrdC02ZJVjZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kquhmWbj; arc=none smtp.client-ip=74.125.231.204
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KSBSxVra"
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7f4df360cc9so80840a34.1
-        for <git@vger.kernel.org>; Wed, 23 Sep 2026 10:10:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kquhmWbj"
+Received: by mail-oi2-f12.google.com with SMTP id 46e09a7af769-7f4f0d37f9dso584788a34.1
+        for <git@vger.kernel.org>; Wed, 23 Sep 2026 10:10:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790183426; x=1790788226; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=82+NEvmukOOLWIVmWYhEn83CfWVj7pNX4c6aKWzPLHg=;
-        b=KSBSxVraq1hI0z6ZDD3ZtUEHWI603F6xQ3uejhnf8LWvzuEKtjAqfbtSnSUMnCSiu6
-         qZQ89KANAzete3+QYvSrb+hpXWSX4xlBXyGJc8bV+AshO1WkWGGY/TmOQ5Z9Q1uZEDTk
-         5Ir7umCPb9Ja8dekL8lkTjHLaRo2UB/NgiBF4baufrIuOWklQpizU/tod6w8uTvpHMrX
-         2F6bM0W1C/v/K1C3V27wB2ZVnUX6oNtlO6ApQZuDcyYVX+hmqFc7iR7c8/ed9A9O3Xwe
-         Zhd4m0OKdQPXHZyoxsE51nPIb5md229l+QGw5Nz5anVSiVz0weRULiVItXfbsQdefJoM
-         YJQg==
+        d=gmail.com; s=20251104; t=1790183428; x=1790788228; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=TrB5/MXpOYoAG62qcMQ8s04R5TpcCT5w7z+WrVb5zaE=;
+        b=kquhmWbju4W9Lzw01RuNsWWySKTwIBwfYIB2EKMuRFsrG6j+ZHaqENtjL2HDebWfHi
+         vWnpYzBlPNhM2W9cMoGHoimt/twXC+xi0Ls7fQGVUuXlJ+VnBeGhrs4S8KnVUWmyDab1
+         m+sUguhzx92Jkz3tICbJFCxFJr0+PPPH3D0htDZ+4P8N+r9r74fR9XUkGrL3p7ahIQTe
+         iXQIEqKik+ZQqtUMp/d0qpf0/TMfVnb7Ukgmu6VCpAr2fmNVb0vjnsXVC4ITXUsy+Lic
+         ROn0HTSLStakrXCn/ZtKJTqq91Yt6mIqi5Xf7FguIz6xD7YxRrxaFjET1ZTvIM7KC0vE
+         652A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790183426; x=1790788226;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=82+NEvmukOOLWIVmWYhEn83CfWVj7pNX4c6aKWzPLHg=;
-        b=aAN8CZ9fM6pImLVUuF4JGTj9/V7OzBKgtllho4550Q8SmQB0v27hLoMCgwrrpmiwtH
-         FU6d+xyxKxqYqy7s5bXoTP5j4QLBgN1e7D1QARoEwWVi2olTdqdP5O0OBzDkt+WcWcEH
-         wi+5EkjdZlYVh8G0+SaS5yeTyiCvpSw4cbx5LwXaw2wfMA4VOtj4H8DJoJPX5iYcbapp
-         02RpX+Ixh5ca1HQTjC/edqP8csUhfqf7ALBZeC0G738PVZBgTBw6tzdAo5FaJnXxcG5x
-         Mw+6mSsfTnOAy7iRJ4o+RWIryUWC+k7GVssizN0gfsP1V1Ti/wD20BbN9Fg4QH6oYrYA
-         tPAg==
-X-Gm-Message-State: AFuF++m5EKNrlJI3F9oT/gDxphesgprXD9YhuuDc817+r5HiddO7ElmM
-	igbo66U0DqQpRdziP9NTTKuGVApnJW2GSZZL5nzzqL7RrLzZVM4hieHs
-X-Gm-Gg: AYBFou1vPXr9Xd3Xu01g3LgmJsBNAIlLsvhmkq0c28zXW6po0dn0McyJBXpMHk8+aMm
-	3UovLKicyYVi2Cg+lcTyfHUNNJp8sHiGNFZFIqU0PrYx9dWGCgXOs9uJiNvVcLzFiU2FzhBtcbT
-	bveYeE4oKYgJU7Ta6q9/zYB7OoOD+VcdeQByOYK2moGd24+qRNujvI0+07MgdReLh1pcMyXJmEJ
-	PpHUT1k5D25edoN8tdaYi6D+x0lDRgngxhvogqU7ML/+hriDLxx2R+gspR9Rlxv3ZA3VmYcQ7p+
-	az3KVKvpe/k9BtnExva9ouOApL3LBqWIOU59N54kCFEh1PWONoZQZ2TghNOQ35walSof4tiJ2WB
-	kDpDCWDvAI+mvGrClQjeWTHrtQE0NZtdkiirQgquEWb7ADqDUEtgyJ2pMQKdfDk6Yxi2AxV5I2g
-	qHDwKdQ4YnGJ5PyUd6Vk+Y166eu9Z14ZSP40d8td1R3YuJhIx9bnP4/NNXONqJWIt+Mir2+P+yf
-	gUZKDfHSGF/4o8fQ261mPWf0oNuRnDyOi7hJnqWqtcEmL1nqlv8oBkgfZFgcg8F/Iad2wPYAYpO
-	YrdxE4NpIQJVwbvUd/rz/aPpUf+6+nolZIXpZyW2bp78S5J1jDbvnJugT99nOAzv8u93NJBqcdZ
-	caSa69bn5Awh3JbETjnrZAezrnXXvTZiazlJLSJkUemaQSSv5iPIVNKBq4S4=
-X-Received: by 2002:a9d:7342:0:b0:816:3195:be1e with SMTP id 46e09a7af769-8163195cd09mr1823493a34.23.1790183425909;
-        Wed, 23 Sep 2026 10:10:25 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1790183428; x=1790788228;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=TrB5/MXpOYoAG62qcMQ8s04R5TpcCT5w7z+WrVb5zaE=;
+        b=JAxWPKL0xmc4PpzVw13+hUhB4pNbsa9t7s3nN1/+X2V1sGVfsDBBoH9ZAJx6ahZ7Cj
+         jZ6lgV9FUsiUGHHbJapFbCEKbEEYfpXj5L7HMf4PcnndL5ptb2yT+Lw7Yo1MIb1gugMh
+         QXCNrSWaJYICan4Q1HULAigwgfPxPa/o1XH3VdCzEJjPNcXbvjhRvpsEeZXvCdv8ubgY
+         hn7JKBnQD2wIYNn2gSoALiQeF5iehBBdN7T3CG5vkE5FUWmbD746yU8lVjrxPS3aA5bb
+         u2P5q0GAUELliPERdnETp01eVeOivhc6vdFMhiFD/r0e9jb166D8bxW++HyJguIdhrdo
+         07Iw==
+X-Gm-Message-State: AFuF++l5neqnCaZAfTXIItNwh1vlmVitcDjF0uLk27vav6dd3fqIIxMQ
+	1cl+LBJfCFudOG4Pz3SxAlQwb00/gmXgBA7Q4Gu4yIaGoDeou1lbSnFL
+X-Gm-Gg: AYBFou1pLdyjPUL9AiQFHaKea/AYM/dp5bLbzjUXX/dG/Kh5uOTxYCHTzR8mwg1whpi
+	DLkezh79fXI2Rw+RowLZNN6UPgaC+rd8iZVgUQgyobxJ7Qh1ocJpClii1SuWU7fm01xofrZwgGs
+	W5ppAuh+dFr6d+4Q+BtHiEGKZLCo1o7D6HbtKVyEDAbJHAykH48npiAwzlvKALlWcXa70HxS8Ka
+	kZld0hfewlMTsIqBqMMaccy7864f7eFr2JnUyricvLQqdTK4XJni6DrVB/tFnY85Jgw+dqtrvGG
+	pq92bhmypzWiNjBmJusDNJ3IDbe7PVzD0hqAcZlt9Ovj9IJ9AiEyAXFZUBBiIdnlcy24atFAZKn
+	OYYtYFKB7/osYDc046mGVxFzmLYNysZcvA7+LfeRxaZuTv6woHB++dNCW/yvotxJm2lZWUP6eQI
+	ueTa1Qw8wICDT09QVsGqO4bOWkN+mZ507o3PQNPt7YSEo8D6ztFd0L5Aw2Sz3Gaz5D8Oz2piTMk
+	R/q5Wr6obAJcOrDaXop0tdB0HbiNu6dJ/nkHsjK9Sjlp2DsQcfctwA5r2LV77gmztRuWlwG8t0s
+	4pYPu92HdwFF9LPVyQv7Ei6Midcwz7GLLYE8zjn3zN1uzgAJQQRki5ejfI8hh6jbix5LRRswd+b
+	bvPPh8969YJZUY36OErUDmDg6H55Q/EsHWQm7oBWMsSv9/iub5atkGz/3a49ktKExuQuUTA==
+X-Received: by 2002:a05:6830:6814:b0:815:5c1:d763 with SMTP id 46e09a7af769-815f3eff73bmr3423642a34.26.1790183428087;
+        Wed, 23 Sep 2026 10:10:28 -0700 (PDT)
 Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa (vpn-centralus-02.tradc-corp.com. [20.98.136.114])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-816049b7b15sm3470670a34.24.2026.09.23.10.10.24
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-816049b7b15sm3470670a34.24.2026.09.23.10.10.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Sep 2026 10:10:24 -0700 (PDT)
+        Wed, 23 Sep 2026 10:10:26 -0700 (PDT)
 From: Tamir Duberstein <tamird@gmail.com>
-Subject: [PATCH 0/2] ls-files: reuse the untracked cache
-Date: Wed, 23 Sep 2026 13:10:07 -0400
-Message-Id: <20260923-ls-files-untracked-cache-v1-0-08db4cc1efdb@gmail.com>
+Date: Wed, 23 Sep 2026 13:10:08 -0400
+Subject: [PATCH 1/2] dir: hash ignore files before adding parser LF
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,62 +72,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQrCMBBG4auUWTuQJlSoVxEX6eSvHS1RMq0Ip
- Xc36vJbvLeRoSiMTs1GBS81feSK9tCQTDFfwZqqyTt/dL0PPBuPOsN4zUuJckdiiTKBQ9f1A5J
- rYwDV/Fkw6vu3Pl/+tnW4QZbvj/b9A86sbKh8AAAA
-X-Change-ID: 20260923-ls-files-untracked-cache-3559bed01a3e
+Message-Id: <20260923-ls-files-untracked-cache-v1-1-08db4cc1efdb@gmail.com>
+References: <20260923-ls-files-untracked-cache-v1-0-08db4cc1efdb@gmail.com>
+In-Reply-To: <20260923-ls-files-untracked-cache-v1-0-08db4cc1efdb@gmail.com>
 To: git@vger.kernel.org
 Cc: Tao Klerks <tao@klerks.biz>, Junio C Hamano <gitster@pobox.com>, 
  Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>, 
  Tamir Duberstein <tamird@gmail.com>
 X-Mailer: b4 0.17-dev
 
-Repeated queries such as
+add_patterns() appends a newline for the pattern parser before computing
+an ignore file's object ID. Its fallback hash therefore includes a byte
+that is absent from the file. The fast path instead copies the original
+blob ID from an up-to-date index entry.
 
-  git ls-files --cached --others --exclude-standard -z -- "**/pyproject.toml"
-
-walk the working tree even when status has already populated an untracked
-cache. This series lets ls-files reuse those directory listings. It
-expands partial scans and collapsed untracked directories as needed,
-without writing the converted cache back to the index.
-
-The first patch fixes inconsistent ignore-file hashes that invalidate an
-unchanged cache. The second enables reuse for ls-files and filters complete
-listings after the walk. Fixed-prefix queries retain directory pruning;
-attribute and exclude pathspecs retain their existing traversal because
-matching a directory can differ from matching its children.
-
-On macOS, a synthetic tree with 100,000 tracked files in 5,000 directories
-and a few untracked files averaged 361 ms before and 50 ms after in five
-hyperfine runs after one warmup. Directory opens fell from 5,058 to seven.
-With half the files untracked, five alternating runs averaged 659 ms
-before and 339 ms after; that case still expands 2,533 partially cached
-directories. A cache populated with status.showUntrackedFiles=all avoids
-directory opens in both cases. These measurements disable fsmonitor and
-use a populated cache with a warm filesystem.
-
-Uncached controls were noisy; the apparent slowdown in the first batch
-did not recur. Literal-query results varied in both directions, with a
-separate five-run hyperfine check measuring 17 ms before and 20 ms after.
-
-Prepared with Codex, including code review and benchmark work by separate
-Codex agents.
+Switching between those paths changes the recorded ignore identity even
+when the file has not changed, invalidating the untracked cache below it.
+Compute the hash before appending the parser newline so both paths agree.
+Update the expected identities of the untracked ignore files accordingly.
 
 Signed-off-by: Tamir Duberstein <tamird@gmail.com>
 ---
-Tamir Duberstein (2):
-      dir: hash ignore files before adding parser LF
-      ls-files: reuse cached untracked listings
+ dir.c                             | 2 +-
+ t/t7063-status-untracked-cache.sh | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
- builtin/ls-files.c                | 11 +++++--
- dir.c                             | 64 +++++++++++++++++++++++++++++++++---
- dir.h                             |  2 ++
- t/perf/p3010-ls-files.sh          | 15 +++++++++
- t/t7063-status-untracked-cache.sh | 68 ++++++++++++++++++++++++++++++++++++---
- 5 files changed, 149 insertions(+), 11 deletions(-)
+diff --git a/dir.c b/dir.c
+index d896e7be4b..037780e556 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1195,7 +1195,6 @@ static int add_patterns(const char *fname, const char *base, int baselen,
+ 			close(fd);
+ 			return -1;
+ 		}
+-		buf[size++] = '\n';
+ 		close(fd);
+ 		if (oid_stat) {
+ 			int pos;
+@@ -1215,6 +1214,7 @@ static int add_patterns(const char *fname, const char *base, int baselen,
+ 			fill_stat_data(&oid_stat->stat, &st);
+ 			oid_stat->valid = 1;
+ 		}
++		buf[size++] = '\n';
+ 	}
+ 
+ 	if (size > PATTERN_MAX_FILE_SIZE) {
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index 8929ef481f..10d4850077 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -98,11 +98,11 @@ test_expect_success 'setup' '
+ 	: >.git/info/exclude &&
+ 	git update-index --untracked-cache &&
+ 	test_oid_cache <<-EOF
+-	root sha1:e6fcc8f2ee31bae321d66afd183fcb7237afae6e
+-	root sha256:b90c672088c015b9c83876e919da311bad4cd39639fb139f988af6a11493b974
++	root sha1:8510665149157c2bc901848c3e0b746954e9cbd9
++	root sha256:09ef24b38105f396a61ad78d73ba6a18ee3cbd89ce4524b4e13b6c1af191e2d8
+ 
+-	exclude sha1:13263c0978fb9fad16b2d580fb800b6d811c3ff0
+-	exclude sha256:fe4aaa1bbbbce4cb8f73426748a14c5ad6026b26f90505a0bf2494b165a5b76c
++	exclude sha1:2bdf67abb163a4ffb2d7f3f0880c9fe5068ce782
++	exclude sha256:b83643f4390b339c1b3ff2f5132c99bd4a77687dd321d3f386c25953aa6f1ce4
+ 
+ 	done sha1:1946f0437f90c5005533cbe1736a6451ca301714
+ 	done sha256:7f079501d79f665b3acc50f5e0e9e94509084d5032ac20113a37dd5029b757cc
 
-
----
-base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
-change-id: 20260923-ls-files-untracked-cache-3559bed01a3e
+-- 
+2.56.0.rc0.807.ga0c0929ce1.frankengit
 
