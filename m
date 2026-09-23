@@ -1,162 +1,93 @@
-Received: from mail-oo2-f41.google.com (mail-oo2-f41.google.com [74.125.231.169])
+Received: from mail-wm2-f5.google.com (mail-wm2-f5.google.com [74.125.225.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126D23B38B4
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 21:17:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460933E639B
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 21:31:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790198256; cv=none; b=LRK0lgy+KtvVYCuxpxiwSkeDyZVf3cMYGb1eHazHcvOoF2bp0JnQrtn6ablHqT5Bl6IVubmT1nxC4aTrOXkup+z0KjmYwCeTqNF+UspHr5XucK/WDH2dihQXN5iXyYa/euFiX2P9SRe6UN6F/BSVCZggYRpBUVhEihdoz1uSKnU=
+	t=1790199113; cv=none; b=WrU9SQi/pV9PM5O2VtP+QXhtHmon8G5Jr1NLdVcb62xwky3StR4MNuo9rGI3aLWKaj8Uxk1dUa8Wp/lDkewbBlhaIraVS3oSoyFymzcgOPMfYQS4AhVno/IT+NHdEP7Jznd9YuLOsrGiS39+pCKwbQ86MC167ne5s5r4+NF/DKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790198256; c=relaxed/simple;
-	bh=vjPAD6p8VynVuJpW0DumLHezVNaR0BZNYeiq483+u+g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=buLba51z8iF/DZ2vMKTn7U57/McvMjEtEH0TLnQFsgGbGIN4Y17GgQSGjg11udqIQ6FoMkvKFRecIlP3sdOlCWxufYVdl1f3iZwba+IrzpsvOh2c1G3DrRqB4BOVlW1rVQBKWyiX/xS6dgZVm4YXJ9Ah9T7NA94rQopzAyNFgD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E/5EwOW4; arc=none smtp.client-ip=74.125.231.169
+	s=arc-20240116; t=1790199113; c=relaxed/simple;
+	bh=E1T9i9WYsME6sZYtxuHpz1j7Tlt0ZKZEEWmbMeQYMDg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rVSokndTdhjDoHwubJziBc7IbvwpO13rUOuulnUNK/aCmrCiy5PxM2QnbfTSOa90T4sfc/32UCAxZqDi0U5E+KJMDnQeKiDNp2cnKR1gk/IB1PpU92f02DTXpuMyDMO2Ki1eMYYHFIX07NCntTy5rYRui43Y/4I1e9u+5YDsyF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CQYFoWGl; arc=none smtp.client-ip=74.125.225.133
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E/5EwOW4"
-Received: by mail-oo2-f41.google.com with SMTP id 006d021491bc7-6d33d80855eso612547eaf.1
-        for <git@vger.kernel.org>; Wed, 23 Sep 2026 14:17:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CQYFoWGl"
+Received: by mail-wm2-f5.google.com with SMTP id 5b1f17b1804b1-49e7b06acb8so5296595e9.1
+        for <git@vger.kernel.org>; Wed, 23 Sep 2026 14:31:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790198250; x=1790803050; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=slJG2NLqFunoUNpWyLDVvBnKxsaBIDPTEjEHBFg4mso=;
-        b=E/5EwOW4+CWGSAR6vLTOqYhKHr9Hr2/pcSEM/zU2huX9LyIYSnSFu5aqymgISkwzpL
-         Zht3tQUDT/NSq/GujQtYxJBSUPFKMtv83cTce1UwvSOMMwAzxlwFoVBMMif45M3KRiqz
-         MVQ9vfj1AC+0UF5bFX63qWLrG7NThUkTSqvsHAVbMx8C21L4T3t7iEvtnqwlHJ1tLJaN
-         kwe7iNhTLRl3kHYTD2rgBmseIxciHaKBV/aibDk9cpizPdQWjG/Y45FFf4QMF6luZKl7
-         ZHxAGGOYE/Ox4s6MXqXAGhN7YNxwiN7rfEFoJoYh+5c8HQgjyMxC0QSavJls9IljEYly
-         xuzg==
+        d=gmail.com; s=20251104; t=1790199110; x=1790803910; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=DQOLeMSfnj1oJ5S7ovqMuHt1Tw+HGbctU91CWRqVWGM=;
+        b=CQYFoWGlqQg6/LPTiRheL/p4y0m3cMC+r++fr+amOwDE31DrmyBa7Byzj1hRO7jYG0
+         txu9df75dF9sL4meb3d5g6WXqC14fcHqSyqBc9CS4X9GJrc8CYIHvFtiHMPYvSSP2S9W
+         CKSUZayPwJxiIhs3uAsIn0awsdinZlXOGfJmXOcnTAGttm4rnnsL/IO7gRB/1X7sOVKu
+         N/tfDOMtfSTbuXzx5+PZbFbCvpwtENDzVw0h7Csn5BuFikuvfJO7YB0jfbs8kmfyA3IC
+         qs8vIXr6KBaYI2JZgIXAXipF2qHCz0/clcWqtczfvNxQKSRxyy27TCFMGq2sEeRKO8N9
+         x+Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790198250; x=1790803050;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=slJG2NLqFunoUNpWyLDVvBnKxsaBIDPTEjEHBFg4mso=;
-        b=0AMHZG6JRO/BEcB7yrgYut14oFKd10IfqGERiC+ch4Otb2XWTdIXWKiVDY4WLFPfk3
-         6CZrcrzBTbGReZadep30ML9pjfUW6SgWm58j88s66W/YQocI9H+1Kp6yoHxeeCJH5L5H
-         9ywJ9gWTTwhmZnz5fNzWc9eYDdnKGqg4a7M70BtOszKDiGPZk1QjBDXLa7jeEWhX12y4
-         6AFY4pt4XbBNo8gCNTnlsIn1MTXx33/OuIe/8ZjjWiKjzRXYJ3LOIdHRU/2NWmqWkpyt
-         BPj2SLGt+H9el1x0ABN1FG44PLtr4neOnBRTrlcm0XoBZwdTsjsVduMs5z+VyPgQ5S3R
-         xKSw==
-X-Gm-Message-State: AFuF++lafGX6CL+MlP8G7NlToZ1RMPMtO04cYu37pGAQQ2HyOD+XlHvn
-	py+Xz1ryygvi45mI0ZQaOgBm8JytJ9NwqmiqOJLW3MF0sKmcb98i9ayE
-X-Gm-Gg: AYBFou1NeD/lPwGryLMD4jE54q1sHayqKt8ox+70ymA2j/X+sFsmqoe4pD51CZ9euB8
-	AwU8HIkEomsqG/p74YgRWfFXP7SAWtUVzj+MGqKpddcFEJSAflECNA2xfWBKgQRI3mxkiA98Bnb
-	Q0OSKr2Jzhap9RErSNWVLw05t7tabpdUEmqLKjrPnVO4RnlyjzdN1Pf8LT+bPbW8gj9YQAyw6BU
-	HpYqOgbpaTqA7fnaYR8Jc2QUJoJYqe1QkG5kZoxEtU6DkFUxUl1BDZTceJiiVoC8mu2fwMW2Kzk
-	K8a196STCGh29sLWs/9ml7LrFG3vtxLouxWmqh+IdZckQxxWsNmQfEx5gAFomwPkvKYgqoO57FR
-	OZLQ4LiwuxwH83VgrvprQKpDJ2mlveelWsTZpjFfrkrdk0APlt1mfXfG2V9EYJ3y5h4Dr7kkNrc
-	+ta3Gkrsg4wegtIebuo0KiZ5BtFZ/SJkut/PRJnBax4v14EdvJy7LOzQbkqoy/ifEYNav167hyK
-	nm/QjPqQKIJXs91OBNNWp0=
-X-Received: by 2002:a05:6820:4b89:b0:6c9:80d8:a1fc with SMTP id 006d021491bc7-6d4410d5f9bmr429205eaf.57.1790198250428;
-        Wed, 23 Sep 2026 14:17:30 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-491ed7278fcsm318987fac.9.2026.09.23.14.17.29
+        d=1e100.net; s=20260707; t=1790199110; x=1790803910;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=DQOLeMSfnj1oJ5S7ovqMuHt1Tw+HGbctU91CWRqVWGM=;
+        b=BjVYI1sCr9rfebjBZ12tepjXNm6TRrVRTvl0v/H6hbjioLsA7oL6TJ4/pRc9pXLjaT
+         5iqH1oMqMJYyqVHkvCPzIcqeukLr4/deuTBRD40zFeVRmOOFTuvGhBwfaiOShh0LSTd2
+         RdT9pTNJPZCI+GBkO4ZjIr5RSCKU12uCPB9sEYjvQLwfythpBh2YhVsIm47ymXnplirq
+         iYSVNsaNQwIVmH9xKJ1TPKddutU+BWf72E/H8CVpL326wqiRFjvuRqVKdugASF9y/gmU
+         kDVqc0fHgWlFqP+JfW5t97t5A2sof2+pTLIt42LcnMcTcknja7q5+kaAVSYlrzYCe+25
+         6xAw==
+X-Gm-Message-State: AFuF++kBN2VC+FpxCNcQ2l8b0ZkDe9Dqjjhj/tX0CBqTXxHOZsbg36DG
+	qA4O5QFDJr11hrTmkIeDX6iP1BZ4Rik946rsO20Bcl+Q29rjnAiBZbnFKP+N78dypzzptw==
+X-Gm-Gg: AYBFou331/BJ/Fhvk05NI4PIcnAfwlw1fMLkC1qOymAusIm1Ps0xBLpzuSIGr49MHTv
+	7IDuN+zt3nVJ0VC6y2FrwEAKUPFQ09OvI6TmMxbKyNRbG8k5lP8eoTF/5Tjb71UotKcBDVUJos9
+	OUeaKrN1K2ceZXGQby2CglzMevozN/e0t8E531yZ4bICq43dDI0b2V3e3avk7VlnYnAJJhpH4cA
+	+YBXiL/qoQM0pjFYBE1RZXk/oEkyt6MEvEpvLWnRwiQbY/asU4nF/G2g7/PXYS8/7nlg2+UgF5d
+	b7rOARDRtR6zO+jqyCEjFTpQNWyYLIOXbAvdiY9wS2UimDRgR6ui3hF0b/4gpdkO7FmzVxkh1eL
+	MoGt3ZYG0balc/aSV2fhsRSqDXl6tvSeqw3zAU+RHE4LP24sjfq8/9xH1gsyhWdru2/1Cojyk3b
+	Ob16hqdpGwhhkHURUupCBA2ZLpbxfCzOtTUpNXazbDlio9DJz+
+X-Received: by 2002:a05:600c:350e:b0:49e:6c27:d093 with SMTP id 5b1f17b1804b1-49fe66d80c8mr7494035e9.15.1790199110406;
+        Wed, 23 Sep 2026 14:31:50 -0700 (PDT)
+Received: from DESKTOP-OI0N70R ([146.158.109.7])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fe5bb9891sm13546875e9.6.2026.09.23.14.31.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Sep 2026 14:17:30 -0700 (PDT)
-Date: Wed, 23 Sep 2026 16:17:26 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] object-file: flush transaction packfile before
- migrating objects
-Message-ID: <arQ_Uz2R_sE4yzXu@denethor>
-References: <cover.1789328612.git.jltobler@gmail.com>
- <18a1798d958d7f089614ec588346096c10b0666a.1789328612.git.jltobler@gmail.com>
- <arPRM191URNQGu7V@pks.im>
+        Wed, 23 Sep 2026 14:31:50 -0700 (PDT)
+From: parovozik <kaliugov@gmail.com>
+To: git@vger.kernel.org
+Cc: parovozik <kaliugov@gmail.com>
+Subject: [PATCH] doc: remove unnecessary comma in git-rm documentation
+Date: Thu, 24 Sep 2026 01:31:25 +0400
+Message-ID: <20260923213125.1316-1-kaliugov@gmail.com>
+X-Mailer: git-send-email 2.52.0.windows.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <arPRM191URNQGu7V@pks.im>
+Content-Transfer-Encoding: 8bit
 
-On 26/09/23 03:16PM, Patrick Steinhardt wrote:
-> On Sun, Sep 13, 2026 at 03:26:22PM -0500, Justin Tobler wrote:
-> > diff --git a/object-file.c b/object-file.c
-> > index 0f123b79fad1..210984f82532 100644
-> > --- a/object-file.c
-> > +++ b/object-file.c
-> > @@ -1262,6 +1262,8 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
-> >  		container_of(base, struct odb_transaction_files, base);
-> >  	int have_packfile = !!transaction->packfile.f;
-> >  
-> > +	flush_packfile_transaction(transaction);
-> > +
-> >  	if (transaction->objdir) {
-> >  		struct strbuf temp_path = STRBUF_INIT;
-> >  		struct tempfile *temp;
-> > @@ -1292,8 +1294,6 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
-> >  		transaction->objdir = NULL;
-> >  	}
-> >  
-> > -	flush_packfile_transaction(transaction);
-> > -
-> >  	if (have_packfile)
-> >  		odb_reprepare(transaction->base.source->odb);
-> >  
-> 
-> In the preceding commit you wrote:
-> 
->     In a subsequent commit, repreparing the ODB is slightly deferred
->     when committing a "files" ODB transaction.
-> 
-> But that's not really true -- you don't delay repreparing the object
-> database, but instead only flush earlier. The reprepare still happens at
-> the same point in time.
+Signed-off-by: parovozik <kaliugov@gmail.com>
+---
+ Documentation/git-rm.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-That's fair. When I said "deferred" I really meant that
-`odb_reprepare()` was now happening after and outside of
-`flush_packfile_transaction()`, but logically it is really in the same
-place.
+diff --git a/Documentation/git-rm.adoc b/Documentation/git-rm.adoc
+index b5ead86796..67061e961f 100644
+--- a/Documentation/git-rm.adoc
++++ b/Documentation/git-rm.adoc
+@@ -61,7 +61,7 @@ For more details, see the _<pathspec>_ entry in linkgit:gitglossary[7].
+ 
+ `--`::
+ 	This option can be used to separate command-line options from
+-	the list of files, (useful when filenames might be mistaken
++	the list of files (useful when filenames might be mistaken
+ 	for command-line options).
+ 
+ `--cached`::
+-- 
+2.52.0.windows.1
 
-I will adapt the commit message accordingly.
-
-> > diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-> > index d295c265c75c..fb83c8fba619 100755
-> > --- a/t/t1050-large.sh
-> > +++ b/t/t1050-large.sh
-> > @@ -87,6 +87,22 @@ test_expect_success 'add a large file or two' '
-> >  	test $count = 1
-> >  '
-> >  
-> > +test_expect_success 'add large file with loose object in batch fsync' '
-> > +	test_when_finished "rm -rf batch" &&
-> > +	git init batch &&
-> 
-> I feel like using a subshell might've helped here for readability. But,
-> oh well, it saves us an extra process.
-
-Ya, using a subshell is probably a bit easier on the eyes. Since I'm
-making some small changes anyways I'll go ahead and make this change
-too.
-
-> > +	git -C batch config core.bigFileThreshold 5 &&
-> > +	echo foo >batch/1-small &&
-> > +	echo foobar >batch/2-large &&
-> > +
-> > +	git -C batch -c core.fsync=loose-object -c core.fsyncMethod=batch \
-> > +		add 1-small 2-large &&
-> > +
-> > +	# Neither object may be left behind in a temporary location.
-> 
-> You don't really verify whether they are left behind, but rather verify
-> that the can be read. Which is a bit of a different thing.
-
-That fair, I'm not sure this comment is really that useful anyways so
-I'll just go ahead and remove it in the next version.
-
-> Sorry, feels like I'm in a nitpicky mood today :)
-
-It is always welcome and appreciated! :)
-
-Thanks,
--Justin
