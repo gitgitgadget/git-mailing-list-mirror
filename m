@@ -1,113 +1,203 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7536157983E
-	for <git@vger.kernel.org>; Wed, 23 Sep 2026 20:14:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790194488; cv=none; b=LAW6QBScl0N52txIUkwAfg0qnIv+CSwyse00jv0/ivKX+xQ/4N9zOVKyjR77nUm3HzUu241kAp+ThP+nHvrdJAh8nG+JrsbwHiJtEM91MIb4j45/QASa0+UEf6uXy3RQOhUEA5kc5Ig4U2464BOfVGI/phO44o11Jct7tMjT1Ak=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790194488; c=relaxed/simple;
-	bh=i6TPFc6pWjLG2LGL6l2d0ppVZH2dD4DPCQZ5nR7tTio=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=s/B6n0Ba+NJnC1DlNR9FSoQvhfqcoKys2XASj71N97NGv7WduEkQWhhBli2Y7vGIKkZRT5utvoWIaPjWSwvD42LMDq/O4l7vWtAHXDhHMPD44d8wJmDnbWNon0XR28R0VdcdTTJ1PZ1hAU3oKjplr38hhiGPce4xNhu2DxvZTLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SZ9oxxqC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lCNbw55f; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CEA46D0A0
+	for <git@vger.kernel.org>; Wed, 23 Sep 2026 20:20:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.225.140
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790194842; cv=pass; b=mnX6pvUtDu4HErXsksbfy0VsVBVWwRbrxtp3eBGcA/rTKU+Cc2X4aMx8HQ/JfwERecAvnh76oA3XfyTW2GYAuJ1bKxTtjDyqCAiU3ufMQdUWHNcvjR98SuMcUZwzdLLmYj5wdkm6zpC2ZGzyEkYlwoUgh9qSd3CNrKe55nzwvaE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790194842; c=relaxed/simple;
+	bh=os+3nP5EAtjiiMyXczVuf5Q1pwLFHK94Qghhc1Dn+RI=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=bwpkmDA8hCql3eyRDU389SFRGtSRhpdfSxJ17qIubZ8o2rxTFjvP/nk8KQLlMuS7ZHQdnao2t5lqu86caO7LAvLh79lVp168bnudY++YrnP2RyH1tzj3g8ePZWZZf/qDb9N+118tSTWHJTHdQF8fAQH3pUqcEJ8B3NbGKXYfo8g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BFbvIPpI; arc=pass smtp.client-ip=74.125.225.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SZ9oxxqC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lCNbw55f"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 68457EC0213;
-	Wed, 23 Sep 2026 16:14:36 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 23 Sep 2026 16:14:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790194476; x=1790280876; bh=BRQps6QJo0
-	Abc5fQvII5cuZUUF+xAwZx5QyusVfP5ME=; b=SZ9oxxqCRhFtdBhTAI5PXejLJD
-	/04dkb+M+gHDIvzCUYCttXEV59GeQA885fOYv6SLal1GkfIzECh711sHuDQJfxOJ
-	y+s9VH/k28h8bM3sg9+B9saHw/eC4DjBYPMYiAIf3ATvdcTwsjl2jqaS6iadgguU
-	pnA2vw6Ir5f22IukIK06XU56qGRwakGDzEi0hVt8du0mB0ATdXOrnUTsHKrowO1Q
-	1PjduVmjO+CigQmEFFhptjd1YOrgd2lZ02Mh16Kbe/LkZkbH5Ipr9jUHphSpCB/F
-	Yb3SoTy8T2s/+PgXD+0eT1VQK8FdEASrHTvn+pY0ivw+Xwi2lZUyrxY2iJvw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790194476; x=1790280876; bh=BRQps6QJo0Abc5fQvII5cuZUUF+xAwZx5Qy
-	usVfP5ME=; b=lCNbw55fttEhRq58l8+D6IFkHxQT9aWFL4ZXNYSvfxAFiqhdfC8
-	O5TTmw4Iq6LJCoBZy+Qg78rJLrnALpXfJ7zCMvLbIsu18nQXCXkZq+iQQEaik5Uq
-	EUXBUE5x3osbr18SMBdNdCj3/ySN4x5sTquD3c6+5t4yZ4y4JC6896lPkgyIdShJ
-	odeiVr+7T6rlaoqHZghA2L0lKezmtBQT7uL+HdcU6pVj+516ZDxTrGRAJM69M+99
-	udKfuIArwgtwWDsN1ss1LidxI6yWQcw3jalVkjDQRNJiHV4n3/mdCtPl6tdel/kO
-	U+L4CbkfDDVPEKRpZJnj+QcG6/fGBydv3Kw==
-X-ME-Sender: <xms:LDO0agphK3udze6hrNDzg7EZEtEvIqdOSm-GIN0Gy4EE_a0Oj7lRcw>
-    <xme:LDO0ao5RrYpIs4kPgDUvZsce4iQl3pIxBirYXKZ27ug3O1I9vyo0sSA_PJlytnFf7
-    xJ21TcR2_r-GXKWZRtJC3TnwWHolEDeUpY1D7EKTdUnQ9-PoBUHbHE>
-X-ME-Received: <xmr:LDO0ancpPQGGY6PkfOL8X4rQPkjPyjyDh2zppK0y6IXfuBuqI4107nAYMoUYBgVd7Kxd6Q7q0NXqZMr86pBlSqeOfUom-hTlvkGY>
-X-ME-Proxy-Cause: dmFkZTEgO11BSfazY7ePuDHsVDDxHNULGWZTU0AGsZitNLRNSJahyd5mA6LYszp0zmh0bh
-    VOYHOF2ax5MtwrpZNV/f1Thy0KcopAvzumSXccuNJxfd2iB9ywstficbiVQixs881HOwP8
-    Tdmwp37Irv/CVoK74YYiEodlTYtv1WTMDqi1jPt3IBFLMxG3vKnRVeT4hcK0xkzcm1tfKJ
-    HA+KKU4pQZ/i086543GWF7+3QXwSVUrIj9vnF6E6NMjZEJ+2MrHv/h5UNNhXN8G+xRdl6/
-    68/Vty5YgHes/k0Hqlo1j42+hvZhxEPM60OwqB/OD9RKmAW2U6e/Vcs8Nldt96qN0H+VHU
-    yQBr0d0705DnQ3hQjvoXxYUmE79edudOh5Honn4m4Byhhr4jFq3oKTTyiVTzv8n7p0dGqC
-    7PrFdRkPi5YSYQDz2sXoDyszqrP5fXPpywclQPIbkokVEODanC5qf7Not4FTLOyukouTnO
-    diP4lC5Jdvfvz7jyXy6c/vJs1oT3igSOpHhEclIpjsvgQTL9TiZK39nH0L+wWbyqzATF5M
-    yaaCRHqHmGHh1QLixAkHW3/3ChbvDbQOMGC9dnKHUbioKY1LUNJG6l8bjdSB55PLGJZtFM
-    jGlHv4SSLqhqmYQ4xqDoQE/06UxpJlMsqBRKALFezYJD5+1GtAa8A9VROmBw
-X-ME-Proxy: <xmx:LDO0at7_rnTmTYz7cCo_rpDLVACVbX86kVjtftoDcanSl-gEy_AjVQ>
-    <xmx:LDO0aus5wZQhJVRwmIiyF8RCDqIqW_yszN4gq-CNExctA0LtpKK25A>
-    <xmx:LDO0atgqQHEREL4640bteeAqpnNFkZ2s3QGz0w4wo_6FONhQySlOGg>
-    <xmx:LDO0apqpyiFDuenu8QO4ds0l7Xb2OJnfmMVXV6keGNB5Cnhf9fdZ5Q>
-    <xmx:LDO0ak9uGf7tPe2ITmg9Gf-eUNI1DGGOCZLoeuB9ePjcLj11raqdNC_e>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Sep 2026 16:14:35 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-Cc: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>,
-  <git@vger.kernel.org>,  <peff@peff.net>,  <newren@gmail.com>,  "Derrick
- Stolee" <stolee@gmail.com>
-Subject: Re: [PATCH 1/6] strbuf: add header for 'safe' API
-In-Reply-To: <DLMXXKPGU78J.2PBDFYJTPFTA4@fastmail.com> (Mark C. Chu-Carroll's
-	message of "Wed, 23 Sep 2026 15:25:23 -0400")
-References: <pull.2230.git.1789736540.gitgitgadget@gmail.com>
-	<b1779709120adc9c1df40c7210481d6bed9791c5.1789736540.git.gitgitgadget@gmail.com>
-	<DLMXXKPGU78J.2PBDFYJTPFTA4@fastmail.com>
-Date: Wed, 23 Sep 2026 13:14:34 -0700
-Message-ID: <xmqqzex7913p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BFbvIPpI"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49b912d391aso9680895e9.2
+        for <git@vger.kernel.org>; Wed, 23 Sep 2026 13:20:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790194834; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Z9ahU3v99YJz/exypOnjTzsWhO6JEM8RAw1tDI9v3K/HwYYf1HPt0XxpxbUGrJJP7W
+         93WjVfkDRNzr3QD6G6xjmBD8MBEBsr7PGasQwcgx6Lpe5Y2yTuoZoJZuFSH94QyHyj7m
+         WKvDvalXhW6C4yq3soohWzPI2BJMCGAQmLeLdhboFWYuNe8StTf+FgzjpW2zDueFSIkJ
+         M4VzMpNdx3RIy8RwjjBP0tCg4ACu+aArjnXhM3OBv/eJLGPWRr4fZFsHQZ6MAqgEemWY
+         Afetzi219nXrHETANwi3wbHT/tCddgVCZz54ZW6GwnQUuDlUPbBsczAVod19PNNdNRxH
+         Up8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=B0Hb/k3Pp2vC97O4lJ5drnb7gwwiPcdqihZIX770IhM=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=HX/Hws5CHiSICeDI5h2Ji9D+Cpx78TopgCSAJcT3G4NUR413KBT6ekidl0mtAMQ4g9
+         Mm5cCUyWZ5MxFMVS8ro8cOVy4LpNRGGXeGJot+7opEISIMhAyCe7xfGApPBlImOtqc7Z
+         yM10/+ulqkkP9zcS0nFH2R7JV1XyME2hhNjJOsjYI+ifAZV8fr7x12GzeKyGPdocMvPg
+         um6/XIfvfciy8k4zhG/Wp3F6NpKlNdyAE7SCvnPsrQhJWKTd/vR8BetHlgKWyUTCYkyQ
+         5he6ETeoHzcoQU6RZdaW5RGAuzRqixGT8YyvqVJwZOMIhOC7HuSbEBkPNrkzL/Y4g5za
+         U/WA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790194834; x=1790799634; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=B0Hb/k3Pp2vC97O4lJ5drnb7gwwiPcdqihZIX770IhM=;
+        b=BFbvIPpIYsHwRBqkNQoYqe90DybB7xwzGzCs/UMRDP4gG13jX4pDMl8jgZFmk2vHPm
+         8Wey3SsWVTMl5pXs2Y+khkIO1S934CAv8UwlO5Z0kCZBuLmimCcwLxiNIh017/cOORVr
+         1FIJ94KWNuBc+ow8r8Wp7PRdFeKpLfKm2Ax5OM3CH/Rt2Ho97HHd5+vogWonmnFTAUKA
+         YCMrVK9qDssz7+BwH2SCd9TEPpUbJND2WVMOz6pyhd5t2iTrQApPxfKe8uJfNrGgnm5i
+         SofDxbRUl3HCrj7Xv+Gi8rRvn9kjxXQpglzWQV8fZCe8PYhEKjFbGV/iZhS26sgPzSMY
+         uyEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790194834; x=1790799634;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=B0Hb/k3Pp2vC97O4lJ5drnb7gwwiPcdqihZIX770IhM=;
+        b=2y0QJ87HmKK7KDED/jCu/Ye/r1Pe/V5eFMgu1hEwkS7nOw17Apt7y99ajqZGNbhkeK
+         iVOvFsrk8czVewSpD6chn2EK8lucK6KK3KFQtHOaxb557lqoAzEBqc7pu5xXbhJ3Arwp
+         cwASjJPoBt9OtFjB5ocTOSlriZT5fQ7mbtj/agOCQnITycAdeqTi1eD+/Rlg0F0BA0NB
+         5izBWnMaSUuMW2pCcmp0jrByAc6plbdCGfYZ9pGtdY+fL+qF3Nv5B4jePWiVNW8jpc/i
+         nTw6dcWKmNSQxt7UJKhjd/8K2jzxAUpZ6oUSfMxf+yJldAskBGCJRCUC/zZgMIZRgKgy
+         X0ww==
+X-Gm-Message-State: AFuF++lGnBWVrGZ2HGEdfwjYwgqEBbk4yQJSmr3AsgaCSmYaOweqYTlZ
+	9o4ft1dWJ0kytQ+hq2cOqiN/s1flaHSgoSV6EL60m05eCR6VIx9TLtMGLJlPNv8jg7AzM6BKSVk
+	fK1BeO2mHvI1eGxnfwmK4mgPO5pWglZ7G/k6p0VP9aw==
+X-Gm-Gg: AYBFou24Q7HLEoQj8NcSNNY+NYw7ER7Em9+2wXYa5w2jl0uS9xVU++HH/4PokupepEt
+	hVY5ArDi7CJ85aoI/QLV/cNU2ks1EsZhgBQV7JXy/5ON8gA7f+bxrc2Z6fKUD6PJT+JFVbrRlU3
+	EW59h8FDzIMW94hk1OiF1Ed8y7R/dynICV3ED0N2VrANFNO2dGeadhp97YTTOUIACxt3p6QpW/1
+	6Yzajpl1IyrAXBftmGTaasMPiKIC0m32Z5v6WwTDXAvrRdChtJgQRTA+ou40vQQLhmd0XO5yCxk
+	OzXj7Ea2d7RiFNkXAelW74phImuRi5343ZlBKr2AZhcDu8Xyo9igLnMTDAe+BxPkLRJ9efQ3FCB
+	R8vHyZizbChtCG8yXvXxqUkcIN+2xaggn6A==
+X-Received: by 2002:a05:600c:1553:b0:49e:74b6:740f with SMTP id
+ 5b1f17b1804b1-49fe66f3ca9mr4448545e9.17.1790194834363; Wed, 23 Sep 2026
+ 13:20:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Guillaume CHAUVEL <guillaume.chauvel@gmail.com>
+Date: Wed, 23 Sep 2026 22:20:20 +0200
+X-Gm-Features: AclHuK-PGISliHvAJVbXzT7lcQPraOfx9I3jSpStnBM9elXANbPEHd6F7Nx5o0M
+Message-ID: <CAP4DsUexEmm1qo6jH+Qzy+n3dQs_OCJ8yg=ReF+aVrcTrC7NeQ@mail.gmail.com>
+Subject: [BUG] submodule merge tries to read B's commit from A
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-"Mark C. Chu-Carroll" <markchucarroll@fastmail.com> writes:
+I ran into two problems while merging a superproject with submodules.
 
-> General comment: I really like the idea of this. While I haven't
-> encountered this specific issue with git, I've dealt with similar issues
-> in other systems, and even if the cascading error case is rare, it's
-> incredibly frustrating to deal with the loss of error details because
-> they used unsafe operations to generate their messages!
+One problem, involving the repository used for commit-graph lookups, was
+reported in this thread:
+https://lore.kernel.org/git/d3241733-d015-4646-88e0-06e56a04e77b@nutanix.com/T/#m174067937aaf76e9fa844386961b3e9e66c1e4d9
 
-If I understand correctly what this topic aims at, you'll see the
-"loss of error details" either way.  Either we ran out of memory
-inside strbuf call and die, or we fail to allocate memory to format
-the details and end up not showing it.
+The other problem is that during a merge, Git sometimes tries to read
+from submodule A a commit that exists only in submodule B. I reproduced
+this with Git v2.56.0-rc2, built from source in an Ubuntu 26.04
+container and an Alpine container. The reproducer below triggered the
+issue in all 50 Ubuntu runs and in 43 out of 50 Alpine runs.
 
-> On Fri Sep 18, 2026 at 9:02 AM EDT, Derrick Stolee via GitGitGadget wrote:
->> From: Derrick Stolee <stolee@gmail.com>
->>
->> In particular, we cannot include 'banned-die.h' in 'strbuf.c'.
->
-> I think we prefer to avoid "we" in these comments; and 
+The merge should report a submodule conflict, not look for B's commit
+in A or report A as corrupt. The script checks the OID's presence in
+both submodules and prints the "BUG" line when it finds this case.
 
-The third word of your comment should not be "we" but "I", if that
-"we" intends to include me and others who wrote many commit log
-messages ;-)
+---------
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+unset $(git rev-parse --local-env-vars)
+export LC_ALL=C
+export GIT_CONFIG_NOSYSTEM=1
+export GIT_CONFIG_GLOBAL=/dev/null
+export GIT_DEFAULT_HASH=sha1
+export GIT_TEMPLATE_DIR=
+export GIT_AUTHOR_NAME=Reproducer
+export GIT_AUTHOR_EMAIL=reproducer@example.invalid
+export GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
+export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
+export GIT_AUTHOR_DATE='2000-01-01T00:00:00 +0000'
+export GIT_COMMITTER_DATE='2000-01-01T00:00:00 +0000'
+
+tmpdir=$(mktemp -d)
+
+for name in A B; do
+mkdir "$tmpdir/source-$name"
+cd "$tmpdir/source-$name"
+git init -q -b main
+printf '%s base\n' "$name" >file
+git add file
+git commit -qm "$name base"
+git switch -qc branch-a
+git commit --allow-empty -qm "$name branch-a"
+git switch -qc branch-b main
+git commit --allow-empty -qm "$name branch-b"
+git switch -q main
+done
+
+mkdir "$tmpdir/super"
+cd "$tmpdir/super"
+git init -q -b base
+git config --local protocol.file.allow always
+for name in A B; do
+# reproduces the bug
+git -c protocol.file.allow=always submodule add -q
+"file://$tmpdir/source-$name" "$name"
+
+# does not reproduce the bug
+# git  -c protocol.file.allow=always submodule add -q
+"$tmpdir/source-$name" "$name"
+done
+git add .
+git commit -qm base
+
+git switch -qc branch-a
+for name in A B; do
+(cd "$name" && git switch -q -c branch-a --track origin/branch-a)
+done
+git add A B
+git commit -qm branch-a
+
+git switch -qc branch-b base
+for name in A B; do
+(cd "$name" && git switch -q -c branch-b --track origin/branch-b)
+done
+git add A B
+git commit -qm branch-b
+
+cd "$tmpdir"
+git -c protocol.file.allow=always clone -q --no-local
+"file://$tmpdir/super" clone
+cd clone
+git -c protocol.file.allow=always submodule update --init -q
+git switch -q -c branch-a --track origin/branch-a
+if merge_output=$(git merge branch-b 2>&1); then
+merge_status=0
+else
+merge_status=$?
+fi
+printf 'git merge exit status: %s\n%s\n' "$merge_status" "$merge_output"
+
+if [[ $merge_output =~ Could\ not\ read\ ([0-9a-f]{40}|[0-9a-f]{64}) ]]; then
+foreign_oid=${BASH_REMATCH[1]}
+if ! (cd A && git cat-file -e "$foreign_oid" 2>/dev/null) &&
+(cd B && git cat-file -e "$foreign_oid" 2>/dev/null); then
+printf 'BUG: OID %s belongs to B instead of A\n' "$foreign_oid"
+fi
+fi
+---------
+
+One run produced:
+
+git merge exit status: 2
+error: Could not read 7d549ba7e9152029e66ddca8dd23ee7da32b036f
+error: could not parse commit 7d549ba7e9152029e66ddca8dd23ee7da32b036f
+error: failed to merge submodule A (repository corrupt)
+Merge with strategy ort failed.
+BUG: OID 7d549ba7e9152029e66ddca8dd23ee7da32b036f belongs to B instead of A
+
+An AI analysis identified a likely cause: a delta-base cache entry may
+remain after its pack is closed. If a pack from another submodule reuses
+the same packed_git address and base offset, Git may return stale cached
+data.
