@@ -1,110 +1,129 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from flow-a1-smtp.messagingengine.com (flow-a1-smtp.messagingengine.com [103.168.172.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB283BCD2B
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 16:34:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868393CB571
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 16:45:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.136
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790267691; cv=none; b=oVQ0SeImyaG0uurvsYo1nAe1SovIGHWZyEusI7V3AXfSQRj4/7YBI62h+k3rLbyw1bFVU+XazFDveOybA8OPgnt8X4lG5AKvQDL2IY476gnhjsToJNM636YTqet5BQm9KAck+DDWdosz0W7VQ3EMtTzEDE0irMqhpmlw98E0w0A=
+	t=1790268317; cv=none; b=hi7BjpKow/jsyI++qT7U0yNIpBNhNJEyre+yOasv6ioTzssTt0AagKxEkv/4myTI4Xr4MR4CTRurnJ5DqGxoaQMfh7iTjoyultWgzy40d1n7A7+jClTCrqOLWjb1mdqrqF+PBzD+sk3PJQfO1sg12bSUl6k52LG8WyY0mF8qTe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790267691; c=relaxed/simple;
-	bh=eQ2GIYBUkjFpJSZUX9tQDhAGuIUFPR9gn0OuVolfgh8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jkednFWLyl0f8LyDoDiI3ylOLZE8H8EEzijuUY5gptRWkcSZwnquwDVpTHqYM4wxYKPNR96KxfGTnPgd4Pl/+iv4+SIeZeZepZpN8k8Iqbd905/TQWUh1j3J5aOj+DU59eR5gCuLbySBG+PS7n5PutyEUunM2rTyAsqi4zwAhwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rGKk21yp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MkoJ6I1H; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790268317; c=relaxed/simple;
+	bh=FqesKS5QIyrNyn9dv/pZhoQ05NLPaCEK669tEJCTR1M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZL80OGYgCQOn5oK1tSAFMCyysqVvlN5+nKLrMaGQiMmjJx2CRlEihtO7IpWVWA++qqptDpuotXMt6UbhN96QRbtuMkZjUKRYJ72rh8M6WRloJNoSoIgQUtubXcPb/ranVan52RuQPOQOSJSivvmCcVxl6zMzM9PAZc2jrvgdYhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=b5AZ8UHZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=u47aYAEA; arc=none smtp.client-ip=103.168.172.136
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rGKk21yp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MkoJ6I1H"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1904714000ED;
-	Thu, 24 Sep 2026 12:34:49 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 24 Sep 2026 12:34:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790267689; x=1790354089; bh=uZgiZ2ECfK
-	n6qVFzuBIbkOSR4KKL4zRFThN8jKaNN4Q=; b=rGKk21yppKJohqSn72k50akNMN
-	K4m+ro9O/9+CFN8GGtT0MfxNGgXIGTFjPLJWfh/q3cvpFNHrXrrkTqZsc7GdaFy+
-	YSyRtgmDsGui20H0f4foE/maBbw+YERfGRAQQkAjWB//LJL3wJE8gpgctPzylJEM
-	944xTVekzxX5U7BLHJzIF8/wDQm07gv0J3Thbq3poM3UXt3g/y2BJ78RwOhN3t8y
-	GTpdU8zzuuKIDyTQXde2RpV69antefUsb1eZFHIrPHFZ+wxoJLhlHg6OBFsQJr4z
-	HaZdPGwqy1NjrcZVRjHxtFyWT+Y1088X40bin6m7yGghBD+Fnm+qfifN3l1A==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="b5AZ8UHZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="u47aYAEA"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailflow.phl.internal (Postfix) with ESMTP id 80118138027E;
+	Thu, 24 Sep 2026 12:45:14 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Thu, 24 Sep 2026 12:45:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm1; t=1790268314; x=1790271914; bh=qqgZ8fENjfBJbvjoGF0/U
+	4FBWUgovmTCpiQAN4HTxk8=; b=b5AZ8UHZ8stYL4S+sbdsi+SpWWEZrUfjjKMMy
+	zx9lnhohPL9pbBObRgzdBOQEXd6KxRUdbNY7r0AT5xpILvkCuN0nT6GJR0mIlsIa
+	PSeaj5q0X9POojg9np3fDQ2znuWLldvw8VPNan1z+rfqcXYn1Ay4CVcLnBNo8N9q
+	aa1HecBJEfznWfR3jpxo7i/wRka14QjNCaWorNPs1vEpaGwZIx0L5dxBd3Hyss8y
+	7zyqoI1eAKqgFgeut6KpSDXBvai/Sg0M5/AnKn4V8cEpVMGY7amYQdZrPtUwwhXe
+	GlcLoIGxyT5vOsr97WUVep0WShLt4pCseoF/xrWPqeDWFhXIg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790267689; x=1790354089; bh=uZgiZ2ECfKn6qVFzuBIbkOSR4KKL4zRFThN
-	8jKaNN4Q=; b=MkoJ6I1H2u5FscuIiTVpwnIJzZsxbCyRqgvM93d6lWimpDDGL0a
-	xdKFTxw6ELxTTiaQlHtV2xYp7xKUUMmZM/zDWRFnq5xzaEuSBhywx+pn+KB1TMJ0
-	03hoEN9b14q66WaCcWJBeFLcuhP/7C3vd7NheCCa91WFpPX4NTxzDcjR8rMn5WF9
-	aZUz06C+vgMGAkhb9/ZsmzVOJiqLxgMgjunCaT45Avpk21Bj0UeV7tNTt5ihvwPF
-	a2244NEUTXNEBig8zeq7Cs5jL0ScdDVWNItWGQn3lIXe+oLI2rJ28m3tUjB39FTQ
-	om8ZSovsT9MD2OmDZ6yd/kgqomZV+ZiuSOQ==
-X-ME-Sender: <xms:KFG1aiWIIVJQKMLHY_0fTsasKvVbZMhYbTAmSZPwi3Up9SOQ8Q2lTQ>
-    <xme:KFG1ahIWaOPwzrrZSDh4HSzXbEoCF5GsnaN7bXGBf8ackd7Jtw6iF_zEnjNBloxGw
-    OSOzIlyYtnXOkqqsrqq9IeUZenNLb77rzRJ8KQh26Md2LZVPqd17tM>
-X-ME-Received: <xmr:KFG1aqBm29KOh_Rsqj03r6E5hTZeti5ATfE2vbsmSbDOPpYSDFliS-xIJIUkPVE2rq1ejF6n4yP5M1PDsd0ZUuIjO3W1FQ2xS2Oc>
-X-ME-Proxy-Cause: dmFkZTEWLe9KswLgv0uv/ve+QUnpoDl8t98R5i1fZ6l9vC0H3KBvWNiD1Ab02XjedYJHkO
-    oieEh4ZVHWA6aX4l33Gvd5oiOQx2M0/b/06YzYOL1WEnk2mzfE8LdjZZ6W1hSgAOZ1S57T
-    xUZdoqh2r5/QBWGWIrk/vDBmr+3dIWpzip1rlSZHXKy7VNPi3O8zxJRBOQw8UAedT571Ly
-    SXH/1YR+T5PARLr+yD9sG3aWz5NgHAuOsn85zBBhKE+EXun9GPYMVddgKA6GE3F3Y8dii2
-    RV/UAssEr+AKbF7JiJybMm8gC/qZ+M3x+Js9yEQR0Xd9O3eisvu+A73L3afy6emNQZXpSL
-    MUNaN0tjJs8gWX6Sryw+3aXgfyHSLGOQNL/8rh75J69aLbwUrh0XJrnitxQBGwF8PO4mLk
-    bK9zDKVPj8op+h7n+oTf4VqEXSbsNPcyEiuEoFHCcok50F4fF7WD+Uq91bacByVBoCMMxZ
-    PxWna0zl/ojeLdnHmOnzK32H2kHbofABoAsFew6kOlTMDqFUGcA9R66gyq7gCvoQsyHUSV
-    HwKWael/jtjgxa8ZUoxMwsWjl83kDto8zfPS0AQF4NYpOqTIvmHPZtceaJwhRzFBi9APfq
-    3yRtlc8ftwIA5alIyqfYmSbwYytbFAC4HwpIkc6IvLXy1nb/8R8v4klBUUdQ
-X-ME-Proxy: <xmx:KFG1apcnq04-H-cnOwz_rB4GqDIJIwrTt7pm_06GMSFAJtRSBxkPVg>
-    <xmx:KFG1ah21JTdbmUHeBJotR_OcXM25j80V9z7NHQl75rSEQp-AjaDrew>
-    <xmx:KFG1aojhI4rDfOEBXK-ENXvy1Da-MVPHwggmp-TeiHH_03Ne0ZDGTw>
-    <xmx:KFG1aikzTrCGtDomvr5_RDgiQxe-SdfSfmErqpz37XRm1mR5VFtoiA>
-    <xmx:KVG1apSfDa2CbGwkXvZ8WUdExvPHcGITL7jgrVD0QYc7YjAx9Wvg6uEw>
-Feedback-ID: if26b431b:Fastmail
+	1790268314; x=1790271914; bh=qqgZ8fENjfBJbvjoGF0/U4FBWUgovmTCpiQ
+	AN4HTxk8=; b=u47aYAEAQtuQHBlDqBMvkW81IQyxJl/Q9bnXxv25ALN8lkTALT6
+	3XvJlk+INwu9Nc54fMduOPH7WyMUbydH5RVdb394gbn/AFn+YK/bB692H0snby9X
+	lpIij2OsDsMm8Ww5PI03rOl/1rpm+okUGGoJGmgITWk/d4s8n8aCmRNz+hSAG4Or
+	V/C/ANjcEjWiRZracYUcXnfXYX51657KGAw2oocXxEFWACvHEKSKrb/aVMEeVj3a
+	d1MUzHNB48hvfEgT+P7ctxJrJWOTzxwgJRrGUbsZweYC5LAPvIZ5qC95+4PRQwbw
+	FSJLD3h7qC9zeKLWNExrHwNjpqTvI0N0GXg==
+X-ME-Sender: <xms:mlO1airiNLpI9BwQVo2J9v1b4oEb8RvJkJNfESbY0L8AMIl6Q3P69A>
+    <xme:mlO1aoH_P2iUy8RgynkgCydw2HFDcLlOfVNKBWCfkpTlObnRivlKBoNfxWKSbpv9O
+    myyFSkUHLcJ4Ei6j01Vq9n5bH3opz42hwHe6bxXKh_rioSO-Wl_ytPV>
+X-ME-Received: <xmr:mlO1akm4N4DMrqEOdI6zV5KUha_UVYCLMxr42bk35W200s_flj_KBmTdponXuDtGFVa8LuFocTZjkYNQ-TOMUtev0I9MYxI8nJDr-Y7jVkSp>
+X-ME-Proxy-Cause: dmFkZTEIyFAuxr0E4Vjx45FbaETBLy3Jxu9bbHp2+ZLbfraj23aq3KglIqHL7tqaMUOasa
+    ssPaNrROneev1yiLfWnZ2jy4WDTXtb64gkT6zB2kt9m68/p3RAbSLuuylAJFZWNRe0WpBf
+    mPXRfR91GC1fya28jXmcsmXFVmp8Xg6q5mJnncnpVHRGe/K1Ipb0Ole8Llnu9ly0+qxgsG
+    iz/rk/ZO+yNPM+ybnhYvt2mY2ogGLeaX365dc/G9E6lHxNhutyH4McZdLZYXEa8rfbDYzE
+    fQp5l2zHlyFlnFbtBqJGpesRL83sKopKQ7K4kBaFi+8c92S7AamYyyGDMj2zMD8ZHBwJGD
+    lizGNWcFwSHM8nMCQQnC9psnEJMFX5qaL7YGTL85ClewWboKRshLvuTIv3LwxkBrhhEU0A
+    PJvbNYMnUsjLKGHaA/NW8AGUAgvP3vXlx6PQX00A8FH1vn3VE6txQFBAoAENj75/Cj0Ye8
+    ZwveG/ayN2TxXp6cMTjBgpGS1Afjtua7TwyQVc+z2vSZDIcES7//ZzCoyJQ/IA+r/+9CUA
+    9lxi0BUn9ZO05vyEVY7J4QzqEm6xemabFJVlRMlaGiWQANTbeV9Ez6A6wmL+eKyo5xcU+c
+    qXgtUXyus5q5xH6nxZ1Fvl19cQ0x8dbhrASgPSUP27vOnf2Q67UyKUu7BywA
+X-ME-Proxy: <xmx:mlO1armQYcH-cjlyMlNs3JIY2n4fq3ekmIY-zdpTK_8uJscauGKW8A>
+    <xmx:mlO1altQfkEfZbR3R4K4xsexWUfXYTwoyA7pqCCLtxwp0oU4zNh_lg>
+    <xmx:mlO1aul5b2dS1yT3OXur4R4K3hTVjhZgs3hGbs1VK3qRao9rMVTGzQ>
+    <xmx:mlO1agtInRCJQFRIq9hY_GK322LAEkM9nbqz9QLsF8LjBb-AzALjiA>
+    <xmx:mlO1avPIkgPjmw3sFRVwDacjyZpCvhJnggwAPG1dcdXafEEN6fvvKghU>
+Feedback-ID: id2564aa6:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 12:34:48 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phil Hord
- <phil.hord@gmail.com>,  Elijah Newren <newren@gmail.com>,  =?utf-8?B?w4Z2?=
- =?utf-8?B?YXIgQXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>,  "D . Ben Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v5 1/3] refs: allow callers to supply old OIDs for batch
- deletion
-In-Reply-To: <CAOLa=ZTWq6eiqCwUyUhCffTn1=f9pdAip7nsYJMnaPPUuccB8g@mail.gmail.com>
-	(Karthik Nayak's message of "Thu, 24 Sep 2026 03:04:59 -0700")
-References: <cover.1790113781.git.maciej.ciemborowicz@gmail.com>
-	<cover.1790196627.git.maciej.ciemborowicz@gmail.com>
-	<9b76cc2c40a2b1fe727677a9400e3b26ec1ab437.1790196627.git.maciej.ciemborowicz@gmail.com>
-	<CAOLa=ZTWq6eiqCwUyUhCffTn1=f9pdAip7nsYJMnaPPUuccB8g@mail.gmail.com>
-Date: Thu, 24 Sep 2026 09:34:47 -0700
-Message-ID: <xmqq8q4q4nh4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 24 Sep 2026 12:45:13 -0400 (EDT)
+From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+To: git@vger.kernel.org
+Cc: jltobler@gmail.com,
+	"Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+Subject: [PATCH 0/1] repo: add filtering options to "repo structure"
+Date: Thu, 24 Sep 2026 12:45:02 -0400
+Message-ID: <20260924164503.119506-1-markchucarroll@fastmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+    repo: add filtering options to "repo structure"
 
-> I'm also still of the opinion that this shouldn't be done. A zeroed out
-> null_oid is usually a user bug, where they haven't initialized a `struct
-> object_id` correctly or ignored the return code while reading a ref.
+    "git repo structure" provides a collection of useful information
+    about the information stored in a repo. In particular, it's
+    valuable for diagnosing performance issues caused by large objects
+    stored in a repo.
 
-... unless they are using an element in an object_array and want to
-selectively have object names to some but not all of the elements in
-the array.  In such a use case, a pointer to a null_oid is just as
-good a representation as a NULL pointer of "N/A" for a parameter to
-a function like this one that takes an optional object name.  You
-could force each such callers to notice the entry they are about to
-call this function with has a null_oid and pass a NULL instead, but
-why force the caller to do so when the callee is capable of doing so
-centrally?
+    The current implementation of "git repo stucture" provides summary
+    information about everything in the repository - all of the
+    branches, remotes, tags, stashes, and notes. But sometimes
+    to properly diagnose a problem, it's useful to be able to exclude
+    refs that are known to not be relevant to the issue at hand.
+
+    Add a set of flags that allow a user to selective exclude
+    reference types from the report generated by "git repo structure".
+    When a ref type is excluded by the filter, it no longer appears
+    in the report (ie, if "--no-tags" is passed, the report line
+    for "Branches" will no longer appear under "* References").
+    Following the pattern of flags that are only used to
+    disable functionality (eg, "--no-verify" in "builtins/push.c"),
+    only the "--no-<reftype>" syntax is listed in the updated
+    documentation.
+
+    Overview of the changes:
+    - Add an enum to represent the structure flags.
+    - Add structure flags to the options for the "repo structure" commands.
+    - For each reference flag, add a conditional in "count_references"
+      which decides whether or not to add a ref to the pending list.
+      If an references is not added to the pending list, the things it
+      transitively references will not be added to the stats.
+    - Add a set of test cases to verify that reference counts
+      in the repo structure report correctly omit the specified
+      resource types.
+    - Update the documentation for git-repo to include the new options.
+
+Mark C. Chu-Carroll (1):
+  repo: add filtering options to "repo structure"
+
+ Documentation/git-repo.adoc |  35 ++++-
+ builtin/repo.c              | 158 +++++++++++++++------
+ t/t1901-repo-structure.sh   | 276 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 427 insertions(+), 42 deletions(-)
+
+-- 
+2.53.0
 
