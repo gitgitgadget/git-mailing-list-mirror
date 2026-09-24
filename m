@@ -1,146 +1,201 @@
-Received: from mail-ej2-f12.google.com (mail-ej2-f12.google.com [74.125.228.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE30E306767
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 07:41:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FAE4252B1
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 07:56:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790235706; cv=none; b=ALSLceiQNqPEleAU8eLspWBACdLJNZlrM6AoaEOi1Ovl2ial9WIydhCzMkQdyZK0vI+qSXMUSGbBATM53Dxd9TVuUzmktB3XxOnSy+SfveYjgFMAEXgIDY+LrGYf7ktQu0lNhdy1Op5sgQrjxGeVSsm/8Y1aBkB9BbFQLb/lt/g=
+	t=1790236576; cv=none; b=PsGJNsCXjc3kCLUswrliG26YGmB62fgrKB02v0meepkHHs1ES5pfDMIZqJapDzNVp8U9w5WcigNT7IezBEQeVFlKRFuHOsNydZZu1TuQ1ErgRQ99L5pqNwF2MQpOE922/Bds1b5rb9sA7o9r02WJVBs6Jj471AbHnDpA7t1udo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790235706; c=relaxed/simple;
-	bh=Rndgb+b9Be+jXUsDpDF+n4rLusHgtk4zthJBw+xkEbg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A/NGNdNV5D/IyQV9718U0OlsX9V044ptLBjz9rvgvZk8bazfDcerSqnDrXQbvkBrjdVHERW+2qFxOI3FCiruY8OvesyhZnCCnZPBsErCqc2dqeQ+deLnuVSLA8G8n0jwMn+ULnSxr6eV+AvE1V3+XR4wIrbFJdsaVTziX96Pzlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T5uPImdw; arc=none smtp.client-ip=74.125.228.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790236576; c=relaxed/simple;
+	bh=1PlN+yAXPPNou6hIB07wzI0XvWhvZILCm+eZxa2/uDw=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=KyXQoizHezK3SbggIvwO4eeVunSEFNQf/Hj3m9znp5FE7V8UStz6H/+rxuLx8wSKxdr4kWU+4cC8ydhy2oFTeVdQVX5xZq0M/eTX/NdJYsD5ydiSc2zN0Q562spLRc06wsSX2TYRV7TpmrgjCCqPKBM8Kkc6qODnq+8EDwPOBUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=delpeuch.eu; spf=pass smtp.mailfrom=delpeuch.eu; dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b=QWCuMgQt; arc=none smtp.client-ip=212.227.17.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=delpeuch.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delpeuch.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T5uPImdw"
-Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c254f9f0b20so268570266b.3
-        for <git@vger.kernel.org>; Thu, 24 Sep 2026 00:41:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790235703; x=1790840503; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=WCBLx1IIB47Ndj23V1wCquR8UnQdD3MIJy58NFWb9bQ=;
-        b=T5uPImdwvGtnbW3yYKr6BZI9A5E4R2OmUzUiudUVuTxg4WrBAqqx7VHrCyZ1LMu6ad
-         yBqr2KoY5MZZX7PDHlIMVXDVbW/yOIt1MjWYGztnbv/RJEFLDzIUyplhpisI6NcRE/w3
-         5n9KNZWja1Dg4/an+t6jqKL0f9hks4gk3JaQnz6IQTu8/H1nwx/ukX4yiAjrFKCmsKRn
-         ic0G1ItepseAclrSV0UZqpsRPtL5NVScP25iscFHrWWVH+tqtpRY0+lm/cO5NSYqbH6b
-         6qak4zsq8CcgZ7DDwc/oJh/4i/zTcPGb1Cb8I5jB83ig+zS5TZnE6/YA/bnsfhz4cAYB
-         j6lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790235703; x=1790840503;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=WCBLx1IIB47Ndj23V1wCquR8UnQdD3MIJy58NFWb9bQ=;
-        b=oLXjReZ0cn6s0iu51CVPjYO4I8ehisOR1QxU23Fu5ds2MgQsF313KyjUzL9jTwM6pX
-         LIx403+kpBr0X8+atoexUSJs0rrgkVHKNhowaKUamYICDrhmnTuP79kOJPPb7GlXuiOy
-         dVS3KQavI1ekhi4vCpzadroacBwEB2MEgBmCjx+KSxUuWWz9W1hr8HcSJ+zXqbqqjHjF
-         oOsMPEy6YwiVO3xvH+7aNOvrItb2eCwJEco3MTCAHfuMstWGw3v5CW6a2iX6OrQoub6l
-         Xb068146DBQ8byo/4uv0D19TesyRZART+CgqIRklvhNq3/y4zDEzVkvlgAMSWqZ79ciY
-         g90w==
-X-Forwarded-Encrypted: i=1; AKwUvBymUKffk6XWjERLlP5uJYaGQPIQHIjzHhnzlYUjogFqncGDEToP7IozpTjEXzAhrzHf+xY=@vger.kernel.org
-X-Gm-Message-State: AFuF++nmJAswr7la5Tpc28wPsHIbG55phfSglhcCO1yzyWSVjJa5g/0Q
-	DUXAkxjX+O3IWx39Fc6dQgK0wnonYNmjNkqA84asyW1eA8Uf6piUK5C5
-X-Gm-Gg: AYBFou3OUxb199tCJLN7y+/8Ph6JEzaQBaOEOMnTt/Zu64SSeLEwpGLUjcVpz1S+XE5
-	LRp9yW6FVJlElxqzYKodr5XiY2ESKLu8sQo7apvbaxx17At3UBCNSf++/w/K8O98414jBuYjMcB
-	WQARw63oA+wiWj9qpkx3FJi1gNwuLUPOWwYfFFhasNbE8wZar+xWsk5PGWPn0CqPhf+brNOFSiZ
-	AN5dNP+urwY9M7pTEWenpBIfom/lc5AbcZQhTgIAScmshih4RQcOy/t1rNo0pyrRN14dENbxZmo
-	fTktPvH8Q5Tl7ymJ8gP0waYnzuszEb58DlRU8dPSnfFSYK1Lhk0IUMegK1QwqpMLLa24uwwx/pp
-	1dc8o4LrTvCqE4E278xanP9Bf+UGJ825NuZLURBn9ijwhCb5EoHI7+1boFt1sy9q18azdYeBjvA
-	VXfWePf+S3JlFhabNM0otKHEqnPOP8XZ5rkrMnMvF+5NC5eLICM35jnGeAcO40W8PrFPgcVrNqK
-	ypbOC9bROFCe5J69IAkPDa/pHGGERTxDcCJtO6X0TGaSvrMFXWM1klwBkgO38MS4+KZEA==
-X-Received: by 2002:a17:906:f588:b0:c2a:6c3:9e98 with SMTP id a640c23a62f3a-c2ac22a7cf7mr117184866b.40.1790235702846;
-        Thu, 24 Sep 2026 00:41:42 -0700 (PDT)
-Received: from localhost (20014C4D24E72500D0AE99597D6BB771.dsl.pool.telekom.hu. [2001:4c4d:24e7:2500:d0ae:9959:7d6b:b771])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2aae639f10sm250740866b.32.2026.09.24.00.41.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Sep 2026 00:41:42 -0700 (PDT)
-Date: Thu, 24 Sep 2026 09:41:41 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: graysongordon-gl <graysongordon1@gmail.com>, ps@pks.im,
-	git@vger.kernel.org, peff@peff.net, avarab@gmail.com
-Subject: Re: [PATCH v7] http: add http.sslVerifyStatus to check stapled OCSP
- responses
-Message-ID: <arTUNYVvCNwX1pDp@szeder.dev>
-References: <xmqqecfez7ie.fsf@gitster.g>
- <20260915162348.97792-1-ggordon@gitlab.com>
- <arQ/nOH+o3XwQFD/@szeder.dev>
- <xmqqwlsb63o9.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b="QWCuMgQt"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delpeuch.eu;
+	s=s1-ionos; t=1790236562; x=1790841362; i=antonin@delpeuch.eu;
+	bh=qS953N4cnkbSap2FArouaBIHl8r4XLStJ4HIWc11L2A=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=QWCuMgQt5XERItlOkIXsC8iGyHhTbcmMvI8M4fGH1CkIFovmEUUpC6ciD75CHMG1
+	 4YHfX8EfupabMpbtEVhEH3I7f3+UlF/+a49HQYIacB1edEao5AfpAVFqxbby6n4kg
+	 9BULZZzaE/ahtM1y9YOnVuNLIOZ9p8Mg9SsR17BbalhI2IIe/EeeqDpxqNTQcI6y6
+	 Kkint2JT3x/49kZ51slyMzEWPIouBJKii9AK3zuJuV71xfLA78fFCxOSuLxguhpwk
+	 59+a2jEJSVR41RPu5Don8aN20JVmou6rivZOJSYyctaGjGYZoGJ/Q6hOL60hA4hWc
+	 ZFq46q4rNaJHgOlBwA==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue109
+ [212.227.15.183]) with ESMTPSA (Nemesis) id 1MEVBc-1wzDvE1sl8-000c15; Thu, 24
+ Sep 2026 09:56:02 +0200
+Message-ID: <33b3ab6d-b2cc-49c3-9a06-3c4070ede57e@delpeuch.eu>
+Date: Thu, 24 Sep 2026 09:56:01 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqwlsb63o9.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+From: Antonin Delpeuch <antonin@delpeuch.eu>
+Subject: Re: Documenting the governance of the git project?
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+References: <1aee1829-d7ad-47e2-b7d1-1a946bd59991@delpeuch.eu>
+ <xmqq7bkel0i3.fsf@gitster.g>
+Content-Language: en-US
+Autocrypt: addr=antonin@delpeuch.eu; keydata=
+ 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
+In-Reply-To: <xmqq7bkel0i3.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:wVoltiYxIyJ2GLxHYB5EAvLl+AtuougIK4sR2w1z9A9bmoZ+n35
+ wq0eLU6SY7qUs8tJOMRSiAsbp7KM4S0JY58qkCzZLFg+IznEE4VTiu1vySj6CgAdXeMstgh
+ HlOft0vYc0DRVxLEe5pbfHwYVkSGiBePZGioVokKU/so/iz6UJ1WQpsPU1bFOztQHP6SH20
+ sbOQIdNqfn3zNIWg6pDCg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:qXCalGQ3Sm8=;AR3mrDuZgbtAegQ0BiihlzkkfMP
+ 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
+ sh5nZN0mkXP2rxRqvY1cjAD+TEw==
 
-On Wed, Sep 23, 2026 at 02:47:18PM -0700, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
-> > On Tue, Sep 15, 2026 at 12:23:48PM -0400, graysongordon-gl wrote:
-> >> From: Grayson Gordon <graysongordon1@gmail.com>
-> >> 
-> >> git never sets CURLOPT_SSL_VERIFYSTATUS, so libcurl never requests the
-> >> OCSP "Certificate Status Request" extension and any stapled response a
-> >> server sends is ignored, including responses that explicitly state the
-> >> certificate has been revoked.
-> > ...
-> > This patch was merged to 'next' the other day, and the last test in
-> > the new t5585 fails on my system.
-> 
-> Sorry about a premature merge.  Since we are not in a hurry to take
-> this topic in (or no new feature topic in general), let me revert it
-> out of 'next' and give it a clean slate to try again.
+Hi Junio,
 
-Well, if you hadn't merged it, we would perhaps still be none the
-wiser, because, alas, I don't have the bandwidth to run tests on the
-seen branch regularly...
+Thanks for your reply.
 
-However, CI does, but I can't seem to find any CI runs that failed
-because of this, which makes me worried that something is wrong on my
-end.
+On 22/09/2026 00:09, Junio C Hamano wrote:
+> Specifically, we do not have an official list of reviewers with an
+> approval bit or those with privileges and responsibilities to speak
+> of.  Clout in the community, on both technical and non-technical
+> matters, is earned through continued contribution over time, and one
+> interesting side effect of this is that a totally new person cannot
+> even know whose words carry weight before they are accustomed to the
+> community.
 
-> > ...
-> > I added that 'cat err' to see the error message.  Turns out that 'git
-> > ls-remote' can't even find the repository on the remote, but the
-> > prereq is still considered fulfilled.  Is that right?
-> > ...
-> > This time the error message talks about missing OCSP response, but the
-> > prereq is still considered fulfilled.  Again: is that right?!
-> >
-> > Instead of the lack of a certain string in the error message, is
-> > there something positive that we can test instead?
-> 
-> Oh, that is a very constructive and useful suggestion.  Greatly
-> appreciated.
+Yes, I wouldn't try to codify the clout of project members in such a=20
+document. But even without that, I don't think we'd run out of things to=
+=20
+describe. Just by reading the discussion from the Contributor Summit, I=20
+identified a few more roles I hadn't thought about: the set of people=20
+with access to the git-security list and the maintainer(s) of=20
+git-scm.com. I imagine there might be other well delimited hats like=20
+those, whose expectations and renewal process we could describe.
 
-After having slept on it :) I now start to realize that this
-SSL_VERIFYSTATUS prereq only checks that libcurl supports the
-CURLOPT_SSL_VERIFYSTATUS option, and has nothing to do with the
-capabilities and configuration of the web server.  If my understanding
-is correct, then I think that:
+>> If there is interest, I would be happy to try and document this. All I
+>> need is the confirmation that people see value in maintaining such a
+>> piece of documentation, and the readiness of project leadership to
+>> answer my questions (which I would try to do in a way that respects
+>> their time, using the communication channel they prefer). I would then
+>> submit my write-up as a patch in the location/format you prefer. I woul=
+d
+>> of course be delighted to team up with others in this endeavor.
+> I am somewhat indifferent.  I wouldn't oppose it at all. I would
+> welcome a descriptive "this is roughly how it currently works"
+> document, but it might be hard to come up with a good descriptive
+> document.
+>
+> Once the document starts trying to be prescriptive, it may open a
+> big discussion with different "opinions" not backed by any common
+> experience from which discussion participants can draw, which would
+> lead to a lot of wasted time and effort.  That is the only thing I
+> would be a bit worried about.
 
-  - Merely attempting a connection to somewhere is indeed sufficient
-    to check this, and it doesn't matter that the server can't find
-    the requested repository.  
+I think aiming for a descriptive document makes perfect sense=C2=A0(even=
+=20
+having it state explicitly that it isn't prescriptive). Even without=20
+trying to give it any authority, the questions asked in the process of=20
+writing the document can be valuable on their own. They can prompt the=20
+team to identify some gaps or some things that they want to change. That=
+=20
+change can happen at its own pace, independently of the documentation=20
+effort.
 
-  - Checking for the error message printed after curl_easy_setopt(...,
-    CURLOPT_SSL_VERIFYSTATUS, ...) returns with error is indeed the
-    right thing to do.
+For instance, if the team behind git-security is struggling with a high=20
+volume of reports, I wouldn't be surprised if by taking the time to=20
+describe who's on the team and how to get in and out of it, we might=20
+identify people who'd be fit and willing to serve (for clarity, I am=20
+definitely not throwing my hat here - the task sounds absolutely=20
+daunting). This is a random example: I'm not (yet) familiar with your=20
+existing processes in this area, so it can be that I'm off-base on this=20
+one, but I'm sure you get the broad idea.
 
-    However, in that new error message the second half is much more
-    informative than the first, and if the prereq looked for the
-    absence of "could not enable OCSP status verification" instead of
-    "http.sslVerifyStatus is set", then I think I would have realized
-    all this sooner.  Perhaps calling the prereq CURL_SSL_VERIFYSTATUS
-    would have helped, too.
+Best,
+
+Antonin
 
