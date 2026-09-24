@@ -1,79 +1,80 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6D35477E
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 14:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0676D379998
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 14:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790258965; cv=none; b=EBj8UJvc68L+eWNrtSk3vQ0r+NWYE0x2QZy+k49l2tKVFkSW8IT0wsSJ7Ry6g0s4ap3HHqRu7aRhfIA2Vpvl5Zxljd40SnMB0Ez4eGuRDWo4o7NvNVq5a/tFpMuHp2sP/OYzWK5zmWR+KCbxaclLYfjaZ7gedWbirmK5ZW6XzJE=
+	t=1790258966; cv=none; b=I3bdLk7M2XhwL2AvjIi08qt4iq8V9gNR8UTm4d7NLxUv0TWcjjXuunI/4w7z7bqod+ZLTdrlm5sAf2NcktUOACkRW3TKkUbwkwLdDujl6TQ9M5s8eO6qhQgmHDJHGKB5jjIFYmRStPgBzldzcxYU1d/N6tBKQUWQ2bvBBYHNYIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790258965; c=relaxed/simple;
-	bh=bB18TNzheASzH9/e1criv89CntVbN1jw4iLvEUhiGZE=;
+	s=arc-20240116; t=1790258966; c=relaxed/simple;
+	bh=KvSbyjO9cbX5LqTPSggcdZAXj+BG8Md8Du5ds/8dv3c=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WBmvTJlJwqyvUxjDoPCA4+NPfUslGjhG2LShysq1/mbwevYf9VoWRfWZnf+qi6lah4Ralpx5faV5BqgDYO3peRJUN4p46QJIJenqBFTJP/q+l0HiV0PS5CwjD22hOWgGuT79NimDfGrwUQkzLScTrqUbMoiD2HDhJiUplfcMapA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EtmtT0Uk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uvcPe+t7; arc=none smtp.client-ip=202.12.124.158
+	 In-Reply-To:To:Cc; b=hf43r19SkDa1JKpRfuT18NpCMdnRytcXiNC1K9xqdKxwR3rnEXRTbSKhfX5YyIc/5YwC5ibZZcg1YGIyGWebxuFlMHQS+5T40PBdRGikZ16zVZmcBkWzcmszIMtJWNRyLN8M1z+RX8IHatRUxPItsMQ6pmUFN3hT1y9eyNRgevA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eWT0WqkR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kBTXmLoR; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EtmtT0Uk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uvcPe+t7"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 185627A0082;
-	Thu, 24 Sep 2026 10:09:22 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eWT0WqkR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kBTXmLoR"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 422B97A00A7;
+	Thu, 24 Sep 2026 10:09:24 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 24 Sep 2026 10:09:22 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 24 Sep 2026 10:09:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790258961;
-	 x=1790345361; bh=Hv3YOrwnKfB/FLuIM6jGGi9IiLpUYqbORDoeo7rn5Lg=; b=
-	EtmtT0Uk7DhV1i3nAATE4+2WcYB8HGUwGc+yVD69dgXhUyTFaSPYXRjvlcukku9a
-	yXuEER2CdgkujjbYq5IxVtuv9uqvqJ1UERp2xl4z8nA940iEksLcl/3G6qDBOUCI
-	5leTn1vPF1muf2ihCSj1r5rWHpCtpbuIReKUa7D5QNEiTST+Lu2CJhRpje6igfs7
-	sU7fyhqrOYPedLLDfU0zJiy7Ws5whxojN7CVnwJLnMUiVz0B/ND9B6g54M8eHnC6
-	TlEtsqeFkkQeGp2wrpJU2rRVnwJMgCuHfsEPnIoMnkFCBjrxLeAd90s0xd0Ypmgx
-	5yQq5+nrgQWY1jGLEeMf+Q==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790258964;
+	 x=1790345364; bh=6H1tu+vB4JJdQfYOuYeSOIE0kj3U+rc65LB3l6ICxzo=; b=
+	eWT0WqkRZklFi1O1xUlfevFnn5Y5wCWRn7AujxQKZpNLgwW6nFNmG9drqsVnw7Ar
+	tdvcy19HnNRcYhQ3vnxtKtYuJzwV29lkoG7f8iJu6PTWxBgkbZpkaCjtXcUo30XE
+	m0bg41RsjknEG5jV0g1pOl2L7qHFnK2EWFvfvimcJjWjHm61i3uoxswSnRwQUwMo
+	NXu7iDslvgrXUxmzwzEOgpbOUVpKuCT+jbReUs8NwS4V/FnzwMnOKv9kWWZ3jZhk
+	JQDU6JnpqqO01pRng/e9UzJ5sokamggBau40GbqUMaBk42B1te6hVGNOzzKs3b01
+	+bIiaPOHPAuLWYKReEvedw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790258961; x=
-	1790345361; bh=Hv3YOrwnKfB/FLuIM6jGGi9IiLpUYqbORDoeo7rn5Lg=; b=u
-	vcPe+t7WbK2OXir58tq/MZMIQgQ/UmvGMseSSo5KeVbk3pGZxSmAy8AJnCGWMSTy
-	QIq7z88cRy2eu84E7QZ8oNiNyT+hp3NV2I7WT0KmGUBD555448LRtF31H6XLVmh+
-	GNiekqAr0kCXQD491Qcg/B3LnuRphaxjVl5OrBQlYJBAUxkFWxIDYIiELpjdLfEG
-	9JOctrWCw8Ln81LzIIlIk+uJ6Ga8kHu378KezPd9wrtNDYpIM7EYelA/ImWJh4Hx
-	u6l7ZwKK2DAx2k+5I74RHjoWoRyXGCdBvocuUAHMQai0MLNOPvW4CUErl0krrX/Z
-	bwAOU97AUysKMk8mqOPag==
-X-ME-Sender: <xms:ES-1avfvO4WT5aVnmhd0sy6bDImkLdqkEPl7SVR5AUp9dumWBLjWMA>
-    <xme:ES-1arO1ZNaf6EegxuKF51WNKbMw4RMnCCpYWnCxebECmynj9-5vCsRqqvWBDs7AE
-    4UHejHh1fngIdYVx5YJz4P27cSWRJD-A08R59S5ve87pQ4KqE8DqFs>
-X-ME-Received: <xmr:ES-1amIlbbNg4-OsQJ5_8XX9RbohhCE6WBgV81gHtxULC9ujJXWNN2zfQanoG5DX2cnSzTg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790258964; x=
+	1790345364; bh=6H1tu+vB4JJdQfYOuYeSOIE0kj3U+rc65LB3l6ICxzo=; b=k
+	BTXmLoR6bZtVW6O2XemBIEdK2CdrRB4luVfa/Q3Eo7gSSrCLjWBe8raKyzFatiD9
+	lMyIVJAwuj7yq3mHtPOdM4efimBeftgNEqYlSGsFx7Gd/dJHH5o8IQq45QKFqKH+
+	y0dDOUMPPg4h888btgokdrQtIS+qCF82RyuWYP3MTrniQmVouOdQPBQUX5/nmbPV
+	gMAjOjD52SZI+eJJdtw4+FVjYDv47DbJpV5DADEkJ3G3Hbq8lbgzH6c3KDSGETY+
+	aK59xz+AoPEovyL2eh4jR0JNmxlOAQi+qIHlgAfhVW0sZLkajwBLt9uMMrF+Rhe5
+	EqGeZd9XThuCLmEfx5eWA==
+X-ME-Sender: <xms:Ey-1aiPeeEL8IrKD099eN-AmSQw9O36uKGNCBY0ZGKjJ9SuoxdfbFQ>
+    <xme:Ey-1am-m4d8ObikWjkjeCK0bd1IB-01aFikn-7XaH0lDBcWF7dFXUgNEpuhiyJroQ
+    d_h8Bm2pBhRxDpMMDuKjPPKldVy5BHCYCJFSkjTjsMLEBVY2w41QnQ>
+X-ME-Received: <xmr:Ey-1am6NOPMiJA3Vv-SKZ7254w9qLuX3SU8KZZbVPBenJ0yVx2q6OeIScyEd4W2SXm03ZNs>
 X-ME-Proxy-Cause: dmFkZTFtQE+DlqvF0lQbqprxNhHky+kluS0f31ID+eJQAOtW/ApPXZMwtEnm8b0s8Tz4zr
     2HcXZm4c1v0YwalfW7U7SogxguwgM7rzDq/2LSkXoKX2t8t4lcVOPYevkW4fNZe7D93O65
     rhKzP8wO2wEax1l3oSxntOmmMY0qqKhziMosLsZe0iuZ5mzyq7HLrvtcTYuPrgnDEnO7fM
     q6thSnkJiuXPsY/PFM+frscD7TgJFW3Dr7VrZgIJEWqGqHnNlRxsfIZW+8Eh4SmLar8TSt
-    iCT+WmRuLtirP6ElGCe7B6h/GmMAPk7nc9DjRQbvsANHU21xAlnVYxzY3JetyAgfQsFNoc
-    p4nEOOG9yn83claIsVPaRcwBpaecflG7D0aLhBjeseejcBmnbC+OK6ASlf01IR8QkjF/Pl
-    B5N7cYUmrKfynmDu7VVIDN9xo4jeLFCmXil860KlsYtYjasIzSXxayyMw4ZE166CI94Yvl
-    /Mu6GAfGRPc2TfIcYP5Zl3USAZQEvU2QUEP132f6TJueQnQ9M9KYLWueGVMCz3vJg+gZwR
-    OsOezxaeitkNY1vRajrOo9cjrwuoSadT32PvoX+oLlnIRiEXl2kejS314Pm2Rgq2uV+vhn
-    p75plwW8vXZSasM065D+pU/a0y/2ZOTLmq/QjtTg0CLvuipwO4FSwjLCpROQ
-X-ME-Proxy: <xmx:ES-1asE_QQ9m77RtU7lHy6I4UWlwgjGtC4nRsiob979XqEeS97fnHg>
-    <xmx:ES-1auQIwisyrZTqMgySfaKuxvKuH2oo2kybzPZlM6AR01WegVuVlw>
-    <xmx:ES-1aoGMYn2c4lJ85pP4JnPkMU7B1ybtlxpK4QU2Ar9NQlfQt16HUg>
-    <xmx:ES-1aq9rsi2Xd9Qma7D8TUaLkLUzxWGmpUujcofGiqKXL8eP5ztB6Q>
-    <xmx:ES-1ajCTonmEgKL3pONS-5WPjOmEGby6yuyBb6s9TwdfXmUJWVMBsoXp>
+    iCT+WmRuLtirP6ElGCe7B6h/GmMAPk7nc9DjRQbvsANHU21xAlnVYxzY3JetyAgfQsFNdB
+    aH5YkVAWYsk++nBBXEk3dqR5rOUQtoezddWcegGM+ay/sm+umYDxLGmOI+IyFFn7v9f8JQ
+    QFx/CFx/Tx62lG/5PtVd5KMXjUtabdQydeOHaptFNMXhUhkC7V19ZJR+gsmcn/zERho1Bt
+    VqbK7NwHCKCROVaM/tH8KEGtW/4fhVqwTFrX2LoUiFlEFBp20gtNxtUImum3da01RpMaUa
+    DKkUwIaIoBqysrIB1OvhuNhpCVtpGTLe38B7NRVsijhmclxEYILDaViaLfVlz7Lm8dDY5o
+    LIztYMbQ5bj53kI5QW5vZxR75d14FjXqp03tB43a/oZak1dLttBYuJhfYQpA
+X-ME-Proxy: <xmx:Ey-1at1UZ0uBc3mXsNJuVWJHIvPKCxzeO3geAICr0D7HnIutineBow>
+    <xmx:Ey-1atAtwLxDo06_s-dQ-MiXdfuRNe6PBpCyR5xID1QvbWedmMLWbg>
+    <xmx:Ey-1av1MVEDYPh2vRNMPV0OKPEpNxO3P_-05Op92e_kfm6diQeIEMw>
+    <xmx:Ey-1anvI4FuTmrUSgUuWuZ70EHbTNyjlH5YlTubQrs1ROcYU-6ZMrg>
+    <xmx:FC-1ahyeEcui0EypZWaTiQsZoeIGw2LofAHZc2v-u5i4QzZTxpYZ6bFq>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 10:09:21 -0400 (EDT)
+ 24 Sep 2026 10:09:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 277be47f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 24 Sep 2026 14:09:20 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 4439fb6e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 24 Sep 2026 14:09:22 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 24 Sep 2026 16:09:10 +0200
-Subject: [PATCH 1/7] meson: avoid recompiling HTTP sources several times
+Date: Thu, 24 Sep 2026 16:09:11 +0200
+Subject: [PATCH 2/7] meson: don't recompile git-remote-http(1) multiple
+ times for tests
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,66 +83,84 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260924-pks-meson-improvements-v1-1-90b7f79f1c4e@pks.im>
+Message-Id: <20260924-pks-meson-improvements-v1-2-90b7f79f1c4e@pks.im>
 References: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
 In-Reply-To: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.15.2
 
-We only link curl into a subset of our subcommands. Consequently, as
-both "http.c" and "http-walker.c" depend on curl, we don't compile these
-into "libgit.a" but instead only link those into the commands that
-depend on curl.
+When running our tests, we expect git-remote-http(1) and a couple of
+other binaries to be available to the test suite. In our Makefile, we
+achieve this by simply hardlinking the file into place in our source
+directory. We cannot easily do that in Meson though because there is no
+available command to create such a hardlink.
 
-In Meson, we wire these dependencies into the target executables by
-using the `sources:` keyword. But this has the consequence that we're
-recompiling those multiple several times, once for every different
-command they are linked into. In fact, each of these sources is compiled
-seven times, which of course has an impact on compilation speed.
+We could of course create a custom target that uses a script for that,
+but that feels quite awkward. Instead, we build the executable several
+times, which is of course less efficient. Even worse though, similar as
+in the preceding commit, we're building "remote-curl.c" once for each of
+these targets, which makes this even more expensive.
 
-Fix this issue by instead linking these into a static library so that
-they only need to be compiled once. This gives us an almost 10% speedup
-in a clean build:
+Fix this by reusing the already-compiled objects from git-remote-http(1)
+so that we only have to perform the linking step several times. This
+leads to a mild speedup:
 
   Benchmark 1: meson compile (version = HEAD~)
-    Time (mean ± σ):      6.781 s ±  0.052 s    [User: 100.775 s, System: 22.954 s]
-    Range (min … max):    6.709 s …  6.867 s    10 runs
+    Time (mean ± σ):      6.250 s ±  0.040 s    [User: 90.881 s, System: 21.912 s]
+    Range (min … max):    6.197 s …  6.344 s    10 runs
 
   Benchmark 2: meson compile (version = HEAD)
-    Time (mean ± σ):      6.274 s ±  0.021 s    [User: 91.882 s, System: 22.092 s]
-    Range (min … max):    6.242 s …  6.306 s    10 runs
+    Time (mean ± σ):      6.218 s ±  0.029 s    [User: 90.633 s, System: 22.022 s]
+    Range (min … max):    6.166 s …  6.262 s    10 runs
 
   Summary
     meson compile (version = HEAD) ran
-      1.08 ± 0.01 times faster than meson compile (version = HEAD~)
+      1.01 ± 0.01 times faster than meson compile (version = HEAD~)
+
+Honestly, a 1% speedup isn't really worth it. But the change makes sense
+anyway, as we're doing the same when we build git-receive-pack(1) et al.
+So while the speed improvement is negligible, it brings more consistency
+into our build instructions.
+
+For the record: I also had a look at using a custom target that
+hardlinks the files into place. But the improvement it had on our build
+times were not that mindblowing either, saving roundabout ~100ms in wall
+time. So sticking with the status quo felt like the better solution as
+it is native to Meson.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- meson.build | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ meson.build | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/meson.build b/meson.build
-index 0a95d90d21..4fdb4c5405 100644
+index 4fdb4c5405..fa104a3efd 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1925,10 +1925,13 @@ bin_wrappers += executable('scalar',
- 
- if curl.found()
-   libgit_curl = declare_dependency(
--    sources: [
--      'http.c',
--      'http-walker.c',
--    ],
-+    link_with: static_library('git-curl',
-+      sources: [
-+        'http.c',
-+        'http-walker.c',
-+      ],
-+      dependencies: [libgit_commonmain, curl],
-+    ),
+@@ -1935,12 +1935,13 @@ if curl.found()
      dependencies: [libgit_commonmain, curl],
    )
+ 
+-  test_dependencies += executable('git-remote-http',
++  git_remote_http = executable('git-remote-http',
+     sources: 'remote-curl.c',
+     dependencies: [libgit_curl],
+     install: true,
+     install_dir: git_exec_path,
+   )
++  test_dependencies += git_remote_http
+ 
+   test_dependencies += executable('git-http-fetch',
+     sources: 'http-fetch.c',
+@@ -1960,7 +1961,7 @@ if curl.found()
+ 
+   foreach alias : [ 'git-remote-https', 'git-remote-ftp', 'git-remote-ftps' ]
+     test_dependencies += executable(alias,
+-      sources: 'remote-curl.c',
++      objects: git_remote_http.extract_all_objects(recursive: false),
+       dependencies: [libgit_curl],
+     )
  
 
 -- 
