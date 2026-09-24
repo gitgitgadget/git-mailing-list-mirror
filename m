@@ -1,111 +1,137 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed2-f12.google.com (mail-ed2-f12.google.com [74.125.228.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5577C3B19AA
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 22:20:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E8E42981E
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 22:33:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790288434; cv=none; b=NkOt2D4iuv+tWV6E5WB8cvgtBG76hG6NwvOTUUt0aa8M/9OcfflqL7hQuKm8WMGqN4giw2UbYGeayd8A9gJyOea/sQxUJp18zXxw60dk8XTFTpQClpvuY4gjdO0F4L5ySaCO3KD0XIZGvDMq0szeOiScdcoX7xTBdUDPEas60D4=
+	t=1790289197; cv=none; b=jdtWpxC3UT18CiH2ZE6deqKqbAiOcF/+y93f4x3p252VB0RWOZ2F6N9cTjwziF1Q0AO0+Lduy6mrSMmmevgjcadrS37LAEZVdbAYBs4p4Wx5nauG2tOfO+Nnfn/Hfkl8eORm2MClqC0IZvDIKRGzfbQlWkaCkxmrg1tHDk/hujI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790288434; c=relaxed/simple;
-	bh=m1IZf8p31c2ae3zjGu7ENzCpeO2kIDmYDTkYwKOz84E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=q3fqyXUcK8T4CDYgcIoXGvpvAbMEbLK5useHXY+Z6QfJAFyaSfj7ENlbnWCRC5h/rb6Bsoe6ifP7xoZ4skVRpwMaYWRu8sKChpTqIDBzoWQ7ySpLGBZofu2QUJxrVKugn9aFuPwCvqUW5WET9klYIgVdXJaQkASIofUqakUTsxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DsBTaeDK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J7feJW+u; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790289197; c=relaxed/simple;
+	bh=f9pDBNwNFgcBRf9BmETNYTDY7YqatL1lJ/dq6HvZWYo=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=kn77355p28hWek0IiSTzc/VJ+1EAvvZvri6kRBBUBoM03CzAEdnSxeJqr0J99W8Uxku5XeRyedkmmiGwYkp3DrFWlN+ZdUT51ZwNYg+qa11CZCgKcCUqUF8rPpM4GOsaOSnEdjWEbUbVlNbI7DgmIHMCefIt4YtKuGTAp4PVgVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zgs2AlL0; arc=none smtp.client-ip=74.125.228.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DsBTaeDK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J7feJW+u"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6AC1CEC00C5;
-	Thu, 24 Sep 2026 18:20:32 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 24 Sep 2026 18:20:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790288432; x=1790374832; bh=6l+LmjdnAe
-	IZxVBPIncNHLOTtGfaZLYHUDKcx78HCOI=; b=DsBTaeDKaSQKgWGFLL4+31NxCt
-	365uEw4Mjqa+IXuZ/S1HN+ya6PtHmJYqD0cMp0WvdV0XadyjMxYylnKgv1kMLehl
-	VQ/ey8YxzTATtNykpViobm4dk/jU1ApaARUyYatawEcJaWewmtJ0AfQWXpIp2C7p
-	ha4WaeNvt6ffgVBuxKZyBB5reGz4CkZbEngWbmMzYQ4HpcbgD1xJT+YXfCSla04B
-	AZhZVH58PdStxwBKYJqgwdkOgM5MXbdsg6Nzh6TLkBNE8Igu2eBL4MaG3RJV2YKX
-	DPgI5bBlrnpUG/mua1YZwbR29rOnYrtxW8IZqB9cNY+Kk0eR+l7tnv+D8BYA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790288432; x=1790374832; bh=6l+LmjdnAeIZxVBPIncNHLOTtGfaZLYHUDK
-	cx78HCOI=; b=J7feJW+u5Bd2YqGVBDGNxFuW3zKfJb7etTZpql15V+9p+IlpCel
-	kzP0xq4WJdc3hW9U11KtQeFm6C0vLCzZPdX7wpy9F4Gm2kuwGcWUQj0URMNmnp4X
-	VPefeQH82P9XNoel3d0oUKZUnoYr6iEkkKhzQZSFJdH3ftcNYhW+J19pxfpUqSUH
-	uWtoTsILhMaZaIw9VPgtKfBF3W9DiBYbX1AAiI43uViriDrbczN1es3kzr7A0SVC
-	ibhjyX6d1C9hGjblBE5TkR7nBOVpaoTPmFA0XmuVBKAzVA9Xn88+vRfeI7KZ7mYj
-	Wp1+0zcXhZrk77TJdffHgL+Gb7rXy2hYZZA==
-X-ME-Sender: <xms:MKK1agd3byQnr9SyfWC35I9sm-FoI_3V_qT2mMuRNCA01d-7gbZjIQ>
-    <xme:MKK1apHeBpA7t0V9O8Rx2Y6I-3fZofhI-4DwR5b698QKH4STRmHFCzxxDdmk8N96E
-    1Sz-XiKODvNruAZ2ZTiSXctkclxOBj5KMlWMCOqfxeBEMIeEus5uLzt>
-X-ME-Received: <xmr:MKK1ap2coQ1fh6p28XtZMOcJ7HqBn24X5ho0tReaBZAVBDuZ1yx-x7LLqU-EHgzMtomaeNLp2XzOFj6Z7Mwdhr2de7qnM0sjUNXL>
-X-ME-Proxy-Cause: dmFkZTGPK0LIi6xX0GYiUUku0ALwo4ax6o2LV1f1t+d8O9zJYequwvILX4T0c1mCWvfqsW
-    jlc/1V9Gm0pLu5WNB+YSOeWL9mKxGVDYxE7UOAaOeLe6ZMVzU7pYg40zHIEowX46WeafXq
-    9pyi363/v8vLa/6NVEA9cR//uuLgcUa9l09kZahKwuN97IlTO8xZ5k/Bpo3TOZu3Enn9qd
-    4XehNfDKbMOa3W5ZBCGOysJDli/RCgJiW1M74jwB76xAIWGub3ieTX8NUcWw49E0y9AsCK
-    9xFQdGuQ0dekgoaeo+xNTint1ezO4/AClEf/cITA/FaTmnxsBuoI3KSY/FAxKEm0YboyRp
-    uPkWKkaTbhlMgEIybb8207WPhdgu9d1mgN3e0fjJUP5pdTsbW2dqbhs6FWMEUegAax+Z8v
-    EUYjWUdHBQB4C/tcWLYD7c6F2QkxsN5PhpBblSa4FBZg3IngTkYPR95AFAHqfaPduLUe+q
-    z9U/PnFYQJS0IPvrqeRZHoBFSY6WU1yxYDP7Id9qSDC58bWDtcLFblzK0LTrEfEngQf+ks
-    EbwN5XOdl0aI5Yskk6sKEq/iRUuHRrKzs/gNx6iGmlrkgrN3kpa/FSSXd1wB/33gSZjaeO
-    jqhLeYh6GzUWSvXABSxKZCpFEfj8CRAtX1I3iOMnRn5cFFxTpqwPIi3yXpig
-X-ME-Proxy: <xmx:MKK1ahnn4QwC4clMd4CXnDq7qyWQTkvhftRH4wKS8aJHR3iWxt9u8w>
-    <xmx:MKK1ap-Y8V9Uo3Uvpf_-w4nU5611qtuGnW8VYTVJYcCfxnRGUP9kcA>
-    <xmx:MKK1amovjYHljTgAio6CecbzZ6SYem6LsopziH3lcdzWMuHa7M8ceA>
-    <xmx:MKK1aim0p_m2CYT76f0rCbEm7QgnAsjgQiT5pAVn4H0PrVoZV4nYOQ>
-    <xmx:MKK1ao3CBRZV6gkEPl5yvrYCtQ5InWVH_GuwGmzTmFl3mNHE-N5ndWbn>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 18:20:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH 0/7] [doc] Add new page on merge conflicts
-In-Reply-To: <pull.2237.git.1790261062.gitgitgadget@gmail.com> (Julia Evans
-	via GitGitGadget's message of "Thu, 24 Sep 2026 14:44:15 +0000")
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
-Date: Thu, 24 Sep 2026 15:20:30 -0700
-Message-ID: <xmqq33uyz3yp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zgs2AlL0"
+Received: by mail-ed2-f12.google.com with SMTP id 4fb4d7f45d1cf-6a803458ba0so473951a12.0
+        for <git@vger.kernel.org>; Thu, 24 Sep 2026 15:33:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790289194; x=1790893994; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=fa9tEWZG+po7Zw2aFaqHuNFJJxRzF0G4M5BS3vHWH/Y=;
+        b=Zgs2AlL0lDLT0hiVIQXTWRrtYUa9Xp62itvISrxlZ13ez5DmK2QlX03h9kbDG1Iaan
+         Lsb+B/unpL7SFzCtgzx1Ts0dyBasHhOa0QadG96Yq3DZZ8MsKoZu9zQHxR3kip0RY/Zr
+         LZRMrUjjffjOcBFIhip5KipuG9JhcwQM6AV1i4HygE99pjk4erOeicCAnOLjXhxw5rTT
+         WuCydJdDXaCWy7Ism2ArFCNmkZG5Kgpvldt8SNoX/xTOHyD61+QjCHOuCMTWwyyNmZxv
+         9V0fSYf7RlZMDnQ8v6u84YV/ggdvM1aEm3P0pVLT/gtsjA0ntoD9yqrWONYt9jRlkmBk
+         gd/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790289194; x=1790893994;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=fa9tEWZG+po7Zw2aFaqHuNFJJxRzF0G4M5BS3vHWH/Y=;
+        b=CBoBUKLMAvmr4yCuHMdcLLPAyhDUqnZs/VUCwvu1H/lwIVwykzsfr8z4Ndep0cgrkv
+         gXW2RMaXG7KEBDfzzqwRlwZCJF8vWbWziYRJgNYM2zknS61SJobtLjfuMg0uZTrdzg8I
+         nDe19XtiGcdFEqrSxKsrpyi0h0o+C0g6wACQWy+FsFPulO+4IR17m3HQPiAvUWRsP7et
+         priYxt7HuxmPPVkG5Fc7mq3qWW2LAbuVTlkYbg3pG6Q6k7vWtENEQhklUPMoWw++KJtm
+         vFqg6w0Kt0u3OqRHTdeL/y/7O08ALjINMpqjJ5IasxSpdsR+njedgc/3PDqJ7R4GlZfS
+         GGCQ==
+X-Gm-Message-State: AFuF++kzLwsIERLIo6IS55eCzYgcWswKMX0s/awgI/Mb8ORf38iVIBpB
+	mw8pRShOjG7dbJ6QC2DLo7Pt/3HN0R3mc6Eyaf9ugZfrjdF5m82tZmr5PnYpptlh
+X-Gm-Gg: AYBFou3MC5wa0OrYZU0IZvDudRwbf4dOrIpAt97pLfp3TaayRX5eDSp1qU+zFW0cP+/
+	ZrCAGmzchRGCBY0vtS8Ce1UEhq/I3DrhsgfmDAzXKSRirvDA/Kg3r3SI72nGlfPyjzBeuLWxdVN
+	gstQsAAoCpiwnepuZWAFa8NccE9OdfqCUm+4vx2ihmdlpzeCN5RkMg7Kb0dGubBOCOAnJ3K5jDb
+	WxtS6qra+04oWEg8pKgvS3NhbxmV1dZu6Z/eX5TjIFXkVpOShJpFoqxuoUpnA6LE9Oij8wQk06C
+	Mdl1IiQJ7WwNjcNBmJWz3eapVdaVndXTLbsjZ3Xq8QBfkcSQaxAQAfL/7XbtrE6SdBk495UsPku
+	UqixcFrXoYawboYhL+Ss6IwEIfNwckfq4C1RQPqSPWvTZGTA/nnfXN4DsqeqqrFgWHQAJSgrZvj
+	eKIyR4R6wqmTxumsP1PgtQel5xikVSvf1R2UxT+QOMaBLCY7jiFjup0wS0TyqAPmlpQM78M180M
+	t9CxFQY2QMdQ34QRj9rW2cC8VL7I2987w0n25O1bq1HX+riH3EGNhnpu0wxv66zAJlckjLZGR3G
+	o9qMK57TQYRXkNjrRHS73fu0elgSu3VCjI/FEWnt3XKlDPbah/ulbyn94EI=
+X-Received: by 2002:a05:6402:42c8:b0:6aa:1db:f7f3 with SMTP id 4fb4d7f45d1cf-6aac90eaa5amr3452403a12.37.1790289193987;
+        Thu, 24 Sep 2026 15:33:13 -0700 (PDT)
+Received: from localhost.localdomain ([37.31.48.79])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6aae5dd7dc5sm210791a12.21.2026.09.24.15.33.11
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 24 Sep 2026 15:33:13 -0700 (PDT)
+From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Phil Hord <phil.hord@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	"D . Ben Knoble" <ben.knoble@gmail.com>,
+	Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+Subject: [PATCH v6 0/1] refs: report old values to transaction hooks
+Date: Fri, 25 Sep 2026 00:33:09 +0200
+Message-Id: <cover.1790269745.git.maciej.ciemborowicz@gmail.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <cover.1790196627.git.maciej.ciemborowicz@gmail.com>
+References: <cover.1790196627.git.maciej.ciemborowicz@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+This follows up on the reference-transaction bug report at [1].
 
-> Julia Evans (7):
->   [doc] Add new gitmergeconflicts man page
->   [doc] git-merge: link to new merge conflicts guide
->   [doc] git-rebase: link to new merge conflicts guide
->   [doc] git-revert: link to new merge conflicts guide
->   [doc] git-cherry-pick: link to new merge conflicts guide
->   [doc] git-pull: link to new merge conflicts guide
->   [doc] ignore conflict markers in gitmergeconflicts.adoc
+The reference-transaction hook currently reports an all-zero old object ID
+when a caller queues an unconditional update. As a result, batched branch,
+tag, and remote-ref deletions report zero for both the old and new values.
 
-With this merged, 'seen' seems to fail
+Earlier versions changed refs_delete_refs() and its callers to pass expected
+old OIDs. As Patrick pointed out, that makes previously unconditional
+deletions conditional and adds complexity at the wrong layer.
 
-	$ make check-docs
+Resolve the old value in the common transaction hook layer instead. Keep it
+separate from the caller-supplied old_oid and old_target so it cannot
+constrain the update. Resolve it before the "preparing" hook and refresh it
+after the backend locks the references, allowing later phases to report the
+value protected by those locks. Do this work only when a
+reference-transaction hook exists.
 
-with these lines at the end
+Changes since v5:
 
-            ...
-            MKDIR -p .build/lint-docs/doc-style/includes
-            LINT DOCSTYLE includes/cmd-config-section-all.adoc
-            LINT DOCSTYLE includes/cmd-config-section-rest.adoc
-            GEN lint-docs-manpages
-        no link: gitmergeconflicts
+ * Replace the three-patch caller-specific approach with one transaction
+   layer change.
+ * Leave refs_delete_refs(), ref_transaction_delete(), and all command call
+   sites unchanged.
+ * Preserve unconditional deletion semantics and test a concurrent update
+   from the "preparing" hook.
+ * Report observed old values for all unconditional transactions, including
+   symbolic ref targets.
+ * Document that the unlocked value reported in "preparing" may differ from
+   later phases if the reference changes before it is locked.
 
-Thanks.
+The full test suite passes (1060 files, 34660 tests). The focused
+reference-transaction tests also pass with SHA-1 and SHA-256 using both the
+files and reftable backends.
+
+[1] https://lore.kernel.org/git/CACQ=SRGTTdQ+dHXhN6F52dBv5KxZBRfk_Em2fvmEmGJDoB6oTg@mail.gmail.com/
+
+Maciej Ciemborowicz (1):
+  refs: report old values to transaction hooks
+
+ Documentation/githooks.adoc      | 17 +++++----
+ refs.c                           | 54 ++++++++++++++++++++++++---
+ refs/refs-internal.h             |  8 ++++
+ t/t1416-ref-transaction-hooks.sh | 64 +++++++++++++++++++++++++++++++-
+ 4 files changed, 128 insertions(+), 15 deletions(-)
+
+Range-diff against v5:
+1:  9b76cc2c40 < -:  ---------- refs: allow callers to supply old OIDs for batch deletion
+2:  6a8401c448 < -:  ---------- branch, tag: retain old OIDs in batched deletions
+3:  541da44c37 < -:  ---------- fetch, remote: retain old OIDs when pruning refs
+-:  ---------- > 1:  2af3eeadd1 refs: report old values to transaction hooks
+-- 
+2.39.3 (Apple Git-146)
