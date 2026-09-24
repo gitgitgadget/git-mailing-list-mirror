@@ -1,118 +1,129 @@
-Received: from mail-lr2-f12.google.com (mail-lr2-f12.google.com [74.125.230.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E697A3A1A23
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 20:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.76
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790280830; cv=pass; b=oE2rDxmiFhGaeW4g8go1C1VSPPgAl5i+72wvBf3ETrm9+/ovo0JMuFyejRcV0tMD10FgWVSyqGVRv7DuczbHT6JLgFWm0f1BdLy97gD+YvQOTqkr1WMlikKirQfh9W5f44lt6iUUDJIR9/qwM6buDkTceSAPtdrQix5wpTWUgms=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790280830; c=relaxed/simple;
-	bh=JV2W/FK7QLtZ+OGAqYb/daCN8hI6bojjlNL7OPY/3x0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YVhodDONTI+Oi3CPMavZlytgddjCuZ3Y/PWLkJsqYEIi9D8PQfNhSo/dIXEC5UK48rtYJxRmNNAcnnjsdbKjLV+kCMX4lNCKy+LvkkEiAl00cJpwuLztzTJZ4Zz2NjTd6w9/6SnTKLN+LLevFDEU08Nrvc6zA4fNxbviOEkcZXs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MksUCq1g; arc=pass smtp.client-ip=74.125.230.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67893423783
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 20:36:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790282212; cv=none; b=FRh/PXKcHMUU3tXk64IMNRwDQ8s/KvKEpzzUi938eXsH6cj4Ie7cZQHp4LQkeGfiTh0tZSkXgYr8UDWnonyrf4ksaUzG9zr4XTtWDINO+Cq7a1DefIqhnihJoaifoeoVWHOy8erngZOu7xWGCcdRNhYJa+dxWSgGH8FFKGlMv08=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790282212; c=relaxed/simple;
+	bh=WfWFTYQ55z4NDn6UvzAbx9sFySSOFrVj2DHovpiS7AE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=e0+KPDJH9nK/1IW8PaAV290kqTTkVyBzh1XCjaxMV4AgCr80xBgnGbwjSANzDrMFpfCGcR0V6vNI8fQDmNkZC0L0RMNuYeALuZX95gDnrTKQNLXdcTGNnJ75szdQgI/MVZkxUzoGm3g2z14a+/wAK95e6095+ioklpwHsSlv6GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mpMM/7Vf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q4HPbfHx; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MksUCq1g"
-Received: by mail-lr2-f12.google.com with SMTP id 38308e7fff4ca-3a5d0ad9b89so1105311fa.2
-        for <git@vger.kernel.org>; Thu, 24 Sep 2026 13:13:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790280825; cv=none;
-        d=google.com; s=arc-20260327;
-        b=prD6M/aO4VtKmemPzNmrDaktMp3CDz7Vg9UUpKlROhvOil/BMhor1cKyGWVCaQs/5P
-         oZ85zn1M20iA5lYjdxvSHkBG7BeFiay19YPv/TxUWz6Qkg3jSfko//1hqCSgqq0ThY8T
-         Cun4xYAGHrwn6zVF74LaTkEFDfmwKvqULl6eY28q3hiR2ArQzTDBLnuL+FkQ6KT1w7+H
-         nioHL/liOzJMksyJb2nsHnJHtSUgyqsWPJEWupqJU46/K8XjXq3EfKDeI1LzQJmasdRa
-         bNfnN/bm0b2b6N+vqHrCWl/ogfd2u79RsZLmIQ7WkeEhBguxrwfk48OA2HcsdBtsqMC7
-         0qtg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=DVLRW1JrCLsO/vfYIzKLYZuJnkZp3XfY5/a5UqFqd7Y=;
-        fh=OvDRtyxaDoeF1PwUN+tKrYf80B55k9QvyGaoDh5oDJ8=;
-        b=cIYMQa5uwEcudFN1rS0DwlgXljLsSPOq8j+XLvuz8zDV0Noebrwo+9t9a2D8q9S/Mu
-         MPecjkCBzGQ+zE2wq8SM5WsUjAJO0VwoZxFTr7MIww3Sfm4YJwzHTUNMfQnd5KhR2oTp
-         s/sMK6YvGTSzImGyIa4kip76sLyBc+cBMeJwyQwoiEwKfwLqIm+cOthK37gyyUrN91fy
-         fmawnFgn0/ept1D6ivCmUjF2+0UREqrAt98wj/J/VwjpF1Qd9MXMRfNZTmNX3ZcJa9ib
-         cSGLdwsHBTZPTrUAz3c6LYNqCEAF98FC0DbPrtjW6xHO/IiyUny+1jKyArtTLNOr0pnz
-         suVg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790280825; x=1790885625; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=DVLRW1JrCLsO/vfYIzKLYZuJnkZp3XfY5/a5UqFqd7Y=;
-        b=MksUCq1gay1KHJta715/kmAlIU4fIulmdcYtACJ6Oacv0e+srNJpUrudmAk1tm1jga
-         4xXQeGgAuXjSqDPDIlbdFVgyOvRFMJ/dfZi24vylbsVffd7ozeAdKbH8sNsDrh4eO4bm
-         OjLvth2RMY1ucCQlcnPQP9NGJRa40jakNAq2073foHe9tLKlHZYCIuq6/GIGVNOa8Fan
-         hW/h9uaB6/cJWzy808mb/ve1hfIULOf6wxBP0538NrpCtnA+ImR6aEyXwVyJh9aLWCaJ
-         lVE8joXKLUrpx+x+ob9XjFgXvmyBHhSZmzkbaFB1O0sB3ALSSi+d8fsaTruXsxx50ijM
-         SDwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790280825; x=1790885625;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=DVLRW1JrCLsO/vfYIzKLYZuJnkZp3XfY5/a5UqFqd7Y=;
-        b=vej3PF57L/4JVEs2LFRDQVsRjILY0Q9RahjEBWb5E2b850qP6quwyiZLA8BxQPLsOe
-         hHF+BPOUrPVMx/p7krbigWF5Tr6A1b0Ja7krFyG9k4Wu1F627ohURW3JAfKgOHZ1GeYp
-         deee4yzbs1g3FwU769kOtkYgAHTGBXg3X2OKVNfbh87k1Si35kxEIwfjINhDNauZ8NWX
-         eIzgngGj1yBgio129kBkrMyy+MyH1wq3qrsIWU2PECtvFOCYEIR4uQ2Uil7tp62h+UhC
-         wHssCeHv7qm2Qgq3ZtoqZqIgD/n8aRxACrLFtjuNxaQqCB1Ux6gWl9uKQBdXbMiFwl/o
-         PnUw==
-X-Forwarded-Encrypted: i=1; AKwUvBysybzI0EU07a1BZtdFkyVevA5LBj/8S35BZIGC/6R5qul3++EemexQ0FKZabJst0JrpS0=@vger.kernel.org
-X-Gm-Message-State: AFuF++lyx/VM1aS9vl1uEySE5wXttWOhpoGKCloGqfBcRWz2v6+A8i32
-	ZEA0FI4Lf3UwGMfibIe6mf1DQT+N6AovpvPNWUWYybgg9yR4KnOIUZmO+9yzbWJZGgMISx7JpUv
-	hb/vPg0NO1WKnhgWxzYPeR/OUmuZZnmA=
-X-Gm-Gg: AYBFou2PTQB6BmaUYRZ3okFrp1oY0JMyPr93QBAuReVYccBHd03eBJ0G8M2HW0W/OLH
-	NGc4N8IhmUQDJtyJnah9ypGvx0O357H8+OLdSCaIzDH74Eeir/DPe0t+3N66JkQskyrakXMUzLU
-	GKswc7j97UvtHylzZl/UzgFwK9KF3TDZrvUxn/RhXf1tva+t6VCXECKesJufndurQVnFlikKjXB
-	Ibp5rT/KYUZZOu41us02FRLTxkzE4E4RsZ6USKYvLLmzWq7LtiqJowt8oRpWRSuf4yNlE9gMvBU
-	TGxHJfMyKBjvywLz2E/EpOk9qYMLwwULWQ+Dcvhi3jOnR9nmGfjAC3FHxRyr30TDK8EadTQDtJR
-	TfvVXcscho/HyjTzpYEAhfErZuJjnESyTrPK63w4tEvHgrYYYeXfCBb9wRoYXf58uNdSQUg==
-X-Received: by 2002:a05:651c:43cf:20b0:3a5:a139:526e with SMTP id
- 38308e7fff4ca-3a63c4120f2mr7125051fa.20.1790280825056; Thu, 24 Sep 2026
- 13:13:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mpMM/7Vf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q4HPbfHx"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 83046EC00B5;
+	Thu, 24 Sep 2026 16:36:49 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 24 Sep 2026 16:36:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790282209; x=1790368609; bh=itiR3C8x5D
+	4kxuk3fxq5cK4p71HcTIlhfrCSfO9yqbs=; b=mpMM/7Vf8SJWrwaaT1QBEw07n0
+	fSo7Fxi2qztpbOmkVewciRow17yU+UEJTCjntPK9M53LzqKVSTmNGpfgoBXXTUUw
+	6DojDpyl3UR/KPq3C3z6027glA3oqmXKgzQzDMfG8sLzJ23dsDnNL6zKKY1/vJSL
+	85Uq5xYdhQ2S5Hc0WrNKRqBbfluIWNaKSC/8yuaxrShIcRQASj4xVXcEtHRcB0Zh
+	AoIyVRW65Vo0Y39MYSjDbCRwfAjh6wZIeeCWREbB26RzTltTZmeFZ/NJddBP0vLV
+	i0I3tAbAompbvT7kvOsuzItMGX/5OuL9nS7SdkXUOfWxjrXvAKJKLAY3IYkQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790282209; x=1790368609; bh=itiR3C8x5D4kxuk3fxq5cK4p71HcTIlhfrC
+	SfO9yqbs=; b=q4HPbfHxmEnfOwv3+MOk9/PbYfw7Xbmx8eN8t4Yd2H+/67ic/ir
+	Jt9ZqU8awHL7TtbhPEf0SuyTdlEIHEdt/lwxAH61fsHSsl97LCzt5aTeIoBS4EuB
+	ev+h+7OFtNf448UG5qQjUlbjaxLVKFUqKqFMamaQSFfec6W4qTaNhxoa+B/xxdji
+	4iljlCaaDNysXD4ppG8A5C0fK0JujL56RTDKdsyjP5brgpjiR/LR9+75PgZdaKRA
+	vi15FzyCatu/0/9LeABJ7IvaVbk1PG/+ch67Fjtok6VGbKH1mYaqQnJzykfFqR4D
+	qF9U8tYocW58y6fCgo5NkMYMOpqYWYI5TDA==
+X-ME-Sender: <xms:4Ym1ahoX9R9SL1NA_xuaoj1qw0_8B38HQCXW9q8eanjHQiAbf1nqzA>
+    <xme:4Ym1aqgYQcFz3X4CUProra3O35yR6l7iEBZdsPEO3azXAyj9CJZWPnK-88FjDtYmu
+    cc4Fpy665DBMjY28KMzdeVD3yL61cdaZ7tl9vVhVH0rD2xn-p1QJBY>
+X-ME-Received: <xmr:4Ym1amgC0dLaEiP2PNx0dRLUVsHdo1y-GoMnW2ljt0g5avROWVVSjzGPtIpVRrXbiDtyunbU69IRzKl4cn1Uo_z-vXLHgYwAhlr4>
+X-ME-Proxy-Cause: dmFkZTE872kc0hnmi67QlA0OEDWchfwzXYeU1hImKJVxC82DKw1YXWCbBhkT4IQMSBL1WD
+    kseO+PpaG5zQhejtFXh73O3nxtYG2c+yCZDftmECehkEC6Xfku1ZsZDbR1sm6b/K0ZUzDm
+    g9nLGygOBQ9avPmvUjEeLpWKGh6J+UCgcXrrothZkQwo9U8h8+Wf+Hi6NZfiQmivi6DYNs
+    gAygkMBuyZSkT7cDbUwmkCsNeRjNdharqiFAj15ZbfDAX9pejlPEhC9D3ydB7WJfETHwk6
+    JsCAL5rC2Xq0SV3h3q7fiQ6BrgJxKSDKIg5ggHpMpfT/dIak95b93gA/px4vrK65pxhPhx
+    E83rdqMSquysebd1gmnZCLcK0HvezWE1qfmd+M2mAEHOhCVqUWg5RLta9jPe6WGXOfCKn0
+    1QIzBqXy8NcgaQtxoDs/BRI7S9NsmjK0K9xX2G8VGTv73KFy8u8vZRi85B+cJb//6CcWpJ
+    G4gh5GR/yq0HCU7YzcsL0JcGbCXj+k6kZy8yzeaYM6k9QkiK/1jOWsMvxH483XNCpK6H9F
+    iCzWDFTMuMyri6v7DVX9N//C5om0UUi3E3YaYFWArOis5hp53jW5Y//nCaRJApBmyDq7vb
+    HNmmta9I9Wzo6UoZli0a3dN4Pjpwkh7i9+XtOJvm9m6WAO5Xl0/BVcffXw7g
+X-ME-Proxy: <xmx:4Ym1aoigqHhrBZ0VBCr7WbwqXkl_AZeomNJGLRwbbbDO_EOhYeOQLg>
+    <xmx:4Ym1auJGfALSAiXhHFrzByYWSAQX782QJDC7h3bBFyxftM56FmkgRA>
+    <xmx:4Ym1avGT7Q7aF2sLDDkZ20hDChYV8LRZXXoNeomgDcxZIzr5v84fRQ>
+    <xmx:4Ym1aqTLd4Rm5DjAPmSc_6jrbdLlctiR9awAK6icIKA8gcqaZTu5-w>
+    <xmx:4Ym1arz8GVsskyGZJqbY7zpfk0RNisPLJNHuDvr-FgOA_HksgftBN8kv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Sep 2026 16:36:49 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH 1/7] [doc] Add new gitmergeconflicts man page
+In-Reply-To: <ad4853dc36cdb883c9a8dc6bda747a5ea318e7a8.1790261062.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Thu, 24 Sep 2026 14:44:16
+	+0000")
+References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
+	<ad4853dc36cdb883c9a8dc6bda747a5ea318e7a8.1790261062.git.gitgitgadget@gmail.com>
+Date: Thu, 24 Sep 2026 13:36:47 -0700
+Message-ID: <xmqqa4p61j4w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1790113781.git.maciej.ciemborowicz@gmail.com>
- <cover.1790196627.git.maciej.ciemborowicz@gmail.com> <9b76cc2c40a2b1fe727677a9400e3b26ec1ab437.1790196627.git.maciej.ciemborowicz@gmail.com>
- <arUEhkuC448hUTCw@pks.im> <xmqq4ife4mzc.fsf@gitster.g>
-In-Reply-To: <xmqq4ife4mzc.fsf@gitster.g>
-From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-Date: Thu, 24 Sep 2026 22:13:33 +0200
-X-Gm-Features: AclHuK_28Yzysv3KU64zpba2X7rBy5yWBZZ8p8J4kSgMVqlAy8hNjatzlyBpPnU
-Message-ID: <CACQ=SRGA5j9ChJ0uM4=5iCwEDgWQEdhhrD8OF9=RJ7XBxqb0dQ@mail.gmail.com>
-Subject: Re: [PATCH v5 1/3] refs: allow callers to supply old OIDs for batch deletion
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
-	Phil Hord <phil.hord@gmail.com>, Elijah Newren <newren@gmail.com>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	"D . Ben Knoble" <ben.knoble@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Sep 24, 2026 at 6:45=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> "callers cannot preserve", meaning "after deletion the values cannot
-> be read anymore"?  Of course, but then callers can read them
-> beforehand and use the stored value when calling hooks later.
+>  Documentation/Makefile               |   1 +
+>  Documentation/gitmergeconflicts.adoc | 294 +++++++++++++++++++++++++++
+>  Documentation/meson.build            |   1 +
+>  3 files changed, 296 insertions(+)
+>  create mode 100644 Documentation/gitmergeconflicts.adoc
+>
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index f8dea4b395..bc49641dda 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -58,6 +58,7 @@ MAN7_TXT += gitdiffcore.adoc
+>  MAN7_TXT += giteveryday.adoc
+>  MAN7_TXT += gitfaq.adoc
+>  MAN7_TXT += gitglossary.adoc
+> +MAN7_TXT += gitmergeconflicts.adoc
 
-I meant that refs_delete_refs() has no parameter for
-the values its callers have already resolved, so those values are not
-carried into the transaction and are therefore not available to the hook.
+This unfortunately needs to be accompanied with a matching change to
+help the other build system.
 
-Patrick's later suggestion to resolve missing old values in the common hook
-layer seems to avoid this API question altogether.
+You probably want to move your change to set conflict-marker-size
+for this new file to this step, not at the end as if an
+afterthought.
 
-Thanks,
-- Maciej Ciemborowicz
+
+ Documentation/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git c/Documentation/meson.build w/Documentation/meson.build
+index 51647957e0..10b0637991 100644
+--- c/Documentation/meson.build
++++ w/Documentation/meson.build
+@@ -201,6 +201,7 @@ manpages = {
+   'giteveryday.adoc' : 7,
+   'gitfaq.adoc' : 7,
+   'gitglossary.adoc' : 7,
++  'gitmergeconflicts.adoc' : 7,
+   'gitpacking.adoc' : 7,
+   'gitmergeconflicts.adoc' : 7,
+   'gitnamespaces.adoc' : 7,
