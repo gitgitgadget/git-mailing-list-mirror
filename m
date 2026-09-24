@@ -1,198 +1,135 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2B53F12E5
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 18:12:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF25370AE6
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 18:18:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790273529; cv=none; b=EDB9kHeYglcqEjwi9FTFgyxaPKsdmXtY9Uk0A6KZpc87eCNg4yFevthSAp4HEOTrMZZuBWmRTrn7q5ijeAWqXxMNXFt9bfjYvnH/Gd/hSyaf8/SQcqHNwreyZmYwgFJQzM/wSzcFIOmHEu7jE5NecAeVvsFCgNA8c4Ay4olzkwU=
+	t=1790273882; cv=none; b=c28eHEN4uhGrOuiH1R+deaSonJpUbFfgDXZZcEuiXFaZZN7uAYflKBqy5Q4EFKurNmN45QKrH4dVodZuSGG0CrLEfEtlPIEdi8EiNbrpCccMvqxjlCRE8VEZHxwIj6LeD0WIA/x8zrDDcwaw32rBpMlHsgpe5wM9LC6CEzBuW48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790273529; c=relaxed/simple;
-	bh=Um/ms6aKTsrbMI+qjrV9E93BejybecHc4FvQ6CQcypc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pm59bKIHYrjAUGOnWcin4KKbIJDqYyKGKt/auwjCPbbiuxPfRos8ATgq42R3l0SbfLHuZCyGxluCHe3cNvHO7pavXiFw0RBh31KGyo5K1j0Hf7GyNSIS0gRPWCi5zGEW8OoRP9gbSpxkHlJPMXOLYq0IOuzbUQDhkOmLdsXpy+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=nTq3WNLv; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1790273882; c=relaxed/simple;
+	bh=athsazGjUx1Trf13e2RoQ8WEaaGywq4IlrI1j4hBuzc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lk4FWrCbZV7ynron+S1bMNbCOhqr70YscRNJa6H1f6JQA4IDozfU2UY5szQ1dZTJzle5YngUf5kJb88TmI67tPPtwqD2aHz61T3EyUZ2Gr8vkMiyMbDPICZrsFqH2atgxzD0u1B5DtEIoDNhHHILgR5XKDa8/3Xg7JbQX0Dzf6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=u6mkh4+q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gAjDbbKk; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="nTq3WNLv"
-Received: from [10.0.2.15] ([195.99.11.174])
-	by smtp with ESMTPA
-	id 9nsLxw7CK5WHg9nsMxAD1f; Thu, 24 Sep 2026 19:08:55 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1790273335; bh=6WEz62JjHDVPARtu/mY48qiXR7cQNseAv7NeuRKfMVE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=nTq3WNLvythq5dhBlky4CIeeIvyN3DMx4ApVThzoHXbYfdTZFtXA0mSg/F6netQqw
-	 /Z8Te+K/gzz0I8qYx7aensUgeeZ9apSHhZiw1rEMLD6nZbi2qGCn1tCsosrIq/CU6c
-	 dqxzBDw8+NaWp75Cqm5Qz6ZmpTH6K7N2VYEuT5P858hrzQboRnly7pxDhjoqVCIPUh
-	 qllOw9VfA2RotyVncKloOpoACc5PSiXsWN219bni2kVJHiFPMLuxK+4QtkTe1gmzM2
-	 pgvWhhZKWSxUAkRp8Rj7ziiZ/5d9XWnhPWLRkxU4nUb5oU5OHbNcTdPM1E1H3Beqd4
-	 7W4uaBS84QIFg==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=dpt4CEg4 c=1 sm=1 tr=0 ts=6ab56737
- a=rWEfxJwGD0TuYe46u5FB7A==:117 a=rWEfxJwGD0TuYe46u5FB7A==:17
- a=IkcTkHD0fZMA:10 a=CCpqsmhAAAAA:8 a=ybZZDoGAAAAA:8 a=YJ8ixoa4bHfJ0UeAcskA:9
- a=QEXdDO2ut3YA:10 a=h2X0mqEp8x8A:10 a=ul9cdbp4aOFLsgKbc677:22
- a=0RhZnL1DYvcuLYC8JZ5M:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <d1ad4da9-e5b6-41c8-8049-0d8ac012a1e2@ramsayjones.plus.com>
-Date: Thu, 24 Sep 2026 19:08:53 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="u6mkh4+q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gAjDbbKk"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6D8BC14000F1;
+	Thu, 24 Sep 2026 14:17:59 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 24 Sep 2026 14:17:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790273879; x=1790360279; bh=7bu5kMAljc
+	yZbyHKjDqQpnwIHyiQQGY46KitzEyebAQ=; b=u6mkh4+qdok7mpfFYJo/7W2QSe
+	mKlS4xk+fAXpFamJuJM5YLWJ3GPuhPPEAnE4P5mZyDkPVDEk9VLmkx52x3RsdJzq
+	D4dJNoXWyBSemOsMCevlFT77h1zXrw5n37PKQcEHwFZ7iTI5beWm96+noMTjpNG1
+	koJ/lY2t96F4v9fl9Gzy5pCPlzsXK29WJuwN1+OrFl6ameNP5H7SK/aEzKVUu3+h
+	8D8OkNQRFZoddfn6+WXTMCw8w1rB4sPeRoJnSVfix3kegePNwSYPTAVHSdeIqD2x
+	q3CiIb0YhHzhAIILXMPMKEdkk3W2MNN7o67jQxTBKyC21rYB/yIaLAV6hq4Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790273879; x=1790360279; bh=7bu5kMAljcyZbyHKjDqQpnwIHyiQQGY46Ki
+	tzEyebAQ=; b=gAjDbbKkAmnTZ3htpLcFQfeRANCJu1TaQuT05GqWcJDSdeYF5+x
+	y8CN3uGBiQLAropCZXzljFFAFjOggeiC2E7oFAVsSXQIPaJpAWYpybJCrP4FVTO9
+	btpWl3ylhF3iU5CyXHyZxeEL4KGgJ84llfq25oPrpCdRDyAVJoeStH0Csg/cHNkM
+	qdZpQ6JUaxxfAmI71VXp9t6Je/M0mV8iNCE78L56U+GqI0XC03HiYcVStSol8Qj2
+	t9RbwHrIYXwkjIdiE3NHbOFASV6He3o5kXayT59nahBe0eCrt07K3kXbFicIWLIC
+	xHr4dnq7g87Cip5dc9mR2Bwwbl97vgHJjfQ==
+X-ME-Sender: <xms:V2m1anxQQ-lVk2zv3gtVNXz8qURy9pM0sWac228U_K75zx0f02Ed6g>
+    <xme:V2m1amKTdaGzArVnqum1ucKaCuHqOPLcMaiy1xkMVBQ1AFLMnzu00P5__i74TiMz2
+    Uk2xTVuCw-E3DjdxaRDNG3TlfC5lhmZ6MS4vw9--O_FJTBflZDqMw>
+X-ME-Received: <xmr:V2m1appf5N5Tfjwrw_VgXdT1jTIiQLy1Lz8jmZGo9e8xrlpEzCXrzek5oa4O90iqKGWzVx5zbUIe2u4TyUSyKVzDbn7ZbrnktNNS>
+X-ME-Proxy-Cause: dmFkZTFfxx/ggXNQyuF5FP1wxBewWEnBrEkPSsV4lCXrCpo6X1qar3K3K9egehYPcLOiOX
+    11jhuDZaHMTl8hzrOR9ePhxd/iuDe/bjI7FVln39yx690tKdl/HcU9msfink1nh8ZM0ds9
+    O1xLJwca5GU9lgsN7+or6kAG33YjaMOIh23+u37uR2iCVy8b7PykKP6wH0fP4jOgxfQaba
+    qdmoGu22iiEpy8Hsfv/QrZQJp586dPkjs4C6jm0SKoqAZ/jNoc8WRoSyZ/nx8k3v4f1jiT
+    SUpn3lC8d4MJUZAorwxH4dwADKRf+nIoun2mIskq5r0V7EG/JjarMAuDugF17nRBYgVYBW
+    fP4IuzrpSeWBlzt+cTnpWc0RxMeMEsPp/tnUKq8aDtsADhETnHKatpfanupyMfTi850eoZ
+    q193IjlEz5/sqK+GoFkMmKOv5AvtKTuGhIgQzV2Xsx2s7YWXIIpAu7wF5cdIRJ1sMNCu4m
+    QPF7dm05KtwYLlziga/804FL045z4FWGn7lbKtPW6d7z5yhRFiMzPT+P3IA4QfGh7ztwE6
+    of4R6m3Fihiyo3ri0OKwuRptblz952NRuBY6fzhEJDDE1VpkSAJfY9aUBTse6NFClVNJN0
+    cH3w8gkS+JtKLWDasDVdknMt0WibbzqLe436s9QphoeMfsNvAk6dFtnJGxvA
+X-ME-Proxy: <xmx:V2m1atI6ukjBwOa9evsbdWBXa5pBjKhuX0qhJv_Cb7FstowIjru_zA>
+    <xmx:V2m1amR00dJeqNPkGa48NKbAoEZZWr89ctEcHjuM23UtgR2_c8FfMA>
+    <xmx:V2m1akvA7PnjqFBQCjHlSqH81s4UYjTbSvhkZzax3F_RkIyi6TPYCg>
+    <xmx:V2m1avaJ7sPgUkGYr6NdjH6E0sAbet8zFMF2hBPnLkyAS-TYEx82mw>
+    <xmx:V2m1apoH1sdNLtGC8Nefnzbg6t3yCK4MpFzVER4i-U22wXf71LSqiT_W>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Sep 2026 14:17:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "Jeff King" <peff@peff.net>,  "Julia Evans" <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
+In-Reply-To: <31577b6f-79b6-456f-9ecd-d1a3df6209e2@app.fastmail.com> (Julia
+	Evans's message of "Thu, 24 Sep 2026 13:22:49 -0400")
+References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
+	<xmqq4ifhdon2.fsf@gitster.g>
+	<665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
+	<20260923214038.GA49087@coredump.intra.peff.net>
+	<63520573-c8a7-41bd-aaeb-bfc2b5e43856@app.fastmail.com>
+	<xmqqse2y371a.fsf@gitster.g>
+	<31577b6f-79b6-456f-9ecd-d1a3df6209e2@app.fastmail.com>
+Date: Thu, 24 Sep 2026 11:17:57 -0700
+Message-ID: <xmqq4ife344q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Git v3.0 timeline, was Re: What's cooking in git.git (Sep 2026,
- #08)
-To: Junio C Hamano <gitster@pobox.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org, Adam Dinwoodie <git@dinwoodie.org>
-References: <xmqqwlsei1pv.fsf@gitster.g>
- <76ac51df-cef8-c6a9-2610-8c21f03c6999@gmx.de> <xmqq4ifhgzvx.fsf@gitster.g>
- <5f34a5a9-9f72-b725-666a-94798895d122@gmx.de> <xmqq4iff5ml0.fsf@gitster.g>
- <xmqqpky346fr.fsf@gitster.g>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <xmqqpky346fr.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfBOESRBfjw/gk6ViArLnJ3Z59EVgKGwrpoP4liNuT9dwIWrrKKNm/Uz7mGiL0ei+GCAQcjrqOk6gEP0/eLrsnUU/MFlR72benzaAn3oJPKe2KM1VZ1MY
- qbm+o/0ZHsHsYvYIkZCX0KItG3jA9JSWLjlrSOfPbiEt/C4KnC4AxLu+JpqWK0JXBQjsMSlxZMzUBoL7PW53Y1CaurYSmYUfkaU=
+Content-Type: text/plain
 
+"Julia Evans" <julia@jvns.ca> writes:
 
+>> To see if I understand correctly, let me rephrase the second
+>> paragraph a bit (not as an attempt to offer an improvement; by
+>> restating the above differently while expressing what I take to be
+>> the same thing, we will see whether I misunderstood what you wrote
+>> if my version ends up saying what you did not intend), as I found it
+>> somewhat puzzling.
+>>
+>>     The short form <<EXAMPLES>> uses EXAMPLES as both the link
+>>     target (which is not shown to the end user except in the
+>>     browser's location bar when the link is visited) and the
+>>     clickable text.  In different parts of the document, however,
+>>     the text in HTML may need to be rendered as "EXAMPLES" or
+>>     [EXAMPLES], which can be achieved by using the
+>>     <<EXAMPLES,"EXAMPLES">> or <<EXAMPLES,[EXAMPLES]>> form.  For
+>>     consistency, always use the longer form, even when there are no
+>>     such typesetting constraints.
+>
+> I meant something different, let me try again (with Peff's corrections as well):
+>
+>     The reason for using the more verbose <<EXAMPLES,EXAMPLES>>
+>     (instead of <<EXAMPLES>>) is that in some cases, <<EXAMPLES>> is
+>     rendered as `the section called "EXAMPLES"` or `[EXAMPLES]`.
+>     <<EXAMPLES,EXAMPLES>> is rendered as just `EXAMPLES`, which gives us
+>     more control over the output.
+>
+> ("in some cases" is code for "I still don't fully understand
+> exactly when each one happens and why")
 
-On 24/09/2026 5:30 am, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-[snip]
-> As I wrote, after the current cycle ends at the end of this month, a
-> 10-to-12-week cycle including the end-of-year slowness would mean the
-> next cycle, 2.98, will end at the end of this year.  Extrapolating
-> from there, 2.99 will be March 2027.
-> 
-> The consensus in the room was that we want to use 2.99 as a signal
-> that something big is coming, so there needs to be some lead time
-> between 2.99 and 3.0 for "advertisement".  This lead time between
-> 2.99 and 3.0 does not have to be the usual 8-to-12-week full release
-> cycle.
-> 
-> I do not think there was a firm agreement on the date for 2.99.1 and
-> 3.0.  Potential factors mentioned in the room included that we may
-> want to match the LTS release schedule of major distributions.  My
-> preference would be to give a month after 2.99 to apply only
-> accumulated bugfixes and nothing else, and tag it as 2.99.1, which
-> means 2.99.1 would be April 2027.
-> 
-> The contents of 3.0 should be identical to 2.99.1 except that
-> breaking changes are enabled in 3.0 while they are disabled in
-> 2.99.1.  Volunteers can run the 2.99.x series indefinitely to help
-> LTS distributions.
-> 
-> At the release engineering level, I am very tempted to keep the
-> WITH_BREAKING_CHANGES Makefile knob in the 3.0 release in order to
-> keep the differences between 2.99.1 and 3.0 to an absolute minimum,
-> and then remove the "dead code" that is used when
-> WITH_BREAKING_CHANGES is not enabled from the 3.x series at our
-> leisure.
-> 
-> So the above is what I have in mind, shaped mostly around the
-> consensus at the Contributors' Summit (or at least how I understand
-> what the consensus was), with my preference filling in what was not
-> firmly decided in the room.
+I see.  I think I understand now.
 
+In your example, "leaving it vanilla without any extra adornment" is
+the control you want to gain by using the two-argument form, while in
+the version that shows my (mis)understanding, it is "you can mark up
+the string that is shown in any way you want".
 
-Back in January, on the cygwin-announce list[1], an experimental rust package
-was announced. This package was marked experimental and unmaintained in the
-cygwin setup program. I was hoping for a more 'official' package to emerge
-before trying it out on git. (the package was version 1.91.0 of rust built
-from a source tarball). However, there has been no sign of a formal supported
-(test or production) package since then (there is still time, of course). ;)
+Either way, the shorthand form forces you to leave the rendering to
+the toolchain, but the two-argument form gives you more control over
+how the text is rendered.
 
-Anyway, this thread prompted me to try the experimental package:
-
-  $ vim config.mak # comment out NO_RUST
-  $ cat config.mak
-  DEFAULT_TEST_TARGET=prove
-  GIT_PROVE_OPTS=--timer -j8
-  #NO_RUST=1
-  NO_DC_SHA1_SUBMODULE=NoThanks
-  DEVELOPER=1
-  $ 
-
-Having fetched today, the 'master' branch @0f8e75abeb is v2.56.0-rc2 with
-the branch 'en/no-amend-during-conflicts' reverted.
-  
-  $ make >out1 2>&1
-  $ ./git version
-  git version 2.56.0.rc2.1.g0f8e75abeb
-  $ git describe
-  v2.56.0-rc2-1-g0f8e75abeb
-  $ diff out out1
-  1c1
-  < GIT_VERSION=2.56.0.rc2
-  ---
-  > GIT_VERSION=2.56.0.rc2.1.g0f8e75abeb
-  277d276
-  <     CC varint.o
-  308a308
-  >     CARGO target/release/libgitcore.a
-  $ 
-
-The 'out' file is yesterdays build of v2.56.0-rc2. (Similarly, the 'sp-out',
-'sc' and 'hcout' files record output for v2.56.0-rc2).
-
-  $ make sparse >sp-out1 2>&1
-  $ diff sp-out sp-out1
-  268d267
-  <     SP varint.c
-  $ 
-
-  $ ./static-check.pl >sc1
-  $ diff sc sc1
-  $ 
-
-  $ make -k hdr-check >hcout1 2>&1
-  $ diff hcout hcout1
-  $ 
-
-  $ . ../git-test-setup
-  $ env | grep TEST
-  TEST_NO_MALLOC_CHECK=yes
-  GIT_TEST_CHAIN_LINT=0
-  $ make test >test-out-2-56-rc2-1 2>&1
-  $ tail -n 13 test-out-2-56-rc2-1
-  Test Summary Report
-  -------------------
-  unit-tests/bin/unit-tests.exe                    (Wstat: 256 (exited 1) Tests: 261 Failed: 1)
-    Failed test:  254
-    Non-zero exit status: 1
-  t9904-url-parse.sh                               (Wstat: 256 (exited 1) Tests: 53 Failed: 4)
-    Failed tests:  39, 42-43, 47
-    Non-zero exit status: 1
-  Files=1060, Tests=33592, 3519 wallclock secs (42.61 usr 141.30 sys + 9056.74 cusr 12680.95 csys = 21921.60 CPU)
-  Result: FAIL
-  make[1]: *** [Makefile:82: prove] Error 1
-  make[1]: Leaving directory '/home/ramsay/git/t'
-  make: *** [Makefile:3424: test] Error 2
-  $
-
-Despite the failure, this shows exactly the same failures as v2.56.0-rc2.
-
-So, this doesn't stress the rust compiler very much, but I guess it is
-slightly encouraging! I suppose Brian has plenty of rust code in a branch
-somewhere that could be tested ...
-
-Unfortunately, I am just about (in a few hours) to go into hospital for a
-surgical procedure, so I will be AWOL for some time yet, ...
-
-ATB,
-Ramsay Jones
-
-[1] https://sourceware.org/pipermail/cygwin-announce/2026-January/012823.html
-
-
-
-
+Thanks.
