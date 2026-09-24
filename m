@@ -1,105 +1,98 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7038B4A2A47
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 15:55:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D48E47F2C3
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 16:13:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790265321; cv=none; b=Yl4lsmnhl+jat5GKhebvViqoe8vJ7B1z+XCSK3yUbWgDHlmOj2IojVolkZrpiKIeYN4MSQ+kgvsRMyobIuFOcB9ZrqRRM+PUVMKlTFc5kQQY8L7Ba/Krr/VuzQNNPtM+2q5C1GBX4bdmXVlCJ7RQW6z3JUzdDetpo6988U/uZAU=
+	t=1790266411; cv=none; b=aR//otGCVbrKL4xNLNMYcHXfuVaq1UAsu67T6/2f/mWRSks+rAQHFiNXHpmiuxyiMsiIYLmVoxg475puSCaNOWO2ur4OLUjZVUfCcNeWWVVRoqfQXQfOCnUCbX3VP+4+kvjWf3wlmPtGxhxWLnQKu7h3ndMm4XtpiVkXxNSHpjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790265321; c=relaxed/simple;
-	bh=3k2DKCl/pyVndwvzgNeF+fPibG+FUyHrDKI/Gh5xZiA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k9ugZw4luhu3kBFjjfzerz8eiT4WSoUbF7LtxRHDuZIlqQMeBcRwqmyS3GudFFwMUe4l4hepVSQEzpoG4bPEzKgIAdzqM7OjvK0jJEv6V4ldIjHCoy3n4O8zHIh4GJ9WdAVQRz0MIoq3weeHZGWNXBdj6YAgLpYG6vVMISRcIG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=YcUCfWYa; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1790266411; c=relaxed/simple;
+	bh=N0o35pgtedYGicgnbMNmx+x/OSQc2ZOhFaKMhvJFA0M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=M5Wmp8Y0UbBYits75JC8NNIw3VEs7INYeQsOACRiRJqS9oDLmdMkdudr5xZpGu90DD5hx3W67KXfx6TRBbEqrHI2EGv2zYX1uObio5CQ2A5jfeTQ2APDnvHfqd4Ovi2UqFB49AnizyUoU3SzH8HzOKnmwPtu2rMNkPjn8HAq030=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FGFftCxv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P57Uqv4O; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="YcUCfWYa"
-Received: (qmail 48272 invoked by uid 106); 24 Sep 2026 15:55:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=3k2DKCl/pyVndwvzgNeF+fPibG+FUyHrDKI/Gh5xZiA=; b=YcUCfWYaRlsdsNZjZi27+xORi63J3kTsgazgggy/RN2P8DG7rFdlw48+H3J0TaT04Q2pqFnsgcjL05EOch8lGEH9dm23UhJpwgbg+zwZ3qlugas1pRS6FH2+TjcF0FdA/AhFiWvNUPkUm23Mmg8gh6Vly74Z4nHDqum45+2vnVle1LhlmczHVdhKJFCTf+slMS7DO+ulOA/Bn1lu+PnwVQBBNX0X0QU6s5EuUfIi5FCV/eUwZ7ZugXFpuiZDcc4HDefapUofIQcqZRLE6NEGs/YZRZaK8KoILl5P15qP1d0qI6kHzwZCvuCBSC7xewo736bgMLihXxFx9SuF29WTNA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 24 Sep 2026 15:55:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 193279 invoked by uid 111); 24 Sep 2026 15:55:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Sep 2026 11:55:17 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 24 Sep 2026 11:55:17 -0400
-From: Jeff King <peff@peff.net>
-To: Julia Evans <julia@jvns.ca>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
-Message-ID: <20260924155517.GB736248@coredump.intra.peff.net>
-References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
- <xmqq4ifhdon2.fsf@gitster.g>
- <665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
- <20260923214038.GA49087@coredump.intra.peff.net>
- <63520573-c8a7-41bd-aaeb-bfc2b5e43856@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FGFftCxv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P57Uqv4O"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C5FFE14000E7;
+	Thu, 24 Sep 2026 12:13:24 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Thu, 24 Sep 2026 12:13:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790266404; x=1790352804; bh=w3aVA9saWv
+	eUfBhPKf+owaNXvEtuIoQZhHRiiJEuyrg=; b=FGFftCxvi8LBBBHVgkn9BefBrV
+	LqXR8SxeJUhdFqRvMMKn4Y13kJPMcY9ZUUUl5bFD4R3AqborxW1QriI57FlAMrUD
+	9HG0CELWVT9/W10BmNdZxLw6kbq+6G1s7I1kX6GAuKnPu6b15niNBPYpW9GUil4g
+	mtg0d/f+iiVJ7p7Ah3DlP/UNQYkIYeyq/bBo7RuRhu8fUaGYlelyorfTKVDmy+wi
+	lPrwMb2sMo8p8F+YWzTSIcoWS40MTRWQpHxLGk9467aUyf5FJn9U7gSdKmoMgmx2
+	nbslBJMVUh+TfiDn6jMKdxWUSliwbr3ZP/cYzJc9PGPeWMH1Finu1+VSCPTg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790266404; x=1790352804; bh=w3aVA9saWveUfBhPKf+owaNXvEtuIoQZhHR
+	iiJEuyrg=; b=P57Uqv4O4bjrVO8R++WdR4PkwkcrsOgdMIPN9wdZPXB+hwrKdIO
+	mgzTsYvNoVoxtB4H5eS2hwWcimPOmEnsMn7SeQcjeffJPoW4Ks2rQsgCBCWdIvjT
+	aTF9FWMmdmdLz1BVkNxu1LzqlJ4cujCxmkiB5ZxuXWOMFKzuwJevYDW/Hyw7A0z5
+	V+CzGouVSEP2P8PAsJeghQTTIPW4OZ44lcncmu2BjB6hxYj/ECRlrDit9cwN/Zd0
+	kIYQvJ8UQfHs8dsNo+YPD33O+0PMKZXQUggT3Ii6z2oRnENUSbBUlTEKctIiiTJ2
+	76AhQMq13cT2vwxpDeC5fxD+WreacW9VYLg==
+X-ME-Sender: <xms:JEy1aiNJZ3oS-dxJJVEDHrDjJV_TmLokgO_iLtg8XWl8tSN-L2VGdQ>
+    <xme:JEy1an9WIhOI5lExYkT5odbNGMlB_NSRMxUQnqybbjZMpt7jMKZP4_eEHYaYym0FR
+    4w_js7DXlY1MOBr7sY5HHdiEWK8di7AQWc9tvOcV4nUrI49ODJDLqM>
+X-ME-Received: <xmr:JEy1auT7UkwNLUKlBCY9sp7g-U0z9dRZJX-h5wL_IpYQ8k1SqLHpPnE13zP_vOX-QvqWGqWlZwpsqkQgDj1a6gBpEm_HMf0wYF68>
+X-ME-Proxy-Cause: dmFkZTFjq5bxQRqxrrCH7YwlirMZocmvpGiOzQ6WzVdX/dUOWwnarJLTc2VD+0DXRzGTYc
+    C9NkZNbTB7PSx3ESoAGy+uqIyA0q84m6qMYHnnj5ObhkI9h3YbAYHx6bCxYw1WX+lrjuvE
+    6zCTDny8oLne80+tgGOp0iZqxCPvb8sxXv57pTu3D35jO6NNJibGUcND1GLFu9Jnb73eUd
+    hyvglRyLEvVPTajwod0ZRM4SKnxjwUp3rHvMNJ7oADp397xFAYBEUjtuACVtHGg/SO9gKk
+    TPu6WJUP8JgK5ZfsnuJ6DXjzEjR3zYH3azGz5NLqJl4WOqqusnln87oaz+suenWaEtnmJM
+    8ceeKRudWwP9iHLladWTueA8nfv2kkq1kpb9dji5Ic07LzPrTtRIfmUZO2976vYVIBRY7S
+    khW+5OcfKVyl6cHK8E1GN4Y+slawXWWMrQ91ZHp7Md09qv4RbgF6h0cs8y9eeVTKy6sQDX
+    pG6iOGJuX7NULNxp1fT2LCJ5IbjU6gp9GT488ylIsrkcZqXTuLqlWxKTGQ2LbjHSyx5Sok
+    JINibw5ArHhsOUliimEOWTQIbcMk+3cayuzG1tv/f/QQjgj5qtFOhRQmdYLnW6qV1HR9pc
+    MoPn46MoF0RdQ3Wg0vURzi4ZyH8Xv3q+6nHKuZLaCvuMmaZpilxgibUBq1wQ
+X-ME-Proxy: <xmx:JEy1ahkm9NT1p5nUSPiX_gzjG7TAeGkJnr610UHv8Ck4IZ-kB-9rkQ>
+    <xmx:JEy1amTke4Ak8cLsLz3IVMrncCx6EyK6NTlbgS40oJXTdB8VmRLErQ>
+    <xmx:JEy1anNkuJZQJamUGlkpgaLY_XV4SjUsSV2K7Cp28q46Zi74F692gA>
+    <xmx:JEy1anUqsbJ0ruj8hz63mDyBV-kC0R9Y35lqj6byVpiuGmH7J0XIGA>
+    <xmx:JEy1ahxnrnuxZ8a3dVAMuFMfE8kMw9vMuAAmJ_M3mtnEc4qcCvDgXVDj>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Sep 2026 12:13:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v6 0/3] t40*: modernize
+In-Reply-To: <067c83e4-7ff9-4e2f-9ca9-2592288bcc93@gmail.com> (Kaartic
+	Sivaraam's message of "Thu, 24 Sep 2026 20:28:05 +0530")
+References: <20260922202152.842793-1-markchucarroll@fastmail.com>
+	<067c83e4-7ff9-4e2f-9ca9-2592288bcc93@gmail.com>
+Date: Thu, 24 Sep 2026 09:13:23 -0700
+Message-ID: <xmqqld8q4ogs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <63520573-c8a7-41bd-aaeb-bfc2b5e43856@app.fastmail.com>
+Content-Type: text/plain
 
-On Thu, Sep 24, 2026 at 08:30:31AM -0400, Julia Evans wrote:
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
-> Thanks for investigating, I was really dreading looking into the guts of
-> asciidoc to figure out exactly what was happening. It would be nice to be able
-> to write just <<PRUNING>>, especially because I believe asciidoctor will check
-> that internal links are valid, so there's no concern about breaking links if we
-> change the title of a section.
+> See also, "Sending v2" section of MyFirstContribution
+>
+> https://git-scm.com/docs/MyFirstContribution#v2-git-send-email
 
-I think asciidoc(tor) doesn't do it itself, so HTML will be generated
-with a broken link. But in the manpage flow, we pass through xml
-docbook, which does complain loudly. So that will be enough to let us
-know about the breakage.
+Thanks.  It also worth noting that the section referred to from the
+beginning of "Sending v2" section is also valuable.
 
-> 1. Leave it is as is and break some links
-> 2. manually enter the ID like `_editing_patches`, trying to make sure to always
-> match the auto-generated ID (I'm not sure how to do that). I think this might
-> also cause some confusion for editors in the future as to why the section IDs
-> are formatted like that
-> 3. Somehow fix it so that we can just do <<PRUNING>>
-> 
-> I'm not sure if #1 or #2 is better, obviously I'm biased towards #1 because
-> it's less work for me. #3 seems like the ideal but I don't know how to do that.
+https://git-scm.com/docs/MyFirstContribution#reviewing
 
-Yeah, sorry I was a bit rambly in my other message, but I think #1 is
-OK. I'm not sure if asciidoctor allows us to configure the algorithm for
-converting a title into a section id. If it does, it might be nice to
-have a flag day where we make all of the auto-ids look like what we'd
-expect. But that is a totally separate topic, and can happen later.
-
-I think #3 is sort-of orthogonal, as I couldn't get the "natural" xrefs
-to work. So we have to either declare the ids ourselves or use the
-auto-generated ones, at which point the use of single- or double-
-<<FOO>> xrefs is purely a matter for the linking site, not the linked-to
-section.
-
-> Here's a revised commit message, can submit that as a v2 if it seems correct.
-> 
->     doc: add more AsciiDoc cross-references
-> 
->     Instead of saying "see EXAMPLES below", say "see <<EXAMPLES,EXAMPLES>>
->     below" to make the man pages easier to navigate on the web.
-> 
->     The reason for using the more verbose <<EXAMPLES,EXAMPLES>>
->     (instead of <<EXAMPLES>>) is in some cases, the HTML output is rendered
->     as `"EXAMPLES"` or `[EXAMPLES]` instead of just `EXAMPLES`.
->     So this gives us more control over how the output looks.
-> 
->     This also changes some of the HTML IDs of the headings from `_examples`
->     to `EXAMPLES`, which has the potential to break some links.
-
-Yeah, I think this is OK. If we want to be really pedantic, the
-"EXAMPLES" with quotes is only in the manpages, not the HTML (and also
-includes extra text: "the section called"). But the point is the same.
-We must use the doubled form to get consistent text output.
-
--Peff
