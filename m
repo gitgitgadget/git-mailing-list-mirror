@@ -1,77 +1,79 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98523793B1
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 14:09:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6D35477E
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 14:09:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790258964; cv=none; b=ZE60rmzRpPRkKL75gT1R5egCthUsti+OcgxRGX5ghLmRmcnZhcAKqQtArUiVMheSe+4O9Z6GFT8WBhPPJxnhDBEaq0E4Jtj/3wrbDIPb/btGNjjNHnO0J4FQJPk1d7N4I2b2HheD0W38I4pt77466A3m+dN1U1L/XpZ+ZjMwMz0=
+	t=1790258965; cv=none; b=EBj8UJvc68L+eWNrtSk3vQ0r+NWYE0x2QZy+k49l2tKVFkSW8IT0wsSJ7Ry6g0s4ap3HHqRu7aRhfIA2Vpvl5Zxljd40SnMB0Ez4eGuRDWo4o7NvNVq5a/tFpMuHp2sP/OYzWK5zmWR+KCbxaclLYfjaZ7gedWbirmK5ZW6XzJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790258964; c=relaxed/simple;
-	bh=JZaGiXcTIz6o0SVSm4o0wX2ovwndhkk5v94puY0z6GA=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XYnbugSwKNP6dSgYdvPVOlmrBzzqRfEgxvrt4Bbs3hvWVIUu7OVy5tEaZzLx9JrAg6wUd1+775PxXTHWU/VIeO28WdZFyf47VzNIUB2kXTbEjoDtmJfygKc4iPvaT1khFJmxawgwxQsAVM8M7BZ7Vwkd1qndXZ8jZAoBYQZYGTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=U+xzsg8B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IArBG+b+; arc=none smtp.client-ip=202.12.124.149
+	s=arc-20240116; t=1790258965; c=relaxed/simple;
+	bh=bB18TNzheASzH9/e1criv89CntVbN1jw4iLvEUhiGZE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=WBmvTJlJwqyvUxjDoPCA4+NPfUslGjhG2LShysq1/mbwevYf9VoWRfWZnf+qi6lah4Ralpx5faV5BqgDYO3peRJUN4p46QJIJenqBFTJP/q+l0HiV0PS5CwjD22hOWgGuT79NimDfGrwUQkzLScTrqUbMoiD2HDhJiUplfcMapA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EtmtT0Uk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uvcPe+t7; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U+xzsg8B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IArBG+b+"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EtmtT0Uk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uvcPe+t7"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 041751D000C0;
-	Thu, 24 Sep 2026 10:09:20 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 185627A0082;
+	Thu, 24 Sep 2026 10:09:22 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 24 Sep 2026 10:09:21 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 24 Sep 2026 10:09:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1790258960; x=1790345360; bh=/f/Jw4fAxH
-	AtB67r6tZVM4dAUG36U6s65Hx4byQHgsg=; b=U+xzsg8B5oMv9HIMnPZnpH63XC
-	/UfS1DhMms9v89zMDKCymxDCT1GHt4Wuixfa2imQYFOeRjdQ0rw3HWqk0oL5WfQO
-	d475Id3GfJbieu7oc4bwUmFa32dGg8CEP870KFq99s39D5/dTPwl2V2NiTOCUMSp
-	MOutIqLjVxQN2eQdObxbUj0mbes1FjsQC7DzZmlV9lsIa8p/7fNWaaL7g2aLomMs
-	RXS+UXIMN6CzEWQ9+426kXvlbiAe+UhEFtlAZIf0NTW2rtB2xVwKQaNK2kUPQio+
-	FNjhz/8QjOQbQDs7LnGUK79iFOYaE+WZTFKrB4BwmlxGHuOqUDtj2zSZwsLQ==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790258961;
+	 x=1790345361; bh=Hv3YOrwnKfB/FLuIM6jGGi9IiLpUYqbORDoeo7rn5Lg=; b=
+	EtmtT0Uk7DhV1i3nAATE4+2WcYB8HGUwGc+yVD69dgXhUyTFaSPYXRjvlcukku9a
+	yXuEER2CdgkujjbYq5IxVtuv9uqvqJ1UERp2xl4z8nA940iEksLcl/3G6qDBOUCI
+	5leTn1vPF1muf2ihCSj1r5rWHpCtpbuIReKUa7D5QNEiTST+Lu2CJhRpje6igfs7
+	sU7fyhqrOYPedLLDfU0zJiy7Ws5whxojN7CVnwJLnMUiVz0B/ND9B6g54M8eHnC6
+	TlEtsqeFkkQeGp2wrpJU2rRVnwJMgCuHfsEPnIoMnkFCBjrxLeAd90s0xd0Ypmgx
+	5yQq5+nrgQWY1jGLEeMf+Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1790258960; x=1790345360; bh=/f/Jw4fAxHAtB67r6tZVM4dAUG36
-	U6s65Hx4byQHgsg=; b=IArBG+b+YB843wRosx4czr3J9L38vYWMHt/+cxi7NQda
-	4pyhvn1Zq4dQfRSO/HejS05V+mLwDvLVCuhNF6+s1mpj44L0fOkz51PkruO3nnH2
-	NAhkyO/6wW9x3pYC3BlZYmzFoehkfgbdI5DhhnRzhwImoI865ypU2ACdS8x/XdF9
-	aZNrDQGCOE3su1QF2Q9namozv7iRTviurVNMhMvlyqTgaDcFkiys/K1cIKYMaboO
-	eDbSNPQeN/jH45cRC7ppGyFYFqEjBEd8QvgspJ/l1qzzntlvdy+eld1i7f2z+Z81
-	dBn5H7PSJJpDA1IgM+uiTl/bDmtF0EnvgYZ7iVJ2XA==
-X-ME-Sender: <xms:EC-1alh1mPg7ovphVQcA7BXErFZM6eufoINI7kj3PyLgDb4glS3Tcw>
-    <xme:EC-1agCmCihfqb0RKerhILHuVKsI5Gdt2fS7NxGHMnwn9ddQazhWampnfAm3S8Q6M
-    V4OwiGduWB3i-T1THAjykjYjotAcBkItvHazdtvqWql98qpRIQcpVk>
-X-ME-Received: <xmr:EC-1aiuk9dmJiSm3EP0rwH_3WBiaktrrWeWvDoljofRPzZmzPvbihEmW9W30wwXnHSDHnzU>
-X-ME-Proxy-Cause: dmFkZTF+SoVW0pedTkeOqnxANNNxYAHek9Z3qcuVg3+UWJrQllA4EssNE/mHVfEZpcSrPw
-    UtdtStnyTr4YWOY+8F2tF4oRmuQQjI2bQ0PbIcb7iEfxiM6Y8D5i/C5DRuknEObxR7Ptfn
-    38Mzcf0HYFFzOYuNp15EAT/D2/gcYd1bIIG8MuYvaV9yooBBvTsU8sJcSLciNX52XQg8KE
-    lX8Qp2WWmHm5dVtKOw6EqNNB1VzKyUwxOciww87LTgaDPkqkinOQIlch4au1RK79ajUwWT
-    MUlWG2amiLry6OAjO60dD3dwEnpq82QJPMbT0JeVO40QwZvNRi8PBgG/A0wjw+A7gl3IJf
-    5tIm4neU3V+B36oZZwsS7pTjIc1Mi+5em7kDETERjQ9UC+5UN3odLH8a4XtFIi1ZonMpXw
-    +GlK6khTCo01dQ6JPfm6qYkzDyX5nWX05NYJaweauxj5QqIH9M7VvbQ6uEIT/xFXBQstQT
-    X0XSF9DIRntZqJt2EN/pSNDEh/YTjv3+EZopyZRK1c0cdYblFjyPCsl95EOOQ5J6mG6sfL
-    pAh7WlNfmwVVt9gv3i1gFeXvFEjmL2PxCduMt/8nlrmGclJ40WzDYcAIbYC7cO92KtWMv9
-    SNuiN3YecuJwSTbe9z8kO/fgz7z2Rxtu/tSyP1kZiEwv495UBpOWn6Nw6xpQ
-X-ME-Proxy: <xmx:EC-1albRk0gzdyKjvoGbuxq6WMKDzLqpkRxhPvsVkkYxQgeu7bxCcg>
-    <xmx:EC-1alXjES7PrVgh5-GllFcNaPPJJLuQBZuBLtF9cZ5hqfQ-2xMCrw>
-    <xmx:EC-1ap4U0JUJDlx0fdBMdRnvfqmtUxgCQA6rgLC2Paxqg6i30D5RJg>
-    <xmx:EC-1aghuW52FP9saeNuPpz1ktvIvNM7zkkPxTCD2Qp5Wu27LV9TYkw>
-    <xmx:EC-1aiF6jUXWJuWtaKDed9rMvvNyvNdmX6lTaeyz9V9m0BZzSny8Xxr2>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790258961; x=
+	1790345361; bh=Hv3YOrwnKfB/FLuIM6jGGi9IiLpUYqbORDoeo7rn5Lg=; b=u
+	vcPe+t7WbK2OXir58tq/MZMIQgQ/UmvGMseSSo5KeVbk3pGZxSmAy8AJnCGWMSTy
+	QIq7z88cRy2eu84E7QZ8oNiNyT+hp3NV2I7WT0KmGUBD555448LRtF31H6XLVmh+
+	GNiekqAr0kCXQD491Qcg/B3LnuRphaxjVl5OrBQlYJBAUxkFWxIDYIiELpjdLfEG
+	9JOctrWCw8Ln81LzIIlIk+uJ6Ga8kHu378KezPd9wrtNDYpIM7EYelA/ImWJh4Hx
+	u6l7ZwKK2DAx2k+5I74RHjoWoRyXGCdBvocuUAHMQai0MLNOPvW4CUErl0krrX/Z
+	bwAOU97AUysKMk8mqOPag==
+X-ME-Sender: <xms:ES-1avfvO4WT5aVnmhd0sy6bDImkLdqkEPl7SVR5AUp9dumWBLjWMA>
+    <xme:ES-1arO1ZNaf6EegxuKF51WNKbMw4RMnCCpYWnCxebECmynj9-5vCsRqqvWBDs7AE
+    4UHejHh1fngIdYVx5YJz4P27cSWRJD-A08R59S5ve87pQ4KqE8DqFs>
+X-ME-Received: <xmr:ES-1amIlbbNg4-OsQJ5_8XX9RbohhCE6WBgV81gHtxULC9ujJXWNN2zfQanoG5DX2cnSzTg>
+X-ME-Proxy-Cause: dmFkZTFtQE+DlqvF0lQbqprxNhHky+kluS0f31ID+eJQAOtW/ApPXZMwtEnm8b0s8Tz4zr
+    2HcXZm4c1v0YwalfW7U7SogxguwgM7rzDq/2LSkXoKX2t8t4lcVOPYevkW4fNZe7D93O65
+    rhKzP8wO2wEax1l3oSxntOmmMY0qqKhziMosLsZe0iuZ5mzyq7HLrvtcTYuPrgnDEnO7fM
+    q6thSnkJiuXPsY/PFM+frscD7TgJFW3Dr7VrZgIJEWqGqHnNlRxsfIZW+8Eh4SmLar8TSt
+    iCT+WmRuLtirP6ElGCe7B6h/GmMAPk7nc9DjRQbvsANHU21xAlnVYxzY3JetyAgfQsFNoc
+    p4nEOOG9yn83claIsVPaRcwBpaecflG7D0aLhBjeseejcBmnbC+OK6ASlf01IR8QkjF/Pl
+    B5N7cYUmrKfynmDu7VVIDN9xo4jeLFCmXil860KlsYtYjasIzSXxayyMw4ZE166CI94Yvl
+    /Mu6GAfGRPc2TfIcYP5Zl3USAZQEvU2QUEP132f6TJueQnQ9M9KYLWueGVMCz3vJg+gZwR
+    OsOezxaeitkNY1vRajrOo9cjrwuoSadT32PvoX+oLlnIRiEXl2kejS314Pm2Rgq2uV+vhn
+    p75plwW8vXZSasM065D+pU/a0y/2ZOTLmq/QjtTg0CLvuipwO4FSwjLCpROQ
+X-ME-Proxy: <xmx:ES-1asE_QQ9m77RtU7lHy6I4UWlwgjGtC4nRsiob979XqEeS97fnHg>
+    <xmx:ES-1auQIwisyrZTqMgySfaKuxvKuH2oo2kybzPZlM6AR01WegVuVlw>
+    <xmx:ES-1aoGMYn2c4lJ85pP4JnPkMU7B1ybtlxpK4QU2Ar9NQlfQt16HUg>
+    <xmx:ES-1aq9rsi2Xd9Qma7D8TUaLkLUzxWGmpUujcofGiqKXL8eP5ztB6Q>
+    <xmx:ES-1ajCTonmEgKL3pONS-5WPjOmEGby6yuyBb6s9TwdfXmUJWVMBsoXp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 10:09:19 -0400 (EDT)
+ 24 Sep 2026 10:09:21 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c893c68d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 24 Sep 2026 14:09:17 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 277be47f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 24 Sep 2026 14:09:20 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/7] A couple of Meson improvements
-Date: Thu, 24 Sep 2026 16:09:09 +0200
-Message-Id: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
+Date: Thu, 24 Sep 2026 16:09:10 +0200
+Subject: [PATCH 1/7] meson: avoid recompiling HTTP sources several times
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,60 +81,69 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMyw6CMBBG4Vchs3YSbBoVX8W4APoLo+klHSAkh
- Hen6vJbnLORIguU7tVGGYuoxFBwPlXUj20YwOKKydTmUjfGcvooe2gMLD7luMAjTMrdFa5p7Q3
- OgkqcMl6y/saP5986d2/00/dG+34ANVI3mHoAAAA=
-X-Change-ID: 20260924-pks-meson-improvements-b7ed9a48ed4e
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260924-pks-meson-improvements-v1-1-90b7f79f1c4e@pks.im>
+References: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
+In-Reply-To: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.15.2
 
-Hi,
+We only link curl into a subset of our subcommands. Consequently, as
+both "http.c" and "http-walker.c" depend on curl, we don't compile these
+into "libgit.a" but instead only link those into the commands that
+depend on curl.
 
-this patch series contains a couple of improvements for Meson:
+In Meson, we wire these dependencies into the target executables by
+using the `sources:` keyword. But this has the consequence that we're
+recompiling those multiple several times, once for every different
+command they are linked into. In fact, each of these sources is compiled
+seven times, which of course has an impact on compilation speed.
 
-  - Clean build times are sped up, going from ~6.8 seconds to ~5.0
-    seconds for a full build.
+Fix this issue by instead linking these into a static library so that
+they only need to be compiled once. This gives us an almost 10% speedup
+in a clean build:
 
-  - A test issue is fixed that causes shell completion tests to fail
-    because the scripts are not properly updated.
+  Benchmark 1: meson compile (version = HEAD~)
+    Time (mean ± σ):      6.781 s ±  0.052 s    [User: 100.775 s, System: 22.954 s]
+    Range (min … max):    6.709 s …  6.867 s    10 runs
 
-  - Our subproject wrappers are updated to current versions.
+  Benchmark 2: meson compile (version = HEAD)
+    Time (mean ± σ):      6.274 s ±  0.021 s    [User: 91.882 s, System: 22.092 s]
+    Range (min … max):    6.242 s …  6.306 s    10 runs
 
-  - A fix for GitLab's msvc-meson jobs that are broken right now due to
-    a change in our runner images. See [1] for the now-working
-    msvc-meson jobs. Note though that the MinGW-based jobs are still
-    broken, but Dscho has been sending fixes for that already.
+  Summary
+    meson compile (version = HEAD) ran
+      1.08 ± 0.01 times faster than meson compile (version = HEAD~)
 
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (7):
-      meson: avoid recompiling HTTP sources several times
-      meson: don't recompile git-remote-http(1) multiple times for tests
-      meson: use precompiled headers for our test-helper
-      meson: use precompiled headers for unit tests
-      meson: fix outdated completion helpers
-      meson: update wrappers
-      gitlab-ci: fix hanging MSVC jobs
+ meson.build | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
- ci/install-dependencies.ps1    |  8 ++++++++
- contrib/completion/meson.build | 38 +++++++++++++++-----------------------
- meson.build                    | 16 ++++++++++------
- subprojects/curl.wrap          | 19 ++++++++++---------
- subprojects/expat.wrap         | 21 +++++++++++----------
- subprojects/openssl.wrap       | 23 +++++++++++------------
- subprojects/pcre2.wrap         | 24 +++++++++++-------------
- subprojects/zlib.wrap          | 21 +++++++++++----------
- t/helper/meson.build           |  1 +
- t/meson.build                  | 10 ++++++++--
- 10 files changed, 96 insertions(+), 85 deletions(-)
+diff --git a/meson.build b/meson.build
+index 0a95d90d21..4fdb4c5405 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1925,10 +1925,13 @@ bin_wrappers += executable('scalar',
+ 
+ if curl.found()
+   libgit_curl = declare_dependency(
+-    sources: [
+-      'http.c',
+-      'http-walker.c',
+-    ],
++    link_with: static_library('git-curl',
++      sources: [
++        'http.c',
++        'http-walker.c',
++      ],
++      dependencies: [libgit_commonmain, curl],
++    ),
+     dependencies: [libgit_commonmain, curl],
+   )
+ 
 
-
----
-base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
-change-id: 20260924-pks-meson-improvements-b7ed9a48ed4e
+-- 
+2.56.0.rc2.329.gd58861e689.dirty
 
