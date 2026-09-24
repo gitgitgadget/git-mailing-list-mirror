@@ -1,81 +1,81 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DD0442397
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 09:19:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CF0442370
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 09:19:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790241593; cv=none; b=n6lKpt+JZn8a3hNDQICG5o1uRyphrnNlbQHlMLq/EHuUZjNm3NhZm6TzJtlnQDi33GIAeE1pm1DiIihQ2I6OjdgIvJCh8x1D4YynNZWLh8hWqTHclPgLMFPsi12siqXvZt00HYb6elPgYFCEd8IcvNu2iP4rzA+Rh8DdZeadG5g=
+	t=1790241595; cv=none; b=pDSA8q3/7I9xi5wL7TqAXFJ/juyI9lezTvU5nlAqCWAjJ2Ai6srIhV/BOzMHLmg/62enRo/dwy61nXMYvzDHoAGvqKNN16hux3hNuvnUQT+r5G9CQEScFjTI42bxU43v6Jqt9NsFMVWmMgr/yVE8WKsRPPLpvdQ1D5qXMtbIM3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790241593; c=relaxed/simple;
-	bh=4umDP7veNM5FcrBpHeeUHJOzt+UZupn20SFQIJNpQjM=;
+	s=arc-20240116; t=1790241595; c=relaxed/simple;
+	bh=CwRhShpAL7sOygI+y4ACUCzqvFJLmSzKeF2jaowSt1M=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ch9DzZ3q4qfF3GuuXz1JlcFwy9c7skbn6nHi7SUC5gFlDd0nFLkrnOFGcFYILl9spkfhCmgFRllM7Iy4pj1cRbO+DE5Xf9LuokHsazezq/gPGJCjnSH4iOGH2yI3ZZAGEqb4CzXlXcZgEfmbNFG+Q8Xj1AhzgYl7EDygGBqj4t8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fmDt6BLL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qhhfXx9z; arc=none smtp.client-ip=103.168.172.144
+	 In-Reply-To:To:Cc; b=DU36C6DX6hH3JGSSpztiC44ilu0mOhIJ2ERdaSQtkcTmOc8eLTDhYaHBn3e1OFw7tKkWYNlTLJ/TvjEaeNXOZGks87kFWKjEClOgJCU4fUoEc1fowePpAn3oWGIWa6AiDBAM49RTIho4J1bSRA25OHPPy8D5UC9z66velCG2F1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Tt3m7CKc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dG30I9eM; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fmDt6BLL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qhhfXx9z"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id AEC40EC00CE
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 05:19:49 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Tt3m7CKc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dG30I9eM"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6332C1400074
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 05:19:52 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 24 Sep 2026 05:19:49 -0400
+  by phl-compute-10.internal (MEProxy); Thu, 24 Sep 2026 05:19:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790241589;
-	 x=1790327989; bh=PNu6uFlNqL9qXfmWR/aGk0uIiBG1UMR+Xzmp/UXV5c0=; b=
-	fmDt6BLLD0kfn839aah0l2xW2zD/8/DlzpGl376vewhtS+QguoGlPekr4s4kCvgL
-	QjuRXJBeAp8T9WQItuWWp8hM3Sxj2G75mOCmNJotGEfNgCwurNiLaQHgUoemAHiu
-	HwND6sc7Xj8ZIr+lpK9zW3rvLMuZOZz526vtHMf15UFvWZGwNBOhkNgfGWtJIKZ9
-	SVcFQ+Fsh83H8L38ykvSF1jmBuG0/Powzj17VOYCDAn9h0fJXpNIARXkqEkNW9tc
-	sWabS8xsmEtFUgAoY9ivShPw87cPmPRcbNdF8Hu/oy3I2sIaUwcievok0Zh6udeG
-	Wj5HkAFc48EC/W1bJr1zsA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790241592;
+	 x=1790327992; bh=aPuE9oeQKVQgsj9fnCu7YTCanTP/YuCo9XWzBFP61ek=; b=
+	Tt3m7CKc1ZPd7PzBTUkVVIMXyI6nZ1jEANroTSTncsj4xiSNoUqQitKOjUmUta98
+	tXL2IxDufsmoBZKibqN1Jh4B2Bcqq8KOLuX0nx9ySrGQ61qkvCzPIRhwhSfja3Ut
+	czOCUMTbe7K9aNFDM2YxSa+/OFafcTWwp836l+ZxXKCnSzJjXORnZjbf1RT0ak+q
+	pff/+CCtXxieDEdzxXbKDkhiFNclz0hdpCqSfKSTb3XyYkfpMWnNGWBGz44f5o8K
+	e8JGc4v+/i0oE03mU2qHoPjukam2dtrkIUeN/fi8ddvG/mihjM8ZjyXZviSU+hAD
+	2fgov9jIV6xbll77VJ81MQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790241589; x=
-	1790327989; bh=PNu6uFlNqL9qXfmWR/aGk0uIiBG1UMR+Xzmp/UXV5c0=; b=q
-	hhfXx9zdQBnjAQu23rbQngczEQ6TTRK3gwGXL2kKV7rQKVIQw2bwk6ta/q3jX0GQ
-	4x/NKhxiYEjEoikYQkGbtVu8o3S+oavsMX27GsN0CwMW4a/uE5B5zjO63QSVd77b
-	pTgP4eL6llu3590Ag8kFrQDfBQECf3i1qeTGDpRHJxSAb0zuJDp2GCWSKovn19ho
-	sQhFtJPlKCxUSM+nmysPl6M8vwPK95SdwPLA/lWtVlHU2KLmcp5oMKCjVevKO1hd
-	hQZSZJudKxd8DbhpmLeitHWiWtcjbQH8zsCTmhkW6tVGBA4SYpgY4GTLBakpzDVZ
-	bvwJ5i+UzK0whZYewn44Q==
-X-ME-Sender: <xms:Neu0asKRvzaRYBApitPnENHe4FIjro7sYdCjJDlrG5mUDwtLZlzELQ>
-    <xme:Neu0ajFw_a0a1H1fSpj3dDt4lh5LRtOdphHwxrKNFbQHWNmCIInYXRKOMiWgoXYrt
-    J-ywxF40e6sKLyM88-_e_OzXqXc1GR3YWQMc8StpfFCxqpQz4Ime3E>
-X-ME-Received: <xmr:Neu0aiU2Ay91b_TLD5mNU4ZC_Pun9HQtpSOmhjUNoqC3Q3mngbe9asNDry9C-bnVTubumnU>
-X-ME-Proxy-Cause: dmFkZTFPodOiLWcdqf6sGstU46dIiqXidIFd9cR4fooPG2VzhuQs4sgHwSSL0mI+zYrJki
-    puKwTM6PzOLvhrOnHha7/ZqJXKFWeUZ7pL3PmhkuvlpM0SAOkWbZk3xZQvHRMhKdNhwt4b
-    RD3a0i1KaVTQhiwtqarc8pf3XfoXA6W5MTyTZacFoe6F2umLNsXJ1ouYl3pIUvkblQZagq
-    My5ETPa7FIKiTyNS2see97qCZqfu7GXNWEANEz90j9Xl651gCUX4FzvDgltnokz25gMaTM
-    HthS5xNHFJNXlc52D+rP6WxTTQ+lRC0R4uRCl7fXgiak8N0bh0v8/Rl7rSKJ4fouMiwlpn
-    nJKga1YIq/HHrO+fV4sq64s0OGShtvD/caiul5tzBbbmYS0riB9GYr87hsolD9Xu/iZsFD
-    ENC4CX/8WENYRPqsU+lvOkIPiZSJy8kCcDuJiTZZnEWfSVJ3EACCk+ZMQLgZT2mLpssPPP
-    wcO+90nCO7sWvNnt2HVa+2k9+9+elpLVoEb0KssKvnlMdDxBep+c9tJ/lJ298SH+jKhEgn
-    zzmSaU9yBBKvoXkL8ZeGFwatGyi+60o+K6ggmL6Uta1Xcs7oiYOzacZYqSu5dyuqU/CKKa
-    ZFMOj2rUM7ptCQCL5U4nBo01btz668w3XKoXPrtgyVRQZuQDoF4kJHoXdIgQ
-X-ME-Proxy: <xmx:Neu0aujMlE-CgKsQAjLkZQhv-5DA-jX5W0RHZnCtd2_3GY2oUAKxtA>
-    <xmx:Neu0ajSkeElo8-3LtJv_8tRiyG1BNMXodJE_g5WCKFXrqIfykA_gTA>
-    <xmx:Neu0ahGPf-UJE9aeysQm0rOqX7eZeNaFJmNGEgJHrCgK7qc56TlMYA>
-    <xmx:Neu0ark5hAIiIEPyragnWBuxQEfq1742W0hZ8lI1YAmTQ_nJ42dWvA>
-    <xmx:Neu0alomdpkpbgVBTt1cvIahKXclAX63y1oVHpZVyyOUd1DE1g0s7NdZ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790241592; x=
+	1790327992; bh=aPuE9oeQKVQgsj9fnCu7YTCanTP/YuCo9XWzBFP61ek=; b=d
+	G30I9eMYjWPXvm9vWJXvJN8ho9B3xC6ux4WNssFqAu6DG720aez5o1D+JsApzgGK
+	rsCgOpydWS8tRvUIWvMpbrSBOq/XACbbt39HN6O8B2DRgm+lKP5RMEaFxMXWiwb2
+	VcfvR/f1w91lRiVGniEs+Zefx16IdPHT5LoScdFrrZBAyaDe4f8Wa0Y5o4YKsfvg
+	asjIoLAZrUl6BPW2oN1Bo4RcPXL0cIx9bcAuHGYBMMaXEuNrGWWMkSh6g1eQn1Ez
+	DTaBE7S5tcna+7JXkfTWJwzYByLO4A/91P+gGnyhM5L2urbZ6Q0ArHAHIe854Pfi
+	eVhXdnTJL0/7ErH803eIg==
+X-ME-Sender: <xms:OOu0avvRfVV3t03uONNH0ANvZ2OhhSedrZiIR5PaNmf5XmdvB1n4wg>
+    <xme:OOu0anb-PVVTHdg6DHWN2YCOiKaOSAh6zO0roXWFYqTojAL3PEjlb5ANzKhJqfF9r
+    5zVLsqh3m3H-JKyVODaBg6LWcqPQyh58-NMKziScCZ_9utiN53EW-s>
+X-ME-Received: <xmr:OOu0aobH7WLi4Z6eZ7aPnO5pU1MPaovzNxzgrKVJKbdcc6Rl7ZAR53VXfeR0NVISQjoMD-s>
+X-ME-Proxy-Cause: dmFkZTGhs9DR4p+NgqsA/Yq2jv5eAnNnd240U1YBWxUaE6zw6rKb23at9GOF1dx4/ypLmT
+    s0/jqJKKuM/bTUBgSE1DiCh1fGkH3ppO0Lv47iNmtkUeWlQqLOA7BYnugGCZG2VWgP5qCI
+    abvNyGiRupoMqqtlKGAUI6Wab4L0Cw7pkDBYRSTf50MF+gbzFrhELDI/fTkCvXDYBSEmwE
+    4xS6TxGaIx08DvfWzlAWGh2AeiaZiTYHUu0QewotLKjYbq2wfzw9xyDsK3db8JhtdVzs79
+    o2HxFhGXuom5Q7qwlF4lrOBhR9OhNshqfULq/l/Rg/uK9K3ySw3s9x2iO5cXEFJFy7FeNf
+    jdxKgKC4hQbaH3fA3L1QnmJUHlIxAXUTH7iPcMB43XO/l+H4/n1aKSccFIqOnljwbl4qhA
+    gIun1f92iai+gRzRmT7+vKAR3fjoGBpejZJSPs5/XyoULHCVngUv0eIJGrSri2mcS6pQKj
+    Gg+CpIgDDzee+L54GsfhU7OewoS8w0+UoW2LvO/Ad73zolVPPAYsDl2IVWMwp28dGFtEWj
+    IZ/yJCdEKGXs8OCZlf3cC8qjpn86VvTspQNayeLKl1Xn9esWxAS55Jxhh2TQD4jSF7wwj/
+    qjcKOsDdpXME9CE2QIpW1QRt1HADziqOyA01MOGoMdAnJonn5Osv2qTE5aaw
+X-ME-Proxy: <xmx:OOu0ajXZfUzqZtwO-fNCLbhjd2b34JCBOU2w43Ua-FYMezQx2dQEWw>
+    <xmx:OOu0av0OvHb_sL21QchHQa9Dsv3Hbp7Xb8gmOjowOEwJlLzrZCa9HQ>
+    <xmx:OOu0aqaccHyiPzaYkvcMzi9XXWQyNoumY58DbF5Usrp3u7CjFEK-Uw>
+    <xmx:OOu0airgtpSuKktCYCMS9sjhBqGgh_YjrlauBeMC2MSqrA1xjMXO9A>
+    <xmx:OOu0auffnhWiOh5dYjsggS5sdqx5n3YMG3cb-RpD5T6oFTNsxLcW7p8t>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 24 Sep 2026 05:19:49 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 24 Sep 2026 05:19:51 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d51adb54 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id c87ceb1b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 24 Sep 2026 09:19:49 +0000 (UTC)
+	Thu, 24 Sep 2026 09:19:51 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 24 Sep 2026 11:19:24 +0200
-Subject: [PATCH 6/7] repository: adapt `repo_clear()` to fully reset the
- repository
+Date: Thu, 24 Sep 2026 11:19:25 +0200
+Subject: [PATCH 7/7] setup: enforce that passed-in repo does not carry
+ relevant state
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,137 +84,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260924-pks-create-repository-stateless-v1-6-11499557cf31@pks.im>
+Message-Id: <20260924-pks-create-repository-stateless-v1-7-11499557cf31@pks.im>
 References: <20260924-pks-create-repository-stateless-v1-0-11499557cf31@pks.im>
 In-Reply-To: <20260924-pks-create-repository-stateless-v1-0-11499557cf31@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-The function `repo_clear()` can be used to clear a repository's state.
-The way it's written though it's quite easy for it to accidentally leak
-some state because we don't make sure to clear the whole structure.
+In the preceding patches we have refactored `create_repository()` so
+that the passed-in repository is not used anymore to propagate any kind
+of state. This was done so that the parameter doesn't act like an in-out
+parameter, but only as an out parameter that we initialize with the
+state of the newly created repository.
 
-Refactor the function to set the whole repository to all-zeroes to avoid
-any kind of leaking state. While at it, make it a bit more robust when
-called on an already-blank repository.
+We don't enforce though that the repository _cannot_ be used to
+propagate state anymore, which makes it quite easy for state to sneak in
+at a later point again.
+
+Ideally, we'd do that by having the function create a newly allocated
+repository instead of taking a repository as input. But unfortunately,
+that does not work because we end up calling `repo_config_values()` when
+we create the "files" ref database, and that function requires that the
+passed-in repository is `the_repository`.
+
+Instead, call `repo_clear()` at the beginning of the function, which
+gives us a clean slate.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- repository.c | 37 ++++++++++++++++++-------------------
- repository.h |  2 +-
- 2 files changed, 19 insertions(+), 20 deletions(-)
+ setup.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/repository.c b/repository.c
-index b857e1c580..e67ff00550 100644
---- a/repository.c
-+++ b/repository.c
-@@ -374,60 +374,57 @@ void repo_clear(struct repository *repo)
- 	struct hashmap_iter iter;
- 	struct strmap_entry *e;
+diff --git a/setup.c b/setup.c
+index 0d0a4abbe6..fa39219d6a 100644
+--- a/setup.c
++++ b/setup.c
+@@ -2858,6 +2858,9 @@ void create_repository(struct repository *repo,
+ 	struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
+ 	struct strbuf err = STRBUF_INIT;
  
--	FREE_AND_NULL(repo->gitdir);
--	FREE_AND_NULL(repo->commondir);
--	FREE_AND_NULL(repo->prefix);
--	FREE_AND_NULL(repo->graft_file);
--	FREE_AND_NULL(repo->index_file);
--	FREE_AND_NULL(repo->worktree);
--	FREE_AND_NULL(repo->submodule_prefix);
--	FREE_AND_NULL(repo->ref_storage_payload);
-+	free(repo->gitdir);
-+	free(repo->commondir);
-+	free(repo->prefix);
-+	free(repo->graft_file);
-+	free(repo->index_file);
-+	free(repo->worktree);
-+	free(repo->submodule_prefix);
-+	free(repo->ref_storage_payload);
- 
- 	odb_free(repo->objects);
--	repo->objects = NULL;
- 
- 	if (repo->parsed_objects)
- 		parsed_object_pool_clear(repo->parsed_objects);
--	FREE_AND_NULL(repo->parsed_objects);
-+	free(repo->parsed_objects);
- 
- 	repo_settings_clear(repo);
- 	repo_config_values_clear(&repo->config_values_private_);
- 
- 	if (repo->config) {
- 		git_configset_clear(repo->config);
--		FREE_AND_NULL(repo->config);
-+		free(repo->config);
- 	}
- 
--	if (repo->submodule_cache) {
-+	if (repo->submodule_cache)
- 		submodule_cache_free(repo->submodule_cache);
--		repo->submodule_cache = NULL;
--	}
- 
- 	if (repo->index) {
- 		discard_index(repo->index);
--		FREE_AND_NULL(repo->index);
-+		free(repo->index);
- 	}
- 
- 	if (repo->hook_config_cache) {
- 		hook_cache_clear(repo->hook_config_cache);
--		FREE_AND_NULL(repo->hook_config_cache);
-+		free(repo->hook_config_cache);
- 	}
- 	strmap_clear(&repo->event_jobs, 0); /* values are uintptr_t, not heap ptrs */
- 	string_list_clear(&repo->disabled_events, 0);
- 
- 	if (repo->promisor_remote_config) {
- 		promisor_remote_clear(repo->promisor_remote_config);
--		FREE_AND_NULL(repo->promisor_remote_config);
-+		free(repo->promisor_remote_config);
- 	}
- 
- 	if (repo->remote_state) {
- 		remote_state_clear(repo->remote_state);
--		FREE_AND_NULL(repo->remote_state);
-+		free(repo->remote_state);
- 	}
- 
- 	if (repo->refs_private) {
- 		ref_store_release(repo->refs_private);
--		FREE_AND_NULL(repo->refs_private);
-+		free(repo->refs_private);
- 	}
- 
- 	strmap_for_each_entry(&repo->submodule_ref_stores, &iter, e)
-@@ -439,6 +436,8 @@ void repo_clear(struct repository *repo)
- 	strmap_clear(&repo->worktree_ref_stores, 1);
- 
- 	repo_clear_path_cache(&repo->cached_paths);
++	repo_clear(repo);
++	initialize_repository(repo);
 +
-+	memset(repo, 0, sizeof(*repo));
- }
+ 	if (real_git_dir) {
+ 		struct stat st;
  
- int repo_read_index(struct repository *repo)
-diff --git a/repository.h b/repository.h
-index 11f5c2ed10..2a348012e8 100644
---- a/repository.h
-+++ b/repository.h
-@@ -258,6 +258,7 @@ void repo_set_ref_storage_format(struct repository *repo,
- void initialize_repository(struct repository *repo);
- RESULT_MUST_BE_USED
- int repo_init(struct repository *r, const char *gitdir, const char *worktree);
-+void repo_clear(struct repository *repo);
- 
- /*
-  * Initialize the repository 'subrepo' as the submodule at the given path. If
-@@ -273,7 +274,6 @@ int repo_submodule_init(struct repository *subrepo,
- 			struct repository *superproject,
- 			const char *path,
- 			const struct object_id *treeish_name);
--void repo_clear(struct repository *repo);
- 
- /*
-  * Populates the repository's index from its index_file, an index struct will
 
 -- 
 2.56.0.rc2.329.gd58861e689.dirty
