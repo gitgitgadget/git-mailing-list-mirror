@@ -1,44 +1,44 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FF74AD7FE
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 18:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE83497B87
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 18:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790275351; cv=none; b=u+SuGTT/A64sP3Jmp57MHdQbV6tRIPCmXprLYvIAjDU9DGpXFOllgainmaeIOw2xdAGaZEfUUkcIdPavaZadFtXtDZ49/NRsV0j43S/k7Xq23Es8JRMri/9uSrR8RVaRSeuPYuzXOwTrw7qjAXLftQAHV2Kms08ebnVPb5D61Xs=
+	t=1790275426; cv=none; b=OGlNJDUjeBn+ybNCvd3UGMC1ENWaDO72iFAot2B8efKvX/2Ai9xG4jUejtEsOURvQA3Fq8KAgY/4wv7P+6A/R2q0h0NwaHZ2GIcfPfuPrh3Yq/pbvzH+Kb8J6dmiU/5FvIofmnULe/155F0xw9s3b3sHWFx/62vLJBdMkypJQHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790275351; c=relaxed/simple;
-	bh=/C5n+0Yg7M5vBtUVQszNPBiGbxogPm0y0TsQBTzO1IE=;
+	s=arc-20240116; t=1790275426; c=relaxed/simple;
+	bh=tu0nOUA3qRIKpedrxj9UjLHN0xjnJ3YVh5zrhkz/L8E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ilXzG41mBN9Qzc6vo4kMO6JOXdNlPa8APlWqa/IS8RBiqTe/RWkiUzqFHcIJOPjC/+usiCAmbbX0OGhRe2lBPEXyznDsI+8krSaGa2xTDcffvgGgP/VSZKuKQyANOWURBtZNEaF4c1rk3izHDWaF9laNkF5mPpNmf5BGb6R7300=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NaBpqIqV; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=dqXr0bCG+tE//+nwcZVJRk0lS5Z7Qh8S+YKTKlfpQbDDMdbUdXbPdeLrLzB0/cyRzliIDO6MgOwhskLwWoIC1XOuw/2Vpog5r6xAsPb61r2s3GoSis+edooUCDcuoCgvH/k9PYlR1C2BhHz7bZ1aAwr4WpircZxxKmJwrTJNlcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Nz0I6eQM; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NaBpqIqV"
-Received: (qmail 48619 invoked by uid 106); 24 Sep 2026 18:42:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/C5n+0Yg7M5vBtUVQszNPBiGbxogPm0y0TsQBTzO1IE=; b=NaBpqIqVSWSCPzE2xij9BBzcg+MJ299VsngDbrQrP6XkUV5sIo9upCHhxrI+5T0soCS2i6bLTlL4gMS32hpIc1bM7nv0ecdlk5ZYwuQpgEbAtigCuH/ZFyj7xYpNUcDfOjp6wheoa/7ddZc7daUZENm1QC2V3EM37p+W3oUz2WTVJxnsis0SD/x2D8uIUhpqNNZ/192rSlm+2/5gevURt4wVSF8lfAP6f2FXRox9rVRKU7/HK0MmHPj8IUbTfgj48h31lkg8D4OK9e0ghXcKlzzM6p1cm214j71pFc3zW10v3FS55irhjAv3rfVGA6bPKsF9e4C8+axHbzfLnrI5Cw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Nz0I6eQM"
+Received: (qmail 48638 invoked by uid 106); 24 Sep 2026 18:43:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=tu0nOUA3qRIKpedrxj9UjLHN0xjnJ3YVh5zrhkz/L8E=; b=Nz0I6eQMJ7SmoKpKJVG5Q4WZHfXJPCOHbjDWhyp3lRloFYnNYlGo7BPIYo/T53PfnlnayrD7fMKc7nFZKHbhRCgHENZED3Ltl7gikeniz0sd18FfRGAOQQiCBaEvTP5e3kAO8pfVQubG6ZpP1hCo3fN/8jFZ+8X7aU0Y5Wmbs7frXuf5PHj1JhomyA3mKfZgNNcKmVeSHrKF1PhH0UrXazdfvghqgKr1Gub+caCmIP/dTzrDmmpmqKlsvZmQurFQtn32FuxFCQ9YeDSD+EqTTiLcmJNtmvG/mNVHX6Yq/XL7NOqo8fOPT5rniLD1fsZupI0kKXnblptRI1hKZQckhA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 24 Sep 2026 18:42:21 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 24 Sep 2026 18:43:32 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 195192 invoked by uid 111); 24 Sep 2026 18:42:21 -0000
+Received: (qmail 195217 invoked by uid 111); 24 Sep 2026 18:43:32 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Sep 2026 14:42:21 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Sep 2026 14:43:32 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 24 Sep 2026 14:42:20 -0400
+Date: Thu, 24 Sep 2026 14:43:31 -0400
 From: Jeff King <peff@peff.net>
-To: Julia Evans <julia@jvns.ca>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
-Message-ID: <20260924184220.GA747880@coredump.intra.peff.net>
-References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
- <xmqq4ifhdon2.fsf@gitster.g>
- <665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
- <20260923214038.GA49087@coredump.intra.peff.net>
- <63520573-c8a7-41bd-aaeb-bfc2b5e43856@app.fastmail.com>
- <xmqqse2y371a.fsf@gitster.g>
- <31577b6f-79b6-456f-9ecd-d1a3df6209e2@app.fastmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Pushkar Singh <pushkarkumarsingh1970@gmail.com>,
+	git@vger.kernel.org, r.norouzi@proton.me
+Subject: Re: [PATCH v2] reflog: fix default expiry periods
+Message-ID: <20260924184331.GB747880@coredump.intra.peff.net>
+References: <20260922165433.591551-2-pushkarkumarsingh1970@gmail.com>
+ <20260923102140.25475-2-pushkarkumarsingh1970@gmail.com>
+ <xmqqpky3ahvo.fsf@gitster.g>
+ <arUvtE67n5_MFM4C@pks.im>
+ <20260924154659.GA736248@coredump.intra.peff.net>
+ <xmqqecei35n2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,51 +47,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <31577b6f-79b6-456f-9ecd-d1a3df6209e2@app.fastmail.com>
+In-Reply-To: <xmqqecei35n2.fsf@gitster.g>
 
-On Thu, Sep 24, 2026 at 01:22:49PM -0400, Julia Evans wrote:
+On Thu, Sep 24, 2026 at 10:45:21AM -0700, Junio C Hamano wrote:
 
-> I meant something different, let me try again (with Peff's corrections as well):
+> Jeff King <peff@peff.net> writes:
 > 
->     The reason for using the more verbose <<EXAMPLES,EXAMPLES>>
->     (instead of <<EXAMPLES>>) is that in some cases, <<EXAMPLES>> is
->     rendered as `the section called "EXAMPLES"` or `[EXAMPLES]`.
->     <<EXAMPLES,EXAMPLES>> is rendered as just `EXAMPLES`, which gives us
->     more control over the output.
+> > On Thu, Sep 24, 2026 at 04:12:04PM +0200, Patrick Steinhardt wrote:
+> >
+> >> > >  #define REFLOG_EXPIRE_OPTIONS_INIT(now) { \
+> >> > > -	.default_expire_total = now - 30 * 24 * 3600, \
+> >> > > -	.default_expire_unreachable = now - 90 * 24 * 3600, \
+> >> > > +	.default_expire_total = now - 90 * 24 * 3600, \
+> >> > > +	.default_expire_unreachable = now - 30 * 24 * 3600, \
+> >> > >  }
+> >> > 
+> >> > and the fix is very straight-forward.
+> >> 
+> >> Is this something that we want to fast-track for Git 2.56?
+> >
+> > The breakage was in v2.50.0, so it is not a new regression. OTOH it
+> > seems quite obvious and low-risk. I'd be OK either way.
 > 
-> ("in some cases" is code for "I still don't fully understand
-> exactly when each one happens and why")
+> Yeah, I didn't know the breakage was that old.  Perhaps not many
+> people are paying attention to reflog expiration?
 
-I think it's just "depending on the implementation and output backends".
-The complete table I saw is:
-
-              |  HTML   | manpage
-  ----------------------------------------------
-  asciidoc    |  [FOO]  | the section called "FOO"
-  asciidoctor |  FOO    | the section called "FOO"
-
-I'm not sure if the manpage expansion is asciidoc itself, though, or
-docbook. I guess that should be easy to test...
-
-Ah, yeah, it's docbook. Using <<PRUNING>>, the xml generated by asciidoc
-looks like this:
-
-  and the <xref linkend="PRUNING"/> section of
-
-and then the roff output from docbook becomes:
-
-  and the
-  the section called \(lqPRUNING\(rq
-  section of
-
-So if we wanted to override that, we'd do it at the docbook layer. If
-you use <<PRUNING,PRUNING>> instead, then the xml looks like:
-
-  and the <link linkend="PRUNING">PRUNING</link> section of
-
-which takes the decision away from docbook and uses the text we provide.
-
-I don't think your commit message needs to go into that detail, but I
-thought it worth documenting in case we revisit this later.
+Quite probably. The default expiration dates are somewhat arbitrary, and
+the reflogs themselves are somewhat ephemeral. Probably people would
+notice most on stashes, but those are also somewhat ephemeral.
 
 -Peff
