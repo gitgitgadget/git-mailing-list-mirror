@@ -1,102 +1,102 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22754488239
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 14:44:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53033C3F4B
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 14:58:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790261075; cv=none; b=EhM09A+SKUtPItijhLQbIYTImTasIKeB+v7hAGK9oA0gOmCS5VwuXRAFY0aFbIomxvfGx7JiMq47obgUu2NhE/Rd6akVtgKB3E1v6zFpCcoGJgTfaeCeykPHD+PTjLnKd50uhCB0cLGPigDuSDFl5MACK3WWGufLjGndB5hpZ+s=
+	t=1790261896; cv=none; b=CHfjyfLf5OK6ONPQ9/FZLNLCRJ9E0IqdX4MpMXa9HUmzZTMjKVF6cxdCtYwH6Ef/oIikCY0Q1o66L6iQEGoxmPCTY/BbjxZ8I/W8fi6nHZfIK3oUrEQ+irwv1PUsBgBLXD4qeRll0G2tEGncFLAQDfhwn6FJQHHOtKLd71xJJQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790261075; c=relaxed/simple;
-	bh=pAX530mibkfJUv00QU5cIykrkUf9frE0H8bpOChRapQ=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=GiKfU69pWky2o7f3X4FqYBhmj8hux2FkKMkRVoXgvBYNLZOp0cgjMm903z2O0x1JcA6hiraj46BbkiDQ3bbxaya602EbQQE60cHOUOAW4XQQjVtrVy+t1iGOWM2GPQ9Nr6/ePc1miqE5lg66VqBnceEjsuCMwYUF53JYDk4iFLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CMydP7m3; arc=none smtp.client-ip=74.125.227.140
+	s=arc-20240116; t=1790261896; c=relaxed/simple;
+	bh=/NK1n99OfoT93QOebhOWEkf7hDyIfSAgNOguDVo4NHs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=lbRqjalhM8FLcB8EVm6phuLnOXdnDLjjMgyEZb+VgjBNFsrOjycdkzMOlWDhaUw8+mt2DrBoEYyqXuqgyP0J1wXJXLvQxLaeAhLcgDj+bQFXFaDO+Y0ZNnWMWbozJbfFtYuThuucDR3YkBZ3nA+q3X7svmCg/VpRtsW6WTKnAz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VRVjWePO; arc=none smtp.client-ip=74.125.227.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CMydP7m3"
-Received: by mail-pj2-f12.google.com with SMTP id d9443c01a7336-2d90ba1d807so20402325ad.3
-        for <git@vger.kernel.org>; Thu, 24 Sep 2026 07:44:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VRVjWePO"
+Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396cccbba92so1704710a91.0
+        for <git@vger.kernel.org>; Thu, 24 Sep 2026 07:58:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790261073; x=1790865873; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=MnFFTFLjCXazsGbgiBiyKT4KuUlMvFXkRn2jiU9XiXo=;
-        b=CMydP7m3+eDD4CFreW8Xxym2lp0SuMMsSnbyfsqAAy4wjV6NMPb/M7zHirGKokk8uc
-         MOUphlWTVgdl4M0l4jcpgkBEdEMJ6Io0wsdPqy83GDbzaPk62vfRti8LR395+40vQzhm
-         obGZo0tv7uhnRemvoMKeL6IJ394TCXPMm3DIR5y0QoF/bzUYitYiYBR4EIWnBRWkc5oJ
-         mBeGQJscPfJwQJJNCpeIetmpccjyseALDMz89BngZZ0wvZLPlxkpL4TadK4Yma9avavH
-         yoHBNXVxCDz5R54lkQKt1F9HRwJS8Jt166PMSz+/rO8/Fc4BsNM2FXZC4ZieOxHPMq9Z
-         GMyQ==
+        d=gmail.com; s=20251104; t=1790261889; x=1790866689; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:cc:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=G0UFSfifzrHn+fi99DITaNHbnFfz92XSexVXD0dwzmA=;
+        b=VRVjWePOJhIpzYIpxQqYLI9n1uicawATVXBmU216c8RzN5Z/hOiM+mlIjiJdL7uuID
+         DXVA2kMf4RfLv2dE71sEmBkfiPThvQigjwZYBlgL/A+NBM7RyrXIVK7+DkNZzWoOv/3p
+         MNXot4a67xh3dK+Err9/nQZXRNYSsU2VbRzdbJNEZkFBtfhtDxLMuIUHu0g5DkZS/Wvs
+         iyEGtTl7gaH6E/9oonrw446XilKJ5VewRcYZK7FfCCsqUFw4riq0fqrbND8/6MY766EJ
+         tpMHL9zgBJaG42wuoSFaLmYq4puVeJESiypchfIG6vLjCggycqZJ7igboy70cfeiDIcR
+         N3qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790261073; x=1790865873;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=MnFFTFLjCXazsGbgiBiyKT4KuUlMvFXkRn2jiU9XiXo=;
-        b=EbBX9wz2MGn6BpBspFEZPI4PpHJrSSLLuPvbHHY3GwV5t2DPkDHs1dR60/EmLxvCp5
-         IEwsH16HyMPTfPnJ9+7vqXanf/7ZOSHTFAMTToqnJTa5WmFM/yj50UpCR4tjTpidzrgI
-         Q954aW0tLjmxD2EBMZsuNNF2sp04LRpkR2j/UMzryjKp/fRFAwuoJ6wDYltF5O63+g9q
-         f+pWjAmvKoyW6Hx9PTdGI9N2caHPGoh0CNmFTAVLVM1lRzCVo+mkd9k+KxHpTbw2UNen
-         sBPtm3NHNHcpPfnrOEF3Mr+rPa5OA4VPrGA+deQggdLNCMLXK5yphBU1e5Pk0dWIpv3c
-         xXsA==
-X-Gm-Message-State: AFuF++lN6NRlKAPowScHu4al/ChUHBnueHpAiZEYhzWJy043Na/dFRYj
-	f6+s2VwXWbULDWWAKc9BARJf9fAB24XlTp+JFUI+RZgO3Ky1OLFXPm5heC1U89wl
-X-Gm-Gg: AYBFou2Z3TRMxKLsUTzTBSeAk1rI6CNvhdgNkdpPZVLJxXqNLJK67jtQTAGogP2VXu2
-	zwwvtIqp1RaxDUpaUWaDOaKvJOKQczoMhNKwfrhyLn3HMHoFPexzD2Yk0RZKW1db9MHfVwRQkd6
-	c4gO8OQ5o16lhSU0jtoBkbdSJ8KIduQGkmNHFor/ddui62Lxrid4y2gEOXJHU6TZ7nTgcs+Vj9u
-	E6e1PYtzfWGQyT98LE6554PHvIww0BvM0UHREs/+D9K97hD3yDJb4ijGNZgw06Kp5S6BZoZualv
-	i87Pp2pqfYQoXIUrU1TtQOpfMK7lpKXWoXPP9nhCt7Tk0/TMea+Gd1dZVo1Jrvcn8F6wpkk8+IB
-	G7a3aXqRimaTpGlC9F41Xm0NolNf3Ef0lunpMTZthqKYL6o3lQzq4CUN/MRKEscH/FihyDsYA/R
-	6D94VcD/GK5YkWIXUIiVdZ7HkgDm6B3KHy92w0v1zTJEWrMEv9nbLU4F1qhgvqqWduxfn9CzQn6
-	T8=
-X-Received: by 2002:a17:903:b4b:b0:2dd:7979:246 with SMTP id d9443c01a7336-2df7da82154mr24711755ad.16.1790261073275;
-        Thu, 24 Sep 2026 07:44:33 -0700 (PDT)
-Received: from [127.0.0.1] ([52.159.247.145])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2df6a5db05dsm28182055ad.49.2026.09.24.07.44.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Sep 2026 07:44:32 -0700 (PDT)
-Message-Id: <4505fdc9a6dec37296952107c90947e43f39bae4.1790261062.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 24 Sep 2026 14:44:22 +0000
-Subject: [PATCH 7/7] [doc] ignore conflict markers in gitmergeconflicts.adoc
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20260707; t=1790261889; x=1790866689;
+        h=content-transfer-encoding:content-type:in-reply-to:cc:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=G0UFSfifzrHn+fi99DITaNHbnFfz92XSexVXD0dwzmA=;
+        b=NgV+70kTstMuvy2JPLUGKA4BOnDfivKGK25Zj2xJRVN1L4ZZfOl258CBODe/QeBS4D
+         boywKs0iiqZLSGhpMJXR+rHkWM1ydQd1f70Harj4qrLCqKMBjFm0WuaS84lqAbrDYJhQ
+         7ZiMyJh2+fEWvbJAxaM6NBgXf5q/ck0IBEQt2q3FRraaqpio+kfp/3/Rf/VU7LiEdIpT
+         oGXHC5PlVbccNMsEoxeTCSUkt3HmzbEzEOL/NeFb1t6OKM6/N2XnxDuSxHDcUD8I+jSW
+         A6xcr6Vm6AJ2eFN0WEA5ZgZ1EbVNenZ7j+TkAew5KuNnpV3TJq+vWSljW6clXjlBg5An
+         nV3Q==
+X-Gm-Message-State: AFuF++nO9koyc12NHlAUYQg2ui6tZKbY9m4vTZ4ifP2cDTuKdweXK8hD
+	d5JGrl1aYpWkJJhbpx4QLdWyn1PGsj0HNxlAq2vTe3xYhPi4K6TDPiov
+X-Gm-Gg: AYBFou2eji4S4hA7T5bjLVPwtIrZ05u5nn+2Tu8n+h9y/gKGMWSZeBZyBtQumujmZ//
+	3/mh/L8dxWm9L4bhaSFRs5Re8QOCAGX/C44QvF7Qg3hyYaOC2EZcCBrTWveRL+gcbqOPiJdypDb
+	AgUyl89Bs9eTiv5BJC8WhIiT5KMBBlB+6rGIFF+80odRHRg5700z+56lMHFPh61YY8Y0CZ/UqeO
+	/Q/WOn9P+ZlM31/JOsnitO0yG/F+6kGs849tYDKTDu82vosD+3Vy2Wg7dpIUoEqRX9s6EsUKLgQ
+	ZLAM/4/VCwhQM+OQd8OLOtp0oIJIb7gcAUqOnHKLZcL0qpnheJUiQcYEtRKnPBpVrQjIZVw8PR5
+	8Qpa6mEO6++bP5HjGMw26/Hka74CUDKrT1L6GMHQgTmJuEEg0W0MYDspvpbxOkC0qcHvCpyimO3
+	l6nHJATC9WNPx4khQE9PEicjCdbNsflmEbCVJtkdMf+y+Eaphex/rp95wTg15L6Y+e+SnwgA/8A
+	amB54PfGznJTA==
+X-Received: by 2002:a17:90b:48c1:b0:3a0:7d5b:8d55 with SMTP id 98e67ed59e1d1-3a098571114mr2536298a91.8.1790261888683;
+        Thu, 24 Sep 2026 07:58:08 -0700 (PDT)
+Received: from [192.168.25.219] ([115.108.41.154])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a0813318c1sm4119419a91.4.2026.09.24.07.58.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Sep 2026 07:58:08 -0700 (PDT)
+Message-ID: <067c83e4-7ff9-4e2f-9ca9-2592288bcc93@gmail.com>
+Date: Thu, 24 Sep 2026 20:28:05 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 0/3] t40*: modernize
+To: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+References: <20260922202152.842793-1-markchucarroll@fastmail.com>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: git@vger.kernel.org
+In-Reply-To: <20260922202152.842793-1-markchucarroll@fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Julia Evans <julia@jvns.ca>
+On 9/23/26 01:51, Mark C. Chu-Carroll wrote:
+> Changes in v6:
+> - Fix rebase error to separate commits correctly.
+> 
+> - Link to v5: https://lore.kernel.org/git/20260922143119.3313620-1-markchucarroll@fastmail.com/T/#t
+>
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
- .gitattributes | 1 +
- 1 file changed, 1 insertion(+)
+Just a tip, you might want to use the --in-reply-to to mention the 
+message ID of your previous iteration's cover letter. This ensures your 
+iterations end up in the same thread. With this, you do not need to 
+manually include links to the previous iteration.
 
-diff --git a/.gitattributes b/.gitattributes
-index 26490ad60a..0a0fc950b1 100644
---- a/.gitattributes
-+++ b/.gitattributes
-@@ -14,6 +14,7 @@ CODE_OF_CONDUCT.md -whitespace
- /t/oid-info/* text eol=lf
- /Documentation/git-merge.adoc conflict-marker-size=32
- /Documentation/git-merge-file.adoc conflict-marker-size=32
-+/Documentation/gitmergeconflicts.adoc conflict-marker-size=32
- /Documentation/gitk.adoc conflict-marker-size=32
- /Documentation/user-manual.adoc conflict-marker-size=32
- /t/t????-*.sh conflict-marker-size=32
+Example of such a thread: 
+https://lore.kernel.org/git/xmqqecfez7ie.fsf@gitster.g/T/#t
+
+See also, "Sending v2" section of MyFirstContribution
+
+https://git-scm.com/docs/MyFirstContribution#v2-git-send-email
+
 -- 
-gitgitgadget
+Sivaraam
+
