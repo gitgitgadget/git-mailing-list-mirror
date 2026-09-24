@@ -1,79 +1,79 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEF53803DF
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 14:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8C7382397
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 14:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790258970; cv=none; b=rrOTukeKg15vaNxOGcKx9HP+Gb6x3GM2fGoEzW7l7UnQIiG8h2McsH3w3SpQw3jHWNVLLrKe5LMieTCq2/2zNoreXlsZEVqnbrJLZMQbSzRSryJABOBfEHwMFMtXtIChzMVwPEorzCXxJqIQxyS6/6tsBJs3UVQNHTSnvzvDKFI=
+	t=1790258972; cv=none; b=FOYFz4BRuSrYjFazQL0L89YCfsFuixWU3IYFICtA1fDSceLsmAOiqhQw/1Fz+/7WlJV7rymoo4miz5ftZa+ZnBaaDtIX5enV3d+du37TiK0PFuPekVqB+9euBC3Z13VEDmrE35+KZN2jOiK4LWDV5uOQLft+fOBK4R1jZYWDOxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790258970; c=relaxed/simple;
-	bh=zMDeSbi3CP7sM0xJHH2J49letC6CvjbeOeD+3v7Glfc=;
+	s=arc-20240116; t=1790258972; c=relaxed/simple;
+	bh=2qal+usjc3IlDC1AWPDdSb6JRzEiNAtG71JUjCawAtM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fKRSiu4V1sbrgSfeM9wRgF8qWJuQB+V2A+NmLteeWoo8soV7StzFmBoTQIzuDEuT9ZsNmCNgldXgfiisQTGNEp8Q+fwddTc4W9RB0ed6M5kkEy7DMg3YMfc/LYVJ24xuW3qugB87cRpLXwiG7F1VIZSDesi/uOocYCUY2Xlfs9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=y4ofgNL+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z7snQMwt; arc=none smtp.client-ip=202.12.124.149
+	 In-Reply-To:To:Cc; b=VcnG6RpK4beW+2Nvgib25T6rvSQ4VAzgdbwekqwmtIpI7Kgt+BeqRy1Vs0NkpovFegerSlkk01GBer/Z0kJlcVkSshAqDvm8Ifq8b56lnZzb2kLf6KkpMaY838Aho/h0wyjUeJJr4OYp71dcl1BaiMuA3/USIb7g2Ke5nkCYR58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ma2xKaea; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ryvsRmuW; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="y4ofgNL+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z7snQMwt"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 61AA61D000DB;
-	Thu, 24 Sep 2026 10:09:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ma2xKaea";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ryvsRmuW"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6F4751D000C0;
+	Thu, 24 Sep 2026 10:09:30 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 24 Sep 2026 10:09:28 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 24 Sep 2026 10:09:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790258968;
-	 x=1790345368; bh=hdnX0xh2yIrk7XGTh8VjzbWA00KR2iH9pWIhovASHAY=; b=
-	y4ofgNL+0ewlzMTXbiiIpQaNnmcPdTcSLvKBffP1s1y2Vu4sJ2WikILWf9vSJWzu
-	vpBLbBbpF4EWBbMjjDRA5yRs1cAwcd8GP7FdI3puBxF+B+O9m1tKtLt/s0W0QP5K
-	ClxbBoi1g9kUTYr2keKrs+NjRWpsJ40myANLtFzOFWp7HBEgTICoWLQqIT1VEO+d
-	Jv8oDu9aahIjGMJSg4SA0nej3qPIeHumlx2YIJB+a93uzlIT6K4OKZQRKEW+9EUf
-	4LNlePaejIylj0q/0crUCn7LdtVefZL9aX3YOqiK3msPQj/rJ1ooajlnCtIAQINY
-	SFtJZ/ojHnyCX5/3jc16xQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790258970;
+	 x=1790345370; bh=N36LViipDpFWqBYfTTaUGO4TmyxtVJGFs8fHknGhTso=; b=
+	Ma2xKaeaKAM93Wi5td6rTsjLQ0vmaBba9+iqvLWudc9tD0MxCcDvoZ+TXAl0Kf1I
+	x2AcGGpW3hWEygzcSe5Dx+OUU1Ku4/V4CLA7Ho9LU/w/uM8fhWSn2LDL2SbJP3g+
+	vmmZWMbuZgKvxGFEiI24+4sjjv8txcH8/+WaYBTCZpWzvGMrfbRvXJ74FeyH/iOM
+	KsGa0crFRDK/+DK213jnRWui+9YR4Yg2lBiLoMTnmLL6MH06lKFuY0Z2wU0txYUB
+	kmcIDpkjV4/VeCIDdMBoh4UWra//xHjbjitm9DvQ6JdW8SwYYG2DOyQwjvqtW29K
+	Gz+UwxAL9HZvwFIi/zWJuQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790258968; x=
-	1790345368; bh=hdnX0xh2yIrk7XGTh8VjzbWA00KR2iH9pWIhovASHAY=; b=Z
-	7snQMwt3TDmAeiMH/wrl/w7ZuwGdr903izMyAUN/4rbAF9Ftoj19nlc1G3+eh2LC
-	AttzBurhNsfj1qve2uXAXDU4If1CXpCCCahPtzD6pGsYL+U8D7VXhxWEahZUg1jH
-	smD9V3sq7iP1XR8QZxb9ATrNWvU77Z9wG1ttqsntLv6jm0NProAjo9vUiKWM4fnJ
-	mIhAv1i1nMtIpVUbvuTUmOlQqHTIgo/Rx+iqTGXd3yDOni1LCeo+6vu9Fdn5zmAP
-	RYhtvfJPM097HyvSygAfl9PCnbUiJ2yjHnwGdAvHWjL3zxc2DfIM+RUwTpvAHSpd
-	2Ovf9lU9bdm2LPYLfDI2Q==
-X-ME-Sender: <xms:GC-1ahZcA0K-eozjpuFWMlirNkzm_1qvpv6nBzeABgtEFu5KNcggXA>
-    <xme:GC-1auaYBfF1ibAfk3DhTmZNImUwB52DtApnX4YgcvGk12U24voTMX-5EwbTrVEJp
-    wxGMuzm7lW06JW3ybsC7iyVHgdeY_s6pEEf3c5RYof8WVS8FJuIYo8>
-X-ME-Received: <xmr:GC-1ahm0EUPEQD0zkyV1Q5B20CL4i3PO3xGmL02rCjoVu5_me94hdaFH9-yMloJGSZ_0ltU>
-X-ME-Proxy-Cause: dmFkZTFtQE+DlqvF0lQbqprxNhHky+kluS0f31ID+eJQAOtW/ApPXZMwtEnm8b0s8Tz4zr
-    2HcXZm4c1v0YwalfW7U7SogxguwgM7rzDq/2LSkXoKX2t8t4lcVOPYevkW4fNZe7D93O65
-    rhKzP8wO2wEax1l3oSxntOmmMY0qqKhziMosLsZe0iuZ5mzyq7HLrvtcTYuPrgnDEnO7fM
-    q6thSnkJiuXPsY/PFM+frscD7TgJFW3Dr7VrZgIJEWqGqHnNlRxsfIZW+8Eh4SmLar8TSt
-    iCT+WmRuLtirP6ElGCe7B6h/GmMAPk7nc9DjRQbvsANHU21xAlnVYxzY3JetyAgfQsFNAd
-    /8Ngb9ky7VkHa1+n+mOAXE080zyy5cDLNkQa+b3xS5qJhHbBqMgT6pbEId/LrjSPg8DS8z
-    Glt1cQvrM9iBMiD1dZKjcF/YHBeYhUpN/fd0ARenflY8idH2dbBcTSNKxzf+9vLqFDIXHh
-    tZ6iIE8i4xTiCMmHoua4MtQrXIVPtJKdnK38hSJWhGx2m5IpIlGspSyu2S1AmHipx2lQoG
-    z0oFYM47MEoLQtqxcg1o+LVWX/e2gat0telqxDKX1eyPbBLrFt5AxeHicbkEYN2Z9i0YrK
-    8Xa7FVVg83MR1z7oyqwFc4aFhAC0tytZETxyW6BwFkyouoKxpZBuuAZ3eOHg
-X-ME-Proxy: <xmx:GC-1aqxtPlM-EG0yGtGeFO_ileD8pKEt0aLt5KylUQv1RqF7_VSo9Q>
-    <xmx:GC-1avO3c7R3g6_CuKJIhfq1vn1dGqwIf-B68-3NVk-mHMuM2kx12A>
-    <xmx:GC-1auSPJbh5JY71yAmAZ8EOezRlvU_taWiys76OGBA0EEdqOq4J4Q>
-    <xmx:GC-1atbOCWHgdIShIG4BsnxbCp6d61pKvPeG7AoGQ4v72vNIJLy5MQ>
-    <xmx:GC-1ar_1uyPq1XFif3y5S7_IN6d1aOPew7olNjqSmLinB1QdxWZFmFuz>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790258970; x=
+	1790345370; bh=N36LViipDpFWqBYfTTaUGO4TmyxtVJGFs8fHknGhTso=; b=r
+	yvsRmuWIhBK3sH7BoYC8mN7s6J9yCVlsOeHb8Qn1C1ps/BDd7GCrLBirfuReMAOP
+	Pc4eYMhTSp+kjSPf2gxxn1n6jNhVIeiY73apXjo5TozsLWyDFTB6MFwkx/YtVsye
+	T3ysjUVpZJqlG1T40Ls21yPWgoJ+FHeKRNg6u3XQvoz4WVWl+OD6rH25y9A9PPjR
+	sIky1qGpf/ksBdIf3Jx+yATLTxYSkfqyeUxwmWamXEnjP+boL/O3Ms7buHgBABoC
+	FD4MvKolYG9nZcNInCYMpBEwILirF2IsXqXC49x2ChwYb9htVSU9bO9XTezQjTGH
+	OLavc9AgvCMZIQffNQ1ew==
+X-ME-Sender: <xms:Gi-1ar38blX4mVMFvl_O_sR2N13L-h58h9ZTqqZ9BcG9_Gctvy2UgQ>
+    <xme:Gi-1agEKI9Sxdaxhbon5Ztf0_NXGl16pcr6P7TRy8u0o9hthi5lMB6akl01JD5cVt
+    WfRJOms-7jllqE5LzgmrRH-Ls3K7d_PRHwtWsy0vsxX3c0xqrhFMwc>
+X-ME-Received: <xmr:Gi-1apgeHRkRdZytqpnxbU26mMgeQTMeqq2hHfblUfXeVDOZf_VbOVjcHnoXrB_9gYNXXzM>
+X-ME-Proxy-Cause: dmFkZTFLLH3pIGCnf1LseMaAoK7hqeaCcUz9yfaw6tj9ZUbVD/HAvnAFFfYhIvtOcpR+u3
+    rtyfIj7XtaSJcKZOihrnuXD0ZE9p4RLrlU2t6CWK8Mvz/Fu2a0a4mCRwfO8B6+nm0sYB/Y
+    +j5h8HLRixCZyPNfFRyOREzvm+GDEkGrfLr+N918WaMsHU5WyTYH4Z/8h3gXl6/vM4lM6I
+    RwYKmkuKFMZcNvD1EIquP1k14oM4Dsr+KMPm+trpigbr9P++ukJN4r1RaNbgh1vTqK2utr
+    b0zXK2+GgeNfaBPYI+1+imTc2vQdt4x34pI3prcTQUK7ECBsY5CTTuYjAuPMciA404nJKq
+    hU+0pI6sW7z46eTQmjc9eCu0gv4IeREeuDvnjC58q7QxhYKz5+zkN3P8694J34x7sxN24P
+    Z2J+yBRt52MidGkCT/XxoEzmjRg6O4x8EJe21z7phMHdkji14sbCTHR38QxtZAagvo5xvG
+    Nl62vzkNeHF5KyaRxk2Jm8/7E5aLl0vpK3z5ISim/CLdW7M/FPdx9AbRTby8OpZ1EinFMX
+    tPEHdnLrXVIjnFWMCkObY0FodwFGzsy5kx7LML882xRf32W96fVUkYcuC7MWDZTCx5V043
+    hyGMvuN47d3K1Msut91q62ZXeo0a+ugbb6ckmTwD5XMZhgBYfSS6B+6z3vyw
+X-ME-Proxy: <xmx:Gi-1ar_f3AYKcJX-4WMmaRZRtLmt4hLjE9pmCZVCAEnxAOF536erMg>
+    <xmx:Gi-1agpc6yzHUlXZEyAURb3y41KyGEXGMHeLgrE9W4PvOuUHepCLRA>
+    <xmx:Gi-1aq8Xt7dd570U4TfC4xQi_lzvfZ25d7bPPxAbGrlAEdOPs5u4sw>
+    <xmx:Gi-1akUCJSvYe8ErtGq46yj2TG28n6jI6fjzv_zZ1mWpQe7Hyhq-ig>
+    <xmx:Gi-1alZxIkDlL9F0p7G6w7tv2TwbiK6fzBW1w2Mnf9jYbVW1i-7BZKZw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 10:09:27 -0400 (EDT)
+ 24 Sep 2026 10:09:29 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7c57023d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 24 Sep 2026 14:09:27 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 276bbde4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 24 Sep 2026 14:09:29 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 24 Sep 2026 16:09:13 +0200
-Subject: [PATCH 4/7] meson: use precompiled headers for unit tests
+Date: Thu, 24 Sep 2026 16:09:14 +0200
+Subject: [PATCH 5/7] meson: fix outdated completion helpers
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,80 +81,97 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260924-pks-meson-improvements-v1-4-90b7f79f1c4e@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260924-pks-meson-improvements-v1-5-90b7f79f1c4e@pks.im>
 References: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
 In-Reply-To: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.15.2
 
-Same as in the preceding commit, our unit tests don't use precompiled
-headers yet. In this case though it's a tiny bit more complicated to
-make use of them, as we do not want to include "git-compat-util.h" for
-"clar.c", as that code file is a third-party implementation that is
-independent of the Git codebase.
+When using Meson 1.3.0 or newer, we use `fs.copyfile()` to put our
+completion helpers into the expected location so that our test suite can
+find these scripts. Naturally, we thus also add these scripts to our
+test dependencies so that we know to build them before executing tests.
+But there's an issue here: we include the "contrib/completion" subdir
+after we have already wired up our tests, so any dependencies we add
+here are not being honored correctly. This has the consequence that we
+don't know to copy around these completion helpers when we execute
+tests, and one has to manually `meson compile` beforehand.
 
-But there's an easy workaround: instead of linking that file into the
-executable directly, we can easily adapt it to be built into a static
-library first. Like that we can trivially have separate build flags for
-that one file.
+The interesting part here is that the code path we use with older
+versions of Meson don't suffer from the same problem as they use
+`configure_file()`, and that function will always run whenever the
+source file changes. It's conceptually correct to use `fs.copyfile()`
+instead, but given that it's mostly creating problems for us it does not
+really seem sensible to continue using it.
 
-Do so and adapt the remaining sources to use precompiled headers. This
-results in a small but noticeable build speedup:
+Adapt the build instructions to unconditionally use `configure_file()`
+to fix this issue.
 
-  Benchmark 1: meson compile (version = HEAD~)
-    Time (mean ± σ):      5.343 s ±  0.019 s    [User: 75.478 s, System: 20.382 s]
-    Range (min … max):    5.308 s …  5.376 s    10 runs
-
-  Benchmark 2: meson compile (version = HEAD)
-    Time (mean ± σ):      5.077 s ±  0.017 s    [User: 70.557 s, System: 19.999 s]
-    Range (min … max):    5.047 s …  5.103 s    10 runs
-
-  Summary
-    meson compile (version = HEAD) ran
-      1.05 ± 0.01 times faster than meson compile (version = HEAD~)
+A better fix would arguably be to promote our shell completion helpers
+out of "contrib/" -- they are an important part of Git nowadays, and
+these helpers get installed on lots of platforms. If so, we could also
+fix the order of subdir includes so that test dependencies are properly
+honored. But that feels like a bigger change, so that's left for a
+future patch series.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/meson.build | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ contrib/completion/meson.build | 38 +++++++++++++++-----------------------
+ 1 file changed, 15 insertions(+), 23 deletions(-)
 
-diff --git a/t/meson.build b/t/meson.build
-index 3ca7b27104..9f1ee9ad59 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -30,7 +30,6 @@ clar_test_suites = [
+diff --git a/contrib/completion/meson.build b/contrib/completion/meson.build
+index 576125b083..4483c5be3e 100644
+--- a/contrib/completion/meson.build
++++ b/contrib/completion/meson.build
+@@ -4,31 +4,23 @@ foreach script : [
+   'git-completion.zsh',
+   'git-prompt.sh'
  ]
+-  if meson.version().version_compare('>=1.3.0')
+-    test_dependencies += fs.copyfile(script)
+-  else
+-    configure_file(
+-      input: script,
+-      output: script,
+-      copy: true,
+-    )
+-  endif
++  # Note that we intentionally don't use `fs.copyfile()` here because we'd have
++  # to add it to our test dependencies in that case, but that creates a
++  # chicken-and-egg situation between including "t/" or "contrib/" first.
++  configure_file(
++    input: script,
++    output: script,
++    copy: true,
++  )
+ endforeach
  
- clar_sources = [
--  'unit-tests/clar/clar.c',
-   'unit-tests/unit-test.c',
-   'unit-tests/lib-oid.c',
-   'unit-tests/lib-reftable.c'
-@@ -49,7 +48,7 @@ clar_decls_h = custom_target(
- )
- clar_sources += clar_decls_h
- 
--clar_sources += custom_target(
-+clar_suite_h = custom_target(
-   input: clar_decls_h,
-   output: 'clar.suite',
-   command : [
-@@ -66,6 +65,13 @@ clar_unit_tests = executable('unit-tests',
-   c_args: [
-     '-DGIT_CLAR_DECLS_H="' + clar_decls_h.full_path() + '"',
-   ],
-+  c_pch: '../tools/precompiled.h',
-+  link_with: static_library('clar',
-+    sources: [
-+      'unit-tests/clar/clar.c',
-+      clar_suite_h,
-+    ],
-+  ),
-   dependencies: [libgit_commonmain],
- )
- test('unit-tests', clar_unit_tests, kwargs: test_kwargs)
+ # We have to discern between the test dependency and the installed file. Our
+ # tests assume the completion scripts to have the same name as the in-tree
+ # files, but the installed filenames need to match the executable's basename.
+-if meson.version().version_compare('>=1.3.0')
+-  fs.copyfile('git-completion.bash', 'git',
+-    install: true,
+-    install_dir: get_option('datadir') / 'bash-completion/completions',
+-  )
+-else
+-  configure_file(
+-    input: 'git-completion.bash',
+-    output: 'git',
+-    copy: true,
+-    install: true,
+-    install_dir: get_option('datadir') / 'bash-completion/completions',
+-  )
+-endif
++configure_file(
++  input: 'git-completion.bash',
++  output: 'git',
++  copy: true,
++  install: true,
++  install_dir: get_option('datadir') / 'bash-completion/completions',
++)
 
 -- 
 2.56.0.rc2.329.gd58861e689.dirty
