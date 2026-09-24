@@ -1,112 +1,193 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy2-f35.google.com (mail-dy2-f35.google.com [74.125.229.35])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A1B52120D
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 17:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71CC3C1412
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 17:59:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.35
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790271925; cv=none; b=CnRs0uhsPjfZZbEtDcUXB1HIqboXLBhkTnYQ7DrbuAwc4EAWk4cn4TDEhHgwxAo9HQqc6bmBm61Acex4LB/Njngfxp99f8T0fav+oP5gHU+0ormK3l7ngoGa560MgLIs+SLETPwquoeoP2T1bv2zKbXiifGQJ6LyrsjHiW60xBM=
+	t=1790272777; cv=none; b=JUjU2OoQho3nySKek1fiYibLs5ZQAZVbw6DgeBMdUHiGZKGRPsiEkfYLX6Y6z6uHs8CA16VvC4h3WWa2WtL07LQo7CGqIZArhd8WMgGobnCHV/1Y/3mymKUvjV9x9Mc++ysXtHxoPVdidGpRNHGZoKBziJO41jF6VMajDRFR4Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790271925; c=relaxed/simple;
-	bh=I+hcPZhnZULvnXayQ9LyY06IT0B6Ndt6V4ObMBNKlkc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TIkyhc7Ox4aTa+T2gepH+jLq1RlMJaT+KygP0U+fIO5tvZCbXbRRlZ+r/X6Y/KKaYvEV5lmaonzZdgbeGCpeOAvPaZ2audOBi7gve5uJ4/sasIejSmBaHjaR3dIPgPaBCl6hBOKRFIdwmUK3HSc+6VRfUnLz4Ppk76pTMGU014U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Hje3KJS8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F1BAibYS; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790272777; c=relaxed/simple;
+	bh=beM6V/qYRfeQnLgjrZoRYUfiEQmaxE3J1q2s4zPxDf4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sxhbKsR41X+8+sYHUDAS4avVbVJu/fMDzYWBBpJ1PJocKgxYc4w/KovZaGjJfn0uL61jGPmaIBjDSMm4e5zDZT+W2wvv6vttQ+ih/s1Xq9TwRA5vrbbAUWtF9Mv+QRnyttGS16Wrxdb7C2N0Qd0XK3yJ8FV7vQNk55ZgzDVPZ5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IsT6wQBm; arc=none smtp.client-ip=74.125.229.35
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Hje3KJS8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F1BAibYS"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EF9D81400127;
-	Thu, 24 Sep 2026 13:45:22 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 24 Sep 2026 13:45:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790271922; x=1790358322; bh=jELrKO+9cP
-	eUFVR9b3WvoN8MDNmZiydh8Bn3ZMV5MVo=; b=Hje3KJS8UpJKrmqgHSLVJsPWMo
-	LiSMFjCBi71M+uGQXDil/4GGRdW5oxcvLlGIBd8GyyZtftzdOaidkk5gC/lEA4KI
-	yiR1h02lpYVFFb0U3dPgU9F2cjnPTEzfLbly16ckrvgCGzGDlSFbeBZJCUEbC+Ga
-	yyRV4eu5piUWx8ERsvKzhR1BTZaRp5wESGISpSz5voeESca+4Z5Fy7+Qpoj2ZY/L
-	UcYQ5HuEWYX6N5cXoqwYteCj610yOHOiW6J5fZXr0XIus4+cCwHFz2JDHqOQ3ecr
-	SoqDG0IaNUjad058sVeXdmmjgCLTEdhsuoa7wDgUG8yFI95yTuJTM/59Sf9w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790271922; x=1790358322; bh=jELrKO+9cPeUFVR9b3WvoN8MDNmZiydh8Bn
-	3ZMV5MVo=; b=F1BAibYSgD2HhWOCk2/Pet9Qvqe4Cj3RsNorf2KXxX9+tLiGgUF
-	dZm/QjSD9yWZR6WXpvdGhKNhkPpXBSXuU8ZEZAWnI8pYfzFWUi6FUf0rAnCZlbdW
-	DA4JK6siDCiA9eyExsVZ80iFonGlMmn7WRepoS6tnw94dPEgsJnuYgivA+6esfM5
-	krFlmNeRvQ1rNcupgndu8Z5CRXQuj6qQD8gYsZshs9EQziGRFQ0Hf8EOK7WLGmLU
-	0hQvd4lUPr7zYuRWvbhRQqHtQ6XayH3Lukwr/Ne07GqBSxdtOvhS/kZrnG+ZFgdk
-	N2jux9pTzXaN9dm3slDUvfJbYfecQHYbPgg==
-X-ME-Sender: <xms:smG1ajm4tPtQqr-bc2P5qh1yWK5iOyyUC9wBRMdnOCRlpzyKsYIrDw>
-    <xme:smG1avQAxRQo7khUK8m0B63D4xs9mLdZGVkIyDZZ84zAv9ARjJ_4y5x9V_s-6SZvP
-    2cSqM5DqUUTRtFzh4EMkUWgU2Qxjbb6Vravrz_XYzbpC_eKGy0Miw>
-X-ME-Received: <xmr:smG1aqEPmjOUecUc_gw7Lb2YHj3ee1t4uujN8pEtg-87df6kNc3SAooF2LWF21R_t7jzlvCmu6PQfhOEACqR8eOkzkfBHyZPm0vS>
-X-ME-Proxy-Cause: dmFkZTGqzIiYjBAz4AUggdCrWQERdsVrxjbQnsOn8YdJE5h7B7omooiXpR/53ivPWIVfLb
-    /SgydiVmfLCsEL4UIZFRNpG+eNK2neK05bikaRQ6kOGu2plQIE+Z/Y8EXSR1hi4MyJlH5g
-    qN0fFNuhn+joKwuL4C1nEm9sCprvnqZ8zfgGcGGfLvUjQTFyN5bJCjQG8FEoGRRGB9zQVD
-    tW0xKz1xxkJDWc5oSRhmaMnsP1ChZXOCVdhbW6aiZLeOIPvqnHJ++QML3sDLD1nHXcV7zt
-    iMF6BC+5sSXiKhzO8btZbG8Pe3bQbuuhcf+/OLGYK8wvSsGyjNvPBnFAflEMBPOrW30Dq0
-    RmCVFmz/4cVnWKvKV5GB7waRobVoyxaqpBHS4iuDFqIpk+rcsOFCM9uJ1NP3n1R0w9nzxS
-    lWjR/1pE7R7BCPscmLCxWQPzBed2rwI5B4b5KMMOkIyQtxM5+IILuB9tKWoNQrk8eD0SUB
-    YCwdn/J1X5hJ85jsXz9D5QZlq2/pEY4jYZ+yphETJhD2oh8Nax/abTX2iYcasNQs1ueOvk
-    h2knLRJzgPFsswXQ1SPm9vgM2tts9Q59k8F4UvoSawPsI/h+xMNgQtKk2a+PdIlCNVtxD9
-    xoXhN8J7AvaSAI9izCwx9w/HzSShyD7XYvVPFfVlhYUCEO5kNSSD22aWLIiA
-X-ME-Proxy: <xmx:smG1asEchc-kqDu8uLzGIdqxI2E5kOMM4PopWEQCWg4FkSgCuV6KFQ>
-    <xmx:smG1agTDnmI6MdYDlCjoTGQIXCG_Xsr4Yc4j6beq7QjpJ7eMAR61-Q>
-    <xmx:smG1alIXh-5iIPbSDssiCrp4-nsVKU3lcHXsXJAUt35ZRmlowu4UGA>
-    <xmx:smG1ajae3oimpv8q7w0-5TfB795Gm7nS6iBiAHLWZrrb9bfhYxS52Q>
-    <xmx:smG1apQAJfLkJaTDGsOL9mxRbxJ6t_mODKB1XT3kXQ3YoajL6OOFSnHr>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 13:45:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  Pushkar Singh
- <pushkarkumarsingh1970@gmail.com>,  git@vger.kernel.org,
-  r.norouzi@proton.me
-Subject: Re: [PATCH v2] reflog: fix default expiry periods
-In-Reply-To: <20260924154659.GA736248@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 24 Sep 2026 11:46:59 -0400")
-References: <20260922165433.591551-2-pushkarkumarsingh1970@gmail.com>
-	<20260923102140.25475-2-pushkarkumarsingh1970@gmail.com>
-	<xmqqpky3ahvo.fsf@gitster.g> <arUvtE67n5_MFM4C@pks.im>
-	<20260924154659.GA736248@coredump.intra.peff.net>
-Date: Thu, 24 Sep 2026 10:45:21 -0700
-Message-ID: <xmqqecei35n2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IsT6wQBm"
+Received: by mail-dy2-f35.google.com with SMTP id 5a478bee46e88-3381a6a05c9so9886eec.1
+        for <git@vger.kernel.org>; Thu, 24 Sep 2026 10:59:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790272775; x=1790877575; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=DlFkUxbgY/VNtniIaFeFsJ+fuf9vIAb6/kQVBsYjnHA=;
+        b=IsT6wQBmvhizlHUG9YdBDXKDY4YuWrMVfiS4gHcwsYL8NyyLBwu3LVQdCe96ZzO54D
+         CfcVAXlese0GYzdTf3s4sm8Csrb9LV8+DdP7WUvE5R9b8PI3fm+kAf1XbS5Rasf2mMd1
+         m95JOgFo5YMyNV5JUihyo7W36DvncL1Tm+2ovHK9tM3pAWuWmTlL1dy6XH4dsxjRzOPC
+         PPQdgMkifJ41lk2ezYSID2vGvLKJwts6if6o5j2sRrGDyPucksfKUFTr5WNe04iXh9UR
+         dTcNNApqJkZMD90ALmXgCJxnThgMwf4EKNbSbifs+q1Gj8tQCDULLIPCdm5+Y9xBBJVR
+         xA8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790272775; x=1790877575;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=DlFkUxbgY/VNtniIaFeFsJ+fuf9vIAb6/kQVBsYjnHA=;
+        b=qMdmtHEcTOjPlWbaK52VWyWCGrfrDqyWIa8WDDVHs1SfZ607PIM1uR19wxct+l5KYJ
+         dRlHx7f9iZBFzNByE//fLfRD1fG2IhcewLqWaXr327EsgUwDjWImykOGy5jg1QuJDxIw
+         EfNwGFdsq4oqqSftqNCr8z0UyuLLhV0DKke+w9vSaIP3yA21NIp8Lr2b5m7Iue9MCsBx
+         YUH+4ti1TlOO97Kd0gGBF9yhHdw15ohgDHb2KQXeEyieXYWnQYqvRVu5QZSEUrCCUkXJ
+         5QyTXb8KvyqLgjK09t3wrjycuv9OGRyP1yWbjvpSyekXJB5Gylpt0joBV5pCQXPTXMW3
+         T14Q==
+X-Gm-Message-State: AFuF++kCQ4Hy+GeD4JiwNKh7f/BsnoUh4thabcTX9dTwhtxWKQonUrwa
+	F59wfsoWML8QEXU55CXCD4b4jEKF/ZFep0g3aALfgwhYioawKhwddEXW
+X-Gm-Gg: AYBFou3TTiyrxIjkNGceVGhGj9IFJs/XIcYxsyV3K+co+a4jFnabb+70tVNofCU3Wob
+	l23rRKdpW4O1XKf6NpZdp4q7+Nuiwve60sJmGR77POzTqeMNo38YvkI0utdbaytPuw2ghGpo0PN
+	hoTWhGZRFbtNvDpOQa2UtewLDf4nrjJXmjg+EpN3sICTrvcgf2blY28Y+HCbYHs4V8DM1XXETh7
+	/hK73hCnib1rSjD5GRKUZ4YhWtVKBem6d3lSOs7/7r0716zB5wj1XmkMxggStxp7HCmi8TWWwq1
+	gYUvKUgPa/uFyUdmxfC9sDhgUjJmKh2EorjsqNjKQ7wp0SOAoNQ8qmrBbizXOEYDb1DWi6M6DDh
+	OEkE+ygG08rKsjY3OIDU7TxNa9XG9fBDNqKMVcjZPY34dSE3HeHlSB6g/ZgJ4WlFfZPxKCWC4Oq
+	DAfaOY/Ljz05KLgogSoMw0ePGRt99VK0yFz5Nuw7jzLWGdOLrF6prtETy6FQYfrEuKxZzwClJpY
+	Mg4L4+6Fslsc8Y42s4=
+X-Received: by 2002:a05:693c:41db:10b0:33b:dd20:f79c with SMTP id 5a478bee46e88-33ffeb46c67mr2707689eec.12.1790272774131;
+        Thu, 24 Sep 2026 10:59:34 -0700 (PDT)
+Received: from HP-V15.xu.edu.in ([125.22.10.135])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-341460f5166sm232890eec.29.2026.09.24.10.59.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Sep 2026 10:59:33 -0700 (PDT)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: pushkarkumarsingh1970@gmail.com
+Cc: git@vger.kernel.org,
+	peff@peff.net,
+	ps@pks.im,
+	r.norouzi@proton.me
+Subject: [PATCH v3] reflog: fix default expiry periods
+Date: Thu, 24 Sep 2026 17:58:44 +0000
+Message-ID: <20260924175843.8383-2-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.56.0.rc1.321.g6cd5cfc5f3
+In-Reply-To: <20260923102140.25475-2-pushkarkumarsingh1970@gmail.com>
+References: <20260923102140.25475-2-pushkarkumarsingh1970@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+The default reflog expiry periods were swapped when they were moved to
+REFLOG_EXPIRE_OPTIONS_INIT() by 85658275702b (builtin/reflog: stop storing
+default reflog expiry dates globally).
 
-> On Thu, Sep 24, 2026 at 04:12:04PM +0200, Patrick Steinhardt wrote:
->
->> > >  #define REFLOG_EXPIRE_OPTIONS_INIT(now) { \
->> > > -	.default_expire_total = now - 30 * 24 * 3600, \
->> > > -	.default_expire_unreachable = now - 90 * 24 * 3600, \
->> > > +	.default_expire_total = now - 90 * 24 * 3600, \
->> > > +	.default_expire_unreachable = now - 30 * 24 * 3600, \
->> > >  }
->> > 
->> > and the fix is very straight-forward.
->> 
->> Is this something that we want to fast-track for Git 2.56?
->
-> The breakage was in v2.50.0, so it is not a new regression. OTOH it
-> seems quite obvious and low-risk. I'd be OK either way.
+This caused reachable entries to expire after 30 days instead of 90 days,
+and unreachable entries after 90 days instead of 30 days.
 
-Yeah, I didn't know the breakage was that old.  Perhaps not many
-people are paying attention to reflog expiration?
+Reported-by: r.norouzi <r.norouzi@proton.me>
+Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+---
+Changes in v3:
+- Split the regression test into four independent cases, covering
+  reachable and unreachable entries before and after their expiry periods.
+
+ reflog.h          |  4 +--
+ t/t1410-reflog.sh | 66 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 68 insertions(+), 2 deletions(-)
+
+diff --git a/reflog.h b/reflog.h
+index b996712c00..3bdd1ca8a5 100644
+--- a/reflog.h
++++ b/reflog.h
+@@ -23,8 +23,8 @@ struct reflog_expire_options {
+ 	int recno;
+ };
+ #define REFLOG_EXPIRE_OPTIONS_INIT(now) { \
+-	.default_expire_total = now - 30 * 24 * 3600, \
+-	.default_expire_unreachable = now - 90 * 24 * 3600, \
++	.default_expire_total = now - 90 * 24 * 3600, \
++	.default_expire_unreachable = now - 30 * 24 * 3600, \
+ }
+ 
+ /*
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 8f78cf4b01..93b5b49e1d 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -153,6 +153,72 @@ test_expect_success 'reflog expire should not barf on an annotated tag' '
+ 	test_grep ! "error: [Oo]bject .* not a commit" err
+ '
+ 
++test_expect_success 'reflog expire keeps reachable entries for 90 days' '
++	test_when_finished "rm -rf reachable-keep" &&
++	git init reachable-keep &&
++	(
++		cd reachable-keep &&
++		timestamp=$(test-tool date timestamp "60.days.ago") &&
++		timestamp=${timestamp#* -> } &&
++		test_commit --no-tag --date "$timestamp +0000" old &&
++		git reflog expire --all &&
++		test_stdout_line_count = 1 git reflog refs/heads/main
++	)
++'
++
++test_expect_success 'reflog expire removes reachable entries after 90 days' '
++	test_when_finished "rm -rf reachable-expire" &&
++	git init reachable-expire &&
++	(
++		cd reachable-expire &&
++		timestamp=$(test-tool date timestamp "100.days.ago") &&
++		timestamp=${timestamp#* -> } &&
++		test_commit --no-tag --date "$timestamp +0000" old &&
++		git reflog expire --all &&
++		test_stdout_line_count = 0 git reflog refs/heads/main
++	)
++'
++
++test_expect_success 'reflog expire keeps unreachable entries for 30 days' '
++	test_when_finished "rm -rf unreachable-keep" &&
++	git init unreachable-keep &&
++	(
++		cd unreachable-keep &&
++		test_commit --no-tag base &&
++		base=$(git rev-parse HEAD) &&
++		timestamp=$(test-tool date timestamp "20.days.ago") &&
++		timestamp=${timestamp#* -> } &&
++		test_commit --no-tag --date "$timestamp +0000" old &&
++		old=$(git rev-parse HEAD) &&
++		git update-ref refs/heads/main "$base" &&
++		git rev-list --all --objects >reachable &&
++		test_grep ! "$old" reachable &&
++		git reflog expire --all &&
++		git reflog --format='%H' refs/heads/main >actual &&
++		test_grep "$old" actual
++	)
++'
++
++test_expect_success 'reflog expire removes unreachable entries after 30 days' '
++	test_when_finished "rm -rf unreachable-expire" &&
++	git init unreachable-expire &&
++	(
++		cd unreachable-expire &&
++		test_commit --no-tag base &&
++		base=$(git rev-parse HEAD) &&
++		timestamp=$(test-tool date timestamp "40.days.ago") &&
++		timestamp=${timestamp#* -> } &&
++		test_commit --no-tag --date "$timestamp +0000" old &&
++		old=$(git rev-parse HEAD) &&
++		git update-ref refs/heads/main "$base" &&
++		git rev-list --all --objects >reachable &&
++		test_grep ! "$old" reachable &&
++		git reflog expire --all &&
++		git reflog --format='%H' refs/heads/main >actual &&
++		test_grep ! "$old" actual
++	)
++'
++
+ test_expect_success 'corrupt and check' '
+ 
+ 	corrupt $F &&
+-- 
+2.53.0
 
