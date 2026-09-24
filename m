@@ -1,129 +1,161 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lr2-f12.google.com (mail-lr2-f12.google.com [74.125.230.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67893423783
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 20:36:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790282212; cv=none; b=FRh/PXKcHMUU3tXk64IMNRwDQ8s/KvKEpzzUi938eXsH6cj4Ie7cZQHp4LQkeGfiTh0tZSkXgYr8UDWnonyrf4ksaUzG9zr4XTtWDINO+Cq7a1DefIqhnihJoaifoeoVWHOy8erngZOu7xWGCcdRNhYJa+dxWSgGH8FFKGlMv08=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790282212; c=relaxed/simple;
-	bh=WfWFTYQ55z4NDn6UvzAbx9sFySSOFrVj2DHovpiS7AE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=e0+KPDJH9nK/1IW8PaAV290kqTTkVyBzh1XCjaxMV4AgCr80xBgnGbwjSANzDrMFpfCGcR0V6vNI8fQDmNkZC0L0RMNuYeALuZX95gDnrTKQNLXdcTGNnJ75szdQgI/MVZkxUzoGm3g2z14a+/wAK95e6095+ioklpwHsSlv6GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mpMM/7Vf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q4HPbfHx; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD15E4A3847
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 20:41:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.76
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790282506; cv=pass; b=o9YgZpPqobn22uq28lkgl9K5WEeVLHaBh+XlGX2Dgrd7pUR6uN2znyhkC+4boyoRfSMP6hf9Ztr9DuD3g5s/KbifDy0uNhIsrEuo45YOh5H+7MWfLhPLMssfjd0f9K1+Vf4uKKFXGhLSWAgt+nzn49nC5iPeXt2fe+zEqMmtHa8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790282506; c=relaxed/simple;
+	bh=nGQiELChfBjrxRbhlG3Clmc03SK1Bzc3hxk8caQB/yk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BNzdFwBQ+GfkGpQANbe8fNFNtnhnJeYh0mB/thn7mpjQl4f9uI9hoYCnn1GfbxA1pW0byk0qDRK4j6f15QbS+O0cB2qSgpoW4ru5X1yZp0BbGpX2pv+VObqarbhSZzVNFqddDkkyliKx5UGlkJBcEQvWq0bT/1upv/QDdGWJOA0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DpaTHAhe; arc=pass smtp.client-ip=74.125.230.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mpMM/7Vf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q4HPbfHx"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 83046EC00B5;
-	Thu, 24 Sep 2026 16:36:49 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 24 Sep 2026 16:36:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790282209; x=1790368609; bh=itiR3C8x5D
-	4kxuk3fxq5cK4p71HcTIlhfrCSfO9yqbs=; b=mpMM/7Vf8SJWrwaaT1QBEw07n0
-	fSo7Fxi2qztpbOmkVewciRow17yU+UEJTCjntPK9M53LzqKVSTmNGpfgoBXXTUUw
-	6DojDpyl3UR/KPq3C3z6027glA3oqmXKgzQzDMfG8sLzJ23dsDnNL6zKKY1/vJSL
-	85Uq5xYdhQ2S5Hc0WrNKRqBbfluIWNaKSC/8yuaxrShIcRQASj4xVXcEtHRcB0Zh
-	AoIyVRW65Vo0Y39MYSjDbCRwfAjh6wZIeeCWREbB26RzTltTZmeFZ/NJddBP0vLV
-	i0I3tAbAompbvT7kvOsuzItMGX/5OuL9nS7SdkXUOfWxjrXvAKJKLAY3IYkQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790282209; x=1790368609; bh=itiR3C8x5D4kxuk3fxq5cK4p71HcTIlhfrC
-	SfO9yqbs=; b=q4HPbfHxmEnfOwv3+MOk9/PbYfw7Xbmx8eN8t4Yd2H+/67ic/ir
-	Jt9ZqU8awHL7TtbhPEf0SuyTdlEIHEdt/lwxAH61fsHSsl97LCzt5aTeIoBS4EuB
-	ev+h+7OFtNf448UG5qQjUlbjaxLVKFUqKqFMamaQSFfec6W4qTaNhxoa+B/xxdji
-	4iljlCaaDNysXD4ppG8A5C0fK0JujL56RTDKdsyjP5brgpjiR/LR9+75PgZdaKRA
-	vi15FzyCatu/0/9LeABJ7IvaVbk1PG/+ch67Fjtok6VGbKH1mYaqQnJzykfFqR4D
-	qF9U8tYocW58y6fCgo5NkMYMOpqYWYI5TDA==
-X-ME-Sender: <xms:4Ym1ahoX9R9SL1NA_xuaoj1qw0_8B38HQCXW9q8eanjHQiAbf1nqzA>
-    <xme:4Ym1aqgYQcFz3X4CUProra3O35yR6l7iEBZdsPEO3azXAyj9CJZWPnK-88FjDtYmu
-    cc4Fpy665DBMjY28KMzdeVD3yL61cdaZ7tl9vVhVH0rD2xn-p1QJBY>
-X-ME-Received: <xmr:4Ym1amgC0dLaEiP2PNx0dRLUVsHdo1y-GoMnW2ljt0g5avROWVVSjzGPtIpVRrXbiDtyunbU69IRzKl4cn1Uo_z-vXLHgYwAhlr4>
-X-ME-Proxy-Cause: dmFkZTE872kc0hnmi67QlA0OEDWchfwzXYeU1hImKJVxC82DKw1YXWCbBhkT4IQMSBL1WD
-    kseO+PpaG5zQhejtFXh73O3nxtYG2c+yCZDftmECehkEC6Xfku1ZsZDbR1sm6b/K0ZUzDm
-    g9nLGygOBQ9avPmvUjEeLpWKGh6J+UCgcXrrothZkQwo9U8h8+Wf+Hi6NZfiQmivi6DYNs
-    gAygkMBuyZSkT7cDbUwmkCsNeRjNdharqiFAj15ZbfDAX9pejlPEhC9D3ydB7WJfETHwk6
-    JsCAL5rC2Xq0SV3h3q7fiQ6BrgJxKSDKIg5ggHpMpfT/dIak95b93gA/px4vrK65pxhPhx
-    E83rdqMSquysebd1gmnZCLcK0HvezWE1qfmd+M2mAEHOhCVqUWg5RLta9jPe6WGXOfCKn0
-    1QIzBqXy8NcgaQtxoDs/BRI7S9NsmjK0K9xX2G8VGTv73KFy8u8vZRi85B+cJb//6CcWpJ
-    G4gh5GR/yq0HCU7YzcsL0JcGbCXj+k6kZy8yzeaYM6k9QkiK/1jOWsMvxH483XNCpK6H9F
-    iCzWDFTMuMyri6v7DVX9N//C5om0UUi3E3YaYFWArOis5hp53jW5Y//nCaRJApBmyDq7vb
-    HNmmta9I9Wzo6UoZli0a3dN4Pjpwkh7i9+XtOJvm9m6WAO5Xl0/BVcffXw7g
-X-ME-Proxy: <xmx:4Ym1aoigqHhrBZ0VBCr7WbwqXkl_AZeomNJGLRwbbbDO_EOhYeOQLg>
-    <xmx:4Ym1auJGfALSAiXhHFrzByYWSAQX782QJDC7h3bBFyxftM56FmkgRA>
-    <xmx:4Ym1avGT7Q7aF2sLDDkZ20hDChYV8LRZXXoNeomgDcxZIzr5v84fRQ>
-    <xmx:4Ym1aqTLd4Rm5DjAPmSc_6jrbdLlctiR9awAK6icIKA8gcqaZTu5-w>
-    <xmx:4Ym1arz8GVsskyGZJqbY7zpfk0RNisPLJNHuDvr-FgOA_HksgftBN8kv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 16:36:49 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH 1/7] [doc] Add new gitmergeconflicts man page
-In-Reply-To: <ad4853dc36cdb883c9a8dc6bda747a5ea318e7a8.1790261062.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Thu, 24 Sep 2026 14:44:16
-	+0000")
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
-	<ad4853dc36cdb883c9a8dc6bda747a5ea318e7a8.1790261062.git.gitgitgadget@gmail.com>
-Date: Thu, 24 Sep 2026 13:36:47 -0700
-Message-ID: <xmqqa4p61j4w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DpaTHAhe"
+Received: by mail-lr2-f12.google.com with SMTP id 38308e7fff4ca-3a2ff176d5eso1220191fa.0
+        for <git@vger.kernel.org>; Thu, 24 Sep 2026 13:41:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790282503; cv=none;
+        d=google.com; s=arc-20260327;
+        b=VAUlYMsbNEwttly3EbJJEeXrigrYV01kT6VqLGqbydMQZuE8ycJBbuEmNHBYcwxYau
+         p5viMGBKoKm0ufMCN+QIalpAH+/KOkZ2BRRNvn0fe2hpwGpvFGz/LjvwPhz70HuFWO9U
+         wiU6rKZac2ddrTXYtPu5DzuL4/s6ZDt80w/dSnGmCrXwoxLa/YtSE0LhtpQblgCFtxQB
+         +b+nTpZb8+A6hI5SeDZTMaaeg0KB/uw/cODhdCJ+MPsC2yaugb5rb1OO4cmYZdVwXqDI
+         4s0caKvJKlcaHJmXk9vxLSd8zwFs+tY/nPSZ1dX59NmCKcz6VAxD1kPryw/jVpTt5HA3
+         9pHg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=XSsb4UKluBoCwaXiKfh2vD1lBL1hEi0b1Ecf9NmzjNU=;
+        fh=4ryOG4wBbIqKixWzeKd5dc717SQGdNJth+KYU2DAukY=;
+        b=Cj2WrFt370hi+hl8uRcn1YcIX22b79Yl9RBimyjFobCKKah8Tmp+jHWfiJOUxICC2S
+         DqY2KzdYH05YROlu31VNFVzcs5nJctzEAHwPV07V3NBFTlVIhiLdx1UNh+04xJpUTH8F
+         CP9A/e0uLRP5t2V0sv5Oq9adweWGgo+Y1Z0ujDx9TACzD4wUE4F6GkNqAcUcd11BFZh8
+         9Q3RO/0x2GaWDvtnAsKryrmOdxWTQoEyHBbiRIjAa8kUhNxLk2Pa0jOruQzEsd7x/ZwI
+         UEz2vo+OoIutlt05p5/e85pzOhPB5k7Y+0YcdouWkof4HRoQ4RQJgMFNS1lA1hhQrlr8
+         SBnA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790282503; x=1790887303; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=XSsb4UKluBoCwaXiKfh2vD1lBL1hEi0b1Ecf9NmzjNU=;
+        b=DpaTHAheOe4aY4VWN4BgwUnLj3/bLsZS73dkfZRQ1BFCd1qh1Fe/YAY1wGAsbe2mL8
+         Ur4V9zVQ0PD2/LVyGfBPK9JqmNYLBc+pyaAyWgjN+yTzus76ZNYQcbCVUJwI44I8RAIW
+         wuTibSpefMU2UZn3EbPUh2ssAOIasL5gz9iqZvdglOdkCvxZGY0ct5mPzLrg9ZvuK1jH
+         TqtdbPwXc4mqW9NscQQ3WITQ7tDddb42fznLtnlGxQ8qYT7VMtQYzE+2ATI9V1JOAfHC
+         DhSlYFxDl4dhXZuIJFW1CCkckhvZ8CjnU48Qnk/uPYNs5QjZ9dEr7yxpI0KhtKToePom
+         8WLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790282503; x=1790887303;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=XSsb4UKluBoCwaXiKfh2vD1lBL1hEi0b1Ecf9NmzjNU=;
+        b=KiH1q3crc8zU7G+20a/D9zhqUHSUiKmhvXty1V0yUNK/9/QFK9J6DnNW27ZpIHhVxc
+         W4syzvLe4wh52y+ToimMC8TreLfLhndhP5upWaekzd37b04061C2qfu0pGWPoz5Fgw+V
+         e2mau56qCTu5qPZ06J4OuyM6iB5sSPpFCKFVktIIqOBNJoOdEteDwwpClFQHH7uEDVDx
+         +1BhLkYtpD6a9VfzFDz9ZT1/xNbs46TxwEp/d6Oz2/+ucCJdfBRhaJuMEtrU+p9iHIve
+         +Z5Vpn7xQeueLMBzUXSgyaEB3tUNrz8oINWDcPq+/QckvyM6nSZUjmCBfUBCE0AXaNKH
+         ydtA==
+X-Gm-Message-State: AFuF++mbMfKmZvzKTkn7Ix9UtkcP3OgAdouqS+GudZgkJ+pe5GY5sP52
+	1/oHAuQPvKAuvPT0sw/XMBymwAHBbOF7hy7Twx/33+b35amcsZj+8MgEyBXgQdSCxXF7TPfhpwM
+	Fske2THx1S/eHBeiaBn6WXSDC8tMnC4M=
+X-Gm-Gg: AYBFou0QSAYpV0qlzoRD35Kb2kvfa0Ui0i7EO1vU0c/Bvku29dgNsZGhk3lBTZiUbWp
+	xSCDvD4lFMi5K92Yl2d8z+AqLs+NXVgl7FAWQrl0wg9XiKWrSXQSgFTHlbv9NCp6vH38l145drr
+	8ilSmUGyPbsnKyrMRN1rE71XpUi0E1vNZPi3TXCXI3ZkAAlQr8afBjy8BUKNJVRR5QXe+LDXpi5
+	4gMqPswDceRrw4jz55vtwgwWlKicbhsdKKNM9FVpCShFKCg0jmG0phZS3xlXPNtbBtRIZ7alKCg
+	8lYM0+c3qwABoDGUNBJZvCvErWWUQbQaZ1YIaIkbvcLzZ+0Xc0ApFHzDjSudWmLrJZqOiXgKTlm
+	7HC3u1l333FAKXEInX2Lwkwub94n5FgmJjXRZbbHkr3noQ5s8HPnQv76SFyka+Pbifv4=
+X-Received: by 2002:a2e:a994:0:b0:3a5:f982:9c78 with SMTP id
+ 38308e7fff4ca-3a63bf5f624mr9795581fa.2.1790282502453; Thu, 24 Sep 2026
+ 13:41:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260923-ci-large-test-resources-v1-0-c28416d59475@gmail.com>
+ <20260923-ci-large-test-resources-v1-1-c28416d59475@gmail.com> <arS_l1hPIr7I2Gn-@pks.im>
+In-Reply-To: <arS_l1hPIr7I2Gn-@pks.im>
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Thu, 24 Sep 2026 16:41:05 -0400
+X-Gm-Features: AclHuK8K-Hd9T2_2pZW_Zfxzq-_z5CfQz8S7UdHdHT6M3jaBDXH6jtuAIpf7noI
+Message-ID: <CAJ-ks9kJWc0e7aEX4vAL-RoJ5kVvfjDABqV86_hZf2Fn-085GA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] t4205: compare huge output without diff
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
->  Documentation/Makefile               |   1 +
->  Documentation/gitmergeconflicts.adoc | 294 +++++++++++++++++++++++++++
->  Documentation/meson.build            |   1 +
->  3 files changed, 296 insertions(+)
->  create mode 100644 Documentation/gitmergeconflicts.adoc
+On Thu, Sep 24, 2026 at 2:13=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index f8dea4b395..bc49641dda 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -58,6 +58,7 @@ MAN7_TXT += gitdiffcore.adoc
->  MAN7_TXT += giteveryday.adoc
->  MAN7_TXT += gitfaq.adoc
->  MAN7_TXT += gitglossary.adoc
-> +MAN7_TXT += gitmergeconflicts.adoc
+> On Wed, Sep 23, 2026 at 01:13:28PM -0400, Tamir Duberstein wrote:
+> > The huge-commit test compares two files with a line larger than 2 GiB.
+> > In Linux GitHub Actions jobs, git log produces its huge output but
+> > its subsequent diff process is killed with SIGKILL.
+>
+> I've never seen that failure before. Do you maybe have a link to it?
 
-This unfortunately needs to be accompanied with a matching change to
-help the other build system.
+The failures happened on a private repo that I've since lost access to
+- but I believe it was precipitated by GitHub runners having half the
+memory in private repos as in public ones [1].
 
-You probably want to move your change to set conflict-marker-size
-for this new file to this step, not at the end as if an
-afterthought.
+> > Use test_cmp_bin to compare the output byte for byte without constructi=
+ng
+> > a line-oriented diff. Remove the two large files after a successful
+> > comparison, releasing more than 4 GiB before subsequent tests.
+>
+> It would be great to back up the claim that test_cmp_bin is better than
+> test_cmp, e.g. by comparing peak RSS and its runtime.
 
+As for the comparison: on Linux arm64 with GNU
+diffutils 3.8 using two identical files containing 2,147,483,649 "1" bytes
+followed by "0\n" (matching this test's expected output) gave:
 
- Documentation/meson.build | 1 +
- 1 file changed, 1 insertion(+)
+Command              Mean +/- stddev       Maximum RSS (KiB)
+diff -u expect actual  5.276 +/- 0.572 s              4199924
+cmp expect actual      0.506 +/- 0.099 s                 1264
 
-diff --git c/Documentation/meson.build w/Documentation/meson.build
-index 51647957e0..10b0637991 100644
---- c/Documentation/meson.build
-+++ w/Documentation/meson.build
-@@ -201,6 +201,7 @@ manpages = {
-   'giteveryday.adoc' : 7,
-   'gitfaq.adoc' : 7,
-   'gitglossary.adoc' : 7,
-+  'gitmergeconflicts.adoc' : 7,
-   'gitpacking.adoc' : 7,
-   'gitmergeconflicts.adoc' : 7,
-   'gitnamespaces.adoc' : 7,
+>
+> > Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+> > ---
+> >  t/t4205-log-pretty-formats.sh | 3 ++-
+> >  1 file changed, 2 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats=
+.sh
+> > index 4be5c51489..6279a7e9bc 100755
+> > --- a/t/t4205-log-pretty-formats.sh
+> > +++ b/t/t4205-log-pretty-formats.sh
+> > @@ -1189,7 +1189,8 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'se=
+t up huge commit' '
+> >  test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'log --pretty with huge =
+commit message' '
+> >       git log -1 --format=3D"%B%<(1)%x30" $huge_commit >actual &&
+> >       echo 0 >>expect &&
+> > -     test_cmp expect actual
+> > +     test_cmp_bin expect actual &&
+> > +     rm expect actual
+> >  '
+>
+> Hm. Sure, releasing these files isn't a bad idea by itself. But we
+> rewrite "expect" in the next test anyway, and "actual" will be rewritten
+> two tests further down. So does it really buy us that much...?
+
+You're right, this probably does not buy much.
+
+Would you like me to include the performance comparison in v2? As for
+the deletion: would you prefer I drop it?
+
+Link: https://docs.github.com/en/actions/reference/runners/github-hosted-ru=
+nners#standard-github-hosted-runners-for--private-repositories
+[1]
