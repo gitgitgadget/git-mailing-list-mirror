@@ -1,156 +1,130 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1B74AD7D6
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 17:10:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.141
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790269860; cv=pass; b=jaihTXJ+XwnOKXNa/IsGWsqBrpotmyIYzllNnoKCMr6wrzre1ehkae9b4iIBu38zWYS8Kk6uKzmxcji5L63EGIstV/SSQxW+QLjHRtX0sm4Eh97N1CWlJVGN4Yv2kSGVjE0Ba3/w6OcGVRs4nK4ZAb0LLmT2ZtWwbztlAAj6uYs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790269860; c=relaxed/simple;
-	bh=bi3JMvzw6mlC/jb0+2hrqZTwslwVy8pHpochO5cWhF8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=reExm7lAcYSFKtcw/73CfJqltLdmJdpskNCPrqTHsRPMAwq+lZDFGTCihp7k4EobH0bDa6VbOw1BGR6kUnpCi6Sjjy0GzB4096+YPJyfCBBnAgj5lJEHkFEnh4hwgbqkhc6rQE//l8vg80/Oy8OodlaB3KOCqCyudfYcdy/kjGA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SbMggQs5; arc=pass smtp.client-ip=74.125.227.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D043415B76
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 17:15:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790270119; cv=none; b=Vh4axWbhNE8BM9/gV/ksQbqp1lWsEpi7UmcMIBoIRUGgjTK1VMy//il4M3Fqu6A55WCRu95FlyzbIBS6gaxJgynMYZ/j4v4c9bsQ1yQqQTqBmYXhloA4oQDFVILxYNrSxDDdx6dhw1u3tBqgjdYizWzoMvv9j2jcMeLqrtIbrw8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790270119; c=relaxed/simple;
+	bh=T5paz5tAaHrJy1ODcPHkuHae0oRDdCub2VLztQRX5/4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UULO451zaeJrNnvr2urRwGs46qeVlbu7EfVE7o9TdyFQTgfk0cKFwN9mgoNEn4I7jQfW5L4GiyfPJhIzixNAyJ3BOmMPOwyZgn6P9MqTEi+3iZy3H8DbGF19Gwz2zIDFPS1/vV/mDtW26QOk1DSirJLfnwRmq6v1cl+Gjp6XNgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=m7cBzKgT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wndJIuvD; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SbMggQs5"
-Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-398a147688bso111269a91.1
-        for <git@vger.kernel.org>; Thu, 24 Sep 2026 10:10:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790269859; cv=none;
-        d=google.com; s=arc-20260327;
-        b=IRkIQ8dmH0zzVYCpOkix1HVhTmEt9OKMioTuwlmZzurT9N2S2qk5IOth94NxhWGRBk
-         yUo2we1t4jvlTHqQU7W2rgAmaN3FVWTDT1CQjqjgBzdStKGFa4HI3ACL5wv0h3+zIcfU
-         NW6Uo1q5K94z1iG1zHfoybmDHQehUoUo0tRLS71bWbhBF/FgJYxg5ssrfmH/URHgHw4k
-         Ge8EvUi+i7xutY+xIlDUnpvzYzkzcw+h7lmsoS4ySUHFL13C3ce+SFO2PQrCd0ejkaUG
-         2iFAeuOTfXSol7/F5yyeYJuoO4ODn2Gzsk/MLFOmK3lRcDvbpKx2JASkf/F8qZKhP6AU
-         cLvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=J1N/JDaLGYKPouu572b198OJGxh+JLkoI22ShJW6E3k=;
-        fh=+X1ghTQeOz9Pov+A+SkScp1W3Sq+yov90ZeObLIoouc=;
-        b=rdqBAMCxff81gOypgBIynsRw8fdCjS3gX0hXDzrAaF4B5WdRtT9wcfOGf3vdiWmLKT
-         kJPOhRCPVknyjvk1FTgUK+EIw1ieD3L71zihr0Lwq4A5qL8jomK234dnZwJgxCDQIARQ
-         Wbj/A6UlzdnswNgAWyUdysTYmE9GalHICMg3euVsLIoVDwjKzQV2poDg0QO9DSf4CMNz
-         egvv3aE/hwAEGDf8rfdtBtV48wORZzEouPuOV5tinG83ETjbLY3Y52uWZYsnncZb8eXg
-         YXr6WPuwMrPDMGN2rdrVLcZ38h55ejXeTstJJEAakSlXg67zYGSnUw8wSfeutm0byGSK
-         yrDw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790269859; x=1790874659; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=J1N/JDaLGYKPouu572b198OJGxh+JLkoI22ShJW6E3k=;
-        b=SbMggQs5WGelCmYNom5u2BKFFevakvOoYCyG3dCDAN3CpY0DuhKFlDYH7fgykbGmjQ
-         AWp4vwSbhRoInpx7Ab2bwO2jL+o8ju4InAY9ihtt2Zgp8YwouVrkSgHiM6BdcOsOTA6V
-         ElQUZDYnqlHVT+x6m2e4Frj53gEVuTfFaL4/OJu/PWsOenHVfElZjqZFOMJcHgY8zq4A
-         mR1U9ycC5Q/ORQzHCTorSlZ7oMwB+MpsUH1j1HQ7Z3URNmz4sdtB1kiv8Y5E8DpyKPVC
-         XJQB/Yvfgi2w68STqN5YESG645lQxxqWkHriGYWuibS1JbJ/MyQPMDLKo2UY91zimnEE
-         8bfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790269859; x=1790874659;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=J1N/JDaLGYKPouu572b198OJGxh+JLkoI22ShJW6E3k=;
-        b=A6FEDtKTkhlIPpS2PaOflnEwDe2OUFOplokjEt8wumcbLqfZBU7DJMP+YAANsgr6pb
-         esFygkilo3AolYfP/4L3sONcnGvylfhXRIIUuT+A8/zpr1KQh7I1CLtryeMx+bneyoi8
-         snGO7C+Ffq7wEdH8ZzUwt8NafGTjdzgFGDwWJHTGbLNcsLxYRNtrmr6A477l7OkVkq+1
-         fJaAbXnY9hazQmOW64kGqLrt1nY/8OJuq7NKzmCovt/ObVGAabfk6lvYMqehCWfoWfNM
-         gVICbWKClFUz8iLbQGDlmiGi/TFggf7vV7NwS6QCYo3/B+b7x0kv7xZPGf44Dp3GkSk1
-         pSQQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxDe+nwc4I854Vj23CteZPUtGRufh+XVmmzb0NfD1My1j5UgfoXo33MQhjLhKUsoKpChJU=@vger.kernel.org
-X-Gm-Message-State: AFuF++lSuzUIfoiYmb7alXcF+3qqTwUk0eQxePdAf6NDnY6Jsq+HAqtb
-	UFJI3leAUjTuEaIn2/tVlDu0Ys0hX28BzEsZBE80GSyBOUjDg5J1uFf3/p/eNAjFWQ9rgCqgmLi
-	Dh9VFtJ+mtOnoStjXflhYRe0Yno390u7Cyg==
-X-Gm-Gg: AYBFou0dwRCwET6u5GHdFns57uisDrtAIASIAsDhgWIG40C/qechJ0GXUnn7z6Hrg4T
-	3AzVjokzrrGRvRMh9svBjb28Bfk8vGk+YeSow3EvbPehSFjJ38wPzagWLKZuveCOLARs8TC4u31
-	QPHuZCr+wEI7LXhYjGknfn3nCYE999T9oKBBLKvNKFVh9WsM/f5qWzdbuSxykOF+BW9MWk8NQc9
-	Hf8SVKjPqsKAL9KnIN9PWYk7nFalNBkRSeWYwUhiH8Yqi8PKr/IUBC9+Z08XLnnpNf13Fzjk+fH
-	TkAUllJDs8q+jsFg5+dMSL+O4csTJpwu2QwZzwLKPwlTP/xlyX4Gs1VwBzhnbsj595Oi+m+MRjJ
-	XWHjjWMpHtv/qobfl3fUwYWTQyqejvwftFy3zRIr1OZO0VOaBbvXz3hOsqbQdbpvVMrOpTadLbj
-	gU3nOoFNg=
-X-Received: by 2002:a17:90b:4fca:b0:3a0:910e:84aa with SMTP id
- 98e67ed59e1d1-3a098d45437mr2734023a91.12.1790269858886; Thu, 24 Sep 2026
- 10:10:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="m7cBzKgT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wndJIuvD"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0B693140012E;
+	Thu, 24 Sep 2026 13:15:16 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 24 Sep 2026 13:15:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790270116; x=1790356516; bh=nS8HRLMfJ1
+	QY2ZAE9xCg206k6p81sD9mKzaoEIfaXkU=; b=m7cBzKgTpqViWWuvDvGu0f9ua/
+	CpLcDUlcXOlXsDazHV7bsx+GdW3lLpj4WVt+WvFWzbm3+mvWLauFUIuSy6r7x/Gd
+	o6TntsJ+pC2jNdJ9DuRCEH9cLI88DdYV+eJAU3net5lXE6InEOiwqcXC60XqxJh2
+	4J1FwawgijrpB23txr/Lne9YpW0FRlWtkmX6PCJ+WPbUzv2e8CQC/Nw/DMEqvNPr
+	ZOasmbikGSqqIaagn3s1L1AiNik3+llltRw9WLYYQarrKbMw/lIWbTXezkTZiseE
+	kaaKeEgz/DJGC5pdqv9id3+qpyUoVdIwHjrEFQX2K5nqeviaoRmScV0CxNNw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790270116; x=1790356516; bh=nS8HRLMfJ1QY2ZAE9xCg206k6p81sD9mKza
+	oEIfaXkU=; b=wndJIuvDB61iEVHyLgRO7scsNbALHPf5Hs8v4it4PreO+LvmwJ9
+	DqmNC06sUnpwOuAKExY747Noal5KhhDeZSRZdb9lbbs0iqtJQ4c+4wCZxWk51x6D
+	CPDT92CqobK/TFfd3UJwzlCbdJLHUD9yzlilCySbvF1HR1l+6FCh6Sa5LE5J8Xc+
+	bTHkozC+m6T4WT46bG5wOhdJ5XPQpxEiP6I2Yh1WAhg6QmQfmyy5qShkNPmG4F6C
+	sdSTj0htkpGLjUpn6q3q5ITyhOlRTGKnqKAhRQH8hOZ1Q93c2seud8kTMxBXFOQv
+	Gn9r+St31UzNNaK/CEn5mkFrA8bmQJkNamQ==
+X-ME-Sender: <xms:o1q1aiI8p-Ldmh3kcT9pK_Wj68a2SEm_ADjifVYlI0IDpPaS5bunZA>
+    <xme:o1q1ahANwMeNR_M0qJV6o4be_7ZPHyLXSLSts51SC4P9OU7bU_bB7yraZ0e2H-CbS
+    Dec1KazxfzlcqyXCWdwiTfBGu3OvR_yZp-zKr1yHhP99UnQl9bjSMw>
+X-ME-Received: <xmr:o1q1arCCVCYCMv3_jzv7cIyYMIfnTE_UA3fLS-SRyeNnWrjl4oxZy5deF_4Y6HnsNGWtPJGIwtHSQxkCAqcql0uvCCjaKA92EoaC>
+X-ME-Proxy-Cause: dmFkZTFmoEONWBhib2oJSGtIJaXArpaoqrA+5uJaY75psgF6Wmgo00IcfNL5kdW9d14cLA
+    OO/iZdVgHcPdvlEi1GHh5QU/1gEzCl0gIKr+nkVgOc8bAsD6iMd4VGwiUdLuyaHSd9dOq6
+    ZZlr2bVsMe8aXIiz/cgMjrcfmMpq6NQFJaE6W9y/4jm55oZI1xmu4E3N70HdMBxbHrog3d
+    O1J7SITx8Ot68iO0jVduKsmDTksG10aqqputCTRmGHnsuFUBM4kQqNSFhjLfAVgUD5zqmz
+    lKYSbT6RT8HV71kjCN7L8H6+avgL+l5z2d4HgtdVUkk1610gJnzH8bPpWhBj7Y24fYmyUM
+    8V6LItscEbl+sA645Vaw1vDzWHyj/FRjmMVtaH+hH7Vs7zOLvdchTlP1HkqjhHy+U3Y28p
+    aYM+piwoKMQ9DNGmkRUajm62pKL11Tnt+Fh3C9aDBJdyRoqUZHrCxRYbiEzlLjD67l/rqe
+    ke0arC1fyoz+GiLjMC+XGbfgTIGz/sEKHNMjgBHnhDFt+Sv762Fyx+4GJn+CD3pA/XBE/k
+    CCU/cdpUn7bzQ0jSs2ZdHYvQSwbuUqKsXDIhPwL5NXjSXn2Hn8zGa5IJZ9RL3fR8lAp4zY
+    zvqZj9zjV4ZmXnvXpqr5DkozVRX+HrLFZlXEmgFWU3MzjxAHygNuu2cI/fvw
+X-ME-Proxy: <xmx:o1q1ajDvRt-zjo_2E3Gp7cgiXgas1eWaqbjc163JeJkDTUcIdiypYw>
+    <xmx:o1q1amq0biH2FHYqqKvLOgtqCuhol0AtzH4E_t7SEOxO4l3ovj4fzg>
+    <xmx:o1q1atlm7vNM2OMPJ-yUzAcJDl_llw4UWH7zW929VWRzSQ9uZJNkNw>
+    <xmx:o1q1amwILmENpGGGFNBtf7HpBrwVaagj2V_1Qgh_VlMNP1XCTtCqtg>
+    <xmx:pFq1ajg7zOWbvFJqyj5Q4KDaurEsh5YB-CbvCp8kqQwXIYNzMfHqDV2y>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Sep 2026 13:15:14 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "Jeff King" <peff@peff.net>,  "Julia Evans" <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
+In-Reply-To: <63520573-c8a7-41bd-aaeb-bfc2b5e43856@app.fastmail.com> (Julia
+	Evans's message of "Thu, 24 Sep 2026 08:30:31 -0400")
+References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
+	<xmqq4ifhdon2.fsf@gitster.g>
+	<665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
+	<20260923214038.GA49087@coredump.intra.peff.net>
+	<63520573-c8a7-41bd-aaeb-bfc2b5e43856@app.fastmail.com>
+Date: Thu, 24 Sep 2026 10:15:13 -0700
+Message-ID: <xmqqse2y371a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
- <7f084e4d-f738-4bd4-9b4d-cad995f04be8@gmail.com> <xmqqh5jhfbyw.fsf@gitster.g>
- <05d0e6e0-e156-4a2a-95a0-4986ab18ef49@gmail.com> <xmqq5wzwc76w.fsf@gitster.g>
- <CALnO6CA2DXvyOO+fu04sozg2=E0JoymAqyhs_heHzExgRSEzVw@mail.gmail.com> <xmqqbj9nagt2.fsf@gitster.g>
-In-Reply-To: <xmqqbj9nagt2.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 24 Sep 2026 13:10:47 -0400
-X-Gm-Features: AclHuK8-5ThVZASD3Bc0TqIiwcEjSJ0UMOSV4xvDnB1coAABguOQ_ns80bb1nSU
-Message-ID: <CALnO6CA5b7mpia9tkiOENdOKcOHF4errc31wuF5n5-=rrbHxVw@mail.gmail.com>
-Subject: Re: [PATCH] fetch: add config to avoid fetching every branch in
- shallow repo
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Harald Nordgren <haraldnordgren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Sep 23, 2026 at 3:50=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
->
-> >>     $ git fetch second main:refs/remotes/second/main
-> >
-> > I've wanted something similar for notes, so allow me to interject from
-> > the sidelines: it would be even nicer to still have the ability to map
-> > fetches (so that "git fetch second main" did the right thing, creating
->
-> The thing is, the command line
->
->     $ git fetch second main
->
-> has been used for the past 20 years as a "single-shot fetch" syntax
-> that expresses that the user does not intend to keep interacting
-> with the same 'main' branch or even the same 'second' repository,
-> and for the "single-shot fetch", it is absolutely the wrong thing to
-> create a remote-tracking branch.
+"Julia Evans" <julia@jvns.ca> writes:
 
-Yes, perhaps I was a bit cavalier about that particular case; but in
-your other message you suggested allowing configurable refmaps, and
-that's what I was getting at previously without having the vocabulary
-for it. Thanks!
+> Here's a revised commit message, can submit that as a v2 if it seems correct.
+>
+>     doc: add more AsciiDoc cross-references
+>
+>     Instead of saying "see EXAMPLES below", say "see <<EXAMPLES,EXAMPLES>>
+>     below" to make the man pages easier to navigate on the web.
+>
+>     The reason for using the more verbose <<EXAMPLES,EXAMPLES>>
+>     (instead of <<EXAMPLES>>) is in some cases, the HTML output is rendered
+>     as `"EXAMPLES"` or `[EXAMPLES]` instead of just `EXAMPLES`.
+>     So this gives us more control over how the output looks.
+>
+>     This also changes some of the HTML IDs of the headings from `_examples`
+>     to `EXAMPLES`, which has the potential to break some links.
 
-> It would be even worse if we created a remote 'second' and
-> remote-tracking branch 'refs/remotes/second/main' when you ran
->
->     $ git fetch https://ho.st/second main
->
-> Having said that, I suspect that the fact that you have the
-> shorthand 'second' (i.e., you have "[remote "second"] url =3D ..."
-> defined) may be a good enough sign that you expect to keep
-> interacting with that repository, and some people might appreciate
-> it if
->
->     $ git fetch second main
->
-> created a remote-tracking branch "refs/remotes/second/main"
-> automatically.
->
-> But we cannot suddenly start doing so without breaking people's
-> expectations, and without a good transition plan.  We need at least
-> an escape hatch for users to say "No, this is a single-shot fetch;
-> do not write the object anywhere other than FETCH_HEAD as we have
-> always done".
+To see if I understand correctly, let me rephrase the second
+paragraph a bit (not as an attempt to offer an improvement; by
+restating the above differently while expressing what I take to be
+the same thing, we will see whether I misunderstood what you wrote
+if my version ends up saying what you did not intend), as I found it
+somewhat puzzling.
 
-So anyway, I think fetch.<remote>.refmap is the right thing here, thanks!
+    The short form <<EXAMPLES>> uses EXAMPLES as both the link
+    target (which is not shown to the end user except in the
+    browser's location bar when the link is visited) and the
+    clickable text.  In different parts of the document, however,
+    the text in HTML may need to be rendered as "EXAMPLES" or
+    [EXAMPLES], which can be achieved by using the
+    <<EXAMPLES,"EXAMPLES">> or <<EXAMPLES,[EXAMPLES]>> form.  For
+    consistency, always use the longer form, even when there are no
+    such typesetting constraints.
 
---=20
-D. Ben Knoble
+I'll mark the topic as Expecting a reroll in my working copy of the
+"What's cooking" report of the next issue.
+
+Thanks.
+
