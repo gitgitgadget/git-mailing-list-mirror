@@ -1,75 +1,75 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFC947535E
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 11:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9D4440A08
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 11:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790248081; cv=none; b=IMTJxPvF2pkEYcWUpaw0z5exhMWJZumVMa9c4zPzDCwE9cXtVyRHF4xIgn9jwnwf1h/G2sANoIatqCN0io2y8OhLLKSgIkJn5/pDP4ySPvNVx6K36n+AqBtFr3sEbcyMGaMQVvEgMY160C8OETBb8KFo7WJoxcrVQ7hDDBgJfkk=
+	t=1790248106; cv=none; b=C/U/wH9P1JEHu8H9GftdWAa8dH3V7s+XH+hih/AaW0m8UKqJ9s40ru6H+V2G14gUJfu8U3jrPjmasHLICE0NoGWUpJoAMgXVG93JJ7A+IOdCysc+VN8VJ43VNC06kmf8Bcs+1qmDNiHTHsO239qTKe+AgXIvJC0us9iDrzSV0uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790248081; c=relaxed/simple;
-	bh=4UZnlVHvQvHWzMO9eLg+a20U4B6ytGX+zgFqR/MDryg=;
+	s=arc-20240116; t=1790248106; c=relaxed/simple;
+	bh=0L5q7LBSn+dPVzgf703reEgBh8eFV2x9vp/up0eibIk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mIKQArd44odWDnwfdZKd55SHNd9BhfuT+HPKgVmoiIZHERybEtYdPSv7C8TXVmEWDyKRqjha6ZZuHFIBiM6CE0k3WhHKQeG1lztRPE1TQmUVFfzC/R+AtlaC+kipDTZoO+2y/ihfXlFvSk8L87IzLz/OqiuwjnRBhHiPV/4tjPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AA+JJg8Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D3GaZZm9; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=cCAO230/2FRGQ2vHERx3V4JnJXdcfH9uiuGKMf3jEx82FouTEvxWULeY3SCU6iAj4fPcrzfcO/Q2t9hkY+kRiliFF/+drRq0uwmCyWzqfmk5OM6N+wVc46SPQMh9GDDgqL9jK3/NbX5Wc/u/t/jyKcuBYz6l9fQsvaX4lkHnG+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=blLIh0oj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JnL14SmN; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AA+JJg8Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D3GaZZm9"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DCE36140006B;
-	Thu, 24 Sep 2026 07:07:55 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 24 Sep 2026 07:07:55 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="blLIh0oj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JnL14SmN"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8A49B1400066;
+	Thu, 24 Sep 2026 07:08:24 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Thu, 24 Sep 2026 07:08:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790248075; x=1790334475; bh=Y5RZ2rVHkM
-	hTZN3PHl2rCPeVSgro0ro+gepDpmxVfTQ=; b=AA+JJg8QSqpbuyXsM/DliyiMh0
-	s3kOIWQv4dx80CiNKAOaYSsBq80oxG+nhA1K1RTVDrp+chx2/Tc8uoQFNyxBc9wh
-	yw+3wwnU9ZdyPNblaHx11K7fV1BUIKFbqBiGDxeKJ4UxmFZPb9WZJEpI4cKC4Tme
-	/LHNIdIhyxRn3tstceYTAJJn9Aj7OMLt3k71qky9px5zGvHo8vhz/iLyrH2nVJtu
-	SKucLE8louF9y0374R2P70Fyn/PFrrXby6PjqiXIiRzuDKApi6QI055ngj495U4e
-	NpFRmGi0RvZo5yF21DmXnUKNhfAncae+MRJkVu4kDdrKQ5gibCY9jtKsN/0g==
+	:subject:to:to; s=fm1; t=1790248104; x=1790334504; bh=Xq/34F0GZu
+	tjYOXxQNFKJ8gGm1HtSVxU4dBbI+qtCO0=; b=blLIh0ojC3ZlU5A6E70gi7Lain
+	QHf+HzWwjSrBjFpc8P0Atd5Yzt0r7s7CuyGP9fmIVRRn5ftxmvXeYTZPAeZifuaW
+	lQADb8/wmWn8jw0MTngpdeEficJyvtUl5u5wBu1B5+nt7tFu5SVbW4A5Pq6igucI
+	/VNvF+O/3VLseWqSftXXQykmsI6Ir8/N/NmTl4C7d4lYecFyYeK+VFyJWMq/qAA1
+	WahSfqakqRyXFlD7A9jZkYA4gypZEIBs5/myiI4a8JmGF+F1PjS4GAycA9eJtK/q
+	7W3oqROUmSr+hj5DQtU8hQ8tWppXIfGQDGqV29V6YqPjpMJNEdex2xw3mDmQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790248075; x=1790334475; bh=Y5RZ2rVHkMhTZN3PHl2rCPeVSgro0ro+gep
-	DpmxVfTQ=; b=D3GaZZm9Q8Nlla2X4ZyvKORi5jqFJqJvO/5RbjSKcGzBc40bk/h
-	Iz3te5v/rAq8iqVifXoM9wlRss97OeQHq1RJZq7a/R8hAR2TB1RxEvQATFFpRpX8
-	mNxX1Ug8Y2IIqB/QMs4jEZs89dQ1qna5C9sbuNcLyIZESZC/1vREzv7kwtkwnnOC
-	XEDJMIvnfSTtHUUkCL0Kqf5DObluK+UmT7aXaX68VTeXHYOeAqeQgque35fGfnH9
-	ars43OTC8nZspAfqq5fzLB9y3T4vio+GiGW5QKv052I0FfLu6pVulE58D3lDIIDC
-	9lVcusGNXNRWqJLfI/ClvpE12BmDZmOzNVg==
-X-ME-Sender: <xms:iwS1auFN70Vx_Em3uO2RfxaUtx2Qo5vwuoqQoOfPByIcLGLyxvRRPA>
-    <xme:iwS1auZJsT4i2IV02DpMsq_rxfJVK5ecFSpa1w-vMM26KxI84PdV1gU-DOIMVladK
-    uIsp94diApP026-d4t5Dnd0vL4VEKb5YRB05L1KW9QTftIQwxStb7k>
-X-ME-Received: <xmr:iwS1auXYdSFq93LXt5hgf7-1WgglKdnfJisLv-tvAvO0vKsv4VJ1mHx89g7RmWqKXZ9qWKA>
+	1790248104; x=1790334504; bh=Xq/34F0GZutjYOXxQNFKJ8gGm1HtSVxU4dB
+	bI+qtCO0=; b=JnL14SmN1WtyEV+qSW9blq6I3IIaJwFfNGo+HilF7HaVQ7PxGKz
+	3QfeifQ4x/JEduI5E5yOjYhdXhdbMqdiwEt4fFtebg6Aq/wyYeH3t/tkHZppQJbt
+	rwphx311eFeZ2gwg1/po7jMcGeX9KT2ahE425VdIMF6J72UAvFo+r1D+5xc7aKz5
+	sEf0DSjPetAGn2Q8nfsEmA45/+1VIpaq5TNQgu42OUtyOtEp1VzKOCAHVa+QFqK2
+	LVdvvUBXS1ljAFAAy8PjDXIcUenKmiQuTMqqQKcZ1n037VDiNKnTVM1a6PAxP+yJ
+	eM5bk+MO88mSCcAZXNhGb0RI/p+MHZmF9aQ==
+X-ME-Sender: <xms:qAS1as0j1dXQywPeb6NbsT4ko41oexAa_Ii5yxCu8j8_EFmPx2Eprg>
+    <xme:qAS1amJnT988jhx56r2jZdfhdIxReZhx91UPDA0ioBE4D9ORB6Tt5JHLRwFWYdvj2
+    _a5r_bHlPSEzg1QKN9imvbgb3VIlUj33Oem_c0_7t_tBmYKo-uVpXo>
+X-ME-Received: <xmr:qAS1arHOlUnTi99OoJNlRMeUTNHNZDxauWa7ivmdrXol7AsABt_aFvr2DMAb6N6DC1Pyr3k>
 X-ME-Proxy-Cause: dmFkZTF9ZstuWnVK3T3YLcc/btfUebBraXLVBvkiNGmd9FqPI3ZcLYgqNm3Gu/VV/4VFK8
     3E8li1+Yb2AIQTqM3qLS4LkUmH/nXULFY5HWg3BTyrX0E1B25AGSDzw9KQ+ZyPH6EqunL6
     wjvZtXeeNZWf0OdU81HUlp72NCYcCVF6qNT7QDKfrcXr355OyDvQHumDf9AsEY2Jdx5GP0
     TvIJB0KJwJi0c4ghsUwLuSD8OkteHIsq/vc4BPLTib8cIe+pkrLGnyq0tdv9Q8hdKjIFnR
-    hequYQfaLDjapWu27vhO2wJeIZOtm5NDehb3eCrhlPaLiQNlwtCzZ75R2jmazdDrHWJOS1
-    aURxDOEqkZeYD6uAXTEyrat5bg+npciDg6iWAvq717aeL+PamR3WUF5uCVhWFfbH6yal43
-    iUOGWH6EV/d1V5P9How8LZOmqsbqFcbEp92dIQILByU2oPhiVX6XUaBr6eEur/3BMRLkG3
-    TLFenv5NJjkb6wJFH9ttQFILHQ4wuqGwoIG4fJNvSBJqdwu4BzXu4+YQo3rtP/1T6iKM+E
-    bw+f1rdlfwX3iIQMVnwCl/VuLDtQCVutfXU53yDkkVV+sTiShA5aN40RhiwpYksBOeABAT
-    ACuxYfXoXA5WopS9YWzjQOBlDZQW1TR5bT3q+3r+9A8EHIRTCls1cQRV5sag
-X-ME-Proxy: <xmx:iwS1akk1EB4FRo8JKLTEiYgzuFnIcRcMug2pB6yYoB5EYto2RI9vHQ>
-    <xmx:iwS1apDUUPLFSqMUwFr30aTat0x4rvlTqXfEmZHQ49nXDnQSBSkmXQ>
-    <xmx:iwS1ajjf24D280trZNtm6EpRCFfkjR1okk9bDpcS7vbqavVfaTrxwQ>
-    <xmx:iwS1amyrjULFsQbD_n1dZ-tFuxiQQgLn3E22rXdLmPGgBvun4WGBQA>
-    <xmx:iwS1aumQ2VI3n4YbHes6E_0xVD66e_1JTXYL7rJn0KHTAKuXa5-aC5rz>
+    hequYQfaLDjapWu27vhO2wJeIZOtm5NDehb3eCrhlPaLiQNlwtCzZ75R2jmazdDrHWJOSM
+    LURszPrHLaNuI0kBXpkJ2b/gMpkjSQnlQJjewOatKa3zM21lU3WY7gbvoJubD3M09XzZvm
+    xLlkm8fzRRu4c2k6yakPnTnoagcFgZpzKdGj/k5E8d1IYfSDP6Ea2zwYOoXFn3jmSL4YzG
+    MCyEBsxRagj8eqCAw6oBaycyVpLodpMeCX4deErmz5RwDizMj0UWSeQHJ59KtbqUNtrPxB
+    R20xEV0FwmOXzxmBR7UcUQ9vsCLIW1TUAxRYpJkQDHZVZkPF3qRnIixA0e54E592pLi94X
+    0RdAD2JGEd9VT0bMtU6rKXasAOGMOBQTZ5DXUYYM6LtUwsC2gL8X2NsqshDA
+X-ME-Proxy: <xmx:qAS1aiUlkWrBNon7Q1eT0LLcWfoVr7niyIYaZbNe_PlzXKgGAjai_g>
+    <xmx:qAS1ajydhkMzCNZvYU7Rsxzi7URXUc8p7e8lUC_7ojBa9ksWIkjUzA>
+    <xmx:qAS1anTYnI0zQE6NH_yFuYAf9rQoF72FjYhur0VJLIeSx9tkgCZ94w>
+    <xmx:qAS1avix89sWbb8vum69nRO3a3j6zUmhWapRGK7F0Ujl0e9azKM4nQ>
+    <xmx:qAS1anW-iK9M9hFFxYL6BvASk9bLeRgpumdHbPElyajPRC9QILY48B5R>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 07:07:54 -0400 (EDT)
+ 24 Sep 2026 07:08:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7783aa31 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 24 Sep 2026 11:07:53 +0000 (UTC)
-Date: Thu, 24 Sep 2026 13:07:50 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 665f2bad (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 24 Sep 2026 11:08:22 +0000 (UTC)
+Date: Thu, 24 Sep 2026 13:08:19 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
@@ -77,12 +77,11 @@ Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Elijah Newren <newren@gmail.com>,
 	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
 	"D . Ben Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v5 1/3] refs: allow callers to supply old OIDs for batch
- deletion
-Message-ID: <arUEhkuC448hUTCw@pks.im>
+Subject: Re: [PATCH v5 2/3] branch, tag: retain old OIDs in batched deletions
+Message-ID: <arUEo7bzFJfOTTFY@pks.im>
 References: <cover.1790113781.git.maciej.ciemborowicz@gmail.com>
  <cover.1790196627.git.maciej.ciemborowicz@gmail.com>
- <9b76cc2c40a2b1fe727677a9400e3b26ec1ab437.1790196627.git.maciej.ciemborowicz@gmail.com>
+ <6a8401c448f527fd80c162908a2736811a723096.1790196627.git.maciej.ciemborowicz@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,97 +90,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9b76cc2c40a2b1fe727677a9400e3b26ec1ab437.1790196627.git.maciej.ciemborowicz@gmail.com>
+In-Reply-To: <6a8401c448f527fd80c162908a2736811a723096.1790196627.git.maciej.ciemborowicz@gmail.com>
 
-On Wed, Sep 23, 2026 at 11:04:40PM +0200, Maciej Ciemborowicz wrote:
-> refs_delete_refs() performs unconditional deletions, so callers cannot
-> preserve old values that they have already resolved. Consequently,
-> reference-transaction hooks see a null old OID.
+On Wed, Sep 23, 2026 at 11:04:41PM +0200, Maciej Ciemborowicz wrote:
+> Before 8198907795 (use delete_refs when deleting tags or branches,
+> 2021-01-21), branch and tag deletion passed each resolved old OID to
+> delete_ref(). This prevented the command from deleting a ref that another
+> process had changed after it was inspected.
 > 
-> Let callers provide an optional array of expected old OIDs in parallel with
-> the refname list. Delete the ref at position N only if it still points at
-> the OID at position N. Treat a null OID as an unconditional deletion in
-> ref_transaction_delete(), allowing callers to include broken refs whose old
-> value cannot be resolved.
+> The conversion to batched deletion dropped those old OIDs. Besides making
+> the deletions unconditional, this causes reference-transaction hooks to
+> report zero as both the old and new OID.
 > 
-> refs_delete_refs() has always promised best-effort deletion. Always use
-> REF_TRANSACTION_ALLOW_FAILURE and report rejected updates so one failure
-> does not prevent independent refs in the batch from being deleted. Let
-> callers request the exact set of failed refs when they need to report
-> partial results. This also completes the conversion that was missed when
-> batched transaction failure support was introduced.
+> Both commands still resolve the old OIDs before starting the deletion. Pass
+> those values to refs_delete_refs(). This restores the old race protection
+> and lets hooks receive useful old values without adding ref reads. If a ref
+> changes concurrently, reject its deletion and preserve the new value.
 
-Taking a step back though... the only reason that this function really
-exists is to provide a convenience wrapper that deletes references while
-we don't care for the old state. If we want to not do that anymore and
-instead want to expect a specific old OID, is this function still the
-right function to use?
+Hm. The motivation makes sense to me, but I have to wonder whether we're
+approaching it on the wrong level. With your proposed changes, we're now
+not force-deleting the refs anymore, which is a user-visible change in
+behaviour.
 
-In other words, shouldn't the callers instead be updated to drive their
-own transaction if they want more complex behaviour?
+What you're after though is to always have an old object ID available
+when the reference-transaction hook kicks in. But if that's the goal,
+shouldn't we consider whether we can instead resolve the old value
+during the transaction and queue that for the reftx hook, regardless of
+whether or not the user has asked for an old object ID? That would now
+cover _all_ users that modify refs without us having to update every
+single callsite.
 
-> diff --git a/refs.c b/refs.c
-> index 92d5df5b7..13ee2d459 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1523,7 +1524,7 @@ int ref_transaction_delete(struct ref_transaction *transaction,
->  			   struct strbuf *err)
->  {
->  	if (old_oid && is_null_oid(old_oid))
-> -		BUG("delete called with old_oid set to zeros");
-> +		old_oid = NULL;
->  	if (old_oid && old_target)
->  		BUG("delete called with both old_oid and old_target set");
->  	if (old_target && !(flags & REF_NO_DEREF))
-
-I'm not a huge fan of starting to treat a null OID as something other
-than "this branch should not exist". Everywhere else it still does, so
-mixing this feels fishy to me.
-
-Also, this change wouldn't have to exist if we instead started to drive
-a proper transaction.
-
-> @@ -3069,39 +3070,73 @@ void ref_transaction_for_each_rejected_update(struct ref_transaction *transactio
->  	}
->  }
->  
-> +struct delete_refs_rejection_data {
-> +	int failures;
-> +	struct string_list *failed_refs;
-> +};
-> +
-> +static void delete_refs_rejection_handler(const char *refname,
-> +					  const struct object_id *old_oid UNUSED,
-> +					  const struct object_id *new_oid UNUSED,
-> +					  const char *old_target UNUSED,
-> +					  const char *new_target UNUSED,
-> +					  enum ref_transaction_error err,
-> +					  const char *details,
-> +					  void *cb_data)
-> +{
-> +	struct delete_refs_rejection_data *data = cb_data;
-> +
-> +	warning(_("could not delete reference %s: %s"), refname,
-> +		details ? details : ref_transaction_error_msg(err));
-> +	data->failures++;
-> +	if (data->failed_refs)
-> +		string_list_insert(data->failed_refs, refname);
-> +}
-> +
->  int refs_delete_refs(struct ref_store *refs, const char *logmsg,
-> -		     struct string_list *refnames, unsigned int flags)
-> +		     struct string_list *refnames,
-> +		     const struct oid_array *old_oids,
-> +		     struct string_list *failed_refs,
-> +		     unsigned int flags)
-
-And here we also have to yield failed refs now because we don't have a
-better mechanism. Same as before though, if we used a ref transaction
-we'd already have that mechanism.
-
-So overall I'm not quite on board with this change, as I think it's going
-down the wrong route. If you want more complex behaviour when deleting
-refs you should use a ref transaction, as it would already handle all of
-what you're trying to do here.
+Sure, strictly speaking it's a backwards-incompatible change. But we've
+always considered the reftx hook to be exposing internals, so we aren't
+all that strict about retaining its behaviour and have allowed changes
+in behaviour in the past. So I wouldn't mind if we adapted the hook to
+always yield the old object ID.
 
 Patrick
