@@ -1,87 +1,81 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF25370AE6
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 18:18:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AC44A6CFC
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 18:26:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790273882; cv=none; b=c28eHEN4uhGrOuiH1R+deaSonJpUbFfgDXZZcEuiXFaZZN7uAYflKBqy5Q4EFKurNmN45QKrH4dVodZuSGG0CrLEfEtlPIEdi8EiNbrpCccMvqxjlCRE8VEZHxwIj6LeD0WIA/x8zrDDcwaw32rBpMlHsgpe5wM9LC6CEzBuW48=
+	t=1790274419; cv=none; b=H0fTkxX/gtENncWiJZ2TqJup6EFXXXr1Wy7lee5CniBIYTWnxDvgggG3dAW27BEoget/vbO/YA1fFgJ/W+GAtEHTmQ07OyE4cje0JHB4glmnmsSC1GKvr3s2HRjdWvpggGSU7UiUjgfqyuYN4Qrtyb5y3wNyWg8lKJ1oIKyv/lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790273882; c=relaxed/simple;
-	bh=athsazGjUx1Trf13e2RoQ8WEaaGywq4IlrI1j4hBuzc=;
+	s=arc-20240116; t=1790274419; c=relaxed/simple;
+	bh=wjdgPkhQ/D4nqesIwXEKlleZ6HRO9Br8enkg66qdr/0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lk4FWrCbZV7ynron+S1bMNbCOhqr70YscRNJa6H1f6JQA4IDozfU2UY5szQ1dZTJzle5YngUf5kJb88TmI67tPPtwqD2aHz61T3EyUZ2Gr8vkMiyMbDPICZrsFqH2atgxzD0u1B5DtEIoDNhHHILgR5XKDa8/3Xg7JbQX0Dzf6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=u6mkh4+q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gAjDbbKk; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=qY5qCwr6Y++ZEItK0w5dEkHt7DEAZmFxN8SH8XezA1bzdJiInSnFxPDBvhOH2wstFjvtLjvUexd53L4RZAzN89q2plC1beeSinQ64awOXwbtcvP8nQab5KMRxYg2wRU6NTmMKnWxNrs2vkUoedCTxfu4XC1iJwjsHYJh0bp0aiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Bu2XkW30; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m99jRnyx; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="u6mkh4+q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gAjDbbKk"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6D8BC14000F1;
-	Thu, 24 Sep 2026 14:17:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Bu2XkW30";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m99jRnyx"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7779FEC001F;
+	Thu, 24 Sep 2026 14:26:56 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 24 Sep 2026 14:17:59 -0400
+  by phl-compute-08.internal (MEProxy); Thu, 24 Sep 2026 14:26:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790273879; x=1790360279; bh=7bu5kMAljc
-	yZbyHKjDqQpnwIHyiQQGY46KitzEyebAQ=; b=u6mkh4+qdok7mpfFYJo/7W2QSe
-	mKlS4xk+fAXpFamJuJM5YLWJ3GPuhPPEAnE4P5mZyDkPVDEk9VLmkx52x3RsdJzq
-	D4dJNoXWyBSemOsMCevlFT77h1zXrw5n37PKQcEHwFZ7iTI5beWm96+noMTjpNG1
-	koJ/lY2t96F4v9fl9Gzy5pCPlzsXK29WJuwN1+OrFl6ameNP5H7SK/aEzKVUu3+h
-	8D8OkNQRFZoddfn6+WXTMCw8w1rB4sPeRoJnSVfix3kegePNwSYPTAVHSdeIqD2x
-	q3CiIb0YhHzhAIILXMPMKEdkk3W2MNN7o67jQxTBKyC21rYB/yIaLAV6hq4Q==
+	:subject:to:to; s=fm3; t=1790274416; x=1790360816; bh=i8PIvtjU3c
+	GSGEluRodCOB3VAmAQ7vGEZ/wMxO/rPDI=; b=Bu2XkW30XYhQrOHHKu8uT3UKRV
+	g/V/s7umOJXWLVMInzGcIEsHtjBlHN+ow8zQsWXvr8DF5xdeOht7xyI6gsbAHN2D
+	mUVd5OI+RxIcYAaahw1hKs3Hu7cuoVBPDLTB7XmRN9zltbftcNHw86g95Cvfs1n7
+	uR7QHxnR2nZxukNA2WftjlNUCRHRQp5Y9QlvMEizYZ6kvQNDGYMQYlCujY4fhrH0
+	kKePh5fQet2dPO48+t8urfE8vmpevsHXk7PudL//ZOn+3CZDGWMe7W1DvsSrXN+9
+	GjZJi+qCeHcWETB0balSziRZUYUtUXQVAUGuv4s/0jC8x9L8wW53NQQJKawA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790273879; x=1790360279; bh=7bu5kMAljcyZbyHKjDqQpnwIHyiQQGY46Ki
-	tzEyebAQ=; b=gAjDbbKkAmnTZ3htpLcFQfeRANCJu1TaQuT05GqWcJDSdeYF5+x
-	y8CN3uGBiQLAropCZXzljFFAFjOggeiC2E7oFAVsSXQIPaJpAWYpybJCrP4FVTO9
-	btpWl3ylhF3iU5CyXHyZxeEL4KGgJ84llfq25oPrpCdRDyAVJoeStH0Csg/cHNkM
-	qdZpQ6JUaxxfAmI71VXp9t6Je/M0mV8iNCE78L56U+GqI0XC03HiYcVStSol8Qj2
-	t9RbwHrIYXwkjIdiE3NHbOFASV6He3o5kXayT59nahBe0eCrt07K3kXbFicIWLIC
-	xHr4dnq7g87Cip5dc9mR2Bwwbl97vgHJjfQ==
-X-ME-Sender: <xms:V2m1anxQQ-lVk2zv3gtVNXz8qURy9pM0sWac228U_K75zx0f02Ed6g>
-    <xme:V2m1amKTdaGzArVnqum1ucKaCuHqOPLcMaiy1xkMVBQ1AFLMnzu00P5__i74TiMz2
-    Uk2xTVuCw-E3DjdxaRDNG3TlfC5lhmZ6MS4vw9--O_FJTBflZDqMw>
-X-ME-Received: <xmr:V2m1appf5N5Tfjwrw_VgXdT1jTIiQLy1Lz8jmZGo9e8xrlpEzCXrzek5oa4O90iqKGWzVx5zbUIe2u4TyUSyKVzDbn7ZbrnktNNS>
-X-ME-Proxy-Cause: dmFkZTFfxx/ggXNQyuF5FP1wxBewWEnBrEkPSsV4lCXrCpo6X1qar3K3K9egehYPcLOiOX
-    11jhuDZaHMTl8hzrOR9ePhxd/iuDe/bjI7FVln39yx690tKdl/HcU9msfink1nh8ZM0ds9
-    O1xLJwca5GU9lgsN7+or6kAG33YjaMOIh23+u37uR2iCVy8b7PykKP6wH0fP4jOgxfQaba
-    qdmoGu22iiEpy8Hsfv/QrZQJp586dPkjs4C6jm0SKoqAZ/jNoc8WRoSyZ/nx8k3v4f1jiT
-    SUpn3lC8d4MJUZAorwxH4dwADKRf+nIoun2mIskq5r0V7EG/JjarMAuDugF17nRBYgVYBW
-    fP4IuzrpSeWBlzt+cTnpWc0RxMeMEsPp/tnUKq8aDtsADhETnHKatpfanupyMfTi850eoZ
-    q193IjlEz5/sqK+GoFkMmKOv5AvtKTuGhIgQzV2Xsx2s7YWXIIpAu7wF5cdIRJ1sMNCu4m
-    QPF7dm05KtwYLlziga/804FL045z4FWGn7lbKtPW6d7z5yhRFiMzPT+P3IA4QfGh7ztwE6
-    of4R6m3Fihiyo3ri0OKwuRptblz952NRuBY6fzhEJDDE1VpkSAJfY9aUBTse6NFClVNJN0
-    cH3w8gkS+JtKLWDasDVdknMt0WibbzqLe436s9QphoeMfsNvAk6dFtnJGxvA
-X-ME-Proxy: <xmx:V2m1atI6ukjBwOa9evsbdWBXa5pBjKhuX0qhJv_Cb7FstowIjru_zA>
-    <xmx:V2m1amR00dJeqNPkGa48NKbAoEZZWr89ctEcHjuM23UtgR2_c8FfMA>
-    <xmx:V2m1akvA7PnjqFBQCjHlSqH81s4UYjTbSvhkZzax3F_RkIyi6TPYCg>
-    <xmx:V2m1avaJ7sPgUkGYr6NdjH6E0sAbet8zFMF2hBPnLkyAS-TYEx82mw>
-    <xmx:V2m1apoH1sdNLtGC8Nefnzbg6t3yCK4MpFzVER4i-U22wXf71LSqiT_W>
+	1790274416; x=1790360816; bh=i8PIvtjU3cGSGEluRodCOB3VAmAQ7vGEZ/w
+	MxO/rPDI=; b=m99jRnyxBpYtq79sQw7ik0+XRxiODy57EecAFQA80rMZNLddlAk
+	V84iYZVAulcHotRfaEiFQR/NlbuELcLpDCrJrxk2PIhlPcJL/0kNIGrN5w0zihXP
+	eRtxZ7bYBC1DOdgjeDEVl0eut0XAI4SUi+nzuUrOC/MTFQKt5pORwM1/gmKsraZp
+	utRyq2jW8OCUjFP4M+98T3T9twZP4LVomMjOJ6SrAovs3sJD9LwFXvIeRSEbyzq8
+	/aU6D5CfrZYNRVIGIT0xlULgO7JkYe+N4cYEmCFGehD+oZD3P7xCe+eeOUA4KGum
+	lU+ygKZsRhNIAzrIUKT2cFf2Kn/RwLWIQ0A==
+X-ME-Sender: <xms:cGu1agNWEcWxxS3DivbSVbs9ZXXC-aAwYJ96fsVBaSBHtJiYM_lnLA>
+    <xme:cGu1aqqS3VdnDuga84g5-TyhXqFqJmtqIzJ09aluC6rZkXzq60p2Dr37LsFnP2bH3
+    X1tDkMhIdHWFsJnfL9EjhWaBt8zdNtt6Rz0ojYb8G6TbEr7muwB>
+X-ME-Received: <xmr:cGu1ahGJl2Tct6G4XFWFcdGz3d9un1hOWs5YvMpUSN4-B8MZ1QTfeXx1ko6J9wg7O3eQHiv-qGIaRw8LTG0fLSVRgszEk3iAOz-K>
+X-ME-Proxy-Cause: dmFkZTGIWfpZUoU8MYalG+x+xujQdPsc9IrS3BpTfcYxtLi0B0LKdIasbWx3zqZV7rm21g
+    6DPzhoobLBsSxRSIBU2MUjLCalJT8c4LamZClQhVwQw4WhS2vSqbxCykDFMUTLeXSntKHP
+    k+aaZcKQmPI+en3TFC2Icb3P4/3wIY8O46vIbkLE2EMO3/mR46zcebOnDdLQIhfQJz0Ooe
+    TmzxAuULg1C52sL4FfTjoXjmMIqKs2ZK3gbABGdW2aoqrUb30C4QZhpADX1MtEYbKCaNwn
+    U9GWU/wJCly2n5E9tj7LsqgI8BV62NlsJ7duE8ktcmJkxOuGEqaWryRJyYqT2cRnOwoFMs
+    DOoORw8pDif6qJ9phzF5eDfBx3c1C2YOXBpdXx1l0pZC9KcGfKtbhhjJ9s0gD4Oeu6ypZy
+    RzTIL5i+ww8HuQOjU00zihB76yje9gFHmza0w0Xg+zecV0JnK2aaW4aWEnyzPZzNZ0DHqh
+    s3LpTq8OvCXrvee8n+Dy3uI3O9ejyntqHDsiJZRC4V5z51lg9nn5SMqpwDTaan5wtsy9vu
+    f/PCtjGZDycOt0dGvwAEXoTbqJMaCbwJs1arSXGpLPK8kJ7at/PQN9dmDgyHnQIgUh+htw
+    Xbz4diZyRPqMcwFkpreitlZUma9pSrDKVtKDVHWc768/ux9AgTxWZldk9KKA
+X-ME-Proxy: <xmx:cGu1avoRRPepT3rruC6s7JbRlU3MS52aJx86Gr1Xbmk9pfM6E0nSwQ>
+    <xmx:cGu1aqYSEDVkc2lQm6fUaeqMuzSuDH0Fz7RQX8XpAFCfJDo69GO2vQ>
+    <xmx:cGu1aoUz0bzRbrFyPm8teWt2olQYyiLYdi-qTGxytmIls1Ww5tuU6g>
+    <xmx:cGu1aj_kADxZsYAYcSPcPJePqP-1MJ0bIKuDTnqIIuFpVT5hdchgmA>
+    <xmx:cGu1ahKPPKHx_I5b_B87EFO2OCHdHhoO5y08sIJK_BosgeobK8jLqT0X>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 14:17:58 -0400 (EDT)
+ 24 Sep 2026 14:26:55 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Jeff King" <peff@peff.net>,  "Julia Evans" <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
-In-Reply-To: <31577b6f-79b6-456f-9ecd-d1a3df6209e2@app.fastmail.com> (Julia
-	Evans's message of "Thu, 24 Sep 2026 13:22:49 -0400")
-References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
-	<xmqq4ifhdon2.fsf@gitster.g>
-	<665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
-	<20260923214038.GA49087@coredump.intra.peff.net>
-	<63520573-c8a7-41bd-aaeb-bfc2b5e43856@app.fastmail.com>
-	<xmqqse2y371a.fsf@gitster.g>
-	<31577b6f-79b6-456f-9ecd-d1a3df6209e2@app.fastmail.com>
-Date: Thu, 24 Sep 2026 11:17:57 -0700
-Message-ID: <xmqq4ife344q.fsf@gitster.g>
+To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Cc: git@vger.kernel.org,  peff@peff.net,  ps@pks.im,  r.norouzi@proton.me
+Subject: Re: [PATCH v3] reflog: fix default expiry periods
+In-Reply-To: <20260924175843.8383-2-pushkarkumarsingh1970@gmail.com> (Pushkar
+	Singh's message of "Thu, 24 Sep 2026 17:58:44 +0000")
+References: <20260923102140.25475-2-pushkarkumarsingh1970@gmail.com>
+	<20260924175843.8383-2-pushkarkumarsingh1970@gmail.com>
+Date: Thu, 24 Sep 2026 11:26:54 -0700
+Message-ID: <xmqqwlsa1p5d.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,45 +85,125 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Julia Evans" <julia@jvns.ca> writes:
+Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
 
->> To see if I understand correctly, let me rephrase the second
->> paragraph a bit (not as an attempt to offer an improvement; by
->> restating the above differently while expressing what I take to be
->> the same thing, we will see whether I misunderstood what you wrote
->> if my version ends up saying what you did not intend), as I found it
->> somewhat puzzling.
->>
->>     The short form <<EXAMPLES>> uses EXAMPLES as both the link
->>     target (which is not shown to the end user except in the
->>     browser's location bar when the link is visited) and the
->>     clickable text.  In different parts of the document, however,
->>     the text in HTML may need to be rendered as "EXAMPLES" or
->>     [EXAMPLES], which can be achieved by using the
->>     <<EXAMPLES,"EXAMPLES">> or <<EXAMPLES,[EXAMPLES]>> form.  For
->>     consistency, always use the longer form, even when there are no
->>     such typesetting constraints.
+> The default reflog expiry periods were swapped when they were moved to
+> REFLOG_EXPIRE_OPTIONS_INIT() by 85658275702b (builtin/reflog: stop storing
+> default reflog expiry dates globally).
 >
-> I meant something different, let me try again (with Peff's corrections as well):
+> This caused reachable entries to expire after 30 days instead of 90 days,
+> and unreachable entries after 90 days instead of 30 days.
 >
->     The reason for using the more verbose <<EXAMPLES,EXAMPLES>>
->     (instead of <<EXAMPLES>>) is that in some cases, <<EXAMPLES>> is
->     rendered as `the section called "EXAMPLES"` or `[EXAMPLES]`.
->     <<EXAMPLES,EXAMPLES>> is rendered as just `EXAMPLES`, which gives us
->     more control over the output.
+> Reported-by: r.norouzi <r.norouzi@proton.me>
+> Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+> ---
+> Changes in v3:
+> - Split the regression test into four independent cases, covering
+>   reachable and unreachable entries before and after their expiry periods.
 >
-> ("in some cases" is code for "I still don't fully understand
-> exactly when each one happens and why")
+>  reflog.h          |  4 +--
+>  t/t1410-reflog.sh | 66 +++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 68 insertions(+), 2 deletions(-)
 
-I see.  I think I understand now.
 
-In your example, "leaving it vanilla without any extra adornment" is
-the control you want to gain by using the two-argument form, while in
-the version that shows my (mis)understanding, it is "you can mark up
-the string that is shown in any way you want".
+This iteration has its tests much more nicely organized than the
+previous round.  Looking very good.
 
-Either way, the shorthand form forces you to leave the rendering to
-the toolchain, but the two-argument form gives you more control over
-how the text is rendered.
+After this patch graduates to 'master' and the dust settles, we
+might want to clean-up the repetitive and verbose combinations of
+turning a human-readable timespec into a machine-usable timestamp
+into a single helper that is easier to use.  But that is outside the
+scope of this change, I would say.
 
-Thanks.
+> diff --git a/reflog.h b/reflog.h
+> index b996712c00..3bdd1ca8a5 100644
+> --- a/reflog.h
+> +++ b/reflog.h
+> @@ -23,8 +23,8 @@ struct reflog_expire_options {
+>  	int recno;
+>  };
+>  #define REFLOG_EXPIRE_OPTIONS_INIT(now) { \
+> -	.default_expire_total = now - 30 * 24 * 3600, \
+> -	.default_expire_unreachable = now - 90 * 24 * 3600, \
+> +	.default_expire_total = now - 90 * 24 * 3600, \
+> +	.default_expire_unreachable = now - 30 * 24 * 3600, \
+>  }
+>  
+>  /*
+> diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+> index 8f78cf4b01..93b5b49e1d 100755
+> --- a/t/t1410-reflog.sh
+> +++ b/t/t1410-reflog.sh
+> @@ -153,6 +153,72 @@ test_expect_success 'reflog expire should not barf on an annotated tag' '
+>  	test_grep ! "error: [Oo]bject .* not a commit" err
+>  '
+>  
+> +test_expect_success 'reflog expire keeps reachable entries for 90 days' '
+> +	test_when_finished "rm -rf reachable-keep" &&
+> +	git init reachable-keep &&
+> +	(
+> +		cd reachable-keep &&
+> +		timestamp=$(test-tool date timestamp "60.days.ago") &&
+> +		timestamp=${timestamp#* -> } &&
+> +		test_commit --no-tag --date "$timestamp +0000" old &&
+> +		git reflog expire --all &&
+> +		test_stdout_line_count = 1 git reflog refs/heads/main
+> +	)
+> +'
+> +
+> +test_expect_success 'reflog expire removes reachable entries after 90 days' '
+> +	test_when_finished "rm -rf reachable-expire" &&
+> +	git init reachable-expire &&
+> +	(
+> +		cd reachable-expire &&
+> +		timestamp=$(test-tool date timestamp "100.days.ago") &&
+> +		timestamp=${timestamp#* -> } &&
+> +		test_commit --no-tag --date "$timestamp +0000" old &&
+> +		git reflog expire --all &&
+> +		test_stdout_line_count = 0 git reflog refs/heads/main
+> +	)
+> +'
+> +
+> +test_expect_success 'reflog expire keeps unreachable entries for 30 days' '
+> +	test_when_finished "rm -rf unreachable-keep" &&
+> +	git init unreachable-keep &&
+> +	(
+> +		cd unreachable-keep &&
+> +		test_commit --no-tag base &&
+> +		base=$(git rev-parse HEAD) &&
+> +		timestamp=$(test-tool date timestamp "20.days.ago") &&
+> +		timestamp=${timestamp#* -> } &&
+> +		test_commit --no-tag --date "$timestamp +0000" old &&
+> +		old=$(git rev-parse HEAD) &&
+> +		git update-ref refs/heads/main "$base" &&
+> +		git rev-list --all --objects >reachable &&
+> +		test_grep ! "$old" reachable &&
+> +		git reflog expire --all &&
+> +		git reflog --format='%H' refs/heads/main >actual &&
+> +		test_grep "$old" actual
+> +	)
+> +'
+> +
+> +test_expect_success 'reflog expire removes unreachable entries after 30 days' '
+> +	test_when_finished "rm -rf unreachable-expire" &&
+> +	git init unreachable-expire &&
+> +	(
+> +		cd unreachable-expire &&
+> +		test_commit --no-tag base &&
+> +		base=$(git rev-parse HEAD) &&
+> +		timestamp=$(test-tool date timestamp "40.days.ago") &&
+> +		timestamp=${timestamp#* -> } &&
+> +		test_commit --no-tag --date "$timestamp +0000" old &&
+> +		old=$(git rev-parse HEAD) &&
+> +		git update-ref refs/heads/main "$base" &&
+> +		git rev-list --all --objects >reachable &&
+> +		test_grep ! "$old" reachable &&
+> +		git reflog expire --all &&
+> +		git reflog --format='%H' refs/heads/main >actual &&
+> +		test_grep ! "$old" actual
+> +	)
+> +'
+> +
+>  test_expect_success 'corrupt and check' '
+>  
+>  	corrupt $F &&
