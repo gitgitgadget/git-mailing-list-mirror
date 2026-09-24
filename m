@@ -1,162 +1,131 @@
-Received: from mail-oa2-f12.google.com (mail-oa2-f12.google.com [74.125.231.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA961625
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 01:26:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450EC40D582
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 03:56:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790213180; cv=none; b=E9hY1Cd+zZUZgIjTbaHWUGyKqUMfuRFDyPlB6Lqnu9Id4j43xf3AGyhwQIZ6hYuNqNp42r8u+PixRFcVIJsdtKyaInWzcfIKtzxo+mEBmVokJH3cuiraG/RWdliEKvEm404svNW7Lslnb3B87sFViY+dSJYxi0g4SG9rgNHbRU8=
+	t=1790222192; cv=none; b=cO5aYdzF7ZXK7rVrXZQl93qs9HBCiatXzLMwvYGI5E2lh0xNQwJXp7AiCa3krfsLB/VAqWLXkIJM3KwU5H05eOm6hqTTCjN9HuR2z0rXY5VmFhVh2WuEyJX9efMKcpwSf59peShjIhE5BmdRja1bJf+ZgNmyyXX+U999gQbWpMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790213180; c=relaxed/simple;
-	bh=MdzBcGoFGgp0yAmjlLTj5i7LiVw3X0pnqfzTFt447eY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
-	 In-Reply-To:References:To:Cc; b=M4lsu6t2jPeL43vFbWAtbQtL4FTOOaurphn4xCYDjjoTKWIGA62SrJh0oWIF29/PpKRiY6YLBEctBMJAFopnYJWoUzXMoqzra7RbAYV8vTZdXeQUi1gPDI2kk9rpwpDVKPCRZiIwrVMMAZEYqg/A36VIvWeP+0DsTIT6d+oGNa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=brighamcampbell.com; spf=pass smtp.mailfrom=brighamcampbell.com; dkim=pass (2048-bit key) header.d=brighamcampbell.com header.i=@brighamcampbell.com header.b=FCadrZO7; arc=none smtp.client-ip=74.125.231.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=brighamcampbell.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=brighamcampbell.com
+	s=arc-20240116; t=1790222192; c=relaxed/simple;
+	bh=BDYpQN2EvJy12AqgBNsr1XZezT51thIbCA6g1pKZDmE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lMCiB9T90LnQ2WFHbUDoqGUvQsXfmr8i5eUrI7kCkaPlpBZpJlA4jBrj7T48axndlJwRT9qu7AI8bNBuKa9jPfF6FNCW7dUb541fJdAbWgc3AVy1bHFNmBA1miim7oF0ZXFoAAWMCkgetpXpvD1wEBdfK1ob5G06uAZUWcy916E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DPDOTxNP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pLIG0C9+; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=brighamcampbell.com header.i=@brighamcampbell.com header.b="FCadrZO7"
-Received: by mail-oa2-f12.google.com with SMTP id 586e51a60fabf-466ccde2a99so1091597fac.3
-        for <git@vger.kernel.org>; Wed, 23 Sep 2026 18:26:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=brighamcampbell.com; s=google; t=1790213178; x=1790817978; darn=vger.kernel.org;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=87nd/dkY7Z4l96DM7Lo8a0Ep2aLz/wvWPIvNUmoo2Gk=;
-        b=FCadrZO7qIw+3rZ15uMCDTHjphz6v7wNg8jC1juxSmtqL3rbXdy5Ty/mNmWF4MLYSp
-         RkyTEfwzWkQ3bJq26aQkwa2WAjidqx7h+/mP3aCDT943ZpeQip6ANChy2RjtjwHwUPQ9
-         Mvzhd4hO2ScIWLc+UmhP6vrGSqvmJ2UXIg7Bc4l6PDwXiqed4lXMZUpdZdv4b/K+fw3I
-         a5+lwddTTwYkKX9lDOgi2nVXkX88pQQYTJgorXdu/QYoVuztX6FTiZUiHgbvTCoiD5o9
-         34z1KbiDHgka/+cCUm69zLNquugCFzNyUfWQkdubrZ2xB0e2g7EDG3ZjZ6FFxmNWTfr+
-         Igqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790213178; x=1790817978;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=87nd/dkY7Z4l96DM7Lo8a0Ep2aLz/wvWPIvNUmoo2Gk=;
-        b=ZTAOx2I1ug/GvWuHVkA2qmhIxL3T/MpuqhfUTuH7ow4XZHsNIixL+4Ta5vcjbxyT3l
-         OSsRiNQoHMnKc5GqN2IYCLln5KC+n2LaLOy01dYg+jVsOwuwzoYAyBMVHfOZSGEEMBaf
-         xDK20pa0iXBgg13CJV4lzP9ZZwrJUJVaJenvotrH3IH/T4vkMGxLoLQD03rwa9cKQqfN
-         pWJEX7qWUOGuI5wsZJJMaHKwdlHx+ZCcQlaNyrbOsffgVP2dvU9mRyZS2E5EMMu64FmL
-         P2p4REGFJe2lISQwHWXAKwYCRCfCSe0TGWoVZzgk7JIFw6JdG6WS64F4QzVY3n9QDDyR
-         QuRQ==
-X-Gm-Message-State: AFuF++lewtfGkxEaMI25kBXXkjFdwZg3hnS8YWA7E6TrQgU1lThU8mM6
-	bz84zBVyvHwlYudRa7dWPiZ7OLox4AERbBwsBgc7JO1e6lzM3rjOx+IBslbK+vOvt7Y=
-X-Gm-Gg: AYBFou2xqFlOp7yDqqQ52eF8XW8L3fBfXIN/K6E5cH6HthvLrp1XewekvrBBMf2GFcO
-	5hrauqX04+WL3+X1ARDK69RI+lPRdPasUhhqpgK6N8F9D4d65Zb4TC7F6vc+p6Ivfl8S/JF30Ap
-	HI/AQQTXfEJh+OlZhv8jKGt7BKlP5ngYAelfRD/bTicmTKXEqM9X1ZwWbAFnYs6aqUHcmf+2hN0
-	glNX0l1E/lhFDjoZci8noImInlI3FG1b+kMJKokbMFbAj2cHK7jfYcGHxn9dKQH2V7Nt8iK13cD
-	isugNqIZMr0SpevFoeAFLJCmQcjdTZ+H9r35npdsFi6pAFZYZYNfvqWj15qgP2toD/MncfAQgRa
-	6aG+FL0prGCR8Yw81hmCk5PuqSDulgcFwY2sxn6swhZBVcRkusE+rAgSmt95RAyJvYkNbhXkp4D
-	F/BQNBqXNcUwUn+OeVB+Jk2gnJxzj35HjMn7CitStlaZyBZZ4wUNdhw0/bQ6275hgHGGfndy2Ly
-	pTWd8JKpiYra/p1P+KO8igsgIXveZJtheEUsUE=
-X-Received: by 2002:a05:6871:c8dd:b0:48f:e25e:e203 with SMTP id 586e51a60fabf-491e6df1dc6mr1121480fac.52.1790213177813;
-        Wed, 23 Sep 2026 18:26:17 -0700 (PDT)
-Received: from brighamcampbell.com ([73.3.69.70])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-491ed1e75a1sm917940fac.4.2026.09.23.18.26.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Sep 2026 18:26:16 -0700 (PDT)
-From: Brigham Campbell <me@brighamcampbell.com>
-Date: Wed, 23 Sep 2026 19:25:30 -0600
-Subject: [PATCH v3] git-contacts: allow inputting patch via stdin
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DPDOTxNP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pLIG0C9+"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4F67B1400053;
+	Wed, 23 Sep 2026 23:56:29 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Wed, 23 Sep 2026 23:56:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790222189; x=1790308589; bh=cy4d22UYm6
+	v3XX9w6mEsBhPthiUInt3nlWb9Naa7FfM=; b=DPDOTxNPcBDanbLhhtSPu76t/W
+	I5pDFlAjFzmPojJqGYu7d5VmvYW+ZmCmBIGHLV9XhVx7/muHMYpBUqs9gCR8PRxg
+	J0hr2tTLsFGI208OIKWYLxD9N35ILg288FS5g0oxm9xu+RAIf1r8Q38ngqezuO/J
+	dlh/3ZQ59ZRG6IK8jiplW3QxfpMtdKx1wp+9tfzWMImwQN2CdzbNkK31RE2fVbdm
+	zdkpD/MEsfCoH7EBlbrJND2c1fd7N/a2v793Z/ThSyK999nauTm2HTVcbqJiaTIV
+	QwGB/+JMb/ZF+oJ5ZK2GbxwgX0xTJtrIKWLlBVzsoBtMYdp/2bSUTQGxvLBg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790222189; x=1790308589; bh=cy4d22UYm6v3XX9w6mEsBhPthiUInt3nlWb
+	9Naa7FfM=; b=pLIG0C9+TCIBzVXUQhovjXv+Nl889zuOOnNWWaySmAa8ZjLZTzE
+	pp9f70j51TqW1+IBeKdoj9oOsICKIQQ7+zJMl6+umP+L63IN5umIKx17zLtspgtd
+	9vb+/wvrkjKCUzNOyZW+xhUnQBHaDs0ZgyWfz1+aACLtZeESjG5AA3xNYOgcN3Z+
+	P6JP4fCXns+yx7RhFPPVv1Y38O1ZG3kYvHBtuHG4BNW3QWCJIx3/83vq18nXSOuz
+	9oD69zpMhIoh37WpSCHsuWNRklX7mh/cAhOOT/CZK8ZilMmwDJfYah0X10VQv0I4
+	aHTUzf1fF2htjKdTOVd3yLaVOSOLaNME5yA==
+X-ME-Sender: <xms:bZ-0arbLXoLQe5B9YrD1mK13QnnCV4m9HHOQzRWAm2SC73fETTiWNw>
+    <xme:bZ-0atpIqIFkkdNyYygQwORLaLzMoTGoCsNtvhNW9XDwNldV9ACuLtdUDAey4dmVb
+    Eh4wbWfHPCChLkeykua9X29NBAhRyAGZzthJ1z2kfKtctsiuojCeJU>
+X-ME-Received: <xmr:bZ-0anZk3YPye7yDqpi1tlOM4ipDcoNriIkJev0qNQlBAagZavdfFdbM_Rin9OE8Hqpbg8pOGm5Mw7kFm6bkdY_ifyJAqrMTJKNP>
+X-ME-Proxy-Cause: dmFkZTFneGFuzgvHLu+WxGE0f/+lPO64LBGuUBDC1ZTZiM5AJ+Ifr+6cXF6kO88fF6vaWw
+    YS3JaQ98K3/Y6izXNRcHen/NnndmWBn/gcC54awJBDRaccItbh9HL/QDXSrgLQBAxfe7DS
+    hAjuAAsmhG7aI4HhUtixLwwm64eK30s2HPPuFr3nzlQZCoQxkhOAhh1Kq9Uloz7V6D78Qk
+    mNbNZsvx1AlpsNgUnQeP1qOSltai2eqMQHjUvMQr9geHKgtLuofIP0eZRMuzA/mHR1t+fW
+    LoRBWnzIs7iDuSKBO0T7OSMgYtfst8xGMX+btKAABdsBKIPPCFQbGJrELkUgpsN+jw5EXc
+    PAi1St7AHkPpd+wA05rGWEHxqZKcCee6IMDVPkIEetFb1SzVHicIZsfaLVnFKKsUaBtmEj
+    gA8NNIcZ+CFvMuKiabA6c1abY4gwBPGMTERhAJHinxbRnViIhE16XzDac03eX+k/9WIocf
+    6qX9u0qdtpmQ8UJ5YucYfXRBdGSgMt8JOYhx1Nd3edJb//y3bMHCz/pnGnu8G5lK37ayw4
+    vGCSncVggi6RdIumgEdjwlVCKAUPx1va2p/10deB8DaaEhxR8UHQvQdcZ7qLtx3AcrRVPd
+    QRFfLBPIjRxYGdGAoOBlBHypM92NzmnXa2HEot7/VMXIxBw4b0omWPSZPvXg
+X-ME-Proxy: <xmx:bZ-0atRFr2hHWI-bVCiUktrRYaFtfWpTbkSSOAEb4ymN665Bt1Betw>
+    <xmx:bZ-0am60Xk0jR95f-T4S9bH0VAoabofr_wOycYXBVupWm7ap7ZEx-w>
+    <xmx:bZ-0aqywqC5Ivjg7v6nLEyBVZdojVCXKy35VZQDue_8jx6OdB9Tl_A>
+    <xmx:bZ-0atSBTNZOrC_Zlfw3s_us-biInh13a-0u4pHLhKJW7PdXcZ7GAQ>
+    <xmx:bZ-0ahauQd4MdqognKYWOnTzbh6Pn8c1ZOm0NfXFXUtZIJWrn1FIua5K>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Sep 2026 23:56:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org
+Subject: Re: Git v3.0 timeline, was Re: What's cooking in git.git (Sep 2026,
+ #08)
+In-Reply-To: <5f34a5a9-9f72-b725-666a-94798895d122@gmx.de> (Johannes
+	Schindelin's message of "Tue, 22 Sep 2026 19:06:55 +0200 (CEST)")
+References: <xmqqwlsei1pv.fsf@gitster.g>
+	<76ac51df-cef8-c6a9-2610-8c21f03c6999@gmx.de>
+	<xmqq4ifhgzvx.fsf@gitster.g>
+	<5f34a5a9-9f72-b725-666a-94798895d122@gmx.de>
+Date: Wed, 23 Sep 2026 20:56:27 -0700
+Message-ID: <xmqq4iff5ml0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260923-git-contacts-stdin-v3-1-56dd43c64d56@brighamcampbell.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32Nyw7CIBQFf6VhLQaoxeLK/zAuKL1tr+krgETT9
- N+FunHRuJzknJmFOLAIjlyyhVgI6HAaI+SHjJhOjy1QrCMTwYRkip9oi56aafTaeEedr3GkHEq
- hVM6Aq4rE42yhwdcmvd2/7J7VA4xPprTo0PnJvrdq4Gn3NxA45VRpI0UJsqkFu1YW204PRg9zB
- X1/NNNAUiqIX1mxKxNRJhgrmOS1Yme9L1vX9QOYWMgVHQEAAA==
-X-Change-ID: 20260914-git-contacts-stdin-1e829930e19b
-In-Reply-To: <20260914-git-contacts-stdin-v1-1-9ac628e6fd20@brighamcampbell.com>
-References: <20260914-git-contacts-stdin-v1-1-9ac628e6fd20@brighamcampbell.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
- Brigham Campbell <me@brighamcampbell.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2131;
- i=me@brighamcampbell.com; h=from:subject:message-id;
- bh=MdzBcGoFGgp0yAmjlLTj5i7LiVw3X0pnqfzTFt447eY=;
- b=owGbwMvMwCUWLsWS0KCyxZPxtFoSQ9aWGtNb0oG8jSxnbJdvXbb4m7Tmtn6tGc15S0+z+CcVT
- /4Tvju3o5SFQYyLQVZMkUXl1iz1i5OtHx2M4J8AM4eVCWQIAxenAEwk5CjDP0utP8Z3p1s4bb2U
- M9HAQk6Z4c+tzbnN2x/tT75+lid4LTfDf/+XXYtCdhY6Hwj4vezwXz5vqeB2H7WIyZsspcu47+9
- dxQsA
-X-Developer-Key: i=me@brighamcampbell.com; a=openpgp;
- fpr=24DA9A27D1933BE2C1580F90571A04608024B449
+Content-Type: text/plain
 
-Make git-contacts accept patch contents via stdin for better
-interoperability with other utilities. Read from stdin when the user
-passes `-` at least once:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-$ git contacts - <patch
-$ git contacts patch1 - patch3 <patch2
+> Fair enough: I did ask you to confirm my summit summary. Let me separate
+> that from what I need for planning: a proposal from you as release
+> maintainer can be discussed on the list on its own merits, without waiting
+> for publication of the meeting record or claiming summit consensus.
 
-Signed-off-by: Brigham Campbell <me@brighamcampbell.com>
----
-This patch is motivated by an ongoing personal effort to allow b4 to
-invoke git-contacts automatically.
+As I wrote, after the current cycle ends at the end of this month, a
+10-12 week cycle including the end-of-year slowness would mean the
+next cycle 2.98 will end at the end of this year.  Expolation from
+there, 2.99 will be March 2027.
 
-This latest revision requires the user to pass '-' instead of implicitly
-reading from stdin when stdin is not a tty and argv is empty. This
-simplifies the change slightly and allows for input via files,
-revisions, and stdin in a single invocation of git-contacts.
----
-Changes in v3:
-- Make user pass '-' instead of an empty argv and non-TTY stdin
-- Link to v2: https://patch.msgid.link/20260915-git-contacts-stdin-v2-1-2005061d907a@brighamcampbell.com
+The consensus in the room was that we want to use 2.99 as a signal
+that something big is coming, so between 2.99 and 3.0 needs to be
+some lead time for "advertisement".  This lead time between 2.99 and
+3.0 does not have to be the usual 8-to-12-weeks full release cycle.
 
-Changes in v2:
-- Minor variable cleanup / un-spaghettification
-- Include update to usage comment
-- Remove Cc trailers from commit message
-- Link to v1: https://patch.msgid.link/20260914-git-contacts-stdin-v1-1-9ac628e6fd20@brighamcampbell.com
----
- contrib/contacts/git-contacts | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+I do not think there was a firm agreement on the date for 2.99.1 and
+3.0.  Potential factors mentioned in the room included that we may
+want to match the LTS release schedule of major distros.  My
+preference would be to give a month after 2.99 to apply only
+accumulated bugfixes and nothing else and tag it as 2.99.1, which
+means 2.99.1 would be April 2027.
 
-diff --git a/contrib/contacts/git-contacts b/contrib/contacts/git-contacts
-index 85ad732fc0..74910496f4 100755
---- a/contrib/contacts/git-contacts
-+++ b/contrib/contacts/git-contacts
-@@ -162,9 +162,11 @@ if (!@ARGV) {
- 	die "No input revisions or patch files\n";
- }
- 
--my (@files, @rev_args);
-+my (@files, @rev_args, $read_from_stdin);
- for (@ARGV) {
--	if (-e) {
-+	if ($_ eq '-') {
-+		$read_from_stdin = 1;
-+	} elsif (-e) {
- 		push @files, $_;
- 	} else {
- 		push @rev_args, $_;
-@@ -178,6 +180,9 @@ for (@files) {
- if (@rev_args) {
- 	scan_rev_args(\%sources, \@rev_args)
- }
-+if ($read_from_stdin) {
-+	scan_patches(\%sources, undef, \*STDIN);
-+}
- 
- my $toplevel = `git rev-parse --show-toplevel`;
- chomp $toplevel;
+The contents of 3.0 should be identical to 2.99.1 except for the
+breaking changes are enabled in 3.0 while they are disabled in
+2.99.1.  Volunteers can run 2.99.X series indefinitely to help LTS
+distributions.
 
----
-base-commit: f0ef1b96a076d08dc972a8d2cb0d1cfd60931eb6
-change-id: 20260914-git-contacts-stdin-1e829930e19b
+At the release engineering level, I am very tempted to keep the
+WITH_BREAKING_CHANGES Makefile knob in 3.0 release in order to keep
+the differences between 2.99.1 and 3.0 to absolute minimum, and then
+remove the "dead code" that is used when WITH_BREAKING_CHANGES is
+not enabled from 3.X at our leasure.
 
-Thanks!
--- 
-Brigham Campbell
-https://brighamcampbell.com
+So the above is what I have in mind, shaped mostly around the
+concensus at Contributor's summit (or at least how I understand what
+the concensus was), with my preference filling in what was not
+firmly decided in the room.
 
+Good enough?
