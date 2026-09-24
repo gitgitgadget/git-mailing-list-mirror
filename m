@@ -1,87 +1,83 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9D4440A08
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 11:08:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1957C2D0C62
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 11:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790248106; cv=none; b=C/U/wH9P1JEHu8H9GftdWAa8dH3V7s+XH+hih/AaW0m8UKqJ9s40ru6H+V2G14gUJfu8U3jrPjmasHLICE0NoGWUpJoAMgXVG93JJ7A+IOdCysc+VN8VJ43VNC06kmf8Bcs+1qmDNiHTHsO239qTKe+AgXIvJC0us9iDrzSV0uc=
+	t=1790248918; cv=none; b=TUttuWX5iOWhceOT5kBONEPfkOoVFJR8aGU6etYN30dPTlaasKrJAhWxk1j86MbzdlKhBRT1qM+SH8O13QaX2BL2wbYOGr9SNpvGCRC/2L/p/XVxhQwdqGjGl6BYZ7NbLuJHL20IVD8b9lbFtO2lNlJoOH2Y/jxCqA28hSny8CQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790248106; c=relaxed/simple;
-	bh=0L5q7LBSn+dPVzgf703reEgBh8eFV2x9vp/up0eibIk=;
+	s=arc-20240116; t=1790248918; c=relaxed/simple;
+	bh=ujs3ZCEliHTDg6XrTId0pQ4Q8F6cIedGo5LMINVslZI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cCAO230/2FRGQ2vHERx3V4JnJXdcfH9uiuGKMf3jEx82FouTEvxWULeY3SCU6iAj4fPcrzfcO/Q2t9hkY+kRiliFF/+drRq0uwmCyWzqfmk5OM6N+wVc46SPQMh9GDDgqL9jK3/NbX5Wc/u/t/jyKcuBYz6l9fQsvaX4lkHnG+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=blLIh0oj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JnL14SmN; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=TJxDAYMDCTUQmSg8yoCWUZhSDKKYssoItf5i7oREXHvAityEUKmoS04vcAqcu34iGRctAiSpuDpTUKbS1pmkCdm08SPUOoxHs+Tv6Eozx5NAsLI1DnYFfbOXPThp1I6GbLCP19fLtIL9dIgAwyb17SMzxY6AtCFWJsVxClK+jxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nJF93RCD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hhid/wIm; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="blLIh0oj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JnL14SmN"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8A49B1400066;
-	Thu, 24 Sep 2026 07:08:24 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nJF93RCD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hhid/wIm"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6B659140002D;
+	Thu, 24 Sep 2026 07:21:51 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 24 Sep 2026 07:08:24 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 24 Sep 2026 07:21:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790248104; x=1790334504; bh=Xq/34F0GZu
-	tjYOXxQNFKJ8gGm1HtSVxU4dBbI+qtCO0=; b=blLIh0ojC3ZlU5A6E70gi7Lain
-	QHf+HzWwjSrBjFpc8P0Atd5Yzt0r7s7CuyGP9fmIVRRn5ftxmvXeYTZPAeZifuaW
-	lQADb8/wmWn8jw0MTngpdeEficJyvtUl5u5wBu1B5+nt7tFu5SVbW4A5Pq6igucI
-	/VNvF+O/3VLseWqSftXXQykmsI6Ir8/N/NmTl4C7d4lYecFyYeK+VFyJWMq/qAA1
-	WahSfqakqRyXFlD7A9jZkYA4gypZEIBs5/myiI4a8JmGF+F1PjS4GAycA9eJtK/q
-	7W3oqROUmSr+hj5DQtU8hQ8tWppXIfGQDGqV29V6YqPjpMJNEdex2xw3mDmQ==
+	:subject:to:to; s=fm1; t=1790248911; x=1790335311; bh=OiQNQ8PrLe
+	xS0rysa9QFU3Y8o9gEkrtGufkyFgV6VmM=; b=nJF93RCDaRF8RZEVEi3GDnI25A
+	gUMZXfQ+00lNNVlZyGONSznl2MciHrQAAlOXkTDwV8ZRQwXGcZ/2UodEBOGNZl6g
+	hyHLW+I1JzC2kVS2dWRCsXf1F/9qlcoe3zIFcSz8XyTcBxLGkHfTfEgqrCI+9iH9
+	73hKGIfsFCevysDPm1bBHE50TgQZgqOBw2zFmGyy666garYrezOOw00Dd6Zo/H8p
+	o4t1p3B/bag2FMxQktljIuOeFrSO7yjiWRES8igcbUtuSGYaYyxlEc2dC+C1sAE1
+	HKyS79OLarSGOkSeFzNV4HY8XcAe5snW9oJ0XQJIzWNc6Pr858NX41CePS7Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790248104; x=1790334504; bh=Xq/34F0GZutjYOXxQNFKJ8gGm1HtSVxU4dB
-	bI+qtCO0=; b=JnL14SmN1WtyEV+qSW9blq6I3IIaJwFfNGo+HilF7HaVQ7PxGKz
-	3QfeifQ4x/JEduI5E5yOjYhdXhdbMqdiwEt4fFtebg6Aq/wyYeH3t/tkHZppQJbt
-	rwphx311eFeZ2gwg1/po7jMcGeX9KT2ahE425VdIMF6J72UAvFo+r1D+5xc7aKz5
-	sEf0DSjPetAGn2Q8nfsEmA45/+1VIpaq5TNQgu42OUtyOtEp1VzKOCAHVa+QFqK2
-	LVdvvUBXS1ljAFAAy8PjDXIcUenKmiQuTMqqQKcZ1n037VDiNKnTVM1a6PAxP+yJ
-	eM5bk+MO88mSCcAZXNhGb0RI/p+MHZmF9aQ==
-X-ME-Sender: <xms:qAS1as0j1dXQywPeb6NbsT4ko41oexAa_Ii5yxCu8j8_EFmPx2Eprg>
-    <xme:qAS1amJnT988jhx56r2jZdfhdIxReZhx91UPDA0ioBE4D9ORB6Tt5JHLRwFWYdvj2
-    _a5r_bHlPSEzg1QKN9imvbgb3VIlUj33Oem_c0_7t_tBmYKo-uVpXo>
-X-ME-Received: <xmr:qAS1arHOlUnTi99OoJNlRMeUTNHNZDxauWa7ivmdrXol7AsABt_aFvr2DMAb6N6DC1Pyr3k>
-X-ME-Proxy-Cause: dmFkZTF9ZstuWnVK3T3YLcc/btfUebBraXLVBvkiNGmd9FqPI3ZcLYgqNm3Gu/VV/4VFK8
-    3E8li1+Yb2AIQTqM3qLS4LkUmH/nXULFY5HWg3BTyrX0E1B25AGSDzw9KQ+ZyPH6EqunL6
-    wjvZtXeeNZWf0OdU81HUlp72NCYcCVF6qNT7QDKfrcXr355OyDvQHumDf9AsEY2Jdx5GP0
-    TvIJB0KJwJi0c4ghsUwLuSD8OkteHIsq/vc4BPLTib8cIe+pkrLGnyq0tdv9Q8hdKjIFnR
-    hequYQfaLDjapWu27vhO2wJeIZOtm5NDehb3eCrhlPaLiQNlwtCzZ75R2jmazdDrHWJOSM
-    LURszPrHLaNuI0kBXpkJ2b/gMpkjSQnlQJjewOatKa3zM21lU3WY7gbvoJubD3M09XzZvm
-    xLlkm8fzRRu4c2k6yakPnTnoagcFgZpzKdGj/k5E8d1IYfSDP6Ea2zwYOoXFn3jmSL4YzG
-    MCyEBsxRagj8eqCAw6oBaycyVpLodpMeCX4deErmz5RwDizMj0UWSeQHJ59KtbqUNtrPxB
-    R20xEV0FwmOXzxmBR7UcUQ9vsCLIW1TUAxRYpJkQDHZVZkPF3qRnIixA0e54E592pLi94X
-    0RdAD2JGEd9VT0bMtU6rKXasAOGMOBQTZ5DXUYYM6LtUwsC2gL8X2NsqshDA
-X-ME-Proxy: <xmx:qAS1aiUlkWrBNon7Q1eT0LLcWfoVr7niyIYaZbNe_PlzXKgGAjai_g>
-    <xmx:qAS1ajydhkMzCNZvYU7Rsxzi7URXUc8p7e8lUC_7ojBa9ksWIkjUzA>
-    <xmx:qAS1anTYnI0zQE6NH_yFuYAf9rQoF72FjYhur0VJLIeSx9tkgCZ94w>
-    <xmx:qAS1avix89sWbb8vum69nRO3a3j6zUmhWapRGK7F0Ujl0e9azKM4nQ>
-    <xmx:qAS1anW-iK9M9hFFxYL6BvASk9bLeRgpumdHbPElyajPRC9QILY48B5R>
+	1790248911; x=1790335311; bh=OiQNQ8PrLexS0rysa9QFU3Y8o9gEkrtGufk
+	yFgV6VmM=; b=hhid/wIm9xkjF/zEjPXyXCBzkidOtmJyjKWPwRE3iqwb4vRb46R
+	BXOJJ+pKODm8B5+MVkU+QNwOx6deLPc9zcLS6mdn54IwZOTHMZiPRrlkL/jMbyTh
+	Sb4gKyV0fEYDscvpAfubLHEW7iaQePNRYoDImwG0MAC28J/gMkH49DQBwgmsJr9B
+	V6E5IENueikKDi/xwYLm18NdCel2fBOIdQ3tqHqWYY5sf9b2ggqd0ovARx+GObMS
+	R+PVSV2ipoMsrgbCRH4I6HpY3VL7VOCkOVoeL0XSa51wMCo21yFBGwG23OsiEgk8
+	86Vt8+juxE1oNGG+XaTRCNOFhwQmX+mkTLA==
+X-ME-Sender: <xms:zwe1atJ7eZZk8HX30aotEJqH2B4LV3Unahs2gKUf0ID9YoczmGIyTw>
+    <xme:zwe1aglcYirOvuw02HvfG2XGKPFuwhojm17AXlqFAkDzJxfsdLKXXUEkI1rS3kgXG
+    T8MIvQvIIyl0R1H5s4vEYXEcrb-IIwbr5gU9jV2fQLUo2Qyxx8e-X4>
+X-ME-Received: <xmr:zwe1ajFOW0WxfTpZexUv5vWBTZGh8uC05XJ_DaStWzDH3TLInmiD-X4AFXe3ozS2TEL9Tig>
+X-ME-Proxy-Cause: dmFkZTE+aTbrE9ghSzT97qPS5vxtiNKJ5dRyX/+yEDJMS8D1xU9QxoCK6Ixt79nyblI34a
+    dsTikztVsEt1HXdMfVt/lvuA0ksBQC8Wb5jEIkie9y7km/Py1ZWf6kKJq7s1eswmh3mkm0
+    yM4P0yFUG1RdVcVOYV9pfD9BAewBx6dhvqq1QLyLG4gTTlTRyQleAhvwfbBuGlfTYXJyhx
+    ifxTW5X+Faf88xzWw95WdFNvxeCIGenfQMBCYuLeqA/Rq1wLZbkJMTWakZcLIspv+o2vZn
+    J8XrSPnfibH9Q924RbhEwX5xaFWxMR4cQ0+uzxS4/7MT+qJKubLoihAVr2JXpVYETK7HcL
+    uRsd7kD4Uo15PRgxp6CtR1cB9BkStj+e52i6bScZCVbEJPaGZUYT8/AzgHPIAVLWy2sPiO
+    19kkSbXCCGQKOx5RzhNL099MKVQQWpcEfzTk3hLh9mVnWYoXRLg4YyqiIzJw/2CgNhW7fF
+    8OkCnVxksy0LJFMHOQLWogXhd47Nj2sF0e/nw79SXryNIF0DL4FN5WiWRAccW2ou4ISExs
+    68N0hzhjOPTB+hjWgjZfPp7aD8A1YINoyiuXOQzHjxeFKz+hw0fGlj0YJPXZ6EvX4QPxcD
+    sXqRZxZnUMcIl+UZ9VxE7g98ugNRg0gST1kIK2bKvoybo3Yl1wgC2YcHl9Nw
+X-ME-Proxy: <xmx:zwe1aoHUFgy5Y-O6JXfhpDPxl5ESklClXyGy7GsS0mIzsNAsKLI24w>
+    <xmx:zwe1aoPc8de_CJ77OPLTAzM1RwIWX-GvHUnyvsY0sF0oPodJHJw_uQ>
+    <xmx:zwe1avEWbiv56maHinOYdjHzBieI-kfDGp52WyXvRK69vTCVBxt9Kw>
+    <xmx:zwe1anNUe_h2p27Fusy-2VbcvM44C0Jy7Xw5XurdNwOGCc0bgfKO_A>
+    <xmx:zwe1avFIYy2P4mJnhfVku_wiKU9423neK47JTwr-B8_ueICgBpZ08ffc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 07:08:23 -0400 (EDT)
+ 24 Sep 2026 07:21:50 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 665f2bad (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 24 Sep 2026 11:08:22 +0000 (UTC)
-Date: Thu, 24 Sep 2026 13:08:19 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 512bbbd7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 24 Sep 2026 11:21:49 +0000 (UTC)
+Date: Thu, 24 Sep 2026 13:21:46 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Phil Hord <phil.hord@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	"D . Ben Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v5 2/3] branch, tag: retain old OIDs in batched deletions
-Message-ID: <arUEo7bzFJfOTTFY@pks.im>
-References: <cover.1790113781.git.maciej.ciemborowicz@gmail.com>
- <cover.1790196627.git.maciej.ciemborowicz@gmail.com>
- <6a8401c448f527fd80c162908a2736811a723096.1790196627.git.maciej.ciemborowicz@gmail.com>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/4] ci(gitlab,windows): provision GNU Rust for SDK-based
+ MinGW builds
+Message-ID: <arUHyjHAX20ovmr8@pks.im>
+References: <pull.2233.git.1789819933.gitgitgadget@gmail.com>
+ <6a389b2bad1653175bde2a767ffbb5b672e324e2.1789819933.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,40 +86,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6a8401c448f527fd80c162908a2736811a723096.1790196627.git.maciej.ciemborowicz@gmail.com>
+In-Reply-To: <6a389b2bad1653175bde2a767ffbb5b672e324e2.1789819933.git.gitgitgadget@gmail.com>
 
-On Wed, Sep 23, 2026 at 11:04:41PM +0200, Maciej Ciemborowicz wrote:
-> Before 8198907795 (use delete_refs when deleting tags or branches,
-> 2021-01-21), branch and tag deletion passed each resolved old OID to
-> delete_ref(). This prevented the command from deleting a ref that another
-> process had changed after it was inspected.
+On Sat, Sep 19, 2026 at 12:12:10PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> The conversion to batched deletion dropped those old OIDs. Besides making
-> the deletions unconditional, this causes reference-transaction hooks to
-> report zero as both the old and new OID.
-> 
-> Both commands still resolve the old OIDs before starting the deletion. Pass
-> those values to refs_delete_refs(). This restores the old race protection
-> and lets hooks receive useful old values without adding ref reads. If a ref
-> changes concurrently, reject its deletion and preserve the new value.
+> The minimal Git for Windows SDK already supplies Git and GCC. The
+> MinGW Makefile build needs the GNU Rust toolchain, not another Git
+> installation or Meson.
 
-Hm. The motivation makes sense to me, but I have to wonder whether we're
-approaching it on the wrong level. With your proposed changes, we're now
-not force-deleting the refs anymore, which is a user-visible change in
-behaviour.
+Huh, what's GNU Rust?
 
-What you're after though is to always have an old object ID available
-when the reference-transaction hook kicks in. But if that's the goal,
-shouldn't we consider whether we can instead resolve the old value
-during the transaction and queue that for the reftx hook, regardless of
-whether or not the user has asked for an old object ID? That would now
-cover _all_ users that modify refs without us having to update every
-single callsite.
+> Let the dependency installer serve this configuration while keeping
+> the existing package set for MSVC builds.
 
-Sure, strictly speaking it's a backwards-incompatible change. But we've
-always considered the reftx hook to be exposing internals, so we aren't
-all that strict about retaining its behaviour and have allowed changes
-in behaviour in the past. So I wouldn't mind if we adapted the hook to
-always yield the old object ID.
+Okay. What's implicit here is that we in fact don't use this script at
+all at the current point in time for our MinGW build, we rather use the
+"install-sdk.ps1" script. I assume it will be wired up in the next step,
+so let's read on.
+
+> diff --git a/ci/install-dependencies.ps1 b/ci/install-dependencies.ps1
+> index e3b367fa54..8c68fb0cfc 100755
+> --- a/ci/install-dependencies.ps1
+> +++ b/ci/install-dependencies.ps1
+> @@ -41,6 +42,17 @@ function Invoke-Installer {
+>      }
+>  }
+>  
+> +$rustTarget = if ($Mingw) { 'gnu' } else { 'msvc' }
+> +$rustMsi = Get-Installer "rust-$rustTarget.msi" (
+> +    "https://static.rust-lang.org/dist/" +
+> +    "rust-$RustVersion-x86_64-pc-windows-$rustTarget.msi")
+> +Invoke-Installer msiexec.exe @('/i', $rustMsi, 'INSTALLDIR=C:\Rust',
+> +    'ADDLOCAL=Rustc,Cargo,Std', '/quiet', '/norestart')
+> +
+> +if ($Mingw) {
+> +    return
+> +}
+> +
+>  $gitAssetVersion = $GitVersion -replace '\.windows\.\d+$', ''
+>  $gitInstaller = Get-Installer "Git-Installer.exe" `
+>      "https://github.com/git-for-windows/git/releases/download/v$GitVersion/PortableGit-$gitAssetVersion-64-bit.7z.exe"
+
+Okay, so installing Rust is the only thing we will want to do on both
+MSVC and MinGW builds.
 
 Patrick
