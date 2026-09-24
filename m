@@ -1,81 +1,81 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBEC5443C1D
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 09:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DD0442397
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 09:19:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790241592; cv=none; b=XhEljsr1DpEPB1gb3YbvgBhNHl0M6L6Oa3E3u0aD4gEp9YTt57AeOWHrq+hZDQ7T7ZffU/Xyoa9f9PO7nh/OaAzztV7huMOQt7CkJkImWxwij2DTRzbXEgQN5QvCrB5CLFqBtzoQx8XUbD2Fp43YdS04RGVGz+MMzVV6OSmDKvs=
+	t=1790241593; cv=none; b=n6lKpt+JZn8a3hNDQICG5o1uRyphrnNlbQHlMLq/EHuUZjNm3NhZm6TzJtlnQDi33GIAeE1pm1DiIihQ2I6OjdgIvJCh8x1D4YynNZWLh8hWqTHclPgLMFPsi12siqXvZt00HYb6elPgYFCEd8IcvNu2iP4rzA+Rh8DdZeadG5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790241592; c=relaxed/simple;
-	bh=8XxUZfdxzDz984d3wTR8VqMAOHm32gt16BfJhKkRZtw=;
+	s=arc-20240116; t=1790241593; c=relaxed/simple;
+	bh=4umDP7veNM5FcrBpHeeUHJOzt+UZupn20SFQIJNpQjM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dI5sIqS5m1UgVDpp6NbP0ajtl+uJyfdUklY40JCWzz31hvY3njgHgofcZgtDc0D1vBiXpfBQI/vXR+2eMyy8FmR+O5EMpzvX7yH0YnNiJXcf+a0PfuzJ0pKJ72vEapMmTGToFDzosz0FFeGGgP0g0LSCxzRVB9CfGDgzWSH/MPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mD5It3Xs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ogoQ8jzu; arc=none smtp.client-ip=103.168.172.144
+	 In-Reply-To:To:Cc; b=Ch9DzZ3q4qfF3GuuXz1JlcFwy9c7skbn6nHi7SUC5gFlDd0nFLkrnOFGcFYILl9spkfhCmgFRllM7Iy4pj1cRbO+DE5Xf9LuokHsazezq/gPGJCjnSH4iOGH2yI3ZZAGEqb4CzXlXcZgEfmbNFG+Q8Xj1AhzgYl7EDygGBqj4t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fmDt6BLL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qhhfXx9z; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mD5It3Xs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ogoQ8jzu"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id F3297EC00B8
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 05:19:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fmDt6BLL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qhhfXx9z"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id AEC40EC00CE
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 05:19:49 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 24 Sep 2026 05:19:47 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 24 Sep 2026 05:19:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790241587;
-	 x=1790327987; bh=Lzi3+wRA0bEef0Pjzko+8yycASrdTv0MdodEe/eYEm0=; b=
-	mD5It3XsGF32XbPY4RFOtGT0g6XJtMmQN1szrKpa+7W/A+2KHKB1a7FErpHOIanL
-	SNWRDT6pwjWt1vnHv480PNTj3IVfcTpkoFv/ywpK/bH70UTTRi9XaGeZKpbvEU/c
-	zbDV2Vhx5tZVuPZCJf3hbr9pxrvZ6ov067NHFahwJ0+NMbmCPDTTi7+xiu5QXn6J
-	C/y6FCjvbuBJzcBN9wNvCyGu+X92nd6O/CZxeTq3QGLXD1PB9gGSlXeptskbjdAW
-	m343sOZI6ogpGhd3ryvpLxoPqZ4Wp0y/4/e1b0C7ngMxc7rAVIojkboPtXBZH7cl
-	Neh8SD4F8ocwznYwjO1m5w==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790241589;
+	 x=1790327989; bh=PNu6uFlNqL9qXfmWR/aGk0uIiBG1UMR+Xzmp/UXV5c0=; b=
+	fmDt6BLLD0kfn839aah0l2xW2zD/8/DlzpGl376vewhtS+QguoGlPekr4s4kCvgL
+	QjuRXJBeAp8T9WQItuWWp8hM3Sxj2G75mOCmNJotGEfNgCwurNiLaQHgUoemAHiu
+	HwND6sc7Xj8ZIr+lpK9zW3rvLMuZOZz526vtHMf15UFvWZGwNBOhkNgfGWtJIKZ9
+	SVcFQ+Fsh83H8L38ykvSF1jmBuG0/Powzj17VOYCDAn9h0fJXpNIARXkqEkNW9tc
+	sWabS8xsmEtFUgAoY9ivShPw87cPmPRcbNdF8Hu/oy3I2sIaUwcievok0Zh6udeG
+	Wj5HkAFc48EC/W1bJr1zsA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790241587; x=
-	1790327987; bh=Lzi3+wRA0bEef0Pjzko+8yycASrdTv0MdodEe/eYEm0=; b=o
-	goQ8jzuZP8s4gcJQws485V4ketNcf/p5W07UdgJUIdhYq2ax8xRCqee8DR8RhpO6
-	rH2KvZFCRqmOUsFWI8V1vsKId3nZDBmFzcsEovroJLgCES4lITuB0jCfkMqM/Vlx
-	Se7UXXISlDHWlNPu5eVzEYdilk5W7aTR0LuiYNe/TgLL/V6rxFjzOPT4Isimzy8q
-	DMsWU/Iha4O0+fDGvldBWiphjksHSQmprK6ZJwSCV/X0J08/9emYSB5ZqQw3KJ14
-	j9o1dNXC/80MrZe8osJn70X939V2JfJGm7S/t6gn+sW0+nQb3oHQT4joZIxXu+7S
-	I0b8FXI9aBDjcPQ0uDATg==
-X-ME-Sender: <xms:M-u0aimRoIF4kJtixdiWhQi4BsZrXkdIpH-vpclLeHb1cFqcqnBgTA>
-    <xme:M-u0agy5NHqsMwoo8OMMyrvw4SYlitpEbpL4zRGU936XMVY6lr4_OczorwmXFgVAd
-    ZttACz-alC7ng_XdnSbJuFWiU6ZyRuu2wnSxrEfKxqzH_Tx-LbP_Q>
-X-ME-Received: <xmr:M-u0amT95eFTYJCL3jTd1JgIeuV5TcnV0Q-WO8n4pEEs6DUsVNZAaTL_Z2O5wM_KHpfGd-Q>
-X-ME-Proxy-Cause: dmFkZTG2pNBg0N/LAGNDOAj+nGLxMFIIor7EHY4S+hpEEIzp1uYqjTYNQWjBtU8CvkDsFO
-    eCHCpjw7Di8S1RJDa4jE0q12X5Ov2TpAKW1KukLXCX9+eBYtA9M81fNI+V9vzuSQPh+sJv
-    I9sBUl1ezeqCePTeQCQwr+SIm8FOVLcj2ENN0UqmeD0WrpUsNRFRcVHAOIpDM0X7ECdHkY
-    V0G5qTdUenhVglwhNugWnp59V6ooFRp445tE1ACeU+8b2kxo7n8WgRQrz6AqQrf19Ytdgy
-    9pXb9mBfTqf1o4cCJ79tp5CIbcpX3p4PyViWIqhIAd8CkzAGb6M10otf9hRSO+Dd/Mkxcj
-    FOVP/dcJIXI07LU3QJlPN6KE8hnDG4vTmtJIALVqB9Pwq6TPxxlpWLUPalFns4bY+lqt7N
-    rjm5vFchU7x9CGtqzZUcEOdC2qgALsPqDXj8LIhUetVzXKuVDyhI4g8wpp4jnwphNGOJ61
-    dAeLdiAoz4pEsgkigaIWEl6O9cHzqYG8Jls8ykn4gOE1wi56EMKDb4RKfCruJK5y2uSSUL
-    MNWOP6VrqgcArp8T+cGqpdqDsB3mMMCF9q5BnmR2Qj20xBjj04KtBpwNs9+hvLeRKM7TPN
-    mFr9vVJ8N7/9TQVemnvsyqwJhAbrw9W/Ie9IMQBM9PFoD/VRkv6eifoFPlAQ
-X-ME-Proxy: <xmx:M-u0ars8OomFADdgsC1UtFOoww0BSkfHZ-PZg1GR0RnttXYem1whpQ>
-    <xmx:M-u0agvT5IfBUMNGz6KkvloXhE6shgbwJ7o4W49kh-FHmQeafrKF5Q>
-    <xmx:M-u0apyq2EunQBKS6DrPAHCl-WhRcPqOIm5FNKyPuhA3NZ03EpPC8Q>
-    <xmx:M-u0aujVV5MBRxkUHseuRc4i9MxAEzuAUnRQgxQdCKqZJtD8HrqLVQ>
-    <xmx:M-u0au0w81JVcDcb75v7KNaTzLs928Q4FjA7eOhJEB6XtOuEoJjZ4w51>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790241589; x=
+	1790327989; bh=PNu6uFlNqL9qXfmWR/aGk0uIiBG1UMR+Xzmp/UXV5c0=; b=q
+	hhfXx9zdQBnjAQu23rbQngczEQ6TTRK3gwGXL2kKV7rQKVIQw2bwk6ta/q3jX0GQ
+	4x/NKhxiYEjEoikYQkGbtVu8o3S+oavsMX27GsN0CwMW4a/uE5B5zjO63QSVd77b
+	pTgP4eL6llu3590Ag8kFrQDfBQECf3i1qeTGDpRHJxSAb0zuJDp2GCWSKovn19ho
+	sQhFtJPlKCxUSM+nmysPl6M8vwPK95SdwPLA/lWtVlHU2KLmcp5oMKCjVevKO1hd
+	hQZSZJudKxd8DbhpmLeitHWiWtcjbQH8zsCTmhkW6tVGBA4SYpgY4GTLBakpzDVZ
+	bvwJ5i+UzK0whZYewn44Q==
+X-ME-Sender: <xms:Neu0asKRvzaRYBApitPnENHe4FIjro7sYdCjJDlrG5mUDwtLZlzELQ>
+    <xme:Neu0ajFw_a0a1H1fSpj3dDt4lh5LRtOdphHwxrKNFbQHWNmCIInYXRKOMiWgoXYrt
+    J-ywxF40e6sKLyM88-_e_OzXqXc1GR3YWQMc8StpfFCxqpQz4Ime3E>
+X-ME-Received: <xmr:Neu0aiU2Ay91b_TLD5mNU4ZC_Pun9HQtpSOmhjUNoqC3Q3mngbe9asNDry9C-bnVTubumnU>
+X-ME-Proxy-Cause: dmFkZTFPodOiLWcdqf6sGstU46dIiqXidIFd9cR4fooPG2VzhuQs4sgHwSSL0mI+zYrJki
+    puKwTM6PzOLvhrOnHha7/ZqJXKFWeUZ7pL3PmhkuvlpM0SAOkWbZk3xZQvHRMhKdNhwt4b
+    RD3a0i1KaVTQhiwtqarc8pf3XfoXA6W5MTyTZacFoe6F2umLNsXJ1ouYl3pIUvkblQZagq
+    My5ETPa7FIKiTyNS2see97qCZqfu7GXNWEANEz90j9Xl651gCUX4FzvDgltnokz25gMaTM
+    HthS5xNHFJNXlc52D+rP6WxTTQ+lRC0R4uRCl7fXgiak8N0bh0v8/Rl7rSKJ4fouMiwlpn
+    nJKga1YIq/HHrO+fV4sq64s0OGShtvD/caiul5tzBbbmYS0riB9GYr87hsolD9Xu/iZsFD
+    ENC4CX/8WENYRPqsU+lvOkIPiZSJy8kCcDuJiTZZnEWfSVJ3EACCk+ZMQLgZT2mLpssPPP
+    wcO+90nCO7sWvNnt2HVa+2k9+9+elpLVoEb0KssKvnlMdDxBep+c9tJ/lJ298SH+jKhEgn
+    zzmSaU9yBBKvoXkL8ZeGFwatGyi+60o+K6ggmL6Uta1Xcs7oiYOzacZYqSu5dyuqU/CKKa
+    ZFMOj2rUM7ptCQCL5U4nBo01btz668w3XKoXPrtgyVRQZuQDoF4kJHoXdIgQ
+X-ME-Proxy: <xmx:Neu0aujMlE-CgKsQAjLkZQhv-5DA-jX5W0RHZnCtd2_3GY2oUAKxtA>
+    <xmx:Neu0ajSkeElo8-3LtJv_8tRiyG1BNMXodJE_g5WCKFXrqIfykA_gTA>
+    <xmx:Neu0ahGPf-UJE9aeysQm0rOqX7eZeNaFJmNGEgJHrCgK7qc56TlMYA>
+    <xmx:Neu0ark5hAIiIEPyragnWBuxQEfq1742W0hZ8lI1YAmTQ_nJ42dWvA>
+    <xmx:Neu0alomdpkpbgVBTt1cvIahKXclAX63y1oVHpZVyyOUd1DE1g0s7NdZ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 24 Sep 2026 05:19:47 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 24 Sep 2026 05:19:49 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b2caa5d4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id d51adb54 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 24 Sep 2026 09:19:46 +0000 (UTC)
+	Thu, 24 Sep 2026 09:19:49 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 24 Sep 2026 11:19:23 +0200
-Subject: [PATCH 5/7] builtin/clone: don't apply "core.sharedRepository" to
- leading dirs
+Date: Thu, 24 Sep 2026 11:19:24 +0200
+Subject: [PATCH 6/7] repository: adapt `repo_clear()` to fully reset the
+ repository
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,113 +84,137 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260924-pks-create-repository-stateless-v1-5-11499557cf31@pks.im>
+Message-Id: <20260924-pks-create-repository-stateless-v1-6-11499557cf31@pks.im>
 References: <20260924-pks-create-repository-stateless-v1-0-11499557cf31@pks.im>
 In-Reply-To: <20260924-pks-create-repository-stateless-v1-0-11499557cf31@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-When creating a repository via git-clone(1) we create leading
-directories with `safe_create_leading_directories()`. We have adapted
-git-init(1) in a preceding commit to instead use the variant of
-this function that doesn't honor "core.sharedRepository". In that
-subcommand it didn't have an effect though as we explicitly unset the
-value of that configuration anyway, so we never honored that config.
+The function `repo_clear()` can be used to clear a repository's state.
+The way it's written though it's quite easy for it to accidentally leak
+some state because we don't make sure to clear the whole structure.
 
-In git-clone(1) it's a bit of a different thing though: while the
-repository isn't initialized at the point in time where we call the
-function, we didn't explicitly unset the value. Consequently we _do_
-honor the configuration here, but when it's configured in global- or
-system-level scope.
-
-This divergence doesn't seem to be intentional -- I cannot think of any
-good reason why git-init(1) and git-clone(1) should have divergent
-behaviour here.
-
-Adapt git-clone(1) to work the same as git-init(1) by also using the
-`no_share()` variants to create leading directories. Add tests for both
-commands.
+Refactor the function to set the whole repository to all-zeroes to avoid
+any kind of leaking state. While at it, make it a bit more robust when
+called on an already-blank repository.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/clone.c        |  4 ++--
- t/t1301-shared-repo.sh | 42 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 44 insertions(+), 2 deletions(-)
+ repository.c | 37 ++++++++++++++++++-------------------
+ repository.h |  2 +-
+ 2 files changed, 19 insertions(+), 20 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index b14264c33a..e72f8aa325 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1133,7 +1133,7 @@ int cmd_clone(int argc,
- 	sigchain_push_common(remove_junk_on_signal);
+diff --git a/repository.c b/repository.c
+index b857e1c580..e67ff00550 100644
+--- a/repository.c
++++ b/repository.c
+@@ -374,60 +374,57 @@ void repo_clear(struct repository *repo)
+ 	struct hashmap_iter iter;
+ 	struct strmap_entry *e;
  
- 	if (!option_bare) {
--		if (safe_create_leading_directories_const(the_repository, work_tree) < 0)
-+		if (safe_create_leading_directories_no_share_const(work_tree) < 0)
- 			die_errno(_("could not create leading directories of '%s'"),
- 				  work_tree);
- 		if (dest_exists)
-@@ -1153,7 +1153,7 @@ int cmd_clone(int argc,
- 			junk_git_dir_flags |= REMOVE_DIR_KEEP_TOPLEVEL;
- 		junk_git_dir = git_dir;
+-	FREE_AND_NULL(repo->gitdir);
+-	FREE_AND_NULL(repo->commondir);
+-	FREE_AND_NULL(repo->prefix);
+-	FREE_AND_NULL(repo->graft_file);
+-	FREE_AND_NULL(repo->index_file);
+-	FREE_AND_NULL(repo->worktree);
+-	FREE_AND_NULL(repo->submodule_prefix);
+-	FREE_AND_NULL(repo->ref_storage_payload);
++	free(repo->gitdir);
++	free(repo->commondir);
++	free(repo->prefix);
++	free(repo->graft_file);
++	free(repo->index_file);
++	free(repo->worktree);
++	free(repo->submodule_prefix);
++	free(repo->ref_storage_payload);
+ 
+ 	odb_free(repo->objects);
+-	repo->objects = NULL;
+ 
+ 	if (repo->parsed_objects)
+ 		parsed_object_pool_clear(repo->parsed_objects);
+-	FREE_AND_NULL(repo->parsed_objects);
++	free(repo->parsed_objects);
+ 
+ 	repo_settings_clear(repo);
+ 	repo_config_values_clear(&repo->config_values_private_);
+ 
+ 	if (repo->config) {
+ 		git_configset_clear(repo->config);
+-		FREE_AND_NULL(repo->config);
++		free(repo->config);
  	}
--	if (safe_create_leading_directories_const(the_repository, git_dir) < 0)
-+	if (safe_create_leading_directories_no_share_const(git_dir) < 0)
- 		die(_("could not create leading directories of '%s'"), git_dir);
  
- 	if (0 <= option_verbosity) {
-diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-index 0e0d07a1a1..3bc4bdb038 100755
---- a/t/t1301-shared-repo.sh
-+++ b/t/t1301-shared-repo.sh
-@@ -210,4 +210,46 @@ test_expect_success POSIXPERM 'template can set core.sharedrepository' '
- 	test_cmp expect actual
- '
+-	if (repo->submodule_cache) {
++	if (repo->submodule_cache)
+ 		submodule_cache_free(repo->submodule_cache);
+-		repo->submodule_cache = NULL;
+-	}
  
-+test_expect_success POSIXPERM 'init does not apply core.sharedRepository to leading directories' '
-+	test_config_global core.sharedRepository 0666 &&
-+	umask 0077 &&
-+	test_when_finished "rm -rf dst" &&
-+	git init --bare dst/with/leading/dirs &&
-+	cat >expect <<-\EOF &&
-+	drwx------
-+	drwx------
-+	drwx------
-+	drwxrwxrwx
-+	EOF
-+	{
-+		test_modebits dst &&
-+		test_modebits dst/with &&
-+		test_modebits dst/with/leading &&
-+		test_modebits dst/with/leading/dirs
-+	} >actual &&
-+	test_cmp expect actual
-+'
+ 	if (repo->index) {
+ 		discard_index(repo->index);
+-		FREE_AND_NULL(repo->index);
++		free(repo->index);
+ 	}
+ 
+ 	if (repo->hook_config_cache) {
+ 		hook_cache_clear(repo->hook_config_cache);
+-		FREE_AND_NULL(repo->hook_config_cache);
++		free(repo->hook_config_cache);
+ 	}
+ 	strmap_clear(&repo->event_jobs, 0); /* values are uintptr_t, not heap ptrs */
+ 	string_list_clear(&repo->disabled_events, 0);
+ 
+ 	if (repo->promisor_remote_config) {
+ 		promisor_remote_clear(repo->promisor_remote_config);
+-		FREE_AND_NULL(repo->promisor_remote_config);
++		free(repo->promisor_remote_config);
+ 	}
+ 
+ 	if (repo->remote_state) {
+ 		remote_state_clear(repo->remote_state);
+-		FREE_AND_NULL(repo->remote_state);
++		free(repo->remote_state);
+ 	}
+ 
+ 	if (repo->refs_private) {
+ 		ref_store_release(repo->refs_private);
+-		FREE_AND_NULL(repo->refs_private);
++		free(repo->refs_private);
+ 	}
+ 
+ 	strmap_for_each_entry(&repo->submodule_ref_stores, &iter, e)
+@@ -439,6 +436,8 @@ void repo_clear(struct repository *repo)
+ 	strmap_clear(&repo->worktree_ref_stores, 1);
+ 
+ 	repo_clear_path_cache(&repo->cached_paths);
 +
-+test_expect_success POSIXPERM 'clone does not apply core.sharedRepository to leading directories' '
-+	test_config_global core.sharedRepository 0666 &&
-+	umask 0077 &&
-+	test_when_finished "rm -rf source dst" &&
-+	git init source &&
-+	test_commit -C source initial &&
-+	git clone --bare source dst/with/leading/dirs &&
-+	cat >expect <<-\EOF &&
-+	drwx------
-+	drwx------
-+	drwx------
-+	drwxrwxrwx
-+	EOF
-+	{
-+		test_modebits dst &&
-+		test_modebits dst/with &&
-+		test_modebits dst/with/leading &&
-+		test_modebits dst/with/leading/dirs
-+	} >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
++	memset(repo, 0, sizeof(*repo));
+ }
+ 
+ int repo_read_index(struct repository *repo)
+diff --git a/repository.h b/repository.h
+index 11f5c2ed10..2a348012e8 100644
+--- a/repository.h
++++ b/repository.h
+@@ -258,6 +258,7 @@ void repo_set_ref_storage_format(struct repository *repo,
+ void initialize_repository(struct repository *repo);
+ RESULT_MUST_BE_USED
+ int repo_init(struct repository *r, const char *gitdir, const char *worktree);
++void repo_clear(struct repository *repo);
+ 
+ /*
+  * Initialize the repository 'subrepo' as the submodule at the given path. If
+@@ -273,7 +274,6 @@ int repo_submodule_init(struct repository *subrepo,
+ 			struct repository *superproject,
+ 			const char *path,
+ 			const struct object_id *treeish_name);
+-void repo_clear(struct repository *repo);
+ 
+ /*
+  * Populates the repository's index from its index_file, an index struct will
 
 -- 
 2.56.0.rc2.329.gd58861e689.dirty
