@@ -1,108 +1,140 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy2-f43.google.com (mail-dy2-f43.google.com [74.125.229.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E7437F33F
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 11:22:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97483C9ED5
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 12:05:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790248935; cv=none; b=fsUZA+SAkfzpb9wYvxR+RoAoyltwAkxBKxJ/WsK6wFq19eowBUlzhcYCC/ukVro2/g1ZfE3B2pqB6M2EAL8tRTFA2/mZF3MEAeteEQth6jfVyuEwE95e2puCAlPk7UVm6SM6mG4S9Z7pbBV05EYicFhsnVpD2m2WxqPDAqVe/9U=
+	t=1790251515; cv=none; b=Qu5x0gpNhfBNRdTCcMB08p5E2bCRmxUaU+JHHqE1dyxCGXrwmPiZmn05Ca508NJEVTc6ogwZgV3etZmdkKkAJ+xMemNanTTeZTGz0thwubN5kfXihFzN8dcixuYkO4LVHff+pHBaGa4TD/qHdJneK0jShi34rwG09uRzTgsr/wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790248935; c=relaxed/simple;
-	bh=Qd7q8/PwPgRksXFncbIJ6NMB+YiN1Ah7vTEuKbjX9og=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eljdcsE/dG1OcQbJX/1roNtGVNW+z9e19AsMOEb47aKLRPhuLRw0b7WOoJYARMXy28ArwDnDUraJwVNgqkqzL/1T0h2stHtGFNjqZAKu0DsRMfRnwryP+t6z9Ig3LdPtYtL1YE91fuZEqcHJL0c/Hx6w9vlM2SuqtIwecKXhj38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uLxtq+TJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LTTtYvld; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1790251515; c=relaxed/simple;
+	bh=R6tTU3xcdrWXBofIX2mV2SqCNG/vvuvvCajuDpr+BpU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IG3m8ehApc/1P+WDgC7N7OTwMd90T1vlwnD53JjD0vVnSsGSfY8FpN3loTncw+lOo7kvJ+e8wEpFTJFCh2+ppo7+x9M4fTzgvbmBs5cuKUEVwKqstElvAyNPCjXQ697/sI7U/ws0dx3Bp1WkfBKbyJGT6NnWJDzaovfHoJYOygI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HcHAcbPW; arc=none smtp.client-ip=74.125.229.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uLxtq+TJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LTTtYvld"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4E77EEC004F;
-	Thu, 24 Sep 2026 07:22:08 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 24 Sep 2026 07:22:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790248928; x=1790335328; bh=vcmywvS8I+
-	cdmROX1F76Qr7aG2qewLn2+zfLr2QV0sI=; b=uLxtq+TJWDEAh5L8+GV4SyDDas
-	PgWFqH0BOSb4myXg7t8Sot4s3WZADUC1tsNkrIrAc011X4UAnK5YpHCvGgpwxl/n
-	hlvFbr3MCtzM1uGycZ2A/wswUn7dLvd06TYnS4GwQ66DNaaKSmd1XnvwJ+jqIrbu
-	ygyZwTfG7Jb2G6jNHtGAPDK/pLHXrcQk24ccoq7OGlwUv5WfW41jbtNpqu84VtFb
-	NRYOCHaYSb9CK+3G3Zza9gfyOZvAX9fy13lAThpInlaxsRkVTZQq6wED/D3V6TkN
-	aCJU0GYHjbkf9B0xZ09hLzPrbVudAPyEji2u30dXrs+nByAhykZREA3QcyEg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790248928; x=1790335328; bh=vcmywvS8I+cdmROX1F76Qr7aG2qewLn2+zf
-	Lr2QV0sI=; b=LTTtYvld+n1IWcKwG2JsosKYsQuwHV6hhBnl1fOWmojyaHX4jKT
-	I3+s5E4zz57k+FneAhTR4zAZKf24IXhnDaelFpJm2gomtxl6u8pFJxRYYHheBSWb
-	+XzFS3OWHRJF1fuaDbGYY8Vvm+KgfGBQq+cYD316i3fSa93IaPJvv+hEZ67KYE3W
-	Ok0qOIMZ8ZAJnJKvm+PrbAWKacFap5jDNrk8QW5syoVq8iiZ9ou7Mt1nmp32Zhct
-	8i2tuNTHIj03fDmHsww3Mp2ravCuO/hk5UhVxlPdtg9uFpTWx5qxXz9K2FWPq8Du
-	4pS1/3gRN4Bf8dmhUdn6pchu1008rwp6TJw==
-X-ME-Sender: <xms:4Ae1atD3qxZXlRfDuEU5mJCQ4SkquWDjjv-ricwYriJfMiaw3vtWGA>
-    <xme:4Ae1ai9bb61pB2javYh9svEqQOMWA_zuqqFW1mtkCK_S178qAbyaWyuiQe66CY_Xr
-    KagIlaZbuJh_zAHvoLWyuVPwdReRdM3rpFcXcLIfxQahzBFOCGQVg>
-X-ME-Received: <xmr:4Ae1al8VKOobBLI4zIWhZWYIfKp26zTJxdNFin52C4pgeEsxBpSnDlfiQrextSgvpqGt4u4>
-X-ME-Proxy-Cause: dmFkZTFaBR/rMNJJMSeAKdrnHMSqIIgxruUQKv5CSRHEJN2FCOb7X7TOWZ2Vs0gxqTAgci
-    YswFLOwgYUJmOfIK/TGHJmWLZqPxs68h+QXM/+MmEiojPzmD6PZ6oe8wp63qmLcIVyYT7Y
-    y2CkkOkrEqcW6zkuqCWOGCX02iV3lUX+c5GLnQCkpZ9erNUhGdKAQKGbYfybnFj9U+5Q3S
-    w+V9K3BSlvfspMtG3H5P48MV48fpezzKHha6tFz012wY2wwIKn269IK3NU2d38gvlim+9B
-    RjfEbbck50oBPYP+Ub15XzvxOjhxY1kK0tpYZqqZHCMYBHsyJtFLmMr7hzNZ/4sgaEkuMp
-    7GJEJQjsP80/ds5fgsgMzroYr8T3xUwsRQP0DZnoQStJ2mwkyO2MBZkaXxMrMRP3loWIvn
-    6jiBeEVxnp9foimNntWXbou++IUh8nB9gZXVars9XsEZFeZM/M4jtJ4fhsnawlccz0iiGs
-    5iifdHUEkvJ9ATSdihrafgrCM3hHuKkUB/vjlsilaZ5SmjWMMPoB0RK7698uUt+x4c3jzk
-    hITY74TraGVLarIs0iXB+KBcHeC/0T35AFJSYH3U4dQ06mD++oOKBy/J/82JKEqjxdduPz
-    MV60t2CpetisOduhMBJKbbH4ddr104gGw8FznSG9JLtIidf16DqJR/ciGOLw
-X-ME-Proxy: <xmx:4Ae1ahf3orTpQF502Z_zfRD0NYah_80m1XWDHakqPZSeSiwxtQTKhA>
-    <xmx:4Ae1amFa93gq9iGzBvs8VOv6mv8Ztv-8BUQVk9fUktzRpG1JMMiOPQ>
-    <xmx:4Ae1ancigjZyWiG4Ux-oRdLIjMYYJL3vKFjNsfNreigQRw-BUABC_Q>
-    <xmx:4Ae1aoGg5oWMR3egh11PD551AVSBePC7DqwUqkjNK4JWkr3d8aWOyQ>
-    <xmx:4Ae1ave3YMqr7zeI2Kikg2mASvLfs7DtpdroJWWSrgbLMVAq1vyxIfh2>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 07:22:07 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 756a1b8e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 24 Sep 2026 11:22:06 +0000 (UTC)
-Date: Thu, 24 Sep 2026 13:22:04 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 4/4] ci(gitlab,windows): provide GNU Rust's host-linker
- support
-Message-ID: <arUH3Bi26yyVcrOb@pks.im>
-References: <pull.2233.git.1789819933.gitgitgadget@gmail.com>
- <1ed79f00cf72b2d5f2e5f55bb11de51dceeeb2bb.1789819933.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HcHAcbPW"
+Received: by mail-dy2-f43.google.com with SMTP id 5a478bee46e88-33e62211987so2231269eec.2
+        for <git@vger.kernel.org>; Thu, 24 Sep 2026 05:05:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790251513; x=1790856313; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=oiS5FaVmT0CC9SEuW5XiI46BV4urIPeZzJBwO3EMhgg=;
+        b=HcHAcbPWebYH2RGhzk+pfznijJVg/06PRKHmBLKky6yjQVVCmhhFGfpBss/AG1Z8RJ
+         vYVADAg90JkMTpVFyglMaX9J7J18S5enNOmpyPTVdGjR4uHRjpBdsuFM5eLljYC0H3lD
+         Br1VKKedkuE8XdjCIv61zxQywtUo70BgkjCUt9rG2ps5D/MijwIbb7fI3HclmwHZWgeX
+         OSiWPuhzjg3kahCeRgGMQItcC5Q1wMS7mJZn7E9+RkWoX1m1nEcKOi5a0wRUT7Sz43CK
+         n8NRBUB9UfDPptdZDIXto6RFRszb7mWmoHl+YfY+EmhQJP7MAUvTiSSB3GmumNCURMVt
+         3oEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790251513; x=1790856313;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=oiS5FaVmT0CC9SEuW5XiI46BV4urIPeZzJBwO3EMhgg=;
+        b=RwIxliylkPJDuAwyue+VI7xYJRdzTWtvZ0j7+f3naeynsIOI892tt6A48bzhQqUMRL
+         MmqIbk1tNZqrY2hknWx5Zu3HKLvZtAtCfYd/VKDUWm1KVugDXuURTXG/u6c14IcycjcB
+         jHUQn2z7q5mGkU9mwxYnqqDNLl1TAGtn3/UDrtaU77S54zqN29nv2l3gs64tAr4qWgfU
+         zL+B2eL3cvUW6fH/J//7ZR/+1dCrU+N1nVpNupgnaR6tn/rtOchYt+EmhzJmpsozxsUf
+         wxyGS1ioxzaaXh4QVkg3VZDlcbIfWKDLL3XdzlRQQ1N34/wA9XG7mq3BpBfvAnG+OT8k
+         8eKw==
+X-Gm-Message-State: AFuF++lAmzm6xykiQ9OXS9D5rOAom56OMzp1w7UxOKj/dUOEBGE/Hhws
+	Obhoh3dgkHjg22+jsXXjNdIXptizzhRIRjzSyEImcjqAvtepLxh7gHi3hhMu695omWE=
+X-Gm-Gg: AYBFou3FPXzWmzRqfFnpQ9D4QZNCixlu33HR+sHqdTQwtQ2shG+B/b1DWeMltaCRmzF
+	dzrBd2bTJt41TWLPa3zeFIvrI8dBe7Wf8JR6dmsB5kKHb6szwqCcoxr940BlDwI2f3vHqA+LdgJ
+	zdCm4U40HazrDNLVBFvIykvMFHGDloUAcBJ0xekSiIX5bzkQXO6czNBlHdsvXAFYnXFr1DqEa2k
+	1DMyhbxCnh3pKAgTMlekTvyzzPXOqmKP6Hgt6EQE3bZICOkZWcaBKyglO8xyvn+RUtHXzB0W5rC
+	p3K3SsVq/RfNS5Mo0kJnX1nhSgcQ/r+pVZyTlxPlq/qH/dw1PCl4/mhuUc6SqF7fCzsQbinwPTo
+	oa2adI7kqoLmiLkkSNrz3+QOFWZebiDphC0hsPOUa9aeeiKOAywWxqPEhNShMqxQjMFvdGgRP3C
+	K2xoMO3PveFIaElZi8xDj0VCg3CP+uRkpHSbNQZS4nZNsLWuDpyUGDA7o97y+oGfb0smTlGl6Kd
+	tadIA0/UCnaKYQz65/G1Yx2pw==
+X-Received: by 2002:a05:7300:169b:b0:340:dca6:f34e with SMTP id 5a478bee46e88-340dca6f75fmr407402eec.40.1790251512511;
+        Thu, 24 Sep 2026 05:05:12 -0700 (PDT)
+Received: from ksivaraam--20260831-PCX54 ([115.108.41.154])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33e95c7cfd9sm14302671eec.5.2026.09.24.05.05.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Sep 2026 05:05:11 -0700 (PDT)
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To: Git mailing list <git@vger.kernel.org>
+Cc: Karthik Nayak <karthik.188@gmail.com>
+Subject: [RFC PATCH 0/3] Improve error reporting to mention "why" a directory is not a repository
+Date: Thu, 24 Sep 2026 17:32:18 +0530
+Message-ID: <20260924120502.2642141-1-kaartic.sivaraam@gmail.com>
+X-Mailer: git-send-email 2.56.0.rc1.12.g2c9c8d64bb
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1ed79f00cf72b2d5f2e5f55bb11de51dceeeb2bb.1789819933.git.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Sat, Sep 19, 2026 at 12:12:13PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> GitLab's MinGW job cannot find `x86_64-w64-mingw32-gcc` when linking
-> gitcore's build script:
-> https://gitlab.com/dscho/git1/-/jobs/16593470275
-> 
-> Although gitcore is a static library, Cargo first links `build.rs`
-> as a host executable. We omitted the GNU MSI's `Gcc` feature, which
-> supplies the required linker and platform libraries:
-> https://github.com/rust-lang/rust/blob/1.96.0/src/etc/installer/msi/rust.wxs
+At the moment, there are a few scenarios where the error message for an
+invalid Git repository is a bit blunt. For instance, when we point
+GIT_OBJECT_DIRECTORY at a directory that does not exist, we get this:
 
-Hm. Does that mean that we now have two versions of GCC available, once
-via the MinGW environment and once via Rust?
+  $ GIT_OBJECT_DIRECTORY=/does/not/exist git --git-dir repo.git rev-parse --is-bare-repository
+  fatal: not a git repository: 'repo.git'
 
-Thanks!
+Even though repo.git itself is a valid repository, we get this rather
+puzzling error saying that it is not. The actual problem is the invalid
+value given to GIT_OBJECT_DIRECTORY, and the user is left on their
+to figure that out. This series aims to make such issues easier to
+diagnose by saying why the specified repository was not considered
+valid.
 
-Patrick
+With this series, the same command outputs:
+
+  $ GIT_OBJECT_DIRECTORY=/does/not/exist git --git-dir repo.git rev-parse --is-bare-repository
+  fatal: not a git repository: 'repo.git'
+  reason: cannot access object directory '/does/not/exist' set via $GIT_OBJECT_DIRECTORY
+
+The following scenarios are covered when --git-dir is given explicitly:
+
+  - HEAD is missing, or its path is not traversable
+  - HEAD is a symlink that cannot be read
+  - HEAD is a symlink whose target lives outside refs/
+  - HEAD cannot be opened, or cannot be read
+  - HEAD contains neither a ref under refs/ nor an object ID
+  - $GIT_OBJECT_DIRECTORY is set to something we cannot access
+  - the object directory in the common directory is inaccessible
+  - the refs directory in the common directory is inaccessible
+
+This series does not yet report a reason in the following cases.
+
+The discovery walk, where we iterate up to the ceiling or the mount
+point looking for a repository:
+
+  $ GIT_OBJECT_DIRECTORY=/does/not/exist git rev-parse --is-bare-repository
+  fatal: not a git repository (or any parent up to mount point /)
+  Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set)
+
+The gitfile case, for instance when run from inside a submodule /
+worktree:
+
+  $ GIT_OBJECT_DIRECTORY=/does/not/exist git rev-parse --is-bare-repository
+  fatal: gitfile does not point to a valid repository: /path/to/super/sub/.git
+
+GIT_ALTERNATE_OBJECT_DIRECTORIES is also left alone. Its diagnostic
+are misleading in their own way, but they are emitted much later, from
+the object database rather than from setup, so they need a separate
+treatment.
+
+I would be very interested in hearing what others think about this
+direction. If it looks reasonable, I'm happy to cover the remaining
+cases too, either in this series or separately.
+
+Kaartic Sivaraam (3):
+  t0009: add tests to cover more error reporting scenarios
+  setup: introduce new helper 'is_git_directory_verbose'
+  setup: communicate why a directory is not a valid git directory
+
+ setup.c                       | 165 +++++++++++++++++++++++++---------
+ t/t0009-git-dir-validation.sh |  38 ++++++++
+ 2 files changed, 161 insertions(+), 42 deletions(-)
+
+-- 
+2.56.0.rc1.12.g2c9c8d64bb
+
