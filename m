@@ -1,164 +1,201 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679253382FC
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 12:30:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758DB368291
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 12:31:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790253054; cv=none; b=njlIHRzl8uBqCLjimiZ0S1rnkQqTZC225PoZAFQq071S7e2ATM+JCskdR/02yBS3qk9QBhSNaCrkSkxC8SDoG1xUuSdsxFcvVvkSjkmznOaltfwsW1jr+36x/MBqD/WIf4S9k+U9mfq8jo+bRsXu8089S7j9+1Wu5p45g0Hc/W4=
+	t=1790253069; cv=none; b=UpqxpWtc3f0pS72RkiFkjTh5WFhv1apovTjUBtwKh+JXrzz+BqxndjQxabdDaq8Mn2hZecqn8aIDCjP9ddRvHDyjgllJ7GTOkClb6KmWEScyHlRO6FnONd9kZ4/9ttK/Sv+kxYwrQ9TkfVZ2h1tSYdLPVASGb5dhBAEMbaPLi+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790253054; c=relaxed/simple;
-	bh=9twQuy/fdfSKmTB723AfGOYsiTVObV5BwR2XE9HLixM=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=iGGjOEeFicLCPCmKFmP6GDRgCKeJG+2+Hg51YT35JGd80B8BAVFFiCdH6XJdXp/8WmB5dUeTSGzIjiZ2zfQUXWURZjQZMh2eeXO6H06X4Qy7qB7GaR9vu18lnQYvL92SF8PiNQM5yUQzLdecokz5sJuwZidkHvuTHubYf9mW4R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=vyVi767z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AoVFCgm8; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1790253069; c=relaxed/simple;
+	bh=G7/dwdbJ5WPMfmUMJMQ72VGvFLo/12E89rpoTtMSsGI=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=Qn7OiAUVuNUZ0F0n+oHHwaC45M3cao+O8/2sde6JkLFtktMAxXL/24WbY0EAlEjhWlVES/G8eoaqgjtMjlumwpqPkD0Lo6O2yo+qe4GAcH40pRlacES0tKNyDb2Sk7+B+cIz4OnNyYff6yExfBGROi6/HUfC1jO4hl2vpSQEyDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=V+agNxfN; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="vyVi767z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AoVFCgm8"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 65465EC012A;
-	Thu, 24 Sep 2026 08:30:51 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Thu, 24 Sep 2026 08:30:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790253051;
-	 x=1790339451; bh=de1iApPO2p7yL/P0MO1oPQjMkddY6dKTKbDZxlPgaq4=; b=
-	vyVi767zZuLKx9f+cgXAligZiRaj00ET/bO9ScYMJHQuTh9060IImWmdkrdsyauB
-	cBslqJ2n0NCQ++a5XIABJdaoWmHCUwr73+1oJ78ekhTSnnur5gLNahf8CY/WPjHf
-	irb6hfoXgMTa01k8xqS7bZ3NsVYjofNJCn2UzJyswbPHwrl6K1DUzbEMkjdrQD0B
-	xhZjl2S4tMZhHzJwLRdKsV+w6KV9L89yf0+k8tZGfox2Ty3B8fnzaBxEtbxbeG/Q
-	aFzTMSeGNtW6Oi56Spkd0wQ0vKKycjvXoBnuatQ2Z18ZjSXT2jP0ooM/fSA7iXKO
-	NAbGlbmy7ISBNO+e0/wPlQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790253051; x=
-	1790339451; bh=de1iApPO2p7yL/P0MO1oPQjMkddY6dKTKbDZxlPgaq4=; b=A
-	oVFCgm8l0jLFPf5SgbMEJPqHKHzUvw8bNnEhHAyplaRiLhIlBZNuGoWBgBlZj+KX
-	2ItNc+hb5hf+wt7VfVYYR1n5mPJpickVkWxFzNrPTwqyXd5RyQvNdLSZbsDr9wUv
-	1mHMEOtZrwdE36X2QBDZirueWC5zQ4LJ/ZNSyYTy+dqPMhzM5q10BsOm57R97eRN
-	8KibtMlNQL+JkSpGfPXmzSEPmVVIxaVf2pmV1674bs5eo3IT01f3TKWoYCpK4kcD
-	I3rr/cAmc+T1hWcjsK2RIkvtjIZ6ScGm8lmTmE/wwELpfk92GvCNrGUaOsOpt6SN
-	3+3cc+XKFAH/lpjlx2ZYA==
-X-ME-Sender: <xms:-xe1ap2hwkT4rdzXj4wApTPBLEJV2bJ2STt0UkFbro-ilcrXasO4cA>
-    <xme:-xe1aq6xXCLBdtqfxeru1NuEuD3ciy-s8AAwvRDwKy4SLNZ2kFAGP81fKNEUsiWNt
-    OefAGCtHsY2_-JUYqi6bzPYECrVB9ZF8Fon74h8LHZqy9JnlUnQmbQ>
-X-ME-Proxy-Cause: dmFkZTGQyX/Ptrb4HUIu8uJ1sFu4BnlHCgE2yHnRfKmlRMWY/G93IMIc+Ec3ew4uReQVOa
-    xKjjSW8Qeh95qROMq09etCngUaPx3MyB36A1cp4rIB+g4Fwsa8cpH1L0f+AwfHEJnVH5WK
-    9MfN2tPLqSqg1TyezdaSVeCDq2i7h7LQ0ThqalXBmPBUKcOcasy+JAMmJzNEf6D410JU+F
-    JiROtprgi4USM/k+c7/YL58eXTqVk5INJTnatcNZGnFFDncqT2Ncqe0r5iqm3m3hsXYyK7
-    m3YgTFBt7pe1JoPuSINJAgHiM+lRdjEA4WMUbShOzFqXpCVvwMXR13Wx4mcFyu5dwo/xjm
-    qPtUesoPkQktTew0YIAJiuEIIL7dSa+/I7AERBavnW77goXj5XiiNnUQnJlYhFgDHOPGC5
-    J3YlfyjXvHxNazC1qZziap/UjC8nafkZTNM1of4jiHFkjgICRE93lNjvLCS6pT3AwyutbB
-    7kD07TbWLhRWrIqBfz4SLLOpERbfwHhJ/uC2QKyrUeaj5WcafNpBBtmgraPv5fNAaHTd90
-    dwbPUxB6UmY9/IogjKK+WYBFYXaeC1/rEbFdJ0yIgq1LNt8RyY3xJvqiQWJ5pb2WpjByjc
-    YLaul+dk8TXFhOAMkPTYtvZO9p7J/KpbRI4aIijYCVeF+Awdfu/JnpVa07aw
-X-ME-Proxy: <xmx:-xe1avcx7vCBvBgvCiVJZ87yj5kGOiORsKTONapKd6hqv--O6XWH2w>
-    <xmx:-xe1ajA-I7FZ60vbYIL511R0Zu6tSM-kpUIyt6XmTLvDSCLPz5sSjA>
-    <xmx:-xe1ai_QYbcG-LzhAQVcyvElf0cLa5O8MOGirLs5UwCjlB41ruWN3w>
-    <xmx:-xe1auIrmvFBJPbdLE3E-9C4-y46FK4gYOrOeqACSenu37J0Syyq5w>
-    <xmx:-xe1avIGNjoFC7l4sMCWI9A9ysLmSLwKyQR2iq0XGxBqt3yo8B4AJ2RH>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 2DA07780075; Thu, 24 Sep 2026 08:30:51 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="V+agNxfN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1790253064; x=1790857864;
+	i=johannes.schindelin@gmx.de;
+	bh=G7/dwdbJ5WPMfmUMJMQ72VGvFLo/12E89rpoTtMSsGI=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=V+agNxfNs3sZZkEWw4SlyrAo9cGQbA76ZVnsLueuM84HfFQea+J2jdx8H0ICcM7a
+	 nY2EgNJl1mUJ8kK7W9YSHjEuq3qFMQf8sQpJKeueavFq1IklMRQ+XpReD9Fe0hvLQ
+	 HW1KX9gn6XtdDGfdTm4JQvGvS0vHNdkxqwOWApYoDZTPO9tESmtPPuRx9DmEEHPvl
+	 CBrpOqOW/Atfj8V+dJllaBqK0vRab1eZ8lb42nkp8WiOf6eTVdjhSdZs4ZNn7Uhqi
+	 DK4By00ZcaJvXdDI+h1xuUQQVMIDxeWwLhMLvgqrrGAtvO4AXhbA77Vvp2u2/YYvr
+	 IqY/rD7tw6bAzTVn+w==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M89L1-1x5a0Z024J-003VKb; Thu, 24
+ Sep 2026 14:31:04 +0200
+Date: Thu, 24 Sep 2026 14:31:03 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Daniele Sassoli <danielesassoli@gmail.com>
+cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: My summary of the Git Contributors' Summit 2026, was Re: Git
+ v3.0 timeline, was Re: What's cooking in git.git (Sep 2026, #08)
+In-Reply-To: <c12b9da1-b679-43e5-9485-2cedeb1dc613@gmail.com>
+Message-ID: <682ca568-ba3e-1102-ec21-03dd4aee2e14@gmx.de>
+References: <xmqqwlsei1pv.fsf@gitster.g> <76ac51df-cef8-c6a9-2610-8c21f03c6999@gmx.de> <xmqq4ifhgzvx.fsf@gitster.g> <5cc325c6-579e-4fed-7071-a3ff98d51ccb@gmx.de> <c12b9da1-b679-43e5-9485-2cedeb1dc613@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AFcAV8VPp38k
-Date: Thu, 24 Sep 2026 08:30:31 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Jeff King" <peff@peff.net>
-Cc: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Message-Id: <63520573-c8a7-41bd-aaeb-bfc2b5e43856@app.fastmail.com>
-In-Reply-To: <20260923214038.GA49087@coredump.intra.peff.net>
-References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
- <xmqq4ifhdon2.fsf@gitster.g>
- <665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
- <20260923214038.GA49087@coredump.intra.peff.net>
-Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
+X-Provags-ID: V03:K1:VBlqExqb+NOkZjIoT7HlvkpggKGxupxVX9Rkuk8YoSmgacNVi15
+ E/Y/OV21NzkOxWg3shT7txhgkAWkHSb04XeCVwRXghOVoBAEk7ZGWJ09Q4Go782u3aNqA1P
+ YvFXk1aM1OoDaYDuDMVDoEQ6WTJXHOOx5YMAAvfoReWwtVzCCmUNO4ujdYT62ZfF5UEcAYq
+ wm0oPhGERaOnaSo5skfmQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:OwP9fIf4uPE=;k/28epiOS9KSKqkejEeWuXNnzpJ
+ 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
 Content-Transfer-Encoding: quoted-printable
 
+Hi Daniele,
 
-> Even weirder, in the manpage output both implementations actually expa=
-nd
-> this to: the section called "FOO". So changing your patch like this:
+On Wed, 23 Sep 2026, Daniele Sassoli wrote:
+
+> Thanks so much for this summary, I didn't participate at the contributor
+> summit as I was leading one of the breakout sessions in the morning and
+> had a plane to catch in the afternoon, so I'm very grateful of your
+> summary.
+
+I'm glad it was helpful!
+
+> On 22/09/2026 19:44, Johannes Schindelin wrote:
 >
->   -See the <<PRUNING,PRUNING>> section below for more details.
->   +See the <<PRUNING>> section below for more details.
+> [... snip ...]
+> > Pluggable object database
+> >
+> > Patrick's pluggable object database is working, but it is not
+> > complete: commit-graph and multi-pack-index integration are still
+> > outstanding, and a repository extension is planned. (Personal note: It
+> > might be interesting to see whether implementing a storage backend is
+> > easier in core Git or in another Git-compatible implementation. JGit
+> > should be a natural target, having originated within BigTable-sized
+> > constraints, i.e. a different storage system, but funding seems to
+> > have dried up, there's not even SHA-256 support, so JGit might not be
+> > as hackable as it once was.)
 >
-> gives doc-diff output like this:
->
->   -         See the PRUNING section below for more details.
->   +         See the the section called =E2=80=9CPRUNING=E2=80=9D secti=
-on below for more details.
->
-> which is obviously nonsense.
->
-> I could very well believe that some older versions did other weird
-> things in the presence of includes. ;) But AFAICT the real need for the
-> doubled text is to control what is in the expanded text (both because =
-of
-> differences between the versions, but also differences in output
-> backends).
->
-> Which is kind of a shame, because writing just <<PRUNING>> makes the
-> source a lot more readable. I wonder if we can configure these text
-> fallbacks, which would let us use the single-item form reliably.
+> Pluggable backend implementations for JGit have been possible for quite
+> some time, although, admittedly, I don't think any made it to
+> production. Maybe at the time when this was introduced(16 years ago!!)
+> by Shawn[1] in JGit it wasn't fashionable yet and so the project was
+> never carried forward. I know Luca submitted a talk for the Gerrit User
+> Summit to present a Cassandra back-end, for which I can see conversation
+> started 10 years ago[2].
+>=20
+> Regarding JGit support's for SHA256, I know some corporations have had
+> interest in sponsoring this work and have discussed potentially
+> implementing together it with GerritForge, but, as far as I know, work
+> isn't ongoing yet. JGit is still very much developed and kept up to date
+> with great effort from the community, so I believe it to still be as
+> hackable as it was, there just hasn't been enough interest for SHA-256
+> yet, which I agree is a shame, hopefully in the near future this gets
+> remediated.
+>=20
+> [1] https://github.com/spearce/jgit_cassandra
+> [2] https://groups.google.com/g/repo-discuss/c/IekVPmow0yE
 
-Thanks for investigating, I was really dreading looking into the guts of
-asciidoc to figure out exactly what was happening. It would be nice to b=
-e able
-to write just <<PRUNING>>, especially because I believe asciidoctor will=
- check
-that internal links are valid, so there's no concern about breaking link=
-s if we
-change the title of a section.
+I'm glad to hear that JGit isn't stalled, even though I doubt that the
+SHA-256 support could be done without any corporate support.
 
-Re your other message about breaking links because we're changing the
-HTML IDs: the options I see right now are
-
-1. Leave it is as is and break some links
-2. manually enter the ID like `_editing_patches`, trying to make sure to=
- always
-match the auto-generated ID (I'm not sure how to do that). I think this =
-might
-also cause some confusion for editors in the future as to why the sectio=
-n IDs
-are formatted like that
-3. Somehow fix it so that we can just do <<PRUNING>>
-
-I'm not sure if #1 or #2 is better, obviously I'm biased towards #1 beca=
-use
-it's less work for me. #3 seems like the ideal but I don't know how to d=
-o that.
-
-Here's a revised commit message, can submit that as a v2 if it seems cor=
-rect.
-
-    doc: add more AsciiDoc cross-references
-
-    Instead of saying "see EXAMPLES below", say "see <<EXAMPLES,EXAMPLES=
->>
-    below" to make the man pages easier to navigate on the web.
-
-    The reason for using the more verbose <<EXAMPLES,EXAMPLES>>
-    (instead of <<EXAMPLES>>) is in some cases, the HTML output is rende=
-red
-    as `"EXAMPLES"` or `[EXAMPLES]` instead of just `EXAMPLES`.
-    So this gives us more control over how the output looks.
-
-    This also changes some of the HTML IDs of the headings from `_exampl=
-es`
-    to `EXAMPLES`, which has the potential to break some links.
+Ciao,
+Johannes
