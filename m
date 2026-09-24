@@ -1,116 +1,166 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f41.google.com (mail-pz2-f41.google.com [74.125.228.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7933386C08
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 14:14:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABB2292B2E
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 14:44:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790259249; cv=none; b=KZFp9iTzGIp7q/kk8zDdcPcGXe4SnLDt/DaeSitqr/JC5B8f39RI8FnliCcSnMlpvT0GjOHCK0IbIw+5H5qmWW3fHqaCg98MucRXlHHXfvKiM5GIHg7PWsJa3ir0IQGJhKXoJJo2r09LQlQv453umHtNB50M7HbILw0t/CrZ1i8=
+	t=1790261066; cv=none; b=CNyHU+hnZbPJ0Bdb83GnSEvcGw6DOGkgRu3E7DhksHpgeIdhfm9E6can/GinZ/+bEE5FbWmqQtCnG1hNW7rw2b90O5kRkCrTSiI3t+RHYHb6s2RCFsJ2q+fLYYNVLvOrQTJ8lAY2n6ZnUSPmtETSwnMw5eSW23PaBchda/DZrH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790259249; c=relaxed/simple;
-	bh=Cp72cPr/klkFnJ7Dy2rkFgS+zd2TimFM7wRRuvEId0Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dFeyZOjfI4GRlPP3A+7QIeFiAm9/1V5nB4ImjADSm1roDCmTJmGbpCSwWhHx/n+OkNNvIdBCq+FkBofECIsopDuNHJTmk86pTIOsqSqJ/t2Brs3DZpFiZF9uZprRWMobPLy9uc7/VGf8j8S1eCqiq8euQ9Mu6agD9TohMc0ya2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ppWfwX6c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I5o4AkE0; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1790261066; c=relaxed/simple;
+	bh=WbvFkT9Xcz49s4N2qbA715woPSdOCOzIuHg6i+sBWxU=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Jsnq/UpuwU2t9FsPaNmkwINomn+MqRgMYY3DiVQKjr11vN8Ej6mwGVV03p8Np5ppo9EF16E2Z7THj0JBwN250TYrWX4CWMCE2wZtdMI6Y11U0AV3HDGG8EVN90DxdY69Wbzzpq/l2/fGKRfaEFJ59puDQJ7GPVkCTvQmjYOYeLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yj+RCtrM; arc=none smtp.client-ip=74.125.228.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ppWfwX6c";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I5o4AkE0"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 177B47A0123;
-	Thu, 24 Sep 2026 10:14:07 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 24 Sep 2026 10:14:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790259246; x=1790345646; bh=GQRfLRTX7N
-	QYy9EpQm38hO4/rRM5TDP3U2I69zY3jGc=; b=ppWfwX6cn/nR9uGYklCs5pLlXn
-	t5nMjMUqeYc4NYp1SUl5PGEhGzJzP8a+X2O641pnUox6hdbiGjkycc8+mrwbEq8T
-	XFgUQU7c8Q6pVHu8xZVozsgnq6Q8UFBWLIjbWDqgd1eHcRX5RkEcDTznrfdIfK1z
-	nijoPqHxw+gV2iX1j0/XKCtakL6NKxfHPBq5y2JE1Ta2G+mLi7BKFfCRWt14ooGD
-	cxbwCBbMz+gjIJXdgQ6bJ/K9jgXaHlkjIZ50620+WCejBiQ5Ck1o7A+AZQJKhCQP
-	e1yifvZYTsmY90p4GT9u+UBQrNg0FWr76ktH6o2VKhD/nj8uE2HT2tF1JCNA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790259246; x=1790345646; bh=GQRfLRTX7NQYy9EpQm38hO4/rRM5TDP3U2I
-	69zY3jGc=; b=I5o4AkE0CxSl+6v3h+3wdJABUE7ZJJcfUbzEm07ErQHBNlkJtKX
-	BQccuuI2jbSqXltESBMVs8GZ0upaql/GPgU4wKEG4Clxm8b8J3sxkKqadnjLZHYH
-	A6SFpybAlo5vlkQBK4WM5tJhUjkLqw/vkRGmS5XUp8oNraTOBxP9OvQmfgR/m726
-	6mn9CRUwz+v21ZEABkYiNHZwL5eJa+m65m+TzMj5grEWBIW5ShtdrCT1BQsY8NGf
-	/dNX0ERVuJ69kYiZH1KgR568HfKE50kAlq3z2LI2j4SzLPUhd5hjjgoP49Gnpp1e
-	WSw1cFZLjwi7ZqlSQrFY6X6u4wI94xwNoOQ==
-X-ME-Sender: <xms:LjC1akYNvaAOFXWPhFHt4on_3P3TMKpxjmezOT26y7MPNEfWGkpFHA>
-    <xme:LjC1am2Cxezdfxrr_Tl-4Op6JMccGgsOyKTXSBZdWgT9Sm45A6MMMXoI90lv-CUxL
-    2WLBobQ26ufWTbXkvfTC8CACB59xrU72aOuDvCZzf5dRpEhte-g1f0>
-X-ME-Received: <xmr:LjC1asV-QDqDUc2qsEBQT6hVrz628Wzre-E5vaR_WruIXjszXwtg7eG7TrX8y6zUlnEbEuc>
-X-ME-Proxy-Cause: dmFkZTFbNETnJOAaKiQyvjDAwBEffioJwbZYokWe3+GPGfYQ6ii4YK61vtCI8M/rfzB/tz
-    OcDlwDIDQLL8nxeXv7pB8qLiV9kmGCaJq6ezF6euAAnQqzhVVVNu3urdppF7VSQVzX7QRb
-    CCHkqEwCsFXENiITu5pmp8bgaK9puwwgDvt35IyRvuXg9UcIuF/jwyE9JJF64dCEv4t6Bp
-    L4svZ7BIs+VfBpy7xROgk2u4ARURCzH0dF2anAOydkxMe8tRNJBROVjV5mHg5xr8EHCEMm
-    3WiXMrOoo34V9RvZqhtIfxNFW2VZq+R2F1xX5WfRkHznOk1U2K5J99b1rVULvTXOnoK4nm
-    3FTpMg6CqLzZk1h3iLZdAmVXNMnON16ghjoJ0V/c+kowd0H4Xl0/XlIKUWnBNScDf2fm7u
-    FOWOBwnRMO2+YG8qR+k/4HLzZF69mJnIVaL9J7Yuhv4h+KayIrdFt2WwVX7f+Pb2sRqI/Z
-    NktACWw1yw3pAIAGSlAhlROLnqpydrpijspIp41qeZeeVFDt9KnPFeQnsShkyzGeyQUkAw
-    7gjOjTMn8PEzbUCzjd84/j6HHd6Gm6j5uD8BXn2cJqSZ/BU/TRKjuiKLXYp1XATI5adrdr
-    8g4zkMuQmv7xefG807KNs4KWwk7tedBgTM0mmNhhYj6+mCcBR8k665olhOIg
-X-ME-Proxy: <xmx:LjC1aoV7wVsS7SV9hMGEfl9jBiJfP-OI7B3sTzl4QTvsaEC78DQamw>
-    <xmx:LjC1ajeRWIVK-FhnB6AP7IH7Dx-9SCmVRIS0Vz3BEMWN_qXiJ3GaRw>
-    <xmx:LjC1apW_cvRSLHEVapOig3vTGZnPc1PaL_t91Kqw3PhC8jGJrDnYjg>
-    <xmx:LjC1akd6Km4n0cZNGHf_SV-2f5e98cn1zuzomgQQ-CaSZ0uaK30P3g>
-    <xmx:LjC1apWmb9Qebxhlad9Qf0147ZCI9ryvj-6QtGrhFk5ym-R_s4FvBY3C>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 10:14:06 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f33886fb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 24 Sep 2026 14:14:04 +0000 (UTC)
-Date: Thu, 24 Sep 2026 16:14:02 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] ci: fix unit tests not running on windows
-Message-ID: <arUwKpju14AVHOIy@pks.im>
-References: <20260924-785-unit-tests-don-t-run-on-windows-v1-1-223cd2e4df43@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yj+RCtrM"
+Received: by mail-pz2-f41.google.com with SMTP id d2e1a72fcca58-85469e2254dso322553b3a.1
+        for <git@vger.kernel.org>; Thu, 24 Sep 2026 07:44:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790261064; x=1790865864; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=yliC+YTje7kAO8+OLZsndopO3YjK5SDoz55KZtY575c=;
+        b=Yj+RCtrMjmRSGTEJ6I414i5T1V4DRHoRCEf43qnFJ7NTXTdAOcJlJJw/pZY1TebypQ
+         2r7HWwNkKr/MGKwFFl+l3Sa4wNscGXM8oHng93VpQDap9HP6kaXJ3DUwGmkMCC1LQJoE
+         DrkxVYhQGKlkMu/SJo8aj9zzDdUxMAzvRbmHRHO77F+UdGQF5yu/9axENTgHzhhCO1v4
+         W6J0p6pMHem571RsDz3ghKXUsUuZc9Q3Ac3Xy8UcvTDDuQPsYpmnE1XpVx5JZTrShrVH
+         gFV47SOO3wTELScPWpMsao5oum3izE8jBGOyiXHTxa21706P2WxlkQB6MzR7HcBFcN1F
+         7eVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790261064; x=1790865864;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=yliC+YTje7kAO8+OLZsndopO3YjK5SDoz55KZtY575c=;
+        b=NDm1GV70s9fvbNO50d/6fvWOZMWLmG1vNtCllyZW8DUgm9gOlS/e6PcEwxbb0RfupW
+         ksmX+fonEvvzMOhAXRS2BH1Iqabl5+/tNAqdSJrZTs7DQR405r1erZQB0xEliNy0u10w
+         Jh3RrwEk5y0nZWovuW5jkURHW4O6gmzzDiJbk4BNuWHYHV6eHuNzFmwZIaCZyxg2hc80
+         Czr3WWnkDh3sIfd3zix1RkBDsv9LaaSplX3OS5IFIeuQGFMR66HXBXUSiQ9Jk3IE+RCp
+         27sK3wd/XCMS2P6Q0PQzm6/+n1kNFW1JTtWE9JQF+lFDQam/DuGdTDLOD0iqaDF/xvD/
+         31DQ==
+X-Gm-Message-State: AFuF++lJRiYwOwqf2CAoEqhkdIYSGmcELLYGgRzdZm/C3qf2aDV5u12X
+	LaRx4yf+s+zeA1ndUpT8mhVsnn71Ri1kJEsLAq/sE5DQGeXil+3efvH9XC2Txq1m
+X-Gm-Gg: AYBFou1eAcdI+va2vsAYc355skPbwdI6c6avaqdM7yPnQjZU4FO8MwMQknijb9JWvCh
+	/Q8GnlLEpM04wGnXH3LIbufgvqWJIGlai+hxxiAW/CfpfrOH3ymjibTWAWsWz9HO4G/1o8lxLcf
+	mkwSvpa2yeNxqQvE9l0at5BXWoo2WMDLwlBW1QBCX/BPTluqXQR10m0mk8yOrj3N9ifUt1r96HG
+	3KltbXg1Y8PL3ekfMajRXoS/HpKQv51brzu7gmzflT1cZZPJl9oJiF6a2XFA8maIXWZp0Eye/ao
+	HXlcU9C13wNj1HlVoRPejewQZ2M1S4/hyLShN/L2I0J9KwI5ICfj7dCkRiVGSAzeCS3uI/q2Clu
+	hYHTrA8hmshJr4nkM4A9MTPZuqfClnTNANzs4KVqul1xrBXINEPsAEr1SSPzMgvcXqfPu/EN9Yy
+	QoCAq+zSYJcKI5ZOy/2sq9MhVVza3cebxHgxnpTT+ygP2XWxAUr6kFt4PvbKHQNtBv4Fz57p6U+
+	/Q=
+X-Received: by 2002:a05:6a00:3a06:b0:878:3704:e0f1 with SMTP id d2e1a72fcca58-87ea07d0e7fmr1557082b3a.23.1790261063590;
+        Thu, 24 Sep 2026 07:44:23 -0700 (PDT)
+Received: from [127.0.0.1] ([52.159.247.145])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-87d1d5c1646sm3217454b3a.30.2026.09.24.07.44.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Sep 2026 07:44:23 -0700 (PDT)
+Message-Id: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 24 Sep 2026 14:44:15 +0000
+Subject: [PATCH 0/7] [doc] Add new page on merge conflicts
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260924-785-unit-tests-don-t-run-on-windows-v1-1-223cd2e4df43@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+    Julia Evans <julia@jvns.ca>
 
-On Thu, Sep 24, 2026 at 03:09:18PM +0200, Karthik Nayak wrote:
-> Since 3141df7ec4 (ci: don't skip smallest test slice in GitLab,
-> 2026-02-19) both our CI workflows at GitLab and GitHub use one-indexed
-> slices to run windows tests. Modify the check for running unit tests on
-> Windows to also be one-indexed as otherwise, the unit tests are never
-> run.
+Handling merge conflicts is difficult, and currently Git's guidance on merge
+conflicts isn't giving users the information they need to navigate the
+process. As usual, the process I used to write this was to collect comments
+from Git users on the existing documentation, and then address those issues.
+I listed the specific issues we're aiming to solve in the first commit
+message in the series.
 
-Oh, that's something that I missed indeed. At least we've still been
-running unit tests via Meson :)
+This patch series introduces a new manual page, gitmergeconflicts, which
+explains the process of explaining a merge conflict with examples. It also
+links to that new page from the commands which can cause merge conflicts,
+instead of trying to reexplain the process every time.
 
-> diff --git a/ci/run-test-slice.sh b/ci/run-test-slice.sh
-> index ff948e397f..d0063efc42 100755
-> --- a/ci/run-test-slice.sh
-> +++ b/ci/run-test-slice.sh
-> @@ -10,8 +10,8 @@ TESTS=$(cd t && ./helper/test-tool path-utils slice-tests "$1" "$2" t[0-9]*.sh)
->  group "Run tests" make --quiet -C t T="$(echo "$TESTS" | tr '\n' ' ')" ||
->  handle_failed_tests
->  
-> -# We only have one unit test at the moment, so run it in the first slice
-> -if [ "$1" == "0" ] ; then
-> +# We only have one unit test at the moment, so run it in the first slice.
-> +if [ "$1" == "1" ] ; then
->  	group "Run unit tests" make --quiet -C t unit-tests-test-tool
->  fi
+This is a pretty big change, so here's a list of things I'm still
+considering in the hopes that it'll help with the discussion:
 
-The diff looks good to me, thanks!
+ * I wrote that git commit does the same thing as git merge --continue
+   during a git merge , but I'm not sure if that's always true.
+ * Not 100% sure that the explanation of diff3 vs zdiff3 is correct
+ * Right now we're listing git merge, git revert, git rebase, git
+   cherry-pick, and git pull as commands that can cause merge conflicts. I
+   believe that git apply and git am can also result in conflicts when
+   applying a patch, though it's a bit complicated because applying a patch
+   is a different operation than doing a 3-way merge and the tools available
+   for dealing with it are a different. My thought right now is to avoid the
+   issue of applying patches for now (because it's a whole can of worms) and
+   instead just try to not imply that this is necessarily an exhaustive
+   list. Also if/when the git rebase --squash changes land, then we'd need
+   to add git history to this list.
+ * Instead of creating a new page, I considered using an include to have a
+   "handling merge conflicts" section in git rebase, git merge, etc. Merge
+   conflict resolution is complex and it's very useful to be able to include
+   examples: this version ended up at ~300 lines and I think that's too big
+   of an include, especially for short man pages like cherry-pick
+ * Explaining what "ours" and "theirs" mean was one of the hardest parts of
+   writing this. From polling Git users in one of my many informal Mastodon
+   polls about Git, my understanding is that Git users are actually
+   relatively unlikely to actually reason about what "ours" and "theirs"
+   mean when dealing with a merge conflict, and that most people prefer to
+   get more context instead, for example by using a mergetool or by using
+   diff3 or zdiff3. I heard a lot of "I can never remember which is which I
+   so I don't even try". So I put the information about what "ours" and
+   "theirs" mean relatively far down the page (with some cross-references),
+   so that it's easily available but not the main focus.
+ * I removed a couple of mentions of the various _HEAD references. It's hard
+   for me to know exactly where they belong because I personally have never
+   used MERGE_HEAD, REBASE_HEAD, ORIG_HEAD, CHERRY_PICK_HEAD etc, and I
+   don't know how they're meant to be used. From some quick unscientific
+   polling (at https://social.jvns.ca/@b0rk/117320011885941855), it seems
+   like most Git users have never used them either (and folks who do use a
+   *_HEAD reference mainly seem to use FETCH_HEAD which isn't relevant
+   here), so from that perspective it seems important to avoid emphasizing
+   them too much. The git revert man page doesn't mention REVERT_HEAD and
+   git rebase only mentions REBASE_HEAD in passing. Of course they're all
+   explained in gitrevisions(7) which might be the best place for them.
+ * I'm still not sure what the SYNOPSIS section is for in a "guide" man page
+   which is not about a specific Git command (what is the user intended to
+   use it for?). I tried to leave it out but the CI said it was required.
 
-Patrick
+Thanks to Lobo, Adam Svahn, Louis Vanier, David Turner, Ben Zanin, Salih,
+and about 12 others who gave feedback on both the original git merge man
+page, as well as the proposed improvements.
+
+Julia Evans (7):
+  [doc] Add new gitmergeconflicts man page
+  [doc] git-merge: link to new merge conflicts guide
+  [doc] git-rebase: link to new merge conflicts guide
+  [doc] git-revert: link to new merge conflicts guide
+  [doc] git-cherry-pick: link to new merge conflicts guide
+  [doc] git-pull: link to new merge conflicts guide
+  [doc] ignore conflict markers in gitmergeconflicts.adoc
+
+ .gitattributes                       |   1 +
+ Documentation/Makefile               |   1 +
+ Documentation/git-cherry-pick.adoc   |  23 +--
+ Documentation/git-merge.adoc         | 125 +-----------
+ Documentation/git-pull.adoc          |   3 +-
+ Documentation/git-rebase.adoc        |  13 +-
+ Documentation/git-revert.adoc        |   5 +
+ Documentation/gitmergeconflicts.adoc | 294 +++++++++++++++++++++++++++
+ Documentation/meson.build            |   1 +
+ 9 files changed, 320 insertions(+), 146 deletions(-)
+ create mode 100644 Documentation/gitmergeconflicts.adoc
+
+
+base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2237%2Fjvns%2Fmerge-conflicts-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2237/jvns/merge-conflicts-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2237
+-- 
+gitgitgadget
