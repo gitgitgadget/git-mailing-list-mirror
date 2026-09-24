@@ -1,228 +1,178 @@
-Received: from mail-lr2-f12.google.com (mail-lr2-f12.google.com [74.125.230.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F7E4A6CF5
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 19:57:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.76
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790279834; cv=pass; b=joor1A6z204bGrvlezVJAxT5mojo3jqjlQZ7st/i3RhRAR8ll9MfHs+wp+H5TUj56hUBtxWjBkdd4bcG2xvka+H3svX2kIpmGY8sVswIJJzx1D3myBQ2gehgm+QCOVlr4p6JFuNtwjy+duGjQxWVkP2ZAPWotg9Jub+zpf5k+1o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790279834; c=relaxed/simple;
-	bh=hEsPNNN7jW44KzV4rd0kY0bRrR0c9kJ2GIicusVJnd0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dH23KevHgYcoBcsQnCDUNAqNLqzqWQ8ur36pwXjSCD5Emk2RTHh66pLzD1Alqam7fuhLmniNHfOxHAWkAam79e1Eo1EXNnASG4uBze/qfnGBld9JQt3Du9+JWYG75jHvnwhUUIXNlTFEzvYBTWT4nKh/s2NY/etmSRI9tljDogQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZyE0VSAw; arc=pass smtp.client-ip=74.125.230.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF07B4CA79E
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 19:57:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790279875; cv=none; b=V0fZRH3aelX8hd/nZDA5gw6MGy1QGfao+dNTURyFZrYmrDFxA2xsCv7vGHjcgVhiPIZk6f3PJ5bu3vY5aJFJ8LlSADkgXsSBccgw1gxB3cwOiiB+wZ0LaJ4wuCFL36p/Wxi8OZlI2UOlUlN3U00qrRA5WPiUVqexXEHrdTdp99Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790279875; c=relaxed/simple;
+	bh=6ISwXQPveki/3LKj4oHCoorht06xzaetIS3YtsJHKyk=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=m1xVqmNAm2IKC82TpJf/+ZpCbrvqiK82S2xqmfHcsi7xRDFHsTL+tKKt25ssOVvxETdMnJMnk+yFpp8gImQsDTikZy2cNhEtAILUiKofhdSXe0+WvTtV0EsLMPz31SD1oI28YnKQ0ld8WigtAsyNSFgOdCPglvf/veY0Qq/Vtew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=rWKZ9car; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZyE0VSAw"
-Received: by mail-lr2-f12.google.com with SMTP id 38308e7fff4ca-3a2ff163f65so939541fa.1
-        for <git@vger.kernel.org>; Thu, 24 Sep 2026 12:57:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790279821; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Cv53JeZzRD8cPmTsKVxEhqYqwuP2RPtAmU5o0Vze0KeefhgwoD80CPBwOkhgxd1Mlq
-         HBkKVbKG3OqEBTN/puqEPqt1SkRf+YK/fMr/56mcEVhWXQPAr+ZixY04pdYce4aVbeVi
-         oUaiEEtVkUvL6DiLuRdcVj5gxgEBjjeYcs4rrwIdT7ziMEACHeYf9iO0A/nk5aIGOn/h
-         GMXq3qzALHXqGgaDK159YE/gSvbmr4F58cYGnkswI7ksrYa24Fp8J1FH8Y7JCoew0j9J
-         SDHZ+fMxHzgEHalCGbGZ8RghvO2nqtObB5RKP4R37Jn3HTCG7jXhzSfJ1sPV4PG5nwu2
-         BdRw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=HORXT1aZ2xo/LCUQDROYJEBvM0Vb25q4BmduWozXyUU=;
-        fh=1zplb4Yre2Dgu3TW3JfDYIRmGU4qgaHRtGD+TAzNK8Q=;
-        b=W328lgTRU4UuXoxrIlefF8GF0w2hk1a/OguKDEMcDRgWUGHidbdl2i3rYFdUws5md0
-         2x28IJeHMEwaSYBdNP+Q5TfZEQHRrngoyDXgETrBh6g6COI9Ecvw5AzOGBRyyA2KgL0/
-         ckdfMJMMxPz1/EKlS2/O/R3kxrX0RGWykX+ZWSI+nlVXO+hDPwBPVo7ESXHvuKE8Lv2V
-         uZS5vjifCMJVp4Kjzt3YjbGL/J9HCbUmNGWDi8nKhSFKd9ZnzjsCTg8igT8koUHcyH5n
-         OIQ3dlkuD6LWvaj3sqZgbNPrYM/6Zxs5oaF6eDZ7rR2K4qYjjMpjEF2BVGLrSqjsix/r
-         yhxw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790279821; x=1790884621; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=HORXT1aZ2xo/LCUQDROYJEBvM0Vb25q4BmduWozXyUU=;
-        b=ZyE0VSAwU/10YipHU5NDLlY8FvS84sZ+krIigsNxpWyeiv+FoUfNOqR4yOylAyX8vT
-         DwaJcIcsoxlziVM7D0dRlZJAlrsbwIuFModwW7gKNi1Sjp7bvqrbgSlxwRRplqOV5SAu
-         8nHz5fT3YjEOq6Nz6RqC8i5y5pHpKX79en3IaFuPsLpKRUtEJeE75VJMW+kr+zZgfm3x
-         5tAPj5HTBKCA6LuAvcj59j+Q4lsyV9oN9w9eNyY3q0c1oxfdzWHSySQE9vQC3THqnIe4
-         TKpqFZvLAP5+2SlSqsqTrQ0OFQV26MMMJHfQMimh/dYwAMzZKZ+bMSWqG6gkF6Fq1ebh
-         KfqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790279821; x=1790884621;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=HORXT1aZ2xo/LCUQDROYJEBvM0Vb25q4BmduWozXyUU=;
-        b=trgJwkHvkNg341ADu3uBJX8+HT/1uajdFOOTTkzoETU9GXVMxosxNyU4Vg08nBjsaj
-         39DdclCEMOIoit6TDQDaKhhTeA/959lnquz4dOHygGU4pzOdMeNR6fDKOtkTwKpzM3JM
-         jaWI0DC8sVzUpnDl6iY9oEzCKfTwrW9IzucyQ6IPjh/dFX6lXaLI+DPOhHcCAOSyan5U
-         lA2ygiVKR5CNdMu+3hSbZ/6avw1xeJPlkbsFqQf36VLyrKFKdpNljKEnCIsy08ynvt2Y
-         qOJLzXtDePc0xX1Kb2qRcf9XkpVIV8uj0izEVKVBRQS9yI95fETSCjQCa0b6EFkcJm8r
-         xXiA==
-X-Gm-Message-State: AFuF++mVLN/Ul3qcaq2YeW39xVGbHjIdHSLZbEH9w9Ixyt0WfieO9GLT
-	baTnNAwJOFPTzPqMO3+X3K8hitOXpIMEQkQtSRH+GeZzY+kwBli0YgZ8VHsR55KRgmF8sAic9oY
-	nAwpiH/4SoL1obMdJzABbwC+nOolvO5Y=
-X-Gm-Gg: AYBFou3OQYWL7ai15RrPQIGDHwFT5+1eV3dNz6imwBQXvmqowQ1RI0VDHe9P5st2+t/
-	YyBB1bu0f0P+MMCHeFhdYWlj67MMboBoufa63Ctt7DR5yIaNqh305HO8XW3+5zMON4z6chg5jeL
-	kzDoQa+RlBipPSYp7GQNuM9TnH9SQP3vYk1I/BAGh1UBuP5dHieunsup9EUE0EU0gdnxAJp2w+c
-	R1veFf+utADcV86ybKheXMhLUgPTM4k0zpy+nzYZGnvjU3PvwvTbR1500gcVTXoP+8ZJqNE7pSt
-	ZdyESKO6JwexkAzEiFj4fD6uSKFkI1/QeUpWK4+Vp1D5a5Za+UT12SLgvIp9hQXkH9LecNHZ/oS
-	nx52E5DXw6MGGYxyRBxFgLo4mwKQynbOjDi0dL+xhAg8eKFNbyyvnGxjXjMn4J8SKEswTNw==
-X-Received: by 2002:a2e:a812:0:b0:3a3:749e:31a1 with SMTP id
- 38308e7fff4ca-3a63de5c715mr7419751fa.21.1790279821209; Thu, 24 Sep 2026
- 12:57:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="rWKZ9car"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1790279862; x=1790884662;
+	i=johannes.schindelin@gmx.de;
+	bh=6ISwXQPveki/3LKj4oHCoorht06xzaetIS3YtsJHKyk=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=rWKZ9carKOptianuwZFT1QcTjdXNaN1C7IOHSnXbqo1HkdQkg8gifMtBK3sDUrXL
+	 XcQUOTloirH34t78zapqKqV+JyYvlPivUsrVdf8DdYvk4dAiNYJJUb0t3bef6r0pV
+	 UEs4eHW5pQwWvCWc4POIzS3Rrx6eRIgrADXy/Lq0A7ZJ5VDCyzRP1q4G4gsgP7s0o
+	 ouXv/bL7A110RBDFJ91riV2GofxNhUkG9G2AdwTO3iMQHX8fJFZSCQjhjKb4GbQ65
+	 63DYacHqImwKRQzNXvqjdFrfKQwAZhJww/VsL/Ywa9ORicEyLuG6m5NvnJaxzRNp/
+	 0/kumke1CF/EIG6asw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTiU3-1xJZYR31AL-00ShYs; Thu, 24
+ Sep 2026 21:57:42 +0200
+Date: Thu, 24 Sep 2026 21:57:43 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org
+Subject: Re: [PATCH 4/4] ci(gitlab,windows): provide GNU Rust's host-linker
+ support
+In-Reply-To: <arUH3Bi26yyVcrOb@pks.im>
+Message-ID: <b62a7c6d-6248-d957-ef76-3b7e3bf28105@gmx.de>
+References: <pull.2233.git.1789819933.gitgitgadget@gmail.com> <1ed79f00cf72b2d5f2e5f55bb11de51dceeeb2bb.1789819933.git.gitgitgadget@gmail.com> <arUH3Bi26yyVcrOb@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1790113781.git.maciej.ciemborowicz@gmail.com>
- <cover.1790196627.git.maciej.ciemborowicz@gmail.com> <9b76cc2c40a2b1fe727677a9400e3b26ec1ab437.1790196627.git.maciej.ciemborowicz@gmail.com>
- <arUEhkuC448hUTCw@pks.im>
-In-Reply-To: <arUEhkuC448hUTCw@pks.im>
-From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-Date: Thu, 24 Sep 2026 21:56:49 +0200
-X-Gm-Features: AclHuK8JQ6A9F78hQwZr8-Lnl0tfPM6Ge5vhv5i8324CdvHmQHPacDSXtdR9gJI
-Message-ID: <CACQ=SRG4GEOzym27GxkR7Cu+Rq5o0Wbr75AU5sA7awKa2eHuUQ@mail.gmail.com>
-Subject: Re: [PATCH v5 1/3] refs: allow callers to supply old OIDs for batch deletion
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Phil Hord <phil.hord@gmail.com>, 
-	Elijah Newren <newren@gmail.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	"D . Ben Knoble" <ben.knoble@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+X-Provags-ID: V03:K1:znuyMvU1WZj9nynrwWR2tPZMJqazW4/nlont0k8UYOIV/NTos63
+ M85BnL/Wqe7QiZH54tdCvG1873LbUtF2RtZAtvI/nh+3ZdpInootWyZTTl8e+bRB19JPOFv
+ Fbj6sZ1vTzcaeQYvo/SG08oSvOpgaLUkGhTUfWwfYOyKieJhLc7Kwv63VbI7FBzl7kPr4YD
+ cj/n6tFqfj3Js6gI4yzQA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:8Lt+8ST+Vas=;QJHPlFayFjffaYHkz2vUSvlrlJr
+ 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
+ FzKefdwVnkuah5JovUApGQ2xtg==
 Content-Transfer-Encoding: quoted-printable
 
-> Taking a step back though... the only reason that this function really
-> exists is to provide a convenience wrapper that deletes references while
-> we don't care for the old state. If we want to not do that anymore and
-> instead want to expect a specific old OID, is this function still the
-> right function to use?
+Hi Patrick,
 
-Agreed. Extending refs_delete_refs() seems to be the wrong layer for this.
+On Thu, 24 Sep 2026, Patrick Steinhardt wrote:
 
-I will try to rework the patch so that refs_delete_refs(),
-ref_transaction_delete(), and callers remain unchanged. Instead, the
-common transaction hook layer could record a separate observed old value
-for updates whose callers did not supply one. That value would be used only
-as hook input and would not set REF_HAVE_OLD or otherwise constrain the
-update.
+> On Sat, Sep 19, 2026 at 12:12:13PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >=20
+> > GitLab's MinGW job cannot find `x86_64-w64-mingw32-gcc` when linking
+> > gitcore's build script:
+> > https://gitlab.com/dscho/git1/-/jobs/16593470275
+> >=20
+> > Although gitcore is a static library, Cargo first links `build.rs`
+> > as a host executable. We omitted the GNU MSI's `Gcc` feature, which
+> > supplies the required linker and platform libraries:
+> > https://github.com/rust-lang/rust/blob/1.96.0/src/etc/installer/msi/ru=
+st.wxs
+>=20
+> Hm. Does that mean that we now have two versions of GCC available, once
+> via the MinGW environment and once via Rust?
 
-This should also allow me to remove the failed_refs interface and the
-special handling of null_oid from the current version.
+I don't think that Rust produces intermediate C by default, so no, this
+would include a second version of GCC. It will just make sure that the
+installed Rust version can produce libraries that GCC can link to.
 
-Thanks,
-- Maciej Ciemborowicz
-
-
-On Thu, Sep 24, 2026 at 1:07=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Wed, Sep 23, 2026 at 11:04:40PM +0200, Maciej Ciemborowicz wrote:
-> > refs_delete_refs() performs unconditional deletions, so callers cannot
-> > preserve old values that they have already resolved. Consequently,
-> > reference-transaction hooks see a null old OID.
-> >
-> > Let callers provide an optional array of expected old OIDs in parallel =
-with
-> > the refname list. Delete the ref at position N only if it still points =
-at
-> > the OID at position N. Treat a null OID as an unconditional deletion in
-> > ref_transaction_delete(), allowing callers to include broken refs whose=
- old
-> > value cannot be resolved.
-> >
-> > refs_delete_refs() has always promised best-effort deletion. Always use
-> > REF_TRANSACTION_ALLOW_FAILURE and report rejected updates so one failur=
-e
-> > does not prevent independent refs in the batch from being deleted. Let
-> > callers request the exact set of failed refs when they need to report
-> > partial results. This also completes the conversion that was missed whe=
-n
-> > batched transaction failure support was introduced.
->
-> Taking a step back though... the only reason that this function really
-> exists is to provide a convenience wrapper that deletes references while
-> we don't care for the old state. If we want to not do that anymore and
-> instead want to expect a specific old OID, is this function still the
-> right function to use?
->
-> In other words, shouldn't the callers instead be updated to drive their
-> own transaction if they want more complex behaviour?
->
-> > diff --git a/refs.c b/refs.c
-> > index 92d5df5b7..13ee2d459 100644
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -1523,7 +1524,7 @@ int ref_transaction_delete(struct ref_transaction=
- *transaction,
-> >                          struct strbuf *err)
-> >  {
-> >       if (old_oid && is_null_oid(old_oid))
-> > -             BUG("delete called with old_oid set to zeros");
-> > +             old_oid =3D NULL;
-> >       if (old_oid && old_target)
-> >               BUG("delete called with both old_oid and old_target set")=
-;
-> >       if (old_target && !(flags & REF_NO_DEREF))
->
-> I'm not a huge fan of starting to treat a null OID as something other
-> than "this branch should not exist". Everywhere else it still does, so
-> mixing this feels fishy to me.
->
-> Also, this change wouldn't have to exist if we instead started to drive
-> a proper transaction.
->
-> > @@ -3069,39 +3070,73 @@ void ref_transaction_for_each_rejected_update(s=
-truct ref_transaction *transactio
-> >       }
-> >  }
-> >
-> > +struct delete_refs_rejection_data {
-> > +     int failures;
-> > +     struct string_list *failed_refs;
-> > +};
-> > +
-> > +static void delete_refs_rejection_handler(const char *refname,
-> > +                                       const struct object_id *old_oid=
- UNUSED,
-> > +                                       const struct object_id *new_oid=
- UNUSED,
-> > +                                       const char *old_target UNUSED,
-> > +                                       const char *new_target UNUSED,
-> > +                                       enum ref_transaction_error err,
-> > +                                       const char *details,
-> > +                                       void *cb_data)
-> > +{
-> > +     struct delete_refs_rejection_data *data =3D cb_data;
-> > +
-> > +     warning(_("could not delete reference %s: %s"), refname,
-> > +             details ? details : ref_transaction_error_msg(err));
-> > +     data->failures++;
-> > +     if (data->failed_refs)
-> > +             string_list_insert(data->failed_refs, refname);
-> > +}
-> > +
-> >  int refs_delete_refs(struct ref_store *refs, const char *logmsg,
-> > -                  struct string_list *refnames, unsigned int flags)
-> > +                  struct string_list *refnames,
-> > +                  const struct oid_array *old_oids,
-> > +                  struct string_list *failed_refs,
-> > +                  unsigned int flags)
->
-> And here we also have to yield failed refs now because we don't have a
-> better mechanism. Same as before though, if we used a ref transaction
-> we'd already have that mechanism.
->
-> So overall I'm not quite on board with this change, as I think it's going
-> down the wrong route. If you want more complex behaviour when deleting
-> refs you should use a ref transaction, as it would already handle all of
-> what you're trying to do here.
->
-> Patrick
+Ciao,
+Johannes
