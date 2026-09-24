@@ -1,211 +1,138 @@
-Received: from mail-ed2-f12.google.com (mail-ed2-f12.google.com [74.125.228.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3984F331EAB
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 13:50:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98523793B1
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 14:09:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790257840; cv=none; b=ovT3eNACjfbXBGCWxEf1/+nPm+/VXVGkc8o9W+w0L9uY6t9GkITek3iu6ulQC1Dwp17j4vgd0rhBH5pzb5pMSQy9MKCexqVxv2OFq8QDWoV+2D5BjoId+UyDQGpdp179B3m0ySdrFL4RZHPRmmbSd8rIGQZWCJ6cSZ/skgu8nfM=
+	t=1790258964; cv=none; b=ZE60rmzRpPRkKL75gT1R5egCthUsti+OcgxRGX5ghLmRmcnZhcAKqQtArUiVMheSe+4O9Z6GFT8WBhPPJxnhDBEaq0E4Jtj/3wrbDIPb/btGNjjNHnO0J4FQJPk1d7N4I2b2HheD0W38I4pt77466A3m+dN1U1L/XpZ+ZjMwMz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790257840; c=relaxed/simple;
-	bh=6MDWz40rySlHYJ9/KrMlgtf2DWiYdqw88Epf/gviyVY=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ZgCRPzJq25EcXwmt4h/C4kmbwPf7uFJJRkMHG36IwA61gKUpNMIwjhesROkL4w3PFxujDh5wp+sQ2bNLFi4D9wb2C5smpGQbwICsysSon9rmalM3OXyfw5RUmjZIDgH8mZjto9fKp0eD4F84SaCguTVIQ1+PEM2Vcegj6hubPFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VNiA251e; arc=none smtp.client-ip=74.125.228.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790258964; c=relaxed/simple;
+	bh=JZaGiXcTIz6o0SVSm4o0wX2ovwndhkk5v94puY0z6GA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XYnbugSwKNP6dSgYdvPVOlmrBzzqRfEgxvrt4Bbs3hvWVIUu7OVy5tEaZzLx9JrAg6wUd1+775PxXTHWU/VIeO28WdZFyf47VzNIUB2kXTbEjoDtmJfygKc4iPvaT1khFJmxawgwxQsAVM8M7BZ7Vwkd1qndXZ8jZAoBYQZYGTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=U+xzsg8B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IArBG+b+; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VNiA251e"
-Received: by mail-ed2-f12.google.com with SMTP id 4fb4d7f45d1cf-6a9a2b95b72so3624495a12.2
-        for <git@vger.kernel.org>; Thu, 24 Sep 2026 06:50:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790257837; x=1790862637; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=xxxdQonZ2LIzsSqGNu8cDCw7oR6MhEmuZnEU2toNyCY=;
-        b=VNiA251e2Mr7TNKTIwJP+vMj/PLWm7SCC6AXjNk+7/uVYhCZU2BXnaNzUHqWbAjNRS
-         kpIvxSTpGBeyxYaQ3Mkt0FIfihdN7y9ukBE33cRgr4WUm91cJYGe/xJ3nJIOnEL3fywY
-         vjsNHWAUGoVWqHCHwdaXcROgdyHsEnMEDGDW3lkGoGVE7exkal9O8C4+2nYmonMAUW5m
-         JizBLMhTwEcfhCSYqhBUlrvapClVVLboJ9mWjONNTXFpdoz958A0HGFxdMVN4PaWwCBF
-         +4Pu0uANZUzx/fP4qp9Whd35BTBrAld2hVsWwWc3uQhi/khh8fle4U3ZdtiZ0qMbjMo9
-         QPAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790257837; x=1790862637;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=xxxdQonZ2LIzsSqGNu8cDCw7oR6MhEmuZnEU2toNyCY=;
-        b=VA3AvMyT7bdqnhO+lJbsdnjlN7ShR4ht0hN98bB5Ty2Y4a807O8JWOef0wEvu53w0U
-         lGF+ZnB8QksLAPwkFgQoglwv2AgSSjWca7raeXrth/3+VE8iTzhrIEQMB3b1vjjDFO27
-         gWp7Gy3cYbNl1/Vrr5kPmHZssqsoPYZB4jET0dOMLZKsBk3PvuTfZSIc82FD6kQGiLZo
-         2AxrhbHlgMru2n27fhPQjbeWVvlhWhbcvTmuiltQhQW+hbk2MBohcKIEclA1uqeHg+yn
-         PkR/mMBAUKVjMcdNgpeFMFZU3OAFvOuASC5dD91BPAYIswWjdLuhtLHYB/Ayv5ZG6qjC
-         dO8Q==
-X-Gm-Message-State: AFuF++naxdV+D+di0xdtNXqotkmDZ7VXYnP0njZ3qpjiKGNQtRXC6h6S
-	929wqAXOyHdi96xdhoqUK3zmGOVRvO9/cGh6xVYUD5k2eEKebelX3Il/GOwA914C
-X-Gm-Gg: AYBFou3G8VFZSuz02BsE5oCvXfmBOOeAeEjlrEWYlMy/3DtiZ/C4iUHaamwkjyVblkk
-	1eYdOsjuDI26XAfiXEIdbL9YuOXXw19KwPXV1jjTwU7HAPjUStHYDDOLxvQjRTw0ETyKL01a9sB
-	rnHA54k7YmJnWvsh7QIZXCZDOktFFz98G5ZprFQE1A6NvEmv3+Ngj2O/dYZ+918C3fxzgPmhhs3
-	GdBuRYGE6cmmiJK3p1u3ZyCx2Joyhm4J6lCJo0u5ljBEmoj9IhkEQjwsXp7qlTzJZA5xirShNs/
-	IuKwZ5ECtwAmiSzzJykHgM6I4h1MjfmplSkoB3ciZOgVUkiJbBdJnXLxfm0ngWvmi5TQaULwhYl
-	1OjGB+7uzFnsTkoGVNuK6aVEdGdo4eKqCrbCi3tj264dmw5Raif9tbiV1FpNmIyIn8zGB5eF0z6
-	DEF5VB1gCQM9YAvWTOLSjT3RfD4EynokmEdYVnoTX7IXETta/8pBeEAh7H2ezOE0G0mk/6CZeYJ
-	Y/5
-X-Received: by 2002:a05:6402:84c:b0:6aa:f0e:a152 with SMTP id 4fb4d7f45d1cf-6aac90c71d4mr2492348a12.20.1790257837084;
-        Thu, 24 Sep 2026 06:50:37 -0700 (PDT)
-Received: from [127.0.0.1] ([172.184.211.150])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6aab38a8fadsm3606223a12.24.2026.09.24.06.50.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Sep 2026 06:50:36 -0700 (PDT)
-Message-Id: <pull.2420.git.git.1790257834680.gitgitgadget@gmail.com>
-From: "Nathan Froyd via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 24 Sep 2026 13:50:34 +0000
-Subject: [PATCH] builtin/fetch-pack: indicate when we have an exact oid
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U+xzsg8B";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IArBG+b+"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 041751D000C0;
+	Thu, 24 Sep 2026 10:09:20 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Thu, 24 Sep 2026 10:09:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1790258960; x=1790345360; bh=/f/Jw4fAxH
+	AtB67r6tZVM4dAUG36U6s65Hx4byQHgsg=; b=U+xzsg8B5oMv9HIMnPZnpH63XC
+	/UfS1DhMms9v89zMDKCymxDCT1GHt4Wuixfa2imQYFOeRjdQ0rw3HWqk0oL5WfQO
+	d475Id3GfJbieu7oc4bwUmFa32dGg8CEP870KFq99s39D5/dTPwl2V2NiTOCUMSp
+	MOutIqLjVxQN2eQdObxbUj0mbes1FjsQC7DzZmlV9lsIa8p/7fNWaaL7g2aLomMs
+	RXS+UXIMN6CzEWQ9+426kXvlbiAe+UhEFtlAZIf0NTW2rtB2xVwKQaNK2kUPQio+
+	FNjhz/8QjOQbQDs7LnGUK79iFOYaE+WZTFKrB4BwmlxGHuOqUDtj2zSZwsLQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1790258960; x=1790345360; bh=/f/Jw4fAxHAtB67r6tZVM4dAUG36
+	U6s65Hx4byQHgsg=; b=IArBG+b+YB843wRosx4czr3J9L38vYWMHt/+cxi7NQda
+	4pyhvn1Zq4dQfRSO/HejS05V+mLwDvLVCuhNF6+s1mpj44L0fOkz51PkruO3nnH2
+	NAhkyO/6wW9x3pYC3BlZYmzFoehkfgbdI5DhhnRzhwImoI865ypU2ACdS8x/XdF9
+	aZNrDQGCOE3su1QF2Q9namozv7iRTviurVNMhMvlyqTgaDcFkiys/K1cIKYMaboO
+	eDbSNPQeN/jH45cRC7ppGyFYFqEjBEd8QvgspJ/l1qzzntlvdy+eld1i7f2z+Z81
+	dBn5H7PSJJpDA1IgM+uiTl/bDmtF0EnvgYZ7iVJ2XA==
+X-ME-Sender: <xms:EC-1alh1mPg7ovphVQcA7BXErFZM6eufoINI7kj3PyLgDb4glS3Tcw>
+    <xme:EC-1agCmCihfqb0RKerhILHuVKsI5Gdt2fS7NxGHMnwn9ddQazhWampnfAm3S8Q6M
+    V4OwiGduWB3i-T1THAjykjYjotAcBkItvHazdtvqWql98qpRIQcpVk>
+X-ME-Received: <xmr:EC-1aiuk9dmJiSm3EP0rwH_3WBiaktrrWeWvDoljofRPzZmzPvbihEmW9W30wwXnHSDHnzU>
+X-ME-Proxy-Cause: dmFkZTF+SoVW0pedTkeOqnxANNNxYAHek9Z3qcuVg3+UWJrQllA4EssNE/mHVfEZpcSrPw
+    UtdtStnyTr4YWOY+8F2tF4oRmuQQjI2bQ0PbIcb7iEfxiM6Y8D5i/C5DRuknEObxR7Ptfn
+    38Mzcf0HYFFzOYuNp15EAT/D2/gcYd1bIIG8MuYvaV9yooBBvTsU8sJcSLciNX52XQg8KE
+    lX8Qp2WWmHm5dVtKOw6EqNNB1VzKyUwxOciww87LTgaDPkqkinOQIlch4au1RK79ajUwWT
+    MUlWG2amiLry6OAjO60dD3dwEnpq82QJPMbT0JeVO40QwZvNRi8PBgG/A0wjw+A7gl3IJf
+    5tIm4neU3V+B36oZZwsS7pTjIc1Mi+5em7kDETERjQ9UC+5UN3odLH8a4XtFIi1ZonMpXw
+    +GlK6khTCo01dQ6JPfm6qYkzDyX5nWX05NYJaweauxj5QqIH9M7VvbQ6uEIT/xFXBQstQT
+    X0XSF9DIRntZqJt2EN/pSNDEh/YTjv3+EZopyZRK1c0cdYblFjyPCsl95EOOQ5J6mG6sfL
+    pAh7WlNfmwVVt9gv3i1gFeXvFEjmL2PxCduMt/8nlrmGclJ40WzDYcAIbYC7cO92KtWMv9
+    SNuiN3YecuJwSTbe9z8kO/fgz7z2Rxtu/tSyP1kZiEwv495UBpOWn6Nw6xpQ
+X-ME-Proxy: <xmx:EC-1albRk0gzdyKjvoGbuxq6WMKDzLqpkRxhPvsVkkYxQgeu7bxCcg>
+    <xmx:EC-1alXjES7PrVgh5-GllFcNaPPJJLuQBZuBLtF9cZ5hqfQ-2xMCrw>
+    <xmx:EC-1ap4U0JUJDlx0fdBMdRnvfqmtUxgCQA6rgLC2Paxqg6i30D5RJg>
+    <xmx:EC-1aghuW52FP9saeNuPpz1ktvIvNM7zkkPxTCD2Qp5Wu27LV9TYkw>
+    <xmx:EC-1aiF6jUXWJuWtaKDed9rMvvNyvNdmX6lTaeyz9V9m0BZzSny8Xxr2>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Sep 2026 10:09:19 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c893c68d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 24 Sep 2026 14:09:17 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/7] A couple of Meson improvements
+Date: Thu, 24 Sep 2026 16:09:09 +0200
+Message-Id: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMyw6CMBBG4Vchs3YSbBoVX8W4APoLo+klHSAkh
+ Hen6vJbnLORIguU7tVGGYuoxFBwPlXUj20YwOKKydTmUjfGcvooe2gMLD7luMAjTMrdFa5p7Q3
+ OgkqcMl6y/saP5986d2/00/dG+34ANVI3mHoAAAA=
+X-Change-ID: 20260924-pks-meson-improvements-b7ed9a48ed4e
 To: git@vger.kernel.org
-Cc: Nathan Froyd <froydnj@gmail.com>,
-    Nathan Froyd <froydnj@gmail.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Mailer: b4 0.15.2
 
-From: Nathan Froyd <froydnj@gmail.com>
+Hi,
 
-The `git fetch` path, when parsing OIDs, properly sets `exact_oid` on
-the relevant refs; the equivalent path for `git fetch-pack` does not.
-This oversight results in an invocation of `git fetch-pack $OID`
-sending `want-ref $OID`, which results in errors like:
+this patch series contains a couple of improvements for Meson:
 
-  fatal: unknown ref $OID
-  fatal: remote error: unknown ref $OID
+  - Clean build times are sped up, going from ~6.8 seconds to ~5.0
+    seconds for a full build.
 
-Make the two paths equivalent by setting `exact_oid` properly.
+  - A test issue is fixed that causes shell completion tests to fail
+    because the scripts are not properly updated.
 
-Signed-off-by: Nathan Froyd <froydnj@gmail.com>
+  - Our subproject wrappers are updated to current versions.
+
+  - A fix for GitLab's msvc-meson jobs that are broken right now due to
+    a change in our runner images. See [1] for the now-working
+    msvc-meson jobs. Note though that the MinGW-based jobs are still
+    broken, but Dscho has been sending fixes for that already.
+
+Thanks!
+
+Patrick
+
 ---
-    builtin/fetch-pack: indicate when we have an exact oid
+Patrick Steinhardt (7):
+      meson: avoid recompiling HTTP sources several times
+      meson: don't recompile git-remote-http(1) multiple times for tests
+      meson: use precompiled headers for our test-helper
+      meson: use precompiled headers for unit tests
+      meson: fix outdated completion helpers
+      meson: update wrappers
+      gitlab-ci: fix hanging MSVC jobs
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2420%2Ffroydnj%2Ffroydnj-fetch-pack-exact-oid-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2420/froydnj/froydnj-fetch-pack-exact-oid-v1
-Pull-Request: https://github.com/git/git/pull/2420
+ ci/install-dependencies.ps1    |  8 ++++++++
+ contrib/completion/meson.build | 38 +++++++++++++++-----------------------
+ meson.build                    | 16 ++++++++++------
+ subprojects/curl.wrap          | 19 ++++++++++---------
+ subprojects/expat.wrap         | 21 +++++++++++----------
+ subprojects/openssl.wrap       | 23 +++++++++++------------
+ subprojects/pcre2.wrap         | 24 +++++++++++-------------
+ subprojects/zlib.wrap          | 21 +++++++++++----------
+ t/helper/meson.build           |  1 +
+ t/meson.build                  | 10 ++++++++--
+ 10 files changed, 96 insertions(+), 85 deletions(-)
 
- builtin/fetch-pack.c               |  4 +-
- t/t5703-upload-pack-ref-in-want.sh | 68 ++++++++++++++++++++++++++++++
- 2 files changed, 71 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 86754296fa..bef8a3dfc5 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -23,13 +23,14 @@ static void add_sought_entry(struct ref ***sought, int *nr, int *alloc,
- 	struct ref *ref;
- 	struct object_id oid;
- 	const char *p;
-+	int exact_oid = 0;
- 
- 	if (!parse_oid_hex(name, &oid, &p)) {
- 		if (*p == ' ') {
- 			/* <oid> <ref>, find refname */
- 			name = p + 1;
- 		} else if (*p == '\0') {
--			; /* <oid>, leave oid as name */
-+			exact_oid = 1; /* <oid>, leave oid as name */
- 		} else {
- 			/* <ref>, clear cruft from oid */
- 			oidclr(&oid, the_repository->hash_algo);
-@@ -41,6 +42,7 @@ static void add_sought_entry(struct ref ***sought, int *nr, int *alloc,
- 
- 	ref = alloc_ref(name);
- 	oidcpy(&ref->old_oid, &oid);
-+	ref->exact_oid = exact_oid;
- 	(*nr)++;
- 	ALLOC_GROW(*sought, *nr, *alloc);
- 	(*sought)[*nr - 1] = ref;
-diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
-index 330d049b2c..c02e1fc79c 100755
---- a/t/t5703-upload-pack-ref-in-want.sh
-+++ b/t/t5703-upload-pack-ref-in-want.sh
-@@ -242,6 +242,74 @@ test_expect_success 'fetching with exact OID' '
- 	test_grep "want $oid" log
- '
- 
-+test_expect_success 'fetch-pack with ref and exact OID from arguments' '
-+	test_when_finished "rm -f log" &&
-+
-+	rm -rf local &&
-+	cp -r "$LOCAL_PRISTINE" local &&
-+	oid=$(git -C "$REPO" rev-parse d) &&
-+	main_oid=$(git -C "$REPO" rev-parse main) &&
-+	GIT_TRACE_PACKET="$(pwd)/log" git -C local fetch-pack \
-+		"$REPO" refs/heads/main "$oid" >actual &&
-+	cat >expected <<-EOF &&
-+	$oid $oid
-+	$main_oid refs/heads/main
-+	EOF
-+	sort expected >expected.sorted &&
-+	sort actual >actual.sorted &&
-+	test_cmp expected.sorted actual.sorted &&
-+	git -C local cat-file -e "$oid" &&
-+	git -C local cat-file -e "$main_oid" &&
-+	test_grep "want $oid" log &&
-+	test_grep "want-ref refs/heads/main" log
-+'
-+
-+test_expect_success 'fetch-pack with ref and exact OID from stdin' '
-+	test_when_finished "rm -f log" &&
-+
-+	rm -rf local &&
-+	cp -r "$LOCAL_PRISTINE" local &&
-+	oid=$(git -C "$REPO" rev-parse d) &&
-+	main_oid=$(git -C "$REPO" rev-parse main) &&
-+	cat >input <<-EOF &&
-+	refs/heads/main
-+	$oid
-+	EOF
-+	GIT_TRACE_PACKET="$(pwd)/log" git -C local fetch-pack \
-+		--stdin "$REPO" <input >actual &&
-+	cat >expected <<-EOF &&
-+	$oid $oid
-+	$main_oid refs/heads/main
-+	EOF
-+	sort expected >expected.sorted &&
-+	sort actual >actual.sorted &&
-+	test_cmp expected.sorted actual.sorted &&
-+	git -C local cat-file -e "$oid" &&
-+	git -C local cat-file -e "$main_oid" &&
-+	test_grep "want $oid" log &&
-+	test_grep "want-ref refs/heads/main" log
-+'
-+
-+test_expect_success 'fetch-pack with OID and ref name resolves the ref' '
-+	test_when_finished "rm -f log" &&
-+
-+	rm -rf local &&
-+	cp -r "$LOCAL_PRISTINE" local &&
-+	oid=$(git -C "$REPO" rev-parse d) &&
-+	main_oid=$(git -C "$REPO" rev-parse main) &&
-+	cat >input <<-EOF &&
-+	$oid refs/heads/main
-+	EOF
-+	GIT_TRACE_PACKET="$(pwd)/log" git -C local fetch-pack \
-+		--stdin "$REPO" <input >actual &&
-+	cat >expected <<-EOF &&
-+	$main_oid refs/heads/main
-+	EOF
-+	test_cmp expected actual &&
-+	git -C local cat-file -e "$main_oid" &&
-+	test_grep "want-ref refs/heads/main" log
-+'
-+
- test_expect_success 'fetching multiple refs' '
- 	test_when_finished "rm -f log" &&
- 
+---
+base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
+change-id: 20260924-pks-meson-improvements-b7ed9a48ed4e
 
-base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
--- 
-gitgitgadget
