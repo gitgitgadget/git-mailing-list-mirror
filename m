@@ -1,80 +1,79 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0676D379998
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 14:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289C937A48D
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 14:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790258966; cv=none; b=I3bdLk7M2XhwL2AvjIi08qt4iq8V9gNR8UTm4d7NLxUv0TWcjjXuunI/4w7z7bqod+ZLTdrlm5sAf2NcktUOACkRW3TKkUbwkwLdDujl6TQ9M5s8eO6qhQgmHDJHGKB5jjIFYmRStPgBzldzcxYU1d/N6tBKQUWQ2bvBBYHNYIE=
+	t=1790258968; cv=none; b=mzozRh68JjiASn9QIPlnf/cPmyIHb9qis6UFgkG5G4QPBHj0yfiuZlObw7Tyxk6hLsdPs6JEftDyPadwQiyiTRhXqg+irJusRkFJJkIgnBbXktP5hZJvAoPBgoJRxrtFkFOv0ThA8ox07G1xm1reoRCARU6/Dm2O1l1sYqGOobw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790258966; c=relaxed/simple;
-	bh=KvSbyjO9cbX5LqTPSggcdZAXj+BG8Md8Du5ds/8dv3c=;
+	s=arc-20240116; t=1790258968; c=relaxed/simple;
+	bh=B3xNf+x1mEB7pOJc6MjnL4NUD0V7sgokGGe2uvXakNc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hf43r19SkDa1JKpRfuT18NpCMdnRytcXiNC1K9xqdKxwR3rnEXRTbSKhfX5YyIc/5YwC5ibZZcg1YGIyGWebxuFlMHQS+5T40PBdRGikZ16zVZmcBkWzcmszIMtJWNRyLN8M1z+RX8IHatRUxPItsMQ6pmUFN3hT1y9eyNRgevA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eWT0WqkR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kBTXmLoR; arc=none smtp.client-ip=202.12.124.158
+	 In-Reply-To:To:Cc; b=nXQ+H5j/Xcva3jt640oLieaYoRRFg5t9CBSmQBRlBufuNRFW5dTrEM+9xfpR9zHGycIkBeFVChePk4C/goF6gUOV7TUXmRMyCAEj2l4RNJXSOTpVlFrhtacasyq2uN3rJ+VUIyuzoKZt4slqIjx7O/yCLS/Aj10UTb+QodOVpy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nrjWnHbI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i19EalRl; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eWT0WqkR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kBTXmLoR"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 422B97A00A7;
-	Thu, 24 Sep 2026 10:09:24 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nrjWnHbI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i19EalRl"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4981C7A00F4;
+	Thu, 24 Sep 2026 10:09:26 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 24 Sep 2026 10:09:24 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 24 Sep 2026 10:09:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790258964;
-	 x=1790345364; bh=6H1tu+vB4JJdQfYOuYeSOIE0kj3U+rc65LB3l6ICxzo=; b=
-	eWT0WqkRZklFi1O1xUlfevFnn5Y5wCWRn7AujxQKZpNLgwW6nFNmG9drqsVnw7Ar
-	tdvcy19HnNRcYhQ3vnxtKtYuJzwV29lkoG7f8iJu6PTWxBgkbZpkaCjtXcUo30XE
-	m0bg41RsjknEG5jV0g1pOl2L7qHFnK2EWFvfvimcJjWjHm61i3uoxswSnRwQUwMo
-	NXu7iDslvgrXUxmzwzEOgpbOUVpKuCT+jbReUs8NwS4V/FnzwMnOKv9kWWZ3jZhk
-	JQDU6JnpqqO01pRng/e9UzJ5sokamggBau40GbqUMaBk42B1te6hVGNOzzKs3b01
-	+bIiaPOHPAuLWYKReEvedw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790258966;
+	 x=1790345366; bh=+MyA+96EFUyI0C9XxKcJAzHsZF+Wb7LcjCehDaqqOG4=; b=
+	nrjWnHbID7x4Vss77j1qQziaa2iCyFeJ9vHD6IMQgBU7ByxCCwCaaYQdL9hmWSKn
+	SSbnx3yd61kDdRUc99Hs84YlrdhqPbV1tFPVPa708pDMd+K+YtxbhYoMC4vxDP/0
+	MzrAn/ngUNPK/HZTaBJIgpJIyu0IkDLRmM6m1K2VCjn14sAeqcP5yBfAntrQeGM2
+	XzoSngl0H3fgKeqXjln18c4OeSIKUKpUNzAsD7vd8kHALAlf1cN8jjO1pXswvbyL
+	0tRyUvdRgLnNFa1LFTVP6d8UTd6/y7R9049o0fL8WNJYGtd7YgOg0LmixOuxoQpU
+	o0hnSKCYveNPdrNEZ5zVWQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790258964; x=
-	1790345364; bh=6H1tu+vB4JJdQfYOuYeSOIE0kj3U+rc65LB3l6ICxzo=; b=k
-	BTXmLoR6bZtVW6O2XemBIEdK2CdrRB4luVfa/Q3Eo7gSSrCLjWBe8raKyzFatiD9
-	lMyIVJAwuj7yq3mHtPOdM4efimBeftgNEqYlSGsFx7Gd/dJHH5o8IQq45QKFqKH+
-	y0dDOUMPPg4h888btgokdrQtIS+qCF82RyuWYP3MTrniQmVouOdQPBQUX5/nmbPV
-	gMAjOjD52SZI+eJJdtw4+FVjYDv47DbJpV5DADEkJ3G3Hbq8lbgzH6c3KDSGETY+
-	aK59xz+AoPEovyL2eh4jR0JNmxlOAQi+qIHlgAfhVW0sZLkajwBLt9uMMrF+Rhe5
-	EqGeZd9XThuCLmEfx5eWA==
-X-ME-Sender: <xms:Ey-1aiPeeEL8IrKD099eN-AmSQw9O36uKGNCBY0ZGKjJ9SuoxdfbFQ>
-    <xme:Ey-1am-m4d8ObikWjkjeCK0bd1IB-01aFikn-7XaH0lDBcWF7dFXUgNEpuhiyJroQ
-    d_h8Bm2pBhRxDpMMDuKjPPKldVy5BHCYCJFSkjTjsMLEBVY2w41QnQ>
-X-ME-Received: <xmr:Ey-1am6NOPMiJA3Vv-SKZ7254w9qLuX3SU8KZZbVPBenJ0yVx2q6OeIScyEd4W2SXm03ZNs>
-X-ME-Proxy-Cause: dmFkZTFtQE+DlqvF0lQbqprxNhHky+kluS0f31ID+eJQAOtW/ApPXZMwtEnm8b0s8Tz4zr
-    2HcXZm4c1v0YwalfW7U7SogxguwgM7rzDq/2LSkXoKX2t8t4lcVOPYevkW4fNZe7D93O65
-    rhKzP8wO2wEax1l3oSxntOmmMY0qqKhziMosLsZe0iuZ5mzyq7HLrvtcTYuPrgnDEnO7fM
-    q6thSnkJiuXPsY/PFM+frscD7TgJFW3Dr7VrZgIJEWqGqHnNlRxsfIZW+8Eh4SmLar8TSt
-    iCT+WmRuLtirP6ElGCe7B6h/GmMAPk7nc9DjRQbvsANHU21xAlnVYxzY3JetyAgfQsFNdB
-    aH5YkVAWYsk++nBBXEk3dqR5rOUQtoezddWcegGM+ay/sm+umYDxLGmOI+IyFFn7v9f8JQ
-    QFx/CFx/Tx62lG/5PtVd5KMXjUtabdQydeOHaptFNMXhUhkC7V19ZJR+gsmcn/zERho1Bt
-    VqbK7NwHCKCROVaM/tH8KEGtW/4fhVqwTFrX2LoUiFlEFBp20gtNxtUImum3da01RpMaUa
-    DKkUwIaIoBqysrIB1OvhuNhpCVtpGTLe38B7NRVsijhmclxEYILDaViaLfVlz7Lm8dDY5o
-    LIztYMbQ5bj53kI5QW5vZxR75d14FjXqp03tB43a/oZak1dLttBYuJhfYQpA
-X-ME-Proxy: <xmx:Ey-1at1UZ0uBc3mXsNJuVWJHIvPKCxzeO3geAICr0D7HnIutineBow>
-    <xmx:Ey-1atAtwLxDo06_s-dQ-MiXdfuRNe6PBpCyR5xID1QvbWedmMLWbg>
-    <xmx:Ey-1av1MVEDYPh2vRNMPV0OKPEpNxO3P_-05Op92e_kfm6diQeIEMw>
-    <xmx:Ey-1anvI4FuTmrUSgUuWuZ70EHbTNyjlH5YlTubQrs1ROcYU-6ZMrg>
-    <xmx:FC-1ahyeEcui0EypZWaTiQsZoeIGw2LofAHZc2v-u5i4QzZTxpYZ6bFq>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790258966; x=
+	1790345366; bh=+MyA+96EFUyI0C9XxKcJAzHsZF+Wb7LcjCehDaqqOG4=; b=i
+	19EalRl4a1eOJ3I1/MFb+GR64PZ35zM5BxAzIXdfEZp4QwxB3AbEVINVmYVfBbyh
+	vwBPJ/4b5OPLcM+lVezh5YdtBQZVFH7iwjQ3rSI4wOFM6OSg1Spw3tfCT1ftMVbX
+	aPQxIa5hX0Up0nJEr5shtZ+jI7DtNhAvzl4xPxIqf9PpkmoXZVcV1cM5xPJTlC+Q
+	oXFRSLNx4V8FDGYh+bQETILvTI/uhOB6EwLdM5LfdEaL/iRP4ZLczbfhX21ACqfU
+	XR+m7CPyY4CMXjk+3v8iMlfvsWQvEkmCwFWrVZjclgCwiGm0Jh0sfJFldDDytVu7
+	OMvuBAunGNjfr6pu4hi0g==
+X-ME-Sender: <xms:Fi-1ajoHunTHgdvbnzu12tUgT7pzStUm_czL_tPWjF9uC093KarHpA>
+    <xme:Fi-1ajrPvqNlCBDsNwPFPTREQCRloxvs17t3Jpe0lz_SvkvFj9-7M4PntMeJGuLbV
+    mWQ3muPyTTl5hMunUFVxjumg-wqDoFj9htZd2ALz35KgHJb_tQFvjE>
+X-ME-Received: <xmr:Fi-1at1NLbBqqzuy9bZvZ8FxoI5JcjDXOVwwmH0F90jtY2S3FZY7KuKZilO40GHzkRO7s1w>
+X-ME-Proxy-Cause: dmFkZTEe2oZmtb0o+7ktXGHj6AU+Zmd989UzScVbnxGCjxt2/WpNO4oLE5ek2XerOT7J4j
+    Mgd1+x5daEZ0OVlwX/vBb15HeLRKlyebjnI3vT+Z5HgqNy2rfJWgk1D5N8Rsv2aN+U7gx9
+    1u+20nMtlqtMhJiZRkLIKEr2bspOitfcQvgcSknxrH0plDqJR2dXJErWSZOWHuJ1IzI9Pt
+    Pdl09pmJx0PdGuKK63Kty83Fqth/RapvQa77a0455MSYJX36XIEvvZpmZ3yW5JZhk6I6UW
+    JQIZExA4oVuwpHC7TX4lb9kk86LwYC4YHY3ZlHJXi40Gg++yq8NFkpW2BohM9WoikUAFgJ
+    uOu3L5NWdSHNNxFy9c8ZQ1XtvXzYugNnOO2eKHSgGXow2g74r6vcbLZ5fJwa6jGhFL5P6z
+    wVmmCnkjVbd4PXMeEJeqOUpmJx7Kj7LlE7H0OKFoTAgKucRK9mA5Eu1gXGeCQ6IADQUwYs
+    0XLrvKfHhldnhH//09plUfqtr1h21LPm2kM7sQczVITmvL+ndqzp25wkJWhYawNOqBbB8l
+    RaEr7krv6KjJqtbgxDoZRbJzyTZgpqnRfl2O8CzK4LhHuqwnrNBXYTJNtADQBdkF9dulrU
+    o5QlVfUjbjB/TLow/iMrz2qTx1myY6At6tS/b+b+mR1EPTsu68htwenOuClg
+X-ME-Proxy: <xmx:Fi-1aiD-1EzH8t2S3pIQoiP17Xpqy-oRFBv7P_8Gv182xfv6IOCCVg>
+    <xmx:Fi-1aldxRwL0zPHHWRWcMR9U4dJb_rrOrBGkOwQF6kEOfSv1ME9V5A>
+    <xmx:Fi-1anhXC7RumHDLcNMoSHSA1FjTu55XOrq56cyeY26KXFWfp7GTcw>
+    <xmx:Fi-1atrAnmd2bhVDcdUaBoKDmGKwWPkrUTlVPE14ksrAnzy2mFGCaw>
+    <xmx:Fi-1aiMxfG8rOnBp-9U2BKr2EKGR5yYQJGdAzkLwNgqmUPgFEYwZll6Y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 10:09:23 -0400 (EDT)
+ 24 Sep 2026 10:09:25 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4439fb6e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 24 Sep 2026 14:09:22 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id a5e24f99 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 24 Sep 2026 14:09:24 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 24 Sep 2026 16:09:11 +0200
-Subject: [PATCH 2/7] meson: don't recompile git-remote-http(1) multiple
- times for tests
+Date: Thu, 24 Sep 2026 16:09:12 +0200
+Subject: [PATCH 3/7] meson: use precompiled headers for our test-helper
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,85 +82,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260924-pks-meson-improvements-v1-2-90b7f79f1c4e@pks.im>
+Message-Id: <20260924-pks-meson-improvements-v1-3-90b7f79f1c4e@pks.im>
 References: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
 In-Reply-To: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.15.2
 
-When running our tests, we expect git-remote-http(1) and a couple of
-other binaries to be available to the test suite. In our Makefile, we
-achieve this by simply hardlinking the file into place in our source
-directory. We cannot easily do that in Meson though because there is no
-available command to create such a hardlink.
+In 671df48df8 (meson: precompile "git-compat-util.h", 2026-03-19) we
+have introduced support for precompiled headers into Meson. At that time
+though we only converted "libgit.a" to make use of those.
 
-We could of course create a custom target that uses a script for that,
-but that feels quite awkward. Instead, we build the executable several
-times, which is of course less efficient. Even worse though, similar as
-in the preceding commit, we're building "remote-curl.c" once for each of
-these targets, which makes this even more expensive.
+Nowadays though, our test-helper also consists of a bunch of code files,
+and all of these include "git-compat-util.h" via "test-tool.h" as the
+first header. So they're a natural target to also use precompiled
+headers.
 
-Fix this by reusing the already-compiled objects from git-remote-http(1)
-so that we only have to perform the linking step several times. This
-leads to a mild speedup:
+Adapt the test-tool executable to make use of them, which results in a
+surprisingly large speedup for clean builds:
 
   Benchmark 1: meson compile (version = HEAD~)
-    Time (mean ± σ):      6.250 s ±  0.040 s    [User: 90.881 s, System: 21.912 s]
-    Range (min … max):    6.197 s …  6.344 s    10 runs
+    Time (mean ± σ):      6.363 s ±  0.033 s    [User: 92.858 s, System: 22.500 s]
+    Range (min … max):    6.311 s …  6.418 s    10 runs
 
   Benchmark 2: meson compile (version = HEAD)
-    Time (mean ± σ):      6.218 s ±  0.029 s    [User: 90.633 s, System: 22.022 s]
-    Range (min … max):    6.166 s …  6.262 s    10 runs
+    Time (mean ± σ):      5.327 s ±  0.021 s    [User: 75.135 s, System: 20.373 s]
+    Range (min … max):    5.299 s …  5.362 s    10 runs
 
   Summary
     meson compile (version = HEAD) ran
-      1.01 ± 0.01 times faster than meson compile (version = HEAD~)
-
-Honestly, a 1% speedup isn't really worth it. But the change makes sense
-anyway, as we're doing the same when we build git-receive-pack(1) et al.
-So while the speed improvement is negligible, it brings more consistency
-into our build instructions.
-
-For the record: I also had a look at using a custom target that
-hardlinks the files into place. But the improvement it had on our build
-times were not that mindblowing either, saving roundabout ~100ms in wall
-time. So sticking with the status quo felt like the better solution as
-it is native to Meson.
+      1.19 ± 0.01 times faster than meson compile (version = HEAD~)
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- meson.build | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ t/helper/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/meson.build b/meson.build
-index 4fdb4c5405..fa104a3efd 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1935,12 +1935,13 @@ if curl.found()
-     dependencies: [libgit_commonmain, curl],
-   )
+diff --git a/t/helper/meson.build b/t/helper/meson.build
+index 3235f10ab8..ae513b4cdc 100644
+--- a/t/helper/meson.build
++++ b/t/helper/meson.build
+@@ -83,6 +83,7 @@ test_tool_sources = [
  
--  test_dependencies += executable('git-remote-http',
-+  git_remote_http = executable('git-remote-http',
-     sources: 'remote-curl.c',
-     dependencies: [libgit_curl],
-     install: true,
-     install_dir: git_exec_path,
-   )
-+  test_dependencies += git_remote_http
- 
-   test_dependencies += executable('git-http-fetch',
-     sources: 'http-fetch.c',
-@@ -1960,7 +1961,7 @@ if curl.found()
- 
-   foreach alias : [ 'git-remote-https', 'git-remote-ftp', 'git-remote-ftps' ]
-     test_dependencies += executable(alias,
--      sources: 'remote-curl.c',
-+      objects: git_remote_http.extract_all_objects(recursive: false),
-       dependencies: [libgit_curl],
-     )
- 
+ test_tool = executable('test-tool',
+   sources: test_tool_sources,
++  c_pch: '../../tools/precompiled.h',
+   dependencies: [libgit_commonmain],
+ )
+ bin_wrappers += test_tool
 
 -- 
 2.56.0.rc2.329.gd58861e689.dirty
