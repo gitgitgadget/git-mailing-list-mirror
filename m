@@ -1,83 +1,85 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3245946AED1
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 17:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A1B52120D
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 17:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790271829; cv=none; b=TNxeMUZxfNonhmKAUG/nIaRhl1kQKGaFXuo8kgFfUeJYpnG8SHJEbsn0GByovHaSRVqSsvDqIKOmTUqE/VTvDdnc8iOVvtkbROxJiNQPhYkGGkSo+pZxtg64bFLslOdZWgaKBZdwSCjjFovNrVUaqZk7nUqieWmtLSmR+hIHItI=
+	t=1790271925; cv=none; b=CnRs0uhsPjfZZbEtDcUXB1HIqboXLBhkTnYQ7DrbuAwc4EAWk4cn4TDEhHgwxAo9HQqc6bmBm61Acex4LB/Njngfxp99f8T0fav+oP5gHU+0ormK3l7ngoGa560MgLIs+SLETPwquoeoP2T1bv2zKbXiifGQJ6LyrsjHiW60xBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790271829; c=relaxed/simple;
-	bh=BLfsfz5w+U+rnczNBdX7F+ArNJYIJg0pgH890cX9x34=;
+	s=arc-20240116; t=1790271925; c=relaxed/simple;
+	bh=I+hcPZhnZULvnXayQ9LyY06IT0B6Ndt6V4ObMBNKlkc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Z9OIAinbRyIgbOxuaLwz+xC7jXIXMvBXiCZ3JGk/J4lM4Qzes6nfuV+BTY1HN2w2UR2xA09knYAsbXcM3H0fqi1aSxVxUfPonbzoWGVekJDwb08Z1PD7iLKK1vdgW512rOSjHLnmi+9P8L3oiALs4WLLIudqwc9lzFArb9y0HO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tNJGceU0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dneJIjy5; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=TIkyhc7Ox4aTa+T2gepH+jLq1RlMJaT+KygP0U+fIO5tvZCbXbRRlZ+r/X6Y/KKaYvEV5lmaonzZdgbeGCpeOAvPaZ2audOBi7gve5uJ4/sasIejSmBaHjaR3dIPgPaBCl6hBOKRFIdwmUK3HSc+6VRfUnLz4Ppk76pTMGU014U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Hje3KJS8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F1BAibYS; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tNJGceU0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dneJIjy5"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4301D14000DD;
-	Thu, 24 Sep 2026 13:43:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Hje3KJS8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F1BAibYS"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EF9D81400127;
+	Thu, 24 Sep 2026 13:45:22 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 24 Sep 2026 13:43:47 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 24 Sep 2026 13:45:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790271827; x=1790358227; bh=RLAfleNMmU
-	M2+aIDdDw+kpHjv6H3h7yNuPYeY0ZV684=; b=tNJGceU0uHzNsQFU0vgUcXLIAd
-	5TIjQ7mGU97TfUXiDaMjb4/X9zU5Lz91GXHBMQHYPiwrn9AjR9aH6jfUCFBxhr3u
-	vNMxEvfhWVblb01zK+MdxenrOUrJhD4GKmmbL5VdPyl1mL7T9X0lpXSTEdp6OY0J
-	nQLX2onEVRCvVJtLHX2KisgxmAcBO2pJZNBL0t6la3OjRzd/8WwZnEkwN4V2UHZr
-	Iq/P8jsb5Lfhswlq9dqb0oxnuRi2KdbZEJ/QSXfaYkrrA2vOBah1LDJVVPatitfr
-	qESGhgdmYA+Iq1V+1chZEjUB8KCllVo4YDH1L6syWsfh437OGqgok56itA3w==
+	:subject:to:to; s=fm3; t=1790271922; x=1790358322; bh=jELrKO+9cP
+	eUFVR9b3WvoN8MDNmZiydh8Bn3ZMV5MVo=; b=Hje3KJS8UpJKrmqgHSLVJsPWMo
+	LiSMFjCBi71M+uGQXDil/4GGRdW5oxcvLlGIBd8GyyZtftzdOaidkk5gC/lEA4KI
+	yiR1h02lpYVFFb0U3dPgU9F2cjnPTEzfLbly16ckrvgCGzGDlSFbeBZJCUEbC+Ga
+	yyRV4eu5piUWx8ERsvKzhR1BTZaRp5wESGISpSz5voeESca+4Z5Fy7+Qpoj2ZY/L
+	UcYQ5HuEWYX6N5cXoqwYteCj610yOHOiW6J5fZXr0XIus4+cCwHFz2JDHqOQ3ecr
+	SoqDG0IaNUjad058sVeXdmmjgCLTEdhsuoa7wDgUG8yFI95yTuJTM/59Sf9w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790271827; x=1790358227; bh=RLAfleNMmUM2+aIDdDw+kpHjv6H3h7yNuPY
-	eY0ZV684=; b=dneJIjy5lk8ppIBqp2a31TlX4n/dCqLFQkwQ5QsAGGL2JyA6V7V
-	P/CO7IZ/PVw1NitCoBMRAIBj8wEDrD1OunFq925r/I9KDKmldn2s3TrDXVHpOP2j
-	pKso701N/UxhId7zsC0LumufEYgUB2AZ2bZ6aHoEa1MhBalzY9s7E4ERhqbnMIHf
-	TYCAKhl51vUNSUyI2lV/ZQBfNst97qX1PG8SsmyJATi2XLaqnBBXcC0UgLYBVu0j
-	b3DTn7O+pIM/eu34HnvNxa3T2xaFAqZAZdFOntQhq/kU8zBB/7mJyFe/8t4vk08v
-	0imguRqNopnkjtWJwpCwHwr4EtD4zQUH//g==
-X-ME-Sender: <xms:UmG1aiIMUWIWrRFbHiDBG8HvNqCkeQphq6am-MVIinxVqTy8JAnkYw>
-    <xme:UmG1at33MVDxZ87F2lzHHuEtDHtZQUw5Qvm__w79VvfhVXJjOghKjr4s51oKXv7ul
-    u4TDorgIW0ch2ApKJjc20_8BkIEkuud4XOEHJZqbzIAYQ0D8ek0lKM>
-X-ME-Received: <xmr:UmG1ashxdniroao5EoL48YR2zHwCb7RCtleGqQVUsb_zTVfthBnopaSNRYkBjmf-mpZvnZtzYh3PeOCcgIvToBq06rKSgD745Ucq>
+	1790271922; x=1790358322; bh=jELrKO+9cPeUFVR9b3WvoN8MDNmZiydh8Bn
+	3ZMV5MVo=; b=F1BAibYSgD2HhWOCk2/Pet9Qvqe4Cj3RsNorf2KXxX9+tLiGgUF
+	dZm/QjSD9yWZR6WXpvdGhKNhkPpXBSXuU8ZEZAWnI8pYfzFWUi6FUf0rAnCZlbdW
+	DA4JK6siDCiA9eyExsVZ80iFonGlMmn7WRepoS6tnw94dPEgsJnuYgivA+6esfM5
+	krFlmNeRvQ1rNcupgndu8Z5CRXQuj6qQD8gYsZshs9EQziGRFQ0Hf8EOK7WLGmLU
+	0hQvd4lUPr7zYuRWvbhRQqHtQ6XayH3Lukwr/Ne07GqBSxdtOvhS/kZrnG+ZFgdk
+	N2jux9pTzXaN9dm3slDUvfJbYfecQHYbPgg==
+X-ME-Sender: <xms:smG1ajm4tPtQqr-bc2P5qh1yWK5iOyyUC9wBRMdnOCRlpzyKsYIrDw>
+    <xme:smG1avQAxRQo7khUK8m0B63D4xs9mLdZGVkIyDZZ84zAv9ARjJ_4y5x9V_s-6SZvP
+    2cSqM5DqUUTRtFzh4EMkUWgU2Qxjbb6Vravrz_XYzbpC_eKGy0Miw>
+X-ME-Received: <xmr:smG1aqEPmjOUecUc_gw7Lb2YHj3ee1t4uujN8pEtg-87df6kNc3SAooF2LWF21R_t7jzlvCmu6PQfhOEACqR8eOkzkfBHyZPm0vS>
 X-ME-Proxy-Cause: dmFkZTGqzIiYjBAz4AUggdCrWQERdsVrxjbQnsOn8YdJE5h7B7omooiXpR/53ivPWIVfLb
     /SgydiVmfLCsEL4UIZFRNpG+eNK2neK05bikaRQ6kOGu2plQIE+Z/Y8EXSR1hi4MyJlH5g
     qN0fFNuhn+joKwuL4C1nEm9sCprvnqZ8zfgGcGGfLvUjQTFyN5bJCjQG8FEoGRRGB9zQVD
     tW0xKz1xxkJDWc5oSRhmaMnsP1ChZXOCVdhbW6aiZLeOIPvqnHJ++QML3sDLD1nHXcV7zt
-    iMF6BC+5sSXiKhzO8btZbG8Pe3bQbuuhcf+/OLGYK8wvSsGyjNvPBnFAflEMBPOrW30DEU
-    6tmZqJq2QO5ZGV+pWAcreLFCvpI8NKBbYv7c6l61pdwjMQV+i68rnwaSAZO14btdo5aGr0
-    UGxZJhkdSsxzFPRZASdfyF2DUcxz3+JtaQRzNHEZY3XwHjBu1GZy+vrnYFHJDTOfY7TDvV
-    acHOziPKNq2emr6sb8c9SqfXDHi/d4C1qD++F7IoVjv+WTWNlz3xtx+NNNFoSuHNFyPjzF
-    m57AJlgq3HX1o3OeIH4/rbdxlLctQlI+XpfITx0KEMBfYetjLV4hfJ8nXGjhuibjNkVcoZ
-    Yj/kCUwSlPnU1p6R9UCnMgmQJLvxkQfwK1mZ5AkZGB7sgqmng/iXFXObcR9w
-X-ME-Proxy: <xmx:UmG1auWR9exotdE-boxcUrX5pxUr_Jv6rr_iLzOE5FJVfF-0yjW0MQ>
-    <xmx:UmG1arWrNAG_25fC9ldmtP4htMxaZblWkZ5u3hBnZJtWmfhV6vLeLA>
-    <xmx:UmG1aujYvaW55E0SapaqU9Whm_zMwN3AmkQOriQ6UD-bxYURiFW2WQ>
-    <xmx:UmG1amZBnlZSYrQ80HaEDZ-gb6-TyrRBZ5qgvLzwzjgK6ceIUmIZ3w>
-    <xmx:U2G1apHMYzfuUB-IL64IpapZG6fv1DXB3vTVjBMtDdMInwnCxAWfvJ11>
+    iMF6BC+5sSXiKhzO8btZbG8Pe3bQbuuhcf+/OLGYK8wvSsGyjNvPBnFAflEMBPOrW30Dq0
+    RmCVFmz/4cVnWKvKV5GB7waRobVoyxaqpBHS4iuDFqIpk+rcsOFCM9uJ1NP3n1R0w9nzxS
+    lWjR/1pE7R7BCPscmLCxWQPzBed2rwI5B4b5KMMOkIyQtxM5+IILuB9tKWoNQrk8eD0SUB
+    YCwdn/J1X5hJ85jsXz9D5QZlq2/pEY4jYZ+yphETJhD2oh8Nax/abTX2iYcasNQs1ueOvk
+    h2knLRJzgPFsswXQ1SPm9vgM2tts9Q59k8F4UvoSawPsI/h+xMNgQtKk2a+PdIlCNVtxD9
+    xoXhN8J7AvaSAI9izCwx9w/HzSShyD7XYvVPFfVlhYUCEO5kNSSD22aWLIiA
+X-ME-Proxy: <xmx:smG1asEchc-kqDu8uLzGIdqxI2E5kOMM4PopWEQCWg4FkSgCuV6KFQ>
+    <xmx:smG1agTDnmI6MdYDlCjoTGQIXCG_Xsr4Yc4j6beq7QjpJ7eMAR61-Q>
+    <xmx:smG1alIXh-5iIPbSDssiCrp4-nsVKU3lcHXsXJAUt35ZRmlowu4UGA>
+    <xmx:smG1ajae3oimpv8q7w0-5TfB795Gm7nS6iBiAHLWZrrb9bfhYxS52Q>
+    <xmx:smG1apQAJfLkJaTDGsOL9mxRbxJ6t_mODKB1XT3kXQ3YoajL6OOFSnHr>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Sep 2026 13:43:46 -0400 (EDT)
+ 24 Sep 2026 13:45:22 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Pushkar Singh <pushkarkumarsingh1970@gmail.com>,  git@vger.kernel.org,
-  peff@peff.net,  r.norouzi@proton.me
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  Pushkar Singh
+ <pushkarkumarsingh1970@gmail.com>,  git@vger.kernel.org,
+  r.norouzi@proton.me
 Subject: Re: [PATCH v2] reflog: fix default expiry periods
-In-Reply-To: <arUvtE67n5_MFM4C@pks.im> (Patrick Steinhardt's message of "Thu,
-	24 Sep 2026 16:12:04 +0200")
+In-Reply-To: <20260924154659.GA736248@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 24 Sep 2026 11:46:59 -0400")
 References: <20260922165433.591551-2-pushkarkumarsingh1970@gmail.com>
 	<20260923102140.25475-2-pushkarkumarsingh1970@gmail.com>
 	<xmqqpky3ahvo.fsf@gitster.g> <arUvtE67n5_MFM4C@pks.im>
-Date: Thu, 24 Sep 2026 10:43:45 -0700
-Message-ID: <xmqqik3u35pq.fsf@gitster.g>
+	<20260924154659.GA736248@coredump.intra.peff.net>
+Date: Thu, 24 Sep 2026 10:45:21 -0700
+Message-ID: <xmqqecei35n2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,34 +89,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Wed, Sep 23, 2026 at 12:26:51PM -0700, Junio C Hamano wrote:
->> Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
->> 
->> > The default reflog expiry periods were swapped when they were moved to
->> > REFLOG_EXPIRE_OPTIONS_INIT() by 85658275702b (builtin/reflog: stop storing
->> > default reflog expiry dates globally).
->> >
->> > This caused reachable entries to expire after 30 days instead of 90 days,
->> > and unreachable entries after 90 days instead of 30 days.
->> >
->> > Reported-by: r.norouzi <r.norouzi@proton.me>
->> > Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
->> > ---
->> 
->> The above reads very well.
->> 
->> >  #define REFLOG_EXPIRE_OPTIONS_INIT(now) { \
->> > -	.default_expire_total = now - 30 * 24 * 3600, \
->> > -	.default_expire_unreachable = now - 90 * 24 * 3600, \
->> > +	.default_expire_total = now - 90 * 24 * 3600, \
->> > +	.default_expire_unreachable = now - 30 * 24 * 3600, \
->> >  }
->> 
->> and the fix is very straight-forward.
+> On Thu, Sep 24, 2026 at 04:12:04PM +0200, Patrick Steinhardt wrote:
 >
-> Is this something that we want to fast-track for Git 2.56?
+>> > >  #define REFLOG_EXPIRE_OPTIONS_INIT(now) { \
+>> > > -	.default_expire_total = now - 30 * 24 * 3600, \
+>> > > -	.default_expire_unreachable = now - 90 * 24 * 3600, \
+>> > > +	.default_expire_total = now - 90 * 24 * 3600, \
+>> > > +	.default_expire_unreachable = now - 30 * 24 * 3600, \
+>> > >  }
+>> > 
+>> > and the fix is very straight-forward.
+>> 
+>> Is this something that we want to fast-track for Git 2.56?
+>
+> The breakage was in v2.50.0, so it is not a new regression. OTOH it
+> seems quite obvious and low-risk. I'd be OK either way.
 
-Probably.  The accompanied tests in the patch was not as nice as
-what is quoted above, if I recall correctly, though.
+Yeah, I didn't know the breakage was that old.  Perhaps not many
+people are paying attention to reflog expiration?
+
