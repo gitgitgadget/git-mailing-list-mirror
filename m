@@ -1,111 +1,97 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6458D36C0D6
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 18:35:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FF74AD7FE
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 18:42:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790274932; cv=none; b=o96tyP0oj7stBTsAy7MKQCK3TAzLGinlzv18gkiXOl+MiM+mUiAkXVpPzdMpCcd/f80cB7/NrOrTq0Wgl/Pjx5/x/ESLOIOUV1aTRQmHT3ak03m+AdEazbjq535Pk/emI1ZMxt8YMIFAk+tHlac7OjSMYdcscEZ5/FkkDtrNmio=
+	t=1790275351; cv=none; b=u+SuGTT/A64sP3Jmp57MHdQbV6tRIPCmXprLYvIAjDU9DGpXFOllgainmaeIOw2xdAGaZEfUUkcIdPavaZadFtXtDZ49/NRsV0j43S/k7Xq23Es8JRMri/9uSrR8RVaRSeuPYuzXOwTrw7qjAXLftQAHV2Kms08ebnVPb5D61Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790274932; c=relaxed/simple;
-	bh=bGXKtgnY5Cdl6qtGj7ORke/SMh/eULNsB5UUUqGE3cU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gyL4dwB0sxuYLvJzXXq+DzWFZm7SHqqqXd/KKyKzSm+b2aQCxRfTwXryDyDKuCUA4IlBT1uTpYlZVP7Q6RNOhBLlOX/iADqkBekhmV4lOPkYEhNcLlcVTVVjvE7sde0kO1wGTRy8MykFFJheMcbgcuffd1CTslrejV6ZCCfmecQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RQ8jwYjf; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790275351; c=relaxed/simple;
+	bh=/C5n+0Yg7M5vBtUVQszNPBiGbxogPm0y0TsQBTzO1IE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ilXzG41mBN9Qzc6vo4kMO6JOXdNlPa8APlWqa/IS8RBiqTe/RWkiUzqFHcIJOPjC/+usiCAmbbX0OGhRe2lBPEXyznDsI+8krSaGa2xTDcffvgGgP/VSZKuKQyANOWURBtZNEaF4c1rk3izHDWaF9laNkF5mPpNmf5BGb6R7300=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NaBpqIqV; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RQ8jwYjf"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6aae37d33cbso205200a12.1
-        for <git@vger.kernel.org>; Thu, 24 Sep 2026 11:35:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790274926; x=1790879726; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=nEaiP1io4Bbh9OxXR/NlySqjjzDxirqvqDF75wW2LGM=;
-        b=RQ8jwYjfzvzmQ10cDZCSyLZ9ZpsYDFYEgDuZNOHLu4UCPQn7qDDaE/pBLyPqdnsf0D
-         XwUCAdF9NokR3utTa6k8MmVOg3WUf6RN2sveyujR9dKfnZSP8zAtHYFaYnCvHkjaM3oe
-         yRDE9e0ikYWSlvQQ2wNJc0P8hLQur1AfWHMyon51V/smocjLHc8T1UoK8exPgwM96+Zs
-         Gqj4sNfMsBBQz+Jo3D1ZFsX33eu2AC5J/A7DGQTra++SMiJZ74s5M78woqj+1VOF6eOO
-         zM2ebr78VFBpOmNSiViQJlma/IB7D+0GpKb++0/p+DX0W6AZMnMhb/3gsBbPMZbUt2rP
-         hpXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790274926; x=1790879726;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=nEaiP1io4Bbh9OxXR/NlySqjjzDxirqvqDF75wW2LGM=;
-        b=okf4VsUqOM/cMVUeaKM9WcLmduRAluGRO0zvRjH/oJri0wCYEnSZPFKfbi5HehUfqw
-         8bgz3XEOJH4l41OgwguRJudQjNdKAhlNASf+/7Btial7TdniBhOIYEZlLWlIxKAdPr+e
-         YROXO238g0LIwwwL/0mLL468SwjjUVh4q4pwMcy2J5l/yOlvndtwhOk+2ZEKpmwjeqEG
-         ZQcU+k6xPp5BMq1+bOAc8GrLjhB22FnM+8EhQOEOQfUPexrOBt5bMwSjligHJrXZqFsx
-         crQ237bfCS41IJ8YYhjaD7XpWwmdw8zLh9tkv8K1jehtmJIrhmIR3Q2ZerCtSG3WQKlK
-         GP2w==
-X-Gm-Message-State: AFuF++mRoGVk6i+uBKDjDkrtNE7xIDdxwvmuDPJ/iVTdSlrhdapxepng
-	xGivzDKBWP6d7EQPPKwlkSqWczsXaD7EYtdB773oKMKC8iK09u6jgt0r
-X-Gm-Gg: AYBFou22Z0WBo4ELGpLPisZNodyMRUZAQI/iErmmwC8y68iGRecTsFrFMXl/CbXUnCt
-	YeBg8qXfVq6KAzu+27qyhGh6u+otXepGZo76jdor5gGfffTL7TQw8p0/2j2KVvlLOFXWxGk137l
-	wag7+3ogYPfFYPbmCp0lH8884FAlkpcxrOxp34mec+hr5Fdh7oY/R3V0oWV1RR3SUxriooPXIU4
-	gAjD+l48o64XNoJB/yHp9rL5/nn/9Eh05DU0fb4nhzdG/smZMr4uwMZ3iHREIlIDg5g53LBGG2g
-	ibDNZjBeTvfZ/81NdcXVEA+l082lYT8XOpqNxWBISfYKGWMD7XnPXQGX0fsAaIyeX/vkB6SNiaM
-	rC1VvnVaijF7JcftQHg3HNJKiozdh1Gp3cqSMm1K6h8i71+oPhwfNghiDcctOd0A1g4+MmV1Rfr
-	SHeDrEMQvGrODYQJJhfO55FXSqNNviFmDRZu1m0PRXa9RuoFKZE5VYEOfSCJP1yGfIj2MJwms/O
-	YJwWt7ze1QDHkJJpkt5C6+LPOEwA8RrumGsjqtA2zdVGONy1++aZzL2Pr9uRG3usPfl
-X-Received: by 2002:a17:907:db18:b0:c2a:880d:777c with SMTP id a640c23a62f3a-c2ac2245724mr301290766b.10.1790274925594;
-        Thu, 24 Sep 2026 11:35:25 -0700 (PDT)
-Received: from Haralds-Air.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2ae757aea7sm736966b.30.2026.09.24.11.35.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Sep 2026 11:35:25 -0700 (PDT)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: ps@pks.im
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	sandals@crustytoothpaste.net
-Subject: Re: What will come after Git 2.56?
-Date: Thu, 24 Sep 2026 20:35:23 +0200
-Message-ID: <20260924183523.53201-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.56.0.rc2.1.gd5f2128258
-In-Reply-To: <ap50kgyenpRrsqln@pks.im>
-References: <ap50kgyenpRrsqln@pks.im>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NaBpqIqV"
+Received: (qmail 48619 invoked by uid 106); 24 Sep 2026 18:42:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/C5n+0Yg7M5vBtUVQszNPBiGbxogPm0y0TsQBTzO1IE=; b=NaBpqIqVSWSCPzE2xij9BBzcg+MJ299VsngDbrQrP6XkUV5sIo9upCHhxrI+5T0soCS2i6bLTlL4gMS32hpIc1bM7nv0ecdlk5ZYwuQpgEbAtigCuH/ZFyj7xYpNUcDfOjp6wheoa/7ddZc7daUZENm1QC2V3EM37p+W3oUz2WTVJxnsis0SD/x2D8uIUhpqNNZ/192rSlm+2/5gevURt4wVSF8lfAP6f2FXRox9rVRKU7/HK0MmHPj8IUbTfgj48h31lkg8D4OK9e0ghXcKlzzM6p1cm214j71pFc3zW10v3FS55irhjAv3rfVGA6bPKsF9e4C8+axHbzfLnrI5Cw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 24 Sep 2026 18:42:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 195192 invoked by uid 111); 24 Sep 2026 18:42:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Sep 2026 14:42:21 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 24 Sep 2026 14:42:20 -0400
+From: Jeff King <peff@peff.net>
+To: Julia Evans <julia@jvns.ca>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
+Message-ID: <20260924184220.GA747880@coredump.intra.peff.net>
+References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
+ <xmqq4ifhdon2.fsf@gitster.g>
+ <665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
+ <20260923214038.GA49087@coredump.intra.peff.net>
+ <63520573-c8a7-41bd-aaeb-bfc2b5e43856@app.fastmail.com>
+ <xmqqse2y371a.fsf@gitster.g>
+ <31577b6f-79b6-456f-9ecd-d1a3df6209e2@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <31577b6f-79b6-456f-9ecd-d1a3df6209e2@app.fastmail.com>
 
-> Well, same as there's room after Git 2.9 we also still have room after
-> Git 2.99. No reason we cannot have Git 2.100. :)
+On Thu, Sep 24, 2026 at 01:22:49PM -0400, Julia Evans wrote:
 
-I agree completely, no need signal that 3.0 is coming until it comes. Once it's
-out, not a soul will question what number the release just before had.
+> I meant something different, let me try again (with Peff's corrections as well):
+> 
+>     The reason for using the more verbose <<EXAMPLES,EXAMPLES>>
+>     (instead of <<EXAMPLES>>) is that in some cases, <<EXAMPLES>> is
+>     rendered as `the section called "EXAMPLES"` or `[EXAMPLES]`.
+>     <<EXAMPLES,EXAMPLES>> is rendered as just `EXAMPLES`, which gives us
+>     more control over the output.
+> 
+> ("in some cases" is code for "I still don't fully understand
+> exactly when each one happens and why")
 
-I have a list of breaking changes that I would like to introduce, I was hoping
-they could be considered before 3.0 is out -- otherwise I fear I have to wait
-another 10 years for 4.0, I would like to change the default values of these
-config values:
+I think it's just "depending on the implementation and output backends".
+The complete table I saw is:
 
-    # Autostash by default
-    checkout.autostash=true
-    rebase.autostash=true
+              |  HTML   | manpage
+  ----------------------------------------------
+  asciidoc    |  [FOO]  | the section called "FOO"
+  asciidoctor |  FOO    | the section called "FOO"
 
-    # User friendlier branch sorting
-    branch.sort=-committerdate
-    tag.sort=-version:refname
+I'm not sure if the manpage expansion is asciidoc itself, though, or
+docbook. I guess that should be easy to test...
 
-    # Better diffing
-    diff.algorithm=histogram
-    diff.colormoved=zebra
-    diff.compactionheuristic=true
+Ah, yeah, it's docbook. Using <<PRUNING>>, the xml generated by asciidoc
+looks like this:
 
-    # Compare branches on when push/upstream are different
-    status.comparebranches=@{upstream} @{push}
+  and the <xref linkend="PRUNING"/> section of
 
-It seemed a bit presumptuous to submit these as a patch, but maybe I should to
-open the formal discussion?
+and then the roff output from docbook becomes:
 
+  and the
+  the section called \(lqPRUNING\(rq
+  section of
 
-Harald  
+So if we wanted to override that, we'd do it at the docbook layer. If
+you use <<PRUNING,PRUNING>> instead, then the xml looks like:
+
+  and the <link linkend="PRUNING">PRUNING</link> section of
+
+which takes the decision away from docbook and uses the text we provide.
+
+I don't think your commit message needs to go into that detail, but I
+thought it worth documenting in case we revisit this later.
+
+-Peff
