@@ -1,301 +1,129 @@
-Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB19410D13
-	for <git@vger.kernel.org>; Thu, 24 Sep 2026 07:58:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.230.60.252
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F032A349CD6
+	for <git@vger.kernel.org>; Thu, 24 Sep 2026 07:59:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790236695; cv=none; b=iUSUbrPYvntd4ZK/zGur0JHrYM1hV8AaLfbtEUChq3DI8MBPuDRea7hXtzW+CDEz4QMGWTgBFHd78306x1vsw4W2/qU9wLKo9zPZeK9xrIcsEDULA/wFLu9HthuG3mqkX1Q0mvadBkFtPabm4am0d314nt8ZL34mzoXrpa2hikI=
+	t=1790236765; cv=none; b=SDnWJyAQlN/nvwS1OK9fg7EsvPFf0rahFJdafl/h8CLPR5A+taLeciUPe1GmJqlPiNtw9uXearX+ooAVLzfbS0MGJNVgyyKmEa/jRmoaz24hqP8rfvyZNeNh14XBlhEF6CMIZ9NswxYOeCGn03loKMfe4WTMpuS/Ay+Tph3CpQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790236695; c=relaxed/simple;
-	bh=gNFhs7H5aCSC67KRcau7OOCjFy0n01++oYv+hKsZCrE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=HPVt80JM2ej1s5IwEtg+dhUS1wcEwUxd0tCwEEZZaejjVr2MjjjtsVchGk8iVCNNpGHa8TjQGfi35wPXda7YEIRttlBVz4f2uOIPEwCNgsHwIUe30IY7FVnMGnuLY8C/kEbXmLKmQYuqPwcTRIXBu4QlZgJjp2IvbQofkQ0/PNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us; spf=pass smtp.mailfrom=lfurio.us; dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b=f9X+a735; arc=none smtp.client-ip=157.230.60.252
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
+	s=arc-20240116; t=1790236765; c=relaxed/simple;
+	bh=0rjCfCOuPEhaqy19Nd6pkVzazcB+gkpHVPxyT3ewNdA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jwnIsukKerDa4yO3CWPviueW2k++0REuWQlFU64+Jd3ISoAXnPKrVzT4Lgl1SEtLrUl8cQRjAmmPLcrhtkS3JryOGFcKT86zJOelPBeB8BD/ajQdajeFWnMbEL5EqWpAXN2FrDBGAwqsFWsQsHsIIErEr3e3iNhxWsl1tjcYV1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=etcsJP5r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YsIE6ICG; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b="f9X+a735"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
-	t=1790236212; bh=gNFhs7H5aCSC67KRcau7OOCjFy0n01++oYv+hKsZCrE=;
-	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
-	b=f9X+a735uXVqHHHLAsulO6Xig+yJiRkf5T5NL93oDrNpvLS2dvv5g2RtFeJdm5Jrq
-	 5tGggRM5gxiKm5T/IyBMTEYj6kRjPUxI/mk6CMOR8DdDwm5mzmhYROvmP1hhCcRNOZ
-	 QqAfMPw+eyoQNqk3a/C2VcfHjKbcwgufKAmuIcws=
-Received: by mail.normalmode.org (Postfix) with ESMTPSA id 2131062402;
-	Thu, 24 Sep 2026 07:50:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="etcsJP5r";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YsIE6ICG"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 04A26EC008B;
+	Thu, 24 Sep 2026 03:59:23 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Thu, 24 Sep 2026 03:59:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790236762;
+	 x=1790323162; bh=IlxFHDnPbOYG53E7WQKXYVQu3MwprfQWA+8NZUQc+T4=; b=
+	etcsJP5rmOOv1dibggvNi6J4bwoaHCBK6HXHD29iRrm5sY5GS3uK90YtZ/qwxYgb
+	VL7pacSAFDMb0+/DEFGZGMirGIBWMfwEeN8CsvbYrYbqr+De2HHo8QDOdAm1fC/i
+	VHvQMJVfX/KhKUVOnMgdR+hswZv0fOUaz9sH9ysbZZdd4jn7i+2U4gwH7PuPp2Dq
+	G6mTOzBXe6qUFl98T2CvFHqxAZ8DIOawYoXEf0PzWCFFhP/+ofSsWKQqWZgPw5bs
+	0bHavp1WJl0Dy/KjVBy4EYQk7Vn1fA+ypWXswDLOh806hRolYAQaF5bxHjpj5YZK
+	NHhlhpZjzY6xL5Uwe1yKuw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790236762; x=
+	1790323162; bh=IlxFHDnPbOYG53E7WQKXYVQu3MwprfQWA+8NZUQc+T4=; b=Y
+	sIE6ICGlQkJNj9ZbF81Qnqt2qonpH0yUN1R8K13VJiAJzZQi9vjeIVlEpyOwdp54
+	S3K2lrLdOasjIz+oueORt5RpTXkuvPxirafEm8p/LKAU8ccm/ksDGtp4LfaqT5/b
+	wc/3amW0iw0/ZuyxqineBWiIKPDFUiZYrA5+6hqxobVmpGdVkBss9I6JyTlAO06k
+	RH+wioyz111v/i6xxxAld7TV9NxljZ/JQ0ow9HUayVrEis0RK7XKx4k384P2XAkh
+	2uroC9mVEjcXKn8iYijbm+NRHRjkFVbYMGQvbKDaP5Q0WtPXK/3ISBttLB9vNzSe
+	CmpOR49RhKZ/JmFr1EBxQ==
+X-ME-Sender: <xms:Wti0avTqnRuo9iw9dlZtD2fPSMbESTVcRQyqITzeHCDi40mTGujyYA>
+    <xme:Wti0akeDtcureHTv3xQhj0jmBxFVzXQ-trTKjMq_fQZIxBA60EHJR0Aa_JEmlftDN
+    RX2zZ3W8frNPNyNZEwgg2JI5whJW8fa9LJoFBm6pRtASoGW9SHNQJU>
+X-ME-Received: <xmr:Wti0auoJcrBlRYo4pR3DQjdSIAMnOEWSfsr7sual6xa87tu-bVZXSckEqZsSWOfByPfu73w>
+X-ME-Proxy-Cause: dmFkZTEpxfVdbZS47uHbOTodQ2F5naJdt12efIlvG55vkmC836AQdOUqXGK/Pu/e0EmBls
+    pv2VGu5mMMx92ORCnXE0mm3VTN6hC85Tx6SpP6ypfbe4z+Q7fc4f5GfYa7k7aFgRu4whNK
+    oxROZZMHIygKWrSAtOYH1jqjxQsIm0IjDM0sXpAXxQVZHZ0053pc+WeWna7VSfj+1XWqEt
+    xfbfUOSbxzfQT63qNwHjBRLqahci9eZBqZOlyywvQi9OL3rTqPkVgTT/ROrgLVgd9QRIHy
+    iAQKx8ZVnc/P+tvfLUTzZT3NeFEJcybdQnxCrJkBXD0BTX3wXFQRhDPxPz736uhzxmC8nY
+    QNGSdDhz7URFuW+iby/8AlxLRTCJSa5cZ3VCCLZrBnE2oT2e6yYzyW+psSADLPtv6OqjPX
+    Tbz6aT49PLCB0bDH7riPxjBT6t6WT9tF9JSArT6xcJ4xPq/y5AdTMozSqKSIPp5cUssO/+
+    xyzxvwC5a2yMLEDUXqBuhQ9B+a+BV/4ICe27TiFqs/nxK0BULj+uLPQ2VURgUyDED0jFsW
+    qC/1W/jDU+F0L/XivXnCceu24yzbWxxSgzM9jsboKJVBWkF0sMV5t+ruoo+nPrl6YsADtm
+    n0/mlUZW2NWLBgq63PET1dM4hMdMGYNIMaoi8QxicKHUiIb6m2Tyi6q3fgqQ
+X-ME-Proxy: <xmx:Wti0al_kG4kWL8p_4IxwbXs4u4-X7fRj6k5z9Tn5diqqyQpy-KxwIw>
+    <xmx:Wti0aqdlF8DQg2fOKlDTJAPKUcqUEI60ehYH1s9swBkpGjliQJ7rtw>
+    <xmx:Wti0avJwbuaHuQzaPN5toQYnxRT1jrZRn_4HHcvQDBBlxMEf0Jb2Zw>
+    <xmx:Wti0aqj5n18x7WgiJBn3mC38TkjDl2uvsJRQ0inUfrRsnApSTeQqsQ>
+    <xmx:Wti0arD2Al6gwwA8WfrPljiMNp_fIDpjLeX7Mbl2sDSczBiaTUIrLcLt>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Sep 2026 03:59:21 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 97a20ec5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 24 Sep 2026 07:59:19 +0000 (UTC)
+Date: Thu, 24 Sep 2026 09:59:16 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	graysongordon-gl <graysongordon1@gmail.com>, git@vger.kernel.org,
+	peff@peff.net, avarab@gmail.com
+Subject: Re: [PATCH v7] http: add http.sslVerifyStatus to check stapled OCSP
+ responses
+Message-ID: <arTYVLnW-2GHpGGm@pks.im>
+References: <xmqqecfez7ie.fsf@gitster.g>
+ <20260915162348.97792-1-ggordon@gitlab.com>
+ <arQ/nOH+o3XwQFD/@szeder.dev>
+ <xmqqwlsb63o9.fsf@gitster.g>
+ <arTUNYVvCNwX1pDp@szeder.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 24 Sep 2026 03:50:12 -0400
-Message-Id: <DLNDRU6GIB30.1F5G8Z3JIR67W@lfurio.us>
-Subject: Re: [PATCH] fetch.c: defer fetch.followRemoteHEAD validation
-Cc: <git@vger.kernel.org>
-To: "Colin Hinton" <colinlewishinton@gmail.com>, "Junio C Hamano"
- <gitster@pobox.com>
-From: "Matt Hunter" <m@lfurio.us>
-X-Mailer: aerc 0.22.0-0-gc2f86b7abde3
-References: <20260922040047.2567-1-colinlewishinton@gmail.com>
- <xmqqwlsdhmvk.fsf@gitster.g>
- <CAHeTm9OMLba_h0B2jRh_-GhogQXuwROBpX2jE__BPJ0GHq9P1A@mail.gmail.com>
-In-Reply-To: <CAHeTm9OMLba_h0B2jRh_-GhogQXuwROBpX2jE__BPJ0GHq9P1A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <arTUNYVvCNwX1pDp@szeder.dev>
 
-On Wed Sep 23, 2026 at 1:03 AM EDT, Colin Hinton wrote:
->> > @@ -1962,6 +1953,14 @@ static int do_fetch(struct transport *transport=
-,
->> >               if (transport->remote->fetch.nr) {
->> >                       refspec_ref_prefixes(&transport->remote->fetch,
->> >                                            &transport_ls_refs_options.=
-ref_prefixes);
->> > +
->> > +                     if (transport->remote->follow_remote_head)
->> > +                             follow_remote_head =3D transport->remote=
-->follow_remote_head;
->>
->> The code assumes that remote.*.followRemoteHEAD has been pre-parsed.
->> Doesn't the code to do so in remote.c::handle_config() share exactly
->> the same problem as you are fixing here?
->>
-> I agree that the same problem that is being addressed here is present
-> in remote.c as well. The only difference being, that there is no
-> return call in the followremotehead block in remote.c,
+On Thu, Sep 24, 2026 at 09:41:41AM +0200, SZEDER Gábor wrote:
+> On Wed, Sep 23, 2026 at 02:47:18PM -0700, Junio C Hamano wrote:
+> > SZEDER Gábor <szeder.dev@gmail.com> writes:
+> > 
+> > > On Tue, Sep 15, 2026 at 12:23:48PM -0400, graysongordon-gl wrote:
+> > >> From: Grayson Gordon <graysongordon1@gmail.com>
+> > >> 
+> > >> git never sets CURLOPT_SSL_VERIFYSTATUS, so libcurl never requests the
+> > >> OCSP "Certificate Status Request" extension and any stapled response a
+> > >> server sends is ignored, including responses that explicitly state the
+> > >> certificate has been revoked.
+> > > ...
+> > > This patch was merged to 'next' the other day, and the last test in
+> > > the new t5585 fails on my system.
+> > 
+> > Sorry about a premature merge.  Since we are not in a hurry to take
+> > this topic in (or no new feature topic in general), let me revert it
+> > out of 'next' and give it a clean slate to try again.
+> 
+> Well, if you hadn't merged it, we would perhaps still be none the
+> wiser, because, alas, I don't have the bandwidth to run tests on the
+> seen branch regularly...
+> 
+> However, CI does, but I can't seem to find any CI runs that failed
+> because of this, which makes me worried that something is wrong on my
+> end.
 
-I'm not exactly sure why the config parsing in remote.c doesn't end with
-a fallback 'return git_default_config(...)', though the followremotehead
-case piggybacking the common 'return 0' at the end should be no problem.
+Do you maybe run with a curl backend that doesn't properly support OCSP?
+But even if so, our test suite should notice and skip the tests.
 
-> and it at most only throws a warning if no valid value is present.
-
-which _was_ the case for fetch.followRemoteHEAD as well.  So, we should
-keep the two in sync right?
-
-> I think this
-> should be addressed, but I am uncertain if this is within the scope of
-> this issue and should be resolved now, or if this requires its own
-> investigation and should be resolved in a future patch. Regardless I
-> am eager to work on it, but would like some guidance as to what is
-> most appropriate for a change in remote.c.
-
-I spent some time drafting up what changes to remote.c could look like,
-based on your work so far.  This follow-up patch also has extra changes
-to builtin/fetch.c to accommodate the same allowed functionality as
-before.  There are two awkward bits to this patch as-is, though:
-
-builtin/remote.c::set_head()
-
-012bc566bad7 (remote set-head: set followRemoteHEAD to "warn" if "always")
-added this behavior to overrule a remote's "always" setting if the user
-ever modified their HEAD manually.  So, this file needs to know about the
-followRemoteHEAD values, but parsing into the enums is currently confined
-to fetch.c.  This just adds another bit of string parsing.
-
-builtin/fetch.c::get_follow_remote_head()
-
-is updated to serve double-duty for both the fetch and remote configs,
-and needs a better warning message if a bad value is detected.  Perhaps
-add another parameter to the function?
-
-With this patch below, it's arguable whether the enum definition for the
-followRemoteHEAD values now better fits in fetch.c instead of remote.h.
-
-
-Signed-off-by: Matt Hunter <m@lfurio.us>
----
- builtin/fetch.c  | 54 ++++++++++++++++++++++++++++++++----------------
- builtin/remote.c |  3 ++-
- remote.c         | 19 ++---------------
- remote.h         |  3 +--
- 4 files changed, 41 insertions(+), 38 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 83074c48150b..5a4c9fb9309c 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -187,18 +187,34 @@ static int git_fetch_config(const char *k, const char=
- *v,
- 	return git_default_config(k, v, ctx, cb);
- }
-=20
--static enum follow_remote_head_settings get_follow_remote_head(const char =
-*setting)
-+/* TODO might be worth considering a better name for this */
-+struct follow_remote_head_target {
-+	enum follow_remote_head_settings mode;
-+	const char *no_warn_branch;
-+};
-+
-+static struct follow_remote_head_target get_follow_remote_head(const char =
-*setting,
-+		int allow_warn_if_not_branch)
- {
-+	struct follow_remote_head_target frh =3D { 0 };
-+
- 	if (!strcmp(setting, "never"))
--		return FOLLOW_REMOTE_NEVER;
-+		frh.mode =3D FOLLOW_REMOTE_NEVER;
- 	else if (!strcmp(setting, "create"))
--		return FOLLOW_REMOTE_CREATE;
-+		frh.mode =3D FOLLOW_REMOTE_CREATE;
- 	else if (!strcmp(setting, "warn"))
--		return FOLLOW_REMOTE_WARN;
-+		frh.mode =3D FOLLOW_REMOTE_WARN;
-+	else if (skip_prefix(setting, "warn-if-not-", &frh.no_warn_branch)
-+			&& allow_warn_if_not_branch)
-+		frh.mode =3D FOLLOW_REMOTE_WARN;
- 	else if (!strcmp(setting, "always"))
--		return FOLLOW_REMOTE_ALWAYS;
--	warning(_("unrecognized fetch.followRemoteHEAD value '%s' ignored"), sett=
-ing);
--	return FOLLOW_REMOTE_UNCONFIGURED;
-+		frh.mode =3D FOLLOW_REMOTE_ALWAYS;
-+	else
-+		warning(_("unrecognized fetch.followRemoteHEAD value '%s' ignored"), set=
-ting);
-+		/* TODO this also parses remote.<name>.followRemoteHEAD,
-+		 * but the warning string says fetch.followRemoteHEAD */
-+
-+	return frh;
- }
-=20
- static int parse_refmap_arg(const struct option *opt, const char *arg, int=
- unset)
-@@ -1758,12 +1774,11 @@ static void warn_set_head(const char *remote, const=
- char *head_name,
- }
-=20
- static int set_head(const struct ref *remote_refs, struct remote *remote,
--			int follow_remote_head)
-+			struct follow_remote_head_target follow_remote_head)
- {
- 	int result =3D 0, create_only, baremirror, was_detached;
- 	struct strbuf b_head =3D STRBUF_INIT, b_remote_head =3D STRBUF_INIT,
- 		      b_local_head =3D STRBUF_INIT;
--	const char *no_warn_branch =3D remote->no_warn_branch;
- 	char *head_name =3D NULL;
- 	struct ref *ref, *matches;
- 	struct ref *fetch_map =3D NULL, **fetch_map_tail =3D &fetch_map;
-@@ -1793,7 +1808,7 @@ static int set_head(const struct ref *remote_refs, st=
-ruct remote *remote,
- 	if (!head_name)
- 		goto cleanup;
- 	baremirror =3D is_bare_repository(the_repository) && remote->mirror;
--	create_only =3D follow_remote_head =3D=3D FOLLOW_REMOTE_ALWAYS ? 0 : !bar=
-emirror;
-+	create_only =3D follow_remote_head.mode =3D=3D FOLLOW_REMOTE_ALWAYS ? 0 :=
- !baremirror;
- 	if (baremirror) {
- 		strbuf_addstr(&b_head, "HEAD");
- 		strbuf_addf(&b_remote_head, "refs/heads/%s", head_name);
-@@ -1813,8 +1828,9 @@ static int set_head(const struct ref *remote_refs, st=
-ruct remote *remote,
- 		goto cleanup;
- 	}
- 	if (verbosity >=3D 0 &&
--		follow_remote_head =3D=3D FOLLOW_REMOTE_WARN &&
--		(!no_warn_branch || strcmp(no_warn_branch, head_name)))
-+		follow_remote_head.mode =3D=3D FOLLOW_REMOTE_WARN &&
-+		(!follow_remote_head.no_warn_branch ||
-+		 strcmp(follow_remote_head.no_warn_branch, head_name)))
- 		warn_set_head(remote->name, head_name, &b_local_head, was_detached);
-=20
- cleanup:
-@@ -1929,7 +1945,7 @@ static int do_fetch(struct transport *transport,
- 	struct ref_update_display_info_array display_array =3D { 0 };
- 	struct strmap rejected_refs =3D STRMAP_INIT;
- 	int summary_width =3D 0;
--	int follow_remote_head =3D 0;
-+	struct follow_remote_head_target follow_remote_head =3D { 0 };
-=20
- 	if (tags =3D=3D TAGS_DEFAULT) {
- 		if (transport->remote->fetch_tags =3D=3D 2)
-@@ -1954,14 +1970,16 @@ static int do_fetch(struct transport *transport,
- 			refspec_ref_prefixes(&transport->remote->fetch,
- 					     &transport_ls_refs_options.ref_prefixes);
-=20
--			if (transport->remote->follow_remote_head)
--				follow_remote_head =3D transport->remote->follow_remote_head;
-+			if (transport->remote->follow_remote_head_raw)
-+				follow_remote_head =3D get_follow_remote_head(
-+						transport->remote->follow_remote_head_raw, 1);
- 			else if (config->follow_remote_head_raw)
--				follow_remote_head =3D get_follow_remote_head(config->follow_remote_he=
-ad_raw);
-+				follow_remote_head =3D get_follow_remote_head(
-+						config->follow_remote_head_raw, 0);
- 			else
--				follow_remote_head =3D BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
-+				follow_remote_head.mode =3D BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
- 		=09
--			if (follow_remote_head !=3D FOLLOW_REMOTE_NEVER)
-+			if (follow_remote_head.mode !=3D FOLLOW_REMOTE_NEVER)
- 				do_set_head =3D 1;
- 		}
- 		if (branch && branch_has_merge_config(branch) &&
-diff --git a/builtin/remote.c b/builtin/remote.c
-index de989ea3ba96..89ac1f0daa82 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1606,7 +1606,8 @@ static int set_head(int argc, const char **argv, cons=
-t char *prefix,
- 	}
- 	if (opt_a)
- 		report_set_head_auto(argv[0], head_name, &b_local_head, was_detached);
--	if (remote->follow_remote_head =3D=3D FOLLOW_REMOTE_ALWAYS) {
-+	if (remote->follow_remote_head_raw &&
-+			!strcmp(remote->follow_remote_head_raw, "always")) {
- 		struct strbuf config_name =3D STRBUF_INIT;
- 		strbuf_addf(&config_name,
- 			"remote.%s.followremotehead", remote->name);
-diff --git a/remote.c b/remote.c
-index fe6206846356..5fdcadfbdbf0 100644
---- a/remote.c
-+++ b/remote.c
-@@ -581,23 +581,8 @@ static int handle_config(const char *key, const char *=
-value,
- 		return parse_transport_option(key, value,
- 					      &remote->negotiation_include);
- 	} else if (!strcmp(subkey, "followremotehead")) {
--		const char *no_warn_branch;
--		if (!strcmp(value, "never"))
--			remote->follow_remote_head =3D FOLLOW_REMOTE_NEVER;
--		else if (!strcmp(value, "create"))
--			remote->follow_remote_head =3D FOLLOW_REMOTE_CREATE;
--		else if (!strcmp(value, "warn")) {
--			remote->follow_remote_head =3D FOLLOW_REMOTE_WARN;
--			remote->no_warn_branch =3D NULL;
--		} else if (skip_prefix(value, "warn-if-not-", &no_warn_branch)) {
--			remote->follow_remote_head =3D FOLLOW_REMOTE_WARN;
--			remote->no_warn_branch =3D no_warn_branch;
--		} else if (!strcmp(value, "always")) {
--			remote->follow_remote_head =3D FOLLOW_REMOTE_ALWAYS;
--		} else {
--			warning(_("unrecognized followRemoteHEAD value '%s' ignored"),
--				value);
--		}
-+		free(remote->follow_remote_head_raw);
-+		remote->follow_remote_head_raw =3D xstrdup(value);
- 	}
- 	return 0;
- }
-diff --git a/remote.h b/remote.h
-index cca02033b9d7..cd97df017454 100644
---- a/remote.h
-+++ b/remote.h
-@@ -122,8 +122,7 @@ struct remote {
- 	struct string_list negotiation_restrict;
- 	struct string_list negotiation_include;
-=20
--	enum follow_remote_head_settings follow_remote_head;
--	const char *no_warn_branch;
-+	char *follow_remote_head_raw;
- };
-=20
- /**
---=20
-2.55.0
-
+Patrick
