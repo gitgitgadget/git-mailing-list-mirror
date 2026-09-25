@@ -1,171 +1,128 @@
-Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEDE0486436
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:04:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB76D4BD7A8
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:09:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790352285; cv=none; b=tsturXrnnLKb1aSCKxQANhLsQwEGqNSGs/xQn2hxXuAFwwvBS/g+9lWTDsHWjVMfww08qRLzFQZuIqFluzlMLW1CQX25ivJk/87p8ujC4jI15/KuZT9sCABRczngkgs/CK/LxQJn/tNDcorNinBDBnZmjh4PgovoQTep3V8kR0g=
+	t=1790352561; cv=none; b=bSusn1KYhrHDmvcvFyioWqkMBEu/NwUSiAFBFr1WBplOjB9HgK9qyP1QrjWWcPVF4OmqIdwv9OqOySLbSpI8RXo3YRoo82vVacLOSfaGUS/CHF3NQWZZL1JEpVQ7sLnA9sWbRKVMMVemZPmReLCWoE+uaiRM9rivzLdKaul/2rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790352285; c=relaxed/simple;
-	bh=ugrvO9oDSZicxIeUh2opSwBVoo+Njr5bkpBWYJJGq0Y=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=bYElX7ujM6Gpfkq1IRLK294ZkYD/bz62kbnNTW2LxGxQCdpxRCdrSxtKIYnPuFd9WO9z4xcu+o2PnnW/+CXopC3nzqbTolZ50FbibGejG27RKqAZ5rcIT07LJ9uwpGgNkRnCbvUgPdR6df2BSYxIY96VJ3+/Ymbgakx/1MBkbUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MilajYXz; arc=none smtp.client-ip=74.125.225.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790352561; c=relaxed/simple;
+	bh=7UK9jLDejJrK3s6ajM0C06NLU+c2QbaexXLDJnVz7r4=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=vF2recwb9iHCLHhMc9cs39KD7DwXb+udEE/g7YOobQ3cp+aeMbBnszJPkEQAW5MYlv/aQ3nIH3fwEihl3q8kwR7f0cfh1XliuH9FqHptZgWoB/UsstDuaLYiklSnoOu98FovRF1JnybkKglKORomkRVbnQ2cVv37eUrEB4HfWcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=fD3O//Jf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aJ6Gx0H5; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MilajYXz"
-Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49ccf3ca626so6480145e9.0
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 09:04:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790352280; x=1790957080; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=seQA8yHbgSOssQt5Tz45MUbQ3UkHHUww8SDobX9gyAY=;
-        b=MilajYXzPREEmsppBCpCsTmalFiYJCO9p/cW0apMtftxbtm5VNpd6vQOwtDxDHlraS
-         3zMwnOanb1+oNXLP7oJoNpIkhi5ILGdS2dtci82B+z17+zjLCi8BOgPBE+Rli+CM3QN6
-         qmbOxZ6zz+dD/hJWdnxOGA37SCpUNECwrkFxlW+LKGDcOWaoap1RBnMaNb87drmxG/TK
-         U3A+2anb3GsyG6FqcjHd9YM/QuAfhkfm/eTYCqFi2YmY2taCHvMt1gpXpttaO0v7/GBj
-         vGz6NQzyS7th7NK20gAZE5vJqOIEAhrwa75VJM0uhMiXAyEgsWwnSIjrf99LYWFcUxUL
-         DvIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790352280; x=1790957080;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=seQA8yHbgSOssQt5Tz45MUbQ3UkHHUww8SDobX9gyAY=;
-        b=jUfg12nFokiT45+KHJ/+EQpW7tzHXb6m8Sp1KrVmpkTENCOpYWV7dBZpxN6Pw+zg8O
-         K5Ib15YeTCGBKYC8oAR3RxowRBrOUg6pYE/a5O647IJeO/9eCAf7MUIi29Kt+QtDC7Pj
-         NNXp84oiF+ksYLeJ+D9kKhYr/35WmoC87phTXYZeFLnJF3cshUnMtravH70MSNejWOxe
-         ly1zZ2IetLcR745bU5EWQm9QN6+AOGnfDJUQlwctLWr4TXRBB6nh1Q8dABxVijZtc+QP
-         9yJ5APEGhkZywGQjG3viKb/CyHlStphNk3npup3QLmYLMDLQ2AidtLfnV3iUQk/5adoG
-         2e9A==
-X-Gm-Message-State: AFuF++mpATFqS4mppeu3KXA1rnDVMnEcwGE2I+T7PzSXTLqBnLcO7BUl
-	oSi8Nm349BNydODUfqRDNuV1bmXqGtbQAUun7FvYNjoyiNiciIsqL+09
-X-Gm-Gg: AYBFou133ejx67GduGjhG9rMCxaSiL2/ZvysVWjYnSr38d0Fslsg5shVTsx8qCv0zma
-	AOrmQvOlK+Ln0JOojfzFSKZEXZNnqUr3NCvmIOYbiIE93kgb8N4Td67oXtCgvq8CsTfULNu/aD9
-	8lOnZ5LlFFblJMo9aVoY+xGRbs9ytaBBW1RjKpPVmQ+dtwBLUCAgnykBkYdk/HlcSHtSxj2Ie23
-	lXSvH8JisovlasySnLn33hSO0JooFk4L1I/eRpIfyHf6hWDW6VYfQt4rFMXisgdp8tiwpKJLgGb
-	g1+BMkVpC4hE0khAvY0UMmPZlqDpDj9Nm6QudpS5Tp0Ocoq68NZi5TQQT7ySbGoOH7bHjgQWfvx
-	JPghJTtsgX1pS5KfppEkH3869/o8pph0Z1l2SmjF0XcggPtXijRh6gfMKALICMYIbOAeVY6/FfM
-	yqfOK5oVBckeFQQ7LkYwrKRff3aDil4hs9V2AnPQuY0PWEB5nSnklWf4dJZ7A3dhrNNSkBGwG5o
-	caCtwd8ZhvlIcbq+VOo43wGOxsahzudMfjSQAwaoCL5Imxu4vrr3Q==
-X-Received: by 2002:a05:600c:3b8b:b0:49d:39:90ba with SMTP id 5b1f17b1804b1-49fe66c301dmr126747515e9.3.1790352280229;
-        Fri, 25 Sep 2026 09:04:40 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49ff069d071sm85049485e9.5.2026.09.25.09.04.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Sep 2026 09:04:39 -0700 (PDT)
-Message-ID: <6e6420e8-3cbd-4975-a781-645e1ffbc1d2@gmail.com>
-Date: Fri, 25 Sep 2026 17:04:34 +0100
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="fD3O//Jf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aJ6Gx0H5"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 30C74EC00F4
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 12:09:12 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Fri, 25 Sep 2026 12:09:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790352552;
+	 x=1790438952; bh=NopDy+SxJqcb6aGAmo5yR+wSgS0JV7uwarffaKPNMII=; b=
+	fD3O//Jf+uyI3CS0moxcs9Vb4tSkRjzbcekyU+0FCQgp143rrZLFJ4ZhTv/dePLy
+	P2cTLLDsrIXdYQI3+MI5ci5Xqb4VJNU4ISAiQ55u2ipn7w9NYqE9b2Hb9ALsLr1X
+	S6CLN66gtPG6Ehs8ddgcKJhvWfnAzc2jfMWExCsk01vbjlQPnDqYwCZKPD4TRbhW
+	y3h89+79tzwEdd2imYtI/ciIMRhEGE+fkdYrpxDNd3kDJKCmmtxuMXzVmy2CdxmA
+	ul37bnyIGLU+CSNVb8Z1zKHAJNO1HsEXsUz2MH36BjoiHaP/b+HFmNKPyJDn3Znl
+	EEsw2LchfCNbSb224mGmeg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1790352552; x=1790438952; bh=N
+	opDy+SxJqcb6aGAmo5yR+wSgS0JV7uwarffaKPNMII=; b=aJ6Gx0H5EpIo/Vstd
+	KzMo/FptaXM0f8PbGPweODASLk2iobvDcnBcyp8RdbcaSzJCsZpH09b7f+XrERjD
+	W6RxuiKrENL+/uwjYaAB7W0HD3CfmWNtCwLEoeUW0ZvJAmN6jL/mXAew1uQ/M4Ft
+	PhcMvSNBefjgAN6tx3bMw2z4CIZapo56wt0D7gOBRwcdKnhZ68rwyPZM4BweNN3B
+	C8wj/cxfvxRTL5cQJtf6Ofj8nmRH6GcHfQS/Scc5zm1l3r/9z30eJhbosVuSF8MS
+	hF7a7OFWRqJE6oJVb55wWBLPmNzaj1zVj7AYm+fuwO0a1ig7HnOIuMXJArr86F4z
+	FmQSQ==
+X-ME-Sender: <xms:p5y2an5fzCcIc_2rnXOChTcJ8Ge55iDZtNzA7kft_XGESOjGHmtdcw>
+    <xme:p5y2anuwhrfgvVOL5KreODSwj-93RmlPKQjiBvFMxGyzn7TWFLjNfahSTqUPlgirc
+    FdcmDF3fRXh0s8AEaK5Ds7r7IGocuj7G_46Aw6Lzhfv4QHJLRxLWzw>
+X-ME-Proxy-Cause: dmFkZTEyUMXU5NUvtOfUSd7axL6oUnAFNZlFcoYjJz0I6HnyvWowGQ4CXx+HeWhZm0s+7K
+    lt55XxmLOlnMFUVMgxEOXrG6d/GsQXLlllgTBFxMNlGUo9btM0/d0L0jd7o1+9qzWdV128
+    o4lsrmXblDHQ4GSwICAQGDGWWxoRQaLUfKdyln04T6WHQqWfRBex8LqSxAviGruQdNoE6S
+    p34+OWj86tKzCW4X5JwZL5Bo0Zym6DLgFfMbLLFW2cdFztB5iSAIvuVRQDT/AmYj4DswNC
+    j5R7NQnJ4pjWGqCfEBuBpfiUE2hLZ2AvRM8phsJz1RgiQVRzg9CmDrreFXDm4/E6yr4CEX
+    5fE4E+ObLjJk3i6dYujqslL33PkUoLH9ZgYM1ulSbOxzDW6QkQ4VdEbqyLe8IjdavRsE0s
+    fLtYS4B2RcDYMJ+2XvtdRl4Z/OvB9xT9+ICwgKNjQQSyBpqx7vS59vJrc5ZAjx5WlG94fk
+    EkdhBA9jg/FtrN8ugmE7AgQEkcrUWDlIle74j8RYpvBLo5UFlYECLBilCK4+EqUVWVf2xK
+    p1neZQhrYfRoekJ3aFXz90SHtUsqbm9/YXTSyuf8HxzTouu8JDgonGsnj3sKF/zRJk7s2x
+    XyatIvXSBmuTrbC3mwHl19VzO2rj09NMAoTgk2V/MVksejKwtiKH0D3f3k6A
+X-ME-Proxy: <xmx:p5y2akIfk1CaDPWOXoFg5UKY-RslzCuKvZRFuMB_LMstpyEk5VhHsg>
+    <xmx:p5y2akEcB_LM7c0g8O7m4WAw93wF-4Lm7HAP3IY159HDw1f7I6vIwQ>
+    <xmx:p5y2ahljenstahSIk3c_ua9g0Xdipcep763SCqRk_BijoyEnuhnb7g>
+    <xmx:p5y2apKU21JkhkTljQzQC2W895hYqptK39a1ohcwsCED2YF38zFWqw>
+    <xmx:qJy2auf1DoSqBuiRVpk4iw60Vd1Bq5pGE9ehYF5ry04bMdFJiO3NiyzV>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id D7950780070; Fri, 25 Sep 2026 12:09:11 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 4/4] builtin/stash: merge index in-core
-To: Junio C Hamano <gitster@pobox.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>,
- Phillip Wood <phillip.wood@dunelm.org.uk>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>,
- Adam Johnson <me@adamj.eu>, Victoria Dye <vdye@github.com>,
- Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
- =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <cover.1789853192.git.ben.knoble@gmail.com>
- <cover.1790168285.git.ben.knoble@gmail.com>
- <e49936ee12aaf5d82a98dddcc618cee01ac3c681.1790168285.git.ben.knoble@gmail.com>
- <xmqqse2yz4y4.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqse2yz4y4.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+X-ThreadId: AGBSJuH7AubZ
+Date: Fri, 25 Sep 2026 12:08:51 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: git@vger.kernel.org
+Message-Id: <bd5d9451-ac5a-4274-9a7a-57ae99864fe9@app.fastmail.com>
+In-Reply-To: <20260925082723.GB1493716@coredump.intra.peff.net>
+References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
+ <pull.2416.v2.git.git.1790297546771.gitgitgadget@gmail.com>
+ <20260925082723.GB1493716@coredump.intra.peff.net>
+Subject: Rewriting the Git tutorial to cover less content
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-Hi Junio
+Hello!
 
-On 24/09/2026 22:59, Junio C Hamano wrote:
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
-> 
-> Ahh, or perhaps the trees are indeed given in a wrong order, but not
-> in a random wrong order.  merge_ort_nonrecursive(), which is *not*
-> the function you are using, takes head, merge, and merge_base in
-> this order, and that order matches what you wrote.
+I'm working on a patch series to replace `gittutorial.adoc` with a completely
+rewritten tutorial, since a lot has changed since it was originally written.
 
-Ouch that's nasty. Well spotted, I missed it when I read the code 
-(because the arguments were in the same order as the call to 
-merge_ort_nonrecursive()) and the tests we have use the same version of 
-the file for "base" and "stage2" so do not notice if they'd been 
-transposed. It is rather confusing that two functions that are so 
-closely related take their arguments in a different order.
+The new tutorial will cover much less material: just `git init`, `git add`,
+`git commit`, `git status`,  `git diff`, `git push`, `git config`, and `git remote add`. 
+One choice that might be controversial is that I'm not covering branches, 
+though I think it would probably make sense to write a second tutorial on
+branches and using Git to collaborate later.
 
-> Perhaps the true culprit in this confusion is that the order in
-> which merge_ort_nonrecursive() takes its three trees (head, merge,
-> and common) and the order in which merge_incore_nonrecursive() takes
-> its trees (merge_base, side1, and side2) are different, and if we
-> fix them to match, it would make it easier to work with?
+The reason to cover fewer commands is that even this smaller set of commands
+is a lot for beginners to absorb. I've already gotten feedback from a test
+reader that they appreciated the "you can stop here!" in the middle of the
+tutorial, since they didn't feel like they could absorb any more information at
+that point.
 
-I think it is definitely worth fixing them to take the trees in the same 
-order. My preference would be "base", "stage1", "stage2" but so long as 
-they match each other I dont object to "stage1", "stage2", "base".
+If you'd like, you can read the current draft here: 
+https://github.com/jvns/git/blob/git-tutorial/Documentation/gittutorial.adoc
+I'm not looking for detailed feedback at this stage since I expect a lot of
+the details to change, and since right now I'm prioritizing feedback from Git
+beginners who are trying to learn Git for the first time from the tutorial.
 
-Thanks
+But if folks have major objections to the high-level structure, let me know!
 
-Phillip
+I'm excited about this direction, I've already gotten some positive feedback from
+test readers, like:
 
-> The new test in the attached patch will fail with this step but if
-> we revert the changes to builtin/stash.c in this step, it passes.
-> 
->   t/t3903-stash.sh | 32 ++++++++++++++++++++++++++++++++
->   1 file changed, 32 insertions(+)
-> 
-> diff --git c/t/t3903-stash.sh w/t/t3903-stash.sh
-> index 3958ab3c8d..0a87e62b11 100755
-> --- c/t/t3903-stash.sh
-> +++ w/t/t3903-stash.sh
-> @@ -374,6 +374,38 @@ test_expect_success 'stash apply -q --index refreshes the index' '
->   	test_cmp expect actual
->   '
->   
-> +
-> +test_expect_success 'stash apply --index does not revert unrelated upstream index changes' '
-> +	test_when_finished "rm -fr playpen" &&
-> +	mkdir playpen &&
-> +	(
-> +		cd playpen &&
-> +		git init &&
-> +		echo "base1" >file1 &&
-> +		echo "base2" >file2 &&
-> +		git add file1 file2 &&
-> +		git commit -m "initial base" &&
-> +
-> +		# Make a staged change to file1 and stash it
-> +		echo "staged1" >file1 &&
-> +		git add file1 &&
-> +		git stash &&
-> +
-> +		# Upstream advances by modifying unrelated file2
-> +		echo "upstream2" >file2 &&
-> +		git add file2 &&
-> +		git commit -m "upstream change to file2" &&
-> +
-> +		# Apply the stash with --index
-> +		git stash apply --index &&
-> +
-> +		# Verify working tree and index state
-> +		test "$(git show :file1)" = "staged1" &&
-> +		test "$(git show :file2)" = "upstream2" &&
-> +		test "$(git show HEAD:file2)" = "upstream2"
-> +	)
-> +'
-> +
->   test_expect_success 'stash apply --index leaves everything untouched on failure' '
->   	git reset --hard &&
->   	echo test >other-file &&
+> I can say I liked this tutorial better than any of the other git tutorials I've tried.
 
+and
+
+> I really like the tutorial, it's easy to follow and I learned a lot!
+
+I have some ideas for what to do with `gittutorial-2` too but I'll leave
+that for another discussion.
+
+thanks!
+Julia
