@@ -1,233 +1,178 @@
-Received: from mail-dy2-f12.google.com (mail-dy2-f12.google.com [74.125.229.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5C748A2C2
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 23:06:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823AA48424E
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 23:26:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790377590; cv=none; b=ipTegaU2Sp2ENeg1uDyyj0msSI/v7YRBFq2Quybq5mnoBDiiFX1n9e/d6biX+rIiyrGCNsrppsbGOMaNc/jJFL0KHYEd945uPXE7VZQdOREg65ZsGmZluIb0d+xWWXS6ZOc3pKQB0xszlVNJEq/Dqa3CSxNB9NM2u4+oiVLTFV4=
+	t=1790378807; cv=none; b=DeY64UC0rSMeOvn+Fd5yrGLE6ltEvugAI+OjFlDa5jUi9QRnixWNdSCYZzDXBh5tG8C8sBm0WusbukOxKkNgHbWXh23YNqywe/0CRtfMdD5/nbXL7MvG2KH0PgjmCKfTryC5oCEgJlFGgj6iPNBBHKp1JqxH0AbLOkqZDlMtck0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790377590; c=relaxed/simple;
-	bh=WDkWeAxk74CZw2+ugCGwLZbQn7NydGPo7+F9p2lHnbk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qxkLhXF/X+qQ9E8bk3W3bI5qNZdG3RU3/hdogIoXMjYyS0pJinMIPUuynXaUGISUGr4vyG1TCnmJ8I+QkTVk7Wj9NEkQqXTwOLuFCUkQ2ONPd7H+8qJ3M/QgBQ0ZPTCva9HTIN2SIlYIzP7lEPwdX2FVSJpIQB7TbZU+FjqS4wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AUrMV/pe; arc=none smtp.client-ip=74.125.229.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790378807; c=relaxed/simple;
+	bh=6P1PPNjSuAQhliJlV2rpF2cE8Wvb3xYU67b6zbqMbt8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BL3RD1hKM80DHvloaOpKe1C40pgMLJW/U5+AeUp2StRzQNt7A9RRDzPbuD6+/HjFvY0NnLXIC988VYPNiQCi/r8+7Fe9iqnF6V0s+BIH5S8QOeAIlcvPe7w8raFR1uZYFjx2JuBsF5VXnYvlf6ym6nTxUIHPCO8+CPhau4thMzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YXgkXqRw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xw6y7/E6; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AUrMV/pe"
-Received: by mail-dy2-f12.google.com with SMTP id 5a478bee46e88-33b9e805130so948445eec.1
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:06:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790377587; x=1790982387; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ByEFYipSo2vWwlG4Kwo3MRs93vlSoU015nH0zDIRxkk=;
-        b=AUrMV/peJxzQzN+gLuP/GDmJhIGD7StI549F2qg4iHjEseugMrxTtIop43CCyC6RnK
-         f0OB7IevyN5Fbx88VaMEToNkK5NxXWvxgOjAhyfaKFexwl24QQFfUsmbmO1kWZ8wCMev
-         IxDknmiidt0Hjw/voM33ok3kkxfjS0YHxrnlpjQ771hUud0NGMIu2A7EYsCcL/I1tYuh
-         rx5Z6foHCuCoAp7mgkQxZs8ibEHEvqL9bMAdeawXKskS4S2kchBrBhEbm9Pm5wCsX2Kc
-         /p1zM2cDE3OHMZ3S2JTzvdNqKZJXOiaMc390CA/IxH1jxPkaHGcevqSfukIdaX1NtBV7
-         nC4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790377587; x=1790982387;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ByEFYipSo2vWwlG4Kwo3MRs93vlSoU015nH0zDIRxkk=;
-        b=FeWb0+pEFs6Ye1GPLm5Eow0xJM8JfNkfRKxm9CVvEjUXULyXsoN3eLo6Z/YI3wLFD7
-         8eXqyvNQZ3WnoVxWD5fWhJpOOHdXYOaeItYknfpmEnbgffL8uw5j+tAlrE75F2XNwbGa
-         72mx1Krpf/CXxQynjnn6gKEmYKbwNL/PpyQYu2zdYVitcIQljPbLp89G6R6Yyi1fEJEC
-         Q9vC0sbcJOum3QmQ0OtbBbamcu3xCDcau6otnaOCYBM7ZvdX2FwoYv2axhMj7PFhl0Xj
-         YMbLTlDRj9JSs47gQVBu3zVNq3garaOqDVGYkv87X6tTBoG8JO2o5+a/kEPIFL59gOXM
-         5wOA==
-X-Gm-Message-State: AFuF++mH+k3OEWAgOiwmLAjfZ6n/9tXDRHBtk6B/O0ZxPuXrniLAnaWH
-	8dZ8dkt1Wj3la9wuw2iIZzb/Hm3pKGD3i4wdoejoxsp1LoKt1iwHuAQiHV8//K4v
-X-Gm-Gg: AYBFou3f0BF5MKy7Kqa0VR3ZGAosn1C1kvFsS2ACnXifCNcjzfDcsWfRrw0Oqiz0kog
-	04KbzVYuGBxMDjTdh+eFSLsPpdiz6MEeI60cgFwnB5JnNPVtmC5xHJk39wbvaIbCYc/Z2rQ5e1E
-	uascyW0Ziu/pLduPZfgDMBY9Y8dzp1SWHChpILToALFCw1TEaERcFbBJlbr3j7cbtqRkWClIFhm
-	Ddh2mPERsPpMmqHoomNxjO6Beb/wqPjK9s2OGJFSDh9LI19dyS5myIdQh2+ADHmQC9w/2LWNCTG
-	If9XiCb9/Bc5peTCUUBK8f0egjX1yfHNpFQUJnOp3O7gUGcgzPEq/mTnvYM+glxr1UjR08BAeBW
-	DFkNLDyuYlQo5ozn4B2rdm5oPD9bS74AYZROIsWn4eDdMbsGg5Tc0OvqsQjQt0qQXMOkgtymC4h
-	3wzdVTC5RLR1Gx5GOY/zKdvLAyETLYXy2fb9VNANQX0WY+K1kPkgzn1gaWXkVE49kWBVLBJYX+h
-	JhRTVnCtnww/yJRo0h1oXQ=
-X-Received: by 2002:a05:7300:c8cb:b0:33e:d4ae:e10e with SMTP id 5a478bee46e88-342746276b6mr1413163eec.40.1790377586526;
-        Fri, 25 Sep 2026 16:06:26 -0700 (PDT)
-Received: from Velociraptor ([172.88.119.157])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-343025a591csm491707eec.12.2026.09.25.16.06.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Sep 2026 16:06:25 -0700 (PDT)
-From: Colin Hinton <colinlewishinton@gmail.com>
-To: git@vger.kernel.org
-Cc: m@lfurio.us,
-	gitster@pobox.com,
-	Colin Hinton <colinlewishinton@gmail.com>
-Subject: [PATCH v3] fetch.c: defer fetch.followRemoteHEAD validation
-Date: Fri, 25 Sep 2026 16:06:21 -0700
-Message-ID: <20260925230621.179649-1-colinlewishinton@gmail.com>
-X-Mailer: git-send-email 2.55.0.windows.3
-In-Reply-To: <20260925192658.1166-1-colinlewishinton@gmail.com>
-References: <20260925192658.1166-1-colinlewishinton@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YXgkXqRw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xw6y7/E6"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 34872EC01EA;
+	Fri, 25 Sep 2026 19:26:44 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Fri, 25 Sep 2026 19:26:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790378804; x=1790465204; bh=K6/uxR4dJC
+	Xueby13dF1onBh8krfUfocs/rPNK8Jyrs=; b=YXgkXqRw7SP2+JlJR0Y0k01Ojw
+	Hn+z/rC88iLh1b6eK4mA/o+sSHH+FE6sxYmSnithjV4BxxpXahHDRrNdq4CW3h/K
+	1drpPwaf+5G/CAyJZxocm2FziX97VTU2ZVAPV5WokXv/INPzffKApB6jfbIIAOHr
+	CbK/i0x2yHOGd6NkDoWjwSCV0S660pSbyfTXijcOjM8rhxTdduy3lZujdWzZSUsQ
+	3NTPuHGagxFGvLGdxw027hVvqLG2XEc/ZWkUvK6YfhzleW+5I1DntqKJwySWlYM5
+	fk48khqMyc5/tf8Z3MSeB5//oMOFntQh20AIx0UoLg+2I3wmooRCPsWU+Rfg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790378804; x=1790465204; bh=K6/uxR4dJCXueby13dF1onBh8krfUfocs/r
+	PNK8Jyrs=; b=Xw6y7/E6qNj2dEYkK079JyYhmZDPCOqAgQwpSMDCDQwI66HLBnp
+	l19UxAEynFcTgYfgIjC/Wm2nps+wvq84e9uYKc864VSh7T6wsrCsMVulcb/U63Yu
+	C5ktYpxeey35U3qZ/MnmAxkEyzv1jXY6/8telMbg1+5+NqJSOT4VSISRm5fv1gB1
+	/0Q0uB4nRvT5NGi/ZGZBKFk4dRfOrOpufOtycvsLmZ3ZumEafRfg4CGUh2RN3zDQ
+	Hl+PVt+ZC8A9S0WrkWQuXwPR7kVFyo9Em6VARugJyi7Kca0GgcyK8AKYffkefSze
+	T4ksMCTUurN0PIzRf/hTwsvhU5Ze67+CZKg==
+X-ME-Sender: <xms:NAO3arHNbLggYgOrdEhMwIzEuY6xazwWQfNxnQdSFbHEOI2NCVS-Rw>
+    <xme:NAO3asDbvVuMWJEKT-Uz-sBucUA1VNo5doHH4UZnZRhgLk_T-YjTKbnD5d71lnn9A
+    f6MBYyeL8k52TdpUri8bJpiMfPndWsKENkTcyrbu6XceL9orZgaghw>
+X-ME-Received: <xmr:NAO3am9rCAH9TQPHLN3nt9KJPglnKOZfMeCK2Fv23PoCcwucd6uQLDdysNQCpXNRl1CNkLzINK5kVNuZ5KW2lnoyN18s24pcxVy7>
+X-ME-Proxy-Cause: dmFkZTGSwBtxai2r80X+YIJ5EkeCAhMWJAjk5EFdd9CHOL4QMWNWuk+SUp9PyyA9U7g//8
+    XbGa69Qiiq5ld3ItRVX243TP3O5ZvqYRK4CamLReT+RmE9lnLhKHd2l8ODyzDAVTACck8R
+    olpEcaDiZpa0Dt0vBCVDorftoukEAki3BNYB4yTWLzoWNC/XaO2lFBj/f1n17aY80o/kvi
+    y9ymEFs40hzxtYAkoPyi032FBsoWqeTXIWuM8MZ8wrjIOdd3wiqxSr0E/xFehh0UjX0nAs
+    FgMR6Xcm/4Najs1MyTU90KeDeIgV0LFUFsHQ8yA6y9XB1l8sCuDqKm6mnmrHHo7KpmuZkW
+    /1DBKbOI8EiIm+chjcv0Y/V6K6F1dgdqPi/FCgyNnGuvhuDgPWuxba2yetnd7a8vrgOuZK
+    je1NGHZ11OT/TL48z29Scz7Ld4rwFdusZEp2CLvrD+zYJrA8mPxjFPF2TZbBJlWPciNv3y
+    1waHR4vJsXocYTb8RyCu/1rXQyFwPh/str6yPPz+1IZ/pqFY6vSVrbQjHAmWXUgBNVYQrQ
+    xvoDOKywfOtPvMorIGl3ZtzzBiPTBmBugVrgVVo0tjEb3ys/8G1ximo6lYpqXwu/l3+j9s
+    UoLvOU6s4hiRyT6SZhyj9gVOug6y+cXxDehHoB3F+s4/4sQtLKQY1mkJHmjg
+X-ME-Proxy: <xmx:NAO3agDoXDGy2juhpy70IlqwPnYmo3ENuqewh5-ZmOwNmQiALIRb3g>
+    <xmx:NAO3ajSXdMMbRrsqcJlhO1DNx2aowHqUvf0qhHHpV-ocMuwGtz4xIA>
+    <xmx:NAO3avs3nQP_e4lM1ch1cbFQ2r2PDCcPSLclqe-KOpC-wgUxoWQttg>
+    <xmx:NAO3an3OqB2SYuroCSDFbDSh5u7ioAjxGM36vJzR3tQrUtt8-sQe-w>
+    <xmx:NAO3alrEe59dms4rjseDC8u5m85LfU7j1zmBENp20WpR5O1x6R555vd2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 25 Sep 2026 19:26:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  "D. Ben
+ Knoble" <ben.knoble@gmail.com>,  Harald Nordgren
+ <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v3 2/4] fetch: infer branches to fetch from a
+ refmap-only remote
+In-Reply-To: <4ec508a223a19c3aac8cf368e3dc0314ff6de479.1790333402.git.gitgitgadget@gmail.com>
+	(Harald Nordgren via GitGitGadget's message of "Fri, 25 Sep 2026
+	10:50:00 +0000")
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+	<pull.2412.v3.git.git.1790333402.gitgitgadget@gmail.com>
+	<4ec508a223a19c3aac8cf368e3dc0314ff6de479.1790333402.git.gitgitgadget@gmail.com>
+Date: Fri, 25 Sep 2026 16:26:41 -0700
+Message-ID: <xmqqo6dksyj2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The value of the fetch.followRemoteHEAD configuration variable is
-validated while the configuration file is being parsed, which
-produces a warning even when this particular "git fetch" invocation
-will never consult it
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Store the raw config string instead, and resolve/validate it lazily
-at the one place in do_fetch() that actually uses it, so a stale or
-mistyped fetch.followRemoteHEAD value only produces a warning when
-this fetch would have consulted it.
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+>
+> Configuring remote.<name>.refmap without remote.<name>.fetch used to
+> make a refspec-less "git fetch <name>" fail with "--refmap option is
+> only meaningful with command-line refspec(s)", since a refmap only
+> says where to put fetched refs, not what to fetch.
+>
+> Make that case infer what to fetch: the local branches whose
+> @{upstream} is already on that remote, plus the remote's default
+> branch, which is always included so it is available even before
+> anything is set up to track it. This lets a remote be configured to
+> fetch only the branches actually in use, without listing them by
+> hand in remote.<name>.fetch, and without needing to touch the
+> command line every time.
 
-Signed-off-by: Colin Hinton <colinlewishinton@gmail.com>
----
- builtin/fetch.c | 67 +++++++++++++++++++++++--------------------------
- 1 file changed, 31 insertions(+), 36 deletions(-)
+You may not necessarily be interested in what the remote's HEAD is
+pointing at.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index ab7db2be06..85e3d1ca4b 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -103,7 +103,7 @@ static struct string_list negotiation_include = STRING_LIST_INIT_NODUP;
- 
- struct fetch_config {
- 	enum display_format display_format;
--	enum follow_remote_head_settings follow_remote_head;
-+	char *follow_remote_head_raw;
- 	int all;
- 	int prune;
- 	int prune_tags;
-@@ -176,24 +176,31 @@ static int git_fetch_config(const char *k, const char *v,
- 	}
- 
- 	if (!strcmp(k, "fetch.followremotehead")) {
--		if (!v)
--			return config_error_nonbool(k);
--		else if (!strcmp(v, "never"))
--			fetch_config->follow_remote_head = FOLLOW_REMOTE_NEVER;
--		else if (!strcmp(v, "create"))
--			fetch_config->follow_remote_head = FOLLOW_REMOTE_CREATE;
--		else if (!strcmp(v, "warn"))
--			fetch_config->follow_remote_head = FOLLOW_REMOTE_WARN;
--		else if (!strcmp(v, "always"))
--			fetch_config->follow_remote_head = FOLLOW_REMOTE_ALWAYS;
--		else
--			warning(_("unrecognized fetch.followRemoteHEAD value '%s' ignored"), v);
-+		free(fetch_config->follow_remote_head_raw);
-+		fetch_config->follow_remote_head_raw = xstrdup_or_null(v);
-+		
- 		return 0;
- 	}
- 
- 	return git_default_config(k, v, ctx, cb);
- }
- 
-+static enum follow_remote_head_settings get_follow_remote_head(const char *setting)
-+{
-+	if (!setting)
-+		die(_("missing value for 'fetch.followRemoteHEAD'"));
-+	else if (!strcmp(setting, "never"))
-+		return FOLLOW_REMOTE_NEVER;
-+	else if (!strcmp(setting, "create"))
-+		return FOLLOW_REMOTE_CREATE;
-+	else if (!strcmp(setting, "warn"))
-+		return FOLLOW_REMOTE_WARN;
-+	else if (!strcmp(setting, "always"))
-+		return FOLLOW_REMOTE_ALWAYS;
-+	warning(_("unrecognized fetch.followRemoteHEAD value '%s' ignored"), setting);
-+	return FOLLOW_REMOTE_UNCONFIGURED;
-+}
-+
- static int parse_refmap_arg(const struct option *opt, const char *arg, int unset)
- {
- 	BUG_ON_OPT_NEG(unset);
-@@ -1918,11 +1925,10 @@ static int do_fetch(struct transport *transport,
- 		TRANSPORT_LS_REFS_OPTIONS_INIT;
- 	struct fetch_head fetch_head = { 0 };
- 	struct strbuf err = STRBUF_INIT;
--	int do_set_head = 0;
- 	struct ref_update_display_info_array display_array = { 0 };
- 	struct strmap rejected_refs = STRMAP_INIT;
- 	int summary_width = 0;
--	int follow_remote_head;
-+	int follow_remote_head = FOLLOW_REMOTE_NEVER;
- 
- 	if (tags == TAGS_DEFAULT) {
- 		if (transport->remote->fetch_tags == 2)
-@@ -1938,22 +1944,6 @@ static int do_fetch(struct transport *transport,
- 			goto cleanup;
- 	}
- 
--	/*
--	 * NEEDSWORK: By the time this function executes, we have already parsed
--	 * all such followRemoteHEAD values from the external configuration,
--	 * potentially emitting warning messages for bogus values.  Ideally, if
--	 * this fetch ends up not needing to consult these values, then git would
--	 * not ever output a value warning. (eg: when pulling from a URL directly -
--	 * rather than a configured remote, or when a remote's followRemoteHEAD
--	 * overrides the fallback fetch setting)
--	 */
--	if (transport->remote->follow_remote_head)
--		follow_remote_head = transport->remote->follow_remote_head;
--	else if (config->follow_remote_head)
--		follow_remote_head = config->follow_remote_head;
--	else
--		follow_remote_head = BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
--
- 	if (rs->nr) {
- 		refspec_ref_prefixes(rs, &transport_ls_refs_options.ref_prefixes);
- 	} else {
-@@ -1962,8 +1952,13 @@ static int do_fetch(struct transport *transport,
- 		if (transport->remote->fetch.nr) {
- 			refspec_ref_prefixes(&transport->remote->fetch,
- 					     &transport_ls_refs_options.ref_prefixes);
--			if (follow_remote_head != FOLLOW_REMOTE_NEVER)
--				do_set_head = 1;
-+
-+			if (transport->remote->follow_remote_head)
-+				follow_remote_head = transport->remote->follow_remote_head;
-+			else if (config->follow_remote_head_raw)
-+				follow_remote_head = get_follow_remote_head(config->follow_remote_head_raw);
-+			else
-+				follow_remote_head = BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
- 		}
- 		if (branch && branch_has_merge_config(branch) &&
- 		    !strcmp(branch->remote_name, transport->remote->name)) {
-@@ -1987,7 +1982,7 @@ static int do_fetch(struct transport *transport,
- 		strvec_push(&transport_ls_refs_options.ref_prefixes,
- 			    "refs/tags/");
- 
--	if (do_set_head)
-+	if (follow_remote_head != FOLLOW_REMOTE_NEVER)
- 		strvec_push(&transport_ls_refs_options.ref_prefixes,
- 			    "HEAD");
- 
-@@ -2164,7 +2159,7 @@ static int do_fetch(struct transport *transport,
- 				  "you need to specify exactly one branch with the --set-upstream option"));
- 		}
- 	}
--	if (do_set_head) {
-+	if (follow_remote_head != FOLLOW_REMOTE_NEVER) {
- 		/*
- 		 * Way too many cases where this can go wrong so let's just
- 		 * ignore errors and fail silently for now.
-@@ -2509,7 +2504,7 @@ int cmd_fetch(int argc,
- {
- 	struct fetch_config config = {
- 		.display_format = DISPLAY_FORMAT_FULL,
--		.follow_remote_head = FOLLOW_REMOTE_UNCONFIGURED,
-+		.follow_remote_head_raw = NULL,
- 		.prune = -1,
- 		.prune_tags = -1,
- 		.show_forced_updates = 1,
--- 
-2.55.0.windows.3
+ - You may only be working on top of their 'maint' and their 'next'
+   without ever touching their 'master'.  It would be rude for Git
+   to decide for you to fetch their 'master', which you have no use
+   for, without being asked at all.
 
+ - Or you may be very much interested in their 'master' that is
+   pointed at by their HEAD.  In such a case, you would have your
+   local branch that is forked from their 'master' *anyway*, and
+   you'll get one, without special casing their HEAD.
+
+Especially since we are about to add the knob to trigger this
+mechanism to "git remote add", presumably this is to be used for
+second and later remotes.  The primary remote may already be
+supplying "refs/heads/master -> refs/remotes/origin/master" when the
+repository was made with "git clone --shallow --single-branch" or
+something like that.  That makes it doubly dubious to assume that
+the branch the HEAD of this secondary remote points at is so special
+and everybody that does "git remote add" wants to interact with it.
+
+> diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
+> index 538914bc6e..c973a07caf 100644
+> --- a/Documentation/fetch-options.adoc
+> +++ b/Documentation/fetch-options.adoc
+> @@ -245,8 +245,12 @@ endif::git-pull[]
+>  	command-line arguments. See section on "Configured Remote-tracking
+>  	Branches" for details.
+>  +
+> -`remote.<name>.refmap` provides the default value for this option, the
+> -same way `remote.<name>.fetch` provides the default refspecs to fetch.
+> +When a refmap is active (from `--refmap` or `remote.<name>.refmap`) but
+> +there is nothing to fetch, neither on the command line nor from
+> +`remote.<name>.fetch`, Git infers what to fetch from the local branches
+> +whose `@{upstream}` is on that remote, plus the remote's default branch,
+> +which is always included so that it is available even before anything
+> +is set up to track it.
+
+So, I would "plus the remote's default branch, which is always
+included".
+
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 7651b41139..c8ce89cf30 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> ...
+> +		if (default_branch_dst) {
+> +			struct refspec_item head_item = { .force = 1 };
+> +
+> +			head_item.src = xstrdup("HEAD");
+> +			head_item.dst = default_branch_dst;
+> +			get_fetch_map(remote_refs, &head_item, &tail, 1);
+> +			free(head_item.src);
+
+This adds a fetch map entry with rm->name = "HEAD" and
+rm->peer_ref->name = "refs/remotes/second/main".  Because "HEAD"
+does not begin with "refs/heads/", the report after fetch says
+
+	* [new ref]    HEAD  -> second/main
+
+instead the usual
+
+	* [new branch] main  -> second/main
+
+doesn't it?  If we do not force-include HEAD, the code would be
+simplar and we won't have to worry about this.
+
+Thanks.
