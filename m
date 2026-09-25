@@ -1,176 +1,233 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy2-f12.google.com (mail-dy2-f12.google.com [74.125.229.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A8C3B27F3
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 22:38:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5C748A2C2
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 23:06:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790375923; cv=none; b=YnJ782T7UohnKbneApHN0CO7wIHpmaZ7m4qYb4xpBbwzNLVtqt+Tcabc74G/Ohbb9zJeD1FwNdeDi2J5Z0RyGQHN6H580z6OoUiUzrJjCtKl0ZEI6QDX40a5nWtujPsXRZNRDmJidazAOa0DoXK98giLaK1kc+lfcVaEzrMCZ+s=
+	t=1790377590; cv=none; b=ipTegaU2Sp2ENeg1uDyyj0msSI/v7YRBFq2Quybq5mnoBDiiFX1n9e/d6biX+rIiyrGCNsrppsbGOMaNc/jJFL0KHYEd945uPXE7VZQdOREg65ZsGmZluIb0d+xWWXS6ZOc3pKQB0xszlVNJEq/Dqa3CSxNB9NM2u4+oiVLTFV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790375923; c=relaxed/simple;
-	bh=BUKjNTSkVp4X6sERPh9Q95cE1BPLazkh7jmx/CJjUXo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lPfGa5OLURp6kr1u6IKOK8MAkMk5pR09wBT3AO167Bdpu/nOi72kmBGM7sC4v31brnJXaQwlqv9Ut780+JoJsWIcjgQBD1zwHU2lZfp9xZloTBtod9kgfCt1gQF3NeIHETqxgPaA5I9f1tN46zGHzdBzMuLqiUZPMYCirAGP1bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SfulH1FT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JX+a7HfZ; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790377590; c=relaxed/simple;
+	bh=WDkWeAxk74CZw2+ugCGwLZbQn7NydGPo7+F9p2lHnbk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qxkLhXF/X+qQ9E8bk3W3bI5qNZdG3RU3/hdogIoXMjYyS0pJinMIPUuynXaUGISUGr4vyG1TCnmJ8I+QkTVk7Wj9NEkQqXTwOLuFCUkQ2ONPd7H+8qJ3M/QgBQ0ZPTCva9HTIN2SIlYIzP7lEPwdX2FVSJpIQB7TbZU+FjqS4wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AUrMV/pe; arc=none smtp.client-ip=74.125.229.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SfulH1FT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JX+a7HfZ"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 18BF11400104;
-	Fri, 25 Sep 2026 18:38:41 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 25 Sep 2026 18:38:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790375921; x=1790462321; bh=i7TkpzPJHv
-	ic774KU6WsVqDHK1ArchzQqAYb/TVotSw=; b=SfulH1FTu/jwjKS7n4YVleWUtC
-	WapmtSeNKO0spZrHga7Xx1dlg6qlBP4tantEIhS7Y97ya10UCd34xTbqmJBPdElj
-	E5QABqGAJflX9xvT1NLt42I+BovQ2rUmAbGS65G1AosrYB066AY/VLECAaY/qd9m
-	L+IEaFzw6TEBk8bOeSLYE9TMIe1QMxbGQtHAYbSnJDmHBOMofb+MKG3agRCzCXaI
-	uEdydSZ7Ijr3ny9WTn76QeJRMAG457F4iGmeElITCBMDKmSEXYAlhkYWIYChLWVB
-	MsAr4GlXXEZlzvLIiLA+wG6vgQR8bBOzPl/8m173RM+RQF4t4UUDGaXuBS/w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790375921; x=1790462321; bh=i7TkpzPJHvic774KU6WsVqDHK1ArchzQqAY
-	b/TVotSw=; b=JX+a7HfZHgF029I7ITrFi8DWi1fPt33CbdfuVt+kRW2aSxtO5C9
-	nju3cH3OH9krQn5B1hWTK1Np1p3YEuU+oiwbXmo/ob9RAl+UQP/wQthJLnSQXN+S
-	gpJ7Xs2L6FYdlmZkmH/86P0LYH6SWOYNHPJM1BWBnzXxXg7+ikjk1lTTrkPzC1X7
-	NU88f4zGMFHeTYwOGugQxC8Y2baKV/3RnLCiDJkA/OyLZ+he9bBr8vPnNavLoKp/
-	gQqGBx3TegPdlnfsirJudKYq1HqpM0UW4dAUGObdgMoLGR4BLnOsTuk5PlTe+4Te
-	EpeinPhc69jDa3Uryusr/jbvK1j0dmxymzQ==
-X-ME-Sender: <xms:8Pe2ao03GfVOY3lQnKHJ95fKoV1fzoYyaFT1QsDDH22VWFc3tHQ8Nw>
-    <xme:8Pe2amyWEncGtI5IxYZaG6lWTd7SNXRhOCQ5g2S6rzx6ymEg4Gh7a8avwD0XAY0Xr
-    iIwOathYH9Nnx4pY-688hBt1mKOv1oV6soGgalanOmspaWJn66CBw>
-X-ME-Received: <xmr:8Pe2aqtuYgJ09Up3ix4ticB0Z765XZLhD7y6Dc_S-WzBqwrraPkh59vm2wh2rCa-bMvLBg-12uRk7rjJ-WsxVtamTlFrqbNjA_TN>
-X-ME-Proxy-Cause: dmFkZTEX5jib8ib2M7V2sKzHl4SQugszZYICxp12nimEJCCisHn+tnb2ozTKCFzQ2P7Bol
-    S2oCXaM/iKDYQsD1y9/pKd301YIrN+OyGfa6ewAra05PHB7eLFYfObWuxpUj0/lWzWa3Fu
-    r33JBT0J/eWBjp+hzY87fRqG19S6PaH2fZ0d1gN34e4pTH/gs8ELzwvMR3BM8umTeZ0BVJ
-    Z4Fnowl1+8d1qRenTpSKdumica+IrpyUx5Rz5sImdeCjsawel2jWWxzRXSqYyrM0xMPzrm
-    uy3ry5a8jwcHrGa3dmjPo2kOVSE/eW3hrw/vyiQAZjqSxcOurejkqUDSXpST3viGKNo5L5
-    ooGBIwgna9bQgl75G3gRbb65+Lwk6Mm3dPbrzz48Voq5O/aY+h2sdUT+zW68m4+Nv87kml
-    LRiy+Vr5dryMZFrgPWGG0YZRgfJqCqqq9OQydJTku1Oow73A6YwjDKDgVnh5tyjKj3zEBj
-    Ufyf871vTlmKu5X6+jZL01y7xs3k+B10ugLt6N4TfEksGaIqHumhvkljs2Xkfqjuwl8E9q
-    gDTkljuhqIgk3BlFxl/12vKlbnZGgujGigKHfxFKqUbxUoui0TNK+6oU381doYZkyQJsPL
-    rC/p1cSBy11DeFHwc4ODk4yAVHBWo6k2DBL++HvI66NRpf+SLrlOt8mBXBJQ
-X-ME-Proxy: <xmx:8Pe2aoww6KaZnVotCJBqkmlknud5O0OshbhmBnbPrlKJAxu5m_1gcA>
-    <xmx:8Pe2atBCADz-kf2q0AoCtiYgRDFLWx_nxYP5GCLPnv1oAwQCWh7q5Q>
-    <xmx:8Pe2amdxE0_V8mpsW-hTPvnUdSEFwbINAGUSZwj_SqfdVri4bNpI2g>
-    <xmx:8Pe2anlJJg4d6-FWYhSFJmIvuZ0B519_yVKmsJR_SdcgrplHXfI0Ew>
-    <xmx:8fe2avaK2zU9MvLznZvmg9sV94SSFvE-yHV21w7x3Qy80n7HJ4FE80a0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Sep 2026 18:38:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  Harald Nordgren
- <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v3 1/4] fetch: add remote.<name>.refmap
-In-Reply-To: <b04c00b974ce488ea1eb82556040fb54c05dad5a.1790333402.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Fri, 25 Sep 2026
-	10:49:59 +0000")
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
-	<pull.2412.v3.git.git.1790333402.gitgitgadget@gmail.com>
-	<b04c00b974ce488ea1eb82556040fb54c05dad5a.1790333402.git.gitgitgadget@gmail.com>
-Date: Fri, 25 Sep 2026 15:38:39 -0700
-Message-ID: <xmqq5wztt0r4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AUrMV/pe"
+Received: by mail-dy2-f12.google.com with SMTP id 5a478bee46e88-33b9e805130so948445eec.1
+        for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:06:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790377587; x=1790982387; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ByEFYipSo2vWwlG4Kwo3MRs93vlSoU015nH0zDIRxkk=;
+        b=AUrMV/peJxzQzN+gLuP/GDmJhIGD7StI549F2qg4iHjEseugMrxTtIop43CCyC6RnK
+         f0OB7IevyN5Fbx88VaMEToNkK5NxXWvxgOjAhyfaKFexwl24QQFfUsmbmO1kWZ8wCMev
+         IxDknmiidt0Hjw/voM33ok3kkxfjS0YHxrnlpjQ771hUud0NGMIu2A7EYsCcL/I1tYuh
+         rx5Z6foHCuCoAp7mgkQxZs8ibEHEvqL9bMAdeawXKskS4S2kchBrBhEbm9Pm5wCsX2Kc
+         /p1zM2cDE3OHMZ3S2JTzvdNqKZJXOiaMc390CA/IxH1jxPkaHGcevqSfukIdaX1NtBV7
+         nC4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790377587; x=1790982387;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ByEFYipSo2vWwlG4Kwo3MRs93vlSoU015nH0zDIRxkk=;
+        b=FeWb0+pEFs6Ye1GPLm5Eow0xJM8JfNkfRKxm9CVvEjUXULyXsoN3eLo6Z/YI3wLFD7
+         8eXqyvNQZ3WnoVxWD5fWhJpOOHdXYOaeItYknfpmEnbgffL8uw5j+tAlrE75F2XNwbGa
+         72mx1Krpf/CXxQynjnn6gKEmYKbwNL/PpyQYu2zdYVitcIQljPbLp89G6R6Yyi1fEJEC
+         Q9vC0sbcJOum3QmQ0OtbBbamcu3xCDcau6otnaOCYBM7ZvdX2FwoYv2axhMj7PFhl0Xj
+         YMbLTlDRj9JSs47gQVBu3zVNq3garaOqDVGYkv87X6tTBoG8JO2o5+a/kEPIFL59gOXM
+         5wOA==
+X-Gm-Message-State: AFuF++mH+k3OEWAgOiwmLAjfZ6n/9tXDRHBtk6B/O0ZxPuXrniLAnaWH
+	8dZ8dkt1Wj3la9wuw2iIZzb/Hm3pKGD3i4wdoejoxsp1LoKt1iwHuAQiHV8//K4v
+X-Gm-Gg: AYBFou3f0BF5MKy7Kqa0VR3ZGAosn1C1kvFsS2ACnXifCNcjzfDcsWfRrw0Oqiz0kog
+	04KbzVYuGBxMDjTdh+eFSLsPpdiz6MEeI60cgFwnB5JnNPVtmC5xHJk39wbvaIbCYc/Z2rQ5e1E
+	uascyW0Ziu/pLduPZfgDMBY9Y8dzp1SWHChpILToALFCw1TEaERcFbBJlbr3j7cbtqRkWClIFhm
+	Ddh2mPERsPpMmqHoomNxjO6Beb/wqPjK9s2OGJFSDh9LI19dyS5myIdQh2+ADHmQC9w/2LWNCTG
+	If9XiCb9/Bc5peTCUUBK8f0egjX1yfHNpFQUJnOp3O7gUGcgzPEq/mTnvYM+glxr1UjR08BAeBW
+	DFkNLDyuYlQo5ozn4B2rdm5oPD9bS74AYZROIsWn4eDdMbsGg5Tc0OvqsQjQt0qQXMOkgtymC4h
+	3wzdVTC5RLR1Gx5GOY/zKdvLAyETLYXy2fb9VNANQX0WY+K1kPkgzn1gaWXkVE49kWBVLBJYX+h
+	JhRTVnCtnww/yJRo0h1oXQ=
+X-Received: by 2002:a05:7300:c8cb:b0:33e:d4ae:e10e with SMTP id 5a478bee46e88-342746276b6mr1413163eec.40.1790377586526;
+        Fri, 25 Sep 2026 16:06:26 -0700 (PDT)
+Received: from Velociraptor ([172.88.119.157])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-343025a591csm491707eec.12.2026.09.25.16.06.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Sep 2026 16:06:25 -0700 (PDT)
+From: Colin Hinton <colinlewishinton@gmail.com>
+To: git@vger.kernel.org
+Cc: m@lfurio.us,
+	gitster@pobox.com,
+	Colin Hinton <colinlewishinton@gmail.com>
+Subject: [PATCH v3] fetch.c: defer fetch.followRemoteHEAD validation
+Date: Fri, 25 Sep 2026 16:06:21 -0700
+Message-ID: <20260925230621.179649-1-colinlewishinton@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.3
+In-Reply-To: <20260925192658.1166-1-colinlewishinton@gmail.com>
+References: <20260925192658.1166-1-colinlewishinton@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+The value of the fetch.followRemoteHEAD configuration variable is
+validated while the configuration file is being parsed, which
+produces a warning even when this particular "git fetch" invocation
+will never consult it
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
->
-> Add a per-remote config variable, remote.<name>.refmap, that provides
-> the default value for --refmap the same way remote.<name>.fetch
-> already provides the default refspecs to fetch. It only takes effect
-> when there is something explicit to fetch, on the command line or via
+Store the raw config string instead, and resolve/validate it lazily
+at the one place in do_fetch() that actually uses it, so a stale or
+mistyped fetch.followRemoteHEAD value only produces a warning when
+this fetch would have consulted it.
 
-This ...
+Signed-off-by: Colin Hinton <colinlewishinton@gmail.com>
+---
+ builtin/fetch.c | 67 +++++++++++++++++++++++--------------------------
+ 1 file changed, 31 insertions(+), 36 deletions(-)
 
-> remote.<name>.fetch, matching how --refmap itself already behaves.
->
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index ab7db2be06..85e3d1ca4b 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -103,7 +103,7 @@ static struct string_list negotiation_include = STRING_LIST_INIT_NODUP;
+ 
+ struct fetch_config {
+ 	enum display_format display_format;
+-	enum follow_remote_head_settings follow_remote_head;
++	char *follow_remote_head_raw;
+ 	int all;
+ 	int prune;
+ 	int prune_tags;
+@@ -176,24 +176,31 @@ static int git_fetch_config(const char *k, const char *v,
+ 	}
+ 
+ 	if (!strcmp(k, "fetch.followremotehead")) {
+-		if (!v)
+-			return config_error_nonbool(k);
+-		else if (!strcmp(v, "never"))
+-			fetch_config->follow_remote_head = FOLLOW_REMOTE_NEVER;
+-		else if (!strcmp(v, "create"))
+-			fetch_config->follow_remote_head = FOLLOW_REMOTE_CREATE;
+-		else if (!strcmp(v, "warn"))
+-			fetch_config->follow_remote_head = FOLLOW_REMOTE_WARN;
+-		else if (!strcmp(v, "always"))
+-			fetch_config->follow_remote_head = FOLLOW_REMOTE_ALWAYS;
+-		else
+-			warning(_("unrecognized fetch.followRemoteHEAD value '%s' ignored"), v);
++		free(fetch_config->follow_remote_head_raw);
++		fetch_config->follow_remote_head_raw = xstrdup_or_null(v);
++		
+ 		return 0;
+ 	}
+ 
+ 	return git_default_config(k, v, ctx, cb);
+ }
+ 
++static enum follow_remote_head_settings get_follow_remote_head(const char *setting)
++{
++	if (!setting)
++		die(_("missing value for 'fetch.followRemoteHEAD'"));
++	else if (!strcmp(setting, "never"))
++		return FOLLOW_REMOTE_NEVER;
++	else if (!strcmp(setting, "create"))
++		return FOLLOW_REMOTE_CREATE;
++	else if (!strcmp(setting, "warn"))
++		return FOLLOW_REMOTE_WARN;
++	else if (!strcmp(setting, "always"))
++		return FOLLOW_REMOTE_ALWAYS;
++	warning(_("unrecognized fetch.followRemoteHEAD value '%s' ignored"), setting);
++	return FOLLOW_REMOTE_UNCONFIGURED;
++}
++
+ static int parse_refmap_arg(const struct option *opt, const char *arg, int unset)
+ {
+ 	BUG_ON_OPT_NEG(unset);
+@@ -1918,11 +1925,10 @@ static int do_fetch(struct transport *transport,
+ 		TRANSPORT_LS_REFS_OPTIONS_INIT;
+ 	struct fetch_head fetch_head = { 0 };
+ 	struct strbuf err = STRBUF_INIT;
+-	int do_set_head = 0;
+ 	struct ref_update_display_info_array display_array = { 0 };
+ 	struct strmap rejected_refs = STRMAP_INIT;
+ 	int summary_width = 0;
+-	int follow_remote_head;
++	int follow_remote_head = FOLLOW_REMOTE_NEVER;
+ 
+ 	if (tags == TAGS_DEFAULT) {
+ 		if (transport->remote->fetch_tags == 2)
+@@ -1938,22 +1944,6 @@ static int do_fetch(struct transport *transport,
+ 			goto cleanup;
+ 	}
+ 
+-	/*
+-	 * NEEDSWORK: By the time this function executes, we have already parsed
+-	 * all such followRemoteHEAD values from the external configuration,
+-	 * potentially emitting warning messages for bogus values.  Ideally, if
+-	 * this fetch ends up not needing to consult these values, then git would
+-	 * not ever output a value warning. (eg: when pulling from a URL directly -
+-	 * rather than a configured remote, or when a remote's followRemoteHEAD
+-	 * overrides the fallback fetch setting)
+-	 */
+-	if (transport->remote->follow_remote_head)
+-		follow_remote_head = transport->remote->follow_remote_head;
+-	else if (config->follow_remote_head)
+-		follow_remote_head = config->follow_remote_head;
+-	else
+-		follow_remote_head = BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
+-
+ 	if (rs->nr) {
+ 		refspec_ref_prefixes(rs, &transport_ls_refs_options.ref_prefixes);
+ 	} else {
+@@ -1962,8 +1952,13 @@ static int do_fetch(struct transport *transport,
+ 		if (transport->remote->fetch.nr) {
+ 			refspec_ref_prefixes(&transport->remote->fetch,
+ 					     &transport_ls_refs_options.ref_prefixes);
+-			if (follow_remote_head != FOLLOW_REMOTE_NEVER)
+-				do_set_head = 1;
++
++			if (transport->remote->follow_remote_head)
++				follow_remote_head = transport->remote->follow_remote_head;
++			else if (config->follow_remote_head_raw)
++				follow_remote_head = get_follow_remote_head(config->follow_remote_head_raw);
++			else
++				follow_remote_head = BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
+ 		}
+ 		if (branch && branch_has_merge_config(branch) &&
+ 		    !strcmp(branch->remote_name, transport->remote->name)) {
+@@ -1987,7 +1982,7 @@ static int do_fetch(struct transport *transport,
+ 		strvec_push(&transport_ls_refs_options.ref_prefixes,
+ 			    "refs/tags/");
+ 
+-	if (do_set_head)
++	if (follow_remote_head != FOLLOW_REMOTE_NEVER)
+ 		strvec_push(&transport_ls_refs_options.ref_prefixes,
+ 			    "HEAD");
+ 
+@@ -2164,7 +2159,7 @@ static int do_fetch(struct transport *transport,
+ 				  "you need to specify exactly one branch with the --set-upstream option"));
+ 		}
+ 	}
+-	if (do_set_head) {
++	if (follow_remote_head != FOLLOW_REMOTE_NEVER) {
+ 		/*
+ 		 * Way too many cases where this can go wrong so let's just
+ 		 * ignore errors and fail silently for now.
+@@ -2509,7 +2504,7 @@ int cmd_fetch(int argc,
+ {
+ 	struct fetch_config config = {
+ 		.display_format = DISPLAY_FORMAT_FULL,
+-		.follow_remote_head = FOLLOW_REMOTE_UNCONFIGURED,
++		.follow_remote_head_raw = NULL,
+ 		.prune = -1,
+ 		.prune_tags = -1,
+ 		.show_forced_updates = 1,
+-- 
+2.55.0.windows.3
 
-> +remote.<name>.refmap::
-> +	The default value of the `--refmap` option for linkgit:git-fetch[1].
-> +	Only takes effect when the fetch names what to fetch explicitly,
-> +	either on the command line or via `remote.<name>.fetch`. See the
-> +	`--refmap` entry in linkgit:git-fetch[1].
-
-... and this made me a bit puzzled.  It may be a philosophical
-difference, but I've always viewed --refmap=<src>:<dst> to "take
-effect" whenever they are given, regardless of 0, 1, or more
-explicit things to fetch.  It is just when you have zero explicit
-things to fetch, 0 things are mapped via the refmap mechanism and 0
-things are fetched.
-
-In other words, what does not "take effect" when 0 things are given
-explicitly to fetch is not the effect of refmap alone, but the
-entire 'git fetch' operation itself.
-
-    The default value of the `--refmap` option for linkgit:git-fetch[1].
-    Used to map remote refs being fetched to remote-tracking refs to
-    store.  See the `--refmap` entry in linkgit:git-fetch[1].
-
-> @@ -244,6 +244,9 @@ endif::git-pull[]
->  	refspecs and rely entirely on the refspecs supplied as
->  	command-line arguments. See section on "Configured Remote-tracking
->  	Branches" for details.
-> ++
-> +`remote.<name>.refmap` provides the default value for this option, the
-> +same way `remote.<name>.fetch` provides the default refspecs to fetch.
-
-This is perfect.
-
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 533fdfe7d8..7651b41139 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -509,6 +509,8 @@ static struct ref *get_ref_map(struct remote *remote,
->  	struct ref *rm;
->  	struct ref *ref_map = NULL;
->  	struct ref **tail = &ref_map;
-> +	struct refspec *effective_refmap =
-> +		refmap.nr ? &refmap : remote ? &remote->refmap : NULL;
->  
->  	/* opportunistically-updated references: */
->  	struct ref *orefs = NULL, **oref_tail = &orefs;
-> @@ -552,14 +554,14 @@ static struct ref *get_ref_map(struct remote *remote,
->  		 * by ref_remove_duplicates() in favor of one of these
->  		 * opportunistic entries with FETCH_HEAD_IGNORE.
->  		 */
-> -		if (refmap.nr)
-> -			fetch_refspec = &refmap;
-> +		if (effective_refmap && effective_refmap->nr)
-> +			fetch_refspec = effective_refmap;
->  		else
->  			fetch_refspec = &remote->fetch;
->  
->  		for (i = 0; i < fetch_refspec->nr; i++)
->  			get_fetch_map(ref_map, &fetch_refspec->items[i], &oref_tail, 1);
-> -	} else if (refmap.nr) {
-> +	} else if (effective_refmap && effective_refmap->nr) {
->  		die("--refmap option is only meaningful with command-line refspec(s)");
->  	} else {
->  		/* Use the defaults */
-
-Looking good.  One of these days, we probably should reduce our
-reliance on the file-scope static "global variables" but that is
-clearly outside the scope of this topic.  Perhaps once the dust
-settles after this topic stabilizes.  I wonder if most of them can
-be added as members to "struct fetch_config" and then we can pass
-one instance of such struct around in the call chain, or if it
-needs a lot more involved changes.
