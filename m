@@ -1,121 +1,128 @@
-Received: from mail-pz2-f41.google.com (mail-pz2-f41.google.com [74.125.228.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3525B3749EE
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:42:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790354566; cv=pass; b=rProeEUR2YYnzyUw9kYprLKzBx5rz+VfA27I8GLcSGEVd/BlBmXBcK/6+cJjaGFK8Em4CAQKynKEYwxqa2dqMr0/S6vIqUharKN0I5JRDdxITE8c4+CRYlwaHD0Epf2QavkbeZseSEGgJFx8ryvab8f81y67sji03RwWQocKgjE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790354566; c=relaxed/simple;
-	bh=ce6F86cRKTz67Ajkee2zf4s1y26Bicd0jY3/sPdb74o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XmszmKH+lXtPDaopmq++hARiyT9iwLTWn+u7317i4zEOFT6G6Oj7fnzxuHMFtktR+/M0HXhJaSLjn6wSpFUpu5OzDB12V3e1cgpUiWccsh7D755iSAVUatmtZ9Lzn+l3h3G1TdPSpR0J73Yo0EmiodLXPn3wf0Y+MXSMAjbL7yg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OEVnH4p6; arc=pass smtp.client-ip=74.125.228.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC45D3AC0FB
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:47:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790354876; cv=none; b=Inxmsrp7oErqfrfbKusB0AWUZej9/h2cVQXjS7YhIadUOz25Eg2l+3BPqpZV8Fjr/G9WGXHmsZapPgdaSV/yWppNWl4hsp+PmNM+PbFNkKSg58+9pov7jr3KvIiTAmlROxMeIXNhf2CnIOmcIgyk0AEvQVbsr9ko/Wq/wbEjDSU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790354876; c=relaxed/simple;
+	bh=XijdhyfdnWFp5DxUQwAfkxC62AFgunTKdvZkPbodTJw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ad688VLtecBOxiIKZrOB9N1ZPf8do5FFs8T6HwTFAtVSDutEhA9etWbhihBNUZUqbVJdnfT3s+A4/3gcIJS60tWG/X9nSJi92RNgUF5/yBHwrSXECRz0gTOvqkidLpH2EwxCBhh//fIBgQjnxiXm0cFXNLc6rHxD2/AKTV+rsos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jn0vqeCw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bA0eVVLk; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OEVnH4p6"
-Received: by mail-pz2-f41.google.com with SMTP id d2e1a72fcca58-85469e211a0so663001b3a.1
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 09:42:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790354547; cv=none;
-        d=google.com; s=arc-20260327;
-        b=R2lQZDU+ODbxABzyLfzemnf42J4hxCSyYvjN9egZxKAFOU8eceUG4rRrhmLSXNmu9z
-         xm9feJxj9CmhXq0yM/bP3MDACXuumDg1ZorwGC9Qhr+aKxd2PkqYVgskxYWYrlEkjyvc
-         qjZbM6eT4r/nzdDpjnbHt1n6c8mdm/8sb2s6Hk4sAAUtVEVRxnwrXxbm9OEKlavocnX0
-         ZlA53feD4shUOfP7dKZ7nzUPt0jCpx7UTZTwoGHBmYF9nR2+WmjWEDj61kmC+fCUMSXf
-         r2aQ9/7EP9Aw5RYyuGSgJfLJqtUFLsG2aEah/y8jiCY6kvEM/EsCbtBI7nj2aCedbau2
-         cVGQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ce6F86cRKTz67Ajkee2zf4s1y26Bicd0jY3/sPdb74o=;
-        fh=C3IK/uP+rYY9CTb03y02xgBO/WGk5MIhiqPKpUyPme0=;
-        b=nI6OwTTAqyj3UfqUJ9wY6lPfB4hrOOdPsZ2cQ3PhAeN71CpMxJeavAo5DSfGVoIzxU
-         cit+675EP1V0VQS9RwQkAgpPVjRXWfRADlD0szpvnbFWyQpi+xyY1JgxZ8uesObH9AbY
-         KqkivyrO40x+KywS/QsPJfttVdoCJp6D2T3EaIP1c5jkyI+IRQYLQEVWs++/0wmuGgA9
-         QnMZiQB071+w9NYQxS7w0nNPUHk17VOwsZkO71KUvku1lUZuIFUluGQuFW7WEquO15zJ
-         0GTXj0awMLBIbk2R1DS9bKFBcfqsx0KysA1b9WXR9uUg5sXuQv6zGpgTpTmHVtXPfd8e
-         2hmg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790354547; x=1790959347; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ce6F86cRKTz67Ajkee2zf4s1y26Bicd0jY3/sPdb74o=;
-        b=OEVnH4p6Msb7FcjB6T9kPn0aVmGCpGNQnxjved/ywLMaA6AoHJJA8w6hkDW1yyk1Np
-         YpDoUYADoAp9oIXwsXM3YrZYFekG/hR69f2eqObUbvZtjysa1DO02LwTI47p0w5MS5Oh
-         Lr6HpiZFDSnT91Mt1623C3v89TjJ9Z+NlyxJ1f+LnGm8sye1z8Fg7eXRhUtaeUHn1b2a
-         fAA4YOblIrjAsTT/RvBPxGxPhRWU6ivlshS4/8nUpiXxtbMzfHrBTWVBVSuPeMPtcLhZ
-         /VmAEoNvffucZFgkRpi7hYlHCo5JCqww8fUnIKl/n/bnxnHusvcOnL4+zoqlCeY+vZyM
-         hYgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790354547; x=1790959347;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ce6F86cRKTz67Ajkee2zf4s1y26Bicd0jY3/sPdb74o=;
-        b=iSgtg2hI1bW0WD83s7KVbtFbciyPxir5rgzw/8i/vgK4qADIoV6lAxdzqR7o5MgRR7
-         QuR+6Bw8aAdyLtBQ62lJTNXBOciPx0GSnlyuRT7cyY3DjcT7srx4IDXr4p/3PJG2XQfP
-         Y85qzA4IStMqVUkmkqSsL8GAIXapTJPe9IYDFzMZVgYPZZAOEXT2OxLSkXMiTua9HZwg
-         LNwXB8RmNpNk6X9LzK1eqyAjPrQYwgX+q9alFSWqXlbIUN/A5Vzbh8BDaBuDs7LbvJcJ
-         +c71rL7ZLsC2o3Dfr9TMeAvaL65Tc/HJmnyNDW3t0RJ3miSrCmnHB4NSdD+oxBTy9cZy
-         Vfsw==
-X-Forwarded-Encrypted: i=1; AKwUvBzXst71H3/Ejmb+u2iS80lrc1BidAvn5dCCqGhGETF5ULeC/NVCihKBJr/RkuwAVZcGn/k=@vger.kernel.org
-X-Gm-Message-State: AFuF++ley3VVF39ey5ZqtHRSc490uNneZ/QQhOsr9L+L/2y16S7VmC1P
-	SR5+TaPjff5J682Y7C98tOJ9jzEE6vtf0ZExfBA+eEEmzMeXJqZZSdH5CJbKA/d5TuEaj+hjV3u
-	ddBBApIs1S7q/h8I6FrjLFU9qfAd9aeA=
-X-Gm-Gg: AYBFou0LvczDLma8JiEA8sfO9EjMnkREJlDyvAWgkmcwzAXXNAyTF9qugwn7NJiXpRV
-	pWwtZ8W1/M1fw8T7P+qem2tY3v66Dhb75PUg2E1/nY9Gk2/0yCGOXj9/kl2ghonzgEJixZg9mXt
-	haDKlQPqTFafbfxwRwjsiedLRRWp/fAiT0U3zt6we1hru9CDRDxFr4o/rvDOqtdH3h1rvUbjEBW
-	yO1MCaOtCfhKy+OQdHYzvBRJIpAALZ51DEYjWW2a8tsoehrUKRGJuusJP2bUuKKtW0VPAuEvs1D
-	iPPQF1+C77iT0hZcVeA9+56psw5ddUkbME7ZC8zd5szign3PkXHJm2VZkY4G5lney2/bQPNjTGN
-	41tPpx5x9NThxZxnTrOrX8FUyzapAHDv9laqiL4iTvNg3WaaOolJOYBCFpDkmEHUUuWbIPT2uRe
-	OI4C4NYMU3ESzQzHhLoahy0GlR999DcA==
-X-Received: by 2002:a05:6a20:4324:b0:3dd:fb34:765c with SMTP id
- adf61e73a8af0-3de0e6f1193mr6042093637.13.1790354547315; Fri, 25 Sep 2026
- 09:42:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jn0vqeCw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bA0eVVLk"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id C43FFEC01D0;
+	Fri, 25 Sep 2026 12:47:43 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Fri, 25 Sep 2026 12:47:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790354863; x=1790441263; bh=RTftR3CRqB
+	XJ7mC6JCdggk7+7n5S9J93JqoqESDmHJY=; b=jn0vqeCw1tMUcPgeNAhOshABox
+	h+8mABXiTCWb0OhVoAQXz0cFAnq0HAU1qFP6mH+7fvN6LsOyIXy8M5Iumh+/a/4P
+	LTwx/VjUtv4YVP8rLw6fANDaLJurllt1TmJ22zfh6qwSENpZY+xWEVMtoG8pPnyr
+	B0wjfn/0bRJAuoR6xFwS0lUnnWaV6paWihfHH8f6NHbMBWxmebstosBBFV1WsSNd
+	0tICWcgKUsJyeLOwQzKvT5ikJUrTW76ZMscT2Guboe8fWvjYE/a8qpObxD06pk5u
+	ojVxXzD+k1lzEKy6Ory+Xp0F+29bgLJD+kcApPsBavrMbBK3s2yt7iBN31fQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790354863; x=1790441263; bh=RTftR3CRqBXJ7mC6JCdggk7+7n5S9J93Jqo
+	qESDmHJY=; b=bA0eVVLk8ktGrIE5cLFjSGdklRmuGrd4k839hJ6b7/AjofOvSyE
+	GijBtLwCCeYwp1hiVONQU4b7tzps2b6WD8v2X6TjGH8tyCfLIQc8P+sxTcVmBpBH
+	kXM0tmj/u9KxvleRkR1oO9INTnPtj8DWmwcZ3GSGjnBEJvCaR9jQArufZTEH/wnS
+	K+bq8mZ2wZkElSTDI0ZW3O8nim/XETp6NawM9EjHaHMzivpQZXckWFPdi2Xmkis4
+	Oe82vz1Uxa8SGrjEEYymTdjKl23bHGxTSGtBkbBn5R5844NI5PZVQANlWT2C64jz
+	ld5YqGASglOGx4rZdCtDPcWzlwUfJllGETA==
+X-ME-Sender: <xms:r6W2ajLVmPy9iK6Fq7UeYd-b85oaCcPcAwxJPWl-9oZETwozsWZTpA>
+    <xme:r6W2aumph3S1Gm8XpDlqo95RtxrHxc0IRiYD2zXM1ZoHmomCpFgZutZMcXigSLkvQ
+    ElFPP_qrr9gHKCFp_cVlFBuceFuf_iSl3PjDVmUnqs5uLkjpK738Q>
+X-ME-Received: <xmr:r6W2apG2tGVjLzKR0cunDtA3DMZPjLsOTT4osqW23qBCe-fDeO_UKYpUWmty4_tDYxlwRpIwBEvPSd6VtT6tV2poD7M5nrFovbKv>
+X-ME-Proxy-Cause: dmFkZTFbkAdrj6mOfIVj5OJs8aFMyasfNdETEvCVm8NhO9l9bmL72EaHGJh9D+cxQMaOIQ
+    +3o62NE6cPk/4hhPk+QAzq5lQfJ+cRdFmH4ucGAK6L1Bae49E3Bf/odcXfPLo+X/I55hGt
+    DOoAoQOEDdGZOOJywGz+9Inw3IO8hV9It/ocvJiwcdK/aVOn6PlYMT/NfaqIFO+4Fi2dEj
+    iXyUFdv+RihdqGekDILB72/Zxhl7emv/b4+1S24kb9iM81tf8HbbR7pVV8QRZuYPONNiNi
+    kDVLkfnXgThqkTkYjL03vh/PQrgeuFcSxWbcdSsS6Ikr6z9eGE1IP3SdhpcNCXMo55Y3Sv
+    k0aIX+gf/IW/gW8QBL5S/0N1Jm6rW8W9Hjjp/rCJD51lyKfCJ5C8wr3StHFeP1CfRefBcg
+    efKxeyhLMYQvCFk1X3GWZd4lqRD3vwc6T8nl1A1+58D+cJcCASW3MmgZCGcSbHnLcaaCTe
+    x+jWhEY+d2KZGSMY5zi4Uh+cYPSI9OikPV4UwPyAOQVR/kYYjNMH3/1oRFmzZUt+EdscQw
+    Qrzc2CnXDGeNm4JOb8zw3L8y+yxqYcHpd8LBQZpiii2MMpZAZNiEGMdcuvBFTamhy4AJ0L
+    Q8/BV2fUbav7obJ1LWgDEGOuh49rc5Me7pZSpVKLSWxd2xnAPHWK/BXo8KLw
+X-ME-Proxy: <xmx:r6W2amGFbp7JERlR-QAsnoVNfiRQbbY1B_s6dS7jIPafBYv9tsesfw>
+    <xmx:r6W2auNrsT6FR4Tldu-A0O2AHBmzCh4eQ6DPlARJp_cWz2MmVscvEA>
+    <xmx:r6W2atFiTnLK4dIrVZO6qmmLnoK9rhFrnVEXPiv-rHu_mu5FF2GFfA>
+    <xmx:r6W2atPiptzIXdsVfMsQ9TKWZ0wyNwTX7OUH3F7BZ4fV-W6oJa0LvA>
+    <xmx:r6W2amtAkxxtHfwukUlryzl-hHbPgTkUHR-bY_5GWp5yBrBh8Eg287lu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 25 Sep 2026 12:47:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: git@vger.kernel.org
+Subject: Re: Rewriting the Git tutorial to cover less content
+In-Reply-To: <bd5d9451-ac5a-4274-9a7a-57ae99864fe9@app.fastmail.com> (Julia
+	Evans's message of "Fri, 25 Sep 2026 12:08:51 -0400")
+References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
+	<pull.2416.v2.git.git.1790297546771.gitgitgadget@gmail.com>
+	<20260925082723.GB1493716@coredump.intra.peff.net>
+	<bd5d9451-ac5a-4274-9a7a-57ae99864fe9@app.fastmail.com>
+Date: Fri, 25 Sep 2026 09:47:41 -0700
+Message-ID: <xmqq7bk9wa4y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <ap50kgyenpRrsqln@pks.im> <20260924183523.53201-1-haraldnordgren@gmail.com>
- <0aaab5ec-d488-421f-b99a-330c1a851fb0@app.fastmail.com>
-In-Reply-To: <0aaab5ec-d488-421f-b99a-330c1a851fb0@app.fastmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 25 Sep 2026 12:42:13 -0400
-X-Gm-Features: AclHuK-kuRVEOdx7r8f56B7D7tI1dlhNBFNoue-zPvVkji-NQU9cXsFPl-QD27M
-Message-ID: <CALnO6CBhWKdHFhGCycCVWrc+3WH7TCNcqy8EzmYxxOhdHvz=Fw@mail.gmail.com>
-Subject: Re: What will come after Git 2.56?
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Sep 24, 2026 at 9:21=E2=80=AFPM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
+"Julia Evans" <julia@jvns.ca> writes:
+
+> I'm working on a patch series to replace `gittutorial.adoc` with a completely
+> rewritten tutorial, since a lot has changed since it was originally written.
+> ...
+> I'm excited about this direction, I've already gotten some positive feedback from
+> test readers, like:
 >
-> On Thu, Sep 24, 2026, at 20:35, Harald Nordgren wrote:
+>> I can say I liked this tutorial better than any of the other git tutorials I've tried.
+>
+> and
+>
+>> I really like the tutorial, it's easy to follow and I learned a lot!
+>
+> I have some ideas for what to do with `gittutorial-2` too but I'll leave
+> that for another discussion.
 
-[snip]
+As long as it does not mean that learners now have to read three
+documents instead of two (i.e., your replacement, gittutorial.adoc,
+and gittutorial-2.adoc), I am also excited.
 
-> On the other hand, or on the opposite side of the spectrum, a tool that
-> can read your configuration and recommend better settings would be more
-> difficult to implement but could be easier to get buy-in for. This would
-> be the next step up from hardcore Git users and folklore spreading
-> through blogs and whatnot, thousands of users setting their version
-> controlled (of course!?) global Git config one advice and word of mouth
-> at a time. Just a plain old program that reads what you have, makes a
-> report on the tiny little part that modern Git practice has an opinion
-> on, and recommends the modern alternatives.
+Omitting some material that is covered in the current tutorial from
+the new one would mean that the topics covered by the remainder of
+the current tutorial have to be sifted into three buckets: one that
+is to be discarded because it is no longer useful to the target
+audience, another that needs to be described somewhere in our
+documentation set, and the rest that need to be taught elsewhere,
+though that may be beyond the scope of the project documentation
+and better left to other projects that produce "books on Git".  It
+is somewhat unclear from your description what your plan is to cover
+other topics that should still be taught.
 
-"git config upgrade" or something would be pretty nice :)
+As we reached consensus at the contributors' summit, we should wean
+ourselves away from the mindset that these tutorial materials can be
+incrementally polished to match today's needs, so if the plan for
+'the rest' is also to write on these topics from the ground up, that
+would be very good.
 
---=20
-D. Ben Knoble
+Thanks.
