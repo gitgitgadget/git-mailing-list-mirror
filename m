@@ -1,227 +1,169 @@
-Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+Received: from mail-pz2-f13.google.com (mail-pz2-f13.google.com [74.125.228.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9F83DDAE1
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 10:50:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790333414; cv=none; b=Hm0rcTw+VelcXHXgf8IeErCT/GrSyoGMp0TvMUIasPhOl+a5CJqpq9C865emmQGYdCTY1rJEsL1yaL72t1+t/ogOMKynjMRxDml29hvNCbStXuKKQwCb1BjErslQ0Yblb6pCUuMPbm0o+qE2PbhEkJlQGzW7YehivI8FlrEaxEQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790333414; c=relaxed/simple;
-	bh=chhJjgswR9iKC3AmcbYR3tpQUrwcP3or0IegCXR3FVY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Wzh3WDchg8jcJz1Uu8H0kcMqzCOroObVRjLg8qSTR//iGGBg+eKC8Jjpo23E3pwHm3MzDElgBZbPOzceMUevPMZQdMHUfXPFx0Jz85Ce3i2GYvSQl3vPkl+Z2bD/mkuvBX8Q2+MPWwd4K7LSvbA/Ebjn3OGmR1Z9lsaT76V5EaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ac+eABM9; arc=none smtp.client-ip=74.125.82.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E543D891F
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 12:55:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.13
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790340918; cv=pass; b=sMDjdv+4Y1gitO4WZeyMgtc8G81bZqSe9FxyaKuz3ZWL7GjXVu7zN/4O/Mn8FFxOFVoRkId75nu+8jen8+YZGq+2GleZdBcduFODKJTpO7C0FcdhwqPtZi/e3kzG0NrA9UgrUFYgECowS28n9n/HBH4CCGxW4G/kBnQtOgw+mjg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790340918; c=relaxed/simple;
+	bh=HHNGBd9TLcb5hwbh8Zm/YrhXJdojQ4ETaxV2ogKst1I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=s9lerMsJ2ptAA8DP7ZYBl7oFj6cx3/jETZdQM+FUuJTf7BnnIxvbQe2B5DNbkvSsF3GYH/IRdibLnQPMD+ntM3qTfVHj0ea/hb4bzZuIWUjyS5OMXGyWs6xENXBRAmPwZJipDGL85oEXqtmoX+Q6v9k8AwJHpddRW96H6HxDfI4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JHCLdwEQ; arc=pass smtp.client-ip=74.125.228.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ac+eABM9"
-Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-3115c4451c8so615146eec.1
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 03:50:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JHCLdwEQ"
+Received: by mail-pz2-f13.google.com with SMTP id 41be03b00d2f7-cc4cdc0d663so308556a12.3
+        for <git@vger.kernel.org>; Fri, 25 Sep 2026 05:55:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790340915; cv=none;
+        d=google.com; s=arc-20260327;
+        b=RZy3JJ5WAJ172agF1BZgcyf1jaKaFfRCCkMeiCfL7R/WidiaddKbRjLb4juXqGHej/
+         BIeG+iiSQklHTHye23QiTm/AtwbYKGRK3WL9V8cYNnDQG1aPqoz/3PiC6QJAkWzYY7W/
+         UCdE2GrBVT4XR7j7aOxS50TAYFtK5S6JNSzXD4XPwTVsfBUjF3X9pbRIdUUPlyVk69fS
+         WgOjA8rZnWrhXw6SUCOtRinPNOi9X1Ixp3NWYd6MTrpPJxBMVGr1Cg88zXk3yR923kXy
+         vKX5ff7mffcTmnMEVExA6ywcjCpUkKzQOgSIox+mE5SF4ikJdB0qYuWcr/JDJOluJVcm
+         Qc6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=18ZDBoP1IJDdqHz+7/LawOUfTNPW4uCk+Y1nmu+pbA8=;
+        fh=f01fq+WVgncbxFGCkL4Sg49FsiA+NYBLlF+Uh+09I2s=;
+        b=Qa3Ygzm0X575FJy7qHmXLfc9oITESSxkQ7cVpHOvQhIZwJdvzQpcORmuaWRBc4euH9
+         IHqYFOXHcX1rd3VADeetuD5BZAvpJKK0koBFP6Z44SIO1Yb1qAqNDQeSv9gxLBKp6Eaw
+         LSheBtzWW5nktnjNHX0JVq1Trck965MVOdL3piUOBTlFg47ggx2SOHfeAy5O6PgQtP8N
+         QgMRdg241uG5oLpHl8lxCWOlOkzK+12aWoEpbzAPJ/K815RyUqPpTsXlD8kbWfgGzsYZ
+         qnSPDjxxBKUK6HpGJ1/dEQwK+GqfoYyS9NIwnbiErYomxX2eJBP6EVJvXpST/kWYU4wP
+         Jm7A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790333412; x=1790938212; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=aYopBmKuB2uR2gTEP1ZHKFiYowbaVPk2PJh4ABOm7ss=;
-        b=ac+eABM9KJlzNKfm3PWzCZloz1aUBpD64xLDFxtSLW/yfOfMokA+W3wNl7z/g0zEIB
-         ZRZIw0tslocoZLvBmrNizGNbo+plpuNrpwyjt8fxl8/iw7VCC9xp+RdaFSRrN+AWwPmX
-         w39+lwIwxlYde8Qnc5xae1H4wU1ZPp2vOp1YuKrfyL0jrnBU3dAxO2eaU1fwXBUPWlSQ
-         Wwq3iEFp4GEiLfywzkRK8u+2I73BkKr9k9MKPF1XBYJcUdSxCykK6zRz314/yxuxQHDc
-         z+h5Foqb+b8bHszP97RMcIFNuyzb9XuuRKeZru3PjyJ0oAG4s12huP/TD7HDxWrwGrCV
-         L57g==
+        d=gmail.com; s=20251104; t=1790340915; x=1790945715; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=18ZDBoP1IJDdqHz+7/LawOUfTNPW4uCk+Y1nmu+pbA8=;
+        b=JHCLdwEQkipySw5M7FFbgnCUr1cNbuQG3QbovLlAcfvgUCKDS91mwf7hG8iQzHFvrg
+         HPZ6Vj5jAjal35kdty5HQ6j16VusoQXe70xPx25v7AACxtLi1e1PjS+rNOHQJ4Na5z8R
+         SYBTE4gDbrpJd9QCEjPw4L3anuOO5kyKcsUeRMHaJxwgw4M9gFnU59VPFm+KDbTLUhdT
+         HLwfn3vTAMqCwAKFOKx6Y+PrQDw8GLqwJXCXTC0RVBYfOz4YsG6AnWnU3cR9XnUXDrZa
+         TcxJemd2z7UjWgbGA8vBlU2DsSbd7Z7Uj9WSNDAWW/nmETk7HcL4x+EhhXd7wQqFVdnS
+         8lGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790333412; x=1790938212;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+        d=1e100.net; s=20260707; t=1790340915; x=1790945715;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=aYopBmKuB2uR2gTEP1ZHKFiYowbaVPk2PJh4ABOm7ss=;
-        b=OyZJtlsRkp3sDvVq2RYPXAJUi6CfrrcfC/5W+qcqAjJVwABVJwQHJ/sHI8GjGJWMdW
-         IrYzs6CfUEs3zjPVE58Ypg/3r6iUGJvE1EUsBpzWQclXGpUUt23IIFNO619DKxt2Fcdk
-         dKCgBArieLc/SvWlErmLxraYSBI7IDiF9E4n97UxGpi1fI/hizTnH5Zm5+fiMVuiVHq+
-         jIezGg8wZrne02vWj7t5WKIo1yk0up5ERzYHlB+dR3iYNIEWDAR/5TNWOmZLSxEbTGxS
-         OhukghUjFRG+oTFHmzUiCj6x9QuMd0SIol5xTHf8O/YPMeHxpChn+8H9d4GttICuORIm
-         Pg1Q==
-X-Gm-Message-State: AFuF++kreV7vq/bcgBGj/Av7L3Mei8w4tvI/oEkuILxUZ4212prCzjUw
-	uxpQknQK5KUjL/R/hPknRSnWc0SfHHtXcaXgePfgUbTYQRF3GEamaqQvkmazUadH
-X-Gm-Gg: AYBFou1RCWFy7SxZVl9xzet6dFaQnDAAio/Z9gogPkfHKfFJ9aHQVVcvr2JZJcSkaE+
-	hVkC9h7LyV8+cKDcse0rDapa9TYd9WX4DQcmHjoL3vh9B062n2Zd/pkZ1t9LUgPTk2CdTieKyG4
-	zp1HX6fElKmRpzpXybhjs46qFvELFKxMLtLkIKzIF9WCE0Y+HwAGLRwvTakcDMOrEYSWrVzD5Ng
-	ws8ywld8PdcplmS3z165/PN/I7hbREAbNxzd3DpRdEVSR7lhidyDcKRoh5eAbdZq0GZQGw5jQI2
-	DZYmvqiuDQa29pFPufPg/OM+tTIxRG9lFJAQz0yuIj7vNqxcxISMePIbMM4hSCYjcW6Ho6ll9z5
-	OxuObwFMnHBhwQ3Apq+i94jX+neI0ab/wb6GGb+JHEL9TnsrtVYfG7zDrxfaB/GXv6+M8v+ywbi
-	JTrbOcdL5vMeL7F2XLmATu7N1isjNLYSguRAe+DDcAmFJULNuoRlIwwSNQwppsy3Jo+3P6Oho=
-X-Received: by 2002:a05:693c:87c7:10b0:33e:61ab:8309 with SMTP id 5a478bee46e88-34006275ab2mr4208365eec.23.1790333411314;
-        Fri, 25 Sep 2026 03:50:11 -0700 (PDT)
-Received: from [127.0.0.1] ([57.154.7.193])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-34144757747sm6936546eec.13.2026.09.25.03.50.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Sep 2026 03:50:10 -0700 (PDT)
-Message-Id: <31462e944563c94829a32e35577d7d2567ff8b36.1790333402.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2412.v3.git.git.1790333402.gitgitgadget@gmail.com>
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
-	<pull.2412.v3.git.git.1790333402.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 25 Sep 2026 10:50:02 +0000
-Subject: [PATCH v3 4/4] remote: default to --limited-fetch in a shallow
- repository
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=18ZDBoP1IJDdqHz+7/LawOUfTNPW4uCk+Y1nmu+pbA8=;
+        b=fKDGGhAdufngVlGZQfdcNNpGtj362CrNwjqyj+AIvZUcniH6Hg3XOZBflhFID5VSBe
+         MqYIeGAVL1ZI4PfgCNDCObwMo4Bf36Glpav04FZnAFsKaFo1WLxqI6Ap2Mmkvgpq4ZGH
+         GmuBicfnVD52HdWS1CYZThbctPHwos7d936spCwhPSVjpkA1y4f3w22ng3AFTJ8Dl/ZY
+         JaTO+c91gTgSUw+oAJr1wmz5wgM68C88YIX6QjAQQEIgnjI69b6R5nVpp/xZchE19gAG
+         +82Qc+Sy++isqzukHZwMTQqx6K1vuDd/r3s8oFI1hOYa14ha5yeC3pS3/2SjJdldUZ3s
+         mQdw==
+X-Gm-Message-State: AFuF++k+YgtYmniP3AHm+j1jyjlAdzQY3zGFdx/3QCE+CeS0RWcXuY2B
+	WXd6gEFT05i2g1wNGFKdVRXezX0SvQdDSgWZs3MTaxDDWISy3vkbKQeb9jsVPWACgrvcaQmcFR5
+	wQXf/uGiiUWVlphz4zfWK18lRm0YNzZc=
+X-Gm-Gg: AYBFou3ZQQMaZenMwA0lhuYDnDujCJdGQnZP3TSwX5SiIPhzQpvB1KMb3bHKxNOAb4G
+	GCDxI/HiPiSQQeNILnbq1cDUDVMpwReR4T8h05RBSyvWWiqAOitRo70OigocjtkAVAO39XhDD8q
+	cWLMsSKu2LCpivKV0jXmad2OGNtObg/j6vwwjLgU3uCdQ1wjhco4j8vufL0+LFvs8q8hFc4QPeq
+	PPORhK9au92mdks25MA0e+JLfl7JBIuM530sAeOMpMCOeumxM8IgkcRwY3j6xIJ6Y1bGVgrVlxB
+	9nBp09MzjAZ8jdfuMNfymD8OWiOeWYKnncbY3bfSEySiFn7PbAhCBd9uuMyDWZ0fwjXvNSHLW45
+	SJZr4JfQ25CJo0HRBE8tdnLyeZkailwMGmCM++SqBUFQHXzsmm1yKkHXlAnWlInnevOU3rklipp
+	gwvhObZIw=
+X-Received: by 2002:a17:90b:35d0:b0:39e:6c6a:209e with SMTP id
+ 98e67ed59e1d1-3a098ac2404mr5080268a91.63.1790340914674; Fri, 25 Sep 2026
+ 05:55:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+References: <cover.1789853192.git.ben.knoble@gmail.com> <cover.1790168285.git.ben.knoble@gmail.com>
+ <e49936ee12aaf5d82a98dddcc618cee01ac3c681.1790168285.git.ben.knoble@gmail.com>
+ <68e83baa-6ccb-4ca8-a1df-f09d51749c67@gmail.com>
+In-Reply-To: <68e83baa-6ccb-4ca8-a1df-f09d51749c67@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Fri, 25 Sep 2026 08:55:03 -0400
+X-Gm-Features: AclHuK-EAtOhInAvCXAOCCzwtLFxpK_8eAeM4MuSZiWnefHBSZ9tVlKUdsQ3riM
+Message-ID: <CALnO6CDpS9GQfONKJs=LAUvwYzYyMby+rGAUtvFQruj-ERXt-g@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] builtin/stash: merge index in-core
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Patrick Steinhardt <ps@pks.im>, 
+	Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, Adam Johnson <me@adamj.eu>, 
+	Victoria Dye <vdye@github.com>, Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Hi Phillip,
 
-Adding a second remote to a shallow, single-branch clone used to
-still fetch every branch that remote has, since "git remote add"
-always set up a wildcard remote.<name>.fetch refspec regardless of
-how shallow the repository already was. That defeats the purpose of
-having cloned shallow and single-branch in the first place, and can
-make a plain "git fetch" on that remote hang or take a very long
-time on a repository with many branches.
+On Thu, Sep 24, 2026 at 5:42=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+>
+> Hi Ben
+>
+> I've spotted a memory leak that I missed last time, apart from that this
+> looks good.
+>
+> On 23/09/2026 13:58, D. Ben Knoble wrote:
+> > @@ -671,29 +627,27 @@ static enum stash_apply_result do_apply_stash(con=
+st char *prefix,
+> >                   oideq(&c_tree, &info->i_tree)) {
+> >                       has_index =3D 0;
+> >               } else {
+> > -                     struct strbuf out =3D STRBUF_INIT;
+> > +                     struct merge_result result =3D { 0 };
+> >
+> > -                     if (diff_tree_binary(&out, &info->w_commit)) {
+> > -                             strbuf_release(&out);
+> > -                             return error(_("could not generate diff %=
+s^!."),
+> > -                                          oid_to_hex(&info->w_commit))=
+;
+> > -                     }
+> > +                     o.branch1 =3D "Upstream index";
+>
+> This is the current index, calling it "upstream" is a bit confusing to
+> me but that's not worth a re-roll on its own.
 
-Turn --limited-fetch on by default when the repository is already
-shallow and neither -t/--track nor --mirror was given, so that
-adding a remote there does not by itself commit to following every
-branch it has. --no-limited-fetch keeps the previous behavior for
-whoever wants it.
+Will fix. The "upstream" verbiage comes from the working tree labels.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/git-remote.adoc |  8 ++++-
- builtin/remote.c              |  5 ++-
- t/t5505-remote.sh             | 59 +++++++++++++++++++++++++++++++++++
- 3 files changed, 70 insertions(+), 2 deletions(-)
+> > +                     o.branch2 =3D "Stashed index changes";
+> > +                     o.ancestor =3D "Stash base";
+> >
+> > -                     ret =3D apply_cached(&out);
+> > -                     strbuf_release(&out);
+> > -                     if (ret)
+> > +                     o.verbosity =3D 0;
+> > +
+> > +                     head =3D lookup_tree(o.repo, &c_tree);
+> > +                     merge =3D lookup_tree(o.repo, &info->i_tree);
+> > +                     merge_base =3D lookup_tree(o.repo, &info->b_tree)=
+;
+> > +
+> > +                     merge_incore_nonrecursive(&o, head, merge, merge_=
+base,
+> > +                                               &result);
+> > +
+> > +                     if (!result.clean)
+> >                               return error(_("conflicts in index. "
+> >                                              "Try without --index."));
+>
+> Sorry, I missed this last time, but we should finalize the merge before
+> returning to ensure the allocations in result are freed.
 
-diff --git a/Documentation/git-remote.adoc b/Documentation/git-remote.adoc
-index 74fbce6e0e..82b21eafa7 100644
---- a/Documentation/git-remote.adoc
-+++ b/Documentation/git-remote.adoc
-@@ -52,6 +52,11 @@ Add a remote named _<name>_ for the repository at
- _<URL>_.  The command `git fetch <name>` can then be used to create and
- update remote-tracking branches `<name>/<branch>`.
- +
-+If the repository is already a shallow repository (see linkgit:git-clone[1]
-+`--depth`) and neither `-t`, `--mirror` nor `--no-limited-fetch` is given,
-+`--limited-fetch` is turned on by default, so that `git fetch <name>` does
-+not need to negotiate history for every branch the remote has.
-++
- With `-f` option, `git fetch <name>` is run immediately after
- the remote information is set up.
- +
-@@ -74,7 +79,8 @@ With `--limited-fetch` option, instead of a `remote.<name>.fetch` refspec
- that tracks all branches, `remote.<name>.refmap` is set up so that a
- refspec-less `git fetch <name>` only fetches branches our local branches
- are built on, plus the remote's default branch. See the `--refmap` entry
--in linkgit:git-fetch[1] for details.
-+in linkgit:git-fetch[1] for details. `--no-limited-fetch` explicitly
-+disables this, overriding the shallow-repository default described above.
- +
- With `-m <master>` option, a symbolic-ref `refs/remotes/<name>/HEAD` is set
- up to point at remote's _<master>_ branch. See also the set-head command.
-diff --git a/builtin/remote.c b/builtin/remote.c
-index f036dd5d6f..0cf1126976 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -16,6 +16,7 @@
- #include "rebase.h"
- #include "refs.h"
- #include "refspec.h"
-+#include "shallow.h"
- #include "odb.h"
- #include "strvec.h"
- #include "commit-reach.h"
-@@ -238,7 +239,9 @@ static int add(int argc, const char **argv, const char *prefix,
- 
- 	if (!mirror || mirror & MIRROR_FETCH) {
- 		int use_limited_fetch = mirror == MIRROR_NONE && track.nr == 0 &&
--			limited_fetch == 1;
-+			(limited_fetch == 1 ||
-+			 (limited_fetch == -1 &&
-+			  is_repository_shallow(the_repository)));
- 
- 		strbuf_reset(&buf);
- 		if (use_limited_fetch) {
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 0168d5abfe..9cb88d8806 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -137,6 +137,65 @@ test_expect_success 'filters are listed by git remote -v only' '
- 	test_grep ! "\[blob:none\]" out
- '
- 
-+test_expect_success 'add remote -t keeps an explicit refspec in a shallow repository' '
-+	test_when_finished "rm -rf shallow-add" &&
-+	git clone --no-local --depth=1 --branch main --single-branch \
-+		one shallow-add &&
-+	(
-+		cd shallow-add &&
-+		git remote add -t main upstream ../two &&
-+		test_cmp_config "+refs/heads/main:refs/remotes/upstream/main" \
-+			remote.upstream.fetch
-+	)
-+'
-+
-+test_expect_success 'add remote keeps the wildcard refspec in a full repository' '
-+	test_when_finished "rm -rf full-add" &&
-+	git clone --no-local one full-add &&
-+	(
-+		cd full-add &&
-+		git remote add upstream ../two &&
-+		test_cmp_config "+refs/heads/*:refs/remotes/upstream/*" \
-+			remote.upstream.fetch
-+	)
-+'
-+
-+test_expect_success 'a remote added in a shallow repository defaults to --limited-fetch' '
-+	test_when_finished "rm -rf shallow-add" &&
-+	git clone --no-local --depth=1 --branch main --single-branch \
-+		one shallow-add &&
-+	(
-+		cd shallow-add &&
-+		git remote add upstream ../two &&
-+		test_cmp_config "+refs/heads/*:refs/remotes/upstream/*" \
-+			remote.upstream.refmap &&
-+		test_must_fail git config get remote.upstream.fetch &&
-+		git fetch upstream &&
-+		git for-each-ref --format="%(refname)" refs/remotes/upstream >actual &&
-+		cat >expect <<-\EOF &&
-+		refs/remotes/upstream/HEAD
-+		refs/remotes/upstream/main
-+		EOF
-+		test_cmp expect actual &&
-+		git branch --set-upstream-to=upstream &&
-+		test_cmp_config upstream branch.main.remote &&
-+		test_cmp_config refs/heads/main branch.main.merge
-+	)
-+'
-+
-+test_expect_success '--no-limited-fetch overrides the shallow-repository default' '
-+	test_when_finished "rm -rf shallow-add" &&
-+	git clone --no-local --depth=1 --branch main --single-branch \
-+		one shallow-add &&
-+	(
-+		cd shallow-add &&
-+		git remote add --no-limited-fetch upstream ../two &&
-+		test_cmp_config "+refs/heads/*:refs/remotes/upstream/*" \
-+			remote.upstream.fetch &&
-+		test_must_fail git config get remote.upstream.refmap
-+	)
-+'
-+
- test_expect_success '--limited-fetch works in a full repository too' '
- 	test_when_finished "rm -rf full-add" &&
- 	git clone --no-local one full-add &&
--- 
-gitgitgadget
+Yeah, I think CI caught this:
+https://github.com/benknoble/git/actions/runs/36033463504/job/107747745741#=
+step:5:31
+
+But I'm not sure I could have understood what it was telling me
+without your hint, thanks!
+
+--=20
+D. Ben Knoble
