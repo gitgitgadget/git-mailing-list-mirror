@@ -1,93 +1,115 @@
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F593DB65A
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 20:53:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769144F6478
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 20:53:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790369635; cv=none; b=iDIEgLICkTY5JSq9mBpoTG8IBJaNwI7G6oTmLKVR2t+j7zdZjJvblKynh+d8gyDma8bB3SnWbbxkm+udZQlbqPs7NmDp3ASuZuYR5vOUpEDnNaisfy9LmEw20IIKofJ5WIKRGYpqUylqX+hGSbFt0as/oW81XXlI3XrUgS/sHnw=
+	t=1790369638; cv=none; b=k/UdN/EzsjpRiXdONGoUSW1+GHqBqXDJt+qA15s3BAulKrVD6Y/kacYfw/B2cg177nLodDxwHw38hYRLP351vnqpWAtO8yGn8OTrKtUwPoBeXM20asulinDXpmywwTMaM3wEbvbU9+5tQMtiECCIvFjf53fsjki1S3zEnfqCreU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790369635; c=relaxed/simple;
-	bh=glidZv+ynfUXVInp8Rh0wlr8TH1CnDGBp2ofI8yK6ls=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=aMd58aqI7SYb/WOnET43xTa5Bco6F04d6jv2vlw3B2PMesXeOBy0B/VOnV3GPg0S7/zP3bUuki7+ocLW0g+yDrNBLyxu2bDt5jR3XqK0vGWmcWV0QmwNvmpoQ+lkZF2z7DIcaGitCqEXakbEhaq/zG5lU0tlIaRMQnFGqh1LBtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--pmonette.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dfCq4z36; arc=none smtp.client-ip=209.85.160.197
+	s=arc-20240116; t=1790369638; c=relaxed/simple;
+	bh=xYeQwRTpu8bk2ACvjt0S3VtDNASxGmK1OABKEnMLtMM=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=EVihv74KCj4KH3a4DPLbLlyvisCCui+0K2Rh+8XsJhHlSZdPo7czd4MYQ6GQghNoTcb8y43nrkDrzZya6/cvfk9Y3adYJeAk42zC/T9zqqSdRRs8isV6YSE4VBkc3CEXNSSkYfjNwLHad26eq8lPimydGA2ery2uBOx3g1G8GaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--pmonette.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WhBtVFCx; arc=none smtp.client-ip=209.85.160.198
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--pmonette.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dfCq4z36"
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-532ed858775so37330081cf.1
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 13:53:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WhBtVFCx"
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-530f9b8cd29so24764901cf.3
+        for <git@vger.kernel.org>; Fri, 25 Sep 2026 13:53:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790369632; x=1790974432; darn=vger.kernel.org;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=5d3Z3C+EneRxcgejPkRLFgykjihUJuEA4wP3TH0g1dw=;
-        b=dfCq4z36fySEwyRrh8PHo+blJFRJtUyQXQuDecfLpuMlc+lCcfiRw0YpC81Kr5Y3xe
-         y772Pnl0v3absbOjKbtaHBnbeEWQo2AYuj/DcUuTkPbHPlD+sQXstWJedvlm/CblAmLK
-         S9vxVl2X1lMxIx1rYPp05wHEHB9xcNvToKRhUZh4bHTfG2k81cwQ0U7xjGwKKKcvqa3Q
-         vAcqxUbVG3LsfWA9pm4n+zHyzWwiUJqKzH5eOcKq02okl7JLEVvDM23qNduddbp8LIk6
-         HfgkPDAKbeOSqVnyMY9Pto7UYm4B/jVRr5FA3oQXmHMQErY46cz6KhU23WAp8iudVqfc
-         qlWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790369632; x=1790974432;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20251104; t=1790369635; x=1790974435; darn=vger.kernel.org;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=5d3Z3C+EneRxcgejPkRLFgykjihUJuEA4wP3TH0g1dw=;
-        b=ScOXaMI8uFxEFVaNf7sA/M78Pgd8M3S7gorj0mQMvvlwDZjwACzL5J6nrkjf99he3G
-         Fmi4aar/5ULUteuzQwRUsN7LvYfncCRwVqcuoUDQsckk8e4/hLAn+sGbnsC7N7BPIFKt
-         NWohPtHtSnX4FJbLNpCk4ewnBwbL3bdLgnXU35aXtducXMJdqkwCO7V9SyQjsqwWCmuo
-         JcM0qg4JV/ToCYrHVuquJ21+/9P59LHDnDkz1Ingq9oJJnSvAzZd/+klH5i0gOKMp6O1
-         JiEQZu/mkASCP4fnAo6iUTZnJbaWhq7iQa6HDvCqU6BSLlZJJP+w0zkY54FC8k/8UBPM
-         Rtbw==
-X-Gm-Message-State: AFuF++lXoL0YjaG2i0fd8nW570mBEPffr2c8eYddDDE7LFugFdz3XMAQ
-	wcC54WgjMz+67bEkDfGq1kDlh2wxBaZVuEoM9OrePv3K1CdJHTw8k43ztElMgp60eeLFKUbNlft
-	dRn/MOr+yVK7LinDvx5sp5ot+veGmV8uOmiv/tFcpmQH3cwKLA90rIPMkhpsQiP/CCBlvRAMbkf
-	jf0ssbLaVQk/+qB6k0I/pamEUah3j22Ikdz03eHdjtEY0=
-X-Received: from qtvx16.prod.google.com ([2002:ac8:4d50:0:b0:531:1263:381c])
+        bh=laTpkW1FZqk5Xedm93LyTjheVYhpKbeZVdHq/LyhRtc=;
+        b=WhBtVFCx/0C7c3PGGXqPzH6uC4rmEKgeao/xZ3cHaLHn5+61f8392q4ngaUMiVeNfo
+         79izKTCKkwAsN4fh4sPGDADRpBFooV3rjVEYx+Q7aRVSmg0vxFYO7GNdHWJjZG094f7U
+         yfwGaTDnelUFNU/yWg0iWxYATi1kjXfGj+d0FQU+7l41QrAXY1lYu8JJfrVzPxNh+dZD
+         xqpu/LjlbYGqC6jWHEJOx6mLNV7BQ0UJ5UmBMG1pWGRUatD4S1eva7Xj6f5ok3+ca041
+         gmqf6G4v4PdH10DLwjOtwkOvXIoY/GNXBYLPFxEY3vLArnPM2nw4RbLYPf1oVpB1sKbA
+         X8eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790369635; x=1790974435;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=laTpkW1FZqk5Xedm93LyTjheVYhpKbeZVdHq/LyhRtc=;
+        b=j7UtDAC5EJCO/OGFTOyOsY2DXnqdXp4TQhYM2bsgJ80wb7d1nAYDiwtxH6v4TJQaQM
+         JfTXCJ5G6fgPJncuu7g1UyvEqLQdjqj727sdMQ5QrB6a0/82/GzvoD3f8dpOuRB+7XTT
+         z3TFwdmWFNik7TEketnBhsDfiNchx8/HST+PHe08PoPP4xORYzH6xWAAGAxC321Th/kn
+         keqPJJvURPIW5+hR44JZ8Yh0xME0CPLjp5Xm0bgKNufaa8B7FtvNZ0IcoqU/oojxG9J0
+         0lLbOqF0r1yYMyDEnQPxQxR3PEsSjMKM8NqYPkf1Qy0afM0fRjkjZ+ar0xEFZUFvOuwB
+         GieA==
+X-Gm-Message-State: AFuF++l/4fsJmYbJSyZbgDLEXSeyHNa35D3mT5dM0lMOqrfzgzOuda8h
+	OYSE+Pm9vYhvJgZjwKeW7wEs6gkLFum/wuwzvEzh7uzrs6crkVcfaKRTumMnL8DTwrL8/efOq8g
+	cfmeJnXfF41PNivY7nIxvmArZQ/koeyTan0HM79ojod2SQyMKSvqSqvvJcfeUuI5cvL4bS0kfMO
+	za7IA6HvAZCK3zrtkK08VagP5kvnq8BB4PgHMjbqtsy2k=
+X-Received: from qtvj16.prod.google.com ([2002:ac8:4c90:0:b0:533:226b:f99b])
  (user=pmonette job=prod-delivery.src-stubby-dispatcher) by
- 2002:ac8:5f8e:0:b0:530:f3bd:d5a3 with SMTP id d75a77b69052e-5330b6ca837mr63675301cf.22.1790369632181;
- Fri, 25 Sep 2026 13:53:52 -0700 (PDT)
-Date: Fri, 25 Sep 2026 16:53:46 -0400
+ 2002:ac8:5dce:0:b0:530:e36d:1855 with SMTP id d75a77b69052e-5330b69495cmr69004181cf.42.1790369634651;
+ Fri, 25 Sep 2026 13:53:54 -0700 (PDT)
+Date: Fri, 25 Sep 2026 16:53:47 -0400
+In-Reply-To: <20260925205348.1210154-1-pmonette@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
+References: <20260925205348.1210154-1-pmonette@google.com>
 X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7-goog
-Message-ID: <20260925205348.1210154-1-pmonette@google.com>
-Subject: [PATCH 0/2] replay: add signing support
+Message-ID: <20260925205348.1210154-2-pmonette@google.com>
+Subject: [PATCH 1/2] replay: handle failure to create commits
 From: Patrick Monette <pmonette@google.com>
 To: git@vger.kernel.org
 Cc: newren@gmail.com, ps@pks.im, toon@iotcl.com, 
 	Patrick Monette <pmonette@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-This pair of commits fixes a FIXME in replay.c. With this, it's possible
-to sign commits using `git replay`.
+When pick_regular_commit() returns NULL, the caller relies on
+`result->clean` to figure out what happened. 1 means success, 0 means a
+conflict, and a negative value means an error.
 
-To follow the convention of git plumbing commands, where they must
-behave the same regardless of user config, `commit.gpgSign` is
-intentionally ignored.
+Right now, if the commit creation fails, `result->clean` stays at 1. The
+caller doesn't expect the combination of NULL + clean == 1, so it breaks
+out of the loop, but the rest of the function treats this as a success.
 
-The first patch fixes pick_regular_commit() to ensure failures to create
-commits are correctly handled, which can now happen more easily because
-of signing.
+The next commit will add a failure mode (signing) to the commit
+creation, so this needs to be handled correctly. Set `result->clean`
+to -1 when the commit creation fails.
 
-Patrick Monette (2):
-  replay: handle failure to create commits
-  replay: add the -S option
+Signed-off-by: Patrick Monette <pmonette@google.com>
+---
+ replay.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
- Documentation/git-replay.adoc |  10 +++-
- builtin/replay.c              |  12 +++-
- replay.c                      |  17 ++++--
- replay.h                      |   6 ++
- t/meson.build                 |   1 +
- t/t3651-replay-gpg-sign.sh    | 107 ++++++++++++++++++++++++++++++++++
- 6 files changed, 146 insertions(+), 7 deletions(-)
- create mode 100755 t/t3651-replay-gpg-sign.sh
-
+diff --git a/replay.c b/replay.c
+index f415103023..ad87863565 100644
+--- a/replay.c
++++ b/replay.c
+@@ -291,6 +291,7 @@ static struct commit *pick_regular_commit(struct repository *repo,
+ 					  enum replay_empty_commit_action empty)
+ {
+ 	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
++	struct commit *new_commit;
+ 
+ 	if (pickme->parents)
+ 		base_tree = repo_get_commit_tree(repo, pickme->parents->item);
+@@ -361,7 +362,11 @@ static struct commit *pick_regular_commit(struct repository *repo,
+ 		}
+ 	}
+ 
+-	return create_commit(repo, result->tree, pickme, replayed_base, mode);
++	new_commit = create_commit(repo, result->tree, pickme, replayed_base,
++				   mode);
++	if (!new_commit)
++		result->clean = -1;
++	return new_commit;
+ }
+ 
+ void replay_result_release(struct replay_result *result)
 -- 
 2.56.0.rc1.315.gc6ed9934b7-goog
 
