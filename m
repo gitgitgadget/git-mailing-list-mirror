@@ -1,89 +1,83 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1504236829D
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 04:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7F43B05BD
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 04:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790309575; cv=none; b=Bzw4Uh6yN20bLRoxaW14KpzYkXUBDPnbWfqam9LX1Bh4gabx9zlEgv7mgP3i1YSfjUGXoOPsCQRQDOh5UDlCU1hnGG/NL9Vce5EZscTDC00G9EtM5CA1QbrZ0Rhfe5013ydc5W2Sgl1j+VmhhwmRkU+ivyy+Rdgwz6ysT/N2l24=
+	t=1790311134; cv=none; b=WpKJLNguQ+6+K6LHs8KHk7V+3QynqdNSW0qOmKUk1Dkuk3OxU59IPW3wup0qhn0+k1XKwwsCKgfwaMt9D6R5hut3cu1U0dIu4Nlo1nleZjQ20qR59Ez31QgdacWl3RjRWfTNMxTgYOH3JQacN8OUuItyeB+hoqJce6HgklL3vL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790309575; c=relaxed/simple;
-	bh=z0I61EQ8TAxkAS4sEF3vtAvrfYPHyRq+b1FPf4T+MtY=;
+	s=arc-20240116; t=1790311134; c=relaxed/simple;
+	bh=14b37RYq9pr80WlJCsXoLQvmagVTTqpmNW0dzilOiuI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OkI2XqkLnYAFxNF20086fpXOU+rX9DaxYJBjVbnH+CpTMJ901c9jfRE/LlWkg2iF7tFDpxGUdd5q06WoQkUwt+jE6n+z4Vr9HP7GFLKw/RLvHn9ZHRgx6h/cdPk0OMRIp1Wn3LGJNgTuQyVTdOFEbzjxNxq1bnEzvx3sHOFCFWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bUdwQjWJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LkFQf4nP; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=FQI6vuduX3nMh/ShnILQNKZxRckAk+03Ejopr3uHfEH9ZxLsw3Mt/bYrutbwzGo4dg65SWnGJ0Dqp6jejjlVmhNSh9hOBuEJdyPg3Fjy0Kihwpgd/J1caTeltjlZ/lbgNg6DETjbqwWj52BqAYwY9mK0eeLuoWCtqE9HkeIG6lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WjuYWNDx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I2MEgmal; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bUdwQjWJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LkFQf4nP"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 04D907A0068;
-	Fri, 25 Sep 2026 00:12:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WjuYWNDx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I2MEgmal"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 533C57A007E;
+	Fri, 25 Sep 2026 00:38:48 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Fri, 25 Sep 2026 00:12:52 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 25 Sep 2026 00:38:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790309571; x=1790395971; bh=6cwnmQnbLr
-	a4inAtUBS9uVHYUPOZ/maIkWPfHyyRyrQ=; b=bUdwQjWJa+aDm2kQsHzHi//VoR
-	8HH4dEEghDtKCrJsXDq3XF/E+P0ZrIokFHk7ra1sJdJSZCepmU4irApezDoSPKJL
-	QPMc/FlB9BAr03EPFG2nVo5DUzggkwf9dLX+aFrBjVGZ3bfGrolO+HuiaPTiJ4Oa
-	0RQioeMvnL/6S35Z1v1/i8RRvhNCerl2wVuScXNzLhI8EfC3HhQlRbywQtImV3BB
-	0J4ds4hQIEzawlQXO4sRO3LlGo3uabepY2tnRus9Xgmysk59j+ZOy5sz1VwhmKUh
-	KVl+LgYujYSXul2mpd2OyM64LsdhUC4zHz/5v5V2gVZ6m3QAZtiIJgn1VJ+Q==
+	:subject:to:to; s=fm3; t=1790311128; x=1790397528; bh=b6AcF4xUFK
+	Ltrl3WuAtB7tg5DIfkrOZOAQeIPRJ1F7U=; b=WjuYWNDxxKWnxC2C5oRWeAuQmM
+	k31pJxAPP004I2G9wEOKPm3an+JGVe+bLzv1dW0n76UxTks/nvDAfCz6oBjhggaX
+	+ceY5PDpmOgNsZHm/IbTg1x8LwPAy3MHrQQbS8qZszqbaHcnjG0RPjnIQB7qXZU2
+	XZBJjxchIxnTYDVpGpFog8QtomJo4Qm3k89Nx5lsm3Vb3AHyknjfHQj8qZdcO/d3
+	VoJ9HuhVBDhYFbxllNRBqhNonoHaN6I3gm+9A1shmodw588n5xZs+8x5rHbsfemy
+	xtSPlP7HKA9WRqRLLqH0l9JJRFBXbXNzmf56Uub6WtSnmtk7cFBU/O8wqdTg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790309571; x=1790395971; bh=6cwnmQnbLra4inAtUBS9uVHYUPOZ/maIkWP
-	fHyyRyrQ=; b=LkFQf4nPhZ4xQ3e84GT7cEWgqT1rmeldRhGgSVf1wTMw+rm+0d3
-	pt0EkUuzHdcJ6emS1Gh6+vEgDw1VUdIlejZ3WT2OjdFKTgMRko0o8AQyeUH2qXuI
-	Ln9GWAOv0QRgsEdZVo8yUT+uE/ohq+TFUjflulNDFuEx4Szm4DDv1UI/yFa2kV6c
-	l3RX07OFuPAHh/KFSEDqMj4AMm7yOa//uYvax42JfUgANfV6KIWWHF+L9MOIWjbh
-	gjQ4m9SUbsEdCZCbim1UiX0VU410XnP6ki9aaWciqjPNj0jM6j3zFoa8Hqumd8Xu
-	GjrKjDAThT5ayuG4jQQyoicbk5wBRfeKu5Q==
-X-ME-Sender: <xms:w_S1ahXjyMzoRXyDkCBPUAFnOnz971-lIZgNDC6YU9hyZ1rG6_Otkw>
-    <xme:w_S1aoEtV6Aks032KzitdZ0THWA4joti1TyCEpMmfIavCETQ1cFftHwOA4hF1uh6S
-    Fz7JsjhU7GtSQ1dBOrZ7ZGfO6o7Tsro15hqRzTeEUWen7rTTDZc5Tc>
-X-ME-Received: <xmr:w_S1arZQ1gG3ft9YwMfRgGtOf7woBF9HmBaQCrkN5x033dk9eGE9zZXcbLTahdX0WaQks7YSLJxcE9DyGNPlR3tteShh1wyOMXN6>
-X-ME-Proxy-Cause: dmFkZTFMrwQZgvWLHCK0UTzUNE8rXPKi7KIcWBxXWKBsUjwVlIPRxLwcj12uGlez0O10QH
-    7CjlXCtESfBziBc0LCHBfXBtjS0qzb10E1ioJsRekHXWn6dXyjaYBc0DeUFjHxwoVBIThB
-    YTvIKJVviK+t54fqHfU23Muy59Frf9GIOyn8Jzq2HdnWnE/vsAjG0jwZZ8co+W2v8D/h7p
-    7PW/oZ2lo/aj+qJ8oaEwFjwgxwU9G8YmjWBycji4hUr5xcjcCP5V3R+y1mp4aMPcu6w7uS
-    q/qbvIJEXLaUJmtBsOB7zTlGDlZEM7UnF8U0dhzdy9pv0NAi3nePpjWZmh9TlfSCL1EMMy
-    5aW9woLJDYGvcH3SgtL+TH6ogTmU5dyBLB6M6d7XPutSF6hDHymScH3GKsjtqmjMnun9su
-    HgGeS8vs8lPq5F+k6ZYnWmg7udplkcD3JSRHbeHcuClx5fFgmgzYLF4saohinIyemIqpK3
-    pS/K+KGfCwt/3Se0pH7k1TtVYYmlVSY868LE2xfo1v4Izusy83GaUBXYpsY22BJT34hlmD
-    1dQV5QHC5VjBr4dGHKj0f2pfUEdhWK/xx1Q2RR7KSXcuNNSiG1V2ZZGs8rx90yqKvNYV4G
-    qRx2ldviYq1LOPp7xB7CWA/nIJocG4qWhwfVJ3EoxYHdr5MnQkThcs0xwNuQ
-X-ME-Proxy: <xmx:w_S1anEtNp7toki5-QAsoWVUMTQQv14KhzzAujHCfH64nnaQCyEYgQ>
-    <xmx:w_S1ah3C_mX_zZD6V5RH_ci36beGRzidpkjCVon6LY7pP6dtHu_zXg>
-    <xmx:w_S1arynYAZkNW2mpHy6HgpyNiF0XI1Me4tg8mFzrO3ERUGqIUSCmw>
-    <xmx:w_S1aqigof776rYi0JU2NKtdhIBvk9ucFb0v_PU-GBsnjp9UGhK8IA>
-    <xmx:w_S1ahtbOsv2VcUNBOQbhdlDmaamXN0U1KNIZzx5skLnEUV_23ScONWI>
+	1790311128; x=1790397528; bh=b6AcF4xUFKLtrl3WuAtB7tg5DIfkrOZOAQe
+	IPRJ1F7U=; b=I2MEgmalPgYSjSeUwe4EWbYYMss+lfhw95D4RHfEqxsxtC3hN4T
+	//nvNBr+rb2Hg7coJ7LD0x6lQeMnRT8U4BHPvAn8HKTgvwY+/JHLKxFkZEgeimgF
+	cKZdMKOfdtZ3UlHchZ8z0zlOpccFxoqeYBQbFhNIGa2+wWYwl9Q86eceh8OBp4Ai
+	U+2pniPuEs39TjNRuKvkNjnsnFtpdh0dB5n7WrAtN8Acd3C79u1oheDoebqz3wI1
+	uVmCTVXCG8uF10b+/HoA8ZVDuxgDzxkZEtJzM9BbgFirRXs54Hdxs79Tzf/BOkEi
+	YjbOTQ2JB3yEIpRDLARMMZBJKbxkgoVMrAw==
+X-ME-Sender: <xms:2Pq1ar67X1AR59LjU0W2bk81aUl_tbq7TzIfs9ypYm-O3q0WtgTXUA>
+    <xme:2Pq1an5kxnUz6lLYWYxjZIZtVhJl8qT4qp-VIk9TBmZ650l4P7EKX_dDgslAwNeA1
+    q9QSmyFwQZ0tzglPppnCmhN3JMv7txdvaGgTLS85x2cb-HqpExeo7eW>
+X-ME-Received: <xmr:2Pq1ancL1LlzOUd3tw9Wf6cVu_W2MhD5iyIJEnPrvSFWX491_b4HbHBLRQruwpk53J7j7NfL-gZ0BjlsiZYLOy_DMHW4kW0Tpmyu>
+X-ME-Proxy-Cause: dmFkZTFRC13vW0FkmnaTJrsvmWibymmPWYz3J8AXLkPb7H/7KjjuaXhzncOBltCEKcqqV/
+    Kd3jn1GjoaoplGYljRyAdyogieiwAq94Y9RyeeEDH8B1+aTPROJGfjurLGy6RCKLzYbnSx
+    qQJ00ufavoDnjTSifzu0NkLhxlSLLDTeNSUQlyNJKGgvnam1mt2c0U1lNx+x2yJh+ZO+t2
+    TedwUOd5iW5xTGOLbqtniFPmlsQamJwwgYmO8Ch9n94PTW3BMhGOzVLnqKZy92aLPHwnMl
+    eIo7jmUgdyOAicsNJ4JDsZGjviq7O5CdqH5TVjaDvvFT50mj1OHgTLwqihbCQFd9EgHtGu
+    6/1ki0fC/zLmSTRy2nGdPHFFUmsJTsC+lcTCIxQO+9JjTip6so6nHrjwre28BukZI5ZptA
+    F8i5QZAoO9Bn+Y8MWBKDag7P3rR5QkxvHKvj78qMyc6BYltYH9yumw0272bsn/q+1ze6Pv
+    5N8ih9XUXKNT9i40B4kP/aQts8RvzVMShrXhwcKC7pboEgfGBTP0QAfJZfYzPPpktqCqMi
+    68FsO7JBANnT6PqqxOTb4bLx7tl+mGW3iUsO0bwgRRkhNieeZJpt6Lc8PBSPCTxbehWKE1
+    RoaXEO2CjgbPFTResP9yd4K4Bwu50dof+3+lQ5qIk7DJr3JaeUVITCNMxelQ
+X-ME-Proxy: <xmx:2Pq1arDZaT7UedSX5B5eXd0yAy6iPjrxsbgAeyQnPY60zN3X7Xy_nw>
+    <xmx:2Pq1aq8FJ6hOWcJuT3PpGqAKj3iGPlpdRUEuAMJl6cMWmCeI_Sv52w>
+    <xmx:2Pq1amLzovXwQbtx-NojDvoPI5RnXZntI0fr7se8VO24lErHHp_46w>
+    <xmx:2Pq1ajjATt9bOv076hfq9ynoGiPill4jlZn8ZjNfRXHZlns6qUgrRA>
+    <xmx:2Pq1akDdSavJbxP6emPnp2yLgSKIiNJOx-L49cKUcCVGVf1kLYxzP9-h>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Sep 2026 00:12:50 -0400 (EDT)
+ 25 Sep 2026 00:38:47 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org,  Eli Barzilay <eli@barzilay.org>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,  Elijah
- Newren <newren@gmail.com>,  Adam Johnson <me@adamj.eu>,  Victoria Dye
- <vdye@github.com>,  Jeff King <peff@peff.net>,  Derrick Stolee
- <stolee@gmail.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>
-Subject: Re: [PATCH v2 4/4] builtin/stash: merge index in-core
-In-Reply-To: <xmqqse2yz4y4.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	24 Sep 2026 14:59:15 -0700")
-References: <cover.1789853192.git.ben.knoble@gmail.com>
-	<cover.1790168285.git.ben.knoble@gmail.com>
-	<e49936ee12aaf5d82a98dddcc618cee01ac3c681.1790168285.git.ben.knoble@gmail.com>
-	<xmqqse2yz4y4.fsf@gitster.g>
-Date: Thu, 24 Sep 2026 21:12:49 -0700
-Message-ID: <xmqqpky2x932.fsf@gitster.g>
+To: "Brigham Campbell" <me@brighamcampbell.com>
+Cc: <git@vger.kernel.org>,  "Patrick Steinhardt" <ps@pks.im>
+Subject: Re: [PATCH v3] git-contacts: allow inputting patch via stdin
+In-Reply-To: <DLO0S0UUB0EM.1NLQFJUPOMGY0@brighamcampbell.com> (Brigham
+	Campbell's message of "Thu, 24 Sep 2026 19:51:52 -0600")
+References: <20260914-git-contacts-stdin-v1-1-9ac628e6fd20@brighamcampbell.com>
+	<20260923-git-contacts-stdin-v3-1-56dd43c64d56@brighamcampbell.com>
+	<xmqqtsnf477e.fsf@gitster.g>
+	<DLO0S0UUB0EM.1NLQFJUPOMGY0@brighamcampbell.com>
+Date: Thu, 24 Sep 2026 21:38:43 -0700
+Message-ID: <xmqqfqyyx7vw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,66 +87,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Brigham Campbell" <me@brighamcampbell.com> writes:
 
-> The new test in the attached patch will fail with this step but if
-> we revert the changes to builtin/stash.c in this step, it passes.
+> On Wed Sep 23, 2026 at 10:13 PM MDT, Junio C Hamano wrote:
+>> Brigham Campbell <me@brighamcampbell.com> writes:
+>>
+>>> $ git contacts - <patch
+>>> $ git contacts patch1 - patch3 <patch2
+>>
+>> The second one is an example that we could tell the command to read
+>> these three files in patch1 and then patch2 and then patch3.
+>
+> Does the order in which arguments are processed matter?
 
-Oh, and with the change to the code, it passes again.
+It does not matter if the order makes difference in the end result,
+because my comment was made out of principle.  I would not at all
+surprised if the command gathers information from all sources, sorts
+and then emits---in which case the end result won't be obviously
+affected.
 
-diff --git i/builtin/stash.c w/builtin/stash.c
-index 219ca457be..44d962cc5d 100644
---- i/builtin/stash.c
-+++ w/builtin/stash.c
-@@ -639,7 +639,7 @@ static enum stash_apply_result do_apply_stash(const char *prefix,
- 			merge = lookup_tree(o.repo, &info->i_tree);
- 			merge_base = lookup_tree(o.repo, &info->b_tree);
- 
--			merge_incore_nonrecursive(&o, head, merge, merge_base,
-+			merge_incore_nonrecursive(&o, merge_base, merge, head,
- 						  &result);
- 
- 			if (!result.clean)
-diff --git i/t/t3903-stash.sh w/t/t3903-stash.sh
-index 3958ab3c8d..0a87e62b11 100755
---- i/t/t3903-stash.sh
-+++ w/t/t3903-stash.sh
-@@ -374,6 +374,38 @@ test_expect_success 'stash apply -q --index refreshes the index' '
- 	test_cmp expect actual
- '
- 
-+
-+test_expect_success 'stash apply --index does not revert unrelated upstream index changes' '
-+	test_when_finished "rm -fr playpen" &&
-+	mkdir playpen &&
-+	(
-+		cd playpen &&
-+		git init &&
-+		echo "base1" >file1 &&
-+		echo "base2" >file2 &&
-+		git add file1 file2 &&
-+		git commit -m "initial base" &&
-+
-+		# Make a staged change to file1 and stash it
-+		echo "staged1" >file1 &&
-+		git add file1 &&
-+		git stash &&
-+
-+		# Upstream advances by modifying unrelated file2
-+		echo "upstream2" >file2 &&
-+		git add file2 &&
-+		git commit -m "upstream change to file2" &&
-+
-+		# Apply the stash with --index
-+		git stash apply --index &&
-+
-+		# Verify working tree and index state
-+		test "$(git show :file1)" = "staged1" &&
-+		test "$(git show :file2)" = "upstream2" &&
-+		test "$(git show HEAD:file2)" = "upstream2"
-+	)
-+'
-+
- test_expect_success 'stash apply --index leaves everything untouched on failure' '
- 	git reset --hard &&
- 	echo test >other-file &&
