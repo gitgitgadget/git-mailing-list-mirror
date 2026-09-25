@@ -1,67 +1,66 @@
-Received: from mail-dl2-f43.google.com (mail-dl2-f43.google.com [74.125.229.171])
+Received: from mail-dy2-f12.google.com (mail-dy2-f12.google.com [74.125.229.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9786E4E1C8D
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 19:49:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4165D3B71DE
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 20:21:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790365788; cv=none; b=gO5/ueSPR8ZZ4N4CWFh4K+8DdKISPsAJrxRrQTA/5aaHGISROQnGev1xifCe+prneNn53vVZCLxmDJ2FgB3Vl5q1Uc15saG8OTh9iLmEw1IhmrvFFqQAqvo1pCGUDG1Z07zH++N5EfMrdvkqtmDAz1SYJdBI8GBE//t3MLwNV7k=
+	t=1790367720; cv=none; b=qa5KUPgILtqqnk1qPVf+se/7f4fy2JbEoUmhMZpLxPpRRKprIrk4D1M9KUB3ErMM7DgIUMK4MMhdrKqqHtL2BaJ4hZ9M7v2oAaF3ZCTTQpQKSg75pJmBnSrHz2c7jR54DstxNTTsjgejuiXRTGRYv8TofE1r7nXOs7+lGiwrbFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790365788; c=relaxed/simple;
-	bh=7cfUY81pRUhH7WXrKZf/Vmgmjw5ifirXU1PwIJUOfY8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=G3iP3WBeuCyyOTLQkaNwrOMkV6cv+qFY7i8TenOKKdXUkUASWydUKWFPMDwyDTRsDzuYdYxTH0OPSkcwc0MdGlq3KeKgZi5Cy2DOwXfs9U2Xayed4jwJjZsYoLgn3ZXqbjp/jTsdBxmXLFBXxH5bYAhPCLUspeJhjzmaK5RcvzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k4lXxfH2; arc=none smtp.client-ip=74.125.229.171
+	s=arc-20240116; t=1790367720; c=relaxed/simple;
+	bh=QLbpxrX/EAMkI9yseFQc22AIC8M8pEEogXQKramenN0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=Ilhbl9q3oQFm1fZ0o9BM48oswJb2SDw+29nAGA8cHH0c6SuTW2A5hhIh0Pvbx1cSypWuxT1xI6jYMt3ssskiuGq66WV8H9TTEzPUwHhzINWZHfW6ZujanfJ/1gy2bvtw88wygchvR5ZLEnPrK7h5tV48ItX6O3H0wEt2GN4lYGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OF5D0qV6; arc=none smtp.client-ip=74.125.229.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k4lXxfH2"
-Received: by mail-dl2-f43.google.com with SMTP id a92af1059eb24-142dd04be84so1520669c88.3
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 12:49:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OF5D0qV6"
+Received: by mail-dy2-f12.google.com with SMTP id 5a478bee46e88-3381a6a05c9so790071eec.1
+        for <git@vger.kernel.org>; Fri, 25 Sep 2026 13:21:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790365786; x=1790970586; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
+        d=gmail.com; s=20251104; t=1790367718; x=1790972518; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:cc:from
          :content-language:references:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=EgaDJ8/+45MqU9ubFRIKQTv4jKr0YWBQoqszNUwd7sA=;
-        b=k4lXxfH2YeHxslBHPWZJtFJd1XjBrzTV/ZlvJQdWbMNWrR29QDriIM4y36g6hOOpms
-         iz8wjxfWP7GyQHuEKGbk53Z9PXJxnbF+7nD1upvjDFZ6e9fTiq18UwZWAJ178/hbLbGL
-         A8bHNHxNjXcScUYte+GDFU6cXKBysF5yZBNUbvf/HU0czRS3osH5YZUG+vmAAG2YGBVN
-         1QPA/Fq1YryEAOA2TUKKcjRVGdU1bMUTPrVGrZzTehpEiO8FMaPur8yqCVQxSxTlOw2N
-         85l/xITQS5fHsGiChvaUcCoZLEJA0403ON9zJkDiKEsFyek61zu31JlQReoUUB4nxMUy
-         J7+w==
+        bh=/aWLSzYAAt1xlk90XaFzYn4S8LzTFnQUf9vwttB+bBo=;
+        b=OF5D0qV6iOD7S44+cRQb2Yb6sPsI2AC8hkFw1NWMyt2Eb1ofB5XTMyTM5PyiXLK2xG
+         q8yoOtslMRuO75Ql5Vu9tizkRq142XE2JIq7cJrZZ1CQ6EGbqvK9KbW8TDw/tPW5YT5M
+         BjY8n/Ww4Pla6P0bb7fdkGyEQ8IhMJBK+4+ZXW7S9wmodtGJ2arlnyx02Vd7+9zC74BS
+         TYsdQyyO7rU2vkok66h5qYcQ6n4XalpQ0QHnIG7cMud2XMPSgJaOQ4UDEPc289kRGtzc
+         LR2qA2idgWEFIl2P4hOrZ726qTBKmeaCnxImmxBndivpum/JXymuNY9TordgrdiG4EjQ
+         mB+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790365786; x=1790970586;
-        h=content-transfer-encoding:content-type:in-reply-to:from
+        d=1e100.net; s=20260707; t=1790367718; x=1790972518;
+        h=content-transfer-encoding:content-type:in-reply-to:cc:from
          :content-language:references:to:subject:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=EgaDJ8/+45MqU9ubFRIKQTv4jKr0YWBQoqszNUwd7sA=;
-        b=zx1mMXDpJj8QB71wwY3Igakp2M/80lacU0rEWcu5dIvHnY7GAy3T6aWcj5dLoLl0Le
-         waEon8xiiMc/V2t+XWoYg8rtjQAZBpxa7nEl4OaBK0O0mPs0kEpyOkQ6Vx4jExohBmYa
-         rTOsIxZROIibWjXBozCJMnkirv0AJos/idCfOmqOAfHTHmDga2o6akXiltGse5GBRVnx
-         08hhc1IwDNXTfZq/vwBRxwlD7mf0SIqZvKejZ7IpcrCd3KSOTkPs12C2wSgpzhjmSZ2u
-         1CQY5GpzZrsYFShLpkBqOiSain6eGzS+h6XYlv6Aw7B7YAt+wPeW72jtUybkTOYgecnT
-         de7g==
-X-Forwarded-Encrypted: i=1; AKwUvBzmUicIAGFrTy+FJqu5aJRtpNQQSPlyJp4KEmW2Wv0AJpEdpfoo/W4TLAxatyuxH1dS5J8=@vger.kernel.org
-X-Gm-Message-State: AFuF++m57aQuvt661YcFU4taUbUOV5pHwd2oLS50SoslW56N3jhLVVoH
-	F5kkuTvnVVXYN5YjogiAcboAZvCVLrLAxFNahv+G0d6BVnKMRsTAIbfEN+AstaXRGUg=
-X-Gm-Gg: AYBFou2x2+beha2RhTUpDfPLwOlB0FPNJm0chvtUupM7OSklv2yHzjBZNW1vo55Q22k
-	qlVr+FU6akMR/Hvfq67yDgfFZVhFvDz41qQoyCFYxyBQbpJOgzpel0a0UvvJVYtnAuyUTJi8WWy
-	V5qjDrVSsejLLgj53nFB2LuypR86jarMdWB16/zrsEWk2urPBTjfWTjSLP/Q75W3oC3UBGoamxA
-	qBWRT3C0TTH5Q3kR4TcJyMRqWFCxmU2Z/ko2CxvpS9zF4svfU5Eyagr03RLOitDD4WTzivfbxnR
-	JNleYzCp5hQaEwvNvuBa3tTr3QJPDwFsekswkita4/G49VA5tOYChLEIeJL4zkosOMVg6hf44CU
-	fVmveWCugwTdR6Pxda0drybRqh6wfPszXtSmpp9V6K6T5UrI29pjRiIRunFr1tWKSMvstoK3CS2
-	yIyr6AIk5XW80Tb1kig4CXI573JE6AYuoSEfX8IE02wLJ2Eb1tuFvtbhZK3BJ54TGCKUFT4Cwuu
-	ImwQoRqrCVYyfRClPvvqaOWiGL+ioKmY3bd848v3Ba+fSjI44AoKSQ=
-X-Received: by 2002:a05:7022:458f:b0:13b:1bd2:38a2 with SMTP id a92af1059eb24-146ce39b1bfmr1449635c88.18.1790365786363;
-        Fri, 25 Sep 2026 12:49:46 -0700 (PDT)
+        bh=/aWLSzYAAt1xlk90XaFzYn4S8LzTFnQUf9vwttB+bBo=;
+        b=CdtygFUOtpEe9wsB1//zk9GSOaHAqnv+tN4SudsknaMwo4f+IzT1iRdZKVLt3gYB7O
+         IxWiZLSjzYfVX27JNI2PmfN1BnP4nXvq1V8NEdxIkWqKTCez6jwXeCWNlMVxGLrjUDb4
+         EMOo3YxRksqgRuis+eu1+aLdApYDzR3rv54xQmFOtBSQBQEHCp36IBeNNNsRpDeI2mFp
+         WDluao2CBbByRqmPsVMhz4aF5GYUvn2tV++FRCDKPio5b6Lfq099j3wm3dV3szTcZa6n
+         ZcM5cEtJiduBp1/Xfcl2CZQogQiVBfjHp3gFo21cXKLDfv/qLdcJ2+VInS9jqkmnzsOa
+         M43g==
+X-Gm-Message-State: AFuF++n/cFacDvoAMJ/CsWvg4RbAaOITTxzZDoexER9ki5V7DBYOpkky
+	C/+znLdNzbPLoRXdlV+rqRoMbuJT51ZS7gPqVdDsXZcUG9tqB8MrIUxz3s/UtdJXPGY=
+X-Gm-Gg: AYBFou1vM3HM3xfc52TZY2KLNmp9lNc1hXTrEO/2lieqPxrLovYcQrHRiR1lWzOd1SV
+	3g5w152uUBqcFqDnI3NEvswWlB2qQK5hAlwPId11WpcOrORSvmFtfjRFqpYIMJjq7RifmBtDye+
+	aDESjFImB7NBzN9mAszBm5B/juG2HAtwXhRNv0DWdV23ZzQyJTfTKlcK/YZQ+u9gnQKppc31v9s
+	3NUJL9jqfm9Fo0zzVxJcgNDBkm04DU19AVz0/RJZSbOBHrld+w5g/mRv8fQf+disfXhEO7VNwOz
+	Zt8KfwwiFGMhDYewlFuVwEtAQ8fw2Rtcwg7QAVrAZLbBs6JgDMoBeRyetr1USFDbr5aCwH0PFX1
+	K6cz67ZoLdk0XKsBzTy+IaNNpaghoZMSrErT/wz22bnsb0nhXIS7uby+T1U3pBSpCm4tMPUWEdo
+	azaw5XzSlrmC7O6UKMduhbtgqEdRfjMLf4xlUA732cgJRAR9rCew7UmFBrQ11cdqmOPo/4AzZOi
+	v5jx8FTLxmluBgI9SsZKCcwWoPCzfrZiqN5VLPW8rB2wktrMmJzRg==
+X-Received: by 2002:a05:7301:18a9:b0:33b:fc17:e691 with SMTP id 5a478bee46e88-342700c7a9bmr986140eec.2.1790367718177;
+        Fri, 25 Sep 2026 13:21:58 -0700 (PDT)
 Received: from ?IPV6:2406:7400:12b:61a6:a5bd:5e99:a91b:f02d? ([2406:7400:12b:61a6:a5bd:5e99:a91b:f02d])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-145ac67c505sm6929639c88.5.2026.09.25.12.49.44
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3414485a9cdsm8574710eec.16.2026.09.25.13.21.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Sep 2026 12:49:46 -0700 (PDT)
-Message-ID: <4770b19f-9a8d-4a4c-8cc6-745aa2868b94@gmail.com>
-Date: Sat, 26 Sep 2026 01:19:42 +0530
+        Fri, 25 Sep 2026 13:21:57 -0700 (PDT)
+Message-ID: <63798ed5-3fea-4938-8b0b-910d5f1c7bf0@gmail.com>
+Date: Sat, 26 Sep 2026 01:51:54 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,33 +68,51 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] path: introduce
- `safe_create_leading_directories_no_share_const()`
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 3/7] builtin/init: refactor messy creation of leading
+ directories
+To: Patrick Steinhardt <ps@pks.im>
 References: <20260924-pks-create-repository-stateless-v1-0-11499557cf31@pks.im>
- <20260924-pks-create-repository-stateless-v1-2-11499557cf31@pks.im>
+ <20260924-pks-create-repository-stateless-v1-3-11499557cf31@pks.im>
 Content-Language: en-US
 From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <20260924-pks-create-repository-stateless-v1-2-11499557cf31@pks.im>
+Cc: git@vger.kernel.org
+In-Reply-To: <20260924-pks-create-repository-stateless-v1-3-11499557cf31@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 9/24/26 14:49, Patrick Steinhardt wrote:
-> 
-> diff --git a/path.h b/path.h
-> index 7e7408dd05..e2d62c4978 100644
-> --- a/path.h
-> +++ b/path.h
-> @@ -254,6 +254,7 @@ enum scld_error safe_create_leading_directories(struct repository *repo, char *p
->   enum scld_error safe_create_leading_directories_const(struct repository *repo,
->   						      const char *path);
->   enum scld_error safe_create_leading_directories_no_share(char *path);
-> +enum scld_error safe_create_leading_directories_no_share_const(const char *path);
-> 
+> diff --git a/builtin/init-db.c b/builtin/init-db.c
+> index 5c22eae2f3..e45268f1ff 100644
+> --- a/builtin/init-db.c
+> +++ b/builtin/init-db.c
+> @@ -131,15 +131,7 @@ int cmd_init_db(int argc,
+>   	retry:
+>   		if (chdir(argv[0]) < 0) {
+>   			if (!mkdir_tried) {
+> -				int saved;
+> -				/*
+> -				 * At this point we haven't read any configuration,
+> -				 * and we know shared_repository should always be 0;
+> -				 * but just in case we play safe.
+> -				 */
+> -				saved = repo_settings_get_shared_repository(the_repository);
+> -				repo_settings_set_shared_repository(the_repository, 0);
+> -				switch (safe_create_leading_directories_const(the_repository, argv[0])) {
+> +				switch (safe_create_leading_directories_no_share_const(argv[0])) {
+>   				case SCLD_OK:
+>   				case SCLD_PERMS:
+>   					break;
+> @@ -150,7 +142,7 @@ int cmd_init_db(int argc,
+>   					die_errno(_("cannot mkdir %s"), argv[0]);
+>   					break;
+>   				}
+> -				repo_settings_set_shared_repository(the_repository, saved);
+> +
 
-nit: All other variants are mentioned in the documentation blurb just 
-above the declarations. Would it also be worth mentioning this new one 
-there?
+Even though this patch does not aim to do so, we lost a bunch of 
+'the_repository' references with this change which is nice.
+
+The patch also looks good to me.
 
 -- 
 Sivaraam
