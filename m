@@ -1,157 +1,171 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0501E3B14C7
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3078C3F4DDD
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 17:17:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790355610; cv=none; b=iz0eu8XGQm509T87auvzvT8Odayve7pBj7b9cdV8NbeN2nNaihJlmk6Hr+v/x+iV4vRHYMFEmcG551hY/6kGgS6HGt0ZyJ+24aqTMT5oGlDLbfnQsbAj5JKs4o35tk65+fLf4JI/4JA5b+Rg6zW1SBsqm6zHKbxDz4D2SYdbCDE=
+	t=1790356672; cv=none; b=eKhOj9HN6s9B5Iuvmi7PEisGX41UL/YYrfkGFNwX1vMETLG5g6BqHlUhlAU197lHmsf0axCYzbE/saOHtvm6MNV5TzFwv8jTgYTYyEg+kstU4onfWkrFh7BlRJEmkwN+CUHkqMAlhpafZ3ock2Zr+HyFP3/IGDNhrZS33cuULrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790355610; c=relaxed/simple;
-	bh=JpV+mmDdcbUbLCCNNeIjDyvZxMxRi9CbgvEF3CLggqs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=qvpchxCH1ZeSIXSe0+hOmbaflMAlOd1nhlnMFdZmLvPm7H0bjZQgnGi2MwKYvIFrEzCxXJnq02gW0cbQwC8HCOHxZmQp8pVLEEGHERuwwvD2FCKF50Z7HVBRAg1dSmtr8xkGm4g/tjw4RcAA71fwRgmLTMGXn9RZiRNs1cEWMpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=5jlTB1Wf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YyQrUmaZ; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1790356672; c=relaxed/simple;
+	bh=WHVsLPZeryS0WEstULheiUH73BM3yzbUqQN1LMyJwg8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RbsXl6FuS3LR29f4IQDtLzR6dpZvzWPOKpGM+xYAeni+v8lEt+/tO5Sw/Sh6cC00n2w/GZMRKxxa0V/iivxjrqs1ObcecDeDJ4NSEDnYL00daHlDSYCTxVTNt1x4qRAL8Q1dKyMwutkI3v2V6NJNeBrDeAICStwThOuc1j4goPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=en6nfBgO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XCHhNK6r; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="5jlTB1Wf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YyQrUmaZ"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4F4F51400101;
-	Fri, 25 Sep 2026 12:59:57 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Fri, 25 Sep 2026 12:59:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790355597;
-	 x=1790441997; bh=y8AaGB/JOJhRaonrvdO24Hcq8CZt8ZGPzmeEp8hStQU=; b=
-	5jlTB1WfbJD4Q44oDIGtxWBOM/wm6Y6OZPXbAxUTlgy0lOmXPaiLUOpFaLMyNyOS
-	P/jp0UbosJv9TEiBXd+EreTQsVytqsKfSO+PzK9nbUUo5EHN4EYjbCTX/gLQ76VN
-	GvTKGO5e1so8HXaIMq6Llpyi2HQC2LLmtGtwnm4x+eAA4gbZFxmwHpzg3icsO5l/
-	eGpV5Pw/+fD3gttr9QC+B9bSQLGHylGQFGcHwn4Lb7B6gg/fSqc6obxU6cAoH3dg
-	s7mhDfOc+3Nx9zgXtDzwpgcoOZMWLIxKwtJ+uYOm5hVF52nTY5rRkCrixGIZ4t25
-	veVoYGqUwn7NM/WT8/OO/g==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="en6nfBgO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XCHhNK6r"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5BC21EC00B5;
+	Fri, 25 Sep 2026 13:17:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Fri, 25 Sep 2026 13:17:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790356652; x=1790443052; bh=dcnK9rLofp
+	WqXqaVL2U5vGMIqd97MkAwjMIz6EY3rZs=; b=en6nfBgOIgptar9wuGslMqGVoM
+	TPKQ5C8xATLDY/SZcgFsf55u5qGpJRLcfEEakLHbU2m3C2bMPbT+WBlS9PtSVMiG
+	9/qq/j8xooMf9j4NsEWNHg//3QNn2sgJgBrUd7mXjY9O5OlzQt5Q2yQtQ92oID0S
+	8UBQ6ACE7jaffAIAwawDb9hpPkNbmTHGcRjjpvVoDO54UGKO36Xb6uOVseatQPZG
+	jPRI67aJwgh/qXIh18DwBVIqXEOurwf6GTmRcV7jdCVVN7jTKUkqn86e7i4n+uRC
+	iooHn65UCiP37S35Fh31ZEHaL9Vd9jKFrKihtrOlVeyqIyig1VIbtNxVS/oA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790355597; x=
-	1790441997; bh=y8AaGB/JOJhRaonrvdO24Hcq8CZt8ZGPzmeEp8hStQU=; b=Y
-	yQrUmaZLCWOYa0gupETPcrJFLks+zzxREz3mnvWeygS0wv/hHvejEV8uZBCoM2jx
-	5HUoKPgHH0XueIOCkrRld9qph0RB5zFGeKg/9+wEQWA18ayLHoSr3VfOTt4658aV
-	rx5a0HhS1i7lCq2TujiVnr4i5gKK5zE8Oq8PYAwVUkHuOstsClG7x8JvxAxjs1w+
-	zNZ/9j3ymlqMHHqdhpiouuab4+Yse+0SycdXL5+DabDh9YOAW73/Wm/FFs14HkbR
-	u2Irn3CO96pvDPXysHD6VZZ68Rabg+9qshgmdYgLnWXTl8bYySHoMN5fVBWv0Tow
-	uwbbUMLteHglf+NRg+tfw==
-X-ME-Sender: <xms:jai2an2I9zgxmcCpwIuMhQ8FpiCmRxU94sj7_KYJPXRztb4aqXiUrQ>
-    <xme:jai2ag4_0LoE5IV109zV1wWslEXn_Xk2YJSjEtaQ9mwLA-DYYvBHvbkvQhTYveplS
-    3BbwSr60gWE09Y4EdE2Yw9dCNmJVpK7cNlMmiUUZMe2TVVk2jI9Fv1k>
-X-ME-Proxy-Cause: dmFkZTGhgQ/ZspvF55DWuRdURC7lsADAOSRmiM+pOjw5qYKNzoP+Wf6Q4LxthJnBkcZ8TL
-    Ls5rrYf4fUvPti4pbAbv9/6BsEvd5vVi5T/LeusjcBR0vBaz8NsugOfRGHjSkXZFsLrNId
-    YULluMMZqKepSQ5D4tzMFU1oVKFjDqJkPrKlwylbphB39xpYNY9qzVkMMBrwHYIqUScwxg
-    32PFKpXwtD+f5gzsji78tefgT5bhpZheIFEbLr+9EDRO9UzRX3vXHukpRO5CEFFcVyYjS7
-    jyZzX6xi4PVr/O37aS4w0HJZgEAUuDTeKymOspj6sll2EeRWnRtafRA5QJ5yZzDqm2UgLp
-    lfMu1/7ZHCZrY6BuSVDucTuV7uZbBGDLqzPQc1JxUHja+9lDO/ECIT9dknwsAkPC4iAAY+
-    rtMQqQv4Ux2/TPeSo7hxikCmvrVDIXogAoFxe46fpohcp9vWt0fs0agEjcM4/9zI0i2izv
-    4cxhrUj7JoIewftD4Tc/TpAuC4Wbt58DOZst9QXonLCylWdxVxQqHGLkNouJziYcAUPTc2
-    8dyw84KYMggJV5Tgt8E+h4InF0CiPHSzzlVDTAFyRI0SvEJnIF4a3OWSFuC6e1ccE+3ku2
-    J6rY7/kaV11DdYRX6EjLwTdPXNap+9VGbm6VHH5R6e6lg0IEFJBG/RC8hjmA
-X-ME-Proxy: <xmx:jai2atdaEmv6r-UZ9FL0WEqjqTPNy8iatNykgD_XsFUJbMTIk0mwdQ>
-    <xmx:jai2apDlwR0RRsh8L6jaXE_NsI7umnq2Gb0hJzIw4eWAXp4GH_CY7g>
-    <xmx:jai2ag9Uzw1CXivOI3Tq3r-9TrMXKBZ4C1ZKkgyRqj7II91iq5TsuQ>
-    <xmx:jai2akKSNvVSMZwQnEkDmNt-xzRcms8UKQJdx5aDmQ8v6b8ksNMlOg>
-    <xmx:jai2as_T6wJ7Hy2c2g1dIUonJiJtMg7xUPoP9gv-4L-AX4265aOvrK_l>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 1E228780078; Fri, 25 Sep 2026 12:59:57 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790356652; x=1790443052; bh=dcnK9rLofpWqXqaVL2U5vGMIqd97MkAwjMI
+	z6EY3rZs=; b=XCHhNK6rOBK3vN/q4qO+cggx0kUOwhYAjdY2HpjPIjlEwUewPaU
+	jQHQHT7sMeUdAG3VF2sbktjvLMzGQhlIuuaQcfyEp9A8B9YWgPGqX5NPcb4USkCs
+	SGfTS1gG0uynypRHRLUtCfbsT4sMo2sdfwTo3cgOKbjlAXgfZnrmSTaube81EvT/
+	X7OBqq4so1/u3AqHZD7XtTgenc2cK7pWdXYj+k/qmstslKyALhFfoTqSnKMj0uen
+	NWKwnqGT5L8e0AXAi/VzXpzxDQ6FoM9NeQ5rP1hGISc19oUDRSPFJjnXPa5jY/no
+	WN/wbuylxkzJP5Mehzw7HczjKoAiDuNafOw==
+X-ME-Sender: <xms:rKy2algON22IgaFDnTX_s0kmY1RxiCwuWyRLDuUUQRpTaGJynp5hfg>
+    <xme:rKy2ag4SoZvf7K-bdW4yzseHEPEC8t6zjHiPyxo41C5k3NihBbxKLcW5fe7R6GM0b
+    3ifvqVbWWsvd25SaVQlxS8c4ydlIfAEEMRqg9B5IkfRxqVgOYSy8kE>
+X-ME-Received: <xmr:rKy2atbWx2UHflhZ3T2dFK6fhkHDiXw3ntQxMv-0yaVrs-ztpQquZO09HREBpCfoLbJPexBhStocgJjexX1TLTsUXuGrhKh8d_vW>
+X-ME-Proxy-Cause: dmFkZTF42A7oMx9EVp5QcWzlf3qMOAhJvLqOMPBA63o+vN2op4+1ZKkM8jMDWYBgkM5LbQ
+    TOsAmmjpvH9H7BBvyG2kCWPz+TR/VG5J48Oc3v0dOq5D9aQq7tmVxknBgTKnSkRzYiXdUv
+    saN22OIsw8YYEu6Cq/Qvwwi8gjGgckv9gV6d5MmaiBPdU0DKisUeHaJPnRDoWfVlVDA7dK
+    TiBcIZiWpj1pXziHvKkf4d8AR7ad377yODXKTHCAMJEpEOJYUn2z5lvtenIzDTk+s5tTDC
+    tX+6F27erZv+97zpx2AlXm99wXZ0ttChquxq/BpSXQVB+/Hb+J9MYZBpG875Plz/Snm0PD
+    zgZ5oEAanOtssOgsqVq9IRoQcmBenqC4uOv09WXh4ccuDu9/agb2B67/+equ4aigsEhbuR
+    QQc5qOJ/T+vfyqq1A9PvW7FfziEy1IqGNmYvMc/8IeFJreBe20NhoFSNUsN8flFm8imAiY
+    jNb02V8PdLPy1g+IciQd4Bkj0aYHR7o1idU1pjN5Q5x0oKHFUmJNNhVsAdEKYOjRX3t5CT
+    FkKEeVesCJYlSADqcKWwX5xufRwZ99Gu4lC/2Tol/9ctTQChg5jya157Zv0Qv1bzHZncG4
+    XigNYf5w+iNSW2yqSCHFL1mjpBHjiy2QdDU+o0X9BxHQHN2LrUk4GC0e51UA
+X-ME-Proxy: <xmx:rKy2al7nAwhgB-nu0lkdWvaeAePXQqXPIpfvYpeAospY0MOMOEzlnA>
+    <xmx:rKy2agC0Re-YEV883BFFJt3DxUo9lz5TCmlbFPw-kVtIl68olCt4kQ>
+    <xmx:rKy2arf9YXRjIGzM2LQ3Krb4p8hhL2AsfXCasp27zzPaatH5pZxFGQ>
+    <xmx:rKy2avK4mIQmGuqn88LZyL3Yi5q-ahOEWTN5fF220p3LTTqQ5TWMTQ>
+    <xmx:rKy2ahLrK_qF1a9TjSxYL_CPaNt0NOXurVmtbMeqdeV-FpEe4nH5UnbW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 25 Sep 2026 13:17:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH 5/7] [doc] git-cherry-pick: link to new merge conflicts
+ guide
+In-Reply-To: <03a6b43b5803e6bd9ebba1a49c34cb42202a7f44.1790261062.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Thu, 24 Sep 2026 14:44:20
+	+0000")
+References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
+	<03a6b43b5803e6bd9ebba1a49c34cb42202a7f44.1790261062.git.gitgitgadget@gmail.com>
+Date: Fri, 25 Sep 2026 10:17:30 -0700
+Message-ID: <xmqqpky1uu6t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AJ3yMKGvzUL-
-Date: Fri, 25 Sep 2026 12:59:35 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <2f71028f-d58e-400f-a02e-7a25c032d889@app.fastmail.com>
-In-Reply-To: 
- <CALnO6CDdoqE2hyZMJg6OZkzNtcnjNXRz=HO4q6cZVpF_wbTXyw@mail.gmail.com>
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
- <a1686a2d82ef9357ecff07c1247092d3dd5ecf95.1790261062.git.gitgitgadget@gmail.com>
- <CALnO6CDdoqE2hyZMJg6OZkzNtcnjNXRz=HO4q6cZVpF_wbTXyw@mail.gmail.com>
-Subject: Re: [PATCH 2/7] [doc] git-merge: link to new merge conflicts guide
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-
-On Fri, Sep 25, 2026, at 12:36 PM, D. Ben Knoble wrote:
-> Hi Julia,
+> From: Julia Evans <julia@jvns.ca>
 >
-> On Thu, Sep 24, 2026 at 10:46=E2=80=AFAM Julia Evans via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> From: Julia Evans <julia@jvns.ca>
->>
->> All of the info about merge conflicts has been moved to the new guide
+> Remove the discussion of merge conflicts and replace it with a link to
+> the guide.
 >
->> Among the changes made to the common ancestor's version,
->> -non-overlapping ones (that is, you changed an area of the file while=
- the
->> -other side left that area intact, or vice versa) are incorporated in=
- the
->> -final result verbatim.  When both sides made changes to the same are=
-a,
->> -however, Git cannot randomly pick one side over the other, and asks =
-you to
->> -resolve it by leaving what both sides did to that area.
+> Signed-off-by: Julia Evans <julia@jvns.ca>
+> ---
+>  Documentation/git-cherry-pick.adoc | 23 ++++-------------------
+>  1 file changed, 4 insertions(+), 19 deletions(-)
 >
->> - * Look at the diffs from each branch. `git log --merge -p <path>`
->> -   will show diffs first for the `HEAD` version and then the
->> -   `MERGE_HEAD` version.
->
-> I think these are both valuable pieces of information we have lost in
-> the new guide (unless I misremember just having read patch 1 :).
->
-> The first explains a bit more about what a conflict *is*. Maybe that's
-> old-hat nowadays, but I think it could be nice to keep a statement
-> about why conflicts exist.
+> diff --git a/Documentation/git-cherry-pick.adoc b/Documentation/git-cherry-pick.adoc
+> index f4cd8b9db7..d93829600b 100644
+> --- a/Documentation/git-cherry-pick.adoc
+> +++ b/Documentation/git-cherry-pick.adoc
+> @@ -19,25 +19,9 @@ Given one or more existing commits, apply the change each one
+>  introduces, recording a new commit for each.  This requires your
+>  working tree to be clean (no modifications from the HEAD commit).
+>  
+> -When it is not obvious how to apply a change, the following
+> -happens:
+> -
+> -1. The current branch and `HEAD` pointer stay at the last commit
+> -   successfully made.
+> -2. The `CHERRY_PICK_HEAD` ref is set to point at the commit that
+> -   introduced the change that is difficult to apply, unless the
+> -   `--no-commit` option was given.
+> -3. Paths in which the change applied cleanly are updated both
+> -   in the index file and in your working tree.
+> -4. For conflicting paths, the index file records up to three
+> -   versions, as described in the "TRUE MERGE" section of
+> -   linkgit:git-merge[1].  The working tree files will include
+> -   a description of the conflict bracketed by the usual
+> -   conflict markers `<<<<<<<` and `>>>>>>>`.
+> -5. No other modifications are made.
+> -
+> -See linkgit:git-merge[1] for some hints on resolving such
+> -conflicts.
+> +When it is not obvious how to apply a change, there may
+> +be a merge conflict. See linkgit:gitmergeconflicts[7]
+> +(or `git help mergeconflicts`) for a guide to handling merge conflicts.
 
-Will think about this!
+The new document may explain how to resolve conflicts, but are the
+details removed from here that are specific to the 'cherry-pick'
+operation also covered there?
 
-> The second is a very useful way to get more context to help resolve
-> conflicts! I have an alias "conflict =3D log --oneline --graph
-> --left-right --boundary --merge" for a similar purpose, and I think
-> the new guide should help folks discover --merge. Often I can get a
-> better sense of how to resolve conflicts by comparing the original
-> changes on each side, or I might at least know who to ask about what
-> to do.
+For example, during a difficult cherry-pick, it is often handy to be
+able to run 'git show CHERRY_PICK_HEAD', but now users are not told
+about the pseudo-ref, which seems like a real loss.
 
-Thanks, I meant to flag this: the reason I deleted it was really
-just that I couldn't understand what `git log --merge -p <path>`  did
-from the documentation and so I removed it until I could figure it out.
-I thought that `--merge` meant that it had something to do with merge
-commits, but upon further investigation it looks like that's not true, a=
-nd
-that `--merges` is related to merge commits, `--merge` is something
-totally different which is relevant any time there's a conflict
+The fact that cleanly auto-resolved contents for paths are recorded
+in the index may be shared with all other merge-like operations,
+and it need not be part of the "how to resolve a conflicted
+merge-like operation" recipe, but users need to be assured that this
+is what happens somewhere in the documentation set.  The list
+removed here served that purpose for this specific command, but it
+is now gone.
 
-My best guess now is that it would make sense to include this
-under "Tools to get more context". Maybe something like this:
+I do not recall offhand whether we explicitly tell our users that
+all merge-like operations update the index with cleanly auto-resolved
+results and only leave conflicts to be hand-resolved by the user,
+but even if we did so elsewhere, I do not see any reference to that
+in the existing text of the 'cherry-pick' manual, nor does this
+patch series add such a link.  At least item #2 and #3 should be
+kept in the list, I think.  A better alternative might be to add
+your new reference, and shorten the description given in item #4,
+and leave everything else as before.
 
-> `git log --merge -p <filename>`  will print out all commits which
->   caused the merge conflict for `<filename>`, and the diff
->  of how they changed the file.=20
+Thanks.
 
-("which caused the merge conflict for" is a little more vague, but
-I'm trying to convey the intent, and hopefully folks can look at
-`man git log` if they want to know the specifics)
-
-This does sound really useful.
+>  
+>  OPTIONS
+>  -------
+> @@ -259,6 +243,7 @@ $ git cherry-pick -Xpatience topic^  <4>
+>  SEE ALSO
+>  --------
+>  linkgit:git-revert[1]
+> +linkgit:gitmergeconflicts[7]
+>  
+>  GIT
+>  ---
