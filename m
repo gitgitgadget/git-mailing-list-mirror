@@ -1,68 +1,76 @@
-Received: from mail-dy2-f12.google.com (mail-dy2-f12.google.com [74.125.229.12])
+Received: from mail-dy2-f43.google.com (mail-dy2-f43.google.com [74.125.229.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9DB3563FB
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 20:57:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0284F474F
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 20:57:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790369827; cv=none; b=bjLJYB1UxtlQf0+O5whVlVNr3Dmvnt+jZ8iOQGUIlKSSHkyIbS0n8aOwLaOTDiudyJ8nGHZ3IPJ/reiHVwe4uuh4NI9JipLAEncb2mUUzNaW5goYC7PFomtiCJvQuAyI+I9xZKwBnUe3HRqdwqCrszoFf3QkkkZe/NDx199+1S8=
+	t=1790369846; cv=none; b=I34T9UThKcsGZpXdJu8I2TK5ViEpp1Yc59nKNhm/6nBlR9HTrNQjZ3p8KXps+vqOGBC+cMMGWoDQc9C98yWLCRVcqiRWqFTyqGwwb/PNaSgIbCYZf26GSvDIG1zmXsVXkx/Yt7VlcBQ8FSenARbto9pIugRKM6oFCmt+494Rw3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790369827; c=relaxed/simple;
-	bh=FSxNf7mNowPCRqTSqkYkNNeK9OUdNTGOXfAyvZyxyQI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CDviGKwdGY4ub/3lpLlbuuDwUXK+5cM7liWCj7b3+2ol6HvGPdigdBD5sYHZ7KMI9XZ7+jJ922X+zkaXOxNZe+4ErVgdfbzhcb/D3/GiYOZWIJL1HfVaYbzjPYmn9+QHv7/9UGBNuW1SEjkTWduVbBjU2F5XVH7ZM7q/vg+NW4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VoDBuTVL; arc=none smtp.client-ip=74.125.229.12
+	s=arc-20240116; t=1790369846; c=relaxed/simple;
+	bh=IGTeTwJu1xrhmarkbPMUfQfFomQPzEFYMMTbSfhqq54=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=cT9TVbhh0B4PCe7IfZR47c006ITzav3SZUw+VRs1fIHvUPTEKQ2VxodvCz4pjoN30wUHXd3UuAY/xFC7X1ftDNvh4ztNnPyooIgeYX2Qh/pIm0ru88V9XJ1Ju7tGGZfj6JujJbnPNB7x7RluTrz3QSniCVUOZhzBrzwRn8/9xxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oFuupBBX; arc=none smtp.client-ip=74.125.229.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VoDBuTVL"
-Received: by mail-dy2-f12.google.com with SMTP id 5a478bee46e88-33be7dfcfc1so1721821eec.1
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 13:57:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oFuupBBX"
+Received: by mail-dy2-f43.google.com with SMTP id 5a478bee46e88-341027843a5so852524eec.2
+        for <git@vger.kernel.org>; Fri, 25 Sep 2026 13:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790369825; x=1790974625; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=2e0Eza53Pz2ISyTGawC6/OAQ9o2MyjBRls6GcH4OUMI=;
-        b=VoDBuTVLzzVawfuK+sagQuZPnELRBZ/1WJWDcPdykUSoIYZxS8Xb15Q+jsyJJhSzhX
-         y22H7Y8qqz95XA7ZD7QMACt6FzveMUE9TjbVOeFQt8stnudiHuQ7FVXQVwZWNQDhkxYI
-         WppPIg68liohI0lqnAquqPM5vSJS10At2VQd5ys4OQmNMRHu2gqx1yudIrxecpt0Bx3L
-         UM+GyvWplEcmiM/lCILtAA3n1FIFvx40sHi5x+hL5mLngnk4FdwHHLs2INUX323klG0D
-         CEgM1RI33ANItSRS2tuoCBtGsc1IVPk/I7Ab1rYOTDgye7rN1cgH1OKyg79ki4EmcqCG
-         Edzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790369825; x=1790974625;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1790369844; x=1790974644; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=2e0Eza53Pz2ISyTGawC6/OAQ9o2MyjBRls6GcH4OUMI=;
-        b=jraxxw5Kuikl4En1EMDvYh8d2tk5pvYT3QdSvNLQmqltsYDzdOrfJ2cpb+fEk7q7o+
-         hX+nwXVGgBZRe2ge4VlPoiSc+X18sziBkWAJ9vNK1/Pj9yyjNcE25fQvBtaX5btnfSEg
-         eHQoRz6qbA3P67uh22kd4nrMBfQ41/lQnDsTOBAPqAQooEzT/iTs8cIVlcrjoAi5ks7r
-         VeCicSeCYoP4DVTGPu2YutBG0txoR6UO0Xhwq3t4XM8c/T1XF1DPQ6utXCQSjlO5LvZg
-         vHISyuYKsgiYmjZaWKT3pz888CP3ifPsfTMSMHi8slsErhBvrL7mRHjHCUWJo0bLI9TU
-         79mw==
-X-Gm-Message-State: AFuF++lb7iqjyOkxAGRJOUiX5sGiZUicRgiOpR+qzsjqIeq5XoFkooRL
-	Jvgj7QlsYaEjnf8dVDczqQFrXEDtBqbxoAxdV7kKjeDyTi7bazEi3+Ih8OF+pA==
-X-Gm-Gg: AYBFou1HSsn+3BfuFndulSeqypJV8sVULqV4cFnPntyiOMfB1fg3ByxXsJJ0CMIx1CQ
-	MBfyaWFVfVvckwt8h82z2cNXdVSHZm9RjkN3TQX4LX6yP7juUPl2km53tEI006T1UBtPjGM1eH9
-	e0xkcaqC4MqmZ6mOUDDRUBAor52HmWbvKglQA7MOFUEpat8FaH7aQsPURCgXPmRtDzsD5oUgcvM
-	vauwsgFuRDkK4v4eWTHikLn11xoZzd3Vo2LzL+sHeTQYhOTFWHMKL2po266e40pC6NqXBgoMdvU
-	ZMHZ+n1T27MwdCWOM2tYQJNa5pDMZHgCMsbEbGIDbU7G5Uh+XCx5kTtg/wQHkmhgUgqNnCHUfVF
-	AqEyvT7ULs7g/hgpSyvnepjb9lGIrM3A8rlrwEbxbEJvmTu/UtHAPq0BgzanbyX6bAMHD9UBoRh
-	xrjLwq9dxEX5TVtrD04jYIOYaMQy9Pz5Nn4xrJKw/+jAz8Za5y74ClKK5CdEHq8Fc8090fOiu6k
-	UuCqJN206a6aSeGOl1e+d1GybeWIoSdjW/x2A==
-X-Received: by 2002:a05:7300:16a8:b0:341:4466:1cd2 with SMTP id 5a478bee46e88-34271d8bc23mr1127530eec.20.1790369824550;
-        Fri, 25 Sep 2026 13:57:04 -0700 (PDT)
+        bh=S9wQ48oXry+CeH9kfZONB2dEbZuH/H9ELk/AMLASLD4=;
+        b=oFuupBBXcNe7MvldbhThq2PSdGvnBJct+BdUp1T/rL+lQsiofUWBkafKVZZiuv8WKi
+         K1fwRO9RoiOG7wiXbVW6GZIuAqrMpXic0/UeMmwTza4EK7EZBljuBHyJ+8bqATsSClpi
+         PUdseGVcqL73Ebx1vN7T+fw6gd5BMQI683qMxYyt+RYKJ09N+coaKZWc3SU8k+emMfeK
+         F8rA00E4RyDjL5qF0Ee24LgY2cOEW1Wr6LFlAamIhWoqHBe7BfmLyJCzNGtBhvM6N2wK
+         E/K1zTUN6AXn19koOdn4t12KCTY5sOxIE/JpAMqneXH+n/jTmts88G1NsEKkONquSBrO
+         mCIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790369844; x=1790974644;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=S9wQ48oXry+CeH9kfZONB2dEbZuH/H9ELk/AMLASLD4=;
+        b=kWpT86BnQdk7AtxwO6jLSYdXCjdueLQFpwktoQlJIFNPvM9qKtrzlZZV8wePm+iVrV
+         U9DWcgvlkidNt8cdIQhE07+KlBODG81KuQYAhFo5TJQuM6kyD5rOULfkVaTCFiA9Mth1
+         vnky512E4VoriCI1jLKH2GXh1NFzsvCzdDozsvhrCMh/K+3uJdfPe95+m+DjeiVKq6uE
+         d5lS4gxi+DlUqYkEWfSenjgVpSe/0QFXXTTA5c5DJ59xXymO8pNWPFs84oXb9YUAbwPf
+         iwUYU07gXETw05WUXXFRp5gQK278vXRrHOyaE1CGfERO1QpePJmheuMnay3w60Pz308B
+         Y8Fg==
+X-Gm-Message-State: AFuF++k0SRaYofHA3QO+IsTm5BF0SkQFYCMUM/OBj2zeTSYagOpMBUXQ
+	OROg9LB8Ehw3di0XWgMQB5fdd7NFNVQftphYKvpCZAic8T/jbGtSvFgb5vjyvYeo
+X-Gm-Gg: AYBFou1NXts9C/zzEQCtoPHcPRmpsVbu/MJOp10tFfLvGK1C97jqEMVfZlULYvCdikn
+	qaEf807c7pAX5EOFMUExdE4ffbFq9UMTe0f7rVP8/4sL6pJPMqkxeNwXsrhzPqdjd6i4n5ujU2q
+	s/Bv0ZpoCxgEhBqqeZwb7T4epeULyYt4Y+peY/wOogJX9u+0buPmG2LItpeFct+MgqooCZbhtL7
+	doXH7x1P87v7lx1w9eOyMHrsEuAwyuC2x/L2YAbUoh62a6OpEDUcjwga9q3oaKtvH0Ur7FrrHBh
+	7xFpf0w2n/PQOoUDk0HWgwPr8kKFR4dVyOIYZIt79UlEOpheyeyO7ygRqoPCPHLDiz2TprlNHQv
+	u4XQhX8ikCMas/bbU0MG/0u/PULMu7O6ZVK2e7ZcNACqmRGgAuzJ8xQZ50GuRqkocWBJOUXlYDD
+	VYQVt03KIclOQS1CLChMYsddMNt+F45QiGrELrOpyQO8t2w7pV1DN5iNTVSV8LLamcjWF3aAUxG
+	0UrqpLi5a9lRNuv0uqztjmfiBZjCpsZOsIyvg==
+X-Received: by 2002:a05:7300:7953:b0:33e:518c:6837 with SMTP id 5a478bee46e88-34272179145mr1236119eec.24.1790369844440;
+        Fri, 25 Sep 2026 13:57:24 -0700 (PDT)
 Received: from royce-MS-7D09.lan (76-14-104-130.rk.wavecable.com. [76.14.104.130])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-34145632298sm8082744eec.22.2026.09.25.13.57.03
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-34145632298sm8082744eec.22.2026.09.25.13.57.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Sep 2026 13:57:04 -0700 (PDT)
+        Fri, 25 Sep 2026 13:57:24 -0700 (PDT)
 From: Royce Remer <royceremer@gmail.com>
 To: git@vger.kernel.org
-Cc: Royce Remer <royceremer@gmail.com>
-Subject: [PATCH 0/1] pack-write, pack-bitmap-write: register tmp pack files for cleanup
-Date: Fri, 25 Sep 2026 13:56:32 -0700
-Message-ID: <20260925205633.530651-1-royceremer@gmail.com>
+Cc: Royce Remer <royceremer@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Elijah Newren <newren@gmail.com>
+Subject: [PATCH 1/1] pack-write, pack-bitmap-write: register tmp pack files for cleanup
+Date: Fri, 25 Sep 2026 13:56:33 -0700
+Message-ID: <20260925205633.530651-2-royceremer@gmail.com>
 X-Mailer: git-send-email 2.55.0.1.ga30d533ec0
+In-Reply-To: <20260925205633.530651-1-royceremer@gmail.com>
+References: <20260925205633.530651-1-royceremer@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,65 +79,104 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This patch registers the temporary pack files created by git-gc(1) and
-git-maintenance(1) with the tempfile subsystem so they are removed when
-the process exits gracefully.
+`git repack` correctly uses `register_tempfile()` via
+`collect_pack_filenames()` for the `.tmp-<pid>-pack-*` files it
+creates, so they are removed when the process exits gracefully.
 
-Background
-----------
+The lower-level pack-writing functions invoked by `git gc` and
+`git maintenance` do not. They call `odb_mkstemp()` which wraps
+`mkstemp(2)` directly, bypassing the tempfile subsystem entirely.
+A SIGTERM leaves these files stranded on disk where they accumulate
+and can exhaust available space:
 
-The motivation came from diagnosing disk space in Kubernetes pods
-running Gitea as git mirrors.  If a pod was killed mid-gc, the
-pack-writing code left orphaned temp files in objects/pack/.
-On restart, git gc would start fresh and write new temp files
-alongside the existing ones.  Over many restarts these,
-accumulated until the underlying volume was exhausted:
+  objects/pack/tmp_pack_XXXXXX   (create_tmp_packfile)
+  objects/pack/tmp_idx_XXXXXX    (write_idx_file)
+  objects/pack/tmp_rev_XXXXXX    (write_rev_file_order)
+  objects/pack/tmp_mtimes_XXXXXX (write_mtimes_file)
+  objects/pack/tmp_bitmap_XXXXXX (bitmap_writer_finish)
 
-  Two repositories examined on a single pod:
-    objects/pack/tmp_pack_* -- 27 GiB, 21 GiB, 11 GiB, ... (17 files, ~60 GiB total)
-    objects/pack/.tmp-*-pack-*.{pack,rev} -- ~118 GiB across 6 killed repacks
+Call `register_tempfile()` immediately after each `odb_mkstemp()` so
+that the atexit(3) and signal handlers unlink the file on abnormal
+exit.
 
-  A second pod had a different repository where two killed repacks left:
-    objects/pack/.tmp-*-pack-*.{pack,rev} -- ~39 GiB across 2 killed repacks
-
-  Deleting those files and running git-prune-packed(1) to remove loose
-  objects already represented in pack files recovered ~224 GiB on that
-  second pod alone.
-
-Obviously, this is dependent on repository sizes and number of
-failures and such, but I thought I'd share my extreme example.
-
-Reviewing the gc and maintenance code, I don't see any attempts to
-resume or reuse temp files left by a previous invocation; each run
-calls odb_mkstemp() unconditionally to create a fresh file.  Any
-surviving temp file should be safe to remove.
-
-The tmp_idx, tmp_pack and tmp_bitmap sites predate the tempfile
-subsystem (1a9d15db25, 2015-08-10) and so had no mechanism to
-register when introduced.  The tmp_rev and tmp_mtimes sites
-were added afterward but did not use it either.
-
-Note that git-repack(1) already handles this correctly: it calls
-register_tempfile() for the .tmp-<pid>-pack-<sha>.* files it creates
-via collect_pack_filenames(), so those are cleaned up on graceful exit.
-The lower-level paths invoked by git-gc(1) and git-maintenance(1)
-(pack-write.c and pack-bitmap-write.c) go through odb_mkstemp() which
-wraps mkstemp(2) directly without registering with the tempfile
-subsystem, and so do not benefit from this cleanup.
-
-I have some unit tests covering this, but they required instrumenting
-the code to add a wait driven by an environment variable so I could
-catch/kill a repack on a tiny mock repo. I decided not to commit
-those as I think the fix is self-evident and we're just delegating
-to the same tempfile cleanup logic and relying on that coverage.
-
-Royce Remer (1):
-  pack-write, pack-bitmap-write: register tmp pack files for cleanup
-
+Signed-off-by: Royce Remer <royceremer@gmail.com>
+---
  pack-bitmap-write.c | 3 +++
  pack-write.c        | 5 +++++
  2 files changed, 8 insertions(+)
 
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 1bcb3f98a4..c566419690 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -23,6 +23,7 @@
+ #include "oid-array.h"
+ #include "config.h"
+ #include "alloc.h"
++#include "tempfile.h"
+ #include "refs.h"
+ #include "strmap.h"
+ #include "midx.h"
+@@ -1378,6 +1379,7 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
+ 
+ 	int fd = odb_mkstemp(writer->repo->objects, &tmp_file,
+ 			     "pack/tmp_bitmap_XXXXXX");
++	struct tempfile *tmp = register_tempfile(tmp_file.buf);
+ 
+ 	if (writer->pseudo_merges_nr)
+ 		options |= BITMAP_OPT_PSEUDO_MERGES;
+@@ -1435,6 +1437,7 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
+ 
+ 	if (rename(tmp_file.buf, filename))
+ 		die_errno("unable to rename temporary bitmap file to '%s'", filename);
++	delete_tempfile(&tmp);
+ 
+ 	strbuf_release(&tmp_file);
+ 	free(offsets);
+diff --git a/pack-write.c b/pack-write.c
+index 83eaf88541..fa6b532230 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -13,6 +13,7 @@
+ #include "path.h"
+ #include "repository.h"
+ #include "strbuf.h"
++#include "tempfile.h"
+ 
+ void reset_pack_idx_option(struct pack_idx_option *opts)
+ {
+@@ -87,6 +88,7 @@ const char *write_idx_file(struct repository *repo,
+ 			fd = odb_mkstemp(repo->objects, &tmp_file,
+ 					 "pack/tmp_idx_XXXXXX");
+ 			index_name = strbuf_detach(&tmp_file, NULL);
++			(void)register_tempfile(index_name);
+ 		} else {
+ 			unlink(index_name);
+ 			fd = xopen(index_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
+@@ -263,6 +265,7 @@ char *write_rev_file_order(struct repository *repo,
+ 			fd = odb_mkstemp(repo->objects, &tmp_file,
+ 					 "pack/tmp_rev_XXXXXX");
+ 			path = strbuf_detach(&tmp_file, NULL);
++			(void)register_tempfile(path);
+ 		} else {
+ 			unlink(rev_name);
+ 			fd = xopen(rev_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
+@@ -346,6 +349,7 @@ static char *write_mtimes_file(struct repository *repo,
+ 
+ 	fd = odb_mkstemp(repo->objects, &tmp_file, "pack/tmp_mtimes_XXXXXX");
+ 	mtimes_name = strbuf_detach(&tmp_file, NULL);
++	(void)register_tempfile(mtimes_name);
+ 	f = hashfd(repo->hash_algo, fd, mtimes_name);
+ 
+ 	write_mtimes_header(repo->hash_algo, f);
+@@ -535,6 +539,7 @@ struct hashfile *create_tmp_packfile(struct repository *repo,
+ 
+ 	fd = odb_mkstemp(repo->objects, &tmpname, "pack/tmp_pack_XXXXXX");
+ 	*pack_tmp_name = strbuf_detach(&tmpname, NULL);
++	(void)register_tempfile(*pack_tmp_name);
+ 	return hashfd(repo->hash_algo, fd, *pack_tmp_name);
+ }
+ 
 -- 
 2.55.0.1.ga30d533ec0
 
