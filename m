@@ -1,201 +1,168 @@
-Received: from mail-pj2-f14.google.com (mail-pj2-f14.google.com [74.125.227.142])
+Received: from mail-oi2-f13.google.com (mail-oi2-f13.google.com [74.125.231.205])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 555C44DD3B1
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:25:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.142
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790353558; cv=pass; b=d0j+bznvP01PKKSJZtUqtRK9X4r5v619LzN6uRmrNerg/eYf2ORFdBr0TDAhUwn74QExYJ2OS4+4JhkBvrzZzxdgyXn7v+ap8eFkCh+8BFWkLQ4EDhULgP/5NxBVXHzGmlTz38AoiA/8zxzxaYkqerDRj3Sxed1iUaQSjH3YoFk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790353558; c=relaxed/simple;
-	bh=iP1D39TQutzlpB6buGtzZ/GBJzuQ6HBvbRFJ+2gXFGE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YkcNKEVNl1dSWN1Ki7aPAk2QpWcBGSBMKA5II+BaN4432N+XwrUe3PQyiIsb3CdEiYJ8hkOd8PvgTjEnWVV6OShF1Kwx0pQOi39GXdmkRZrFnJVNdvT+QJacg8YXY+uaNjaTovLKg/w3bUKjuVcn6+gLF61+81S0G9vPd/aCrFE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TOoaASX2; arc=pass smtp.client-ip=74.125.227.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6277345729
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.205
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790354161; cv=none; b=FfmhUn8IHbN2On7abJRTIcNxkg4rtXuh3yJADsa2GMnEQNxWye/9X3FD2ZnPCRCBA00/7Nx3petXAzixiIId5BlAmXVX1h9sqEu/XzJ3167ASz9ElqxLEE7qJPvyDGLFX3W8t35Wea+6W82YLjpCEsF//mz00S8hHzlo/dpjf9A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790354161; c=relaxed/simple;
+	bh=5/8gGmFUH0OyEU4x+ZluhNc9RJY4fkBxNR4sNEUOKfs=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=mkyfJ5CE3c6EzGSosWgqL9tR3UPOT1eX3uaboVtXP8YTfvy/TjZygWu/3oQBJvYvuTL357X8adv+UlV/4VNO80YeBwaqRuRAOQ+efQ4C5mz1++9V+A6qVhwrqdbhpsjOaTNDNEA7foKlN4uDdQckv7CGvK0c6PPJx4SN89Lvpmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LiQ9jYRt; arc=none smtp.client-ip=74.125.231.205
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TOoaASX2"
-Received: by mail-pj2-f14.google.com with SMTP id d9443c01a7336-2dd58e1e2c7so4981495ad.0
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 09:25:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790353556; cv=none;
-        d=google.com; s=arc-20260327;
-        b=rK/2+HJgJmBUtlz4E8dYrS3sT2hZurkqV3pnqKKPV6MW5C7XMvxOzDdzLn2w8/v+I0
-         eSc48JrWsEKRqN8sMLH1AUeGzOY8YZcDcwjBwRV7oIkjaeZb/fGULMN4DPKlje2PRqpo
-         0p6UTRWu9ZPr0XO33cJpPngmX+0SkmyXmNcKogCNiyeVkVYJQbWMEtedctU8Kk0bZXwz
-         Rf//9CKrRN53Bq/HQHJonx1jJNBOM0e9lptC9MuSatN30jlIkgLqXSPLh5DMDCITLsBS
-         5ryGb5j9OmhIA/6ArlV+v0944XlGrZIxWlDyrZM+I5DgHbBeFf9D5z8LwjeLgpbPcKPS
-         ecqQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=zBOhlaymB1SeYX+/62oPSHG0jWklDenSUEeP8555XqQ=;
-        fh=SMcdeyh5Ydll3uJ2fNj3zdbWH6sdNhaXZDFdUs18jPo=;
-        b=anKUt+JrZXgFAk3em0n6/L6dgFbP9HXCUIJbW2AUWfNyhkKKm0m2R04se88LeUGLD5
-         bIzoNPAvY0sdTkoabW6AQtc7Hov1YVMzjHcCdJ8T5xqDNKmhzVCcbJXpjJKPQAb4PEkg
-         r7H5pbMXI8yw/TGwcgFY6xTDFRQ90d8FpPhTN04E7HgJ03lU0YHIAELYaJ5WR0A4gX4I
-         VVV8pZ8SDpoaslar2VfawcOoGEZofP6CQMju8vKWv7YaL9226NDHHkXn6MSEsS+dfeh1
-         Bu6oS6xAQeewnuOczj3PUP41h/wtbMRau4Cl4/4XMY18CkVqyAqoDx7+hYlDfsjf3cV5
-         C6xw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LiQ9jYRt"
+Received: by mail-oi2-f13.google.com with SMTP id 5614622812f47-4b37a3688a2so793715b6e.0
+        for <git@vger.kernel.org>; Fri, 25 Sep 2026 09:35:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790353556; x=1790958356; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=zBOhlaymB1SeYX+/62oPSHG0jWklDenSUEeP8555XqQ=;
-        b=TOoaASX2ORRoP9bEENWHPwefO5wwHhku7J8oOYg2Euzw3oBEYDHx+LtTsubQ586vTG
-         BWP0Az4RkqCaqhzmOQlaY0Thcu3chhfL/4EuFy08IkKSPMpHm7GkXqQmGkF/vARruAzQ
-         DVNmIJzNlkpsbek3QAOPRdaNZjt7YZNqbB2akYCRdRX4FX8qsV30Uo/53/vj47aUH2fh
-         fS5brQlSzr+ssstGOb5DUZthxCslyqu2I/GYHiyJhxpVwfDJrqtqpUv6gaoRPFxDdTHq
-         8SER45HZPH+NUJq4CG+LdcNnYh6226uiYDGnUAbaWg5Xy8xm3I8LOv3oONl2uqCG8yvn
-         WEhw==
+        d=gmail.com; s=20251104; t=1790354158; x=1790958958; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:content-type
+         :mime-version:message-id:date:subject:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=nJqj+xLYdxxkVMSwGT1xAq2nwy/mDU8SECNC35DYUjU=;
+        b=LiQ9jYRtxifRwtcTnT/yze8V3HWy/AUdfXSYMsgTvWnGTIkSkS0JIcQxypUmbEx7c8
+         yZER6//GNJkVOuuqUES21w87/dS8mW8qoaMYNUtI0cHMv+K1gzo3ptTNmCGquARhumEd
+         2n6D3R0MNTDyNFdnYW19gx3oy7XjEG3W1MNY+n5OoJjRT2v5mr8ZgCaerkIQMWPdQ5SD
+         EnUrDGtGnRlWYDvDwIG/GlLJQsAQ0siq9Q76HWQW1rymXaBeZ7SYBED+Bu/XU4/M/G7B
+         wsiKUWuTQ6iCPH561WeLbvbClG6LtVC5HDLwJ1w5XfYLofuP4O1FYBplP9Q0euelf7M/
+         SlrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790353556; x=1790958356;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1790354158; x=1790958958;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:content-type
+         :mime-version:message-id:date:subject:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zBOhlaymB1SeYX+/62oPSHG0jWklDenSUEeP8555XqQ=;
-        b=LA49YLho1h28nbdC91TJrM3KcnFzqbTC2wl1SF3nwi4SuWmGjsnq0TxbAJquySEz2g
-         p//ASi3Pmai8X2F7Mr4rpjdfRmgVFmnZi8CxIsKm8zVcg3Saj3JsUufRFQcaPj742bvv
-         MFb99RHE8/EHmcy39KVCjY3fQyPlWKlDObQ2IGJwQA7+TZu+XiFB4S9hnUJ1GE42nIx5
-         TrCSi6eFwPJI0XBQTfZOnQYnhbDEYAqhjCyBEGuyKcJhGp1X6liGGo98IP40GQ190JjB
-         3ViI+X4xCnLgZb8WDMeP6vdvfF9VIQoNoodCn4D+XCFlpiGarLHzjelhOYS52O94alkh
-         cSEA==
-X-Gm-Message-State: AFuF++n6ahF3jMRYvaqNMJc6GaSRCfuRLE9MTd/q5237QY8tbRmJ1MuT
-	KzUgaitjG0jYOEpudNSCVYg6Dq3lU5L+l43rrMgvGDgXKU7WTgqaMRq0s5jMCahxHJJ/bAkQVjq
-	BlzuDcTQRCph7cXeqwIgPh67S7Tufcw8=
-X-Gm-Gg: AYBFou0MYBrGCAZUz5RF0Lb+4Sf5cnuvQxU6BjhvQc687+0k62jbluCMLtNxiT09CWN
-	tq3mTsKkXCx5wUpmIZ3KWzg9nh94TxiXktZ/cH+maYXzjDoyOBu+KgjhMai7dOAR+MMUSA7EbVB
-	OIhqoaPh2mOPvsFLg0to+EuVAoK58hHWjkPF24rA0gc0vNHvw+pHQjGp++tY4Yh4y9XvX7RO2NX
-	27cRdseHKlP9kERPt+LyYFpAwbjBVQdt1h0auVvKalzdRT4jLgMVqdXW4g3xDrMLV9n0LEDOB8I
-	ONQbA342yAr6HWpAcvtNsKmRZwoEyk2QyGclU/JbpaObAkRdNOn/jkyum2zsOYKwp8XXOkcee3H
-	BKUQEohmuD6GJ4pUSsmy2DLD5OwCS+XNrys3yy6ts8e2j6eotlLfpR+5E32Byh6LNgppwrWvBm7
-	K1OmyQq5ItjFSPHIasarcvULKaRQILjA==
-X-Received: by 2002:a17:902:e74e:b0:2df:8e8f:8d8e with SMTP id
- d9443c01a7336-2df8e8f94b7mr30263655ad.26.1790353556431; Fri, 25 Sep 2026
- 09:25:56 -0700 (PDT)
+        bh=nJqj+xLYdxxkVMSwGT1xAq2nwy/mDU8SECNC35DYUjU=;
+        b=DC6nM0vj1ZpAbJPyfBLyKVqddy7qNe8SpxPL8qXbxAowTo517zOuKHDIT1V4bnXHOo
+         cm5Jcnl/ViL32IWA2nTE8A8XdW2RC9BUiq3GGcHnt6o7cqUln5BAhUwAuY3zNaBU+ukA
+         mBdr7dQqnNdbejo2QrlKqJsdtV7/j0rjizbo9FaiorMgJbxIo6Wx4ur+DsN3R+XDhlC1
+         gFuRaCSrSoeQ0ju1zw+Q4Y11xUtblS75QZn0+6QwxjoOX11X11uSe8AzuDk5gXe7O1D8
+         2mKPDn2gb8ndZKhRbDe66cg1ufDP7xFJN6QBhLwVsHpJ6l2EOcbq1pFeR3xMKmPrI/CK
+         lTPg==
+X-Gm-Message-State: AFuF++m1FzsuOPazgw/Bdd0iVCf3yeBB2XkifoicwNAESEmKtB+r3tGo
+	pAK/heAMwTGP6AHKqiDWFWAi8tP9Wg6+YbnXwHrjDjm+yRV4xn2qlIc8mXUKkEN6
+X-Gm-Gg: AYBFou3Iu0jh46PYgCh4SU+LTwJpegfXrjgTzLJQdtZujfF52+8AjXtgJ/mEB7GvGas
+	gAv10fn+/tvYBu561QfrTXcF06uETGIcNpdJXMYruHacaoGjp4NmgNDizpzIWGmP1aPMmAjPT3a
+	UmHerpraPS2GN4MAoJFQZyGr+33UbQg97Ag7IPqiO2ifvV4uqcT6q8YrKWV2yna9uEYU4Wdh6Xk
+	Zcs9wdvlO3n99c9UsKT0cmWJjjbOH/096kdG3JXbXcIHPJp5MAs9ArpyAXEO/avhJer4YG90oF/
+	qv9DEOsjNsTXgmM/Cg64wS9AJGG2a5GuwgDjpKbaWDaqN1iAsZxd3fU+kVNW+DXRSt2CjWDowFI
+	gopkeaekB0/+Tix7BSa/+Iblnn4vwMvW7FUAM/NzjgpXydcSabn5wJuM8rDDyZ2kwB9+FWB6ePl
+	bdPIvoyJ5JnUnrTjXbajRUjv+xs8zkgUqm+sn0cfo6L+NvdBPFHhHJYZ54etXspWcKysbPveWhe
+	3AyQ3CZ4aA+84COTX9f4h78qNByiDczNyoR4spBV1olnjls72KQo9QEjH7TEiuZrVU9m31Bo6+6
+	l0OxCvUuEOgCWgzLKa7uoyyVdUlO7pRksXT7PXRUI/NVqvH+8hOv0/dupAIR8uk4NeTOYAHajTr
+	ZvFh39GI5grh8lmZ9+hiJOD45jhnlqw+4JrMJbnLCf1Ds56bDryy7CJ6B7tqSYZ6iEqtellw=
+X-Received: by 2002:a05:6808:309c:b0:4b9:a8ac:487 with SMTP id 5614622812f47-4d72df6cf05mr7162390b6e.37.1790354158421;
+        Fri, 25 Sep 2026 09:35:58 -0700 (PDT)
+Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa (vpn-centralus-01.tradc-corp.com. [172.169.249.3])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4dbe7e76bcdsm2113204b6e.1.2026.09.25.09.35.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Sep 2026 09:35:57 -0700 (PDT)
+From: Tamir Duberstein <tamird@gmail.com>
+Subject: [PATCH v2 0/2] ci: use cmp and align job-count selection
+Date: Fri, 25 Sep 2026 12:35:37 -0400
+Message-Id: <20260925-ci-large-test-resources-v2-0-f632cf319756@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 25 Sep 2026 12:25:44 -0400
-X-Gm-Features: AclHuK8FbYDEnd18A2dOBR8ov4LRPOWxmUDq8P3utvNge-pLTaanjkioHu6zwdE
-Message-ID: <CALnO6CA_=OsznkQ4iT0vBMWf3L=bmVKMBdk1MTHQdaKEcKwn4g@mail.gmail.com>
-Subject: Re: [PATCH 0/7] [doc] Add new page on merge conflicts
-To: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, Julia Evans <julia@jvns.ca>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNSw6CQBBEr2J67RgYvuPKexgW2DTQBhgzPRAN4
+ e4OeACXr1JVbwUhxyRwPa3gaGFhOwXQ5xNgX08dKW4Cg450HhmdKGQ11C7knsQrR2JnhyQqSQ0
+ 2aLK2aEsI65ejlt/H8736scyPJ6Hf7/ZGz+Kt+xzqJd57/y1LrCKFukzjvMlMWmS3bqx5uKAdo
+ dq27QtfAJp+0AAAAA==
+X-Change-ID: 20260923-ci-large-test-resources-349cdc95f7f8
+In-Reply-To: <20260923-ci-large-test-resources-v1-0-c28416d59475@gmail.com>
+References: <20260923-ci-large-test-resources-v1-0-c28416d59475@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
+ Jeff King <peff@peff.net>, Tamir Duberstein <tamird@gmail.com>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=openssh-sha256; t=1790354149; l=3321;
+ i=tamird@gmail.com; h=from:subject:message-id;
+ bh=5/8gGmFUH0OyEU4x+ZluhNc9RJY4fkBxNR4sNEUOKfs=;
+ b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
+ MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
+ QAzpKMWfJQt8YgSGgs1Dc60epWpVmbBFmcrJCt5m0p2FO7gSYZqsNX6+MDctoZcxRN6EdTo4qpw
+ X479UaIAiMgs=
+X-Developer-Key: i=tamird@gmail.com; a=openssh;
+ fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-A big thank you for working on this.
+The first patch uses cmp for the huge commit-message output comparison.
+On this input, GNU diffutils 3.8 on Linux arm64 takes 5.276 seconds with
+4,199,924 KiB peak RSS for diff, versus 0.506 seconds and 1,264 KiB for
+cmp. Patch 1 includes the fixture and measurement details.
 
-On Thu, Sep 24, 2026 at 10:46=E2=80=AFAM Julia Evans via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> Handling merge conflicts is difficult, and currently Git's guidance on me=
-rge
-> conflicts isn't giving users the information they need to navigate the
-> process. As usual, the process I used to write this was to collect commen=
-ts
-> from Git users on the existing documentation, and then address those issu=
-es.
-> I listed the specific issues we're aiming to solve in the first commit
-> message in the series.
->
-> This patch series introduces a new manual page, gitmergeconflicts, which
-> explains the process of explaining a merge conflict with examples. It als=
-o
-> links to that new page from the commands which can cause merge conflicts,
-> instead of trying to reexplain the process every time.
->
-> This is a pretty big change, so here's a list of things I'm still
-> considering in the hopes that it'll help with the discussion:
->
->  * I wrote that git commit does the same thing as git merge --continue
->    during a git merge , but I'm not sure if that's always true.
+The second patch aligns GitHub Actions' Make and prove job counts with
+GitLab CI's CPU-count policy, replacing GitHub's fixed ten jobs.
 
-See also discussion in
-https://lore.kernel.org/git/CABPp-BEQSx4m3BcT28CpVGCtsH75+x3gmv4OJz_ecLVLx+=
-kBWg@mail.gmail.com/T/#t
+Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+---
+Changes in v2:
+- Replace the unavailable CI failure reference with comparison runtime
+  and peak RSS measurements.
+- Drop the file removal; following tests overwrite expect and actual.
+- Share job-count selection between GitHub Actions and GitLab CI.
+- Use native CPU-count queries on macOS and Windows.
+- Link to v1: https://patch.msgid.link/20260923-ci-large-test-resources-v1-0-c28416d59475@gmail.com
 
->  * Right now we're listing git merge, git revert, git rebase, git
->    cherry-pick, and git pull as commands that can cause merge conflicts. =
-I
->    believe that git apply and git am can also result in conflicts when
->    applying a patch, though it's a bit complicated because applying a pat=
-ch
->    is a different operation than doing a 3-way merge and the tools availa=
-ble
->    for dealing with it are a different. My thought right now is to avoid =
-the
->    issue of applying patches for now (because it's a whole can of worms) =
-and
->    instead just try to not imply that this is necessarily an exhaustive
->    list.
+---
+Tamir Duberstein (2):
+      t4205: compare huge output without diff
+      ci: align job counts across CI providers
 
-I think that's a good approach!
+ ci/lib.sh                     | 16 ++++++++++++----
+ t/t4205-log-pretty-formats.sh |  2 +-
+ 2 files changed, 13 insertions(+), 5 deletions(-)
 
-> Also if/when the git rebase --squash changes land, then we'd need
->    to add git history to this list.
+Range-diff versus v1:
 
-I imagine you meant history squash? I also thought that history had
-punted on how to deal with conflicts (rejecting any operation which
-creates them) for now, since we don't have 1st-class conflicts =C3=A0 la
-Jujutsu.
+1:  5babc36eb5 ! 1:  b48c86e164 t4205: compare huge output without diff
+    @@ Metadata
+      ## Commit message ##
+         t4205: compare huge output without diff
+     
+    -    The huge-commit test compares two files with a line larger than 2 GiB.
+    -    In Linux GitHub Actions jobs, git log produces its huge output but
+    -    its subsequent diff process is killed with SIGKILL.
+    +    The huge-commit test compares output containing a line larger than 2 GiB.
+    +    For two identical files containing 2,147,483,649 "1" bytes followed by
+    +    "0\n", GNU diffutils 3.8 on Linux arm64 gives these measurements:
+     
+    -    Use test_cmp_bin to compare the output byte for byte without constructing
+    -    a line-oriented diff. Remove the two large files after a successful
+    -    comparison, releasing more than 4 GiB before subsequent tests.
+    +      Command               Mean +/- stddev       Maximum RSS (KiB)
+    +      diff -u expect actual  5.276 +/- 0.572 s              4199924
+    +      cmp expect actual      0.506 +/- 0.099 s                 1264
+     
+    +    The test needs only an equality check. Use test_cmp_bin, which runs cmp,
+    +    to compare the output byte for byte with less time and memory.
+    +
+    +    Assisted-by: LLM
+         Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+     
+      ## t/t4205-log-pretty-formats.sh ##
+    @@ t/t4205-log-pretty-formats.sh: test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'se
+      	git log -1 --format="%B%<(1)%x30" $huge_commit >actual &&
+      	echo 0 >>expect &&
+     -	test_cmp expect actual
+    -+	test_cmp_bin expect actual &&
+    -+	rm expect actual
+    ++	test_cmp_bin expect actual
+      '
+      
+      test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'log --pretty with huge commit message does not cause allocation failure' '
+2:  0836f6b372 < -:  ---------- ci: match Linux jobs to available CPUs
+-:  ---------- > 2:  8ec0308f6a ci: align job counts across CI providers
 
->  * Instead of creating a new page, I considered using an include to have =
-a
->    "handling merge conflicts" section in git rebase, git merge, etc. Merg=
-e
->    conflict resolution is complex and it's very useful to be able to incl=
-ude
->    examples: this version ended up at ~300 lines and I think that's too b=
-ig
->    of an include, especially for short man pages like cherry-pick
+---
+base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
+change-id: 20260923-ci-large-test-resources-349cdc95f7f8
 
-Sensible. I have often wished some of our includes were actually links
-to separate documents, to keep overall document size down.
-
->  * Explaining what "ours" and "theirs" mean was one of the hardest parts =
-of
->    writing this. From polling Git users in one of my many informal Mastod=
-on
->    polls about Git, my understanding is that Git users are actually
->    relatively unlikely to actually reason about what "ours" and "theirs"
->    mean when dealing with a merge conflict, and that most people prefer t=
-o
->    get more context instead, for example by using a mergetool or by using
->    diff3 or zdiff3. I heard a lot of "I can never remember which is which=
- I
->    so I don't even try". So I put the information about what "ours" and
->    "theirs" mean relatively far down the page (with some cross-references=
-),
->    so that it's easily available but not the main focus.
-
-I think the biggest reason to (ahem) reason about these is if one
-wants to restore --{ours,theirs} or restart and try again with a merge
-strategy -s {ours,theirs} [rare] or merge strategy option -X
-{ours,theirs} [less rare].
-
-But, leaving it out of focus makes sense to me!
-
->  * I removed a couple of mentions of the various _HEAD references. It's h=
-ard
->    for me to know exactly where they belong because I personally have nev=
-er
->    used MERGE_HEAD, REBASE_HEAD, ORIG_HEAD, CHERRY_PICK_HEAD etc, and I
->    don't know how they're meant to be used.
-
-My most frequently use is "git show REBASE_HEAD" (which is what "git
-rebase --show-current-patch" does, albeit with more typing). :shrug:
-
---=20
-D. Ben Knoble
