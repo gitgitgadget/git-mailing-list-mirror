@@ -1,124 +1,142 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy2-f42.google.com (mail-dy2-f42.google.com [74.125.229.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8DD3B6367
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 17:25:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E562F3C37
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 17:51:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790357133; cv=none; b=ACa4F6zn8evOpIYWQWHI9U+hyT9m/VgUYpno2ymkWi2P/bCbjEM6OlKyYNTrrWxte3uG17WFhWFArcH5WAn3MEcqC4snjVx9kssMowUYgD82vsIDTmJvTXY9e1AnCcbNEFjhxWEqZ3QsC/Qi/RGhIwalZIhR8Oie757LH0OY5oM=
+	t=1790358676; cv=none; b=WKi3e1AXaftavEXd63femchYf29DbqVgWyR7rIkSL+Fd7lpeImgSeY3v0I1e4PGjslahu3oc0AOlx8kgM68afnAIRCwUPl3MkoAzeX1ZZhK0dzMp6rr3VnFyapMfj30G76W8FLC4nCljet5QFBiV8cXNk7n+Dj8Jfh+IKAm39TM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790357133; c=relaxed/simple;
-	bh=QgYWryX3jPyPkB+cVLpzJK9NLVch6DXZYXiorIMONO4=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=NMk0bvyigh/aeULc3KLWM2x3v1ab3q+JV1XhY2+oZgJQMVXEggSpUsxlfR6zo7fpuyAFtZZJz+PkI/1rUzYfGtd49uLj44s91ba7E6hsmcxZe/Sda3JTxMW6FCvVDC9BBeHwJEq+BNH6YS9BfnZvdfN5XLTxfYOrKO9WeM/yqoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=U4GcbOzw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I6jXq961; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1790358676; c=relaxed/simple;
+	bh=5XVkEnH/KWtcRDg04g2sQKdR3fcTYITuvWP8MI7APaY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=mNYjsYm1X5U6SJoY0yFgw6rGhLWnwTdIsD5LAL1q3BLN+jI2CsB7h3Lhhzl7F5tkJYnKK22PAfkkFa5EWzFo5FSS7jhlf7Q2Tu5vdi/cuLsHbZIbaJfoYkntF6BUsRoPD4gPiRrzvOp5HmdyCPK0sHPyxewq5fI1sPzIQRzSypg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LxXDNjVg; arc=none smtp.client-ip=74.125.229.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="U4GcbOzw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I6jXq961"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A4E671400122;
-	Fri, 25 Sep 2026 13:25:30 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Fri, 25 Sep 2026 13:25:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790357130;
-	 x=1790443530; bh=995iGsrYYD1WnQRGdkKDGekV80deF8N9YqKA8OH2roQ=; b=
-	U4GcbOzwzGuvJUX/uaQpyo1V55LDVpdnV0Z8LFVHWjURCPwceqpfR8hDPVXlPrib
-	L9lWHNqLtL1qTFRVacRoqdJlEhLM5AwVX2f3eLOyaDJ6XBDoxr4ZuBy8vUTwq3h4
-	07G5936M+mFs0u7QmWWbF1hHljfGYgPd6FuNutsvLpNxACeB7W0750k5F0y9DRE9
-	SdqaOJfrN/Er+0h1IEiGKlnbH1glJw2DyaOQAoANGsVQI+2aE56NDYLXXDRf3uqE
-	T4+Ez1imNOMy4JtqVkUyXlsWqp8srCiFZgKcVN3G48QD6M46v8IwPgiO3JaheAM/
-	EDdPrhsYawAWCeajDxYOCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790357130; x=
-	1790443530; bh=995iGsrYYD1WnQRGdkKDGekV80deF8N9YqKA8OH2roQ=; b=I
-	6jXq9616xQ4WE7cZe6QUM45J5Q+3w4nb5A8RRBSgrASwWTY0hGC3cBY7UM0FG1H2
-	pB0XTeCKhS6guOdNYqW+U1bIx0PPtrZXNgzqhvsblrzAWd0LRtmIkUuKvop2O5GS
-	izJyWxN1bFwjYRHkFbSHHQ6ZrswdffMtj7PeC4qRBanrKrqKp9g0uTsgDuEHpf2U
-	RO7Ti+PFRIvS7zh6RXCpRRXErosgEoSuNDBZhzrSAEZoSkgxzH27yk7hnG4C5wPf
-	JzbLcufWObH8q3xlz6wcMBnpdEGPfRsP+MEyXlNiOihD6qJburXtcpNjY9L5nw0h
-	Y3erl6jWo6tkcMFfTB+dg==
-X-ME-Sender: <xms:iq62aj1mtpNo00nNykZqfo9oD4dqajx258x5XRbMgi6dAKH435ZmQQ>
-    <xme:iq62as4pT8bTwqsx8qO9W6Q-vMcr110hIWU523Cs7Xgd-SKkHOzu7AUF9b_9pPE3O
-    EZJ6LiBW2nBQfp8rXNnpml1wydVh_hG_0hZbVhzuY-IBvQa6V50jCzV>
-X-ME-Proxy-Cause: dmFkZTF7Hb/lCMuIwar/hGUiRVA2a4hHhKyj23sg8puoXbmuxtzUBE3OW/DyMpkPlN4wTT
-    nb54JAAEzjLBSCRstDYr8OKmNUqtTTRWcSFBqiUpX6gNrE/GEYyNH2r47LUJTk/ieNlour
-    /No6KDqtkSxPz7/bpWKOlHMZ68NeGBfOlzc006BXj+ppK2RcDK866BaX/hYzFORlQobkMX
-    jWu9A2mpCbRDyh99sSlAomRT4EtjqQSHFc0y9DySe5oOSF/T0G7fUi4X8QhJhgjzLiQHoo
-    FIxQzLWx4OwuSPODKeArIJQxlKe8H9k0QqNWtJJsfwnsl7G8VSIWl/oQjHc+PSReny2NY8
-    iZUyaOztjuF5eBeqgW811cAM3He8T6tGCCzIrf8NtPiyXjpNfNQLXemPKOLKd3KOlQWGBM
-    JAkbZw8g7MEnvaGG70+jzW4x4BIFjFf8X1Tg37LX0P/PRtqeaF2jgWw+Rnp1s9rxXcSaLy
-    wdapp0ENfqKOysua9BEAolsmz786ctSvz7Y1eHUc1BcKCV2aHSk1M/93oS3GIIIscAjYp1
-    sb+G4ruCGKQDCOPOSW0Uu1O9kyazRm2WkXlo/OKIk/IURqDBO+FbkhWzujuAlfW4xEAT6m
-    57CR/7vprNctK1MfZXQN/0HJvnoY6ccMBoXfs8vA20YD+dUEUrHgse/yBFwQ
-X-ME-Proxy: <xmx:iq62aqjWCh0GJHGWsTOctndF_nJ1_RD3T2t5FjOvlhrojmyptsf5dA>
-    <xmx:iq62ao-eMtVABd7lD35HXk5xlyuklZpOANSBPznuXu377V0sXLkkfQ>
-    <xmx:iq62app6nFhpY6-q3KOGeubatfDdZLjsEu4uN2PCgVoWNxEPuacTGg>
-    <xmx:iq62av96VoACU_7JkpTWD6JICBOXtRAD5VyrV6hVgmiWbodlX55IoQ>
-    <xmx:iq62asoxP2aE2u9QSGkUrOoYKQOh-6di9DJPD8PmN2dB9fyUsClW0LWu>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 75DDE780076; Fri, 25 Sep 2026 13:25:30 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LxXDNjVg"
+Received: by mail-dy2-f42.google.com with SMTP id 5a478bee46e88-34182b58c7eso787736eec.0
+        for <git@vger.kernel.org>; Fri, 25 Sep 2026 10:51:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790358674; x=1790963474; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=z6MdepKHqJjj3QQ5iP/ezKbO3O2yTcfxSr2Lg4OqU40=;
+        b=LxXDNjVgg/tlr+yZtz+KPK2q8R2RRv5sn8xt7xlqeenmv6CizJCfw/hTCbBpiHcuyX
+         p26Y8TwoNKWyBWfUsrNl+SKw5BTnAQQcpM97XPLtiAOaFHg6IdbNpwQsboI5GunA2uKu
+         UtYx3GNFkhWdVVUs1GOOWYURSZjHUFYCde2wumAaGCqnCQht0S4FAENxFh7KSTGlMOsj
+         4+Qm3HvZ6bICqoKuZ9HYcAHNMnT2SmMBbJ4G255FXFH/oZoJkKNUSuXRoX0nzlcyBiNw
+         jAo9BsmKGOtBWfnDtA342vexuDCu8L0xJj09w6FBWa8YFW9fRUy0m/OLjbuujYbAR4ix
+         E+kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790358674; x=1790963474;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=z6MdepKHqJjj3QQ5iP/ezKbO3O2yTcfxSr2Lg4OqU40=;
+        b=nRzMWYVEOvqThAAmibGbfs+05+Tv+heu3DwT5PjI16yiLJOL3guo+kqr+yGdrI/qTy
+         Xmb8SCWoAD3T/SxPNz78M/R9IQwYGj3IfrLraFAGeESs8H9jAL47kIJ9xeABKWWKfKHg
+         TtQ01gdqC/0j27JN8smcIdOnLO6uHVjbk0cR1pwQoc1Ku+njaQTci53hZ7HRXn9t2xu/
+         EPtjRE+frhkyL41yfLgkDhs9S6KB/iwf3FSvemAkYfhYXJzacCjqNiIDW33oJ6SCHR2C
+         nDQBLcgOKr1hfXR8RL4HnGHQlid/8oTV05EWF8h4eGqUPHX+9GqmIYM+4d8tcLJ7c6hB
+         Ma4A==
+X-Gm-Message-State: AFuF++lVdMdki4u2Zo4qDrXMMoWUBPOR9jjSIG5nMUDguHkXmiLx8v0a
+	f4mo+2UYmozcScAiHtUgB//moe1S/OeOoCM+vP9V0ywuYACzakuHUckt
+X-Gm-Gg: AYBFou3tx/8cCDmlphHuHyo/0Lmnd4dA4iTBZDlrEeeMRVpXJeU3UkhxDG5hBHZR02d
+	eSeNuD9AH4TBGkAgLW8XUNghD+CNCIJ4XEdOnCAAl8vk1BJFPePc6ljeP29OMnj114igviUYxIy
+	YMc3wRwRRdpdXt584zoIXswiQ4jpGvuEjepgD/hPlB6hW15vJ/NFU5seK9lMxRLFbepyj4I1CU5
+	1TTFQ+8WlVDosvbZ8m/lgqGGmG0tNVlghXCxd6y3HP+ED5xGFdeXkNeYhIpcjjqPnFdksEHTril
+	/l5DpRTFS3wVjx0o79zLxKMdG4nj6GqpBoizms49NAv1I8RcDxKqe53M90pyKFKbk2K/lVYwgBV
+	Anoaa1tl53hCplTcrM+FqlGEigReOC6ZdChpGzB42rfizd4Oipen+uhD97agQbec5ziuXCLD6IX
+	SzqxuqeLf8yeXHF3Cpz4lA02ObpBogaGntzEvOQVVyFO++K992jBoYdeGZD6ZB37xr8JGPRIapw
+	kHVbNi2/zkk0YFU8ww+HhWfy0StPjsBzAH1uX+JlExUXcxXc3I7QA==
+X-Received: by 2002:a05:7022:282:10b0:139:f6bb:c8e7 with SMTP id a92af1059eb24-146ce29fdf2mr729965c88.8.1790358673656;
+        Fri, 25 Sep 2026 10:51:13 -0700 (PDT)
+Received: from ?IPV6:2406:7400:12b:61a6:7269:1fbc:67b4:5dff? ([2406:7400:12b:61a6:7269:1fbc:67b4:5dff])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-145ad4028a9sm5805161c88.11.2026.09.25.10.51.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Sep 2026 10:51:13 -0700 (PDT)
+Message-ID: <c7808d4b-36f8-4583-8836-7b7d8bc24905@gmail.com>
+Date: Fri, 25 Sep 2026 23:21:08 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AGBSJuH7AubZ
-Date: Fri, 25 Sep 2026 13:25:10 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Message-Id: <4c9f0480-768a-48ba-9753-b4d34188b1a1@app.fastmail.com>
-In-Reply-To: <xmqq7bk9wa4y.fsf@gitster.g>
-References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
- <pull.2416.v2.git.git.1790297546771.gitgitgadget@gmail.com>
- <20260925082723.GB1493716@coredump.intra.peff.net>
- <bd5d9451-ac5a-4274-9a7a-57ae99864fe9@app.fastmail.com>
- <xmqq7bk9wa4y.fsf@gitster.g>
-Subject: Re: Rewriting the Git tutorial to cover less content
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: [RFC PATCH 2/3] setup: introduce new helper
+ 'is_git_directory_verbose'
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git mailing list <git@vger.kernel.org>,
+ Karthik Nayak <karthik.188@gmail.com>
+References: <20260924120502.2642141-1-kaartic.sivaraam@gmail.com>
+ <20260924120502.2642141-3-kaartic.sivaraam@gmail.com>
+ <xmqqcxu2z4cy.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqcxu2z4cy.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-> Omitting some material that is covered in the current tutorial from
-> the new one would mean that the topics covered by the remainder of
-> the current tutorial have to be sifted into three buckets: one that
-> is to be discarded because it is no longer useful to the target
-> audience, another that needs to be described somewhere in our
-> documentation set, and the rest that need to be taught elsewhere,
+On 9/25/26 03:41, Junio C Hamano wrote:
+> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+> 
+>> diff --git a/setup.c b/setup.c
+>> index 0d157ac254..b3b53a1cfc 100644
+>>   
+>>   	/* Make sure it is a "refs/.." symlink */
+>>   	if (S_ISLNK(st.st_mode)) {
+>>   		len = readlink(path, buffer, sizeof(buffer)-1);
+>>   		if (len >= 5 && !memcmp("refs/", buffer, 5))
+>>   			return 0;
+>> +		if (len == -1 && err)
+>> +			strbuf_addf(
+>> +				err,
+>> +				_("could not read the symlink HEAD at '%s'"),
+>> +				path
+>> +			);
+>> +		else if (err)
+>> +			strbuf_addf(
+>> +				err,
+>> +				_("HEAD is a symlink ('%s') but target"
+>> +				  " lives outside refs/"),
+>> +				path
+>> +			);
+>>   		return -1;
+>>   	}
+> 
+> All of the above (and below---ellided) look fairly funny way to
+> indent them.  If you are trying ot match the style used in the
+> existing code around the same area, I wouldn't complain, but I
+> didn't look beyond what is visible in the patch.
+> 
 
-I do think there's a cost to keeping guides around that are outdated
-and difficult for users to understand.
+Indeed. My bad. Does the following look like a good indentation style 
+for shorter messages?
 
-For example right now `man git` says:
+	if (lstat(path, &st) < 0) {
+		if (err)
+			strbuf_addf(err, _("could not stat HEAD at '%s'"), path);
+		return -1;
+          }
 
-> See gittutorial(7) to get started, then see giteveryday(7) for
-> a useful minimum set of commands.
+... and this for messages that are a bit longer:
 
-This is a nice friendly statement, but in my opinion `gittutorial` and
-`giteveryday` really do not live up to what it promises, and I think
-it undermines trust in the documentation.
+	if (len == -1 && err)
+		strbuf_addf(err, _("could not read the symlink HEAD at '%s'"),
+			    path);
+	else if (err)
+		strbuf_addf(err, _("HEAD is a symlink ('%s') but target lives"
+				   " outside refs/"), path);
 
-> though that may be beyond the scope of the project documentation
-> and better left to other projects that produce "books on Git".  It
-> is somewhat unclear from your description what your plan is to cover
-> other topics that should still be taught.
 
-I see a couple of possible strategies.
+-- 
+Sivaraam
 
-* We can write new guides which are clearer
-* We can link to outside resources (via https://git-scm.com/learn)
-  which we think do a good job. Right now that page is pretty
-  out of date and it would be very easy to improve.
+PS: I'm not yet very sure if my MUA will send this as intended. Will 
+resend if it doesn't. Excuse the noise in advance.
 
-I think a mix of both is probably most realistic right now.
