@@ -1,119 +1,110 @@
-Received: from mail-dy2-f12.google.com (mail-dy2-f12.google.com [74.125.229.12])
+Received: from mail-yx2-f43.google.com (mail-yx2-f43.google.com [74.125.224.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4165D3B71DE
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 20:21:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45353381E92
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 20:26:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790367720; cv=none; b=qa5KUPgILtqqnk1qPVf+se/7f4fy2JbEoUmhMZpLxPpRRKprIrk4D1M9KUB3ErMM7DgIUMK4MMhdrKqqHtL2BaJ4hZ9M7v2oAaF3ZCTTQpQKSg75pJmBnSrHz2c7jR54DstxNTTsjgejuiXRTGRYv8TofE1r7nXOs7+lGiwrbFk=
+	t=1790367985; cv=none; b=hx2xBuxEHJXg8H1iwslt7sKo+4AbzD45VVXRNuiS60kdHZfS725m5GM394aZWcBnmkttkgHsPU76QquGh0U202bBBza2QVnJzvi4Ag27UOs+l+styvXIpmiCrvr5ejbwFnw3N9H+GW3/Yxw1bfgqSXtmjZsuXrEJpEUWUKYPbp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790367720; c=relaxed/simple;
-	bh=QLbpxrX/EAMkI9yseFQc22AIC8M8pEEogXQKramenN0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=Ilhbl9q3oQFm1fZ0o9BM48oswJb2SDw+29nAGA8cHH0c6SuTW2A5hhIh0Pvbx1cSypWuxT1xI6jYMt3ssskiuGq66WV8H9TTEzPUwHhzINWZHfW6ZujanfJ/1gy2bvtw88wygchvR5ZLEnPrK7h5tV48ItX6O3H0wEt2GN4lYGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OF5D0qV6; arc=none smtp.client-ip=74.125.229.12
+	s=arc-20240116; t=1790367985; c=relaxed/simple;
+	bh=sTX+QV8jRGSGcCTK5HVQhntCC0eLZtpU0688VveyO2k=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=bjPCly9n2sd/Z85HyAK25JPLFCIu7hY5yS8NyilmHQOvoJjGo1vj1XdEVU0p0vnTE7aJU3W8wGTK+E+qFvUwZNlfEJB5UxTjfRlC6kmTZp9BXnfcaSNDklPGQZGEufGJglz1K7XT6rZ0hgAwPBFwM6S0gkM8YBK4rvjVuk24JLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RMxpU+rl; arc=none smtp.client-ip=74.125.224.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OF5D0qV6"
-Received: by mail-dy2-f12.google.com with SMTP id 5a478bee46e88-3381a6a05c9so790071eec.1
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 13:21:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RMxpU+rl"
+Received: by mail-yx2-f43.google.com with SMTP id 00721157ae682-895eaf31683so14456967b3.0
+        for <git@vger.kernel.org>; Fri, 25 Sep 2026 13:26:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790367718; x=1790972518; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:cc:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=/aWLSzYAAt1xlk90XaFzYn4S8LzTFnQUf9vwttB+bBo=;
-        b=OF5D0qV6iOD7S44+cRQb2Yb6sPsI2AC8hkFw1NWMyt2Eb1ofB5XTMyTM5PyiXLK2xG
-         q8yoOtslMRuO75Ql5Vu9tizkRq142XE2JIq7cJrZZ1CQ6EGbqvK9KbW8TDw/tPW5YT5M
-         BjY8n/Ww4Pla6P0bb7fdkGyEQ8IhMJBK+4+ZXW7S9wmodtGJ2arlnyx02Vd7+9zC74BS
-         TYsdQyyO7rU2vkok66h5qYcQ6n4XalpQ0QHnIG7cMud2XMPSgJaOQ4UDEPc289kRGtzc
-         LR2qA2idgWEFIl2P4hOrZ726qTBKmeaCnxImmxBndivpum/JXymuNY9TordgrdiG4EjQ
-         mB+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790367718; x=1790972518;
-        h=content-transfer-encoding:content-type:in-reply-to:cc:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1790367983; x=1790972783; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=/aWLSzYAAt1xlk90XaFzYn4S8LzTFnQUf9vwttB+bBo=;
-        b=CdtygFUOtpEe9wsB1//zk9GSOaHAqnv+tN4SudsknaMwo4f+IzT1iRdZKVLt3gYB7O
-         IxWiZLSjzYfVX27JNI2PmfN1BnP4nXvq1V8NEdxIkWqKTCez6jwXeCWNlMVxGLrjUDb4
-         EMOo3YxRksqgRuis+eu1+aLdApYDzR3rv54xQmFOtBSQBQEHCp36IBeNNNsRpDeI2mFp
-         WDluao2CBbByRqmPsVMhz4aF5GYUvn2tV++FRCDKPio5b6Lfq099j3wm3dV3szTcZa6n
-         ZcM5cEtJiduBp1/Xfcl2CZQogQiVBfjHp3gFo21cXKLDfv/qLdcJ2+VInS9jqkmnzsOa
-         M43g==
-X-Gm-Message-State: AFuF++n/cFacDvoAMJ/CsWvg4RbAaOITTxzZDoexER9ki5V7DBYOpkky
-	C/+znLdNzbPLoRXdlV+rqRoMbuJT51ZS7gPqVdDsXZcUG9tqB8MrIUxz3s/UtdJXPGY=
-X-Gm-Gg: AYBFou1vM3HM3xfc52TZY2KLNmp9lNc1hXTrEO/2lieqPxrLovYcQrHRiR1lWzOd1SV
-	3g5w152uUBqcFqDnI3NEvswWlB2qQK5hAlwPId11WpcOrORSvmFtfjRFqpYIMJjq7RifmBtDye+
-	aDESjFImB7NBzN9mAszBm5B/juG2HAtwXhRNv0DWdV23ZzQyJTfTKlcK/YZQ+u9gnQKppc31v9s
-	3NUJL9jqfm9Fo0zzVxJcgNDBkm04DU19AVz0/RJZSbOBHrld+w5g/mRv8fQf+disfXhEO7VNwOz
-	Zt8KfwwiFGMhDYewlFuVwEtAQ8fw2Rtcwg7QAVrAZLbBs6JgDMoBeRyetr1USFDbr5aCwH0PFX1
-	K6cz67ZoLdk0XKsBzTy+IaNNpaghoZMSrErT/wz22bnsb0nhXIS7uby+T1U3pBSpCm4tMPUWEdo
-	azaw5XzSlrmC7O6UKMduhbtgqEdRfjMLf4xlUA732cgJRAR9rCew7UmFBrQ11cdqmOPo/4AzZOi
-	v5jx8FTLxmluBgI9SsZKCcwWoPCzfrZiqN5VLPW8rB2wktrMmJzRg==
-X-Received: by 2002:a05:7301:18a9:b0:33b:fc17:e691 with SMTP id 5a478bee46e88-342700c7a9bmr986140eec.2.1790367718177;
-        Fri, 25 Sep 2026 13:21:58 -0700 (PDT)
-Received: from ?IPV6:2406:7400:12b:61a6:a5bd:5e99:a91b:f02d? ([2406:7400:12b:61a6:a5bd:5e99:a91b:f02d])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3414485a9cdsm8574710eec.16.2026.09.25.13.21.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Sep 2026 13:21:57 -0700 (PDT)
-Message-ID: <63798ed5-3fea-4938-8b0b-910d5f1c7bf0@gmail.com>
-Date: Sat, 26 Sep 2026 01:51:54 +0530
+        bh=yx7J/KTVkLO6BnbDh+NqszbsSkYWQekGwz11+1/ZNQU=;
+        b=RMxpU+rleB2+Fczto7FeBDyf9clx1kr6w1qrK76wbAPOLUAJ3YcnmFSyFg50jyHsJm
+         2+k/WCEyBA/Sa8yivZ3Xw7X4CB5iUKOUXv/aEII4zHlQjPpyGmPS1gjDuR0keVrW8Djd
+         Ur1fyxa9GfHwMrVZKK9V56QkBFYWY5Nfjct+ClDVoI9fXJOBoXObhSJ0DcM8XkT6ihkk
+         4OdEgMg/jLW0LYqbBDFSbM4yZGXUGGRGwfC8FBK/u/WQGYOyRV4LGMVMSqfccFlF4kiL
+         nnmeX6Z6b3aVQ2M+PIzz3cER/xWOrbWKfyVtALtbGOyGH0Razj/edAuDl4FJxsKRjMXf
+         Qzdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790367983; x=1790972783;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=yx7J/KTVkLO6BnbDh+NqszbsSkYWQekGwz11+1/ZNQU=;
+        b=KiQmwSRMLLXvfFcDgJT46Km3tFPX/s2fyhux5LSGbOaM0eyreJF+4lcUSp9bbuHXFi
+         k4Rm2qbgixCe2G/3W0mFVIM7czX9z+RXuUaFmIvXtyWCmi4s9qwXzHQw76T7vQ5m4ybK
+         mgttwwcR4vrDYn7+KQ7j5PRuALNWI29PaXsqbI/LtnJdegGr5hDXeZ/C56NQMWZHx3b+
+         BF1Qy7l2ul1kqX0Ogp8zOAAO4KBrMLT83h1t/HoXotbaczsGm8fmsHVZP1K8KXHirM90
+         EUjg8sTkLOzMctHCPx5icsMBkvaD1rRR8HRvMosfcO3F05vAU69YhlAJxwIY4mDfDT/X
+         LrHg==
+X-Gm-Message-State: AFuF++nLNK4uj7NLECFsoewfrgDNsX/PZB2nrKEP795thzMiW66cSPba
+	x/7ALteRqIextWfD50xBUDuPG0abWmzwWYkZmdmwqI5YgB6/Zhgr1WtS
+X-Gm-Gg: AYBFou1wseMEUXMqZb6GGRXY52z5dHoRvogY19gIfv5eJCVRyDv+rhzvloPUJ9J2Mvc
+	OpYUeYA96WBd6e7bt+EmamI2tkmHK++ZmiAVuYckGf024pj1xrBGQr8p3GyVhQETzL1LkBduzlD
+	9QhfKgWXBhkLWKZoP4AYQO593EyM3+XmP5mhtgyuUVLoqoOtSrnqKgYZISKwPeDGHvtm7ojgZHi
+	8mOgrHljT/NbRxO3shVxk/HmZ0/XJfBKqq3OC99oineTIdHzq1//P2M+nzXIk5JLwDidQhucf8M
+	5xcRLUxmcLfqy8QP+SSt3qcGLKUJAEvRPZbhSMah73DzP2uI7kZZLcgrdJs6NBEOWkUHTrOTeF5
+	UvjTv3hZMhiNeewFBJ4be6kDFgHbigcoL6OHeo8XLpeP1GcyJH5Fl5OmZxV6xP2o+yusoNNoNfK
+	qjHru3U3gSUxdvfzkIQ4AM0aVOamBIGw1XRgAt/V7JXNq0ueirxR/6zKKeAw2A5bvL0U2Boo6B7
+	ULfycSSb092Vruote1GsV3tFxvC9Bt6c3pV9iL6ShnfLC0ke7u54TJ3puwJm7Rxm9EfJcPnh2No
+	TciaKlVoROeAevhIGh3A8BoOzj9ukSOsM7pXr4Jwr8Vy51x3
+X-Received: by 2002:a05:690c:a753:b0:8a1:84eb:f9b7 with SMTP id 00721157ae682-8a86ca4d1f2mr9259097b3.3.1790367983008;
+        Fri, 25 Sep 2026 13:26:23 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:9092:700:f9a9:65f6:303f:ab61])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8a860e5b296sm13436687b3.8.2026.09.25.13.26.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Sep 2026 13:26:22 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] builtin/init: refactor messy creation of leading
- directories
-To: Patrick Steinhardt <ps@pks.im>
-References: <20260924-pks-create-repository-stateless-v1-0-11499557cf31@pks.im>
- <20260924-pks-create-repository-stateless-v1-3-11499557cf31@pks.im>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: git@vger.kernel.org
-In-Reply-To: <20260924-pks-create-repository-stateless-v1-3-11499557cf31@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] ci: point leak-sanitizer failures at the actual test and error
+Date: Fri, 25 Sep 2026 16:26:11 -0400
+Message-Id: <09549A0E-D5FF-465C-A933-F144A19D14E4@gmail.com>
+References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+In-Reply-To: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+X-Mailer: iPhone Mail (23D8133)
 
-On 9/24/26 14:49, Patrick Steinhardt wrote:
-> diff --git a/builtin/init-db.c b/builtin/init-db.c
-> index 5c22eae2f3..e45268f1ff 100644
-> --- a/builtin/init-db.c
-> +++ b/builtin/init-db.c
-> @@ -131,15 +131,7 @@ int cmd_init_db(int argc,
->   	retry:
->   		if (chdir(argv[0]) < 0) {
->   			if (!mkdir_tried) {
-> -				int saved;
-> -				/*
-> -				 * At this point we haven't read any configuration,
-> -				 * and we know shared_repository should always be 0;
-> -				 * but just in case we play safe.
-> -				 */
-> -				saved = repo_settings_get_shared_repository(the_repository);
-> -				repo_settings_set_shared_repository(the_repository, 0);
-> -				switch (safe_create_leading_directories_const(the_repository, argv[0])) {
-> +				switch (safe_create_leading_directories_no_share_const(argv[0])) {
->   				case SCLD_OK:
->   				case SCLD_PERMS:
->   					break;
-> @@ -150,7 +142,7 @@ int cmd_init_db(int argc,
->   					die_errno(_("cannot mkdir %s"), argv[0]);
->   					break;
->   				}
-> -				repo_settings_set_shared_repository(the_repository, saved);
+
+> Le 25 sept. 2026 =C3=A0 14:59, Harald Nordgren via GitGitGadget <gitgitgad=
+get@gmail.com> a =C3=A9crit :
+>=20
+> +finalize_test_leak_output () {
+> +    test_leak_summary=3D$(head -n 40 "$TEST_RESULTS_SAN_FILE".* |
+> +        github_escape_message_)
+> +    github_annotation_ error "t/$github_markup_script_name" 1 \
+> +        "memory leak logged around $this_test.$test_count%0A%0A$test_leak=
+_summary"
+> +}
 > +
+> # No need to override finalize_test_output
+> +
+> +github_escape_message_ () {
+> +    sed -e ':a' -e 'N' -e '$!ba' -e 's/%/%25/g' -e 's/\r/%0D/g' -e 's/\n/=
+%0A/g'
+> +}
+> +
+> +find_test_case_line_ () {
+> +    grep -n -F -- "$1" "$TEST_DIRECTORY/$github_markup_script_name" |
+> +    head -n 1 | cut -d: -f1
+> +}
+> +
+> +github_annotation_ () {
+> +    echo >>$github_markup_output "::$1 file=3D$2,line=3D$3::$4"
+> +}
 
-Even though this patch does not aim to do so, we lost a bunch of 
-'the_repository' references with this change which is nice.
-
-The patch also looks good to me.
-
--- 
-Sivaraam
-
+Without commenting on the rest, introducing the helpers first might make the=
+ important patch easier to read. =20=
