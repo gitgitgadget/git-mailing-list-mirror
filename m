@@ -1,69 +1,69 @@
-Received: from mail-oi2-f13.google.com (mail-oi2-f13.google.com [74.125.231.205])
+Received: from mail-oa2-f12.google.com (mail-oa2-f12.google.com [74.125.231.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96ABA4D0A1C
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:36:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.205
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FA54DE73F
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:36:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790354163; cv=none; b=cI9y6IkvQES3oFHcfB936IKYLnhaRbX3luyOQFcNhxFxVMCYDE1f40UpIQlLCebmyUjI7D+rW1JEtUxnYC3enUaEcv8xlqsKTZFeL7lQ7dulelIN+qi+eSQThDpg5DXel+vi3u9ZqQQQnQCN47jTDWNpnLgpiZjuO7Fuq6X6L3I=
+	t=1790354165; cv=none; b=jes+L0Ur7UzbiJOzf4H6/GF6C2AXn1Qp9OJCzYZ5KelFiv+OeeO/raYZqhIJullEoMwxCrojcOnJORi//WtXudkBcLGhGi1gZRfyCXbJHfn78a9M/+CB6CrmsZkWZWwVu5JgTmMp4itb28BNTVOJVZY3A9Nd8yjIp7wVwPnAfEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790354163; c=relaxed/simple;
-	bh=jlnu3b35JFYy/TVX+jWPGjBnWu/REdsOcCfy6nFzHNo=;
+	s=arc-20240116; t=1790354165; c=relaxed/simple;
+	bh=uWqEt3TgPcKFcBx1ECxpMbGZZGwZ2GHj6CaNVP9kEFA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lgZhJyvgqeiigyj2W3DJAN0MZqiDn3vn+x8Xk1QOp87rHLfu64X9uEsKb2rcnsetxFQb+eeOtFc3dbE78HFIxAbzO6lW3zVizcHl12RSLMZtizLfv/Bxy+G2BUeBeCpZbz4qE3s16Vw1HbU4CwU8g4cDUZ2DIKKsNKQg0nFWiWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TmTZN6FK; arc=none smtp.client-ip=74.125.231.205
+	 In-Reply-To:To:Cc; b=XyuM/xIpwpROskAvocUZBn+cCVPYZ3tedG5jzK/amVRiBPCm2TM8fse3LoDfPWIML0YxZCWc8IlTBm+MFbZtCmgkrMjIpVAvCT+XLOJ4dFB4KZX7OJaXg9Gw1hI6DQLkSV52r7BgSRnSUEq8Sosz0HR2zxd+EbfrcCdrmtxp7Mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VJLw+ona; arc=none smtp.client-ip=74.125.231.76
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TmTZN6FK"
-Received: by mail-oi2-f13.google.com with SMTP id 5614622812f47-4b37a3a9768so880029b6e.0
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 09:36:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VJLw+ona"
+Received: by mail-oa2-f12.google.com with SMTP id 586e51a60fabf-466ccbd478cso483755fac.0
+        for <git@vger.kernel.org>; Fri, 25 Sep 2026 09:36:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790354160; x=1790958960; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790354162; x=1790958962; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=otBUVID5cpnynOcX2V5uhON7JiX8lFfwfDM0bfHQV0Q=;
-        b=TmTZN6FKQtVeeuHAvbprHbHKNZfiCPT7k9Wx7LqlAHxlEgvc2+2JZWKFEbhAsIfqbB
-         CepJdk841PPanuFYoSsmMQUpUwoXW0fabSNkKQKuyGL/rxfJMFD/rla2W2nQJZtlMLFs
-         J0G7G61F4uAkOYhdJ+ZbZGIFem4cY8/V+HPCOcyZytIP/IPu3c92ZVfEJWbO8oSPkiJI
-         VD5SSDT4UhDILbtpJLQRcS+pxNaN3zT9hMjHpcDQMeZ+a4Vxd96OLzopfL0t8SrrNFln
-         MDkf/sbXezx0kwbc181GSKe/IFvykAmfz69D7V9mGlRQXqSQ8+DloHmRnYo+Yl/s7tRB
-         UDVQ==
+        bh=ia+HwOYryDBvTCYxtmfMN75tEkBkl01bJnVNVzx9r0k=;
+        b=VJLw+ona7leN2THGGLRr/4z+6qR7CxbrOeeR2aGDZqbwyU1g3ZY/1HrxCpUhG6TDCx
+         Lt9UObBNjoQcGd1o2+mdAD8SOCHlsdKRkIbPZS4a5LXbeeXVoSUTLB2r6rAXKAYxVo9F
+         5rcKXtl7D/f0x7CvUgwWUGh2k7jZlnuzaEVuO035SfvJP3UrtXya4DwZUovfiQhVyue8
+         TdEkKMmhgJWfD+Pwb3EfSMjKvM7QSTPs4ST81PhXL4qiTnpEx+ztYl3Hve0VzXgFiGY8
+         n00ldHKgsul35EJef4qzuCtb0xXY24KKxMvhb01Hix6T+4mR+cSbcOS6X4z/Y+RnmTKK
+         o2ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790354160; x=1790958960;
+        d=1e100.net; s=20260707; t=1790354162; x=1790958962;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=otBUVID5cpnynOcX2V5uhON7JiX8lFfwfDM0bfHQV0Q=;
-        b=VsMdvrT3ZAfzUXMGv8wBxQEJ3VhGVXuMF4m5F/xGYpg8ViXt/LpMqHWnzKvyCzhnvp
-         netSd26LoK1EPcdmV/MLA7ZqhBOX2+qWgOO9jEmyXyUHDJdGthrlAR6UQdvI7oGuEsNk
-         KEJpyYX7ELNK2MBQniDdAuqdPomp+3lBl1Fm/kzh31dmxPhEvpBpaHpCji1H2pbEdDzU
-         ZANaEn1JUl/6DziMnelnC5ccD9LT+vy5pOTev0NnydcvEAFnc1MtR59pvVuSgcz1Tsh9
-         tWa5+0kv0YDSJIBKSqlKmjC6maMw4LwcRIaIGGTe87LvVCDhZMJBOXnHZ6vyXZZrBQ22
-         xCjQ==
-X-Gm-Message-State: AFuF++nUP/rnMVXt63SSSHFOwFCAbRLVAhj9GARCaUfdp+gqMP0bjqaK
-	hK3johNdD8uw4mXCgeMRemJ4K+bdBwT19nTuqFUUnVZaJ5H2QlnT59ua3GdYL/0o
-X-Gm-Gg: AYBFou3MeqrWIGaeaxHYtob+DX4f3br2EqmYpAldW5kzXWuCa16lO87g3sdTtEV+0Kp
-	DacgxgRzpZqLHJ65CnB01DmjQMvqp0qN488w8j/Cvy1mfmasokLCYrCcdwKRS57kyk67g7ct/Cd
-	veDNEQizOe/GNuX3CkZoQ3beSPjC7sVYNK0KQ61Lo/miRWtq9YDUGZaRdlWvhvzdItaKsUmaeIf
-	17JEiSrH9bVrkkHJLqQ8GbFDKg/tXzHzzCrnYnx+YzMOewyVBOiKvrMdxzOqataiCDWAa7F9jug
-	TUyZ6/FE4emmK+PrSSJWrHk9mtUPu1yrE1ferC4IeJ3nNVja4PHnix9vFm1AwxjEGE1txIur8Rx
-	k6WvePhzFOZTU2Nc9HmmiaucscE9vXaH6Xwpyv8nZoQDptMpgiMf3EdnH1fLzfgYcoTdMIo97/O
-	87WI7tPfptTeaxuaZNAdbG5/sucqv+2VlNIW0yrPw9d7HYW4YbZ11G3CTQSpqEkGOiBTL6vrCHa
-	ATQrMAIew7Dg0kFq7XE4p5+gQsSJhXEsRKSTa5l5ENgJfDQyEF3KQf1dcWMuc+7G7Uif9DOcLOl
-	FQXS0FpinAyjv0to48FTirXRgo1M1jKn8Ld1gFjUTHvOx+fdlnxr5z6WyiDWT7jwvtiwTh0ZRzE
-	Nx5m+pMXjsaY+krsNYwyCH3z7B3iQD+wUpJKNB+qkKh6kEDG9n1XuwMObgd0=
-X-Received: by 2002:a05:6808:238e:b0:4d5:27da:a497 with SMTP id 5614622812f47-4d72ed6980bmr5530309b6e.49.1790354160418;
-        Fri, 25 Sep 2026 09:36:00 -0700 (PDT)
+        bh=ia+HwOYryDBvTCYxtmfMN75tEkBkl01bJnVNVzx9r0k=;
+        b=tS9X9CfDTlGgJLUO66NGXtii0o8TQDs35RSdkIqE1ld2qRPGgc336/P+mV9d8rhBtU
+         ITbBQM29p6V38xwoueGtk6NdwCvEgFINkdxZnqyQHym18ylrOtYeRxSpBd8ynmPpbrtN
+         THeeR75koQEBkUh2AJ1iVHr/2tRU3/Sl+DqnoSJJE+AvFP3aWIbSnM2cr3QD7/c9Xgbq
+         W8FWTe33ztd+stu6xRaZE0bMfcYAgeFBobXxQ55zTH1EJ1I88odduwJ7T8qxp/6gMWJq
+         ZHrd4I7PFoavND/TK0W65XYWza/3df12uY60pHBj8WUladsZD1w0Vh8jHVTLvbmhu0s7
+         86fQ==
+X-Gm-Message-State: AFuF++n+bHYywV6pjfrHwBEFhb6JQrqsU4E8cL8dXynwH+REsZPQlR5z
+	1C+BcpzjzDWpUG1tgI7iZIHhzdvVlF+P8/ovBrIbn+yhLporj65JejZuDWZiEngH
+X-Gm-Gg: AYBFou0qyvZXCUxpIQP0SfnFH/6dbEtZUbKAn0DhIwbH68MojOxY4FauWeRse53Foui
+	ximZJ5LOQ65vSqdCIU3oC0BLwM2jw6bl88vHzqkVIvNrqr8h6R2PjFVXxB7HqsxPcJ4nCMXxQOr
+	RWXvPGHFqgfbLhtK6TcKafcDn9YZ1w125EaOVKVJnGqdoYY1C0XSjYdVYEzwGiz8WyWCsmL5nb9
+	FnlrKAdPQF8s1Qq+naVrYRYDZsAj5j3tq8ogM2cO2OwOlHqK9msTAWHRsrut9KWASnWE3BbN46T
+	qq5XVLd5U9JktqxHFON9LGFVbX9xo/C3mM+JagHi6c0+HMbFJRapEYwnWDKTRSbazl5XlMomHMm
+	7Xm6sNFOQhk/1rwbicPDKRnCca5VMlVLoe7ZGM46tBJpZPeeKuYgIY/y8F1+ywHUnqsEFldiQw9
+	2MJbxLSrWDLxqEhUHaIvBSrLcKBCOjZi+70SfgGn4Xf2XGE/R743ny33PMFjiLxQIzD5hOSXxcd
+	CEK3s9wpwNQa/0zvh7CZRb/ziSqfKaM3w9I/jPSARw4M6u9DwT+idqx6A6LMq1wz6I4NalnGC50
+	n6j2xWGVpesgDmidsQjLrL+xAbxOWAcSRi0+Vxkyevy6qLuA8TIJ2llaL71CvXZE0zb+15s3EVN
+	Ppo4Eds5j9iliitUCOhKoBuMOkJsp40S7kO9usqtwrHRYJ9c4cEFrttqKaOA=
+X-Received: by 2002:a05:6808:1a1a:b0:4c9:6b4d:f2f2 with SMTP id 5614622812f47-4dc640ac175mr2734728b6e.39.1790354162178;
+        Fri, 25 Sep 2026 09:36:02 -0700 (PDT)
 Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa (vpn-centralus-01.tradc-corp.com. [172.169.249.3])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4dbe7e76bcdsm2113204b6e.1.2026.09.25.09.35.58
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4dbe7e76bcdsm2113204b6e.1.2026.09.25.09.36.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Sep 2026 09:35:59 -0700 (PDT)
+        Fri, 25 Sep 2026 09:36:01 -0700 (PDT)
 From: Tamir Duberstein <tamird@gmail.com>
-Date: Fri, 25 Sep 2026 12:35:38 -0400
-Subject: [PATCH v2 1/2] t4205: compare huge output without diff
+Date: Fri, 25 Sep 2026 12:35:39 -0400
+Subject: [PATCH v2 2/2] ci: align job counts across CI providers
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,53 +72,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260925-ci-large-test-resources-v2-1-f632cf319756@gmail.com>
+Message-Id: <20260925-ci-large-test-resources-v2-2-f632cf319756@gmail.com>
 References: <20260925-ci-large-test-resources-v2-0-f632cf319756@gmail.com>
 In-Reply-To: <20260925-ci-large-test-resources-v2-0-f632cf319756@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
  Jeff King <peff@peff.net>, Tamir Duberstein <tamird@gmail.com>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openssh-sha256; t=1790354151; l=1402;
+X-Developer-Signature: v=1; a=openssh-sha256; t=1790354151; l=1729;
  i=tamird@gmail.com; h=from:subject:message-id;
- bh=jlnu3b35JFYy/TVX+jWPGjBnWu/REdsOcCfy6nFzHNo=;
+ bh=uWqEt3TgPcKFcBx1ECxpMbGZZGwZ2GHj6CaNVP9kEFA=;
  b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
  MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
- QBvBuroU3LT5uSfGwsMB3IIv//UQE1GMrI7DfALYKRrfYX3aC2of03qL5PWb1Nlg5lkZ5V7Zv/g
- C3n3NTyexTA8=
+ QEd3kLFfI/d8R5DrncnuUVyebIjLP+R4qYeM3qCEdM58IcSWMbSadzXFyBooZtqGrZOFtYXe4t5
+ GQSGFlaBGbws=
 X-Developer-Key: i=tamird@gmail.com; a=openssh;
  fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-The huge-commit test compares output containing a line larger than 2 GiB.
-For two identical files containing 2,147,483,649 "1" bytes followed by
-"0\n", GNU diffutils 3.8 on Linux arm64 gives these measurements:
+GitHub Actions sets JOBS to ten regardless of runner size, while
+GitLab CI uses the detected CPU count. Use the CPU count for Make and
+prove on both providers, selecting JOBS after the operating system
+is identified.
 
-  Command               Mean +/- stddev       Maximum RSS (KiB)
-  diff -u expect actual  5.276 +/- 0.572 s              4199924
-  cmp expect actual      0.506 +/- 0.099 s                 1264
-
-The test needs only an equality check. Use test_cmp_bin, which runs cmp,
-to compare the output byte for byte with less time and memory.
+Use nproc on Linux and NUMBER_OF_PROCESSORS on Windows. On macOS, use
+sysctl to avoid requiring nproc before the dependency installer has run;
+GitHub macOS images need not provide GNU coreutils.
 
 Assisted-by: LLM
 Signed-off-by: Tamir Duberstein <tamird@gmail.com>
 ---
- t/t4205-log-pretty-formats.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ ci/lib.sh | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 4be5c51489..01b97c8888 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -1189,7 +1189,7 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'set up huge commit' '
- test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'log --pretty with huge commit message' '
- 	git log -1 --format="%B%<(1)%x30" $huge_commit >actual &&
- 	echo 0 >>expect &&
--	test_cmp expect actual
-+	test_cmp_bin expect actual
- '
+diff --git a/ci/lib.sh b/ci/lib.sh
+index c6ccbf8c17..db593cc62c 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -227,7 +227,6 @@ then
+ 	cache_dir="$HOME/none"
  
- test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'log --pretty with huge commit message does not cause allocation failure' '
+ 	GIT_TEST_OPTS="--github-workflow-markup"
+-	JOBS=10
+ 
+ 	distro=$(echo "$CI_JOB_IMAGE" | tr : -)
+ elif test true = "$GITLAB_CI"
+@@ -250,7 +249,6 @@ then
+ 	case "$OS,$CI_JOB_IMAGE" in
+ 	Windows_NT,*)
+ 		CI_OS_NAME=windows
+-		JOBS=$NUMBER_OF_PROCESSORS
+ 		;;
+ 	*,macos-*)
+ 		# GitLab CI has Python installed via multiple package managers,
+@@ -260,11 +258,9 @@ then
+ 		export PATH="$(brew --prefix)/bin:$PATH"
+ 
+ 		CI_OS_NAME=osx
+-		JOBS=$(nproc)
+ 		;;
+ 	*,almalinux:*|*,alpine:*|*,debian:*|*,fedora:*|*,ubuntu:*|*,i386/ubuntu:*)
+ 		CI_OS_NAME=linux
+-		JOBS=$(nproc)
+ 		;;
+ 	*)
+ 		echo "Could not identify OS image" >&2
+@@ -291,6 +287,18 @@ else
+ 	exit 1
+ fi
+ 
++case "$CI_OS_NAME" in
++windows|windows_nt)
++	JOBS=$NUMBER_OF_PROCESSORS
++	;;
++osx)
++	JOBS=$(sysctl -n hw.logicalcpu)
++	;;
++*)
++	JOBS=$(nproc)
++	;;
++esac
++
+ MAKEFLAGS="$MAKEFLAGS --jobs=$JOBS"
+ GIT_PROVE_OPTS="--timer --jobs $JOBS"
+ 
 
 -- 
 2.56.0.rc2.815.g5b995412e4.frankengit
