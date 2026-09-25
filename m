@@ -1,172 +1,161 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo2-f37.google.com (mail-oo2-f37.google.com [74.125.231.165])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFA84E8E1E
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 20:40:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3B03806CA
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 20:53:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.165
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790368802; cv=none; b=DsAWgLol7KdZlsNNcxEcqRmWogoR26QWiBbUTbk2qxWEHVKOYyqprjHZc1VmP2Fa48Xj5Bd1qV9eHw2t6clTGdM41vbP97eRGOsR+OY4wEkW6Ie5+MCR7skKQ5JjQf3eCNKbNxaNz25Ds+zlziL8IIDw94cV2hOhkS2xlvyKI54=
+	t=1790369609; cv=none; b=ClBoIh3I2mwQh+Br/z1Qyb5Qrv9MA6f3W8ZaDvU9RwkCO+nUkMuqndjFUZhzGRYF7hZlk/MiR2lieiNYZ6PLHHg7GDKb8Fyt6S5Hu0qjTxeNUswcZNigMZryxSousJuUAnhVCgfe0zzsQL31LY+I9yCWyrXc1YKalg37fzlMmx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790368802; c=relaxed/simple;
-	bh=rLyjsvxIxvex5aMVTLqFo2UQJ3Ks8Q0CKww+ki643oQ=;
+	s=arc-20240116; t=1790369609; c=relaxed/simple;
+	bh=GoSvvhDMKzhH8NBSKbT+ZDuBwh5Zr7hicE72H6Fy++8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=enLysLz6GQJl+Owiz7tMGvmCnVo2k1VPGCFG2DrNFGFM6MxL/I3tyct/8PCGNnsNS7u3fAWao7+awkG6zzOxSjpGmNn9JIGv9ITN129JkLbt4LIdk9rzo69IQmkXd36tsgkJoW9rUTE4/53wPIl0dgyHl7gsEzFOs6DTQV3uxFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=c/MduDl2; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=VcdmqAa2QOG9uFsd8HaaIk+K9fXgTo+9dXkiK0kMRe+7zghXqxWRH3hNPPb4nWkqogaiERLOBdHJPDOL5eFuEqelMhtTogQhgOgpONwvYOoWEEAnFjXV28fcdQWwTWyJrjHoceFSrruNSn9/PuwL5LD5K/0BvfOcjjA24BWQfdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com; spf=none smtp.mailfrom=tylercipriani.com; dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b=a3FiQKSn; arc=none smtp.client-ip=74.125.231.165
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tylercipriani.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="c/MduDl2"
-Received: (qmail 53018 invoked by uid 106); 25 Sep 2026 20:39:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=rLyjsvxIxvex5aMVTLqFo2UQJ3Ks8Q0CKww+ki643oQ=; b=c/MduDl2H7V6E4qSAG+XSrfg7WsH99KlzM/hCjFFX9JHxzH0Atrz8BMfhIKD7VuCebdgxnw3ha+Om5hE8C0zBJ3o1jheXNfvW6nq0VBtt/+i8hT87uSB0VHAKcoOiDg3DJ0A/VraX65p9qztMAHodzsyzYJG6WkP+U+mhyqAqv4eXeaSbM/qwwQTGgFoR1lXohd0Ls8kp15Kx5ZRDdb7M4Uc0zzE7PfXn2+M4nOyAXVMOkOhosN5d5MRzzIt4RO2t0F2+0xrXjypDhfTDAU2lujDvsIRrg/KkLj8pJmFsj9zUn2wTSatTy26E0h9ooiF5X2zcOt0W7MUV60p9PUo+g==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 25 Sep 2026 20:39:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 210208 invoked by uid 111); 25 Sep 2026 20:39:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Sep 2026 16:39:58 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 25 Sep 2026 16:39:58 -0400
-From: Jeff King <peff@peff.net>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: [PATCH 2/2] revision: handle argv movement in parse_revision_opt()
-Message-ID: <20260925203958.GB1544493@coredump.intra.peff.net>
-References: <20260925203359.GA1506705@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b="a3FiQKSn"
+Received: by mail-oo2-f37.google.com with SMTP id 46e09a7af769-7f4f0d37f93so990472a34.2
+        for <git@vger.kernel.org>; Fri, 25 Sep 2026 13:53:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tylercipriani-com.20251104.gappssmtp.com; s=20251104; t=1790369607; x=1790974407; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=5vbIUxRkS7kkG0uyI5uADf+qST1/bgM5ybNPnq/pb4I=;
+        b=a3FiQKSn8L10sHc8EnjviQ5yWRHKfjBnMb3tBdEp6X0cx3wxLg1bqi0yMzw9EMSFTO
+         a9XeQIEUI6FWCN+0DUatc4WcuHteBP3CYxjw4qZ5g8aHaupyerenUXoFEI0AbeOMgkir
+         o/yoH6Yg9mf7l2OLUri+Ey5XXnSqryIQaK8eDBVR/S6JXpSQCmKqI82NgF72gGe+ertN
+         SnPrWL6Ilnvjh46a7naBxpgeQLm5pwInFRjCkive8+tENp+t1+y71sKhyNCuGke1RazG
+         WFvjbVQP8Zx1DrLQWbmJygpoR3c+dc3R5Y0iJtCeWd2Fg/FKQqTpb6iv2HkWxTinngSW
+         1bgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790369607; x=1790974407;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=5vbIUxRkS7kkG0uyI5uADf+qST1/bgM5ybNPnq/pb4I=;
+        b=zsO6jT1sAA8cRisT+JUqj6qCN3wBOVtygg17V4CgUf55JGxPHNDx51md1+KG674kyV
+         psyhGSJJ5ce2PSZ3DhB+/N8z7v0tLfXliqgVkcoc5Yi1WZOWs4VWpETBX27aHaGogy3e
+         D/pgMXBmYTy130GGUIxs3rjaqEcZVVjcAjVKnUuDXjjPLpqw2PDm6mItHL0xUDbbMrB1
+         Xy0LiefvS3iTdAW+1xYc+E4zRTFPyCikLi4fFJ5mkMC4o4X0T9piexvEc//043Cp19Q+
+         saOD/h7MU96O0D0KCW/0WHMbTUcUQAFeX5/Is6DisB8dTvgR3SMy6mWLpicDvL2gFhZq
+         2H0w==
+X-Forwarded-Encrypted: i=1; AKwUvBxxOTSlkO6Gxo5AUtPqS2gjpe6kjcFmT9TEAWYdEeV4W0yjgDqwNz0M1eMi7go7zzgmHCo=@vger.kernel.org
+X-Gm-Message-State: AFuF++ls41Hd/pVGIdE4aCBYn56ak3rQjzctK6k2i9yBv9NTdrG9s7QW
+	YgnLbRJJOGjps4nEHAojnc6sEUfKSFh86BDkIU4psEAi0YsaGMPe7nq0kHysihY/4ndi5afpkc/
+	4uJLRi1c=
+X-Gm-Gg: AYBFou0Vx8XXYP8AhIGnBvQU9aN9VT0b7MYF4fldwoivnxEyQkn5AoP+1sjmcgrUXWf
+	ND8BeLdLnqqjT9TMsk5s4SQYS6e4UYTt7NBP4KNxQQAV+N5KjCBKZEqqdyB4u6CdTkRDW7nc3Pu
+	a6vGC5cT8hOD8okH4upmcgsXp2ZzeUNhis5NRFS4/F+TqqdLX8/+D/6ZLfnHIB/FprSZOROt6jP
+	cVa/d6ICY67iHD/z7fpzbeE3L57IAUNrX4bdumCsrV9wWznewt7xZhD1i3738Xbm9pqFFMCXiby
+	QI17Xh8hRONuzX8d6k/hj9/o3tPHHDebfln7E3OItfEuan8OMBib34PGm3U+RPxmVlv+ZS0MUPD
+	ZDKVJQZiU8blOMpqxG5RZEmJPPY1iA4hy6Z6uonDthyKvN/yl6G9mFWEH8lLnHhXftVnGEmN0V1
+	wOeWvS33g/SAiZcHhujLR5oFGebTXK9Tngf/mlbx7bUT2t6iw6hIe8oIRFEe8rVGfJWVVWh9I=
+X-Received: by 2002:a05:6808:ec6:b0:4c3:9388:db43 with SMTP id 5614622812f47-4d72c042991mr7418080b6e.9.1790369606721;
+        Fri, 25 Sep 2026 13:53:26 -0700 (PDT)
+Received: from localhost ([161.97.221.21])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-4dbf849c0b0sm2764891b6e.11.2026.09.25.13.53.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Sep 2026 13:53:25 -0700 (PDT)
+Date: Fri, 25 Sep 2026 14:53:23 -0600
+From: Tyler Cipriani <tyler@tylercipriani.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Aleksei Sviridkin <f@lex.la>, git@vger.kernel.org
+Subject: Re: [PATCH v2] push: fix --force-if-includes when remote-tracking
+ ref has no reflog
+Message-ID: <arbfQ7xF1NgDeilU@localhost.localdomain>
+References: <20260903010547.85469-1-f@lex.la>
+ <xmqq5x0mfgyh.fsf@gitster.g>
+ <20260904124433.12840-1-f@lex.la>
+ <xmqqzexx58hc.fsf@gitster.g>
+ <xmqq33vn5hsq.fsf@gitster.g>
+ <20260906165052.21780-1-f@lex.la>
+ <xmqqjyowz9oq.fsf@gitster.g>
+ <20260909065639.47316-1-f@lex.la>
+ <xmqqv78dordu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20260925203359.GA1506705@coredump.intra.peff.net>
+In-Reply-To: <xmqqv78dordu.fsf@gitster.g>
+X-PGP-Key: https://tylercipriani.com/018FAC02.asc
 
-The argument parser used by setup_revisions() modifies the argv array
-that is passed to it, consolidating non-options and unknown options at
-the start of the array. This led to problems with memory leaks when argv
-pointed to allocated strings. We addressed that in cd43948798 (revision:
-manage memory ownership of argv in setup_revisions(), 2025-09-19). Now
-instead of copying strings to the earlier part of argv, we actually move
-them, setting the original location to NULL (so that we know we have
-exactly one pointer to the string).
+On 26-09-09 17:57:01, Junio C Hamano wrote:
 
-This works fine for setup_revisions() itself, but the underlying
-handle_revision_opt() has another entry point: parse_revision_opt().
-This lets a parse-options user parse a single revision option, but the
-movement introduced by cd43948798 confuses its error code path. If we
-see an unknown option, then handle_revision_opt() will move it out of
-the way (to the "unknown options" section) and return an error. But
-parse_revision_opt() then tries to access the original argv location,
-which has now been set to NULL, and you get:
+<snip>
 
-  $ git shortlog -n --no-such-option
-  error: unknown option `(null)'
+>Doesn't that mean it is more logical to use the default gc
+>expiration timeout than year 1970 and in any cases using the usual
+>gc expiration would not waste more time than using 1970, right?
 
-Whereas prior to cd43948798, it would have been a leftover copy of the
-pointer (that may or may not eventually get written over, but was valid
-for this immediate message). And you get what you'd expect:
+I like date=0 (i.e., 1970).
 
-  $ git shortlog -n --no-such-option
-  error: unknown option `--no-such-option'
+Tested locally, in _most_ cases both give the right answer. But
+date=<cutoff> can give the wrong answer in a subset of cases, and date=0
+can give a slower answer in a subset of cases.
 
-Making things even more confusing, it only happens if there's another
-option before the unknown one! That's because with just:
+I think the wrong answer is worse, and I think the case where
+date=<cutoff> provides a wrong answer is common for me (with default gc
+settings and lots of old git clones).
 
-  $ git shortlog --no-such-option
+The important bits of is_reachable_in_reflog:
 
-we "consolidate" to the exact same spot, and no movement occurs at all.
+- date: initial: either gc.reflogExpire (default: 90 days) or 0. Later:
+   maybe set by a walk of remote reflog.
+- remote: e.g., remotes/origin/<x>
+- local: e.g., refs/heads/<x>
+- remote->old_oid: advertised oid for remote ref
 
-Note that we use shortlog in these examples because it is one of only
-two commands that use the parse_revision_opt() interface (the other is
-blame).
+We need to find remote->old_oid in the local reflog. We can't build on a
+commit we've never fetched, so we set date to the last time remote's
+reflog moved to bound our walk of local.
 
-There are a few options for fixing this. One is that we can observe that
-the "move" semantics introduced by cd43948798 only matter when the argv
-strings are allocated on the heap, in which case the caller passes in
-the free_removed_argv_elements flag to tell us. But we never use that
-flag with parse_revision_opt(). So we could do something like this:
+But remote's reflog can expire or be empty, so it needs an initial
+value.
 
-  diff --git a/revision.c b/revision.c
-  index ee1df92d1d..7b858d54c1 100644
-  --- a/revision.c
-  +++ b/revision.c
-  @@ -2340,7 +2340,8 @@ static void overwrite_argv(int *argc, const char **argv,
-   	if (*value != argv[*argc]) {
-   		mark_argv_for_free(opt, revs, argv[*argc]);
-   		argv[*argc] = *value;
-  -		*value = NULL;
-  +		if (opt && opt->free_removed_argv_elements)
-  +			*value = NULL;
-   	}
-   	(*argc)++;
-   }
+With date=0 (and remote gone: older than 90 days + gc, removed, or fresh
+clone), we walk local until we find the remote->old_oid or we run out of
+reflog to walk. But local is also subject to gc, so by default that's 90
+days without having to bound anything. Since both reflogs are gc'd, the
+time difference should be minimal.
 
-to restore the pre-cd43948798 semantics when heap-allocated strings are
-not in use. We'd just keep the extra pointer in the original location,
-but nobody cares because they're not going to free anything anyway.
-That's enough to fix this case, and could fix any other theoretical
-cases we haven't noticed. The downside is that it's an accident waiting
-to happen if we ever do teach parse_revision_opt() to handle allocated
-argv strings.
+With date=<cutoff> is only faster where we have no remote reflog, we
+don't have remote->old_oid in our local, and our local reflog has
+entries older than the typical gc cutoff; viz. I'm rebuilding history
+without the remote tip and: (a) expired my remote reflog manually (b)
+have my remote reflog gc configured differently than my local or (c) I
+have gc turned off.
 
-But are there other theoretical cases? I don't think so. The code paths
-touched by cd43948798 are either in setup_revisions() itself (which also
-learned how to handle this movement) or in handle_revision_opt(), the
-low-level static helper. It has only two callers: setup_revisions()
-itself, and parse_revision_opt() in which we see the current breakage.
-So fixing parse_revision_opt() should cover all of our bases, and keep
-the code ready for a potential future change to handle allocated
-strings.
+But in one case, date=0 gives the right answer and the cutoff date gives
+the wrong answer:
 
-The fix is just to tell parse_revision_opt() to look for the unknown
-option in the consolidated destination rather than the original
-location.  We might write to that consolidated location for other
-reasons (like moving pseudo-revision options like "--all"), but there is
-only one code path that returns the 0 for an unknown option, and it
-always moves the option before doing so. So the "end" of that
-consolidated area will always have our unknown option.
+     git clone ...            # 1. files backend, no remote reflog
+     git reset --hard HEAD^   # 2. start a rewrite
+     ...                      # 3. do nothing for gc.reflogExpire amount
+     ...                      #    of time.
+     ...                      #    Remote never moves/we never fetch.
+     git commit ...           # 4. Finish rewrite and push
+     git push --force-if-includes --force-with-lease origin main
 
-This patch implements that solution and demonstrates the breakage and
-fix using shortlog.
+Push fails with date=gc.reflogExpire (wrong). Push succeeds with date=0
+(right).
 
-Reported-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
-Obviously another possible fix is for parse_revision_opt() to record the
-string before passing it along, and use that for its error message. That
-seemed clunkier to me.
+And nothing about gc config need be tweaked from the defaults for this
+to happen---git gc can even happen (provided it runs between the initial
+clone and the reset, since the reflogUnreachable prune is 30 days by
+default). But in small repos, gc may not have been triggered at all.
 
- revision.c          | 2 +-
- t/t4201-shortlog.sh | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+So date=0 is always correct and should have equivalent in runtime in
+most cases. And it neatly side-steps what cut off should we use?
+gc.reflogExpire vs.  gc.<remote>.reflogExpire vs.
+gc.<local>.reflogExpire vs. flat 90 days vs. do we respect
+gc.reflogExpire=never.
 
-diff --git a/revision.c b/revision.c
-index f958d8c301..a83e499047 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2775,7 +2775,7 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
- 		/* handle_revision_opt() has already reported the error. */
- 		usage_with_options(usagestr, options);
- 	} else if (!n) {
--		error("unknown option `%s'", ctx->argv[0]);
-+		error("unknown option `%s'", ctx->out[ctx->cpidx - 1]);
- 		usage_with_options(usagestr, options);
- 	}
- 	ctx->argv += n;
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index 4ba7f5aec6..10c43e6e75 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -442,4 +442,9 @@ test_expect_success 'invalid revision options are not reported as unknown' '
- 	test_grep ! "unknown option" err
- '
- 
-+test_expect_success 'unknown revision options are reported correctly' '
-+	test_must_fail git shortlog -n --no-such-option 2>err &&
-+	test_grep "unknown option .*--no-such-option" err
-+'
-+
- test_done
--- 
-2.56.0.rc2.289.g137cf50cac
+Thanks.
