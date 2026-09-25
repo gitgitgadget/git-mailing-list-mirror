@@ -1,106 +1,135 @@
-Received: from mail-dy2-f42.google.com (mail-dy2-f42.google.com [74.125.229.42])
+Received: from mail-dy2-f12.google.com (mail-dy2-f12.google.com [74.125.229.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9A54F55A6
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 20:54:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9DB3563FB
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 20:57:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790369661; cv=none; b=Fp5CLz5D9HLFib2QMX+K5LrIbyeWcRzgWnfU2c8+ue3P/EGY9bdbl+Ih+RREE+b7k4Q237sOZ0LGdpEsSNVT5wGWdxUZgYXRGtnBuBGwKgPFvwEqTWlilqFybdqSKt1DnWaqLARIRCNnDoxKHSQQ3BiZHkFPG8tuTmd6OBz8oAQ=
+	t=1790369827; cv=none; b=bjLJYB1UxtlQf0+O5whVlVNr3Dmvnt+jZ8iOQGUIlKSSHkyIbS0n8aOwLaOTDiudyJ8nGHZ3IPJ/reiHVwe4uuh4NI9JipLAEncb2mUUzNaW5goYC7PFomtiCJvQuAyI+I9xZKwBnUe3HRqdwqCrszoFf3QkkkZe/NDx199+1S8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790369661; c=relaxed/simple;
-	bh=QJf6TRV/x6nfA0d+vRCvWkPhkJadctes8ti5/aV9Dxw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=mpXgL8z9BcKR4CxVEx1eARUIJrWS37W1vlZvtRGD5V50gGZExTJi10EsQA6md4ktsVVFMB+9WLb8Yee+XipLLAWn3qIo8pju6eZ6Dhly7hPlwfsguYDrhMQxCEfzIEV2lrNA0G1o4h9NYGs+8lCrhpNUf+xcQpqQCE3Dg6O3Apc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N/Tb7vbO; arc=none smtp.client-ip=74.125.229.42
+	s=arc-20240116; t=1790369827; c=relaxed/simple;
+	bh=FSxNf7mNowPCRqTSqkYkNNeK9OUdNTGOXfAyvZyxyQI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CDviGKwdGY4ub/3lpLlbuuDwUXK+5cM7liWCj7b3+2ol6HvGPdigdBD5sYHZ7KMI9XZ7+jJ922X+zkaXOxNZe+4ErVgdfbzhcb/D3/GiYOZWIJL1HfVaYbzjPYmn9+QHv7/9UGBNuW1SEjkTWduVbBjU2F5XVH7ZM7q/vg+NW4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VoDBuTVL; arc=none smtp.client-ip=74.125.229.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N/Tb7vbO"
-Received: by mail-dy2-f42.google.com with SMTP id 5a478bee46e88-3411e0ace19so659925eec.3
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 13:54:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VoDBuTVL"
+Received: by mail-dy2-f12.google.com with SMTP id 5a478bee46e88-33be7dfcfc1so1721821eec.1
+        for <git@vger.kernel.org>; Fri, 25 Sep 2026 13:57:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790369659; x=1790974459; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=EaLJrxT8lt6pt+FVU/1+dJ1gkDeSzIgJhbnPI4gFO1o=;
-        b=N/Tb7vbO8HVi93x5y+14ZyjP9xw4kylgWKUo4UioA32JTuKHpkGOO+/XbRyCJ1JZYW
-         qZrVemMhiEuZRVEbvnN1mUxPYR2Y5uIQ8yq/e/mEW7W/FBIUj0IUrfNlnJEmSsWwV8gy
-         ZjPfTy6o+z6k2MXU3WUU80BjvdHYx2nme4ituNmJekfRwcqjJ27jtP+Ntm54sYHB/utI
-         MPa5MlKuruVT2JQQoV1vqK+2UYh75E6ww9FNAKylzL9mF8MIetPz2xzxxJtdODgLycrk
-         dVHy3w8uFWRG9wN3J3AnFyGEJNG7h30cHmVOAER9JMguTZ6noXZsf8GtVl2gMXrUrGme
-         qgQw==
+        d=gmail.com; s=20251104; t=1790369825; x=1790974625; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=2e0Eza53Pz2ISyTGawC6/OAQ9o2MyjBRls6GcH4OUMI=;
+        b=VoDBuTVLzzVawfuK+sagQuZPnELRBZ/1WJWDcPdykUSoIYZxS8Xb15Q+jsyJJhSzhX
+         y22H7Y8qqz95XA7ZD7QMACt6FzveMUE9TjbVOeFQt8stnudiHuQ7FVXQVwZWNQDhkxYI
+         WppPIg68liohI0lqnAquqPM5vSJS10At2VQd5ys4OQmNMRHu2gqx1yudIrxecpt0Bx3L
+         UM+GyvWplEcmiM/lCILtAA3n1FIFvx40sHi5x+hL5mLngnk4FdwHHLs2INUX323klG0D
+         CEgM1RI33ANItSRS2tuoCBtGsc1IVPk/I7Ab1rYOTDgye7rN1cgH1OKyg79ki4EmcqCG
+         Edzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790369659; x=1790974459;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20260707; t=1790369825; x=1790974625;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=EaLJrxT8lt6pt+FVU/1+dJ1gkDeSzIgJhbnPI4gFO1o=;
-        b=LRTpL8h9nEngJFsRv0gTexsD8PbMIl8SC0R7B6dWjf8Q1bp8L6OF6JIiUQT8rA2hY1
-         UhzADebMpmdpt5knX1hmgZqXw6xWBISUNgYEIRyuFM1ZcNr6H/j3geQeitzr5fxzaL/v
-         cAsVkHm0ehxx2oA+oZVNEdT3rIW2dLnlQTxVyy1klemSNngtTzCn5E/a11iiCW9KwFPO
-         i9ISYBfubv08AFu7zpHz23rgKLmn8IpruB/l/DzHjtOOf4wWW+2SxouEikoV/4DG9olB
-         bffL8zFzlmWyT/++btSL5d09tT2zbxMEo+iZEVsupDIDLq/OLZDPFYSsSDc14R6Xegqs
-         WJAQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxaVoyIKJCJQjUTI98W+pu3KBzvogNGIdUchZmviKYHxGnqH0MEt9U3D0rpeiI14pQUS94=@vger.kernel.org
-X-Gm-Message-State: AFuF++kBJLj9JGVl23fTab3noH4IPPJa5YNeXHTUduzXYUya+tw4sJhq
-	toBRoC8n6BirUyJf4Xz6LNLgRdoepLTKjfrNb4LOY3V67MH0xsEVWz9v
-X-Gm-Gg: AYBFou0I6fsKQY+itK1456irgCK54Sq/bg7Tg722DF+XuFsqFF03Cpji0bJOfTOv1Mk
-	qDaDG2Vsn7jDEry06NvmEJqnEt3kMRswDiEzgCdGCSMrHns5Hl3186SGcnilDYC1tL1bnbvMYdl
-	zOvr8SdpYKr/rBKNlUYMdSf1VjEbY+gXvXu1JZE9Pv9iad5I5S1DdPdZ6nScKWGRrVVrQyK6gdy
-	UNZQBDVJzc/RrLIzIfMo2reNm4XooFUd5akqsoufgnyLsoL8BavesyF4KNmymMeelDQzJLow/ER
-	61Qo44AaIJ5Lg/5SRvQtXxvNKz+OaHkAfkF+aPJllglkuUjWQVm6NMMZ5Qs9YEECMoJFyyvbClc
-	8z5FPqQe2aerzmFtxXphjxameZklSWht+8sltnYQ69rfa+fIo5xetc6NJLiWSoUgtU3SjhFkQMC
-	wgu+zbSSTm3yrb+UZhTkHoBbR49/lX8JNSJbDK/q86Wf8on5EJZho0c4na/coGH509iWvalafmd
-	lvYnjwKxdYPkPRIpreP45M6UUuskOuwbK8kNh4zeLAVTQKgxFl16Q==
-X-Received: by 2002:a05:7301:1a3:b0:33b:dd20:f78c with SMTP id 5a478bee46e88-34272e5e6aemr1219983eec.34.1790369659264;
-        Fri, 25 Sep 2026 13:54:19 -0700 (PDT)
-Received: from ?IPV6:2406:7400:12b:61a6:a5bd:5e99:a91b:f02d? ([2406:7400:12b:61a6:a5bd:5e99:a91b:f02d])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-34144173a2asm8278803eec.6.2026.09.25.13.54.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Sep 2026 13:54:18 -0700 (PDT)
-Message-ID: <4e26b51a-f811-4548-97e0-6570680efa13@gmail.com>
-Date: Sat, 26 Sep 2026 02:24:15 +0530
+        bh=2e0Eza53Pz2ISyTGawC6/OAQ9o2MyjBRls6GcH4OUMI=;
+        b=jraxxw5Kuikl4En1EMDvYh8d2tk5pvYT3QdSvNLQmqltsYDzdOrfJ2cpb+fEk7q7o+
+         hX+nwXVGgBZRe2ge4VlPoiSc+X18sziBkWAJ9vNK1/Pj9yyjNcE25fQvBtaX5btnfSEg
+         eHQoRz6qbA3P67uh22kd4nrMBfQ41/lQnDsTOBAPqAQooEzT/iTs8cIVlcrjoAi5ks7r
+         VeCicSeCYoP4DVTGPu2YutBG0txoR6UO0Xhwq3t4XM8c/T1XF1DPQ6utXCQSjlO5LvZg
+         vHISyuYKsgiYmjZaWKT3pz888CP3ifPsfTMSMHi8slsErhBvrL7mRHjHCUWJo0bLI9TU
+         79mw==
+X-Gm-Message-State: AFuF++lb7iqjyOkxAGRJOUiX5sGiZUicRgiOpR+qzsjqIeq5XoFkooRL
+	Jvgj7QlsYaEjnf8dVDczqQFrXEDtBqbxoAxdV7kKjeDyTi7bazEi3+Ih8OF+pA==
+X-Gm-Gg: AYBFou1HSsn+3BfuFndulSeqypJV8sVULqV4cFnPntyiOMfB1fg3ByxXsJJ0CMIx1CQ
+	MBfyaWFVfVvckwt8h82z2cNXdVSHZm9RjkN3TQX4LX6yP7juUPl2km53tEI006T1UBtPjGM1eH9
+	e0xkcaqC4MqmZ6mOUDDRUBAor52HmWbvKglQA7MOFUEpat8FaH7aQsPURCgXPmRtDzsD5oUgcvM
+	vauwsgFuRDkK4v4eWTHikLn11xoZzd3Vo2LzL+sHeTQYhOTFWHMKL2po266e40pC6NqXBgoMdvU
+	ZMHZ+n1T27MwdCWOM2tYQJNa5pDMZHgCMsbEbGIDbU7G5Uh+XCx5kTtg/wQHkmhgUgqNnCHUfVF
+	AqEyvT7ULs7g/hgpSyvnepjb9lGIrM3A8rlrwEbxbEJvmTu/UtHAPq0BgzanbyX6bAMHD9UBoRh
+	xrjLwq9dxEX5TVtrD04jYIOYaMQy9Pz5Nn4xrJKw/+jAz8Za5y74ClKK5CdEHq8Fc8090fOiu6k
+	UuCqJN206a6aSeGOl1e+d1GybeWIoSdjW/x2A==
+X-Received: by 2002:a05:7300:16a8:b0:341:4466:1cd2 with SMTP id 5a478bee46e88-34271d8bc23mr1127530eec.20.1790369824550;
+        Fri, 25 Sep 2026 13:57:04 -0700 (PDT)
+Received: from royce-MS-7D09.lan (76-14-104-130.rk.wavecable.com. [76.14.104.130])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-34145632298sm8082744eec.22.2026.09.25.13.57.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Sep 2026 13:57:04 -0700 (PDT)
+From: Royce Remer <royceremer@gmail.com>
+To: git@vger.kernel.org
+Cc: Royce Remer <royceremer@gmail.com>
+Subject: [PATCH 0/1] pack-write, pack-bitmap-write: register tmp pack files for cleanup
+Date: Fri, 25 Sep 2026 13:56:32 -0700
+Message-ID: <20260925205633.530651-1-royceremer@gmail.com>
+X-Mailer: git-send-email 2.55.0.1.ga30d533ec0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] builtin/init: move handling of
- "core.sharedRepository" into "setup.c"
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <20260924-pks-create-repository-stateless-v1-0-11499557cf31@pks.im>
- <20260924-pks-create-repository-stateless-v1-4-11499557cf31@pks.im>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <20260924-pks-create-repository-stateless-v1-4-11499557cf31@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 9/24/26 14:49, Patrick Steinhardt wrote:
- >
-> diff --git a/builtin/init-db.c b/builtin/init-db.c
-> index e45268f1ff..34215bbf18 100644
-> --- a/builtin/init-db.c
-> +++ b/builtin/init-db.c
-> @@ -171,9 +171,6 @@ int cmd_init_db(int argc,
->   			die(_("unknown ref storage format '%s'"), ref_format);
->   	}
->   
-> -	if (init_shared_repository != -1)
-> -		repo_settings_set_shared_repository(the_repository, init_shared_repository);
-> -
- >   	/*
- >   	 * GIT_WORK_TREE makes sense only in conjunction with GIT_DIR
- >   	 * without --bare.  Catch the error early.
+This patch registers the temporary pack files created by git-gc(1) and
+git-maintenance(1) with the tempfile subsystem so they are removed when
+the process exits gracefully.
 
-I was wondering if there'll be any function that between here and the 
-create_repository call that may use the_repository. I could not find any 
-from my reading of the code, though. So, this looks good to me.
+Background
+----------
 
--
-Sivaraam
+The motivation came from diagnosing disk space in Kubernetes pods
+running Gitea as git mirrors.  If a pod was killed mid-gc, the
+pack-writing code left orphaned temp files in objects/pack/.
+On restart, git gc would start fresh and write new temp files
+alongside the existing ones.  Over many restarts these,
+accumulated until the underlying volume was exhausted:
+
+  Two repositories examined on a single pod:
+    objects/pack/tmp_pack_* -- 27 GiB, 21 GiB, 11 GiB, ... (17 files, ~60 GiB total)
+    objects/pack/.tmp-*-pack-*.{pack,rev} -- ~118 GiB across 6 killed repacks
+
+  A second pod had a different repository where two killed repacks left:
+    objects/pack/.tmp-*-pack-*.{pack,rev} -- ~39 GiB across 2 killed repacks
+
+  Deleting those files and running git-prune-packed(1) to remove loose
+  objects already represented in pack files recovered ~224 GiB on that
+  second pod alone.
+
+Obviously, this is dependent on repository sizes and number of
+failures and such, but I thought I'd share my extreme example.
+
+Reviewing the gc and maintenance code, I don't see any attempts to
+resume or reuse temp files left by a previous invocation; each run
+calls odb_mkstemp() unconditionally to create a fresh file.  Any
+surviving temp file should be safe to remove.
+
+The tmp_idx, tmp_pack and tmp_bitmap sites predate the tempfile
+subsystem (1a9d15db25, 2015-08-10) and so had no mechanism to
+register when introduced.  The tmp_rev and tmp_mtimes sites
+were added afterward but did not use it either.
+
+Note that git-repack(1) already handles this correctly: it calls
+register_tempfile() for the .tmp-<pid>-pack-<sha>.* files it creates
+via collect_pack_filenames(), so those are cleaned up on graceful exit.
+The lower-level paths invoked by git-gc(1) and git-maintenance(1)
+(pack-write.c and pack-bitmap-write.c) go through odb_mkstemp() which
+wraps mkstemp(2) directly without registering with the tempfile
+subsystem, and so do not benefit from this cleanup.
+
+I have some unit tests covering this, but they required instrumenting
+the code to add a wait driven by an environment variable so I could
+catch/kill a repack on a tiny mock repo. I decided not to commit
+those as I think the fix is self-evident and we're just delegating
+to the same tempfile cleanup logic and relying on that coverage.
+
+Royce Remer (1):
+  pack-write, pack-bitmap-write: register tmp pack files for cleanup
+
+ pack-bitmap-write.c | 3 +++
+ pack-write.c        | 5 +++++
+ 2 files changed, 8 insertions(+)
+
+-- 
+2.55.0.1.ga30d533ec0
 
