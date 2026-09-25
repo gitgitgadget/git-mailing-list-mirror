@@ -1,123 +1,128 @@
-Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3484B345729
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 19:34:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE184D98EF
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 19:34:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790364863; cv=none; b=osc2PUVxzShuEtx84AEyU75sMjGki0zgXB7YnZj2Hax4og2bmlAfb91FfhEXizSRyrqhPRz2ZpxX+YmqPjjXEe60YH1n9At3+3k3RNcXG+9KKkut33XJwYrHSybE2hSilHs6SWp+6f+KAe1u+OXaPpS6H8IqzsWjoP/UN8L/JFQ=
+	t=1790364873; cv=none; b=ZJLY9O7lSBp7dslTKQUfuC1nkwDkOfxoJ4F/eUzSWkjy1/bMmlds1SeHeDZoVkt8lp3ZSEGuH5kCfxlIGfuKbKoherkuZEjbvBaO9QNsQtROqikWAc3/N/H+qEXMWu8d/lX8ppvUFt/XVBwW2mWcqRHRMQZ2eLPkols49Ti2e48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790364863; c=relaxed/simple;
-	bh=+r6XOAd7Kr0u90O4oi66sjDPDTXNSsHg+LlardFPSGM=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=ruiUoAQ55wZxIMdJVkJepPevzbRn7tEq+ZcwYiPl9/tqWao0QQmnalHBKe/Vt4yk1Ho+xW4MJuA/ZJS5EVbnYSLSGaZSpNu00cm91xCSKsPpQzShByDj0nRAOKO6Qeyiz3fyWH9/Qdx5Eg8gFiQW+7tjNhN5dDbn245UEaqYnN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tCwHgC/n; arc=none smtp.client-ip=74.125.224.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790364873; c=relaxed/simple;
+	bh=r28xSaTfJcD+bfDUo+sYy0+d+W0eXDeoKOrz5G8EUMg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sD9WbGrYU/0Kt496HFOeMFNQxBAqBJgj4f6efXFL2PDv0H+327hmMVRnZlC3axBMKkGmKa0T+8PhX3gdD/eOlqqPI1Z8vtR73tnKNGEqWpfQOjQK2bJ4XY8Thn/KnOZoypq9tkWk1bG/JtJXgw8CiAOiW37SKOMTnKZ7U1gxjQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fpNGWL4g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lV+DKmOy; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tCwHgC/n"
-Received: by mail-yx2-f12.google.com with SMTP id 956f58d0204a3-66e4ab201ebso1353272d50.3
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 12:34:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790364861; x=1790969661; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=WbrH9WBQ3Hy2MiurYl8XUv8zADhYNIQshehDbZadJ20=;
-        b=tCwHgC/nwGnOCSxaI8zJL23/OTxpZPksGnSUld7Ok0EFMoRsgcq5GmpW6yojxUcZQ3
-         XwjjEezDL+4n/ry8plqummLnfj1VR9SKJ28tlALd+PXLaC2dUb5fUov80kSBdFmThwrq
-         auZqHX9yiy0me2FDG0Mzn6kW0836bHLUuA8Q3wLRu5lXGAEC5m6RhyZrmHjF7KIebH5p
-         vJ0w/b5SDQivlv621JnUGhAjPytYBxReyk+n6TqvXbjCzEajmLmWIXUWqU2XVu+cgA5Z
-         wNbwKJXKXiHczAWIqCweGANhYDC6B6+6E+x+CvyT0HLjwIFqyn8/1Gxj38h70Q7Z91XI
-         w4kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790364861; x=1790969661;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=WbrH9WBQ3Hy2MiurYl8XUv8zADhYNIQshehDbZadJ20=;
-        b=LelvtM0xPYl2saL0VNy62O78xvcJYjnD8W762eNFjFYjuCAH+F1rWG/i1Vl4Bnn7Au
-         lJ8iqiXrM04L1zqDCCMxfx4vNufCYjd2L5DXXBp8YeLxubvb3WEXLTjPLkfuCMO8gGec
-         tJESgih4eMWrqXEpLYzipb9FEAMXj23Y3hhvIygQ6iuoZ7TxwNLUSfM3zLRefewzyj9r
-         5EJmbouVfMxcQ9tHsxQSo4hrAJEGJWcYlXJoOlTEBvLTt+KUGV4YdWgeJXIIekkJMGiY
-         sVnjXGZ8NSOSrpaQIoyMIjZaf4ytRitetfj7JREiLZS5jg/WHoVgG9OZ6zMSNU+jT3WF
-         4sgQ==
-X-Forwarded-Encrypted: i=1; AKwUvBw8iGsw4Kp2sFY1zklCJR76n8VVcIu+7IT7Lt7VCe9MOxlBVngDZp6zBzkePP5NOwWFuxY=@vger.kernel.org
-X-Gm-Message-State: AFuF++kvli7LA3c1CTZnz2pHE+NIRJ+joDnxKCzdFzwmYqxxKXot4/WN
-	cGv2iOf+WKtDmAcB2Jgxx82tR+WrPY16cbbSOErjw8c6kUTk7P+Z7kxhh3knurz0
-X-Gm-Gg: AYBFou3DELvb6uz1cWZ7wU/ZYx96AJB7aPHAxZmOFyb0jUXqGL/M66MrFEDf2D/RYWp
-	zwA62EWM01vKISO+E1v7DE4TJgovHoUzhXml4+VZpR4NHz6zqeJxaWk+Wh0Z6dMRp+jxXvOjkv6
-	6d9mQ17oh/bU3WFjlsQRDQonW0vDVX8JV0mf8MNCIQ3nJ8cAT0vakXvXBG9oeEvzTwEkCqZTkW/
-	bt4ROwjjQBagCG3EeMLmsd8wMYVxtVtVQfKtQQtzVfctM8piJVRpNRBSzw+SKjmLD872fzfuFgj
-	nyb6Qua2YkhwM/VeKPZBo5K4N1LIuk3IbA7dI3J5tt6YdY7aZTctbHKf56yhdsG/HZvfFqM/fDv
-	1g441vCDeFx9VulC72Ap1373JwCX+yR9iYKM8hQyHrFE/eMTaht96rZVCXp7NQ6cGmNuMovR4U2
-	//pNHUrH3tMC8t2DbE40KyVi0STbKci5UcsxWSaKoxj8MMgy79Sx7mfcgg+pENKVfY3q5tvR0pi
-	TlCnoVzG2gM517dgEvkYoGQ+E2pzvvz8dLaQqWNeMVkPqK6RsZLcYtbGm5DQyCqCxqk2g4FHWI+
-	A3SUnDeRwhQM0rFJMyAXD9hG5kdYyX1JE+pZSkvJjiocnsFI
-X-Received: by 2002:a05:690e:43cf:b0:672:e7bc:ae75 with SMTP id 956f58d0204a3-672ed507673mr2189381d50.137.1790364861050;
-        Fri, 25 Sep 2026 12:34:21 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:9092:700:f9a9:65f6:303f:ab61])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6740ee940a0sm1308533d50.3.2026.09.25.12.34.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Sep 2026 12:34:20 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fpNGWL4g";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lV+DKmOy"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id E5BD2EC0064;
+	Fri, 25 Sep 2026 15:34:29 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Fri, 25 Sep 2026 15:34:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790364869; x=1790451269; bh=VIlVRZwPWk
+	HEOYVOuULpfDyhz/toeibunfn9r5sCrJg=; b=fpNGWL4gHpccpZAUmoDAZmNIaP
+	R21u7izOvy8rutea78fmGsLTwH9PFKbYNdEriDscwvkESw5e1Xfc8ErenB9H5SlI
+	xoa5+H+3fJk1T92Q8MYJTefF6G4wEEp33EibUb+z7QoWlVfTOa3sKenlbnjURlaE
+	XJPMW2hHP34NL9P1aklzj636p4lV4U5n09iDL58m9o24tcF8x8NhSEeF6ZveooVc
+	pl2hhp5BYpMkmmyMO/7Q1NdUV2pRsRBkAQRX4rbMWyz31eIxFR26rnIEOkZzyfjY
+	yU0Qm0R4Kc4shG2CmUp1DBoPXWDF+Ymgb+iLwOiK1emFs0Y47gOQ0M9dKgFA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790364869; x=1790451269; bh=VIlVRZwPWkHEOYVOuULpfDyhz/toeibunfn
+	9r5sCrJg=; b=lV+DKmOyjfwCCC4lIZ+rkmpeVXWAB5zJBWkF+d3CpIHqEjaSg/p
+	EnK0YgZtpdl5RUSd99XjcvUUX9/q1PSgWo7oAQxHZafYRcPKTXGzLUNYUq+gbpw3
+	Qh2yN3pdBFkXVKZk8fuMioNF5lAU5OPz7tAr/ysBzcCdYQQRbXIfWAZGXZXRJUS9
+	pG5BXNWdR7ZJwa76TugS5nE0AUV43lWtw532unRq3VW/JMt+y+LfnhC5qj4JXvyB
+	aHFsJ0HnV2YKBzYWEPw1huDFT01vPks/5uYH/SKWca3atVg8w/kewgygFqXbzLo8
+	2SIIUFn+P+PnDDmKkbrigp3zzK5cOX78v7Q==
+X-ME-Sender: <xms:xcy2algTPP3dC7nNFA10K7zCoiwfJM_ApQJWgKE4I3gH9rqqmhYPJQ>
+    <xme:xcy2ahdE56K7962hFFl7xNq5whMxCssRypaXRBHsNBiY7Ft0uj0RicPUnx3gJmh18
+    byk9JFBT8xaMDjYxzWhURpepM60wg7wWsCkXx9C8CQgn9HRUyJ9JQ>
+X-ME-Received: <xmr:xcy2aiewVg8h8hU-LWukthIWrI_4sHE4C6uDIeCVh6Zc5me-zMe3pSCSxyqMjrKQTmai8SF2XePgiW6OLanlqA_kp5JeMyV1oaDk>
+X-ME-Proxy-Cause: dmFkZTGS6bvlCRL61ULTTx8rFBcaNRJsA4deHbzQss2fzFW6oQAduPBxy/IisSdYmKdSK1
+    hBoYnwA8yE5kOVgD/Pv5Xh27/ECdK4eOz/x05kp92UOKpr2OmCUi+JKEq0rSwtM2QTVkcL
+    eF3zHvA6LeLYda+xJEG6yrGqh5cEhBTIfB0t65cs6BDtJK1eF4n0Nm+1+y3WozIdu50QzX
+    z620rIURgaaE4mzkf+uIDdXS2a2FDbvOTrJISFd4kClYKYcNiSpcby38UfacztgmiY8KZA
+    ycP1EFZzFGrkFAdkmnO5u4Eg0sY/D+sqgjCwl+Cow+POFBWFcjiW28zrmaxUK88l5edoch
+    s+hn5NLPn0bcrFK8KC9253O+z07UxIArS73S90O8oC9GF9hlZNCBn96ml594rhuWnQyCUg
+    aZTevJkPAmpjJL3zmiYiLEvjNXyDzuuQwytTVzlQoGwG0/akXjlRTplUE2PAQjaDu/wFKz
+    wirMCSLyfMxLkUhSrt808mWb5SlDCiK2kB1SETL18jB6vHYOh958Pzhi9ju1BH8ETL0R2p
+    7DMGDtS8zrvsrNoY3fbmyWU4eq8D3PGuASF9z1Ih58DI9tOyhlUT4RMgt214kQTtbNJtBN
+    7Q8ypxJiQjmeVobh/z1yUTgBwgfSs47DUzY07Ssnh4h+/YxPBI50dNhxknkg
+X-ME-Proxy: <xmx:xcy2aj-O6ohXfiKgaHa2Ynjxu53jKDoIDxGEaP6-pXLFy236PqKVUw>
+    <xmx:xcy2ammmIDZcw1g0X48qWTsnE6sHio3f0GfppHqLQLZ4AQPh6EdKNQ>
+    <xmx:xcy2at-xxuIPM-n5uVhIqPo1FWO9ql_1HqYLMX1b7FjKv4N8G6dL_w>
+    <xmx:xcy2askfz9tJCh-bn_1Xn4EM6tcixSoFY5kPOs21SLdGQtU2ImSdvg>
+    <xmx:xcy2apmJYfuLQE_vXQQUDySPqjXf4uZxGaApO2_gYeU3o_ZKlsmz3-fv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 25 Sep 2026 15:34:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: git@vger.kernel.org
+Subject: Re: Rewriting the Git tutorial to cover less content
+In-Reply-To: <17c46e4e-a4f6-433e-8eea-c1e4eb28fdfd@app.fastmail.com> (Julia
+	Evans's message of "Fri, 25 Sep 2026 15:22:29 -0400")
+References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
+	<pull.2416.v2.git.git.1790297546771.gitgitgadget@gmail.com>
+	<20260925082723.GB1493716@coredump.intra.peff.net>
+	<bd5d9451-ac5a-4274-9a7a-57ae99864fe9@app.fastmail.com>
+	<xmqq7bk9wa4y.fsf@gitster.g>
+	<4c9f0480-768a-48ba-9753-b4d34188b1a1@app.fastmail.com>
+	<xmqqh5jdur4c.fsf@gitster.g>
+	<17c46e4e-a4f6-433e-8eea-c1e4eb28fdfd@app.fastmail.com>
+Date: Fri, 25 Sep 2026 12:34:27 -0700
+Message-ID: <xmqqv77tt9a4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH 2/7] [doc] git-merge: link to new merge conflicts guide
-Date: Fri, 25 Sep 2026 15:34:09 -0400
-Message-Id: <C66B019E-9107-49BA-B54A-6B82BF11CB77@gmail.com>
-References: <2f71028f-d58e-400f-a02e-7a25c032d889@app.fastmail.com>
-Cc: Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>
-In-Reply-To: <2f71028f-d58e-400f-a02e-7a25c032d889@app.fastmail.com>
-To: Julia Evans <julia@jvns.ca>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+"Julia Evans" <julia@jvns.ca> writes:
 
-> Le 25 sept. 2026 =C3=A0 12:59, Julia Evans <julia@jvns.ca> a =C3=A9crit :
->=20
-> =EF=BB=BF
->=20
->> On Fri, Sep 25, 2026, at 12:36 PM, D. Ben Knoble wrote:
->> Hi Julia,
+> I don't understand what you mean by "replace the current one". 
 
-[snip]
+If giteveryday for example is so stale and unusable, we should drop
+the entire file.  If there were some topics in there that can be
+salvagd, we should freshly explain these topics elsewhere in our
+documentation, and starting a new document is one way to do so.
+Then we "replaced" the current "giteveryday" with something else.
 
->> The second is a very useful way to get more context to help resolve
->> conflicts! I have an alias "conflict =3D log --oneline --graph
->> --left-right --boundary --merge" for a similar purpose, and I think
->> the new guide should help folks discover --merge. Often I can get a
->> better sense of how to resolve conflicts by comparing the original
->> changes on each side, or I might at least know who to ask about what
->> to do.
->=20
-> Thanks, I meant to flag this: the reason I deleted it was really
-> just that I couldn't understand what `git log --merge -p <path>`  did
-> from the documentation and so I removed it until I could figure it out.
-> I thought that `--merge` meant that it had something to do with merge
-> commits, but upon further investigation it looks like that's not true, and=
+> Some interpretations I can imagine:
+>
+> 1. The documentation remains internally consistent, like if it says
+>    "see <page> for <information>", then the information is in fact on that page
+> 2. Any information explained in a guide must always be explained a
+>     in some guide in the future
+> 3. We should aim to make guides more _useful_ over time: on average,
+>     a user reading the new version of the guide should come away having
+>     learned more relevant-to-them information about Git than with the
+>     old guide.
+> 4. The original intent of a guide needs to be maintained.
 
-> that `--merges` is related to merge commits, `--merge` is something
-> totally different which is relevant any time there's a conflict
->=20
-> My best guess now is that it would make sense to include this
-> under "Tools to get more context". Maybe something like this:
->=20
->> `git log --merge -p <filename>`  will print out all commits which
->>  caused the merge conflict for `<filename>`, and the diff
->> of how they changed the file.
->=20
-> ("which caused the merge conflict for" is a little more vague, but
-> I'm trying to convey the intent, and hopefully folks can look at
-> `man git log` if they want to know the specifics)
->=20
-> This does sound really useful.
+>> I do not know if we have bandwidth to keep external links fresh, and
+>> having a set of links to stale pages ourselves may hurt more than
+>> help.
+>
+> We've had a list of links like this since 2013, at https://git-scm.com/doc/ext. 
+> It definitely has broken links and it would be pretty easy to update
+> some of them once, which would help in the short term.
 
-That reads well enough for me! Thanks.=20=
+Dealing with broken links is easier as we can just remove them.
+Noticing a link that points at an unmaintained stale document that
+describes what used to be relevant but no longer in today's
+environment and replacing it with something more relevant was what I
+am worried about.
