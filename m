@@ -1,131 +1,140 @@
-Received: from mail-pz2-f40.google.com (mail-pz2-f40.google.com [74.125.228.40])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D844A5C55
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:17:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.40
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790353066; cv=pass; b=PpDBnR1V1NwpbNzaXCoR2tuBLr/E1C1CZgk98K+dj+wjx/1O5G1GBNfXp0oVDdHwlHjx1hjisFs3OC/TFqgvqeu8BQ8YYZbWrIMldjfBi0d75a42vXcRDWwUM9kgYgRZdSxTpykkFT6ubSiiVmjt5A9L3GP80yupKx+RaD6fnkA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790353066; c=relaxed/simple;
-	bh=bsJ+h6HipZ3Xg50Uxpeb4MzHMTA23BTjA+MKyd23SBA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=t400+i/46CuVUOahc+2j+7AA2vWsARbPXxKbU3g+EOk2rSvHW26kciLuFMkWQxO4kvTh/0lJKvgpltE24RH9rgQescrpLM5Do5u87EjKLcxxlymQUo+0No41RKz9l9NM1nQQRTEzQvQo3eb+LKbO4EIfGhr8XOmccsX/rP9zMRA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GGck90Wd; arc=pass smtp.client-ip=74.125.228.40
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBBA4D9545
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:24:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790353491; cv=none; b=tGWCVonX9sK0ZfFjF3ggKimApSUruPEGSWC1OUaMYWbon7xN99iMWRUdO/SrY0iHhYvB5MWJJUUkVv/h67xapdRAhHvFrJxwiJmESZv9Q06oJKMiWktrtS3rvjRuodPIAovadlD1RR5e4IChz2UGrMNq9xEaFT+e/MxXpWmWHDw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790353491; c=relaxed/simple;
+	bh=qo7YXgxF3LD9MNzD7m3XiThZuZxI6wf6D+iFmlFkrwg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FWFyajm8mGBYtZQtr/g7+MaUU5UrRgNmq7j96h8e9yVw3aR9SIL/hVDn0Lvgft0Kw38hfRK5DRJ/2TsHoe1Dt3hLH4Lqy3fPlaS+AS2A6xDeLa/+mbQPQkMmwb9nfWAPy613/42ZLV2bbw0GzIf6Ov5k2niy5zEzw3U5lFJ4/ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JSFdmUR0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ViFL7lwF; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GGck90Wd"
-Received: by mail-pz2-f40.google.com with SMTP id 41be03b00d2f7-cc78d45f78fso519395a12.3
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 09:17:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790353064; cv=none;
-        d=google.com; s=arc-20260327;
-        b=JzpS/yJzwVOhnxZDhnTs3OFJxCE30OZ+j9qWfVuoy7qa5pz+L+BGRfup09pk+bttn2
-         QF+ABHPdcnInTJFvgM5ffcRiin7QN1KYdG6426+Gk2e9aU8fzOXn4EM/7wcD1QVgYrp2
-         NHuoDeODdJ3cC09pAOpV/UCoZA50W2ekfhdRKKd95fTyD00GxY73/ujM2TNBWuv/J4N+
-         WwTwm18PNXRvL8eJc2hdiJLCIhp1/mzzh8c6YP9h5O8ZyOB9shAjzSiyoYLM3/jyYClx
-         7nhLvqjz3Nj/zP76XXkLADYm/82EecYbF2loMp43Iweo34mne3FsmQBD9INhD4dCmI7w
-         83Jw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=bsJ+h6HipZ3Xg50Uxpeb4MzHMTA23BTjA+MKyd23SBA=;
-        fh=vsIQf0EsFq4ZxyHuwbYXoOBrJp9/M1rTtX9ags3UxnI=;
-        b=aXjzN9BsgQQ3KJ9SyH8hqhSkwIH6NVLZttEWp1b766iEHT8MwDqfV+j214iE2iYgPJ
-         sfVI7EyDZqgRpxwrUkn43+ST+St5xo3EhIV8mHpuwGXY6A+3fOeONHxc1uJPxnjsPPCu
-         bbL1zq7x/ajFqFZqT1ZIm/aQlqpb+m8f+wluYelaAcn4R2R45H26ruxcygwPFpK7kbLA
-         ZQlPh5U+uDWMqD1OnURZHxGAkDZbH+r7E2dM0AAS3duE2blvZup5I7pzbVOuvilJeh6c
-         TLm24vAtKxsQfqCpaMS2816P99x0UITlTVbWjPkUxSbnB5c+PwW/rXHxzzRB8qj2YrN5
-         HRGA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790353064; x=1790957864; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=bsJ+h6HipZ3Xg50Uxpeb4MzHMTA23BTjA+MKyd23SBA=;
-        b=GGck90WdA/s+HfDvSH3/D1EpOUnB7Q//iUDrS4gm80JQHmVKF9t+CcnoN0XVAwYtbM
-         JsBMjvCR3DBWZcUcn08zJS0M1epbSUExiN4JkaR/Kq69ff+2IopXlbRBTVd42R6oxXZ2
-         XYlXDkFtvGzaz9Thwj5M8HFxppRc/0/PJhj+G9VMNAp7Khv/UZoiTnVGvqTcU1ybMUui
-         J2rUdf5Ce73/d4ByV1y3YO8HsADxrYLH+cwv+H5FvY3TKQVyKmIZ/eH18aJY3xYJQlNU
-         dq2T6sJXmePoZqpqAVSTfA7myTbB+Ps56im2aoYwuH3GpzLgjI+pGCEXZt7BbDPzEm3H
-         S8Xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790353064; x=1790957864;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bsJ+h6HipZ3Xg50Uxpeb4MzHMTA23BTjA+MKyd23SBA=;
-        b=ab821FmTeXYqmY34a+1T+CtdFNZO39i6V36TX9SJw1CyGRLixXn2xAAT98nyG46hUH
-         kaahRon4Wqtj/X9l6ZSUbv/M+g7CaqIbTDAtKDKLNrnB2+dG0CDYQcWMoj/xXdm8SoWF
-         pBmdD56h3V36C8oBTGlaQO8M2BassKIo7IatdVyHTDo70ibHWjuBVlT2TUdLmM44joM4
-         nmcRa7U9RhLFSZT8ski9QoGILhOZEAr21msiUJ58njnmPfW+UNdMUEjMPwSkSqdoCQBL
-         qlCm/Tx6oRZcW2A1Mwhq9rQhoFPVKdTULOLV1dgFU4iOk+RzeA/k4NacrTdDx39BtCRY
-         au0w==
-X-Forwarded-Encrypted: i=1; AKwUvBz8XLewySsPGZQK31ueIh/W3MD6P1uT3WACrvbOZXv3V7EMOsaO+oWPPWMlSeksauLtdWo=@vger.kernel.org
-X-Gm-Message-State: AFuF++mbf7QhS5xvv2GdDkrSLW/gH0z4ooG9+SXooPdrpwcUhfsqn1uU
-	IEDUENakepPN6/OB+TKFijHcsPFLBaZhBoLuZ65vjn6ykOE/6Clq0Hr+Kdode6Yl4Lsg9SqwbEG
-	GjoIoDouV6ipty69G5Y0q+ogPHc8tx58=
-X-Gm-Gg: AYBFou2r+ZUhwxUMogIjxQYqW8G7onS3813W8FRN0ReucAh7fS1fkvhco8BbOOmoF89
-	v3HyGNbPphU+DYEU9GpdLc5SC5A1G6wcRCH+SbF/uagxuIZJg5pzT8j4BnW6pg84kA3WTMdpKWS
-	pdlHBK3yCGSxWARLPfNb20d62oRmpbygB6JYKsR63zIblfLoeFLX+atSiW4JZKRqnQWfFOFhu3k
-	Xbbw18d1keyueTkDToXfSAz4X+GY9NIttIAa9Hv771gYcE4a3WsgR+O678DADhTHyGtl6Mrx52c
-	pm3ABy6UAsXrxmndy8+b1USg+SJ9QH5M6RSqLHbN3oPSALaHRjA5tBF8L7yq+ktGZCFp2yN6Uk9
-	uEcL21YWyKLKlvxsezdIGTUMsh8QPnvqZLw37LguyBuLBQlzRJaXG0xUIsPbioF0BL4RjdyDUHu
-	SJL0MowcusZJDZoDKxigX7pyMuCMXPvKhbmNO9W5Vv
-X-Received: by 2002:a05:6a20:d48c:b0:3de:94b:7e37 with SMTP id
- adf61e73a8af0-3de0e6f5365mr6370806637.14.1790353064317; Fri, 25 Sep 2026
- 09:17:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JSFdmUR0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ViFL7lwF"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B0F8D1400173;
+	Fri, 25 Sep 2026 12:24:48 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 25 Sep 2026 12:24:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1790353488;
+	 x=1790439888; bh=QIhCOBOz6L5k9e2XUxlWnzx/rCNboVlAy54KgVSwo6o=; b=
+	JSFdmUR0oJfKIT6FlZSZGtUYRmuc73HJoOkd5PVQ62E/WfOgXpHSjAinbGeMHh3S
+	/z98j0UsgUoh7aeYuDTCfEm0gs0HvRkix5YnwQtVGKZZbzvTF3Ipwy71GUyOkVzD
+	0RAe1yxH3+dyc1X4mXmsSNwd5lkwzmObPxhL+lh/WOMMBQMoSCcJp5RczNX0URXR
+	psCoczopc1aUHJMKMywC3Vk8T5pKJTsdqYOqsnWlAsNT0Sc9SQ5QEbfqnaE8OmrR
+	ZcEVD/vrAuGvRoHR16HSCvaAao171wnxQ7ygVd+JOYutMbojD+NFHfuTdIuDz+5F
+	EWhLtfBU4i4VZDexR6nTkw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790353488; x=
+	1790439888; bh=QIhCOBOz6L5k9e2XUxlWnzx/rCNboVlAy54KgVSwo6o=; b=V
+	iFL7lwF/t4xOXWKrc0JAuXYSr0oL3Sb+XDzMlon6hAZR6UvGRdz4kyEoSqehnkKB
+	+v5V3Ni45k9DrdCQetI1IS7ptoA4axoSH4ogm81y6BJg9/uWXrpFH73FpRVw4AaG
+	XHhh1s0svm+RhzBaUoHLP2p/SeArYtTfj258bF7/eqlRxiisuPGzZy5QAz29nVmH
+	knltOn32xqrtx/srxmiJNFvDXzP+FpnbnDgOL0NBWfqZLfD70vleso0i+f95KsHA
+	rgWEw0LDWXl9+wl2qffeFejE5E4nuUVQ6GPJEXNSwa410gLmUrJXwpDwCI9Hvvpt
+	uMNhu+hZdEf7yM60Lzbcg==
+X-ME-Sender: <xms:T6C2aoudjJCmj1uT8whDlihV1q-Qc1ecioF7BdGpLUA0MKyjk_AnJw>
+    <xme:T6C2ar-V-wx1F28TBPxqztxE215XkKeuMz84Ye3QiZRPl5pcHVxW5_eXq7VeG_J7j
+    sLGx-dL46yMD13Ewp7zh4lVURciBVaEMg7PWoj4oIh8Usluig1j6g>
+X-ME-Received: <xmr:T6C2ahxnptZ74ZMIXCCBQIHyYF2JdrUY3f1l8X-5doRR_KFRFwc-NK4vTSWeca3y5wwVF49eILURvSrkza6bz7Kz5WaoJdnmjEr6>
+X-ME-Proxy-Cause: dmFkZTEb2eVJ9fDLN6mrirmpqn4OHq4GB9uI0/ji3zUVV9d8tPRZWQctI0pF5/76ejr83h
+    d+5HHHcf4N+OX6ZpGE3yTSp/LUz8PLgLejJkofihZMoRQgNAAH3OIQbJQyWqJsYNrB0TWV
+    ulTzcLluTZg/DtivBLAdRS/Djzv3BCiknAd4wQqFt4P4kCLO/BzOC02PvrcE1i0O4r6ifk
+    LBzQgvPbv1IvzBBpJim5r8Nq9duITH3my13VhkkJ+SJmx2V6AKP8Pqa0gGVF5Y81qWjpST
+    1W0VzYj1o6j7XnOTyNHjaj0lrUldZx0hU5ZnGLDo3LEL75zXUeD3LyaA8JEf7iKPcBIZgD
+    WLvQJXdRZzQ3SCa6cp2h9p/JFvsKYztf/RLlWhjzOuoo3CGIl4rr/5KSMTR6W8tbu4o/vm
+    QaLAA4NpWZhLRc7C/1CuaUO3palXi1xvGtsfc/fKaYhfc4Ya6J5dn3f0OsfRw1cMq0f0h6
+    5ZlvQ7QmdsrMesIyojw26mivIHcjdFY8YKZrbATT5JXkGqKUxRtRT7JI9VHfme1v2WdHbP
+    piCmu5gn01eNpMWaLhRr7R/5f/cFxDHHfIA8DfOkQw6PDIQyGREINtPZ7D7XnhUmONOGh9
+    5i9Sw1p0uHiFH/O6RlEUl+0WyoAiBWNonJeedrhAWYd1lBXAdbqtR30CXtNw
+X-ME-Proxy: <xmx:T6C2at9a90jiE7vnkTXrN5ytNTmiSgDXflMJa8PlRKxW50SYFgjuJw>
+    <xmx:T6C2avPtd-6lWHnLgAyLMmye8hVVg6i7ILBO8LDn7zRToxbQnjH3Lw>
+    <xmx:T6C2atqVovxFQvP1g-9LYWssMb_sS_6AZzsEdIg_AGSSVKSq1dXN1g>
+    <xmx:T6C2am73SpxGX864YYTJYypCsrxBOg01XZEvHH340Xs7qLkfExGwhQ>
+    <xmx:UKC2ahEaIgjSKj4Q0tD1qvvmGTm-ypOn3MLzezp_2DpB3Sjs3FbtOS8P>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 25 Sep 2026 12:24:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org,  Eli Barzilay <eli@barzilay.org>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,  Elijah
+ Newren <newren@gmail.com>,  Adam Johnson <me@adamj.eu>,  Victoria Dye
+ <vdye@github.com>,  Jeff King <peff@peff.net>,  Derrick Stolee
+ <stolee@gmail.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH v2 4/4] builtin/stash: merge index in-core
+In-Reply-To: <CALnO6CBhoBcVjLXidvii+o_Ump_k9disW177LeSS0118t3oGKg@mail.gmail.com>
+	(D. Ben Knoble's message of "Fri, 25 Sep 2026 09:00:51 -0400")
+References: <cover.1789853192.git.ben.knoble@gmail.com>
+	<cover.1790168285.git.ben.knoble@gmail.com>
+	<e49936ee12aaf5d82a98dddcc618cee01ac3c681.1790168285.git.ben.knoble@gmail.com>
+	<xmqqse2yz4y4.fsf@gitster.g>
+	<CALnO6CBhoBcVjLXidvii+o_Ump_k9disW177LeSS0118t3oGKg@mail.gmail.com>
+Date: Fri, 25 Sep 2026 09:24:45 -0700
+Message-ID: <xmqqpky1wb76.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1789853192.git.ben.knoble@gmail.com> <cover.1790168285.git.ben.knoble@gmail.com>
- <e49936ee12aaf5d82a98dddcc618cee01ac3c681.1790168285.git.ben.knoble@gmail.com>
- <xmqqse2yz4y4.fsf@gitster.g> <6e6420e8-3cbd-4975-a781-645e1ffbc1d2@gmail.com>
-In-Reply-To: <6e6420e8-3cbd-4975-a781-645e1ffbc1d2@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 25 Sep 2026 12:17:31 -0400
-X-Gm-Features: AclHuK_2vEA68AwXv8TQEgSyiE-sc9WMsoav1xHPE2Tnx49c_01GrQGHjcM1cQI
-Message-ID: <CALnO6CDzbUMSAqLgZ_A1xx=XJPN1_HR-tJUDqG4-Q_xV2Ypzkg@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] builtin/stash: merge index in-core
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
-	Adam Johnson <me@adamj.eu>, Victoria Dye <vdye@github.com>, Jeff King <peff@peff.net>, 
-	Derrick Stolee <stolee@gmail.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Sep 25, 2026 at 12:04=E2=80=AFPM Phillip Wood <phillip.wood123@gmai=
-l.com> wrote:
->
-> Hi Junio
->
-> On 24/09/2026 22:59, Junio C Hamano wrote:
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-[snip]
-
-> > Perhaps the true culprit in this confusion is that the order in
-> > which merge_ort_nonrecursive() takes its three trees (head, merge,
-> > and common) and the order in which merge_incore_nonrecursive() takes
-> > its trees (merge_base, side1, and side2) are different, and if we
-> > fix them to match, it would make it easier to work with?
+> On Thu, Sep 24, 2026 at 5:59 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Ahh, or perhaps the trees are indeed given in a wrong order, but not
+>> in a random wrong order.  merge_ort_nonrecursive(), which is *not*
+>> the function you are using, takes head, merge, and merge_base in
+>> this order, and that order matches what you wrote.
+>>
+>> Perhaps the true culprit in this confusion is that the order in
+>> which merge_ort_nonrecursive() takes its three trees (head, merge,
+>> and common) and the order in which merge_incore_nonrecursive() takes
+>> its trees (merge_base, side1, and side2) are different, and if we
+>> fix them to match, it would make it easier to work with?
 >
-> I think it is definitely worth fixing them to take the trees in the same
-> order. My preference would be "base", "stage1", "stage2" but so long as
-> they match each other I dont object to "stage1", "stage2", "base".
+> Indeed, the confusion is that simple ;) Shamefully, we don't have
+> enough test coverage to catch that regression, so I'm very glad indeed
+> you spotted it.
 >
-> Thanks
+>> The new test in the attached patch will fail with this step but if
+>> we revert the changes to builtin/stash.c in this step, it passes.
 >
-> Phillip
+> Any objection to me adding this test as a preparatory patch? There's
+> no sign-off, so I don't want to mess up the DCO here.
 
-FWIW, I concur with changing them (and Phillip's preference of order),
-but I'll elect to leave that out of scope for this series.
+It was written merely as an illustration and is not something I am
+proud of.  For example, creating a totally new playpen repository
+only for a single piece of test and remove the entire thing when the
+single test piece is done was done only to make sure the existing
+test that come later can never be affected.  Also the test only uses
+the most trivial case (a file is added in the stashed change, nobody
+else involved in the stash application has touched the file so there
+is nothing to "merge" in the file).  It was enough to demonstrate
+that the order of arguments given to the function was wrong, but
+we wouldn't catch problems in content-level merge with such a test.
 
---=20
-D. Ben Knoble
+So, I wouldn't mind if you reused that as one in a series of tests,
+but I'd prefer to see those who are move invested in the topic to
+come up with a bit more realistic scenario.
+
+Thanks.
