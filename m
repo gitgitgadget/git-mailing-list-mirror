@@ -1,81 +1,90 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E174DE70F
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:09:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9872B2264A9
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 16:13:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790352598; cv=none; b=OTcbEZ3wzJWLnsp320UNj6bcRFDRI2qM5yrDwu/mEhVie658QmfnS0wydP4JwNCQ5AYPU0Iujog/itctSozl90l4SgSuzfZ4pCpbdUckEFgQ34o+LHmldud5GMDrf7MUS65CULvwmjPPaM/KuYeh+9fhsx06/5W7hxBbf/T2Nrc=
+	t=1790352815; cv=none; b=KHNvGEeZG5ayhBh0ki1MnN+Ljrdfj4DjcEdcHRL2gkJpYGHJ2dLIItul/Ay/GCSnvIAc8q8+30+31HQ8njpl3v2wFlZqhlm8wL61IaEm4QNq3DEmTwZ5HHnLyNnVz3Pe5Vtw/KVhEXTLP5WOjhVbngGPWgarmC8WLurnF8SBPSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790352598; c=relaxed/simple;
-	bh=qKAy4qBdBlapUs3dYZRxVCVtTRYZDWrzFl/tQd4aNxo=;
+	s=arc-20240116; t=1790352815; c=relaxed/simple;
+	bh=hM+8tkMG5VTSOAAhcjjXobRjSrgrqOYijfZ2wZrjXME=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CrXdL6zICIQNAGVahMmS2g0S4mCJIyaBcNUyFK1vSy5cyKDeWLQdOlUWw+7foUs4+Xpon673mYMi/Z9+6Qa40qg5QmgR/egPAKoYryA3l1vGp/Iqx5H5G1ahm7A+Bu+OKCU5jS/WSx0U9OAYZF93drngDq5YhHuoFjnd1gaLtnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xa/aGnFN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H/8dvA9I; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=RXmyJuQJD3io+FqBBvyUOxqya7OJDsazcCpVR18yZrNNCfyC6N+g4Z7eEX6i/KKEaBCdEVlCr3udwfWUDCAiOOIdQztmrK5GKimopiIZE/ffJdPH8VCcKywCWfloigBwrWRgzS0gtKxjl0ywZ+Hd2bHwtwO0wnh8OaP3tFhZqVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G9j494bv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s/jVNHmv; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xa/aGnFN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H/8dvA9I"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2F26FEC01DB;
-	Fri, 25 Sep 2026 12:09:49 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G9j494bv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s/jVNHmv"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9573B14000CB;
+	Fri, 25 Sep 2026 12:13:33 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 25 Sep 2026 12:09:49 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 25 Sep 2026 12:13:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790352589; x=1790438989; bh=Pq+bWctc1o
-	Hqp51M4qBqWYYt2lSWja38fzVEfmiVW4I=; b=Xa/aGnFNSmcOVRNogNeNAbHfcB
-	CFQOmQ36f7+gazRckcppAx+NFjcgkWAwBnWuv94VH2nGdvFjVNjnrPIB5iXTzitD
-	9NHxIycGc0WQ8Fv65eCYViUtJebnyLzEmDHuyqNzEly0WZwOXdBxCQpxTnzJR2k/
-	Y7tIHGebYzgNI/Kgt3N2Ktf09usZg+mvZObYjACIzIE8CmovooUS58SPhe8YOqqG
-	S72kmCTetKSafd1l3TLjhg0Zo/VwU2NBsiJdwthDgLJ5HvbKHKdcqMUUZTmoHPRd
-	w75UOEHhSap+zTBcO/9EXMz0PtXyig4Pd5YpnK41M+lOqjaPs6TqKwGVOJKg==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1790352813;
+	 x=1790439213; bh=jDromobMbmQcPy0aoLeJgIgwvfEOhmJjhbstU2Z9BDM=; b=
+	G9j494bvWTijL19OdW9eYlH/dB7by6HcnezM47f8nmqdOOBKrgJGavMwMxvawgJE
+	w3PD2JoqrRGGTy2oaUXfparvjClRrp9+6wdWVU0rNCWaJkPYh7+1Ul54aHr8eH32
+	0e9dbZoRVoNIM8mSmMdkYJQqkJfXjWnm27A26bqBsyF6TgnANNXqhoTe83yjV7Ld
+	BTmKLBhK8gxzSO8TRYJ1PSAYIukkukKvqVKyjXdaZC4ayHHgkEREXo2MTp/i9Lgj
+	NLDkcFAIrQs8YRboI6JrFNJZUUZYlSzaYixylVzCeh53/fqiFvYRB0jNk8QFtDR8
+	Q+Zj4RO2VO4jS/Zk7XgZKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790352589; x=1790438989; bh=Pq+bWctc1oHqp51M4qBqWYYt2lSWja38fzV
-	EfmiVW4I=; b=H/8dvA9IWsHbcQ/CqOVFZhXzRrgIrhu1zOadU9zPB40lIf0Ehn1
-	IVUuZHLtLZWoJHpwG8Yf7cPKmfpuBgFOKf3n944MXy8ZO2DLEA0Hgmea2rJ4YHSi
-	+U0lUSE5nkP1pMGMYHZ767a8U1/yDiRk3qH69W4K7t519ld4F4nsbfceEUPYSZb8
-	TtrBhGxc9pnh4CKn5MAD96y+eU4wXP6NVFRIHAdi8wsV3Is1ZpUKMASofTbuIOHe
-	z7b+yWa1RBe1hkTBT7fHg3Fk2KK+7CiR57jnaTwjXdc4tszWePhZH3mbmZYvpY2l
-	x0jXuoa46oyjz0s/UWtdBRwb/ip/PzQn3Eg==
-X-ME-Sender: <xms:zJy2agihs-rthoNWL5B8JDdGRNLosJrxU_SbESzrM-EoNWGFGcQKrQ>
-    <xme:zJy2agCBtxfuIk0c6kKYSxWzNxPGD-UO0h_ZdreCdPCC41uayqwX4q7z6Rf5sXudP
-    jnuazy6b6uBl7Z4rIFY7g7ngnMtLG9JDg84Nfy9XHGW_KuKmx55CA>
-X-ME-Received: <xmr:zJy2atH68VCW-dTsKkdzsFO45W1gbHjhQ5NIJ1VxO4YsmHEnqAWkr3R8hg6pkEWGwYvevoSaD8sE_k7pO0vN2KDywA3uD9QB--XT>
-X-ME-Proxy-Cause: dmFkZTFqXDvqUf2C64si01oVHKaVNTgrukfVVsf5etOhXqwSDo9MrMCime+NMAUQbwlCew
-    nr9IHznHTqARE9HRyBY5cYfZh666E7gtCOne3sy4g8COnAxt6vDYgDfB4TQ4q45Y61WRvU
-    riCmtF/yaoAG+PGoOaM20UvqDCsQAKZaycpI2Y4p+SUxbi0pF8i9v8X4a3G6zq6llNHsB5
-    DHcPb1Eqi3TusyQxhHaNNoosf8MyR0Alanp8U/XVwZhnXzdelOPFmkEAb8RVy1FjoiFLJj
-    M5JzXHoJX3/s3JrF+IeyF5T5qw9LFgk/8sQ4hEUOwC/dMWOHFDgRAs8i8/PkQfP6aN9ni0
-    SCHvNUEybAhS5UM3jQdjaKTbLRHZb/1hAfhanN74VeFHjXT/Qdyx1unF5skwOEghph6h+J
-    LvbvdbHbTft5RIiKO+zHM90jOOMT+TpZkXmAVfWobYgimyblfDCAcY2lJq2sVJSbvKFlrN
-    xhlgFjSHmq5cqlzei+4oqx0auk8BvdoSmVuuNu86a2MhLrNJ+TiXJkZY3rJJ45DsvSNJE/
-    346GmQ8xYV5DPtDB5aEvCnp+4BUz+4IOw5Q32zFjkubYUgZ8+ypPAgH6m/5GFRzVZfk74C
-    3jwfPav0+2qxMQ6gsizw07PfZeeXzd0PoexbnvJeDZDEXuEEWGo+UOIMK+Uw
-X-ME-Proxy: <xmx:zJy2agKfKy5CiduWUf5x0KP-_T-4_k3n4l5YC7z7Mlop8Iwps2gnMg>
-    <xmx:zJy2apm1h9gNTdsNfMU2lHJKahDi0D2kok72Ef2QDpTmhmdziegCjQ>
-    <xmx:zJy2agQWkoTNQPEL34jSPuhNByuBaPZmEfAvLDlJBBBG-q84Si9sng>
-    <xmx:zJy2ajILlv3PXmS7oZ0hepehu_l9xUp17aifo5DWSv1zMuEVWm_suA>
-    <xmx:zZy2aspuFLkHAe2aWjf-0QCRL5Ce0bKpKCMrrX7JAKPSGZP8sQUFs48P>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790352813; x=
+	1790439213; bh=jDromobMbmQcPy0aoLeJgIgwvfEOhmJjhbstU2Z9BDM=; b=s
+	/jVNHmva7+bSNTlb+T76+HYZVQuHdBNXgpX1Oi10Pu3Wnxx/g3++hDftSF2rIE7E
+	nH0OtrWJKmIlpQO6QTGpcuFwMI4fk0rWxJSs2MMD1u31moc2gqHcsRsfDgXCtQe9
+	O6Es8AlCTyFvccdtLAHgEsEBP05I1j6M46w7YoL50wzz0+7xlLuVoP3hkDOIo9o/
+	fLXHx/HnNXjZj7Zbkb95CjbUNehfUc8xci1j6izbIk2F7V8nPdNIm91qq7YBoig9
+	F+7+AfprxdYht1bVguvarso38UQcE60eKOiujd+/ShNEO3oWgXNnkYcAa0x2IIFF
+	M3pRp6mtvsSYmt9MzF+ZQ==
+X-ME-Sender: <xms:rZ22agXKWaOIcDNZ34-l1cX3_9vkG9OaqHLahIYxOv3jrXdluWuYlA>
+    <xme:rZ22am2GJcpjlYREJWpJoAMd6AUZDKZAvPIIPsJS_sowsVs8WZsZhYbjyQ4ZQvuoo
+    S-eDcacj-iWNsAW5wv0ejeEv4GV6D0syX7Tdh432xEF2vkj2jcaDIw>
+X-ME-Received: <xmr:rZ22amoGgCYdW4ig1wr0aUYI22-WyXtB3-m-yZnHXsWlHlfi75z8m7clY_6BqefYV7CGMUgEvBMh1YtYE3AMxQCi-aIP1mmw6by7>
+X-ME-Proxy-Cause: dmFkZTGgRatzYO2RbkSFyzMm9w1m6zru11aYPFZaehCCWJhxMwG5d1lItX18tTZYqPBTki
+    WICAK10yvwllOzHH31VhZ9ecs5fxqYIre5Id6+mCF8yond8H5xeSxSOTRKdtO9fEfBf6+Y
+    i2yAsqclCJNX4aGTbZ7j5yYwxn5OvRjPbbQXww2xp3dKeUu0UkmPi3nz8O/3Ux6X4a8EVE
+    DbqpXAn6SRpOZzWibDmRdqqgFNbn5MS0cxVzwohJ24JhhWt5WSGAMtcqS+RXmtiZDynXby
+    MB7ys2Cldyr38fdrdUgD/nJo+7bqxJa6uAyBzkBRn/+bgJJ9UEA585NF1Vd4jcwtN12idS
+    rC3EdbenA7oeRKDZbX/1qdRQsnvTbLl4bvX7bo2F1/89y9FOAgWXUpMjLz3zVJSnIzSVZn
+    xd9LJ9zIgZ1SkKFnwOLULtPkWCZIE+De0AS9KP4rXGl/DSBMsrTgZ+Emze6r917dIat1N2
+    stuneEpX5OizH2QPTNdRxel2+NbE7DakhSg6bsvIvuzSNv9QNWavb5NxQKHPKCTslofqok
+    1PuLGcw/q7Dqc64pAswMuo7t4g4J2m8TZnEdYcujCmGIu5vTaaAaXGxa4bmUCfxebGNfD3
+    hNeuNKYLYXg5GOPWhK0CpmRH0OYRMjHIl9JP0nvd+F/eNntV2iEX12IHslmw
+X-ME-Proxy: <xmx:rZ22alVlrc5UaDBObuQn_GzH5UTNBUWlrTGuvSjJZ0OFqZuP0COnnA>
+    <xmx:rZ22apZX7zAomCVyqNuhOGsizxeZoFlHCftbwfoIoMrlrZgsWhYNkQ>
+    <xmx:rZ22aqduLgO5XspFyDHQiyhITFBjGTZKYuywcijDx-ZlYjsahsuqxw>
+    <xmx:rZ22ar2C_VknIp00uB4I3bxaG6HoiSAr5Nwu_pA7IH8l3JEnctUh4g>
+    <xmx:rZ22ar5NfZjGqkFSIpvxNkNLDsTcH4ieSPofaOO8dy-oqHbBMj1nwIqz>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Sep 2026 12:09:48 -0400 (EDT)
+ 25 Sep 2026 12:13:32 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Brigham Campbell <me@brighamcampbell.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4] git-contacts: allow inputting patch via stdin
-In-Reply-To: <20260925-git-contacts-stdin-v4-1-9b4e4bcbb91c@brighamcampbell.com>
-	(Brigham Campbell's message of "Fri, 25 Sep 2026 00:42:39 -0600")
-References: <20260914-git-contacts-stdin-v1-1-9ac628e6fd20@brighamcampbell.com>
-	<20260925-git-contacts-stdin-v4-1-9b4e4bcbb91c@brighamcampbell.com>
-Date: Fri, 25 Sep 2026 09:09:46 -0700
-Message-ID: <xmqqy0cpwbw5.fsf@gitster.g>
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  graysongordon-gl
+ <graysongordon1@gmail.com>,  git@vger.kernel.org,  peff@peff.net,
+  avarab@gmail.com
+Subject: Re: [PATCH v7] http: add http.sslVerifyStatus to check stapled OCSP
+ responses
+In-Reply-To: <arY+2p3YZWlyL9Gq@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
+ =?utf-8?Q?=22's?= message of "Fri,
+	25 Sep 2026 11:28:58 +0200")
+References: <xmqqecfez7ie.fsf@gitster.g>
+	<20260915162348.97792-1-ggordon@gitlab.com>
+	<arQ/nOH+o3XwQFD/@szeder.dev> <xmqqwlsb63o9.fsf@gitster.g>
+	<arTUNYVvCNwX1pDp@szeder.dev> <arTYVLnW-2GHpGGm@pks.im>
+	<arY+2p3YZWlyL9Gq@szeder.dev>
+Date: Fri, 25 Sep 2026 09:13:31 -0700
+Message-ID: <xmqqtsndwbpw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,55 +92,20 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Brigham Campbell <me@brighamcampbell.com> writes:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> Make git-contacts accept patch contents via stdin for better
-> interoperability with other utilities. Read from stdin when the user
-> passes `-` at least once:
+>> Do you maybe run with a curl backend that doesn't properly support OCSP?
+>> But even if so, our test suite should notice and skip the tests.
 >
-> $ git contacts - <patch
+> Apparently I did!  Removing 'libcurl4-gnutls-dev' and installing
+> 'libcurl4-openssl-dev' instead makes t5585 succeed.  Go figure.
+>
+> Thanks for the hint!
 
-OK.
+Thanks for collectively digging down the cause of the issue to (1)
+help your set-up to pass the test, and (2) point out that the
+prerequisite setting needs to be improved.
 
-> Even before this patch, git-contacts parses files first, then git
-> rev-lists second, regardless of their order in argv. If we instead want
-> git-contacts to parse arguments in the same order that they're passed,
-> that's a change which should occur in a separate patch.
-
-Fair enough.
-
-We would want an update to contrib/contacts/git-contacts.adoc as
-well.  Here is my attempt.  I realize that the new text implies that
-we read only one patch from the standard input, but I do not know
-offhand whether scan_patches() successfully reads multiple patches
-concatenated together into a single stream.  If it does, we may want
-to say "read patch file(s) from" instead.
-
-The original uses <rev> in <angle brackets> to clarify that it is a
-placeholder, so the added text does the same for <patch>.  The
-original text does not say what the command expects of the "patch
-files" it mentions, which may be worth improving and when it happens
-we would say <patch> in the description to refer to one argument on
-the command line.  But I left it outside the scope of this message.
-
-
-
- contrib/contacts/git-contacts.adoc | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git c/contrib/contacts/git-contacts.adoc w/contrib/contacts/git-contacts.adoc
-index dd914d1261..6473e878e0 100644
---- c/contrib/contacts/git-contacts.adoc
-+++ w/contrib/contacts/git-contacts.adoc
-@@ -24,7 +24,8 @@ Input consists of one or more patch files or revision arguments.  A revision
- argument can be a range or a single `<rev>` which is interpreted as
- `<rev>..HEAD`, thus the same revision arguments are accepted as for
- linkgit:git-format-patch[1]. Patch files and revision arguments can be combined
--in the same invocation.
-+in the same invocation.  A single dash `'-'` character in place of a <patch>
-+tells the command to read a patch from the standard input.  
- 
- This command can be useful for determining the list of people with whom to
- discuss proposed changes, or for finding the list of recipients to Cc: when
