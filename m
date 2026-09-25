@@ -1,59 +1,108 @@
-Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADE646D0B1
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 08:17:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B699D64A8D
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 08:26:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790324278; cv=none; b=WUJok1HnvPlqF026DO0CpTka0vsi10UyyZJPjFNyl4sJ9wG8wa534GJK2GJ4tMnQ3Vi6vk6CmfCsCo/4xOpx7xKlZtGBVBxavfnG4J8oU25TZ90AmBBa3z5TmLig0si8YiBbzMDbzHA45xHcdTFHQSmFwM6h+xJ8CYNw06B0eP4=
+	t=1790324800; cv=none; b=NvEuoSMZGubAZqQGH2SvhjF2WTKLxdr0TS6urTbKc6PHjEXjW0Vl+vxMDtVzofFtTx0BVkV4GqWf/IXuh8zWO1+HwsP+ykjgb2igrLG3rnig/w69QrJixhXK6xFOSgaUf30bz3Ajmq4/ngLG1DDVeRAkV3bcE5xPxQ6G2p0399U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790324278; c=relaxed/simple;
-	bh=utKvVato7LAxkrphlCW10zIQFukLdIY/QYX8LtEsxT0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q0HYRvxXL/a1JQ8gX7zzBYKSa/HioHeDX2zwlFg8asGP/HinpAMjctaPN9rPI0OZZ8r+urJ3OeyIHwJQ9JVGhASjEg6pUYNbzOmpEcvP2UK5onVvtXsFTm4POmiJVXrJZJ5BVGujmdbXkAk93KYSiso1M0jtEzRNnxamP+9bNdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.100] (unknown [93.83.142.38])
-	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4hrk8t6YRpzRnlV;
-	Fri, 25 Sep 2026 10:17:50 +0200 (CEST)
-Message-ID: <b4e8375a-742d-4ba0-9413-f5503e2c6b7e@kdbg.org>
-Date: Fri, 25 Sep 2026 10:17:50 +0200
+	s=arc-20240116; t=1790324800; c=relaxed/simple;
+	bh=vUCQvjDGieVpedK79OzIMIjVxYCoLmNvoVg2o1aBvBs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HpLgRyFp8QqnpUO0q/Iw5JHrrbH1Hw16ZS1+fX8USQx3VT4NyQ57DNDRw79JSQIWsNAoKo4arlVtzWb5c0ko53/6rZItlb4FV1QolZtJsFfhxTwHdYCHGrlGdOJD/2noDFe7O2DzyBOMNoC9J0M2bXl8A6CkULCn0wufykb6e1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Su3V9Syz; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Su3V9Syz"
+Received: (qmail 50789 invoked by uid 106); 25 Sep 2026 08:26:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=vUCQvjDGieVpedK79OzIMIjVxYCoLmNvoVg2o1aBvBs=; b=Su3V9SyzugmWClb+z+YA524jSaavh45sYlPA6ecP9O6Oexgk3ucM9GvHblbbb2P+PfuOdtGmKP+XZPsnwHa30YKKiJzxxT9n9arGLvSuMysaMFminI8DujCBrfbWJQqk4ma0eYu4jRq8w8tt4djIKxYgmO1mQRRz0HdRAd4hF8RjH2O5Cl7xVa+bHMRHpPBzPEJee0zrNiOZlcDbuJUsyUhtl0dqpFVv3bCpGfW4jsrWXc521+CprZviKgqaocT2nkaI7z3Zc0k9Peg1FKwJ7xoM5ccPje7984O3lys6iM9V0Hid+vzS5CuwLReBVYqli574SRQ16ZlFPxi8LIXlDw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 25 Sep 2026 08:26:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 202798 invoked by uid 111); 25 Sep 2026 08:26:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Sep 2026 04:26:36 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 25 Sep 2026 04:26:36 -0400
+From: Jeff King <peff@peff.net>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [BUG] revision: premature =?utf-8?Q?fr?=
+ =?utf-8?Q?ee-and-null_causes_=E2=80=9Cunknown_option_`=28null=29`?=
+ =?utf-8?B?4oCd?=
+Message-ID: <20260925082636.GA1493716@coredump.intra.peff.net>
+References: <74796901-ffb1-4cf3-bd63-7294328f70bc@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] git-gui: add Afrikaans translation
-To: =?UTF-8?Q?St=C3=A9fan_Driaan_Turvey?= <stefanturvey1912@gmail.com>
-Cc: git@vger.kernel.org,
- =?UTF-8?Q?St=C3=A9fan_Driaan_Turvey_via_GitGitGadget?=
- <gitgitgadget@gmail.com>
-References: <pull.2238.git.1790229073946.gitgitgadget@gmail.com>
- <pull.2238.v2.git.1790257167561.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <pull.2238.v2.git.1790257167561.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <74796901-ffb1-4cf3-bd63-7294328f70bc@app.fastmail.com>
 
-Am 24.09.26 um 15:39 schrieb Stéfan Driaan Turvey via GitGitGadget:
-> Range-diff vs v1:
+On Fri, Sep 25, 2026 at 02:28:57AM +0200, Kristoffer Haugsbakk wrote:
+
+> git shortlog -n --not-an-option master
+> [...]
+>
+> I expected it to print the option in quotes. Instead it printed `(null)`
+> which I think is the placeholder for when the `%s` arg is `NULL`.
+> [...]
 > 
->  1:  ce1f406d4b ! 1:  3015e1802e git-gui: add Afrikaans translation
->      @@ Commit message
->       
->           Add an Afrikaans translation of git-gui.
->       
->      +    Register the language in po/meson.build and omit source
->      +    locations in po/af.po.
->      +
->           Signed-off-by: Stéfan Driaan Turvey <stefanturvey1912@gmail.com>
-Queued, but without this new sentence in the commit message, where it is
-just confusing. It would have been suitable for a "changes since v1" note.
+> I have bisected this to cd439487 (revision: manage memory ownership of
+> argv in setup_revisions(), 2025-09-19).
 
-Thanks,
--- Hannes
+Yep, definitely my fault. I don't have time to do a full write-up now,
+but the most direct solution is:
 
+diff --git a/revision.c b/revision.c
+index ee1df92d1d..501a4ba36e 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2768,13 +2768,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ 			const struct option *options,
+ 			const char * const usagestr[])
+ {
+ 	int n = handle_revision_opt(revs, ctx->argc, ctx->argv,
+ 				    &ctx->cpidx, ctx->out, NULL);
+ 	if (n <= 0) {
+-		error("unknown option `%s'", ctx->argv[0]);
++		error("unknown option `%s'", ctx->out[ctx->cpidx - 1]);
+ 		usage_with_options(usagestr, options);
+ 	}
+ 	ctx->argv += n;
+ 	ctx->argc -= n;
+ }
+
+But I think instead doing this:
+
+diff --git a/revision.c b/revision.c
+index ee1df92d1d..7b858d54c1 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2340,7 +2340,8 @@ static void overwrite_argv(int *argc, const char **argv,
+ 	if (*value != argv[*argc]) {
+ 		mark_argv_for_free(opt, revs, argv[*argc]);
+ 		argv[*argc] = *value;
+-		*value = NULL;
++		if (opt && opt->free_removed_argv_elements)
++			*value = NULL;
+ 	}
+ 	(*argc)++;
+ }
+
+will restore some of the hidden assumptions made by pre-cd439487 code.
+So it would fix this case, along with any other lurkers.
+
+I know that's probably quite opaque. ;) I'll fully explain what's going
+on in a follow-up tomorrow, but I wanted to post the solution quickly so
+nobody else wasted time digging.
+
+Thanks for a clear report.
+
+-Peff
