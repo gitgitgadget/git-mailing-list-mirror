@@ -1,110 +1,177 @@
-Received: from mail-yx2-f43.google.com (mail-yx2-f43.google.com [74.125.224.171])
+Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45353381E92
-	for <git@vger.kernel.org>; Fri, 25 Sep 2026 20:26:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790367985; cv=none; b=hx2xBuxEHJXg8H1iwslt7sKo+4AbzD45VVXRNuiS60kdHZfS725m5GM394aZWcBnmkttkgHsPU76QquGh0U202bBBza2QVnJzvi4Ag27UOs+l+styvXIpmiCrvr5ejbwFnw3N9H+GW3/Yxw1bfgqSXtmjZsuXrEJpEUWUKYPbp0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790367985; c=relaxed/simple;
-	bh=sTX+QV8jRGSGcCTK5HVQhntCC0eLZtpU0688VveyO2k=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=bjPCly9n2sd/Z85HyAK25JPLFCIu7hY5yS8NyilmHQOvoJjGo1vj1XdEVU0p0vnTE7aJU3W8wGTK+E+qFvUwZNlfEJB5UxTjfRlC6kmTZp9BXnfcaSNDklPGQZGEufGJglz1K7XT6rZ0hgAwPBFwM6S0gkM8YBK4rvjVuk24JLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RMxpU+rl; arc=none smtp.client-ip=74.125.224.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E419466B08
+	for <git@vger.kernel.org>; Fri, 25 Sep 2026 20:31:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.225.76
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790368276; cv=pass; b=VnljHRzNyoT52pDnT94JARp5eVwLRzBMBSZztmJyP7vxTlCDsEBXl8igM/6TW6XcjxW/Npm9j3reNWsShg3yJlBaH0n2j5iaGrKnyL4OsxJ44EJJRNWPtvtO37eESFOi9OAOIK8taLOZzrsU3BUISgRNR+9eUx1KuQ7UkogNHr0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790368276; c=relaxed/simple;
+	bh=11XjGqmCW9KL5T5nPDnIpkxLwHjyk77aFZkKfEJsg+Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hPgWWbS6bmnSE0Z2NrlVMPEeKW3yXRIROPqMWG/wtsmnuHwV3Vthf+hT7syoLZTl6rH9hwAnLOObAD+0VDDjAJUhPBC2tTWOaBRPMMjMRY8wFIavje2L6SpbuJd8n4yUN668QRibjJCHdx+Q8bdhZmIntPYBCVzYzQcoOjTR4co=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gVVeRjQ6; arc=pass smtp.client-ip=74.125.225.76
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RMxpU+rl"
-Received: by mail-yx2-f43.google.com with SMTP id 00721157ae682-895eaf31683so14456967b3.0
-        for <git@vger.kernel.org>; Fri, 25 Sep 2026 13:26:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gVVeRjQ6"
+Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-482f6351831so723727f8f.1
+        for <git@vger.kernel.org>; Fri, 25 Sep 2026 13:31:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790368266; cv=none;
+        d=google.com; s=arc-20260327;
+        b=DWdv2GWR80GLr7EQxfa9GC8QhJ0qIZRE2lXs6cOVxCTBOceCRSZ7oLW+g/+x/Lx7Au
+         qkP0bPlahpvupbaeOlOXV9zqK51sawe45R+FSv/6vaZu0sPurgRyZI7vC5hiCEDdHMYl
+         3Gv/KRTRnRbZ9MLowcgXrAOHKL9p8RJN0dwxutmponZyWxiNrZg6LIIhd2OM2y9ZK1Zn
+         /RQKBBKw8QaDTENOQyO1BVz+2A4FeGCKJTQN3PzJo4v/vKXokgRrJn4teSAj2mBfChvx
+         3aTnF26cF1XSACTEYE6ds7sbe9NvcgFkw1b0T5AeNAg2ntCuifDRp7qpp3b1mrKabOCn
+         3YbA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Z5jKJKaTyUtdOlplpUKws7Oue2FxaDLoPFAaM+bIogw=;
+        fh=9lOeBiTeAI+4FIPMHGbUvHErvC4nv37dZNbhm6sOM2g=;
+        b=m0IqU/sQr6a0F/7dx4gXLjF1DoqB3HOsjgtJ12OMAjK1Rpj6xpWaRnrGWtZPX+Pgaw
+         jf+JseH0MgOYoj3btxRfeCQwszrJ1ApXjvr+ueRR0g0EKXK3IOSlpQqqj9uli8Vn3gas
+         Fjoaab7GkUD6yupGZIlQrBkX1ZOpkiiBuh0q7KtJyQIdMV3QNe+62sX+rbRp/8xv8MfZ
+         SWspuZfDzlhf84h57ddjg3IuvLHwFnq0Cqkk4wcQGItj/JRsIKpx//89CkEAjq8dX+S6
+         GBdQ0ccBWtqvFIFmLZkzi/0iD1eQqBZsCRaY8JgGD3TvW00mfSRA15Xyx+Sd9Y9X/Q8g
+         7TQg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790367983; x=1790972783; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=yx7J/KTVkLO6BnbDh+NqszbsSkYWQekGwz11+1/ZNQU=;
-        b=RMxpU+rleB2+Fczto7FeBDyf9clx1kr6w1qrK76wbAPOLUAJ3YcnmFSyFg50jyHsJm
-         2+k/WCEyBA/Sa8yivZ3Xw7X4CB5iUKOUXv/aEII4zHlQjPpyGmPS1gjDuR0keVrW8Djd
-         Ur1fyxa9GfHwMrVZKK9V56QkBFYWY5Nfjct+ClDVoI9fXJOBoXObhSJ0DcM8XkT6ihkk
-         4OdEgMg/jLW0LYqbBDFSbM4yZGXUGGRGwfC8FBK/u/WQGYOyRV4LGMVMSqfccFlF4kiL
-         nnmeX6Z6b3aVQ2M+PIzz3cER/xWOrbWKfyVtALtbGOyGH0Razj/edAuDl4FJxsKRjMXf
-         Qzdg==
+        d=gmail.com; s=20251104; t=1790368266; x=1790973066; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Z5jKJKaTyUtdOlplpUKws7Oue2FxaDLoPFAaM+bIogw=;
+        b=gVVeRjQ6WkSXw+evS1zYz9RrXrGuSPuKl5hQ9d4djsJm712jBze4TuNUGZ1fFeC+mT
+         mKyt86HRWOv7Ujn1e46mpicjq8cOuSYmOHk69ZbfSnpnM5U/oaNlfVdygFy6oTiL/veO
+         4+Egq2lwuG2ngUyQbgfTef6X6hAwVhPr5O5VMxZyjTZVqC52m0LDxHB/dUiCYAxHOS2/
+         vwjkdioE8p14nigg3saLmVOa4LLLe7nBG+Klx9+Kewz+Jgccm0oUcAXrI8MEdI4v/DjK
+         4q2AcakbmxX7spIH/8Z+8DKsrN48NL106a5svWpWhJTtQJYF1u1HFFcpgy8jFz/RA2l0
+         B9JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790367983; x=1790972783;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
+        d=1e100.net; s=20260707; t=1790368266; x=1790973066;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=yx7J/KTVkLO6BnbDh+NqszbsSkYWQekGwz11+1/ZNQU=;
-        b=KiQmwSRMLLXvfFcDgJT46Km3tFPX/s2fyhux5LSGbOaM0eyreJF+4lcUSp9bbuHXFi
-         k4Rm2qbgixCe2G/3W0mFVIM7czX9z+RXuUaFmIvXtyWCmi4s9qwXzHQw76T7vQ5m4ybK
-         mgttwwcR4vrDYn7+KQ7j5PRuALNWI29PaXsqbI/LtnJdegGr5hDXeZ/C56NQMWZHx3b+
-         BF1Qy7l2ul1kqX0Ogp8zOAAO4KBrMLT83h1t/HoXotbaczsGm8fmsHVZP1K8KXHirM90
-         EUjg8sTkLOzMctHCPx5icsMBkvaD1rRR8HRvMosfcO3F05vAU69YhlAJxwIY4mDfDT/X
-         LrHg==
-X-Gm-Message-State: AFuF++nLNK4uj7NLECFsoewfrgDNsX/PZB2nrKEP795thzMiW66cSPba
-	x/7ALteRqIextWfD50xBUDuPG0abWmzwWYkZmdmwqI5YgB6/Zhgr1WtS
-X-Gm-Gg: AYBFou1wseMEUXMqZb6GGRXY52z5dHoRvogY19gIfv5eJCVRyDv+rhzvloPUJ9J2Mvc
-	OpYUeYA96WBd6e7bt+EmamI2tkmHK++ZmiAVuYckGf024pj1xrBGQr8p3GyVhQETzL1LkBduzlD
-	9QhfKgWXBhkLWKZoP4AYQO593EyM3+XmP5mhtgyuUVLoqoOtSrnqKgYZISKwPeDGHvtm7ojgZHi
-	8mOgrHljT/NbRxO3shVxk/HmZ0/XJfBKqq3OC99oineTIdHzq1//P2M+nzXIk5JLwDidQhucf8M
-	5xcRLUxmcLfqy8QP+SSt3qcGLKUJAEvRPZbhSMah73DzP2uI7kZZLcgrdJs6NBEOWkUHTrOTeF5
-	UvjTv3hZMhiNeewFBJ4be6kDFgHbigcoL6OHeo8XLpeP1GcyJH5Fl5OmZxV6xP2o+yusoNNoNfK
-	qjHru3U3gSUxdvfzkIQ4AM0aVOamBIGw1XRgAt/V7JXNq0ueirxR/6zKKeAw2A5bvL0U2Boo6B7
-	ULfycSSb092Vruote1GsV3tFxvC9Bt6c3pV9iL6ShnfLC0ke7u54TJ3puwJm7Rxm9EfJcPnh2No
-	TciaKlVoROeAevhIGh3A8BoOzj9ukSOsM7pXr4Jwr8Vy51x3
-X-Received: by 2002:a05:690c:a753:b0:8a1:84eb:f9b7 with SMTP id 00721157ae682-8a86ca4d1f2mr9259097b3.3.1790367983008;
-        Fri, 25 Sep 2026 13:26:23 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:9092:700:f9a9:65f6:303f:ab61])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8a860e5b296sm13436687b3.8.2026.09.25.13.26.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Sep 2026 13:26:22 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        bh=Z5jKJKaTyUtdOlplpUKws7Oue2FxaDLoPFAaM+bIogw=;
+        b=nTKV89BfQJUKOq9HeODfhpyYM1tAE3VWSG4jOQopvttg0z3oOiPXnonKqwMXYERRQf
+         2jTTfVRBIdqyLhYIvQMLQTtbuDgYRZmuzfaGFiKBQRWVicEcdp9dPKsO0u05+gyDmghJ
+         psOv5QnaLg8JxxgwPRDgaeJajvMgo0T9j7I1Qzy8WSxVKpTjrpnUckdKunOnUlJ13M8j
+         WCD+Z7+qbTnrrZuUfm7QzulgynEXq92tJYsO92cwV0pwYQ4eU9QclJXrTQX5bfeXn2Fn
+         XjvqlNUyfjGUiHj87yBBKEnjFnPvjHKgFHD0y/Zyu3LKCD+GQ8kOMbMUMoXjq4nzh/pC
+         f66Q==
+X-Gm-Message-State: AFuF++n1Ov7NcHsq2S+3MUHwLtb0Y30QVdzqHbHLAIcQRB1di4hTW52m
+	eazK2m7ZSZiW9T21/O1qA5ymu0VKPYAeE/r7D/8p/BxjxFqjVX42+i/rP8Dy0EGFE94bhKeiz/T
+	JvsueHOFrJssc9domSF4za4zwDL/Tviw=
+X-Gm-Gg: AYBFou3g6QFOEUjuygOMiMXTw1Ilp8N0fElnGjpXrcBHbQoz0SdKyCC98Uz/HzCwb4c
+	gxCSoCG2PltcIHrDtFM1ZbSU29NHHVEQcMEHy1Hv9DYo0+MEluY2eZTFaCaijtaROmDkONwHXxv
+	CBI8Ggjd2/NXmtTN2cEZFbD9QhEiwCQdlGdXA9Ku/h6Bdi0q8sZZ1JGd0ZgQDPT8pIyXKPdqMH3
+	s9aeW6OBVlgQbImCXk27S8gwLVP9+ZvTBAIOYSmTaNL/j/osUZaeBOGV2ZFZawcF0JD/aHd7jRC
+	eHAHst8c5CIoUQLKWyLHbl7o/H7WZXd4tCQ5yrtYKhEE5T5j1FKRY+uw
+X-Received: by 2002:adf:e198:0:b0:486:e5c6:cab with SMTP id
+ ffacd0b85a97d-4887174b7ffmr11224066f8f.32.1790368265900; Fri, 25 Sep 2026
+ 13:31:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] ci: point leak-sanitizer failures at the actual test and error
-Date: Fri, 25 Sep 2026 16:26:11 -0400
-Message-Id: <09549A0E-D5FF-465C-A933-F144A19D14E4@gmail.com>
-References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-In-Reply-To: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+References: <20260922040047.2567-1-colinlewishinton@gmail.com>
+ <20260925192658.1166-1-colinlewishinton@gmail.com> <xmqqo6dlt906.fsf@gitster.g>
+In-Reply-To: <xmqqo6dlt906.fsf@gitster.g>
+From: Colin Hinton <colinlewishinton@gmail.com>
+Date: Fri, 25 Sep 2026 13:30:54 -0700
+X-Gm-Features: AclHuK9kpRnopLBy4mjUlH0_S796h0TDHN--LQUDfq5d_a4hX1QM4lTfNSQTVRw
+Message-ID: <CAHeTm9Pb-fb-ZS_m4UVNZxfp+ENQwBUGDvP1E24dEDTZy5RFFw@mail.gmail.com>
+Subject: Re: [PATCH v2] fetch.c: defer fetch.followRemoteHEAD validation
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, m@lfurio.us
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, Sep 25, 2026 at 12:40=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Colin Hinton <colinlewishinton@gmail.com> writes:
+>
+> >  struct fetch_config {
+> >       enum display_format display_format;
+> > -     enum follow_remote_head_settings follow_remote_head;
+> > +     char *follow_remote_head_raw;
+> >       int all;
+> >       int prune;
+> >       int prune_tags;
+> > @@ -176,24 +176,31 @@ static int git_fetch_config(const char *k, const =
+char *v,
+> >       }
+> >
+> >       if (!strcmp(k, "fetch.followremotehead")) {
+> > -             if (!v)
+> > -                     return config_error_nonbool(k);
+> > -             else if (!strcmp(v, "never"))
+> > -                     fetch_config->follow_remote_head =3D FOLLOW_REMOT=
+E_NEVER;
+> > -             else if (!strcmp(v, "create"))
+> > -                     fetch_config->follow_remote_head =3D FOLLOW_REMOT=
+E_CREATE;
+> > -             else if (!strcmp(v, "warn"))
+> > -                     fetch_config->follow_remote_head =3D FOLLOW_REMOT=
+E_WARN;
+> > -             else if (!strcmp(v, "always"))
+> > -                     fetch_config->follow_remote_head =3D FOLLOW_REMOT=
+E_ALWAYS;
+> > -             else
+> > -                     warning(_("unrecognized fetch.followRemoteHEAD va=
+lue '%s' ignored"), v);
+> > +             free(fetch_config->follow_remote_head_raw);
+> > +             fetch_config->follow_remote_head_raw =3D xstrdup(v);
+>
+> This will segfault when !v, so
+>
+>         fetch_config->follow_remote_head_raw =3D xstrdup_or_null(v);
 
-> Le 25 sept. 2026 =C3=A0 14:59, Harald Nordgren via GitGitGadget <gitgitgad=
-get@gmail.com> a =C3=A9crit :
->=20
-> +finalize_test_leak_output () {
-> +    test_leak_summary=3D$(head -n 40 "$TEST_RESULTS_SAN_FILE".* |
-> +        github_escape_message_)
-> +    github_annotation_ error "t/$github_markup_script_name" 1 \
-> +        "memory leak logged around $this_test.$test_count%0A%0A$test_leak=
-_summary"
-> +}
-> +
-> # No need to override finalize_test_output
-> +
-> +github_escape_message_ () {
-> +    sed -e ':a' -e 'N' -e '$!ba' -e 's/%/%25/g' -e 's/\r/%0D/g' -e 's/\n/=
-%0A/g'
-> +}
-> +
-> +find_test_case_line_ () {
-> +    grep -n -F -- "$1" "$TEST_DIRECTORY/$github_markup_script_name" |
-> +    head -n 1 | cut -d: -f1
-> +}
-> +
-> +github_annotation_ () {
-> +    echo >>$github_markup_output "::$1 file=3D$2,line=3D$3::$4"
-> +}
+Will change shortly.
+>
+> With that change,
+>
+> > +static enum follow_remote_head_settings get_follow_remote_head(const c=
+har *setting)
+> > +{
+> > +     if (!setting)
+> > +             die(_("missing value for 'fetch.followRemoteHEAD'"));
+> > +     else if (!strcmp(setting, "never"))
+> > +             return FOLLOW_REMOTE_NEVER;
+> > +     else if (!strcmp(setting, "create"))
+> > +             return FOLLOW_REMOTE_CREATE;
+> > +     else if (!strcmp(setting, "warn"))
+> > +             return FOLLOW_REMOTE_WARN;
+> > +     else if (!strcmp(setting, "always"))
+> > +             return FOLLOW_REMOTE_ALWAYS;
+> > +     warning(_("unrecognized fetch.followRemoteHEAD value '%s' ignored=
+"), setting);
+> > +     return FOLLOW_REMOTE_UNCONFIGURED;
+> > +}
+>
+> This would do a reasonable job.
+>
+> We should do something similar to what remote.c parses for
+> consistency, but other than that, it seems this topic is moving in
+> the right direction.
+>
+> Thanks.
 
-Without commenting on the rest, introducing the helpers first might make the=
- important patch easier to read. =20=
+The only critical difference I see in the configuration parse between
+remote.c and fetch.c is the case for "warn-if-not-$branch". From
+reading the git-config manpage, this is only a setting for a remote
+and not for fetch directly so I do not see a reason to check this in
+fetch.c. Perhaps I am missing something else to make this more
+consistent, or perhaps there is an argument to support the
+configuration for fetch to "warn-if-not-$branch" in which case can be
+added to this patch.
+
+-Colin Hinton
