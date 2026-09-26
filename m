@@ -1,183 +1,196 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv2-f43.google.com (mail-qv2-f43.google.com [74.125.230.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0634E42A792
-	for <git@vger.kernel.org>; Sat, 26 Sep 2026 10:51:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B68346E51
+	for <git@vger.kernel.org>; Sat, 26 Sep 2026 11:56:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790419916; cv=none; b=JrlMufZwkGZiB05jgBRttkgqWkcdMXuh27tQLvsYB3uqbXkjjeWXC4K2STVDHdv6Uq3loEU6IQBnSFJn06Hz32xxoKOiU4edFkewfoOFInjYPkYnI0ERGtv3wTfgf9cNiUYIhL/P1zPr+x04YPBAppckpfTMogRgemEGfWuuiWc=
+	t=1790423800; cv=none; b=fX5GNhUBXFzxdIgZC3xWFRVkhwlGXvoGD+/pQhZ6ROri3Iq/IrLmU6PDFVm1mb1JF2SKc96Enb40vPIhL8lICf7pbVQpFefEtdNCuyb/Hcuiim7UUxQEkq9Vk5iUcb4Ktmc05uiMMz4W7epw3OdLBIJ9oDWykTxvbdkNSjE5GJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790419916; c=relaxed/simple;
-	bh=v8/Tw9HhseN2Gq1XL2uKpWbwOBrFSxZd/suJ4+/pvnw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HCPcJYuvIUNXIxD45gUB289IsuyK990EWZTqRKOY+gXsZcwmcOFwhHv8TOMwJ0MLwrjtZYK/s1R932HlU1Ybg2I9Vb86KKUM7O08Qi5bk578BBbZPgKRb/oxT9ZZYeDOm220EP7bzomyRw7gjG7XUUx3XGKHKi1kqb306JOaDuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=kC9TQ29q; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1790423800; c=relaxed/simple;
+	bh=+RcY2eEcN/J2UbOsUBSF17951aXPOiig37m+LFqqJW8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
+	 In-Reply-To:References:To:Cc; b=bS35QG2bNuwhtv9GDQbBYbDeRYg10UXb5/1wk//vX9yHJWwcBgG55/f6OsfbKboszIWGgqVO60ax3tz6n8N/OQNlswybjnr27k3HCHIvf/DMMh4EOMrZ/HTCYnaNbu9QNIWYVd2hc+zW2VUumTOpbAQ+php5v2MALMV0/EHuMA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B1WmsJ+U; arc=none smtp.client-ip=74.125.230.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="kC9TQ29q"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1790419891; x=1791024691; i=l.s.r@web.de;
-	bh=/D3oGAB2TRrQxViUXunFTwLGwzp+T+CCnwuTBO5lY3Y=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=kC9TQ29qu0I5N+XQ7FjFBomdUVkoHRbGJMtPFpM62Oal/X11QdZs62aAoP4dAYt/
-	 sTasVGvE1Hwplf/8F4V9KB5E8lgBzU+kPI2XhmPVTjTYcX7JfZwqdNlloBWS8YL5Y
-	 1YaGBe+cPCkUwMz8sgTV0dr4FGwCZTj4/K3pi8CN8RkNna0ubdgPChrL9U4Qc+mQ3
-	 JarQznMR3Z7nuhinJVIAmEendZ5wpMqGWL3x/TP0VBPoae2I7BW7LgV7UnJHqIDvF
-	 JfjIekpv6vKeJMAXsihQPLywzAKvJkDX04hO5zC/PnP/i5cpkUuIDAA7xEfAcgBXL
-	 Mf9wBl1r1m8DDRquGQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mtgyj-1wt2FA1jLD-00xSgG; Sat, 26
- Sep 2026 12:51:31 +0200
-Message-ID: <78937658-ac31-4ec9-8f8a-ce8fb74ed196@web.de>
-Date: Sat, 26 Sep 2026 12:51:30 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B1WmsJ+U"
+Received: by mail-qv2-f43.google.com with SMTP id 6a1803df08f44-9143a7c85c5so17015726d6.1
+        for <git@vger.kernel.org>; Sat, 26 Sep 2026 04:56:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790423797; x=1791028597; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Iv4uXx5H2yt4TsUrCIkJqgd+RaHB09fyMHXUiTXBOPA=;
+        b=B1WmsJ+Use2jZbuOoCWAdUT7z04YQzrq/Ma82GUOdVQx2UnWVd45WUKCDbOSJ/KCzT
+         9yaXd5AMhj2ThQIbyYwO/W2FUgLKZBAkZfezI7RgehoDpKXxUNtbYZgpukl9/6jjc1nQ
+         2fXxZzotlQaQn5qFaRrbJ85Hj480y6HauVhqpJAZCyz8UrdPrixupxhbqd4wta0tw3mx
+         msFB1FHuCiAaXuJ1XUVa0G8f71R5dbHNKrtHCEbvNyUqRqD0e01bg7V+uMiVi7+lLDtP
+         vJvg04/aMTerK17l6PMJCnqf1IvHBWZG3RQGYUKqfmg6TdqsgWcW/4MX7N7JrklZ5Ti1
+         P7Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790423797; x=1791028597;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Iv4uXx5H2yt4TsUrCIkJqgd+RaHB09fyMHXUiTXBOPA=;
+        b=NwdHEUShXL+M1A3YSkZYhkvkNaW++XxXEGOABy6e9JhsQHbNSqXPrbA2zqyC2Lx+Gp
+         /bwi3F/gtGgR+mbCEN7LOOxvccFtsuJIGL/auso4fKO1ICij1IMMFu3zrjHLz6WxNRVp
+         DO7naOLeqqnV0hYj6Etd3MDfsmyNdvvMpVb778swg/w4Bh8LxTqwB4qiVy5/qGZGwe7X
+         ykOf7FjSrO1GHD7lP194ndN+uURjS+N9vgT3pnJoMQCKDwACD+qKaRvz9rUvD/CcsW8I
+         CDAWMnrLqUTLavjA9EiURk8J23aB1+O9CMs1IVhIZSZCS9AxHmu+ADaIHQjVrq0D14qH
+         +SYw==
+X-Gm-Message-State: AFq9FYJrxDfwaS+0byEy0b24Re5frij4wVSM9wZNrU/3OEH4h2AxtiwR
+	v6+TzVtoHhKzO5R9FBE2Ju6XIhFEEuE3WZ8te6vmD8nlGxQaf5p//TrEmarGbSJC
+X-Gm-Gg: AYBFou2yXq/qGpOrbltAgLBUxRz6EgoQNRpeg7nJNLSaUdt8x42DlBDaRqHSEDwyUeZ
+	8d5IVhWeJpSd7GZdmKOuX6ijulNmxU3yi9S9o07Z8Xps2LhvKWxAEKh6luB5U9HAWfRlnIVLthV
+	bK1VNqJZXYcjbBLA4w297rFSq1E/y4RiP/MzUQvSBfmu7KQzblyX82PkI+qMKncxZfZaOWMmasI
+	D7NlBpKUvOoMcuzlSVYmCex85+tXtDMJnPSmr1Ol5CazO0CwuulUdAUiCyCzxzsMDmLNprrQ5xk
+	r63/DrpLdzVCbuGl8oLbfxuY2pYCWCR76K3/KBfTvPxEZrbEObLR8f+q29DKawSns+uPUocow/h
+	5+0zTNJz1PJMb/TpZgovJqPbv2F+xKvqWXW8+vM1heGdejFSlojBhFjVEYeQxzE6FMDQkl9tZaI
+	l3k+lp/hElxEsbPFteNguXT6fqqjCScJCv/3MS2Wqy/xhDSrAi1gUHQUlSpYN/wr9mhKiu0WwFg
+	S54vxW2LkG2Ol4rMmXGHUsa74t0XxmKBw6USi4oljKLnbZ+AbmwaAyM1hI22KezpeeaucvWeeNP
+	lQvOp9bfkgILmbctXYggYJd69mBmazjSrxQfJTauxOOfyu+a0M9Y/RHKzN4qL+cvrQoCZu/rleB
+	jtADD1SNbqfVDtRRyUCz03MkB+HA56tsarA+lV+OnUU9wu8T/d/qgOvpW
+X-Received: by 2002:a05:6214:5b08:b0:912:4310:e5a6 with SMTP id 6a1803df08f44-9142f91b2ecmr96632886d6.35.1790423797396;
+        Sat, 26 Sep 2026 04:56:37 -0700 (PDT)
+Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa (vpn-eastus-03.tradc-corp.com. [40.76.104.167])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91430df77adsm37890496d6.26.2026.09.26.04.56.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Sep 2026 04:56:36 -0700 (PDT)
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Sat, 26 Sep 2026 07:56:21 -0400
+Subject: [PATCH v5] doc: clarify --follow's single-file limitation
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dir: skip excluded directory with nested repo on prefix
- match
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, 81625@debbugs.gnu.org,
- Lester Longley <lester@ieee.org>, Sean Whitton <spwhitton@spwhitton.name>,
- Elijah Newren <newren@gmail.com>, =?UTF-8?Q?Martin_=C3=85gren?=
- <martin.agren@gmail.com>
-References: <87ld94klhf.fsf@athena.silentflame.com>
- <be53c379-b0e1-4242-8504-e96c2c49d294@web.de> <xmqqjyodj320.fsf@gitster.g>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqjyodj320.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:LlAMg8V18Kmbqky7RKcACSda4Eh9p/BImMq3kYyHGwiFdXtCTxQ
- 32rd24woaNKElS+GV1c1uGCMmQ7nSo4KnPI2MrbogfWbW6bELEuge0uGFp7mw3h7WcQmrvg
- HR2+S1IqEfpuunZiDr0ZRxxrqSfNN6BSE9IsjMFj8Ot03086BS4RjewsTtIl+Ee69DrevSQ
- AlzMsRsIawB9MSAtZuFyA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:cEsZ92XIAKo=;GmJFoG9Yjsi95XLDzDVVa9/VqCH
- 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
- Q4gMnRwMY3MXI5yG/+krrf6N/Oy3rUVXR+w==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260926-document-log-no-follow-v5-1-d04efeca7551@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/43OQW7CMBAF0Ksgr2tkjx0ndNV7VCwy40lwlcRVH
+ EIrlLvjwIIWCbXLL/15f84i8Rg4idfNWYw8hxTikEPxshF0qIeWZfA5C1DgVKFK6SMdex4m2cV
+ WDlE2seviSZZAxnjShdKlyMefIzfh6wq/7285HfGDaVq1tXEIaYrj93V51mvvz5FZSy2tI1Zgd
+ 4qxfmv7OnRbir1YR2b4HwOZYS6RENlpaB4Z84PR6iljMuOdN8ZV5CziI2PvjIPiKWMzs0MEY8B
+ WWP36ZlmWC1HYqRejAQAA
+X-Change-ID: 20260507-document-log-no-follow-72c33dc15017
+In-Reply-To: <20260625-document-log-no-follow-v4-1-9bb233248b8f@gmail.com>
+References: <20260625-document-log-no-follow-v4-1-9bb233248b8f@gmail.com>
+To: git@vger.kernel.org
+Cc: =?utf-8?q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>, 
+ Junio C Hamano <gitster@pobox.com>, Miklos Vajna <vmiklos@collabora.com>, 
+ Tamir Duberstein <tamird@gmail.com>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=openssh-sha256; t=1790423791; l=4350;
+ i=tamird@gmail.com; h=from:subject:message-id;
+ bh=+RcY2eEcN/J2UbOsUBSF17951aXPOiig37m+LFqqJW8=;
+ b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
+ MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
+ QBaRJHLv1P3uiNMYGjt2TMtFKZKpGXj0+Wxogs6r4yjudLCzgyLXTZYzAWsfEg6GRjKm4l2GabN
+ He9eF/cBrDAU=
+X-Developer-Key: i=tamird@gmail.com; a=openssh;
+ fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-On 9/22/26 6:57 AM, Junio C Hamano wrote:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->=20
->> @@ -2034,8 +2040,13 @@ static enum path_treatment treat_directory(struc=
-t dir_struct *dir,
->>  		strbuf_release(&sb);
->> =20
->>  		if (nested_repo) {
->> -			if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
->> -				(matches_how =3D=3D MATCHED_RECURSIVELY_LEADING_PATHSPEC))
->> +			if (dir->flags & DIR_SKIP_NESTED_GIT)
->> +				return path_none;
->> +			if (!matches_how)
->> +				matches_how =3D dir_match(istate, pathspec,
->> +							dirname, len);
->> +			if (!matches_how ||
->> +			    matches_how =3D=3D MATCHED_RECURSIVELY_LEADING_PATHSPEC)
->>  				return path_none;
->=20
-> Here, we do not know if we have pathspec=3D=3DNULL.  Shouldn't "make
-> sure we have a result from dir_match() and return path_none as
-> appropriate" be done only when pathspec !=3D NULL or something like
-> that, since dir_match() will crash if pathspec is NULL?
+Saying that --follow works only for a single file leaves open whether
+other inputs are rejected or ignored. In particular, log.follow enables
+following for a directory argument, although that use is unsupported.
 
-Ugh, nasty, that was silly of me.  Thanks for finding this bug!
+Distinguish errors for an explicit --follow with no paths or multiple
+paths from the configured default, which has no effect in those cases.
+State that results for directory arguments and accepted wildcard
+patterns are unspecified, and document --no-follow to disable the mode.
 
-Ren=C3=A9
+Assisted-by: LLM
+Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+---
+Changes in v5:
+- Distinguish explicit --follow errors from cases where log.follow
+  leaves the command unchanged.
+- State that results for directory arguments and accepted wildcard
+  patterns are unspecified, and explain how to disable following.
+- List --follow before --no-follow.
+- Rebase onto current master, which includes mv/log-follow-mergy.
+- Link to v4: https://patch.msgid.link/20260625-document-log-no-follow-v4-1-9bb233248b8f@gmail.com
+
+Changes in v4:
+- Limit the patch to `--no-follow` and its `log.follow` override; leave
+  the existing `--follow` limitations unchanged.
+- Link to v3: https://patch.msgid.link/20260510-document-log-no-follow-v3-1-d6d3368c64bb@gmail.com
+
+Changes in v3:
+- Retitle the patch to avoid the awkward `doc: git-log:` subject.
+- List `--no-follow` before `--follow`.
+- Clarify that `--follow` follows a single file across renames, even
+  though the option is accepted with exactly one pathspec.
+- Document the directory-pathspec case: directory renames are not
+  followed, but `--follow` still uses file-follow traversal, disabling
+  normal pathspec pruning and possibly changing which commits,
+  especially merges, are shown.
+- Link to v2: https://patch.msgid.link/20260507-document-log-no-follow-v2-1-ee7bcbbe612f@gmail.com
+
+Changes in v2:
+- Document --follow as limited to a single pathspec, not a single file.
+- Adjust the log.follow documentation to use the same wording.
+- Link to v1: https://patch.msgid.link/20260507-document-log-no-follow-v1-1-46ce02490eba@gmail.com
+---
+Range-diff versus v4:
+
+1:  ee9e9a1817 < -:  ---------- doc: clarify --follow and log.follow for git log
+-:  ---------- > 1:  993a2ed91c doc: clarify --follow's single-file limitation
+---
+ Documentation/config/log.adoc | 10 +++++++---
+ Documentation/git-log.adoc    | 10 ++++++++--
+ 2 files changed, 15 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/config/log.adoc b/Documentation/config/log.adoc
+index f7dfce69b5..4efdd4f61b 100644
+--- a/Documentation/config/log.adoc
++++ b/Documentation/config/log.adoc
+@@ -51,9 +51,13 @@ This is the same as the `--decorate` option of the `git log`.
+ 	details. Defaults to `separate`.
+ 
+ `log.follow`::
+-	If `true`, `git log` will act as if the `--follow` option was used when
+-	a single <path> is given.  This has the same limitations as `--follow`,
+-	i.e. it cannot be used to follow multiple files.
++	If `true`, `git log` enables `--follow` when a single <path> is
++	given. With no paths, multiple paths, or pathspec magic unsupported
++	by `--follow`, this setting has no effect.
+++
++A single directory argument or an accepted wildcard pattern still
++enables `--follow`, with unspecified results. Use `--no-follow` to
++override this setting.
+ 
+ `log.graphColors`::
+ 	A list of colors, separated by commas, that can be used to draw
+diff --git a/Documentation/git-log.adoc b/Documentation/git-log.adoc
+index fb3ac11283..a40b3d1c05 100644
+--- a/Documentation/git-log.adoc
++++ b/Documentation/git-log.adoc
+@@ -28,8 +28,14 @@ OPTIONS
+ -------
+ 
+ `--follow`::
+-	Continue listing the history of a file beyond renames
+-	(works only for a single file).
++`--no-follow`::
++	Continue listing the history of a single file beyond renames.
++	An explicit `--follow` requires exactly one path argument; Git
++	reports an error if none or more than one is given.
+++
++A directory argument is accepted and enables `--follow`, but results
++for directories and accepted wildcard patterns are unspecified.
++Use `--no-follow` for directory history or wildcard matching.
+ 
+ `--no-decorate`::
+ `--decorate[=(short|full|auto|no)]`::
+
+---
+base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
+change-id: 20260507-document-log-no-follow-72c33dc15017
 
