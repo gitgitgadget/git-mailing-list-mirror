@@ -1,40 +1,41 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from mout.web.de (mout.web.de [217.72.192.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D15D415B8B
-	for <git@vger.kernel.org>; Sat, 26 Sep 2026 10:48:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0634E42A792
+	for <git@vger.kernel.org>; Sat, 26 Sep 2026 10:51:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790419734; cv=none; b=e9q0NBYV+7YtskiF1TOx/5tWEKp1jOHs9OUeLSJoOzMSzCKbTImOP4dnhoOI5nhmYVh0n1V5+FTKvnyD+aS74KbW4V6Nxofc6ChBMbA5+hMNKJmC81mmNwYiBe3fKsjQPWsiO8Y3xYtXMc+RsGrMSzXenQp8RFyVNDzaaDOgHXs=
+	t=1790419916; cv=none; b=JrlMufZwkGZiB05jgBRttkgqWkcdMXuh27tQLvsYB3uqbXkjjeWXC4K2STVDHdv6Uq3loEU6IQBnSFJn06Hz32xxoKOiU4edFkewfoOFInjYPkYnI0ERGtv3wTfgf9cNiUYIhL/P1zPr+x04YPBAppckpfTMogRgemEGfWuuiWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790419734; c=relaxed/simple;
-	bh=ys3EweHuq5g7MsUggRgJHt+u7DefpQ82xdXjl7HtHl4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lVHXipJNECGS/y0NXSKiNU8qhndC5obqok1I0N/lQ0bYEMoysdXkpaDc/OuRd1nAsCPguNf/XKvbqZtdVSmyhzIzR+/kNFrek0PnFZJpO4z0ZC3NfZWllXtfP1WesN6awhd3oxwipADjZroMuS6B5PJZFO2Ghw7/23ZNTBZ/+/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=GQd04dvf; arc=none smtp.client-ip=212.227.17.11
+	s=arc-20240116; t=1790419916; c=relaxed/simple;
+	bh=v8/Tw9HhseN2Gq1XL2uKpWbwOBrFSxZd/suJ4+/pvnw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HCPcJYuvIUNXIxD45gUB289IsuyK990EWZTqRKOY+gXsZcwmcOFwhHv8TOMwJ0MLwrjtZYK/s1R932HlU1Ybg2I9Vb86KKUM7O08Qi5bk578BBbZPgKRb/oxT9ZZYeDOm220EP7bzomyRw7gjG7XUUx3XGKHKi1kqb306JOaDuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=kC9TQ29q; arc=none smtp.client-ip=217.72.192.78
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="GQd04dvf"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="kC9TQ29q"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1790419710; x=1791024510; i=l.s.r@web.de;
-	bh=cd5WHN7jEEGv9t8MUd074xbJETDT2Dq/BCy/OK5icig=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
-	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=GQd04dvfCXsdb2YR4DDLm5OfVHSMtpNEK7XpaZKwNzKR8AdP683JQ/6l8+Idt1IN
-	 50voT9rgxDPD24SSDjg6ozFobKnkaqBw/YhW0NzNyh3KMzJl1IgwCGSKZ8KAAU4R8
-	 DIu45/hsaGWcdysHFrADsLIp70fhdQ568MXLbQ5CxBnGMJ8doM6dbX94jZfbwqOTY
-	 qzxFp+SvjX9vkX4n0v6hCDagUOsQZ+hv0CP8yagnFjlaBU4BWR5oCquGbFgVUOTOg
-	 gTLGtu3J3oV+0zfpp0bqc2bVYUW9ZDrK+gHF+D+6nQrCoudqK5RWoDOkQD1vaivjC
-	 EnnmZ4bH3NS08AxoSQ==
+	s=s29768273; t=1790419891; x=1791024691; i=l.s.r@web.de;
+	bh=/D3oGAB2TRrQxViUXunFTwLGwzp+T+CCnwuTBO5lY3Y=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=kC9TQ29qu0I5N+XQ7FjFBomdUVkoHRbGJMtPFpM62Oal/X11QdZs62aAoP4dAYt/
+	 sTasVGvE1Hwplf/8F4V9KB5E8lgBzU+kPI2XhmPVTjTYcX7JfZwqdNlloBWS8YL5Y
+	 1YaGBe+cPCkUwMz8sgTV0dr4FGwCZTj4/K3pi8CN8RkNna0ubdgPChrL9U4Qc+mQ3
+	 JarQznMR3Z7nuhinJVIAmEendZ5wpMqGWL3x/TP0VBPoae2I7BW7LgV7UnJHqIDvF
+	 JfjIekpv6vKeJMAXsihQPLywzAKvJkDX04hO5zC/PnP/i5cpkUuIDAA7xEfAcgBXL
+	 Mf9wBl1r1m8DDRquGQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from client.hidden.invalid by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MgRQD-1wWzC52ItL-00bW01; Sat, 26
- Sep 2026 12:48:30 +0200
-Message-ID: <1c6ac703-a5a5-421b-bf0b-640bc1a0932f@web.de>
-Date: Sat, 26 Sep 2026 12:48:29 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mtgyj-1wt2FA1jLD-00xSgG; Sat, 26
+ Sep 2026 12:51:31 +0200
+Message-ID: <78937658-ac31-4ec9-8f8a-ce8fb74ed196@web.de>
+Date: Sat, 26 Sep 2026 12:51:30 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,269 +43,141 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2] dir: skip excluded directory with nested repo on prefix
+Subject: Re: [PATCH] dir: skip excluded directory with nested repo on prefix
  match
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-To: git@vger.kernel.org
-Cc: 81625@debbugs.gnu.org, Lester Longley <lester@ieee.org>,
- Sean Whitton <spwhitton@spwhitton.name>, Elijah Newren <newren@gmail.com>,
- =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, 81625@debbugs.gnu.org,
+ Lester Longley <lester@ieee.org>, Sean Whitton <spwhitton@spwhitton.name>,
+ Elijah Newren <newren@gmail.com>, =?UTF-8?Q?Martin_=C3=85gren?=
+ <martin.agren@gmail.com>
 References: <87ld94klhf.fsf@athena.silentflame.com>
- <be53c379-b0e1-4242-8504-e96c2c49d294@web.de>
+ <be53c379-b0e1-4242-8504-e96c2c49d294@web.de> <xmqqjyodj320.fsf@gitster.g>
 Content-Language: en-US
-In-Reply-To: <be53c379-b0e1-4242-8504-e96c2c49d294@web.de>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqjyodj320.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:3LetSR4YmRcwSbsnzsiTUx+zmrzkb52zCfmkyVfNxE8oxJKKa5m
- hyFQPr523dIqQPm5bZsgpZM9i+eJFPHPikvupmaBUVKQ4ix7NT+CUoQNpNw6TfHD2Oe/Ams
- eSCqIT6Ty+0mpDc2BAlGi9V8YJqrdFXYJzsWrjJjHQ3ErcJ4CgyiwQ57CDFg85ia6uVvJZ6
- +8d82EbpJ5vQwK3IK0bkA==
+X-Provags-ID: V03:K1:LlAMg8V18Kmbqky7RKcACSda4Eh9p/BImMq3kYyHGwiFdXtCTxQ
+ 32rd24woaNKElS+GV1c1uGCMmQ7nSo4KnPI2MrbogfWbW6bELEuge0uGFp7mw3h7WcQmrvg
+ HR2+S1IqEfpuunZiDr0ZRxxrqSfNN6BSE9IsjMFj8Ot03086BS4RjewsTtIl+Ee69DrevSQ
+ AlzMsRsIawB9MSAtZuFyA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:86RaWGiyjjQ=;+afoh6+YBeKAGSMWM0brQm7yGX5
- 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
- 1ktG
+UI-OutboundReport: notjunk:1;M01:P0:cEsZ92XIAKo=;GmJFoG9Yjsi95XLDzDVVa9/VqCH
+ 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
+ Q4gMnRwMY3MXI5yG/+krrf6N/Oy3rUVXR+w==
 
-95c11ecc73 (Fix error-prone fill_directory() API; make it only return
-matches, 2020-04-01) optimized away pathspec matching too eagerly and
-cada7308ad (dir: check pathspecs before returning `path_excluded`,
-2020-07-20) fixed that for files and symlinks.
-
-A corner case remained unaddressed: Ignored directories that contain a
-nested repository.  Make sure to run match_pathspec_with_flags() for it
-if necessary.
-
-Add a status test to check whether the pathspec is applied correctly as
-well as a checkout test to exercise the changed code without a pathspec.
-
-Reported-by: Sean Whitton <spwhitton@spwhitton.name>
-Reported-by: Lester Longley <lester@ieee.org>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- dir.c                         | 27 ++++++++++++++++++++-------
- t/t2021-checkout-overwrite.sh |  7 +++++++
- t/t7061-wtstatus-ignore.sh    |  5 +++++
- 3 files changed, 32 insertions(+), 7 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index d896e7be4b..ac246ced1d 100644
-=2D-- a/dir.c
-+++ b/dir.c
-@@ -1935,6 +1935,16 @@ static enum exist_status directory_exists_in_index(=
-struct index_state *istate,
- 	return index_nonexistent;
- }
-=20
-+static int dir_match(struct index_state *istate,
-+		     const struct pathspec *pathspec,
-+		     const char *dirname, int len)
-+{
-+	return match_pathspec_with_flags(istate, pathspec, dirname, len,
-+					 0 /* prefix */,
-+					 NULL /* seen */,
-+					 DO_MATCH_LEADING_PATHSPEC);
-+}
-+
- /*
-  * When we find a directory when traversing the filesystem, we
-  * have three distinct cases:
-@@ -2001,11 +2011,7 @@ static enum path_treatment treat_directory(struct d=
-ir_struct *dir,
- 	 * for matching patterns.
- 	 */
- 	if (pathspec && !excluded) {
--		matches_how =3D match_pathspec_with_flags(istate, pathspec,
--							dirname, len,
--							0 /* prefix */,
--							NULL /* seen */,
--							DO_MATCH_LEADING_PATHSPEC);
-+		matches_how =3D dir_match(istate, pathspec, dirname, len);
- 		if (!matches_how)
- 			return path_none;
- 	}
-@@ -2039,8 +2045,15 @@ static enum path_treatment treat_directory(struct d=
-ir_struct *dir,
- 		strbuf_release(&sb);
-=20
- 		if (nested_repo) {
--			if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
--				(matches_how =3D=3D MATCHED_RECURSIVELY_LEADING_PATHSPEC))
-+			if (dir->flags & DIR_SKIP_NESTED_GIT)
-+				return path_none;
-+			if (pathspec && !matches_how) {
-+				matches_how =3D dir_match(istate, pathspec,
-+							dirname, len);
-+				if (!matches_how)
-+					return path_none;
-+			}
-+			if (matches_how =3D=3D MATCHED_RECURSIVELY_LEADING_PATHSPEC)
- 				return path_none;
- 			return excluded ? path_excluded : path_untracked;
- 		}
-diff --git a/t/t2021-checkout-overwrite.sh b/t/t2021-checkout-overwrite.sh
-index 38c41ae373..2b7fff5159 100755
-=2D-- a/t/t2021-checkout-overwrite.sh
-+++ b/t/t2021-checkout-overwrite.sh
-@@ -79,4 +79,11 @@ test_expect_success 'checkout --overwrite-ignore should=
- succeed if only ignored
- 	test_path_is_file some_dir
- '
-=20
-+test_expect_success 'checkout must not overwrite untracked nested repo' '
-+	git checkout -f start &&
-+	rm -rf some_dir &&
-+	git init some_dir &&
-+	test_must_fail git checkout df_conflict
-+'
-+
- test_done
-diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-index 14ddaba2f3..182933471f 100755
-=2D-- a/t/t7061-wtstatus-ignore.sh
-+++ b/t/t7061-wtstatus-ignore.sh
-@@ -340,4 +340,9 @@ test_expect_success 'status ignores submodule in exclu=
-ded directory' '
- 	test_cmp expected actual
- '
-=20
-+test_expect_success 'status omits excluded directory with submodule on pr=
-efix match' '
-+	git status --porcelain --ignored -u tracke >actual &&
-+	test_must_be_empty actual
-+'
-+
- test_done
-
-Interdiff against v1:
-  diff --git a/dir.c b/dir.c
-  index aa457f0f4e..ac246ced1d 100644
-  --- a/dir.c
-  +++ b/dir.c
-  @@ -2047,11 +2047,13 @@ static enum path_treatment treat_directory(struc=
+On 9/22/26 6:57 AM, Junio C Hamano wrote:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>=20
+>> @@ -2034,8 +2040,13 @@ static enum path_treatment treat_directory(struc=
 t dir_struct *dir,
-   		if (nested_repo) {
-   			if (dir->flags & DIR_SKIP_NESTED_GIT)
-   				return path_none;
-  -			if (!matches_how)
-  +			if (pathspec && !matches_how) {
-   				matches_how =3D dir_match(istate, pathspec,
-   							dirname, len);
-  -			if (!matches_how ||
-  -			    matches_how =3D=3D MATCHED_RECURSIVELY_LEADING_PATHSPEC)
-  +				if (!matches_how)
-  +					return path_none;
-  +			}
-  +			if (matches_how =3D=3D MATCHED_RECURSIVELY_LEADING_PATHSPEC)
-   				return path_none;
-   			return excluded ? path_excluded : path_untracked;
-   		}
-  diff --git a/t/t2021-checkout-overwrite.sh b/t/t2021-checkout-overwrite.=
-sh
-  index 38c41ae373..2b7fff5159 100755
-  --- a/t/t2021-checkout-overwrite.sh
-  +++ b/t/t2021-checkout-overwrite.sh
-  @@ -79,4 +79,11 @@ test_expect_success 'checkout --overwrite-ignore shou=
-ld succeed if only ignored
-   	test_path_is_file some_dir
-   '
-  =20
-  +test_expect_success 'checkout must not overwrite untracked nested repo'=
- '
-  +	git checkout -f start &&
-  +	rm -rf some_dir &&
-  +	git init some_dir &&
-  +	test_must_fail git checkout df_conflict
-  +'
-  +
-   test_done
-=2D-=20
-2.55.0
+>>  		strbuf_release(&sb);
+>> =20
+>>  		if (nested_repo) {
+>> -			if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
+>> -				(matches_how =3D=3D MATCHED_RECURSIVELY_LEADING_PATHSPEC))
+>> +			if (dir->flags & DIR_SKIP_NESTED_GIT)
+>> +				return path_none;
+>> +			if (!matches_how)
+>> +				matches_how =3D dir_match(istate, pathspec,
+>> +							dirname, len);
+>> +			if (!matches_how ||
+>> +			    matches_how =3D=3D MATCHED_RECURSIVELY_LEADING_PATHSPEC)
+>>  				return path_none;
+>=20
+> Here, we do not know if we have pathspec=3D=3DNULL.  Shouldn't "make
+> sure we have a result from dir_match() and return path_none as
+> appropriate" be done only when pathspec !=3D NULL or something like
+> that, since dir_match() will crash if pathspec is NULL?
+
+Ugh, nasty, that was silly of me.  Thanks for finding this bug!
+
+Ren=C3=A9
+
