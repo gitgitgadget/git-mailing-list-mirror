@@ -1,123 +1,159 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A687347C6
-	for <git@vger.kernel.org>; Sat, 26 Sep 2026 09:29:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790414975; cv=pass; b=k2xrvULk/ckOQW5wCER49kKZlVJ9FJiAw8ejI+bE/Tc+nhnAkdOHZgPnIJ8iU1zATEqLDz/pqkn+oaZVQL8xpiSKSzGEH6gocb7m9m/VeqMzUUXwG4pSjiVpaCNR3KvcZQ/Q1YI56IJ6sRcf3mp+/MUsUiB/5H20q8U4paSa9DE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790414975; c=relaxed/simple;
-	bh=tXsIjj4ffiH+O42VWxA5/02yUoIH41VQjL6hKdpQOPQ=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=cr7tQxNBPPLla2aLzKPzKDYZxRmiPZSoADrG5Y2ziZRZS+viTymB4KN6IrsWGdmYj++zqUzo3QSRsUtUARDElCe6v0rKmov3IERT9vHG/j423Nup0yqQulYaDfp6GJFtpbV+c1kiWob0Xqc+8/pjip75HOevoGKc2tF+5NO9N/A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=epY4LRGu; arc=pass smtp.client-ip=74.125.224.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93CA3DD85F
+	for <git@vger.kernel.org>; Sat, 26 Sep 2026 09:51:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.76
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790416287; cv=none; b=hAe2mo2/d69W+VzO+V5y5KSn1axQW6bXEEPLc/GXoZCGm7nOZnAK/V9a55E9Um9dQifiNFduJ5yK84SYfriIJjXLcF9Mjr00lJsJ6jYDtM8NzaWz6qkA1c6VCOaheTwkW60lsy6/eaW34XrpXaTI4nLmJHADO447nKaUMPw5ba8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790416287; c=relaxed/simple;
+	bh=6hy546DR6Vqe12VVsVkTa3FBm5GW9g1q6ZX1/B8vmU0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=dhqIvX95NCYNq/hsg3fWVaXE4PLsxStA+ojdsjvOBiJEpeeYhvYkqZWdgR3W2Yon3kBX3Tzrj5F11dfUC22lUp6fnh2EBx1LbaXS9vGNkAnGLga3QmSlME8+IwT8I+SvjH3LFfUEk5uhbQfFfZB5Ar+pYwUqqYZWfjrIvGLMs7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CteOOjHs; arc=none smtp.client-ip=74.125.225.76
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="epY4LRGu"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-66d1447e2b1so911971d50.0
-        for <git@vger.kernel.org>; Sat, 26 Sep 2026 02:29:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790414972; cv=none;
-        d=google.com; s=arc-20260327;
-        b=QL8wSUgN2XlA+RC9r5IX9Bt4MJD/gKUVMG4XxDDQI3jKjHN0vps7RlIiIayeca/3wG
-         h3aVAgbefMLdmsaNvxu7Qx/1+5kaHSGLqXpMZN7LNUnjQT8vA0UK+JnMycKhk+Qzd/a1
-         CHdPqG+sUfIC7UvU6P5y69qJuH7GKy4orCWZlzdRA5BNn4o/2KVczr4BIeWJegRduTls
-         wsZV8TVwkHz43viiKjUCyf5FXR0Vwu97z9cwheJrUOrCEQsPxgsdS2XT3/lRi9pPxQ20
-         oc4nMll/6TXNteZsG9zv9LBACUyI8GZMmTSAVXgTSBhtHS4A+SJkEBW762A7USh4IKh2
-         eTTg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=tXsIjj4ffiH+O42VWxA5/02yUoIH41VQjL6hKdpQOPQ=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=QbXHjVAYMqv+3/9zeAaiE1+tbkToNS3bOKrGm584qPq0BasXHuk+60j1LTyygSH3g+
-         NJE1ynYEahiMAaJwCUwVgTR5bgjE9jBxW/3KoU9t4hEzNLt3uW5X3N15PPp36oK8hoqc
-         srTd+t0OUTvmVHtDmELJMZV3y9Yn0kbrocf69dKjJ1eCJgLHAk30gbqK4gsue7xcmi5L
-         HJwknM72ayLnBaFVsdWzyRGCvMIunZ0FmA6738R7+QEdvcKcrBC8USezHBYNU7NWCRfA
-         8PdSKL6OA4gMFiiW7Yb8sYR9/biYtvQgKrlz1O+nFBHYVsjHSG7dJfHNAQgihrVDPqYS
-         AHPg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CteOOjHs"
+Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-48439feca17so1198573f8f.1
+        for <git@vger.kernel.org>; Sat, 26 Sep 2026 02:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790414972; x=1791019772; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=tXsIjj4ffiH+O42VWxA5/02yUoIH41VQjL6hKdpQOPQ=;
-        b=epY4LRGuRbhqSOBZkOtGKUr5Ax1NHgBZRibHbUKyToehPU71RfpGv9qrwe+sShxU3D
-         BCVs2lNKcd73c0RrVSDYTTGA24Vy5NPUSWqbz+uDwfv09ICxLVN/zFyeReqkmgeXPxap
-         1MD3GhO7IQugNtSKLxSDerusZ1yM01P3Dl6sRLAQXATaMFRC9E7AcnL7QovmDL0+WwXd
-         /aNu0mC1Y78o1skXsVs7tCxM93S7n7kFV4KrDDvq/1f8t84WP7vd5GXvu6qrcPO2JCRf
-         5IpjYZmKfnVedON5Bnwqpju3cBzGfyKd3j3EFNO6TFlm5zyi7weS5dEacwzbj2fw6+nG
-         FlfA==
+        d=gmail.com; s=20251104; t=1790416284; x=1791021084; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Q0N3A3GbQlHYcOrrSvVMrKE4Lgyp5lEG3x+ROqCflyo=;
+        b=CteOOjHsFURzZ8mftQqSg4MmqWJPzmtVZW8hhPAndKFCZ6omvDfEXNiL3fLCOMFU5m
+         uiT5069lhy1CNtwvTI82rujrtwP8lF3N+YUG/txkU4Im9S10vccZ/LGq5eUGt0OnHWnG
+         VR0dHVCi1y34W2Cv/tWWtk/tkcsbGuuPJa/IXUxm9zP1ORgmtZfP3KHT+BGIaSTSt8QD
+         O7u21AKiScArgL9LtK0n1sAX7lUlS5pQrlEFPxCb7JNNH+TNLjMqDiS8xiNDKelvo/jl
+         WEVxk0iBeS2mwFbcIkNglft/zae+QbyoZdu8F9/aemcYJiJIoMef2/iFhkJ5hqyBLsXi
+         i1Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790414972; x=1791019772;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=tXsIjj4ffiH+O42VWxA5/02yUoIH41VQjL6hKdpQOPQ=;
-        b=2sr7/j9H3dteFfyMRc8yjf6JuZtI+U5HU0tYU5at2nAFybeHeQPwGBvoL8sYopMydz
-         uejnfK/+4obfgTrJ1w7xX7kBfhWj2cq/3pvl/hnSQZrlGgMeyp160SyK/ZNZ4HPZbk7C
-         ADgVn7NHVXJISgFkjqSlh+sOfzkTyr1x7cdFowRnbTgKs+WSMgNHVcRMPcwornS16OM1
-         HSF5re2qVJmtrgFYPOlG9hvIMPB0W09mxPdthnoc9yj5JslhvBnTph+u7Lz4rVSRiIrL
-         +tIfuqbCo89H2C3FZsE+99f/FtnsHiTt75X+dG9XRnUWH0RPleLLyVC5qSAWdP/scDzt
-         4GMg==
-X-Gm-Message-State: AFq9FYIggVXWt5OeBnHFbYjGhxqLM3q5SBmf//rQHvWR/SronZedtDE/
-	edn4DklhjW4t76E2RKXGTn2vtG7R9JU+/pkoC1XUYSJIR0xDKyelIO8dwsyIzyD1L2y5m32G6sQ
-	X054sm+amN3vcvK27hb1ePpQg413eZ4uy1g==
-X-Gm-Gg: AYBFou0O/lRToPq6GOav0cec2FCE3NgYlJ4l0Sx62yyO+zHqksVPX6/ewPGcnlAPUJn
-	Cz8l7F/+GEdS632E7+28c6uul5ltsiFtCcp9Bd3aCz10ZbyZKfvFPPXfqDtFOp0CysKvxPmNtD7
-	0nQfOsy5IH48hWgzQhzI5uzzUSNMNqc5FW9ZrC96Q5aVMAYLRcEvguiq0VSewpousfsc6BphD2K
-	UzTQAApN66hoyJInEHmxHZK2WPMSvlfSIjxrmUrEH02o6+wNXM2g1gmszQbDUftOuJbm+0D5A7X
-	cCl38U+vOUzYOmTr1+45awyBwtfCsZtfPJ7KgNdsAFngHG0OMWJM9y/gsssXR4yi+ZxOuFp+Uoh
-	94NMjXNnDKhs=
-X-Received: by 2002:a05:690e:1504:b0:674:a09:3990 with SMTP id
- 956f58d0204a3-6740a094193mr2232256d50.30.1790414972505; Sat, 26 Sep 2026
- 02:29:32 -0700 (PDT)
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Sat, 26 Sep 2026 02:29:31 -0700
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Sat, 26 Sep 2026 02:29:31 -0700
+        d=1e100.net; s=20260707; t=1790416284; x=1791021084;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Q0N3A3GbQlHYcOrrSvVMrKE4Lgyp5lEG3x+ROqCflyo=;
+        b=F8XTOSW1kI6DAIr3aZ1dch9JtzKsd6iSnm4wg8Rv0kmVvYyDMIh7AdeBIv2CSfHNif
+         ZA/wsHzovO7PEf5c3ZjiSQ15FPWtPssCFx9Eus/egxMwnehLFifYwyga2iteFWmA0rGu
+         nnMLBa2TWLyG9wWUjKrMKvyYqREAKXJUwo7lHs4+o01wEwqLnpTXoSYVbVaESJGRW7en
+         jw9JJP5Spe1EyQlQ8kR/sspv37ALdP7vcRqeRd5Lkv3JQLtz3ruR1RCc0GwFosojzzBR
+         90Y3DRyYmuj4prYRlIpG0GVEg8D3ypchRETdoqjSYCasc1sHjNwKE2nWRf/yF6jQf3t6
+         RxwQ==
+X-Gm-Message-State: AFuF++lZBGKRZzY9zguTccuMzEVKigQ3YN0IFd258lZ2HRbxfQcfWuzW
+	2v/hdlE6dyAU2RfIAwXNvtobaFFOO8xF1cKxVK9ZyP7VyE447bWXblrb
+X-Gm-Gg: AYBFou1+oxH0aa1Kl9D1ozVMWTrSIWEFjSQ6MnJcj7BCsHKvfzMckp2rytdEFHT1NpM
+	OR3TsrwpXiS1Dwrr7ru/OFg8oeSdmKeuaAz4ZXzWMdhz6mRKlv2CNy5lXO9GDHObqz2ise/SKn7
+	7VkdA1M13H9YcbXq0FaO0TtvivLwM9bqWz6F6bp+FaeS08tV7/VoKiBx/0c94crNe0vA5coAIXI
+	37+HZBN8SRmR47YsY+yp1APr70nqiq8wxleaVBVOMdSxA3IKLq/MAqNn1CT/GEj2HmjOL9Z5K6d
+	GCnvfsxrUDAP3cLQ6WES07phh3I/pHpcS2HmGEiMJYhY7//FxML+5TyXAxnr9SZ/H4q3211qO46
+	+SFKSZpiIg1n12Gr1AVwlMaWg2yZ2nhZ0R0j1AcA6Pzi9YxpH0ZbCJGrp9DAlc3gb7AlKBiYqQV
+	NFMIUtTD7EXs5MOfodFF+RvX2IlTL5qaEGFYjYbYQemyCGcWcQU/RXm0QEZP2P57Ujn3pWV2lHI
+	8T76CPxKw9c8k0UxnY3MYsOFx6qi7Ht6NGG/EM31rV1ahSmaQEr3Q==
+X-Received: by 2002:a05:600c:1d29:b0:49d:797:83bf with SMTP id 5b1f17b1804b1-49fe66f3c7cmr162946025e9.21.1790416283508;
+        Sat, 26 Sep 2026 02:51:23 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49ff06b4d45sm125114985e9.7.2026.09.26.02.51.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 26 Sep 2026 02:51:22 -0700 (PDT)
+Message-ID: <c2bab13f-a9f1-473d-97aa-c201b2060bfd@gmail.com>
+Date: Sat, 26 Sep 2026 10:51:16 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?B?TCBOYXVkw6k=?= <lourens.naude@gmail.com>
-Date: Sat, 26 Sep 2026 02:29:31 -0700
-X-Gm-Features: AclHuK965KBHnHIJXUZuM7yUBYpnaG_UVEFExKjNX3XaZCRlmjWBj0Qot8DMISg
-Message-ID: <CAFhNnpth2=NFFbPpyt2GTCvAs0DrKkgLrmE5OdNb2MOUZc2G_g@mail.gmail.com>
-Subject: BUG: pack-objects aborts on missing promised tree during fetch (Git 2.55.0)
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 4/4] builtin/stash: merge index in-core
+To: Junio C Hamano <gitster@pobox.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>,
+ Adam Johnson <me@adamj.eu>, Victoria Dye <vdye@github.com>,
+ Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
+ =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <cover.1789853192.git.ben.knoble@gmail.com>
+ <cover.1790168285.git.ben.knoble@gmail.com>
+ <e49936ee12aaf5d82a98dddcc618cee01ac3c681.1790168285.git.ben.knoble@gmail.com>
+ <xmqqse2yz4y4.fsf@gitster.g>
+ <CALnO6CBhoBcVjLXidvii+o_Ump_k9disW177LeSS0118t3oGKg@mail.gmail.com>
+ <xmqqpky1wb76.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqpky1wb76.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Following up on the earlier report
-(https://www.spinics.net/lists/git/msg500476.html), I hit the same
-failure with Git 2.55.0 on Arch Linux x86_64 while running `git fetch
-origin main` in a `tree:0` partial clone of the public
-`NousResearch/hermes-agent` repository.
+On 25/09/2026 17:24, Junio C Hamano wrote:
+> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+> 
+>> On Thu, Sep 24, 2026 at 5:59 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>>
+>>> Ahh, or perhaps the trees are indeed given in a wrong order, but not
+>>> in a random wrong order.  merge_ort_nonrecursive(), which is *not*
+>>> the function you are using, takes head, merge, and merge_base in
+>>> this order, and that order matches what you wrote.
+>>>
+>>> Perhaps the true culprit in this confusion is that the order in
+>>> which merge_ort_nonrecursive() takes its three trees (head, merge,
+>>> and common) and the order in which merge_incore_nonrecursive() takes
+>>> its trees (merge_base, side1, and side2) are different, and if we
+>>> fix them to match, it would make it easier to work with?
+>>
+>> Indeed, the confusion is that simple ;) Shamefully, we don't have
+>> enough test coverage to catch that regression, so I'm very glad indeed
+>> you spotted it.
+>>
+>>> The new test in the attached patch will fail with this step but if
+>>> we revert the changes to builtin/stash.c in this step, it passes.
+>>
+>> Any objection to me adding this test as a preparatory patch? There's
+>> no sign-off, so I don't want to mess up the DCO here.
+> 
+> It was written merely as an illustration and is not something I am
+> proud of.  For example, creating a totally new playpen repository
+> only for a single piece of test and remove the entire thing when the
+> single test piece is done was done only to make sure the existing
+> test that come later can never be affected.  Also the test only uses
+> the most trivial case (a file is added in the stashed change, nobody
+> else involved in the stash application has touched the file so there
+> is nothing to "merge" in the file).  It was enough to demonstrate
+> that the order of arguments given to the function was wrong, but
+> we wouldn't catch problems in content-level merge with such a test.
+> 
+> So, I wouldn't mind if you reused that as one in a series of tests,
+> but I'd prefer to see those who are move invested in the topic to
+> come up with a bit more realistic scenario.
 
-The child command `git pack-objects
---exclude-promisor-objects-best-effort .git/objects/pack/pack` aborted
-with `BUG: builtin/pack-objects.c:5004: should_include_obj should only
-be called on existing objects`.
+Maybe something like the test below (which I admit I haven't actually 
+tested). That checks we merge the file contents and puts the changes in 
+the file close enough together so that the old code would fail and has 
+different contents for the three merged blobs.
 
-Matching debug symbols place the failure in
-`is_not_in_promisor_pack_obj()` at `pack-objects.c:5004`, called from
-`process_tree()` at `list-objects.c:167`. The tree was
-`d0daf5223f2367bd20fc2deb9d66aed05fcd30e8`. With lazy fetching
-disabled, `cat-file` cannot find it and `rev-list --objects --all
---missing=3Dprint` marks it missing. The clone has
-`remote.origin.promisor=3Dtrue` and
-`remote.origin.partialclonefilter=3Dtree:0`. All pack indexes verify,
-and `git fsck --full --no-dangling --no-reflogs` exits successfully.
+test_write_lines A B C >file &&
+git commit -m xxx file &&
+test_write_lines A B staged >file &&
+git add file &&
+test_write_lines A B unstaged >file &&
+git stash &&
+test_write_lines committed B C >file &&
+git commit -m yyy file &&
+git stash pop --index &&
+git show :file >actual &&
+test_write_lines committed B staged >expect &&
+text_cmp expect actual &&
+test_write_lines committed B unstaged >expect &&
+test_cmp expect file
 
-The child command matches `index-pack`'s `repack_local_links()` path.
-I have no deterministic minimal reproduction, but another reporter
-supplied partial-clone reproduction steps
-(https://www.spinics.net/lists/git/msg511313.html). I have not
-attached the core because it contains process memory.
+Thanks
 
-Reported by GPT-6 via Codex on behalf of L Naud=C3=A9.
+Phillip
+
+
+
