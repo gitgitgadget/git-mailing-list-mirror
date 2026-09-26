@@ -1,83 +1,82 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+Received: from mail-pz2-f42.google.com (mail-pz2-f42.google.com [74.125.228.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3B7346FBC
-	for <git@vger.kernel.org>; Sat, 26 Sep 2026 12:04:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D1928033B
+	for <git@vger.kernel.org>; Sat, 26 Sep 2026 12:08:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790424284; cv=pass; b=RkvMo2bnLdL5jGeiV/PtnbsckQ7Wce26Mu8+vNC+AA4xDbKBMVwjCoYYfnO5lRKg9bscINm/AMMUv4iY8YE2K26wggTFDB68jQbddM+NQMg38zoEpdo09s/q17K4A7vZqHpuzEMRsHiQ7e2eL+k02fxJImGT1R+Sl9qeLKSBwJ8=
+	t=1790424485; cv=pass; b=GUqmyV/ViaB9AlNdwjKp6yPYm540MWtnnsfH1n91QNz0SG4/mwXGxUgMV0Gv/TQ8kNo+lq35nEY40+QMNce/qcHBpwcsr5LDSDlFBmoDBu80B1aZ/zoihLFANtRiAn/hUeYs/emz86VRfseiKSZSYSBih0xah4IYrLxpoCwqA/Y=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790424284; c=relaxed/simple;
-	bh=//G9WKdGTx/hEyA3HYr1oDXjQSqg3soR/8p7neS3u6A=;
+	s=arc-20240116; t=1790424485; c=relaxed/simple;
+	bh=f2+B/8C0KbEyhiwCaRArzKnLVXA6+wCmqArIapHav7A=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RqxnlICSpT6uCCFggP/OgUFMCvDtfYTgsw/JFgTctP7V6Z7jfPQ8gQ73sVY5NXDn5FdXANoB4QlGwNRHCAR/6JMimNsaja4V6HvkVqU4D1eZieRYlv0MVrMdf3zLEH0NEGfkh215/bunaFiXb+Ir6LoNnYZBLS2twyllRU669FE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kzvF2UL7; arc=pass smtp.client-ip=74.125.227.141
+	 To:Cc:Content-Type; b=SyVFGrWCl+LL7K0iynojpprVJHNT2ifmUuqmrii+nFlaoDyyWvEWzOGilFBCBCdyr4PK7/onJp6WleiWwAc/1C6hSKV+2+y38jEcFIGcOaC702Jd1K/t2cuFT1xot2JMqdpNXpvn1KFLjO2+J5KVrPqVf14haaHkLWNLni5Hdro=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gtnS1ZdH; arc=pass smtp.client-ip=74.125.228.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kzvF2UL7"
-Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396ccdaea76so567411a91.0
-        for <git@vger.kernel.org>; Sat, 26 Sep 2026 05:04:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790424282; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gtnS1ZdH"
+Received: by mail-pz2-f42.google.com with SMTP id 41be03b00d2f7-cc4aa0f1766so971130a12.0
+        for <git@vger.kernel.org>; Sat, 26 Sep 2026 05:08:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790424483; cv=none;
         d=google.com; s=arc-20260327;
-        b=QtqY00qVhHC9YIwjXVDVcB/cy3ByGw0p1LxXVwHrXkodP/9CbvWCUdnScwp2+Sf1ta
-         L5Np5tysDFV1TnIfsjDHPANUj6xi7MU3lioZn0FeFuvUFABvyD51dS8u/MwHuuGbwlAK
-         Q87wiVWygdj++fDF/bFMgCKdvCNDfoRlaKKnGPXcKVHVRBJFfl05uyWadkEkHDutd5Sr
-         NdG0XjoYWUaOYdNL7duNunBVvc9HUQPJtgllNRMpfDvJtAVbH3ZL5qkutEaHTesuU7VV
-         +JjvyFBPZVxFmzNWzcTpjob/TkfmDOaExuzWTRbYb3B2/AAWdbxEnk/4iQKOI7u5ZXQr
-         tWkw==
+        b=WzSStlTq0cvDBSqWBtkFYwAQFZlcIcCMmvNrFr2c3i34aRg1Y+YtwAmaGQx1j4OFYp
+         RunPSjTDr/saMQZ67+zQwUiURd+gVRV+iPUK9593IHjIm8aLL7jr3AtIHKQwaddyUPpC
+         /yFOh/gz3x9nENpgTqfmFqITTFKzYpsA5NntjR70jH5DmSM6C3tyKpqK8GjEca6Pl54q
+         7lROpXBJCCJsV1vtUjLc0vcdSk/S+sJgqjZFMllnsXMw0tdK6TWmsPj2gwPqcHjINTvZ
+         ttOhQD2zWHMAzckv3jkZ2WCzuDy5aDMeFhKPSoaZqEYeb+sk+LELX2ykevc4AJtiJiK/
+         zxlA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=dvtVOEUglWlULZ9speKWJGgB1QaV5xNeDDmOxLkBXFU=;
-        fh=Ix0yJrKLcACLSKu9Fwm8GEHXdJVgOX3a5x/p2hneejU=;
-        b=Q7QT8e0ztfNR6O8+QNCpOH04vi1RkA/71bst1RP/OxP8CXaBlZePvyiFBWF+a0gnJP
-         f4Gg4V0qis7y7jZQ2mR5IGLd4UhvFotp7/SqkadvMP5sKOpQwoand6og3nkZMKxu81v5
-         ZNlae5NX+SUHgA04uOFduJgS0TZNYSH4O763Xaj6Csesqly/758hsj1ExVtFALeJf152
-         Ekb3bmszQCVTw8XpAyZWtXIfEbArBVqpNNJFb+NhNJOqF1vcGeBv9iGszr1wM4eR4tAa
-         E/sh+jkD7Rem2uFs78gkikitcgwXDuxYDZyPeUszjid5EAP0gjjCjzr8wLgLD10kB0hc
-         2Bhg==;
+        bh=f2+B/8C0KbEyhiwCaRArzKnLVXA6+wCmqArIapHav7A=;
+        fh=glCaWXGmc6Mqjg6YULaf99bOD5gPB3stA6YjpvEjc7c=;
+        b=PGZTk1nkH1J/fo7xsWCKLOcJ5mzMkmxkZrVsPShcSO/2yf0ynSsBQaDtkLPCg0Ez+s
+         7CEt57aTX/B5u/nfh7qVH3ydpfhxcIsoXMthdwVy7S7teYUcqEAHidESPlh54nFGR58c
+         rJulo+rpscr21Ja9lQZGxzTtQyhp07o199AW4Gb8WCHXTfsj9BEYhDHxVMt/MTUzgGtE
+         6BLKieMccSCknPNEW6Tmq2xm8bx1xCsj1r9wO0cskwN3L4ysoT08VftjVkcrXDPA/wbf
+         gf7dqi1hXJ9wd6AotK4twZ9MZ6Mpiy+Dzf6e58TbCsp1wr0ATbmXLYN/X5BUM5v+zhJx
+         NIwA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790424282; x=1791029082; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790424483; x=1791029283; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=dvtVOEUglWlULZ9speKWJGgB1QaV5xNeDDmOxLkBXFU=;
-        b=kzvF2UL7suw0xX+V6QZDqvY3bQ8UJWrtVqkKJkMefAxBVpEI30T1uLCQfyS5OrekA4
-         +isb5kK7aZ+uMSvencPesDPDnrbebB8n7JMs+7gW1HvQ4GP6GuZKkXAydaZ8TSzF09Eu
-         t4vW6ZY24XA0jPOeal/PjaN4UODuluM8E6VovWMeVRzXos3jh+c9uwTvfbhuLEErAB8K
-         sCCR6v515BUiLsrMvwyYQgRQSFI3x0IeyHC9Lt8pwmU2qxL7ZnJjHz+WUiQ0mF1nigqe
-         i47qKdPEgY1Vj61sf1HQoSh3t0cPv/adoDGRNqLLsqaQLzNG43OQxAOpnQpe4LsxptVh
-         WBBA==
+        bh=f2+B/8C0KbEyhiwCaRArzKnLVXA6+wCmqArIapHav7A=;
+        b=gtnS1ZdHYogGn8/ztwp+vAs2A6r1F88GRuLHAe7sjAw6rAM5m+FCmpkVfrXGFDfFOx
+         jKu7cfoUZWhSYgGGpwtwGK2rZ361bcwR9IDhVXF16YekiA0qhwiNTTSjGNKkouVEGkwu
+         IKR38RAG1neIpPdUSdWuZ7Wovzygj/Xv0a4ekLCsovF24ykh6uMZRFFmoOAeN5a7xC0v
+         J8oJM97p940KPMD9z9IcrYOOP1qrfU8IsXAnRMIrx0eW+6ZEi75xH+E7HAaBvFOcIiKI
+         gRwd8s2AgZVyzBdB2MozmjOW8Vg0M0tqnFGuUeFfuig6015lmIO09lSIoHJit5xz0jPJ
+         ebKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790424282; x=1791029082;
+        d=1e100.net; s=20260707; t=1790424483; x=1791029283;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=dvtVOEUglWlULZ9speKWJGgB1QaV5xNeDDmOxLkBXFU=;
-        b=C3YpcICh+4F9pHKNR+8xw/TGAl2P7Kadc1VBlvpQzGi4on0rrGOYY7NWzl7Al715mz
-         PmErSfURQiQtXfmJHHF7kXpb9lwJfMz13hs6ErEvY4ek5fUPE2CKdMLDu0joprI6CO58
-         SInpJa2sqg/Xg4qkTgVRueXsqlRhN+5saN3KqqQTUKGyNLVHmcftvSmNCn0LlG6lIuEi
-         L5o71y6Y+nU7cNCxl95Yd0XpZSeXbFObCuu8o2QKwX0sFEG6lyaLN0fls1Vj4KT0PuwI
-         4BHNScKv2GN9U9TuSOvH+oT9ZP9Q+RS9Rva8KGp3EsybkE6FbynPwN4z9FT7rrNaWOEA
-         J8nQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxJLuHPYevm/tTm25cfAqwGFAGDTK5MIzlNNfruXGpRc4RNvmmSmv3k/blrmHKKfdSDM/Y=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJGXEmURmrzt8iSOfUkDnFJVpEwXQrhwYpomHKh7rs8JpfAyFmO
-	ttvUP5Tu0ab8Rr7dEgj+ouOzYgm8f6HQptNkl+wUVzoLVE4zF5r3UcnRkmAyxZ/89XfvvyKlTsW
-	BtEAenBfZlA1mied/YKlZBjshtvJuhT0=
-X-Gm-Gg: AYBFou1HaHz3fv21mXjZ6qvxlZmC/zTdOLBk0azwwdBkJHv6OV8RMo2CS5uXEivV6W7
-	XHuCdj5D6jJqjHZqqZt9uuWp4VP7LHiGUbox6a1NQBnkluIrxP2Ia1d4Nf11d+B4CPM+nT41m/h
-	PKK08Q9B9RrRaQ2r87U8+XA7rmEGKrFReS+GTNv3JSiErNSh6nq0KI0WnqFPSJirxTYfJbJkeUQ
-	WaEOk2N1C4bLSFOnVIYwafGWOxl+OofH4vqfdr5GcSv9gN8Q55MOlvJbkpRPeaBipIl2jztvRix
-	cGVwyJL81C7TXk5iqSrGsJQ59n0wXQqgaj3fc+ZzdNiz7y+4w6UmfkXUC7/V8Mm7P3nKFXKrQ1X
-	ewunYjnbJbbzXpZGIXxM0kf05GWP99+iBTChSFdNTO65IPnOLhgIeRszyja3Kex6Djw5Nypxps5
-	5i4PKQLFY=
-X-Received: by 2002:a17:90a:d64f:b0:3a0:e985:9ca2 with SMTP id
- 98e67ed59e1d1-3a0e985a241mr454728a91.31.1790424280953; Sat, 26 Sep 2026
- 05:04:40 -0700 (PDT)
+        bh=f2+B/8C0KbEyhiwCaRArzKnLVXA6+wCmqArIapHav7A=;
+        b=0Ix531PjXP1vyvZTTdFDfhSqAmyhV7v8ntsszWpE3b8LHv4iwCa8f9zPBAgvgqLhWz
+         hCkSqmKmggvTFSwZVGRPSV+N99qai1tZ8MM26lf5kiZFdG3mUfdHvqAD1sohJPSHDm7e
+         m5w9jBpNb+168d3b00ggB5dDRheB9suANWBYGu/8pkIP3CJP7JMZM1A7lvRNKHXYEZHA
+         aJ3m1hYfE26E0Jo/uDMakE41R9eySNMTHvx5leOU/OhpQFZrmEWQezXEXQLtPM4vgIUb
+         9a9su39z8ijV2AG+rNDAlCwBQ5BxyQLEfkEhsieJMpvwz9V2p/gcka4gC044QeFb8Ztn
+         hnKw==
+X-Gm-Message-State: AFq9FYLXV0BG/dMFrr6LAxxvtG1W++tDq1Ik0BcZY0lYznqyOKd2UO5+
+	OhnPuKATtXTHSe5z9Y5wdM+zDjyPwHUuBfMGR03wUPqsHJ3/sE4+PFpq4WmV6xSR68FqTyS7HOi
+	hPORTlExQMZZga/hQLxAGJmzqMcXyYSc=
+X-Gm-Gg: AYBFou3IGN3qU2cwLyrQdSTlxgzmBVf/Z17IdrProugcG2o+FUWXMggbXq8Rj8QA+c3
+	XZrYuycpMecRel5kk7Eqnoww2L+lcUWBJWJ6CG2A/i5cjrmHh/O90jdgJlxKtOQkKPHhW9G13Sj
+	QZxRegD3viW8wNPKTRWEUQXDlCXuWmRIyKQ8qasF26RzsRaDj7ravjaZwlfk/iFPjuVXPCO3PBj
+	BFwmcOTFifvw4LCnB3LHFTT7qFRKaomwdfnWLNJyjfShfR0ZVuskigLjv8NWcWpHvqlbc8g8Zr/
+	X9dMxOH3X7iPC4FUU1T1HwVzRK11oPdEwgf9BOhZFfXt3T3jtJAYt596Be1K3kmJolcjVj/DcXY
+	FUK4hyrciWZJxcb84KNbPJJehIifho37vD0nNu11VIo73s/6AwaBW9EANeM70ufRgNKd4WapeOu
+	SkCDOycjc=
+X-Received: by 2002:a17:90b:2c88:b0:39e:b15:7950 with SMTP id
+ 98e67ed59e1d1-3a0bb5789eamr3843028a91.23.1790424483086; Sat, 26 Sep 2026
+ 05:08:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,98 +84,42 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <cover.1789853192.git.ben.knoble@gmail.com> <cover.1790168285.git.ben.knoble@gmail.com>
- <e49936ee12aaf5d82a98dddcc618cee01ac3c681.1790168285.git.ben.knoble@gmail.com>
- <xmqqse2yz4y4.fsf@gitster.g> <CALnO6CBhoBcVjLXidvii+o_Ump_k9disW177LeSS0118t3oGKg@mail.gmail.com>
- <xmqqpky1wb76.fsf@gitster.g> <c2bab13f-a9f1-473d-97aa-c201b2060bfd@gmail.com>
-In-Reply-To: <c2bab13f-a9f1-473d-97aa-c201b2060bfd@gmail.com>
+ <5bd4b78cace8ba8c8887c78f739bde3513dfda28.1790168285.git.ben.knoble@gmail.com>
+ <232f2bf6-04d8-4a54-b4e9-51b5ee79799f@gmail.com> <CALnO6CDTaunaBby+Gy4B5vxiHES3DHpybv8Eq2JPvQ1cteGzrw@mail.gmail.com>
+ <a9c44afa-583e-45ad-9447-c00144141c32@gmail.com> <b4023f5d-efba-487e-b273-a4283c50a774@gmail.com>
+In-Reply-To: <b4023f5d-efba-487e-b273-a4283c50a774@gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 26 Sep 2026 08:04:28 -0400
-X-Gm-Features: AclHuK83ewiFoZqksEn1uTlh1UG2oUZD9-TkyYmdxWIcU92tW70C-P6bS1Ksqz0
-Message-ID: <CALnO6CC5bj0-yhoMD3AUGcO=uxX+y4btC=nGZ6QbmOoGr97B3w@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] builtin/stash: merge index in-core
+Date: Sat, 26 Sep 2026 08:07:50 -0400
+X-Gm-Features: AclHuK_vTySV4VC46Zz8KMIR954bHf0dF8dMcAtfKl4wwz6QBhcgF2TSJRDF2eY
+Message-ID: <CALnO6CAwN=Xx5NUqNg8KZ9gf9Nn+nuSP6Yn3YnxyX5w8HqhkcQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] t: test failed "stash apply --index"
 To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
-	Adam Johnson <me@adamj.eu>, Victoria Dye <vdye@github.com>, Jeff King <peff@peff.net>, 
-	Derrick Stolee <stolee@gmail.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>, Victoria Dye <vdye@github.com>, 
+	Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Sep 26, 2026 at 5:51=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+On Sat, Sep 26, 2026 at 5:53=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
 .com> wrote:
 >
-> On 25/09/2026 17:24, Junio C Hamano wrote:
-> > "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+> On 25/09/2026 16:45, Phillip Wood wrote:
 > >
-> >> On Thu, Sep 24, 2026 at 5:59=E2=80=AFPM Junio C Hamano <gitster@pobox.=
-com> wrote:
-> >>>
-> >>> Ahh, or perhaps the trees are indeed given in a wrong order, but not
-> >>> in a random wrong order.  merge_ort_nonrecursive(), which is *not*
-> >>> the function you are using, takes head, merge, and merge_base in
-> >>> this order, and that order matches what you wrote.
-> >>>
-> >>> Perhaps the true culprit in this confusion is that the order in
-> >>> which merge_ort_nonrecursive() takes its three trees (head, merge,
-> >>> and common) and the order in which merge_incore_nonrecursive() takes
-> >>> its trees (merge_base, side1, and side2) are different, and if we
-> >>> fix them to match, it would make it easier to work with?
-> >>
-> >> Indeed, the confusion is that simple ;) Shamefully, we don't have
-> >> enough test coverage to catch that regression, so I'm very glad indeed
-> >> you spotted it.
-> >>
-> >>> The new test in the attached patch will fail with this step but if
-> >>> we revert the changes to builtin/stash.c in this step, it passes.
-> >>
-> >> Any objection to me adding this test as a preparatory patch? There's
-> >> no sign-off, so I don't want to mess up the DCO here.
-> >
-> > It was written merely as an illustration and is not something I am
-> > proud of.  For example, creating a totally new playpen repository
-> > only for a single piece of test and remove the entire thing when the
-> > single test piece is done was done only to make sure the existing
-> > test that come later can never be affected.  Also the test only uses
-> > the most trivial case (a file is added in the stashed change, nobody
-> > else involved in the stash application has touched the file so there
-> > is nothing to "merge" in the file).  It was enough to demonstrate
-> > that the order of arguments given to the function was wrong, but
-> > we wouldn't catch problems in content-level merge with such a test.
-> >
-> > So, I wouldn't mind if you reused that as one in a series of tests,
-> > but I'd prefer to see those who are move invested in the topic to
-> > come up with a bit more realistic scenario.
+> > I think that sounds reasonable, we can delete the index lines from the
+> > patch output with sed to make it easier to compare them.
 >
-> Maybe something like the test below (which I admit I haven't actually
-> tested). That checks we merge the file contents and puts the changes in
-> the file close enough together so that the old code would fail and has
-> different contents for the three merged blobs.
+> I just opened the test file and realized it has a diff_cmp() function to
+> compare diffs ignoring the index lines
 >
-> test_write_lines A B C >file &&
-> git commit -m xxx file &&
-> test_write_lines A B staged >file &&
-> git add file &&
-> test_write_lines A B unstaged >file &&
-> git stash &&
-> test_write_lines committed B C >file &&
-> git commit -m yyy file &&
-> git stash pop --index &&
-> git show :file >actual &&
-> test_write_lines committed B staged >expect &&
-> text_cmp expect actual &&
+> Thanks
+>
+> Phillip
 
-s/text/test ;)
+Doh!
 
-> test_write_lines committed B unstaged >expect &&
-> test_cmp expect file
-
-This does fail on the original code (head, base, merge_base) because
-the index (git show :file) has "A B staged" lines instead of
-"committed B staged" lines.
-
-This test does pass on the new code, but needs some
-arrangement/cleanup for the later "stash -k" test to succeed, so I'll
-include that in the next round as well.
+On the other hand, I don't think we need it. Those lines are showing
+blob IDs, which would be stable in our case (fixed hash algorithm over
+fixed contents), and we don't make the test dependent on the actual
+IDs?
 
 --=20
 D. Ben Knoble
