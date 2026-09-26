@@ -1,64 +1,64 @@
-Received: from mail-qk2-f41.google.com (mail-qk2-f41.google.com [74.125.230.233])
+Received: from mail-qk2-f40.google.com (mail-qk2-f40.google.com [74.125.230.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F08C372B41
-	for <git@vger.kernel.org>; Sat, 26 Sep 2026 16:20:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.233
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED89A1CAA78
+	for <git@vger.kernel.org>; Sat, 26 Sep 2026 16:20:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790439653; cv=none; b=Yo2Fosand3ASNi6mBw2t61hnrfldWxqH5XNGaR6E5LYzvWtfN1wEaXszM2ws+r135BfBr7WK8LCahMv7apNzT6pgvIOdk/RuowmZMLGSEdHVpdIWL73HrhF4JNL+OSVvYyPMj8ZuBy1zQTSCQRYZ7vImMCNzzWlODclaOzZPm7g=
+	t=1790439655; cv=none; b=qU2X605ZasoQrIOvYQ4AFVwEwnIULEgNPKRWGafXCwSmakoBnvHrJ4afngCEfYIsVNN8ltR/s63PPCWjVeZB3AkvzKID3WRErGW5nds721C5NZPeLNPknh8pareCTZccGd8AWbHvyvNqjpMfxSoYGq/8/MwWmjK0YZBYv19XeH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790439653; c=relaxed/simple;
-	bh=EKlEjefOWLV1KeQuV0XIP4SHtCle5Y+2yP9IeMAWzKI=;
+	s=arc-20240116; t=1790439655; c=relaxed/simple;
+	bh=2hraQfjzWwHnWmxueAX+eec/g8mKcp2w/1vX7VLOGyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ffPYQJVZvzTtMKQjtRhOLg0zUDxyUiOuHQcp5ET9A55f0w9aD/fA+tGnOqPEyfb+JEUIgwEcNFCpaSsrD8kjedkLiM4HCEe8KXEq6Q9MkAQXVZzThsvwFm0PUgKFu3/69A47XLfB9NYXWFf/T/XHSOADRrYCSA4GRAVqoASpryM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SlSBv0Kw; arc=none smtp.client-ip=74.125.230.233
+	 MIME-Version; b=Cp1OZU1c3v2xY/tRVh2vXAdK7mEsACsnhxwaWUTSfHFuWdTwkDlzIb4IThQNUHKmi9kJYIzVjoiFBQGUTFdQak6ZZH+QRmzJZf7kseqCx8QMFZBivQVxRVq4bdKIGpB7aswqexAMP4Af98+KO0pZXu1F5SZZqPtRnnPDeegycyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ln66A6kj; arc=none smtp.client-ip=74.125.230.232
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SlSBv0Kw"
-Received: by mail-qk2-f41.google.com with SMTP id af79cd13be357-93c59695cc9so54137285a.3
-        for <git@vger.kernel.org>; Sat, 26 Sep 2026 09:20:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ln66A6kj"
+Received: by mail-qk2-f40.google.com with SMTP id af79cd13be357-93c5b166b8fso46204585a.0
+        for <git@vger.kernel.org>; Sat, 26 Sep 2026 09:20:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790439650; x=1791044450; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790439651; x=1791044451; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=JyokEbIGh9LQH13wkpSrMAmmhk08RM3101YcWRvkCSQ=;
-        b=SlSBv0KwKeDJe/GmhcQoyTh6yWU+On/yI0TqngQZAOy2Z1delXtgIyTgDTJxr3TaWz
-         vEN0tqMxnWEBrZ+KdqQ4Q0XEKiwIwD40kc/0o8gZ4G3E4kVOnUK/+4cSlE0nbuK/6B0n
-         4JVHJVOEbHNegSiS+H2FaNMLBhPiiEGdRWSYMta3WAV5h9EdwMeFcbT2P1CmaACVN0G9
-         Fb9hlgF1knkKuKkif7jeDkHpUG8wVBDPFW6t3+oD5z3J0M8kTmcffdcBRtuCGpWechVz
-         7NN/JW44/POBE61G2NtDQWJk0ZBKWL5qopuHdGarUphvFfFhCZoogM6l7cluUk5qglQg
-         FMUQ==
+        bh=0RHS8SrgX2p5lacYy4sqMBwZGUd4KrbX3DIG5RUVd4I=;
+        b=Ln66A6kj9bxqWT1BoVHIzNvlZprZ/u1XGpRFcQ/K+ETXYcEIsMGUj/u704LzNzO6eP
+         Q8ayRA+CBLqGryKtZUHkD9w+dwP1m3PyWx4eRA0mM8woch1yow3xc910FwOniBOuaejQ
+         WgmayznCQ0uZ8xr40vU7221C66gNqhFI3WQ2p1HLUusKVGvr6XPLvqjmqSOQZykf/Sn9
+         0k19y5mmIfjRq+KMXxMEMBpEFoHnuml+gFVGgB/ls33EAqgth+YhMDPciG1PrMN5cxr5
+         GetPXCvjXIaiLLi4thWgIsDXaE5ScnrMKyTx273eOUaun06+aKsAOS+X50vMNpjYSBtM
+         EfVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790439650; x=1791044450;
+        d=1e100.net; s=20260707; t=1790439651; x=1791044451;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=JyokEbIGh9LQH13wkpSrMAmmhk08RM3101YcWRvkCSQ=;
-        b=1qK5rt7GwXKFr7JPcRCODcoZ/b8iQ+6DnbbFmhT2O/lEJF4RufsAIDNWZecwwKOdQh
-         bb/s2AuBXEixDyRSHJGgVZiHwdHpEq/ZATxNpZHcvYd6mGBE9D8CTYABN2eTqDX/Fosw
-         jghWV695EOW+Wyo6dIQ/3pBD9CsnMV4POPD6wIU7m/iUtW6GCy0EcTJjqYPsupN3/oXl
-         pX2Am+roepuFq7hIA3s7bYdr26ehgqWfLgucbhfb8YFNZ0GXFue3E5Wi2tKuwCBSOorz
-         xY3LBIAhARvZ1OSMn58AQtFcZohIg/OiDIvSU4IVOsDJ+XxSFenOn8FHWUx6rG4SzXmJ
-         nmNQ==
-X-Gm-Message-State: AFuF++nKdx4ovExZJvCsS3Jv89ZfyvRuc+XaWWmYDCBN7XWf8ZdlOx+U
-	AR8F09FPifHkOOaBtE+E6qKGjdLUqV+sfHBg51fN5gk/pQSOiZnJVOWhaohbezCA
-X-Gm-Gg: AYBFou2Rw4+eu9j77cCvWKsZ0bWStgX9szrzMlqTTpYiy399o6WUZR0Zh/z6QkXqJVO
-	hMeb4aFgI6wpit4R0dfejyVLVkPdCU5eKKTwXRV9TeqaevjiDWuMYFjoIq+iEjZEJ3dE1lc7biB
-	BViM8OeCxqSnB6e0bgeg5eDUDb+9vzfex3IXYUXKepDW7dDZ67Pa/mOoODFs5I3B8zLj9hqP+9I
-	ZSPY7U2gqWHDH826jyKwRaAt/1cykm7azgh8dkkorOY6Csu/fq2GgI4SVJ3T/d3rak/toOfcx9y
-	k3TomfThpO9wLiyvsfw/AQ6/WWJNmSrNT4I/ksV9BJFq+2m/5rvCyJLoW9j2CmpveOwmq4kubGd
-	k+Xi+aq0iNmHNizzV4XfsdoZqzd8J5lO6OZNOmS2AFhAgg8gFg/V4bIU0S1/c+bbS4f6lPqv1hS
-	mc2EPaSC/xGce21eqz/JpXIUYr3D0dDGmP+forVnDZXc2smugxnMhjjhb9ZOCfSLD99DJGQCzfX
-	PR0+Tb1p1Eqh/nXH9UGy7s3HNTLIDGoanq6MNVXnOpTADc5SJ1NYibWKFVImYsHwaS3vuYJ518W
-	nWz351IOx7ArDTJr6DMKOV+uNKNzLBzSIEnYYjM/Ui5S3Oz9caz0
-X-Received: by 2002:a05:620a:8810:b0:939:c303:c54a with SMTP id af79cd13be357-93c43c9db58mr1167618985a.31.1790439650170;
+        bh=0RHS8SrgX2p5lacYy4sqMBwZGUd4KrbX3DIG5RUVd4I=;
+        b=m5djA9qeTRSNcEwct01dUnh4vXtWFOCG5T5j8SkVRH8+Npv4RC2RHH1p0bl5K06I8A
+         BIOnal6HmIeqFklzpKX+sTzIZCoq5oMzIg3SHhQF+BroU3a5QXdNMjZyuotItBxPbRUn
+         hB5py/1hjVZu9ocKLvreAqNOuOo7U7QmWZchikX/3lr0MLR6YnnWEuqV8lEpT5j2R69M
+         yyAufXq9sFbhMNouCbRy+tPq7liZxMAtdySZATmnl7wmVCvMyVyJZ1DXgmr6XxACB1DX
+         qVJPIkfqzFkCF+iXT7VApUi+ghiFRE+oa5/HH43kilZKGq4/cj7yL99OJzwILAS6Bl9e
+         S0oA==
+X-Gm-Message-State: AFuF++kHORrsckzQF9EaSolCVVAa0+u+u5IgbnLb4QaSVbl2MkuNaSYx
+	Puyr9G5CLYVVt4G6JDSQ8+fJbB0+iCiMx7YuuoQ5O1q9UaM4f7mhFvHnKaKy1YFmH30MCA==
+X-Gm-Gg: AYBFou2MMV5QGf7De7oG0i0M84cJcW1Ctxit5fvauUWgprmDEj4ramy96LJ93lEV3gv
+	xTU2vtWG0gk0Q7BQ6hUikAHPQt3tm+K396gncDDjNaMAR6ocLLF+UYajdhY36qTIVO6l1Y9HGHn
+	kBrgUrB0YRic12u+n9SxFpOmWytVxHPzQxLGHHNtIlqBHxE8dhN1vma0+oGhl7KT+pic41yQtg8
+	tKYdOzNneNpPR//GManyNR2NebOabj8eeb1y/J10M2ep74E2layuZUzIQViYmdX1pXn3dK2R7ue
+	fSMEnCu1Kx8ScZQHbtvXm8Cnwk1P+TF0DAId7cJQ6XG/K/ZrEwoYQCBlxRqEB5ElX5oFplcn6Cl
+	dCV+Uhpelr4HZro0DXPwoyuYsjx6bqcwo3ljymoq3dA4Kzpsf2WDHmCtTljMp2JeYl983ERtznt
+	ysZ5dzenZlOFK9bnhVKUomQQZqkHEckp9nMmRoXIX8NRrHz7BiffiSQh5DGNFuHsGEQ3liM0hU7
+	StDDNVwhlLRnEHoHKq7jQf7EzIa+zaCWleKcNd++O9onyXwR6PJZxX9upM5A7BreKx6VLPjctzx
+	i9BJx9Kd8KNE1aYkVtmwq/rl1UkAlSsR0JzMSvnhxXWzxqxxpTHu
+X-Received: by 2002:a05:620a:400d:b0:93b:d7a2:dd29 with SMTP id af79cd13be357-93c43d2d070mr1061060985a.57.1790439650997;
         Sat, 26 Sep 2026 09:20:50 -0700 (PDT)
 Received: from localhost.localdomain ([2603:7002:a00:5733:58df:3319:3c13:321f])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93c448ae8ecsm440919985a.9.2026.09.26.09.20.49
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93c448ae8ecsm440919985a.9.2026.09.26.09.20.50
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 26 Sep 2026 09:20:49 -0700 (PDT)
+        Sat, 26 Sep 2026 09:20:50 -0700 (PDT)
 From: Andrew Pleeter <andrewpleeter@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
@@ -66,9 +66,9 @@ Cc: gitster@pobox.com,
 	ben.knoble@gmail.com,
 	peff@peff.net,
 	sandals@crustytoothpaste.net
-Subject: [PATCH v9 0/4] var: -z output, multiple variables, and broken-out idents
-Date: Sat, 26 Sep 2026 12:20:44 -0400
-Message-ID: <20260926162048.30853-1-andrewpleeter@gmail.com>
+Subject: [PATCH v9 1/4] var: represent multi-valued variables with a string_list
+Date: Sat, 26 Sep 2026 12:20:45 -0400
+Message-ID: <20260926162048.30853-2-andrewpleeter@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <xmqq33va1lcg.fsf@gitster.g>
 References: <xmqq33va1lcg.fsf@gitster.g>
@@ -80,66 +80,194 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This is a reroll of the single patch in v8, split up as Junio asked
-for, with the changes Phillip asked for on the list.
+A variable whose value is a list, of which GIT_CONFIG_GLOBAL is
+currently the only one, is read into a single string whose elements are
+joined with newlines, and "git var -l" splits that string apart again
+before showing each element.  Round-tripping through a delimiter that
+can legitimately appear in a value is fragile, and it forces every
+future caller to know which variables need splitting.
 
-v8 was one commit doing four things at once. It is now four patches:
+Give "struct git_var" a separate "multiread" function that appends the
+elements to a string_list, and let the single "read" function stay for
+the variables that have exactly one value.  A variable uses one or the
+other, never both, so which one is set also says whether the variable
+is multi-valued.
 
-  1/4 converts the internal representation of a multi-valued variable
-      from a newline-joined string to a string_list, with no change in
-      output. Phillip suggested doing this as its own preparatory step.
+The output is unchanged.  While at it, say in the documentation that
+GIT_CONFIG_GLOBAL can have multiple values, so that callers know when
+to expect a list.
 
-  2/4 adds "-z", which is what forces the switch to parse_options(), so
-      that conversion lives here rather than in 1/4.
+Signed-off-by: Andrew Pleeter <andrewpleeter@gmail.com>
+---
+ Documentation/git-var.adoc |  1 +
+ builtin/var.c              | 79 +++++++++++++++++++++-----------------
+ 2 files changed, 44 insertions(+), 36 deletions(-)
 
-  3/4 teaches "git var" to take more than one variable.
-
-  4/4 adds GIT_AUTHOR_NAME and friends.
-
-Changes since v8:
-
- * GIT_SIGNING_KEY is dropped. Phillip asked three times how it was
-   meant to be used, and once I looked properly the answer was that the
-   value cannot be interpreted without also reading gpg.format, and that
-   in the default configuration it is a committer ident rather than a
-   key at all. I would rather leave it out than define a variable I
-   cannot describe. Details are in my reply to him on this thread.
-
- * Asking for several variables no longer exits non-zero just because
-   one of them has no value; such a variable is left out of the output
-   and the rest are still shown. A non-zero status is now reserved for
-   real errors, such as naming a variable that does not exist, so
-   callers can detect those from the exit code. A single variable still
-   exits 1 when it has no value, as before. This is Phillip's
-   GIT_CONFIG_NOSYSTEM point.
-
- * GIT_CONFIG_GLOBAL is documented as a variable that can have more than
-   one value.
-
- * The commit messages are prose rather than a list of bullet points,
-   and no longer narrate how the patch was developed.
-
-The tests use nul_to_q rather than running test_cmp over files
-containing NUL bytes, which Phillip pointed out in v6. Each patch builds
-and passes t0007 on its own.
-
-One thing I did not do, and would like an opinion on: for a multi-valued
-variable in multi-variable mode, rather than emitting a trailing
-delimiter, each value is shown as its own "VARIABLE=value" entry, which
-matches "git var -l". Phillip suggested the trailing delimiter and I am
-happy to switch.
-
-Andrew Pleeter (4):
-  var: represent multi-valued variables with a string_list
-  var: add "-z" output mode
-  var: accept more than one variable
-  var: add broken-out identity variables
-
- Documentation/git-var.adoc |  68 +++++++++--
- builtin/var.c              | 242 +++++++++++++++++++++++++++++--------
- t/t0007-git-var.sh         | 153 +++++++++++++++++++++++
- 3 files changed, 403 insertions(+), 60 deletions(-)
-
+diff --git a/Documentation/git-var.adoc b/Documentation/git-var.adoc
+index 697c10aded..de3007732d 100644
+--- a/Documentation/git-var.adoc
++++ b/Documentation/git-var.adoc
+@@ -83,6 +83,7 @@ endif::git-default-pager[]
+ 
+ `GIT_CONFIG_GLOBAL`::
+     The path to the global (per-user) configuration files, if any.
++    This variable can have multiple values.
+ 
+ Most path values contain only one value. However, some can contain multiple
+ values, which are separated by newlines, and are listed in order from highest to
+diff --git a/builtin/var.c b/builtin/var.c
+index cc3a43cde2..9f7c8a6113 100644
+--- a/builtin/var.c
++++ b/builtin/var.c
+@@ -14,10 +14,11 @@
+ #include "environment.h"
+ #include "ident.h"
+ #include "pager.h"
+-#include "refs.h"
+ #include "path.h"
+-#include "strbuf.h"
++#include "refs.h"
+ #include "run-command.h"
++#include "strbuf.h"
++#include "string-list.h"
+ 
+ static const char var_usage[] = "git var (-l | <variable>)";
+ 
+@@ -90,35 +91,27 @@ static char *git_config_val_system(int ident_flag UNUSED)
+ 	return NULL;
+ }
+ 
+-static char *git_config_val_global(int ident_flag UNUSED)
++static void git_config_val_global(struct string_list *list)
+ {
+-	struct strbuf buf = STRBUF_INIT;
+ 	char *user, *xdg;
+-	size_t unused;
+ 
+ 	git_global_config_paths(&user, &xdg);
+ 	if (xdg && *xdg) {
+ 		normalize_path_copy(xdg, xdg);
+-		strbuf_addf(&buf, "%s\n", xdg);
++		string_list_append(list, xdg);
+ 	}
+ 	if (user && *user) {
+ 		normalize_path_copy(user, user);
+-		strbuf_addf(&buf, "%s\n", user);
++		string_list_append(list, user);
+ 	}
+ 	free(xdg);
+ 	free(user);
+-	strbuf_trim_trailing_newline(&buf);
+-	if (buf.len == 0) {
+-		strbuf_release(&buf);
+-		return NULL;
+-	}
+-	return strbuf_detach(&buf, &unused);
+ }
+ 
+ struct git_var {
+ 	const char *name;
+ 	char *(*read)(int);
+-	int multivalued;
++	void (*multiread)(struct string_list *);
+ };
+ static struct git_var git_vars[] = {
+ 	{
+@@ -163,8 +156,7 @@ static struct git_var git_vars[] = {
+ 	},
+ 	{
+ 		.name = "GIT_CONFIG_GLOBAL",
+-		.read = git_config_val_global,
+-		.multivalued = 1,
++		.multiread = git_config_val_global,
+ 	},
+ 	{
+ 		.name = "",
+@@ -175,28 +167,30 @@ static struct git_var git_vars[] = {
+ static void list_vars(void)
+ {
+ 	struct git_var *ptr;
+-	char *val;
+-
+-	for (ptr = git_vars; ptr->read; ptr++)
+-		if ((val = ptr->read(0))) {
+-			if (ptr->multivalued && *val) {
+-				struct string_list list = STRING_LIST_INIT_DUP;
+-
+-				string_list_split(&list, val, "\n", -1);
+-				for (size_t i = 0; i < list.nr; i++)
+-					printf("%s=%s\n", ptr->name, list.items[i].string);
+-				string_list_clear(&list, 0);
+-			} else {
++
++	for (ptr = git_vars; ptr->read || ptr->multiread; ptr++) {
++		if (ptr->read) {
++			char *val = ptr->read(0);
++
++			if (val) {
+ 				printf("%s=%s\n", ptr->name, val);
++				free(val);
+ 			}
+-			free(val);
++		} else {
++			struct string_list list = STRING_LIST_INIT_DUP;
++
++			ptr->multiread(&list);
++			for (size_t i = 0; i < list.nr; i++)
++				printf("%s=%s\n", ptr->name, list.items[i].string);
++			string_list_clear(&list, 0);
+ 		}
++	}
+ }
+ 
+ static const struct git_var *get_git_var(const char *var)
+ {
+ 	struct git_var *ptr;
+-	for (ptr = git_vars; ptr->read; ptr++) {
++	for (ptr = git_vars; ptr->read || ptr->multiread; ptr++) {
+ 		if (strcmp(var, ptr->name) == 0) {
+ 			return ptr;
+ 		}
+@@ -220,7 +214,6 @@ int cmd_var(int argc,
+ 	    struct repository *repo UNUSED)
+ {
+ 	const struct git_var *git_var;
+-	char *val;
+ 
+ 	show_usage_if_asked(argc, argv, var_usage);
+ 	if (argc != 2)
+@@ -237,12 +230,26 @@ int cmd_var(int argc,
+ 	if (!git_var)
+ 		usage(var_usage);
+ 
+-	val = git_var->read(IDENT_STRICT);
+-	if (!val)
+-		return 1;
++	if (git_var->read) {
++		char *val = git_var->read(IDENT_STRICT);
++
++		if (!val)
++			return 1;
+ 
+-	printf("%s\n", val);
+-	free(val);
++		printf("%s\n", val);
++		free(val);
++	} else {
++		struct string_list list = STRING_LIST_INIT_DUP;
++
++		git_var->multiread(&list);
++		if (!list.nr) {
++			string_list_clear(&list, 0);
++			return 1;
++		}
++		for (size_t i = 0; i < list.nr; i++)
++			printf("%s\n", list.items[i].string);
++		string_list_clear(&list, 0);
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.54.0 (Apple Git-157)
 
