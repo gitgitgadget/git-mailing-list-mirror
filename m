@@ -1,125 +1,224 @@
-Received: from mail-pz2-f42.google.com (mail-pz2-f42.google.com [74.125.228.42])
+Received: from mail-yx2-f13.google.com (mail-yx2-f13.google.com [74.125.224.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D1928033B
-	for <git@vger.kernel.org>; Sat, 26 Sep 2026 12:08:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790424485; cv=pass; b=GUqmyV/ViaB9AlNdwjKp6yPYm540MWtnnsfH1n91QNz0SG4/mwXGxUgMV0Gv/TQ8kNo+lq35nEY40+QMNce/qcHBpwcsr5LDSDlFBmoDBu80B1aZ/zoihLFANtRiAn/hUeYs/emz86VRfseiKSZSYSBih0xah4IYrLxpoCwqA/Y=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790424485; c=relaxed/simple;
-	bh=f2+B/8C0KbEyhiwCaRArzKnLVXA6+wCmqArIapHav7A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SyVFGrWCl+LL7K0iynojpprVJHNT2ifmUuqmrii+nFlaoDyyWvEWzOGilFBCBCdyr4PK7/onJp6WleiWwAc/1C6hSKV+2+y38jEcFIGcOaC702Jd1K/t2cuFT1xot2JMqdpNXpvn1KFLjO2+J5KVrPqVf14haaHkLWNLni5Hdro=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gtnS1ZdH; arc=pass smtp.client-ip=74.125.228.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722821D416C
+	for <git@vger.kernel.org>; Sat, 26 Sep 2026 12:17:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.141
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790425052; cv=none; b=UpNfkmjK4jy2RppTg4w+Qp2zax6RnolchRdbKIyJtcAupctiU28JpEK65C3XxSGqy5CL/KN5dU8bfFQY78bi+BMs8ZerGifKaTZ86+Mgw6IslQHhOgnxh/sRRhFbsEWTy3qHUvRb1pKNmZSBgL1DG7i+6UXxig/AwkCA088LPBo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790425052; c=relaxed/simple;
+	bh=l0NZMfeE4lzd/X5xfK9ciYcG4VXyZpxCKCuph/2pTLc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CHACn1gXQn8nZ8KwuaDK9gHniP+OA2C2Ne+PpoN3n8Z9olP9CSyqHRpfTxFB9P2rbZZu9d6vbDXiThTh3JaZIMen2pOLhUdv7FVliAB85egDXD0F2WSmZGUdf6sUpdUrjlvm/122vg0bZuzfEp8TBW9PXJQfvd2oG7ucVypJjsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pn/ahK7a; arc=none smtp.client-ip=74.125.224.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gtnS1ZdH"
-Received: by mail-pz2-f42.google.com with SMTP id 41be03b00d2f7-cc4aa0f1766so971130a12.0
-        for <git@vger.kernel.org>; Sat, 26 Sep 2026 05:08:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790424483; cv=none;
-        d=google.com; s=arc-20260327;
-        b=WzSStlTq0cvDBSqWBtkFYwAQFZlcIcCMmvNrFr2c3i34aRg1Y+YtwAmaGQx1j4OFYp
-         RunPSjTDr/saMQZ67+zQwUiURd+gVRV+iPUK9593IHjIm8aLL7jr3AtIHKQwaddyUPpC
-         /yFOh/gz3x9nENpgTqfmFqITTFKzYpsA5NntjR70jH5DmSM6C3tyKpqK8GjEca6Pl54q
-         7lROpXBJCCJsV1vtUjLc0vcdSk/S+sJgqjZFMllnsXMw0tdK6TWmsPj2gwPqcHjINTvZ
-         ttOhQD2zWHMAzckv3jkZ2WCzuDy5aDMeFhKPSoaZqEYeb+sk+LELX2ykevc4AJtiJiK/
-         zxlA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=f2+B/8C0KbEyhiwCaRArzKnLVXA6+wCmqArIapHav7A=;
-        fh=glCaWXGmc6Mqjg6YULaf99bOD5gPB3stA6YjpvEjc7c=;
-        b=PGZTk1nkH1J/fo7xsWCKLOcJ5mzMkmxkZrVsPShcSO/2yf0ynSsBQaDtkLPCg0Ez+s
-         7CEt57aTX/B5u/nfh7qVH3ydpfhxcIsoXMthdwVy7S7teYUcqEAHidESPlh54nFGR58c
-         rJulo+rpscr21Ja9lQZGxzTtQyhp07o199AW4Gb8WCHXTfsj9BEYhDHxVMt/MTUzgGtE
-         6BLKieMccSCknPNEW6Tmq2xm8bx1xCsj1r9wO0cskwN3L4ysoT08VftjVkcrXDPA/wbf
-         gf7dqi1hXJ9wd6AotK4twZ9MZ6Mpiy+Dzf6e58TbCsp1wr0ATbmXLYN/X5BUM5v+zhJx
-         NIwA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pn/ahK7a"
+Received: by mail-yx2-f13.google.com with SMTP id 956f58d0204a3-66e50968489so1571432d50.0
+        for <git@vger.kernel.org>; Sat, 26 Sep 2026 05:17:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790424483; x=1791029283; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1790425049; x=1791029849; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=f2+B/8C0KbEyhiwCaRArzKnLVXA6+wCmqArIapHav7A=;
-        b=gtnS1ZdHYogGn8/ztwp+vAs2A6r1F88GRuLHAe7sjAw6rAM5m+FCmpkVfrXGFDfFOx
-         jKu7cfoUZWhSYgGGpwtwGK2rZ361bcwR9IDhVXF16YekiA0qhwiNTTSjGNKkouVEGkwu
-         IKR38RAG1neIpPdUSdWuZ7Wovzygj/Xv0a4ekLCsovF24ykh6uMZRFFmoOAeN5a7xC0v
-         J8oJM97p940KPMD9z9IcrYOOP1qrfU8IsXAnRMIrx0eW+6ZEi75xH+E7HAaBvFOcIiKI
-         gRwd8s2AgZVyzBdB2MozmjOW8Vg0M0tqnFGuUeFfuig6015lmIO09lSIoHJit5xz0jPJ
-         ebKQ==
+        bh=f+NrjLsCLWWd027pKexVeBUqPCd1UlBkySnBmBeBwqY=;
+        b=Pn/ahK7aJIHSDPmsZjeOZYL+3/dtZxK06+KTNamd1hfwKmhpaivJg+K0EUPY4CbigX
+         UWM2QesjYfwC2twhPBUSb32MObIalEmL2t7h5LMYTtOS7JyUUdqbGc7OInOYu9/ZYA/E
+         y4u1T1FmX4AfOZRZUJCDyQzTr3zrAscmC00xW+agveMNLwi5gVF/sJRjq4ptqWKEeeNN
+         xPt4HMZqYE+5o/kcpp5A7Wj7O13ISucy1z+MxLXxQE5hNjFY8SlSkfzj60ALesUbd0zx
+         s6kBXwGF6ZftTfJCI094rnbhYUA3QRYu/mLFExSpzb5BrveAdL/Ebc7AVM37J3dYRRR8
+         NBeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790424483; x=1791029283;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1790425049; x=1791029849;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=f2+B/8C0KbEyhiwCaRArzKnLVXA6+wCmqArIapHav7A=;
-        b=0Ix531PjXP1vyvZTTdFDfhSqAmyhV7v8ntsszWpE3b8LHv4iwCa8f9zPBAgvgqLhWz
-         hCkSqmKmggvTFSwZVGRPSV+N99qai1tZ8MM26lf5kiZFdG3mUfdHvqAD1sohJPSHDm7e
-         m5w9jBpNb+168d3b00ggB5dDRheB9suANWBYGu/8pkIP3CJP7JMZM1A7lvRNKHXYEZHA
-         aJ3m1hYfE26E0Jo/uDMakE41R9eySNMTHvx5leOU/OhpQFZrmEWQezXEXQLtPM4vgIUb
-         9a9su39z8ijV2AG+rNDAlCwBQ5BxyQLEfkEhsieJMpvwz9V2p/gcka4gC044QeFb8Ztn
-         hnKw==
-X-Gm-Message-State: AFq9FYLXV0BG/dMFrr6LAxxvtG1W++tDq1Ik0BcZY0lYznqyOKd2UO5+
-	OhnPuKATtXTHSe5z9Y5wdM+zDjyPwHUuBfMGR03wUPqsHJ3/sE4+PFpq4WmV6xSR68FqTyS7HOi
-	hPORTlExQMZZga/hQLxAGJmzqMcXyYSc=
-X-Gm-Gg: AYBFou3IGN3qU2cwLyrQdSTlxgzmBVf/Z17IdrProugcG2o+FUWXMggbXq8Rj8QA+c3
-	XZrYuycpMecRel5kk7Eqnoww2L+lcUWBJWJ6CG2A/i5cjrmHh/O90jdgJlxKtOQkKPHhW9G13Sj
-	QZxRegD3viW8wNPKTRWEUQXDlCXuWmRIyKQ8qasF26RzsRaDj7ravjaZwlfk/iFPjuVXPCO3PBj
-	BFwmcOTFifvw4LCnB3LHFTT7qFRKaomwdfnWLNJyjfShfR0ZVuskigLjv8NWcWpHvqlbc8g8Zr/
-	X9dMxOH3X7iPC4FUU1T1HwVzRK11oPdEwgf9BOhZFfXt3T3jtJAYt596Be1K3kmJolcjVj/DcXY
-	FUK4hyrciWZJxcb84KNbPJJehIifho37vD0nNu11VIo73s/6AwaBW9EANeM70ufRgNKd4WapeOu
-	SkCDOycjc=
-X-Received: by 2002:a17:90b:2c88:b0:39e:b15:7950 with SMTP id
- 98e67ed59e1d1-3a0bb5789eamr3843028a91.23.1790424483086; Sat, 26 Sep 2026
- 05:08:03 -0700 (PDT)
+        bh=f+NrjLsCLWWd027pKexVeBUqPCd1UlBkySnBmBeBwqY=;
+        b=2W2ix0QZX60emtCQ5J3ofvcxJKtcBW+9m/g323nMFZ+/+OrtRAqLAERiVP+n+hHwV+
+         CV1uTa81deYX7BX/KdP63V/PwSskE4hkSCJVhi6v1MwNo91cAiOo3PqNpAJfkAr87wuN
+         OnFXKRYUGwXZJUWxSY4CklYQjPe9tThasCJa1BL4sIjaunbHDIzl66xLh/uqmxfIsrMl
+         ImIX9fdhu+ADccE5s7MoSsXVi7GNBvIUdydWruTPbLYmAJTHICpI+8dR+98XnWBVJcxm
+         StyByIVuByIWYfLqOaMUA/Oo8dSZGJ6sp+0HyrBghwMLbaxwvvrl1T5OfAc3xLJST57I
+         ku9A==
+X-Gm-Message-State: AFq9FYL9ygD2VZZXgeVT9XcM1LAv5NsxdO3Igjrvv40/83G4V9up1tOq
+	tW/QESclKmztxqFYGwbwBQXb4hYRDkj1248+6WQqpsTCGDi3wrGlGq/kGfn2Ckad
+X-Gm-Gg: AYBFou2/M0en4U41JZnDE4BTx9F/Xru9PF3z7AqsNUhAvUCM+BPDv9bhii5Xq78UwCr
+	3n9gO43d5PXQwPqURxEkFbWDihS/nbuNDOvfOG4DwtOMsYaT72wPhbrUsCdIWFOHiPRwahFwhb2
+	s6ZLjsTLcbUx42mivjKKuGW3LyU54gk3rZNRotSbjHQ6G8EgCReL0wLE/DKprPJX199nAGXTsgq
+	mAs03czm3dunJWX+Er/Ce0BnlCwMCkKHQneh1Pjk1s22Lp5/PwwuYXJ2Mk8RpvOtoI5pgswXbnB
+	rBz7ZEU6z72JVaW5Fe/isZ18EhWyG5BQll6oaCnkWZFb/zPcq6CnNT26PMU4qlOyYPnfX/wMYNM
+	wBuz6Q0n9bnaQgGTFI0iWZKoSJuCv8NvhDEbfCAiENKFMzEu0h0EIMFSv/7zrrguavdQmsbqMzD
+	50316QXK4ty9ADweG1LRTCU2rDoTasKRfrIf7Nm6ynYpHQn1En8MpPsLY1Shzrui39RgRwtCOjo
+	2sehGKvI7ntqN4sf7jQcQ+c1ZweBzyMKWtfmiUSVsgoiVrInA8LbN5fZNpatSiV3eqmm6U6K9i9
+	n9iXmWrDBVGk7LWCmSYCtg==
+X-Received: by 2002:a05:690e:d05:b0:672:f50e:b8ba with SMTP id 956f58d0204a3-672f50edcb8mr3536659d50.56.1790425049131;
+        Sat, 26 Sep 2026 05:17:29 -0700 (PDT)
+Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9092:700::6])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6740ee9d17csm2179151d50.5.2026.09.26.05.17.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Sep 2026 05:17:28 -0700 (PDT)
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Eli Barzilay <eli@barzilay.org>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v3 0/5] stash: clean up index-mode test merge
+Date: Sat, 26 Sep 2026 08:16:43 -0400
+Message-ID: <cover.1790425008.git.ben.knoble@gmail.com>
+X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7.dirty
+In-Reply-To: <cover.1790168285.git.ben.knoble@gmail.com>
+References: <cover.1790168285.git.ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1789853192.git.ben.knoble@gmail.com> <cover.1790168285.git.ben.knoble@gmail.com>
- <5bd4b78cace8ba8c8887c78f739bde3513dfda28.1790168285.git.ben.knoble@gmail.com>
- <232f2bf6-04d8-4a54-b4e9-51b5ee79799f@gmail.com> <CALnO6CDTaunaBby+Gy4B5vxiHES3DHpybv8Eq2JPvQ1cteGzrw@mail.gmail.com>
- <a9c44afa-583e-45ad-9447-c00144141c32@gmail.com> <b4023f5d-efba-487e-b273-a4283c50a774@gmail.com>
-In-Reply-To: <b4023f5d-efba-487e-b273-a4283c50a774@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 26 Sep 2026 08:07:50 -0400
-X-Gm-Features: AclHuK_vTySV4VC46Zz8KMIR954bHf0dF8dMcAtfKl4wwz6QBhcgF2TSJRDF2eY
-Message-ID: <CALnO6CAwN=Xx5NUqNg8KZ9gf9Nn+nuSP6Yn3YnxyX5w8HqhkcQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] t: test failed "stash apply --index"
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>, Victoria Dye <vdye@github.com>, 
-	Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sat, Sep 26, 2026 at 5:53=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> On 25/09/2026 16:45, Phillip Wood wrote:
-> >
-> > I think that sounds reasonable, we can delete the index lines from the
-> > patch output with sed to make it easier to compare them.
->
-> I just opened the test file and realized it has a diff_cmp() function to
-> compare diffs ignoring the index lines
->
-> Thanks
->
-> Phillip
+Hi all,
 
-Doh!
+This small patch series fixes a bug reported by Eli Barzilay in the
+interaction between autostashing, staged index entries, and
+stash.index=true.
 
-On the other hand, I don't think we need it. Those lines are showing
-blob IDs, which would be stable in our case (fixed hash algorithm over
-fixed contents), and we don't make the test dependent on the actual
-IDs?
+The first patch is an incidental cleanup, and the second re-arranges one
+line to make the change easier. The third and fourth add missing test
+coverage (which catch breakages from prior incorrect rounds of this
+series), while the last holds the interesting bits.
 
---=20
-D. Ben Knoble
+Changes in v3:
+
+• Change conflict label for current index
+• Fix memory leak of merge_result
+• Fix order of trees to make the correct merge (cherry-pick)
+    • New test (3/5) to validate this
+• Fix test in 4/5 to assert more details of expected state
+
+Changes in v2:
+
+• Do give branch labels for the incore merge, although they are never
+  seen (and clarify commit message as a result, also keeping the
+  merge-ort asserts). Phillip was right: without those, we do segfault
+  on conflicts.
+• Use the ui merge options to keep the same diff algorithm.
+• Use merge_finalize instead of clear_merge_options, and reuse the
+  options between merge calls if they are already initialized.
+• Add a new 2/4 to simplify merge options initialization.
+• Add a new 3/4 with a test case for conflicted index merges.
+
+v1: <cover.1789853192.git.ben.knoble@gmail.com>
+v2: <cover.1790168285.git.ben.knoble@gmail.com>
+
+[1/5] builtin/stash: remove unused header
+[2/5] stash: prepare merge options earlier
+[3/5] t3903: test stash --index merges
+[4/5] t3903: test failed "stash apply --index"
+[5/5] builtin/stash: merge index in-core
+
+ builtin/stash.c  | 85 +++++++++++-------------------------------------
+ t/t3903-stash.sh | 42 ++++++++++++++++++++++++
+ t/t7600-merge.sh |  9 +++++
+ 3 files changed, 70 insertions(+), 66 deletions(-)
+
+Diff-intervalle contre v2 :
+1:  b6798c8a25 = 1:  6a165c4df4 builtin/stash: remove unused header
+2:  1e2343c7fc = 2:  d9a9e18f3a stash: prepare merge options earlier
+-:  ---------- > 3:  8b5ea5e6f4 t3903: test stash --index merges
+3:  5bd4b78cac ! 4:  d39e16905d t: test failed "stash apply --index"
+    @@ Metadata
+     Author: D. Ben Knoble <ben.knoble@gmail.com>
+     
+      ## Commit message ##
+    -    t: test failed "stash apply --index"
+    +    t3903: test failed "stash apply --index"
+     
+         The next commit will refactor index handling for applied stashes, so
+         let's make sure we cover conflicted index merging, too.
+     
+    +    Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+    +
+      ## t/t3903-stash.sh ##
+     @@ t/t3903-stash.sh: setup_stash() {
+    - 	test_cmp expect actual
+    + 	test_cmp expect file
+      '
+      
+     +test_expect_success 'stash apply --index leaves everything untouched on failure' '
+    @@ t/t3903-stash.sh: setup_stash() {
+     +	echo unrelated >file &&
+     +	echo unrelated >another-file &&
+     +	git add another-file &&
+    -+	git diff-files >expect &&
+    -+
+     +	echo conflict >other-file &&
+     +	git add other-file &&
+    ++	git diff-files -p >expect &&
+    ++	git diff-index --cached HEAD >expect-index &&
+    ++
+     +	test_must_fail git stash apply --index 2>err &&
+     +	test_grep "conflicts in index. Try without --index" err &&
+    -+	git diff-files >actual &&
+    -+	test_cmp expect actual
+    ++	git diff-files -p >actual &&
+    ++	test_cmp expect actual &&
+    ++	git diff-index --cached HEAD >actual-index &&
+    ++	test_cmp expect-index actual-index
+     +'
+     +
+      test_expect_success 'stash -k' '
+4:  e49936ee12 ! 5:  fde7fb7988 builtin/stash: merge index in-core
+    @@ Commit message
+     
+         Reported-by: Eli Barzilay <eli@barzilay.org>
+         Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+    +    Helped-by: Junio C Hamano <gitster@pobox.com>
+     
+      ## builtin/stash.c ##
+     @@ builtin/stash.c: static int create_index_from_tree(const struct object_id *tree_id,
+    @@ builtin/stash.c: static enum stash_apply_result do_apply_stash(const char *prefi
+     -				return error(_("could not generate diff %s^!."),
+     -					     oid_to_hex(&info->w_commit));
+     -			}
+    -+			o.branch1 = "Upstream index";
+    ++			o.branch1 = "Current index";
+     +			o.branch2 = "Stashed index changes";
+     +			o.ancestor = "Stash base";
+      
+    @@ builtin/stash.c: static enum stash_apply_result do_apply_stash(const char *prefi
+     +			merge = lookup_tree(o.repo, &info->i_tree);
+     +			merge_base = lookup_tree(o.repo, &info->b_tree);
+     +
+    -+			merge_incore_nonrecursive(&o, head, merge, merge_base,
+    ++			merge_incore_nonrecursive(&o, merge_base, head, merge,
+     +						  &result);
+     +
+    ++			oidcpy(&index_tree, &result.tree->object.oid);
+    ++			merge_finalize(&o, &result);
+    ++
+     +			if (!result.clean)
+      				return error(_("conflicts in index. "
+      					       "Try without --index."));
+    - 
+    +-
+     -			discard_index(the_repository->index);
+     -			repo_read_index(the_repository);
+     -			if (write_index_as_tree(&index_tree, the_repository->index,
+    @@ builtin/stash.c: static enum stash_apply_result do_apply_stash(const char *prefi
+     -			reset_head();
+     -			discard_index(the_repository->index);
+     -			repo_read_index(the_repository);
+    -+			oidcpy(&index_tree, &result.tree->object.oid);
+    -+			merge_finalize(&o, &result);
+      		}
+      	}
+      
+
+base-commit: d38352cd43ab9745686d697872408bc3249a153f
+-- 
+2.56.0.rc1.315.gc6ed9934b7.dirty
+
