@@ -1,195 +1,134 @@
-Received: from mail-dy2-f42.google.com (mail-dy2-f42.google.com [74.125.229.42])
+Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F009039FCCA
-	for <git@vger.kernel.org>; Sun, 27 Sep 2026 13:01:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BF424C06A
+	for <git@vger.kernel.org>; Sun, 27 Sep 2026 13:48:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790514113; cv=none; b=j0Y5EpjoPjZmulEl9/+J5iUZkNIn/ofusj0okSKWmU+P3QBAgoBSPB4DBUaTeAFuvNXIcqhVPljsK2V17QKabVJeGBBk5WEru0VkOW0mp0AT2eJRpeakQydeC9sVigLFx49SaMQZ78UFxKrJBodPAp3i09zUtJzP7GA8bG76PoE=
+	t=1790516916; cv=none; b=jO57NDlWTTb2MTEd92z+eRTpIvQiCFxhS9F5QnnT6C7YBjXqJUy6UnJLTwuw6qKtT/N2e4b8vXxxTDeK10sH/r7KVe3OeXzCbgN7KpTr48X/xRobDi924BO1IHbi8yKCdDPbaJ9N0GX1fX6QO2iGml94kcyn67Z04JOxZpcjAds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790514113; c=relaxed/simple;
-	bh=2EGzjheQgxuMFJ60mVJsBmqHIjsWwGYMQJibbEsHo+o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=I3okxRYLXYjpieYBoLgxpug+rKF008/863gvMXc/VWr0CHeC8wU7oYGvZj6cEZeWGdz/dQP0nyIuzDG7I29JCjWV2N9nVbv8LVth9wPManBJCDJcZMkv7Go72NxSpHp0Z5JXNpu51fVAhCsbTuyN+8lBvtksjjJ9FoAd4OqTqa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=imtpnXp8; arc=none smtp.client-ip=74.125.229.42
+	s=arc-20240116; t=1790516916; c=relaxed/simple;
+	bh=AswCw57gHN29jjUehD+IwzP/9Pej7/AGvxkb/p1thqc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bKiANt4jiM2jLb0gqyjbVBmSn4SCtYW2syEMWEYThfSeNJ6EJkA8lO+0NyH0soo13WrIbSJrlpQk84cbPhJ4eYofA6X/2HkHmDySx+O64+HC8TtuO2UAGtjnSL3YhkVqHMurDnKqlw0XgbNPxiEFtHaEQeiAi9/ZsrOC/Ig6MsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UOU7TPKD; arc=none smtp.client-ip=74.125.225.76
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="imtpnXp8"
-Received: by mail-dy2-f42.google.com with SMTP id 5a478bee46e88-341d5303884so1391678eec.3
-        for <git@vger.kernel.org>; Sun, 27 Sep 2026 06:01:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UOU7TPKD"
+Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-4843c3ea1f6so1177720f8f.0
+        for <git@vger.kernel.org>; Sun, 27 Sep 2026 06:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790514111; x=1791118911; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=AQXoW0lBLbtEjX0FVJhb5lRkyZriWMJ4HMWUFuwKl0w=;
-        b=imtpnXp8umEq+KKoDCd1SGQ00KCGlkAPlTgjjKIrT+DVwtZLiXGO/zcNMNnd0qVfSb
-         4QKhxcJ3duR7nZ0X6y8TOCP5JCGtlFvyCPtFW8GkBIB7XgUuTrSI8bnQ84xDo8ZGm1T1
-         UeqlgQFXugTX3ud1WVZvcdhgc13LO/L+ca0zVF+5Ka/NKSIkkdmTmszHHr8qC5A4pPgi
-         Fj/uWAcD7027G/d209GgcAu09njLGiH8TSLUttyapc7oWe7DGNeXF34LzXVdOTmb9/+k
-         sU89qy5rF0vB5ydKNHG8BZ8vN6W0JxIQShAqPVyZmTTHf5Vlk0atf0PyPbYC/NnDm9GG
-         BKrw==
+        d=gmail.com; s=20251104; t=1790516913; x=1791121713; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=SS6vuTrFYpsL3J3NUXtIIYaqW2SMn42oLgAZBXJoxVg=;
+        b=UOU7TPKDy1Qb6szxdI0dyNNu+K6kqR0vtRzEFdHUx0sfMt/w/0/5XsRuJC3lQloJ4/
+         5Jclg6WLNSc3t1hPqMBxOXqkUlzPAnGCouIsgP60yR3uC/r6h6g1tu0x6Zwy1J+vXCBf
+         4zNR1MtQyjGYVI40o6TZ0Ch8G992wHAlNIts62W/4pitrS9/swH3ffoiNL0fNAhXOX0w
+         Gap4g3Etmz99vA5C1R65lSsGCpj8DeDBg60Sf0DSaCUSCsv7gWB4dW4wFO+jxsnyUJFz
+         KHX98DRwuW81nuQUqt4QKbAik8IPvXsARP4OyNKRbb23F75q4V/Czy7H2h9tiR1mkW0m
+         +snw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790514111; x=1791118911;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=AQXoW0lBLbtEjX0FVJhb5lRkyZriWMJ4HMWUFuwKl0w=;
-        b=Bvz9Nl3Q3GRsL+2rjH89wMNPxwuf+SKT17uWZ/I2IV0fQKkiiaFD4NwfOSQqaGDHIh
-         QSIFusYRcla7qGD3jIN9ImXf5AugWXoxLOjDtLJn9Gcn2SKqEqRapuONb+qzwnpSeP54
-         1uX+0qxVoyO0KO5j8ilulte/M2OUauCuNI5F+pLNeFO7u7r66VrN2qxM0Kb3JQQAZZCP
-         f6aB7JX47ykQJKD42tm0DMehL9hb0JY4vE4xTqTbzJ248bC/8nUdkxQA6qLNhW9xTGvs
-         mqS+I+W5f8D5Es8c8NgxPePwCQYS9jUvxuN0oiyLupbNk/FuvYcTQ9q5Y7jLJxtsR3gC
-         fbew==
-X-Forwarded-Encrypted: i=1; AKwUvBzpuIVwhrrBotSaI5mWDaAJQz/fSCI371/f9ZCGufp8UAJJn0fU2M48tzCIjMeuboZOgmY=@vger.kernel.org
-X-Gm-Message-State: AFq9FYI/53p3BWZYbT1jhPoey6aj3geYq3DpBBtaIL2eiLeGjJtvJX4K
-	kcP5r1TnPo3qVsCFj7SW9OtdzTBVyVDyUwV0tyMDfS5WaH/UaO0Ohy9X
-X-Gm-Gg: AYBFou3oaI3oeA5XGLsarjR7cFPg16mO8MG+rR+XI64ea/HgCILDbdWAL66UyOkR2PN
-	iuK+2zTuGwqx4FWV+LE0nd+0F+uvPcacAglVEYcQsd/lOaTQ7VAVO8agR7rWvjRtjSl0vzTVLAf
-	pmtUIBuO/BzcCJ8frA1pwAMdPV56aAxotWGkXlQlg/7TJuSbfg1VlnXGl+WVL5r/g7RFBQamIGq
-	DglmZg4rW7bVuKoI0P7VMQmUTCtTqlYOQqYbDuNGxaKH+URcGQFWSN6nOtk/Cd78l8Qgw+hUo/9
-	xp0XZ2SiPJD4a6rySNiK3jJG8diw0ebn4a8oM7/AHXq+SpgSQXZijY5y5st7mQBzV4O9Jkeokf9
-	bLqXz8yoSfYTpscDg62Z3iRyRD7uOMBzLNBfacUR6UO1P4NxhbcLpT9EBdqoilhgHapa9XC/HyK
-	IPLF3Q033k+GECYDxu8tVmqoyV93dke7z9dLQUXoROh0UUxBT0HylQ8TxTNvwxrDShTNz14Qk8O
-	6Myr+NZjg8ciTgXNiqXG0vtao7CMd8A6kYz/kpyAsTTGdZOW8sVXltNRMiyO5kDprbJIC6oPXkv
-	9ikBeL3+edx1/DuqjxBr4doQxjOr7C7Ifv18oJYDShg5UXNaKe+XYmazsA==
-X-Received: by 2002:a05:7301:687:b0:33e:64bb:e5d1 with SMTP id 5a478bee46e88-3427265e212mr9612479eec.34.1790514110774;
-        Sun, 27 Sep 2026 06:01:50 -0700 (PDT)
-Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-341460f5166sm22687306eec.29.2026.09.27.06.01.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Sep 2026 06:01:49 -0700 (PDT)
-From: Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	=?UTF-8?q?St=C3=A9fan=20Driaan=20Turvey?= <stefanturvey1912@gmail.com>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Mikel Forcada <mikel.forcada@gmail.com>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	=?UTF-8?q?Aindri=C3=BA=20Mac=20Giolla=20Eoin?= <aindriu80@gmail.com>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Daniel Pereira <danielmaraboo@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Emir SARI <bitigchi@me.com>,
-	Arkadii Yakovets <ark@cho.red>,
-	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
-	=?UTF-8?q?=E4=BE=9D=E4=BA=91?= <lilydjwg@gmail.com>,
-	Yi-Jyun Pan <pan93412@gmail.com>,
-	Git List <git@vger.kernel.org>
-Subject: [GIT PULL] l10n updates for Git 2.56.0
-Date: Sun, 27 Sep 2026 21:01:41 +0800
-Message-ID: <20260927130147.45096-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.51.0.rc2
+        d=1e100.net; s=20260707; t=1790516913; x=1791121713;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=SS6vuTrFYpsL3J3NUXtIIYaqW2SMn42oLgAZBXJoxVg=;
+        b=cE/IDxuSMP5DgM7o4qyGhCyk2ORcYxJq/ZzpRk0UpHyRnBFGQYqdZF81wvivt07CRM
+         H5mP7Ct48XbivQrKczHMucbVUA3w+aNK3e1ofSEBW84y/1lSIrUFb5exsE7hcSQLVLx6
+         XLKfOgT8MwZ69Xh74TVJeUWnY5hGH6xV8M6ZWJeYhXgQqu3FrhlLmp10aOHcZPzKzHP4
+         Yw/lVAzob476ZIip6z7FWN1L/Ui7h4QnCLjIa9qitNLXmrpyRn1/oEFnWK++4OkXagDM
+         eBHE6Lf+WIX8XAvP48uWur/RtbgogcDIKLBqfVfqG0tUOXI3Z1TvMXQOZ1xLPYmiqyCe
+         N1rg==
+X-Forwarded-Encrypted: i=1; AKwUvBxx6EcXOQIMY8efn9tfs1NCjSryNmMdys6JFKR3yqzxoLgsIC9vb9NNfqTuucVPab+7RYk=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKpbzGG0UBpUbA8EtwwAsmIU11b90a6dTRlvlp5I1jcopIzM7Ym
+	sLaZ3HDHS1z9zp/i8BwJoRzTKeTXckwv6h3VeVIm2HbcAN7aCT/se8a6p5HcsAHV
+X-Gm-Gg: AYBFou3uF3G9J0qtJbD9JyEyQdWd5VqZsVpkSLfCBm9DIVtvotOf6mhsemmDZDoCahb
+	fTXfCvDj7nZp5OqiH9S6Cl6dKBp3nr+KtgH2QM8mfd0RA9sUpJ3Xq8S7aXxAvrnV+tt1s55im6+
+	osx2hpV+GWKEo0A6SgRMfFno8dypSMfSbaUp9JuvT3+I1ry6VXD6IdY8ZOV6Es/SKkdO1JLR8fb
+	Fo3tsrK38PxX5+JuYkxf15gh0EHNA0Wc/eZ0huAr2dBkdV9RQx2WfslJa0nI92qgj3IIZx0BG3G
+	51Ra0w93XZZezc2g8CYdfExqRFQ8E16mSrgiQb020xXhpr3QvfABPxfFQUrGPTqB4tqRBgbzMRO
+	e0iIds832jzr86EwMHU975b1UOBzcmIUVUXS3azAh5UTyyD1+SYhdFDPkWZVDpCBWTMrPjVzYzQ
+	ead3ujhE+n8Ryu9J/DljViGGEst8Oax2+Dm+4SvWLiU1/RQDXSKZdnUMgy12dhCZPhaxO1fY4nI
+	5h7N7kUvAIu9PjMIORC9IrjDvyosvRqetE6LbRTzCcFY7BKjtNz71w=
+X-Received: by 2002:a5d:6f03:0:b0:486:f767:8be0 with SMTP id ffacd0b85a97d-4887165e9edmr19106950f8f.12.1790516913292;
+        Sun, 27 Sep 2026 06:48:33 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4887a30c43asm21654786f8f.3.2026.09.27.06.48.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 27 Sep 2026 06:48:32 -0700 (PDT)
+Message-ID: <7ccc822a-6bd0-44e2-8d6b-ca525d729207@gmail.com>
+Date: Sun, 27 Sep 2026 14:48:31 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Changing default config values (was Re: What will come after Git
+ 2.56?)
+To: Junio C Hamano <gitster@pobox.com>,
+ Harald Nordgren <haraldnordgren@gmail.com>
+Cc: ps@pks.im, git@vger.kernel.org, sandals@crustytoothpaste.net,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Emily Shaffer <emilyshaffer@google.com>, Jeff King <peff@peff.net>
+References: <ap50kgyenpRrsqln@pks.im>
+ <20260924183523.53201-1-haraldnordgren@gmail.com>
+ <xmqqpky21mh6.fsf@gitster.g>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqpky21mh6.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Junio,
+On 24/09/2026 20:24, Junio C Hamano wrote:
+> Harald Nordgren <haraldnordgren@gmail.com> writes:
+> 
+>> I have a list of breaking changes that I would like to introduce, I was hoping
+>> they could be considered before 3.0 is out -- otherwise I fear I have to wait
+>> another 10 years for 4.0, I would like to change the default values of these
+>> config values:
+> 
+> I do not know how long it will be before 4.0, but if you do not have
+> any draft code on the list or even design presented before this
+> message, it is way too late for 3.0.  No, these won't be part of it.
+> 
+> But some may not even qualify as "breaking changes", so after 3.0,
+> some of them may not have to wait until 4.0 happens.
 
-Please pull the following l10n updates for Git 2.56.0.
+A couple of thoughts about changing the default values for config variables:
 
-This round adds two new languages: Afrikaans (af) and Portuguese -
-Brazil (pt_BR). It also updates Catalan, French, Irish, Indonesian,
-Swedish, Turkish, Ukrainian, and Simplified Chinese, restores two
-translations reintroduced by the upstream revert of
-en/no-amend-during-conflicts, and refreshes po/AGENTS.md for the
-localization workflow.
+For ui related config values such as diff.algorithm, diff.colorWords, 
+commit.verbose, merge.conflictStyle etc. where their effect is largely 
+cosmetic and the potential negative impact of the value changing is 
+limited, I wonder if we should be more willing to take a 
+consequentialist approach and allow changes where the net benefit 
+outweighs any potential downside. Currently we tend to have a 
+deontological approach that views any negative effect on even a small 
+number of current users as inherently bad. A consequentialist approach 
+would allow us more flexibility to change defaults, though we'd need 
+some way to try and gauge the relative costs and benefits.
 
-The following changes since commit 0f8e75abebff0877cae681a3d5ff31ac47f54220:
+One way we could change the default values of a set of config variables 
+is to have a config variable, say "core.defaults", that determines the 
+default values of the config variables we'd like to change. That would 
+allow us to have a set of "modern defaults" that can evolve over time 
+and can be easily enabled or disabled (a bit like 
+"feature.experimental"). We may want to extend the concept slightly so 
+that different values for "core.defaults" tune the defaults for 
+different workflows; for example having a setting that implies 
+"push.default=current" and "status.compareBranches=@{upstream} @{push}" 
+for triangular workflows. If we take the approach suggested above, the 
+modern defaults could be enabled by default and it would be easy for 
+users to opt-out by setting a single config variable.
 
-  Revert "Merge branch 'en/no-amend-during-conflicts'" (2026-09-23 11:18:51 -0700)
+Thanks
 
-are available in the Git repository at:
+Phillip
 
-  git@github.com:git-l10n/git-po.git tags/l10n-2.56.0-v1
-
-for you to fetch changes up to 14a748f8522dd86bb0d42f435bab8fd665bb864b:
-
-  l10n: af: fix review comments (2026-09-27 20:41:50 +0800)
-
-----------------------------------------------------------------
-l10n-2.56.0-v1
------BEGIN PGP SIGNATURE-----
-
-iQJPBAABCAA5FiEE37vMEzKDqYvVxs51k24VDd1FMtUFAmq5EJkbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMCwzAAoJEJNuFQ3dRTLVNygQAKBKbnyl5/UZGGhbkWTU
-p86/q4gBVmI+icmE8Zx4RfP3KTjTNP5ajPVgF92MUt1WjK4r6lmNQT9GbQa/BfP0
-L2ZX5z2irN1GwnrUuWTD4/gSlO3vj2B3yFZPjMg4EYK9ba0PwSew5X5lbyYM67O5
-r4roOLO3NkLY/nrLMfxMqrWJGfRt+XP7yqvLwdpc6Nft/SrhM4WerTxXKkW0nqcx
-0EHqgx5a201UX434qGKKCUOpH+oYZoZ6IldstzDsd46GaWEKoIAiUy52A/UWF+wN
-+rWNBB9VDspb4rwVeJlY4mNbHChfkycWFXt+XTjU/+f7zAMCsEHK64AR/yWBjq7/
-6NbHZnOI1jh0sARewzJT7EVEzhk+yC1qTnqllkSp3vijemVJ2KU8VmBJPnk8lIPQ
-rHCbmuAdkBxtDXNogSN9WimTF0V9tXcEf7VG6n2T0xFqM71mvTQmZ+MghD0Vre+L
-MQotkqmpxk+hkTi395M/08tOTR0aNbrMzKFe6hvxd1WL4BM8FUwDQSd2nY20udlY
-nZlIuxrGfgKvdxI+/GtZekzwOiKVk0MfB3MJfrfLtd0MHGo0eGh4PaawH/oR+1ak
-u2abcrut88q29xi8nu0Fq0e8zJojUoZKRO/AWhDXoIVNM2yK7vHNJbfxZGeT6IZ6
-wAsUsuLZBgL9mXvsXDl5F25e
-=rheU
------END PGP SIGNATURE-----
-
-----------------------------------------------------------------
-Aindriú Mac Giolla Eoin (1):
-      l10n: ga.po: update for Git 2.56
-
-Arkadii Yakovets (1):
-      l10n: uk: add 2.56 translation
-
-Bagas Sanjaya (1):
-      l10n: po-id for 2.56
-
-Daniel Pereira (1):
-      l10n: pt_BR: add Brazilian Portuguese translation
-
-Emir SARI (1):
-      l10n: tr: Update Turkish translations
-
-Jean-Noël Avila (1):
-      l10n: fr: update translation for git 2.56.0
-
-Jiang Xin (6):
-      l10n: AGENTS.md: fix counter fallbacks
-      l10n: AGENTS.md: require git-po-helper >= 0.9.1
-      l10n: AGENTS.md: count PO entries with git-po-helper stat -c
-      l10n: AGENTS.md: use JSON intermediates in workflow
-      l10n: AGENTS.md: zsh-safe review result cleanup
-      l10n: restore translations after upstream revert
-
-Mikel Forcada (1):
-      l10n: Update Catalan Translation
-
-Peter Krefting (1):
-      l10n: sv.po: Update Swedish translation
-
-Stéfan Driaan Turvey (2):
-      l10n: af: add Afrikaans translation
-      l10n: af: fix review comments
-
-lilydjwg (2):
-      l10n: zh_CN: updated translation for 2.56
-      l10n: zh_CN: adopt review suggestions
-
- po/AGENTS.md |   214 +-
- po/TEAMS     |    10 +-
- po/af.po     | 26353 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- po/ca.po     |  2497 ++++--
- po/fr.po     |  1436 +++-
- po/ga.po     |  1125 ++-
- po/id.po     |  1374 ++-
- po/pt_BR.po  | 26593 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- po/sv.po     |  1101 ++-
- po/tr.po     |  1200 ++-
- po/uk.po     |  1097 ++-
- po/zh_CN.po  |  1317 ++-
- 12 files changed, 61417 insertions(+), 2900 deletions(-)
- create mode 100644 po/af.po
- create mode 100644 po/pt_BR.po
-
---
-Jiang Xin
