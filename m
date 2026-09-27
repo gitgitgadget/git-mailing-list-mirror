@@ -1,73 +1,73 @@
-Received: from mail-dy2-f42.google.com (mail-dy2-f42.google.com [74.125.229.42])
+Received: from mail-dy2-f41.google.com (mail-dy2-f41.google.com [74.125.229.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C5B3822A5
-	for <git@vger.kernel.org>; Sun, 27 Sep 2026 11:46:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B552E2663
+	for <git@vger.kernel.org>; Sun, 27 Sep 2026 11:47:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790509603; cv=none; b=iQtLK2g+q486xqNGNOSNqBdMoy149Zwz4IOWMg/8wk8/8Tx4M86N23D+KjBPbW4giEik1aK+LaN6i3lG7SjDWeFAVqNsPACGSqBHfqcCJH5eNswxaFzYD0cLOZmhJDX2kiHbe/SMgXwThmSI8NoQydSkTPdWcEL7pk89Ys4yGac=
+	t=1790509631; cv=none; b=BgRbUzNPa1vIkXZ3wAptOEpOG1VtB0iUDns1Gc2alrlsDKSIvoSLru7kZ/cybsnk3W0Co0QvrZ1fWVfy9Qzsn/6O/xVeCOTU6pPd99nomuaUtUsaTNGzzxsJzsvIjmX3n2spIn2cUTExlPdvVlo3lt4jdxqrR/rU2/P9rZqp3aY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790509603; c=relaxed/simple;
-	bh=rISTUhZ1pKouZIkrrg6bTCMT4MRz5GgJMw5FluTJMJ4=;
+	s=arc-20240116; t=1790509631; c=relaxed/simple;
+	bh=qROKwjCj6tYvMIRBAD3EvcpnYPUISNVtqNtyqTk/42o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eSoa6/XD6rys2XjQ8fbywA6+5Uu+iNUfx27SMKksISeOQaixCXiK0ui1O0DQ4Hn3ggF518JhkYLKUE1clTMZEphkgI0UNuLfANzUaGNikEc5TsUgA/F8ASLXBohU6I2gBOIR67tvcBpLEMbH7NBC8Rp2Sq8FERgG20be+Wa72fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iTbC6ryz; arc=none smtp.client-ip=74.125.229.42
+	 MIME-Version; b=qph3qF0nhtwYKgP9nE/3kjMcAjCBrcfqVFkdTJadk0e0hE6IOm/nIt7Lkak7Y9S7CMdfosSWiVlY8bAdMxVh23bVoIuWJskNP0ahnfFuWFPhwxWX5Gahl67AGQpsZ0ZaOiBqkfEPhK6FNkMBuc2Bz7QVUHpxPBqpqZcBTgvQbrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZTi8AM5L; arc=none smtp.client-ip=74.125.229.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iTbC6ryz"
-Received: by mail-dy2-f42.google.com with SMTP id 5a478bee46e88-342773d94a7so1022790eec.0
-        for <git@vger.kernel.org>; Sun, 27 Sep 2026 04:46:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZTi8AM5L"
+Received: by mail-dy2-f41.google.com with SMTP id 5a478bee46e88-34346932d93so665407eec.3
+        for <git@vger.kernel.org>; Sun, 27 Sep 2026 04:47:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790509601; x=1791114401; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790509629; x=1791114429; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=2H7nwgCOG6FPN2ii30hPl6qeB5xHqOhLFRvH4rDKYV4=;
-        b=iTbC6ryzW1w6NUOi0V2VcUa+LEEq5qAt8UTuVICZHEIxkYvCCM12a+1LShlf03YIl5
-         PwYSb5pv43QMLMeqRcA3zJMZ9C2mmIEXtuV2fm0frOA4tPxdb+a3pRwVq+84y9SLSr1B
-         KeDjqIRckYawVLvqMThLdj01Gpo8SQlJdLuwN9yhjlVpbJ44yKpNJAgGnwuwc7DnOrHm
-         fhtAJM4JF/ntfOGD4YmmH0SOLlOoEeF19DewX5PJjN5PpegVHP8pgjZqDwGx8gftr3TJ
-         QSKfybbdc67p9ygyeDZrYdqKocJ13Ds6PRV45Xvmq1Vxc+EJa78HRxHPkBK1O+vrHHB3
-         qhEw==
+        bh=67HH8lsy1LPbQuI90X+YqJ0NB0Sr3nBThr15tMDRLsE=;
+        b=ZTi8AM5LwytAr+U35RD9khM0uDhEcwYs/FBN/0BvLT86wtZwzUmrYYPBDB3GZ0wGeE
+         UbQXPva0WRNu/a9esWCZwZlxcdZ9J3ZnV6tNmsuWrn8PsFIs3D96XmMFi9FSwF/GwYy8
+         gDgLj458ytcfV6h2FiDwOVa4PAJw62cbKu3AuA9yY4AtwKFKPda0xv+kPuyX2n8SIbhE
+         FvQ28KVb5Stpwx7CbIbSn1mcLWqYN57DuRxWv4LwDyXYeizZML7+9Eq++gLhkBdyM+qK
+         BqtVy5BWV9wz6pLi/z94dFWSALCA7SQos8cBVuKqQatVKrXzDeMM8JrhDUuPLndLl2ZR
+         Pc8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790509601; x=1791114401;
+        d=1e100.net; s=20260707; t=1790509629; x=1791114429;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=2H7nwgCOG6FPN2ii30hPl6qeB5xHqOhLFRvH4rDKYV4=;
-        b=SeSLahuEXmjiM/PjP9zI0QgZqIv33n2txXnu7OR0vWQoyylsv2EgAsJ5KMf9lVjJGD
-         f9h2bG6eqhS79lFpy8F7rjntzAgVMu2XiSdpeTuTwCUudEJ69ZKe8h7R9nHkiEUxb25Y
-         okOGYywwaXT6mIILHG8szuNOVTWsQsO/5unpGVIwtQM5SHc9XgHciq+I04AuqpgrQnDc
-         7vW5tPQ2gHMTzxjhHweZt4Cj1FzSq/99hCMGJVwtxxOR06UIe/DTwRjOksPQYODKZDry
-         yFLAFfDrMcfQgOx1Za6DPqVcbVI7P136eikF+s8DOqbD3PhYlv5/jF033h82r18Pu4/W
-         XWPg==
-X-Gm-Message-State: AFuF++kZDqI/A2SIW0upqk5bUHY/Hh4mdrCx7oRGIUcKmZIrLpzCz4y2
-	s7rWss5P0bd0JpXq4IKbcZOY85slQXxJYJOgDBE3ji0igaD6mAbmeF38
-X-Gm-Gg: AYBFou38vrbcY8iUm7fVdd67c3CQ6vyTfqqUgsp6nxEFQFOwID2sM1oCe7jLyuWGRE1
-	wFIyHbaX1D1pofumTe1LQHH93zDS+Foc8s3yTrR2HmOHTfAi+35m2O1NRSZS1/YFnRTIpH6XWJV
-	PjV25decWhrZZ5t2NDwLJPfiCP66HNP1nvW43WuxRYKRT8KWyiT1G0Cp/VTNtmAh8S/3hzQ/1bH
-	zroBdlexqS8UZWhMr/y3aCpOZ4EzlTpAqpWSr7ljGCRYxRh1ocLk2xupRW+6LI4DP4YLS4daLIj
-	yIGhqVxH7tzML2QUfcQ+IQdZ7dguOf9e0SMxjHQowQLL1/jTKXC3UE6mMD5oCc+rxq4zIcHtk/D
-	PiYUJ04MfWP68/57Tmvh8XMjQOUpmqBVyGUb/WdvzuCqf5b3LhlPxnqRvDbwpIYTfiBCeMct2mU
-	dZ/7WF3vLqg4/zlyXBwwG4sURKFR3eoUw6+GAsolF61ad9tGH3ApDDr7Luwi2s/R5lH9sF4Udts
-	nKSd8Iz9HwC/+TJwFnsFoD6LJxBvxZrYK25/6KDfJ7OtCKhlmcTiVCSfzWrlVdeEcp2JFiwLGdA
-	3JhS
-X-Received: by 2002:a05:701b:2042:10b0:143:298e:913b with SMTP id a92af1059eb24-146d096b3b9mr5779179c88.45.1790509601220;
-        Sun, 27 Sep 2026 04:46:41 -0700 (PDT)
+        bh=67HH8lsy1LPbQuI90X+YqJ0NB0Sr3nBThr15tMDRLsE=;
+        b=2CsSLt/aFqTTXTg189LJPL7w0VS3MzKLSKg/KG5ogOIXvO7lPvBOz1E0+vc+oOq7of
+         WhFdUJz+Cs0BDrjfZI4+RaV9lOY5QP8YLgEDOopfRfKCJF+FS9Y2+6NT+OHVFsEwwr7Y
+         RtiiP0/lVXWOldDpt1bZbUrGFGrYgfS0L868m1vkLmWkKmYelG1UA9mJ870W1aTcjLWW
+         s6otcJo8likOThqShS8fbWfUTNkyiGsOUb04hl92QfM7mn5EMfcUxc8ujwV0IYASdMoS
+         t0UgjePpRmxYm5wpMbqa9q0c1WKEFtKsdn5IpUiWY/WUEDkpKedcWZAamGP1ejAYZcWV
+         DaKA==
+X-Gm-Message-State: AFuF++nP6LoEESP/BfE8PX75j1QcwNorAyP/7moBZD1udLUePqMfkG0w
+	Y9QJRo7CvUmzPPMnmH4K2T05npGrfIYwzQuc2xmCmAbq08qdRL8VqYLM
+X-Gm-Gg: AYBFou3ZQzS2NY+B3Hi0MlGwIOXCoz3GDtU2zojGvdpX0Zb/wI3lbLINBJ/e+22+5EV
+	xCfs5I0iMQIyioUFU/VhVXGUpyAuaw6Zei5gZFnZiNAGRW7QB+iqfOXRwr27F8jtqfuL/pGuNyW
+	kYx+W1BE4FfBiZAoC4Yyqvo3rJfyN4JrK8symT+H4MfCJJNjWitLCY5WBorEu/iwToXvbg0v5H2
+	SLXOLuYbsfN31S8QBac6k2n8DqpeFgkwr9/2/ZxUVSn9DBjywixjYij/McS0yM43cK1VGyYteAL
+	Ljr3yz1w5PZlwe3CNVzATtm9nrkITjYZ2MWOzPbDy5/wfvBd3DK0dKPRAVZ/V48c5oEzglgMuKZ
+	080VJY9CfvcFURRM/re6BF+NX9oXowarfE4aTIHoPBbthrJhp8V0Lrp4UXBT5tkT2+M9oUETF0v
+	WgSRNRyGt+9IPykhAPwGZwcXXVUeYKDxxbjd3wNRmr6V6pSRysz7A48z0Gfjw5Q4n6wldblmHyr
+	Gp+wKQT86fKmhF7kEytidIie63qvGtDHBOMZcAGI4V9GPJDVQpGacd3204ccusFGe31GTyiCqOo
+	1AT5
+X-Received: by 2002:a05:7022:5f05:b0:144:fbc6:59dd with SMTP id a92af1059eb24-146d0871d65mr5262508c88.45.1790509629123;
+        Sun, 27 Sep 2026 04:47:09 -0700 (PDT)
 Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-145a7318afcsm17450424c88.0.2026.09.27.04.46.38
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-145a7318afcsm17450424c88.0.2026.09.27.04.47.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Sep 2026 04:46:40 -0700 (PDT)
+        Sun, 27 Sep 2026 04:47:08 -0700 (PDT)
 From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 To: jayatheerthkulkarni2005@gmail.com
 Cc: git@vger.kernel.org,
 	jltobler@gmail.com,
 	lucasseikioshiro@gmail.com,
 	gitster@pobox.com
-Subject: [GSoC Patch v7 7/8] repo: add path.git-prefix
-Date: Sun, 27 Sep 2026 17:14:19 +0530
-Message-ID: <20260927114420.59724-8-jayatheerthkulkarni2005@gmail.com>
+Subject: [GSoC Patch v7 8/8] repo: add path.cdup
+Date: Sun, 27 Sep 2026 17:14:20 +0530
+Message-ID: <20260927114420.59724-9-jayatheerthkulkarni2005@gmail.com>
 X-Mailer: git-send-email 2.56.0-rc2
 In-Reply-To: <20260927114420.59724-1-jayatheerthkulkarni2005@gmail.com>
 References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
@@ -80,13 +80,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Scripts sometimes need the path from the repository's working tree root
-to the current working directory. While this information can be derived
-through existing Git commands, `git repo info` does not currently expose
-it as a scriptable key.
+Scripts sometimes need the relative path from the current working
+directory to the repository's working tree root (cdup). While this
+information can be retrieved through `git rev-parse --show-cdup`,
+`git repo info` does not currently expose it as a scriptable key.
 
-Introduce the `path.git-prefix` key to `git repo info`. The key returns
-the path from the working tree root to the current working directory,
+Introduce the `path.cdup` key to `git repo info`. The key returns the
+path from the current working directory to the root of the working tree,
 returning the empty string when invoked from the working tree root.
 
 Mentored-by: Justin Tobler <jltobler@gmail.com>
@@ -94,89 +94,118 @@ Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 ---
  Documentation/git-repo.adoc |  5 +++++
- builtin/repo.c              | 11 +++++++++++
- t/t1900-repo-info.sh        | 23 +++++++++++++++++++++++
- 3 files changed, 39 insertions(+)
+ builtin/repo.c              | 23 +++++++++++++++++++++
+ t/t1900-repo-info.sh        | 40 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 68 insertions(+)
 
 diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 868ab0ed9f..fb5aceae8f 100644
+index fb5aceae8f..7e14aac244 100644
 --- a/Documentation/git-repo.adoc
 +++ b/Documentation/git-repo.adoc
-@@ -113,6 +113,11 @@ values that they return:
- 	The path to the Git repository's common directory relative to
- 	the current working directory.
+@@ -104,6 +104,11 @@ values that they return:
+ `object.format`::
+ 	The object format (hash algorithm) used in the repository.
  
-+`path.git-prefix`::
-+	The path from the root of the working tree to the current working
-+	directory. Returns the empty string when the current working directory
-+	is the root of the working tree.
++`path.cdup`::
++	When the command is invoked from a subdirectory, show the
++	path of the top-level directory relative to the current
++	directory (typically a sequence of "../", or an empty string).
 +
- `path.gitdir.absolute`::
- 	The canonical absolute path to the Git repository directory (the `.git` directory).
- 
+ `path.commondir.absolute`::
+ 	The canonical absolute path to the Git repository's common
+ 	directory (the shared `.git` directory containing objects,
 diff --git a/builtin/repo.c b/builtin/repo.c
-index 8144b74361..ce78cdc44e 100644
+index ce78cdc44e..d4083abedc 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -100,6 +100,16 @@ static int get_path_commondir_relative(struct repository *repo, struct strbuf *b
+@@ -78,6 +78,28 @@ static int get_object_format(struct repository *repo, struct strbuf *buf)
  	return 0;
  }
  
-+static int get_path_git_prefix(struct repository *repo, struct strbuf *buf)
++static int get_path_cdup(struct repository *repo, struct strbuf *buf)
 +{
-+	/*
-+	 * repo->prefix is NULL when the current working directory is
-+	 * the worktree root.
-+	 */
-+	strbuf_addstr(buf, repo->prefix ? repo->prefix : "");
++	const char *pfx = repo->prefix;
++
++	if (!is_inside_work_tree(repo)) {
++		const char *worktree = repo_get_work_tree(repo);
++
++		if (worktree) {
++			strbuf_addstr(buf, worktree);
++		}
++	}
++
++	while (pfx) {
++		pfx = strchr(pfx, '/');
++		if (pfx) {
++			pfx++;
++			strbuf_addstr(buf, "../");
++		}
++	}
 +	return 0;
 +}
 +
- static int get_path_gitdir_absolute(struct repository *repo, struct strbuf *buf)
+ static int get_path_commondir_absolute(struct repository *repo, struct strbuf *buf)
  {
- 	const char *git_dir = repo_get_git_dir(repo);
-@@ -244,6 +254,7 @@ static const struct repo_info_field repo_info_field[] = {
+ 	const char *common_dir = repo_get_common_dir(repo);
+@@ -252,6 +274,7 @@ static const struct repo_info_field repo_info_field[] = {
+ 	{ "layout.bare", get_layout_bare },
+ 	{ "layout.shallow", get_layout_shallow },
  	{ "object.format", get_object_format },
++	{ "path.cdup", get_path_cdup },
  	{ "path.commondir.absolute", get_path_commondir_absolute },
  	{ "path.commondir.relative", get_path_commondir_relative },
-+	{ "path.git-prefix", get_path_git_prefix },
- 	{ "path.gitdir.absolute", get_path_gitdir_absolute },
- 	{ "path.gitdir.relative", get_path_gitdir_relative },
- 	{ "path.grafts.absolute", get_path_grafts_absolute },
+ 	{ "path.git-prefix", get_path_git_prefix },
 diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-index adc4a92487..b689445b7a 100755
+index b689445b7a..c600074c24 100755
 --- a/t/t1900-repo-info.sh
 +++ b/t/t1900-repo-info.sh
-@@ -215,6 +215,29 @@ test_repo_info_path 'commondir with only GIT_DIR' 'commondir' \
+@@ -215,6 +215,46 @@ test_repo_info_path 'commondir with only GIT_DIR' 'commondir' \
  	'.git' \
  	'GIT_DIR="../.git" && export GIT_DIR'
  
-+test_expect_success 'path.git-prefix at repository root' '
++test_expect_success 'path.cdup at repository root' '
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
-+		echo "path.git-prefix=" >expect &&
-+		git repo info path.git-prefix >actual &&
++		echo "path.cdup=" >expect &&
++		git repo info path.cdup >actual &&
 +		test_cmp expect actual
 +	)
 +'
 +
-+test_expect_success 'path.git-prefix in subdirectory' '
++test_expect_success 'path.cdup in subdirectory' '
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	mkdir -p repo/sub/dir &&
 +	(
 +		cd repo/sub/dir &&
-+		echo "path.git-prefix=sub/dir/" >expect &&
-+		git repo info path.git-prefix >actual &&
++		echo "path.cdup=../../" >expect &&
++		git repo info path.cdup >actual &&
 +		test_cmp expect actual
 +	)
 +'
 +
- test_repo_info_path 'gitdir standard' 'gitdir' '.git'
- 
- test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir' \
++test_expect_success 'path.cdup cwd outside the working tree' '
++	test_when_finished "rm -rf repo" &&
++	mkdir -p repo/tmp/x &&
++	cd repo &&
++	git init test &&
++	(
++		echo path.cdup=$(pwd)/tmp/x >./test/expect &&
++		cd test &&
++		GIT_WORK_TREE=../tmp/x &&
++		export GIT_WORK_TREE &&
++		GIT_DIR=$(pwd)/.git &&
++		export GIT_DIR &&
++		git repo info path.cdup >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_expect_success 'path.git-prefix at repository root' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
 -- 
 2.56.0-rc2
 
