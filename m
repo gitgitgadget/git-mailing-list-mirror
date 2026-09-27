@@ -1,122 +1,114 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f41.google.com (mail-pj2-f41.google.com [74.125.227.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976CC42E41C
-	for <git@vger.kernel.org>; Sun, 27 Sep 2026 19:42:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEAC438010
+	for <git@vger.kernel.org>; Sun, 27 Sep 2026 19:52:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790538164; cv=none; b=H7j7QSBkbzm5o64izU6/H0pd7O79MYkaQ1DkZmC4C19n0tTlx8PyfAcLSV/lU7jfKm+i5JF7Hg2THryYrdBwAfueIXLMWkYR3sdq3O/o5Sed9jPoKhFFOau0UXdtzulw1O/esehf27UfCJGRLkbqS48QNBJK7rSQvV5HhUqultY=
+	t=1790538730; cv=none; b=k+xm8zHhY+UJ9MQGFhtzGwxGowksvbgtzRHQydaEgkxQ3I9fqM4WNYe22DbrctN7+9pEXksvUaD67piTEbAJc4aJhl9AHo01zYO+qrxbhNZwYO2bmHSFxrU1ODwn7fuQTbFsCM1nxxg9xnJ/Yf/roiNTh7PZPdMyB83kUzocg0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790538164; c=relaxed/simple;
-	bh=mud3jQgBcA25I98V4hs21Y5m+dvhrqm+elVB+VMesRc=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=QQwbxB9Xzb/cbTm4MkowLDwtnrW+aWMPcxi3z7YAJHF9EdBuERuMxwz+YyeUklli7E8IeKibFMJZTVoIQSNSYvr/j8F30PazhXVJvgtv0g5s7th2YdY/SG4T4jygJIZbVI25Q2lzVJbKT9bSvu8odnsbszLSGvU7Nyk4CSJQYDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=e8S86gcR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iHcEXeZv; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1790538730; c=relaxed/simple;
+	bh=4F7LuyiV71sP8/u0RQqWY3Kzfea3sKr6h0riI4E6zHc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=e/P5xSwhwLBkVNfeXiAAY+P8Fs6/WLMpFY/nAbqae2A9duSYUE78JTJAoYN7g5eZHdjN43O/lWtTGQ0uWYd2n5CPlZzrV15Dp2UQs4cjjNPi8csrLMT6Sdr+QSAWveeowBEECz8YzLBFB2qIBYQbsmrSLpREwwh55HAvvyau+jA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NkS7HqGo; arc=none smtp.client-ip=74.125.227.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="e8S86gcR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iHcEXeZv"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.phl.internal (Postfix) with ESMTP id 27501EC00BE;
-	Sun, 27 Sep 2026 15:42:41 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Sun, 27 Sep 2026 15:42:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1790538160; x=1790624560; bh=aIePa7+ju7wtBpob2pBHldrbrHUN+5FY
-	6IVq76Y068c=; b=e8S86gcRhFvX9l1nZEnpD3KKaGLcWIctgm1MAedWldeCX6gV
-	8enMBj8POaeRjtAp+aPovhyzKPKaULG/GtSseJIKhuOUlCwYyw7anWJZO3wHqwPn
-	Aui2tiaqFBvKs/VeVgGVVsySI86tsNX8DbGplmzxOXaQoZD1XPA8aqQZMyC5ksr+
-	cmedWUikSRdJuzucd4M9hI2Pr8EDDUB+1HgbhAEVzLAjgOLO0ppMOl02hRr+XQmE
-	VVIeBZtLIBSpfxNEBin7XgFCpW+Ix6OyRsPhb4OFZgocmEJgPtorJWXU3nfJRrr0
-	LnP5aY7cxsMyUqI0aJKaB5ZV0F32BUNbhakXSg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790538160; x=
-	1790624560; bh=aIePa7+ju7wtBpob2pBHldrbrHUN+5FY6IVq76Y068c=; b=i
-	HcEXeZvwvDPWMeGqD0DGio1Va53R0Kf9yM4fYET8icX4M8TzeHqtnlNPMZbZjiAa
-	DjTNYsprne3K3ud9HTf1VPbUI37bMLc5oG1q1FrLIq48g0doRO5A16I0v277Qfgt
-	zLultz7Qb9qdsmwKspMZpXMYzP7AHSWNceIyeWqvsc3SqVVwJWuGpNOrS2/pcuCj
-	ne1Cb5mjMCXYCzUTNEXYdHQuQT+3fID1u5im6johYM9EoJgXY5iWWcVJNZevy3qA
-	/S8r0lIf5VGkOg0L2MUwVj8aEFCGpHYtImkPkYG7sxp/OHYquHFdZfQOwcBl4ccW
-	6YTxnZ1bJimEU0VogZXrg==
-X-ME-Sender: <xms:rnG5anzuQoHphdKlKtch3G5PxgbN2LUSD8KVKojGdUyULNWX8k88D1I>
-    <xme:rnG5aqHGoWkIBZUzPSNuSIIgy71HfqG9AJcx2sT33POWnXkCQv5rm-5k_xeZi_hml
-    yY8-2dzClzt9LZsD-f7dwCOL15cvg7vW3SS8qz2Sge3mDyC_9Eb2iU>
-X-ME-Proxy-Cause: dmFkZTGm9TLS8/oDwdg/VIIchBk8y6EfJK1pVcHdoKMPdKu/ujW52k5aEIHlfawZRcAwk/
-    pwqRxG1azqJj2SD1FRKg7e0FX641c5XlC3nqHvVwhCoGmjzdOq5UWazxypLY8qF3lSiQZZ
-    miQDfIy2QTUpOTyksR9aoLB3p1Fj4yxeNlwJzHESlyYqukjUABtvAoNu+ZwyB/Z1vGLElp
-    qYchtJbc2/Hmfb8OIBmq0iV6vKjVO3jEKFY2cenpKurJqjC9ycHUDrmwpQgcNg7oaedhgr
-    gRgkxYBufPrG1skijTswr8BRRyzaGsyXqB23pKTWGsXmqC0Qee5cUd1yN7AQPtkY+hDjbt
-    fJRowmQjzuG7cL0u+m3gm6XcoFydGI0Yn0X/s263q8VMxwMH63fk/pZQkOTayR9O48OJiG
-    BbO4JppyTbYxBrl2KMfHlqWO3n3eeL3scDFLP77OB5rNZsjyioY6K+37SlzuGyy/ueyivy
-    RkTOGc6YzEvrKUoP5InRZfDpIfFelsXKOObxAE+5dH5IGKZw+hAD2CvSlvAViKP2rXp1Uc
-    ZWFpFYg4k0xBSIuqNiPxcyPAak7sm61A7tDWEwzVjNdEyYm+LuE7G4Ryy79ukk0IYHakvo
-    yYmvGqiJzzfkJN8I6a+CBIXkShXquFVTpxQQxAc3mx3meC3Nnk35sPKiPsow
-X-ME-Proxy: <xmx:r3G5amYizQ6scms91SNp8D6CHj2C24-XA835fE53Zogobn3aJ2JwhQ>
-    <xmx:r3G5anNXZ53IrjgJEJ6fvtcaRlDL15HNimo4K0JaQYHbc3XaKDQ1ww>
-    <xmx:r3G5arbD1uIiqVSZAvJSVm8zSU-kc0EKJh7T9X4FzSqtT3tCmTWTzg>
-    <xmx:r3G5al0mpReer5dMbx7vsew4stTIK-_XVGt3NAA4VuVsJpTzKa5tvQ>
-    <xmx:sHG5am8xiVXdOjazuS4tiATOMMkdF8UeQRejXh2-5jFo82nWLzYJVYkz>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 6D61E22C008B; Sun, 27 Sep 2026 15:42:38 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NkS7HqGo"
+Received: by mail-pj2-f41.google.com with SMTP id 98e67ed59e1d1-3a0bd71827eso1257150a91.0
+        for <git@vger.kernel.org>; Sun, 27 Sep 2026 12:52:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790538728; x=1791143528; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=5y8lFJkqUP7afT17JpD4fPb9Gyr9DJCU5NJCBJ8qCgI=;
+        b=NkS7HqGoJwZqIGpwUvsZHDN/yF8rCoofLRQksE4wrqjdklt9eIjgbl5KzT5pY90aTA
+         lBhMuca/uKT6tG5Y0t3/roHllm0Bus1wWvGH7fNixtFb34q8XiCaQulFLz3OocHaaEKo
+         3PqdUJnNo4t8ZeQ1OPuCVVD+u7NLvtQvPj1IqeWYfQeUTUbqPEyfoAv6ZE/oiuXafqRj
+         DBFbY+6iupZwGhqrcTePy7F2BXnTK9qQIaBJ9rh7ZBKVASmvZqz3IzeSQgofCHQc3THy
+         FUbPuCWiDuPW6lS836puwOtzExoj7eLyryzsc2ziGJCwp5MNeRvtKIKrdWEos74oC3WR
+         nwog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790538728; x=1791143528;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=5y8lFJkqUP7afT17JpD4fPb9Gyr9DJCU5NJCBJ8qCgI=;
+        b=uWPaYviTW/2mpfoVM+cMqqvwfzxiTDPJKg0WXc1tyCT43IPkz4eViZwLT63EevEAXP
+         hADjZXBnFkOYgzHUN1ZpdEvi+RA6DDBkQA0g8gksthiWCzDeibTBaxzC7GQxgnJ4mRmR
+         NBl1wH3n00/zofHuHgGe/QLRoeFTM/BmbH8ujOxfa53m+33nIt3c99MVYNQ1am06W7wf
+         l6FbQ1NoigDGN/tTJnWi50PhZ/LXBORvaCtvr5WhU18LpQWERcJ5dRNWQNa5HwcsMx7+
+         TT23SPjQIGAxNev6Q8acDmr/31hv7ehJHH27CuGqM4gbp8HNIt/5Mh5C4EFnJJy3XU1Y
+         CJjA==
+X-Gm-Message-State: AFq9FYI3kOCWYwGD0GV+yGvr4x1ZuyK+JqY6zuA5iM2VVrxxCydCtSC8
+	HCu7sneyzvQ3LU4Ox+CiQS6LUYAPwg6KEKgOh8PYbdLcTnwI7VtsVEU9fkq2OHsj
+X-Gm-Gg: AYBFou1hg1Jh5fWhRqXoTojQ0/T0JQ6FvrlsqQzpD6kOlXNSlNbAINk1c2Bm98cN437
+	AHOR/3yF4vjeSCU5otNqzxbzK77VPg3LBvCf28s4suNYSyusELBWeXuAvPaH0Z3rLo/deJN4XpE
+	ZyqnPG20X0Ud+Vlj4a2yqluD07t2Hhr932q3B7kiK/JiztaeLFgawTjgVzh5LhvIudxZHgyDmoJ
+	+IqG8vzxdS0fbtiNFSDstrV2jpyHrHQxDEaFIgE29BCnSi74vKohFTIt1Ul7+Y8E3zXAwoJ08W6
+	kD8QRJvQq1fe1EBO9YUTN68BMT5QwIjiDO7pawqt9eHFN9VTQGvQoLh+6thJRO+fbdeuq2bp/AJ
+	Ew5nSmNFHU+8vKXA7nv0JJ1BFV+k0iJqwQvddacRN2oAWH7OC9AdHjJoyQZt0YcTDnAukOhReN/
+	yGSv7fClp1tf2xmHv2WQ1KY9JUST9LJln66qVmaKN0e+Lsn3p5/Brwdrw1Cqqp4CzgMdlmbd2lk
+	4D4Br0NWEA8Z70=
+X-Received: by 2002:a17:90b:17c3:b0:3a0:bfaf:2ae with SMTP id 98e67ed59e1d1-3a0bfaf039bmr6046955a91.43.1790538728065;
+        Sun, 27 Sep 2026 12:52:08 -0700 (PDT)
+Received: from aegix.lpu.com ([128.185.168.198])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a0b4983f43sm6255027a91.0.2026.09.27.12.52.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Sep 2026 12:52:07 -0700 (PDT)
+From: jyotish kumar <jyotishkumar725015@gmail.com>
+To: git@vger.kernel.org
+Cc: sandals@crustytoothpaste.net,
+	jyotish kumar <jyotishkumar725015@gmail.com>
+Subject: [PATCH] name-rev: update hash descriptions
+Date: Mon, 28 Sep 2026 01:16:02 +0530
+Message-ID: <20260927194602.86750-1-jyotishkumar725015@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <arkfFUpCskucD7Nh@fruit.crustytoothpaste.net>
+References: <arkfFUpCskucD7Nh@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 27 Sep 2026 21:42:17 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <57741bea-f264-45ab-b5fc-52466fdcb03e@app.fastmail.com>
-In-Reply-To: <xmqq33uusvst.fsf@gitster.g>
-References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
- <V2_CV_format-patch_learn_--range-diff-notes.cdb@m5gid.xyz>
- <V2_format-patch_learn_--range-diff-notes.cdd@msgid.xyz>
- <xmqq33uusvst.fsf@gitster.g>
-Subject: Re: [PATCH v2 2/2] format-patch: learn --[no-]range-diff-notes
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
+The documentation for --annotate-stdin and --name-only refers to
+SHA-1, although name-rev handles object IDs according to the active
+hash algorithm.
 
-On Sun, Sep 27, 2026, at 14:50, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
->
->> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
->> index ef92704de39..640c5dec52e 100755
->> --- a/t/t3206-range-diff.sh
->> +++ b/t/t3206-range-diff.sh
->> ...
->> +# The '--range-diff-notes' has no effect but is allowed
->> +test_expect_success 'format-patch --range-diff-notes=not-a-note (no --range-diff)' '
->> +	test_when_finished "rm -f 000?-*" &&
->> +	git format-patch --range-diff-notes=not-a-note --cover-letter \
->> +		main..unmodified &&
->> +	test_when_finished "rm -f 000?-*" &&
->> +	test_file_not_empty 0000-cover-letter* &&
->> +	test_grep ! "^Range-diff:" 0000-cover-letter* &&
->> +	test_grep ! "## Notes " 0000-cover-letter*
->> +'
->
-> The second test_when_finished is redundant, I suspect.
+Update the descriptions to refer to object IDs instead.
 
-Oh yeah. If there is no Range-diff then
-there won't be a notes section. I'll fix that
-in the next version.
+Signed-off-by: jyotish kumar <jyotishkumar725015@gmail.com>
+---
+ Documentation/git-name-rev.adoc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-name-rev.adoc b/Documentation/git-name-rev.adoc
+index d4f1c4d594..9837fe59b3 100644
+--- a/Documentation/git-name-rev.adoc
++++ b/Documentation/git-name-rev.adoc
+@@ -43,7 +43,7 @@ OPTIONS
+ 	List all commits reachable from all refs
  
->
-> Other than this minor nit, I didn't see anything questionable in
-> this step.
->
-> Thanks.
+ --annotate-stdin::
+-	Transform stdin by substituting all the 40-character SHA-1
++	Transform stdin by substituting all the full-length object ID
+ 	hexes (say $hex) with "$hex ($rev_name)".  When used with
+ 	--name-only, substitute with "$rev_name", omitting $hex
+ 	altogether. This option was called `--stdin` in older versions
+@@ -72,7 +72,7 @@ while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
+ -----------
+ 
+ --name-only::
+-	Instead of printing both the SHA-1 and the name, print only
++	Instead of printing both the object ID and the name, print only
+ 	the name.  If given with --tags the usual tag prefix of
+ 	"tags/" is also omitted from the name, matching the output
+ 	of `git-describe` more closely.
+-- 
+2.43.0
+
