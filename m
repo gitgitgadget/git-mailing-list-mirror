@@ -1,239 +1,210 @@
-Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34023B14AA
-	for <git@vger.kernel.org>; Sun, 27 Sep 2026 15:19:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63B0437136
+	for <git@vger.kernel.org>; Sun, 27 Sep 2026 18:59:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790522369; cv=none; b=dUYVzU4PD+okZLSZxakZTKPX651AB0y9hwI67zQmNP0eMLsPSKSmSgSdg6mnkDiPK+EfspkO6YZbb13psto+Jc7m3ixNpJ5X8T4yM++psJ2665zMITR3VW4SSYSmpX/B9yS95kkelC1QNkpM6trJbcUYKQg723CcjWL139KOigI=
+	t=1790535588; cv=none; b=PLW4yg1+df7CoWqoFh1c9v/3WBAwfs0Is7TstWDiE6OdEs7eZgqsMVdNfo3wpp0DoFjBPReRvV8K46Zzs8n9lZlcB0+nye42jG3x1TtdcO8Ihg+I+f5YhthXbe7KvU0b5V5wBoVZJp536RQxAmAf5aGmWo0MDs5lsFdzTxpxEAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790522369; c=relaxed/simple;
-	bh=y8xPUme151g4sjD00apxzpU/kwJPmqJV4JGUcE/VADk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O7g6HQ/pvYq646uRMX8k9Z9fE7kwC/PKEZ8VR/2Zj1upnodRZcHUQvaFPJHs0x2ivVbsa53ZutP7qK2pOFcMzVIBJZTFhMNRsvfUFgPhUAO9pNAR6s1fhPPtby5B8SWLYZB+z8Qp1cAsyoEanr7cWP0slH+/V++3JuVgK6OXnSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GZNUUVGS; arc=none smtp.client-ip=74.125.225.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790535588; c=relaxed/simple;
+	bh=MoIqLSsvCx8SpIq6L1BEyrrlDu8hlZ0Iyq4pdm0UmNc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=s8jWatH4J+ba2os+T8h4CTAdUCVwCU0qjQKqxL+3pzqgVSo0f1CK36D0y3a7EwB88c+1zQLuoK3G77DH1oslCq17ISYjqER64QVmvNWr+PxmTSEjAJZxobGmTMbNbcssX4oozC4t3S0CZw77+3th8z4+BcwRXnUYjPod/Bv5RVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WdKUjO0e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JR9NuI6U; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZNUUVGS"
-Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49ffe817151so4390475e9.0
-        for <git@vger.kernel.org>; Sun, 27 Sep 2026 08:19:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790522366; x=1791127166; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=ilSdAbbhXdaO36RgrxMp68V/vg0lg4qcaWCfgn2bvW4=;
-        b=GZNUUVGStW8UoJKe19+6kPdeqAplaww04emMRgkDIjbI92zGFJHXi4pkDHTUms5djK
-         sC/mBiuHM0nU8E/SVojohME4aIbJsIN/t7DfqbLl5IDbVwV1wupHHs6vHxT5k7BN+7OZ
-         tVi0lntvTlkZE5CDw78NHWodpGNZTJfb0sS2gcz6CqT4dmhsF1rkBmbUEdxY9DqzJoZB
-         t7m+lBJceiuUQupnON3ibyMvlhBrPGR2Mk+ihNCFBM/7l5ftvX9nGLUnK5CB9pjMFub5
-         MItQN7sWy24S8lExQnb+KEAqedOrhGe1IjdXBUqeWm2+wy1zzVsuxN57lVwp8KVJvjSX
-         dvvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790522366; x=1791127166;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ilSdAbbhXdaO36RgrxMp68V/vg0lg4qcaWCfgn2bvW4=;
-        b=j3RZdpm9BTTPehzcshwUNq3s+M2D0MGpgjpN3vIs4KE4ce9WLbapXgUR/To3Pow+Eq
-         9zYmkvl/7vL27UxlY2nNU2GpmzExbTdl0nrtkSCJh7+6YM+3x5ZZtnD5nOSqMoMs6GIA
-         fWPIRz+GfSLSCcged5zkWcQ7ZtOxFlvjGlLWTxBdC815xYoLnnI3WemK5kyHORzTQbrz
-         PKqDPe8FrcRW7FzIAtOSYb4Ad4EnqarEZ2Z281pdRpn42vJCuc793MgF6vtbop785B9y
-         X6EISPv5UWP4uZkuO3X6bMN8m71EV0Ut/+7H3FGA+gbGSU2tR+WITcbOke0gyj1uHCTG
-         4BuQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzEk7qIj5TBG0L5ozLB5CmB8TA8g+zwFZZGKl9R3tix4SSWyGdSaleKyQ8CWP9KzyrEWGw=@vger.kernel.org
-X-Gm-Message-State: AFuF++mWDXjkq337GGer/jWKceWajcUU8j43phknrjWQU0t9ALhROwmQ
-	BidWWtmeAkONuzMGrsrUJw5oxac2ZXnKH0xLxbzeWudn/+fazzzX+ouOAoMrr3R5
-X-Gm-Gg: AYBFou0pPE1p/mtUpYO0xxVTVF9xHDm1gH630Ct6AUiY1NmgGGiiPpj07eNy3UpWK2w
-	AvcQ+tYErbok4zjX2vy/jbxr4cy+yCOSjVTX3Aw8VqFjtaEWY9OXf2VQBVhZfB+z3gCEt75Fq6C
-	SI8iEsxgsxT+ldy+E3FR9NW1c049WjGQWBE+rCmYLZ3lda8JU4Zlh5t7k3BY+KUxLVHVKIUMiDJ
-	/zpFSHdvN2BfKFtoNRxbLX6/U+uqgL9YCo6/M1Bz5XpJ2oH3aha70PTiqMkRneP7b3182/GkAET
-	uJrHBG/dWQHWJx/GzAl2IWcCfuPUYvoU0w3yoqG7abxMQynaigfU92VhvUKu8CYT61ERtKATeZG
-	OGZXDfpmTa9s7jqSKeNOV5cOg3earJypA+aEO+a6/7do3gAo7bVdXYm2cPHYac5gMd2i8TTYps/
-	bY+iYg3I1EP6dRuqKzSXymBGvGBd2W1SDAvTxinBpFg9SFzfaEIUFqTTF6RqCApdAcqmB9ucI6D
-	gfgSW052nuPtIp52DHCs8q6dSyFTlSDxqF6cdNM4SFedeXgW9fZWw==
-X-Received: by 2002:a05:600c:4e53:b0:49e:6861:50f7 with SMTP id 5b1f17b1804b1-49fe66c8921mr180205985e9.5.1790522365666;
-        Sun, 27 Sep 2026 08:19:25 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fee6cc7d3sm154855035e9.0.2026.09.27.08.19.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 27 Sep 2026 08:19:24 -0700 (PDT)
-Message-ID: <fc4efe9f-69f4-4f58-9f7c-8f2e75a8e590@gmail.com>
-Date: Sun, 27 Sep 2026 16:19:22 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WdKUjO0e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JR9NuI6U"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C82361400058;
+	Sun, 27 Sep 2026 14:59:44 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sun, 27 Sep 2026 14:59:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790535584; x=1790621984; bh=tZJs2Ll+xv
+	qjEyCw/KgBkQA9lUnXYt0R2IS9y3xHFG0=; b=WdKUjO0ercyy/5kNAm8QVfD3mW
+	m0hYakMLjrzSxL6O5vvNPHssKKrr7RlBAfUGrRn4Ddslpo6nVfqLaER+OZsE/e1g
+	jhUh8sYnY2EYvsQBLyNgJHr7hGE17qjJ/fzkBLHmYP9fzXXSOF6yDD45cmzn9OHw
+	que58ItzBS2CGffjeMsk1DT5X8cUVy7HmNmyP8OC0FweL+gBNuTBuC1wVnWrXpTH
+	GVWf2DRMteHKq2KUeT67vCFZFvuNNCeHbOhdUHGh5/wwFIsUzVwfUecO7D3OapB6
+	9VTCJAqGdpHJW2eM/i/hPTgjIk4wqtPKlyLJfSiVmZXvNCwEQuABENjBjHcA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790535584; x=1790621984; bh=tZJs2Ll+xvqjEyCw/KgBkQA9lUnXYt0R2IS
+	9y3xHFG0=; b=JR9NuI6ULyX85HKyHQJO1FsEpkQRPD/A8TZZ7o+sb67VxPzL4TJ
+	m6gX8Yovu/gwGDE/Q2MVE6sAQqDNELX3FrK0eQGb+rpBAUCZNS4LMqv2Y9h/NFPe
+	rUNrb0X8mQxZyf9pl0lbKToTZUzbLC2x9iH68g5sYZqipFiWgjK1U4l+s5ssKpXf
+	MwobbLrdG6XGNoe8+Qa+KQ8uo9CHV8fUUxWj4VRBGLLQ1+6qzVV3f2v1mWE84YQI
+	wBgO3IFNO4BGUg1nKLWBdF10NNmXm+zrP5StKN1TPKEOhFUIf6gBi0GRlPfVMo0y
+	0j4CQw2dSRRyJ7isXghclrRkaMbfRMeKz/g==
+X-ME-Sender: <xms:oGe5ag6k-dtblPcvvOOS58gWanrMFXJPYp8CkjCZjWxwcHzsWLvjBQ>
+    <xme:oGe5agL0D7Ynr8NDFWDcgYRcRxU9_9z1XLwXi8zNuFZrv8_dYKrL3Iimygeifr0mK
+    NQghnMBrUcHpeUAGUpKCRczY3LwGzii7_N9v_1DTKuK5qXOF5_MCOs>
+X-ME-Received: <xmr:oGe5aoz0Kn8JONmEx8XTeDVz9MeeDkSjIqx7l_0EdSHjF-x9DO5LeLDQ6Pjpj_kR7Wbna7ON9eaBz4soIqcCv2guZ3w7v7jQuQgV>
+X-ME-Proxy-Cause: dmFkZTEZcz6dFyzEtHLXMk+AKkxOq0VgZ4ROjpkf/MW2JeCoW3TSFEYRIQQ84bRd+kN3Gb
+    FE9lKCijolZrf/Py8SPGzZMeaXpAV60WvoamNJZinV2ctmDIOKJ3HWDSFEcekm/iXvTwv8
+    ezFOQV9uJlr2s4QO6ES5JIjOON1bNfdEhEwiCM885woAMRAVBg6fe80Ae81jgdk7JGkGbI
+    v+AmoJZ5Hc2r9VobgJOPaYAyPtcBXjxsCPKiIjuJ0z4nkiQzeYd7og1R8bUQEUPc29NF46
+    eHrOhSwdH+zNr8N3eeen5/KtRaIHRpAucRW/4AlIlhTx3bZ0fo+4NiLBYU4DqvxKCydKWv
+    MlGyFq/YxNmR5hFFk5jQufQ1etTgQvIfQdjIHezklMJcVrQXvGytxmSZWfQtYa2DI8vif8
+    W1qflkBFYQPDTpcC2q1B2IGzWf/PyBu4vGzu2r/Typ8H/KPo+Pb5rQsG62dZqQO4Ux+vM/
+    j/2E2LADbwJ6AdcHtoPXovuL/8FKfcFhHmwrlXhfDxcZTsW9Zt9RTgfU4Snr0hn0Q/uwqm
+    GDHYi6jmtWChXYROs4AEqBWD4fq2guLdctwN9dn5LxoDwuO9A1jGZQ1R+NeTYAmAAJ3wfr
+    DvWIRfe0JbTj4Bl8K8nYC1rPLdxSrXriY1EVPRMpcvchdK7bz9r31oPxH/rw
+X-ME-Proxy: <xmx:oGe5aoK69IwcpXcpxcviB3pWGkNeZukWkd8WQkYQiMDni0AGlLU1iw>
+    <xmx:oGe5anVQZ1-T73wYeYy54-6LwPVoyJcUNEhVXhJz6WhSoSdeNWRxVg>
+    <xmx:oGe5arbKU9CT1CmFURPhShalCO_9fgFA9qVCdmW3GqLs1JAuHIP8nA>
+    <xmx:oGe5auwM5ncWb68xatJ1lQh5gwmRkPvchjZzODftyBM-J-gPhGCthw>
+    <xmx:oGe5aizCml87dkn4SV1YTCGS2-IwBbOvq1fbjxz4vHfZ4gCX83OF0lNn>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 27 Sep 2026 14:59:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org,  Eli Barzilay <eli@barzilay.org>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>,  Elijah Newren <newren@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>,
+  Victoria Dye <vdye@github.com>,  Adam Johnson <me@adamj.eu>,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH v3 5/5] builtin/stash: merge index in-core
+In-Reply-To: <fde7fb7988b695707c6f2776adc18eec7fe4696a.1790425008.git.ben.knoble@gmail.com>
+	(D. Ben Knoble's message of "Sat, 26 Sep 2026 08:16:48 -0400")
+References: <cover.1790168285.git.ben.knoble@gmail.com>
+	<cover.1790425008.git.ben.knoble@gmail.com>
+	<fde7fb7988b695707c6f2776adc18eec7fe4696a.1790425008.git.ben.knoble@gmail.com>
+Date: Sun, 27 Sep 2026 11:59:41 -0700
+Message-ID: <xmqqo6dir04i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] ci: point leak-sanitizer failures at the actual test and
- error
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Harald
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-On 25/09/2026 19:54, Harald Nordgren via GitGitGadget wrote:
-> From: Harald Nordgren <haraldnordgren@gmail.com>
-> 
->      ci: point leak-sanitizer failures at the actual test and error
->      
->      I discovered while running CI on another GitHub pull request that it's
->      very hard to see where the error is for the leak tests.
->      
->      This will stop each leak-sanitizer script at its first failure and
->      points annotations at the real file and error.
+> @@ -671,29 +627,27 @@ static enum stash_apply_result do_apply_stash(const char *prefix,
+>  		    oideq(&c_tree, &info->i_tree)) {
+>  			has_index = 0;
+>  		} else {
+> -			struct strbuf out = STRBUF_INIT;
+> +			struct merge_result result = { 0 };
+>  
+> -			if (diff_tree_binary(&out, &info->w_commit)) {
+> -				strbuf_release(&out);
+> -				return error(_("could not generate diff %s^!."),
+> -					     oid_to_hex(&info->w_commit));
+> -			}
+> +			o.branch1 = "Current index";
+> +			o.branch2 = "Stashed index changes";
+> +			o.ancestor = "Stash base";
+>  
+> -			ret = apply_cached(&out);
+> -			strbuf_release(&out);
+> -			if (ret)
+> +			o.verbosity = 0;
 
-Putting the leak output in the test results is very welcome, but does 
-this mean that if there are two leaks we only report one?
+We realize that 'o' is a struct merge_options defined on the stack
+for this function, initialized with init_ui_merge_options() fairly
+early on.  It would have initialized '.verbosity' to the default
+verbosity, the merge.verbosity configuration variable, or the
+GIT_MERGE_VERBOSITY environment variable.
 
->      Proof that it works:
->      https://github.com/git/git/actions/runs/35871180948/job/107215430244
+You drop the verbosity here, presumably because you want to match
+the previous implementation 'diff-tree | apply --cached' (which I
+guess was fairly quiet, but I do not use 'stash pop --index'
+myself).
 
-Opening that link shows that the individual test failures are no-longer 
-folded and I see some very strange scrolling behavior in firefox - when 
-the page opens it scrolls to the bottom of the output of 
-"ci/build-and-run-tests.sh" and if I try to scroll up it immediately 
-scrolls back down as soon as my fingers leave the touchpad.
-
-The patch below seems to do more than just changing the output to 
-display the leak backtrace - it adds some escaping and changes the 
-annotations. There is no explanation of what these changes do or why 
-they are required.
-
-Thanks
-
-Phillip
-
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2419%2FHaraldNordgren%2Fci-annotation-file-line-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2419/HaraldNordgren/ci-annotation-file-line-v1
-> Pull-Request: https://github.com/git/git/pull/2419
-> 
->   ci/lib.sh                            |  1 +
->   t/test-lib-github-workflow-markup.sh | 49 +++++++++++++++++++++++-----
->   t/test-lib.sh                        |  2 ++
->   3 files changed, 44 insertions(+), 8 deletions(-)
-> 
-> diff --git a/ci/lib.sh b/ci/lib.sh
-> index c6ccbf8c17..a89f480a78 100755
-> --- a/ci/lib.sh
-> +++ b/ci/lib.sh
-> @@ -382,6 +382,7 @@ linux-leaks|linux-reftable-leaks)
->   	export NO_CVS_TESTS=LetsSaveSomeTime
->   	export NO_SVN_TESTS=LetsSaveSomeTime
->   	export NO_P4_TESTS=LetsSaveSomeTime
-> +	GIT_TEST_OPTS="$GIT_TEST_OPTS --immediate"
->   	;;
->   linux-asan-ubsan)
->   	export SANITIZE=address,undefined
-> diff --git a/t/test-lib-github-workflow-markup.sh b/t/test-lib-github-workflow-markup.sh
-> index fa29a62aa3..4f6460a0ad 100644
-> --- a/t/test-lib-github-workflow-markup.sh
-> +++ b/t/test-lib-github-workflow-markup.sh
-> @@ -28,6 +28,7 @@ start_test_output () {
->   	github_markup_output="${GIT_TEST_TEE_OUTPUT_FILE%.out}.markup"
->   	>$github_markup_output
->   	GIT_TEST_TEE_OFFSET=0
-> +	github_markup_script_name=${0##*/}
->   }
->   
->   # No need to override start_test_case_output
-> @@ -35,22 +36,54 @@ start_test_output () {
->   finalize_test_case_output () {
->   	test_case_result=$1
->   	shift
+> +			head = lookup_tree(o.repo, &c_tree);
+> +			merge = lookup_tree(o.repo, &info->i_tree);
+> +			merge_base = lookup_tree(o.repo, &info->b_tree);
 > +
-> +	case "$test_case_result" in
-> +	ok|broken)
-> +		# Exit without printing the "ok" or "broken" tests
-> +		return
-> +		;;
-> +	esac
+> +			merge_incore_nonrecursive(&o, merge_base, head, merge,
+> +						  &result);
 > +
-> +	test_case_line=$(find_test_case_line_ "$1")
-> +	test_case_output=$(test-tool path-utils skip-n-bytes \
-> +		"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET)
+> +			oidcpy(&index_tree, &result.tree->object.oid);
+> +			merge_finalize(&o, &result);
+
+And then the (index) merge is quiet, which is nice.
+
 > +
->   	case "$test_case_result" in
->   	failure)
-> -		echo >>$github_markup_output "::error::failed: $this_test.$test_count $1"
-> +		test_case_summary=$(printf '%s\n' "$test_case_output" |
-> +			tail -n 20 | github_escape_message_)
-> +		github_annotation_ error "t/$github_markup_script_name" "${test_case_line:-1}" \
-> +			"failed: $this_test.$test_count $1%0A%0A$test_case_summary"
->   		;;
->   	fixed)
-> -		echo >>$github_markup_output "::notice::fixed: $this_test.$test_count $1"
-> -		;;
-> -	ok|broken)
-> -		# Exit without printing the "ok" or ""broken" tests
-> -		return
-> +		github_annotation_ notice "t/$github_markup_script_name" "${test_case_line:-1}" \
-> +			"fixed: $this_test.$test_count $1"
->   		;;
->   	esac
-> +
->   	echo >>$github_markup_output "::group::$test_case_result: $this_test.$test_count $*"
-> -	test-tool >>$github_markup_output path-utils skip-n-bytes \
-> -		"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET
-> +	printf '%s\n' "$test_case_output" >>$github_markup_output
->   	echo >>$github_markup_output "::endgroup::"
->   }
->   
-> +finalize_test_leak_output () {
-> +	test_leak_summary=$(head -n 40 "$TEST_RESULTS_SAN_FILE".* |
-> +		github_escape_message_)
-> +	github_annotation_ error "t/$github_markup_script_name" 1 \
-> +		"memory leak logged around $this_test.$test_count%0A%0A$test_leak_summary"
-> +}
-> +
->   # No need to override finalize_test_output
-> +
-> +github_escape_message_ () {
-> +	sed -e ':a' -e 'N' -e '$!ba' -e 's/%/%25/g' -e 's/\r/%0D/g' -e 's/\n/%0A/g'
-> +}
-> +
-> +find_test_case_line_ () {
-> +	grep -n -F -- "$1" "$TEST_DIRECTORY/$github_markup_script_name" |
-> +	head -n 1 | cut -d: -f1
-> +}
-> +
-> +github_annotation_ () {
-> +	echo >>$github_markup_output "::$1 file=$2,line=$3::$4"
-> +}
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 1f0505e412..a52589c6a2 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -199,6 +199,7 @@ mark_option_requires_arg () {
->   start_test_output () { :; }
->   start_test_case_output () { :; }
->   finalize_test_case_output () { :; }
-> +finalize_test_leak_output () { :; }
->   finalize_test_output () { :; }
->   
->   parse_option () {
-> @@ -1218,6 +1219,7 @@ check_test_results_san_file_ () {
->   		return
->   	fi &&
->   	say_color >&4 error "$(cat "$TEST_RESULTS_SAN_FILE".*)" &&
-> +	finalize_test_leak_output &&
->   
->   	if test "$test_failure" = 0
->   	then
-> 
-> base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
+> +			if (!result.clean)
+>  				return error(_("conflicts in index. "
+>  					       "Try without --index."));
+> -
+> -			discard_index(the_repository->index);
+> -			repo_read_index(the_repository);
+> -			if (write_index_as_tree(&index_tree, the_repository->index,
+> -						repo_get_index_file(the_repository), 0, NULL))
+> -				return error(_("could not save index tree"));
+> -
+> -			reset_head();
+> -			discard_index(the_repository->index);
+> -			repo_read_index(the_repository);
+>  		}
+>  	}
+
+
+But the thing is, this is not the end of the function, or the last
+call to the merge machinery using 'o'.  We then use the same 'o' to
+drive another three-way merge.  Yet nobody restores '.verbosity'
+that was unconditionally turned off above for that second merge.
+
+It is a bit surprising that the existing test suite did not catch
+this.  Perhaps we do not test --quiet and the merge.verbosity
+configuration in combination?
+
+Anyway, I think you'd need something like the following (caveat
+emptor: written against checked out 'seen' while reading the patch,
+and not even compile tested).
+
+Thanks.
+
+
+ builtin/stash.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+diff --git c/builtin/stash.c w/builtin/stash.c
+index 0f10b9c703..a165419d77 100644
+--- c/builtin/stash.c
++++ w/builtin/stash.c
+@@ -622,6 +622,9 @@ static enum stash_apply_result do_apply_stash(const char *prefix,
+ 
+ 	init_ui_merge_options(&o, the_repository);
+ 
++	if (quiet)
++		o.verbosity = 0;
++
+ 	if (index) {
+ 		if (oideq(&info->b_tree, &info->i_tree) ||
+ 		    oideq(&c_tree, &info->i_tree)) {
+@@ -633,8 +636,6 @@ static enum stash_apply_result do_apply_stash(const char *prefix,
+ 			o.branch2 = "Stashed index changes";
+ 			o.ancestor = "Stash base";
+ 
+-			o.verbosity = 0;
+-
+ 			head = lookup_tree(o.repo, &c_tree);
+ 			merge = lookup_tree(o.repo, &info->i_tree);
+ 			merge_base = lookup_tree(o.repo, &info->b_tree);
+@@ -658,9 +659,6 @@ static enum stash_apply_result do_apply_stash(const char *prefix,
+ 	if (oideq(&info->b_tree, &c_tree))
+ 		o.branch1 = "Version stash was based on";
+ 
+-	if (quiet)
+-		o.verbosity = 0;
+-
+ 	if (o.verbosity >= 3)
+ 		printf_ln(_("Merging %s with %s"), o.branch1, o.branch2);
+ 
 
