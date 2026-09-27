@@ -1,122 +1,78 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-104.mta1.migadu.com [95.215.58.104])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00F7192B75
-	for <git@vger.kernel.org>; Sun, 27 Sep 2026 22:34:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F91437136
+	for <git@vger.kernel.org>; Sun, 27 Sep 2026 22:45:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.104
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790548448; cv=none; b=s5x2rFB+3C5aqKMSD93C2b17+QvBHtFgRiO0H8isTZip58fNNPI1/B3+M5jX7IuLy2coQ6rEPl7PQZ9dM7WH4r/FSFGCL79fGrhga6Xt8fU37Abl1gQDH+IVoiHAu1oJnCnbuM/XSEFT/XjhYTaEaXDDKsctqKcv5h7hFo4y6oY=
+	t=1790549116; cv=none; b=QeBQc/NOBbSZWepIP0oWCpVBr6OhYVAwm1oH56s1INqDifXOM/PbDQprEAbpjxM+I5P+tOTYm2M1ZlZVsQve9j35yFPceywsSlYuJZi5zdKOwpQeTtGKV5JEDRLZLD0SQ78U611tYTj6NTyHBdUoqRAPJ7uiYkgfZlgn521xwCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790548448; c=relaxed/simple;
-	bh=TyYHOomRZFxoPLuq8ld4OeDLtpOZdRasQ8MCA2daURE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZR0STveyJe5JQ8pEKeLgj0TqVmdHXkz5Em6++trIpwgHPTsGXo2xSwRfl45sxFJr0SRPsRQjK7YHywigRjJ9GPfRmEHet9v6u0S6vKPdj3w1FlxYnwrB3Lm7q25qa6ldYq8T+kKs1K0KJbYzDlqKY1oKDTzzexszm+VbyEfNmys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=MRn3RtnD; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1790549116; c=relaxed/simple;
+	bh=KciA9YJ8wvP6vI5GUiXfHhHw4tpHpthEl3T8HXXLrZ0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bTdwMnrUDXUhvPQou/j9mUFdDbkJ1gr0a/DV/9xrUM8Q8+G9zZBd7Dy4QSOfkzPyhDSTko7edPEGos3zZdQ4Fc/N6X2ktjqAwiwmZ927NtYjBrFqGoW4rv39KhiH39iV0o3a/9xg5CWVOpzFkKwEyYb0w9EWoQMsNbh1jHluObY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mvdan.cc; spf=pass smtp.mailfrom=mvdan.cc; dkim=pass (1024-bit key) header.d=mvdan.cc header.i=@mvdan.cc header.b=dvBJoful; arc=none smtp.client-ip=95.215.58.104
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mvdan.cc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mvdan.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MRn3RtnD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1790548444;
-	bh=TyYHOomRZFxoPLuq8ld4OeDLtpOZdRasQ8MCA2daURE=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=MRn3RtnDq8Vgh9Fac59F3ZcScZoEelH7zdKUeHqngrult0N4zvzhTdUmGvARelRKf
-	 qkVM2Z5crPQQLZP8MiZdf3s+CqDspxltuyEny6/15r7O7UVlXS4gtbEGN8g3Np8MQP
-	 kxzDjd0OyrKK0X82QnYifb41ui7TpwPLIj7PFrwfBio3GgSf1gGVNeloEm403AR/nf
-	 BzCjPsSpOmUup/CqR0MwiYfAlP39CQdOG9wNfTVBOIrdUrskbG4E//nhyIYfZeoiPr
-	 PvTozDaVETzL2K52LZ/jJvJ+NSYynhtW72DLQG04sP7rH9Xk/WX+hJoLH6gYidcDil
-	 H7y7P+qUiPr2AiygGwBmBS+XHmXZFqHy2DjGqjdMzYQZnjzrG+nmwBwOsXXZKSti52
-	 ruNpHpDUjPlULeJ66DDUgKWZXqQTBNLcGLSBt5YvOUIGkcHmhYF/nKJVgCLg3XPm3C
-	 EpmvV5NvY8JEi4vpzDaxqiIylpPzZ4jUNLn27eJCgmpkWM8D7BF
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f1ae:eb38:1836:c72c])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id BB38B200FF;
-	Sun, 27 Sep 2026 22:34:04 +0000 (UTC)
-Date: Sun, 27 Sep 2026 22:34:03 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: jyotish kumar <jyotishkumar725015@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] name-rev: update hash descriptions
-Message-ID: <armZ28MWl9dTHDz6@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	jyotish kumar <jyotishkumar725015@gmail.com>, git@vger.kernel.org
-References: <arkfFUpCskucD7Nh@fruit.crustytoothpaste.net>
- <20260927194602.86750-1-jyotishkumar725015@gmail.com>
+	dkim=pass (1024-bit key) header.d=mvdan.cc header.i=@mvdan.cc header.b="dvBJoful"
+X-Envelope-To: git@vger.kernel.org
+DKIM-Signature: a=rsa-sha256; bh=KciA9YJ8wvP6vI5GUiXfHhHw4tpHpthEl3T8HXXLrZ0=;
+ c=simple/simple; d=mvdan.cc;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1790549110; v=1; x=1791153910;
+ b=dvBJofulwg8Mlyc9L/wkEuXhm6iaaXb1p1shNBzrjmzrhjhVsRx4dXOiB1YXizXPqt2cY3Cv
+ 6BGjqN3bVJAV6D2/ozLWmYUcdSy+YQKfnQvVwPjox/LyVPZosGzNqm5NVqb4QGmyYUfVPJ8f84t
+ t7VANaiFiIIyO0UL/nfJhXf4=
+X-Envelope-To: git@vger.kernel.org
+Received: by smtp.migadu.com with ESMTPS id 3d7325f701019e76;
+	Sun, 27 Sep 2026 22:45:07 +0000
+X-Mizu-Trace-ID: 3d7325f701019e76
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <3cae7bd6-33fa-4695-bf4e-9f473ac98042@mvdan.cc>
+Date: Sun, 27 Sep 2026 23:45:03 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/I6CEKfLKGTVzN1C"
-Content-Disposition: inline
-In-Reply-To: <20260927194602.86750-1-jyotishkumar725015@gmail.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] credential/libsecret: load secrets explicitly
+To: M Hickford <mirth.hickford@gmail.com>,
+ =?UTF-8?Q?Daniel_Mart=C3=AD_via_GitGitGadget?= <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, =?UTF-8?Q?Mantas_Mikul=C4=97nas?=
+ <grawity@gmail.com>, Patrick Steinhardt <ps@pks.im>
+References: <pull.2372.git.git.1785883217733.gitgitgadget@gmail.com>
+ <CAGJzqs=sUA7vGDwadL9h-dcuPAsQvhAjiirZhA5=_fyqH1QXuA@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Daniel_Mart=C3=AD?= <mvdan@mvdan.cc>
+In-Reply-To: <CAGJzqs=sUA7vGDwadL9h-dcuPAsQvhAjiirZhA5=_fyqH1QXuA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---/I6CEKfLKGTVzN1C
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 9/24/26 8:00 AM, M Hickford wrote:
+> Is this an upstream bug in libsecret?
+>
+> The libsecret docs for SECRET_SEARCH_LOAD_SECRETS  are unfortunately
+> truncated https://gnome.pages.gitlab.gnome.org/libsecret/method.Service.search_sync.html
 
-On 2026-09-27 at 19:46:02, jyotish kumar wrote:
-> The documentation for --annotate-stdin and --name-only refers to
-> SHA-1, although name-rev handles object IDs according to the active
-> hash algorithm.
->=20
-> Update the descriptions to refer to object IDs instead.
->=20
-> Signed-off-by: jyotish kumar <jyotishkumar725015@gmail.com>
-> ---
->  Documentation/git-name-rev.adoc | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/Documentation/git-name-rev.adoc b/Documentation/git-name-rev=
-=2Eadoc
-> index d4f1c4d594..9837fe59b3 100644
-> --- a/Documentation/git-name-rev.adoc
-> +++ b/Documentation/git-name-rev.adoc
-> @@ -43,7 +43,7 @@ OPTIONS
->  	List all commits reachable from all refs
-> =20
->  --annotate-stdin::
-> -	Transform stdin by substituting all the 40-character SHA-1
-> +	Transform stdin by substituting all the full-length object ID
->  	hexes (say $hex) with "$hex ($rev_name)".  When used with
->  	--name-only, substitute with "$rev_name", omitting $hex
->  	altogether. This option was called `--stdin` in older versions
-> @@ -72,7 +72,7 @@ while its tree object is 70d105cc79e63b81cfdcb08a15297c=
-23e60b07ad
->  -----------
-> =20
->  --name-only::
-> -	Instead of printing both the SHA-1 and the name, print only
-> +	Instead of printing both the object ID and the name, print only
->  	the name.  If given with --tags the usual tag prefix of
->  	"tags/" is also omitted from the name, matching the output
->  	of `git-describe` more closely.
+Partly. The truncated sentence is a docs bug, which I've sent a fix for:
+https://gitlab.gnome.org/GNOME/libsecret/-/merge_requests/182
 
-This looks much better.  I didn't see any other instances of "SHA-1" in
-the documentation or "40", so this looks complete.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+The behavior itself looks intentional, though. The search does not
+load secrets of locked items, and just like a failed unlock, a failed
+load does not fail the search; secret_item_get_secret() is documented
+to return NULL for a locked or unloaded item. The daemon side is
+deliberate too: gnome-keyring's GetSecrets skips items which are
+locked or no longer exist, whereas GetSecret on a single item returns
+an error.
 
---/I6CEKfLKGTVzN1C
-Content-Type: application/pgp-signature; name=signature.asc
+So git needs to handle a NULL secret either way, including with every
+libsecret release out there. libsecret's own secret-tool also loads
+each secret explicitly after searching, which is what this patch does.
 
------BEGIN PGP SIGNATURE-----
+I'll send a v2 with a reworded commit message shortly.
 
-wr0EABYKAG8Fgmq5mdsJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZzvRFY2jaeKw9UxzhYcwfaByNGH/hv1xKByMeEBDTWzN
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAACbrAQDp6t1kyUp/cRbb9lTO1ayY9XnG
-OQtgIanSs6uwn3qaswEAwkUhDduGMXOTY8BSIBK0XnLe4l8VpUEO4sdd9+qoIQ0=
-=Gt1Z
------END PGP SIGNATURE-----
+Thanks!
 
---/I6CEKfLKGTVzN1C--
