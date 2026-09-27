@@ -1,127 +1,130 @@
-Received: from mail-dy2-f41.google.com (mail-dy2-f41.google.com [74.125.229.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD8835B636
-	for <git@vger.kernel.org>; Sun, 27 Sep 2026 05:50:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83FE35A39D
+	for <git@vger.kernel.org>; Sun, 27 Sep 2026 07:16:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790488246; cv=none; b=K5p8LARocrkQf+PDhVftuTILi11vllGWziG8OwTqbRmxs3E8fksFYeME3Xydvn7+IwfBODtjc/dpe60lsSkZwAWcHsm6Fn/hc0wHKQCgKUl2y97FvwkO5/jopdfzOS6UiO33ixW6z2QdgHGZWrjIHtqCANQpZs8brksOk58Qw+U=
+	t=1790493368; cv=none; b=TPEJRHGFnkiXvY+ZX64BkESv8cBcpB2fETZDsl3qMEuVjATtog8WBBX269nDy1h/n7Bfb3AG+cOPkwpp+QKAZDQEW9759zsLGwWLoBqKAr0L8/nhJiMIzpxhF7TPNp1M4b6w3EeFOrTlnKNJpDEa1XuauRJH66iOYjvFr/uEhwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790488246; c=relaxed/simple;
-	bh=oMGt5q8+G2PUpzoq1cZjb6UwNCmKqTxSdCp0iAagciI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HyMX0wthxbh8ovlC0S7bFtbwvGnMA3XGuazc6IAAXBTv+Y9GzWlH33j8Fpx32pegwvNEGGDedgnkq36NUCfwKW5so4mKPEAb0UGVFZ2fX8iE3gSUJ8ZNR5GeAvR9+ow51bt7lipzNi2ZbpVOMx4nefkj/ENxgUNUP1tiDSE5MDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WYVqNHyk; arc=none smtp.client-ip=74.125.229.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790493368; c=relaxed/simple;
+	bh=iK7ijIPTuTuWPWSITmDjzTFaDfPAsFvpquPTXz6e+3M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=CEhiD7WXfIHPNBiyqZwEnf0yHl46TQ+9q7nmqU+onzILA2AnZApiekbb2eWkOH+y0leJKLDk9PFspngNVsQ+LpO9ff8fK+pBb/7+h4gaBFh9sIZT3KhdM9Iw8KjZvfBSIVffX8Th92RVZ2/LI0ZRdiE5yQG8Lz+aKgDyGnu2x/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=mluXnIqJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nS/zkv+Q; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WYVqNHyk"
-Received: by mail-dy2-f41.google.com with SMTP id 5a478bee46e88-3468ec309afso39730eec.3
-        for <git@vger.kernel.org>; Sat, 26 Sep 2026 22:50:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790488244; x=1791093044; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=eMVXdnOd79VUE14vyd/tzTDQhy82O4DzapT2eMxLamc=;
-        b=WYVqNHykPCLd5M+El2IAVOjJyrHi3bjATZ1dgr8S2yBIo8cqffaxiih4O7mqxJcXPy
-         qStFM73gaFIlaTL24SOWrvKp3MbmW/1T1ft3Gwo1WOEp17/pIPwtnLWONAN8+sSalDM0
-         /U0JYeFABT+mr1BmBm6DazrfVFhkLBHIV1MWosu0vr+f7X93ZCPel8duLM7X60EnTvhW
-         ifabLCRhvTTTJkLE1HSqFrWRhxi3K9SusNDaznn6/muI0PUr+7owKOsO4edITf+o0+ph
-         dhWnryA7c83/WRB6KEnW0pCnqg8SVCLjwPxY82Rz/vl6JVUYXAD70OITRi3ge30SRrXG
-         9R1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790488244; x=1791093044;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=eMVXdnOd79VUE14vyd/tzTDQhy82O4DzapT2eMxLamc=;
-        b=Ln3f0wpX87HuJ997qNl8EYE7jaHsbyAvtMuDiNrYTH1jlqs9tRd1JakGP8vMA4HsdU
-         idVefomXthHbHgAK3QFYS1ikZJyBjvYidFr7UBRuvLXKGvbEouTJtXutagzZB0RAMy4D
-         Bvv34V/WILBBYp+sWNYMiqQobp2UCUCdGU//nLgh3CcePmw1M0QGiTW16nthcZzPcPEF
-         z/s4VlN7yCdt2XfRFpJ3IzRoM7EGVIgveRy0CBHMKR7oOq4ajkmTZxcwftIBZFdrB6NA
-         UqjIo00PJX0MSu6LRxe0qPY2+fVQOFNsl7W0a3q0K4c6udQftHmmjppSz62moRmcZ4Xi
-         zVAQ==
-X-Gm-Message-State: AFq9FYJAWfPyIuUE+3KTovP3Zuuh7Qm9JQlKe40JHhTQcQ8dAAU5g2Cc
-	igKptgG9SFOB0lcXRDvFn87b+3eKHK9Rcbqx8XIRhEOZGglUfpJZpmFRK2NRYZbkihGpZQ==
-X-Gm-Gg: AYBFou1VC8c2wbqk48snu4c6uNtHbGmr3lsZvvgdpnEn/5SxWqqTHQUqkmC/jrACWTp
-	zes7nooU44a4CgazIePqmot0rW/MtNUY9qB52aihrOUqAWmVqmz1Cht3MaelpP+h/CJuRxSMArA
-	PDFzfO9d8w3Jtl/rG36JT8YJAztLBgftd0SwRjR9wc4N27LoEV5RBuhNpjqp5Zk2st7IZOflcIF
-	uktivwl3PLzpLlpO1hPeGB5yIZvjkNYP+2dWvr4aHmhKgBehggWJcyIaGhcRZIWf8ZXCh6dUpM/
-	y+4bvhKz88xUmWBsTjoqyBV0l3EHcPksN4TeaAiq+QWTUxgDX0i5wS5QcP0T4ioAhMksCDqK0Wi
-	b9bZLM8QpIAURKS3StLCfl/PlT+WMCl+boDJPk43jKc31P2me9IvSjCG2e7gfWQlXwQSaKqH3vI
-	MaoYSKqWKzRiuqsL7F3q+36kc2nre8qPKTSQtSR3N0b52rlF8GMgnk84Ma1NWWyUfdjQVvSixg1
-	4Gip7ppl7ifYNU1WT4sXOeImC65bLFOec+VqQ4iBX1SuGv4gCXu2LtSlfRNUUnsZq1uY9ffhIRa
-	cW4FUK/RCwZmsiAEmPGgc5iIDwUlB8ji6ZearME/0wO5KugGKilF9TON07eM
-X-Received: by 2002:a05:7301:1a0d:b0:33b:aea6:17be with SMTP id 5a478bee46e88-3427324eedamr5188643eec.24.1790488244181;
-        Sat, 26 Sep 2026 22:50:44 -0700 (PDT)
-Received: from spider.bream-herring.ts.net ([103.6.151.236])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-34571658054sm1318185eec.8.2026.09.26.22.50.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Sep 2026 22:50:43 -0700 (PDT)
-From: Matthias Goergens <matthias.goergens@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="mluXnIqJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nS/zkv+Q"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id B5CFBEC00B3;
+	Sun, 27 Sep 2026 03:16:05 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Sun, 27 Sep 2026 03:16:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm1; t=1790493365; x=1790579765; bh=xB
+	omwR4HJd9sVHSwuvkQ+C3pGCnwgwz00O6GVMaSTN0=; b=mluXnIqJ2PCl8gZmCj
+	UFpY48BfDitZHMSPzKnyGVBgZnRfrpNbcXtM7sPuV3EVR4lWKJ/pBssmxVPFwxT7
+	NyXWLjLTVfMv7Q/IQ22fYi4lGR2E44EbBvXdsM9At0dCL2OiHCJ3PGR/nWW8bRMG
+	rTUk1Am6xYDv7DvgKVvQn/v0DoIYnUwsogxeeqRHQoT9oPM3YwsO5gMbEY4Wu3Mh
+	2MkK8p5cf/8o4hm0ywEB2YmhMUIaAw1iovLbc/V/Ywo9rhjJKZC9a7bo8z85XanW
+	nPcjVs6sXSsCjpxk3PtMloVdkudzjrrr9YV0FHA2lZ+mQBTpptJVb56SKetDbUhU
+	TmqQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1790493365; x=1790579765; bh=xBomwR4HJd9sVHSwuvkQ+C3pGCnw
+	gwz00O6GVMaSTN0=; b=nS/zkv+QqtCMkA5DOBRpvoqWinbTqBd0WRSZq/dLf+Lx
+	xXkCZlIT3YBKNkk8LelWsJWq3sb2M3ysMBqLBbfkBFEk2wi+QmVjOqVEjAJMpqdF
+	SKbDQumIwyCMPVa4b7sif+S9v7Hi58d/ZhcRgh18wjWOZ/fdXN4x30l9/JtKnF4S
+	VxIV+zUGg7b4mhf3JJbfe5YXzx2S3shLE+oP6/a3vfhYhqOibrA7RyuFQQaOopfA
+	fJ7xCpzwoq62nmlfnRd+lCssS6HU1sJ79eHww4hJwfWlCRoY2TDfM+ZugpVBntiD
+	+WgRGKGj/WbnzquDdmfVpnCJ/qix83iYuoB+nwFI0g==
+X-ME-Sender: <xms:tcK4aqe3A6XwJOnoAgHBXx8_y4t4Ib3aOQAqxiaoWJOPf5bgB4OrkdM>
+    <xme:tcK4aqPbHJIyyBSQvR7330NDSdyZfPS7Ptc6NT5Urq4mXChTwDOm1oQe81bVtzM0U
+    B0qhJR-iJZWjcn0OkvgUvavUOlbB_9sTpjlchieLsNJfCgURJSleQ8>
+X-ME-Received: <xmr:tcK4apLsKiydQb0mklWOm-bKmqwaLd2Y_nV8vAyw3nZ8m2ZFwuHFYhoNnsPbli8GyjBLb0FAsejXF-JfenRZm0XoH3MXlLAGKoMvyP9EcYf1mOie-cF58SE>
+X-ME-Proxy-Cause: dmFkZTFNGcdCDO+n3TxRx/XcEuN8MetRMRfzvo6NwVuIoCbS5xWES6ZdowUXfjzq1F/iFm
+    UXR9Sxo1XIKlkvITEa/eRRVeR4ZW4CgAjIgMrDq2kZ/tSCi7Wxfwyn2tMOGZOA0zfgI/yX
+    bX+jyrwydzZwJeJBdNgRWRr8CyEhvv15nm9fqiQf0SGjl5Kv6KdmXE2KWKP1YME/0wqNUQ
+    aVeI+1ZpYbqB5NJu9tw73teorbnw6DEtk5PO71MB2JxRV1cCB1Lq3jIXUBRGD6WoV5X1nK
+    Rq8RxT0vHTuLI6JFMtZg3/guRRSv3k2u73//C5x6EVeoY6RR+XKaHoov06EaNB9Vg8OkPS
+    ewvlPx9p0vTTFZ1Y7/biNLGAdp08qLzbgtZju9muujiTCZuTZePwn5+8dnOLTtSL+NYlhI
+    YOJknkUnRpQ56xSB/hZIaZw59oqIdv67pg/FbpMQUMH95TcGolC9f0HtFdICYcp94845Mh
+    z/fI3HEuaiiD9ZKelXNkQuCJ+neRaRshiFG22OIxXo7sXHYFS0CAi+u6mSsMUKP2fuXlYC
+    aJszFdtQrGXaibCjP1NRnQaktczGicNO6qRlqTYpVb42bfPyfn4BkaEdZFit2KDXsG74Fs
+    wzxT6p6AEEaWJm8M5yWD8qofrmAMwOnXWQsfvTd7WBkKzACsn4RO9ELaqoZA
+X-ME-Proxy: <xmx:tcK4ajEvRDnpjK2JyJoxGSmSkZQG_aiq_DbeD7X1mPLk9tcPF-4Mdg>
+    <xmx:tcK4apSbYI38OGO_y-M-WIHfJY-tmv5AaNymRyNpRez4oq3zq0mB_A>
+    <xmx:tcK4anEh8V8tmTvYpW3BMtnq4uOqC8ESNkCmeJmvHcMbLsIkcomsPg>
+    <xmx:tcK4at91dytvDSvigulaS4KHGZhihh2xy3lMoIxv-l80GY-GyR-1og>
+    <xmx:tcK4al2lKOP2_8R8IoE-QAR3jic1jdWMuSPbs64ODl-cmzKn1hxtTJUW>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 27 Sep 2026 03:16:04 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
-Cc: Niklas Cassel <cassel@kernel.org>,
-	Bence Ferdinandy <bence@ferdinandy.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH] doc: clarify that set-head does not change the remote's HEAD
-Date: Sun, 27 Sep 2026 13:50:40 +0800
-Message-ID: <20260927055040.2441925-1-matthias.goergens@gmail.com>
-X-Mailer: git-send-email 2.55.0
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH] .mailmap: map Kristoffer H.
+Date: Sun, 27 Sep 2026 09:15:20 +0200
+Message-ID: <mmkh.cde@msgid.xyz>
+X-Mailer: git-send-email 2.55.0.793.gc667de3f2c5
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-`git remote set-head <name> <branch>` never changes the remote
-repository's own `HEAD`, i.e. the branch that a fresh `git clone` of
-that remote checks out; every change it makes is local.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-The current wording, "Set or delete the default branch ... for the
-named remote", reads as though the command changes the remote itself.
-It was recently misread that way in a discussion on another project's
-mailing list, until a test showed the remote's `HEAD` unchanged.
+Map my email addresses for Fastmail and Gmail. Fastmail has been used
+for some trailers and Gmail for my first four commits.
 
-Say that the change is local and that Git offers no client-side way to
-change a remote's own default branch.
+The `code@` address is my canonical address here both for commits and
+for trailers. I recently posted about that preference.[1] But I can do
+more than state my preference, namely to make it possible to look up my
+preferred name+email pair:
 
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+    git check-mailmap 'Kristoffer Haugsbakk <kristoffer.haugsbakk@gmail.com>'
+
+Which one can use as a trailer command via `trailer.<key-alias>.cmd`.
+
+† 1: https://lore.kernel.org/git/add1abaa-5d51-43dc-9907-d6d3851004f5@app.fastmail.com/
+
+That’s the only motivation for this change. The Gmail adddress is just
+for completeness.
+
+Although the proper long-term solution would be to fix my domain so that
+Gmail doesn’t think it is suspicious anymore.
+
+Assisted-by: GNU Emacs
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
-The misreading is in this sub-thread of a Linux MAINTAINERS patch:
-https://lore.kernel.org/all/arfrW8NmQ4tsCF2I@ryzen/
+ .mailmap | 2 ++
+ 1 file changed, 2 insertions(+)
 
-On a gitolite server, the remote's HEAD can be changed with gitolite's
-symbolic-ref command, if the site enables it.  On kernel.org, for
-example:
+diff --git a/.mailmap b/.mailmap
+index 29b48905327..3aec9edfd16 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -157,6 +157,8 @@ Kevin Leung <kevinlsk@gmail.com>
+ Kirill Smelkov <kirr@navytux.spb.ru> <kirr@landau.phys.spbu.ru>
+ Kirill Smelkov <kirr@navytux.spb.ru> <kirr@mns.spb.ru>
+ Knut Franke <Knut.Franke@gmx.de> <k.franke@science-computing.de>
++Kristoffer Haugsbakk <code@khaugsbakk.name> <kristofferhaugsbakk@fastmail.com>
++Kristoffer Haugsbakk <code@khaugsbakk.name> <kristoffer.haugsbakk@gmail.com>
+ Lars Doelle <lars.doelle@on-line ! de>
+ Lars Doelle <lars.doelle@on-line.de>
+ Lars Noschinski <lars@public.noschinski.de> <lars.noschinski@rwth-aachen.de>
 
-  ssh git@gitolite.kernel.org symbolic-ref pub/scm/<repo> HEAD refs/heads/<branch>
-
-(https://korg.docs.kernel.org/gitolite/index.html#symbolic-ref).  If a
-client-side way would be welcome, e.g. a push option that receive-pack
-honours, I could look into it.
-
- Documentation/git-remote.adoc | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/Documentation/git-remote.adoc b/Documentation/git-remote.adoc
-index eaae30aa88..c9cf17e7bd 100644
---- a/Documentation/git-remote.adoc
-+++ b/Documentation/git-remote.adoc
-@@ -107,6 +107,12 @@ branch. For example, if the default branch for `origin` is set to
- `master`, then `origin` may be specified wherever you would normally
- specify `origin/master`.
- +
-+This command does not change the remote repository's own `HEAD`, i.e.
-+the branch that a fresh `git clone` of that remote will check out;
-+every change it makes is local. Git provides no way to change a
-+remote's own default branch from the client; how that is done depends
-+on how the remote is hosted.
-++
- With `-d` or `--delete`, the symbolic ref `refs/remotes/<name>/HEAD` is deleted.
- +
- With `-a` or `--auto`, the remote is queried to determine its `HEAD`, then the
+base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
 -- 
-2.55.0
+2.55.0.793.gc667de3f2c5
 
