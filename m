@@ -1,73 +1,73 @@
-Received: from mail-dl2-f43.google.com (mail-dl2-f43.google.com [74.125.229.171])
+Received: from mail-dy2-f41.google.com (mail-dy2-f41.google.com [74.125.229.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0283D331E
-	for <git@vger.kernel.org>; Sun, 27 Sep 2026 11:45:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714DD2DB7BE
+	for <git@vger.kernel.org>; Sun, 27 Sep 2026 11:45:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790509522; cv=none; b=WRQMuAwf97iB++QcPGfD6Plmfj4c8TuVEx64oV9xpy7urTjphtDt8wHnCQxbWXsLatDiM2tvswQ8LAooISsEc/9g21LET0QK0L4xhsQukHG/EmgLI3kWdSjx+J3oPpckems3gFMu2gy+bgu3PJXkqrS6iL547p+7i9pANWaCc8Y=
+	t=1790509529; cv=none; b=FS3kIpmo1ohfWcLy/qOB9kuo4P4eSg92jr1c/i9CwitS1Llo+kOKipXDU9QxZrbnqZKOGB6PPget9skdmPMo0YFufY3V+oa8CMbDGzW4nIGPHAPfvLTmQDeYWJZmADdh4/bTwI4GMujksIFi76BgwAMxQA5sNwvc38CdeMK05ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790509522; c=relaxed/simple;
-	bh=aS+7IWol2jM2TUSr6RbXDst0IyOfnp4w1NjRlSRvgpo=;
+	s=arc-20240116; t=1790509529; c=relaxed/simple;
+	bh=hWL6dd0PCT6sn/2E/xbLFOKRgbBL3GJkXQToz0xecJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qNO44hqzCNJiA6HCiVw1n+jznVC+CA8aSm1bGYkT0CV1nKl+d8zSFCC/ZdMWmmnBQxLXY/03/NUXbIuRN4YFhnvxSgSGy3U/GiLHTS28kxskbMwI14UY+RNIiCsE+fbeipG7Cx62do4ZbOML1TKqADqQA/Hd7vAXByUx1Saxv+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CWkTNIfG; arc=none smtp.client-ip=74.125.229.171
+	 MIME-Version; b=rUPYeXO/zsPAqv+dslSZjAeI9UGEDwVuB3BioCVduSqX4Qn5P+4FX8bbLvWeUCAAmX5Hd/spsw82fpg0ntcxFF7OrhtzhAdbt6hoTcuh1f87xxRvMix3daaViRWIkJmYGXiMS+c9ySwp642zJaKwrH4/nh3cTzZ5q3BZ5kz+AVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R3ZR8dxu; arc=none smtp.client-ip=74.125.229.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CWkTNIfG"
-Received: by mail-dl2-f43.google.com with SMTP id a92af1059eb24-1450541ab18so2523079c88.0
-        for <git@vger.kernel.org>; Sun, 27 Sep 2026 04:45:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R3ZR8dxu"
+Received: by mail-dy2-f41.google.com with SMTP id 5a478bee46e88-3468ec309afso144956eec.3
+        for <git@vger.kernel.org>; Sun, 27 Sep 2026 04:45:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790509520; x=1791114320; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790509527; x=1791114327; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=IWZ1N1fVFoTw8gQPGChLu7yRZ5cE6qJOAwLKYpSwjkw=;
-        b=CWkTNIfG7OgNZ3Scx2VUIR5etnM5rtQAhxE24b8eHFjsDBOZDLBpHZaZFUrxFEzLtH
-         E1eQgC2DKwPcFT1EuRqVkik6hLng/mrMbmfKQ2rKUg6kwa5okOENWqvMqdzpVic+dCw/
-         OJZJOwLVwNJdvbNzEEdSHIEgLLftkKvKvU91UX2Q0ju7pNTD5N3XW0WAocg+PmIxoj3K
-         s8nvgEJxhz1sfPg91pQtbUbAZHKVWiRkdmhdm6cyitnoErarqjptkhgAU25BKhn34E8y
-         QamzHEUhD9agR3XCF4mYsLUqcGtG3RNx7+TGj5dpAYDuA5vQUN/AyaIz3LO+4PxI1Iej
-         ti5Q==
+        bh=mpfPC132R6aZtVzOsG1KxOhgyDJiWKnllpHeL0xA+Qk=;
+        b=R3ZR8dxubcwB3uXrfh9LiZHptXhd9VmOT9u5ALkshE22GjFqpDrSkOPEsO95AF0Kjw
+         aELzTi5MabYhyekq4SK4GF/zoB/QLbfdrQaCLt7UcqqUWS0O01Eekqd5R+Rw7r/YPq7K
+         V8xBss9fEtmA5Tt3i8uqFlWmZr8IajK0EY787bbeuc2fW8jVBDVzGWRV4IzKt36MOL+N
+         QdV2U533Ygn34UhWqW3UOfq58OtF0O/QuSAuI5T6Q15Z/wC1tDCCXOHHSGsg+e4Slf0z
+         jT/guRHizmRi+B1bTMAjDCWTOGXXS7qfHU8zYvrynD/LZf0kgQC+Kfrt9LJINzfGLSaq
+         kL4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790509520; x=1791114320;
+        d=1e100.net; s=20260707; t=1790509527; x=1791114327;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=IWZ1N1fVFoTw8gQPGChLu7yRZ5cE6qJOAwLKYpSwjkw=;
-        b=0fbSB4b1xLu3LhpgxWCTpGLdMaNjjRNVNOFK27rVmbEVPuvYxdLuKQ1zTjy2C2NJf2
-         RmY5rNzU0CnjCD9jSD3eT9FufoE7AZrhxKxGp/7eup9MQcNgpfeUjWFwVM2/o2jNk9WT
-         NMOxroifxgWqVo5iWzL8McSaWATr3hs/C8ydK0DTFiFpRS1GJLEpJtfesW69lt+QQVqa
-         C7H5AvkkH2+eHm2naHXnaqI6WbgdNRbTtl2bOeWOFMwUnQ1EQvPk7aqhnic34lnZSJcM
-         xs67AZanJffurf/D4MaEjF0WOfhkYhoWmOeQO63Hyybj+yFoW48YW5UACMvyetC8uWGb
-         3x4A==
-X-Gm-Message-State: AFuF++lL3kmVGJv9ZyBO81eHplrd3i1/Jrd7Zm3iU0hcHkWJy1xySaSF
-	bIBcLQUof5AAC2XknvfSSe49qaqyxOlXJYzK3RaW7G0MOZEtGsyZsAx/
-X-Gm-Gg: AYBFou0CpJCtjg5kwGYk0abVKcJkGUn2i0Eo0ibtk8EMpBLInPrMdVYM6IAsHynO9l3
-	z5iq3gAQWLDDvdL+LlWSfKsCTTY7lcWdGO2P2dZ6hUA5PKPh5zKmoODlsWYeBRDNdxKbXM74biK
-	3yfLxKVFSZK3FtxP4p6erJp+od7prsSKrxMAF1ed8ejP4vMUMe8XNsZm/NusfxoLNBv+2Yi+ODA
-	mRB80o28lyYoIz6PmEbNx8npnxHpLYO9XnFy+F/kvmzUdWfSA4BX7hjJMciTb5h+9QU92ADdp7H
-	b6H6qgtXelRHJ4mkYq432o8jJ/Zy4XyPGaHaKI/W1hriLjdpluTy5c+YeBGMSRfKjGxkrJ49ME2
-	CPqJCUXti/KrFeY9s7WkDKOy0I4dZVdzV8akksnY8NxI3tgoCv+g1USyuw6AbkLC6wRKToTAuLK
-	ovcL1uTHP4OiLZ9IiZO4mVM0iaDc86l9k1KaaYdB0HmsQBcc8Vn7JGCPiRzOojPGSA/p115zuA/
-	YH01v1LMqcrM41V+JBhoHJtu6xtJRg/ZvTbfIORnQXbvtr55b8GG11WyWisuGyGrQVQU5YBJv/G
-	erkh
-X-Received: by 2002:a05:701b:4305:b0:13b:3bee:1e2e with SMTP id a92af1059eb24-146ce77543dmr7138313c88.18.1790509519869;
-        Sun, 27 Sep 2026 04:45:19 -0700 (PDT)
+        bh=mpfPC132R6aZtVzOsG1KxOhgyDJiWKnllpHeL0xA+Qk=;
+        b=taBpso1V9nV3e1wd56W0+rzYC8PS4M25Wz1tTLo+mMI2J2Uy7S98sbCDI2zBAY4b2e
+         atMSeMzV+lb+Y0EjyrIhxHP1jU2X3SxNph7WVr41MsZQZD2eYahzIJvVgKbMjCOUrABy
+         lsw2ayAKxHVidvsNQY0dO52bhD+Mis/fSvFLIs204sI64mHuhGnM96SlCViET6MVb+Oy
+         znv1BJIYDCKONk4kFpuDZRXYAOTJqOO5PnOfm8xVIhykKuRT4UqtHTIZd4GyKxnrRdtv
+         1kA5nYDvMQhcO3rli/b5VguUxSao1JcVLq3j3BZVrh3W/NNLre2dnsmO5gM/eCvXO0wq
+         Fw7A==
+X-Gm-Message-State: AFuF++klKfR+siYHOuFpbkVq4c3RuMF48dMkH47ajpRY6gZVJaOb2q5T
+	kaSieQeuOtgR8uF2V1+Lezhemq8dqvs0GwUNJZVCuwTLjZtowkugmLYB
+X-Gm-Gg: AYBFou0ypwd+wkq4whj+WPtGyT6Q+VLcltPDCtonx33sjaMUrmzmTsWxHLLKZU5RpHD
+	dL2HEHThxW4r9tntDqntJx04TCzLlLkQr0Cr+OBFEV60tOkh6fJiWepgxaMRnKdMD0EbwZlvgHJ
+	6toTd8RjCBC5ehgdq5bJMMM6fRj+02H7Z18JXfE5XKjHPlxvoYoWVTSPTgBWGwPQXjAPnEKCMSw
+	WmagPznMKIlHJnDmn9wnclDFjRUW6bOYrjquVu3Urts8BvbLxsXh2XIUYO4PpJS1+fob5NGrufZ
+	ODx7YOzjvEq94lQzLjVLg4+rFrLB/b/rxvUaH/r4WnoeRfcJ6KsBgnj2c9ithM0pi9aE1CTEN+w
+	msUMjHFjgjWKlGKLZVaTDsJE8kHQ+kaEy/Y6RkUrN4IJ5Q3kjGTlyioZvcJ7/MuM2Uc0rBoJrax
+	FE5exmeEZ72HW6FWqLKUxXoRCFM/n4XXU0TpZ5bVS3W/LgiBQN0ew9QSXvlYgw3LA62aGvraMt8
+	EfdXsz74i7jsRLkUI5u5ThFFCTabipGHz31igYlJqRN4sKgnIDY5DLMyG3Nj4gP0CLsxF8aEB1Q
+	zrWz
+X-Received: by 2002:a05:701b:2919:b0:13d:992:ffa with SMTP id a92af1059eb24-146cdebd327mr4496172c88.6.1790509527270;
+        Sun, 27 Sep 2026 04:45:27 -0700 (PDT)
 Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-145a7318afcsm17450424c88.0.2026.09.27.04.45.17
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-145a7318afcsm17450424c88.0.2026.09.27.04.45.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Sep 2026 04:45:19 -0700 (PDT)
+        Sun, 27 Sep 2026 04:45:26 -0700 (PDT)
 From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 To: jayatheerthkulkarni2005@gmail.com
 Cc: git@vger.kernel.org,
 	jltobler@gmail.com,
 	lucasseikioshiro@gmail.com,
 	gitster@pobox.com
-Subject: [GSoC Patch v7 2/8] submodule: use repository to find superproject
-Date: Sun, 27 Sep 2026 17:14:14 +0530
-Message-ID: <20260927114420.59724-3-jayatheerthkulkarni2005@gmail.com>
+Subject: [GSoC Patch v7 3/8] repo: add path.superproject-root with absolute and relative suffixes
+Date: Sun, 27 Sep 2026 17:14:15 +0530
+Message-ID: <20260927114420.59724-4-jayatheerthkulkarni2005@gmail.com>
 X-Mailer: git-send-email 2.56.0-rc2
 In-Reply-To: <20260927114420.59724-1-jayatheerthkulkarni2005@gmail.com>
 References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
@@ -80,170 +80,114 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-`get_superproject_working_tree()` currently uses `xgetcwd()` to
-determine the repository whose superproject should be checked.
+Scripts working in multi-repository setups often need to identify the
+top-level working tree of a superproject from within a submodule.
+Currently, this is only exposed via `git rev-parse
+--show-superproject-working-tree`.
 
-This is incorrect when `--git-dir` points to a repository different
-from the one associated with the current working directory. In that
-case, the current working directory may cause the function to return
-the wrong superproject or an empty result.
+Introduce `path.superproject-root.absolute` and
+`path.superproject-root.relative` keys to `git repo info`.
+This exposes the core submodule context via a scriptable config-like key
+using standard format rules.
 
-Pass the `repository` to `get_superproject_working_tree()` so that the
-superproject is determined from the repository being inspected rather
-than the current working directory.
+If requested when not inside a submodule, the command returns an empty
+string.
 
 Mentored-by: Justin Tobler <jltobler@gmail.com>
 Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 ---
- builtin/rev-parse.c        |  2 +-
- submodule.c                | 43 +++++++++++++++++++-------------------
- submodule.h                |  2 +-
- t/t7400-submodule-basic.sh | 19 +++++++++++++++++
- 4 files changed, 43 insertions(+), 23 deletions(-)
+ Documentation/git-repo.adoc | 10 ++++++++++
+ builtin/repo.c              | 31 +++++++++++++++++++++++++++++
+ t/t1900-repo-info.sh        | 39 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 80 insertions(+)
 
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 43693454d5..e1a6da0076 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -997,7 +997,7 @@ int cmd_rev_parse(int argc,
- 			}
- 			if (!strcmp(arg, "--show-superproject-working-tree")) {
- 				struct strbuf superproject = STRBUF_INIT;
--				if (get_superproject_working_tree(&superproject))
-+				if (get_superproject_working_tree(the_repository, &superproject))
- 					print_path(superproject.buf, prefix, format, DEFAULT_UNMODIFIED);
- 				strbuf_release(&superproject);
- 				continue;
-diff --git a/submodule.c b/submodule.c
-index 6fcb606f7e..4db90ef9b0 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2610,34 +2610,35 @@ void absorb_git_dir_into_superproject(const char *path,
- 	absorb_git_dir_into_superproject_recurse(path, super_prefix);
- }
+diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+index e34abe5fea..e524a07f53 100644
+--- a/Documentation/git-repo.adoc
++++ b/Documentation/git-repo.adoc
+@@ -119,6 +119,16 @@ values that they return:
+ `path.gitdir.relative`::
+ 	The path to the Git repository directory relative to the current working directory.
  
--int get_superproject_working_tree(struct strbuf *buf)
-+int get_superproject_working_tree(struct repository *r, struct strbuf *buf)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf one_up = STRBUF_INIT;
--	char *cwd = xgetcwd();
-+	struct strbuf target_wt = STRBUF_INIT;
-+	const char *worktree;
- 	int ret = 0;
- 	const char *subpath;
- 	int code;
- 	ssize_t len;
- 
--	if (!is_inside_work_tree(the_repository))
--		/*
--		 * FIXME:
--		 * We might have a superproject, but it is harder
--		 * to determine.
--		 */
-+	worktree = repo_get_work_tree(r);
-+	if (!worktree)
-+		goto out;
++`path.superproject-root.absolute`::
++	The canonical absolute path to the working tree root of the superproject
++	if the current repository is an initialized submodule. Outputs an empty
++	string if not in a submodule.
 +
-+	if (!strbuf_realpath(&target_wt, worktree, 0))
- 		goto out;
- 
--	if (!strbuf_realpath(&one_up, "../", 0))
-+	strbuf_addf(&one_up, "%s/..", target_wt.buf);
-+	if (!strbuf_realpath(&one_up, one_up.buf, 0))
- 		goto out;
- 
--	subpath = relative_path(cwd, one_up.buf, &sb);
-+	subpath = relative_path(target_wt.buf, one_up.buf, &sb);
- 
- 	prepare_submodule_repo_env(&cp.env);
- 	strvec_pop(&cp.env);
- 
--	strvec_pushl(&cp.args, "--literal-pathspecs", "-C", "..",
-+	strvec_pushl(&cp.args, "--literal-pathspecs", "-C", one_up.buf,
- 		     "ls-files", "-z", "--stage", "--full-name", "--",
- 		     subpath, NULL);
- 	strbuf_reset(&sb);
-@@ -2648,14 +2649,14 @@ int get_superproject_working_tree(struct strbuf *buf)
- 	cp.git_cmd = 1;
- 
- 	if (start_command(&cp))
--		die(_("could not start ls-files in .."));
-+		die(_("could not start ls-files in %s"), one_up.buf);
- 
- 	len = strbuf_read(&sb, cp.out, PATH_MAX);
- 	close(cp.out);
- 
- 	if (starts_with(sb.buf, "160000")) {
- 		int super_sub_len;
--		int cwd_len = strlen(cwd);
-+		int wt_len = target_wt.len;
- 		char *super_sub, *super_wt;
- 
- 		/*
-@@ -2666,12 +2667,12 @@ int get_superproject_working_tree(struct strbuf *buf)
- 		super_sub = strchr(sb.buf, '\t') + 1;
- 		super_sub_len = strlen(super_sub);
- 
--		if (super_sub_len > cwd_len ||
--		    strcmp(&cwd[cwd_len - super_sub_len], super_sub))
--			BUG("returned path string doesn't match cwd?");
-+		if (super_sub_len > wt_len ||
-+		    strcmp(&target_wt.buf[wt_len - super_sub_len], super_sub))
-+			BUG("returned path string doesn't match worktree?");
- 
--		super_wt = xstrdup(cwd);
--		super_wt[cwd_len - super_sub_len] = '\0';
-+		super_wt = xstrdup(target_wt.buf);
-+		super_wt[wt_len - super_sub_len] = '\0';
- 
- 		strbuf_realpath(buf, super_wt, 1);
- 		ret = 1;
-@@ -2681,10 +2682,10 @@ int get_superproject_working_tree(struct strbuf *buf)
- 	code = finish_command(&cp);
- 
- 	if (code == 128)
--		/* '../' is not a git repository */
-+		/* parent directory is not a git repository */
- 		ret = 0;
- 	else if (code == 0 && len == 0)
--		/* There is an unrelated git repository at '../' */
-+		/* There is an unrelated git repository at parent directory */
- 		ret = 0;
- 	else if (code)
- 		die(_("ls-tree returned unexpected return code %d"), code);
-@@ -2692,7 +2693,7 @@ int get_superproject_working_tree(struct strbuf *buf)
- out:
- 	strbuf_release(&sb);
- 	strbuf_release(&one_up);
--	free(cwd);
-+	strbuf_release(&target_wt);
- 	return ret;
++`path.superproject-root.relative`::
++	The path to the working tree root of the superproject relative to the
++	current working directory if the current repository is an initialized
++	submodule. Outputs an empty string if not in a submodule.
++
+ `path.toplevel.absolute`::
+ 	The canonical absolute path to the top-level directory of the
+ 	repository's working tree. Outputs an empty string if the repository
+diff --git a/builtin/repo.c b/builtin/repo.c
+index c31e9cfa70..27ebb7a1c9 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -18,6 +18,7 @@
+ #include "strbuf.h"
+ #include "string-list.h"
+ #include "shallow.h"
++#include "submodule.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+ #include "utf8.h"
+@@ -121,6 +122,34 @@ static int get_path_gitdir_relative(struct repository *repo, struct strbuf *buf)
+ 	return 0;
  }
  
-diff --git a/submodule.h b/submodule.h
-index b10e16e6c0..1a465a1208 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -170,6 +170,6 @@ void absorb_git_dir_into_superproject(const char *path,
-  * project is a submodule of. If this repository is not a submodule of
-  * another repository, return 0.
-  */
--int get_superproject_working_tree(struct strbuf *buf);
-+int get_superproject_working_tree(struct repository *r, struct strbuf *buf);
++static int get_path_superproject_absolute(struct repository *repo, struct strbuf *buf)
++{
++	struct strbuf superproject = STRBUF_INIT;
++
++	if (!get_superproject_working_tree(repo, &superproject)) {
++		strbuf_release(&superproject);
++		return 0;
++	}
++
++	format_path(buf, superproject.buf, "", PATH_FORMAT_CANONICAL);
++	strbuf_release(&superproject);
++	return 0;
++}
++
++static int get_path_superproject_relative(struct repository *repo, struct strbuf *buf)
++{
++	struct strbuf superproject = STRBUF_INIT;
++
++	if (!get_superproject_working_tree(repo, &superproject)) {
++		strbuf_release(&superproject);
++		return 0;
++	}
++
++	format_path(buf, superproject.buf, repo->prefix, PATH_FORMAT_RELATIVE);
++	strbuf_release(&superproject);
++	return 0;
++}
++
+ static int get_path_toplevel_absolute(struct repository *repo, struct strbuf *buf)
+ {
+ 	const char *work_tree = repo_get_work_tree(repo);
+@@ -159,6 +188,8 @@ static const struct repo_info_field repo_info_field[] = {
+ 	{ "path.commondir.relative", get_path_commondir_relative },
+ 	{ "path.gitdir.absolute", get_path_gitdir_absolute },
+ 	{ "path.gitdir.relative", get_path_gitdir_relative },
++	{ "path.superproject-root.absolute", get_path_superproject_absolute },
++	{ "path.superproject-root.relative", get_path_superproject_relative },
+ 	{ "path.toplevel.absolute", get_path_toplevel_absolute },
+ 	{ "path.toplevel.relative", get_path_toplevel_relative },
+ 	{ "references.format", get_references_format },
+diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+index 9417d1ab65..eec576a1d9 100755
+--- a/t/t1900-repo-info.sh
++++ b/t/t1900-repo-info.sh
+@@ -213,6 +213,45 @@ test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir' \
+ 	'.git' \
+ 	'GIT_DIR="../.git" && export GIT_DIR'
  
- #endif
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index eefdecb0bd..5c3d9f2829 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -1549,4 +1549,23 @@ test_expect_success 'submodule add fails when name is reused' '
- 	)
- '
- 
-+test_expect_success 'path.superproject-root works with --git-dir' '
++test_expect_success 'path.superproject-root absolute and relative' '
 +	test_when_finished "rm -rf sub super" &&
 +	git init sub &&
 +	test_commit -C sub initial &&
@@ -253,16 +197,38 @@ index eefdecb0bd..5c3d9f2829 100755
 +		git -c protocol.file.allow=always submodule add "../sub" sub &&
 +		git commit -m "add submodule" &&
 +
-+		SUPER_ROOT="$(test-tool path-utils real_path .)" &&
-+		MODULE_DIR="$SUPER_ROOT/.git/modules/sub" &&
++		cd sub &&
++		ROOT="$(test-tool path-utils real_path ..)" &&
 +
-+		echo "path.superproject-root.absolute=$SUPER_ROOT" >expect &&
-+		git --git-dir="$MODULE_DIR" repo info path.superproject-root.absolute >actual &&
-+		test_cmp expect actual
++		echo "path.superproject-root.absolute=$ROOT" >expect.abs &&
++		git repo info path.superproject-root.absolute >actual.abs &&
++		test_cmp expect.abs actual.abs &&
++
++		echo "path.superproject-root.relative=../" >expect.rel &&
++		git repo info path.superproject-root.relative >actual.rel &&
++		test_cmp expect.rel actual.rel
 +	)
 +'
 +
- test_done
++test_expect_success 'path.superproject-root returns empty when not in a submodule' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++
++		echo "path.superproject-root.absolute=" >expect.abs &&
++		git repo info path.superproject-root.absolute >actual.abs &&
++		test_cmp expect.abs actual.abs &&
++
++		echo "path.superproject-root.relative=" >expect.rel &&
++		git repo info path.superproject-root.relative >actual.rel &&
++		test_cmp expect.rel actual.rel
++	)
++'
++
+ test_expect_success 'path.toplevel absolute and relative' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
 -- 
 2.56.0-rc2
 
