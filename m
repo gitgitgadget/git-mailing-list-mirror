@@ -1,136 +1,239 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFBF248880
-	for <git@vger.kernel.org>; Sun, 27 Sep 2026 14:12:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34023B14AA
+	for <git@vger.kernel.org>; Sun, 27 Sep 2026 15:19:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790518365; cv=none; b=GZ0m0i3dfqPOMfl7yu0LLWHY59//Tw0cxaqk+n7qWVgReedt3J4KZ7hDtf+0f/UoYEzP+LFXH/ZOJ7g5IMedaKFDVM378pBfILwGsdBOfSO2Y7fISZWAmLccbTAhzNRas94MExYWyENbyEOJ6pDE4HctG72jeRDE91kD8e/8IJs=
+	t=1790522369; cv=none; b=dUYVzU4PD+okZLSZxakZTKPX651AB0y9hwI67zQmNP0eMLsPSKSmSgSdg6mnkDiPK+EfspkO6YZbb13psto+Jc7m3ixNpJ5X8T4yM++psJ2665zMITR3VW4SSYSmpX/B9yS95kkelC1QNkpM6trJbcUYKQg723CcjWL139KOigI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790518365; c=relaxed/simple;
-	bh=IhMwC9jlXFmtt0YF6nhiVmb0gwCdciB6c4u0KosluSc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=U5vwp80opZ/TWm/AsrAhe/+9yp+6qhoQx6mw48rUSlffbJ6XKqFuTxfxIeaDvg98cb6zHNjmv4K8NycJ3ma+BTZ/erhvZP0UG+ZJ6lYAiTUrZWwffoXKEoo6eL16wPT6Aw5yvVQk5LMbjR5J80heLWteWhvSEgy5j+jot/Ao1Uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=bZCzqwpe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bznUtXfZ; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1790522369; c=relaxed/simple;
+	bh=y8xPUme151g4sjD00apxzpU/kwJPmqJV4JGUcE/VADk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=O7g6HQ/pvYq646uRMX8k9Z9fE7kwC/PKEZ8VR/2Zj1upnodRZcHUQvaFPJHs0x2ivVbsa53ZutP7qK2pOFcMzVIBJZTFhMNRsvfUFgPhUAO9pNAR6s1fhPPtby5B8SWLYZB+z8Qp1cAsyoEanr7cWP0slH+/V++3JuVgK6OXnSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GZNUUVGS; arc=none smtp.client-ip=74.125.225.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="bZCzqwpe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bznUtXfZ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 477DB1D00046;
-	Sun, 27 Sep 2026 10:12:42 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Sun, 27 Sep 2026 10:12:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=fm1; t=1790518362; x=1790604762; bh=UVxvFklC7guD03+/m28Pn
-	i8fhSYpZ/pj0AmFUxnHtsI=; b=bZCzqwpesrapwnUE7BV+LnSqbLUNhXlCgY2xL
-	N+zfsPpxTaknL9EitS9VwD3S2zadO5Kq7SzTLDhMl/xkqdD2YK66VyHVTLyVnUwA
-	zFWLZEhZnr8GYRusC2Jf4H+Evcm24i9zyiZG1YjImAk8hbipf8J+HyrxN7U5cCBh
-	Q1SRelgtOsW5hUHd21XcifQXUl75BE30fOQRFdRX5XVQMuW7T66iGUuOIcETPx1c
-	uz7NwPqBg7oGyqxC27u3i6ND1vAbkyErN/m4yIV3RXpe/wQXWW75k9erIoqXpWmW
-	ED0wG0LkkAU7d5BBdjV8niovG6YSujj7hFFjfXOOWboq8gGdw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790518362; x=1790604762; bh=UVxvFklC7guD03+/m28Pni8fhSYpZ/pj0Am
-	FUxnHtsI=; b=bznUtXfZFTCNyukgIKZHzWYyilkJ07kFNwNsC+pza7jCsIDK3SG
-	W6HZSREtQ3qRFyj4nB5BI7nDYhGGZjHJq4POMYFFwknfwl3UCq14MDEudRdz3p+E
-	YOo84u3MoJXhaZT93aTDoAeNYzpsg5RnvrI7lJQCQatHlUmjk3MCE2ErFWl3raom
-	8/RnkzG148IHcA7p2ueVPbkhwp4wG+u4bPvPvjarO0Y7+K7cWV6ItuQ1f+PLFVXM
-	HdsqFmsFs/3mR4MsQrfuruCwT/kTDn9Kf9z4tGKLh9DogbmUbHxNaWOTO5tpC2cN
-	SMd+VptJhWL4kBcmZHRi/4vNsmaQVqZ8/PQ==
-X-ME-Sender: <xms:WiS5asBMmCZ6pzKcUh0wfA1SbJhf8N9ciTGtdZu5AUj2YvNWTVpvnjI>
-    <xme:WiS5al8lnzYrDAcNwIVPw-OZgJWytvqPcVmQhtsjQhoJkhxs9wev3hN7UeSrd1yaT
-    BphXCJB1qjS3FIXxG247ad7aoIQCmDdojzM0ArekAQwq-aymH_3BV75>
-X-ME-Received: <xmr:WiS5as9LaEcxkYfsInSfQ7do8tWJwZG069Zz-Se1W0GUh2DRJZUcYpVlh-5YlsqlibTgu4uVhARNzOhor4aupbq858HoKkIhVwUVLhByWU9BhzNjElwtXlw>
-X-ME-Proxy-Cause: dmFkZTFnJwXwvLPvr8FoDRQqa11Q8j4o1ZbG4g52o/zxoFG4S7s3KxqzURGjO3CnTVEfKh
-    uuTP/9feoeH5/USiAIK0IyZB82ovSK03mR8cwTaN0Tjfc90Nso/fwu3tCO4M1y/LdfIXPX
-    9ffHGztU78c1RFhZhfLLGDcUOpWxwqWtTyFInpKNOsMAv4446ARXL6EwiYAM5qMYCb/4iO
-    y+WqMGoYMnNM8P2pPocLWMFSb/KlJ8HgGNUFUlbwhWNS1I2BChFo9UwKAnMXiELLMrl0Uh
-    3E1Q/pPzwekAEk8JHwH/aWUJ2Mm3nERjZNT9fdTyJTFI1Klygt8+7HyQfUolKuAaEn2rpH
-    41DXI2P2XrL7UmSF/IV48TJwsQMwfbCjFNLwyiHpLtq9jIj5Kr8W3jLwRDB7hI7dm3IoRm
-    caabTAQ+7RnCYJpN7h8VgsyYBgWcmDWToCTZRoalJFJ+ShGRb754YZB+S0TON9Deu+b9Ed
-    2RlSLSHG2VWq9eUDMEXHwSZ6Uk/671q2gDhIupDkMUje/5PTlGKxxpTshuEwLKRcb12SUN
-    AesA3g+p+XGt6yD/hq2pNfzs9ldLGMnTELrYVePRIUwsh1fXDoxHK9T/MD4eHHGq0ieCX/
-    MNVa0KnQ2+GPO/YFfHZvUZLxpWbVz2Y3WVmcESax64naf3xiS/gW3cUCRyAg
-X-ME-Proxy: <xmx:WiS5asfEIml8AYOV6MVY7M9etxSnqq7fc6HRSDpWpEacBMjb0KoBIQ>
-    <xmx:WiS5alEObmTbMAPMdWT3fKh6J0W_i8vTk62SqdHpYqcARyzO3tGOiA>
-    <xmx:WiS5aqdf9h62xK74ANrVAjOGOytsQr_-9dDtxqj55Pk9J02V7VMbmw>
-    <xmx:WiS5avHNnfbhsQz3Ttj3t5SohOK9y3MpDKEczr9Uv60XxuyXCrTatA>
-    <xmx:WiS5al-cbvrXcD-Yt8s1IIGAbF3zkwGWrS-r_O6MlQR-boYVLteiJrS9>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 27 Sep 2026 10:12:40 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	ZheNing Hu <adlternative@gmail.com>
-Subject: [PATCH] doc: interpret-trailers: fix cmd examples
-Date: Sun, 27 Sep 2026 16:12:27 +0200
-Message-ID: <doc_trailers_cmd_examples.ce1@m5gid.xyz>
-X-Mailer: git-send-email 2.55.0.793.gc667de3f2c5
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZNUUVGS"
+Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49ffe817151so4390475e9.0
+        for <git@vger.kernel.org>; Sun, 27 Sep 2026 08:19:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790522366; x=1791127166; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=ilSdAbbhXdaO36RgrxMp68V/vg0lg4qcaWCfgn2bvW4=;
+        b=GZNUUVGStW8UoJKe19+6kPdeqAplaww04emMRgkDIjbI92zGFJHXi4pkDHTUms5djK
+         sC/mBiuHM0nU8E/SVojohME4aIbJsIN/t7DfqbLl5IDbVwV1wupHHs6vHxT5k7BN+7OZ
+         tVi0lntvTlkZE5CDw78NHWodpGNZTJfb0sS2gcz6CqT4dmhsF1rkBmbUEdxY9DqzJoZB
+         t7m+lBJceiuUQupnON3ibyMvlhBrPGR2Mk+ihNCFBM/7l5ftvX9nGLUnK5CB9pjMFub5
+         MItQN7sWy24S8lExQnb+KEAqedOrhGe1IjdXBUqeWm2+wy1zzVsuxN57lVwp8KVJvjSX
+         dvvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790522366; x=1791127166;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ilSdAbbhXdaO36RgrxMp68V/vg0lg4qcaWCfgn2bvW4=;
+        b=j3RZdpm9BTTPehzcshwUNq3s+M2D0MGpgjpN3vIs4KE4ce9WLbapXgUR/To3Pow+Eq
+         9zYmkvl/7vL27UxlY2nNU2GpmzExbTdl0nrtkSCJh7+6YM+3x5ZZtnD5nOSqMoMs6GIA
+         fWPIRz+GfSLSCcged5zkWcQ7ZtOxFlvjGlLWTxBdC815xYoLnnI3WemK5kyHORzTQbrz
+         PKqDPe8FrcRW7FzIAtOSYb4Ad4EnqarEZ2Z281pdRpn42vJCuc793MgF6vtbop785B9y
+         X6EISPv5UWP4uZkuO3X6bMN8m71EV0Ut/+7H3FGA+gbGSU2tR+WITcbOke0gyj1uHCTG
+         4BuQ==
+X-Forwarded-Encrypted: i=1; AKwUvBzEk7qIj5TBG0L5ozLB5CmB8TA8g+zwFZZGKl9R3tix4SSWyGdSaleKyQ8CWP9KzyrEWGw=@vger.kernel.org
+X-Gm-Message-State: AFuF++mWDXjkq337GGer/jWKceWajcUU8j43phknrjWQU0t9ALhROwmQ
+	BidWWtmeAkONuzMGrsrUJw5oxac2ZXnKH0xLxbzeWudn/+fazzzX+ouOAoMrr3R5
+X-Gm-Gg: AYBFou0pPE1p/mtUpYO0xxVTVF9xHDm1gH630Ct6AUiY1NmgGGiiPpj07eNy3UpWK2w
+	AvcQ+tYErbok4zjX2vy/jbxr4cy+yCOSjVTX3Aw8VqFjtaEWY9OXf2VQBVhZfB+z3gCEt75Fq6C
+	SI8iEsxgsxT+ldy+E3FR9NW1c049WjGQWBE+rCmYLZ3lda8JU4Zlh5t7k3BY+KUxLVHVKIUMiDJ
+	/zpFSHdvN2BfKFtoNRxbLX6/U+uqgL9YCo6/M1Bz5XpJ2oH3aha70PTiqMkRneP7b3182/GkAET
+	uJrHBG/dWQHWJx/GzAl2IWcCfuPUYvoU0w3yoqG7abxMQynaigfU92VhvUKu8CYT61ERtKATeZG
+	OGZXDfpmTa9s7jqSKeNOV5cOg3earJypA+aEO+a6/7do3gAo7bVdXYm2cPHYac5gMd2i8TTYps/
+	bY+iYg3I1EP6dRuqKzSXymBGvGBd2W1SDAvTxinBpFg9SFzfaEIUFqTTF6RqCApdAcqmB9ucI6D
+	gfgSW052nuPtIp52DHCs8q6dSyFTlSDxqF6cdNM4SFedeXgW9fZWw==
+X-Received: by 2002:a05:600c:4e53:b0:49e:6861:50f7 with SMTP id 5b1f17b1804b1-49fe66c8921mr180205985e9.5.1790522365666;
+        Sun, 27 Sep 2026 08:19:25 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fee6cc7d3sm154855035e9.0.2026.09.27.08.19.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 27 Sep 2026 08:19:24 -0700 (PDT)
+Message-ID: <fc4efe9f-69f4-4f58-9f7c-8f2e75a8e590@gmail.com>
+Date: Sun, 27 Sep 2026 16:19:22 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] ci: point leak-sanitizer failures at the actual test and
+ error
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Hi Harald
 
-Fix `trailer.<key-alias>.cmd` examples which have remained unchanged
-since they were written in c364b7ef (trailer: add new .cmd config
-option, 2021-05-03). (Modulo formatting changes.)
+On 25/09/2026 19:54, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+> 
+>      ci: point leak-sanitizer failures at the actual test and error
+>      
+>      I discovered while running CI on another GitHub pull request that it's
+>      very hard to see where the error is for the leak tests.
+>      
+>      This will stop each leak-sanitizer script at its first failure and
+>      points annotations at the real file and error.
 
-Use this example as a guide for how to phrase it:
+Putting the leak output in the test results is very welcome, but does 
+this mean that if there are two leaks we only report one?
 
-    Configure a `see` trailer with a command to show the subject of a
-    commit that is related, and show how it works:
+>      Proof that it works:
+>      https://github.com/git/git/actions/runs/35871180948/job/107215430244
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+Opening that link shows that the individual test failures are no-longer 
+folded and I see some very strange scrolling behavior in firefox - when 
+the page opens it scrolls to the bottom of the output of 
+"ci/build-and-run-tests.sh" and if I try to scroll up it immediately 
+scrolls back down as soon as my fingers leave the touchpad.
 
-Notes (series):
-    Topic name: kh/doc-trailers-cmd-examples
+The patch below seems to do more than just changing the output to 
+display the leak backtrace - it adds some escaping and changes the 
+annotations. There is no explanation of what these changes do or why 
+they are required.
 
- Documentation/git-interpret-trailers.adoc | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+Thanks
 
-diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
-index 77b4f63b05c..3e81632b252 100644
---- a/Documentation/git-interpret-trailers.adoc
-+++ b/Documentation/git-interpret-trailers.adoc
-@@ -305,9 +305,8 @@ subject
- Fix #42
- ------------
- 
--* Configure a `help` trailer with a cmd use a script `glog-find-author`
--  which search specified author identity from git log in git repository
--  and show how it works:
-+* Configure a `help` trailer with a command that searches for an author
-+  identity and show how it works:
- +
- ------------
- $ cat ~/bin/glog-find-author
-@@ -329,9 +328,8 @@ Helped-by: Junio C Hamano <gitster@pobox.com>
- Helped-by: Christian Couder <christian.couder@gmail.com>
- ------------
- 
--* Configure a `ref` trailer with a cmd use a script `glog-grep`
--  to grep last relevant commit from git log in the git repository
--  and show how it works:
-+* Configure a `ref` trailer with a command that searches for the last
-+  relevant commit and show how it works:
- +
- ------------
- $ cat ~/bin/glog-grep
+Phillip
 
-base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
--- 
-2.55.0.793.gc667de3f2c5
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2419%2FHaraldNordgren%2Fci-annotation-file-line-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2419/HaraldNordgren/ci-annotation-file-line-v1
+> Pull-Request: https://github.com/git/git/pull/2419
+> 
+>   ci/lib.sh                            |  1 +
+>   t/test-lib-github-workflow-markup.sh | 49 +++++++++++++++++++++++-----
+>   t/test-lib.sh                        |  2 ++
+>   3 files changed, 44 insertions(+), 8 deletions(-)
+> 
+> diff --git a/ci/lib.sh b/ci/lib.sh
+> index c6ccbf8c17..a89f480a78 100755
+> --- a/ci/lib.sh
+> +++ b/ci/lib.sh
+> @@ -382,6 +382,7 @@ linux-leaks|linux-reftable-leaks)
+>   	export NO_CVS_TESTS=LetsSaveSomeTime
+>   	export NO_SVN_TESTS=LetsSaveSomeTime
+>   	export NO_P4_TESTS=LetsSaveSomeTime
+> +	GIT_TEST_OPTS="$GIT_TEST_OPTS --immediate"
+>   	;;
+>   linux-asan-ubsan)
+>   	export SANITIZE=address,undefined
+> diff --git a/t/test-lib-github-workflow-markup.sh b/t/test-lib-github-workflow-markup.sh
+> index fa29a62aa3..4f6460a0ad 100644
+> --- a/t/test-lib-github-workflow-markup.sh
+> +++ b/t/test-lib-github-workflow-markup.sh
+> @@ -28,6 +28,7 @@ start_test_output () {
+>   	github_markup_output="${GIT_TEST_TEE_OUTPUT_FILE%.out}.markup"
+>   	>$github_markup_output
+>   	GIT_TEST_TEE_OFFSET=0
+> +	github_markup_script_name=${0##*/}
+>   }
+>   
+>   # No need to override start_test_case_output
+> @@ -35,22 +36,54 @@ start_test_output () {
+>   finalize_test_case_output () {
+>   	test_case_result=$1
+>   	shift
+> +
+> +	case "$test_case_result" in
+> +	ok|broken)
+> +		# Exit without printing the "ok" or "broken" tests
+> +		return
+> +		;;
+> +	esac
+> +
+> +	test_case_line=$(find_test_case_line_ "$1")
+> +	test_case_output=$(test-tool path-utils skip-n-bytes \
+> +		"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET)
+> +
+>   	case "$test_case_result" in
+>   	failure)
+> -		echo >>$github_markup_output "::error::failed: $this_test.$test_count $1"
+> +		test_case_summary=$(printf '%s\n' "$test_case_output" |
+> +			tail -n 20 | github_escape_message_)
+> +		github_annotation_ error "t/$github_markup_script_name" "${test_case_line:-1}" \
+> +			"failed: $this_test.$test_count $1%0A%0A$test_case_summary"
+>   		;;
+>   	fixed)
+> -		echo >>$github_markup_output "::notice::fixed: $this_test.$test_count $1"
+> -		;;
+> -	ok|broken)
+> -		# Exit without printing the "ok" or ""broken" tests
+> -		return
+> +		github_annotation_ notice "t/$github_markup_script_name" "${test_case_line:-1}" \
+> +			"fixed: $this_test.$test_count $1"
+>   		;;
+>   	esac
+> +
+>   	echo >>$github_markup_output "::group::$test_case_result: $this_test.$test_count $*"
+> -	test-tool >>$github_markup_output path-utils skip-n-bytes \
+> -		"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET
+> +	printf '%s\n' "$test_case_output" >>$github_markup_output
+>   	echo >>$github_markup_output "::endgroup::"
+>   }
+>   
+> +finalize_test_leak_output () {
+> +	test_leak_summary=$(head -n 40 "$TEST_RESULTS_SAN_FILE".* |
+> +		github_escape_message_)
+> +	github_annotation_ error "t/$github_markup_script_name" 1 \
+> +		"memory leak logged around $this_test.$test_count%0A%0A$test_leak_summary"
+> +}
+> +
+>   # No need to override finalize_test_output
+> +
+> +github_escape_message_ () {
+> +	sed -e ':a' -e 'N' -e '$!ba' -e 's/%/%25/g' -e 's/\r/%0D/g' -e 's/\n/%0A/g'
+> +}
+> +
+> +find_test_case_line_ () {
+> +	grep -n -F -- "$1" "$TEST_DIRECTORY/$github_markup_script_name" |
+> +	head -n 1 | cut -d: -f1
+> +}
+> +
+> +github_annotation_ () {
+> +	echo >>$github_markup_output "::$1 file=$2,line=$3::$4"
+> +}
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 1f0505e412..a52589c6a2 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -199,6 +199,7 @@ mark_option_requires_arg () {
+>   start_test_output () { :; }
+>   start_test_case_output () { :; }
+>   finalize_test_case_output () { :; }
+> +finalize_test_leak_output () { :; }
+>   finalize_test_output () { :; }
+>   
+>   parse_option () {
+> @@ -1218,6 +1219,7 @@ check_test_results_san_file_ () {
+>   		return
+>   	fi &&
+>   	say_color >&4 error "$(cat "$TEST_RESULTS_SAN_FILE".*)" &&
+> +	finalize_test_leak_output &&
+>   
+>   	if test "$test_failure" = 0
+>   	then
+> 
+> base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
 
