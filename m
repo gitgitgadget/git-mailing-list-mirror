@@ -1,148 +1,115 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed2-f36.google.com (mail-ed2-f36.google.com [74.125.228.100])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C95A4E433A
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 16:02:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790611381; cv=none; b=n5jhtcSAgg9KhaNriFxAG6Dcq81ccQ8qsWmVilwoBExhdswmDLLxoJQJ4oiQqi1xoUyUQyXVwE8E5D1DcqrkUB1QAHUuhiZzS2dUyrZue4G6O7Casl+jqr4NDY20iScI2nC02ZyojKC/pPuPnJ7mHDS3DcqP7S63YrBEhaKVIuw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790611381; c=relaxed/simple;
-	bh=gkqoueewLUkW+T9jyzgi6G3o34VjvlUdu0N7i8ywa0o=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=CXBKQ0lVmpKxnQupcNmSB7O1dO3hu0hAlYBA5I6VUWmN/em93cz+BTbjySvD/7bkjmjKb3zbbahmN1KZYo2CqVphhOCVnQaqtnt29kdJvK2IyDiQ0040jobPqstuVlbsilBUlnxMtAoXnZAvf/QOEimq2jxgpfilKPZY8O6+5HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lists.joshka.net; spf=none smtp.mailfrom=lists.joshka.net; dkim=pass (2048-bit key) header.d=joshka.net header.i=@joshka.net header.b=6k/AZH84; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sEPRp9Sn; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lists.joshka.net
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=lists.joshka.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26234E9C08
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 16:13:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.100
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790612021; cv=pass; b=VR3fH+7v8R+PVPY/tJgYn8BQR3/gkcE+/bKgauJuOU/YCvS7goQf+Rlbsti8akyMPA2KDvblgO+RY9qsV/0FO32pQNBr+4r3ZNaUrbVwjwUFYE7vx3mhtefO7nqawrlXYKf7uA1WPZs/+Yp3S1CbbrLHX0OvGZAt2PCH0Y5CoXI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790612021; c=relaxed/simple;
+	bh=g2n8RpM69o9fhq8trtWptzh++DaOP1Fzd3kzLEpkk2s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bardQtugnfTRmMPCSxPpC70uHmpbgRcm9zsHtnlI6KYLJRYea65WBt5daiunMEzKjCvtHtbiYGS6lz5tXKJhhHW+qr8wV2WZm9g7fz37XTDvrr2y+yqto+6p0d6FaKgtVI+Okw6C97NfSQxvnz0F2ajGx/VqYocB/YTlF5+lRI8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mmy46gVf; arc=pass smtp.client-ip=74.125.228.100
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=joshka.net header.i=@joshka.net header.b="6k/AZH84";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sEPRp9Sn"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7B5BB7A00EA;
-	Mon, 28 Sep 2026 12:02:58 -0400 (EDT)
-Received: from phl-imap-02 ([10.202.2.81])
-  by phl-compute-06.internal (MEProxy); Mon, 28 Sep 2026 12:02:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=joshka.net; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1790611378;
-	 x=1790697778; bh=6GVDZJ97KLHTFZdJu39ZDJVbItHkQjQzJ/aVPJPeyjs=; b=
-	6k/AZH84Z/kgsguT9EtaJnA202nHdc+illLNPvp61/S95rIS9tKhqABNvRqKs2gx
-	IL4hedThK31BK5dtDl5PcUqZx5fL5Qx39GF200kDq8zJXQjiwx+rRNelUsUYWM/y
-	SY1kgtq+h7xx/7qYZGHvJrqgJ1qtOLXM3rUco2MLl+E7edtZZepN4LdSWdF3zQD8
-	qkxBq9+O6s7WPir1X/5lZ02CT1jIflOaz/mYA8lY4J25/ic5NbI8Eq/Pxt6ojxZx
-	fD92lzU9WnHc0dRO3PcgvSR+dx7Hx0GJDC7gWLJUa2EBxlxA0B9KzoTgYKiDmCIm
-	dtJzgcpanMa9nDorVSVqzg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790611378; x=
-	1790697778; bh=6GVDZJ97KLHTFZdJu39ZDJVbItHkQjQzJ/aVPJPeyjs=; b=s
-	EPRp9Snq9ctsK+JdSqzanUJlkdt0sk7z2VoHeqA9pikJlSqA983XeonK3kdfddhE
-	1OikKYr73YsPFikgjDtukpNjVKWJ7CH5YwkRQ1vzHeElK8CoX+8bKw6l75d7Woxg
-	Iiju3xpmdIog5zl7zjkCruEsZts5y3z4MKLlUAO1sToVf+QxgZcC1hwJzG0MzSKT
-	pXEaweCMgQghdEjkS/3LXrsBG6ABdCSoPbj/mCEP+wP0rauflt6Q/RFLlEV+0HAG
-	FLhPKDkmi5eMTp9Fx8TE05azz9twwpSKGiooBjhtrU9L4ZmLxBVCe/1kwG15hXh6
-	YLl4jXSDEW+W9uitpd4eA==
-X-ME-Sender: <xms:so-6anwIuipsx_uPJbNXi2OqslhJhVUSTcO3W0hWFQOPgmzQzsd3qg>
-    <xme:so-6aqHYs4qhlBXsswreMeK4vQZH_ac-3oc5uHlHZbGKSic8AKzjGgA1_OffTaZ9N
-    rTsPayBLCTAy8bco-fCVjq3FugCoisiPnft49skFK9ZenY2o9jg4EY>
-X-ME-Proxy-Cause: dmFkZTEuuS143QIHYcLwRd0a2E9tV0gaoNAFHsGVRNLuKjMWd9OnPRL0b3USHMOQLzACfM
-    fw9u2pYWoz7UQ/uWhhLN53rsw5yEgnOoiQjjCIo1caHnrziJ1f7wtx+s0RVcMqj43l2sJd
-    0QFWh6TT8Y8jahv9chF67Ps0vr4kN/JPh8UFaHWCKWPdEOnnIH4BHwq4LQ6V+uYUhb+mkW
-    +lXKdJQDSHHjoSzP3h/d7m+iyzn3yeepjof8SIbFSOrLlkGKAmAV4Z7raBdfpHVZz8Tay3
-    LkXy4T/9Vy9qMj7SCE/kjX9YXk+cK8KvTLE5g9Ma+/MjBLXsI1pyd7pmLWuKa/GAqhkRAt
-    JzKcNAH6xHkXP+xgVTU48Cs/aVTYkXnMHforByMjTNTOBK90fdq9o1shMlOo5XKVSVbJ0T
-    dt3V9rbZlUf+ThcYtBYk3L2FfrNMFCu8TeB28qB+pelP3OPBy0Wn3wfb0mTAiFfLvsMkhK
-    0f3v7HEILMTUftHheCoYeNsIAcviiUDFdSpzvV8Pe3/nfYadkKRCLkptJB3e2R2zGvjHaD
-    /+y/WxnfwpkJEdW0K8j/VWeyDBLKwgKy1wDSwN/xrcaD+BPudyyLIRojisCtzZMZFkVkaN
-    KAYrZCQZ4dAoDBoUdzVbH221EFTh44YGYv93hGnxFYVQeW1cJoYnnqtA208g
-X-ME-Proxy: <xmx:so-6avPw_T2Mjf6ivIAdH2SkmnO0SL5C3c5SXFESxSHk-8M-CxfyKQ>
-    <xmx:so-6ahttaE6QLhHOSIHlE3LGktkf4F8bKlUp1F0HIxdSpUdLFE8pcA>
-    <xmx:so-6ahUywp3dZJFRWGO_EKgEKL73lpYfvYyM4i2n0Hr9v6SsiUtPmw>
-    <xmx:so-6ahuymxD6ar0XwKijXmN9LXOxm2G7aABj77YqoBs3yt7ttxfGbg>
-    <xmx:so-6atL4FVw0OwQHHn0PrBY4BEn0WeYCqnEBi47OZjdbmn5wTxU-Zwwz>
-Feedback-ID: i504042c9:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 170A2700065; Mon, 28 Sep 2026 12:02:58 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mmy46gVf"
+Received: by mail-ed2-f36.google.com with SMTP id 4fb4d7f45d1cf-6ac62c88c7cso3002564a12.0
+        for <git@vger.kernel.org>; Mon, 28 Sep 2026 09:13:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790612018; cv=none;
+        d=google.com; s=arc-20260327;
+        b=OxSVIbbALgJGfFUgt92qsdkDfejio7SBvzHQdx5K8Bb5KSoPHBFbkYRa0YbWyHFkMW
+         vcVPdxDvc9RK5sEsQRz+5Oo4VuX5M0muzQMNISJHh931bAEVDyuFRfV2EFCi9JZveWA1
+         fjYU+6+87a5GaCai69adSrC01l8laGQ7ZpD9l9loXGfQJMLt+p3y4hyEFoOg45QoL52S
+         2qmw0ZM2WJDR4rbcf8hjxKJC0SDFDtxMOdzUlLqHkBypzmsEzg9ncc3Jdh5a05XUfcBK
+         C019otfdFr0xCAWTMrcyQMubhuiKGGuThjOfKn48p5tm8q58vgRTzaLJjsINka4IohHA
+         sEXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=g2n8RpM69o9fhq8trtWptzh++DaOP1Fzd3kzLEpkk2s=;
+        fh=JDlQWswoHst9RY/oImP03kV3/rrP+Hqyo0sZFx+597Y=;
+        b=Qc2PQ/cRbSotFRuahkWAB4NRv4QJnxPEcou6ZZRsVFzo6EX7Hdm4j6TeqPokA4rYht
+         xRB2pr174si6WXInBBEDOI80U2khfzPIrETOB6VgfmGL9PyHO42iFLV3WJQV2P0xvARY
+         DPNKWCJyg3d/n8ab8EMLdchw3cA5bLVjngqqreQIqUWdW2ZFQ5jD0lRVqkYYqmaGeCMp
+         tCTXisy2lSUU78wviUi09bcdQ5SPwtdxC6fwFm95UZGkAFDQOCUXaRpAsOPAx++qRMVV
+         35X6x/fMmgqfVtXXRx0cujnJj7fv10OSbdC212zemjJcJC0Wy9pb/cghS8uHvBbnM88q
+         BOzw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790612018; x=1791216818; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=g2n8RpM69o9fhq8trtWptzh++DaOP1Fzd3kzLEpkk2s=;
+        b=Mmy46gVfrHYIxUG+3vUOrneSN2+vnXzXf9GvY5Qo8Ox8llyM0iGVQ0Mgadkx1fb07e
+         jVWn7RTgOdHy8FCXmPWBWeqW9j5R9f+/CsqEcS/EUfBWrlq6zlNeVBEwPLQd58HWFb2+
+         jfc0ELe10/0E227MdXyLI25+aAlXnuM83ufYilthzogfaqOGkPghdiqpzKA7Xpvwltsy
+         GvPQoCwT4iKC/v6FEdWezo9nXKHFurUS2+C8F6ND2SuAdIz/SQUyCV5JJ76oUNwRGoVS
+         u5cqaQoSMAQLOHyLCfsXDkalmEIHMah9HbSl7oAVMoz+JPuTM9CYiJH+wPdWkUwt2NHs
+         P48w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790612018; x=1791216818;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=g2n8RpM69o9fhq8trtWptzh++DaOP1Fzd3kzLEpkk2s=;
+        b=MOeiGwDCpU4Kzf4UfLcf04A2xhZlnxXEgwX2/4VIhVuWtXDgynve6HHu1Ilw7xO7Xd
+         +jeTwLnR5veX7QL0Vj4yH/Xgklv+f4SDk1qtPyY7SuiokgnMGG4JZOCnfJnpsN/GAwoQ
+         HtHHmKPejJGbFRGrARP6/DozVghX8w42sLjVPbNUOyRYkAxxk4s1mHwKbU9PqzJrMQT2
+         sAu2hcV4vbGi9QkvxRhoHqiEYpRwUKHaaKk4wLSal1V4mbRS/Ng4v3LxjZVv+9s/NaSk
+         3zNS2vNQtuduSFDm6oSuP/ylS0e92PyXK1D1iG7WUP62fgxqObb0Z1SkDQ5+owoMW8RU
+         LmoQ==
+X-Forwarded-Encrypted: i=1; AKwUvBzg2tVzVIcfGeB1SmQ76xSaoEyAR6fVxetzNJdsOpvewZ3ubDGwtvS26JCDDNNbtbHsDiY=@vger.kernel.org
+X-Gm-Message-State: AFq9FYIXEeGsYTrt68oeztMCvPOhbLViAUmcT1etiO02pVuJ1HW63Ydz
+	WDw9xlkOHHmC1zNTsV6mF1xPXcj9HX3rYchhyQlU4lkMfwla/4vWhMnhMHCnrxpE2wAq8aTJbwc
+	pkko6Ww0hJYfamMQ1XZXrO1Pp8u8bpE0=
+X-Gm-Gg: AYBFou1ZolkjVFZx3EnEmvnR0fyNOxXTNiDITWxSgpDiffQE2Pf4i5hT//cCFjpL89/
+	ae1CkpQ/5WuqZGSOJ6Sc0dWJvO+w6iW7x71NBXWT/896VS0Qka5G1FAZxoCcCI26yrneqOy8/WN
+	V6xAgnXW1hLqACLHhESFoAdHgzVhHeOCotzivaZ74iajkpaK30rmMM1ptQ1lMpUMIUpoQYYBMDR
+	sUWZoQQwJLkeM4eFt+xf1DXtH4SNe6TVGFcooLWBcf6L5CDMTeFYUvnLL58C19/VEalbMeAyJRW
+	cN/xyYa2u5yUvoBLfm7Dvi+zUYH9fX0x4AFphPremyilf/isjqC2mBs=
+X-Received: by 2002:a05:6402:1d55:b0:6aa:7fb:7678 with SMTP id
+ 4fb4d7f45d1cf-6aae8a518b4mr7090282a12.6.1790612017552; Mon, 28 Sep 2026
+ 09:13:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: APvEQebsEnVZ
-Date: Mon, 28 Sep 2026 09:02:36 -0700
-From: "Josh McKinney" <git-bugs@lists.joshka.net>
-To: "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>
-Cc: git@vger.kernel.org
-Message-Id: <2abba760-d331-4cad-bb8b-6e567b517beb@app.fastmail.com>
-In-Reply-To: <xmqq33utphdy.fsf@gitster.g>
-References: <85f7daa8-d60b-4348-ac2f-b1a68628af7b@app.fastmail.com>
- <arpZ5xCwFXc9ikrj@pks.im> <xmqq33utphdy.fsf@gitster.g>
-Subject: Re: Reftable reflog timezone encoding differs from specification
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+References: <pull.2403.git.git.1789223882471.gitgitgadget@gmail.com> <arpeDzeXlnZRwj30@pks.im>
+In-Reply-To: <arpeDzeXlnZRwj30@pks.im>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Mon, 28 Sep 2026 18:13:00 +0200
+X-Gm-Features: AclHuK9gGcbwo-2AEFYHhh0l96Duvb4HkZWFVuOcKTPquiVcE_K5TWMOyeGMHtc
+Message-ID: <CAHwyqnXJqABaN1JvfF7R0P9FbK1ptt66kaO98=sJDw-p3x=nXg@mail.gmail.com>
+Subject: Re: [PATCH] ci: only warn about perforce/git-lfs/JGit on platforms
+ that need them
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-I think my main concern here is mostly around using multiple tools on the same repo and how they should interpret on disk formats (my clanker picked up the problem when comparing git's output with a library it's writing).
+> I wonder whether it makes sense to have these warnings in the first
+> place.
+>
+> Part of the reason why we have these checks is that we allow the
+> installation of these tools to fail, and if so we know to gracefully
+> continue anyway. Tests will be skipped, and the pipeline will be green
+> in such a case. But is that even a safe thing to do? I strongly doubt
+> that we'd start to notice such failures anytime soon, so it very much
+> gives us a false sense of confidence.
+>
+> So I'd suggest that instead of warning, we should make the whole build
+> fail outright if we fail to install any of those tools. And once we do,
+> these warnings here become quite useless, because we know that the build
+> would fail on platforms where we expect the tools to be present. And on
+> platforms where we don't, the warning is pointless anyway.
 
-Anyway, nothing urgent on the problem from me because I noticed it purely in a development context.
-Thanks for filling in the bits about the real world impact on this too.
+Fine by me!
 
-Josh
 
--- 
-Josh McKinney
-joshka.net
-
-On Mon, Sep 28, 2026, at 7:42 AM, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->
->> We should use the one that we have in our specification, so in my
->> opinion we should fix Git itself. This is also because JGit, which had a
->> reftable implementation for far longer compared to us, implements the
->> specification correctly:
->>
->>
->> 	private PersonIdent readPersonIdent() {
->> 		String name = readValueString();
->> 		String email = readValueString();
->> 		long epochSeconds = readVarint64();
->> 		ZoneOffset tz = ZoneOffset.ofTotalSeconds(readInt16() * 60);
->> 		return new PersonIdent(name, email, Instant.ofEpochSecond(epochSeconds), tz);
->> 	}
->
-> Thanks for checking.  I (unfortunately) agree with the (unfortunate)
-> conclusion.
->
-> We do not ship reftable files over networks and reflogs at the
-> conceptual level is not shared across repositories, so the issue,
-> other than the trivial part of updating the implementation, is how
-> to migrate the data in a local repository that uses reftable.  One
-> time offline conversion may be the simplest but I do not know if it
-> is worth it, given ...
->
->> We could of course retroactively declare that version 2 of the format
->> uses the syntax that Git uses right now. After all, JGit only knows to
->> read version 1 of it anyway, so that could kind of fix it. But for any
->> repository that uses SHA1 we used to write version 1 anyway, so this
->> does not really buy us anything, I'd claim.
->>
->> In summary:
->>
->>   - We have an upper limit in divergence of <10h.
->
-> ... this.
->
->>
->>   - This only matters in the context of reflogs, we don't use these
->>     anywhere else.
->>
->>   - The risk for data loss by a change is limited as our default grace
->>     period for garbage collecting reflog entries is 30 days.
->>
->> With these points I'm inclined to call it a bug and just fix it, without
->> handling backwards compatibility.
+Harald
