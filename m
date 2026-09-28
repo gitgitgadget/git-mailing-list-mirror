@@ -1,69 +1,69 @@
-Received: from mail-qk2-f39.google.com (mail-qk2-f39.google.com [74.125.230.231])
+Received: from mail-qk2-f13.google.com (mail-qk2-f13.google.com [74.125.230.205])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBC44D1781
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 20:25:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.231
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4907232B135
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 20:25:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.205
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790627128; cv=none; b=HlVzXNWFPnBjMycJcr5ucmEP8ecdYrBFA3mFs81khBCJE0Pd2mOGMwX1JdQUb/p1eIzElg3irXG8UR74VZ2zHhP9XrfxbP013d0PrvhTFvQGQ1cJGUTvqUSMP8joJaUDlSUWjSt69zv/4SyDTC+UAjeqeTorJQl7aENfgDkQgyA=
+	t=1790627130; cv=none; b=YKhBmPdvqhKyDdeyCnCstg/prW8Wp00EKtMp/eiA/zVpcJh+Za+onuMPokMCChlZ9j8MzNnX8Fqt1QNLfO0yeuPhotrp3r4OSv7gBE/f3tRgooHMeCE96bzQMyMrLo53f02P9wvsQRy0QItUHTUET+lxpAFl3BpYmdfSjYKYi0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790627128; c=relaxed/simple;
-	bh=xIam5YYthpaql0wpX8dEw61l6K5Bw17t4xctKFI/fAk=;
+	s=arc-20240116; t=1790627130; c=relaxed/simple;
+	bh=8bEyJII+ztBUyazUjrwv2GZRA7YBOOWtdtOzNUnKEQ0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=U9Pq1nQrYl6a2f03Ongz7O5wsFdLi1533uaJ0YUEMXAv9rNBz7YXn6e89Fefntv1W/J4KBsF4lYh78aL+Rsr51um5tXBiDg7gGx0p71Kbi2WGNhZ+TazRjsWqMywioIktPWXjZaHp7qIb62qa7GobSlAAVbEd0i8a00O7W23ADA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lTe+JbVI; arc=none smtp.client-ip=74.125.230.231
+	 MIME-Version:To:Cc; b=eRVgDHJqAhS0qyufJWYNypz5FvIa1U6hw+0P8nfxThm6zdc/6X2AKNpJNkoWNxSWMYBSalYESYZHcXTJpKRbST077crEP42X+UMrXrFvqkD6RO+WitbxQNjjYEsGbe5iUvlj+XAeR2Hylp+ySUmDSYwja0ESVP8/33Dr0ZoTxQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T25evnCW; arc=none smtp.client-ip=74.125.230.205
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lTe+JbVI"
-Received: by mail-qk2-f39.google.com with SMTP id af79cd13be357-939922847efso313018485a.0
-        for <git@vger.kernel.org>; Mon, 28 Sep 2026 13:25:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T25evnCW"
+Received: by mail-qk2-f13.google.com with SMTP id af79cd13be357-93910ad20d4so416952385a.3
+        for <git@vger.kernel.org>; Mon, 28 Sep 2026 13:25:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790627126; x=1791231926; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790627127; x=1791231927; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Gra3gPehtwgUDKxIrPdKC+qgfC93Bf3lbkoIoIXTjbg=;
-        b=lTe+JbVIdWPcrWvc7PHzjaXyKjjEYOz/2IGgULo95KhzFv8hCnKk/YZzV7YZ3rfn8O
-         ArcJtBYliAcLObBF10R9wdCXOYHjp9094BmcgGyyOlokTgT1EYSjxGHe/yE2i4grO1Ei
-         RYq8fH7MPyhXZAFcJf3c4WBND4T+1gVOULm5oEqetVFWPabc7gWNuYL33LHMlc/HljnC
-         mhX9guUwcDnCxs0/nXTn1nqDE3e62MeV+rf4X7oBPVvNuCvtciqK2f6hcp68TsiVWV2u
-         ZkWmDAJssETby8AAQyAbEIf2mfly7BKM6YykfeSvbDHje93c5/RGz0fJxiOPvoCU/99A
-         fNBg==
+        bh=hX/g5qqr+7O0UmmKjXJ1JPscVgtvnSwpEi6jCYobYaM=;
+        b=T25evnCWpHEUphAFCcaYcwG5svoGHOvCm6+xYg8LySacT3zqe1MuSAhjSGw49YTpdM
+         NbyIjVSbeQKTDefjOqhBL/++d5FYxCEfwuyFDwCjuftRbuhOE52whfaFpT1D+iaLquv1
+         sFvluP/uvfFuYzzguqerixMY6qL0uEE5z8R2pd1xa0JpoHWsGXH9etAmFJwJcMwzd48I
+         /7ICa9a4AiF49BUWTDpOr2FqPg8qDRo6SNn75VorYkggYIc67ZtexEFSVL3nUyPsXmCm
+         3hbA0sBqHBWRvHRHozfrGVGYYnVfrdBWAX7PQu02doF+7QAFJmg/0baMpT056gM11I1d
+         cP9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790627126; x=1791231926;
+        d=1e100.net; s=20260707; t=1790627127; x=1791231927;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Gra3gPehtwgUDKxIrPdKC+qgfC93Bf3lbkoIoIXTjbg=;
-        b=oTa0pT95uLQANhAkfmrYgC8fDR2w1+zZaWeXsxW4N57x2sN8HptliU/Ury6G4gJEN3
-         31NHCCW6NqLSf/eWsF2M+9pVY4EGqK6NJu4rm+S+xZ8PPJniSKpt3/sEcnqx4uzB+TIF
-         JNdaBv9q7XX0RU/VkGSj0hRNPewN2brUedK3n11Mtj+18Bp5h03JRMwepauD0F1kNGGW
-         OTisYVn2sAMCnVjECA+xH571wND7Bfluv7p4HYKuxeKCrn+0P605y6Bp4n4ND/PI5fGG
-         zS824RCbd6kCHZ/tLm/NHJ7WbzwL7zGbK3214G6BLEaUpcT1sGx16p3gFu3gdzSIiNO/
-         V7dQ==
-X-Gm-Message-State: AFuF++lnPMyxfCTNj0rRCDb2oJWMnsTfb99ApdlDTkyHqA9u3qKWsVvd
-	l/rioR1Wu6AJstcB0i77Y5PDNHdXt2+O7QnP4pmhd6Gg8zeOjZNdb1hzM0jhFw==
-X-Gm-Gg: AYBFou0uCsgXEMA1+k/564E6KvC8u6FXyqqDGnTXnStKZVOfXMM+o/BbVU3i2CU+4wx
-	+zc+pKDHs9BXT+mClc295nO8BRMfqbnCAuJHwkIf1qVTZRISdtD9KP7oTlZiQKrRukoWKhL8ym3
-	a3Z6LZU6C+FzO3cLU0wY0UsKvTd5avGEa7n3MdXaPb0BXEdZ1Da0mSRIlqFWCJxvex6DbUnPcm/
-	CantKgCJdbngOuHc+gGfNfF6xxq1smDRcfl41Aohcjb42JS4RP9L8+8AktO+iukdqbO3Ua3ohsA
-	qNDl/R/u8R+VOWTqm5RWKHoENznvFwjKXT5aNU8Xxy/gdUr2Ue3qqr6wqNm9KTE+C+2XEpatjPG
-	jgR2ojPGxWjo8JnhR1O/6PT05JgTRdkCjviIiuM9YLuDuJIGdQnqef7ezf3Bk4Cl6mEK7R66BNI
-	Xki0axyzK/PWAbcC1vemuhgFubNJa9STvNKz6t/lP1f2vqAhk2ZE8FdpXO+JRtJ+zN1N3LLuT3
-X-Received: by 2002:a05:620a:1a09:b0:93b:fb3c:2d09 with SMTP id af79cd13be357-93c43d7a705mr2174701685a.66.1790627125763;
-        Mon, 28 Sep 2026 13:25:25 -0700 (PDT)
+        bh=hX/g5qqr+7O0UmmKjXJ1JPscVgtvnSwpEi6jCYobYaM=;
+        b=ddseYE0DtP1Kp+7hGC5NOmUyHnlm/QHn+7G7iF8wlza8JX6qAE1HZ0uk+eSqa4PpUc
+         6CtGHmhsPfhlHXA6Q7iQwoMZuPC5DAGhbZGC6YYWFlcjV/Kob6lGy9ycNtd5tEbzIXxR
+         92TQATAZ97k3ocRYZfEo2dJB3+ThxJo3MMz0eXyHoklQ9nTtJPwxHFqBnIMrzz+NCy3D
+         //fKbe94IRqUBpDhTSUTG6f4ZONSxsZ42B2xCNja5nnZpFuH/gcnlFlt2MeGDeW9LdZe
+         /e7LM9OKeacs+ulfFW+BKrH5+vaYdATyZHnMWfIgn3GBD3UfFcd2Ceuv/D2Hkcs80LSq
+         rzmw==
+X-Gm-Message-State: AFuF++m+xFsYqWDK3q2CWD72yhBZLG789hYAtfEwkquDsCocYjeLFXrk
+	qCO+ptD0zsshgFO9XGQb4yLtkSOL18hig3gGxvErWUPSryxBUwbaxlR3jF3P2w==
+X-Gm-Gg: AYBFou0Uf/2GImxobo7YlYk3RcZPLrYJzShCqkJXAjCJDyPy8DXGl/IVxM62ytupn9Z
+	Tw7aCYcRitzoIvwVLqvYYSbUlLQXUTH5kCQApvdwVRZbFH+JatdIXOBsNlVul3RRW6gKnpeRYUq
+	uVwqULi/Y/bDVV/Jyj3cR16yWzSSiEQL3EPjatAJ77lDoGWoBI4+iCsRX4JfBbvFR0Ug8qertlQ
+	pesJjqutESr8tOjhM/Jsi7B2v/9t8/FQ6NlPWJJjkRRBGtSay+2unxhphdlG12PQ2S9bWoc2DkG
+	S2ESPP1fHzZ363OhmWqJGM0d60bbbOA3mAn5rSd/BoeUp5kGEfKwVBd26SiOgS7rRi8U4XYOy/m
+	SnQlZ43q3Ouxq3ElKWcyKBT7PccaWTeIIQHlW+cz9+gu7Yp8DsiuzZL8XiRuMKargbM0G0QF7G8
+	6qG25aBWK1PBraLDIpCRJwFvSXeC2UljaRzpHNrf+uvt+oKlqmGleBoamaeBIInX1qV/ENzLI5
+X-Received: by 2002:a05:620a:40d6:b0:932:ddff:1241 with SMTP id af79cd13be357-93c4738cc70mr2183227385a.26.1790627126986;
+        Mon, 28 Sep 2026 13:25:26 -0700 (PDT)
 Received: from [127.0.0.1] ([74.235.79.40])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93c814353dbsm231707785a.30.2026.09.28.13.25.25
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93c81598783sm230830285a.46.2026.09.28.13.25.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2026 13:25:25 -0700 (PDT)
-Message-Id: <a76819e3aff80b587156ba805fc6e93bb54cc41b.1790627122.git.gitgitgadget@gmail.com>
+        Mon, 28 Sep 2026 13:25:26 -0700 (PDT)
+Message-Id: <017ca1346d40e386abf943c9f22ccc365bbf4d7a.1790627122.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
 References: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 28 Sep 2026 20:25:21 +0000
-Subject: [PATCH 2/3] [doc] Remove references to gittutorial-2
+Date: Mon, 28 Sep 2026 20:25:22 +0000
+Subject: [PATCH 3/3] [doc] Delete translations of gittutorial-2 description
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,128 +79,319 @@ Cc: Julia Evans <julia@jvns.ca>,
 
 From: Julia Evans <julia@jvns.ca>
 
-Redirect folks to `gitdatamodel` instead, since every time it's
-referenced the intent is to explain objects, references, blobs, etc.
+The tutorial has been deleted so we don't need the translations anymore.
 
-The update to `gittutorial` isn't very carefully thought through since
-we're planning to delete that entire document anyway. It's just there to
-maintain some internal consistency.
+Deleted them with sed like this to try to avoid making mistakes by
+deleting them manually, and then cleaned up the comments by hand
+sed -I '' '/msgid "A tutorial introduction to Git: part two"/,+2d' po/*.po
 
 Signed-off-by: Julia Evans <julia@jvns.ca>
 ---
- Documentation/MyFirstObjectWalk.adoc |  2 +-
- Documentation/git.adoc               |  2 +-
- Documentation/gitcore-tutorial.adoc  |  1 -
- Documentation/gitcvs-migration.adoc  |  2 +-
- Documentation/gitglossary.adoc       |  1 -
- Documentation/gittutorial.adoc       | 23 +++++------------------
- 6 files changed, 8 insertions(+), 23 deletions(-)
+ command-list.txt | 1 -
+ po/bg.po         | 3 ---
+ po/ca.po         | 4 ----
+ po/de.po         | 3 ---
+ po/el.po         | 4 ----
+ po/es.po         | 3 ---
+ po/fr.po         | 3 ---
+ po/ga.po         | 3 ---
+ po/id.po         | 3 ---
+ po/it.po         | 4 ----
+ po/ko.po         | 3 ---
+ po/pl.po         | 3 ---
+ po/pt_PT.po      | 4 ----
+ po/ru.po         | 3 ---
+ po/sv.po         | 3 ---
+ po/tr.po         | 3 ---
+ po/uk.po         | 3 ---
+ po/vi.po         | 3 ---
+ po/zh_CN.po      | 4 ----
+ po/zh_TW.po      | 4 ----
+ 20 files changed, 64 deletions(-)
 
-diff --git a/Documentation/MyFirstObjectWalk.adoc b/Documentation/MyFirstObjectWalk.adoc
-index 413a9fdb05..76e635b93a 100644
---- a/Documentation/MyFirstObjectWalk.adoc
-+++ b/Documentation/MyFirstObjectWalk.adoc
-@@ -145,7 +145,7 @@ used to track the allocated size of the list.
- Per entry, we find:
+diff --git a/command-list.txt b/command-list.txt
+index 63ae2a67c9..5c649c882e 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -244,7 +244,6 @@ gitrepository-layout                    userinterfaces
+ gitrevisions                            userinterfaces
+ gitsubmodules                           guide
+ gittutorial                             guide
+-gittutorial-2                           guide
+ gitweb                                  ancillaryinterrogators
+ gitworkflows                            guide
+ scalar                                  mainporcelain
+diff --git a/po/bg.po b/po/bg.po
+index e11e536182..fae7ca2c71 100644
+--- a/po/bg.po
++++ b/po/bg.po
+@@ -17097,9 +17097,6 @@ msgstr "Монтиране на едно хранилище в друго"
+ msgid "A tutorial introduction to Git"
+ msgstr "Въвеждащ урок за Git"
  
- `item` is the object provided upon which to base the object walk. Items in Git
--can be blobs, trees, commits, or tags. (See `Documentation/gittutorial-2.adoc`.)
-+can be blobs, trees, commits, or tags. (See `Documentation/gitdatamodel.adoc`.)
- 
- `name` is the object ID (OID) of the object - a hex string you may be familiar
- with from using Git to organize your source in the past. Check the tutorial
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 6f0075f918..1f0cbaee7a 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -1200,7 +1200,7 @@ the Git Security mailing list <git-security@googlegroups.com>.
- 
- SEE ALSO
- --------
--linkgit:gittutorial[7], linkgit:gittutorial-2[7],
-+linkgit:gittutorial[7],
- linkgit:giteveryday[7], linkgit:gitcvs-migration[7],
- linkgit:gitglossary[7], linkgit:gitdatamodel[7],
- linkgit:gitcore-tutorial[7], linkgit:gitcli[7],
-diff --git a/Documentation/gitcore-tutorial.adoc b/Documentation/gitcore-tutorial.adoc
-index 2122aeb976..abbe193056 100644
---- a/Documentation/gitcore-tutorial.adoc
-+++ b/Documentation/gitcore-tutorial.adoc
-@@ -1649,7 +1649,6 @@ to follow, not easier.
- SEE ALSO
- --------
- linkgit:gittutorial[7],
--linkgit:gittutorial-2[7],
- linkgit:gitcvs-migration[7],
- linkgit:git-help[1],
- linkgit:giteveryday[7],
-diff --git a/Documentation/gitcvs-migration.adoc b/Documentation/gitcvs-migration.adoc
-index 905d08cd5f..66a5c3ed6d 100644
---- a/Documentation/gitcvs-migration.adoc
-+++ b/Documentation/gitcvs-migration.adoc
-@@ -194,7 +194,7 @@ repositories without the need for a central maintainer.
- SEE ALSO
- --------
- linkgit:gittutorial[7],
--linkgit:gittutorial-2[7],
-+linkgit:gitdatamodel[7],
- linkgit:gitcore-tutorial[7],
- linkgit:gitglossary[7],
- linkgit:giteveryday[7],
-diff --git a/Documentation/gitglossary.adoc b/Documentation/gitglossary.adoc
-index b046d9cb29..6051f494d3 100644
---- a/Documentation/gitglossary.adoc
-+++ b/Documentation/gitglossary.adoc
-@@ -18,7 +18,6 @@ SEE ALSO
- --------
- linkgit:gitdatamodel[7],
- linkgit:gittutorial[7],
--linkgit:gittutorial-2[7],
- linkgit:gitcvs-migration[7],
- linkgit:giteveryday[7],
- link:user-manual.html[The Git User's Manual]
-diff --git a/Documentation/gittutorial.adoc b/Documentation/gittutorial.adoc
-index 519b8d8be2..006e534778 100644
---- a/Documentation/gittutorial.adoc
-+++ b/Documentation/gittutorial.adoc
-@@ -622,24 +622,12 @@ Next Steps
- ----------
- 
- This tutorial should be enough to perform basic distributed revision
--control for your projects.  However, to fully understand the depth
--and power of Git you need to understand two simple ideas on which it
--is based:
-+control for your projects.  However, to fully understand the Git
-+documentation, it's useful to learn how Git stores the history of
-+your project in its database. See linkgit:gitdatamodel[7] for an
-+explanation.
- 
--  * The object database is the rather elegant system used to
--    store the history of your project--files, directories, and
--    commits.
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Въвеждащ урок за Git: втора част"
 -
--  * The index file is a cache of the state of a directory tree,
--    used to create commits, check out working directories, and
--    hold the various trees involved in a merge.
--
--Part two of this tutorial explains the object
--database, the index file, and a few other odds and ends that you'll
--need to make the most of Git. You can find it at linkgit:gittutorial-2[7].
--
--If you don't want to continue with that right away, a few other
--digressions that may be interesting at this point are:
-+A few other commands that may be interesting:
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Уеб интерфейс на Git"
  
-   * linkgit:git-format-patch[1], linkgit:git-am[1]: These convert
-     series of git commits into emailed patches, and vice versa,
-@@ -662,7 +650,6 @@ digressions that may be interesting at this point are:
+diff --git a/po/ca.po b/po/ca.po
+index e8cfa5e925..73f071f048 100644
+--- a/po/ca.po
++++ b/po/ca.po
+@@ -20846,10 +20846,6 @@ msgstr "Muntant un repositori dins un altre"
+ msgid "A tutorial introduction to Git"
+ msgstr "Un tutorial d'introducció al Git"
  
- SEE ALSO
- --------
--linkgit:gittutorial-2[7],
- linkgit:gitcvs-migration[7],
- linkgit:gitcore-tutorial[7],
- linkgit:gitglossary[7],
+-#: command-list.h
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Un tutorial d'introducció al Git: segona part"
+-
+ #: command-list.h
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Interfície web del Git (interfície web pels repositoris Git)"
+diff --git a/po/de.po b/po/de.po
+index 6b65bb6180..abf37baa43 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -15263,9 +15263,6 @@ msgstr "Einbinden eines Repositories in ein anderes"
+ msgid "A tutorial introduction to Git"
+ msgstr "eine einführende Anleitung zu Git"
+ 
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "eine einführende Anleitung zu Git: Teil zwei"
+-
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Git Web Interface (Web-Frontend für Git-Repositories)"
+ 
+diff --git a/po/el.po b/po/el.po
+index 703f46d0c7..5809b434ee 100644
+--- a/po/el.po
++++ b/po/el.po
+@@ -19747,10 +19747,6 @@ msgstr ""
+ msgid "Specifying revisions and ranges for Git"
+ msgstr ""
+ 
+-#: command-list.h:206
+-msgid "A tutorial introduction to Git: part two"
+-msgstr ""
+-
+ #: command-list.h:207
+ msgid "A tutorial introduction to Git"
+ msgstr ""
+diff --git a/po/es.po b/po/es.po
+index aa1bb9bf90..dcdcbf5360 100644
+--- a/po/es.po
++++ b/po/es.po
+@@ -14046,9 +14046,6 @@ msgstr "Montar un repositorio dentro de otro"
+ msgid "A tutorial introduction to Git"
+ msgstr "Un tutorial de introducción a Git"
+ 
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Un tutorial de introducción a Git: parte dos"
+-
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Interfaz web Git (interfaz web para repositorios Git)"
+ 
+diff --git a/po/fr.po b/po/fr.po
+index f9613e793f..2e020cedf6 100644
+--- a/po/fr.po
++++ b/po/fr.po
+@@ -16698,9 +16698,6 @@ msgstr "Montage d'un dépôt dans un autre dépôt"
+ msgid "A tutorial introduction to Git"
+ msgstr "Une introduction pratique à Git"
+ 
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Une introduction pratique à Git : deuxième partie"
+-
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Interface web de Git"
+ 
+diff --git a/po/ga.po b/po/ga.po
+index 3d04a3bc51..b023d7fb3f 100644
+--- a/po/ga.po
++++ b/po/ga.po
+@@ -16521,9 +16521,6 @@ msgstr "Stóra amháin a chur isteach taobh istigh de cheann"
+ msgid "A tutorial introduction to Git"
+ msgstr "Réamhrá teagaisc ar Git"
+ 
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Réamhrá teagaisc ar Git: cuid a dara"
+-
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Comhéadan gréasáin Git (tosaigh gréasáin chuig stórais Git)"
+ 
+diff --git a/po/id.po b/po/id.po
+index 381db5a4bf..4176009e8f 100644
+--- a/po/id.po
++++ b/po/id.po
+@@ -20476,9 +20476,6 @@ msgid "A tutorial introduction to Git"
+ msgstr "Tutorial perkenalan Git"
+ 
+ #: command-list.h
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Tutorial perkenalan Git: bagian dua"
+-
+ #: command-list.h
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Antarmuka web Git (tampilan depan web untuk repositori Git)"
+diff --git a/po/it.po b/po/it.po
+index b5ccd8c731..d180be5e88 100644
+--- a/po/it.po
++++ b/po/it.po
+@@ -24498,10 +24498,6 @@ msgstr "Come specificare revisioni e intervalli in Git"
+ msgid "Mounting one repository inside another"
+ msgstr "Monto un repository dentro un altro"
+ 
+-#: command-list.h:215
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Un tutorial introduttivo per Git: seconda parte"
+-
+ #: command-list.h:216
+ msgid "A tutorial introduction to Git"
+ msgstr "Un tutorial introduttivo per Git"
+diff --git a/po/ko.po b/po/ko.po
+index 7a6847f023..a930084b5b 100644
+--- a/po/ko.po
++++ b/po/ko.po
+@@ -15972,9 +15972,6 @@ msgid "Specifying revisions and ranges for Git"
+ msgstr "깃의 리비전 및 범위를 지정하기"
+ 
+ #: command-list.h:204
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "깃 따라하기 안내서: 2부"
+-
+ #: command-list.h:205
+ msgid "A tutorial introduction to Git"
+ msgstr "깃 따라하기 안내서"
+diff --git a/po/pl.po b/po/pl.po
+index 0ec127e14c..9e75518503 100644
+--- a/po/pl.po
++++ b/po/pl.po
+@@ -25581,9 +25581,6 @@ msgid "Mounting one repository inside another"
+ msgstr "Montowanie jednego repozytorium w drugim"
+ 
+ #: command-list.h:216
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Samouczek wprowadzenia do Gita: część druga"
+-
+ #: command-list.h:217
+ msgid "A tutorial introduction to Git"
+ msgstr "Samouczek wprowadzenia do Gita"
+diff --git a/po/pt_PT.po b/po/pt_PT.po
+index 32142531bb..875671179a 100644
+--- a/po/pt_PT.po
++++ b/po/pt_PT.po
+@@ -25857,10 +25857,6 @@ msgstr ""
+ msgid "A tutorial introduction to Git"
+ msgstr "Um tutorial de introdução a Git"
+ 
+-#: command-list.h:217
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Um tutorial de introdução a Git: parte dois"
+-
+ #: command-list.h:218
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Interface web de Git (frontend web para repositórios Git)"
+diff --git a/po/ru.po b/po/ru.po
+index e8845ca2c0..6cad41bc00 100644
+--- a/po/ru.po
++++ b/po/ru.po
+@@ -13866,9 +13866,6 @@ msgstr ""
+ msgid "A tutorial introduction to Git"
+ msgstr "Обучающее введение в Git"
+ 
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Обучающее введение в Git: часть вторая"
+-
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Веб интерфейс Git (веб-интерфейс для Git репозиториев)"
+ 
+diff --git a/po/sv.po b/po/sv.po
+index 3856426319..df6508317e 100644
+--- a/po/sv.po
++++ b/po/sv.po
+@@ -16194,9 +16194,6 @@ msgstr "Monterar ett arkiv inuti ett annat"
+ msgid "A tutorial introduction to Git"
+ msgstr "Introduktion till Git"
+ 
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Introduktion till Git: del två"
+-
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Git-webbgränssnitt (webbframända för Git-arkiv)"
+ 
+diff --git a/po/tr.po b/po/tr.po
+index 5e992e1a04..79ca735d17 100644
+--- a/po/tr.po
++++ b/po/tr.po
+@@ -16319,9 +16319,6 @@ msgstr "Bir depoyu bir başkasının içine bağlama"
+ msgid "A tutorial introduction to Git"
+ msgstr "Git'e giriş için bir öğretici"
+ 
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Git'e giriş için bir öğretici: Bölüm 2"
+-
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Git web arabirimi (Git depoları için web ön ucu)"
+ 
+diff --git a/po/uk.po b/po/uk.po
+index 7d0451933c..824d6b0137 100644
+--- a/po/uk.po
++++ b/po/uk.po
+@@ -16509,9 +16509,6 @@ msgstr "Монтування одного сховища всередині ін
+ msgid "A tutorial introduction to Git"
+ msgstr "Навчальний вступ до Git"
+ 
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Навчальний вступ до Git: частина друга"
+-
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Веб-інтерфейс Git (веб-фронтенд до сховищ Git)"
+ 
+diff --git a/po/vi.po b/po/vi.po
+index f91a7de810..b7c353352b 100644
+--- a/po/vi.po
++++ b/po/vi.po
+@@ -15606,9 +15606,6 @@ msgstr "Gắn một kho chứa vào trong một cái khác"
+ msgid "A tutorial introduction to Git"
+ msgstr "Hướng dẫn cách dùng Git"
+ 
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Hướng dẫn cách dùng Git: phần hai"
+-
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Giao diện Git trên nền web (ứng dụng web chạy trên kho Git)"
+ 
+diff --git a/po/zh_CN.po b/po/zh_CN.po
+index 9baf2bf7a6..40e7359b8a 100644
+--- a/po/zh_CN.po
++++ b/po/zh_CN.po
+@@ -20237,10 +20237,6 @@ msgstr "将一个仓库挂载到另一个仓库中"
+ msgid "A tutorial introduction to Git"
+ msgstr "Git 入门教程"
+ 
+-#: command-list.h
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "Git 入门教程：第二部分"
+-
+ #: command-list.h
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Git Web 界面（Git 仓库的 Web 前端）"
+diff --git a/po/zh_TW.po b/po/zh_TW.po
+index 87a8faca93..18e079ef1f 100644
+--- a/po/zh_TW.po
++++ b/po/zh_TW.po
+@@ -20095,10 +20095,6 @@ msgstr "在某個版本庫掛載某個版本庫"
+ msgid "A tutorial introduction to Git"
+ msgstr "一個 Git 教學"
+ 
+-#: command-list.h
+-msgid "A tutorial introduction to Git: part two"
+-msgstr "一個 Git 教學：第二部分"
+-
+ #: command-list.h
+ msgid "Git web interface (web frontend to Git repositories)"
+ msgstr "Git web 介面（Git 版本庫的 web 前端）"
 -- 
 gitgitgadget
-
