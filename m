@@ -1,81 +1,80 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4711472540
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FCB4915A9
 	for <git@vger.kernel.org>; Mon, 28 Sep 2026 09:51:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790589112; cv=none; b=UIW1JGd7apkMsJz6WL3aetwAbn2QlL0K0oD8Dpgo03lFlbivONGSqjB5w8nQZcpNp/ysNR9IGLKgGovgRGM1w1GsAfAV+4S3R04XbF8O7isPK8KSmCm2Q6NQdmiVSyQQEFDp/Sq7OgpclcZSWmvt7A3NWTDeuCy6uZ1X+8oLEyg=
+	t=1790589112; cv=none; b=mJPGxLCp0u2M+3NT3p7cazWw+NEQI2e0bkG404FhARw9M5dRFfZQ0AdxlxVV1l6V5Z8vN7awORnpbCajexTcelDxb4OHoAcFlzLKJ7bc0MA/bEc9WO69gHQD3jB7Nc+4Hs0hkbvbjBA9cDPtnRCE6YAwSK/j6C4VSJtMXszhqvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790589112; c=relaxed/simple;
-	bh=b2BrhUBGAKzvYNIp1KXF4zeA1QYgDXLsUhW0nEAcV3U=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=UDo3xU+KGUnE9M6pgu6ugboZrhKsXC346I9FQDH+Cirk2oiXvAfeNIZHSZSdb182jJNFHDs7NOPsT685n9+Oc4VTqarJe/xi1aTs+A0mqC/P3Miy6eVu9vuBSNpyjCwpfA7EvMGx8dYRyPtFf5hk2wW/zN4K4/H0KHAWomzgofo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Oo1W/ZVf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uo8tMZoH; arc=none smtp.client-ip=103.168.172.158
+	bh=kAakvSZB1DfHp6X6kD4pxxRsyBaPFzU1arh17IFtdtU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=qP5IHG5i7/3+wJ6BoKZgaMkSlNUzuWKyGh/4Y6hr8YNGMgdX8g4r8+DWLrgGw/1TktLHlZ+8ELKXGLKOWI4NIMjhUOxISUWATmgZttVwXbc85ioNOGMjvLrUc/Sun2vIK/gcFYOqhKN7nuqVb8hvpwr/2c/fT1IQOx/uMbpS2uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BVVmHTpj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xzJhNiIr; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Oo1W/ZVf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uo8tMZoH"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BVVmHTpj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xzJhNiIr"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 87A7B140002F;
-	Mon, 28 Sep 2026 05:51:49 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 28 Sep 2026 05:51:49 -0400
+	by mailfout.phl.internal (Postfix) with ESMTP id 42393EC005A;
+	Mon, 28 Sep 2026 05:51:50 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Mon, 28 Sep 2026 05:51:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790589109;
-	 x=1790675509; bh=Ic4zdvMx+9N91a6eZpbigIoZWQf9p/q58HfjvQjEC5k=; b=
-	Oo1W/ZVfI73/2KKYBxcxxvhG989LPBFP9cTmL/xxw913mnEl/P4Ry6sVd8uzcxmz
-	5P5gDpPT+Rpb+Js2t6jJQ2yUqMRjs+oIIuQzalHBtsCcL9WRhumRwHq78gG2C+TR
-	RE0SLMerUxKZGIA1uhNDmmDwCaO4zsRjfN32pVF8rSE8zsS4IPFPaNbT52DKV7bc
-	6gnwzWef3DRneipSeXpChpJKlzYcIW0ISuoEvVocg5z+4gWcW/nCfF9Knz23zDGS
-	c3os8VMUn1JC+vafEzn7/mpYPlZZhPcNDaAbTxXOUDWIIQrxeh0SFb7CVrdXMRc1
-	6IqGmJXKvD7BnOpVWPJ+cA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790589110;
+	 x=1790675510; bh=W0d2Z5VXq6etkEp9QSGVyASsKrEB3JDcDE/MxYeMN1A=; b=
+	BVVmHTpjgCjFPhsj8tZ6PaF5OTjlQaClyfWJWpuGEdrO8SadcLttgS5a+ByhHPcS
+	sl8TUrz+ju1atmsFn6zBd18YEP4Ibe8G3yyjpKiOjLadSTyFrHG6Ya3H+zfs/TNB
+	HF5TzXArQxi0ih2upALHE++eZr+IBcp2gLxu/uhKxDQfr3vIWiEEXO2FhZGn3Ck6
+	d+UUYloF95kjrWCELJB/JNOUeUHJ8COPvmSa3JtdM8rNIQlURzBs662zrCRnacGj
+	uMTLId/ScDiTJSTV3OI6bDXAx4/z0/0ie3iJfQKzDRIxTqqnhgWQJVujAmwUvB3R
+	/xdetAs0WYTot/hCQHvxdA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790589109; x=
-	1790675509; bh=Ic4zdvMx+9N91a6eZpbigIoZWQf9p/q58HfjvQjEC5k=; b=u
-	o8tMZoHLQgLj0MlwpNfMkGIj18GLzoXsP62w3rwLE2/QTeAqqa2o85WS4bpf9wJl
-	9PxainptTkCvl69RDp38S5EO/YNgDW07SeNXJO+meH+8yi8l+NKIzaiDJGZCJIpk
-	EMaasqSbTE0e9fokTTuPP4jqUI//WyhbePh2Vai63zSyIDZlYOZIipjTk/9Di6Rh
-	QT7i+d3cLVjbbZGwOjA2W8fxWwfiqIhvcRRN0mMknkUSlVG23mJPRca6288QKUPU
-	1exw4DXtV6M2/vpiHkMCWsYK9slmfKnz5uECdeN4fm3u3uoaczesHo25x2pAnHNb
-	ShSBqKmEUt4f1zCV+XuHw==
-X-ME-Sender: <xms:tTi6aiKEHpnlRsicJ-pOdw3804T8v09A0m2Hg4HWDwe6ZWZtHExVOw>
-    <xme:tTi6ahnG3pkMd9co2nUjystxBIT7dW3l9mgBLqhHEqF-0wuyqIyIOlaTHopa7mIyk
-    0HOjltaXM4MwcNmcZWxWdlyWXnKq7hgGnxMXIVsDl_2jVxF8_azQtM>
-X-ME-Received: <xmr:tTi6agHXXitJ0rJd1dEV74G9kd5jAByx25qAtCnMv8v3IkwKDxFmGw>
-X-ME-Proxy-Cause: dmFkZTF/gmpwG0yL35l/AjgTR8F2OvA59A4pdBJ5zaqZ00Kfe87OlFg51lM8dPL6Nkhdcb
-    IL/N/X92IUvGBkJojcXkOa1dLeX+yd7GXEnhCAUrTK87/Jf4MPZrBNNb8/k4I5OzeAfb5h
-    2iJHSEHn7aVJnNGw0nX3vcgygwDlU2cpk1Ub/BCJcPcOa0iqCfQWnCoLhp5k1lBglhEKXm
-    i3NEVLX61Y9EJiACySTQVp70CJlClP5r29cLBibY/xW0iruPGxNDvJWEVa3iCVQy8vbVwZ
-    83x3UXMqd8K5rEs5rvqyHsgS35gmg8xFuEGF/pRB/odbbkYoSM4SNjWKjpJucmmOovkeh2
-    QoO9SbsBx+WW6Q2K5mjYGY9dVaYxcnva8RORCP0uNI1EhwpVuHWuvuxDIIg/nDXrW1TVjR
-    eM2a5GzIyCkewzPZwdmt94wrfGXEAnKur1l/Bo48yGCiVwgnUhGkQjaTyHOWeuYsMc7G+K
-    nmtu5HCwPrDFwG2vRBgwj51OhtF0YeLj5V82GA4l2JtaHbVRucftFKnijPUekvXh4GOmRo
-    8vzcgKGBsTuQKSyHnutrR0/uwo6gLYAfuPSwyWjBc0S8p8w4aSn9ENa0v86y7RD/YEvYvS
-    GxiL7OmZfRyoR/RJTTTM+KcnD4heTZgKpfYLDS6mB8QI84T5s9dajUxElpuA
-X-ME-Proxy: <xmx:tTi6ahH1QqglD35cJurubXha5VXKE7cGFliDsvTntgCVAswXYIOuig>
-    <xmx:tTi6atMZveDVnpEEGw8Wzw2ijTMVxaLg5oVq61As5XZIKjuqZSOJ6w>
-    <xmx:tTi6agESzWhcZBdSuUVLtLhFZjk2FRKkkI_wqso6n6Qshx1J-6vnHg>
-    <xmx:tTi6akOaPMIh1h-N8YhEer1mbzxfiTj1Y1wZwXvt6xtl-npWwENQEg>
-    <xmx:tTi6avCXOzAhwX_9ICMM4VPIXGLGcgPJztnbgWLwpYd8OWzxal6R_3Qd>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790589110; x=
+	1790675510; bh=W0d2Z5VXq6etkEp9QSGVyASsKrEB3JDcDE/MxYeMN1A=; b=x
+	zJhNiIrP0wvoC/5eM6C2k1vNR6SEw6UZkrhEutqVtQKacBJ65VR/+GEnfcxsIxZy
+	rNcBie/RL7q6EGjp8IqZcDUtVnI/vKWDmW+yKup4+d2Bk0p6VtzklMOr4xrRBQZ9
+	irmvhj3VuixPl43HXKQ9e3TDvwDMNIc8ScWflDfckrIZAsLPbivIO1GfOE4GMAk1
+	kcpQUcZYaNu0FMBApGWEfAFLuWzGcvMyXH8CdjKF71GgwTee+Y5H88VvZ8nXNhy5
+	8nmfKPzxLHkDKQ7FluRzY4tikSSIRxkCupQ3nbnxiFOOShIhq5HymkrkfUpyz4Qp
+	JfWjRxTGWnyYOGiUFYm6w==
+X-ME-Sender: <xms:tji6ar_3d2FYcJR0NKGzAx3gGlfszGvllBrNkgfQbthvqY_TEeelDg>
+    <xme:tji6avINkADJ2jYOijlOe9HEJZ6iBUqVX2mq5sMXbH8uqH4DNl-Rr77BbIRzZTpWQ
+    KCeGY3DEaxy24m0SA_XuMFEPTU4lld9IWZjL0te7_qDtSgInpwH_DY>
+X-ME-Received: <xmr:tji6amZkc5VkKpU00qL04m6cqVodf3UsbRf1sscBvAoKl2-zE3TXqg>
+X-ME-Proxy-Cause: dmFkZTFf3wbZ+K2hbzfSgpgETsMz+NBy3J6MpFvFZYdyyTeL1iI2BFDj1IOSxm4OYKC0H3
+    1Aperekeoh01XU/Affr9YDGewK0XTpFuAvdOqXRnkn1hAQOMt6Cmug4wAR/cLjxT0+YYyY
+    V0ix31kC1wU9qb1Fc8l0wzUB6/ndZQ/KZS4bdHqUX1yu2WFUdfLdGcye3K8VFjVWdme6dj
+    VB+FbRki+xZ7UJmHTn7m2FhlNqt4gn7r8JRqnyPx9S2V0Cn7eSTMCsJkqZ9Q8z0sAb/7of
+    tUBRJGNrdn5okkLUJRR2FTKTF+T7dMnEgQWAA9cfkQE6WEt+aDQyOttxx4ijBJAJTShyNK
+    Wz187Mbm6eiDFcxWq1pw5otGNgFNUSPZhtGPQ+bXD7K7+ZPwrbnNwGZSogSei81S9Utxz+
+    3+Gl6/xHi7CN5dD/IM3BYsfUANO66vHkiLZnF2RiHINKQSrDsof1pCQifiMA48kZlxm/Ha
+    SeGUo2/KvOc6mVzgeh2JaY8E9HjPjqsSC8UI4isRIAS+hQHb8Tshj31b5qgcgEIRvOjJdY
+    n2Sf6H4m5+Cw9hTSSafYwFdp7hF3tK0xn2aZ4qku0X7S/tD6k5zluiocv8qaFNUrc0Po0M
+    L3MDR5TIAZxCKNSdt9OAXSOeLww8f0m8a7bhu4iS6PVpWtoiBT85lzSkTVXQ
+X-ME-Proxy: <xmx:tji6ahLnJzn8fZP_nn_PbKc2-s1jsYE4gucSMje2-paqyrUbMJe13w>
+    <xmx:tji6akAKkTq6FzRFUVuv7Y_6NdSu-OHm8FzWzezpoafmhbrSWuHbig>
+    <xmx:tji6ampeiDx4eGkksz3yEMvHOzyCfZUben0rK5CMvdlVdy2j-luUbg>
+    <xmx:tji6avh4bq5hFeEtgemwlyi3uGr-JSBrBEiVp2RwqrXtmEsHKGn1Mw>
+    <xmx:tji6aln1-91Q2eS0CIJkRzTjySwIxdCqy8Ew3hVzWygCDgNs388a5IYb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Sep 2026 05:51:48 -0400 (EDT)
+ 28 Sep 2026 05:51:49 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 07c09f0a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 28 Sep 2026 09:51:45 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 33570931 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 28 Sep 2026 09:51:48 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/7] setup: enforce repo passed to `create_repository()`
- has no state
-Date: Mon, 28 Sep 2026 11:51:01 +0200
-Message-Id: <20260928-pks-create-repository-stateless-v2-0-a03612f703fa@pks.im>
+Date: Mon, 28 Sep 2026 11:51:02 +0200
+Subject: [PATCH v2 1/7] path: drop useless
+ `safe_create_leading_directories_1()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,123 +83,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WOSw7CMAxEr1JljVGSfiCsuAfqIgSXGuhHcahAV
- e9OUtizfNbMG8+C0ROyOGSz8DgR09BH0JtMuNb2VwS6RBZa6koaVcF4Z3AebUDwOA5MYfBv4BA
- PD2SGRjorc+dstTciWkaPDb3WhVP9ZX6eb+hC0qZES5wc6wuTSrnfmi7+rk0KJChVGFOWO9fk6
- hgbW+pEvSzLBz4FzIXdAAAA
-X-Change-ID: 20260916-pks-create-repository-stateless-f0ca03cca689
-In-Reply-To: <20260924-pks-create-repository-stateless-v1-0-11499557cf31@pks.im>
-References: <20260924-pks-create-repository-stateless-v1-0-11499557cf31@pks.im>
+Message-Id: <20260928-pks-create-repository-stateless-v2-1-a03612f703fa@pks.im>
+References: <20260928-pks-create-repository-stateless-v2-0-a03612f703fa@pks.im>
+In-Reply-To: <20260928-pks-create-repository-stateless-v2-0-a03612f703fa@pks.im>
 To: git@vger.kernel.org
 Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
  Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
 
-Hi,
+The function `safe_create_leading_directories_1()` is being called by
+both `safe_create_leading_directories()` and its `_no_share()` variant.
+It is ultimately the exact same as the former of these functions though
+and is thus quite useless.
 
-when creating a new repository via `create_repository()` we pass in a
-repository. This repository is acting as an in/out parameter: the caller
-expects that it will be fully configured after the call, but the
-function itself also uses some information from the passed-in repository
-to figure out how exactly we want to create it.
+Drop the function and inline it into its callsites directly.
 
-This interface is quite confusing, as it's not obvious at all what
-configuration of the repository is relevant. We have thus over a couple
-of patch series reduced the use of the parameter as in/out parameter. So
-now, the only piece of info that is still being propagated via the repo
-is "core.sharedRepository".
-
-This patch series cleans up that last remaining part so that the repo
-becomes purely an out-parameter. To ensure that this is the case we also
-start to `repo_clear()` it as a first step.
-
-Besides simplifying the interface, the intent is also to go further into
-the direction of unifying repository initialization in a follow-up patch
-series.
-
-The series is built on top of 0f8e75abeb (Revert "Merge branch
-'en/no-amend-during-conflicts'", 2026-09-23) with
-ps/odb-alternates-at-creation at d1019ac894 (odb/source: remove the
-ability to write alternates, 2026-09-10) merged into it.
-
-Changes in v2:
-  - Adapt documentation of `safe_create_leading_directories()`.
-  - Better explain change to fully clear repos.
-  - Link to v1: https://patch.msgid.link/20260924-pks-create-repository-stateless-v1-0-11499557cf31@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (7):
-      path: drop useless `safe_create_leading_directories_1()`
-      path: introduce `safe_create_leading_directories_no_share_const()`
-      builtin/init: refactor messy creation of leading directories
-      builtin/init: move handling of "core.sharedRepository" into "setup.c"
-      builtin/clone: don't apply "core.sharedRepository" to leading dirs
-      repository: adapt `repo_clear()` to fully reset the repository
-      setup: enforce that passed-in repo does not carry relevant state
+ path.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
- builtin/clone.c        |  4 ++--
- builtin/init-db.c      | 15 ++-------------
- path.c                 | 13 ++++++-------
- path.h                 | 14 ++++++--------
- repository.c           | 37 ++++++++++++++++++-------------------
- repository.h           |  2 +-
- setup.c                |  6 ++++++
- t/t1301-shared-repo.sh | 42 ++++++++++++++++++++++++++++++++++++++++++
- 8 files changed, 83 insertions(+), 50 deletions(-)
+diff --git a/path.c b/path.c
+index c3a709a928..69b06c9464 100644
+--- a/path.c
++++ b/path.c
+@@ -829,8 +829,8 @@ int safe_create_dir_in_gitdir(struct repository *repo, const char *path)
+ 	return adjust_shared_perm(repo, path);
+ }
+ 
+-static enum scld_error safe_create_leading_directories_1(struct repository *repo,
+-							 char *path)
++enum scld_error safe_create_leading_directories(struct repository *repo,
++						char *path)
+ {
+ 	char *next_component = path + offset_1st_component(path);
+ 	enum scld_error ret = SCLD_OK;
+@@ -884,15 +884,9 @@ static enum scld_error safe_create_leading_directories_1(struct repository *repo
+ 	return ret;
+ }
+ 
+-enum scld_error safe_create_leading_directories(struct repository *repo,
+-						char *path)
+-{
+-	return safe_create_leading_directories_1(repo, path);
+-}
+-
+ enum scld_error safe_create_leading_directories_no_share(char *path)
+ {
+-	return safe_create_leading_directories_1(NULL, path);
++	return safe_create_leading_directories(NULL, path);
+ }
+ 
+ enum scld_error safe_create_leading_directories_const(struct repository *repo,
 
-Range-diff versus v1:
-
-1:  6ec41760de = 1:  0f9513d5c6 path: drop useless `safe_create_leading_directories_1()`
-2:  85ac056b80 ! 2:  3294cdb6b6 path: introduce `safe_create_leading_directories_no_share_const()`
-    @@ path.c: enum scld_error safe_create_leading_directories_no_share(char *path)
-      {
-     
-      ## path.h ##
-    +@@ path.h: int safe_create_dir_in_gitdir(struct repository *repo, const char *path);
-    +  * race, callers might want to try invoking the function again when it
-    +  * returns SCLD_VANISHED.
-    +  *
-    +- * safe_create_leading_directories() temporarily changes path while it
-    +- * is working but restores it before returning.
-    +- * safe_create_leading_directories_const() doesn't modify path, even
-    +- * temporarily. Both these variants adjust the permissions of the
-    +- * created directories to honor core.sharedRepository, so they are best
-    +- * suited for files inside the git dir. For working tree files, use
-    +- * safe_create_leading_directories_no_share() instead, as it ignores
-    +- * the core.sharedRepository setting.
-    ++ * The default variants honor "core.sharedRepository" and temporarily modify
-    ++ * `path`. Note that this configuration should be honored for all files in the
-    ++ * git directory. The `no_share()` variants ignore "core.sharedRepository",
-    ++ * and should be used for working tree files. The `const()` variants do not
-    ++ * modify `path`.
-    +  */
-    + enum scld_error {
-    + 	SCLD_OK = 0,
-     @@ path.h: enum scld_error safe_create_leading_directories(struct repository *repo, char *p
-      enum scld_error safe_create_leading_directories_const(struct repository *repo,
-      						      const char *path);
-3:  3a7c197f1b = 3:  8dd89f144a builtin/init: refactor messy creation of leading directories
-4:  c3ced666bd = 4:  f37db1b17d builtin/init: move handling of "core.sharedRepository" into "setup.c"
-5:  25918a4ff6 = 5:  db76d32f2c builtin/clone: don't apply "core.sharedRepository" to leading dirs
-6:  a742852675 ! 6:  19388a188c repository: adapt `repo_clear()` to fully reset the repository
-    @@ Commit message
-         some state because we don't make sure to clear the whole structure.
-     
-         Refactor the function to set the whole repository to all-zeroes to avoid
-    -    any kind of leaking state. While at it, make it a bit more robust when
-    -    called on an already-blank repository.
-    +    any kind of leaking state. Replace calls of `FREE_AND_NULL()` to instead
-    +    use free(3p) to avoid zeroing out the data twice.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-7:  760058e9c5 = 7:  0d4819f005 setup: enforce that passed-in repo does not carry relevant state
-
----
-base-commit: 6b6fe25b12e5324f2fdaf8c73816b9d2207e9404
-change-id: 20260916-pks-create-repository-stateless-f0ca03cca689
+-- 
+2.56.0.rc2.329.gd58861e689.dirty
 
