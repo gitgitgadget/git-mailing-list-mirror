@@ -1,155 +1,140 @@
-Received: from mail-pj2-f43.google.com (mail-pj2-f43.google.com [74.125.227.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E583E7BAD
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 13:00:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790600438; cv=pass; b=JewJue6W+wJw+ZF2TGIB24Roj0sA2qzbnU+VNxnZSKtdi0AgcU+QQ5qv2Sno+SrHyjxPLpBQ2d4LUa6pwJ7w1sgWAr0M5awaWWDupdheWEuk4a4ViSmS6LxQGhemo2xxefAQ6CdKqYoufn79xhkk22BPqtgaJTdFLaArAWrrGrA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790600438; c=relaxed/simple;
-	bh=aImkuTtgtQ0LSG8jvCIMsyWj5K8Tnw81rG6/Q1T9BrE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=p+qcqclwrMMTFi+NBWXEfsB3ui/emEIDQQGg/bx1I7vHkshJbX378YeZ+XA6dSpK5c3ADXFoVEaahBccoXOkXcGHOPBQu5yW4sfsKf265yeHEYWKAnsb5XKMg9V94RtjDwhBtGfqOKHC1AuBfyopSIzOWqjtTpwX/DtqTdWoEwY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mQPP0Jp9; arc=pass smtp.client-ip=74.125.227.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DE02248B3
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 13:01:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790600474; cv=none; b=utmhPIM8v6dKa/q0ITWHtMeIXqLgc7ZQYiRia2CCor7oH6JVHtrKcZZafcuY0pxMm4ApXLl5LgKEN3wxiSWxrp3AdXG6KmRgD+FEnimFfZRhF/JF3Kx+Qe+tBEc7/MEwX4B/MWtvgSSwJx7bCmakfAtsyT2KJWhGTpy/ujtfpEc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790600474; c=relaxed/simple;
+	bh=TiD8BCyKST9dYXZ+xFh6YDUj1Wt54MFjzyZbIzeb7EY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oPCkAKjYLKAR5MhcpBb6vhmY9LLqcBFQ4pWes0CTBJJQYV9/FeyqTZmmZJkPdvshiFBi/7QpIk9lAJBjkDwca0cYe44dLqMg+aVX6GakPesTAINDkQDLbgqmFje0sJLM0eovX4NCDH6n4ZEeZPoNlOz45nSyICQYGCQL4T4lYPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oVyAh7Cy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RJe5hero; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mQPP0Jp9"
-Received: by mail-pj2-f43.google.com with SMTP id 98e67ed59e1d1-398a147688bso2161690a91.1
-        for <git@vger.kernel.org>; Mon, 28 Sep 2026 06:00:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790600437; cv=none;
-        d=google.com; s=arc-20260327;
-        b=GqnFowOUoSLtu10Yh4STKq6LnyBoT96U1Te4nonUQtXleP4mHpB59exJmZhrq96H5Z
-         6LPtb5AM2sNUogNzDA/cC5ZTkpOxc33gmrV/SDGSUAP9WPOK3BebtR8jfQv+iW/h7wem
-         nhur/uqZHk/Quy6913nxwbPi4CrpxSSG3h7+kE1ABYVVqtnFh39gNiktVyAOzQtN1B9T
-         /6Qk6d2hsK2rGc5fqr/8DFEFLQQJu4LHI7/ET1LXlBKjD1qtmQrRO0pHBlNkKoF5n4kP
-         vlgG9To3ltodWhwyObFIGvQVBp+HU19uVgj1LoZtvQBYxeY8zv+ylnh6azkzV3OaXzLx
-         TD2w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=qpfRHqiaXCB391mwlbaRNrcJdiAMTuBdv519Fy4FNxc=;
-        fh=j31ckz8DMvxVeBuAyrMWt95mG6mcZEKr1nZr/SW8v+g=;
-        b=o4wtpmJhkIFWtr/1aE19AqsXJUc9EMa2DoXeZRJnGNCZTwFcXBHvqfBKtYjKEoIzgq
-         P4K21T8RRrpcNviR8VN9as064CaeAUBqHlT1qLRCk5YDaI25NMK2CVSFqwirT+Oc3Vqx
-         ujzo3kpAWTBn/LXRqNroh/TVdcApDdHCpBVVb9MMM63eOMMYjj5+uBTaVakFWGe2h3aC
-         rCz/5e9aJNvGajs/VbnJHAH8LGBY3RIvAL0RM4hAAtKYQXC/NGDIA9QslO9sACEaSSas
-         YS7qyBIZX8zttZmBvBF/oX+bNp7sn68SoHKypQ0a0e2OtBOfB/pRjxHGVmNC0ZhsrqsE
-         Q9Zg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790600437; x=1791205237; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=qpfRHqiaXCB391mwlbaRNrcJdiAMTuBdv519Fy4FNxc=;
-        b=mQPP0Jp9JAWT3VQub6PBnwpsa95R0xlDnSydnnARmVpWSDkmklMtomeEUKcIntdt6C
-         wiTKOVYZail0IyJQZjXzDsb/itMG/04kJ3CeL36U+j3EMt45jpqT1tkGsDvyPTG0Ypju
-         P8xVzad0Wd1IwDleGilICsdK6ukLvIY6JP/gwEc+TL8t2blL8Ne5zvJv1ivtsbMUGHu5
-         Bd/J1clRy4+MAzsZawnJGdf7/3upW4SGyntAJTi1OtyStvpXa0mCWQKrL5GV8DAoxdQd
-         LZdFxi8IBsiTHDd8uVAR7352WMnmM/A3RFrHjHsxXB5Hkup64Os8IsSmzhOt1Rqvb/DX
-         jyZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790600437; x=1791205237;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=qpfRHqiaXCB391mwlbaRNrcJdiAMTuBdv519Fy4FNxc=;
-        b=cKfSVY0latsFSQ1uWOIvVAZtsJETRLCOUY8KtQuAZ6UPT90GkwbOFWfWnSxMLS0f93
-         epnsFxSEGtDSck7tCWDauyYKX2fuo73Xc4Q+jrKCPoJGZ5jpFbTNQjqemY7UonJwQhLT
-         GED3ysFh0/w2dDj1dgICzsLxZClOlR6Hm8YRcyeFDVDt9iNkw3gBURtyi1JcPtxMSAXJ
-         4Ggaqx73Gpby06qr8wx0TMV70dsHROE088fc2X1fM83cM5OUlDvs5QPXLZ8m4bdFhSmT
-         DqIULvynjxT6isgD0kDbxsErJNz4cEuin36C1CfJwsO1ChKXamKCikn6czCjpO3arWru
-         hF5g==
-X-Forwarded-Encrypted: i=1; AKwUvBwSMp5VQuuxBg+HO4HkGOtC3TAqSc/gFvY0E4dyYQjMjb4PEmTQrymDSVb7AIxJfTKioR4=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJEgp5CT8JemTJDridARqppderTg4ZAvnLV2sTdIMwKVfMZ9E+S
-	JXz5YvzGV3dh+UZuWYo9G0RBiqlBSfM0WWu8Wtwm3W7afuNdWnFAWq7GeWjYT41NOyvHBhg0b+L
-	I5sbr6n2lH6VKyxFZK7+Q5BrgxnD1ytk=
-X-Gm-Gg: AYBFou1dqNhvAOPNbif7KlXPgA6fFQCA6gkHL5/mZ2efChPyx+aqNncQvHHrnpcg+Bd
-	UVMEJkMwBizHQeXXRbJWfczAhXVgAXCiMxDKtt/Fr2l0+gSKwp3Pyuwwa8s6EfBnvgM/D4KpkxR
-	AL55lEZJ0CJgV9ymNlLPN8UDCMNHuXvusy0WfBs5cWIakhbVZqqJDPmXc4A+yh2diXcfAGZfm85
-	W1jbUrjAQtwqDCKmiVuIeuBHtB40Wd0pifVYyjkcVBPRVpEaJr61BR2J/vZ6HEWqhDl5Qor/ps0
-	PPnR2VQMajY1RB82mvnh0XUlka/i04vgLCxCEz+6MEcKbWmDKodRJoRYq0v234C1GDAqvTG3Clh
-	JgZeVYkZ7/H3pDK9tZsk51jXjJfr2aP8w69QdRtYD0p9CXzLlYsD6KQNwHXLMWQOBVu3GCI9m1L
-	2K/c/Kpwo=
-X-Received: by 2002:a17:90b:3a0e:b0:3a0:3a3e:f78d with SMTP id
- 98e67ed59e1d1-3a099230a33mr11203127a91.47.1790600436671; Mon, 28 Sep 2026
- 06:00:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oVyAh7Cy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RJe5hero"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 854A91D000D8;
+	Mon, 28 Sep 2026 09:01:12 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 28 Sep 2026 09:01:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1790600472; x=1790686872; bh=azemjEx4+/
+	kiBxgD9qsHwUdXrlbYwD2mT9L+oNNLs1Q=; b=oVyAh7Cyy/f7Cr72ctOk81PF08
+	OCCjPu0CgwlIJfxCE7hOhjsqfddSYTIy1mgRehO8gkhwyiQID1RvmMNytOwqBynM
+	MPDOGZV3rAOvQaUvIOsZsY2iUVFkGRgO/2J8O6t4F7Bsh6bq8sdSJESGbQo1kHlv
+	299l31YPzEZ3981PEJkZbwCj8sZuzT0jmW1CEABsXVKGNnyAfrNCdK+6uww8mDkE
+	Y2/D/KOpteKwG1wLK2HO2p+Q6yZedh6/GWyxoIJrvGw3Bq95AYqBFucW0l1VZ44l
+	SHZk7vnGxHQH4kRYzsTa/nxVrA9GMu1UsjMvxmzZ+54hfr66AI8+G126DP3w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790600472; x=1790686872; bh=azemjEx4+/kiBxgD9qsHwUdXrlbYwD2mT9L
+	+oNNLs1Q=; b=RJe5heroQllK4fXbu4MaxczgA4HCIyde7xob9q7bxu2Rffn7Ct+
+	NUHr4Y7hpQHez8M2yV7snrHcu3GFTz95f4Nce0Nr9f9LLH5mSV4zWp/yrUH3yKSF
+	1hpPBMFoKyoSYIACJhAW/AQIWYI+2NcJ/nKpNy+9WPN5kau/EpGG2XIv1D2ryvlO
+	FTTybPYkKdebiR2P7Uosde03zNE1onmZs93XGpasyC2u7R1Z1hH5Fg81dhFQAk3K
+	X2fKqMsdoY7058G43a9aUGB6elJcDNN0TY4r23gJMPp3LrcyPqopq17qBX0fMrBo
+	eWHRZjIdhWzf5mBqy+cThKtBH/TP3ss3VPA==
+X-ME-Sender: <xms:GGW6ak4jm93xv-FxlfQhQwoUWPWyq8ibe3HaQUC5RPMbTbKKtIF27w>
+    <xme:GGW6ar67QcVPiqBlB6X7mXHmkifviNixPa2dFqkd3CaWSDLyUISg9c8nn_OQcKuhQ
+    bYKiNxlEjo7rf89lBTL-6taIqG3-yv53xhiXZmxraoOdsPaUge7SA>
+X-ME-Received: <xmr:GGW6ahGaGhdrucba_U3TqgWeyNqZmXeoItNc8UIA2DiVkFjdmLeWWw>
+X-ME-Proxy-Cause: dmFkZTE62ogcG6MHxhTHzqz+g0mOsyJ+C+qMbzsXH+EIUKUh+GAfQa4qobNMvAnbENQcG1
+    yBul7LLv8i0+2iVkJzWn5bLzMj4ZbAWczU6/DRGgBgq9SDiPdtTTXxxM9ChB2jwlv+3JyB
+    BDcP437dWhXLw7ApZMuIV7TmzLz6YM7zvjsSgqFhSU7CVIih2krm0kb8rf6BexL9YU9wBW
+    2jHrU6XswfNOJX42q2d368FKG/K19kowyJegB16doH15SBgT9qKK9L1IQZFv3rMBLwbF+P
+    ZMNXnErowbRBrzTCQ1AciWNBrzNHN4uSvkZ6rm6QA02Q4LZK1C+L5zysWjCovwY3h4ddHL
+    tQ70rKLnR8gOBsO8RGJMAp1Q9+e/VhRwyOkEtV8sLWyB46UbtH+nkBZyQeIBPioueMzXq2
+    U0Kep9J4+QHVKMNDWnZ+vPsvRuSPzPj4+CCJYIOm8XNj4jBbEsw3zxBAw8SfqxELesCuCU
+    rGL4wQGi9H3imOzbhde9iomsK2N0h4HGj9qX5i2Pa1NDXguoHa9y+YxhS7zM6+K5c7YDzK
+    y5+vLHapesqu/KnTCIkl6UA0xPPwpK1i9Qz3B/OzF0EHP2yguIwS4bYB8dgySIE41/VTLx
+    xn9ou5KexYppQvrAmIVQgzuMeAaljiwjr4K2J2ditUctMWPb8Osu1bcvZXDg
+X-ME-Proxy: <xmx:GGW6akQoRaqHnKTl7vl2SLw38nZ40OfS9NEK6H1U3N5slMH5rlCQoQ>
+    <xmx:GGW6aqu6FaJHk0W2_YMvnOm_7PzZB85gY5mvr1viLS-cfuDsYt3C6Q>
+    <xmx:GGW6ajwIMoa-4vOIxawD3y6AXSjzeOQgfC3Zmx42IhiLlT2JAQCSag>
+    <xmx:GGW6ak4cmJH0Y0k2IHcTjUjvgpy3yLoHjx-7fGip73ODfM7oFnRCeQ>
+    <xmx:GGW6avZRBwfdXBt5DGrN-bQVQiCRiCvYOPZnaA4cny-DYLkcH07mJy0D>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Sep 2026 09:01:11 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 9fa3225e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 28 Sep 2026 13:01:10 +0000 (UTC)
+Date: Mon, 28 Sep 2026 15:01:07 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] http: handle curl stripping creds from effective url
+Message-ID: <arplE8-5jD-rZiyu@pks.im>
+References: <20260928040149.GA498186@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1790168285.git.ben.knoble@gmail.com> <cover.1790425008.git.ben.knoble@gmail.com>
- <xmqqjyo6qz3z.fsf@gitster.g> <346c4209-9600-4302-817f-e8f6b364ce6a@gmail.com>
- <CALnO6CCXT1HHUwL8+eYGVL443nO0eoC7vhpoLvC3RXjp39XQYA@mail.gmail.com> <CALnO6CDOo35HAfqn_h2CUUdux9LeOkjM8OdFLkkS1nVexijUvw@mail.gmail.com>
-In-Reply-To: <CALnO6CDOo35HAfqn_h2CUUdux9LeOkjM8OdFLkkS1nVexijUvw@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 28 Sep 2026 09:00:24 -0400
-X-Gm-Features: AclHuK84Rm79le9Gs-44i1yYaKlRogPC7Sh-r5Hj4OzBJKKm1ey5rwu3jWhqXyM
-Message-ID: <CALnO6CAf491aNhqcb7K7YcNTSTNLAESmqeLwzEGk_S=ZsOjG9Q@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] stash: clean up index-mode test merge
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>, 
-	Thomas Bachem <mail@thomasbachem.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260928040149.GA498186@coredump.intra.peff.net>
 
-On Mon, Sep 28, 2026 at 8:33=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.com=
-> wrote:
->
-> Just leaving some breadcrumb notes=E2=80=A6
->
-> On Mon, Sep 28, 2026 at 8:05=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.c=
-om> wrote:
-> >
-> > On Mon, Sep 28, 2026 at 5:50=E2=80=AFAM Phillip Wood <phillip.wood123@g=
-mail.com> wrote:
-> > >
-> > > On 27/09/2026 20:21, Junio C Hamano wrote:
->
-> From my local version of the branch, the following script points at
-> 4f65642eb0 (Merge branch 'tb/rerere-lock-grace' into jch, 2026-09-27):
+On Mon, Sep 28, 2026 at 12:01:49AM -0400, Jeff King wrote:
+> When we detect that curl performed a redirect of a URL we requested, we
+> update our base URL to match the new location and flush the http_auth
+> credentials. This goes back to c93c92f309 (http: update base URLs when
+> we see redirects, 2013-09-28).
+> 
+> We detect the redirect by comparing the requested URL to the response
+> from CURLINFO_EFFECTIVE_URL, using a simple string comparison. This has
+> worked fine for years, but a change in the upcoming curl 8.23.0 adds a
+> complication. If our URL directly contains credentials (like
+> "https://user:pass@example.com/foo.git"), then as of 7a6bd027d0
+> (getinfo: make sure CURLINFO_EFFECTIVE_URL does not contain creds,
+> 2026-09-21), curl will strip the credentials from what it returns (so
+> just "https://example.com/foo.git" in this case).
+> 
+> This breaks our direct string comparison, and we believe that we've been
+> redirected. We flush our http_auth credentials, and now subsequent
+> requests will use the reduced URL, causing us to re-request credentials
+> from the user. Notably this causes t5550.15 (among others) to complain;
+> it tries a clone with credentials in the URL, and fails if the user is
+> prompted at all.
+> 
+> We can handle this new behavior by doing a more careful comparison: if
+> the direct string comparison fails, we'll strip out the credentials
+> ourselves and compare. This is a little extra work, but in practice it
+> should only happen once per process.
 
-And within that topic, bisect points to 2d1fa0323f (rebase,
-cherry-pick, revert: run auto maintenance when done, 2026-09-17) in
-t5220.69 as Phillip said.
+So in my own words, we want to detect the case where we have been
+redirected and, if we have been, we want to strip credentials. But this
+logic is about to break as curl starts to rewrite EFFECTIVE_URL more
+aggressively, and that makes us detect redirects in cases where there
+were none.
 
-expecting success of 5520.69 '--rebase -f with rebased upstream':
-test_when_finished "test_might_fail git rebase --abort" &&
-git reset --hard to-rebase-orig &&
-git pull --rebase -f me copy &&
-echo "conflicting modification" >expect &&
-test_cmp expect file &&
-echo file >expect &&
-test_cmp expect file2
+> I've used curl's curl_url() interface to do the stripping here, mostly
+> because its behavior should match the stripping it does internally. And
+> also, though we have code to parse a URL, we don't have any to
+> reconstruct it, making a single string comparison hard.
+> 
+> One alternative would be to parse with url_parse() or similar, and
+> compare the individual fields (skipping username/password). I think that
+> would probably also work in practice, but it seemed to me that the
+> simplest change would be sticking with string comparisons.
 
-++ test_when_finished 'test_might_fail git rebase --abort'
-++ test 0 =3D 0
-++ test_cleanup=3D$'{ test_might_fail git rebase --abort\n\t\t} || eval_ret=
-=3D$?; :'
-++ git reset --hard to-rebase-orig
-HEAD is now at cb9bf26 to-rebase
-++ git pull --rebase -f me copy
-From .
- * branch            copy       -> FETCH_HEAD
-Rebasing (1/4)
-Auto-merging file
-CONFLICT (content): Merge conflict in file
-error: could not apply f29aa66... file
-hint: Resolve all conflicts manually, mark them as resolved with
-hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-hint: You can instead skip this commit: run "git rebase --skip".
-hint: To abort and get back to the state before "git rebase", run "git
-rebase --abort".
-hint: Disable this message with "git config set advice.mergeConflict false"
-Could not apply f29aa66... # file
-error: last command exited with $?=3D1
+It still feels rather roundabout to compare URLs only to figure out
+whether we have been redirected. I wondered whether there is maybe a
+more direct way to get that info, and there indeed is
+CURLINFO_REDIRECT_COUNT, which allows us to retrieve the number of
+redirects that have happened.
 
+Is that interface maybe a more direct way to get what we're after?
 
---=20
-D. Ben Knoble
+Patrick
