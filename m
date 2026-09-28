@@ -1,182 +1,139 @@
-Received: from mail-pz2-f40.google.com (mail-pz2-f40.google.com [74.125.228.40])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81DC64E66A9
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 15:36:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.40
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790609792; cv=pass; b=nJUREaoRPTKMLryQa4mZBKcaBjqxSdaIZQPOsNF6zR+gYnuCexqyTsJjxzrj6sheGLU7whH2C5sXmgcST50GdDfeJ/QBoSLfPopdWkwhD5RnCl3UnyB/vy2Ru4g77QbKKM2jSNWCRpB3FZ06ibD0+koOe1Hap+eJcYCYTqQMr0g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790609792; c=relaxed/simple;
-	bh=tLwoHnG/mxkXBCCUTdhd7iOqZyPcNhv719SFWqmeiMw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=vDaccUlRWNci/emx/NNkwWcuID499C2shg2csSjRyLKAqf5ozTJI/8pt+PY0koEQieyKCKXPgOMfAuGG+Y+hq6Rb4MsYTfLSTW+DBVs5sVGh0bH+IiW4LDDdAGvdB34TShPte5L7dC65ZXGDd/s3Qe5ZOm9qYRN6ebH3+lRF/Ho=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bkXI5XGF; arc=pass smtp.client-ip=74.125.228.40
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4550C28686
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 15:38:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790609934; cv=none; b=jA8nZQLSFbC9y5544DnlgFXQowv8kntTFAH2LibBq9GqtTr19YJXzt1rMjKltnnUw+gZpIXQ9UTBOde8oZvGezGPLheqlNCXmP3Vyl2rpdEafqABzr4HMT4SrXokYCBjsZnzlCEuWqOwGEPUzEXJ4FyqRjYq2v573eTHwIOzSmc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790609934; c=relaxed/simple;
+	bh=/XWuK6ZeMx12TeDQjdF5FhDl656/OXauuHCvt07OXjU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=s0CuTfVfu4e72FsgQ1rVqkiaqDVaIe4+sa5p5P0QwscgCZxcWN08DMvN9GTmcoLc0zzZ3uuYahwRr59zTv8pe9+peFZZW2N49XosECis/nc+SaxGGGUHb+RBVJ9Yf8PjdNe4MENWoPJF0LaQj/nmrdeNb8moXBPEltdZXhrUL48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NQevyrui; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Eh1hzi/2; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bkXI5XGF"
-Received: by mail-pz2-f40.google.com with SMTP id 41be03b00d2f7-cc750a1482fso1737805a12.2
-        for <git@vger.kernel.org>; Mon, 28 Sep 2026 08:36:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790609791; cv=none;
-        d=google.com; s=arc-20260327;
-        b=om6fTb6OeekePTk3qV0iuzGpqLS6cQKjEU05guDc2xJHVE1nsE+YibYyRZcvTLu4jR
-         eKHA8TEhkpYwjCG4e4C4oepkidOE5D5R+BOmZBGxV6wuAur7rm7XkV7QXMT5dpmOqPQ3
-         sIYltV2LdCsgjJaqpFvrAv1+QoGRZf83bn5e2ytvdPyiv4co22uFvRru7cym9nKq1x/Q
-         tytZ8TQFn1EtJG6wEwsyUHhwtEObzSb+ebDNzaZgioFxWJCRTNM4qhq5OzDGXSUgxvRr
-         /E7P7LKG9tagsBVpB3HgAQstlKwGKIIHJdMPlmm6Jc/8SZjVGgNTRXX+8mjU7arkTE86
-         hEvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=tLwoHnG/mxkXBCCUTdhd7iOqZyPcNhv719SFWqmeiMw=;
-        fh=YnA6kTP7eA8SCMH+sPWO248C5ddIxPSEqU78ZRjRFRY=;
-        b=WUZs29T+poTEk+MewjFMJnOVjbNuTdr3jZeOyZNYgDLiGnKv8NaXR8nwdvDzm+Gtgl
-         LNj1al/yRsenVaAEQnb9UicE2qTF6xMosx/y7btQMU8orswCYD7+irLt2oyELG/NOJ/N
-         HKP7Zlai90HVwXhIaz9IPm9vgFvkfB6oFMUaixrO/QT6yh3D3tr37SpIvHXpu/Lo47sU
-         gDg2zI/KxGykSpA0yY76K1ZLAE3rnaI9rWO+LadogF0d7YOFQNSJ4uVK8VpayrWscfJ/
-         sxaquNr01npZnQfl/bL8LKHiCEy1IZxQYbwPGoheFR5hYQUoV4X8lN7scJqJ4wq+lVY4
-         FiNw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790609791; x=1791214591; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=tLwoHnG/mxkXBCCUTdhd7iOqZyPcNhv719SFWqmeiMw=;
-        b=bkXI5XGFQtDRxGqN8DN16lIh/sKTd/FZU0wC0OcZ1j7A6h0ZO+IXoWrT+2tbXsui3s
-         /gw4DIQCCUp6g/SsszCS/uHwTpjfL1F36MpC+h1F1XNRQJbmYgGBJX5h+lEfLZRTbHQT
-         rVGPEWLalmAfJjH32vSjVrq1tTGvtC20/K7JGUKUDgIjMR4MZ039qXaCTTCRPezj18Zs
-         AjlDw17yiPuj/Lfw7dAvjwtBZxL0ntPbIvHRlymFx6BEL506K9bWZ1qZoCE9eo5sz2NA
-         rr/jGO3CwsH3lfRfnx8uBw58OeCQl8u0BA7O9pZGba12qWsECvVZLZXwNxNl/65PaIyw
-         bb0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790609791; x=1791214591;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=tLwoHnG/mxkXBCCUTdhd7iOqZyPcNhv719SFWqmeiMw=;
-        b=HzfsbasnA+6B25tI/RU66u+aFtEr+eGPLCGl6BtInFluDCrHSmYIpB7epdr6lYL8vS
-         ZJZN+5VrJ22geaLE+RGzCw06Eaytr53oo4ChgTb4XpP67TbdZf6xHyZx2+woAqr5rTmC
-         OzxMJERJcwRxIf6o8S71+tTbDHc2skw6lhx+GkuVA63E0TUGtEBWLn7OfREu47Km3myv
-         2D0mh+9QWtvBhUH3HoLwx4ec6X1FfvfBukiQXcIglUehoeJj12kb1lVOsmvo3eNF1kAA
-         nLDFUxsSFkjfPcJTa5LSYe+TErAc1pXu2vkH4GbYJhoAdgRxL8lLsWlhAj5oOnrw8wh7
-         kxWQ==
-X-Forwarded-Encrypted: i=1; AKwUvBwm38m2lzGiYE/Et86dQspKR8mDeTDOG92oLxNgfxBfEeaLFs7kWWUzuLgPrAesZrKjt0k=@vger.kernel.org
-X-Gm-Message-State: AFuF++kwOGeN9LV2w8oxCO2rE2+3FEQaes/spik401NLuEcPnxrH9pc4
-	dXtel+53gRtMCuA3nMcJcJPdhJt59PFGPAgMlcT7JoK43lCT0eenHqtSDU5ZUpRHDYRjD6Q3My8
-	Q62LBMSH3j1LiEaT2RdNKYg4AUy4ic5U=
-X-Gm-Gg: AYBFou0umGMMvpIlvLuuclrfX0/apX6vm02Tyh4P68S6MEdbRtMN4/TvlHlFCs4luQr
-	b58mxUaFM4MIFsPjcqZC+p00mjT0JS45i4vPL9AUkx4rbbecrdhrsW/7OFZVjV1aygCP61kFeRc
-	d/hOt1xTXMl8LGYCFNzUgJaL1JXmCb+LkJTccFUqg8cJwJGYXVpDqMvALfngnosN7xe+kHjYQ5F
-	Yo2rV6qJaaTAO7Seoln/0z9yi+DXpk6C6gNEePaMOT2hLlHzVTGNltHSzheLNAdSO3UC6A0cVsk
-	ENxE3pZ6vq4vVmH0NSEs6er+IkoR2Onof4NKcxiN2CogYl7c2ASkERT4xdbLvblFPLh/CObif0E
-	Ls6HuqB0mSuCGh1dLu+/RiA/Rk/DTcjebN7Fg6yxzEh01/qPAO7cfiHMRcnqBUSw5Mwv+Vkq/Wy
-	PdYLleQBYpGno0PGKIQHMoDXCN/SdSIg==
-X-Received: by 2002:a05:6a20:144d:b0:3db:4e0a:df51 with SMTP id
- adf61e73a8af0-3de26c609a9mr10061618637.22.1790609790588; Mon, 28 Sep 2026
- 08:36:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NQevyrui";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Eh1hzi/2"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1B6D714000E8;
+	Mon, 28 Sep 2026 11:38:51 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 28 Sep 2026 11:38:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1790609931;
+	 x=1790696331; bh=Pzk8WebP2/ee9exWoGbEwzvvb9l7QOLk0zQGBV1CsrE=; b=
+	NQevyruiJACVsYsVLnmVu/tFsuSrZC5KPZjzeIB0wfIcSsLmflgbCVQImu4ayCVx
+	bda7acGo7GX/NxPU9BRa4qDEEEIajs96Z62RAup5uCpg4xV1fXrNFWrCyVe6DCJc
+	xAWHYC1joObqDL7GavfvZHC1hPE5Mum2YS6rnHWKM4z9Z8/DpVjo24WkIbmaqBVW
+	rc6tUQDC4ON4vgtGbd477qIwodQOqN6lwD5JRdJG/OeSiTwH77JaqwDgVf35yWfV
+	hsos4pPjaai0V3bNKT3ZO4pBFUwQT+9j75obor4BX/b1M1wekHJqgi87Czgjc7tb
+	f9wHkrOIKKV0iBVnMKFJkg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790609931; x=
+	1790696331; bh=Pzk8WebP2/ee9exWoGbEwzvvb9l7QOLk0zQGBV1CsrE=; b=E
+	h1hzi/2EMaLT1bME5t1kyq3whW0PPQRUDuD8fN6VA0J1av2nZA04JN6xaeY52yH8
+	sX5MRREw96/R5mGsx/ZbdyH7PvVGzERZiGHQKX33OwVnD7ElBLSEyUIm9Otz8eXV
+	COshOTG41EI4pY951o9wNbvj3hQsHzPCy+nTsI+ZhNUvRTPmkmFxGZ1ZydalFFvq
+	oWr5OyrQ6YKp5KAEL62k4vH0R3/sdrrFBMhz7CCCRU1el9acGaItu4Z8aFMoyQgf
+	hO4h1s0qTyCZ3LS5jg1SC08j/dsnCBWPEr1fM8QUoXIlzaXNszCcKfeZpCxRZOtn
+	Hc9hyysw5eEeWF5VaOi6A==
+X-ME-Sender: <xms:Coq6av1c1p_OsovCNOkJm4efKDVLG4nPE55PsNohkcj6bn3UBkOx1w>
+    <xme:Coq6alGmOyiVHl3AACabPKMIjD2Maa3D2EgEyyokyauv_2ZLIqxeoTgzHg4GUKfJd
+    3-v6J1DnJhqhiP_0hmR4y5gmBMkEaJ3u8N3opmmfQ9RkuC68FApKyg>
+X-ME-Received: <xmr:Coq6ak6kaLck_PDiqBHN6Xq6yFTay0IEFW8QE150LHLKqsW4UZjwTVbRhTjQJVHOeIr-a3HtJmMkzsKQj6EgipgW3EOdPjfkbPOd>
+X-ME-Proxy-Cause: dmFkZTGGxtHliJ9QcxqqUsIcs0T3dtFhXcFvoxP7cLdOdM95Yiz62eZDwc3I6F1ZI0zc9m
+    TG2B6ckovLTB7gFaGoJTa4xrePW5kYee2XVoIZtK4+sVXHEdjHQpaHn3MyYOSowlZxXWHd
+    S2sFHjaBToCvCToLQiafPXVd9sqGpXQ4YsuZuyMWttNQdETr2YBe7dg4OwcePKWJo97pCm
+    glUJZqFf/i6fE72VNCaOEjhv7iQWME+toO8uCndWllCjbubBXx+E/XxPnvnhuXCRsZDaJt
+    Iij786c9tq9yuFmQmA8KgPYswT2UPBbSEKVzLo0GdnhKGvP6PPKat4TARI2Ztdvq6sEnTK
+    lBmv6iuFqVrfEx+wBTI3+/TKa6PBiaqnIc0no6aVYPxQmrkt1lKLOHbN54gOCCpRgB8tDn
+    gLJDuRVMqCq7hMciQbeItBOV2MdoAWiGtCfbbi6LL/8YTHEpsMf+cWaBDLZBkkYrEGf4Ws
+    jFOhZ7bWfpb5Q8fl8MAS6S78OR826+XXDqHC5g37jiklK17mLKpFZBbpya/msebTzj0+Jo
+    4wCFHz0iBYuL4YTPSZEDaZIcOxL+XcaxRT7oDujyhRRrHPbMzMDPMAStSYYIbJURVA1/Re
+    Oade+w7T3uQ6hJUplEmiLhMpNpBUsR79qLC9f84FZH6AMJ/1ux24kgx4O1ew
+X-ME-Proxy: <xmx:Coq6ajsXNBCDvzdOdJzfi4cCpmyC2L6445nzdIil0Ac8lFBSjrxxGA>
+    <xmx:C4q6at4bsvS9z3TTnHv5P3F_XDOFwBmm9elpi462JQFgTmSq0t4esw>
+    <xmx:C4q6amWfHbi70eO9udX-L2jTMXTmYJd7kQq96bwROtYodXydUB_KTg>
+    <xmx:C4q6an-v2BA7Kp9wrRqfh9cFf-4ZsNpZBJTCFvFxbzwbOrZFXsYFjw>
+    <xmx:C4q6arhXpN7p_zRVYM0hFJ7fcTMEFMQ8ENWE0Z_buN3x9xtJJewMOYyI>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Sep 2026 11:38:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH] .mailmap: map Kristoffer H.
+In-Reply-To: <mmkh.cde@msgid.xyz> (kristofferhaugsbakk@fastmail.com's message
+	of "Sun, 27 Sep 2026 09:15:20 +0200")
+References: <mmkh.cde@msgid.xyz>
+Date: Mon, 28 Sep 2026 08:38:49 -0700
+Message-ID: <xmqqy0clmlme.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1790168285.git.ben.knoble@gmail.com> <cover.1790425008.git.ben.knoble@gmail.com>
- <xmqqjyo6qz3z.fsf@gitster.g> <346c4209-9600-4302-817f-e8f6b364ce6a@gmail.com>
- <CALnO6CCXT1HHUwL8+eYGVL443nO0eoC7vhpoLvC3RXjp39XQYA@mail.gmail.com>
- <CALnO6CDOo35HAfqn_h2CUUdux9LeOkjM8OdFLkkS1nVexijUvw@mail.gmail.com>
- <CALnO6CAf491aNhqcb7K7YcNTSTNLAESmqeLwzEGk_S=ZsOjG9Q@mail.gmail.com>
- <a59c4225-f093-4001-b77a-2083dfecce6e@gmail.com> <CAA0xjtpzaWH10pHOQ5j-5Hp1yHEKTDFbsicG6E4w=5nxb_irWw@mail.gmail.com>
-In-Reply-To: <CAA0xjtpzaWH10pHOQ5j-5Hp1yHEKTDFbsicG6E4w=5nxb_irWw@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 28 Sep 2026 11:36:18 -0400
-X-Gm-Features: AclHuK9z7TbTrRP6JMoClhoXJHmAszVIIZbLuKE7OouhjPtljqnmhb11TkoAZEY
-Message-ID: <CALnO6CC-eop86W3VREwGz0seG1pmtd0qS968TyP=mo_G+ZMrSA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] stash: clean up index-mode test merge
-To: Thomas Bachem <mail@thomasbachem.com>
-Cc: phillip.wood@dunelm.org.uk, gitster@pobox.com, git@vger.kernel.org, 
-	eli@barzilay.org, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Let me see if I understand correctly=E2=80=A6
+kristofferhaugsbakk@fastmail.com writes:
 
-On Mon, Sep 28, 2026 at 10:50=E2=80=AFAM Thomas Bachem <mail@thomasbachem.c=
-om> wrote:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> On Mon, Sep 28, 2026 at 3:45 PM Phillip Wood <phillip.wood123@gmail.com> =
-wrote:
-> > Oh, when I was thinking about this over lunch I did wonder if that migh=
-t
-> > be the culprit. Previously we didn't run "git maintenance --auto" after
-> > a rebase with the 'merge' backend but with that topic we do, and becaus=
-e
-> > we set GIT_COMMITTER_DATE to sometime in 2005, if 'git reflog expire'
-> > gets triggered it will expire the reflog entries that 'git pull
-> > --rebase' relies on. As you suggested in another mail, I assume this
-
-> "git pull --rebase" computes the fork point before it fetches, from
-> the reflog of refs/remotes/me/copy,
-
-This is described by the manual for git-rebase under --fork-point,
-which is on unless we have an <upstream> or --keep-base (modulo
-config). Put a pin in this.
-
-> and test 69 needs the entry that
-> test 68's fetch wrote there, copy-orig (f29aa66) to ae98574. With the
-> reflog empty, "merge-base --fork-point" falls back to the ref itself,
-> ae98574 is no ancestor of to-rebase, and pull hands the merge head to
-> rebase as the upstream. That is your "--onto ae98... ae98...", and the
-> four commits from copy-orig up come back, the first of them
-> conflicting with "conflict".
+> Map my email addresses for Fastmail and Gmail. Fastmail has been used
+> for some trailers and Gmail for my first four commits.
 >
-> > topic has changed something in one of the '--autostash' tests that come
-> > before the failing test triggers which the new behavior. What that
-> > something is I'm not sure; off the top of my head I'd expect the number
-> > of reflog entries in HEAD to be the same but maybe I'm missing
-> > something. Adding
+> The `code@` address is my canonical address here both for commits and
+> for trailers. I recently posted about that preference.[1] But I can do
+> more than state my preference, namely to make it possible to look up my
+> preferred name+email pair:
 >
-> It is eight entries fewer, and they come from the failed merges, not
-> from the autostash tests. "git merge" restores a dirty tree with
-> "stash apply --index --quiet", and until Ben's series that spawned
-> "git reset --quiet --refresh", which writes "reset: moving to HEAD"
-> to the reflog. That happens eight times in t5520 before test 68.
+>     git check-mailmap 'Kristoffer Haugsbakk <kristoffer.haugsbakk@gmail.com>'
 >
-> Auto maintenance expires reflogs once HEAD's reflog holds a hundred
-> entries that the policy would remove, the default of
-> maintenance.reflog-expire.auto, and after the first test_tick that is
-> every entry. Which run crosses the hundred depends on how many entries
-> and maintenance runs came before it. On 'seen' the expiry lands on
-> "git commit -m conflict" in test 68, before the fetch writes the entry.
-> Eight entries fewer move the crossing past that commit, and the
-> maintenance run my topic adds at the end of the rebase in test 68 is
-> the next one: after the fetch, before test 69 reads the reflog. Either
-> change alone leaves it somewhere harmless, and nothing else is going
-> on. The expiry is the usual 90 days applied to entries dated 2005, and
-> the only new thing is one more maintenance run per rebase, the same
-> one "git commit" and "git fetch" run.
+> Which one can use as a trailer command via `trailer.<key-alias>.cmd`.
+>
+> † 1: https://lore.kernel.org/git/add1abaa-5d51-43dc-9907-d6d3851004f5@app.fastmail.com/
+>
+> That’s the only motivation for this change. The Gmail adddress is just
+> for completeness.
+>
+> Although the proper long-term solution would be to fix my domain so that
+> Gmail doesn’t think it is suspicious anymore.
+>
+> Assisted-by: GNU Emacs
 
-In short, expiry used to happen prior to .68, so the reflog entry
-created in that test which is used by "pull --rebase" in .69 is picked
-up. With fewer reflog entries, expiry happens later, and it just so
-happens to drop the important entry. Darn!
+Is this an attempt to render use of Assisted-by trailers that we see
+more frequently these days less meaningful?  ;-)
 
-But here's what I can't figure out, returning to that pin from
-earlier: I was a bit surprised to see mention of rebase reading
-reflogs! When I remembered --fork-point, I was even more curious (but
-at least it's obvious that rebase will read the reflogs in some
-scenarios).
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-What confuses me is that builtin/pull.c:run_rebase() sure looks like
-it provides an <upstream> to the command invocation, so shouldn't
---fork-point and reflog use be disabled????
-
-I'll try tracing that test myself later, I suppose. It's nice to know
-we have a fix available (thanks for the patch), but it sure feels like
-a hack :) oh well?
-
---=20
-D. Ben Knoble
+> ---
+>  .mailmap | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/.mailmap b/.mailmap
+> index 29b48905327..3aec9edfd16 100644
+> --- a/.mailmap
+> +++ b/.mailmap
+> @@ -157,6 +157,8 @@ Kevin Leung <kevinlsk@gmail.com>
+>  Kirill Smelkov <kirr@navytux.spb.ru> <kirr@landau.phys.spbu.ru>
+>  Kirill Smelkov <kirr@navytux.spb.ru> <kirr@mns.spb.ru>
+>  Knut Franke <Knut.Franke@gmx.de> <k.franke@science-computing.de>
+> +Kristoffer Haugsbakk <code@khaugsbakk.name> <kristofferhaugsbakk@fastmail.com>
+> +Kristoffer Haugsbakk <code@khaugsbakk.name> <kristoffer.haugsbakk@gmail.com>
+>  Lars Doelle <lars.doelle@on-line ! de>
+>  Lars Doelle <lars.doelle@on-line.de>
+>  Lars Noschinski <lars@public.noschinski.de> <lars.noschinski@rwth-aachen.de>
+>
+> base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
