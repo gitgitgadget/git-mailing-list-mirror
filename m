@@ -1,146 +1,135 @@
-Received: from mail-pz2-f39.google.com (mail-pz2-f39.google.com [74.125.228.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7C74C10C3
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 14:38:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441204C4F69
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 14:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790606292; cv=none; b=TLZVTs6tbaVvTuxv+FHTPFs6Vyx1nSuk6bbsvkkJt+r0avDva9cGowQI/nrP8zsjiMReST26HJzKR5bsebUh6wuSTL4PPAXGUzK78ZyQn6WtLRrIZgKRuEH21hUDnqAkehU9Wk+T9qRjAVoXHtGIWYaHhgq+Lc/OTAhyunaWTS4=
+	t=1790606531; cv=none; b=c7/4+DztWZEZr+BGXWqwkrk8mphgtmGu/ZEC1fEVuzjxyFqPTIl7OBmfyzAvQ89jR/cXVYOpgPYxEGwiYCjsA7qWYkz8ksxxVI/6QjXzkxn2nosIboDE3+stKWRwdWOQJqkL5A3gEWSLgwvxfu+DwqJXMnJDguWPbl5YSwfYv0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790606292; c=relaxed/simple;
-	bh=dWUk0yNY/yBIs9Bmf8djyH+n/laEhtkEp8mrBBzzAus=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=NFvcU/WUCjk5xJ7cipsqCrGt22GVlp179KhAVeyAUJvN1cWqwQPqLtqSUr+oulky3ElavRvaV7iyzz31SbOs5clY67rm+W2vwz3QWVHVoF0DECiQTAtdY88O5+XGSOg4hbuKvmb6SutcDuW6/22fh6ySnUCfAVzzNgjMXcztbXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k2hiZlfh; arc=none smtp.client-ip=74.125.228.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790606531; c=relaxed/simple;
+	bh=f0Tl9S5Ory6Nzj5zhiQSnusDmOBbjTYIlgmaEcsCEo8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=M1ZFgfGK696wBgjIdEzumI3dlT0mi1mrV5RSKdWj8lE+ApXtvlQ+rSc+0SbhA3xcU1+wkLBBfOrc9OI12hqebWYF+F3SU8Bqp0xjGLGGaVSok8S0Nm/WulVUUyWpxjUF+ElTVykCBKNlEHH2pkyjPRp/cZmA3in1IJ018BADryE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V836AjjI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a+54zJb2; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k2hiZlfh"
-Received: by mail-pz2-f39.google.com with SMTP id d2e1a72fcca58-88098db8dcdso1165691b3a.3
-        for <git@vger.kernel.org>; Mon, 28 Sep 2026 07:38:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790606284; x=1791211084; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=vqHPphlwqZKAfs2vm2Wl4ltPaI4BLXPvpaSySqssU5c=;
-        b=k2hiZlfho1JzJrBzeWX2A76hivg535vQZRzGhIBivsJz3TR/uYuCTksn4NX4ESdtOK
-         S7KLF+YgHy7MCG0ilwT42MdmL9FUHNCqoS4Mm0VIBEwmht1Fw0YP5tH85WDyjQ+VIcZS
-         U2dOIZoZvzSq8MiKVVwBhox9YOYrwPVXyFycnqZmx9W9PCKX3NTQmwuu+CDajqK4YtGV
-         vkvMcK5kx4MFNhAoJsYAdHTitS43N5wi2HEPRmLJ3lMA4fTAn5CLKLlia0FM/RJj9eck
-         KiKGpPNpn5rVBp9+CHACoXss8OzOBBA/ygCtJIPDm79NqUl/zrF+92xyZ/qY/mE3AfhE
-         QAtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790606284; x=1791211084;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=vqHPphlwqZKAfs2vm2Wl4ltPaI4BLXPvpaSySqssU5c=;
-        b=QLyxPgYaxJde6gIcXAj63rqetD2ujJ1i5ba9KxbR6+2967wOf3Wu00n/4B+CkCPZg9
-         1haUwRBT+rik/1J31Sn2AXWph9XFEQQ0I1Zwfabl4zUz8dpvFDCDh+Q5ylm4Z3bmXZb/
-         ZDiy1Yxn/a+LYzI9m0Nhk9iPxCktz2JnhfI80HdXCmPd0xqE4zvw81jI2rSCGlw2IQMt
-         6tbl4G9YdPzLbBThDWPCLPBlIHFda7k7Bpw934ShmZq6FX2MC+TITCtHwBdholJBcrBd
-         b3rIHIiB2Z2XslofxHBOy6JN942VmBd5EtmU7Va7Qi4rVJ4Em70FGdRY7gXYZA5AEbPn
-         pmDg==
-X-Gm-Message-State: AFuF++nmT718103aEHO0Ayu5aIzWuboAQPs20iRExKXI5wvbXlzsV2ZP
-	9PDQmGFhvI/bXJeqxK8MSB977+Nx7Zr1B6EWRvQylbgH/63KglgI4VS5y0wO3Q==
-X-Gm-Gg: AYBFou2+2hUgxHKqsSUFcwPnQBWYvlbp0jVr34Q+oDc1Pxtaltmd+Zs2Bukx5Id51VR
-	TD6BSQzXM+C1FhnrUXW29RSShyWD5INE8+Cn20rmdSc6WW4Es2J9YPgs8VD8iYvtXdmgU7dGz3T
-	dLXYgrGDSzBOU0a/iu6C8pQejBcI7LbpDyDRAcruiyRLJwLVmxEJDEAQk2IadPF9Ixyh5KFXt0f
-	dVHAbiOR7RmHDD54lQeb3dMfF/6wqIzv8ssgDCx+vLq1DmJBzR2NTOv5p6Qupa5B/At9z80Pol+
-	Jn0SrVTt8kW4gukQCX+SEk5ivy1o1S7FB3CsPVwDpCuWALpJZ4qvHbmdr1stPn1dkA5bHTh+PI4
-	ird/qJ3tn1wGZJD3vUs50xvBhQYA0fBl83u36TRz/znPZUEr+FR705PF3twL1ns1x0qptaqmJS5
-	gt8yLhVZuB2qIRruQCgTKYNa+SMlvyuxycsMDiGXQaU+P1mk7K3vXInff6hZ6czI7nw080B6gAo
-	A==
-X-Received: by 2002:a05:6a00:1790:b0:881:e626:74a9 with SMTP id d2e1a72fcca58-881e6268a10mr6319699b3a.26.1790606284480;
-        Mon, 28 Sep 2026 07:38:04 -0700 (PDT)
-Received: from [127.0.0.1] ([52.161.69.164])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-87fea19800esm4252294b3a.10.2026.09.28.07.38.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2026 07:38:03 -0700 (PDT)
-Message-Id: <pull.2243.git.1790606282769.gitgitgadget@gmail.com>
-From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 28 Sep 2026 14:38:02 +0000
-Subject: [PATCH] t5520: don't expire reflogs where it matters
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V836AjjI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a+54zJb2"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 02246EC0196;
+	Mon, 28 Sep 2026 10:42:03 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Mon, 28 Sep 2026 10:42:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790606522; x=1790692922; bh=Yv6sTZONz7
+	CzYMK3skMarSQBTsH8gAlVYHZtB6Jdd2Q=; b=V836AjjIQck0wIbq8ry9M/esuz
+	VxT7s5P3HdHhlN8q525imNJsBYLBERZFYrEVf6pZCzkzqA5bIzHLgr0U35xkv2rh
+	Km4lfvS5f6om67/vxFh+Kr7RnF0DuKMqIBfKESO/6I7n2OWJ64O6qrwX6g6Zkzh6
+	0rcZtlD9bIgmeRgxjdvVsAxpGmmHgsANIv5UmY7RiEzQu1SpE3fEiMKUBsF6hbbw
+	Xewpo+eADf2YTZzAQ6BVV/RTL09syEy8laMfKCUiEYxJ5I92h6oFD0MA5TgeRquH
+	4jWA/yyJre5saenU00AEVQudByL2NAmYQcjMC2b/jisjdY4yJBICeq3OtLuA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790606522; x=1790692922; bh=Yv6sTZONz7CzYMK3skMarSQBTsH8gAlVYHZ
+	tB6Jdd2Q=; b=a+54zJb271Dg3EUNfT1RQB4Q4C7Bcs97GS5H/L7XeK3ETbhGz4j
+	CNyjg7m+HHeLNJPAUtXfH4NWN9VZanzbw2ZUmQZj/sDrxtTuuUPSrl8XpRn/1QwM
+	gyA3dIfXd5qIPiOoKiTvmyxr4UoI/BquNo978FTrtzzFGzGdXvj4csHTKlOISi2D
+	8e1NYptTH6g3d+eeCEr5Ut7LzL3UkduM/XguzpKcs2jw7NFOnAJSFpuimfwSpxUl
+	UPLQEI2Iok61RihRCKZH+L2KHFWEdspCF3Nliu8Q0gfLWVdRCXAZLjYHOxLhserN
+	wBB+g3/xLAjG9aZa8ABlFlRYIMpU1FGmNoQ==
+X-ME-Sender: <xms:uny6alXdm6jdrNkOvgzJ-cWsvEkOcUI5K9fyilrlJ3qZ-aIf3CVn1w>
+    <xme:uny6avDQ1EDurIL5KCMiRZZpOHj9mFCsC6U_tqFR5-Bki4Xj5Dv5a00wzfXcBt3ar
+    wxALhrJpy7SJqIFYgFpcUuyhEmyB6xV9kYP942CNEtoVK3Xkw3AT9g>
+X-ME-Received: <xmr:uny6ag_kKtrmpybi7RhqfVX1abYKwwOrVugZfwCEo2jsmzmTKmcHRl-JXEqB3FavJF8qfN1PR0xVbuLcHdRlEeAhf_p42M1U3amD>
+X-ME-Proxy-Cause: dmFkZTF6TlHE2Z2GM6gBgUs+yMwZdlVuxPvllB24XprOE+AQOPIf3ti6+tVtyHz8cAkFf8
+    eGQccOw1VAI5NbI/SS1yfBUeW+3M3SSRw7LyPxGdGxKhgwzPqZj2N4nMCLwIfvQ7BgZiSZ
+    x3k84pRQta2TLEXTMUdiXSEU9N+vS1fScruVhg0yJj3J/asvDrKx893DWNymAxpZtK5eU4
+    ZlDXFaQhdPsLvIa3h9FXWtCvSRqXXz9qzeHbgBnB/+OFy8niahGmjsZtbfQJKq7XBvLB5b
+    5ukD6cAhkHY1OyqPf9cH9lluXrFsKjPG9GWKa35TAu/4cLumDO6SnGLNIo3nXSawL2diV+
+    i9C8cQJMrmGh4OFUhKaoAMZfV+KFGAcNa1JEtgpt5reuL+I9/01EtC1l6lraNMnGQuFMmO
+    Xg2lTSsgiyK+1z9xI9DpREI+ipIQ3EG1Zp61Cwx1nw78CJ3qBDWHnVOVPctCNEudEz4iBn
+    NRuqhBh/Sb4F4OW9DK9mxI78osPekNzBOy4s5g08EbJGmd/br5aknoD5kFhXKQoWAvg/k7
+    XQfeJmAAeT7LB3ZEGF1W74SDDzTO98gXkKjMuXQIqi5q3QmCh5qrBdxckQV/lantHRafaG
+    9YEnG8jbzzrcSLSUyuBDGhTIqu1DU00IncS+83V+S6XidF0sOImRxmbDds5w
+X-ME-Proxy: <xmx:uny6auGn5zRwOFGQDs2zJxpuOxfHrBR6-HNFFSGZI5eBMHa6NxpnVQ>
+    <xmx:uny6amOHD6SHaKFyKmFPmUdyam6WYKFnETgoT002iT1q4QTaBYbIYA>
+    <xmx:uny6agcqlhpHNrUMJ1Oz9eFlt4X2FQXAkWwbSQ9yKmgxDspg6m4lOA>
+    <xmx:uny6ajtZx5EV8w3bhBg_Qmw2qSa87fDBj9axHalWD5A-2X0TgSeVMg>
+    <xmx:uny6aqcKX5TvP11zEv7jNRr3_nP-RJ7gCIgJTVYm0lwrlRG0a1vgN1YP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Sep 2026 10:42:02 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Josh McKinney <git-bugs@lists.joshka.net>,  git@vger.kernel.org
+Subject: Re: Reftable reflog timezone encoding differs from specification
+In-Reply-To: <arpZ5xCwFXc9ikrj@pks.im> (Patrick Steinhardt's message of "Mon,
+	28 Sep 2026 14:13:27 +0200")
+References: <85f7daa8-d60b-4348-ac2f-b1a68628af7b@app.fastmail.com>
+	<arpZ5xCwFXc9ikrj@pks.im>
+Date: Mon, 28 Sep 2026 07:42:01 -0700
+Message-ID: <xmqq33utphdy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Junio C Hamano <gitster@pobox.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Thomas Bachem <mail@thomasbachem.com>,
-    Thomas Bachem <mail@thomasbachem.com>
+Content-Type: text/plain
 
-From: Thomas Bachem <mail@thomasbachem.com>
+Patrick Steinhardt <ps@pks.im> writes:
 
-The "--rebase -f with rebased upstream" test computes its fork point
-from the reflog of refs/remotes/me/copy, and the entry it needs is
-the one that the fetch of the test before it wrote. Like every reflog
-entry the suite writes after test_tick, it is dated 2005, so the
-first "git reflog expire --all" after that fetch removes it. Pull
-then finds no fork point and rebases onto the merge head with the
-merge head as the upstream, and the rewound commits come back as a
-conflict.
+> We should use the one that we have in our specification, so in my
+> opinion we should fix Git itself. This is also because JGit, which had a
+> reftable implementation for far longer compared to us, implements the
+> specification correctly:
+>
+>
+> 	private PersonIdent readPersonIdent() {
+> 		String name = readValueString();
+> 		String email = readValueString();
+> 		long epochSeconds = readVarint64();
+> 		ZoneOffset tz = ZoneOffset.ofTotalSeconds(readInt16() * 60);
+> 		return new PersonIdent(name, email, Instant.ofEpochSecond(epochSeconds), tz);
+> 	}
 
-Since 452b12c2e0 (builtin/maintenance: use "geometric" strategy by
-default, 2026-02-24) auto maintenance runs that expiry once the reflog
-of HEAD holds a hundred entries it would remove, the default of
-maintenance.reflog-expire.auto. Which run crosses the threshold
-depends on the entries and maintenance runs before it, so the script
-passed by chance: a stash topic that no longer runs "git reset" from
-"stash apply --index" and a rebase topic that runs auto maintenance
-at the end of "git rebase" together move the expiry between the two
-tests.
+Thanks for checking.  I (unfortunately) agree with the (unfortunate)
+conclusion.
 
-Pin the expiry as ea7d894f44 (t34xx: don't expire reflogs where it
-matters, 2026-02-24) did for the rebase tests. That covers a "git gc"
-as well, which expires reflogs on its own, where turning off the auto
-trigger of the reflog-expire task alone would not.
+We do not ship reftable files over networks and reflogs at the
+conceptual level is not shared across repositories, so the issue,
+other than the trivial part of updating the implementation, is how
+to migrate the data in a local repository that uses reftable.  One
+time offline conversion may be the simplest but I do not know if it
+is worth it, given ...
 
-Reported-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: D. Ben Knoble <ben.knoble@gmail.com>
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Assisted-by: Claude Fable 5.1
-Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
----
-    t5520: don't expire reflogs where it matters
-    
-    The t5520 failure Junio saw in 'seen' with Ben Knoble's stash series,
-    bisected by Ben to tb/rerere-lock-grace and taken apart in the thread:
-    https://lore.kernel.org/git/a59c4225-f093-4001-b77a-2083dfecce6e@gmail.com/
+> We could of course retroactively declare that version 2 of the format
+> uses the syntax that Git uses right now. After all, JGit only knows to
+> read version 1 of it anyway, so that could kind of fix it. But for any
+> repository that uses SHA1 we used to write version 1 anyway, so this
+> does not really buy us anything, I'd claim.
+>
+> In summary:
+>
+>   - We have an upper limit in divergence of <10h.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2243%2Fthomasbachem%2Ft5520-reflog-expire-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2243/thomasbachem/t5520-reflog-expire-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2243
+... this.
 
- t/t5520-pull.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
+>
+>   - This only matters in the context of reflogs, we don't use these
+>     anywhere else.
+>
+>   - The risk for data loss by a change is limited as our default grace
+>     period for garbage collecting reflog entries is 30 days.
+>
+> With these points I'm inclined to call it a bug and just fix it, without
+> handling backwards compatibility.
 
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 27f38ab3c8..bc818605a5 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -35,6 +35,12 @@ test_pull_autostash_fail () {
- }
- 
- test_expect_success setup '
-+	# Commit dates are hardcoded to 2005, and the reflog entries will have
-+	# a matching timestamp. Maintenance may thus immediately expire
-+	# reflogs if it was running.
-+	git config set gc.reflogExpire never &&
-+	git config set gc.reflogExpireUnreachable never &&
-+
- 	echo file >file &&
- 	git add file &&
- 	git commit -a -m original
-
-base-commit: 34f06850c16c7f7ac822b1adc71354f11b0f2ca3
--- 
-gitgitgadget
