@@ -1,176 +1,100 @@
-Received: from mail-dl2-f43.google.com (mail-dl2-f43.google.com [74.125.229.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFE71E260C
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 20:32:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F473DD86A
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 20:42:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790627578; cv=none; b=PFzqmfkNnSdGdroiTO2olEos4LRNaCCO35IfuQXe/6hjwS02ZMIJtShcin8ocwHW2Q39oeTvp62M7OY98pXsIDoYVSKiSLyGC3F1sADmz8KhbwHqkNb77zPCJQiuMDJKhKIF7TvzOzEkeiof8g+blKMMBfrywNxc4GUTS4RAhW4=
+	t=1790628137; cv=none; b=pmQ+JWVurFTunFCEkWpJksHO2YRcf0uz0fEPn7abs8yWT2p5A+186PXfELugQvoblbJf6cp028bp2OxdJYrRcD8HAXjD14L6j3A7E+rNI1BZ11p5GRa83H1Uqs93L+3zoXzAvwUCnZBv1r0USf3TZmwjSdjb4kwzE4GBxTua7+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790627578; c=relaxed/simple;
-	bh=SF6MK1CiEfAr1Gho2nzCqsjLUDZVWQ3kc/ysRMg5Wk0=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Nwixy/9npW0BROrQyJhu96tV5UTglJc1Zdew0aooWZ895QXgn0tanHbm1dgN8q+CJEUv0Gj6ckYtJpYSUUqHY6vJrv8gnUx7DwB3MZHOhZ6IdkRXDkX+reLEddBJFxJb2Dxs8PkbJlTwkeeFSJF5Posvuwk7/AziQSgRNALeY74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mvV7i4ro; arc=none smtp.client-ip=74.125.229.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790628137; c=relaxed/simple;
+	bh=iuvaU63Uvt4Sgtu3D2al34CzyWy7NJR8vs7hK/WmZiY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=ClYpBMz4OwP9myXFPVR+fT8fRip7gL0jVfCI+w1nv+C2hMnf1obE/W0Ap61CcYq0NbYWyeIuMTv2J0WNanjkpO10QvQqJtqpfCQ55cH1EjMNahD6DU43ExSkOSgoCZ1HcNp3kAJO6KKbhm82m0vGXAfPHgnNBHH4MFAxpO1ZQoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=QR4I7aYa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P9YrTfI1; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mvV7i4ro"
-Received: by mail-dl2-f43.google.com with SMTP id a92af1059eb24-144f7915355so3019399c88.3
-        for <git@vger.kernel.org>; Mon, 28 Sep 2026 13:32:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790627576; x=1791232376; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=N0/nc4mq934OaXIV7pR5YS7FQYX/rXq/YBSdT57cxuQ=;
-        b=mvV7i4rob7Du00j6fFPjSH3bpU7KKE7y+p9yJs/KUmXE3X5iuyANKmw0Wqw26kVNzx
-         I6DpxJZIzzrho0O+kcpA0tOLq+BuQQo5PKYvU4Esi3n1UHQo6m9csOKb8avrN++SHtPp
-         AjBluure3GsqmPOCK6DohUzWqriqyFhxeUCp0iUax6obUV67bNtcMF0shXI2W7u7xDdp
-         LGmMlJ9WMMHwxeCrROaGvybct/AlmgfCY9qngLR/NVOtdOp+hKK22/kbMYs9zWARCoEx
-         NLNgCjjOEj+7oTiws71YW+zdvK1+B1UCN0Hfke7ILn4SzQbDJN9mPby9s833daO+NoJ6
-         Emuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790627576; x=1791232376;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=N0/nc4mq934OaXIV7pR5YS7FQYX/rXq/YBSdT57cxuQ=;
-        b=aDru0k3GqyIe1Hav76du35HQbtKhFaFJmbkaySUVxrg7nvtwwbn376t9hzL8b+C7Wr
-         iPw8FnjbkGl/Gv5cV/70Rg57UKPLMztgV6fhJ5Z0zokRNs/576yUo0FUn5Cok50pWuwM
-         P5Zz6nZkempwn3Rgl2NgecQEjEvOH9v0W9wT06F5OSR3Ay2iGaiXBWn1ZiynqyPqo5iR
-         k3YoJ7S2VGKyBJ1rJ6ufSQNr9QS8U7bgUDwl0O1mwYELqwA4b67m0HKH8Uon5WyP0K24
-         xRIgdnz4n9yYy2pVucGEinzFH4sI178EPhZLvacv3gZfg6u7DJEWFQiXFEyXhOCqq8YU
-         O52A==
-X-Gm-Message-State: AFuF++kG96G2g6dT+xz157zDqF1rusf0dt1dgaHIdQfPStNg8NvEpCg4
-	mueDSpMsDFmV6sjmDmQ+RnaPZTKcFn+RaBB3zgjd3o2gJJj1JIxUIUcVP5NRFg==
-X-Gm-Gg: AYBFou0rOh6OINy+3qRQJ9QbHEro0t6DTQ1eRK1KLFuVracFICwHhIY1CoiaNtqkDAx
-	7/buyoBa0Duab5pxMwzFT6YUmoOyuvBrdclTCbO7kFmhmvccTIRuAcGiA6HKrS3uZU43t0lUOvW
-	BJ1ED+qoUeiBa4Mg0u7aQ8Tu+fiYe/ZcZPBuTrqjX9FU6hvRYcW+fA1GcTK74OhVecnz5ikPHji
-	YUZEKZxLwews1cK783ehOGjucaFmQDK/6T7dIKOUxDbPNXlTW0MTYy15Qc83YXOCWGLyloRbTDP
-	9oiiJrW0Yx+qnaI2ygXbNrxPlewYX/WKSqeagTXqr9JwI7mnsZi/pAbVWeMtwCIHIZ2suEerfn6
-	7BQMm/O+FiKnV5Um2jSgqCpUQ8yque4SucuAyVq3wUzCGqXBCLVd/l7FfgmN5VloxJY/l5MmFwU
-	wRMJ4YIODyvICB201HtqSRfs9SRbTWdspPcQdlxEVIzRiAn289mRx04Z1dZau+UZfPLGhPLoe3+
-	wY=
-X-Received: by 2002:a05:7022:43a9:b0:143:4710:a869 with SMTP id a92af1059eb24-146cdfbecc6mr16888897c88.2.1790627575742;
-        Mon, 28 Sep 2026 13:32:55 -0700 (PDT)
-Received: from [127.0.0.1] ([52.159.245.178])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-145a7318afcsm25673834c88.0.2026.09.28.13.32.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2026 13:32:55 -0700 (PDT)
-Message-Id: <pull.2242.git.1790627574093.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 28 Sep 2026 20:32:54 +0000
-Subject: [PATCH] [doc] Use `man git` to teach users how to navigate the docs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="QR4I7aYa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P9YrTfI1"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id DAA851D000E5;
+	Mon, 28 Sep 2026 16:42:14 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Mon, 28 Sep 2026 16:42:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790628134;
+	 x=1790714534; bh=iuvaU63Uvt4Sgtu3D2al34CzyWy7NJR8vs7hK/WmZiY=; b=
+	QR4I7aYacsGhiJ2v3t8vr1NGnUHXfO7MbhXbClN3eDrow+eCnoU51Rnmb51TEORl
+	qy9qc/lTl8fRM1W39+kDvTg7/cng/ViEriB25c076Ccbtvc03nDwqbiSUSj6Y5IY
+	wK4ULzTiq22xj8r55uhjLHMrD21ij2fo+Ip3b/lTeuN+3t5W1PtDY0cOkXEAIVPO
+	ALi4UgEkdhHGmIkoomoSTaWi7kSIL0hEHVJF2iMNcRfLb/VRFnqDEz6FS1bCn4yn
+	fPM/NR2jlN2bUqn3SZCx3eI3YWs6QX5d3aDQhI19qezODOcCFZhhd93MWD00EXJw
+	NLwFOcDt9QUzsH4tQyxeiA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790628134; x=
+	1790714534; bh=iuvaU63Uvt4Sgtu3D2al34CzyWy7NJR8vs7hK/WmZiY=; b=P
+	9YrTfI1kQcrEBWle0A/JGqsJ9HWpPrPbU6pUhPZCF9weoLf26y5ZhIE5ck9yoRoC
+	54XUqNZj2I96MquuXd/g4rUqAhSZziDP3WDGngkb9/7d7f6OgbkySG87OC1RX2Lx
+	WMqAT1eASQ3IHkY85VYduGEyS7jYdclvhcY4biHTAmThkVp1MWow5hSqQ1NzNXiR
+	0TPxmn1sxbigaq0tXlWR2UR19ULwmmBCvzrxm5kKhJLJNfVMU1sPMs4RsYYKuIsy
+	MWH1SV7jXMVXmJGV+W/EA2NT5+FbRmG9XMfm0yqPE3NVf4UzS5WLVK+2oNLfYuRE
+	sgndyGQB175IPpL4zWA5w==
+X-ME-Sender: <xms:JtG6ailCJKgQi4ADjWT-OXS-UIqQTrociHW7bO-3G1OsMuMBpPSm4A>
+    <xme:JtG6akrVO5I8f9Y1dvbsOLn83FFe6-l4w7o_MbLzpHTH3aEzujxoHRNzhscRGbsaB
+    HEnKfl-_p-pfvMxHnUVtTOrh8lD7FWyuddyAUTnzzCc8pnN4cpgPUE>
+X-ME-Proxy-Cause: dmFkZTFLFE1r8LsUbXpjWjIwVSkyTmrfIpwrJedohHQWRVvUDgd0E98S0B1/a207JaqZjh
+    zhht4Bv58tYYJyLDFZA5xxkw24A3OtCbNcnbBba+hwSJ+pHAnApGM/4qh2cD6SNQ5F2EhU
+    om4jSTDNmHSei9JKuQ6Vj3Hp5xXj4osNgLtWhF3J4nWxK0kcVatWLar/QfLEIbSxTHl1X5
+    HTM+z1p6RwqfDDN6aJnf7oaaGEZFFtLhCtTBkU1jzh7m7JWWmxLL7MOSLy3H3tYGUIHgpA
+    n/c+kRRmt9sF8rBxWylXUOWjU6jZxabeOPujW3yJvnED/nPf4cdChjWrM08wfRmYmoBtS6
+    FCdqwKzSwwBT5w0Ib5jX/TgqE8JPZtxjqTikdEQOQpOWy605up4HLhjizh32czi/B4eBjJ
+    zTjfqE6pGmM2TqagYDJQMZyJ6i8wq7fufTLHNn3dnecnKAaHWAtD/CQur2E09fWDyFgFZd
+    z1kXzOkxrH2L/rNuxPKmxggLcSOReMvjfNfPMd3uswDdw7OcWGBWnutwyJn16djO8KgWq0
+    MDVG70vDiTqEOLO7gvYXtxLqsfcFRZC7acrGPp4aSPGW+6PQV9FdU+oviqGUj/V6OyWjzk
+    eLYuzB3x1nvxo1N1Fwd2+Y5D7ZdnC8JVKDLmp1C9dTzwqsKw6Mc+0Lc3qGLA
+X-ME-Proxy: <xmx:JtG6aqL10HNxQUbUM8ZB1iaa_UgGc0SLep4iHL_zdaaLha9i9LFP1g>
+    <xmx:JtG6ajpMoX-QSEIQa_9RA42atLX_VCif38YTBU89GaMcaQVhjJD9_A>
+    <xmx:JtG6aqxNtwjhdil7dBJf9jYZCtcWZSg-g0C0h2BfI7DxYpW4g8X5pg>
+    <xmx:JtG6avPzYCzt4MdoJQm4tqpFMThNw0eW0qd0mrW1y-fRyCNDarPtCA>
+    <xmx:JtG6aje14BHUS5UE1yEDI3h-D0tLvx5kixNFM9fCpEsQML6aHB3yrup5>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 82553780070; Mon, 28 Sep 2026 16:42:14 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+X-ThreadId: AWFTbsbb2HAJ
+Date: Mon, 28 Sep 2026 16:41:54 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Jeff King" <peff@peff.net>
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ "Patrick Steinhardt" <ps@pks.im>
+Message-Id: <01f196af-3a6a-40e6-86c9-f8b4ce7bfe47@app.fastmail.com>
+In-Reply-To: <20260924233726.GB765100@coredump.intra.peff.net>
+References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
+ <xmqq33uyz3yp.fsf@gitster.g>
+ <20260924233726.GB765100@coredump.intra.peff.net>
+Subject: Re: [PATCH 0/7] [doc] Add new page on merge conflicts
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-From: Julia Evans <julia@jvns.ca>
+> I think that is giving us a good signal, though. The guide should be
+> mentioned in command-list.txt, so that it is linked from git(1).
 
-Many existing users of Git don't know how Git's documentation is
-structured, and a lot of folks have expressed frustration that `man git`
-doesn't make it easy to find out how to get help with using Git.
+Thanks, will fix this (and will move the conflict-marker-size change).
 
-Explain how Git's help system works in `man git`
-(`git push -h` gives a short help, `git push --help` is the full docs),
-since it's a slightly unusual approach.
+Should I be trying to apply my patches to `seen` before submitting them?
 
-Remove the references to gittutorial and giteveryday since they're
-unlikely to help new users learn Git. Currently they feel very
-aspirational (it would be nice to have a tutorial and a guide to
-everyday Git commands!), but we should give users a realistic view of
-what the documentation actually provides.
-
-Mention `git help` instead of `giteveryday` for now, which does a better
-job of giving an overview of everyday commands.
-
-Also mention `git help --guides` and `git help --user-interfaces`,
-since those parts of the documentation are useful and hard to discover.
-
-Do not mention `git help --developer-interfaces` since it's not relevant
-to users.
-
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
-    [doc] Use man git to teach users how to navigate the docs
-    
-    Here's a list of things I'm still considering in the hopes that it'll
-    help with the discussion:
-    
-    I'm not totally satisfied with the description of git help
-    --user-interfaces here. It might be clearer to give examples of topics
-    those guides cover, like "hooks, .gitignore, and more".
-    
-    I thought about mentioning git help push and/or man git-push, but (from
-    a Mastodon survey I did) git push --help is the one users are most
-    familiar with, it's most similar to how other Unix tools work, and it
-    makes the description really clear and concise (-h for short help,
-    --help for long help).
-    
-    We just added gitdatamodel here but I took it out because I couldn't
-    find a place to put it in the new explanation that felt natural. I do
-    think that discoverability of that guide is still an issue and it's
-    something that's on my mind. One option in the future to make the guides
-    more discoverable would be to feature them more often in Git's advice,
-    for example see 'git help mergeconflicts' for a guide to handling merge
-    conflicts. Users definitely do read the advice.
-    
-    Related to the discussion here
-    https://lore.kernel.org/git/7004c3b1-2100-4a90-9815-2a679ceb25b2@app.fastmail.com/T/#mf600063180d6239916e3fa6e9d33da86969547ec
-    
-    ccing Kristoffer who edited this most recently.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2242%2Fjvns%2Fupdate-git-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2242/jvns/update-git-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2242
-
- Documentation/git.adoc | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 6f0075f918..3e886d3e1d 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -22,16 +22,18 @@ Git is a fast, scalable, distributed revision control system with an
- unusually rich command set that provides both high-level operations
- and full access to internals.
- 
--See linkgit:gittutorial[7] to get started, then see
--linkgit:giteveryday[7] for a useful minimum set of
--commands.  The link:user-manual.html[Git User's Manual] has a more
--in-depth introduction.  See linkgit:gitdatamodel[7] if you want to
--learn about the data model and important terminology.
--
--After you mastered the basic concepts, you can come back to this
--page to learn what commands Git offers.  You can learn more about
--individual Git commands with "git help command".  linkgit:gitcli[7]
--manual page gives you an overview of the command-line command syntax.
-+There are two ways to get help on any Git subcommand (replace "push"
-+with the command you want help with):
-+
-+- `git push -h` for a short help
-+- `git push --help` for the full documentation
-+
-+There are also guides explaining Git's concepts and more:
-+
-+- `git help` shows the most frequently used Git subcommands
-+- `git help --guides` lists Git's concept guides
-+- `git help --user-interfaces` lists guides for various
-+  special files you can use to change Git's behaviour
- 
- A formatted and hyperlinked copy of the latest Git documentation
- can be viewed at https://git.github.io/htmldocs/git.html
-
-base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
--- 
-gitgitgadget
+- Julia
