@@ -1,68 +1,68 @@
-Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1CF413787
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 15:40:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9A926299
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 15:44:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790610008; cv=none; b=l33sfB4TnI+CBIre8HPNOa/z0wFmBFZOUaZqzIncJcRE79L0dKwWs66qaTdFgmar0rwIq/PxKyz+O0E0CgjAR6QQbYIgiyDkDaN5D4XK6ghwdf8Uljki9CsRzTG0ex5pJZUjrk730gJu1N3tfZ8q8JQkyIyr9UZi6h1D+1ssKqk=
+	t=1790610288; cv=none; b=JH0F6b6Or/6LWHdaGxgvV8MiZ+XNB335OuHtuJu4Fy4It30DdCnY7DA497pFMUtSaMvXFZRT3oWvj8a/kEu9ww20sJwJydJiLVzPmRmGk71wenoQDiW0I95bXbsuGwWcquTkGFDhK87blI9pJAb+jXk/esj8rNeTwoiBE1+C1u0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790610008; c=relaxed/simple;
-	bh=clkEvbmQeIPZ+5R1Yjd0bpZ+lQpLIefx3PlCpJyhaL4=;
+	s=arc-20240116; t=1790610288; c=relaxed/simple;
+	bh=SN5rOv98gfghY/LZkD8A98qBz86K6G/H/1lLR3moO0k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qeOnsjubRrh9U0l9OF8TVgtBtp8BDy62Fx/u0wFVkSXJ76x9FDG+y98QOP3y4DkxDpudoxHeKkKvn8qmyIlFS/wemObdYkgNebPNGKAn8Q8onbfoch1EXI69ITPVjK+avzkUPmkl2A5g7iVshEysun6J6oUmwW+pypkzrTHu94s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RLxhJW/1; arc=none smtp.client-ip=74.125.225.141
+	 In-Reply-To:Content-Type; b=AkcMD6Ttigyt83az3tsqgTSNwrdEGAyCay4jxGQHAQApJ8sYeDl0FxU0dSlHpMpBbqnq00E0uv9XDYeLVja5sr1RJvMFSFZhOvIgWqBnvktpZkxb1zizdNrzRy+W6KIS2E40XR/F106WkP2X2es1vQaVZ7AIc1nclv1zsoyACVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gnmoZ4OC; arc=none smtp.client-ip=74.125.225.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RLxhJW/1"
-Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49e7d2bb404so11334515e9.1
-        for <git@vger.kernel.org>; Mon, 28 Sep 2026 08:40:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gnmoZ4OC"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49fff72474fso10017975e9.3
+        for <git@vger.kernel.org>; Mon, 28 Sep 2026 08:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790610004; x=1791214804; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790610285; x=1791215085; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:reply-to:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=iU6X2S9y78ygrj1BJjCfgW2kUGB16wDvBUxWWbZ2hGg=;
-        b=RLxhJW/1WCuV7iATLhmdM7p6yB2RE4P1d9rntamEmOsGfW2PmCF2Zvr7GQyYeKVHkW
-         67YXXpTIYfTlNCMH586VKI3AW4Fplkms8pC4B+LUa/UbBYuAd4/DBnHsIp8e/IzYhjyg
-         aM5t8LszuGtE1eVj8HqNHUqABOTIWOlKUbAaTYGLjsKBfJYUhqQgwyO5hcTdG2MhSdk+
-         rAeIdt8zuZg3oreBnV43l221Fmp627oG9DnO05XzJ9bwedwetCs/FoSp++XvF8Qhamrs
-         dFQ4fwM91IFVkgrSHhJK1lExdhRX5by1vZeRmrFAUHN/K8cFmtfQrZpTQYrfeJbNLznz
-         IBMw==
+        bh=IVdNfC1nhNRX2MJPmqn1Va+A2547TQVz0Hc1T9dWUTg=;
+        b=gnmoZ4OCJGNXVMI14nsBuHP1qu3nR+ORm6M59Qc65VlIqBdeWXKAR8ny6EEOpY8003
+         dfkAZobEqqc9l1Q73R5I3lLp3tkHue/efUixcPoLki4yGsGcfCOmRnJFWlYUHU9AApN9
+         1z0ovxVbFTaU386wEaPodiu7x/mu5efpOeBiS2yvAQWhGPrCVQEWmpLRDnp7NgJroD2o
+         YrmDOQYEeoPHjJtxL5TNWMOq8DcGP4tq5rcaH+18aHE/Aiq4K74Zd2Ni9BGey1OQR5pG
+         SOyzedz2U+3j6gA33hqX/kpEzkyuV92rCWGSov2OKfG8Ork+a5/DM4yeXcUv2pu8q1gd
+         raCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790610004; x=1791214804;
+        d=1e100.net; s=20260707; t=1790610285; x=1791215085;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:reply-to:user-agent
          :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=iU6X2S9y78ygrj1BJjCfgW2kUGB16wDvBUxWWbZ2hGg=;
-        b=sAAuhfnVdOuc3dEhFIZAs7xDw0ofvlVXCCXyTT1uqgg3GLSZToaLVIGS7HFLPmPLsA
-         HWoD45dL9AH4kAnoVNraUZGfxng+XxVWjgC37BZm+ypSi/gL3RbBsc0mTtKGWPlk7u4Z
-         lxd9xCZ8U+TsmXm6K3YeSO/hPvW5S+kX0ZsoiCad7kZBisak4Rz31tQr4PrZ1Gts5qiP
-         0Fi0rosHbysmFWXFipS61/yWXD24q9DnsigTH4Pwwf2gBLnBAYyhYod+6TObcy4ZuNHg
-         APspCkf27vMweDsFp5CWXofIr/EIIQctatmi3Voowl6ATMdeChVYAoivof6wi0fmfhzX
-         aUpQ==
-X-Forwarded-Encrypted: i=1; AKwUvBz0zhxdGlccG1aI9hsGD52q+BPICne+qjfZ0q0q1E8d3N6mUngb6iOHtzlCcIhm0ME7eRo=@vger.kernel.org
-X-Gm-Message-State: AFuF++mntms6/Gyh6eXrXoACC8c8vkn00HaQGFKuxahuucmDEIyaRVP+
-	mHE+vQDft6j4o2PwIyGidVpNpBJQCWbdCq/9VrIMzzFKBZ5v7XdF0+v9
-X-Gm-Gg: AYBFou0/JhWA5wRTkjIx+8uXzedShne1tNOhlUrIWtSafA8EH8SIdeX9cO5v8IX585c
-	LLY3wuN2/5R956b7Q+hWesehMLUxJoWYONWK/Sf3ylsplw+X69+cHil73gnlLqaDuPNtsmaUw1E
-	lLejbCMwDVTG90Rp5G2ssTyeRgRzT8wfHxQoaqxinB3e4wf5xMYGtAKK5KLebMfh0MQlyuz7QTC
-	5uL2Q1NWsh+O6r2g2HXw76dBqbLrhbcZFHTeqKn2Dh8yC7WDvxNCDG7rpVZCp8iwGNIur+zbfra
-	Q+iplXeNXPnKBgn/o/YjLyDTkPKMGbw72RqHdbNAsQrC05wIqePi798RmqOn8bcOSba4cOPyoK0
-	H2O8CBBtEJJT962pLaGy27OmjcFFtiv6V8in2ax2/eyTPY7zu31Zgd/G6zf2OWDwhlAZIoEHoy+
-	iIXa5h2NVAelcLbKP874gKeoTjDk2lN9tccjZcc4rC2VrRbjq53UXSRL52BX0XHYaC53EncSpyR
-	o0aEMqacGly48VH325Z62foIEzJKbF1AVUyqPRpQ7LhhuRBMn96EQ==
-X-Received: by 2002:a05:600c:1908:b0:49f:ffa2:1c72 with SMTP id 5b1f17b1804b1-49fffa2221emr99570485e9.11.1790610004018;
-        Mon, 28 Sep 2026 08:40:04 -0700 (PDT)
+        bh=IVdNfC1nhNRX2MJPmqn1Va+A2547TQVz0Hc1T9dWUTg=;
+        b=mXZ8bPIy93zhR85O48bXI3Brwl54rfI1MbD2kMNQl+o87X/SPo0rVufEru5Z+WjyE/
+         c8TQ2en3pAejyQLdsMWuJug5loOghB2KJKWmZSmu0UgRKRMaJqjteprwHRQlCfrxM0PQ
+         t9FFG0UsGLGpXwJTQMJ957j7FNw6CEXkPHWBrOak8nOPF/GqSsSJCjwV/SMhJn2DtLwc
+         KbyxEjfBrdkFarKztyOQjYI1kaQbUx+W7PlWxaQB+CUv+4ysdtv13G2q71vV7AFH7c23
+         SoVL0D2XJi6jMoax/nQ4jmMFWnw8QZmT31W91lR/vSwGohIqeeKAPwCthCQy3XTUC4mV
+         e8rA==
+X-Forwarded-Encrypted: i=1; AKwUvBz63j0unYg8M3f/yOYldE/XdvZcehJY9Pc6nZDd5M1EEoqAngQvHQ94Fj1UIpKthlMf6PA=@vger.kernel.org
+X-Gm-Message-State: AFuF++mP3qbBdYxIURL6Ud7Biuf7TPq5vz74A5gE67ArkJeL3FpRErrW
+	Fzsj2qUVDEwGxQOA2GCjDFQfN+MkhFWewgV2e65jaZqAg9bGTjFL9mEX
+X-Gm-Gg: AYBFou1WEMyJ0V+sMyL21TVeDRjRfJlztzxGansGyLRB0BgfziG4JlAZqdjbAdCL8Wl
+	zazaWv1Ggi6vQCOYFSXSLgCirwwNCHHzMm2Qe7aVbtkUGe4DjlYgin8jSgNHXIG+1Y9uxeXeD6i
+	13GGg/W2ARQn4X6x4PbA1OFSFVfIH1mM6hd7/0NRF1y5t/xnEUaevCGXMVY8cm07KKjrHrKT5Nn
+	Frif8ksduT7sBRqs3ryscif22UOuHm631uLYDna/fdRvr4Tg2AcW8OYHzi94O99Cc8NzD+3xczA
+	GStxj7DOmKrWimiVyJ7Jnb4pHMkWEWVUZTZmKroSdlJQDnKiYrDDg3NMLkkV8Iii5QjDZ4FiViM
+	X5nlHguTLxe+lz3beklOlEc9oPOI3icAD4qJ6OhsuH0obAAYpPeYUHNgxl4K5WcemRP2qYABAkr
+	ZgNY5hOGZ0QWEzDzyRa7dFYOL3CPLNrjy2cIKU4Pjd6TYXOemAbJSAeVj3yLNWbB3YyUGk4HwZ4
+	UtGfczuO6kCFgasVnpNj8vwBPO83hlC7wMGLin8jvk3QTVwcbF0FQ==
+X-Received: by 2002:a05:600c:4709:b0:49f:fbad:29c1 with SMTP id 5b1f17b1804b1-49ffbad2d61mr108227465e9.33.1790610284799;
+        Mon, 28 Sep 2026 08:44:44 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a00571744csm80234935e9.13.2026.09.28.08.40.03
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4887a648895sm28431498f8f.28.2026.09.28.08.44.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Sep 2026 08:40:03 -0700 (PDT)
-Message-ID: <ef5e507f-9e26-4e7e-887a-403cf7f282a7@gmail.com>
-Date: Mon, 28 Sep 2026 16:40:02 +0100
+        Mon, 28 Sep 2026 08:44:44 -0700 (PDT)
+Message-ID: <97f86d82-b5ec-44df-9ccf-8e6cd93e45f4@gmail.com>
+Date: Mon, 28 Sep 2026 16:44:43 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,88 +71,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 0/5] stash: clean up index-mode test merge
-To: Thomas Bachem <mail@thomasbachem.com>, phillip.wood@dunelm.org.uk
-Cc: ben.knoble@gmail.com, gitster@pobox.com, git@vger.kernel.org,
- eli@barzilay.org, ps@pks.im
+Subject: Re: [PATCH v3 3/5] t3903: test stash --index merges
+To: "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org
+Cc: Eli Barzilay <eli@barzilay.org>, Phillip Wood
+ <phillip.wood@dunelm.org.uk>, Elijah Newren <newren@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
 References: <cover.1790168285.git.ben.knoble@gmail.com>
- <cover.1790425008.git.ben.knoble@gmail.com> <xmqqjyo6qz3z.fsf@gitster.g>
- <346c4209-9600-4302-817f-e8f6b364ce6a@gmail.com>
- <CALnO6CCXT1HHUwL8+eYGVL443nO0eoC7vhpoLvC3RXjp39XQYA@mail.gmail.com>
- <CALnO6CDOo35HAfqn_h2CUUdux9LeOkjM8OdFLkkS1nVexijUvw@mail.gmail.com>
- <CALnO6CAf491aNhqcb7K7YcNTSTNLAESmqeLwzEGk_S=ZsOjG9Q@mail.gmail.com>
- <a59c4225-f093-4001-b77a-2083dfecce6e@gmail.com>
- <CAA0xjtpzaWH10pHOQ5j-5Hp1yHEKTDFbsicG6E4w=5nxb_irWw@mail.gmail.com>
+ <cover.1790425008.git.ben.knoble@gmail.com>
+ <8b5ea5e6f47ee9a57df3a4d97a457d024b3dec00.1790425008.git.ben.knoble@gmail.com>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAA0xjtpzaWH10pHOQ5j-5Hp1yHEKTDFbsicG6E4w=5nxb_irWw@mail.gmail.com>
+In-Reply-To: <8b5ea5e6f47ee9a57df3a4d97a457d024b3dec00.1790425008.git.ben.knoble@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Thomas
+Hi Ben
 
-On 28/09/2026 15:50, Thomas Bachem wrote:
-> On Mon, Sep 28, 2026 at 3:45 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->> topic has changed something in one of the '--autostash' tests that come
->> before the failing test triggers which the new behavior. What that
->> something is I'm not sure; off the top of my head I'd expect the number
->> of reflog entries in HEAD to be the same but maybe I'm missing
->> something. Adding
-> 
-> It is eight entries fewer, and they come from the failed merges, not
-> from the autostash tests. "git merge" restores a dirty tree with
-> "stash apply --index --quiet",
+On 26/09/2026 13:16, D. Ben Knoble wrote:
+> A future commit will refactor index handling for applied stashes, and we
+> need to take care to get the order of trees right when merging. Add a
+> test that covers this case.
 
-Thanks for tracking that down, I couldn't see where we'd be calling "git 
-stash apply" with "--index" but builtin/merge.c:restore_state() calls 
-"git stash apply --index --quiet" rather than calling one of the 
-autostash helper functions which do not use "--index".
-
-> and until Ben's series that spawned
-> "git reset --quiet --refresh", which writes "reset: moving to HEAD"
-> to the reflog. That happens eight times in t5520 before test 68.
-
-That accounts for the difference in the number of reflog entries. It's 
-good to have an explanation for why we're expiring the reflog entries at 
-a slightly different time.
+The test looks good, but without the changes in patch 5 it fails and so 
+adding it here breaks running "git bisect" on this series. I'd squash 
+this into the final patch and I think we can probably replace an 
+existing "stash apply --index" tests that are not so strict with this 
+one, rather than adding a new test.
 
 Thanks
 
 Phillip
-> Auto maintenance expires reflogs once HEAD's reflog holds a hundred
-> entries that the policy would remove, the default of
-> maintenance.reflog-expire.auto, and after the first test_tick that is
-> every entry. Which run crosses the hundred depends on how many entries
-> and maintenance runs came before it. On 'seen' the expiry lands on
-> "git commit -m conflict" in test 68, before the fetch writes the entry.
-> Eight entries fewer move the crossing past that commit, and the
-> maintenance run my topic adds at the end of the rebase in test 68 is
-> the next one: after the fetch, before test 69 reads the reflog. Either
-> change alone leaves it somewhere harmless, and nothing else is going
-> on. The expiry is the usual 90 days applied to entries dated 2005, and
-> the only new thing is one more maintenance run per rebase, the same
-> one "git commit" and "git fetch" run.
+
+> Suggested-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Signed-off-by: D. Ben Knoble <ben.knoble@gmail.com>
+> ---
+>   t/t3903-stash.sh | 21 +++++++++++++++++++++
+>   1 file changed, 21 insertions(+)
 > 
->> git config maintenance.reflog-expire.auto 0
->>
->> to the 'setup' test fixes the test failure, but it would be good to try
->> and understand why this topic triggers the reflog to be expired in case
->> there is something nasty happening that we've not thought of.
-> 
-> I'd pin the expiry itself instead, as ea7d894f44 (t34xx: don't expire
-> reflogs where it matters, 2026-02-24) did for the rebase tests:
-> 
-> git config set gc.reflogExpire never &&
-> git config set gc.reflogExpireUnreachable never &&
-> 
-> That covers a "git gc" as well, which expires reflogs on its own. With
-> it, 'seen' plus Ben's series passes t5520 here and no expiry runs
-> during the script at all. I sent it as a patch on master:
-> <pull.2243.git.1790606282769.gitgitgadget@gmail.com>
-> 
-> FWIW, any script that reads a reflog after a hundred HEAD updates can
-> fall into the same hole. I have not looked further than t5520.
-> 
-> Thomas
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index 721158606f..9bc99fa252 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -374,6 +374,27 @@ setup_stash() {
+>   	test_cmp expect actual
+>   '
+>   
+> +# the later "stash -k" test is not expecting us to muck with file so much, so
+> +# reset when finished
+> +test_expect_success 'stash apply --index merges the correct trees' '
+> +	head=$(git rev-parse HEAD) &&
+> +	test_when_finished "git reset --hard $head" &&
+> +	test_write_lines A B C >file &&
+> +	git commit -m setup file &&
+> +	test_write_lines A B staged >file &&
+> +	git add file &&
+> +	test_write_lines A B unstaged >file &&
+> +	git stash &&
+> +	test_write_lines committed B C >file &&
+> +	git commit -m to-be-merged file &&
+> +	git stash pop --index &&
+> +	git show :file >actual &&
+> +	test_write_lines committed B staged >expect &&
+> +	test_cmp expect actual &&
+> +	test_write_lines committed B unstaged >expect &&
+> +	test_cmp expect file
+> +'
+> +
+>   test_expect_success 'stash -k' '
+>   	echo bar3 >file &&
+>   	echo bar4 >file2 &&
 
