@@ -1,121 +1,107 @@
-Received: from mail-pz2-f40.google.com (mail-pz2-f40.google.com [74.125.228.40])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10B845FFDF
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 09:21:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.40
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD19448FF94
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 09:40:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790587273; cv=none; b=FmafMkYq/5m8kpUlUElBk4cMNaW68KLArKl557fuLYUj0UQqKeN+cTWwBkKdzp6bD5K1kKVHmqkYRmHCFO2CAV27BcFtnwHJVrHmvat0DcE36zD/QJYRZtcVjS/JxVH8yCoCYA+MN5jExZDnd42HZZh9Lc4Tqkn86SdGOscZTpY=
+	t=1790588416; cv=none; b=uCiAsBMHDFreWETVR8I+vCPodjK+d6d73ozdxPEHOLvBccob4JN7NTgMUNCEhJdKst/TaJZ0ylcnmKJ6MvG+wN23EKK3hGuNfAefDzti7tvH2V7TYD0vyma8dKqdJ1NCuVx+IfnBB7wq03OluxF2JEx0QLShMlFzyICTbemiHMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790587273; c=relaxed/simple;
-	bh=IBaqwIu7FF+w3Y2gskJSGlkX4yIrIYzRMLhDPVzgaHM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Dw4wEjzoiNMhW+goQXptZDjGIgSrAfVkUZecO4bCV1/quzuHmR8ytUPbtm6qXqO7Iebq4JNmHHXVNQgWwzX/tMC4N12BqP/r7YEjs19G6RSkP5iZTH6TKYsXGee2OTHKmidIggAwfeQKTHIEbeWUywBgKVyo2JFPFiLQqjoihtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JEMOZHZi; arc=none smtp.client-ip=74.125.228.40
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790588416; c=relaxed/simple;
+	bh=PkxvGC/Xf63cHvrRmH1J+ccYH697TYCc3VuAsARsz/o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DJJaDum1pl4sf/F+/xiishrLhZ8f5E9Iyizqw7ukLKfU6WLgglbsXg2YihZv/d3vN78+PlvFV+rXyLkjE7VZsdc01ZeuQWJPJobWaPqtu5wS8SvOF2N/fL5BymVeZXI1XTOG9RdzjDje9NSUZ9cRiD0VZmq7BejQ+4mQ89iGDn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CK+2MZAm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uiR6g7HJ; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JEMOZHZi"
-Received: by mail-pz2-f40.google.com with SMTP id d2e1a72fcca58-87fd84c0bfeso995187b3a.3
-        for <git@vger.kernel.org>; Mon, 28 Sep 2026 02:21:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790587271; x=1791192071; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=s39u3I9EhOd/UwXn3eW6/iP4cUUQSm5+xXFm3RKZm1M=;
-        b=JEMOZHZiTGih193s/QdbxwLiFatnGQP/FGHMc/hG05NcYwMqSEY2GGaFzTSW55Q9ao
-         UUzQ3of6PdYakTvEpc3QkaIjvbac5r44m8hbdQCfvrCCv+6UhoCa6qOB+kPTIVCvHAeV
-         Uv9tuY3kiFZ8zB2L12myXQEi00zEuyFMSQx7Nqci52qniSmgGu8VmWMu88EWFKdcFBA5
-         R/k4w9Jv9DHdF3p6W7XUqzkq+Lnd1XfLHFIBIgISDVZAWPHJFLSQgS2FoxzPgb1r1Y7r
-         cwmbIQpijr42nrnocJnIERjbrFPx6pLCLI8g1oIa6hw7nMpWqlKtFaZKZrwICDvQNbiI
-         ezpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790587271; x=1791192071;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=s39u3I9EhOd/UwXn3eW6/iP4cUUQSm5+xXFm3RKZm1M=;
-        b=p4MmwiWLZ3jAWD3FC4KTOnsK//Jze9DXM2P1ZTOCwiqNF8iHuRS0MznNKUGpEVPw9A
-         BVhDXDgM3fVb0Mojn7h6m+5VboDbnxqwewqXz305OcJMpI0nWd8rMhnKsOmajUFkFOcR
-         lO1BGP22wR75cy/M/+e0BIB/ORZ00SLZ8l9eFyWtAbokBLxw8q9V4xI1jwP4EXKZUspv
-         WOSf5cqyMfXtsXeOiQMS65NU5FDnqv6igJQXccch1vaq+fWVGfaX6MhJ+Lk6Lx4pgCG4
-         O+N1NSlWIRe7UUPobL/AHevDhMNalfvZI9lW2QiWlRb7cX6643TTZfv8BdRWXsUiZ19o
-         d42g==
-X-Gm-Message-State: AFuF++ldKPew4Hmw6kYCB6sei4w2X7TA2ENNQFj7TWzCbqPEcZnM3RBm
-	WD0ogXbFzHvg6AIdZ4rrpcAOdrCneyDujuuKimNr3/pyptZeocwT6vcd
-X-Gm-Gg: AYBFou2qN5djLwyK7al67EuS0ac3p1bNGI7tt8bg2IaxRt03fcCznEOd+JHesO8n83D
-	9WIuNmlnn1Q+zQMizPRUbfhCHxg0T8Q0MvmAx4ZWQ/xKw0liarb68kb9tUeHfaLdvxtBo6yEhDN
-	tz5MLCrxg7f0yQcsCT7lgfORdlIoyER2lLyB6+LDtrTzJ0QikEwOmP87Bp/HmA5TlBu5duM6x5v
-	CILHMCQGCdYZEOHF7/J5zaeDoVxjgUilhucAzLMrs/daS4kA7PXHvzR1mCVQoe0NaXenlWXvZHX
-	9U8LxjJuNAv3jwPYvfQCqd5ggCYVTjbLffGvbJlquaRUlIpQ5BhrPy/NsEZ6w9Qp2nyJzHCPfxr
-	PeMnPHQz5Mhd0B4Ede/ed4jlfalX9LT76Hgou8LsSpIh4SEjtKx0FlGTUG4rLT3krqGtDRxeoFD
-	8GtPQMZ+yPqioc89xoBWYXtJmWrASRdcwWnnl6BTyLxIaKUlShjcdTTjXizgRtsy1KOprwv9ieZ
-	Rj7YPMYCKdb5hwedN5kjr+1VtBnZOYLMD4LJ9f6ir/V08TJ7WDxhUFymg==
-X-Received: by 2002:a05:6a00:950f:b0:881:c881:96e8 with SMTP id d2e1a72fcca58-881c8819a45mr3505586b3a.23.1790587270872;
-        Mon, 28 Sep 2026 02:21:10 -0700 (PDT)
-Received: from ?IPV6:2401:4900:88e4:1a00:6c4d:e299:e430:9822? ([2401:4900:88e4:1a00:6c4d:e299:e430:9822])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-87fea8894d7sm3776211b3a.26.2026.09.28.02.21.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Sep 2026 02:21:10 -0700 (PDT)
-Message-ID: <557ab7b2-a1b6-4064-997c-d0dc50126df6@gmail.com>
-Date: Mon, 28 Sep 2026 14:51:08 +0530
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CK+2MZAm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uiR6g7HJ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id B0EDCEC00EF;
+	Mon, 28 Sep 2026 05:40:13 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 28 Sep 2026 05:40:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790588413; x=1790674813; bh=AlWEay+8pa
+	lssHx6y/jImbFBmAGZfNEM3Gzb8ktu/Cs=; b=CK+2MZAmv6/n5o2tjqU/I5+Xit
+	fljQ7PZyTBGyiU+851s2s1gQN48ka1+V/44JBZPYSJJqY2/qQ6kGol7IOuvz+2xX
+	t6tGBvc/2s/LgNF8leeAVZQUV0tQmgGvJtzckJWW5cLCLokoIuDyGMs4Q2XNiU+e
+	/oIxT0oOn8/hdn7B+EsFO4NPpeA54dZsZ+Lkv0fBMtcVYIoDGMc3tQjooDfRrg9A
+	D6dIoljBvrxq6fBIS9FARdLA2Qf89ZGdbboPO7hUHSnXYzZB/srLnXjUXxup4sZT
+	l7UFfTAeqwjb25AfXrQPU9Hu9y0hN5u5LW4EuPR6+4OiHab13wzka6Dlp2fw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790588413; x=1790674813; bh=AlWEay+8palssHx6y/jImbFBmAGZfNEM3Gz
+	b8ktu/Cs=; b=uiR6g7HJSjSvlnz8PNLN6PqJAGlaWQzduAs1d7d810HSRCoXiQn
+	KedufaIYchP7UidJqm+tG1Dm/yA90o8aVRGV4pe+Ei6thnrFK4gep0iuqlsbKgil
+	/hr0p6BT+iYmZDpefbGUQs2QrYHMrFaYr+x5I1a3OKg27XrJOAu6VN72t0JnlI5X
+	o6vmxY7kyQhGSaxHsMFp7KO5j0sXuGvKv6wVrktjPcWnf6soo1VwxAUCMJDlyxUH
+	nJgLfmkbUkb4rdPbU+f+BreeC7dVR2hL1iu6lJtVs6cn3gvIG7L4f7jDFcY5e79v
+	lstRq3d3z1P7aLpweG4+WwkKm3RJFDtsx8w==
+X-ME-Sender: <xms:_DW6ahuucy3dEP-1wsCybcrlbPY07oDzZrmC3Ae5YeSV9Z6KAWjq7g>
+    <xme:_DW6aovpCZYiUwkYnz8J44VuXmi2fx3wNqGHtzq_fRFkvfirAZjIs6q1e_ZENroDE
+    CzUwxKPwEFJQn2ezwrEwTZJnfiwD8KdMgSq1nScaooUVcywwtE_RJ4>
+X-ME-Received: <xmr:_DW6auGVfZczRO__aoLr0D__lPtO37fEuJszT5RLH2aRMPipUSJKIpkRXZZwuQhVGkEX3FaPyOent5Sf2QKUnQFvKHeqyUKh_KGG>
+X-ME-Proxy-Cause: dmFkZTEp0I6kS2YPBRrVfJTGSWMC4akITlT067TDp7dztOyBblpYSnD7tRVv3J63Wc43NV
+    g50sdSuEvSTAFszzy/FxEJ3x4VkZi21M98CswP8UCVDH/h27/SfgF0FMghMvD3eF/SfzxK
+    UAWOE8k209peUG3k+rFZmRl8CNoAC/0h+/Th4vGPEGCvPSQxyz7/xAMkZqR2yWgnG+sCNo
+    hClGV3wNj7w8tDfgoSNemgIA9JCa5WFkJEV/OXBq7pmqttTHrWb17u7IQI7TWJerAc4edf
+    UQmMFzQTMsAn7g3TsZ7mnAEIhA0EViNo/CeuHvJlTB090T/4qP/LnB3jQuaO8IO21G40e2
+    L4uVMcxvf90C5J+olhSFBKnqOYDr9k5jcQGSLERD2ZoFgb1aDqP69ZCYXjGcG5rqdOhiB+
+    LxWg/HGybpPyMiopEpHiTJm+ZWC0SfoZ7WvlipwyhMozz+DIKvnmASfGHHnwL8Vwz/Ydr8
+    epvn2R5cJSHlUKsG6WvPfJMtI7RYFzURO+ustlnyuWNhMFmDHJeSlutvnH7IFIed6t1Ejm
+    rO8ifgVnFT2C651FXEsyLhtl5+h4o+1dwQmXyVHk30XYjtDA5/nGXXkCNCuTxs4tKHOg1O
+    QwPjGlhxeaGyId/vil0S5gY6+I27ajp+QcfYytEzWdOjdG8Y8q8zHn5UYKTw
+X-ME-Proxy: <xmx:_DW6arPJcZULN3EhMzKFu5TdkFzMU7YbCwUAW3kvAkuTsjTNRefrNQ>
+    <xmx:_DW6alLOeNfuJkl3mMPaa-wYagFvcx2U0FUu5eVll07Le1_rghrXiQ>
+    <xmx:_DW6as_vllTn6WDP7j4d3GoMIfTi36mXWnr-asSpxo8-GNbJfv13kA>
+    <xmx:_DW6apFO3fz3pl8WY4MbSmsoB_X_ardK6w2UNSGAWyBfkc7MT0ViTQ>
+    <xmx:_TW6aofMPjW0t9yKLHVmBh4E2qXUC13dmxrg-8y_SWR2A17HQSw62Xzi>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Sep 2026 05:40:12 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org,  Eli Barzilay <eli@barzilay.org>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>,  Elijah Newren <newren@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>,
+  Victoria Dye <vdye@github.com>,  Adam Johnson <me@adamj.eu>,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH v3 5/5] builtin/stash: merge index in-core
+In-Reply-To: <fde7fb7988b695707c6f2776adc18eec7fe4696a.1790425008.git.ben.knoble@gmail.com>
+	(D. Ben Knoble's message of "Sat, 26 Sep 2026 08:16:48 -0400")
+References: <cover.1790168285.git.ben.knoble@gmail.com>
+	<cover.1790425008.git.ben.knoble@gmail.com>
+	<fde7fb7988b695707c6f2776adc18eec7fe4696a.1790425008.git.ben.knoble@gmail.com>
+Date: Mon, 28 Sep 2026 02:40:10 -0700
+Message-ID: <xmqqmrt1pvd1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] path: introduce
- `safe_create_leading_directories_no_share_const()`
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-References: <20260924-pks-create-repository-stateless-v1-0-11499557cf31@pks.im>
- <20260924-pks-create-repository-stateless-v1-2-11499557cf31@pks.im>
- <4770b19f-9a8d-4a4c-8cc6-745aa2868b94@gmail.com> <aroULK79T-UkwkoM@pks.im>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <aroULK79T-UkwkoM@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 9/28/26 12:45, Patrick Steinhardt wrote:
-> On Sat, Sep 26, 2026 at 01:19:42AM +0530, Kaartic Sivaraam wrote:
->>
->> nit: All other variants are mentioned in the documentation blurb just above
->> the declarations. Would it also be worth mentioning this new one there?
-> 
-> That's fair. I find the comment to be somewhat unwieldy overall. How
-> about this diff?
-> 
-> diff --git a/path.h b/path.h
-> index 7e7408dd05..922bd6e377 100644
-> --- a/path.h
-> +++ b/path.h
-> @@ -234,14 +234,11 @@ int safe_create_dir_in_gitdir(struct repository *repo, const char *path);
->    * race, callers might want to try invoking the function again when it
->    * returns SCLD_VANISHED.
->    *
-> - * safe_create_leading_directories() temporarily changes path while it
-> - * is working but restores it before returning.
-> - * safe_create_leading_directories_const() doesn't modify path, even
-> - * temporarily. Both these variants adjust the permissions of the
-> - * created directories to honor core.sharedRepository, so they are best
-> - * suited for files inside the git dir. For working tree files, use
-> - * safe_create_leading_directories_no_share() instead, as it ignores
-> - * the core.sharedRepository setting.
-> + * The default variants honor "core.sharedRepository" and temporarily modify
-> + * `path`. Note that this configuration should be honored for all files in the
-> + * git directory. The `no_share()` variants ignore "core.sharedRepository",
-> + * and should be used for working tree files. The `const()` variants do not
-> + * modify `path`.
->    */
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-Reads much better to me. Thanks.
+> +			merge_incore_nonrecursive(&o, merge_base, head, merge,
+> +						  &result);
+> +
+> +			oidcpy(&index_tree, &result.tree->object.oid);
 
--- 
-Sivaraam
+This is risky, isn't it?
+
+If there were catastrophic failure (e.g., missing object that were
+involved in the merge), merge_incore_nonrecursive() may stuff -1 to
+result.clean and return without populating result.tree, and when
+that happens, result.tree->object.oid would be dereferencing NULL.
 
