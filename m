@@ -1,80 +1,89 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CB04E3239
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 15:01:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99894E5351
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 15:16:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790607677; cv=none; b=GrBINcqnHIJWS/EMge90ukFMYszpMkcP6ML+/BYdTTyaLB7TR4NVoIC/BfJmm/plsRn3mOx1KM8BPQGebIG0VXrK8NFgB3kSPobLxdoLaJueT7rfoQUU5uyJeOu/HIbErWh8BzK9bipey15u9+x1CFjAO5UiNDh4FLKHKHh69mc=
+	t=1790608583; cv=none; b=BIx0/rDCjq8m+kYm+aiNOviJ5MyPSghM8tjjsUM3qoaRGJjfELnSq3h1YM1Jh13etUOQT4Ee3Q1Kg0v9XiKIYrr07CFOGzdKUfNMQ0DYz6fXFYE02ePuYjIy8U8tpOfKTuAGvZEHy0gF8RSFkdKZBNVGgy8SQNYLVNJLd6k1lYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790607677; c=relaxed/simple;
-	bh=nIqeZ1DgVM4bhFq1tw80Srze5Yx5kdPkarwyM+humZQ=;
+	s=arc-20240116; t=1790608583; c=relaxed/simple;
+	bh=kA61DRXxlv3cWiGANRUkdGkQ7XBjEoIlH2VWM3tu/JE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sPGYB1PdOZG6L6DbMG14zLmkxklypcv19EHjg/PpRFCgjmlQ5+33AuxNRBG0s36z1E5SxER5vuQfHFipK/3yC/6pthxqzx2VgdyTBCs3B7c1q0ImvN35htujVvVbrAXqL0RmxVxblpux9vDXjRArv45fDkc3svqW2dlB9mI0sUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qOdReZo0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WzKJyuU1; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=hh1ivH5FuUPnumFCiDPgjthA49lTuwAk9Jl5Am2UPGelGsWjxSu7GltnR39E9qZ1eNUlheM9gDLEKDJ1SaXjNZ5SqCcXUX2vpOPwn9HnhJVebscXWC6uQjR4YQwRb/u1/y8K8DJHNSbmhHLb7Y6wTdSZwuF3vfPHN/HA9mEqHX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XVART7KM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sDemmnfW; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qOdReZo0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WzKJyuU1"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7D7A6EC0183;
-	Mon, 28 Sep 2026 11:01:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Mon, 28 Sep 2026 11:01:14 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XVART7KM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sDemmnfW"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 292A3EC003B;
+	Mon, 28 Sep 2026 11:16:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Mon, 28 Sep 2026 11:16:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790607674; x=1790694074; bh=r/AmFP3roq
-	edv3ygaatAGWhPTmG13TrKlj0umoO9hd0=; b=qOdReZo0k1wzYYz3tLgxiPwvz9
-	p2dKW7FXvTIrDyNv5GDSBNDNiJhYEXs42p+iDwfx5a+Rprm9HTz2Rij+EUNdNYKO
-	jkZYAymGTP/Ltguy/A9SCoVlU+Exfh/iGxRKeU+8egTxXQiAd0JP1djWRfrvkXJF
-	dQNjvEzvtSXHuOVdR2v7zHk9kLF+VO8NN96/VDp9Ssw6ggE07VI1g1ETTO77q71t
-	/g1qAD3pObKYR7q4qVIueQnlM+whxxXZ+Z/N33Kdfp8Do6AOagjs5pmEJG4moBwI
-	BLmTeiHeYMYYoH60y1wBHqDuHrmJDkvSx6GpzoscAcJ+Mgx+34pKfGFTxJiw==
+	:subject:to:to; s=fm3; t=1790608580; x=1790694980; bh=jxwySHrmjw
+	t7yZZYxU9YM5KTWwQVp76YQDAQUAzIkbc=; b=XVART7KMTIR1+FlstY57prGlNn
+	EPe7YZrE5yoNO/QuhN8pZm3Ti2szophqXpzxGpk6Rmkc+aL5CpfXYgN2Izmq93Uv
+	KTJzxJhUTAVZzHCmwNhN69RaOEq/gGPtV6AIc916cuT0uirdLjL08HCkCmiVL2C5
+	hx36iEY2K2JtHthsQsNq9Uo9RnIXd8s6DoKChRVWkpzgN07koxcLTJHaVMVrkrCB
+	k0nUyH+sdiqeYm6YRX7K7fvt4E1EVygBDFZ/SntD3amExUAsptNMyfDurRtuTjut
+	QJHRHXaK+rlGf2GNfprOqFh3vTaisNJbyBE0Xv+IVRSLhF5Yp+THpdPFhqSw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790607674; x=1790694074; bh=r/AmFP3roqedv3ygaatAGWhPTmG13TrKlj0
-	umoO9hd0=; b=WzKJyuU1Zdya1eYhxgzA5VHCQtQUBeJQMLNlyWXfBLYW3JKrtYM
-	aeVlEy9scEUlZkeaifbSxQ5bdil+KbBMYGKlgoEXqUlK3/HT5iBrLO1FtXEAvl0c
-	6FOk0OJKRUvtPR8ack6pRpJF4g5UnQqpi+8b6f+PTSVnUmRGVrDpV82k48qBfxUK
-	81gBs1BI8p913o25KxovFsuRKVKGzY2DDXEMcKVMHcJn8K+Z09fb44JgciXwk4ge
-	VYjeK4mExXQ5D7eQXiCqxdoysC16wu82sjevt8kBOSrqDQXSg1gemH0O6diRNMyf
-	L3QENpFJkHoa4vFVsnq2wz1rPQzVLIxJWBQ==
-X-ME-Sender: <xms:OoG6anE507adRA8lwU9gorHRGvGT58A3OlTi0O5H4Hn-_ynU6sW7Ig>
-    <xme:OoG6arzyiEHU5Ksx6TCogsiUoY12BepaIp8nmgtEn7s3K8NkMtE0wESbmQc1xkPI3
-    DVGNV89fVQfD0qeYgtrAz5vI4ML3Mr1Pnz9rIr0qgzjid4_UnunLOE>
-X-ME-Received: <xmr:OoG6amhKMvPRU60klfT3UwdWOa3mzYUTKUUL6dsnJf77x9cmMhbNOq5EKBmq3wnxjRTo4a5s7GJ6DUd0WBspJgTHcB1hf2vphw9v>
-X-ME-Proxy-Cause: dmFkZTGCbatcAaNGCWAh5UmQ2tnQ0mHYm+8ZWQM0mHdR9bs2P42jUz1hm7TG9PhbM5nc2Z
-    FQSjM7k//GuvwFtgvwtgjTAWsD0QlAaMqry16G2zGDo9gsYg5HoQA4+jJBQnq6yhe6XVR5
-    tdc1otoY7feBqia8pTlKE2R73YpdEwMCEanqZLJq0MRDNCO6uie3247AKwk/redM5i8NYL
-    gquk/uDSGzSiO+ieufDOIgqjntqywDwQQEY9q+LfCbo0lMNJE0xQaIQPIp+fcP1J1snjxa
-    s1VoE/cr2nsWVex1eYp5q5nH2BMq4frDVXhdzlzfcC9RvO7XlUUpi0oHs2azGXaeCvZhPS
-    wjwNflz2t3jSo/wt4n3ezOzOQB2DYtH8zSX1bcBGqd+K0e+Rq60zU3zn1cODBn+4N1TwS8
-    VtH4jW6Lu3mTbHacEDbiXYHA9aoGaXzDxpNNw/GcHtyMWrv8zW/PjHg1aqgQljDUosSm9c
-    ondOsFmyYAQmz2JBc9iHp0bYZi5Tz9lqXippURjw2SzUD5CQmaQvi/mlotRPoyJ83FpyP1
-    W6DngifR6VxSOjqdJMc3HgO+p7B/eVaosQ62voobl8KGbAr+C+Z+8Ft3RDqvn0uYSAmr1A
-    jkA25aGhybm+zmSl3u5PB2Y7gKczO+YAJBmJcJEX93ffBSuvmBRK8GZ79bsA
-X-ME-Proxy: <xmx:OoG6auyh7WtMTcpX_g_2rnhLsquYoeF9yjjZEjjA4ZMOwem6QZ-O4A>
-    <xmx:OoG6ahJ1mcvG_2RfVVwItXcUsC8XJP8pIeMQpOka8h3Sfb2rR0ZW7w>
-    <xmx:OoG6atSFriJKyAdHrzl7pPLssbS2_irArJny2ZW6WuGD77uzBeT52A>
-    <xmx:OoG6ahp9zjXhApnZhd4JwXy8ePlp8vEVzmQ_5dIxNbzgrMz9tLhQtw>
-    <xmx:OoG6aoicPER8v3p5tjQbTHbjdO5DPCOYjrNxj50WeGnPf1RQtzyPxmCs>
+	1790608580; x=1790694980; bh=jxwySHrmjwt7yZZYxU9YM5KTWwQVp76YQDA
+	QUAzIkbc=; b=sDemmnfW63Zy8Z0LhxzYHfs8y7PgoQqNyWDjB1hlbf58Cz/bnQ8
+	eBI3nQR+GDKlzD1SMQFwzYd6Ggv8SmRZqmBkPvPQuhFNRm/V330NR5FtUVjJPzIN
+	Xf+JfW7LCHgoapy+V5j4/S0YV92BA3Oq/dEDQaPoGWJXqfIuYavzU+a6WvW9IXV/
+	8uC8TP9/3u/1XWLERalXlsi70iuZeZUVlsca1c8K04LRwaakuIFyssXkH5EE95Fg
+	PT1paa1ztlQlgIOCClR5xHzb+ADbkNPa6FUcnxRraft2N426ofmH7xCAnEkoRdAu
+	e7CCTgKASHhhJ6MAJGOepLcYrl2kKPZ5+2g==
+X-ME-Sender: <xms:w4S6ahmEJBS-DP5QjIgaUbCb4-yfkuJrtZw3IFSnT9BFSrTx8RPSew>
+    <xme:w4S6akSsGIlf28npZbfHInrvKp8wrRX8BJ7uZbVqLITKuG5E4lNvri-UMCC1fklxx
+    2KRHaRiim453UQlTU6FUdkEn2NkFmDQiRTrrHCsqcNkvHETphc3ezk>
+X-ME-Received: <xmr:w4S6alB5dIViVmLQz8CHhSB7OlCiacNYvDrl-4O-WZ-Frim0Cb94r-pkPohQifcmAPtcGXCYWF3SGSAcJyqrklKJrKqkKqggbYUR>
+X-ME-Proxy-Cause: dmFkZTFFaSJJsRgd3iuj7OJLorY8T727pPp2pgp4fzaeIEHhKD33LjCxFhrXT1zY2ntCx+
+    9hjKYmjNXaQ91HBgABFxMcFVuNg2rO/g3Goq76eKAXGlkcfICSoV5fVniMUxJKsarStqT9
+    IARJeZ7zJ6v8IfTMaM2pWBnZTiRk2zdukZ//4I7m5yWUc3djnph/2nmp7FXKvWnObIj8SX
+    CTAgWF6y3kqQ1ddzxQf8aZQK+FSswqLwuMB8JEWl8MY+Tenw8/OQuLWdbWQf7ldPat5q7z
+    9sSMbCZeKIEgDI5k26bqFaEKDxzdo5F/bmMv7XUfJC8Xkd9O6sbdYoA11u8Z2wdnTAztje
+    xM8bLkgp9k8qsxShE8ipnZfw4yL00KZ9wq0IcGG0uONzRV3Ce2DtIVAmsI4adL9g8n6cDK
+    jK+XvapanM91Yf83pNPlmMBTgwvTJZFt9X7xtgi468qk9/fGo8TiDG78CgGEAehnDk1QaY
+    +t7WBIr2TbMWK/LOiaFdjW1tKn2NTEUJydg3D7oYWPMWT9yy2cQDF3xOXUvHJAR+U9pcSv
+    YwAtGsmimzjMMTth8T3Zpdnbnm/PY0paDGwj351piv28eYYZSfG0QU5zVig9MOCLDkG505
+    DQos7+Sft7n2xvKOvscIOgyNZv6Hg2fKl2iQeUFDirI5NLq90nuVzOXTEEPQ
+X-ME-Proxy: <xmx:w4S6arQKIJZpsD29XFGBFOZGC6VWzlYef3A4iRk0B-c1sq37o5f2WA>
+    <xmx:w4S6ajrCkxXgTnLbXNTmjHOb961RhTWI2P7e53gxiqDwISPvce204A>
+    <xmx:w4S6atxPc1R_UugDz2_8pEHdud4ret-hVPx5lbqK9aVuIWhirEVySQ>
+    <xmx:w4S6aoKye2O0Bz9aq0e_1MsIYxaq7xfTfRCgaIfJMk6Aay_axaJ9jg>
+    <xmx:xIS6akaME8p6zS6vxxYIEvW5sensNq3Y8Q4Y-NxVjvKcGyzRDMm5ms99>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Sep 2026 11:01:13 -0400 (EDT)
+ 28 Sep 2026 11:16:19 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
+To: "Julia Evans" <julia@jvns.ca>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH] http: handle curl stripping creds from effective url
-In-Reply-To: <20260928040149.GA498186@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 28 Sep 2026 00:01:49 -0400")
-References: <20260928040149.GA498186@coredump.intra.peff.net>
-Date: Mon, 28 Sep 2026 08:01:12 -0700
-Message-ID: <xmqqo6dho1xj.fsf@gitster.g>
+Subject: Re: Rewriting the Git tutorial to cover less content
+In-Reply-To: <7004c3b1-2100-4a90-9815-2a679ceb25b2@app.fastmail.com> (Julia
+	Evans's message of "Mon, 28 Sep 2026 08:21:11 -0400")
+References: <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
+	<pull.2416.v2.git.git.1790297546771.gitgitgadget@gmail.com>
+	<20260925082723.GB1493716@coredump.intra.peff.net>
+	<bd5d9451-ac5a-4274-9a7a-57ae99864fe9@app.fastmail.com>
+	<xmqq7bk9wa4y.fsf@gitster.g>
+	<4c9f0480-768a-48ba-9753-b4d34188b1a1@app.fastmail.com>
+	<xmqqh5jdur4c.fsf@gitster.g>
+	<17c46e4e-a4f6-433e-8eea-c1e4eb28fdfd@app.fastmail.com>
+	<xmqqv77tt9a4.fsf@gitster.g>
+	<7004c3b1-2100-4a90-9815-2a679ceb25b2@app.fastmail.com>
+Date: Mon, 28 Sep 2026 08:16:17 -0700
+Message-ID: <xmqqh5j9o18e.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,55 +93,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+"Julia Evans" <julia@jvns.ca> writes:
 
-> I've used curl's curl_url() interface to do the stripping here, mostly
-> because its behavior should match the stripping it does internally. And
-> also, though we have code to parse a URL, we don't have any to
-> reconstruct it, making a single string comparison hard.
+>> Dealing with broken links is easier as we can just remove them.
+>> Noticing a link that points at an unmaintained stale document that
+>> describes what used to be relevant but no longer in today's
+>> environment and replacing it with something more relevant was what I
+>> am worried about.
 >
-> One alternative would be to parse with url_parse() or similar, and
-> compare the individual fields (skipping username/password). I think that
-> would probably also work in practice, but it seemed to me that the
-> simplest change would be sticking with string comparisons.
+> Thanks, this is helpful. Let me try to rephrase to see if I understand,
+> let me know if I'm understanding wrong.
 
-Very nice.
+In the above, I was talking about the reference links that are stale
+at https://git-scm.com/doc/ext which you mentioned.  You said that
+it is easy to update broken links there.  I wanted to point out that
+there are two kinds of staleness, one that you can validate by
+clicking on the link and seeing 404 (your "easy" kind), and the
+other that you have to read what you are given by clicking on the
+link and evaluate its relevance in today's world (which is much
+harder).
 
-> The curl_url() interface appeared in 7.62.0. We document that 7.61.0 is
-> still supported, so I've made it conditional here. Only new versions
-> strip the result from CURLINFO_EFFECTIVE_URL, so it's OK for very old
-> versions to skip the extra comparison.
+So, while I do agree with everything you said in the two paragraphs
+below, I do not think these two paragraphs have any rephrased
+version of what I wanted to say ?-).
 
-;-)
+> When possible, it's better to split up changes into smaller pieces so
+> that they can be reviewed more easily.
+>
+> For this change, it would help to split it up into two different patch series:
+> "remove tutorial" and "add new tutorial", where the first patch series
+> deletes all references to the tutorial. If we do it this way, we can
+> both make sure that there isn't any content that we regret deleting,
+> and lets us take a look at the documents that reference the tutorial too.
 
-> We could probably declare 7.62.0 the oldest supported version of curl,
-> but it would really only save a few lines of #ifdef here. I'd prefer to
-> consider that question separately.
+Yes, feeding smaller independent pieces is a format that is easier
+to review.  If the end result is that the old tutorial is gone and
+replaced by the new tutorial, that would be what we want.  When we
+added gittutorial-2, we did not remove gittutorial, probably because
+nobody had the guts to say "let's rip out what Linus wrote, it is so
+out of date and gives much less relevant information useful in
+today's world".
 
-That is very sensible.
-
-> +#ifndef GIT_CURL_HAVE_CURL_URL
-> +#define strip_url_credential(in) NULL
-> +#else
-> +static char *strip_url_credential(const char *in)
-> +{
-> +	char *ret = NULL;
-> +	CURLU *url;
-> +
-> +	url = curl_url();
-> +	if (!url)
-> +		goto out;
-> +
-> +	if (curl_url_set(url, CURLUPART_URL, in, 0))
-> +		goto out;
-> +
-> +	curl_url_set(url, CURLUPART_USER, NULL, 0);
-> +	curl_url_set(url, CURLUPART_PASSWORD, NULL, 0);
-> +	curl_url_get(url, CURLUPART_URL, &ret, 0);
-> +
-> +out:
-> +	curl_url_cleanup(url);
-> +	return ret;
-> +}
-> +#endif
-
+I do not want to repeat that; it is like https://xkcd.com/927/.
