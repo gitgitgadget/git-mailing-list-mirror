@@ -1,82 +1,81 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908B938E8C9
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 18:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C819637DE84
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 18:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790620176; cv=none; b=gjYn/WbIpvXmIVL8Lw2rmf+3e6hr/F2KpIQTkZmNoIIGdlNkdEpNjnX9vy0yYokd+Ng5oLBm6daQzXa0h25nDnRwbB64NgF9mPzGOF4qzPhcVG/yToudkfiGacZ4FGpeTLPOPB+ThNku6zBjeaeioLwuq/VM91FJyJbhJxqAGcA=
+	t=1790620216; cv=none; b=EnIhvZUV8hMbHkXhWw/7AaEv+KyNeRH/8vJNroE+Z2ZlzPlW4Qhj1tmSN+vVdoNmTmmRhQksqmioCLl7tIUSB+gAaUIrppgRNIrBe5FTXeU0AP9s4ujnMgKTKUmb4hVy3mdKIUYwrkNhIjCbOkdQA7zha0f/odZ/z+6iO9vy4YE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790620176; c=relaxed/simple;
-	bh=I3xPmL1nY6BzRbiol6Qps/wEMBDvPmxsB6bt8A0ATx8=;
+	s=arc-20240116; t=1790620216; c=relaxed/simple;
+	bh=EepzB6sUHSh6OuRdw3ZWsCghsvws3cYX2z6ZSCOM1uQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BiBB8hv9gaUuwIY+Is4X2m1+9R6fvxkWEq6cLhjYhhDGykNXdVbsQ7pmDVEzf0xewFguCBzuCMFvskro1JKRKVi7khBXlvN5GBuvvZy4Gpo7eahgj9iK6IPZbnQb+rUr5ZnqhXRmAQddSs5IouwreGBgfB3kKGidPX0bRS/htyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VFGKxVlh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tDadUyVb; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=TEhyEV9yjJX2uvt8zHjS2e+m7WbNjne30jMOKL+XaACn+zrKXkXDEbYWuOE50Go3zuvqFRMECxPvbhumEYeGzZqUJlcIFYFbUxJZSC9OwTF/WsJumMyDbR7DB1uUBdwI2GDx+jDVm00XmdXlkQ30L+J3z5sBrDGo1JmkRM0P4b8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CC58ymkg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WO/bOV2O; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VFGKxVlh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tDadUyVb"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8FCDB1D00030;
-	Mon, 28 Sep 2026 14:29:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CC58ymkg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WO/bOV2O"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id CC88C1D000F5;
+	Mon, 28 Sep 2026 14:30:13 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 28 Sep 2026 14:29:32 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 28 Sep 2026 14:30:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790620172; x=1790706572; bh=+y3bx9E9De
-	OnSG5qZe5SdJCm+egr+ZSrKT14D71bdbM=; b=VFGKxVlhbRpZBdJgBZOv8xAb9l
-	4GPr/jANF/crwQTkTdSH8XZIQi/tN5giU/knCTCmCsr6eJSIcFYgfRGQPTuxb36+
-	Q/s2Toa7Z2kzsxSddwC3HsWOdPIwAIfECjo9jExQAMsQqGOykkqwKNbLY5Cy3Ofl
-	40jGtm9J6fPGw1JJc+z5sImvcwOkulGO1qFgyYxWm9nbYM/GXaQPCnzfYCsvZ0CQ
-	AtiSyA7g5zODu13l5rxvP4mQscL8n7vopFJOTtvZ05v2gS+byseMrkVF1aOT8kNF
-	B16yLLXjP73xNsmnbEX0NVpnuGJtzuEYAkZNNDN9dnvuW44gG9NM0if07Ocw==
+	:subject:to:to; s=fm3; t=1790620213; x=1790706613; bh=JG7KDxdcYz
+	2P/Ap97ja83tN+PFsxyeid9cq8XCkN9J0=; b=CC58ymkg918Mhp9Aqw4ekQAUHj
+	p3EuBaMv/sur7BfWA4aqJp6moy8KvIZ1YeLJvPSDiDmuL21yQCrFcV7lzB9N9Ouz
+	TfffRbb0gMrToGE8BAZ1nrKjn6YVwYekVXTuufJ3gZXtpQA2qEEIQep0qdFslMnB
+	r7p597Bf9EduOBLAySCVeTPG7zc0CI2CeP3UA5lRmD0ybA3BVDIoW4xOef4nHwpD
+	ECmw9FvfsXdh6JGWRpmghWH7ycVy7HPhq+buifVAnvNtp+E0ozAmoJPqXXZ+Ibpl
+	iDAcig4ibI9mRgNW3sIojIIUMuAGAYJmZn87yaA6I3YIBvU3ASBAB2C43gPg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790620172; x=1790706572; bh=+y3bx9E9DeOnSG5qZe5SdJCm+egr+ZSrKT1
-	4D71bdbM=; b=tDadUyVbFw/Kqi+UEVI3k0L74bmYuk8fJmCkiYxa2z62AhoQuGK
-	/SbJrCyL4RvrT+vjXOJfzr9S/WUBaZAkCPo3McBmBx/+4q2En7vcVSYTgDalYapx
-	naPMZCsEQht5TYvFn6nVOaDGRFb8LS0rr82M/+dgqpIgMhapeUz+Pz3yOW3KyXlf
-	bLLUytjG6kovicpDmsK6eW1/ZyXxfor7l34Ta5fN2RGyFBacAeFHN73vtVxsdzGS
-	JXWrirjRAioWP4F82bJLzhiTAqWsuayo0liPbvDZOEhAeUQuR8+qFsv4e1be019v
-	Prat1XnKEdVpAB8HavYRDBIqgA2pladp3pQ==
-X-ME-Sender: <xms:DLK6akbWkb99UD4RJVp1v9yQPgk9-RcjtsXSAC4YjwOpodJbIv_xZw>
-    <xme:DLK6amQGUO9t3jZbgGswhK7n4LWasIbNRAMZp27nAcB6zsP8oI48-QV4w3LXOAQoc
-    9pMNbYQi2bHmAx-TPnNgf34QEXFNReowKRWbmZrMlTBi9T5ZrkgoA>
-X-ME-Received: <xmr:DLK6anQjEwqXfiro0BmjwpT_n09yUPtgwHV0E7QhNIzHGsLGAGkra3EseTU9_R9sU_nQSSQZvKtnkwFRteXzzZ_QEoudHArpsdhL>
-X-ME-Proxy-Cause: dmFkZTGwMuC+T1f0lffgYDZD+OPvQKdWN1trRS5QnLbt9GqKhZTFrK4C0L4IwxaMhGmwz1
-    yq6DxFJ9THz2sO+JKAlRR2dUl5bf5yUbGqLBqp5GndRCnCJRJraclJdPwFVsRIjW9Hmfxq
-    GJ1QdCEXGl9SngN/Aw5VjSuPOZ0zrxZkTT47w0dYSMBpUQDrzqARN6DajhwPsHoGAsMFAd
-    wLff48gIrvEPiOeJV1mZ4a88BwOaAzxr5vFqmOyBbNFt5SWDdnHAAKBAvTbuTpFq2Kh+2l
-    LHt+XY8VmxHOIhd/cn/+IChPNvgECq+DwippOBhPDYoBX+BZoK1E32pKq0ZCt+YyZ4q+eH
-    0M7RgfgFYahUBGnHTgdHjGMfqc/k94vXfnfE7nUiP1VxrCdfcJO+N+EBvgNFlQvAHJ0KCX
-    ARTHa29+UMiQlYtQALSQ1NhVfWYSSjBx+1+07bJy+/6XNU3CmVxotezS5qUseup8ny3xx8
-    uB3p+DeXEZSp/GnrfOjVWZyngH8BdMuO0WUR4S/2+3XkHgUwsl6ivflbDdNYQHxnwHS7la
-    5s+6qKAp1I6W22AhnM+OrfWHEMhiZmNZxPrloKJewR3UNJAgVfTlgKTLxCRhqUwrgQBuRY
-    x8saBZ1BCCbzckQF/o7GfDYdAugXMjSOomJzajvRrjob2tjvrvuCbfAYEnJg
-X-ME-Proxy: <xmx:DLK6aqR6kUjPNgl9oPZmQJBpZ_4TJVSUZNU5k_5JKxvdVKL60c3-kg>
-    <xmx:DLK6as5MZhZBjTcGfiiwZzXqJh4wFzS1SabL4KS5cG-bsX2qDmG0yg>
-    <xmx:DLK6am0hdOiUOikRLEXJXfObq68C00AETchPMJVxobQVevZN7GD5WQ>
-    <xmx:DLK6anBxL_zLwcmKn3PmhpG2qjB01XTKKoTqR0J5hoFF3Y2OuzQW1g>
-    <xmx:DLK6asRbOX5YCO0FDczMV7nZsDCg_6CIC7SuM9HW0doU-UenUhI1yuGL>
+	1790620213; x=1790706613; bh=JG7KDxdcYz2P/Ap97ja83tN+PFsxyeid9cq
+	8XCkN9J0=; b=WO/bOV2OTL2G7X2QnKsQaIDmPzD2Cg0bHJwK2AWNKC4cKMH+SEc
+	XQz+Xs+s/opyxsI2nEDmpuvNIJMkK1bK5d8lq2vy3y/kzW+3tzkh+iFHm/FuvCcH
+	Nuw/yxe0xfs9sDkRblOI0Ri2YIIgCrZx0yZj7zpEIvitCNF6p6MI2aB5M0lx+KsH
+	/dl6F1//PzNYT3sc/rQObNvpSBDrKXqC7e6qYMN7mxKxb6jLolq6XoTTvvIY2su0
+	Y4RgI/7b2VcNkIvd0hh4t0Fx6rhYA/7kga6Sa4P/qMbflLVHSZQ6MvHuK7W7F/a2
+	Xgwwmuf14E+znaFqzekMFWnbpYJJNk1R1SA==
+X-ME-Sender: <xms:NbK6aofH1N_FlcrdpKijy4MBxpXKdWtkMynSYn63HHOVtFdz106ORA>
+    <xme:NbK6ahP_ft5LPfOdKWzFAMPjzxxj10i46sfAt5-TWkBYjw_pAkekvuuHoVtsSBGcl
+    kKTd2GvmJnDskwpjJoqjExZp9H1qLLjDexnT588NyzLYQuN1Iv-Iyw>
+X-ME-Received: <xmr:NbK6aui6q-KlQsg7ElhWBC5LeJ7FxEx735vBI2T9GUQLWgqiOJaS2dFSiGAOnKdT7EWkgvpArYayan7JqMSX-RGdNoaH_N0llnTc>
+X-ME-Proxy-Cause: dmFkZTGZTeTbSN9brl5yzM9PcDoflwP0dbwsBXKo0ZyCZC/n8dMR3nxROPFjJn6My1OH2y
+    EYn5DBgBymbb1vhybwDgw8ubEDLWd7sT2D/js0EMd7FXGlpwQnn3b4GbecH7lD9raEII7C
+    BzP24gswQpEo3aARzAHBPAKgcuA+F8tjKtBR7DC36e8b4tQIGlLd8jjNY6PSLcKmrFugHW
+    H8nAqkpybsWalWWX7c07zpdUai6M1ThOOzdC41EVoCDVn+Skp9S3OEa+HRkIdWtvr035nG
+    GMmTQ8iR9lNRZuKrnEil6pH9B9NZ1O+jX4aFSwjptaeJVWY90JXOnAr+t8Bqog34wp2Wt5
+    R6zRhyeRwMC52pQBNDEhtxCppvn43T3odEhnDRKiyyYrRnqn/5QCtLiXZOfQEH9IwY8XzJ
+    bWXrSYwsMCHMXP8GC49840Mw0667VMaQ01BGfUwEJ1JbO2zrrP6mf79kRzuUsuJG4mYJWK
+    mCs8kgGm+FW2nlHp9RFDWgGBAZ9mOhSr+WXkRfskoyMZmPVrJGNpflWW7B9e8DqQeTu46o
+    4WOLo4gqcnZlwyjndx1yqG/H/yCJhCBJaibDSWKvOTVeC+gDfc87qFxgFyIMfBXxQrQqZm
+    EVR/CH6H0QnV7P6S1WCPa9/ISstVkrI4Y0rdkvpAuUWgW2dqV0gh+KWrhTfw
+X-ME-Proxy: <xmx:NbK6as0SCyRo6-3tWNL7ukttNvjFmowT-a4p2qaYwDkQ07OD1NxwZQ>
+    <xmx:NbK6aghl2BMldL04gaSwc774ZK08OsommqDAsRVBuWZ-APZoWPpahg>
+    <xmx:NbK6akeC3j9wZou4w6Ftko3eHr8AGEqDMpXf9OWJOQojANWc4Zy3Iw>
+    <xmx:NbK6arlVKE7puS5nLOgvv1oBsOWwUigYFFuNFL7v7epqaM10zqnnHw>
+    <xmx:NbK6at3WvjUPcwhJs2meX2dqy3Bb4IY_avRLDvsqlofoygyr8BaFbPLQ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Sep 2026 14:29:31 -0400 (EDT)
+ 28 Sep 2026 14:30:13 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
-  ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH] doc: interpret-trailers: fix cmd examples
-In-Reply-To: <doc_trailers_cmd_examples.ce1@m5gid.xyz>
-	(kristofferhaugsbakk@fastmail.com's message of "Sun, 27 Sep 2026
-	16:12:27 +0200")
-References: <doc_trailers_cmd_examples.ce1@m5gid.xyz>
-Date: Mon, 28 Sep 2026 11:29:30 -0700
-Message-ID: <xmqqh5j9mdpx.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Jon Simons <jon@jonsimons.org>,  git@vger.kernel.org
+Subject: Re: [PATCH] p5551: fix repeated runs with update-ref --no-deref
+In-Reply-To: <20260928040511.GA498426@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 28 Sep 2026 00:05:11 -0400")
+References: <20260926180648.60770-1-jon@jonsimons.org>
+	<20260928040511.GA498426@coredump.intra.peff.net>
+Date: Mon, 28 Sep 2026 11:30:12 -0700
+Message-ID: <xmqqcxtxmdor.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,67 +85,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-kristofferhaugsbakk@fastmail.com writes:
+Jeff King <peff@peff.net> writes:
 
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> On Sat, Sep 26, 2026 at 02:06:48PM -0400, Jon Simons wrote:
 >
-> Fix `trailer.<key-alias>.cmd` examples which have remained unchanged
-> since they were written in c364b7ef (trailer: add new .cmd config
-> option, 2021-05-03). (Modulo formatting changes.)
+>> Update p5551-fetch-rescan.sh to pass `--no-deref` when deleting child
+>> test refs before each measured `git fetch`.  Otherwise, for repeated
+>> runs, the second iteration will fail with:
+>> 
+>>     fatal: multiple updates for 'refs/remotes/origin/master' (including
+>>     one via symref 'refs/remotes/origin/HEAD') are not allowed
+>> 
+>> Starting with 3f763ddf28 (fetch: set remote/HEAD if it does not exist,
+>> 2024-11-22), `git fetch` instantiates the HEAD symref.
+>> 
+>> The test, introduced in 7893bf1720 (p5551: add a script to test fetch
+>> pack-dir rescans, 2017-11-20), predates that.
 >
-> Use this example as a guide for how to phrase it:
+> Thanks, the explanation and patch both make sense.
 >
->     Configure a `see` trailer with a command to show the subject of a
->     commit that is related, and show how it works:
+> This test could probably benefit from using --setup (which also didn't
+> exist back when this test was written). But that's nothing new, and well
+> outside the scope of your patch.
+>
+> -Peff
 
-This read as if you are declaring that you use a template that
-invented to consistently give intro for each example, and made it
-look like the use of `see` was as a placeholder.  It would have
-avoided the "Huh?" reaction if it were phrased like so:
-
-    Steal how example to show the `see` trailer is phrased and use
-    it throughout:
-
-	Configure a `see` trailer ...
-
-Other than that, this looks good.
-
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
->
-> Notes (series):
->     Topic name: kh/doc-trailers-cmd-examples
->
->  Documentation/git-interpret-trailers.adoc | 10 ++++------
->  1 file changed, 4 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
-> index 77b4f63b05c..3e81632b252 100644
-> --- a/Documentation/git-interpret-trailers.adoc
-> +++ b/Documentation/git-interpret-trailers.adoc
-> @@ -305,9 +305,8 @@ subject
->  Fix #42
->  ------------
->  
-> -* Configure a `help` trailer with a cmd use a script `glog-find-author`
-> -  which search specified author identity from git log in git repository
-> -  and show how it works:
-> +* Configure a `help` trailer with a command that searches for an author
-> +  identity and show how it works:
->  +
->  ------------
->  $ cat ~/bin/glog-find-author
-> @@ -329,9 +328,8 @@ Helped-by: Junio C Hamano <gitster@pobox.com>
->  Helped-by: Christian Couder <christian.couder@gmail.com>
->  ------------
->  
-> -* Configure a `ref` trailer with a cmd use a script `glog-grep`
-> -  to grep last relevant commit from git log in the git repository
-> -  and show how it works:
-> +* Configure a `ref` trailer with a command that searches for the last
-> +  relevant commit and show how it works:
->  +
->  ------------
->  $ cat ~/bin/glog-grep
->
-> base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+Thanks for writing and reviewing.  Will queue and mark for 'next'.
