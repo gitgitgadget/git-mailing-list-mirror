@@ -1,185 +1,128 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E23D3B813D
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 07:01:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BD830E85D
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 07:02:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790578867; cv=none; b=qGdbWHz02OtgrYUeUQF73W+etWc6asROltG0CfPOaqzmUMotVpvU4VbNTv9oRJRg8jspdr6qOhVAB7U/gOTBSS6+tU2ehlVn6lqyzOPYOOChrrHFryCktVtVEHeYdtALxPjQ8ZJY6hcvf2fklcDUMdlarJsHxmnzZ8Gfc/VCd9Q=
+	t=1790578950; cv=none; b=GpWZije0tD4DDaBulFApARTNQX8jCWdKCqmJARI+BpWRgGSW0wls7Yn/pRM0fpDMK6ky4rv2woF9o8J79sY2ApEyXfpb7MvfVabVbPszZuULIeTZjXqDm7llL4ZR6yfzrLd38U6mgEWpcwUdZ1LuNy9RVkON51CWim9YRDafvgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790578867; c=relaxed/simple;
-	bh=pZoqa2qAg2+3gP0DyTBEeLqjLQJeq0LtOUJejKKE0gQ=;
-	h=MIME-Version:Date:From:To:Message-Id:Subject:Content-Type; b=GAxxLsO8nVUXHiWVKLXR5xzaFr8dGSLmECDtBY3+2ESGu0tPckMAcwG6s8mPyR4ENsFg9QbBttnrZTXkuaNIgvSoD9qZiOknVZF+YYiQzeGpcgHONXIxolMTBmN1bDAyNBZHrR6dOrzGYiSlKSyhaBZAyiRn4CX1ZRYgGYBmEaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lists.joshka.net; spf=none smtp.mailfrom=lists.joshka.net; dkim=pass (2048-bit key) header.d=joshka.net header.i=@joshka.net header.b=O9l+uKrK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H/TmODrC; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lists.joshka.net
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=lists.joshka.net
+	s=arc-20240116; t=1790578950; c=relaxed/simple;
+	bh=u0iWVPzyu2p07EmT1k9vwI8M3AvI6f+XvrrSz6e8414=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qd2WF2ZH+CmFkj97mFFsE/mbLXPyOCdUKCaDiiZFNRQxDIrIHInRGhG+tOcMC+OoAhS6I1mg0hnPz59c8tE4jX/Peul5GmgCSRNSZ4OmDqfQHyeMffHrc/HNSY+ZQfjZy+T27mRfmmNnaMjVO/UD2L9Ocv9uwA+oeG33j5qmIBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O+/N3XNJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p6HpdM6A; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=joshka.net header.i=@joshka.net header.b="O9l+uKrK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H/TmODrC"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7B0D11D0008A
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 03:01:04 -0400 (EDT)
-Received: from phl-imap-02 ([10.202.2.81])
-  by phl-compute-06.internal (MEProxy); Mon, 28 Sep 2026 03:01:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=joshka.net; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1790578864; x=1790665264; bh=5ULasp7VVy
-	ZNQoJKDteoxPJKil3uYf68TKTI4ckHM4o=; b=O9l+uKrKIEKBergDDbNe4hSEjo
-	d85dZW7w9rJntio/2nkS3TI8ZIqHq8y3iOE+GaIoOLEkCZUsvgSC0x6oLp+X9BO7
-	50QSY/22sSPazHuBDB5yF5J8aRFX6bU1uAcqB7PlG0cOKaIy8Sy0aUdx+MONVUa8
-	dUN3kz1tcOGi6bIGpcm/KWtqwoxMBiZQYFCBHaEcIy7EEk+bRrbd7BG6ZtghWKCq
-	vmzxXVR4+Hs0/AbI9qvyumD7MFe5lBat5aocsTtKK7X/aio7IG7Xt+3dOZuxY608
-	WNdnZV9NuvMjf49X6e4hGiHlRuwksA4K88dbevsSIYjKOjGbDXXlTii4nIgw==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O+/N3XNJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p6HpdM6A"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A5EF51400078;
+	Mon, 28 Sep 2026 03:02:28 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Mon, 28 Sep 2026 03:02:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1790578948; x=1790665348; bh=xNzRPLzkgJ
+	OCmV7g/T6+spRtZ/4K1rglTXeW+opXlWI=; b=O+/N3XNJuyZdKPBHaaMKVSEtzX
+	fLjqTPJZyrxBtAFlDs4EddoGHqEgNzOSA5YVF8edvrKYkaF1OjvDewaff6PNxtMp
+	BFw8knf6S4/sJd2ivXtQq9ehGKKpGMWQIFkIZxgTKn51yBcoVZVkmCMKOcL25FvW
+	qumHuHurBCIyC+xltJTlKm/tw1rspQDQ3/1GI7D6HS30WrTOz1UEazzS+tGCtxWj
+	3ba455uQ01Ip53pkZdq3p7bBg7UxuPT/icVy8HXA1i0b0FlxitPhez7Svz3hO3Qq
+	xleBLOnd5KgFkZrHjZKlX1Qy4n9q8S9UQa6axK+PYKwhVgZJw9dMolO6pTKw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790578864; x=1790665264; bh=5ULasp7VVyZNQoJKDteoxPJKil3uYf68TKT
-	I4ckHM4o=; b=H/TmODrC6d20upeK50WDW4urhVSAKSAklxnVpjLyJBW2ZxexraR
-	nWMi671V7bHMAM9F0Ka3cJssbuqZ56mmka+iM1RHHa88jL7T/bMIPTnNXMBU5J9C
-	girP5Nj4eaZfnzA2DTeKpstQkLOyFE80pyxdoMJymtEF++Cszbzje5k4M9sOHwfC
-	hhnrxHrFdoEJtNji+zUfwrqvR0F4U/tjSocsg8h7bZ66TNZofxdOnvugL1twoC4n
-	CMZPw7iAVY2MfqkdRIGoFjOv79wJI6k7xwCOgvV2GDeeGlYRKh3HIExNMqlvjCH2
-	Zmx+305ZbuWyxHLYkhWiD7tej3RuFj6774Q==
-X-ME-Sender: <xms:sBC6aq2cETHBxf6KXBZ_gzRmiw5k7-rxCCSsCR1_cqAfUb5DUcXY7g>
-    <xme:sBC6an73TQgx6TY9QVKgFSJ5600M03byQnJm8lMXjz_66_TOgbQhhM9GpLWbQJ8G2
-    oleArs4-ebf2O-yCRaw0kLBcod-_vKwXrN3HMP7g_-nUcHMZYX8lac>
-X-ME-Proxy-Cause: dmFkZTGtw41yVXP3k7xhToLHerpBjS/xsbGQ7umA+FuSmq3/ZkrsdgXAHNDggE9zYTqdRX
-    A9vnKERlB9D3yt0NHtkjCBX3QXQVidYQ/8CgU5uVNQsle3bbRpD2+NncuBDfIUkCHLSPhI
-    WxH1lf9dsHzabNkDhYdvzosBtu+DTFzHz7nNVYZ+RJABHG2IBtJlf3e/QYD15NVmsFclWE
-    y6t87FauKBAEjJT+ZJDnGAO0BuwTtxEgtAxy7tqcykB6k2cDbVBPW2d3LHePAOYz3xP4rF
-    rAXunP+iFI44Ppbg4DaZGVGE4uT79gp5LGBAJTawsJsgCKpDAE13Ee5JWzoo8VwvRBQzEP
-    ICbBJwzm8eOvyy4QuqAyRDlKBZ0J9/fY64lTvS6VDcxUrYzjvBPw5qS7PWOhIpOI8IE/gK
-    jSFvEixZUFrMqYbGjxlVFCM6sW+zHOS5Oqi3/52lqjDXzcFeLFfO/yCMi1ISjuf1r9cpLe
-    bVBMSsMPMKkdyXukZL0ixLdTKnv8CgvzfJo2xSIkGayos1LqUPNT2Q6SpO2jCsOLRYE2sm
-    qUHAmnZUBa6qwPV2j7dUi8tuf5LVrF4vLqiI4n2OiotRgCfM0s1+7w8ubzMmsRPaa3oC3b
-    adpu7NgLiEWY9XawMAq1HaGi92ymX9XXQgzpmDKm9V0fXAaVC//2vazf7zFg
-X-ME-Proxy: <xmx:sBC6amnvexErdNBfVvivTsNw3TH0gC5rcgUkUA6fqcMwE6PCbks6zA>
-    <xmx:sBC6atzGHvaAT_aeFuyGKrFGwB3DfiKnJnEHBhKQZxEfs2B5Czovlg>
-    <xmx:sBC6ahhJuS2HYvzKDsq3Hau3risC0puHePMuaoAqoL_KZLiriVfI-A>
-    <xmx:sBC6aiWcWuPL-oFLxQOnKqvVAn_RF3JAjTnXMDCEvI7z7KPWb1Gc6w>
-    <xmx:sBC6athIRCNVvEFZ0UFcU4ZxSX7wrpc-4AP7zVs_kXK82G-cczCiY5bA>
-Feedback-ID: i504042c9:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 33B5F700069; Mon, 28 Sep 2026 03:01:04 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	1790578948; x=1790665348; bh=xNzRPLzkgJOCmV7g/T6+spRtZ/4K1rglTXe
+	W+opXlWI=; b=p6HpdM6AY6eRimKbAjRWiHN8GAv4eo/WhgNnk7LSBiIybxZsQfe
+	GP+8yHdH3fn5z9pWaVcLQpwiDb/9UhKFw9VxTuwGgQz9+sAAtyjzlypRf6tYhULJ
+	PbFYBDeDg2FOhohPctlGlf6Ojv5gOUYpB0S5mQoXkI0xoUppl8Eiodj2+P4Y1HZ4
+	KRXTsiSQExxrl3G271J2EwothwzZwl2GFA0DBiHYl4OpN3ANcs719sw5mTt/59WH
+	bLTM98d/wIHkxD8sCrfaKwzKnr4vglNSrDpr47ifXB2qz43K4YWqj7+zvdoh+C7m
+	nFnX4j1r50W+BYyBeu0GkaCGSJkVlmj451A==
+X-ME-Sender: <xms:BBG6alAlQnYl8WESPj7uamxziNh_UNJY4l8ZIewq67KcF0E5GGg_Mw>
+    <xme:BBG6aqiDnvDuvXAGo4bSHFBn6ET4RkSDSAne9whSdhPAfhhrQxu7Jbls77QKz_nsw
+    iYPg4QgISiwFFF7N_D3bn13wM5V5sTRDpd71JN9RobXdD8DrFRsyvHy>
+X-ME-Received: <xmr:BBG6alkMkVo9lrM8ORRe_FATX5utp899Eh2xyu-vt2bT8yMDFQSzlg>
+X-ME-Proxy-Cause: dmFkZTFy3vtfF3H7T/gz7633gyobn863E+ffKT8fUjcvWYdG/tDvv8Foc9Kpq+I9lGisAE
+    Xvd/LSVz59UIA7tgaGi6XLW52plcW/y52Dv0716EYLajiph9kr/EG/QOrRl+I0gk4nYJ/L
+    79kAuIt05vC2yP5gatqwg9NUwcKTQGDuOalL2EEl0aVqnQZGvR4r7GSTBu7bTvnIQoi3OF
+    fuDLF2CWSTQnIbaGhvxWGjj3XahfPwD4k40JLmlDX97Po5AKh32KrArJPSxicXpG+R3D5N
+    WQL2LRk4zmE0gKaHXhH4PcgfuXFuDic+qs9P7mfufTGUMmWROpTxw4UbkL7lPtOEUErtQN
+    DVF6a5MPSEXFfu98MKT5Q6+CoYuREgWpn/I99NU5S7TCgS0sYrLDH4SrHNGYcYQG70BIM2
+    9hiUu0zgpBFTjGEMv0dqjkiCupyzguGtbric/CH32WGt40mYHpxAZQOifF5GmMtzknJT2v
+    5kvRdQNSC2QN5bhrYQ29iJUApm8kJ/Z/H/kWeP5kgVDwa1x4Kblj0RKn/9j7saAJyr1R+f
+    z+UVlocVUdMGEv7+wIiJhUg/f3VwumEg6YHLxKyEpA9tcPSoZ7K9/gI/wcpQOtZS/Ohrtp
+    R6OK3jvIznU6DJSmMi9GtqlwuE7/5Jlg2JDgsO91OXKVAA+H6QzjCfeTGuOw
+X-ME-Proxy: <xmx:BBG6aupFBkqfanwNWr8e11mUs-HetYsai2ZGxsrk4YApaSubJ-8NjQ>
+    <xmx:BBG6amE2dTTm08Y0XK9HXgf6VfyryIVO1yCwP-G57V78v2wkOWR1Lg>
+    <xmx:BBG6aiybxTKVQJ6P3nBTKTrR-4Tp053dd0chRGzS6aXCPVTGKF_jww>
+    <xmx:BBG6ajqtB-SYKvMk81_AFjkMIyp8uNiqzoZX1zqLb8Ld7KskAYkLjg>
+    <xmx:BBG6avh2NvElr7OCfZQKYszApWvo5iZxpj7rP06TUw-Z5oVWtGvzwtrz>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Sep 2026 03:02:27 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 6ab52f08 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 28 Sep 2026 07:02:26 +0000 (UTC)
+Date: Mon, 28 Sep 2026 09:02:23 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Cc: git@vger.kernel.org, peff@peff.net, r.norouzi@proton.me
+Subject: Re: [PATCH v3] reflog: fix default expiry periods
+Message-ID: <aroQ_zZvUXKKK7--@pks.im>
+References: <20260923102140.25475-2-pushkarkumarsingh1970@gmail.com>
+ <20260924175843.8383-2-pushkarkumarsingh1970@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 28 Sep 2026 00:00:43 -0700
-From: "Josh McKinney" <git-bugs@lists.joshka.net>
-To: git@vger.kernel.org
-Message-Id: <85f7daa8-d60b-4348-ac2f-b1a68628af7b@app.fastmail.com>
-Subject: Reftable reflog timezone encoding differs from specification
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260924175843.8383-2-pushkarkumarsingh1970@gmail.com>
 
-Hi,
+On Thu, Sep 24, 2026 at 05:58:44PM +0000, Pushkar Singh wrote:
+> diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+> index 8f78cf4b01..93b5b49e1d 100755
+> --- a/t/t1410-reflog.sh
+> +++ b/t/t1410-reflog.sh
+> @@ -153,6 +153,72 @@ test_expect_success 'reflog expire should not barf on an annotated tag' '
+>  	test_grep ! "error: [Oo]bject .* not a commit" err
+>  '
+>  
+> +test_expect_success 'reflog expire keeps reachable entries for 90 days' '
+> +	test_when_finished "rm -rf reachable-keep" &&
+> +	git init reachable-keep &&
+> +	(
+> +		cd reachable-keep &&
+> +		timestamp=$(test-tool date timestamp "60.days.ago") &&
 
-Git 2.55.0 appears to store reftable reflog timezone offsets as signed
-HHMM integers, whereas the specification requires signed minutes.
+Nit: I would've preferred to make this 89 days...
 
-https://git-scm.com/docs/reftable#_log_record states:
+> +		timestamp=${timestamp#* -> } &&
+> +		test_commit --no-tag --date "$timestamp +0000" old &&
+> +		git reflog expire --all &&
+> +		test_stdout_line_count = 1 git reflog refs/heads/main
+> +	)
+> +'
+> +
+> +test_expect_success 'reflog expire removes reachable entries after 90 days' '
+> +	test_when_finished "rm -rf reachable-expire" &&
+> +	git init reachable-expire &&
+> +	(
+> +		cd reachable-expire &&
+> +		timestamp=$(test-tool date timestamp "100.days.ago") &&
 
-    "tz_offset is the absolute number of minutes from GMT the
-    committer was at the time of the update."
+... and this here exactly 90 days so that our test is a lot more narrow.
+Same for the subsequent test, where we could've made it 29 and 30 days,
+respectively. But I don't think that this necessitates a reroll.
 
-The specification also gives GMT+0230 as an example encoded as 150.
+Other than that I'm happy with this patch, thanks!
 
-I reproduced the discrepancy on macOS arm64 by creating a SHA-1
-reftable repository and committing with this date:
-
-    2026-09-27T12:00:00+05:30
-
-An independent Python/zlib inspection of the resulting reftable found:
-
-    Stored timezone bytes: 02 12 = 530
-    Expected signed minutes: 01 4a = 330
-
-Both HEAD and refs/heads/main reflog entries contained 530. Git reads
-its own entries back correctly as +05:30, so its writer and reader
-appear internally consistent, but disagree with the specification.
-
-Here is a reproducer using only Git and Python's standard library:
-
-(
-    set -eu
-    proof_dir=$(mktemp -d)
-    cd "$proof_dir"
-    echo "Repository retained at: $proof_dir"
-
-    export GIT_CONFIG_NOSYSTEM=1
-    export GIT_CONFIG_GLOBAL=/dev/null
-    export GIT_AUTHOR_DATE='2026-09-27T12:00:00+05:30'
-    export GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"
-
-    git --version
-    git init --initial-branch=main --object-format=sha1 \
-        --ref-format=reftable example
-
-    git -C example \
-        -c user.name=Example \
-        -c user.email=example@example.com \
-        -c commit.gpgsign=false \
-        -c core.logAllRefUpdates=true \
-        commit --allow-empty -m "Timezone example"
-
-    git -C example reflog show --format='%gD' \
-        --date=iso-strict refs/heads/main
-
-    python3 - <<'PY'
-from pathlib import Path
-import zlib
-
-directory = Path("example/.git/reftable")
-for name in (directory / "tables.list").read_text().splitlines():
-    table = (directory / name).read_bytes()
-    assert table[:5] == b"REFT\x01"
-    footer = table[-68:]
-    log_start = int.from_bytes(footer[48:56], "big")
-    if not log_start:
-        continue
-
-    assert table[log_start:log_start + 1] == b"g"
-    log = zlib.decompress(table[log_start + 4:])
-
-    # Fixture-specific: email, variable-length time, then timezone.
-    email = b"example@example.com"
-    search_from = 0
-    while (position := log.find(email, search_from)) != -1:
-        position += len(email)
-        while log[position] & 0x80:
-            position += 1
-        position += 1
-
-        raw = log[position:position + 2]
-        offset = int.from_bytes(raw, "big", signed=True)
-        print(f"Timezone bytes: {raw.hex(' ')}; integer: {offset}")
-        search_from = position + 2
-PY
-)
-
-The relevant output is:
-
-    refs/heads/main@{2026-09-27T12:00:00+05:30}
-    Timezone bytes: 02 12; integer: 530
-    Timezone bytes: 02 12; integer: 530
-
-Is this a known discrepancy? Which representation should interoperable
-implementations use? If either the implementation or specification
-changes, how should existing tables be interpreted, given that values
-such as 330 are valid under both interpretations?
-
-Given that Git consistently writes and reads HHMM values, I suspect the practical resolution is to update the specification to match existing behavior. Are there other implementations or compatibility considerations that would prevent that?
-
-Thanks,
-Josh
-
--- 
-Josh McKinney
-joshka.net
+Patrick
