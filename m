@@ -1,203 +1,132 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk2-f40.google.com (mail-qk2-f40.google.com [74.125.230.232])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519053BF689
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 19:36:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8793264C7
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 20:25:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790624208; cv=none; b=UeaBy990IMuYYkSCzasrw0nyIKRmvPxqkU7ILE52to5tT9s0Fq0V3nxxPEkdeUVK+TeI3x2XmIT4BYWa19ooRO6F05BAJADmRCHYKklrLMv30qLOB2UP1K/hsDRXtMaeUtm2VG1NkAXRORsX/gzd4HoDs2oJ46Ako6pufa1cpKs=
+	t=1790627126; cv=none; b=F24BAthMevE8aHbBgtWtP28mzBhmNLCKnOBDcKwr1UTV0XKGkXIlotbnyxWmgNOO4ZGZD9ggV6BcqNzsNs+N8GcXUaG187zk0TYC41mdxU9q3PT8tfhHL8B918f0o35O3eYLGvT5c7P1DdDUTcHy7/8dgHEhXJxjpaxLQz6BCis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790624208; c=relaxed/simple;
-	bh=S6haOAoFNAf8aFYxliEe4GTI+utXSSXM6nuILN8uRsY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=du/hCfVKIto5NltayTWoQWiVbcOILOGW0eELgJbArHeUMq4YiC0g9eHcLv+bLmosxi2nKtSb3SAdwL6BVKrL4vktgejfLLQkumGCfuehQm74W3+NQ63pSbRMLxdmLN43jtfheYNt9nnxxFOTgvQ63kQvdYxJlWPbw2fMfTxmVHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=B0AaYxeu; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1790627126; c=relaxed/simple;
+	bh=KaRodkphrjFWASOgrTQKOJnMcdtF3OULtZZOMOA4ubM=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=CS3XF26EE4Bt/FikbMNc8NawSfdAJH6fCp7RjyYEMlxuuhndaRGuqFJES2+/R1OWRwDDaKaoL67QAv971Bt5v5Wf1R6scFIKQmPuGCA80y/iSxSwewtQt4C3GpVLxLwCNVc99nirps5cuvrtOOiGx1ShlPK8aiBOOlp//xZj8qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GDxpQfIp; arc=none smtp.client-ip=74.125.230.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="B0AaYxeu"
-Received: (qmail 67256 invoked by uid 106); 28 Sep 2026 19:36:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=S6haOAoFNAf8aFYxliEe4GTI+utXSSXM6nuILN8uRsY=; b=B0AaYxeuzeneCTSo6JUTO0HcbN6+cRWZT0GJJQcPjEb6DvXYDxJbZYQCPzJU/uJVXe4IullpcVfBdmh2WrEfHJAeInoXSonK27Ugw2t7lhhm4wuXzvZBMK75/AD6Kyogw4czCsY09ooad5bxqeEPEYATIY7lMI7KiMS+ZNyEdmFdIVVHdiP82ro3Y90TQe76hOMZHZ5FpOA+aHewE2s9Arg7wm1S16eRh01T84tt5399Jw8u8W28uPu+BCYud/eWRb442tDN4mqhegy8n31PoHoWEcDQvZ9BbE3QdflhXYNZgYsg1VG1qW+9K+ptMrXtTL2BXK7Xd7JG9+RVdor2xg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 28 Sep 2026 19:36:44 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 280562 invoked by uid 111); 28 Sep 2026 19:36:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 28 Sep 2026 15:36:44 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 28 Sep 2026 15:36:44 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] http: handle curl stripping creds from effective url
-Message-ID: <20260928193644.GA1075764@coredump.intra.peff.net>
-References: <20260928040149.GA498186@coredump.intra.peff.net>
- <arplE8-5jD-rZiyu@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GDxpQfIp"
+Received: by mail-qk2-f40.google.com with SMTP id af79cd13be357-93c5b166b8fso232146085a.0
+        for <git@vger.kernel.org>; Mon, 28 Sep 2026 13:25:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790627124; x=1791231924; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=lLGA+5Hb64d0lIv7ipPCDyzN2+RlxBg9YGdeHYNsDVs=;
+        b=GDxpQfIpshe0MP586b9jn55dS7wBPNbF6WsaEgx+n69p9o+mZvd0ZGfHDrvHO6r/Go
+         DGZgO3aaouz03QoxAAo25EgUcwRmF9OFoOjO8VhaWW0yxtojAXc7Ow4x/gUrt4cllqt/
+         fGlFl5jLAxsSH3f5XeVMeCr9c9+UyCuigha0tpFwjP0Pq4R+MnoyV1/bwfaU+NeWe1tY
+         5zhFWfqbeYwdOO4+1WbgMghEwFlmPssEZPEhAaWgeIZhNL2Anka+HqAub/WzE9KA919V
+         Q7wn7+Sw/LF6Ux1VRhcUVr64gmsexnr7FbPyCGit/ce3vaUz6TPncRM5c2BbgtS/oo36
+         sFdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790627124; x=1791231924;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=lLGA+5Hb64d0lIv7ipPCDyzN2+RlxBg9YGdeHYNsDVs=;
+        b=u+Ln5z0Qf0yaGmvPoIr1uzVRYO7vp8aKzj2jpVcBPD4Cy50RZ8CIQPmpzd2JOv4ILn
+         Q19U4QLEFMyvnZ+fMml9uzW9rYKHEYDw4R0r61pkfOFipB+fuWjww2uq5qyZbACX5tfK
+         8lgjNiJmKWZOc1CIfS0QWt++Sfym6ZzEqv6uB3IpEtZp9Mvy3AfrGMMwJU4WWndRuW6G
+         evIZkC4WN+QB3LwchdN7ZSh48w1RmJkNiJ0kftGmDqbTN/d6PdYWdBNvC/+jmEVO5LvR
+         ropCedOobux2oAnDEJovYpnezLDzcTUbwkYzpXAOq7UtLw5rWcxVPa7+oGldgRUUWJF8
+         OT0w==
+X-Gm-Message-State: AFuF++lKwNdfUM0Avtu4agnAIs/T0QJQw7EeKd1yGzzQ4C/skZcRApZk
+	Xae1YikdW4SUYtu0QvtyOcKdQXMgo1lJwNa3kBdB6WkpCHShpCgCDnsg9c2GPQ==
+X-Gm-Gg: AYBFou1WXuamXT5hae5+yyzDyB0MXLRvBr403MHq0/uhnbg1UWv6Sasge8XnyXCDua2
+	bX2KUz6Z6DRKM/zlbdt3lx7xnr/I23QqC+nmN43HWWj/d3ozJQWxUP+ZX0bDDwI1lJHBhFu5/hE
+	tIGUqEG/8wbtdVMYwwHEvgqF2644CSE24CvfZmscRbAo4oTC+ga/JyZoQuLx1GjMV9ShYSqXBh1
+	Djk+/fb5Bj0nOQx987w9I2sWARMxvSrAnd6ttyOY364RhpqNgDjzSpCw25m+pU1Ev/qnhVS37Fy
+	nH8noQMH4du9RUw5VpT7mneShQZIO2722wYtD766KaUkHPVbHG+VokNm3FQasSIil5H6eY/JeC7
+	27LsxTbVT3ZT7SjHG6I67RQOVBLHJMNilkZDiL6DL285ljGd3aJJT9cuSuyUfGzGaVKBk7tcZ8+
+	B/sJ9L3q+67acm43MapN+I8kSqFats5WbaAY5j/yj1srY/qK1fk8Y25h4NFZWSeWNhoXqziUL26
+	A==
+X-Received: by 2002:a05:620a:3190:b0:93b:d7a2:dd2b with SMTP id af79cd13be357-93c43d2e555mr2303955285a.59.1790627123594;
+        Mon, 28 Sep 2026 13:25:23 -0700 (PDT)
+Received: from [127.0.0.1] ([74.235.79.40])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91430dd2858sm88311116d6.21.2026.09.28.13.25.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Sep 2026 13:25:23 -0700 (PDT)
+Message-Id: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 28 Sep 2026 20:25:19 +0000
+Subject: [PATCH 0/3] [doc] Remove gittutorial-2
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <arplE8-5jD-rZiyu@pks.im>
+To: git@vger.kernel.org
+Cc: Julia Evans <julia@jvns.ca>
 
-On Mon, Sep 28, 2026 at 03:01:07PM +0200, Patrick Steinhardt wrote:
+This patch series removes gittutorial-2 and all references to it, leaving a
+stub behind to help out any users who might be looking for this
+documentation.
 
-> > We can handle this new behavior by doing a more careful comparison: if
-> > the direct string comparison fails, we'll strip out the credentials
-> > ourselves and compare. This is a little extra work, but in practice it
-> > should only happen once per process.
-> 
-> So in my own words, we want to detect the case where we have been
-> redirected and, if we have been, we want to strip credentials. But this
-> logic is about to break as curl starts to rewrite EFFECTIVE_URL more
-> aggressively, and that makes us detect redirects in cases where there
-> were none.
+The goal is to remove obsolete documentation and make it easier to improve
+our tutorial material in the future.
 
-Yes, though I'd be careful to distinguish "strip" credentials versus
-"flush" credentials. I'd take the former to mean "remove them from the
-URL if they are embedded in it", whereas the latter to mean "throw away
-any credentials in the http_auth credential struct".
+I tested that the docs are staying internally consistent by running git grep
+tutorial-2 and making sure that the only remaining references are in the
+Makefiles, the document itself, and some example output in user-manual.adoc
+which isn't relevant to the actual manual.
 
-Those credentials in http_auth might have come from the user, or even
-been extracted from the URL originally (or some combination; e.g.,
-getting the user from the URL and the password from the user). But we
-want to flush them so that we won't provide them to a redirected
-destination.
+Here's a pointer to a past discussion:
 
-I think we are on the same page and this is just wording pedantry, but
-wanted to make sure.
+https://lore.kernel.org/git/7004c3b1-2100-4a90-9815-2a679ceb25b2@app.fastmail.com/T/#mf600063180d6239916e3fa6e9d33da86969547ec
 
-You might also reasonably ask: if we have already extracted the
-credentials from the original URL into http_auth, can't we just strip
-them immediately afterwards, and always deal with a vanilla URL? That
-was my original approach, but sadly it does not work because we then
-pass that URL across process boundaries (e.g., to http-push), but the
-extracted http_auth credential struct doesn't make it. One of the tests
-in t5540 notices those.
+Julia Evans (3):
+  [doc] Remove gittutorial-2
+  [doc] Remove references to gittutorial-2
+  [doc] Delete translations of gittutorial-2 description
 
-> > I've used curl's curl_url() interface to do the stripping here, mostly
-> > because its behavior should match the stripping it does internally. And
-> > also, though we have code to parse a URL, we don't have any to
-> > reconstruct it, making a single string comparison hard.
-> > 
-> > One alternative would be to parse with url_parse() or similar, and
-> > compare the individual fields (skipping username/password). I think that
-> > would probably also work in practice, but it seemed to me that the
-> > simplest change would be sticking with string comparisons.
-> 
-> It still feels rather roundabout to compare URLs only to figure out
-> whether we have been redirected. I wondered whether there is maybe a
-> more direct way to get that info, and there indeed is
-> CURLINFO_REDIRECT_COUNT, which allows us to retrieve the number of
-> redirects that have happened.
-> 
-> Is that interface maybe a more direct way to get what we're after?
+ Documentation/MyFirstObjectWalk.adoc |   2 +-
+ Documentation/git.adoc               |   2 +-
+ Documentation/gitcore-tutorial.adoc  |   1 -
+ Documentation/gitcvs-migration.adoc  |   2 +-
+ Documentation/gitglossary.adoc       |   1 -
+ Documentation/gittutorial-2.adoc     | 422 +--------------------------
+ Documentation/gittutorial.adoc       |  23 +-
+ command-list.txt                     |   1 -
+ po/bg.po                             |   3 -
+ po/ca.po                             |   4 -
+ po/de.po                             |   3 -
+ po/el.po                             |   4 -
+ po/es.po                             |   3 -
+ po/fr.po                             |   3 -
+ po/ga.po                             |   3 -
+ po/id.po                             |   3 -
+ po/it.po                             |   4 -
+ po/ko.po                             |   3 -
+ po/pl.po                             |   3 -
+ po/pt_PT.po                          |   4 -
+ po/ru.po                             |   3 -
+ po/sv.po                             |   3 -
+ po/tr.po                             |   3 -
+ po/uk.po                             |   3 -
+ po/vi.po                             |   3 -
+ po/zh_CN.po                          |   4 -
+ po/zh_TW.po                          |   4 -
+ 27 files changed, 14 insertions(+), 503 deletions(-)
 
-Hmm, interesting. We need to grab the effective URL anyway in order to
-actually do the base-url update. But in theory we could replace the "did
-we redirect at all" early return with a check of the redirect count. And
-indeed, the patch looks much cleaner (see below).
 
-But sadly, it doesn't work! Curl reports that we did 1 redirect for the
-initial request. I think it is counting the extra request it does for
-the auth (we get a 401, then it auto-retries with the password to get a
-200).
-
-So we really do need to do our string-based check for "did the URL
-meaningfully change", and all of the annoying cred-stripping that comes
-with it.
-
-Too bad, because your solution looks much nicer. ;)
-
----
-diff --git a/http.c b/http.c
-index c8fcfd7693..e95fe4ba7b 100644
---- a/http.c
-+++ b/http.c
-@@ -2305,6 +2305,9 @@ static int http_request(const char *url,
- 		strbuf_release(&raw);
- 	}
- 
-+	curl_easy_getinfo(slot->curl, CURLINFO_REDIRECT_COUNT,
-+			  &options->redirects);
-+
- 	if (options->effective_url)
- 		curlinfo_strbuf(slot->curl, CURLINFO_EFFECTIVE_URL,
- 				options->effective_url);
-@@ -2325,8 +2328,6 @@ static int http_request(const char *url,
-  * The "got" parameter is the URL that curl reported to us as where we ended
-  * up.
-  *
-- * Returns 1 if we updated the base url, 0 otherwise.
-- *
-  * Our basic strategy is to compare "base" and "asked" to find the bits
-  * specific to our request. We then strip those bits off of "got" to yield the
-  * new base. So for example, if our base is "http://example.com/foo.git",
-@@ -2340,16 +2341,13 @@ static int http_request(const char *url,
-  * scheme is unlikely to represent a real git repository, and failing to
-  * rewrite the base opens options for malicious redirects to do funny things.
-  */
--static int update_url_from_redirect(struct strbuf *base,
--				    const char *asked,
--				    const struct strbuf *got)
-+static void update_url_from_redirect(struct strbuf *base,
-+				     const char *asked,
-+				     const struct strbuf *got)
- {
- 	const char *tail;
- 	size_t new_len;
- 
--	if (!strcmp(asked, got->buf))
--		return 0;
--
- 	if (!skip_prefix(asked, base->buf, &tail))
- 		BUG("update_url_from_redirect: %s is not a superset of %s",
- 		    asked, base->buf);
-@@ -2363,8 +2361,6 @@ static int update_url_from_redirect(struct strbuf *base,
- 
- 	strbuf_reset(base);
- 	strbuf_add(base, got->buf, new_len);
--
--	return 1;
- }
- 
- /*
-@@ -2426,12 +2422,12 @@ static int http_request_recoverable(const char *url,
- 	if (ret == HTTP_RATE_LIMITED && !http_max_retries)
- 		return HTTP_ERROR;
- 
--	if (options->effective_url && options->base_url) {
--		if (update_url_from_redirect(options->base_url,
--					     url, options->effective_url)) {
--			credential_from_url(&http_auth, options->base_url->buf);
--			url = options->effective_url->buf;
--		}
-+	if (options->redirects > 0 &&
-+	    options->effective_url && options->base_url) {
-+		update_url_from_redirect(options->base_url, url,
-+					 options->effective_url);
-+		credential_from_url(&http_auth, options->base_url->buf);
-+		url = options->effective_url->buf;
- 	}
- 
- 	while ((ret == HTTP_REAUTH && --i) ||
-diff --git a/http.h b/http.h
-index 729c51904d..79cd0a2c1a 100644
---- a/http.h
-+++ b/http.h
-@@ -171,6 +171,12 @@ struct http_get_options {
- 	 * libcurl 7.66.0 or later), or -1 if no such header was present.
- 	 */
- 	long retry_after;
-+
-+	/*
-+	 * After a request completes, contains the number of redirects reported
-+	 * by curl.
-+	 */
-+	long redirects;
- };
- 
- /* Return values for http_get_*() */
+base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2241%2Fjvns%2Fdelete-tutorial2-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2241/jvns/delete-tutorial2-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2241
+-- 
+gitgitgadget
