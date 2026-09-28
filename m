@@ -1,214 +1,128 @@
-Received: from mail-qk2-f38.google.com (mail-qk2-f38.google.com [74.125.230.230])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9783BCD1A
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 18:54:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.230
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1F8498917
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 19:01:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790621703; cv=none; b=A5+7m6dw9wlj9EUReUeBC8bOnMKjQ2Tfs/K5Q95DIJEOf5sjhwje/kqjT3Bo5wZ13EaJ56ttFkcna/v2+B2QSQ4Jvr7yCwFv5gKGf1lhsiJzDneOB1ca37rgNKeSkpg7YMLVkTjoIK980NrlyK61cYB7UTSAmDpUFfQrxXBR9cs=
+	t=1790622114; cv=none; b=rID7IrZ71OqHgqvr33Lhuq6grWo+uR61+QuPGCKQajdYaXfumTq3L7KowqEk0ME/1pSa8mOfzbZ6gPHrUQbnhyhR97SU7AluuHPog2Bn+B06nTbFdiCDypsUwCC5N+5Yw4bLGr0MKDaOI4SZ1UI6hEiphYZ8ZJzG4HI8f15OFMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790621703; c=relaxed/simple;
-	bh=qbiWE9203B2LGXIhCHZ6M03pPYvZwztSV48QpXIa0H0=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=CE9KbikCtxWwzR9Z6gnpO8EjxyvChCOESE0AFtZNh2LNZDqyM+pGGkPAS8mTJsg2b81jqT0YjymBUYqym6ZZoSU2LfaLOGh3xyq3kWBviaBWRLrPa6b4KCyK4rntLax98TasBE9n7/MRb6Fvc95/Q7o/0eKAR3hQ4daqfl4Isq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b1jEOLd4; arc=none smtp.client-ip=74.125.230.230
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790622114; c=relaxed/simple;
+	bh=l3jRmOCTCm6jfxgznfKYV4DLS62BE5OirQoVMSfJleU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XqX4IdjOjNajstaQWSTTYI0Vb71b9/uX5cBowUy8GjnsGtE4V7Kj1Os55KbzTcVNntpU23E6muz2HBHmsf8vAcAcL2FP0BdwM6gAreI/KmnO3PbNOXMdSaYea6I2DMj+UtB0VDe0BR4twiInlePqsch+pdiWB4k/T37sMB4qTP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gbe5GrnB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EUeT6kZ0; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b1jEOLd4"
-Received: by mail-qk2-f38.google.com with SMTP id d75a77b69052e-53336049862so15566001cf.3
-        for <git@vger.kernel.org>; Mon, 28 Sep 2026 11:54:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790621697; x=1791226497; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=2Sf9S4LQxos0qTSB5PCL6N+RyYim9O4JWrapri5LjsI=;
-        b=b1jEOLd4RKin5RDrijxHXUeBGoCLmrMo84HOEFYAHGTzQa/w0jqm/tm7C0t6PwlUK+
-         XGONW1s6XDKqvtrR0ht0KYH0u1cahN2Y7rsgJGY12uYYSwS2RrdZZmQgx9zieyGTPL83
-         GSDtRVHPv0FWbg8IY9SirEiCfjKTeygzOjpFYk60YO+yDUQSy9UNc0dWH9tNi7LaBf+7
-         IREEchvUaa3hwqpwnnQuT42vAbQHFp4Pof5ibTuFRvpEkL9j96j3yEXLId/vrMKCgyE7
-         yAmbin5zzbm2/MZeaYiUQa7H/f3dhf36iu8BPdvPhZwQCDiQlbdXMA+kv/mNbNPKmVoD
-         FU4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790621697; x=1791226497;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=2Sf9S4LQxos0qTSB5PCL6N+RyYim9O4JWrapri5LjsI=;
-        b=ZIQdFDtdJdv+UhVsHnZ8v74rpGZfpg42Vp6YP9Xqj5pCjSj95s7uPA9kinctrLY6YL
-         jV6uV5lJI9jbAzEUpV+CZizRgPFIYetphd5Iodl/14jyiuqa+Gmg4gJqGgEBHwmsGIlF
-         5TtM4Dxr7ye3syFvNYsyXsFgX57WHlNPkPiOMLiJS6yWNI7PcoPMDW8Am/hJw2FBT+/b
-         96Cyqi/HZEl8+oTTra3SiMtefBbTAYQs4MhSf81uAMyTjKRFxxOddru0ZgK87u3Ky9BN
-         MReBqiho22d8eIu4U1YIARcty4rCe3mad6Wy76iuyuJzYC7OPAyQ7srMTf7Gfsd4QSkQ
-         /DfQ==
-X-Gm-Message-State: AFuF++kTHIVHKWhSdo45KLatIKI+zwFjZQ8olV05UZpo66N91Rrz7+lB
-	vCbgsGPZ8n5vfnU2DEzssjwCdjSpaWwjlc8CM3xKYHIamdlruW6c0A1MMrLDFQ==
-X-Gm-Gg: AYBFou1VSA3mlIymcq7ML1P8ydWRgntPqbB6hMo4Mk3Fhhfh4BfsXE2D6j/si+ssjtg
-	f/HKAaqmjscYJHckJdH9yT3nPtkHDd+b3Rwb6cZ4s2ekn0T92vGMHQvZvZpDh91PswI8WAlSJhR
-	OmaZJFfA7dgf0jSo8cM2ARwebUE8ejIoyjDq8Cu3G/p+D57af17lXsNtgWe1i1C8PJpr25gUzUN
-	bIC+OQw0tSqh+xUq081lbTAmcIpqh9xdg7HlG8XEJQItAMVRLPg6e6u4zoQFugdhqT5O78r1qew
-	wBH/sS5Lf9K58m2fgDv0q6EFrvUBijnDSFwbkUCjg7e3v2yrQ5Dik73kySD5T7aMIREptuvPBQZ
-	AzH34/+CshrWIvxz5DRn7jNQZMNooEfBIgEXkB7jYAtuZCEnhM8QYoDgd3MbjpOhnjHCda8aYj1
-	580NP5LkiJ0qnagiu2JIAajDg+w2mChgjPFf1zscUsEiRo8ad50ZDL7AbAC7nxmOPulbKUfaM4b
-	9ldX+yxuUBuFQo=
-X-Received: by 2002:a05:620a:4492:b0:939:2c5c:7977 with SMTP id af79cd13be357-93c43c75a3emr2253356585a.20.1790621695598;
-        Mon, 28 Sep 2026 11:54:55 -0700 (PDT)
-Received: from [127.0.0.1] ([172.203.213.92])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93c813dca59sm217177285a.22.2026.09.28.11.54.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2026 11:54:55 -0700 (PDT)
-Message-Id: <46e13a6e77f0c1c23a0dfe6183e8c3dac405da89.1790621693.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2419.v2.git.git.1790621693.gitgitgadget@gmail.com>
-References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
-	<pull.2419.v2.git.git.1790621693.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 28 Sep 2026 18:54:52 +0000
-Subject: [PATCH v2 1/2] ci: annotate leaks and stop a leak-sanitizer script at
- its first failure
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gbe5GrnB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EUeT6kZ0"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B7E0B7A0053;
+	Mon, 28 Sep 2026 15:01:51 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Mon, 28 Sep 2026 15:01:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790622111; x=1790708511; bh=Xj1X6lff0N
+	nt+rzO/eR/59uy8jHIKVs9dwvDmuq5ngE=; b=Gbe5GrnBWG0bxFPu8tVSuz55Cn
+	EnZIs+jZpy7RfwP5o2WmmTfj7FakGsX9P0VkL/zAxL852w4ljW5/t47fNDQXKP2i
+	dAO5XWi22Yal63wBWfnj9VYuK5Gsp9PZSCw6W9d5sMoc1GxDdA07WNbVO0YtyWvC
+	Ywfmt7SsXfedi67dEPrWEd0YA5p4O12wNgkeJR/PnDMuVwxp/1YmNDw2uAl/vMn8
+	up7s4fqWnfEaoZDR7xKXZtetz5vYZyb2/aXMEfmYUr/l4P76zcRqfnIBvhyesPUF
+	0M4Em5wEJiT5+6Q8fpttEIYS4WtOdk9aTBQCQUpQrZdqBnFLhNCxPhVAUQyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790622111; x=1790708511; bh=Xj1X6lff0Nnt+rzO/eR/59uy8jHIKVs9dwv
+	Dmuq5ngE=; b=EUeT6kZ0nszn7vN3lRbN0OrePLn64fiRmxIn8yfdq1dzpz5xrI0
+	zxWhpKJ4AOKMuaBJMbc4siU3givr3i+J3Rt65gGcdZb3wEgcu291KOsWHtUmX6sq
+	w5gJZrzYITan0dYTplZfi6yTfBRv6Ly7NF8v7GjVJO6YfXL/mVIBCSiN7pQBNZA7
+	k5xkza/dmAd8T3wA5kx5Mfh3jVTjT6jvdkveV0+mXxat2OPl/xIq1qlB29OvH5mH
+	wsbFJTcVHGpy6TiEC5IWw/uhhnO87/d2B5yzaWZJuwwjUszUgEw4q7pAGtp6WQIl
+	O1D8cdziGHh+i4lVLJyY1D2t6HcyZW9wCXQ==
+X-ME-Sender: <xms:n7m6aj7Wkw_422OQY336kEmHuC4tddHdKvdMzMdRylYr1SC3KBmLAg>
+    <xme:n7m6arLwY7jKrlbWTEw8HLXyEMQW3eom0utJeSofDR1MeyLLHTNL0rIrt3u-BjEmq
+    0_vkb9J23gmzsfAk7K9tvKXpqup_Js7VQTOoNYYLwcwdLlXgoAY7Og>
+X-ME-Received: <xmr:n7m6astDKXgE2p7CFOEOGiv6Fjnx5Rp1q-OlgyGYMcKzcmgZGSWXUFz6lfZE9A5pZqYxx5fgnjLHZZ3h46zoyY7Ol0D_NJ59NROE>
+X-ME-Proxy-Cause: dmFkZTGletcwF06gcTycrqXCU8AYQ5DsXKjfQ4crscVN0+KYROW1NZF205MLs0MjLXH2y3
+    ch/NbjOwxFyKT83N4GzhnwHPPinI75+M56jDoLx3e253HdAcpLiYbDnQgiY/f5DVvKFBzy
+    aHtCMMkNcwLpH2BZIcbBwjoUqGJgOGzuZS6JOE8/+N8Pc8IbLG+An0YVQpDf3R2QeMqPz1
+    eqJMHozFXbSR54DCNlMKJaZz9THNJFgl2zBnZPYGP011dXrud9Oo6s7RgIPrWvqt+NzWwU
+    nBvcDNYZ/a/SaxIAAXXV38YlSK0PZswezxA4KxhFjcjUo7LfzYsX0boLY1rVIowD1ly7hp
+    GtMVri7Gb9i1X0WSyFs0esIThrNHsM3sH4W0iFHZMPlH1w7smvwEXFMKFQ+Lece6kh/iHQ
+    CUPvJo22d5uRka9ALyMuB9wZaosUZZbkw4gcO8MKEmYU41Z/XpgfVZ14ZupwLm2ui3HPqC
+    eRJSe4kx1jRL8+E1mpbiXBd2GLGR8Z0ZvDlDA+8e9HF6HtZ2U2dwYzYYTjcX3EXN2kqulp
+    lyIMQUnYNBDvAflARiiaY2iH3Bqi0U3HOgWHP/g7FKM2z871pRovx1OZEg/u5OjCZLptpc
+    +tAvsxbN1wZlRr+tx7PunLpKbjcaC9L/H6HcT7uCWkk30oOdktcAcJr6/qWg
+X-ME-Proxy: <xmx:n7m6aqKtTVRBQl4wPI9_cMOqkq2HmpMkqq04CkRKmMJLH2kP3S-VQQ>
+    <xmx:n7m6al9OH4SfuZ1VuTUf1tIE530L4VC0GVRIdtBPQ-ZIaaJ9F1dg8g>
+    <xmx:n7m6ajwYn1X32nW56Z9zKL6JvqxGyQDkkXgIeOmZjwk34GbUJ-JilQ>
+    <xmx:n7m6ai6VrTfEnG7rK9w-IpETzIdor80HpJhSwwEAaSANMD00welFQQ>
+    <xmx:n7m6asWfUHiVXqY7ETa1c8XomCuUZXumztqFvYYwkSr_p6--CEIT5KUK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Sep 2026 15:01:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Matthias Goergens <matthias.goergens@gmail.com>
+Cc: git@vger.kernel.org,  Niklas Cassel <cassel@kernel.org>,  Bence
+ Ferdinandy <bence@ferdinandy.com>,  Philip Oakley <philipoakley@iee.org>,
+  =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] doc: clarify that set-head does not change the remote's
+ HEAD
+In-Reply-To: <20260927055040.2441925-1-matthias.goergens@gmail.com> (Matthias
+	Goergens's message of "Sun, 27 Sep 2026 13:50:40 +0800")
+References: <20260927055040.2441925-1-matthias.goergens@gmail.com>
+Date: Mon, 28 Sep 2026 12:01:49 -0700
+Message-ID: <xmqq4if9mc82.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Ben Knoble <ben.knoble@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Matthias Goergens <matthias.goergens@gmail.com> writes:
 
-A leak is only discovered once, at the end of a whole script, well
-after every test has already reported ok, and it gets no annotation at
-all, so a leak-sanitizer job's only visible failure is:
+> `git remote set-head <name> <branch>` never changes the remote
+> repository's own `HEAD`, i.e. the branch that a fresh `git clone` of
+> that remote checks out; every change it makes is local.
 
-    Process completed with exit code 1.
+This is true, but the local nature of the command is not limited to
+set-head.
 
-Give a leak its own annotation. Point it at the test script, the exact
-line isn't known, only which script the leak turned up in, and put the
-full sanitizer report in a log group next to it, so it stays visible
-and isn't capped to a handful of lines.
+Adding a new 5 line paragraph specifically to the description of the
+`set-head` command may be an improvement, but I wonder if we should
+tell the readers that anything and everything done via "git remote"
+affects the local repository, not the remote one, as the very first
+thing in the manual page.  That way, we do not have to say that
+'remote prune' only prunes remote-tracking branches and does not run
+any pruning command on the remote repository, for example.
 
-Once a script has one leak, it keeps running: the sanitizer log
-directory is never cleared between tests, so every later test in the
-same script sees the same leftover log entries and also reports "not
-ok", burying the one real failure in copies of itself. Stop a
-leak-sanitizer script at its first failure with --immediate instead.
+Thanks.
 
-A failing test already gets its own annotation once its script
-finishes, but --immediate exits as soon as that test fails, before
-reaching the code that writes it. Write the annotation first, so
-turning on --immediate here does not silently drop it.
-
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- ci/lib.sh                            |  1 +
- t/test-lib-github-workflow-markup.sh | 16 ++++++++++++++++
- t/test-lib.sh                        | 21 +++++++++++++--------
- 3 files changed, 30 insertions(+), 8 deletions(-)
-
-diff --git a/ci/lib.sh b/ci/lib.sh
-index c6ccbf8c17..a89f480a78 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -382,6 +382,7 @@ linux-leaks|linux-reftable-leaks)
- 	export NO_CVS_TESTS=LetsSaveSomeTime
- 	export NO_SVN_TESTS=LetsSaveSomeTime
- 	export NO_P4_TESTS=LetsSaveSomeTime
-+	GIT_TEST_OPTS="$GIT_TEST_OPTS --immediate"
- 	;;
- linux-asan-ubsan)
- 	export SANITIZE=address,undefined
-diff --git a/t/test-lib-github-workflow-markup.sh b/t/test-lib-github-workflow-markup.sh
-index fa29a62aa3..0d54496358 100644
---- a/t/test-lib-github-workflow-markup.sh
-+++ b/t/test-lib-github-workflow-markup.sh
-@@ -28,6 +28,11 @@ start_test_output () {
- 	github_markup_output="${GIT_TEST_TEE_OUTPUT_FILE%.out}.markup"
- 	>$github_markup_output
- 	GIT_TEST_TEE_OFFSET=0
-+	github_markup_script_name=${0##*/}
-+}
-+
-+github_annotation_ () {
-+	echo >>$github_markup_output "::$1 file=$2,line=$3::$4"
- }
- 
- # No need to override start_test_case_output
-@@ -53,4 +58,15 @@ finalize_test_case_output () {
- 	echo >>$github_markup_output "::endgroup::"
- }
- 
-+finalize_test_leak_output () {
-+	# The exact line the leak turned up on isn't known, only the script,
-+	# so point at line 1.
-+	github_annotation_ error "t/$github_markup_script_name" 1 \
-+		"memory leak logged in $this_test"
-+
-+	echo >>$github_markup_output "::group::leak: $this_test.$test_count"
-+	cat "$TEST_RESULTS_SAN_FILE".* >>$github_markup_output
-+	echo >>$github_markup_output "::endgroup::"
-+}
-+
- # No need to override finalize_test_output
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 1f0505e412..3552a19323 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -199,6 +199,7 @@ mark_option_requires_arg () {
- start_test_output () { :; }
- start_test_case_output () { :; }
- finalize_test_case_output () { :; }
-+finalize_test_leak_output () { :; }
- finalize_test_output () { :; }
- 
- parse_option () {
-@@ -822,20 +823,23 @@ test_failure_ () {
- 	say_color error "not ok $test_count - ${pfx:+$pfx }$1"
- 	shift
- 	printf '%s\n' "$*" | sed -e 's/^/#	/'
-+	if test -n "$immediate" && test -n "$invert_exit_code"
-+	then
-+		say_color error "1..$test_count"
-+		finalize_test_output
-+		_invert_exit_code_failure_end_blurb
-+		GIT_EXIT_OK=t
-+		exit 0
-+	fi
-+	# Write the annotation before the --immediate exit paths below,
-+	# which call exit and would otherwise skip it.
-+	finalize_test_case_output failure "$failure_label" "$@"
- 	if test -n "$immediate"
- 	then
- 		say_color error "1..$test_count"
--		if test -n "$invert_exit_code"
--		then
--			finalize_test_output
--			_invert_exit_code_failure_end_blurb
--			GIT_EXIT_OK=t
--			exit 0
--		fi
- 		check_test_results_san_file_ "$test_failure"
- 		_error_exit
- 	fi
--	finalize_test_case_output failure "$failure_label" "$@"
- }
- 
- test_known_broken_ok_ () {
-@@ -1218,6 +1222,7 @@ check_test_results_san_file_ () {
- 		return
- 	fi &&
- 	say_color >&4 error "$(cat "$TEST_RESULTS_SAN_FILE".*)" &&
-+	finalize_test_leak_output &&
- 
- 	if test "$test_failure" = 0
- 	then
--- 
-gitgitgadget
-
+>  Documentation/git-remote.adoc | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/Documentation/git-remote.adoc b/Documentation/git-remote.adoc
+> index eaae30aa88..c9cf17e7bd 100644
+> --- a/Documentation/git-remote.adoc
+> +++ b/Documentation/git-remote.adoc
+> @@ -107,6 +107,12 @@ branch. For example, if the default branch for `origin` is set to
+>  `master`, then `origin` may be specified wherever you would normally
+>  specify `origin/master`.
+>  +
+> +This command does not change the remote repository's own `HEAD`, i.e.
+> +the branch that a fresh `git clone` of that remote will check out;
+> +every change it makes is local. Git provides no way to change a
+> +remote's own default branch from the client; how that is done depends
+> +on how the remote is hosted.
+> ++
+>  With `-d` or `--delete`, the symbolic ref `refs/remotes/<name>/HEAD` is deleted.
+>  +
+>  With `-a` or `--auto`, the remote is queried to determine its `HEAD`, then the
