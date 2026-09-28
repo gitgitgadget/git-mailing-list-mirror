@@ -1,83 +1,81 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0CE4CDDFB
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 14:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EF935C695
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 15:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790607061; cv=none; b=eYqvVfem6qYGJMTJ54CAtUqYKhl7+rrSnhn5EkM5/ap/XL+/U0cCxy9KZe4Pdg5yWtP8/zzH+X57U35PDxhP7Iy1PG7Z0LXoiTXf27pohkLCllg5Si90k/UF0ccf/hKbCcwZM9Kbb2o1q4mtM7j7dV60fAcSwrCF9xeazM0/9j8=
+	t=1790607640; cv=none; b=j6JwSVx1fNINZQd8Vwv15ZoPMhuwkP6qjWT5NgyMx87bgOvHxGcyZrF8fLuQiP4tBGkQmCCkrSxp3c9wbUCWectd+18nc4djeOOpfkAvihld+Ij4Qcn2Z8LYxgPomJMct2MqEp1BlYd064ODg18xl8NX1IcKgOREZg/PFcf91kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790607061; c=relaxed/simple;
-	bh=bGY3gdsGTUE7OwGfIeNK8qw17bjTKCfIRiEIZuHVnKM=;
+	s=arc-20240116; t=1790607640; c=relaxed/simple;
+	bh=HYU6XC0ce2vRzo/+8Yf80sjIfR2q/nz293fJ3+7BAbk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gjptey2tgdrHU3smsGaK5T5NGNVdINHgIyZUnNq8evI+77h2ohz2ZDkpbWOit+Fn8YpBx+MeBdyLAHUl+fALNvCr0JKz5Clbq9dFW6JZP4pOGg1p5TbAU9stILD5JuMTwAMJfb8Fe1Ti0sA0NfnVZsmUf7x7R9cYdJl5ErESMDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bCRRBlRH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uJVLzqDq; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=cbEvhIBHI2MqtYS/GulrXqgfOeJiQQ1ApRIaO4H1KE7XbzLZkUsBOl6sndrS8J/RR1qud2LT5lRrztHbshBSxN/GEpYn0MUOpzuf0plaR5/897p4R4jRdg5iOjwrO0wA0KERbdWGDjVbXnPnNjdyQ2OTjr8OQ4kmk+JaEfsYH/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HPuBHW5v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=okogAxRt; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bCRRBlRH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uJVLzqDq"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 79B6514000FC;
-	Mon, 28 Sep 2026 10:50:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HPuBHW5v";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="okogAxRt"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5E1C21400120;
+	Mon, 28 Sep 2026 11:00:38 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 28 Sep 2026 10:50:59 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 28 Sep 2026 11:00:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790607059; x=1790693459; bh=uUWfEzvx9B
-	dOwC9H5H4FmurZJJq/k4/d3VozJx4hKuU=; b=bCRRBlRHjI9EzsTIIx2QK+6ATY
-	XPSKIFeNVI0s4EdDGJZD4mz5IrWOBbJiJOiHASRO8sCCjh/1RcUTxnwwNY5NddBw
-	ImCLQRZNOapdConof+iBFfn5FfqcMxY9RGb0eHmrKFcwnyByzkLK8YF5lw0Ux/4v
-	TiNBg8jWMLnCzmRrIXFR2ZxZMQI7VmxYnpDDaKuHAzUUfr3NfwEB/X3CPOynzouq
-	kdwyVvfb7kqENReNPftMku8AsfyBj1A3kMFhjM34/pKQY/hVAoCStjiWC5cgEFPZ
-	PoE4lEpzPTNTfl6NYvqjk6ilvOSRZcg0rv7Bf9txmfUbTO5KNb2zI4su58Lw==
+	:subject:to:to; s=fm3; t=1790607638; x=1790694038; bh=V4adR8jdbd
+	rmtCIYcnKT3VvXAGYZHlKc8TZueg/Iq2s=; b=HPuBHW5vxsemReynE7xTb/o555
+	FCqeiIEUmASXLF8xaoGMci//VZaGcXCO8suuvffu1xMbZN5bSjAY5ogbMOv8Q06S
+	8nn0z9cSnY117QY4JapqAx/kuygvk4h9EVRIqzpMn4/IFWwN2fhAR0RLoteFhb/o
+	4Msl8tCBGT6YxFrFAxfyBAIAwqwdpetVB5HBr/IfNAJ/qNotRToctKZ9zKh9dQT6
+	HIJeCWr/bpSzDxLy+4VxmoGtC6C/4YIGA5oauWAuGESx1jmoqAg/6Jl7iDq9a9cS
+	4eBGpmKYuu0OZaXc2FVDqTVyxD9d9aX9MBW4YXZjj2xg8onUDseo8t341+cQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790607059; x=1790693459; bh=uUWfEzvx9BdOwC9H5H4FmurZJJq/k4/d3Vo
-	zJx4hKuU=; b=uJVLzqDqTWrJYd1jeUM1xTQaf34gl3Y1YlYO9LA3YT0AHkVW24q
-	BZCKt4CSHtf1EOXIyRDyCIXa4aJwhAftOmv0GlXY8TFbq5/V/18/i2MFWacoVLj7
-	4bBg4DLAKoMqG5vG/xjc7TREyGPibZUY/1dqH0fxcMih1UvC5g7OH5OkefH0zYlh
-	3PaEQXbK7Q12FoT5EzZm0NisKzp4/xRYqBlr9aU2dzFW4awaJagsFc29DR9GwVR1
-	Zv5dx8p1iuZEFD3s21m2Hk2LrBCsGlHeYQWNUBenX5qRquDTgNAJflGi1wqd2lBF
-	Krd8y2k3xWnADjIgMiQKk08SfPkvsKveLJg==
-X-ME-Sender: <xms:0366anOU4aCq7X0WTRuR4jcx9BfN3i1tBSXQ6veXclxUlBN3EwRJvA>
-    <xme:0366alrI4LbLO1SfSAIc4W4ZUQpBW1MqptOBuUu_CqvKDex7MjUJO9bqaZG-L37Sd
-    hmGNQVNyUcLCZuY5rqlsiWebnrJOwrmjlZhauC4iDrAUwd511DAjZU>
-X-ME-Received: <xmr:0366agGFcdlCa8Nj9chvo_6hgWNouTGJAN5FKi_dLkBY7Efadx_swOsPEk8FkL-kiKFEayfhhwOYYcv7iKayv8EeUZCVHu0K3Qk6>
-X-ME-Proxy-Cause: dmFkZTG4Epeg1Q4wpx1bpeS/npMe3Js+cFCFt9aOICC5LkAMIfM77alEcshiD3NOiOGbNQ
-    CJtEzgdtjdt4SZaMMFJ7N/5LP/I1JDquqFzB6mKFpPEzc2ScuGX1aGZ0TSvptmT9Ee7f2E
-    aJe0dBdDBJcJik+IlS9HPad3QdEoOwvlq4WHerx4O5v2sZInawGRIwB4c1sjZYjAT67EtK
-    6CC3Lx/Mx4e96GmPi1aLmC+QGqTPWmtKMrl7oW526VZr3Z+aqDdSeSCcbzOZAC9l7xzb0Z
-    keHtLMLceeIED+rDOBROb6g88+e1LuBZnBMJmrq+DhmJo1hOIefIoDnqzBv+1XdmB1gHbU
-    BhBuV6jkqIbEapDDqRoWPsBnVCXxYNTU1qlwHfff29F+r/NCYio7UGlFX9aD5uCKVAQVub
-    FGJKG+Y7i1/TqR5rT8TbbcF3xxJHyFfXbCAeHjD5KqW2iMmjUrM4Liv+HlA0v1E5ogQHeR
-    SwH0R84BsuzTfF9uoXt4beV4JCouTq5Q/SzYUHs/RLVBHCJ7ggiihc7fSvilz57Kk9tcmg
-    sP2yA3xiABfnY51DX1DceHWjczgtAESbQJN+Hq/GIFIt4vPRsc4A6vs0Pbr7IViMrtDpJN
-    ipbJonXlKfFhgAOMai3kCGT+CzJdMCEnjWrC1u9Hew1VtP5bBv0wGSQOsBMw
-X-ME-Proxy: <xmx:0366air3rfED-Lru4SrIYaor4V8bNaoMpu-2Gh0_joVajaY4XTJFxw>
-    <xmx:0366ahbIT-Bse7K7bq3_ZkB1PuRPuDYMn02w2ZEsj7PSsA0nQ5TiBw>
-    <xmx:0366ajUUNEdvbXopEX6-n2XJn-UM83G-MFMEU_xr-ComqTAmlB6wgQ>
-    <xmx:0366ai-vOMA5R-LU2_dOn_X5q22A-CNWXKi8186AQqOvAwcTyXEwDA>
-    <xmx:0366aoITxTnIkVzMOnBd4tTKK_1PeA-p84QVElNc1mxcIozfYhxqIWJq>
+	1790607638; x=1790694038; bh=V4adR8jdbdrmtCIYcnKT3VvXAGYZHlKc8TZ
+	ueg/Iq2s=; b=okogAxRthj/idUJ0lT6xS81jbGiUEwQWL8wGX5SdJyUOuixriME
+	gkS3QjtqQ3fsYyw+stXfdVrtW55QImpm2EcyhJjYMMnbntbFyBPU9sxDfYAZMJy0
+	qPxffpcwypNxa/qdWRCa7DMO3qCo/QEAlI8cHCCxGdMcY4ATFQDMtsE7CDwHmwfC
+	vnP9C2KLSP8Xt/4tT5GWY+Yvswc+/Zo/PFWDy9SFe/XucgydLQAGWcpDkCdWv31N
+	b9gWaxaC0W10XnU+rbuK5MmBf6x5MQ5j9MI3NETi1boPToYdWKEU53BcZBX0BhIB
+	8anPzKLSB5LY1+q5aIcEv4JmrmFtcVi4gdg==
+X-ME-Sender: <xms:FoG6atuOl-fd3Z73a14oPrOPSNDCU6ZcCdqOYgzYZnJ4LijddKs5Rg>
+    <xme:FoG6atdV88TzmKGUXXo2lb83ZQTz7ptI18J3vW2CpnvWDsOqKd0NpIvWyWrR_CwCt
+    hvnV2wqzMuV-On12Ik_6jvRmvRyCGkNmWHbrGlnrgo3eSk3CeiO>
+X-ME-Received: <xmr:FoG6alzE2HzHahDWCDqAYImDR_KHsTarNnV16t0GaCQgEAYYlZMV1NHRUaE7aahrSho5A-67i4JOZl4YKisG29qYWHrvDFw7EAT9>
+X-ME-Proxy-Cause: dmFkZTEzWDde9sGX8y8dWjT1J1HakCTyAdEMMT0Kj7YvQt9pbBB8SWPCjeEekAmPSdhkmG
+    7GZ/TDwzZfNqr/RtAs5ludE5mBWGwIGqk0Q5islDQLN1wXpJLjBp8NjVqNHE6oDO5KwQNm
+    0a2SswizBhyzNVaOuZpTcBSWWPdx0+RSVxX6hYLYEKtCgDX/MM7nusarbo8q/8vOd/0EuD
+    OGDJO49mjP1L6M+Xt7Yjk+TLWUCBtjpxmF5bnJt5c/ggVd7OLRQjSZyJJ/E+OU3hNDVvOs
+    oOZb7WLR/mBL8kQ82n+Yyq3sAo9bExUirAa4FSaiBgK1fh/ZUQ+oeAbzJZcsjT81zWWpin
+    J2NEqn7C25DBgHFCZfFKAzIGGdSqotjnwJz+M5POy5lyu+H8e8bMeyg5NPEsfqcVB4e2O/
+    2qYXAdHHdE9GV8zcDAgqaR5qXYK4v2nru/un6WsRL3+CRticxgaetpgpLu3tOxjhJZrF99
+    NQv7VS/ee4/gG4ji0Q5Fxm/F7jR5dD/mVYWupyHOwpJl5QLeZJ+Jpcvkf6hN1L08o8DJ+W
+    5dG4S8U+Mx0zlbEm11FqaBPeSkiXDO56daSeuNQpVodjqbfDr3/gNtr/GTJDZ7qNLJlEZI
+    pPnrvK62ZaN0FQbF3ydGodyeDL3rJ8taLv3yJwf8Db4IxWTTqlmFaHIE9OwQ
+X-ME-Proxy: <xmx:FoG6ajFRpo7vAj0NIYGMBAywuEye1mLALZm1l4S0-fbxW6npK2o3qw>
+    <xmx:FoG6apzNLy4K3qqluJKvwHag3zRTjJUCZIf9PuKFWDuYQzaVoL926Q>
+    <xmx:FoG6aksBe7-U8vFkkR38c-IOSLSCJ8nP2hSMt4Bq9thCgvz_2aU1Fw>
+    <xmx:FoG6am0CmM2YWH6w9woYUT5e0L8BJuHEfUVvCoW1VTrlmX4LsK05Ow>
+    <xmx:FoG6asaWm9dHLPnh9Rs4K-ZJvfIIVWUST0Kc3_vTbfz6dbru8H_k84Hl>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Sep 2026 10:50:58 -0400 (EDT)
+ 28 Sep 2026 11:00:37 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Pushkar Singh <pushkarkumarsingh1970@gmail.com>,  git@vger.kernel.org,
-  peff@peff.net,  r.norouzi@proton.me
-Subject: Re: [PATCH v3] reflog: fix default expiry periods
-In-Reply-To: <aroQ_zZvUXKKK7--@pks.im> (Patrick Steinhardt's message of "Mon,
-	28 Sep 2026 09:02:23 +0200")
-References: <20260923102140.25475-2-pushkarkumarsingh1970@gmail.com>
-	<20260924175843.8383-2-pushkarkumarsingh1970@gmail.com>
-	<aroQ_zZvUXKKK7--@pks.im>
-Date: Mon, 28 Sep 2026 07:50:57 -0700
-Message-ID: <xmqqy0clo2em.fsf@gitster.g>
+Cc: Souma <git@5ouma.me>,  git@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] history: sign rewritten commits
+In-Reply-To: <aroX94CD_kOyLnuW@pks.im> (Patrick Steinhardt's message of "Mon,
+	28 Sep 2026 09:32:07 +0200")
+References: <20260703145037.69832-1-git@5ouma.me>
+	<20260912160045.36064-3-git@5ouma.me> <aroX94CD_kOyLnuW@pks.im>
+Date: Mon, 28 Sep 2026 08:00:36 -0700
+Message-ID: <xmqqtsn9o1yj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,36 +87,29 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Thu, Sep 24, 2026 at 05:58:44PM +0000, Pushkar Singh wrote:
->> diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
->> index 8f78cf4b01..93b5b49e1d 100755
->> --- a/t/t1410-reflog.sh
->> +++ b/t/t1410-reflog.sh
->> @@ -153,6 +153,72 @@ test_expect_success 'reflog expire should not barf on an annotated tag' '
->>  	test_grep ! "error: [Oo]bject .* not a commit" err
->>  '
->>  
->> +test_expect_success 'reflog expire keeps reachable entries for 90 days' '
->> +	test_when_finished "rm -rf reachable-keep" &&
->> +	git init reachable-keep &&
->> +	(
->> +		cd reachable-keep &&
->> +		timestamp=$(test-tool date timestamp "60.days.ago") &&
+> On Sun, Sep 13, 2026 at 01:00:45AM +0900, Souma wrote:
+>> Add --gpg-sign/--no-gpg-sign support to git history and honor
+>> commit.gpgSign when creating replacement commits. Thread the selected
+>> signing key through direct rewrites and replayed descendants while
+>> preserving the original author identity.
+>> 
+>> Cover configuration, command-line precedence, explicit keys, split commits,
+>> and replayed descendants with GPG-gated tests.
 >
-> Nit: I would've preferred to make this 89 days...
-
-Dates calculated as 89 days ago from the beginning of today, from
-the end of today, and from this very minute can differ by almost 24
-hours.  Because we are not interested in testing what semantics
-approxidate() implements in test-tool date timestamp, but are
-testing what expiry period reflog expire implements between 30 and
-90 days, using numbers that are not too close to the edge spares us
-from having to worry about boundary cases we do not care about.
-
-So I wouldn't have preferred using 89 days there.
-
-> Other than that I'm happy with this patch, thanks!
+> This is much shorter now, which is good. One question to ask yourself
+> though is whether there's any subtleties in the changes you perform that
+> might want to be explained.
 >
-> Patrick
+> One such subtlety for example is that you reorder the calls to
+> `repo_config()`. It's obvious to me, but it may not be obvious to every
+> reviewer why you do that. Pointing out and explaining details like this
+> in a sentence or two is useful context.
 
-Thanks.
+Thanks for pointing this out.  It encouraged me to take a peek into
+the area in the patch ;-).
+
+> Other than these nits about the commit message I'm happy with this
+> series as-is. I won't insist on a reroll, but wouldn't mind if you did.
+> Thanks!
+
+Thanks for writing, and thanks for reviewing.
