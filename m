@@ -1,139 +1,158 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4550C28686
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 15:38:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1CF413787
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 15:40:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790609934; cv=none; b=jA8nZQLSFbC9y5544DnlgFXQowv8kntTFAH2LibBq9GqtTr19YJXzt1rMjKltnnUw+gZpIXQ9UTBOde8oZvGezGPLheqlNCXmP3Vyl2rpdEafqABzr4HMT4SrXokYCBjsZnzlCEuWqOwGEPUzEXJ4FyqRjYq2v573eTHwIOzSmc=
+	t=1790610008; cv=none; b=l33sfB4TnI+CBIre8HPNOa/z0wFmBFZOUaZqzIncJcRE79L0dKwWs66qaTdFgmar0rwIq/PxKyz+O0E0CgjAR6QQbYIgiyDkDaN5D4XK6ghwdf8Uljki9CsRzTG0ex5pJZUjrk730gJu1N3tfZ8q8JQkyIyr9UZi6h1D+1ssKqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790609934; c=relaxed/simple;
-	bh=/XWuK6ZeMx12TeDQjdF5FhDl656/OXauuHCvt07OXjU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=s0CuTfVfu4e72FsgQ1rVqkiaqDVaIe4+sa5p5P0QwscgCZxcWN08DMvN9GTmcoLc0zzZ3uuYahwRr59zTv8pe9+peFZZW2N49XosECis/nc+SaxGGGUHb+RBVJ9Yf8PjdNe4MENWoPJF0LaQj/nmrdeNb8moXBPEltdZXhrUL48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NQevyrui; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Eh1hzi/2; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790610008; c=relaxed/simple;
+	bh=clkEvbmQeIPZ+5R1Yjd0bpZ+lQpLIefx3PlCpJyhaL4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qeOnsjubRrh9U0l9OF8TVgtBtp8BDy62Fx/u0wFVkSXJ76x9FDG+y98QOP3y4DkxDpudoxHeKkKvn8qmyIlFS/wemObdYkgNebPNGKAn8Q8onbfoch1EXI69ITPVjK+avzkUPmkl2A5g7iVshEysun6J6oUmwW+pypkzrTHu94s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RLxhJW/1; arc=none smtp.client-ip=74.125.225.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NQevyrui";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Eh1hzi/2"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1B6D714000E8;
-	Mon, 28 Sep 2026 11:38:51 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 28 Sep 2026 11:38:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1790609931;
-	 x=1790696331; bh=Pzk8WebP2/ee9exWoGbEwzvvb9l7QOLk0zQGBV1CsrE=; b=
-	NQevyruiJACVsYsVLnmVu/tFsuSrZC5KPZjzeIB0wfIcSsLmflgbCVQImu4ayCVx
-	bda7acGo7GX/NxPU9BRa4qDEEEIajs96Z62RAup5uCpg4xV1fXrNFWrCyVe6DCJc
-	xAWHYC1joObqDL7GavfvZHC1hPE5Mum2YS6rnHWKM4z9Z8/DpVjo24WkIbmaqBVW
-	rc6tUQDC4ON4vgtGbd477qIwodQOqN6lwD5JRdJG/OeSiTwH77JaqwDgVf35yWfV
-	hsos4pPjaai0V3bNKT3ZO4pBFUwQT+9j75obor4BX/b1M1wekHJqgi87Czgjc7tb
-	f9wHkrOIKKV0iBVnMKFJkg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790609931; x=
-	1790696331; bh=Pzk8WebP2/ee9exWoGbEwzvvb9l7QOLk0zQGBV1CsrE=; b=E
-	h1hzi/2EMaLT1bME5t1kyq3whW0PPQRUDuD8fN6VA0J1av2nZA04JN6xaeY52yH8
-	sX5MRREw96/R5mGsx/ZbdyH7PvVGzERZiGHQKX33OwVnD7ElBLSEyUIm9Otz8eXV
-	COshOTG41EI4pY951o9wNbvj3hQsHzPCy+nTsI+ZhNUvRTPmkmFxGZ1ZydalFFvq
-	oWr5OyrQ6YKp5KAEL62k4vH0R3/sdrrFBMhz7CCCRU1el9acGaItu4Z8aFMoyQgf
-	hO4h1s0qTyCZ3LS5jg1SC08j/dsnCBWPEr1fM8QUoXIlzaXNszCcKfeZpCxRZOtn
-	Hc9hyysw5eEeWF5VaOi6A==
-X-ME-Sender: <xms:Coq6av1c1p_OsovCNOkJm4efKDVLG4nPE55PsNohkcj6bn3UBkOx1w>
-    <xme:Coq6alGmOyiVHl3AACabPKMIjD2Maa3D2EgEyyokyauv_2ZLIqxeoTgzHg4GUKfJd
-    3-v6J1DnJhqhiP_0hmR4y5gmBMkEaJ3u8N3opmmfQ9RkuC68FApKyg>
-X-ME-Received: <xmr:Coq6ak6kaLck_PDiqBHN6Xq6yFTay0IEFW8QE150LHLKqsW4UZjwTVbRhTjQJVHOeIr-a3HtJmMkzsKQj6EgipgW3EOdPjfkbPOd>
-X-ME-Proxy-Cause: dmFkZTGGxtHliJ9QcxqqUsIcs0T3dtFhXcFvoxP7cLdOdM95Yiz62eZDwc3I6F1ZI0zc9m
-    TG2B6ckovLTB7gFaGoJTa4xrePW5kYee2XVoIZtK4+sVXHEdjHQpaHn3MyYOSowlZxXWHd
-    S2sFHjaBToCvCToLQiafPXVd9sqGpXQ4YsuZuyMWttNQdETr2YBe7dg4OwcePKWJo97pCm
-    glUJZqFf/i6fE72VNCaOEjhv7iQWME+toO8uCndWllCjbubBXx+E/XxPnvnhuXCRsZDaJt
-    Iij786c9tq9yuFmQmA8KgPYswT2UPBbSEKVzLo0GdnhKGvP6PPKat4TARI2Ztdvq6sEnTK
-    lBmv6iuFqVrfEx+wBTI3+/TKa6PBiaqnIc0no6aVYPxQmrkt1lKLOHbN54gOCCpRgB8tDn
-    gLJDuRVMqCq7hMciQbeItBOV2MdoAWiGtCfbbi6LL/8YTHEpsMf+cWaBDLZBkkYrEGf4Ws
-    jFOhZ7bWfpb5Q8fl8MAS6S78OR826+XXDqHC5g37jiklK17mLKpFZBbpya/msebTzj0+Jo
-    4wCFHz0iBYuL4YTPSZEDaZIcOxL+XcaxRT7oDujyhRRrHPbMzMDPMAStSYYIbJURVA1/Re
-    Oade+w7T3uQ6hJUplEmiLhMpNpBUsR79qLC9f84FZH6AMJ/1ux24kgx4O1ew
-X-ME-Proxy: <xmx:Coq6ajsXNBCDvzdOdJzfi4cCpmyC2L6445nzdIil0Ac8lFBSjrxxGA>
-    <xmx:C4q6at4bsvS9z3TTnHv5P3F_XDOFwBmm9elpi462JQFgTmSq0t4esw>
-    <xmx:C4q6amWfHbi70eO9udX-L2jTMXTmYJd7kQq96bwROtYodXydUB_KTg>
-    <xmx:C4q6an-v2BA7Kp9wrRqfh9cFf-4ZsNpZBJTCFvFxbzwbOrZFXsYFjw>
-    <xmx:C4q6arhXpN7p_zRVYM0hFJ7fcTMEFMQ8ENWE0Z_buN3x9xtJJewMOYyI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Sep 2026 11:38:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH] .mailmap: map Kristoffer H.
-In-Reply-To: <mmkh.cde@msgid.xyz> (kristofferhaugsbakk@fastmail.com's message
-	of "Sun, 27 Sep 2026 09:15:20 +0200")
-References: <mmkh.cde@msgid.xyz>
-Date: Mon, 28 Sep 2026 08:38:49 -0700
-Message-ID: <xmqqy0clmlme.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RLxhJW/1"
+Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49e7d2bb404so11334515e9.1
+        for <git@vger.kernel.org>; Mon, 28 Sep 2026 08:40:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790610004; x=1791214804; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=iU6X2S9y78ygrj1BJjCfgW2kUGB16wDvBUxWWbZ2hGg=;
+        b=RLxhJW/1WCuV7iATLhmdM7p6yB2RE4P1d9rntamEmOsGfW2PmCF2Zvr7GQyYeKVHkW
+         67YXXpTIYfTlNCMH586VKI3AW4Fplkms8pC4B+LUa/UbBYuAd4/DBnHsIp8e/IzYhjyg
+         aM5t8LszuGtE1eVj8HqNHUqABOTIWOlKUbAaTYGLjsKBfJYUhqQgwyO5hcTdG2MhSdk+
+         rAeIdt8zuZg3oreBnV43l221Fmp627oG9DnO05XzJ9bwedwetCs/FoSp++XvF8Qhamrs
+         dFQ4fwM91IFVkgrSHhJK1lExdhRX5by1vZeRmrFAUHN/K8cFmtfQrZpTQYrfeJbNLznz
+         IBMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790610004; x=1791214804;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=iU6X2S9y78ygrj1BJjCfgW2kUGB16wDvBUxWWbZ2hGg=;
+        b=sAAuhfnVdOuc3dEhFIZAs7xDw0ofvlVXCCXyTT1uqgg3GLSZToaLVIGS7HFLPmPLsA
+         HWoD45dL9AH4kAnoVNraUZGfxng+XxVWjgC37BZm+ypSi/gL3RbBsc0mTtKGWPlk7u4Z
+         lxd9xCZ8U+TsmXm6K3YeSO/hPvW5S+kX0ZsoiCad7kZBisak4Rz31tQr4PrZ1Gts5qiP
+         0Fi0rosHbysmFWXFipS61/yWXD24q9DnsigTH4Pwwf2gBLnBAYyhYod+6TObcy4ZuNHg
+         APspCkf27vMweDsFp5CWXofIr/EIIQctatmi3Voowl6ATMdeChVYAoivof6wi0fmfhzX
+         aUpQ==
+X-Forwarded-Encrypted: i=1; AKwUvBz0zhxdGlccG1aI9hsGD52q+BPICne+qjfZ0q0q1E8d3N6mUngb6iOHtzlCcIhm0ME7eRo=@vger.kernel.org
+X-Gm-Message-State: AFuF++mntms6/Gyh6eXrXoACC8c8vkn00HaQGFKuxahuucmDEIyaRVP+
+	mHE+vQDft6j4o2PwIyGidVpNpBJQCWbdCq/9VrIMzzFKBZ5v7XdF0+v9
+X-Gm-Gg: AYBFou0/JhWA5wRTkjIx+8uXzedShne1tNOhlUrIWtSafA8EH8SIdeX9cO5v8IX585c
+	LLY3wuN2/5R956b7Q+hWesehMLUxJoWYONWK/Sf3ylsplw+X69+cHil73gnlLqaDuPNtsmaUw1E
+	lLejbCMwDVTG90Rp5G2ssTyeRgRzT8wfHxQoaqxinB3e4wf5xMYGtAKK5KLebMfh0MQlyuz7QTC
+	5uL2Q1NWsh+O6r2g2HXw76dBqbLrhbcZFHTeqKn2Dh8yC7WDvxNCDG7rpVZCp8iwGNIur+zbfra
+	Q+iplXeNXPnKBgn/o/YjLyDTkPKMGbw72RqHdbNAsQrC05wIqePi798RmqOn8bcOSba4cOPyoK0
+	H2O8CBBtEJJT962pLaGy27OmjcFFtiv6V8in2ax2/eyTPY7zu31Zgd/G6zf2OWDwhlAZIoEHoy+
+	iIXa5h2NVAelcLbKP874gKeoTjDk2lN9tccjZcc4rC2VrRbjq53UXSRL52BX0XHYaC53EncSpyR
+	o0aEMqacGly48VH325Z62foIEzJKbF1AVUyqPRpQ7LhhuRBMn96EQ==
+X-Received: by 2002:a05:600c:1908:b0:49f:ffa2:1c72 with SMTP id 5b1f17b1804b1-49fffa2221emr99570485e9.11.1790610004018;
+        Mon, 28 Sep 2026 08:40:04 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a00571744csm80234935e9.13.2026.09.28.08.40.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Sep 2026 08:40:03 -0700 (PDT)
+Message-ID: <ef5e507f-9e26-4e7e-887a-403cf7f282a7@gmail.com>
+Date: Mon, 28 Sep 2026 16:40:02 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 0/5] stash: clean up index-mode test merge
+To: Thomas Bachem <mail@thomasbachem.com>, phillip.wood@dunelm.org.uk
+Cc: ben.knoble@gmail.com, gitster@pobox.com, git@vger.kernel.org,
+ eli@barzilay.org, ps@pks.im
+References: <cover.1790168285.git.ben.knoble@gmail.com>
+ <cover.1790425008.git.ben.knoble@gmail.com> <xmqqjyo6qz3z.fsf@gitster.g>
+ <346c4209-9600-4302-817f-e8f6b364ce6a@gmail.com>
+ <CALnO6CCXT1HHUwL8+eYGVL443nO0eoC7vhpoLvC3RXjp39XQYA@mail.gmail.com>
+ <CALnO6CDOo35HAfqn_h2CUUdux9LeOkjM8OdFLkkS1nVexijUvw@mail.gmail.com>
+ <CALnO6CAf491aNhqcb7K7YcNTSTNLAESmqeLwzEGk_S=ZsOjG9Q@mail.gmail.com>
+ <a59c4225-f093-4001-b77a-2083dfecce6e@gmail.com>
+ <CAA0xjtpzaWH10pHOQ5j-5Hp1yHEKTDFbsicG6E4w=5nxb_irWw@mail.gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CAA0xjtpzaWH10pHOQ5j-5Hp1yHEKTDFbsicG6E4w=5nxb_irWw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-kristofferhaugsbakk@fastmail.com writes:
+Hi Thomas
 
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->
-> Map my email addresses for Fastmail and Gmail. Fastmail has been used
-> for some trailers and Gmail for my first four commits.
->
-> The `code@` address is my canonical address here both for commits and
-> for trailers. I recently posted about that preference.[1] But I can do
-> more than state my preference, namely to make it possible to look up my
-> preferred name+email pair:
->
->     git check-mailmap 'Kristoffer Haugsbakk <kristoffer.haugsbakk@gmail.com>'
->
-> Which one can use as a trailer command via `trailer.<key-alias>.cmd`.
->
-> † 1: https://lore.kernel.org/git/add1abaa-5d51-43dc-9907-d6d3851004f5@app.fastmail.com/
->
-> That’s the only motivation for this change. The Gmail adddress is just
-> for completeness.
->
-> Although the proper long-term solution would be to fix my domain so that
-> Gmail doesn’t think it is suspicious anymore.
->
-> Assisted-by: GNU Emacs
+On 28/09/2026 15:50, Thomas Bachem wrote:
+> On Mon, Sep 28, 2026 at 3:45 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>> topic has changed something in one of the '--autostash' tests that come
+>> before the failing test triggers which the new behavior. What that
+>> something is I'm not sure; off the top of my head I'd expect the number
+>> of reflog entries in HEAD to be the same but maybe I'm missing
+>> something. Adding
+> 
+> It is eight entries fewer, and they come from the failed merges, not
+> from the autostash tests. "git merge" restores a dirty tree with
+> "stash apply --index --quiet",
 
-Is this an attempt to render use of Assisted-by trailers that we see
-more frequently these days less meaningful?  ;-)
+Thanks for tracking that down, I couldn't see where we'd be calling "git 
+stash apply" with "--index" but builtin/merge.c:restore_state() calls 
+"git stash apply --index --quiet" rather than calling one of the 
+autostash helper functions which do not use "--index".
 
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> and until Ben's series that spawned
+> "git reset --quiet --refresh", which writes "reset: moving to HEAD"
+> to the reflog. That happens eight times in t5520 before test 68.
 
-> ---
->  .mailmap | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/.mailmap b/.mailmap
-> index 29b48905327..3aec9edfd16 100644
-> --- a/.mailmap
-> +++ b/.mailmap
-> @@ -157,6 +157,8 @@ Kevin Leung <kevinlsk@gmail.com>
->  Kirill Smelkov <kirr@navytux.spb.ru> <kirr@landau.phys.spbu.ru>
->  Kirill Smelkov <kirr@navytux.spb.ru> <kirr@mns.spb.ru>
->  Knut Franke <Knut.Franke@gmx.de> <k.franke@science-computing.de>
-> +Kristoffer Haugsbakk <code@khaugsbakk.name> <kristofferhaugsbakk@fastmail.com>
-> +Kristoffer Haugsbakk <code@khaugsbakk.name> <kristoffer.haugsbakk@gmail.com>
->  Lars Doelle <lars.doelle@on-line ! de>
->  Lars Doelle <lars.doelle@on-line.de>
->  Lars Noschinski <lars@public.noschinski.de> <lars.noschinski@rwth-aachen.de>
->
-> base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
+That accounts for the difference in the number of reflog entries. It's 
+good to have an explanation for why we're expiring the reflog entries at 
+a slightly different time.
+
+Thanks
+
+Phillip
+> Auto maintenance expires reflogs once HEAD's reflog holds a hundred
+> entries that the policy would remove, the default of
+> maintenance.reflog-expire.auto, and after the first test_tick that is
+> every entry. Which run crosses the hundred depends on how many entries
+> and maintenance runs came before it. On 'seen' the expiry lands on
+> "git commit -m conflict" in test 68, before the fetch writes the entry.
+> Eight entries fewer move the crossing past that commit, and the
+> maintenance run my topic adds at the end of the rebase in test 68 is
+> the next one: after the fetch, before test 69 reads the reflog. Either
+> change alone leaves it somewhere harmless, and nothing else is going
+> on. The expiry is the usual 90 days applied to entries dated 2005, and
+> the only new thing is one more maintenance run per rebase, the same
+> one "git commit" and "git fetch" run.
+> 
+>> git config maintenance.reflog-expire.auto 0
+>>
+>> to the 'setup' test fixes the test failure, but it would be good to try
+>> and understand why this topic triggers the reflog to be expired in case
+>> there is something nasty happening that we've not thought of.
+> 
+> I'd pin the expiry itself instead, as ea7d894f44 (t34xx: don't expire
+> reflogs where it matters, 2026-02-24) did for the rebase tests:
+> 
+> git config set gc.reflogExpire never &&
+> git config set gc.reflogExpireUnreachable never &&
+> 
+> That covers a "git gc" as well, which expires reflogs on its own. With
+> it, 'seen' plus Ben's series passes t5520 here and no expiry runs
+> during the script at all. I sent it as a patch on master:
+> <pull.2243.git.1790606282769.gitgitgadget@gmail.com>
+> 
+> FWIW, any script that reads a reflog after a hundred HEAD updates can
+> fall into the same hole. I have not looked further than t5520.
+> 
+> Thomas
+
