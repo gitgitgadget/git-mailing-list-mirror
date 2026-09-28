@@ -1,131 +1,108 @@
-Received: from mail-yx2-f40.google.com (mail-yx2-f40.google.com [74.125.224.168])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB654CE67F
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 14:27:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.168
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790605657; cv=pass; b=mV+6hOfbhuYheNZwvzioZA7F6T4whTXUotAMmej8UAZlfDiSkg/8nQGK0MVzE6bZZCy5l7FC0TSb5IDO3UwYmJdoour6M/Qg0RsT+67k7NZ+TV1YD/tv/QGU7G2iHlEjGyu2qZu6mV4GPbIiwCyepB3ZMOpsrM6nP8QZWdf2+Cc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790605657; c=relaxed/simple;
-	bh=VGcmwdgJLCzG1rHMBf5EzX803HCZD1cceO6EZEMewPU=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=mj9LB3mO8KxMxKR0TU8IaulMJVOJXBSH49akOeDbI9Ujuk1HVmMyDp0zmclC8yIhGINc534Zpc6/5LmJhnwh0k5KgwTwNJ65mzLLE0E3LfVJlJefMHs1dMQUba2zVt1L3DFZ3Hg+7AOv35lO0qMqOMQ6uSanc9f1pUZH6OQwMpw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T73Lss/G; arc=pass smtp.client-ip=74.125.224.168
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CFA4E1C80
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 14:33:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790606021; cv=none; b=qFKzVz5nGM6/vQu8GtKIsesYqYIw52lDCsLyhS3MwJtbuuA6A0UpSTOGS00/gO2DJ9THSKND7MsCoc5yqjzmDMHUK5CcI305Mtt3naWs8zMfdLP2OXbGDEKbbB8RJlKgNcXrI7oHQbfaRdnUODxCLLwN9vEynjfFXi/PQ7Bj3Sg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790606021; c=relaxed/simple;
+	bh=TjkYONbP+Kmj6qWl6whbCKnYotkM9RkroWHSbDf9FHk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Lg5u1p9NZtbTsSbeVPNgv20F+huvAx/conyFjLSWkd5IRU1IFmXIoIqhOU57ukxvHIthMzMiBh8zmCKFeoOoZY/OcD7qflkBcvdFmY3nJpAm0jkP+2jqN4wJK2rl96J/y3uBC/8k+j0H0lhIASC2p0NPoKvFH48K+nx7m1hqBik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y2mberqN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mlS2Wx1J; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T73Lss/G"
-Received: by mail-yx2-f40.google.com with SMTP id 00721157ae682-8a894197c96so21902077b3.3
-        for <git@vger.kernel.org>; Mon, 28 Sep 2026 07:27:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790605655; cv=none;
-        d=google.com; s=arc-20260327;
-        b=IQ9zWGlKwniZEOCRxrRXggdCe7LpU+EMcwVolknJ6tXRstSDEIafxvMB3Ti5wcF+LJ
-         +OQG2xsuU3z2t4RgiCOb9+e7KWQUTPeBRI5NnWA9BX3bh21nZm6faeL8p6xYRwF5rvqT
-         qGXvmsUln/C31vEdWZP6e+hYZWR7791NtPtIqc/fxQgF8qLLq2RCho9a09Xfjz1AUPNk
-         mXIeJ8gYmkQd73uEbFnV66WgM49mT6eTTKAoe5EGAkN56ZyuN0+Rb9fMTz8vygcPWrEN
-         PHCxZLiqwirDbJJ08RPIg278JiAmB349zDSFPzbCU/kZxPyHoA/E9nD/3QMOOA6Ed1Lx
-         VaLQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=8CJggjtPIqaPxHhpEPFDHo9m5xnilcyjAY8XKmwHjAM=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=DZb3JmD5VqDh2o7fp2vpfWPvDi+OoLfoMXsKQ3kK8xdQTycI/j9Cs/WI/BdMwBWroD
-         wBJOr7Q41Y12UAUAH6aXE6s+0MSFsd0GmtmwF5cC3eCEhjPZ4x3jFCdDYs9LPURckFzs
-         NtbUfMuGg2c4f2tWSqpICmTpyeplCsxI1j1oPepQndArrYzNCWqXxr5PreR8+or9eq8D
-         vSkike6aB5qpIpyM5jLz1fNYdOk9poYK8mOyrrxFOCmE7iasvT34+7NfoAFaEVYBWLK2
-         O6bZ29wCz8mXG0MdCTXJwZTCwFd4IRm7AwY5jZdPoTOnW8zvKIyy4UvOK89dxI+YwIfh
-         yICg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790605655; x=1791210455; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:mime-version:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=8CJggjtPIqaPxHhpEPFDHo9m5xnilcyjAY8XKmwHjAM=;
-        b=T73Lss/GLb8+WJfbGHaTMOFDuiyWgy+gw590atzqqNdLNh1ft312skjPFBjJNuYy9k
-         m3GLCL5mA+CBLM74BSJhzpdMdPhDXTMhhbl3WRs9PJAoFqLnhkfM6yxl5Oa0yOpnF+95
-         y8oEWzL/Tz/sC+qoieGHutCwmElx0lpx2TM5Dpcu0Wenl0ktvA1I23FD3ClS7yfppzkd
-         sPCnfNDQ3kZs4mvHkwfavC2rZHO+T7ecYg5/X8gHcI3O30F0WE6/3FGqI4oEMNryOlc3
-         /1e9KaioKkY/tqB+dXBfc+Y/KjwZnCyT6GFONyUIL1tC8zgVz56yAWIl5llWK1oceK7B
-         OKJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790605655; x=1791210455;
-        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8CJggjtPIqaPxHhpEPFDHo9m5xnilcyjAY8XKmwHjAM=;
-        b=bII+WSSoJ0UGJimoyif4+eidtF7FJSA+IERv6ernpyURz+liz6aY+I1qaL0gaRWgvP
-         przEDQ+WSW5obEPdYXbjbMA2EIRpsVUqrGvDZRfXsMuyhuCWZ5FsUBqwYNwNr+uGXpua
-         DtXlC3ckYaAl/Jkgttd8kftrhl6KRoQrjnIQNqouIfUlbym5hrjAN4IlKEoRElHIC/cy
-         0VESRo1VNR2iyShttz3cwMYKVh9f4WHvmOFspjdaQAFtSaKpg+Co2aazXbl4uwfLQi/s
-         kXdWRusiShCzbqyE9W+XTBrWdwcOpif+eXif0p3YsXvUrv8AhJk9XKtlUyh3LMQL85fB
-         kHpw==
-X-Gm-Message-State: AFq9FYLwGJdi6wEJXzItZlX2FyKLqhY9CEun6Lk/aiml1hFU6UFkYTMI
-	HEJVxJKvskU/VozkeeNEiKZBaF5EfjslX8SPXfsgsuFjweob3NTa3lGWuq73XYmXLfqGu3tWlzH
-	GgmXBTvJp7HfHPuZJCPqjxof+/Z1FVhKl1ERkBKGB5A==
-X-Gm-Gg: AYBFou32urpzPTPiyVbKKW9FXnsKzT/AuNrbT3EIa09mSm2IjJoEsX39xWcdHvjUBts
-	Npfc7kpGPNdrN4sKkUlQkwkGHdbCxcSRJxbQOcqveIN83O5U3KY8eNQDXf4Dq6kGCLyC94lWXdb
-	BZqv5MVzES5UiyvStjzeLn/2LnfoA2bxV2PKhxb8L7tdmezVvdPScHvr3J3nKTRzFDj9iy3j76Q
-	ijnIlIoIFTHBEnZZeDKzojv0GvGnxpNbcbifz/Kyo8EDwQJf6ZsKNdlULKbJLqEYmVJuA2DACkc
-	Nu4M2/+qa1lPVmiaVO/AOiUIv/KaljEWQ+4cE5VcXWiXPnS2qDxEyOc2
-X-Received: by 2002:a05:690c:3481:b0:8a8:6aca:ca6c with SMTP id
- 00721157ae682-8a86acad1edmr32893557b3.28.1790605654847; Mon, 28 Sep 2026
- 07:27:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y2mberqN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mlS2Wx1J"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D49D41400021;
+	Mon, 28 Sep 2026 10:33:31 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 28 Sep 2026 10:33:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790606011; x=1790692411; bh=ctwwqlFJMa
+	spr0HK9j2+VP+zxEDhYSGKRTwCoiDnViQ=; b=Y2mberqNfqdkNCtK8s95/GkXe5
+	MXhyDDS4Qgv7ExxKCCyJcdEQXoZnkCq3+ZCz03SLW9yPCDSfZEX+riHwNpWmmcL+
+	KrKkrNmLfEVdRoJuAlK+pwlz0mRLjHBFSJVS8CJO5K7On9BwIhlINscOLbZho34W
+	NXl1wwNhy4adtKdZYjYHLuphTu54tl9kDc4w0atdejN5s+Ga4BmK1WeKenlgKjeb
+	ELiLXgnpfrAI4JtPT/+FaHVrWoN04grFWZL7PmaQE618r/iGSrAlxTARi2DMbl1k
+	RDJ8xmhX8XoCeilt2/1gPZRp7KupxfrR/2Nj3RVTzVO7Ldmdl2tXx+xwYqfw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790606011; x=1790692411; bh=ctwwqlFJMaspr0HK9j2+VP+zxEDhYSGKRTw
+	CoiDnViQ=; b=mlS2Wx1JWpj07jz+pRxgZQeSAPi8Ti4zIdn1VlP0oXrn8wtjLLA
+	aww9JJqiKPsWV5yJkJAjXaiVwpQqbCcy8Kj4WAv1O9cxNavR4caFfRENChVHScm1
+	xov0P1Z8GAtPpSSRC6vmbxBD9wSx5sEE0B+S7TsBsfemeWbGvTpvon0VV8FAoh7+
+	NhHnTdFLpPeKfcKgzXTmRC6DupZGpr/gLwIjMn3QWZn1y6WZ+QYAhbU/pKm3/ZM7
+	wt3FkaCbcStMkR1LKVFHxvNYt+CyVyyLfXh/nHdqyt7+tdBoaArxAaDiHfqKqmLF
+	Sn6SJTbJz1lHr11OWlk8orIawkxI4M9PjQA==
+X-ME-Sender: <xms:u3q6aq27-EVh2sMJ5osZezfzd_VhmgsSYgjOR58jsvthLotUz_dsig>
+    <xme:u3q6aj89LmiaGpPvBD0H-YAtcErj7NKVql3wziskeOLQFe7X-LOuRwDQS2S2DcOmZ
+    JKJp-qFPchCeB5lDjR17sBGN6a9SThC7Y687k2h5ddmzngUruKUIs0>
+X-ME-Received: <xmr:u3q6arNA3aELAIltqDb_ZPKfFe4Mm2_fR0ttIoH8RBASvLOpYUrG02Ug7maZCt9JSeGWI4xWgm9Gb5NFvUSFijp_0vbmcT8Fa94E>
+X-ME-Proxy-Cause: dmFkZTGw7gPtDlB7rvF+CFgwr5GtkBixwKDHE47vvHWlWx3GPa4MvnbpJNaH2cfN1KgKyF
+    GMUdtACD+CY3SrspFYX67zGuWj91QQOpY4x7pcuQyU2YAKLJMLLE7wkwox5WHbBuC0j5W2
+    9PZNZpvHwePJieOeMt6e91O0MLuwqKiHAWERtUOfsJUROgFtRDjAUu6gYo3t9ukbeKM2Bk
+    X/btZUUgFa11KQ4UO+0KNZ796za/HsWGE1vw7fQLpgcMa2Gdd2WLoxxjAZF2PMlLwL5FJx
+    3aVNu1DkN1MDpNVFuSHnbAoOl4TwRGJiwtneCZPwZ+GuWHB0mwLHHF79LS7pL/78DoJLN+
+    ugBMYvwc6TxfxPvvSqATR9fPCaJHXSdWwo3Uf8raJf7HV1hiieluwMWlSUgWT/FcIbqOwh
+    lIPGxjyitjuQsXGch91/ypVLbO/lCI7chPhupBgnI5+yyroLqyBoMSW5m5DQWRt7F902Ag
+    mYB3kp1cIxnY7I/uzSjiijoIPYgzdiYup3PWNln/LK4spydH+pnVyl68JOMaIFz2KVtpg7
+    QM34rdEnCx7DF4i4lj2x9ITpYRwwp/+EWQNczBBsRfU3LSCmzYmN6dX5yIXnN5McxfBJqW
+    HZIi/jN+vmGKpNy8fwf2qQHHerfc2DNrJnEizV8pl61SLeSjamy8/UfBcrNQ
+X-ME-Proxy: <xmx:u3q6aneI-hehfuV0n6QNPmsiYVwLyApld89Vuf7WhKitmaOBg3ur_g>
+    <xmx:u3q6aqXBEIH8pKiD5I9j8T52TH0ldZKXeV9M37tom8sccpZ4jYot_g>
+    <xmx:u3q6avgKNaA_BBHwVwgcwxWsp9NAVPQQ5DyE6nbu1LnyjuyW9ToE8g>
+    <xmx:u3q6ap_DSWGtxUO8H2pThUinPApofbgJwc_WFUq6BghhW3AL8DFYPQ>
+    <xmx:u3q6al1JMQkpM9uWPqqvXsslusmwnKm0uDDG2TvXRmmAAX_cDGcpSm1f>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Sep 2026 10:33:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Johannes Schindelin
+ via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 3/4] ci(gitlab,windows): fix Rust setup for GitLab's
+ MinGW build
+In-Reply-To: <aroOJHlxCs9Rnwv-@pks.im> (Patrick Steinhardt's message of "Mon,
+	28 Sep 2026 08:50:12 +0200")
+References: <pull.2233.git.1789819933.gitgitgadget@gmail.com>
+	<57a83d15fda4ad3d4297f665d6c35e205e916e7a.1789819933.git.gitgitgadget@gmail.com>
+	<arUH2KM2rHQwhmpf@pks.im>
+	<1c829af9-1923-a6ff-78a1-b738cc6bf5a6@gmx.de>
+	<aroOJHlxCs9Rnwv-@pks.im>
+Date: Mon, 28 Sep 2026 07:33:30 -0700
+Message-ID: <xmqq8q4lphs5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Hanan Arshad <hananarshad619@gmail.com>
-Date: Mon, 28 Sep 2026 19:27:23 +0500
-X-Gm-Features: AclHuK_7MvvnWwiUZa1JyrErgXjYxPU65yOQHTzJiLGalVK37d-GwouKs-uer9o
-Message-ID: <CAKPibBw2XxjGpE_DZrWLZmMHs7kAyvOaP8504kfoh61c4UkGyg@mail.gmail.com>
-Subject: [RFC] git stash: add porcelain for sharing stashes through remotes
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi,
+Patrick Steinhardt <ps@pks.im> writes:
 
-I'd like to propose adding a small porcelain workflow for sharing
-stashes through a Git remote.
+>> > Are we sure that PATH cannot ever contain spaces or should we rather
+>> > quote here?
+>> ...
+> Well, TIL :)
 
-git stash export and git stash import already provide a transportable
-representation of stashes. I tested the following workflow using
-existing commands:
+Our coding guidelines share some blame.  As some implementations of
+shells historically were buggy when assignment is combined with
+modifers (e.g., "export var=val") and split the right hand side at
+$IFS, we strongly encourage assignment to be written with right hand
+side quoted even when you shouldn't have to.  Uniformly applying the
+safer rule is easier on mere mortals than knowing and remembering
+exactly when we do not have to quote and omitting the quote ;-).
 
-Alice:
-  git stash export --print stash@{0}
-  git push origin <export-tip>:refs/stashes/alice/wip
 
-Bob:
-  git fetch origin refs/stashes/alice/wip:refs/shared-stashes/origin/alice/wip
-  git stash import refs/shared-stashes/origin/alice/wip
-The imported stash is a normal local stash and retains the original
-stash object ID. Removing the remote ref afterward does not affect
-Bob's imported stash.
-
-I'd like to add porcelain around this existing mechanism for four operations:
-
-1- publish a selected stash to a remote
-2- list available shared stashes
-3- get a shared stash as a normal local stash
-4- remove a shared stash from the remote
-
-This would not introduce a new stash object format, server-side
-service, or synchronization model. It would essentially compose the
-existing export/import mechanism with normal push/fetch operations.
-Before working on an implementation, I'd appreciate feedback on a few
-design points:
-1- What remote ref namespace would be appropriate?
-2- Should shared stashes use an explicit user-provided name or an
-object-derived identifier?
-3- Should listing only inspect remote refs, or fetch the export
-commits so stash messages can also be displayed?
-4- What command naming would fit best with the existing git stash interface?
-
-If the general direction seems reasonable, I can follow up with a more
-concrete interface and implementation.
-
-Thanks,
-Hanan Arshad
