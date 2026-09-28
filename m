@@ -1,108 +1,146 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f39.google.com (mail-pz2-f39.google.com [74.125.228.39])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CFA4E1C80
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 14:33:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7C74C10C3
+	for <git@vger.kernel.org>; Mon, 28 Sep 2026 14:38:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.39
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790606021; cv=none; b=qFKzVz5nGM6/vQu8GtKIsesYqYIw52lDCsLyhS3MwJtbuuA6A0UpSTOGS00/gO2DJ9THSKND7MsCoc5yqjzmDMHUK5CcI305Mtt3naWs8zMfdLP2OXbGDEKbbB8RJlKgNcXrI7oHQbfaRdnUODxCLLwN9vEynjfFXi/PQ7Bj3Sg=
+	t=1790606292; cv=none; b=TLZVTs6tbaVvTuxv+FHTPFs6Vyx1nSuk6bbsvkkJt+r0avDva9cGowQI/nrP8zsjiMReST26HJzKR5bsebUh6wuSTL4PPAXGUzK78ZyQn6WtLRrIZgKRuEH21hUDnqAkehU9Wk+T9qRjAVoXHtGIWYaHhgq+Lc/OTAhyunaWTS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790606021; c=relaxed/simple;
-	bh=TjkYONbP+Kmj6qWl6whbCKnYotkM9RkroWHSbDf9FHk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Lg5u1p9NZtbTsSbeVPNgv20F+huvAx/conyFjLSWkd5IRU1IFmXIoIqhOU57ukxvHIthMzMiBh8zmCKFeoOoZY/OcD7qflkBcvdFmY3nJpAm0jkP+2jqN4wJK2rl96J/y3uBC/8k+j0H0lhIASC2p0NPoKvFH48K+nx7m1hqBik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y2mberqN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mlS2Wx1J; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790606292; c=relaxed/simple;
+	bh=dWUk0yNY/yBIs9Bmf8djyH+n/laEhtkEp8mrBBzzAus=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=NFvcU/WUCjk5xJ7cipsqCrGt22GVlp179KhAVeyAUJvN1cWqwQPqLtqSUr+oulky3ElavRvaV7iyzz31SbOs5clY67rm+W2vwz3QWVHVoF0DECiQTAtdY88O5+XGSOg4hbuKvmb6SutcDuW6/22fh6ySnUCfAVzzNgjMXcztbXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k2hiZlfh; arc=none smtp.client-ip=74.125.228.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y2mberqN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mlS2Wx1J"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D49D41400021;
-	Mon, 28 Sep 2026 10:33:31 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 28 Sep 2026 10:33:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790606011; x=1790692411; bh=ctwwqlFJMa
-	spr0HK9j2+VP+zxEDhYSGKRTwCoiDnViQ=; b=Y2mberqNfqdkNCtK8s95/GkXe5
-	MXhyDDS4Qgv7ExxKCCyJcdEQXoZnkCq3+ZCz03SLW9yPCDSfZEX+riHwNpWmmcL+
-	KrKkrNmLfEVdRoJuAlK+pwlz0mRLjHBFSJVS8CJO5K7On9BwIhlINscOLbZho34W
-	NXl1wwNhy4adtKdZYjYHLuphTu54tl9kDc4w0atdejN5s+Ga4BmK1WeKenlgKjeb
-	ELiLXgnpfrAI4JtPT/+FaHVrWoN04grFWZL7PmaQE618r/iGSrAlxTARi2DMbl1k
-	RDJ8xmhX8XoCeilt2/1gPZRp7KupxfrR/2Nj3RVTzVO7Ldmdl2tXx+xwYqfw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790606011; x=1790692411; bh=ctwwqlFJMaspr0HK9j2+VP+zxEDhYSGKRTw
-	CoiDnViQ=; b=mlS2Wx1JWpj07jz+pRxgZQeSAPi8Ti4zIdn1VlP0oXrn8wtjLLA
-	aww9JJqiKPsWV5yJkJAjXaiVwpQqbCcy8Kj4WAv1O9cxNavR4caFfRENChVHScm1
-	xov0P1Z8GAtPpSSRC6vmbxBD9wSx5sEE0B+S7TsBsfemeWbGvTpvon0VV8FAoh7+
-	NhHnTdFLpPeKfcKgzXTmRC6DupZGpr/gLwIjMn3QWZn1y6WZ+QYAhbU/pKm3/ZM7
-	wt3FkaCbcStMkR1LKVFHxvNYt+CyVyyLfXh/nHdqyt7+tdBoaArxAaDiHfqKqmLF
-	Sn6SJTbJz1lHr11OWlk8orIawkxI4M9PjQA==
-X-ME-Sender: <xms:u3q6aq27-EVh2sMJ5osZezfzd_VhmgsSYgjOR58jsvthLotUz_dsig>
-    <xme:u3q6aj89LmiaGpPvBD0H-YAtcErj7NKVql3wziskeOLQFe7X-LOuRwDQS2S2DcOmZ
-    JKJp-qFPchCeB5lDjR17sBGN6a9SThC7Y687k2h5ddmzngUruKUIs0>
-X-ME-Received: <xmr:u3q6arNA3aELAIltqDb_ZPKfFe4Mm2_fR0ttIoH8RBASvLOpYUrG02Ug7maZCt9JSeGWI4xWgm9Gb5NFvUSFijp_0vbmcT8Fa94E>
-X-ME-Proxy-Cause: dmFkZTGw7gPtDlB7rvF+CFgwr5GtkBixwKDHE47vvHWlWx3GPa4MvnbpJNaH2cfN1KgKyF
-    GMUdtACD+CY3SrspFYX67zGuWj91QQOpY4x7pcuQyU2YAKLJMLLE7wkwox5WHbBuC0j5W2
-    9PZNZpvHwePJieOeMt6e91O0MLuwqKiHAWERtUOfsJUROgFtRDjAUu6gYo3t9ukbeKM2Bk
-    X/btZUUgFa11KQ4UO+0KNZ796za/HsWGE1vw7fQLpgcMa2Gdd2WLoxxjAZF2PMlLwL5FJx
-    3aVNu1DkN1MDpNVFuSHnbAoOl4TwRGJiwtneCZPwZ+GuWHB0mwLHHF79LS7pL/78DoJLN+
-    ugBMYvwc6TxfxPvvSqATR9fPCaJHXSdWwo3Uf8raJf7HV1hiieluwMWlSUgWT/FcIbqOwh
-    lIPGxjyitjuQsXGch91/ypVLbO/lCI7chPhupBgnI5+yyroLqyBoMSW5m5DQWRt7F902Ag
-    mYB3kp1cIxnY7I/uzSjiijoIPYgzdiYup3PWNln/LK4spydH+pnVyl68JOMaIFz2KVtpg7
-    QM34rdEnCx7DF4i4lj2x9ITpYRwwp/+EWQNczBBsRfU3LSCmzYmN6dX5yIXnN5McxfBJqW
-    HZIi/jN+vmGKpNy8fwf2qQHHerfc2DNrJnEizV8pl61SLeSjamy8/UfBcrNQ
-X-ME-Proxy: <xmx:u3q6aneI-hehfuV0n6QNPmsiYVwLyApld89Vuf7WhKitmaOBg3ur_g>
-    <xmx:u3q6aqXBEIH8pKiD5I9j8T52TH0ldZKXeV9M37tom8sccpZ4jYot_g>
-    <xmx:u3q6avgKNaA_BBHwVwgcwxWsp9NAVPQQ5DyE6nbu1LnyjuyW9ToE8g>
-    <xmx:u3q6ap_DSWGtxUO8H2pThUinPApofbgJwc_WFUq6BghhW3AL8DFYPQ>
-    <xmx:u3q6al1JMQkpM9uWPqqvXsslusmwnKm0uDDG2TvXRmmAAX_cDGcpSm1f>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Sep 2026 10:33:31 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Johannes Schindelin
- via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 3/4] ci(gitlab,windows): fix Rust setup for GitLab's
- MinGW build
-In-Reply-To: <aroOJHlxCs9Rnwv-@pks.im> (Patrick Steinhardt's message of "Mon,
-	28 Sep 2026 08:50:12 +0200")
-References: <pull.2233.git.1789819933.gitgitgadget@gmail.com>
-	<57a83d15fda4ad3d4297f665d6c35e205e916e7a.1789819933.git.gitgitgadget@gmail.com>
-	<arUH2KM2rHQwhmpf@pks.im>
-	<1c829af9-1923-a6ff-78a1-b738cc6bf5a6@gmx.de>
-	<aroOJHlxCs9Rnwv-@pks.im>
-Date: Mon, 28 Sep 2026 07:33:30 -0700
-Message-ID: <xmqq8q4lphs5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k2hiZlfh"
+Received: by mail-pz2-f39.google.com with SMTP id d2e1a72fcca58-88098db8dcdso1165691b3a.3
+        for <git@vger.kernel.org>; Mon, 28 Sep 2026 07:38:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790606284; x=1791211084; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=vqHPphlwqZKAfs2vm2Wl4ltPaI4BLXPvpaSySqssU5c=;
+        b=k2hiZlfho1JzJrBzeWX2A76hivg535vQZRzGhIBivsJz3TR/uYuCTksn4NX4ESdtOK
+         S7KLF+YgHy7MCG0ilwT42MdmL9FUHNCqoS4Mm0VIBEwmht1Fw0YP5tH85WDyjQ+VIcZS
+         U2dOIZoZvzSq8MiKVVwBhox9YOYrwPVXyFycnqZmx9W9PCKX3NTQmwuu+CDajqK4YtGV
+         vkvMcK5kx4MFNhAoJsYAdHTitS43N5wi2HEPRmLJ3lMA4fTAn5CLKLlia0FM/RJj9eck
+         KiKGpPNpn5rVBp9+CHACoXss8OzOBBA/ygCtJIPDm79NqUl/zrF+92xyZ/qY/mE3AfhE
+         QAtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790606284; x=1791211084;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=vqHPphlwqZKAfs2vm2Wl4ltPaI4BLXPvpaSySqssU5c=;
+        b=QLyxPgYaxJde6gIcXAj63rqetD2ujJ1i5ba9KxbR6+2967wOf3Wu00n/4B+CkCPZg9
+         1haUwRBT+rik/1J31Sn2AXWph9XFEQQ0I1Zwfabl4zUz8dpvFDCDh+Q5ylm4Z3bmXZb/
+         ZDiy1Yxn/a+LYzI9m0Nhk9iPxCktz2JnhfI80HdXCmPd0xqE4zvw81jI2rSCGlw2IQMt
+         6tbl4G9YdPzLbBThDWPCLPBlIHFda7k7Bpw934ShmZq6FX2MC+TITCtHwBdholJBcrBd
+         b3rIHIiB2Z2XslofxHBOy6JN942VmBd5EtmU7Va7Qi4rVJ4Em70FGdRY7gXYZA5AEbPn
+         pmDg==
+X-Gm-Message-State: AFuF++nmT718103aEHO0Ayu5aIzWuboAQPs20iRExKXI5wvbXlzsV2ZP
+	9PDQmGFhvI/bXJeqxK8MSB977+Nx7Zr1B6EWRvQylbgH/63KglgI4VS5y0wO3Q==
+X-Gm-Gg: AYBFou2+2hUgxHKqsSUFcwPnQBWYvlbp0jVr34Q+oDc1Pxtaltmd+Zs2Bukx5Id51VR
+	TD6BSQzXM+C1FhnrUXW29RSShyWD5INE8+Cn20rmdSc6WW4Es2J9YPgs8VD8iYvtXdmgU7dGz3T
+	dLXYgrGDSzBOU0a/iu6C8pQejBcI7LbpDyDRAcruiyRLJwLVmxEJDEAQk2IadPF9Ixyh5KFXt0f
+	dVHAbiOR7RmHDD54lQeb3dMfF/6wqIzv8ssgDCx+vLq1DmJBzR2NTOv5p6Qupa5B/At9z80Pol+
+	Jn0SrVTt8kW4gukQCX+SEk5ivy1o1S7FB3CsPVwDpCuWALpJZ4qvHbmdr1stPn1dkA5bHTh+PI4
+	ird/qJ3tn1wGZJD3vUs50xvBhQYA0fBl83u36TRz/znPZUEr+FR705PF3twL1ns1x0qptaqmJS5
+	gt8yLhVZuB2qIRruQCgTKYNa+SMlvyuxycsMDiGXQaU+P1mk7K3vXInff6hZ6czI7nw080B6gAo
+	A==
+X-Received: by 2002:a05:6a00:1790:b0:881:e626:74a9 with SMTP id d2e1a72fcca58-881e6268a10mr6319699b3a.26.1790606284480;
+        Mon, 28 Sep 2026 07:38:04 -0700 (PDT)
+Received: from [127.0.0.1] ([52.161.69.164])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-87fea19800esm4252294b3a.10.2026.09.28.07.38.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Sep 2026 07:38:03 -0700 (PDT)
+Message-Id: <pull.2243.git.1790606282769.gitgitgadget@gmail.com>
+From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 28 Sep 2026 14:38:02 +0000
+Subject: [PATCH] t5520: don't expire reflogs where it matters
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Phillip Wood <phillip.wood@dunelm.org.uk>,
+    Junio C Hamano <gitster@pobox.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Thomas Bachem <mail@thomasbachem.com>,
+    Thomas Bachem <mail@thomasbachem.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+From: Thomas Bachem <mail@thomasbachem.com>
 
->> > Are we sure that PATH cannot ever contain spaces or should we rather
->> > quote here?
->> ...
-> Well, TIL :)
+The "--rebase -f with rebased upstream" test computes its fork point
+from the reflog of refs/remotes/me/copy, and the entry it needs is
+the one that the fetch of the test before it wrote. Like every reflog
+entry the suite writes after test_tick, it is dated 2005, so the
+first "git reflog expire --all" after that fetch removes it. Pull
+then finds no fork point and rebases onto the merge head with the
+merge head as the upstream, and the rewound commits come back as a
+conflict.
 
-Our coding guidelines share some blame.  As some implementations of
-shells historically were buggy when assignment is combined with
-modifers (e.g., "export var=val") and split the right hand side at
-$IFS, we strongly encourage assignment to be written with right hand
-side quoted even when you shouldn't have to.  Uniformly applying the
-safer rule is easier on mere mortals than knowing and remembering
-exactly when we do not have to quote and omitting the quote ;-).
+Since 452b12c2e0 (builtin/maintenance: use "geometric" strategy by
+default, 2026-02-24) auto maintenance runs that expiry once the reflog
+of HEAD holds a hundred entries it would remove, the default of
+maintenance.reflog-expire.auto. Which run crosses the threshold
+depends on the entries and maintenance runs before it, so the script
+passed by chance: a stash topic that no longer runs "git reset" from
+"stash apply --index" and a rebase topic that runs auto maintenance
+at the end of "git rebase" together move the expiry between the two
+tests.
 
+Pin the expiry as ea7d894f44 (t34xx: don't expire reflogs where it
+matters, 2026-02-24) did for the rebase tests. That covers a "git gc"
+as well, which expires reflogs on its own, where turning off the auto
+trigger of the reflog-expire task alone would not.
 
+Reported-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: D. Ben Knoble <ben.knoble@gmail.com>
+Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Assisted-by: Claude Fable 5.1
+Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
+---
+    t5520: don't expire reflogs where it matters
+    
+    The t5520 failure Junio saw in 'seen' with Ben Knoble's stash series,
+    bisected by Ben to tb/rerere-lock-grace and taken apart in the thread:
+    https://lore.kernel.org/git/a59c4225-f093-4001-b77a-2083dfecce6e@gmail.com/
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2243%2Fthomasbachem%2Ft5520-reflog-expire-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2243/thomasbachem/t5520-reflog-expire-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2243
+
+ t/t5520-pull.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 27f38ab3c8..bc818605a5 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -35,6 +35,12 @@ test_pull_autostash_fail () {
+ }
+ 
+ test_expect_success setup '
++	# Commit dates are hardcoded to 2005, and the reflog entries will have
++	# a matching timestamp. Maintenance may thus immediately expire
++	# reflogs if it was running.
++	git config set gc.reflogExpire never &&
++	git config set gc.reflogExpireUnreachable never &&
++
+ 	echo file >file &&
+ 	git add file &&
+ 	git commit -a -m original
+
+base-commit: 34f06850c16c7f7ac822b1adc71354f11b0f2ca3
+-- 
+gitgitgadget
