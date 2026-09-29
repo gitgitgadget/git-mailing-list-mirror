@@ -1,81 +1,87 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6EE1D47AC
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 16:30:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B543E6DD5
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 16:51:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790699421; cv=none; b=MlgkUQNz2Te+Efn99VMHaCXuL7CvivGtUdoAHAut5EA6mifl0sSdzLg+SM3+kSr8irRHh1slpUhWojqtx1Buf3js3WgqMVbRxXYzSbXaBXqFdzkaKGPFj6a0Q3SD+jL0u1pxlewyvpjVtWASmWVt60cmAV4GUP/D6XkoBPhbBY8=
+	t=1790700719; cv=none; b=Exajv4gSLb6cj6AWOvrmK/9lqja9KUV7Cuo6LbCvjoPPTXm5zfoDO0ZFPWZjFmsl0eLkzjH1jXMZOy+BC4B4BIRFSBQ71W0VuorpiTi800tI10wj/PaQMrUOXlVVCVy3mJldj3ekWkgNsowLiSjQkkA40aPV9C36KMrSgVvnwks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790699421; c=relaxed/simple;
-	bh=AAbfkZ7C9fCb1eRmNQEyH4ieEdIUw8RBg+f0mJE3/pU=;
+	s=arc-20240116; t=1790700719; c=relaxed/simple;
+	bh=gfmBfvpLaio+D/LcbfvYZGsjCwkC4Tf4eVZ5Lhz0PNQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gd+vb3W2ZhX8lhhrMEKUkaUYKyxXHe7eM1+wZHN64V1A7gDPjO6Zx1NYJvGldemZaiEjHFuC8V4x0ClCTs2uNzAUabjI0bD5SSwZfE8IBa2k7LaM7abWT4KYmZtMMREOsmSm2lFL9cHpU8eD40H+g7CzkA/fWUtzOtq3eezH9bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YuUBsvLe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ic05pGZp; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=WnQjO5nx6GUcN2voopGlEs8UrZtveD8VBBwgGZ22shDFPKACVopBzYd8i7vs7NeUqbZUz0AGI1aSpBKw06A9EsvlEOCbAfOZg8OaQXAy2ymYrPqKq/pqnIC1lf91BbW+jL35EHIQtcN2l65QOtXVFJaltnTT1Qosgqiuh2gZHao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rPNjn88g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e352dhqF; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YuUBsvLe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ic05pGZp"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 15D237A0369;
-	Tue, 29 Sep 2026 12:30:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rPNjn88g";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e352dhqF"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 51A0F7A03EA;
+	Tue, 29 Sep 2026 12:51:56 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 29 Sep 2026 12:30:19 -0400
+  by phl-compute-11.internal (MEProxy); Tue, 29 Sep 2026 12:51:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790699418; x=1790785818; bh=AAbfkZ7C9f
-	Cb1eRmNQEyH4ieEdIUw8RBg+f0mJE3/pU=; b=YuUBsvLeG5/StTukAYWggkqanw
-	WXNhOzpdf/PVlCgya8rAvXhfhgowvixONpl/Ye1uSW2zi8gwWtihVO3/v92jDqEA
-	d97piy+IVUwJ3BASRSkc6LzEA/GnTPSEwsiutuXvCf3Io2th8bJwvGvXpMPbxp88
-	W9pIfkT8YoIxye0rq6JZN5fXVwK+DJkyn+pTZGHkceehYzowgocBVdnolff4+O1a
-	Lok1t1S36+RjtZMjCzqlWntZhQoVVJnRq0sSf6pse51pbrtQaregqnMB4Y/zQkMu
-	Jrpa74iq9emQXuf3TBQMDGhv5QqFeOj2gfiDS7CoXJdsBIW17D53/pLP2MBA==
+	:subject:to:to; s=fm3; t=1790700716; x=1790787116; bh=hSpk124JtT
+	vzpFHZshHPEnj21Euol4uTpaUkcm9wTss=; b=rPNjn88gm9Ot8b2PB/FfCkTFe7
+	MVSvuB1Alpohwryur6XbpNayjaR6PHTuAKK6S2DpR4tgDHMI/hg6wCNIgCTKrhCR
+	Y/o4cKVp+D3QYAbTFhEL1NdSL1OsG9pTD1piSRRG8/mCpIgFQn8ZmZbQ25qgiCTF
+	+3h3VhE0uObUmNcngyyRQXXS1aukySbSqGQW/py7zOMJN3mNwXZ6z5hUG0doYOaM
+	kf/R7zOqsXosUmVQZYeGq9/YAlcZCOWmBC+2chlHpD91zXFyrelzsT8OQTlD6sTJ
+	8314EoLM1Syy4rYwC8oNVMi3cf0DozUpbQv91efANRMUfgtZ5Q5oXVCs30Yg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790699418; x=1790785818; bh=AAbfkZ7C9fCb1eRmNQEyH4ieEdIUw8RBg+f
-	0mJE3/pU=; b=Ic05pGZpPQYt2dCvrDWLjfapP3EaPTMqB+uE5ucIItKvUaxVSph
-	+ItRkjiZ49t6MpJZo+oGUOP8GlvnPfSB7fhTCebUVuhyabTrUYxDunGn1epDpZ7l
-	xay+XkarZ9m/zFSYfAsNbWpRdYPF+ItlrxZfEqpV6TdBCIwMPBbWJKpkP/MZDZJA
-	MRsWGd/znTVOS9KsJEl9mSCpk2+Gdin7NWA9KlL95UpxzrQ/4mqGsKF27G9XfYPZ
-	Vbbqimmai3UIaxf6Y9/DPhOiNKJnmcoKPRsd+7XJWuFLJM4l+A7Fw9AXk7vGD1Pq
-	MSQVmRVvDPyWycGBdtIReEjg4QxMqzfQi8A==
-X-ME-Sender: <xms:mue7almZtbmgR4IBU1PisBIRctyUSnwgWdumKbX1Q9MiEwv2ljZwxw>
-    <xme:mue7an0BUyla4Z-S-bktNlQCN9xW1KUT_pyJP-7r5sj0yh2LWEx2gOBg5fsJfQ-jK
-    zJTJUXNU6o1dXQ1-cp0UBqGG9lJOoKT0uObxlZj_1CB3xOHmjmZNY8>
-X-ME-Received: <xmr:mue7agr-0156JIc1rXOfi7fIsENgye6Cl1ryAMJeWh-hXreo2LZtEeV-fLAOclCe8E13yr_0nCsKw_hKJWg1NCGNmVYet1VBoOdV>
-X-ME-Proxy-Cause: dmFkZTGk67Pf8WlA1VcfT0sjuUvsuQUNYUpvSqQW/xwep7aknRFmNa9J1t1TLQdi6940Ql
-    nxXXO/E3IpqgYxTfgeIjl+smPzeyp5w297LGbA+Ge3OpoWLOi4iq7N4uUluF3gHCekaJgh
-    7j5rB9/sownnQgvSVYvM02E+u9Xl+28k9Duy1SeNXNKvr/hfc3VdREGcUAgHzmwbqEdprh
-    +fepXpNMeyTPsbF2EhF2VLpVbePGa4YIBLKnKZEJyFwaiSKCG6WdM+f+zsM3n+ZSbULs+3
-    VKY6yLlc+Afa/oNwGC0ITbpg7ttgWBu7Jzsxhp7+qesQ/G8C7TYR9zh9fPEzIIwkBoZ5o5
-    IA5DKTiMHOEEZgpJYYfTXEkGKYYuLRlwzJzxY+1IWQW95UNW+89XBiP6YCUjdbMuCGs1G4
-    v2Sdtts+9oxA+YBn7ptHBGp1wMJCXfPx4MgJq8mpKM0g5l4CNfsY/hCGxQEFj6WxvkBF4Z
-    H7Sx77TKuSo96mj5rH1qEnPd40xisoXfYiBYJJHtr6OhWGDj0ulBLIFnYYD3oR2eYWThsT
-    chKJxZrjr2YI77moc0D5E7tNNsSI63w8ajZ8ZaBCyy6RYqtkkV+tjAUm6ECsfFyFCpvHF0
-    GD2A2e/Y6wKzULAfWOyY2G0kbUXEnfFKpuuj/4djAoThw96ckv8ntoMUj0yw
-X-ME-Proxy: <xmx:mue7akc02IyPxzcV1Qlp5WsI_tIolHiG5-99p3yo5gX0CikgjQioHQ>
-    <xmx:mue7avpBu6eOMFVR9G3eRsfKx0sShOgechjFZYVApIQppu1Ql_BiQw>
-    <xmx:mue7alEBEJWLCO3WQqv26aObgADZczS0EvpAzUofz0yKdc7msa9d0Q>
-    <xmx:mue7avtoltXS5buDDV9KYxkwcY-TuTAHUnV_vOG1PUrOqn-b6WitYw>
-    <xmx:mue7artMZ8LpsZ-6zvAjmoEDFWLNre6e-E3LqZrmiBIP6LPEi6VGH5DZ>
+	1790700716; x=1790787116; bh=hSpk124JtTvzpFHZshHPEnj21Euol4uTpaU
+	kcm9wTss=; b=e352dhqF37XbPCGLHwyTF90sUSze4vtMN5HW6bMuLhulWyhqIMr
+	kkOltfjdyrKd8i/kNocIbDhJpGB9iwnC1yj9k/xYoO9ap9M9Kjs/R0FJalrv+5Rw
+	yX6owPb5g+5hl979NB/A9FWSJlaqsohBIstS5JvkpNsQlZ8eQtc7/7TGPb/zvMgy
+	JhojAtqyxZuzrOY/VOzuAx3cLrssnWJaOWpzvmKVXCWDUZ1gnjjsrlwL/rmQd5iJ
+	ktly+KvnpK0FVJk2x5548Fp0rxTCZ/IrFLJo45e12JIKHeVS9KiJCMeuNjCBb/uV
+	R3TA0Cx8sVNvEvONOM9qt54o989967xFm6A==
+X-ME-Sender: <xms:q-y7atvdhhXl_ScJg_N54P84Lbmf4BxiRPT7V-CqgH04AifSuTqR7w>
+    <xme:q-y7apAYV_gmIJtC-EyatcyZbpOPte_EWP-6TQZMgFfFQoZnPjW837mw-xu6dRe0W
+    Q81tKGnNaRVi9ROP3kl2nB5SmDrGq7q7vqvPHkWkYRAA8gbNJfmMw>
+X-ME-Received: <xmr:q-y7akaqBAla2gQlYK7UmIYaWoIOENjlK1_UN8VkfcFX6h2139NzsSwl0FUFMpQG9tDzBEGnjBE0xgMptB5bMsDJsgL3olwwaNI8>
+X-ME-Proxy-Cause: dmFkZTF7MJE2GBxj07CVh54pQgYlB/7M4sJ93qadut2HuZ3iuxRrX2afGNo9pH9v4UcuR+
+    jI8WVrnjf/tFCA9KOf1I/ddTdSIFLc0O8ZjKTN3dW4vvDDxgysVzt7yx55fvv28U9Dp+Ft
+    wsL8xY7I7JQf4YHaw6Isnu0xTx6rUExd5jKGrCJLMjxemlAyJer/AMOt0BZlP0DhujTkdb
+    CzRUmAToxs/oA/pjM6TYOsUZCCI2ka7Ocdez81SH8PdqRETPIZNNyRXFU/ioMZZY8z/OXp
+    VGuvqkuuMp0h9CybskTuBv56CeK9HIl/zayblRvmeHY9soaiCkJBtl5PZFqq5NeQFGunLO
+    mSwgcoVKAfgU2T59qTCmTa4qC+G3yQjRNfT8gSsUKErUohT1oEY6ElVeRUXOG97nNwayk0
+    ZW7VX2uKz9nPms/EkKyKfk1UWP3+iiRnFOULUSjzk9r8TC16ifpKX/9yd381glEK+frwos
+    AteDhSfT2IIQxny0ywQ9YdwYArn5TQZwteuTtp+eGljToQ4XO9GV9rhyRMasPyhCmHGv4G
+    kCSoi6qEvmQA/Hz52BuvIxY9QgcxO7PhtKdayhyFYQe3mNO8T5DAgd3n039pzcZ2kbsGEl
+    v4jQ9vp9S2it7l3vkeHeessbsGLFJ+i7LvjfJwMcKomfMipqDa+8XwSd3jNA
+X-ME-Proxy: <xmx:q-y7akUZDMJKj8JMUlxTSnByQy7Pa5sd8kZLFpuaQVi-UBDJst_2TA>
+    <xmx:q-y7ajPw9iCKbqZFjjXKmhUJwCz0MUTfea6dqqLFBILrdRG5SMuvoA>
+    <xmx:q-y7aubNl59rcBRUh-2Oie5K9PtyJTqfjJ08hy9A7twUf-iOyf_p1Q>
+    <xmx:q-y7ai9LrmNEdachdeubwaPbSNfzIvjG97tFMVD49lFCkWyUoxqtkw>
+    <xmx:rOy7atbdPK8Sl-cGXU-jgdrgWaYoalH_T9HI3l-5JxPf3l1QDxVXbcYQ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Sep 2026 12:30:18 -0400 (EDT)
+ 29 Sep 2026 12:51:55 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Brigham Campbell <me@brighamcampbell.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v5 0/2] git-contacts: allow inputting patch via stdin
-In-Reply-To: <20260928-git-contacts-stdin-v5-0-e9becaebc47e@brighamcampbell.com>
-	(Brigham Campbell's message of "Mon, 28 Sep 2026 23:47:11 -0600")
-References: <20260914-git-contacts-stdin-v1-1-9ac628e6fd20@brighamcampbell.com>
-	<20260928-git-contacts-stdin-v5-0-e9becaebc47e@brighamcampbell.com>
-Date: Tue, 29 Sep 2026 09:30:17 -0700
-Message-ID: <xmqqh5j8hvfq.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Michal =?utf-8?Q?Koutn=C3=BD?= <mkoutny@suse.com>,  git@vger.kernel.org,
+  Jean Delvare
+ <jdelvare@suse.de>,  Elijah Newren <newren@gmail.com>,  Usman Akinyemi
+ <usmanakinyemi202@gmail.com>,  Taylor Blau <me@ttaylorr.com>,
+  =?utf-8?Q?Ren=C3=A9?=
+ Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v3 2/2] merge-ll: use tempfile API for external driver
+ files
+In-Reply-To: <20260929051312.GB1100669@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 29 Sep 2026 01:13:12 -0400")
+References: <20260929051200.GA1100000@coredump.intra.peff.net>
+	<20260929051312.GB1100669@coredump.intra.peff.net>
+Date: Tue, 29 Sep 2026 09:51:53 -0700
+Message-ID: <xmqqcxtwhufq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,22 +91,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Brigham Campbell <me@brighamcampbell.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Make git-contacts accept patches via stdin. Multiple patches may be
-> concatenated together before being passed into git-contacts;
-> git-contacts recognizes the mbox `From ` header inserted by
-> git-format-patch to separate concatenated patches.
+> When there's a long(er) running merge driver helper, the user may just
+> decide to terminate it with Ctrl+C. That sends a signal to the driver
+> program and to the whole process group as well, including the git merge
+> command proper. Hence the cleanup code would not run and .merge_file_*
+> files are left behind.
 >
-> Update git-contacts and its corresponding documentation.
+> We can fix this by using the tempfile API, which auto-cleans files on
+> signal or other error. That covers the Ctrl+C case above, as well as any
+> other incidental death (e.g., allocation error due to a gigantic
+> output).
 >
-> ---
-> Changes in v5:
-> - Add a patch documenting stdin support
-> - Link to v4: https://patch.msgid.link/20260925-git-contacts-stdin-v4-1-9b4e4bcbb91c@brighamcampbell.com
+> Note that there is one gotcha here. The current code uses short,
+> relative filenames for the tempfiles (like ".merge_file_abc123"). But
+> the tempfile API stores and returns absolute paths. Because we run the
+> merge driver as a shell command, this can result in problems if the
+> leading directories contain shell metacharacters (like our tests, which
+> put a space in the trash directory name for exactly this purpose).
+>
+> If we were starting from scratch, I'd say the correct solution here is
+> to shell-quote the filenames we put in the command. But doing so isn't
+> strictly backwards compatible, because users might have their own shell
+> characters. For example, if I configure a driver like this:
 
-The end result may be the same, but I somehow expected that a new
-feature plus the documentation update to describe the new feature to
-come in a single patch.
+"own shell characters" -> "own shell quoting"?
+
+>
+>   [merge "foo"]
+>   driver = "my-driver '%O' '%A' '%B'"
+>
+> then adding extra quoting will screw things up! Strictly speaking, this
+> kind of quoting is wrong (it would fail if %A expanded to something with
+> a single-quote in it), but it is entirely harmless with the current
+> vanilla relative paths. It doesn't seem worth breaking it.
+>
+> So let's take the most conservative route, and just continue reporting
+> the relative paths.
+
+Very well reasoned, and the implementation exactly matches the
+designed behaviour.
+
+Will replace.  Let's mark it for 'next' (unless somebody notices
+what I overlooked, which is not a very high bar to cross).
 
 Thanks.
