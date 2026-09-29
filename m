@@ -1,84 +1,87 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7711569F36
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 19:55:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB2B3CAA55
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 20:07:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790711724; cv=none; b=FlXLEBeAc43+LOeoVtc01UbLPjptcTTtKZv0V9VPOWlrlBdHyIDott2czVVz0bN0f5PKYWMgCcflXX+HmXhZA2wQZCTdjalkbXZIJDyb3gHVMmsaE4rnBUqoDNqMNIc/1L8lSar38SWMVfgQymJIgQR/Ql/pfJ+OtBbEATFninE=
+	t=1790712427; cv=none; b=gHX8VMOVZbzdWyA24V3uBaGGuFqsSBTJnXZDr/w1jR9cxJCFL5w+1HVyIo5hfLiPSLkgXw/WON7dMNUUlh4JJU7//z+zuOzWVB6wgNkZFAxJ5zhGCn920hyWAficzTYLROF+PPxC9eAKZtTy6c4Txj5cY9Ow+FA8Z/Cf9Goo5s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790711724; c=relaxed/simple;
-	bh=SEbJFQjDZMhGtPwkE1aGXsoJCW9/WwYHRhW0fcWzLe4=;
+	s=arc-20240116; t=1790712427; c=relaxed/simple;
+	bh=ogJAtHh3C33N5zdS6OWelCRKkaK/7nzGwudbWKIvE+o=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NJyMxhnLhOa+YwwIscPeOTV9TkYvmGyOz2QvCoCOp2UQ1ZrADUE8eTlOKHyqojrmT02a9B5lqmkU+pqNAMaoa53FWd5paWcM5Xc+2dlejNWZJoo4ANwynlYPYWmpPZc/gNuvqIbSybbhjZ4nlpJyuiXrTJQzt0gE0hUWLGSVuww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L/tvmPrC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jcEYQvoS; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=uxAWoLtoFOZS8UDmO4C3zGParzHsq+G28LrV1Q7duOSXiOf0DPlsJyO6m0mKJezP5/DIpd1t3IB2KihScor9GaBTQXn4xYRCbnB45kl4VJiDFg97iOr0KqQ1pSo7D1jm4cc41vgtd9r6Q5LeJuKaJw2du22Pbu4ADa3skBdFL/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XB8QE6S0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vhwxoRAM; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L/tvmPrC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jcEYQvoS"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1F5617A079C;
-	Tue, 29 Sep 2026 15:55:21 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 29 Sep 2026 15:55:21 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XB8QE6S0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vhwxoRAM"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7C6EC7A076B;
+	Tue, 29 Sep 2026 16:07:05 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 29 Sep 2026 16:07:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790711720; x=1790798120; bh=aD2jq99qXo
-	bL/gtGB8QuG6VZ4D/Nm9SaSk24TRjrbGQ=; b=L/tvmPrC/jKOX1C6sitDblnPMS
-	nafzZNEJhXmPkOn/zYF9Tm0vRuFlW2MpbCVUDiaRn+3jQLCc5/pukjx48lldkGLd
-	Y4BKANKdLk/3gUXARbPT6xepMvGt5IgvMmWyb4INleWtgDrWV90vGyeQFjOBHgBk
-	f2AOtvyfzCgzJfO5b71lJ/63tFkZJr8+dRHGih20ZC3XM90cl90+xvLeeuTS7EpY
-	iLoFFi05AMKoixZuzHgvrybHlciX/dHaqR8IM0nfHAi+sKrmbREUVdwU+1IibhBR
-	PnO1D2avWpwMWoEh+CMMAnPnSK1ghHjxz/D+VdmkjHXUDWCxlaSi8MWnqlOA==
+	:subject:to:to; s=fm3; t=1790712425; x=1790798825; bh=cNTpmkw0xs
+	ySu4WEKeCd/joFir+OK+NDN4Srlve/aDQ=; b=XB8QE6S0DR5dFgndpdWPbCwI1P
+	bMplS2AgkrEGacXUZU3fAWbl7A647PcQYNwoG2bEojfcaklieL4R9v4Z6qlcuUnI
+	4h8W6LrvV8xOv0HNeXeyQUTac52v99/hL5GZ0vMkN71ZG9sbwNov9A8O/aFZFoO1
+	sIkaPi5kmfYytTJG/c9pta+beMMFnOyYGvmBjaXUI9y+tTYjD0CIeCQgfoOCFtvD
+	eCVFbhpNKBpATtUOzRCR4Tp93mmUWVnaPbmiQl7Tk7zD2MWQiybByP6QPQhdsENV
+	HdAFHNo4Y/Dfat4broJCGY5BcW/L5CiHZC/SNhTBLkT48kr/Ux43/POd+qQA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790711720; x=1790798120; bh=aD2jq99qXobL/gtGB8QuG6VZ4D/Nm9SaSk2
-	4TRjrbGQ=; b=jcEYQvoSjX1HrBzHZB8p6pszEWa3S2kzh67y7eHpXKWSFWcdCpG
-	KgG3cAW7NNNDLBRpXdGygqFhZ+MSLORQAFRM870YuNoj/O/J63lM1dKRj/QdyCsI
-	JMHU1VZHRLgnlyaWwPAIuqx4zu1T51h4PXQW4syqbb6aD/NL1A2mFBw1/8CLDWWz
-	4JCqFguSalbL95obp0Z+QkOGNFEp1Boyaeyhpz/36QQPoqam89QKbeIDcXmAc/tN
-	6IpVak58iEEh8LIvO41wDoBPzFLvhzJFhSJVpaVVuo2B2qqCzC0bFFRuVki1B6Iy
-	e5Y5yLBpdCFilArjgulxjJkQmn/0KdWff+A==
-X-ME-Sender: <xms:qBe8akl-6lEQLndzVcCUyuzde1-wjlaQgkkBKLFhZygQykxi3CtFRw>
-    <xme:qBe8aqtBxmIOdXTGn5tD3xR99WJOlMB0FpYlD54_wnRVglswTaRicaym_scG17SgA
-    LOmeGk7oW8ZaYXxqIeWrimv4vuSLDsdQLlDnqq3ujXpqC4Ns4ZMJw>
-X-ME-Received: <xmr:qBe8aq8qIKRTFAWC4TEbt-HJs_L2obkxtccrL6erJA1DosiNIgWxE5aNJofmptUOUuNPYByLJW6hcq4Nf6sPM2RfRgZNhVzg5u1p>
-X-ME-Proxy-Cause: dmFkZTFEPEU4XaA5clvzr3d8Q1Aw/Zr3E+9m6aqQnkQ5cKO67xA/WSfDJ+vMGEvyYOhqq9
-    /rCCB2HSPFyp6ue3icKRPC+zpwtBCcnZgnVTMUgnULJuuxkG6D65vaOQZOw/0ph6IxoEOD
-    Tts54e/3nrXBQJMxsNl1Xzg8eyAg3TSyiIGH4yxIEe2hBzGM2vUEhwnrUGHXTZ2WXq8u/D
-    LyX70K2Dmo+fq+rzHSxKgm3CzSTvylLYisIYPeLxwdXxSPquY2rPcLLgIbl/CzwluB9BxI
-    PrJDibPuSol3jr1lkaW9iRaPhXXKk9EEHtJONWUC9Z7qErkpSrk/PkfkApCyXdGnFv34GV
-    CxfFcM9ly2kveBQVURoSESIND9JHaQSW1iHUDkgDhWAWTv8OTXsDYw9bJXaa7k6Tt9ThIW
-    zNc6icPWAQG5aFUH/CPId6//Bn6m7z2g401nHLq/mzmJgwLFDjHLYk/uzU6n4GsyY3F8HC
-    N01aD+uREcCS5HjwSQ60DvLzEq7B3ICbi7ObwM71ObqiE4lVtqtqQjUpmRdFNK2gU2MzyC
-    pp8Q3q2ylehDRfKdhd6pGDGQZr147mbQx6vaAUU4vUI0oWPCYSrsemEoE7w3tRtQS7GbaC
-    QW4txIBEU9KjMNOQ38re7DBWOPfqtHIGfuXRAazzCBKseElYitjShUF+gg+A
-X-ME-Proxy: <xmx:qBe8asOQAGmiF7mzrJFlOrsEU1_38b61qY8f2YwhkpW_OapLzDQokQ>
-    <xmx:qBe8agGSJvoV6Uywxti1oh6wip-Zg6hk1NJ4masEC7hvvV3-CNBLLg>
-    <xmx:qBe8aiRqgaQppiIHq2DEJtMJc7fVKIcQgMkCu5rhx9Y5CBVDRvmbUA>
-    <xmx:qBe8alvR37eajhtcns3mv3dID8dpgtlaAfv4WbS6mIvAUQUDxqi4vQ>
-    <xmx:qBe8airX7VmiuR-sBiosErLDmi44lYtnqnVljI6OR_CMQa7QZj2yWUvl>
+	1790712425; x=1790798825; bh=cNTpmkw0xsySu4WEKeCd/joFir+OK+NDN4S
+	rlve/aDQ=; b=vhwxoRAMI9INQBLQPnIlmuJXOFetw8J58q+6MAEaAVwXRnEhDtU
+	ND8Y4BaSOEbf6HrwM1MlymXymNNPahNA6e45Y9CHJH/88hhcUyiwbeOdrR9GWnsU
+	DpbGgEjF1so1anPF9ZsjZuCnHNZMeclZFmsy/iAvIZOBgZgksw65XeDpJu301Z52
+	3doM/R+RI+OwTjEU25EQYtTILNWwziUYYEycL4Xcs+7oY/nGFF+PLSI0MsCEdhZP
+	Z1hwJ9vQFXTA89s6tgo8jloy0wUvIgHCjLzHomKdRka4OVlje4GT9sAkWTMujijw
+	8/PmCTYOCTRQL8YOROoK4LnlLSR3N7HCHaA==
+X-ME-Sender: <xms:aBq8arI8D-3GrH4ID8yoZ9pMrb0r4plYdf3EXGtVMib3_Suh2kwPjQ>
+    <xme:aBq8atZJlVKT5gXkVH2YsfUF2zn_-lbduhRo8xGJSyJCACBMwevTztKXFWcvVKJPW
+    mFom3gLu_NT38bXY3Ch0VCOH6dT5nNFYtPnHABLKokoUw_5sufXqfU>
+X-ME-Received: <xmr:aBq8atD3fOYm9EGWkLKO_3ERknrBJSVuU_f1ic4J18Q-cH0-YNMLw8tGYn9GGqu6roL15hnLt7g_A-GscjHVL39-k_4ZkK1SfIGV>
+X-ME-Proxy-Cause: dmFkZTGfJ/pqAiLyD6uYGJYXrqC9LTp4ZCBANdUOaBCaLqXhqwZb9wyBJpvrimzypcc1/X
+    zFAd5fe/LP/eZH0aMRl/WdMVXjbZ5JDN4tivIN22UFL0s/UsX4aLv/X+xtIBrPmnPh4hql
+    nDOoJvhPpeCOomQV+GrlhYONd9EE9eCWZ7HH+DYaEhW0kKdNEu16/RnCME9KQj1K3t24gz
+    0jqFUfL3nHDTWXyTRskrriCVDqyOJXGDGwzYfj/19+lDq0QB/h1dvEJQKwxbYyZ/pOEXTu
+    Lu01l4Z2CwAhVXIxoJPNxtsxUgeN3mNsZ27Wv5Zc0Y8GQcZ5VQl3zTfXvGKUFzJ9utUgLa
+    Mr9UMhegyaWZ3ipIj7dvLYwbi+ndEZxfTeFQKq4YzRfOWjbTkQ6vYWkyI44AaQfAPZ7GGE
+    ltAq3NS9JHa3j7yMOzmu0NpNFLnGxmqgBZQLL1I/9UUXiIkQp1GVNsoQqaPuPUyprXOkHj
+    2uHUZ8ptMyR56pVzWrCADGD5p2sS0lrJlUVpJWKTx9ygdXPFFhc/YIVzaFiy12ctuIGIq+
+    5uA6yS6m5zbQRBLItQA568zWdkNRN2NKiGEq9m4wgIFnCcv6DRA/5cCenKHC+ImEswlo0o
+    o0+dCNjjIIgLm+98g3S+LtX02ynxYeVLW66akHt5kmZBdy6qcFofQXsOGUVA
+X-ME-Proxy: <xmx:aBq8anY2fzQ2f6P3k1jl8K50wt9mW11NnyRE5yG9y7-R3Vfr6w_0jQ>
+    <xmx:aBq8allPq_0b06eJSNgL5UAK7x4RGkynJoPOGibeaIIeMfYIHKllAQ>
+    <xmx:aBq8asopePwT7FmYXnGDbmI-LRCpK__R7QSFIzb-qNeGKk0FIQxOSw>
+    <xmx:aBq8anCAPu_mN37zVuOY9eCa6l2IhNi9MXXOo95sMOYhFG2x1feCwQ>
+    <xmx:aRq8amDb1CPCZ-cRGjT9_zWYiTZHjfRYePh1dCcZTdS7tcJfBUEYuoqw>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Sep 2026 15:55:20 -0400 (EDT)
+ 29 Sep 2026 16:07:03 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Ignacio Encinas" <ignacio@iencinas.com>
-Cc: "Jeff King" <peff@peff.net>,  "Isabella Caselli"
- <bellacaselli20@gmail.com>,  <git@vger.kernel.org>
-Subject: Re: hostname: includeIf condition =?utf-8?Q?=E2=80=94?= anyone
- already working on this?
-In-Reply-To: <DLRSIZ3JV2DF.10GG1YB2D8DHW@iencinas.com> (Ignacio Encinas's
-	message of "Tue, 29 Sep 2026 13:14:34 +0100")
-References: <CAK4AdTRdNEU8cLFQ_7A=CUUL6u6dc327rn_H-SeBBD_dD-K7PA@mail.gmail.com>
-	<20260929014415.GB1089022@coredump.intra.peff.net>
-	<DLRSIZ3JV2DF.10GG1YB2D8DHW@iencinas.com>
-Date: Tue, 29 Sep 2026 12:55:19 -0700
-Message-ID: <xmqqa4ozg7dk.fsf@gitster.g>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org,  Eli Barzilay <eli@barzilay.org>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>,  Patrick Steinhardt <ps@pks.im>,
+  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,  Elijah
+ Newren <newren@gmail.com>,
+  Jeff King <peff@peff.net>,  Victoria Dye <vdye@github.com>,  Adam Johnson
+ <me@adamj.eu>
+Subject: Re: [PATCH v4 5/5] builtin/stash: merge index in-core
+In-Reply-To: <e21b832a6e1d99416a220bb5ca1f008777ef4e7d.1790684309.git.ben.knoble@gmail.com>
+	(D. Ben Knoble's message of "Tue, 29 Sep 2026 08:18:31 -0400")
+References: <cover.1789853192.git.ben.knoble@gmail.com>
+	<cover.1790684309.git.ben.knoble@gmail.com>
+	<e21b832a6e1d99416a220bb5ca1f008777ef4e7d.1790684309.git.ben.knoble@gmail.com>
+Date: Tue, 29 Sep 2026 13:07:02 -0700
+Message-ID: <xmqq4if7g6u1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,21 +91,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Ignacio Encinas" <ignacio@iencinas.com> writes:
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-> On Tue Sep 29, 2026 at 2:44 AM IST, Jeff King wrote:
-> ...
->> It looks like after review on v3 of the series we never saw more. I'd
->> guess the author (cc'd) just never got around to pushing it forward.
->
-> That's what happened. Similar to Isabella, I was looking for a small
-> contribution but it ended up being more complicated than expected. I got
-> a bit overwhelmed and decided to drop it.
-> ...
-> I hope the discussion from 2024 is at least helpful now if this ends up
-> being implemented by Isabella.
+> +			merge_incore_nonrecursive(&o, merge_base, head, merge,
+> +						  &result);
 
-I was re-reading the thread yesterday.  It looked like we were _so_
-close to the finish line before the discussion stopped, which is a
-shame.  All the good bits were already designed and the only thing
-left was to assemble and package them up.
+In a hard error from merge_incore_nonrecursive(), result->clean is
+set to -1, which means that ...
+
+> +			if (!result.clean) {
+
+... "result.clean is false" is not true here, so we will ...
+
+> +				merge_finalize(&o, &result);
+>  				return error(_("conflicts in index. "
+>  					       "Try without --index."));
+> +			} else {
+
+... come here to access result.tree member, no?
+
+> +				oidcpy(&index_tree, &result.tree->object.oid);
+> +				merge_finalize(&o, &result);
+> +			}
+
+IOW, shouldn't it be more like three-way check,
+
+			if (result.clean < 0) {
+				merge_finalize(&o, &result);
+                                return error(_("index merge failed."));
+			} else if (!result.clean) {
+				merge_finalize(&o, &result);
+                                return error(_("conflict in index merge."));
+			} else {
+				... happy path ...
+			}
+
+or something like that?
