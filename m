@@ -1,68 +1,68 @@
-Received: from mail-wm2-f6.google.com (mail-wm2-f6.google.com [74.125.225.134])
+Received: from mail-wr2-f10.google.com (mail-wr2-f10.google.com [74.125.225.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1399233B6F1
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 21:02:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.134
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1053F3265
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 21:06:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790715777; cv=none; b=mUuPonDxXWMiEiyhqP68DkBRgk79hhb4V2FJmI5ZXeQSey4hAL0tpL81uCjFiTjA0Vv/IMEg/vPFDM+ht6Gf8Y3EsJJSWKMd1Yk9sWDTRrpETB9tDagFCAHFwoRVw2ZXa6gC8tvozDGbbSQo27+CN6dEdayHIL+Q6L7kI2gTFpQ=
+	t=1790715986; cv=none; b=o8a2MPSj+oVN7IHn5Riqrg/bjihIQwG5oJOfM0Cw8RpCqIBatQLc19DMKaEZu12PFo+ZOfpDHpT2E9W7JfaOL99/OiUvwx2HQ0wm0B6QqnSRaLAtsNzF2ihqr/sWp6LxVPRWDac6oBPQV30nFitw+zcyD622bh3wZzGL0jge58s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790715777; c=relaxed/simple;
-	bh=aNoUKPBcU6ESSvB/OueX7M0LIHIdH6TUbZYhFlDN2y8=;
+	s=arc-20240116; t=1790715986; c=relaxed/simple;
+	bh=ygHE/HilrPlLHbrZWNjmAelY0RY2Qgnd1JXlAtRLDaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FU1CDZiy2Yue4YAJBWGtEtnx1ULNoKn0o85NSAzKd0PpC6dwQUyV8g8+Jx6z34iud7dsGS61Xz+FD07Kr3pcprrIQEYeRZMHaGhtz+rnGzTD+MfrxkQahBoikpIQIfkIfcxvkz/YUp+ogVrMqNjPdNfCTYpGV+f8r8MFg1jeHw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o/WfqJgh; arc=none smtp.client-ip=74.125.225.134
+	 MIME-Version; b=I4aqHg6duAmgodo/86OOvjvbmWEyS/QiMbatiT+wXCVMOsb2ppqi1G6wUQN7vOQb+WUgNuj/s3hZnV3DAe1OvbP1SUBtwVI2B6AH//3lWmJQCffCZGnCmLXzSkekuFCRCB43eZ6GuZzdT/qNYfF6/9hgEglPmaJoJVg+zt9UZoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E+DAxa8K; arc=none smtp.client-ip=74.125.225.74
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o/WfqJgh"
-Received: by mail-wm2-f6.google.com with SMTP id 5b1f17b1804b1-4a0025d3f2bso8543845e9.0
-        for <git@vger.kernel.org>; Tue, 29 Sep 2026 14:02:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E+DAxa8K"
+Received: by mail-wr2-f10.google.com with SMTP id ffacd0b85a97d-484372811e5so1484176f8f.0
+        for <git@vger.kernel.org>; Tue, 29 Sep 2026 14:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790715774; x=1791320574; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790715981; x=1791320781; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=z2+bIywJZGyBvqgyVFa94H4PL5L6tojhRoyxchyLRB8=;
-        b=o/WfqJghZw3hUw4HBRA1lzytGY+3J3EMaSe/mbllsRSuLsrWjluNXUwAX1RyX5M0g3
-         zmLkaRw7vNYMBFshVutkUN5ZB60s36e9thcydSFZgjpo88hRpdAn5UM+KIS51EGD3DPN
-         P9VjIixqULH9smUk97+Vq3sSILQ+8ITgkB6yVDgIA+gDkB+kudllIATZbNORRpuz6UVL
-         cOh4UHE4LiDKtkPBWEQ1VbgfVTOCcA3zfcsX+KBuaeyfOBFUoV/oWqHGuA3uXPDCuOCW
-         98CwM6NaY3dwXuam382MKUFkxmtxs6mDSD0Ix/KRtQfgv+6mxMFXOoB6SuwYXeuE3BaI
-         SJhg==
+        bh=aGAQR4BUvHBanRo0wIppkH0dXNttMyXlqe+JM4Qsz+M=;
+        b=E+DAxa8KU7qCSpFeZkHmOsMLQunNEdGPHy9J9lukFo2jz3mXPVa02JGpjROMKqZFwl
+         w6xCGsSp66aRvzRe9CxvXSzGXgbO8VZfHa6XdjDkLhlzrq+1Hs6ZJS1mCy2snY2rNmrz
+         IAPwshkC67UT6Nk1SMX445bH2B6n6DqzhBTDHC5DtaHxMCzApbk5AOyLR1aFoOuGmYmr
+         dpgUuqND2PP24gNUMBFrWrYnv9ggE1LLaDGIS1ddjdwnwQ5K3MzF3b7ae8P/hbmv2Olf
+         RDczb5botZj/mcIGOwGW1cnotOAuJNO+lsXy7goHRzFFjfiVt157RT8l1OjNvXGdFpjv
+         JyyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790715774; x=1791320574;
+        d=1e100.net; s=20260707; t=1790715981; x=1791320781;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=z2+bIywJZGyBvqgyVFa94H4PL5L6tojhRoyxchyLRB8=;
-        b=Ir/UtshFECIqQR7G23COffR/BV8gNGsY18tHiV4qoH/YardR9UzBA8QSTLMadQgOmv
-         Hju1QY2AcWGh4EYQxAgum4PYRpdXjd3wAXXXwuPQolFVGYgrWQ0RJkGl5YrzdhQ/8+T/
-         mqZcNpSQmGAYF9BNPVsZDfqkHslH5iLzyjGe7yyqFLEXJW85qCzTSfl2JbCLRGe/UWXs
-         vqlg1ht1Rt61r0Pl/IZiifJeHq3tnrBZFWcubqwnDmgH1ZAZSqP5cBmbOk1ST2/HldlG
-         tc97GDSQbRnO8VZOFaKqPuTc1QisqFkoOD4+RLsCIR2VJUGVTg67XhAZZET8eahiXNY+
-         p4Ew==
-X-Gm-Message-State: AFuF++lOB6LPzICMHDT8iE/XrgwY17Z2nUiTkafQ8BmxbPUm6YWBJ8Ll
-	c8CLy+GkR9iWnW4z4cszMU1fqLJGV/OC7VgSjvhxHj8iO8Sb3aX4COjL
-X-Gm-Gg: AYBFou1GbE6YoH8L50s2+z3yyynHHJ7xIN2B0Z/AdcK5mrvUVJhNSBA+dBN1eLMuI0q
-	nJR/xo0KSW88vtOk6/VjrwnMN1xIrjilyuAl27CmD6KHViqBh50uwGtqzKzDgHq++/m1vnqABx4
-	4qsumtkEhDH+/kWNuZnO02uqW9wHV1zK42JXI7oE99QCfPhfuRMwO4kiFsgtTpxDVNkK35w7XP6
-	pPfWnSiNCDXFZdqNC6uOQPpPDFCFV7teeLZxSmm5bSiGEB7GAo0On3fXT+8WtXQJkYpQgdL4w+D
-	5ZD+CbPs5HGK8RtdfJs0eesNnol1r3R9mjG4yPX+gu1SsDw+NTOfkIdS+ddnGtjAKsdkstKMqRb
-	HV1vc0NfXLgxWjySlYxHmlr5cD2CS3WixpbnPvd5os3fWw5lK3LsP/hrvBjRqtQHhp7VtKM6kbj
-	YdO07Z1IY4XUDZwkySJ9l4xNiNhL3h/YQAGhSFPUSeZ1OTmRE=
-X-Received: by 2002:a05:600c:1c19:b0:49d:10d6:fd55 with SMTP id 5b1f17b1804b1-4a014fd2689mr7491275e9.1.1790715773787;
-        Tue, 29 Sep 2026 14:02:53 -0700 (PDT)
+        bh=aGAQR4BUvHBanRo0wIppkH0dXNttMyXlqe+JM4Qsz+M=;
+        b=kcQdzPc8HG7GUELGdXA3UuOsuIBCJyXGryD287EHeQvD+zgqqd8Bq/FmYQDz2ltc9c
+         GLGcaD6hHtcGiuPvz8q0U6o+8A2oCqYP2jna1IhR6uUOilLXP0ibFHtZl8WUrUP36Tuj
+         Hy6jwHgVsAW8mFyZgeY0zELrLI4fNKPZ4Shg2Y0J5TX4xpQAa4Q1kuIar2s5jODyydvU
+         4qJ6e2cBbOJgZpi6IDa6/+hurUHRjhDrTro28c+oBVvEe3jlYGyVTwFsLN5vEsExJApX
+         DHj0TgPM4jltdg8x2UfNOJcC2D/Ru+MfVufylnHBC7R/eSNSZl/F7HW4fG3XcL9C99ab
+         Oa1w==
+X-Gm-Message-State: AFuF++nqan5dms5A1stFEQ88NBSR9w8qPecATzexxtwAANE3df0mOnqH
+	BxEHClrCqbk6C4Ymm0pfIJfm061viUJIW23rIV+ayjXZhQ1ol8bdjOwo
+X-Gm-Gg: AYBFou1FwlxRDaiCPkCqa7m2AlQ7szbW7A/Y97HlyO3PMBw/HRpjovDoGPe3zMZ3g7M
+	QfQlbox++0Qz4lFE9EkNDV0P36dsPV4K7lMh00Ue2sezuEdPkfQuAHKgYdd9Gg02aKhdxX5iTE+
+	4M+vgAh+/B+sV6eBcCfB3+dgXVxf4vOKobs20sc57ydy9LtrvWLFfcLkM3tMtnSo7P73yCespHS
+	IeXy306fhCcK2Q+isAPie1rQzFbTPxNxx8U8KoT9sCE/1BL1/n6KWGnrc2hZf5fMgPiFjCXl73A
+	S0qVCXIn9WshlrSgJVCacoaSYozq5PJkTL2XUGg1Mb1YmFmDFES5th0WyyffIZTMiPOVfdWEBno
+	dQxLG2ItpIJmRy1UX1LeLqTMpdsTSZJVnGBh44E//DY9wdkk/JnUUjlV72ZLWuHMjFTlqQ+Z7T5
+	ReeCIxVrkuofUwoiv7/h58M3cwEX/ftfX5err3pyotZhyvL98=
+X-Received: by 2002:a05:600c:4454:b0:49d:1f32:c911 with SMTP id 5b1f17b1804b1-4a014fcfae6mr5492045e9.3.1790715980865;
+        Tue, 29 Sep 2026 14:06:20 -0700 (PDT)
 Received: from DESKTOP-OI0N70R ([146.158.109.7])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a015a1a854sm720445e9.0.2026.09.29.14.02.52
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a014ed6482sm10666665e9.0.2026.09.29.14.06.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2026 14:02:53 -0700 (PDT)
+        Tue, 29 Sep 2026 14:06:20 -0700 (PDT)
 From: Khan Zimov <kaliugov@gmail.com>
 To: gitster@pobox.com
 Cc: git@vger.kernel.org
-Subject: [PATCH v3] doc: remove unnecessary commas in git-add and git-rm documentation
-Date: Wed, 30 Sep 2026 01:02:49 +0400
-Message-ID: <20260929210249.1024-1-kaliugov@gmail.com>
+Subject: [PATCH v4] doc: remove unnecessary commas in git-add and git-rm documentation
+Date: Wed, 30 Sep 2026 01:05:04 +0400
+Message-ID: <20260929210618.147-1-kaliugov@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <xmqqh5je4o45.fsf@gitster.g>
 References: <xmqqh5je4o45.fsf@gitster.g>
@@ -76,6 +76,16 @@ Content-Transfer-Encoding: 8bit
 
 Signed-off-by: Khan Zimov <kaliugov@gmail.com>
 ---
+Changes since v3:
+ - Add changes description.
+
+Changes since v2:
+ - Use real name in Signed-off-by (sorry, handle before).
+
+Changes since v1:
+ - Also fix the same text in git-add.adoc, so that both files
+   stay in sync.
+
  Documentation/git-add.adoc | 2 +-
  Documentation/git-rm.adoc  | 2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
