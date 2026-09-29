@@ -1,36 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9521F39060B
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 06:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A3239A056
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 06:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790664579; cv=none; b=URGvxJtAWlhvmitTAS8P/7oDzBdDgaHJyMYEK8hfR5wLBm5BzpGjb4mScHiW+wIYFzCyJO58sXqWpObDuvBvtoPasPDrS6D82a+VwNJP0ErAVPq+tCx71hHl8OnM5xCNUzTHsMUdnm3uUmH+UoZRUj0Q0BNN5V6MwYTQ7umAa88=
+	t=1790664694; cv=none; b=utBVE011sIrmxeCnw6jTAV0X4dlD17RABeZAslnkFEGbo5dWN0od+OTkd6k1HAW9sQp2/aS1a4sB6jApbFuuuNmN9YWGkn9QSRbPvOr5p3adukNwXZSjaQ47AT8YrToyn+diFAe2WvFAfmOljwUVlR4kIKbSd34RjCqA6VRBYSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790664579; c=relaxed/simple;
-	bh=etpjZukVIi9lJwNAL0ZW8RBUhlz3iUETEVo+O7Uxf24=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=EI+pZP8ZLizvXRH5aP09hp8dUdXnI5MZGultP1xz2/Ght9UKv6mQj0ge64t2oKYdAvtuV6H50qtP/NWl1wWrLRxN4lP/YR/rkp7fNTP2/zGeWeMNVJMLHFtZRxoZWHA2GjcG0+g8fQEWNWxmmvfEArzDSBqFyRSjSmYGYPk2qwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XN6ayF6T; arc=none smtp.client-ip=217.216.95.84
+	s=arc-20240116; t=1790664694; c=relaxed/simple;
+	bh=g0WqAhORQ2Nxu5Jbx1mW0ggnVrdXwv6+etI9Mju8qls=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=puQHXcX2r3AFM63SHRgB9jfUrJucMSSQZ2Rkvm8MhCOVFT1F9oANeKw9wI4w4clHg4KF4Qs7FBDHxfUiAXEhjn+phS+aC5qWph1gEEO1QHpKs/ZzDyYz4S7vryjrBNGdgyRObfzWD9E1njDzpmm1vmuyVaaupUfaD3dFx2cxFcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XgjFmZkS; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XN6ayF6T"
-Received: (qmail 70130 invoked by uid 106); 29 Sep 2026 06:49:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=etpjZukVIi9lJwNAL0ZW8RBUhlz3iUETEVo+O7Uxf24=; b=XN6ayF6TyRz2Wy++jZWh7hL616lXHO+riqq9R7i8+upNrHncFBy48KFDi2942bRcPBz0M9pQThEREOOa3aCLePbtBdqt29XlgIcagTYmvC41H7vz6C6vw3pLpFwvQRXzrVOXd2JEm0pP2dS8s9RuQBBsLCPWPVmSEogq97zmVub+YGmReWWODF0BpZ/ChCwoJOffFdrzR9rrjO2DjRzo0a96DauIbaEViBnR+k20IqVR4yXs19mCHF/XL+FFg+OSNEFwu35NWh/yoxS+/sgQq1s/LTevhxqMhLmBdIYfkHCZDEA7Ng/xH6ZcelVIrbCfmXPk2hzzEuBlFz6fGWsHHw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XgjFmZkS"
+Received: (qmail 70136 invoked by uid 106); 29 Sep 2026 06:51:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=g0WqAhORQ2Nxu5Jbx1mW0ggnVrdXwv6+etI9Mju8qls=; b=XgjFmZkSiS4L70w3LqI+AkvUGsIzRhh9XyFuZGr6xu7PonmyHJ9jZZeli5Cd3XMjBU3vWvn7l52BKBQs5iIQ6clCdLh9oO/820Fcymzp3MNKMMMLPf9OhkfSBNuZT6a01pRalzxvFmIwY+Dz/F+QfM3Oau+JspvJ1dcwJi+wsd0At7Q12xXLnMLZUEqiUYoxvF4Lvj79WVK2X7/yU7nrNePqCJMXoAnW2Cb29z32okpL57/Z1DtjtL4ApUNIMxjeRbswiPr200wSR6pa8iYtgWa+0bzGoo8MbOumnk8wFJFXCA3Ik8DAzxh4BDWre0MyMIAk9X4tEo+z/HH57wT5jQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Sep 2026 06:49:36 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Sep 2026 06:51:32 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 289464 invoked by uid 111); 29 Sep 2026 06:49:36 -0000
+Received: (qmail 289502 invoked by uid 111); 29 Sep 2026 06:51:31 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Sep 2026 02:49:36 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Sep 2026 02:51:31 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 29 Sep 2026 02:49:35 -0400
+Date: Tue, 29 Sep 2026 02:51:31 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 0/5] use size_t for xdiff mmfile_t
-Message-ID: <20260929064935.GA1276867@coredump.intra.peff.net>
+Subject: [PATCH 1/5] xdiff: clean up read_mmfile() allocations on error
+Message-ID: <20260929065131.GA1697497@coredump.intra.peff.net>
+References: <20260929064935.GA1276867@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,45 +40,90 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20260929064935.GA1276867@coredump.intra.peff.net>
 
-An earlier series tried to simplify ll_ext_merge()'s code to read back
-the merge result from a temporary file, but Elijah pointed out some
-subtle integer overflow confusion:
+When read_mmfile() returns an error, it may or may not have allocated a
+buffer in the passed-in mmfile_t. So callers must initialize the pointer
+to NULL and free it even on error.
 
-  https://lore.kernel.org/git/CABPp-BG9Hkc7i_JxAbYfyzu+b4Mc_pZUr0jJF=vY0jHSARpHzw@mail.gmail.com/
+Most callers do this already, but rerere's diff_two() does not, and
+would leak the buffer after a read error. We could fix it directly, but
+let's instead try to make the interface less error-prone by freeing the
+memory when returning failure from read_mmfile().
 
-I dug a little bit and found that similar problems exist elsewhere. So
-here's an attempt to make things at least incrementally better. And
-patch 4 is the original cleanup I set out to do. ;)
+This fixes (part of) the leak in diff_two(). In theory it also lets us
+simplify other callers to skip initializing the mmfile. But in practice
+most still need zero-initialization because they may jump to free()
+before even calling read_mmfile (e.g., in try_merge()). But we can at
+least simplify rerere_forget_one_path() a bit.
 
-There are a few textual conflicts with the v3 of
-jk/merge-ll-tempfile-cleanup that I just sent out. They should be
-easy-ish to resolve, but I'm happy to just base this on that topic if
-it's easier.
+I said "part of" earlier. There's a related leak in diff_two(): if
+reading the first file succeeds but reading the second fails, we return
+early and leak the first buffer. We can fix that by checking each
+individually.
 
-  [1/5]: xdiff: clean up read_mmfile() allocations on error
-  [2/5]: xdiff: replace mmbuffer_t with mmfile_t
-  [3/5]: xdiff: use size_t for buffer sizes
-  [4/5]: merge-ll: use read_mmfile() to read external merge results
-  [5/5]: xdiff: NUL-terminate buffers read by read_mmfile()
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I found this while reading the code, but never actually triggered it in
+practice. It would require some way of having fopen() succeed and
+fread() fail.
 
- Documentation/technical/api-merge.adoc |  7 +++---
- apply.c                                |  2 +-
- builtin/checkout.c                     |  2 +-
- builtin/merge-file.c                   |  2 +-
- builtin/merge-tree.c                   |  2 +-
- builtin/rerere.c                       |  8 +++++--
- diff.c                                 |  2 +-
- merge-blobs.c                          |  2 +-
- merge-ll.c                             | 33 +++++++++-----------------
- merge-ll.h                             |  4 ++--
- merge-ort.c                            |  4 ++--
- notes-merge.c                          |  2 +-
- rerere.c                               | 11 ++++-----
- xdiff-interface.c                      |  5 ++--
- xdiff/xdiff.h                          | 11 +++------
- xdiff/xmerge.c                         |  4 ++--
- xdiff/xutils.c                         |  4 ++--
- 17 files changed, 46 insertions(+), 59 deletions(-)
+ builtin/rerere.c  | 6 +++++-
+ rerere.c          | 3 +--
+ xdiff-interface.c | 1 +
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
--Peff
+diff --git a/builtin/rerere.c b/builtin/rerere.c
+index a056cb791b..d39c6e8445 100644
+--- a/builtin/rerere.c
++++ b/builtin/rerere.c
+@@ -34,8 +34,12 @@ static int diff_two(const char *file1, const char *label1,
+ 	mmfile_t minus, plus;
+ 	int ret;
+ 
+-	if (read_mmfile(&minus, file1) || read_mmfile(&plus, file2))
++	if (read_mmfile(&minus, file1))
+ 		return -1;
++	if (read_mmfile(&plus, file2)) {
++		free(minus.ptr);
++		return -1;
++	}
+ 
+ 	printf("--- a/%s\n+++ b/%s\n", label1, label2);
+ 	fflush(stdout);
+diff --git a/rerere.c b/rerere.c
+index 1c3745d9e3..856347c9ae 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -1039,7 +1039,7 @@ static int rerere_forget_one_path(struct index_state *istate,
+ 	for (id->variant = 0;
+ 	     id->variant < id->collection->status_nr;
+ 	     id->variant++) {
+-		mmfile_t cur = { NULL, 0 };
++		mmfile_t cur;
+ 		mmbuffer_t result = {NULL, 0};
+ 		int cleanly_resolved;
+ 
+@@ -1048,7 +1048,6 @@ static int rerere_forget_one_path(struct index_state *istate,
+ 
+ 		handle_cache(istate, path, hash, rerere_path(&buf, id, "thisimage"));
+ 		if (read_mmfile(&cur, rerere_path(&buf, id, "thisimage"))) {
+-			free(cur.ptr);
+ 			error(_("failed to update conflicted state in '%s'"), path);
+ 			goto fail_exit;
+ 		}
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index db6938689f..e3dd2184ae 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -168,6 +168,7 @@ int read_mmfile(mmfile_t *ptr, const char *filename)
+ 	sz = xsize_t(st.st_size);
+ 	ptr->ptr = xmalloc(sz ? sz : 1);
+ 	if (sz && fread(ptr->ptr, sz, 1, f) != 1) {
++		FREE_AND_NULL(ptr->ptr);
+ 		fclose(f);
+ 		return error("Could not read %s", filename);
+ 	}
+-- 
+2.56.0.325.g545d7e68bc
+
