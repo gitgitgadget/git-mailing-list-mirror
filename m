@@ -1,186 +1,130 @@
-Received: from mail-dl2-f42.google.com (mail-dl2-f42.google.com [74.125.229.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB2550E59D
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 10:25:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5005B51A739
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 10:43:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790677542; cv=none; b=EqjlUpG42F9zVktlkxK1jrR5ihZmvU0buQqPKWA9qwgRbOrLFrzbXAQqOWJRbTeeHDaGk3/h0quCsTOaX1ZkiZdFoUgUBWVWFlGEEo+kP9OtqooLng4GWs3kHF7dL2doElB4yyKGLPnv2Wih7VZGvZgec8Gan4+Y/Ymy9ZrOIpk=
+	t=1790678594; cv=none; b=uHL19z47Me8GtEhx/ybAFxI+b3DtRFdLQKqifwiTgDgeAvIyeyUlmc6R9LFAHXUROtgyhufDz+IsKvwAqf94k1ekNasbv76SCridT4MDSPLZvc6RGU+v8aXRO3ikAJbGka4JukIbbNw8QCB1cl/YYFqEdaN27lh2IC0VIymuv4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790677542; c=relaxed/simple;
-	bh=nvX1b7Z6zpWfTz/8hO7PGdEwyfARd15FPnElUI0wvSs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fggnN/IJlPS63R5kvh9ihVINJerh9XzTXMFZ1Ya8L0BZ5JdSCAhnI2eZLPyKglRNIV2MEzF9ztp0UC/o8RvQNKH3Xlzdv7zJ7lEnUdV/zSAkw5L+oTgLQbB/B2PH5ffwciIaff+dRO1j704TUzwjfHLQZW3/D7Ah4W/qnq2KVvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ksqcw+oJ; arc=none smtp.client-ip=74.125.229.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790678594; c=relaxed/simple;
+	bh=UudoBIbCi/KOvAqvvQENyiFsG1s0Lye4o58mPNO8sqA=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=sVUnNmadE0AAlQqXHJI6sbi8Qxwriq6XEUJfnG2zFirY8X/qtgr+3cUiRarjOxh2W+OCE9pIWeyh469mvP2q/L4d8v2AA9Phx2SL4IYeD0Bvv92p5hOWORNhZy5HbEdDJzf4OiQaFFjObU+tcTUiPDNu8RNfCn4/h7zQNdTtsO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=ggly1wSK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tUybAnTJ; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ksqcw+oJ"
-Received: by mail-dl2-f42.google.com with SMTP id a92af1059eb24-144efd1ea76so2301271c88.1
-        for <git@vger.kernel.org>; Tue, 29 Sep 2026 03:25:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790677527; x=1791282327; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=SXxRghwKHq+vTiMqaQwtNNuxT2JaHCjSeffbmYLiL4E=;
-        b=ksqcw+oJa0l94dMD0acR0lQNDHhYQtCepbd0xKXrrBDEMTGtYul4AvGgNFaHApMazj
-         up0wx/0YTf1mJ5zZwo2V9Us6hzvbMG7fiS4hVNfhQ6ix58ankWYRPoBuiZzIivM4l7dS
-         faeOSPd4eoeq2+LITFfsIY4dF6DATuLeaoqexc5NlzxA5j5pX+prwSoLfRj4fWW+KDsl
-         Imw3mE5VgdQj+DwFEIGNVFaWURI6Vedj4mdwkjudfNHduLtkjCOVYOkbd0Dgo3BG34NW
-         dXq3rItMv5pNS+0APqAEeUOwduLqvExhCx22mkIB9UBDRNAWW9xqYyRYl3vDqNhRSJAK
-         r1kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790677527; x=1791282327;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=SXxRghwKHq+vTiMqaQwtNNuxT2JaHCjSeffbmYLiL4E=;
-        b=WNoLf5hChY2lkpC24QdrIfmW28VW6BYWaU5JMMCx4VRX2BSh+9jh/+7TeUBdfdcodG
-         QUe5InfWdP1ApWXoFGsqprL22FDMITiNUb+3jNV59Cdjq8wz/FxQP0Vdha8ICx5pKshR
-         cTd0QKpWTf6QutT8zHtrnkHVXfmkHSAgvLbIldVyWfscIC8Nt4MHkHeQPqGgoCmLFZ6c
-         hNHv9gxlX1C8YjcHzVkaE369VDokgqVvafvgtepowsdM+zvhyWSSo3Eb7wULgmEjXuqS
-         nSU/IL6c367Meal1W8F45RNkMc68SGeBl7T+8F6bQ71qDQZS2YUU3xWOT6k9jTX1EGsH
-         HCUA==
-X-Gm-Message-State: AFuF++lQMCkiPJS4j3ReoMTolFpazY9iEanLZ4b0xeO9P6ypX9AWqmW1
-	SLtl0SbEtzHycCnFariD3KbRXuWvIeViNb6kOY6Fwv4Vl8kD4mbvY1zeFwkvrQ==
-X-Gm-Gg: AYBFou2kW3fyUGz+hZcBVupT71hWq61f/baQoLdNHXgoE6eE387crCWD0ZguXqXFxxQ
-	vTC0lQ+6yTy+iPm2YWYcdV9NmoVn94UR1kFR7kPiLPV31jejF4ws1pL3Ww+ov2KrWOL7c/t3mJ7
-	MoRRBFZOJh5DGOzuon2UTMbE3qyr2drziN5s5nf3Y71DteK/RoWMnDQHyBe8jlVgGPLS0Qis0Dc
-	jDxVJiIl1wxi28A2+7CzqpeCy9F6v3v+ZQD+kPm0ddREyxxLMzWWUli+shJ9cY4VGq2FVJAalnu
-	4TUfYYRCCpjARgrHM+BhuupMTNe071sxwj3js8TrGlBigIikte9C/yUtBYfmuH72LLSLZRUnS4N
-	MC4LkTetRGDqgWrgJyW5z9s37gisEtRRJsfCCS97IjiHdy+SfKv3YPII6YSit+CrS5W9QRepYNJ
-	+dqZhFquaaZ1/CHR8id5lDv7c0/uuN1vW8l1sOQfmiv1vMbaZvcn0SWpBc0CnWKABWo0GM2/Jc5
-	z0UVwzIwhWQ5P32/0G5cCUbMH/uJQ==
-X-Received: by 2002:a05:701b:280b:b0:144:fb42:3e with SMTP id a92af1059eb24-146cfec86d0mr9611719c88.25.1790677526724;
-        Tue, 29 Sep 2026 03:25:26 -0700 (PDT)
-Received: from ksivaraam--20260831-PCX54 ([2401:4900:884c:d167:a737:cb55:b3cc:523e])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-145acc45f03sm30417589c88.7.2026.09.29.03.25.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2026 03:25:26 -0700 (PDT)
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Git mailing list <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [RFC PATCH v2 4/4] setup: communicate why a directory is not a valid git directory
-Date: Tue, 29 Sep 2026 15:55:10 +0530
-Message-ID: <20260929102513.712181-5-kaartic.sivaraam@gmail.com>
-X-Mailer: git-send-email 2.56.0.rc1.12.g2c9c8d64bb
-In-Reply-To: <20260929102513.712181-1-kaartic.sivaraam@gmail.com>
-References: <20260924120502.2642141-1-kaartic.sivaraam@gmail.com>
- <20260929102513.712181-1-kaartic.sivaraam@gmail.com>
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="ggly1wSK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tUybAnTJ"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1CF881401123;
+	Tue, 29 Sep 2026 06:43:01 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Tue, 29 Sep 2026 06:43:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790678581;
+	 x=1790764981; bh=E5ry0S1xrkdixvG5uYfOH9WRmS1EeU1sNERDgpYzoYQ=; b=
+	ggly1wSKQVXkQl1zGbXHbmWM5VQxhAS9deS8riWwmOW4aEwpSMYgnm691r39tGtZ
+	/Jrzn594ChlpR6RdEbzEF1i+IJkvEnlOmUmdVKc1l9tXW7PFLg12ENtoixJ/oGYI
+	NVjn96T4+SM3DBuIBYIhw7LYbr7B3hLhm+YJtf3OKhizB5Znu7i1TceU38StP79d
+	kaTCr6FpIE7U8Aig6/gPc95BBIYHNDV8EY13yu3fr8E6v05onuffrEWYyfzY1Yhu
+	QV19FJKU2SKMEGjz9S1tv229EbAoILUwafiqLy8Dj3Bq+h7hotWLRPFke7tHOnAm
+	lJPEAaWvcQfBFKkpjZba2w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790678581; x=
+	1790764981; bh=E5ry0S1xrkdixvG5uYfOH9WRmS1EeU1sNERDgpYzoYQ=; b=t
+	UybAnTJRAFkVh4kbNORJHvMzWpgsV8mCjUFnVvuQS9mcG/xbJ+0v/4cMp/sCmcRM
+	a9yFMaVXq4Cl+B58Hh3sIo4yCLlxdhHfO+2uCjtIMUmy9VURipeXt72g7k4MPTeS
+	d5c27o6Ahl+Fmf0R0IrKmpC+8b/pDJ2jevMhTTjpOYoSJvLWzfxe3U4jrXHmasbo
+	vT+OYjhibbhQJoETE9Ic9DavVdlwSOcul496F3x3ZT1V2zexPYPJySzCkgtSxgXm
+	1gp5ODNCGJ19HQIre8pDRT5yCJVdPBmgKtYtZRzprwd0WBk/j3cBvRJcqih2bcMO
+	IeybrB9KQb5NKaKgjqlSg==
+X-ME-Sender: <xms:NZa7an8Kc1bP__SFrV47MssOxdmPgR-hOvtL4dbdsKits2Ezbafxew>
+    <xme:NZa7auhlDNVbPWFgQUEKQ1SCy8K7ouXjvgYze5KkIgAU5AZ6U1raKDuDRncnblK1e
+    mglaMYQ42xgEp0XSSk4Ui2SgfCB7lR6p1wr_rpYxEPRW6mtLS0ihLZR>
+X-ME-Proxy-Cause: dmFkZTFL7MmyOYzPQF5JkvMtUVVC0K1whMZ/0l6lYfRZ1rUemVJGAxI3R+fW8b9+4UnFZZ
+    at1fWMTZcuKaxFc7aX77Gd6sLRRNRJySR8CTiOY4Gji7TGAlecCcq9MqOr3AKSAqksHgzy
+    qq20DVUjyXFvJMGNe8Jl6XostLuQ7oBTZg4zov5XC86T6i+4XjTT3/dDx4X466N9l+eK+0
+    U4y55ntOGRXWnqIkKkNQJRjFM2hEUOKxQ5QAuOiCDFMIkhkyrjbQm2ClIqwMOV2WuE1J1d
+    ms0ryt1qaQD33d/DqbrRKcDLaySrNDpkGO3xP3oWbp9lK3F3BCDmUnzglUJ2WmIXDj/+Me
+    cEM84NvdscPtIF4XOV4FSuYX6ZUEfyT9CAeZk25kfb81eEqFuY4rM/YrvHgt9+0S9kjkeF
+    dqjlRKRjxaAthcZSt556MNB2SKajrcRCe4eQHTJocEhDb4/QuXuLzUj9aYudTUn7D76WiU
+    sLAsb80D/KgRyjpGr4cuWL9dm5fP2US5yYXuB7BbGZn3i/45k6zZi9XzZKL+Vzr1x8Fvid
+    vNhFEFN5gadQYIzVUJ2VFrhILfVQMkO38zIG3J3EM0zzxC0Ci17MpdwCzUK8MpUXggx2LZ
+    n5LcmrVDYWvb586wPsBeMbqjSX7n7NLaGXNJ/wvLeqP02qDaIAUq6lpjHbvg
+X-ME-Proxy: <xmx:NZa7ap4r5s6Cnf0PC71HSHBBxFVqcW9R6jUxpF5kj1_t8GaB5S4LjQ>
+    <xmx:NZa7auoJowWRSA2uNkYzU2hXhzHPbn9jmB3pSzoofaPQk7myjVLtYw>
+    <xmx:NZa7ajjwbFvq0XZXkGIEJ06mtvs_qseO-BSpGpB6gBITkMiwOcL9Kg>
+    <xmx:NZa7agIZZtvYXeNvWtKeenAK4kGSGS-0Q57wwSctCe7e474o65fYPQ>
+    <xmx:NZa7ai1dM7EtpuFEB9rH6TWPNXfh6dH_ynwLy8H2S1jqdyBctBR7igYO>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id F276D780070; Tue, 29 Sep 2026 06:43:00 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-ThreadId: AqO-TNe5d1d7
+Date: Tue, 29 Sep 2026 06:42:40 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <8a5b742a-3f11-4bfa-954b-ffdd839b6d43@app.fastmail.com>
+In-Reply-To: <xmqq5wzojy31.fsf@gitster.g>
+References: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
+ <xmqq5wzojy31.fsf@gitster.g>
+Subject: Re: [PATCH 0/3] [doc] Remove gittutorial-2
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-At the moment, there are a few scenarios in which the error message
-surrounding an invalid Git repository is a bit blunt:
+> Is this the "two series" approach you mentioned earlier?
 
-  $ GIT_OBJECT_DIRECTORY=/does/not/exist git --git-dir repo.git rev-parse --is-bare-repository
-  fatal: not a git repository: 'repo.git'
+The idea is that:
 
-In this case, even though repo.git is a valid Git repository,
-we get an output saying it is not since the GIT_OBJECT_DIRECTORY
-does not point to a valid object directory. At the moment, the
-user is on their own in figuring this out.
+1. we delete gittutorial-2 (this series)
+2. we delete gittutorial
+3. we add a new gittutorial
 
-Instead, make it more easy for users to figure such issues
-particularly in cases where they have explicitly specified
-a Git directory. This intends to improve the error reporting UX
-by clarifying why the specified repository is not considered valid.
+We could also combine #2 and #3 into a single series.
+I don't feel strongly about that and it might (as you mention below)
+be better to wait to delete gittutorial until we have a replacement
+ready to go.
 
-We achieve this by means of using the new helper
-is_git_directory_verbose() that has been introduced. With the
-same, we get a more helpful error message as follows:
+> There is no need to ensure that the new document that replaces the
+> old one covers everything the old one did.  After all, giving us a
+> clean slate and letting us choose what to cover (and, more
+> importantly, what not to cover) with fresh eyes to match the needs
+> of today's world is the whole point of redoing the tutorial
+> document.
+>
+> So I personally feel it is OK to remove the old one, without
+> promising or even hinting at what in the new one that replaces it.
+> But we would want to see its replacement in the not-so-distant
+> future.
 
-  $ GIT_OBJECT_DIRECTORY=/does/not/exist git --git-dir repo.git rev-parse --is-bare-repository
-  fatal: not a git repository: 'repo.git'
-  reason: cannot access object directory '/does/not/exist' set via $GIT_OBJECT_DIRECTORY
+I'm not planning to replace gittutorial-2 since the material in it
+is already covered by gitdatamodel and gitcore-tutorial.
+Let me know if you disagree!
 
-Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
----
- setup.c                       | 10 ++++++++--
- t/t0009-git-dir-validation.sh | 10 ++++++----
- 2 files changed, 14 insertions(+), 6 deletions(-)
+> Also, we may want to decide what to do with gittutorial.  It is
+> short and reasonably sweet.  One old-fashioned thing that does not
+> exactly match today's prevalent usage patterns may be that it starts
+> tracking a new project from a tarball, but other than that, it may
+> not hurt to keep it around.  I do not know.
 
-diff --git a/setup.c b/setup.c
-index a0fb68f7f6..a0d3c0c5bb 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1195,6 +1195,7 @@ static void repo_discover_explicit_gitdir(struct repo_discovery *discovery,
- 					  int *nongit_ok)
- {
- 	const char *work_tree_env = getenv(GIT_WORK_TREE_ENVIRONMENT);
-+	struct strbuf invalid_gitdir_reason = STRBUF_INIT;
- 	char *gitfile;
- 	int offset;
- 
-@@ -1207,12 +1208,16 @@ static void repo_discover_explicit_gitdir(struct repo_discovery *discovery,
- 		gitdirenv = gitfile;
- 	}
- 
--	if (!is_git_directory(gitdirenv)) {
-+	if (!is_git_directory_verbose(gitdirenv, &invalid_gitdir_reason)) {
-+		struct strbuf die_msg = STRBUF_INIT;
- 		if (nongit_ok) {
- 			*nongit_ok = 1;
- 			goto out;
- 		}
--		die(_("not a git repository: '%s'"), gitdirenv);
-+
-+		strbuf_addf(&die_msg, _("not a git repository: '%s'\nreason: %s"),
-+			    gitdirenv, invalid_gitdir_reason.buf);
-+		die("%s", die_msg.buf);
- 	}
- 
- 	if (read_and_verify_repository_format(&discovery->format, gitdirenv, nongit_ok))
-@@ -1274,6 +1279,7 @@ static void repo_discover_explicit_gitdir(struct repo_discovery *discovery,
- 	repo_discovery_set_gitdir(discovery, gitdirenv, 0);
- 
- out:
-+	strbuf_release(&invalid_gitdir_reason);
- 	free(gitfile);
- }
- 
-diff --git a/t/t0009-git-dir-validation.sh b/t/t0009-git-dir-validation.sh
-index 6c40925aa4..1f8ac3fad5 100755
---- a/t/t0009-git-dir-validation.sh
-+++ b/t/t0009-git-dir-validation.sh
-@@ -78,7 +78,8 @@ test_expect_success 'setup: custom git directory with missing HEAD is rejected'
- 	test_when_finished "rm -rf parent/empty-dir" &&
- 	mkdir -p parent/empty-dir &&
- 	test_must_fail git --git-dir parent/empty-dir rev-parse --is-bare-repository 2>stderr &&
--	test_grep "not a git repository" stderr
-+	test_grep "not a git repository" stderr &&
-+	test_grep "reason: could not stat HEAD at" stderr
- '
- 
- test_expect_success 'setup: custom git directory with HEAD as a symlink outside refs/ is rejected' '
-@@ -91,7 +92,8 @@ test_expect_success 'setup: custom git directory with HEAD as a symlink outside
- 		rm real-repo/HEAD &&
- 		ln -s ../garbage real-repo/HEAD &&
- 		test_must_fail git --git-dir real-repo rev-parse --is-bare-repository 2>stderr &&
--		test_grep "not a git repository" stderr
-+		test_grep "not a git repository" stderr &&
-+		test_grep "reason: HEAD is a symlink .* but target lives outside refs" stderr
- 	)
- '
- 
-@@ -103,9 +105,9 @@ test_expect_success 'setup: custom git directory with invalid GIT_OBJECT_DIRECTO
- 		git init --bare real-repo &&
- 		test_must_fail env GIT_OBJECT_DIRECTORY="$(pwd)/does-not-exist" \
- 			git --git-dir real-repo rev-parse --is-bare-repository 2>stderr &&
--		test_grep "not a git repository" stderr
-+		test_grep "not a git repository" stderr &&
-+		test_grep "reason: cannot access object directory .* set via \$GIT_OBJECT_DIRECTORY"   stderr
- 	)
- '
- 
--
- test_done
--- 
-2.56.0.rc1.12.g2c9c8d64bb
-
+We definitely want a tutorial that covers `git init`, `git add`, `git commit`,
+etc. Any replacement would definitely cover those topics, but 
+I don't see the value of having 2 such tutorials.
+Why do you think it would be valuable to keep it around? It seems
+like it would cause a lot of confusion to me.
