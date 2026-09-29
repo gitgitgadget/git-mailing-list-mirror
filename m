@@ -1,111 +1,123 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1BB339B3D
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 07:10:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19F83A3E8B
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 07:30:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790665822; cv=none; b=rBo4kCSyHb4Kld6t6t/w8708AQs/LpH199JlQVd1Dp+DkizD6MgPLdFQW83zT7cyPk+Vdc8Uml5QttfksnAUSpQ4Q/zIwlMV980SGIOEWZGieN72pJORt7eaz4/kgImiCO2S2DVtgNxSwVJxeDRfVoO2ORzN9oJTWWkWY93fgEI=
+	t=1790667015; cv=none; b=dXkFDUObqE9C/8mZ4NhpzufemqMQLGT/YLZRDrVfc+R/QGw+PY5nqhwwdVwjzNieFNeTauJk08+YfsAQ8ZYabk7hVAhx7kLoLz63WaO/d0aVpEbxYqkIQVgfRg7/ateeW9wHWPdENKVTLtG80H0FmEOxuKXYOwxbCrWQ+uAtCdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790665822; c=relaxed/simple;
-	bh=T97xl/uRAWerN58ejNHlh73RBd+CGIDj1okdNwYinMc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J0dNVDTDf8b05/UOO2O9AAATWzA/uigJ7AU589mEhImqUGLZooNYByTZAUu1+j7RxnzkD2OHTCFg1f6U5Nd7eXLrntVG2m6qkmj09joRzqkW8GfE7g1iVsPwPqVY5anaremHECFRVXsFRInPWrPAwcKOhEk6Rm5ND6dKMKSJpa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NfiMRgDW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k7XIJJXM; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1790667015; c=relaxed/simple;
+	bh=Qi8A/9Ng1uBkDkyQO/Bb1n1QE2pS2X9vZQJdg4Y7LBw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=b9NP7FVKocZeEPbejBD4IcB47Dxx6hiu5mQsBPiRrWizV10PYk5bqXSvqICLxihMUGZe6rodL0h85DVFl8TX/FRf7DJHxqtzuBf4bmPT+HHi9thETcjj/rl+WKvKRacUV7GbVNckLLHaZVJqyLgssNJoaCLHLKzakMBjnXBJnng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uOcTo8g3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v6DSpLm4; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NfiMRgDW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k7XIJJXM"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EAEA07A009C;
-	Tue, 29 Sep 2026 03:10:19 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 29 Sep 2026 03:10:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uOcTo8g3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v6DSpLm4"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B72C97A00C2;
+	Tue, 29 Sep 2026 03:30:12 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Tue, 29 Sep 2026 03:30:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790665819; x=1790752219; bh=T97xl/uRAW
-	erN58ejNHlh73RBd+CGIDj1okdNwYinMc=; b=NfiMRgDWnuux6eO47sdxdSRXPH
-	HuGeykV6h12EN09K9QmAItT3uAXgM/TCTBqGwGmx8LpaeEI4jX4Q7Fa/yzL6fBXo
-	RBxe0PvkhJYGpOrV0n2g5M3l1h+6V8xVuL5d3PIJQ/dvaOhd+DhfbEigzl+fliwF
-	KB6hfSTdo3lY2hY2o4FvpriV0NgCDAVP1LhGYaFh+tQkdkX73pVZ6fHBJRKakJGX
-	AkI8jCOUGHyuPE9xuiyXCKOA7fywOM9qCFUnjE/mUO1Uesa6Iz4grhguS9ZPvBFW
-	iElP/bkVseTqM76gxWSXaUs1XxUdgHvmfho25LldH5esJBZr1JyVhCJgXsNg==
+	:subject:to:to; s=fm3; t=1790667012; x=1790753412; bh=oVxSiZt3nx
+	c+XzkgtihZnCTYTbOLEEzPvy/YuQBSov4=; b=uOcTo8g3iAuS7SOLPfIGRVhj1/
+	QEjTC8QhutV1IOtsfHFrq9RuYCCmv9B789OVLIZSmoNJfN/IHc9FH4iy/kynbd+6
+	fWMxe31RIsIvsnDCm3uQ8VX4+f64uWNTw3/k6biTYXb2Of+a5OFq8iPuv/4QW81H
+	7GBglB3LN5PADKaHd3zBb+W9G8khS3J9onuep70P7Bpdllu4jSdRdCunu9KJcxQu
+	6KD8s8oonG7UuNLwNRV9QWTmp5uEtOehochf2KmzDMjAWSmIi4Vdv0d8SbtAgf5V
+	12fq026DBuCWqpGl18oBV2hJrFOkreK0CVbTs5N3fYeiXbRATzzqKj7NrkhQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790665819; x=1790752219; bh=T97xl/uRAWerN58ejNHlh73RBd+CGIDj1ok
-	dNwYinMc=; b=k7XIJJXMRAhl05OHx1T+vJEWzUH46a22+kBOesGFvRKO94H4Usy
-	ADvEj/Vd7rScCR8Doz1lD+jYgVAbwNj4aHRUIchu1V6Xa+3+t5rqmMRcm9FueaDY
-	nzte7m0yJ7JgC2Wqpp55pBSPP1xCK22a5gRy3iWs/i4AjQU8oeXK+m1VOhai74Mk
-	n0ZQe7uxOhiu2dpsFni+swy0ecCv0FLuWdW2iG2282UpW9HgmjU1G1dlSO/lR780
-	OmA6TqfJsJimwlnBdNteuRpG2Bnw//ZWhngwCcw2KCGzJOHKRrckKDX8IM1tujuE
-	5xTYFtf9e8u/6EAlegWGFDxHm96zhPx2V5Q==
-X-ME-Sender: <xms:W2S7avAivptkqlPSY_PGP09oxCt2HlTvUEKfyF2LfsE9u81sq4QLvQ>
-    <xme:W2S7atQDY2GshtrXPopU3hT5doHgtsWwoWlxEV9sqHJqXqM_G3fFqEwUi4VGytSLI
-    TxFq3--r-MNwiEp4slefIKz7G4QroDqEoYBM6gYJP3FMML1KmtnqhQ>
-X-ME-Received: <xmr:W2S7atqUajbke1DAe5Kb9FmsstQ5W1u6eHEQfcfALnDojzuvuoFRmA>
-X-ME-Proxy-Cause: dmFkZTEscQWFs0xi8++KYKMlszHRH96PEHtqvr01GRmE7NUeloRWT7lTL1MRl9O+Kxw1EA
-    m4fCgk9EhUU+vi/pV6e2uyVFGZqgY/lv9mH5bY8ttMN3I7hY9IMiBBZvrHTGonDzSVj2GD
-    uA4tS2rqMewDbjw6AO4KWyQEQY2PArWARMUC6heDrCjLFuIlTv7ZrpnD+x2r4mI1fXhu/K
-    F68uDBZWtzFYr5lunRTVcD+zJOFmNLcU7IlJN9nB8CvvC1F+Wc8MAmMWeQATLQ/eLFMCt4
-    3R22eEvCsB1vuKW03snzEduS3U/0TAI7OHzD9KOr+zgU+7Azwo48J1x+VI3Tuim0SkbQgV
-    4zqyOFTvUBdrZt/dLb24FlAMRgqjtPGh1rzjedYvBCnS8tRYcNz7ChgdJsXGfDqg98ftQ7
-    gI+6Znn53DRpkW9BP5RKEdjM62VIr2FSzkV8ib8HlFZX8ss+ekkWu6BxM4cjw3DjjGKXM4
-    6pkNYmRwT0VreCzTrUYsl2jO7k6BK4tdJzoGn04JDFLm5mxVSmTAvSuWgLrhAlVjwhSMBL
-    v1HZVv3OQqhhXRgXBY0/vDSnDuHl59k9BwdlKzqbEwholitYnIDD/zZYryFi3fLdGSllL6
-    rMtSgSP6sSWeaJuID6/c/2d+oZi6Bqtv3IWdeLzKzJboFU4LEBep3PFKQgkA
-X-ME-Proxy: <xmx:W2S7avy9pjxv00k8_TODi9KzHdgkGboHewGvChe0YyM0QR6Ekwpong>
-    <xmx:W2S7aiJW0rvqzWNkv83NlatjK44riUQVxHNowyqBTmmXoxGQHkkb2Q>
-    <xmx:W2S7ahL5dzioDWkypd1shpnVltYCoh7z8F7lrPxvUHk94JzjGmeZDw>
-    <xmx:W2S7antGXXt_mwlWYP-0272cAVu4wC6cukSlPF6tx7ZmTuNWt7cQeg>
-    <xmx:W2S7ah14Vj3yjmlU-ZgJPx9arHfpRmB_mt-Bz2GEpizOfUegBJ0F1QPE>
-Feedback-ID: i197146af:Fastmail
+	1790667012; x=1790753412; bh=oVxSiZt3nxc+XzkgtihZnCTYTbOLEEzPvy/
+	YuQBSov4=; b=v6DSpLm42Z69DCBlD9nodIG5DM+Ql8NraBRHtFxNNZVBwVKCHTH
+	xz+Ni10h4hyEK8o/fLO1Qe17inpa0cH0L0DsqHeeuAtjEptHNuCug06uy3X5dzsc
+	3ETOShSgw1W0d/ESXWqBx/T4kfXnPlt9yPZ0x2uRC3nbvQ55zbc4LduPxJi2l4yJ
+	l4VzLQ3T5vC3inu+HeoJ0XWPYG1pcF/NsclmD43HTz2ymMZWU1oY0Ycd677XOaTb
+	e+p5V+f6wbBcSh+iL0/695o22mHQiv+L4duTUA1RZYuvk5bXoNP3+FIfjDVI4H7r
+	YgIL8c6+ZZvcfBfwAye5/X6osx2FGyfC+1A==
+X-ME-Sender: <xms:BGm7aoozeH_L1vFhTpqjXXbl9MBBET8QrSySPVOvdUWfLt3Av28Amg>
+    <xme:BGm7alqu4taL0VqHEJjLDCrrAb7gfrishc8u6Nh_GtLN6KtQ8rjGGI8uGi2NuV31M
+    g0EqAPehraWjznNwPFlCpQt1SMKvl6svzJIFw2osuY_tOJ5Ur8CqQ0>
+X-ME-Received: <xmr:BGm7aiMmC1w9HI1pQwQtJKPuMibQCiOD3BM6gbvFSfjRqYFDHt7cDqFkBNByMiWruA9as8tBX_cFnGM3WrDerVLKp6zIYZr_RLX_>
+X-ME-Proxy-Cause: dmFkZTEvQT8Bom0+VTwvnVn4TpiWtJ7In8fgUvK7nR3ZmgjVZ9/FlrwaEp1i/yXtg/PnuR
+    VgCFO3AGPkl0ZwjN+UI++po2vTXSqKngKBTXA5EW3lSZfbPA4oaAmFyoF5es+H+duh0osu
+    VvpvvWFvNGnACFGp3Qcgd6kUWKGlckXGZiiZtvzSqCCpmo4xqrqD4Dgmaz05UNLPxqfLvC
+    duLM5W1fk6SKpLhSzmjkxO2wNR/hl3QeZhySW+VbRE2L5TDTSQQnhtku/cJDTRuI8TzjIN
+    lEYUrp2YnX62y52DNzNNTchkFKVArYSZJ8TvQG6huGNEOr2cPyz5XqVWI90f7jK45cgXd7
+    Yt0TMMXYAuXNzwo+Bl+/WJPlf9bfsU3WCE/iPUFFWHEGSUq1TPryktMB/TBNamHuj/nF6P
+    iafuMaD11V/jZs6wu581aMThi2vm0G3c2x4fZhru6ZL4PNLAGwBnKO4+hCztlaY01OtNPu
+    tHVXNM5howSzYeNunxeDY4L7Ab+URB2VFZS1ZuePfwyjmqSAwoc/nyKwS50RX+dTs2LSmL
+    KCotGS0KMSJaEByC7RgIvZnPjuBKIIjnXoPt4dRaWLgicEVF5XWaMcXQwWOUD5K4/TFfBE
+    e7qRpYD00b5ObEHpuMLoZW7MZwO++/1l08x7UCSlZhf7BK/ov6Ghaw2F1nCg
+X-ME-Proxy: <xmx:BGm7auy8ZpBW2qbnnVizgoLHbJXZde9LdSEHPN4j7y6xXP8emEKPrA>
+    <xmx:BGm7ajuuS0jdiPt80oTCIRh0gzRwfqFAMGUXEb0GLyevT4mgUm6xQA>
+    <xmx:BGm7av5-vN2v_eHpTlEnjqej5WbcwK8oPSR3Js6P6b_0UzuH7gTx6Q>
+    <xmx:BGm7aqRZbaHejghjtfIOAoqe2Opy8aVptKgvTAKy4JHpC7tYTkSzmQ>
+    <xmx:BGm7anmNCd1oMpOXyjBXppbgk0AJhItquTnluv5FjpOFZxg-_VmUc2Ql>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Sep 2026 03:10:18 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b4b83629 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 29 Sep 2026 07:10:16 +0000 (UTC)
-Date: Tue, 29 Sep 2026 09:10:14 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Josh McKinney <git-bugs@lists.joshka.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Reftable reflog timezone encoding differs from specification
-Message-ID: <artkVoGEP0iLOGgr@pks.im>
-References: <85f7daa8-d60b-4348-ac2f-b1a68628af7b@app.fastmail.com>
- <arpZ5xCwFXc9ikrj@pks.im>
- <xmqq33utphdy.fsf@gitster.g>
- <2abba760-d331-4cad-bb8b-6e567b517beb@app.fastmail.com>
+ 29 Sep 2026 03:30:12 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/4] Add a compile-time option to use the new, very fast
+ sha1dc Rust crate
+In-Reply-To: <pull.2240.git.1790610691.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Mon, 28 Sep 2026 15:51:27
+	+0000")
+References: <pull.2240.git.1790610691.gitgitgadget@gmail.com>
+Date: Tue, 29 Sep 2026 00:30:10 -0700
+Message-ID: <xmqqa4p0jz0d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2abba760-d331-4cad-bb8b-6e567b517beb@app.fastmail.com>
+Content-Type: text/plain
 
-On Mon, Sep 28, 2026 at 09:02:36AM -0700, Josh McKinney wrote:
-> I think my main concern here is mostly around using multiple tools on
-> the same repo and how they should interpret on disk formats (my
-> clanker picked up the problem when comparing git's output with a
-> library it's writing).
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Yeah, and sticking to the spec we have is the best way to fix that, I'd
-think.
+> I stumbled across this new Rust crate last week. Its performance numbers are
+> quite impressive. Naturally, I want to make use of this and get for Windows,
+> which is used on many monorepos where this makes a real difference: In a
+> pretty fast and loose test, I verified that a git index-pack runs roughly
+> three times faster solely due to using those SIMD-based optimizations!
+>
+> As a safety precaution, because this sha1dc crate is quite new, I wanted to
+> introduce an escape hatch: core.sha1dcBackend=c, but turn it on by default,
+> which is the reason for the three additional patches. Should these patches
+> be undesirable for the Git project? I would not be mad at all if they were
+> simply dropped.
+>
+> Johannes Schindelin (4):
+>   libgitcore: add `sha1dc` as an optional feature
+>   sha1dc: allow selecting the C backend without rebuilding
+>   pthread: provide `pthread_once()` shims for Windows and for
+>     NO_PTHREADS
+>   sha1dc: make `sha1dc_init()` thread-safe
 
-> Anyway, nothing urgent on the problem from me because I noticed it
-> purely in a development context. Thanks for filling in the bits about
-> the real world impact on this too.
+The feature sha1dc_choose() means that you can between Rust and C
+implementations of sha1dc pick at runtime and I was confused by the
+"compile-time" in the topic title, which is misleading.  From the
+end-user's point of view, being able to choose between the two at
+runtime gives them a lot bigger value, even though from the point of
+view of the developer who added the feature to allow users to do so,
+that feature being a compile-time choice might matter more.
 
-Well, I think fixing it is somewhat urgent -- the longer we have the
-inconsistency the more problems it causes. I'll aim for having a fix for
-this ready later this week.
+How close are these two implementations?  Do they implement the same
+idea but the details may differ?  Do they both faithfully implement
+what the same paper wrote and given the same fudged input they will
+always detect the attempted attack the same way?
 
-Thanks for detecting this!
-
-Patrick
