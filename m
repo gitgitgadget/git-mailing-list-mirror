@@ -1,81 +1,85 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABCC44F563
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 19:29:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E326A3C8C71
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 19:37:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790710175; cv=none; b=SmwvIpkjUgv6DTTuBW0Ki8Cft2i3rC91tCXn6DKUgqzT7EDJqQat1x+ndZmC5qsVAcJYM7eoJAcfbexELDC9l5B/yLd78cHApBtRoCEtnBISqkPzGrGQBqVB2vov33sHuCbNwqS61ItXeTEWUaE7OjYYAAwOjPbR7PAe5IVMPio=
+	t=1790710625; cv=none; b=s2GpsiPNEe8bHN6CaYhq+lwEF32V+3y+58lDansD9HXgXDOT6w6xhhCbXcGz7hpQXMn7JQchguNAnNJtXuFyWk4laIMlK0wnQ1kyQbftiWrJfbKAWcrEpkS2MC9UquZ0BOGLEsm0AEpF9N0qHaGdteoXIlHCKD2sbNNql6RN7GU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790710175; c=relaxed/simple;
-	bh=+6liAz90zYE87HG0e4cAp98osQLwUAx3dgLIghuh7Lc=;
+	s=arc-20240116; t=1790710625; c=relaxed/simple;
+	bh=9lscgxGxbfNcEzWvXS2yw7W2yuietbOGfDvOGhzZpxY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qvS0mVjJmSdS4y2oeUwkI+Dq2fwRpqwN+nwtssKE7J+vHvRBccfuVpAKUjjCW4PnMO4G3IdUk9LEg2TFBzGhz99aSYfSSUalfil4fP+ltFKwohgMfud6FGgcFTpMn/3ifCML8TEvrbiuNNQ66YvK9/4QX0+msM2A7RnF9ljG4YU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=h5u0Z/6A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C/xDGl2U; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=jbczlZ75zC+qYXGCgVv8G9rTx1usZdE6wx18u6RxJCRJ47TDq6M7/akkxGn/xSHW6JgDs3mvecE6R3h0dFc0kHDFeRRSS/u733mvrgXxnjI4omj8WJ28MSzM8X5Tv57oSGoyjk5Ll9FCbYiZ4ZrUTZINsJ7KkJzRuOx0FfB6ltU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cVK2obD0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jvg7Suzb; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="h5u0Z/6A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C/xDGl2U"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id EE51F1D000CF;
-	Tue, 29 Sep 2026 15:29:32 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 29 Sep 2026 15:29:33 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cVK2obD0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jvg7Suzb"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7CEC57A07AC;
+	Tue, 29 Sep 2026 15:37:01 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 29 Sep 2026 15:37:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790710172; x=1790796572; bh=3NbYHGlar4
-	3JpFym6JXXykKJIrxIZP57z3pofKTEkFM=; b=h5u0Z/6A95v7mz7WZELdDAsRAj
-	IPRtdqBV2sxbemlg6YWRvkDjQsiPgM2QsYTIOa6Ohi0VXF6UDQuVt92B1j0dTRkK
-	RBQMuN/9EgwluWu0StxMaRrYvwDLrkmUrMuhgKaDMpQL1PGpL7Z5Wc4FJBpnYfSy
-	KCarG7T3k8UfbxzeJrcN83bNM/wl40973lQqthuezuHXHrH+ic79znceNMp/5Cpz
-	oPDsVimzgwye0qFA0wYnHKD5zn2YpbhanTcLTGNf94emZF0GUn1Bdx3SIWLUju1+
-	jenOtnMxkxqo10RhaTWK2yOVWBBKDywyE03gf/2oD+mCl9GUGC/J7zMIkZBQ==
+	:subject:to:to; s=fm3; t=1790710621; x=1790797021; bh=hjOBITdF+I
+	BRIzovbPSLBKVBiyXq8v1/A+Qoo9CBj20=; b=cVK2obD0sicOa8RyVDjHWaabwj
+	oHfXBk+T9HbPEBdTuI5SAcsUHnjqL8kIUogzDbkUCF9DfYvK3Mjwmu8kxB0wXnWM
+	Bhby0LwNubeIayXTcsnZkDoFnNqhtczpC/18iJGYkDPPDSkvvHRtUd7grpFMdTA+
+	PMFLB4RlN9+hJ1qs/vnDfArmP9uJV4UUlP/57z4c0UMfPRUSvNhOv1crmvUcHxJc
+	ljgyO+i2OSs0WuXOy83jBiXCgSn5D/fDWoQqrle8RzBPZDaS7cJ5/3GbQ6Vz5V8S
+	rfIjEAGgT5XEgnNS0pqGiY7Qwim+Y+6PkbBaPpyyopgaGa2J05d1iCeFjU1Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790710172; x=1790796572; bh=3NbYHGlar43JpFym6JXXykKJIrxIZP57z3p
-	ofKTEkFM=; b=C/xDGl2Ut+qfW1ZgFRZwHu6BJoV/DhxhN1fQIU62OIpiabJZYYC
-	S7ht/tpRpzJWMqS4NTuIgTGsVbyY79EFdtu1V2m3MHdeNjdwaZ/BLbfsOxoYFysc
-	3F0QWdbF1o7CvpAt7FcbiaEOy7f4ai568j2LEpV3Xo4TnkFA9FNAglbn/5CfbknG
-	UsTTfHZ6QnN3ysBh55ckgYANV5H9bJE1BVdhXyiHNslb2cyMuNUrPQ4burqD9x8K
-	nKgKvwTckuyCUQb8iN7tQ/W+p5LTvsQ4hqrfkDy+lg3Z5fEv2hBuD1o3x0mazeMC
-	TxjVXtqPGBtH4RkqR6kpjAJ2tXIAk3Kpatw==
-X-ME-Sender: <xms:nBG8aisRWsUV9zlqfu5T3tJnh-J3T_racLHS9vwva2jWMOXdgMkMXw>
-    <xme:nBG8auexmHOyTsReCFKNOHnB5jIICkmEeoaNse-Dz95QuRG0JTr8JXYWmqtHpmert
-    QFyTquK7AZGGTmkk2NJ5n1OyQU7WGu4qnum50SgbYLUBI7giE1AUH_S>
-X-ME-Received: <xmr:nBG8aixXtyhwf2w-R-WHbSGXK72FlOv8nrlwy3N6CE-C6Ms9f2ZOu9KGMQzWKEBxAGpiI39qyYOa3ce_E4WezOgMhP-WB8XxoFA6>
-X-ME-Proxy-Cause: dmFkZTE7/tHlUSdoM4+8Q0gftIu/5lH82n+RgM3AOLrfUWfGqmVWgetZWTdnvYIb8Af2Ub
-    DxBWOjR6JRoJCLB552Isf6HInLhOkOusZMtlf2GiRli457fs8DoZwSrtAuHC09oCLx+Olu
-    vPUqRuTDTksNkioSSKay9gA9Oubp0qFM+HKcgNI0ziBYKDIyxGb/urPDeMOT6DvIgti4be
-    K2y55P4/tqOc1xZZ/Lu6EbUxkPjOHBfq6ArmFikxCFMR6mBRTK56qf9+5MDX6pa7oRgaHn
-    M/U8smIU4Wgrlh0M5K0jPxJKYl3aXLSUlN2Z9HyS6CkkT1thnr+Htv8exvxLPrW041erI4
-    JgPQ5jY9T40oZudhzDYpcClrO1nx7rgqMX9UP9ID6uB4DEB95fRCuhPwOwDf0RiM5aCaC9
-    Le+UXgEiSjH+uF0n5WkHCe9PQRFxBVniOhgfCA0bi07bYlsUAKq4X2wDRGOhgtm5ln9U5G
-    S2gsoe6AN1PfBkPeSvxSg8nbefJOomYhSR0NnsGEwp4CIWVhxC9S1+2trIKma3bi3v74Yh
-    b1kiJr6JUudeD2LNluuYUWUmRzbFgj4y6ucMMAtKF/pVgN0SqQahpqJDJUs4n+a7bVWcsu
-    RHtZTzcrkERJ0Xasj0usg6iWzHu97EeyiXyuCTwamdJBMca4MLO7Bb33dZiQ
-X-ME-Proxy: <xmx:nBG8asGzEWzVAJV0xufcFBvT7ygXLbuP8WpScj0cUHBaiAPiF4AvNA>
-    <xmx:nBG8auwkNqwnWHeJJmdw2F0AmkZNKbxuwP3MtWXZgN-J_wv18A5asw>
-    <xmx:nBG8alsOYPiztDVbLB-d4R3Pzfmv85DnAMmkGsphJhHxHjYs00pqug>
-    <xmx:nBG8aj3ymrtHE9memhQoZgJIHXpHyc9eJS_oTfHxFnfqJzrOI2rRRg>
-    <xmx:nBG8as2d-zp4ISltd09tega3Ph1eMh0Lmk5VZtD7CvzIf4JtbIc7bpUr>
+	1790710621; x=1790797021; bh=hjOBITdF+IBRIzovbPSLBKVBiyXq8v1/A+Q
+	oo9CBj20=; b=Jvg7SuzbJToPFB3hmjOa5bqrSZ2whAgECVA/S7iXw9lTrlxAumj
+	dTemS80SaJNs68fUhubNfn7z4RDu/Dp5jq4XVFUKCvYMvlJHHMK4muoKp8yh/9JK
+	nIQK5ZQd4FwWY3TasD09ul/wfAHDlrMIAVcojqCEZ5GnVObXjM/HpIJ7UZ+U4kkl
+	BRA4hmiKZ927FqrfmmSUVxonq64kU3B9XhcR4ryNB2aV1+x9gS9NdM2Byzho6R4x
+	C8+R2EDceBNJ1YjbrVlemdQ1F7WG+cyrRY1RWcjHyGYwK4T4Fj9Tmx08zCqV/YLR
+	idD+S3cWLeKbzME5JE8DXAvsFL/VnHp29eQ==
+X-ME-Sender: <xms:XRO8aiPivsn4JireN55-rbT_7aMpWdxNt75yDRURu6u6WswsDhqo-A>
+    <xme:XRO8akr8Ji_cZkN5jTtm_nMQwIriCHUf81KhcfrtmKK2239TghE7G0bsvfKN0J_-Y
+    3PqaDnbzCSL1LtznJ01IC82BAgs-xnUhG6e-6PbPP9fpY2W_G-fLv4>
+X-ME-Received: <xmr:XRO8ajFCPyPPK2LU1q-8ciNtrv0_P-tJe_3I2mCJg8kiKw7BgoXv5TyYNKZx0c3Kyc_wJx4ws2Bo5nzN1QgRAppKvTLoJiqJ0tVv>
+X-ME-Proxy-Cause: dmFkZTFsninSpRmZB5DDS+xvEsTbvutpyhYLR9OfD4hY9YNeFL4s5CTkfMavuW72Ylts8B
+    4lava3Lya34bJm6kuG9nt2yN8cyDJjzH/KhcN0llMbTcvMbBnSy+a6ETAso/SLv21KbAu9
+    pvnMZktE779z21fgvvNn12gmC7wdEkFW7V/OO8R4wAGZlNyONXyUJ0/qbgIqu03d6J5Ciu
+    dYaLJYzDNRk2N69ElpUpIWlspP1eRTNLKrpGn7RO8B4b7JLeozOt6QDCIN+8ihPWpa0mjE
+    6hUGCJ4Mb5qYTIDUbItgRkySPratTCQSKRGPIdmsrZMcbL0GhDF7ns58E7OQ5MiVLVJNgl
+    bFq/hFaHDIePQ2vLsvYXIGcwZ229aMejWE7cASkB0/oT2542VhKXBUUkhDYezShqJTMeKY
+    pG98/pMYKV0lfI1cGV4BgaR/J8HjJJJ7DsyIV82sRITWCgPYNw23OwPNy7Vrrvrw6uwhuV
+    cCv6x95jKKFaE7CFbz3rADczcZodlr7PX97Wad1JKBiEssp4S3ioNzHbX32tT4876Gspia
+    C5nrkZ2PY7msQfnIQMFWWAruhv/KpDFJR1M0pLkDEpsA8q0qIRCMyjN7ZoQYdYPj5GuBTa
+    yUfqbaY8ngx+DOpOJmPeZZkCSvHozBH4KB2rQsg4MzePSGa+/BfJIAKDSHUQ
+X-ME-Proxy: <xmx:XRO8apqkgD5atJ5xWDplFoLguiZ4-mABXfbz1mIG7ncUUch8BvxIFQ>
+    <xmx:XRO8asZAFuH6sNnPRCjnf9mz1Vrj-G0ZnKp3iaE42HiulOnSWUDs3Q>
+    <xmx:XRO8aiWXY87C4mlw_9yvUoePWLOFymtU5AW0yo1mepUHFMqgXUTiNw>
+    <xmx:XRO8al8PV9SluNJh7tmRKZiaX9CY-dDFsHSYXzos-CXyBy8BI1YUGA>
+    <xmx:XRO8amxYaO-vIgAto-ktdgnkRynKUgEr3hj0ohpm3-6qVsKMupgzsm1k>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Sep 2026 15:29:32 -0400 (EDT)
+ 29 Sep 2026 15:37:00 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Brigham Campbell <me@brighamcampbell.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v5 1/2] git-contacts: allow inputting patch via stdin
-In-Reply-To: <20260928-git-contacts-stdin-v5-1-e9becaebc47e@brighamcampbell.com>
-	(Brigham Campbell's message of "Mon, 28 Sep 2026 23:47:12 -0600")
-References: <20260928-git-contacts-stdin-v5-0-e9becaebc47e@brighamcampbell.com>
-	<20260928-git-contacts-stdin-v5-1-e9becaebc47e@brighamcampbell.com>
-Date: Tue, 29 Sep 2026 12:29:31 -0700
-Message-ID: <xmqqv77ng8kk.fsf@gitster.g>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  "D. Ben
+ Knoble" <ben.knoble@gmail.com>,  Harald Nordgren
+ <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v4 0/4] fetch: avoid fetching every branch of a new
+ remote in a shallow repo
+In-Reply-To: <pull.2412.v4.git.git.1790673598.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Tue, 29 Sep 2026 09:19:54
+	+0000")
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+	<pull.2412.v4.git.git.1790673598.gitgitgadget@gmail.com>
+Date: Tue, 29 Sep 2026 12:36:59 -0700
+Message-ID: <xmqqqzibg884.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,63 +89,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Brigham Campbell <me@brighamcampbell.com> writes:
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Make git-contacts accept patch contents via stdin for better
-> interoperability with other utilities. Read from stdin when the user
-> passes `-` at least once:
+> Avoid fetching every branch of a new remote in a shallow repo.
 >
-> $ git contacts - <patch
+> Changes in v4:
 >
-> Signed-off-by: Brigham Campbell <me@brighamcampbell.com>
-> ---
->  contrib/contacts/git-contacts | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
->
-> diff --git a/contrib/contacts/git-contacts b/contrib/contacts/git-contacts
-> index 85ad732fc0..df7b920d9e 100755
-> --- a/contrib/contacts/git-contacts
-> +++ b/contrib/contacts/git-contacts
-> @@ -162,9 +162,11 @@ if (!@ARGV) {
->  	die "No input revisions or patch files\n";
->  }
->  
-> -my (@files, @rev_args);
-> +my ($read_from_stdin, @files, @rev_args);
->  for (@ARGV) {
-> -	if (-e) {
-> +	if ($_ eq '-') {
-> +		$read_from_stdin = 1;
-> +	} elsif (-e) {
->  		push @files, $_;
->  	} else {
->  		push @rev_args, $_;
-> @@ -172,6 +174,9 @@ for (@ARGV) {
->  }
->  
->  my %sources;
-> +if ($read_from_stdin) {
-> +	scan_patches(\%sources, undef, \*STDIN);
-> +}
->  for (@files) {
->  	scan_patch_file(\%sources, $_);
->  }
+>  * Removed the automatic default-branch fetch. A fresh remote fetches
+>    nothing until you track a branch explicitly.
+>  * Fixed fetch report showing "new ref HEAD" instead of "new branch "
+>  * Reworded remote..refmap docs and commit message.
 
-Doesn't the Usage comment at the beginning also want to be updated?
+Will replace.
+
+As my eyes have been contaminated by and biased for this topic, I'll
+spend my time on other topics first to let my eyes and brain
+"forget" about it before I revisit these patches.  I'd really
+welcome reviews with fresh eyes to happen in the meantime.
 
 Thanks.
-
-
-diff --git i/contrib/contacts/git-contacts w/contrib/contacts/git-contacts
-index 85ad732fc0..1eb91c4ab1 100755
---- i/contrib/contacts/git-contacts
-+++ w/contrib/contacts/git-contacts
-@@ -3,7 +3,7 @@
- # List people who might be interested in a patch.  Useful as the argument to
- # git-send-email --cc-cmd option, and in other situations.
- #
--# Usage: git contacts <file | rev-list option> ...
-+# Usage: git contacts <file | '-' | rev-list option> ...
- 
- use strict;
- use warnings;
