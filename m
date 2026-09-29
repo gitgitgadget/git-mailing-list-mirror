@@ -1,98 +1,72 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A643347FC0
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 20:17:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127DF38D3F7
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 20:41:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790713078; cv=none; b=Y4tjkOgJIWEcDFplQzQm8saVIdzVdbH6DI2Hzr4niia7gYG2juYiVEnljSMU+YYkRdxunvLth/E7DIsiGzljrgjNz059dJemRJAbIfNWyzewDSDtYLe3itSyHfUdivyGedon0duivbraW3fuMETLkYqy351Y9z8FNY3ruLXpuqY=
+	t=1790714520; cv=none; b=SMybSGQaTaK8aSI+5MVRCf7H0BTnxX2yjXr3vvduOPrPAO86ebkBLBZ2qUCKBnkS/NwMVONBeQPrH7yoooJ+43G3CKeqRvkCTYIjYpoIezw5ioQQoC7N0Z/Da905mzfG2cyo/xfu+2FPs5r6NVi7Hn07sT/yPggdK6w/wkffJmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790713078; c=relaxed/simple;
-	bh=miEqk71DSn+vKBmNa63N8AlFAPsjy09f6U3mF6ufYHc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BeBny6WNHnPSvae25JNbAseBpGMXB1JL1Rkd8x/zKRvE+GgXMfvXxrrf4l4duthHe+SiA3mdp2rLS8yEoQcRTrueXD6Rw2LtaCphyg/yG3nq53dpXGHIzW5ntT1RzTiUCbVcvWqQE9RAezAzZ6VHK/TOr0/SWk31HC7RYA1uPb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vAfNepJA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eGiNGaVJ; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790714520; c=relaxed/simple;
+	bh=bMYwlIbYrdqGGhFTTckiSXR78WcT3d7rC8KRBe2s1b4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JX6p0WTXvtoQ9LC7ElyB+sltPiJKQbHCjArKj2+rVfimdPoG3Go37ZEIHZJ66YcKCK4ewxb+XbJaMxf47BGtWxbDQJUJm3kpag4GgFiynBkF5f7u78xmV36TEwnCqQptK3zxhHKe9e9k6pDk3i3Aw0vmtUTCh4ZZSVK9lrF5uSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=EmcrtYXu; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vAfNepJA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eGiNGaVJ"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 593931D00754;
-	Tue, 29 Sep 2026 16:17:56 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 29 Sep 2026 16:17:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790713076; x=1790799476; bh=gW8Cr4Dmjt
-	cIcwuziCsIje1DnAUentK6IxbM1D1ELFM=; b=vAfNepJAh+N2i3ltY9SMm9G4L4
-	ZYjkA19SunJOgby9ADLLdVrOzbqWNs+Zo7Pg4pC/jeAnkwlhKDS4XhF3o8x2mgTW
-	ltoYXB41HTwEapRIaThnXjT3dZ7gY/V7d+PUItos9eBGe16WaV0WBvA9yC8lsZAk
-	RtCU2xo/JC9tVxwA9UB3rmIVALASdKOoCiboh/f0fEMUGqx8ZpvuqCmSUcy3bKI2
-	XY1Yc4Tl7CO95r68ID2odRZbr4DpsXazmvqdcSH6RwBdK/5F6QaUwMla0rrty3PR
-	Xy8Bf0JIre6voIM1pJzpIzK3Rj7vfZ847Y9VtBfciZUGFJNpXpcTIjR4PA9w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790713076; x=1790799476; bh=gW8Cr4DmjtcIcwuziCsIje1DnAUentK6Ixb
-	M1D1ELFM=; b=eGiNGaVJ3V3Xs7dRdwBDc+ClKXTGlW6SFf4lAHh2vJtSZ3v8Iy2
-	EzbhsdEHLw1gAuya80YWqu05AynoNjB9eZG9Z6D/GaN7/IDInBf/87d6//8oknS1
-	oG/EWLIQ2+J3NUwNksOo/au+2BV2HqYsI4bMWui2HKauc6ghH3VImy+yA31hjfad
-	MzEKGgPeboN5VYRbn9Deoy5LfmTWKsYSmcpa74ZzZZdfDX5vJrKF/iBGrp3Er5Ch
-	fFWVXCFPVBHta/0rGqZYxbLAlOD/vFmsg1CQ0z3LFZx5d8Xozmq84kRuPOsa596+
-	TENRMdejlrKQfuFYu9t+FU36InrF51fUqGQ==
-X-ME-Sender: <xms:9By8av4B6GzypQty5oojpnxDP_3GRHZWVDNtEtOazm-mfRsN7sXASQ>
-    <xme:9By8aolOLOLoB1HbBMcwv2o0d8ulxGk0t4UHEY1ZqnrFPJ5XVxClO3WA3JAX9Yq8x
-    zyJeB_MdP8BNH-M0Jw3iZRjrfUqFlSMXAPewmLVriZTfOUytETHnzuz>
-X-ME-Received: <xmr:9By8agThe5htbdSL7UC53zO2bmjQNNQTv3DrHQ-lpueVjWYWzYs-HoJkhlgVZ0C2CNVBpAPwtCYBP2E0gxB8f-2fpdh4UjCBqvYZ>
-X-ME-Proxy-Cause: dmFkZTFtVTecOFa+D2Lht1FUCPgY00oAzxhxYeOtOoNh6skJIJQCcL6do6c7qnIwAhvQDC
-    tn3a9Qa6MfwvfPziD29X9DdWhPRrvQB+T958eeJyvhFUcumfr2caRNrgQXzE6he+OTm5X4
-    SswIcsWjvuzspVhyWP5p/gn0Bo05asUGf8Cs6EQUi101dDBu95jsmIudbaaPd+E2OA3Nls
-    URK/2n2VGPpKYDWdVj5/UsdxcSxw38hTs4rMlosRVFoDk4+QK6Wx8SAcxQx3bbdD6niFgY
-    okeOb3AHJXngbfW3hgfbBmO7YDSucwJnoTMc6GSy/16s/nfrc82zjfh/5WIByoWJJd8koR
-    ExgMBXiBdteULMq37tiHKXIv+0D2vBTLGJFBhNJ0IGbsxegjF6eRdBVpK7V2Uc+ZnRQS23
-    p6Pp0Fjc+LSifBXQ4vKpCjHaAsRJu9TVhz9tmSSbBH8YD8W9AFTZCvwNzQHKvGqV1jgKSV
-    Mft5FRqNH9NggSzpr6+RgD4s43YEQe0qK/VAs+DHm+67sVnCYCmxlKebhYu+hsd4xePeia
-    AFUPiTj0XWhyT1uK+go7ryTxrUkcuqKDWid5g3a9DE7KUJTDt/h98Awv5ECNEUMrOqRLM+
-    Ab2BFoMuZvd57FiQYDqDEl6pqvnvof04MySdSXGxRbegXUkCiPFmo/zwd4ow
-X-ME-Proxy: <xmx:9By8anHWhQSEw3ang_SS1_vegnxYQuKiphoh6So9PUe5ymG9wQlclg>
-    <xmx:9By8alGjR0CwUkZey-8sHqgVob7F4dAl57SxpUV2YBS2fHVLUYlZNA>
-    <xmx:9By8alRuFxeOJo4F0DPk5Iz0OZrq6pjRWJr3GkfGbTO-hZBY9X39-A>
-    <xmx:9By8amLokX1CRYdIdogJOoY_wsiFDJCvCJSK7bi889yxRTU7ILd-wQ>
-    <xmx:9By8arc2z4V6paf4-zQpE5NAd-59LVFqsTNh_sfqRHuETYfY3w5ew9wC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Sep 2026 16:17:55 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  Harald Nordgren
- <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v4 2/4] fetch: infer branches to fetch from a
- refmap-only remote
-In-Reply-To: <45b26e2bb292f31eb36d88e2fcf8801eb8313374.1790673598.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Tue, 29 Sep 2026
-	09:19:56 +0000")
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
-	<pull.2412.v4.git.git.1790673598.gitgitgadget@gmail.com>
-	<45b26e2bb292f31eb36d88e2fcf8801eb8313374.1790673598.git.gitgitgadget@gmail.com>
-Date: Tue, 29 Sep 2026 13:17:54 -0700
-Message-ID: <xmqqzewzerrh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="EmcrtYXu"
+Received: (qmail 1399 invoked by uid 106); 29 Sep 2026 20:41:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=bMYwlIbYrdqGGhFTTckiSXR78WcT3d7rC8KRBe2s1b4=; b=EmcrtYXuhkbYkzb+SqXRO2Czuehb+ORMWXbOdEUdDt5AEgF+E2QbevPEaqAXAJujVL1zzeE9u01QEU1rDZjMOLVQ2Brb8dLCaJ+Ykvv0RWrl2epixEPKtCZnsTv/Bjm3n1kpnxzSe+t7rNRKvnKgwHjE/nfEn0iwIL1Xi0jGtaJR4a9HVd3Qbxd9QXU5fZ6RQQOXGzPMqUeB4Ua9v2S3Iw/Y+Mz4BGvGXjO4ibjQrRg+LIEqOop6b5EMfdVtmpmhOXwlsp6aTGq7EKabR8j2CzIrD2dEM8tskH+0gJ8mWBV+0XczBQMwCvNlF62A6r/w1L346e9CJtUhxL89pI8YmA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Sep 2026 20:41:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3659 invoked by uid 111); 29 Sep 2026 20:41:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Sep 2026 16:41:57 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 29 Sep 2026 16:41:57 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 4/5] merge-ll: use read_mmfile() to read external merge
+ results
+Message-ID: <20260929204157.GA1733321@coredump.intra.peff.net>
+References: <20260929064935.GA1276867@coredump.intra.peff.net>
+ <20260929065442.GD1697497@coredump.intra.peff.net>
+ <xmqqzewzg8w0.fsf@gitster.g>
+ <20260929201134.GA1713437@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260929201134.GA1713437@coredump.intra.peff.net>
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Sep 29, 2026 at 04:11:34PM -0400, Jeff King wrote:
 
->  t/t5585-fetch-refmap.sh          | 119 +++++++++++++++++++++++++++++++
+> I had imagined just fixing this in ll_ext_merge(), like:
+> [...]
+> which reduces the weirdness coming out of that function. But it wouldn't
+> help with other drivers (which may or may not have similar problems? I'd
+> guess not, since they are all operating internally).
 
-Please renumber.  This number is taken by another topic already in
-flight, I think.
+So here are patches to do that, including a cleaned-up version of the
+reproduction I posted.
+
+I think ll_ext_merge() is the only driver that has this weird error
+case, so it should be sufficient. Your patch would protect a potential
+future driver, but I'd be surprised if we had one that introduced the
+same NULL-but-not-an-error behavior.
+
+  [6/5]: merge-ll: handle external driver status before reading result
+  [7/5]: merge-ll: report an error when reading external merge results fails
+
+ merge-ll.c        | 14 ++++++-------
+ t/t4200-rerere.sh | 51 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+), 7 deletions(-)
+
+-Peff
