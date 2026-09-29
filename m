@@ -1,81 +1,81 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A357E5383E4
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 18:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92249541E54
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 18:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790707025; cv=none; b=d2QjeA/1q/Ur60boBpQisaIjLIF6AXqZUyL/jPMxmXjfS0Sjr0AhpLT0MkEiDSe6x/Fu+dFmrGyi761/tRHz+B1DVNbKOcQ0K8Ga1Rnn+qE70/dVnNlCIIlOyVC2C3UavMeA+HKAg0LzBB5tyM2vTGh1P4ZtjAygxuXb+QEyAfQ=
+	t=1790707203; cv=none; b=Sk1NdjymJO624VKzrh7PliN3kOIbH6F7mij6ywcBNFWYFM26LzWajonEvECQV0qcn3e+mD3gcI040yGgbsYcxzYqLT4Gu3hA6DPzRlYSY+oiwIUe7UgLzdpvH6IRWWK8hXr9BlI+nlgflgPYxYRpqPfhAU3LByX1+qypchXQabY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790707025; c=relaxed/simple;
-	bh=GoMA5ca2Edj47EzmkJlsmHf/1hWu0/88A2kCsy4IMqg=;
+	s=arc-20240116; t=1790707203; c=relaxed/simple;
+	bh=PiOrYBUNOCDZTtXW3qUoWEu75YX1/ek1uqyeY4QOFkY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PqC29ohUXO6gZyhdM3eGV+ivjx+MCRixscjo9aXAnvsicsOcpGEZY47LZV7DhWFg2OtHbD+PMDD8lPN4RhbdwILmMQXIe0xpYmRVgFQhg59NlkUXQDTDrEnsCH8ftKqwCqKc6jxkI16jTznHQDXOq0ldn4nEq9cpjOIFnQJhO2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xd6MzKOv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EJR2ROfd; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=V7dWg/A22o6HJMMn5dyMD4MG84BCd31SdipSSBGHrP4R7sMDepqMUeYxgftFFbjHUe2Dn+lGNlwOpwnVVoZGnh9S+rNRvyo+qGfWJOpC7G0SaPbTdH0GVgF/KUaxOdXuwp5mR3HfVyX3S41po4EvBR4XQUpcCoTTSJp/Wv23bzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CH9yDBJ3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bjqbsMxI; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xd6MzKOv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EJR2ROfd"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id CBED41D00060;
-	Tue, 29 Sep 2026 14:37:02 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CH9yDBJ3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bjqbsMxI"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id EC06B1D000B6;
+	Tue, 29 Sep 2026 14:40:00 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 29 Sep 2026 14:37:02 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 29 Sep 2026 14:40:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790707022; x=1790793422; bh=DRXAdkKfSJ
-	gbT/z3F4vRLCwpDWoh7jRolvvCffeLlp0=; b=Xd6MzKOvS1xk1aqVgD2Daw5nBo
-	vFzFo16nK8wfYd89uPSQLZzlxuX8KbVexPpzwezFbNPnIQhfMxkfpLhteDg+t9QV
-	eomtHBA6cFIrYZSahQFh0bec1SNHlZM3DcnrqmcPun708battb5TFJCMUP/p31bq
-	S90+ntrlxH3XhNPxpkzegnw2a1/lT1iXlIM8qKrodn3+U7tGL/gP+vcF1loROmx8
-	eivOVyZ7FEL8tXVHSMRiqj5f13oQ3dGsH31VYf0RTp8SptiV78y2iLQX3HTiCqaS
-	RFPnb5v7/NYwVY6B/79ZCDFzeDapdIi9zj9J7gcm3x7lVD4vy4Ld3J5f3X2A==
+	:subject:to:to; s=fm3; t=1790707200; x=1790793600; bh=PiOrYBUNOC
+	DZTtXW3qUoWEu75YX1/ek1uqyeY4QOFkY=; b=CH9yDBJ3ivTacwXv4Y8C4/xMkj
+	SDqhi2+xU9vymYQyce4mmLBSeUM820R4D4kL7kjwtuhufKQtfB9pxJNzu+F+Kr2e
+	K6Qa6JoysjZPfyiT8f7OPntp9YxkuzD3SHvpLA4vU7chkjgsZUQC3gKVTnCJBWv6
+	fAsm14bVTwWRM2BW1hEjK8F9WVjAROiCbYbmU63Vxa/WhLMkYv+pYGs9FAapfywB
+	qSeZPrbZoxXuBXVatjBY4rUXVS88ofxN5m803Ul6z+C3qDc9apZxFUPlSb7DuNZv
+	Ukx9CWsjBZII7wegBd3XkuCEXoAI2dvf+kP1zvLuTtDdFdW3+kdLdAH+ymuQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790707022; x=1790793422; bh=DRXAdkKfSJgbT/z3F4vRLCwpDWoh7jRolvv
-	CffeLlp0=; b=EJR2ROfd+OJG1EkWcxHDbIJKZGBNB66/xjpuzZHv4tQRcOr8Z0w
-	uQENoyqsHnpR/ENV+4urjDXeTQcDx/YG3ySPi9q81nfgcjGVrvhbGT0KOolIyjgd
-	OYZVm/y3x+BcPA5MeRDYrpQ2WHkx4yXlodlmp581XOEYvOQFbV10b9XxaAs7Laxs
-	AruCYhvoNFqOnRc998tBpG1E9zX14fbyrKdXcmz7MVk5L1UWHnsBH6Z1VltcmzhH
-	UxdavbwLmsqi5VK56LgfdV7sYW+J/kbvmeEYh+w7qEMv4+9jyKEZqDL72msedBDN
-	pqxxV9sQii3odrunOO1XT2NA7E3zwgZ+XTA==
-X-ME-Sender: <xms:TgW8arp7NXoZWqoVF7KPUkKVXQEp38pUHL6Q6gitEv2hCA1bo3fTww>
-    <xme:TgW8asqKldSraoRe1EqsWZyUvILxglOF4UXycmGDai9lXCZ1Den-JPlqMRNsjNlYj
-    PxH1BtxbuS_QeH_dErXqA6u7QEPGnRF_QGp2PbQRyqgs93gxhck0hs->
-X-ME-Received: <xmr:TgW8atOhf2qobeFpUq2-3DUsLBY1aLgwfMiLuxwu0PL-s03JAqseuOH9O8-SNkzhW_GZC7wfs11nfQdmK4HW6EtK7mea4aEdg8DX>
+	1790707200; x=1790793600; bh=PiOrYBUNOCDZTtXW3qUoWEu75YX1/ek1uqy
+	eY4QOFkY=; b=bjqbsMxI3OAc6m3c3Al9wLYg6THV841CSXH1SV641OdjqIjMQgD
+	ikQPa45cSu+eZL7cXpWfeIKwVpJIVSTLHio8OSj81TeIKLtARQNDS4tGsXEheqJO
+	Y0Oq6l0losQVGdkZHwerfd6mCmcmeOTd63CV/dPciA0OelVzpFs1zS+ntw96eB0V
+	o7Z+eSDgFZ4iZr1FXyPN8+OeK4aDXpGV+XYE9c4F0ptyaswJUzDySdvWJeZoN6gb
+	SRaIZPW1uVrUVPM+6h8kPtrz+CJXjDAJv2h9iI/lB+tkSHsVMObS8egF8FJjD/zb
+	PZJYAp9F5Pi66N5XaQNM7PDkdlmP4BlnYjQ==
+X-ME-Sender: <xms:AAa8aiKj09jJLv4Uvbq1Mf7JvGemecZ1Pvx3ytwVn6juUqKkGWxOlQ>
+    <xme:AAa8ahLCM7muU-2zOFOjxJvq0sOvIKLuHZy5RRPqz0DZ3meYPhSV6ji-S_6noovGb
+    _J24hG6FYr4I4moVDOYDHbRAzYIAxvF01PtgCpucmIqbXtmtM7eX4Y>
+X-ME-Received: <xmr:AAa8anvb503M6FYzrhuxK_SVUCMRH42YzErh8m7rsrhcquoeaM7xKQ82RyI22gRVKz6qX4TArOceSOrDbX2Xu_7P4eQmay2i5O5c>
 X-ME-Proxy-Cause: dmFkZTFqzWnY+NpywGyHGQHCbkPRbIEUtMeL7NgkSLE29ZRAwH3ZjsxSffrihCrq6znPvi
     HFZz2/HwkzZ8nPxw2OtRBqkrTmWiFdjQVNlbVHnaDH+ulz+tXtMxVm+y9Kp6Ue8zzyYs43
     /ymShR4ryBLhTTwJfhKTR7mAoOaHlL4M8+w4mkB3dpcsToRRqQiCw6V6mQIU1k3Mcq4v2F
     zDy6bJQmdbM6V0uvpbEhZ9brzJEkSpNAyogR4t0YE/5iCmuMuFgzu6u+u9ey/AEzYAO1W1
-    eKG0wX0Qfdo0fCwd7iwMKEGHFumulDhlegvGltYPwKB616VUJqhjhxgoY1Qmj2av53eOAW
-    0XVVyaS7wiQz+0YTXWQT3qLR8qO2fhPOJiMUDrsgLUu60idQbVTJ+KKcoIggF7wxmoeQrn
-    Zi9i6m6qwXHkscI6XlH8spgKaoV8nHnmnJpo53+Tuh3ChgavaveQQ3UbFAqK4akYsTFH8U
-    uFj13mD8SrOgzg89CxQOY3iYE3vFaKNAFdjYtZpiUIjrI1x2wBDtjr5EpHrkGRo7pLRIzI
-    ib8B4FRIzuFpylL4tCotRstqPu8m2GAuofDvMMX7qgBUrOGRLszltVqb8czrBDGeY0pKZN
-    ZjV4fm0YcNSci4y6JtG4PHQwTRpsmb8838CY0nwrbEocYg2k5zoSCrGR5TQg
-X-ME-Proxy: <xmx:TgW8atyGXwU7LQA2mkPSOrsKdEuq3qSATNp7SRA7ixuupxdF_lO9Ag>
-    <xmx:TgW8amtJ5-RJIx_bqigMvL5qhieqHHWwEdRDaSFxcDQpV_x1IId_Lw>
-    <xmx:TgW8am6yqgkGiZbZrBciZ36sfHpwWY63zIVNN8opBSNLNbA200K1xg>
-    <xmx:TgW8alTgT-N0hUTEe_7z0avNiboeib9B0BMRc48jXqu-M067v5uiNg>
-    <xmx:TgW8ajJuaaSPcQ0iqAwJ14AFpb4BKE6fidFus98-NW6uy9lCCcclZzvb>
+    eKG0wX0Qfdo0fCwd7iwMKEGHFumulDhlegvGltYPwKB616VUJqhjhxgoY1Qmj2av53eOBZ
+    j4l5iXYLEk+ZJ2ghMeDHwf83sEZ3qsT+64t03JnrvfFx0jPOheQ5kFL1mXUBsRksWcYeWB
+    JAaNgPk6uPh3wA0miFuvMhDV42tCq9nFmIpUY/tgS1LyZaQ3WLfZoyshz8Lb7teKYrd3u3
+    25pLW/QnZWeyh9WNYP4xIyw5XS/zhNJxSDzXU9UFJBuNuA7xJmKGZ5shZzlrYfR9gZgM0J
+    yfRN+/Tc1oToxkueAgsM52oDYa9Urk6JX80s4yXQdftAcXv/xjPPkQghLfEeqONet4a7LI
+    8ANyhPKX94Qb6csURQEaBQlXd2P/s1E2iadd5xCNVTXILzzgbvzk1wcg2dQg
+X-ME-Proxy: <xmx:AAa8amQDbVORqXlRQDBlhY6VsQSRf08VsRQk8BLQTDtoymzzO311NQ>
+    <xmx:AAa8alN_5_s3kNfNsDOg25Cdkz4xwGP1cmaTqv0LjhDBNn7XkCoIyw>
+    <xmx:AAa8ajYWEOcYQxTVCcaM_YpKRYWL9KnB9Sviiayr-TqP427QzAkWtA>
+    <xmx:AAa8anwMgasscdmz8jb8l929wjo8xrsl1JSJd9B0zLMx3x8YCjbMgg>
+    <xmx:AAa8atoWBMCdO0qsbT4RuTsHSn4Z6qrMJg8-u7Lxm1HG1e6ZDihCgSEy>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Sep 2026 14:37:02 -0400 (EDT)
+ 29 Sep 2026 14:40:00 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 1/5] xdiff: clean up read_mmfile() allocations on error
-In-Reply-To: <20260929065131.GA1697497@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 29 Sep 2026 02:51:31 -0400")
+Subject: Re: [PATCH 2/5] xdiff: replace mmbuffer_t with mmfile_t
+In-Reply-To: <20260929065239.GB1697497@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 29 Sep 2026 02:52:39 -0400")
 References: <20260929064935.GA1276867@coredump.intra.peff.net>
-	<20260929065131.GA1697497@coredump.intra.peff.net>
-Date: Tue, 29 Sep 2026 11:37:00 -0700
-Message-ID: <xmqqbj9fhpkj.fsf@gitster.g>
+	<20260929065239.GB1697497@coredump.intra.peff.net>
+Date: Tue, 29 Sep 2026 11:39:59 -0700
+Message-ID: <xmqq7bk3hpfk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,24 +87,35 @@ Content-Type: text/plain
 
 Jeff King <peff@peff.net> writes:
 
-> When read_mmfile() returns an error, it may or may not have allocated a
-> buffer in the passed-in mmfile_t. So callers must initialize the pointer
-> to NULL and free it even on error.
+> Our import of xdiff has two identical buffer structures: mmfile_t and
+> mmbuffer_t. In upstream xdiff these were actually different, but the
+> import in 3443546f6e (Use a *real* built-in diff generator, 2006-03-24)
+> simplified mmfile_t to a simple buffer.
 >
-> Most callers do this already, but rerere's diff_two() does not, and
-> would leak the buffer after a read error. We could fix it directly, but
-> let's instead try to make the interface less error-prone by freeing the
-> memory when returning failure from read_mmfile().
+> In xdiff we usually use mmfile_t for input and mmbuffer_t for output,
+> but they are really both just a ptr/len pair. I don't think that having
+> different types is buying us anything in terms of type safety or
+> semantics, and having two makes it awkward to use the same helpers for
+> both. In particular, an external merge driver's output is read from a
+> file, but we can't easily use read_mmfile(), since we want the result in
+> an mmbuffer_t.
 >
-> This fixes (part of) the leak in diff_two(). In theory it also lets us
-> simplify other callers to skip initializing the mmfile. But in practice
-> most still need zero-initialization because they may jump to free()
-> before even calling read_mmfile (e.g., in try_merge()). But we can at
-> least simplify rerere_forget_one_path() a bit.
+> Let's use mmfile_t for both cases and drop mmbuffer_t. The latter is
+> probably a more descriptive name, but we have many more uses of
+> mmfile_t (and helpers like read_mmfile). So let's consolidate using that
+> name; we can always change it to something more sensible later.
 >
-> I said "part of" earlier. There's a related leak in diff_two(): if
-> reading the first file succeeds but reading the second fails, we return
-> early and leak the first buffer. We can fix that by checking each
-> individually.
+> There should be no behavior change here; this is just consolidating the
+> types.
 
-Nice.  Thanks for plugging my leaks.
+Obviously good.
+
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I guess this step might be controversial, but I hope not. I think the
+> ship has long sailed on trying to pull "upstream" changes from xdiff
+> (there haven't been any, and we've hacked it up quite a bit already).
+
+I share your prediction that we will not be "synchronizing" with the
+upstream.
