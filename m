@@ -1,122 +1,160 @@
-Received: from mail-qk2-f42.google.com (mail-qk2-f42.google.com [74.125.230.234])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380F02DA76C
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 17:32:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.234
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2948E53F6B0
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 17:47:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790703132; cv=none; b=WRSFrcu7T+/j+b+eqh8vvnXhcLNMOvZA6IjAeVQsRTqzwd+DCiqKbZ2yZ7S/jJdhUlx0bA/tZFkKNuRmTZlA7pKyYfB6WPzn1deSrJLdHO+dyeH0ctgQXnmvzY+OqOIOVDTNi3mfQN6kYfLt+PbsFO0HzsmUSeZnQQ4FIo+2ip4=
+	t=1790704069; cv=none; b=M4+Zt3Fb9DF5vkUcdId7UKxNnbn+9CvIesEjgAMSIVUk9dSy5CQBshonYCwzSz5Pu0zc8FFBLmul3pw9xNQcBmaNUG1+d2ziyztzScwPT39c49LRSAqQqYiaep0TynBZHN3YkSsk7KnNnwpAIpPJXtwnn0HldNMfh9T+NgNpzFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790703132; c=relaxed/simple;
-	bh=g4T+CdGOxtAroK2aG7yjbxTV7tUSrD+/T6yF0gU9guU=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=SDUDBoedZn6o50/BgjESvoPEIx/8sKF8fNcn9f2XY2zJH6mX0iSmqlv0ZUDGnPqz78K9UQ6xaSTsmu5j9w+cyQd4eOTxI0q1fzp/yI3OunPovd5jbf6I5aB99TOYOdztFYd3Taa5JONzS11kGs5SkjE9gAFsJR90qsVJdBgIuX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CkkUFeqr; arc=none smtp.client-ip=74.125.230.234
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790704069; c=relaxed/simple;
+	bh=BwUe/XfIyOKk9GsTuPa+qoX0wbit/gOdJWFmm+vvlm8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VSuCd80attahY9ZXKiVmzlsr1w5SvXWIi+b5WH1UPNPz9w/jVcKisDI9ONNI88zOXZ6o24DNrQkeQ5fSiPUUt5KB3xEZquxqWjlgrUKnkhFKDhal08Xxl1Ab5uWeX8UHctR71UsO1JI8k1FWofJ1Na79Dh4pnX68K8bisr/rD+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Eg3fo6Ri; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DmyAw2ts; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CkkUFeqr"
-Received: by mail-qk2-f42.google.com with SMTP id af79cd13be357-93bef17c191so391382085a.2
-        for <git@vger.kernel.org>; Tue, 29 Sep 2026 10:32:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790703130; x=1791307930; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=tq2XV6L6KyElZUB/LKT3r1FSPlA5GtdOB7midTqoxj0=;
-        b=CkkUFeqrTU0qGPcLfWXA/rBzeSwXtUYMCiOwZpNTfUkTXkpusElOUaJ19hUiK8c6sB
-         7vWaTvLfEm6tJ3264rqr/qxUXlPIPoI/m+wbOYMGs2UlOXwtlSG488BTx36QpA5uPUVQ
-         qNa7i/QHnaIlpTkbp+z4rKJjQT+jXKDaPWwiOTfPrilAaFDJQFhCYWMRvSWev+0q4fTs
-         C0QCgSZO/RrW+pe+CAq7TKnaLC/tDhCzfo9crkessIXsSAnE6mQSx58/SRCdNQP0xwZn
-         K1R2lZLy1ZMG5vt75epz0+UfPK2qHhy8bKZYIx24BJlt+a7YRlhKbJHV6ljMvEmhrk4U
-         tZ+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790703130; x=1791307930;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=tq2XV6L6KyElZUB/LKT3r1FSPlA5GtdOB7midTqoxj0=;
-        b=TtLzLhToh33WjjWkTgoF420me45jls/OgGOhXKbYVRKevGYZJfTTomQVAvATL/+0nF
-         2Ze45Q40PEJcnnhCUyZIcwpEmOuL1csUbNfQTMdkr+7Nv1K/Gg0ljWl98Dx5h4DWHwdC
-         oIoQ3rttUhGG9nLiTKWJajnzJpT8L9GxcNR0+nmeGc/8Fpgodk/GqxIZFQBe60uYNoDV
-         kFTsoWrQ7bsBj6Nw+kRxbZYta3HqHR2K4S49Z8XgpMvBLpmeHYmQ191yx4g77ET60U4S
-         beclmcPxIQjLuYMT/FaJjlCfWfuU6VeLgAoIPMGP6X+JKY+B1AXn0V2XiocMPTPtGqvZ
-         bwMg==
-X-Gm-Message-State: AFuF++mjugG4J+O1joMh7m7ktOKFrBkyYkFXVgJl7w+zQlD7zE85/AvN
-	QrmFDlByJsNWxAhi8dP2ToGEk5EDcnIs0lmkH5ckUk69CBtRop6wfNx2vB7VxEnh
-X-Gm-Gg: AYBFou3B3T/ogYF6pJhQAI73fiU4kDLl87A3rsqMgwS4WVU35ZZDVpFT51xhhsgauCw
-	O/kS4QkKF5/Nu1BzQoAdw+YintZ0oZ02GcWobT5yBy5aIOJA0UVXl3IpeDNz7aHDxySLft4TxNk
-	0idVhtvm1eOybEwtgwPRV9YztkaRvxxkrlnjwNuD05cHNJzkMC9B9H3xRSKBSXxww5Em5a9Yp7n
-	g0jq0W3K/qLNgIm77wO2jtAYFQg60wqioyIqDmXtYy8jDs5TSvU4xOypzJsyLs6WdHzHC8kIf+q
-	ZUtcYICm/erSSWlAP9yKmfhEOE09cD29bTC8CT4UKnKQGjUvrI1D1HCRTUgFXTcK/4R+e0sE80R
-	zPXyzIB+a6pABwBvhXlG85QkYGySkQtzlwAAliFQPltm+ldiefiyudeCUyhqIecyW01OgIkynPJ
-	6SmqrvDCVWqeJsz/cxRacWIQqlqz+d89RaYDF3Mwoym39RPb/YJqCh1R3wtzmnW4KjfxoBTCrXp
-	ofGsMMMY+rbbmizfuWEm1TzfqV153uOapjcq6nrCrloddfnkW8tY+anSO9A8DJegI7BinyaO2Pu
-	HkRVdttMc7DxP/F3QIM+TYNycW3uUAHLs9tPRQC/VhMYGPrpFyYeYb8qXBaHXe5zE0J1FI3rgmX
-	R01imzA==
-X-Received: by 2002:a05:620a:284c:b0:93c:5c7d:2229 with SMTP id af79cd13be357-93c9fc2dc32mr34988985a.54.1790703129936;
-        Tue, 29 Sep 2026 10:32:09 -0700 (PDT)
-Received: from smtpclient.apple (158-94-182-130.mclarenap.oninferno.net. [158.94.182.130])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93c9f57ccd4sm20240885a.46.2026.09.29.10.32.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2026 10:32:08 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Eg3fo6Ri";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DmyAw2ts"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EC3C57A0271;
+	Tue, 29 Sep 2026 13:47:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 29 Sep 2026 13:47:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790704066; x=1790790466; bh=zRRuCaW+A6
+	Y9IES4iCYsFziJrzbLRABzgXC0myZwgKQ=; b=Eg3fo6RijicQpJ1qOqLa5YNBJF
+	dThD46zV2POEJKyPU787EJS006KQEWTvN/fRfWJst0cmqFbI8Zy6jG0KOPbX6SnG
+	l00hsQb5JcpReOd0zUHnAWDRTItgG3+i45O7D9NAsoTKI5GGGgje3RG5/u/Tzv1q
+	VIEG2ZXUacizwD4OswvWTiNiedTCb5yQwfn21sGXq62UNm1fNicLirC5uRgHYWd4
+	hu0IeZ2DN7r0EgHZNzaDGII57zxWxaWF3kGOLJzMb/HkwHGPutfIVQ0Vc/m91nU/
+	FOIQQbd3Pc1KCKZ9yhT+9aiHtER81KwpufvRJX0Ats9SN5zwVbJm9x0hDtFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790704066; x=1790790466; bh=zRRuCaW+A6Y9IES4iCYsFziJrzbLRABzgXC
+	0myZwgKQ=; b=DmyAw2ts9d2HdOizbwoBTXJxOemx8gXefcSj+OA5cjltsT8x730
+	vXd+7Jt3uS67Kh7sfJpKojPRfuQiRSfIHFO9FqGiyhFbPDmrH2F0OTCmpxyBdKlX
+	nqnfQ3sKyRhkziaEK2uMtnply+eKU/I5yiwe2WOaoizJXfffVX1hhx8MVZ2Sm+NT
+	X08WzkQxm/tPtyNswmiPamxPUPtMraTeKvWN4GABtZYGBZPnklYMdPK6JGaPbUMl
+	T1bxNWi/VLwevBXL4bNsZedBRZcyNVfUqRIG8pTYORRjiC57/YRZz+BBnwaKROjg
+	oc2heuC+3riRqFSDA4uyycI0hEVhuSRvKWQ==
+X-ME-Sender: <xms:wvm7aqUxWYcn7r55pCDf4ohxdDHL7xaCzavHsNFkT13rSPrJhHcoYQ>
+    <xme:wvm7alpcGSxTN8vyU1AVtx3rh50LtRZqUVIyZP-pf2WqUSmvFP0Y9J0fAXIqBVi0r
+    SeuGsO_-dLGS5s06mhVmztFj17v-EFhVSXdM2pgdbKxLVUpfkFMRKM>
+X-ME-Received: <xmr:wvm7aknsSVI_crHMIG8EAuxQeg0WweJHKLH1GSxozjgzcfhZKSGCU5WH5dtThtw8eSAR_bbLMsDAngtL9aHUX1inVbJ5MD9N1Srt>
+X-ME-Proxy-Cause: dmFkZTF5LzTpqBo7e1SgYqJ/LxPJoRtujM7mrBzUfrRirR36lOb5ojA1RIrrdRSvYaB/2x
+    pXLKi+gco+DtRb1qfPFBWiDQbIp+WrCSUgBeGChgdUEl+uPaXQIg5YKvQrA2JnIEjpEVDF
+    aaJfHtpKy1AqBykrmf7R50eYQwzjMYUqK94sbbUJMt15ZxdLpMGvZTVOFS8JA9P5u/Hk4y
+    n/RxYdkoEf1WjzE2rNppDqRJIbO0W/QsoQinR62X24fcMjP/k/aIeLsbsM5x3kvFzzdTKL
+    0bU+znbWZwf3fMkU9TCmNAd4sIKCYCEZa84So2Rc9ApDGhOkUhEWSL/QP2n1JUozZUYUf5
+    Bx1Q4BpjXAMXocJ87hEgVGYR8p8CWWpDPXBz+6PzSy6FcwcLyX5UM2FxOFpQb1LwZTfWC+
+    gTr2tS7BBchxy9T3X03RzJ6IYtAxwbReqgIWezcJ3dIsA7jtdfVNMYavL9YDEb1u5sfoVI
+    tvPaOY6dpDF4AqolpZv3QbVveUJNgw337xudS0vQUx+t+sxWUE7933cALFv2BnSr5x9+EF
+    1KKIEDVgQBTyavenqNldniXjYe80SUXiwGUnyzAv684t6ePpmgAdmM8Ub6Q6PtgEMIHsR0
+    Jiehi7GQVXn9iTfHKWZFemaV+56nc9h5EpyKAbjJnqBb2k/1/FKRa9ML6kIw
+X-ME-Proxy: <xmx:wvm7at1O-AmS2ViXva-Zj3GdaNFhbHP2DrZ6ph7kbh2utuTe2473AQ>
+    <xmx:wvm7apSwjteBV_i4fWgpun5lQObNuhIM0nUPR-LkeTfQB6ngc-atkw>
+    <xmx:wvm7auwkjvuXaqQZCRRfCGq1uTCSwLo_q1ocPkowtxK0WtTdy3NoTw>
+    <xmx:wvm7ahARBQV9ibWLesRMP789autSHE8CdiB2LbSoopRrCHdZH19ofw>
+    <xmx:wvm7arY5I84nzO1UcwCg7G6e0ZkWyVBbCiMus0VvKD6s79DqoQpdHVRf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Sep 2026 13:47:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  "brian m . carlson"
+ <sandals@crustytoothpaste.net>,  Patrick Steinhardt <ps@pks.im>,  Karthik
+ Nayak <karthik.188@gmail.com>,  Jeff King <peff@peff.net>,  Elijah Newren
+ <newren@gmail.com>
+Subject: Re: [PATCH v4 5/5] builtin/upload-pack: don't disable lazy fetching
+ on trusted repo
+In-Reply-To: <20260928133846.2094261-6-christian.couder@gmail.com> (Christian
+	Couder's message of "Mon, 28 Sep 2026 15:38:46 +0200")
+References: <20260908164129.560396-1-christian.couder@gmail.com>
+	<20260928133846.2094261-1-christian.couder@gmail.com>
+	<20260928133846.2094261-6-christian.couder@gmail.com>
+Date: Tue, 29 Sep 2026 10:47:45 -0700
+Message-ID: <xmqqse2sgda6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v4 0/5] stash: clean up index-mode test merge
-Date: Tue, 29 Sep 2026 13:31:57 -0400
-Message-Id: <F407EDB6-80C5-45AA-B8DE-CCD61DB663F7@gmail.com>
-References: <d5ac59be-0688-4d60-871a-2ccebc91c58b@gmail.com>
-Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-In-Reply-To: <d5ac59be-0688-4d60-871a-2ccebc91c58b@gmail.com>
-To: phillip.wood@dunelm.org.uk
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Christian Couder <christian.couder@gmail.com> writes:
 
-> Le 29 sept. 2026 =C3=A0 11:48, Phillip Wood <phillip.wood123@gmail.com> a =C3=
-=A9crit :
->=20
-> =EF=BB=BFHi Ben
->=20
->> On 29/09/2026 13:18, D. Ben Knoble wrote:
->> Changes in v4:
->> =E2=80=A2 Drop merge verbosity changes altogether. I was going to
->>   save-and-restore, but when looking at the index-merge test case (more
->>   below) closer, I noticed that "git apply --cached" reports conflicts
->>   on stderr. That is, "git stash apply --index" would report conflicts,
->>   and silencing the merge takes that away. So instead let's leave the
->>   configured verbosity alone.
->> =E2=80=A2 Only copy resulting index merge tree OID when successful
->> =E2=80=A2 Fix interaction with t5520 (new patch 4/5)
->> =E2=80=A2 Squash test from 3/5 into 5/5, since it requires actually mergi=
-ng
->>   trees. I've elected to keep it a separate test for now (contrary to
->>   Phillip's suggestion) since it's written and working. Adapting
->>   existing tests requires quite a bit more digging into implicit context
->>   assumptions ;)
->=20
-> I've left a comment on the new patch 4, but everything else in the range-d=
-iff looks ready to me.
->=20
-> Thanks
->=20
-> Phillip
+>  Documentation/config/uploadpack.adoc  |  49 +++++++++
+>  Documentation/git-upload-pack.adoc    |   5 +
+>  Documentation/git.adoc                |   4 +-
+>  builtin/upload-pack.c                 |  19 +++-
+>  t/t5710-promisor-remote-capability.sh | 142 ++++++++++++++++++++++++++
+>  5 files changed, 217 insertions(+), 2 deletions(-)
 
-Thanks Phillip. Pending other positive acks, I=E2=80=99m not sure if I shoul=
-d reroll with Thomas=E2=80=99s new patch, reroll dropping it now there=E2=80=
-=99s a seen topic for it, or just wait ;)
+The diffstat above is pleasing to see, with ample documentation to
+help users, tests with (hopefully) reasonable coverage, and a
+minimal amount of actual code changes to enable the feature, thanks
+to the preparatory work done in earlier steps.
 
-I=E2=80=99ll probably wait a bit and see how the dust settles, but:
+> +uploadpack.lazyFetchTrusted::
+> +	A multi-valued configuration variable, each of which contains the
+> +	absolute local path of a repository that `upload-pack` is allowed to
+> +	lazily fetch missing objects for.
 
-Junio if you want to see a reroll hit the list using the new synthetic base t=
-o make things nicer for you, I can do so. In particular, I think the last ch=
-eck I made when I saw your mail about the synthetic base had the prior round=
-.=
+"each of which" lacks a plural noun to modify.  Perhaps
+
+	each value of which specifies the absolute local path of a
+	repository from which upload-pack is allowed to lazily fetch
+	missing objects.
+
+> ++
+> +A repository is identified by its git directory, i.e. the `.git`
+
+"i.e." -> "i.e.," (similarly "e.g." -> "e.g.," below).
+
+> diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
+> index 32831fb879..53e76deb23 100644
+> --- a/builtin/upload-pack.c
+> +++ b/builtin/upload-pack.c
+> @@ -46,7 +46,6 @@ int cmd_upload_pack(int argc,
+>  	packet_trace_identity("upload-pack");
+>  	disable_replace_refs();
+>  	save_commit_buffer = 0;
+> -	xsetenv(NO_LAZY_FETCH_ENVIRONMENT, "1", 0);
+>  
+>  	argc = parse_options(argc, argv, prefix, options, upload_pack_usage, 0);
+>  
+> @@ -62,6 +61,24 @@ int cmd_upload_pack(int argc,
+>  	if (!enter_repo(the_repository, dir, enter_repo_flags))
+>  		die("'%s' does not appear to be a git repository", dir);
+>  
+> +	/*
+> +	 * Lazily fetching while serving a client would run `git fetch`,
+> +	 * which may execute arbitrary commands from the configuration
+> +	 * and hooks of the served repo, so we disable it by default as
+> +	 * we trust nobody. There are two ways for a server operator to
+> +	 * allow it though:
+> +	 *
+> +	 *   - if GIT_NO_LAZY_FETCH is already set, we leave it alone and
+> +	 *     honor whatever the operator put there,
+> +	 *
+> +	 *   - otherwise, if the served repo is in the
+> +	 *     "uploadpack.lazyFetchTrusted" protected allowlist, we
+> +	 *     don't disable lazy fetching.
+> +	 */
+> +	if (!getenv(NO_LAZY_FETCH_ENVIRONMENT) &&
+> +	    !upload_pack_lazy_fetch_trusted(the_repository))
+> +		xsetenv(NO_LAZY_FETCH_ENVIRONMENT, "1", 1);
+> +
+
+OK, the logic is so trivially obvious and clear that it wouldn't
+even need the above comment.  Very nice.
+
