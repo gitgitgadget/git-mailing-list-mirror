@@ -1,514 +1,345 @@
-Received: from mail-pj2-f39.google.com (mail-pj2-f39.google.com [74.125.227.167])
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC46B39936D
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 07:30:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6813B21FF23
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 07:42:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790667035; cv=none; b=nCsH0SUyvb95GM5ZF5Lq8uny5BvIA2FetWDOt7vyS1UrTXj+gbINQXOT3NkdHSouvpF1A/IPrlktjuu4QFlDPzCYgXdnUr3d9zaw6w015pfpKQoZVH+jlL2AOSo4QLoic+VgSopHmaeU/uYztLeWFrYXhAE8Wy9RB1JVOh4LUhA=
+	t=1790667753; cv=none; b=SvfbNErqJxCDhNQPlAKlBOxstFKUzVnOQfa2hXzJbaL5yeJSMCz0GvhDGMx2zCrqE2JFWBad9BvLNeRhzclt7VawAzJhjNOa9zEpjjEUM08SrXJVmQ2yeZBOlLgzqnUsmFJpNk+oKBQCPHrwmyLvj4PPEHh72vj37hMj5gIz7mQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790667035; c=relaxed/simple;
-	bh=iduN5N+/ShQ9D3Edhg99wR2VnqKy4tAOwCOA7apJr2w=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=upcxiPHMNubbtvptaZydrUz8Xzj+GjyULz3K6NyiSPWouZL4xgAZknmNaLjjcROe8Mmr0JnjALdSOP/uiG+NlYW4iF8Ljv0/JU+sKrh9QNtP4DThyVWy2kYd9YWpS8u9yitGL5YXYVPgt2ICXUhoDLPZjRxwhzGeq1w79Ugll3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JvQw70eJ; arc=none smtp.client-ip=74.125.227.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790667753; c=relaxed/simple;
+	bh=J+cdYy2IL8SIeGBKzCRTTDRshBM9TQDIU1HqKUHlD18=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=InJzVUypIXnVVEFEAO6e+fbbmCv7k4S/xSNhb+vxNsZsa6C0s9M1tu/+jq5yyvVXVRMkQhNr2KEJalroSRYEassw6qb+lrawMX+WrS7/WUQSM1WvrENw9ffMXXOXca7nkw0TSOueMqy3bWTsMi8vlYkYrUtt7tEaK7wXohBtCSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com; spf=pass smtp.mailfrom=kanamei.com; dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b=fJKGJaAp; arc=none smtp.client-ip=74.125.227.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kanamei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JvQw70eJ"
-Received: by mail-pj2-f39.google.com with SMTP id d9443c01a7336-2e2ad8bf95bso10800105ad.0
-        for <git@vger.kernel.org>; Tue, 29 Sep 2026 00:30:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b="fJKGJaAp"
+Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-39dacf053eeso1940761a91.2
+        for <git@vger.kernel.org>; Tue, 29 Sep 2026 00:42:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790667033; x=1791271833; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=L2FlFgyvZwyPcjMUxmGd7bLmAAtRzHWcG4Fs0ylmrxY=;
-        b=JvQw70eJm35uyJb6gZlnSDXnUHvHpWHoCp46E9gOJhA1j3glsmEAxqHv4Q6Z8cffyW
-         NifkAGxbSMoebXtzAb1M+gJAZbWfAuTsz7WtjXTWjvLGSksBbJGvE5R1ClBAdtPvO8Ev
-         zkwYEWHlrJEu56xzWerALE519uNFwRifZMmySjs4PCr0J2O2HOAk6sD/VaZfgvDoRra9
-         dq98qBRK17fUDgjBIm/hSGwYDxnlJ+DBm4SzWB0tfTZ0Ah29rYVsd2PnLehBbr1Flhoc
-         rg7+8y8+xYqTbQWVh7c3bLzqEKVjow110DQPqseKEzvHJDxLWF2hAQOSHv/HiGHvOxsC
-         YdtA==
+        d=kanamei-com.20251104.gappssmtp.com; s=20251104; t=1790667750; x=1791272550; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=5fUhV40w+Et5wW7fiaD5RoCEKO7qyYUZfoSkI0uwyJQ=;
+        b=fJKGJaApbLjvge6UKDRFBvS1KCLFEMliz3TpK3c0SZ2ZW5d7Jdjr09g9QygZ8U9Mpg
+         q5KjPNPjr5Uuep85zyl18FvVVebOIn3ea3z4RE76ESGruR2Gb9ZjxcmTkMg/BKIKYSqK
+         E9+dgacIRcEsZgivR+V9xEw9oVa3DhzKiit6kRh15AQeGb63NT8L8Fdh9ffin+Dume5N
+         ev372nKhjgWNxO/hiPqvQ8y/GaoBr9lZlVmKVmYD7PhVSK4x+M17i/y0C/2BFJ9SNmEu
+         UMr8RUDuIURuTiz4IWfmZYnRGW9GR5fEPbKJzNlmxWswM+ZIboJx95w2eY1FaUODRhOI
+         hPQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790667033; x=1791271833;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=L2FlFgyvZwyPcjMUxmGd7bLmAAtRzHWcG4Fs0ylmrxY=;
-        b=IlxL2dW8KuZWHkBA6BWtKTx8TMKiWrAi/l96uH1vyUsrkYLLFdGx/asre6mivbZC48
-         PN+CgANsafrS/wBkX4jdePI4e5AqNDcVbMsMPFNrnlfUMOdXVQLiSswq/QQ4eUX+w0cs
-         nMSOlea6gyEIckliTR9NXb5Ekt1wj3D6JFf4H9PLnQSKhjKfOz4vkyjTN6C37sCFjlYr
-         PPJNhjZK3VOWYZeWIueuD538xYYCRVp8dNrySkxXuhOqVCdvjjjciDtfFXms/Hja8rCl
-         egagu46Az542i8Sdhb/ceN6/23zn/8s9oR7VcjDirXJUiYRZIrKa2rUTGcGNvkOTJzGz
-         RzlQ==
-X-Gm-Message-State: AFq9FYI135ezJWtjXYA3RHFkkNy676HRH00SXiIvmdXY9+yAODuwrnFW
-	/wrz/y5Fl306xMAOfsmZBDxchtDg9HQTcMQ3twbcPrOCKtFXQg/lbVeVEmVSdA==
-X-Gm-Gg: AYBFou3T/7uEdT3BryUDEhSMqvK9ffPucR8XD8ctcxalKcE0vwEAbXi8q2EOYS9QImF
-	/dWuXI7aqVOZQerY+x77t7zQaj4r4r4Wq0AS5aS6z4vAHJk/AdBNIAIiPqKbUwD8jw28dzvtfD4
-	H9W7ePr/Jj0hRaIV42a9ofMeRhYBUQ9O/JgTF9CscW47S6Rt7mgfG6r55Y+KvLxewe9k110Dk4B
-	hjI0uCNAbVEL5QIoud/y+QlBbKimYiA5c4sOGsnG/+oa6EQnJJuIl0qdHc1ppLi0wDgqeC5dGL8
-	iiiw7i6Ay3P0iXPeXUgzmQfr/ZRo4PR1uGBeKxo8oleqxkhsPZ0qfNdqvphc+iLa0kVwDZd0SGi
-	OhyyT7SMyWRYWZYd0FvCkZZ3YcnaECqvDM/mHd354VmVTUjx0+fmtyL9oxoh5AbKgnxHl43yyjp
-	b/TDYpqEnYv++0etm7wCQ+3ovs91W+AUjpLgoxXfubnCEnBs4uvx7dTminY4zsIvi3h0xQl1Zhl
-	g==
-X-Received: by 2002:a17:903:2303:b0:2dd:c053:9c70 with SMTP id d9443c01a7336-2df94b92b78mr89978685ad.38.1790667032775;
-        Tue, 29 Sep 2026 00:30:32 -0700 (PDT)
-Received: from [127.0.0.1] ([4.149.237.42])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dfa60bfb1csm38209595ad.48.2026.09.29.00.30.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2026 00:30:31 -0700 (PDT)
-Message-Id: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 29 Sep 2026 07:30:30 +0000
-Subject: [PATCH] branch: let --delete-merged find squash merged branches
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20260707; t=1790667750; x=1791272550;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=5fUhV40w+Et5wW7fiaD5RoCEKO7qyYUZfoSkI0uwyJQ=;
+        b=zZk+jFuWS6K5EJTJZhbrR04p+Pa1Rr1X5iAUBnrcLnxxEy45Ptee7XRUyNibYRuR2w
+         KR93Reegky4fgQi8ZbPt9/lKG0uoa+NuPlvDKkpUPeAumpl5GCzxsNXAj/yAOQZaiuns
+         00vbPmwmYbLRHmVCn5oB6xj0xJ8YysUhkAr079Cg6ZKQKLVg20AuklAi0aw59Ic2+kya
+         kdZoIgOvukcfanIm8l4EKZBjoZGdLFAOtjRZU16kWzKAQ7WRq+gmBIRVFWs6pZV2zysW
+         qVDHTZPbtes44XawgQPK06/3QqIK2jcdM6+qCW75fNnlUTQNue5HvzMuFtXH35lOVnrB
+         ZzYQ==
+X-Gm-Message-State: AFq9FYJrRRiJ689jUI2DStLLUCzT7e+x/mxHLef8FIMX0OIBhYnl9IHC
+	ydzFn4uC8aNJjZa6U8dHR1mUMBW9mdETiY6qHX3zNoMjH+twKkwgf1Ut67I7dEcgmL3hoKc89Ig
+	I5GkHMjfUcw==
+X-Gm-Gg: AYBFou1F+1L+rrnl2E2S/vrn7ZVu5EsRz5Y5KSNHxMyq3OOgGbxJLr0StlOtj+Npzec
+	RAlqNFIXUDUSsx36qxIw6/3RPxrqZqSMOowRcvJQaZTCU+NaQsuprAftYuyelf8994ZNOQip9z8
+	z2mNaFX8NPyMuxI6qLpn8mn68wJ07bPm+8085OFN8aFGBgFFTPNIT0dJIC8JOgSDgLuIvXF0Mgp
+	eEMvCqG3vGTS4Gfa1Y+k/zPPAN/MW/kdnJ0KpYHR8JMRU3EHhvyeDO1DnaAhrXvSDVbN7Wiz3pA
+	ZEWn7pvXVlluXsXJJF4bC7dORoLCxg3XOlS66epKWnMFs48sQ1eG4bu8Sz6SVt5equ9LOP+LhPR
+	GfMkIsV8R0rZxPsRZOwxNIslFMmfjQ0kpYoQFqaGVTjNHUV4Yet2yxU22QujVrWie37RZXcgpvF
+	b9wi30O9i/ETNkymQCSMI0SjIf6SGvbZAjUsCk4bE5xtrz4D05IEmUzgRH5WT4V3hKzkADDXm6E
+	o8ftY6N8H34l2UL/Ew5ksxJ67Oagk2O9lhirG2gokHdzgQzrnNdBs42PIPitWf5CZ2vy9Q5xOiR
+	Mpdy
+X-Received: by 2002:a17:90b:540b:b0:3a0:4384:adf6 with SMTP id 98e67ed59e1d1-3a09855cfa2mr11885606a91.0.1790667750469;
+        Tue, 29 Sep 2026 00:42:30 -0700 (PDT)
+Received: from m4-mbp16-shigedan.flets-east.jp ([2400:4050:3c1:f500:3003:4562:d18:f28b])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a497e90180sm4240233a91.2.2026.09.29.00.42.29
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 29 Sep 2026 00:42:29 -0700 (PDT)
+From: Kazumasa Shigeta <kazumasa.shigeta@kanamei.com>
+To: git@vger.kernel.org
+Cc: Shabbir Bhojani <shabbir.r.bhojani@gmail.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH] stash: expose untracked modes in create
+Date: Tue, 29 Sep 2026 16:42:22 +0900
+Message-ID: <20260929074222.11942-1-kazumasa.shigeta@kanamei.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+`git stash create` always passes zero for the include_untracked parameter
+of do_create_stash(), even though that helper already supports untracked
+and ignored files and stash push/save expose those modes as
+-u/--include-untracked and -a/--all.
 
-Branches merged on GitHub with "Squash and merge" or "Rebase and
-merge" are never deleted by "git branch --delete-merged". The upstream
-holds a rewritten copy of their work, so their tips are not reachable
-from it and they look unmerged forever.
+Teach create to accept the same options and pass the existing mode
+through. Unlike push/save, create continues to only create objects: it
+does not update refs/stash or modify the index or working tree.
 
-Treat such a branch as merged when some upstream commit since the fork
-point contains all of its changes, so that merging the branch into
-that commit would change nothing. Name that commit in the output so
-the user can see where the work went:
+When the selected mode finds no changes, do_create_stash() returns 1.
+Translate that to success so create keeps its existing no-object, empty
+output behavior.
 
-    Deleted branch topic (was 1a2b3c4, landed as 9f8e7d6).
+Use normal parse-options semantics, so options may appear after message
+arguments. A message that begins with a dash can be disambiguated with
+--.
 
-The first upstream commit that contains the changes is used, so the
-branch is deleted even if upstream later reverted or reworked them.
-Nothing is lost, since that commit keeps them in the upstream history.
-A branch whose changes only partly landed is kept.
+9ca6326dff29 (stash: refactor stash_create, 2017-02-19) added the
+internal include-untracked path while intentionally leaving the user
+interface for "git stash create" unchanged. Reuse that machinery and
+the existing INCLUDE_ALL_FILES mode rather than adding a separate stash
+creation path.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+Add coverage for both short and long aliases, the untracked/ignored
+boundary, option/message parsing, no-change behavior, and preservation
+of refs/stash, the index, and the working tree.
+
+Signed-off-by: Kazumasa Shigeta <kazumasa.shigeta@kanamei.com>
 ---
-    branch: let --delete-merged find squash merged branches
-    
-    Branches merged on GitHub with "Squash and merge" or "Rebase and merge"
-    are never deleted by git branch --delete-merged, because their tips are
-    not reachable from the upstream. This treats such a branch as merged
-    when some upstream commit contains all of its changes, and names that
-    commit in the output:
-    
-    Deleted branch topic (was 1a2b3c4, landed as 9f8e7d6).
-    
-    
-    After the release of 2.56, I saw people liking the --delete-merged
-    feature, but asking for this. A lot of people, me included prefer
-    squash-merge and it currently doesn't work with --delete-merged.
+Related work:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2425%2FHaraldNordgren%2Fbranch-delete-squashed-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2425/HaraldNordgren/branch-delete-squashed-v1
-Pull-Request: https://github.com/git/git/pull/2425
+I proposed adding both --include-untracked and --all to
+"git stash create" in 2014:
+  <1403856479-37421-1-git-send-email-shigeta@kanamei.co.jp>
 
- Documentation/git-branch.adoc |  15 +--
- builtin/branch.c              | 183 ++++++++++++++++++++++++++++++++--
- t/t3200-branch.sh             |  74 ++++++++++++++
- 3 files changed, 259 insertions(+), 13 deletions(-)
+I should also apologize for dropping that thread after receiving review.
+I did not follow up on the comments at the time.  Thanks to those who
+reviewed it then.
 
-diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index bfdf459329..0427324de1 100644
---- a/Documentation/git-branch.adoc
-+++ b/Documentation/git-branch.adoc
-@@ -204,12 +204,15 @@ This option is only applicable in non-verbose mode.
+Separately, in 2017, Thomas Gummerer added an internal -u path while
+refactoring stash_create in 9ca6326dff29 (stash: refactor stash_create).
+That change explicitly kept the user interface of "git stash create"
+unchanged.
+
+When "stash create" was later converted to the builtin C implementation
+in d4788af875cc (stash: convert create to builtin), the untracked-file
+handling was carried into the new implementation and remains there today.
+
+More recently, Shabbir Bhojani proposed exposing --include-untracked:
+  <pull.1892.git.1774768580147.gitgitgadget@gmail.com>
+
+This patch exposes both existing untracked modes, --include-untracked and
+--all, to "git stash create".
+
+ Documentation/git-stash.adoc | 18 ++++++----
+ builtin/stash.c              | 36 ++++++++++++++-----
+ t/t3903-stash.sh             | 70 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 109 insertions(+), 15 deletions(-)
+
+diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
+index fc6a9a0..32f0fd5 100644
+--- a/Documentation/git-stash.adoc
++++ b/Documentation/git-stash.adoc
+@@ -21,7 +21,7 @@ git stash [push] [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | -
+ git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
+            [-u | --include-untracked] [-a | --all] [<message>]
+ git stash clear
+-git stash create [<message>]
++git stash create [-u | --include-untracked] [-a | --all] [<message>]
+ git stash store [(-m | --message) <message>] [-q | --quiet] <commit>
+ git stash export (--print | --to-ref <ref>) [<stash>...]
+ git stash import <commit>
+@@ -138,10 +138,12 @@ with no conflicts.
+ `drop [-q | --quiet] [<stash>]`::
+ 	Remove a single stash entry from the list of stash entries.
  
- `--delete-merged <pattern>`::
- 	Delete local branches whose configured upstream matches
--	_<pattern>_, but only when their tip is reachable from that
--	upstream. In other words, the work on the branch has already
--	landed on the upstream it tracks, so the local copy is no longer
--	needed. _<pattern>_ may name a ref, a remote (using the branch its
--	`HEAD` points at), or a shell-style glob. The option can be
--	repeated to widen the upstream match.
-+	_<pattern>_, but only when their work has already landed on that
-+	upstream, so the local copy is no longer needed. This is the case
-+	when their tip is reachable from the upstream, or when some
-+	upstream commit contains all of their changes, as happens after
-+	a squash or rebase merge, even if those changes were later
-+	reverted. The message for such a branch names the first upstream
-+	commit that contains its changes. _<pattern>_ may name a ref, a
-+	remote (using the branch its `HEAD` points at), or a shell-style
-+	glob. The option can be repeated to widen the upstream match.
- 	Optional _<branch-pattern>_ arguments limit which local branches
- 	are considered, e.g. `git branch --delete-merged 'origin/*'
- 	'topic-*'`.
-diff --git a/builtin/branch.c b/builtin/branch.c
-index a613148fc7..982a8abe24 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -29,6 +29,13 @@
- #include "help.h"
- #include "advice.h"
- #include "commit-reach.h"
-+#include "diff.h"
-+#include "diffcore.h"
-+#include "hex.h"
-+#include "merge-ll.h"
-+#include "revision.h"
-+#include "tree-walk.h"
-+#include "xdiff-interface.h"
+-`create`::
++`create [-u | --include-untracked] [-a | --all]`::
+ 	Create a stash entry (which is a regular commit object) and
+ 	return its object name, without storing it anywhere in the ref
+-	namespace.
++	namespace.  The `--include-untracked` option includes untracked
++	files, while `--all` also includes ignored files, without modifying
++	the working tree.
+ 	This is intended to be useful for scripts.  It is probably not
+ 	the command you want to use; see "push" above.
  
- static const char * const builtin_branch_usage[] = {
- 	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged] [(--forked <branch>)...]"),
-@@ -236,7 +243,7 @@ static void delete_branch_config(const char *branchname)
- }
+@@ -167,10 +169,11 @@ OPTIONS
+ -------
+ `-a`::
+ `--all`::
+-	This option is only valid for `push` and `save` commands.
++	When used with the `push` and `save` commands, all ignored and
++	untracked files are also stashed and then cleaned up with `git clean`.
+ +
+-All ignored and untracked files are also stashed and then cleaned
+-up with `git clean`.
++When used with the `create` command, ignored and untracked files are included
++in the stash entry without modifying the working tree.
  
- static int delete_branches(int argc, const char **argv, int kinds,
--			   unsigned int flags)
-+			   unsigned int flags, struct strmap *landed_commits)
- {
- 	struct commit *head_rev = NULL;
- 	struct object_id oid;
-@@ -334,6 +341,8 @@ static int delete_branches(int argc, const char **argv, int kinds,
- 		}
+ `-u`::
+ `--include-untracked`::
+@@ -179,6 +182,9 @@ up with `git clean`.
+ 	all untracked files are also stashed and then cleaned up with
+ 	`git clean`.
+ +
++When used with the `create` command, untracked files are included in the
++stash entry without modifying the working tree.
+++
+ When used with the `show` command, show the untracked files in the stash
+ entry as part of the diff.
  
- 		if (!(ref_flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
-+		    !(landed_commits &&
-+		      strmap_contains(landed_commits, bname.buf)) &&
- 		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
- 					flags)) {
- 			if (!(flags & DELETE_BRANCH_SKIP_UNMERGED))
-@@ -357,15 +366,33 @@ static int delete_branches(int argc, const char **argv, int kinds,
- 	for_each_string_list_item(item, &refs_to_delete) {
- 		char *describe_ref = item->util;
- 		char *name = item->string;
-+		struct commit *landed = landed_commits ?
-+			strmap_get(landed_commits, name + branch_name_pos) : NULL;
-+		const char *landed_abbrev = landed ?
-+			repo_find_unique_abbrev(the_repository,
-+						&landed->object.oid,
-+						DEFAULT_ABBREV) : NULL;
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 7a98434..57a4750 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -59,7 +59,7 @@
+ 	N_("git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
+ 	   "          [-u | --include-untracked] [-a | --all] [<message>]")
+ #define BUILTIN_STASH_CREATE_USAGE \
+-	N_("git stash create [<message>]")
++	N_("git stash create [-u | --include-untracked] [-a | --all] [<message>]")
+ #define BUILTIN_STASH_EXPORT_USAGE \
+ 	N_("git stash export (--print | --to-ref <ref>) [<stash>...]")
+ #define BUILTIN_STASH_IMPORT_USAGE \
+@@ -119,6 +119,11 @@ static const char * const git_stash_clear_usage[] = {
+ 	NULL
+ };
+ 
++static const char * const git_stash_create_usage[] = {
++	BUILTIN_STASH_CREATE_USAGE,
++	NULL
++};
 +
- 		if (flags & DELETE_BRANCH_DRY_RUN) {
--			if (!(flags & DELETE_BRANCH_QUIET))
-+			if (flags & DELETE_BRANCH_QUIET)
-+				;
-+			else if (landed)
-+				printf(_("Would delete branch %s (was %s, landed as %s).\n"),
-+				       name + branch_name_pos, describe_ref,
-+				       landed_abbrev);
-+			else
- 				printf(remote_branch
- 					? _("Would delete remote-tracking branch %s (was %s).\n")
- 					: _("Would delete branch %s (was %s).\n"),
- 					name + branch_name_pos, describe_ref);
- 		} else if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
- 			char *refname = name + branch_name_pos;
--			if (!(flags & DELETE_BRANCH_QUIET))
-+			if (flags & DELETE_BRANCH_QUIET)
-+				;
-+			else if (landed)
-+				printf(_("Deleted branch %s (was %s, landed as %s).\n"),
-+				       refname, describe_ref, landed_abbrev);
-+			else
- 				printf(remote_branch
- 					? _("Deleted remote-tracking branch %s (was %s).\n")
- 					: _("Deleted branch %s (was %s).\n"),
-@@ -824,6 +851,134 @@ static int branch_pushes_to_upstream(struct branch *branch,
+ static const char * const git_stash_store_usage[] = {
+ 	BUILTIN_STASH_STORE_USAGE,
+ 	NULL
+@@ -1643,26 +1648,39 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
  	return ret;
  }
  
-+struct branch_change {
-+	char *path;
-+	struct object_id base_oid, branch_oid;
-+	unsigned short branch_mode;
-+};
-+
-+static void collect_branch_changes(struct commit *base, struct commit *rev,
-+				   struct branch_change **changes,
-+				   size_t *nr, size_t *alloc)
-+{
-+	struct diff_options opt;
-+
-+	repo_diff_setup(the_repository, &opt);
-+	opt.flags.recursive = 1;
-+	opt.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&opt);
-+	diff_tree_oid(get_commit_tree_oid(base), get_commit_tree_oid(rev),
-+		      "", &opt);
-+	for (int i = 0; i < diff_queued_diff.nr; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+		struct branch_change *change;
-+
-+		ALLOC_GROW(*changes, *nr + 1, *alloc);
-+		change = &(*changes)[(*nr)++];
-+		change->path = xstrdup(p->two->path);
-+		oidcpy(&change->base_oid, DIFF_FILE_VALID(p->one) ?
-+		       &p->one->oid : null_oid(the_hash_algo));
-+		oidcpy(&change->branch_oid, DIFF_FILE_VALID(p->two) ?
-+		       &p->two->oid : null_oid(the_hash_algo));
-+		change->branch_mode = p->two->mode;
-+	}
-+	diff_flush(&opt);
-+}
-+
-+static int merge_keeps_upstream(const struct branch_change *change,
-+				const struct object_id *upstream_oid)
-+{
-+	mmfile_t base, upstream, branch;
-+	mmbuffer_t result = { 0 };
-+	int ret;
-+
-+	read_mmblob(&base, the_repository->objects, &change->base_oid);
-+	read_mmblob(&upstream, the_repository->objects, upstream_oid);
-+	read_mmblob(&branch, the_repository->objects, &change->branch_oid);
-+	ret = ll_merge(&result, change->path, &base, "base",
-+		       &upstream, "upstream", &branch, "branch",
-+		       the_repository->index, NULL) == LL_MERGE_OK &&
-+	      result.size == upstream.size &&
-+	      !memcmp(result.ptr, upstream.ptr, upstream.size);
-+
-+	free(base.ptr);
-+	free(upstream.ptr);
-+	free(branch.ptr);
-+	free(result.ptr);
-+	return ret;
-+}
-+
-+static int change_landed(const struct branch_change *change,
-+			 struct commit *commit)
-+{
-+	struct object_id oid;
-+	unsigned short mode;
-+
-+	if (get_tree_entry(the_repository, get_commit_tree_oid(commit),
-+			   change->path, &oid, &mode))
-+		return is_null_oid(&change->branch_oid);
-+	if (oideq(&oid, &change->branch_oid))
-+		return mode == change->branch_mode;
-+	if (is_null_oid(&change->base_oid) ||
-+	    is_null_oid(&change->branch_oid) ||
-+	    oideq(&oid, &change->base_oid) ||
-+	    mode != change->branch_mode || !S_ISREG(mode))
-+		return 0;
-+	return merge_keeps_upstream(change, &oid);
-+}
-+
-+static struct commit *find_landed_commit(struct commit *rev,
-+					 struct commit *upstream)
-+{
-+	struct commit_list *merge_bases = NULL;
-+	struct branch_change *changes = NULL;
-+	size_t changes_nr = 0, changes_alloc = 0;
-+	struct commit *commit, *landed = NULL;
-+	struct strvec args = STRVEC_INIT;
-+	struct rev_info revs;
-+
-+	if (repo_get_merge_bases(the_repository, upstream, rev,
-+				 &merge_bases) < 0)
-+		exit(128);
-+	if (!merge_bases)
-+		return NULL;
-+	collect_branch_changes(merge_bases->item, rev, &changes,
-+			       &changes_nr, &changes_alloc);
-+	commit_list_free(merge_bases);
-+	if (!changes_nr)
-+		return NULL;
-+
-+	strvec_pushl(&args, "rev-list", "--reverse",
-+		     oid_to_hex(&upstream->object.oid), NULL);
-+	strvec_pushf(&args, "^%s", oid_to_hex(&rev->object.oid));
-+	strvec_push(&args, "--");
-+	for (size_t i = 0; i < changes_nr; i++)
-+		strvec_pushf(&args, ":(literal)%s", changes[i].path);
-+
-+	repo_init_revisions(the_repository, &revs, NULL);
-+	setup_revisions_from_strvec(&args, &revs, NULL);
-+	if (prepare_revision_walk(&revs))
-+		die(_("revision walk setup failed"));
-+	while (!landed && (commit = get_revision(&revs))) {
-+		size_t i;
-+
-+		for (i = 0; i < changes_nr; i++)
-+			if (!change_landed(&changes[i], commit))
-+				break;
-+		if (i == changes_nr)
-+			landed = commit;
-+	}
-+	release_revisions(&revs);
-+	clear_commit_marks(upstream, ALL_REV_FLAGS);
-+	clear_commit_marks(rev, ALL_REV_FLAGS);
-+	strvec_clear(&args);
-+
-+	for (size_t i = 0; i < changes_nr; i++)
-+		free(changes[i].path);
-+	free(changes);
-+	return landed;
-+}
-+
- static int delete_merged_branches(const struct strvec *upstreams,
- 				 const char **argv, unsigned int flags)
+-static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
++static int create_stash(int argc, const char **argv, const char *prefix,
+ 			struct repository *repo UNUSED)
  {
-@@ -832,6 +987,7 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 	struct ref_array candidates = { 0 };
- 	struct strset deletable_branch_names = STRSET_INIT;
- 	struct strset protected_branch_names = STRSET_INIT;
-+	struct strmap landed_commits = STRMAP_INIT;
- 	struct strvec branches_to_delete = STRVEC_INIT;
- 	struct strbuf key = STRBUF_INIT;
- 	struct hashmap_iter iter;
-@@ -852,6 +1008,7 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 		const char *branch_name;
- 		struct branch *branch;
- 		const char *upstream_refname;
-+		struct commit *landed = NULL;
- 		int opt_out;
+-	int ret;
++	int ret = 0;
++	int include_untracked = 0;
++	struct option options[] = {
++		OPT_BOOL('u', "include-untracked", &include_untracked,
++			 N_("include untracked files in stash")),
++		OPT_SET_INT('a', "all", &include_untracked,
++			    N_("include ignored files in stash"),
++			    INCLUDE_ALL_FILES),
++		OPT_END()
++	};
+ 	struct strbuf stash_msg_buf = STRBUF_INIT;
+ 	struct stash_info info = STASH_INFO_INIT;
+ 	struct pathspec ps;
  
- 		if (!skip_prefix(branch_refname, "refs/heads/", &branch_name))
-@@ -867,8 +1024,17 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 			continue;
- 		if (check_branch_commit(branch_name, branch_name,
- 					&candidates.items[i]->objectname, NULL,
--					FILTER_REFS_BRANCHES, DELETE_BRANCH_SKIP_UNMERGED))
--			continue;
-+					FILTER_REFS_BRANCHES,
-+					DELETE_BRANCH_SKIP_UNMERGED)) {
-+			struct commit *rev = lookup_commit_reference(
-+				the_repository, &candidates.items[i]->objectname);
-+			struct commit *upstream = lookup_commit_reference_by_name(
-+				upstream_refname);
-+
-+			if (!rev || !upstream ||
-+			    !(landed = find_landed_commit(rev, upstream)))
-+				continue;
-+		}
+-	/* Starting with argv[1], since argv[0] is "create" */
+-	strbuf_join_argv(&stash_msg_buf, argc - 1, ++argv, ' ');
++	argc = parse_options(argc, argv, prefix, options,
++			     git_stash_create_usage, 0);
++	strbuf_join_argv(&stash_msg_buf, argc, argv, ' ');
  
- 		strbuf_reset(&key);
- 		strbuf_addf(&key, "branch.%s.deletemerged", branch_name);
-@@ -882,6 +1048,8 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 		}
+ 	memset(&ps, 0, sizeof(ps));
+-	if (!check_changes_tracked_files(&ps))
+-		return 0;
++	if (!include_untracked && !check_changes_tracked_files(&ps))
++		goto done;
  
- 		strset_add(&deletable_branch_names, branch_name);
-+		if (landed)
-+			strmap_put(&landed_commits, branch_name, landed);
- 	}
+-	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, NULL, 0, &info,
+-			      NULL, 0);
++	ret = do_create_stash(&ps, &stash_msg_buf, include_untracked, 0, NULL,
++			      0, &info, NULL, 0);
+ 	if (!ret)
+ 		printf_ln("%s", oid_to_hex(&info.w_commit));
++	else if (ret == 1)
++		ret = 0;
  
- 	protect_stacked_branch_bases(refs, &deletable_branch_names,
-@@ -895,7 +1063,7 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 				      FILTER_REFS_BRANCHES,
- 				      DELETE_BRANCH_SKIP_UNMERGED |
- 				      DELETE_BRANCH_NO_HEAD_FALLBACK |
--				      flags);
-+				      flags, &landed_commits);
- 
- 	if (!ret && !(flags & DELETE_BRANCH_DRY_RUN))
- 		clear_deleted_upstreams(&protected_branch_names,
-@@ -903,6 +1071,7 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 
- 	strbuf_release(&key);
- 	strvec_clear(&branches_to_delete);
-+	strmap_clear(&landed_commits, 0);
- 	strset_clear(&protected_branch_names);
- 	strset_clear(&deletable_branch_names);
- 	ref_array_clear(&candidates);
-@@ -1135,7 +1304,7 @@ int cmd_branch(int argc,
- 			die(_("branch name required"));
- 		ret = delete_branches(argc, argv, filter.kind,
- 				      (delete > 1 ? DELETE_BRANCH_FORCE : 0) |
--				      (quiet ? DELETE_BRANCH_QUIET : 0));
-+				      (quiet ? DELETE_BRANCH_QUIET : 0), NULL);
- 		goto out;
- 	} else if (delete_merged.nr) {
- 		ret = delete_merged_branches(&delete_merged, argv,
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index cdb6c6a634..3b05718bab 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1979,6 +1979,80 @@ test_expect_success '--delete-merged deletes only selected merged branches' '
- 	)
++done:
+ 	free_stash_info(&info);
+ 	strbuf_release(&stash_msg_buf);
+ 	return ret;
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 7211586..fe34879 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -640,6 +640,76 @@ test_expect_success 'stash create - no changes' '
+ 	test_must_be_empty actual
  '
  
-+push_topic () {
-+	branch=$1 &&
-+	shift &&
++# --all observes every untracked and ignored path in the worktree.  Use one
++# isolated repository for these checks so unrelated test state is not captured.
++test_expect_success 'stash create with untracked options' '
++	test_when_finished "rm -rf stash-create-options" &&
++	test_create_repo stash-create-options &&
 +	(
-+		cd repo &&
-+		git checkout -b "$branch" --track origin/next &&
-+		for commit in "$@"
-+		do
-+			test_commit "$commit" || return 1
-+		done &&
-+		git push origin "$branch" &&
-+		git checkout --detach
-+	)
-+}
++		cd stash-create-options &&
++		test_commit base tracked base &&
++		echo create-ignored >.gitignore &&
++		git add .gitignore &&
++		git commit -m ignore &&
 +
-+squash_merge_upstream () {
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		git merge --squash "$1" &&
-+		git commit -m "Squash merge of $1" &&
-+		git checkout main
-+	)
-+}
++		git stash create -u >.git/actual &&
++		test_must_be_empty .git/actual &&
++		git stash create -a >.git/actual &&
++		test_must_be_empty .git/actual &&
 +
-+test_expect_success '--delete-merged deletes a squash merged branch' '
-+	setup_repo_for_delete_merged &&
-+	push_topic squashed squashed-one squashed-two &&
-+	push_topic partial partial-landed partial-pending &&
-+	squash_merge_upstream partial~1 &&
-+	squash_merge_upstream squashed &&
-+	squash=$(git -C upstream rev-parse --short next) &&
-+	(
-+		cd repo &&
-+		git fetch origin &&
-+		sha=$(git rev-parse --short squashed) &&
++		echo untracked >create-untracked &&
++		git stash create "without untracked" >.git/actual &&
++		test_must_be_empty .git/actual &&
++		short=$(git stash create "create untracked" -u) &&
++		long=$(git stash create --include-untracked "create untracked") &&
++		test_cmp_rev "$short^3^{tree}" "$long^3^{tree}" &&
++		echo untracked >.git/expect &&
++		git show "$short^3:create-untracked" >.git/actual &&
++		test_cmp .git/expect .git/actual &&
++		branch=$(git symbolic-ref --short HEAD) &&
++		echo "On $branch: create untracked" >.git/expect &&
++		git show --pretty=%s -s "$short" >.git/actual &&
++		test_cmp .git/expect .git/actual &&
++		test_path_is_file create-untracked &&
 +
-+		git branch --delete-merged origin/next >actual 2>&1 &&
-+		echo "Deleted branch squashed (was $sha, landed as $squash)." >expect &&
-+		test_cmp expect actual &&
++		echo ignored >create-ignored &&
++		with_untracked=$(git stash create -u "create options") &&
++		test_must_fail git cat-file -e "$with_untracked^3:create-ignored" &&
++		short=$(git stash create "create options" -a) &&
++		long=$(git stash create --all "create options") &&
++		test_cmp_rev "$short^3^{tree}" "$long^3^{tree}" &&
++		echo ignored >.git/expect &&
++		git show "$short^3:create-ignored" >.git/actual &&
++		test_cmp .git/expect .git/actual &&
++		test_path_is_file create-untracked &&
++		test_path_is_file create-ignored &&
 +
-+		check_branches <<-\EOF
-+		main
-+		partial
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--delete-merged deletes a squash merged branch that was reverted' '
-+	setup_repo_for_delete_merged &&
-+	push_topic reverted reverted-work &&
-+	squash_merge_upstream reverted &&
-+	squash=$(git -C upstream rev-parse --short next) &&
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		git revert --no-edit HEAD &&
-+		git checkout main
-+	) &&
-+	(
-+		cd repo &&
-+		git fetch origin &&
-+		sha=$(git rev-parse --short reverted) &&
-+
-+		git branch --delete-merged origin/next >actual 2>&1 &&
-+		echo "Deleted branch reverted (was $sha, landed as $squash)." >expect &&
-+		test_cmp expect actual &&
-+
-+		check_branches <<-\EOF
-+		main
-+		EOF
++		echo staged >staged &&
++		git add staged &&
++		echo modified >>tracked &&
++		git diff >.git/before-worktree &&
++		git diff --cached >.git/before-index &&
++		git status --porcelain=v1 --ignored >.git/before-status &&
++		test_must_fail git rev-parse --verify refs/stash >/dev/null 2>&1 &&
++		STASH_ID=$(git stash create -a -- -create-message) &&
++		git diff >.git/after-worktree &&
++		git diff --cached >.git/after-index &&
++		git status --porcelain=v1 --ignored >.git/after-status &&
++		test_cmp .git/before-worktree .git/after-worktree &&
++		test_cmp .git/before-index .git/after-index &&
++		test_cmp .git/before-status .git/after-status &&
++		test_must_fail git rev-parse --verify refs/stash >/dev/null 2>&1 &&
++		echo "On $branch: -create-message" >.git/expect &&
++		git show --pretty=%s -s "$STASH_ID" >.git/actual &&
++		test_cmp .git/expect .git/actual
 +	)
 +'
 +
- test_expect_success '--delete-merged keeps main despite a different default push remote' '
- 	setup_repo_for_delete_merged &&
- 	create_merged_branch on-next &&
-
-base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
++test_expect_success 'stash create rejects unknown options' '
++	test_expect_code 129 git stash create --unknown-option 2>err &&
++	test_grep "unknown option" err
++'
++
+ test_expect_success 'stash branch - no stashes on stack, stash-like argument' '
+ 	git stash clear &&
+ 	test_when_finished "git reset --hard HEAD" &&
 -- 
-gitgitgadget
+2.47.3
+
