@@ -1,130 +1,135 @@
-Received: from mail-ej2-f12.google.com (mail-ej2-f12.google.com [74.125.228.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83C34ED1A8
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 09:41:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC7F4FD7B2
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 09:56:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790674879; cv=none; b=Gzz6Zn1BbAiyFYocvpiyQeZWm+BfebYQUdGJsnTCnrEqt6aGWQbiSAvbKmOvsyLecqlV+pdu2CfAMspNqn/RjH9PegtNeCBOVW+utpR4d4t7EguhmpmuNvuPKYGscY/KKD/dG73iqCdbiUmyyMs9mLxm9KZWm040tEuxgFUNBwo=
+	t=1790675814; cv=none; b=kZkuU3GjhxvAC7tYSExZ9CunomPOL9r1Ung+SMqn7aUn3cVE1FHgDHZO249R7ChhPDELPFCJcxT+TZ+XmGuPmXxBhWfEN8G3Rm6Cq/YL5RkFjp7hNlipIE1l1AH4vQS7MVAREzIkDKfRQOQIgbUMjK/M3M7K1LGt4fxYDxPMbtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790674879; c=relaxed/simple;
-	bh=Vr2894t115FevPUdrvjjBcQBy5lB8tvCZneLRdNKDEo=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=AsgQOdAFC29GSXvyJSBiaCDH7yKvO0UpaaTtlquMIt23iecnJVVhH6j7NqofCWg7n004NcHBAHiAsVbcIS4vNIJsYoUCCBFpFqTYmiOqx1zYckCez9jHtgON+b1BHYVB657MaCAbG3Xshr6auLPxlcWetfF3njbNfi7HUZUJ4W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nuDzbLSv; arc=none smtp.client-ip=74.125.228.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790675814; c=relaxed/simple;
+	bh=ND8+0uMFQ7H96haMtnUcNkiP2F3T9yZVQwFvPp4XRPA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=scBJEpGZNpA+p20Ka2Zq5uTRMZx12PgIPv8QpHvfKdFq9frB1lolK497dJuSAhDtO4BVbNc30v/LHbj7Dbxt2T1wtikCAGVQH3uqR0pBD+pcokZ/RCp0lNtDGqb98rzRY9XxDTTOCN/aB2e0zRwyuECeBCsE8IkZnrpw7pxu75s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ia9nIduR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b3Ww94z0; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nuDzbLSv"
-Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c2940ef15c1so555853066b.1
-        for <git@vger.kernel.org>; Tue, 29 Sep 2026 02:41:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790674876; x=1791279676; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=YmV69TDpcuDRgkFAVojSTMxZHU8FkvBwdZhxrM3ARTc=;
-        b=nuDzbLSvLTVV+OdH7NHUEMx6RytCTgfjmNMJFKefwDJCo8YcLEZ02iNoEM0PIt6Nli
-         +m6zS+cr4JDlgepSv4NkPGqD4Jgulrzovn8HB2/CxPQHRDqi8mBfaQb5D67rMh2FYbGR
-         k4gBh7v6d+HQQ75zNL2qquGQnQTMVO+DvZSmLVVeKFe0/ukM1e3Ke44OVfv84YfjQ0xq
-         dOX3wZRwlVsKiKafvAc8sSabeMCUJ5NnM1rFNaOMQXYW4pDwejLLEocagfewjRdgYpzr
-         SHmibPSNxE9Z5KT72YUYSUb2/0FP5ayeJypOhRYEw4zvLfnzZLSkMVdkQxYUbc1nSUlq
-         6hWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790674876; x=1791279676;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=YmV69TDpcuDRgkFAVojSTMxZHU8FkvBwdZhxrM3ARTc=;
-        b=VHwiD2kl8MqsnYck94ZNdY7HCbitYRYgDDIBR22UMo+Pi6GxJcygb2uPb+bKDrK2Jo
-         14gKu3aZ+mB+XG77Gy2hcL+oJOGn/uhrXZE3Yg5IqWYYr4uKo5zsoL+nrbbhcnC/uEcw
-         gjc16LAhv3onMVD4SDT/davIHnWpywzqGwksuyt7koInvWvpHC1ZeSqZo66MjaXBDMs5
-         fJ3fUp3B6VjXNNEJdomAkn5OC86zZU6Ocolw5nSL4tIUV+2pFSHgQPgeIwltW78hL51k
-         DoSUeogM8hGKt7UDHaUQKR+9YLdT6S+gj9ibv0LYXk76pRNm1r2ZF0o+oet3Wb3wO1As
-         yxkg==
-X-Gm-Message-State: AFuF++nRA0CRUuOYAP7M4qIjCVmSObdFimWuJf9fspv2SsGTITRerZIL
-	QZLLQij1NJwGOp5c/qsbWeIohVe+bOAuO3NPzKmSB+B00Uz1cc7wkcz8
-X-Gm-Gg: AYBFou1tpJGexRhLQsfWqXXxqfkdYFc8eiawqKgnz5D4zbxZn+1iDga6+SXMd5HWJ9A
-	cnMYhyR+3VijAz05E6/IRsZBKzOnJKGm+JuiqbVSpja4559qvfvAdWbEqtwUP9+DfUaIqvSKqyi
-	XcOMOxL2SDvtbKZKNMyMHSIwiCLPmuqzd8FpAUcfAhcqCXtDutqVH5d5sXNlaPceaRIiE/PPLh+
-	4BIGHIiKQ14pmYGEqX7CqNUd4FZpN74HmsLfktuDzNn366xv7u+8QOarwHpUlI19ZryDfmIVuKE
-	6pdCcW9+7Q40+9bz2rVbAWfauhkv3tfb10sVRNPClTCbYlyEsuyYLb3NarIUmcx140sAzpalZxA
-	JwDk9LTpiItUYmBn0iEQSfdv+d/+TEm75vtfm0hQFo7s2cf9//0alhAbrcLa18V5TphYpL73j/j
-	AiIjRy1HKB9nJkcuzCcwPSAerZhwquz/ECgqVUdajVTl1oXh6+g7uk4h3xwpsGlADefTmHosGvE
-	Ww2acgfPem4BR3/vwBXg3nPj5Cpz2X7n5bM3goWKWpX7s9+s7J/eQ==
-X-Received: by 2002:a17:907:7214:b0:c25:c54d:d1a2 with SMTP id a640c23a62f3a-c2ac23c0f05mr1226287766b.18.1790674875795;
-        Tue, 29 Sep 2026 02:41:15 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6acb8e19b41sm530871a12.4.2026.09.29.02.41.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Sep 2026 02:41:15 -0700 (PDT)
-Message-ID: <21a5c1fc-b268-493c-bd61-fa0afdf98bee@gmail.com>
-Date: Tue, 29 Sep 2026 10:41:11 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ia9nIduR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b3Ww94z0"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 31B037A009B;
+	Tue, 29 Sep 2026 05:56:51 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Tue, 29 Sep 2026 05:56:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1790675811; x=1790762211; bh=luYq1vV/IH
+	/Oo/XrgpryioOLy7nCM6qkoN+7oBBgZ+0=; b=ia9nIduRC1J/d/DC6MJr+MxvM/
+	/VGQjpNpSwetzZNInJZ36N0QrW0yth5enEc72CdD0vY/uaqLWTTN5CaC79MoeABB
+	KaBV/TrSa3QaXyKpwzdOricnt6rRQaFUcKFFP/0EnXmLWOd/xXy1++/qhRcv1A6m
+	NyxTqQxY6TnpV2p8au9DDpE/Ij6srIh3PsS7vvREqUEelJXZBH90E+ZlKou1g8Cv
+	AD8m718nhvEixZf8nuO2BVy/MN/5z16T6J4hmn5/injw94dlCeQkxnD0bhWxZ7w8
+	lk/k/XndVX+arOPzViYAb4zF5JAcZhpl/FnwzthpNnW8ixI3Q8F0m1qxQHBA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1790675811; x=1790762211; bh=luYq1vV/IH/Oo/XrgpryioOLy7nC
+	M6qkoN+7oBBgZ+0=; b=b3Ww94z0RG3uH2waQ64S72IMCJ0eug7V3vhFNHXnlBDt
+	dWGokjYWrw98BX47zHu5/TsoZhxobk7T0n5ofF2YIwq6r3q2ef2bg4x5FFx2eoE3
+	qAJhKhPSRBiR7/WyoTKbssJUNn58LhPRB1iEnzANt+NWTZoVzNlNHsAiXjXXsADL
+	MqsWKhnFbgwKiQ3lO+kBDhrmb8GpJ2ZkqZpqDgoKxZ8zmRadtlWBFnWRvAg1i/2b
+	IpTzmeA1BJ//TjELDL1YL4SezPFsYlMVKr+nshYUHqyo84gBc5RtmTO6xJNJPjIU
+	bRIZ/SMnkANSdPhUgdWooBaf4cOW05wdf2NRtS86ow==
+X-ME-Sender: <xms:You7as92ycd0TY8UegMaKSofrHYfrBmFmgqWIIbQw4frE8taHf7kgw>
+    <xme:You7ascTJAP9NcniixEnOx6MmH5ePxJrL7PWdeAOmzOiBQNZmMbFHZLN-JjXza1Vk
+    idUrU4LGfZP_Uu9Y4HpEI_Pyq4NEyFlpmQTRe_zsyAgJFCx-tVAXw>
+X-ME-Received: <xmr:You7alGx9vd_cNYcJNM8V4XHVmN87lML0IBTGtUBffD3QnvV5G7RhQ>
+X-ME-Proxy-Cause: dmFkZTGMGOPkMvWl111hKcTRKJKp2yXQhrREVlEXfkjDvgvEh6MoVY6oSd2rPZ50DpVvLu
+    QzC4M0GpKDsqDR0pUsd8BpI+no10pufzaro3t2ebzJigByEoGuGkG0GGOIM7DLgqTY+iFy
+    8hdvYQ78x/ojP2VW+JX7WtiInioHhjgD95HroXNdCrExoJSFiJmuWbaQsNd1FFKraloIU9
+    vzTL1gzmde6A72B3Ber2BFYqHeJPgZU2UoLJSJEs1CvaVPKg2PLzS7V7NVjT0Je4hHMjhb
+    YfYQGXIKQeSLmY2Oo/0YiVDqr17xBwkKgUF+Ag4jwp/T1Hk7232gLXqOBxlYPyUEl5hkQ3
+    UhYyTE4dcp5qIbzRkJwjCkat/oR1e2S5glKUDRZRUbFRIDS21hXJ77B7+XfdJQley0a3mI
+    r9abDtf7l9oQMxgaglb2QcDcIqXEwvTKfjFSRFxnWEDvacIzmvZATIeJpwrr12x/ws5jBG
+    729+iUQYboe48s6dYVK4n56WNq/S/dDHaPx7mGXy2six7VVj1EYcArZk94NqJqK1uK04v6
+    xAFMlur+YvcG8+PNHFcLnsTSNmXCHoWEbGsTme2PS9j7WNwLBv3RfMoJfGI01smSNHoIOe
+    C8l0Vp6x6Rx1zJ2hE7HXnXqHneRuJLFczVNPidLUxXoePFzNCzD2wi7O49+A
+X-ME-Proxy: <xmx:You7aqfGlfZOd-OG2ZK5YgiVBnweBeFHsJZtHc-UHqzRnspTKe86Xg>
+    <xmx:You7avGoBvBCSRkWu9XyIX9TWiL91aKsa6Qm2xgGlwfvo0g8teW2Qw>
+    <xmx:You7ajU1-U2mZXjz3YN8vQ0xMpQ9iaG7AdqyL5tLhKe9O18EWGBVnA>
+    <xmx:You7amJTr4mRO-ekt_4exKKafW3nXeyREuU2yFPpOu5LmyasKgJAcA>
+    <xmx:Y4u7apB91VZH3aEOPSEuY-32g7PZWjh4BOJmyhfdIrK9qEfkoBLPq7gS>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Sep 2026 05:56:49 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 091e00c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 29 Sep 2026 09:56:47 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/3] refs/reftable: fix on-disk representation of reflog
+ timezones
+Date: Tue, 29 Sep 2026 11:56:28 +0200
+Message-Id: <20260929-pks-reftables-fix-timezone-format-v1-0-3df105a95ed1@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 3/5] t3903: test stash --index merges
-To: "D. Ben Knoble" <ben.knoble@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>,
- Elijah Newren <newren@gmail.com>, Junio C Hamano <gitster@pobox.com>,
- Victoria Dye <vdye@github.com>
-References: <cover.1790168285.git.ben.knoble@gmail.com>
- <cover.1790425008.git.ben.knoble@gmail.com>
- <8b5ea5e6f47ee9a57df3a4d97a457d024b3dec00.1790425008.git.ben.knoble@gmail.com>
- <97f86d82-b5ec-44df-9ccf-8e6cd93e45f4@gmail.com>
- <CALnO6CCX+CvMZcOiyaFB0_nhe0wSv2-E2hx-iTbN4OvSVvNDRw@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CALnO6CCX+CvMZcOiyaFB0_nhe0wSv2-E2hx-iTbN4OvSVvNDRw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXNQQrCMBCF4auUWTuQRKjEq4iLNJnoqE1KJpXS0
+ rsbdfnB438bCBUmgXO3QaE3C+fUoA8d+LtLN0IOzWCU6ZU1FqenYKFY3fAiwcgLVh5pzYkw5jK
+ 6ivZIPig6OR00tM7U5rz8Pi7Xv2UeHuTrNwz7/gGrq4XZhQAAAA==
+X-Change-ID: 20260929-pks-reftables-fix-timezone-format-93ecd0e7a1d1
+To: git@vger.kernel.org
+Cc: Josh McKinney <git-bugs@lists.joshka.net>, 
+ Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.15.2
 
-Hi Ben
+Hi,
 
-On 28/09/2026 16:55, D. Ben Knoble wrote:
-> On Mon, Sep 28, 2026 at 11:44 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->> The test looks good, but without the changes in patch 5 it fails and so
->> adding it here breaks running "git bisect" on this series. I'd squash
->> this into the final patch
-> 
-> Interesting. I thought I checked that the test passed sans patch 5,
-> but I'll double check. I can't think of a reason it wouldn't offhand,
-> but my thoughts on patch 5's changes have become a bit scattered.
+it was reported [1] that the way we store reflog timezones with the
+reftable format has a mismatch with the reftable specification. While
+the spec says that reftables should be stored as a signed offset in
+minutes, we store them in the "[+-]HHMM" format that we typically use in
+commit headers, for example.
 
-It fails because it tries to apply a patch that looks like
+This patch series fixes this bug by making our on-disk representation
+match the specification. This will of course make us reinterpret old
+reftables. But ultimately, the fallout caused by this change is somewhat
+limited as we only ever use reflog timezones for display purposes. So
+yes, we'll display a wrong timezone. But it's not used as part of any
+kind of computations.
 
-@@ -1,3 +1,3 @@
-  A
-  B
--C
-+staged
+The series is built on top of v2.56.0.
 
-to a file that looks like
+Thanks!
 
-committed
-B
-C
+Patrick
 
-and so the first context line does not match. Because the changes do not 
-overlap the merge machinery is perfectly happy. As an aside when we 
-clear the worktree changes from "git stash push -p" generate the patch 
-with "-U1" to try and avoid problems like this.
+[1]: <85f7daa8-d60b-4348-ac2f-b1a68628af7b@app.fastmail.com>
 
-Thanks
+---
+Patrick Steinhardt (3):
+      date: add helpers to convert between "+HHMM" timezones and minutes
+      t/helper: fix segfault in "dump-reftable -t"
+      refs/reftable: fix on-disk representation of reflog timezones
 
-Phillip
+ apply.c                    |  3 ++-
+ date.c                     | 25 +++++++++++++++++--------
+ date.h                     |  9 +++++++++
+ refs/reftable-backend.c    |  7 ++++---
+ strbuf.c                   |  3 +--
+ t/helper/test-reftable.c   | 13 +++++++++++--
+ t/t0610-reftable-basics.sh | 35 +++++++++++++++++++++++++++++++++++
+ 7 files changed, 79 insertions(+), 16 deletions(-)
 
-> 
->> and I think we can probably replace an
->> existing "stash apply --index" tests that are not so strict with this
->> one, rather than adding a new test.
-> 
-> That's probably a good idea, thanks.
+
+---
+base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
+change-id: 20260929-pks-reftables-fix-timezone-format-93ecd0e7a1d1
 
