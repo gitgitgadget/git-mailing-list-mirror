@@ -1,129 +1,259 @@
-Received: from mail-oi2-f42.google.com (mail-oi2-f42.google.com [74.125.231.234])
+Received: from mail-oa2-f35.google.com (mail-oa2-f35.google.com [74.125.231.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217F8503BEE
-	for <git@vger.kernel.org>; Mon, 28 Sep 2026 23:44:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.234
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790639045; cv=pass; b=WUD1CAjx00cKpCnHb2oZnPZkgDSCvFuz6pBczc9wvVxjDCF5qbE4WjPsjccYwUZWGqMCO0nBTBnhRd+6OxJRYMUUYAqTNsLDd9vMsmPtwdGsrDuOYceEL0kiqM9CHidkKercjaWEwXnxO4cnm652T13pTuzUMCVaUV95mBWd7tw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790639045; c=relaxed/simple;
-	bh=Jkt85lMNVgC4x/TWhZHilcVkN63s7YTHfioPDUWOtQk=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=WxOn0y8UKYKgkugFLOLATbPVybUVflpK27pf6lLhZ69XJNjVn9f+zHBNl3W0+gignSWHEH+ZB1nHAHbJOJCa8X5d1g8uMiWLRdjj2GHchwOOtOpMEqQjBkTxETF+XYiTk213sLrDdA9nm2aiZr8z8qO2KYRl5zjQaCKVZerQmKE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RX25Ygen; arc=pass smtp.client-ip=74.125.231.234
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07FA2325495
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 01:10:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.99
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790644213; cv=none; b=OR0VG5CSNnoPD3cex4db4hKGO2V/Yv5ZG8eQO0grqDOR2tIhg6DnNMfoXsmB5xFzVzCZvo9v4bhiV6ByrIaBD4fvI0yXuDPqhPSn/4h0B8DkxUW5gi6oAyMnC6Xcy3USEA+O6Ui3ImETgO9Jm4VrUeLvd3a3Qc1cemcq3v0kTlM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790644213; c=relaxed/simple;
+	bh=xlXYH5KQ8R+tCld7rNPMoFdSB1nkdQb/m6YBN8qPLnQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ui+JIUcgX77MQxWS+i6icMcWyyib878upJ0dMQ9NEMBQDzkKjx4GjHgSCExQ7Wr50e2gOXyMvS/Z0LFLg81sdzyDkil1i0VW7YamXBMv5rRt8VQBdHe/Lfmml1NSg8nraFjO4vgBzePLTxdurLCopANloMM1yDxFDu8yz+uf/DE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com; spf=none smtp.mailfrom=tylercipriani.com; dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b=gdhuN/+H; arc=none smtp.client-ip=74.125.231.99
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tylercipriani.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RX25Ygen"
-Received: by mail-oi2-f42.google.com with SMTP id 5614622812f47-4e7b5de66d0so1508446b6e.3
-        for <git@vger.kernel.org>; Mon, 28 Sep 2026 16:44:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790639043; cv=none;
-        d=google.com; s=arc-20260327;
-        b=J61jRz0rxl/UndfpCN96m6QhrrKsCGmFVPY72/y5mqEvaGor0TO8c31rzHaMakSids
-         374AGnE/ixuMrz7XnYPD3ci8mKKmraj4F6MpMnut+ul/jvFWmo6j2WoVZi3LUHIRXNAn
-         pGqH0HKE+wmHpSY0F9dQMy0XrAItdY9/VbBoO/G3ENIHV/5OKm2C+MZMOktZ5ZNZePef
-         kUnz8/F8bO8cOXkKVi8h/ez4fWjhLyyokUACDGdCI4rB5ZoLmREJdmHjswlPzyNgCYBC
-         4iUvnFRaXRpwHVWORPQvC20sIVQY6erOCwzZllCIDqGGql5+nsDUvDjWMSOAi4OzyuvE
-         LWJg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=INCn8QWGmLCIx42eZc+610eraCD3AuKD3uyoM8b/shA=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=DlcvDHWRzCZLVeqACJ77BiQMSloTSc9wczdFNFBShHsI9RC03oJDZxeHk9W/9CrUct
-         3hMP2R7XQkD+xHZR+pxme/M+KSnDzb+VrwAqdmVn0OZA8zMBxxa0A1b1Ajerzp++nAur
-         U3gk2U2rfm0HS3Sf0328hb/CR70sbroU5IcBdZQA6qCqYzZP6Rqto+cfov2rsO5D+uLA
-         9Viq76maTWE2A4oKFwlNMoqOLu64jD5bboen71FaMwfv8oSeLjk9LCMJWGVv9b3EaoMa
-         oc95svAncc/+K8gy3ghZt2retFUoFpcryZAjT8W6eMILiBHnmXhnIK9nIN3BJsfdWTg3
-         ozaw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b="gdhuN/+H"
+Received: by mail-oa2-f35.google.com with SMTP id 586e51a60fabf-4881ca701a4so1867200fac.2
+        for <git@vger.kernel.org>; Mon, 28 Sep 2026 18:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790639043; x=1791243843; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=INCn8QWGmLCIx42eZc+610eraCD3AuKD3uyoM8b/shA=;
-        b=RX25Ygen1PUIkeeyGtmrgHLUBbbVBeDaEFgdOkQ1w8jdrbjmjkqua1wa2UEMoRSPZ2
-         BkgaFX8afalIEC9PJn89KZ/EiHaSx1VdxvOl1Q/J/Sg84Xeeez3maaRPYluLI3e6X4oF
-         EaayHGx0JtyJwy3znGuC/FwimGLwDW4xPVmDWjBC8fXiPFlJA40NK8N333R/vFiQrdYg
-         giocdIMYFQhyvpQ+NrpYlxg/8i2Azelk989ml6qDroZ0Ps+VTCOt2oF1krI1PxyBGuHc
-         ykMsOB7F9OsgS8w7N6jR3aFVZqajZE3ONODFbgLqBWuqdaaDWI0Lsx0FNvm6E3y3OIfM
-         xE4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790639043; x=1791243843;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
+        d=tylercipriani-com.20251104.gappssmtp.com; s=20251104; t=1790644211; x=1791249011; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=INCn8QWGmLCIx42eZc+610eraCD3AuKD3uyoM8b/shA=;
-        b=N9SnxFZRuosDj2WGAYLYqiWqm/PvYq1x4VofwQPzwaPmv7WFX1rQtHQii/0RUOMpd7
-         FZ+vizvE+3FPRG4YtQGwG3Lbej25iLRqy9We42IsEoXFkvr4ftw5KMZOYRwMiX395ua3
-         yH7M9k90zf5cq73BT6thOu3M3elqyol1Hs2Dcm6VM/Mj2IGa8iZ+fh8cZpZHlmjuKVUO
-         Fua6YOxaHuDoQJ5mapTfOL8qJTsevGYj/jJapVdu3ksjhhWtimYK2h427f9DaFcEcbZ5
-         Fi9jdX5GM4Bucci56vkBW/CpkY2P1MJZMo84vWvslCiOsPvfsBfusWI30WOGFGzWFtzK
-         kWRg==
-X-Gm-Message-State: AFuF++m1dnPGzCrSCKVjD9OQ+KNrphwNr25WQ/bIFHs0NeHYJ5+SSe94
-	9Le8n6qAz3S9PGiAU+q20ThG3lhm8arHO4uETTCJI5byYk553SSNuqX1xn/7vTZkr2OmI2WYJyq
-	w7dGLlVhQl0XMbh0nHFoMPgZyVIel4lCBDGDVRds=
-X-Gm-Gg: AYBFou1SOngld0Lt64sv6V8+vF2vecvv6vvmS/mIMYR/IOpQh2xXAEoI0ot8nPj1G6n
-	lGHHbdpt5tEz7+rkTzWS+Gl5fRRBtEK5mRKerxKbkjkeDteMDw0tMmoBgQ6rBJgD2jYX8w7RP2e
-	dOBHqoeKFsXLRDDzyzZjePZ0uMCOSQzj+EwwcEOe6JdxbiF6SwxeAqLugYS4W+JGn1oTpzcoDEu
-	BH7wib5vv1ORJKmaY98lIQoepxNTX507jERMLOqodfko0nIVJIfDTttfkdXnbEldNLFr4kRopGP
-	msZEnxpmrxJpplxlHJmvgKxl+z3fmfl3S7LQMneEW9E+IcALtLHQ+2B6E0SqyeR9aus=
-X-Received: by 2002:a05:6808:23c7:b0:4cb:f21c:a79a with SMTP id
- 5614622812f47-4d72ac46340mr15317355b6e.34.1790639042901; Mon, 28 Sep 2026
- 16:44:02 -0700 (PDT)
+        bh=hq9GOfKxjSXVo6QTGJxh5Lco+JzHyLrzkK/5mSsxG8A=;
+        b=gdhuN/+HLcTshlQTbydsVwte6N+EMAqGfgwNeZROg5QXbBpChtcpGEmtcCvU1TLHwf
+         iXyGI1aTqqGmgk1Df0HaduKEhS/tNbYNCvFG59XwGZMi6pS1bj5D23h9bC649lTVyBa1
+         Sz5w1jCs2PJWNVv+muuCyUYwX+DCd3sHU85KtBPnIPaovGnfhY5G3e+v/oaRIbiFzJoM
+         kFUQ3wfNtJ2gDPfO9OSzr3Qk5hodvZijW5I/21DMGwpD6QsLIIN7Z7cKMbv++dv7mSOY
+         DjXGcvaoPWNCiAyltCRPQFfq05984q1vr3qAQH+OGUzbnolvj0LNZbm9H3kYysUi2CKZ
+         k9Lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790644211; x=1791249011;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hq9GOfKxjSXVo6QTGJxh5Lco+JzHyLrzkK/5mSsxG8A=;
+        b=Wc4em1lvO4ZLmfh8OjSdWLpk77HVPcroHE9YXvVese3zoWbBCTMDRMGmS/xZO42il2
+         0bIPgJTtUdPEbo1PgcLzPGAdOosNgyk8x5NqGMRAZoB0PvagzTWS7b/ewZQkNtnobO2A
+         KdTiJ3iZor0tE5hPhMDM0byfhmMqCBGoaUNDgMS2OUfoiIPOyba7W0h0cm7AC/H+HLZ3
+         odPdYrI8PFTh47ahOXrlAYTRuRu6i8o3MuA/sXHJXuRcdeby2/ZgWZeACGUfihY5IAZM
+         9JdZhpB7QbDtCp6r4/RzzlIPL7CSXUGcutZ54LvsJ8ssIC0ceTmJLNvkO+EE+ASrqlbo
+         hcXA==
+X-Gm-Message-State: AFuF++kXrilzc17AxD6fJ88rD9U/4HSzK800RL1OSHkNigYk7SrwklWn
+	SR9F4Wm9poDKRY9qUEwePAr9pMNpbBYm7n7ks6JH8jcz1aEdlQ9XwiYr9wa1C6tnJRgMFzkod5y
+	ZQ3MEY60=
+X-Gm-Gg: AYBFou0tX72SizAat4vVNMnXo3mMcCDi4+sKvfuYsbV7OFXi27u2sniG+Bc57LdW28o
+	A5A3O0cxpM5VB+zeL9+N30kseIxfzgJI5Blh4JmanUdOdVd3yncdCuHZ3z7O4quXgFn13jgeB9/
+	LnSsK0OJ80dPYk7gLHFLc2rC48LXCl+j0uyBb15DL0DJ9y1WKaED9j6mOYizvDNfEd8gNJWl3T8
+	4rH+pXgfApLo2r21HxGPktm4QTBOA+IFrMvOgko3C3DTcKimS1jZV4Gzoqz6qj3mofm6x9eLyo9
+	1iasChSLjInzQhq12ri1HJUWQx8I+VGM1+4Pnpw5JHY4A/6ZTeaUKBb5Gr2m4PlAM9PXjSlInco
+	VQRm3j+0d59NRjzL6dJm3Vh1s6cPe8rHII8ynU5MulY9ErtluDRykLpFO9EKL9El9vPMehM7l2t
+	/9xJLvZPQxV4Yw7ctoaQ8aM3p1xdSTE/Hd6iIzAuGqme9bdVK86ojPp+Xwyq0YdVxvWs7EtRM=
+X-Received: by 2002:a05:6820:81cf:b0:6b7:46e9:96ff with SMTP id 006d021491bc7-6d4411d226dmr12635159eaf.47.1790644210803;
+        Mon, 28 Sep 2026 18:10:10 -0700 (PDT)
+Received: from localhost ([161.97.221.21])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-493367b617fsm11903935fac.18.2026.09.28.18.10.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Sep 2026 18:10:10 -0700 (PDT)
+Date: Mon, 28 Sep 2026 19:10:08 -0600
+From: Tyler Cipriani <tyler@tylercipriani.com>
+To: Aleksei Sviridkin <f@lex.la>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] push: fix --force-if-includes when remote-tracking
+ ref has no reflog
+Message-ID: <arsP8IE6LuAKzYE6@localhost.localdomain>
+References: <20260903010547.85469-1-f@lex.la>
+ <20260905171330.34646-1-f@lex.la>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Isabella Caselli <bellacaselli20@gmail.com>
-Date: Mon, 28 Sep 2026 20:43:49 -0300
-X-Gm-Features: AclHuK_Y6UEIhhVhHMg89L1_ZLTq1z0OlTFNOgQ-pWGElnwd7YPBMzNPP0O6PpI
-Message-ID: <CAK4AdTRdNEU8cLFQ_7A=CUUL6u6dc327rn_H-SeBBD_dD-K7PA@mail.gmail.com>
-Subject: =?UTF-8?Q?hostname=3A_includeIf_condition_=E2=80=94_anyone_already_wor?=
-	=?UTF-8?Q?king_on_this=3F?=
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260905171330.34646-1-f@lex.la>
+X-PGP-Key: https://tylercipriani.com/018FAC02.asc
 
-Hi all,
+On 26-09-05 20:13:30, Aleksei Sviridkin wrote:
 
-I'm looking for a small, relatively simple first contribution to Git
-as part of an undergraduate thesis on community/contribution barriers,
-and I'd like to work on the "hostname:" includeIf condition requested
-in gitgitgadget/git#1665 [1]: matching includeIf on the machine's
-hostname, mainly for sharing dotfiles across machines, e.g.:
+Code looks right to me with the date=0 fallback.
 
-    [includeIf "hostname:laptop"]
-        path =3D ~/.gitconfig-laptop
+push.useForceIfIncludes is meant to tighten --force-with-lease's checks.
+Getting a wrong answer with advice telling me to pull would push me (pun
+intended) to drop the config and ditch the feature. For
+--force-if-includes, being wrong here is worse than being slow here.
 
-I found a related proposal from 2022 for an includeIf condition based
-on the operating system [2], which stalled over disagreements about
-naming and case sensitivity. My understanding is that "hostname:" is a
-narrower, separate condition (machine identity, not platform), so I
-don't think it needs to revisit that discussion, but I wanted to check
-before starting:
+Re: being slow. I tried to recreate some numbers from this thread with
+my own test case using linux.git and 2k reflog entries. In the cases I
+tried:
 
-- Is it still relevant for the project?
-   - If yes, is anyone already working on this issue?
-- Any objection to the approach itself? The same machine can report
-its hostname differently depending on how it's set up =E2=80=94 sometimes j=
-ust
-the short name, sometimes with the full network address attached to it
-=E2=80=94 so it isn't obvious whether the condition should compare that val=
-ue
-exactly as the system reports it, or normalize it somehow before
-comparing.
+- With a commit-graph (which gc should write), walking + merge-base
+   checks on 2k entries took 15ms. So a few microseconds per reflog entry
+   roughly jibes with numbers from this thread.
+- Without a commit-graph, each batched call to
+   repo_in_merge_bases_many() walks the commit history from scratch:
+   rejection took two minutes for 2k entries.
 
-If nobody is on it, I'll put together a small patch modeled on the
-existing onbranch: condition (dispatch in config.c, tests in
-t1305-config-include.sh, docs in config.adoc).
+But my tests were artificial worst-case scenarios. And today, on my
+build, "date" already happens to be a low number. For folks like me,
+setting date=0 is a non-change and I've been unable to find any
+complaints of slowness on the mailing list (or by searching the web).
 
-Thanks,
-Isabella Caselli
-[1] https://github.com/gitgitgadget/git/issues/1665
-[2] https://patchwork.kernel.org/project/git/patch/pull.1429.v2.git.1669058=
-388327.gitgitgadget@gmail.com/
+For folks where date happens to be a high number: this gets the feature
+working correctly. Bonus: doubling batch size after each call to
+repo_in_merge_bases_many took my 2min down to 10s, locally; a viable
+speed up if needed (but separate from this change).
+
+>Since 99a1f9ae10 (push: add reflog check for "--force-if-includes",
+>2020-10-03), is_reachable_in_reflog() stops walking the reflog of the
+>local branch at entries older than the newest reflog entry of the
+>remote-tracking ref. That timestamp is read by a callback of
+>refs_for_each_reflog_ent_reverse(), so when the remote-tracking ref
+>has no reflog, the variable that holds the timestamp stays
+>uninitialized.
+>
+>With the files backend a remote-tracking ref created by "git clone"
+>has no reflog and does not get one until it moves. On my machine the
+>leftover value exceeds any real timestamp: the walk stops at the very
+>first entry, never reaches the "Created from" entry that "checkout
+>--track" wrote, and the push is rejected with "remote ref updated
+>since checkout" although nothing on the remote has changed.
+>
+>The cut-off is an optimization that rests on an assumption: an entry
+>older than the moment the remote-tracking ref last moved is not
+>expected to be the one being looked for. Without a reflog there is
+>no such moment, hence no cut-off to apply. Initialize the timestamp
+>to zero to say exactly that: timestamp_t is unsigned, so no entry
+>compares older than zero and the comparison never fires. Using
+>"now", or any fixed age, would instead cut the walk off at the first
+>entry older than that bound, which is how the failure happens in
+>the first place. The price is paid only when no matching entry is
+>found: the walk then reaches the oldest entry and falls back to the
+>merge-base check over what it collected, where the cut-off would
+>have stopped it earlier.
+
+The last paragraph of this log message is hard to read for me; I think
+people could come away from reading it with the wrong information.
+
+Nits:
+
+- The final paragraph of the log message starts with "The cut-off", but
+   it's the first time you've used "cut-off." What cut-off?
+- "an entry older than [...] is not expected to be the one being looked
+   for" - passive voice, stacked verb phrases ("is not expected/to be"),
+   and a subject separated from its verb by 9 words made this hard to
+   follow. And it leaves questions: Why is <who or what> not looking at
+   <what> entry?
+- "Without a reflog" - which reflog? remote-tracking or local?
+- Unclear referents:
+     - "exactly that"
+     - "that bound"
+
+Problems (with more nits :)):
+
+- "there is no such moment"
+   - Readability: referring back to "moment" that came 23 words before
+     this "moment" made me re-read this a few times.
+   - Inaccuracy: there may have been a moment when the remote-tracking
+     ref last moved, but there is no reliable record of it because there
+     is no remote-tracking reflog. That is, someone may have removed the
+     reflog, or the reflog could have been GC'd (neither case is
+     mentioned in your message).
+- Most importantly, since the way I parse it is technically incorrect:
+   "the walk then reaches the oldest entry and falls back to the
+   merge-base check...where the cut-off would have stopped it earlier." -
+   Stopped what earlier? I read this sentence split on "where" (i.e., Y
+   does this, whereas X does that).
+
+   Read that way, the final sentence reads as:
+
+   Walk without a cut-off:
+
+   (a) "reaches the oldest entry"
+   (b) "falls back to the merge-base check"
+
+   vs.
+
+   Walk with a cut-off: stops earlier and therefore does neither.
+
+   But a walk with a cut-off falls back to a merge-base check, too. The
+   difference is that without a cut-off you reach the oldest entry and
+   therefore pass more local reflog entries to the merge-base check;
+   i.e., potentially more calls to repo_in_merge_bases_many()
+
+>
+>Signed-off-by: Aleksei Sviridkin <f@lex.la>
+>---
+>Changes since v2:
+>  - reworded the first paragraph as you suggested
+>  - explain why zero is the fallback rather than "now" or a fixed age
+>  - dropped the Assisted-by trailer
+>
+> remote.c            |  2 +-
+> t/t5533-push-cas.sh | 18 ++++++++++++++++++
+> 2 files changed, 19 insertions(+), 1 deletion(-)
+>
+>diff --git a/remote.c b/remote.c
+>index 00723b385e..6d301698ca 100644
+>--- a/remote.c
+>+++ b/remote.c
+>@@ -2751,7 +2751,7 @@ static int check_and_collect_until(const char *refname UNUSED,
+>  */
+> static int is_reachable_in_reflog(const char *local, const struct ref *remote)
+> {
+>-	timestamp_t date;
+>+	timestamp_t date = 0;
+> 	struct commit *commit;
+> 	struct commit **chunk;
+> 	struct check_and_collect_until_cb_data cb;
+>diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+>index cba26a872d..bb8878c593 100755
+>--- a/t/t5533-push-cas.sh
+>+++ b/t/t5533-push-cas.sh
+>@@ -396,4 +396,22 @@ test_expect_success '"--force-if-includes" should allow deletes' '
+> 	)
+> '
+>
+>+test_expect_success '"--force-if-includes" should allow forced update when remote-tracking ref has no reflog' '
+>+	rm -fr dst src &&
+>+	test_when_finished "rm -fr dst src" &&
+>+	git init --bare dst &&
+>+	git push dst main main:branch &&
+>+	git clone --no-local dst src &&
+>+	(
+>+		cd src &&
+>+		# a clone leaves the remote-tracking refs without reflog
+>+		# entries with the files backend, but not with reftable
+>+		git reflog expire --all --expire=all &&
+>+		git switch -c branch --track origin/branch &&
+>+		git reset --hard HEAD^ &&
+>+		test_commit D &&
+>+		git push --force-if-includes --force-with-lease="branch"
+>+	)
+>+'
+>+
+> test_done
+
+Tested: passes with the fix.
+
+Without the fix it also passes on my machine. gdb says that the value of
+date is 2 for me (Linux x86_64, gcc (Debian 14.2.0-19) 14.2.0, on
+Trixie). To get the test to fail reliably, had to build with:
+
+     make CFLAGS_APPEND=-ftrivial-auto-var-init=pattern
+
+So, CI probably would miss date becoming uninitialized again. It also
+fails with a date set to a timestamp 90 days ago due, since test dates
+are 2005.
+
+Minor nit: surrounding tests in t/t5533-push-cas.sh use
+setup_src_dup_dst, which would simplify the test setup.
+
+I'd be happy to give a Reviewed-by once the log message is clearer.
+
+Thanks.
