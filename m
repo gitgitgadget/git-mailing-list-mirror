@@ -1,158 +1,116 @@
-Received: from mail-pj2-f41.google.com (mail-pj2-f41.google.com [74.125.227.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375E93CF97F
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 11:26:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790681194; cv=pass; b=FaWZqXZk7VNHYcMnCzmswxnuZ+Xf9hSPIuR2hgtt29NVL6Z50hP8fVzZZE6L71QM2pkQhW3RDIXYUsIoqpIXr03eJmlDbLEyabumgUm2VWeN9Kckd8MUPP5mJgNN9qOJsBF81Er1ebzHNIp56Nq6sq9ww7by+QHas0J99YhhvMw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790681194; c=relaxed/simple;
-	bh=EPU/O7ujAbBCuBEbfdtGtEDjGNZ+FIf8ohl06qnVZ54=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BRlFnCXsBf4aE27FO7GbGcpGhiEes4ARdtxkZYs0iPoDJKzWtBO1ry1JYoEhHfP7AO4Qx+A+LFcla2aAi7G8paFKYbuikF4v704GqZnU6N4ULrrxxSXbL5BNsydgsC8qwd66eyb1udzqnSKmVmEnSzwU7W1sxMShCwQJTrkBG84=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pdZfjAok; arc=pass smtp.client-ip=74.125.227.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3621938F658
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 11:29:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790681387; cv=none; b=NpdVwgWP3slQXidU/5AZvIk9vZ0TZHLuUUIqhAcq/YmOQXSISCE1dv/8j5Xy4eycQ07MSAw1QszzRAF6q6wSkyVVRUexnWmc/okYYZUxa6a1sZa31oAXvxdMfsMP5pjRfnJjssWd4I+HQxejONHvXPW7fkth7LYZq3Me/g4aRVU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790681387; c=relaxed/simple;
+	bh=xyZr1msKY+g8bs130kGvSK0Yp32YSC9gSKtMNI8Llik=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=ZY0NEHDloEJuge73+qncvaGYd5S3D2iPCjlN6vgLGEoXSilmuvvJ/KF6uf+euJeKoRkVye0VAzyuIgZP8DV6Tf1HeJpHukEXpMvbUpzLk2V2jzH8MLjVDJY3c3nIgmWv60pIBz1m2o+Ku7/8f8VXicpvhe55qlPNTtqJTb0ObQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=A0jHHx4d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bA3BsoWb; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pdZfjAok"
-Received: by mail-pj2-f41.google.com with SMTP id d9443c01a7336-2df9754484aso19898125ad.0
-        for <git@vger.kernel.org>; Tue, 29 Sep 2026 04:26:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790681192; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Ek8IsTe0S+vs/PvlLq1LW4kD+FcF4Nwo6umZ7ak8O8x4383ea4OcbEGpLHETsxUun6
-         XvKNQzanb9xLcbPZPXaC2xE8knRex6CNH+sWXd+EwqknFCNqQ9SXW9frPeykSUeCAJBT
-         EWvWEbOXp6cbXNxe0wKIhpnRNQbFHC6sPWQAZrmQlKFzm6P5u3bK2JRDrlcC6QUlpLcM
-         tjrY5pJJ3Ofjups5TJcSY/ookHQ6Pp6wZu67UEpqz7WN82/okcCuKTwCNyLgew9Mak+h
-         TUQLKuoltADB+Vt6Ht7yDHVug8L82miXOoDYqwHh1TnbYqPM0s0I6I51eArq/WUqM6p2
-         FWJw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=TnIh6S0awq7YJGBHOiGPrDRrIyQ4CY6l3f05wsoR4MQ=;
-        fh=Ox4D5aCb0Wm3NuWmIZhbrD5IUgm6JPtaEE6xbKungY4=;
-        b=MgA6wx0FdJ2oCZA4zyNCkEbRfnoHUfsN8bUSeogcugY2SqL5yfbfUyugD0l9bq7FRH
-         gKEQIzLQmMJU67PXJaLPTbwVhwcoVB+sjuOn7eiEqA3+X/6xWqLEHi4dPoYndP0xjeh2
-         5YKnoa2As/iQUfHN66/WIgt+MIjCuNO7X4BN+cAiUMlTKwY1ByF1Zji6GSLVaZUXKVwb
-         OqSuQIaY2bUjM7qxETSV37bcbb/+YjIdUGqE6YFIabPSrwwBtzW8ceRK+xEL8Fa5JVpb
-         Ozf6C8LkyrvyMSNyqQp3N/+rmAu6vKyRYtv8Wxn0ibdKGwD+oAgR8labDkbI46gCASTX
-         gNdg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790681192; x=1791285992; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=TnIh6S0awq7YJGBHOiGPrDRrIyQ4CY6l3f05wsoR4MQ=;
-        b=pdZfjAokzKxlBRAYG6Awhfn7l0QPLOlc0eJCNwS29dKdxsLKnOPE9q0wChoJZAjQhF
-         23sUTH5xCFhd2z6XhF54+4LQMF6RRgvZscLZqHFt748mL/ae4CAi5d0yp4qg93e5xx3Q
-         AEokRPo036KkqBk94qWnzqEizCd0P/2x0xxXuS3EBAjzDIx/YGRjcbzwuGm7uT6LhMIK
-         HvVbQy8YZrHgCE3yY7ABKEmrIGgmAIoIzPbwsKCZ05DUMnS215BFAvKGBWRlSAbJsrGx
-         MoSlOkvigZ0M6daR1hBjGOgMEF9iW/ZKTggto1NEjuxGDXrrIHzfSEQqeRC/2cZ2N6dC
-         Zv3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790681192; x=1791285992;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=TnIh6S0awq7YJGBHOiGPrDRrIyQ4CY6l3f05wsoR4MQ=;
-        b=X6G7KQwKS2XiF5umA5LY8uFaAAg5z4xlajeN6RCKlA5VMOtz/jWFbuhZSQIW2O+VUs
-         +C2JQaFZw1TbKih4RkMxyhrX1fsz4e3wHTzSIE2wwDk7nfmrChbHdxf8cmi05EsfFjiJ
-         JG+zhKe+AkE0Cc35j4eou48XRNreF9CWNhRwqcfQVp3mVhLO6oMbZLiFpstmoDxQIU7U
-         HsR+n0pDQ2R4oN21FSyUgwZPtn1HKaj427iEHkRcQ6HUsMHexuGRi4NLjXR5kEoPRjSC
-         As+ZFyKp83oqlvc1NbkIboaPLgCv1kWpJ/zHofbwbX2+M+dYHC78NbNvF+yqiz26e5Nh
-         7Yng==
-X-Gm-Message-State: AFq9FYJbIG74ugi9AaWGbW0beMPKVMh0EEOSWpQugRaVQmFKPZfImyyb
-	B4vuz8dJ+SkX/4uzZcChJG7i87dOQv1m9UiHYcwBlP7DXpUXolc7nY+I1IW/83zUjgiAt+iYVkB
-	8gCfuEYN/6WIr2ajmlWU+xptrNh1ZnoB89U0oX4o=
-X-Gm-Gg: AYBFou13GS3U632etfqlxIz0/YnazjCjFJ0lWwrx3vWytrhbJN9o4WktogEGWyUJtCi
-	4KTNH+OBC/4i9bojh9/JMQgTJNwldTNuLzaSwP4vjP5Wx6UGurfk8vKIw0IWtvHsEXrNirgPzXk
-	cl+oi2+AjlRXLhdo1pzO/e6F4W+3uQMURGQQ74tHeZ79GfdyMI4nIJbNdN+wObn8dYURFDvg3UJ
-	PYuecfljhS6r75V//qMbCDql8BM/LWsp2MKHo/rkpMc3xwO6HxX3yasbG6NxV5TCOGNHe5d3wE7
-	XDTavDJO0zv/4RJZoJN14SqtKfLGjLU0coaQ1GFbOltdvTuAWkAeH6YxwlQu9M/6ePkykrpzObW
-	XdW4VRCEW+N4yqAbcWmbbCeSEl17drFYDU8KIK7Qq9s4V4alRE52w+2U6KWTZXU6WdtGO+9fhRQ
-	==
-X-Received: by 2002:a17:902:c404:b0:2dd:c0ff:e728 with SMTP id
- d9443c01a7336-2df7dfdda93mr123653765ad.58.1790681192451; Tue, 29 Sep 2026
- 04:26:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="A0jHHx4d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bA3BsoWb"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2E1FB140161F;
+	Tue, 29 Sep 2026 07:29:45 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Tue, 29 Sep 2026 07:29:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790681385;
+	 x=1790767785; bh=xyZr1msKY+g8bs130kGvSK0Yp32YSC9gSKtMNI8Llik=; b=
+	A0jHHx4dFDRMgTT8Ec1dFASi208/Ap9Oe/aNZZxOQo54IMaYy+cX7fzpu4Iv2zQ7
+	1lpF7yBHIeczaRIhPgJcHxMW7dfT/R5vYCLZxg8HGRiOZ9HLFK2RVa5OaMJOBApg
+	LVu4F9I4xcJG/YQjGTbX9MvgT5MTT9YQlkULe5yQQcsDDHq/Cn7tcSBK8MgazNLx
+	oRHc0rLR7nMQEWvoi4viiTEnc9u17s9gPfY5NhwgnkxRCOLCNKybnYA9IPH8/cqQ
+	cqUT+yCcJSS/g22tbRCB/NfPZX/VbKRLHGbaTlOQsb7rEXdsFAGq7q7OoCu3uuTe
+	2nRQNI5wvQ1Hyqj0s6Txhw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790681385; x=
+	1790767785; bh=xyZr1msKY+g8bs130kGvSK0Yp32YSC9gSKtMNI8Llik=; b=b
+	A3BsoWbQyuCd6O7V6ccZO8/Bo17J6v/5jNnsFXWN6ej3M1gHsp+arDyk1UfWM2Ze
+	ar8EYvBiCCqHGZMBpFcvshHD85SE4ZJxWVTqmPYeGoLHW7D2UFSJbby19QtS39zh
+	han9QaRxi5AXI1yj+yrPTqFoye/ZpL2vvuR+ENKJcOt5gc4Jb2ZXYM4s4qmtwY3K
+	asWy0XzlNMkU6CsEgR7WZmajy+uJECarUMrWVDDmgVVtQz//loM5Psrorh4bMDUa
+	IkE7lOobiDyqabDoE9f1/vZqPuKT+JukQVjjpgoO0kXxx6YCswUfOB2SezB5lOsx
+	GcbjyqqIzDUOip5tZOEog==
+X-ME-Sender: <xms:KaG7ap_1GmkqyhM7FdadvSKmkC7P8Q9GBVFnzU-TbkW58ThuSYE1jA>
+    <xme:KaG7aohCSiWWvWzKGa6NynZcsFnKGAYZkUUNnHzH4RqwvxlOD8SLCuYe08J65k-kC
+    HEJpsqAItonsrDWte3US6VmQqPqCHTl4OMIYLSeGvpWi58JegCLfz0>
+X-ME-Proxy-Cause: dmFkZTFwHKUCqTbqu3oiZ7qDRM7zA25UC7RhqIIlZV+UwXB/egNRwp8NQvG4xYuWxURupb
+    JNQj5MPo+B3MUa/7w2ALOImxRG2fWNiem/1IPnEjDjtSyOFyGLMn1Z+gId4z2/mF9UsxG6
+    7WKpifar3FC6AewDsSdj/mfs8YLi4D4tGuNoul8y8xlZiae47L6C2XdfHD6aOSmB6KTfDu
+    kT0dPR6w5agurOC1retPHyKSPh1mGTlxx94K/Hj4tEscVc9z0Z6HVxSAoT4vZ9g/DqMHgX
+    c9CyEmbAIF0CRt5Qbsc4bmrorR7xWExvvcDXenP1EJa984yIMMA0lmc8Wbt7BJo7ofk9eS
+    vyHDQ18akD+IJXbJuKuEUKIS7dZFwfPUOFDnxNmyIwSse9cG3+rgk2BsormezLj4Gz3jyT
+    UhXmJL3Dj8uEdwJqvDnNbO0zoNgrTdzIsaBceZ4jKL/K2GeTpDvb2+zyRWAadZFJZW/DEJ
+    iqk0qL8hsKDTgGmf/loYyn9RexjI1Q1pdPbYr7w89KWJjbkzYMgWLrX2ZMjKRUhq6qjaL0
+    T7npKH4Kml4MXThyO4t2VxTmYGHr7VgiLzOdCujLeGuw8Gbdwls1TMD0gBqfzqs6/YzQVU
+    NABVIbp3kMFSPOJ6gknyWkcYc/egJYxFmL0IwASeZqKjh0Kg/tlbuDVj1mPQ
+X-ME-Proxy: <xmx:KaG7agjYIGuj4lcPwZpBBelPe10x12YxXriLJPHra-gV6v1jJnSoKw>
+    <xmx:KaG7aqhVFLzAcpQuqtMgdkVgNSbdZflwEf5cbbsgV2xFmEyIIqXEHA>
+    <xmx:KaG7aoIlkzUW2B5lXG4h-OXMf-cWqZAV2nbGbk4ZJ_b4-t9Fw4a-ag>
+    <xmx:KaG7ahEeLlem53gK3fM2z2RvhZp5yt-GUgC1-Tuerki0EIdIGmsLcw>
+    <xmx:KaG7ao2T9sGUSiQASI8Vh5oUfUC0U-nLPNyCWbSUn0dHCBDo4h7kUiha>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 0180F780070; Tue, 29 Sep 2026 07:29:45 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 29 Sep 2026 07:26:20 -0400
-X-Gm-Features: AclHuK_J6lW8b6cUS6knnc2Rqa5A45Qve1ukSbL8IRB83U1q84XyvFZ8stnqyM4
-Message-ID: <CALnO6CBwWy3aafyDJPKFk5vuWy2EF1n1Oc=W7+RVAE3rxpXwiw@mail.gmail.com>
-Subject: Re: [PATCH] branch: let --delete-merged find squash merged branches
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: A6s586G7u8KZ
+Date: Tue, 29 Sep 2026 07:29:24 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Message-Id: <064ec9c5-d539-4d21-96a7-6ad0ead5a061@app.fastmail.com>
+In-Reply-To: <xmqqo6dgkead.fsf@gitster.g>
+References: <pull.2242.git.1790627574093.gitgitgadget@gmail.com>
+ <CCB1855E-759F-4741-BE49-23FC6DD402A6@gmail.com> <xmqqo6dgkead.fsf@gitster.g>
+Subject: Re: [PATCH] [doc] Use `man git` to teach users how to navigate the docs
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Without looking too much further=E2=80=A6
+> The survey result that says the users are more familiar with "git
+> cmd --help" merely tells us that they are not taking full advantage
+> of what they are offered ;-).
 
-On Tue, Sep 29, 2026 at 3:33=E2=80=AFAM Harald Nordgren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Harald Nordgren <haraldnordgren@gmail.com>
->
-> Branches merged on GitHub with "Squash and merge" or "Rebase and
-> merge" are never deleted by "git branch --delete-merged". The upstream
-> holds a rewritten copy of their work, so their tips are not reachable
-> from it and they look unmerged forever.
->
-> Treat such a branch as merged when some upstream commit since the fork
-> point contains all of its changes, so that merging the branch into
-> that commit would change nothing. Name that commit in the output so
-> the user can see where the work went:
->
->     Deleted branch topic (was 1a2b3c4, landed as 9f8e7d6).
->
-> The first upstream commit that contains the changes is used, so the
-> branch is deleted even if upstream later reverted or reworked them.
-> Nothing is lost, since that commit keeps them in the upstream history.
-> A branch whose changes only partly landed is kept.
->
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+>> I think =E2=80=9Cgit help cmd=E2=80=9D is quite a bit more
+>> useful than =E2=80=9Cgit cmd --help=E2=80=9D because the former suppo=
+rts
+>> aliases, HTML formats, and various other documents.
 
-=E2=80=A6in the rebase case, I would expect something like git-log's
---cherry-mark option (or really the algorithm behind it, git-cherry,
-and git-range-diff) to be useful for identifying rebased branches. But
-of course even rebase-merged branches can end up with minor
-differences (say, a commit was made upstream before that branch was
-rebased with an identical change; no conflict occurs, but the new
-commit differs from the old by not having that change).
+Viewing the HTML docs with `git help` does seem very useful, especially =
+for
+folks who aren't as comfortable in the terminal. I had no idea you could=
+ do
+that.
 
-In the squash case, I suppose the best we can do is check that all our
-changes were applied at some point between the merge-base and the tip.
-There probably won't be any tree-same commits, though maybe a
-(premature?) optimization can return early if the trees match exactly.
+Perhaps we could mention `git help` like this:
 
-It looked like you don't distinguish the 2 cases in the code, and I
-think that's reasonable: we wouldn't know a priori whether to check
-for a rebased series or a squashed commit, so we'd have to run both
-checks, and the latter presumably subsumes the former.
+> `git push --help` or `git help push` for the full documentation
 
-Anyway, I can see how this would all be fairly expensive---on one repo
-I work in, git-range-diff can be somewhat slow depending on how many
-commits are in the range, I think. I don't know if it's worth trying
-to state that for folks, though? If we ever make improvements to
-performance, we'd have to remember to remove the "this may be slow"
-text.
+and then advertise the superior features of `git help` like this
+(in the last sentence of the DESCRIPTION).
 
-> After the release of 2.56, I saw people liking the --delete-merged
->    feature, but asking for this. A lot of people, me included prefer
->    squash-merge and it currently doesn't work with --delete-merged.
-
-Btw, I wonder if you can share where you saw this? 2.56 was released
-so recently I'm (pleasantly) surprised there's already feedback on
-this!
-
---=20
-D. Ben Knoble
+> You can view an HTML version of the Git documentation at
+> https://git-scm.com/docs, or on your computer with `git help`,
+> for example `git help push --web`.
