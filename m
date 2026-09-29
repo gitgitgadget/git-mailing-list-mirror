@@ -1,85 +1,86 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E326A3C8C71
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 19:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B54735C19B
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 19:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790710625; cv=none; b=s2GpsiPNEe8bHN6CaYhq+lwEF32V+3y+58lDansD9HXgXDOT6w6xhhCbXcGz7hpQXMn7JQchguNAnNJtXuFyWk4laIMlK0wnQ1kyQbftiWrJfbKAWcrEpkS2MC9UquZ0BOGLEsm0AEpF9N0qHaGdteoXIlHCKD2sbNNql6RN7GU=
+	t=1790711520; cv=none; b=Yd2ndBuiyc73zs/VUAZbsb7xCgA+DkrevCeQyvB7MDp4W4Q/9yE76SmrZq3zmw520Kadj/BRETYPOGrnRDhJUQil8nBJhhYls/ruoValCWv++BtdtfrQ9uTzWLVbsc8RdfJAMFhQtcB0XDmaM5FENU/EBGxw55Yg3jTLNGegBc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790710625; c=relaxed/simple;
-	bh=9lscgxGxbfNcEzWvXS2yw7W2yuietbOGfDvOGhzZpxY=;
+	s=arc-20240116; t=1790711520; c=relaxed/simple;
+	bh=LFnYHT0xIiZEJFjQzgnmPZ35UVQMUsx2NpRSyl9HmIo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jbczlZ75zC+qYXGCgVv8G9rTx1usZdE6wx18u6RxJCRJ47TDq6M7/akkxGn/xSHW6JgDs3mvecE6R3h0dFc0kHDFeRRSS/u733mvrgXxnjI4omj8WJ28MSzM8X5Tv57oSGoyjk5Ll9FCbYiZ4ZrUTZINsJ7KkJzRuOx0FfB6ltU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cVK2obD0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jvg7Suzb; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=uJhmwYt1fXRETycLlmdrtAwpS82jiiUjJ8pxWw9Ycex6Lo9uCfEOEX98TFm/Eply65TsLIyomwFWayEvzJLY34sRf16OXU5po5XqkqPGviSNqgUJv8B69y22ksCFDbOeKLGNYv8TwsRjUikLnyoXsjbgaw8Fh8D9k37GHkC4VLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sQuJKeyX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QavEnfQK; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cVK2obD0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jvg7Suzb"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7CEC57A07AC;
-	Tue, 29 Sep 2026 15:37:01 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 29 Sep 2026 15:37:01 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sQuJKeyX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QavEnfQK"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 561DF7A0609;
+	Tue, 29 Sep 2026 15:51:58 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Tue, 29 Sep 2026 15:51:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790710621; x=1790797021; bh=hjOBITdF+I
-	BRIzovbPSLBKVBiyXq8v1/A+Qoo9CBj20=; b=cVK2obD0sicOa8RyVDjHWaabwj
-	oHfXBk+T9HbPEBdTuI5SAcsUHnjqL8kIUogzDbkUCF9DfYvK3Mjwmu8kxB0wXnWM
-	Bhby0LwNubeIayXTcsnZkDoFnNqhtczpC/18iJGYkDPPDSkvvHRtUd7grpFMdTA+
-	PMFLB4RlN9+hJ1qs/vnDfArmP9uJV4UUlP/57z4c0UMfPRUSvNhOv1crmvUcHxJc
-	ljgyO+i2OSs0WuXOy83jBiXCgSn5D/fDWoQqrle8RzBPZDaS7cJ5/3GbQ6Vz5V8S
-	rfIjEAGgT5XEgnNS0pqGiY7Qwim+Y+6PkbBaPpyyopgaGa2J05d1iCeFjU1Q==
+	:subject:to:to; s=fm3; t=1790711518; x=1790797918; bh=IZhcUzMn2j
+	lhvgovXR50AJyaufeHpZO5sd5i0u/cd64=; b=sQuJKeyXPUReE6kPj4AszPn9qp
+	fROQGRo4Dd0kSt8gMdji6Ah7Z7OImPV4J4lMsxhgip0AhBKib5IEHAxtiOjfrAbS
+	LUvM5FQNfC5KxLLFsDJ8cfOkNgQhHq6jtnX8tCdv8sXAXAFKfCuTLqG34VASzcen
+	Qt7DlTvzwNUxNmsgmeek6M3su3fqkyZkES7RviEXVg4nKUK7lXb1p8S7PP2aAqvY
+	N6C8ua5m+8x9FjkJ4GuMN23/TpTpa6MOLw/bzeNfS+wJttwPdyXL515vm0Z+Qgcj
+	wsg+h+UwNAY7kW2dfPCop2BRVMZ1iOn4PP/w0RnzeTS8ykerGMdl/VJxdulQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790710621; x=1790797021; bh=hjOBITdF+IBRIzovbPSLBKVBiyXq8v1/A+Q
-	oo9CBj20=; b=Jvg7SuzbJToPFB3hmjOa5bqrSZ2whAgECVA/S7iXw9lTrlxAumj
-	dTemS80SaJNs68fUhubNfn7z4RDu/Dp5jq4XVFUKCvYMvlJHHMK4muoKp8yh/9JK
-	nIQK5ZQd4FwWY3TasD09ul/wfAHDlrMIAVcojqCEZ5GnVObXjM/HpIJ7UZ+U4kkl
-	BRA4hmiKZ927FqrfmmSUVxonq64kU3B9XhcR4ryNB2aV1+x9gS9NdM2Byzho6R4x
-	C8+R2EDceBNJ1YjbrVlemdQ1F7WG+cyrRY1RWcjHyGYwK4T4Fj9Tmx08zCqV/YLR
-	idD+S3cWLeKbzME5JE8DXAvsFL/VnHp29eQ==
-X-ME-Sender: <xms:XRO8aiPivsn4JireN55-rbT_7aMpWdxNt75yDRURu6u6WswsDhqo-A>
-    <xme:XRO8akr8Ji_cZkN5jTtm_nMQwIriCHUf81KhcfrtmKK2239TghE7G0bsvfKN0J_-Y
-    3PqaDnbzCSL1LtznJ01IC82BAgs-xnUhG6e-6PbPP9fpY2W_G-fLv4>
-X-ME-Received: <xmr:XRO8ajFCPyPPK2LU1q-8ciNtrv0_P-tJe_3I2mCJg8kiKw7BgoXv5TyYNKZx0c3Kyc_wJx4ws2Bo5nzN1QgRAppKvTLoJiqJ0tVv>
-X-ME-Proxy-Cause: dmFkZTFsninSpRmZB5DDS+xvEsTbvutpyhYLR9OfD4hY9YNeFL4s5CTkfMavuW72Ylts8B
-    4lava3Lya34bJm6kuG9nt2yN8cyDJjzH/KhcN0llMbTcvMbBnSy+a6ETAso/SLv21KbAu9
-    pvnMZktE779z21fgvvNn12gmC7wdEkFW7V/OO8R4wAGZlNyONXyUJ0/qbgIqu03d6J5Ciu
-    dYaLJYzDNRk2N69ElpUpIWlspP1eRTNLKrpGn7RO8B4b7JLeozOt6QDCIN+8ihPWpa0mjE
-    6hUGCJ4Mb5qYTIDUbItgRkySPratTCQSKRGPIdmsrZMcbL0GhDF7ns58E7OQ5MiVLVJNgl
-    bFq/hFaHDIePQ2vLsvYXIGcwZ229aMejWE7cASkB0/oT2542VhKXBUUkhDYezShqJTMeKY
-    pG98/pMYKV0lfI1cGV4BgaR/J8HjJJJ7DsyIV82sRITWCgPYNw23OwPNy7Vrrvrw6uwhuV
-    cCv6x95jKKFaE7CFbz3rADczcZodlr7PX97Wad1JKBiEssp4S3ioNzHbX32tT4876Gspia
-    C5nrkZ2PY7msQfnIQMFWWAruhv/KpDFJR1M0pLkDEpsA8q0qIRCMyjN7ZoQYdYPj5GuBTa
-    yUfqbaY8ngx+DOpOJmPeZZkCSvHozBH4KB2rQsg4MzePSGa+/BfJIAKDSHUQ
-X-ME-Proxy: <xmx:XRO8apqkgD5atJ5xWDplFoLguiZ4-mABXfbz1mIG7ncUUch8BvxIFQ>
-    <xmx:XRO8asZAFuH6sNnPRCjnf9mz1Vrj-G0ZnKp3iaE42HiulOnSWUDs3Q>
-    <xmx:XRO8aiWXY87C4mlw_9yvUoePWLOFymtU5AW0yo1mepUHFMqgXUTiNw>
-    <xmx:XRO8al8PV9SluNJh7tmRKZiaX9CY-dDFsHSYXzos-CXyBy8BI1YUGA>
-    <xmx:XRO8amxYaO-vIgAto-ktdgnkRynKUgEr3hj0ohpm3-6qVsKMupgzsm1k>
+	1790711518; x=1790797918; bh=IZhcUzMn2jlhvgovXR50AJyaufeHpZO5sd5
+	i0u/cd64=; b=QavEnfQKVsHhiYtyvVba5c/6Na0xZ0SW/Wjfy9lLwfC+qgICC4N
+	7JpQEPwpSRvkLqA93eVByXpMi6IjMCQzZQCsFyltnF7ciWQbtFoKkr6ge13iIv/a
+	uevhbLaGM/GT9fBvtos3Rr7JED1MRcCa5fGHZS9TLTQ32up+2gkrIzckG+fGJdlL
+	w3ZNoN/YBUb9jDxEoRNdJ/OzaDuywQdtblllclFHY3+5zkKHoyvzwRSKk3Ya9qrs
+	0msuthVtHlLoY8oeLwTKK8UiI2JLnsPZLz8hzNATmX+l1bUIz8DnSODYPrhpOIvl
+	Zfb/E3RRUeAVxbDHnT+p3KuCcOZSPIwFbow==
+X-ME-Sender: <xms:3ha8annP_s0BDS2mbAHmTxyLMrWsSVcbTSwy2JE-mKXU31Q-tTX4_w>
+    <xme:3ha8auhN4szUpMyhtrHa1Q1j-BshHb7aAxkUWZA8Lh5OxO_J9p2nfqfaohb3SjOkZ
+    JrPkx7rT6ncytSePNwBwEkIuQ9fsS5kpQlc9SPfgPKM6JX6ndw8qqc>
+X-ME-Received: <xmr:3ha8anf2_NhjPwKTRQfrOT_nFo2UyEYCdvuNjSnOXZo1PYKT4W-oXmb2-QJAbWK48N-fL_3Sn9XHAKHCyN0X_YvJk84IaQGbBzBl>
+X-ME-Proxy-Cause: dmFkZTFDQBa+Nz/TYL6peVodogrD8bUMZyG3zWWblMlKZZYbMgHlIOo/RWQxSUI8/GkzUi
+    s51r1JKCgeMXOWMOWsiIGoXSImKeXL3pWf466DEpeFv1aQbMjWXAHmDRf6l5BCZEsNcvB8
+    jWUqNXE7XEFjEfPaigP71h4NvykjlzCEzvQZk8AswNYM0fMeURvge9/uiaUAA+nb0Klwgn
+    GiMDMK3Yi++yxPki5nGc5aAU1ZF2Pn/ewcuYZYpqafYe3YJSlfXiKoCIRevKPEdZ03WwaH
+    FY8EjcJ25qQDCde1exPZm2cwDHaBAmz2b8Z6kKq3FGQ24BcNUex4MwVIJWTtYp7NMEMBSl
+    C6qH8pKlBbp3Tqt6WVDioWnjeVwswqpQ3/zBUcXjc7F0ktkfaEq2ZQWhwznDv5nr6Kj13V
+    mP/oM1iJMIHpXMzznX9RfmqvEQQXNNXPvCFtQI0THqM9i8wJQg3RVGEmHcgmHUAeCNspkk
+    /2bhWqa+TFPBL03Ze4z1HjNcCOt8m0mgQn3nKZMRgPUSUdiGlR6OYU8q1cSGGTHt7y8nhE
+    3iJjyEez0rrMZr8ONp2XXCClk2/l3vQJhi3eVHmjUjVEoGnKjEA6wAoLeHeb4dHgIaesqt
+    A+vB5MtQEi82J2PbexnTNDD4ZhgD4f7tdvgOTUdcEgWie14AtxeG8NyDzZVA
+X-ME-Proxy: <xmx:3ha8amhKxfS8cK8-0fCaksYKzZiDEG8-PY09Jl6pnQwFh5xEjJzAyQ>
+    <xmx:3ha8anztL6de1aIOiS0DW3O78e9xXCfuG_ke3aqZftHWopQje6aI7g>
+    <xmx:3ha8aqOkRUTx5pNZahOvu9QrK005FPcbHdmPxSE34iOcRlIwkltATA>
+    <xmx:3ha8agUC3tF3XXQZY5enViyLBBii8nl7e9fDgOrJ1FOlTOTiRZiDbQ>
+    <xmx:3ha8aqLEHmtHQCZANf_kGUXghGfTDYPHT-R3oCHKE59Hx9wcWwjFsKtb>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Sep 2026 15:37:00 -0400 (EDT)
+ 29 Sep 2026 15:51:57 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  Harald Nordgren
- <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v4 0/4] fetch: avoid fetching every branch of a new
- remote in a shallow repo
-In-Reply-To: <pull.2412.v4.git.git.1790673598.gitgitgadget@gmail.com> (Harald
-	Nordgren via GitGitGadget's message of "Tue, 29 Sep 2026 09:19:54
-	+0000")
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
-	<pull.2412.v4.git.git.1790673598.gitgitgadget@gmail.com>
-Date: Tue, 29 Sep 2026 12:36:59 -0700
-Message-ID: <xmqqqzibg884.fsf@gitster.g>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  "Julia Evans"
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "Kristoffer Haugsbakk"
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH] [doc] Use `man git` to teach users how to navigate the
+ docs
+In-Reply-To: <064ec9c5-d539-4d21-96a7-6ad0ead5a061@app.fastmail.com> (Julia
+	Evans's message of "Tue, 29 Sep 2026 07:29:24 -0400")
+References: <pull.2242.git.1790627574093.gitgitgadget@gmail.com>
+	<CCB1855E-759F-4741-BE49-23FC6DD402A6@gmail.com>
+	<xmqqo6dgkead.fsf@gitster.g>
+	<064ec9c5-d539-4d21-96a7-6ad0ead5a061@app.fastmail.com>
+Date: Tue, 29 Sep 2026 12:51:56 -0700
+Message-ID: <xmqqfqyrg7j7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,22 +90,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Julia Evans" <julia@jvns.ca> writes:
 
-> Avoid fetching every branch of a new remote in a shallow repo.
+> Perhaps we could mention `git help` like this:
 >
-> Changes in v4:
+>> `git push --help` or `git help push` for the full documentation
 >
->  * Removed the automatic default-branch fetch. A fresh remote fetches
->    nothing until you track a branch explicitly.
->  * Fixed fetch report showing "new ref HEAD" instead of "new branch "
->  * Reworded remote..refmap docs and commit message.
+> and then advertise the superior features of `git help` like this
+> (in the last sentence of the DESCRIPTION).
 
-Will replace.
+Amusingly
 
-As my eyes have been contaminated by and biased for this topic, I'll
-spend my time on other topics first to let my eyes and brain
-"forget" about it before I revisit these patches.  I'd really
-welcome reviews with fresh eyes to happen in the meantime.
+$ git help tutorial
 
-Thanks.
+begins with "man git-log" and "git help log".  The first one is so
+old fashioned ;-)  Perhaps a more modern version should be given at
+the very first part of the description section of
+
+$ git help git
+
+>> You can view an HTML version of the Git documentation at
+>> https://git-scm.com/docs, or on your computer with `git help`,
+>> for example `git help push --web`.
+
+Please write it as "git help --web push".
+
+The command line parser may be lenient at times, but we do not
+guarantee it.  Please stick to published "git help cli" style in
+your insturction materials.
