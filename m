@@ -1,69 +1,69 @@
-Received: from mail-dl2-f39.google.com (mail-dl2-f39.google.com [74.125.229.167])
+Received: from mail-dl2-f41.google.com (mail-dl2-f41.google.com [74.125.229.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A969A50AC35
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 10:25:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9DE50E58E
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 10:25:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790677529; cv=none; b=OrwW88ocoyLvm15f5tvqAjpU/yVtfv4S9cMNPhGvw26XHJ6aNiMX1zWJc7D1Xd7QpLfyWNJ8VShuVJRyCIb6+YYxfhC4Qx01fvXWpoUDnVlK+veKdKNuunD7Y5/GqYR4mx4aXQlCqv2Ghs49LksgHr9X4scmbVR0ibWKC3urWBU=
+	t=1790677533; cv=none; b=g3X1ARbOA5bJSpSqJNKLE/zc5Mu9DdlPxls3NaoQGwuw2QlsSH+SqyQZBRmkA8WJKzxhJd3F47fVVDpGiNxzKiXBFtBb6M4Qm3uHKhyv7YjYyOq1Des0FVVOB7e7ZQGJ5DW+CAOCSwzLPJmn8Ecg9VtptuaWLnbnsJJSeUtgal0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790677529; c=relaxed/simple;
-	bh=UxrMnN8kxd33GH0iUakqZ4trpq9dm0hpsLrbTg6s7co=;
+	s=arc-20240116; t=1790677533; c=relaxed/simple;
+	bh=7pdqhKMNMHtKqxlM+ZVXeVeZe+q8pMGAFvP4FqqF06w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gABGZOi+tqhP1o23jlQ3JBP6CDeAniGsAzy5feu5rM9ZduDxipUhR/UjXlfrpnup4ZxYT2AWeykizW/9iRZw7V/SytrtEWVA11Pp3zhl2tRi+Vwqxa/hob/N8c3GoSf6do9cJsA7PBF5S+rqGosYAlPuVEIfkkMBoxT2yAnmxh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MZ/6jNQz; arc=none smtp.client-ip=74.125.229.167
+	 MIME-Version; b=AraYv+u2UCcfhyZXtxlfpgAvFaW1BdXSito9Ng6xqY20/HvYoMeJMhjqoRz9FbhXcG3T9DGPAv47wziYtX3RSyc1hBire1ll+ruwoB2qRjWGSuyMzFyH1jRl1oPnARDx9LliWIsak6LHOJE3lAXRj/Qq0rwz7AUGlPn3Fsy1eOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KRT51sfw; arc=none smtp.client-ip=74.125.229.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MZ/6jNQz"
-Received: by mail-dl2-f39.google.com with SMTP id a92af1059eb24-1438cb9b3a3so2720880c88.2
-        for <git@vger.kernel.org>; Tue, 29 Sep 2026 03:25:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KRT51sfw"
+Received: by mail-dl2-f41.google.com with SMTP id a92af1059eb24-148b5c829e8so2207106c88.0
+        for <git@vger.kernel.org>; Tue, 29 Sep 2026 03:25:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790677521; x=1791282321; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790677523; x=1791282323; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=HJU0IkQkK5SjvctgrcOqu1HunXMDdCBmOeyaQbUSRL8=;
-        b=MZ/6jNQzutvaA5PYmLKCtJdm4kol2vGfSMznV/Y7EaimamWT8+zb32LiaTslPDomNl
-         9mPtAMQkfknRAQYabOZhQ834qHyddMlGThCzrFKiK7Yuu/pd7a3n7yioIHYM0GWg2R47
-         /n2h5W2+J8QDK6Q6GpEDgn2uVVOkDLQkM82vymr3UdEBXsQzCDQAVqqXxAb4lL7iIA1y
-         cJ/Sl8xVI9+NJSfF8VbemjifA2wJ0NxYhjDFuPHce2dBg1Fvr8l6HsvDjkdP1p5StbWP
-         bdz9t5MfVgfR/51fS1s92QwZs8Qw9/Zq7NYL41SUJp8JhyNXXy8xOPsqGWGxK/Cak8/7
-         wMqw==
+        bh=nKnLqjoUlw+aDy8GG1WAzAw7KvA39e2+9Vj0qBj+CM4=;
+        b=KRT51sfweEM7apgIK9Ll6i/oIbS54531D4q5UIM9omow5USNS4t3aDYSVM8tIbmH3f
+         3R+P3FOljALdNixXsD6cVxGIOC6OplTi5FX9qI1U5iZpfi7A3ZojUoyHEWXA3vKdkD/2
+         IGdy9uMaj1OXKaM77kLkNwW3tah0qApb0cQoaXfIHNONy8sCJn8YW+ZFSRHLS5aF+7xr
+         5OMLscbWkXsGKE9WCP6ZByJrjvyOGl1b0trCi6pluVBbipBfwE+AY5r3q06W7ino0fX7
+         oXteYo18DYeNcwa780LvNX17jqSqh3LPBBhCRnALX1IZaKvgNCLS4SFKzYVhVVaO0ta9
+         QAMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790677521; x=1791282321;
+        d=1e100.net; s=20260707; t=1790677523; x=1791282323;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=HJU0IkQkK5SjvctgrcOqu1HunXMDdCBmOeyaQbUSRL8=;
-        b=Gh/GimtGwLkd7yJFm00bCk6MnIo0dQ1MtpJu3s8PDR8YTvTkvQBdIIQv5/8qzp0Hdm
-         Tkp5YhylieW+PwQfxsH57Qf2zhbB0Vj34D6K55XYhLNlzkBLAsQPrgejLOcE9EAeGcgB
-         JjXkRS1gF/pEqaK4Y3ivgSoCReR+1Iz7tj4KUCz1B181Pq434NDHNp+pDbuNPmgvTNWQ
-         ha4UcI8L+FVNS4Ol9RolXiINM+2iibdJGXjMZnDj88aPBtazNHAwmgno7VVlOQqF/i0l
-         tBV4TrEILHhw/eg4MJ7clUPNbfJct4od65J55iMPwAOTxOK3vGL1pyIHrqM87hJes8Ir
-         5R2g==
-X-Gm-Message-State: AFuF++n/ByiMMAmsSU+a8ndz3OJ/s8NCEzzUMnv8IaYIgwXc9mF8XwL6
-	+lkQaKjqaGFL5Dy9m7RX5n16vmEWGTt+Z0JhDz3zZqE0/2CekSGcft0JpUDp7g==
-X-Gm-Gg: AYBFou2w9uTBQ+z9j1Y1fQyvxmgS2AMC6YsAGkJ5hrGcmrmQLsB+h7hWHBdSIHJbrVL
-	5jQuVyAinu59AH8PiZuzqzteJi5Lww3AdaByk9c1kHGkUoNUqLjqQ8XgMvukv8PHRNQVMmrLusc
-	a246S6h0pkndF3mpCb69uj8L5AicLqJyvGzWfpbjQ1/58XyB36SCtfrSMuQzBp/k308Kb3hq7jB
-	xRIkMhUyaPNl+iD3eiXAgbzSsKYTRBW0L9zHw+9+J5E+ceOAkldOlInLwch+k/RduwP9FDzheMc
-	ePUViOY1OPvO8EjvkomVwtMS/jUSTD3mVWthex0qxe003HstEYYhTTrq6yyRncEZdayMH3IWaRn
-	V7d/hIg6tKuOGaq2o5jzcsmuErt51mbDWczuOrW3IG9+vjiKKASX/mlek7draNESMqB2YZvXGo+
-	ch8tnXE861ZP1W3+AHj8UhIgUwrpPtgE34eIc44ZVr2HoIPqsBXagTTgkc9RDg0Q3Jw15Wr1EsG
-	Q/CN9pN1qyiaP64j2KjfyDh8F7ySw==
-X-Received: by 2002:a05:701b:451b:10b0:14c:1f57:3e86 with SMTP id a92af1059eb24-14c1f5742e2mr122919c88.47.1790677521137;
-        Tue, 29 Sep 2026 03:25:21 -0700 (PDT)
+        bh=nKnLqjoUlw+aDy8GG1WAzAw7KvA39e2+9Vj0qBj+CM4=;
+        b=eTIJHY7MMY3JskHUZanWIQwOIdcJizIUaFKbcw5HvjubFyWQFIvxmNfrOaHjM68zeh
+         0LuOib3MCC9XUvCfz3mDhkZunaRQKtyNFEJY6Cf3wisvxWuXL/octYt4jYaCzqUei66b
+         /hCvNIXzmWOGxi4Q5v/iJcbKmyNd13RTWTRunXA3CtUYoioljPulmoM1YSfdMipKmSo8
+         L0jXXfqFeR/89FcxGXmNUazE8ffuTasav9pMv1IM6tzDXO2MjVClG5kyaOpkVFMJC7CM
+         z9PlOVxj/q5DeSRDOSiXC4Umzi2bDkSKdNJ1KNL0jlH7zXcl2lv35j0642jvuRjcxo8L
+         5+Mg==
+X-Gm-Message-State: AFuF++kj6C3YOu0u2hDeT5ebqlaH51kcKVdckbK/AeetpSDdqX933Woj
+	SRICWfkaV+U4tAw0x1EIDgOalIgjJphfP8CJWfY31dOCx0nHbB7ge6E3OSKjEA==
+X-Gm-Gg: AYBFou0WsVlONJhygOZyqNn6Xbcsu8AcN3asZHyJ4xMRsxOH/PsTKAq0OV6tjspijGn
+	6n2/qOHQ2Cj0lHyHvirq9rVuKyMQXrlt1T8O/ft58+toQ633ebvnmkx4RjsLGj2oCvzQU4lOFpJ
+	dezfBjWU8W69t3Z609mPJwNjGBNDPUWLU3JXosYFwVv8EK3ihFYNrdZK90aXo9RVEVakOL03rrj
+	YUipLdUyurVQ3T9KiapNxURJ19DxcK9Ee/Vym3oEDvxv1mL9Srs09VkHL4ygPrD/LVKcI/mjO7B
+	REZOPr89zaRzQZ4n8bmYqVyqi5b1wNiIDoqy+y4MySBXgiBnME1EGUGtfom1WCDC7q2XJa9UOsE
+	0o/XEyS7mlqIRZHgnvWGprB+WlWXHkDWBQjKbUVruJ/fRAYSA9Kj3WySPByHCsAAYu90EBGv5Dn
+	AhLdE67FGhJreBmo0OcGisfDEhThY2BxegHSFTreISkJBaXpdEi3rPokPUhcGrIQZGyfNdJ6bum
+	WskjgUxq39fsW5u6f9wiBvpvYdLSw==
+X-Received: by 2002:a05:7022:b04b:20b0:144:c127:dd19 with SMTP id a92af1059eb24-146d01afcb2mr13675622c88.37.1790677522975;
+        Tue, 29 Sep 2026 03:25:22 -0700 (PDT)
 Received: from ksivaraam--20260831-PCX54 ([2401:4900:884c:d167:a737:cb55:b3cc:523e])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-145acc45f03sm30417589c88.7.2026.09.29.03.25.19
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-145acc45f03sm30417589c88.7.2026.09.29.03.25.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2026 03:25:20 -0700 (PDT)
+        Tue, 29 Sep 2026 03:25:22 -0700 (PDT)
 From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 To: Git mailing list <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [RFC PATCH v2 1/4] setup: normalize an if-else to follow our convention
-Date: Tue, 29 Sep 2026 15:55:07 +0530
-Message-ID: <20260929102513.712181-2-kaartic.sivaraam@gmail.com>
+Subject: [RFC PATCH v2 2/4] t0009: add tests to cover more error reporting scenarios
+Date: Tue, 29 Sep 2026 15:55:08 +0530
+Message-ID: <20260929102513.712181-3-kaartic.sivaraam@gmail.com>
 X-Mailer: git-send-email 2.56.0.rc1.12.g2c9c8d64bb
 In-Reply-To: <20260929102513.712181-1-kaartic.sivaraam@gmail.com>
 References: <20260924120502.2642141-1-kaartic.sivaraam@gmail.com>
@@ -76,31 +76,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The else case was not stuck with the corresponding if's
-closing brace which is not in-line with our convention.
-Fix the same.
-
-This is a style-only change; no behaviour change intended.
+Introduce few more tests to t0009 to cover error reporting scenarios
+when --git-dir is used.
 
 Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 ---
- setup.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ t/t0009-git-dir-validation.sh | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/setup.c b/setup.c
-index 0d157ac254..e9a9ecda19 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1879,8 +1879,7 @@ const char *enter_repo(struct repository *repo, const char *path, unsigned flags
- 		if (chdir(used_path.buf))
- 			return NULL;
- 		path = validated_path.buf;
--	}
--	else {
-+	} else {
- 		const char *gitfile = read_gitfile(path);
- 		if (!(flags & ENTER_REPO_ANY_OWNER_OK))
- 			die_upon_dubious_ownership(gitfile, NULL, path);
+diff --git a/t/t0009-git-dir-validation.sh b/t/t0009-git-dir-validation.sh
+index 4cba478e50..6c40925aa4 100755
+--- a/t/t0009-git-dir-validation.sh
++++ b/t/t0009-git-dir-validation.sh
+@@ -74,4 +74,38 @@ test_expect_success 'setup: .git as an empty directory is ignored' '
+ 	)
+ '
+ 
++test_expect_success 'setup: custom git directory with missing HEAD is rejected' '
++	test_when_finished "rm -rf parent/empty-dir" &&
++	mkdir -p parent/empty-dir &&
++	test_must_fail git --git-dir parent/empty-dir rev-parse --is-bare-repository 2>stderr &&
++	test_grep "not a git repository" stderr
++'
++
++test_expect_success 'setup: custom git directory with HEAD as a symlink outside refs/ is rejected' '
++	test_when_finished "rm -rf parent/head-as-link-to-garbage" &&
++	mkdir -p parent/head-as-link-to-garbage &&
++	(
++		cd parent/head-as-link-to-garbage &&
++		git init --bare real-repo &&
++		touch garbage &&
++		rm real-repo/HEAD &&
++		ln -s ../garbage real-repo/HEAD &&
++		test_must_fail git --git-dir real-repo rev-parse --is-bare-repository 2>stderr &&
++		test_grep "not a git repository" stderr
++	)
++'
++
++test_expect_success 'setup: custom git directory with invalid GIT_OBJECT_DIRECTORY configuration is rejected' '
++	test_when_finished "rm -rf parent/invalid-git-object-directory-config" &&
++	mkdir -p parent/invalid-git-object-directory-config &&
++	(
++		cd parent/invalid-git-object-directory-config &&
++		git init --bare real-repo &&
++		test_must_fail env GIT_OBJECT_DIRECTORY="$(pwd)/does-not-exist" \
++			git --git-dir real-repo rev-parse --is-bare-repository 2>stderr &&
++		test_grep "not a git repository" stderr
++	)
++'
++
++
+ test_done
 -- 
 2.56.0.rc1.12.g2c9c8d64bb
 
