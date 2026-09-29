@@ -1,102 +1,156 @@
-Received: from mail-ej2-f41.google.com (mail-ej2-f41.google.com [74.125.228.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9F83E44ED
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 04:23:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790655838; cv=pass; b=q4QuJGuFtbOECsGnnMdfJ7txh0lgt38WA/P8c3CDTA3d6eaA7GU0VE2jhlpxJ8tvD2db/C7+Hwa7OG8oq2NJ/TfxUi8KpSmp3HSHuFKyGEOBIhlZNiqXU7YB8qsekMxkMotANw2rwCqK78hOJeZXdsXYUeRBP0UIzmWGkKj0PHs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790655838; c=relaxed/simple;
-	bh=ImvwQDpKhGKdiXb/EZmN2u+hnM7CMYzRNoY4MzGFsA4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=SvHniWKh0uYoppLBZHlolYDoDiXNoZ3l7mEZPIeMALIgvB2lTXjXaSjMf7E37UXilTUbgvhDgwIQzvp5N7sr3bpPighF/nyYkJNn4i17/xOt0rGMjQOlQJDFr67HM+WNf9AlAGjw0zO/WvQqCgUCmzg2U+xbUStw3j/l7tlSdiY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V+3S8053; arc=pass smtp.client-ip=74.125.228.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD0B233721
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 05:12:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790658730; cv=none; b=qAWDhn3fUattJ6xC+RXK2VTCtWgQY/IRkMPv3DHtjUNiIvbkRqTHG0xhUG9C2sygQ/uz7zED3B50vJbgyI4jRH1WZHq+yWrZFfOSTjHcxQbU/HzEHwNrIKrL9RXwb18Hqrw5SZoVeXsLDTswuA5m2qRxBtnVVoJUrRs05oabD4Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790658730; c=relaxed/simple;
+	bh=ETKzpQY6HaDDybrpY1Hpuv50ExdYGXREYh8jkYJTor0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nxIp6HYql028SGVKu5+PA1UA8udpEym8jWA/bgM2UYp+PjIW1vI+snALyFfXHzL2qt5znvebzl28LtBoiW3U40T5K8YnrALpIrtCUsl0hWCMzwCMlYS6a/sQm4VKEBrQ1oe/K0n6FU7EYU6f+rXsCwEHBKJCdeKQI5BdZz2Kgbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=h9zckard; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V+3S8053"
-Received: by mail-ej2-f41.google.com with SMTP id a640c23a62f3a-c2df698f77cso37637166b.1
-        for <git@vger.kernel.org>; Mon, 28 Sep 2026 21:23:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790655835; cv=none;
-        d=google.com; s=arc-20260327;
-        b=GHP43xmhsI6IRIax8xuaSWCk35yvx5F2IIDCFnHlzujUk7MowB+2H2cGpte/s8klyd
-         Y7vUIc5aVtXCvf258Ax6Ysbicz7mQCcAOLxQrCAv1mvkjKHm4Lil+1S87IGNkpMavzBI
-         bVqbbdMCEI5lUNJ57IACa9zOZ96yqj48nETYvWYiiWusCKVizzy/GkCS3Jo+THsTcmmX
-         BQE6EyhO7N0ppuu9BFo6syOGEV8hhaxspsYhckh9Y/yNc7OQXe1B0FzJgMN3tmvFAu9s
-         17D2ab962W8RMWfMED+515XmksurxUpTF5fQ2+jmHdmMqMnv47TaVqB+d5gl5WDQoUYp
-         5iQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=ImvwQDpKhGKdiXb/EZmN2u+hnM7CMYzRNoY4MzGFsA4=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=V1EQm2ap0inAN4cRgYKTnbbFdsaNwdnUE3kMdzLxf+p69CuEEZGRdK5fjzMMSwR6pf
-         8R7bP1g4dEwr9aFbJgvO03g6u5RWkjMDE6jCfVkW6c8GZZJs7r+HnYmT5aYwMQHfUdaW
-         2p6oXXoYtapjb+HP+VsdiO1NemcYwL7d3uZB+ODRLMX6AjXO+1VZkVrziIYrlCrYGeJk
-         l3yGyB1AtuFarks/Hh6gT0iCKg8rtRJAIrz0Kv2YYfQOBe39ao0jX2NXHZV7bVvp57oU
-         Q3PsTUQBkoLVvYeVY3sALh5T+XD5VDfnY3QHpm98Qbzo/zk3+Xq4tlrJ7OQ2++8Yi8vL
-         9dgA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790655835; x=1791260635; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ImvwQDpKhGKdiXb/EZmN2u+hnM7CMYzRNoY4MzGFsA4=;
-        b=V+3S8053DdxyPt5gQJ4w/FqdlwNpo9tBLfzbske/kOhKojnKTSC6bgHEbcwxI9Jk9A
-         G6SYtibBGBRqwTX6JNB8/dRfujX1ZQzIDd0BYWi18PEkwOOR7QCTWW8tvgMGN7MtIPcU
-         F4DsJCVBAppoSvpnp0s9gaIS7BqHY/iOnDgySkY0zywCYDyQl4k375Cqu7vy9fyEpCEb
-         21w+4h+3LlwbyglObAkp7zB2DAq6W5s3U6lqq1ZHKaArIcruHxoiKqzM3wlVB5xaP8TR
-         vwy46kdwat/1TselSMPpwyWtGK66LR7+sFyrb9RyWRyT86ymZPOWrrOd6pfQTM7SrY4t
-         w8gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790655835; x=1791260635;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ImvwQDpKhGKdiXb/EZmN2u+hnM7CMYzRNoY4MzGFsA4=;
-        b=LOj5UthYpziUPBfFfdELWWiEwRu4N3WGecMF6zAmlyNB20mkCGJ+AcmjHxrmgScv4H
-         UFe3bwObe6L7lPF/Vrsqbfj++dQ/m25wxqBuDwGRiwnTk0a694nK40WYLEEbBygdEkXh
-         6p4E8SScWh3vA3U816g7ZF+EzjPfbCoFUY0ZO0qZgzgkS/hEEBKtfps1HCjc1eaJ6TiJ
-         ypNtY8B4BjHJMGPWFVG2GcqtJNV3X4jBvwx09QuAsX6XZpK84GP2CJx3liLxVKEo349+
-         xXzjHOl/ThYZI7dAI7/gZDFllGSgOFFoblTh72TF/37Y7EhZJ7Gt7U9j84uPAkfP81Al
-         XKrA==
-X-Gm-Message-State: AFq9FYIyX/0McytVaNqliQNeJ7v63eNVZdk7XOJGbIXsW0b/Cvhm7eOU
-	PRkB06jW5tLwBOTX+bIHryMPgqoGmtaFzgP1lJg4jqT/iBlPbCdxmQm4cuQqRY7X+WwOe7m91Wd
-	p70MshQbyuCBrB9wmTRZrgusfdtzAU0LAPf3KOlo=
-X-Gm-Gg: AYBFou0DvLNnFGfhkLako4MIN/t0p+eF2SC0OQIDivucDRQmslwdZLrqzGfLKZfLURa
-	wnetqO8QNyK7ROHWdqQHO3RBBgCFWWIVYtDCI/MK7nkNGvGCHowEOTQubNeOefhlgrasEjm6QzM
-	9g7r6dDsy+Xcz6wsybN1qn+fwm+rudOkIl7O11gWakpL2slBtCJn7nlT767Zy/RWTqnZAGZGHN/
-	tY9hmvZZD8Hmn5vksE774LQ34t2xdtUC/EiRM+lOluDQuz7mGTUFa8tokqC+eUzGDMDKt98vlF5
-	VfFXNZxrO0goFf5nzM9DYByfam+IrbEeYUbJHhgDmpSQwP/c7D9KQjE=
-X-Received: by 2002:a17:907:da1:b0:c2d:bc33:7be3 with SMTP id
- a640c23a62f3a-c2dbc33c16dmr603037466b.47.1790655835147; Mon, 28 Sep 2026
- 21:23:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="h9zckard"
+Received: (qmail 69110 invoked by uid 106); 29 Sep 2026 05:12:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=ETKzpQY6HaDDybrpY1Hpuv50ExdYGXREYh8jkYJTor0=; b=h9zckardk/RHji9bDks7y8usOqBixrRnU8VPMnB4FCLLlQOdVJ47IO/ojD5Ni4QCl16/1rafO50DnhTVDs89iyIDB3QGHl2zSEbJbx/DequQ1FrFH9gwCbtlhe946hUzgUKvmM8g9Hpy1l8ybr7TUGcBXY1k1CzgzABYxJhW1pZDgZJVUKHImiXCT4SPOoi6LwHCO/soAUEZfSRLfS9hUjJ4bSYZ7gtY5zltxMUGWd/slzmNh8JetYRT0xyiFxKQb0vSu+hh1ySpnYd8WxbQSR2ZWqHJmNWD8pPVuvaD2UcQ2oSMUri0dV2mI5uoGRD1EW0fJnhwsqOjkV99TZ5p0Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Sep 2026 05:12:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 288241 invoked by uid 111); 29 Sep 2026 05:12:00 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Sep 2026 01:12:00 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 29 Sep 2026 01:12:00 -0400
+From: Jeff King <peff@peff.net>
+To: Michal =?utf-8?Q?Koutn=C3=BD?= <mkoutny@suse.com>
+Cc: git@vger.kernel.org, Jean Delvare <jdelvare@suse.de>,
+	Elijah Newren <newren@gmail.com>,
+	Usman Akinyemi <usmanakinyemi202@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: [PATCH v3 0/2] merge-ll: Cleanup merge driver temporaries after
+ signal
+Message-ID: <20260929051200.GA1100000@coredump.intra.peff.net>
+References: <20260910150608.1867930-1-mkoutny@suse.com>
+ <20260910162242.GC251185@coredump.intra.peff.net>
+ <aqQN_Q6ZAeyTy7WA@localhost.localdomain>
+ <20260911171044.GA1609692@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Dmytro Lymarenko <dmytro.lymarenko@gmail.com>
-Date: Tue, 29 Sep 2026 07:23:43 +0300
-X-Gm-Features: AclHuK_Bx9ltiromYVkuoSZnYfugbyaaXzuOpL0UEsFqSqzBiMlFw6JVas8kXYM
-Message-ID: <CAF1QGTmK=WY_AODsfETOtzOSuwpZ_4KV5SiNPoRv0SAYeJ7T5A@mail.gmail.com>
-Subject: [RFC] Optional per-repository consent before running local hooks
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260911171044.GA1609692@coredump.intra.peff.net>
 
-I=E2=80=99d like to propose an optional safety setting for Git hooks. When
-enabled, Git would check for an active hook before running it in a
-repository that the user has not approved. It would show the hook=E2=80=99s
-path and ask whether to run it once, trust the current hooks for this
-repository, or decline.
-This would help when a tool or setup step installs hooks from files
-supplied by a project. The check should happen immediately before
-execution, so it also covers hooks installed after a repository was
-cloned. For scripts inside the working tree, Git should ask again if
-the approved script changes.
-The default behavior could remain unchanged, with this protection
-enabled by an explicit user setting.
+Here's a revised version of the series to switch merge-ll to use
+tempfile structs. Sorry, I got derailed a bit by travel.
+
+I dropped the v2 cleanup patch to use strbuf_read() for now. It was not
+strictly related and I think there's a bit of a rabbit hole that extends
+even beyond this function. That might become its own series later.
+
+Beyond that, this is mostly the same as v2. I tweaked the error-checking
+for close() in the first patch so that it's more obviously correct (and
+can produce a slightly more informative message).
+
+The range diff is below, though it's IMHO not very informative. The
+drop of the cleanup patch a lot of uninteresting textual ripples.
+
+  [1/2]: merge-ll: catch close() errors when writing external tempfiles
+  [2/2]: merge-ll: use tempfile API for external driver files
+
+ merge-ll.c | 51 +++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 33 insertions(+), 18 deletions(-)
+
+1:  62b4ac5ae0 < -:  ---------- merge-ll: use strbuf to read back external merge result
+2:  020e3bfcbd < -:  ---------- merge-ll: catch close() errors when writing external tempfiles
+-:  ---------- > 1:  c6a4b3146d merge-ll: catch close() errors when writing external tempfiles
+3:  914fafcd88 ! 2:  b85e169cb3 merge-ll: use tempfile API for external driver files
+    @@ Commit message
+     
+         When there's a long(er) running merge driver helper, the user may just
+         decide to terminate it with Ctrl+C. That sends a signal to the driver
+    -    prog and to the whole process group as well, including the git merge
+    +    program and to the whole process group as well, including the git merge
+         command proper. Hence the cleanup code would not run and .merge_file_*
+         files are left behind.
+     
+    @@ Commit message
+         So let's take the most conservative route, and just continue reporting
+         the relative paths.
+     
+    -    Commit-message-stolen-from: Michal Koutný <mkoutny@suse.com>
+         Reported-by: Jean Delvare <jdelvare@suse.de>
+    +    Reported-by: Michal Koutný <mkoutny@suse.com>
+         Signed-off-by: Jeff King <peff@peff.net>
+     
+      ## merge-ll.c ##
+    @@ merge-ll.c: static struct ll_merge_driver ll_merge_drv[] = {
+     -
+     -	xsnprintf(path, len, ".merge_file_XXXXXX");
+     -	fd = xmkstemp(path);
+    --	if (write_in_full(fd, src->ptr, src->size) < 0 ||
+    --	    close(fd) < 0)
+    +-	if (write_in_full(fd, src->ptr, src->size) < 0)
+    +-		die_errno(_("unable to write %s"), path);
+    +-	if (close(fd) < 0)
+    +-		die_errno(_("unable to close %s"), path);
+     +	struct tempfile *t = xmks_tempfile(".merge_file_XXXXXX");
+    -+	if (write_in_full(t->fd, src->ptr, src->size) < 0 ||
+    -+	    close_tempfile_gently(t) < 0)
+    - 		die_errno("unable to write temp-file");
+    ++	if (write_in_full(t->fd, src->ptr, src->size) < 0)
+    ++		die_errno(_("unable to write %s"), get_tempfile_path(t));
+    ++	if (close_tempfile_gently(t) < 0)
+    ++		die_errno(_("unable to close %s"), get_tempfile_path(t));
+     +	return t;
+     +}
+     +
+    @@ merge-ll.c: static enum ll_merge_result ll_ext_merge(const struct ll_merge_drive
+      	struct strbuf cmd = STRBUF_INIT;
+      	const char *format = fn->cmdline;
+      	struct child_process child = CHILD_PROCESS_INIT;
+    --	int status, i;
+    -+	int status;
+    - 	struct strbuf result_buf = STRBUF_INIT;
+    +-	int status, fd, i;
+    ++	int status, fd;
+    + 	struct stat st;
+      	enum ll_merge_result ret;
+      	assert(opts);
+     @@ merge-ll.c: static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+    @@ merge-ll.c: static enum ll_merge_result ll_ext_merge(const struct ll_merge_drive
+      			strbuf_addf(&cmd, "%d", marker_size);
+      		else if (skip_prefix(format, "P", &format))
+     @@ merge-ll.c: static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+    + 	child.use_shell = 1;
+      	strvec_push(&child.args, cmd.buf);
+      	status = run_command(&child);
+    - 
+    --	if (strbuf_read_file(&result_buf, temp[1], 0) >= 0) {
+    -+	if (strbuf_read_file(&result_buf, get_tempfile_path(tmp_a), 0) >= 0) {
+    - 		result->size = result_buf.len;
+    - 		result->ptr = strbuf_detach(&result_buf, NULL);
+    - 	}
+    - 
+    +-	fd = open(temp[1], O_RDONLY);
+    ++	fd = open(get_tempfile_path(tmp_a), O_RDONLY);
+    + 	if (fd < 0)
+    + 		goto bad;
+    + 	if (fstat(fd, &st))
+    +@@ merge-ll.c: static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+    +  close_bad:
+    + 	close(fd);
+    +  bad:
+     -	for (i = 0; i < 3; i++)
+     -		unlink_or_warn(temp[i]);
+     +	delete_tempfile(&tmp_o);
