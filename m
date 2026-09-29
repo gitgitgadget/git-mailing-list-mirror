@@ -1,78 +1,78 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BD1515881
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 11:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB27C51477C
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 11:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790681163; cv=none; b=NBjRhSPzyx4n57C5kqpaEWQgXRg6TX2ATQJGMeD8wdCFTHem99fJ6QqarTQgUFkDeXEoWI1+XYFco92VbpusWlNRxmeMGFMzL1Sbcn4RIqrCalGVqkHEGG6DkZ0Lg8KpC40X2ve1dWVX/r32ZcmBWUPFdvReKIJwNcWleR7A7IU=
+	t=1790681166; cv=none; b=HbOjdNHUJKt/DePDosH38Yj6WLV6VcHdprWko9rR0qMOweOfFpku7NaLi8iUC5YQ2sVaa1/kNI1Er908l7w3Qjo68uEUGWid3f44d5UjvevMW0zDC6Pw4EFcp++wdssFSovUHGczPTxbJnrWv/5prIspTZZfhdTRS10mABqSuro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790681163; c=relaxed/simple;
-	bh=1+hcbpUK/MONngbdgBBqcD4eJXeAseZghc36wIMCquc=;
+	s=arc-20240116; t=1790681166; c=relaxed/simple;
+	bh=watE2Kuw+OqaX5XK1Vu5TLVzGJi11h873R5DQS2Wq6c=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eojjFWW2P03QKRtKKxrZVVwRNEQJqtiMHgd218+YzL7Q5pK7+CY01ujLOdp1waNsMCtB9Iql4PszuEILlgOWzOTGTKrlXpi0t9wJKBs6OEe64/GoZNJ1ze7D6faCGs+ugU9sGhLl4bgDmbxyN5KO4xTa5Rf1OBOHrVPjS5AHbQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gitbutler.net; spf=pass smtp.mailfrom=gitbutler.net; dkim=pass (2048-bit key) header.d=gitbutler.net header.i=@gitbutler.net header.b=BYz85Yao; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=frLIVzPF; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=HS5BUIFDPg9OpfpZ7F8/Tb03Ae8ZUcWUeXbA0Iz6o3yUbuC+Ap8aFX3rfqzm/cTNZCASBCcYhn4RImc7AtohbeWVxAAcUYMUtDdj196+27EHBqk2ZkHlS7muluHyfHi81DJII4qG+jPWr+CMExtc1lkNgK8EVyQRYkiwvwpqKF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gitbutler.net; spf=pass smtp.mailfrom=gitbutler.net; dkim=pass (2048-bit key) header.d=gitbutler.net header.i=@gitbutler.net header.b=FjKqDWeI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n/y1vlqF; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gitbutler.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gitbutler.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gitbutler.net header.i=@gitbutler.net header.b="BYz85Yao";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="frLIVzPF"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 825BC7A00C4
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 07:25:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=gitbutler.net header.i=@gitbutler.net header.b="FjKqDWeI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n/y1vlqF"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1323D7A0038
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 07:26:03 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 29 Sep 2026 07:25:58 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 29 Sep 2026 07:26:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gitbutler.net;
 	 h=cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1790681158;
-	 x=1790767558; bh=xRVucyQBWWgcTqXpQjuNb3Qxh0xIopBZFYuv75iYFvk=; b=
-	BYz85Yao+VqNbXpXmT03zhDcG1IZPleoE8CDvYjW8eRKlm9I1yU3GYc28jmER4GE
-	itZvlTVBUmKZ9hr1EfoMitjrm2f4oapXEBMm4dubjOEX2olzWj4IP+AX3+BB77Pv
-	ypbl/MN6trliwvcmdDNbXm9HYlF6Upxt1b5MqubpCi0qXRSAdMOk4vyqCUbFdu8G
-	TcUOoWRtf+lhUauPFa6p7vKAKittT516AtVyUcSmC/UHE6hydNcFtFKTrL/42WBc
-	r9dFZops95MpZxf71/0FDx1/8I8GjGxa6dufzK2K7xvn9KmaF9vnknMkUQcHgG/O
-	X/99jKGaHx6v1VjKuCzmhw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1790681162;
+	 x=1790767562; bh=UMCm7w2GjdtirjcYwu+bhsJwa+rNNkylgIVKylPtiqU=; b=
+	FjKqDWeIeuPq/YPG8flPqR1WkjGu0FYti2f5eg6acZzz3sIzK8VD+Xp0NhcCTjxz
+	jTT0nhjO71zm1PB2wj//G0psTkBqMHMZLmRTzJ2zKxbV0HMlAA9QKVFgvlVZ4Qmk
+	uFtCkKpaod7RIycdwGG3UyXwP73vR77BiR5A9an0bb2DrnybqaZhV9VETAoYL1m1
+	8iyxbmWsChZHkgwA6MrZ5Vl3VOzCOSG8t0gEoui6hkabNV/c1SMLqCGlUtR6hbY/
+	OHfh7WgJGX5Ybx6ucmG5uHhi9vzBzuJrqBbNOeCxuq1eNJXXbSkCLeJ0Qr9wnRVj
+	aYGIGPJbuTvn+4ecf7Rszw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1790681158; x=1790767558; bh=x
-	RVucyQBWWgcTqXpQjuNb3Qxh0xIopBZFYuv75iYFvk=; b=frLIVzPF7IdFeHAPn
-	To2IEiurv5MubWcTcu316jvEJdt46huYdYPGAmluQHGsARmN4+7ZjddqqIjo/KOJ
-	py4J+33SG8S0WU1CjeUavOtQyb7C3fTiPg7MP0pnd3+qBCKAVu0nEBAnmfv1Omr4
-	hY2Ngrjz7Rh8fiv3z7f5fFrzzZsblJXTQ0VHytiBmuHHf2vZ+baUBOymhMNQ2SdY
-	6jbypPo2EoXAFCye4jHcQfTb7KUk8DYzVNPLRY5fOAou6wG6uuqWttRGgWtw3S8L
-	XKw3QBnvwZOyNqDhTF8xiJ6/Q0cVYHSIwb/Jit5vR8u/m3LnxS5/NwVHUYu6lgYR
-	uNQ1w==
-X-ME-Sender: <xms:RqC7at1bbVtiwMUxSyUAkOAjI3kI3msaqvGCopYfz9jgwzdWJx3Pbg>
-    <xme:RqC7arC_dCpr37apYT8jtE1FgXqmWpAjccjZku6CxMVfw6YD6zUJJLtNstqInOy83
-    yXYlHB01q7oKoAirkkIDstR1-qMFjJxpVgjREnr8C3zQNLHGTnAz88u>
-X-ME-Received: <xmr:RqC7ajgpUMqIMbWPgLBnjF6VxWRxh8UuwPa1d2cmA_0HcHO_O9B2Sy0LHhbkE8w71tqmvw>
+	:x-me-sender:x-sasl-enc; s=fm1; t=1790681162; x=1790767562; bh=U
+	MCm7w2GjdtirjcYwu+bhsJwa+rNNkylgIVKylPtiqU=; b=n/y1vlqFlWJm6YH4P
+	1z+j1+vxpdqOOLjNPy7+SPuProec+pCVTWLv4IXNi0ihEK2OgGifqs2U1NyKyDGj
+	NQ6wPXhvcZcb10CqJ9MAfH7gfwgcWUTGQoauDY3s/KCIjHXc7qvh54j3xqvxMVLY
+	Y2YhtVXILCx100P/t/nnwNUkHqaOz3UyqkGJeYE5hvN8XmLjeMd4dlkc+TDOV4DV
+	Z9RZMMF2CjpW1cDPXyLs4O59ywecWuOpIyzV8MS5oIiH7VCgXjIBTo+9n8HNn+9D
+	AHM4oNtjsOFZJzNn4jJjTkPj1b1dUVb8r51PACoOrIYKAheCMS9TV3MnvswxHbC8
+	aZfGA==
+X-ME-Sender: <xms:SqC7aumDiOgzkhN4dWzH7UjtJiny_3RNL7_Tdqs5j18g6vUMG_eyFA>
+    <xme:SqC7asyUD_gt-qV2ONPTueVvjJR1ODwtmkjm9Qdwm0PZVb0VXH463_1Alf_oONipJ
+    XfuHepBvC3O2EqLWsT67MAZANx9WWWcFkyuSsFNwJ5ke-V4_EmqAN-b>
+X-ME-Received: <xmr:SqC7aiQOhC7YkYG1H-c6zuAe0_dQcrcGoCiioawikhUNYr0zq_Ms-1EAsHsi3dfprqYSug>
 X-ME-Proxy-Cause: dmFkZTE9kmltghFDfr4Pcq9atLw9Y1Ls3Yq2KHKMSz3wo7lvM1VkIyVOsw8gq+mapJJlGE
     c9yGgtvEPLe8mYIgxcwuodYkGuuNdK1RxlXgyQ4qHl7ISCf3z9P+nIjjHQjtEf6oJxuAVW
     L5umzAdCEXKN4Pmz9ZY46DJHSIa6DV8bbkjUgVwD1yRB33QQTOrxUVWFhbUC0R56PtYfRY
     mPMFZCpOcJWyyUB61VpvsT9AARelqLxeIF6TUw21ymdtXNqTMab0PrRICjJj9B+eDb+AR/
-    WbOVkiqsyemyJs+EV8Dr3jUb4bZCK+7zN5TP1H7k82ToV9bLS9jRk7/PubpEaJKblGNSMi
-    mNMxpm0YVTAm01AUFDETjGG6PJxS1IAFEZOGXcPQ9/U2igZpltVYkK1uu7rm/064Afq3eY
-    Pj+pWdTy3oUF4zho6GDXJRMWLBahj1iwml1xQfIQhbsdV+6bIIPZ/TPfYJRfUmO/prKTxE
-    oAOR6XsZlUCYR//oI8OSFkrqJsriCj5iccw3+glttddDJWWF5GYh1by/oFkeJw0JfzFMuW
-    F7v0F7api8gMxCtTU3MSktz5RK29Un5QicmSy83eyojHHSUD4cogJPw3esIb28meyDwb0e
-    2AmuC2kxQBJxrHrwoIzRVyQV4DttZrJ9VrysrAaCP7KWCeaunh1BXnDBOyJw
-X-ME-Proxy: <xmx:RqC7av9dPyGyCD8P5Ym3gQJtfkXeoXWl7uI3fJlPKd2mweesmEcDWw>
-    <xmx:RqC7av8Up4CmzY3zuyDry6vpeQWgbx3Xjv3Kzq_-TGFC-HRmpT9BBw>
-    <xmx:RqC7aoD3vyLZGKTMF3mcoLtj1aCA3NY7OJabV4V_st2LSIh6mcco8w>
-    <xmx:RqC7avxqGH3Uq2QUwgvSDIKncngb4egpRsefwL8qrOnxr7f0O-eTQQ>
-    <xmx:RqC7ajErU4mYlZKSbor_oB5OBfeXgdoskUjCmC9Tz-o43hUQskZVNArV>
+    WbOVkiqsyemyJs+EV8Dr3jUb4bZCK+7zN5TP1H7k82ToV9bLS9jRk7/PubpEaJKblGNSLi
+    K24AeFshOTKL3FchGgPYRXU5/GM6EpnitlJIQkr4jE5v4ev0loENYdpJQvKmC3OGv5lwul
+    +zwu7W//Apu0r5JAbI8MefwhzwpyTy6R2j18GJ+o9k+BkmTppQgaSmxp6FyoP+gwFmWG2d
+    u8NHIqn5BU+7R0Qo77MlYsPA8RQu5Mg3QyZFOjradD8v9uJxn40QnPwxK+IYSfDFV8VDmk
+    sYmCSGeCBah//6n0GADdWj4lZx7kah2loQqZwTravfaFiOFD89AU/wxJMTkUmZlssLZmog
+    QRCqYN9Xpf60iRwVXY/PCNf3dX7f/SAWcgcrpdchIDb+GYAsFWgN/bZMjB1g
+X-ME-Proxy: <xmx:SqC7anvekxxB2QLsQDXFn_Juz2arUp-iDPII6MQc3Yh1cGBvw4enbA>
+    <xmx:SqC7assxYWmEnlw3pOMJTldi12ByJTuJaWl5UtSiMhrP2bAH7zEQ3w>
+    <xmx:SqC7alyC7ePxcW_TxJKIRLzpZA5Rv210Pef9YFrNRjn_vyRIIUGeZA>
+    <xmx:SqC7aqgyDnNxU-8sVkposwZ2H1JVKv1klgsJt8Gzav3djOt8W_UyVg>
+    <xmx:SqC7aq3C-LpM2yjYQ66bcTD65bgwmI34V7trABDRmSzL-FX7DN8xzL-2>
 Feedback-ID: iecfe4abb:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 29 Sep 2026 07:25:55 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 29 Sep 2026 07:26:00 -0400 (EDT)
 From: Scott Chacon <scott@gitbutler.net>
 To: git@vger.kernel.org
-Subject: [PATCH 2/4] sha1dc-accel: vectorize the unavoidable-bitconditions check
-Date: Tue, 29 Sep 2026 13:25:42 +0200
-Message-ID: <20260929112544.86511-3-scott@gitbutler.net>
+Subject: [PATCH 3/4] sha1dc-accel: compress with SHA-NI on x86-64
+Date: Tue, 29 Sep 2026 13:25:43 +0200
+Message-ID: <20260929112544.86511-4-scott@gitbutler.net>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260929112544.86511-1-scott@gitbutler.net>
 References: <20260929112544.86511-1-scott@gitbutler.net>
@@ -85,2245 +85,768 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-After compressing a block, sha1dc checks its expanded message schedule
-against the "unavoidable bitconditions" (UBCs) of each of its 32
-disturbance vectors (DVs). Each condition says that one bit of W[i]
-XORed with one bit of W[j] must have a particular value if an attack
-along that DV is in progress. A failed condition rules out its DVs, and
-if all 32 are ruled out, which happens for about 95% of blocks, we can
-skip the expensive recompression.
+With the UBC check out of the way, most of what's left is the SHA-1
+compression itself, which we still do in portable C. Most x86-64 CPUs
+from the last several years (Intel since Ice Lake and some Atoms, AMD
+since Zen) have instructions for that: sha1rnds4 does four rounds at a
+time, and sha1msg1/sha1msg2 do the message expansion.
 
-That makes the check a cheap filter, but it's cheap only compared to
-recompressing. It's 111 scalar statements, of which 47 run for every
-block, and the rest sit behind tests of whether their DVs are still
-alive. On this machine it takes about half as long as the compression
-itself.
+There are two catches. The first is that the detection needs the
+expanded schedule, which the instructions keep to themselves. That's
+easy enough: as each group of four words is used, we store it (with a
+shuffle, since SHA-NI holds them in reverse order). Words 16 to 31 come
+from sha1msg1/sha1msg2, and the rest from the recurrence
 
-The conditions for any one DV aren't a fixed list, though. They're
-equations over the bits of the schedule, and equations chain: if bit A
-must equal bit B, and B must equal C, then A must equal C. So each DV
-really has a whole space of equivalent condition sets. The generator
-that wrote sha1dc's ubc_check.c picked conditions that are shared by
-many DVs, which is the right thing for scalar code. But a vector unit
-can check 4 (or 8) conditions in a single pair of loads if they have the
-same shape: the same distance between the two words, the same bit
-positions, at consecutive values of i. That wants a different choice.
+  W[t] = (W[t-6] ^ W[t-16] ^ W[t-28] ^ W[t-32]) <<< 2
 
-The sha1dc Rust crate has a solver that makes that choice for each
-instruction set. It picks a "prefix" of vector groups that runs on every
-block, sized so that it rules out as many blocks as possible for what
-it costs, and leaves the remaining conditions to a scalar "tail" that
-only runs for DVs the prefix left alive. Its plans work out roughly like
-this (the last column is the solver's estimate for random blocks):
+in plain SSE, in which no word of a group depends on another. That's
+what the crate does, too; it notes that sha1msg2 is microcoded on
+Sapphire Rapids, where this runs about 10% faster.
 
-  form    prefix               tail   blocks reaching tail
-  scalar  70 statements        86     21%
-  sse2    26 groups of 4       58      9%
-  avx2    16 groups of 8       44      7%
-  neon    20 groups of 4       77     17%
+The second catch is that the recompression starts from the working
+state before step 58 or step 65, and the instructions only let us see
+the state between groups of four steps. But the state at step 60 is
+just two steps away from 58, and 64 is one step from 65. So we save
+those two for every block, and only for a block that the filter flags
+(about one in twenty) do we walk them the rest of the way.
 
-The crate only emits Rust, so ubc_check.c carries its plans over as
-tables: for each form, the conditions of its prefix (as one entry per
-vector group, giving the two words, their shifts, and the bit and DVs
-of each lane), and the remaining conditions of each DV for its tail.
-The code that runs them is a short loop per form. We ask the compiler to
-unroll the prefix loops fully, so that each table entry turns back into
-immediates; without that, the forms are 2.2x to 2.4x slower with GCC
-and 1.3x to 3.6x slower with clang. With it, GCC's build of the tables
-runs the same number of instructions as the crate's plans written out as
-straight-line code, at the same speed. The exception so far is clang 18
-on x86-64, where the scalar form runs at half that speed (68ns a block
-instead of 34ns), since it spills partial masks to the stack. That form
-is only the fallback for CPUs without SSE2 or NEON, and Apple clang 21
-does not do this.
+While we're here, we can do the recompression of those flagged blocks
+with the SHA-1 instructions, too. The portable code runs the partner
+block backwards from its state at 58 or 65 to find the chaining value
+it started from, then forwards to find the one it ends on, and compares
+that with ours. But the instructions only go forwards. So instead we run
+the partner forwards from step 60 or 64 to step 80, which tells us the
+only input chaining value that could produce our output (it's the output
+minus the state at 80, since the feed-forward is just addition). Then we
+run forwards from that input to step 60 or 64 and see if we arrive back
+where we started. Since each step is a bijection, that's the same test.
 
-The tables come from the crate as of commit 426b4afd. The crate is MIT
-or Apache-2.0 at your option (sha1collisiondetection itself is MIT); we
-use the tables under the MIT license, and the file carries its notice.
-Note that the crate stores its schedule backwards on x86 (to save a
-shuffle in its SHA-NI code), where we keep it in step order everywhere,
-so our SSE2 and AVX2 tables list their lanes in the opposite order from
-the crate's.
+The exception is reduced-round detection, which also wants to know the
+partner's input chaining value for its own sake. Git never turns that
+on, so it just keeps using the portable recompression.
 
-We now have these backends, in order of preference:
+We check for SHA-NI (plus SSSE3 and SSE4.1, which the code also needs)
+with cpuid when we pick a backend, and compile with target attributes,
+so there's nothing to configure. That gives two new backends in front of
+the others, shani+avx2 and shani+sse2, which differ only in the UBC
+check.
 
-  - portable+avx2: if the CPU has AVX2 (and the OS saves the YMM
-    registers, which we check with xgetbv)
+The unit test gains a check of the compression against SHA-1 steps
+written out in the test itself, and of the recompression, which must
+accept the partner's real output and reject any other.
 
-  - portable+sse2: always on x86-64, where SSE2 is part of the ABI
-
-  - portable+neon: always on arm64
-
-  - portable: everywhere else, which still gets the new scalar form
-
-The vector forms need target attributes and intrinsics, so for now
-they're only built with GCC 5 or newer and clang. Other compilers (and
-32-bit x86, where SSE2 isn't a given) get only the portable one.
-
-With 256MB of random data again, the Xeon picks portable+avx2:
+With the usual 256MB of random data (the Xeon picks shani+avx2):
 
   Benchmark 1: test-tool.old sha1
-    Time (mean ± σ):     801.1 ms ±  82.9 ms    [User: 750.1 ms, System: 40.3 ms]
-    Range (min … max):   673.1 ms … 1006.1 ms    30 runs
+    Time (mean ± σ):     590.3 ms ±  83.8 ms    [User: 541.0 ms, System: 42.6 ms]
+    Range (min … max):   440.2 ms … 750.7 ms    30 runs
 
   Benchmark 2: test-tool.new sha1
-    Time (mean ± σ):     620.4 ms ± 111.2 ms    [User: 571.0 ms, System: 41.9 ms]
-    Range (min … max):   486.4 ms … 857.2 ms    30 runs
+    Time (mean ± σ):     285.2 ms ±  26.0 ms    [User: 238.9 ms, System: 42.1 ms]
+    Range (min … max):   223.9 ms … 341.5 ms    30 runs
 
   Summary
     test-tool.new sha1 ran
-      1.29 ± 0.27 times faster than test-tool.old sha1
+      2.07 ± 0.35 times faster than test-tool.old sha1
 
-and callgrind counts 16% fewer instructions than before this patch. The
-M5 Max picks portable+neon, and hashes 1GiB in 1.22s instead of 1.55s
-(median of 9 runs), 1.27x faster.
+That makes the whole series so far 2.70 ± 0.35 times faster than plain
+sha1dc/ on this machine. Or, for index-pack on the 208MB pack of a clone
+of git.git, single-threaded:
 
-For testing, the unit test compares every form against sha1dc's own
-ubc_check(). Random schedules aren't enough, though: the prefix rules
-out most of them, so the tail checks for any one DV would hardly ever
-run. So for each DV, the test also generates random schedules until one
-keeps that DV alive, and then compares all forms on it with each of its
-2560 bits flipped in turn. That's the same approach the crate takes (and
-sha1collisiondetection's own tools before it).
+  Benchmark 1: git.old index-pack --threads=1
+    Time (mean ± σ):     24.301 s ±  1.102 s    [User: 23.739 s, System: 0.219 s]
+    Range (min … max):   23.557 s … 26.215 s    5 runs
 
-Outside of the test suite, I also checked every form against ubc_check()
-on a million random schedules and 256 of those witnesses: built with
-GCC 13 and clang 18 on x86-64, with Apple clang on arm64 (and with it
-targeting x86-64, running the SSE2 form under Rosetta and the AVX2 one
-translated to NEON by SIMDe), and with GCC and clang for aarch64 under
-qemu.
+  Benchmark 2: git.new index-pack --threads=1
+    Time (mean ± σ):     12.689 s ±  0.385 s    [User: 12.293 s, System: 0.197 s]
+    Range (min … max):   12.274 s … 13.226 s    5 runs
+
+  Summary
+    git.new index-pack --threads=1 ran
+      1.92 ± 0.10 times faster than git.old index-pack --threads=1
+
+and with 4 threads:
+
+  Benchmark 1: git.old index-pack --threads=4
+    Time (mean ± σ):     10.450 s ±  0.445 s    [User: 27.147 s, System: 0.497 s]
+    Range (min … max):    9.853 s … 10.782 s    5 runs
+
+  Benchmark 2: git.new index-pack --threads=4
+    Time (mean ± σ):      5.924 s ±  0.214 s    [User: 12.693 s, System: 0.527 s]
+    Range (min … max):    5.591 s …  6.185 s    5 runs
+
+  Summary
+    git.new index-pack --threads=4 ran
+      1.76 ± 0.10 times faster than git.old index-pack --threads=4
+
+Hashing in-process, shani+avx2 runs at 900 to 1050 MiB/s for messages
+of 1KiB and up, against 1130 to 1230 MiB/s for OpenSSL's SHA-1 (which
+doesn't detect collisions at all) and 420 to 450 MiB/s for sha1dc/. The
+full test suite passes on this machine, as do t0013 and the unit tests
+for each of its five backends.
 
 Signed-off-by: Scott Chacon <scott@gitbutler.net>
 Assisted-by: Claude Opus 5.5 <noreply@anthropic.com>
 ---
- Makefile                            |    5 +-
- contrib/buildsystems/CMakeLists.txt |    2 +-
- meson.build                         |    2 +
- sha1dc-accel/internal.h             |   49 +
- sha1dc-accel/sha1.c                 |   47 +-
- sha1dc-accel/ubc_check.c            | 1789 +++++++++++++++++++++++++++
- sha1dc-accel/x86.c                  |   38 +
- t/unit-tests/u-sha1dc.c             |   75 ++
- 8 files changed, 1985 insertions(+), 22 deletions(-)
- create mode 100644 sha1dc-accel/ubc_check.c
- create mode 100644 sha1dc-accel/x86.c
+ Makefile                |   2 +-
+ sha1dc-accel/internal.h |  28 +++++
+ sha1dc-accel/sha1.c     | 105 ++++++++++++++-----
+ sha1dc-accel/x86.c      | 224 +++++++++++++++++++++++++++++++++++++++-
+ t/unit-tests/u-sha1dc.c | 141 ++++++++++++++++++++++++-
+ 5 files changed, 471 insertions(+), 29 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 9ab13ca2ab..3ad8a7fc92 100644
+index 3ad8a7fc92..8181ea5692 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -568,7 +568,8 @@ include shared.mak
- # submodule.
+@@ -569,7 +569,7 @@ include shared.mak
  #
  # Unless DC_SHA1_EXTERNAL is defined, the built-in code is driven by the
--# block loop in sha1dc-accel/, which gives the same results.
-+# faster implementation in sha1dc-accel/, which gives the same results
-+# using the CPU's vector units where it has them.
+ # faster implementation in sha1dc-accel/, which gives the same results
+-# using the CPU's vector units where it has them.
++# using the CPU's SHA-1 instructions and vector units where it has them.
  # Define DC_SHA1_NO_ACCEL to use the sha1collisiondetection code alone.
  #
  # === SHA-256 backend ===
-@@ -2177,6 +2178,8 @@ ifdef DC_SHA1_NO_ACCEL
- 	BASIC_CFLAGS += -DDC_SHA1_NO_ACCEL
- else
- 	LIB_OBJS += sha1dc-accel/sha1.o
-+	LIB_OBJS += sha1dc-accel/ubc_check.o
-+	LIB_OBJS += sha1dc-accel/x86.o
- endif
- 	BASIC_CFLAGS += \
- 		-DSHA1DC_NO_STANDARD_INCLUDES \
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 3c0ea2a27c..67b96d601b 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -218,7 +218,7 @@ add_compile_definitions(NO_OPENSSL SHA1_DC SHA1DC_NO_STANDARD_INCLUDES
- 			SHA1DC_INIT_SAFE_HASH_DEFAULT=0
- 			SHA1DC_CUSTOM_INCLUDE_SHA1_C="git-compat-util.h"
- 			SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="git-compat-util.h" )
--list(APPEND compat_SOURCES sha1dc_git.c sha1dc/sha1.c sha1dc/ubc_check.c sha1dc-accel/sha1.c block-sha1/sha1.c sha256/block/sha256.c compat/qsort_s.c)
-+list(APPEND compat_SOURCES sha1dc_git.c sha1dc/sha1.c sha1dc/ubc_check.c sha1dc-accel/sha1.c sha1dc-accel/ubc_check.c sha1dc-accel/x86.c block-sha1/sha1.c sha256/block/sha256.c compat/qsort_s.c)
- 
- 
- add_compile_definitions(PAGER_ENV="LESS=FRX LV=-c"
-diff --git a/meson.build b/meson.build
-index a821b85f30..47a60526e9 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1632,6 +1632,8 @@ if sha1_backend == 'sha1dc'
-     'sha1dc/sha1.c',
-     'sha1dc/ubc_check.c',
-     'sha1dc-accel/sha1.c',
-+    'sha1dc-accel/ubc_check.c',
-+    'sha1dc-accel/x86.c',
-   ]
- endif
- if sha1_backend == 'CommonCrypto' or sha1_unsafe_backend == 'CommonCrypto'
 diff --git a/sha1dc-accel/internal.h b/sha1dc-accel/internal.h
-index bf3513a1e3..03427224da 100644
+index 03427224da..a27fda19d1 100644
 --- a/sha1dc-accel/internal.h
 +++ b/sha1dc-accel/internal.h
-@@ -10,10 +10,38 @@
-  * A "state" is the five working words [a, b, c, d, e] before a step.
-  */
- 
-+/*
-+ * Which forms this build can have. The vector and hardware forms need
-+ * GCC-compatible target attributes and intrinsics; anything else gets the
-+ * portable form, which every build has.
-+ */
-+#if defined(__GNUC__) && !defined(SHA1DC_ACCEL_PORTABLE_ONLY)
-+# if defined(__x86_64__) && (defined(__clang__) || __GNUC__ >= 5)
-+#  define SHA1DC_HAVE_SSE2 1
-+#  define SHA1DC_HAVE_AVX2 1
-+#  include <immintrin.h>
-+#  define SHA1DC_TARGET_SSE2
-+#  define SHA1DC_TARGET_AVX2 __attribute__((target("avx2")))
-+# elif defined(__aarch64__) && defined(__ARM_NEON)
-+#  define SHA1DC_HAVE_NEON 1
-+#  include <arm_neon.h>
-+# endif
-+#endif
-+
- #if defined(__GNUC__)
- # define SHA1DC_NOINLINE __attribute__((noinline))
-+# define sha1dc_ctz(x) ((unsigned)__builtin_ctz(x))
- #else
- # define SHA1DC_NOINLINE
-+static inline unsigned sha1dc_ctz(uint32_t x)
-+{
-+	unsigned n = 0;
-+	while (!(x & 1)) {
-+		x >>= 1;
-+		n++;
-+	}
-+	return n;
-+}
+@@ -19,9 +19,11 @@
+ # if defined(__x86_64__) && (defined(__clang__) || __GNUC__ >= 5)
+ #  define SHA1DC_HAVE_SSE2 1
+ #  define SHA1DC_HAVE_AVX2 1
++#  define SHA1DC_HAVE_SHANI 1
+ #  include <immintrin.h>
+ #  define SHA1DC_TARGET_SSE2
+ #  define SHA1DC_TARGET_AVX2 __attribute__((target("avx2")))
++#  define SHA1DC_TARGET_SHANI __attribute__((target("sha,sse4.1,ssse3")))
+ # elif defined(__aarch64__) && defined(__ARM_NEON)
+ #  define SHA1DC_HAVE_NEON 1
+ #  include <arm_neon.h>
+@@ -71,4 +73,30 @@ uint32_t sha1dc_ubc_check_neon(const uint32_t w[80]);
+ int sha1dc_avx2_available(void);
  #endif
  
- /* The step a DV's recompression starts from. */
-@@ -22,4 +50,25 @@ enum sha1dc_from {
- 	SHA1DC_FROM_65 = 65
- };
- 
 +/*
-+ * The UBC check, one form per instruction set. Each returns the same mask
-+ * as ubc_check() in sha1dc/: a set bit names a DV that is still possible.
-+ * See ubc_check.c.
++ * The state the partner block of a DV reaches at the group boundary next to
++ * where its recompression starts: step 60 from step 58, step 64 from step
++ * 65. `state` is this block's state at `from`. In sha1.c.
 + */
-+uint32_t sha1dc_ubc_check_scalar(const uint32_t w[80]);
-+#ifdef SHA1DC_HAVE_SSE2
-+uint32_t sha1dc_ubc_check_sse2(const uint32_t w[80]);
-+#endif
-+#ifdef SHA1DC_HAVE_AVX2
-+uint32_t sha1dc_ubc_check_avx2(const uint32_t w[80]);
-+#endif
-+#ifdef SHA1DC_HAVE_NEON
-+uint32_t sha1dc_ubc_check_neon(const uint32_t w[80]);
-+#endif
++void sha1dc_partner_boundary(enum sha1dc_from from, const uint32_t m1[80],
++			     const uint32_t dm[80], const uint32_t state[5],
++			     uint32_t out[5]);
 +
-+/* Whether the CPU (and OS) can run the AVX2 form. In x86.c. */
-+#ifdef SHA1DC_HAVE_AVX2
-+int sha1dc_avx2_available(void);
++/*
++ * The hardware compression. It compresses one 64-byte block into `ihv`,
++ * writes the expanded schedule to `w`, and this block's own states at
++ * steps 60 and 64 to `at_60` and `at_64`.
++ *
++ * Its recompression answers whether a DV candidate is really an attack,
++ * running the partner block forwards from `state` (this block's state at
++ * `from`) with the SHA-1 instructions.
++ */
++#ifdef SHA1DC_HAVE_SHANI
++int sha1dc_shani_available(void);
++void sha1dc_compress_shani(uint32_t ihv[5], const unsigned char *block,
++			   uint32_t w[80], uint32_t at_60[5], uint32_t at_64[5]);
++int sha1dc_recompress_shani(enum sha1dc_from from, const uint32_t m1[80],
++			    const uint32_t dm[80], const uint32_t state[5],
++			    const uint32_t ihv_out[5]);
 +#endif
-+
  #endif /* SHA1DC_ACCEL_INTERNAL_H */
 diff --git a/sha1dc-accel/sha1.c b/sha1dc-accel/sha1.c
-index fd75289997..1b3d82b4e4 100644
+index 1b3d82b4e4..2f30b207db 100644
 --- a/sha1dc-accel/sha1.c
 +++ b/sha1dc-accel/sha1.c
-@@ -1,19 +1,23 @@
- /*
-- * SHA-1 with collision detection.
-+ * SHA-1 with collision detection, faster.
+@@ -7,6 +7,14 @@
+  * Shumow. It is a port to C of the approach of the "sha1dc" Rust crate by
+  * Sam Reis (https://github.com/srijs/sha1dc), which gitoxide uses:
   *
-  * This computes exactly what sha1dc/ computes: the SHA-1 digest of the
-  * input, and whether any block of it looks like one half of a collision
-  * made by one of the 32 known disturbance vectors (DVs) of Stevens and
-- * Shumow. It works on sha1dc's SHA1_CTX, and uses its table of DVs, but
-- * has its own block loop, which gives the following patches room to
-- * follow the approach of the "sha1dc" Rust crate by Sam Reis
-- * (https://github.com/srijs/sha1dc), which gitoxide uses.
-+ * Shumow. It is a port to C of the approach of the "sha1dc" Rust crate by
-+ * Sam Reis (https://github.com/srijs/sha1dc), which gitoxide uses:
-  *
-- * Each block is compressed by a "backend", which also spills the expanded
-- * message schedule, and the two intermediate states that recompression
-- * starts from (at steps 58 and 65). The unavoidable-bitconditions (UBC)
-- * filter then rules out about 95% of blocks; the rest are recompressed,
-- * once for each DV the filter could not rule out.
-+ *  - The unavoidable-bitconditions (UBC) filter, which rules out about 95%
-+ *    of blocks and is most of what detection costs, has one form per
-+ *    instruction set (SSE2, AVX2, NEON and portable C). For each, the
-+ *    crate's solver picked conditions equivalent to the published ones
-+ *    that fill vector lanes well, for a prefix run on every block, and left
-+ *    the rest to a scalar tail that few blocks reach. Those choices are
-+ *    kept as tables, run by a short loop per form. See ubc_check.c.
++ *  - The compression runs on the CPU's SHA-1 instructions where it has them
++ *    (SHA-NI on x86-64), and
++ *    spills the expanded message schedule as it goes, which is all that
++ *    detection needs from an ordinary block. The hardware keeps no
++ *    intermediate states around, so the two states that recompression
++ *    starts from (at steps 58 and 65) are recovered from the ones at steps
++ *    60 and 64, and only for the rare block that needs them.
 + *
-+ * The compression is portable C, and spills the expanded message schedule
-+ * and the two states that recompression starts from (at steps 58 and 65)
-+ * as it goes.
+  *  - The unavoidable-bitconditions (UBC) filter, which rules out about 95%
+  *    of blocks and is most of what detection costs, has one form per
+  *    instruction set (SSE2, AVX2, NEON and portable C). For each, the
+@@ -15,9 +23,12 @@
+  *    the rest to a scalar tail that few blocks reach. Those choices are
+  *    kept as tables, run by a short loop per form. See ubc_check.c.
+  *
+- * The compression is portable C, and spills the expanded message schedule
+- * and the two states that recompression starts from (at steps 58 and 65)
+- * as it goes.
++ *  - The recompression of a flagged block also runs on the SHA-1
++ *    instructions, forwards from the partner block's state at step 60 or
++ *    64, since that is the only direction they go.
++ *
++ * Without SHA-1 instructions the compression is portable C, and the
++ * best-suited form of the filter still applies.
   */
  
  #include "../git-compat-util.h"
-@@ -221,18 +225,21 @@ struct backend {
+@@ -180,6 +191,14 @@ static void walk(uint32_t s[5], const uint32_t *m1, const uint32_t *dm,
+ 	s[4] = e;
+ }
+ 
++void sha1dc_partner_boundary(enum sha1dc_from from, const uint32_t m1[80],
++			     const uint32_t dm[80], const uint32_t state[5],
++			     uint32_t out[5])
++{
++	memcpy(out, state, 5 * sizeof(*out));
++	walk(out, m1, dm, from, from == SHA1DC_FROM_58 ? 60 : 64);
++}
++
+ /*
+  * The recompression, the way sha1dc/ does it: from this block's state at
+  * `from`, the partner block's chaining value on the way in (`ihv_in`) and
+@@ -215,31 +234,49 @@ static void compress_schedule(uint32_t ihv[5], const uint32_t w[80])
+ struct backend {
+ 	const char *name;
+ 	/*
+-	 * Compresses a block, spilling its schedule and the states at steps
+-	 * 58 and 65.
++	 * Compresses a block and spills its schedule. If `at_60_64` is set,
++	 * it leaves the states at steps 60 and 64 where the others leave the
++	 * ones at 58 and 65.
+ 	 */
+ 	void (*compress)(uint32_t ihv[5], const unsigned char *block,
+-			 uint32_t w[80], uint32_t state_58[5],
+-			 uint32_t state_65[5]);
++			 uint32_t w[80], uint32_t s1[5], uint32_t s2[5]);
++	int at_60_64;
+ 	uint32_t (*ubc_check)(const uint32_t w[80]);
++	/* Whether a candidate is an attack; NULL for recompress_portable(). */
++	int (*recompress)(enum sha1dc_from from, const uint32_t m1[80],
++			  const uint32_t dm[80], const uint32_t state[5],
++			  const uint32_t ihv_out[5]);
  	int (*available)(void);
  };
  
--/* sha1dc's own UBC check. */
--static uint32_t ubc_check_sha1dc(const uint32_t w[80])
--{
--	uint32_t mask;
--
--	ubc_check(w, &mask);
--	return mask;
--}
--
++#ifdef SHA1DC_HAVE_SHANI
++static int shani_avx2_available(void)
++{
++	return sha1dc_shani_available() && sha1dc_avx2_available();
++}
++#endif
++
  /* In order of preference. */
  static const struct backend backends[] = {
--	{ "portable", compress_portable, ubc_check_sha1dc, NULL },
-+#ifdef SHA1DC_HAVE_AVX2
-+	{ "portable+avx2", compress_portable, sha1dc_ubc_check_avx2,
-+	  sha1dc_avx2_available },
++#ifdef SHA1DC_HAVE_SHANI
++	{ "shani+avx2", sha1dc_compress_shani, 1, sha1dc_ubc_check_avx2,
++	  sha1dc_recompress_shani, shani_avx2_available },
++	{ "shani+sse2", sha1dc_compress_shani, 1, sha1dc_ubc_check_sse2,
++	  sha1dc_recompress_shani, sha1dc_shani_available },
 +#endif
-+#ifdef SHA1DC_HAVE_SSE2
-+	{ "portable+sse2", compress_portable, sha1dc_ubc_check_sse2,
-+	  NULL },
-+#endif
-+#ifdef SHA1DC_HAVE_NEON
-+	{ "portable+neon", compress_portable, sha1dc_ubc_check_neon,
-+	  NULL },
-+#endif
-+	{ "portable", compress_portable, sha1dc_ubc_check_scalar, NULL },
+ #ifdef SHA1DC_HAVE_AVX2
+-	{ "portable+avx2", compress_portable, sha1dc_ubc_check_avx2,
++	{ "portable+avx2", compress_portable, 0, sha1dc_ubc_check_avx2, NULL,
+ 	  sha1dc_avx2_available },
+ #endif
+ #ifdef SHA1DC_HAVE_SSE2
+-	{ "portable+sse2", compress_portable, sha1dc_ubc_check_sse2,
++	{ "portable+sse2", compress_portable, 0, sha1dc_ubc_check_sse2, NULL,
+ 	  NULL },
+ #endif
+ #ifdef SHA1DC_HAVE_NEON
+-	{ "portable+neon", compress_portable, sha1dc_ubc_check_neon,
++	{ "portable+neon", compress_portable, 0, sha1dc_ubc_check_neon, NULL,
+ 	  NULL },
+ #endif
+-	{ "portable", compress_portable, sha1dc_ubc_check_scalar, NULL },
++	{ "portable", compress_portable, 0, sha1dc_ubc_check_scalar, NULL, NULL },
  };
  
  static int usable(const struct backend *be)
-diff --git a/sha1dc-accel/ubc_check.c b/sha1dc-accel/ubc_check.c
-new file mode 100644
-index 0000000000..f95b799f9d
---- /dev/null
-+++ b/sha1dc-accel/ubc_check.c
-@@ -0,0 +1,1789 @@
-+/*
-+ * The unavoidable-bitconditions (UBC) check of SHA-1 collision detection,
-+ * in one form per instruction set.
-+ *
-+ * Every form returns the same mask as ubc_check() in sha1dc/ubc_check.c:
-+ * one bit per disturbance vector (DV) that the expanded message w[] has not
-+ * ruled out. A DV is ruled out as soon as one of its bitconditions fails;
-+ * each condition says that bit a of w[i] XOR bit b of w[j] equals c.
-+ *
-+ * Each form runs in two parts. The prefix tests a fixed set of conditions,
-+ * chosen and packed into vector lanes for that instruction set, on every
-+ * block; it rules out every DV for almost all blocks. The few blocks that
-+ * survive it run the tail, which tests the remaining conditions of each DV
-+ * still alive.
-+ *
-+ * The tables in this file were derived from the output of the solver in
-+ * the "sha1dc" Rust crate by Sam Reis (https://github.com/srijs/sha1dc,
-+ * commit 426b4afd), which picks the conditions and their packing. They are
-+ * used under the MIT license:
-+ *
-+ *   Copyright (c) 2017 Marc Stevens (Cryptology Group, Centrum Wiskunde &
-+ *   Informatica)
-+ *   Copyright (c) 2017 Dan Shumow (Microsoft Research)
-+ *   Copyright (c) 2026 Sam Reis
-+ *
-+ *   Permission is hereby granted, free of charge, to any person obtaining a
-+ *   copy of this software and associated documentation files (the
-+ *   "Software"), to deal in the Software without restriction, including
-+ *   without limitation the rights to use, copy, modify, merge, publish,
-+ *   distribute, sublicense, and/or sell copies of the Software, and to
-+ *   permit persons to whom the Software is furnished to do so, subject to
-+ *   the following conditions:
-+ *
-+ *   The above copyright notice and this permission notice shall be included
-+ *   in all copies or substantial portions of the Software.
-+ *
-+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-+ *   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-+ *   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-+ *   IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-+ *   CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-+ *   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-+ *   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-+ */
-+
-+#include "../git-compat-util.h"
-+#include "internal.h"
-+
-+#define DV_I_43_0_BIT ((uint32_t)1 << 0)
-+#define DV_I_44_0_BIT ((uint32_t)1 << 1)
-+#define DV_I_45_0_BIT ((uint32_t)1 << 2)
-+#define DV_I_46_0_BIT ((uint32_t)1 << 3)
-+#define DV_I_46_2_BIT ((uint32_t)1 << 4)
-+#define DV_I_47_0_BIT ((uint32_t)1 << 5)
-+#define DV_I_47_2_BIT ((uint32_t)1 << 6)
-+#define DV_I_48_0_BIT ((uint32_t)1 << 7)
-+#define DV_I_48_2_BIT ((uint32_t)1 << 8)
-+#define DV_I_49_0_BIT ((uint32_t)1 << 9)
-+#define DV_I_49_2_BIT ((uint32_t)1 << 10)
-+#define DV_I_50_0_BIT ((uint32_t)1 << 11)
-+#define DV_I_50_2_BIT ((uint32_t)1 << 12)
-+#define DV_I_51_0_BIT ((uint32_t)1 << 13)
-+#define DV_I_51_2_BIT ((uint32_t)1 << 14)
-+#define DV_I_52_0_BIT ((uint32_t)1 << 15)
-+#define DV_II_45_0_BIT ((uint32_t)1 << 16)
-+#define DV_II_46_0_BIT ((uint32_t)1 << 17)
-+#define DV_II_46_2_BIT ((uint32_t)1 << 18)
-+#define DV_II_47_0_BIT ((uint32_t)1 << 19)
-+#define DV_II_48_0_BIT ((uint32_t)1 << 20)
-+#define DV_II_49_0_BIT ((uint32_t)1 << 21)
-+#define DV_II_49_2_BIT ((uint32_t)1 << 22)
-+#define DV_II_50_0_BIT ((uint32_t)1 << 23)
-+#define DV_II_50_2_BIT ((uint32_t)1 << 24)
-+#define DV_II_51_0_BIT ((uint32_t)1 << 25)
-+#define DV_II_51_2_BIT ((uint32_t)1 << 26)
-+#define DV_II_52_0_BIT ((uint32_t)1 << 27)
-+#define DV_II_53_0_BIT ((uint32_t)1 << 28)
-+#define DV_II_54_0_BIT ((uint32_t)1 << 29)
-+#define DV_II_55_0_BIT ((uint32_t)1 << 30)
-+#define DV_II_56_0_BIT ((uint32_t)1 << 31)
-+
-+/*
-+ * The prefixes loop over constant tables. Unrolling those loops fully lets
-+ * the compiler fold each entry into the code as immediates, which is what
-+ * makes them fast; without it they are two to three times slower.
-+ */
-+#if defined(__clang__) || (defined(__GNUC__) && __GNUC__ >= 8)
-+#define UNROLL_TABLE _Pragma("GCC unroll 128")
-+#else
-+#define UNROLL_TABLE
-+#endif
-+
-+/*
-+ * The tail loops run over a few conditions at a time, too few to gain from
-+ * vectorizing; clang would otherwise vectorize them when targeting AVX2.
-+ */
-+#ifdef __clang__
-+#define NO_VECTORIZE _Pragma("clang loop vectorize(disable)")
-+#else
-+#define NO_VECTORIZE
-+#endif
-+
-+/* A bitcondition: bit a of w[i] XOR bit b of w[j] must equal c. */
-+struct ubc_cond {
-+	uint8_t i, a, j, b, c;
-+};
-+
-+static inline uint32_t cond_fails(const uint32_t *w, const struct ubc_cond *c)
-+{
-+	return (((w[c->i] >> c->a) ^ (w[c->j] >> c->b) ^ c->c) & 1);
-+}
-+
-+/* A condition of the scalar prefix, and the DVs it rules out if it fails. */
-+struct ubc_prefix_cond {
-+	struct ubc_cond cond;
-+	uint32_t dvs;
-+};
-+
-+/*
-+ * A group of conditions for a vector prefix, one per lane. In lane k, the
-+ * bit selected by test[k] of (w[lo + k] >> lo_shift) ^ (w[hi + k] >> hi_shift)
-+ * must equal want, or the DVs in dvs[k] are ruled out. The lanes share
-+ * everything but test[] and dvs[]; an unused lane has both 0.
-+ *
-+ * No group reads past w[66].
-+ */
-+struct ubc_group4 {
-+	uint8_t lo, lo_shift, hi, hi_shift, want;
-+	uint32_t test[4];
-+	uint32_t dvs[4];
-+};
-+
-+struct ubc_group8 {
-+	uint8_t lo, lo_shift, hi, hi_shift, want;
-+	uint32_t test[8];
-+	uint32_t dvs[8];
-+};
-+
-+/* The tail conditions of DV d are checks[spans[d].start] onwards. */
-+struct tail_span {
-+	uint16_t start;
-+	uint8_t len;
-+};
-+
-+/*
-+ * Runs the tail conditions of each DV still alive in `mask`, and clears
-+ * the DVs with a failing one. Each condition fails about half the time, so
-+ * it tests all of a DV's conditions rather than branch on each one.
-+ */
-+static inline uint32_t run_tail(const uint32_t *w, uint32_t mask,
-+				const struct ubc_cond *checks,
-+				const struct tail_span *spans)
-+{
-+	uint32_t out = mask;
-+	while (mask) {
-+		unsigned d = sha1dc_ctz(mask);
-+		const struct ubc_cond *c = checks + spans[d].start;
-+		const struct ubc_cond *end = c + spans[d].len;
-+		uint32_t fail = 0;
-+
-+		NO_VECTORIZE
-+		for (; c < end; c++)
-+			fail |= cond_fails(w, c);
-+		out &= ~(fail << d);
-+		mask &= mask - 1;
+@@ -320,22 +357,27 @@ const char *const *sha1dc_accel_backends(void)
+ 
+ /*
+  * Whether any DV in `candidates` makes this block half of a collision.
+- * `ihv_in` and `ihv_out` are the chaining values before and after it.
++ * `s1` and `s2` are what the compression left, `ihv_in` and `ihv_out` the
++ * chaining values before and after it.
+  */
+-static SHA1DC_NOINLINE int attacked(SHA1_CTX *ctx, uint32_t candidates,
+-				    const uint32_t w[80],
+-				    const uint32_t state_58[5],
+-				    const uint32_t state_65[5],
++static SHA1DC_NOINLINE int attacked(const struct backend *be, SHA1_CTX *ctx,
++				    uint32_t candidates, const uint32_t w[80],
++				    uint32_t s1[5], uint32_t s2[5],
+ 				    const uint32_t ihv_in[5],
+ 				    const uint32_t ihv_out[5])
+ {
++	const uint32_t *state_58 = s1, *state_65 = s2;
+ 	int i;
+ 
++	if (be->at_60_64) {
++		walk(s1, w, NULL, 60, 58);
++		walk(s2, w, NULL, 64, 65);
 +	}
-+	return out;
-+}
 +
-+/* scalar form */
-+
-+static const struct ubc_prefix_cond scalar_prefix_conds[] = {
-+	{ { 44, 29, 45, 29, 0 },
-+	  DV_I_48_0_BIT | DV_I_51_0_BIT | DV_I_52_0_BIT | DV_II_45_0_BIT |
-+	  DV_II_46_0_BIT | DV_II_50_0_BIT | DV_II_51_0_BIT },
-+	{ { 46, 29, 47, 29, 0 },
-+	  DV_I_43_0_BIT | DV_I_50_0_BIT | DV_II_47_0_BIT | DV_II_48_0_BIT |
-+	  DV_II_52_0_BIT | DV_II_53_0_BIT },
-+	{ { 45, 4, 48, 29, 0 },
-+	  DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_49_0_BIT | DV_I_51_0_BIT |
-+	  DV_II_49_0_BIT | DV_II_54_0_BIT },
-+	{ { 49, 29, 50, 29, 0 },
-+	  DV_I_46_0_BIT | DV_II_45_0_BIT | DV_II_50_0_BIT | DV_II_51_0_BIT |
-+	  DV_II_55_0_BIT | DV_II_56_0_BIT },
-+	{ { 40, 29, 41, 29, 0 },
-+	  DV_I_44_0_BIT | DV_I_47_0_BIT | DV_I_48_0_BIT | DV_II_46_0_BIT |
-+	  DV_II_47_0_BIT | DV_II_56_0_BIT },
-+	{ { 36, 1, 37, 6, 1 },
-+	  DV_I_47_2_BIT | DV_I_50_2_BIT | DV_II_46_2_BIT },
-+	{ { 47, 29, 48, 29, 0 },
-+	  DV_I_44_0_BIT | DV_I_51_0_BIT | DV_II_48_0_BIT | DV_II_49_0_BIT |
-+	  DV_II_53_0_BIT | DV_II_54_0_BIT },
-+	{ { 39, 1, 40, 6, 1 },
-+	  DV_I_46_2_BIT | DV_I_50_2_BIT | DV_II_49_2_BIT },
-+	{ { 40, 1, 41, 6, 1 },
-+	  DV_I_47_2_BIT | DV_I_51_2_BIT | DV_II_50_2_BIT },
-+	{ { 41, 1, 42, 6, 1 },
-+	  DV_I_48_2_BIT | DV_II_46_2_BIT | DV_II_51_2_BIT },
-+	{ { 43, 4, 46, 29, 0 },
-+	  DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_49_0_BIT |
-+	  DV_II_47_0_BIT | DV_II_52_0_BIT },
-+	{ { 46, 4, 49, 29, 0 },
-+	  DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_50_0_BIT | DV_I_52_0_BIT |
-+	  DV_II_50_0_BIT | DV_II_55_0_BIT },
-+	{ { 45, 6, 47, 6, 0 },
-+	  DV_I_47_2_BIT | DV_I_49_2_BIT | DV_I_51_2_BIT },
-+	{ { 45, 29, 46, 29, 0 },
-+	  DV_I_49_0_BIT | DV_I_52_0_BIT | DV_II_46_0_BIT | DV_II_47_0_BIT |
-+	  DV_II_51_0_BIT | DV_II_52_0_BIT },
-+	{ { 44, 4, 47, 29, 0 },
-+	  DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_50_0_BIT |
-+	  DV_II_48_0_BIT | DV_II_53_0_BIT },
-+	{ { 48, 29, 49, 29, 0 },
-+	  DV_I_45_0_BIT | DV_I_52_0_BIT | DV_II_49_0_BIT | DV_II_50_0_BIT |
-+	  DV_II_54_0_BIT | DV_II_55_0_BIT },
-+	{ { 44, 6, 46, 6, 0 },
-+	  DV_I_46_2_BIT | DV_I_48_2_BIT | DV_I_50_2_BIT },
-+	{ { 47, 4, 50, 29, 0 },
-+	  DV_I_47_0_BIT | DV_I_49_0_BIT | DV_I_51_0_BIT | DV_II_45_0_BIT |
-+	  DV_II_51_0_BIT | DV_II_56_0_BIT },
-+	{ { 35, 1, 36, 6, 1 },
-+	  DV_I_46_2_BIT | DV_I_49_2_BIT },
-+	{ { 44, 1, 45, 6, 1 },
-+	  DV_I_51_2_BIT | DV_II_49_2_BIT },
-+	{ { 42, 6, 43, 1, 0 },
-+	  DV_II_46_2_BIT | DV_II_51_2_BIT },
-+	{ { 37, 4, 40, 29, 0 },
-+	  DV_I_43_0_BIT | DV_I_47_0_BIT | DV_II_46_0_BIT | DV_II_53_0_BIT |
-+	  DV_II_55_0_BIT },
-+	{ { 41, 6, 42, 1, 0 },
-+	  DV_I_51_2_BIT | DV_II_50_2_BIT },
-+	{ { 40, 4, 43, 29, 0 },
-+	  DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_50_0_BIT | DV_II_49_0_BIT |
-+	  DV_II_56_0_BIT },
-+	{ { 41, 4, 44, 29, 0 },
-+	  DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_51_0_BIT |
-+	  DV_II_45_0_BIT | DV_II_50_0_BIT },
-+	{ { 52, 29, 53, 29, 0 },
-+	  DV_I_49_0_BIT | DV_II_45_0_BIT | DV_II_48_0_BIT | DV_II_53_0_BIT |
-+	  DV_II_54_0_BIT },
-+	{ { 40, 6, 41, 1, 0 },
-+	  DV_I_50_2_BIT | DV_II_49_2_BIT },
-+	{ { 46, 6, 47, 1, 0 },
-+	  DV_I_46_2_BIT | DV_II_50_2_BIT },
-+	{ { 47, 6, 48, 1, 0 },
-+	  DV_I_47_2_BIT | DV_II_51_2_BIT },
-+	{ { 42, 4, 45, 29, 0 },
-+	  DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_52_0_BIT |
-+	  DV_II_46_0_BIT | DV_II_51_0_BIT },
-+	{ { 37, 1, 38, 6, 1 },
-+	  DV_I_48_2_BIT | DV_I_51_2_BIT },
-+	{ { 43, 6, 45, 6, 0 },
-+	  DV_I_47_2_BIT | DV_I_49_2_BIT },
-+	{ { 53, 29, 54, 29, 0 },
-+	  DV_I_50_0_BIT | DV_II_46_0_BIT | DV_II_49_0_BIT | DV_II_54_0_BIT |
-+	  DV_II_55_0_BIT },
-+	{ { 41, 29, 42, 29, 0 },
-+	  DV_I_45_0_BIT | DV_I_48_0_BIT | DV_I_49_0_BIT | DV_II_47_0_BIT |
-+	  DV_II_48_0_BIT },
-+	{ { 50, 29, 51, 29, 0 },
-+	  DV_I_47_0_BIT | DV_II_46_0_BIT | DV_II_51_0_BIT | DV_II_52_0_BIT |
-+	  DV_II_56_0_BIT },
-+	{ { 61, 2, 62, 7, 1 },
-+	  DV_I_46_2_BIT | DV_II_46_2_BIT },
-+	{ { 46, 6, 48, 6, 0 },
-+	  DV_I_48_2_BIT | DV_I_50_2_BIT },
-+	{ { 39, 4, 42, 29, 0 },
-+	  DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_49_0_BIT | DV_II_48_0_BIT |
-+	  DV_II_55_0_BIT },
-+	{ { 43, 29, 44, 29, 0 },
-+	  DV_I_47_0_BIT | DV_I_50_0_BIT | DV_I_51_0_BIT | DV_II_45_0_BIT |
-+	  DV_II_49_0_BIT | DV_II_50_0_BIT },
-+	{ { 47, 6, 49, 6, 0 },
-+	  DV_I_49_2_BIT | DV_I_51_2_BIT },
-+	{ { 51, 29, 52, 29, 0 },
-+	  DV_I_48_0_BIT | DV_II_47_0_BIT | DV_II_52_0_BIT | DV_II_53_0_BIT },
-+	{ { 36, 0, 37, 5, 1 },
-+	  DV_II_49_2_BIT },
-+	{ { 37, 0, 38, 5, 1 },
-+	  DV_II_50_2_BIT },
-+	{ { 38, 0, 39, 5, 1 },
-+	  DV_II_51_2_BIT },
-+	{ { 38, 4, 41, 29, 0 },
-+	  DV_I_44_0_BIT | DV_I_48_0_BIT | DV_II_47_0_BIT | DV_II_54_0_BIT |
-+	  DV_II_56_0_BIT },
-+	{ { 50, 6, 51, 1, 0 },
-+	  DV_I_50_2_BIT | DV_II_46_2_BIT },
-+	{ { 42, 6, 44, 6, 0 },
-+	  DV_I_46_2_BIT | DV_I_48_2_BIT },
-+	{ { 48, 4, 51, 29, 0 },
-+	  DV_I_48_0_BIT | DV_I_50_0_BIT | DV_I_52_0_BIT | DV_II_46_0_BIT |
-+	  DV_II_52_0_BIT },
-+	{ { 42, 29, 43, 29, 0 },
-+	  DV_I_46_0_BIT | DV_I_49_0_BIT | DV_I_50_0_BIT | DV_II_48_0_BIT |
-+	  DV_II_49_0_BIT },
-+	{ { 54, 29, 55, 29, 0 },
-+	  DV_I_51_0_BIT | DV_II_47_0_BIT | DV_II_50_0_BIT | DV_II_55_0_BIT |
-+	  DV_II_56_0_BIT },
-+	{ { 38, 1, 39, 6, 1 },
-+	  DV_I_49_2_BIT },
-+	{ { 45, 1, 46, 6, 1 },
-+	  DV_II_50_2_BIT },
-+	{ { 46, 1, 47, 6, 1 },
-+	  DV_II_51_2_BIT },
-+	{ { 50, 1, 51, 6, 1 },
-+	  DV_II_49_2_BIT },
-+	{ { 39, 4, 40, 29, 1 },
-+	  DV_I_43_0_BIT | DV_II_53_0_BIT | DV_II_55_0_BIT },
-+	{ { 55, 29, 56, 29, 0 },
-+	  DV_I_52_0_BIT | DV_II_48_0_BIT | DV_II_51_0_BIT | DV_II_56_0_BIT },
-+	{ { 48, 6, 50, 6, 0 },
-+	  DV_I_50_2_BIT | DV_II_46_2_BIT },
-+	{ { 49, 4, 52, 29, 0 },
-+	  DV_I_49_0_BIT | DV_I_51_0_BIT | DV_II_45_0_BIT | DV_II_47_0_BIT |
-+	  DV_II_53_0_BIT },
-+	{ { 40, 4, 41, 29, 1 },
-+	  DV_I_44_0_BIT | DV_II_54_0_BIT | DV_II_56_0_BIT },
-+	{ { 41, 4, 42, 29, 1 },
-+	  DV_I_43_0_BIT | DV_I_45_0_BIT | DV_II_55_0_BIT },
-+	{ { 42, 1, 43, 6, 1 },
-+	  DV_I_49_2_BIT },
-+	{ { 51, 1, 52, 6, 1 },
-+	  DV_II_50_2_BIT },
-+	{ { 52, 1, 53, 6, 1 },
-+	  DV_II_51_2_BIT },
-+	{ { 62, 2, 63, 7, 1 },
-+	  DV_I_47_2_BIT },
-+	{ { 63, 2, 64, 7, 1 },
-+	  DV_I_48_2_BIT },
-+	{ { 45, 6, 46, 1, 0 },
-+	  DV_II_49_2_BIT },
-+	{ { 36, 4, 40, 29, 0 },
-+	  DV_I_46_0_BIT | DV_I_49_0_BIT | DV_II_45_0_BIT | DV_II_48_0_BIT },
-+	{ { 50, 4, 53, 29, 0 },
-+	  DV_I_50_0_BIT | DV_I_52_0_BIT | DV_II_46_0_BIT | DV_II_48_0_BIT |
-+	  DV_II_54_0_BIT },
-+	{ { 56, 29, 57, 29, 0 },
-+	  DV_II_49_0_BIT | DV_II_52_0_BIT },
-+	{ { 43, 4, 44, 29, 1 },
-+	  DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_47_0_BIT }
-+};
-+
-+static const struct ubc_cond scalar_tail_checks[] = {
-+	/* DV_I_43_0 */
-+	{ 58, 0, 59, 5, 1 },
-+	{ 58, 0, 63, 30, 1 },
-+	{ 61, 1, 62, 6, 1 },
-+	{ 43, 4, 47, 29, 0 },
-+	/* DV_I_44_0 */
-+	{ 40, 4, 42, 4, 1 },
-+	{ 42, 4, 44, 4, 1 },
-+	{ 59, 0, 60, 5, 1 },
-+	{ 59, 0, 64, 30, 1 },
-+	{ 62, 1, 63, 6, 1 },
-+	{ 44, 4, 48, 29, 0 },
-+	/* DV_I_45_0 */
-+	{ 43, 4, 45, 4, 1 },
-+	{ 60, 0, 61, 5, 1 },
-+	{ 63, 1, 64, 6, 1 },
-+	{ 35, 4, 39, 29, 0 },
-+	/* DV_I_46_0 */
-+	{ 40, 4, 42, 4, 1 },
-+	{ 42, 4, 44, 4, 1 },
-+	{ 44, 4, 46, 4, 1 },
-+	{ 61, 0, 62, 5, 1 },
-+	/* DV_I_46_2 */
-+	{ 39, 1, 42, 6, 1 },
-+	/* DV_I_47_0 */
-+	{ 43, 4, 45, 4, 1 },
-+	{ 45, 4, 47, 4, 1 },
-+	{ 62, 0, 63, 5, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	/* DV_I_47_2 */
-+	{ 40, 1, 43, 6, 1 },
-+	/* DV_I_48_0 */
-+	{ 42, 4, 44, 4, 1 },
-+	{ 44, 4, 46, 4, 1 },
-+	{ 46, 4, 48, 4, 1 },
-+	{ 63, 0, 64, 5, 1 },
-+	{ 35, 4, 39, 29, 0 },
-+	{ 38, 4, 42, 29, 0 },
-+	/* DV_I_48_2 */
-+	{ 41, 1, 49, 1, 1 },
-+	/* DV_I_49_0 */
-+	{ 43, 4, 45, 4, 1 },
-+	{ 45, 4, 47, 4, 1 },
-+	{ 47, 4, 49, 4, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	/* DV_I_49_2 */
-+	{ 38, 1, 40, 1, 1 },
-+	{ 42, 1, 50, 1, 1 },
-+	/* DV_I_50_0 */
-+	{ 36, 4, 37, 4, 1 },
-+	{ 44, 4, 46, 4, 1 },
-+	{ 46, 4, 48, 4, 1 },
-+	{ 48, 4, 50, 4, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	{ 40, 4, 44, 29, 0 },
-+	/* DV_I_50_2 */
-+	{ 43, 1, 44, 6, 1 },
-+	/* DV_I_51_0 */
-+	{ 37, 4, 38, 4, 1 },
-+	{ 45, 4, 47, 4, 1 },
-+	{ 47, 4, 49, 4, 1 },
-+	{ 52, 29, 55, 29, 1 },
-+	{ 35, 3, 39, 28, 0 },
-+	{ 38, 4, 42, 29, 0 },
-+	{ 41, 4, 45, 29, 0 },
-+	{ 51, 4, 54, 29, 0 },
-+	/* DV_I_51_2 */
-+	{ 44, 1, 51, 6, 1 },
-+	{ 44, 1, 52, 1, 1 },
-+	{ 35, 5, 39, 30, 0 },
-+	{ 37, 1, 37, 6, 0 },
-+	/* DV_I_52_0 */
-+	{ 38, 4, 39, 4, 1 },
-+	{ 46, 4, 48, 4, 1 },
-+	{ 48, 4, 50, 4, 1 },
-+	{ 53, 29, 56, 29, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 42, 4, 46, 29, 0 },
-+	{ 52, 4, 55, 29, 0 },
-+	/* DV_II_45_0 */
-+	{ 47, 4, 49, 4, 1 },
-+	{ 60, 0, 61, 5, 1 },
-+	{ 63, 1, 64, 6, 1 },
-+	{ 41, 4, 45, 29, 0 },
-+	/* DV_II_46_0 */
-+	{ 48, 4, 50, 4, 1 },
-+	{ 61, 0, 62, 5, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	{ 42, 4, 46, 29, 0 },
-+	/* DV_II_46_2 */
-+	{ 47, 1, 48, 6, 1 },
-+	/* DV_II_47_0 */
-+	{ 52, 29, 55, 29, 1 },
-+	{ 62, 0, 63, 5, 1 },
-+	{ 35, 3, 39, 28, 0 },
-+	{ 35, 4, 39, 29, 0 },
-+	{ 38, 4, 42, 29, 0 },
-+	{ 43, 4, 47, 29, 0 },
-+	{ 51, 4, 54, 29, 0 },
-+	/* DV_II_48_0 */
-+	{ 35, 30, 36, 3, 1 },
-+	{ 35, 30, 40, 28, 1 },
-+	{ 52, 29, 55, 29, 1 },
-+	{ 53, 29, 56, 29, 1 },
-+	{ 63, 0, 64, 5, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 44, 4, 48, 29, 0 },
-+	{ 52, 4, 55, 29, 0 },
-+	/* DV_II_49_0 */
-+	{ 36, 30, 37, 3, 1 },
-+	{ 36, 30, 41, 28, 1 },
-+	{ 53, 29, 56, 29, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	{ 40, 4, 44, 29, 0 },
-+	{ 51, 4, 54, 29, 0 },
-+	{ 53, 4, 56, 29, 0 },
-+	/* DV_II_49_2 */
-+	{ 36, 0, 41, 30, 1 },
-+	{ 50, 1, 53, 6, 1 },
-+	{ 50, 1, 54, 1, 1 },
-+	/* DV_II_50_0 */
-+	{ 37, 30, 38, 3, 1 },
-+	{ 37, 30, 42, 28, 1 },
-+	{ 55, 29, 58, 29, 1 },
-+	{ 38, 4, 42, 29, 0 },
-+	{ 41, 4, 45, 29, 0 },
-+	{ 52, 4, 55, 29, 0 },
-+	{ 54, 4, 57, 29, 0 },
-+	{ 57, 29, 58, 29, 0 },
-+	/* DV_II_50_2 */
-+	{ 37, 0, 42, 30, 1 },
-+	{ 51, 1, 54, 6, 1 },
-+	{ 51, 1, 55, 1, 1 },
-+	/* DV_II_51_0 */
-+	{ 38, 30, 39, 3, 1 },
-+	{ 38, 30, 43, 28, 1 },
-+	{ 55, 29, 58, 29, 1 },
-+	{ 56, 29, 59, 29, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 42, 4, 46, 29, 0 },
-+	{ 53, 4, 56, 29, 0 },
-+	{ 55, 4, 58, 29, 0 },
-+	/* DV_II_51_2 */
-+	{ 38, 0, 43, 30, 1 },
-+	{ 52, 1, 55, 6, 1 },
-+	{ 52, 1, 56, 1, 1 },
-+	/* DV_II_52_0 */
-+	{ 36, 4, 38, 4, 1 },
-+	{ 39, 30, 40, 3, 1 },
-+	{ 39, 30, 44, 28, 1 },
-+	{ 54, 4, 60, 29, 1 },
-+	{ 56, 29, 59, 29, 1 },
-+	{ 40, 4, 44, 29, 0 },
-+	{ 43, 4, 47, 29, 0 },
-+	{ 54, 4, 57, 29, 0 },
-+	{ 56, 4, 59, 29, 0 },
-+	/* DV_II_53_0 */
-+	{ 55, 4, 57, 4, 1 },
-+	{ 55, 4, 61, 29, 1 },
-+	{ 41, 3, 45, 28, 0 },
-+	{ 41, 4, 45, 29, 0 },
-+	{ 44, 4, 48, 29, 0 },
-+	{ 55, 4, 58, 29, 0 },
-+	{ 57, 29, 58, 29, 0 },
-+	/* DV_II_54_0 */
-+	{ 36, 4, 38, 4, 1 },
-+	{ 42, 3, 46, 28, 0 },
-+	{ 42, 4, 46, 29, 0 },
-+	{ 56, 4, 59, 29, 0 },
-+	{ 56, 4, 58, 29, 0 },
-+	{ 58, 4, 62, 29, 0 },
-+	/* DV_II_55_0 */
-+	{ 43, 3, 47, 28, 0 },
-+	{ 43, 4, 47, 29, 0 },
-+	{ 51, 4, 54, 29, 0 },
-+	{ 57, 4, 59, 29, 0 },
-+	{ 59, 4, 63, 29, 0 },
-+	/* DV_II_56_0 */
-+	{ 40, 4, 42, 4, 1 },
-+	{ 44, 3, 48, 28, 0 },
-+	{ 44, 4, 48, 29, 0 },
-+	{ 52, 4, 55, 29, 0 },
-+	{ 60, 4, 64, 29, 0 }
-+};
-+
-+static const struct tail_span scalar_tail_spans[32] = {
-+	{ 0, 4 },	/* DV_I_43_0 */
-+	{ 4, 6 },	/* DV_I_44_0 */
-+	{ 10, 4 },	/* DV_I_45_0 */
-+	{ 14, 4 },	/* DV_I_46_0 */
-+	{ 18, 1 },	/* DV_I_46_2 */
-+	{ 19, 4 },	/* DV_I_47_0 */
-+	{ 23, 1 },	/* DV_I_47_2 */
-+	{ 24, 6 },	/* DV_I_48_0 */
-+	{ 30, 1 },	/* DV_I_48_2 */
-+	{ 31, 4 },	/* DV_I_49_0 */
-+	{ 35, 2 },	/* DV_I_49_2 */
-+	{ 37, 6 },	/* DV_I_50_0 */
-+	{ 43, 1 },	/* DV_I_50_2 */
-+	{ 44, 8 },	/* DV_I_51_0 */
-+	{ 52, 4 },	/* DV_I_51_2 */
-+	{ 56, 7 },	/* DV_I_52_0 */
-+	{ 63, 4 },	/* DV_II_45_0 */
-+	{ 67, 4 },	/* DV_II_46_0 */
-+	{ 71, 1 },	/* DV_II_46_2 */
-+	{ 72, 7 },	/* DV_II_47_0 */
-+	{ 79, 8 },	/* DV_II_48_0 */
-+	{ 87, 7 },	/* DV_II_49_0 */
-+	{ 94, 3 },	/* DV_II_49_2 */
-+	{ 97, 8 },	/* DV_II_50_0 */
-+	{ 105, 3 },	/* DV_II_50_2 */
-+	{ 108, 8 },	/* DV_II_51_0 */
-+	{ 116, 3 },	/* DV_II_51_2 */
-+	{ 119, 9 },	/* DV_II_52_0 */
-+	{ 128, 7 },	/* DV_II_53_0 */
-+	{ 135, 6 },	/* DV_II_54_0 */
-+	{ 141, 5 },	/* DV_II_55_0 */
-+	{ 146, 5 }	/* DV_II_56_0 */
-+};
-+
-+static uint32_t scalar_prefix(const uint32_t *w)
-+{
-+	uint32_t mask = 0xFFFFFFFF;
-+	size_t i;
-+
-+	UNROLL_TABLE
-+	for (i = 0; i < ARRAY_SIZE(scalar_prefix_conds); i++) {
-+		const struct ubc_prefix_cond *p = &scalar_prefix_conds[i];
-+		mask &= ~(p->dvs & (0 - cond_fails(w, &p->cond)));
-+	}
-+	return mask;
-+}
-+
-+uint32_t sha1dc_ubc_check_scalar(const uint32_t w[80])
-+{
-+	uint32_t mask = scalar_prefix(w);
-+	/* Every check only clears bits, so an empty mask settles it. */
-+	if (!mask)
-+		return 0;
-+	return run_tail(w, mask, scalar_tail_checks, scalar_tail_spans);
-+}
-+
-+/* neon form */
-+
-+#ifdef SHA1DC_HAVE_NEON
-+
-+static const struct ubc_group4 neon_groups[] = {
-+	{ 35, 0, 36, 5, 1,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 0 },
-+	  { DV_I_46_2_BIT | DV_I_49_2_BIT,
-+	    DV_I_47_2_BIT | DV_I_50_2_BIT | DV_II_46_2_BIT,
-+	    DV_I_48_2_BIT | DV_I_51_2_BIT,
-+	    DV_II_51_2_BIT } },
-+	{ 36, 0, 37, 5, 1,
-+	  { 1u << 0, 1u << 0, 1u << 1, 1u << 1 },
-+	  { DV_II_49_2_BIT,
-+	    DV_II_50_2_BIT,
-+	    DV_I_49_2_BIT,
-+	    DV_I_46_2_BIT | DV_I_50_2_BIT | DV_II_49_2_BIT } },
-+	{ 36, 0, 38, 0, 1,
-+	  { 1u << 4, 1u << 4, 1u << 1, 1u << 4 },
-+	  { DV_II_52_0_BIT | DV_II_54_0_BIT,
-+	    DV_I_43_0_BIT | DV_II_53_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_49_2_BIT,
-+	    DV_I_43_0_BIT | DV_I_45_0_BIT | DV_II_55_0_BIT } },
-+	{ 36, 0, 40, 25, 0,
-+	  { 1u << 4, 1u << 5, 1u << 5, 1u << 5 },
-+	  { DV_I_46_0_BIT | DV_I_49_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_48_0_BIT,
-+	    DV_II_49_2_BIT,
-+	    DV_II_50_2_BIT,
-+	    DV_II_51_2_BIT } },
-+	{ 38, 0, 40, 0, 1,
-+	  { 1u << 4, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_I_44_0_BIT | DV_II_54_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_50_2_BIT | DV_II_49_2_BIT,
-+	    DV_I_51_2_BIT | DV_II_50_2_BIT,
-+	    DV_II_46_2_BIT | DV_II_51_2_BIT } },
-+	{ 37, 0, 40, 25, 0,
-+	  { 1u << 4, 1u << 4, 1u << 4, 1u << 4 },
-+	  { DV_I_43_0_BIT | DV_I_47_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_53_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_48_0_BIT | DV_II_47_0_BIT |
-+	    DV_II_54_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_49_0_BIT | DV_II_48_0_BIT |
-+	    DV_II_55_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_50_0_BIT | DV_II_49_0_BIT |
-+	    DV_II_56_0_BIT } },
-+	{ 40, 0, 41, 5, 1,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_I_47_2_BIT | DV_I_51_2_BIT | DV_II_50_2_BIT,
-+	    DV_I_48_2_BIT | DV_II_46_2_BIT | DV_II_51_2_BIT,
-+	    DV_I_49_2_BIT,
-+	    DV_I_50_2_BIT } },
-+	{ 40, 0, 41, 0, 0,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29 },
-+	  { DV_I_44_0_BIT | DV_I_47_0_BIT | DV_I_48_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_47_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_45_0_BIT | DV_I_48_0_BIT | DV_I_49_0_BIT | DV_II_47_0_BIT |
-+	    DV_II_48_0_BIT,
-+	    DV_I_46_0_BIT | DV_I_49_0_BIT | DV_I_50_0_BIT | DV_II_48_0_BIT |
-+	    DV_II_49_0_BIT,
-+	    DV_I_47_0_BIT | DV_I_50_0_BIT | DV_I_51_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_49_0_BIT | DV_II_50_0_BIT } },
-+	{ 41, 0, 43, 0, 0,
-+	  { 1u << 6, 1u << 6, 1u << 6, 1u << 6 },
-+	  { DV_I_47_2_BIT,
-+	    DV_I_46_2_BIT | DV_I_48_2_BIT,
-+	    DV_I_47_2_BIT | DV_I_49_2_BIT,
-+	    DV_I_46_2_BIT | DV_I_48_2_BIT | DV_I_50_2_BIT } },
-+	{ 41, 0, 44, 25, 0,
-+	  { 1u << 4, 1u << 4, 1u << 4, 1u << 4 },
-+	  { DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_51_0_BIT |
-+	    DV_II_45_0_BIT | DV_II_50_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_52_0_BIT |
-+	    DV_II_46_0_BIT | DV_II_51_0_BIT,
-+	    DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_49_0_BIT |
-+	    DV_II_47_0_BIT | DV_II_52_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_50_0_BIT |
-+	    DV_II_48_0_BIT | DV_II_53_0_BIT } },
-+	{ 44, 0, 45, 5, 1,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_I_51_2_BIT | DV_II_49_2_BIT,
-+	    DV_II_50_2_BIT,
-+	    DV_II_51_2_BIT,
-+	    DV_II_46_2_BIT } },
-+	{ 44, 0, 45, 0, 0,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29 },
-+	  { DV_I_48_0_BIT | DV_I_51_0_BIT | DV_I_52_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_46_0_BIT | DV_II_50_0_BIT | DV_II_51_0_BIT,
-+	    DV_I_49_0_BIT | DV_I_52_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_47_0_BIT | DV_II_51_0_BIT | DV_II_52_0_BIT,
-+	    DV_I_43_0_BIT | DV_I_50_0_BIT | DV_II_47_0_BIT |
-+	    DV_II_48_0_BIT | DV_II_52_0_BIT | DV_II_53_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_51_0_BIT | DV_II_48_0_BIT |
-+	    DV_II_49_0_BIT | DV_II_53_0_BIT | DV_II_54_0_BIT } },
-+	{ 45, 5, 46, 0, 0,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_II_49_2_BIT,
-+	    DV_I_46_2_BIT | DV_II_50_2_BIT,
-+	    DV_I_47_2_BIT | DV_II_51_2_BIT,
-+	    DV_I_48_2_BIT } },
-+	{ 45, 0, 47, 0, 0,
-+	  { 1u << 6, 1u << 6, 1u << 6, 1u << 6 },
-+	  { DV_I_47_2_BIT | DV_I_49_2_BIT | DV_I_51_2_BIT,
-+	    DV_I_48_2_BIT | DV_I_50_2_BIT,
-+	    DV_I_49_2_BIT | DV_I_51_2_BIT,
-+	    DV_I_50_2_BIT | DV_II_46_2_BIT } },
-+	{ 45, 0, 47, 0, 1,
-+	  { 1u << 29, 1u << 29, 1u << 4, 1u << 4 },
-+	  { DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_48_0_BIT,
-+	    DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_49_0_BIT,
-+	    DV_I_49_0_BIT | DV_I_51_0_BIT | DV_II_45_0_BIT,
-+	    DV_I_50_0_BIT | DV_I_52_0_BIT | DV_II_46_0_BIT } },
-+	{ 45, 0, 48, 25, 0,
-+	  { 1u << 4, 1u << 4, 1u << 4, 1u << 4 },
-+	  { DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_49_0_BIT | DV_I_51_0_BIT |
-+	    DV_II_49_0_BIT | DV_II_54_0_BIT,
-+	    DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_50_0_BIT | DV_I_52_0_BIT |
-+	    DV_II_50_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_47_0_BIT | DV_I_49_0_BIT | DV_I_51_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_51_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_48_0_BIT | DV_I_50_0_BIT | DV_I_52_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_52_0_BIT } },
-+	{ 48, 0, 49, 0, 0,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29 },
-+	  { DV_I_45_0_BIT | DV_I_52_0_BIT | DV_II_49_0_BIT |
-+	    DV_II_50_0_BIT | DV_II_54_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_46_0_BIT | DV_II_45_0_BIT | DV_II_50_0_BIT |
-+	    DV_II_51_0_BIT | DV_II_55_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_47_0_BIT | DV_II_46_0_BIT | DV_II_51_0_BIT |
-+	    DV_II_52_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_48_0_BIT | DV_II_47_0_BIT | DV_II_52_0_BIT |
-+	    DV_II_53_0_BIT } },
-+	{ 52, 0, 53, 0, 0,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29 },
-+	  { DV_I_49_0_BIT | DV_II_45_0_BIT | DV_II_48_0_BIT |
-+	    DV_II_53_0_BIT | DV_II_54_0_BIT,
-+	    DV_I_50_0_BIT | DV_II_46_0_BIT | DV_II_49_0_BIT |
-+	    DV_II_54_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_51_0_BIT | DV_II_47_0_BIT | DV_II_50_0_BIT |
-+	    DV_II_55_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_52_0_BIT | DV_II_48_0_BIT | DV_II_51_0_BIT |
-+	    DV_II_56_0_BIT } },
-+	{ 52, 0, 55, 0, 1,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29 },
-+	  { DV_I_51_0_BIT | DV_II_47_0_BIT | DV_II_48_0_BIT,
-+	    DV_I_52_0_BIT | DV_II_48_0_BIT | DV_II_49_0_BIT,
-+	    DV_II_49_0_BIT | DV_II_50_0_BIT,
-+	    DV_II_50_0_BIT | DV_II_51_0_BIT } },
-+	{ 60, 0, 61, 5, 1,
-+	  { 1u << 0, 1u << 2, 1u << 2, 1u << 2 },
-+	  { DV_I_45_0_BIT | DV_II_45_0_BIT,
-+	    DV_I_46_2_BIT | DV_II_46_2_BIT,
-+	    DV_I_47_2_BIT,
-+	    DV_I_48_2_BIT } }
-+};
-+
-+static const struct ubc_cond neon_tail_checks[] = {
-+	/* DV_I_43_0 */
-+	{ 41, 4, 43, 4, 1 },
-+	{ 58, 0, 59, 5, 1 },
-+	{ 58, 0, 63, 30, 1 },
-+	{ 61, 1, 62, 6, 1 },
-+	{ 43, 4, 47, 29, 0 },
-+	/* DV_I_44_0 */
-+	{ 40, 4, 42, 4, 1 },
-+	{ 59, 0, 60, 5, 1 },
-+	{ 59, 0, 64, 30, 1 },
-+	{ 62, 1, 63, 6, 1 },
-+	{ 44, 4, 48, 29, 0 },
-+	/* DV_I_45_0 */
-+	{ 41, 4, 43, 4, 1 },
-+	{ 63, 1, 64, 6, 1 },
-+	{ 35, 4, 39, 29, 0 },
-+	/* DV_I_46_0 */
-+	{ 40, 4, 42, 4, 1 },
-+	{ 44, 4, 46, 4, 1 },
-+	{ 61, 0, 62, 5, 1 },
-+	/* DV_I_46_2 */
-+	{ 39, 1, 42, 6, 1 },
-+	/* DV_I_47_0 */
-+	{ 41, 4, 43, 4, 1 },
-+	{ 45, 4, 47, 4, 1 },
-+	{ 62, 0, 63, 5, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	/* DV_I_48_0 */
-+	{ 44, 4, 46, 4, 1 },
-+	{ 46, 4, 48, 4, 1 },
-+	{ 63, 0, 64, 5, 1 },
-+	{ 35, 4, 39, 29, 0 },
-+	{ 38, 4, 42, 29, 0 },
-+	/* DV_I_49_0 */
-+	{ 45, 4, 47, 4, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 49, 4, 52, 29, 0 },
-+	/* DV_I_49_2 */
-+	{ 42, 1, 50, 1, 1 },
-+	/* DV_I_50_0 */
-+	{ 36, 4, 37, 4, 1 },
-+	{ 44, 4, 46, 4, 1 },
-+	{ 46, 4, 48, 4, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	{ 40, 4, 44, 29, 0 },
-+	{ 50, 4, 53, 29, 0 },
-+	/* DV_I_50_2 */
-+	{ 48, 6, 51, 1, 0 },
-+	/* DV_I_51_0 */
-+	{ 37, 4, 38, 4, 1 },
-+	{ 45, 4, 47, 4, 1 },
-+	{ 35, 3, 39, 28, 0 },
-+	{ 38, 4, 42, 29, 0 },
-+	{ 41, 4, 45, 29, 0 },
-+	{ 49, 4, 52, 29, 0 },
-+	{ 51, 4, 54, 29, 0 },
-+	/* DV_I_51_2 */
-+	{ 44, 1, 51, 6, 1 },
-+	{ 44, 1, 52, 1, 1 },
-+	{ 35, 5, 39, 30, 0 },
-+	{ 37, 1, 37, 6, 0 },
-+	/* DV_I_52_0 */
-+	{ 38, 4, 39, 4, 1 },
-+	{ 46, 4, 48, 4, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 42, 4, 46, 29, 0 },
-+	{ 50, 4, 53, 29, 0 },
-+	{ 52, 4, 55, 29, 0 },
-+	/* DV_II_45_0 */
-+	{ 63, 1, 64, 6, 1 },
-+	{ 41, 4, 45, 29, 0 },
-+	{ 49, 4, 52, 29, 0 },
-+	/* DV_II_46_0 */
-+	{ 61, 0, 62, 5, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	{ 42, 4, 46, 29, 0 },
-+	{ 50, 4, 53, 29, 0 },
-+	/* DV_II_46_2 */
-+	{ 48, 6, 51, 1, 0 },
-+	/* DV_II_47_0 */
-+	{ 62, 0, 63, 5, 1 },
-+	{ 35, 3, 39, 28, 0 },
-+	{ 35, 4, 39, 29, 0 },
-+	{ 38, 4, 42, 29, 0 },
-+	{ 43, 4, 47, 29, 0 },
-+	{ 49, 4, 52, 29, 0 },
-+	{ 51, 4, 54, 29, 0 },
-+	/* DV_II_48_0 */
-+	{ 35, 30, 36, 3, 1 },
-+	{ 35, 30, 40, 28, 1 },
-+	{ 63, 0, 64, 5, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 44, 4, 48, 29, 0 },
-+	{ 50, 4, 53, 29, 0 },
-+	{ 52, 4, 55, 29, 0 },
-+	/* DV_II_49_0 */
-+	{ 36, 30, 37, 3, 1 },
-+	{ 36, 30, 41, 28, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	{ 40, 4, 44, 29, 0 },
-+	{ 51, 4, 54, 29, 0 },
-+	{ 53, 4, 56, 29, 0 },
-+	/* DV_II_49_2 */
-+	{ 50, 1, 51, 6, 1 },
-+	{ 50, 1, 53, 6, 1 },
-+	{ 50, 1, 54, 1, 1 },
-+	/* DV_II_50_0 */
-+	{ 37, 30, 38, 3, 1 },
-+	{ 37, 30, 42, 28, 1 },
-+	{ 38, 4, 42, 29, 0 },
-+	{ 41, 4, 45, 29, 0 },
-+	{ 52, 4, 55, 29, 0 },
-+	{ 54, 4, 57, 29, 0 },
-+	/* DV_II_50_2 */
-+	{ 51, 1, 52, 6, 1 },
-+	{ 51, 1, 54, 6, 1 },
-+	{ 51, 1, 55, 1, 1 },
-+	/* DV_II_51_0 */
-+	{ 38, 30, 39, 3, 1 },
-+	{ 38, 30, 43, 28, 1 },
-+	{ 56, 29, 59, 29, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 42, 4, 46, 29, 0 },
-+	{ 53, 4, 56, 29, 0 },
-+	{ 55, 4, 58, 29, 0 },
-+	/* DV_II_51_2 */
-+	{ 52, 1, 53, 6, 1 },
-+	{ 52, 1, 55, 6, 1 },
-+	{ 52, 1, 56, 1, 1 },
-+	/* DV_II_52_0 */
-+	{ 39, 30, 40, 3, 1 },
-+	{ 39, 30, 44, 28, 1 },
-+	{ 54, 4, 56, 4, 1 },
-+	{ 54, 4, 60, 29, 1 },
-+	{ 56, 29, 59, 29, 1 },
-+	{ 40, 4, 44, 29, 0 },
-+	{ 43, 4, 47, 29, 0 },
-+	{ 54, 4, 57, 29, 0 },
-+	{ 56, 4, 59, 29, 0 },
-+	/* DV_II_53_0 */
-+	{ 55, 4, 57, 4, 1 },
-+	{ 55, 4, 61, 29, 1 },
-+	{ 41, 3, 45, 28, 0 },
-+	{ 41, 4, 45, 29, 0 },
-+	{ 44, 4, 48, 29, 0 },
-+	{ 49, 4, 52, 29, 0 },
-+	{ 55, 4, 58, 29, 0 },
-+	{ 55, 4, 57, 29, 0 },
-+	/* DV_II_54_0 */
-+	{ 42, 3, 46, 28, 0 },
-+	{ 42, 4, 46, 29, 0 },
-+	{ 50, 4, 53, 29, 0 },
-+	{ 56, 4, 59, 29, 0 },
-+	{ 56, 4, 58, 29, 0 },
-+	{ 58, 4, 62, 29, 0 },
-+	/* DV_II_55_0 */
-+	{ 43, 3, 47, 28, 0 },
-+	{ 43, 4, 47, 29, 0 },
-+	{ 51, 4, 54, 29, 0 },
-+	{ 57, 4, 59, 29, 0 },
-+	{ 59, 4, 63, 29, 0 },
-+	/* DV_II_56_0 */
-+	{ 40, 4, 42, 4, 1 },
-+	{ 44, 3, 48, 28, 0 },
-+	{ 44, 4, 48, 29, 0 },
-+	{ 52, 4, 55, 29, 0 },
-+	{ 60, 4, 64, 29, 0 }
-+};
-+
-+static const struct tail_span neon_tail_spans[32] = {
-+	{ 0, 5 },	/* DV_I_43_0 */
-+	{ 5, 5 },	/* DV_I_44_0 */
-+	{ 10, 3 },	/* DV_I_45_0 */
-+	{ 13, 3 },	/* DV_I_46_0 */
-+	{ 16, 1 },	/* DV_I_46_2 */
-+	{ 17, 4 },	/* DV_I_47_0 */
-+	{ 21, 0 },	/* DV_I_47_2 */
-+	{ 21, 5 },	/* DV_I_48_0 */
-+	{ 26, 0 },	/* DV_I_48_2 */
-+	{ 26, 3 },	/* DV_I_49_0 */
-+	{ 29, 1 },	/* DV_I_49_2 */
-+	{ 30, 6 },	/* DV_I_50_0 */
-+	{ 36, 1 },	/* DV_I_50_2 */
-+	{ 37, 7 },	/* DV_I_51_0 */
-+	{ 44, 4 },	/* DV_I_51_2 */
-+	{ 48, 6 },	/* DV_I_52_0 */
-+	{ 54, 3 },	/* DV_II_45_0 */
-+	{ 57, 4 },	/* DV_II_46_0 */
-+	{ 61, 1 },	/* DV_II_46_2 */
-+	{ 62, 7 },	/* DV_II_47_0 */
-+	{ 69, 7 },	/* DV_II_48_0 */
-+	{ 76, 6 },	/* DV_II_49_0 */
-+	{ 82, 3 },	/* DV_II_49_2 */
-+	{ 85, 6 },	/* DV_II_50_0 */
-+	{ 91, 3 },	/* DV_II_50_2 */
-+	{ 94, 7 },	/* DV_II_51_0 */
-+	{ 101, 3 },	/* DV_II_51_2 */
-+	{ 104, 9 },	/* DV_II_52_0 */
-+	{ 113, 8 },	/* DV_II_53_0 */
-+	{ 121, 6 },	/* DV_II_54_0 */
-+	{ 127, 5 },	/* DV_II_55_0 */
-+	{ 132, 5 }	/* DV_II_56_0 */
-+};
-+
-+static uint32_t neon_prefix(const uint32_t *w)
-+{
-+	uint32x4_t acc = vdupq_n_u32(0);
-+	uint32x2_t folded;
-+	size_t i;
-+
-+	UNROLL_TABLE
-+	for (i = 0; i < ARRAY_SIZE(neon_groups); i++) {
-+		const struct ubc_group4 *g = &neon_groups[i];
-+		uint32x4_t lo = vld1q_u32(w + g->lo);
-+		uint32x4_t hi = vld1q_u32(w + g->hi);
-+		uint32x4_t dvs = vld1q_u32(g->dvs);
-+		uint32x4_t set, fail;
-+
-+		lo = vshlq_u32(lo, vdupq_n_s32(-(int32_t)g->lo_shift));
-+		hi = vshlq_u32(hi, vdupq_n_s32(-(int32_t)g->hi_shift));
-+		set = vtstq_u32(veorq_u32(lo, hi), vld1q_u32(g->test));
+ 	for (i = 0; sha1_dvs[i].dvType != 0; i++) {
+ 		const dv_info_t *dv = &sha1_dvs[i];
+ 		enum sha1dc_from from;
+ 		const uint32_t *state;
+-		uint32_t ihv2_in[5], ihv2_out[5];
+ 
+ 		if (!(candidates & ((uint32_t)1 << dv->maskb)))
+ 			continue;
+@@ -354,11 +396,23 @@ static SHA1DC_NOINLINE int attacked(SHA1_CTX *ctx, uint32_t candidates,
+ 			    dv->dvType, dv->dvK, dv->dvB, dv->testt);
+ 		}
+ 
+-		recompress_portable(from, w, dv->dm, state, ihv2_in, ihv2_out);
+-		if (!memcmp(ihv2_out, ihv_out, sizeof(ihv2_out)) ||
+-		    (ctx->reduced_round_coll &&
+-		     !memcmp(ihv2_in, ihv_in, sizeof(ihv2_in))))
+-			return 1;
 +		/*
-+		 * The DVs of the lanes where the bit is not g->want. Each lane
-+		 * of set is all ones or zero, so a saturating subtraction keeps
-+		 * dvs where the bit is clear, and min keeps it where it is set.
++		 * Reduced-round collisions are recognized by the partner
++		 * block's chaining value on the way in, which only the
++		 * portable recompression computes.
 +		 */
-+		fail = g->want ? vqsubq_u32(dvs, set) : vminq_u32(set, dvs);
-+		acc = vorrq_u32(acc, fail);
-+	}
++		if (be->recompress && !ctx->reduced_round_coll) {
++			if (be->recompress(from, w, dv->dm, state, ihv_out))
++				return 1;
++		} else {
++			uint32_t ihv2_in[5], ihv2_out[5];
 +
-+	folded = vorr_u32(vget_low_u32(acc), vget_high_u32(acc));
-+	return ~vget_lane_u32(vorr_u32(folded, vdup_lane_u32(folded, 1)), 0);
-+}
-+
-+uint32_t sha1dc_ubc_check_neon(const uint32_t w[80])
-+{
-+	uint32_t mask = neon_prefix(w);
-+	/* Every check only clears bits, so an empty mask settles it. */
-+	if (!mask)
-+		return 0;
-+	return run_tail(w, mask, neon_tail_checks, neon_tail_spans);
-+}
-+
-+#endif /* SHA1DC_HAVE_NEON */
-+
-+/* sse2 form */
-+
-+#ifdef SHA1DC_HAVE_SSE2
-+
-+static const struct ubc_group4 sse2_groups[] = {
-+	{ 35, 0, 36, 5, 1,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 0 },
-+	  { DV_I_46_2_BIT | DV_I_49_2_BIT,
-+	    DV_I_47_2_BIT | DV_I_50_2_BIT | DV_II_46_2_BIT,
-+	    DV_I_48_2_BIT | DV_I_51_2_BIT,
-+	    DV_II_51_2_BIT } },
-+	{ 36, 0, 37, 5, 1,
-+	  { 1u << 0, 1u << 0, 1u << 1, 1u << 1 },
-+	  { DV_II_49_2_BIT,
-+	    DV_II_50_2_BIT,
-+	    DV_I_49_2_BIT,
-+	    DV_I_46_2_BIT | DV_I_50_2_BIT | DV_II_49_2_BIT } },
-+	{ 36, 0, 38, 0, 1,
-+	  { 1u << 4, 1u << 4, 1u << 1, 1u << 4 },
-+	  { DV_II_52_0_BIT | DV_II_54_0_BIT,
-+	    DV_I_43_0_BIT | DV_II_53_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_49_2_BIT,
-+	    DV_I_43_0_BIT | DV_I_45_0_BIT | DV_II_55_0_BIT } },
-+	{ 37, 0, 40, 25, 0,
-+	  { 1u << 4, 1u << 4, 1u << 4, 1u << 4 },
-+	  { DV_I_43_0_BIT | DV_I_47_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_53_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_48_0_BIT | DV_II_47_0_BIT |
-+	    DV_II_54_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_49_0_BIT | DV_II_48_0_BIT |
-+	    DV_II_55_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_50_0_BIT | DV_II_49_0_BIT |
-+	    DV_II_56_0_BIT } },
-+	{ 36, 0, 40, 25, 0,
-+	  { 1u << 4, 1u << 5, 1u << 5, 1u << 5 },
-+	  { DV_I_46_0_BIT | DV_I_49_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_48_0_BIT,
-+	    DV_II_49_2_BIT,
-+	    DV_II_50_2_BIT,
-+	    DV_II_51_2_BIT } },
-+	{ 38, 0, 40, 0, 1,
-+	  { 1u << 4, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_I_44_0_BIT | DV_II_54_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_50_2_BIT | DV_II_49_2_BIT,
-+	    DV_I_51_2_BIT | DV_II_50_2_BIT,
-+	    DV_II_46_2_BIT | DV_II_51_2_BIT } },
-+	{ 40, 0, 41, 5, 1,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_I_47_2_BIT | DV_I_51_2_BIT | DV_II_50_2_BIT,
-+	    DV_I_48_2_BIT | DV_II_46_2_BIT | DV_II_51_2_BIT,
-+	    DV_I_49_2_BIT,
-+	    DV_I_50_2_BIT } },
-+	{ 40, 0, 41, 0, 0,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29 },
-+	  { DV_I_44_0_BIT | DV_I_47_0_BIT | DV_I_48_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_47_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_45_0_BIT | DV_I_48_0_BIT | DV_I_49_0_BIT | DV_II_47_0_BIT |
-+	    DV_II_48_0_BIT,
-+	    DV_I_46_0_BIT | DV_I_49_0_BIT | DV_I_50_0_BIT | DV_II_48_0_BIT |
-+	    DV_II_49_0_BIT,
-+	    DV_I_47_0_BIT | DV_I_50_0_BIT | DV_I_51_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_49_0_BIT | DV_II_50_0_BIT } },
-+	{ 41, 0, 44, 25, 0,
-+	  { 1u << 4, 1u << 4, 1u << 4, 1u << 4 },
-+	  { DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_51_0_BIT |
-+	    DV_II_45_0_BIT | DV_II_50_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_52_0_BIT |
-+	    DV_II_46_0_BIT | DV_II_51_0_BIT,
-+	    DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_49_0_BIT |
-+	    DV_II_47_0_BIT | DV_II_52_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_50_0_BIT |
-+	    DV_II_48_0_BIT | DV_II_53_0_BIT } },
-+	{ 42, 0, 44, 0, 0,
-+	  { 1u << 6, 1u << 6, 1u << 6, 1u << 6 },
-+	  { DV_I_46_2_BIT | DV_I_48_2_BIT,
-+	    DV_I_47_2_BIT | DV_I_49_2_BIT,
-+	    DV_I_46_2_BIT | DV_I_48_2_BIT | DV_I_50_2_BIT,
-+	    DV_I_47_2_BIT | DV_I_49_2_BIT | DV_I_51_2_BIT } },
-+	{ 40, 0, 44, 0, 0,
-+	  { 1u << 6, 1u << 6, 1u << 29, 1u << 29 },
-+	  { DV_I_46_2_BIT,
-+	    DV_I_47_2_BIT,
-+	    DV_I_43_0_BIT | DV_I_45_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_46_0_BIT } },
-+	{ 44, 0, 45, 5, 1,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_I_51_2_BIT | DV_II_49_2_BIT,
-+	    DV_II_50_2_BIT,
-+	    DV_II_51_2_BIT,
-+	    DV_II_46_2_BIT } },
-+	{ 44, 0, 45, 0, 0,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29 },
-+	  { DV_I_48_0_BIT | DV_I_51_0_BIT | DV_I_52_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_46_0_BIT | DV_II_50_0_BIT | DV_II_51_0_BIT,
-+	    DV_I_49_0_BIT | DV_I_52_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_47_0_BIT | DV_II_51_0_BIT | DV_II_52_0_BIT,
-+	    DV_I_43_0_BIT | DV_I_50_0_BIT | DV_II_47_0_BIT |
-+	    DV_II_48_0_BIT | DV_II_52_0_BIT | DV_II_53_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_51_0_BIT | DV_II_48_0_BIT |
-+	    DV_II_49_0_BIT | DV_II_53_0_BIT | DV_II_54_0_BIT } },
-+	{ 45, 5, 46, 0, 0,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_II_49_2_BIT,
-+	    DV_I_46_2_BIT | DV_II_50_2_BIT,
-+	    DV_I_47_2_BIT | DV_II_51_2_BIT,
-+	    DV_I_48_2_BIT } },
-+	{ 45, 0, 47, 0, 1,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 4 },
-+	  { DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_48_0_BIT,
-+	    DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_49_0_BIT,
-+	    DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_50_0_BIT,
-+	    DV_I_50_0_BIT | DV_I_52_0_BIT | DV_II_46_0_BIT } },
-+	{ 46, 0, 48, 0, 0,
-+	  { 1u << 6, 1u << 6, 1u << 6, 1u << 6 },
-+	  { DV_I_48_2_BIT | DV_I_50_2_BIT,
-+	    DV_I_49_2_BIT | DV_I_51_2_BIT,
-+	    DV_I_50_2_BIT | DV_II_46_2_BIT,
-+	    DV_I_51_2_BIT } },
-+	{ 45, 0, 48, 25, 0,
-+	  { 1u << 4, 1u << 4, 1u << 4, 1u << 4 },
-+	  { DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_49_0_BIT | DV_I_51_0_BIT |
-+	    DV_II_49_0_BIT | DV_II_54_0_BIT,
-+	    DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_50_0_BIT | DV_I_52_0_BIT |
-+	    DV_II_50_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_47_0_BIT | DV_I_49_0_BIT | DV_I_51_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_51_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_48_0_BIT | DV_I_50_0_BIT | DV_I_52_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_52_0_BIT } },
-+	{ 48, 0, 49, 0, 0,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29 },
-+	  { DV_I_45_0_BIT | DV_I_52_0_BIT | DV_II_49_0_BIT |
-+	    DV_II_50_0_BIT | DV_II_54_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_46_0_BIT | DV_II_45_0_BIT | DV_II_50_0_BIT |
-+	    DV_II_51_0_BIT | DV_II_55_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_47_0_BIT | DV_II_46_0_BIT | DV_II_51_0_BIT |
-+	    DV_II_52_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_48_0_BIT | DV_II_47_0_BIT | DV_II_52_0_BIT |
-+	    DV_II_53_0_BIT } },
-+	{ 49, 5, 50, 0, 0,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_I_49_2_BIT,
-+	    DV_I_50_2_BIT | DV_II_46_2_BIT,
-+	    DV_I_51_2_BIT,
-+	    0 } },
-+	{ 49, 0, 52, 25, 0,
-+	  { 1u << 4, 1u << 4, 1u << 4, 1u << 4 },
-+	  { DV_I_49_0_BIT | DV_I_51_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_47_0_BIT | DV_II_53_0_BIT,
-+	    DV_I_50_0_BIT | DV_I_52_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_48_0_BIT | DV_II_54_0_BIT,
-+	    DV_I_51_0_BIT | DV_II_47_0_BIT | DV_II_49_0_BIT |
-+	    DV_II_55_0_BIT,
-+	    DV_I_52_0_BIT | DV_II_48_0_BIT | DV_II_50_0_BIT |
-+	    DV_II_56_0_BIT } },
-+	{ 49, 0, 53, 0, 1,
-+	  { 1u << 29, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_II_45_0_BIT,
-+	    DV_II_49_2_BIT,
-+	    DV_II_50_2_BIT,
-+	    DV_II_51_2_BIT } },
-+	{ 52, 0, 53, 0, 0,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29 },
-+	  { DV_I_49_0_BIT | DV_II_45_0_BIT | DV_II_48_0_BIT |
-+	    DV_II_53_0_BIT | DV_II_54_0_BIT,
-+	    DV_I_50_0_BIT | DV_II_46_0_BIT | DV_II_49_0_BIT |
-+	    DV_II_54_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_51_0_BIT | DV_II_47_0_BIT | DV_II_50_0_BIT |
-+	    DV_II_55_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_52_0_BIT | DV_II_48_0_BIT | DV_II_51_0_BIT |
-+	    DV_II_56_0_BIT } },
-+	{ 53, 5, 54, 0, 0,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_II_49_2_BIT,
-+	    DV_II_50_2_BIT,
-+	    DV_II_51_2_BIT,
-+	    0 } },
-+	{ 52, 0, 55, 0, 1,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29 },
-+	  { DV_I_51_0_BIT | DV_II_47_0_BIT | DV_II_48_0_BIT,
-+	    DV_I_52_0_BIT | DV_II_48_0_BIT | DV_II_49_0_BIT,
-+	    DV_II_49_0_BIT | DV_II_50_0_BIT,
-+	    DV_II_50_0_BIT | DV_II_51_0_BIT } },
-+	{ 53, 0, 56, 25, 0,
-+	  { 1u << 4, 1u << 4, 1u << 4, 1u << 4 },
-+	  { DV_II_49_0_BIT | DV_II_51_0_BIT,
-+	    DV_II_50_0_BIT | DV_II_52_0_BIT,
-+	    DV_II_51_0_BIT | DV_II_53_0_BIT,
-+	    DV_II_52_0_BIT | DV_II_54_0_BIT } },
-+	{ 60, 0, 61, 5, 1,
-+	  { 1u << 0, 1u << 2, 1u << 2, 1u << 2 },
-+	  { DV_I_45_0_BIT | DV_II_45_0_BIT,
-+	    DV_I_46_2_BIT | DV_II_46_2_BIT,
-+	    DV_I_47_2_BIT,
-+	    DV_I_48_2_BIT } }
-+};
-+
-+static const struct ubc_cond sse2_tail_checks[] = {
-+	/* DV_I_43_0 */
-+	{ 41, 4, 43, 4, 1 },
-+	{ 58, 0, 59, 5, 1 },
-+	{ 58, 0, 63, 30, 1 },
-+	{ 61, 1, 62, 6, 1 },
-+	{ 43, 4, 47, 29, 0 },
-+	/* DV_I_44_0 */
-+	{ 59, 0, 60, 5, 1 },
-+	{ 59, 0, 64, 30, 1 },
-+	{ 62, 1, 63, 6, 1 },
-+	{ 38, 4, 42, 4, 0 },
-+	{ 44, 4, 48, 29, 0 },
-+	/* DV_I_45_0 */
-+	{ 41, 4, 43, 4, 1 },
-+	{ 63, 1, 64, 6, 1 },
-+	{ 35, 4, 39, 29, 0 },
-+	/* DV_I_46_0 */
-+	{ 61, 0, 62, 5, 1 },
-+	/* DV_I_47_0 */
-+	{ 41, 4, 43, 4, 1 },
-+	{ 45, 4, 47, 4, 1 },
-+	{ 62, 0, 63, 5, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	/* DV_I_48_0 */
-+	{ 46, 4, 48, 4, 1 },
-+	{ 63, 0, 64, 5, 1 },
-+	{ 35, 4, 39, 29, 0 },
-+	{ 38, 4, 42, 29, 0 },
-+	/* DV_I_49_0 */
-+	{ 45, 4, 47, 4, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 45, 4, 49, 4, 0 },
-+	/* DV_I_50_0 */
-+	{ 36, 4, 37, 4, 1 },
-+	{ 46, 4, 48, 4, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	{ 40, 4, 44, 29, 0 },
-+	/* DV_I_51_0 */
-+	{ 37, 4, 38, 4, 1 },
-+	{ 45, 4, 47, 4, 1 },
-+	{ 35, 3, 39, 28, 0 },
-+	{ 38, 4, 42, 29, 0 },
-+	{ 41, 4, 45, 29, 0 },
-+	{ 45, 4, 49, 4, 0 },
-+	/* DV_I_51_2 */
-+	{ 35, 5, 39, 30, 0 },
-+	{ 37, 1, 37, 6, 0 },
-+	/* DV_I_52_0 */
-+	{ 38, 4, 39, 4, 1 },
-+	{ 46, 4, 48, 4, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 42, 4, 46, 29, 0 },
-+	/* DV_II_45_0 */
-+	{ 63, 1, 64, 6, 1 },
-+	{ 41, 4, 45, 29, 0 },
-+	/* DV_II_46_0 */
-+	{ 61, 0, 62, 5, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	{ 42, 4, 46, 29, 0 },
-+	/* DV_II_47_0 */
-+	{ 62, 0, 63, 5, 1 },
-+	{ 35, 3, 39, 28, 0 },
-+	{ 35, 4, 39, 29, 0 },
-+	{ 38, 4, 42, 29, 0 },
-+	{ 43, 4, 47, 29, 0 },
-+	/* DV_II_48_0 */
-+	{ 35, 30, 36, 3, 1 },
-+	{ 35, 30, 40, 28, 1 },
-+	{ 63, 0, 64, 5, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 44, 4, 48, 29, 0 },
-+	/* DV_II_49_0 */
-+	{ 36, 30, 37, 3, 1 },
-+	{ 36, 30, 41, 28, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	{ 40, 4, 44, 29, 0 },
-+	/* DV_II_49_2 */
-+	{ 50, 1, 51, 6, 1 },
-+	/* DV_II_50_0 */
-+	{ 37, 30, 38, 3, 1 },
-+	{ 37, 30, 42, 28, 1 },
-+	{ 38, 4, 42, 29, 0 },
-+	{ 41, 4, 45, 29, 0 },
-+	/* DV_II_50_2 */
-+	{ 51, 1, 52, 6, 1 },
-+	/* DV_II_51_0 */
-+	{ 38, 30, 39, 3, 1 },
-+	{ 38, 30, 43, 28, 1 },
-+	{ 56, 29, 59, 29, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 42, 4, 46, 29, 0 },
-+	/* DV_II_51_2 */
-+	{ 52, 1, 53, 6, 1 },
-+	/* DV_II_52_0 */
-+	{ 39, 30, 40, 3, 1 },
-+	{ 39, 30, 44, 28, 1 },
-+	{ 54, 4, 56, 4, 1 },
-+	{ 54, 4, 60, 29, 1 },
-+	{ 56, 29, 59, 29, 1 },
-+	{ 40, 4, 44, 29, 0 },
-+	{ 43, 4, 47, 29, 0 },
-+	/* DV_II_53_0 */
-+	{ 55, 4, 57, 4, 1 },
-+	{ 55, 4, 61, 29, 1 },
-+	{ 41, 3, 45, 28, 0 },
-+	{ 41, 4, 45, 29, 0 },
-+	{ 44, 4, 48, 29, 0 },
-+	{ 55, 4, 57, 29, 0 },
-+	/* DV_II_54_0 */
-+	{ 42, 3, 46, 28, 0 },
-+	{ 42, 4, 46, 29, 0 },
-+	{ 56, 4, 58, 29, 0 },
-+	{ 58, 4, 62, 29, 0 },
-+	/* DV_II_55_0 */
-+	{ 43, 3, 47, 28, 0 },
-+	{ 43, 4, 47, 29, 0 },
-+	{ 57, 4, 59, 29, 0 },
-+	{ 59, 4, 63, 29, 0 },
-+	/* DV_II_56_0 */
-+	{ 38, 4, 42, 4, 0 },
-+	{ 44, 3, 48, 28, 0 },
-+	{ 44, 4, 48, 29, 0 },
-+	{ 60, 4, 64, 29, 0 }
-+};
-+
-+static const struct tail_span sse2_tail_spans[32] = {
-+	{ 0, 5 },	/* DV_I_43_0 */
-+	{ 5, 5 },	/* DV_I_44_0 */
-+	{ 10, 3 },	/* DV_I_45_0 */
-+	{ 13, 1 },	/* DV_I_46_0 */
-+	{ 14, 0 },	/* DV_I_46_2 */
-+	{ 14, 4 },	/* DV_I_47_0 */
-+	{ 18, 0 },	/* DV_I_47_2 */
-+	{ 18, 4 },	/* DV_I_48_0 */
-+	{ 22, 0 },	/* DV_I_48_2 */
-+	{ 22, 3 },	/* DV_I_49_0 */
-+	{ 25, 0 },	/* DV_I_49_2 */
-+	{ 25, 4 },	/* DV_I_50_0 */
-+	{ 29, 0 },	/* DV_I_50_2 */
-+	{ 29, 6 },	/* DV_I_51_0 */
-+	{ 35, 2 },	/* DV_I_51_2 */
-+	{ 37, 4 },	/* DV_I_52_0 */
-+	{ 41, 2 },	/* DV_II_45_0 */
-+	{ 43, 3 },	/* DV_II_46_0 */
-+	{ 46, 0 },	/* DV_II_46_2 */
-+	{ 46, 5 },	/* DV_II_47_0 */
-+	{ 51, 5 },	/* DV_II_48_0 */
-+	{ 56, 4 },	/* DV_II_49_0 */
-+	{ 60, 1 },	/* DV_II_49_2 */
-+	{ 61, 4 },	/* DV_II_50_0 */
-+	{ 65, 1 },	/* DV_II_50_2 */
-+	{ 66, 5 },	/* DV_II_51_0 */
-+	{ 71, 1 },	/* DV_II_51_2 */
-+	{ 72, 7 },	/* DV_II_52_0 */
-+	{ 79, 6 },	/* DV_II_53_0 */
-+	{ 85, 4 },	/* DV_II_54_0 */
-+	{ 89, 4 },	/* DV_II_55_0 */
-+	{ 93, 4 }	/* DV_II_56_0 */
-+};
-+
-+SHA1DC_TARGET_SSE2
-+static uint32_t sse2_prefix(const uint32_t *w)
-+{
-+	const __m128i zero = _mm_setzero_si128();
-+	__m128i acc = zero;
-+	size_t i;
-+
-+	UNROLL_TABLE
-+	for (i = 0; i < ARRAY_SIZE(sse2_groups); i++) {
-+		const struct ubc_group4 *g = &sse2_groups[i];
-+		__m128i lo = _mm_loadu_si128((const __m128i *)(w + g->lo));
-+		__m128i hi = _mm_loadu_si128((const __m128i *)(w + g->hi));
-+		__m128i test = _mm_loadu_si128((const __m128i *)g->test);
-+		__m128i dvs = _mm_loadu_si128((const __m128i *)g->dvs);
-+		__m128i clear, fail;
-+
-+		lo = _mm_srl_epi32(lo, _mm_cvtsi32_si128(g->lo_shift));
-+		hi = _mm_srl_epi32(hi, _mm_cvtsi32_si128(g->hi_shift));
-+		clear = _mm_and_si128(_mm_xor_si128(lo, hi), test);
-+		clear = _mm_cmpeq_epi32(clear, zero);
-+		/* The DVs of the lanes where the bit is not g->want. */
-+		fail = g->want ? _mm_and_si128(clear, dvs) :
-+				 _mm_andnot_si128(clear, dvs);
-+		acc = _mm_or_si128(acc, fail);
-+	}
-+
-+	acc = _mm_or_si128(acc, _mm_shuffle_epi32(acc, 0x4E));
-+	acc = _mm_or_si128(acc, _mm_shuffle_epi32(acc, 0xB1));
-+	return ~(uint32_t)_mm_cvtsi128_si32(acc);
-+}
-+
-+SHA1DC_TARGET_SSE2
-+uint32_t sha1dc_ubc_check_sse2(const uint32_t w[80])
-+{
-+	uint32_t mask = sse2_prefix(w);
-+	/* Every check only clears bits, so an empty mask settles it. */
-+	if (!mask)
-+		return 0;
-+	return run_tail(w, mask, sse2_tail_checks, sse2_tail_spans);
-+}
-+
-+#endif /* SHA1DC_HAVE_SSE2 */
-+
-+/* avx2 form */
-+
-+#ifdef SHA1DC_HAVE_AVX2
-+
-+static const struct ubc_group8 avx2_groups[] = {
-+	{ 35, 0, 36, 5, 1,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 0,
-+	    1u << 1, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_I_46_2_BIT | DV_I_49_2_BIT,
-+	    DV_I_47_2_BIT | DV_I_50_2_BIT | DV_II_46_2_BIT,
-+	    DV_I_48_2_BIT | DV_I_51_2_BIT,
-+	    DV_II_51_2_BIT,
-+	    DV_I_46_2_BIT | DV_I_50_2_BIT | DV_II_49_2_BIT,
-+	    DV_I_47_2_BIT | DV_I_51_2_BIT | DV_II_50_2_BIT,
-+	    DV_I_48_2_BIT | DV_II_46_2_BIT | DV_II_51_2_BIT,
-+	    DV_I_49_2_BIT } },
-+	{ 36, 0, 38, 0, 1,
-+	  { 1u << 4, 1u << 4, 1u << 4, 1u << 4,
-+	    1u << 4, 1u << 4, 1u << 4, 1u << 4 },
-+	  { DV_II_52_0_BIT | DV_II_54_0_BIT,
-+	    DV_I_43_0_BIT | DV_II_53_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_44_0_BIT | DV_II_54_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_43_0_BIT | DV_I_45_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_46_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_47_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_48_0_BIT,
-+	    DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_49_0_BIT } },
-+	{ 37, 0, 38, 5, 1,
-+	  { 1u << 0, 1u << 1, 0, 0,
-+	    0, 0, 1u << 1, 1u << 1 },
-+	  { DV_II_50_2_BIT,
-+	    DV_I_49_2_BIT,
-+	    0,
-+	    0,
-+	    0,
-+	    0,
-+	    DV_I_50_2_BIT,
-+	    DV_I_51_2_BIT | DV_II_49_2_BIT } },
-+	{ 35, 0, 39, 25, 0,
-+	  { 1u << 5, 1u << 4, 1u << 5, 1u << 5,
-+	    1u << 5, 1u << 3, 1u << 3, 1u << 4 },
-+	  { DV_I_51_2_BIT,
-+	    DV_I_46_0_BIT | DV_I_49_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_48_0_BIT,
-+	    DV_II_49_2_BIT,
-+	    DV_II_50_2_BIT,
-+	    DV_II_51_2_BIT,
-+	    DV_II_52_0_BIT,
-+	    DV_II_53_0_BIT,
-+	    DV_I_52_0_BIT | DV_II_46_0_BIT | DV_II_51_0_BIT |
-+	    DV_II_54_0_BIT } },
-+	{ 37, 0, 40, 25, 0,
-+	  { 1u << 4, 1u << 4, 1u << 4, 1u << 4,
-+	    1u << 4, 1u << 4, 1u << 4, 1u << 4 },
-+	  { DV_I_43_0_BIT | DV_I_47_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_53_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_48_0_BIT | DV_II_47_0_BIT |
-+	    DV_II_54_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_49_0_BIT | DV_II_48_0_BIT |
-+	    DV_II_55_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_50_0_BIT | DV_II_49_0_BIT |
-+	    DV_II_56_0_BIT,
-+	    DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_51_0_BIT |
-+	    DV_II_45_0_BIT | DV_II_50_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_52_0_BIT |
-+	    DV_II_46_0_BIT | DV_II_51_0_BIT,
-+	    DV_I_43_0_BIT | DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_49_0_BIT |
-+	    DV_II_47_0_BIT | DV_II_52_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_50_0_BIT |
-+	    DV_II_48_0_BIT | DV_II_53_0_BIT } },
-+	{ 39, 5, 40, 0, 0,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 1,
-+	    1u << 1, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_I_49_2_BIT,
-+	    DV_I_50_2_BIT | DV_II_49_2_BIT,
-+	    DV_I_51_2_BIT | DV_II_50_2_BIT,
-+	    DV_II_46_2_BIT | DV_II_51_2_BIT,
-+	    0,
-+	    0,
-+	    DV_II_49_2_BIT,
-+	    DV_I_46_2_BIT | DV_II_50_2_BIT } },
-+	{ 40, 0, 41, 0, 0,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29,
-+	    1u << 29, 1u << 29, 1u << 29, 1u << 29 },
-+	  { DV_I_44_0_BIT | DV_I_47_0_BIT | DV_I_48_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_47_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_45_0_BIT | DV_I_48_0_BIT | DV_I_49_0_BIT | DV_II_47_0_BIT |
-+	    DV_II_48_0_BIT,
-+	    DV_I_46_0_BIT | DV_I_49_0_BIT | DV_I_50_0_BIT | DV_II_48_0_BIT |
-+	    DV_II_49_0_BIT,
-+	    DV_I_47_0_BIT | DV_I_50_0_BIT | DV_I_51_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_49_0_BIT | DV_II_50_0_BIT,
-+	    DV_I_48_0_BIT | DV_I_51_0_BIT | DV_I_52_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_46_0_BIT | DV_II_50_0_BIT | DV_II_51_0_BIT,
-+	    DV_I_49_0_BIT | DV_I_52_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_47_0_BIT | DV_II_51_0_BIT | DV_II_52_0_BIT,
-+	    DV_I_43_0_BIT | DV_I_50_0_BIT | DV_II_47_0_BIT |
-+	    DV_II_48_0_BIT | DV_II_52_0_BIT | DV_II_53_0_BIT,
-+	    DV_I_44_0_BIT | DV_I_51_0_BIT | DV_II_48_0_BIT |
-+	    DV_II_49_0_BIT | DV_II_53_0_BIT | DV_II_54_0_BIT } },
-+	{ 40, 0, 42, 0, 0,
-+	  { 1u << 6, 1u << 6, 1u << 6, 1u << 6,
-+	    1u << 6, 1u << 6, 1u << 6, 1u << 6 },
-+	  { DV_I_46_2_BIT,
-+	    DV_I_47_2_BIT,
-+	    DV_I_46_2_BIT | DV_I_48_2_BIT,
-+	    DV_I_47_2_BIT | DV_I_49_2_BIT,
-+	    DV_I_46_2_BIT | DV_I_48_2_BIT | DV_I_50_2_BIT,
-+	    DV_I_47_2_BIT | DV_I_49_2_BIT | DV_I_51_2_BIT,
-+	    DV_I_48_2_BIT | DV_I_50_2_BIT,
-+	    DV_I_49_2_BIT | DV_I_51_2_BIT } },
-+	{ 45, 0, 46, 5, 1,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 1,
-+	    1u << 1, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_II_50_2_BIT,
-+	    DV_II_51_2_BIT,
-+	    DV_II_46_2_BIT,
-+	    0,
-+	    0,
-+	    DV_II_49_2_BIT,
-+	    DV_II_50_2_BIT,
-+	    DV_II_51_2_BIT } },
-+	{ 45, 0, 48, 25, 0,
-+	  { 1u << 4, 1u << 4, 1u << 4, 1u << 4,
-+	    1u << 4, 1u << 4, 1u << 4, 1u << 4 },
-+	  { DV_I_45_0_BIT | DV_I_47_0_BIT | DV_I_49_0_BIT | DV_I_51_0_BIT |
-+	    DV_II_49_0_BIT | DV_II_54_0_BIT,
-+	    DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_50_0_BIT | DV_I_52_0_BIT |
-+	    DV_II_50_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_47_0_BIT | DV_I_49_0_BIT | DV_I_51_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_51_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_48_0_BIT | DV_I_50_0_BIT | DV_I_52_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_52_0_BIT,
-+	    DV_I_49_0_BIT | DV_I_51_0_BIT | DV_II_45_0_BIT |
-+	    DV_II_47_0_BIT | DV_II_53_0_BIT,
-+	    DV_I_50_0_BIT | DV_I_52_0_BIT | DV_II_46_0_BIT |
-+	    DV_II_48_0_BIT | DV_II_54_0_BIT,
-+	    DV_I_51_0_BIT | DV_II_47_0_BIT | DV_II_49_0_BIT |
-+	    DV_II_55_0_BIT,
-+	    DV_I_52_0_BIT | DV_II_48_0_BIT | DV_II_50_0_BIT |
-+	    DV_II_56_0_BIT } },
-+	{ 47, 5, 48, 0, 0,
-+	  { 1u << 1, 1u << 1, 1u << 1, 1u << 1,
-+	    1u << 1, 1u << 1, 1u << 1, 1u << 1 },
-+	  { DV_I_47_2_BIT | DV_II_51_2_BIT,
-+	    DV_I_48_2_BIT,
-+	    DV_I_49_2_BIT,
-+	    DV_I_50_2_BIT | DV_II_46_2_BIT,
-+	    DV_I_51_2_BIT,
-+	    0,
-+	    DV_II_49_2_BIT,
-+	    DV_II_50_2_BIT } },
-+	{ 47, 0, 49, 0, 1,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29,
-+	    1u << 4, 1u << 4, 1u << 4, 1u << 4 },
-+	  { DV_I_46_0_BIT | DV_I_48_0_BIT | DV_I_50_0_BIT,
-+	    DV_I_47_0_BIT | DV_I_49_0_BIT | DV_I_51_0_BIT,
-+	    DV_I_48_0_BIT | DV_I_50_0_BIT | DV_I_52_0_BIT,
-+	    DV_I_49_0_BIT | DV_I_51_0_BIT | DV_II_45_0_BIT,
-+	    DV_II_49_0_BIT,
-+	    DV_II_50_0_BIT,
-+	    DV_II_51_0_BIT,
-+	    DV_II_52_0_BIT } },
-+	{ 48, 0, 49, 0, 0,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29,
-+	    1u << 29, 1u << 29, 1u << 29, 1u << 29 },
-+	  { DV_I_45_0_BIT | DV_I_52_0_BIT | DV_II_49_0_BIT |
-+	    DV_II_50_0_BIT | DV_II_54_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_46_0_BIT | DV_II_45_0_BIT | DV_II_50_0_BIT |
-+	    DV_II_51_0_BIT | DV_II_55_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_47_0_BIT | DV_II_46_0_BIT | DV_II_51_0_BIT |
-+	    DV_II_52_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_48_0_BIT | DV_II_47_0_BIT | DV_II_52_0_BIT |
-+	    DV_II_53_0_BIT,
-+	    DV_I_49_0_BIT | DV_II_45_0_BIT | DV_II_48_0_BIT |
-+	    DV_II_53_0_BIT | DV_II_54_0_BIT,
-+	    DV_I_50_0_BIT | DV_II_46_0_BIT | DV_II_49_0_BIT |
-+	    DV_II_54_0_BIT | DV_II_55_0_BIT,
-+	    DV_I_51_0_BIT | DV_II_47_0_BIT | DV_II_50_0_BIT |
-+	    DV_II_55_0_BIT | DV_II_56_0_BIT,
-+	    DV_I_52_0_BIT | DV_II_48_0_BIT | DV_II_51_0_BIT |
-+	    DV_II_56_0_BIT } },
-+	{ 48, 0, 50, 0, 0,
-+	  { 1u << 6, 1u << 6, 1u << 6, 1u << 6,
-+	    1u << 6, 1u << 6, 1u << 6, 1u << 6 },
-+	  { DV_I_50_2_BIT | DV_II_46_2_BIT,
-+	    DV_I_51_2_BIT,
-+	    0,
-+	    DV_II_49_2_BIT,
-+	    DV_II_50_2_BIT,
-+	    DV_II_51_2_BIT,
-+	    0,
-+	    0 } },
-+	{ 51, 0, 54, 0, 1,
-+	  { 1u << 29, 1u << 29, 1u << 29, 1u << 29,
-+	    1u << 29, 1u << 29, 1u << 29, 1u << 29 },
-+	  { DV_I_50_0_BIT | DV_II_46_0_BIT | DV_II_47_0_BIT,
-+	    DV_I_51_0_BIT | DV_II_47_0_BIT | DV_II_48_0_BIT,
-+	    DV_I_52_0_BIT | DV_II_48_0_BIT | DV_II_49_0_BIT,
-+	    DV_II_49_0_BIT | DV_II_50_0_BIT,
-+	    DV_II_50_0_BIT | DV_II_51_0_BIT,
-+	    DV_II_51_0_BIT | DV_II_52_0_BIT,
-+	    DV_II_52_0_BIT,
-+	    DV_II_53_0_BIT } },
-+	{ 58, 0, 59, 5, 1,
-+	  { 1u << 0, 1u << 0, 1u << 0, 1u << 2,
-+	    1u << 2, 1u << 2, 0, 0 },
-+	  { DV_I_43_0_BIT,
-+	    DV_I_44_0_BIT,
-+	    DV_I_45_0_BIT | DV_II_45_0_BIT,
-+	    DV_I_46_2_BIT | DV_II_46_2_BIT,
-+	    DV_I_47_2_BIT,
-+	    DV_I_48_2_BIT,
-+	    0,
-+	    0 } }
-+};
-+
-+static const struct ubc_cond avx2_tail_checks[] = {
-+	/* DV_I_43_0 */
-+	{ 58, 0, 63, 30, 1 },
-+	{ 61, 1, 62, 6, 1 },
-+	{ 43, 4, 47, 29, 0 },
-+	/* DV_I_44_0 */
-+	{ 59, 0, 64, 30, 1 },
-+	{ 62, 1, 63, 6, 1 },
-+	{ 44, 4, 48, 29, 0 },
-+	/* DV_I_45_0 */
-+	{ 63, 1, 64, 6, 1 },
-+	{ 35, 4, 39, 29, 0 },
-+	/* DV_I_46_0 */
-+	{ 61, 0, 62, 5, 1 },
-+	/* DV_I_47_0 */
-+	{ 62, 0, 63, 5, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	/* DV_I_48_0 */
-+	{ 63, 0, 64, 5, 1 },
-+	{ 35, 4, 39, 29, 0 },
-+	{ 38, 4, 42, 29, 0 },
-+	/* DV_I_49_0 */
-+	{ 39, 4, 43, 29, 0 },
-+	/* DV_I_50_0 */
-+	{ 36, 4, 37, 4, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	{ 40, 4, 44, 29, 0 },
-+	{ 46, 4, 50, 4, 0 },
-+	/* DV_I_51_0 */
-+	{ 37, 4, 38, 4, 1 },
-+	{ 35, 3, 39, 28, 0 },
-+	{ 38, 4, 42, 29, 0 },
-+	{ 41, 4, 45, 29, 0 },
-+	/* DV_I_51_2 */
-+	{ 37, 1, 37, 6, 0 },
-+	/* DV_I_52_0 */
-+	{ 38, 4, 39, 4, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 46, 4, 50, 4, 0 },
-+	/* DV_II_45_0 */
-+	{ 63, 1, 64, 6, 1 },
-+	{ 41, 4, 45, 29, 0 },
-+	/* DV_II_46_0 */
-+	{ 61, 0, 62, 5, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	/* DV_II_47_0 */
-+	{ 62, 0, 63, 5, 1 },
-+	{ 35, 3, 39, 28, 0 },
-+	{ 35, 4, 39, 29, 0 },
-+	{ 38, 4, 42, 29, 0 },
-+	{ 43, 4, 47, 29, 0 },
-+	/* DV_II_48_0 */
-+	{ 35, 30, 36, 3, 1 },
-+	{ 35, 30, 40, 28, 1 },
-+	{ 63, 0, 64, 5, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 44, 4, 48, 29, 0 },
-+	/* DV_II_49_0 */
-+	{ 36, 30, 37, 3, 1 },
-+	{ 36, 30, 41, 28, 1 },
-+	{ 37, 4, 41, 29, 0 },
-+	{ 40, 4, 44, 29, 0 },
-+	/* DV_II_49_2 */
-+	{ 36, 0, 37, 5, 1 },
-+	/* DV_II_50_0 */
-+	{ 37, 30, 38, 3, 1 },
-+	{ 37, 30, 42, 28, 1 },
-+	{ 38, 4, 42, 29, 0 },
-+	{ 41, 4, 45, 29, 0 },
-+	{ 54, 4, 57, 29, 0 },
-+	/* DV_II_51_0 */
-+	{ 38, 30, 39, 3, 1 },
-+	{ 38, 30, 43, 28, 1 },
-+	{ 39, 4, 43, 29, 0 },
-+	{ 55, 4, 58, 29, 0 },
-+	/* DV_II_51_2 */
-+	{ 52, 1, 56, 1, 1 },
-+	/* DV_II_52_0 */
-+	{ 39, 30, 40, 3, 1 },
-+	{ 40, 4, 44, 29, 0 },
-+	{ 43, 4, 47, 29, 0 },
-+	{ 54, 4, 57, 29, 0 },
-+	{ 56, 4, 59, 29, 0 },
-+	/* DV_II_53_0 */
-+	{ 55, 4, 57, 4, 1 },
-+	{ 41, 4, 45, 29, 0 },
-+	{ 44, 4, 48, 29, 0 },
-+	{ 55, 4, 58, 29, 0 },
-+	{ 55, 4, 57, 29, 0 },
-+	/* DV_II_54_0 */
-+	{ 42, 3, 46, 28, 0 },
-+	{ 56, 4, 59, 29, 0 },
-+	{ 56, 4, 58, 29, 0 },
-+	{ 58, 4, 62, 29, 0 },
-+	/* DV_II_55_0 */
-+	{ 43, 3, 47, 28, 0 },
-+	{ 43, 4, 47, 29, 0 },
-+	{ 57, 4, 59, 29, 0 },
-+	{ 59, 4, 63, 29, 0 },
-+	/* DV_II_56_0 */
-+	{ 44, 3, 48, 28, 0 },
-+	{ 44, 4, 48, 29, 0 },
-+	{ 60, 4, 64, 29, 0 }
-+};
-+
-+static const struct tail_span avx2_tail_spans[32] = {
-+	{ 0, 3 },	/* DV_I_43_0 */
-+	{ 3, 3 },	/* DV_I_44_0 */
-+	{ 6, 2 },	/* DV_I_45_0 */
-+	{ 8, 1 },	/* DV_I_46_0 */
-+	{ 9, 0 },	/* DV_I_46_2 */
-+	{ 9, 2 },	/* DV_I_47_0 */
-+	{ 11, 0 },	/* DV_I_47_2 */
-+	{ 11, 3 },	/* DV_I_48_0 */
-+	{ 14, 0 },	/* DV_I_48_2 */
-+	{ 14, 1 },	/* DV_I_49_0 */
-+	{ 15, 0 },	/* DV_I_49_2 */
-+	{ 15, 4 },	/* DV_I_50_0 */
-+	{ 19, 0 },	/* DV_I_50_2 */
-+	{ 19, 4 },	/* DV_I_51_0 */
-+	{ 23, 1 },	/* DV_I_51_2 */
-+	{ 24, 3 },	/* DV_I_52_0 */
-+	{ 27, 2 },	/* DV_II_45_0 */
-+	{ 29, 2 },	/* DV_II_46_0 */
-+	{ 31, 0 },	/* DV_II_46_2 */
-+	{ 31, 5 },	/* DV_II_47_0 */
-+	{ 36, 5 },	/* DV_II_48_0 */
-+	{ 41, 4 },	/* DV_II_49_0 */
-+	{ 45, 1 },	/* DV_II_49_2 */
-+	{ 46, 5 },	/* DV_II_50_0 */
-+	{ 51, 0 },	/* DV_II_50_2 */
-+	{ 51, 4 },	/* DV_II_51_0 */
-+	{ 55, 1 },	/* DV_II_51_2 */
-+	{ 56, 5 },	/* DV_II_52_0 */
-+	{ 61, 5 },	/* DV_II_53_0 */
-+	{ 66, 4 },	/* DV_II_54_0 */
-+	{ 70, 4 },	/* DV_II_55_0 */
-+	{ 74, 3 }	/* DV_II_56_0 */
-+};
-+
-+SHA1DC_TARGET_AVX2
-+static uint32_t avx2_prefix(const uint32_t *w)
-+{
-+	const __m256i zero = _mm256_setzero_si256();
-+	__m256i acc = zero;
-+	__m128i half;
-+	size_t i;
-+
-+	UNROLL_TABLE
-+	for (i = 0; i < ARRAY_SIZE(avx2_groups); i++) {
-+		const struct ubc_group8 *g = &avx2_groups[i];
-+		__m256i lo = _mm256_loadu_si256((const __m256i *)(w + g->lo));
-+		__m256i hi = _mm256_loadu_si256((const __m256i *)(w + g->hi));
-+		__m256i test = _mm256_loadu_si256((const __m256i *)g->test);
-+		__m256i dvs = _mm256_loadu_si256((const __m256i *)g->dvs);
-+		__m256i clear, fail;
-+
-+		lo = _mm256_srl_epi32(lo, _mm_cvtsi32_si128(g->lo_shift));
-+		hi = _mm256_srl_epi32(hi, _mm_cvtsi32_si128(g->hi_shift));
-+		clear = _mm256_and_si256(_mm256_xor_si256(lo, hi), test);
-+		clear = _mm256_cmpeq_epi32(clear, zero);
-+		/* The DVs of the lanes where the bit is not g->want. */
-+		fail = g->want ? _mm256_and_si256(clear, dvs) :
-+				 _mm256_andnot_si256(clear, dvs);
-+		acc = _mm256_or_si256(acc, fail);
-+	}
-+
-+	half = _mm_or_si128(_mm256_castsi256_si128(acc),
-+			    _mm256_extracti128_si256(acc, 1));
-+	half = _mm_or_si128(half, _mm_shuffle_epi32(half, 0x4E));
-+	half = _mm_or_si128(half, _mm_shuffle_epi32(half, 0xB1));
-+	return ~(uint32_t)_mm_cvtsi128_si32(half);
-+}
-+
-+SHA1DC_TARGET_AVX2
-+uint32_t sha1dc_ubc_check_avx2(const uint32_t w[80])
-+{
-+	uint32_t mask = avx2_prefix(w);
-+	/* Every check only clears bits, so an empty mask settles it. */
-+	if (!mask)
-+		return 0;
-+	return run_tail(w, mask, avx2_tail_checks, avx2_tail_spans);
-+}
-+
-+#endif /* SHA1DC_HAVE_AVX2 */
++			recompress_portable(from, w, dv->dm, state, ihv2_in, ihv2_out);
++			if (!memcmp(ihv2_out, ihv_out, sizeof(ihv2_out)) ||
++			    (ctx->reduced_round_coll &&
++			     !memcmp(ihv2_in, ihv_in, sizeof(ihv2_in))))
++				return 1;
++		}
+ 	}
+ 	return 0;
+ }
+@@ -366,17 +420,16 @@ static SHA1DC_NOINLINE int attacked(SHA1_CTX *ctx, uint32_t candidates,
+ static inline void process(const struct backend *be, SHA1_CTX *ctx,
+ 			   const unsigned char *block)
+ {
+-	uint32_t w[80], state_58[5], state_65[5], ihv_in[5], candidates;
++	uint32_t w[80], s1[5], s2[5], ihv_in[5], candidates;
+ 
+ 	memcpy(ihv_in, ctx->ihv, sizeof(ihv_in));
+-	be->compress(ctx->ihv, block, w, state_58, state_65);
++	be->compress(ctx->ihv, block, w, s1, s2);
+ 	if (!ctx->detect_coll)
+ 		return;
+ 
+ 	candidates = ctx->ubc_check ? be->ubc_check(w) : 0xFFFFFFFF;
+ 	if (candidates &&
+-	    attacked(ctx, candidates, w, state_58, state_65, ihv_in,
+-		     ctx->ihv)) {
++	    attacked(be, ctx, candidates, w, s1, s2, ihv_in, ctx->ihv)) {
+ 		ctx->found_collision = 1;
+ 		/*
+ 		 * Two more compressions of this block give a digest that the
 diff --git a/sha1dc-accel/x86.c b/sha1dc-accel/x86.c
-new file mode 100644
-index 0000000000..7c942fe4de
---- /dev/null
+index 7c942fe4de..c2a0c71f17 100644
+--- a/sha1dc-accel/x86.c
 +++ b/sha1dc-accel/x86.c
-@@ -0,0 +1,38 @@
-+/*
-+ * The x86-64 parts of sha1.c: detecting what the CPU has.
-+ */
+@@ -1,5 +1,6 @@
+ /*
+- * The x86-64 parts of sha1.c: detecting what the CPU has.
++ * The x86-64 parts of sha1.c: detecting what the CPU has, and the SHA-1
++ * compression and recompression on SHA-NI.
+  */
+ 
+ #include "../git-compat-util.h"
+@@ -35,4 +36,225 @@ int sha1dc_avx2_available(void)
+ 	return cpuid_7(&ebx) && (ebx & (1u << 5));
+ }
+ 
++#ifdef SHA1DC_HAVE_SHANI
 +
-+#include "../git-compat-util.h"
-+#include "internal.h"
-+
-+#ifdef SHA1DC_HAVE_SSE2
-+
-+#include <cpuid.h>
-+
-+/* Leaf 7 of CPUID, subleaf 0, if the CPU has it. */
-+static int cpuid_7(unsigned int *ebx)
++int sha1dc_shani_available(void)
 +{
-+	unsigned int eax, ecx, edx;
-+
-+	if (__get_cpuid_max(0, NULL) < 7)
-+		return 0;
-+	__cpuid_count(7, 0, eax, *ebx, ecx, edx);
-+	return 1;
-+}
-+
-+int sha1dc_avx2_available(void)
-+{
-+	unsigned int eax, ebx, ecx, edx, xcr0_lo, xcr0_hi;
++	unsigned int eax, ebx, ecx, edx;
 +
 +	if (!__get_cpuid(1, &eax, &ebx, &ecx, &edx))
 +		return 0;
-+	/* OSXSAVE and AVX, then whether the OS saves the YMM registers. */
-+	if ((ecx & (1u << 27 | 1u << 28)) != (1u << 27 | 1u << 28))
++	/* SSSE3 and SSE4.1 */
++	if ((ecx & (1u << 9 | 1u << 19)) != (1u << 9 | 1u << 19))
 +		return 0;
-+	__asm__("xgetbv" : "=a"(xcr0_lo), "=d"(xcr0_hi) : "c"(0));
-+	if ((xcr0_lo & 6) != 6)
-+		return 0;
-+	return cpuid_7(&ebx) && (ebx & (1u << 5));
++	return cpuid_7(&ebx) && (ebx & (1u << 29));
 +}
 +
-+#endif /* SHA1DC_HAVE_SSE2 */
-diff --git a/t/unit-tests/u-sha1dc.c b/t/unit-tests/u-sha1dc.c
-index 31fcd68451..15e71fb023 100644
---- a/t/unit-tests/u-sha1dc.c
-+++ b/t/unit-tests/u-sha1dc.c
-@@ -126,6 +126,76 @@ static void every_backend_agrees_with_sha1dc(void)
- 	cl_assert_equal_i(sha1dc_accel_select(orig), 0);
- }
- 
-+/* Asserts only on a mismatch; clar's assertions are too slow to run 10^5 times. */
-+#define check_form(got, want) do { \
-+		uint32_t got_ = (got); \
-+		if (got_ != (want)) \
-+			cl_assert_equal_i(got_, (want)); \
++/*
++ * `sha1rnds4` does four steps at a time, on `abcd` held with A in the top
++ * lane; `sha1nexte` derives the fifth working word for the next group from
++ * the previous `abcd`, which is why two registers alternate as `live` and
++ * `held`. The group of schedule words for steps t..t+3 is held reversed too.
++ * Words 16 to 31 come from `sha1msg1`/`sha1msg2`, the rest from plain SSE
++ * by the recurrence W[t] = (W[t-6] ^ W[t-16] ^ W[t-28] ^ W[t-32]) <<< 2, in
++ * which no word of a group depends on another.
++ */
++
++/* Turns a group round, between step order and the order SHA-NI holds. */
++#define REVERSE 0x1B
++
++#define LOADU(p) _mm_loadu_si128((const __m128i *)(const void *)(p))
++#define STOREU(p, v) _mm_storeu_si128((__m128i *)(void *)(p), (v))
++
++/* Writes group `v` (steps t..t+3, held reversed) to w[t..t+3]. */
++#define SPILL(t, v) STOREU(w + (t), _mm_shuffle_epi32((v), REVERSE))
++
++/* Schedule words 4k..4k+3 for k from 8 on, from groups k-8, k-7, k-4, k-2, k-1. */
++SHA1DC_TARGET_SHANI
++static inline __m128i expand_rol2(__m128i v8, __m128i v7, __m128i v4,
++				  __m128i v2, __m128i v1)
++{
++	__m128i x = _mm_xor_si128(_mm_xor_si128(v8, v7), v4);
++	/* Words t-6 to t-3: the last two of group k-2, the first two of k-1. */
++	x = _mm_xor_si128(x, _mm_alignr_epi8(v2, v1, 8));
++	return _mm_or_si128(_mm_slli_epi32(x, 2), _mm_srli_epi32(x, 30));
++}
++
++/* Schedule words 4k..4k+3 for k from 4 to 7, with the SHA-NI instructions. */
++#define EXPAND_NI(a, b, c, d) \
++	_mm_sha1msg2_epu32(_mm_xor_si128(_mm_sha1msg1_epu32((a), (b)), (c)), (d))
++
++/* One group of four steps on schedule group `t / 4`, spilling it first. */
++#define ROUNDS(t, k, live, held) \
++	do { \
++		SPILL(t, v[(t) / 4]); \
++		live = _mm_sha1nexte_epu32(live, v[(t) / 4]); \
++		held = abcd; \
++		abcd = _mm_sha1rnds4_epu32(abcd, live, k); \
++	} while (0)
++
++/* The same, also storing the state [A, B, C, D, E] before it in `at`. */
++#define ROUNDS_AT(t, k, live, held, at) \
++	do { \
++		SPILL(t, v[(t) / 4]); \
++		live = _mm_sha1nexte_epu32(live, v[(t) / 4]); \
++		STOREU(at, _mm_shuffle_epi32(abcd, REVERSE)); \
++		/* `live` holds E + W[t] in its top lane. */ \
++		at[4] = (uint32_t)_mm_extract_epi32(_mm_sub_epi32(live, v[(t) / 4]), 3); \
++		held = abcd; \
++		abcd = _mm_sha1rnds4_epu32(abcd, live, k); \
++	} while (0)
++
++#define ROL2(k) v[k] = expand_rol2(v[(k) - 8], v[(k) - 7], v[(k) - 4], v[(k) - 2], v[(k) - 1])
++
++SHA1DC_TARGET_SHANI
++void sha1dc_compress_shani(uint32_t ihv[5], const unsigned char *block,
++			   uint32_t w[80], uint32_t at_60[5], uint32_t at_64[5])
++{
++	/* Big-endian words, and the four of a group reversed. */
++	const __m128i swap = _mm_set_epi64x(0x0001020304050607LL,
++					    0x08090A0B0C0D0E0FLL);
++	__m128i abcd = _mm_shuffle_epi32(LOADU(ihv), REVERSE);
++	const __m128i abcd_in = abcd;
++	const __m128i e_in = _mm_set_epi32((int)ihv[4], 0, 0, 0);
++	__m128i e0, e1, v[20];
++
++	v[0] = _mm_shuffle_epi8(LOADU(block), swap);
++	v[1] = _mm_shuffle_epi8(LOADU(block + 16), swap);
++	v[2] = _mm_shuffle_epi8(LOADU(block + 32), swap);
++	v[3] = _mm_shuffle_epi8(LOADU(block + 48), swap);
++
++	SPILL(0, v[0]);
++	e0 = _mm_add_epi32(e_in, v[0]);
++	e1 = abcd;
++	abcd = _mm_sha1rnds4_epu32(abcd, e0, 0);
++	v[4] = EXPAND_NI(v[0], v[1], v[2], v[3]);
++
++	ROUNDS(4, 0, e1, e0);
++	v[5] = EXPAND_NI(v[1], v[2], v[3], v[4]);
++	ROUNDS(8, 0, e0, e1);
++	v[6] = EXPAND_NI(v[2], v[3], v[4], v[5]);
++	ROUNDS(12, 0, e1, e0);
++	v[7] = EXPAND_NI(v[3], v[4], v[5], v[6]);
++	ROUNDS(16, 0, e0, e1);
++	ROL2(8);
++	ROUNDS(20, 1, e1, e0);
++	ROL2(9);
++	ROUNDS(24, 1, e0, e1);
++	ROL2(10);
++	ROUNDS(28, 1, e1, e0);
++	ROL2(11);
++	ROUNDS(32, 1, e0, e1);
++	ROL2(12);
++	ROUNDS(36, 1, e1, e0);
++	ROL2(13);
++	ROUNDS(40, 2, e0, e1);
++	ROL2(14);
++	ROUNDS(44, 2, e1, e0);
++	ROL2(15);
++	ROUNDS(48, 2, e0, e1);
++	ROL2(16);
++	ROUNDS(52, 2, e1, e0);
++	ROL2(17);
++	ROUNDS(56, 2, e0, e1);
++	ROL2(18);
++	ROUNDS_AT(60, 3, e1, e0, at_60);
++	ROL2(19);
++	ROUNDS_AT(64, 3, e0, e1, at_64);
++	ROUNDS(68, 3, e1, e0);
++	ROUNDS(72, 3, e0, e1);
++	ROUNDS(76, 3, e1, e0);
++
++	/* Feed-forward. */
++	e0 = _mm_sha1nexte_epu32(e0, e_in);
++	abcd = _mm_add_epi32(abcd, abcd_in);
++	STOREU(ihv, _mm_shuffle_epi32(abcd, REVERSE));
++	ihv[4] = (uint32_t)_mm_extract_epi32(e0, 3);
++}
++
++/*
++ * The partner block's schedule words for group `g`, in the order the
++ * rounds take them.
++ */
++#define WORDS(g) \
++	_mm_shuffle_epi32(_mm_xor_si128(LOADU(m1 + 4 * (g)), LOADU(dm + 4 * (g))), REVERSE)
++
++/* Four steps. The first of a run adds the fifth word itself. */
++#define GROUP_FIRST(e, g, k) \
++	do { \
++		__m128i live_ = _mm_add_epi32((e), WORDS(g)); \
++		held = abcd; \
++		abcd = _mm_sha1rnds4_epu32(abcd, live_, k); \
++	} while (0)
++#define GROUP(g, k) \
++	do { \
++		__m128i live_ = _mm_sha1nexte_epu32(held, WORDS(g)); \
++		held = abcd; \
++		abcd = _mm_sha1rnds4_epu32(abcd, live_, k); \
 +	} while (0)
 +
 +/*
-+ * Checks every form of the UBC check against sha1dc/'s on `w`, and next to
-+ * it, with each bit flipped in turn if `flip`.
++ * Whether the partner block, whose state at `from` is `state`, ends on
++ * `ihv_out`. From its state at step 60 or 64, it runs out to step 80,
++ * which gives the chaining value an attack would have had to start from,
++ * and then in from that value, which must arrive back at the same state.
 + */
-+static void check_ubc_forms(uint32_t w[80], int flip, int avx2)
++SHA1DC_TARGET_SHANI
++int sha1dc_recompress_shani(enum sha1dc_from from, const uint32_t m1[80],
++			    const uint32_t dm[80], const uint32_t state[5],
++			    const uint32_t ihv_out[5])
 +{
-+	int k;
++	uint32_t at[5], reached[5];
++	__m128i abcd, held, e_at, e_80, e_in;
 +
-+	for (k = 0; k <= (flip ? 80 * 32 : 0); k++) {
-+		uint32_t want;
++	sha1dc_partner_boundary(from, m1, dm, state, at);
++	abcd = _mm_shuffle_epi32(LOADU(at), REVERSE);
 +
-+		if (k)
-+			w[(k - 1) / 32] ^= 1u << ((k - 1) % 32);
-+		ubc_check(w, &want);
-+		check_form(sha1dc_ubc_check_scalar(w), want);
-+#ifdef SHA1DC_HAVE_SSE2
-+		check_form(sha1dc_ubc_check_sse2(w), want);
-+#endif
-+#ifdef SHA1DC_HAVE_AVX2
-+		if (avx2)
-+			check_form(sha1dc_ubc_check_avx2(w), want);
-+#endif
-+#ifdef SHA1DC_HAVE_NEON
-+		check_form(sha1dc_ubc_check_neon(w), want);
-+#endif
-+		(void)avx2;
-+		if (k)
-+			w[(k - 1) / 32] ^= 1u << ((k - 1) % 32);
++	/* Out to step 80, from 60 or from 64. */
++	e_at = _mm_set_epi32((int)at[4], 0, 0, 0);
++	if (from == SHA1DC_FROM_58) {
++		GROUP_FIRST(e_at, 15, 3);
++		GROUP(16, 3);
++	} else {
++		GROUP_FIRST(e_at, 16, 3);
++	}
++	GROUP(17, 3);
++	GROUP(18, 3);
++	GROUP(19, 3);
++
++	/*
++	 * The feed-forward adds the input to the state at 80, so the only
++	 * input that gives this block's output is the output less that state.
++	 */
++	e_80 = _mm_sha1nexte_epu32(held, _mm_setzero_si128());
++	abcd = _mm_sub_epi32(_mm_shuffle_epi32(LOADU(ihv_out), REVERSE), abcd);
++	e_in = _mm_sub_epi32(_mm_set_epi32((int)ihv_out[4], 0, 0, 0), e_80);
++
++	/* In from there, as far as the state the way out started from. */
++	GROUP_FIRST(e_in, 0, 0);
++	GROUP(1, 0);
++	GROUP(2, 0);
++	GROUP(3, 0);
++	GROUP(4, 0);
++	GROUP(5, 1);
++	GROUP(6, 1);
++	GROUP(7, 1);
++	GROUP(8, 1);
++	GROUP(9, 1);
++	GROUP(10, 2);
++	GROUP(11, 2);
++	GROUP(12, 2);
++	GROUP(13, 2);
++	GROUP(14, 2);
++	if (from == SHA1DC_FROM_65)
++		GROUP(15, 3);
++
++	STOREU(reached, _mm_shuffle_epi32(abcd, REVERSE));
++	reached[4] = (uint32_t)_mm_extract_epi32(
++		_mm_sha1nexte_epu32(held, _mm_setzero_si128()), 3);
++	return !memcmp(reached, at, sizeof(at));
++}
++
++#endif /* SHA1DC_HAVE_SHANI */
++
+ #endif /* SHA1DC_HAVE_SSE2 */
+diff --git a/t/unit-tests/u-sha1dc.c b/t/unit-tests/u-sha1dc.c
+index 15e71fb023..5948466cb9 100644
+--- a/t/unit-tests/u-sha1dc.c
++++ b/t/unit-tests/u-sha1dc.c
+@@ -2,7 +2,8 @@
+ #include "hash.h"
+ 
+ /*
+- * Tests sha1dc-accel/ against sha1dc/, which it must agree with exactly.
++ * Tests sha1dc-accel/ against sha1dc/, which it must agree with exactly,
++ * and its parts against the plain SHA-1 step function written out here.
+  */
+ #if defined(SHA1_DC) && !defined(DC_SHA1_EXTERNAL) && !defined(DC_SHA1_NO_ACCEL)
+ #define HAVE_SHA1DC_ACCEL
+@@ -196,6 +197,139 @@ static void ubc_forms_agree_with_sha1dc(void)
+ 	}
+ }
+ 
++#ifdef SHA1DC_HAVE_SHANI
++
++static uint32_t rol(uint32_t x, int n)
++{
++	return (x << n) | (x >> (32 - n));
++}
++
++static uint32_t f_k(int t, uint32_t b, uint32_t c, uint32_t d)
++{
++	if (t < 20)
++		return ((b & c) | (~b & d)) + 0x5A827999;
++	if (t < 40)
++		return (b ^ c ^ d) + 0x6ED9EBA1;
++	if (t < 60)
++		return ((b & c) | (b & d) | (c & d)) + 0x8F1BBCDC;
++	return (b ^ c ^ d) + 0xCA62C1D6;
++}
++
++/* One SHA-1 step forwards, from the state before step t. */
++static void step(uint32_t s[5], int t, uint32_t w)
++{
++	uint32_t a = rol(s[0], 5) + f_k(t, s[1], s[2], s[3]) + s[4] + w;
++	s[4] = s[3];
++	s[3] = s[2];
++	s[2] = rol(s[1], 30);
++	s[1] = s[0];
++	s[0] = a;
++}
++
++/* One SHA-1 step backwards, to the state before step t. */
++static void unstep(uint32_t s[5], int t, uint32_t w)
++{
++	uint32_t a = s[1], b = rol(s[2], 2), c = s[3], d = s[4];
++	s[4] = s[0] - (rol(a, 5) + f_k(t, b, c, d) + w);
++	s[0] = a;
++	s[1] = b;
++	s[2] = c;
++	s[3] = d;
++}
++
++typedef void (*compress_fn)(uint32_t ihv[5], const unsigned char *block,
++			    uint32_t w[80], uint32_t at_60[5], uint32_t at_64[5]);
++typedef int (*recompress_fn)(enum sha1dc_from from, const uint32_t m1[80],
++			     const uint32_t dm[80], const uint32_t state[5],
++			     const uint32_t ihv_out[5]);
++
++static void check_compress(compress_fn compress)
++{
++	int i, t;
++
++	rng_seed(3);
++	for (i = 0; i < 2000; i++) {
++		unsigned char block[64];
++		uint32_t ihv[5], got[5], w[80], at_60[5], at_64[5], s[5];
++
++		for (t = 0; t < 64; t++)
++			block[t] = rng();
++		for (t = 0; t < 5; t++)
++			ihv[t] = got[t] = rng();
++		compress(got, block, w, at_60, at_64);
++
++		memcpy(s, ihv, sizeof(s));
++		for (t = 0; t < 80; t++) {
++			uint32_t want_w = t < 16 ? get_be32(block + 4 * t) :
++				rol(w[t - 3] ^ w[t - 8] ^ w[t - 14] ^ w[t - 16], 1);
++			cl_assert_equal_i(w[t], want_w);
++			if (t == 60)
++				cl_assert(!memcmp(at_60, s, sizeof(s)));
++			if (t == 64)
++				cl_assert(!memcmp(at_64, s, sizeof(s)));
++			step(s, t, w[t]);
++		}
++		for (t = 0; t < 5; t++)
++			cl_assert_equal_i(got[t], ihv[t] + s[t]);
 +	}
 +}
 +
-+static void ubc_forms_agree_with_sha1dc(void)
++/*
++ * A recompression must accept exactly the chaining value the partner
++ * block ends on, and nothing else.
++ */
++static void check_recompress(recompress_fn recompress)
 +{
-+	uint32_t w[80];
-+	int i, k, dv, avx2 = 0;
++	int i, t, d;
 +
-+#ifdef SHA1DC_HAVE_AVX2
-+	/* Once: CPUID can take microseconds under a hypervisor. */
-+	avx2 = sha1dc_avx2_available();
++	rng_seed(4);
++	for (i = 0; i < 50; i++) {
++		uint32_t w[80], state[5];
++
++		for (t = 0; t < 80; t++)
++			w[t] = rng();
++		for (t = 0; t < 5; t++)
++			state[t] = rng();
++
++		for (d = 0; sha1_dvs[d].dvType; d++) {
++			const dv_info_t *dv = &sha1_dvs[d];
++			enum sha1dc_from from = dv->testt == 58 ? SHA1DC_FROM_58 : SHA1DC_FROM_65;
++			uint32_t in[5], out[5];
++			unsigned nudge = rng();
++
++			memcpy(in, state, sizeof(in));
++			for (t = dv->testt - 1; t >= 0; t--)
++				unstep(in, t, w[t] ^ dv->dm[t]);
++			memcpy(out, state, sizeof(out));
++			for (t = dv->testt; t < 80; t++)
++				step(out, t, w[t] ^ dv->dm[t]);
++			for (t = 0; t < 5; t++)
++				out[t] += in[t];
++
++			cl_assert(recompress(from, w, dv->dm, state, out));
++			out[nudge % 5] ^= 1u << (nudge / 5 % 32);
++			cl_assert(!recompress(from, w, dv->dm, state, out));
++		}
++	}
++}
++
 +#endif
-+	rng_seed(2);
-+	for (i = 0; i < 20000; i++) {
-+		for (k = 0; k < 80; k++)
-+			w[k] = rng();
-+		check_ubc_forms(w, 0, avx2);
-+	}
 +
-+	/*
-+	 * Random schedules rarely get past the vector prefix of a form, so
-+	 * look for one that keeps each DV alive, and check around it.
-+	 */
-+	for (dv = 0; dv < 32; dv++) {
-+		uint32_t mask;
++static void hardware_compression(void)
++{
++	int tested = 0;
 +
-+		do {
-+			for (k = 0; k < 80; k++)
-+				w[k] = rng();
-+			ubc_check(w, &mask);
-+		} while (!(mask & (1u << dv)));
-+		check_ubc_forms(w, 1, avx2);
++#ifdef SHA1DC_HAVE_SHANI
++	if (sha1dc_shani_available()) {
++		check_compress(sha1dc_compress_shani);
++		check_recompress(sha1dc_recompress_shani);
++		tested = 1;
 +	}
++#endif
++	if (!tested)
++		cl_skip();
 +}
 +
  #endif /* HAVE_SHA1DC_ACCEL */
  
  #ifdef HAVE_SHA1DC_ACCEL
-@@ -143,3 +213,8 @@ void test_sha1dc__every_backend_agrees_with_sha1dc(void)
+@@ -218,3 +352,8 @@ void test_sha1dc__ubc_forms_agree_with_sha1dc(void)
  {
- 	RUN_OR_SKIP(every_backend_agrees_with_sha1dc);
+ 	RUN_OR_SKIP(ubc_forms_agree_with_sha1dc);
  }
 +
-+void test_sha1dc__ubc_forms_agree_with_sha1dc(void)
++void test_sha1dc__hardware_compression(void)
 +{
-+	RUN_OR_SKIP(ubc_forms_agree_with_sha1dc);
++	RUN_OR_SKIP(hardware_compression);
 +}
 -- 
 2.50.1 (Apple Git-155)
