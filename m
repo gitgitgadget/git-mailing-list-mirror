@@ -1,86 +1,83 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2948E53F6B0
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 17:47:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BD5375ADF
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 18:05:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790704069; cv=none; b=M4+Zt3Fb9DF5vkUcdId7UKxNnbn+9CvIesEjgAMSIVUk9dSy5CQBshonYCwzSz5Pu0zc8FFBLmul3pw9xNQcBmaNUG1+d2ziyztzScwPT39c49LRSAqQqYiaep0TynBZHN3YkSsk7KnNnwpAIpPJXtwnn0HldNMfh9T+NgNpzFk=
+	t=1790705120; cv=none; b=J6iwfjU6hxnjKYrox8ahgohrPufW/L9aeY5cWjxDy+MjCsu+2GDJFFFrBvWCrz/iyqZsXPMQESIOp5nBCQsG2HxLUjU6boOITCH2tRej2Te0iX/Ns9g/yBLGa6vuYao8QEyAnnNIXP566jsCACYNSyfljMroq8GJXiMozFuUZO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790704069; c=relaxed/simple;
-	bh=BwUe/XfIyOKk9GsTuPa+qoX0wbit/gOdJWFmm+vvlm8=;
+	s=arc-20240116; t=1790705120; c=relaxed/simple;
+	bh=zfj7UndRMN2Fht23UPXgQR49CVQZBD18EWqaoUj91t4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VSuCd80attahY9ZXKiVmzlsr1w5SvXWIi+b5WH1UPNPz9w/jVcKisDI9ONNI88zOXZ6o24DNrQkeQ5fSiPUUt5KB3xEZquxqWjlgrUKnkhFKDhal08Xxl1Ab5uWeX8UHctR71UsO1JI8k1FWofJ1Na79Dh4pnX68K8bisr/rD+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Eg3fo6Ri; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DmyAw2ts; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=l8rX/V3XGUQkv5PxbbHKLIyiwMeokEB+ejI0WwwZ1llvwxml61FuUpa/FsEurSUhZ0wY7ySzxYNGobS6XmH5ZrciRXlnU/WbXUruEX2M8/xe7AxQawAd56vr60KHOAaIJbL+Ea+bHyrv/Yfwo7POp3sELhNxQAZgCat4p/wdlz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FNZe2G6o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G/iv2Wqt; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Eg3fo6Ri";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DmyAw2ts"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EC3C57A0271;
-	Tue, 29 Sep 2026 13:47:46 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FNZe2G6o";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G/iv2Wqt"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 22A101D00394;
+	Tue, 29 Sep 2026 14:05:18 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 29 Sep 2026 13:47:47 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 29 Sep 2026 14:05:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790704066; x=1790790466; bh=zRRuCaW+A6
-	Y9IES4iCYsFziJrzbLRABzgXC0myZwgKQ=; b=Eg3fo6RijicQpJ1qOqLa5YNBJF
-	dThD46zV2POEJKyPU787EJS006KQEWTvN/fRfWJst0cmqFbI8Zy6jG0KOPbX6SnG
-	l00hsQb5JcpReOd0zUHnAWDRTItgG3+i45O7D9NAsoTKI5GGGgje3RG5/u/Tzv1q
-	VIEG2ZXUacizwD4OswvWTiNiedTCb5yQwfn21sGXq62UNm1fNicLirC5uRgHYWd4
-	hu0IeZ2DN7r0EgHZNzaDGII57zxWxaWF3kGOLJzMb/HkwHGPutfIVQ0Vc/m91nU/
-	FOIQQbd3Pc1KCKZ9yhT+9aiHtER81KwpufvRJX0Ats9SN5zwVbJm9x0hDtFQ==
+	:subject:to:to; s=fm3; t=1790705117; x=1790791517; bh=/ofqdRm+gE
+	cReYhSIxTU6mCRn36wE49slBFJAvhOMoM=; b=FNZe2G6ovHZxrBpzujNMprfSZi
+	ZO5d3Qrkftpuzpd+ajmBEZWvmrhIMkoQeusWK+k+eTIzRV7YiBJQnBJTJ+SnPKBC
+	+pSossYm0n74Ka8hIjTFuk07Wx+CCZkK7Un/iKIWSQy6CuZJS1aeWVQEUqCz8yX+
+	RMVqPKoBhCYpjauWSM3oTTuGTtP0o5T0WqWYPz4Uc1+eSPULz1HPINXfRLe7goF1
+	WGFlBQCVkAROtaxtt55FWGBPvCH00bVwW8DtZSDz1SDWEt4WxlBrV5kuJmusLCnu
+	pvhLhJ5jZ60XOBtgUCUt6Gq9h0rWeAdKNBKA259uY5pbDSxMD0eTx43J5Smw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790704066; x=1790790466; bh=zRRuCaW+A6Y9IES4iCYsFziJrzbLRABzgXC
-	0myZwgKQ=; b=DmyAw2ts9d2HdOizbwoBTXJxOemx8gXefcSj+OA5cjltsT8x730
-	vXd+7Jt3uS67Kh7sfJpKojPRfuQiRSfIHFO9FqGiyhFbPDmrH2F0OTCmpxyBdKlX
-	nqnfQ3sKyRhkziaEK2uMtnply+eKU/I5yiwe2WOaoizJXfffVX1hhx8MVZ2Sm+NT
-	X08WzkQxm/tPtyNswmiPamxPUPtMraTeKvWN4GABtZYGBZPnklYMdPK6JGaPbUMl
-	T1bxNWi/VLwevBXL4bNsZedBRZcyNVfUqRIG8pTYORRjiC57/YRZz+BBnwaKROjg
-	oc2heuC+3riRqFSDA4uyycI0hEVhuSRvKWQ==
-X-ME-Sender: <xms:wvm7aqUxWYcn7r55pCDf4ohxdDHL7xaCzavHsNFkT13rSPrJhHcoYQ>
-    <xme:wvm7alpcGSxTN8vyU1AVtx3rh50LtRZqUVIyZP-pf2WqUSmvFP0Y9J0fAXIqBVi0r
-    SeuGsO_-dLGS5s06mhVmztFj17v-EFhVSXdM2pgdbKxLVUpfkFMRKM>
-X-ME-Received: <xmr:wvm7aknsSVI_crHMIG8EAuxQeg0WweJHKLH1GSxozjgzcfhZKSGCU5WH5dtThtw8eSAR_bbLMsDAngtL9aHUX1inVbJ5MD9N1Srt>
-X-ME-Proxy-Cause: dmFkZTF5LzTpqBo7e1SgYqJ/LxPJoRtujM7mrBzUfrRirR36lOb5ojA1RIrrdRSvYaB/2x
-    pXLKi+gco+DtRb1qfPFBWiDQbIp+WrCSUgBeGChgdUEl+uPaXQIg5YKvQrA2JnIEjpEVDF
-    aaJfHtpKy1AqBykrmf7R50eYQwzjMYUqK94sbbUJMt15ZxdLpMGvZTVOFS8JA9P5u/Hk4y
-    n/RxYdkoEf1WjzE2rNppDqRJIbO0W/QsoQinR62X24fcMjP/k/aIeLsbsM5x3kvFzzdTKL
-    0bU+znbWZwf3fMkU9TCmNAd4sIKCYCEZa84So2Rc9ApDGhOkUhEWSL/QP2n1JUozZUYUf5
-    Bx1Q4BpjXAMXocJ87hEgVGYR8p8CWWpDPXBz+6PzSy6FcwcLyX5UM2FxOFpQb1LwZTfWC+
-    gTr2tS7BBchxy9T3X03RzJ6IYtAxwbReqgIWezcJ3dIsA7jtdfVNMYavL9YDEb1u5sfoVI
-    tvPaOY6dpDF4AqolpZv3QbVveUJNgw337xudS0vQUx+t+sxWUE7933cALFv2BnSr5x9+EF
-    1KKIEDVgQBTyavenqNldniXjYe80SUXiwGUnyzAv684t6ePpmgAdmM8Ub6Q6PtgEMIHsR0
-    Jiehi7GQVXn9iTfHKWZFemaV+56nc9h5EpyKAbjJnqBb2k/1/FKRa9ML6kIw
-X-ME-Proxy: <xmx:wvm7at1O-AmS2ViXva-Zj3GdaNFhbHP2DrZ6ph7kbh2utuTe2473AQ>
-    <xmx:wvm7apSwjteBV_i4fWgpun5lQObNuhIM0nUPR-LkeTfQB6ngc-atkw>
-    <xmx:wvm7auwkjvuXaqQZCRRfCGq1uTCSwLo_q1ocPkowtxK0WtTdy3NoTw>
-    <xmx:wvm7ahARBQV9ibWLesRMP789autSHE8CdiB2LbSoopRrCHdZH19ofw>
-    <xmx:wvm7arY5I84nzO1UcwCg7G6e0ZkWyVBbCiMus0VvKD6s79DqoQpdHVRf>
+	1790705117; x=1790791517; bh=/ofqdRm+gEcReYhSIxTU6mCRn36wE49slBF
+	JAvhOMoM=; b=G/iv2Wqtq1YWQgEa1XFc2L23hydcT91bjP//NdqZ8KPURvYDeYz
+	N3mHFV3plkUd8q9cSlPI6YXvVtkmYUxSjjja8HAQ2lxc8DOgxO6/NatsxUv6i2Dl
+	EmHMWxOw85UbtcJXV2SoLdfPglDkZwdEtPYB+Y91U9/ScDaC5mSOfIN6O4aVWF7c
+	ndZqbh5KXIezaNlGMW3KQQM5QtYonUSQ3MYPN1mYwZFLaTLqwCf+rf76dlJKbzJI
+	kLwiM846bMpIieVqylB9vxIGYB+WxOVIQoNQzkRAFA/pwI5QMKEfE02yHtmXxkyr
+	EpKKjHX09+Scf02jQl3x1EvQAZ5OzXBVnJA==
+X-ME-Sender: <xms:3f27atJaYbCmG6JOZ1v1cndzbrvYGGPgN75-lUiDONTYY3CQDEtTBw>
+    <xme:3f27agIY08mcI_iQr05ntjmkKrxp1fun5F3YqkmJ6DtsS6mLco5mC9D3F2p7kafWR
+    XWx1EXj8wrxSs4FwyTm80Ns75U4HeczH3UrRsDGDM8APmUyjLUa5TU>
+X-ME-Received: <xmr:3f27aqsSNeIpMBDbCzYe8Qt26MW6LKv5L2JiEUBoC-F0gMNdFc6FT0FXWJDVZ9CXl497RorBsDYML3unybdp4tlcv4iraKuwaJ5l>
+X-ME-Proxy-Cause: dmFkZTGKM5N8tErj9lbyN16oPFJEHXnLiEa99osmvvZhnGUgHjd4+XL5beB7w5AeR8hbal
+    8eMFf0+kh7oLIIa/cBVQaSIsG3jf5MPMYRwZLEJPj4Iw8JiyTSQEtVmmM+GPT5bgrUhWnq
+    wkG2DBzU7u6o73LMraneMh7QUKNjap7t9bCRwuPuonIjIVyygVyVGTDjl/Rbm+8Ko7T5nG
+    0uTdj6lza5zImrBXeXLL7zx/tk3l/bIpZT2p7BesQvwZfFfQv7SOYmdr/ZHIolxjp541Z1
+    jrWOQZ9pwYy3c1uX8TapeHxT89iomEp0UMH6PEW6EgK4DlSX6NTj4IZJWGTCRQnbI3xxFZ
+    iRQnPg8UBEgktFA1X0iWnwNPECJ7ZBn4trHYtmfW89nyMRYdXBcGIViOkFSdd2m7XqkqKF
+    kuRvR53XAhYOQqamRzPMtnwLThryMWUiiPRQDN/rHOlPXDcQu7tAFiteILs6FssctUN6jd
+    p3rY3ZnNamU7FtnVhlwzwD1xSclIoqLqKovzbrH6Ut7xW5ZXuz23IxABz4RyHiITcxgcPo
+    GYNwKKkCflLgTv6ffAi2LTCQSw/p96x+L4LSLxr5LSdTe+igLjkS9XIdn2du7fxp0h/1Lh
+    WQfogBQj4csO2vc1CWwRFL1948w8QVeTvrJMS/Qo0YwXWvqa9JqrGDwuE+QQ
+X-ME-Proxy: <xmx:3f27atSiIljY0gGE1t3CFk_RlB3CBFal7TQ8J0OfzkQ93x5m4Ct6-w>
+    <xmx:3f27agMCu0V09Gpz7m-6Dw2frp7vBnePvolCHMWu_fQJ6HfIAFgMgw>
+    <xmx:3f27aibbyHcT_3MAai23BTNVpWWxLIbVrfSlRQMuWNu85NJRGxmqTg>
+    <xmx:3f27aqyGXPgGYqFHTfNvliaUlGItQaMWoaQCA70EuQajUdO3YeMhFQ>
+    <xmx:3f27ajvBcNTNRfLrlMvGjWRipDYCRyC2PNrS7wnGV97B-p29RHmW7DCj>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Sep 2026 13:47:46 -0400 (EDT)
+ 29 Sep 2026 14:05:17 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Patrick Steinhardt <ps@pks.im>,  Karthik
- Nayak <karthik.188@gmail.com>,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH v4 5/5] builtin/upload-pack: don't disable lazy fetching
- on trusted repo
-In-Reply-To: <20260928133846.2094261-6-christian.couder@gmail.com> (Christian
-	Couder's message of "Mon, 28 Sep 2026 15:38:46 +0200")
-References: <20260908164129.560396-1-christian.couder@gmail.com>
-	<20260928133846.2094261-1-christian.couder@gmail.com>
-	<20260928133846.2094261-6-christian.couder@gmail.com>
-Date: Tue, 29 Sep 2026 10:47:45 -0700
-Message-ID: <xmqqse2sgda6.fsf@gitster.g>
+To: Tyler Cipriani <tyler@tylercipriani.com>
+Cc: Aleksei Sviridkin <f@lex.la>,  git@vger.kernel.org
+Subject: Re: [PATCH v3] push: fix --force-if-includes when remote-tracking
+ ref has no reflog
+In-Reply-To: <arsP8IE6LuAKzYE6@localhost.localdomain> (Tyler Cipriani's
+	message of "Mon, 28 Sep 2026 19:10:08 -0600")
+References: <20260903010547.85469-1-f@lex.la>
+	<20260905171330.34646-1-f@lex.la>
+	<arsP8IE6LuAKzYE6@localhost.localdomain>
+Date: Tue, 29 Sep 2026 11:05:15 -0700
+Message-ID: <xmqqo6dggch0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,71 +87,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Tyler Cipriani <tyler@tylercipriani.com> writes:
 
->  Documentation/config/uploadpack.adoc  |  49 +++++++++
->  Documentation/git-upload-pack.adoc    |   5 +
->  Documentation/git.adoc                |   4 +-
->  builtin/upload-pack.c                 |  19 +++-
->  t/t5710-promisor-remote-capability.sh | 142 ++++++++++++++++++++++++++
->  5 files changed, 217 insertions(+), 2 deletions(-)
+> Minor nit: surrounding tests in t/t5533-push-cas.sh use
+> setup_src_dup_dst, which would simplify the test setup.
+>
+> I'd be happy to give a Reviewed-by once the log message is clearer.
 
-The diffstat above is pleasing to see, with ample documentation to
-help users, tests with (hopefully) reasonable coverage, and a
-minimal amount of actual code changes to enable the feature, thanks
-to the preparatory work done in earlier steps.
-
-> +uploadpack.lazyFetchTrusted::
-> +	A multi-valued configuration variable, each of which contains the
-> +	absolute local path of a repository that `upload-pack` is allowed to
-> +	lazily fetch missing objects for.
-
-"each of which" lacks a plural noun to modify.  Perhaps
-
-	each value of which specifies the absolute local path of a
-	repository from which upload-pack is allowed to lazily fetch
-	missing objects.
-
-> ++
-> +A repository is identified by its git directory, i.e. the `.git`
-
-"i.e." -> "i.e.," (similarly "e.g." -> "e.g.," below).
-
-> diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
-> index 32831fb879..53e76deb23 100644
-> --- a/builtin/upload-pack.c
-> +++ b/builtin/upload-pack.c
-> @@ -46,7 +46,6 @@ int cmd_upload_pack(int argc,
->  	packet_trace_identity("upload-pack");
->  	disable_replace_refs();
->  	save_commit_buffer = 0;
-> -	xsetenv(NO_LAZY_FETCH_ENVIRONMENT, "1", 0);
->  
->  	argc = parse_options(argc, argv, prefix, options, upload_pack_usage, 0);
->  
-> @@ -62,6 +61,24 @@ int cmd_upload_pack(int argc,
->  	if (!enter_repo(the_repository, dir, enter_repo_flags))
->  		die("'%s' does not appear to be a git repository", dir);
->  
-> +	/*
-> +	 * Lazily fetching while serving a client would run `git fetch`,
-> +	 * which may execute arbitrary commands from the configuration
-> +	 * and hooks of the served repo, so we disable it by default as
-> +	 * we trust nobody. There are two ways for a server operator to
-> +	 * allow it though:
-> +	 *
-> +	 *   - if GIT_NO_LAZY_FETCH is already set, we leave it alone and
-> +	 *     honor whatever the operator put there,
-> +	 *
-> +	 *   - otherwise, if the served repo is in the
-> +	 *     "uploadpack.lazyFetchTrusted" protected allowlist, we
-> +	 *     don't disable lazy fetching.
-> +	 */
-> +	if (!getenv(NO_LAZY_FETCH_ENVIRONMENT) &&
-> +	    !upload_pack_lazy_fetch_trusted(the_repository))
-> +		xsetenv(NO_LAZY_FETCH_ENVIRONMENT, "1", 1);
-> +
-
-OK, the logic is so trivially obvious and clear that it wouldn't
-even need the above comment.  Very nice.
-
+Thanks.  Just FYI, the patch has textual conflicts in t5533 with
+your tc/push-force-if-includes-fixes topic, but the resolution was
+trivial.
