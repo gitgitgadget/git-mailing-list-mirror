@@ -1,155 +1,153 @@
-Received: from mail-pj2-f39.google.com (mail-pj2-f39.google.com [74.125.227.167])
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE23515987
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 11:38:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F1E501293
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 11:48:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.141
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790681935; cv=pass; b=D4t1YpN2wRlxw1/78MDqdORRSfI4vZ6icuFDoutH1pKc8VQkTGdYKHuwTQhQQV1wYqUAewjpSC4DRhiImot1FWrwSRhsDFxvL5PocUc0e2Gih6852s22ABPcLTqhJweyDHR7XcTZ1WnKYk6uGNgQnrlFQuG0UxRs3ib56BuNVtw=
+	t=1790682502; cv=pass; b=TRBG6K79DgKA+hQ5lAL0d+QQwGXqBRl0gjSRn17eiT5tY3Sg5E8aPXNl2oD1A00THjT9+spZ9G+pQ1MuJ4zzdW1NbW2au3wjdLr9hVNJyGXm5fO2yKj1+Dcj1hRZBS8JY28Dr121b7lI9YBK3pzTNJNINdeBvC5tlL+IhNWei44=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790681935; c=relaxed/simple;
-	bh=bylyYDJr+HD6/PqCn7l0U2G+KKURReTsy9lRhEjLyYk=;
+	s=arc-20240116; t=1790682502; c=relaxed/simple;
+	bh=HofOdsvEvhfR4SGLORATKinaUPRb2YtDWAeHqTpO+KQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Y57GqmOoNvvMUEHBXuiMaoagrZwBuoZYBIdFIRwgHUKDVRFOwNEhujZPKHmrKOOFWVcUEzm9qM0gRYmzEMAuPWbdbXRF+PhTwQRIPaKNlnbl/6qGIsviVKHjzIn/TTQe365Z3xdsAlGiXsOBKWs3LXNOho57wsG2pWs6J3NKUb0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bPgB0+Fx; arc=pass smtp.client-ip=74.125.227.167
+	 To:Cc:Content-Type; b=orqNmgNOM5QliD0ygRxcTxsovXZ0U9qNFwjm5UXFP7VXzBz2ADsJeui5A22wXrtQ3xInxlI+GBOlEiPj7LAFKNl5/qpCjXmkDkK5JgSAH8WnFYor1OFugUViSNvwndafYlb7RSPS1XOtKdlAka7euEsXIHuZ3ND20a/3oaaCmm4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gt5mE0KU; arc=pass smtp.client-ip=74.125.227.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bPgB0+Fx"
-Received: by mail-pj2-f39.google.com with SMTP id 98e67ed59e1d1-3a498cb99b3so396846a91.0
-        for <git@vger.kernel.org>; Tue, 29 Sep 2026 04:38:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790681933; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gt5mE0KU"
+Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2d747f01363so23594395ad.2
+        for <git@vger.kernel.org>; Tue, 29 Sep 2026 04:48:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790682500; cv=none;
         d=google.com; s=arc-20260327;
-        b=WyFu3vBRpiL2zuRzXUyEEGrpOngZLNfPPph0CgXLzqJ0wlsOlIaZJM5QloA95eNho9
-         QkiNeFBgbwZ0d6tT0cyvW18jgPQshmkjzWFfQ5FbFl3znP+dmQPyV+KK2PVvleXUjNxU
-         h1PfO1SlGxbrim2GY590FmWpSFtHWGhooEQRLyrgTVLtFmHqNcPdno8ol0po7bIuT43R
-         xSE2L8eL1/vDbW18KKJf26Qg6htwdjMfE138RfOxZWhdnSlBu/1fgrCJ+2gfob7Fbtdb
-         TynfEXqJ9SStK8C5aFnrMhkYWYv26HFyLkP4tPZFEEHp1xJMP2E/BE3dZxnJE7yCp2dy
-         LoHQ==
+        b=PxdCfWLREwz9zQ6JzphNxL3SRwm2A6dZivJu6Q/nAp8aXfeVTFfObzCbDO2/hxNnrB
+         jg973SdHZKPc/L0kaPbHsMmuCimxf1zx1d/g9fXrb589oKmKam4MdnZQn3TGcFlVggAA
+         fs8fynRhJnlBpC3RT9/7ZQ0Hk+mwjz6ZwKQhXtcyL6YrbrdEOEADti9HaxMepAFBSv2v
+         4Bg0B436YlarC8gfl+fp+SxSPqwNNDVUMfvpy8dQ0hHbNf8M1/fYRCQRER+9AEH1Mdub
+         xJJQi/tMqw3NHcDOYlNikVQEcxAW9QI9y09UEW5bjADUqKdCZ3+D/Ue+6a9EYgx/Kjg+
+         VhDw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=Ry9onfbAIlMSnJoWhp+p36hj1rTuTYxsjK5zYEPs+gM=;
-        fh=Yc5tcaQn2ra69+RkkQeLK6T+AKoRLmdoMcPAvgmZadw=;
-        b=eDagoXR2dM86U+kvtjNn+G2OqzB/oecK+DGKr3yGFn+RzPkTdyk/JWqVBv5SKSfBZu
-         SCiohI5qdUsVUXa32yCJbxb66J3gHaxCMu4Z0t/hjUZtOGBmgioa5neSy4+Vhd9GhSuL
-         /VzdVPdxMjaXN8w0b6uAuF9RfVURl8SCrp311JulICVMLG6RC76nq1WYA+FrJ6mIJDJY
-         J2N+GdvchbXrD6seaAZNmx10BJSdFMkyd+a7J1pcwNh31Ut5B9VK+9jbCNDWol1V6B+b
-         eSm+vd0rOtrzTBU8aFf9U+cxYypTXeBbCe4eYEeQtVHeMiurvP9DlYWL/JIAzA0s7hhR
-         MdJQ==;
+        bh=JRZH3wpSw137oKuhyPsGTaMzW3pc1c3bKkJAhsQeVBc=;
+        fh=RSj3hG9dGVMqrRdGTcNXHMDg/DJuaXpFWRZOmnoml/s=;
+        b=LfAJ1wwDSrJoRvgo5aP42pRlo0Bu0LNflxzA0X0WHrSGQZDAaAgNZ1iS3dGMUX5Bgz
+         zouBO6hIC126WrdKE8iDLCTGU7+8YKtUgN80CVzapvS5vxa501QwfiTCOnH07Rd/qS57
+         DinWinuLsq/+TAucTr4rAmCbRvD6QbjyrSq8Wpfa4thxbefBNy7JBxPFeTOXDUL1Hpka
+         mcHYwQ+J2EEe4LV/CkMwELQ2iR/HMJJavfAXKGXS/ecj+vrFYSBs2MAJAEE6togxoDtn
+         XzcO6ObBtEwsT75/KjMW4KLuCSOLyY1VmswgvuGm2DWCj9Hjemp9rq/gOn2OllvM7VBP
+         IZZg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790681933; x=1791286733; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790682500; x=1791287300; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=Ry9onfbAIlMSnJoWhp+p36hj1rTuTYxsjK5zYEPs+gM=;
-        b=bPgB0+FxoqZ7dVlYt5Vaui0PPcF0hmI043UuOp8Cio4EseRSntkRBPM18OXNHV/Bpk
-         FFMfZMMWYKtcjIJaGCnsFFNw8bx9SVbvTcP80rHGItOnyG5RtdeHQaBpzLCtcu/YaosH
-         f8EuBjWTToNvS0+crR+s4s0ZaYterrv6cNAaw9qLMedXVy/KeD0ew+q/Na/rWmnfueXy
-         FM6qsZRfqxlxrS0Sj9hv4eJmRBaWCL0+XZy2fDpVxGrFKgApsiF6jcXPKWgoygMf7fDd
-         wNqMoRYNQzblXfrb9beE95MZwa3e+FpfKRB9tis6hL0YkmVh1GXuG37isJRMLT7cgCmr
-         NdBg==
+        bh=JRZH3wpSw137oKuhyPsGTaMzW3pc1c3bKkJAhsQeVBc=;
+        b=Gt5mE0KUYcl1jdiE9E+jkNxZ2AxEN1rcYib1PY+JqaySc8fHjyAtSITR5HXHFqbFdF
+         TBiHQyC9pK0VSnximRvKgCv0wzS9/6e2zaQKh7aXrthEj7Fp6IkRpnChQ+dyBwkxHeut
+         w7u+CvFtxwNwezFxAQhZ4si43oyuBYAVrEQCx7jytfr2RXVTIPqJwWgoB8MaGT8ZIfDo
+         eeL1VfBLXNkqht3CFfFIUfSLqkII+U4VXJ8zvNj3BNvfl/MNM7Qs6LFLMwey/GNFEWax
+         GgOUMrh3RaoPGWk8FSbcDcFwXgfu1sYotR98zP4FZ3B99L1KS2VMLym4vBV2U0nJz6+J
+         ORcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790681933; x=1791286733;
+        d=1e100.net; s=20260707; t=1790682500; x=1791287300;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Ry9onfbAIlMSnJoWhp+p36hj1rTuTYxsjK5zYEPs+gM=;
-        b=Ai2WCCrfrogbbrIbqIhJTfjGehkvsenaeS+qROkmq11jV9m+4r2TKghqebUs+xyrhY
-         ph1/9M+LbhVH1ne+Pw/Z6UzAXW+Cnc0sUEDfLIh10/7HfP8CiKX8/O80wOz53HCeVGQi
-         xc2h0G+lZKnuNGTgZflnZQRjWLxB9d5YSQ75fc7P9UGazpFIJYYDIJfaST0yrEehy0gh
-         R7POiRs/sCRx6J6YvpwnYKqncBvVyS47EYtM7uVmI6v6311z+A8XsxZw4/sQv9BmHfeV
-         THNVPcaCKzCCse9ItapqNehq6fEBrJ8GlCnF3HnPLeD7dF7QzFBOeFbRfrFT2kNIRA6J
-         jAkg==
-X-Forwarded-Encrypted: i=1; AKwUvByxZ4v2XI7tpi1X+z2a7CroelgdoK0nzDTo43Oa3Px+MSD8RFOEDLT/XBHmAL6Ehm3cXeo=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIhH+eyUeuYGS5qjgJnK/cr3Soxt/V1d+fG4CG2hBqAIqy30ovC
-	IYfWRyRfviLN1UL51AUOGZVfSR/dLfiPwYKdAd2Ppk+KtzfUcvMwiIIH1z2e9INVEOuz79pu4v7
-	chDPSRS5ERMmAOfi0jFUvOhOqYPhL6Tg=
-X-Gm-Gg: AYBFou3ReLKe+RuCAd3lVWp9e1T/do2HdDzhEaNetbswX9wfKD/L4ot1IWn5NqX0h6J
-	5VHDKm4Aoz3LEypFPlWSnQaprrAMWTLiXbEjXFjHGQhwPDhJimdQ8qdVDW++vasK4OTY1PoXLOo
-	fH9X6SNyVBe1LNo73xBHzNgujBhkvcHtvOYCXULKYU9sUwJTSjw1zjR8sbZBD1h2h4yNXfgKVrV
-	v3ZR/2Te7/ts24U4SlTJGvW2GEwT9V8994+fmvANGcjj9owGjDl6XhON/UuPdgVbllV/XqZefcO
-	v1McPKct5ip9QJDBTDJFl73twffrjJwt8MGnocZTMJyf3d9Fk6oDXzESbi9H3Ot3NQgHcr667xg
-	W53j3FQFSFRdVB75mJJw3ynIeKpEQpDFBZj65U1GWG8PulaUKfdBKxk51xgs4H5yLRa7wYdezhn
-	w+Yj4fewDs
-X-Received: by 2002:a17:90b:524a:b0:3a4:71b7:eb63 with SMTP id
- 98e67ed59e1d1-3a471b7f585mr3210226a91.10.1790681933226; Tue, 29 Sep 2026
- 04:38:53 -0700 (PDT)
+        bh=JRZH3wpSw137oKuhyPsGTaMzW3pc1c3bKkJAhsQeVBc=;
+        b=yqLP/amtKIhRNudJUTYoa/29HSQ53yuqDu6kYazMIYfwUinmgWLqpE1Zw11c98yQzn
+         F+UaXiHnLs0tf710XlCicXfUVVCyqP2M5DVSX6iaQ/aLkEodc0tD9/xvAUA3tZz/dc73
+         5FRPaAXRUsBy0DslLXJJY7Lx//t+Uoqcm5tBjCO6F4X6srOaUvJJAlJivT0J39B0SM4o
+         HGJFrMak3UZ3KQDaVgTcR389Nl0qdJZqneCzxh6y09bDRP+gY6e5LdusllxRup5Q7oVj
+         sKyc6J9UjLWYOCeqEjjDWyCoEGJZCaNqnva4RCxohU2jojgya1DudUYfS8nIbWqzcw0p
+         e9RQ==
+X-Gm-Message-State: AFuF++mEg9w2gWQwzQUI2tEaz5h+4PsG9quoyS+PnTCSGK2yMA5Hjkmd
+	/ygUGLj9kRmQ2+rGFCIG9xEuxyf/nf5ZFmhShMnmXXQoI/xHl6W3YcrrCflsZF5K+/82MyI/FWW
+	o26NTtL47nW+24A5bdNcded4tTLG3Fqk=
+X-Gm-Gg: AYBFou0gzlbiiQrz1m+xPAX1kCKxLsQzyNyttr9E7QnIyvI5Q2JJPZuKg3yw2++1J0z
+	GJ3b9p0vOLWKEyS2hss5rrQMESUMjvlSOSxME40bhH4RhpAwtK/ulVJJ/RY3A70CLVAhUKhpLuM
+	g060VuPh60cgcNRhp+Q2MEHUuCpB7wgqL7Mm6NbVDeBYf7GJqQJxZ+n/VVs5RoMEGEbyMxEk/6Z
+	UHjczTNk3arH841hTMdvmGgJBktvMhFKAA3M7pHzac8a+gNVRRIGl3wtcLV2JTXWl06SUdDWa4W
+	fiFMNd1N/jCMjvGROqYeVF5TX1F5bq+7u5LfGhPcIrzSr8E9iCInFK3ytgrqpYqiVoM/Qyva025
+	arTqdUqpLfeMS439QaE9vsgT4l4WTxtP5VTp3bW5aXBHwFqo9xG7mPxn4eXZX+al/q1rqYC5YkQ
+	==
+X-Received: by 2002:a17:902:fc44:b0:2e2:c602:2072 with SMTP id
+ d9443c01a7336-2e2c602252dmr16868895ad.36.1790682500073; Tue, 29 Sep 2026
+ 04:48:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1790168285.git.ben.knoble@gmail.com> <cover.1790425008.git.ben.knoble@gmail.com>
- <xmqqjyo6qz3z.fsf@gitster.g> <346c4209-9600-4302-817f-e8f6b364ce6a@gmail.com>
- <CALnO6CCXT1HHUwL8+eYGVL443nO0eoC7vhpoLvC3RXjp39XQYA@mail.gmail.com>
- <CALnO6CDOo35HAfqn_h2CUUdux9LeOkjM8OdFLkkS1nVexijUvw@mail.gmail.com>
- <CALnO6CAf491aNhqcb7K7YcNTSTNLAESmqeLwzEGk_S=ZsOjG9Q@mail.gmail.com>
- <a59c4225-f093-4001-b77a-2083dfecce6e@gmail.com> <CAA0xjtpzaWH10pHOQ5j-5Hp1yHEKTDFbsicG6E4w=5nxb_irWw@mail.gmail.com>
- <CALnO6CC-eop86W3VREwGz0seG1pmtd0qS968TyP=mo_G+ZMrSA@mail.gmail.com>
-In-Reply-To: <CALnO6CC-eop86W3VREwGz0seG1pmtd0qS968TyP=mo_G+ZMrSA@mail.gmail.com>
+References: <pull.2243.git.1790606282769.gitgitgadget@gmail.com> <89E3CD2E-8366-4C5A-B3A4-8F44AC5F89DF@gmail.com>
+In-Reply-To: <89E3CD2E-8366-4C5A-B3A4-8F44AC5F89DF@gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 29 Sep 2026 07:38:40 -0400
-X-Gm-Features: AclHuK8Fpua01pe5GjNQi3pAq7AIKI7TviwLF_pRdB29x2uDIp5B99RUpyfpnuo
-Message-ID: <CALnO6CDnYmmVfcTrkuQ=hTUDKBAAspYrSxmwM+yVUSnJinN_Xw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] stash: clean up index-mode test merge
-To: Thomas Bachem <mail@thomasbachem.com>
-Cc: phillip.wood@dunelm.org.uk, gitster@pobox.com, git@vger.kernel.org, 
-	eli@barzilay.org, ps@pks.im
+Date: Tue, 29 Sep 2026 07:48:08 -0400
+X-Gm-Features: AclHuK-W6WFzdqw8aOHvElMpDV9DZ3vHLl3GJAtA1AbZpgjqLCrsn_X3_LvWh8E
+Message-ID: <CALnO6CDMTHw9EqvvD5_s7WhFVhukr936ddhuJwdOhdJGdwmrRA@mail.gmail.com>
+Subject: Re: [PATCH] t5520: don't expire reflogs where it matters
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>, 
+	Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
+	Thomas Bachem <mail@thomasbachem.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 28, 2026 at 11:36=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.co=
-m> wrote:
+On Mon, Sep 28, 2026 at 4:45=E2=80=AFPM Ben Knoble <ben.knoble@gmail.com> w=
+rote:
 >
-> Let me see if I understand correctly=E2=80=A6
 >
-> On Mon, Sep 28, 2026 at 10:50=E2=80=AFAM Thomas Bachem <mail@thomasbachem=
-.com> wrote:
+> > Le 28 sept. 2026 =C3=A0 10:38, Thomas Bachem via GitGitGadget <gitgitga=
+dget@gmail.com> a =C3=A9crit :
 > >
-> > On Mon, Sep 28, 2026 at 3:45 PM Phillip Wood <phillip.wood123@gmail.com=
-> wrote:
-> > > Oh, when I was thinking about this over lunch I did wonder if that mi=
-ght
-> > > be the culprit. Previously we didn't run "git maintenance --auto" aft=
-er
-> > > a rebase with the 'merge' backend but with that topic we do, and beca=
-use
-> > > we set GIT_COMMITTER_DATE to sometime in 2005, if 'git reflog expire'
-> > > gets triggered it will expire the reflog entries that 'git pull
-> > > --rebase' relies on. As you suggested in another mail, I assume this
+> > =EF=BB=BFFrom: Thomas Bachem <mail@thomasbachem.com>
+> >
+> > The "--rebase -f with rebased upstream" test computes its fork point
+> > from the reflog of refs/remotes/me/copy, and the entry it needs is
+> > the one that the fetch of the test before it wrote. Like every reflog
+> > entry the suite writes after test_tick, it is dated 2005, so the
+> > first "git reflog expire --all" after that fetch removes it. Pull
+> > then finds no fork point and rebases onto the merge head with the
+> > merge head as the upstream, and the rewound commits come back as a
+> > conflict.
+> >
+> > Since 452b12c2e0 (builtin/maintenance: use "geometric" strategy by
+> > default, 2026-02-24) auto maintenance runs that expiry once the reflog
+> > of HEAD holds a hundred entries it would remove, the default of
+> > maintenance.reflog-expire.auto. Which run crosses the threshold
+> > depends on the entries and maintenance runs before it, so the script
+> > passed by chance: a stash topic that no longer runs "git reset" from
+> > "stash apply --index" and a rebase topic that runs auto maintenance
+> > at the end of "git rebase" together move the expiry between the two
+> > tests.
+> >
+> > Pin the expiry as ea7d894f44 (t34xx: don't expire reflogs where it
+> > matters, 2026-02-24) did for the rebase tests. That covers a "git gc"
+> > as well, which expires reflogs on its own, where turning off the auto
+> > trigger of the reflog-expire task alone would not.
+> >
+> > Reported-by: Junio C Hamano <gitster@pobox.com>
+> > Helped-by: D. Ben Knoble <ben.knoble@gmail.com>
+> > Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> > Assisted-by: Claude Fable 5.1
+> > Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
+> > ---
+> >    t5520: don't expire reflogs where it matters
+> >
+> >    The t5520 failure Junio saw in 'seen' with Ben Knoble's stash series=
+,
+> >    bisected by Ben to tb/rerere-lock-grace and taken apart in the threa=
+d:
+> >    https://lore.kernel.org/git/a59c4225-f093-4001-b77a-2083dfecce6e@gma=
+il.com/
 >
-> > "git pull --rebase" computes the fork point before it fetches, from
-> > the reflog of refs/remotes/me/copy,
->
-> This is described by the manual for git-rebase under --fork-point,
-> which is on unless we have an <upstream> or --keep-base (modulo
-> config). Put a pin in this.
+> Junio, if it=E2=80=99s simpler for you this way: I=E2=80=99ll just pick t=
+his patch into my series rather than wait for it to appear in seen and recr=
+eate my topic on master + it.
 
-
-> But here's what I can't figure out, returning to that pin from
-> earlier: I was a bit surprised to see mention of rebase reading
-> reflogs! When I remembered --fork-point, I was even more curious (but
-> at least it's obvious that rebase will read the reflogs in some
-> scenarios).
->
-> What confuses me is that builtin/pull.c:run_rebase() sure looks like
-> it provides an <upstream> to the command invocation, so shouldn't
-> --fork-point and reflog use be disabled????
-
-Indeed, from GIT_TRACE2 output I can see we do run
-
-    git rebase --no-autostash --onto ae98=E2=80=A6 f29a=E2=80=A6
-
-but well before that we run
-
-    git merge-base --fork-point refs/remotes/me/copy to-rebase
-
-which is then presumably fed down to the rebase. Interesting.
-
---=20
-D. Ben Knoble
+I've confirmed this changes fixes the test interaction between our two topi=
+cs.
