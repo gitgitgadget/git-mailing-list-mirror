@@ -1,41 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127DF38D3F7
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 20:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B182C347FC0
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 20:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790714520; cv=none; b=SMybSGQaTaK8aSI+5MVRCf7H0BTnxX2yjXr3vvduOPrPAO86ebkBLBZ2qUCKBnkS/NwMVONBeQPrH7yoooJ+43G3CKeqRvkCTYIjYpoIezw5ioQQoC7N0Z/Da905mzfG2cyo/xfu+2FPs5r6NVi7Hn07sT/yPggdK6w/wkffJmc=
+	t=1790714604; cv=none; b=ll0ZIGq4lTTbX8bQIKSc6BXvlwJLskDzZKheqrg+4189yx40VREJyrh0tMGKD5UIii2rxEQp6vHDCutWpwRuGn9n9yM+W0s+DfXl1KAwz4y4k/2yeWZAsztl3jbKRxcWC22+IBi7y4TvIMsr6ReT0czlgkY3bdgoP4xDnX9f2eY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790714520; c=relaxed/simple;
-	bh=bMYwlIbYrdqGGhFTTckiSXR78WcT3d7rC8KRBe2s1b4=;
+	s=arc-20240116; t=1790714604; c=relaxed/simple;
+	bh=dfMxzZ7llhlbx0tVodbe54MfqUE/6TcZ6qYz/NlX12U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JX6p0WTXvtoQ9LC7ElyB+sltPiJKQbHCjArKj2+rVfimdPoG3Go37ZEIHZJ66YcKCK4ewxb+XbJaMxf47BGtWxbDQJUJm3kpag4GgFiynBkF5f7u78xmV36TEwnCqQptK3zxhHKe9e9k6pDk3i3Aw0vmtUTCh4ZZSVK9lrF5uSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=EmcrtYXu; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=PNCbOLGmWKcaeHvKpHI+PXBBrxP507auN/srBMNsvpI1qVdeTdeu2804LpXLcTB3mgeXoZUkxhC2gaZ/5f2Bhk0/v2GLDhXakUvOOQer8RtMcLXOQ+4qkEouJNreJXwFVr23BpXfjfjxLE6abN8TxSG2QRW/m4C4TAjJa7O1OwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=UzTdI0Wc; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="EmcrtYXu"
-Received: (qmail 1399 invoked by uid 106); 29 Sep 2026 20:41:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=bMYwlIbYrdqGGhFTTckiSXR78WcT3d7rC8KRBe2s1b4=; b=EmcrtYXuhkbYkzb+SqXRO2Czuehb+ORMWXbOdEUdDt5AEgF+E2QbevPEaqAXAJujVL1zzeE9u01QEU1rDZjMOLVQ2Brb8dLCaJ+Ykvv0RWrl2epixEPKtCZnsTv/Bjm3n1kpnxzSe+t7rNRKvnKgwHjE/nfEn0iwIL1Xi0jGtaJR4a9HVd3Qbxd9QXU5fZ6RQQOXGzPMqUeB4Ua9v2S3Iw/Y+Mz4BGvGXjO4ibjQrRg+LIEqOop6b5EMfdVtmpmhOXwlsp6aTGq7EKabR8j2CzIrD2dEM8tskH+0gJ8mWBV+0XczBQMwCvNlF62A6r/w1L346e9CJtUhxL89pI8YmA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="UzTdI0Wc"
+Received: (qmail 1410 invoked by uid 106); 29 Sep 2026 20:43:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=dfMxzZ7llhlbx0tVodbe54MfqUE/6TcZ6qYz/NlX12U=; b=UzTdI0WcXbUhUNEHnbK/F24clKpRTNrWnEDuKhoTktZlDWdHn9YcHdGI7gg57fKGKwYxLUiROMckG8TiR2jOV+s/q2Ixyr8fVUN9aDc03euhSpjt1Je5sojPjs+hEkbr/8sO27fStgikn9zeEYkXfP+m96jkoow+bilM8XucCybGz19A5Osea5UmzgkYPt8EgCzXUrVLoOeYWSLrtcbxJCVTfyxqrJ2E63NvDe08mLMnvn8HW0dd2avZKvnRV7MmVWVwIayKvKMScek6r0qI9wsjD71zKbBQ18RvzWvB+H+HB/q8LE/NPOqOiWrVK+fo/RnmmnO2jjTdY2Y5TKO4ag==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Sep 2026 20:41:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Sep 2026 20:43:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3659 invoked by uid 111); 29 Sep 2026 20:41:57 -0000
+Received: (qmail 3675 invoked by uid 111); 29 Sep 2026 20:43:21 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Sep 2026 16:41:57 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Sep 2026 16:43:21 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 29 Sep 2026 16:41:57 -0400
+Date: Tue, 29 Sep 2026 16:43:20 -0400
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 4/5] merge-ll: use read_mmfile() to read external merge
- results
-Message-ID: <20260929204157.GA1733321@coredump.intra.peff.net>
-References: <20260929064935.GA1276867@coredump.intra.peff.net>
- <20260929065442.GD1697497@coredump.intra.peff.net>
- <xmqqzewzg8w0.fsf@gitster.g>
- <20260929201134.GA1713437@coredump.intra.peff.net>
+Subject: [PATCH 6/5] merge-ll: handle external driver status before reading
+ result
+Message-ID: <20260929204320.GA1734030@coredump.intra.peff.net>
+References: <20260929204157.GA1733321@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,29 +41,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260929201134.GA1713437@coredump.intra.peff.net>
+In-Reply-To: <20260929204157.GA1733321@coredump.intra.peff.net>
 
-On Tue, Sep 29, 2026 at 04:11:34PM -0400, Jeff King wrote:
+After running an external merge driver, ll_ext_merge() reads its output
+and cleans up the temporary files before converting the exit status to
+an ll_merge_result.
 
-> I had imagined just fixing this in ll_ext_merge(), like:
-> [...]
-> which reduces the weirdness coming out of that function. But it wouldn't
-> help with other drivers (which may or may not have similar problems? I'd
-> guess not, since they are all operating internally).
+Move that conversion immediately after run_command(). This will let us
+override the result if reading the output fails, without having to fake
+an exit status. No behavior change yet.
 
-So here are patches to do that, including a cleaned-up version of the
-reproduction I posted.
+It is tempting to only call read_mmfile() when we have LL_MERGE_OK, but
+callers do care about the result even with LL_MERGE_CONFLICT (e.g., the
+output may contain a partial). I think we could safely skip it for
+LL_MERGE_ERROR, but that's a rare case and not worth complicating the
+code for.
 
-I think ll_ext_merge() is the only driver that has this weird error
-case, so it should be sufficient. Your patch would protect a potential
-future driver, but I'd be surprised if we had one that introduced the
-same NULL-but-not-an-error behavior.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ merge-ll.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-  [6/5]: merge-ll: handle external driver status before reading result
-  [7/5]: merge-ll: report an error when reading external merge results fails
+diff --git a/merge-ll.c b/merge-ll.c
+index 7fab7c5438..4d82836bc5 100644
+--- a/merge-ll.c
++++ b/merge-ll.c
+@@ -240,20 +240,20 @@ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+ 	child.use_shell = 1;
+ 	strvec_push(&child.args, cmd.buf);
+ 	status = run_command(&child);
+-
+-	/* We can ignore errors; result is left NULL/0 in that case. */
+-	read_mmfile(result, temp[1]);
+-
+-	for (i = 0; i < 3; i++)
+-		unlink_or_warn(temp[i]);
+-	strbuf_release(&cmd);
+ 	if (!status)
+ 		ret = LL_MERGE_OK;
+ 	else if (status <= 128)
+ 		ret = LL_MERGE_CONFLICT;
+ 	else
+ 		/* died due to a signal: WTERMSIG(status) + 128 */
+ 		ret = LL_MERGE_ERROR;
++
++	/* We can ignore errors; result is left NULL/0 in that case. */
++	read_mmfile(result, temp[1]);
++
++	for (i = 0; i < 3; i++)
++		unlink_or_warn(temp[i]);
++	strbuf_release(&cmd);
+ 	return ret;
+ }
+ 
+-- 
+2.56.0.325.g545d7e68bc
 
- merge-ll.c        | 14 ++++++-------
- t/t4200-rerere.sh | 51 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 58 insertions(+), 7 deletions(-)
-
--Peff
