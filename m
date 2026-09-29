@@ -1,67 +1,67 @@
-Received: from mail-wr2-f34.google.com (mail-wr2-f34.google.com [74.125.225.98])
+Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A58C3DEFF0
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 15:48:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3DB43E09A
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 15:54:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790696900; cv=none; b=Iieo2z4wR6a8ix8tnLWP03x3lUgiG8ixzJ10OBJ+CwUYb6QHcX3s/IBUU7LqXhDLtsyRiXX9Z+cTjJO/PbcaAbdL778GFAFDpSw3ditS221JkHJilLiN6k+/+/lfDGHJnIMrCLxSd+nTZTUd9KpMg3/UJR2HTF6xGGXJRfzGqs4=
+	t=1790697274; cv=none; b=n+7HoK+GT2XzNSjYVkbS5dKuK3B4Di5MC3oFcJB6PJ9YfcyX37zok7zeXCNljfQpIU4mqb0I2NXjoFBPLMME4zBrxbOK6oFz29r4TQ+pk35AK8ZrzBagbFmUYKFSN6JJ39cFtC7bxv4Lew3Jyi/ZbAiqS1V0kd5IaQlxsoAXawc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790696900; c=relaxed/simple;
-	bh=xtW9EGz3iAdMcN1nN/aI69l4klnwoUxJTeJ0Q3rPnzw=;
+	s=arc-20240116; t=1790697274; c=relaxed/simple;
+	bh=LbfsJDP1NY20PjbxsSJ6t0cVB0EtME/+1mhTTE2cVME=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=MFqkadGyw6PWBrKnY5CcGqfu+8IfdiVRqFwAblut+V/s8ZVgN4hpEeh/dU4bc6l9FNDolzviYz9Kn0x8F08sP3o2zpyTUxHUrG35+AOOwZoWYRp+CTOrbMdT0KW3LiRDuAtLhVNmj4QBIPfz+IO9sgni3j9k2KhcWeHiMNty2po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R6k5EYGF; arc=none smtp.client-ip=74.125.225.98
+	 In-Reply-To:Content-Type; b=WM5tVi4ZjDcP2cIonqvHDFkVzDEaK01QsqCcX+Ie+tKEyc4qJbDVqH5cJbNVRZhjzJkbnMiiNKW1Jbbh63zwEsMgRmKhg9Mo+zeyCrq/QlRoc+WfvXUXhPGWm3ei/F5sSeDKZ3QB6q91LPiAcKkoDKbyi1Z0nmBCpSwaR2rKBwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TbZMZVaI; arc=none smtp.client-ip=74.125.225.76
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R6k5EYGF"
-Received: by mail-wr2-f34.google.com with SMTP id ffacd0b85a97d-48af9f88c95so214952f8f.0
-        for <git@vger.kernel.org>; Tue, 29 Sep 2026 08:48:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TbZMZVaI"
+Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-482f6350f91so2564914f8f.1
+        for <git@vger.kernel.org>; Tue, 29 Sep 2026 08:54:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790696896; x=1791301696; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790697270; x=1791302070; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=mg9c8gDThDDgsKqg8rkWeJ+1gDzb7172RRqykntKT2A=;
-        b=R6k5EYGFoxn5xyQitLUKaxzLrwoCOlExhEUOepPAID5uGNSL2HCoyYqTZIu3Bzv3sr
-         zRgNIVGVUiAKL7RwDFPUe4EYZbQzyvNwv/bWyOGIyd/tXsAKMIwEe52PxQz/jSp0iWU0
-         medbHQVbsjUt+w51F99fGybeH16DZl1qav6aGk0XQFIuRJ/z6uZlGj/SomJ9kgpAxn+W
-         gH7T3CFQDSWhonJbuBZh0hxIfaDBa0ttjxputmhcAvL0snifyxh+lpN7YuvhFYnkGxrG
-         z2/tIJW88eWmLiNSam58qf0P+IHytjpL4+KtlUZO3SWUwL3iieheVkywBlW+HX/M7giR
-         3bvQ==
+        bh=CyEuMR3WwtUzyxTXLG5x+BGjF8VIHArcvZIVSnZSWRs=;
+        b=TbZMZVaIdPvmdr/G6z6zfs7FyqnaTKTAEh/9VwDQ0+TzNyOq+nhL/TbCclMonuSibL
+         bud8/zyNHM4U8xTMdh3PLRJacBP9zjv+WS5QjLPwnNbmvMdzrYeXUiKDpNqlVPvzYxyG
+         oMkOo0ytk77WyrHs9cqp/+vaa1ASyJhFPu/DpVUPiQWqYQPs/RZ/d3+3nYRzUYSd3TFV
+         X2Tq1eUs5XUdXoa0a+bicpr77RErkKHXvc12xYKJOuR6LUal+DqF/A0zKgpVn9YoG4Ik
+         0it/pr711ALSM4iSd7gQ558vm/MFsAfo1Xvp58SYW7gtr3zX2JORaKKQHEjmbMuJJeKX
+         GJ5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790696896; x=1791301696;
+        d=1e100.net; s=20260707; t=1790697270; x=1791302070;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=mg9c8gDThDDgsKqg8rkWeJ+1gDzb7172RRqykntKT2A=;
-        b=lDKLiygIT7Rrt1Ty9wyFDsC92izVfWZDKoel3nDNnRD81FTrJjUcyNDx2AxC8JwhIh
-         C9Id9JG+znjNxzPIw1/0MpbYFPA4DmItXm3KpbSbMXoxEQKAa/JNclDtuwbrXOZ7yyWF
-         FAlv/1Vim7tExsPj65z430sm1abHGt8PjbIF1PJqjhlOU4nTx2OjHv6Hmj3kwamg0wTM
-         yQ4gXAd1Mrm6f3Hr4zhRiPsZuFkmO/rO7LTgEkRQCiOfKgO2jygk9uj4+i7i8+OhTXJp
-         baR1S+eVkngpGukvZmDpOWqw4ybLmoD8vWEOruFtckcTiTovOKTFYA+KKHuvFMwPmpFW
-         9Kxw==
-X-Forwarded-Encrypted: i=1; AKwUvBzSmovgWGKczl+PPUEvBHEFLuI9gGSFqtZL6p5oAPLwTJdojgkG8UXpoU70+9ynNRheiXI=@vger.kernel.org
-X-Gm-Message-State: AFuF++k98OgpA9DodfDzRvJMfF4RYI0hBfae+A98ZKyemUAKelhbNSGk
-	xxnYRdYsZ4NccddCO+Y06oSbrkHrw6ItvDJx7IbmXm6SMtJnOI+Jryit
-X-Gm-Gg: AYBFou2c4HYK6xNR1/3TYoih+jhmsC9dEHTJ7CxApYujIBgUCSzftem4EwHRb3SA1bx
-	X1ItAwmxrrDn2i+rwQU0ur/mopkqfGbN6r7zuE8jySK3Beba6xBwxJ23AatkSwcKAojKkvV7csx
-	KkGnMGXt50ArpoEPx40KaAnYQJnQKP9uTw5cmfcx3emPYPTEhK0GJbT+hAQQhMtJrNM0LRt1Hs0
-	XZSzfB5D5guHXZo8dkaiZ0qw8qFN/2234jVlJ07edvcbTFm5PhQZ5ZmXSHRI3YR4ofPZBMzoj5S
-	0w0E3SiR94DF22t0dtWH0PkMxGbylbsDNLDPECcB/c7Qc/exOeLyS5UPLDz5Zy/a7y4nHfDt6rl
-	CYcWv31fPSJVb46JNIql2B98Db1lSLAdXqYZwMdZX8mG/AdCvev/MVPdWypGkHtv/QRb+Y1bDns
-	fPPjYUKrEZOBLBo1Px7zLUJQYpul4aA97Evld4VwYTD+rh1Y3tUStGuqGfQsE29M+EkDoSLqMJo
-	SexLkzGqwKQDLfBaiTHCmZq55YYZjoiVlvLy+sIGmc4WMr2d+BReeeE33aZpeHo
-X-Received: by 2002:a05:600c:c3dc:10b0:49e:6581:7baf with SMTP id 5b1f17b1804b1-4a00d75ac6bmr40938275e9.2.1790696896204;
-        Tue, 29 Sep 2026 08:48:16 -0700 (PDT)
+        bh=CyEuMR3WwtUzyxTXLG5x+BGjF8VIHArcvZIVSnZSWRs=;
+        b=wzwxQllmnz1FwtRjAJh2RvVOACbB6Uk5fsa5x/C7Qw5wouwF7rmJ+fToO4j40vM96t
+         xkr0FnE/xHqsECMg7xnPhiWTP2+lizOdM5fzw1A5FeMXqp8KgJKC8Q9NdHEjiI61N40b
+         mQR70H+mEY7Bio8BVLpYc6nlgvpP2OI3PIYiYn5V6omEK/HWGbimZPgFpg9YEPi7Jvza
+         Uyv5h0kQQPKr3GBktzcR+hBORqRZoC3oCTghzgyvD3TOlBPKxu+BCh+y09FvGl+trL9s
+         zIAyGLlJBT6c7Nj3sXZYR7BPPS0YOyshleV3QJYIZTqxczlMbT4kMkdwYCnrcv6bOdUf
+         2+LA==
+X-Forwarded-Encrypted: i=1; AKwUvBxoPHlLsH5s+Oibo64mlbFvKviWeGBqYf8M/XftopZRNqxfKFV4pPKHCtR0aS6dFSAT0IE=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJ7HwHecMMhf7E8c3OcRFj1/InrEDtuHZD5HF4gajKlsMiOohC0
+	R1uf3kBVFFDvYMYIY7+Xiut9dxWeaongl5QLq7BZO+Vnfy+XZYP5cS8F
+X-Gm-Gg: AYBFou3ZZiaD6G30TZ3X4H4aOeRd89O0DleNP5n6/jRNCzhMYbhsI03bupseGd7zfK0
+	1YXaWJR+d4VN8kICx/iDO/kQzhI2KRuA0xg939GzB1GkR1v/FjqjGrtq1M5j/0ICCQ2htKhDY4v
+	Yhohzxw4tshnFMG6NZqNUMcVivdSQ2vP0MakZCbdcyawLptPuTv2TYUb47t/GJ3WIoTw6S+vMoL
+	A4p8W0z7GWmWbpd48ipWcGiSAB3DRYB22gdZ/I0yFlMgpDNakZs2iOtffD8R9Bfsl05K3eFlHAC
+	Vh5JiAU8jBta8p4N5kiVaCQGyQJzuYzrH2fqCZqirfZNTjH/aUy5FJPZU4lj5uzuLRYhaMA822J
+	t0mCo0Tny4UZ+O5VrpKbJk47gxezI4VyqmS3eSCF1GX9bKEleZNJ9kPs+urCD3Wbh3NHoF7F57h
+	H5+vE+earDVCQw3lvwdTEtufeLtnPJx0bz+GbADoXAl1IVu7RR0GtvqW5u4V0d5OtzP2AW+MNL0
+	39hU2dj//bP00wDd/fvJ3z7trAcS0n+tix8qjcvpGLREwBLs/uWBw==
+X-Received: by 2002:a05:6000:4b09:b0:487:218b:bbb0 with SMTP id ffacd0b85a97d-4887db3a9a8mr23896888f8f.42.1790697270083;
+        Tue, 29 Sep 2026 08:54:30 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48af508cedfsm4753647f8f.30.2026.09.29.08.48.15
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48af50a65f4sm4719914f8f.35.2026.09.29.08.54.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Sep 2026 08:48:15 -0700 (PDT)
-Message-ID: <d5ac59be-0688-4d60-871a-2ccebc91c58b@gmail.com>
-Date: Tue, 29 Sep 2026 16:48:14 +0100
+        Tue, 29 Sep 2026 08:54:29 -0700 (PDT)
+Message-ID: <54957537-e40d-45b6-886c-5fc433f3d54e@gmail.com>
+Date: Tue, 29 Sep 2026 16:54:28 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,278 +71,114 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 0/5] stash: clean up index-mode test merge
-To: "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org
-Cc: Eli Barzilay <eli@barzilay.org>, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <cover.1789853192.git.ben.knoble@gmail.com>
- <cover.1790684309.git.ben.knoble@gmail.com>
+Subject: Re: [PATCH v3 0/5] stash: clean up index-mode test merge
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Thomas Bachem <mail@thomasbachem.com>
+Cc: phillip.wood@dunelm.org.uk, gitster@pobox.com, git@vger.kernel.org,
+ eli@barzilay.org, ps@pks.im
+References: <cover.1790168285.git.ben.knoble@gmail.com>
+ <cover.1790425008.git.ben.knoble@gmail.com> <xmqqjyo6qz3z.fsf@gitster.g>
+ <346c4209-9600-4302-817f-e8f6b364ce6a@gmail.com>
+ <CALnO6CCXT1HHUwL8+eYGVL443nO0eoC7vhpoLvC3RXjp39XQYA@mail.gmail.com>
+ <CALnO6CDOo35HAfqn_h2CUUdux9LeOkjM8OdFLkkS1nVexijUvw@mail.gmail.com>
+ <CALnO6CAf491aNhqcb7K7YcNTSTNLAESmqeLwzEGk_S=ZsOjG9Q@mail.gmail.com>
+ <a59c4225-f093-4001-b77a-2083dfecce6e@gmail.com>
+ <CAA0xjtpzaWH10pHOQ5j-5Hp1yHEKTDFbsicG6E4w=5nxb_irWw@mail.gmail.com>
+ <CALnO6CC-eop86W3VREwGz0seG1pmtd0qS968TyP=mo_G+ZMrSA@mail.gmail.com>
 Content-Language: en-US
-In-Reply-To: <cover.1790684309.git.ben.knoble@gmail.com>
+In-Reply-To: <CALnO6CC-eop86W3VREwGz0seG1pmtd0qS968TyP=mo_G+ZMrSA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 Hi Ben
 
-On 29/09/2026 13:18, D. Ben Knoble wrote:
+On 28/09/2026 16:36, D. Ben Knoble wrote:
+> Let me see if I understand correctly…
 > 
-> Changes in v4:
-> • Drop merge verbosity changes altogether. I was going to
->    save-and-restore, but when looking at the index-merge test case (more
->    below) closer, I noticed that "git apply --cached" reports conflicts
->    on stderr. That is, "git stash apply --index" would report conflicts,
->    and silencing the merge takes that away. So instead let's leave the
->    configured verbosity alone.
-> • Only copy resulting index merge tree OID when successful
-> • Fix interaction with t5520 (new patch 4/5)
-> • Squash test from 3/5 into 5/5, since it requires actually merging
->    trees. I've elected to keep it a separate test for now (contrary to
->    Phillip's suggestion) since it's written and working. Adapting
->    existing tests requires quite a bit more digging into implicit context
->    assumptions ;)
+> On Mon, Sep 28, 2026 at 10:50 AM Thomas Bachem <mail@thomasbachem.com> wrote:
+>>
+>> On Mon, Sep 28, 2026 at 3:45 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>> Oh, when I was thinking about this over lunch I did wonder if that might
+>>> be the culprit. Previously we didn't run "git maintenance --auto" after
+>>> a rebase with the 'merge' backend but with that topic we do, and because
+>>> we set GIT_COMMITTER_DATE to sometime in 2005, if 'git reflog expire'
+>>> gets triggered it will expire the reflog entries that 'git pull
+>>> --rebase' relies on. As you suggested in another mail, I assume this
+> 
+>> "git pull --rebase" computes the fork point before it fetches, from
+>> the reflog of refs/remotes/me/copy,
+> 
+> This is described by the manual for git-rebase under --fork-point,
+> which is on unless we have an <upstream> or --keep-base (modulo
+> config). Put a pin in this.
+> 
+>> and test 69 needs the entry that
+>> test 68's fetch wrote there, copy-orig (f29aa66) to ae98574. With the
+>> reflog empty, "merge-base --fork-point" falls back to the ref itself,
+>> ae98574 is no ancestor of to-rebase, and pull hands the merge head to
+>> rebase as the upstream. That is your "--onto ae98... ae98...", and the
+>> four commits from copy-orig up come back, the first of them
+>> conflicting with "conflict".
+>>
+>>> topic has changed something in one of the '--autostash' tests that come
+>>> before the failing test triggers which the new behavior. What that
+>>> something is I'm not sure; off the top of my head I'd expect the number
+>>> of reflog entries in HEAD to be the same but maybe I'm missing
+>>> something. Adding
+>>
+>> It is eight entries fewer, and they come from the failed merges, not
+>> from the autostash tests. "git merge" restores a dirty tree with
+>> "stash apply --index --quiet", and until Ben's series that spawned
+>> "git reset --quiet --refresh", which writes "reset: moving to HEAD"
+>> to the reflog. That happens eight times in t5520 before test 68.
+>>
+>> Auto maintenance expires reflogs once HEAD's reflog holds a hundred
+>> entries that the policy would remove, the default of
+>> maintenance.reflog-expire.auto, and after the first test_tick that is
+>> every entry. Which run crosses the hundred depends on how many entries
+>> and maintenance runs came before it. On 'seen' the expiry lands on
+>> "git commit -m conflict" in test 68, before the fetch writes the entry.
+>> Eight entries fewer move the crossing past that commit, and the
+>> maintenance run my topic adds at the end of the rebase in test 68 is
+>> the next one: after the fetch, before test 69 reads the reflog. Either
+>> change alone leaves it somewhere harmless, and nothing else is going
+>> on. The expiry is the usual 90 days applied to entries dated 2005, and
+>> the only new thing is one more maintenance run per rebase, the same
+>> one "git commit" and "git fetch" run.
+> 
+> In short, expiry used to happen prior to .68, so the reflog entry
+> created in that test which is used by "pull --rebase" in .69 is picked
+> up. With fewer reflog entries, expiry happens later, and it just so
+> happens to drop the important entry. Darn!
 
-I've left a comment on the new patch 4, but everything else in the 
-range-diff looks ready to me.
+Yes, it is incredibly bad luck that the test broke, though I guess it is 
+also fortunate as it means we can fix the latent bug in the test.
+
+> 
+> But here's what I can't figure out, returning to that pin from
+> earlier: I was a bit surprised to see mention of rebase reading
+> reflogs! When I remembered --fork-point, I was even more curious (but
+> at least it's obvious that rebase will read the reflogs in some
+> scenarios).
+> 
+> What confuses me is that builtin/pull.c:run_rebase() sure looks like
+> it provides an <upstream> to the command invocation, so shouldn't
+> --fork-point and reflog use be disabled????
+> 
+> I'll try tracing that test myself later, I suppose. It's nice to know
+> we have a fix available (thanks for the patch), but it sure feels like
+> a hack :) oh well?
+
+It is a bit confusing that "git pull --rebase" does not use "git rebase 
+--fork-point", instead it calls "git merge-base --fork-point" (which is 
+where we read the reflog of the remote branch) itself and then passes 
+that as the upstream revision to "git rebase". I think this is because 
+fork-point handling was added to "git pull" before "--fork-point" 
+existed in "git rebase". "git rebase" only looks for a fork-point if its 
+upstream argument is a ref, so as "git pull" passes an object id, the 
+fork-point detection in rebase is bypassed.
 
 Thanks
 
 Phillip
-
-> Changes in v3:
-> 
-> • Change conflict label for current index
-> • Fix memory leak of merge_result
-> • Fix order of trees to make the correct merge (cherry-pick)
->      • New test (3/5) to validate this
-> • Fix test in 4/5 to assert more details of expected state
-> 
-> Changes in v2:
-> 
-> • Do give branch labels for the incore merge, although they are never
->    seen (and clarify commit message as a result, also keeping the
->    merge-ort asserts). Phillip was right: without those, we do segfault
->    on conflicts.
-> • Use the ui merge options to keep the same diff algorithm.
-> • Use merge_finalize instead of clear_merge_options, and reuse the
->    options between merge calls if they are already initialized.
-> • Add a new 2/4 to simplify merge options initialization.
-> • Add a new 3/4 with a test case for conflicted index merges.
-> 
-> v1: <cover.1789853192.git.ben.knoble@gmail.com>
-> v2: <cover.1790168285.git.ben.knoble@gmail.com>
-> v3: <cover.1790425008.git.ben.knoble@gmail.com>
-> 
-> [1/5] builtin/stash: remove unused header
-> [2/5] stash: prepare merge options earlier
-> [3/5] t3903: test failed "stash apply --index"
-> [4/5] t5520: don't expire reflogs where it matters
-> [5/5] builtin/stash: merge index in-core
-> 
->   builtin/stash.c  | 91 ++++++++++++------------------------------------
->   t/t3903-stash.sh | 42 ++++++++++++++++++++++
->   t/t5520-pull.sh  |  6 ++++
->   t/t7600-merge.sh |  9 +++++
->   4 files changed, 79 insertions(+), 69 deletions(-)
-> 
-> Diff-intervalle contre v3 :
-> 1:  6a165c4df4 = 1:  6a165c4df4 builtin/stash: remove unused header
-> 2:  d9a9e18f3a ! 2:  35b64ae321 stash: prepare merge options earlier
->      @@ builtin/stash.c: static enum stash_apply_result do_apply_stash(const char *prefi
->        		return error(_("cannot apply a stash in the middle of a merge"));
->        
->       +	init_ui_merge_options(&o, the_repository);
->      ++
->      ++	if (quiet)
->      ++		o.verbosity = 0;
->       +
->        	if (index) {
->        		if (oideq(&info->b_tree, &info->i_tree) ||
->      @@ builtin/stash.c: static enum stash_apply_result do_apply_stash(const char *prefi
->        	o.branch1 = label_ours ? label_ours : "Updated upstream";
->        	o.branch2 = label_theirs ? label_theirs : "Stashed changes";
->        	o.ancestor = label_base ? label_base : "Stash base";
->      +@@ builtin/stash.c: static enum stash_apply_result do_apply_stash(const char *prefix,
->      + 	if (oideq(&info->b_tree, &c_tree))
->      + 		o.branch1 = "Version stash was based on";
->      +
->      +-	if (quiet)
->      +-		o.verbosity = 0;
->      +-
->      + 	if (o.verbosity >= 3)
->      + 		printf_ln(_("Merging %s with %s"), o.branch1, o.branch2);
->      +
-> 4:  d39e16905d ! 3:  7b0b317ce0 t3903: test failed "stash apply --index"
->      @@ Commit message
->       
->        ## t/t3903-stash.sh ##
->       @@ t/t3903-stash.sh: setup_stash() {
->      - 	test_cmp expect file
->      + 	test_cmp expect actual
->        '
->        
->       +test_expect_success 'stash apply --index leaves everything untouched on failure' '
-> 3:  8b5ea5e6f4 ! 4:  2ac371d2dc t3903: test stash --index merges
->      @@
->        ## Metadata ##
->      -Author: D. Ben Knoble <ben.knoble@gmail.com>
->      +Author: Thomas Bachem <mail@thomasbachem.com>
->       
->        ## Commit message ##
->      -    t3903: test stash --index merges
->      +    t5520: don't expire reflogs where it matters
->       
->      -    A future commit will refactor index handling for applied stashes, and we
->      -    need to take care to get the order of trees right when merging. Add a
->      -    test that covers this case.
->      +    The "--rebase -f with rebased upstream" test computes its fork point
->      +    from the reflog of refs/remotes/me/copy, and the entry it needs is
->      +    the one that the fetch of the test before it wrote. Like every reflog
->      +    entry the suite writes after test_tick, it is dated 2005, so the
->      +    first "git reflog expire --all" after that fetch removes it. Pull
->      +    then finds no fork point and rebases onto the merge head with the
->      +    merge head as the upstream, and the rewound commits come back as a
->      +    conflict.
->       
->      -    Suggested-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->      +    Since 452b12c2e0 (builtin/maintenance: use "geometric" strategy by
->      +    default, 2026-02-24) auto maintenance runs that expiry once the reflog
->      +    of HEAD holds a hundred entries it would remove, the default of
->      +    maintenance.reflog-expire.auto. Which run crosses the threshold
->      +    depends on the entries and maintenance runs before it, so the script
->      +    passed by chance: a stash topic that no longer runs "git reset" from
->      +    "stash apply --index" and a rebase topic that runs auto maintenance
->      +    at the end of "git rebase" together move the expiry between the two
->      +    tests.
->       
->      - ## t/t3903-stash.sh ##
->      -@@ t/t3903-stash.sh: setup_stash() {
->      - 	test_cmp expect actual
->      - '
->      +    Pin the expiry as ea7d894f44 (t34xx: don't expire reflogs where it
->      +    matters, 2026-02-24) did for the rebase tests. That covers a "git gc"
->      +    as well, which expires reflogs on its own, where turning off the auto
->      +    trigger of the reflog-expire task alone would not.
->      +
->      +    Reported-by: Junio C Hamano <gitster@pobox.com>
->      +    Helped-by: D. Ben Knoble <ben.knoble@gmail.com>
->      +    Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->      +    Assisted-by: Claude Fable 5.1
->      +    Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
->      +
->      + ## t/t5520-pull.sh ##
->      +@@ t/t5520-pull.sh: test_pull_autostash_fail () {
->      + }
->        
->      -+# the later "stash -k" test is not expecting us to muck with file so much, so
->      -+# reset when finished
->      -+test_expect_success 'stash apply --index merges the correct trees' '
->      -+	head=$(git rev-parse HEAD) &&
->      -+	test_when_finished "git reset --hard $head" &&
->      -+	test_write_lines A B C >file &&
->      -+	git commit -m setup file &&
->      -+	test_write_lines A B staged >file &&
->      -+	git add file &&
->      -+	test_write_lines A B unstaged >file &&
->      -+	git stash &&
->      -+	test_write_lines committed B C >file &&
->      -+	git commit -m to-be-merged file &&
->      -+	git stash pop --index &&
->      -+	git show :file >actual &&
->      -+	test_write_lines committed B staged >expect &&
->      -+	test_cmp expect actual &&
->      -+	test_write_lines committed B unstaged >expect &&
->      -+	test_cmp expect file
->      -+'
->      + test_expect_success setup '
->      ++	# Commit dates are hardcoded to 2005, and the reflog entries will have
->      ++	# a matching timestamp. Maintenance may thus immediately expire
->      ++	# reflogs if it was running.
->      ++	git config set gc.reflogExpire never &&
->      ++	git config set gc.reflogExpireUnreachable never &&
->       +
->      - test_expect_success 'stash -k' '
->      - 	echo bar3 >file &&
->      - 	echo bar4 >file2 &&
->      + 	echo file >file &&
->      + 	git add file &&
->      + 	git commit -a -m original
-> 5:  fde7fb7988 ! 5:  e21b832a6e builtin/stash: merge index in-core
->      @@ Commit message
->           we don't see the usual branch and ancestor labels, but the merge
->           subroutines insist on their presence, so use something simple.
->       
->      +    We need to take care to get the order of trees right when merging. Add a
->      +    test that covers this case.
->      +
->           We *could* swap just the git-reset(1) subprocess with our internal
->           reset_tree() and refresh_index(), which would fix the bug. We'd much
->           prefer to clean up these vestiges of the shell-based git-stash, though.
->      @@ builtin/stash.c: static enum stash_apply_result do_apply_stash(const char *prefi
->       -			ret = apply_cached(&out);
->       -			strbuf_release(&out);
->       -			if (ret)
->      -+			o.verbosity = 0;
->      -+
->       +			head = lookup_tree(o.repo, &c_tree);
->       +			merge = lookup_tree(o.repo, &info->i_tree);
->       +			merge_base = lookup_tree(o.repo, &info->b_tree);
->      @@ builtin/stash.c: static enum stash_apply_result do_apply_stash(const char *prefi
->       +			merge_incore_nonrecursive(&o, merge_base, head, merge,
->       +						  &result);
->       +
->      -+			oidcpy(&index_tree, &result.tree->object.oid);
->      -+			merge_finalize(&o, &result);
->      -+
->      -+			if (!result.clean)
->      ++			if (!result.clean) {
->      ++				merge_finalize(&o, &result);
->        				return error(_("conflicts in index. "
->        					       "Try without --index."));
->       -
->      @@ builtin/stash.c: static enum stash_apply_result do_apply_stash(const char *prefi
->       -			reset_head();
->       -			discard_index(the_repository->index);
->       -			repo_read_index(the_repository);
->      ++			} else {
->      ++				oidcpy(&index_tree, &result.tree->object.oid);
->      ++				merge_finalize(&o, &result);
->      ++			}
->        		}
->        	}
->        
->       
->      + ## t/t3903-stash.sh ##
->      +@@ t/t3903-stash.sh: setup_stash() {
->      + 	test_cmp expect-index actual-index
->      + '
->      +
->      ++# the later "stash -k" test is not expecting us to muck with file so much, so
->      ++# reset when finished
->      ++test_expect_success 'stash apply --index merges the correct trees' '
->      ++	head=$(git rev-parse HEAD) &&
->      ++	test_when_finished "git reset --hard $head" &&
->      ++	test_write_lines A B C >file &&
->      ++	git commit -m setup file &&
->      ++	test_write_lines A B staged >file &&
->      ++	git add file &&
->      ++	test_write_lines A B unstaged >file &&
->      ++	git stash &&
->      ++	test_write_lines committed B C >file &&
->      ++	git commit -m to-be-merged file &&
->      ++	git stash pop --index &&
->      ++	git show :file >actual &&
->      ++	test_write_lines committed B staged >expect &&
->      ++	test_cmp expect actual &&
->      ++	test_write_lines committed B unstaged >expect &&
->      ++	test_cmp expect file
->      ++'
->      ++
->      + test_expect_success 'stash -k' '
->      + 	echo bar3 >file &&
->      + 	echo bar4 >file2 &&
->      +
->        ## t/t7600-merge.sh ##
->       @@ t/t7600-merge.sh: verify_no_mergehead () {
->        	test_cmp result.1-5 file
-> 
-> base-commit: d38352cd43ab9745686d697872408bc3249a153f
 
