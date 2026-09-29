@@ -1,132 +1,142 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy2-f41.google.com (mail-dy2-f41.google.com [74.125.229.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3BE33987E
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 05:45:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBFA33BBC0
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 05:47:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790660748; cv=none; b=EQhuRSlCdT877n9D3YDDUN3W8vhYtTwOx92svGN0xfVKGQ5jQVgVOhAK5QBYC07b9seJ6jedwusgw9tugyGZrD5/pHYIF8ptIusQLcuODiQzXSLHB5GvQuAFaUVj2Ih0G4kl1NLQ4b0WH5WA6yICzO32EZb5a7c0JwXvA6qt2+Y=
+	t=1790660854; cv=none; b=K32BX5TmKxum9f32mSbwxj/mN1mU4uX03pdw3Rz/gCoFZERJz5QHbNVChkH5hMgeIGAzclLvklZ5PMurobcP/nYEvacesPXdkh6Gy8RvXMCD8RA/WhrJmXd5+60HfJUOXPDnNCIMK0IfZxjowFZ8H9Pol4en6Ejq3x7LIDo3RJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790660748; c=relaxed/simple;
-	bh=MowQgbqWDvELk2vOoO6iT9ScOzJr0PDISDC9im3/SJ4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NyPeXvzdXPrM9dKqeo6uuzBy8ywIlkCFAurQRdFdKZcDNiB5rnag8w/eu7LKQEoKaVbXkkZ2zah9S9QKCB5hanLiBP2GSOuS2SUxYobBnl5jaz+dvBJmblSugPLBgeRpgT02/+/VnwF4t65YvgeTBEgsnJtrbvChb5yp+MARUNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JbSROfRX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MtktLrmw; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1790660854; c=relaxed/simple;
+	bh=F130vdXAERPNH/zFsmaO1t8xM1cM8nrmwZBG9NqGLOg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=Nb2+Nxc6Vlj4DxHqyPRx7N1dQ4WYmkonUAQMQ5M3vKkc/fYzAVCBf0hu6x4M1pGsn9N6YqxJSWFHZMtZww8zfYj5ROB2sXlnjVYd+hwianPMIx74BupPNHG7jzwikXnzBF15f2twiORqU+USA6WHATDluMnibFI+/DayEYkkxkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=brighamcampbell.com; spf=pass smtp.mailfrom=brighamcampbell.com; dkim=pass (2048-bit key) header.d=brighamcampbell.com header.i=@brighamcampbell.com header.b=R+gN/0kp; arc=none smtp.client-ip=74.125.229.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=brighamcampbell.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=brighamcampbell.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JbSROfRX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MtktLrmw"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 668397A0113;
-	Tue, 29 Sep 2026 01:45:46 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Tue, 29 Sep 2026 01:45:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790660746; x=1790747146; bh=HMwLYmwewm
-	cKYXGUAhsYZ1FN62jRSB6d11BwsHGrbpk=; b=JbSROfRXqJnMbDXaICLR9i4fb2
-	hFHyxJ6E5Blu6gM18JoMYw98JgAQcoR3MV3Dobe3R1Z02iUfikgpniDsYThq702v
-	ryewY5iySS7aoLVO9B6daSVAeEqDulquUVIaVLrb82F++ht5x9A/I+ldJc+aQ7gT
-	pdGy7YQqW8DhWv2SjjALKInRQpOPrUICR3Ou9oR0zxNnHWeYHdiU8x+Ye38DYfZo
-	xgys68wT2wQvxfZKGdr2zncT5m09sYsYywMHDIjDtx4oiSHg82dPgeHhpy0fWXZH
-	PB6j28frntu2qKf/Ja1xf9MvG/um35VntOi8+mLgeAR0l6SwKKexzzlTMhKg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790660746; x=1790747146; bh=HMwLYmwewmcKYXGUAhsYZ1FN62jRSB6d11B
-	wsHGrbpk=; b=MtktLrmwO6hG4gmZNhtq0dBMt59ZZkDm11Ak77kO1LlCoLuAE6t
-	VArEOz1eJ9fyV0N93PwqZyP+EtJY9JBw6MP3PkqNFHtKar3mXjudc4oVGHioHO48
-	W2Piwq2/96txCx7DMbmoouT3D20Ehyp9BpBcpsu/n1793p/iSOivxhNAvp8WIL1z
-	A3ZurN+ia9byH2OUMVcy/nbbmNV9exVWPv9x7WY3HwBGY0bxqBzvWUUTPR9b02Qe
-	3qsQRw/lIKSwEt0QRTt6DwCOCcpq89Wy+41Cis/w6reDrDSqSK8VbeGZHYFtCsct
-	SajyZ6wTJcang4MNE9X/SERX7lRIXhq9chA==
-X-ME-Sender: <xms:ilC7akH2X0FdUOR8ZsU99I98VKAOZnQ-D4Kp6TyvPyT_vtmgInUbtA>
-    <xme:ilC7akMmM4pzTJpuxBbzHSRTLxlZ9iq_5b_TKiDXkt4hn1H0gWI2vEwiqNzXEvIOo
-    27fLMYxkfl4wmnEfJvCPW8Plx6sr9dmaSDVWymw21ialU7wODQdGYU>
-X-ME-Received: <xmr:ilC7amcP_s67ZithpcD8_BmDv5d655_-NdPJCzqvJ0L5EyA4a534Nw>
-X-ME-Proxy-Cause: dmFkZTEZZ3hbM2N2fUBSzi/Eab1KOT2cL4hnYLOqDl3c6QKIkMM8UhATkKjaA2bTsLhL9N
-    yLEloME+ZXQcoA8TtCsEizMlu3cYWatL3mv+kNwQWiQBRaVL1tuA58kPLQ6GQrzLuWRwDK
-    oELgoH0SkpQ9nKa+eJQXKydzM7mvmCSBJDTc48OwkFCPQFZbDqFgo6CIiWBdhVHKCqKAVo
-    ctaniQnci7YGK7Lyuj59H03QTunMzKu9SRoCrUaNOaMRJo7VFq2qVZGATq1i+E7omSlwKk
-    GETqtj4z1J/rXu8ZEpAe7OeG2lNYr1ExnDEaXoT1ETt9frgbdM1M6Q8rPvLP3IcJ/z2fCG
-    qf2DKNuoSEQWprOtjd/CVjWX3EINHqzUwigjP1qGyVKOlU7RVG9Kyut10tZOwRKwSL15Wt
-    snH1KxlfLqSBCBtEOrGAnxxpye7b7005WbgRDQY99fDV3h0yvSJOiq3kwgbEN7kGRiRECR
-    QW2wTBMhTJQ5sih8L5qJjXhb3scjnU+Kc+L77whyEBdCjP6+MtH4OzpwRFMV3CXckSmg1Q
-    emrr+BKJEiNxvkBKFlOmeZaYwJ3hCD5SeLnRpoCLyozu0S73G8tIobdRR7T4pevVTKLvFa
-    bYl9iDuVzo4wtzPObpPrP6x+XGHnKVPr1OzQa6ykpflXr3HIJPtnEgqQwSfQ
-X-ME-Proxy: <xmx:ilC7ahtDmG7cuZ6KdPpF82m17cbPoNyuu28e_KY-dbhVHelrDI4JRw>
-    <xmx:ilC7anmRGF_HjHI5ZCP9HX5p_n9or342V3S7HrBgXJTaZS7v_VumQA>
-    <xmx:ilC7ajwAsZ0mJ63HhoUg9ICN1H6q0AncyYaPo908YPlCPmgvfE6bjg>
-    <xmx:ilC7apNJHMCGaZG9Pk5mu2YGNbHjH1kyiozsbeMC2OF41KXf3gpG2Q>
-    <xmx:ilC7agK7b0YPMtPl7dBNOtJ2oCGNXDOrGX3VXBseAeIsADCdrw8WWK-u>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Sep 2026 01:45:45 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id abe37686 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 29 Sep 2026 05:45:44 +0000 (UTC)
-Date: Tue, 29 Sep 2026 07:45:41 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Pushkar Singh <pushkarkumarsingh1970@gmail.com>, git@vger.kernel.org,
-	peff@peff.net, r.norouzi@proton.me
-Subject: Re: [PATCH v3] reflog: fix default expiry periods
-Message-ID: <artQhZKf6JuRhmRl@pks.im>
-References: <20260923102140.25475-2-pushkarkumarsingh1970@gmail.com>
- <20260924175843.8383-2-pushkarkumarsingh1970@gmail.com>
- <aroQ_zZvUXKKK7--@pks.im>
- <xmqqy0clo2em.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=brighamcampbell.com header.i=@brighamcampbell.com header.b="R+gN/0kp"
+Received: by mail-dy2-f41.google.com with SMTP id 5a478bee46e88-34bb8b31660so293eec.3
+        for <git@vger.kernel.org>; Mon, 28 Sep 2026 22:47:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=brighamcampbell.com; s=google; t=1790660852; x=1791265652; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:content-type
+         :mime-version:message-id:date:subject:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=axvmVI0Gt67FfEJVlamP+XNznuUfpiyg1KHJ7AxXQTk=;
+        b=R+gN/0kpeX/G6FCmQHFUfLkJ0jzc6x3bkkquotzE5bs878z8+UXeF5zHfaWhEmGwXU
+         eykHDaMNFm5YMVaL9ijCaGxcALxmCBwchx7Hya1YDprWBs+IiNzsF122VaUqyEnjD9A8
+         fo77JE1GPQ2M903R0qRN4aZ2fTBZ/6pqSe3SUY0RagpaLoqJCjMbScDpkT3ouitpGNYm
+         87JDLuWaWg4VK/IyTuBAmyBbtydsVLWQ1gF2agP2bMSXPezagCHzBucrCahR55GeTL95
+         tAtJ286vaWIpFP1VpSGY6Nf/G+khzynLReIDJGrLmt9FGD0WgH8rLgipzHpgT9gpS98i
+         5Dfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790660852; x=1791265652;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:content-type
+         :mime-version:message-id:date:subject:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=axvmVI0Gt67FfEJVlamP+XNznuUfpiyg1KHJ7AxXQTk=;
+        b=iGPk6XefRuIIWDvJuRsjyhqOy0j186FVgFle2+a1Y7RTGybKYTmzkPrZEZoAqlbSBk
+         95PixO507tT0A2qziy/sGyFtc59bPGeyWkniK2a7K+nGeIWli21z7IoIZ6N/bUt9xT/f
+         AEd33BbZL7woTZeO5Fb18STCf+NBMM0sNj/qxLqxw7Hav7F6mqzxMtWMe1QKG0hbBlHS
+         NheXG2DnnmJk3Ajbc2qD/AcekItbZVHXaKYRd5F5CGKRYPHBBKS/sGBTwePoZbiv/odz
+         fH7MUzrNcNT2GFOru/KP7LsAVHfyAZ4aRuChrJcZn02CKmc7x0jR9Rru0R6Rq1Q0vSqu
+         Gaag==
+X-Gm-Message-State: AFq9FYKR56GJMzlaqjTogyPjbr5Ror4sjkIE70xIRvQ3XWymYu7unSq6
+	tIT8HaGOn1HNU59Aa/ZuPh75SEjtZi4hCLEDgcTODt1wZ8hYsz7xzftkZumJjXCm11jgRd+ed0G
+	s+M43
+X-Gm-Gg: AYBFou0cVgjsLYW6ygBIOIhp+c3WxixLKjH61PhVYu6jgrRGCEQcBhCofbhVzEa6/Yy
+	7sF5C+1ih4SVjyRuM4xcsLPKszBRkA0nS0tFaibTaAv7jWENK1QTaQ99/UC2O0KtrYCQGpmb6Bf
+	LjzrvpF83+GCP7DaUs0ghFXYCZm6Pcd8BzZu1odSfxalyX2Gk1LY/kUpb9DdH6y/sxIfBVNz8KA
+	IZkysHiyjZ3Rj50FhYS2UbnbGlnRAknJHpmMafevjxKUXA6wjH+X9lpvPqvsGmbwJaGZsFXYzk9
+	BTFhf6kB0YsGVnAYjHXZau+jNAdpVv1BUmwchKUgQFJvDI3oauamYxgxf0jJns951YfJXFKjfeT
+	q8Y6Zo0vom3RYu19x8yv4bKhLFPtTAoNjRw/o6JxDFqHg7TYzo62tmUHvWoZvjY2+t2GUWuXa70
+	Ed8nDMHtJhIX3gSPtKLBmX5RpcKY7dqrb5XpAOJ8vuxHGG2BjOZZvTfQpm6jrgvzFR9HJUvaYll
+	h26KQnngXvgZfspEm05pNOC4TG+9T+OVU8kO2M=
+X-Received: by 2002:a05:7301:2224:b0:341:2466:2d68 with SMTP id 5a478bee46e88-3427304d4e6mr11653194eec.38.1790660851549;
+        Mon, 28 Sep 2026 22:47:31 -0700 (PDT)
+Received: from brighamcampbell.com ([73.3.69.70])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-34ba464d6c8sm654247eec.27.2026.09.28.22.47.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Sep 2026 22:47:30 -0700 (PDT)
+From: Brigham Campbell <me@brighamcampbell.com>
+Subject: [PATCH v5 0/2] git-contacts: allow inputting patch via stdin
+Date: Mon, 28 Sep 2026 23:47:11 -0600
+Message-Id: <20260928-git-contacts-stdin-v5-0-e9becaebc47e@brighamcampbell.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqy0clo2em.fsf@gitster.g>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33PTW7CMBAF4KsgrzHyf3FXvUfFwh4PiRFJkO1GV
+ Ch3rw2bLEKXT5r53syDZEwRM/ncPUjCOeY4jTXo/Y5A78YOaQw1E8GEYZYr2sVCYRqLg5JpLiG
+ OlONRWCsZcutJXbwlPMf7E/0+vXL+8ReE0qQ20cdcpvT7bJ15m/u3YOaUU+vAiCOacxDsy6fY9
+ W4AN9w8Xq8HmAbSqmaxxvQmJiomGNPM8GDZh3uPyRUm5CYmK6ZNCEqCUUGb95haY9uXqfamV6g
+ 8eG85bGPLsvwBbPOMZrcBAAA=
+X-Change-ID: 20260914-git-contacts-stdin-1e829930e19b
+In-Reply-To: <20260914-git-contacts-stdin-v1-1-9ac628e6fd20@brighamcampbell.com>
+References: <20260914-git-contacts-stdin-v1-1-9ac628e6fd20@brighamcampbell.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+ Brigham Campbell <me@brighamcampbell.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1672;
+ i=me@brighamcampbell.com; h=from:subject:message-id;
+ bh=F130vdXAERPNH/zFsmaO1t8xM1cM8nrmwZBG9NqGLOg=;
+ b=owGbwMvMwCUWLsWS0KCyxZPxtFoSQ9bugI97Vkiz36+fXGol13rS3W3ygvjcsC6DLMFaGamNl
+ nErjDk7SlkYxLgYZMUUWVRuzVK/ONn60cEI/gkwc1iZQIYwcHEKwEQM7jEyHD33L9vTfl8n2zST
+ mnfTZ+l3Zl5cHxDk+z3Eco9C1ERdoIqfbld47xirPq3kKjY9W8Tws/t+vu6plzVXOmY6pEZ0V3E
+ CAA==
+X-Developer-Key: i=me@brighamcampbell.com; a=openpgp;
+ fpr=24DA9A27D1933BE2C1580F90571A04608024B449
 
-On Mon, Sep 28, 2026 at 07:50:57AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > On Thu, Sep 24, 2026 at 05:58:44PM +0000, Pushkar Singh wrote:
-> >> diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-> >> index 8f78cf4b01..93b5b49e1d 100755
-> >> --- a/t/t1410-reflog.sh
-> >> +++ b/t/t1410-reflog.sh
-> >> @@ -153,6 +153,72 @@ test_expect_success 'reflog expire should not barf on an annotated tag' '
-> >>  	test_grep ! "error: [Oo]bject .* not a commit" err
-> >>  '
-> >>  
-> >> +test_expect_success 'reflog expire keeps reachable entries for 90 days' '
-> >> +	test_when_finished "rm -rf reachable-keep" &&
-> >> +	git init reachable-keep &&
-> >> +	(
-> >> +		cd reachable-keep &&
-> >> +		timestamp=$(test-tool date timestamp "60.days.ago") &&
-> >
-> > Nit: I would've preferred to make this 89 days...
-> 
-> Dates calculated as 89 days ago from the beginning of today, from
-> the end of today, and from this very minute can differ by almost 24
-> hours.  Because we are not interested in testing what semantics
-> approxidate() implements in test-tool date timestamp, but are
-> testing what expiry period reflog expire implements between 30 and
-> 90 days, using numbers that are not too close to the edge spares us
-> from having to worry about boundary cases we do not care about.
-> 
-> So I wouldn't have preferred using 89 days there.
+Make git-contacts accept patches via stdin. Multiple patches may be
+concatenated together before being passed into git-contacts;
+git-contacts recognizes the mbox `From ` header inserted by
+git-format-patch to separate concatenated patches.
 
-Fair enough. I just find it a bit fishy to assert that we "[keep]
-reachable entries for 90 days" by checking that we keep it for 60 days
-but throw it away after 100 days. THat allows for a very wide range of
-values that aren't 90 days.
+Update git-contacts and its corresponding documentation.
 
-So even if it shouldn't be 89 days, it could very well have been 88 days
-without any risk for test flakiness.
+---
+Changes in v5:
+- Add a patch documenting stdin support
+- Link to v4: https://patch.msgid.link/20260925-git-contacts-stdin-v4-1-9b4e4bcbb91c@brighamcampbell.com
 
-Patrick
+Changes in v4:
+- Don't imply that git-contacts processes input in any particular order
+- Link to v3: https://patch.msgid.link/20260923-git-contacts-stdin-v3-1-56dd43c64d56@brighamcampbell.com
+
+Changes in v3:
+- Make user pass '-' instead of an empty argv and non-TTY stdin
+- Link to v2: https://patch.msgid.link/20260915-git-contacts-stdin-v2-1-2005061d907a@brighamcampbell.com
+
+Changes in v2:
+- Minor variable cleanup / un-spaghettification
+- Include update to usage comment
+- Remove Cc trailers from commit message
+- Link to v1: https://patch.msgid.link/20260914-git-contacts-stdin-v1-1-9ac628e6fd20@brighamcampbell.com
+
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>
+---
+Brigham Campbell (2):
+      git-contacts: allow inputting patch via stdin
+      git-contacts: add stdin functionality to docs
+
+ contrib/contacts/git-contacts      | 9 +++++++--
+ contrib/contacts/git-contacts.adoc | 3 ++-
+ 2 files changed, 9 insertions(+), 3 deletions(-)
+---
+base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
+change-id: 20260914-git-contacts-stdin-1e829930e19b
+
+Thanks!
+-- 
+Brigham Campbell
+https://brighamcampbell.com
+
