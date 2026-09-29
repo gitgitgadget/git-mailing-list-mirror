@@ -1,84 +1,111 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F597411F80
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 06:55:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1BB339B3D
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 07:10:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790664907; cv=none; b=FkBax/GEikAyd1TltkEwfrfmwmPQa6pe7VnZsL3T1bRDHY8N4t5/+ifayqi0EpdjCidsjgUtpVgQGFglgFUpmR0+zxn/yol5fGYXQi3tjY8QdXqLioxsokqZu3Qj2NVGgXfsVhdfWi96y4fks3clBQHPjfUXKeRQjv0O3iWy9cY=
+	t=1790665822; cv=none; b=rBo4kCSyHb4Kld6t6t/w8708AQs/LpH199JlQVd1Dp+DkizD6MgPLdFQW83zT7cyPk+Vdc8Uml5QttfksnAUSpQ4Q/zIwlMV980SGIOEWZGieN72pJORt7eaz4/kgImiCO2S2DVtgNxSwVJxeDRfVoO2ORzN9oJTWWkWY93fgEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790664907; c=relaxed/simple;
-	bh=0QTY2+nqSPgGKSVMyghQsxcpI7u2eKKeYft18bKzzGs=;
+	s=arc-20240116; t=1790665822; c=relaxed/simple;
+	bh=T97xl/uRAWerN58ejNHlh73RBd+CGIDj1okdNwYinMc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A3ZNPtA+bwzmUJ1ZgPQch2EbFxfVtTgBl4Oy30HUrIzCavLrj0bSPX6m1Or+g+DlsjR7KaOHlyH2/G7JEMYB206+/SxK9Hv0zHR6lg+h/oyREKaRCLws6U4XT5IfU6Ih5Fmo2YA/9zpfo5THA4Eq9ZD8EoRBoGuRw8fhIqXsRIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=LuqAIFKJ; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=J0dNVDTDf8b05/UOO2O9AAATWzA/uigJ7AU589mEhImqUGLZooNYByTZAUu1+j7RxnzkD2OHTCFg1f6U5Nd7eXLrntVG2m6qkmj09joRzqkW8GfE7g1iVsPwPqVY5anaremHECFRVXsFRInPWrPAwcKOhEk6Rm5ND6dKMKSJpa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NfiMRgDW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k7XIJJXM; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="LuqAIFKJ"
-Received: (qmail 70168 invoked by uid 106); 29 Sep 2026 06:55:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0QTY2+nqSPgGKSVMyghQsxcpI7u2eKKeYft18bKzzGs=; b=LuqAIFKJr1MZ7R4K/EeOuL0vNQ/feRnTGu2A3JGapFc4rtyx0SQRt5LebwBw+l8Z65SfEEBXFqpIb7/AXePOr6WT0FmNPr0/uWoDs8a08hwDx5c/0tsOMBTSy3EDr9vclO0fBH+fwT+SMLbhR418JU/vOGCoEOwK6LxEnRMCnEaIRLtXDRm31xTTQ+qaZ6t8gOBmithXhKeTm01pw4PWRMnvtLYmInXi+ToliPIHF/MbcwmPrmcqeRb8d39Rf+qV9VxutTyI1azwDntVs+PAcR1OFwf9ydZLn+Cx/eFxd4pgGlNFM35aLkyNfYiPqHRljxppmH7P6O2m0vQodrXlUQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Sep 2026 06:55:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 289561 invoked by uid 111); 29 Sep 2026 06:55:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Sep 2026 02:55:04 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 29 Sep 2026 02:55:04 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 5/5] xdiff: NUL-terminate buffers read by read_mmfile()
-Message-ID: <20260929065504.GE1697497@coredump.intra.peff.net>
-References: <20260929064935.GA1276867@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NfiMRgDW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k7XIJJXM"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EAEA07A009C;
+	Tue, 29 Sep 2026 03:10:19 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Tue, 29 Sep 2026 03:10:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1790665819; x=1790752219; bh=T97xl/uRAW
+	erN58ejNHlh73RBd+CGIDj1okdNwYinMc=; b=NfiMRgDWnuux6eO47sdxdSRXPH
+	HuGeykV6h12EN09K9QmAItT3uAXgM/TCTBqGwGmx8LpaeEI4jX4Q7Fa/yzL6fBXo
+	RBxe0PvkhJYGpOrV0n2g5M3l1h+6V8xVuL5d3PIJQ/dvaOhd+DhfbEigzl+fliwF
+	KB6hfSTdo3lY2hY2o4FvpriV0NgCDAVP1LhGYaFh+tQkdkX73pVZ6fHBJRKakJGX
+	AkI8jCOUGHyuPE9xuiyXCKOA7fywOM9qCFUnjE/mUO1Uesa6Iz4grhguS9ZPvBFW
+	iElP/bkVseTqM76gxWSXaUs1XxUdgHvmfho25LldH5esJBZr1JyVhCJgXsNg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790665819; x=1790752219; bh=T97xl/uRAWerN58ejNHlh73RBd+CGIDj1ok
+	dNwYinMc=; b=k7XIJJXMRAhl05OHx1T+vJEWzUH46a22+kBOesGFvRKO94H4Usy
+	ADvEj/Vd7rScCR8Doz1lD+jYgVAbwNj4aHRUIchu1V6Xa+3+t5rqmMRcm9FueaDY
+	nzte7m0yJ7JgC2Wqpp55pBSPP1xCK22a5gRy3iWs/i4AjQU8oeXK+m1VOhai74Mk
+	n0ZQe7uxOhiu2dpsFni+swy0ecCv0FLuWdW2iG2282UpW9HgmjU1G1dlSO/lR780
+	OmA6TqfJsJimwlnBdNteuRpG2Bnw//ZWhngwCcw2KCGzJOHKRrckKDX8IM1tujuE
+	5xTYFtf9e8u/6EAlegWGFDxHm96zhPx2V5Q==
+X-ME-Sender: <xms:W2S7avAivptkqlPSY_PGP09oxCt2HlTvUEKfyF2LfsE9u81sq4QLvQ>
+    <xme:W2S7atQDY2GshtrXPopU3hT5doHgtsWwoWlxEV9sqHJqXqM_G3fFqEwUi4VGytSLI
+    TxFq3--r-MNwiEp4slefIKz7G4QroDqEoYBM6gYJP3FMML1KmtnqhQ>
+X-ME-Received: <xmr:W2S7atqUajbke1DAe5Kb9FmsstQ5W1u6eHEQfcfALnDojzuvuoFRmA>
+X-ME-Proxy-Cause: dmFkZTEscQWFs0xi8++KYKMlszHRH96PEHtqvr01GRmE7NUeloRWT7lTL1MRl9O+Kxw1EA
+    m4fCgk9EhUU+vi/pV6e2uyVFGZqgY/lv9mH5bY8ttMN3I7hY9IMiBBZvrHTGonDzSVj2GD
+    uA4tS2rqMewDbjw6AO4KWyQEQY2PArWARMUC6heDrCjLFuIlTv7ZrpnD+x2r4mI1fXhu/K
+    F68uDBZWtzFYr5lunRTVcD+zJOFmNLcU7IlJN9nB8CvvC1F+Wc8MAmMWeQATLQ/eLFMCt4
+    3R22eEvCsB1vuKW03snzEduS3U/0TAI7OHzD9KOr+zgU+7Azwo48J1x+VI3Tuim0SkbQgV
+    4zqyOFTvUBdrZt/dLb24FlAMRgqjtPGh1rzjedYvBCnS8tRYcNz7ChgdJsXGfDqg98ftQ7
+    gI+6Znn53DRpkW9BP5RKEdjM62VIr2FSzkV8ib8HlFZX8ss+ekkWu6BxM4cjw3DjjGKXM4
+    6pkNYmRwT0VreCzTrUYsl2jO7k6BK4tdJzoGn04JDFLm5mxVSmTAvSuWgLrhAlVjwhSMBL
+    v1HZVv3OQqhhXRgXBY0/vDSnDuHl59k9BwdlKzqbEwholitYnIDD/zZYryFi3fLdGSllL6
+    rMtSgSP6sSWeaJuID6/c/2d+oZi6Bqtv3IWdeLzKzJboFU4LEBep3PFKQgkA
+X-ME-Proxy: <xmx:W2S7avy9pjxv00k8_TODi9KzHdgkGboHewGvChe0YyM0QR6Ekwpong>
+    <xmx:W2S7aiJW0rvqzWNkv83NlatjK44riUQVxHNowyqBTmmXoxGQHkkb2Q>
+    <xmx:W2S7ahL5dzioDWkypd1shpnVltYCoh7z8F7lrPxvUHk94JzjGmeZDw>
+    <xmx:W2S7antGXXt_mwlWYP-0272cAVu4wC6cukSlPF6tx7ZmTuNWt7cQeg>
+    <xmx:W2S7ah14Vj3yjmlU-ZgJPx9arHfpRmB_mt-Bz2GEpizOfUegBJ0F1QPE>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Sep 2026 03:10:18 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b4b83629 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 29 Sep 2026 07:10:16 +0000 (UTC)
+Date: Tue, 29 Sep 2026 09:10:14 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Josh McKinney <git-bugs@lists.joshka.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Reftable reflog timezone encoding differs from specification
+Message-ID: <artkVoGEP0iLOGgr@pks.im>
+References: <85f7daa8-d60b-4348-ac2f-b1a68628af7b@app.fastmail.com>
+ <arpZ5xCwFXc9ikrj@pks.im>
+ <xmqq33utphdy.fsf@gitster.g>
+ <2abba760-d331-4cad-bb8b-6e567b517beb@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260929064935.GA1276867@coredump.intra.peff.net>
+In-Reply-To: <2abba760-d331-4cad-bb8b-6e567b517beb@app.fastmail.com>
 
-Since an mmfile_t is a ptr/len pair, our read_mmfile() allocates exactly
-the number of bytes we claim to store. But in many other places in Git,
-we add an extra NUL "just in case", which can help avoid read overruns
-due to off-by-ones or the use of string functions.
+On Mon, Sep 28, 2026 at 09:02:36AM -0700, Josh McKinney wrote:
+> I think my main concern here is mostly around using multiple tools on
+> the same repo and how they should interpret on disk formats (my
+> clanker picked up the problem when comparing git's output with a
+> library it's writing).
 
-I don't know of any path that would benefit from this, but I noticed it
-while converting ll_ext_merge() to use read_mmfile(), since its original
-code did add a NUL byte (even though I cannot find any case where it
-would have mattered). Let's teach read_mmfile() to add this defensive
-NUL; it probably doesn't help anything, but nor should it hurt.
+Yeah, and sticking to the spec we have is the best way to fix that, I'd
+think.
 
-Note that the matching read_mmblob() doesn't need the same treatment.
-Its buffers already have a NUL from the object-reading code (which uses
-the same defensive trick).
+> Anyway, nothing urgent on the problem from me because I noticed it
+> purely in a development context. Thanks for filling in the bits about
+> the real world impact on this too.
 
-As a bonus, we can get rid of the hack in read_mmfile() to handle empty
-files by allocating a single byte.
+Well, I think fixing it is somewhat urgent -- the longer we have the
+inconsistency the more problems it causes. I'll aim for having a fix for
+this ready later this week.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This one is obviously optional, which is why I put it last.
+Thanks for detecting this!
 
- xdiff-interface.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index bc340d5a8a..b3e9f1952b 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -166,7 +166,7 @@ int read_mmfile(mmfile_t *ptr, const char *filename)
- 	if (!(f = fopen(filename, "rb")))
- 		return error_errno("Could not open %s", filename);
- 	sz = xsize_t(st.st_size);
--	ptr->ptr = xmalloc(sz ? sz : 1);
-+	ptr->ptr = xmallocz(sz);
- 	if (sz && fread(ptr->ptr, sz, 1, f) != 1) {
- 		FREE_AND_NULL(ptr->ptr);
- 		fclose(f);
--- 
-2.56.0.325.g545d7e68bc
+Patrick
