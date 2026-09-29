@@ -1,102 +1,136 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed2-f33.google.com (mail-ed2-f33.google.com [74.125.228.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E463AC0ED
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 07:47:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790668030; cv=none; b=Y5TMdQK7oAgBuREognByf1eFIBjp2UYpSOzAXzfE4OTNGFLBGuTy1EvfYrN5odepPefWHhdrmRpV9sazJYDOfidCTImiF//hfFZCcAFo/k2S/r3MPy36PCkscx3UyioNiBQobdgEAMeaElPbcolPg7EGMXrLq7WpRm6Ncpj6c08=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790668030; c=relaxed/simple;
-	bh=wgE2HFP8N4KGIVJR5SRlwS8bTO6nuDRShX1m6luQDrE=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Rpo4gz9ruXYOEt73VwHQb8MxfZX/aExyckOSLJu0NcgDHFti9yFjWFspG2pDgon4A5ytOhnZra9Jsg5UUdCE4WlVuBL0qyJWfQxM/7bJAKUgnNc3AmWQ1wpqh5UJXd23eIEI2b/gkGW6folpE5jgGkvEpi+EeUku5RgcmB3R0SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Zog5nDu8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r01XQzfg; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8A13A873D
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 07:48:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.97
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790668115; cv=pass; b=hH+RcxRoVmC/KwxIHhIX46wz+wuhWwInRHikNwGU3WOLRuneEDg9t1iOlxFZ2OFkjfIzfQGg4WxRLLafatQYRlCFYXweh5DfjglpAbN9xKULx0HTwphxA+d72FmVx3k7Nf5exPUQD4jGBeOmifP6jpM0QlDIWOkq3uTqTR0vkOE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790668115; c=relaxed/simple;
+	bh=prtew9QHLBMa3ENIvfKjnk+1rsWLfQZC982KBgisBMc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WUIGyx6fMbbAO8S//CVgMEppYQXTWhX6kd+RZ1a6zYWVNbVkTpQdoQdHagiW2SYEDFRTD1tuZxVlZurx7q9pjNJEZxxyzLmAgyqmKhhGw7A9OaQ4KzHcoUle978gU+HzFAGByY3TABwZs4jdMchKmaEsthY/Dmoz1i9y2TExg6w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LXZoQks8; arc=pass smtp.client-ip=74.125.228.97
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Zog5nDu8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r01XQzfg"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BF7C37A0082;
-	Tue, 29 Sep 2026 03:47:07 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Tue, 29 Sep 2026 03:47:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790668027;
-	 x=1790754427; bh=97kGE84TzEdTKqE9QaFsHE4OdfdQS5yF1bvX+YGwIEo=; b=
-	Zog5nDu8W/udkjtxYty4/ApjztLik0GTfp//gg2HsxOp8ITWCJ3JBp9DIkiklUSH
-	YSUFWDJ6P2tOKc55IGh54ANAnnMNrN/Uet9JZZsdvxR3dkdETgyD9ZoPuOxpnyLr
-	G0Zl388q5RsjlOD5gnY+SpY3S/+qxJvZNLNBSSrPllDgEvW7p5kOKxTiY3cQHJqj
-	3+csC6u8PD9Djs8Qyq5Gwe9K968UPpyIpaccLse//L6AbUg7o/AIVrRt1muBd4B9
-	kmYFTOKROkMnK9PISsuwLEBgNHpLjLGD4mD82yGfk12E4FoOTX5BiPCiHe5JA3nf
-	HAN7/rHlNuWcePjZL4Wvdw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790668027; x=
-	1790754427; bh=97kGE84TzEdTKqE9QaFsHE4OdfdQS5yF1bvX+YGwIEo=; b=r
-	01XQzfgILHwFhRai7ZAGCN/KxtlgLTJ5OOuq2ergk3QanA9+OeImFn/dkYbtxqJp
-	2f5cfSx6LV5IG7lvkRtk8E0bPa5QLTnT6zOMuHe5SelV+TJ/EzudgvaDtUEZ5JmN
-	fIMzYgP5iWj9uIEtr3/tNTl6RnZVaz9qve0XpnwD2NVHOfSFmfJr8NLHYdUYuy3/
-	AgJ5XV1PC/Vrl/V/l+CfG0VcKscE5CXA7kAZqnUYN+EdaRvmU4l3Cwc8vI6SePi/
-	s8/4LfTaq8wSzoBmm5IaLstHFTsQpaiACeu9W3qPS77+zYOUloZc7jKYTrqlHQyG
-	9P2Sly6TC55qEnQEYWjXA==
-X-ME-Sender: <xms:-my7ai6IwoRPpumDDTLIQNCxn97dNlFyo7emSarg8uvSO8JSk5eRToI>
-    <xme:-my7amsjJJdiqtqAXB9PmuwunqZ7X2ixr5T42kDh0rC4ywGQrx6oBiDzQdQLrMMb6
-    S3jKx0Z6X9Fkz8RqNt8OSmt-_SNK4N1ZnSqodZcfByqBm_IC3pG4eo>
-X-ME-Proxy-Cause: dmFkZTEefSNmDRYqi5ZA87QZuQ9ySMreWrRcB1um9HgII2tlCOWtt7RfV8zJwKEaI9e0wt
-    59m2a/QwkYy4aYTL+E9isyPrtxt+q6upgqREIAz6gp36rhIpYvaTHBAyufDKegLD2NWm/U
-    5SBhgShj4VOHRe1vGGpv8YBM/GfxMuFNX+AP5fIgOR9mHe1BuhzSGnpsFa+HiG7ZLR1Qxk
-    ACDpoqlixT+wRmF+FqQBW5eOJRL7/W+ck7ObVRsqJivRT0KMUztvxmvDIgKQ8Cg36w80T9
-    4sVYM9f87VX/Xu00eBQHR0frgqKfKeh9qoPYERNhS1GbynRhuS5gWekZ+barXsj0SOK0kl
-    QttWKb/+dtxFeihMoY2A6KGJTcmrCncaaZ6eQGfw9NT7P4C+kSz+tiLLITunFwtvA0viGM
-    J96H3jsv9gMWxc88XM1aVX7Zq9ILoOyJKWpR1jndhvdW/CmGbbRq3tdebybiJ+0Jh4FTD4
-    11s4oDr/m3mMKNBXR3JBCLEve+J9EJsxlwFEm8JkPKkjrBQjSgw+kwQJ+pZARL9FbcDE7O
-    rKOzf9sB5kMWAX2OOfzy2o6sMCE3ZpnkanQLQVdATMiWXju/58lduRsUACfFDG7aJYt9xE
-    rhXSUDEIgrrEbYJi5GNJ//F4pxrfWN/q03+T9He/YAM9C/OSW5glGd2EP5yA
-X-ME-Proxy: <xmx:-my7apUPMvZ6XQmiBiK-QOTWUyCdvOu5BV54YhQWHUrevcdHshFQxA>
-    <xmx:-my7ahUEd0lErqHH1RIb_WtBvA98SGAqMtt-B_x7N8aXJnnMQI2XCQ>
-    <xmx:-my7aocWFZlZWFR9Wh6uE9Wk5bIrLgqYF0Sbsc6Aj8fSnRDOb3POew>
-    <xmx:-my7aqViPQEO_arML-v64QBaFvtkXfkzMtAevNTxI6uyYz2zd-wYlA>
-    <xmx:-2y7at09PM-5UAMTkA1hSczSm9r7mTtjTOiYkjpyJGoaiPGqpBcjBMB0>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 10ED622C008B; Tue, 29 Sep 2026 03:47:06 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LXZoQks8"
+Received: by mail-ed2-f33.google.com with SMTP id 4fb4d7f45d1cf-6ac6fa788e6so3081322a12.1
+        for <git@vger.kernel.org>; Tue, 29 Sep 2026 00:48:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790668112; cv=none;
+        d=google.com; s=arc-20260327;
+        b=fPlX0vxeJGq63FH07eENgjwTeyrFgIAzfJ9l10zSV6ZmYN5OMtXx5UtIV/i/mSoyqK
+         M3OPSPrmLIjA93kJLkN4rq13D+08NTD+pKR5n8Fi8Tl+eayTKr7mKVqgV0cAlQLxMF9O
+         gYktYC5US+jEy9oDk0upbDRKxJ71qVA6CW9bEfT5nO843+1ftbXf36tWXVarlcZt+YqD
+         hjCz3CDRsnmcdSA0Wngo7Ryw5N8iV9fPgmRtAemCBiNXds8WEIU7iIUCWcPHejQdYuIo
+         4f8P4WKHEu36/j7C9XUpMYP3n31LN31Y795XzvLEdrsSHcB0iOzRWx5jJfRYtu3ISyQw
+         dCYw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=UA8iBFrUHvFV78FcZDqVxT7V/nCZkf6DNDGAE38Ipus=;
+        fh=A/H8zF5aN2sad7LJh2iOe02uwskCYCLLd0Csq0qIK7M=;
+        b=YOi7hIiBH+SqdqnjtsdnSnVhaGD/kMCDKkmicvXD5d+wZLHFislm2kVOc+ioo6Ruww
+         Rdy8HcSQ3aU/ibLqbgnO6Z4TVNML8IIAufPnMr04KZemA2kpzppLGgme7plLFIblDDGI
+         2mjh3FD9JhOy9SJu46FHTOKqCwapE6Cb5JyXuch6NsREXKNhlR1MjbjRCgKmty53t10D
+         /Fs42FcDh2A/uHQHOD5YLuWhN93F6LYgPkCD0bLN/Rh+1ZvnVOCfb0RYyssWzRaxZELd
+         2icZhnui6fMvXzRZVg0ToQimOvFL2An4Eckuwct2nMmnQ4Vq6B/f3zfrn2t6uDVD0amI
+         sdAA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790668112; x=1791272912; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=UA8iBFrUHvFV78FcZDqVxT7V/nCZkf6DNDGAE38Ipus=;
+        b=LXZoQks8M1ch+zlflnT0FfJzp1P1pqLXoOFIxe2jQ/EXk3ObMvrVpDRbGofF7bKbwm
+         /9Y10vTWimh4/WU4Q2p2aTbbaExAhrQCv1fxg95Gc2ykmO89eJJ83oda7JV3T7HsofDB
+         7o/G/1bEQ1ISJgTqJTE2Zvz+EOF+kmc8pUeUIoK2QDfqf8uU+Fpl9LA+6Kiq56a+jnq9
+         vzxrhJFPnsoArckK9Z12HEoIHSYUFdeangUhCMt95BIbte7RGTTTYtz8mA0qGvv0MghQ
+         zowNTjNmJkdt1YBHZdUq4Aa1FKrFU6/PlbE00hSdnnh/nxQ1mPm2kNHWxNeweNbHVwL+
+         Bfvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790668112; x=1791272912;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=UA8iBFrUHvFV78FcZDqVxT7V/nCZkf6DNDGAE38Ipus=;
+        b=kwXQtmbPmAOs19S6G2KQB0hFilxWxx+6Gg3akH48X4u0xhm2kQoJi3ai2DkC9MuF2r
+         s/59eWbb3nYOOtwdxAoE2/VNSvp/PfNcKsSBJIbo3ljFZbmnST1W7+vgwY+8JfCaWWJZ
+         oCq1ypSNTRh6ANZ2q7bH0sATyO8vIcHUDO82r2oYiU7jrtSjBfUYkUfHX1F9OWwUcRSp
+         4EwjlIal85RgxN10krBzw4jOHaHHeO9TVK3x0SizIQ9dz8oaXbrnsyxPUxu81WBUEQLs
+         Wdzl6Sp2kFqV+ypsrbzUhr12/eeJbiN8hNXFUthzFoEQuh4wmtEgq4CZApZxtUV8wfIP
+         QQKg==
+X-Forwarded-Encrypted: i=1; AKwUvBxly2afoSiv8oZQ+vD0L2AoURU6F+bWcO16izlzFQASS8lUshe1relK9wnxn09RAac4vW4=@vger.kernel.org
+X-Gm-Message-State: AFq9FYI0PbVizdRSyeJHPZcLw8kCyqBr9WHLpty/VUPvqHv1SUQ0X/E2
+	kq37a/W98V4QRjCvQrEAkX3xERoviO4mi0n5+N4Ix15ql14aFxrrDVFM0xWe4+VXKcV4NcxMriB
+	oNMJG/5K+H4PtyWjZxwqHOlgdcDuftXz9LQ4/
+X-Gm-Gg: AYBFou2xRoPoPFMjYN8fj1btpOknYb/3KkCVSRJgF1BP4H3BYxvahPr7lYwMW4V02eo
+	dbCJ5NsSgl2IpN7vFES0TgN9rpIsB3a2iXLK9D8npuapFjSRfK69/VQD8FZTTSAxKbpKUK5w52v
+	3O1GPru/mACuUmNNXCsy/qj2BU5nC9PX0ExYSWRzDh7FfoOKtUICEv3U6qP/8ZEPUd9urmTzRfg
+	apg3IAvgaFN4Q3qrIxdq5xJ1+nNalG9FDAbS3rx4MTtK9qTV6F876rgZMYO1i9S4Ws6eyfsVUCE
+	1lx5DKrC95ctuGcEdPUZVrNr38729omiaYBIIOrLvYjZu6QJQnVxXH8=
+X-Received: by 2002:a05:6402:510c:b0:6ac:a828:428d with SMTP id
+ 4fb4d7f45d1cf-6aca8284378mr1345988a12.26.1790668112069; Tue, 29 Sep 2026
+ 00:48:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ACf_4gHdHLcR
-Date: Tue, 29 Sep 2026 09:46:45 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: git@vger.kernel.org, GITGITGADGET <gitgitgadget@gmail.com>
-Cc: "Harald Nordgren" <haraldnordgren@gmail.com>
-Message-Id: <9a6bfc3c-8759-4fbe-9e90-5dec9d00e278@app.fastmail.com>
-In-Reply-To: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
-References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
-Subject: Re: [PATCH] branch: let --delete-merged find squash merged branches
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
+ <pull.2419.v2.git.git.1790621693.gitgitgadget@gmail.com> <46e13a6e77f0c1c23a0dfe6183e8c3dac405da89.1790621693.git.gitgitgadget@gmail.com>
+ <xmqqtsn9kssi.fsf@gitster.g>
+In-Reply-To: <xmqqtsn9kssi.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Tue, 29 Sep 2026 09:47:55 +0200
+X-Gm-Features: AclHuK-jv4WHNoEwlcGafEe32qck-_ZapIeRgftv3GI5zShfFRvnD9KPvg1uKLQ
+Message-ID: <CAHwyqnXX-kxDmsE+uiVHZ3=6iKvNkWkd5VkK1tRmFBS7fGWmxQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] ci: annotate leaks and stop a leak-sanitizer
+ script at its first failure
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Ben Knoble <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Sep 29, 2026, at 09:30, Harald Nordgren via GitGitGadget wrote:
-> From: Harald Nordgren <haraldnordgren@gmail.com>
+> > Once a script has one leak, it keeps running: the sanitizer log
+> > directory is never cleared between tests, so every later test in the
+> > same script sees the same leftover log entries and also reports "not
+> > ok", burying the one real failure in copies of itself. Stop a
+> > leak-sanitizer script at its first failure with --immediate instead.
 >
-> Branches merged on GitHub with "Squash and merge" or "Rebase and
-> merge" are never deleted by "git branch --delete-merged". The upstream
-> holds a rewritten copy of their work, so their tips are not reachable
-> from it and they look unmerged forever.
+> OK.  So the idea is that we do not have sanitizer report per
+> test_expect_* block but showing the single one over and over,
+> whether the next test_expect_* block has leaks, is not helpful, so
+> we just immediately kill the test script after the first leak?
 
-An example closer to git(1)=E2=80=99s home:
+Yes that's it, one leak makes continuing pointless since every later
+test would just see the same accumulated log, so we stop there
+instead.
 
-    git merge --squash
-    git commit
+> >       if test -n "$immediate"
+> >       then
+> >               say_color error "1..$test_count"
+> > -             if test -n "$invert_exit_code"
+> > -             then
+> > -                     finalize_test_output
+> > -                     _invert_exit_code_failure_end_blurb
+> > -                     GIT_EXIT_OK=t
+> > -                     exit 0
+> > -             fi
+> >               check_test_results_san_file_ "$test_failure"
+> >               _error_exit
+> >       fi
+>
+> The two-line comment in the middle made me puzzled to see "exit 0"
+> just above it.  If "--immediate" is asked and we are checking leaks,
+> shouldn't we be doing finalize_test_case_output regardless of the
+> "invert" setting?
 
->[snip]
+I'll take a look at that, it might be a problem.
+
+
+Harald
