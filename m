@@ -1,83 +1,98 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26124E66AD
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 18:28:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4693A257C
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 18:31:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790706534; cv=none; b=fdo7XAu9B/HHDcjBnBP1riq4Rp1D15SAD+EgaG0HM803i+3k30EhrmUr6pJ3Qk1JuBviGbFv17Vp+0rgD+eIJFDJOC6UXUGiqeOtak6vD3uz3CX6d/JD9tEZkn0SNO+/waRu7dVw9T2skE4rpex+5UHpGn/LPyWQn4iP8aOoggA=
+	t=1790706670; cv=none; b=N8n/F87d6F9iIb7DVUHy4IkgMB1b2PFoKwW/nMHTu8vi4Nbkjf+27zVrfu9Ry5jtsS85ySMfrsM29km+DBXkYjLBbigduAuN96RG66gjKPTUivk+h4PcaZBe2CulxP+AEbT9T9fDdvJdEppUA1sVSfy472YRFdhPowHalyl4NHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790706534; c=relaxed/simple;
-	bh=KhNGkS5JZc5VXkN8WncMhdV+4Bd3+l0XA3W95NOlZUM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V9K09T0XFWCO33T5+6WEWkh+RqRZ1InvMLYUWZmipK1wh7Zao81zel3/JrLWunguM13zzb5doi5M7Qf/rKcAYi9gm33v0ejsbPCDRAzrwmiHLXZ+f26sCkoqBjgruAND4layu0cAbXPzgtE9Lb1uwkk+IEk6aVmeKZvIenebV+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=c8e1UYih; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1790706670; c=relaxed/simple;
+	bh=Xh7f2Unu2qJq97ziU2hS4J9fmn584epWywXSRKIdBaA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VvYKAGCpxLxyVW8/erokWYJ1+jJ8bOzhJGscSj2lz7E8ll7dyGbJaAtoybJa0MoSZGY16u6xrEqvmLvH65NWqDWWBY2qc6plYXyX0aIEAraTnbzDMXP75wWUQEbsmCCO3h2+bNPnGivPf9E3u3PEWW667ZW+PvhVHdpBgAdBB5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dmX0miaU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V6ZeLsd0; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="c8e1UYih"
-Received: (qmail 837 invoked by uid 106); 29 Sep 2026 18:28:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=KhNGkS5JZc5VXkN8WncMhdV+4Bd3+l0XA3W95NOlZUM=; b=c8e1UYihT4IbNajzGL9wQhwp9ukANr+w0mIVjpHC2+Vn878tV8WYAVfAV1uooUvCSI4qhEW71N3uL+44anEKcMQXGa9oiDPjabni01DVk0Iq62b7b6XAKJ82ayK1V8DSp85cgpwqyWigQt6/o0JrmnuTZBTxpXObVw42Am7K+ck+OK+2IUYQuElNHgOtV/GbkbNTqCPbwKWZGDTEuRY5TsPIN9VQ1vimPsU/UxOmaHBTRcrmJfaS3rv14X3BnnyDuh/8x2YfbsOuFeF25JW+u4L6TM6jjgw1VrCca/Ge+L/q7tXifW6wim+8AVNULz3VraEbBkdQaf3wn9B4lpXj/Q==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Sep 2026 18:28:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2223 invoked by uid 111); 29 Sep 2026 18:28:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Sep 2026 14:28:50 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 29 Sep 2026 14:28:50 -0400
-From: Jeff King <peff@peff.net>
-To: Ignacio Encinas <ignacio@iencinas.com>
-Cc: Isabella Caselli <bellacaselli20@gmail.com>, git@vger.kernel.org
-Subject: Re: hostname: includeIf =?utf-8?Q?conditio?= =?utf-8?B?biDigJQ=?=
- anyone already working on this?
-Message-ID: <20260929182850.GB1710046@coredump.intra.peff.net>
-References: <CAK4AdTRdNEU8cLFQ_7A=CUUL6u6dc327rn_H-SeBBD_dD-K7PA@mail.gmail.com>
- <20260929014415.GB1089022@coredump.intra.peff.net>
- <DLRSIZ3JV2DF.10GG1YB2D8DHW@iencinas.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dmX0miaU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V6ZeLsd0"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2402C7A0533;
+	Tue, 29 Sep 2026 14:31:08 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 29 Sep 2026 14:31:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790706667; x=1790793067; bh=Xh7f2Unu2q
+	Jq97ziU2hS4J9fmn584epWywXSRKIdBaA=; b=dmX0miaULlvVbttwCdb9By/W3l
+	dtKPx7emJaBa4AGXh35T4ZndH4qd/IFekCD4I+S3vbeEt2C1ksMugq6XGiaKeUnn
+	pQpYO7P6iCaz6MHoeTasXJDKwg00rkwh2Hfar5jsFA8n5T0jA7uUn1EFENVWqQsv
+	vIkLmIxK6J4CR8yzspP9iNenbgS1RFw9G2M8+kuGjwR/ekTB+Sljd/wKPMLrGBeW
+	QzhpD66tMc58TedugEHILGX3iv6yZASoXb0OULXbIV6ma56k477vPhUr8iAayS5g
+	+C97ASpifZRZZuUq5LGBrnaj76MGKf5H2ybjOUyacew+l6IlBmh86BpfcrzQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790706667; x=1790793067; bh=Xh7f2Unu2qJq97ziU2hS4J9fmn584epWywX
+	SRKIdBaA=; b=V6ZeLsd0ru1ZRn40iH+mM+rEmlLD6qzGty4vLAMwepc5GYeDGiL
+	SwAyQ1vmyzxwJ2orz7hfv2jxCHxBARwoAq5AL27eJhpBYbvNPYY9upNqzqCsYIBl
+	xTGcygLoEvxx586kar8HsVr5p+L82k50zcE3w1a1YtXtyDf9p/8+vZHsT4LPvGM3
+	A2M/a1JgSWT5NIhVeEM22uVWRrOH0faqSV3RvxKjq+xTXKUSNQurfENWSxDu9nID
+	7HCzE7k8pmzDNQJAOc/ppMaPK51kjt4Eb9B7ujBrDO2oC9+vJp+038MDjTkw1OJC
+	XAYxyjpbUOTxX6rMPxsBpfVWD5Bf+GtAACQ==
+X-ME-Sender: <xms:6wO8amAVhQge4BcH5z7orp8T4RwTEyFJu8ynrMdrwNUYflxP_l1CLw>
+    <xme:6wO8akObzx1ZTHO4W1oSem8_xlwyTgcJFUR0tyVUtHWMnvvN8NwTa0Hlmk-KoaLSf
+    jm3vaC92w1jDOOCkwHSi7cBIlO-joIiqG9oDoMMq4N1hdjAWpbq4Lg>
+X-ME-Received: <xmr:6wO8ajaoartAqRthdx3dW8qR3U2yvdDRTRMTng2wH4s5AgLcfzuQJ3C6uHx_aHpVVkbcEYSKgv8nXJEkfxfDZWz_EVovHHC0uNdp>
+X-ME-Proxy-Cause: dmFkZTGhvCQLdcsERhgvH3I7jQ9xNwwIUXG8KEGB4VixVViBbAsGGkG/hPmTnLYJkqEd31
+    3lyjaPbvNtGvmwMvZ67OgJu7lvtMfOWTtqft63gqNBpl46B4rIbupHjDokh94Pfak1Az6F
+    +f8kcrSRsMzMFqTAesjX+/vqE8DOezGf0MSWgTJhCP8vtygTD39T6P92tETbjLhhIweXkH
+    zu8tQH+TqkyRIkSg1s1VHkO8ro17Z9DqI/IgoIApdh0nrXU/stAMQFcUfDi8FtHE0gQONS
+    QpLg14y5iuiu36BojgoOo34iYrGws/9N4wrirYWIg2Qto3Q0t2+xTlVED8NRMRFldmwRNe
+    RKeIrPpCG7RWsB3Nhg/VfWdakNZ8ur3MUuJ4H0Zf5yKpRbfzFOR2FnXjiKjF9CEadMg2LN
+    6N9Z8pNhgTPA9W0QX5U6xFa0Qh9HU9EDChOudNMSlPfF5k0S48jdryQxDrlpVTUoFaUpe3
+    x3J9URbiOKa5Ufi4I1oB4yKslfd2/U4FHXWm7s8H5j2R/+NaN9loIkMChy+Y9u6VFVAfiS
+    UwVuek82PycucCMmrsMcbtG1a4iT3NOqkjnrcV/eQ7Kti+MPKXuezuOZE7JzRQaICvbEWN
+    rZtR2mA+po4iqvcq2LerfpHi8GKd2hHAer2HZ3QySgZc8Tc6G4CwamvWcPQQ
+X-ME-Proxy: <xmx:6wO8aruSP2noYHXKJuAKRqp9aEgTpeUOZfHbcSXM8oEE9JHvEug7RQ>
+    <xmx:6wO8atNKv8IxRct6Mz5mIf2J9Nz0In0b0u5DjZK2MpMivn2ebEQjmw>
+    <xmx:6wO8aq6MYExzQrNKolCFcuPUXbcoZy4K0f9XRsHl8YZdLSOeXDAfsA>
+    <xmx:6wO8arSw8OXVzobC1FBg8FhIqnfa5e8bR6lVEMGWNvNDj4WzFVcN0A>
+    <xmx:6wO8ao8EZazzQgWQ7itxzuNA2ZiHYVRFz42KUb3r7wFNjQuEu9MoF-US>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Sep 2026 14:31:07 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Pushkar Singh <pushkarkumarsingh1970@gmail.com>,  git@vger.kernel.org,
+  peff@peff.net,  r.norouzi@proton.me
+Subject: Re: [PATCH v3] reflog: fix default expiry periods
+In-Reply-To: <artQhZKf6JuRhmRl@pks.im> (Patrick Steinhardt's message of "Tue,
+	29 Sep 2026 07:45:41 +0200")
+References: <20260923102140.25475-2-pushkarkumarsingh1970@gmail.com>
+	<20260924175843.8383-2-pushkarkumarsingh1970@gmail.com>
+	<aroQ_zZvUXKKK7--@pks.im> <xmqqy0clo2em.fsf@gitster.g>
+	<artQhZKf6JuRhmRl@pks.im>
+Date: Tue, 29 Sep 2026 11:31:06 -0700
+Message-ID: <xmqqfqyrhpud.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <DLRSIZ3JV2DF.10GG1YB2D8DHW@iencinas.com>
+Content-Type: text/plain
 
-On Tue, Sep 29, 2026 at 01:14:34PM +0100, Ignacio Encinas wrote:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> > Yes, that is the tricky part. :) There were some patches in 2024:
-> >
-> >   https://lore.kernel.org/git/20240307205006.467443-1-ignacio@iencinas.com/
-> >
-> > where the issue came up. Based on my recollection and a quick skim of
-> > the thread, I think the consensus was that it's OK to document that it
-> > is system-dependent whether we'll match against a short of fully
-> > qualified hostname. But exposing our view of the hostname via git-var
-> > (e.g., "git var GIT_HOSTNAME") might be a helpful debugging aid.
-> >
-> > It looks like after review on v3 of the series we never saw more. I'd
-> > guess the author (cc'd) just never got around to pushing it forward.
-> 
-> That's what happened. Similar to Isabella, I was looking for a small
-> contribution but it ended up being more complicated than expected. I got
-> a bit overwhelmed and decided to drop it.
-> 
-> I kept wondering if I should have communicated that, so apologies if
-> that was the case.
+> So even if it shouldn't be 89 days, it could very well have been 88 days
+> without any risk for test flakiness.
 
-Nah, it's not a big deal. This is open source, so everybody is here
-voluntarily, and it's normal for people to come in and out as time and
-interest permits. Plus the very reason that people end up dropping a
-series (getting overwhelmed) often makes it hard to decide whether and
-when to write the "I'm dropping this" email. :)
+That's fair.
 
-> I hope the discussion from 2024 is at least helpful now if this ends up
-> being implemented by Isabella.
-
-Yeah, I think there's a lot of good discussion there, and the patches
-themselves can probably give a boost to another attempt. Even if we did
-not finish it back then, thank you for the work so far.
-
--Peff
+Thanks.
