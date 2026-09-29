@@ -1,129 +1,122 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk2-f42.google.com (mail-qk2-f42.google.com [74.125.230.234])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC7751B175
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 17:26:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380F02DA76C
+	for <git@vger.kernel.org>; Tue, 29 Sep 2026 17:32:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.234
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790702777; cv=none; b=hsBVQT9c57TbNLxmjZTGG/f8K8DzZfqGM678zekrBM/L5/aIIXyNB+uwfIFqgZigCKSJ6jBTS+g5Gu1eC1mTRFMgRTHwWsplF6VSLyFeuhYiuK01eHqN8KYroa3DWTbLnfdvkiLE8lBzCb25t4tQ5tb+4akjHJCsKfrEcKrCqHo=
+	t=1790703132; cv=none; b=WRSFrcu7T+/j+b+eqh8vvnXhcLNMOvZA6IjAeVQsRTqzwd+DCiqKbZ2yZ7S/jJdhUlx0bA/tZFkKNuRmTZlA7pKyYfB6WPzn1deSrJLdHO+dyeH0ctgQXnmvzY+OqOIOVDTNi3mfQN6kYfLt+PbsFO0HzsmUSeZnQQ4FIo+2ip4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790702777; c=relaxed/simple;
-	bh=eV+EOs4aac8Do58mY1nSCxXKheYfeqLibR7bJMTF+X8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SIqjPd1lTke4GRCXdl04fi/QGaxsKQgOf7iVmcN+VKInk6+JDq6Aj09c8myk851+r+wT8L9KaEUJUO+s+DCNLQhKChjKCB6Kl5yCS+2OAvDdVb5f7yKqfPy3cLTlMi3EVOmkOaFMsbv5Ki3pa8T4/8FWLCStNPn+tUfizqFViwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Nt03o01F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=w/dC8TiJ; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790703132; c=relaxed/simple;
+	bh=g4T+CdGOxtAroK2aG7yjbxTV7tUSrD+/T6yF0gU9guU=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=SDUDBoedZn6o50/BgjESvoPEIx/8sKF8fNcn9f2XY2zJH6mX0iSmqlv0ZUDGnPqz78K9UQ6xaSTsmu5j9w+cyQd4eOTxI0q1fzp/yI3OunPovd5jbf6I5aB99TOYOdztFYd3Taa5JONzS11kGs5SkjE9gAFsJR90qsVJdBgIuX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CkkUFeqr; arc=none smtp.client-ip=74.125.230.234
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Nt03o01F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="w/dC8TiJ"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 04F6A7A0612;
-	Tue, 29 Sep 2026 13:26:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Tue, 29 Sep 2026 13:26:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790702774; x=1790789174; bh=z3ca7JpaSP
-	mg3YQqOOdzeNmdmU1YEZP9i2zjL3xLFxc=; b=Nt03o01FvBT0VHN9EgYrZsTy0M
-	WDtMXXQ+zWvoKJhT/LlAP/+/stfxCyzSG+hVVzH+kaC6xis+wKbZNFvBOu7hXMvb
-	XJgrGw0QDI3hDW8RbV4IMqIOtnohRVIXLPOXJmqPfRf9tIognQrDeWeXi8l/68Np
-	NggUwKZp5++gz6jU/zWb19505+2n+MXd6ToIBtbFpneNPJqHU3UCSkB+geEReyb3
-	wUIn/hVzIVIochyY/Q/PkFTHU+/Jx97Sufhz1k9HfnWANWVtCtEJ+BHmSS5Luv4x
-	AgJbjDApBYAuniQpV51t7ywovXHbzuuauI+/JTSLxs4nwh0oCNUAOO/p9/dA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790702774; x=1790789174; bh=z3ca7JpaSPmg3YQqOOdzeNmdmU1YEZP9i2z
-	jL3xLFxc=; b=w/dC8TiJ5PCnYPpU6dglLGZappVPtrQ2AarFezxob7aiJ5FcH0O
-	CHG3Mz181KWEN/FGgtKV5MSal73JeyFAZZyHoYdR+uHv9EVqGxvojAw4Sw4n4qDv
-	hXB9Ar79RaE9v5Ci1Hcz33xUw4VGS9Dp7i3RbBVzirqWM7sYHdU1z+0AVnWvfLR8
-	nrV1tRpdB4rEKxIK9q1a3M2+j4hbs1IF+KMzr0rIOkZ9jjsiKrtu/Bqup1Ds6ZZ2
-	0CZEYeK7a+hJYJxawn5zmiKdtt1rH+dFcMJAhdpuN7Fdzg6l7SFb8Vi0MIQKyqsr
-	p7Gwvc8FyDdbB8cIj4A9MbitWxQWN6SDg4w==
-X-ME-Sender: <xms:tvS7anXXfgbtjE9n9c57h1cxjzht9mOWe9hbWrjXWO0UKsc1JRRKQw>
-    <xme:tvS7aurV2V28CdosGQnAeOXE-6Ot4wzdR4x3mH9dj40UVYyCEimdhKZmsaCOqx4pv
-    2rCNS5HyRmW972rJ4cpk99wkRNJDBAB12XAWjJvhxLjMZsXLvP2-A>
-X-ME-Received: <xmr:tvS7apkONV_HJO-cJbrrxMa3lBhe2skB1XgTSV60EUSaF6sf4AqEdJNtRNqoquR3LtwgllVmBd4aMnUrhKZWrktyD3BDO35-TvIp>
-X-ME-Proxy-Cause: dmFkZTFGsTAXrYbU6CoecUL9aNAOvqVxHs7Y2FhclkmGFufEcJ0Lj+aMPNg19+HO7MLG6i
-    CrxjCGQ+LWpR+zpeK5BXVi85iYp6XfhD6NOGwakR2usOJZc+6WGxVj+38pdnovWDVeN7j3
-    bSkBhh6BP0NC4HYcXHsu3JnAtfk+cEpRMZOeBYv5e6y1fMom+wW+zuQbbpZKZ4v5hL1IJT
-    TKzAA3hgyH/MY7hiZSgj7196J23uS8pCw9wU95PBfAx1nPjCpGhODA5eWDr4EIDowhbtrq
-    eN0m4BsefnbIL1PV8NyRkEhK7/fvmad/kvrc56Jw6G1myDAlAEhT8jn63GT4H1OGYWQOmu
-    Z/iJjsrA8cWEYnfIrRT2f94wG0+Crkca7dBwwGJ31CkQntRpTA67/doTmLFVa1s9ga2vU6
-    dgd7MTrBtq3BckWT9KUzSLt/2c3B7okSUGO+xzb6QAHk621Rdj9GBdyuvMljzhnk247EGO
-    l9fouMGoDJfPSDK1JJi79g/0T/j2kw8GKi+vjSNTWvrYXPfjV1rGvytRBqVFTJXuGNLKyI
-    5Y3FkQ2xLyf5x8+/2Gi+2uZj13J4k0FchBTyr3EY2oEiOXmlJAcHEkMPRO7Ipx1H3/yBUv
-    gwtdGM9diKycX5YfD6xtPUJe1VYMH9oZTjAR1hyd44+6tArVKWecAcXLCXDQ
-X-ME-Proxy: <xmx:tvS7au3Kqcy6j3tmE0ZCK0nLFblO5Ds4tLyaYFNpvI0qEWiUGNG2TA>
-    <xmx:tvS7amTjVnFiu_IwjgwDcvlKZed5XXwhy8CkZ5uKRsajZfXnWAlfsg>
-    <xmx:tvS7anynMovbEBp0qVIVRv6BT_k1zsVcBj4Y_o4HPeDWRla1ZqkeyQ>
-    <xmx:tvS7amAIHjgQdN6u0a6qvgraWPJbQ2YnV4rBInCCZZZwkXnJw3ZUpw>
-    <xmx:tvS7aoZkrPc-H-rfykmRzXH-qamy0-hPl8gypRGCRZmAeu4zEI3cnshT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Sep 2026 13:26:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Patrick Steinhardt <ps@pks.im>,  Karthik
- Nayak <karthik.188@gmail.com>,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH v4 2/5] setup: extract path_allowlist_apply()
-In-Reply-To: <20260928133846.2094261-3-christian.couder@gmail.com> (Christian
-	Couder's message of "Mon, 28 Sep 2026 15:38:43 +0200")
-References: <20260908164129.560396-1-christian.couder@gmail.com>
-	<20260928133846.2094261-1-christian.couder@gmail.com>
-	<20260928133846.2094261-3-christian.couder@gmail.com>
-Date: Tue, 29 Sep 2026 10:26:12 -0700
-Message-ID: <xmqqy0ckgea3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CkkUFeqr"
+Received: by mail-qk2-f42.google.com with SMTP id af79cd13be357-93bef17c191so391382085a.2
+        for <git@vger.kernel.org>; Tue, 29 Sep 2026 10:32:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790703130; x=1791307930; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=tq2XV6L6KyElZUB/LKT3r1FSPlA5GtdOB7midTqoxj0=;
+        b=CkkUFeqrTU0qGPcLfWXA/rBzeSwXtUYMCiOwZpNTfUkTXkpusElOUaJ19hUiK8c6sB
+         7vWaTvLfEm6tJ3264rqr/qxUXlPIPoI/m+wbOYMGs2UlOXwtlSG488BTx36QpA5uPUVQ
+         qNa7i/QHnaIlpTkbp+z4rKJjQT+jXKDaPWwiOTfPrilAaFDJQFhCYWMRvSWev+0q4fTs
+         C0QCgSZO/RrW+pe+CAq7TKnaLC/tDhCzfo9crkessIXsSAnE6mQSx58/SRCdNQP0xwZn
+         K1R2lZLy1ZMG5vt75epz0+UfPK2qHhy8bKZYIx24BJlt+a7YRlhKbJHV6ljMvEmhrk4U
+         tZ+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790703130; x=1791307930;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tq2XV6L6KyElZUB/LKT3r1FSPlA5GtdOB7midTqoxj0=;
+        b=TtLzLhToh33WjjWkTgoF420me45jls/OgGOhXKbYVRKevGYZJfTTomQVAvATL/+0nF
+         2Ze45Q40PEJcnnhCUyZIcwpEmOuL1csUbNfQTMdkr+7Nv1K/Gg0ljWl98Dx5h4DWHwdC
+         oIoQ3rttUhGG9nLiTKWJajnzJpT8L9GxcNR0+nmeGc/8Fpgodk/GqxIZFQBe60uYNoDV
+         kFTsoWrQ7bsBj6Nw+kRxbZYta3HqHR2K4S49Z8XgpMvBLpmeHYmQ191yx4g77ET60U4S
+         beclmcPxIQjLuYMT/FaJjlCfWfuU6VeLgAoIPMGP6X+JKY+B1AXn0V2XiocMPTPtGqvZ
+         bwMg==
+X-Gm-Message-State: AFuF++mjugG4J+O1joMh7m7ktOKFrBkyYkFXVgJl7w+zQlD7zE85/AvN
+	QrmFDlByJsNWxAhi8dP2ToGEk5EDcnIs0lmkH5ckUk69CBtRop6wfNx2vB7VxEnh
+X-Gm-Gg: AYBFou3B3T/ogYF6pJhQAI73fiU4kDLl87A3rsqMgwS4WVU35ZZDVpFT51xhhsgauCw
+	O/kS4QkKF5/Nu1BzQoAdw+YintZ0oZ02GcWobT5yBy5aIOJA0UVXl3IpeDNz7aHDxySLft4TxNk
+	0idVhtvm1eOybEwtgwPRV9YztkaRvxxkrlnjwNuD05cHNJzkMC9B9H3xRSKBSXxww5Em5a9Yp7n
+	g0jq0W3K/qLNgIm77wO2jtAYFQg60wqioyIqDmXtYy8jDs5TSvU4xOypzJsyLs6WdHzHC8kIf+q
+	ZUtcYICm/erSSWlAP9yKmfhEOE09cD29bTC8CT4UKnKQGjUvrI1D1HCRTUgFXTcK/4R+e0sE80R
+	zPXyzIB+a6pABwBvhXlG85QkYGySkQtzlwAAliFQPltm+ldiefiyudeCUyhqIecyW01OgIkynPJ
+	6SmqrvDCVWqeJsz/cxRacWIQqlqz+d89RaYDF3Mwoym39RPb/YJqCh1R3wtzmnW4KjfxoBTCrXp
+	ofGsMMMY+rbbmizfuWEm1TzfqV153uOapjcq6nrCrloddfnkW8tY+anSO9A8DJegI7BinyaO2Pu
+	HkRVdttMc7DxP/F3QIM+TYNycW3uUAHLs9tPRQC/VhMYGPrpFyYeYb8qXBaHXe5zE0J1FI3rgmX
+	R01imzA==
+X-Received: by 2002:a05:620a:284c:b0:93c:5c7d:2229 with SMTP id af79cd13be357-93c9fc2dc32mr34988985a.54.1790703129936;
+        Tue, 29 Sep 2026 10:32:09 -0700 (PDT)
+Received: from smtpclient.apple (158-94-182-130.mclarenap.oninferno.net. [158.94.182.130])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93c9f57ccd4sm20240885a.46.2026.09.29.10.32.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Sep 2026 10:32:08 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v4 0/5] stash: clean up index-mode test merge
+Date: Tue, 29 Sep 2026 13:31:57 -0400
+Message-Id: <F407EDB6-80C5-45AA-B8DE-CCD61DB663F7@gmail.com>
+References: <d5ac59be-0688-4d60-871a-2ccebc91c58b@gmail.com>
+Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+In-Reply-To: <d5ac59be-0688-4d60-871a-2ccebc91c58b@gmail.com>
+To: phillip.wood@dunelm.org.uk
+X-Mailer: iPhone Mail (23D8133)
 
-Christian Couder <christian.couder@gmail.com> writes:
 
-> +	/*
-> +	 * A .gitconfig in $HOME may be shared across different
-> +	 * machines and the config variable entries may or may not
-> +	 * exist as paths on all of these machines.  In other words,
-> +	 * it is not a warning worthy event when there is no such path
-> +	 * on this machine---the entry may be useful elsewhere.
-> +	 */
+> Le 29 sept. 2026 =C3=A0 11:48, Phillip Wood <phillip.wood123@gmail.com> a =C3=
+=A9crit :
+>=20
+> =EF=BB=BFHi Ben
+>=20
+>> On 29/09/2026 13:18, D. Ben Knoble wrote:
+>> Changes in v4:
+>> =E2=80=A2 Drop merge verbosity changes altogether. I was going to
+>>   save-and-restore, but when looking at the index-merge test case (more
+>>   below) closer, I noticed that "git apply --cached" reports conflicts
+>>   on stderr. That is, "git stash apply --index" would report conflicts,
+>>   and silencing the merge takes that away. So instead let's leave the
+>>   configured verbosity alone.
+>> =E2=80=A2 Only copy resulting index merge tree OID when successful
+>> =E2=80=A2 Fix interaction with t5520 (new patch 4/5)
+>> =E2=80=A2 Squash test from 3/5 into 5/5, since it requires actually mergi=
+ng
+>>   trees. I've elected to keep it a separate test for now (contrary to
+>>   Phillip's suggestion) since it's written and working. Adapting
+>>   existing tests requires quite a bit more digging into implicit context
+>>   assumptions ;)
+>=20
+> I've left a comment on the new patch 4, but everything else in the range-d=
+iff looks ready to me.
+>=20
+> Thanks
+>=20
+> Phillip
 
-This might be a minor point (as not many people may be using the
-safe.directory feature that this was moved from), and this dates
-back two years, starting with dc0edbb01c (safe.directory: normalize
-the configured path, 2024-07-30), but the above design decision cuts
-both ways.  If you misspelled a pathname, you would never be told
-about it.
+Thanks Phillip. Pending other positive acks, I=E2=80=99m not sure if I shoul=
+d reroll with Thomas=E2=80=99s new patch, reroll dropping it now there=E2=80=
+=99s a seen topic for it, or just wait ;)
 
-I wonder if we want to allow users to explicitly mark that it is OK if
-a path does not exist, in much the same way that a pathname-typed
-configuration variable can be prefixed with :(optional) to tell the
-system "if this path exists on the system, use it, but if not, instead
-of warning, pretend that you did not see this specified".
+I=E2=80=99ll probably wait a bit and see how the dust settles, but:
 
-That way, a user can first specify the value normally, and then when
-they reuse the .gitconfig file somewhere else that does not have the
-path, they see a warning message.  You would help them by giving a
-hint, e.g.,
-
-    Specified path foo/bar does not exist.  If you spelled the
-    pathname correctly, and the path is allowed to be missing,
-    mark it as optional, i.e., ":(optional)foo/bar".
-
-or something along those lines in the warning message and the world
-would be a much better place.
-
-In any case, it is outside the scope of this series, beyond leaving
-a NEEDSWORK comment here, and/or a #leftoverbits comment in the
-review.
+Junio if you want to see a reroll hit the list using the new synthetic base t=
+o make things nicer for you, I can do so. In particular, I think the last ch=
+eck I made when I saw your mail about the synthetic base had the prior round=
+.=
