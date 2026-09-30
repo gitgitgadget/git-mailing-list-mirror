@@ -1,84 +1,83 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEE14457B6
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 20:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7F92E285C
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 20:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790800640; cv=none; b=B75RiNHl0yqNg8GPNFrIS5qj2o6jlFW3M1v7/dz1535Ukke7Vb+lFNufJa98ERuyJ9tJn51Z6kra6p9StxX2dFvT93olGqJPFcLpdWB7sQfFfJl349+1QIPzy6Vs3YgBzytpai4PJVCHiiKojoNwkt8WKUE1v3SUSUHmao2nsmI=
+	t=1790800838; cv=none; b=BFxntYqpWLPSh8KJtjFQegwVzaDIFDBiRJG6HNsCqKdkGmcobhAUckaxZq2gOhH26PFyUVGjAnR1CY328uzsE+YcGULGRcwgMDAsJFFlPIffuS7rpK6TxWQUVUuQNhqkii+8OkiTDMnHCv/irC5pFJ+Wrc1Ca5Nq8qe8jKV/Pcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790800640; c=relaxed/simple;
-	bh=JQ6jeKi1CiXnboHKfe5HfyWKoVqf+9PuNnuqjvCoA20=;
+	s=arc-20240116; t=1790800838; c=relaxed/simple;
+	bh=RWIcZFOJK3FTfgOnXvV7W4WSm5gqzcqNxx10bX1jaNY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PeWnBOrjuFUd4H07+QftaDdu/IyvYm/bizxsf5sR/ChyFZEfRSgi/AeUSer/itwYJ5htJXajEduzpFEtSNXYB8SeJpNVJqtp/n8ojTk0qp+OpHk6PJFxcgShh/SiCLqgcN6lLgE9iYQmrVgHH9lwez/j0iSIErMPjuZXMl2IBSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I20voQxW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NIFqYNRw; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=ihQObVWUp28wsA3TMewKJTUi9wpvUGcJoVJ/HFaoifY/GmqdJaIQPpIe3vNAx9SF64TFSlQzMEKWQ8ufyYv0134iRWny05PplVgPrWF0f8neBKi0vj0p//XnWeZvjB7cY1e1tBpE4z+XXxjxxrvcSd/TMb9ft2B3yEo3WtUEwuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cK83ZOO+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z7vJMekz; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I20voQxW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NIFqYNRw"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BFCBE14000BA;
-	Wed, 30 Sep 2026 16:37:17 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cK83ZOO+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z7vJMekz"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2B3601400098;
+	Wed, 30 Sep 2026 16:40:36 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 30 Sep 2026 16:37:17 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 30 Sep 2026 16:40:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790800637; x=1790887037; bh=RlY4RONvum
-	9J9CixswnCXw6siytr32T0cL2RdDsivGk=; b=I20voQxWhry7+FApooDgrWd5TO
-	HtllJSHky/PKaTpSACUlzBRFzivzfhNyI+RbvokXCB4hdZyWHX4Q/+91Q12q4WGu
-	C+KXgaJQQVXXdqurGIlSLGkUvZuKQ9xB7OK7i+C4quvJQ3KQfb36/+RIGTjDK775
-	TqeyY5mkX1HKw5AKOty25xRiRL6eIaA9hMCecY673cXxCJWbAEEPKiWn/TPftZTg
-	+LOukfg6CjzHjsuZ/Yf+YW517WndPHLRkV5epjwyojV+97qFMNI+fiQxQc3rDJCX
-	8UDzf75ecjKsyk/t05BUvkN1ZROVT5W+0WZK6Wf/rJ6TAD4BXlXrg9H+FhQw==
+	:subject:to:to; s=fm3; t=1790800836; x=1790887236; bh=Z4zjIhnCju
+	Oy0U/4DOwZlhF5yFnUickV4Ccz6YYkAH4=; b=cK83ZOO+vlL5edQfz3R8zuf6YA
+	bGN1pDKvUaxjRQ4EpMxiYVsLFtFgqGisciPwsKirg+ogqiHOxclAOT5n+wPWly55
+	0QQImefgitnyyAb+Rg5RUnkhKGEGu/6E8STLIRVSx/DiApEBB7z5Q2h4epIwtxQx
+	wjWzkKnKqiSC8e4M1lJW3gbhn9oKzqagyzba17Z5jDOWv5zQnMk0IogrgtgBOKmu
+	gwxGdMPptZH0dyOycePZCqjp7TP4kITVSZwMZt7MiiStEDIjMS3nBX0NrlChPb+E
+	fCw4rswOpZJteF5dIYp26VzLkhj9MK63mfocQ40Wkg5/X940RRk0FdFN66IA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790800637; x=1790887037; bh=RlY4RONvum9J9CixswnCXw6siytr32T0cL2
-	RdDsivGk=; b=NIFqYNRwbuDmqzFUeWkyXtPhGNNkiuGxhyLIHIrpwXVH0RrGU7v
-	aHO5eJ2VM5g0eVE179oAf8OLuHz4j9BestYaNLUMQyuNkTdbAr4HEDMjtao4mBga
-	hHXQCQ7/if+BVBhtyfA/OZ5Pn5A75r46upQndsd2HMt3lzaYZ9JzlR984IXNtIaP
-	WLy8JfhDCyMcQ0111cDfxAoyfFVkpOR48O3PF1fhfBiuERPXAo/vchXBuOTkVv2E
-	2ujpeQnLw1sSwxGjn/l876He56b+1D30t/+M/hDdqh/nx12LSGtunAWW4Ak84zfB
-	VdStq2kvlNG2RGUrBhN36Qo6Udv72c+5zow==
-X-ME-Sender: <xms:_XK9auSo7kbXP1lUUNsXWM8IKx1NU0NmFCaUK62bfBgWffQDFzzCmA>
-    <xme:_XK9aqqntySwVU4BMoCvONG9h3Q7dmYEfD4cvO8Cxn8OBmJGXXL0Z0TH7mNpN9wzj
-    aPRxVD8jaHPlXWwIIxuBHPiWWwtXfQbzOHvNTJiuAz7rl06XxE2-dQ>
-X-ME-Received: <xmr:_XK9akKyn0KoVJu4dFrv-dXttwytYbaVp65YAvIklEtHFuZExGEU_L3xki3HHy0gLg_5nRZBJitz_LpE2yiAcQt6my38GpH513dR>
+	1790800836; x=1790887236; bh=Z4zjIhnCjuOy0U/4DOwZlhF5yFnUickV4Cc
+	z6YYkAH4=; b=Z7vJMekzkL5wntThOQmMXzfdDnJzMc5wMCCFvUJmZtpY5bho9tJ
+	DKsb2/ClxRSax7ooaA1u6ErUK7DFhxAYZZ0Z5Cnw4KhhN1HKKnxFoKc2MujXid6+
+	zI9Uscq/5eUlsdx/GEW5NjyC8DVjMczRWSUj6BaPEDKJASGcQDHudx1Vw9scBlTR
+	M7UqMgFk5auGluxP55cKqqxRUZLOj6AKFDLZunN8M9x7mtAoQCQFM02Z2GUm6Auz
+	nuYwGGeghn4R2UdNYBXPj8NfMxMq53+YfpdUNZwJLxCelb7re5vKBpF7K5k2WQwH
+	Kkl4L9Srq+hX9dptBcJQeGWnrw/28EX9Hbw==
+X-ME-Sender: <xms:w3O9ai5nPUqFz3csWtZC8CtK43RL8XHe35qguF2sRRc-C3DG0yfplA>
+    <xme:w3O9alOyLa3hKkw4f5sRD-lq0CJQVDKHSO8FfucdOAlnHXANPewtTRvndgdl5sIiO
+    x-eJTBZ6sVHrbcz92Y_QfU2Ef93h9kA3wr5ToxFq0TyhFN4SVdiIw>
+X-ME-Received: <xmr:w3O9aotOpY-zDTEJyaAsCas6Ku9n-yvmbuHRj6kduBQmFLVz21dkCqirQ-UHfYcZjTicqCUalExavnBJSxx8B7OqQDG7ICdHN8Qi>
 X-ME-Proxy-Cause: dmFkZTEq0t1Sy0tIm3nJf2Q1mM8C8GiPGnlxroDO2O5xQo3cxXWH0f7xZ4AdSnT6cm9F2z
     LeWgL81ThFAKUbFx8C4V4NdIKi24NOkxCDx8GOx8S21vV3UEtbxAHgiGN8sgOAmufFZyJi
     UUn3sHbHXMtlF3qtmQR4B5/MYA6/tVyGMRV/8Cmb87WPxhM4XYGJnukaiM39S77VMpVT7d
     KAI1YEronx9GPzw4L5LX5hZ1RYMM9UOtOTVnN/nzNFgvGfvNMeEwPUxOALCyHN6A0QiqKl
-    i3Da24Dw0MU/a2EmxFtD966R7l+EiYhdbMgIbOEMZunUe6ucOP0mFYLhKDE2PMgqK38tdV
-    OhhWuaMyLArhQckE2ig4duu9qoJtnNE/Ot2u98KTe04EFtzeIb3DF2zkgwqAMK2HS6cFYw
-    TyH8Kw+7uJ+m10Ac7vAcflL0unis0wZcgTqB351mEBUGdvWpaIEhdF9zD/ObubD4YSM85m
-    pDKCKiGYFD7jxmlX6O4As2zeXElYSlduLG410dbiJvLoeK/wZP4sIvZGRKfeMJ/Z7CznxB
-    js6a6aUK4cZOH1vXI9N4It9FqgHD3xiI3BLaFj96NiX4sKxRUSUz/rEDyXY4WIXszyxPMY
-    8kKw0WCXKijbmomEaaSVjxMePf3lePOmdVWHjYSn8jfagCErlth/AkyMlY9A
-X-ME-Proxy: <xmx:_XK9alpcn-44_sWdovlTOGJAtkqxfcFWfmx3lsLQ3gOMb327kOZNIg>
-    <xmx:_XK9akzr4CpH4HbCLUiqGgsT-R2isyTHw3Y68xW-RfltLXuvh4A-TA>
-    <xmx:_XK9ahPRNiv8I-gSq22wHV4umtFIy7UxfHevTtmnQ--ydPfs413UiA>
-    <xmx:_XK9ah5f6zO9OfVsRahhH7q3AWo9Y-rXvWh4VTSUWTNY4N8gzof67g>
-    <xmx:_XK9ag7zUN89laUkJZj3NnBGNGKb3bC2C7KiS7xCaOBxs9ui_vgdvfsk>
+    i3Da24Dw0MU/a2EmxFtD966R7l+EiYhdbMgIbOEMZunUe6ucOP0mFYLhKDE2PMgqK38tAt
+    MI2Z4PcGi20470bAYv8VlAC57u0kPN+MQ2viBtf+vE0CmgA6keoOsgiSYRqtGF15Dr9lpW
+    Hyg3N2lSx66HhPhFZ3DgVVhYNuUzPSTZ9/vzYraAVmGF/zc90B3OAUJIWqcFhtKaBOBVTr
+    DOqhYlxe5Bs4z/AJWluT1LguJ8DVPBAmWPzchFXqW6yo7LCowl7JTkGPIHM9C7A8eAITSI
+    pZ1my52X8Q9ZCTOqt2GqTHZRaU2ri8q7/t0sE7L+6HOt8A4yuMirbhMQ4qVdF9lSwrQG5B
+    o3xhiBWFIF443+6ABgUA4IYyH4AoRbvn7Go7g6U6Gmnsuo0rNUSqT07TES6g
+X-ME-Proxy: <xmx:w3O9agZyRy8SRtCPDSDs1Dn9VhdPHqIRpqY8NRcpuhwvUIOQOqeLjQ>
+    <xmx:w3O9aixnbbF8F4dpDcA_CF8Rg54nNKX6kTtDKVxHcslnN89TmjNKyg>
+    <xmx:w3O9agh6pBmoJl7-2yMW9Ji5cA8yUwkK26eir5z7o0R160VhbBXvMQ>
+    <xmx:w3O9amkBTwsZpYrRZ_CAkzgDUZEWPnDK2TBGJDSa9q03hYZBPx7juw>
+    <xmx:xHO9aq0WroNNVvhherTlbrNcO_ST-3tlvZjaND1KLZc8FyBWqxT-qbD8>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Sep 2026 16:37:17 -0400 (EDT)
+ 30 Sep 2026 16:40:35 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Patrick Steinhardt" <ps@pks.im>,  "Julia Evans"
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/7] [doc] Add new gitmergeconflicts man page
-In-Reply-To: <5ba2088c-4919-465f-8892-4ed0685f81ea@app.fastmail.com> (Julia
-	Evans's message of "Wed, 30 Sep 2026 15:53:17 -0400")
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
-	<ad4853dc36cdb883c9a8dc6bda747a5ea318e7a8.1790261062.git.gitgitgadget@gmail.com>
-	<ar0MVRV5X8zgZfLy@pks.im>
-	<5ba2088c-4919-465f-8892-4ed0685f81ea@app.fastmail.com>
-Date: Wed, 30 Sep 2026 13:37:16 -0700
-Message-ID: <xmqqqzia8ohv.fsf@gitster.g>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,  Elijah Newren
+ <newren@gmail.com>,  Phillip Wood <phillip.wood123@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH 0/2] checkout -m: recreate conflict labels
+In-Reply-To: <223c99ea-64d9-46da-9631-ed8035f1a062@kdbg.org> (Johannes Sixt's
+	message of "Wed, 30 Sep 2026 22:24:33 +0200")
+References: <cover.1790761727.git.phillip.wood@dunelm.org.uk>
+	<223c99ea-64d9-46da-9631-ed8035f1a062@kdbg.org>
+Date: Wed, 30 Sep 2026 13:40:34 -0700
+Message-ID: <xmqqmrsy8ocd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,48 +87,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Julia Evans" <julia@jvns.ca> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
->>> +to include merge conflict markers `<<<<<<<`, `=======`, and `>>>>>>>`.
->>> +For example, here's a merge conflict where both sides edited a list of
->>> +fruits in different ways:
->>> +
->>> +----
->>> +FRUITS = [
->>> +    "apple",
->>> +<<<<<<< HEAD
->>> +    "cherry",
->>> +=======
->>> +    "banana",
->>> +>>>>>>> add-fruit
->> Hide quoted text
->>
->> A bit of a tangent, but sometimes I wonder whether we should make the
->> respective commits a bit easier to access. For example, we could put the
->> equivalent of `git rev-parse --reference <commit>` here for each of the
->> sides.
+> Am 30.09.26 um 11:48 schrieb Phillip Wood:
+>> When "git checkout -m <path>" recreates a merge conflict, it uses
+>> the labels "base", "ours", "theirs", rather than the labels used by
+>> the original merge. This short series teaches the ort machinery to
+>> write the labels to ".git/MERGE_LABELS" when it switches to a merge
+>> result containing conflicts, so that "git checkout -m" can then read
+>> that file and use the same labels.
 >
-> Personally I'm not sure if the commit ID would do much for me, but I feel
-> like it would help me if it were possible to include the commit message. 
+> Would an index extension not be a better place to store auxiliary
+> information about merges?
 
-It would also help the resolution, not just committing after you are
-done.  It may not matter while picking between cherry and banana to
-show your personal preference on fruits, but in a more involved
-conflicted merge, it may help to be able to view "git show $commit",
-"git diff ...$commit", and "git diff $commit..." where $commit is
-the "add-fruit" side of the merge to understand what they wanted to
-do, and what we have done while they weren't looking.
+Wow.  MERGE_HEAD, CHERRY_PICK_HEAD, and all others replaced with
+index extensions?  That would unclutter $GIT_DIR/ quite a lot (for
+some reason, I find ORIG_HEAD is a bit of eyesore).  It makes the
+information less accessible, so I am not sure how I feel about the
+proposal, but it is an interesting thought.
 
->> I tend to forget that by default, we only render ours/theirs in the
->> conflict. I always feel like that makes it way harder to resolve
->> conflicts as you don't have the context of what the code looked like
->> originally. So I have diff3 configured locally for ages.
->
-> Every time I show people diff3 someone tells me how happy they
-> are to learn it :)
+Thanks.
 
-Yes, we should encourage "merge.conflictstyle=diff3" (I feel about
-this strongly enough to think it should become the default).
-Knowing what the original was before one side wanted to say "cherry"
-while the other side wanted to say "banana" sometimes helps a great
-deal to decide what to do with the conflict.
