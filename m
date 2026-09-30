@@ -1,135 +1,122 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl2-f12.google.com (mail-dl2-f12.google.com [74.125.229.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C821B3E6DDA
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 07:50:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790754621; cv=none; b=eTELP1dKnRaEQjd+w/BpW9Psoq+qILsK9ih0fOhC1kJOWQ0/ceHACue2CRg/Naq1If9HRp5cSMeFQbvulf45pzbXJeby9IGvPooQKje37m33doJ8a40b/J/9LbNU/yuWQZuZ8FBJD6cgQSnnDxdjJQJZnRG5y5ToUzMTMFZ8xKg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790754621; c=relaxed/simple;
-	bh=TovtO90reRPl8KPtCXQC2quyeiCqTHWHboBqnQuOitY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VpsFWGwlp5kuF5PnanQjcn0cFVUet3vJakq/Jihywh2ySijHK3euitTl3VE+NWucaD+aCpBUcyHNzn+4ewRv5xebzIeZpEfM0aM4FBC+WaeWltJg2O2xqN70ngIYeprD4yHQq5bMhHlnZ/vAuuGrRKTn81D+AGDvVIjvsuv+l0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qpNzJ8iI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=itTLZ+h4; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902F1446BF8
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 08:39:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.140
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790757601; cv=pass; b=NTqWdwtQ3GDgqmws7PcD2Kncp1tT3RRcZ4vZ0Qcm5rOytqd12Z7j1Z5fWhEg55EeC/hs+LnD1jZKZV0sIk6mBjD9KN/aTFfrLgy7uZxhiulI4xZpb58GkyUSmhHdf6TFK8zWeQMh0EI3PeZAQUXYBsSzX0boZMu6IXHu219mmpw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790757601; c=relaxed/simple;
+	bh=hxBxb9tj/v+6casPh5mHWXIRzCt2uEr0kgkhZBHhSLc=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=S2xgXc8O2Ao83L1zwDe4xM8sVhzOCj5hgj3qYQKkR0JwCDDQXVtjJMuTwNiuW1CB5W3xQBiyVWhs262BgZbebjT8XVnUoGVYZR/Z4QUXftav6YD53lE2mwGUNd+qD+CgVTVp+xAsSO8gdyiDMS9hTc6W+Tr09gBt+JB1anZzEYw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=se598R5Z; arc=pass smtp.client-ip=74.125.229.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qpNzJ8iI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="itTLZ+h4"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A3BBC7A0780;
-	Wed, 30 Sep 2026 03:50:16 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Wed, 30 Sep 2026 03:50:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790754616; x=1790841016; bh=EpZ7REE9t6
-	qEiAiapYaMbMfgkutWAc78nWxQ4F0BX8E=; b=qpNzJ8iIvXeWVrzaP03AcqsKQB
-	2nH+XFf1ffyE3BCWebwKSh6/uIj3SE0W5eWUS040ZSawP4m8v6d4iITIxHp1ZV8p
-	XZ2DyBviC/CWG59HbR81O+YC0YPb+nHtmgE0/qvx/4W4o+cYQ736MawkJnhTqxxW
-	C7bO0iIm9nGm8M2qu5gtAt8SHmnq3tndNdgtRuN5O1iwapVMZrzUQkKP39IhVuhD
-	9kgG5ClDvlCzoNOjv18KvheEIgUWf6639VIiq7CQJ3PE1MYwdIDJ2VMi4e5YQFWS
-	bAGkHtcQEth2KEgFMc3G8X1UAUt43zEYPkTvPiW4TmG5Ai2Az99M0ngMk/BQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790754616; x=1790841016; bh=EpZ7REE9t6qEiAiapYaMbMfgkutWAc78nWx
-	Q4F0BX8E=; b=itTLZ+h4g1U4YnbJ4sMxYRbe+4rFJqcG+U5H2oIJLdqmTlVQSa7
-	DDTOzfTaRFioymWxxnX9m1Nho24RW1RC3TUKVdTlTeZPs3E0KtpyoiSLFsU9rUUI
-	oO3WBhkklyr/t9SBqeFWihNBIvdB/qCm5m5R4Pb3rAdVJVnw5uE61FEDBgh8yWsP
-	5D96U0iXfU54ViOuBaEjV1fnEnhmQmqO2Kf6qJQk4z0nlGk2Jr4+JT21S0lQyDRD
-	/PjT9BpU1yKypykhcurC9u7rwtJkQ8WlT52aEfJDaB0Ahnrb23opmnAfNJRPcRh5
-	QR6FdRuKldRIpt07lUrtCARuTBW3caBaL7A==
-X-ME-Sender: <xms:OL-8ah3tFffZUZqSLGANouUxKd8NgkVS9oR312ALD5fghSe8kewDVA>
-    <xme:OL-8avHDSAfsI43q5EigGwM2SSursE9oEsB0unTDjJxsIzzoSXYUxoVRjh9spI4yd
-    rykyBzOvoosGrpNNyKhiP6MTpB1UDLcFQ-D0irYdLYAN48L72Z-9A>
-X-ME-Received: <xmr:OL-8am4BHIhVIh4xe6aOwmY6QAd-bDwj7EwxmZ3l4urMsVglWY6SSST48Kkm5vr6Kh2zxQnL6zNhFRQzc107rK0lLxyq5o9VU8OZ>
-X-ME-Proxy-Cause: dmFkZTEzr93MGnpHs7NDAhKzlwkAP1Vjg3Ig2xCtH999Suv/ivrTPZxFshN6FLAxP2ECYS
-    igWJ9XfqEA3GRNf8IBTwISp7bh3GN4b1xsgrlk5N2ZUYyiOe9DYE6X4lGsVQmSGCb2NXUD
-    QOMk7GTn0a8c3Ar8Q93MgQ0o71+r3ev9GTribfYHtulhTci1g3sOgGGO8YJBcW+S23UMxJ
-    GdMz0bSg7XphxzZ9CCMTh8W29CilFKZSxcvFmKu51L78uXyiftOtnekHzB34tqHT99mrev
-    4K0f3iUqkirWsqr4P+cSOrWe3aebNmBaoKfTYrNn00Oek2J8j4rMy9daArZ/+1ntJfM+r+
-    BglLIjYf5jVeYQQlN4NydI71tl7krm0xGdXQHdr+tiZIMtbzYrnngfkHcfn3eM/2sTi3aI
-    vWyJUOIGvm/1K3v9DjxPXIUEVpWhzoQjdtbPnXcb/og/YgbDox9hv7HZqpGf/oXk0lLruF
-    /R41EG/WRryfQkC7A9exPK69VTJvr0sMuOuvvTze2hJ7jyCrtIDxk2fapazvS/tBUlyCd6
-    AHu6ULSXR9Fbf/eH+7H5I1fkYpidKa9K+uE1pj99cbMF4dhsc6GKMCBfi5ZJ5JAbn0CemM
-    9EFTtUH1vNz/QXExc9kQ6UROkIFbXGMrf/hgYDn/rK1KnsRLW8wJavpXMzYg
-X-ME-Proxy: <xmx:OL-8att9vavazyle2dn-8v2bV-9GlU0GMPRhbRFjWD14zZFF2D5fyg>
-    <xmx:OL-8av6N5vu9-UQmNdJJJvYL9YjH6F1ESmaaSfsmCGGCjxnQ4DULFQ>
-    <xmx:OL-8agX3et0yLO-T9IQxm2ouIMx0H_f8ZIkPZBgPa_f4CIxnJ3vZGQ>
-    <xmx:OL-8ap--0F0uzaEyr5XX4tJBqH_aeWjqa-aVUClJpYpojjkNXqlTMQ>
-    <xmx:OL-8aib9F5tzlb7s_jijKMNwHnCjpYEpH_D7L3ZSGcVyNmyiTLyVe9uS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Sep 2026 03:50:16 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/3] [doc] Remove gittutorial-2
-In-Reply-To: <8a5b742a-3f11-4bfa-954b-ffdd839b6d43@app.fastmail.com> (Julia
-	Evans's message of "Tue, 29 Sep 2026 06:42:40 -0400")
-References: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
-	<xmqq5wzojy31.fsf@gitster.g>
-	<8a5b742a-3f11-4bfa-954b-ffdd839b6d43@app.fastmail.com>
-Date: Wed, 30 Sep 2026 00:50:14 -0700
-Message-ID: <xmqqzewzch55.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="se598R5Z"
+Received: by mail-dl2-f12.google.com with SMTP id a92af1059eb24-142dd04edb5so8640618c88.2
+        for <git@vger.kernel.org>; Wed, 30 Sep 2026 01:39:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790757596; cv=none;
+        d=google.com; s=arc-20260327;
+        b=fB18m2vUjnjNGOba0uLCZn2TgwS77LZ8avvWOvxFt73+GHzhdqep4SfeFQ8eiS+pt+
+         fSo8LuzU8s1KXwITNd0Pdsop2sLgJDjLrAmiJMxhMR3w8qi7Axb+3lsEDlYxCnUBzZ6t
+         /xUlKVOPAYj3XrUzM1QxunLGvn+APSMuh0NV9Zo0xqA8znaG4pdk9PNRhUHRqSTegH9i
+         DEoKbHqRC0WEZqSANU6Y/2lfK5ytDhp5BqILy/oXR/WfwpOlaoOBbkDfIuKcj7xhAa/K
+         cA2ZTaxFXELv2s/dCusV17jKFNG/OTwdSMq0XE7hNIDV9ToIQUo8N/rdjlQoAypPqzB4
+         Aodg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=+kZz2JcILk1fCdg5EK36LWmn61lq9HUXWXOBzqD8BHs=;
+        fh=1hsHg2A8KfpQ5f5R4xzcqhynqNho6Ie10tJsSKgpn5Y=;
+        b=W0ZJmkAHcYLKGTSiku+B7ItiEkp55CrIztlngBQw25ieR1X+2UV6m4Bmr3HC3IuOtO
+         T6EwQcwMg7DgBLGR9Wo2IN5OjnXdSturKcObSQcfJWQ9TTRy0S4ZNOoew3/7hJol53E2
+         5maqEDt41uHN4OKqJ9HFkk8VDj/PU1TIfqT1GDrGOqkROy4b8eMjFcIDPgT80mzHWbBN
+         DyCAb2UYB2TwVVEw8iQr+LG+voG21/OGhhmNJjUNgYJoE/nCjMuPCQge7oHSSu/3mTo/
+         McQhHiB2xE+E+q1IPQEZ5+kYg2E4tNGY6Fu9tygdxZpRfmSSZOnl90cCsCN1TRbe4MT8
+         3N9g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790757596; x=1791362396; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=+kZz2JcILk1fCdg5EK36LWmn61lq9HUXWXOBzqD8BHs=;
+        b=se598R5ZbyZ2FEUdkg717U2Dayfyl5jXpfXbWhso7k8QC2HBByrZHir21ITdlgQNwD
+         zPSR3pfxPS2U6OATHBEV4V713kk3qKBmNzL9BB32jB/Xm/JBJHXyETK1HI98IPDWOTVN
+         w77hudzKlJPkpQJm4kk2rw9gwJ4/OO0VVBWleu9X107DeXASHqQtvxgJOobFRU9yB+Vj
+         9btFvqa1nBlDhwIVin9ucjkh4ft2U/ODsZj9310NTaUK8KqiWTJmq9fYZ/tJ44xOhpAH
+         NKb3OxZ1J1N4EekYDrIfkYmBkizGDHTJ7259vcpqDLQLfjyscmm0cJj7wxh5G1mNdxMT
+         e2Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790757596; x=1791362396;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=+kZz2JcILk1fCdg5EK36LWmn61lq9HUXWXOBzqD8BHs=;
+        b=znk7VGgpwLxRQxN4uLOD63lCYh7b2UYHh+bUwIR0+1H+z5Bi5SeLiGYVcx09Bo4Cdx
+         xTeswv3vRo7mF5HFO+QPJKI9RNDrQFhuRGkUSC6htYm1N1EGdhtoU13fBhKtQ++0m+cG
+         L13sfcytLR6/WHJV949dCfZIj9h1gAgmVKs3OuThFB1OlwlnlVCUJ1wcQW4oUsKY7XOo
+         VWZSjlSONRg7GwmmOP5acVbTOkPWPjym+hfRa+oHxD21XjSpFu9T1JRme9y0YR09yGze
+         AbR9JC/+YwVZVGv/SKpFFbGLUnpXRzdm2mPgy875dphlatX0jgYUn851nW5/v4RJp36B
+         81pA==
+X-Gm-Message-State: AFuF++n5rrCM4aTLYTg1j6yhjLCX9YRXC6dbg1Fu/FXeJuCCwqyfr2B7
+	rtqMQ333IBKC+qtfhQazXLvxk2x4RaAvEato2HSlRNc6enfwQmA/RgCt91R14hhbfb3jvT6R3ei
+	rBDDVYcFi+Y/sQ1MqffeppnwEjIZ5s40+d5uBb7qZww==
+X-Gm-Gg: AYBFou0WSC6i6hPWCZ1xkt1f0XmJB+PI6ieFqQGWUR5vyj4dU55eRJeF/5WZhI2KTsR
+	Jbq5zCQRKLuCqolNgr1gIRoncdPHuBLfiS1QoZdpT5vCF/JJd1crjsSczYozeZRrNdpvDNi+iJ4
+	jZ3tCPIaJsb1+M2wnu9L3Xkc3sDU05XnHAE8uQXQ53iwaxOQCpvHv4GJWubtBxGHeynqBg/9P1p
+	Es/gvOy5VEIX2C73Id3ZI06J5y954vfVPfkqlp6FCf11jfphA4Mj0j1lMQM7p12hbMlY1QD35p2
+	b9QmG4Jfuv9bst8Vh9ppVYdH5Jno7FG/gM+UM8hUwRHafjpvBdCYdktYwnusSECrerxK5epTs/T
+	SBhkzU6EsxyMbyAFBlcZVnHDEWePa4uugpxmr4W9KwU8W7nYz8omCyTjFJcsMhSdwomVztXN5M0
+	LfVYQcM/xXhhtAFL/DrQdOUwzTf+RKg1CKGZSCDhHPMGplhbOZqw==
+X-Received: by 2002:a05:701b:4544:20b0:144:fb42:50 with SMTP id
+ a92af1059eb24-14d331ab843mr569065c88.31.1790757595881; Wed, 30 Sep 2026
+ 01:39:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 30 Sep 2026 10:39:44 +0200
+X-Gm-Features: AclHuK-yLBn23Ym2etvISTwV2i2YMTtxHiK4KjQEh-_WT5cBZvo54fdvRE6FC2I
+Message-ID: <CAP8UFD1cA5uCpLRoozRMzemFwMbs9=ug+OQq3ATQcMA9HMK72A@mail.gmail.com>
+Subject: Draft of Git Rev News edition 139
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jeff King <peff@peff.net>, 
+	Patrick Steinhardt <ps@pks.im>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
+	Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-"Julia Evans" <julia@jvns.ca> writes:
+Hi everyone,
 
->> So I personally feel it is OK to remove the old one, without
->> promising or even hinting at what in the new one that replaces it.
->> But we would want to see its replacement in the not-so-distant
->> future.
->
-> I'm not planning to replace gittutorial-2 since the material in it
-> is already covered by gitdatamodel and gitcore-tutorial.
+A draft of a new Git Rev News edition is available here:
 
-OK.  I didn't sense that from the proposed log messages for these
-patches.  Sorry for my misunderstanding.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-139.md
 
->> Also, we may want to decide what to do with gittutorial.  It is
->> short and reasonably sweet.  One old-fashioned thing that does not
->> exactly match today's prevalent usage patterns may be that it starts
->> tracking a new project from a tarball, but other than that, it may
->> not hurt to keep it around.  I do not know.
->
-> We definitely want a tutorial that covers `git init`, `git add`, `git commit`,
-> etc. Any replacement would definitely cover those topics, but 
-> I don't see the value of having 2 such tutorials.
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-> Why do you think it would be valuable to keep it around? It seems
-> like it would cause a lot of confusion to me.
+  https://github.com/git/git.github.io/issues/860
 
-You confuse me.
+You can also reply to this email.
 
-What do you mean by "it" in "keep it around"?  gittutorial.adoc?
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
 
-If so you said it yourself, that we want to have a tutorial that
-covers the basics like `git init` etc.
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
 
-Or do you mean some other document, like gittutorial-2?  It would
-have made sense to keep it while a replacement was being written, to
-make comparison easier, *if* the goal were to make sure that the new
-one covers everything the existing one covered, but we already
-agreed that it is not the goal to salvage what is in gittutorial-2
-(and that is why I personally feel it is OK to remove the old one
-first).
+Jakub, Markus, Kaartic and I plan to publish this edition early on Friday
+October 2nd, 2026.
 
-Puzzled.
-
-
-
-
-
+Thanks,
+Christian.
