@@ -1,303 +1,135 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF14415F29
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 07:13:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C821B3E6DDA
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 07:50:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790752441; cv=none; b=icZRLHZjk+tqW7hbX8gyhfpl5q7iqOueLx/TcdDXuEYbAKE0/g9JFTcy4S8JB1yEhn9zwQaVw7S5JetXAIiYEjRo0XC8scsYuE/776UHVNmE+uMPn9pxoE/zdgkoC8ZFnCmnmjX9aAhLvyEmCVp8o7JLOmBZYAYHCRY9ZA5h2S4=
+	t=1790754621; cv=none; b=eTELP1dKnRaEQjd+w/BpW9Psoq+qILsK9ih0fOhC1kJOWQ0/ceHACue2CRg/Naq1If9HRp5cSMeFQbvulf45pzbXJeby9IGvPooQKje37m33doJ8a40b/J/9LbNU/yuWQZuZ8FBJD6cgQSnnDxdjJQJZnRG5y5ToUzMTMFZ8xKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790752441; c=relaxed/simple;
-	bh=WIYX8Bi4aB2wB+Yq6EBMoU/1M+THFqH7s11gPuakI0w=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=gGIkjvzwL3U3z/5DNKe+TlU0zdoT1nXG6/cXhTbKiDsoOgzEzJqsXuk250oyUFvY1R3lNVfScYonwUjhVhRJV/NhnQMN/JsFgGpzBMISsPg6jdMWEpjBaUelnltXyW/9trJ4JlCC+S8hCYia5/sypgCNW+xuMMSfTxcg/NMKkFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lte3cu/6; arc=none smtp.client-ip=74.125.227.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790754621; c=relaxed/simple;
+	bh=TovtO90reRPl8KPtCXQC2quyeiCqTHWHboBqnQuOitY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VpsFWGwlp5kuF5PnanQjcn0cFVUet3vJakq/Jihywh2ySijHK3euitTl3VE+NWucaD+aCpBUcyHNzn+4ewRv5xebzIeZpEfM0aM4FBC+WaeWltJg2O2xqN70ngIYeprD4yHQq5bMhHlnZ/vAuuGrRKTn81D+AGDvVIjvsuv+l0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qpNzJ8iI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=itTLZ+h4; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lte3cu/6"
-Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-398b3b189e0so2746426a91.2
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 00:13:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790752439; x=1791357239; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=WpDBu6M3jshYV5ZqKPWIsboAOc4FV1LLCiLy3s+UDV4=;
-        b=lte3cu/6rfRGrrz0bgHWagurJcSscnBiDCCsZTxKyqKF93gZlid25neYPxvJ4295UL
-         nAWjlWHd1ESK5T1gcs/vBd4l8TQjAWh1aBL9+MxnxjUSAyQgq4drZiq+ccBbz+9i1/UJ
-         GQAVSTaGLwElfFw3aEH4TEWbzKyEYsRvkwiuMbSXqFsquk1x4R4smOYt5ln3wNXWvH5b
-         K9CitJj3pZYD4I2ybKHYKyvghk15cC0LMuiScfFEx3aeSuLRpZXLKWioTecCZgI6fhGq
-         pdesjhPu6U+gthpHgCM0eMlZslWO6shooP1akA/cZWvieW7FBya6v6RNWuFBMNvuZccX
-         07rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790752439; x=1791357239;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=WpDBu6M3jshYV5ZqKPWIsboAOc4FV1LLCiLy3s+UDV4=;
-        b=JP4eDKHXDDKZmkPhrLRGqv+uJs1Lr8joekspc3hkG+VHRs6Bl1qs76nNjaeF3Q5q+F
-         /nUVe14UxI2BJwwNdwS9QzRisJ6CjNlp+ZW+6lzh8nJJpcuSXE4GUrY5C5q4WEw9x4kv
-         ddKlphAYy88h37q37kSlnwZZ1f/K4Ia0uTdOdelygo7Fenjh8GQefIIM2QiqsM13IqTA
-         8S876C4lEcimThzBErUFQ0FlfYGfd4T9WTRDzWl5B7ZXcack0C8ueBt9lmaHZW8hAoOO
-         yQ7otpJsf3TuSJUQbOrytMtuwdQfKGKQbNbdl0CTKyC2lX190QyibWkA6rMCbqrKvITr
-         keYg==
-X-Forwarded-Encrypted: i=1; AKwUvBxqAGbM96W2OXAv17+qh4oa0uIgyPb3Do6zOYszZXL8MwSAxsjHYbPeiI9o92IbFEmPx3E=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLt8R3c93I/XZvJrEmE4IAa4EoEMYU4dBApvoc9galJttT5W+D8
-	iThLlrAqU3yvToQAktUY36GLYw6oQwDyXNOiBZn165cgwWkg3gKnpSDW
-X-Gm-Gg: AYBFou3pyBdb5qDsEUwMuy7GPBQvCfjzhwS1Hew49hhikh/UxPGSScDep1igEHGRd+x
-	g2mfEGN4rd8/zVsnWd8U1+R1M+frjmQwQQPfkvypXmNot+kiuFhJyU+6topo31uxeXg9kXae20X
-	B/jGtyhQgUAe1+YPSNoQlTF80QuIDmgNThbf/gohwqd3fS0xmb/sdeSAOQWm7rd7jsZZ6xPx35V
-	eSnfLBfVaZP6MhLu2lJjEeDTpsMHMEwh8++Uca9h9GDKupsNJveal7RrMEVSFIt4McKzXHMIBDa
-	B2jeIal0pGKOv2kjJ6MMfKJol7La+0ng7/hiQvIV4/gfGI0Kp7w+7rg5h3Lu1RWntnd1DMXDVoV
-	rhCkstKdb7J2xeXcMQfp7IkkTrlN4WQjUMyQkkmH7gFGZzoOvn76tCvvUiSrm6v0Xz845ZUXHZ+
-	A1Z+8M4RUJQPYEYPc79Hr06vQpoym3rzlX9U/6F+edc2qj8RSOKTHF4uDT1r65qo8iJDMHhd3XT
-	UVEQ0kqDo8qH9Qdm7BCKJG+yrPYdv4HrAxRok2SLXZ2qRE1CY5AYl0=
-X-Received: by 2002:a17:90b:2b43:b0:3a4:8d74:2ee1 with SMTP id 98e67ed59e1d1-3a4d197a2fdmr434231a91.22.1790752438587;
-        Wed, 30 Sep 2026 00:13:58 -0700 (PDT)
-Received: from ?IPV6:2401:4900:884c:d167:793:d042:ebbf:3c1d? ([2401:4900:884c:d167:793:d042:ebbf:3c1d])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cc7da12684csm325329a12.8.2026.09.30.00.13.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Sep 2026 00:13:58 -0700 (PDT)
-Message-ID: <84f9d1c9-30b7-4d8b-82d6-9afd16d0ab08@gmail.com>
-Date: Wed, 30 Sep 2026 12:43:53 +0530
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qpNzJ8iI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="itTLZ+h4"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A3BBC7A0780;
+	Wed, 30 Sep 2026 03:50:16 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Wed, 30 Sep 2026 03:50:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790754616; x=1790841016; bh=EpZ7REE9t6
+	qEiAiapYaMbMfgkutWAc78nWxQ4F0BX8E=; b=qpNzJ8iIvXeWVrzaP03AcqsKQB
+	2nH+XFf1ffyE3BCWebwKSh6/uIj3SE0W5eWUS040ZSawP4m8v6d4iITIxHp1ZV8p
+	XZ2DyBviC/CWG59HbR81O+YC0YPb+nHtmgE0/qvx/4W4o+cYQ736MawkJnhTqxxW
+	C7bO0iIm9nGm8M2qu5gtAt8SHmnq3tndNdgtRuN5O1iwapVMZrzUQkKP39IhVuhD
+	9kgG5ClDvlCzoNOjv18KvheEIgUWf6639VIiq7CQJ3PE1MYwdIDJ2VMi4e5YQFWS
+	bAGkHtcQEth2KEgFMc3G8X1UAUt43zEYPkTvPiW4TmG5Ai2Az99M0ngMk/BQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790754616; x=1790841016; bh=EpZ7REE9t6qEiAiapYaMbMfgkutWAc78nWx
+	Q4F0BX8E=; b=itTLZ+h4g1U4YnbJ4sMxYRbe+4rFJqcG+U5H2oIJLdqmTlVQSa7
+	DDTOzfTaRFioymWxxnX9m1Nho24RW1RC3TUKVdTlTeZPs3E0KtpyoiSLFsU9rUUI
+	oO3WBhkklyr/t9SBqeFWihNBIvdB/qCm5m5R4Pb3rAdVJVnw5uE61FEDBgh8yWsP
+	5D96U0iXfU54ViOuBaEjV1fnEnhmQmqO2Kf6qJQk4z0nlGk2Jr4+JT21S0lQyDRD
+	/PjT9BpU1yKypykhcurC9u7rwtJkQ8WlT52aEfJDaB0Ahnrb23opmnAfNJRPcRh5
+	QR6FdRuKldRIpt07lUrtCARuTBW3caBaL7A==
+X-ME-Sender: <xms:OL-8ah3tFffZUZqSLGANouUxKd8NgkVS9oR312ALD5fghSe8kewDVA>
+    <xme:OL-8avHDSAfsI43q5EigGwM2SSursE9oEsB0unTDjJxsIzzoSXYUxoVRjh9spI4yd
+    rykyBzOvoosGrpNNyKhiP6MTpB1UDLcFQ-D0irYdLYAN48L72Z-9A>
+X-ME-Received: <xmr:OL-8am4BHIhVIh4xe6aOwmY6QAd-bDwj7EwxmZ3l4urMsVglWY6SSST48Kkm5vr6Kh2zxQnL6zNhFRQzc107rK0lLxyq5o9VU8OZ>
+X-ME-Proxy-Cause: dmFkZTEzr93MGnpHs7NDAhKzlwkAP1Vjg3Ig2xCtH999Suv/ivrTPZxFshN6FLAxP2ECYS
+    igWJ9XfqEA3GRNf8IBTwISp7bh3GN4b1xsgrlk5N2ZUYyiOe9DYE6X4lGsVQmSGCb2NXUD
+    QOMk7GTn0a8c3Ar8Q93MgQ0o71+r3ev9GTribfYHtulhTci1g3sOgGGO8YJBcW+S23UMxJ
+    GdMz0bSg7XphxzZ9CCMTh8W29CilFKZSxcvFmKu51L78uXyiftOtnekHzB34tqHT99mrev
+    4K0f3iUqkirWsqr4P+cSOrWe3aebNmBaoKfTYrNn00Oek2J8j4rMy9daArZ/+1ntJfM+r+
+    BglLIjYf5jVeYQQlN4NydI71tl7krm0xGdXQHdr+tiZIMtbzYrnngfkHcfn3eM/2sTi3aI
+    vWyJUOIGvm/1K3v9DjxPXIUEVpWhzoQjdtbPnXcb/og/YgbDox9hv7HZqpGf/oXk0lLruF
+    /R41EG/WRryfQkC7A9exPK69VTJvr0sMuOuvvTze2hJ7jyCrtIDxk2fapazvS/tBUlyCd6
+    AHu6ULSXR9Fbf/eH+7H5I1fkYpidKa9K+uE1pj99cbMF4dhsc6GKMCBfi5ZJ5JAbn0CemM
+    9EFTtUH1vNz/QXExc9kQ6UROkIFbXGMrf/hgYDn/rK1KnsRLW8wJavpXMzYg
+X-ME-Proxy: <xmx:OL-8att9vavazyle2dn-8v2bV-9GlU0GMPRhbRFjWD14zZFF2D5fyg>
+    <xmx:OL-8av6N5vu9-UQmNdJJJvYL9YjH6F1ESmaaSfsmCGGCjxnQ4DULFQ>
+    <xmx:OL-8agX3et0yLO-T9IQxm2ouIMx0H_f8ZIkPZBgPa_f4CIxnJ3vZGQ>
+    <xmx:OL-8ap--0F0uzaEyr5XX4tJBqH_aeWjqa-aVUClJpYpojjkNXqlTMQ>
+    <xmx:OL-8aib9F5tzlb7s_jijKMNwHnCjpYEpH_D7L3ZSGcVyNmyiTLyVe9uS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 30 Sep 2026 03:50:16 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 0/3] [doc] Remove gittutorial-2
+In-Reply-To: <8a5b742a-3f11-4bfa-954b-ffdd839b6d43@app.fastmail.com> (Julia
+	Evans's message of "Tue, 29 Sep 2026 06:42:40 -0400")
+References: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
+	<xmqq5wzojy31.fsf@gitster.g>
+	<8a5b742a-3f11-4bfa-954b-ffdd839b6d43@app.fastmail.com>
+Date: Wed, 30 Sep 2026 00:50:14 -0700
+Message-ID: <xmqqzewzch55.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [PATCH v2 2/3] parse-options: add early_scan_options()
-To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
- Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
- "brian m . carlson" <sandals@crustytoothpaste.net>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Justin Tobler <jltobler@gmail.com>
-References: <20260902161047.476753-1-christian.couder@gmail.com>
- <20260923080928.1534413-1-christian.couder@gmail.com>
- <20260923080928.1534413-3-christian.couder@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260923080928.1534413-3-christian.couder@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 9/23/26 13:39, Christian Couder wrote:
+"Julia Evans" <julia@jvns.ca> writes:
+
+>> So I personally feel it is OK to remove the old one, without
+>> promising or even hinting at what in the new one that replaces it.
+>> But we would want to see its replacement in the not-so-distant
+>> future.
 >
- > [ snip ]
- >
-> One consequence of staying simple is that abbreviated options are
-> still not matched, even though the scan is now given the command's
-> full option array. Resolving them the way parse_options() does would
-> mean duplicating the ambiguity detection that parse_long_opt()
-> performs. So the scan can fail to see an option that parse_options()
-> would accept, and its callers have to cope with that, typically by
-> erring on the safe side. This and the other differences with
-> parse_options() are documented in "parse-options.h".
-> 
+> I'm not planning to replace gittutorial-2 since the material in it
+> is already covered by gitdatamodel and gitcore-tutorial.
 
-I think not handling abbreviations could also have another potential 
-problem. Consider a command as follows:
+OK.  I didn't sense that from the proposed log messages for these
+patches.  Sorry for my misunderstanding.
 
-  $ git fast-import --quiet --export-pack --allow-unsafe-features
-
-Here `--export-pack` is an abbreviation of `--export-pack-edges`. So, 
-the arg next to it should ideally be considered as a value for it but
-given the correct "ignore" logic, we will happily interpret is an 
-argument which misaligns with parse_options()'s behaviour.
-
-In the ideal world, we could say such weird names for files is unlikely 
-and this isn't such a big concern. But given it is the scope of this 
-series to make early scan more reliable, I think we should consider how 
-to handle this better.
-
-Would it make sense to actually err on the safe side and just stop 
-walking the args as soon as we notice an unrecognized argument? This 
-will the ensure the walk never misinterpret a value for an argument.
-
->   
-> diff --git a/parse-options.c b/parse-options.c
-> index a132c1ea12..559dad9061 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
+>> Also, we may want to decide what to do with gittutorial.  It is
+>> short and reasonably sweet.  One old-fashioned thing that does not
+>> exactly match today's prevalent usage patterns may be that it starts
+>> tracking a new project from a tarball, but other than that, it may
+>> not hurt to keep it around.  I do not know.
 >
- > [ snip ]
- >
-> +int early_scan_options(int argc, const char **argv,
-> +		       const struct option *option,
-> +		       enum early_scan_flags flags,
-> +		       early_scan_fn *fn, void *data)
-> +{
-> +	for (int i = 0; i < argc; i++) {
-> +		const char *arg = argv[i];
-> +		const char *value;
-> +		const struct option *opt;
-> +		int pos = i;
-> +
-> +		/*
-> +		 * parse_options() always stops parsing options at these,
-> +		 * whatever its flags, so nothing after them is an option.
-> +		 */
-> +		if (!strcmp(arg, "--") || !strcmp(arg, "--end-of-options"))
-> +			return i;
-> +
-> +		opt = find_early_scan_option(arg, option, &value);
-> +		if (!opt) {
-> +			if ((flags & EARLY_SCAN_STOP_AT_NON_OPTION) &&
-> +			    (*arg != '-' || !arg[1]))
-> +				return i;
-> +			continue;
-> +		}
-> +
-> +		/*
-> +		 * When an option takes a value, but that value is not
-> +		 * stuck to it with '=', then the next argument is the
-> +		 * value and it has to be skipped so that it isn't
-> +		 * taken for an option itself.
-> +		 */
-> +		if (parse_options_takes_argument(opt) && !value && i + 1 < argc)
-> +			value = argv[++i];
-> +
+> We definitely want a tutorial that covers `git init`, `git add`, `git commit`,
+> etc. Any replacement would definitely cover those topics, but 
+> I don't see the value of having 2 such tutorials.
 
-The 'i +1 < argc' part is an appropriate guard to have. But this means a 
-command such as the following:
+> Why do you think it would be valuable to keep it around? It seems
+> like it would cause a lot of confusion to me.
 
-   test-tool early-scan-options --wanted-value
+You confuse me.
 
-... would reult in 'value' being NULL. I suppose this is kind of 
-expected for the early scan code and is not something we need to worry 
-about?
+What do you mean by "it" in "keep it around"?  gittutorial.adoc?
 
-> +		if (opt->flags & PARSE_OPT_EARLY && fn(opt, value, pos, data))
-> +			return i;
-> +	}
-> +
-> +	return argc;
-> +}
-> +
->   static int usage_argh(const struct option *opts, FILE *outfile)
->   {
->   	const char *s;
-> diff --git a/parse-options.h b/parse-options.h
-> index f29e73f85c..3ef64744a4 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
- >
-> [ snip ]
->
-> +/*
-> + * Scan `argv` for the options described by `option`, calling `fn` for
-> + * each of those that have PARSE_OPT_EARLY set. `argv` is not
-> + * modified.
-> + *
-> + * `fn` may be NULL when no option has PARSE_OPT_EARLY set, which is
-> + * useful to only find out where the scan stops.
-> + *
-> + * The scan always stops at "--" and at "--end-of-options", as
-> + * parse_options() always stops parsing options there too, whatever its
-> + * flags. PARSE_OPT_KEEP_DASHDASH and PARSE_OPT_KEEP_UNKNOWN_OPT only
-> + * decide if the terminator is left in argv, not if it terminates.
-> + *
-> + * Returns the index at which the scan stopped, which is `argc` when the
-> + * whole array was scanned.
-> + *
+If so you said it yourself, that we want to have a tutorial that
+covers the basics like `git init` etc.
 
-As for the return index, when the callback stops the scan the index 
-returned is that of the option's value rather than the option itself. 
-Would it be better to capture this more clearly?
+Or do you mean some other document, like gittutorial-2?  It would
+have made sense to keep it while a replacement was being written, to
+make comparison easier, *if* the goal were to make sure that the new
+one covers everything the existing one covered, but we already
+agreed that it is not the goal to salvage what is in gittutorial-2
+(and that is why I personally feel it is OK to remove the old one
+first).
 
-Also, would it be helpful to also have a test for this?
+Puzzled.
 
-> + * This scan is for now deliberately much simpler than
-> + * parse_options(), so it differs from it in the following ways:
-> + *
-> + *  - Only the long form of an option is matched, and it has to be
-> + *    spelled in full: short options and abbreviations are ignored.
-> + *
-> + *  - Negated forms ("--no-<name>") are not matched. This is harmless,
-> + *    as they never take a value to skip.
-> + *
-> + *  - Options with PARSE_OPT_OPTARG or PARSE_OPT_LASTARG_DEFAULT are
-> + *    treated as not taking a separate value.
-> + *
-> + *  - OPTION_SUBCOMMAND entries are skipped.
-> + *
-> + *  - OPTION_ALIAS entries are not resolved to the option they stand
-> + *    for.
-> + *
-> + * So the scan can fail to see an option that parse_options() would
-> + * accept, and callers have to cope with that, typically by erring on
-> + * the safe side.
-> + */
-> +int early_scan_options(int argc, const char **argv,
-> +		       const struct option *option,
-> +		       enum early_scan_flags flags,
-> +		       early_scan_fn *fn, void *data);
- >
-> [ snip ]>
-> diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-> index 449fff4d34..b796d96b9a 100755
->
- > [ snip ]> +
-> +test_expect_success 'early_scan_options() takes values from struct option' '
-> +	test-tool early-scan-options --number --wanted >actual &&
-> +	cat >expect <<-\EOF &&
-> +	stopped at: 2 of 2
-> +	EOF
-> +	test_cmp expect actual &&
-> +	test-tool early-scan-options --number=5 --wanted >actual &&
-> +	cat >expect <<-\EOF &&
-> +	found: wanted at 1
-> +	stopped at: 2 of 2
-> +	EOF
-> +	test_cmp expect actual
-> +'
 
-Compared to others, I'm not quite sure this test is testing something 
-special. Do we need it?
 
-> +test_expect_success 'early_scan_options() does not skip an optional value' '
-> +	test-tool early-scan-options --optarg --wanted >actual &&
-> +	cat >expect <<-\EOF &&
-> +	found: wanted at 1
-> +	stopped at: 2 of 2
-> +	EOF
-> +	test_cmp expect actual &&
-> +	test-tool early-scan-options --lastarg --wanted >actual &&
-> +	cat >expect <<-\EOF &&
-> +	found: wanted at 1
-> +	stopped at: 2 of 2
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'early_scan_options() matches a stuck optional value' '
-> +	test-tool early-scan-options --early-optarg=one >actual &&
-> +	cat >expect <<-\EOF &&
-> +	found: early-optarg at 0 value: one
-> +	stopped at: 1 of 1
-> +	EOF
-> +	test_cmp expect actual &&
-> +	test-tool early-scan-options --early-lastarg=two >actual &&
-> +	cat >expect <<-\EOF &&
-> +	found: early-lastarg at 0 value: two
-> +	stopped at: 1 of 1
-> +	EOF
-> +	test_cmp expect actual
-> +'
 
-Would the following be a useful part to also add to the above?
-
-          test-tool early-scan-options --optarg=5 --wanted >actual &&
-          cat >expect <<-\EOF &&
-          found: wanted at 1
-          stopped at: 2 of 2
-          EOF
-          test_cmp expect actual
-
--- 
-Sivaraam
 
