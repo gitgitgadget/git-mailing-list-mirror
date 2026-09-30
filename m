@@ -1,41 +1,42 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FEF2D3A75
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 22:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A454472F89
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 22:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790807950; cv=none; b=TtIImMOSmVSHgeuFnzdWrKC6mvNeg/4bEhyai8+uRhV6bXnRua1jxQlUyi+FZC8hTM2F+CfhANuWWG8z36SSyrp0JvrMdrsLNzyK3gIpI4eP6CPygLiaHZHS+px5pCSE1Hljp3m2PVVnkLk2FVQfGz/zEU10okk/WtEaJAqD244=
+	t=1790808106; cv=none; b=uAS6eO/sBjfesmwxGJxYfIX+ZOsberum+VWKsSNK8I0I1af9qmeYxUFiF3iApB6k4/1E4X9ysWTn8G9igthYthlKiT+NPxMxPfXN29qYT1jXXCNEzc58GM6fiF0RQuKsa5Oz4L15yGJXsGS8cQGyjKhc2PYd8lhomX2XRdyq5Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790807950; c=relaxed/simple;
-	bh=TCYFe7w6SXEwbHqRByYaZO5UOpAKTxBDo2BnDpb2Xnk=;
+	s=arc-20240116; t=1790808106; c=relaxed/simple;
+	bh=WuhKKIImUcH2ZAJt6/9/9uAXz6XUkyDh1Fdom9lc3vI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zpxt0oKbla3ZqZGUEMD7IFupuqX9puKdTzfOxZF7Rw7q1UAjYBgsGr6MSRcqk7uzB8dbZPt1obH/QxbnMe7AQwbtFfcG0bZvEgvCump4tfI0MSK6AmOEExWcT4UwnfH+x4gK5bw3/9SA7fnPw2Xu/Fi+BS3BiOFsnnScQCVEzkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gKAETSRr; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=Rx9gapI4yTKx87ayOf4ZpbGoXtyygxB0QGd/GQYHDaznnJBj63crpmYmbISGZyLM3VpOu4Nz2l6JIdXWDBtRNbZDmqM3ljyFeo6dU2CwAIyVTQPUuRClyyz8iN+W0jiXgs519BeyKnkUKEvdI4yreyEEAzkUUuydXMdDkSymQMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VTQ7Sctj; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gKAETSRr"
-Received: (qmail 7921 invoked by uid 106); 30 Sep 2026 22:39:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=TCYFe7w6SXEwbHqRByYaZO5UOpAKTxBDo2BnDpb2Xnk=; b=gKAETSRrOyOxPIYG87+X2ag+ohstlVh2Ka0PRj6wwoOiP1TQsDr5OiNvkDa0B7bpN9fBbq/Gyvsp+pwX4pJ8dHOQqL9BwOkEXAnRv3Y6htouSlOy3+FNh9+tcuDI0TNVaUm/CXcaVeH+qI7UsX0aaFceiB/dTll5CcN2W8eWHX30R3WT1m6M0yyLBjGd5LcTNw0TjfHK+0jLVVrd5143zCwbceVVxQB72BOIosIvwCop0imzqxI5XciZYpFgLBWAnfueQjW/uMWryrpH6Wt46C6ijIRgpc206Mmn8bUqVyEOl749tr+2PtZfwNYKVJbDS7LFWUCAz894wovdXqolIg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VTQ7Sctj"
+Received: (qmail 7934 invoked by uid 106); 30 Sep 2026 22:41:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=WuhKKIImUcH2ZAJt6/9/9uAXz6XUkyDh1Fdom9lc3vI=; b=VTQ7SctjbKBBk/t/LSEHgflwFcAqDaLdgQXHfWHFRV2t5/9EpV8zk2ScWT+q5HDFVtq5pLKvpMMlQ8d7Mk5pXi+Krb4oyZBXiPBDSlU8BVHf64EAUH+CYfyyES7Ml2wNP9/ASomS6SI+FHOCUzbg0olbnV4psnS8n85z+/XbTYpdG2NWwMHjJIYgilTwSLai00MHM26U2meNR/7WgrmzbzMxC703MDcCyVbcqioAkIfKmHH21SD16zJ3U2RYJ6Xu5Rf+TnFD2BzVFLDteCueW2wOSrCBTRfxWhiTdH3kq71joJtHFSU4cHM4zZHoCFNhxYQxvSKp+celjJ+Zm/wn0Q==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Sep 2026 22:39:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Sep 2026 22:41:43 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19904 invoked by uid 111); 30 Sep 2026 22:39:08 -0000
+Received: (qmail 19964 invoked by uid 111); 30 Sep 2026 22:41:45 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Sep 2026 18:39:08 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Sep 2026 18:41:45 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 30 Sep 2026 18:39:06 -0400
+Date: Wed, 30 Sep 2026 18:41:42 -0400
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH] object-name: accept @{p} as short for @{push}
-Message-ID: <20260930223906.GA763270@coredump.intra.peff.net>
-References: <pull.2431.git.git.1790797186658.gitgitgadget@gmail.com>
- <CALnO6CBR0XJUJR=2e5kUM8Fk9aV5uz+QxajRpnFFVTEkFfJQ3Q@mail.gmail.com>
- <xmqqbj9e8kb3.fsf@gitster.g>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 7/5] merge-ll: report an error when reading external
+ merge results fails
+Message-ID: <20260930224142.GB763270@coredump.intra.peff.net>
+References: <20260929204157.GA1733321@coredump.intra.peff.net>
+ <20260929204421.GB1734030@coredump.intra.peff.net>
+ <xmqqv77neowx.fsf@gitster.g>
+ <20260929214943.GA1735259@coredump.intra.peff.net>
+ <xmqq8q4ibouf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,43 +45,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqbj9e8kb3.fsf@gitster.g>
+In-Reply-To: <xmqq8q4ibouf.fsf@gitster.g>
 
-On Wed, Sep 30, 2026 at 03:07:44PM -0700, Junio C Hamano wrote:
+On Wed, Sep 30, 2026 at 11:01:28AM -0700, Junio C Hamano wrote:
 
-> @{u} existed since the inception of @{upstream}, as we can see in
-> https://lore.kernel.org/git/20150331173740.GE18912@peff.net/ which
-> is the first iteration of the patch set that added @{push}.  It is
-> unclear what was said during the review of v2 [*] but in the review
-> of v3 https://lore.kernel.org/git/20150521045233.GA26507@peff.net/,
-> nobody questioned the asymmetry between @{upstream} having a
-> short-and-sweet @{u} while @{push} lacked the corresponding @{p}.
-
-I think you have to go back further. Another contributor proposed
-@{publish} with somewhat different semantics, and I requested that it
-not use @{p} to avoid confusion between the two. There was also some
-discussion of @{pull} (I think as an alias to @{upstream}) at the time,
-which would further increase the confusion.
-
-See this what's cooking and the actual patch threads around that time:
-
-  https://lore.kernel.org/git/xmqqoazpt45p.fsf@gitster.dls.corp.google.com/
-
-I don't remember what ultimately happened with the @{publish} series,
-but given the time-frame and the contributor, I can make some guesses.
-
-I don't think either of those name conflicts are under current
-discussion, so I don't have any particular objection. Just noting the
-history.
-
->  * https://public-inbox.org/git/?q=gmane:268185 would have given us
->    a good way to find what thread Peff was referring to in the cover
->    letter of v3 iteration:
+> Jeff King <peff@peff.net> writes:
 > 
->    https://lore.kernel.org/git/20150521044429.GA5857@peff.net/
+> > Here's a resend of that final patch (not just a squash, because the
+> > commit message mentioned the chmod).
 > 
->    Unfortunately, we are getting 502 back X-<.
+> Makes sense.
+> 
+> These 6/5 and 7/5 are probably better squashed into 5/5 than left as
+> "oops that was bad, so here is a preliminary clean-up to make the
+> fix easier (6/5), and here is the fix of the fifth step (7/5)", no?
 
-I have a local archive, but the v2 thread is not enlightening. :)
+I don't think it is the fault of 5/5 at all (which carefully tried to
+maintain the NULL behavior). The problem fixed by 7/5 existed before my
+series.
+
+In theory that fix _could_ come earlier in the series, but it's actually
+much easier to fix after 5/5, because we have a single spot to error
+check.
 
 -Peff
