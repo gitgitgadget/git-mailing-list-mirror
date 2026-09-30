@@ -1,99 +1,96 @@
-Received: from mail-ed2-f31.google.com (mail-ed2-f31.google.com [74.125.228.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx-out1.startmail.com (mx-out1.startmail.com [145.131.90.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E49463B73
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 15:52:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F804E01E3
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 15:53:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=145.131.90.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783550; cv=none; b=a5igeC6siFFK2dJRn8VZbv2X6I2+u8QxX/83Fi38aXYfe5DHx5Kvmf8niKwVhGHh6G1ZKNQkwiu4xJQRNunKuGBABbbcLs2BmmtBwZNo3T0PcArovWWmsE3PcIUgGi4FxSNEJbT6JUNTi2/7haZ6pnPWLV9zWos8+0DTeE5fNys=
+	t=1790783640; cv=none; b=IRrV7LvU+XEdHlzXKPHr32Zu3oV5xq+jR81uk482RcqeedoAbJZwiGRop1UPs2mtk+u0OMOIAmxFcRmMAa78z6b5vbNCeyiOs7kZk4kyW3ewFDGWcBur/TbP7BA+s9DhlHkVVUjRpwcbWx4iNmEf9Y7SDttNePyZyT/jlaY1bFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783550; c=relaxed/simple;
-	bh=qvJYNWHhPs5BBZz15vwQCHyh3aFn+JBD8OuJvP4dm9k=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Na3biXichWsSsIxAjO+BoTOg0/du3V4ZzWBXS5CCcQlDb/hZuYdKEZ1bu2VnTfIZAk10zXnsy4zspG7Asj8j4/OOlmeNNUjVCFU5tleTjM7+IPJ2sYX426naCanyK754dayUUD8dBvlJxLGspQNuAbNv0Faaxlr3f+X62VN+mPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Em58oRGa; arc=none smtp.client-ip=74.125.228.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790783640; c=relaxed/simple;
+	bh=zgUNcfIGiYdEJKzuxrl6CaUGPEeHvv9AT8WUKESjhKg=;
+	h=Message-ID:Date:Mime-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=qWJBD6M/TAxSXrZG60b/yTQPSbEPD4hQOTEV3j4C7lqSGCRn7w358VnR8NFiAZUUJjtH2ocUtISX2Jzm69gshBdGoF9gCAGaG98zRKpFUT0fVGw7EGlljTBtIF6DoZgfRj+mtWj+h6MNIbVf75guItVsk7Quy9bjuuZLLrzhero=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grantmoyer.com; spf=pass smtp.mailfrom=grantmoyer.com; dkim=pass (2048-bit key) header.d=startmail.com header.i=@startmail.com header.b=bA1MYeyY; arc=none smtp.client-ip=145.131.90.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grantmoyer.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grantmoyer.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Em58oRGa"
-Received: by mail-ed2-f31.google.com with SMTP id 4fb4d7f45d1cf-6ad795d5205so1190321a12.0
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 08:52:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790783544; x=1791388344; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=nXlfOS6j9JAQLIflAPoTu361tdd3e+WYZY6mhRyfrVU=;
-        b=Em58oRGaUpeU9dw6ZBgG8qkrSOHZOLRZ+Q0h3PZ2a9fMNe0icaWYCBqU6lLHULSBf9
-         cVZpw9GIdKDEesa9813u81V0mI7gGf5pkjvpxEgwQwl/1ZEg1w7kWkuR9IbSjf8R2/5v
-         dxh9nJgU6S1vlFra5aqD5mxNk2Sc1IvNWrAnsNN21fRKxwOavMfcnnc2c4ftLfKTrhUy
-         NbJnZUxlGqLbxU2QiQPYSjNKFsZT7ARcTKGZ/GHV85c/RGqQxw7SQUGMaJsHsjyFaxog
-         Qvn/SkiN0qvR+RLJePuQzenetwkNZoXo5+vE1F26gvmu+nmNQaYxuPGieIO3gjKtWLXH
-         QSiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790783544; x=1791388344;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=nXlfOS6j9JAQLIflAPoTu361tdd3e+WYZY6mhRyfrVU=;
-        b=dgYpygpWJCRo1hXdbspWREA64k6Jkj6TaNtuP+cwlzRf22G7s20MTXtVKnRlpvq5rO
-         zSq9KGOERblQW/xW65SqWE7y9teLdE6eXzS8GEgxVPng1eozsHngONCdYdKVjz2aTJWT
-         DHxtAIodZPzQQgBdeKCcDYUtYrXXPHWUQZLQyFIAMLLWe5G/3v6w27Q8tVaVYiB0ehMT
-         0AgSCZjNAsEIGaL5To5vJoO0a/sQuX91fBPxZ1Fpx8TvMfgu3seguWx1UeWi5Gsw8Ly9
-         nOH3FeeoD53s6QoasJfoAVcwOIIasO0Zt+OlfKqo8nuAtSUSTKgbBumSn5qOv1JUW97H
-         cP8g==
-X-Gm-Message-State: AFq9FYIb5UwT5O4veZFQ2VosCUFDw49PU4EOabnzzXP3z05OZH48r+WC
-	BFAPFti8ioRvio0230lMhuCaRmUimx4d3ZxGPQ31GOUW0J/LKI25tMy2
-X-Gm-Gg: AYBFou2F1Z6xpFldt8M5oWhYCY6kt4fFLXkJaU/cmjOkyw81gBxWd+3CJMWAKZ1tQ3b
-	xg6j4YRsc2xEePXeQt9O0w11UmaqqziKOh5NZ5cVtCCrK51hcY2KMZR9r7TkXMW43SuAkqEec4E
-	D/yGMXyiQkvJgo0oox3BDz75IdX9BITqHPRepo7jA1CA/Y/LmqIXhbVMKsHBLivg9Jh6/yxhFJ/
-	srZ0u7G6AoYQHqn3eqtmQrpOdrZFcH0lfJi71PxIhU9y1zpP+C1XWXGpDkxIJqAAEEF+CSGP4lx
-	WC0GYI3o67Cd5eQKgRlNiTEWUxDXlL7PMgF/7NdJATMLEtIvtvieM+NrWS3HHtzM5u+hTf4h6eH
-	2IaFoEgzVm9DoqZ5oJg4hMHwoF5sKdDudsnL8C86Xm519GJwSKwLaygIE6inmPNWtDsSP+TV/+O
-	w6LbyX+KzODHZGarxvMNR9r7vBtWu5qLgkpsQs7cPTWy0YhvgJyO8D9aHCqlV5H8No97oQbLRtR
-	s66t3rYmzx5r9U8qYgn7byD90gdswyXagMJWMOoABMokX9Zm9i/Ig==
-X-Received: by 2002:a05:6402:43c6:b0:6a7:ee56:6160 with SMTP id 4fb4d7f45d1cf-6ae19949dffmr1356157a12.34.1790783543409;
-        Wed, 30 Sep 2026 08:52:23 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6ae156a04a9sm1018389a12.26.2026.09.30.08.52.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Sep 2026 08:52:23 -0700 (PDT)
-Message-ID: <acc4ad5b-1ac7-4a63-b771-fc2e585a6ebf@gmail.com>
-Date: Wed, 30 Sep 2026 16:52:17 +0100
+	dkim=pass (2048-bit key) header.d=startmail.com header.i=@startmail.com header.b="bA1MYeyY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=startmail.com;
+	s=2020-07; t=1790783308;
+	bh=BJxawQpGu+E7zKcLqEibU9EM4uLD8N2zC2TEImDe19Y=;
+	h=Message-ID:Date:Mime-Version:From:Subject:To:References:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding:From:Subject:To:
+	 Date:Sender:Content-Type:Content-Transfer-Encoding:
+	 Content-Disposition:Mime-Version:Reply-To:In-Reply-To:References:
+	 Message-Id:Autocrypt;
+	b=bA1MYeyYfbY+gcKFQMSzFS5as3/BP8w4H0+csQppjBIJkhKQkmwE6jNqQlwfTLg14
+	 k1cFaxWOwsbVa1HR2DZYK5mLhnHhiJxkIi6mTquz9zkicfcfdj9Y5MztIqG4DhMhom
+	 b7QwbNWeFjotN1WWnU6M+z2SVpOUhBDfhVmVPhwHDnlE15afjAnhskJkBpE0ESTEJh
+	 bCF7Zzj7INtPdfOqW8cUke3ZO+Ydr+rzyo4hJraNhbChgfIfzU8LibQFBZWfgrvQT+
+	 78f/t+PWAUujLZjD/pOlKVJd/vb/P4ayCHZloc5RzRhQ2rhJ5Q2eWnLNncBttKwfCj
+	 QVdYwReRA7gLA==
+Message-ID: <c6d3deb4-088b-476e-921c-c2ee788fb309@grantmoyer.com>
+Date: Wed, 30 Sep 2026 11:48:25 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 0/2] ci: link failure and leak annotations to the test
- script
-To: Junio C Hamano <gitster@pobox.com>,
- Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Ben Knoble <ben.knoble@gmail.com>,
- Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
- <pull.2419.v3.git.git.1790748583.gitgitgadget@gmail.com>
- <xmqqpkxudcva.fsf@gitster.g>
+Mime-Version: 1.0
+From: Grant Moyer <dev@grantmoyer.com>
+Subject: Re: [PATCH] fiter-branch: fix commit map init from state branch
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Michele Locati <michele@locati.it>
+References: <20260801033127.10606-1-dev@grantmoyer.com>
+ <ar0fRtN8XMG-fyis@pks.im>
 Content-Language: en-US
-In-Reply-To: <xmqqpkxudcva.fsf@gitster.g>
+In-Reply-To: <ar0fRtN8XMG-fyis@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 30/09/2026 15:37, Junio C Hamano wrote:
-> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> With these updates, the patches look good to me.  Unless others
-> spot problems I failed to see, let me mark the topic for 'next'.
-I've left a couple of comments. This version is a nice improvement on 
-the status quo, but I'd like some clarity on what the filename and line 
-number annotations actually do, and why we selectively escape the 
-annotations.
+On September 30, 2026 10:40:06 AM EDT, Patrick Steinhardt <ps@pks.im> wrote:
+>Okay. A simpler fix could've been the following diff:
+>
+>- echo "${line%:*}" >../map/"${line#*:}";;
+>+ echo "${line#*:}" >../map/"${line%:*}";;
 
-Thanks
+Yep, that's equivalent and was my first version, but I decided to err on 
+the side of clearer intent. Plus, the more verbose version mirrors how 
+the state branch is constructed further down in the script.
 
-Phillip
+>So... does this mean that we don't have test coverage for this case at
+>all?
+
+Yeah, the test for this case was broken.
+
+>>  test_expect_success 'using --state-branch to skip already rewritten commits' '
+>>  test_when_finished git reset --hard $V &&
+>>  git reset --hard $V &&
+>> - git filter-branch --state-branch state -f --tree-filter "touch file || :" HEAD &&
+>> + git filter-branch --state-branch state -f --tree-filter "exit 1" HEAD &&
+>>  test_cmp_rev $W HEAD
+>>  '
+>
+>So does this now detect the issue? If so, it feels somewhat roundabout.
+
+The current test seemingly intends to check if the --tree-filter filter 
+was run on already processed commits, but it only checks that the filter 
+produces the same final result. Since the filter is deterministic, the 
+final result is the same whether or not the filter is re-run on already 
+processed commits.
+
+The proposed change makes the test fail immediately if the tree-filter
+is re-run. I looked around other tests for a test_* command or
+conventions to fail with a message, but I didn't find anything. I've
+checked that the test fails without the filter-branch change, and passes
+with it.
+
+>Nit: pointed out by Michele: the subject has a typo in "fiter-branch".
+
+I'm new here. Is this something I should fix by submitting a new version 
+of the patch, or will the maintainer fix it  up if/when they merge the 
+patch?
+
+
+Grant
