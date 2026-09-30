@@ -1,102 +1,238 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed2-f31.google.com (mail-ed2-f31.google.com [74.125.228.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0D84DEC38
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:46:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E1D3BE630
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:56:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790779576; cv=none; b=nStBwAQgo50wNBQUL0PXBnQMPdBY8qRpD6FBp668P9GTawb2gXE2ux/O/vDctXuenMQtwfvzbSwqXQVbXuyPnigg/8WVpmAqU/pV4cPm4IegJVOPvrbVoCeYxQdjQO9sQb+KiPJP5Su+tKo9aLK/vYUQ8xvHojE/uT4ffOI57Iw=
+	t=1790780212; cv=none; b=kDfvtKRtWOqu93Ev5SA96AidZDQLaXbOALgSfqZ1H8sx84O6k1IePO/XH5rKZZH2kEI1n7EP6oDqoixztpsgDxCGsq9GyNds+S/bu7xPFCQWGJBtYS532p3WLi9AvuM9dlS6vN9JpaTiNBLKne/JTjyyCRo4N7RYtM4awWs1szg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790779576; c=relaxed/simple;
-	bh=01N57bM4LMXAYMB7aD/qyAhQOuiFzaXes8G8DxEGmQc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KS2kzay3zfnCeoDssHa4fwzgCloU6LmpBNduJWbWfAiqQc8jtJHXTlfHPN9gPh9McYG3ehT5iAi1zysldL2fg34Pekke09YBjOAZOv6UovJv7GeUEMTymbQcI+YMZKOH718azaREpyKsMN4hQoh267KoP0OUrYpi41s4Z0ESc78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f7zo9DjL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RZ2gT/QS; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1790780212; c=relaxed/simple;
+	bh=Axs6a2AYFQXob3/qpO+1mpZ2P4f/P29YgnhGkqVX3vI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CWo2AOS6q6hl1+VjmqM9bcxGwftY75tSXlhRNChwbjFOn6/6GoSvSlU2e5nj31aZcMAGH0YTmMRVmxODIx6NZC17ZmgQrNSrLl6JK8xAZaQN05FAShseCrahFc1TXiVhi1bKisQ+sjHBOU698vYfI0A/NUppti1nBUTzzeS1g+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lZL77pbI; arc=none smtp.client-ip=74.125.228.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f7zo9DjL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RZ2gT/QS"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8E9CBEC025B;
-	Wed, 30 Sep 2026 10:45:58 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 30 Sep 2026 10:45:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790779558; x=1790865958; bh=x5B/sTSGLZ
-	iyT4uvTIMUWU0or15+287mQeXTfgNzBUA=; b=f7zo9DjLBq4/Bg521T94VrbmXY
-	b6Y+wndj85B/eUGt8cs6kl4cWQpl89aaYIYwwTmbfpucTm9I/wpDj3wylFMKTjlE
-	3EPdBufQeNpzEqSVGWr5mgo68jcFvVJ1Z1d0zYdZz5DBEoWmiJj7EtD48BaLsuki
-	ib87yUm6lW6DvqE9TUlt7ouKSAAYy+JNRQgEQiLkJtKkwUywlOf06xFPy0YTl4rk
-	vghAlXKOK+HD4+v3mFeJtmuwdY1qi5TER/C5BYVWtXdV4ieqLiJS7b646gubqqhh
-	S+Qc0UPEp5//cIJG+aoVfqGV8ZyOp4ugJXOnMErK94yUQ6X/Vp1+TS2RXBXA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790779558; x=1790865958; bh=x5B/sTSGLZiyT4uvTIMUWU0or15+287mQeX
-	TfgNzBUA=; b=RZ2gT/QSDw5CHnc4121QWHnwb0fVpKSfAkbCaHQp8LCLptfqjT3
-	cfgKF2xrzigdRjtneIUvw4/+Hdf4IAo6iqlEMUgf40fxpnNmfsB6HVtOtKu/kR6G
-	4MXe2XSd3xgeJEOC1oWzXgd4WARLWKJQgfiIHY6++gZi1zYB6IupiI4nxu+q8PuT
-	NJHp4OlDbc/UpI5p+4CKO2EawGEU4HULx2mufPUQX1WNhIt9dVUU//TYncXY8Suk
-	dpkamTqredI6mNN3j6wm+Jpc9GP895e8Peth3I6eD7beINWzMFYmnBtRd2wI5K3h
-	llAbCiOQSQ7h8L073PWWbltPtosodmj23Dg==
-X-ME-Sender: <xms:piC9aqCHYC01T57ThsZBa9BXrbcZwfey9hREFx5EbNlk0k6WoQxOnQ>
-    <xme:piC9arg_ojY2o7QU6oYf9bNejrld-wnAaCTcyQsAe8zdAJz9iWkHaSO-muKihzVYQ
-    Vy7BYbzKE22tRvhS7I0DQ2_oZ6k6MmVsz4gKf9qxg4wjvbVG-bqrDg>
-X-ME-Received: <xmr:piC9ail_3sNTGmK51bJoJdbaSTzN01G08oTCC45UL6lPptS1Y6fkMA>
-X-ME-Proxy-Cause: dmFkZTGx/okesKsHLibzKu8si3YLEHbYIw9SLiWYvpV+KLrBiA0Fqbb2RAntn8gCSjO5t/
-    lDyGgFzycunqXHl2nkCyiDnBIuPEp5tlHIzVkFEXq+AIsDHxQdPnlzv+3Tn31tzU6YEGel
-    7+Cltgx8Uii2UzTdIk72xEB8qKkAaSVFRewrt9474ZvpqpIhIIScTx5w0Da+VIJOaTi71J
-    CU4RPWIMHe7pvL6MXntKzq6VgsImr2p47/J2d05ApA9/dM29d0ovFCYlT0tQ3yKOa3to/f
-    EuSyESnebsxaIrD7glZZv9A1pWKI2Juj/TIht06VW19yzOy4PlfaxYz3MpwZRt61BOmCbn
-    WhS3PDIJFwFZirEz+Hx9ERouZ/wa3y4Z6gSRoRNFakSOtPC6EQ4Fx6lQvRMu1HiTT+EJVM
-    bkKvE08pTv1PQZdC0lLIocxuvL6WAEkJ7qIA/x8A8fpoUzH721uwJycPFY0uXikKnJhwSZ
-    AwOfs7xYgrJtGhb956Srf0ilmtooiY3DB3dWPdU8jjlChRukKW5XKPw9Qu8BYF8yqN3m9m
-    qMVCrvTEfD5okCjcCIqV6WvHuBFfemKM13FgrLe9KgGFiyVJKzBIFIRkhHkQmkW/WRFxun
-    d0wdTMo+DCdRI/wYWsNgJAsEIGdqCwf4a1e6qNi7038uOGV+4vSH9LqHvfRw
-X-ME-Proxy: <xmx:piC9anoI5-yNqKulPgZ8Ag077-nusmoThVJb74dsvuVtrrWCdU6nhg>
-    <xmx:piC9arFttblzKc65JzkFvJt-rLCwBBqY8Okn4iZSHoVjbzLWeSFQLg>
-    <xmx:piC9ajwIj_6_HTjtFCg5vdiquv9LP9XejWBvNWXdCGH9U_HESWswxw>
-    <xmx:piC9agp9hwv4-at2WjOsALltOQpKD7vM7ySYUZGHqufVs6ViUEYadw>
-    <xmx:piC9asiXj-hcoZc-GLDO_VzfO3WRcCzX2_JWjPne033P7rVH-k5aNMla>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Sep 2026 10:45:57 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 53475fbf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 30 Sep 2026 14:45:57 +0000 (UTC)
-Date: Wed, 30 Sep 2026 16:45:54 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Tamir Duberstein <tamird@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/2] ci: use cmp and align job-count selection
-Message-ID: <ar0gon2VE0RlG_cC@pks.im>
-References: <20260925-ci-large-test-resources-v2-0-f632cf319756@gmail.com>
- <20260930-ci-large-test-resources-v3-0-d65ac7c21b5f@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lZL77pbI"
+Received: by mail-ed2-f31.google.com with SMTP id 4fb4d7f45d1cf-6ae19319854so1019281a12.3
+        for <git@vger.kernel.org>; Wed, 30 Sep 2026 07:56:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790780195; x=1791384995; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=5Th1xF7tqd8FgLXHIOx0+cr2NJklMpqW7iri+TpQuNE=;
+        b=lZL77pbIaS+IVUR2ICbt11T6xUSxJjvcCWOYSXl/SPxmae39V9Uo6xmZMxSRG476P6
+         S2NGwjkJ7kuec1LKsQX/XktYvQy6UgMQjsw1C3U1KhEg+Rz3LF2QPpNctFZIU2Yt3Hl9
+         4b4mTUrMVriNKuy41+XUtb8J1KFc43mVA+n8yUGxUF/0JXMKcABRnJzZf4RdNZTDRAYA
+         v50cUkhm3uteyN+pyWB1gcsX+g1+6IMinVKgl5kOFqsMT4uiGxBgNzoTYPxizX86fsgb
+         oos4uSYGU9OhSI6AWH2kK0VAU0kdfwERTzVskreAd7tRcs3byaQXTOfS3F8jr1CQ5Elr
+         O0Dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790780195; x=1791384995;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=5Th1xF7tqd8FgLXHIOx0+cr2NJklMpqW7iri+TpQuNE=;
+        b=a/wsBzwPlnY4xzNC0qmAs7htKXbP0Bk5NY0vF35nBPrOgowB6TF7NUIglsE4MHjSWb
+         JF+Bbbp1SCRgH+Hjhun5GCoP33oYq8kaaRPM5He8ofpFG2MJQAGuDPx0j8KnWq3ww6Fd
+         vqaOJhoBdaq33yok97vlROX+2KxMp/YZepUpi1Ejl7AL7AI39aw9FTNru9P3BYYnrf4p
+         Mb7Gb4D6M44JEgJueUrWjGDs97+LAIevVbjLYp9fkF3/eLvQoytasZN0h6wBlK2yiU32
+         Hov/Sl8JNL3Tmer3QW6m8KYzI++um6UXX3LZvXdXh2t4h/ZfdNmElfKAPFBoqztpruqH
+         fNqQ==
+X-Forwarded-Encrypted: i=1; AKwUvBz5c9sBmi5HH0SrcH2uVqxinnOwM15KdiEkyA1jTcG65+L8h0qnMZFEpltLxGWxmuFC9lQ=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLlcVwLBeqfV3XMUoXYplzAIZDnsl3auFolev01rhVAxyICc8Sz
+	qliT/BnhW/P0N/4INMaicp+sjhr6n7rWoJ7qkUdiQQGrs8HouaK+BDs21+Yu/XFH
+X-Gm-Gg: AYBFou2/D07RR1tThrANZTSl39hNM+vFFmOr3hFSO2StHwYcCTja53TPBg/BSXKdl2B
+	SZypShJEftlHNL+DbO2E1iCUh4lf++N+jYPgRRtgCjXGvuW0yWP8OeZ5rAKwlc5+r5nSzf/vKVT
+	1HsUIffuNpNzvwK6anlcJ5jeVlXaYitSQEVRQhmB4rnqkLPtknIfU2ZUBLZld+DQEcd3tJYL7+/
+	3CEktBsby64qmPihCT7ikwkywMf8WQW9C+HKlZlZtwRsh9OXMIvC86gtz0BU2MobCuspo7XXDdf
+	Qqm/1eDQI5C4f98PKaE9yk3+8CB+++ak1HzXbfPuw+3pYo83qekk314s6odyogZ0nBi4ULw1QgC
+	jfwneX//rApQQxDiuCxofYgAbMIzkIjalvAGL/oU2MGbmyX/1mYCDHMzmxV5XSsejkT9V5psv0O
+	vI/4rriWJu/RpSGodsAbGQFrIKRHuzQZoIjGi/1+6kSntG5/nexvza+vMMfSdq9arr8bPyxr0ff
+	DHUhVNRqdl+s63VSY7eCz508AZx3fQ6m5mOz2N+hnG67cT7QUiej4g=
+X-Received: by 2002:a05:6402:3221:b0:6ac:c82f:3caa with SMTP id 4fb4d7f45d1cf-6ae198649c8mr1389018a12.1.1790780195236;
+        Wed, 30 Sep 2026 07:56:35 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6ae1568e8b2sm884260a12.19.2026.09.30.07.56.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Sep 2026 07:56:34 -0700 (PDT)
+Message-ID: <37628f91-eb36-426b-9f6b-b2083f917919@gmail.com>
+Date: Wed, 30 Sep 2026 15:56:29 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260930-ci-large-test-resources-v3-0-d65ac7c21b5f@gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 1/2] ci: annotate leaks and stop a leak-sanitizer
+ script at its first failure
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Ben Knoble <ben.knoble@gmail.com>,
+ Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
+ <pull.2419.v3.git.git.1790748583.gitgitgadget@gmail.com>
+ <b6a36820ae3c50e36d71f751b7ff25b7f3275cea.1790748583.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <b6a36820ae3c50e36d71f751b7ff25b7f3275cea.1790748583.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Sep 30, 2026 at 10:20:33AM -0400, Tamir Duberstein wrote:
-> Changes in v3:
-> - Use twice the CPU count on both providers, instead of adopting
->   GitLab's existing one-job-per-CPU policy.
-> - Include CI timings and their tradeoffs in patch 2's commit message,
->   and explain the use of sysctl directly.
-> - Patch 1 is unchanged.
-> - Link to v2: https://patch.msgid.link/20260925-ci-large-test-resources-v2-0-f632cf319756@gmail.com
+Hi Harald
 
-Thanks, I'm happy with this version.
+On 30/09/2026 07:09, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+> 
+> A leak is only discovered once, at the end of a whole script, well
+> after every test has already reported ok, and it gets no annotation at
+> all, so a leak-sanitizer job's only visible failure is:
+> 
+>      Process completed with exit code 1.
+> 
+> Give a leak its own annotation. Point it at the test script, the exact
+> line isn't known, only which script the leak turned up in, and put the
+> full sanitizer report in a log group next to it, so it stays visible
+> and isn't capped to a handful of lines.
 
-Patrick
+It is good that it reports the full LSAN but is it really necessary to 
+emphasize that - why would anyone reading this think it might be 
+abbreviated?
+
+What does adding the file and line number to the annotation buy us? I 
+was hoping there'd be a link in the output to the test source but I 
+can't see anything like that. The output is displayed as
+
+     Error: failed: t7603.3 pull c2, c3, c4, c5 into c1
+     ▶failure: t7603.3 pull c2, c3, c4, c5 into c1
+     Error: memory leak logged in t7603
+     ▶leak: t7603.3
+
+and clicking on the '▶' lines expands the output, but there is nothing 
+about the source file as far as I can see. Ideally, if the test is 
+failing due to a leak, it would be nice to report that as
+
+     Error: leak detected in: t7603.3 pull c2, c3, c4, c5 into c1
+     ▶failure: t7603.3 pull c2, c3, c4, c5 into c1
+
+and display the test output and LSAN output together when the 
+"▶failure:" line is clicked, rather than having separate sections for 
+the test output and leak output. Having said that what you've already 
+implemented is a clear improvement so I'd be happy to take that if you 
+don't feel like devoting any more time to it.
+
+> Once a script has one leak, it keeps running: the sanitizer log
+> directory is never cleared between tests, so every later test in the
+> same script sees the same leftover log entries and also reports "not
+> ok", burying the one real failure in copies of itself. Stop a
+> leak-sanitizer script at its first failure with --immediate instead.
+
+I think that is probably a welcome improvement though if two different 
+tests have different leaks it would be nice to be able to show both.
+
+Thanks for working on this, it makes the LSAN output much more accessible.
+
+Phillip
+
+> A failing test already gets its own annotation once its script
+> finishes, but --immediate exits as soon as that test fails, before
+> reaching the code that writes it. Write the annotation first, so
+> turning on --immediate here does not silently drop it.
+> 
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+>   ci/lib.sh                            |  1 +
+>   t/test-lib-github-workflow-markup.sh | 16 ++++++++++++++++
+>   t/test-lib.sh                        |  6 +++++-
+>   3 files changed, 22 insertions(+), 1 deletion(-)
+> 
+> diff --git a/ci/lib.sh b/ci/lib.sh
+> index c6ccbf8c17..a89f480a78 100755
+> --- a/ci/lib.sh
+> +++ b/ci/lib.sh
+> @@ -382,6 +382,7 @@ linux-leaks|linux-reftable-leaks)
+>   	export NO_CVS_TESTS=LetsSaveSomeTime
+>   	export NO_SVN_TESTS=LetsSaveSomeTime
+>   	export NO_P4_TESTS=LetsSaveSomeTime
+> +	GIT_TEST_OPTS="$GIT_TEST_OPTS --immediate"
+>   	;;
+>   linux-asan-ubsan)
+>   	export SANITIZE=address,undefined
+> diff --git a/t/test-lib-github-workflow-markup.sh b/t/test-lib-github-workflow-markup.sh
+> index fa29a62aa3..0d54496358 100644
+> --- a/t/test-lib-github-workflow-markup.sh
+> +++ b/t/test-lib-github-workflow-markup.sh
+> @@ -28,6 +28,11 @@ start_test_output () {
+>   	github_markup_output="${GIT_TEST_TEE_OUTPUT_FILE%.out}.markup"
+>   	>$github_markup_output
+>   	GIT_TEST_TEE_OFFSET=0
+> +	github_markup_script_name=${0##*/}
+> +}
+> +
+> +github_annotation_ () {
+> +	echo >>$github_markup_output "::$1 file=$2,line=$3::$4"
+>   }
+>   
+>   # No need to override start_test_case_output
+> @@ -53,4 +58,15 @@ finalize_test_case_output () {
+>   	echo >>$github_markup_output "::endgroup::"
+>   }
+>   
+> +finalize_test_leak_output () {
+> +	# The exact line the leak turned up on isn't known, only the script,
+> +	# so point at line 1.
+> +	github_annotation_ error "t/$github_markup_script_name" 1 \
+> +		"memory leak logged in $this_test"
+> +
+> +	echo >>$github_markup_output "::group::leak: $this_test.$test_count"
+> +	cat "$TEST_RESULTS_SAN_FILE".* >>$github_markup_output
+> +	echo >>$github_markup_output "::endgroup::"
+> +}
+> +
+>   # No need to override finalize_test_output
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 1f0505e412..e74a12f1dd 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -199,6 +199,7 @@ mark_option_requires_arg () {
+>   start_test_output () { :; }
+>   start_test_case_output () { :; }
+>   finalize_test_case_output () { :; }
+> +finalize_test_leak_output () { :; }
+>   finalize_test_output () { :; }
+>   
+>   parse_option () {
+> @@ -822,6 +823,9 @@ test_failure_ () {
+>   	say_color error "not ok $test_count - ${pfx:+$pfx }$1"
+>   	shift
+>   	printf '%s\n' "$*" | sed -e 's/^/#	/'
+> +	# Write the annotation before either --immediate exit path below,
+> +	# both of which call exit and would otherwise skip it.
+> +	finalize_test_case_output failure "$failure_label" "$@"
+>   	if test -n "$immediate"
+>   	then
+>   		say_color error "1..$test_count"
+> @@ -835,7 +839,6 @@ test_failure_ () {
+>   		check_test_results_san_file_ "$test_failure"
+>   		_error_exit
+>   	fi
+> -	finalize_test_case_output failure "$failure_label" "$@"
+>   }
+>   
+>   test_known_broken_ok_ () {
+> @@ -1218,6 +1221,7 @@ check_test_results_san_file_ () {
+>   		return
+>   	fi &&
+>   	say_color >&4 error "$(cat "$TEST_RESULTS_SAN_FILE".*)" &&
+> +	finalize_test_leak_output &&
+>   
+>   	if test "$test_failure" = 0
+>   	then
+
