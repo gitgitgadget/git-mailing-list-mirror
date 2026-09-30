@@ -1,128 +1,127 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE55A3515DC
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 18:32:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793166; cv=none; b=f5cxHiC8QXq79z3zgR6xiGkT5qRrHSJhsavGnwlC1EQOSK9IahX/jorD1LBNc5PU1+d0+jX0BYQJIHhFq3qAXiFOQmm6CPqru1tjKRw2SXsRUl4Lj6XicOq9VTyaewl7Iirpcw2fj6SqPvBtHf7RhZpwGuEAjvbSoS86ZyjjjXE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793166; c=relaxed/simple;
-	bh=/g0jk7SpaH/Zsx9RZgYVlDFg8JbpofOturnLHSmKobA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jIHyw4yyb2pdLOPpd5yjjUU9EbNBROFyefC6h5zn8gpIG0n8rO7MVN6LdsYeYLB+DROAV7kPkD4boK/wNXeabK6buJMOFpATFPhM6ozl3M73qZ8dxWv09peQ5Y3Zqyj4AiHikx6iAjLeX9gPIQfyTlzIiLwmktwjOyq+AP3Qd3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oSFEf/fI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Uyj7urQC; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C8852122D
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 18:41:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790793667; cv=pass; b=Aw1teO+KMpExXsrvn+4gGNSnIi/OUIiQZHTpptlioUBy+qNYLqm8nQs21Sursrf/W93hCESbclUTVm9VENXgjEaLgW6d5oQaO7SLmnFGKNN4ygj1kNlT/Wg4WSVMq9z9OQTxP02dPP1CWA4uROBfNHuneCZYUmi5tLoSAnfZegU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790793667; c=relaxed/simple;
+	bh=aatbV1TXtzDZujiJqd3YuzK+owTnprpMVEZoH3FWy8M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oV25oaSoMWQGDSoQuVLSXQRK8hTR5WzJFl8GYly3Yx+SZVah+SI0o6+k1ItVHzTC69qeVozXDCVmHQKnjW92e3pUkQAWy0QgzR8RENbjNJGGVi1oTXQWWqQXgUhioKYd1C+Jo4kMSniie4oTi0ccZizbrgOeuFOh2bquoDvp26Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LcRLAX2R; arc=pass smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oSFEf/fI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Uyj7urQC"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id F065CEC024A;
-	Wed, 30 Sep 2026 14:32:42 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 30 Sep 2026 14:32:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790793162; x=1790879562; bh=kFM8BR2Cqg
-	cMMPdePxCQMOQAx0vFjNK6Eu+BfTsVKdw=; b=oSFEf/fISFmT9JeRpthq+vpMWJ
-	1/GEYTHCLBR8K2V0pQM+qrvXs5WFlNucUYs4i4Gd9635XgfOdJ+W9PKB5KTPYTV+
-	KtWMO92BRSB5yK2dzO8XbGnhp6F1kQGN0ltHezWMsPWUbemVFM/aNrgpIoG4TB7Y
-	yhS4MxbxmFXbvL05nFk0zo9TqVxMklo/oQtjkUTpiX+loOr25UkYYa0ds/XdZCbK
-	AOyr93U8PDR46zZlfHPHwmR9Igb2mzxfDQ+4uaSEF9TLXVQilGfU6w6D4xpnG1VJ
-	oEfa2JbWrPukP3/1H8QIK/djihMfuBLdfqt8P+cdP12uBNp7ovqb8oHfEd+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790793162; x=1790879562; bh=kFM8BR2CqgcMMPdePxCQMOQAx0vFjNK6Eu+
-	BfTsVKdw=; b=Uyj7urQC7Uzp5T914I4369NaM8ITikEAqfLhFFgVxccYX61bsE4
-	N9GI8r6AMdX94E2ex83Y4DVHGU/0+FtivpbUQ77JDjGMdHevC/OCXeCniPPNgfbh
-	0e2aDKR/clsmh4TxchZzTYXwn2+TxtruCjVVwcYo+fit6WeXCvn31QkgQL1xx2ra
-	8Fe8EK7aCWO9VXplSN6lZxYdjj/6+LE1X9YZt1nd6xYabwGdwVB+HbK5DxxvG0Bv
-	ON60bcemD9giGAYmFi4GxSlo8UfmmP6cstE2qMVB3nXKrqA8EPCffY1Z9Pa/ttPX
-	VP3mmzerNzdstvhTYKhEvpE+AyVUYzTvhgw==
-X-ME-Sender: <xms:ylW9aovcxymydK-ZHw7VsfxY8cozIkny7PmNreQhFOT4TjnVOuvLSQ>
-    <xme:ylW9as7AM-YKR6axcMtXX6zjG8RyTVYDvPBZtawwSCI9Sir-259FLIROJl98MqJ2D
-    xip0kdR_y3jda4PNYxUvGSuZakRhhrAi1wmZ0LmgYLK5QjFrp3cp4k>
-X-ME-Received: <xmr:ylW9ahI0qBku_-x5BliV8mIVEtfuTUgJpdD-A0zXcxUwPNpGx3-UBgU_qdcXhsIX1kwOUUQJwKbgiRafZIxWnVC1N5_Q8IFxPCsr>
-X-ME-Proxy-Cause: dmFkZTFuwRq6+7Xj2PGtZy0cgSgZJMeaP7gGivFNUULLb16LeHA2DsZ1cjBIDlXivTbcnq
-    0spHCfW0HQxrBMF+ix6jL6zoc+mvCmes2BszIMmR+k0WDcDwbuwMjs5/0GQXFBUUk8JIkn
-    aYbGxDG9XMLebajOTINMdQuaPNHGtvVMypx4Xd3ZILFTI1CUjWP0z1f7cP270OeegepV1L
-    FMRnRlhmThpe5I9IGRDbbcKATrnADZRB/VX1iocp0MYPj8hqAGT56BXCQaSR71O8qoK6n4
-    CLniZCrsI+cUFDH5vG2w4ghGK9E5jbqNxHzyN0rVLiBOUJj/xYuo7vT4lV+npewrfObGKR
-    Eby5GbqaQpFEBtQLIZ4gWZlUrjYIueTWT7L9PZW8gHJGRHizsNggranTjY3s4SG58nYmRZ
-    qDxZQWah4dq+azmja3qhu8tGC+9wDXIpj765+ieGRMs1iZQhLPSL069txk3n20Bz7PzxKM
-    eoULnSDdt10Y8OB3P1xnn+1/vIX9XtXN0bzQQL/ZV8C6sRXSuQa9qdgfbELFp55ms6kfnn
-    RZoomhTZ1mQnHx4d4VXgLsQzUkRiO9N0OIBlKbrZFME1VOzYsGkXGm/+FNaBH0YK6/6Wx4
-    DhDy6KKE97QtaHV9c1H6+XHwdv9T43Qb2GaS9w0T3HNATFry/yk1NvcOUIVg
-X-ME-Proxy: <xmx:ylW9ak7byJBU2hHK_y6WQdFKV8UIWcLcOw69Cif6kwq2AYGI7hgwuw>
-    <xmx:ylW9aszv1lT2OCN9vXJ9oBdj-07WJJGsaQ0FRpt0sGC-O0mHHS_6Pw>
-    <xmx:ylW9agbjlj2YUqE7skPG-wGT9mxRFhoFo_Tt3Bn1Er8J3VAI6f7pZg>
-    <xmx:ylW9amQXkbS-VUMgPjAzmQp5uoeevR_7p2p43FsZW47D2XEQNwws7A>
-    <xmx:ylW9ao44v_jYLV8WVf7X9qQ0TDLVOFqa68X0TNweNj2eA86M_h3JVC-r>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Sep 2026 14:32:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: Git mailing list <git@vger.kernel.org>
-Subject: Re: [RFC PATCH v2 3/4] setup: introduce new helper
- 'is_git_directory_verbose'
-In-Reply-To: <20260929102513.712181-4-kaartic.sivaraam@gmail.com> (Kaartic
-	Sivaraam's message of "Tue, 29 Sep 2026 15:55:09 +0530")
-References: <20260924120502.2642141-1-kaartic.sivaraam@gmail.com>
-	<20260929102513.712181-1-kaartic.sivaraam@gmail.com>
-	<20260929102513.712181-4-kaartic.sivaraam@gmail.com>
-Date: Wed, 30 Sep 2026 11:32:41 -0700
-Message-ID: <xmqqv77ma8ty.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LcRLAX2R"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c294ad260fdso371862766b.1
+        for <git@vger.kernel.org>; Wed, 30 Sep 2026 11:41:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790793664; cv=none;
+        d=google.com; s=arc-20260327;
+        b=k4yaDwfLXH46M57zU7WTCmtBr+H4fua3lx4V078T4sVHq8nBSbYwTJqcVyUc98DMyg
+         GDQbf67Cs43dsNbpcFQX/MDuaPzk3YxLSvxXclKcdn0d27auGmuMsgrygvRpCp/CzxRq
+         cjMnxO/5RDCsbdwzo2EYlCH3buaFNtx7kGg0vjq5TKhvi8TQAk8p79VNZmt3sxcGDecw
+         FRKBGCO42LkNw2dHy+XC27Co8cjSWafnoFlH210gc10ZI0EHEvc0N+GdbDe05yEUbxwq
+         R1Y5Hj3itZMwiA9/kl3a9EDS6Urxk3Lvcqeflbz/TmIETBR0YPCMK1ltdsJOqJ3w10ip
+         vGkA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=aatbV1TXtzDZujiJqd3YuzK+owTnprpMVEZoH3FWy8M=;
+        fh=T5Afz/ThPuoJh0TjS//g6UiQ2CgnsgOC8t1S/wJTeJE=;
+        b=g33Jc39Djcem7q2IF4DabejiKiSYDKijDegf68U+MP/cnRewqqcyDLin3P2MdFEGFx
+         HrN/YHS9FuttI5VV8MBiYnie/90eHAN5SNg47dchHru5p5e+j+wSsfcvUySlH6xoTx6Z
+         j4kwVgyb2pyqqYhXVh4DfPYUA/GtKoSeJcI0zvMttEuPZkuOJYCqDczADTZd+iHIuLY2
+         BVaEZWeibqwrXstRj2g+KBCJ6oU400jxNAP4/8/ViPiMuBpdeb7Lu7v96AMUkPZnslIF
+         iUX3obKqoLWMtUwoGUOvsHkZ2xHFmtipDg6FfWpGROFN1NZnzbb5MK2PUCFOM8G3oMQZ
+         kThQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790793664; x=1791398464; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=aatbV1TXtzDZujiJqd3YuzK+owTnprpMVEZoH3FWy8M=;
+        b=LcRLAX2R/oS060R23t4aXIBImetbFUrrdfyLcq8s8Uh2BihVzr3GgCw8Cn/+YuRGlY
+         5trGPKkbkYbn4JmadUPBu7omncuuf+Z1gZrhZ5fhGJDozKQLiYxCQy64bgLMxsWkuTEw
+         lPeShM5YckLlSc1LnLmk9CLgEv8BrK4a7OVfxpRWbViVlEARFBSa5plTV05BLfXhWFEL
+         lBvl7idnqcsAFPNg8Xs2TJUm3xHqtb2oslWz+6ZAe9q/yYCp7d0DGWyjgbCUmbl5vRO2
+         2FEMnu3gzmAKCgsIVDEzoEWo5PauYYEtDNeh+PJdLXyAsXo7zJauueURbmvljnrg85NZ
+         D4Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790793664; x=1791398464;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aatbV1TXtzDZujiJqd3YuzK+owTnprpMVEZoH3FWy8M=;
+        b=zCA+qaRn3IVBZmkePbFCTrgDfWFfRf5cbdpVGu6ibTzuaS+NLi2xC/C++vLKsLLKJD
+         8YvNtJ0hbictLSqAptAeWHMh3q3K2KEdYmlUw/8RJCRuSbBXlv8BfsNs20Z5wEp+dFgh
+         m0jg1UoGantaLhDi0Gl7w7n7sAFCngFvo34PvaTeZLCx8M2qZpB2YwFRqVKmzJ8fZlL1
+         LxPILYKQzOqxuauzmeQNIHIVf/dGnKdEpZvLPG+HVM+OQvymNzy8674s84iiX4AsgyFq
+         3TsB5TXVDKmahKGJVGj22D5OAOtCmRRQUa6H7E1QUVFegt3TqVaIFvwKeBVS3yo3haOF
+         xrWQ==
+X-Forwarded-Encrypted: i=1; AKwUvBxy65gpqTvMr7VteRQSvKksiZ8pf0ecD4xxqSYL82RNJlmts4RKn2AEq3nwwrNhdrZaNXI=@vger.kernel.org
+X-Gm-Message-State: AFuF++lUxi+ZSUkxX8zwHZHkHsOfK992n4UITGVVxCRidhGf7g8MqygK
+	NbzkPMz91FHy11DjWGG07+INeTRzVKvXOOpK4Zq4y2kg+bsrKBO3SBTyTPEAJ7sxTqIrjlItDaN
+	/W0OL2cNfCSMCuOek/bHdIdKLV/xYLDY=
+X-Gm-Gg: AYBFou0bhgca83z807HRb6H5x4sSDd1Wd25PeYrTIEJUYkr6hobCyGBKs9s+VuYzdDG
+	DO60iMF0GXgLQkNA04dO5KjQWk9HqWq0m48CxK/JvmesKcO1DXpscIgYoqgQPNePeYCD6NGz3Kp
+	Qmy3tGyhxiaIWqeYYP3WUk3xbsU0yHLmQvje6sXvfDEDs//PL2tLvcjWiGMrYmWjsxTPEVTx3pI
+	Fn87owVAZLUQJBThTvOM/RrInvnLc5jR1/f+r3/3pe6z6OJ0qpDuh/XyXo6bEtkn7lWNEgp/+VQ
+	9j6621PyPLQbSa5bGoCouVbwSVU4YUQrNGv1mERaxGtzFt+zXnXqdfE=
+X-Received: by 2002:a17:907:9625:b0:c2e:2275:1168 with SMTP id
+ a640c23a62f3a-c2e33fa28d3mr35051166b.19.1790793664036; Wed, 30 Sep 2026
+ 11:41:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
+ <pull.2419.v3.git.git.1790748583.gitgitgadget@gmail.com> <750c3605128c268f331b1b9477ca0489ced75543.1790748583.git.gitgitgadget@gmail.com>
+ <5529bccf-eeb1-40f9-ae03-8fa19dc26f5a@gmail.com>
+In-Reply-To: <5529bccf-eeb1-40f9-ae03-8fa19dc26f5a@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Wed, 30 Sep 2026 20:40:27 +0200
+X-Gm-Features: AclHuK_0GARABAIMJVutxrBtiN6ptjGq32Jzs_JAz9tqH9BHGYRsAXQMtkJPMEs
+Message-ID: <CAHwyqnVt=mSG9u6a_FtuqHDSM+8RVKRNmow7f7MtDvFV4EyOhQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] ci: point test failures and fixed known breakages
+ at their file and line
+To: phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Ben Knoble <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
-
-> Introduce a new helper is_git_directory_verbose() as a
-> counterpart to the existing is_git_directory().
+On Wed, Sep 30, 2026 at 4:56=E2=80=AFPM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
 >
-> is_git_directory_verbose() also populates an optional
-> string strbuf with reasoning around why the given suspect
-> is not a valid git directory. This strbuf in turn can be
-> used to improve the error reporting which is currently blunt:
+> Hi Harald
 >
->   fatal: not a git repository
+> On 30/09/2026 07:09, Harald Nordgren via GitGitGadget wrote:
+> > From: Harald Nordgren <haraldnordgren@gmail.com>
+> >
+> > A test failure or a fixed known breakage gets an annotation that names
+> > the test but carries no file or line, so there is nothing to click
+> > through to from the GitHub UI.
 >
-> This is not helpful as the user does not get any hint about "why"
-> the repository is not considered valid.
+> Have you got an example of this? As I said in my last mail, I can't see
+> any links in the output from the linux-leaks job.
 
-I suspect that it is much less the failure to report the reason that
-may confuse users than the failure to report which directory was
-inspected and why we picked that directory.  Once we make it clear
-which directory was used as the repository to run the Git operation
-the user specified, they can visit the directory themselves and see
-that there is no HEAD, etc.  The user may have a leftover GIT_DIR in
-the environment that is interfering with their operation without
-their remembering they still had it, for example.  For this reason,
-I am not so enthused to see this much code churn to tell the user
-the subtle differences among a dangling symlink HEAD, a HEAD
-pointing outside refs, and a missing HEAD.
+That's poor wording on my side, I'll clarify.
 
-What would be preferable is a much less invasive patch that reports
-which path was assumed to be the repository and where it came from
-(among GIT_DIR, auto-discovery stopped at GIT_CEILING_DIRECTORIES,
-etc.).  It would help the user figure out why the directory they
-thought was the Git directory is not what the git binary inspected.
+> Why do we need to escape the test descriptions when we haven't been
+> doing so up to now? Also if the test description is a single line why
+> are we worring about '\r'? If it is so important to escape the output
+> why does this patch not convert the existing annotations like the
+> "group::" on in the trailing context lines?
 
-This patch does report which path we thought HEAD should be at in its
-messages, but does not explain where that assumption came from,
-unlike the verification of the objects/ directory, which mentions the
-environment variable if it is involved.  This feels uneven.
+Yeah, that can be simplified.
 
-Thanks.
+
+Harald
