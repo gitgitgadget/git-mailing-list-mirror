@@ -1,210 +1,242 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00870318EC5
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 16:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA4650E59D
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 16:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785728; cv=none; b=h8RW0SxgD4GlhEMEjK512LOrydsI/GksfrxnxmsO/6CBhhwnxLzQCEAQJayEokT9w56slRALZnrsivirl8Mac477ZeDoCXfeZffrFrbas2mt8wRZFXx+7XTKKL2DjPbMDwEdgDujma4Lp4oXLfLTjDhUuXbnlDA+BgWD2Q5jlyY=
+	t=1790786573; cv=none; b=Vc5gMfbQMEWZKwDB187gMg6vz+OMDKOK0bb6M3kKX+Rzajr/YmWX6L2uXuA38fOsOXin0nvEtlN+vt04inJKJlg3mCQwvuTH9bG/BS+VcK+FRSHcvDK0CyjcS47dU0H/sQBmQheIWyIwpb+ivhBArf7lZ5glfE96kOMuzMu/D2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785728; c=relaxed/simple;
-	bh=YY3VPyQP44VCCAJB8h15cbeN/t9KED+l8Ee/WuO9Auo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kDEwmF0j0iOUq8qMMhfvSYCFOGEF36faG2UTChXuQQo3kIJ7Vucao6FKFE758i3XKl7XnmDttyYPvwh0Iu6USY+z+iEYsYFZGTif4puXhj70al6pDzF3mT6+Vt3tUm4F//gnNmdeXDjVi/+eXGmcvLVVEd265owGLcH0Ld/b9qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bPSMOm4f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VRMQiYSn; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1790786573; c=relaxed/simple;
+	bh=ltzswyIXxsdw4VwwWuuLp9+qR05jjDDj58Zqea7rtP0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pQVHG/uh8A2p2b3geBYmSPgqFaRsOhQb6KtkeR256R8X4jTC0M4V6cHmOWTiA9C3W6zZs737Lv39ou9fWilyKwINrEZhYTMXI4DNzTHvX3xtxYlt7JT1d40V8G3YRX22AP5gbh2R3dGGd+t3BAUsSMj5LIxr5hBN/P1WGh64RL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WOhqnvlw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oLn+Yc3R; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bPSMOm4f";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VRMQiYSn"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 167E914001B2;
-	Wed, 30 Sep 2026 12:28:46 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Wed, 30 Sep 2026 12:28:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WOhqnvlw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oLn+Yc3R"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1793914001FF;
+	Wed, 30 Sep 2026 12:42:50 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 30 Sep 2026 12:42:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790785726; x=1790872126; bh=uBRGfwjXLi
-	KugRRMnLl79ZnkWRibV+ybWXDabF268z4=; b=bPSMOm4fwuZn3TwAxNsyGgc238
-	Jmb8OYfVqj9NYWL5i4PNYgIc/ePSaDcQtNjkGACc/i0WULbFMzZxCmwR59frglYh
-	2ILwCXNwkHsLhZ9BIde2WSwbvjTtL16jqnFL/D+8nxhU3f0uI7seqe/Gt4MAAaPW
-	pneWh/meJgCsSMrmNmlN/+e2+tj39kd9EgqR5fbWGNrvB9ae75zGFSQ0trGgKqRB
-	NFqLqJfrNYero9TnzipQF5A9LDnR1Bl+994dUb41Bia0o4D2s69TnLF99Wb/taec
-	uU30dA3M+hbx+5PCerQ15Xh/QTwATcy7v7RjDQD37PPp+DpRZ+O/ieINgIhw==
+	:subject:to:to; s=fm3; t=1790786570; x=1790872970; bh=WIpkONaYEA
+	vbYpitY6kuXRvaJ9EbotUmwKsYuQjtiKo=; b=WOhqnvlw/rI59a+G5TPt86KEb6
+	fFhu/Jt9w/VAPVkKib7jz18ARPSdaZuYwI+jcQmOV1HJNW+EjmMcH8aHiex7iY0X
+	43ekqd3kzwVYC40edM8jWs5AR4alnge8JthCK1AspLllxnVINp+Atd3F2/0m9zdk
+	Dyc+mCCdcI5jH1T02MyawHWVdq+uS4kumAR3T6zEjKBmznwNSteg1oDHGmyfxb7w
+	FmP1AzgLr37U4D+i2MFXPyjcuiOqng1tF6EbTyQRw3UwHAU4RySdazyhS9Ysvr9T
+	BcBCYB9msgMNlD29wJyAUbNcdkW5Kf1b9dJpibz/imfv7zsFs3sKi5+Cn3bQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790785726; x=1790872126; bh=uBRGfwjXLiKugRRMnLl79ZnkWRibV+ybWXD
-	abF268z4=; b=VRMQiYSnqlNQanSG3jfUdxYZiX1h0FxbU+s+P8zWWcN26GnCN2b
-	Gp0B+E6+8dfBpoFb5tmpb3SPb623ejUc0DDgJDJUE7gcq/kFUqTXIy9oPgBwyinz
-	aAl4z8Rgm21ASwJziorXOrPbzJfxbqk/F9KL7D0WHdlPJes5s6UeBJtz/OwpZjEz
-	rfOCP5VUxlzrku0CkXaMV316URFgMOAxKUGfkATPClUWZ0pZTKYW6Ht9fOfaitnm
-	vFvQD1sgH8J/ayh+xRzyuwmLb7GUromyKtY+YMwoKskIoUX5L3IOnAzYsu7+HnJG
-	ELIOa/dn5cY8y//tJKl4ZVwn6040Tc57J3A==
-X-ME-Sender: <xms:vji9agaKy9Qt0UPrg8dWYTOpziHur_FJq6bzcZ-S-pSooD76j-XCoQ>
-    <xme:vji9ai0gBZx4-ji6WCZAhIihpr53TGZNkH9SJMhcxazcKCS665Z890edPmxRThiT9
-    0T_jy4FzMexiI-msbv8oZF0Sw3sN_J_jhoDjdITyYD_Uwk3v1PxO_xw>
-X-ME-Received: <xmr:vji9aoUpEe1suxhhIaRcsZaKjIhGJZd06cnbunzoHBDBeeITWefQyA>
-X-ME-Proxy-Cause: dmFkZTECJrhWGSk1mjbIUuSD346p6iuxdTT+sfQmnEwswW2gIE1AXv/PRIw5+TrRy5SSV2
-    UwzgE7gCnWzScz2qS4DK5GZlWizQ+DYt1zjChHbfgR2L4q6l6LsFkGmUaziKk9PDGNSuUv
-    8409P4r5sEfiTjmT0cOONs9T3yJnnFqKhb0dUIbN6SuxWxeOducURaz+iDY54KtJf+6Niq
-    CE892zxbAR879TApb9Xm9UIAnmXYft38pRMG1PAraxIM6yjtZ1hgaN0S/UdBnQ8eMdEw4O
-    yk7sQtT/y9NBdigHTKRX0Ri+qTXgHQipgyHElvAg2yTkTdgRlU9Pt41MIRuPPCm8tNMnon
-    KINpqP1NbShXU5O06H3CaCmnhc5WvEvFHUweQMK5sscOVTyeqHr7rwiozLiGnJpRDSq2L3
-    oZ1Tc3HD1bUfs64iveu4R2Hr2ZiAXa8t5xdEZ8jY2GYK3Mx6Fq4hHv1sEQEhJDYcB/hB7O
-    VojTdXVYK7TEOU4V11dCFp4isjBRDKXBzIzJG/uq9LMHV4UxoGfvYhwwKaJN9RvDR0bZxc
-    XdQ+95MUiOVPZ6u8st497mV8C0clcRmREVU5DvSpxCytc5l8z4a+h7pIygqOowINgseTfI
-    FkYG3vBIhyHeCRFo8qJ1ObdAem7oTkSLE9FcNfgT0oTVtrWa50KMdCCt9EoQ
-X-ME-Proxy: <xmx:vji9akWvAuEV4FjKcfCBlMqcmLsvJI6bzZaiUTS79VPGjdSefX5GeQ>
-    <xmx:vji9avcZmgu5X4p85KKcYb5dnNu5yXB7tWMQMJ82-IOA9pTsFPouOQ>
-    <xmx:vji9alV5NpDe1HnHdODlcMv3WThFAOWvzTO6l3ov-_IY6l6lSY6moQ>
-    <xmx:vji9agcRY1afMqhR12ORog73gbNepDdnBM1YbS2H5qypMk91SD-fWg>
-    <xmx:vji9aq3kfkVSDEEv9mk251R2Rr4rVgRL9D2dk3Wz9NJEZvx6TaCyvOkw>
-Feedback-ID: i197146af:Fastmail
+	1790786570; x=1790872970; bh=WIpkONaYEAvbYpitY6kuXRvaJ9EbotUmwKs
+	YuQjtiKo=; b=oLn+Yc3R68k/62URdj/2Mit2JWEB7Nis9GBrffCDOCXE0rcQprO
+	uqUnSWvWNFN5r3eGa6N0HgGVXWw0rkl+9vrcjKq9nL39mpcr/gQW2K4gewzOZ9BA
+	rkewiEa5DomLofa2jp29xvqyTt7pne29yrvxDc0mf1P8BPZvZu1slIQKUeh+sMGJ
+	dR4JtLofXxMexRNprpmOTg8E5PIMkIdTgp2Ic8ndrW1I3qz000SpncSfSimMm203
+	d+iyLO1bTFZd5LobcCcQ1dEVk/ro0hwpPcsL87FAtyrT7G+Z8ElOUtvQ7+HuO0tn
+	G9cCHgULXOuXLBw4gnYSFZgpU7LjPAfbzpA==
+X-ME-Sender: <xms:Cjy9aps8qJIEh3hgtEbXK1kTxEc4b0tIzdTAmLoTUyDsyEXgkK6KCQ>
+    <xme:Cjy9apfQJ0R2uSWu6IVl6g03Igq9RugquKoIuMrqPSqcrmNCNQODIukej0pjMDUJR
+    RpMC6XJ32Y_HxMwIyJygi6wSPBVROjMh7VPSlOH_ScswxnTTGJvrwY>
+X-ME-Received: <xmr:Cjy9ahyIeXVrCdnIyEQgGTWHd2NkxXmTlS05FJq-Q-u-nFm915qWmR6Jxc97lfZGqcabfc5WEcIpj0urUcQ8Nz3pywyEzMfW-pA->
+X-ME-Proxy-Cause: dmFkZTFaRhR9oRfVDhdAwoxOK4Id7g6VfahyNXb31ZMnuDzeMEksS72EZb2AyjiNJUwj3x
+    2zBAsw6/FUWf5H53+oRBT2f+3gDdZsVPsQhVXEst2tTVbGFGcDRVf1t/h67BzTwQZTVuJD
+    1uLVkytD5BiAErW1lbXlq/d31KQQjcdo+wfz1fhMzAQJ44c76LHA0jCSCU7Hd3Bj0zRVEO
+    pUgfDziU2F2Vz4StmudKxnPtSiaymnGynmveNkdjhdKFmqsp3O1KSuNPjEUK15p3XsKLIN
+    Cu/uOBgd0CvtFWLomUfg29cmxQL8SMETH8fCutmtD7VIK7qJd6X11ChMJva2U1xzz6ScBe
+    kW0mW/JXg+lvZg/YMVtoYk7gVAFC03NywahETve9DbgvHmYl3fwjjMdrpcQoB+6mfi9h39
+    Kl9fssuMPTsFAvdWJNojAH5cGNnr6hEEmtMoK36xPd3RI/jHhKAyLggZOTCjPFjEH3hD6T
+    uN6z0vuvj6hklc2Za0vL++XM9l0LEno/p0QIhnkQVSeP4mmy+a68zzSUwpw0+KKjgTelU4
+    Ob+JioiKjAWpvZVTkn5JnsPTy0wPUQNxr+fvo+I/esavX+v609b8rSYU8AuH24f+AniFms
+    Hnu75R8VSvFfa2mfXVg1tpaVTqDKb5flx9g2zfzdGU6tN1C+XXB5UVY+MObw
+X-ME-Proxy: <xmx:Cjy9avEp-M9d9M6UkY3sDXZbwyVO7muy8Hw_kfO6bW8ZWR7OBh0JJQ>
+    <xmx:Cjy9alyXxdeGJmABSVJef32a5GVzpqphXge10vaJmfzcynU-LjoeZA>
+    <xmx:Cjy9agtohARfGYMm8Y0KMJHh8ehbJQCcJ_ho1M6FgQnmosTDTMoXvw>
+    <xmx:Cjy9ai1C6d1oEm_rtu1QnEOYu50wjeUNrQb6GS6WnJEVX5D03NhwvA>
+    <xmx:Cjy9alRpsYJ9hTh7TZqR_BI7lokRfIuaT0Q-hgGvzqfaBsGhqZ27SGYU>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Sep 2026 12:28:45 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 29aea881 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 30 Sep 2026 16:28:44 +0000 (UTC)
-Date: Wed, 30 Sep 2026 18:28:41 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com
-Subject: Re: [PATCH 1/1] repo: add filtering options to "repo structure"
-Message-ID: <ar04uStCZ4pnEJ38@pks.im>
-References: <20260924164503.119506-1-markchucarroll@fastmail.com>
- <20260924164503.119506-2-markchucarroll@fastmail.com>
+ 30 Sep 2026 12:42:49 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 2/2] merge: remember conflict labels
+In-Reply-To: <fdaf3da993366878b51bd0b2a950888710cafb8a.1790761727.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Wed, 30 Sep 2026 10:48:49 +0100")
+References: <cover.1790761727.git.phillip.wood@dunelm.org.uk>
+	<fdaf3da993366878b51bd0b2a950888710cafb8a.1790761727.git.phillip.wood@dunelm.org.uk>
+Date: Wed, 30 Sep 2026 09:42:48 -0700
+Message-ID: <xmqq1paad71z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260924164503.119506-2-markchucarroll@fastmail.com>
+Content-Type: text/plain
 
-On Thu, Sep 24, 2026 at 12:45:03PM -0400, Mark C. Chu-Carroll wrote:
-> "git repo structure" provides a collection of useful information
-> about the information stored in a repo. In particular, it's
-> valuable for diagnosing performance issues caused by large objects
-> stored in a repo.
-> 
-> The current implementation of "git repo stucture" provides summary
-> information about everything in the repository - all of the
-> branches, remotes, tags, stashes, and notes. But sometimes
-> to properly diagnose a problem, it's useful to be able to exclude
-> refs that are known to not be relevant to the issue at hand.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Yes, indeed. Sometimes you may for example want to figure out where
-exactly the storage size of a particular repository is going. Or in the
-case of GitLab for example, we may have bookkeeping references that are
-not controllable by customers. So we may only want to get the structure
-for all the customer-controllable branches there.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> When recreating merge conflicts with "git checkout -m <path>" the
+> original conflict labels are lost. For commands like "git merge" and
+> "git cherry-pick" we could use the presence of the related root
+> ref (MERGE_HEAD and CHERRY_PICK_HEAD respectively) to recreate the
+> labels. However, if the conflicts are from "git stash pop" or "git
+> checkout -m <branch>", then there is no ref to deduce the labels from. To
+> ensure the labels are always available, the merge machinery is updated to
+> write ".git/MERGE_LABELS" when it updates the worktree and
+> there are conflicts. The labels are then read from that file by "git
+> checkout -m <path>" when recreating the conflicts.
+>
+> As "git checkout -m <branch>" calls remove_branch_state() which
+> ordinarily removes the labels file, we need to pass a flag down
+> to optionally prevent that so that the labels are available for any
+> subsequent "git checkout -m <path>". Note that merge_switch_to_result()
+> we assign "result->priv" to "opt->priv" and later clear "opt->priv" in
+> order to get a pointer to the private struct as result->priv is void*.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  branch.c           | 11 ++++++--
+>  branch.h           |  1 +
+>  builtin/checkout.c | 24 +++++++++++++++---
+>  builtin/commit.c   |  1 +
+>  merge-ort.c        | 19 ++++++++++++++
+>  merge.c            | 63 ++++++++++++++++++++++++++++++++++++++++++++++
+>  merge.h            |  4 +++
+>  path.c             |  1 +
+>  path.h             |  1 +
+>  repository.c       |  1 +
+>  repository.h       |  1 +
+>  sequencer.c        |  1 +
+>  t/t7201-co.sh      | 21 ++++++++++++++++
+>  13 files changed, 143 insertions(+), 6 deletions(-)
 
-> Add a set of flags that allow a user to selective exclude
-> reference types from the report generated by "git repo structure".
-> When a ref type is excluded by the filter, it no longer appears
-> in the report (ie, if "--no-tags" is passed, the report line
-> for "Branches" will no longer appear under "* References").
-> Following the pattern of flags that are only used to
-> disable functionality (eg, "--no-verify" in "builtins/push.c"),
-> only the "--no-<reftype>" syntax is listed in the updated
-> documentation.
+Where do we talk about MERGE_HEAD and CHERRY_PICK_HEAD in the
+current documentation set?  Do we want to mention MERGE_LABELS
+alongside them?
 
-Hmm, okay. I would have expected that the user can essentially pass
-arbitrary revisions as understood by git-log(1) et al. And if they pass
-any such revisions, we should not enumerate anything but what they have
-passed, so the flags shouldn't only be used to exclude.
+> +
+> +int write_merge_labels(struct repository *r, const char *base,
+> +			  const char *ours, const char *theirs)
+> +{
+> +	FILE *f = fopen_or_warn(git_path_merge_labels(r), "w");
+> +
+> +	if (!f)
+> +		return -1;
+> +
+> +	fprintf(f, "%s\n%s\n%s\n", base, ours, theirs);
+> +	if (fclose(f))
+> +		return error_errno("could not write '%s'",
+> +				   git_path_merge_labels(r));
+> +
+> +	return 0;
+> +}
+> +
 
-So, for example:
+We write three items, one per line, delimited by LF.  As this goes
+through stdio, wouldn't Windows write CRLF-delimited lines?  I guess
+if we read this back through stdio, that will cancel out and we get
+the LF-delimited lines back?
 
-    $ git repo structure --branches
-    $ git repo structure master
-    $ git repo structure --all --not --branches
+Wait.  Do we want to read this file via stdio, one line at a time,
+using three calls to fgets()?  No, we do not give a strict upper
+limit to the length of these labels.  So if we read with
+strbuf_read_line() or something, we would be safe, I guess, but alas
+there is no such helper function X-<.
 
-I would hope that git-repo(1) can achieve that rather easily because I
-expect that it uses `struct rev_info`, but let's read on.
+> +static int parse_merge_label_line(const char **p, char **line)
+> +{
+> +	const char *eol = strchr(*p, '\n');
+> +
+> +	if (!eol)
+> +		return -1;
+> +
+> +	*line = xmemdupz(*p, eol - *p);
+> +	*p = eol + 1;
+> +
+> +	return 0;
+> +}
 
-> Overview of the changes:
-> - Add an enum to represent the structure flags.
-> - Add structure flags to the options for the "repo structure" commands.
-> - For each reference flag, add a conditional in "count_references"
->   which decides whether or not to add a ref to the pending list.
->   If an references is not added to the pending list, the things it
->   transitively references will not be added to the stats.
-> - Add a set of test cases to verify that reference counts
->   in the repo structure report correctly omit the specified
->   resource types.
-> - Update the documentation for git-repo to include the new options.
 
-Note that we typically don't have lists of what exactly has changed in
-the commit. That kind of information is already visible from the diff
-itself. So what the commit message itself should focus on is whether any
-of these changes are non-obvious or whethere there's any dragons to be
-found.
+OK, this reads one line at a time from the file contents already
+fully read by strbuf_read_file(), as seen below.
 
-So in summary: everything that may surprise the reader should be part of
-the commit message, everything that's just obvious plumbing doesn't
-really have to be mentioned.
+Which means that the CRLF fprintf() may have written in
+write_merge_labels() will come back to this function, and our 'ours'
+may become 'ours\015' after stripping only the LF at the end?
 
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index 84e012f83f..c8f6e38011 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -490,7 +504,8 @@ static inline size_t get_total_object_values(struct object_values *values)
->  }
->  
->  static void stats_table_setup_structure(struct stats_table *table,
-> -					struct repo_structure *stats)
-> +					struct repo_structure *stats,
-> +					enum repo_structure_filter_flags flags)
->  {
->  	struct object_stats *objects = &stats->objects;
->  	struct ref_stats *refs = &stats->refs;
-> @@ -502,9 +517,15 @@ static void stats_table_setup_structure(struct stats_table *table,
->  	ref_total = get_total_reference_count(refs);
->  	stats_table_addf(table, "* %s", _("References"));
->  	stats_table_count_addf(table, ref_total, "  * %s", _("Count"));
-> -	stats_table_count_addf(table, refs->branches, "    * %s", _("Branches"));
-> -	stats_table_count_addf(table, refs->tags, "    * %s", _("Tags"));
-> -	stats_table_count_addf(table, refs->remotes, "    * %s", _("Remotes"));
-> +	if (flags & REPO_STRUCTURE_FILTER_BRANCHES) {
-> +		stats_table_count_addf(table, refs->branches, "    * %s", _("Branches"));
+> +int read_merge_labels(struct repository *r,
+> +		      char **pbase, char** pours, char** ptheirs)
+> +{
+> +	struct strbuf buf = STRBUF_INIT;
+> +	const char *p;
+> +	char *base = NULL, *ours = NULL, *theirs = NULL;
+> +	int ret = -1;
+> +
+> +	if (strbuf_read_file(&buf, git_path_merge_labels(r), 0) < 0)
+> +		return -1;
+
+Can strbuf_read_file() fill '.buf' halfway and return a failure, or
+does it ensure that it frees '.buf' before returning failure?  Just
+double-checking.
+
+    ... goes and checks ...
+
+strbuf_read_file() calls strbuf_read(), which calls read_in_full() to
+fill a sufficiently large buffer, and a failure from there results in
+strbuf_release() or strbuf_setlen() resetting back to the '.len'
+before strbuf_read() was called (i.e., 0 in this case), so we do not
+leak anything on the error path and this code is safe, I think.
+
+> +
+> +	p = buf.buf;
+> +	if (parse_merge_label_line(&p, &base))
+> +		goto out;
+> +	if (parse_merge_label_line(&p, &ours))
+> +		goto out;
+> +	if (parse_merge_label_line(&p, &theirs))
+> +		goto out;
+
+OK, we read three things.
+
+> +	ret = 0;
+> +	*pbase = base;
+> +	*pours = ours;
+> +	*ptheirs = theirs;
+> +out:
+> +	if (ret) {
+> +		free(base);
+> +		free(ours);
+> +		free(theirs);
 > +	}
-> +	if (flags & REPO_STRUCTURE_FILTER_TAGS) {
-> +		stats_table_count_addf(table, refs->tags, "    * %s", _("Tags"));
-> +	}
-> +	if (flags & REPO_STRUCTURE_FILTER_REMOTES) {
-> +		stats_table_count_addf(table, refs->remotes, "    * %s", _("Remotes"));
-> +	}
->  	stats_table_count_addf(table, refs->others, "    * %s", _("Others"));
->  
->  	object_count_total = get_total_object_values(&objects->type_counts);
+> +	strbuf_release(&buf);
 
-Coding style: we don't use curly braces around single-line statements.
 
-But more importantly, I think this is where the mismatch in expectations
-comes from that I was pointing out further up. My expectation was that
-what we want to achieve is to filter the reachable objects by revisions,
-which I think is a much more useful thing to do. But what the flags do
-instead us to filter the output in the "References" count.
+OK, so the contract is that we will not touch p{base,ours,theirs}
+if we return failure, and we will not leak anything when doing so.
 
-I think that we should rather go into the direction of filtering objects
-and not the ref output, as the latter isn't all that useful. It _may_
-make sense to maybe make some sections of the output optional, but
-excluding individual ref types is arguably too fine-grained.
+Which is very sensible.
 
-In any case, to go into the direction of filtering objects you'd want to
-adapt `parse_options()` so that it accepts unknown options (you can
-achieve that by passing `PARSE_OPT_KEEP_ARGV0 |
-PARSE_OPT_KEEP_UNKNOWN_OPT`) and then pass argv to `setup_revisions()`.
-And I think that _should_ already achieve proper filtering of objects by
-revisions.
+> +	return ret;
+> +}
 
-Thanks!
+Looking good so far, modulo a small worry about writing via stdio
+and reading back while bypassing stdio.  But perhaps CRLF is so
+annoying that the compat/mingw layer takes care of all of the above
+worries by passing the 'binary' bit down to the msvcrt/ucrt layer,
+in which case we should not have to worry about it.  I dunno.
 
-Patrick
+Thanks for working on these patches.
