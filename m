@@ -1,220 +1,142 @@
-Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF66501294
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 15:15:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F54503BD4
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 15:33:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790781347; cv=none; b=cwZJtv9nh9JNi1zI2Y0lVZUN7O/ASGU6uYYH+L41izsXUmZ7iQgg2aMBYA0mXoXPQK+z8TXJZk/6Wz9AlV1XBbYBFvLeohNzwQ22EpT4Hqfg/bW/ADMBrmjss/id11H+M0KuVcpnZJGq93yRx3wCNej7ah0n4wKuUjqYy/JHdls=
+	t=1790782389; cv=none; b=Op9u5wZeY66nPZ+bCCmBRCIs+zizb4NuHATdzaycz3YhZXDhyNkPwMTDrnjALf33rcLA0k+c8rLBXlnPbKc9doZK8FBtlgJU1Ai1I5CrD7xV7+x0fElZTpq/hY85aOBix/76h6j9d/OLX2danOSQAPKP+H87JRewyikFFBAhCXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790781347; c=relaxed/simple;
-	bh=q0ith4kl4WVUNFqPIKxfPvo9tmjzWbDblymgnp5ku0E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=I18YA8FybhIXf6OfLsw83bPERd2aikX6QeY+hZ5n+Aa9C/9xvnUcFrMYoI3CmUjADYnaD6nYGpoqGcPpl5qDuUXtTviDq8vDss6SSG4hAi51Uu8+FX3LCPK3aULP+/dcR1b2KoGsA8Zk5sIRXUEiEZpEMNwkIdETeOoLUZb5O68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qWKvirL7; arc=none smtp.client-ip=74.125.225.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790782389; c=relaxed/simple;
+	bh=khnbLvgdzg6dIj75h6DmC8GBE9I4Ky+/t6lqhofFEtA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=unbDYMz6lJpGZTSuRGBKegqyh6flXHC21/P9N47oH66Hc8/gPFbISlLb+4YTbqSIj+npjxkHTqb9yB4nQZi4zwQJZ6nNxpc4HNWnOXZHKlAE5VY7WtI/BQ9RYejo1WW4itSHx6k+HWaxtLkLhS7KF8ZRoJEWevcVnhUZPur9NgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Pyu5gIgO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gWBgYzBK; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qWKvirL7"
-Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49b912d391aso41942635e9.2
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 08:15:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790781332; x=1791386132; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=SWvsF7wDxyvpkamYYOoXuZ3K03Wo+yXrjN8h/+dUl3I=;
-        b=qWKvirL7gl5c7/LiHDC5O6FWly6P6DxmmyhivgC3YooeFAxo/RJTQXzfAHN0pMQB3W
-         KjGbO+zFvzx7fU7/h5W0T7b9dJ9iDQmKEK71RAFf2zCGKTkgJwO1BxvoORN3yc9Coshx
-         J5vXQGDGxgode4JVpdsEcUKHWKZBlLx0o2XM/LVKaqwAjcs4BNHhxD3i91HhKPnUUb5I
-         /oTbxaY3+zHTAvhbUWuQz1YnVht/BZx5jBFyRehFSz6oh8AyJ59wCmPgPsthX4hrabzz
-         iJ5jH6oWhHaO0vumpxWd6CnMhGigPJHOgf8kmmx7ZDXKyBh3+R5lPTsCJTX6+cWJA81O
-         52dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790781332; x=1791386132;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=SWvsF7wDxyvpkamYYOoXuZ3K03Wo+yXrjN8h/+dUl3I=;
-        b=a6lD9JlWQnoIoLlHZT9dURTisfJJYP3CzziFZE3lTaL8CJRNehseWJ+MpjePoR3hCw
-         n7Sm2G7PtKeEwIggwBVSeI8WyiV3kF69BV8ozFQVmidauu4mEr4/j/MZ/bWjedhOxuLZ
-         u4RVVa/WHIlGZr3NAX1undyKKRec0EGDigRVWFCa3esfarJjKSAiacmp0QPhKBdUK4YE
-         z/3vvs29qb0iHXeEEGq6g6x8oIXxJ3KajRngXAJEMYYfTkxBgzO3+kiRc7Dgigy5TRx8
-         ZtIA1PLqO/S46Z3OyQKWX8xggmb/YOqntBJ6yaSFIf/l+fyKGeY0u9eyftkT72K1bL+t
-         Sw+A==
-X-Gm-Message-State: AFuF++ms466dqwEQ/f8TW9H6wRTrXsx8lumEIJ+cKw3UNrTNccmGlaxp
-	eEvJC4u6+KPF+cjdeEj8dMyBC/SMweHqICjLf5DGKmxgLH1G9nifSnB4
-X-Gm-Gg: AYBFou0qqBIYcF9PtSXnZZEyqkTMQaMEgx/TTllbWMT4t4aD1x5z+k5hI99ARQ1NsAE
-	A9ODF2/tnlPTFgJDnsNPLWMhJTw9A+kRu4OjuswultkV/UO5p1ll8CWOMA5KfjwcLehMpMjNBeT
-	cz94OSDZhFNeTMHU3ZFgQ4tB3oVAWQehdevMvTYbM58xDZN5HRgr6HO6U5iTjBf5Byc0lhm5LIF
-	BxhP4fgMX/TgTWiqx+klLMigkWA56JVG7Ytah4ZhLXrZjFSgDCRvopvuuvsLB6pPOPOgdVNEcFf
-	izZggqpobV2mkxPc1SN1pwCPq6Bvvq/K535Anf4cYydlk5cxTbSGXWjR+x/4M3qgaV2ncXW2Xk3
-	OQQLCDdFe+0txpqMaqFSC9NVRd6+t2ShUNCag/kWQZVWOccrEct2mRnFdFVvORSF1afdQ8HPURQ
-	50WbrGN7DnUEvAoZory3UHx0pFxWfmDwj/W/ifQll5fF9fxwsFRcbr4exBNKFhq1NF1fdOhyYJ4
-	OuOb/FCsQu45e1SoBGzJATWH09VS9M1qIsRIw==
-X-Received: by 2002:a05:600c:4691:b0:49e:799a:8951 with SMTP id 5b1f17b1804b1-4a01aff4450mr26126105e9.11.1790781331161;
-        Wed, 30 Sep 2026 08:15:31 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:8109:d906:4e00:c442:398f:5ba7:af40])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a01e686cf1sm5713405e9.15.2026.09.30.08.15.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Sep 2026 08:15:30 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 30 Sep 2026 17:15:29 +0200
-Subject: [PATCH] packed-refs: use `fwrite()` when passing refs verbatim
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Pyu5gIgO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gWBgYzBK"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 65D6C140022D;
+	Wed, 30 Sep 2026 11:32:58 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Wed, 30 Sep 2026 11:32:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1790782378; x=1790868778; bh=NW39VZ6vhg
+	aK2Ixnv+pnRrWt0Ls3kSCY0o7mfuIlTu4=; b=Pyu5gIgOE0pisoAhPa3y10KfVz
+	H1LU1zpH0KOssYZCNdBh6KaL1piXmyrnNs1mm0dn4ad4cEaaOfGwMqp395ZTNu3M
+	BiMv4qWTxm2pqfVP23r9rMTlbAtx7MTY0rYUnWwLRCwasoGly0QWzvTiegKruWnB
+	C4+E1dpusCWNRAziA6li6Bqx36uZg7x0FOQrM6WMnZGsgGW6bQtzh1eoP/XzcFF1
+	JBV+9Ys4vHQWcxT/4ATBvPbqbritpgt6f6tbr21L+TL/SYPoH4119xqqUzHeNqm1
+	wgwLtFBG6Ynw+9LEZyI8Kd7F3LZI5q52qiA2oKrtZZ3AezPX2Fe4bu0USB+w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790782378; x=1790868778; bh=NW39VZ6vhgaK2Ixnv+pnRrWt0Ls3kSCY0o7
+	mfuIlTu4=; b=gWBgYzBKaKNNrFzg8+cgF4oXjGneaUXJ3grm9hBdyarrr6tUe0Z
+	fSpTPxlWdmy+Z/eiDg2bWeBh/nl0aXBPDbFfGdPpnKz/doqepLUs7SWDoxEUhUWF
+	SF0U9TfZcueeklWQPSTuGicyTdcodHYsLE5+JRoDA6UWZRfiI0UdOmooK+KlkImb
+	e4QwgFJ/Iw8M4ZaiCJNP++T6P7mzBy6ytC7B9UP47VD/BSjY7dSLyowtnTq28mXl
+	k/Wfouecoo/hrr91IpVvffOGxLQ2Gh823J4AjMP1B3LCXST3iwAjfP8fgA2VvxCh
+	OD8+xi9Ci7fmn0Xl0RQdoO+614eMvoNAIHw==
+X-ME-Sender: <xms:qiu9apLKh-bkL3i-8QcJiTNUtxh2BRflvtnzm5EMEy3RK_76g2oKWw>
+    <xme:qiu9asljOjQadc4fhADBYMG4DIFoPAm6j0w5uMJeZOH90EQrvq3XSwk7j-LosdNnb
+    QWH7_fDB435GgSGlsIoWq7_1_SZkBxtUTq32tb_5f4cWaNfvJOjEWU>
+X-ME-Received: <xmr:qiu9avEaTTJ16Z8uMAZ-cnNMTs9SGO7l6Hi86Fc-vdx2eogtS3XewA>
+X-ME-Proxy-Cause: dmFkZTGa8Y2Qcg/BV/xbMY2HiAErV9l9soJz6ZsrijsSNi+3ggOx2QCtQAXEL4JL8tpsvZ
+    jqoyJ/2K6+4XijuLEeHkfLr5GrqiVReZaCkpcbT+W83O4eEEWM7LqKA9BTcH0nHB0luYih
+    KK5Evl4id9bLYGidVoYO0+3Ip2nQQl7bg0sha32MViSQiIWluS/+81CChnnNpqsBM3hUqx
+    Nalbk9W19myc2gpAvAtCvb7LcZdWgvuTN4ocOPswN2vX6b+BCsQ6wduT4YKr7ihysCMItH
+    93yYIian88My0Neiv/H4g7ANZTHFJ6r2UcRkftXWmHK0h7QfRLU8Bo6biVe5ez6zah2dnJ
+    1iVGv7rwAUdsgCzAobOcIKYmH19uIGLZjnJpmoumf0WrQknLXlPVaEaQSHKfAh/HNY872e
+    AhfSYc++3CBz1L6q68jlGwt4yqH7JyraFX3DvKD8/At2PL6JF+km8xxzw/zctBe4Wa2ouI
+    uY062pHGq4VO26CzILttfDhyF3N6UXl14HbYhdZwptNvCK8ceBL1GoOudodWhm41jsJAAL
+    RA2cJz8WRukmsXA9Zgn6cznONnpdlroOxx/hFDf0bGD9t/mok9p2eJkbEMVpZKPoznRaW5
+    D0yWYbMiiInL9eC3fMEf1bkbZ0cZ//wtV2iUlJfZif3lkFMlEe1nqExXwLCQ
+X-ME-Proxy: <xmx:qiu9akGC_20AAnl5tV6hJVdEhc49M3S3XqKoXasFYaVJwX5X8xdmKw>
+    <xmx:qiu9akNXHkFTp_VRBz7JxmW1zTryN1RBNbjEmp5SmoqE75h_ZjDiQA>
+    <xmx:qiu9arHappJJNlqwXBfXXjeaQCaa6p4diiISrlx72EIc4672JBwgOg>
+    <xmx:qiu9ajMtheBJ3vKeIHrOAJj6KboWye9DxGlkqKs0X5b_Kb9RmxjxBg>
+    <xmx:qiu9apRTcH9JHnMHmzAA18d32MCU-DR22deMDTmkZoby9U8FX138ZQ66>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 30 Sep 2026 11:32:57 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3a3ae429 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 30 Sep 2026 15:32:57 +0000 (UTC)
+Date: Wed, 30 Sep 2026 17:32:55 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 5/5] xdiff: NUL-terminate buffers read by read_mmfile()
+Message-ID: <ar0rp1cSIKuCMZyQ@pks.im>
+References: <20260929064935.GA1276867@coredump.intra.peff.net>
+ <20260929065504.GE1697497@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260930-kn-speedup-packed-refs-v1-1-111cd03d9b0e@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMUQqDMBCE4avIPruQWhTTqxQfYjK2WyEN2VoK4
- t1N9fEbmH8lRRYo3aqVMr6i8o4Fl7oi/3TxAZZQTI1pOmOvhufImoCwJE7OzwicMSnbvuunNhg
- 3wlI5p7LK7wjfh9O6jC/4z79G27YD+wJDy3oAAAA=
-X-Change-ID: 20260930-kn-speedup-packed-refs-9868f5d0abe9
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4962; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=q0ith4kl4WVUNFqPIKxfPvo9tmjzWbDblymgnp5ku0E=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGq9J5Ht+lP5mz3+cxKGf6e9ynNvJdKap0QBC
- xiZ07bUCVuLlYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqvSeRAAoJED7VnySO
- Rox/bUEMAISLGcXV81Dew2foBvFqwbDHfeiSFt1++/LbR3eqHF/FgJG6zAfrbX0Wr51/SQPXXbZ
- sQapsigiBZ/7gTD43yNepYcTPWRrrwag0PAtVjoFNhN9lLvTtU56FLlQhH1N1JMohmDWFQ2SSsF
- X8f6hoEvIvBz+BhKtTxI10H6gzvYpt1Xa3t3Ys4z8EdcbXhbKB7SmbvhLRjw8Qs+ajJTP1ukA0y
- xb+K5SeUdkwSsO+HGPZfrF3WEPNV9UEMbLneELvj6c62yOpVlFkoff3MfqDCkdaqk5wMKa/QIlg
- +WP1OObGmnd/8Q5vVdCJoRZW1Lr6xVAchQRSi3wKfIv5RlnLZ3wj70f3888V4wWRKaWXHGQUDtk
- iVfkgI6MGVdWS19nV2U2JVbtM6qc200EqYbkMYzsVJzh8UgMq4AncaiL19O/SkhvUz4W7a2csYn
- oDXaRrSrKlQd35o+4WcLtXFPdZJIHyftn2v7f7vt3mGUyhMXoxdSGXzyJHwdeXlA0QV8vBNtYv6
- 1w=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260929065504.GE1697497@coredump.intra.peff.net>
 
-The `write_with_updates()` function uses a `struct ref_iterator` to
-iterate over all refs to write to the temporary packfile. It receives
-the iterator from `packed_ref_iterator_begin()` which takes a snapshot
-of the 'packed-refs' file.
+On Tue, Sep 29, 2026 at 02:55:04AM -0400, Jeff King wrote:
+> Since an mmfile_t is a ptr/len pair, our read_mmfile() allocates exactly
+> the number of bytes we claim to store. But in many other places in Git,
+> we add an extra NUL "just in case", which can help avoid read overruns
+> due to off-by-ones or the use of string functions.
+> 
+> I don't know of any path that would benefit from this, but I noticed it
+> while converting ll_ext_merge() to use read_mmfile(), since its original
+> code did add a NUL byte (even though I cannot find any case where it
+> would have mattered). Let's teach read_mmfile() to add this defensive
+> NUL; it probably doesn't help anything, but nor should it hurt.
+> 
+> Note that the matching read_mmblob() doesn't need the same treatment.
+> Its buffers already have a NUL from the object-reading code (which uses
+> the same defensive trick).
+> 
+> As a bonus, we can get rid of the hack in read_mmfile() to handle empty
+> files by allocating a single byte.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> This one is obviously optional, which is why I put it last.
 
-While writing to the new packfile, writes are routed via
-`write_packed_entry()` which uses `fprintf()`. Even for references which
-haven't changed, we use the same mechanism. Instead, let's track the
-position of unchanged references in the snapshot iterator and directly
-use `fwrite()`.
+Hm, I'm somewhat indifferent here. It always feels a bit weird to be
+this defensive because "programming errors", as the next question then
+is "but what about all the other errors where we're not defensive?" But
+the xdiff code is complex enough with a bunch of pointer arithmetics, so
+maybe it's not even that bad of an idea.
 
-This removes the unnecessary formatting operation involved. We can see a
-consistent ~20% performance improvement when deleting from packed
-references.
+That being said, I feel like a better course of action could be to use a
+fuzzer for this code, because as far as I'm aware we have none yet, and
+that would potentially shake out a bunch of bugs. But that still doesn't
+really help us to catch platform-specific bugs due to different integer
+sizes.
 
-Benchmark 1: update-ref: delete ref (refcount = 100000, revision = master)
-  Time (mean ± σ):      28.7 ms ±   1.7 ms    [User: 22.5 ms, System: 5.9 ms]
-  Range (min … max):    26.7 ms …  33.3 ms    46 runs
+The counterargument is that before your 3/5 we used to use xmallocz, so
+you're essentially just reinstating the previous safety guards.
 
-Benchmark 2: update-ref: delete ref (refcount = 100000, revision = b4/kn-speedup-packed-refs)
-  Time (mean ± σ):      23.8 ms ±   1.2 ms    [User: 17.5 ms, System: 6.0 ms]
-  Range (min … max):    22.1 ms …  27.7 ms    56 runs
+> diff --git a/xdiff-interface.c b/xdiff-interface.c
+> index bc340d5a8a..b3e9f1952b 100644
+> --- a/xdiff-interface.c
+> +++ b/xdiff-interface.c
+> @@ -166,7 +166,7 @@ int read_mmfile(mmfile_t *ptr, const char *filename)
+>  	if (!(f = fopen(filename, "rb")))
+>  		return error_errno("Could not open %s", filename);
+>  	sz = xsize_t(st.st_size);
+> -	ptr->ptr = xmalloc(sz ? sz : 1);
+> +	ptr->ptr = xmallocz(sz);
 
-Summary
-  update-ref: delete ref (refcount = 100000, revision = b4/kn-speedup-packed-refs) ran
-    1.21 ± 0.09 times faster than update-ref: delete ref (refformat = files, refcount = 100000, revision = master)
+I was staring at this code a while before I noticed the added `z` at the
+end of this function.
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- refs/packed-backend.c | 43 ++++++++++++++++++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 11 deletions(-)
-
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index a73fc6aca7..ef952cdba6 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -879,6 +879,12 @@ struct packed_ref_iterator {
- 	/* The current position in the snapshot's buffer: */
- 	const char *pos;
- 
-+	/*
-+	 * Start of the current record, set when advancing `pos`. Used to
-+	 * pass records verbatim to `fwrite()`.
-+	 */
-+	const char *record_start;
-+
- 	/* The end of the part of the buffer that will be iterated over: */
- 	const char *eof;
- 
-@@ -933,6 +939,7 @@ static int next_record(struct packed_ref_iterator *iter)
- 	if (iter->pos == iter->eof)
- 		return ITER_DONE;
- 
-+	iter->record_start = iter->pos;
- 	iter->base.ref.flags = REF_ISPACKED;
- 	p = iter->pos;
- 
-@@ -1218,17 +1225,27 @@ static struct ref_iterator *packed_ref_iterator_begin(
- 
- /*
-  * Write an entry to the packed-refs file for the specified refname.
-- * If peeled is non-NULL, write it as the entry's peeled value. On
-- * error, return a nonzero value and leave errno set at the value left
-- * by the failing call to `fprintf()`.
-+ *
-+ * If the raw data is available, skip the formatting and directly write to
-+ * the file using `fwrite()`. e.g. when deleting references and remaining
-+ * refs need to be written verbatim. Otherwise, use `fprintf()`.
-+ *
-+ * If peeled is non-NULL, write it as the entry's peeled value.
-+ *
-+ * On error, return a nonzero value and leave errno set at the value left
-+ * by the failing call to `fwrite()` or `fprintf()`.
-  */
--static int write_packed_entry(FILE *fh, const char *refname,
--			      const struct object_id *oid,
-+static int write_packed_entry(FILE *fh, const char *raw, size_t raw_len,
-+			      const char *refname, const struct object_id *oid,
- 			      const struct object_id *peeled)
- {
--	if (fprintf(fh, "%s %s\n", oid_to_hex(oid), refname) < 0 ||
--	    (peeled && fprintf(fh, "^%s\n", oid_to_hex(peeled)) < 0))
-+	if (raw) {
-+		if (fwrite(raw, raw_len, 1, fh) != 1)
-+			return -1;
-+	} else if (fprintf(fh, "%s %s\n", oid_to_hex(oid), refname) < 0 ||
-+		   (peeled && fprintf(fh, "^%s\n", oid_to_hex(peeled)) < 0)) {
- 		return -1;
-+	}
- 
- 	return 0;
- }
-@@ -1530,9 +1547,13 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
- 		}
- 
- 		if (cmp < 0) {
--			/* Pass the old reference through. */
--			if (write_packed_entry(out, iter->ref.name,
--					       iter->ref.oid, iter->ref.peeled_oid))
-+			const struct packed_ref_iterator *packed_iter =
-+				(const struct packed_ref_iterator *)iter;
-+			size_t len = packed_iter->pos - packed_iter->record_start;
-+
-+			if (write_packed_entry(out, packed_iter->record_start,
-+					       len, iter->ref.name, iter->ref.oid,
-+					       iter->ref.peeled_oid))
- 				goto write_error;
- 
- 			if ((ok = ref_iterator_advance(iter)) != ITER_OK) {
-@@ -1551,7 +1572,7 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
- 		} else {
- 			bool peeled = update->flags & REF_HAVE_PEELED;
- 
--			if (write_packed_entry(out, update->refname,
-+			if (write_packed_entry(out, NULL, 0, update->refname,
- 					       &update->new_oid,
- 					       peeled ? &update->peeled : NULL))
- 				goto write_error;
-
----
-base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
-change-id: 20260930-kn-speedup-packed-refs-9868f5d0abe9
-
-
-Thanks
-- Karthik
-
+Patrick
