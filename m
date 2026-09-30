@@ -1,166 +1,175 @@
-Received: from mail-vs2-f36.google.com (mail-vs2-f36.google.com [74.125.227.36])
+Received: from mail-ua2-f43.google.com (mail-ua2-f43.google.com [74.125.226.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6EAD3B19C6
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 12:26:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.36
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EC04D0CCB
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 12:26:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.226.235
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790771181; cv=pass; b=tGVBfulcjOlfd63S80cX3fFb5aDug2OXz05iQlDJ7SEddJ3YkFlcUFF0WTvIOCYdWXyf8oFbhwMuq54eldaez8yP0+z2o6cvfcLV1Te2soiew2KmQidFTjIrnoDa0mRdk1P18TQD749wPCALmCCabjQyJ/cQ8sm6wff6kliSQl4=
+	t=1790771202; cv=pass; b=OGl3G8xy3O8JPrcO1ZGxPJnfs9cXuCD/anPWf3+0FSUigHiM7cKMGExdTJc5r5XkIQ/tvXfyf2D64mSB1TNtew5MW7Gx/kr0egyQy4/8O+9h638zy39jwqCqERzvtJ1ISXz2E2fBRpBWi7AiaPoszeTfguOTeDqq6BwTnQu9SgM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790771181; c=relaxed/simple;
-	bh=BOr/FhiMQMeuiHrWYkUN0ADHCCSbfKD0/93tFVyvCSw=;
+	s=arc-20240116; t=1790771202; c=relaxed/simple;
+	bh=3ywDYfrOb7UNWCUTkChDaW4KtfSfkyNhRsmh0NCu3+M=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MKJeft8EqvoeZjy6q6840+99OrvQlMvrVIlkQlJWw8PZlrsBq0DwCMSyhwSwxR5h0OxH67TXiu80lrFIOfzUtV5ZT2DOfQo/Wqdqydu5fQWXqpZKDKUbN7wDPLuVlSeUgtelOpz1+rbVr9XYL7mooL4ksGuy0hFWH4aB+xmfQ3k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HoUzgjqi; arc=pass smtp.client-ip=74.125.227.36
+	 To:Cc:Content-Type; b=WNARzsouNQ3NfouGZUHO5GLDdBAHLw9OB4pK1XWarKNSlrOlShEhPTj1OkybbTa5OMtWqNiUkLZWFxUCUQKCWzCpcN0f1Iq5DGRmXzO7eVJLFVFhxLTfJvB64xjQkj2W4MWeRAuv7WJ4+JQFVZ7hD9vNearQRsYAJvJ9z/OZChI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RQuuGKWk; arc=pass smtp.client-ip=74.125.226.235
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HoUzgjqi"
-Received: by mail-vs2-f36.google.com with SMTP id ada2fe7eead31-7ba8b67f74eso315389137.0
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 05:26:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790771178; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RQuuGKWk"
+Received: by mail-ua2-f43.google.com with SMTP id a1e0cc1a2514c-988ba23f552so1048877241.3
+        for <git@vger.kernel.org>; Wed, 30 Sep 2026 05:26:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790771199; cv=none;
         d=google.com; s=arc-20260327;
-        b=i+j6oiNZEyn7SE1qoGNdLsViy/Eb1LbjF52tXv/Le+glgXZY3O0LLLrH0Dff6Neja4
-         GVLOaPrVl/OIU9cYRy7du/ZWNVxwyVSdFMTwoDQl4iV0OTiQ3p2EhxK2NSVRWxhc8Xm2
-         Gt8lZkpVYzP5LD/f2dgUifb1EWK9WsyGrpwyzIkzlZfkn27+pBkjyV2ragPyy+5L7ytO
-         hsRej3yzssFhrcuXp6Ss1/KnhN/KVRTmfKsKtEly/Mfcok5SubteGo0BvycVEFQv0/Hq
-         VphopAmm1SLx0H7I2kIYAv8Q662Jgtg8k+mOSc0+Amt10aW43mFa5yy8ZeXoS4SCf+mg
-         T5SA==
+        b=DDfh6ZfX8vP+rEyM+yWeyP1iFFGijTtXzf7u12yTclbRNg9qPGiFFx3Bq9XBq2Yucw
+         umItdivYjRKHox02CKNvOF1ZcjAhDsHstbOX9U0psWVPvIv1D1A40LBznkgOLg3UWZcO
+         5jvrtAvutH+JNWnOqURw6bSQczsEHz9/37R/zi4m0qaZJ1RNz7BJIepxf38jVrE91mwR
+         bRR8NGBvmSQEpYALjv6QA73d1GRtQEPSkqPqI1zYl+wspRMF8SOyNQl84iUiR3qRg643
+         v2vyl6SxIUFlsem/B2cYHkGXLJ0vxQ9bu4XSL8qhJ6fqf44/9ax5vbbH78ll5RED65GO
+         Wrww==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=44/vmJ9rUM1I9m4pvLp/0A/MBfS23LDonLhFvMBIkj8=;
-        fh=Q5Z87g2awXg4dYbbuZF/TeVSx+8jBpAb0Rp59QuDm+o=;
-        b=TbH8Hp3XHNlR81kGdyh3v3gG2RxhyaDq65LIgT4iCvOsE9oSHkX9jAyED3z+AkEmiu
-         AKdfMgXiJtH/+OXLq2OT6/agYSpCTTeHvo5TnUdNXMadXoFEzADvgrmky+WKumta8wSE
-         TvlogLG6dczoBNsbikvWTGZfd2QBugr+mUX+tiMtkN8FoP8R6dc8gayG3iAEI/AM5Jpp
-         FmYHBA5JhTm6MDpZxLEBJKl8O4FDUldUZ+iplWY/muM6icV52s/XRF5zQeU1wgbISuyr
-         wiQIiAIwCNPv7aZZVtndlXSzn1rl8wPwTEDP6DYEnC+ZyP48XLswtygjAGw9znczYB4y
-         wCVg==;
+        bh=1myGdVdrzPLWzgFRAYCAvWpoEdrF2CiHeyktdIoguJI=;
+        fh=+RT+/ifrmydh+o2q3Dp+pZ0fW6fAFWmQjqhCuMSSa/A=;
+        b=RhyMFbUjr73eJUxoJXOZTMwzOKXjgQ27B62j77M3wXLEwZGTMg3tNC03VI+ZQlNpM7
+         xrSJg7diCC4yBCYud+AS01wbZP9ItS004D4AMehXpGcMfUHkPHlml3IKOAVg/yoXosec
+         V9jzVq/+/AhXMCrNuaz2J4h/05w2EjHIZlK+Hfo00rp07/yr5hRzBRNbuL5YaqTrN5Qy
+         dIy/MAxYvGTH2BKDUyPIodkw1060gI1b1+Qni6KSZXHdgF6Fob3e/E+jFbcMUoNdobLj
+         FMUzY07tHBIpbC3NnfdwTB6qp5cwhGpU9zsDDdZflGTu4zM4HSW69I0i2MlzFElTDLcl
+         ILAA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790771178; x=1791375978; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790771199; x=1791375999; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=44/vmJ9rUM1I9m4pvLp/0A/MBfS23LDonLhFvMBIkj8=;
-        b=HoUzgjqiUvMxThHzJvfOjtF1IaXUQaMJolmqIuperfhdSyq81u96D62LxaSkXutNjz
-         LOGXNo7oapiXwd5gSjSf+Bn8wD7wOUugjJ6D8Lp6DzT8yyWhhzPh6Fbs7SVSKtYDtvH6
-         zz5L0r2B784lDY5yKo4Zqjn99CI4EANJsisJbF/ulSjNQXCj+3OQS2+TzHN0xyJudm4x
-         mYCRagGIJU0NTCrZHUMACCutITuPsbHG3/q4BDfVEqxwxuWKqw+c+PhbY70uhezD2lsv
-         ky4r1Db+RKiWXE3pElkWt0RLc2U1NUQd0P7of+1PIWXpirzIaBy8A+J8EAmkjqgLOQKp
-         xmCQ==
+        bh=1myGdVdrzPLWzgFRAYCAvWpoEdrF2CiHeyktdIoguJI=;
+        b=RQuuGKWkQe5kRpV7AylgLLP2PQgVfk6RKSZj2nHG6LwZVlAMk3BOhKR6ROKVyeIXaE
+         zyY4Nx02sb6lFA1B5AvaRkNr+db8Snhj6CjbekEqfBC3VlC5UF+5AjQV0RpuCjtqj0us
+         q4cFFcNvwAlaY4+gzactZDg9tLuRTsTIvn7yJLnZz82iumjXXsVfueAB2Bhm6XgjmVDg
+         Jp4+yTPgoL3IpYFU9sjBFAEMtfTrqRrk06CU6G0JmLGdjX7OUNDrtS/1y6q8Qmkm4BAU
+         ihgGpT0z1VAqiRMvt9Z9fQj+MrIlFbZgBQnfsg7Ext23Qrq8gEPJ3/2mdE4PNmwqLfow
+         BztQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790771178; x=1791375978;
+        d=1e100.net; s=20260707; t=1790771199; x=1791375999;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=44/vmJ9rUM1I9m4pvLp/0A/MBfS23LDonLhFvMBIkj8=;
-        b=gDDT4wMKiRvvQjA8m/YylNuj6WmDY8ovHZmfFWn3YJOIbtY2DjIq0EZtrTKQuJOpJQ
-         ZZKEpmobn6pMsrWUrlcZh+AVUKKfsondFoSDYfEbC/23DS8oLIRZYZKFIo6tXINsKXli
-         qXq/lKjSKx1dd9xsjZPVahnxDVRRfyXiLg109CTUN4TxSa8AzbTigtmLuQAXJPWZ21F/
-         KdKIbt/aiE5XZNx+C8rNafJhPvwTH8BDy1z1/98LOmxXzIuhjKeB1IXMoEIZ6t5INKct
-         xpmFLtLiJnsxG+MmNMEULSuRALKGV5wZst12WAK4uSCYanFlaGrUsVaMb8ZkS8+jH397
-         MDHQ==
-X-Forwarded-Encrypted: i=1; AKwUvBw8t+bib1QAIJpmg8sXUWH5cRmxzI88sIwlAOT4nTt1bU+gs373PaGoZneAAHagX0vJb6g=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLCRntJBkMlC0bQVkw/qt76638H7EZi82+8nanapCnjaSqr5CIX
-	+gED6bD0dDbKmXwt/PkSWHoOrhE3TRsVldo0YOqkPzKNP9Fc2pNDzMK20dMjTj9Q8ctJFSWk6bv
-	Qh//qNVhoevK7l252i8bgMZinGOna98I=
-X-Gm-Gg: AYBFou1pqNey93DVv5ekH4tJdwrwzwwgxlB29MVcW7y7+D4zVE/wYWYvM2gKLDecZ9z
-	CFtpmH502GrAaCuoBHurNK47s+7Tm2KLRTaEyQ0zO5l5nVPbdZcHAKMvBd3VJ52rZ7ZZkdZ3kwt
-	3a1Q9Xk8IJ2T+EBDlxY90YvhOMig3JJvHempjbub99kewFL4wwxxcY/aNPosG3AwVtdGsOZTpPM
-	VTUHB94Bv59m2M0mDRZMLpeKHcfdGYHYFNz7hB3+71nu31sCy/LJTzrgzZnlnZrkKDhXKGpV3Wb
-	qYlqavnsEAYuXq+zkQootjw2vm8A2hi8c/8aDr9hHQ+JUMmAwNwlS74uI619l/eQA/qVrBDZYjG
-	JNHTFdhTlATY51glbZ/ai98Dr7wivwM9GWLbhHNjNV1Gx5Q==
-X-Received: by 2002:a05:6102:c4e:b0:7a5:673f:9a37 with SMTP id
- ada2fe7eead31-7be91326073mr196882137.15.1790771178629; Wed, 30 Sep 2026
- 05:26:18 -0700 (PDT)
+        bh=1myGdVdrzPLWzgFRAYCAvWpoEdrF2CiHeyktdIoguJI=;
+        b=PW/pvjIoERLUn06qHEeSuq7h1uJmH7PL5R1scMcrf2UGzxjyTr+pUcKiZZcAL1WMt5
+         OqDoOyfQaYylJXF6YqpUIGAD1phxNjFZxzcVsPbIJk6Xn5eFmccina02hhQwGAeemKN4
+         bkZ44l6no/VTA80b9UGSbQBksiLnNo7UGbNaqiYZCt6AYjCGHwbsb1H1PQPf9COEcZ4K
+         WkITF2DOlFsMzdcnQ3s8zmIKTHKgZJqaE0fq9Zq5wG4KcfmosYbWvAYaT/dgB+X2WfEw
+         uyIweWb+SxZsf+INXxLYXqiZ5nzRtRw+mNfF5FNiNQC/18dbyDWC6IHuNdQCsFEjWbPE
+         pymA==
+X-Forwarded-Encrypted: i=1; AKwUvBwV9JrDF2gcJpW14U1I0hWdP30lfqClkBMYVX8t9hdtZWK/7RyMsc/9/wmweGIFHyBPqQc=@vger.kernel.org
+X-Gm-Message-State: AFq9FYI5IeV9Eez7Z2Pp1Jtpaburcdzz7D3k1kpTHx9tj8CaJZcNHZVB
+	cMI5lW+nPda1sdt+MTHFyKY/nmC/wNwsqidcgCQVp9OhMtJfwCKPt6pTo8ylBRKxvYHJTFUm4NS
+	O7aBFsJ6diHMBMQK5ijjBnlO+vaPDpJs=
+X-Gm-Gg: AYBFou18kCN6b8fr/5QQzsU15yoHoaGW70XtNMX/ltkaio1/bIkGvBjkSzZFT3S7AvU
+	NCKHHquQoSs/4ODiF2qpwsjjMnVECXQt2iwobZj8gU5nrR9aIkzjSs9qRfgNa6bmmjpcdqZEO2D
+	cCvonmT+YEyJHW6z/V/GXDh/j//kUMYG64bQAl9/nYSZubLiaqPMu+dLHAXVRiS46gOhgOxki4A
+	wPWM2c5DRsBlUfrQUzQcedRRWid9U18Cih6b40iVpzt/NpVM1LBoVEpA0mseRdIdFwC809hwIe1
+	5N9keuR4pnNlIhXSEB98EendB7OZ0dl7B+f+9Q4Lt1z+EHcbPT4kHSWxqLCIGKB2DJYihLWYZk/
+	tk9+zCI95EsQoKyssIEOJMACql6hUrvFzBagjx9GWqYJ8Lw==
+X-Received: by 2002:a05:6102:3f45:b0:7b3:5873:4b03 with SMTP id
+ ada2fe7eead31-7be73e9a327mr260609137.29.1790771199367; Wed, 30 Sep 2026
+ 05:26:39 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 30 Sep 2026 05:26:17 -0700
+ HTTPREST; Wed, 30 Sep 2026 05:26:37 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 30 Sep 2026 05:26:17 -0700
+ HTTPREST; Wed, 30 Sep 2026 05:26:37 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260924-pks-meson-improvements-v1-7-90b7f79f1c4e@pks.im>
-References: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im> <20260924-pks-meson-improvements-v1-7-90b7f79f1c4e@pks.im>
+In-Reply-To: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
+References: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 30 Sep 2026 05:26:17 -0700
-X-Gm-Features: AclHuK8vPVExrRcwP0V6T1nB_YjYqaa1m9ogg6uqTHCowwo_2sMV_8byp3WtkrU
-Message-ID: <CAOLa=ZShU_FhuudX6JSPO7q6w9xBR-QRyEd1UbCZ15o-S3xtqQ@mail.gmail.com>
-Subject: Re: [PATCH 7/7] gitlab-ci: fix hanging MSVC jobs
+Date: Wed, 30 Sep 2026 05:26:37 -0700
+X-Gm-Features: AclHuK9KNJhIa3SClQ6bYZFOE2dZyc7ntqRMgZux0PbsZtbg43K3rZmHpwBPhzQ
+Message-ID: <CAOLa=ZS8Exa_WkMLiFNspeYaKFf40eOM19ZgecC=yTnFEAhMzQ@mail.gmail.com>
+Subject: Re: [PATCH 0/7] A couple of Meson improvements
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: multipart/mixed; boundary="000000000000fa1e79065cb26721"
+Content-Type: multipart/mixed; boundary="0000000000003678f7065cb26921"
 
---000000000000fa1e79065cb26721
+--0000000000003678f7065cb26921
 Content-Type: text/plain; charset="UTF-8"
 
-FPatrick Steinhardt <ps@pks.im> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Starting with GitLab Runner 19.x, the runner executes `git credential
-> reject` in its cleanup stage. This has bad interactions with our build
-> environment because we install our own version of PortableGit, and the
-> runner picks up that version of Git. The consequence is that we invoke
-> PortableGit's default credential manager, which is Git Credential
-> Manager for Windows. GCM then tries to use Windows Credential Manager,
-> but it cannot and thus the job hangs in its cleanup phase forever.
+> Hi,
 >
-> Fix this hang by unsetting the credential helper after installing
-> PortableGit. This means that `git credential reject` becomes a no-op,
-> and thus the cleanup succeeds again.
+> this patch series contains a couple of improvements for Meson:
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>   - Clean build times are sped up, going from ~6.8 seconds to ~5.0
+>     seconds for a full build.
+>
+>   - A test issue is fixed that causes shell completion tests to fail
+>     because the scripts are not properly updated.
+>
+>   - Our subproject wrappers are updated to current versions.
+>
+>   - A fix for GitLab's msvc-meson jobs that are broken right now due to
+>     a change in our runner images. See [1] for the now-working
+>     msvc-meson jobs. Note though that the MinGW-based jobs are still
+>     broken, but Dscho has been sending fixes for that already.
+>
+> Thanks!
+>
+> Patrick
+>
+
+The patches look good. The speedup is much appreciated.
+
 > ---
->  ci/install-dependencies.ps1 | 8 ++++++++
->  1 file changed, 8 insertions(+)
+> Patrick Steinhardt (7):
+>       meson: avoid recompiling HTTP sources several times
+>       meson: don't recompile git-remote-http(1) multiple times for tests
+>       meson: use precompiled headers for our test-helper
+>       meson: use precompiled headers for unit tests
+>       meson: fix outdated completion helpers
+>       meson: update wrappers
+>       gitlab-ci: fix hanging MSVC jobs
 >
-> diff --git a/ci/install-dependencies.ps1 b/ci/install-dependencies.ps1
-> index e3b367fa54..2ceb5dd99a 100755
-> --- a/ci/install-dependencies.ps1
-> +++ b/ci/install-dependencies.ps1
-> @@ -53,3 +53,11 @@ Invoke-Installer msiexec.exe @('/i', $mesonMsi, 'INSTALLDIR=C:\Meson', '/quiet',
->  $rustMsi = Get-Installer "rust.msi" `
->      "https://static.rust-lang.org/dist/rust-$RustVersion-x86_64-pc-windows-msvc.msi"
->  Invoke-Installer msiexec.exe @('/i', $rustMsi, 'INSTALLDIR=C:\Rust', 'ADDLOCAL=Rustc,Cargo,Std', '/quiet', '/norestart')
-> +
-> +# Disable Git Credential Manager, which is auto-configured by PortableGit.
-> +# GitLab's runner picks up this Git in its cleanup stage and runs `git
-> +# credential reject`, which hangs in GCM and makes the job time out.
-> +& "C:\Program Files\Git\bin\git.exe" config unset --all --system credential.helper
-> +if ($LASTEXITCODE -ne 0 -and $LASTEXITCODE -ne 5) {
-> +    throw "Failed to unset credential.helper with exit code $LASTEXITCODE"
-> +}
+>  ci/install-dependencies.ps1    |  8 ++++++++
+>  contrib/completion/meson.build | 38 +++++++++++++++-----------------------
+>  meson.build                    | 16 ++++++++++------
+>  subprojects/curl.wrap          | 19 ++++++++++---------
+>  subprojects/expat.wrap         | 21 +++++++++++----------
+>  subprojects/openssl.wrap       | 23 +++++++++++------------
+>  subprojects/pcre2.wrap         | 24 +++++++++++-------------
+>  subprojects/zlib.wrap          | 21 +++++++++++----------
+>  t/helper/meson.build           |  1 +
+>  t/meson.build                  | 10 ++++++++--
+>  10 files changed, 96 insertions(+), 85 deletions(-)
 >
+>
+> ---
+> base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
+> change-id: 20260924-pks-meson-improvements-b7ed9a48ed4e
 
-Nice, for reference the runner team also has a fix on their end to
-disable credential.helper on their side too [1].
-
-[1]: gitlab.com/gitlab-org/gitlab-runner/-/merge_requests/7470
-> --
-> 2.56.0.rc2.329.gd58861e689.dirty
-
---000000000000fa1e79065cb26721
+--0000000000003678f7065cb26921
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 4d2d0244d82cd28e_0.1
+X-Attachment-Id: 25a1e1bf10f3517e_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xOC8rZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOEJHQy8wYm0zNGsrSVUxSDl5NnM4T3liVEhLTDJqVQpGbFhGWHNoSkJL
-ejdNWXZFN2NrMzJTRmlLKzZUekZOa3NoR3V2UC85K3pyL2VrTjJmcnNaTnRYSVp0b1BCSXgvCll2
-emkvbytGRUFiMFIzekRLMWRzckVKU05GMWpzcWgvL2VSU2QxMGNUaUhCYWZNUTdWQlFRa1Q2dGxB
-dGVlUHgKdEZEeVdBc0pGYStYdGpUbWdRU1d3MGR6bU5TOHJZR3F0UHJKNUl6UCtoekw0U01lYjY3
-NWxwTnNVU3dOaCtOOQoxVnFMbng1ZmxSRGhaN2xvREluYXVXQzl2TXJGWVFhVWNoK0kwSm1KYjJh
-cU1xbDhVWlJIWjBmRWpSVjRjZE5zCjNSbEhaSXVkZndMQnVQVVdac0ZDWExZekxtYUJadVBzck1k
-QmZnbkVaYW8yd1RDZWc3TFBhQ0JBVGszOFpzalIKSVNlTkx1UjNNcFJ6aW9DL3UzUmIyOWFRVGhU
-TTVSNU5LYU9PMTY0d3BmdE5OczR2REtUQ1BGUVdTbW1TZjh5Lwo2c201WGo1ajh6cnh2L3dWM245
-NE9KaWVvRW5kdExCRUtnRXpVS2htN3RwMjFtZVg4cE1qT1dVMkVWQ2M3TndVCklqQ091QktzR0JV
-eDNQRmJmbjFibHY3TDlYSmNLZTBmbkNZSS9rND0KPVhnNzIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xOC8vd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNDhTREFDYjFPWWF4Rkh6aGhqSnZQL0xtbURjRktFbApZd2ZPeEdWZis0
+OXFycUNaN2J4ZkowRlVjZ2xITmNRamdhYXUzdkNDcVdzQkt4ZTB5WDhBTTdhWGVabWQ3S2xkClZl
+dVhLTHc0clJScHpDUVdxWVBITG1vQzFJM1ZSeEJlK0paeG9raDVoZnBIZXJSaUFRa29GU1lmKzZX
+VWs5Y2wKcXRUT242MitqTzlWQlJIQW9KN01YYmVhSjJYRGN4U05HZE9wcXFQL08yaTk0aFpLRjFZ
+RktjVzM5azRNQzh1UQpTWVFXNVJUZzdjbzFGYVlBRFJwRzU2bU9zZVJxNkRLZ2NGSjlUWU53WFVo
+OU1DRmE0OTVCQ2ozVFgyRU92elVxCi9Rd3JKcXZOTHg2c0JzV2hWbUtKNU1ORUdRbUpZSndoU2Jl
+MzZ1RGlZanRkVU55OXM0cjZIT0VLY3VEd3QvYVEKMHR6Ulh3b3JwM3Y5QTdCS3hicVVUSDdZQTJP
+WXk2dGQvbHAvMnc5YnBaN1NlSFBpZUswc3lRSFVjZXdMMnJQaAplT20xY1B6ZHRSL281QXRuU2pF
+dDkzYW0zNFhiZkhxNEVkcm9HQWVhY2VOZVdmSXNkWTNGOXFacWplc3dkeUx2Cm03TVFzdTVVcTlm
+ZnBzM2ZaRnZiL2tkbEhwWWxxQTJPNzhYaUFUVT0KPXFCQ0UKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000fa1e79065cb26721--
+--0000000000003678f7065cb26921--
