@@ -1,100 +1,117 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr2-f34.google.com (mail-wr2-f34.google.com [74.125.225.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA19F4F5E18
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 18:01:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B879851D53E
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 18:03:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791292; cv=none; b=g59wttHoQ7Cn8NOPwr8ArPeo5+HTGw3YDZDobKB0WxOiYJGgqLgdMK/EYrsAUPST7AsYpcWayQQF6EBxsb8TdnOz0DLZ6ZEhq6gU/zqvBegCkBDwG74mqglqGtHLGdp6XR/CjAWx/5hyhAyUSt6pVQYrytaCl9XqA1f2VuYVRbY=
+	t=1790791411; cv=none; b=OtBztor5s2zF0q31YTwYuEFKN5rliTUsiHtBgesas6iJSVq5Siinv0YKQ8pie7vQeKxWCuT/Gzj/mTBGUqDFUBpgx+Lb1ydsqjEIEDH7+Y7E/5qe5kGPgNQTIixDcPJIedMEixuRAViLJoustyAQIyhKxHKt399p2EiFZVigORE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791292; c=relaxed/simple;
-	bh=8/7pj/9Qb8Wvbe4i5s8nhCMRL5Wz5Yy9d1SUV/Aw8m4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MSazNG8hLKsxCE0GYdeGM0LSePckc95OK9WBW5xhZ0ISiOIe23/BjyP6sI/3TgDbLOw0+Ri6wlvwT9HedAgk7EI+2VZwNxG8pbKCrQW7UuF2cB/i6UjF/24OR0GRZUcWxW9I7KCc1Z6ld7acBVjgnRifu3w+QrOV7xz8JsioKV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AHxRzWQz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F3T9lTHF; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790791411; c=relaxed/simple;
+	bh=W9kfl7kz7AeKYw9k1YNpd92TmLK+tCVR+0hhvZeETFY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=fK5kD9TdmYat79rLjeGbPTyQ8xQEHmqPRj/UnCpe3JfO67CFaSXvKvYy5w0tk4gauoz4a/T65DbUu9oUUH1+We4oSswGwQM+fYjTy9i5pQPCx6KAMRABU3AvyAY+tuR14CWvSFqX92DThUCq2UJDKJGZUV6kLhfa/8q5tew3Zlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kFam+DZm; arc=none smtp.client-ip=74.125.225.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AHxRzWQz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F3T9lTHF"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D4E351400139;
-	Wed, 30 Sep 2026 14:01:29 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 30 Sep 2026 14:01:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790791289; x=1790877689; bh=8/7pj/9Qb8
-	Wvbe4i5s8nhCMRL5Wz5Yy9d1SUV/Aw8m4=; b=AHxRzWQzIdSTjot66DAvo/JWji
-	Mgk7WVcLT8qu1HGs+AX6U3WPdgWpgVcKETAKrZtGAMu77iqU/Tr9XbqfrQLrhFC6
-	FMCBiInvs1e8AXgnNUdXEQwiI8HXHyTiL9ME5Wlu70pmtE15JWjo325ZTa0bA0dE
-	SXwLkJB3gL4doI1IHrPZ7Tt1zvHLirU+pn94foI6XdItDP4eyMQsqyYSUfwAvVej
-	4YiepssyCkIao1m/bC782Nt0F1a0qUHNxFh5vwhnb8kfn+XX/9cDBAJCTVWyhNrp
-	8fQC7yxtACpzvcOUiGUbvMU3T7Ab4eeouJP9GjchGWROreUB/BjBM5JBZxYA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790791289; x=1790877689; bh=8/7pj/9Qb8Wvbe4i5s8nhCMRL5Wz5Yy9d1S
-	UV/Aw8m4=; b=F3T9lTHFu+JiH/mUYL3rqh0C4WJLvpgLho4aRqrHggeCa/GU6mS
-	T479RFTucLZdwRvuxhIhohxUhEG9ebSCam7+3FxepodjPQYhLzBYfNj6SzWYQPu5
-	S4y+NteDKwXNFCzjVXdU+ypzqIGNIbnFG9XG/lBzbun2VhDBoMBDrMImzFhX9lZt
-	QQw77Fe9Q1Lu41mpnMhbiF6XzXmwfVVXMgZOQSUcmn6QNb/LJ5ZXjD+Qax6jfsNw
-	rbTp78wQ4DrCiiPtgYNBz6+5Du7pvl5ubpes7MWyBS/knhxbxi4AsZPVilSC0cG0
-	d9schnp+noakxRBBJ3Upeht4sUbqkqJIvYA==
-X-ME-Sender: <xms:eU69arPyy35CyvuEB-Bn9UlV5D_EHH4tEzcOALi5Wmj9n2CUsniXRA>
-    <xme:eU69as_oFZOCDewT5rhpHyloR9TxTqDPrVV6p9_gX2xU3rcdVM6ZNnmsJe4-_P0-t
-    rIxPCZkLv6SrDS0M4Pzo4AbEQaY1m5x6ENSDhDpXgL3We_dePxBvV0Z>
-X-ME-Received: <xmr:eU69avQnPN6R_QOWWXsPJQsOjYGxxk4bRJw56ptaxbL5VnuGB7AUsa1D8f8tIC8cMOIyyEGyFSJ6tc_m5BgSk1hjZZojn7ehQ1Bz>
-X-ME-Proxy-Cause: dmFkZTG27U4k26L75Z/8hAZxfRJ8Ob8/DvNDFNO4hj5yin/9wkzD3LT8MtIs+Cjk7KUkp9
-    Ov+W13V0pv6WR8VOMU3X4HKk4IURHXOkN1Gk5Pssvbe87yqw1gcYec6a17mDvCAqajntbq
-    s8chkWto+ANZ8TzG56olJu1Lg/CNKeVchQUPRidmQgMMDBX0ER0vsJC2s2pyTBz8EfJ+CJ
-    s9nKpq0WWArm5H6IM/l7Q7MYxB5ln8OXhdywwM0MFBxSZIdo95LGriQcw4qbaYuzDCb3fC
-    5IdfoOWyh67koDY5u9mlWZgeY3GlgEgqriRMowNDTYrQB+oWmVsy7rllCosxVCYxsLuir9
-    EUQHiPJb1q//oxoCfL20ej9HFK9Z3MhGK/gRpE9/GA8sWgNBB5XVhskFGRR1FP6zpIUfDD
-    8BQXsjsDWn2zRCmQ3DIAXZ4jMVbSeFnRYQB8Q1Zzaw9TDu71PQWGV0AMJslpQIEiNNVUWv
-    Sq17Uf7qcHZdebCtUBnyxp/GNoG1/pBQGpCe45KIB/J9Nm4MHp1IvAxsifqTW3Pv9KyHFa
-    WEDVPWnxCoPKBchbiEuT8XMnlfQQfKOSqJxLrLD1g9jEb6dnfH4CO0hPN4iMRLMhYkC3Jj
-    Bkt9L5y6HdN7UgJoEM5dlZtjK8QGx1v2JHnn3mrJSEjki9tHvMoShDwvrc5g
-X-ME-Proxy: <xmx:eU69aulIkvFJxNdXfZfMQYuDNfJqhGIl_JieCcjPz7pwrkIYFurSlA>
-    <xmx:eU69avSW1zrISIydOWENvgLd1sWy2aWKvrozlUP2fr-02XIyjIla5A>
-    <xmx:eU69asPL8M4uYzL52FNLq5z9WpuHAbWV7vf_Rw04NpSYLZKUemGFlw>
-    <xmx:eU69aoUHR-1NEmehW5OOXr94qDEgYgbHD1yvp8b0Vcql4kO8FPUcPA>
-    <xmx:eU69arPySAom4mp9DN0KZnBAWWe9RmSbt3sG_X7qAUdyfDziUZxMZq-p>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Sep 2026 14:01:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 7/5] merge-ll: report an error when reading external
- merge results fails
-In-Reply-To: <20260929214943.GA1735259@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 29 Sep 2026 17:49:43 -0400")
-References: <20260929204157.GA1733321@coredump.intra.peff.net>
-	<20260929204421.GB1734030@coredump.intra.peff.net>
-	<xmqqv77neowx.fsf@gitster.g>
-	<20260929214943.GA1735259@coredump.intra.peff.net>
-Date: Wed, 30 Sep 2026 11:01:28 -0700
-Message-ID: <xmqq8q4ibouf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kFam+DZm"
+Received: by mail-wr2-f34.google.com with SMTP id ffacd0b85a97d-48affb828f1so1105166f8f.0
+        for <git@vger.kernel.org>; Wed, 30 Sep 2026 11:03:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790791408; x=1791396208; darn=vger.kernel.org;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=dunLS1SSyejl9XXwsWqYlV31k+Bh/0XXHT4uaWx8OEo=;
+        b=kFam+DZmKClnrlDgbsmlnPq7DnRl3+3r8s2VanEmHpq96E1CCWn4uKvsqd4dTKZLPK
+         2/4Kvzi0L4Lx3zuEMvGMM1hyFDsii8TdbIqFAlidum9PmMHaXcsUfp3G2exq7x6SrCdN
+         NTO9ZXMzm7Qiw03xTqi6UfAbu+mu7wBuFYjZJH4ZbXqJPPbUxOLseHZ5O3T6j/ukvf0s
+         0HG92ZIIjC8cKKZ+rRyjIOOuYLOQOaGIz4GASKlXcoZf73U+w8Wa5zfPNmpDd7n2wZoY
+         R/MPW9exZ+qmBwR20KcydDjBE7eaWjmCxrc0CWJAjIkTLDw0+MwqjTnY5TgBbhryS2AP
+         JcfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790791408; x=1791396208;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=dunLS1SSyejl9XXwsWqYlV31k+Bh/0XXHT4uaWx8OEo=;
+        b=Zbdvy9+KOO6IT0x8gwFFHMIynJPn5y6I9R+F5uDqMSY47P3VwFuLBXeL/UvUujVph7
+         m9M7q5r68FvzL9I99FKDDoXkCPVILiRL7NGgR2mBw96ftPv/sTBr+k8dQS5SwQOEOX0n
+         0jgiVpxmF8a3tGnDnQ8Y/qaH0eGFv7q3bqO1NLdYyORkSRASgl5P3PtaFGVoJJ5OZm0D
+         4b8193dm8H8cZH5mYpMhvcr7IS1Y8NLpwa2puZtm12SRMv3ohaHKYH7wIo4Kqh36syI7
+         t6yX6f32CXSrLTXGtUL6YeLUcE/1+f2zAM4RbM3yBq84QhOOwGb9EYVA4yyWY18Z2dLl
+         L3dw==
+X-Gm-Message-State: AFq9FYLG0P3WGUywA32hSOJvIJIoKzw9jPspMF7ktlejDj0O/XHt5g7j
+	zCg8x2nPzKQNjWDL6sOv4tTjtZqRxBuFReJkObj960jsq8Xy+LaE5Wue
+X-Gm-Gg: AYBFou1OMlYJly/LmMw7THfkQooTre8Hylnx7AXdfUVVemCVI4HYQpGl0+NBY1T+QZ/
+	ft8ikKaUE4DaX7Fdc20kxXXFBs19xXjp98qsQSYWcls9G2cqn+qviM+Wtw2qPNqrR7mKBLswpMO
+	UAVsO7Ib94gHcr3kO3TKmNbOI41+ptDnI0X/o7dR2s0u1DB3Wr9YI+zw6Ac2VlLJyEFaJOIJDRu
+	4ianuBzELESxQD+aVhcAfKkYlfxjqODP8Smeb/pAWrBFCPaEzMaCBSIIQCpG1ulJZYWpaXOB/Oi
+	k7QEbNfMNhRjsDLi0QdQK3/xunSFdCAH4zE/57e0Mzh4UHL1UILlAcVKi9DGOH/LdEmSq9lWwMQ
+	4OsjKoAoArgiUhKFmZwvnzLiJJVnbyCSvCFba4FBG6GItB03IucWdPp0Yfoi2+KurKUwwIOLwuC
+	8wj5Sc2IBd2M6coy5OIWMfgD45/igGCmD52tanYdNStV7gfEZ/Di/H6/SLhnlJcGtzozGBUvWnC
+	2WA3p9sDEwUT9HGQY/ce7GpRkejT2twL3kTSec2VQPgnFusBEf6iGjoxpqIlljnUgewTBWiwXzY
+	70llSyPYDdfGm1Ipm4xUtAl3qfwWc7PidBpl93+yvsHkG6cZqgnuz4Wjuky7cLehnjUsj/aeXS+
+	65ykQC25ThKb+dDZLUWXvwLs=
+X-Received: by 2002:a05:6000:25c3:b0:487:c99:8bec with SMTP id ffacd0b85a97d-48b02427d63mr4735579f8f.3.1790791407548;
+        Wed, 30 Sep 2026 11:03:27 -0700 (PDT)
+Received: from localhost ([2001:818:c665:a700:5109:cb7:aac5:8093])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48b0690d45fsm790357f8f.21.2026.09.30.11.03.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Sep 2026 11:03:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 30 Sep 2026 19:03:26 +0100
+Message-Id: <DLSUKMRZHHGO.HVX98MB8KLSF@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Pablo Sabater"
+ <pabloosabaterr@gmail.com>
+Cc: <git@vger.kernel.org>, "Derrick Stolee" <stolee@gmail.com>
+Subject: Re: [PATCH RFC 3/5] fetch-object-info: return a status instead of
+ dying
+From: "Pablo Sabater" <pabloosabaterr@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <20260930-backfill-dryrun-v1-0-1128f247ee01@gmail.com>
+ <20260930-backfill-dryrun-v1-3-1128f247ee01@gmail.com>
+ <xmqqwls2brca.fsf@gitster.g>
+In-Reply-To: <xmqqwls2brca.fsf@gitster.g>
 
-Jeff King <peff@peff.net> writes:
+On Wed Sep 30, 2026 at 6:07 PM WEST, Junio C Hamano wrote:
+> Pablo Sabater <pabloosabaterr@gmail.com> writes:
+>
+>> A subsequent commit needs fetch_object_info() not to die() when the
+>> object-info capability is not enabled on the server, so that it can
+>> fall back.
+>>
+>> Make fetch_object_info() return FETCH_OBJECT_INFO_NOT_ENABLED instead
+>> of die()'ing when the server does not advertise the object-info
+>> capability, and propagate the status through the transport layer so
+>> that callers of transport_fetch_object_info() can act on it. It is now
+>> up to them whether to die() or fall back.
+>
+> It may be just me but unless the client can tell between the server
+> not supporting (i.e., they are unable to enable it even if they
+> wanted to) and not enabling (i.e., they are capable, but are not
+> willing to give it to you), it may make sense to report it as "not
+> available".  "not enabled" sounds as if we know that it is the
+> latter and not the former.
+>
+> The code change looks very cleanly done.
 
-> Here's a resend of that final patch (not just a squash, because the
-> commit message mentioned the chmod).
+Makes sense, I'll rename it to FETCH_OBJECT_INFO_NOT_AVAILABLE.
+The git cat-file remote-object-info command path die()'d with this
+message:
 
-Makes sense.
+	die(_("object-info capability is not enabled on the server"));
 
-These 6/5 and 7/5 are probably better squashed into 5/5 than left as
-"oops that was bad, so here is a preliminary clean-up to make the
-fix easier (6/5), and here is the fix of the fifth step (7/5)", no?
+I'll update the die() message as well.
+
+Thanks.
+
