@@ -1,83 +1,83 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4355013AB
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:46:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0D84DEC38
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:46:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790779576; cv=none; b=TQIiWQJahbTiRp9GoUt5n+eJWImac1WcYZUTsgbMF8j/JUcIkXuHWZOVlRhRXPVJK6wl9h1XXKj1sGm0hUizUjSYdn43uRLnbm6kGKeWwo9onPzpNXZk4zax0F+U7nnpLydo1EZRPs7YSFTfPxEYNNW7FbcM6pJ8RyeTy7Rv0LU=
+	t=1790779576; cv=none; b=nStBwAQgo50wNBQUL0PXBnQMPdBY8qRpD6FBp668P9GTawb2gXE2ux/O/vDctXuenMQtwfvzbSwqXQVbXuyPnigg/8WVpmAqU/pV4cPm4IegJVOPvrbVoCeYxQdjQO9sQb+KiPJP5Su+tKo9aLK/vYUQ8xvHojE/uT4ffOI57Iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790779576; c=relaxed/simple;
-	bh=9IYa9TiUy78wHPXixD84UkpHq9PSjwB3JDRscOFjmhE=;
+	bh=01N57bM4LMXAYMB7aD/qyAhQOuiFzaXes8G8DxEGmQc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hh91JtJ9FK3ybcF66JTGyJDmxIGYOBQBDHE6RMvk5RgJljwnAufyrFI6jta+Z/o86fSwT0toLn5WDdNM3GXXopfEFJWQa4nwLGRQq/NQpAMaWHtfm3PdqGA6yr1RkjyxIk/wig3FFoFynCApCK8adUM7zPsn2W/GDxtM+HYFAJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=szAFNVyd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fO+Z2TOx; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=KS2kzay3zfnCeoDssHa4fwzgCloU6LmpBNduJWbWfAiqQc8jtJHXTlfHPN9gPh9McYG3ehT5iAi1zysldL2fg34Pekke09YBjOAZOv6UovJv7GeUEMTymbQcI+YMZKOH718azaREpyKsMN4hQoh267KoP0OUrYpi41s4Z0ESc78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f7zo9DjL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RZ2gT/QS; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="szAFNVyd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fO+Z2TOx"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 94DBC1400231;
-	Wed, 30 Sep 2026 10:45:55 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f7zo9DjL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RZ2gT/QS"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8E9CBEC025B;
+	Wed, 30 Sep 2026 10:45:58 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Wed, 30 Sep 2026 10:45:55 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 30 Sep 2026 10:45:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790779555; x=1790865955; bh=y08bnbUM+7
-	FAecA9zpzo9MZmRefzn6cyUmU7h5bSCI0=; b=szAFNVydirO2hfpJIMsQKnLzfm
-	YNEhIXlDgG1tXdF/V5MTxubUQjUV3RPXfVebcSyHOEAO8EtPC18z8BIyGPQSdiom
-	qnAHYu1+xyBAyU46IgwX0eeCORfT0stfEHx+CEyNnfo011gCiQB+oVjCVPtXzUcx
-	Tl7XDXzDYPT5RGErFZC0HPUhbqXj9yUWVJCDonuELhHLjHHVeU2icy8Wk5v2WUTv
-	zoDhcdSWAqNeWCuNsd5aM4HJ5me4vlMiQXuDZvLKBLMRpSbKwf/tDFUykuu0MrkH
-	4zcJ/9u8LSDwPzu5d2bYY9cHp4ZO5K8KBG0vYVNCE48mP2K7AluTERFyhGDg==
+	:subject:to:to; s=fm1; t=1790779558; x=1790865958; bh=x5B/sTSGLZ
+	iyT4uvTIMUWU0or15+287mQeXTfgNzBUA=; b=f7zo9DjLBq4/Bg521T94VrbmXY
+	b6Y+wndj85B/eUGt8cs6kl4cWQpl89aaYIYwwTmbfpucTm9I/wpDj3wylFMKTjlE
+	3EPdBufQeNpzEqSVGWr5mgo68jcFvVJ1Z1d0zYdZz5DBEoWmiJj7EtD48BaLsuki
+	ib87yUm6lW6DvqE9TUlt7ouKSAAYy+JNRQgEQiLkJtKkwUywlOf06xFPy0YTl4rk
+	vghAlXKOK+HD4+v3mFeJtmuwdY1qi5TER/C5BYVWtXdV4ieqLiJS7b646gubqqhh
+	S+Qc0UPEp5//cIJG+aoVfqGV8ZyOp4ugJXOnMErK94yUQ6X/Vp1+TS2RXBXA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790779555; x=1790865955; bh=y08bnbUM+7FAecA9zpzo9MZmRefzn6cyUmU
-	7h5bSCI0=; b=fO+Z2TOxXHOsoflVMGyVKc2KeYmkadMmoHtXdQd6vmKYfmazWZp
-	NAjoGvUmOVaGdlaatzbJa3KhLc6MmXt6NssUlpfzt1KRW/b8vVHDmFdwxAJmb1ez
-	Zup4zoqhsENXYXxXKcLdPFLknMVsoHNWxz8f0iqbWLgIeAQ5kZ4n+2wjMCbaEN79
-	MDmNHZIkTiC6y16hpn3vUA4AeznKWZt7v6wVinUjH/dPf9s9KI5+QodDbC2tf1sH
-	u1oKQj9+a/HppFP0hklEDLWqzIV5ShSqhZhYX5pFwiY7+t99ic8yGUQmwR1cVZIR
-	nKh3HrHAQXanxyFnaArujMfeEZtKD97NhGw==
-X-ME-Sender: <xms:oyC9akTqE3P1VOTgneBuAgjt-o2cUplnusxIjec3xMlT_DRDfO94Tw>
-    <xme:oyC9aoyX0jW_Qg6id-EhnhaZvB-FymlcQARHInafzTlhJ9pYPDuujET066MIVbPsd
-    U-n6V-x9r7wvtfSpLfYUGHt_yIsfpiOLPqymNNklHdPqR5EBgc190g>
-X-ME-Received: <xmr:oyC9am1czKnrhOSLRGTiQHUCxcpaN_lTV-VmWdHFBWuNTHbGEeLGlQ>
-X-ME-Proxy-Cause: dmFkZTFDx5j7ASUHAV9rerQlG4lhW0XE1LQN8DLDGscKimK3YF0Ru2sA4mHVCTDHwx5d2f
-    N/rLiA6DcNXCyAJbjXlqqSZaI6eMFy6lNcCnaNXO7HJLc5qkGY3tRobUphfQinOkYZegED
-    ePUemaQ3zW/ZpVPytC3yPo0+A0N1T+y6/u/pHEIw6GyNSVOGmVpK3DwJ9GkV32xDvkXXDh
-    uWJVY0Ip1pkU4b9B4nhnLFa+fpB+8dNpOj+sFfoMpSxTVIJgQwglWMXVaGmb/qOaOHIgoK
-    Yb6HYFTDJIHT1XA0Ng1fy1wN8wNH61UuWeOHGWYrYDlq46rhf/5FPcER9JY21D0bcMZbCM
-    H0ttUd5BzbBnHPLe9XJz2HX6nFpz0ad72ROhtJc0WYcqympDf446olwNypXaTAQsKNoixB
-    fDqxjoYnpiIV9Lz8yX0h+RxcUya7MzqfRdlsqnaT+uMouk8ezSrZ15kTulLFNncWAq28P5
-    Y5URLcNPvoRSWQvSqRzUpb3m+z/yDRUo1HZcg0qK1zna0sXNdVW9JVP1WCXSRx6w3FnoQg
-    AHNygTzC/0hxPLy0ZcRD2XWvlGPY+sM5NJ70+ZotKWjiB/MU9iO5MGK6HtYOMurj8mXsjv
-    ReIHVEe85sh3TehuQtwJdJQoWSVk6a5EzFYzxRbVhlRSD8m9Z+bm25Iko1pQ
-X-ME-Proxy: <xmx:oyC9am5WqXpeX1XgAYHPP5mkWk7Y_Ot_8q2a6oUn5xbApfDsPkaxrw>
-    <xmx:oyC9apXWaRyOJUz1ZDcOPLcyZR43glugGkSp_Sdo6UqG7eYgCeGvLQ>
-    <xmx:oyC9alCJzIUWmzU5hZ-sKPrP3F8qd7vrDoxdzcoeysZOPfHnc7rR1g>
-    <xmx:oyC9ao5qHzlrAVxOvPKAkReqY_13TB6W2f0xzbDo1MB6IJ3pfrLi-g>
-    <xmx:oyC9aoy2kGP3WHlZF2_ctBEN-Krhjbx92ozoV6Nqmiqa5eO1QrntPaPV>
+	1790779558; x=1790865958; bh=x5B/sTSGLZiyT4uvTIMUWU0or15+287mQeX
+	TfgNzBUA=; b=RZ2gT/QSDw5CHnc4121QWHnwb0fVpKSfAkbCaHQp8LCLptfqjT3
+	cfgKF2xrzigdRjtneIUvw4/+Hdf4IAo6iqlEMUgf40fxpnNmfsB6HVtOtKu/kR6G
+	4MXe2XSd3xgeJEOC1oWzXgd4WARLWKJQgfiIHY6++gZi1zYB6IupiI4nxu+q8PuT
+	NJHp4OlDbc/UpI5p+4CKO2EawGEU4HULx2mufPUQX1WNhIt9dVUU//TYncXY8Suk
+	dpkamTqredI6mNN3j6wm+Jpc9GP895e8Peth3I6eD7beINWzMFYmnBtRd2wI5K3h
+	llAbCiOQSQ7h8L073PWWbltPtosodmj23Dg==
+X-ME-Sender: <xms:piC9aqCHYC01T57ThsZBa9BXrbcZwfey9hREFx5EbNlk0k6WoQxOnQ>
+    <xme:piC9arg_ojY2o7QU6oYf9bNejrld-wnAaCTcyQsAe8zdAJz9iWkHaSO-muKihzVYQ
+    Vy7BYbzKE22tRvhS7I0DQ2_oZ6k6MmVsz4gKf9qxg4wjvbVG-bqrDg>
+X-ME-Received: <xmr:piC9ail_3sNTGmK51bJoJdbaSTzN01G08oTCC45UL6lPptS1Y6fkMA>
+X-ME-Proxy-Cause: dmFkZTGx/okesKsHLibzKu8si3YLEHbYIw9SLiWYvpV+KLrBiA0Fqbb2RAntn8gCSjO5t/
+    lDyGgFzycunqXHl2nkCyiDnBIuPEp5tlHIzVkFEXq+AIsDHxQdPnlzv+3Tn31tzU6YEGel
+    7+Cltgx8Uii2UzTdIk72xEB8qKkAaSVFRewrt9474ZvpqpIhIIScTx5w0Da+VIJOaTi71J
+    CU4RPWIMHe7pvL6MXntKzq6VgsImr2p47/J2d05ApA9/dM29d0ovFCYlT0tQ3yKOa3to/f
+    EuSyESnebsxaIrD7glZZv9A1pWKI2Juj/TIht06VW19yzOy4PlfaxYz3MpwZRt61BOmCbn
+    WhS3PDIJFwFZirEz+Hx9ERouZ/wa3y4Z6gSRoRNFakSOtPC6EQ4Fx6lQvRMu1HiTT+EJVM
+    bkKvE08pTv1PQZdC0lLIocxuvL6WAEkJ7qIA/x8A8fpoUzH721uwJycPFY0uXikKnJhwSZ
+    AwOfs7xYgrJtGhb956Srf0ilmtooiY3DB3dWPdU8jjlChRukKW5XKPw9Qu8BYF8yqN3m9m
+    qMVCrvTEfD5okCjcCIqV6WvHuBFfemKM13FgrLe9KgGFiyVJKzBIFIRkhHkQmkW/WRFxun
+    d0wdTMo+DCdRI/wYWsNgJAsEIGdqCwf4a1e6qNi7038uOGV+4vSH9LqHvfRw
+X-ME-Proxy: <xmx:piC9anoI5-yNqKulPgZ8Ag077-nusmoThVJb74dsvuVtrrWCdU6nhg>
+    <xmx:piC9arFttblzKc65JzkFvJt-rLCwBBqY8Okn4iZSHoVjbzLWeSFQLg>
+    <xmx:piC9ajwIj_6_HTjtFCg5vdiquv9LP9XejWBvNWXdCGH9U_HESWswxw>
+    <xmx:piC9agp9hwv4-at2WjOsALltOQpKD7vM7ySYUZGHqufVs6ViUEYadw>
+    <xmx:piC9asiXj-hcoZc-GLDO_VzfO3WRcCzX2_JWjPne033P7rVH-k5aNMla>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Sep 2026 10:45:54 -0400 (EDT)
+ 30 Sep 2026 10:45:57 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5f773e08 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 30 Sep 2026 14:45:52 +0000 (UTC)
-Date: Wed, 30 Sep 2026 16:45:50 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 53475fbf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 30 Sep 2026 14:45:57 +0000 (UTC)
+Date: Wed, 30 Sep 2026 16:45:54 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Tamir Duberstein <tamird@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 2/2] ci: use twice the CPU count on both providers
-Message-ID: <ar0gnpgH7CJqN_w2@pks.im>
-References: <20260930-ci-large-test-resources-v3-0-d65ac7c21b5f@gmail.com>
- <20260930-ci-large-test-resources-v3-2-d65ac7c21b5f@gmail.com>
+Subject: Re: [PATCH v3 0/2] ci: use cmp and align job-count selection
+Message-ID: <ar0gon2VE0RlG_cC@pks.im>
+References: <20260925-ci-large-test-resources-v2-0-f632cf319756@gmail.com>
+ <20260930-ci-large-test-resources-v3-0-d65ac7c21b5f@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,31 +86,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260930-ci-large-test-resources-v3-2-d65ac7c21b5f@gmail.com>
+In-Reply-To: <20260930-ci-large-test-resources-v3-0-d65ac7c21b5f@gmail.com>
 
-On Wed, Sep 30, 2026 at 10:20:35AM -0400, Tamir Duberstein wrote:
-> GitHub Actions sets JOBS to ten regardless of runner size, while
-> GitLab CI uses the detected CPU count. Use twice the CPU count for
-> Make and prove on both providers, doubling GitLab's job count.
-> 
-> Five GitHub Actions attempts per policy, with the long tests enabled,
-> gave these sums of per-job median successful build/test-step times
-> (minutes; four or five samples per job) [1-3]:
-> 
->                       Fixed 10   CPU count   2x CPU count
->   Linux Make             278.9       273.9          259.9
->   macOS Make              94.5       119.1           99.8
->   Windows Make           102.2       103.8          100.8
-> 
-> Workflow overhead is excluded; Windows runner images varied.
-> 
-> Use twice the CPU count to scale concurrency with runner size while
-> avoiding the larger macOS slowdown observed with one job per CPU.
-> Compared with ten jobs, this trades a lower Linux total for a higher
-> macOS total.
+On Wed, Sep 30, 2026 at 10:20:33AM -0400, Tamir Duberstein wrote:
+> Changes in v3:
+> - Use twice the CPU count on both providers, instead of adopting
+>   GitLab's existing one-job-per-CPU policy.
+> - Include CI timings and their tradeoffs in patch 2's commit message,
+>   and explain the use of sysctl directly.
+> - Patch 1 is unchanged.
+> - Link to v2: https://patch.msgid.link/20260925-ci-large-test-resources-v2-0-f632cf319756@gmail.com
 
-Right. We could of course special-case macOS. But I don't feel like it
-makes sense to squeeze every single second out of a job that's already
-the fastest anyway.
+Thanks, I'm happy with this version.
 
 Patrick
