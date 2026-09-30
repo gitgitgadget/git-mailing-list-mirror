@@ -1,125 +1,134 @@
-Received: from mail-qk2-f40.google.com (mail-qk2-f40.google.com [74.125.230.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59674DAF9B
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:20:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A634E2F33
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:22:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790778066; cv=none; b=C1fgRaa1XHiKHkz0YNtkF5z8u1/V53jDHjGr7sonxi+a6hUThdjDKqJzek+E2IUXhdd7nv+L70FbnJ+xZTCEiYJdwLzIDArsWFp1ZpKbAffqu1YeYyVGnhcCQphbm5XzUZNzs5Ll+fwno93Ul7g6VpOuThsrg70Br8XNPR4mbs8=
+	t=1790778159; cv=none; b=irDtLjfKMmyFnE7CYpvbWX2Jb6hCe5WWPaXkUUNrhLO5Aju9DPSzasaEyZ41/7yCYoYSKMS41R/ZV9ixuKWt/ebduEd/jv1y9K/VBJiRpZfcUxhQZ4bLC9sBbi7imbhRXjv/Wexca1YbjjLZBTonLcEwPWW/pZifj7Ta5NuRKd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790778066; c=relaxed/simple;
-	bh=sjA8gtMO+Pz0Jy+tqETKy+Dd3hlvOae5Khx61MKZmh8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HFwk6agJib6V9dsctBZFNDkVaWWSKVPUZyZzjjZa+l+9ivqtCafOJdiENbE6OWA1qhAofG4Byo7G+hrmGB0bZ49dT526fEgAdaHEH+kdBxIQBVCYtWMeMOKrrSoUfE/6vrfB2lfDgTKnNe15DuwMWUlubmlm5fm8aA6jIPG2lYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pa8Yr1QS; arc=none smtp.client-ip=74.125.230.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790778159; c=relaxed/simple;
+	bh=iHOqEU9To6cOOWYFTNvQz9ssgY7HOTouuDfvGIYSzjo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=A/Wa4ZUB412KJN+MV4H+GvlM3aiItjH922Ngxy+xuZJvxQ53haFT5MolNaZ6jUw1tyKVXGrRxqIu3l/q8DrcxcWlXH4Vfg+kj6pvkk3yh4+M+EgEyQD1NYgQsiTEZNIIkqrzWAbNG+LXW7PdYXFxdInUyHqdeHahfADOuJGAGhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MidP3qf8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wLRZdVLc; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pa8Yr1QS"
-Received: by mail-qk2-f40.google.com with SMTP id af79cd13be357-93c5b166b8fso411474185a.0
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 07:20:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790778048; x=1791382848; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=COlp2PQAi6pC6egT8QJ6v4J2lfxBZ81ICeWnFEptv9w=;
-        b=pa8Yr1QSYmVeESgPPozkga+yAHJUp6SC5vUzJTcYWpAVmz/4hbbeDA1UcitHxxngyS
-         9QSASXhU2Bjp6+asWmVhh7PqMBri/Db3UpQY4QBVKmrVulZlpqBiHfaTtIQEMBbMTBxw
-         I7OEmOMmi7DWFeoIMOv7Tnt9Aw4s0i0G6eNT+iikerqJmKV1D+ubezZ3f+mEsugbWq8a
-         ciVlnzeo+1+zX+S7q2ZOGE7wf+k8bJ2WOZjWnbJBzdW5zk899XjOc0l0ioJ/lL4NxvrI
-         mjOewuz5g2jQ/Lbfso7pEpH1kZjqcr9vuJNuCCiuK4568TLCg5o0vke1fs7GgodNyuwo
-         ATdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790778048; x=1791382848;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=COlp2PQAi6pC6egT8QJ6v4J2lfxBZ81ICeWnFEptv9w=;
-        b=e2lTJqWtGkYfEU2vtG6PNgVQmnxaQ2DJihUDx/o1WI3n2P7G+wAPSRDJISnOBBR+rM
-         8OLjkIC14mwQoGqSh3YrcY+FkzTg3RBI+0kbp5MdRVZWg0gihCVxIkCyYOwrvTMulrSz
-         9cJS+zXLRGvBBKC87kzaWxF7gFi4iPApP3PsuiCuFJM3hLrmZwHGE46SSXeuzMQH0rKG
-         0UL+yYNu/B3OsUUsldLkXAruUk3lnmJeqhSCY+gB1J2f0luZf5LhlCQhPWFDBq9WcpJJ
-         VN+7+6L+DXHVpuYp5CIWwl59elunnVct9yRsIKYyENe7Snenrn5QUc2Pi0v/XOwKM+V7
-         QenQ==
-X-Gm-Message-State: AFuF++ljhZUFdc9pE2/uzd9yP4FKFHTkyRWBW/xQahxgAURcqG5HcTI9
-	O965BEdFiYNQXN5x2pfCnEDfCsmg8FReSi/ZJPHTth9yJ8YGNUW+5EJqYt9cSy4g
-X-Gm-Gg: AYBFou3GLo64++ENwRtB0ZfjwaahJJ1rXVG/kbH1AHJJbrmaMK3YqnM8UFhOjUyeiG0
-	y1pfJdB+u343eFNNwUel3acqJGNJsbxDXtwWVi4sLCXCdkLL5CEYYm6kWuzbeL+LT6zrjkboUvA
-	6UO+6So8h144aAMORRReZM9KpNPXSlBu8Vm9hPcdM4/M/31Mchn0R0b7sbd7HZtaRgqdh/msxa7
-	2icj59qBN98RrrEtsSO13P/5pHgOu+o5u5oheUgLsgqVTJu3g9nJI3Ygfrpl/0W/+jI/1YLr8nR
-	cLvWqAlEcAJuiDwduSXKyS6BdoCkZwuqHOM+eKIL4JDdsWptUBDFph99/0cPr49LbVh1N6H3qeZ
-	CbJaVpbr4PQSnBGqYGj1/2C/pQGA66Tg0VkxXf5oigAQgHR/YtO0z30F6trI8yZC44/PQ+tZtYe
-	YOFESh1LuaYLO1vg1ySyl3xGCOxO8ums6tq5R73YD/e7GjyljRixbpEKwRw2IwSMuJZ/CBT7P+d
-	BZdCOdzYcVB2978SsIESdLxEVTeA689whyNxWX9oUFFzbnppHmgxRzb2gK151hl4j2yIxoSQ9X2
-	bO7CENwdSPDlY2dq8XLW55mj94qHjfpP5Rm9aA6Uyg6KOp7ZgTwr5ifzN0h0MzXmtm1XILAetn7
-	tUjLstlrGXkGIkPeDnPXs3LbY0fccH2VLwCQu9JV2aZiiUeVZooAruw6I
-X-Received: by 2002:a05:620a:4115:b0:93b:d7a2:dd2c with SMTP id af79cd13be357-93ca97b10demr255706185a.60.1790778047637;
-        Wed, 30 Sep 2026 07:20:47 -0700 (PDT)
-Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa (vpn-eastus-03.tradc-corp.com. [40.76.104.167])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93ca808106csm124645685a.9.2026.09.30.07.20.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Sep 2026 07:20:46 -0700 (PDT)
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Wed, 30 Sep 2026 10:20:34 -0400
-Subject: [PATCH v3 1/2] t4205: compare huge output without diff
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MidP3qf8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wLRZdVLc"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 802AA1400147;
+	Wed, 30 Sep 2026 10:22:18 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 30 Sep 2026 10:22:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790778138; x=1790864538; bh=ZpgF1MeANR
+	/qt6UmB4u6mk8Dv/gOh831GsPIwdyB0uQ=; b=MidP3qf85PupaB9Nnu96FTYO7O
+	0+mnz3QALdAKiI91Eq/YQHngsQjSa6Yb0JB9THAaVwo3IH/wcm2PGRfaseRXyVP5
+	S3scqWc5c7sc4G9cdcY9TgbaRT7gEtlRgf1ERLFbEHK9Q4nioHbKYE2RPvb+58dp
+	Lpc2ndhI8chIuYft90EecOpdxCrb9GPmpdJ9f6yqbMl2oRDjii7QIh7w1J/zYS7q
+	xddenobFCc4T80wlPX/ZTtuc3x/kJP6qmWgdNdMDO5Qw3XWN4SURE/5a3VJG43lu
+	sxdJ7f/T1/5EojrZPGxlDsZNjifvwKqhmNldaTCRMksnNoCK0MUGoS9eSTPA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790778138; x=1790864538; bh=ZpgF1MeANR/qt6UmB4u6mk8Dv/gOh831GsP
+	IwdyB0uQ=; b=wLRZdVLcwG01hEG8pqWzo2vGPcXKvTHQXHKUZ14sB6CkgHkdtlm
+	6n7nxE/pZYoW7NSp5vjFqz5fHFLLL15S/7krqlatjvovEd0qdM3ITbxe2JQLNO+y
+	M/6n+v2LXk9lN8KGgmzJ3CRBgVi+9v5vD4xUscp5T5zkO+1XDwnX76eQG/lgsKLu
+	42hSN/DjEwdeu3Y+Hjdp8FLo2t2a0MgRlJ9Z9p9iuq4BsXjg8JMZ/r67YHok7qkK
+	foPym26DNaInEJIP91kyU5A5MwyPF2tL3SbKVYNItDs+6c5TyiWxGK8h2O/IQtJh
+	BmPlVGQ8PrU4VgtdXxM28qQnw2/uZRZHc6A==
+X-ME-Sender: <xms:Ghu9anZsDOqOkhDZpYRWOBWxhmRbdNSSOBn5JobmeVePkCfOJQ3Sbg>
+    <xme:Ghu9atQYsTwRocanc9WCJJBg9pJSqICAPC9ZOST8ErkfHywo8jMwEZw4xxPhdl7Jw
+    50Yq-y17l3m5U68IuVwtUufAICGfhe3oIUgrmhdzwhsSSt2y3JxbP3t>
+X-ME-Received: <xmr:Ghu9aiSdOFLRdrXDRl3nS1_U25PyLfWn7ujjYK4hxFT-lEF_XCzzBSyWxSTLh_Qt1Ohr6J24SvtDKpH3XTVk8l-n0MGLqP5-i102>
+X-ME-Proxy-Cause: dmFkZTGOvux5LrNBETrymGjvxsXf0obVAZP6wH8ty2ectRfjEH2WpgG73XpgmsrsBVR6XR
+    1v4JrjJHiOhnM0+r4YEZBCqq/RZiuNY8rD4mbtKHhSTyAKQTxs4BYk9NQW1tx6jmyjFSGD
+    B5t77izC9yAnUKG8Ei88pquoRIVQ+hwIzOunzctPPN0ZvRP415PdMVuderPivSm78NL5w4
+    GxsNNJ0YAiwCtbaKnpUpOS9ITFoGVMhJp79U1bozfcn0dCA3V/hpwhWUe+bp4eCCYlBBzq
+    VgeBVB0lDd1WoumkGaA5hBa3KG53pk5wwuC51q3BIzZ9WZe5aIU+lMEtMqSxw5yPS3JrKq
+    U03d3hrpFHgfidQB2W224MBEXx7dWiFRUgCiE9GkFVR3ui9WrhyIfhzzULb388/Rhv1iVT
+    trwWEKSL3WNjh06fyT22T+49SAb3H9maEGfWs/paMdV5xYTwfb4uOO+sm2A8r8qk46VSIu
+    pPXjERORU7z73CWdyNfnO4id9SDaaM4OPDsPfP0cCG/KKGB9DQA3kMx2hPuTm4df2lV9wk
+    QTwtvKFPIPBl33M/x4EkzOm6djILu16wQ7tOO+0T009Oz69dqaJcb03X+c9UV6VMWcVkcA
+    7uZ85yGFU5pcNFvEu1/gMI/3OCcxA0die5Av0ZYGLVHB9HZQYTfVtZHtjoVw
+X-ME-Proxy: <xmx:Ghu9apRqGnrRQJO824X1o34k5sevXP0i5oPlXjyyiIVVVqWZaY1XVA>
+    <xmx:Ghu9av4Vhoa06K_V0K1kCsgAB4Jz4NrrnjwGQUCVc438AJzWPCWCBw>
+    <xmx:Ghu9at3q_UxStMQ9sDstIJ-aw-ZkI2T67z-zoWPmuPtKTTlfwAdvIQ>
+    <xmx:Ghu9aiDWFGlusEgHia_j_EnvnaLmXBGvGWC8OM70xbJTVCQPdXHsRA>
+    <xmx:Ghu9aohWims_rtUl26svwKscLb3CVAvkjnvFHGd_PKdVpEmpM5l_9dV2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 30 Sep 2026 10:22:18 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
+  <git@vger.kernel.org>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH 0/3] [doc] Remove gittutorial-2
+In-Reply-To: <20260930061524.GNkIK%taahol@utu.fi> (Tuomas Ahola's message of
+	"Wed, 30 Sep 2026 09:15:24 +0300")
+References: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
+	<xmqqcxtven3u.fsf@gitster.g> <xmqq8q4jelvp.fsf@gitster.g>
+	<20260930061524.GNkIK%taahol@utu.fi>
+Date: Wed, 30 Sep 2026 07:22:16 -0700
+Message-ID: <xmqqtsn6ddk7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260930-ci-large-test-resources-v3-1-d65ac7c21b5f@gmail.com>
-References: <20260930-ci-large-test-resources-v3-0-d65ac7c21b5f@gmail.com>
-In-Reply-To: <20260930-ci-large-test-resources-v3-0-d65ac7c21b5f@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
- Jeff King <peff@peff.net>, Tamir Duberstein <tamird@gmail.com>
-X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openssh-sha256; t=1790778039; l=1402;
- i=tamird@gmail.com; h=from:subject:message-id;
- bh=sjA8gtMO+Pz0Jy+tqETKy+Dd3hlvOae5Khx61MKZmh8=;
- b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
- MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
- QEV8hdxvqEtov7EPuoJyHOl0usYiN9a6iTEjdM6lDPR4afOlbnqVzGwSlrlzrIofp0c6P0zfhKf
- bE0UNrcaCMAE=
-X-Developer-Key: i=tamird@gmail.com; a=openssh;
- fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
+Content-Type: text/plain
 
-The huge-commit test compares output containing a line larger than 2 GiB.
-For two identical files containing 2,147,483,649 "1" bytes followed by
-"0\n", GNU diffutils 3.8 on Linux arm64 gives these measurements:
+Tuomas Ahola <taahol@utu.fi> writes:
 
-  Command               Mean +/- stddev       Maximum RSS (KiB)
-  diff -u expect actual  5.276 +/- 0.572 s              4199924
-  cmp expect actual      0.506 +/- 0.099 s                 1264
+>> Sorry, but there was another.  With this merged, doc-lint seems to
+>> fail and breaks 'seen'.
+>> 
+>>             ...
+>>             LINT DOCSTYLE includes/cmd-config-section-all.adoc
+>>         no link: gittutorial-2
+>>         gmake[1]: *** [Makefile:537: lint-docs-manpages] Error 1
+>>         gmake[1]: Leaving directory '/home/gitster/w/buildfarm/seen/Documentation'
+>>         gmake: *** [Makefile:4003: check-docs] Error 2
+>> 
+>
+> If we want to build gittutorial-2(7) as a manpage stub but to hide it in `git
+> help --guides`, we can squelch that linter error with a merge-fix:
+>
+> diff --git a/Documentation/lint-manpages.sh b/Documentation/lint-manpages.sh
+> index d4a1977ba6..db2a54116d 100755
+> --- a/Documentation/lint-manpages.sh
+> +++ b/Documentation/lint-manpages.sh
+> @@ -32,6 +32,7 @@ check_missing_docs () (
+>  		git-legacy-*) continue;;
+>  		git-?*--?* ) continue ;;
+>  		gitweb.conf) continue ;;
+> +		gittutorial-2) continue ;;
+>  		esac
+>  
+>  		if ! test -f "$v.adoc"
 
-The test needs only an equality check. Use test_cmp_bin, which runs cmp,
-to compare the output byte for byte with less time and memory.
+Great.  Will use that in future integration runs.
 
-Assisted-by: LLM
-Signed-off-by: Tamir Duberstein <tamird@gmail.com>
----
- t/t4205-log-pretty-formats.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+How close is your topic to 'next', by the way?  I think we have
+already caught a few missing links since it was queued in 'seen',
+and that should be enough to prove its worth.  Even so, that is
+merely "we saw cases where it was useful" and neither "we know it
+will not fire when it should not" and nor "we know it will always
+fire when it should" (which is why we want to see a solid review).
 
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 4be5c51489..01b97c8888 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -1189,7 +1189,7 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'set up huge commit' '
- test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'log --pretty with huge commit message' '
- 	git log -1 --format="%B%<(1)%x30" $huge_commit >actual &&
- 	echo 0 >>expect &&
--	test_cmp expect actual
-+	test_cmp_bin expect actual
- '
- 
- test_expect_success EXPENSIVE,SIZE_T_IS_64BIT 'log --pretty with huge commit message does not cause allocation failure' '
+What I am wondering is if Julia's topic should be built on top of
+the ta/command-list-guides-sync-lint topic.  Perhaps it is a bad
+idea and coping with merge-fix would be more flexible.
 
--- 
-2.56.0.rc2.851.g50a151a6e9.frankengit
+Thanks.
+
 
