@@ -1,146 +1,112 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC17D4C10DD
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:28:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2904FC350
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:37:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790778528; cv=none; b=Ky2d4ypuT+bJuKECsKUd7ub//QRX6z1rZ9Ko0Zow7IbBmzps15aLNfzUj1Ccgn/RvcPE2zNRArFRplAaz8jB02KnVf9WGWXfzhmtL8iM4NlHiTUTrG4Hu8rvQp5LwylvPk78JGU1QBqJt08TIgqDVb0m+F7lGDHAd6ivTruj1ME=
+	t=1790779041; cv=none; b=VfMpUccBG+9SWLCHC7LdNHh31ZZm0nWjBTAq2hqGPPyHXXMQV5jZe9F8BaDesO6tcgTLTF4705mElu/7YV5brsiBBSplTmdSrUuNZgsv35Ev6dpJrkuIjlZcjp0Dm9S9t0ghZbdfkrBLFGYueHvPQx9dwyYoEk0HQ3nj2nkNaro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790778528; c=relaxed/simple;
-	bh=P7fyc7acqrpdIGo6nhHHXDUYTqy0+HDLI9VunMHSW2w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C5581gjoloL5czGYGGuQ6pjpwjrldTL1vhQCGf2EpKxiavijdLFQ9zXA6v/wE5MK2yFpd6hO+JsHQYvfFVNUknwYxss7ZRB04DhCA52hWsFZN3sv5oRWNDY28dXvjedID7jsdRPbaSBkZv5FChQV0u1NnKePkw5hhmN8u6u1eVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MU/FRlxC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JDwlA9OJ; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1790779041; c=relaxed/simple;
+	bh=RomiXGkMA3zrB0RWzi5GcIaEP6wja6LregZCKQPneyI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bxrwbKBYNtl0tvX8Ruwn0oUaOseIaAfNRawjoH6e4hY+EBMuSXPw8/QEuqhN2jF58c7/VSItWfJSDQtRpMoBJOJffGC3eNtNo/VhD3GS5DxiyLwnHNpHypTd7EcXzhr+4b4tZphNFonMYQboOI8sLAbYLOQJoGFSXYDRepoL5wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lhe35FLU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TJew8Da6; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MU/FRlxC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JDwlA9OJ"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7E8021400220;
-	Wed, 30 Sep 2026 10:28:34 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 30 Sep 2026 10:28:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790778514;
-	 x=1790864914; bh=gwzhd+Z9ZtRilngP/hckVKF3NuzzlCWCd7p2yl1D1rs=; b=
-	MU/FRlxCNe9Z3jSFIDxiuc7Cs8A+ERgAm4DWeyWDIYImd6yrvsGMDuZxKEVRgxTf
-	Sm77DS43VRIekQ5KvOeW+/0eSrL763armovw1z/cAorjHFrnr6Razt7d71GDG04C
-	7rput3oAbxQlgqGv8Nce/Sqa1AijyrmF7b5UqOWfS8186sUyVCCA/bisWvJub9v2
-	lRDFbroblHQ5BHQ0mk3+uaGpnbgHSs94PuJSqXjFuyDQiMBADkFayqQA00BGVvt8
-	Bh2rFOUr4AVehefv6Mog0yiA4dRA6IXlkTLSRuXBx3whNfjyiDVmUg/vRpNMAQWB
-	twsMHRmJrXSRWB/EvZG8yA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lhe35FLU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TJew8Da6"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 80393EC02AA;
+	Wed, 30 Sep 2026 10:37:15 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 30 Sep 2026 10:37:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790779035; x=1790865435; bh=tN6nw3bUAC
+	WW18sr3UcWcm4TrRm7BZhGyy3GX+c+0TQ=; b=lhe35FLUQGHFvxFLeKfmGOacP/
+	3AcUZrXPhL67OaWcVpOfyKQBfE2+y7aMdCvBy+NojvHU2nkftJit1dwVUVl2SrRi
+	iWt0hFmjUCM2UcEeuCwk2VCNBPPx/Hi1gr+2CNXYl5eqoPEUFuhWPc0SHejGN/Qm
+	Dz/QqHOiS7xB0yycFAsE9hsuR1WPkH4PLi8oKxH9as4KOI3LEOpx7TaWnhPbVYiN
+	0/e6gHCCmb8Hu25CqW/ipEiGymd/l5KndzjQG+Bl6smKTHkePHFL+x/YdsN0rBm9
+	v0Sk9f5+BzhY5jdJkcbCNTZZUtU2cI1WjNufh4zVWdyxt6DyQmuAb/NJjaJg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790778514; x=
-	1790864914; bh=gwzhd+Z9ZtRilngP/hckVKF3NuzzlCWCd7p2yl1D1rs=; b=J
-	DwlA9OJriS2SE9AYWwoPVN2aW1YoRwyMVWrvrr+O0fLlaRmnd99dT450aFVCiQK5
-	S1JibhNwGi78ute+ZeZzDxsB+/MQmCnWmIoRRbkizz6SdeQUK1Fa+qCK4ucGjf3f
-	iOvJPyp//sUwUmFLd6g2LQhxgvEtBJ2ljjjMFyaVet+y1vCpy8Fb/lfr5hbKQL+S
-	8JFuUxQu3XHv9wRgCA2YKTkG0YXyZZ4zmXs5dEeM4iFnJ0UfYvBgq1r0TXSWCVq8
-	GaKcJAEV306uwd4ZrK+3JoC9uRI8hxJ//9cDike5cfTJTHiGiDbHcgjFOUNoDfnu
-	58qpbqg/5G0/sCPE7A8GA==
-X-ME-Sender: <xms:khy9as85RyzU32fuEzIV4MiKGefTSK4sFW9YCubaeD9Z6irbCBoohA>
-    <xme:khy9aqs2q32HkCdcFe0c5cN6sWxa6vUkmjR0H5HZJDo8vDij8W_V9tPQZf9HNODlJ
-    Chq4wWF5QUz9vujvpnb2SgOM1otZ2cv6bcZrpBF_cVNqGyx2DsesmU>
-X-ME-Received: <xmr:khy9avre8DhQLGHEnXj1ja2rmB8JXA8JTPMU8vG7S5hcDqIP--_hCg>
-X-ME-Proxy-Cause: dmFkZTFbk2vJu6N5rT4coHsGwfnGPgXhRPjS5a8FrNDGquqeUu2PW37GxbrxTawODRSXc8
-    YnQGIvgb7rtzc+jk/nBLpkCSwveI3GfxrBcKcS9gTnqHbmhXiCBDuUQklUFkqFn831Htcc
-    XBsZxLeBF2O9vaif5PXiiPUatWdFOU7wdpYHgHYAn9bW0nZTowZI78jefQjMWJ/Iwp+uD8
-    rzmFtjfgGW17pzjDYyDCKZnHs93BJPkWifIO4PeApnPOk9ciUhpvL2t6ByM1lPugVFmVUP
-    1mhkQBAJUG8AWflkHJtoVIf1ZHD37k6m/PUgcz+7bUeeuPztCGcCDcbm/CSxiWhtEAO6cG
-    Uyg5N7t+AUIs5/TyV81jAtXll5nxANZMpydWWTLrJFcg+BHC9Ty4KDccZscCjlh9M89uvF
-    OZLdJ0quM2eGElw99mb2SfeKWZ58Cy/GQLjw8YBuULzoPvsy2oQJTgzCyoH6YMkVeWzcqI
-    CEVciJYVYeOdXr8iBUJdIqRSoD5uP2CjJi3uDY4cRM/NY2voo4DEIlBH+7v+yh9VT//6y0
-    LXimoq5y6xFxykMj6Vi2IDjzWkCYq5ZKZVbdwrw12/Kf+LGz/Zz30odnvssc8MZkD6eAFA
-    DoSRAQcbSReGLcMuekbyJ1es2N44clOIH1bE2+6XbvkdRPKcxtBn16lqS87w
-X-ME-Proxy: <xmx:khy9annVNSkO1Zw9aGKL4PcZcl4WHmM7-ctrFuVXqLU_FnS6bsbCvw>
-    <xmx:khy9ajwYCY05NLqyeCsFkGJduXse_XiidplvEhBZsnMiuMgNCuwrxQ>
-    <xmx:khy9avkkjTUwDUFJcExh_FkgFTURXEIjmXPINO_yTbLFyQLlLTBsnw>
-    <xmx:khy9ascmcXvs-y-IaXEZwWbPEbwC7FdAy8wBJ3OKzPqEf08DoFmwIQ>
-    <xmx:khy9aoVbYGEqvDZ_cKkZs1LHM-YvdhD96g7dkfLXwVysPTReYHbIRJr_>
-Feedback-ID: i197146af:Fastmail
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790779035; x=1790865435; bh=tN6nw3bUACWW18sr3UcWcm4TrRm7BZhGyy3
+	GX+c+0TQ=; b=TJew8Da6NgHELyHOl1sMczp+6NrIFzii0I2vPOLmuHCcWmsj4Xn
+	j8JWvia+P1n9R16Y0T3oJ+9Dbv4gWfwM4rQy1J1CcAbav2SPJ+yVAM5IQ1w/3mGs
+	JGSYKJKF3n/RsN+e9PXnyQLv+7IUIQgFxkEzkmtYSl2Nysu+oT2DTXQ2EnOARof8
+	qvMRbdPpSU0b9uTWdV4n4oks/XynjqmZhXYTWmSvlxpfjkZ7sttf+v3/+uRHKpYt
+	XG2xKh111iTZLUexvAM42gum/xwGDtmReeSFv6OlDgJTq17Sf6IEX7BdC9A0cfbQ
+	FRpjlZdZxKR/9rbEEGmTwe6ZkmGd1UZv5Bw==
+X-ME-Sender: <xms:mx69aiII6HTz_IPYYbm2KP8PA0GZ2dzkrixRT-NAZlD5LZ2rKoO6qQ>
+    <xme:mx69at1D4zB4vRrGQUIL5ANllD4k-dmvCVO3INMdMOK7Fxag5AZbZcn0FPXTzGJtN
+    FV2t1Hm71XynZD2dhPzXCssDNnhlkcJr_4VcGy0hiEj7G4Cxvv8JQ>
+X-ME-Received: <xmr:mx69asjNO34Fkz05FSeZf1_xvRDvTd2qE3wqiXqBQUQm5XanDbUDpW_mCgsf1pE-ydmZuFfN4FhAaIrdj5TXDwAVgzDWdv-tLcJX>
+X-ME-Proxy-Cause: dmFkZTEw6RUjQ7nx+Ae5QoTdCTMm4c7jmJvljcKQ3QqVEVxhOlD0q0mosUm0qP1tFsAMEw
+    0NSArSW6lEQF661cXYbk9wWPVaHoFCCDigjLeOeWMMJ13Lbr0TJ9p/CFddec91Gw+AMuaX
+    7P0H+dZt/F5uykJcllqCs2fprJGJxgXnrtvH/9rSc64Y90P5YhDhUFrhwgGh7dOqtRXjlO
+    SmOQ0EfCmKeiGXgQNQTz/iNqcdypLfp2S45AZ3dwqpe9xSUVLzGaWzRe7wN/sMYQe9oVLO
+    5qdPbARvWYhxtur42f40On/q1+HIJ8JKL+6LMB09rTQjEOWPiGPxObN8Cv+zDWtGKwM9JU
+    +ao2MXPAA7zrRGwNo8+39gRwU2Bi0crhUHAy4gC810vTaY3NsxRkjledjZmJCJz9gD9FWv
+    9JUXEwGQfF7RCLT+TNLk2OBbrVb8DNkgPWBw6+J+mryEVt5DkNWuKnPPIebz8L/ss2wOk3
+    Q2FSKUx5Ihv60mqyoV2PozMxvvSjNwYOEePV2e2sIHZB6Az7aPT9a0mnCj69awEjwWWta4
+    BMtb7Q5a+/Y+//+W2Gg/Xzm4wDTgeYlu8UQb5S0hHdVlpCSF38w/a3I5wbqo7Ugd4azrTY
+    nU+9dcZeJxiJKbaTMP6LshTFq/LuS464LuVyWmd36ARhrZlFbqWueYzsmkyg
+X-ME-Proxy: <xmx:mx69auW9pYK5-Z0GGtrVe06ilCa1tE0xb8Fsnjjy7wQsSi1gW_hDlA>
+    <xmx:mx69arVnv5ROOeUYmHhfmnuoSgL86PBI-R_PAfNHGJfuYlro-z9S_w>
+    <xmx:mx69aujkt2xPp_aRSzbcyfrWLkYes51l48ddbBCd7sjluqu6eGnmmg>
+    <xmx:mx69amZd3cVCK9E20EKYG8b-3RcrCrkdY3YMCpYynaMIUOO2zB_uJw>
+    <xmx:mx69ahvgHmmZ_WQh5bz4vOZ4_CiAh2-Y-3c5bFXUIQbv0Oqvaeq7F4hF>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Sep 2026 10:28:33 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bc6c7cd6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 30 Sep 2026 14:28:31 +0000 (UTC)
-Date: Wed, 30 Sep 2026 16:28:29 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/4] doc: transform breaking changes doc to a manpage
-Message-ID: <ar0cjf3rdrp6NAba@pks.im>
-References: <CV_gitbrchanges7_please.d1c@m5gid.xyz>
- <gitbrchanges7_please.d1d@m5gid.xyz>
- <ar0OicAaDipYx-xU@pks.im>
- <2e53feae-94fe-4e1b-9665-2a639fe08515@app.fastmail.com>
+ 30 Sep 2026 10:37:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Ben Knoble <ben.knoble@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v3 0/2] ci: link failure and leak annotations to the
+ test script
+In-Reply-To: <pull.2419.v3.git.git.1790748583.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Wed, 30 Sep 2026 06:09:41
+	+0000")
+References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
+	<pull.2419.v3.git.git.1790748583.gitgitgadget@gmail.com>
+Date: Wed, 30 Sep 2026 07:37:13 -0700
+Message-ID: <xmqqpkxudcva.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2e53feae-94fe-4e1b-9665-2a639fe08515@app.fastmail.com>
+Content-Type: text/plain
 
-On Wed, Sep 30, 2026 at 04:17:44PM +0200, Kristoffer Haugsbakk wrote:
-> On Wed, Sep 30, 2026, at 15:28, Patrick Steinhardt wrote:
-> > On Mon, Sep 28, 2026 at 12:41:25PM +0200, kristofferhaugsbakk@fastmail.com wrote:
-> >> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> > [...] The one interesting question about it is of course what we'll do
-> > with the document once Git 3.0 is out. Will we retain it? Will we
-> > remove it? Will we empty it and make it focus on Git 4.0?
-> >
-> > I guess once it's a manpage we should definitely retain its contents for
-> > a while longer. The breaking changes will be relevant to users even
-> > after they've already upgraded to Git 3.0. But if so, we should probably
-> > introduce a new section for Git 4.0, at least if we already want to
-> > start thinking about that.
-> >
-> >   NB: even if we start thinking about it I think we should probably not
-> >   release it anytime soon. I guess having a major release once per
-> >   decade may be good enough.
-> 
-> I know you are wondering out loud here to the fora. But just personally,
-> I imagine that this will happen after Git 3.0:
-> 
-> • A section at the end about Git 3.0 for historical interest as well as
->   people on older versions who might be browsing outside of their
->   installation (probably git-scm) (and who might be on pre-3.0)
-> • Git 4.0 discussion before that, however hypothetical or distant the
->   release date
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Yeah, that's also mostly what I arrived at, too.
+> Link failure and leak annotations in CI to the test script, so both can be
+> found from the job summary.
+>
+> V3 CI Job where failures and leaks are reported:
+> https://github.com/git/git/actions/runs/36537917146/job/109306215909?pr=2426
+>
+> Changes in v3:
+>
+>  * Fixed bug in the --immediate exit ordering: the --immediate &&
+>    --invert-exit-code path called exit 0 before the test's annotation was
+>    written, now a single unconditional call covers both exit paths.
+>  * github_escape_message_ no longer relies on \r being a portable sed escape
+>    sequence (not POSIX-guaranteed and BSD sed implementations can differ),
+>    it splices in the literal carriage-return byte via printf instead.
+>  * Reverted unrelated test-tool line back to its original form.
 
-> >> To that end, let’s move the text to a manpage. But keep the old page,
-> >> just linking to the new one. (We wouldn’t want to break any readers.)
-> >>
-> >> Just do the minimal changes for the new format. Also demote the first
-> >> section to the second level, i.e. make “Introduction” the same level
-> >> as “Procedure’.
-> >
-> > I feel like a good first step could've been to convert the
-> > BreakingChanges.adoc document in-place to use the new format. Like that,
-> > it would've become way easier to see what's actually changing. The
-> > rename could've then been a 1:1 move.
-> 
-> Like this?
-> 
-> 1. Convert to the manpage format without changing the filename
-> 2. Rename the file: pure rename without any other modifications
-> 3. Resurrect `BreakingChanges.adoc` with one line that points to the new
->    document
+With these updates, the patches look good to me.  Unless others
+spot problems I failed to see, let me mark the topic for 'next'.
 
-I guess (2) and (3) can easily be combined. I'd hope that Git still
-detects this as a 1:1 rename.
-
-Patrick
+Thanks.
