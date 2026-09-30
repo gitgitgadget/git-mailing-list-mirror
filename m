@@ -1,200 +1,115 @@
-Received: from mail-ej2-f43.google.com (mail-ej2-f43.google.com [74.125.228.171])
+Received: from mail-ed2-f31.google.com (mail-ed2-f31.google.com [74.125.228.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD55E4E01E3
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:56:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790780218; cv=none; b=Pgx+b4akMVH140rsj9GgySZlOajkXC0LSXdyt+diDPw35R1x7Z77cVfr5h/JdSzjm0hmxnw2lcR2IH9rSjLHSWyT/rtAU3iQEwKKDFxF6k/fCAWxO0xtjbKIi9LeByJk6APCikLS/bTqOHKnirERJ71knmNt0pbvzGfZzCkXpbc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790780218; c=relaxed/simple;
-	bh=N8VZjVu5/2yIRHgWiOxiH1DQ8D9bAcSu7LJC1YjNfz4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iqhTwdV8I6E4woXNew8FcISG5kW4PiNmnzVbVHLDD5WmYOsZIEYFmTWfnrySA12l4aDdunDPt3GH2tzOVUHApgIyrJMp7eqF9iKs/186YULUueBJ/sQhMkJPXPMw+pcsiPmYTPEO6ZAeZVbwAq468Rwu9Xnlc9O+n5VOt834viI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PO8/IA0O; arc=none smtp.client-ip=74.125.228.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBDFD4F93CC
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:59:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.95
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790780350; cv=pass; b=r4aQx6u74uwCIyACsRpxdzmvaHHkazgljTssQWkYOaFvu5gMjdotsdb7dfMFE+2DYElmpaet3ekhj94OOcBFEbTQC2mxf1Z5qEyHOT69avzCwXIhGlXFz6U7R7KkGmeOj8tkUteEn0IIwpraPhUpN2K9r5pqdZ/R0jAAANoTFZ0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790780350; c=relaxed/simple;
+	bh=LOaTrTHU6SMtjpF0MGNE0i048dgVpu2bgweGs5lS8y0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eRUfBNbXR3p4t0yGkTI7pLS/1ZLjpISEKMoc+9fx24XQhceJB5YcwIkBMnLktjwNIf8Dh7+aZf/DZ6/TFbYMfOjoJSeNtqhZjqV1HjYJLMDL1FDcSgNY6nLD6mThSL3Hi7xJA4A3a4Ex+TiSV/DEigRi3jn1X8RmZaoJgBVg6Ic=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dGhpznxe; arc=pass smtp.client-ip=74.125.228.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PO8/IA0O"
-Received: by mail-ej2-f43.google.com with SMTP id a640c23a62f3a-c2e201b7189so126351166b.0
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 07:56:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dGhpznxe"
+Received: by mail-ed2-f31.google.com with SMTP id 4fb4d7f45d1cf-6ad795d5205so1086487a12.0
+        for <git@vger.kernel.org>; Wed, 30 Sep 2026 07:59:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790780339; cv=none;
+        d=google.com; s=arc-20260327;
+        b=HA3K/6RPQZO5xEIGxb72H3Vr0zd6j+ZJ6ksE+e64vcjXq6NaeJ59MQUjuRo8+lTeEN
+         vqUUc+WhZ86oH3699fE5Eb68Jkjkd89K28o9VmomqZhaSe3aRyiU56oKoyA1wiPvXvzx
+         FTZ1rciH7K/zFAunFlODexEfGUGc7Eeo3BPDsL49U40mWlqEsjiPuT6h9sOFuBI0iDsU
+         bRlrsJ7E0yw4gBZEiPXyHIJmpr60yyUCbWYvPNU7NRly6gBogtKakmNKznLit4gBuLFL
+         /emHDr/wXcFdwuY5FTM2KFlA36Mlg0QLiMGD1FPPg8dpLnrjYX+lZ23RJd949wObf/sT
+         uMUQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=O85meBPB/8uu1eE8XWBQpTM/UXm1Xkmv3hLW165HqO4=;
+        fh=xhTNA0mJPQkXgCl5nb8pmfEc9l2jOBtNjAD+skEbj5M=;
+        b=dhZJmScKW2LxwrRaSBIbtJAy/9TLq7J4KvmN7Mg8QxvKblHU6c8JRWJ+0SLWEUCCtr
+         +/D5v5JxoMCMPy4xOdoD0MdoOGRHoz+485J8y28D1QxZNLwHc2y1OsARaZN50HPsvYW0
+         5sQlmmpDe9F59tg58OSU5XPdT6rwOemL6aWNQAU4B433pM53y24CMBHoT24jLx+OnJuZ
+         bN6uD253yrOu9DA0ZW7V4NUuEqCsFq1ROuhDqP5Y2lRyQ8CyHqNuVymiPuOEe126OfKC
+         5P5PD7LNTFgCvWLNOdQL9FS7H2cNn7BD+hJ+DDF/flfC4OcOsupy2hqsDmMkjmQKT/PP
+         Zopw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790780205; x=1791385005; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=aahfjgFOSfVAsh8S027gq/nLpLEwRHsc32bHfWdbABQ=;
-        b=PO8/IA0OhJQGK4f5MhKOyDrArPE/0eIdEWgPy2Uov1QyFrEd5599G/EEanh6L4XiNn
-         b8UeUTyB//RScl42s6yEf+98LFXoh3gfsNVPK2tg5l91lF/ifz6DnvOe4VDikOKD/z+H
-         NrROgrRxCbU2wdjQOIj9CyGRGMy6f5SO17C62MxtzTw29Wi1Pl8NSWTTxJ6dWeZjM+9U
-         bK1JgWFikzeDp++Zecxmhz9EZxr7wwL6x8adyuGf0LAqbNtb9h2PSAJRK+ub3hftrthw
-         uwCLm2llSgnPK4ytW/D1sjIORTkkIidgTKAXwEF+PHzn8z0us+Fd6g0lY+Gg12NToWiR
-         0URg==
+        d=gmail.com; s=20251104; t=1790780339; x=1791385139; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=O85meBPB/8uu1eE8XWBQpTM/UXm1Xkmv3hLW165HqO4=;
+        b=dGhpznxeZXhtn590lKsB/0MECxd7eGo7YaJfYrniAusgxRZjmc5JA4J7vLbwAdwfaL
+         fJNeFGt2gatFV0EE6s5mkPyH62Ggic5Z8ilmdTEIg+XWhsn2oB2Th0M575pRDnufJuMx
+         Hp7w9vTVJ5l0Dx5UTYw6ppY9kqoksRbzFERekLSFul+oIKAoy/Rl0ouOxgfzKYbj4zXr
+         1vZU3LILDXILlNuVuck9RH9odzpY2wi86fAKPvyhZMYrg80epoS9FYPjD3l+0vzwDaC+
+         DGZ+jU0GCf0ja99Mo3bGmxRdWeDBHWyy66Yd2yHU8s/42SBWMzVtPkT7oK25UmjfkxhU
+         RiRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790780205; x=1791385005;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=aahfjgFOSfVAsh8S027gq/nLpLEwRHsc32bHfWdbABQ=;
-        b=0Jx0VqYpP7RquP9UGFy+/Yk6pN9umnG5gh3G/UbRQkkHEmmSRfTsKcyGCbVpEDU6ig
-         qLzMis8fUEXf5L2vLzrucU0OTmTuEM7WUdFlPNMJJ4ATpsG2jriCilB7UUFu86hgnim8
-         3nJapegyKhHCJvcHretpHR+UIEuvxeu+tQSLIkSjkAM876mzVRaptE417g0MxyTgZTVI
-         EALqsAuzR/Fu7AWuZb+HyD75NqXLEmnmLoawQ6EOEqmLSEJ/tCt5hMHNekEiHLyUrwRl
-         ucj57C1+SGoqLJyW6ln5zRoEb5LcgZP1p9s7MyQs8rYBdG/m95JBHE01M8wB4PI6qcic
-         vTqw==
-X-Forwarded-Encrypted: i=1; AKwUvBw8+YsCDIrK/FgOe0iEWfi5msC0Go4NT2q04g8m4RWolligUnnoGnmIZkEoTX+ry2wkRCM=@vger.kernel.org
-X-Gm-Message-State: AFuF++nCY4TZ2DuzpA7mdsgNGMhM042N9KmZXPXBvFXbKTQjsgtshto3
-	bFgvZTVwLTe6OliSuU73HidbipfwTDm1RGYu5mPxGFcmdMq3uCGeUAs5obcv5xLQ
-X-Gm-Gg: AYBFou2ygmMiGGZJNmE0n07wA4VjGNo0kJX7rJLbKurmnFHpNs3mHmGeRvALzKiDTGQ
-	6XGkTkxIxK+Silze9LGbo4fv/gijD2v9JzZ5YAb1GobSGQwX/OkyJoD4ID0lMVZd0S19A0LDTkC
-	qraZ05dKczWp6ZDa9Qg1ILwqnS6nWEa+ZTMZBi+3Zwy+yZBzgluZGUaPBmW3JKs6t6vAdmypalu
-	KsWqFUHoipjPl0PZ81V2/M4qD4zyRAilQYQWwWxzZOk2/+Qkfbs1Gje+DJvAPXMfbJZ2nAWktan
-	3JwwPIRwq8ddt1vog6n9NrTgO9db/ydpWDf73qwTnVTzGM/cUbJtkFeuxYiO7Sat7ixBbFAfQ/g
-	K0lhKuR7DXBx1Pu0t8pvBZwCRgHEbWPjT6qRy+0orHw6EH7h58IizZFoJqF6lK/Uaywfd4MFA7R
-	Ni5xw7Zd12D/1UuwGf4VhrdUD6pl4oqMeoF31svdfg+1+oTML9w4UAp50Kxn2LApnIuJqAQuA7a
-	Yk415Kv1f7TXmCGzaVbHvDIubElBPNC39A1+IeT7ioTf/TlQi1gcPrcRmX7Iagr
-X-Received: by 2002:a17:907:3d91:b0:c28:599b:7782 with SMTP id a640c23a62f3a-c2e23cd9d61mr147939466b.21.1790780204754;
-        Wed, 30 Sep 2026 07:56:44 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2e31d36795sm16563966b.38.2026.09.30.07.56.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Sep 2026 07:56:44 -0700 (PDT)
-Message-ID: <5529bccf-eeb1-40f9-ae03-8fa19dc26f5a@gmail.com>
-Date: Wed, 30 Sep 2026 15:56:39 +0100
+        d=1e100.net; s=20260707; t=1790780339; x=1791385139;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=O85meBPB/8uu1eE8XWBQpTM/UXm1Xkmv3hLW165HqO4=;
+        b=tYp/XbMhSxNiwlXmjr/OHfC5ihVSY7RsW2R4VMCC99EPXvF6d6ptccO5gRCTSxpxAl
+         Mva4Z1oLaTmDn543XjuTq6Mr19CAC35xhL+dOejYH/bpH7OVOlNJ+vtiSgUTyWAQbN5/
+         fYbbZyJ84+akwWzkHnevTlu0DrMGsZsAt4Zb+StaTeRpk4d8J9odkRG2jCqsCbv5ggw7
+         EbbWtNus12uT8JpnelMpt/sZUWQ6aFD+WHff2/S6FVJVEEHnVEbhnUauVqnivEserP16
+         cch2l727GVdcXU/xmrJKa8RxGmAV7a7w4nGjqqzvsC1A06lWdkawBP8HkhKGL9sETj/g
+         VaLg==
+X-Gm-Message-State: AFq9FYJeiUUrmKycURijq5dV+S4JbrI+NmP8JZppxHAaRw3/6PLN9IiL
+	3n0fJsok+USTB2d1P0LqjOEhqTHKVXCVFlHea8Xp2UtqM6rD/YW8jZXgmOW9i8gqi6yG90dYjBi
+	iiR+ft6eyt0ksCDuTCBKfDeHKE6n58D+GzgRs
+X-Gm-Gg: AYBFou1BoG/DqmBOyxSj/nGdq1fTloYGH3FLjXmYjcQyBxCrnbmtNdsdKaGajpfZXkT
+	y+t40Z6cbob0lQUQD4mJ0Ikl5HES7cpQdDQ5LaQkMwdoktB0Za13E/pB7oxHMQDoBnWaQjQsmBw
+	kHC82CME5HcauIqUGQH7uVIrYUrvLNCkwK/f6ehxXm8EZGPzJRCYyX5HF0jRl9Ce8M95FGyxd75
+	P7VXEw9msQioT9T7EQ/erflt2VEHfR+2Hs2W8OERbBmBcvSisW4+q7JEU99vdB9XuYpmmCntn4d
+	eRpP1Yj9bQkq6RHtww4hR0bFB49oCjIfnwIvONjVxgEz29gYwdRRmCE45XHX2y4dw5CiQoTFs1l
+	SJSpLfbeXTX4yX3trhqOC7rWhgeHnXKWglNCxzLqWXxsSj9bVKB4J35By8UCZCf0nrXw=
+X-Received: by 2002:a05:6402:43c6:b0:6a7:ee56:6160 with SMTP id
+ 4fb4d7f45d1cf-6ae19949dffmr1219130a12.34.1790780338635; Wed, 30 Sep 2026
+ 07:58:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 2/2] ci: point test failures and fixed known breakages
- at their file and line
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Ben Knoble <ben.knoble@gmail.com>,
- Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
- <pull.2419.v3.git.git.1790748583.gitgitgadget@gmail.com>
- <750c3605128c268f331b1b9477ca0489ced75543.1790748583.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <750c3605128c268f331b1b9477ca0489ced75543.1790748583.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260925-ci-large-test-resources-v2-0-f632cf319756@gmail.com>
+ <20260930-ci-large-test-resources-v3-0-d65ac7c21b5f@gmail.com> <ar0gon2VE0RlG_cC@pks.im>
+In-Reply-To: <ar0gon2VE0RlG_cC@pks.im>
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Wed, 30 Sep 2026 10:58:22 -0400
+X-Gm-Features: AclHuK9IMe_bU9B5uxXZTr8lSZXQAUCu8509BfflnhbugDkQRv9wLnBWE6EbguU
+Message-ID: <CAJ-ks9kYC3NM7BY=gYKxVL54nOkH4wp9TdAJye_8ifNPa7oVdg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] ci: use cmp and align job-count selection
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Harald
+On Wed, Sep 30, 2026 at 10:45=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
+te:
+>
+> On Wed, Sep 30, 2026 at 10:20:33AM -0400, Tamir Duberstein wrote:
+> > Changes in v3:
+> > - Use twice the CPU count on both providers, instead of adopting
+> >   GitLab's existing one-job-per-CPU policy.
+> > - Include CI timings and their tradeoffs in patch 2's commit message,
+> >   and explain the use of sysctl directly.
+> > - Patch 1 is unchanged.
+> > - Link to v2: https://patch.msgid.link/20260925-ci-large-test-resources=
+-v2-0-f632cf319756@gmail.com
+>
+> Thanks, I'm happy with this version.
+>
+> Patrick
 
-On 30/09/2026 07:09, Harald Nordgren via GitGitGadget wrote:
-> From: Harald Nordgren <haraldnordgren@gmail.com>
-> 
-> A test failure or a fixed known breakage gets an annotation that names
-> the test but carries no file or line, so there is nothing to click
-> through to from the GitHub UI.
-
-Have you got an example of this? As I said in my last mail, I can't see 
-any links in the output from the linux-leaks job.
-
-> Find the line a test is defined on by searching the script for its
-> description as a fixed string, using the first match. A description
-> can contain characters like `[` or `*` that a regex search would
-> misread, so match it literally. 
-
-This second sentence doesn't really add anything - you've already said 
-we're searching for a fixed string.
-
-> Fall back to line 1 when the
-> description is not found verbatim, which happens when a test builds
-> its description at runtime instead of writing it out literally.
-
-Ironically, it is the dynamically generated tests where a line number 
-would be most useful, but there is no easy way to determine what line we 
-should be using.
-
-> A GitHub annotation is a single line, and a test description is always
-> one line too, so only a `%` or a stray carriage return in it needs
-> percent-encoding to keep the annotation intact. Escape `%` first, or a
-> carriage return's own encoding would be mangled by a `%` substitution
-> that ran after it.
-
-Why do we need to escape the test descriptions when we haven't been 
-doing so up to now? Also if the test description is a single line why 
-are we worring about '\r'? If it is so important to escape the output 
-why does this patch not convert the existing annotations like the 
-"group::" on in the trailing context lines?
-
-Thanks
-
-Phillip
-
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> ---
->   t/test-lib-github-workflow-markup.sh | 38 +++++++++++++++++++++++-----
->   1 file changed, 32 insertions(+), 6 deletions(-)
-> 
-> diff --git a/t/test-lib-github-workflow-markup.sh b/t/test-lib-github-workflow-markup.sh
-> index 0d54496358..66d2ccca18 100644
-> --- a/t/test-lib-github-workflow-markup.sh
-> +++ b/t/test-lib-github-workflow-markup.sh
-> @@ -31,6 +31,22 @@ start_test_output () {
->   	github_markup_script_name=${0##*/}
->   }
->   
-> +github_escape_message_ () {
-> +	# A test description is always one line, so only % and CR need
-> +	# escaping here. Escape % first, or CR's own %-encoding gets mangled.
-> +	# \r is not a portable sed escape, so splice in the actual byte.
-> +	sed -e 's/%/%25/g' -e "s/$(printf '\r')/%0D/g"
-> +}
-> +
-> +find_test_case_line_ () {
-> +	# A description can contain characters like [ or * that would
-> +	# corrupt a regex search, so match it literally and take the first
-> +	# hit; -- keeps a description starting with "-" from being read as
-> +	# an option.
-> +	grep -n -F -- "$1" "$TEST_DIRECTORY/$github_markup_script_name" |
-> +	head -n 1 | cut -d: -f1
-> +}
-> +
->   github_annotation_ () {
->   	echo >>$github_markup_output "::$1 file=$2,line=$3::$4"
->   }
-> @@ -40,18 +56,28 @@ github_annotation_ () {
->   finalize_test_case_output () {
->   	test_case_result=$1
->   	shift
-> +
-> +	case "$test_case_result" in
-> +	ok|broken)
-> +		# Exit without printing the "ok" or "broken" tests
-> +		return
-> +		;;
-> +	esac
-> +
-> +	test_case_line=$(find_test_case_line_ "$1")
-> +	test_case_description=$(printf '%s' "$1" | github_escape_message_)
-> +
->   	case "$test_case_result" in
->   	failure)
-> -		echo >>$github_markup_output "::error::failed: $this_test.$test_count $1"
-> +		github_annotation_ error "t/$github_markup_script_name" "${test_case_line:-1}" \
-> +			"failed: $this_test.$test_count $test_case_description"
->   		;;
->   	fixed)
-> -		echo >>$github_markup_output "::notice::fixed: $this_test.$test_count $1"
-> -		;;
-> -	ok|broken)
-> -		# Exit without printing the "ok" or ""broken" tests
-> -		return
-> +		github_annotation_ notice "t/$github_markup_script_name" "${test_case_line:-1}" \
-> +			"fixed: $this_test.$test_count $test_case_description"
->   		;;
->   	esac
-> +
->   	echo >>$github_markup_output "::group::$test_case_result: $this_test.$test_count $*"
->   	test-tool >>$github_markup_output path-utils skip-n-bytes \
->   		"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET
-
+Thanks for the reviews!
