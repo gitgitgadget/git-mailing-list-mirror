@@ -1,168 +1,135 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41AF425897
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 20:31:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEE14457B6
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 20:37:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790800279; cv=none; b=O8n9nRbiOiNf/HYRx3w3WM1lqptpnZd2YH2HXVI9GojSuJFRMTcqawtACWNf4sM7/tLVqaHaXbPgfQKgNH07RNtIiahHnKNPdasD93uqA+/Ro9tmehbjSrpBGqFXNadI8Ntk29qNZRUfcULsUx93axQSOf56+Ty16N8Pp/aUcC0=
+	t=1790800640; cv=none; b=B75RiNHl0yqNg8GPNFrIS5qj2o6jlFW3M1v7/dz1535Ukke7Vb+lFNufJa98ERuyJ9tJn51Z6kra6p9StxX2dFvT93olGqJPFcLpdWB7sQfFfJl349+1QIPzy6Vs3YgBzytpai4PJVCHiiKojoNwkt8WKUE1v3SUSUHmao2nsmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790800279; c=relaxed/simple;
-	bh=0Hcfu1jg1Dh2aDhcHgmgAggkYvSWf7/PxzZOqjRmt5A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kAQPMNptwkMpZHyqls4qy5sn2OnGLtTGP5kYiW6H7z/irw6NYfMLdQb7bAnxbHy6BWDCnr8lz4ZT6emnNx/gYUWP9Dj+AHE/rTzu4y7RxHfOaodkG4IwSWsM+i4Vch5dbWcbSQHEZiSaEHzcSDusLDZZ15M+SVWlIovqiXC8iuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QB9Za2vJ; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1790800640; c=relaxed/simple;
+	bh=JQ6jeKi1CiXnboHKfe5HfyWKoVqf+9PuNnuqjvCoA20=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PeWnBOrjuFUd4H07+QftaDdu/IyvYm/bizxsf5sR/ChyFZEfRSgi/AeUSer/itwYJ5htJXajEduzpFEtSNXYB8SeJpNVJqtp/n8ojTk0qp+OpHk6PJFxcgShh/SiCLqgcN6lLgE9iYQmrVgHH9lwez/j0iSIErMPjuZXMl2IBSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I20voQxW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NIFqYNRw; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QB9Za2vJ"
-Received: (qmail 7503 invoked by uid 106); 30 Sep 2026 20:31:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0Hcfu1jg1Dh2aDhcHgmgAggkYvSWf7/PxzZOqjRmt5A=; b=QB9Za2vJrIP/ShJENcBMNGzSNvF4lBRuQwSTn6yJwbrwDECwx6bRZX5trgF4F2p+syyzGg7XFibDZD9naK8ggLboXTOGp6FeI97bbZoHEYMrJUGSqieeXvYb50btsAN5dmAnZkQYVBFNi52gUk4Twk56OZoVqw+SBfnVfbIlYZQGPP66PyX/ZfAmtt3Nn7sxJzkmtmnLKE6jyCjv6kwrxhcmKgqeNh0zlNe1WJp8DWmPe/oLXbr1foXFx5/Ie/OVOGMR9r4tmAyWrH3kolusP0TBrw03BW4f4ToJkLHz5P2sbAwUk0lLIpjLOGXt8vbMOoaziZDk2aWePLW7Izxn0w==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Sep 2026 20:31:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18624 invoked by uid 111); 30 Sep 2026 20:31:10 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Sep 2026 16:31:10 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 30 Sep 2026 16:31:08 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <ttaylorr@openai.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ted Nyman <tnyman@openai.com>, Elijah Newren <newren@github.com>
-Subject: Re: [PATCH 2/4] pack-objects: ensure tree/tag closure with
- '--stdin-packs=follow'
-Message-ID: <20260930203108.GA747209@coredump.intra.peff.net>
-References: <cover.1790731662.git.me@ttaylorr.com>
- <6348667e2e3fe63aeb139888e877dd8447570253.1790731662.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I20voQxW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NIFqYNRw"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BFCBE14000BA;
+	Wed, 30 Sep 2026 16:37:17 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Wed, 30 Sep 2026 16:37:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790800637; x=1790887037; bh=RlY4RONvum
+	9J9CixswnCXw6siytr32T0cL2RdDsivGk=; b=I20voQxWhry7+FApooDgrWd5TO
+	HtllJSHky/PKaTpSACUlzBRFzivzfhNyI+RbvokXCB4hdZyWHX4Q/+91Q12q4WGu
+	C+KXgaJQQVXXdqurGIlSLGkUvZuKQ9xB7OK7i+C4quvJQ3KQfb36/+RIGTjDK775
+	TqeyY5mkX1HKw5AKOty25xRiRL6eIaA9hMCecY673cXxCJWbAEEPKiWn/TPftZTg
+	+LOukfg6CjzHjsuZ/Yf+YW517WndPHLRkV5epjwyojV+97qFMNI+fiQxQc3rDJCX
+	8UDzf75ecjKsyk/t05BUvkN1ZROVT5W+0WZK6Wf/rJ6TAD4BXlXrg9H+FhQw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790800637; x=1790887037; bh=RlY4RONvum9J9CixswnCXw6siytr32T0cL2
+	RdDsivGk=; b=NIFqYNRwbuDmqzFUeWkyXtPhGNNkiuGxhyLIHIrpwXVH0RrGU7v
+	aHO5eJ2VM5g0eVE179oAf8OLuHz4j9BestYaNLUMQyuNkTdbAr4HEDMjtao4mBga
+	hHXQCQ7/if+BVBhtyfA/OZ5Pn5A75r46upQndsd2HMt3lzaYZ9JzlR984IXNtIaP
+	WLy8JfhDCyMcQ0111cDfxAoyfFVkpOR48O3PF1fhfBiuERPXAo/vchXBuOTkVv2E
+	2ujpeQnLw1sSwxGjn/l876He56b+1D30t/+M/hDdqh/nx12LSGtunAWW4Ak84zfB
+	VdStq2kvlNG2RGUrBhN36Qo6Udv72c+5zow==
+X-ME-Sender: <xms:_XK9auSo7kbXP1lUUNsXWM8IKx1NU0NmFCaUK62bfBgWffQDFzzCmA>
+    <xme:_XK9aqqntySwVU4BMoCvONG9h3Q7dmYEfD4cvO8Cxn8OBmJGXXL0Z0TH7mNpN9wzj
+    aPRxVD8jaHPlXWwIIxuBHPiWWwtXfQbzOHvNTJiuAz7rl06XxE2-dQ>
+X-ME-Received: <xmr:_XK9akKyn0KoVJu4dFrv-dXttwytYbaVp65YAvIklEtHFuZExGEU_L3xki3HHy0gLg_5nRZBJitz_LpE2yiAcQt6my38GpH513dR>
+X-ME-Proxy-Cause: dmFkZTEq0t1Sy0tIm3nJf2Q1mM8C8GiPGnlxroDO2O5xQo3cxXWH0f7xZ4AdSnT6cm9F2z
+    LeWgL81ThFAKUbFx8C4V4NdIKi24NOkxCDx8GOx8S21vV3UEtbxAHgiGN8sgOAmufFZyJi
+    UUn3sHbHXMtlF3qtmQR4B5/MYA6/tVyGMRV/8Cmb87WPxhM4XYGJnukaiM39S77VMpVT7d
+    KAI1YEronx9GPzw4L5LX5hZ1RYMM9UOtOTVnN/nzNFgvGfvNMeEwPUxOALCyHN6A0QiqKl
+    i3Da24Dw0MU/a2EmxFtD966R7l+EiYhdbMgIbOEMZunUe6ucOP0mFYLhKDE2PMgqK38tdV
+    OhhWuaMyLArhQckE2ig4duu9qoJtnNE/Ot2u98KTe04EFtzeIb3DF2zkgwqAMK2HS6cFYw
+    TyH8Kw+7uJ+m10Ac7vAcflL0unis0wZcgTqB351mEBUGdvWpaIEhdF9zD/ObubD4YSM85m
+    pDKCKiGYFD7jxmlX6O4As2zeXElYSlduLG410dbiJvLoeK/wZP4sIvZGRKfeMJ/Z7CznxB
+    js6a6aUK4cZOH1vXI9N4It9FqgHD3xiI3BLaFj96NiX4sKxRUSUz/rEDyXY4WIXszyxPMY
+    8kKw0WCXKijbmomEaaSVjxMePf3lePOmdVWHjYSn8jfagCErlth/AkyMlY9A
+X-ME-Proxy: <xmx:_XK9alpcn-44_sWdovlTOGJAtkqxfcFWfmx3lsLQ3gOMb327kOZNIg>
+    <xmx:_XK9akzr4CpH4HbCLUiqGgsT-R2isyTHw3Y68xW-RfltLXuvh4A-TA>
+    <xmx:_XK9ahPRNiv8I-gSq22wHV4umtFIy7UxfHevTtmnQ--ydPfs413UiA>
+    <xmx:_XK9ah5f6zO9OfVsRahhH7q3AWo9Y-rXvWh4VTSUWTNY4N8gzof67g>
+    <xmx:_XK9ag7zUN89laUkJZj3NnBGNGKb3bC2C7KiS7xCaOBxs9ui_vgdvfsk>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 30 Sep 2026 16:37:17 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "Patrick Steinhardt" <ps@pks.im>,  "Julia Evans"
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 1/7] [doc] Add new gitmergeconflicts man page
+In-Reply-To: <5ba2088c-4919-465f-8892-4ed0685f81ea@app.fastmail.com> (Julia
+	Evans's message of "Wed, 30 Sep 2026 15:53:17 -0400")
+References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
+	<ad4853dc36cdb883c9a8dc6bda747a5ea318e7a8.1790261062.git.gitgitgadget@gmail.com>
+	<ar0MVRV5X8zgZfLy@pks.im>
+	<5ba2088c-4919-465f-8892-4ed0685f81ea@app.fastmail.com>
+Date: Wed, 30 Sep 2026 13:37:16 -0700
+Message-ID: <xmqqqzia8ohv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6348667e2e3fe63aeb139888e877dd8447570253.1790731662.git.me@ttaylorr.com>
+Content-Type: text/plain
 
-On Tue, Sep 29, 2026 at 08:28:49PM -0500, Taylor Blau wrote:
+"Julia Evans" <julia@jvns.ca> writes:
 
-> In cd846bacc7d (pack-objects: introduce '--stdin-packs=follow',
-> 2025-06-23), this behavior changed such that whenever excluded-open
-> ('!') packs are present, the walk stops at objects in excluded-closed
-> ('^') packs. Geometric repacks use '^' for retained packs already in the
-> MIDX, relying on the indexed object set being closed under reachability.
-> 
-> However, the walk introduced in cd846bacc7d starts only from commit
-> objects. A geometric repack can therefore produce a MIDX that does not
-> maintain reachability closure for lone trees (that are not reachable
-> from any commit otherwise in the closure).
-> 
-> A later walk with '!' packs can stop at that tree in a retained '^'
-> pack even if a new commit reaches it. If the cruft pack remains
-> excluded, and the bitmap selection picks one or more commits which reach
-> that tree, the MIDX cannot generate a bitmap for that commit.
+>>> +to include merge conflict markers `<<<<<<<`, `=======`, and `>>>>>>>`.
+>>> +For example, here's a merge conflict where both sides edited a list of
+>>> +fruits in different ways:
+>>> +
+>>> +----
+>>> +FRUITS = [
+>>> +    "apple",
+>>> +<<<<<<< HEAD
+>>> +    "cherry",
+>>> +=======
+>>> +    "banana",
+>>> +>>>>>>> add-fruit
+>> Hide quoted text
+>>
+>> A bit of a tangent, but sometimes I wonder whether we should make the
+>> respective commits a bit easier to access. For example, we could put the
+>> equivalent of `git rev-parse --reference <commit>` here for each of the
+>> sides.
+>
+> Personally I'm not sure if the commit ID would do much for me, but I feel
+> like it would help me if it were possible to include the commit message. 
 
-OK. It took me a minute to grok this, and what I got hung up on is "a
-later walk". I thought you meant a later walk within the same process,
-but you mean "a subsequent repack / midx generation".
+It would also help the resolution, not just committing after you are
+done.  It may not matter while picking between cherry and banana to
+show your personal preference on fruits, but in a more involved
+conflicted merge, it may help to be able to view "git show $commit",
+"git diff ...$commit", and "git diff $commit..." where $commit is
+the "add-fruit" side of the merge to understand what they wanted to
+do, and what we have done while they weren't looking.
 
-So we fail to walk in an earlier repack, but we might not fail there
-because no bitmapped commit happens to require that closure. But we've
-set up a timebomb for that later repack, because our pack which is
-_supposed_ to be closed (and thus gets marked with "^") is broken.
+>> I tend to forget that by default, we only render ours/theirs in the
+>> conflict. I always feel like that makes it way harder to resolve
+>> conflicts as you don't have the context of what the code looked like
+>> originally. So I have diff3 configured locally for ages.
+>
+> Every time I show people diff3 someone tells me how happy they
+> are to learn it :)
 
-So this fixes the initial generation of that timebomb. It doesn't help
-us deal with existing bombs, but presumably the solution there is a full
-repack (and we would not want to deal with existing bombs, because the
-point of "^" is that we can trust it and avoid lots of extra traversal).
-
-Not really asking for a change to the commit message, but just
-documenting my understanding (which hopefully matches yours ;) ).
-
-> Add trees and tags from included and '!' packs (and loose ones with
-> '--unpacked') as roots in '--stdin-packs=follow' mode. This rescues
-> their descendants even when no input commit reaches them. Walk these
-> roots after the existing traversal, preserving the `SEEN` bit to avoid
-> redundant traversals. Ensure that the walk takes place *after* the
-> existing traversal so that we don't lose the path prefix used for trees
-> and blobs wherever possible.
-
-OK, that makes sense, as we should treat them the same as commits.
-
-> @@ -3846,6 +3847,9 @@ static int add_object_entry_from_pack(const struct object_id *oid,
->  		 * list after checking `want_object_in_pack()` below.
->  		 */
->  		add_pending_oid(ctx->revs, NULL, oid, 0);
-> +	} else if (ctx->mode == STDIN_PACKS_MODE_FOLLOW &&
-> +		   (type == OBJ_TREE || type == OBJ_TAG)) {
-> +		oid_array_append(&ctx->extra_roots, oid);
->  	}
-
-And this is the interesting part. What about blobs? I guess we don't
-care about them because they are either there or not. There is no need
-to walk them independently because they can't reference anything.
-
-Why do we need a separate extra_roots here, rather than just using
-add_pending_oid()? I'd have thought we'd add it all to the same
-("--objects") walk.
-
-I guess that is explained here:
-
-> +	/*
-> +	 * Trees and tags need closure even when no commit reaches them.
-> +	 * Defer adding these roots to revs.pending until the commit walk
-> +	 * finishes. Otherwise a subtree may be visited and marked SEEN
-> +	 * before its commit's root tree, using "a" instead of "sub/a" for
-> +	 * a blob's namehash and delta attributes.
-> +	 */
-> +	for (size_t i = 0; i < ctx.extra_roots.nr; i++) {
-> +		const struct object_id *oid = &ctx.extra_roots.oid[i];
-> +		struct object *obj = lookup_object(repo, oid);
-> +
-> +		if (!obj || !(obj->flags & SEEN))
-> +			add_pending_oid(&revs, NULL, oid, 0);
-> +	}
-
-but I'm not sure I buy it. Don't we always visit the commits first in a
-walk? So a single walk with all of the proposed objects would be fine?
-
-If I understand this subtree claim, you are worried about the
-(single-traversal) case that we manually queue tree A, and then later
-visit commit C, which eventually has A as a sub-tree. So we queue A
-again _after_ its original, but that second visit (that we skip) would
-have had more interesting information (like path context).
-
-But I don't think a second walk clears you of that possibility. You are
-queuing tags, too, which might in turn point to commits. So you might
-get the same commit traversal within that second walk.
-
-I think you could fix it by putting tags into the first walk. But it
-will always exist to some degree (you could have a tag that points to a
-tree and queue that tree, but also a commit that points to it). 
-
-It's not clear to me how big a problem this is in practice. We know that
-the "path" of a tree or blob in a traversal is subject to context. There
-might be multiple commits that point to it at different levels. I guess
-it might be more common if we are adding random trees from a pack
-without context.
-
-I think the more complete solution there is not two walks, but that the
-traversal machinery should queue context-ful trees ahead of low-context
-ones. I don't think we want to make the queue a stack (that would change
-the output considerably), so you'd probably need to keep a separate
-queue of low-context objects, and drain it only after the high-context
-ones we get from traversing the commits.
-
-
-I certainly think this patch is a strict improvement, and should fix the
-main bug. It can't make anything worse for these extra trees and tags,
-because we weren't even including them before. ;) But I think the subtle
-side-bug here is not a complete fix (though I do think it is strictly
-better than doing nothing).
-
-So I dunno. I'd probably be OK proceeding with this as-is, because I
-fear that dual-queue thing I mentioned above might turn into a rabbit
-hole that would derail the much more important fix.
-
--Peff
+Yes, we should encourage "merge.conflictstyle=diff3" (I feel about
+this strongly enough to think it should become the default).
+Knowing what the original was before one side wanted to say "cherry"
+while the other side wanted to say "banana" sometimes helps a great
+deal to decide what to do with the conflict.
