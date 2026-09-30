@@ -1,182 +1,201 @@
-Received: from mail-wr2-f35.google.com (mail-wr2-f35.google.com [74.125.225.99])
+Received: from mail-vs2-f43.google.com (mail-vs2-f43.google.com [74.125.227.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9BF51A73A
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 18:31:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4CF51FCB7
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 18:31:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793097; cv=none; b=lMwRkIX1DMdN6zJ2f3bxyshy7OIv9Yt++67J/vmih7kOHMl/CVyWHzxmIUWwCMQ59sCyLW4Shooz4QEv/XC+FJiGHxi/86cis+RXba6XbBmq7E2QCkWqt+J9CrvKkZzr3l3vODwUOTFlI5QtInmSa1yVIwKtcLngzu3qfj+A/Ww=
+	t=1790793110; cv=none; b=F5H0HA0OFXD7m5MroDWu8MB1Cs4cebqL+y/noblo76pSQ0fXcSksy9x6DKLW0lgV0E+63KhObJCT8goOJIorYw4kuyjtF4CAT1yLRh2hLCwtpa66bXNIqGLlGpZSD1LsCTV3jx/+Z58wxMD7F6RkiSpqwouILm/gMttf9xweWvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793097; c=relaxed/simple;
-	bh=2WyDMGV/m7ffvnmjwIhcprThaD/7comGJ0vZOWEfVGk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Khb286J+LvMGyuggmE6UdbGo5Pq6V37Yt5FBfHEV3F5t38BaaGLmHpU/v3JK/PzN55R0f6NHklnZgVttrtR+qreCPuoHWfLX2H6KkO5bx4S0Z8Y46Fv4QGY3rosWxZuaHqjh4Q1LkNUk3olLKlOeZTcIZzt7TAR+sMWg6Qy3Fv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RYqjm57D; arc=none smtp.client-ip=74.125.225.99
+	s=arc-20240116; t=1790793110; c=relaxed/simple;
+	bh=A1h9AOe3gHmYevLsLGtsdOOvBOU3/roAqKU1rJRjlLo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=CzHKy2Y1axHsz6jyshz5jpdNfeAlGFW5aGCazto5bvLkBF1IrLeLQ6pSV7HZDxXg0mjt/+J+iJ7Qt0JNw18w/VhmyYG2nUOYtCNlHiC9pM5KFJJFKt6uPkVWa6Zs5xtlD6yXQ5L5EzfYTvQ+Ti1TgHkHdyI8GHwomdygg9rQC8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cY3YDaRP; arc=none smtp.client-ip=74.125.227.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RYqjm57D"
-Received: by mail-wr2-f35.google.com with SMTP id ffacd0b85a97d-48b05fdb2f9so224752f8f.0
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 11:31:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cY3YDaRP"
+Received: by mail-vs2-f43.google.com with SMTP id 71dfb90a1353d-5ce2742fc3dso2975220e0c.1
+        for <git@vger.kernel.org>; Wed, 30 Sep 2026 11:31:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790793093; x=1791397893; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=DbWdXjotQoRQnB79Cpp7A/iI45tDf6Vjxe6wF/fgfiI=;
-        b=RYqjm57DQBmW46qKzu30XphsVEOq8CwK0LdLGj/z/JN8Hvj+xEX840N9crRYelq3LP
-         QK3qKs2EUrgrgKz1TMvCCIaBLWAykP9VoJMbq8ON6ynNEbBd2gWBUHmTZgNtybO2BrwA
-         a4fh9nfdSNU65b6Fax+vK+gVgyNYlgfrugrFvtM1gozJVaXLX5ZPi2snANdCJSrwUA4P
-         83uTajsn2NbuOe9B3NvNX8X8ys/aQ+Fs2+y75zrywtmN5CP428kwYQMEiql1FpqUwlF3
-         wuZXPMRAGu+Ms7O61L464zgT8kJIY3iV6AfW6Ijzc598ON6AjLmIc0dhELRvcsBpLYKA
-         d/Cw==
+        d=gmail.com; s=20251104; t=1790793107; x=1791397907; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:cc:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=HcCLzkG6zONbgIGQ3R3U2DaVjnNEriFb9u81sNKEkFg=;
+        b=cY3YDaRPK/p+hCKrCB5x5+71jNTIPUZpFOJJaT1YCirXCyHdZhZfsRmooCZ7uXo8lM
+         vanEP7VQXAh9BqVAnULxg8KRWfYPP4SUbD8apohDJ/cnlMZSgayvs5eTZogbyicj2Kvn
+         NcQl7L1efpt5a2lZCR3HnkX0D1G1Ntz4hLDkBWmKXjGQs1YX4buXtGOW//hP10tq17DK
+         HRR0tAW/JGvs6KeNGCjX0XaCPHM95gYuro2WiUWm7B3wkEUzfoR7u3ElnpzDhOqS80U5
+         2QYjVaPBYwLZHSljtHGLhcrc/KJFwGsNUd4z08VQzlaYjGPbeMiY58pViwwIW8gKZkuV
+         2SyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790793093; x=1791397893;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=DbWdXjotQoRQnB79Cpp7A/iI45tDf6Vjxe6wF/fgfiI=;
-        b=cf3Qa9uRlzpnRSPloGwgCtHe6PLyvzvwC+GO1LeV2n69ANv3OuMsDaBpvCrRgYqPPY
-         g5jbFXiGceLGXxk1iNnGlimxjy4db5o4XeVFunFtLBCIj5Ipcu7EQHUouEdi9teSJMci
-         XqmNKekCDnkxMBSNg0KsbtWb3Rg2wdJIUnIHS6TfcgMS6G1x14LfAOLLPXEGQJ6SCBlb
-         HMSyPjI/SX9LQTGUKkA9H3+KnlusZrmx6ZrjfM5KveNqEgX0yEsPdqM1RdytjH6lqdhO
-         bh2SYQVciRmPRbVYJwkfWy/QFY7DW6XlM3jIjogiB7yVLoBDLUi82MZe4GcOl3aFNpvZ
-         g0Ig==
-X-Gm-Message-State: AFuF++mSGua/H6IqYfLyIPrGey6kHCfEFQ1IN9cjEX8n3GpsZ709b8hL
-	m6mMbdAHhd5UuDTm/J6mRqoBmGr6xlpE1NMa7ks2vHnAYwBc1Q+/sKG3
-X-Gm-Gg: AYBFou0BoF4Gm5qGCPNLSjj4rED3fJ5OKBPS/YXHsXmnsct+uGJ9Wzda3QPwIwimxFA
-	CWP3t+LeQBbxnDL+F6wfsFzOHvhk1zeIdTFrqPFkq5ja6C6ZQsk61efDf9hciMCF+8870J87tHO
-	5v8dd4V8jnn/ShOdI4iIYWSIVWj3CLxsYT4KNdkkIrxsmXr5UTWcxkvLAsQrsWyTzQnRZ4a2RFh
-	oZPYPent2h2zyrt+mwy3zzBKTK5gkNjbaj5LZV1cHTTBmspigqy5bFwaMwyPPJSGHa1mYhulJmG
-	fdzp+yGp70KrFZosg1D+rzfTxKaUpf1V1Rz4Lx4hEQg1krjwD9cQ7WnBnyGRyQVVppeCyOogR1I
-	HfjXx9MOX6sDRBaN3SHirKitba8CcpK3IHc5AO9/JaEIamIHOYKTG+ETJOOoda3BAdJoBQoMi6e
-	nEXIdtkzXYxRJrTxL7L91+TK4IsLliINU6zy/HuBxt5JQI8boIBXHTpqTrmNaZzF6e6B94SAiFf
-	8X1h1MdGSxffDmcRyj4RT9rw+HtEToL29Db1D2kI6jK66hbc276x8tBYF4xvTLy6fRU6zZOXdTc
-	GzP2QnwjKSMD8qK6SAE9RtfhAvmNRmX9RI8HNjrMj24tdKMdbSz8+UlcEgNPzeaLHpTacIVg+EO
-	LzeNlLrXl3GnQFuTstC5XC6trHdoUzTkoBg==
-X-Received: by 2002:a05:600c:354e:b0:4a0:b6:460f with SMTP id 5b1f17b1804b1-4a01b132a27mr38725905e9.33.1790793093242;
-        Wed, 30 Sep 2026 11:31:33 -0700 (PDT)
-Received: from localhost ([2001:818:c665:a700:5109:cb7:aac5:8093])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a01f979c05sm2137765e9.3.2026.09.30.11.31.32
+        d=1e100.net; s=20260707; t=1790793107; x=1791397907;
+        h=content-transfer-encoding:content-type:in-reply-to:cc:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=HcCLzkG6zONbgIGQ3R3U2DaVjnNEriFb9u81sNKEkFg=;
+        b=xH7ryjuFS5xTeljwGxg6L28N8RrvFICnzRyiObQnwEB8Q/h/YMGlKAbmTRDgw3Txu5
+         9dgVg3Tfaymc9orKzeJenB6RF9KGr0QFk4ft7p43zk20u4Wrm5W1XLJh77jr4FiqbMgQ
+         13cq2CFZSUq3w26yex8MXXXhU6C+STnPr3AEu1mn/rWLpyVyTVlcfb9FDDoquT77Hx9G
+         vE+bjMZ1og4CUj5MI+Lrr7rheZq0l7ZoCmjeOzuoSVB3gXMDcL0Bo+AKKhu1bAdD1UrA
+         73Yr2aGNjSSsGeA9E6nGar6g3JTd1Bch+0SfqqdGtsIgm+IYLOWMMQIA2N+8vUM7DvHL
+         +S6Q==
+X-Forwarded-Encrypted: i=1; AKwUvByHNd526xTHxqryYC7rrPNHd9dTgeMsfscxTCYqGvgJ491YVWUuQJHOI8ZXlTRLi8pITwk=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKDDkvkun5p0UYh9+Aq0+fFJU5wFveuZa60hsBs9IdQuhvT6E8E
+	WlQ0ZZaJ+uvEhyvRdhD9E8nd6a24a694iPfCG+65OSkqnuQzMEBP8DvkxaSTiw==
+X-Gm-Gg: AYBFou23BOb1Vvu5UFFOk5At0RTpNnDjIG6lXnpjyKK8GyusfzwwCJxdbzTPB5/hg6y
+	nPpf9jm//qyAep7EqrMgSxerWN47kuA/wb1RACffz3BYP3pW6I6Kgwq4Ov1SM7rEoYJE1asmQCp
+	KnVS4/Kr1GQ44gO307a5p8gGXfTOcdKs26EsJ9gxPU8hEt0kYA4jJi0SraYs1xuyg6pKcaDCY8J
+	1PEA+5Ynvf6fV8++ljZsNOWUj8rmdT1QrXJv7nAS0NsHFDLXR2KNUnqlndOOCvW2PgN3s80rvdr
+	I+Hvi6e4IFrQAaVoTeLL3VTUbRJ0GCpDVoQyZH58NkI/igeFcK3tij9VbneVkNl1jRer48OS5FK
+	Bzz3oK+4h+39VcvEtLehOBk/12cxZ8QRoP0JLyOzp0rlBtnQbHOfYTctoawb9481mHWQKti0Qfm
+	k2qgZ5Em729XsH6Ljw/WF01nqpgCMP7XLOPLbObT5dzvO5F0oiFSUNFh62IGfeMX1ju813PE3HK
+	EI1RNlkz4d/HiLCdAlMzGbZpp4UsT5WOqdfCZPPyr+4tt6/uMG5pg==
+X-Received: by 2002:a05:6122:1781:b0:5c8:c5f:e8fa with SMTP id 71dfb90a1353d-5d67a9c1781mr922917e0c.4.1790793107402;
+        Wed, 30 Sep 2026 11:31:47 -0700 (PDT)
+Received: from ?IPV6:2606:6d00:11:296d:6500:f703:fed5:ba52? ([2606:6d00:11:296d:6500:f703:fed5:ba52])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5d7fbc4bdbbsm72502e0c.15.2026.09.30.11.31.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Sep 2026 11:31:32 -0700 (PDT)
+        Wed, 30 Sep 2026 11:31:46 -0700 (PDT)
+Message-ID: <764b8c2e-cf09-4531-94f2-268f97a889d7@gmail.com>
+Date: Wed, 30 Sep 2026 14:31:44 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [BUG] submodule merge tries to read B's commit from A
+To: Guillaume CHAUVEL <guillaume.chauvel@gmail.com>, git@vger.kernel.org
+References: <CAP4DsUexEmm1qo6jH+Qzy+n3dQs_OCJ8yg=ReF+aVrcTrC7NeQ@mail.gmail.com>
+Content-Language: en-US
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+Cc: ps@pks.im
+In-Reply-To: <CAP4DsUexEmm1qo6jH+Qzy+n3dQs_OCJ8yg=ReF+aVrcTrC7NeQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 30 Sep 2026 19:31:31 +0100
-Message-Id: <DLSV653N0668.1OZOWE9P5ZJV6@gmail.com>
-Cc: <git@vger.kernel.org>, "Derrick Stolee" <stolee@gmail.com>
-Subject: Re: [PATCH RFC 5/5] backfill: report total size of missing blobs in
- --dry-run
-From: "Pablo Sabater" <pabloosabaterr@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Pablo Sabater"
- <pabloosabaterr@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260930-backfill-dryrun-v1-0-1128f247ee01@gmail.com>
- <20260930-backfill-dryrun-v1-5-1128f247ee01@gmail.com>
- <xmqqqziabqw8.fsf@gitster.g>
-In-Reply-To: <xmqqqziabqw8.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Wed Sep 30, 2026 at 6:17 PM WEST, Junio C Hamano wrote:
-> Pablo Sabater <pabloosabaterr@gmail.com> writes:
->
->> +
->> +	if (!ctx->object_info_enabled)
->> +		goto cleanup;
->> +
->> +	if (!ctx->object_info_transport) {
->> +		struct promisor_remote *promise =3D
->> +			repo_promisor_remote_find(ctx->repo, NULL);
->> +		struct remote *remote =3D NULL;
->> +
->> +		if (!promise || !(remote =3D remote_get(promise->name)))
->> +			die(_("--dry-run requires a promisor remote"));
->> +
->> +		ctx->object_info_transport =3D transport_get(remote, NULL);
->> +
->> +		if (!ctx->object_info_transport->smart_options)
->> +			die(_("failed to get object info: smart options required"));
->> +	}
->> +
->> +	results->wants_size =3D 1;
->> +	status =3D transport_fetch_object_info(ctx->object_info_transport,
->> +					     &ctx->current_batch,
->> +					     results);
->> +
->> +	if (status =3D=3D FETCH_OBJECT_INFO_NOT_ENABLED ||
->> +	    !results->sizes) {
->> +		ctx->object_info_enabled =3D 0;
->
-> Yuck.
->
-> Because we cannot tell if they allow you to look at the information,
-> this cannot be helped, but it means anybody that looks at this
-> ctx->object_info_enabled member to decide what to do must be careful.
->
-> Is it guaranteed that results.sizes[] have been populated as long as
-> status is not FETCH_OBJECT_INFO_NOT_ENABLED?  Can there be other
-> errors that makes result.sizes[] unusable?  If that is the case,
-> then it would be cleaner to have a dedicated ctx->sizes_valid member
-> rather than relying on ctx->object_info_enabled member to carry this
-> information ...
+Hi Guillaume,
 
-Not quite, transport_fetch_object_info() can also return
-FETCH_OBJECT_INFO_ERR when finish_connect() fails in
-fetch_object_info_via_pack(). I'll change the condition to:
+Le 2026-09-23 à 16 h 20, Guillaume CHAUVEL a écrit :
+> I ran into two problems while merging a superproject with submodules.
+> 
+> One problem, involving the repository used for commit-graph lookups, was
+> reported in this thread:
+> https://lore.kernel.org/git/d3241733-d015-4646-88e0-06e56a04e77b@nutanix.com/T/#m174067937aaf76e9fa844386961b3e9e66c1e4d9
 
-	if (status !=3D FETCH_OBJECT_INFO_OK || !results->sizes) {
+FYI, the above bug was fixed in 700f7b74de (commit-reach: parse commits in 
+the given repository, 2026-09-16), which is currently in 'next' but not yet
+in master.
 
-With FETCH_OBJECT_INFO_OK, fetch_object_info() only allocates
-results->sizes when the server answers with the "size" attribute,
-and it die()s on any incomplete or malformed response, so a
-non-NULL sizes[] is always fully populated. A NULL sizes[] with
-FETCH_OBJECT_INFO_OK means object-info is available but the server
-does not support "size".
+> The other problem is that during a merge, Git sometimes tries to read
+> from submodule A a commit that exists only in submodule B. I reproduced
+> this with Git v2.56.0-rc2, built from source in an Ubuntu 26.04
+> container and an Alpine container. The reproducer below triggered the
+> issue in all 50 Ubuntu runs and in 43 out of 50 Alpine runs.
+> 
+> The merge should report a submodule conflict, not look for B's commit
+> in A or report A as corrupt. The script checks the OID's presence in
+> both submodules and prints the "BUG" line when it finds this case.
 
-Agreed, the member is also cleared in that last case, where
-object-info does work but "size" is not advertised, so I get that it can
-be misleading. Since its only use is deciding whether to report the=20
-total size, I'll rename it to ctx->sizes_valid instead of adding a=20
-separate member.
+Thanks for the reproducer, I confirm I see the same behaviour with v2.56.0-rc2, 
+on RHEL 9. With v2.48.1, the merge results in a conflict, instead of aborting, 
+although I get a spurious "hash mismatch" message, and the reason for the 
+conflict ("commits not present") is wrong:
 
->
->> +		goto cleanup;
->> +	}
->> +
->> +	for (size_t i =3D 0; i < results->nr; i++)
->> +		ctx->total_batch_size +=3D results->sizes[i];
->> +
->> +cleanup:
->> +	free_fetch_object_info_results(&ctx->object_info_results);
->>  	oid_array_clear(&ctx->current_batch);
->>  }
->> =20
->> @@ -157,12 +201,25 @@ static int do_backfill(struct backfill_context *ct=
-x)
->> =20
->>  	dry_run_batch(ctx);
->> =20
->> -	printf(Q_("After backfill, %" PRIuMAX " blob would be fetched.\n",
->> -		  "After backfill, %" PRIuMAX " blobs would be fetched.\n",
->> -		  (unsigned long)ctx->total_batch_nr),
->> -	       (uintmax_t)ctx->total_batch_nr);
->> +	if (ctx->object_info_enabled && ctx->total_batch_nr) {
->
-> ... and use it here.  Within the design presented in this series, we
-> know we have asked the other end at this point, and the above
-> function may have turned ctx->object_info member off if the
-> information is not there, so this may be safe.  But as I said, I am
-> not sure what happens when fetch-object-info returned other kind of
-> errors.
+git version 2.48.1
+git merge exit status: 1
+error: hash mismatch 2ca9f0f330e976b992fc18633d1d267b8aad596e
+Failed to merge submodule A (commits not present)
+CONFLICT (submodule): Merge conflict in A
+Failed to merge submodule B
+CONFLICT (submodule): Merge conflict in B
+Automatic merge failed; fix conflicts and then commit the result.
 
-The condition above is checked on every batch, and any status other
-than FETCH_OBJECT_INFO_OK or a NULL sizes[] clears ctx->sizes_valid
-(currently ctx->object_info_enabled), so by the time we get here it
-is only set when all the batches returned valid sizes.
+With 2.33.0, which I chose randomly, we get the correct behaviour:
 
+git version 2.33.0
+git merge exit status: 1
+Failed to merge submodule A
+CONFLICT (submodule): Merge conflict in A
+Failed to merge submodule B
+CONFLICT (submodule): Merge conflict in B
+Automatic merge failed; fix conflicts and then commit the result.
+
+I turned your reproducer into a bisection script (~/bisect-merge.sh) 
+by tweaking the final 'if':
+
+```
+if [[ $merge_output =~ Could\ not\ read\ ([0-9a-f]{40}|[0-9a-f]{64}) ]]; then
+    foreign_oid=${BASH_REMATCH[1]}
+    if ! (cd A && git cat-file -e "$foreign_oid" 2>/dev/null) &&
+         (cd B && git cat-file -e "$foreign_oid" 2>/dev/null); then
+        printf 'BUG: OID %s belongs to B instead of A\n' "$foreign_oid"
+        exit 1
+    fi
+elif [[ $merge_output =~ hash\ mismatch ]];then
+        [ ${1:-""} = MISMATCH ] && exit 1 || exit 0
+else
+    exit 0
+fi
+```
+
+and invoking it in my ~/bisect-git.sh script:
+
+```
+#!/bin/bash
+
+make clean > /dev/null
+# build but keep the output on one line
+if	make -j |& { while read line; do  printf "\033[K%s\r" "${line}" ; done; 
+                     printf "\033[KFinished building $(cat GIT-VERSION-FILE)\n" ; }
+then
+	# run project specific test and report its status
+	export PATH="$PWD/bin-wrappers/:$PATH"
+	~/bisect-merge.sh "$@"
+	status=$?
+else
+	# tell the caller this is untestable
+	status=125
+fi
+
+# return control
+echo
+exit $status
+```
+
+Bisecting the merge failure with:
+
+	git bisect start v2.56.0-rc2 v2.48.1 && git bisect run ~/bisect-git.sh
+
+finds bb5da75d61 (commit: use commit graph in lookup_commit_reference_gently(), 
+2026-02-16), i.e. v2.54.0-rc0~136^2, which is the same commit from which the 
+commit-graph bug mentioned above originates. I CC'ed Patrick, its author.
+
+Bisecting the "hash mismatch" behaviour with:
+
+	git bisect start v2.48.1 v2.33.0 && git bisect run ~/bisect-git.sh MISMATCH
+
+finds 6f1e9394e2 (object: fix leaking packfiles when closing object store, 2024-08-08),
+i.e. v2.47.0-rc0~123^2, which is also authored by Patrick.
+
+I did not yet dig further, but I have a few additional observations:
+
+- in contrast to the commit-graph bug, disabling the use of commit-graphs via
+  'git config --global core.commitGraph false' early in the script, by moving the 'tmpdir'
+  definition to the top and setting GIT_CONFIG_GLOBAL=$tmpdir/.gitconfig, does not change
+  the behaviour, neither in the "repository corrupt" case, nor in the "hash mismatch" case.
+- On Ubuntu 22.02 under WSL, the reproducer does not trigger the bug on v2.56.0-rc2 (on a dozen runs),
+  but it does trigger it on v2.55.0. Funnily on that system with v2.56.0-rc2 I get the correct behaviour !
+  (no "hash mismatch" either).
+- On a Ubuntu 22.04 Docker container, I get the same behaviour as on RHEL 9.
+
+> An AI analysis identified a likely cause: a delta-base cache entry may
+> remain after its pack is closed. If a pack from another submodule reuses
+> the same packed_git address and base offset, Git may return stale cached
+> data.
+> 
