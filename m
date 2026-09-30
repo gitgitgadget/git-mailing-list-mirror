@@ -1,39 +1,40 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682D24477E7
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 22:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BC93A75BD
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 22:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790808579; cv=none; b=SicP4pBeWtffHdWbWnTnPfiUq21uxNQ99HrhkT9rZ1bopAY3bIY9IZ4t1JU5BJRHZy00ToM4lM4JFwf77DESL/fFhZknT+ODpU0c7x1Ava+2i/oBNH4CXaFkGrfdYvhfEdphjc0RuHh89V46kTj77lijMe+hzhnq7syQLdlLvD0=
+	t=1790808615; cv=none; b=Zg3xqmHevXfSVHuBfyOunN72M/G9q3oJdppEWH1bn8hW+Jc8mH5MMwbQRop8XMN9FU5SI3U2aGQg7VHIrq4RGbmgzAIztmgMq3Z+KhN07PXXreVfzTK5sdxBBlIzJWh0Fg9oMNXep2wE2XXmuohToDyyxQhYcH9WXZ9oYoVSas0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790808579; c=relaxed/simple;
-	bh=qPMhEbztxCxKCtzgoZVhlXg2pgwgFQCkN8+Szxuss0A=;
+	s=arc-20240116; t=1790808615; c=relaxed/simple;
+	bh=nItGHPK6flH5eRDf1ABLfDd6jNQfLRQn7VLps8RrHHY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WIDuguMQY15xnkCoGVvvDr8NfwKE6D1ymhFWZrIUpBUHqvlT85PChMfjG2B7aa3GvTV/o3nOD57PtnpovP6Ntd3Vos+1x0jSBE7o56Ps6rxgyZWSh65fH1aGMxOtJCIujz1i6+bufpiKU236N6P1IBmI3PB341VxrojilqCWoh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=S1n5k6OI; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=FbCbg7Jdc0sKQRphXg+Nkf+BjJGehXCozA6FKv00NQEoOaMP9iDlNnf9ZjXv1wtDL7+MYc5vV/xKZ6HH+hTNcHgetUHnS8Yl0AH9TWP9Hm/99oTQTUfbk729tVHoROSpIqu6kPU/U7HvYytkFEFqEy7fRqHhEzfNZlwVl7NCwBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=C09bx5Pb; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="S1n5k6OI"
-Received: (qmail 7962 invoked by uid 106); 30 Sep 2026 22:49:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=qPMhEbztxCxKCtzgoZVhlXg2pgwgFQCkN8+Szxuss0A=; b=S1n5k6OID24x7YqXd6EQUt1v6I1xzywZW4XvUBuMEKSsJAUfasszJSl5k4jqTwUU6h4RIAchzFsDYXNufKOdK/N8O02lq+4dLpzXfu/b6dfY9uDZWMYqAzX04nI6WkNTqPwI7pbuuFhmpgUWfv1O/LZjH0wMFq0SE80fP5pgGhz26oloR9bVOfeztF4woJKjRacduOzyYAklk/H//YEdWO79tMhDddbOv6u6xBJ8f75o+8OHU0OvkJL+6WFXmigOqC0mypY1KLCE+xAtr5PIuOwnE8Nyc4kwaksGYQLwc8KDY+tGUrvXWussnJd4+V7eEi1W0jdct8GK3ELUiLJshw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="C09bx5Pb"
+Received: (qmail 7972 invoked by uid 106); 30 Sep 2026 22:50:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=nItGHPK6flH5eRDf1ABLfDd6jNQfLRQn7VLps8RrHHY=; b=C09bx5Pb4O+TeBpeI0Fm1Q09vVbPuDMDj4AhyAwriitQiqBEdgxJSei8Y9LipLrNBbZNQtTezUPf2vJN6dFwVW86LAfqhARtD+IFML5lJMNG/kc62MDKk7gEydDQQEPN8nPDrsY8Y+a/kSW442xKTiCrJRKFyy8RyCpJKzNUz0KnDijInCqqpZAN1mG05saWu7Zg9Sy8R1QM1jQphWT90sZm0vXYa7oQbUlunSJ66RX6F/D5N0WA1211vDMwgkMXh4fy7P6C4gC6riwKC9XAJrKcwwQrNYMa+4grjvNMsqGejZhuS/eRli1iqBneavYTklhUy3j08+0SPiBKBpZGUA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Sep 2026 22:49:36 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Sep 2026 22:50:12 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20079 invoked by uid 111); 30 Sep 2026 22:49:38 -0000
+Received: (qmail 20109 invoked by uid 111); 30 Sep 2026 22:50:14 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Sep 2026 18:49:38 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Sep 2026 18:50:14 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 30 Sep 2026 18:49:35 -0400
+Date: Wed, 30 Sep 2026 18:50:11 -0400
 From: Jeff King <peff@peff.net>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 5/5] xdiff: NUL-terminate buffers read by read_mmfile()
-Message-ID: <20260930224935.GB765052@coredump.intra.peff.net>
+Subject: Re: [PATCH 4/5] merge-ll: use read_mmfile() to read external merge
+ results
+Message-ID: <20260930225011.GC765052@coredump.intra.peff.net>
 References: <20260929064935.GA1276867@coredump.intra.peff.net>
- <20260929065504.GE1697497@coredump.intra.peff.net>
- <ar0rp1cSIKuCMZyQ@pks.im>
+ <20260929065442.GD1697497@coredump.intra.peff.net>
+ <ar0rrVE0ZxcU7uG-@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,58 +43,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ar0rp1cSIKuCMZyQ@pks.im>
+In-Reply-To: <ar0rrVE0ZxcU7uG-@pks.im>
 
-On Wed, Sep 30, 2026 at 05:32:55PM +0200, Patrick Steinhardt wrote:
+On Wed, Sep 30, 2026 at 05:33:01PM +0200, Patrick Steinhardt wrote:
 
-> > This one is obviously optional, which is why I put it last.
+> So we do lose the NUL-termination that `xmallocz()` gave us, as
+> `read_mmfile()` doesn't do that. You reinstate that in the last patch
+> though, which makes me lean more into the direction of having that last
+> optional patch. If so though, we may want to reorder it to come first.
+
+Yeah, I'll do that re-order.
+
+> > -	if (read_in_full(fd, result->ptr, result->size) != result->size) {
+> > -		FREE_AND_NULL(result->ptr);
+> > -		result->size = 0;
+> > -	}
+> > - close_bad:
+> > -	close(fd);
+> > - bad:
+> > +
+> > +	/* We can ignore errors; result is left NULL/0 in that case. */
+> > +	read_mmfile(result, temp[1]);
 > 
-> Hm, I'm somewhat indifferent here. It always feels a bit weird to be
-> this defensive because "programming errors", as the next question then
-> is "but what about all the other errors where we're not defensive?" But
-> the xdiff code is complex enough with a bunch of pointer arithmetics, so
-> maybe it's not even that bad of an idea.
-> 
-> That being said, I feel like a better course of action could be to use a
-> fuzzer for this code, because as far as I'm aware we have none yet, and
-> that would potentially shake out a bunch of bugs. But that still doesn't
-> really help us to catch platform-specific bugs due to different integer
-> sizes.
+> One change in behaviour that wasn't called out is that this will now
+> make us write an error message in case we failed reading the file. That
+> could be a good change, but that's hard to say.
 
-I look at it as: why not do both?
-
-Mostly the lack of extra NUL surprised me, as we routinely add one in
-most other places (and it has prevented some memory bugs in the past).
-
-> The counterargument is that before your 3/5 we used to use xmallocz, so
-> you're essentially just reinstating the previous safety guards.
-
-Yes, though I did confirm that those guards were doing nothing. This is
-less about protecting the new ll_ext_merge() caller and more about all
-of the _other_ callers of read_mmfile().
-
-But yeah, it is obviously a lot easier to explain if this patch comes
-first. I just wasn't sure if we'd want to drop it or not (though yeah,
-we probably should explain in the earlier patch that the lack of NUL
-termination is OK).
-
-I'll re-roll with this patch earlier in the series.
-
-> > diff --git a/xdiff-interface.c b/xdiff-interface.c
-> > index bc340d5a8a..b3e9f1952b 100644
-> > --- a/xdiff-interface.c
-> > +++ b/xdiff-interface.c
-> > @@ -166,7 +166,7 @@ int read_mmfile(mmfile_t *ptr, const char *filename)
-> >  	if (!(f = fopen(filename, "rb")))
-> >  		return error_errno("Could not open %s", filename);
-> >  	sz = xsize_t(st.st_size);
-> > -	ptr->ptr = xmalloc(sz ? sz : 1);
-> > +	ptr->ptr = xmallocz(sz);
-> 
-> I was staring at this code a while before I noticed the added `z` at the
-> end of this function.
-
-Heh, fair. I'll say something more explicit in the commit message when
-re-rolling.
+True, I hadn't even thought about that. It seems like a strict
+improvement to me, but I'll mention it in the commit message.
 
 -Peff
