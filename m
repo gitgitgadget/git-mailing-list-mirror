@@ -1,151 +1,140 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B396E40F74B
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 21:26:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790803611; cv=pass; b=TXk2u+epdFKEJKPmhb9LwRYeBqDoSDunOj0QSFkO6N+V8p6sqtA4xI1IhvvSY+GZnhZHc47bm6ZXZcoNmsS7pECT2yIvfJJNtmVQUWqo5ZLr05CCH+NHMjk+tYuX+wYy6CFaLAXmuks76A+o6qOedE6qj1Z3NH5nMJY8HEo0BIA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790803611; c=relaxed/simple;
-	bh=GCtO9+NT04pl/WQi4Y5j72aeMHDm64ayj/BamsPbBFs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ibCqe5xcB2AdjzXTfsrzz52HvcA/s2BFCfUwD2GQOMOu2TprsaWT+8kX4CpqpqL3X2yPfEh2ROkgjfleUtjHPOSfelKwpcp/zGtPNT//nc+nwgrmVgsY5FkbQwQf5c4xaGfTmZCitBdn7NXu8yUCPTupB555IRnMtXhObGoNNKI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Poo2A0zj; arc=pass smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FFC74749C1
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 21:33:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790804001; cv=none; b=bc3kkvuEFN1z1vXjtcKnnh9JQmBfB6/LhGrSliVnCYykaVwZLbenTYnZnSmAAKRCnWMslLjO6WeVeGeKU+4/2wuq70Mjku6JYKyy9Us9ELLywjneQkoEnQ8AYg+ypPG/0Z65K2cknoDQlGk2wXE0Vqli7Ld8HEd+vLP9bx2wfNc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790804001; c=relaxed/simple;
+	bh=SwWuDZeGQWFy6ypYUjSh1TzjxrzRY7Wq6T1RK1sGR14=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VdQFcOwXWHP3NKzMJPr+raL0DfnvGXi2Fhc8T4IvEeNGy5hNpBUYLFPBup4jeR3Qdb60WaPn/IK2SUWb6/mNpXFkAn/y2M1Ppn2yTXd6vRwlSNV2oK9ChgZu9Aw8f0SH1V4pPKTsHAi3OXMqoNXt2Xc0cAg91Q5YrjagwN8Lp8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=B+aU+bFj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wMlnnAXg; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Poo2A0zj"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2db710396ffso583315ad.1
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:26:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790803610; cv=none;
-        d=google.com; s=arc-20260327;
-        b=JP5Ti06cjMCPs7dqcCne+ZLJPC6p+63MVsgZBcpfIWe6+8lWG0gNPWNuR3e1N16Szh
-         nGJ50gW9fbdHS+gOwhWutobSPIkhWARwTJd7QwXJLyGduuhuLTkDMgFEYkmYC7dE9lTW
-         JOCSv7ndq/Y/YqtWEkeEUimDfSoPT3n7paNtL3L4vZE6QamXFOrI86GfGjrWWKcNQVtf
-         ZQCDAvnnVF09z+/bJLtm0OFcCQBvwuniYZKLUM+yYmzPj7gkImQTFgKUGx1JGL4NGPoD
-         dIO01M+PUr79reMKlTPT6jo1igOFTsgqpOsQ/pUnj8uvcy4n7u+D0rslj23ljJqQWyBj
-         0UdA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=rXw6DXfNt1nAObx0P61UZ2iHqNiZPThpO7WQ+Qf1hR8=;
-        fh=RakNZSpi2P6MPnl5yVFA7Z54/a9TOhJkSJB/jVpVb8k=;
-        b=K33pHfstNL3ireGt9ClzEdayw1tLAuob+gWBJIhxa3G2jxRmBQPK1IR/75unlAFrpJ
-         UPBZjGV4xyyJyxNrAJD30NV99VXCcFX0cUZcP/Yy+uCECYlpegyQnT8Ye1V83n15D+OJ
-         7mjYoJzluy585kqavq4LYPR4eycTgddqHcnxCaZrhM8Tl/ePFWtD30EE+z4fFxdk4wql
-         J+2PqK6oye6B51/+ijVCoh4d8chffqwn7/DPbCVNMCruNAE+OhpYBcLuKIEYZORI4Ib3
-         +zUqHq4khUz9qHp8o4n1lWvxfzr9PT6XuIGxv/aAvqlc40T0X51Nbp8l1AEk4XaGjEOk
-         zGAg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790803610; x=1791408410; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=rXw6DXfNt1nAObx0P61UZ2iHqNiZPThpO7WQ+Qf1hR8=;
-        b=Poo2A0zjUDvJoHPEcRNjX/ZRNPkymXRTRFTwM2DBgLHKw/c/+fl34gVqPFCIXpGCUC
-         DQf0TUTcUz6z6bu+YtpaKJYQOpQnGgj6Vh34plq6OI6J4UHjXQ0+bLP37YsMl25AQM5/
-         +8dEIWr8FvQ0vKShrSV2eQWO8W/p4M+6dRdGqOJ3oakdLd5PH8WUAqs07fIOo3D1Olqt
-         Bx/8J8xuCXWp/ajkgh/Soa5BoWOdiSCcGGqrmP02ciixqhEj0tf4DHErdMRG6QgjWDys
-         SIMVQBiB9iH95/th5UaPxkAz2frJ/1Ep+YYNdBmclrL/n0LfDEYKzU7SL/lzIgEe2c0u
-         2cDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790803610; x=1791408410;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rXw6DXfNt1nAObx0P61UZ2iHqNiZPThpO7WQ+Qf1hR8=;
-        b=07pYAqa+3qgxJ/em6VUYKOFFvzEUxKmlt5rOBlqD3ohuvdwBFXOQNkPl5+9LQKTkwm
-         8q8rmtWdIxGRu3sWNSHFnsjKjnxG8cZjCzV86WiX9+mRvNxh2u9V/oORsM5ZIlKPyovC
-         bn42wcIfYjwcSH5+Sc9szgTRjXWUoRHQcqxyIEFaFprVMKkTltlRpQZI4Duw4BpUZmhS
-         clUIqT0/gmE/ao0OWn8VOW6tui4N/bPhoRifv0L81lEOOL6ZjbA/THH9TZld9waVmXOe
-         H/7gwek9lF+sQyDNeQ6WmpJXI9PadZW5+/vZXYlW3RJ7OfsV9QLAECiLa/1ZPtL1dvIr
-         jckg==
-X-Gm-Message-State: AFuF++nqvcnZ5QUbmaI9hiNsHtSLjy+yXFJsiS2F4KooU8Qs1bculOOj
-	OLnJSCalKM3i5y8iTBdmJkwH+L9rkiv4B15XYRhLMqyhgmCi+hZzBwwpgo+sTkGPXXYUO6ISvOj
-	2yybLl9OmebhPSqkuiJc/K4pqHjplmQ8=
-X-Gm-Gg: AYBFou0cgfCw6gRCA5Pvz7p7S54r/iRGWS47DIPus9r9Na8b5h1g6LfZnJU+CUSYwRd
-	giYM1aIJ6tDHIgrPenaHuQQHtKlWaX6NdfcvF03fiuz35hfDF3K9s4bZkVq8IyreFH9ICkK/x7g
-	OHKLZvcObqdJIGVVPPWiSEO91VYHiO65SaJ8Rf87U2sqYM94z0du1R0D1Fu6aQ7iwIcRxDvTuKW
-	zeNj5bBAB3ILRkNN7r/pgNVjPsapvM/ShbRzLbOLkBRCcMYCrlVPhmp0pp3IP9bFVJS71XEEiMH
-	f8sogxen4vG7GTAqUKA4nCdwUndpJWKY9tZKt8toBipQ5nX1IxwMYwVJg4zeFvwPh+9YDJCiUsp
-	xCsQ2UaCM0VMop3mhaT3DObeZKRrPVKSop1ZGWoUc7wWdq7LlFKM7eaEjlY7KyZx/aqUsGT3H1K
-	Wr6ndCeyZI
-X-Received: by 2002:a05:6a21:748e:b0:3dd:a9a9:396d with SMTP id
- adf61e73a8af0-3deace089c9mr549626637.49.1790803609953; Wed, 30 Sep 2026
- 14:26:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="B+aU+bFj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wMlnnAXg"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 28B35EC0171;
+	Wed, 30 Sep 2026 17:33:18 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Wed, 30 Sep 2026 17:33:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790803998; x=1790890398; bh=EaVREcw20v
+	CmtfME1ROzp8bRIrDccTf70vdsaP5HP9M=; b=B+aU+bFjogxSqNV53gMikYnsU/
+	HEN4VpfUT79JwEe7/uhjKu30OlXjHsItMC0PC63MGplclhydTofZIek4AIsVte6q
+	1bEjBH4RzU/jIbX8IhxCAzYzie4ZHWg22GbzpgvMH3BGV5t6D2IDE3dc7GOrOFf+
+	pqWZNpWHkbN8kwNK5/nAMrg1nCepXgtqPkEo48uJ762ygQEEO+ZS/3nam9Jsbv1n
+	rq3ON6Rb51xAIFq9FvqG09FjzOKyw9UcLd8uKVPyJLGgscjPFNae8QOt9d8e6lis
+	cLgDPnaJxQJz7LqJnA0cydYUN6u6nmXrHWXPkEEX90lis1IfQfpkizpafWIA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790803998; x=1790890398; bh=EaVREcw20vCmtfME1ROzp8bRIrDccTf70vd
+	saP5HP9M=; b=wMlnnAXg8KSpzu7I7V4z6x1/RrHA5KEoVK09WDIHTt/sVbfLV27
+	iBsB/m/l9hz3UqaTpNIOEAx/s7U99D83CpvZo/LBNNJpF9+KRo4tPG5OBn0aIFTe
+	7dKMjz0YeGAfbRZgdwrDVmcn2Po2YJM+YweCZW68z+lp4+3/dgmden5ShEWYgLob
+	Qo2sBaAam6Ll+zEoilDsdjF2cTx+rnuC7KRB5NuDLHy3z3VSdb/KNHeT8YrA3qsR
+	GqibzOox5r9PURVQ01wHk8qlW40uD5OmoPEB6oRmyb5kwrq6L+9Jb42y/H/GsGz0
+	bqvuFZUSZpAr9mOJTe9vgLirPIBsGOtfaGw==
+X-ME-Sender: <xms:HoC9ah_WzuPkIYIwdj7cAbXhhpbIaNqcQwGChn22mVh-qPK54y3EWw>
+    <xme:HoC9asvFM319VKixovPNsDhbLtGvCKdz-QEdfkR0scM-99gLonpw-JunskILhBptf
+    CfVfPlAizB8eZqscDYTRsqZqxkasTvxkYCE2m04yYSEyL4ZmUEru_Q>
+X-ME-Received: <xmr:HoC9akCnzaHbX9GEaZsPCG47XBOUdmCqHEx60nJjg2xaCvkm4Qy0NTCRE-PsbZDz3Vmk4plSUrlUlg_ONjug6HJp-DxjdMhmceMS>
+X-ME-Proxy-Cause: dmFkZTFctpe3FmXdW12BOWhgfm1FWTfGooq7UbriOSHU9+NfxtFNLwetUOCyCT17W0+On1
+    ZPC8dXinh1wvc/7U4N3xLaHpFFwX0+cSw8avyvvr+wKhPzUqqYgnfG6bUlsNCwLD/kVTuX
+    y9qbJpVf3usw9DRLoaCo80dHBa4Z/6h6Q9r03u3HPFR3or8i06WdO9JDVR7sZKABzLcqPz
+    5lN41ExIV96GWEXstq7KW3Iz3ySNqPosvbB2nzjLwsKTiCGhQllGZN06uTyNAPB5TXq4uV
+    538F8tiuEqMZovDzrG9W2dKnSG7lwzUjjE0CsrrJ6vN9otB/A85C1NH8AtZgHZMkSZMJiY
+    hS+loCsvn1HD3JAk2BE/O3wBtB3hAkcVjnyK+b293/+b1rcpOOXR4wFqJ4giWPnBvSKAYs
+    lCzuOuXJmqbY2ZDfvmahBIGRIdCYZ1dne5SqR96D6wYBFeqwQ4MF9MaZg1ZSvcmhnfd1wG
+    Trpk88PXfpVxp0EjeGyVDApaoAvD6oeCtop2zCoC7FaxF1Ws5gagOnwyKkY0vXgJr8eSE5
+    m15E0Ezto05rZDyWw2XSX0lnyWpsEUVWNcXuqcYNjw6lu/bxB87qcqTyNZDCLzPjO7LEBj
+    y7EwFiMZ8OpTR3dSJZL4bM7hwZI7J1O0HpmSAG+pkfo/s/esa0feEgFJkkow
+X-ME-Proxy: <xmx:HoC9akXE8zAA_tsPg1QbHqj7K-ymOjecOtUBYnrcCgn5wKRqsXeZiQ>
+    <xmx:HoC9aiDF_UwLWGBZj6BHVRKa0TORA96B7SMros5Cj2t8eqJEHm590Q>
+    <xmx:HoC9an_8PY86W1mYICJ_QndaQ-_rRLmp3cvrXEIBprgxb3d8QhZPJQ>
+    <xmx:HoC9apGvPR22dZlAtfHcKWAe7t3N6O5SXHkcleCozOTUyXpQNmEdsw>
+    <xmx:HoC9anhdEniE76l2Zu3b9blqX3_W226pDySr3hQpDynFQn9NWHMQBYJe>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 30 Sep 2026 17:33:17 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH] stash: allow custom conflict labels for pop
+In-Reply-To: <pull.2430.git.git.1790801929375.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Wed, 30 Sep 2026 20:58:49
+	+0000")
+References: <pull.2430.git.git.1790801929375.gitgitgadget@gmail.com>
+Date: Wed, 30 Sep 2026 14:33:16 -0700
+Message-ID: <xmqqfqyq8lwj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <d5ac59be-0688-4d60-871a-2ccebc91c58b@gmail.com> <F407EDB6-80C5-45AA-B8DE-CCD61DB663F7@gmail.com>
-In-Reply-To: <F407EDB6-80C5-45AA-B8DE-CCD61DB663F7@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 30 Sep 2026 17:26:38 -0400
-X-Gm-Features: AclHuK-xlXaNEndlywyR8x0fzYvzS-Q_M7oZ2G9sKcIeXaSRKUULKcpEOqizRXo
-Message-ID: <CALnO6CALq2V0Nmx=VE8X79VVhNxa_xiH3dtv+QixaHsB1=K4iA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/5] stash: clean up index-mode test merge
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Sep 29, 2026 at 1:32=E2=80=AFPM Ben Knoble <ben.knoble@gmail.com> w=
-rote:
->
->
-> > Le 29 sept. 2026 =C3=A0 11:48, Phillip Wood <phillip.wood123@gmail.com>=
- a =C3=A9crit :
-> >
-> > =EF=BB=BFHi Ben
-> >
-> >> On 29/09/2026 13:18, D. Ben Knoble wrote:
-> >> Changes in v4:
-> >> =E2=80=A2 Drop merge verbosity changes altogether. I was going to
-> >>   save-and-restore, but when looking at the index-merge test case (mor=
-e
-> >>   below) closer, I noticed that "git apply --cached" reports conflicts
-> >>   on stderr. That is, "git stash apply --index" would report conflicts=
-,
-> >>   and silencing the merge takes that away. So instead let's leave the
-> >>   configured verbosity alone.
-> >> =E2=80=A2 Only copy resulting index merge tree OID when successful
-> >> =E2=80=A2 Fix interaction with t5520 (new patch 4/5)
-> >> =E2=80=A2 Squash test from 3/5 into 5/5, since it requires actually me=
-rging
-> >>   trees. I've elected to keep it a separate test for now (contrary to
-> >>   Phillip's suggestion) since it's written and working. Adapting
-> >>   existing tests requires quite a bit more digging into implicit conte=
-xt
-> >>   assumptions ;)
-> >
-> > I've left a comment on the new patch 4, but everything else in the rang=
-e-diff looks ready to me.
-> >
-> > Thanks
-> >
-> > Phillip
->
-> Thanks Phillip. Pending other positive acks, I=E2=80=99m not sure if I sh=
-ould reroll with Thomas=E2=80=99s new patch, reroll dropping it now there=
-=E2=80=99s a seen topic for it, or just wait ;)
->
-> I=E2=80=99ll probably wait a bit and see how the dust settles, but:
->
-> Junio if you want to see a reroll hit the list using the new synthetic ba=
-se to make things nicer for you, I can do so. In particular, I think the la=
-st check I made when I saw your mail about the synthetic base had the prior=
- round.
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I realized Junio wasn't CC'd on the prior mail, but since I re-rolled
-and the merge base changed, I think I've got it right for v5, which
-just went out.
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+>
+> Since 13817db274 (stash: add --label-ours, --label-theirs, --label-base
+> for apply, 2026-04-28), "git stash apply" accepts custom labels for
+> conflict markers, but "git stash pop" does not, although it applies the
+> entry the same way and only differs by dropping it afterward. A caller
+> that wants its own labels has to use apply and drop the entry itself.
+>
+> Teach "git stash pop" the same three options.
+>
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+>     stash: allow custom conflict labels for pop
+>     
+>     git stash pop now accepts the conflict label options that git stash
+>     apply gained in 2.55.
 
---=20
-D. Ben Knoble
+This is not a new problem, but is it just me who finds this
+"feature" more about "because we can do it", not "because we need to
+have it"?  Stepping back a bit, why did we add these three options
+to "stash apply" in the first place?
+
+If there is no good use case, perhaps what we should be doing is to
+remove from "git stash apply" these three options, not adding the
+same to another command.
+
+I know that the underlying machinery to allow different labels were
+invented for "checkout" that automatically stashes and then pops
+while switching branches, and the "checkout" command wanted to use
+labels that are different from what "git stash pop/apply" uses.  So
+I would not question that there is a very good use case for the
+underlying machinery to allow us to use different labels.
+
+But was it really helpful and necessary, beyond "Having the feature
+exposed to lower level component command like 'stash apply' makes it
+slightly easier to debug", to add these three options to the "git
+stash apply" command in the first place?  Who in their right mind
+would type
+
+    $ git stash pop --label-base=B --label-ours=O --label-theirs=T
+
+every time they unstash a saved change?
+
+Maybe I am not seeing an obvious use case, but I would blame the
+lack of justification in the proposed log message for that.  And "We
+can add the same three options" is not it.  "A caller that wants its
+own labels has to..." is not it either.  Why does that caller want
+such a strange thing?  What we have in the proposed log message is
+exactly "because we can" and not "because we need them in order to
+do X".
+
