@@ -1,132 +1,159 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526F53BFE3E
-	for <git@vger.kernel.org>; Tue, 29 Sep 2026 22:25:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951FF26ED46
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 00:21:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790720703; cv=none; b=kx5ETij0+wR4UJ02RHVQwLwmkBNF+WBfZJ1dIWggRT9lzLahvtFFXsoP/2MUVIIr7axHfm7Jin0QjX2jVWKBRxY0i8d62FYwljwBIJNSiju/NKJ10i/lz3l6ucAeE/YRoaCpl5RS7KgTXyNaNy3bT4AVkL/zYmoI977/hc+LvoI=
+	t=1790727718; cv=none; b=don183qT4zCtFazMDJhIpsAJjSS5K9g8lZ6ML+oM14UskPhxT5pMWIVOpy+5tz/F+FxgwL4FP/evEeupqfYgWGG0RPrOmpmtqa1kqW6Eu24XYbMaf3sylwFjib0mzZpTR+mnngSrVSOJYygifpZUpeppzhmVtESPWFsb/0er0pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790720703; c=relaxed/simple;
-	bh=nRskK7a3CHSmwYRRxhDqh2X/QiTV9Hll57qXJiTEVoQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NOnvAatX1N/vFmfj8Ye+kRsMi13+Gw1XslDNIr/9jxZTshxWXf68hu5za7Oo2LxZTVNbMarAMGbue97Hko0/HQtEbXqeZLpFW4yQzPjZb1YM8o0uiXSgiVPFp3zTJcGRiWjL2mdJ7jWS6FfrxvaQ/1/25ViQPRrYhs9/kXV6bm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NZzFMYRo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vhDu7+BG; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790727718; c=relaxed/simple;
+	bh=0pceFs13kVmzxwAwr4o9tiXe2iq3atVaioX50aRGEHw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=rX/oPmZci7kgKWT2qZ/cESb+sf2MtwU9h5ZMfnB/GinlIfjNu5QIHrZ9AlZ1QqCLnwH0ENvlF41lDekmbiJMPm5Gska+D2K+LHVHctEiWjy0NqAz+5WFS9EC74R+mkXKB+Uwpgh3k0a5ED1jmzU41dLOxyJ+8vsl90W/tnJsN30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jsIkAnOW; arc=none smtp.client-ip=74.125.225.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NZzFMYRo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vhDu7+BG"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 70AE97A072C;
-	Tue, 29 Sep 2026 18:25:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Tue, 29 Sep 2026 18:25:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790720700; x=1790807100; bh=e2Y4Qjk78B
-	Bbx8yieNhaI9V5CQfw2nmJNBOBALHMC4k=; b=NZzFMYRoT+v/H4i2rE+VWkCI+D
-	R29oMiEdl5lWsUYqWSAiLreojeJylMhxfm3P1p5q3DL8JRVIvw5sDW7LMxVwjQh5
-	ogyzdfx1QhFqcmMYgP3gcz6Ml71Dm8lSdkqMWJW7wbkmuieZCEhaDZGybH0RtLGN
-	U2yhnieiJZK+SUl+H7KXs7m2zCcyhs3fMK4sCUlWCHfRyr0PXiCylN6aSVhYpXsX
-	GporOoKuajaJMZK3/Zr6N9XY6WIwJml9BAkrFhkeVClonu7DyKaXLvY9Yxn+G5d5
-	LxiUiR+775wdMqxCbeQAOHpw2ENW8vZ1nGSOIqgNNfRMjx7kOQ9U/hbw9wnA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790720700; x=1790807100; bh=e2Y4Qjk78BBbx8yieNhaI9V5CQfw2nmJNBO
-	BALHMC4k=; b=vhDu7+BG+vBQD5b+6VM7lerBDbiriIfNSWTBu7eiJAtjHrv0Zfe
-	BEv2EqiClzTQu9Ne/mvVNw0N1xrUkned7AlIYMK3qNnBolzogVb/G4Z0XAE9Sx48
-	bOv4QceX7mVMs1r+O2I2fgyTtP4LkberdV/4wI5O4gJmLetUf30Q7wx+iUNWthoB
-	2rOYUTOJu4cw+G04eEN5dUGS4KnUFtQLoXLoLjH4H8bDIGNHa/cip6GM4+pN0/+w
-	LYkGOWHkK7l/ZRvMLhUVFAn4TGKdtG25Pcc/xRZv7cwUMSdqloieASb+x//eyNEa
-	af9fbvQU/1NFjBrmAJuigf+AWDyjT5eyzLg==
-X-ME-Sender: <xms:vDq8amKTMfEQv6to7VHySfEhn_OX8nDtFkta-uFC_e0K0ky_vleM9A>
-    <xme:vDq8alKNDHpcrhkmFped4PsC3gm1C8oj0zF0fAaY11Rp3hLLZmMAW-1cO5vV9X7O0
-    E-YS0mKHF2PJGJI6GiT28IoUQ4DSXAEXZNOYDkt47mSqWssxggelA>
-X-ME-Received: <xmr:vDq8arvl0Q86lzo_RFgI8sxinE68Ts1Ey16iFnPzU0p7Y2GbH_My_Kl-h_Kt1g3ByUCFXHWmekgBHpgooPPtU_OTVURtxB59lOdi>
-X-ME-Proxy-Cause: dmFkZTE+9gbG6lJ6PDj6h/oQ0yA2mvYdPxkopBQYQNcCuNeEIu0EPby1ryGUgjeS3f4hru
-    u3XIuh97BIt2ch/ArbZDI9XvLxiGhA2K9v8qV2VyTFz95se3/rHQhyjeC+nyM4eq/Ky3La
-    gkOuYx6m6LiJGDHdME3mgoStj1x5lMNYqE3K/Nc6oZiv2GFckvRnO1Hpi86qY3ZS4lXSa2
-    WJss+AQyxytHCL+yMi0/608LllaNL/fa+Jx5maQRfNSTL9HOa2vf2zGUi/3I1tJJLqeuYK
-    6Y5LNzw2F4OTVOYXkqK56tbzoWyl7mn1Gxnogte8RlewoICQI4szxOTDLxTDrgz+018eXF
-    rNVeIQHHOtvGUGsixYLt4mXhFwawBXyEU0tPT1VaactdvDbDb/5dcEB3AH+wXATYaOSuax
-    n/vqlrSpgT1Qhd9LPkMNK8ilyTBoVXqZi2FjCl1yt9QQYMUgIT7q/4eLSIQDE30Uhsz9KU
-    ZCVDUXOR+4Rl9xiEZIw33l+NbzqCsARr3irR/oZnMEoWSzC3wEAzN2e94d88lfudTDvol8
-    PhCV/PVMsCWqjLil1JtfGezYvlxo6K0FUX4KUbRzLrMTT7n7TkOmMmgpNNwahjjALRwfuL
-    qDpzSZiLbcdS3jdSL7hPf26zzuOfcMYaF6CqLAGerphkbi3ReOfzasfwc5EA
-X-ME-Proxy: <xmx:vDq8aqTgSBwtNY-1jqpaZDxlkmpzhxPP27WBAROFNEq_zUIzODmecA>
-    <xmx:vDq8apMzTIE2xtWLTpX4TCJe-BQm_ikkouZUiOtKRX9pILzX50IPqA>
-    <xmx:vDq8anZV4tcxAyPXgxGy5V202DPhgRe-UKSWg4HbuAuHWoggP4tnSg>
-    <xmx:vDq8arx62eilwLwrtXvkMGbLjVQo_m5G1T7Q_hED2GLNc-YmhSzvWQ>
-    <xmx:vDq8arNjDJ03RsPVgmnICci1nT3dox4C2VO1Wb4k-O_K2hb53Bf-3WVo>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Sep 2026 18:24:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH 0/3] [doc] Remove gittutorial-2
-In-Reply-To: <xmqqcxtven3u.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	29 Sep 2026 14:58:29 -0700")
-References: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
-	<xmqqcxtven3u.fsf@gitster.g>
-Date: Tue, 29 Sep 2026 15:24:58 -0700
-Message-ID: <xmqq8q4jelvp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jsIkAnOW"
+Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49b912d391aso36099825e9.2
+        for <git@vger.kernel.org>; Tue, 29 Sep 2026 17:21:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790727715; x=1791332515; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=dU1+ADH6VhOMKorPsyFkC8uvvQRhCureyDUDelpT35Q=;
+        b=jsIkAnOWRJr0zRbRQfcOPscDOL1IllRnKkQ5NLL5gOmljABYuLjSoPOnFd9HeYlsJL
+         tXEnXCOBzr+RHVbAibn84fRrUcSe3xZX2YaKQk8zjTZTJwxrs/kKpFTpWtiINgSHCWAM
+         OJqEWDItP63j0Ly1TfL4lD8Sy4C2+RNXNi0rgQtt37ef8PYw+wdIeCoNv+YijdHxMAvj
+         zZ4uqiIrtQSccSJ+uNXYzCUzzp67KCEAs1LwIkR0XDrS4gtFbNiJIN4lYKfoAqmC55M4
+         JtE+exVHTdI+q5gtGnnuqb/5y4W0J8Q95HxTqr9BTRrpy3VANrx7/vU7/wVzgk3LUDJ6
+         K63Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790727715; x=1791332515;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=dU1+ADH6VhOMKorPsyFkC8uvvQRhCureyDUDelpT35Q=;
+        b=t7UYbEy0gWv39QXH8vsEyDWphMRygLfaf3+3i6eAOxW1O/4Y7v5765mlmlPy8tZo/x
+         QzfLpYP24b1lHh606jlBRoLWKwTjyY2opl+EQkbne1HgvD2xN3CcCN60lVHzaZMmTWLi
+         x2BU9OdUYRdsrLWWFOIYEm3BgYB6p7sS7Jyx6VmK543dd79e9vgEgGHxJ1tsvbg1UMJ5
+         X/jtTTldThgpOzRdnJrVp/8B28uOv2LSxuOcTrxnDLTbWgHKcgljbhIu5FhLL4MbF7rc
+         DrXb3O9Hf2ie3pt7nk2iUCZ76LrxV1HUqUE56p5wgaasJ9QI4mFuq9RocVUDj7mbLWSZ
+         cJ1A==
+X-Gm-Message-State: AFuF++mVb+5il532OrREvZdnSGBgRXlxYVg3d79pHfctVID+x6hoflti
+	7XveZSLeVVXUGp4dBMYMgkEL/oAVlwqgi1FVIMJbNZovqm39aW41rG0f
+X-Gm-Gg: AYBFou1eVfrxx3SR5at8z5/pZdscV2zhSAr6DvyOzGxhhH/h3QCaCC8gcK3iH9/L5bo
+	LO0mNw4IYQbGQQvmINEqGOjBgMxjEk5fFrqlCvB1CLDKrO26ajC6nF1dDMtxZUadl4zl/8zV7mG
+	6qwbEjiljJ+6QJZIbAO3yvLGNnQYnCJIo0DqI8T/QuBgTbYeD4/sj2I9zr+4AfAjlxRkUPG/hyt
+	UUI+1ZiZ6ky99A56pGZAE3cMkBmGrfc+eZUeWJO84sFyemg3iT9Qx59MKbhXQciyj4uq2y8zamF
+	SCsdh7HhmsrLGhEifIjlPjevvHL2Bn7OErvL3xNzKjDAz3bdL9xljHCA5CZD7kRgw0moaYruwWh
+	wdQtgUOvN2T24FurxVd7g7rQ950zELBRppRqL801saCkgwBBUUSoWr/56a7B26Ihw33ORcp/d+N
+	HuIqvVwnu5CQLHIoIgd2a2b2784sskyVJ6s1sC+UXfxmyT67pJG+6K/qgfMNbOBpZ9egvGChMHA
+	CSEirg/Pss0Y+YZ5wnuqThPouivLdk0oLdDMFffhD2jMSc9UjOfkHZjC5H1uC6+SJR5BcfjMeqy
+	mYOqP5F/RbjBy9iW6AojFifNZBoIPNjgjUEmaERZI+piKzu0A2o0Y6aL2ghhrp/A0jZndfq6/0l
+	4YgSK7VbZraSLUoxmBrQy
+X-Received: by 2002:a05:600c:6388:b0:49c:fc6c:be19 with SMTP id 5b1f17b1804b1-4a01514e20cmr12402945e9.31.1790727714692;
+        Tue, 29 Sep 2026 17:21:54 -0700 (PDT)
+Received: from mac.lan ([2001:818:c665:a700:4e1:afcc:bdec:a44d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a015cde27asm5135615e9.3.2026.09.29.17.21.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Sep 2026 17:21:54 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+Subject: [PATCH RFC 0/5] Add --dry-run option to git-backfill(1)
+Date: Wed, 30 Sep 2026 01:21:45 +0100
+Message-Id: <20260930-backfill-dryrun-v1-0-1128f247ee01@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDS0MT3aTE5Oy0zJwc3ZSiyqLSPN20xGRLS3MDA2NjIyMloK6CotS0zAq
+ widFKQW7OSrEQweLSpKzU5BKQWUq1tQC1y6+NeAAAAA==
+X-Change-ID: 20260914-backfill-dryrun-fac997003322
+To: git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>, 
+ Pablo Sabater <pabloosabaterr@gmail.com>
+X-Mailer: b4 0.15.2
 
-Junio C Hamano <gitster@pobox.com> writes:
+[Cc'd Derrick Stolee for his work in the backfill(1) command]
 
-> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->>  Documentation/MyFirstObjectWalk.adoc |   2 +-
->>  Documentation/git.adoc               |   2 +-
->>  Documentation/gitcore-tutorial.adoc  |   1 -
->>  Documentation/gitcvs-migration.adoc  |   2 +-
->>  Documentation/gitglossary.adoc       |   1 -
->>  Documentation/gittutorial-2.adoc     | 422 +--------------------------
->>  Documentation/gittutorial.adoc       |  23 +-
->>  command-list.txt                     |   1 -
->>  po/bg.po                             |   3 -
->>  po/ca.po                             |   4 -
->>  po/de.po                             |   3 -
->>  po/el.po                             |   4 -
->>  po/es.po                             |   3 -
->>  po/fr.po                             |   3 -
->>  po/ga.po                             |   3 -
->>  po/id.po                             |   3 -
->>  po/it.po                             |   4 -
->>  po/ko.po                             |   3 -
->>  po/pl.po                             |   3 -
->>  po/pt_PT.po                          |   4 -
->>  po/ru.po                             |   3 -
->>  po/sv.po                             |   3 -
->>  po/tr.po                             |   3 -
->>  po/uk.po                             |   3 -
->>  po/vi.po                             |   3 -
->>  po/zh_CN.po                          |   4 -
->>  po/zh_TW.po                          |   4 -
->>  27 files changed, 14 insertions(+), 503 deletions(-)
->
-> One thing I forgot to mention.
+This series adds a --dry-run option to git-backfill(1) that reports how
+many missing blobs would be fetched and, when the remote server
+supports the object-info capability, their total size:
 
-Sorry, but there was another.  With this merged, doc-lint seems to
-fail and breaks 'seen'.
+        $ git backfill --dry-run
+        After backfill, 48 blobs would be fetched (1.20 KiB).
 
-            ...
-            LINT DOCSTYLE includes/cmd-config-section-all.adoc
-        no link: gittutorial-2
-        gmake[1]: *** [Makefile:537: lint-docs-manpages] Error 1
-        gmake[1]: Leaving directory '/home/gitster/w/buildfarm/seen/Documentation'
-        gmake: *** [Makefile:4003: check-docs] Error 2
+If the server does not advertise object-info, only the count is shown.
+
+I am not a git-backfill(1) user myself, but it seemed useful for users
+to know how much data a backfill would bring in before running it.
+
+The number of missing blobs is the sum of the number of blobs to be
+fetched in each batch. The object-info capability lets us ask the server
+for the size of each blob without downloading it, so summing them gives
+an estimate of the total.
+
+Note that this is an upper bound rather than the exact disk usage:
+object-info reports the uncompressed size of each object, while the
+objects end up stored compressed and possibly deltified in a packfile,
+so the space actually used on disk will usually be smaller.
+
+Since I do not use backfill, feedback on whether this is useful, and on
+the output format, is very welcome.
+
+Patches 1-3 are preparatory:
+
+  [1/5] transport-internal: update fetch_object_info comment
+        Fixes an outdated comment: object-info supports type as well as
+        size.
+
+  [2/5] fetch-object-info: add enum for fetch_object_info() statuses
+  [3/5] fetch-object-info: return a status instead of dying
+        Teach fetch_object_info() to return a status instead of dying
+        when the server does not advertise object-info. The die() is
+        kept in cat-file's remote-object-info path, so its behavior is
+        unchanged.
+
+Patches 4-5 add the option in two steps:
+
+  [4/5] backfill: add --dry-run option
+        Prints only the number of blobs that would be fetched.
+
+  [5/5] backfill: report total size of missing blobs in --dry-run
+        Also prints their total size when the server supports
+        object-info, and falls back to the count alone otherwise.
+
+Thanks.
+
+Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+---
+Pablo Sabater (5):
+      transport-internal: update fetch_object_info comment
+      fetch-object-info: add enum for fetch_object_info() statuses
+      fetch-object-info: return a status instead of dying
+      backfill: add --dry-run option
+      backfill: report total size of missing blobs in --dry-run
+
+ Documentation/git-backfill.adoc | 10 ++++-
+ builtin/backfill.c              | 97 +++++++++++++++++++++++++++++++++++++++--
+ builtin/cat-file.c              |  4 ++
+ fetch-object-info.c             | 17 ++++----
+ fetch-object-info.h             | 24 +++++++---
+ t/t5620-backfill.sh             | 48 ++++++++++++++++++++
+ transport-helper.c              |  6 +--
+ transport-internal.h            | 12 ++---
+ transport.c                     | 29 ++++++------
+ transport.h                     |  7 +--
+ 10 files changed, 208 insertions(+), 46 deletions(-)
+
+
+---
+base-commit: 12cb6293d6288865c1a133cf22accbaf99d13eb6
+change-id: 20260914-backfill-dryrun-fac997003322
 
