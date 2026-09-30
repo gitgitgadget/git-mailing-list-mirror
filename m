@@ -1,310 +1,303 @@
-Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
+Received: from mail-ua2-f43.google.com (mail-ua2-f43.google.com [74.125.226.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C9546C850
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 11:06:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2D74915B9
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 11:47:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.226.235
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790766388; cv=pass; b=dyAObXx4v10DzRCuBj5a8GgFbBZKsYxdL4TPKnWkSjzYwtAnQrrbz3btYzP4WPoXP5a+SoUOs0WdTDHbYyfgFowgsCRUUCwgiEXmbV4oSexeRh2bPqZ2fhSoo9xv/l0z7NWVGW0g9GeRoKeYGN0JyXmCmYMDO1pVKf14zfm5Dt4=
+	t=1790768830; cv=pass; b=iBFLhZB/3XCBAR+PidfqQd9tH6RFI65V1IxglNBkbDKifl+V57TUAFaT9vJPuwPYk8cJwZpFzAGUs9B1MOUbTNb4xnpDLqo2hiutOlUXpfb0SY92D8P2AbmN4kqqHgW14Je5MvCyGuxCjcTv/IxKI760PfuP4qsUcef3MSe5CsQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790766388; c=relaxed/simple;
-	bh=qbWxu38qG9vr2w3YnpOxBewULmwEtuZAGiI2iTwaFvQ=;
+	s=arc-20240116; t=1790768830; c=relaxed/simple;
+	bh=X+V2xQhwkusL6cTBeiiLTPvO6JOMqW9wv2h2g35aW7g=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cRC8XQhUOeJEkBqCg5FoHf/aLXHxRiud5h+yfcRK3T4iUo/9btaz4R9hg8xe6hsf84f9HmeoKwCT+Qqmx1Br3jCwPzr57hwxg0ctHvJAm0/SKbQ27Rq2gArWWn/WqUuODwIn1H5j4Nadm3CHf318O5RMczvNCAlgoCcL0LnrvLg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V4YDa0N4; arc=pass smtp.client-ip=209.85.222.49
+	 To:Cc:Content-Type; b=jodMYFsTKF17MgPVBXCMoizWiMvW5rfDW/DrNoGk1laeom+nyorB8dy9MZNyZtviQzqI4XgeHTKu4msqoVBzK4b189kn+46fKt5J8h0nxJFHILjG6xLwRUTXevruQOLqh5zz87E51PvfX4KHd/XxJlOEdEt+aNOw7hHUDsDNlwY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OXnEun7E; arc=pass smtp.client-ip=74.125.226.235
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V4YDa0N4"
-Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-989e5cbcb12so117236241.1
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 04:06:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790766379; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OXnEun7E"
+Received: by mail-ua2-f43.google.com with SMTP id a1e0cc1a2514c-988c446fa9dso435915241.3
+        for <git@vger.kernel.org>; Wed, 30 Sep 2026 04:47:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790768825; cv=none;
         d=google.com; s=arc-20260327;
-        b=lRoq099cNMdXUE5uRVf4YAuBCeVRKlvDiBh7VeBRJfcmVBYal3jGUHngO7jep21o7I
-         I7kuzd5SamGVRjJ7TY5wBbsthnFGSIiW6cN5AtKf2KFdzdKb9Ns9NOeC5/OHnI3+qP8r
-         WKnaVZ3udVb77v/vdsthX2syJn8uno1iSchYMmD8ZLvteI+4ZrHP0j2SSnFBH0s6styy
-         CUY91+UARQbGKe6KzQL/aQajtXnQlV/dEudwZOlddVsWXpiSb3EP5exVNVZZUCdCZFZG
-         EInY2qDV+h0gR/NlnHIDilutToROuwYwP7n5D9e9g1MIGpLXLxXX49oe5MLLb3SgIAk8
-         67ng==
+        b=MSFfCPx74zMQVr3lr3el3vZUxfO3nBeRjnMReKOlFMiRb2ZxCGgf6Ef0wxwuGC0uX9
+         +19lANtMIMCa3HIR9RvDCPriBNQbpyN+3hBi62r8+IaUJMv8fKV5A8SeN1Kn5+3i0CT1
+         tjuhfExY4+ItrJN66uFNFDzUAFdfD2nhL8CBG8yhNEzzybvbj7yoMxMJ43o3JcsmXYlR
+         IybtAjUEdapbSJAzWga+knMhP6Jwc2KfSY94F5m6tIw9Yf37g5iHZJ7WNd3f+oNgdnkj
+         4fjarg4VICZpbqE4PLED4B4kujexohfL0mZquxEpkKLi67QUX2/plVj+qDGcvpijF+4n
+         tWrA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=gvJ3gvL9mkHLHEenBRppNmbuci4GAgqEoeCmuENaYyk=;
-        fh=KLIo73DoAJYJFJm5BWJBUeAgtdZLXSTUHY/Cejme7tg=;
-        b=XPzaihRB0MC+RbUb/X6gqm+fAQI8A1iob2s3AMmNmeE7ZTL/G9E1OKnQdOJ6ckh13h
-         7n+Mgz1y8MP2bAKgYZ/IVClSkQgj5gTW91gIMNQ8NhP4SukLC+56IPSRE4PFmouwimIw
-         PYkunRE1E8vslraC7AlgE05YnR4XgVMhFldydBpt4P623rkCHfMebdQxgg4Xrt51vMRu
-         lkhAVHBrAPPQZgJ+THRq/+HiV9yl52B3jiD4Hsr8zDMHp6uk+S9FxS2P8eo2FOMTAXSm
-         4P8Da23LvyYvmEDGqMm8v/9zSzkk8N86mS4N4FLMQRHhQcFhokXjea55GOYV83gDsw41
-         gXwQ==;
+        bh=NKSlMAlMPOj/iXAFale8cik9ZukLvkk9htI3r/xJM2U=;
+        fh=qHrGj+CLAb61EKe8BtzFdapg+yCfir2rU15+JWAR9ss=;
+        b=IIkQDSldhUf/22uuebxa73XA137t+qf+xan0cKz3IA1EwzpqjPPgovCt97R4fUltEp
+         ZvKV8ALr6ZCAFNQ3SEQm/ZDPqbzc6hNcNMd4zI2hYEYvb1vg6l6Jw8g6GFb08i1GPFXd
+         o6t9ZsYXN8p4Dtj5YWLv2DvLL0lbaK3rPD+Re2DpV80x8gYTmISnkaxQ9M5r0BR342Ip
+         EMuR3N0B6DZbFsjBksX8+d9pt3BhBTkYUm5cEt9mulbKRfEeyA/JVL9jyxMCzmJc4bzy
+         G+FvP4fZuaH+sMSp4ibHxeiImynb5I9LVmpyTf2IC8+W29OytwNVkQkPIGKA8LIvSrsA
+         +FCw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790766379; x=1791371179; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790768825; x=1791373625; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=gvJ3gvL9mkHLHEenBRppNmbuci4GAgqEoeCmuENaYyk=;
-        b=V4YDa0N4vtu36+nDpMSESFIsODz5eG9pls4yFucuQlYV32FIoyQ3pySQFWhT/BigFK
-         O3i98zURFgyX5v5xP+q8zLUtl5ujZxASELeBVFux+B/HHnf08+YT62mPXMpSm+IAafCH
-         Vou0HxjWcaV0FjLRd1rBpTMRQHo2xiABnQOwMREs7yFNTBz89E/ym87J6LV2qInYJ97E
-         DwAEEiVCok/Wro9pnR/KNLtw0CReNGbrsWbMZxIpUNG4i2yviURG5EPEgUZ3Di+baxfV
-         graesE9TF5LI2myRRSbJ4t4z9qTdAK3ZZANH4MGlPn+oXVexI2qxgE1sTlJ6Y/wspPeb
-         FL6w==
+        bh=NKSlMAlMPOj/iXAFale8cik9ZukLvkk9htI3r/xJM2U=;
+        b=OXnEun7Ei2RiIEBxawHgp6+NeRJs/ELOf5+dj7+xVSlrcyN4R3ZRonyBKCtpajp/v3
+         XymQ6Aff0aa2tzZGgo/eaWFT2YKpx90I7hT4sB+Osae2Sywt6xgIwczNSrQ8nmdZQ8mP
+         3P04u+DcXQ5Lx64EneDp7+6TGBTUxYb843TNw1sH5I9x07YYt7t7YelpWkm9xxxMMtja
+         pMj3mnAHu0xVV511BfbogsmaeF/QitHm+JAQaM8egb0ToN935Z78uJgKmrdNyc2XtCfO
+         yoRDYodzbstJbjyPVHtpRMV5BQo2IdlZzqsohuirYBrOH5TRE6K665d8RA8KOU1yoFxj
+         ZdRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790766379; x=1791371179;
+        d=1e100.net; s=20260707; t=1790768825; x=1791373625;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=gvJ3gvL9mkHLHEenBRppNmbuci4GAgqEoeCmuENaYyk=;
-        b=EouUl0DNKI+OICkTuwyhV1676kq8ZwOjLQRi2dKxRx99BTF4S/CN/gUaE0x1S1YTlQ
-         c0dxbyfqTRyfCgqm/EwiYBYNZwvgtr3edN0HNhgE2X9GGBwaD8EqoJwlP4+65oAgKCim
-         TdGRpY7XDbyb03YbH318RXC5nQK8fl8UbG0wkgU6YxPXg8XHVsLBErc32qtGzeZjmUmZ
-         fl1fChGniHh7nS4MhsyxxRy+74REdME78/sIbqadQ6hYnH4Mj7Ut5LPIJxyWpj3MYtLF
-         cVFt9W+JM0CkZuYTu0NUcjJOCGVERdo0ERBulu1d1FF2g2UOB6VrTATnIBebElym1H+z
-         TwZQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzsYDKzngSXEBOKFQIL5qXgGcACv8lUdp1SEm4XYzNZJs0eg6klDlJdVqCVYmwT0U+vLQQ=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIeP8Ij0HgTgiLw3zLJfzDKgf1CT3afh2707tHVA2UKu26m/blL
-	2TIzARADag7iVcIJQAKUjVwP1bQi+ciNHKVvq3AHRHLowJqZASPHVuLYEb0T+6xrp+N0vVSwsxw
-	NJd1GsPXNYcaQW6UoSckIBmAWay9aRlw=
-X-Gm-Gg: AYBFou0YYzbBEmyvfPYFiAgWR5HpJvRUnBjeuU7PvH0gaNUO/323YVmdafNhIqHtfD4
-	1uASDls+7OEnwAujnmS6TWDxRXEGxQyrGlEpgrwHGaosDG7KPUF7OOgxg5qUh2jvXgw2N6AOz2M
-	ILcKwo5iujHvpKqsnMEQkRxrkUs6t6x5fTQhPWU3ifOUd7UBHM2CVA1v+wxRJgt+WFch2dk5cUO
-	wrRI213wSFBbKFzsv+a1Gi4/F6TFTL1XhMck+RXmVdAQGAfHsI1Wr4/6URp1UPSNI/XOu0j8yIx
-	KydGVlJLqRfMIqEL2cQr2khjUsj8Oycs5TTyE9vHXq6AuEDV+umyG6BFHg2Hocz4S+qPNeQp7tO
-	pUO7g9BksOULo7d4cYEjiTWXuN0o3pYCB1XGEfNxVURqVMg==
-X-Received: by 2002:a67:f503:0:b0:7bf:8ec:4996 with SMTP id
- ada2fe7eead31-7bf08ec5738mr95010137.20.1790766378863; Wed, 30 Sep 2026
- 04:06:18 -0700 (PDT)
+        bh=NKSlMAlMPOj/iXAFale8cik9ZukLvkk9htI3r/xJM2U=;
+        b=1fIAlOqe0VitLBeyWAWQ0ZEycAXRBcfVG2I9jzG77/ipv838EMneI/56X994Wd4Yy1
+         6IaGJ1ULnZXnfSaFX68G1d/nCK21nqTcXBvOB8JF5SpKjzuvs5zAUvfis1Kk3Kj+dJJs
+         8/a17EeD2AJ1MrvRGI9KxK14SjJWfl+D5vemTBVTcLshC/ofJNbsq7TnqzEO+yWNhZtm
+         Go79IPEcJDrm29fhoudJuE6RUihx05ODrIdWJte3XHGuvURh4KNjjc0/oYGoS/LmZzdn
+         MDbkFbObVwR/B16uYlfNOID0eqOAg6DCgGppTS3ehGQL3PJejNXnVWfQwZq9EnoACF9r
+         GZRA==
+X-Forwarded-Encrypted: i=1; AKwUvBwNYNbkY0kCS2BU2+R5BNeuw4GLuApT5+IfHEo0M07+NFLlc7JUsrNIToZ/hGDSHfIFbj4=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLlz3y5v4nvVYLXgOP+ChNOsfzoZZMgkQ32FvhhCQ6BrEt9eHhV
+	7mponexr2QfuSvkHIxw61L/x+s1uh1C2LVy73iOCMGEwzjGaSMp6QqDa7hAPRZhW86Ne6qfNWHR
+	4YVJ/mkl8PAO42fFEiQeOxdQBaFre3oWFIQ==
+X-Gm-Gg: AYBFou17sJsNfjuVWtRZYbuu0J8B2PboyaaXO3JFNh0kKZ3gFMNaP3AwBouTBtRSAVL
+	qyBlCCyFzL6gIBoDFvN+/LcayeU1GNpLZG0PW3MbLC7y+UVwhHaI4V3LFUgEUfOAAXiiSKGURJg
+	P3SoWDmJRKsLNI2eNphnm/DNHg8mLM8ibEssrwDLy++8bMHYzo6n2FMz47lS8dqFuFQ5YQ9mIzs
+	+T89RCCdGKTUt2W4MHWKIRrtty5zjPl8SHn60N+nr/6UMOblN4EwI9+EXoWNiyXn4+/3u5WU5dX
+	efdQfihUEgkyua+obdozuQyzCd107hD/A1J53i206K/V+JgJzjZ1DV1FwRPtjBYXqy7zpNukkXg
+	rlVm/zbhJ90LrAggc001giG3gATzNmkHJIhIP0pF/IVgh0w==
+X-Received: by 2002:a05:6102:5122:b0:7a6:d11b:16ea with SMTP id
+ ada2fe7eead31-7be726b8973mr154422137.6.1790768825484; Wed, 30 Sep 2026
+ 04:47:05 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 30 Sep 2026 04:06:10 -0700
+ HTTPREST; Wed, 30 Sep 2026 04:47:02 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 30 Sep 2026 04:06:10 -0700
+ HTTPREST; Wed, 30 Sep 2026 04:47:02 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260930-backfill-dryrun-v1-4-1128f247ee01@gmail.com>
-References: <20260930-backfill-dryrun-v1-0-1128f247ee01@gmail.com> <20260930-backfill-dryrun-v1-4-1128f247ee01@gmail.com>
+In-Reply-To: <20260929-pks-reftables-fix-timezone-format-v1-1-3df105a95ed1@pks.im>
+References: <20260929-pks-reftables-fix-timezone-format-v1-0-3df105a95ed1@pks.im>
+ <20260929-pks-reftables-fix-timezone-format-v1-1-3df105a95ed1@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 30 Sep 2026 04:06:10 -0700
-X-Gm-Features: AclHuK_uKxGjcy8XWJAEgGrxzFE_ISifXnR55gXnBzxqOETEAmBkKIPdD8Z29gc
-Message-ID: <CAOLa=ZR2Ka+5o8HxgZtnO98oH6vo6B_HmjVekYT8hC3HTMq-QQ@mail.gmail.com>
-Subject: Re: [PATCH RFC 4/5] backfill: add --dry-run option
-To: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000e37178065cb14925"
+Date: Wed, 30 Sep 2026 04:47:02 -0700
+X-Gm-Features: AclHuK_kNhv3p9lyhC2M7zpMn0DfWLKJsJpN_O5CpDoXQ90qKXo1WGzx1aYPENU
+Message-ID: <CAOLa=ZQRDVL2Djh4du1zWGg_ABZTyzaWDYYb0PDg3EXAfpn7bA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] date: add helpers to convert between "+HHMM"
+ timezones and minutes
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Josh McKinney <git-bugs@lists.joshka.net>, Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="000000000000b7ea76065cb1db70"
 
---000000000000e37178065cb14925
+--000000000000b7ea76065cb1db70
 Content-Type: text/plain; charset="UTF-8"
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Users have no way to know how many blobs git backfill is going to
-> download before running it.
+> The timezones that we store in commits as part of the identity
+> information are encoded in "[+-]HHMM", for example "-0700" for UTC-7.
+> Internally we typically pass around this timezone either as string or as
+> a parsed integer (-700).
 >
-> Add a new --dry-run option to the backfill command. The objects are
-> walked as usual, but instead of fetching each batch of missing blobs
-> they are only counted, and the total is printed at the end.
+> Some sites want to convert between this format and minutes or vice
+> versa, and that conversion is performed ad-hoc. We're about to introduce
+> another site though that wants to have access to this logic, and having
+> it cluttered across our codebase is a bit awkward.
 >
-> A subsequent commit will also print their size when the server supports
-> the object-info capability.
+> Introduce two new helpers `tz_to_minutes()` and `minutes_to_tz()` that
+> perform the conversion for us and convert call sites to use them.
 >
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+> Note that we used to perform a dance in `gm_time_t()` where we first
+> convert `tz` into a positive value, then calculate the minutes, and
+> finally turn the minutes into a negative value again. This dance is
+> performed because it is implementation-defined in C89 whether the
+> division on negative values truncates towards zero or not [1]:
+>
+>   If either operand is negative, whether the result of the / operator is
+>   the largest integer less than the algebraic quotient or the smallest
+>   integer greater than the algebraic quotient is implementation-defined,
+>   as is the sign of the result of the % operator.
+>
+> So under C89, `-130 / 100` could legitimately result in -1 or -2, and
+> `-130 % 100` could result in either -30 or 70. For us though, the result
+> that we want is the first one (-1 and -30), which is called truncation
+> toward zero.
+>
+
+We divide by '100' because we represent "-0700" as '-700' in integer. So
+we need to separate out the 'HH' from 'MM'. Okay.
+
+> This part of the C language has changed in C99, where this edge case is
+> now well-defined to always truncate towards zero [2]:
+>
+>   When integers are divided, the result of the / operator is the
+>   algebraic quotient with any fractional part discarded.90) If the
+>   quotient a/b is representable, the expression (a/b)*b + a%b shall
+>   equal a.
+>
+>   90) This is often called ''truncation toward zero''.
+>
+> So in theory it's unlikely that we still need this logic. In practice
+> though it feels safer to just retain it as we don't require a fully
+> C99-compliant compiler in Git.
+>
+> [1]: https://port70.net/~nsz/c/c89/c89-draft.html#3.3.5
+> [2]: https://port70.net/~nsz/c/c99/n1256.html#6.5.5p6
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  Documentation/git-backfill.adoc |  6 +++++-
->  builtin/backfill.c              | 37 +++++++++++++++++++++++++++++++++----
->  t/t5620-backfill.sh             | 26 ++++++++++++++++++++++++++
->  3 files changed, 64 insertions(+), 5 deletions(-)
+>  apply.c  |  3 ++-
+>  date.c   | 25 +++++++++++++++++--------
+>  date.h   |  9 +++++++++
+>  strbuf.c |  3 +--
+>  4 files changed, 29 insertions(+), 11 deletions(-)
 >
-> diff --git a/Documentation/git-backfill.adoc b/Documentation/git-backfill.adoc
-> index 82d6a1969d..08f19fea17 100644
-> --- a/Documentation/git-backfill.adoc
-> +++ b/Documentation/git-backfill.adoc
-> @@ -9,7 +9,7 @@ git-backfill - Download missing objects in a partial clone
->  SYNOPSIS
->  --------
->  [synopsis]
-> -git backfill [--min-batch-size=<n>] [--[no-]sparse] [--[no-]include-edges] [<revision-range>]
-> +git backfill [--min-batch-size=<n>] [--[no-]sparse] [--[no-]include-edges] [--dry-run] [<revision-range>]
+> diff --git a/apply.c b/apply.c
+> index f00b7ba4d3..367271b8ac 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -14,6 +14,7 @@
+>  #include "abspath.h"
+>  #include "base85.h"
+>  #include "config.h"
+> +#include "date.h"
+>  #include "odb.h"
+>  #include "delta.h"
+>  #include "diff.h"
+> @@ -851,7 +852,7 @@ static int has_epoch_timestamp(const char *nameline)
+>  	if (*colon == ':')
+>  		zoneoffset = zoneoffset * 60 + strtol(colon + 1, NULL, 10);
+>  	else
+> -		zoneoffset = (zoneoffset / 100) * 60 + (zoneoffset % 100);
+> +		zoneoffset = tz_to_minutes(zoneoffset);
+>  	if (timestamp[m[3].rm_so] == '-')
+>  		zoneoffset = -zoneoffset;
 >
->  DESCRIPTION
->  -----------
-> @@ -70,6 +70,10 @@ OPTIONS
->  	--onto TARGET A..B`, where A..B normally excludes A but you need
->  	the blobs from A as well.  `--include-edges` is the default.
->
-> +`--dry-run`::
-> +	Do not download any objects. Instead, print the number of
-> +	missing blobs that would be downloaded.
-> +
->  `<revision-range>`::
->  	Backfill only blobs reachable from commits in the specified
->  	revision range.  When no _<revision-range>_ is specified, it
-> diff --git a/builtin/backfill.c b/builtin/backfill.c
-> index e71e0f4742..6019112966 100644
-> --- a/builtin/backfill.c
-> +++ b/builtin/backfill.c
-> @@ -26,7 +26,7 @@
->  #include "path-walk.h"
->
->  static const char * const builtin_backfill_usage[] = {
-> -	N_("git backfill [--min-batch-size=<n>] [--[no-]sparse] [--[no-]include-edges] [<revision-range>]"),
-> +	N_("git backfill [--min-batch-size=<n>] [--[no-]sparse] [--[no-]include-edges] [--dry-run] [<revision-range>]"),
->  	NULL
+> diff --git a/date.c b/date.c
+> index 014065b419..63ea9dbc76 100644
+> --- a/date.c
+> +++ b/date.c
+> @@ -45,13 +45,23 @@ static const char *weekday_names[] = {
+>  	"Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"
 >  };
 >
-> @@ -36,6 +36,8 @@ struct backfill_context {
->  	size_t min_batch_size;
->  	int sparse;
->  	int include_edges;
-> +	int dry_run;
+> -static time_t gm_time_t(timestamp_t time, int tz)
+> +int tz_to_minutes(int tz)
+>  {
+> -	int minutes;
+> +	int minutes = tz < 0 ? -tz : tz;
 
-Nit: This could be a bool, since `OPT__DRY_RUN` uses `OPT_BOOL` internally.
+This is the part which we could skip as we're C99 compliant, but keeping
+to be on the safe side.
 
-> +	size_t total_batch_nr;
-
-
->  	struct rev_info revs;
->  };
+> +	minutes = (minutes / 100) * 60 + (minutes % 100);
+> +	return tz < 0 ? -minutes : minutes;
+> +}
 >
-> @@ -58,6 +60,15 @@ static void download_batch(struct backfill_context *ctx)
->  	odb_reprepare(ctx->repo->objects);
->  }
->
-> +static void dry_run_batch(struct backfill_context *ctx)
+> -	minutes = tz < 0 ? -tz : tz;
+> -	minutes = (minutes / 100)*60 + (minutes % 100);
+> -	minutes = tz < 0 ? -minutes : minutes;
+> +int minutes_to_tz(int minutes)
 > +{
-
-While it is used during dry_run, probably makes more sense to rename it
-to `count_batch()` since that's what it does.
-
-> +	if (!ctx->current_batch.nr)
-> +		return;
-> +
-> +	ctx->total_batch_nr += ctx->current_batch.nr;
-> +	oid_array_clear(&ctx->current_batch);
+> +	int tz = minutes < 0 ? -minutes : minutes;
+> +	tz = (tz / 60) * 100 + (tz % 60);
+> +	return minutes < 0 ? -tz : tz;
 > +}
 > +
->  static int fill_missing_blobs(const char *path UNUSED,
->  			      struct oid_array *list,
->  			      enum object_type type,
-> @@ -73,8 +84,12 @@ static int fill_missing_blobs(const char *path UNUSED,
->  			oid_array_append(&ctx->current_batch, &list->oid[i]);
+> +static time_t gm_time_t(timestamp_t time, int tz)
+> +{
+> +	int minutes = tz_to_minutes(tz);
+>
+>  	if (minutes > 0) {
+>  		if (unsigned_add_overflows(time, minutes * 60))
+> @@ -103,8 +113,7 @@ static int local_time_tzoffset(time_t t, struct tm *tm)
+>  		offset = t_local - t;
 >  	}
->
-> -	if (ctx->current_batch.nr >= ctx->min_batch_size)
-> -		download_batch(ctx);
-> +	if (ctx->current_batch.nr >= ctx->min_batch_size) {
-> +		if (ctx->dry_run)
-> +			dry_run_batch(ctx);
-> +		else
-> +			download_batch(ctx);
-> +	}
->
->  	return 0;
+>  	offset /= 60; /* in minutes */
+> -	offset = (offset % 60) + ((offset / 60) * 100);
+> -	return offset * eastwest;
+> +	return minutes_to_tz(offset * eastwest);
+
+While mathematically it's the same, but shouldn't this have been
+`minutes_to_tz(offset) * eastwest`?
+
 >  }
-> @@ -131,10 +146,23 @@ static int do_backfill(struct backfill_context *ctx)
 >
->  	ret = walk_objects_by_path(&info);
->
-> +	if (ret)
-> +		goto end;
+>  /*
+> @@ -862,7 +871,7 @@ static int match_object_header_date(const char *date, timestamp_t *timestamp, in
+>  	ofs = strtol(date, &end, 10);
+>  	if ((*end != '\0' && (*end != '\n')) || end != date + 4)
+>  		return -1;
+> -	ofs = (ofs / 100) * 60 + (ofs % 100);
+> +	ofs = tz_to_minutes(ofs);
+>  	if (date[-1] == '-')
+>  		ofs = -ofs;
+>  	*timestamp = stamp;
+> diff --git a/date.h b/date.h
+> index 0747864fd7..816df5b833 100644
+> --- a/date.h
+> +++ b/date.h
+> @@ -70,4 +70,13 @@ void datestamp(struct strbuf *out);
+>  timestamp_t approxidate_careful(const char *, int *);
+>  int date_overflows(timestamp_t date);
+>  time_t tm_to_time_t(const struct tm *tm);
 > +
->  	/* Download the objects that did not fill a batch. */
-> -	if (!ret)
-> +	if (!ctx->dry_run) {
->  		download_batch(ctx);
-> +		goto end;
-> +	}
+> +/**
+> + * Convert between the "[+-]HHMM" timezone format and minutes. This format is
+> + * used for example as part of commit headers and reflogs. For example, the
+> + * timezone -0100 is converted to -60 minutes.
+> + */
+> +int tz_to_minutes(int tz);
+> +int minutes_to_tz(int minutes);
 > +
-> +	dry_run_batch(ctx);
-> +
-> +	printf(Q_("After backfill, %" PRIuMAX " blob would be fetched.\n",
-> +		  "After backfill, %" PRIuMAX " blobs would be fetched.\n",
-> +		  (unsigned long)ctx->total_batch_nr),
-> +	       (uintmax_t)ctx->total_batch_nr);
->
-
-Nit: Okay so we have a goto inside the first if(...), which skips this
-section. I would have found it easier to read if it was
-
-if (dry_run)
-   count()
-else
-   download()
-
-> +end:
->  	path_walk_info_clear(&info);
->  	return ret;
->  }
-> @@ -157,6 +185,7 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
->  			 N_("Restrict the missing objects to the current sparse-checkout")),
->  		OPT_BOOL(0, "include-edges", &ctx.include_edges,
->  			 N_("Include blobs from boundary commits in the backfill")),
-> +		OPT__DRY_RUN(&ctx.dry_run, N_("Preview the number of blobs to be fetched")),
->  		OPT_END(),
->  	};
->  	struct repo_config_values *cfg = repo_config_values(the_repository);
-> diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-> index 7462280470..e76fa6081b 100755
-> --- a/t/t5620-backfill.sh
-> +++ b/t/t5620-backfill.sh
-> @@ -141,6 +141,32 @@ test_expect_success 'do partial clone 2, backfill min batch size' '
->  	test_line_count = 0 revs2
->  '
->
-> +test_expect_success '--dry-run reports missing blobs without fetching them' '
-> +	test_when_finished "rm -rf backfill-dry-run dry-trace" &&
-> +	git clone --no-checkout --filter=blob:none \
-> +		--single-branch --branch=main \
-> +		"file://$(pwd)/srv.bare" backfill-dry-run &&
-> +
-> +	GIT_TRACE2_EVENT="$(pwd)/dry-trace" git \
-> +		-C backfill-dry-run backfill --dry-run >out &&
-> +
-> +	test_grep "48 blobs would be fetched" out &&
-> +	test_grep ! fetch_count dry-trace &&
-> +	git -C backfill-dry-run rev-list --quiet --objects --missing=print HEAD >missing &&
-> +	test_line_count = 48 missing
-> +'
-> +
-> +test_expect_success '--dry-run with no missing blobs' '
-> +	test_when_finished rm -rf backfill-dry-run &&
-> +	git clone --no-checkout --filter=blob:none \
-> +		--single-branch --branch=main \
-> +		"file://$(pwd)/srv.bare" backfill-dry-run &&
-> +	git -C backfill-dry-run backfill &&
-> +
-> +	git -C backfill-dry-run backfill --dry-run >out &&
-> +	test_grep "0 blobs would be fetched" out
-> +'
-> +
->  test_expect_success 'backfill --sparse without sparse-checkout fails' '
->  	git init not-sparse &&
->  	test_must_fail git -C not-sparse backfill --sparse 2>err &&
+>  #endif
+> diff --git a/strbuf.c b/strbuf.c
+> index 44955669e8..c3baa47b3f 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -1023,8 +1023,7 @@ void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
+>  		else if (skip_prefix(fmt, "s", &fmt))
+>  			strbuf_addf(&munged_fmt, "%"PRItime,
+>  				    (timestamp_t)tm_to_time_t(tm) -
+> -				    3600 * (tz_offset / 100) -
+> -				    60 * (tz_offset % 100));
+> +				    60 * tz_to_minutes(tz_offset));
+>  		else if (skip_prefix(fmt, "z", &fmt))
+>  			strbuf_addf(&munged_fmt, "%+05d", tz_offset);
+>  		else if (suppress_tz_name && skip_prefix(fmt, "Z", &fmt))
 >
 > --
-> 2.54.0
+> 2.56.0.rc2.329.gd58861e689.dirty
 
---000000000000e37178065cb14925
+The rest looks good.
+
+--000000000000b7ea76065cb1db70
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: e88585bb78238ac9_0.1
+X-Attachment-Id: 515ce232aa6fbde7_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xODdTRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNkRyQy8wZXZRR1RjOWR1cSsyNm9EU1pnUXkwaFlBaAoyK1g5RldJNnMx
-TFZaaSs0Tm9yei9Kc1h3aDM3bUdJNmg3Y1A3bUN0WVNKV1lLc2o1c2JMdldGQ0F2THBtZlRYCnhR
-eStKemhnemV1cVpzUUVtV0hudEwyZ2FpWFdhNTRiZEhaS2VCcGpiNzNmOUF1ejJ6UUV4WkdlQjJM
-bjRrYVUKdzdOK3QyemRMUHI0djFxWk9GREpKZzMrMFV0Rmk1NWsrWmFWLzkvR2xkZHozOVNHbE94
-UUZvU1pJUzFyKzI2QgpFY2E3Q25kTUdRUEVib0VrTHpyam5DZFRGK1pvOVR6YlpOUXoxQzRvcDIr
-UExUbDJQYkRNR1l5TTRjRlVOMG00Ck9hRzdiMzgxR3BXWmdTTGM0NDh5NVlVRkk1U2k0RWJzT3A3
-aWp5OUUwKytkV3ZNS0lvbmhHN3pPNFVEOC9jMXUKS3JGVk4zNFh2Z2VkYmNZTHNSbDhOWDZEUlF3
-SEZGbXpSQ1p3U3Q0YjRlUU81YXdKSWk3TFBhbEtzMERtcGFYYwpqQWFsNFVmUVBJSHhuU0xtNFZq
-dTRTb2x5QWRwU2VyUlhuUTRTWjVqQlRWSHJaTkF3OVRTZkNsdjlrNE5uZlRxCkh4R2xCZXFYUjNh
-eTZibW9HczN2OStGeDJ5VGQ4akNLakQwNjV3bz0KPXA2YUIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xODlyVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK0x6REFDZTk4MElOcTBQbVBDVUNoZHpreFhZZjBuMgp6STg2YXJqcm1J
+NHpDNDZzY0ZGTm5aQmJQRGpXK1pQUVlCd0JGd2VtM1RQdnVyYU9ma1NnTnh2UzhMUCtheC95CnhC
+bjFES0xGMXhTMUljOVJ0VU1BRU9KdUh6OTNWMGNrQXZ4blA4UiszemhWN21YenBML0VDK1FiekEy
+cE01YXIKcnFONnB0ekU4Sm1ONkVsb2MyY3ZFbEJsc1k2STlNeURHeWJyZnc5a3NnVndXYldPS2do
+L2RxbnQ3VHBibUFiKwp0akZwRDZqeVVvMFFKbEdWcE1iVFhuV2lwcHYrRFFUMjd3d0pwQ0VGT2h3
+RFg4UnBwMGE3YVJzV205OXNFVVM3CmpMdjJzYTFhUHQ4QWRReldlYnlFK1JweFlXR2ZUcjVJZGs1
+dm0wdVZvaGduTXN4MUh5RHhCdXYzbnNjSGNOdC8KbFNhRm4vcDJKVnYzNWhHWnBvM2d0cEcxdVRQ
+dXJpM2YrUEZVbUZTSmQxYkVIb3VqcFpiUERNdy9oTW1OVGU2cQpRSUJ1c3RtOUlYb1R0YzhFY1Bq
+U0tMR09GK2ZFQk03U2dKQ0cxcFNvOWxyZFZaWDNnSkZBZjl4bkhCNGRsbXpsCnBFdHBHOCtwbHV6
+Zm04VzZOTDUxN0F3YldBY1BlOHRFT3ZyaGZlOD0KPTVyakcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000e37178065cb14925--
+--000000000000b7ea76065cb1db70--
