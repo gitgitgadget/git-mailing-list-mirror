@@ -1,82 +1,82 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8068518154
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 17:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A5B3624BF
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 17:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788057; cv=none; b=cmNMz4dy+yGQRWFjBozRUcbYaZ4g2IHYOYXyEVwz8H149YkAfCfR5CZGFIoDQsmzDcwLCHaayyalOHmkbDFxCM2sR1eirTWgbpknFhAKlhypQnbQj04e6/ALhPylD8fvg35XbSsdW0s2pxmSiVkPGfgVi9qPaYPO8nKSs2JJzs8=
+	t=1790788635; cv=none; b=ENKPt4zV+v2dv0AAFb7YTg6ZSF27AiV5M7V6kfUuhzwC+OkbpJs0GruWm4JXsR28QvwrG/ow4mmeOyKo7WSvzNSjZstLHWrwVhA8eJw8ZpsvIKjf43+8iM4+pDNUd5O2DlqUCKrIxNfeTAZ8+S2OPKG1wsOi+mWw2mMwAiYgSq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788057; c=relaxed/simple;
-	bh=8lPlvDojainHL1XZPvO22nxVp00AGFYo/sOsrYYDAxc=;
+	s=arc-20240116; t=1790788635; c=relaxed/simple;
+	bh=QPEeec/J4JdXqOFzshEqTQKXFcAMzdTH+5+7kWTA7Ck=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WLbsHNP7g/jgid43hkJFy6yfrPVCjGG8XXsVQ8ZVrfqs/lgJ+YnNE1gj9BOABId+on1nV775X8WcASOICvaj6oitZn0E8uW5+hdzBA3f/wavO72hM0Vg2UkUekqbrneRU+2ULYmr64PZx4U3rOX8vGtjyfZwIvpozkMB0oBkoH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Mxc2MxyT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ALryRJ/T; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=AkqZ9JfYIqRQTyBPphE6zTkkHiz0HBkHMuY6ugzpjvztz/AFlSfDOHiNP+0rT6RKotEGot5YlERfcOEfJZpACuUyzalkpJA29DYctqmgTLXzIjXP9rdnapCCCJZ8QUJ4pC35kLUnqUA0XiBpXLEgmoQi69/bykTwo7g/60eN+HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=P9cg/mbY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=w48Nb2Hc; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Mxc2MxyT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ALryRJ/T"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EABAF14001DE;
-	Wed, 30 Sep 2026 13:07:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="P9cg/mbY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="w48Nb2Hc"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 40FD414001A4;
+	Wed, 30 Sep 2026 13:17:13 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Wed, 30 Sep 2026 13:07:34 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 30 Sep 2026 13:17:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790788054; x=1790874454; bh=JfI/7iV203
-	qO7wehKWn3iyHP8Y/3pXHEYVBYA/xqEMA=; b=Mxc2MxyTzNv56uif2YAaO1aH0P
-	jbo/06gCLO6Dy6bDUGtY2pjZiDy8gcXbDx6/HKr4CaDyubXGic7qYDmOfABRxmVv
-	Z+9hJ7NapnA9hNzjDRNVNt0hU5fZK/JKNLKAddg+xjKHawPAXNxAuMz54j0KdCaP
-	lcoR/BAWnPKF4rwVUJfLf8/lOEJRLqTrYS5txcmKEJhgpVCeh72D0UCkcQrl+Q75
-	/qcE0+7E4oYh3v5QncBoux410bgWaGcZD8qcXILLJoSbncAO69eOI8UVkqeaIRKL
-	g5N7itwa9BW9Pg3E301KZfQW4aBGZuZyZodwyCAxrWstE6KTRR2V3oUW5FNQ==
+	:subject:to:to; s=fm3; t=1790788633; x=1790875033; bh=VKKl+XGh2a
+	3fndbSnRtEIwRhYvN6uFCdxt4oz0vptb4=; b=P9cg/mbYKK8nbAf8TeghL6a6Sm
+	n8ifRJNwlrFa4wilsCDZzGykCR6jOWFNiYvs5jiPzWvCL1n7lPnQpfd5B79Rsf7N
+	lIqcyf4QI/wgonqHU+OA80ZC+QBRBZRccrZiIBvt8vVrkQvwxPt+LlFGxELdARjq
+	2+J5Ig5TaGvy2mvdWthuaRiRkt5b2QKXyLp1GbQ93QLZOHC2Lw5+8U14NSgLqGAw
+	6a6ifT0HNAX3hPfTtmLH5b4IhOeMYRBV2pF4F4l0fYZpoOvrsWo15soCfqeH9vfT
+	7orBVFq1Re9mojRmB0//sTDnMjhSEjnEcCw+0eUazVruIE1PadepMt/kUZpQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790788054; x=1790874454; bh=JfI/7iV203qO7wehKWn3iyHP8Y/3pXHEYVB
-	YA/xqEMA=; b=ALryRJ/TKORpD72fBDiSuuD1A61a9/kxLtrS10yjq1+lNvUgXIk
-	4sZWt47uxNls56xqg452tVNPoJulCcJ0k/NQvBxZyX9OySa1ymYdq76lNnebMq9U
-	QjjIcKT7dNPDIJQ1cssgetAoBaAdfGpa/ijxeoVaS7+ZaN5m4ROMRYG68gRf5MbW
-	vPywTJguzNb1wB6pevSpVBeG4y32VsQcwVM4Z2cSFcKrRU2oDSyR27q4S0yI0BTk
-	9oTezENhMxqVU+huExNSCZ2H68vkQoQ13T4jF5Jd9+nHPTZhg/BkDQyBJxUyf6mj
-	SAAEttzwOD67J0GtZWny6xSixteNh4GHITQ==
-X-ME-Sender: <xms:1kG9avj8qS7MfrjJSzn5kFxF7y5zrDXoxxMvoYcOHSqicozdiG1Evw>
-    <xme:1kG9ajBGdj-kRqBz18dG0vjNAfAA96cMHEXvuyJ3EPwbkhmduRnmReilTylcCZ0C2
-    RUNhMh5_rXjbvN95Il_uCL3aNH_f-rMI1jxjILopBymac_IclBQdQ>
-X-ME-Received: <xmr:1kG9akEQlQp8ooo-HFip6OordlAA-CmxUPUxkw4BXjoBDOQ7BkSLis9D6PxgkVHzJR3zy-D9HHiHjRAgJlSvrCivHfd8x47ZLNcT>
-X-ME-Proxy-Cause: dmFkZTF9xpUTZJcz7wG2/6EEvJ9yRKFicWYw5qEfuxkboIlKKQ+Y/DDLxt1zGCGKy8NoaO
-    +H2CgbzGuDq1t8GXCdem4BfWxf0xDaoYIAwFCIm8kUsT8uOCRegkfZjdxOkm7ERafnDzZS
-    /xw/ECpTcXvf+iCg2ePYX4fD7Y78rRj9wl9mMVEjXrTmEctKrdcZn/YCOaFccSAXP9HdlM
-    lY7NTUjJzletSry1jHlaq5emGpiD7Kk1z3QwGtSC1+QqIJnu5V6TudnTBNh5iXe7lHqdI1
-    cAeSlSuk+U57weG22z8SpPbyA4N9ImOf4K9pO3GNH9Tu/jWO+A39YIHAOxcLog73T3esLQ
-    JM/sYU0NZHu6k3UrH+1saxayXYc9r0+9DpFC+/9IlIYYwh0NMZJ9QZBaT/c7LgHrxuuyL9
-    GDBXrwFJSxVvSgwN7naCXpO5TA5/OJrMTaMne/ZkI8I/4TMg0/hXmYaxlVDf013OmMgErM
-    pypbeNM5ajJPFM6sh1vgz4Lau6+GJll4YYvxToJB2ME1pzKrp5xXdgQ5wqVrPdmfvv6uCm
-    4XwCjkDgW8Ls14gbrKbChpwOQWukQdrv4bZWsT4Nx4E/ftgYK/obHfCQrZs2FQBhjz0aPl
-    9w1kFp3FZLKmcHrq8afwc2QgtMxpaxEXlvLT9p94FPN5lg3sTzAVg+2j9l1w
-X-ME-Proxy: <xmx:1kG9arJfHqHladHzb8E1BXmixbv0-7LJ1NSQhYVKjZKVi8Yg0tUzAw>
-    <xmx:1kG9aongQSU4YpjSlq0he3a9qfvsnGQWJJ6gWTLyqenOKfjAl8syow>
-    <xmx:1kG9ajT-qSfOmgG1UP049TLXGsFLaoc9xaXRMOGjbyzwkiGXJGP2AA>
-    <xmx:1kG9aqIHn5X0vI7p7vNmLygVYo5PDCJSUZioww5x9pIL1qYPVzlz9g>
-    <xmx:1kG9armxNXHyItpQhODdyZgZTzTMvGLeBmSZjNnvnvLKLz8kENdeonSv>
+	1790788633; x=1790875033; bh=VKKl+XGh2a3fndbSnRtEIwRhYvN6uFCdxt4
+	oz0vptb4=; b=w48Nb2Hcn0hnPfd664edeVIPllVDh7CHKHKswoJIlRI57JNUZBZ
+	c8aZcVBw37Y86u/SmsyYNJJj5nBLFZoB8duoBaGu3JETsm6WVj6bV/xnkmShbyOI
+	Zqw0NosnsrEPWVlujeSulvywQYAxYhyxsJlcW+0CLr6BmiZlgrFfVMruDiGTkz1R
+	RDYlG1x/BdTwKphvRxOsA7zR54PZZZSD5rTu7essB3xrbVAf3SYOdENk92eLLBTN
+	rCsvnEoeGWl5/9Plm9+Wi+T2tOrVR/t+ugvP1ZevPPgtBIr0EFxwx6ErKr4lBHaO
+	mb7STbwYPCCoPryDSCikAdbUpvv0naBbiqg==
+X-ME-Sender: <xms:GUS9arieAdR6xZRA8-c1zEkSKEh3E4YIAauQomDXBaOzR5QFKmkimg>
+    <xme:GUS9avCkGP7gkMBRRCukKGDAL6X-KBzbgVgOmq7PY8zYn9zBgm1tfy0lSErXMwcxC
+    QP9c3m3zTERGcWthJUPEDx-qvUEasnzj2yFzeJrlXelqaEQnbED336d>
+X-ME-Received: <xmr:GUS9agHo1-9LCS7WSZExPYuHki9l18z5W_dk3HH-iTUrEKZCZabbdZYEAmQjX6-TqlMIW-k7WgXmii004Sk9s2aru7cev3pFi2EZ>
+X-ME-Proxy-Cause: dmFkZTEtyt1q0pUTFsgxvLjpfUCDhzjAUnraoN8c51PWDd02Hy/XI2uM8j5sjnApGiVm+v
+    Ex3K6ih1WL8hkf1ryihrwMBdkLPgPA1y72KDZWP/p9Ob7KpPjiisBFBQum4dcV6pkB6ueT
+    58Yy85S/38d4MYBci1nrcJsye+oPr7f3ISoFQ+357kOi/ISGsq0psthH7J7RDAzIvpYevs
+    GlMN0AliToBqHCq+THVC8nIdpaflHKzKp4rodEQJ50F+KA1UDbAugKXJNpnSlTVl/oXl3B
+    2hKJUSxeaQY/XRZXxyv5o3LkuB0J93YTYgG6R7fhU7I6Ljnfqm1HbFpse+mM5SIJLoFNWG
+    NURZOzDi6a5UJY/G+woEoAQmV790xPFq3B55lass+9jFu9LDaRMc6aKJT5UQMLJoxhEk+7
+    zGtFtuMsUiMVTOOV1X8yxHWy2Epi5o1iolehfAOzCz7erbssHQieNfWHfpTkSqwRmq72Eu
+    P8mUMIS1gQkF/noh2gTzW3hp2SPUCHEfQgGEsjlQqspYSjw/GoLecFXgGMQJZDAU1QccjE
+    JyOBKoI1H6h2ZbKjVytQXpSlFykHXcJ8rVELWMozqWbCRL4htO1DrSKwnAxeZDrFqYrrik
+    24+jyTtHRQmacr2NSo/jBQ1iFKdDXban4bJgS1YAiChWT/Dahh0ggqojbEzg
+X-ME-Proxy: <xmx:GUS9anK8arEg_uAvrFC9zZMtVE207mQvk6nEF0uvD8Kf7tTb6a_Jkw>
+    <xmx:GUS9akneGbLlNCY9BinZXh2EAbFPv_NcWLvVNcGfn831s9F0qf6bMg>
+    <xmx:GUS9avSIm5oFUBwsmpOERJ_gpx092YHYoSF6jKK7Wo7CPkqpV-O-Jw>
+    <xmx:GUS9amKbH_LKjItKNhWwi-gV3gELPKNYm63LpcbrxvzO2PN0XoqIeQ>
+    <xmx:GUS9arwsJeZAXQUSg8JnkkSq-BZiMFegALMgRcWHeohSxsWg6QsdXaI6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Sep 2026 13:07:34 -0400 (EDT)
+ 30 Sep 2026 13:17:12 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Pablo Sabater <pabloosabaterr@gmail.com>
 Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH RFC 3/5] fetch-object-info: return a status instead of
- dying
-In-Reply-To: <20260930-backfill-dryrun-v1-3-1128f247ee01@gmail.com> (Pablo
-	Sabater's message of "Wed, 30 Sep 2026 01:21:48 +0100")
+Subject: Re: [PATCH RFC 5/5] backfill: report total size of missing blobs in
+ --dry-run
+In-Reply-To: <20260930-backfill-dryrun-v1-5-1128f247ee01@gmail.com> (Pablo
+	Sabater's message of "Wed, 30 Sep 2026 01:21:50 +0100")
 References: <20260930-backfill-dryrun-v1-0-1128f247ee01@gmail.com>
-	<20260930-backfill-dryrun-v1-3-1128f247ee01@gmail.com>
-Date: Wed, 30 Sep 2026 10:07:33 -0700
-Message-ID: <xmqqwls2brca.fsf@gitster.g>
+	<20260930-backfill-dryrun-v1-5-1128f247ee01@gmail.com>
+Date: Wed, 30 Sep 2026 10:17:11 -0700
+Message-ID: <xmqqqziabqw8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,21 +88,71 @@ Content-Type: text/plain
 
 Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> A subsequent commit needs fetch_object_info() not to die() when the
-> object-info capability is not enabled on the server, so that it can
-> fall back.
->
-> Make fetch_object_info() return FETCH_OBJECT_INFO_NOT_ENABLED instead
-> of die()'ing when the server does not advertise the object-info
-> capability, and propagate the status through the transport layer so
-> that callers of transport_fetch_object_info() can act on it. It is now
-> up to them whether to die() or fall back.
+> +
+> +	if (!ctx->object_info_enabled)
+> +		goto cleanup;
+> +
+> +	if (!ctx->object_info_transport) {
+> +		struct promisor_remote *promise =
+> +			repo_promisor_remote_find(ctx->repo, NULL);
+> +		struct remote *remote = NULL;
+> +
+> +		if (!promise || !(remote = remote_get(promise->name)))
+> +			die(_("--dry-run requires a promisor remote"));
+> +
+> +		ctx->object_info_transport = transport_get(remote, NULL);
+> +
+> +		if (!ctx->object_info_transport->smart_options)
+> +			die(_("failed to get object info: smart options required"));
+> +	}
+> +
+> +	results->wants_size = 1;
+> +	status = transport_fetch_object_info(ctx->object_info_transport,
+> +					     &ctx->current_batch,
+> +					     results);
+> +
+> +	if (status == FETCH_OBJECT_INFO_NOT_ENABLED ||
+> +	    !results->sizes) {
+> +		ctx->object_info_enabled = 0;
 
-It may be just me but unless the client can tell between the server
-not supporting (i.e., they are unable to enable it even if they
-wanted to) and not enabling (i.e., they are capable, but are not
-willing to give it to you), it may make sense to report it as "not
-available".  "not enabled" sounds as if we know that it is the
-latter and not the former.
+Yuck.
 
-The code change looks very cleanly done.
+Because we cannot tell if they allow you to look at the information,
+this cannot be helped, but it means anybody that looks at this
+ctx->object_info_enabled member to decide what to do must be careful.
+
+Is it guaranteed that results.sizes[] have been populated as long as
+status is not FETCH_OBJECT_INFO_NOT_ENABLED?  Can there be other
+errors that makes result.sizes[] unusable?  If that is the case,
+then it would be cleaner to have a dedicated ctx->sizes_valid member
+rather than relying on ctx->object_info_enabled member to carry this
+information ...
+
+> +		goto cleanup;
+> +	}
+> +
+> +	for (size_t i = 0; i < results->nr; i++)
+> +		ctx->total_batch_size += results->sizes[i];
+> +
+> +cleanup:
+> +	free_fetch_object_info_results(&ctx->object_info_results);
+>  	oid_array_clear(&ctx->current_batch);
+>  }
+>  
+> @@ -157,12 +201,25 @@ static int do_backfill(struct backfill_context *ctx)
+>  
+>  	dry_run_batch(ctx);
+>  
+> -	printf(Q_("After backfill, %" PRIuMAX " blob would be fetched.\n",
+> -		  "After backfill, %" PRIuMAX " blobs would be fetched.\n",
+> -		  (unsigned long)ctx->total_batch_nr),
+> -	       (uintmax_t)ctx->total_batch_nr);
+> +	if (ctx->object_info_enabled && ctx->total_batch_nr) {
+
+... and use it here.  Within the design presented in this series, we
+know we have asked the other end at this point, and the above
+function may have turned ctx->object_info member off if the
+information is not there, so this may be safe.  But as I said, I am
+not sure what happens when fetch-object-info returned other kind of
+errors.
+
