@@ -1,70 +1,69 @@
-Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AEE2FF641
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 00:21:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEBA2FA0C6
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 00:22:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790727721; cv=none; b=D8G4+OpSYUqh0ci8gbV+1rwqMj39z6hBe4MHrRq6My/u2bzzoVMzodygU/metZjK2cH+JZPJ+TxTCVWbLb0t3TNLLC0mBO2PUetQSjxZGazlePErlwQgvnQ+jiPzQueK2396baputOjAdp1gkSDoDl8PipUIM3ZCLmvCWaNmmak=
+	t=1790727723; cv=none; b=kDz2ZgNjjHRpjGS1oyfn5eTwavPsBhYgswh0AkLLH4U83faxwGctaI9LqRny0AMCMvJ+wGmXQnjepEPW+spSX+JDJZzj61DVb5JuJkxK+xdp2C8pf4StxFVIyY5kv3Gkze4xJLOvffbo36BFicMsqbnXcNf8wxfB301bgpGMbXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790727721; c=relaxed/simple;
-	bh=vEQiEdFmgwha3CqPocJlDDXQiDN9AjJyLRLMVdd/dAY=;
+	s=arc-20240116; t=1790727723; c=relaxed/simple;
+	bh=D/K7gZEsV40tY1kwvGsnxHHH9H68SJp9a3QGraZu66k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EaMzScoQAQ6qPcnQUwvL6dE7g9tD5r2y13/qFZmAO0Du3yA8si9oZOtBpTs8rs5tJcPGEpmyjIxn3C0uu+GGknjnbLCAkb5y64VvQC1cH+s1lDXELv0tEHSezVlcTVAJ5ElhbSpSIKxzglQiUlTGSzTWkmbf4ODMVra7VUxOPWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RMgEwUbP; arc=none smtp.client-ip=74.125.225.141
+	 In-Reply-To:To:Cc; b=lMLllWidHIJBACzrgryP5a9wVfj+rGl2onm+78bzCGlfqtltFzMtGR6skN/tfMUWkKiqcUveHpw88UKAC6TjYC6rYbq07ciuWDvjJjh5RfGot2zr61sIr7Dt4DEjAR3gachSpjSvwoB2tMVb1rzjymu5WFiVASUi8SfLl+f8M7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pjsjlkuV; arc=none smtp.client-ip=74.125.225.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RMgEwUbP"
-Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49e721b5503so44282125e9.0
-        for <git@vger.kernel.org>; Tue, 29 Sep 2026 17:21:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pjsjlkuV"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49b912d391aso36100115e9.2
+        for <git@vger.kernel.org>; Tue, 29 Sep 2026 17:22:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790727718; x=1791332518; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790727719; x=1791332519; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=zBo49VmDuD+AmUpdtgWekP4yOgXL8AU8JgXYYRJ1CQ4=;
-        b=RMgEwUbP0LmwZKLxTHGkUr66++Zpr/SZH4q4hl1SR1UheOaYo0wnModUYPIroHx3BA
-         /n/xFyp7BGv1QGSfQH40QjSnklMMMCxsXNlBXJm/orZ1zYR4jzbr8mSTbN5sfpXwJRFT
-         u+rpNYJnENmkFKmxQi39AYPvDBkNNaKVH4K/IeHGio8c8oAKjKldEGH7wauJfe7fkn3Y
-         JaKeNfpKuolnk3z07pulbPiifQ+9JPQFwiV9p3Iolax3F7YmL+EBAOL1hdhuF6Cxzlsr
-         RsKjOgW7H5vSyF8EI2pm8xfyoC8AtZxOVeubR1xvwVmsl/RHOCMFhXZiSNP7qbv9o6Vi
-         OlYQ==
+        bh=RlrI5d9Jn5H9+o9Y6qk8ltxOYbQzUrnLTb2yMofGUdc=;
+        b=pjsjlkuVMenMNvbVNo2ug8es9iRjg3pWxreTYOELUVRUj5VtTLt6T26GBzRzIq2Fcv
+         3frjlfNuUW7uwNWskt6mBIP2SG5jLmA1DmIwVUdUTjsIlGIw0kXowD+EPV9fd85gjapF
+         Nodb2lBX+O38jPiEjJ44Mz8Nlqqe2sHzfZsV2gLF0Uq+TgP+yz5UPPyIFrUQM7wzx0RA
+         IEx6HyyYtBhVK7+YojGNaMhDmxSZIQscY1K2EYu1wV+60yQJYjIulo8a504GHm4nsKWX
+         MRUv1nuEyimWJwGMwJS7hwQTzqHrD4r8mytOtKQoL2HRhFCrzH1OsjuRpDlQPqNqs0/R
+         Bsmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790727718; x=1791332518;
+        d=1e100.net; s=20260707; t=1790727719; x=1791332519;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zBo49VmDuD+AmUpdtgWekP4yOgXL8AU8JgXYYRJ1CQ4=;
-        b=tK0W6fWXJRdVnjS/xR/en+8gp//4qolRrVqR0U4Z9KhadmalsHz5lzmpTgoZ59+2Zf
-         k8Dy5vdtnVKfHW6m1FYQ0zmwxTvszuIlUl5VQZ8slRJAbKCYxRhHn0e76NO7FnuecIAX
-         jnqzl6iXnZToyMpgs5qqzEogwqgKlHZN0iYyU80u4bJNRpp21qxO7kXABVb41iZUBS6u
-         e1dUN1hceYk04AJoYm7Dxnc3mWcfAuIM9mOdB4nvk2s3IvSnemLAiZliFCWTwMLURBQV
-         mH2xCmLU092t1u53BK5c9Ah2kS6KnLbtsWJDzh3NohHikSC5Z0VbBI1z0rnphIqXBh/T
-         1rVw==
-X-Gm-Message-State: AFuF++nIfAYbA2Hw5+klomNOr4sEONaTbgDUXxKwsIkU1Ul+uiJjwqQf
-	Q82mpFX5lgTuLTrHVo2QwQqamcwId25w+IJWIavDQPJLYxdu0KZvQcr/
-X-Gm-Gg: AYBFou0gGHx2t7vkbwSMHV060ZnIT+YU1KrHpryPmygeApf+93O/AyoY+1z5Nb1T1+B
-	z+apxR//KGAXzLNSlZxHTOIrpQ4+05qitekGnoLIja57g2q6OstOuTp0vRftiUAZMa03VS94HI0
-	18VBw+ZUQ+RJqlgsGhssPrPG0r2ITRFEgaJsy8zeAdwcGKwBKFpjUpn+2g5mxverSq8vDHFs0o7
-	HGXlYxsJcVlbdK3jNlcnQ/yVX4X8OGCWJt355MSOTZyGaH3Yc0FUtCTP9ZAjGxbHNogZ9sqldeP
-	+4XFNqMCVONcN/F7IsAzDQjPW1nJtbW3r3ac9xQPfj40nRtONxFJc2F6HGbnuoRA5Wtbff3Fwcc
-	i6wUcz8IrBqxnoXFIhF976Skft2/mVPoK90QnJ2wG4GZLbMhYeKvSgGxGLdEDDgK5P+9glKN4jP
-	p18e00httZV5KQYyqchFteocfSng2iXxotnCSZ0djhLm4Hi03fbxYhUC6/JghNXzUFoPyyJcTH3
-	OEF/hY1iDf6otgfaLS5VXktXCMxgpqmPqNMiRIb8zZhq6uD3kl4Akdf1ZwFAYVAWUF3GaiOZSCg
-	aNJ5TvvVC6ZZ1uvm1GiCRsyGM+baojbHvd9Bsw2MnW8WR7s+cXEO/pnxt6+eyuZ+GqWNbdn9EOb
-	ra/VxzxYbZkdDllYrqJJG7g==
-X-Received: by 2002:a05:600c:3b28:b0:49e:799a:8951 with SMTP id 5b1f17b1804b1-4a01502f919mr11035785e9.11.1790727717748;
-        Tue, 29 Sep 2026 17:21:57 -0700 (PDT)
+        bh=RlrI5d9Jn5H9+o9Y6qk8ltxOYbQzUrnLTb2yMofGUdc=;
+        b=AiJETUB32tDnQoVir4ItIAjKNRWHYcXjycMHX351rVvRKE3JHf6O1V7ozXm2mI4DcM
+         E5VJBnU4Js0gtZN3wq7SxXzcqg3yQmeywolbLtgtPaFiv8MuznGRy6nLjEO5YuRC7Uso
+         CyDRf5xMdTDNduNlXZAiYK2cigGmY2eyMLbLx+fwE1D94rrGKJ68qchGHEvlGnfwpaFA
+         xluSP4Gn7SbO08culeAjPdQw5L5HqExqK5jpLOxD96Q6IZdHzulQO3ZrizOdARRV5qRy
+         PGrLNtipx8WmtXQmqKQ7X3arFz+jWh9x6vJn8VCLDvVAnVVwWLVrOoOviPqImytHwtzs
+         rL6g==
+X-Gm-Message-State: AFuF++lAcwMBAgMa2ASQ49QpVB3oDNe5tSwV8mjvy307ADaEENS7MQQM
+	CgLReWKWWM2pmdV0Auwzu2gIUJOLrZZRbnEz9qZybz1CudYlT04APnLa/EvUP0NPPog=
+X-Gm-Gg: AYBFou2wDePn1bFHgUYNV7BMMjt0yWLjVu/AXAnY//nSc05cLyuBQOSgHksrxYRckBN
+	zYrisdrIuiXKZhhoPwbesU/M/hWvw7fHeANM7qlEmiMGuYCp2z3z2FzkGjISXFl44NUACgVwfHw
+	ZQxchpv2wnjYdPQwNI+SS+3/D6MjimCd0ILczgbo6IfY7s+JPgCRkWwMWkR8i93PP293RVAxxp/
+	G2Zhf5M9UV7EVSaX13x7uO6WVBdBC2QMsB3b8l4NHxIk71/d5QhanIBdwO3ERLOTrt/8z/TaDJf
+	RkKG6/j6Z8FUgs1KrabVifaDLXj5YCSU+lKBJdbHnlw8P54Wxd/IBO5Bl+9howo7nJrRZNjeOKu
+	EmQr2HD03Y8MxFEH3AQGDqTosN9ZkS6AvEX4xU1y0rg+TESb+oFYs65648EBm2c0Y+Zscxp+q+8
+	VtY8kEQLhRaUZGu9UJBUv65OU7AiAvBKoU1jGt3ODrzWVitun1kiAKiH04ksRSQ2rprGysQsh/4
+	NiAjqjBNG8TY/POP/8BUd6NfV6eKn91yc6edDxyuudyYVUgMMKogyrIrG6oNEtCgxJr6ISIMIEo
+	P5uUmBOCCCYD/AM0Cgve8oYzAAM9akYY2eJ1eQKgg+NOXzI3NCp4AFsZlZ8xKLG8+fwhIytwyYN
+	I+kf5l43vC11ZVW5DT3jJ
+X-Received: by 2002:a05:600c:c4a8:b0:49f:ce72:dfe7 with SMTP id 5b1f17b1804b1-4a01515104emr9661595e9.35.1790727719110;
+        Tue, 29 Sep 2026 17:21:59 -0700 (PDT)
 Received: from mac.lan ([2001:818:c665:a700:4e1:afcc:bdec:a44d])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a015cde27asm5135615e9.3.2026.09.29.17.21.56
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a015cde27asm5135615e9.3.2026.09.29.17.21.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2026 17:21:57 -0700 (PDT)
+        Tue, 29 Sep 2026 17:21:58 -0700 (PDT)
 From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Wed, 30 Sep 2026 01:21:48 +0100
-Subject: [PATCH RFC 3/5] fetch-object-info: return a status instead of
- dying
+Date: Wed, 30 Sep 2026 01:21:49 +0100
+Subject: [PATCH RFC 4/5] backfill: add --dry-run option
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,7 +72,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260930-backfill-dryrun-v1-3-1128f247ee01@gmail.com>
+Message-Id: <20260930-backfill-dryrun-v1-4-1128f247ee01@gmail.com>
 References: <20260930-backfill-dryrun-v1-0-1128f247ee01@gmail.com>
 In-Reply-To: <20260930-backfill-dryrun-v1-0-1128f247ee01@gmail.com>
 To: git@vger.kernel.org
@@ -81,249 +80,170 @@ Cc: Derrick Stolee <stolee@gmail.com>,
  Pablo Sabater <pabloosabaterr@gmail.com>
 X-Mailer: b4 0.15.2
 
-A subsequent commit needs fetch_object_info() not to die() when the
-object-info capability is not enabled on the server, so that it can
-fall back.
+Users have no way to know how many blobs git backfill is going to
+download before running it.
 
-Make fetch_object_info() return FETCH_OBJECT_INFO_NOT_ENABLED instead
-of die()'ing when the server does not advertise the object-info
-capability, and propagate the status through the transport layer so
-that callers of transport_fetch_object_info() can act on it. It is now
-up to them whether to die() or fall back.
+Add a new --dry-run option to the backfill command. The objects are
+walked as usual, but instead of fetching each batch of missing blobs
+they are only counted, and the total is printed at the end.
 
-cat-file now dies by itself on FETCH_OBJECT_INFO_NOT_ENABLED, so its
-behavior is unchanged.
+A subsequent commit will also print their size when the server supports
+the object-info capability.
 
 Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
- builtin/cat-file.c   |  4 ++++
- fetch-object-info.c  | 17 +++++++++--------
- fetch-object-info.h  | 18 +++++++++++-------
- transport-helper.c   |  6 +++---
- transport-internal.h |  8 ++++----
- transport.c          | 29 +++++++++++++++--------------
- transport.h          |  7 ++++---
- 7 files changed, 50 insertions(+), 39 deletions(-)
+ Documentation/git-backfill.adoc |  6 +++++-
+ builtin/backfill.c              | 37 +++++++++++++++++++++++++++++++++----
+ t/t5620-backfill.sh             | 26 ++++++++++++++++++++++++++
+ 3 files changed, 64 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 8870a210ec..f4758f2203 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -726,6 +726,10 @@ static int get_remote_info(int argc,
+diff --git a/Documentation/git-backfill.adoc b/Documentation/git-backfill.adoc
+index 82d6a1969d..08f19fea17 100644
+--- a/Documentation/git-backfill.adoc
++++ b/Documentation/git-backfill.adoc
+@@ -9,7 +9,7 @@ git-backfill - Download missing objects in a partial clone
+ SYNOPSIS
+ --------
+ [synopsis]
+-git backfill [--min-batch-size=<n>] [--[no-]sparse] [--[no-]include-edges] [<revision-range>]
++git backfill [--min-batch-size=<n>] [--[no-]sparse] [--[no-]include-edges] [--dry-run] [<revision-range>]
  
- 	retval = transport_fetch_object_info(gtransport, object_info_oids,
- 					     results);
+ DESCRIPTION
+ -----------
+@@ -70,6 +70,10 @@ OPTIONS
+ 	--onto TARGET A..B`, where A..B normally excludes A but you need
+ 	the blobs from A as well.  `--include-edges` is the default.
+ 
++`--dry-run`::
++	Do not download any objects. Instead, print the number of
++	missing blobs that would be downloaded.
 +
-+	if (retval == FETCH_OBJECT_INFO_NOT_ENABLED)
-+		die(_("object-info capability is not enabled on the server"));
+ `<revision-range>`::
+ 	Backfill only blobs reachable from commits in the specified
+ 	revision range.  When no _<revision-range>_ is specified, it
+diff --git a/builtin/backfill.c b/builtin/backfill.c
+index e71e0f4742..6019112966 100644
+--- a/builtin/backfill.c
++++ b/builtin/backfill.c
+@@ -26,7 +26,7 @@
+ #include "path-walk.h"
+ 
+ static const char * const builtin_backfill_usage[] = {
+-	N_("git backfill [--min-batch-size=<n>] [--[no-]sparse] [--[no-]include-edges] [<revision-range>]"),
++	N_("git backfill [--min-batch-size=<n>] [--[no-]sparse] [--[no-]include-edges] [--dry-run] [<revision-range>]"),
+ 	NULL
+ };
+ 
+@@ -36,6 +36,8 @@ struct backfill_context {
+ 	size_t min_batch_size;
+ 	int sparse;
+ 	int include_edges;
++	int dry_run;
++	size_t total_batch_nr;
+ 	struct rev_info revs;
+ };
+ 
+@@ -58,6 +60,15 @@ static void download_batch(struct backfill_context *ctx)
+ 	odb_reprepare(ctx->repo->objects);
+ }
+ 
++static void dry_run_batch(struct backfill_context *ctx)
++{
++	if (!ctx->current_batch.nr)
++		return;
 +
- cleanup:
- 	transport_disconnect(gtransport);
- 	return retval;
-diff --git a/fetch-object-info.c b/fetch-object-info.c
-index 0a58308f9b..7e4c922d27 100644
---- a/fetch-object-info.c
-+++ b/fetch-object-info.c
-@@ -52,13 +52,13 @@ static int parse_object_size(const char *s, size_t *res)
++	ctx->total_batch_nr += ctx->current_batch.nr;
++	oid_array_clear(&ctx->current_batch);
++}
++
+ static int fill_missing_blobs(const char *path UNUSED,
+ 			      struct oid_array *list,
+ 			      enum object_type type,
+@@ -73,8 +84,12 @@ static int fill_missing_blobs(const char *path UNUSED,
+ 			oid_array_append(&ctx->current_batch, &list->oid[i]);
+ 	}
+ 
+-	if (ctx->current_batch.nr >= ctx->min_batch_size)
+-		download_batch(ctx);
++	if (ctx->current_batch.nr >= ctx->min_batch_size) {
++		if (ctx->dry_run)
++			dry_run_batch(ctx);
++		else
++			download_batch(ctx);
++	}
+ 
  	return 0;
  }
+@@ -131,10 +146,23 @@ static int do_backfill(struct backfill_context *ctx)
  
--void fetch_object_info(const enum protocol_version version,
--		       const struct string_list *server_options,
--		       const struct oid_array *oids,
--		       struct packet_reader *reader,
--		       struct fetch_object_info_results *results,
--		       const int stateless_rpc,
--		       const int fd_out)
-+enum fetch_object_info_status fetch_object_info(const enum protocol_version version,
-+						const struct string_list *server_options,
-+						const struct oid_array *oids,
-+						struct packet_reader *reader,
-+						struct fetch_object_info_results *results,
-+						const int stateless_rpc,
-+						const int fd_out)
- {
- 	unsigned ask_size = 0;
- 	unsigned ask_type = 0;
-@@ -72,7 +72,7 @@ void fetch_object_info(const enum protocol_version version,
- 	switch (version) {
- 	case protocol_v2:
- 		if (!server_supports_v2("object-info"))
--			die(_("object-info capability is not enabled on the server"));
-+			return FETCH_OBJECT_INFO_NOT_ENABLED;
+ 	ret = walk_objects_by_path(&info);
  
- 		if (results->wants_size &&
- 		    server_supports_feature("object-info", "size", 0))
-@@ -188,6 +188,7 @@ void fetch_object_info(const enum protocol_version version,
- 		    (uintmax_t)oids->nr);
++	if (ret)
++		goto end;
++
+ 	/* Download the objects that did not fill a batch. */
+-	if (!ret)
++	if (!ctx->dry_run) {
+ 		download_batch(ctx);
++		goto end;
++	}
++
++	dry_run_batch(ctx);
++
++	printf(Q_("After backfill, %" PRIuMAX " blob would be fetched.\n",
++		  "After backfill, %" PRIuMAX " blobs would be fetched.\n",
++		  (unsigned long)ctx->total_batch_nr),
++	       (uintmax_t)ctx->total_batch_nr);
  
- 	check_stateless_delimiter(stateless_rpc, reader, "stateless delimiter expected");
-+	return FETCH_OBJECT_INFO_OK;
- }
- 
- void free_fetch_object_info_results(struct fetch_object_info_results *results)
-diff --git a/fetch-object-info.h b/fetch-object-info.h
-index 663a7f3ae7..9d2750bc93 100644
---- a/fetch-object-info.h
-+++ b/fetch-object-info.h
-@@ -32,14 +32,18 @@ struct oid_array;
-  * the server both advertised and answered with. An array left NULL means the
-  * attribute is not available.
-  * Release them with free_fetch_object_info_results().
-+ *
-+ * Returns FETCH_OBJECT_INFO_NOT_ENABLED if the server does not advertise the
-+ * object-info capability, FETCH_OBJECT_INFO_OK otherwise.
-+ * die()'s on any other error.
-  */
--void fetch_object_info(enum protocol_version version,
--		       const struct string_list *server_options,
--		       const struct oid_array *oids,
--		       struct packet_reader *reader,
--		       struct fetch_object_info_results *results,
--		       int stateless_rpc,
--		       int fd_out);
-+enum fetch_object_info_status fetch_object_info(enum protocol_version version,
-+						const struct string_list *server_options,
-+						const struct oid_array *oids,
-+						struct packet_reader *reader,
-+						struct fetch_object_info_results *results,
-+						int stateless_rpc,
-+						int fd_out);
- 
- void free_fetch_object_info_results(struct fetch_object_info_results *results);
- 
-diff --git a/transport-helper.c b/transport-helper.c
-index d5a064d386..855b53da59 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -786,9 +786,9 @@ static int fetch_refs(struct transport *transport,
- 	return -1;
- }
- 
--static int fetch_object_info_helper(struct transport *transport,
--				    const struct oid_array *oids,
--				    struct fetch_object_info_results *results)
-+static enum fetch_object_info_status fetch_object_info_helper(struct transport *transport,
-+							      const struct oid_array *oids,
-+							      struct fetch_object_info_results *results)
- {
- 	get_helper(transport);
- 	if (process_connect(transport, 0))
-diff --git a/transport-internal.h b/transport-internal.h
-index 626ceaae2b..067134081c 100644
---- a/transport-internal.h
-+++ b/transport-internal.h
-@@ -2,13 +2,13 @@
- #define TRANSPORT_INTERNAL_H
- 
- #include "connect.h"
-+#include "fetch-object-info.h"
- 
- struct ref;
- struct transport;
- struct strvec;
- struct transport_ls_refs_options;
- struct oid_array;
--struct fetch_object_info_results;
- 
- struct transport_vtable {
- 	/**
-@@ -53,9 +53,9 @@ struct transport_vtable {
- 	 *
- 	 * Uses object-info capability of v2 protocol.
- 	 */
--	int (*fetch_object_info)(struct transport *transport,
--				 const struct oid_array *oids,
--				 struct fetch_object_info_results *results);
-+	enum fetch_object_info_status (*fetch_object_info)(struct transport *transport,
-+							   const struct oid_array *oids,
-+							   struct fetch_object_info_results *results);
- 
- 	/**
- 	 * Push the objects and refs. Send the necessary objects, and
-diff --git a/transport.c b/transport.c
-index 25e2c14a7b..561764cb6a 100644
---- a/transport.c
-+++ b/transport.c
-@@ -433,11 +433,11 @@ static int get_bundle_uri(struct transport *transport)
- 				     transport->bundles, stateless_rpc);
- }
- 
--static int fetch_object_info_via_pack(struct transport *transport,
--				      const struct oid_array *oids,
--				      struct fetch_object_info_results *results)
-+static enum fetch_object_info_status fetch_object_info_via_pack(struct transport *transport,
-+								const struct oid_array *oids,
-+								struct fetch_object_info_results *results)
- {
--	int ret = 0;
-+	enum fetch_object_info_status ret = FETCH_OBJECT_INFO_OK;
- 	struct git_transport_data *data = transport->data;
- 	struct packet_reader reader;
- 
-@@ -450,26 +450,27 @@ static int fetch_object_info_via_pack(struct transport *transport,
- 	data->version = discover_version(&reader);
- 	transport->hash_algo = reader.hash_algo;
- 
--	fetch_object_info(data->version,
--			  transport->server_options,
--			  oids,
--			  &reader,
--			  results,
--			  transport->stateless_rpc, data->fd[1]);
-+	ret = fetch_object_info(data->version,
-+				transport->server_options,
-+				oids,
-+				&reader,
-+				results,
-+				transport->stateless_rpc,
-+				data->fd[1]);
- 
- 	close(data->fd[0]);
- 	if (data->fd[1] >= 0)
- 		close(data->fd[1]);
- 	if (finish_connect(data->conn))
--		ret = -1;
-+		ret = FETCH_OBJECT_INFO_ERR;
- 	data->conn = NULL;
- 
++end:
+ 	path_walk_info_clear(&info);
  	return ret;
  }
+@@ -157,6 +185,7 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
+ 			 N_("Restrict the missing objects to the current sparse-checkout")),
+ 		OPT_BOOL(0, "include-edges", &ctx.include_edges,
+ 			 N_("Include blobs from boundary commits in the backfill")),
++		OPT__DRY_RUN(&ctx.dry_run, N_("Preview the number of blobs to be fetched")),
+ 		OPT_END(),
+ 	};
+ 	struct repo_config_values *cfg = repo_config_values(the_repository);
+diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
+index 7462280470..e76fa6081b 100755
+--- a/t/t5620-backfill.sh
++++ b/t/t5620-backfill.sh
+@@ -141,6 +141,32 @@ test_expect_success 'do partial clone 2, backfill min batch size' '
+ 	test_line_count = 0 revs2
+ '
  
--int transport_fetch_object_info(struct transport *transport,
--				const struct oid_array *oids,
--				struct fetch_object_info_results *results)
-+enum fetch_object_info_status transport_fetch_object_info(struct transport *transport,
-+							  const struct oid_array *oids,
-+							  struct fetch_object_info_results *results)
- {
- 	if (!transport->vtable->fetch_object_info)
- 		die(_("remote does not support object-info"));
-diff --git a/transport.h b/transport.h
-index 39193d0077..c1671639d6 100644
---- a/transport.h
-+++ b/transport.h
-@@ -1,6 +1,7 @@
- #ifndef TRANSPORT_H
- #define TRANSPORT_H
- 
-+#include "fetch-object-info.h"
- #include "run-command.h"
- #include "remote.h"
- #include "list-objects-filter-options.h"
-@@ -314,9 +315,9 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs);
- /*
-  * Fetch the object info from remote
-  */
--int transport_fetch_object_info(struct transport *transport,
--				const struct oid_array *oids,
--				struct fetch_object_info_results *results);
-+enum fetch_object_info_status transport_fetch_object_info(struct transport *transport,
-+							  const struct oid_array *oids,
-+							  struct fetch_object_info_results *results);
- 
- /*
-  * If this flag is set, unlocking will avoid to call non-async-signal-safe
++test_expect_success '--dry-run reports missing blobs without fetching them' '
++	test_when_finished "rm -rf backfill-dry-run dry-trace" &&
++	git clone --no-checkout --filter=blob:none \
++		--single-branch --branch=main \
++		"file://$(pwd)/srv.bare" backfill-dry-run &&
++
++	GIT_TRACE2_EVENT="$(pwd)/dry-trace" git \
++		-C backfill-dry-run backfill --dry-run >out &&
++
++	test_grep "48 blobs would be fetched" out &&
++	test_grep ! fetch_count dry-trace &&
++	git -C backfill-dry-run rev-list --quiet --objects --missing=print HEAD >missing &&
++	test_line_count = 48 missing
++'
++
++test_expect_success '--dry-run with no missing blobs' '
++	test_when_finished rm -rf backfill-dry-run &&
++	git clone --no-checkout --filter=blob:none \
++		--single-branch --branch=main \
++		"file://$(pwd)/srv.bare" backfill-dry-run &&
++	git -C backfill-dry-run backfill &&
++
++	git -C backfill-dry-run backfill --dry-run >out &&
++	test_grep "0 blobs would be fetched" out
++'
++
+ test_expect_success 'backfill --sparse without sparse-checkout fails' '
+ 	git init not-sparse &&
+ 	test_must_fail git -C not-sparse backfill --sparse 2>err &&
 
 -- 
 2.54.0
