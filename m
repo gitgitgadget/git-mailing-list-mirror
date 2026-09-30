@@ -1,122 +1,121 @@
-Received: from mail-dl2-f12.google.com (mail-dl2-f12.google.com [74.125.229.140])
+Received: from mail-wr2-f35.google.com (mail-wr2-f35.google.com [74.125.225.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902F1446BF8
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 08:39:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.140
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790757601; cv=pass; b=NTqWdwtQ3GDgqmws7PcD2Kncp1tT3RRcZ4vZ0Qcm5rOytqd12Z7j1Z5fWhEg55EeC/hs+LnD1jZKZV0sIk6mBjD9KN/aTFfrLgy7uZxhiulI4xZpb58GkyUSmhHdf6TFK8zWeQMh0EI3PeZAQUXYBsSzX0boZMu6IXHu219mmpw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790757601; c=relaxed/simple;
-	bh=hxBxb9tj/v+6casPh5mHWXIRzCt2uEr0kgkhZBHhSLc=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=S2xgXc8O2Ao83L1zwDe4xM8sVhzOCj5hgj3qYQKkR0JwCDDQXVtjJMuTwNiuW1CB5W3xQBiyVWhs262BgZbebjT8XVnUoGVYZR/Z4QUXftav6YD53lE2mwGUNd+qD+CgVTVp+xAsSO8gdyiDMS9hTc6W+Tr09gBt+JB1anZzEYw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=se598R5Z; arc=pass smtp.client-ip=74.125.229.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401EA3E16B9
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 09:49:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.99
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790761749; cv=none; b=Sl5WZjFAAYOSe8hNRHu+IZyzId1zuCBn1ICmnawDa4mZWjzZN1SOUX0SrRBHkl60RlyzXxTPvvuZos0DZmXIBCO6wyiS1K4iVRVdt1eSCrqCxAMZE6xwuZqKJYt+LwnnGNm/RWG5GRH1x6DdqZ4YJIWBR98IuKX0NGEWuTRv5Dg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790761749; c=relaxed/simple;
+	bh=GWl2okeZwLyXQCEAP6+J8o8RECa6yyaNxxpHeUDAkLg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=RZW7cR7s6rlLw2VVxV2vBveAnfORqjKK9VX/+kgXZkf+y23tjyD80Dg/f4qi5HtxvDSAoTiAvdQjU76TIfVNGFfiSm5q66ZWlQfHcvfSQUa8iK39OLxHmio3J4Z3udVXOQz+806r/ULiY0yHH/IZ6Ggt6MoxmxUGmGbkq/uHv/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c5I4N65p; arc=none smtp.client-ip=74.125.225.99
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="se598R5Z"
-Received: by mail-dl2-f12.google.com with SMTP id a92af1059eb24-142dd04edb5so8640618c88.2
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 01:39:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790757596; cv=none;
-        d=google.com; s=arc-20260327;
-        b=fB18m2vUjnjNGOba0uLCZn2TgwS77LZ8avvWOvxFt73+GHzhdqep4SfeFQ8eiS+pt+
-         fSo8LuzU8s1KXwITNd0Pdsop2sLgJDjLrAmiJMxhMR3w8qi7Axb+3lsEDlYxCnUBzZ6t
-         /xUlKVOPAYj3XrUzM1QxunLGvn+APSMuh0NV9Zo0xqA8znaG4pdk9PNRhUHRqSTegH9i
-         DEoKbHqRC0WEZqSANU6Y/2lfK5ytDhp5BqILy/oXR/WfwpOlaoOBbkDfIuKcj7xhAa/K
-         cA2ZTaxFXELv2s/dCusV17jKFNG/OTwdSMq0XE7hNIDV9ToIQUo8N/rdjlQoAypPqzB4
-         Aodg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=+kZz2JcILk1fCdg5EK36LWmn61lq9HUXWXOBzqD8BHs=;
-        fh=1hsHg2A8KfpQ5f5R4xzcqhynqNho6Ie10tJsSKgpn5Y=;
-        b=W0ZJmkAHcYLKGTSiku+B7ItiEkp55CrIztlngBQw25ieR1X+2UV6m4Bmr3HC3IuOtO
-         T6EwQcwMg7DgBLGR9Wo2IN5OjnXdSturKcObSQcfJWQ9TTRy0S4ZNOoew3/7hJol53E2
-         5maqEDt41uHN4OKqJ9HFkk8VDj/PU1TIfqT1GDrGOqkROy4b8eMjFcIDPgT80mzHWbBN
-         DyCAb2UYB2TwVVEw8iQr+LG+voG21/OGhhmNJjUNgYJoE/nCjMuPCQge7oHSSu/3mTo/
-         McQhHiB2xE+E+q1IPQEZ5+kYg2E4tNGY6Fu9tygdxZpRfmSSZOnl90cCsCN1TRbe4MT8
-         3N9g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c5I4N65p"
+Received: by mail-wr2-f35.google.com with SMTP id ffacd0b85a97d-4887840c529so1817608f8f.1
+        for <git@vger.kernel.org>; Wed, 30 Sep 2026 02:49:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790757596; x=1791362396; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+kZz2JcILk1fCdg5EK36LWmn61lq9HUXWXOBzqD8BHs=;
-        b=se598R5ZbyZ2FEUdkg717U2Dayfyl5jXpfXbWhso7k8QC2HBByrZHir21ITdlgQNwD
-         zPSR3pfxPS2U6OATHBEV4V713kk3qKBmNzL9BB32jB/Xm/JBJHXyETK1HI98IPDWOTVN
-         w77hudzKlJPkpQJm4kk2rw9gwJ4/OO0VVBWleu9X107DeXASHqQtvxgJOobFRU9yB+Vj
-         9btFvqa1nBlDhwIVin9ucjkh4ft2U/ODsZj9310NTaUK8KqiWTJmq9fYZ/tJ44xOhpAH
-         NKb3OxZ1J1N4EekYDrIfkYmBkizGDHTJ7259vcpqDLQLfjyscmm0cJj7wxh5G1mNdxMT
-         e2Wg==
+        d=gmail.com; s=20251104; t=1790761745; x=1791366545; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=a6FKah8nMihBZCTrMBHxODzTWG2X8MgdcDH2pDd2++8=;
+        b=c5I4N65pzAKXZibFg84uko7kW1Exeke2mcNfEpX3ZtcaYbLMDKNPOM8YCe7CnkHA9l
+         JI1EFKRC0+o/7XYS7MzE2BkLxR2KCnZOf2eAJ3UJImGknLsd0a6PD4eJAUsw5vygzZe9
+         vLu7O3OJy2mscGA8DqCh7omH6u+qdPdYXLucy7row3m8OzGDDv0puEiRpo5Pt6G/NYed
+         KeX75atNN81qfUiY8lyre+oVnktVSwTbkIgvpMe41yfNS0jFzGxjNlZe3VHs5DJ2doAB
+         8CUKYRhA9FQr9mT+bQXAGsFhUoK6v7O+13FcZlGmSivSm35LjEIqP15iq0aq6bYrhsD1
+         dX3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790757596; x=1791362396;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=+kZz2JcILk1fCdg5EK36LWmn61lq9HUXWXOBzqD8BHs=;
-        b=znk7VGgpwLxRQxN4uLOD63lCYh7b2UYHh+bUwIR0+1H+z5Bi5SeLiGYVcx09Bo4Cdx
-         xTeswv3vRo7mF5HFO+QPJKI9RNDrQFhuRGkUSC6htYm1N1EGdhtoU13fBhKtQ++0m+cG
-         L13sfcytLR6/WHJV949dCfZIj9h1gAgmVKs3OuThFB1OlwlnlVCUJ1wcQW4oUsKY7XOo
-         VWZSjlSONRg7GwmmOP5acVbTOkPWPjym+hfRa+oHxD21XjSpFu9T1JRme9y0YR09yGze
-         AbR9JC/+YwVZVGv/SKpFFbGLUnpXRzdm2mPgy875dphlatX0jgYUn851nW5/v4RJp36B
-         81pA==
-X-Gm-Message-State: AFuF++n5rrCM4aTLYTg1j6yhjLCX9YRXC6dbg1Fu/FXeJuCCwqyfr2B7
-	rtqMQ333IBKC+qtfhQazXLvxk2x4RaAvEato2HSlRNc6enfwQmA/RgCt91R14hhbfb3jvT6R3ei
-	rBDDVYcFi+Y/sQ1MqffeppnwEjIZ5s40+d5uBb7qZww==
-X-Gm-Gg: AYBFou0WSC6i6hPWCZ1xkt1f0XmJB+PI6ieFqQGWUR5vyj4dU55eRJeF/5WZhI2KTsR
-	Jbq5zCQRKLuCqolNgr1gIRoncdPHuBLfiS1QoZdpT5vCF/JJd1crjsSczYozeZRrNdpvDNi+iJ4
-	jZ3tCPIaJsb1+M2wnu9L3Xkc3sDU05XnHAE8uQXQ53iwaxOQCpvHv4GJWubtBxGHeynqBg/9P1p
-	Es/gvOy5VEIX2C73Id3ZI06J5y954vfVPfkqlp6FCf11jfphA4Mj0j1lMQM7p12hbMlY1QD35p2
-	b9QmG4Jfuv9bst8Vh9ppVYdH5Jno7FG/gM+UM8hUwRHafjpvBdCYdktYwnusSECrerxK5epTs/T
-	SBhkzU6EsxyMbyAFBlcZVnHDEWePa4uugpxmr4W9KwU8W7nYz8omCyTjFJcsMhSdwomVztXN5M0
-	LfVYQcM/xXhhtAFL/DrQdOUwzTf+RKg1CKGZSCDhHPMGplhbOZqw==
-X-Received: by 2002:a05:701b:4544:20b0:144:fb42:50 with SMTP id
- a92af1059eb24-14d331ab843mr569065c88.31.1790757595881; Wed, 30 Sep 2026
- 01:39:55 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1790761745; x=1791366545;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=a6FKah8nMihBZCTrMBHxODzTWG2X8MgdcDH2pDd2++8=;
+        b=DY4RfRQ3YYbI8Uf0x1xn7jkGBGaglGUv+o2fcAIo3D1+CQdMYJJKVaUfj0wwIwxKpR
+         NiYlZJVcCgYmMa9OFPbql8jsaBz811xNTbCyM0imx25RfeSugqU9JhvBKWFlV935eVZW
+         ydmGaUBKpGxO0/3i7Sq3as/iE5JSiuKz1nsaSnv6pGsdRcD8YZuMofFIBFnysRwVn10+
+         o5VvkcZu2NiYk20thOPthQpJpg0+8tvuzXaGqpNR58O8nY5WZ55QOErsBm8c0AEouiM9
+         +uvRMbKodfn3hhQWo6qxXt4KLx7X7e2Y+2sgivmA43gOI3DtrzAJsMyFbLKAKwd4TzAq
+         5HKQ==
+X-Gm-Message-State: AFuF++l3GfUxxpzEhhI+qgMIfeuy+4BhAtrBrv0Lq6+kNUinnTG2JK80
+	UdEn5+OQa23MqxnVNvslu+ISl30R1LgEbx6yYDDBB8L3QqpYg0x1woc0KjTO2gpy
+X-Gm-Gg: AYBFou2aM6uDVynKsZXNcJ/i+EqquRlL+91i1J3Bs+AtLiQfAhML74UWJYYYVUeOoXN
+	HRgnLeTeW9wdkiz7r5w62S08AP36bk8SxC+zX3hfghpIfKkTB22M4iGJcI7RnLZdUWsMN0TDywU
+	oEoGBTovkzn9yzvhjxOat2LOD1aPhjQzH+R4sqa/M6qDSQc2oQ6JQW+oFVFByqASG6g4ZfbRP8J
+	MTkxvuEvJ1G7kNKh67DB+Clycw10kAWHkqiV1YZZqn41euQY36++3ta+4dK7POm/Tm6+SEiMfyY
+	dWfxDY1yY16fgOnhXEgN/sG3DXRsRrxioyKQwOuyiM+pBjXiT51gZpCj66yNHtDjRUnZ+yZFOfx
+	qeCu1k+z+hHvmuoDW+E6FhhZOXLkE9Y0ZaRmVYoDqh6UzHbn1lHzHH6jbirm2KiU1Xc9BHrzNb+
+	LasYJ5uEWM5xkmvO4Iryjf9Pr6bNDX8EdNUwPLNIPcEXX8K4jR0EQzXNglhcaqduQj/z664XTgl
+	VA=
+X-Received: by 2002:a05:600c:5391:b0:4a0:34a:588c with SMTP id 5b1f17b1804b1-4a01b1ba781mr11880785e9.14.1790761745182;
+        Wed, 30 Sep 2026 02:49:05 -0700 (PDT)
+Received: from berwick ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a0174e165fsm47632845e9.6.2026.09.30.02.49.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Sep 2026 02:49:04 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH 0/2] checkout -m: recreate conflict labels
+Date: Wed, 30 Sep 2026 10:48:47 +0100
+Message-ID: <cover.1790761727.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.56.0.rc0.210.gaf8b4f0d381
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 30 Sep 2026 10:39:44 +0200
-X-Gm-Features: AclHuK-yLBn23Ym2etvISTwV2i2YMTtxHiK4KjQEh-_WT5cBZvo54fdvRE6FC2I
-Message-ID: <CAP8UFD1cA5uCpLRoozRMzemFwMbs9=ug+OQq3ATQcMA9HMK72A@mail.gmail.com>
-Subject: Draft of Git Rev News edition 139
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jeff King <peff@peff.net>, 
-	Patrick Steinhardt <ps@pks.im>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
-	Harald Nordgren <haraldnordgren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Hi everyone,
+When "git checkout -m <path>" recreates a merge conflict, it uses
+the labels "base", "ours", "theirs", rather than the labels used by
+the original merge. This short series teaches the ort machinery to
+write the labels to ".git/MERGE_LABELS" when it switches to a merge
+result containing conflicts, so that "git checkout -m" can then read
+that file and use the same labels.
 
-A draft of a new Git Rev News edition is available here:
+As "git checkout -m" is recreating the original conflict I wonder
+if we should remember the conflict style as well so that
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-139.md
+    git -c merge.conflictStyle=diff3 git merge topic
+    git checkout -m <unmerged-path>
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+would recreate diff3 style conflicts, instead of using the default
+config. I cannot decide if that would be convenient or confusing and
+am interested to hear what others think.
 
-  https://github.com/git/git.github.io/issues/860
+base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fconflict-labels%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/3bc034112...fdaf3da99
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/conflict-labels/v1
 
-You can also reply to this email.
 
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
+Phillip Wood (2):
+  remove_branch_state: convert boolean argument to flags
+  merge: remember conflict labels
 
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
+ branch.c           | 17 +++++++++----
+ branch.h           |  4 ++-
+ builtin/checkout.c | 30 ++++++++++++++++++----
+ builtin/commit.c   |  1 +
+ merge-ort.c        | 19 ++++++++++++++
+ merge.c            | 63 ++++++++++++++++++++++++++++++++++++++++++++++
+ merge.h            |  4 +++
+ path.c             |  1 +
+ path.h             |  1 +
+ repository.c       |  1 +
+ repository.h       |  1 +
+ sequencer.c        |  1 +
+ t/t7201-co.sh      | 21 ++++++++++++++++
+ 13 files changed, 153 insertions(+), 11 deletions(-)
 
-Jakub, Markus, Kaartic and I plan to publish this edition early on Friday
-October 2nd, 2026.
+-- 
+2.56.0.rc2.84.gaf8b4f0d381
 
-Thanks,
-Christian.
