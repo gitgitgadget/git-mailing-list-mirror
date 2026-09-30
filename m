@@ -1,72 +1,72 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8ED2502554
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:10:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347014F96C8
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:18:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790777416; cv=none; b=QNJLNkdmJcZktHIYCe0b+Pt1e3AdLDpUqR9gsOnS3RN3RxdThOtRdVcwgWdUVGF8AHyCLknpqSyRFWyyXjKvTXBzhXQejdWGLNF4Uo/LhVu0ArDsoxYnZuzVmEjRAhH8TuODU0TAKEhcROkiwMePIPCf+5cOvaZMIeCkVeyWYjk=
+	t=1790777899; cv=none; b=IfewhSwdjw51qtVst6ioT7U0R4PATC2FFhlSufN3Fz1Zn6zIEP4BdZESzKvIGqTGZZHyKY49ZNfuYXG72QIQuoJVtBCaDXhH4CaiE9pzt9ekvPcTRffv9Eks8jVMLNcCHajPprQHReBZQwAIkaZ0ybqZrqRL15T5bRseALNDWLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790777416; c=relaxed/simple;
-	bh=5NtDLc1Z42/pZGF0iijXQakrTiO/WG+6TjRJDTxnNIY=;
+	s=arc-20240116; t=1790777899; c=relaxed/simple;
+	bh=Lxph8+KzAu3aoZZkZkHduH1jza3U0bdK4yz/IlO9low=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=m2R5YrlxplydcbOvGM/4qnn8hTX3JSrnrxyix9SZAq573lk3RRfh3RTEKdVWOcyTL0zmh6jhPDN2efxzDOb/UMlw+dZJaikCuZ28xaV8Xm3/sXdXT4vMylXcDpFhIeNYQz1otGPF7kPJovo30Ma2zC6Zqs527uLteClI8c+HDfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=GyAWQust; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R47bdfBm; arc=none smtp.client-ip=202.12.124.145
+	 Subject:Content-Type; b=QFpcycFKJSdFC0O7yD4Whb60o814dYe2lAfFbrvQ0614I9xS0PK++y09U+rGkigVAgYtD7iMiEb1w8oL662bwpURn266K5gR9I/D+++xMtug3VU2EEIB5YT3+seM3OqIW10Ame8zHNzdzOiJ0j4sWbtrAmhAi4vxTJ1mpBqzf+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Tbk1xtBG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EtIoTP5c; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="GyAWQust";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R47bdfBm"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Tbk1xtBG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EtIoTP5c"
 Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.stl.internal (Postfix) with ESMTP id 534471D006E6;
-	Wed, 30 Sep 2026 10:10:05 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 23DC41D006E6;
+	Wed, 30 Sep 2026 10:18:06 -0400 (EDT)
 Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Wed, 30 Sep 2026 10:10:05 -0400
+  by ams-compute-01.internal (MEProxy); Wed, 30 Sep 2026 10:18:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790777404;
-	 x=1790863804; bh=7IhVr5BCW5CxSf3OolWZXiy1DKlwuJScVYnrPuMgy3I=; b=
-	GyAWQustvRa+O4Nmzx4LhpOD9/is/71zz3J6KkVyVnBi/NrhlXNK1050DIHkL2+a
-	Tb7AO9URRyb+YC9mbZwCMimuuGYNzm/NJwIacjii1EeWMSo6aBSegq6Jch4M/qXW
-	wt5DEdhZ44qfCoZw0kwaUjCpFzJegNpjoe6ySfM8wRlq41aZoMSgdq8EooWGEgrI
-	fRpRVC2rp2lTI0cC7vKjxA0JFyQB7yzTO08t6dWm3ZtRMVjcOwKfE02pTVeQLGbs
-	Rr4bLxrgNbv/6tdI2mkIS3CgWsN2hp8GMLuMIfQQZAJuv8TQNY/KqebWOB89I1jn
-	UhXWD8+QBpBY4fbJqFUQYg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790777885;
+	 x=1790864285; bh=fVKX1KMKFc/0KTeQ9CXGoiwWDBu3rdj91aSJhmrHKBk=; b=
+	Tbk1xtBGJ0xf5gxlNbVJMh/2B8KLpZIX8BrBz5lyc5fvIBoCL7AzZqwwvBHkag/x
+	xpLPcMyEz3sWTYXJdh6ECixVJtfZfIq/M2Q/EA7seRuHCOJP5MoipbYqfZyAly3D
+	bh/Vaf1QL3HrSVNgHl3MoL7Bw5twZQUkPdphQffDpOzHbZtCD9l6jZDyigZ5IYJS
+	aIN3SGF9n0OXRDWdKCpy4/Ce5k1CZ2fEXRGWVO8h4htViqeQkThZ89BndEZKsTaJ
+	WClKmnGP0KbV0ejyt1xIrVdMLBcAc1pilzkhlsxnrRcGST7y1otezfnMMUmXJxAx
+	ut/qME2EgaBwz8SkDt/zTg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790777404; x=
-	1790863804; bh=7IhVr5BCW5CxSf3OolWZXiy1DKlwuJScVYnrPuMgy3I=; b=R
-	47bdfBmjy/XEoAa1pPaV9XK/OEYbRntJyTvmXoQvAVT0CrLLyFKQ75YjAPcf1w4k
-	XHgTzkLbLXHXy5MuZuWVM7sfwaGLIRxsGvljoOjiKQYxtQDd+61yj84siJ5COQQj
-	7sqFNlw+8Rtd0kSYdZr29KN9Yss6n9y4QqkvGvkmGJ6Lrg+hU/GZJVllNs+Bwk3B
-	XWnxFmfi35g+wZHzRI2FsmFNRyWxq9AlBCTBNKtN6UPwM1FSFv5Bt0VA31f5/plT
-	bhKqkUyd4Pq0PqFCs03a3xr7Rgn9kovSyYPelYzE/8FUIzhuozzNELrMsE5+n6zt
-	btBXt96At90U2OIqq7Hxw==
-X-ME-Sender: <xms:Oxi9avxqGBBUUaXAGckld2_CZsZ2BmCQHXK596Yql43OcMheZNYP-v0>
-    <xme:Oxi9aiHJYs6saeDc8xjn_5ivWmhGMZ3jcisPE_7LvOSgNTPqXkRsItdHXFqjFKreW
-    ClugCmw92I5V4DwJ2wj3Qe7IXMZlbjLWTczX6k8tTRtU3QJmUGN9rU>
-X-ME-Proxy-Cause: dmFkZTEt/qQwi3gQshpyzh+xkdCD7XBxZk+Smjm6OJjELYt/1nHy132n0hzmX459V1q9oj
-    lzHJsntZTIkzPggW15ry8aazmn0DHxbMr0qqFgsRWAIQeU3GjcpT08zug70LLadRGZeOmO
-    7bDjON71DK7AwbUaq3qo6NRVaRS5g/77b2dl6u53oX/5ahOn6mWPLi7FtHQs8V11c4rbMc
-    GbmVm2KFNIwJvaYKnk769eWrYnJ/R0oO2mVuPivYPjYl/SN1buQVcuFaJeyB4jYOXWGtXo
-    mExVgYChFdSDMJrmFUHp/BejAq/QBCC0/AC3jq/OK5KdhO08MobTTeLsFc2z+3h4beaspY
-    9Khs59k31KubhHwcu9yLigYD/3bXbv0QeuFeDJM1q2b40osgggfxRVNa3r7KZcTQLtUW/L
-    9AalKgxTGU2nycPKCeq6yfeEu7M8kE5Lvq2pxEo958BxbL7KLPLmm1aXOUmhYfBhVlO2v8
-    eZrlHwY6k7gJIuRp3bGpVCtEa6kAcW+4tI8GmbLKIL32QFHpm2N2RRA9b8+wPl3atSsAgP
-    GiE4AH2N6JIsTHC/sVGJ+fjVnE7LABDTgY1Lyqqw6G2WFRcvmYyGgT5jH1m2aBvB3BTVXR
-    eeu3r7EYBmHq/HjwHchafrlf4dBHYcHh2DjOwOcZ5hglYIuQ01qBhLkvCMdg
-X-ME-Proxy: <xmx:PBi9aieJgzwKQEnS7AuFOuQ27AQ0MDfGhvoOBKqqg7AVyKsLN-8utw>
-    <xmx:PBi9aqK4CFvGZj8CJ1Sj_4Fu1DfM7_7Pa4Hx9nRKY17pAdPTawntyg>
-    <xmx:PBi9arGmtjO6WcYMQUpIfOMuz4pfjCZ5WeQVH4F0kbVZyxwJu_-Z2g>
-    <xmx:PBi9asrqS-X7QtYmMNOO53IvuzbN3p2NJzxulmed1YiwOon82VogNw>
-    <xmx:PBi9ai1O5BxdzlJt9U5xzO0MAWMaH8R66KBnReQKeH6gsd-QuI3s2vbT>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790777885; x=
+	1790864285; bh=fVKX1KMKFc/0KTeQ9CXGoiwWDBu3rdj91aSJhmrHKBk=; b=E
+	tIoTP5cgjZY5dIFZtGt7rNxp/MZsn16LolGG2FeMpvOWyPb2edrC81SAMgeMpS7V
+	yZ5AmILbjg7EGpiNABB9ETRN62wcHbsyreHXSp8R9qr2Y2zhXh8j5aBf9fUNASBi
+	15rDgmaQ+Io5C8kqC1l0hJM56a458FhsH9nYaWEFbifwlQWLMeiIpTPZR4obI0QC
+	OCMyOHAg5UZ/e0jFi0oo7FaL4nit70KErTpkTK0vMlW5yUGURuqF4/2WeuUdFooU
+	zniqrnsXDaOmEq5KrZ9KBZGVMVNOSHY9meHYLT/p+3WpumRcMj1X49kk/ZN0dqNc
+	au4ZVQqcl/Xyy9yIgKpYg==
+X-ME-Sender: <xms:HBq9ah1TtQUV-d0VqftwnjfPNzBEgByNcq6v65pwykS2Sc1Yaq1SWXQ>
+    <xme:HBq9ai5FK_eX4OcoURP9Cog4ekr_lqsgwUS9IL-ypBDZD-OR0yAZS2npCbTVL5jn3
+    ZOzzO7AJ7ISk_Kx9gf5kKGJs2sQoUNE3SwgLHKP1BLWZsOqvpZiVA>
+X-ME-Proxy-Cause: dmFkZTFO9aoJdGYAFwMiFNHZvjPfJF4XhBnVAqjjszrBGwZebh7Ub0v0D1Q/saFnYmAMod
+    AQclZjrEg25LihAOEYrLmgLiQeXt9XPKz0cphzOuhNGB5y28xchQ0SEtjgnJbGiQqcD9OZ
+    ha/HNkd1t5xA7Ev2hu/G9ahEx2nJQJt9n7XLnroyjGSLIuZRnaNpDrFToZSYp60cCWmqZg
+    PvVkKoJGNvUavqLSOXfBKyHxyqfb6gXZZmFCqo6s2/lvoJPFQhNJWG1rEIxnw3owdBNzAU
+    AwZFbj1UJBY+gg0GCqS9Ml4nDVkPeKmIDT6TtorU3oaQ5rQG+y29iGeTRMKeNodsMNSPh1
+    8Se/9WkTO+3dwvM/njtrkLLTV6SdEDNcqO4OuNPQ8fytDhQ6Ct2qI5P56jspvxK/H+Mk4k
+    sb+423cATbnK8EwvGWPkKGSZ8dI/UveyecLI/X9AnHSDQqLrLL69I88v39pDN4N9ercU/c
+    648wd18PHezMmvxtvD4J6q/nOlNA9sjeQzm4dmvtwG/rF4ZuXL0K2Qsr4en0y8xgMuzVqu
+    ln8+wp3Y91au2QwkfIT1q4lxZHkzVThRmUO7GJ8IU3TEv/dqdrQZcqIjX4SYPFXzf3yitg
+    73gzFvZFPArzZAUbCPuD4YL0kcY6t58qvK3dgp0MXGUP/1vyyUc00db9UQ2A
+X-ME-Proxy: <xmx:HRq9aoi7HmKL8dv86ZaPSS9fsG2e8AbVTSJrcqKXMo3TAxBORmrwPw>
+    <xmx:HRq9au9RzFxLPl_2ExswlImbHjExKSdfLrezV6dsdQ0i89J1kWvNpA>
+    <xmx:HRq9anoatsjgGzO6kcCVjIZW-pcesoRlHqB9T7fPHIREsq02M7OE3A>
+    <xmx:HRq9al_NYuOTBYhMtGzO1UP_Rd7rYG6OM85p26aziX86sdJMqwgcaA>
+    <xmx:HRq9aiqf6EWXs3IYSvnBONfbCQavCmH_34v81c8coasU7ZOeP8gqhKGF>
 Feedback-ID: i83a1424c:Fastmail
 Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 34C9822C0092; Wed, 30 Sep 2026 10:10:03 -0400 (EDT)
+	id 4D12B22C008F; Wed, 30 Sep 2026 10:18:04 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,97 +74,95 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A5YEOc4Hum2Z
-Date: Wed, 30 Sep 2026 16:09:43 +0200
+X-ThreadId: AdBGhQn8Dy97
+Date: Wed, 30 Sep 2026 16:17:44 +0200
 From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
 To: "Patrick Steinhardt" <ps@pks.im>
 Cc: git@vger.kernel.org
-Message-Id: <5e957505-384c-42b3-980c-da905d69c71a@app.fastmail.com>
-In-Reply-To: <ar0OltAkeTiCx81c@pks.im>
+Message-Id: <2e53feae-94fe-4e1b-9665-2a639fe08515@app.fastmail.com>
+In-Reply-To: <ar0OicAaDipYx-xU@pks.im>
 References: <CV_gitbrchanges7_please.d1c@m5gid.xyz>
- <URLs_not_just_msg_ids.d1e@m5gid.xyz> <ar0OltAkeTiCx81c@pks.im>
-Subject: Re: [RFC PATCH 2/4] doc: gitbreaking-changes: replace msg-ids with URLs
+ <gitbrchanges7_please.d1d@m5gid.xyz> <ar0OicAaDipYx-xU@pks.im>
+Subject: Re: [RFC PATCH 1/4] doc: transform breaking changes doc to a manpage
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
 On Wed, Sep 30, 2026, at 15:28, Patrick Steinhardt wrote:
-> On Mon, Sep 28, 2026 at 12:41:26PM +0200,
+> On Mon, Sep 28, 2026 at 12:41:25PM +0200,
 > kristofferhaugsbakk@fastmail.com wrote:
->>[snip]
->> Let=E2=80=99s instead replace all of the msg-ids with complete links.=
- That way
->> everyone can jump right to the discussions.
+>> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>>
+>> The breaking changes document is not a regular Git documentation page.
+>> That means that you cannot navigate to the doc with git(1), i.e. with:
+>>
+>>     git help BreakingChanges
+>>
+>> You instead have to download the Git project source. Or go to
+>> git-scm.com.[1] Then you get this disclaimer:[2]
+>>
+>>     This information is specific to the Git project
+>>
+>>     Please note that this information is only relevant to you if you
+>>     plan on contributing to the Git project itself. It is in no shape=
+ or
+>>     form required reading for regular Git users.
+>>
+>> But this document is relevant to *all* Git users. Everyone should have
+>> as easy access to it as the other doc and guide pages.
 >
-> Fair. The links may of course break if at any point in time
-> lore.kernel.org were to vanish or change its interface. But if so we c=
-an
-> adapt accordingly, also because the message ID can still be extracted
-> trivially.
+> Yeah, I agree with that sentiment.
 
-Yeah makes sense.
+I=E2=80=99m glad that this idea makes sense to more than one person. x)
 
+> [...] The one interesting question about it is of course what we'll do
+> with the document once Git 3.0 is out. Will we retain it? Will we
+> remove it? Will we empty it and make it focus on Git 4.0?
 >
->>
->> diff --git a/Documentation/gitbreaking-changes.adoc b/Documentation/g=
-itbreaking-changes.adoc
->> index c6b974b6d8c..9aba419efc9 100644
->> --- a/Documentation/gitbreaking-changes.adoc
->> +++ b/Documentation/gitbreaking-changes.adoc
->> @@ -59,15 +59,14 @@ make the described change that can be easily unde=
-rstood without having to read
->>  the mailing list discussions. If there are alternatives to the chang=
-ed feature,
->>  those alternatives should be pointed out to our users.
->>
->> -All items should be accompanied by references to relevant mailing li=
-st threads
->> -where the deprecation was discussed. These references use message-ID=
-s, which
->> -can visited via
->> +All items should be accompanied by links to relevant mailing list th=
-reads
->> +where the deprecation was discussed. These links use this format:
->>
->>    https://lore.kernel.org/git/$message_id/
->>
->> -to see the message and its surrounding discussion. Such a reference =
-is there to
->> -make it easier for you to find how the project reached consensus on =
-the
->> -described item back then.
->> +I.e. they link to the `Message-ID` of the email on the mailing
->> +list. These references are there to make it easier for you to find h=
-ow
->> +the project reached consensus on the described item back then.
->>
->>  This is a living document as the environment surrounding the project=
- changes
->>  over time. If circumstances change, an earlier decision to deprecate=
- or change
+> I guess once it's a manpage we should definitely retain its contents f=
+or
+> a while longer. The breaking changes will be relevant to users even
+> after they've already upgraded to Git 3.0. But if so, we should probab=
+ly
+> introduce a new section for Git 4.0, at least if we already want to
+> start thinking about that.
 >
-> I wonder whether the information on how to add new entries should now =
-go
-> towards the end of this document. The target audience is expanding with
-> your patch series, and most of those new readers will not care about h=
-ow
-> to add an entry.
+>   NB: even if we start thinking about it I think we should probably not
+>   release it anytime soon. I guess having a major release once per
+>   decade may be good enough.
 
-Yeah, I can make that change.
+I know you are wondering out loud here to the fora. But just personally,
+I imagine that this will happen after Git 3.0:
+
+=E2=80=A2 A section at the end about Git 3.0 for historical interest as =
+well as
+  people on older versions who might be browsing outside of their
+  installation (probably git-scm) (and who might be on pre-3.0)
+=E2=80=A2 Git 4.0 discussion before that, however hypothetical or distan=
+t the
+  release date
 
 >
->> @@ -332,7 +331,7 @@ The command will be removed.
->>  * Support for `core.commentString=3Dauto` has been deprecated and wi=
-ll
->>    be removed in Git 3.0.
->>  +
->> -cf. <xmqqa59i45wc.fsf@gitster.g>
->> +cf.  https://lore.kernel.org/git/xmqqa59i45wc.fsf@gitster.g
+>> To that end, let=E2=80=99s move the text to a manpage. But keep the o=
+ld page,
+>> just linking to the new one. (We wouldn=E2=80=99t want to break any r=
+eaders.)
 >>
->>  * Support for `core.preferSymlinkRefs=3Dtrue` has been deprecated an=
-d will be
->>    removed in Git 3.0. Writing symbolic refs as symbolic links will b=
-e phased
+>> Just do the minimal changes for the new format. Also demote the first
+>> section to the second level, i.e. make =E2=80=9CIntroduction=E2=80=9D=
+ the same level
+>> as =E2=80=9CProcedure=E2=80=99.
 >
-> Nit: two spaces.
+> I feel like a good first step could've been to convert the
+> BreakingChanges.adoc document in-place to use the new format. Like tha=
+t,
+> it would've become way easier to see what's actually changing. The
+> rename could've then been a 1:1 move.
 
-Thanks, I=E2=80=99ll fix that.
+Like this?
+
+1. Convert to the manpage format without changing the filename
+2. Rename the file: pure rename without any other modifications
+3. Resurrect `BreakingChanges.adoc` with one line that points to the new
+   document
+
+Thanks for reviewing.
