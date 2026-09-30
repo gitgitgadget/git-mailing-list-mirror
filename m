@@ -1,109 +1,155 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA4B51AFD6
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 18:46:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D75408028
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 19:06:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794005; cv=none; b=LwVYs7G3Z6w3XdHbNmaAIQtu3MgC8/hx3khIMQ/Oc2rDSS14PZ1sZJONhCLMlMKL3ZCjK03gGtbFdG7+KqI4OH/cVaoS0tuXyzf/IPvKOI5o/o8SvwbYfW5RY6hWQNQvCwZDbiTZ0+s3td8xT6Qnn65fAkb94JlLbpbc438STWk=
+	t=1790795187; cv=none; b=DRhYHg4JdlUETqp3TQZZfwznaLYxlVh9HpMrByPwiTrPwHd2e93hV1Bw69NjqXDmFhO34e0W8FEEaVp77cJV1mJx+dnTMKKCKsq2+qkB+Wx6XvMqrwDbpvcJ/ZiwG+i7ni0FFfIdeW1eIKJOniLsfspyhAJxeMxchURg0eQd+cA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794005; c=relaxed/simple;
-	bh=NbFZkLE5RtWssffD8XSrAUNZEQjE2Px3tS6XX8hiLIA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NjZo5GU73d9n2vf8znbA6UtRby44f9sd/WnGCEesQZP5kxv5qC0uqfY/wKtOg9M5eapfYxOzD7q8lyNrZUGV98TwGf5HXBQpHEvbpVS9TOi9hsrqi15ToCqLN2Y1j8Ubzl6cJHQqTcJjnDQNnI2q4Mt1f6bfMJxdaUYqSLHnXks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I1QzY3jP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VlW6/ZC1; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790795187; c=relaxed/simple;
+	bh=TO1LZrCOnESBgSIDV0cMnwYHgpkhY6Mr7xNE9MjuZmI=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=cmlAoASi+9LO8LjL2JwRa0og3cauAq7jzEhwW8swrKP9bkpdYKYhxmVZTTWW3yUIFseHU6YZjquQt0zFIdKSwdrtcQMPvZAQrLTLUdYE0h7X8xgnyR/6zCRddcNwpFXzdvDlLMhHsZUh1Bx9B0YTt27jNh3oNMBM5/b+fFJSP18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aFJI0Drv; arc=none smtp.client-ip=74.125.225.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I1QzY3jP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VlW6/ZC1"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 25DB914000BB;
-	Wed, 30 Sep 2026 14:46:43 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 30 Sep 2026 14:46:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790794003; x=1790880403; bh=Uta9dNruGc
-	QivszDVDV9bFMV+iLka9ZKgKlQ6d+kFK0=; b=I1QzY3jPApzUVVBdAK/r/0Hc0Q
-	tOB+F7zqnPTD+1mbt0curvwgyZtSdBwali1Xr+U2jGW/XO8eICVLAc2I6OVmNMSl
-	oGTNWjWcVBXWUc3EJEP3H7PdRnGL4n2yHQWwnWeH0piHSK9P3xOO06tISasYVHMO
-	Q55HGWqtXMQhsKpylV7OVEvV1pXg/goUbcrqpJnEZK358GHknJQMWxTvFbbUCTWj
-	aRB5MsrY5GI9UHyTkr6z9FHVBEgXmVDT/RmT9PZXSQBi8URealPL/zv7xfhdgbDE
-	fFx86TM0m4Pq9VEvRtDRZzwDexIrH5oCdS/uFhtrTNRnCd4/WRxSD+ips2zg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790794003; x=1790880403; bh=Uta9dNruGcQivszDVDV9bFMV+iLka9ZKgKl
-	Q6d+kFK0=; b=VlW6/ZC1n7bFvJQE+Q296x8HbtDOUttFGlnTKceDvzuR8HQKX43
-	SVdJgaNyqMY4TX4Ggq13fQt2wrd0u7WcCV8LUMP86mN2WbYs/MiK/pOthjkx+viw
-	yHYLYUnJpwcc8G+GLnEHmm71VmpshhO8yKKbTqiEXji6Rqf2UCT4n/wxb+6B/hAn
-	pK1vZ2JFVwl1vLvlyTMbr5trZnU1xxBZZt0hWy9N3t5yRvsesPSStZ7KagG2kyiv
-	bUbW0BCnXvf9kJ7AjFdrGmjcg8jrWO16PX5cDIfqB4tyFyLKqjbQ37nhTH8iBc3I
-	uCKUZJCZOIz6yxQmummagMye1pPvAtlgTog==
-X-ME-Sender: <xms:E1m9aia1qqL5UDAc9inMOaewcPmwtgbrQDwwDSxxzD-dX3ub6uwxoQ>
-    <xme:E1m9apGG6ItRYxG8Vd8nxN-m4efytm7lJBbrIXL0KMoSTLHbe0xFBbUhZhBuDLVE8
-    SrYrGGxVpuN4eWCeoPm4JACTFui4Ro2fm6cpj-AASTV8odS8H-WrLk>
-X-ME-Received: <xmr:E1m9amzsVo-HMKx6V1mUIaP8K4CPKQtq_zrN558H3QrfgPxy5MNJonIfQsCpJ2rk_0OWyZMHLf1FrgYfyZw8roLB6TFzX6SkBL_v>
-X-ME-Proxy-Cause: dmFkZTEYNU1WNL1gEmH5oK8dQGMez5VTDsK9K6RXxVjtLy9ikQf6pUUKESpCscrXT44b+n
-    HMXCKanVQUuTiWtNkd7FGY1dJsGznhxJzeaAL8Cv5DypqWDvvVT54lcjaL7mGlhkhc+FUc
-    iMqcNtpkZighmmVolyH3AvQsB92cVBTq1YbIZvBY0T3fhZeN+5+0uA+WLD0xPMJLMk6xPi
-    17nyDcCqLNBPu/4Lh9W6GlUZsg0rUEDAbgtNdlsQ/C1oOaru7rTjNT0xZJ4HWHVYkHUO/4
-    EaA9OFBNZOTRO37XQpc6Ksdd3BIv71cl5VW6k+KCdA1gx7I3P5dSgNCD6bi4QglqvI/FSB
-    3LtlOA4qac+IrgUuwVyaZYWdOxJGUp5FQDguMVVSmgVbixybFMTy6F+L0DiVqgYnfUUYHx
-    HwniyZ+jhPrsbXwCeqvOP8FZdmeM1ahJlZo24MakN124kbGh0naVgfOVTJjj8Coh9kHdjo
-    HBFBdhtL6kEgFe0ASgR6jxSNee6e7O1o7Bp8DNCK9ZW0Jn3KZjn2i2VSwhMc72qk0JMyJL
-    SLHtxyywZV9FverGvXGUUZ+NTmBsolLb4BndfFD7/a3yimuO8xaBy+4O7V1D8taTi4q65N
-    PSeEU7402Wy4qzWKGwJb7Oo3A2Mscsn3QfpTIkvxhMzeONMobGKFnVr4Lgog
-X-ME-Proxy: <xmx:E1m9arkh6Z9a6AaDx8ZhToNuyZKX6v0rh8x6xvJLQGA564_RMk_ckA>
-    <xmx:E1m9avlgkXWhH2M1LylVNar2E_dkpDrS9V7RFLEvOecStcPFgjBr8A>
-    <xmx:E1m9atwewo4cPAWXQMHNv4so3i51JwdP7xfOFTjHIrBJWgvFB6kiYQ>
-    <xmx:E1m9akpCOXm6cfrw29g5Nx41GtZkzx4ivlDb9lKkuJPl00PMd7RwbA>
-    <xmx:E1m9al-W5_pEu3wG-ZlW1Wa2qtBZrl_5R8tj_1BhJr6insr1F4DL0MXy>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Sep 2026 14:46:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Ben Knoble <ben.knoble@gmail.com>,  Harald Nordgren
- <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v3 0/2] ci: link failure and leak annotations to the
- test script
-In-Reply-To: <acc4ad5b-1ac7-4a63-b771-fc2e585a6ebf@gmail.com> (Phillip Wood's
-	message of "Wed, 30 Sep 2026 16:52:17 +0100")
-References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
-	<pull.2419.v3.git.git.1790748583.gitgitgadget@gmail.com>
-	<xmqqpkxudcva.fsf@gitster.g>
-	<acc4ad5b-1ac7-4a63-b771-fc2e585a6ebf@gmail.com>
-Date: Wed, 30 Sep 2026 11:46:41 -0700
-Message-ID: <xmqqld8ia86m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aFJI0Drv"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49fff6f0f87so29528575e9.3
+        for <git@vger.kernel.org>; Wed, 30 Sep 2026 12:06:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790795184; x=1791399984; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:message-id:date:content-type
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=BzKBBDxOHJTVyxiBlh4UyKyRye/yrUD6DrGFd8a91qE=;
+        b=aFJI0Drvwvj5QSezEvcz51H2MBrp/Xh8ks+LMHNBWoPoNsNIwZusaBV30LE/3AKlfu
+         7jCD+ht5IptH5KaeVqo1SMxsmQOSFlAgMvk3AQ1YLEeIKW0ZulduaI4T7XKzB4Qd6fFk
+         fnRnAgTmsHEDLvHR1tv7+as3EXZOp6oe1vPykFtXNKxdAVeroFysaMnbnD/7DEzteiWC
+         eaRmmpxw51WsXWgKUhMO2FrtYRWpj4CJef8tFp1b5Ul5lf0JHTDzw0L8AHzmtg2YzePW
+         IsbxH1LSAqMgkFXbI5m40Zl+sXISrKf7VVJlPdCQo/7lO9smajm/UfDBDi6XV5E8PHIj
+         W8pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790795184; x=1791399984;
+        h=in-reply-to:references:to:from:subject:message-id:date:content-type
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=BzKBBDxOHJTVyxiBlh4UyKyRye/yrUD6DrGFd8a91qE=;
+        b=ypz0CZ6vQmbKUtNCcVVfQDj8iSMeExzAxTC6JUdDlaPtzIakF4YVJcBE7lW42RSS5l
+         IwfgDWl7km5Hc3zY6ySx3rSabML4jzCYMNRJIrhdd1KkQlkkWEbadrb2rIPGYZMVvQrs
+         HJwOtTwM+7KGHa4RUz07PpntQGwPmgAES9HhAbVh7Wmfn57w02APz5afdmIqlDxJAqx9
+         HahH+K8aNlkdSy1s0AK/XYLXBzm5NnJB8jkjjnHh1jEZplJ3oyHuyT/ixCZNiRno7x3Z
+         9raarous0OnBxg+rxIbvL9aZdQqnbzxYXy7PHo0cVDIVl+GrxPxpioADkg+NL7VLyMgp
+         fAoA==
+X-Forwarded-Encrypted: i=1; AKwUvBz7GzNMd0bz70iLacuBAqJWwelASVj/lQ/GAMtS9y3+GdpLKF+31FJRaD6EGybh+ImEOnw=@vger.kernel.org
+X-Gm-Message-State: AFuF++looOrQfpjLqYdnTEOsBVvHV0QLC+r6vrmYtd4zVsACHbNbt/aI
+	8rSMyz0k+EZFn2CAVlloJ5NQMQxARwyUI9uITA9X26GATrp43MVZazgy
+X-Gm-Gg: AYBFou2Xn/4wl/wxxxmwGCxnFU1TABU/YIAQqQq4wEcq+WLi8BbQwceQm0l6o75G8tp
+	X0+JdxlS/sAp+GP3PKgsC4FCpmaCALVDcRUoNOw7b2YzH0tntE8ErfAsbpaQIUEVU5uM/piqaxE
+	t4HAjju8vbH7OyNPPRlqr2QysouMICrZUeQ/tKh28QkQe2Rh1ftlME58OYJ0spn3Vvt0Zb7G2Gw
+	KYZZgl3qCts7b7RAKJtBayXuMuTga9/E5Al5VZ1lqAnyZwdtwbdzpChVTpMpMfv9HWxPc86mR3R
+	ayfObOkOQ3/GBDDaY+0R2eyq1MTF9wg2MYm0pMdIglxJkpv8M7QvsPj1RYC/UW9lxgAz13nhOfk
+	ztJEKL5LuFoo/a79I1Zk+V+0Qw/5On+pM7+aJlSEgORBrQYO3limlnjyMERJEUD2QFvZGyQYusM
+	Nzrgud9yT/YQ+LTB3O7oXWZ3PTdAnbaX+vjv0aNLk6k7NnO53ROd5UmISCPVV5PxFhk5H/EZz55
+	mgYKQbWd87mSwkSlYrAQ29L9gR5fCy4jJmm+jCfdu12wOw5S4kp7V39FBnoR4lIgE5l3ORfy1q3
+	R2erH+HeP38yu8o7DQ9/DWWURnh75rLOGwimV/QTeQyfSexbbwBNy6SyRx5ybVbKljY2+PnU5GW
+	ChqvI6uKwaBA6b0r6UpIrTQR+
+X-Received: by 2002:a05:600c:4714:b0:4a0:bc9:28c6 with SMTP id 5b1f17b1804b1-4a01b00f6b4mr43478265e9.34.1790795183590;
+        Wed, 30 Sep 2026 12:06:23 -0700 (PDT)
+Received: from localhost ([2001:818:c665:a700:5109:cb7:aac5:8093])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a01f9634a9sm1452345e9.2.2026.09.30.12.06.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Sep 2026 12:06:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 30 Sep 2026 20:06:21 +0100
+Message-Id: <DLSVWT1QTELK.17U19NG169AW9@gmail.com>
+Subject: Re: [PATCH RFC 0/5] Add --dry-run option to git-backfill(1)
+From: "Pablo Sabater" <pabloosabaterr@gmail.com>
+To: "Derrick Stolee" <stolee@gmail.com>, "Pablo Sabater"
+ <pabloosabaterr@gmail.com>, <git@vger.kernel.org>
+X-Mailer: aerc 0.21.0
+References: <20260930-backfill-dryrun-v1-0-1128f247ee01@gmail.com>
+ <ed1b9048-d438-4143-a224-fa0e28d4fd42@gmail.com>
+In-Reply-To: <ed1b9048-d438-4143-a224-fa0e28d4fd42@gmail.com>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
-> On 30/09/2026 15:37, Junio C Hamano wrote:
->> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> 
->> With these updates, the patches look good to me.  Unless others
->> spot problems I failed to see, let me mark the topic for 'next'.
-> I've left a couple of comments. This version is a nice improvement on 
-> the status quo, but I'd like some clarity on what the filename and line 
-> number annotations actually do, and why we selectively escape the 
-> annotations.
+On Wed Sep 30, 2026 at 7:14 PM WEST, Derrick Stolee wrote:
+> On 9/29/2026 8:21 PM, Pablo Sabater wrote:
+>> [Cc'd Derrick Stolee for his work in the backfill(1) command]
+>>=20
+>> This series adds a --dry-run option to git-backfill(1) that reports how
+>> many missing blobs would be fetched and, when the remote server
+>> supports the object-info capability, their total size:
+>>=20
+>>         $ git backfill --dry-run
+>>         After backfill, 48 blobs would be fetched (1.20 KiB).
+>>=20
+>> If the server does not advertise object-info, only the count is shown.
 >
-> Thanks
+> This is a helpful capability, but I'm not sure the size check counts
+> as a "dry run" because it involves a network call (and possibly many
+> depending on --min-batch-size).
 >
-> Phillip
+> Perhaps a different argument would be better, such as --info=3D(count|siz=
+e)
+> to make it clear what level of information you want to know in advance
+> and thus how much effort are you willing to put in to discover this.=20
 
-Thanks.
+Makes sense to have it as an --info option.
+
+>> I am not a git-backfill(1) user myself, but it seemed useful for users
+>> to know how much data a backfill would bring in before running it.
+>
+> I'm not sure that we want to add a feature based on speculation. Git
+> is a collection of "itches" that the contributors needed scratched.
+> The work is motivated by real needs.
+>
+> While I can see some benefit to curiosity, I'm not sure how much this
+> would prevent users from making their decision as to whether they
+> should run backfill or not.
+>
+>> The number of missing blobs is the sum of the number of blobs to be
+>> fetched in each batch. The object-info capability lets us ask the server
+>> for the size of each blob without downloading it, so summing them gives
+>> an estimate of the total.
+>>=20
+>> Note that this is an upper bound rather than the exact disk usage:
+>> object-info reports the uncompressed size of each object, while the
+>> objects end up stored compressed and possibly deltified in a packfile,
+>> so the space actually used on disk will usually be smaller.
+>
+> I don't think the uncompressed size is a useful metric here, as it is
+> likely astronomically larger than what will be downloaded. How will
+> this help a user make a decision?
+
+Yes, that's one of the itches I have with the object-info protocol: it
+cannot give you a reliable compressed size, and that's why only the
+total size is supported.
+
+The object-info protocol could be extended to support the
+objectsize:disk attribute, either by having the server know what we
+already have and the oids that we want, or by directly having the
+server send us the compressed size of its local copy (to avoid too much
+work).  Even with the first option, because it goes in batches, it
+would still be an estimate, just a closer one.
+
+Given that I don't use backfill, I Cc'd you because I wasn't sure if it
+was really useful, and the main motivation was the "I'm going to check
+--dry-run before backfilling" case, so it helps to decide.  If it's not
+that helpful and seems to end up as a decoration option, it might be
+better to drop it.
+
+>
+> Thanks,
+> -Stolee
+
+Thanks for taking a look,
+Pablo
+
