@@ -1,194 +1,118 @@
-Received: from mail-vs2-f12.google.com (mail-vs2-f12.google.com [74.125.227.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5204CDDC5
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 12:00:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790769655; cv=pass; b=LfOyZ6bnLRu49lhfF3yqTokgRsAZy+0u9HvSM/GYIXBhIvDvVqDnGTzQUCdESLqSDJk0TgSue4Ecs69Mhf6tKOvrRRX1A9L02EXWxkxO+k010YN/h7gVcrzGuNioZV3BWfR2XGmhGWf46OhdnA84IGIWPLx4CEKPHmcnP9IceoE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790769655; c=relaxed/simple;
-	bh=VFzQwJcAM5oLu/6UAa64Gg8DvEQIp4QUNVJCDaUYRYo=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bnKY80pugMCng+2GEmTWi7c4jUc3ayMELjAno4aE+YfK6M57Ew9C3u0uYXjtl1I2rohX7/kMYuHybOtIM2OELcL4V1mhoXstuZ1PXEEe6jA39tTGOkmd6szGREJ47tZZ8CaCXTXCTwcp182t4THqtcR8YAu+6fmGarITtfPBtaM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NYNV+wDV; arc=pass smtp.client-ip=74.125.227.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC3D4CDDC6
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 12:05:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790769937; cv=none; b=lwyj7U9onurmZuhgxTWv5rbVDHo5kg19lNYssByU8SaSwdexIP7xhEC4jjfnzkY4H1A32/V1AZpcEEQ1r9e5woM5S3f0IjPJtQ1a4wZl+FKx5Z4Q6RBiSVLn7y4Xwrhh9ZZMP+RlMsribrWKYewHCoTMHlwG7eiAZbnHsdS8q8I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790769937; c=relaxed/simple;
+	bh=JEJLVZ7eUohN7wmZFRGd9DUtRkvUmVLsz7CVwI1rT10=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lI4dnvXhgfjRZ5enYPsPc0To1VDyFXZ/C9Mdd8KaQoklqcIR1yNXy+nkaoiUmf0EZIsOxmT8SYIhPqrPNyREwojgieCakZ9rQGqWnaelC7MaTOMEFDHjHSTOLhM0hv/VKgxa8kFkDRIZTcMSWGZSXkaU04CEyhRq/e16x/j4epE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bAURgcvy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vGfLw/g/; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NYNV+wDV"
-Received: by mail-vs2-f12.google.com with SMTP id 71dfb90a1353d-5c67e5059f8so1660711e0c.1
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 05:00:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790769651; cv=none;
-        d=google.com; s=arc-20260327;
-        b=L/SDHr0j6iTTLC9HSb3S1LB4fr6bybxRaxUbKOtQ/sEUzuvEKznr+NF9K9Cg8q2hWt
-         ZZ41If7abr8U3Zg9eWLdPeRWV6bOvzefIpnDGcT7TcF9V6WH5POjJM3y4brRh7pMnHVG
-         /mHEQds4SU8MdhquHoxCsqP1Zn4yhRotRfe6PVowJOhk3dHNbpCGjKFYE4G0413EmVgH
-         z28pLWo7MFTHXtu3WX34Bw5GQktfSmNbJZqEso8dRfa9mIlBJeV0knD/9lMNce0j9b1D
-         1ZUENTlH6GvDPRBDuQVfuR02msrr0v+P0drCmPkc0z6s14vL6jVFVvFCGorYwADn5fZ+
-         OcAg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=EUpbiHeCr3zgz/pwcBKykreEzDFQ2Tif9PwS1vSQwVI=;
-        fh=BX5MrFx7i87Lq0pvJX37c/Z0HlXFPvk5is/hQPy3jw8=;
-        b=BHp4huVWRB83BpwnTMzyn8t2jOzHDPns+n3Sjfx0rN+xl4QicFb2d/6A2Y7tEAiwO6
-         wlFlzBbTL+gq7BjSQ2TYLN9Ei/FR3Vr01EvBdBFH1xRrwraaX13QMobapz2S376HA8nS
-         Mlc4uGk/nrsPXptRLlqoTAh43W0Q1PQj1eV/ZVKrBssxTnOK7sxq6leny+2k3XsGBPPD
-         RbWLgUxeYQnrL5JDa/CpxbOrBybkkb/ZjcjlD5MWZJAPNIdttB+d/y2jAbGd8XE4fB9B
-         tbUdKgzTYhKz6TQwk6RG1manpYk1Foa24q7zqeX8ZiLLCv8QzLf3DmndEocW0mu5lI5b
-         QpaA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790769651; x=1791374451; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=EUpbiHeCr3zgz/pwcBKykreEzDFQ2Tif9PwS1vSQwVI=;
-        b=NYNV+wDVUCEEoSZ3WVy1uvPhzSkX7eN9twjEZKZzgxEuLqyGmBy9USrgdQmDI/Olow
-         RdH+D+koBjwidFbJ0M7RXo5bERWrpX/Pc3GWqhFFDsP3VUtIeWM6vFqMoB1nqpzDcZcx
-         /UAN9/U4LBAnPTmmDclccer4Gjs28Dh7Md8hDa6yndg8S8ZnBFfoSh3eGjxkrym2UwZf
-         njj/g7e42D8BpG47anO+CSXCt7ABoC33hQkrUsfVnzen86vWTCbkmdtOiSHNOcJfsg1b
-         E/ZwU0IkcZepSZ7VDV/JzNnB/ufqGYaEn0LEG2mn6ibQJXQMpVFUwHg4o6AyG6QJ88fp
-         WeWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790769651; x=1791374451;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=EUpbiHeCr3zgz/pwcBKykreEzDFQ2Tif9PwS1vSQwVI=;
-        b=C7Qq2DtfoGy9NveTllMUduYAlu+UwT3xjQS9TJHOmcIZXFh3yLNfqZKiXgDFwTJ9ZO
-         5yfdPodClz1CRvGTmtA6XtKpFhdIMi8HxEgSMYEIOdz148rjBfSmJR9pjbYnL4h7Kn8P
-         2CujjdfIOma6lqoMXNAcDD/sgWjx5J3+qABlzFvmRcICi/Mr0DnaHc43eQ7JGSj6eJOr
-         K8uzWp2HZd6qrdMOAkjLFY1gHeV5PXPXDlfcaDdiQHc9pNTPobFjAliIAK2mCqmulYPd
-         uTFWE7HN4jnJeHPpZHK1twwAdnROyyvP2QXjNr6UiyDI+3psGP4u6/B+nKzKzr2l1Ys6
-         4vPA==
-X-Forwarded-Encrypted: i=1; AKwUvByAUd6wDBApHrr39TJLKABskbAenwX+zgUg1n1DNGaCP8fJi6CYP4P/4oUmsNfHeX23wnM=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLZkOjqG/zOXZ+827DFgZR9fCsBOpVpMALNFLbSyaTginHi7Hkb
-	SIOEc5yKW+T24o4ZeKRAQUOqyFmCe4+4sAj6WIp0YviMY0TNAulDpuvE2eIwyAIAZP4P81vTekr
-	WcDDz0rI6gtfjJ0uXxqw/NqElz+ZHkRk=
-X-Gm-Gg: AYBFou3wxcUJUU4qAuTprB1/yp+SZBKg0dSGHQ/KYub8UB04POsws8WgFepU6NgUVxb
-	YTZxP6n9Hr6wCZ0Z9foLjzKh/vNjCMHN6mNsdd5wHqqLWilN0J+Flu3HpjRtgsSZHVwCziY/UvJ
-	SNSIkvJll6sQaZoY1RtI5X6bfNfj57zyQTZt1hqCJyNcUSD0pJvoGRIIBCIDN10BbxKAOQeR1rT
-	0xxcKPXQKuLV2lao/cIVwx9uYeQEMMuhy4xCl60xmzRkdH4vqXnCXVV6iOBDJAE53A9JJWGpAF4
-	gBzMWJrHN5ES7Ri6grwzqDYlQ2A9oBbYXa7q3tOQW5CVxRWKh5K+B+9+fuGrua7r6/9wAcOlNAm
-	1vqjIQEQfO71OSao2lKIEJx8KL7S7f/JCwzBBT4DGztQ3XQ==
-X-Received: by 2002:a05:6102:8097:b0:79c:99ea:2c9a with SMTP id
- ada2fe7eead31-7be72ab7b3emr193464137.11.1790769650907; Wed, 30 Sep 2026
- 05:00:50 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 30 Sep 2026 05:00:48 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 30 Sep 2026 05:00:48 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260924-pks-meson-improvements-v1-1-90b7f79f1c4e@pks.im>
-References: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im> <20260924-pks-meson-improvements-v1-1-90b7f79f1c4e@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bAURgcvy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vGfLw/g/"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AFC3314001A1;
+	Wed, 30 Sep 2026 08:05:34 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Wed, 30 Sep 2026 08:05:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1790769934; x=1790856334; bh=VO2iEbKisw
+	avJeKu/IQZvvZjwEFtQDEtbJIIZjDcAuA=; b=bAURgcvyeM6WV36UyfrcHz1pZX
+	T5/CG1J3ZYTt2ELtl7zAOZJbd8RXXU83PUWxr4HPiYlzGI/ZuKS72YWiG9EhPWgP
+	cGco0BFuV/SFlFc4nmFYITvkkXiMfOA5//SjguSZw0mNlz9Gip/miqc6V6JA+M4K
+	WjCoJ7lotv1/k7RQhk7JdtvX7NJcFA8H+wzYn9P20/OtBvPMrn5g5WtQNTYG1Jqs
+	nV2oJZcJZSjE+IaHzWe79QgL++Js6bkhRMYrX03atyYtKZNQ3TwWlEHIFCnemgVD
+	jcT8QsT5OouiBSuoULZdjf+FVKWCIm8hVeyttawa5Ha/Q+xSQdUQlCmhp9yg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790769934; x=1790856334; bh=VO2iEbKiswavJeKu/IQZvvZjwEFtQDEtbJI
+	IZjDcAuA=; b=vGfLw/g/2izVkBkBPFh2GFO2/NXYGoymsVaMqa99cHz1vqYDUUS
+	e7EJItM+7K4YrMzN3Vx1A+ijkr/ed9mmstiuhbfUUZ2Fu0TsEfXAkLkRGhXz7G0H
+	TXSMDdXOEsCE0nR9yQZTPeOZQF7Z+qxdV0u+vwq/O8PwxbuQd/ml/qjQzi9n4rsX
+	BxdEg+GAkwvMZ188fYZjFmm9Xir1Y1ucC8YCHG5VUqlPI3MX5Bw+DDyNrVF0URAo
+	xGBj1cWAjupoSkkWyoo6+p6CHjGxrS6P74KxXu8IYxWdkLIcG3Gmp2OyPeSpUWJD
+	FVLmVnTa+H7WcsFRFhYwMmxJLlMGzPYXjKw==
+X-ME-Sender: <xms:Dvu8asItWGOEjBUJcC4Db80jIsTdYouQkpPKfc-JvQUzmWsDmJ2iCQ>
+    <xme:Dvu8ap_Vn8nJ3GnJRD5NQul3er8KyECnCYvr_MM363vyaf_d2Yfi8ri7jr9EeBQRE
+    neERZFJuAZW_9PokF-f4gU3Xo88i_OkKyja10HJA10fQ3TwJcz22P8>
+X-ME-Received: <xmr:Dvu8anIE0PDDbuapumIZTfArmwplaxWivam_9NOdX_45D-p9_jSqoA>
+X-ME-Proxy-Cause: dmFkZTF8KMLB2CYzVaLj2MQVgP647qUv0SfqCxSwg+eP6EECo8a/8LKW7ZKAVM0yTYxTkd
+    /yMVciE75j7bzULDO1ZlJVSC+YRWyV1DsbK7dKKOYakHVNIsG+bm0fe2vo/SPqyPOzjOmA
+    Wlvdv7dUtEOaEbLmoBBbi8m1d2p2WuAapCvUOr+ApG/4NeBKfbxQ/DiBlEEC1l/Lq+pOLP
+    RhQ2aFZI5fOq1IcaotukfWyl0cfKbGTTKBfVPq1thu0hIFr63QMxOIN1iWtEZw4rx7ahPD
+    vCZv1Hf/uneF1pboZ4UzlFCmYG3h21KKrCNZjyVrIOePH/BZrUgFZBa3UfoJ/AUuBHVKa7
+    VP95AkFDo2M408tdsVzFcuOSgHQauYyqo3MuTdShOya4Rm1dK1916XS8kCfx8GjqqlAEM9
+    XzUaFIY+YgpYfPT4geTjwZj/n9Zs1r8jXivgp1/y9WDUQdimSjMEK45SFSGyZqu1ODIekG
+    P480kJBK4KONlVIIbcge446PJMaYi9kFPt4iXV1oectL+UooFj0crRIzgZlQqP5zyqqx6t
+    13ZyeLiUG/B2rfzOLujmuM4UlStHc2LoZejP/cQWQvHr6mH9EdSNzWxwjadNUwnsUVxLlE
+    VvncF+XTx+I1dKU+yy3LohqHX+0SOPuRtsXP5dh7UozbkVTmHkOoZ0vc2E8A
+X-ME-Proxy: <xmx:Dvu8ammePrDb3JJcUy9WSDQ9ewVB39lt-z77LI_8TcbBJPtiT5yBJw>
+    <xmx:Dvu8ajPcsuvjc3lv5hzShD9xB-_cqrnao8b8MEvbICSL1DWTU2_wqw>
+    <xmx:Dvu8ak16LmEQl9Agzh1WxaLamDF_MjbWNhhcwHbVFoN8xtJI8DNUFg>
+    <xmx:Dvu8aqnTuUpmcuNmrHFBu48Rx4-CtpD0R6j6V19nUdvUdBPNk7tCiQ>
+    <xmx:Dvu8akgNzUfTYhpMc6EF9FK2X8J-DX58dc1-p10DVtY6R1HaVi26NV3x>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 30 Sep 2026 08:05:33 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id dda97a15 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 30 Sep 2026 12:05:30 +0000 (UTC)
+Date: Wed, 30 Sep 2026 14:05:28 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Josh McKinney <git-bugs@lists.joshka.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] date: add helpers to convert between "+HHMM"
+ timezones and minutes
+Message-ID: <arz7CNEhQSoDwJ77@pks.im>
+References: <20260929-pks-reftables-fix-timezone-format-v1-0-3df105a95ed1@pks.im>
+ <20260929-pks-reftables-fix-timezone-format-v1-1-3df105a95ed1@pks.im>
+ <CAOLa=ZQRDVL2Djh4du1zWGg_ABZTyzaWDYYb0PDg3EXAfpn7bA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 30 Sep 2026 05:00:48 -0700
-X-Gm-Features: AclHuK8EL3mCmXsfD1q6gI169rfnxZ85utrJiN5Mv4YXIme95YPXI9kynvmXIUw
-Message-ID: <CAOLa=ZQ0qVCS2Bi3QrDokBRfgtTFH9bqudYiFozHtmEzKgRVeA@mail.gmail.com>
-Subject: Re: [PATCH 1/7] meson: avoid recompiling HTTP sources several times
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: multipart/mixed; boundary="000000000000eae18a065cb20ce9"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQRDVL2Djh4du1zWGg_ABZTyzaWDYYb0PDg3EXAfpn7bA@mail.gmail.com>
 
---000000000000eae18a065cb20ce9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Wed, Sep 30, 2026 at 04:47:02AM -0700, Karthik Nayak wrote:
 
-Patrick Steinhardt <ps@pks.im> writes:
+One suggestion: I'd recommend trimming the mails you're responding to a
+bit more aggressively. Otherwise one is hunting for responses in files
+and hunks that are not relevant to your remarks :)
 
-> We only link curl into a subset of our subcommands. Consequently, as
-> both "http.c" and "http-walker.c" depend on curl, we don't compile these
-> into "libgit.a" but instead only link those into the commands that
-> depend on curl.
->
-> In Meson, we wire these dependencies into the target executables by
-> using the `sources:` keyword. But this has the consequence that we're
-> recompiling those multiple several times, once for every different
-> command they are linked into. In fact, each of these sources is compiled
-> seven times, which of course has an impact on compilation speed.
->
-> Fix this issue by instead linking these into a static library so that
-> they only need to be compiled once. This gives us an almost 10% speedup
-> in a clean build:
->
->   Benchmark 1: meson compile (version =3D HEAD~)
->     Time (mean =C2=B1 =CF=83):      6.781 s =C2=B1  0.052 s    [User: 100=
-.775 s, System: 22.954 s]
->     Range (min =E2=80=A6 max):    6.709 s =E2=80=A6  6.867 s    10 runs
->
->   Benchmark 2: meson compile (version =3D HEAD)
->     Time (mean =C2=B1 =CF=83):      6.274 s =C2=B1  0.021 s    [User: 91.=
-882 s, System: 22.092 s]
->     Range (min =E2=80=A6 max):    6.242 s =E2=80=A6  6.306 s    10 runs
->
->   Summary
->     meson compile (version =3D HEAD) ran
->       1.08 =C2=B1 0.01 times faster than meson compile (version =3D HEAD~=
-)
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  meson.build | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
->
-> diff --git a/meson.build b/meson.build
-> index 0a95d90d21..4fdb4c5405 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1925,10 +1925,13 @@ bin_wrappers +=3D executable('scalar',
->
->  if curl.found()
->    libgit_curl =3D declare_dependency(
-> -    sources: [
-> -      'http.c',
-> -      'http-walker.c',
-> -    ],
-> +    link_with: static_library('git-curl',
-> +      sources: [
-> +        'http.c',
-> +        'http-walker.c',
-> +      ],
-> +      dependencies: [libgit_commonmain, curl],
-> +    ),
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/date.c b/date.c
+> > index 014065b419..63ea9dbc76 100644
+> > --- a/date.c
+> > +++ b/date.c
+> > @@ -103,8 +113,7 @@ static int local_time_tzoffset(time_t t, struct tm *tm)
+> >  		offset = t_local - t;
+> >  	}
+> >  	offset /= 60; /* in minutes */
+> > -	offset = (offset % 60) + ((offset / 60) * 100);
+> > -	return offset * eastwest;
+> > +	return minutes_to_tz(offset * eastwest);
+> 
+> While mathematically it's the same, but shouldn't this have been
+> `minutes_to_tz(offset) * eastwest`?
 
-So there are 7 locations which mark `libgit_curl` as a dependency,
-earlier this would have recompiled the two sources here each time for
-each of the 7 locations.
+I guess we can. It's probably less confusing if we do it this way
+indeed.
 
-Now we build a static library and declare the dependency to be linked
-with the static library. Looks good.
-
->      dependencies: [libgit_commonmain, curl],
->    )
->
->
-> --
-> 2.56.0.rc2.329.gd58861e689.dirty
-
---000000000000eae18a065cb20ce9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 7c4f7b4638c6b9a1_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xOCtlOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMzhmQy85NjRYM1pPT0krSThqQ0hhUERLMStQSDY2UQp5amo0SkJ0TmYw
-YWpKeUV2V0I2OW85TmVVWWV1cGRaVHJWSTV0TnkrYXVwTFo1YWNqRHdUc1Q4MEl6dTZZMUh6CnRk
-c1JuOFJWTndCTndLc20rRkdrczFGbW9NK015K05DZUxtQVdaSHlLRFE5VW92dmtxL2sxcEloTmI2
-cVE3eisKQmd5MkZHRHBja2xrVWZMeWhjWWpmVmF5dDNiM1NIVmVubkE4TlV6cFBCVFRETHFxRE5X
-K2FST1lHcXFnV1kzVApSS1FWZmhPVmVWcm14ZHpZTkJPNU1GSkl6S21uSnQyYXd3a1JBS3pKVm5R
-VnV6UHZJZG9QUVJDc0sxT1M5bk9qCk9qQlBEeEFGQjV6YVU1S25tMlROVWhuNlpIdzA5SzM5M1Rz
-QnkyS3ZYZFZMS2l1L0tZN1VWUnhIV3hmcms3Z2sKazJUb3QycUp0bkpGdElvM1Jncm9adGlnM2la
-LzhBSCs2SEozMlpMNEJNcDAvWDlNaVU1K2JJZGsxTkZpOWpyNQpla2VCZU9EOUp5a25JRmROYjNW
-cE8ySldmMzN6WnU1ZFBDYW40ayt2QUxmUld3NTNkbWlTNy9pOHlzdEZ1L090ClREMlhCd1ZsVWZh
-TFUvM25FdnZjcVJGVGZYeEtlMUNQM2cvbTRIYz0KPThPN00KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000eae18a065cb20ce9--
+Patrick
