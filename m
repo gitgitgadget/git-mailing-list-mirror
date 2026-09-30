@@ -1,72 +1,72 @@
 Received: from mail-dy2-f41.google.com (mail-dy2-f41.google.com [74.125.229.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A1D31AF07
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 06:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF383B3C19
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 06:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790748589; cv=none; b=ZDkLJa6FAnwtHHi753ncIQATSAE3GkotJp8oksmRF5SQQc2WHmWHuFgFmdAxS5D8+DRTZYsLA+wkdwgz0l5HJvpvblQu45rQzt6Bz4acn8uETcthLUY9RVSIGrTMMQ9I1xsL71aav+GIc7k2r20uD4DsGgoAQn6aPB8oX0S2BBs=
+	t=1790748590; cv=none; b=lh4Djrh54xbUfz9VRh8PyduIZahpoP6ZmtCcty/J25cr4jdSR2tN+oj6ym+RBhYm4PkM3Da6fkt1cCVV2Gnm0oVWQTYcOBdqvz3hOMEq+MPJ+spTv7tSmeFr4Yu8gw+ctKv2Yvbl6UOI/IqWl/A5nMduakqwrZARBxIPDlps+Ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790748589; c=relaxed/simple;
-	bh=i0Mxt5Qy/bgzCUAHOCaIJ/4FrSC//ELBDRX7dPrcAJI=;
+	s=arc-20240116; t=1790748590; c=relaxed/simple;
+	bh=p3n/f3GfxdYWpl5bPGWtmbx5UD0mVjPgumOVmH/4gP0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=IsqcJKNpXJXM2uFCJH3n4BKksxFjZrk5yZq9WvXYWs+4SsylpG87sMkwMuULoPadOUCnfKABU67bJ83FEPMzAGV7tc219j7E7Ai7GMKi8XqrzfgyHGzzmjhyocms5wd9ERkyeMJbShkZMF+WL4F7o2ZdhkWphknKwqb0+MNlGjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L5BKYpkN; arc=none smtp.client-ip=74.125.229.41
+	 MIME-Version:To:Cc; b=N1c51qm2X9RGRysjlog0Slg5x72uah9GOeahB3Y/rqAGOUrLmQsP59YiK/xDDNmTiD9Qybh2FLNs885Jbrg7PN4EIQ9MVx5EbMBOxy+InrJvXn+iKLIbPOvXAIUrPp8P/7iT2Br9b7+kRgujagt10Y+98Z7u/0Y0iPPIlw538TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KCoOhduG; arc=none smtp.client-ip=74.125.229.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L5BKYpkN"
-Received: by mail-dy2-f41.google.com with SMTP id 5a478bee46e88-34c2a97ec17so561555eec.3
-        for <git@vger.kernel.org>; Tue, 29 Sep 2026 23:09:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KCoOhduG"
+Received: by mail-dy2-f41.google.com with SMTP id 5a478bee46e88-34cde269e1bso158750eec.0
+        for <git@vger.kernel.org>; Tue, 29 Sep 2026 23:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790748587; x=1791353387; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790748588; x=1791353388; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=zzE3eH+O+l8dCIwSNjBf4zd/qVoICk9loygGXizId2o=;
-        b=L5BKYpkNL0gf3OSLvk/AeuT/ZFfHZhPuDlYlxyPx/SEJkBC/WDq3YqxgmPSTDbKa3h
-         XNgl3h3qD864CA9VD2KBTZTZKhv8coDGoub64Oaga+y8TwPdDAetIw5BxSvhKDNDFteF
-         9o2ZH2ej/bPhpFZBxBoON5LesKiF+sHB8J32+omQUe2DJePAs4h8V8fsRaNhQj/j/LQc
-         59KWpS2DkY/HxNgPhFX8DD9xbPVJod5PElvMkrv3443N6PAb+N7eFHnf2ffSkU7YKuH6
-         N0NDOGmT+l/q0QRJBPsWReYgJGvkJKYIxO49SoHTIuTGgLHn/x0KeUaiQgA0foq0ItTZ
-         KvSw==
+        bh=ThWQx691WHHNtQGf7exUbK+V4PS+zDjZYSmM6oxiobo=;
+        b=KCoOhduGhROOMehgucw8Xo3dSzDdag6A8vb/lRXQZVXWA4HKSL0/9qmN8OwUAqr7ZG
+         FXRd1yq5Px2nfUWqGtMeoArXRWHOCjqy0bFBlNgEWjpHS7Jh9JmjO4HDm/fTFzYBRAw2
+         ts7ZPXCWOKyTlTyG+4m1dxuEhypkQTNDCuwEy8lMm+W7QG4MfJDUverL1Zgb+OxZewi1
+         TVGv4xD/AH/dZV9Pi/BhPHsudgo3e7IVwYICp+o+9bPUFNxmUhJXrF+kSb4aLvbYdpZE
+         LWsnv0gOauJerP0VSDupRMCwM3BEv83oAi9wkaStIIMCftKt1a6bbvx9brpnrrD0xKuD
+         ky+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790748587; x=1791353387;
+        d=1e100.net; s=20260707; t=1790748588; x=1791353388;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zzE3eH+O+l8dCIwSNjBf4zd/qVoICk9loygGXizId2o=;
-        b=Rd3SmSPaapOClWtMkZuRSnCEgnSaNKHeVh9ZfIUr8x5n6KwHdz0a8BQY4/MPwqCKKy
-         rFHBVgYdOdLxc1x0OMZoOAJgxbFx04oACL784SjsKM8wlrZQhm8YlmKDHVBIXr3zWGGW
-         yeYHbevFe7uS0JwuIDutXT8+0fSeahaOqrZIDE8SLPvz/RTdAimqzLjjIoGGdzyi2v7K
-         mfA8TPAyBUTdOyeUE+LxzEStx8wmyrTPjEdFt02infMJwIbrun4UcnG/yUCH+w6Ic4OZ
-         S9a3VDkuG9z9hiZyLhSwPazM0hEed54GMsr0jdgAnimob1FoU2oSZgJhAbff7ExJbdBz
-         eb/g==
-X-Gm-Message-State: AFq9FYK1tMHahdn3IKci3q8xb2DpxTLGANmODriEt++3HBPzH9x5/SMG
-	5f7SBqlOLHlot8/Fp9mIb6sLJh9nfxRPx7Z2AvSR4/K6Br8u7ySKurTXcl+7XA==
-X-Gm-Gg: AYBFou0jbqxWCmZR3FwKTgS6lbFBQN/0MpjoXV0hE1WY4k4jcr6asLkvTLpJXmvBGKi
-	espN7EDUoIZBIuB/A5Ksn2fxL836yYZw54JER0lKnLukQfjCnyA6HYizzvBv4QtwsfsEc6RZ+AF
-	qDKVv6O+67xRSj2Yt+pfliwqHKphKB9ArUwW8OIq4SBlOu75ahWYox+wXk31H10k4QZrN8kut+Z
-	hnA9Yo090bAXFaaMM7WU7bIbGA7I6fgzXiEWssQNWjf0aMrdG+kMZ30eFtCJzqv7rnMIQKiE/ND
-	zsjqNv7w9Qy7QE/fNLqUBQah1JVU/5krPgyuJKTqPHqqV/QWi7yjJr/LpjsJ4abnq8J9GRuVg4Q
-	adsOOp9VQXzuBaNZu7ZS4SXsWzC7uvX2YgrVDoga/HRlKEex2Odlgk3N6I64KCJqusj3eGk4nLb
-	Hgb7wxfj3aIVdEfI2oyNt5EtCcMzOg9I+8tLjvfFiCe+dzjZ1pCV2qGDHBENUkcZV0QXZt1NqK/
-	hA=
-X-Received: by 2002:a05:7300:c4c1:b0:34b:5ab2:e221 with SMTP id 5a478bee46e88-34cdd0aaba6mr739099eec.33.1790748586637;
-        Tue, 29 Sep 2026 23:09:46 -0700 (PDT)
+        bh=ThWQx691WHHNtQGf7exUbK+V4PS+zDjZYSmM6oxiobo=;
+        b=lbVDpYQj+SyeWrcylSfpsW5jEXkzH5MDJGu4oDsz6jcuY23g5TDjPS8J9ovY/bYgmW
+         cFmW6mOG4sYm86Y8ZiQhArtz5dn+3y0qn/JRczdOaQ4HbwGhbP+j1gkWz6M7QhkPqLBE
+         oiqnZQmBwf6emMgcUYboRVh2IE2cnNasieEJ5TZI28ssrgZtMm3rGkrpRjftA/yIlQD0
+         llnYVeWEU9VM0zOapMwQHhKJ3wS3U+QeeWA6ur5Cf01dzwTgSnMvugHxNc71Qea0cnFX
+         Ra03hFjIgZQhqL4jWNXfZwDujlGMHham7Kjsdv6i22gMcCsR7Br17oxJ6hXvThVsKBsB
+         7Naw==
+X-Gm-Message-State: AFq9FYL3qWNV3ikFXKGIl4KqIl6STeR6sB0UIxuY9GJaDIMdTm0QVBFz
+	bV5j3gMzPqLZ+Muyjn+ndwUrbRw9NZICMkNOFkzzp9SiRpDOeLquuAlTDOdvqQ==
+X-Gm-Gg: AYBFou0AThli9OfMV5ScIUl3Iq6dYlXSP44g1cHUHKq06bUE0xnPlnhhx6fkTCzCOjF
+	LT6dik+D8VOn2msqtVESmC3KX8dnTSuZHDNTK4HVSL+DZGEcShfi1jsZiGVmPxXnT2IgUiFzEHd
+	ruaGYxSuXKuzg0U4e8HrA93j3byvsijcKDvyy3gUaDBc4Gbt/JIAjzhORrZX/QCeDJBCqW8ISUg
+	IXBJsRzHiTJTWtBVg9IxSYbkdkr7DsYZb6ioabuvpXucMAsNzw7cNS2ctzEVGH6ZDOHoN2hJSBQ
+	WLwpU7P+YxR4kKaAvDM2JIQ9oP+Ec5694dI9s5w30eG+wj+Qq+WfYL0gPZYw4LfF9b91o9uirUb
+	mqb/w5ZWPrLCUyRULbHoCnjQLW42t/sD7YV8467E963Fm0+mpDVwfjqxkq3dzhgb6NKivgbZT6i
+	yXIX3Jz3fpHt0oUcjIKbcBCFDeuwtJVXTV9u6/XlvGMHUk23VSUJrB+w70ohSOwBLoVIaZGFcbq
+	l4=
+X-Received: by 2002:a05:7300:ac8a:b0:33b:ef1f:14b9 with SMTP id 5a478bee46e88-34cdc0cebb2mr807765eec.15.1790748588155;
+        Tue, 29 Sep 2026 23:09:48 -0700 (PDT)
 Received: from [127.0.0.1] ([57.151.137.184])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-34cf4a651desm1740109eec.9.2026.09.29.23.09.45
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-34cf50553f8sm2201410eec.14.2026.09.29.23.09.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2026 23:09:46 -0700 (PDT)
-Message-Id: <b6a36820ae3c50e36d71f751b7ff25b7f3275cea.1790748583.git.gitgitgadget@gmail.com>
+        Tue, 29 Sep 2026 23:09:47 -0700 (PDT)
+Message-Id: <750c3605128c268f331b1b9477ca0489ced75543.1790748583.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2419.v3.git.git.1790748583.gitgitgadget@gmail.com>
 References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
 	<pull.2419.v3.git.git.1790748583.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 30 Sep 2026 06:09:42 +0000
-Subject: [PATCH v3 1/2] ci: annotate leaks and stop a leak-sanitizer script at
- its first failure
+Date: Wed, 30 Sep 2026 06:09:43 +0000
+Subject: [PATCH v3 2/2] ci: point test failures and fixed known breakages at
+ their file and line
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,117 +84,89 @@ Cc: Ben Knoble <ben.knoble@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-A leak is only discovered once, at the end of a whole script, well
-after every test has already reported ok, and it gets no annotation at
-all, so a leak-sanitizer job's only visible failure is:
+A test failure or a fixed known breakage gets an annotation that names
+the test but carries no file or line, so there is nothing to click
+through to from the GitHub UI.
 
-    Process completed with exit code 1.
+Find the line a test is defined on by searching the script for its
+description as a fixed string, using the first match. A description
+can contain characters like `[` or `*` that a regex search would
+misread, so match it literally. Fall back to line 1 when the
+description is not found verbatim, which happens when a test builds
+its description at runtime instead of writing it out literally.
 
-Give a leak its own annotation. Point it at the test script, the exact
-line isn't known, only which script the leak turned up in, and put the
-full sanitizer report in a log group next to it, so it stays visible
-and isn't capped to a handful of lines.
-
-Once a script has one leak, it keeps running: the sanitizer log
-directory is never cleared between tests, so every later test in the
-same script sees the same leftover log entries and also reports "not
-ok", burying the one real failure in copies of itself. Stop a
-leak-sanitizer script at its first failure with --immediate instead.
-
-A failing test already gets its own annotation once its script
-finishes, but --immediate exits as soon as that test fails, before
-reaching the code that writes it. Write the annotation first, so
-turning on --immediate here does not silently drop it.
+A GitHub annotation is a single line, and a test description is always
+one line too, so only a `%` or a stray carriage return in it needs
+percent-encoding to keep the annotation intact. Escape `%` first, or a
+carriage return's own encoding would be mangled by a `%` substitution
+that ran after it.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- ci/lib.sh                            |  1 +
- t/test-lib-github-workflow-markup.sh | 16 ++++++++++++++++
- t/test-lib.sh                        |  6 +++++-
- 3 files changed, 22 insertions(+), 1 deletion(-)
+ t/test-lib-github-workflow-markup.sh | 38 +++++++++++++++++++++++-----
+ 1 file changed, 32 insertions(+), 6 deletions(-)
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index c6ccbf8c17..a89f480a78 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -382,6 +382,7 @@ linux-leaks|linux-reftable-leaks)
- 	export NO_CVS_TESTS=LetsSaveSomeTime
- 	export NO_SVN_TESTS=LetsSaveSomeTime
- 	export NO_P4_TESTS=LetsSaveSomeTime
-+	GIT_TEST_OPTS="$GIT_TEST_OPTS --immediate"
- 	;;
- linux-asan-ubsan)
- 	export SANITIZE=address,undefined
 diff --git a/t/test-lib-github-workflow-markup.sh b/t/test-lib-github-workflow-markup.sh
-index fa29a62aa3..0d54496358 100644
+index 0d54496358..66d2ccca18 100644
 --- a/t/test-lib-github-workflow-markup.sh
 +++ b/t/test-lib-github-workflow-markup.sh
-@@ -28,6 +28,11 @@ start_test_output () {
- 	github_markup_output="${GIT_TEST_TEE_OUTPUT_FILE%.out}.markup"
- 	>$github_markup_output
- 	GIT_TEST_TEE_OFFSET=0
-+	github_markup_script_name=${0##*/}
-+}
-+
-+github_annotation_ () {
-+	echo >>$github_markup_output "::$1 file=$2,line=$3::$4"
+@@ -31,6 +31,22 @@ start_test_output () {
+ 	github_markup_script_name=${0##*/}
  }
  
- # No need to override start_test_case_output
-@@ -53,4 +58,15 @@ finalize_test_case_output () {
- 	echo >>$github_markup_output "::endgroup::"
- }
- 
-+finalize_test_leak_output () {
-+	# The exact line the leak turned up on isn't known, only the script,
-+	# so point at line 1.
-+	github_annotation_ error "t/$github_markup_script_name" 1 \
-+		"memory leak logged in $this_test"
-+
-+	echo >>$github_markup_output "::group::leak: $this_test.$test_count"
-+	cat "$TEST_RESULTS_SAN_FILE".* >>$github_markup_output
-+	echo >>$github_markup_output "::endgroup::"
++github_escape_message_ () {
++	# A test description is always one line, so only % and CR need
++	# escaping here. Escape % first, or CR's own %-encoding gets mangled.
++	# \r is not a portable sed escape, so splice in the actual byte.
++	sed -e 's/%/%25/g' -e "s/$(printf '\r')/%0D/g"
 +}
 +
- # No need to override finalize_test_output
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 1f0505e412..e74a12f1dd 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -199,6 +199,7 @@ mark_option_requires_arg () {
- start_test_output () { :; }
- start_test_case_output () { :; }
- finalize_test_case_output () { :; }
-+finalize_test_leak_output () { :; }
- finalize_test_output () { :; }
- 
- parse_option () {
-@@ -822,6 +823,9 @@ test_failure_ () {
- 	say_color error "not ok $test_count - ${pfx:+$pfx }$1"
++find_test_case_line_ () {
++	# A description can contain characters like [ or * that would
++	# corrupt a regex search, so match it literally and take the first
++	# hit; -- keeps a description starting with "-" from being read as
++	# an option.
++	grep -n -F -- "$1" "$TEST_DIRECTORY/$github_markup_script_name" |
++	head -n 1 | cut -d: -f1
++}
++
+ github_annotation_ () {
+ 	echo >>$github_markup_output "::$1 file=$2,line=$3::$4"
+ }
+@@ -40,18 +56,28 @@ github_annotation_ () {
+ finalize_test_case_output () {
+ 	test_case_result=$1
  	shift
- 	printf '%s\n' "$*" | sed -e 's/^/#	/'
-+	# Write the annotation before either --immediate exit path below,
-+	# both of which call exit and would otherwise skip it.
-+	finalize_test_case_output failure "$failure_label" "$@"
- 	if test -n "$immediate"
- 	then
- 		say_color error "1..$test_count"
-@@ -835,7 +839,6 @@ test_failure_ () {
- 		check_test_results_san_file_ "$test_failure"
- 		_error_exit
- 	fi
--	finalize_test_case_output failure "$failure_label" "$@"
- }
- 
- test_known_broken_ok_ () {
-@@ -1218,6 +1221,7 @@ check_test_results_san_file_ () {
- 		return
- 	fi &&
- 	say_color >&4 error "$(cat "$TEST_RESULTS_SAN_FILE".*)" &&
-+	finalize_test_leak_output &&
- 
- 	if test "$test_failure" = 0
- 	then
++
++	case "$test_case_result" in
++	ok|broken)
++		# Exit without printing the "ok" or "broken" tests
++		return
++		;;
++	esac
++
++	test_case_line=$(find_test_case_line_ "$1")
++	test_case_description=$(printf '%s' "$1" | github_escape_message_)
++
+ 	case "$test_case_result" in
+ 	failure)
+-		echo >>$github_markup_output "::error::failed: $this_test.$test_count $1"
++		github_annotation_ error "t/$github_markup_script_name" "${test_case_line:-1}" \
++			"failed: $this_test.$test_count $test_case_description"
+ 		;;
+ 	fixed)
+-		echo >>$github_markup_output "::notice::fixed: $this_test.$test_count $1"
+-		;;
+-	ok|broken)
+-		# Exit without printing the "ok" or ""broken" tests
+-		return
++		github_annotation_ notice "t/$github_markup_script_name" "${test_case_line:-1}" \
++			"fixed: $this_test.$test_count $test_case_description"
+ 		;;
+ 	esac
++
+ 	echo >>$github_markup_output "::group::$test_case_result: $this_test.$test_count $*"
+ 	test-tool >>$github_markup_output path-utils skip-n-bytes \
+ 		"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET
 -- 
 gitgitgadget
-
