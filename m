@@ -1,120 +1,147 @@
-Received: from mail-pz2-f30.google.com (mail-pz2-f30.google.com [74.125.228.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D369E4CE681
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 21:39:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.30
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790804357; cv=pass; b=RkLE4UDGUI/Dm0Kliljs96GWull8dZmzW/3sHrdsAKBcMziP35/qY4Xni2N/tJ68VuN9TIQ9C06KgSE3kqeBI9tblPqITx6DEx0jf4y83hE9U4+CiUuopSqER18SYDD34n6mNJuWug3IrZHcEU/JxRTMGO1X8NNQClI13MGgfmM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790804357; c=relaxed/simple;
-	bh=4zOu20i6NsrWUp+M4YfSjPPUOdJd2TyMvS0gIupf+Yg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d8dD8BdAhzNHUs6iVsM66XtrL95sxjQX2vvK7fB1obYBFJdpH4Eh6ud72YkA2mVV/+++tOZ+/S5XeQGZuy/yNqWNLPVG+GhlbLVchI4ozAfQSAbd1jlpdvKQcvuCpGPW+79Q9XFa7L+01vlweb8i2C4mh+XLJ17hXiDInF5OtS0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PNoTb+Vz; arc=pass smtp.client-ip=74.125.228.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AE4403B1B
+	for <git@vger.kernel.org>; Wed, 30 Sep 2026 22:07:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790806071; cv=none; b=pHeBQgFAHJ2ZPUgsR8wyjDzt/p497B4KKPmnidQdE08v1aR9iz+MjkZH+ZXYglkYjqElRzm1gPZWfsnNUh/9V8qh2/h4Wr2fb7LXKxhxNNBxN6B4UiWKHU9HhXBJDCtANhnt3UHlbc4TUtWM7Ju6kg+YStFe0aYZlNEnemRc3GU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790806071; c=relaxed/simple;
+	bh=QFbgHmFdP+o5KaFS5xLVOaLsumqXKen4EuKsszMkeW8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VtxANLiUexXKvGjqOvU5VOxP/6NcBqEuxcVulEWPOsvsbTMU2m91G5Odr+u3hyY/KrPnS/jw80kQwNoZmGnpmZpqA03Rym+UgxoBAWc33G+lkSdR3UUi7jU0Mp0pUubMrGZFE7jhJ+wuJObT0rDCvXiJl0CouLLkX1SM5uBDIj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jYFrlLjF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bl5oMAUW; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PNoTb+Vz"
-Received: by mail-pz2-f30.google.com with SMTP id d2e1a72fcca58-880fcd3790bso2102085b3a.1
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 14:39:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790804355; cv=none;
-        d=google.com; s=arc-20260327;
-        b=TPTqaSMFEcj37EGzgfqumLbPsTtWaH3UpamYKF4qKrMt3I22sgDVpfkcLJHeAH80XK
-         1WU9vFabtcPcWnW3JYX7+ZmVQXe05OZe+ugxnO0TEvhX+WutZJoJQfbPpvtSizLPE1hl
-         NuthnYn4jAKsxbz29WNQYcLAgAs5dIN03tL9J1o9xtUfRMIKvRAXNv4NWbTh9rPDlFv7
-         8rzixB2H/4KyQ57HqHn3iuWEg8uPLJNMAc0jN0GqrHMBg+IUjEqZRrwFXFTJFmf2LpCD
-         X3UuRpv0YGA3H6w1uXjro61qaW9Uej7PsMHnqDD0CMlxWVITSKZc3ZhQLx8mif7ZwqIC
-         B6/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=4zOu20i6NsrWUp+M4YfSjPPUOdJd2TyMvS0gIupf+Yg=;
-        fh=Ox4D5aCb0Wm3NuWmIZhbrD5IUgm6JPtaEE6xbKungY4=;
-        b=GYG5oeVYXM9rJN2MAyG06p+0EMkfhnf/cIMFfL/oR18g93rjaxrlBtUK6KzduW6poV
-         csYITlGk1tTtglpDHX35oPfh9kCa8gk10ABM7hcSBi2dmHMtABTd06zkk1EEbB6vpk89
-         1gzU+oKxHCVVdcdBoIejVRAkcWXI56f3OH0eGd3sKU90+Jsg+yZqE8cNlSpXM7sihO4K
-         Rqt4M8uE8htbtNbBfHwszHpuwujS4TVw9Lv5azsgeofPxTKTDt/cci+MzadUSGSmejGc
-         a4ueFBVr2R2qpPm4ViGM9EG/LuPQKgZK+TxJn+NLyrtpew0J/VWhBvVYTveAGdvxnab/
-         GPAg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790804355; x=1791409155; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=4zOu20i6NsrWUp+M4YfSjPPUOdJd2TyMvS0gIupf+Yg=;
-        b=PNoTb+Vzw9fs3Z7i7ID8UaTcPmkKNTthiDR9XyFeXHrEMNdEFUD4vDj13xXN7Nw9XU
-         q7m0s/m2T3VzQ7ELAlimfhZ2+xRswEElkJEnJLY/LITFia/bN9lqiCvGMtXyduwgW3sF
-         9WVzN8+yQb74pDV3VoVSW+0qmldOluVXKHGKE9ZwlBJmNKwO0OiismYM181FdRX1LI+i
-         kQXJOYGqX68nm3MjJRwDbxl21gz5TMLIPyy6qAXAJGO+kNYhMuY+oJ4NlWP55NhQxKwO
-         OPS4hOfeW7PzBEQwYXNb71OLELilrmVdhge5madbyOsN3xMD88gpjSUwRxZSCu7ZpZct
-         v6kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790804355; x=1791409155;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=4zOu20i6NsrWUp+M4YfSjPPUOdJd2TyMvS0gIupf+Yg=;
-        b=e6XqKEnI+auQJFWEAEoJWiaTUaUl0X2XL0qDlgfaohmaCW375smo2I1Zp1JGAz0i0q
-         k/VQECPSZ1NdPzOmW3DKNjpgpYXdJJwrtaiuBAG94uMqv5TkylRntoR8ldJHbEgDrGcs
-         yG578xAcBnWVgCM4Fav6+hGZNQ6u/QyVirGEejMaYrvA0UWA+zN0qt0UPej6/fwGCJNF
-         wm/rzbpYPfusKSpN8RyZi3KEZq5Ojo6PVSy5qEPFZTCLhvyBcVQ0+XFe70mmZtpeMrGh
-         LZv/mC2kvbWDk5JjLOS+xNuJUREhpH4qth1j4g1bsFGxvpXMowO5APuYOCtlHiBZO5dW
-         fK2g==
-X-Gm-Message-State: AFuF++kKaOwkLth9zRqEL3prCW7cVd5neYVmFG14erXTEjsqb2rpB351
-	Q4qsZYMoNFmnPLpwNxN65rLamJSy5lHMSignWCwwcgegvPlU8TJNoTW/sPUYrQBJ+wSVwp31aiu
-	xAexRQvqvrsnoPZWoXpLlBTsFsM7vaMc=
-X-Gm-Gg: AYBFou24wIi/gnrNnh0TXmN8u9qWo9r3H9rNkfQ54ZnxnJlAqlTpZ4lxZjmVDlLXOBe
-	Uosu2nIVhj9Cj0mX1gbdv93mMGLLb00SceaEDVWtdASqiGr0H5xZ56JxZtnvtSklS0jsZ+WLXJo
-	i3D20NjHU598e5oZhZgJxSbxJijxz3iG+ooSzj1bYzPFIEY7Sh9ic1kf/CDQtxXyIPaQPBkWcky
-	BaOaTJMU9Spk84ckavHdpeL5qrgxh33WKJLUHqfIr8JgbMUYs/l8QowO2vpk4knxuOX1eMW4S28
-	ZLFHOzfffTY1GPsZ4/NnKXCKOlit8/AZbKQfswu6OFImWbr0r40cfHEVw7+c3wcXCJSyFVfOwb3
-	VlL1AI/mJTZ+s11ZClBllS8huuXdf0H0oOjnpQlE5Q62OxdyRo0qISaUIlvHd/xxFrrhWGDQuwg
-	==
-X-Received: by 2002:a05:6a20:e290:b0:3dd:85a8:4c5a with SMTP id
- adf61e73a8af0-3de9e6ef037mr2661986637.33.1790804355058; Wed, 30 Sep 2026
- 14:39:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jYFrlLjF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bl5oMAUW"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8EB6BEC029B;
+	Wed, 30 Sep 2026 18:07:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Wed, 30 Sep 2026 18:07:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1790806066;
+	 x=1790892466; bh=mLuiHzYCMdhw1T9PUXfXO+9TiM04dlO6Uq0LoaMdFFo=; b=
+	jYFrlLjFUAeo60rvQefXmxwc7hwxygDjb5UZtjssRdYv1y2J5spYAd7AuSUYzn12
+	1OLgT9pzvO1aEQxRFtQOoERkXZN+SgkWsx44oewUh3okszHV4z9d6YicIXLRXg/q
+	SZrExf/GY8oCjkcQo3vu2LG3qXwAUBAF1Fh3hQa3azsHNSST7Y/A008IviPBiLeT
+	wC5RGJNzDHO1Rw+SM9qNR6QMOWY4aBwI7UCCDkrMNVpwI4ps6SNzj88zIsh/6iEB
+	QZ3Uu8kCBTPlZ8fjnz1+Jih71sU4uxWMPdjB7D/Q8R7mgO/l9ncIWnkhA3yugsXG
+	0T2g+SJL67XBf1YF5fmsbg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790806066; x=
+	1790892466; bh=mLuiHzYCMdhw1T9PUXfXO+9TiM04dlO6Uq0LoaMdFFo=; b=B
+	l5oMAUWKJB3fz0jqJQ5JRsWJ5ycgwnLZYFXf2/FTt/z7Yj7zIwbA3hiCcpy/hITI
+	p2CyCmqhsTQnxOc5VBsW9PkHBO2/7CHxiejOTxsZVix1PtO8VdN86qeLVpLGVKUv
+	ke7NgszSjuVF7yLPPaQz3jsP01du5KdIn40m7cVZIdijGCawtDMvCPef6KcpC9If
+	BqX0g/fWl6G9UIStzI/BHb+ZXcIxq0+rUj9/74BMkzsMwgnl0+ek2cKZwPBI0kee
+	LLUs+4bgSjKWJ2VT1I/yo4XH4IEiRxpctWS+mS6dMoe6g7J6h2eX4GYulM72ZiIv
+	bC26hxVuqpNCewtjnA0XQ==
+X-ME-Sender: <xms:Moi9akolCbD1g7o7r5oDyGPUDkHnBaKEOLqlHv79pkpUiLezha2eTg>
+    <xme:Moi9ahhDytKBF425VoHJnBOsUn2GT5yOk5skfYywmOpNizUeeZLAZCAYCBgeqUPvh
+    GggZ4HXz0LD-LFbQqidFGzs6NK16vJokpkobtZGrIqQA3M5ZJprJWs>
+X-ME-Received: <xmr:Moi9ahi0mMVPKz8Hm06vV6tqC-lPMxW9cfsBgSLJk-eJ4IoqAHZo7FSIupl0wdvGKIc86KicsXiOobImxv-iI9cdrPtCN5AbNzPc>
+X-ME-Proxy-Cause: dmFkZTEh47nuw0p/2WigAatICSMk0Juewkmi4SwJum7EoLtnHfOPRAiES3mdx+vw2HEgNU
+    V7SIN1uHkWE/rLGfSOPE7rcR55uehkcjXn8EPYH0Ei7iCZ74nSQPJJRqg12uj6bvHNgwUh
+    50sdzXiV094nKTPWpYZHgnYHufeQnDiPSz4B+Q1y+stbnJsY+lnCZt5PdvZqFCQfiPKUKp
+    NjAFgJp3uF2gkchWzsaATgY9RMFvMB8W2h1QzAUxiVYN1zVqpQj8rIhcj0EPaWiGoc3E4O
+    4a+7/yTbrtmu9jZ3vFzACo10PgUS0djf/eZX9bBcaRe/bmI0jAgi8hXDvqdpUET9qB2RTZ
+    bfXy4L5jUd6zGvFb9weHgT23HBu+gEk7I4G4U7RBPA0WjMz8tHhi+PaecAlVf3ylz4hHdg
+    ZnTTomEFB6OGOZcIb5wACv2dxVxW1PBZzuz4+9TX1mHmCzOoiZ/wwncfdNlrA/B4yfvim2
+    nyaXV4jx8uNNlGeee7b7x67tDqIGVdUW+xf9nxJvq0vZfbvY2EfFl8QY8jl06JmiogOmDF
+    2QMxnFf60T896XWOMtL4hamv4vtakb6z2/OdDDuxVIyI9/X57abaV3iJYY4kPiCX3xV1Ar
+    DqLArLleRdlc8t4Bzey0UXxeiNeI1+Xp5LN2PUgR7PN/bPxUpD3DKzoPTP+Q
+X-ME-Proxy: <xmx:Moi9anhok69eoT43r3Lw0bc8C8dKD4ky2rcWPMmnw6jP4y6N4f79SA>
+    <xmx:Moi9ahIIVcX9XDT_fu7l8EaF4miZJdf4VsdbkozsaJ_VntZtD5fjkA>
+    <xmx:Moi9amH1CHse2q9cUiLBfZ-Y6lwFEluZ-cA-MYcbXPqGOo9Px1c8Qg>
+    <xmx:Moi9alTo6hiEDlT2JUvx-qezAPVSef_KCAjwYm2a_invY3-sqoIMmA>
+    <xmx:Moi9aqwQZLoQKwzIowmHuPAmWjS3sBXe9WIyrAg6Dgkr0qsWxsnZZNRy>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 30 Sep 2026 18:07:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH] object-name: accept @{p} as short for @{push}
+In-Reply-To: <CALnO6CBR0XJUJR=2e5kUM8Fk9aV5uz+QxajRpnFFVTEkFfJQ3Q@mail.gmail.com>
+	(D. Ben Knoble's message of "Wed, 30 Sep 2026 17:39:03 -0400")
+References: <pull.2431.git.git.1790797186658.gitgitgadget@gmail.com>
+	<CALnO6CBR0XJUJR=2e5kUM8Fk9aV5uz+QxajRpnFFVTEkFfJQ3Q@mail.gmail.com>
+Date: Wed, 30 Sep 2026 15:07:44 -0700
+Message-ID: <xmqqbj9e8kb3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2431.git.git.1790797186658.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2431.git.git.1790797186658.gitgitgadget@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 30 Sep 2026 17:39:03 -0400
-X-Gm-Features: AclHuK_ED1VxwYK1YV5K8sn3Vx5udugCUZ4ljyrVb2QR5UhVZifrok5CfngeKig
-Message-ID: <CALnO6CBR0XJUJR=2e5kUM8Fk9aV5uz+QxajRpnFFVTEkFfJQ3Q@mail.gmail.com>
-Subject: Re: [PATCH] object-name: accept @{p} as short for @{push}
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Sep 30, 2026 at 4:06=E2=80=AFPM Harald Nordgren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+
+> On Wed, Sep 30, 2026 at 4:06 PM Harald Nordgren via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Harald Nordgren <haraldnordgren@gmail.com>
+>>
+>> Typing "git log @{p}.." fails with "unknown revision", even though
+>> "@{u}" works as the short form of "@{upstream}". Users who reach for
+>> the one letter spelling of the push destination by analogy get an
+>> error.
+>>
+>> Accept "@{p}" wherever "@{push}" is accepted, in any case, just like
+>> "@{u}".
 >
-> From: Harald Nordgren <haraldnordgren@gmail.com>
+> I've oft wanted this. Though, I don't have a `p = push` (or `p =
+> pull`) alias set, because it could be short for either!
 >
-> Typing "git log @{p}.." fails with "unknown revision", even though
-> "@{u}" works as the short form of "@{upstream}". Users who reach for
-> the one letter spelling of the push destination by analogy get an
-> error.
->
-> Accept "@{p}" wherever "@{push}" is accepted, in any case, just like
-> "@{u}".
+> There's no "@{pull}", though, so that reasoning doesn't apply here.
 
-I've oft wanted this. Though, I don't have a `p =3D push` (or `p =3D
-pull`) alias set, because it could be short for either!
+Interesting thing to point out.  Letting @{push} squat on @{p} would
+prevent us from adding @{pull} and anything that begins with 'p' in
+the future (like 'previous', perhaps?).
 
-There's no "@{pull}", though, so that reasoning doesn't apply here.
+> I have to wonder if there's an older discussion around these notations
+> that explains why one got shorthand and the other didn't?
 
-I have to wonder if there's an older discussion around these notations
-that explains why one got shorthand and the other didn't?
+But we have lived with only two at_marks in the object name syntax,
+for upstream and for push, and nothing else for quite some time.
+So perhaps it is OK to assume that we do not have to worry about any
+new ones in the future?
 
---=20
-D. Ben Knoble
+Digging the history, @{upstream} came in 2010 and @{push} came in
+2015.
+
+@{u} existed since the inception of @{upstream}, as we can see in
+https://lore.kernel.org/git/20150331173740.GE18912@peff.net/ which
+is the first iteration of the patch set that added @{push}.  It is
+unclear what was said during the review of v2 [*] but in the review
+of v3 https://lore.kernel.org/git/20150521045233.GA26507@peff.net/,
+nobody questioned the asymmetry between @{upstream} having a
+short-and-sweet @{u} while @{push} lacked the corresponding @{p}.
+
+I do not know if that was because "push" was so short and easy to
+type anyway?
+
+
+[Footnote]
+
+ * https://public-inbox.org/git/?q=gmane:268185 would have given us
+   a good way to find what thread Peff was referring to in the cover
+   letter of v3 iteration:
+
+   https://lore.kernel.org/git/20150521044429.GA5857@peff.net/
+
+   Unfortunately, we are getting 502 back X-<.
