@@ -1,151 +1,127 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from mx-out1.startmail.com (mx-out1.startmail.com [145.131.90.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755273CAA3A
-	for <git@vger.kernel.org>; Wed, 30 Sep 2026 23:44:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2201A5B9E
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 01:24:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=145.131.90.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790811864; cv=none; b=UrgcXwcLYpMdEmCYzl6DEDZXucStpTttVRrsrh8m1+fdSN/8bbcmaj6emynjoI/UEUjCPcsSLJoqjb8CSLQQr38pr/f0cif/ZKTSswqb8etLmNOw5DysnJikppRha8Ng8N38teyuzxZflYhKSwlbySnNjS+8FApkouYJmEzilqo=
+	t=1790817875; cv=none; b=mpFvLvM93xOJrigF5IWozUf8uriycKMtf7khHb9UYI/sniDpLU5dvLimovZYzcJ47+qwwKdaqkBW0WCz4PtWg0gU8LEYThCINGtAAOL9Jz2XBb7+jBrbQY2AyZu9JU9q7+d6juZB7dSfQd40oPHPDUXHMLtt+sSwzqoNMS05Jk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790811864; c=relaxed/simple;
-	bh=wJhWgraFne8bTAtExBQXx3rKTFOHm1eVoTI2kZhuufU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D0p9mDhJw9rIevbZMt3FAZwmfk7LFepEpQvhG5BDPHGlf1nNNL2/l0m5ION2HpQJgqOSy0Jw4ZrSvMXIw8gNjoIexGrPqE8FFzQQNF3ecZtNUx8/Tr33Fq2whbwFDiVDiNr4UypCOvyUIcc1DZ5b9Ze5RsTM93tz00fmHq6DSTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=KcbgsMDq; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1790817875; c=relaxed/simple;
+	bh=dgZ8kMg74Ekll3VQzqsleSUcn1RaL3WNCsgLjTsHt64=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Mime-Version; b=N8e9TCP1ikALEzSN5xXcKytT90cZB3rzJdVm0Ai/3AUp2B/WYs91bcYTt9MaX4MEZGe2s5upqtPGkHZdFQq4lCYI2AqHO+uznisJ8naGcoQL99BUQtjb52LyBDOLga3bksklLIGoG0adizV0KALRhaRSeWNy5ve6/RCmPX4knKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grantmoyer.com; spf=pass smtp.mailfrom=grantmoyer.com; dkim=pass (2048-bit key) header.d=startmail.com header.i=@startmail.com header.b=xw60gpNM; arc=none smtp.client-ip=145.131.90.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grantmoyer.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grantmoyer.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="KcbgsMDq"
-Received: (qmail 8231 invoked by uid 106); 30 Sep 2026 23:44:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=wJhWgraFne8bTAtExBQXx3rKTFOHm1eVoTI2kZhuufU=; b=KcbgsMDqzK1/+H2fvTyhrFeztQt/Ihd9VsLGCquog9S+815UIUwsAJoZimFsxITtSTSR0KYUFxfaCIvwZAHxceEd22ufCiHzS4qu9rsplQM7hz+e7h+tb0b/nDwbstX8H81rRpX0bWK6rH2R7yP58BoYp55COu5XrnOhxJJ8ln0jwAxl8gnsVpbPA0LenZleMHKt65ho5G8uUGTluIJctRC97qJf0+vdsTGhTZFz+dbU5PRNtCN3L5jdpu376Yx/2czfxfrSJ7ojT0V6Wp36OAVt3kGwIOyEXGHkDDNW6bha0lSOMPJU5Q7lGDfzeW/MZsj52bYRgDkItrHz2EvFMw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Sep 2026 23:44:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20858 invoked by uid 111); 30 Sep 2026 23:44:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Sep 2026 19:44:24 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 30 Sep 2026 19:44:20 -0400
-From: Jeff King <peff@peff.net>
+	dkim=pass (2048-bit key) header.d=startmail.com header.i=@startmail.com header.b="xw60gpNM"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=startmail.com;
+	s=2020-07; t=1790817869;
+	bh=S6fmnSwGY4WaBXjfs559PVG4x758Jby0Uj6lkU5T+no=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 Mime-Version:Content-Transfer-Encoding:From:Subject:To:Date:Sender:
+	 Content-Type:Content-Transfer-Encoding:Content-Disposition:
+	 Mime-Version:Reply-To:In-Reply-To:References:Message-Id:Autocrypt;
+	b=xw60gpNM31I7QWDagz6YWGnphMSmc9xXkFMjzpNmjZIMAtCaBFlUYfTu+P9YUd7zm
+	 XJBSyButVxvasxgcAQVI3YFHwOL9utK+JiK+WPMaG/HLua2JtSxhGMG/JPgRfOmnPt
+	 e4wxE4KZ5Mwex1/VhPZD5/+phH8wbbNxw+j5xUdHCQox/6s+O0tXshdnwt0OBOrmVQ
+	 w9RpPywup0w+2tJNINmc18FhwTAJ/aZKTSNDf3D+sAYP75s6RNFv0NFrnwxfRWFRyq
+	 TzAZV4xHe4bDJ6hCqd0t06oF83LahbURMfLkVB98psyb/nSiHYfaO2/+CbHFvC8/lu
+	 PwT6X9xtpcnGg==
+From: Grant Moyer <dev@grantmoyer.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-	Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 7/7] merge-ll: report an error when reading external merge
- results fails
-Message-ID: <20260930234420.GG1347555@coredump.intra.peff.net>
-References: <20260930234348.GA1340390@coredump.intra.peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Grant Moyer <dev@grantmoyer.com>,
+	Michele Locati <michele@locati.it>
+Subject: [PATCH v2] filter-branch: fix commit map init from state branch
+Date: Wed, 30 Sep 2026 21:23:47 -0400
+Message-ID: <20261001012347.3998801-1-dev@grantmoyer.com>
+In-Reply-To: <20260801033127.10606-1-dev@grantmoyer.com>
+References: <20260801033127.10606-1-dev@grantmoyer.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260930234348.GA1340390@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-If we can't read an external merge driver's output, ll_ext_merge()
-leaves the result buffer as NULL but returns a status based only on the
-driver's exit code. So a driver which exits successfully can cause us to
-return LL_MERGE_OK without a result.
+The commit map dir is populated from the state branch assuming a
+"to_commit:from_commit" format, but the state branch is written with a
+"from_commit:to_commit" format, resulting in an inverted mapping when the
+map is populated from the state branch. This is especially evident when
+--prune-empty is used and creates commits which map to nothing; when the
+map dir is populated from this state on subsequent runs, git-filter-branch
+outputs many errors while trying to create files with empty names, like:
 
-Most callers of ll_merge() check for a NULL buffer in addition to an
-error return, so they're fine. But rerere's merge() checks only the
-return value, and may write out the (incorrect) empty result as the
-recorded resolution.
+> /usr/lib/git-core/git-filter-branch: line 305: ../map/: Is a directory
 
-Let's return LL_MERGE_ERROR when read_mmfile() fails, regardless of the
-driver's exit status, to make it clear that the returned value is not
-valid.
+This change corrects the population of the commit map dir to match the
+"from_commit:to_commit" format and adds/updates tests to check that the
+state branch is written correctly.
 
-Our test is a little funny; the bad case happens when reading back the
-file happens to fail. That can happen due to system errors, but of
-course we want it to be deterministic. We can make that happen by
-removing the result file. But if we configure a driver that always does
-that, we'd never record a rerere result in the first place! So we
-instead create a driver that "breaks" the read only when we instruct it
-to do so.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Grant Moyer <dev@grantmoyer.com>
+Tested-by: Michele Locati <michele@locati.it>
+Co-authored-by: Michele Locati <michele@locati.it>
 ---
- merge-ll.c        |  4 ++--
- t/t4200-rerere.sh | 51 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 53 insertions(+), 2 deletions(-)
+ git-filter-branch.sh     |  4 +++-
+ t/t7003-filter-branch.sh | 24 +++++++++++++++++++++++-
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/merge-ll.c b/merge-ll.c
-index 4d82836bc5..3b5327e7df 100644
---- a/merge-ll.c
-+++ b/merge-ll.c
-@@ -248,8 +248,8 @@ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
- 		/* died due to a signal: WTERMSIG(status) + 128 */
- 		ret = LL_MERGE_ERROR;
- 
--	/* We can ignore errors; result is left NULL/0 in that case. */
--	read_mmfile(result, temp[1]);
-+	if (read_mmfile(result, temp[1]) < 0)
-+		ret = LL_MERGE_ERROR;
- 
- 	for (i = 0; i < 3; i++)
- 		unlink_or_warn(temp[i]);
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index 7bb601e117..5be3f056f5 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -734,4 +734,55 @@ test_expect_success 'rerere does not crash with unmatched conflict marker' '
- 	test_must_fail git rebase --continue
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 24fa317aaa..9aa07be6e1 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -302,7 +302,9 @@ then
+ 		do
+ 			case "$line" in
+ 			*:*)
+-				echo "${line%:*}" >../map/"${line#*:}";;
++				from_commit=${line%:*}
++				to_commit=${line#*:}
++				echo "$to_commit" >../map/"$from_commit";;
+ 			*)
+ 				die "Unable to load state from $state_branch:filter.map";;
+ 			esac
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 86011e7b1f..cf225b0f0f 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -121,10 +121,32 @@ W=$(git rev-parse HEAD)
+ test_expect_success 'using --state-branch to skip already rewritten commits' '
+ 	test_when_finished git reset --hard $V &&
+ 	git reset --hard $V &&
+-	git filter-branch --state-branch state -f --tree-filter "touch file || :" HEAD &&
++	git filter-branch --state-branch state -f --tree-filter "exit 1" HEAD &&
+ 	test_cmp_rev $W HEAD
  '
  
-+test_expect_success 'rerere preserves conflicts when driver output is unreadable' '
-+	test_create_repo unreadable-output &&
++test_expect_success '--state-branch incremental rewrite uses the rewritten parents' '
++	git init incremental &&
 +	(
-+		cd unreadable-output &&
-+		git config rerere.enabled true &&
-+		git config rerere.autoupdate true &&
-+		write_script merge-driver <<-\EOF &&
-+		git merge-file "$@"
-+		status=$?
-+		if test -f fail-read
-+		then
-+			rm "$1" || exit 1
-+		fi
-+		exit "$status"
-+		EOF
-+		git config merge.unreadable.driver "./merge-driver %A %O %B" &&
-+		echo "file merge=unreadable" >.gitattributes &&
-+		test_commit base file base &&
-+		git checkout -b one &&
-+		test_commit --no-tag one file one &&
-+		git checkout -b two base &&
-+		test_commit --no-tag two file two &&
-+
-+		# Teach rerere a resolution while the driver works normally.
-+		test_must_fail git merge one &&
-+		echo resolved >file &&
-+		git rerere &&
-+		git merge --abort &&
-+
-+		# Recreate the conflict without replaying the resolution yet.
-+		test_must_fail git -c rerere.enabled=false merge one &&
-+
-+		# We will expect the same conflicted content after rerere fails
-+		# below.
-+		cp file expect &&
-+		git ls-files -u >expect-index &&
-+		test_file_not_empty expect-index &&
-+
-+		# Now we try rerere again, but the merge driver will cause the
-+		# read to fail.
-+		>fail-read &&
-+		git rerere 2>err &&
-+		test_grep "Could not stat" err &&
-+
-+		# And we expect the conflicted state.
-+		test_cmp expect file &&
-+		git ls-files -u >actual-index &&
-+		test_cmp expect-index actual-index
++		cd incremental &&
++		mkdir sub &&
++		test_commit first sub/file &&
++		test_commit outside root-file &&
++		git filter-branch --state-branch refs/state \
++			--prune-empty --subdirectory-filter sub -- HEAD &&
++		rewritten_first=$(git rev-parse HEAD) &&
++		git reset --hard outside &&
++		test_commit second sub/file &&
++		git filter-branch -f --state-branch refs/state \
++			--prune-empty --subdirectory-filter sub -- outside..HEAD &&
++		test_cmp_rev $rewritten_first HEAD^ &&
++		git show refs/state:filter.map >map &&
++		echo "$(git rev-parse second):$(git rev-parse HEAD)" >expect &&
++		grep "^$(git rev-parse second):" map >actual &&
++		test_cmp expect actual
 +	)
 +'
 +
- test_done
+ git tag oldD HEAD~4
+ test_expect_success 'rewrite one branch, keeping a side branch' '
+ 	git branch modD oldD &&
 -- 
-2.56.0.354.gb6b32d5be5
+2.55.0
+
