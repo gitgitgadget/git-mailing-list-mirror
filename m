@@ -1,80 +1,80 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808F137266D
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 05:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3562443F090
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 05:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790833159; cv=none; b=BZo/kYnJr8WKAMVGIABElrStbOUCd4cpLK2c/bz9IEBcua1bWRdliBQOVw+7ktktpS0tTqUcf4qurzOQtkw8LELRwJ4BDBhG6QZKq5MuOCwFmNeRQCQdXN0nG/nA8i/u0zjuvhooXTeMXmUFduNe87TTE0bycXLGz5bAzd9v6R4=
+	t=1790833165; cv=none; b=HNx1yiz7An4YTHs3x0Uk4nsEJoIrjmSyveB2DbCSZ46cJ1HQi4yMA2RsdN1DKO8JXZCIoVAEQlzpczuplcj1HOVQqOa4zXE7zWovo6jzJw2yk3ZQ2OqpjbWPlIHNWVPiOkhEvActsmWWKi9kJVtN19wy+85zO8paek3nqydJjo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790833159; c=relaxed/simple;
-	bh=62U+nri5FQUCGefkD3j96fZlWRHc3kDNNHvRZ2xWAOw=;
+	s=arc-20240116; t=1790833165; c=relaxed/simple;
+	bh=e33QVOBdCxDlhzAFb8MzOgY5khm2Ld1ijisqK6UzpNQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rHuEO0csjS9Zh6mVDEVvM6/ZMT/wm/0xIQC4wEZWCDXtsL/2IoP8ioG+ldnYAY56fcEP2CBCX135qlkNHX2Hdh6Z31shohfWCIY6EIPXq9oFLE8HPSAdTjufzuZwQ0GaY86MbDwnsZKqKUwY+Q4nUl8Bzn2ha3jr2KhFsfP6HWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tZg1wYub; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P0vBSXD9; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=mcXM5Uh3w3zm6NazSZF7dM+bdpj/FzFDoJzbujhbFds2KC+O3/v/It3zJ9sPThVumrFoi/kCm0/UtueK+nBX2lhIlyT80nBHn9/0osLA0NrC8CtPGF80glO7bpd5L5Uj7N7UtH5sGkVSoO9MogGRX9EuscC35a1LB7sBk3/G2z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Zz9Ea5ix; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s2jtrAdy; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tZg1wYub";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P0vBSXD9"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5BA3814000F4;
-	Thu,  1 Oct 2026 01:39:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Zz9Ea5ix";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s2jtrAdy"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5C0C714000E1;
+	Thu,  1 Oct 2026 01:39:18 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Thu, 01 Oct 2026 01:39:13 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 01 Oct 2026 01:39:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790833153;
-	 x=1790919553; bh=fS6t3MBkmNxbqeTXfAh+Jwd1Ova8cm4BBKju73AxVuQ=; b=
-	tZg1wYubBghdZY83NTdpd6wboJUP/C33RzlPS1bL/VQKfdxOfnbOnWAyblTpORg9
-	7o3AG6z7BGA1Ko8gVSEq0nMSFV1n4nx0r0r30P0prpr/Wibph1w6mv1X0wzXjDQC
-	CQXc9AytkUEnVwklQd54sa9YgtfNW86WYm6rUh8oPv+BKyHcdaUNnSgwa6u2brjr
-	2LaJocepHSDi5VNGX82yL+zE4fu/CXkENmbvBAeCHkgZVwuu6zPjH6D1LzOJxcCp
-	f4mnoSb9Pq0lnvAvdb055aKXP1F1rK0LH9QUeGJueAAGlrhJrO3qTaqeeZjnCdll
-	3RM6IEDIQ3PsDXiLJn3fXA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790833158;
+	 x=1790919558; bh=2U6kTqnDZHW+75AVMO8adNH8Rx5tdi3eFPiP5BLYLfU=; b=
+	Zz9Ea5ixMdiDfZ81uOkpwnjsoQZRtfLONAQbnJoI0GkiTalaHOnn18OZE7YYTEj8
+	IJYc3C7SR78xUL0spudAlR0kNHg6qQv+Wt8j/IPT/bTk1IVNSsdxDeWNMz4CmR+0
+	5l4uwP2Ke9SHKn74/SImk/+e11OMo11xgdUAUl/XwB0GRYZ7dRewJf9P6W5DGjdU
+	qMW29CHKjV7ZLUg/3ZOx/u24KIaEaHbC1IJ+dl0kU8fmhaGGOW2Eeex8Fc/JNJ4x
+	wuOyl965GN5BpNqYzjbl5KTg90WrB/50SsTrHAwnoAzpJkLPIdVU5s3BsFSAax6u
+	V4+qecAHgSFAf5tjUi4t3w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790833153; x=
-	1790919553; bh=fS6t3MBkmNxbqeTXfAh+Jwd1Ova8cm4BBKju73AxVuQ=; b=P
-	0vBSXD9m0vLtO/iMSRg/XoJN5dVAA42ZzBiptB/rlqR3d4Pir6WHRFWRU+TeUK0K
-	6YWi0utqDW8Vnn6PyrMM0520rM3U/HWNhCeHtL7ax0hO3QGQl2hrX7mhkCmwvJv8
-	qXpHXUc5Bx6FUHeEJMyuCjW1Hlp1t+3+xcCjcAd3hDQq1arzmpao0vlFVJZcGNO7
-	zF88gi9W99X2xPUv6/kn2GohAXLMY6IiqlRoqAVF6UQid3mxLpUSZjxEX2ufksns
-	hdVYKf4GEBw4WMbqENEEY4vFnvVj+HZVTW8uLnvXTZvTZWajRrhSwC/NRakr9GwV
-	iDHiVTQDgKO5vzejH2nrg==
-X-ME-Sender: <xms:AfK9ahy71cqEvA7cI8TZLIIL0nf4Lxy-7_Knxjp7ye612ae1q_gAPQ>
-    <xme:AfK9avHgCwKQLiDiDswrOvJwA9dWiELoQ36ZwEU309ZXGYxU3p53v71sfUt1gL8Wd
-    XqBqDgJR-UsIs2Zi3tpwmrSlh6dWFqDRDQDH8D2t68FCdluDRnKlng>
-X-ME-Received: <xmr:AfK9alyClJROlGkDirFmI8UxuQzMQMPu4u83k-xbJLdKWcCWQT0-AjLtIeqmC8e3prTs9Q>
-X-ME-Proxy-Cause: dmFkZTG0u7o+ksaeHQI+bcVRTOo6KrX3Faeon9Sz/aWNKAGGO72QL80JZ6aJgQvzrGZ3hu
-    wwZY/LOnOyrSsS2xNVTYVQR+RUBiGpybY33SKWuVX4WQbF35/yCUu6bxPUK25I/lUOBMF1
-    WNcWwinBZmXg7U1lN84mlQhzIBzyDULjT/AEKJlX1KxkmYSUIIZ5AF2IlcTCsr7ocSJ+wb
-    E9jlLGgpv5WK73E7aOx9nl190NJEcreVJvgz7oWSD3AkmP9MgWe0oSP8PD8Gs8L18kG0fN
-    bmRfN0PTg/92z9JCjtQu8TuCv/LioVDZeBFvTxOCCjNmitDxx7qkaR/q37ikj41IPDX7iX
-    S1ERj/puoxIJuvkshTW6IwN4dHF8LUHvA77HipZ8X85Z0BLnNAjtRtThgCgSa4o5hW/d0t
-    Zg3E/EiT7wfA9Z81+ep8IgAhT1BUklKuq4niUWooMwRj+gLyTGPV7bvIr+mZUeV6Et4bti
-    7Eb5oFAidmqt0FQESY4btdLRL6Yr3ix2ynKtgD66752QECjIWxdyZE9lHr+jRZ/Ne6G1G1
-    0qDmESSDonafnVu4rmKiY6v7znAC2Y74QHYRiBy37iDl+i9l2e9KEFngCsEW+RrCCuW+np
-    VI8TPbDt7Y+LwhyVjjxmNfKuZJEH6y3EYlqHvSglX4BI1MTa12PhxsmszIOg
-X-ME-Proxy: <xmx:AfK9agt3wPPJy_otcFrf4K93M-rmpXyOVHPzeA-sHvlJBZBV8RWZbA>
-    <xmx:AfK9ai2l9YO1Bc_Z7B83iotsrDhalDaswj8SbTTouOoIVVdnhxH0lA>
-    <xmx:AfK9ar-opkiYSI_ntNiTWDzPgtbKXPFMa22zdMbVowC-vVZtBVvgXw>
-    <xmx:AfK9ajMGuH8CBdLNLvKhI0cO4prsKyZ5Qe8BwZhEjOCamkljCyr4NQ>
-    <xmx:AfK9arJTuNrEjRSGjyLHfQn4wyi-pdG3v5bwwxUUj5COwwGG4NOj1MTS>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790833158; x=
+	1790919558; bh=2U6kTqnDZHW+75AVMO8adNH8Rx5tdi3eFPiP5BLYLfU=; b=s
+	2jtrAdyjWEkxiLTTuVaMnDfZ9ayzYMI6S/lCrMz9oGpqtTpDZD6icCAQQOfAY/3k
+	07gINtnyU6jpX8psIV29Ki4nCHk1NG9aPatEof9/fE8tMXaUqUhT961hRVOldg+T
+	Q9DEvMQmHCVz6yRMxrCbNc3X+80s/o3HLa1BuD3wF13sBUKVzpfCpejmJ7K9HgZU
+	VHB/L9XmHfs5q46+fZLzm2YJJQF2ih1p4alGRS0LQx6PbDSs3vUZNxFinhpAX80w
+	X1XhQ9Gz5KBuZKv1CbzVxKxeoBN/S0nJPqx4F881uxqhH9FVsdjqOnwlcuSxOqSF
+	L+6gabTzUIbzrRKV4kf+w==
+X-ME-Sender: <xms:BvK9ammh9ZUecQaqxsLpQCjsrfPJ3rrPvrGME4REGrjSMlkp8fmiTQ>
+    <xme:BvK9arodhjx13WlLcn1hst318RTNLlPcMgj_U7ERH34M0u1upbFLVOCkSTs8FjxVe
+    KbXYX2xf6vd2ZRk-nLX9W4k945x0d-x8PrrNOJuUr5-VMq4eCtK-jc>
+X-ME-Received: <xmr:BvK9avH5iKR5uZMd2dL6_sM90dokYJlWUI2Y98RdrQvBcO-qNP1VqjTFTjfVZVE0UIpdzA>
+X-ME-Proxy-Cause: dmFkZTGIkKVdMarSAY4xW6yDam7TpuznlbXDDdynjc5Pvdxkql0eaW81iqkeTIDr57n18D
+    Qf+hY8KXhZFfu1rkTLS8gEkLFaYXtoNacbrSzp858oJpmLKA/U4F9KEXt5Bbhkwtj/OGfx
+    gEm1opbaTXksonW6Oma261aZyGGsyHPFcGq41BoM2GiU2AhW7LTGsgTnJmrjin1yXa0gnD
+    n/iVbiEkqn7rqU6WJIMYpRhh0tFIhyjtP8gKihOqWVIQvcW8h+8Ek6UF1POoE0kbNvAi3g
+    RhSccRA5Kvl8TbxfUp1tN3eF0zUJ7poEtJEGLbsSfl+G8OPWA9Q8BH50r4okzyNklXDeRP
+    5v+z4Yci+st0ajReiSzJpw++b91Vs8H/WoDWDzOkIsKkFACz9EoX5ASMao36qrcl9zkkVB
+    85LkP3lKpUYNEcUVS6SuSdgmo8qV4EUQx1sjzq3ySfTZ7YJZUXaxotn1XOPJyj2USvVNk1
+    c8owPuLATaWyTPRG4v6AHk3bb2b9WCQHS5xPwBvC/QlmCMUDBfRye5fp+qcBnp6qSYqVHM
+    O3gV7LjhYtyKWRWwquMF1KxuR41R6x0BEBQ5OqT/1QDgMsfZLQ14jmec8GH3PjuKNgo9NR
+    0sCOTTQs90JxGvEchP9q794e5cwvvQ9ncgCWa43TH1yhOjuw7lv/pp1P9ygg
+X-ME-Proxy: <xmx:BvK9anw_o9WaDgu6Dfjb6p6r-WA_PwJxNqZuSvaD7Fb1HViyVvW7gw>
+    <xmx:BvK9akqDxjf3Lu2lGD0ZHN3_Lp-we7KLH2xakIa1kRVIgVFQVh80gg>
+    <xmx:BvK9ahhJ32hVyrVg8YZgTc2R1YT7bIVEZJNzt9MtoDlCu70XmGF6aA>
+    <xmx:BvK9ahhC8Bf63q2DVj6Yvv5cGnSyU39ueQU7lRFppCdLbcKcL8G-NQ>
+    <xmx:BvK9aoc3YX0ivXPKA66s3maScz-B0W50oSwbCLV9_mzviFt0P9zIRSeY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 Oct 2026 01:39:12 -0400 (EDT)
+ 1 Oct 2026 01:39:17 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id be0e470e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 1 Oct 2026 05:39:11 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 92641793 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 1 Oct 2026 05:39:16 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 01 Oct 2026 07:39:00 +0200
-Subject: [PATCH v2 1/3] date: add helpers to convert between "+HHMM"
- timezones and minutes
+Date: Thu, 01 Oct 2026 07:39:02 +0200
+Subject: [PATCH v2 3/3] refs/reftable: fix on-disk representation of reflog
+ timezones
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,8 +82,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261001-pks-reftables-fix-timezone-format-v2-1-a4fd1f7cd21a@pks.im>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261001-pks-reftables-fix-timezone-format-v2-3-a4fd1f7cd21a@pks.im>
 References: <20261001-pks-reftables-fix-timezone-format-v2-0-a4fd1f7cd21a@pks.im>
 In-Reply-To: <20261001-pks-reftables-fix-timezone-format-v2-0-a4fd1f7cd21a@pks.im>
 To: git@vger.kernel.org
@@ -91,165 +91,171 @@ Cc: Josh McKinney <git-bugs@lists.joshka.net>,
  Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
 
-The timezones that we store in commits as part of the identity
-information are encoded in "[+-]HHMM", for example "-0700" for UTC-7.
-Internally we typically pass around this timezone either as string or as
-a parsed integer (-700).
+When writing reflog entries to disk we also record authorship
+information for the reflog. Besides the author name and mail address,
+it also contains the date and timezone at which the record has been
+created.
 
-Some sites want to convert between this format and minutes or vice
-versa, and that conversion is performed ad-hoc. We're about to introduce
-another site though that wants to have access to this logic, and having
-it cluttered across our codebase is a bit awkward.
+The timezone information is typically encoded in the "[+-]HHMM" format,
+and we often pass it around as parsed integer. For example, the timezone
+"-0700" would be passed around as -700. And this is also the value that
+we eventually store in the reftable on disk.
 
-Introduce two new helpers `tz_to_minutes()` and `minutes_to_tz()` that
-perform the conversion for us and convert call sites to use them.
+But the specification in "Documentation/technical/reftable.adoc" notes
+that the timezone is a "2-byte timezone offset in minutes (signed)". So
+instead of storing -700 in the above example, we have to first convert
+that value into minutes and then store -420. We don't though, so we have
+a mismatch between specification and implementation.
 
-Note that we used to perform a dance in `gm_time_t()` where we first
-convert `tz` into a positive value, then calculate the minutes, and
-finally turn the minutes into a negative value again. This dance is
-performed because it is implementation-defined in C89 whether the
-division on negative values truncates towards zero or not [1]:
+Ideally, we'd just adapt the specification to match the implementation.
+But that's easier said than done, because the specification is 11 years
+old by now and reftables have already been implemented by JGit for a
+long time. So if we now changed the specification, those libraries would
+have to make a backwards-incompatible change.
 
-  If either operand is negative, whether the result of the / operator is
-  the largest integer less than the algebraic quotient or the smallest
-  integer greater than the algebraic quotient is implementation-defined,
-  as is the sign of the result of the % operator.
+Another alternative would be to bump the reftable format version, but
+that feels suboptimal, too. Other libraries would all have to adapt, and
+it wouldn't really help us to fix the discrepancy between alternative
+implementations and our implementation as older versions would still be
+misinterpreted.
 
-So under C89, `-130 / 100` could legitimately result in -1 or -2, and
-`-130 % 100` could result in either -30 or 70. For us though, the result
-that we want is the first one (-1 and -30), which is called truncation
-toward zero.
+The only viable option seems to be that we simply treat this as a bug
+and fix it. This will of course make us misinterpret older reftables
+that already exist on disk:
 
-This part of the C language has changed in C99, where this edge case is
-now well-defined to always truncate towards zero [2]:
+  ┌───────┬───────────────┬─────────────────┬────────────┐
+  │ tz    │ HHMM encoding │ correct minutes │ divergence │
+  ├───────┼───────────────┼─────────────────┼────────────┤
+  │ +1400 │ 1400          │ 840             │ 560        │
+  ├───────┼───────────────┼─────────────────┼────────────┤
+  │ -1200 │ -1200         │ -720            │ 480        │
+  ├───────┼───────────────┼─────────────────┼────────────┤
+  │ +0530 │ 530           │ 330             │ 200        │
+  ├───────┼───────────────┼─────────────────┼────────────┤
+  │ +0000 │ 0             │ 0               │ 0          │
+  └───────┴───────────────┴─────────────────┴────────────┘
 
-  When integers are divided, the result of the / operator is the
-  algebraic quotient with any fractional part discarded.90) If the
-  quotient a/b is representable, the expression (a/b)*b + a%b shall
-  equal a.
+But this divergence ultimately doesn't matter much, as Git only uses the
+timezone of reflog entries for display purposes anyway. We don't take
+the timezone into account when parsing "HEAD@{1.hour.ago}" syntax, and
+`should_expire_reflog_ent()` doesn't use it either to decide whether
+reflog entries should be pruned.
 
-  90) This is often called ''truncation toward zero''.
+In summary, the fallout from this change is quite contained. Adapt the
+reftable backend accordingly and simply reinterpret the timezones with
+the specified meaning.
 
-So in theory it's unlikely that we still need this logic. In practice
-though it feels safer to just retain it as we don't require a fully
-C99-compliant compiler in Git.
+Add a test to verify that we properly encode the timezone as offset in
+minutes. Adapt the test helper accordingly to no longer zero-pad the
+offset with "%04d", as that can be easily misinterpreted as the "HHMM"
+encoding.
 
-[1]: https://port70.net/~nsz/c/c89/c89-draft.html#3.3.5
-[2]: https://port70.net/~nsz/c/c99/n1256.html#6.5.5p6
-
+Reported-by: Josh McKinney <git-bugs@lists.joshka.net>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- apply.c  |  3 ++-
- date.c   | 25 +++++++++++++++++--------
- date.h   |  9 +++++++++
- strbuf.c |  3 +--
- 4 files changed, 29 insertions(+), 11 deletions(-)
+ refs/reftable-backend.c    |  7 ++++---
+ t/helper/test-reftable.c   |  2 +-
+ t/t0610-reftable-basics.sh | 35 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 40 insertions(+), 4 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index f00b7ba4d3..367271b8ac 100644
---- a/apply.c
-+++ b/apply.c
-@@ -14,6 +14,7 @@
- #include "abspath.h"
- #include "base85.h"
- #include "config.h"
-+#include "date.h"
- #include "odb.h"
- #include "delta.h"
- #include "diff.h"
-@@ -851,7 +852,7 @@ static int has_epoch_timestamp(const char *nameline)
- 	if (*colon == ':')
- 		zoneoffset = zoneoffset * 60 + strtol(colon + 1, NULL, 10);
- 	else
--		zoneoffset = (zoneoffset / 100) * 60 + (zoneoffset % 100);
-+		zoneoffset = tz_to_minutes(zoneoffset);
- 	if (timestamp[m[3].rm_so] == '-')
- 		zoneoffset = -zoneoffset;
- 
-diff --git a/date.c b/date.c
-index 014065b419..c50f45d310 100644
---- a/date.c
-+++ b/date.c
-@@ -45,13 +45,23 @@ static const char *weekday_names[] = {
- 	"Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"
- };
- 
--static time_t gm_time_t(timestamp_t time, int tz)
-+int tz_to_minutes(int tz)
- {
--	int minutes;
-+	int minutes = tz < 0 ? -tz : tz;
-+	minutes = (minutes / 100) * 60 + (minutes % 100);
-+	return tz < 0 ? -minutes : minutes;
-+}
- 
--	minutes = tz < 0 ? -tz : tz;
--	minutes = (minutes / 100)*60 + (minutes % 100);
--	minutes = tz < 0 ? -minutes : minutes;
-+int minutes_to_tz(int minutes)
-+{
-+	int tz = minutes < 0 ? -minutes : minutes;
-+	tz = (tz / 60) * 100 + (tz % 60);
-+	return minutes < 0 ? -tz : tz;
-+}
-+
-+static time_t gm_time_t(timestamp_t time, int tz)
-+{
-+	int minutes = tz_to_minutes(tz);
- 
- 	if (minutes > 0) {
- 		if (unsigned_add_overflows(time, minutes * 60))
-@@ -103,8 +113,7 @@ static int local_time_tzoffset(time_t t, struct tm *tm)
- 		offset = t_local - t;
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 10db03991e..d0de066355 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -2,6 +2,7 @@
+ #include "../abspath.h"
+ #include "../chdir-notify.h"
+ #include "../config.h"
++#include "../date.h"
+ #include "../dir.h"
+ #include "../environment.h"
+ #include "../fsck.h"
+@@ -317,7 +318,7 @@ static void fill_reftable_log_record(struct reftable_log_record *log, const stru
+ 		tz_begin++;
  	}
- 	offset /= 60; /* in minutes */
--	offset = (offset % 60) + ((offset / 60) * 100);
--	return offset * eastwest;
-+	return minutes_to_tz(offset)  * eastwest;
+ 
+-	log->value.update.tz_offset = sign * atoi(tz_begin);
++	log->value.update.tz_offset = tz_to_minutes(sign * atoi(tz_begin));
  }
  
- /*
-@@ -862,7 +871,7 @@ static int match_object_header_date(const char *date, timestamp_t *timestamp, in
- 	ofs = strtol(date, &end, 10);
- 	if ((*end != '\0' && (*end != '\n')) || end != date + 4)
- 		return -1;
--	ofs = (ofs / 100) * 60 + (ofs % 100);
-+	ofs = tz_to_minutes(ofs);
- 	if (date[-1] == '-')
- 		ofs = -ofs;
- 	*timestamp = stamp;
-diff --git a/date.h b/date.h
-index 0747864fd7..816df5b833 100644
---- a/date.h
-+++ b/date.h
-@@ -70,4 +70,13 @@ void datestamp(struct strbuf *out);
- timestamp_t approxidate_careful(const char *, int *);
- int date_overflows(timestamp_t date);
- time_t tm_to_time_t(const struct tm *tm);
+ static int reftable_be_config(const char *var, const char *value,
+@@ -2186,7 +2187,7 @@ static int yield_log_record(struct reftable_ref_store *refs,
+ 	full_committer = fmt_ident(log->value.update.name, log->value.update.email,
+ 				   WANT_COMMITTER_IDENT, NULL, IDENT_NO_DATE);
+ 	return fn(log->refname, &old_oid, &new_oid, full_committer,
+-		  log->value.update.time, log->value.update.tz_offset,
++		  log->value.update.time, minutes_to_tz(log->value.update.tz_offset),
+ 		  log->value.update.message, cb_data);
+ }
+ 
+@@ -2690,7 +2691,7 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
+ 
+ 		if (should_prune_fn(&old_oid, &new_oid, logs[i].value.update.email,
+ 				    (timestamp_t)logs[i].value.update.time,
+-				    logs[i].value.update.tz_offset,
++				    minutes_to_tz(logs[i].value.update.tz_offset),
+ 				    logs[i].value.update.message,
+ 				    policy_cb_data)) {
+ 			dest->value_type = REFTABLE_LOG_DELETION;
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index 57758936b0..d9f2ca1d0e 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -163,7 +163,7 @@ static int dump_table(struct reftable_merged_table *mt)
+ 			       log.update_index);
+ 			break;
+ 		case REFTABLE_LOG_UPDATE:
+-			printf("log{%s(%" PRIu64 ") %s <%s> %" PRIu64 " %04d\n",
++			printf("log{%s(%" PRIu64 ") %s <%s> %" PRIu64 " %d\n",
+ 			       log.refname, log.update_index,
+ 			       log.value.update.name ? log.value.update.name : "",
+ 			       log.value.update.email ? log.value.update.email : "",
+diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+index 35e98b43db..2253705a19 100755
+--- a/t/t0610-reftable-basics.sh
++++ b/t/t0610-reftable-basics.sh
+@@ -837,6 +837,41 @@ test_expect_success 'reflog: renaming branch writes reflog entry' '
+ 	)
+ '
+ 
++test_expect_success 'reflog: timezone offset is stored in minutes' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		GIT_COMMITTER_DATE="1234567890 -1200" git commit --allow-empty -m min &&
++		GIT_COMMITTER_DATE="1234567890 +0530" git commit --allow-empty -m east &&
++		GIT_COMMITTER_DATE="1234567890 -0830" git commit --allow-empty -m west &&
++		GIT_COMMITTER_DATE="1234567890 +1400" git commit --allow-empty -m max &&
 +
-+/**
-+ * Convert between the "[+-]HHMM" timezone format and minutes. This format is
-+ * used for example as part of commit headers and reflogs. For example, the
-+ * timezone -0100 is converted to -60 minutes.
-+ */
-+int tz_to_minutes(int tz);
-+int minutes_to_tz(int minutes);
++		# The reftable format specifies the timezone as the offset from
++		# UTC in minutes, whereas Git uses the parsed form of "+HHMM"
++		# internally. Verify that we do the conversion when writing.
++		for table in .git/reftable/*.ref
++		do
++			test-tool dump-reftable -t "$table" || return 1
++		done >dump &&
++		sed -n "s/^log{refs\/heads\/main([0-9]*) .* 1234567890 //p" dump >actual &&
++		cat >expect <<-\EOF &&
++		840
++		-510
++		330
++		-720
++		EOF
++		test_cmp expect actual &&
 +
- #endif
-diff --git a/strbuf.c b/strbuf.c
-index 44955669e8..c3baa47b3f 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -1023,8 +1023,7 @@ void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
- 		else if (skip_prefix(fmt, "s", &fmt))
- 			strbuf_addf(&munged_fmt, "%"PRItime,
- 				    (timestamp_t)tm_to_time_t(tm) -
--				    3600 * (tz_offset / 100) -
--				    60 * (tz_offset % 100));
-+				    60 * tz_to_minutes(tz_offset));
- 		else if (skip_prefix(fmt, "z", &fmt))
- 			strbuf_addf(&munged_fmt, "%+05d", tz_offset);
- 		else if (suppress_tz_name && skip_prefix(fmt, "Z", &fmt))
++		# And verify that we convert back when reading.
++		test-tool ref-store main for-each-reflog-ent refs/heads/main >entries &&
++		test_grep "1234567890 -1200	commit (initial): min" entries &&
++		test_grep "1234567890 +0530	commit: east" entries &&
++		test_grep "1234567890 -0830	commit: west" entries &&
++		test_grep "1234567890 +1400	commit: max" entries
++	)
++'
++
+ test_expect_success 'reflog: can store empty logs' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
 
 -- 
 2.56.0.353.g0856645cf6.dirty
