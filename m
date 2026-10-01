@@ -1,228 +1,200 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41053E316E
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 16:50:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DEE52379B
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 17:03:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790873414; cv=none; b=iutyU+6WKy7IfnaeUaaWQuczZkcJ2iWe+JMmcsrtpqMH5Duj6CLHN6sgQ/ZB2T6K0MWIXckpme411N/WY2d4EK6tK2yp5DbnRkCugvTj8+Esfu8k4x7WLm8tW47POCOHiusEm5gUiyGWOaVxUFJDtnp1sPpDJi/qOVJuiLuGNJM=
+	t=1790874211; cv=none; b=EKkUB7gjSYpFR/U9AM4MVWazI/G6iLrPIdFwqqqSTpGSWsm+YiA8OcbyMQ+Y5KCClWoB+H2n2SQZR4tG8xEay6WGqRT9zH1nEDqeaGCpAItTe6Lj85SLICSjzazWOOFq63pIBLhH8p/5umOFmQPg0pevUEjPzS7GeiZIG6ZtEbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790873414; c=relaxed/simple;
-	bh=dT+wz77LtvzfRScbKIfCMFxO7NiDdHDgFPkphhEpYq0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OTlqgItjpOvWD5LuDWkQfEvlxi9ZHUakTpyz6sZUBvtEMcLfTWrYw2f/Dxewd/JLDCBFfTFgTpw6w16BRnzgQ+Wv4hhjPwmcL1UqDReE4uXejg1EWJOJ+mmwjhvqtDSb3mj7X2HoLtH9lVqC08cRP7Oh0Q32ss+WIokGYeEuJ6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=elOhYWe2; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790874211; c=relaxed/simple;
+	bh=ERPeRmpaQivSyxwhc2TM2xl2BTzf9s2GAAfEQwmGfag=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AHUSZAVgf7upe3SBxttJEtSv9bpOPvBQQr34tdUwmxzuc6aGe9JDURBYHVVIN85GR67bkcmgdCwkh3yB9DFh6NKb4huzabjKXwPJxCmydAoigY1KOsi45N9RKi77AoO0rsWpcfaNgGwuWaACW7e502pQ2v6oInHtJu+PgJ8LGTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aPpcp3aD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ImwoHkUA; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="elOhYWe2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5659D1F000FF;
-	Thu,  1 Oct 2026 16:50:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790873412;
-	bh=JeTIYpVcUdQJZOWjEcolmxVts4h6RnAC97W7J/EBIW4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=elOhYWe2a/Q7fhpeN7Behjv3I85tSIMPCtOObLt8mbHO7SdN0E2SKN3J3rJb2C8oE
-	 Q/UROtEorIBRMxxVyCg2u60M1KieQaYsKlDDYf53f78tTgvV0bPWKjWtS3/PO43MCU
-	 z9TC8w7fVHW4Io2J+rB29Y9B4XRQbclaUR/hOdC14s6wLoQQkv1yMJ2p5cv1uktQMz
-	 TIvcuTn7r7SRzSsYITgnpWEkpR35K/WSAgD+QH5c5ltvyvpScf4zJF3gu+CsL32528
-	 PKrgFc0DqboZRoX50drWY9OBhnxV2ykJIN48Kxj3qYtzJ/8GrwdV2PRa0NmlQKITGa
-	 OhKH7i00i2Tww==
-Date: Thu, 1 Oct 2026 18:50:08 +0200
-From: Alejandro Colomar <alx@kernel.org>
-To: Nico Williams <nico@cryptonector.com>
-Cc: git@vger.kernel.org
-Subject: Re: git-rebase-walk
-Message-ID: <ar6LUeH3AjxbiMgd@debian>
-References: <ar5KL4_IKXYbx3Sb@debian>
- <ar6GExDLasWWFajm@ubby>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aPpcp3aD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ImwoHkUA"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9CFE81400112
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 13:03:15 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 01 Oct 2026 13:03:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790874195; x=1790960595; bh=2wybp8uyOH
+	C6TXAkWiZ2UTkeZRlwthBjRfA0MI2htbo=; b=aPpcp3aDIJxH74Yp6KKyuXePe6
+	SiG7YI3sDTTU7UgK94aLqlaxulzij2Ij1UmAlrUgaM84ul/DDqBZJyO3L67Dr3H8
+	4UNwhJXZYejiZbG95usafl+JblfZGetSVGwS4Ysc4TYKqEn0HfQLUfn9+dNvIEBc
+	OIW5BQgv2uNLByV2Dhr/kSB/1tpmh4YzL5/8rZaFjs+TqHyyN9LxUpUFFgC3Ro0I
+	7WyiYKYHCyZ3DQge2l5jt9vc25xm4iHPTiKMoWdVpkUnSe8nJcJdcX8DUTkH5uUH
+	3hkyGBE8io2m3OOwhD1tnOASxw9dlb6iGoGf97/vmvOVs5IOI1vt7p8lD4UA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790874195; x=1790960595; bh=2wybp8uyOHC6TXAkWiZ2UTkeZRlwthBjRfA
+	0MI2htbo=; b=ImwoHkUA4T4l4J1hYgCjcB/1EK1pvcNT7PxE+q1qqrN+O6y71nw
+	8GQTLZNR7Oci5H6heWAtjiWeH/M7BfE4/jeyB4Vz6dklrmN9iM3UltcMLO7cRfeD
+	cJn7Mi9jwqs0gObAhGmWQ/hSO0j7pgte8Cp8S+l6cpE7IQEi1MdbPUfRLaz0m+VB
+	MyvQnATyKjQqUq9Hj71bwasMj89FvkR1rrXvvZavPhORtypEUIKBy7EWOQxNzrYT
+	NaA7WqIE0T4FOG9ZhL+StSFRDgoaBBEESjj0yV14e7lFdnRzM7sO0rmJ377bZZ9w
+	6n7K6LtzojHWrb0GL2PTJgU1fV/hrUjr8BA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1790874195; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:HGDmA1ofQwRYORYncrSzNzAzwCkYWQfNBXi7t+3gt5TIXZb
+	eUklkgdekDxQA8WnASvHuinu3OgWqR4A+J/3WA43nOsIL1Pm7VlloaaVzEc0PjJz
+	eWtBLBwz44IVPWhnUSVOdBbz11HVdcdQmVRkbXGUzujKn7YC27v4YBiJmjzodSq0
+	GAacoeNjPD4S9fq6lgXm7JybR3FhtaVNur6WufQLo4RIAJkgXgqPMBZTQpQKoQou
+	JYcoNm7KxEpnJQT3MoeMOG+6Og2/v9scSx6ndn6IUbzlqK6geLpWS5pG797+JS6b
+	EOIGiCWPJFGNVmeWlHfRIBbLs8vHm3tRJ0ce+pA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:Uq1nK/VgCijg2ck4gaM+jjPk6mkm5GD6d5XmDAX/a0g=:ERPeRmpaQivSyxwhc2TM2xl2BTzf9s2GAAfEQwmGfag=;
+X-ME-Sender: <xms:U5K-amaGmzVQRhESD_16YlXONhmPnkAIiHr8iGO0ThWz9A0tEk8RDg>
+    <xme:U5K-aq4HoW3__G7JTF2-3mntEclyz6M34E7QsdtkdgXYcx4nha9nOgkT9XWP6QNVf
+    Cq2bnw3pWYcH1KDCNlHXvvi3Vwg-Fzj3yJhByAaib_74zUXYpY0Jw>
+X-ME-Received: <xmr:U5K-ahBW9IenBcrHr-eRcD1a1BiHrUR8vL_-OjjAF5ZSbwtfGAQx8J0aZaSeRwra6LSFeMS0nJr-IbHsZ0OkSS9aCgWY_nvYcYwW>
+X-ME-Proxy-Cause: dmFkZTFejQ7M6+xyoW2+or7dfbRDRgXzD6pBhGBpJrCtN2PsiZHkyAG5nv3dVrkx7i3oCO
+    XFxZBzBvHB94Sek0mPfCRv4Uzg+bYaE2F6pWAT5QY1HS2XGBydqLjLLkalWv9rkZr6g4e6
+    wHiPOki3OfJDwEiH32/22eW70W2U61B3wHe5CMOeWY840Tk4nP1vyZuV3NhDWiPVOvqcli
+    y0u2KGgSFD5GQ8ZulBtjAQbY8+EPNecnp9U4Bs+e0wisKYRsW2NOv7eOlb+q9fLrgJBtAP
+    DQ/FYPH8jmgFg0FR+qF5xg71Bmf2P8pdc0jwTumMyGY3XUwHnQyUSoIugMv84Xi0CkCOIQ
+    WMf3yHQuY0vQryM2tDbpNq3ulIzszTfiXJS4WUHv8NNFrck5DDa3KackCvqWr5A6OnRDyz
+    ijhC9pejd3W10/sjDsbbK8Ir+FWO5z3PRvF/hDZ91YNv82a+DRlNutKEoucrmKnEVKaypR
+    9Agu3GjcUWyJXAE+jV3La2DHH2KfCeyz5wc/0LnzG9Z3W+YbqJucTTnzcWMTqktEO+Q5fe
+    sw9HWGtU12wmosOcnJ4Dfskwck/H1ZzNg6cX1Nsvwq2yGctkywWkSHu8m+mAjl4Q8/2Fbo
+    hUxbsNDGEAvzic2yrc6aUvgmC20u0LlDYFs9u50OOxUFETVjXVjtSFSm8+ag
+X-ME-Proxy: <xmx:U5K-aodeF6Ms-3sgXH8cPGXN1X5yvm-SlDdTolXmSltySvFXrKMJVg>
+    <xmx:U5K-aoLRjfyKHvXtZ8G55hvuurFz4CddzneKTJR7F-dQIStoHOyGZA>
+    <xmx:U5K-ar1B5skVriiAiL-RKSpZEPm-Yi8TM4X7n_Iyr3p_69aUI_Yqpg>
+    <xmx:U5K-aigmGZ-KM2s90XDdAkfkVOJVgIDu3EAfT8u8lHaJX-S93ku17A>
+    <xmx:U5K-anXniw2a6o8qfjQVcTEuM3hgNX7aUCCJkENnZA7WSqoOo-Wen9H3>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 1 Oct 2026 13:03:14 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kazumasa Shigeta <kazumasa.shigeta@kanamei.com>
+Cc: git@vger.kernel.org,  Shabbir Bhojani <shabbir.r.bhojani@gmail.com>,
+  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2] stash: expose untracked modes in create
+In-Reply-To: <20261001042155.33303-1-kazumasa.shigeta@kanamei.com> (Kazumasa
+	Shigeta's message of "Thu, 1 Oct 2026 13:21:55 +0900")
+References: <20260929074222.11942-1-kazumasa.shigeta@kanamei.com>
+	<20261001042155.33303-1-kazumasa.shigeta@kanamei.com>
+Date: Thu, 01 Oct 2026 10:03:13 -0700
+Message-ID: <xmqq7bk173qm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2ptvjrsgm7ylcryf"
-Content-Disposition: inline
-In-Reply-To: <ar6GExDLasWWFajm@ubby>
+Content-Type: text/plain
 
+Kazumasa Shigeta <kazumasa.shigeta@kanamei.com> writes:
 
---2ptvjrsgm7ylcryf
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
-To: Nico Williams <nico@cryptonector.com>
-Cc: git@vger.kernel.org
-Subject: Re: git-rebase-walk
-Message-ID: <ar6LUeH3AjxbiMgd@debian>
-References: <ar5KL4_IKXYbx3Sb@debian>
- <ar6GExDLasWWFajm@ubby>
-MIME-Version: 1.0
-In-Reply-To: <ar6GExDLasWWFajm@ubby>
+> `git stash create` always passes zero for the include_untracked parameter
+> of do_create_stash(), even though that helper already supports untracked
+> and ignored files and stash push/save expose those modes as
+> -u/--include-untracked and -a/--all.
 
-Hi Nico,
+There may be no lies in what the above says, but we would prefer to
+hear what the user visible implication of "passing 0" is more than
+what mechanically is happening inside a program.  For example:
 
-> Date: 2026-10-01 11:10:59-0500
-> From: Nico Williams <nico@cryptonector.com>
+    "git stash create", "git stash push", and "git stash save" are
+    commands that create a new stash entry.  The latter two are also
+    responsible for storing the resulting stash entry to the reflog
+    of the "refs/stash" ref, but have options to control what is
+    included in the stash entry.  Among these options, "create" only
+    supports the equivalent of "-m <message." to record in the stash
+    entry.  Most notably, "-u" and "-a" options are missing.
+
+> Teach create to accept the same options and pass the existing mode
+> through. Unlike push/save, create continues to only create objects: it
+> does not update refs/stash, reset the index, or clean the working tree.
+
+Sure.  It is a very concise and good description of what we want to
+do.
+
+> Use parse_options() for the new options and stop parsing at the first
+> non-option message word. This keeps option-like tokens after the message
+> as message text, while leading option-like arguments now follow Git's
+> normal option parsing. In particular, unknown or malformed leading
+> options are rejected instead of silently becoming a message, short
+> options may be combined, and `--` can be used when a message itself
+> begins with a dash.
+
+Why do we need to go into such a detail in the log message?  What is
+the above paragraph designed to convey to the reader?  Again, it may
+not be telling any lies, but it misses the point by being inconsiderate
+to your readers.  What you need to tell them is _WHY_ you chose to
+use parse_options() in such a way.  What were you trying to achieve?
+
+I am guessing that something along this line ...
+
+    "git stash create" traditionally treated the rest of the command
+    line as a message.  For example, 
+
+	$ git stash create adding -u option
+
+    has always been a request to create a stash entry with the
+    string "adding -u option" as its message.  We should not make it
+    trigger the "-u" (include untracked) behavior for backward
+    compatibility, by using parse_options() with stop-at-the-non-option
+    mode to forbid it from reordering the command line arguments.
+
+... was what you wanted to say, but I am not sure.
+
+How much of all these verbiage was written by AI by the way?  You'd
+need to spend effort to make it readable to humans.
+
+> Keep create's existing no-change behavior: detect the usual no-change
+> case before do_create_stash() refreshes and writes the index, and return
+> success without printing an object name. If do_create_stash() still
+> reports its internal "nothing to create" result, map that to create's
+> public success status.
+
+You already said that with "does not update, reset, or clean".
+
+> This follows the stash subcommand exit-status convention established by
+> 786fc390465f (stash: reserve exit status 1 for conflicts, 2026-09-03):
+> subcommands return 0 on success, negative values on failure, and status 1
+> when applying a stash results in conflicts. cmd_stash() maps negative
+> subcommand failures to 128.
+
+Again, there may not be lies in here, but if you did not make a
+breaking change to the established convention, is it worth saying?
+
+> 9ca6326dff29 (stash: refactor stash_create, 2017-02-19) added the
+> internal include-untracked path while intentionally leaving the user
+> interface for "git stash create" unchanged. Reuse that machinery and
+> the existing INCLUDE_ALL_FILES mode rather than adding a separate stash
+> creation path.
 >
-> On Thu, Oct 01, 2026 at 01:58:42PM +0200, Alejandro Colomar wrote:
-> > I use this little command to apply iterative rebases, which are easier
-> > to handle when there are large conflicts.  Are you interested in it?
-> >=20
-> > 	$ cat $(which git-rebase-walk)
-> > 	#!/bin/bash
-> >=20
-> > 	set -Eeufo pipefail;
-> >=20
-> > 	git merge-base HEAD "$1" \
-> > 	| xargs -I{} git log --oneline {}.."$1" \
-> > 	| cut -f1 -d' ' \
-> > 	| tac \
-> > 	| while read -r c; do
-> > 		git rebase "$c";
-> > 	done;
->=20
-> You could simplify this pipeline to:
->=20
->     git log --reverse --format=3D%H $(git merge-base HEAD "$1").."$1" |
->     while read c; do git rebase "$c"; done
+> Add coverage for short and long aliases, combined short options, the
+> untracked/ignored boundary including an ignored-only worktree, option
+> parsing and dash-leading messages, no-change behavior, and preservation
+> of refs/stash, the index state, and the working tree.
 
-Actually, I've simplified it to:
+Again, adding tests for comprehensive coverage is not something to
+boast about.  Is it worth saying?
 
-	$ cat $(which git-rebase-walk)
-	#!/bin/bash
-
-	set -Eeufo pipefail;
-
-	git merge-base HEAD "$1" \
-	| xargs -I{} git rev-list {}.."$1" \
-	| tac \
-	| while read -r c; do
-		git rebase "$c";
-	done;
-
-since git-rev-list(1) is the plumbing command (IIUC).
-
-I prefer the explicit tac(1) instead of --reverse.  It's simpler
-conceptually (we don't need to know/remember that there exists a
---reverse flag to git-rev-parse(1) nor to understand its exact meaning).
-tac(1) is well known.  The performance doesn't change much, IME
-(sometimes better; sometimes worse).
-
-I also prefer to use a pipe with xargs(1), since it keeps each command
-short and readable, without nested commands inside arguments to other
-commands.
-
->=20
-> But:
->=20
->  - you need to add conflict handling
->  - this is very slow
-
-I have it running on the background while doing other stuff, and when
-it stops at a conflict, I look at it.
-
-> I've tried this before, so I know it's very slow if you're rebasing
-> across thousands of upstream commits!
-
-Yes, it is.  When I did this manually before writing the tool, I did
-roughly a binary search of the conflicts.  That'd be faster, and if
-implemented as part of git(1), it would make sense to implement it that
-way.  For my use case, I could live with a slow thing in the background,
-which is why I chose to keep it robust.
-
-I expect it wouldn't be that hard to do a binary search within a script.
-
-> Also, you need some extra handling of conflicts.
-
-No, that's the nice part.  It works as is.  When I see a conflict, I get
-stopped at the rebase that caused the issue.  I solve that conflict, and
-then can --continue that one rebase.  Or I can --abort that one rebase.
-
-Once I've --continue'd, it ends at that one rebase, and doesn't continue
-the walk.  I must run git-rebase-walk again for resuming the
-rebase-walk, which allows me to see the status before doing it.
-
-> > The source code is trivial, so I guess I don't need to explain much.
-> > It behaves quite nicely, IME.
->=20
-> It can be much too slow.  I've a better solution: bisect-rebase.sh:
->=20
-> https://gist.github.com/nicowilliams/ea2fa2b445c2db50d2ee6509c3526297
-
-Hmmm, 93 LoC is certainly more interesting than the 4k+ python script.
-I'll have a look.  I'll also attempt at writing a bisect-rebase from
-scratch myself, to compare.
-
-> (The first revision of that gist is slow-rebase.sh, which is a linear
-> rebase like the one you posted.)
->=20
-> This script very efficiently finds the firts upstream commit that your
-> branch conflicts with, asks the user to resolve conflicts, then resumes
-> rebasing.
-
-Indeed, this is what I did manually before writing my slow script, so it
-seems you've had the same needs and line of thought that I had.  :)
-
-> So let's say that your upstream has 1,000 commits you need to rebase
-> across, and 10 of those introduce conflicts (assume there's no reverts
-> of those for now), then this script will ask you to resolve conflicts 10
-> times, and each time it's clear which pair of local and upstream commits
-> conflict so you have the best possible context for conflict resolution.
->=20
-> It's like git-imerge, but better in that it's specifically geared to
-> rebase workflows.
->=20
-> I've successfully used this bisect-rebase.sh script to rebase a
-> postgresql fork across between 1,000 and 2,000 commits twice, each time
-> with significant conflicts to resolve that were much too difficult to
-> resolve with a plain rebase.  I.e., a plain `git rebase origin/master`
-> produced large conflicts where I didn't have enough context, but
-> bisect-rebase.sh let me resolve much smaller conflicts with a new base
-> that immediately introduced those conflicts, so I always had the right
-> context for resolving them.
->=20
-> PG is a perfect test case for this sort of thing because it's so large
-> and moves so fast.
-
-I'll certainly try your script; thanks!
-
-Out of curiosity, did you offer this script to git(1)?
-If not, why not?
-If yes, what happened?
-
-This is something that would clearly be helpful to people solving rebase
-conflicts in many projects.
-
-
-Have a lovely night!
-Alex
-
->=20
-> Nico
-> --=20
-
---=20
-<https://www.alejandro-colomar.es>
-
---2ptvjrsgm7ylcryf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmq+jzUACgkQ64mZXMKQ
-wqlxmQ//aA60vrla19dcC+Amq/dBWXU5KQnmBgunSzZ1MYohnwzMHOGn13ab2LWL
-Es3FaDXWZ0njyUZ+g/pDp7poHPux2C7dUXH6qL0kUUZoBUgOYRMooyxdlmxpbKp7
-lApay3K9kNULWIM4VOvyVSS8zvlVcG5TT0Yaft/B02v97UcB2IpAwwbNy9zjPvlz
-KYbqAncHo+Q61bXPCr4ERRTz/a/9v6XRlTioba7HP6oi8Sf1l91rJDmZ0O3L1IMg
-TETIl8z9p9GUcrvIqV2/eK8/PRX2SssTjrC5f7Vq8nRds5PegA3ukuI2aDCkOF/J
-MUN5h6W6fq8AAwfWsEzQEh1rbAZlyD52Itf4+6TsaUEQBKHVD28WF4OwUrrATVmy
-9ie5faEUQ5xNCt5r3ey5HEWHP60AbMtc0emQbPx3faCxwZ9HOipZjI4fftlA45pO
-lHoL3HVOCG+kLCtnY8JQdk1fupkz8o00DiSAF7md3VCDwA8W1JAtqxI5n7/ureSF
-JaysdWViMhskqPAv89/bobiTUOnHl3JOdJbmkXO8Ci0gAWmAxN5m7AlERVc4j5iQ
-xxkypH07/yfm18x97S1ByEBKY7yD5ROSd4kvXXuaWZASAdBCbbHOrgb+AoT4KfYc
-5kgeO4aKsfs+jnmDD5gIU4Uz0ik7cTeE6PiWtXAnviKgNztkuA4=
-=qrgJ
------END PGP SIGNATURE-----
-
---2ptvjrsgm7ylcryf--
+Aren't -p/-S/-k/-q and pathspec support all about the creating half
+of "git stash push" that are not available to "git stash create",
+not just "-u" and "-a"?  Why are we singling out only these two?  It
+may be more worthwhile to explain the rationale behind such a design
+decision.
