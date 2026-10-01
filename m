@@ -1,127 +1,99 @@
-Received: from mx-out1.startmail.com (mx-out1.startmail.com [145.131.90.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa2-f12.google.com (mail-oa2-f12.google.com [74.125.231.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2201A5B9E
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 01:24:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=145.131.90.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FE82989B5
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 03:14:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790817875; cv=none; b=mpFvLvM93xOJrigF5IWozUf8uriycKMtf7khHb9UYI/sniDpLU5dvLimovZYzcJ47+qwwKdaqkBW0WCz4PtWg0gU8LEYThCINGtAAOL9Jz2XBb7+jBrbQY2AyZu9JU9q7+d6juZB7dSfQd40oPHPDUXHMLtt+sSwzqoNMS05Jk0=
+	t=1790824455; cv=none; b=Zv+J6L0us4qDeaxj/HEa1W1Ydt2JSPUgQBFdCJK32PktJFRo9zgvjgclqgSsgfMffnVVBonzgMsTqIjOTftm2nT512BWoUF4tk1w3dYQ+Ur+g7qSX5NvkbeqspckdV+Z9xUjriqS71Etp0pkAAhKPAPmqhWYpXL6WhCNzhtUOKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790817875; c=relaxed/simple;
-	bh=dgZ8kMg74Ekll3VQzqsleSUcn1RaL3WNCsgLjTsHt64=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Mime-Version; b=N8e9TCP1ikALEzSN5xXcKytT90cZB3rzJdVm0Ai/3AUp2B/WYs91bcYTt9MaX4MEZGe2s5upqtPGkHZdFQq4lCYI2AqHO+uznisJ8naGcoQL99BUQtjb52LyBDOLga3bksklLIGoG0adizV0KALRhaRSeWNy5ve6/RCmPX4knKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grantmoyer.com; spf=pass smtp.mailfrom=grantmoyer.com; dkim=pass (2048-bit key) header.d=startmail.com header.i=@startmail.com header.b=xw60gpNM; arc=none smtp.client-ip=145.131.90.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grantmoyer.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grantmoyer.com
+	s=arc-20240116; t=1790824455; c=relaxed/simple;
+	bh=EidI0sFVD+7rD3/BW0VVay1PWS4t1nw6e/e/V20gfSQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XCbmPjNk72aRAj5CWlK7Vlejbrge3cwVrBmz4aDaxUoH3A1bXsy2vP1PjowQzjIKEBukODXML+xksrGupr42OynfH+1KkShL1JBcr0KkkBz9yChNop9ccrIWaEskpjXizJdfTNFTiQZ+S7GjhgVc/HY1qRIrF/fVsa9mz/AI6fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=QNX2lLpa; arc=none smtp.client-ip=74.125.231.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=startmail.com header.i=@startmail.com header.b="xw60gpNM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=startmail.com;
-	s=2020-07; t=1790817869;
-	bh=S6fmnSwGY4WaBXjfs559PVG4x758Jby0Uj6lkU5T+no=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 Mime-Version:Content-Transfer-Encoding:From:Subject:To:Date:Sender:
-	 Content-Type:Content-Transfer-Encoding:Content-Disposition:
-	 Mime-Version:Reply-To:In-Reply-To:References:Message-Id:Autocrypt;
-	b=xw60gpNM31I7QWDagz6YWGnphMSmc9xXkFMjzpNmjZIMAtCaBFlUYfTu+P9YUd7zm
-	 XJBSyButVxvasxgcAQVI3YFHwOL9utK+JiK+WPMaG/HLua2JtSxhGMG/JPgRfOmnPt
-	 e4wxE4KZ5Mwex1/VhPZD5/+phH8wbbNxw+j5xUdHCQox/6s+O0tXshdnwt0OBOrmVQ
-	 w9RpPywup0w+2tJNINmc18FhwTAJ/aZKTSNDf3D+sAYP75s6RNFv0NFrnwxfRWFRyq
-	 TzAZV4xHe4bDJ6hCqd0t06oF83LahbURMfLkVB98psyb/nSiHYfaO2/+CbHFvC8/lu
-	 PwT6X9xtpcnGg==
-From: Grant Moyer <dev@grantmoyer.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Grant Moyer <dev@grantmoyer.com>,
-	Michele Locati <michele@locati.it>
-Subject: [PATCH v2] filter-branch: fix commit map init from state branch
-Date: Wed, 30 Sep 2026 21:23:47 -0400
-Message-ID: <20261001012347.3998801-1-dev@grantmoyer.com>
-In-Reply-To: <20260801033127.10606-1-dev@grantmoyer.com>
-References: <20260801033127.10606-1-dev@grantmoyer.com>
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="QNX2lLpa"
+Received: by mail-oa2-f12.google.com with SMTP id 586e51a60fabf-466ccde2a99so3249998fac.3
+        for <git@vger.kernel.org>; Wed, 30 Sep 2026 20:14:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1790824452; x=1791429252; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=jwyxySeX9ZUM4CVke83cyq1gUGlwfT/adVFfY2uPw+I=;
+        b=QNX2lLpaKzMKOQvxAF3yhqyKBsdKdZQw/jQE3UuIuM6fCsP2cvAApOl6VHlHkUcmyd
+         hVUOHXyDil5ux4t2rusrpREgrCf5fEB3/a6ZOFlXXpH+ioo6748CRoVmJF/hwB+WnHde
+         ZluG2hJzWlEAgRdsE/hqKld73tz/uvjv6TMDc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790824452; x=1791429252;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=jwyxySeX9ZUM4CVke83cyq1gUGlwfT/adVFfY2uPw+I=;
+        b=zCp0LjZy4Zd0m6covMXg6bTH58kBZScaNm5+XC/W1sinorQdSmmrdi7NrFqVX2mKPi
+         ePVTxjBcSjvfdZjNBl3ti5p7/lkn/hPo9ALyEAhEbKCSWP0r6uk2CFOX3GvH4pXN4EIq
+         VrsLxoAk10n6DRcs4266s4z13GdP04vXG5Nz5SCrMAy/93aJOFthposZTpeR99UyLx4E
+         xDMalVY8+Bqjy+4UXG6G/tWFoBS0RlmOUzNdRdSPs2hOZbI0qCoNxQodAlEzvncpx8yb
+         O+DHKKRCxSmjvBjUi2dPJ/Tt7HuynaMJF/iG67WD4pqcOPDhItZ58kbey6feoMXGY0m0
+         Gs2w==
+X-Gm-Message-State: AFuF++n/BmlD97sSdhMQOaK3/7n5poL4oNNZsvoYdytFed4DzNLV1peO
+	GJA/To3M8JVbymoQSCJAW45cknN65o0j2LInlbGrj3UbtfRgMwrlLPPDWa5+YYtchBk=
+X-Gm-Gg: AYBFou3/5DXZ2esLxyJtIVk5HTtCMdjRhq/AXjg0Z1xKOBVI5xHLJOYqso+UpAd/o1K
+	FRq+4aIRpeXePfz8MHTtrDSlrFHGnGVTrABhTIBC6wDvMndNusek60T01naTGZ51CVPw5acVJ7J
+	ihmYX7VGRIfz7anLKkX5oJRlmI3r7tUoWvtKoezItlAoqtLvSS/T3sCB2+3gFTpn1lDElDdwVOI
+	Vi/OV5K7dijwib/4h4g16tIX0mY7ASx9PDKRoL4KT9bT45LqfDzhdSvqeC2y/fFLcfRuxVDQu1H
+	VWZGC6zkPX3YF+eO0eKeUnjcpwrL4cbNvZKulktlGK6oW0/t191bSys6k8qJg6tDcJ6S0BtyT/F
+	VBK65D0+ryEaHLmbK2fWV+oOhA4LzSIlty/tvynK6z4GiheO8x7gGCFsrqNGniwUsi3uSK3P6qo
+	JGKPc+SCLpugPzhh2KAKJLJ0/3JUH7SG5BegH7ouPYd3ikP3NXhSFBG5puxQs/XK/NwhglRSn+4
+	hchxmiBVcMoJg6en+e9si06B6E/kmfjRzn3Op7pbo4ks9jIf/5DH5wyrjGg79PtbjDofWqz6p9u
+	lU89vNgs
+X-Received: by 2002:a05:6808:c197:b0:4cb:26a3:a0dc with SMTP id 5614622812f47-4f1b4c6bcb2mr4550048b6e.20.1790824447545;
+        Wed, 30 Sep 2026 20:14:07 -0700 (PDT)
+Received: from com-79390 (vpn-centralus-02.tradc-corp.com. [20.98.136.114])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4f34c787c02sm1328823b6e.14.2026.09.30.20.14.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Sep 2026 20:14:06 -0700 (PDT)
+Date: Wed, 30 Sep 2026 22:13:59 -0500
+From: Taylor Blau <ttaylorr@openai.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Ted Nyman <tnyman@openai.com>, Elijah Newren <newren@github.com>
+Subject: Re: [PATCH 1/4] pack-objects: introduce `stdin_packs_context` struct
+Message-ID: <ar3P9650Hj1uOR3C@com-79390>
+References: <cover.1790731662.git.me@ttaylorr.com>
+ <64bb13e2db2e5c22e842c188e08861d63e99dc77.1790731662.git.me@ttaylorr.com>
+ <xmqqik3mbpql.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqik3mbpql.fsf@gitster.g>
 
-The commit map dir is populated from the state branch assuming a
-"to_commit:from_commit" format, but the state branch is written with a
-"from_commit:to_commit" format, resulting in an inverted mapping when the
-map is populated from the state branch. This is especially evident when
---prune-empty is used and creates commits which map to nothing; when the
-map dir is populated from this state on subsequent runs, git-filter-branch
-outputs many errors while trying to create files with empty names, like:
+On Wed, Sep 30, 2026 at 10:42:10AM -0700, Junio C Hamano wrote:
+> We used to take _data that is rev_info, but no longer.  We lost decl
+> for "struct rev_info *revs" and rewrote its only use to directly
+> reference ctx->revs.  As long as the result compiles, we know there
+> is no stray reference to "revs" left in this function, so the
+> rewrite is complete.  It is rare but I love this kind of patch whose
+> correctness can be seen without reading beyond the context ;-)
 
-> /usr/lib/git-core/git-filter-branch: line 305: ../map/: Is a directory
+;-)
 
-This change corrects the population of the commit map dir to match the
-"from_commit:to_commit" format and adds/updates tests to check that the
-state branch is written correctly.
+> It is not clear to me what the implication of assuming a non-NULL
+> 'ctx' always means a non-NULL 'ctx->revs' is for the code health in
+> the longer term, though.
 
-Signed-off-by: Grant Moyer <dev@grantmoyer.com>
-Tested-by: Michele Locati <michele@locati.it>
-Co-authored-by: Michele Locati <michele@locati.it>
----
- git-filter-branch.sh     |  4 +++-
- t/t7003-filter-branch.sh | 24 +++++++++++++++++++++++-
- 2 files changed, 26 insertions(+), 2 deletions(-)
+That's fair. For the following round, I added a small note next to the
+'revs' member in the struct's definition to indicate that it must be
+non-NULL.
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 24fa317aaa..9aa07be6e1 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -302,7 +302,9 @@ then
- 		do
- 			case "$line" in
- 			*:*)
--				echo "${line%:*}" >../map/"${line#*:}";;
-+				from_commit=${line%:*}
-+				to_commit=${line#*:}
-+				echo "$to_commit" >../map/"$from_commit";;
- 			*)
- 				die "Unable to load state from $state_branch:filter.map";;
- 			esac
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 86011e7b1f..cf225b0f0f 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -121,10 +121,32 @@ W=$(git rev-parse HEAD)
- test_expect_success 'using --state-branch to skip already rewritten commits' '
- 	test_when_finished git reset --hard $V &&
- 	git reset --hard $V &&
--	git filter-branch --state-branch state -f --tree-filter "touch file || :" HEAD &&
-+	git filter-branch --state-branch state -f --tree-filter "exit 1" HEAD &&
- 	test_cmp_rev $W HEAD
- '
- 
-+test_expect_success '--state-branch incremental rewrite uses the rewritten parents' '
-+	git init incremental &&
-+	(
-+		cd incremental &&
-+		mkdir sub &&
-+		test_commit first sub/file &&
-+		test_commit outside root-file &&
-+		git filter-branch --state-branch refs/state \
-+			--prune-empty --subdirectory-filter sub -- HEAD &&
-+		rewritten_first=$(git rev-parse HEAD) &&
-+		git reset --hard outside &&
-+		test_commit second sub/file &&
-+		git filter-branch -f --state-branch refs/state \
-+			--prune-empty --subdirectory-filter sub -- outside..HEAD &&
-+		test_cmp_rev $rewritten_first HEAD^ &&
-+		git show refs/state:filter.map >map &&
-+		echo "$(git rev-parse second):$(git rev-parse HEAD)" >expect &&
-+		grep "^$(git rev-parse second):" map >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- git tag oldD HEAD~4
- test_expect_success 'rewrite one branch, keeping a side branch' '
- 	git branch modD oldD &&
--- 
-2.55.0
-
+Thanks,
+Taylor
