@@ -1,139 +1,231 @@
-Received: from quail.birch.relay.mailchannels.net (quail.birch.relay.mailchannels.net [23.83.209.151])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6233CD8D7
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 22:16:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.209.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7203D3FC5A5
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 22:21:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790892990; cv=none; b=T2WQM1Sl7MVJ4NeQVKogL/F4+C10ePJ1i7HIaWFi7/t+ey2Jr1juHON0JWuG7BV3w3Dg4OsEd+DHPDujfXf/Kd97jjiyumi1WPtK5lOPUQfzfx8A1S3cqnPdo51Ix8+829wCIdozUBoWfxdm6YsWpXOck+azGtQSW0VbEhELhIc=
+	t=1790893313; cv=none; b=iJp6GlB/7mBBVs4daXuB0FoD0tYzW32ngJGF65qZ//Z92EdM642VTE7+8TRjecd0gUVz8IDvsIciArJLjDbsp25wRu34AhdehTv/zxOKXHNBpn1HLHb/7+di+FARBfNI9SCxS8F0PI4ZpNhZgYrv+J2CY/iwV0Kl8eJ041aIx4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790892990; c=relaxed/simple;
-	bh=zqVPhaTxLRD+5Wj/Lkeq1IptmL08KWfxymlp9ZunyQM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z3wt3Dv1zWuymlC8KedpaK8VpM7Rsrd923DZ1BE1UR6rBusScJfTXPadt9V8pJvrtyZWm+UPVQ00ktHnvA7lQvMs2u0eve8Gm2HiLOvpQx0Khj+noOBQ414Td0cN26UnTQj8copGNbvx/lYhO7EAlmWKBn1Zp+YO6Rwho7VIoyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=EYOiNfpt; arc=none smtp.client-ip=23.83.209.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
+	s=arc-20240116; t=1790893313; c=relaxed/simple;
+	bh=sA4ullsk3TQtGjH64VIjB1C47r8MscwvLaeIswjI/Gw=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=GywNUlmGQRghJLpQo0qkEBT3XwJElC2Oh3HewE67Go7IoK1+35QgNRR6bclg7YmJ0PIEahDpcxxbIiGupHFZNDfDfXxZJj76aGMIuc2Tf7zwfpptICSEMjm79BwjyFbOaxDGebcG9iVQRU0SYa+t/0hNyNy0k/m3FTRjYONts3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=0cIDBoWV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sccEs+CK; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="EYOiNfpt"
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 79E6F403818;
-	Thu, 01 Oct 2026 21:01:04 +0000 (UTC)
-Received: from pdx1-sub0-mail-a234.dreamhost.com (100-96-21-185.trex-nlb.outbound.svc.cluster.local [100.96.21.185])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id E7D0E403545;
-	Thu, 01 Oct 2026 21:01:03 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
-X-MailChannels-Auth-Id: dreamhost
-X-Oafish-Illustrious: 2e14a1931af00760_1790888464162_285693251
-X-MC-Loop-Signature: 1790888464162:285367060
-X-MC-Ingress-Time: 1790888464162
-Received: from pdx1-sub0-mail-a234.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.96.21.185 (trex/8.0.2);
-	Thu, 01 Oct 2026 21:01:04 +0000
-Received: from ubby (unknown [24.28.102.31])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a234.dreamhost.com (Postfix) with ESMTPSA id 4hwkpl31rPz104k;
-	Thu,  1 Oct 2026 14:01:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1790888463;
-	bh=4mbO7GJ6QXsrEWOoZlsxVTEUP9tBEZABHHtIcjLg1gQ=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=EYOiNfpt54gVQ8NqwN1bFgUOw+JbOmBDedTjqL8r9x2IoVnWm31zXaPhFFt9NYJfg
-	 fXXi0lMTAwvqtCH9solpKZP8Kqjj9v0sj9J+0jpk1D9HYiL+QfMFSul6ttMWdLBnoL
-	 GCg11TSmdqLc6YlBQBZyslWIebM/dWrp8UPDZlcfiEQlEDlQ7VPwJ0zOizMEgc7jlT
-	 uCTgmvHFbmKH2mzfzln0dSyRNQBhkCA6KWQob1dXQRrd+Glbigce0o6VD0oWDACNLB
-	 wINeRChbzJKWv46ph/CbMPo5TdFa8q1/iTsTvVr7LpR0faneE02Cii+wKJdSeSH+sM
-	 efhLqOl0bVebw==
-Date: Thu, 1 Oct 2026 16:01:01 -0500
-From: Nico Williams <nico@cryptonector.com>
-To: Alejandro Colomar <alx@kernel.org>
-Cc: git@vger.kernel.org
-Subject: Re: git-rebase-walk
-Message-ID: <ar7KDbV2ra7Rtzl6@ubby>
-References: <ar5KL4_IKXYbx3Sb@debian>
- <ar6GExDLasWWFajm@ubby>
- <ar6LUeH3AjxbiMgd@debian>
- <ar6a8OkGhmYVoM7E@ubby>
- <ar69ZZ4r9ZxISIHz@debian>
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="0cIDBoWV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sccEs+CK"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 68D67140003B
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 18:21:50 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Thu, 01 Oct 2026 18:21:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790893310;
+	 x=1790979710; bh=5zFxqD9F/GNQ4vQ7+OPoKW+aVSTzMuSutmmN/tdDylA=; b=
+	0cIDBoWVL4+9mwC3c3jENcNP2X5gSXFSe1lm70lgv7Ld8E/h4/z5oR4cIjxgwLC5
+	QwL9HuGB46u88gj3h8BI3Jf2VVzMja1pOAnErBj1aHr1IISOr4qceamHtW0XsAVQ
+	UfFeGDGPzfD8NE+JCt4LSIfL7UeJQUyo45UKFl45ODvJlNqcyRXhzqYcnC//Qafx
+	lWYa+ALb8yDyn2Gi3a9d4MfrW0ROjSILyMgOH8Bg2k+3yyrsemD3N41lQMBO6Yci
+	9UUOwfhlGVQ7ZN2GazjSpsfaS9ciTXzkZXl12LXUbrnxF5yV5QmAotKpq26rQqcR
+	thB4kzbzhRnucURbG5fTaw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790893310; x=
+	1790979710; bh=5zFxqD9F/GNQ4vQ7+OPoKW+aVSTzMuSutmmN/tdDylA=; b=s
+	ccEs+CKecc4La9gghQiFqeBkjN1VkhRYLXEMDO4BHu37+DBsAMNiqC/CjhnVlWNx
+	lgH3oAdD5hhjYH5DuKPCgKfgBnGOW9r3BeTRGlX6csHhjpCy3q9l1EkQZoxg6lCq
+	WUcPCLqyObr/8+ybMXkfoqGolZO5e786FW84YUpbEsYhLaoRkcezyaipqlQREwKi
+	lGtg82cnqYVKTeStbC7dVXgHGTP+rwNA1oBslIMWDoCdut3Wf0oEGdo40MZz8aim
+	QU/uSDDZOVomt1mXLIhU/BE5OmFp1cbtsN9H/7TYmxDEg0aVDimPT91jSxBoTFOw
+	6PjesrEHH1dJ4Q3pOYmGQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1790893310; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:iOxLXgWI8reMY+0KntyNm4YH5e4fIZfXpUXdlt/vjI4hN8O
+	GXzm3YSSXftfpJyISYkpc95uxJ/RWch2tCYFP92RuG6nFw/QwUoLKgxGT5msRdqh
+	utWPCDPIJZ+7fJOK8rLcx3ll8i2/g6EkUmJlAxf/LQ9WQYswRRiRcd47QSklYp7t
+	/PDCi1SHAt7Dz9G2evdeeSbNok+6ka3nGW652Sz39cSNGBIfZ1HEeS/HTNcE8qSI
+	GMt6WGkpCB8PfNKYRHojWmcP9Ubklk1MFEdFurY0Crr5BYXvlkUCNx5XLs2rInrA
+	a+KucPrRs8Gj2veObNhGFlbfQf2e/87D6boOEWA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:9xH6ZomjfI3u5LQTWKLiLvB7J0tinhtGJEDpWqjIFuU=:sA4ullsk3TQtGjH64VIjB1C47r8MscwvLaeIswjI/Gw=;
+X-ME-Sender: <xms:_ty-aipSqsEaps7Z9NIIrmorPyR2hXIhaEusEzIyc4kpSLJkKzaOqA>
+    <xme:_ty-areLnYEv_snUmeB8jtRMCYko-35TyxeHR3e2Zr4kejGgu2lJ_4iZhLC7BFsHM
+    fpn9ijC0WxgVyyJqv7ZmU0tIfeWH6JrJ4qZlyzQlO7ze3dSPaeGAdo>
+X-ME-Proxy-Cause: dmFkZTF3noi4LLs/Qiy8VG5Gc56YGqm1iyujIFArkb7XjVH0gFdnaNb39jR6uqerGMnTrc
+    VrQgCIcDzE3MgvCG4AkOIH8Yk34PjbVYZwTu6ttk79ii0XZn5Ie3Cejh4GR/Adq9jfbWwB
+    PyDv3Q99YF8hmqR17Vl7MnvvrF2boGnYuqQDtNQJqUKxUsrmZPBcyCV1yiZOiFxK3qX8Ob
+    blTcRoxtBneG38pMTecpWS/wvBw5FIuoWMtrjnW2iS/WA9iDA/n7Hlpmi26IrAL7BKgv98
+    BUKrQ7qLszSO/c9CdWhF8nJMQWIPp6Nml+887/+xrS1Lfd6170WIFt7yBKNpO2f9lqNEk/
+    NomINHk4sNhzyadwv6RKSuhNNq9HF7IT7MWY7rZQ1KHNcKkZrZmmJRAeQbtILOqimQhhNN
+    w5ulgSGPtmnp9P+AOsuyvHzHe5Lk4olpv7E5UnbGJtJT6E0vIpXMNOYOHx5O5ZnI8DHGSX
+    BJv4nvp27ejWfBAFtAnS2kZmi/1kX2XmnrxGovPuHnwNbRYnHsG3YFM/B25ukO2+IOHb7o
+    lIDb8GaqLdQ0VPoG0SVtmV3kCr/Yn0d+EW1BiknQ6XlyVatPQa8OhfUDUs8avbSySdSSmU
+    lkawxgTxD1b92CCJK2YMhsUrBvCPZkD7opnelUdtyqLusCi3nMz33YtmslAw
+X-ME-Proxy: <xmx:_ty-arGoX2TpRYUcupgGa7tYfXO2oqBA7lbhGRIZcgqXS06E5ZoxIg>
+    <xmx:_ty-agFdQJhho7pFruOaIL0gpApUwxNXx2R_oaNQMRIJ8ns-tqab-A>
+    <xmx:_ty-agP7Q6zXiqLqFyRV6II-VJV2CdfuF6ZJ24ZsksAChsvQK90K4Q>
+    <xmx:_ty-anETzHeF9XHpTu38YAsziX8XFzE5zgh1pDE_bwjUw802BDiwgA>
+    <xmx:_ty-aggxrR0qtJ0VXk-WXfHLiaAEVWcHv6fZCIqv72ketzSPnfhk1kAI>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 2CBA4780070; Thu,  1 Oct 2026 18:21:50 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ar69ZZ4r9ZxISIHz@debian>
+X-ThreadId: AqO-TNe5d1d7
+Date: Thu, 01 Oct 2026 18:21:30 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Message-Id: <040938c6-6fc9-4727-901a-9be2b0b3a6cf@app.fastmail.com>
+In-Reply-To: <xmqqzewzch55.fsf@gitster.g>
+References: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
+ <xmqq5wzojy31.fsf@gitster.g>
+ <8a5b742a-3f11-4bfa-954b-ffdd839b6d43@app.fastmail.com>
+ <xmqqzewzch55.fsf@gitster.g>
+Subject: Re: [PATCH 0/3] [doc] Remove gittutorial-2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 01, 2026 at 10:29:41PM +0200, Alejandro Colomar wrote:
-> Here's the implementation:
-> 
-> [...]
-> 
-> It seems to work fine, and the source file uses 52 lines (including
-> blank lines).  The behavior seems intuitive, and not too verbose.
 
-Yes, exactly.
+> You confuse me.
+>
+> What do you mean by "it" in "keep it around"?  gittutorial.adoc?
+>
+> If so you said it yourself, that we want to have a tutorial that
+> covers the basics like `git init` etc.
+>
+> Or do you mean some other document, like gittutorial-2?  It would
+> have made sense to keep it while a replacement was being written, to
+> make comparison easier, *if* the goal were to make sure that the new
+> one covers everything the existing one covered, but we already
+> agreed that it is not the goal to salvage what is in gittutorial-2
+> (and that is why I personally feel it is OK to remove the old one
+> first).
 
-> Now, compared to your script, the source length is similar (most of the
-> difference is printf calls).  I use more pipes, while you use shell
-> features like arrays (I have a very hard time reading shell code that
-> does heavy use of shell features).  Other than that, they look
-> fundamentally similar (except for the paragraph below).  :)
+Here's another attempt to explain! I think this whole sub-discussion
+is not very relevant to `gittutorial-2` (the subject of this patch serie=
+s)=20
+which should be deleted in any case. I would move this out to talk
+about it separately but the mailing list is still tough for me to naviga=
+te.
 
-Indeed.  My script minus unnecessary vertical whitespace and printfs is
-very similar in size.
+Everything after this point is about `gittutorial.adoc` and about how
+to manage the process of improving it.
 
-> One thing I'm surprised, though, is that you take two parameters instead
-> of just the target branch.  I very much prefer my script in this sense,
-> which is like git-rebase(1), which rebases the active branch on top of
-> the target commit.  It's up to the caller to make sure that the active
-> branch is the right one.
+Here are some facts, some of my opinions, and some options I see.
+Apologies for the length :)
 
-Oh, I know... I... was being paternalistic there.  It's completely
-unnecessary, I agree.  I'll remove it.
+Facts:
 
-> > > I'll certainly try your script; thanks!
-> > > 
-> > > Out of curiosity, did you offer this script to git(1)?
-> > 
-> > No, though I think I've mentioned it here before.  I'd be happy to
-> > submit a patch, but I'd first have to get employer approval for it
-> > (which is not a problem -- it will only take time).
-> 
-> Please!  :)
-> 
-> Or I could send mine; I don't need to do any paperwork.
-> Actually, due to the difference in parameters, I prefer to send mine.
+1. The current `gittutorial` covers git init, git add, git commit, git d=
+iff, git
+   log, git branch, git switch, git merge, git clone, git fetch, git pul=
+l, gitk,
+   git remote add, git show, git reset --hard, git tag, git show, and gi=
+t status,
+   (and potentially more commands I missed)
+2. My current `gittutorial` draft covers fewer topics: just
+   git init, git add, git commit, git diff, git status git remote add, g=
+it push.
+   Basically just how to make commits and push them to a remote.
+   These tools on their own are enough for a user to back up their code =
+or use Git to
+   publish a website (for instance with Github Pages or Heroku RIP)
+3. 22 people who are new to Git have tested the new draft so far
+3.1. Several of the testers said in the post-tutorial survey that they w=
+anted more
+   information on branching and collaboration with Git. This was the mos=
+t common
+   "what do you wish this tutorial covered?" request.
+3.2. Several of the testers also said that the new version is a lot of
+   material, and they were not able to finish it because they didn't hav=
+e time
+4. Writing tutorial material is a lot of work, it will take time to do a=
+ good
+   job of covering branching and collaboration
 
-You're there already, so go for it.  You can credit Vitor Dukhovni and
-me for this idea (he wrote slow-rebase.sh, and he and I rewrote it
-together into bisect-rebase.sh when I just didn't have the patience to
-babysit a slow rebase of my PG work), though.. it's fairly obvious, so
-much so that there's also the three alternatives mentioned by @pabs3 in
-a comment on my gist any or all of which you could credit as well, and
-probably more if you look hard enough:
+Opinions:
 
-    https://github.com/CTSRD-CHERI/git-mergify-rebase
-    https://github.com/mhagger/git-imerge/
-    https://github.com/brooksdavis/mergify/
+It's important for us to cover branching, collaboration, and how to rest=
+ore
+old work in our tutorial material. There are other topics too but these =
+are the
+most important.
 
-I agree with you: smaller and simpler is better, which is one reason I
-prefer bisect-rebase.sh over git-imerge.  But I confess I've not looked
-a those three alternatives in much detail because, frankly,
-bisect-rebase.sh is so simple and easy to use, and since I [co-]wrote
-it, I know it well, so for me it's the best choice.  Since it seems to
-be a best choice for someone other than me, it might actually be a good
-choice for others.
+It=E2=80=99s not realistic to expect new Git users to be able to learn w=
+hat they need to
+know about branching and collaboration from the =E2=80=9CMANAGING BRANCH=
+ES=E2=80=9D and =E2=80=9CUSING
+GIT FOR COLLABORATION=E2=80=9D sections of `gittutorial`. Two of the man=
+y issues are
+that it starts talking about branches without explaining what they are, =
+and it
+teaches collaboration in the context of a multi-user system which is not=
+ how the
+vast majority of users would collaborate. As far as I can tell it never =
+explains
+what a branch is in any way. My impression is that we all already agree =
+that
+this tutorial is not doing the job it needs to do in any case.
 
-Nico
--- 
+It's also probably unrealistic to merge a guide to branching at the same=
+ time as
+the intro to `git commit` just because it's already so much work just to=
+ cover
+the first parts effectively.
+
+All of this together means we=E2=80=99re not in an ideal situation.
+
+Options I see for dealing with this:
+
+option 1: Refer folks to the contents of the current `gittutorial` (in s=
+ome new
+location?) to learn branching and collaboration. I think this is what yo=
+u are
+suggesting (?). I am not willing to do this because (as mentioned) the c=
+urrent
+gittutorial is not a good way to learn those topics.
+
+option 2: Ship the new tutorial without a guide to branching and collabo=
+ration,
+with that to come later. Not ideal, but I think this is better than opti=
+on 1,
+since at least we are not pointing users to a tutorial that we know will=
+ not
+help them.
+
+option 3: Recommend some kind of external guide for now. We talked about=
+ this
+before and I agree there are issues with maintainability etc.
+
+option 4: Wait until we have a new tutorial on branching to merge any new
+tutorial. This will take a very long time and it=E2=80=99ll be a lot mor=
+e to review at
+one time.
+
+Right now option 2 is my preferred one of the options (which all have di=
+fferent
+drawbacks)
+
+best,
+Julia
