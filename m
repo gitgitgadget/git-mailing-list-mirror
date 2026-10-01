@@ -1,99 +1,99 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3804F93DC
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 17:46:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A922F5218A2
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 17:46:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790876793; cv=none; b=c3hO8yISQLjigGNs9wAj4rSvn1IvXnPMYFCkSfRdMJfTN7RCi504ROGv4Alybr3khILBE2+n8rNe+qlnBDUc3YG2uF5+/3QLbFWG0A/J4UEgqhoK1UjF4z62DVewOUKx4hWFTrd5QPXL9FvqpVz97c/A7uK3PsXk2BidK6CrLBE=
+	t=1790876810; cv=none; b=CM4kkQ/mgRd5dAJpnjKHfp7aJvpJRrxhmqSBb2fktum8cjIN0ZbeeCSH6WsxxZDPNNDVOen2XaWQ6vL+3QzA2dnm7r92oMOOKpD36ak90gDZwrBKsDr5eyuN6qLszxObQPuwIMG1qYvw6bX/mIfxgoSa70qPZ16NpHfoWfZ3OaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790876793; c=relaxed/simple;
-	bh=x5+JfsFRybScx7FwADC3k0uDPTN6u2EfLFK7110BiUE=;
+	s=arc-20240116; t=1790876810; c=relaxed/simple;
+	bh=PsUQqvp8mqbShWkGwK32Zv2FHRH6ipmPPVGm4NUjioE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FMnUVslMSlr9zrHlTMsbX8JBdegdea68t967uET1ssecGGddQUxFos7m8sVOvGMqS8FYyWKJhF1Eqs2I6Q6rCIwUshZJQgKtVtTD4YRHeyaTjaZQU8KP7f6KReu9dvVE++VWKRsaiiLq3NB6x/vjNTmBnzKpSvItOKgzoT8Ca5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bBxtRoAz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hEGdUXN/; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=qWH5BvZVlHqUy+FRkZawAzG8fB8ThKIuYvt4mNKzJ5qiPO8sd9hYCH4t9sx7dafwDOONlW0OoN8e2XqlPR8PoLNvVCd2MvqJefePedLqy/1AXcjp4Ct6d29kdY4eWV9RqB7sLhKVrKPOSDdMdrH0NJtyc2h/fHoVhhnSmIQzhW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=a0/+kRkC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cxmVLTDK; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bBxtRoAz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hEGdUXN/"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id C7F65EC01D6
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 13:46:25 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 01 Oct 2026 13:46:25 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="a0/+kRkC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cxmVLTDK"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 878691400100
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 13:46:44 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Thu, 01 Oct 2026 13:46:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790876785; x=1790963185; bh=EENbf8lyK4
-	tLbcuXN55ZDeSeq7HvqD6Fmu3cI0YIMqw=; b=bBxtRoAzuvH7jDvB20wHZVn5ht
-	jXKzKSnVbW+8KKV2M65aSWvC606yR2yywsvwvqZWXH95pu+bfjilwjTVg75pJIrb
-	60Bw32/GhPCrUVYH6gYE8W7uM0WYGhH5xRzzeV+02+eT7s47UEuS9R+9x+cOppZF
-	Nn0tpFcDy527sJ2/PNfUTlNP9Zhs11XMNMn2SV3/a8VoDaNzZr5MND7npl2A9ntk
-	Ugrq4o4raReHjS615js2PdWIGtuq+LF6Q0D18dG2zZe16nMCFQE1isWmBv1nHpOG
-	DkOWjF98dEalhdvX7iwjPDPnl5frKXycbhaCx2pAK3CTVCZSG4pX5OsgzidA==
+	:subject:to:to; s=fm3; t=1790876804; x=1790963204; bh=T5F7h1kvNX
+	fQMLjnALyNUq5vrY6EVUBWuaaNUTVHRJY=; b=a0/+kRkCJ3D+DLkqS2Nq3vg/G1
+	jeHxuBYLRPZGutKKPh7P8erdF/RQKfDu10ZRHMkI8c1Ojl6AfFDtR69ezFn82PIt
+	Py1uJkfDhiSM/5qULqdW43BMWgZKAokxKIiXT86p88xzsyjDG3YWIp1vh07QuUpC
+	oNw7G9daT6CKKoqTwbV8/hGmFa6EmrJpekuPZPu0ukvLjHeb12s0Uxywng1WIFHx
+	G9rFOv9vSvaMJTa8e0WhjEmr6VCbyJj9BXnTQ63PbWNLAj5xmOxYp9UswHi75QRI
+	wyJVWlCdgsjGT01L4CERieQ6lP7IXh5A4SfUbjq6vGor56VfO4fo2kXtPNcw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790876785; x=1790963185; bh=EENbf8lyK4tLbcuXN55ZDeSeq7HvqD6Fmu3
-	cI0YIMqw=; b=hEGdUXN/b00TOresbkY9HdTnJ21f9zwW8z2ITKx3Y8gDxcC2jRS
-	+Cvt+9NJgj/e0sHIj9FdTnazJh5qvCIBL7LlStFA3VVdd36KU9cPMxaPHM07ZjBc
-	crtvdNG6EPX6NY56vwXupPpjgPuI1GFlmne4qChgqbWDOz59SZ+w9D5y1OBXUc5z
-	izfgFq92/YxbJjcUkNbPsP4h2YHjZ1rTb8XJV3F4VB/1NGM+COIOaMHdIo9MR2qh
-	Q9J0THiyaWh8uifmtVYulG5mJjhfrdGF0WsYmK4pR2n6vMxVaRyj5FzdYqbO//Cd
-	kZzLyACG75QoP5hNXw1h054dXYhE/9KAyeg==
+	1790876804; x=1790963204; bh=T5F7h1kvNXfQMLjnALyNUq5vrY6EVUBWuaa
+	NUTVHRJY=; b=cxmVLTDKjlltiERvS1SaCoUCdDk6CiPdD9JrOpolDYly5TW7QGs
+	32lbm3sewjeEphMLMBJ1Lb78nVQrR25Ar50Tj44Nc9PL4O9U+HwuW1OWfQESgPl5
+	rFFSREow2MUlm21+zhpi6KBmNxzAWtEHxBayY2fanoQP9pFk9goRz0StOx+SZxXK
+	zvKErOlBbGRptCaPvAXO4UB0jR2X2dWnokCQqaalww/kzTjnDOQgs3sUOIMpyXOK
+	EvLtQGZlalipSDwwzm6ZNdvW3yKAI/nJdZ5jXq8Gn5i55LfjlLtE/M9fGna7QLlf
+	2+cOMX/jNQt9A7fDmsPY4n7UE/9q75LvHhQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790876785; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1790876804; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:bM0pTjUeuCS9trXEZMQ6kbGRIAEJq5sGK5zKqMTwIEtOjfk
-	LRmPQs+lNt1PWQzNZa71auw1KJIV+fOWVpnTi0v0oWh6dPnZ8g4QGqvivt5ENMD+
-	v7TwKe+LRj6Caayd0axNTrn2pZtKmormIhWdDp9bVZwd56KlGJ/O1gNB1imqfpjP
-	nIhRhMh9CChD1uTCeyN83bH8y7i+ll+wq7o0BvF/Rkyqww4Qo+1AtImF0Kb65xEm
-	aaQLRhNwPMISky0kExRNcjDQTKtwzel6/VGKlPxLaYjJdTdRJMmkmg8DIiHaW3MO
-	xUh9EcBv77TUBJjziLsoK/JUJCQiMH5H8iXawuw==;
+	s=fm3:rsa-sha256:doQ9Wt38svdiCG7tyDgKaKt58UK2iRnX9BjqMEw3bpawaes
+	FHaxu/7trC44BcGoGdUj4vvKZYoqPXCZ4GNtepJe+9ALYjLfPg7E9VDIqPsfGqoX
+	bNO+ssgyEhjM8kwHzCW9Z0dUyR2HZh8SiP9eBgij6IEKrJXdSq1iv8DHyfxpOgFN
+	aKSc1jL2F0LttT/D+uXUHUceKzP5X76VxC9L6btMx2vlqx9x0y7YFC+RI1iXizWA
+	5J2o41Wu0gW1Bh6tbjPbmesZbulPlMa3zfdmqUWelxt9PoI3uGVwgGK51LAMmBIo
+	/L23eq5DmHqlHmZgF9/w+rzpOd7fJfBGZUTr2zg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:PJX9/z4S+l5/EkZAFqXYBsbCgTe6f9OD1p7/D3D8qVE=:x5+JfsFRybScx7FwADC3k0uDPTN6u2EfLFK7110BiUE=;
-X-ME-Sender: <xms:cZy-aho8b6qOHKXlvRXmwlXLSAd5elinW0SmRmxfPxgiitv23mKiUw>
-    <xme:cZy-arHqJSdjF8jfvYynZyqFBVSKIiKVbm1DJmn3STdlQvdti_A1cVBjerDPSYY2G
-    YdLcaHBAae_muxeR7retKhmCLM7gqJbk63vwvHwLjo72w-muV78L-aY>
-X-ME-Received: <xmr:cZy-arn7qcmFzQgeamte97LvzFNQgq5XI4-OtumSJmbUmpqDBTw_3ulNyrQWjmX90A8l8IQ2P1hwmM3miTXs1DFJHl8LOHeivyws>
+Message-Instance: m=1; h=sha256:6+Dul4GgSsKN5owQrb/1wl3h4K4pWlBh3az4TRSEYGA=:PsUQqvp8mqbShWkGwK32Zv2FHRH6ipmPPVGm4NUjioE=;
+X-ME-Sender: <xms:hJy-ahm0jyS4MvtnYdL9Sk1g7KcrcaGT15szVlKPfUhUEbbnNGNS1A>
+    <xme:hJy-akQc3BPCfHeALICDRwSzjDs4ND9bVXu3-vtN35C93uM_j0BD1qStWUETNGliF
+    DMmE6WNvggJyYG3lVOVZtxQZBBw0OR_xCJyDpcG7icn7OQt6SOXWkvx>
+X-ME-Received: <xmr:hJy-alApS3Ela5yLm6WakJ3c3HzVAS43I_x5zOGnypF78a4VJe3CWX6uPyb2JeQLE04xPjqfCfoNQgTp3KUBSq3o9V9FBi5osQ43>
 X-ME-Proxy-Cause: dmFkZTFWe/awTcRXSwn3fw9X69ae+l/5rKEn7k6mefIj9xdfpzsX3wePindE5CdbIxLYmM
     ZrGnFpL2T8+kBjZ6dXnfonOFHPTeB+JljtBtMzCLx0Ov+r3UXib3OzVRPKbL4bP73MMA/Q
     P6BowY4IYJlElWtBE9y1NXaUIDnff7T0mZ0bw6XaxFsSqHlII6D8BbyMBR5YujcW+koSZj
     O3L8NszQ9b2nmxWN66+H4PgJo72AQfx6Jvzz3YcjEUawSybapuR8hYLaJbawoS7MaM/FlV
-    xwNUwyAOoLPe6U6QOzSnpR1a9hVefJsFJu5/N50vDxADa0K2U+EEKfrAlPzd44x21w28X3
-    Fh0CQssACk6wGWQXvZgA/xKjagFZMojKEKlyvMRkjHRJsCScnHS/Xrb24XVGciLdLLNixV
-    BG9PN6mkigBxacXEChqQKXHj1FtvzmmlwX9/7KInLytpUQbRXRVR5vE+6rFTCO6XHnF4XG
-    Eel6M+O9a9b7x24GAZ+yhYFAN3ZC1bXiekjH2BoNnulDZvmOKdWChz92d12GM9xNFF4Auf
-    LQW2Yb58Aq69OMBh2jFzceamvH8/jUE0ediH0NmOVdm8dk/M+J9E5sUlUrq2w9H9OX048f
-    yYsN0Xo0p+MRilVxcaGf3G2HE90Tj/WqUbecVM0q4JNwiwQbNnNjt3cI2wsQ
-X-ME-Proxy: <xmx:cZy-amnn3voZsVY7ZEucCM5d5Z2aMix6DL7PArb8VP_KkNdSxqmhug>
-    <xmx:cZy-aktZ_uGACNT43XhvACe5IuOsDUHW5jpyBzYWabu4owpo1HgaCw>
-    <xmx:cZy-ahnoOiMH_7jjgijAJ7Puy8RoNfDSx7Zg5Z_i1ApZGh-sUYCA4A>
-    <xmx:cZy-antSev-ascNXHEX0YjtS2NHZpVxO8rKrdRVTBrkVf90hQmOlxA>
-    <xmx:cZy-ajOFiUSiaCLkq7XpQpiL1Eq3EoILM59p3T33gYHjGmtw5RxOQQ8J>
+    xwNUwyAOoLPe6U6QOzSnpR1a9hVefJsFJu5/N50vDxADa0K2U+EEKfrAlPzd44x21w28nO
+    WoUop13syxlK5cAzn4N6UDIJCzLxj3iGIDD6BzERonY75byKxiTj/Z1F/h09LxNN/gzHBV
+    rMHjyNU0VlOLLQQkVS3UNqthQ+qs0DBmoZiDfBU922FPHLmkmp/nvOiE0mznAJZ4PPSbxL
+    Tf27XGT1qtm35FY1fIO1oNu7CsfaixYATL4WtJILFnvG3Yjfc/eiaHQE6pE+FKLjBYPqf0
+    21PSOM4ITg+GSmxAL6XLb1YoJ4AeiLvvRd/YnfFSgencGFb8xHLPreiPP+5W1jQgSN9IZV
+    cv7/le0aAPQQ1GAnD3CInsFikWOOq3K/Xu1DYuJ0DbdH2WHP+eeCTIwatjZg
+X-ME-Proxy: <xmx:hJy-arT6qCJH_M_oRjgL7Myqq0AKcCk1KQZ-WDxWYzsCp1U44ZU1LQ>
+    <xmx:hJy-ajrygTOTZ_aKeCBbU2H5UxSmGJa5efdhKWlZ52H3qdDHDasyXw>
+    <xmx:hJy-aty__VHhlEKHTLpYgLZBP26zF9xzfgiLLr-h21gsNe2kNRFIaQ>
+    <xmx:hJy-aoJiDfjPFl10MjwmPk5eOEIWxV4v43Co0vXi8ZdkTtkZE6GCLA>
+    <xmx:hJy-akb8TqsBGI5YkeFE6nrUFgYjaegfj0iWd0LoZ_Wy-Iq19TjnpDr0>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 Oct 2026 13:46:25 -0400 (EDT)
+ 1 Oct 2026 13:46:44 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] parse-options: allow grouping subcommands
-In-Reply-To: <20261001-b4-pks-parse-options-subcommand-groups-v1-2-01eb2f4a4c32@pks.im>
-	(Patrick Steinhardt's message of "Thu, 01 Oct 2026 12:13:29 +0200")
+Subject: Re: [PATCH 3/3] builtin/refs: introduce subcommand groups
+In-Reply-To: <20261001-b4-pks-parse-options-subcommand-groups-v1-3-01eb2f4a4c32@pks.im>
+	(Patrick Steinhardt's message of "Thu, 01 Oct 2026 12:13:30 +0200")
 References: <20261001-b4-pks-parse-options-subcommand-groups-v1-0-01eb2f4a4c32@pks.im>
-	<20261001-b4-pks-parse-options-subcommand-groups-v1-2-01eb2f4a4c32@pks.im>
-Date: Thu, 01 Oct 2026 10:46:24 -0700
-Message-ID: <xmqqcxtt5n67.fsf@gitster.g>
+	<20261001-b4-pks-parse-options-subcommand-groups-v1-3-01eb2f4a4c32@pks.im>
+Date: Thu, 01 Oct 2026 10:46:43 -0700
+Message-ID: <xmqq8q4h5n5o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -105,67 +105,33 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> @@ -1432,35 +1432,39 @@ static enum parse_opt_result usage_with_options_internal(struct parse_opt_ctx_t
->  		}
->  
->  		pos = usage_indent(outfile);
-> -		if (opts->short_name) {
-> -			if (opts->flags & PARSE_OPT_NODASH)
-> -				pos += fprintf(outfile, "%c", opts->short_name);
-> -			else
-> -				pos += fprintf(outfile, "-%c", opts->short_name);
-> -		}
-> -		if (opts->long_name && opts->short_name)
-> -			pos += fprintf(outfile, ", ");
-> -		if (opts->long_name) {
-> -			const char *long_name = opts->long_name;
-> -			if ((opts->flags & PARSE_OPT_NONEG) ||
-> -			    skip_prefix(long_name, "no-", &positive_name))
-> -				pos += fprintf(outfile, "--%s", long_name);
-> -			else
-> -				pos += fprintf(outfile, "--[no-]%s", long_name);
-> -		}
+> The git-refs(1) command nowadays has a bunch of different subcommands,
+> which makes it hard to figure out what's what at a glance. Now that the
+> parse-options subsystem supports grouping subcommands though we can do
+> better. The commands roughly fall into the following categories:
+>
+>   - Operations that span across the whole reference database.
+>
+>   - Operations that read references.
+>
+>   - Operations that write references.
+>
+> Introduce these groups accordingly, which results in the following help
+> output:
+>
+>   Reference database
+>       migrate               migrate the reference database to a different format
+>       verify                verify the consistency of the reference database
+>       optimize              optimize the reference database
+>
+>   Reading references
+>       list                  list references
+>       exists                check whether a reference exists
+>
+>   Writing references
+>       create                create a new reference
+>       delete                delete a reference
+>       update                update an existing reference
+>       rename                rename a reference
 
-It may have made it easier to follow if a preliminary step pushed
-the above to a helper function.  It would have also prevented the
-nesting becoming too deep as we see below.
-
-> +		if (opts->type == OPTION_SUBCOMMAND) {
-> +			pos += fprintf(outfile, "%s", opts->long_name);
-> +		} else {
-> +			if (opts->short_name) {
-> +				if (opts->flags & PARSE_OPT_NODASH)
-> +					pos += fprintf(outfile, "%c", opts->short_name);
-> +				else
-> +					pos += fprintf(outfile, "-%c", opts->short_name);
-> +			}
-> +			if (opts->long_name && opts->short_name)
-> +				pos += fprintf(outfile, ", ");
-> +			if (opts->long_name) {
-> +				const char *long_name = opts->long_name;
-> +				if ((opts->flags & PARSE_OPT_NONEG) ||
-> +				    skip_prefix(long_name, "no-", &positive_name))
-> +					pos += fprintf(outfile, "--%s", long_name);
-> +				else
-
-> diff --git a/parse-options.h b/parse-options.h
-> index d7f896a933..5249404b46 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -401,6 +401,13 @@ static char *parse_options_noop_ignored_value MAYBE_UNUSED;
->  	.subcommand_fn = (fn), \
->  }
->  #define OPT_SUBCOMMAND(l, v, fn)    OPT_SUBCOMMAND_F((l), (v), (fn), 0)
-> +#define OPT_SUBCOMMAND_H(l, v, fn, h) { \
-> +	.type = OPTION_SUBCOMMAND, \
-> +	.long_name = (l), \
-> +	.value = (v), \
-> +	.help = (h), \
-> +	.subcommand_fn = (fn), \
-> +}
-
-As presented, _F does not allow you to give it a help, and _H does
-not allow you to give it a flag word.  I would have preferred to see
-OPT_SUBCOMMAND_F to be extended to also take the help text, as we
-only have two existing users in *.c code, rather than adding _H
-variant that is incomplete and keeping _F incomplete.
+Nice.
