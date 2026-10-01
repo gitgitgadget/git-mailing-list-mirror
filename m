@@ -1,363 +1,168 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33E11B2EF2
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 04:22:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D0F2E3FE
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 05:14:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790828525; cv=none; b=O5kSDSz1hmvl5xs81nA7LeBRf7MJa3KUA/BXAmP123BeXiw2ieMQbKKDOUYlvZeW1ZscE7Ab/pOPMrM78Q+WmXgjWPgSrfRuqbDVLsr3aFv3FOLEkk2lQJvNeGl74XiZl11ykCivepOlcGxGmInvBZukFcnhuHLo/617htBU/Yc=
+	t=1790831653; cv=none; b=lYMxpE0EhaZouyjPFTTL7Yi1xUa8PF/fXNcOES1vPysX7f7+wfJ4Yol/VfpiAgulaIJlkAmgksgzSX4AdJdEpt3GgyMa2+p9AURVKwT4VG2UOMijFzCXci5/a72LCpl+RcDJSXaVNRm3KkFXIzUGtzjQeZv1YbC0Ro+fNRjE5zQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790828525; c=relaxed/simple;
-	bh=v7fvfiwe6MsX/b9ufy4iPy7RdYnpWT6A3QBc+wRLzo8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M7rHlvCFx82Bf6XMO9ApVV5mYb7gzb/N5RxCu8yLlJijboO9ayXWDygMALdYibr/B7U6tSbbg5k19oSwT8muND9MGvnWVvh8pAorIZeUDYwzrDmhuNyT3Uavq/CCeeDmIIu0nDsb6SkSAhucDVj5LDDTc+q0k5NAImmxl8f3L2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com; spf=pass smtp.mailfrom=kanamei.com; dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b=FoVW2U7r; arc=none smtp.client-ip=74.125.227.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kanamei.com
+	s=arc-20240116; t=1790831653; c=relaxed/simple;
+	bh=cQPEZ2CAfS6LK5QvQW7zzK7v1ZsFVdWY7WWeHklwRIo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dUrYrtEp8dsZzO+8I04rxGh6VUEnyY1HSmKmmeGIh83q30/BAP1FOOO4ZhPNhZVG28h/ggRYc/ZbkvDqYX0x0tLhpF0GdquKJRTm7J4PT2MPYYZxfYaaInRCloFvaAEvtNLpQmtRRYVR+XwLVfhaXWcmnKgrq+w1kvkWVcwZNxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZOV2fVcA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PDUM8jr5; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b="FoVW2U7r"
-Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-396ccc09d65so3633594a91.3
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 21:22:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kanamei-com.20251104.gappssmtp.com; s=20251104; t=1790828522; x=1791433322; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=4CWr5kBW70ipeB9x711gxu3GklUO0G1iG5FahCySmmA=;
-        b=FoVW2U7r+0bcqImAGzxHnrcBfcubCQ+8Qz7zYFHaiGn/tkJ4aUhFxot5Y7MR4vWt1W
-         d1ksyQxU6EI9ePNOKt3h3My5UH7pUSCsIhD+mQhHmhdVRHxm83OwtnAyefQle44bXm8l
-         Kfw6jM9l3hdpeoV4wd6TSD/sb8NnKk1qSmzvKGPppF/ulGGP+mczbxDT5hGcXyAJU7IS
-         vVOIuwUO9m2jCVgWK7hlCtu6Ji609bKU5jMBf0N1nDR/yMMViAKMbLvlKu+p7TSTcwe8
-         jEPSMK+vIBjuIh6vLexc5dlPCLNLNJbp3hVoWniwHm0wS9VQpU+F68Uyqtp4v5e5CJvS
-         BTCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790828522; x=1791433322;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=4CWr5kBW70ipeB9x711gxu3GklUO0G1iG5FahCySmmA=;
-        b=X/9i29099kKCLKOFXfyj6Q8m41sZ6dtIQst3aOLSHEWcViJGKM2O5Y43HZ5OGVfpBu
-         2RRLHcO/MBg7YjoBh2wqNcNeIYEd57UD52JoENGNLzx6fJ/iUjucFsAp2dTjB0rTk3WV
-         MtnQSnCzdwTQXeGzRG2HZYKo1/X4qDV3THiL+TRo5QmrPs9u9xFUJXcCTfW7e8p8CPv9
-         OPO5oUmyqJHsiQAVPxolV90oUv4aC4Mi0JEuhyYjs+asPmRo0PZddqd79B6IlghnwjgS
-         sSXIVTaOV5FTQQeonDaV1xwmc1fsqjbPeUXdm0WBi6ehm4Mfxb/3D7UJe5M1VTPDWI/C
-         j98Q==
-X-Gm-Message-State: AFq9FYIVuZHGH/LIfFRl850RYs3EDjAIMNBolOAggr23Lt9+5ofinAEl
-	ceG/0RYV9CPSOqMcuuBqB4nljr0w9EbTI3iZjlGrtvbmWKq3Z3NB0T9OId0lWUF+pkU9pXwyCm6
-	lmifIcIcsxw==
-X-Gm-Gg: AYBFou13H+8QFUh5Wr2fkTy3F2ff0LKunX+81vQgLRReU9GyDBsHz0a/6GRlYEyQ+mb
-	zCly9JmTzX+UtG08d690ot4pUScVr//vHAx82W2TO3ktNaHzgltth5tArza9JhdMacJgpharEeV
-	CduOKVEP67VKaY4xPnJfGuqPe/lyzb0ZwkT22qvqpngxph43DXd67tXe2hcEb4Om4a05atJ7fyP
-	8AQb36ZdySKR2BvOJnOVSKlWdNR3+qbplXWjJl3NnDuISoYbr6c6sZAZb5tw+lbIOaVXdcKjZM9
-	hxgLCmZ9XnMoQDK17SX4Ok333CRgcqU1SHer1KU0g8gcmTZexK/+l1kyaztod52MlhlGDb864sW
-	oqH90nZztuhVi2rXxrWnUolWkSumpgHEUtglyUEgDHG+XjUgwRZvYcOCupiPQQ9VkdQx4bGboPK
-	PA0IEgoR8M2d74tNUDZ4Lq9kPIRykTf40KrFr8XxV4lU9p4vb3Lt0rphhSMiH0qc3AUM1UlM12X
-	YcRwZ6Jgw+zOD/00PY4z1t8ld68IVyQa+HxPr67Mmc4MYyxNCPaebsbVh8=
-X-Received: by 2002:a17:90b:1d0b:b0:3a0:2662:815a with SMTP id 98e67ed59e1d1-3a4d18c0f0emr2983669a91.43.1790828521994;
-        Wed, 30 Sep 2026 21:22:01 -0700 (PDT)
-Received: from m4-mbp16-shigedan.flets-east.jp ([2400:4050:3c1:f500:5d3d:b617:5e0:4606])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a4f44a5a29sm2222921a91.14.2026.09.30.21.22.00
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 30 Sep 2026 21:22:01 -0700 (PDT)
-From: Kazumasa Shigeta <kazumasa.shigeta@kanamei.com>
-To: git@vger.kernel.org
-Cc: Shabbir Bhojani <shabbir.r.bhojani@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Kazumasa Shigeta <kazumasa.shigeta@kanamei.com>
-Subject: [PATCH v2] stash: expose untracked modes in create
-Date: Thu,  1 Oct 2026 13:21:55 +0900
-Message-ID: <20261001042155.33303-1-kazumasa.shigeta@kanamei.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260929074222.11942-1-kazumasa.shigeta@kanamei.com>
-References: <20260929074222.11942-1-kazumasa.shigeta@kanamei.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZOV2fVcA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PDUM8jr5"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 26451EC011C;
+	Thu,  1 Oct 2026 01:14:10 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Thu, 01 Oct 2026 01:14:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1790831650; x=1790918050; bh=RZPaIDWWa9
+	zruSZIZ8RYarLm/3EOV/Xo6qBSuRLdPRY=; b=ZOV2fVcAGfWAf4I4mY9w7hoa9W
+	CLzYTlA3fgFoAzgMGIK8oShwaF+i/5c17xg8VadErdGrBZF8NHEzKxtTU/hsmiDD
+	kNAXH6Bd47DQg2bmLfrGpsOIeIUY7D4a3eysixfvRFUBTm02T8twdj3xEKJ0wWY9
+	rXe8omF8YwJHKUKKJjmNvNh6puaSvByOhRB1ck2+sHuUY+RM0K0QGs12NkAG24JG
+	cT0rYmzjsfsShFa5sk3UlqJHStyK6guc5bEVkhuKSTGJuC2l11cu0E+TJLUv3Wp5
+	JDL1MAf3i166gq41YGLwrYtfmNdANqbT8aMXFWCYX9kuFv9vs2dUTl9gyepw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790831650; x=1790918050; bh=RZPaIDWWa9zruSZIZ8RYarLm/3EOV/Xo6qB
+	SuRLdPRY=; b=PDUM8jr5wnnYIY81+3jvIZfrhJlHKKAgQR6zublShswJJoIB9Cj
+	g4kC/UEtj8I89xW97KHNd5d2/SKRLJ+WXq8v/0WEN7UMG4u7CwLmA444ZVasBkib
+	KFuoYRe1Mz1/yubg0Zn57+Y+K6z8Pph6X4g+gZdeQldWgsPUYqWKTQ/f3Nc2h2Xh
+	RCR/vddadOXHTxQf0oTF2i9SfP5n5lFaHuQdRcslXpQTeM/1XeYPdrz8DU0xJjkT
+	rl3tr4AmWBhI6tH93v9aBzKeWyv1L6cx4ZK2Zxf6XF8kg2M+3dRM08UIOn7yg7c/
+	3pu/iqpD8kPstA+G94eAaG3lmlklUrIWnew==
+X-ME-Sender: <xms:Iey9aqz6ciKGw9_k4XK4Gr57p1uBKpnxkIKJiudLzmMYosuUXt6Ifw>
+    <xme:Iey9atQD6plYwSDmiKkjRbyXziVscdI_Nl32urwLe7etWhJX27hwJ0BetbfpaVwO_
+    GsBOh_l7h53X6t6sxn1dgug7oHyDi74-x58UbsTzioNWSCVcok5w1I>
+X-ME-Received: <xmr:Iey9ahUnbpU2fy7SrRYEGqUYY_INraJe4lIp3e0vY3tMT5kaEIvZyJuR7CIxIyuAeexMOg>
+X-ME-Proxy-Cause: dmFkZTEc3tjFsOc94JBQ3ATW1YbyFBg6XRsSSeekjbNj1fabeMH0MdVV+oWe0TTxpSMvyM
+    WTUqYi/IiHDfiWaHfv6R/yN+T6VM9aSvggfBuRxyi1GNdp4kT03FxD5RGAUcyOcR5pJAG4
+    H2/BlePgy1Zue22AJ+L1pD8UT6YpAXHUNHLUEJfT07IXPrnexsx7jpFmkvEwfAcvIa9/Rt
+    LGEEZxfcMrpMPRfxulMx0nkajt5Q20np2gbuaA5V+Z3DTEiCRsn04gl89gjIX8JYhNwooV
+    DNIY1jB1tFg2S83CTTiacRiDUS/Yu9vVxMyiMJ7U6Mm6v2w6GwYRDTbboRmTiX58KYF4MK
+    cbJ/bBWb5XLCDgQgSWBK6DrXGVHdFZl96wXy62OntIMVZ6/86x35lGNwIi7w4dhXzEkajP
+    eUkkVn50tIlnsgSvvH7oJEiZiSPjafc7nRguFUex/Nvmy65xfD9Jtv6T3wjvfYFr21IkuI
+    xxjpDO3ruGtt8y9jOo/e9ED5g9bTec7LSPaVqT3k0qfSJwGBZz5KMvpy0K7vC7c1HrTUI8
+    zyYZEskkcjeT4H7as8gI0xYKJokiSchlT8x/Co0cMkIyTp6XyA1FeKuDfYXB3kPWQtvbc8
+    I4wPVu8ViA47w4ebECDVvzO8Tjy+J/G7fKY3Vef+2mZI+EtIPY0ztTyM2mOg
+X-ME-Proxy: <xmx:Iey9avaPf600hH5fAw8rAvOfK7-_9oban4uNE40mDbYwFvfPRfLpvw>
+    <xmx:Iey9an2FsDI2J8sL0Xloc-ZEAZwZeFi2GqbVhTxk_Af4_fSvV64jww>
+    <xmx:Iey9ahhy6fCTc0YqBRTXnZ-_spWXGUyRO5aTHoxOkzXxe7DTYy0Tzg>
+    <xmx:Iey9arY38tWcqtW6UGk5vs0RsDiQmBK9eF-zg2aAjT1j2dezWeZgcg>
+    <xmx:Iuy9ao0ZbBq7g1PVP8mmVM4Bpbet1e5WyY5-jtGJmXx0spgNluu9tY9J>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 1 Oct 2026 01:14:08 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 626020dd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 1 Oct 2026 05:14:06 +0000 (UTC)
+Date: Thu, 1 Oct 2026 07:14:03 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Julia Evans <julia@jvns.ca>, Julia Evans <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 1/7] [doc] Add new gitmergeconflicts man page
+Message-ID: <ar3sGzEknG2_Un_E@pks.im>
+References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
+ <ad4853dc36cdb883c9a8dc6bda747a5ea318e7a8.1790261062.git.gitgitgadget@gmail.com>
+ <ar0MVRV5X8zgZfLy@pks.im>
+ <5ba2088c-4919-465f-8892-4ed0685f81ea@app.fastmail.com>
+ <xmqqqzia8ohv.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqqzia8ohv.fsf@gitster.g>
 
-`git stash create` always passes zero for the include_untracked parameter
-of do_create_stash(), even though that helper already supports untracked
-and ignored files and stash push/save expose those modes as
--u/--include-untracked and -a/--all.
+On Wed, Sep 30, 2026 at 01:37:16PM -0700, Junio C Hamano wrote:
+> "Julia Evans" <julia@jvns.ca> writes:
+> 
+> >>> +to include merge conflict markers `<<<<<<<`, `=======`, and `>>>>>>>`.
+> >>> +For example, here's a merge conflict where both sides edited a list of
+> >>> +fruits in different ways:
+> >>> +
+> >>> +----
+> >>> +FRUITS = [
+> >>> +    "apple",
+> >>> +<<<<<<< HEAD
+> >>> +    "cherry",
+> >>> +=======
+> >>> +    "banana",
+> >>> +>>>>>>> add-fruit
+> >> Hide quoted text
+> >>
+> >> A bit of a tangent, but sometimes I wonder whether we should make the
+> >> respective commits a bit easier to access. For example, we could put the
+> >> equivalent of `git rev-parse --reference <commit>` here for each of the
+> >> sides.
+> >
+> > Personally I'm not sure if the commit ID would do much for me, but I feel
+> > like it would help me if it were possible to include the commit message. 
+> 
+> It would also help the resolution, not just committing after you are
+> done.  It may not matter while picking between cherry and banana to
+> show your personal preference on fruits, but in a more involved
+> conflicted merge, it may help to be able to view "git show $commit",
+> "git diff ...$commit", and "git diff $commit..." where $commit is
+> the "add-fruit" side of the merge to understand what they wanted to
+> do, and what we have done while they weren't looking.
 
-Teach create to accept the same options and pass the existing mode
-through. Unlike push/save, create continues to only create objects: it
-does not update refs/stash, reset the index, or clean the working tree.
+Yup. Doesn't mean we cannot _also_ include the names that we have above.
+So in the above example it could be for example:
 
-Use parse_options() for the new options and stop parsing at the first
-non-option message word. This keeps option-like tokens after the message
-as message text, while leading option-like arguments now follow Git's
-normal option parsing. In particular, unknown or malformed leading
-options are rejected instead of silently becoming a message, short
-options may be combined, and `--` can be used when a message itself
-begins with a dash.
++FRUITS = [
++    "apple",
++<<<<<<< HEAD: abcdefg (fruits: add apple, 2026-10-01)
++    "cherry",
++=======
++    "banana",
++>>>>>>> add-fruit: 12345678 (fruits: add banana, 2024-02-03)
 
-Keep create's existing no-change behavior: detect the usual no-change
-case before do_create_stash() refreshes and writes the index, and return
-success without printing an object name. If do_create_stash() still
-reports its internal "nothing to create" result, map that to create's
-public success status.
+That format would have a bunch of advantages:
 
-This follows the stash subcommand exit-status convention established by
-786fc390465f (stash: reserve exit status 1 for conflicts, 2026-09-03):
-subcommands return 0 on success, negative values on failure, and status 1
-when applying a stash results in conflicts. cmd_stash() maps negative
-subcommand failures to 128.
+  - We don't have to teach users about special refs like MERGE_HEAD to
+    let them figure out how to access each of the commits.
 
-9ca6326dff29 (stash: refactor stash_create, 2017-02-19) added the
-internal include-untracked path while intentionally leaving the user
-interface for "git stash create" unchanged. Reuse that machinery and
-the existing INCLUDE_ALL_FILES mode rather than adding a separate stash
-creation path.
+  - It gives a bit more context about what each specific side does, at
+    least if you have good commit messages.
 
-Add coverage for short and long aliases, combined short options, the
-untracked/ignored boundary including an ignored-only worktree, option
-parsing and dash-leading messages, no-change behavior, and preservation
-of refs/stash, the index state, and the working tree.
+  - It also gives a sense of timing because we include dates, and that
+    may help in some situations to figure out what's what.
 
-Signed-off-by: Kazumasa Shigeta <kazumasa.shigeta@kanamei.com>
----
- Documentation/git-stash.adoc | 19 ++++++---
- builtin/stash.c              | 48 +++++++++++++++++----
- t/t3903-stash.sh             | 83 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 135 insertions(+), 15 deletions(-)
+I'll create an issue on the GitLab side and ask someone in the team to
+maybe give this a try.
 
-diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
-index fc6a9a0..d343a75 100644
---- a/Documentation/git-stash.adoc
-+++ b/Documentation/git-stash.adoc
-@@ -21,7 +21,7 @@ git stash [push] [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | -
- git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
-            [-u | --include-untracked] [-a | --all] [<message>]
- git stash clear
--git stash create [<message>]
-+git stash create [-u | --include-untracked] [-a | --all] [--] [<message>]
- git stash store [(-m | --message) <message>] [-q | --quiet] <commit>
- git stash export (--print | --to-ref <ref>) [<stash>...]
- git stash import <commit>
-@@ -138,10 +138,13 @@ with no conflicts.
- `drop [-q | --quiet] [<stash>]`::
- 	Remove a single stash entry from the list of stash entries.
- 
--`create`::
-+`create [-u | --include-untracked] [-a | --all] [--]`::
- 	Create a stash entry (which is a regular commit object) and
- 	return its object name, without storing it anywhere in the ref
--	namespace.
-+	namespace.  The `--include-untracked` option includes untracked
-+	files, while `--all` also includes ignored files, without modifying
-+	the working tree.  If `<message>` begins with a dash, use `--` to
-+	separate it from the options.
- 	This is intended to be useful for scripts.  It is probably not
- 	the command you want to use; see "push" above.
- 
-@@ -167,10 +170,11 @@ OPTIONS
- -------
- `-a`::
- `--all`::
--	This option is only valid for `push` and `save` commands.
-+	When used with the `push` and `save` commands, all ignored and
-+	untracked files are also stashed and then cleaned up with `git clean`.
- +
--All ignored and untracked files are also stashed and then cleaned
--up with `git clean`.
-+When used with the `create` command, ignored and untracked files are included
-+in the stash entry without modifying the working tree.
- 
- `-u`::
- `--include-untracked`::
-@@ -179,6 +183,9 @@ up with `git clean`.
- 	all untracked files are also stashed and then cleaned up with
- 	`git clean`.
- +
-+When used with the `create` command, untracked files are included in the
-+stash entry without modifying the working tree.
-++
- When used with the `show` command, show the untracked files in the stash
- entry as part of the diff.
- 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 7a98434..ec2b5e7 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -59,7 +59,7 @@
- 	N_("git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
- 	   "          [-u | --include-untracked] [-a | --all] [<message>]")
- #define BUILTIN_STASH_CREATE_USAGE \
--	N_("git stash create [<message>]")
-+	N_("git stash create [-u | --include-untracked] [-a | --all] [--] [<message>]")
- #define BUILTIN_STASH_EXPORT_USAGE \
- 	N_("git stash export (--print | --to-ref <ref>) [<stash>...]")
- #define BUILTIN_STASH_IMPORT_USAGE \
-@@ -119,6 +119,11 @@ static const char * const git_stash_clear_usage[] = {
- 	NULL
- };
- 
-+static const char * const git_stash_create_usage[] = {
-+	BUILTIN_STASH_CREATE_USAGE,
-+	NULL
-+};
-+
- static const char * const git_stash_store_usage[] = {
- 	BUILTIN_STASH_STORE_USAGE,
- 	NULL
-@@ -1643,26 +1648,51 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
- 	return ret;
- }
- 
--static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
-+static int create_stash(int argc, const char **argv, const char *prefix,
- 			struct repository *repo UNUSED)
- {
--	int ret;
-+	int ret = 0;
-+	int include_untracked = 0;
-+	struct option options[] = {
-+		OPT_BOOL('u', "include-untracked", &include_untracked,
-+			 N_("include untracked files in stash")),
-+		OPT_SET_INT('a', "all", &include_untracked,
-+			    N_("include ignored files in stash"),
-+			    INCLUDE_ALL_FILES),
-+		OPT_END()
-+	};
- 	struct strbuf stash_msg_buf = STRBUF_INIT;
-+	struct strbuf untracked_files = STRBUF_INIT;
- 	struct stash_info info = STASH_INFO_INIT;
- 	struct pathspec ps;
- 
--	/* Starting with argv[1], since argv[0] is "create" */
--	strbuf_join_argv(&stash_msg_buf, argc - 1, ++argv, ' ');
-+	argc = parse_options(argc, argv, prefix, options,
-+			     git_stash_create_usage,
-+			     PARSE_OPT_STOP_AT_NON_OPTION);
-+	strbuf_join_argv(&stash_msg_buf, argc, argv, ' ');
- 
- 	memset(&ps, 0, sizeof(ps));
--	if (!check_changes_tracked_files(&ps))
--		return 0;
-+	/*
-+	 * Preserve "stash create"'s successful no-change behavior before
-+	 * do_create_stash() refreshes and writes the index.
-+	 */
-+	if (!check_changes(&ps, include_untracked, &untracked_files))
-+		goto done;
- 
--	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, NULL, 0, &info,
--			      NULL, 0);
-+	ret = do_create_stash(&ps, &stash_msg_buf, include_untracked, 0, NULL,
-+			      0, &info, NULL, 0);
-+	/*
-+	 * Status 1 is reserved for conflicts when applying a stash.
-+	 * do_create_stash() uses it internally for "nothing to create", so
-+	 * translate that sentinel to create's public success status.
-+	 */
- 	if (!ret)
- 		printf_ln("%s", oid_to_hex(&info.w_commit));
-+	else if (ret == 1)
-+		ret = 0;
- 
-+done:
-+	strbuf_release(&untracked_files);
- 	free_stash_info(&info);
- 	strbuf_release(&stash_msg_buf);
- 	return ret;
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 7211586..1f660ca 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1179,6 +1179,89 @@ test_expect_success 'create with multiple arguments for the message' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'create with untracked options' '
-+	test_when_finished "rm -rf create-options" &&
-+	git init create-options &&
-+	test_commit -C create-options base tracked base &&
-+	test_commit -C create-options ignore .gitignore ignored &&
-+
-+	git -C create-options stash create -u >actual &&
-+	test_must_be_empty actual &&
-+	git -C create-options stash create -a >actual &&
-+	test_must_be_empty actual &&
-+
-+	echo untracked >create-options/untracked &&
-+	echo ignored >create-options/ignored &&
-+	git -C create-options diff >before-worktree &&
-+	git -C create-options diff --cached >before-index &&
-+	git -C create-options status --porcelain=v1 --ignored >before-status &&
-+
-+	short=$(git -C create-options stash create -u "create options") &&
-+	long=$(git -C create-options stash create --include-untracked "create options") &&
-+	test "$(git -C create-options rev-parse "$short^3^{tree}")" = "$(git -C create-options rev-parse "$long^3^{tree}")" &&
-+	echo untracked >expect &&
-+	git -C create-options show "$short^3:untracked" >actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git -C create-options cat-file -e "$short^3:ignored" &&
-+
-+	short=$(git -C create-options stash create -a "create options") &&
-+	long=$(git -C create-options stash create --all "create options") &&
-+	cluster=$(git -C create-options stash create -ua "create options") &&
-+	test "$(git -C create-options rev-parse "$short^3^{tree}")" = "$(git -C create-options rev-parse "$long^3^{tree}")" &&
-+	test "$(git -C create-options rev-parse "$short^3^{tree}")" = "$(git -C create-options rev-parse "$cluster^3^{tree}")" &&
-+	echo ignored >expect &&
-+	git -C create-options show "$short^3:ignored" >actual &&
-+	test_cmp expect actual &&
-+
-+	git -C create-options diff >after-worktree &&
-+	git -C create-options diff --cached >after-index &&
-+	git -C create-options status --porcelain=v1 --ignored >after-status &&
-+	test_cmp before-worktree after-worktree &&
-+	test_cmp before-index after-index &&
-+	test_cmp before-status after-status &&
-+	test_must_fail git -C create-options rev-parse --verify refs/stash >/dev/null 2>&1
-+'
-+
-+test_expect_success 'create untracked modes with only ignored files' '
-+	test_when_finished "rm -rf create-ignored-only" &&
-+	git init create-ignored-only &&
-+	test_commit -C create-ignored-only base tracked base &&
-+	test_commit -C create-ignored-only ignore .gitignore ignored &&
-+	echo ignored >create-ignored-only/ignored &&
-+
-+	git -C create-ignored-only stash create -u >actual &&
-+	test_must_be_empty actual &&
-+	stash=$(git -C create-ignored-only stash create -a) &&
-+	test -n "$stash" &&
-+	echo ignored >expect &&
-+	git -C create-ignored-only show "$stash^3:ignored" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'create option parsing and dash-leading messages' '
-+	test_when_finished "rm -rf create-message-options" &&
-+	git init create-message-options &&
-+	test_commit -C create-message-options base tracked base &&
-+	echo modified >>create-message-options/tracked &&
-+	echo untracked >create-message-options/untracked &&
-+
-+	stash=$(git -C create-message-options stash create handle new -u flag) &&
-+	echo "On main: handle new -u flag" >expect &&
-+	git -C create-message-options show --pretty=%s -s "$stash" >actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git -C create-message-options cat-file -e "$stash^3^{commit}" &&
-+
-+	test_must_fail git -C create-message-options stash create -f >out 2>err &&
-+	test_grep "unknown switch" err &&
-+	stash=$(git -C create-message-options stash create -- -f) &&
-+	echo "On main: -f" >expect &&
-+	git -C create-message-options show --pretty=%s -s "$stash" >actual &&
-+	test_cmp expect actual &&
-+
-+	test_must_fail git -C create-message-options stash create \
-+		--include-untracked=yes >out 2>err
-+'
-+
- test_expect_success 'create in a detached state' '
- 	test_when_finished "git checkout main" &&
- 	git checkout HEAD~1 &&
--- 
-2.47.3
+> >> I tend to forget that by default, we only render ours/theirs in the
+> >> conflict. I always feel like that makes it way harder to resolve
+> >> conflicts as you don't have the context of what the code looked like
+> >> originally. So I have diff3 configured locally for ages.
+> >
+> > Every time I show people diff3 someone tells me how happy they
+> > are to learn it :)
+> 
+> Yes, we should encourage "merge.conflictstyle=diff3" (I feel about
+> this strongly enough to think it should become the default).
+> Knowing what the original was before one side wanted to say "cherry"
+> while the other side wanted to say "banana" sometimes helps a great
+> deal to decide what to do with the conflict.
 
+I very much agree that it should be the default.
+
+Patrick
