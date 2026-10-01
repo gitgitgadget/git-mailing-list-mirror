@@ -1,121 +1,139 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from quail.birch.relay.mailchannels.net (quail.birch.relay.mailchannels.net [23.83.209.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43FE3CD8D7
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 22:16:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6233CD8D7
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 22:16:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.209.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790892984; cv=none; b=ctMVcb4y/cEu07bX1B7d7NvWNKhAUFlbdp50ht83uELlfFLQc3fv/e+8EWyjrSJT1FUIX+EL5z81kYsnYaaRpxbli5wj3Xz7I3AzM2JEK16Zp6bJyvWyxBV3U1LQM6RR9+cSBMzJLs0ulw3AM7kx2gzBdvrVUlZt63pDExpKKQQ=
+	t=1790892990; cv=none; b=T2WQM1Sl7MVJ4NeQVKogL/F4+C10ePJ1i7HIaWFi7/t+ey2Jr1juHON0JWuG7BV3w3Dg4OsEd+DHPDujfXf/Kd97jjiyumi1WPtK5lOPUQfzfx8A1S3cqnPdo51Ix8+829wCIdozUBoWfxdm6YsWpXOck+azGtQSW0VbEhELhIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790892984; c=relaxed/simple;
-	bh=Iv0krZCDwvebv5XQS7QUMa3LDLbHdF0SEDJPrurlUjs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=et3uu/J6OFpKCzCmF9QgM4VNNZ112SAzYESnw4SwG8fJgKP8T+f8XTZ1tAB5WCCkE/7B96yn2N+WPu+NQBFbxR2WxQIH/drrq4IxavaNJsVnL6GliW1yxg31zYfmdYj3iyV+McgPt77yvPAgMkk1ZlqD3k9ZzgMfyPSW+Szqxmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=s7UM/YTi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YEr/rbqp; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790892990; c=relaxed/simple;
+	bh=zqVPhaTxLRD+5Wj/Lkeq1IptmL08KWfxymlp9ZunyQM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z3wt3Dv1zWuymlC8KedpaK8VpM7Rsrd923DZ1BE1UR6rBusScJfTXPadt9V8pJvrtyZWm+UPVQ00ktHnvA7lQvMs2u0eve8Gm2HiLOvpQx0Khj+noOBQ414Td0cN26UnTQj8copGNbvx/lYhO7EAlmWKBn1Zp+YO6Rwho7VIoyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=EYOiNfpt; arc=none smtp.client-ip=23.83.209.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="s7UM/YTi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YEr/rbqp"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 231381400120
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 18:16:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 01 Oct 2026 18:16:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1790892979;
-	 x=1790979379; bh=Iv0krZCDwvebv5XQS7QUMa3LDLbHdF0SEDJPrurlUjs=; b=
-	s7UM/YTip8d0pnmYnPePy5oKCidXjDaw5FLH5pCpym0QFI/ZSAdIjHFXt1D6qwKO
-	sPVGJwqaW5QPLsxlGUdoIADUOU/SF0j3oPlLdcHF/dQZt5AVp3wlDLze+hVi3aRj
-	Xv0wG2O7kyYHzqD9KBQp6qwEJs7JJakcdR9iMR7VLKcODGC+guDtJIw+9w7qVqcK
-	Aj41QwylT2goRLsrgM55qvFKe+u+db8JU1IIiG3R+uDVysWecwIaIQyBQNoHzX0+
-	XEzZZYOrWLEobDqzSvRk5arnrJhn96wVuvQqCk66CqMPP+5TduvyIZT0Af+ZSdCx
-	sb9SMfEy+6bqlXGeGlbRuw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790892979; x=
-	1790979379; bh=Iv0krZCDwvebv5XQS7QUMa3LDLbHdF0SEDJPrurlUjs=; b=Y
-	Er/rbqpQJcDwOlkhChu5ZpGfLbgLkxoKezAHXw7cRkjfJXKXnfJKYRWua6tPydx/
-	7gaWzUePY7ZCyc60dpLjFN5RPvXxiCobBBA1cuhCMoLWtwfW9hVMx6isnerpODHI
-	WK/2x7Bk0bbIGsDrLvOGQeiZJpppt5JGraV6PHKbHBZJyXOkYbYKTOEJCneMDA7N
-	p6dy5xOQ6OaOVdCECHgrJJ9roWZfdZ3AMNnAevM955ww25f40XpuaLi8NUHOnSa7
-	5uf/nUoIb5IvoUTd3BbYhKffE5CP5dBnuHfNfrdjvUBF6y7Est40Z2NnU/RXZiNJ
-	GoNBySqFKIPJsXqHGVZaQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790892979; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:nEHTPlp2M16kRDbks8jhr1qrT0vga1apsZ+sdarnUNI7Vrr
-	7s0XhYkXXWrTqbzsL3g6FifyHDXWI25SGrX9OlF4Y6wd8hEHVLVe5Mq/UZBYbizU
-	/oysA8C84CjO/v/RFy2bAR8KnNyLLlZnhtt4d3c7O4tv8RuagYNW9uVvcRJhMRWk
-	EdfjRjj7UwTcKOOmYdrzUy2iqfpjxEMtWjkESx0jFhl2aN9/YbhDOsccsxLqsjfc
-	eFHIlUm84f/fjz9ZtsMhZz/3d7LEkuO46/tzwrqVQNB3Knh9nsGw/i0Y/3p3FhUt
-	+rmife5nfW2JEbF2DlEB9gCfoYKP5HYppxUpDBw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to,
-	user-agent;
-Message-Instance: m=1; h=sha256:7k60M0ZNb7BfJ29TxA/emnBFhiV6Dqjs1AuerWdcavA=:Iv0krZCDwvebv5XQS7QUMa3LDLbHdF0SEDJPrurlUjs=;
-X-ME-Sender: <xms:s9u-avy6jcYoXe_5tXphC0Q9KvNXW3IhGw8SjGuNjtA_kg9sK-5AdA>
-    <xme:s9u-auTF1StLlvqlL258nt7fbUzBLi6T3-1Sn9TGvkFmwj-7DK0GwsSLJBfPxPLrh
-    _G03Y7sjkZh6GZJYY0KLFmRzjm5RX74O-pWa3dmS1n244410VpNTCM>
-X-ME-Received: <xmr:s9u-auUn6k3Ey96rXq0zx6vub2isfvUbdRYl3RpTDJdVPugABJStedmQ7B_mhjFz78Nn-wO61Abaq8DSritrDI3jl70u5N4xpqNL>
-X-ME-Proxy-Cause: dmFkZTFIc89kiBMDQTLqibmuRfXT1sMmx0U2H4czKXysJ6O1FJlFBb6TH1csmaVJjf/89r
-    /TPIqMEKGu/9C29RFzRyloGy7Ap9sfDYyrJ1orL8BiqjXrMKFFxIgFmgNidnG92feSvE59
-    ndwJt067Ezi9Zlbh7W6o99dTpJPgQ1QITCAEOOG09MXPA0pjYfwvDB+9EezfSfw4SDTFyf
-    6pKJdEfrnR2ZX4IEdfcnn9kwE1SDduxXUAbC3IfHoN8QWXvaVr4Dxbf5PJHqj4jeINJ6/i
-    Wh1Sz61DDkfz8Zg9TSUp/kDaUTp2eISIj7G6ATjKGVbZqRnvVEpnpGO+aDgl/LiWJzaUgO
-    SppwW6huiwDNkQImX1BGF4aDbcb9cMapt2yUlT9214gQCeTqYx4q6xKiIr4kmTLKTFTfuR
-    Tb4mC0QIu0gRlSjuNx0SjhwjrQ8Uy7kd9oKQ/ZPEbyB7ZjXCf0+W0lkKTrLVuv+c7CYtiw
-    61r7e1qJMRLhTLCpkCzZnWi9uOxDynCVIk6Qvecxu8b7UzfA4DpyqFvzdZCDrja6Jm/pjF
-    c7tCCkeXNg4Q/yk2nPz4R+ek0nCBwTPv1bOelaBz+8+Icb6kVxc1ze3TsF9lbFF0YIjD7s
-    bzea5HMBjCNPtaFaVwNMANspnlOi4ivWb5I8Qg28cOZp0BFkBLckGjC3W/Jg
-X-ME-Proxy: <xmx:s9u-aobIxsLm0yP2UI3c-N2lDILQx4l7ovxV9Ag3sMvllE-Cs7l-eA>
-    <xmx:s9u-as36lEMBeQ83DBMUIX9PMA4R5Jhl3g4A2eH5QvH4rslmFQ8Agw>
-    <xmx:s9u-aihFVemCUytVa_563Ku3J9ZpMA3AXzrFAccPOsdxJ1Dggzer8A>
-    <xmx:s9u-aoZ1O-6wXRlxS-bss6ESxQJSDhrrydyPuuPBHkpIf0LChBYDQA>
-    <xmx:s9u-al0-06ImdB_8RL3YW9xUDnVcwMJog3TMRbqrWHDE4Lp_uoXhHDxQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 Oct 2026 18:16:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Hanan Arshad <hananarshad619@gmail.com>,  git@vger.kernel.org
-Subject: Re: [RFC] git stash: add porcelain for sharing stashes through remotes
-In-Reply-To: <CALnO6CBL552Ny8-cqo9EE0uy6j-TMszJFRrRuTOFC=nRJEv5qw@mail.gmail.com>
-	(D. Ben Knoble's message of "Thu, 1 Oct 2026 18:02:39 -0400")
-References: <20261001085330.73586-1-hananarshad619@gmail.com>
-	<CALnO6CBL552Ny8-cqo9EE0uy6j-TMszJFRrRuTOFC=nRJEv5qw@mail.gmail.com>
-Date: Thu, 01 Oct 2026 15:16:17 -0700
-Message-ID: <xmqqzewx2hji.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="EYOiNfpt"
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 79E6F403818;
+	Thu, 01 Oct 2026 21:01:04 +0000 (UTC)
+Received: from pdx1-sub0-mail-a234.dreamhost.com (100-96-21-185.trex-nlb.outbound.svc.cluster.local [100.96.21.185])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id E7D0E403545;
+	Thu, 01 Oct 2026 21:01:03 +0000 (UTC)
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
+X-MailChannels-Auth-Id: dreamhost
+X-Oafish-Illustrious: 2e14a1931af00760_1790888464162_285693251
+X-MC-Loop-Signature: 1790888464162:285367060
+X-MC-Ingress-Time: 1790888464162
+Received: from pdx1-sub0-mail-a234.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.96.21.185 (trex/8.0.2);
+	Thu, 01 Oct 2026 21:01:04 +0000
+Received: from ubby (unknown [24.28.102.31])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nico@cryptonector.com)
+	by pdx1-sub0-mail-a234.dreamhost.com (Postfix) with ESMTPSA id 4hwkpl31rPz104k;
+	Thu,  1 Oct 2026 14:01:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
+	s=dreamhost; t=1790888463;
+	bh=4mbO7GJ6QXsrEWOoZlsxVTEUP9tBEZABHHtIcjLg1gQ=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=EYOiNfpt54gVQ8NqwN1bFgUOw+JbOmBDedTjqL8r9x2IoVnWm31zXaPhFFt9NYJfg
+	 fXXi0lMTAwvqtCH9solpKZP8Kqjj9v0sj9J+0jpk1D9HYiL+QfMFSul6ttMWdLBnoL
+	 GCg11TSmdqLc6YlBQBZyslWIebM/dWrp8UPDZlcfiEQlEDlQ7VPwJ0zOizMEgc7jlT
+	 uCTgmvHFbmKH2mzfzln0dSyRNQBhkCA6KWQob1dXQRrd+Glbigce0o6VD0oWDACNLB
+	 wINeRChbzJKWv46ph/CbMPo5TdFa8q1/iTsTvVr7LpR0faneE02Cii+wKJdSeSH+sM
+	 efhLqOl0bVebw==
+Date: Thu, 1 Oct 2026 16:01:01 -0500
+From: Nico Williams <nico@cryptonector.com>
+To: Alejandro Colomar <alx@kernel.org>
+Cc: git@vger.kernel.org
+Subject: Re: git-rebase-walk
+Message-ID: <ar7KDbV2ra7Rtzl6@ubby>
+References: <ar5KL4_IKXYbx3Sb@debian>
+ <ar6GExDLasWWFajm@ubby>
+ <ar6LUeH3AjxbiMgd@debian>
+ <ar6a8OkGhmYVoM7E@ubby>
+ <ar69ZZ4r9ZxISIHz@debian>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ar69ZZ4r9ZxISIHz@debian>
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+On Thu, Oct 01, 2026 at 10:29:41PM +0200, Alejandro Colomar wrote:
+> Here's the implementation:
+> 
+> [...]
+> 
+> It seems to work fine, and the source file uses 52 lines (including
+> blank lines).  The behavior seems intuitive, and not too verbose.
 
-> On Thu, Oct 1, 2026 at 5:37 AM Hanan Arshad <hananarshad619@gmail.com> wrote:
->>
->> Hi,
->
-> Hi Hanan, did you mean to send a copy of your prior thread
-> (https://lore.kernel.org/git/CAKPibBw2XxjGpE_DZrWLZmMHs7kAyvOaP8504kfoh61c4UkGyg@mail.gmail.com/)
-> ?
+Yes, exactly.
 
-Perhaps they sent a wrong message after they composed a message to
-respond to the excellent idea-review made by Brian?
+> Now, compared to your script, the source length is similar (most of the
+> difference is printf calls).  I use more pipes, while you use shell
+> features like arrays (I have a very hard time reading shell code that
+> does heavy use of shell features).  Other than that, they look
+> fundamentally similar (except for the paragraph below).  :)
+
+Indeed.  My script minus unnecessary vertical whitespace and printfs is
+very similar in size.
+
+> One thing I'm surprised, though, is that you take two parameters instead
+> of just the target branch.  I very much prefer my script in this sense,
+> which is like git-rebase(1), which rebases the active branch on top of
+> the target commit.  It's up to the caller to make sure that the active
+> branch is the right one.
+
+Oh, I know... I... was being paternalistic there.  It's completely
+unnecessary, I agree.  I'll remove it.
+
+> > > I'll certainly try your script; thanks!
+> > > 
+> > > Out of curiosity, did you offer this script to git(1)?
+> > 
+> > No, though I think I've mentioned it here before.  I'd be happy to
+> > submit a patch, but I'd first have to get employer approval for it
+> > (which is not a problem -- it will only take time).
+> 
+> Please!  :)
+> 
+> Or I could send mine; I don't need to do any paperwork.
+> Actually, due to the difference in parameters, I prefer to send mine.
+
+You're there already, so go for it.  You can credit Vitor Dukhovni and
+me for this idea (he wrote slow-rebase.sh, and he and I rewrote it
+together into bisect-rebase.sh when I just didn't have the patience to
+babysit a slow rebase of my PG work), though.. it's fairly obvious, so
+much so that there's also the three alternatives mentioned by @pabs3 in
+a comment on my gist any or all of which you could credit as well, and
+probably more if you look hard enough:
+
+    https://github.com/CTSRD-CHERI/git-mergify-rebase
+    https://github.com/mhagger/git-imerge/
+    https://github.com/brooksdavis/mergify/
+
+I agree with you: smaller and simpler is better, which is one reason I
+prefer bisect-rebase.sh over git-imerge.  But I confess I've not looked
+a those three alternatives in much detail because, frankly,
+bisect-rebase.sh is so simple and easy to use, and since I [co-]wrote
+it, I know it well, so for me it's the best choice.  Since it seems to
+be a best choice for someone other than me, it might actually be a good
+choice for others.
+
+Nico
+-- 
