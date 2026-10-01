@@ -1,133 +1,154 @@
-Received: from mail-ed2-f34.google.com (mail-ed2-f34.google.com [74.125.228.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D938D4CEE47
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 09:48:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4FA4E3259
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 10:13:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790848083; cv=none; b=GjSlcGbyPUM1NHAsRu4qD/XGvuCy3HcNzWGOVnIvtn2+feR8keIQOR+iONVrHNZiUPel1u5FEWlwshP+TKjqOUwjF6sr7M6956VwphjdWezwNtI7N7gqrTGKY9u42UrUeztQc2Cw1qshCXbH5oaV1XtfznoVziww1SGahq/ITZ4=
+	t=1790849632; cv=none; b=rtrNBbi86A+qF9xyxYHJVLL2zbGCd3lCEv0NZ7BRCQc6FaonSnTidgqan9SqS9N03E6kTS7cQ+frwNWar4LVKbTD81p3mizWI8B1rxbTJUM2Fkc4EDnS0D21Jw+igf4GYq6jnAAYwO5URV9HNpTyo4smQnlgH6l9VeaNdvQh5VA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790848083; c=relaxed/simple;
-	bh=Kw/fxm36v7k34LNpXLBr6PEk6APwhBE7wEyisqQpdLg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S2n0Wh19lPtmcqGJ9vfsWd0L8BG+1w9JHNYjS7Fd762/VgxCMq2FRwrFdsDHZjVM1qTVBoBULk0efZVshauSm3tbV++FL8JIvWTKImXteYz66FQ6aLCfPL+6lVUcy1PPZXyLziOtRwEagv8BcXhMWfI/DMQCTL3AGHoK5f6nPqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BxNVOQkO; arc=none smtp.client-ip=74.125.228.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790849632; c=relaxed/simple;
+	bh=YiVXJLLZpCaGkZAqym5D/4GQnrJ/d9Y2KqJnz7rGRrA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Jf2unhiZcED6Ylg/+O28AGSYtKWjgPsvEI3VXnkXbcvg2fBYt/SGZkcFOs9NGBjxcNG5KHpyzwSJSpM3PDkplDw7jeBCUWiK2z8IkKEp4iwqFpacKPU3D2G+JzOwSpoyiinzeQiLhyFTRDHI9iI4zCoQyOL00n7mJs4vH45swa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fj7i4Le8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xGmfonqS; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BxNVOQkO"
-Received: by mail-ed2-f34.google.com with SMTP id 4fb4d7f45d1cf-6aae1f2cedfso8362324a12.3
-        for <git@vger.kernel.org>; Thu, 01 Oct 2026 02:48:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790848080; x=1791452880; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=31mSmqY1iEu4nXAYqnAXjBUWph7LfDYAKs72WX8ram0=;
-        b=BxNVOQkOw8IcdCC1PK2oBfvG9wiQ7YK/v72L+E5xtOTOLiDp8Eh+jy5I2P0YvWYYzM
-         R9TajpKT0A6+kHmRPSD9kK1P0crGpXumd5hlLI67N/zLvdOg6OizlOQAq/QPuZwTbGwv
-         twTsWJY/N0vXJ3E3ZeDkayC8iKr5PMhOqYvK7oP9rrNFqTWWDUZv6LBMjF0NcWb+KWFV
-         GF0qmLBDzFeviQkvtD4/Ncnij75mmyRL46QZeIixiHS7Mn/3Y4mhqpOI0j+1Tj8Y2KQd
-         4phmya2Uf7/QPYAvcFOwCg47vB8tRbXCrEMKHQs+8TyEcEJcFSU3m3ovEktyq3WBikYF
-         /Kng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790848080; x=1791452880;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=31mSmqY1iEu4nXAYqnAXjBUWph7LfDYAKs72WX8ram0=;
-        b=rlqA0u+TwCmizndePyNUtVNkhQ28VhETg+OvDcDUyPGsOKfXQhtXAI++aOzWCgWc0n
-         Htxk/z4IkfSDNWwFobDKUoF4k0jQdbZxzuEHCx/8LhQ5ZJbmVZWgVHk61biH+/rH94+f
-         t2g6PCVPIePQYuIPTozIx72Mt8nZts7M1DM23Hpaz8je9dpqiaQhcYIPrXVE8oxmw2SL
-         2EgRhJ+rS6AdTxLlLwwSzxeq3uEFDRngiF6DnUR4+ON3Ga/dl4wU3K4S791JbCW6ITdK
-         sbrByUCjRpsHk87lhiCshRZiE00ZUhijH7BntWLGmriBjnjFFWbI9qpnfJoDfPiaURhE
-         14FA==
-X-Gm-Message-State: AFq9FYIAUFkR7VZpcawhOid45d80T43NjYBJmrfCtfXFNhY/oVgmDMPt
-	oCskD3og1b5gCPOXz6HbbeS1yQPkjEqSdjyhrbjowowT0Oc5oVEyTupDUx6xhq4W
-X-Gm-Gg: AYBFou1s/o3+m0vHIvqKh0dvP5DIXYyQL4Edz7K0n/pdcSvLgHegTk/j8krorpHQbKV
-	nZ+TXUIUPHXVIBH93tllVTHJTFdNw/Xz+biTzVSS0c0XVX/t9asFCz1NoRGtbf1/nwwHhqwnNfD
-	8veE24NAromn49RN/1BLD3F8cK2UAIiVMztRhmipWpRqY1h+o5at3Rj4NX1xa/byJuylylRmqQe
-	aq6wsZF2EG1ECc8sSiKfGonkSrT4gR7X8hE8eV6WK05OzlUtcqrsra1KPdOGDXN5q7Ev6Wx95AO
-	riEGMehV+yuwUWP4lyWKIE6WnXx5wLZy+5QTq719qQAJOLFIJrHNXi8JxZfZJ4ZVxds0D5BTA+8
-	2RWECDvt/0SzHr6unUnGDj3VP6i2BPrZY340F31O/g1oGFIIkaKp8ZYP/T7/G6Hrv8cqefiOdrc
-	7sq0GTjqFNU3K2/QPiGy/1r7KI1zh9PkpqN7Zi6VdahBuELVLXQ0COSUSuY0UDWdBWny5XTFqx8
-	9h6nrkk2E+mp19jzcNmN1rPJxMBekfCHGAaKFYsNyYYJ6RYOGh6g4siANakd8XI
-X-Received: by 2002:a05:6402:51d0:b0:6ac:689e:ad5f with SMTP id 4fb4d7f45d1cf-6ae19914711mr2973488a12.23.1790848079785;
-        Thu, 01 Oct 2026 02:47:59 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6ae5ca74f82sm800002a12.28.2026.10.01.02.47.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Oct 2026 02:47:59 -0700 (PDT)
-Message-ID: <93321573-2164-4bbd-b884-7d6287c400b3@gmail.com>
-Date: Thu, 1 Oct 2026 10:47:52 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fj7i4Le8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xGmfonqS"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6E9E61D000B6
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 06:13:42 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Thu, 01 Oct 2026 06:13:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790849622;
+	 x=1790936022; bh=lJXqNTv4zWq26IGIP8A9UDsb4bZqRJAT5MvIF5bg3ig=; b=
+	fj7i4Le8ml/M92VNQ6B+OA9bZdr/jvhqh2YLwYrGPAaiEg2b9I2t/ygmcHhfZuQ1
+	h2P/rD1mXQ/Pk0BkHaQpo1bLJMQRVFYKBDn9SsVGznRWn5MotCvVyCty8zU8w07D
+	YdKe/IyjuQNpBn2vwetMr9Vek+3mgj/bafZEmiG7TtEzgmiMKd07jcAdNSLyvhiC
+	VQwyJCcf9XpIg8kHMFAu2OCfXn5OXFGpcA9ccW41oEHwsysLbp7tCEifipFr0aIw
+	rSukWF2Ac+V2MNd2bZpmYqyrW5ej+OVWZdhqng9GOZmpkhzxFkwMgXVZXGTk3bxj
+	mvcath8ASqiumv14N4gHdQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790849622; x=
+	1790936022; bh=lJXqNTv4zWq26IGIP8A9UDsb4bZqRJAT5MvIF5bg3ig=; b=x
+	GmfonqSYcsZBQp+jY/hI7Xq6lmGL97iYtDH1QI+DcEy4+2BzAXXmXo2xZV7c0xLD
+	4PRw/gjLhaVB6w+VzhOHuNO9Wj7bh14tcp/FNo5KncxvXLIG84T/Tq/zzWzqNvgB
+	4tUGxNfXrM0v10lNt92V5om5YEyPU2DTXwwGV1kD1PR6HaWKDvJgpILH5MOMGBYy
+	1SpBra+UvwmBCrmWWDO4UAeqs8scEtd/lL0Sm8ilVKnzhArfzY/E8H6cHSD3MPoF
+	EzQZcQe2xV46RXiCU+Ftzrw6CidTXTuxJuGeJ0uiI2oFJVm1fbF/SziJkqXFCpe+
+	KiD3Udrp+J+eT5XXAbnpA==
+X-ME-Sender: <xms:VjK-amvtXrJDl0KQp85grAvLBGezeK7el_P9a4j-dmrGDYEZpquS0g>
+    <xme:VjK-aiZN_YrJeMUdNViBtwOBeav-TdVrw7LRVFBfE2IyHCOZjCn_HDEa1R3w-9MTq
+    d1xsrEynJ0Vdu47oZnENp8CTJqbD_O7EYcVrOMssD2d8bNMuX6_KOM>
+X-ME-Received: <xmr:VjK-anZoVFAaA-iTBxqK1uLQ60b2WKgAWMwmdGxW4CZUY3pSXmjAEnj5kj9Ot9qtbu9UbA>
+X-ME-Proxy-Cause: dmFkZTF0h35Mue9KHmP8mMGW4ZegWvlnVie16JZ/OUm/O4CJZ3hjyFnJDlEtSwqdPkGNj4
+    YcSPAPsLVCPLDg5/1Nw7H0KdO0Ff3jIpzIAf4Pszwl75qMiABMJqxbODbWGF6c3siOaumk
+    P1BEEb97x56OYefJOHgySdEogrsY5wMeRcIs064fiS8yalNUdFLxWg87tX3sygwlrYa/i6
+    EI9jRTWudpfTsXkoNkGhS6YanrhXcU6LKvDlL1yE5C7cXJ1J+qoc2BJlMlhVtIgyz8UeV5
+    fB/BrLFUPqcGt2QRcdYzu4CJ2vOXFJYuyFavPwoZGFtjhKVKj2r/T2CPTKmJVZd7oZ9bQ+
+    9sYzta8chIhWmpu5zpXSYCMIjqM8HPtBOUI0u/JctdiQmUDTkaNkjsIo0mpK+Z9+Xv56Os
+    aw68VGOLwxEC8OnSLx/FB2H0zDQrLtvJfxFNFefSK5fWBO1eqYR8NchNRGD6+CUjzoog2U
+    pwxRvTxI4kYY0yN7XqMrikmPp/4oJu11vzuvHn04jS9WYJNcOlxt/VLQ1NyVPl/GmiO6R/
+    /yw/8TVPxY9jGxcP6J/qnEmAJ1eIl9lUPjMop7NFwpYwoq4EzrTrZmoTE22BgrwuLExGdH
+    gKwrVj8Z02KtbkS/7ucj4LoMapNlKiXutx/fcyOT1h3aDfO0XBo/HR8omGvA
+X-ME-Proxy: <xmx:VjK-amX_BxNIT7GPkEJy096o3dnFEOXBxh8s8-HsNlVtbD9u1Kz0CA>
+    <xmx:VjK-am1xHfJ4oDIux7YY7dn1ngOKqY5vZQ7QCUw4E9nEtL7QnlouJg>
+    <xmx:VjK-alYmmGJ9THCpTZ1LOHxoQD6U8vYQ93FEAr1Dg_nS0WVbNf8Nzg>
+    <xmx:VjK-ahqggKc0PBmxi64FBOaDSfGcLG-ZdEeXEgM2oZoCb7tdW1gzQA>
+    <xmx:VjK-ahfyvuDR8QLYs4SB2h4iOrR1_cOR0g3dbuUDbWYY5Bbno99QjCQb>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Thu, 1 Oct 2026 06:13:41 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 5c500acb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Thu, 1 Oct 2026 10:13:39 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Thu, 01 Oct 2026 12:13:28 +0200
+Subject: [PATCH 1/3] parse-options: fix completion format when first option
+ is skipped
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] stash: allow custom conflict labels for pop
-To: Junio C Hamano <gitster@pobox.com>,
- Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2430.git.git.1790801929375.gitgitgadget@gmail.com>
- <xmqqfqyq8lwj.fsf@gitster.g>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqfqyq8lwj.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20261001-b4-pks-parse-options-subcommand-groups-v1-1-01eb2f4a4c32@pks.im>
+References: <20261001-b4-pks-parse-options-subcommand-groups-v1-0-01eb2f4a4c32@pks.im>
+In-Reply-To: <20261001-b4-pks-parse-options-subcommand-groups-v1-0-01eb2f4a4c32@pks.im>
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.15.2
 
-On 30/09/2026 22:33, Junio C Hamano wrote:
-> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> This is not a new problem, but is it just me who finds this
-> "feature" more about "because we can do it", not "because we need to
-> have it"?  Stepping back a bit, why did we add these three options
-> to "stash apply" in the first place?
+The "--git-completion-helper" option can be passed to any command or
+subcommand that uses the parse-options interface. The output it
+generates is a space-separated list of subcommands or options understood
+by the command.
 
-So we could have meaningful conflict labels for "git checkout -m".
-> If there is no good use case, perhaps what we should be doing is to
-> remove from "git stash apply" these three options, not adding the
-> same to another command.
+The format is slightly broken though in the case where the first option
+is not being printed, like for example a group or a hidden option. In
+that case, `show_gitcomp()` will of course skip that first entry. But
+when printing the next option it checks for `opts == original_opts` to
+verify whether we're printing the first option. The check will evaluate
+to false though as we have skipped it, and thus we'll print a leading
+space even though we have printed nothing else yet.
 
-I think having better labels for commands that are autostashing is a 
-good use case for adding labels to "apply" but I'm not convinced there 
-is a good use case for "pop". As you say below is anyone really going to 
-type out the labels when they pop a stash? Scripts should probably be 
-using "create" and "apply" rather than "push" and "pop" so are already 
-covered.
+Fix that bug by tracking whether we have already printed anything via a
+local variable.
 
-Thanks
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ parse-options.c               | 4 +++-
+ t/helper/test-parse-options.c | 1 +
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-Phillip
+diff --git a/parse-options.c b/parse-options.c
+index 4519ead9dc..356eeff016 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -845,6 +845,7 @@ static int show_gitcomp(const struct option *opts, int show_all)
+ {
+ 	const struct option *original_opts = opts;
+ 	int nr_noopts = 0;
++	bool first = true;
+ 
+ 	for (; opts->type != OPTION_END; opts++) {
+ 		const char *prefix = "--";
+@@ -882,8 +883,9 @@ static int show_gitcomp(const struct option *opts, int show_all)
+ 			suffix = "=";
+ 		if (starts_with(opts->long_name, "no-"))
+ 			nr_noopts++;
+-		printf("%s%s%s%s", opts == original_opts ? "" : " ",
++		printf("%s%s%s%s", first ? "" : " ",
+ 		       prefix, opts->long_name, suffix);
++		first = false;
+ 	}
+ 	show_negated_gitcomp(original_opts, show_all, -1);
+ 	show_negated_gitcomp(original_opts, show_all, nr_noopts);
+diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
+index f181f0c02d..fbafd67756 100644
+--- a/t/helper/test-parse-options.c
++++ b/t/helper/test-parse-options.c
+@@ -351,6 +351,7 @@ static int parse_subcommand__cmd(int argc, const char **argv,
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	int opt = 0;
+ 	struct option options[] = {
++		OPT_GROUP("Subcommands"),
+ 		OPT_SUBCOMMAND("subcmd-one", &fn, subcmd_one),
+ 		OPT_SUBCOMMAND("subcmd-two", &fn, subcmd_two),
+ 		OPT_INTEGER('o', "opt", &opt, "an integer option"),
 
-> I know that the underlying machinery to allow different labels were
-> invented for "checkout" that automatically stashes and then pops
-> while switching branches, and the "checkout" command wanted to use
-> labels that are different from what "git stash pop/apply" uses.  So
-> I would not question that there is a very good use case for the
-> underlying machinery to allow us to use different labels.
-> 
-> But was it really helpful and necessary, beyond "Having the feature
-> exposed to lower level component command like 'stash apply' makes it
-> slightly easier to debug", to add these three options to the "git
-> stash apply" command in the first place?  Who in their right mind
-> would type
-> 
->      $ git stash pop --label-base=B --label-ours=O --label-theirs=T
-> 
-> every time they unstash a saved change?
-> 
-> Maybe I am not seeing an obvious use case, but I would blame the
-> lack of justification in the proposed log message for that.  And "We
-> can add the same three options" is not it.  "A caller that wants its
-> own labels has to..." is not it either.  Why does that caller want
-> such a strange thing?  What we have in the proposed log message is
-> exactly "because we can" and not "because we need them in order to
-> do X".
+-- 
+2.56.0.353.g0856645cf6.dirty
 
