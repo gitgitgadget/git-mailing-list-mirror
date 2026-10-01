@@ -1,109 +1,106 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8245133689D
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 11:32:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB09033DEDF
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 11:58:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790854354; cv=none; b=A/PKxfANvhaL3Wob8ybkNKQQyKGg4QAHREmETTB22aB70wgreaKQRstO4jtM/8RLPh3kQHePygOn9QWl0G7ENQjS6bjXNLg7pXggE8jGyPDXwk1weZS3ypK92XlntX9y7a1rhbsilbmuimQIygqRVB/RC40oJ0PutQns1EGcFso=
+	t=1790855933; cv=none; b=F0izFEwqLayUWWyPxdwKpKecT98KPnvNJp478tmwEAf6wpYEZP9kYPsv3D1EMF5ngZ2cusqzedZ4/D699zlAHtHBtHnDubWWQam+sHXhgocu+Hpj/zlMFqv/SMQMC5rnGm211YtCv/qATAGwXltXVelKvLWGTfI/O/gs7Y6+rHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790854354; c=relaxed/simple;
-	bh=7JOdTmQEdNtcSVO6s+RuT9V0t/VfIyITKoJj7OoLbbs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aZ9eutfZfPpL224UnW9g7kWwn41xtPTXHSeVNZmBZCCeFKaJRCUquZQd3OcBXCPWfj/6NPJ05ZxY34k4uhzg80ZhenpE+rsnT/RfzrZsdQl0ytYWBFXYx1jOFj6FxnKpGO12vlpclz/RZAtSGuixL08HlIH0PPXGlRHXlutycWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iDdToZTA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YpQX9vhC; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1790855933; c=relaxed/simple;
+	bh=hs6Dq7QQm4FaiHWAC+/kMmVARhGeG/+NeXHDoxFlwn0=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=b8C+cymS/Gxlapgw7IQBJScqmOmvX1Bl0m89yK2PJuP1e4Och0UK2bSmyQYy8qZml4NETEvUqpGKjAbaqdYISHNPOcV+VD6i3AQ9aHAPvYLmzxEfZAu/9yl7m+Du4/+gqEyaXAPiZD7AOK6okLeARxe/MGFVtECIpqcm3ejg0Y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S3MX0z99; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iDdToZTA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YpQX9vhC"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 628BE1D000DB;
-	Thu,  1 Oct 2026 07:32:24 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Thu, 01 Oct 2026 07:32:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790854344; x=1790940744; bh=mB404q+zXS
-	7aRpKe5PjnferemG9RLCOI7LFO6LMfHQw=; b=iDdToZTA0ToNs8llxg7XV4CWoF
-	oIVepgaCk9PsvbOpCI8nJDRb4pnFk+BMU8eB5yNw2/H5qNQqSZBsJeefjRTsP3c3
-	+oiShCXbWO1oMDTNg9nPBy98lq6o/oKTKsbJvqpalfT+G3FyIFi1G60+qg6tL3/i
-	nj/9gYxj1qmQgd8BU3JmziZltRU2tl3IMjIV7AiUrnGJyMb49siNQH4YoQxfz1gg
-	Qax68DqKTOLQgb6qEk92vtP9erLMEbjn0lpA2uzif0K/YWufuNbtw+eBAl+jhJYm
-	6xm4XGN7hg7BziUmEtYAlDSRrg/lI2+SzBqA12tDbAtIYIHBNq/hnArBVdrA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790854344; x=1790940744; bh=mB404q+zXS7aRpKe5PjnferemG9RLCOI7LF
-	O6LMfHQw=; b=YpQX9vhCfM3HuZ1pdAtnKAL8yghtwLpNPqhSnCUSOSLbcEfDvWC
-	bT1hshVgW0rWE3ouIDYe2dctBMuUpvDslAq78zPQNXG7eXHbUfIvE8zi4nesTgSx
-	V1GQdkjk7SQQDH3WCToNXgTm8TqSWfG3kL4oBDhfIFmbqeG8p3ywuuTZI2pA3O6o
-	DcEgq0Q/aGUB9l9U5+PAYWgtyipby0m7P+WJExEXmyWx0x+TpT3AVRl+GuIsH70q
-	9w0K/jvNeGcGZsgGNHeXYjKDy2Klfn5nQ5I53AFEu8yqujem5KAkRxVsXjbTQh1n
-	6frOAd+/rYoyB0q206OXNnq8Mq3LiiYsW5A==
-X-ME-Sender: <xms:x0S-api-dXV-Bpj69o20K4bWLFeoPyrbE1T2CDw4X1mT_BqE14dXAw>
-    <xme:x0S-ar3EnimGOVFt_Q3s_qxCHa1ktEFeOftXUjBA3d-c7unBLPxRfS3AugcATedDa
-    T6ikZaSt0j2I8f3DEDHZsEDPP9tQylAiKvXUaVd0ckIDHY_08utQTo>
-X-ME-Received: <xmr:x0S-ajjI2E5TxCTEduyrLSBlcbQdS9w01WxJuvU1U51AkBM7Va40jQshsJBChOfvtmZhWw>
-X-ME-Proxy-Cause: dmFkZTEVWOFs79HA26G/E4moRPMYox5222n9/erlnoqFk6yl8ZgIX8z6l2CTLKoqgzpewV
-    wFL2+84M11YRJUkJ8cg57CutVaQ8glzNrV/+cisI+RIjOKSRCt/Xn/IJZeaL7Urde3+fk8
-    xusFf6UxZQW/VhlHRQQV/STqxw3/kxVvZMnFqs6yJJJhbgDDg0ICk5fZVUI2wRd0rlf5AF
-    90FxJw5HXJl1U7CMYrzRgJol+DfCpvNXSFQPCssdAwqbYZIis+dM2ghkxX6VIIl1nYqDfD
-    W+mi0zvBby5pcSzW8Gd1k7QvWWEXW63WvXzMbSeKg6Ymyn8GAHiBFzGhRxi5KNQfi5QQLP
-    yjHsUyYnolPVjS0II0nAJ/B2K7S19u7TYyn4eLhwizJ6O0xeWuOeBxxPewjTsIvM1U+Fgt
-    BiXZ96HkmE0e7FvNAh0TVaJYIWy8R5TPiHjsD9qPK40gJ3GP3x0p6KsVpTGQ375Jl8isRH
-    UoppEtbCjYkM7MTKYAj5NanC+QMiXuVxYV6fskte2zOPvpbSHZGo3vbUzdoJdEhw3lsz6i
-    LlKjlYhTg3tagEUIsCzkHBG6cWAeUZDlyugq17aT0XzrkFFiNAQGT4tOH3Xntts4q8qhV4
-    ZAewsdUAJav9M1VEOQzTaTRzTrsoEjLJS8XWOJjEYpGgaPplrhkMfSJcGygA
-X-ME-Proxy: <xmx:x0S-arfdZchmf6hoAU1bnDbvY4E5EkBrOzD9VQViXn_QKmnCR68MTA>
-    <xmx:x0S-amnkMHcb1JEUayUIBG25tUxaSnclaHTpTN-e2gGuaNYMJvjFYQ>
-    <xmx:x0S-akt9AGdKswbeYTuWRHcNLFhreNP-9h6SFGpLBToqUnQTJA-dNA>
-    <xmx:x0S-as9N_XlPICekGoVPaBY_W2XaPtJBEl3ZvgiIjHxx7sTtjzCbrw>
-    <xmx:yES-aoJ23FEA92Jp7o7k0kySCSdnphP_WsLDWKOKf-XjEuPwz9uUlEwi>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 Oct 2026 07:32:22 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bed3fe57 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 1 Oct 2026 11:32:21 +0000 (UTC)
-Date: Thu, 1 Oct 2026 13:32:19 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Kazumasa Shigeta <kazumasa.shigeta@kanamei.com>
-Cc: git@vger.kernel.org, Shabbir Bhojani <shabbir.r.bhojani@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2] stash: expose untracked modes in create
-Message-ID: <ar5EwwEt8-ADeLdr@pks.im>
-References: <20260929074222.11942-1-kazumasa.shigeta@kanamei.com>
- <20261001042155.33303-1-kazumasa.shigeta@kanamei.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S3MX0z99"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672E81F000FF
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 11:58:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790855929;
+	bh=uXrlQ568yxigxlmULnvzi/qH2srt2ZM00H29qkXXf9U=;
+	h=Date:From:To:Subject;
+	b=S3MX0z99+CXjAsjYiaGCgZ0pAYbX10tpFgLBAEWaluPSqDfwSHhZvniRWnCorcPXc
+	 P7RQuxH1DdBiVHxo8c8XWCUYUhBRhGzkUXJeNS+Rv90vB6xiWPsDqjdAMy+VF2Wwjk
+	 cb4TDDNxDRf/kMxQaTL4aHdxXxqhMcDlyuNvNfeADmYlph6cjNz+ldvoDbDi4RN4RV
+	 2+r72H4WQOLZfiKW2GtQd6I3Wfx5QPTD04D3fHcpdLmTrSwiw9QPCHu69d47yAPgud
+	 u1pHszuorml/nCBA1XsfrL9g7yYc6cz+GKYX1RoK7008igYoQSN4HtZoCDXVFEemsz
+	 nW2znBgcZb8RA==
+Date: Thu, 1 Oct 2026 13:58:42 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: git@vger.kernel.org
+Subject: git-rebase-walk
+Message-ID: <ar5KL4_IKXYbx3Sb@debian>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="a446ufjeorwdyusv"
 Content-Disposition: inline
-In-Reply-To: <20261001042155.33303-1-kazumasa.shigeta@kanamei.com>
 
-On Thu, Oct 01, 2026 at 01:21:55PM +0900, Kazumasa Shigeta wrote:
 
-When sending a v2 in response to review feedback it's a good idea to
-both:
+--a446ufjeorwdyusv
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: git@vger.kernel.org
+Subject: git-rebase-walk
+Message-ID: <ar5KL4_IKXYbx3Sb@debian>
+MIME-Version: 1.0
 
-  - Respond to the reviewer to acknowledge their feedback and/or engage
-    in a discussion.
+Hi!
 
-  - As part of v2, send a range-diff as well as some documentation what
-    has changed between the two versions.
+I use this little command to apply iterative rebases, which are easier
+to handle when there are large conflicts.  Are you interested in it?
 
-This ensures some netiquette in an age where we're increasingly only
-talking with AI, either directly or via a meat proxy. And makes it
-easier for the reviewer to see how exactly you have honored their
-feedback.
+	$ cat $(which git-rebase-walk)
+	#!/bin/bash
 
-Thanks!
+	set -Eeufo pipefail;
 
-Patrick
+	git merge-base HEAD "$1" \
+	| xargs -I{} git log --oneline {}.."$1" \
+	| cut -f1 -d' ' \
+	| tac \
+	| while read -r c; do
+		git rebase "$c";
+	done;
+
+The source code is trivial, so I guess I don't need to explain much.
+It behaves quite nicely, IME.
+
+You may of course want to adapt it a little bit for merging in git(1).
+I could help improve it a little bit.
+
+
+Have a lovely day!
+Alex
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--a446ufjeorwdyusv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmq+SvIACgkQ64mZXMKQ
+wqn3Dg/+MFc68a6LK6j6tg6Pf21+GXFKkaWcrO2E/vecdtR3wCzaxT/Hc0Llk9rn
+16RcFdafnhrOE1TbJLJQB40p0p29cgcOqEp846fol/+/O1ffwJyuSleg0GHiJOUo
+0Uqp3LnghPunabLbbZ104XvIqlJRzMUw731O+pWMK160Y7dxheUVxzq8wmRjcQVJ
+GAQ+U3lsj6xa72T/oDIVLa8Xrkq5YO6K3Tg+L0+zbQJh/6hd7ykG8qL8OiCr73+W
+zqmCIBqb++jwHOaxZ9RV4yB4cdYesGtAEUv9+FPyYc8pUUqcUEPEZphppM93YQlV
+IQKXLmguH8njktlGlvo7baC5w7nrGcbnD8JITj6N5gKq+EcqE1EGdPbXYtvCLFDa
+vk0VeZeyIRznfYkWyEnqO7rwmvyDeTEnl1N8lffufhFVJkdvGXEOzYNInE4ZVZ7i
+/e8tVAv9v/7hJ6lO1WgEnk19+HIwKTq2M3QPbR1Q3z+L36z3yfLY5DucZ8vfk71r
+VIqtplH+dpQ/mEiBZM/bVRYS78c1aij59aMcz8jq6l7ptoPaem71TYnsSidrylP8
+UZzvx1QQzr6RF2YIdyC4zyTiZKUlgI3Nt8eznxkA2s/0O1/c4LU6BKGtjgWQ9OI1
+0KpetVQdAdt+jrn3AsYJTBo/T3vsGG3MA3m++ufD17k0x9X3Hc4=
+=iLK1
+-----END PGP SIGNATURE-----
+
+--a446ufjeorwdyusv--
