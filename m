@@ -1,100 +1,102 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DEE52379B
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 17:03:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577E141735B
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 17:11:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790874211; cv=none; b=EKkUB7gjSYpFR/U9AM4MVWazI/G6iLrPIdFwqqqSTpGSWsm+YiA8OcbyMQ+Y5KCClWoB+H2n2SQZR4tG8xEay6WGqRT9zH1nEDqeaGCpAItTe6Lj85SLICSjzazWOOFq63pIBLhH8p/5umOFmQPg0pevUEjPzS7GeiZIG6ZtEbQ=
+	t=1790874669; cv=none; b=mTtEIIH63aetD11Ehx2mDPf1/KUODY+3Dq0MvY0aTeqSbiA+LCI7We898N4Cf4wWU7rBs6ANwVmRpcxkMjVjN8XO/v//t/NxV67tjy9Q4VxCWWIs4D6MftDpftHShQneo5bWbOjHJmb2GFGz+P1Kucea1oYmZn/CfAadJWc6Uyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790874211; c=relaxed/simple;
-	bh=ERPeRmpaQivSyxwhc2TM2xl2BTzf9s2GAAfEQwmGfag=;
+	s=arc-20240116; t=1790874669; c=relaxed/simple;
+	bh=4bcS7zZ2p6ZJWvSlCOBFrDmSR2J6EJNG4nEVyjyQ4JA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AHUSZAVgf7upe3SBxttJEtSv9bpOPvBQQr34tdUwmxzuc6aGe9JDURBYHVVIN85GR67bkcmgdCwkh3yB9DFh6NKb4huzabjKXwPJxCmydAoigY1KOsi45N9RKi77AoO0rsWpcfaNgGwuWaACW7e502pQ2v6oInHtJu+PgJ8LGTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aPpcp3aD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ImwoHkUA; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=TvPPvIxmaT3dkFkb494qh05iGEoTbeUDfA5v23jRXVvwDv7sFakJxqq6i9x1k1R00bdmGHTUJpXz1ajFy0TqGaZnzD9+gagVSt/nC1YS4YOkfsR3KvjTQMeK3aIQhJIU/nCxoaqsIWRHUyvbhYWxdj5+K/v7fX8En7ZO+wv4G6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=u0JLScAk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p1tNv+hL; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aPpcp3aD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ImwoHkUA"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="u0JLScAk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p1tNv+hL"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9CFE81400112
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 13:03:15 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 66DA4EC01AA
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 13:11:03 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 01 Oct 2026 13:03:15 -0400
+  by phl-compute-02.internal (MEProxy); Thu, 01 Oct 2026 13:11:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790874195; x=1790960595; bh=2wybp8uyOH
-	C6TXAkWiZ2UTkeZRlwthBjRfA0MI2htbo=; b=aPpcp3aDIJxH74Yp6KKyuXePe6
-	SiG7YI3sDTTU7UgK94aLqlaxulzij2Ij1UmAlrUgaM84ul/DDqBZJyO3L67Dr3H8
-	4UNwhJXZYejiZbG95usafl+JblfZGetSVGwS4Ysc4TYKqEn0HfQLUfn9+dNvIEBc
-	OIW5BQgv2uNLByV2Dhr/kSB/1tpmh4YzL5/8rZaFjs+TqHyyN9LxUpUFFgC3Ro0I
-	7WyiYKYHCyZ3DQge2l5jt9vc25xm4iHPTiKMoWdVpkUnSe8nJcJdcX8DUTkH5uUH
-	3hkyGBE8io2m3OOwhD1tnOASxw9dlb6iGoGf97/vmvOVs5IOI1vt7p8lD4UA==
+	:subject:to:to; s=fm3; t=1790874663; x=1790961063; bh=0/nYkU85+x
+	79sLdq+bgJOi0ETnitlPH5l+LMHP8DI50=; b=u0JLScAkh2GIhKVp4F1jEOwWyf
+	UYnpO1X1UZKs0KU8q8rXx+9Tpy1VNb43UL9P5Mnqii7EVWpJDYBT12xSmfBjqjsH
+	pPdETl8Why3forKh3vifzNpgWAB6FSHYaqF3XsmiOWU2pDXak9HhRd+d9274bRRv
+	4T789YT8iJCFViTIZdSCxAxpsKvlUlPntC8ZLPT1M1ggP671vzf8T04ReVQSf1OE
+	H9POiX6Ms88vxzhrrJ4uQ9BmKT5UyNFLTkvUhFDjuxXFZROL5bEBG+TqiEDtdzjP
+	viLzh3j5aBvx7Hc2nVHI5f7sunyXwt4/Qu2zBvpanQnkF50QhCa+S3q9MKyw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790874195; x=1790960595; bh=2wybp8uyOHC6TXAkWiZ2UTkeZRlwthBjRfA
-	0MI2htbo=; b=ImwoHkUA4T4l4J1hYgCjcB/1EK1pvcNT7PxE+q1qqrN+O6y71nw
-	8GQTLZNR7Oci5H6heWAtjiWeH/M7BfE4/jeyB4Vz6dklrmN9iM3UltcMLO7cRfeD
-	cJn7Mi9jwqs0gObAhGmWQ/hSO0j7pgte8Cp8S+l6cpE7IQEi1MdbPUfRLaz0m+VB
-	MyvQnATyKjQqUq9Hj71bwasMj89FvkR1rrXvvZavPhORtypEUIKBy7EWOQxNzrYT
-	NaA7WqIE0T4FOG9ZhL+StSFRDgoaBBEESjj0yV14e7lFdnRzM7sO0rmJ377bZZ9w
-	6n7K6LtzojHWrb0GL2PTJgU1fV/hrUjr8BA==
+	1790874663; x=1790961063; bh=0/nYkU85+x79sLdq+bgJOi0ETnitlPH5l+L
+	MHP8DI50=; b=p1tNv+hL8xWejoN86jOoIJ1RbHZx1ck2ON1KLZPaCfQG+S4n3tN
+	9OHk3sAjWLXmUfPCzEkdACqI35jgyFRfya5D3RmQLfwd+iM3ss8ugHhbeCrl2o5O
+	QPoEKtHHgJM7c6yjVb9JXyyJ85s5cSGAllSf2Cr7Kj3dvZzBagu3I8Iat6Uoqksp
+	7f4+cWooZuCiaJ42dzKph0cjr62Zibn+bH9qoyDG9SPY1pl45qb/u29midHnpEun
+	N6ZcQny1PkR9RlFAdY0/NssWJb8DYjGQRgHnUQsQc6GSPekKa+CTaAX78o79GM8A
+	EXoBWDnvkKraoTR/z25+Do5adpCrf9VJ6xw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790874195; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1790874663; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:HGDmA1ofQwRYORYncrSzNzAzwCkYWQfNBXi7t+3gt5TIXZb
-	eUklkgdekDxQA8WnASvHuinu3OgWqR4A+J/3WA43nOsIL1Pm7VlloaaVzEc0PjJz
-	eWtBLBwz44IVPWhnUSVOdBbz11HVdcdQmVRkbXGUzujKn7YC27v4YBiJmjzodSq0
-	GAacoeNjPD4S9fq6lgXm7JybR3FhtaVNur6WufQLo4RIAJkgXgqPMBZTQpQKoQou
-	JYcoNm7KxEpnJQT3MoeMOG+6Og2/v9scSx6ndn6IUbzlqK6geLpWS5pG797+JS6b
-	EOIGiCWPJFGNVmeWlHfRIBbLs8vHm3tRJ0ce+pA==;
+	s=fm3:rsa-sha256:BOkRhbDN/bNQv6aO05omewvTi5nRULXR0d+vScg0HkqwWPb
+	DcpN+1RCd0Y/4Z9BvoCBlK8eoxwWsDc4CIB7pu9np4VLVxE19oKn2Ba8XC/HQlYz
+	KilTIdywGgclXsH4isETY7N+GdV9eagRVtanb23cp/iL9WM+LXzZw9DBDEqq8b7X
+	qwuGAGEHS+/XAqPlnOGEtOWnxWfYOsRTM/JJDpWtwUhIVeF5FA4nf+CbiWTN3x/3
+	Ke5o3MTlRgY4NoCwHERI7vekssfct7BwaeGjg0MafmcFOZ5beV+ciHezIo9ofljl
+	g597yk0UlveyuxpGYCGVvNgllHUFe787uKe/efg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:Uq1nK/VgCijg2ck4gaM+jjPk6mkm5GD6d5XmDAX/a0g=:ERPeRmpaQivSyxwhc2TM2xl2BTzf9s2GAAfEQwmGfag=;
-X-ME-Sender: <xms:U5K-amaGmzVQRhESD_16YlXONhmPnkAIiHr8iGO0ThWz9A0tEk8RDg>
-    <xme:U5K-aq4HoW3__G7JTF2-3mntEclyz6M34E7QsdtkdgXYcx4nha9nOgkT9XWP6QNVf
-    Cq2bnw3pWYcH1KDCNlHXvvi3Vwg-Fzj3yJhByAaib_74zUXYpY0Jw>
-X-ME-Received: <xmr:U5K-ahBW9IenBcrHr-eRcD1a1BiHrUR8vL_-OjjAF5ZSbwtfGAQx8J0aZaSeRwra6LSFeMS0nJr-IbHsZ0OkSS9aCgWY_nvYcYwW>
-X-ME-Proxy-Cause: dmFkZTFejQ7M6+xyoW2+or7dfbRDRgXzD6pBhGBpJrCtN2PsiZHkyAG5nv3dVrkx7i3oCO
-    XFxZBzBvHB94Sek0mPfCRv4Uzg+bYaE2F6pWAT5QY1HS2XGBydqLjLLkalWv9rkZr6g4e6
-    wHiPOki3OfJDwEiH32/22eW70W2U61B3wHe5CMOeWY840Tk4nP1vyZuV3NhDWiPVOvqcli
-    y0u2KGgSFD5GQ8ZulBtjAQbY8+EPNecnp9U4Bs+e0wisKYRsW2NOv7eOlb+q9fLrgJBtAP
-    DQ/FYPH8jmgFg0FR+qF5xg71Bmf2P8pdc0jwTumMyGY3XUwHnQyUSoIugMv84Xi0CkCOIQ
-    WMf3yHQuY0vQryM2tDbpNq3ulIzszTfiXJS4WUHv8NNFrck5DDa3KackCvqWr5A6OnRDyz
-    ijhC9pejd3W10/sjDsbbK8Ir+FWO5z3PRvF/hDZ91YNv82a+DRlNutKEoucrmKnEVKaypR
-    9Agu3GjcUWyJXAE+jV3La2DHH2KfCeyz5wc/0LnzG9Z3W+YbqJucTTnzcWMTqktEO+Q5fe
-    sw9HWGtU12wmosOcnJ4Dfskwck/H1ZzNg6cX1Nsvwq2yGctkywWkSHu8m+mAjl4Q8/2Fbo
-    hUxbsNDGEAvzic2yrc6aUvgmC20u0LlDYFs9u50OOxUFETVjXVjtSFSm8+ag
-X-ME-Proxy: <xmx:U5K-aodeF6Ms-3sgXH8cPGXN1X5yvm-SlDdTolXmSltySvFXrKMJVg>
-    <xmx:U5K-aoLRjfyKHvXtZ8G55hvuurFz4CddzneKTJR7F-dQIStoHOyGZA>
-    <xmx:U5K-ar1B5skVriiAiL-RKSpZEPm-Yi8TM4X7n_Iyr3p_69aUI_Yqpg>
-    <xmx:U5K-aigmGZ-KM2s90XDdAkfkVOJVgIDu3EAfT8u8lHaJX-S93ku17A>
-    <xmx:U5K-anXniw2a6o8qfjQVcTEuM3hgNX7aUCCJkENnZA7WSqoOo-Wen9H3>
+Message-Instance: m=1; h=sha256:5ggY6sTX+9AorQGWDLXveF6w/+a/og48GgE9u1xRAXk=:4bcS7zZ2p6ZJWvSlCOBFrDmSR2J6EJNG4nEVyjyQ4JA=;
+X-ME-Sender: <xms:J5S-ahCZ3-ma3r8rIyKuC92UgxHz2KZKSKVTjKJ-px5EZLAD0tPb7w>
+    <xme:J5S-ahC2GfgN82vo76AODKYwJkZNw9gG9ePB2sJfxwJOZF6ZWfroDHp1sr4XMjl2h
+    kgmDQUJN1SMeHYkstONaWJUEzcerqqVRo4kEdBrYW3wG9tU7xTN>
+X-ME-Received: <xmr:J5S-asqhWqij7JZip-oFL7Ucj_ZnBDbQKDsGO3swRHjCy_qU9zPFTiHplovfFMc8_mkCqRUGVRu0GE_hJLLQOE71PAWjYOS-oJpf>
+X-ME-Proxy-Cause: dmFkZTFS+hLbOW0HS4lxCYZdRSdUUIEC3gsh7uIE8CRvgUFg4zpeLGIr2XoVOnDRsnUCjP
+    Qcgb4c07GNX3spxEN2ywn3/n0jxgUtxsO+2N5wLJ86dXJQmsWIO+m3NGWIs6EhPmnDo9xC
+    3XPxvlSfyWsoedPFQuSpvXzpFcLA4s91LkeOgX/l+o10ORAeW0ePlEqSAmg4M3JLmr9jE8
+    xhji2+wXAwXPw3sJq9MtlugIlh37h/tjZV0lkMACrNKw4j8nRCzUfFTWOobOkjFlskx1+r
+    2c5M+j8cKHuBXQuF+MBx7pbCELGxsTzjienm8L9URQZ4SFw6Xk0l84DwgWW3NFJSGpQym6
+    DbHmztdccdBkGcq0tPuigBprkjicZxV4vHzm5uWS85evOZG6cetAT7HAGoXbp8Gs1OaXzJ
+    ANn4jdakSaF0quAgMkWBP4qrQfwASaq/HirEqZShVP1QeXv/088riSg+q9eFTcnd7pdR/7
+    mJWrFdXwrTyL/C+Mm11HED9pkEEMSQdcPf/S7WALLSmEZsqjfkOQ56+enp4EwMLCOgZ7TK
+    LdbOpbgP/+Q2GjVctXw9kEpurFheeHGFLaS+xPK43COu7Bzr2iRXQnjfVHWAqI6Fy43a9D
+    zDXs+uVltKwUnfYfJGeWkSmHzAwci2JouNpkGNPT3Zar+2fiAKK/KzLJtm1g
+X-ME-Proxy: <xmx:J5S-arm4JnJMnjURSw0goOvIaecQczADPrWMwzZA4h6Pl3piOeU-7w>
+    <xmx:J5S-aswkOHMYgkvh8erDHnmbTdSR0vFzVpfFdQIa1XnNZjpge81Zzg>
+    <xmx:J5S-aj80eEvIvCe-kIuzk8thVtplPdyGVUbUOvapYuGGpRiSMt6XFA>
+    <xmx:J5S-aoIz9jXwzRc4yg148sPnI6HvZdz-2USuv9ZFSUr8XVE4xkMbTQ>
+    <xmx:J5S-anT0BuC6tAxFCH8Kle5Aym23qaD0fGpJ68X0Mer1Hub6kNuKSaj_>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 Oct 2026 13:03:14 -0400 (EDT)
+ 1 Oct 2026 13:11:02 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Kazumasa Shigeta <kazumasa.shigeta@kanamei.com>
-Cc: git@vger.kernel.org,  Shabbir Bhojani <shabbir.r.bhojani@gmail.com>,
-  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2] stash: expose untracked modes in create
-In-Reply-To: <20261001042155.33303-1-kazumasa.shigeta@kanamei.com> (Kazumasa
-	Shigeta's message of "Thu, 1 Oct 2026 13:21:55 +0900")
-References: <20260929074222.11942-1-kazumasa.shigeta@kanamei.com>
-	<20261001042155.33303-1-kazumasa.shigeta@kanamei.com>
-Date: Thu, 01 Oct 2026 10:03:13 -0700
-Message-ID: <xmqq7bk173qm.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Josh McKinney
+ <git-bugs@lists.joshka.net>
+Subject: Re: [PATCH v2 0/3] refs/reftable: fix on-disk representation of
+ reflog timezones
+In-Reply-To: <CAOLa=ZRVt=e3MqjLY=UkitfSg_YjpsfFjeDsEmqJQm-5YhopxA@mail.gmail.com>
+	(Karthik Nayak's message of "Thu, 1 Oct 2026 05:19:29 -0500")
+References: <20260929-pks-reftables-fix-timezone-format-v1-0-3df105a95ed1@pks.im>
+	<20261001-pks-reftables-fix-timezone-format-v2-0-a4fd1f7cd21a@pks.im>
+	<CAOLa=ZRVt=e3MqjLY=UkitfSg_YjpsfFjeDsEmqJQm-5YhopxA@mail.gmail.com>
+Date: Thu, 01 Oct 2026 10:11:01 -0700
+Message-ID: <xmqq33up73dm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -104,97 +106,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Kazumasa Shigeta <kazumasa.shigeta@kanamei.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> `git stash create` always passes zero for the include_untracked parameter
-> of do_create_stash(), even though that helper already supports untracked
-> and ignored files and stash push/save expose those modes as
-> -u/--include-untracked and -a/--all.
-
-There may be no lies in what the above says, but we would prefer to
-hear what the user visible implication of "passing 0" is more than
-what mechanically is happening inside a program.  For example:
-
-    "git stash create", "git stash push", and "git stash save" are
-    commands that create a new stash entry.  The latter two are also
-    responsible for storing the resulting stash entry to the reflog
-    of the "refs/stash" ref, but have options to control what is
-    included in the stash entry.  Among these options, "create" only
-    supports the equivalent of "-m <message." to record in the stash
-    entry.  Most notably, "-u" and "-a" options are missing.
-
-> Teach create to accept the same options and pass the existing mode
-> through. Unlike push/save, create continues to only create objects: it
-> does not update refs/stash, reset the index, or clean the working tree.
-
-Sure.  It is a very concise and good description of what we want to
-do.
-
-> Use parse_options() for the new options and stop parsing at the first
-> non-option message word. This keeps option-like tokens after the message
-> as message text, while leading option-like arguments now follow Git's
-> normal option parsing. In particular, unknown or malformed leading
-> options are rejected instead of silently becoming a message, short
-> options may be combined, and `--` can be used when a message itself
-> begins with a dash.
-
-Why do we need to go into such a detail in the log message?  What is
-the above paragraph designed to convey to the reader?  Again, it may
-not be telling any lies, but it misses the point by being inconsiderate
-to your readers.  What you need to tell them is _WHY_ you chose to
-use parse_options() in such a way.  What were you trying to achieve?
-
-I am guessing that something along this line ...
-
-    "git stash create" traditionally treated the rest of the command
-    line as a message.  For example, 
-
-	$ git stash create adding -u option
-
-    has always been a request to create a stash entry with the
-    string "adding -u option" as its message.  We should not make it
-    trigger the "-u" (include untracked) behavior for backward
-    compatibility, by using parse_options() with stop-at-the-non-option
-    mode to forbid it from reordering the command line arguments.
-
-... was what you wanted to say, but I am not sure.
-
-How much of all these verbiage was written by AI by the way?  You'd
-need to spend effort to make it readable to humans.
-
-> Keep create's existing no-change behavior: detect the usual no-change
-> case before do_create_stash() refreshes and writes the index, and return
-> success without printing an object name. If do_create_stash() still
-> reports its internal "nothing to create" result, map that to create's
-> public success status.
-
-You already said that with "does not update, reset, or clean".
-
-> This follows the stash subcommand exit-status convention established by
-> 786fc390465f (stash: reserve exit status 1 for conflicts, 2026-09-03):
-> subcommands return 0 on success, negative values on failure, and status 1
-> when applying a stash results in conflicts. cmd_stash() maps negative
-> subcommand failures to 128.
-
-Again, there may not be lies in here, but if you did not make a
-breaking change to the established convention, is it worth saying?
-
-> 9ca6326dff29 (stash: refactor stash_create, 2017-02-19) added the
-> internal include-untracked path while intentionally leaving the user
-> interface for "git stash create" unchanged. Reuse that machinery and
-> the existing INCLUDE_ALL_FILES mode rather than adding a separate stash
-> creation path.
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> Add coverage for short and long aliases, combined short options, the
-> untracked/ignored boundary including an ignored-only worktree, option
-> parsing and dash-leading messages, no-change behavior, and preservation
-> of refs/stash, the index state, and the working tree.
+>> Hi,
+>>
+>> it was reported [1] that the way we store reflog timezones with the
+>> reftable format has a mismatch with the reftable specification. While
+>> the spec says that reftables should be stored as a signed offset in
+>> minutes, we store them in the "[+-]HHMM" format that we typically use in
+>> commit headers, for example.
+>>
+>> This patch series fixes this bug by making our on-disk representation
+>> match the specification. This will of course make us reinterpret old
+>> reftables. But ultimately, the fallout caused by this change is somewhat
+>> limited as we only ever use reflog timezones for display purposes. So
+>> yes, we'll display a wrong timezone. But it's not used as part of any
+>> kind of computations.
+>>
+>> The series is built on top of v2.56.0.
+>>
+>> Changes in v2:
+>>   - Improve readability of one of the converted sites that now use
+>>     `minutes_to_tz()`.
+>>   - Improve test coverage.
+>>   - Link to v1: https://patch.msgid.link/20260929-pks-reftables-fix-timezone-format-v1-0-3df105a95ed1@pks.im
+>>
+>
+> The range-diff looks in order. This version looks good to me!
 
-Again, adding tests for comprehensive coverage is not something to
-boast about.  Is it worth saying?
+Thanks for writing and reviewing.  The previous round was good
+enough already but with an extra polish, this looks really ready.
 
-Aren't -p/-S/-k/-q and pathspec support all about the creating half
-of "git stash push" that are not available to "git stash create",
-not just "-u" and "-a"?  Why are we singling out only these two?  It
-may be more worthwhile to explain the rationale behind such a design
-decision.
+Will mark the topic for 'next'.
