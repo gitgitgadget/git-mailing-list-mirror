@@ -1,78 +1,80 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599C335E956
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 10:13:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EAC4E2F20
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 10:13:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790849634; cv=none; b=dX0l/aIpImSTp9ZcEuLDrSWW84O4Z5fOAi+sAspZpmpDn55n76ezt119x5/UabNJDetfrtOZruDbdxATs30MugkXvxGg5AFHyQUl0HPa7k1zcLY68HvY3/m3KaZ0JOwfusHmcStWYr+DqJi784Jq4VAtIwdKBqsz+U+HmPzVjM4=
+	t=1790849636; cv=none; b=AMaEdL3+t1aIjeh76qvNqsPLeEGPWErk316F1LS/7a+IQORPhfOzhOoueg8xjQNghxRLfQkHVsP3xviySBFZ7xiMkV4McNp1pe/TFwclVMD61Wk7y9FR3n7Sf4w+P7qE668EZFuIW9Y/cp9jNS4f4et+TbuXkrZ1aLJbTzEs0d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790849634; c=relaxed/simple;
-	bh=/sazE2Ai78ypo9O0diazdNRM/m0jFSqMiIgjrItv15A=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=MxU7I2Ggig+sqnJcNnx4jveYe9GVVx7JpaMMqAHhVO5PVcIK2ycYW0ERuGvNMqn78vlTiULWAaCK8oWS6IhaYbYATqERR3w6OoED5mcgIWEH7Sy6uJxmwx2F6Nyw1jSQM/nZE9ZxePnEdX48aVBtJGleUYDeZ7AOb4UVcg2lnhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vCh9TxDc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cvksFHRk; arc=none smtp.client-ip=202.12.124.148
+	s=arc-20240116; t=1790849636; c=relaxed/simple;
+	bh=cGIcAVwH//JH7sDGitiLNP0l0zU1FbFuvow3N8ELQ9w=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=hhjCENARoQECKEQti3XwTUtdZSA4J181/KNwNp9Cfd9G5yVU0b9xGhClESaMUXmAdc4JyNh52isDBaHolrs4pujx9Xf4AICpYuavnpmLBaGdT6+i9c/Er2UYtwCdeh+mymLO74D3Ao9/tgAeWp8zr0i4rDKlAvxaV9y3IIzCgmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DcKnJMTE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z8gM/WZt; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vCh9TxDc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cvksFHRk"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 751781D000F8
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 06:13:41 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 01 Oct 2026 06:13:41 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DcKnJMTE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z8gM/WZt"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 41FC97A00F8
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 06:13:46 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Thu, 01 Oct 2026 06:13:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1790849621; x=1790936021; bh=q4sAkphRiN
-	3U35p0vlnBFnw1ijwLJxmyihebs0zM9dQ=; b=vCh9TxDcGOVb4zhBnUn0ACpeM6
-	0ugLOSJhV1aFdbmzVkPpzAK1lWLgWF1sjsbv8lX4fSpzfTgpF9MsastntuMnRT5m
-	j1X4MW/p8c2czSPY4A35yWWt69/BaDtBATGtxpfiV2x5D8/4k2S2hDj8ts4zH9jm
-	aWv8DPd1mrG+xG4fFY3dhyQAwgFYffqFQ/RY6ZRTlYTGhR/FjObdQSzLkvzpFPkV
-	vCmmU4TVDhBH1E46NTrELGlnVb4EZaApb+4VUy4jlAtdpl2U7jWc8s+rQrg4wyEe
-	zuy8rJoZf7FQPzfFBnH1FTSm3F7JLD6YDuZa1IBZJll6kyznt49yDfmmFzxw==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790849626;
+	 x=1790936026; bh=A/BGRttBQQeRFH8xjSp8gmdknt2IKosZLmohueHASe8=; b=
+	DcKnJMTEAHWLbX6GbbKEwUJZQkzrFMdM+2Y152UsZ2RAF/8zKoUx2QIEZqjgqTg1
+	VhiqhUOo/+kbAB//jFWBtaHEAN68NaHzmp0+GRIf6n2FKrEj/qRuVjWOjt+urd4D
+	R3T9OBX6HgfeYXolalF4PRXjMGJE8iyAa25s26JYlTy3e/Y6MSgFTvs7bheWJ9eK
+	rN3WEqtnLlVWgaP6cgSboRL3PDORhbrINC+SEeDCZI9ggzV/QU9/Phi978/NrNgC
+	NkKUKA2l5iOLb8qDvUI79Y+ykhRD2DkxQ7bjmVreNd7+8EdKJDvg0JjOmdYgS4ri
+	9/NA3RBKY/oiizMK3SV6/A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1790849621; x=1790936021; bh=q4sAkphRiN3U35p0vlnBFnw1ijwL
-	Jxmyihebs0zM9dQ=; b=cvksFHRkdVqWNJbTfjEIaG+NKm8euEY/K0+eIJqYGXd7
-	qc8kp35hAuq+0nOuBAYgzsWGmJx/zvvGJykcJkXEqqAtKMfET0gZiVL9QNKay3wb
-	1rFWFJPv02rSjEn9G93D/0tufV0+BX2sWp7EUEU1ELML4ZDOdDv90JxCK6RgDKgY
-	qpNqrRvg7ydqNJmKpDoL9M2WgHf06DTVnCZ7ugJw7JKxkkyp2u69Teo+swnTlc0T
-	BECaN5kLLfFUvtjrUc7dwlXZ0qhaTSjO9AZh+4feOXfeYy978eGbe1DkSJgOI2c4
-	QXVgT4r3e9MZ4QDnnOc4JyekXjWDsLRoxBCv/bSjuw==
-X-ME-Sender: <xms:VDK-audU_tCYkWDnXF03by1FQOZykz4n6R2p9E1GTganpfu6FviwCw>
-    <xme:VDK-avLEJbqO6Cfgny-ltlFuHOUEqvIW3sWtfrE6Fz6gumQbj34Vj3WuRxgzv_BsR
-    EmkhVSSzswLvs2F1svzy_ebiqW87NZVEUVB7V3eCkDMjn8pRfPm>
-X-ME-Received: <xmr:VDK-alKyQBgn_nE1AyWo_rmxQTh0LFq-1xUValFIEAONtoobcv2XAmsVZjL6yYEuorWZ8Q>
-X-ME-Proxy-Cause: dmFkZTEBLfzayD/OOeiM5EmJH1eZMGwcwBHFVSYfvnhWVB+I+kH4mFYEXP/ysMkarOTJHj
-    3elXfUlxCBfpXwhznJY36cLY34okngMvgMD0O2PxmRoFJjjAWs9l+u9/zNRzCqKzx6w4GT
-    SHBI2/uPj9qmqQY0qCEqykIBVNYR2e0chF96VLIgx76MyrPJa9gVHtlmd1MIYoX1peqAB+
-    YFapNRqrQJHoSr+eHkdGgYtZtxTVkVezMojqh152Z6q7BznfPjL5wDTSSQb67nwx8U01uJ
-    x1jd8+7Uyt681C6DHhGROqX7B8toAIA5+O5mA+zGP8SB90g4xQoEeSBxMaKfwIcTpg0hBT
-    rWAKaXuB9Jj+vTb6qUswUw0XhEODyDA/8MEDAr/95SjNcHP0tVTWJLwkonvVXW8P1UuyV3
-    yFR/xKzq71Nb7sNsWrpzTNaaT/cllBhjJZT0DsDWoNI4BOG+AB5ZOZ99SNZeRzdnHGFNzO
-    EY1e+32lH9bE4CzItp3XW8nwIuxev8NRUG+4aqTIPrItkhfkRgwa6u1kAcMQnKxCfnJPnM
-    uVtkDjgQD2XdoDXbHpV59IF0zP9XsWC4OVifG8XL6FmW/c8HwhA7/TVQU3kiUBLlS7S/my
-    Ejsa8sxwRLH8XT3jzAwxb6lVL9W9W6UFAWkqYTdG4fZqgaofWjhip7rrZP8w
-X-ME-Proxy: <xmx:VDK-ahEaz1uiseDMc3_u8nJYormi6lu75d_quFaC9LBgudQGTg-rfA>
-    <xmx:VDK-aqlUao8C4qVgMC6xDI5POBw3ZQvMRN4Rus1VcRC_KWdFh8Lo4g>
-    <xmx:VDK-auLOzPMFruzrTUNFpFPjGbWBxf-vrbzvThbfsVanG1epDw3pGA>
-    <xmx:VDK-arYrapNA4VAWhEC2IIA-dZshICWc2zQ-l0a5YikDReoBVhaDPw>
-    <xmx:VTK-asMPcn-uOAxEXpUjWr_QBltR9A00_zxd3D054CG--kVGATsd6sXY>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790849626; x=
+	1790936026; bh=A/BGRttBQQeRFH8xjSp8gmdknt2IKosZLmohueHASe8=; b=Z
+	8gM/WZtRscv7rov6FvLoCGjZ229l1+Rxs/u+W/xzmNdeTD922ZaTjAvwshT6uL7u
+	rqj2CoHoxFAdadFs8o4JJ8m8RzpmQItUS0e+GfjpqbVMPzZ02gaIxFQSZbJ8kWPy
+	fpHMaOiCEGXGoDcVO2bMAY+Hd3n4vDJlRapmnF/S4O0l8byjdsOHuIlZTu9XKQ4Z
+	+o99uyfobpboBFQQuSPtB88DPZ5RtuTthhuDdQX+KfZO1RowIJKCNp9Z07BpJDes
+	d3kXYUx9vVSTnJ4mjjZvcPGrRhHjxBWzamyscw/bspI131kT0XXqScrzThO0xZo/
+	RB6R6yo0NrlRRc7O1Yg3Q==
+X-ME-Sender: <xms:WjK-atY2L8GTCXVbiEwv1_B7cdxSlCz1VxGb0I1suvMKyeWI4IXG1A>
+    <xme:WjK-arWxRnRF6sS3CZhImAc8cPqqq-HUvX91zCneFt2pKln9LFVOmVJQi1rtLrph-
+    vaMOWfuaz-pZR69PmkqJGI8awDzaUvwEEndKTdT-5gp3eXHKq9YZ-I>
+X-ME-Received: <xmr:WjK-almzwEocyQZy41aItaldYp2twk27rxONsL65yylkMBVkraprKD1-vlRPA29YPq_xIA>
+X-ME-Proxy-Cause: dmFkZTF0h35Mue9KHmP8mMGW4ZegWvlnVie16JZ/OUm/O4CJZ3hjyFnJDlEtSwqdPkGNj4
+    YcSPAPsLVCPLDg5/1Nw7H0KdO0Ff3jIpzIAf4Pszwl75qMiABMJqxbODbWGF6c3siOaumk
+    P1BEEb97x56OYefJOHgySdEogrsY5wMeRcIs064fiS8yalNUdFLxWg87tX3sygwlrYa/i6
+    EI9jRTWudpfTsXkoNkGhS6YanrhXcU6LKvDlL1yE5C7cXJ1J+qoc2BJlMlhVtIgyz8UeV5
+    fB/BrLFUPqcGt2QRcdYzu4CJ2vOXFJYuyFavPwoZGFtjhKVKj2r/T2CPTKmJVZd7oZ9boU
+    LnzSjlElei72ljjAKcgUQQskbBitoesAt5T1lK8vwBHCt2voLVdkMR4nv/9zNasiCX4zUp
+    XmGiTlzl46x6OtIK1ZivpG1vv51gvj/MdPx2NK7Cd6Q4DPmseS/X3e24pjBTZ42P0ET3ls
+    mh8PCoCJJjTdnLGMzqzE16wYFL2jaNFgQVJK85tjEMk2sIOYBy6Sbd5QuQge5skP/5daFN
+    VztfUNY+c5THAo4YZL4v1TlmSV03ZZKwBAdYrENKsr1r58HVtNGOciiTkehEGCKn3uO4Yq
+    0748yAVTI8wzQ0HaoyKvgqT0w/XbwyqgvQEB04eCPXlAFUT2muLXmLF3T7hA
+X-ME-Proxy: <xmx:WjK-agzUr-FsvL5OjmBvydwxnyJykpC4BmzdIFbAJ5RLJ7TUkNCnAw>
+    <xmx:WjK-aogGlZSK1-AyIXc6vNzeIDqb56R0P2dcBuPzYnAP5Z_UzKM9YA>
+    <xmx:WjK-atXkXN4HvrvxHoQOPK_gu3OWwe3Bi30E33jtuYDp7YrHkmdyeg>
+    <xmx:WjK-ai3Wf9y3v5kUtAwCIV2YQPkl3Dx8pC3KvVyQt81xO6hzzXJPSQ>
+    <xmx:WjK-an4-saSZyH857i2uIxom4hDD04koT9W8aG_a8395DphTzZof6Qro>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 1 Oct 2026 06:13:40 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 1 Oct 2026 06:13:45 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9c7781d5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id e2e252e9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 1 Oct 2026 10:13:37 +0000 (UTC)
+	Thu, 1 Oct 2026 10:13:44 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/3] builtin/refs: introduce subcommand groups
-Date: Thu, 01 Oct 2026 12:13:27 +0200
-Message-Id: <20261001-b4-pks-parse-options-subcommand-groups-v1-0-01eb2f4a4c32@pks.im>
+Date: Thu, 01 Oct 2026 12:13:30 +0200
+Subject: [PATCH 3/3] builtin/refs: introduce subcommand groups
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,45 +83,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWNywrCMBBFf6XM2oEkakV/RVzkMa2jNBkyrQil/
- 27U5YFzz11BqTIpXLoVKr1YueQGdtdBvPs8EnJqDM643hpjMRxQnoriqxIWmZuvqEuIZZp8Tjj
- Wsoji8Rz2gzslb/oILSaVBn7/jq63P7fRg+L8rcO2fQCafZyWigAAAA==
-X-Change-ID: 20261001-b4-pks-parse-options-subcommand-groups-59b3f27da06c
+Message-Id: <20261001-b4-pks-parse-options-subcommand-groups-v1-3-01eb2f4a4c32@pks.im>
+References: <20261001-b4-pks-parse-options-subcommand-groups-v1-0-01eb2f4a4c32@pks.im>
+In-Reply-To: <20261001-b4-pks-parse-options-subcommand-groups-v1-0-01eb2f4a4c32@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-Hi,
+The git-refs(1) command nowadays has a bunch of different subcommands,
+which makes it hard to figure out what's what at a glance. Now that the
+parse-options subsystem supports grouping subcommands though we can do
+better. The commands roughly fall into the following categories:
 
-the git-refs(1) command has grown quite a bunch of different subcommands
-by now. These subcommands can easily be grouped into three categories:
+  - Operations that span across the whole reference database.
 
-  - Operations that span across the whole reference database (migrate,
-    verify, optimize).
+  - Operations that read references.
 
-  - Operations that read references (list, exists).
+  - Operations that write references.
 
-  - Operations that write references (create, delete, update, rename).
-
-This patch series thus adapts the parse-options subsystem to support
-grouping subcommands and then introduces the grouping for git-refs(1).
-This results in the following output:
-
-  usage: git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]
-     or: git refs verify [--strict] [--verbose]
-     or: git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
-                                  [(--sort=<key>)...] [--format=<format>]
-                                  [--include-root-refs] [--points-at=<object>]
-                                  [--merged[=<object>]] [--no-merged[=<object>]]
-                                  [--contains[=<object>]] [--no-contains[=<object>]]
-                                  [(--exclude=<pattern>)...] [--start-after=<marker>]
-                                  [ --stdin | (<pattern>...)]
-     or: git refs exists <ref>
-     or: git refs optimize [--all] [--no-prune] [--auto] [--include <pattern>] [--exclude <pattern>]
-     or: git refs create [--message=<reason>] [--no-deref] [--create-reflog] <ref> <new-value>
-     or: git refs delete [--message=<reason>] [--no-deref] <ref> [<old-value>]
-     or: git refs update [--message=<reason>] [--no-deref] [--create-reflog] <ref> <new-value> [<old-value>]
-     or: git refs rename [--message=<reason>] <old-ref> <new-ref>
+Introduce these groups accordingly, which results in the following help
+output:
 
   Reference database
       migrate               migrate the reference database to a different format
@@ -136,31 +119,87 @@ This results in the following output:
       update                update an existing reference
       rename                rename a reference
 
-I expect that going forward, we'll probably have more use cases where we
-can use these new capabilities (e.g. an upcoming git-objects(1) command,
-which is going to be the equivalent to git-refs(1)).
+Reorder the usage strings to match the new grouping.
 
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (3):
-      parse-options: fix completion format when first option is skipped
-      parse-options: allow grouping subcommands
-      builtin/refs: introduce subcommand groups
+ Documentation/git-refs.adoc |  2 +-
+ builtin/refs.c              | 32 ++++++++++++++++++++++----------
+ 2 files changed, 23 insertions(+), 11 deletions(-)
 
- Documentation/git-refs.adoc                    |  2 +-
- Documentation/technical/api-parse-options.adoc | 10 ++++-
- builtin/refs.c                                 | 32 ++++++++-----
- parse-options.c                                | 62 ++++++++++++++------------
- parse-options.h                                |  7 +++
- t/helper/test-parse-options.c                  |  4 +-
- t/t0040-parse-options.sh                       | 16 +++++++
- 7 files changed, 92 insertions(+), 41 deletions(-)
+diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
+index 9dc08cbca9..da7260c416 100644
+--- a/Documentation/git-refs.adoc
++++ b/Documentation/git-refs.adoc
+@@ -11,6 +11,7 @@ SYNOPSIS
+ [synopsis]
+ git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]
+ git refs verify [--strict] [--verbose]
++git refs optimize [--all] [--no-prune] [--auto] [--include <pattern>] [--exclude <pattern>]
+ git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
+ 		   [(--sort=<key>)...] [--format=<format>]
+ 		   [--include-root-refs] [--points-at=<object>]
+@@ -19,7 +20,6 @@ git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
+ 		   [(--exclude=<pattern>)...] [--start-after=<marker>]
+ 		   [ --stdin | (<pattern>...)]
+ git refs exists <ref>
+-git refs optimize [--all] [--no-prune] [--auto] [--include <pattern>] [--exclude <pattern>]
+ git refs create [--message=<reason>] [--no-deref] [--create-reflog] <ref> <new-value>
+ git refs delete [--message=<reason>] [--no-deref] <ref> [<old-value>]
+ git refs update [--message=<reason>] [--no-deref] [--create-reflog] <ref> <new-value> [<old-value>]
+diff --git a/builtin/refs.c b/builtin/refs.c
+index 5cd21c25fe..f46abd6268 100644
+--- a/builtin/refs.c
++++ b/builtin/refs.c
+@@ -382,9 +382,9 @@ int cmd_refs(int argc,
+ 	const char * const refs_usage[] = {
+ 		REFS_MIGRATE_USAGE,
+ 		REFS_VERIFY_USAGE,
++		REFS_OPTIMIZE_USAGE,
+ 		"git refs list " COMMON_USAGE_FOR_EACH_REF,
+ 		REFS_EXISTS_USAGE,
+-		REFS_OPTIMIZE_USAGE,
+ 		REFS_CREATE_USAGE,
+ 		REFS_DELETE_USAGE,
+ 		REFS_UPDATE_USAGE,
+@@ -393,15 +393,27 @@ int cmd_refs(int argc,
+ 	};
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option opts[] = {
+-		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
+-		OPT_SUBCOMMAND("verify", &fn, cmd_refs_verify),
+-		OPT_SUBCOMMAND("list", &fn, cmd_refs_list),
+-		OPT_SUBCOMMAND("exists", &fn, cmd_refs_exists),
+-		OPT_SUBCOMMAND("optimize", &fn, cmd_refs_optimize),
+-		OPT_SUBCOMMAND("create", &fn, cmd_refs_create),
+-		OPT_SUBCOMMAND("delete", &fn, cmd_refs_delete),
+-		OPT_SUBCOMMAND("update", &fn, cmd_refs_update),
+-		OPT_SUBCOMMAND("rename", &fn, cmd_refs_rename),
++		OPT_GROUP(N_("Reference database")),
++		OPT_SUBCOMMAND_H("migrate", &fn, cmd_refs_migrate,
++				 N_("migrate the reference database to a different format")),
++		OPT_SUBCOMMAND_H("verify", &fn, cmd_refs_verify,
++				 N_("verify the consistency of the reference database")),
++		OPT_SUBCOMMAND_H("optimize", &fn, cmd_refs_optimize,
++				 N_("optimize the reference database")),
++		OPT_GROUP(N_("Reading references")),
++		OPT_SUBCOMMAND_H("list", &fn, cmd_refs_list,
++				 N_("list references")),
++		OPT_SUBCOMMAND_H("exists", &fn, cmd_refs_exists,
++				 N_("check whether a reference exists")),
++		OPT_GROUP(N_("Writing references")),
++		OPT_SUBCOMMAND_H("create", &fn, cmd_refs_create,
++				 N_("create a new reference")),
++		OPT_SUBCOMMAND_H("delete", &fn, cmd_refs_delete,
++				 N_("delete a reference")),
++		OPT_SUBCOMMAND_H("update", &fn, cmd_refs_update,
++				 N_("update an existing reference")),
++		OPT_SUBCOMMAND_H("rename", &fn, cmd_refs_rename,
++				 N_("rename a reference")),
+ 		OPT_END(),
+ 	};
+ 
 
-
----
-base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
-change-id: 20261001-b4-pks-parse-options-subcommand-groups-59b3f27da06c
+-- 
+2.56.0.353.g0856645cf6.dirty
 
