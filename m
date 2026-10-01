@@ -1,131 +1,203 @@
-Received: from mail-dl2-f40.google.com (mail-dl2-f40.google.com [74.125.229.168])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7450F377034
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 16:01:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.168
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790870470; cv=pass; b=isrWnvc4eBNKRM06n7dAJJhkcAKvKbSt+1Y7jhMKi7RnaBsyFZYAvhEIcTQ1RTuPTSjNfHk3K5PKkpj2LtNHx1P/cESBekxmJ/A0mHoJfANEM119Ak3htksfi6j3XpRLNQxA2jdWOsLNSI8P9NPfK0w6VK09IXXnNCJhq3/gZqI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790870470; c=relaxed/simple;
-	bh=39petTY5CC0UzueW5HYiqxCbSKtsz1/2KSMYhX1Wd10=;
-	h=In-Reply-To:References:MIME-Version:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=L9WjcgAsBEFNmAs2RwoP6P9LLY5WJ3xGMrDaCgFQSwfHHvH9VTbtceYDo8Ett6kOQVOpghgS0m08nYRIP9DQw6nRG89k1EJLuPDW39Shm8msvg00MZGIKiROgZg8g8XIGw1UmLm3mnZ9f2egd4Hf7rZRwr+OrPROdmLioI0b+gw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com; spf=pass smtp.mailfrom=kanamei.com; dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b=qEehboDm; arc=pass smtp.client-ip=74.125.229.168
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kanamei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58133408624
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 16:10:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790871009; cv=none; b=tLU1Zh9ztVw2hHIGLfomu9rB6td8ps9i677VYOvPvUp/eqv/b7Am4f7np8N8C2bXAcVqCENM3fovgLp5ih2NUUmphg+LN4cXElVZubIM6paOoyEb5k65RJZUmQDEX87MV3ek+Ug21H+7V1fwooUXc3iS1grR6VenQFbSKPDm4Uc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790871009; c=relaxed/simple;
+	bh=jIwtNHv+HbBwbKpgX0H+lJae0LjKhAI2uyejB9WLc5o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Qb0OW+rRjr4tiMZyDogTr+a01OU6YMC+Ko0sqGmJse+xZUtrc+JW52XjVaXbSfYL91Darn0QzAeOlEYlgaZgbUnzzZ2SdbcGBAAnXffq8XoL+IOgiE/1OyuuAU2i0i0+JLgpGr/FEikyxAvHecPxO90/My9vE6iAa/qIyXsb6Do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jh48E+Jw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rQGpIBpR; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b="qEehboDm"
-Received: by mail-dl2-f40.google.com with SMTP id a92af1059eb24-14ce76ce216so1407081c88.2
-        for <git@vger.kernel.org>; Thu, 01 Oct 2026 09:01:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790870467; cv=none;
-        d=google.com; s=arc-20260327;
-        b=cbI7v9RCZ47f+F6HnBAl6EizC0QF8KcLSnYOOiFBs4OFhE1YEn9uVLO3YL1GidHxyt
-         pXIj+ikSNbR6TQ3oXQLoXaTJsKtbudh3wgkXXf3YVsm/j8qWNgTOSv7hZIMoxWrXMvqV
-         1ToSHgJKIMq0u9aGacasa4hEg4syPhMcosl3m7wlpDm/nq6nZly23z/ImeqXO5QqJF5W
-         5LS+wjABqZ4HXPQhhDeQ/Yby40bhsRWRkXu40ZUcqhKzyad0pflFwt89CoUyMh6XimUQ
-         2pXUj47QmBLphydGa6Ud5SgQKbdmXnF1HFlYAGTi17ORe11S36sA59ju7HUxV2MAf4ur
-         gyQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:mime-version:references
-         :in-reply-to:dkim-signature;
-        bh=39petTY5CC0UzueW5HYiqxCbSKtsz1/2KSMYhX1Wd10=;
-        fh=2V0/zlUwjEmuYtVRRPN68To0+sbBfz0rn2sjuZIDoE4=;
-        b=kKGBUaA/bEMVc7L6yha/EN7k5XpMhOpEOHlSspyEf7fijloqjUjP0vGGSaflI5gSIV
-         6D0J+jiDQ7ojYd4OagiS7c34BonKyM8bcNbZa4gPMDBskbf8BwwJH22vtOwmM10gUGbT
-         sSYevxySmcZxxky0sM7IR9CcQTP7FffkslKMFWZckI0O7fZwI2p9qieOm9OBNJxy9e33
-         GLenj9dVGxvqJk3AXoFoVkKqePwaWENV+fwirEaLGpmQwa2Ncb4vcnlyeBw/3RYPh3Cu
-         UfBks8nVB0I1EMs6a9zcDqQAi6qi5t1huccW6H+zxQmjSy+TCP8uYSAbZTD/A/mLme4f
-         UH0w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kanamei-com.20251104.gappssmtp.com; s=20251104; t=1790870467; x=1791475267; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :references:in-reply-to:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=39petTY5CC0UzueW5HYiqxCbSKtsz1/2KSMYhX1Wd10=;
-        b=qEehboDm8hmQAlsYkxVQ3QGOKtgY/dT3Nf4uUi52RGHRX1kiMbzv0D+oKXI0y20THw
-         napWn4/y+Ck3DFuAMtUxOXqVxDaJhblEDnOdqap/gt4sJ0jNZBpHpSWGdnK9hkik2J3v
-         U3dBQw4He2RrsPxwkU30a0brx+ZvHcZN5fwZYXKNEU/e7iZtq2uMrGk+20NfzZnjXM++
-         nlnGz1V1tMCG2DWB0bRepsTD6CJXw24Ioifs3SnrkOCwBaQfzlCwaeNSFDdAqzZQV9ar
-         Mmdov7IYT04f6yyEZrhKvI6rGNlqIKirN136Koe5rY9sTt3fsCaUM4KU+5261LkwIvvF
-         PQrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790870467; x=1791475267;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :references:in-reply-to:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=39petTY5CC0UzueW5HYiqxCbSKtsz1/2KSMYhX1Wd10=;
-        b=mkqSqpQCfPebMXDJP9yjUoEeSxmI0sTfDnm7dhHx9qgHBYH7rT2B+A2oz+WxzJmoDg
-         1UMU+SEuiGAUj7x6tIF+xLhTtn+8U4To4GYm7SskpsXDUz+O84G9/pPTqGXy0+CEeOhy
-         LrsZqyR5H11Pa0uPp79yECp6WBT7BSpRCE7K6Yw3Vg5juGJzW5G5fvJ3IvOffwxUqr5h
-         3U7qvo89HBVE+nhycfOIQfRgczPG25YNatby2rAWU29isJVzwc5WDTl2MrdE3jkCYjwB
-         d+lKWPSZB/Fvju1Q0bjUGj1VVdz/FPGOwJ0RbTQZXEr1iX80Zi/Ln5yOm4sBsEnghFGa
-         dvSg==
-X-Gm-Message-State: AFuF++mIbl6XrglPSy0H712CkjMC7g6D1Y+6WOYsGMUg1Vbc6Qi9lMUq
-	MeN0oO+kuDMFSxtglnCbr1k/E78PEjr3uIZDn2QyNvE4LpDJXUrXlOi5Ec2LbOVoCaWzD2e3YVb
-	61hK/msn4cLCCMPh+zgKqx77zozIPQ+87eWBJpeJe1c0xSU5T+bRW38g=
-X-Gm-Gg: AYBFou2vBZJmYA5QivGSW2m0BNQ4XmXTBLwfwvOejGX7SRzb+KEnMl81zcD+61aRB7U
-	/asH1mffLRjaefheeA9kRSR6Y0hQ34lH9sZ8P2O4SD/t8yX+nKKXcJRJWN5ScJMJF5jmKeyT7uA
-	yz8kFqdqa0xlmnwcM1RBNyP3Df+vE0jnvDGxsb4r0OoSO9gjfRVz+agIQKA8G8arfn63bhazXNB
-	ZbGRFBziuus+AcNV+LSu2ts5LGAseCavf4KXCm/cg+NwpbJuded1HuAnsxnpkKpKSa6yLZ9S4BO
-	amKqFqKTKMXhXX2/MwO7BtO/MUk0UnAGwC4jAg2qs9lYe4o1HUwH1mk=
-X-Received: by 2002:a05:7022:7f03:b0:14c:e31e:5dd4 with SMTP id
- a92af1059eb24-14d33495892mr4789635c88.36.1790870466068; Thu, 01 Oct 2026
- 09:01:06 -0700 (PDT)
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Thu, 1 Oct 2026 09:01:04 -0700
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Thu, 1 Oct 2026 09:01:04 -0700
-In-Reply-To: <ar5EwwEt8-ADeLdr@pks.im>
-References: <20260929074222.11942-1-kazumasa.shigeta@kanamei.com>
- <20261001042155.33303-1-kazumasa.shigeta@kanamei.com> <ar5EwwEt8-ADeLdr@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jh48E+Jw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rQGpIBpR"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 57644EC0169
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 12:10:06 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 01 Oct 2026 12:10:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790871006; x=1790957406; bh=RXeyXkEQGo
+	s68+JhQKNJkojIriUMQQ4d5BB7LruHrwU=; b=Jh48E+JwcvgJcsG4R7EBuaEzWK
+	h5q/MOKNjrf9fyJ/OOrHaiC8cvkBjA7DOUzexfxuZKuTe/JR/42Er+cXZsEC72rl
+	ku7zizo/4QXkVdtFFGsB1exEFEoVMJhjFMk6cRWN+E6kqTPVCyc4bvPXmvBoNSPw
+	Kmrz4Ass+JFAt4QOwqLu4VTjqr4L93gY+B5bGNGIycqyYqeUUBuI4vRlqM10vEZa
+	jK9ZfErvwNnS/CKDxlcCIhAvS9arTLVN0776VAvZGNND4QbjLc5JIUc3zZflGaIa
+	9NrcTrnIJ1+P7jtx5hT3Z+Ob310hIEcMDnmejYdG/pHFEFe+qflwZT9EHxaA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790871006; x=1790957406; bh=RXeyXkEQGos68+JhQKNJkojIriUMQQ4d5BB
+	7LruHrwU=; b=rQGpIBpR3ZYhkhC1dxR932yukIS95sDLwD11xiQXODccTjygchA
+	gGgynneBMfvvF5lYPCe10lUiUu3G4yc5VHjecnSKUPyoYhIytFqxFeG19uktH8RF
+	9ZXQaVOJclzVFs1tWTomcfFwb2fmG0jZHoRxBgNsEdze58rS7kl3JM+VZbfGKFCv
+	uQtiVfX0Ge5nNXS7cUee37s+zYrvqo+Q6QS4RaZJkiugcbN+YNaWrJ2rn2oC0wAL
+	EdgeEWxKPtLnjrrMVGi4jD1rWWSVi4VJ+3/5Z4zmFSh/pH6OEFYupbwEPkw7s2on
+	tGHz85uGWmw7lJfaa8fp5Xfq0YhhR7ydz7w==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1790871006; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:lq6nM1yKhRmhfdSV4XL1DFRSg+fVxgyOgca6mkjFsAfSEKE
+	llgpdK4Ige5AFEwI1NY/0UFhzyF1oUYf+3Q1yPSy21rkSPuldtaxDUTO47oohdSC
+	4VVA6XzmWh11AeKSVtYERw5skVD1RAeHlKhakXoCqPDul2gOZWCN8ZyGcbQRwvDK
+	KjBM+QHWkqDuSZGGFNfqriTYX+NxDQBdkI+Gk796DDUSinWG4v6NM8DepomZOr/G
+	X9sQ2KdNRKBu6d/AUGCf0Xpollj8GVM+Wfnjub0FncwP84okeUgwMRoRciFxHwg6
+	SkB7jLu68j62Gn31bpx2ufai8sB2vZyU5XPuhIA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:4VVMm7elJ2Mz6+gPtWmLI9O1KAqPp7I6yqCnBr9lURM=:jIwtNHv+HbBwbKpgX0H+lJae0LjKhAI2uyejB9WLc5o=;
+X-ME-Sender: <xms:3YW-auK0GbwIejkEAeuFagrDLqDjjW0gXm4koom088jaKp16nnZA6Q>
+    <xme:3YW-atD2-QaRl3zAOngrkzQtYXX10W2aO9BGQMf8_q7caTxJMqWsR4j3GsGhmOrK-
+    zg7tmGf04CUcMdoB-glg6WWMf4rfl1TdZGzV9NMcB83DBumi5Xq>
+X-ME-Received: <xmr:3YW-anCJ_xYApeNOfUpDnc-RoqpCn6a4OUw_F4Lf7YPM34KcHCxuQsO2SRyS4qBub2LYguRCWtMMKpSGd-Icq798fmO8Z9KwqxzP>
+X-ME-Proxy-Cause: dmFkZTFKRl0ev2ukTAq1r6N42r0hGxrDNDW/uKX2hgxFKsZ20H8D0BR5fNSSUCR6AHWth3
+    G8/GRirWmgknuePQmYMyVEYTfAJ34j0vqqKWfDZt69lTd5YZN2ON6H3dvEBG3yMuiZGJjE
+    A1FHdA5kCcFXHF6Au+tMbuFHVUGXJPGqWqpJIMBQldh1ZAoqfrIuj3meTYtUVSCE7/VKcR
+    QpshaB30F30rsCaplFRcI5aYyvQ6iMHM0DPecz6/aIvn/EVFcINlT7bBc1EyIscV+TZo2I
+    dSQ9r+c46iF7vLMasQmNo0Uzk1UgxKa8rnqX8PEJDthMnxvFDPmJ1eyHIyDqA/SuVXCRNH
+    vKg6E8jucj4vWthdDL5Srhdbzf/HIz5tXOO/BGm2KPd6WOJ8y3UmrfcsycbGWSrju5fn1g
+    BN9NYgWugh3Xwt4XcSkITF/Sw71SPPl1vqhHw5TrLH/R0MB5GAV80VpW8nnn1ee5lwIjcU
+    6fhx0Jkq3BRE1cIl0pOSUmHL9cOXaTFo52HLA0FvUZ4VO26w+8yRJFXxF+b8PgNQAySZv8
+    EDcfXL7+V+Fq/6Z4j7cCZJBnIuT19KOpiV+iLZlE1KT6Ob7rwTEKT8QypEskUHxlAxYikb
+    7YOyJL2/H5Te4hjFqVxlECRS9t3jhdOQsooEweSzormg1Ic0rHwBsB61c9Qg
+X-ME-Proxy: <xmx:3YW-avBOKbm-QyINWFh_FY3diqMkQNQi7oEo87UEjLzJPB5Gol5Vmg>
+    <xmx:3YW-air51w2ONFKmG19BtUvWSvmLP_4JCgZYDhUMMf8wOUJ5sH3w4Q>
+    <xmx:3YW-apkshRGJkZ9R3S9blo828eKYEa-84Lb1VHiSG5z1Lt8ae-2F4A>
+    <xmx:3YW-aiy7Cj0o5JYXFvyWEc6jCrS-vZ4KOHQ4vo7kklMsJveQw0xJnw>
+    <xmx:3oW-aqc2z56k22JTPvyd37Ai2LoIEOsuT-FxxukXV-lCqvvHwqRsGzZH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 1 Oct 2026 12:10:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Grant Moyer <dev@grantmoyer.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Michele Locati
+ <michele@locati.it>
+Subject: Re: [PATCH v2] filter-branch: fix commit map init from state branch
+In-Reply-To: <20261001012347.3998801-1-dev@grantmoyer.com> (Grant Moyer's
+	message of "Wed, 30 Sep 2026 21:23:47 -0400")
+References: <20260801033127.10606-1-dev@grantmoyer.com>
+	<20261001012347.3998801-1-dev@grantmoyer.com>
+Date: Thu, 01 Oct 2026 09:10:04 -0700
+Message-ID: <xmqqh5j57677.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?B?6YeN55Sw5LiA6IGW?= <kazumasa.shigeta@kanamei.com>
-Date: Thu, 1 Oct 2026 09:01:04 -0700
-X-Gm-Features: AclHuK82CxuJWnXqARA6ra_D-319T1WCNYBKUug7FGVvYrIFJYECjqtcY76fhUE
-Message-ID: <CANUHOw3syiH81F_5q-S33Zmyfw5v_R8cS1hwgpPLqrBDQGu3FQ@mail.gmail.com>
-Subject: Re: [PATCH v2] stash: expose untracked modes in create
-To: ps@pks.im
-Cc: git@vger.kernel.org, shabbir.r.bhojani@gmail.com, 
-	phillip.wood@dunelm.org.uk
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi Patrick,
+Grant Moyer <dev@grantmoyer.com> writes:
 
-Thanks for pointing this out, and sorry I did not understand the
-expected review process here and sent v2 before replying to Phillip.
-
-I'll reply to Phillip first and follow the proper order.
-
-Thanks,
-
-Kazumasa Shigeta
-
-
-On Thu, 1 Oct 2026 13:32:19 +0200, Patrick Steinhardt <ps@pks.im> wrote:
-> On Thu, Oct 01, 2026 at 01:21:55PM +0900, Kazumasa Shigeta wrote:
+> The commit map dir is populated from the state branch assuming a
+> "to_commit:from_commit" format, but the state branch is written with a
+> "from_commit:to_commit" format, resulting in an inverted mapping when the
+> map is populated from the state branch. This is especially evident when
+> --prune-empty is used and creates commits which map to nothing; when the
+> map dir is populated from this state on subsequent runs, git-filter-branch
+> outputs many errors while trying to create files with empty names, like:
 >
-> When sending a v2 in response to review feedback it's a good idea to
-> both:
+>> /usr/lib/git-core/git-filter-branch: line 305: ../map/: Is a directory
 >
-> - Respond to the reviewer to acknowledge their feedback and/or engage
-> in a discussion.
+> This change corrects the population of the commit map dir to match the
+> "from_commit:to_commit" format and adds/updates tests to check that the
+> state branch is written correctly.
 >
-> - As part of v2, send a range-diff as well as some documentation what
-> has changed between the two versions.
+> Signed-off-by: Grant Moyer <dev@grantmoyer.com>
+> Tested-by: Michele Locati <michele@locati.it>
+> Co-authored-by: Michele Locati <michele@locati.it>
+> ---
+>  git-filter-branch.sh     |  4 +++-
+>  t/t7003-filter-branch.sh | 24 +++++++++++++++++++++++-
+>  2 files changed, 26 insertions(+), 2 deletions(-)
 >
-> This ensures some netiquette in an age where we're increasingly only
-> talking with AI, either directly or via a meat proxy. And makes it
-> easier for the reviewer to see how exactly you have honored their
-> feedback.
->
-> Thanks!
->
-> Patrick
+> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+> index 24fa317aaa..9aa07be6e1 100755
+> --- a/git-filter-branch.sh
+> +++ b/git-filter-branch.sh
+> @@ -302,7 +302,9 @@ then
+>  		do
+>  			case "$line" in
+>  			*:*)
+> -				echo "${line%:*}" >../map/"${line#*:}";;
+> +				from_commit=${line%:*}
+> +				to_commit=${line#*:}
+> +				echo "$to_commit" >../map/"$from_commit";;
+>  			*)
+>  				die "Unable to load state from $state_branch:filter.map";;
+>  			esac
+
+I very much appreciate the clear description in the proposed log
+message above that makes what this change corrects very easy to
+understand.
+
+> diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+> index 86011e7b1f..cf225b0f0f 100755
+> --- a/t/t7003-filter-branch.sh
+> +++ b/t/t7003-filter-branch.sh
+> @@ -121,10 +121,32 @@ W=$(git rev-parse HEAD)
+>  test_expect_success 'using --state-branch to skip already rewritten commits' '
+>  	test_when_finished git reset --hard $V &&
+>  	git reset --hard $V &&
+> -	git filter-branch --state-branch state -f --tree-filter "touch file || :" HEAD &&
+> +	git filter-branch --state-branch state -f --tree-filter "exit 1" HEAD &&
+>  	test_cmp_rev $W HEAD
+>  '
+
+I am not sure what this change is about.  Care to explain in the
+commit log?
+
+> +test_expect_success '--state-branch incremental rewrite uses the rewritten parents' '
+
+It is a minor nit, but do we want to have
+
+	test_when_finished "rm -fr incremental" &&
+
+here, before creating a new repository that is used only for this
+test, or do we expect that in the future we will add more pieces of
+tests that work inside this new repository (in which case leaving it
+there may indeed be a better choice)?
+
+> +	git init incremental &&
+> +	(
+> +		cd incremental &&
+> +		mkdir sub &&
+> +		test_commit first sub/file &&
+> +		test_commit outside root-file &&
+> +		git filter-branch --state-branch refs/state \
+> +			--prune-empty --subdirectory-filter sub -- HEAD &&
+> +		rewritten_first=$(git rev-parse HEAD) &&
+> +		git reset --hard outside &&
+> +		test_commit second sub/file &&
+> +		git filter-branch -f --state-branch refs/state \
+> +			--prune-empty --subdirectory-filter sub -- outside..HEAD &&
+> +		test_cmp_rev $rewritten_first HEAD^ &&
+> +		git show refs/state:filter.map >map &&
+> +		echo "$(git rev-parse second):$(git rev-parse HEAD)" >expect &&
+> +		grep "^$(git rev-parse second):" map >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+>  git tag oldD HEAD~4
+>  test_expect_success 'rewrite one branch, keeping a side branch' '
+>  	git branch modD oldD &&
+
+Thanks.
