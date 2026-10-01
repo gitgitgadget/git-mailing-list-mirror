@@ -1,139 +1,198 @@
-Received: from mail-yx2-f41.google.com (mail-yx2-f41.google.com [74.125.224.169])
+Received: from mail-qv2-f41.google.com (mail-qv2-f41.google.com [74.125.230.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3BD327C08
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 08:08:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790842110; cv=pass; b=Hq8Ty+N8lZvrgfW0NSACEqhr0SvPD9HpV8/1ywbskod/85Rrq7a6S20ft1njww409a2d3IjqQFoY2XB3byplbpxdgjJOK10cDFUuyT9xwZGRSLSoIKjxyb+62jyaENm9Hq8qAD+tgJQNMHjYXAGd/HF54Oi3i9tj+OR7rG+Pu30=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790842110; c=relaxed/simple;
-	bh=6llHAe1x8y4ibVFy1KA4vDeUblGTsnqHCnRvfLtP0Ks=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YAfOyXIx25zP3W0i3ZvrzJMNV710DN3QreM0Y1ZjfgXUb+qT2CMfXDtDpYk3Xd5DSVOqQ16GMiRa5EkNr6EWt6lryacsliRDnukejNVfC+9kkwmfYd3p+AG1XXOlYYBVzto1d0DYD+3v+GbWK6rUB0E7CrOq6DGyZIZU1H4i4AE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com; spf=pass smtp.mailfrom=thomasbachem.com; dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b=On78M3XS; arc=pass smtp.client-ip=74.125.224.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thomasbachem.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468594A68BC
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 08:24:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790843064; cv=none; b=IfK/QUpvh6aNnlk1aSW349+aJc/GSDh6Ng7vxqe75crByF1z8zNV2ywavRvCDBb/SK/yg7avkW0IOSEm9b0C3hClF4tbPx+bI6xdGRO/Hzh529t2I/+o2XJiJbjEFKwpgavP8fXX0mcOBqopWHpuj1QCCzxZFTggfWnL9e/qyDg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790843064; c=relaxed/simple;
+	bh=UyKwDYXJrNJx3yRuu/yZqT3SvRtRBDgwkR4+tAxcbKg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=BPCXmwgr5X3Kr1W0wY0EeuyQRlrxGnEeeI7axJJf1QnrN+LvPrrZ4s1UDYVS2G0o0/qr66T9HwIX47dR67n2LspA+bYuv/2yHzSSAdPs0MFG2Dneiv+7/Tb4UmrF9h4cixIjkp2fYorVXIVpp1I9R9DP6wW7p7ElAK7vPB0Ll58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PAWnTIuE; arc=none smtp.client-ip=74.125.230.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b="On78M3XS"
-Received: by mail-yx2-f41.google.com with SMTP id 00721157ae682-8a8496fd8c3so66376837b3.0
-        for <git@vger.kernel.org>; Thu, 01 Oct 2026 01:08:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790842107; cv=none;
-        d=google.com; s=arc-20260327;
-        b=KekSSSFUS0wKiLttKXjKufMw0I0vmOEbv2NRoJeiOI9trL/YHMlHpZCll64/k+YtYH
-         syemwz8+R3Q9pWi5dYRg4J0/CVgjpDf5qBaUGDcvfZEoEO6hytsOIROwpQiIAyQzzOci
-         aJUgTDW5ZHw7CAVTNhg9KQ6JHnAhs2+6Lmv59nhPIKTBDD5IrpuiZqHoVnz8VVaIayE/
-         farQ/0CAyRit7/x6dUQd+2MNVGmxjQgOWlF70E6mgeDxfqeY6OBR8QwXSWEnsJ1roYqO
-         xsvqIXNW+nFLr2zKL5joGXKGnMvw6RnNqYlfg17Sr/PawbODXrH3RvII6QfPtLEfQXXZ
-         pksA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=6llHAe1x8y4ibVFy1KA4vDeUblGTsnqHCnRvfLtP0Ks=;
-        fh=4mVgkBmAu9PM5TtAIg8xcMo9PSKZIk7MLS2mQ9gj/aI=;
-        b=pfeW2DK60E5tu8NKipVUA9jP4aRovKdvO8op/0/qRrXpdVyEu1HDfzKQ6Wd+FizzmM
-         +tn9BthcgO8FOH9B+dbufrG45YUnhstsMT0LFjudUIfR14T0XBEYia1G0Ek3wBIbRqmg
-         UBq6Lai3rT+aAukk+fIWZefp7UqiPRLXfW5VkYLDjpj2KFumfYpBD9SOx+LLtghkJbhM
-         TZMD2mC5rS2kluXLGlpXq5c2FMDFwbc5duJ7XpLaURdh375OdE+o8NPXEgypUnu09hwp
-         NHOtzX1E7NckLGqt9anrpuR8WzopbYh0ne5xmJR6Eh0/N0gINF+X0QkiaH9OMkxgmF1Y
-         Gu9A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PAWnTIuE"
+Received: by mail-qv2-f41.google.com with SMTP id 6a1803df08f44-91784fbb60dso30550006d6.1
+        for <git@vger.kernel.org>; Thu, 01 Oct 2026 01:24:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=thomasbachem.com; s=google; t=1790842107; x=1791446907; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6llHAe1x8y4ibVFy1KA4vDeUblGTsnqHCnRvfLtP0Ks=;
-        b=On78M3XS1jax7Pn0pa+Npa7bho7buNnDkvRwlPsHBOJadey9DF35pfyNiy9T0YhgKu
-         wUX8Stltvm9PRVEdUVqxAETx798mB25oxNNJ2/sSVaLp9cEsybKZldE6tFCnfMrf972Y
-         j3BjanDWC3WAE8aCF5dhEQIpU19J8iuWUQxlrSIJ01zZfG0hiRXjHfEPmfXobEfNaAy9
-         WMetE/C2DzHbzdOW7KaPFzXBcz3hjJ2Sm+Cv/7UVKD4uiM0bMB97Qnj8cWg3iUysuDXC
-         wkO610lWCPPbbaJM/4dyFuqY36RL4g2qa32edZd7VxetptW1PBnvsEQLqjUPxy+WqB2M
-         zWXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790842107; x=1791446907;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20251104; t=1790843058; x=1791447858; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=6llHAe1x8y4ibVFy1KA4vDeUblGTsnqHCnRvfLtP0Ks=;
-        b=fkTgv3TDAqN1q8f7Sye4WGbxdjqkJWPWytk7dmUiLSZZ5keTZVTwK4LqGg2GHiYHbG
-         YimE8zWrr+isw0MwPnHQHp++nPEA1bi2RZ9g4YNY2jj8nMco8MrquHcFJhmnISD/TFEn
-         gjnFanl7PtD2qO/Z3Q7oUBs6CWCPFm8SBchSYUEWWO/Fb+gN15K7UsI7oBc8/I9Lv1MA
-         UYid8p63JqQb3olFfImDYWE5GQSx5VeHUbHXV0Z3lv8/NLiE4QH0b3xKZW/asNy90Hwq
-         jdugK3iXK+1A7F4pCRbyM7GLzF8lRJm6R4wfn1Mwi27q2/w+iFpZRabS7Te+xEdhxpjZ
-         gznQ==
-X-Forwarded-Encrypted: i=1; AKwUvBw81OIC/sInYa2CDRJr7P3kjMQerIfIOQ/mtkWTUBk0T4+C002ah/6lwHtIsNj63CzUQFs=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLKKh5FQGjbSdRaDHxaqgbtMAIKyCiuSTtAtDrX4mBe1Yh65d+e
-	25zDV2YkvzSskgwExb1K6sJckJQoev2F/ssltWOi790zOPJMRYjhoMrjXE5gMeXONFf04VYmw/W
-	7rZJPAj9/TS58BKvkI9hchba3nGBesy3qndUTf18RtQ==
-X-Gm-Gg: AYBFou2WeLqn3JhlXS5MN2fjie1yExz69a38lb0BxzCD04Auz8m1lWAck5OHWIpjVxc
-	XD8uXFVjaMqgdAvlPEynLBqyIPgoiPjwg3qwjGazfyJjdlzM91I96UnEFyB0xcAy4dOpnd1Ntei
-	k8AWVAJ8XXLuel+KkCY1UMV3gN3uQTm73tQV6Def8SjqwXc0H9UN+VHUHL8LQMzA1WJ+HZiAH72
-	CCT6YraO38iTFnf9apu8QuP9IMCgQeiOduxoMXqgRTltBFq5z4QfNt2hFICs7LzOMrqrmj77N3b
-	2hVSlnktF4gMGFxmjvr5Gvj977OQzSMRETPLpqEkMfIXBE/c7YHl/o1XexmRHsY60rgyqZ296Gn
-	AlYxfHZAgUpCWaFBwmiWCxY2KiClXrP4FFPV9CiwPD0n1Ow==
-X-Received: by 2002:a05:690c:a189:b0:873:5bb2:6c38 with SMTP id
- 00721157ae682-8ac92f2bb19mr11559837b3.63.1790842106780; Thu, 01 Oct 2026
- 01:08:26 -0700 (PDT)
+        bh=dbhuXdMnHAC6q5Ax6Eh5X44nRrM2QeSOVcVuaW/NQP8=;
+        b=PAWnTIuEhHsUD8MWNmM4kV4JKF9y9vxSvJJ6uSdBdc7bsIIGl1ClSKVSyuy06oHqHn
+         GZa0wxLO37xBflzuiYOMnB/IlrsN94WIQLYE5ZG5zRBT6Rir5ZBzJdpVCunVcdXuUUGp
+         LVj2V8vBrQjcO7EOYoxd6lRjRE1UuL6ijv0ua9u2SAOfj2gDK77etlKNbo8v3vHyO7i7
+         NzX6Eo/szE7GfoIVTk5PcC6ecfiJwWBpmHbWXofARXyxQWPtM9LcnsbgeVhI9rkuxHKL
+         HcpuGQhI3R4xg3P7EDMhPNecB4Eb2iH/w2usiQ9YT2/nJc5VV3tQboZvqrCxYruyuGsE
+         +RxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790843058; x=1791447858;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=dbhuXdMnHAC6q5Ax6Eh5X44nRrM2QeSOVcVuaW/NQP8=;
+        b=tJ+mT+U7su15F6nWxKJPXaX0bdLD/aeArb9duqccp9I8SftKqdDDMfnQm7u3fXtYoH
+         DcKdeyidmRAYaLS90c93WPrNHoUGB9JcvDOnG/m8or9Xje6mlGvZZWnmdsIHJlNmLu5e
+         kovsF/Rmge3a3Z+UFjAeGsIFKkhCLEEAaiBazBSBwa4seCGjp2aFfLRG3Pq3ZMVd2T1k
+         ZGi8CZwT8S6OfkOJbo5FZFvWvBGukZqMabqJ1xzgy2k73O3fiFrgp1lbYwaQpQ+BHHEb
+         B4fSqKFzfbscrLncrPLbbkHyo+Ip9U2SRZq9LC8a0jnKJEbwlH6L/jCRLaRucmF0oozq
+         SxSA==
+X-Gm-Message-State: AFuF++nGhMr6isAzeO2/YEhcQOOWq8Ivpo9o0wRlWLxVr0NX4YHHMZ4I
+	AkEtcu9mY3ufSfN/7nwb+NmsOCKO+CkliR9+q7zcxq8TBKbAPlKWSRR0PM8x1w==
+X-Gm-Gg: AYBFou3j8k/5w5MSVpMQGqvugJkVoJRJiodSW/5zUE/RS5/M+BAuydNEYn1bOH5gXXY
+	q26ktekPOlxzOR5YY9LBrn7ip2SEBqjc3RQBAN9Cqgk3T+TljA+k3QFsEe+VDFwde0QYkuqgd8H
+	zBtG7v4xgrfmumiIUXPHbiNtM7pY9LYzemsD4v66JikWJpy+AOjBpPkZYfM6LJOXl0R6kDiQ93/
+	T0WfNVZWwEeWzKM/E62ujE58ywuCTz+jQng6qIo+6Vt3MRjQcQjRf+fgp95pyBziBlRxFIp+60f
+	RlWu/D4hRr2s5KWkgDYa1E33C1yCNrKwLP67WlaSDNv21eA9HY/LA4xCFSSimNu9k09De8gTpsM
+	1ZMnxHz3/yauNjilXhspSqF8e5vxXbuCqe1tteWCV3Fwi4+Mri4HUdIp3J5vuELvOYdGN7xeFRO
+	Z53vI4Uwo4vXzKvmV9DL2saaRhSemY1UK0AZ8KsI7xS0ixnx7F81MrL+HwM51vYg2xCXW6lhs4f
+	w==
+X-Received: by 2002:a05:6214:3981:b0:914:3cd3:a1a9 with SMTP id 6a1803df08f44-917a0b30653mr78287836d6.12.1790843057972;
+        Thu, 01 Oct 2026 01:24:17 -0700 (PDT)
+Received: from [127.0.0.1] ([40.76.117.247])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-917a8a5bd54sm20194446d6.39.2026.10.01.01.24.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Oct 2026 01:24:17 -0700 (PDT)
+Message-Id: <pull.2243.v3.git.1790843056949.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2243.git.1790606282769.gitgitgadget@gmail.com>
+References: <pull.2243.git.1790606282769.gitgitgadget@gmail.com>
+From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 01 Oct 2026 08:24:16 +0000
+Subject: [PATCH v3] t5520: don't expire reflogs where it matters
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
- <pull.2214.v5.git.1790596702.gitgitgadget@gmail.com> <27673137aae961105a3d3b6ea615879e0686cc65.1790596702.git.gitgitgadget@gmail.com>
- <ar0kJPdY1WSsWvP8@pks.im>
-In-Reply-To: <ar0kJPdY1WSsWvP8@pks.im>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Phillip Wood <phillip.wood@dunelm.org.uk>,
+    Junio C Hamano <gitster@pobox.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Thomas Bachem <mail@thomasbachem.com>,
+    Thomas Bachem <mail@thomasbachem.com>
+
 From: Thomas Bachem <mail@thomasbachem.com>
-Date: Thu, 1 Oct 2026 10:08:16 +0200
-X-Gm-Features: AclHuK8U5TEvSA-RDRhZVoam3msijt5Prvt2RPpCSCk3S5zskKNnPXnio9FEp24
-Message-ID: <CAA0xjtoj_uf-f+kzjRpmOkq1RsbGnkXdodeSS2ND0R-FsP4qRg@mail.gmail.com>
-Subject: Re: [PATCH v5 2/3] rerere: add "gc --auto" that skips a held lock
-To: ps@pks.im
-Cc: gitgitgadget@gmail.com, git@vger.kernel.org, phillip.wood@dunelm.org.uk, 
-	gitster@pobox.com, phillip.wood123@gmail.com
-Content-Type: text/plain; charset="UTF-8"
 
-Hi Patrick,
+"git merge" saves any uncommitted changes with "git stash" before it
+tries a merge strategy. When the strategy does not handle the merge,
+it restores them with "git stash apply --index". If some of the
+changes are staged, that runs "git reset", which writes an entry to
+the reflog of HEAD. The tests that pull with autostash disabled run
+eight such merges, each with a new file staged.
 
-On 30/09/2026 17:00, Patrick Steinhardt wrote:
-> It's a bit weird to have git-rerere(1) document who calls it. We may
-> want to document why specifically this is useful though.
+An upcoming change makes "git stash apply --index" merge the index
+in-core, so it no longer runs "git reset" and those entries go away.
+Another makes the default "merge" backend of "git rebase" run auto
+maintenance when it finishes. Together, they change when auto
+maintenance expires the reflogs.
 
-I'll take that out of git-rerere(1) again. I'd keep the last sentence
-of the rerere.lockTimeout entry, since that is where I say what each
-command does when the time is up, but name the two commands there
-instead of the option:
+This means that unfortunately the reflogs are expired at the end of
+"git pull --rebase" in the "--rebase with rebased upstream" test. The
+"git pull --rebase -f" in the next test looks for the fork point in
+the reflog of refs/remotes/me/copy, but as the test suite dates every
+reflog entry to 2005, the expiry has emptied that reflog. Pull then
+finds no fork point, so the rebase also replays copy-orig, the commit
+"copy" was rewound from, and it conflicts.
 
-"A `git rerere gc` run by `git maintenance run --auto` or
-`git gc --auto` does not wait and does nothing while the lock is held."
+Disable reflog expiration in this script, as ea7d894f44 (t34xx: don't
+expire reflogs where it matters, 2026-02-24) did for the rebase tests,
+so that the test no longer depends on where the expiry falls.
 
-> How about we instead call this "--skip-locked"? We could even mark it as
-> a hidden option and not even document it, as it feels very specific to
-> how git-maintenance(1) wants to invoke it. If so, we could maybe remove
-> it again at a later point.
+Reported-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: D. Ben Knoble <ben.knoble@gmail.com>
+Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Assisted-by: Claude Fable 5.1
+Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
+---
+    t5520: don't expire reflogs where it matters
+    
+    The t5520 failure Junio saw in 'seen' with Ben Knoble's stash series,
+    bisected by Ben to tb/rerere-lock-grace and taken apart in the thread:
+    https://lore.kernel.org/git/a59c4225-f093-4001-b77a-2083dfecce6e@gmail.com/
+    
+    Changes since v2: only the commit message. I had the eight merges in the
+    wrong tests: they come from the pulls with autostash disabled, where
+    "git merge" stashes and restores the staged file itself. I also dropped
+    the clause about the hundred entries and took Phillip's opening for the
+    third paragraph, all from his review:
+    https://lore.kernel.org/git/8b81c508-ac67-498d-b78f-a4b5dab8c198@gmail.com/
 
-I'll take both, the name and hiding it.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2243%2Fthomasbachem%2Ft5520-reflog-expire-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2243/thomasbachem/t5520-reflog-expire-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2243
 
-Patch 3 has a RERERE_SKIP_LOCKED flag for the conflict-time callers.
-I'll rename that one to RERERE_WARN_LOCKED so it doesn't look like the
-option's flag, which stays RERERE_NOWAIT.
+Range-diff vs v2:
 
-> An alternative could be to instead call `rerere_gc()` directly, and if
-> so we wouldn't have to add this flag at all. But that may result in some
-> bigger changes, so I'll leave it up to you to decide.
+ 1:  6699f3782e ! 1:  be6c3f21c5 t5520: don't expire reflogs where it matters
+     @@ Commit message
+          tries a merge strategy. When the strategy does not handle the merge,
+          it restores them with "git stash apply --index". If some of the
+          changes are staged, that runs "git reset", which writes an entry to
+     -    the reflog of HEAD. The autostash tests in this script run eight such
+     -    merges.
+     +    the reflog of HEAD. The tests that pull with autostash disabled run
+     +    eight such merges, each with a new file staged.
+      
+          An upcoming change makes "git stash apply --index" merge the index
+          in-core, so it no longer runs "git reset" and those entries go away.
+          Another makes the default "merge" backend of "git rebase" run auto
+          maintenance when it finishes. Together, they change when auto
+     -    maintenance expires all reflogs, which it does once a hundred entries
+     -    in the reflog of HEAD are due to expire.
+     +    maintenance expires the reflogs.
+      
+     -    With both, the expiry comes at the end of the "git pull --rebase" in
+     -    the "--rebase with rebased upstream" test. The "git pull --rebase -f"
+     -    in the next test looks for the fork point in the reflog of
+     -    refs/remotes/me/copy, but as the test suite dates every reflog entry
+     -    to 2005, the expiry has emptied that reflog. Pull then finds no fork
+     -    point, so the rebase also replays copy-orig, the commit "copy" was
+     -    rewound from, and it conflicts.
+     +    This means that unfortunately the reflogs are expired at the end of
+     +    "git pull --rebase" in the "--rebase with rebased upstream" test. The
+     +    "git pull --rebase -f" in the next test looks for the fork point in
+     +    the reflog of refs/remotes/me/copy, but as the test suite dates every
+     +    reflog entry to 2005, the expiry has emptied that reflog. Pull then
+     +    finds no fork point, so the rebase also replays copy-orig, the commit
+     +    "copy" was rewound from, and it conflicts.
+      
+          Disable reflog expiration in this script, as ea7d894f44 (t34xx: don't
+          expire reflogs where it matters, 2026-02-24) did for the rebase tests,
 
-I tried it. It is six lines in builtin/gc.c, but rerere_gc() dies when
-it can't take the lock. A manual or scheduled "git maintenance run"
-then dies with the lockfile's message and exit code 128, where it now
-reports "task 'rerere-gc' failed" and exits with 1. The rerere-gc
-tests in t7900 fail too, since their helper looks for the
-"git rerere gc" child. So I'd keep the option for this series. Say if
-you'd rather have the direct call.
 
-I'll wait a day or two for other comments before I send v6.
+ t/t5520-pull.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Thanks,
-Thomas
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 27f38ab3c8..bc818605a5 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -35,6 +35,12 @@ test_pull_autostash_fail () {
+ }
+ 
+ test_expect_success setup '
++	# Commit dates are hardcoded to 2005, and the reflog entries will have
++	# a matching timestamp. Maintenance may thus immediately expire
++	# reflogs if it was running.
++	git config set gc.reflogExpire never &&
++	git config set gc.reflogExpireUnreachable never &&
++
+ 	echo file >file &&
+ 	git add file &&
+ 	git commit -a -m original
+
+base-commit: 34f06850c16c7f7ac822b1adc71354f11b0f2ca3
+-- 
+gitgitgadget
