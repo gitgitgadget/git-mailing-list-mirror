@@ -1,415 +1,363 @@
-Received: from mail-oo2-f42.google.com (mail-oo2-f42.google.com [74.125.231.170])
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6490D42A7A8
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 04:12:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33E11B2EF2
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 04:22:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790827932; cv=none; b=aOzva8VV9Ejm6Snanp9hjsTrAbpcFW7bPkbs8WIq0E0D+fan5aw7AxzdrMKPmyrieweIm1K9RIB/VRQioXtO72vSXbUvblSrSEIEhnr3mBwJgUmSd77ETXmra6O/5ylMy/beSM20VC5j5x6MyK0d0LP10ww4IQ0b1V8MP9uTOhE=
+	t=1790828525; cv=none; b=O5kSDSz1hmvl5xs81nA7LeBRf7MJa3KUA/BXAmP123BeXiw2ieMQbKKDOUYlvZeW1ZscE7Ab/pOPMrM78Q+WmXgjWPgSrfRuqbDVLsr3aFv3FOLEkk2lQJvNeGl74XiZl11ykCivepOlcGxGmInvBZukFcnhuHLo/617htBU/Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790827932; c=relaxed/simple;
-	bh=ZUNbtJpTwtQLkEWwTMu89QF1fxO2VEThfxbhxRTVUKs=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TTiyLjRQ97Ep8IeJDVASTCQuujIaId3/lnUEdrTKcWMy3l6912SGK1baLOTZCq6ixTqCRnp6t23I6lKktUfqr2rytyv1aa+4h6+tVsdCVWjMH+tsmD6ijUfvN3vA6godoHHD6VrCxsKY7A54io6bXEEpKCeR0z4o3SqBP4SnI4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=J8LsffC6; arc=none smtp.client-ip=74.125.231.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	s=arc-20240116; t=1790828525; c=relaxed/simple;
+	bh=v7fvfiwe6MsX/b9ufy4iPy7RdYnpWT6A3QBc+wRLzo8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=M7rHlvCFx82Bf6XMO9ApVV5mYb7gzb/N5RxCu8yLlJijboO9ayXWDygMALdYibr/B7U6tSbbg5k19oSwT8muND9MGvnWVvh8pAorIZeUDYwzrDmhuNyT3Uavq/CCeeDmIIu0nDsb6SkSAhucDVj5LDDTc+q0k5NAImmxl8f3L2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com; spf=pass smtp.mailfrom=kanamei.com; dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b=FoVW2U7r; arc=none smtp.client-ip=74.125.227.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kanamei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="J8LsffC6"
-Received: by mail-oo2-f42.google.com with SMTP id 006d021491bc7-6d8709e0e13so1808790eaf.3
-        for <git@vger.kernel.org>; Wed, 30 Sep 2026 21:12:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b="FoVW2U7r"
+Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-396ccc09d65so3633594a91.3
+        for <git@vger.kernel.org>; Wed, 30 Sep 2026 21:22:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1790827929; x=1791432729; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=vqAAtlkvTtudNgYyX8buxI8SzBu4oHkAZRA+s6PUISo=;
-        b=J8LsffC6RE19wsq/LkR8+6fY12GwMaK8ffTfDZ3qssrzDa4bWtLb6utbKtPYEyPuZv
-         ErpZr6UG4JnbEZ2lOVEpDRWUHKDS1XIcVrjNsG1dHRCku7B4eXSFFxtIWD1ScB5D7KcF
-         Gf1qgIAPg1BeQ8MJCWEOqapvSDPzI2I9b1kSk=
+        d=kanamei-com.20251104.gappssmtp.com; s=20251104; t=1790828522; x=1791433322; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=4CWr5kBW70ipeB9x711gxu3GklUO0G1iG5FahCySmmA=;
+        b=FoVW2U7r+0bcqImAGzxHnrcBfcubCQ+8Qz7zYFHaiGn/tkJ4aUhFxot5Y7MR4vWt1W
+         d1ksyQxU6EI9ePNOKt3h3My5UH7pUSCsIhD+mQhHmhdVRHxm83OwtnAyefQle44bXm8l
+         Kfw6jM9l3hdpeoV4wd6TSD/sb8NnKk1qSmzvKGPppF/ulGGP+mczbxDT5hGcXyAJU7IS
+         vVOIuwUO9m2jCVgWK7hlCtu6Ji609bKU5jMBf0N1nDR/yMMViAKMbLvlKu+p7TSTcwe8
+         jEPSMK+vIBjuIh6vLexc5dlPCLNLNJbp3hVoWniwHm0wS9VQpU+F68Uyqtp4v5e5CJvS
+         BTCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790827929; x=1791432729;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=vqAAtlkvTtudNgYyX8buxI8SzBu4oHkAZRA+s6PUISo=;
-        b=EFwBt8YHYpJvv22aOUUTzcw2C8SpzW14ITIznZYH1+S7WK5Mazt56VnWgCUP4NVZRm
-         LY2LsUHLhjwoWoht/z3u36zGFFDVmgjIZgoIa8GW8mFtpPMQx0oAvL3c9AmHtbw8wMc2
-         3qnora5zAe5Drp40ajDZICqz9p8gn6JioVUVZOvJnfJiApns7FxfJ6BYoaQSd/Otpl2W
-         BEDtE2n0wlrogCOIEG13GgdN4s+3xJ+2smfbSKzkewkHyUwiGaVEyUMU9NO8PneHLVVI
-         k4a1GivyTY7Poh8tqK2xsnsxNOBH4ZHpysDE6+oBVP+XLdjZUYoHem7F7UY5f5QfX92q
-         vQQg==
-X-Gm-Message-State: AFuF++mZHbPesOYDEeZV97T+qgD8daJXFknlexS9CI0lBEsZkch9/OYP
-	Xft0SvIet2/WPCVM7yP1WzakfKftwidsU414+iIHPKAesf8dblXJ2A9zKYav8g33dXsI/o1R2Xp
-	lD9twEY0=
-X-Gm-Gg: AYBFou3nJ+cetg9ZEL7ryuQWMfoAvM2LeKvEsR6ZPLUJm0qvvC5G7B39z8JQez7Kzn/
-	odNTSmipdCeZfW0aF68myDZMCDG1l6OfiRYm+w0Q14i/9a0RqfqB0hH96fGBW5dvwxs4FatJZ9T
-	IQksox+hOq53m6Rfcv+9lG4xr1d7wOToVQvWUSUH9jBwa5vblG2pkR3cbAnDDl6EwHY9eD27zVn
-	izYzYMZAaJbJ1vsZyQSx1esMHf4Bd+ctcfw4nz3P3wIoKaVYucA3w314DlnIxaUNoy4k22zJpVU
-	dGt/8smKOARxbiuuCYudew4PltuP2UL/VmFkvb8+aFzr34EPulAQKOHbXh4iFRQDTfGRUdSligc
-	XdMOES26TJcMep6jw7FgRoQeHNO43qr18HaObxQ9yoLrmRYmfEof1kMsXtblJhGug1k4g2lGVUX
-	l4kgktBOYcPI7xwrVRyD9jYckCzriFpNLZY8dwQfuN6w8rGk4yySKILb0T1gLILoEGg4xODCiY8
-	gvrvK2Qn/mxmO1qgxz2b0/9EnMqBzwgS3uexiC3IGOgYnAzupcrTTsPSu4fz3x9LGgt7exXiPut
-	LJ73vSsn
-X-Received: by 2002:a05:6820:f03:b0:6d8:8fdb:c4a1 with SMTP id 006d021491bc7-6dcf46576f2mr3914306eaf.16.1790827928726;
-        Wed, 30 Sep 2026 21:12:08 -0700 (PDT)
-Received: from com-79390 (vpn-centralus-02.tradc-corp.com. [20.98.136.114])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6dd980fb183sm1848132eaf.10.2026.09.30.21.12.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Sep 2026 21:12:08 -0700 (PDT)
-From: Taylor Blau <ttaylorr@openai.com>
-X-Google-Original-From: Taylor Blau <me@ttaylorr.com>
-Date: Wed, 30 Sep 2026 23:12:05 -0500
+        d=1e100.net; s=20260707; t=1790828522; x=1791433322;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=4CWr5kBW70ipeB9x711gxu3GklUO0G1iG5FahCySmmA=;
+        b=X/9i29099kKCLKOFXfyj6Q8m41sZ6dtIQst3aOLSHEWcViJGKM2O5Y43HZ5OGVfpBu
+         2RRLHcO/MBg7YjoBh2wqNcNeIYEd57UD52JoENGNLzx6fJ/iUjucFsAp2dTjB0rTk3WV
+         MtnQSnCzdwTQXeGzRG2HZYKo1/X4qDV3THiL+TRo5QmrPs9u9xFUJXcCTfW7e8p8CPv9
+         OPO5oUmyqJHsiQAVPxolV90oUv4aC4Mi0JEuhyYjs+asPmRo0PZddqd79B6IlghnwjgS
+         sSXIVTaOV5FTQQeonDaV1xwmc1fsqjbPeUXdm0WBi6ehm4Mfxb/3D7UJe5M1VTPDWI/C
+         j98Q==
+X-Gm-Message-State: AFq9FYIVuZHGH/LIfFRl850RYs3EDjAIMNBolOAggr23Lt9+5ofinAEl
+	ceG/0RYV9CPSOqMcuuBqB4nljr0w9EbTI3iZjlGrtvbmWKq3Z3NB0T9OId0lWUF+pkU9pXwyCm6
+	lmifIcIcsxw==
+X-Gm-Gg: AYBFou13H+8QFUh5Wr2fkTy3F2ff0LKunX+81vQgLRReU9GyDBsHz0a/6GRlYEyQ+mb
+	zCly9JmTzX+UtG08d690ot4pUScVr//vHAx82W2TO3ktNaHzgltth5tArza9JhdMacJgpharEeV
+	CduOKVEP67VKaY4xPnJfGuqPe/lyzb0ZwkT22qvqpngxph43DXd67tXe2hcEb4Om4a05atJ7fyP
+	8AQb36ZdySKR2BvOJnOVSKlWdNR3+qbplXWjJl3NnDuISoYbr6c6sZAZb5tw+lbIOaVXdcKjZM9
+	hxgLCmZ9XnMoQDK17SX4Ok333CRgcqU1SHer1KU0g8gcmTZexK/+l1kyaztod52MlhlGDb864sW
+	oqH90nZztuhVi2rXxrWnUolWkSumpgHEUtglyUEgDHG+XjUgwRZvYcOCupiPQQ9VkdQx4bGboPK
+	PA0IEgoR8M2d74tNUDZ4Lq9kPIRykTf40KrFr8XxV4lU9p4vb3Lt0rphhSMiH0qc3AUM1UlM12X
+	YcRwZ6Jgw+zOD/00PY4z1t8ld68IVyQa+HxPr67Mmc4MYyxNCPaebsbVh8=
+X-Received: by 2002:a17:90b:1d0b:b0:3a0:2662:815a with SMTP id 98e67ed59e1d1-3a4d18c0f0emr2983669a91.43.1790828521994;
+        Wed, 30 Sep 2026 21:22:01 -0700 (PDT)
+Received: from m4-mbp16-shigedan.flets-east.jp ([2400:4050:3c1:f500:5d3d:b617:5e0:4606])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a4f44a5a29sm2222921a91.14.2026.09.30.21.22.00
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 30 Sep 2026 21:22:01 -0700 (PDT)
+From: Kazumasa Shigeta <kazumasa.shigeta@kanamei.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Ted Nyman <tnyman@openai.com>, Elijah Newren <newren@github.com>
-Subject: [PATCH v2 8/8] repack: include required packs in incremental MIDX
- writes
-Message-ID: <a42f775cbe27b385bfc8ff38f33604b3913dc340.1790827875.git.me@ttaylorr.com>
-References: <cover.1790731662.git.me@ttaylorr.com>
- <cover.1790827875.git.me@ttaylorr.com>
+Cc: Shabbir Bhojani <shabbir.r.bhojani@gmail.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Kazumasa Shigeta <kazumasa.shigeta@kanamei.com>
+Subject: [PATCH v2] stash: expose untracked modes in create
+Date: Thu,  1 Oct 2026 13:21:55 +0900
+Message-ID: <20261001042155.33303-1-kazumasa.shigeta@kanamei.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260929074222.11942-1-kazumasa.shigeta@kanamei.com>
+References: <20260929074222.11942-1-kazumasa.shigeta@kanamei.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1790827875.git.me@ttaylorr.com>
+Content-Transfer-Encoding: 8bit
 
-The append plan introduced in 06733a50eee (repack: allow
-`--write-midx=incremental` without `--geometric`, 2026-05-19) adds only
-newly written packs to the existing MIDX chain. The bitmap writer can
-use objects from the new layer and all retained base layers, but the
-plan omits preexisting packs outside the chain. Bitmap generation fails
-if a selected commit reaches an object absent from the resulting chain.
+`git stash create` always passes zero for the include_untracked parameter
+of do_create_stash(), even though that helper already supports untracked
+and ignored files and stash push/save expose those modes as
+-u/--include-untracked and -a/--all.
 
-The geometric plan from 1da62fb5c86 (repack: implement incremental MIDX
-repacking, 2026-05-19) can omit kept and cruft packs, since neither
-necessarily participates in the geometric repack. Such packs can also be
-lost when replacing a tip layer that contains them. Neither plan
-consults `midx_included_packs()`, so the rules for retaining cruft in
-ordinary MIDX writes do not protect incremental writes.
+Teach create to accept the same options and pass the existing mode
+through. Unlike push/save, create continues to only create objects: it
+does not update refs/stash, reset the index, or clean the working tree.
 
-Use that selection logic to add missing packs to each plan's write step.
-Skip packs in retained base layers, but include required packs from a
-replaced tip. Count added objects when choosing which layers to compact,
-without changing the preferred pack.
+Use parse_options() for the new options and stop parsing at the first
+non-option message word. This keeps option-like tokens after the message
+as message text, while leading option-like arguments now follow Git's
+normal option parsing. In particular, unknown or malformed leading
+options are rejected instead of silently becoming a message, short
+options may be combined, and `--` can be used when a message itself
+begins with a dash.
 
-Write and verify bitmaps in the existing append test: its existing
-checks do not detect the omitted pack containing the first commit. Cover
-the no-new-pack case separately with a reachable blob in a cruft pack.
+Keep create's existing no-change behavior: detect the usual no-change
+case before do_create_stash() refreshes and writes the index, and return
+success without printing an object name. If do_create_stash() still
+reports its internal "nothing to create" result, map that to create's
+public success status.
 
-Signed-off-by: Taylor Blau <ttaylorr@openai.com>
+This follows the stash subcommand exit-status convention established by
+786fc390465f (stash: reserve exit status 1 for conflicts, 2026-09-03):
+subcommands return 0 on success, negative values on failure, and status 1
+when applying a stash results in conflicts. cmd_stash() maps negative
+subcommand failures to 128.
+
+9ca6326dff29 (stash: refactor stash_create, 2017-02-19) added the
+internal include-untracked path while intentionally leaving the user
+interface for "git stash create" unchanged. Reuse that machinery and
+the existing INCLUDE_ALL_FILES mode rather than adding a separate stash
+creation path.
+
+Add coverage for short and long aliases, combined short options, the
+untracked/ignored boundary including an ignored-only worktree, option
+parsing and dash-leading messages, no-change behavior, and preservation
+of refs/stash, the index state, and the working tree.
+
+Signed-off-by: Kazumasa Shigeta <kazumasa.shigeta@kanamei.com>
 ---
- Documentation/git-repack.adoc      |  5 +-
- repack-midx.c                      | 83 ++++++++++++++++++++++++------
- t/t7705-repack-incremental-midx.sh | 63 ++++++++++++++++++-----
- 3 files changed, 122 insertions(+), 29 deletions(-)
+ Documentation/git-stash.adoc | 19 ++++++---
+ builtin/stash.c              | 48 +++++++++++++++++----
+ t/t3903-stash.sh             | 83 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 135 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
-index a1f9e64f668..ee59b76580a 100644
---- a/Documentation/git-repack.adoc
-+++ b/Documentation/git-repack.adoc
-@@ -303,8 +303,9 @@ linkgit:git-multi-pack-index[1]).
- 		flat MIDX.
- +
- Without `--geometric`, a new MIDX layer is appended to the existing
--chain (or a new chain is started) containing whatever packs were written
--by the repack. Existing layers are preserved as-is.
-+chain (or a new chain is started) containing newly written packs and any
-+other required packs not already in the chain. Existing layers are
-+preserved as-is.
- +
- When combined with `--geometric`, the incremental mode maintains a chain
- of MIDX layers that is compacted over time using a geometric merging
-diff --git a/repack-midx.c b/repack-midx.c
-index 06eadb9df82..58776c44691 100644
---- a/repack-midx.c
-+++ b/repack-midx.c
-@@ -7,6 +7,7 @@
- #include "odb.h"
- #include "oidset.h"
- #include "pack-bitmap.h"
-+#include "packfile.h"
- #include "path.h"
- #include "refs.h"
- #include "run-command.h"
-@@ -73,7 +74,8 @@ void midx_snapshot_refs(struct repository *repo, struct tempfile *f)
+diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
+index fc6a9a0..d343a75 100644
+--- a/Documentation/git-stash.adoc
++++ b/Documentation/git-stash.adoc
+@@ -21,7 +21,7 @@ git stash [push] [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | -
+ git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
+            [-u | --include-untracked] [-a | --all] [<message>]
+ git stash clear
+-git stash create [<message>]
++git stash create [-u | --include-untracked] [-a | --all] [--] [<message>]
+ git stash store [(-m | --message) <message>] [-q | --quiet] <commit>
+ git stash export (--print | --to-ref <ref>) [<stash>...]
+ git stash import <commit>
+@@ -138,10 +138,13 @@ with no conflicts.
+ `drop [-q | --quiet] [<stash>]`::
+ 	Remove a single stash entry from the list of stash entries.
  
- static int midx_has_unknown_packs(struct string_list *include,
- 				  struct pack_geometry *geometry,
--				  struct existing_packs *existing)
-+				  struct existing_packs *existing,
-+				  struct multi_pack_index *base)
- {
- 	struct string_list_item *item;
+-`create`::
++`create [-u | --include-untracked] [-a | --all] [--]`::
+ 	Create a stash entry (which is a regular commit object) and
+ 	return its object name, without storing it anywhere in the ref
+-	namespace.
++	namespace.  The `--include-untracked` option includes untracked
++	files, while `--all` also includes ignored files, without modifying
++	the working tree.  If `<message>` begins with a dash, use `--` to
++	separate it from the options.
+ 	This is intended to be useful for scripts.  It is probably not
+ 	the command you want to use; see "push" above.
  
-@@ -91,6 +93,8 @@ static int midx_has_unknown_packs(struct string_list *include,
- 		 *    MIDX. Note this function is called before the include
- 		 *    list is populated with any cruft pack(s).
- 		 *
-+		 *  - In a MIDX layer retained as part of the new chain's base.
-+		 *
- 		 *  - Below the geometric split line (if using pack geometry),
- 		 *    indicating that the pack won't be included in the new
- 		 *    MIDX, but its contents were rolled up as part of the
-@@ -99,7 +103,8 @@ static int midx_has_unknown_packs(struct string_list *include,
- 		 *  - In the existing non-kept packs list (if not using pack
- 		 *    geometry), and marked as non-deleted.
- 		 */
--		if (string_list_has_string(include, pack_name)) {
-+		if (string_list_has_string(include, pack_name) ||
-+		    midx_contains_pack(base, pack_name)) {
- 			continue;
- 		} else if (geometry) {
- 			struct strbuf buf = STRBUF_INIT;
-@@ -141,7 +146,8 @@ static int midx_has_unknown_packs(struct string_list *include,
+@@ -167,10 +170,11 @@ OPTIONS
+ -------
+ `-a`::
+ `--all`::
+-	This option is only valid for `push` and `save` commands.
++	When used with the `push` and `save` commands, all ignored and
++	untracked files are also stashed and then cleaned up with `git clean`.
+ +
+-All ignored and untracked files are also stashed and then cleaned
+-up with `git clean`.
++When used with the `create` command, ignored and untracked files are included
++in the stash entry without modifying the working tree.
+ 
+ `-u`::
+ `--include-untracked`::
+@@ -179,6 +183,9 @@ up with `git clean`.
+ 	all untracked files are also stashed and then cleaned up with
+ 	`git clean`.
+ +
++When used with the `create` command, untracked files are included in the
++stash entry without modifying the working tree.
+++
+ When used with the `show` command, show the untracked files in the stash
+ entry as part of the diff.
+ 
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 7a98434..ec2b5e7 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -59,7 +59,7 @@
+ 	N_("git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
+ 	   "          [-u | --include-untracked] [-a | --all] [<message>]")
+ #define BUILTIN_STASH_CREATE_USAGE \
+-	N_("git stash create [<message>]")
++	N_("git stash create [-u | --include-untracked] [-a | --all] [--] [<message>]")
+ #define BUILTIN_STASH_EXPORT_USAGE \
+ 	N_("git stash export (--print | --to-ref <ref>) [<stash>...]")
+ #define BUILTIN_STASH_IMPORT_USAGE \
+@@ -119,6 +119,11 @@ static const char * const git_stash_clear_usage[] = {
+ 	NULL
+ };
+ 
++static const char * const git_stash_create_usage[] = {
++	BUILTIN_STASH_CREATE_USAGE,
++	NULL
++};
++
+ static const char * const git_stash_store_usage[] = {
+ 	BUILTIN_STASH_STORE_USAGE,
+ 	NULL
+@@ -1643,26 +1648,51 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 	return ret;
  }
  
- static void midx_included_packs(struct string_list *include,
--				struct repack_write_midx_opts *opts)
-+				struct repack_write_midx_opts *opts,
-+				struct multi_pack_index *base)
+-static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
++static int create_stash(int argc, const char **argv, const char *prefix,
+ 			struct repository *repo UNUSED)
  {
- 	struct existing_packs *existing = opts->existing;
- 	struct pack_geometry *geometry = opts->geometry;
-@@ -198,7 +204,7 @@ static void midx_included_packs(struct string_list *include,
- 
- 	if (opts->midx_must_contain_cruft ||
- 	    (!geometry->split_factor && existing->kept_packs.nr) ||
--	    midx_has_unknown_packs(include, geometry, existing)) {
-+	    midx_has_unknown_packs(include, geometry, existing, base)) {
- 		/*
- 		 * If there are one or more unknown pack(s) present (see
- 		 * midx_has_unknown_packs() for what makes a pack
-@@ -336,7 +342,7 @@ static int write_midx_included_packs(struct repack_write_midx_opts *opts)
- 	struct packed_git *preferred = pack_geometry_preferred_pack(opts->geometry);
- 	int ret = 0;
- 
--	midx_included_packs(&include, opts);
-+	midx_included_packs(&include, opts, NULL);
- 	if (!include.nr)
- 		goto done;
- 
-@@ -547,9 +553,50 @@ static void midx_compaction_step_release(struct midx_compaction_step *step)
- 	free(step->csum);
- }
- 
-+static int midx_compaction_step_include_packs(struct midx_compaction_step *step,
-+					      struct repack_write_midx_opts *opts,
-+					      struct multi_pack_index *base)
-+{
-+	struct odb_source_files *files = odb_source_files_downcast(opts->existing->source);
-+	struct string_list include = STRING_LIST_INIT_DUP;
-+	struct string_list_item *item;
-+	struct strbuf path = STRBUF_INIT;
+-	int ret;
 +	int ret = 0;
-+
-+	midx_included_packs(&include, opts, base);
-+	string_list_sort(&step->u.write);
-+
-+	for_each_string_list_item(item, &include) {
-+		struct packed_git *p;
-+
-+		if (string_list_has_string(&step->u.write, item->string) ||
-+		    midx_contains_pack(base, item->string))
-+			continue;
-+
-+		strbuf_reset(&path);
-+		strbuf_addf(&path, "%s/%s", opts->packdir, item->string);
-+		p = packfile_store_load_pack(files->packed, path.buf, 1);
-+		if (!p || open_pack_index(p)) {
-+			ret = error(_("cannot open index for %s"), path.buf);
-+			goto out;
-+		}
-+		if (unsigned_add_overflows(step->objects_nr, p->num_objects)) {
-+			ret = error(_("too many objects in MIDX compaction step"));
-+			goto out;
-+		}
-+		step->objects_nr += p->num_objects;
-+		string_list_insert(&step->u.write, item->string);
-+	}
-+
-+out:
-+	strbuf_release(&path);
-+	string_list_clear(&include, 0);
-+	return ret;
-+}
-+
- /*
-- * Build an append-only MIDX plan: a single WRITE step for the freshly
-- * written packs, plus COPY steps for every existing layer.  No
-+ * Build an append-only MIDX plan: a single WRITE step for packs not
-+ * already in the chain, plus COPY steps for every existing layer. No
-  * compaction or merging is performed.
-  */
- static void repack_make_midx_append_plan(struct repack_write_midx_opts *opts,
-@@ -557,17 +604,20 @@ static void repack_make_midx_append_plan(struct repack_write_midx_opts *opts,
- 					 size_t *steps_nr_p)
- {
- 	struct odb_source_files *files = odb_source_files_downcast(opts->existing->source);
-+	struct string_list include = STRING_LIST_INIT_DUP;
-+	struct string_list_item *item;
- 	struct multi_pack_index *m;
- 	struct midx_compaction_step *steps = NULL;
- 	struct midx_compaction_step *step = NULL;
--	struct strbuf buf = STRBUF_INIT;
- 	size_t steps_nr = 0, steps_alloc = 0;
--	uint32_t i;
++	int include_untracked = 0;
++	struct option options[] = {
++		OPT_BOOL('u', "include-untracked", &include_untracked,
++			 N_("include untracked files in stash")),
++		OPT_SET_INT('a', "all", &include_untracked,
++			    N_("include ignored files in stash"),
++			    INCLUDE_ALL_FILES),
++		OPT_END()
++	};
+ 	struct strbuf stash_msg_buf = STRBUF_INIT;
++	struct strbuf untracked_files = STRBUF_INIT;
+ 	struct stash_info info = STASH_INFO_INIT;
+ 	struct pathspec ps;
  
- 	odb_reprepare(opts->existing->repo->objects);
- 	m = get_multi_pack_index(files->packed);
+-	/* Starting with argv[1], since argv[0] is "create" */
+-	strbuf_join_argv(&stash_msg_buf, argc - 1, ++argv, ' ');
++	argc = parse_options(argc, argv, prefix, options,
++			     git_stash_create_usage,
++			     PARSE_OPT_STOP_AT_NON_OPTION);
++	strbuf_join_argv(&stash_msg_buf, argc, argv, ' ');
  
--	for (i = 0; i < opts->names->nr; i++) {
-+	midx_included_packs(&include, opts, m);
-+	for_each_string_list_item(item, &include) {
-+		if (midx_contains_pack(m, item->string))
-+			continue;
- 		if (!step) {
- 			ALLOC_GROW(steps, st_add(steps_nr, 1), steps_alloc);
- 			step = &steps[steps_nr++];
-@@ -575,12 +625,9 @@ static void repack_make_midx_append_plan(struct repack_write_midx_opts *opts,
- 			step->type = MIDX_COMPACTION_STEP_WRITE;
- 			string_list_init_dup(&step->u.write);
- 		}
--		strbuf_reset(&buf);
--		strbuf_addf(&buf, "pack-%s.idx",
--			    opts->names->items[i].string);
--		string_list_append(&step->u.write, buf.buf);
-+		string_list_append(&step->u.write, item->string);
- 	}
--	strbuf_release(&buf);
-+	string_list_clear(&include, 0);
+ 	memset(&ps, 0, sizeof(ps));
+-	if (!check_changes_tracked_files(&ps))
+-		return 0;
++	/*
++	 * Preserve "stash create"'s successful no-change behavior before
++	 * do_create_stash() refreshes and writes the index.
++	 */
++	if (!check_changes(&ps, include_untracked, &untracked_files))
++		goto done;
  
- 	for (; m; m = m->base_midx) {
- 		ALLOC_GROW(steps, st_add(steps_nr, 1), steps_alloc);
-@@ -729,6 +776,12 @@ static int repack_make_midx_compaction_plan(struct repack_write_midx_opts *opts,
- 	if (opts->geometry->midx_tip_rewritten)
- 		m = m->base_midx;
+-	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, NULL, 0, &info,
+-			      NULL, 0);
++	ret = do_create_stash(&ps, &stash_msg_buf, include_untracked, 0, NULL,
++			      0, &info, NULL, 0);
++	/*
++	 * Status 1 is reserved for conflicts when applying a stash.
++	 * do_create_stash() uses it internally for "nothing to create", so
++	 * translate that sentinel to create's public success status.
++	 */
+ 	if (!ret)
+ 		printf_ln("%s", oid_to_hex(&info.w_commit));
++	else if (ret == 1)
++		ret = 0;
  
-+	if (midx_compaction_step_include_packs(&step, opts, m) < 0) {
-+		midx_compaction_step_release(&step);
-+		ret = -1;
-+		goto out;
-+	}
-+
- 	trace2_data_string("repack", opts->existing->repo, "midx:rewrote-tip",
- 			   opts->geometry->midx_tip_rewritten ? "true" : "false");
- 
-diff --git a/t/t7705-repack-incremental-midx.sh b/t/t7705-repack-incremental-midx.sh
-index 25a8c40e8ee..4760c920a50 100755
---- a/t/t7705-repack-incremental-midx.sh
-+++ b/t/t7705-repack-incremental-midx.sh
-@@ -74,7 +74,7 @@ test_expect_success '--write-midx=incremental without --geometric' '
- 		git repack -d &&
- 
- 		test_commit second &&
--		git repack --write-midx=incremental &&
-+		git repack --write-midx=incremental --write-bitmap-index &&
- 
- 		git multi-pack-index verify &&
- 		test_line_count = 1 $midx_chain &&
-@@ -83,7 +83,7 @@ test_expect_success '--write-midx=incremental without --geometric' '
- 		# A second repack appends a new layer without
- 		# disturbing the existing one.
- 		test_commit third &&
--		git repack --write-midx=incremental &&
-+		git repack --write-midx=incremental --write-bitmap-index &&
- 
- 		git multi-pack-index verify &&
- 		test_line_count = 2 $midx_chain &&
-@@ -91,10 +91,50 @@ test_expect_success '--write-midx=incremental without --geometric' '
- 		head -n 1 $midx_chain >actual &&
- 		test_cmp expect actual &&
- 
-+		git rev-list --test-bitmap HEAD &&
- 		git fsck
- 	)
++done:
++	strbuf_release(&untracked_files);
+ 	free_stash_info(&info);
+ 	strbuf_release(&stash_msg_buf);
+ 	return ret;
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 7211586..1f660ca 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -1179,6 +1179,89 @@ test_expect_success 'create with multiple arguments for the message' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'incremental MIDX includes cruft without a new pack' '
-+	git init incremental-cruft &&
-+	(
-+		cd incremental-cruft &&
-+		git config repack.midxMustContainCruft false &&
++test_expect_success 'create with untracked options' '
++	test_when_finished "rm -rf create-options" &&
++	git init create-options &&
++	test_commit -C create-options base tracked base &&
++	test_commit -C create-options ignore .gitignore ignored &&
 +
-+		test_commit base &&
-+		echo cruft | git hash-object -w --stdin &&
-+		git repack --cruft -d &&
-+		test_commit cruft &&
-+		git repack -d &&
++	git -C create-options stash create -u >actual &&
++	test_must_be_empty actual &&
++	git -C create-options stash create -a >actual &&
++	test_must_be_empty actual &&
 +
-+		# All objects are packed, but the new MIDX still needs cruft.
-+		git repack --write-midx=incremental --write-bitmap-index &&
-+		git rev-list --test-bitmap HEAD
-+	)
++	echo untracked >create-options/untracked &&
++	echo ignored >create-options/ignored &&
++	git -C create-options diff >before-worktree &&
++	git -C create-options diff --cached >before-index &&
++	git -C create-options status --porcelain=v1 --ignored >before-status &&
++
++	short=$(git -C create-options stash create -u "create options") &&
++	long=$(git -C create-options stash create --include-untracked "create options") &&
++	test "$(git -C create-options rev-parse "$short^3^{tree}")" = "$(git -C create-options rev-parse "$long^3^{tree}")" &&
++	echo untracked >expect &&
++	git -C create-options show "$short^3:untracked" >actual &&
++	test_cmp expect actual &&
++	test_must_fail git -C create-options cat-file -e "$short^3:ignored" &&
++
++	short=$(git -C create-options stash create -a "create options") &&
++	long=$(git -C create-options stash create --all "create options") &&
++	cluster=$(git -C create-options stash create -ua "create options") &&
++	test "$(git -C create-options rev-parse "$short^3^{tree}")" = "$(git -C create-options rev-parse "$long^3^{tree}")" &&
++	test "$(git -C create-options rev-parse "$short^3^{tree}")" = "$(git -C create-options rev-parse "$cluster^3^{tree}")" &&
++	echo ignored >expect &&
++	git -C create-options show "$short^3:ignored" >actual &&
++	test_cmp expect actual &&
++
++	git -C create-options diff >after-worktree &&
++	git -C create-options diff --cached >after-index &&
++	git -C create-options status --porcelain=v1 --ignored >after-status &&
++	test_cmp before-worktree after-worktree &&
++	test_cmp before-index after-index &&
++	test_cmp before-status after-status &&
++	test_must_fail git -C create-options rev-parse --verify refs/stash >/dev/null 2>&1
 +'
 +
-+test_expect_success 'geometric incremental MIDX retains cruft when replacing its tip' '
-+	git init geometric-incremental-cruft &&
-+	(
-+		cd geometric-incremental-cruft &&
-+		git config repack.midxNewLayerThreshold 1 &&
++test_expect_success 'create untracked modes with only ignored files' '
++	test_when_finished "rm -rf create-ignored-only" &&
++	git init create-ignored-only &&
++	test_commit -C create-ignored-only base tracked base &&
++	test_commit -C create-ignored-only ignore .gitignore ignored &&
++	echo ignored >create-ignored-only/ignored &&
 +
-+		test_commit base &&
-+		echo cruft | git hash-object -w --stdin &&
-+		git repack --cruft -d &&
-+		git multi-pack-index write --incremental --bitmap &&
-+		test_commit cruft &&
-+
-+		# Pack the new commit and tree, leaving the blob in cruft.
-+		git repack -d &&
-+		git repack --geometric=2 --write-midx=incremental \
-+			--write-bitmap-index &&
-+		test_line_count = 1 $midx_chain &&
-+		git rev-list --test-bitmap HEAD
-+	)
++	git -C create-ignored-only stash create -u >actual &&
++	test_must_be_empty actual &&
++	stash=$(git -C create-ignored-only stash create -a) &&
++	test -n "$stash" &&
++	echo ignored >expect &&
++	git -C create-ignored-only show "$stash^3:ignored" >actual &&
++	test_cmp expect actual
 +'
 +
- test_expect_success 'below layer threshold, tip packs excluded' '
- 	git init below-layer-threshold-tip-packs-excluded &&
- 	(
-@@ -338,7 +378,7 @@ test_expect_success 'geometric rollup with surviving tip packs' '
- 	)
- '
- 
--test_expect_success 'kept packs are excluded from repack' '
-+test_expect_success 'kept packs are excluded from repack but included in MIDX' '
- 	git init kept-packs-excluded-from-repack &&
- 	(
- 		cd kept-packs-excluded-from-repack &&
-@@ -353,21 +393,20 @@ test_expect_success 'kept packs are excluded from repack' '
- 			test_commit "$i" && git repack -d || return 1
- 		done &&
- 
--		keep=$(ls $packdir/pack-*.idx | head -n 1) &&
--		touch "${keep%.idx}.keep" &&
-+		keep=$(test-tool find-pack A) &&
-+		touch "${keep%.pack}.keep" &&
- 
--		# The kept pack is excluded as a repacking candidate
--		# entirely, so no rollup occurs as there is only one
--		# non-kept pack. A new MIDX layer is written containing
--		# that pack.
--		git repack --geometric=2 -d --write-midx=incremental &&
-+		# Neither pack is repacked, but both are needed for the
-+		# bitmap of B, which reaches objects in the kept pack.
-+		git repack --geometric=2 -d --write-midx=incremental \
-+			--write-bitmap-index &&
- 
- 		test-tool read-midx $objdir >actual &&
- 		grep "^pack-.*\.idx$" actual >actual.packs &&
--		test_line_count = 1 actual.packs &&
--		test_grep ! "$keep" actual.packs &&
-+		test_line_count = 2 actual.packs &&
- 
- 		git multi-pack-index verify &&
-+		git rev-list --test-bitmap HEAD &&
- 
- 		# All objects (from both kept and non-kept packs)
- 		# must still be accessible.
++test_expect_success 'create option parsing and dash-leading messages' '
++	test_when_finished "rm -rf create-message-options" &&
++	git init create-message-options &&
++	test_commit -C create-message-options base tracked base &&
++	echo modified >>create-message-options/tracked &&
++	echo untracked >create-message-options/untracked &&
++
++	stash=$(git -C create-message-options stash create handle new -u flag) &&
++	echo "On main: handle new -u flag" >expect &&
++	git -C create-message-options show --pretty=%s -s "$stash" >actual &&
++	test_cmp expect actual &&
++	test_must_fail git -C create-message-options cat-file -e "$stash^3^{commit}" &&
++
++	test_must_fail git -C create-message-options stash create -f >out 2>err &&
++	test_grep "unknown switch" err &&
++	stash=$(git -C create-message-options stash create -- -f) &&
++	echo "On main: -f" >expect &&
++	git -C create-message-options show --pretty=%s -s "$stash" >actual &&
++	test_cmp expect actual &&
++
++	test_must_fail git -C create-message-options stash create \
++		--include-untracked=yes >out 2>err
++'
++
+ test_expect_success 'create in a detached state' '
+ 	test_when_finished "git checkout main" &&
+ 	git checkout HEAD~1 &&
 -- 
-2.56.0.8.ga42f775cbe2
+2.47.3
+
