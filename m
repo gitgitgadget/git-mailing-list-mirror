@@ -1,203 +1,141 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from quail.birch.relay.mailchannels.net (quail.birch.relay.mailchannels.net [23.83.209.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58133408624
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 16:10:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D244C470134
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 16:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.209.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790871009; cv=none; b=tLU1Zh9ztVw2hHIGLfomu9rB6td8ps9i677VYOvPvUp/eqv/b7Am4f7np8N8C2bXAcVqCENM3fovgLp5ih2NUUmphg+LN4cXElVZubIM6paOoyEb5k65RJZUmQDEX87MV3ek+Ug21H+7V1fwooUXc3iS1grR6VenQFbSKPDm4Uc=
+	t=1790872561; cv=none; b=lNBclgKZfiSYQ+G0f8vr7v2ObfIgLTJ4A1xazwMhsL8vBgej6+eKW55ULe8kBnqwKIuvViVIkH9omOjY2fyhpGE5RwaK63ZiqbRn3xTj54aLvQEFti88g02vGKXv+G4y9N12s3M1I3uKpIJ3XFhYZcvwF2hgYC1q4YhSdinkLLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790871009; c=relaxed/simple;
-	bh=jIwtNHv+HbBwbKpgX0H+lJae0LjKhAI2uyejB9WLc5o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Qb0OW+rRjr4tiMZyDogTr+a01OU6YMC+Ko0sqGmJse+xZUtrc+JW52XjVaXbSfYL91Darn0QzAeOlEYlgaZgbUnzzZ2SdbcGBAAnXffq8XoL+IOgiE/1OyuuAU2i0i0+JLgpGr/FEikyxAvHecPxO90/My9vE6iAa/qIyXsb6Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jh48E+Jw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rQGpIBpR; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790872561; c=relaxed/simple;
+	bh=PHhuI9bFFDYLqTdk9PYUchromDk6rN1WEvAxFvGW2GI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AvCPRORlHukk3EsLRVIwtR+FINduCEluZabRADUZ8e6HgQnlm6L5yafijaQk2TMRI1meGvZNoJH7waTo+EBqw9MHN/DT06AzEGa71Xr3w+t72MkDCo7Onp1tZTAjQ6/wZ/CHXBcvQhUnF9cWBY6u3jvaffnkgpTNziVF1eRutKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=fGd1Rq/l; arc=none smtp.client-ip=23.83.209.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jh48E+Jw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rQGpIBpR"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 57644EC0169
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 12:10:06 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 01 Oct 2026 12:10:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790871006; x=1790957406; bh=RXeyXkEQGo
-	s68+JhQKNJkojIriUMQQ4d5BB7LruHrwU=; b=Jh48E+JwcvgJcsG4R7EBuaEzWK
-	h5q/MOKNjrf9fyJ/OOrHaiC8cvkBjA7DOUzexfxuZKuTe/JR/42Er+cXZsEC72rl
-	ku7zizo/4QXkVdtFFGsB1exEFEoVMJhjFMk6cRWN+E6kqTPVCyc4bvPXmvBoNSPw
-	Kmrz4Ass+JFAt4QOwqLu4VTjqr4L93gY+B5bGNGIycqyYqeUUBuI4vRlqM10vEZa
-	jK9ZfErvwNnS/CKDxlcCIhAvS9arTLVN0776VAvZGNND4QbjLc5JIUc3zZflGaIa
-	9NrcTrnIJ1+P7jtx5hT3Z+Ob310hIEcMDnmejYdG/pHFEFe+qflwZT9EHxaA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790871006; x=1790957406; bh=RXeyXkEQGos68+JhQKNJkojIriUMQQ4d5BB
-	7LruHrwU=; b=rQGpIBpR3ZYhkhC1dxR932yukIS95sDLwD11xiQXODccTjygchA
-	gGgynneBMfvvF5lYPCe10lUiUu3G4yc5VHjecnSKUPyoYhIytFqxFeG19uktH8RF
-	9ZXQaVOJclzVFs1tWTomcfFwb2fmG0jZHoRxBgNsEdze58rS7kl3JM+VZbfGKFCv
-	uQtiVfX0Ge5nNXS7cUee37s+zYrvqo+Q6QS4RaZJkiugcbN+YNaWrJ2rn2oC0wAL
-	EdgeEWxKPtLnjrrMVGi4jD1rWWSVi4VJ+3/5Z4zmFSh/pH6OEFYupbwEPkw7s2on
-	tGHz85uGWmw7lJfaa8fp5Xfq0YhhR7ydz7w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790871006; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:lq6nM1yKhRmhfdSV4XL1DFRSg+fVxgyOgca6mkjFsAfSEKE
-	llgpdK4Ige5AFEwI1NY/0UFhzyF1oUYf+3Q1yPSy21rkSPuldtaxDUTO47oohdSC
-	4VVA6XzmWh11AeKSVtYERw5skVD1RAeHlKhakXoCqPDul2gOZWCN8ZyGcbQRwvDK
-	KjBM+QHWkqDuSZGGFNfqriTYX+NxDQBdkI+Gk796DDUSinWG4v6NM8DepomZOr/G
-	X9sQ2KdNRKBu6d/AUGCf0Xpollj8GVM+Wfnjub0FncwP84okeUgwMRoRciFxHwg6
-	SkB7jLu68j62Gn31bpx2ufai8sB2vZyU5XPuhIA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:4VVMm7elJ2Mz6+gPtWmLI9O1KAqPp7I6yqCnBr9lURM=:jIwtNHv+HbBwbKpgX0H+lJae0LjKhAI2uyejB9WLc5o=;
-X-ME-Sender: <xms:3YW-auK0GbwIejkEAeuFagrDLqDjjW0gXm4koom088jaKp16nnZA6Q>
-    <xme:3YW-atD2-QaRl3zAOngrkzQtYXX10W2aO9BGQMf8_q7caTxJMqWsR4j3GsGhmOrK-
-    zg7tmGf04CUcMdoB-glg6WWMf4rfl1TdZGzV9NMcB83DBumi5Xq>
-X-ME-Received: <xmr:3YW-anCJ_xYApeNOfUpDnc-RoqpCn6a4OUw_F4Lf7YPM34KcHCxuQsO2SRyS4qBub2LYguRCWtMMKpSGd-Icq798fmO8Z9KwqxzP>
-X-ME-Proxy-Cause: dmFkZTFKRl0ev2ukTAq1r6N42r0hGxrDNDW/uKX2hgxFKsZ20H8D0BR5fNSSUCR6AHWth3
-    G8/GRirWmgknuePQmYMyVEYTfAJ34j0vqqKWfDZt69lTd5YZN2ON6H3dvEBG3yMuiZGJjE
-    A1FHdA5kCcFXHF6Au+tMbuFHVUGXJPGqWqpJIMBQldh1ZAoqfrIuj3meTYtUVSCE7/VKcR
-    QpshaB30F30rsCaplFRcI5aYyvQ6iMHM0DPecz6/aIvn/EVFcINlT7bBc1EyIscV+TZo2I
-    dSQ9r+c46iF7vLMasQmNo0Uzk1UgxKa8rnqX8PEJDthMnxvFDPmJ1eyHIyDqA/SuVXCRNH
-    vKg6E8jucj4vWthdDL5Srhdbzf/HIz5tXOO/BGm2KPd6WOJ8y3UmrfcsycbGWSrju5fn1g
-    BN9NYgWugh3Xwt4XcSkITF/Sw71SPPl1vqhHw5TrLH/R0MB5GAV80VpW8nnn1ee5lwIjcU
-    6fhx0Jkq3BRE1cIl0pOSUmHL9cOXaTFo52HLA0FvUZ4VO26w+8yRJFXxF+b8PgNQAySZv8
-    EDcfXL7+V+Fq/6Z4j7cCZJBnIuT19KOpiV+iLZlE1KT6Ob7rwTEKT8QypEskUHxlAxYikb
-    7YOyJL2/H5Te4hjFqVxlECRS9t3jhdOQsooEweSzormg1Ic0rHwBsB61c9Qg
-X-ME-Proxy: <xmx:3YW-avBOKbm-QyINWFh_FY3diqMkQNQi7oEo87UEjLzJPB5Gol5Vmg>
-    <xmx:3YW-air51w2ONFKmG19BtUvWSvmLP_4JCgZYDhUMMf8wOUJ5sH3w4Q>
-    <xmx:3YW-apkshRGJkZ9R3S9blo828eKYEa-84Lb1VHiSG5z1Lt8ae-2F4A>
-    <xmx:3YW-aiy7Cj0o5JYXFvyWEc6jCrS-vZ4KOHQ4vo7kklMsJveQw0xJnw>
-    <xmx:3oW-aqc2z56k22JTPvyd37Ai2LoIEOsuT-FxxukXV-lCqvvHwqRsGzZH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 Oct 2026 12:10:05 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Grant Moyer <dev@grantmoyer.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Michele Locati
- <michele@locati.it>
-Subject: Re: [PATCH v2] filter-branch: fix commit map init from state branch
-In-Reply-To: <20261001012347.3998801-1-dev@grantmoyer.com> (Grant Moyer's
-	message of "Wed, 30 Sep 2026 21:23:47 -0400")
-References: <20260801033127.10606-1-dev@grantmoyer.com>
-	<20261001012347.3998801-1-dev@grantmoyer.com>
-Date: Thu, 01 Oct 2026 09:10:04 -0700
-Message-ID: <xmqqh5j57677.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="fGd1Rq/l"
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 9A016801426;
+	Thu, 01 Oct 2026 16:11:02 +0000 (UTC)
+Received: from pdx1-sub0-mail-a225.dreamhost.com (trex-green-7.trex.outbound.svc.cluster.local [100.96.5.35])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 53D658011CF;
+	Thu, 01 Oct 2026 16:11:02 +0000 (UTC)
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
+X-MailChannels-Auth-Id: dreamhost
+X-Duck-Coil: 32a190c02e0ba6c0_1790871062518_891080237
+X-MC-Loop-Signature: 1790871062518:2999479676
+X-MC-Ingress-Time: 1790871062518
+Received: from pdx1-sub0-mail-a225.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.96.5.35 (trex/8.0.2);
+	Thu, 01 Oct 2026 16:11:02 +0000
+Received: from ubby (unknown [24.28.102.31])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nico@cryptonector.com)
+	by pdx1-sub0-mail-a225.dreamhost.com (Postfix) with ESMTPSA id 4hwcN54pLDz2D;
+	Thu,  1 Oct 2026 09:11:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
+	s=dreamhost; t=1790871062;
+	bh=Y/Y0qyuHEafSJNDFR9bgBc7MLdH0CAI1vaaG0DhWpAg=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=fGd1Rq/ldE3HE7vzfm5bmXQZJwNxehY909X1WTpiq0FftOnE5y4KX0TOTV6tsejYD
+	 jj8mbDZFao2E9Id8x/xuV8OLROBjs95uoiiMt9L2AlmA4c/gDuN/EyG3QbVsfp5+fj
+	 szaz7lrhqHChLg8iPFEIlwjVDadKtaSuMjZYPhzw09fOQcd65ptVHMkuUDXmpWfWIx
+	 fw5BZ0ngG/NDflizr5byZeTGrMopywgdFTpE1CX0zE+DE3YVitVf42YM+TG3Wbs78g
+	 40nwUoixj1exVMrP7WwQJ3i/rw+8LvE5H0KR8WkAXWIomvsRolOgjGDDfEQuVZ1kmQ
+	 eqBSbIwRs6UBg==
+Date: Thu, 1 Oct 2026 11:10:59 -0500
+From: Nico Williams <nico@cryptonector.com>
+To: Alejandro Colomar <alx@kernel.org>
+Cc: git@vger.kernel.org
+Subject: Re: git-rebase-walk
+Message-ID: <ar6GExDLasWWFajm@ubby>
+References: <ar5KL4_IKXYbx3Sb@debian>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ar5KL4_IKXYbx3Sb@debian>
 
-Grant Moyer <dev@grantmoyer.com> writes:
+On Thu, Oct 01, 2026 at 01:58:42PM +0200, Alejandro Colomar wrote:
+> I use this little command to apply iterative rebases, which are easier
+> to handle when there are large conflicts.  Are you interested in it?
+> 
+> 	$ cat $(which git-rebase-walk)
+> 	#!/bin/bash
+> 
+> 	set -Eeufo pipefail;
+> 
+> 	git merge-base HEAD "$1" \
+> 	| xargs -I{} git log --oneline {}.."$1" \
+> 	| cut -f1 -d' ' \
+> 	| tac \
+> 	| while read -r c; do
+> 		git rebase "$c";
+> 	done;
 
-> The commit map dir is populated from the state branch assuming a
-> "to_commit:from_commit" format, but the state branch is written with a
-> "from_commit:to_commit" format, resulting in an inverted mapping when the
-> map is populated from the state branch. This is especially evident when
-> --prune-empty is used and creates commits which map to nothing; when the
-> map dir is populated from this state on subsequent runs, git-filter-branch
-> outputs many errors while trying to create files with empty names, like:
->
->> /usr/lib/git-core/git-filter-branch: line 305: ../map/: Is a directory
->
-> This change corrects the population of the commit map dir to match the
-> "from_commit:to_commit" format and adds/updates tests to check that the
-> state branch is written correctly.
->
-> Signed-off-by: Grant Moyer <dev@grantmoyer.com>
-> Tested-by: Michele Locati <michele@locati.it>
-> Co-authored-by: Michele Locati <michele@locati.it>
-> ---
->  git-filter-branch.sh     |  4 +++-
->  t/t7003-filter-branch.sh | 24 +++++++++++++++++++++++-
->  2 files changed, 26 insertions(+), 2 deletions(-)
->
-> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> index 24fa317aaa..9aa07be6e1 100755
-> --- a/git-filter-branch.sh
-> +++ b/git-filter-branch.sh
-> @@ -302,7 +302,9 @@ then
->  		do
->  			case "$line" in
->  			*:*)
-> -				echo "${line%:*}" >../map/"${line#*:}";;
-> +				from_commit=${line%:*}
-> +				to_commit=${line#*:}
-> +				echo "$to_commit" >../map/"$from_commit";;
->  			*)
->  				die "Unable to load state from $state_branch:filter.map";;
->  			esac
+You could simplify this pipeline to:
 
-I very much appreciate the clear description in the proposed log
-message above that makes what this change corrects very easy to
-understand.
+    git log --reverse --format=%H $(git merge-base HEAD "$1").."$1" |
+    while read c; do git rebase "$c"; done
 
-> diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-> index 86011e7b1f..cf225b0f0f 100755
-> --- a/t/t7003-filter-branch.sh
-> +++ b/t/t7003-filter-branch.sh
-> @@ -121,10 +121,32 @@ W=$(git rev-parse HEAD)
->  test_expect_success 'using --state-branch to skip already rewritten commits' '
->  	test_when_finished git reset --hard $V &&
->  	git reset --hard $V &&
-> -	git filter-branch --state-branch state -f --tree-filter "touch file || :" HEAD &&
-> +	git filter-branch --state-branch state -f --tree-filter "exit 1" HEAD &&
->  	test_cmp_rev $W HEAD
->  '
+But:
 
-I am not sure what this change is about.  Care to explain in the
-commit log?
+ - you need to add conflict handling
+ - this is very slow
 
-> +test_expect_success '--state-branch incremental rewrite uses the rewritten parents' '
+I've tried this before, so I know it's very slow if you're rebasing
+across thousands of upstream commits!
 
-It is a minor nit, but do we want to have
+Also, you need some extra handling of conflicts.
 
-	test_when_finished "rm -fr incremental" &&
+> The source code is trivial, so I guess I don't need to explain much.
+> It behaves quite nicely, IME.
 
-here, before creating a new repository that is used only for this
-test, or do we expect that in the future we will add more pieces of
-tests that work inside this new repository (in which case leaving it
-there may indeed be a better choice)?
+It can be much too slow.  I've a better solution: bisect-rebase.sh:
 
-> +	git init incremental &&
-> +	(
-> +		cd incremental &&
-> +		mkdir sub &&
-> +		test_commit first sub/file &&
-> +		test_commit outside root-file &&
-> +		git filter-branch --state-branch refs/state \
-> +			--prune-empty --subdirectory-filter sub -- HEAD &&
-> +		rewritten_first=$(git rev-parse HEAD) &&
-> +		git reset --hard outside &&
-> +		test_commit second sub/file &&
-> +		git filter-branch -f --state-branch refs/state \
-> +			--prune-empty --subdirectory-filter sub -- outside..HEAD &&
-> +		test_cmp_rev $rewritten_first HEAD^ &&
-> +		git show refs/state:filter.map >map &&
-> +		echo "$(git rev-parse second):$(git rev-parse HEAD)" >expect &&
-> +		grep "^$(git rev-parse second):" map >actual &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
->  git tag oldD HEAD~4
->  test_expect_success 'rewrite one branch, keeping a side branch' '
->  	git branch modD oldD &&
+https://gist.github.com/nicowilliams/ea2fa2b445c2db50d2ee6509c3526297
 
-Thanks.
+(The first revision of that gist is slow-rebase.sh, which is a linear
+rebase like the one you posted.)
+
+This script very efficiently finds the firts upstream commit that your
+branch conflicts with, asks the user to resolve conflicts, then resumes
+rebasing.
+
+So let's say that your upstream has 1,000 commits you need to rebase
+across, and 10 of those introduce conflicts (assume there's no reverts
+of those for now), then this script will ask you to resolve conflicts 10
+times, and each time it's clear which pair of local and upstream commits
+conflict so you have the best possible context for conflict resolution.
+
+It's like git-imerge, but better in that it's specifically geared to
+rebase workflows.
+
+I've successfully used this bisect-rebase.sh script to rebase a
+postgresql fork across between 1,000 and 2,000 commits twice, each time
+with significant conflicts to resolve that were much too difficult to
+resolve with a plain rebase.  I.e., a plain `git rebase origin/master`
+produced large conflicts where I didn't have enough context, but
+bisect-rebase.sh let me resolve much smaller conflicts with a new base
+that immediately introduced those conflicts, so I always had the right
+context for resolving them.
+
+PG is a perfect test case for this sort of thing because it's so large
+and moves so fast.
+
+Nico
+-- 
