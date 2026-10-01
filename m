@@ -1,103 +1,117 @@
-Received: from mail-ej2-f40.google.com (mail-ej2-f40.google.com [74.125.228.168])
+Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB49D4BD0F2
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 08:45:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.168
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377844BD798
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 08:53:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790844346; cv=none; b=vDde6bp9GotCV2PqJqvNmf05fuuinD2R3QlhIJMCxUzXKtI8/CUduN+695YtQreT/pt9D/kPxKKZtYt5d6disO3cDtysoAMZa+jxanm3ZbRJImqCe6vwfD8oapaezQ03MjuHYq+Jt3yVwt3RYdMTUQAkOKhonfWC+PWhjYVF4KA=
+	t=1790844819; cv=none; b=u1FSKPBH2xPjpcd7Ez3F8QaXkTdOUpGRvcbeUSjE0wtpBSANTb8PWkwswajXSKJa4JK5hngo+O4Iom1W2rZGdehrYSV2yfdUUAdmPZU3/Ey82cCMSExDKY2WPm/GfMAOq8ZBGjILxdzt1fldp8bbtpWlNUcIFfNwqEFHLD48OKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790844346; c=relaxed/simple;
-	bh=5HE0p26TND/CHzFNVsd8z8AR9i7gKtwKLwm+9r8vnQk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=dWgr93pYJee8qdB72nBPvCX+1UTLqyxBovMAqK2Qt6kfvjKXR6TDUdvYO5YebX0pasYEk90hPvnX06sQ1ZCETKp65WRtZHRLOdTORpeiAF2A71euh55K/t+Hy5L0s6n35q/DZIUl+Kklw0bdX9vlOnIrkLvkvTo+jHJv+Wfqvkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OAvt0ZQP; arc=none smtp.client-ip=74.125.228.168
+	s=arc-20240116; t=1790844819; c=relaxed/simple;
+	bh=RvdhpVjA/mHtNYltcbqa70qzsiJwp6HQM0tNAt3o7xM=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=nYzyCVIM+DlPgZ+irlrqiGQa7l56+nDL2w3neZ/FT5aAT8LdgkMnM4/qfSi8217X3fZVRavT6new8WlsW92qTR181tYS5iOm7YtzyR28o/SwXquc2T6cHF0Jf49J0leURc6BPeIKnsIOsdlQMHdMBXhrRxvmX9vdFlL5u8rAQeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LiBtTgcr; arc=none smtp.client-ip=74.125.225.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OAvt0ZQP"
-Received: by mail-ej2-f40.google.com with SMTP id a640c23a62f3a-c2e402001e8so35743966b.2
-        for <git@vger.kernel.org>; Thu, 01 Oct 2026 01:45:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LiBtTgcr"
+Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49e721b5503so58706075e9.0
+        for <git@vger.kernel.org>; Thu, 01 Oct 2026 01:53:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790844342; x=1791449142; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=S+Opfzo4lLo2WE2k+F7L2lqjHK36FMVk5FF35AYGtAg=;
-        b=OAvt0ZQP+GvbAebHnQ9wWKvfju5Atd+3j3ksWjEdwZf8Z5l86DPkG9JGAXJU0+dAK4
-         xuG02WtawoT2CscGqfMCOimhMmJ3Rcv/EB7AHOCZ8LUHL1xXqd1T5cr8QA+1EKfh6jhZ
-         shW7DzrupibkjpzO+rrx2crNG2Q+89vtUV6/JnCtXLXqTbbBNU6aWAw05NlR3zuzKfZD
-         BVJ9x7LIP+5vZ5IABS6A9PiJujcvEzfp2U0yAjse/8tDhyD9HBhsqaR0l7ElAFmgO6H0
-         cTY44SiFzht+WeAT7CIs9hGzjxBdOYTK+8qDNm5uWI4PV/ocStnRUHoayQ55wd0RE42A
-         dfmA==
+        d=gmail.com; s=20251104; t=1790844815; x=1791449615; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=nlnvN99UtZqk3+dvXqEpiAGsAmxcGWoSUmy6lhg6jHo=;
+        b=LiBtTgcreIFhMHcJFJVHi9LfkKIuPKrFILj1refIdH83T+dfiSNoM2r+C+Zgiq75f0
+         e0ndsDgZQZwdKmhHJcIkiu0pfp7WzO4/wYmHY4gdV1P112xwOwmDkIVU/pyc5JhoLo1c
+         p1la9zx4Ju8C/hCknJoT3DiIHclRBMckwxrHEiOcuCmPJXUnp8AmtAgezQigt0J96Yuy
+         yAU5AqYs+8x53DJWUMUQHPfLFR9ByC1LwXP040T+f/CT3jELPYTMDEsPpSdObihFivZd
+         yzvYwf/d4p0/qTVp5uizb3cZXu+hgn1TGykF7vJ6DhmQTP1t/I/pUsC11UDeU+6JqOVC
+         j94Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790844342; x=1791449142;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=S+Opfzo4lLo2WE2k+F7L2lqjHK36FMVk5FF35AYGtAg=;
-        b=IU6QEL9o+tBZKBvwkh2c/vI5ydDiAhc/nwwZPeEiAmD33sjYmgIJ85aGNHAJYvm1K4
-         kxtXhxJBGcAjCXH3m4bU2YXV5o7yt+1YCpUM93k73ViTVuhPMt5BBM6NnGS2ajAkj+7/
-         jPJ4rYhB+6YbjjqhkH+py/CYOdrYp6B/6AMsKa+31AlI5ThiqMNtrNVXveiBPoKoUBlV
-         xXipN+lOO/hHszCZpPjoxQq13m/7qituv0/DZZFjj+9LZRcIxq7t1aHE5vAu3gTuGMFT
-         PLOhSlezLUOCmTS4qRvf9XwWS9aPTpgKp2mPa5UYy2q8W3oqeEu5WIA6k3SZ3xHk6uDp
-         Oeyg==
-X-Forwarded-Encrypted: i=1; AKwUvBxhV7h2IMDXpV6qwTKraRV3piBWP80lzRUn/m9vfGBZaA/eJYOtAj88k2AjfSIkZKgetfI=@vger.kernel.org
-X-Gm-Message-State: AFuF++mzYMaWNRKfKXpIg6T2awj9P+Oxs2l5GEmpO9/XoY/pyG+COtxo
-	dqF7XEkBolg1D/8GkqX4NC1DnazcofsuTfyufMZ6lr4Tih1kWAsPg7dc
-X-Gm-Gg: AYBFou2no0ZCUpuIuUKZprnuS4+w+sOvAwEBHQU5Ho/QMyc0gdW9ndonFcps5frsFlh
-	0MEeaYyx0vfPO7/75fuBo53rTfyYondYxBscMQ8uprobQ6R10sUrJHDHYwyByxJr4ZU6jJpFaEi
-	eoNRdw8VLYl5i1NLAeoAX6lyXcPDksYLwri4hfx2o0G0ZtRPSO65FPxhsOemDfER3wOkjJ1SsqC
-	AqwwJ4lUHr9PQksshMiuokP9QJtf6b7OMdmWdDupkrxmy/pO8Bk6jaPWBK7XtjzNXvbwlhcmdnA
-	osUzKuI6X9bRyuHUD5xSgEtmmyEdxms9pzzN6GpfKt8bWXmhl/u9tSZCpuUbeYrPvknPjfs2L53
-	kW+Q4WtkZ6kgSTvHdLnCtBiiy7gjHQkZaiakPrMYM99WIAs7gfiTjgJaNevLUbj8xXgkmDL8WgW
-	ZnBzrQFY1GYE+ZXRqEcWmA5DWg8n0MQKLCgbSMPrPb/YClxH4+XHJAvYJBZhsosnPW/CA+5wIzv
-	ro6NnopaBc4Huq6Ns7/nvwtw8hZecTbqaA0MLUQOyd/kq6/4Tewlw==
-X-Received: by 2002:a17:907:9703:b0:c2a:f360:1c67 with SMTP id a640c23a62f3a-c2e23dd96b0mr296380566b.35.1790844341776;
-        Thu, 01 Oct 2026 01:45:41 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2e31ce9e4fsm110743266b.31.2026.10.01.01.45.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Oct 2026 01:45:41 -0700 (PDT)
-Message-ID: <f5397a5c-3482-4207-9501-fec431fa34a0@gmail.com>
-Date: Thu, 1 Oct 2026 09:45:34 +0100
+        d=1e100.net; s=20260707; t=1790844815; x=1791449615;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=nlnvN99UtZqk3+dvXqEpiAGsAmxcGWoSUmy6lhg6jHo=;
+        b=AdV+gjFfSiCvccIsdMM9rxJNDy50E2KerY3nTN2f1uspG8t49Z+CeMUIlhZvHvsHN2
+         9WLnG7ZdA8e45L/2fObyLwgaCgBG/x3LBDK4k1UCsqpujYGke87/0FsQuXk22Rj+WDIQ
+         oaQ1l8OVVDCSnCS6NmutYMGetSh5aE0UffHHWcWwMbHsKX7jh18F3+Pq+D7X9Yx8OV6N
+         VgaYO+bawyuGlN2CZa4hjHavDos34CnyVmRxRpsXE1/OWPqZm8BVJVXJzqFQtiCPBrvs
+         U7e+VfqOpxlB2nj8qtR/RPlvYGI5adV0f2xQxGCW/0PT9JDV5RWVB0k7aT4Q4ZDkmHcr
+         p0Mw==
+X-Gm-Message-State: AFuF++lMQWhkVciV7dYb+vF4z0Fs5LsMfBFlszKm0ODcJ+khE5s1UyWs
+	vpcBTsAmx8V+xuqdZyAP7CJS1EN3eVBZgXeNv+YFX2EQKnjOQDBtUz4FpeNeJA==
+X-Gm-Gg: AYBFou1F9oz3UuHI1LfkkTFBFMtR/W7hd4Eq1o2WRoIvcJysR2Ov6/bz+lV5on+10sX
+	Cx3HsRPoyaC1/p1OmWwtVsq8psSoudl+ROOTIcigrglZQEc80HxF/BlG+rR4Sj1YOJSGDXq/y2o
+	rsu8jflCJUBm1oCu/JKjlcg3C+bjKAUwoLo79fRxiXwpoDO7paG6jyDdDqHF7VOIc2jeXmjfDMi
+	XbzkBXePXguiSp7QF2xB/r1lzG/wI8AMiShgqXzkOebx/EwAdCax//oyEkFmIBPykVwwlNA4H9D
+	w7zdPW69GHxpdl/BGxELUxduB/h2YMIBVqLIa0DzTx/z+DDVy3r0uGmBbYfMFhSZ1hk4PSfJ9sG
+	SZAYL8G3Fg1ek8YS16heijEKF0RV33jfCN2p3D6bO4i1AU1w7yrASSeZtDJ/S4612L+2pn9H12M
+	NmEaQHddbYNuDF/eNKOevJYsFkBtBp3aKvw3d3MI5ZljmTug4NPp7/TDfi/5PRWgUDf00l6aYKF
+	7ndz6mRxOfzFU6D96742+ijQ6S7bdB6gezDHA==
+X-Received: by 2002:a05:600c:5020:b0:4a0:1efa:c746 with SMTP id 5b1f17b1804b1-4a01efad733mr29773125e9.21.1790844815292;
+        Thu, 01 Oct 2026 01:53:35 -0700 (PDT)
+Received: from SSI-H-ARSHAD-LP.ssilhr.com.pk ([182.188.107.82])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a01f98604csm40751875e9.4.2026.10.01.01.53.33
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Oct 2026 01:53:34 -0700 (PDT)
+From: Hanan Arshad <hananarshad619@gmail.com>
+To: git@vger.kernel.org
+Subject: [RFC] git stash: add porcelain for sharing stashes through remotes
+Date: Thu,  1 Oct 2026 13:53:09 +0500
+Message-ID: <20261001085330.73586-1-hananarshad619@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/2] checkout -m: recreate conflict labels
-To: Johannes Sixt <j6t@kdbg.org>, Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-References: <cover.1790761727.git.phillip.wood@dunelm.org.uk>
- <223c99ea-64d9-46da-9631-ed8035f1a062@kdbg.org>
-Content-Language: en-US
-In-Reply-To: <223c99ea-64d9-46da-9631-ed8035f1a062@kdbg.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 30/09/2026 21:24, Johannes Sixt wrote:
-> Am 30.09.26 um 11:48 schrieb Phillip Wood:
->> When "git checkout -m <path>" recreates a merge conflict, it uses
->> the labels "base", "ours", "theirs", rather than the labels used by
->> the original merge. This short series teaches the ort machinery to
->> write the labels to ".git/MERGE_LABELS" when it switches to a merge
->> result containing conflicts, so that "git checkout -m" can then read
->> that file and use the same labels.
-> 
-> Would an index extension not be a better place to store auxiliary
-> information about merges?
-I did briefly consider that, but it makes it much harder for other merge 
-strategies such as git-merge-octopus (which I should probably update to 
-write MERGE_LABELS) to store the labels. We already have MERGE_MODE, 
-MERGE_RR and MERGE_MSG storing various bits of merge-related information 
-so this series just follows existing practice.
+Hi,
 
-Thanks
+I'd like to propose adding a small porcelain workflow for sharing
+stashes through a Git remote.
 
-Phillip
+git stash export and git stash import already provide a transportable
+representation of stashes. I tested the following workflow using
+existing commands:
+
+Alice:
+  git stash export --print stash@{0}
+  git push origin <export-tip>:refs/stashes/alice/wip
+
+Bob:
+  git fetch origin refs/stashes/alice/wip:refs/shared-stashes/origin/alice/wip
+  git stash import refs/shared-stashes/origin/alice/wip
+
+The imported stash is a normal local stash and retains the original
+stash object ID. Removing the remote ref afterward does not affect
+Bob's imported stash.
+
+I'd like to add porcelain around this existing mechanism for four operations:
+
+1. publish a selected stash to a remote
+2. list available shared stashes
+3. get a shared stash as a normal local stash
+4. remove a shared stash from the remote
+
+This would not introduce a new stash object format, server-side
+service, or synchronization model. It would essentially compose the
+existing export/import mechanism with normal push/fetch operations.
+Before working on an implementation, I'd appreciate feedback on a few
+design points:
+1. What remote ref namespace would be appropriate?
+2. Should shared stashes use an explicit user-provided name or an object-derived identifier?
+3. Should listing only inspect remote refs, or fetch the export commits so stash messages can also be displayed?
+4. What command naming would fit best with the existing git stash interface?
+
+If the general direction seems reasonable, I can follow up with a more
+concrete interface and implementation.
+
+Thanks,
+Hanan Arshad
+
