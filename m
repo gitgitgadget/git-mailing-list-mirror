@@ -1,228 +1,221 @@
-Received: from mail-oi2-f42.google.com (mail-oi2-f42.google.com [74.125.231.234])
+Received: from mail-dy2-f43.google.com (mail-dy2-f43.google.com [74.125.229.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329F23B7B6B
-	for <git@vger.kernel.org>; Thu,  1 Oct 2026 23:22:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.234
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6282EEE79
+	for <git@vger.kernel.org>; Thu,  1 Oct 2026 23:54:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790896945; cv=pass; b=n/EBzpe4aUAu/0Q2+tfOOtAQRJrWqUhr5xqdLriRTkMdNcsaYEplp1Is+ToYeJ9zMshGyGPx+gs/IwroxRcULtjvhs0/Zkvn0OnQQ9MI5+vs5+ci3m9RCyuvrfwuhkZByUpcNEHeg89x4PKlR+nIVDPK0HRyhsx6nR7vZ5cUGhs=
+	t=1790898866; cv=pass; b=odlNm7nP1UJ8gsnBRk/uSzszsmk2QIx/pzvVE9wPTBF2ISPt5Yc+TLs2Yg9o+JTDd7FVHwiHpzrCBPZyR48XI+wWJCVdphKmIrwsLGQ/kVwEzaeQq9Qa9/mGNvHmMXEuy1SCTAlqycrJWVB3LKbNT7TxAZkaWN++IF3EjIZnStA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790896945; c=relaxed/simple;
-	bh=MHzSU5EAsCma5f/bK/2m+iOiYYMt54akvrP1eXziHa4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=msxDlcSEwX64Yt2Ah+D/Gk53oi2Zo3RsGe1XKfUjVnqc6WfKZitfjRnr2Lqn1rKt1hTokpYKcwDpfQmxfgBdNLFoiWytSHufSXsOg8KTAl9jWEkQBKM0R8CFYPvesgOxcbk54X+1wB4nLNhewLeG6ZkxXWaZpXtUuNE6mnkDSkk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KJLnh61s; arc=pass smtp.client-ip=74.125.231.234
+	s=arc-20240116; t=1790898866; c=relaxed/simple;
+	bh=b7F6uHs6OaI48yQGIvj3/icKVWmEI0m9RbaJ+2TmUK4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=GWvVwIQrx35aS9Z63u47cJ6dTIbk6XbFFWAt6rCmqMPgwSmExG31JCrJMjGVJERCfXeft7LqWlfzmHEKFzFrXOJSl5h4DNEGKAJKSkQH3gUr3uM1O8KAPsC4iAevvPU+d+Jg72BQVlOkq32w4waghaT8co8ifL2ifC48Jn/f2Og=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M6kx5uxf; arc=pass smtp.client-ip=74.125.229.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KJLnh61s"
-Received: by mail-oi2-f42.google.com with SMTP id 5614622812f47-4db3c747ad8so4539498b6e.2
-        for <git@vger.kernel.org>; Thu, 01 Oct 2026 16:22:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790896943; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M6kx5uxf"
+Received: by mail-dy2-f43.google.com with SMTP id 5a478bee46e88-33e79c06622so807662eec.3
+        for <git@vger.kernel.org>; Thu, 01 Oct 2026 16:54:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790898864; cv=none;
         d=google.com; s=arc-20260327;
-        b=i/UgmMwMzZblcYBDFCV/ioXoEgpaG10eKDTTt2eWa6y4IUowU1COmIFVMBZKnk04dO
-         HXkigN06B+1ccOZv6xz5q6MxTQFkkVgDSwtlaN9mHbvopDQjTXGxRBBIGujZHMMyKzxt
-         gc204FGN43hxK0Rdm1lSSk15rSM8HzhY9o5ec4rHRPH1B5UGpBABg5KQlLz0CpcliCT2
-         PODlrPwjRfRL+27iixobreWTb3w2KLVZBY5YLCQFwilsGgO9IFSqWHifZucWynLrb7xE
-         8g2xKcZGL3lf56vs9IWZ1hao+Nnq5F0W++M9Fw8TGj+mN5jl1HSS4CkO1kCDncdOsSfQ
-         D7Kg==
+        b=RF+U68NHLJB1cQV6ifBMtw1Xn8o1SJcX/mgBMzRLeVpa4lo828GJfDxwiLuYR1Go2W
+         9d3mRSdtr0C1rrgigqzc3DKE9pjdlMJHS5kYYcrEzUk4aOcIkIrd//KAuL4J7BDQHi2B
+         enaJQe1CFDanOlSS0a0mBuKSDll548J1gHWFQbauYykN0AFn5yLez42jzKHTY/P/5vmk
+         A7MtqMi6yy2nLYLaKexuWXuEc/j1ZCeEgMdRIdJjt3eDlgx0u5rQ9TPCJ/PeBMK88onM
+         UnU48T9i7x1Wsq5q+jwX2F3XKy5x7wd+N1CRBz5eLs2yQDQLQ2XhOk4yGImZy4F5SPrC
+         gAxg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=DwgQuxJO6OZS+gkBjtXD06F19fWTbwF9RzzjR4E1g9U=;
-        fh=LjiFYbubOI4PNWlo2PsAqFE+5895Is9PS0Pr5a0gUGg=;
-        b=QCdtmhCGWI3uF6EO40UTsNHmWHArUl35tfAPFafTUxEMlxNKBkNnr8zS6gXvb4W1Cn
-         bdAkIIbdAt2kMALCr7bswG7WYTBohovjYp7jfkg1F3GqBEKiCMKJ6xGfQ1auqCtAHlMh
-         /5Zpbzlfk+kMqXN3D4oLOurAPQ90pGl1h9mLxWWIzdTy23ViJLKTjMvlSNVecVMU+Vqw
-         sgoZ/w78Nf0SAJbLfQVAR6JchR05KenxJxDvrmjNeZwopT8XuOQ4hxNWvjzhLhzFl+4Q
-         ERocamYPiLztg3PcXtJd8vbaZ9R0avU2IutkX97N2rjF5XPvUvLxHleF2gxRrm9gUSBw
-         +YMQ==;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=KUweEk/9e7Fo228kF7aG0Xw+dMTq0V0eq8SdDMTxofo=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=HPfEzG7aPCkXX3GkrnQere+37t5FW3c/txVXfOmwhqrcR74up71T7NeUFXiLhSr+N5
+         F0YT6YRBn3SVwljpiSgIY1dMhaae4mYg45QnKtY0Q04WN2dYB4m8xISvM+1A9YWIFXzr
+         v96ijSX+oJTQvv5hAjeH5Tmj6m6UWiAVIqsKfiLFy29napthZPfzfIB4MTZ/Ykeg56nC
+         0M+sC2GBMf/Tj6ancc3iQed0b5akAb8HmlrEcLv4Ir/aR5A2FFtEA5FjemaoU9bx9ElV
+         a8ApfHwQJ5NM54w/pbvxIDmh2CPW+oEH0ZsEtsdy6PZwHguhUu+RDbGM6AvRkFOUalhY
+         k7jQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790896943; x=1791501743; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=DwgQuxJO6OZS+gkBjtXD06F19fWTbwF9RzzjR4E1g9U=;
-        b=KJLnh61s7UIGzHSMhaHsqMVgnbzivSr7LMc6qn3ZjlhJYhy9RxXSNaZZRQfLVqnXSW
-         FN1bXMctLcIRuAe6P5iLQFs/Xf1sRYwFkvr2pMJwPRS4PD3ieGsCKujYIckgSvh0C3l6
-         52uSS8qk2v07htxME85UZRNKhimmpFLVB9EgXcq01ge90ynd7qmjltyAj3/bwfcGEh92
-         KWPCvsPaaaCNeKrOAcfbCA0nZONfyo1NGFuOzEHeh4Yavvbw+syOCR3D/cj1hKaKB2bD
-         ZoJRogLAdTrFog504vVhYzS3paCioNGmC/JP4rjCK8Sr1OHjy/MEBebq7SZ5aLQDWzuA
-         LubA==
+        d=gmail.com; s=20251104; t=1790898864; x=1791503664; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=KUweEk/9e7Fo228kF7aG0Xw+dMTq0V0eq8SdDMTxofo=;
+        b=M6kx5uxfbqQ1MlQDa+W/GLIsZXPGG6y2frIjzsBpzUEZFAWOahqakDVhgxl+98k+SH
+         iph0UgZEy7SDu/c7doxljDHs1m6THFpH81J2ZnNqdtBiqB79398Ez2XpwIUtncT9bQnG
+         hkeODBTbcrS3nXhI/P10svt70cWuLyM9rxZ0c7EkQucrMzDAKKh526EGJY7/5mJa/NgM
+         L3nRJvbJO0vJUSokt3d8I4ACT2pp12q7MdKnpxHfqlS41H8IBxZSqDacR9ElxQLmm+qG
+         9psfUi3c9ihzDYPxW7Z5HSz5L6YM8COHLstz6uBHzJ0rHXta5fuRNJr23bjruO8xmteQ
+         kzpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790896943; x=1791501743;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1790898864; x=1791503664;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=DwgQuxJO6OZS+gkBjtXD06F19fWTbwF9RzzjR4E1g9U=;
-        b=GnrO4ZDwwViyYcebXgkvTHTw3/vjRPTEEicK46Uz7Bwl3gr945OvsmFY9IYlVE3R/V
-         fKXmGMrMamRCijBQePBPiwntWc2LErkonXaRNp+zgflh7Y+vtxv/MT5ULJncl5ikZswu
-         FdOy4gODRTpaf5Ko6bYGWscnSgKguMoivk3LhMuDrApnK2ysrfdQWMB/Pd46PMZFpe0U
-         u1Gs5qb5U9kJPbPdxVQbecmVszFxSfX07Se0iMKos307ctJOlO7VKMLcfz+9njaeazmK
-         LjQPiGM0iRUSre8W6Wx6x0GURXtIhfR9CHMdxlqR2l2oIMBqYuou3X9RMOEik6TIGNTY
-         NlCQ==
-X-Forwarded-Encrypted: i=1; AKwUvByzgVso685CJvC4wSj6qlBiXucLPklEJX/ru90M2ajeRUU2FD6AX+rIUD/cvEgTHLg+VmU=@vger.kernel.org
-X-Gm-Message-State: AFuF++nXgkOG8bTbYRPmXxp/DvCZPuT1453+nkZk5S0Z/uI8h4pZe4xo
-	pAwUm39Gp6C3bdPQa6nQBv5NeotrZ+e4leFPA7oYcVioDuLjq0uitQic6+ANwzMhAGk0IlADBOp
-	uoYoZiJyyyc0cdWfDmUJ0TynQ5Hs09D8=
-X-Gm-Gg: AYBFou07UPs7qxOg+eg2TWE+GdUlIyS6Vk5RyuwWLYwhc72svSc1jRNashySxjS7P71
-	svf30r7EaOrUmjAibxjdE9OCUQ2L4Bo1xaINsqAod813lVUdBhQUCK0eJbhh0ialI1C2fADzvRr
-	MwRH4zIUz5Va4heJYJwEYhnjfBIIhcmRlOc6Kj6pJtNVVT4jpGW4oHgLKvEwM6XaqHaV/45oJl+
-	9k//ANc5Qk0WTLpXMJNPDzz49aQ67OMzLMbESzwfA8j61SE+u/88FhjKDEAa+eej78jbjsPCPa8
-	iMNtmKSeK3bOD5ioGkRXoXV/NIHsiQT2wWEGSktDYfiDg9En/sPI9Uv/xZf6wLezGEaOvvfImry
-	bL4DRre8j0TdcPNXakN+UakfmczM2GAFp/+Hgw/DchiGCGMCITPOOiXWcpYf7/RRj9OO8MIvB
-X-Received: by 2002:a05:6808:1993:b0:4d6:9335:d533 with SMTP id
- 5614622812f47-4f52ab91601mr674301b6e.64.1790896942933; Thu, 01 Oct 2026
- 16:22:22 -0700 (PDT)
+        bh=KUweEk/9e7Fo228kF7aG0Xw+dMTq0V0eq8SdDMTxofo=;
+        b=BB6WMrKrqQrslnBD2AVVvprJV86K2HMz+E75NlZBDiY6Rdi+a8VPs+vxPdocg7lHBH
+         8MVqY9CPuLAO588iKSIGHiRLZrZy/yH4ccFCCovT+LnbAefvwbPOHokvNSIyb0I/lF0n
+         batoSlsxkV+HeumbVggbJUlqUyGs208n6N9YA6C55TWXYjYpg3UsIqq9oHt/gtyjCp4v
+         +hBPw38iZELDXQ3Kx/TVHL/8j+0v8wfxVS1BpKaMOEAK2uQaUqP7qeyJyeMbARMCKcLf
+         qcuRgYeDpU1NHvPCYRTKzelKZkjFl+hFXJX0XeXhlBoGQEEEIaJ46d4drUpotKNzbjnC
+         3v+g==
+X-Gm-Message-State: AFq9FYLK5+ADhOGOn9Y1fSpfgtNZUxaZ8iuUkvX5ahS5DXCObVzZdRkp
+	TS3N/UWyndYW5TlyASTUrUeMZ3P59n8+z3ZZpio95CG4rArG0NBNjX6SJFg2MolEGumX1bDid8c
+	Nv4zz95bKVV3MFPnLSnbvg1bKhxXSTvn8hzHC
+X-Gm-Gg: AYBFou3gGQLs0qgIDK1sp9kqZ3rGX6W9s+fDkCvt2mgHEodNB//XnAKrjY45sVbfQgx
+	TZFY4Pq//5VmbgBOZ/pRpKolAoyQHHYlfsDWVyWk9n0T5E8WG58Ys/VUmcTOyVUSqHa1VMgy29V
+	AxwK16qUh9ZrGsD6QPrYLlwN6KBCtzpGl9t9pAxje7keyWdroWwpZXD7FlO6wAMP5G5mTvEhAZS
+	KqJERUFyUJm9nwLmTv+GvIP8tmJkVb8EhRFsr2Y8i0CFeFi0vmWHvHQ6PkDPrRQXhLhQA0ktQ4x
+	l3EcvIIOwQ3a13BeulcOFKPOZByCn28rEwpca5gvvxrLphqTZSdhJfJzuywNDmI2ho8dwnlT4c5
+	5cA==
+X-Received: by 2002:a05:7300:2d04:b0:33e:4e49:d08d with SMTP id
+ 5a478bee46e88-34f150248dcmr1961428eec.1.1790898863381; Thu, 01 Oct 2026
+ 16:54:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1790731662.git.me@ttaylorr.com> <6348667e2e3fe63aeb139888e877dd8447570253.1790731662.git.me@ttaylorr.com>
- <a78a38ca-b08a-4194-b17c-b8802e4d43a7@gmail.com>
-In-Reply-To: <a78a38ca-b08a-4194-b17c-b8802e4d43a7@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 1 Oct 2026 16:22:11 -0700
-X-Gm-Features: AclHuK8S-RAUqovAgQD2Ic-roI2BJbWS2cZ6VVVKcwbOZQoSy0XnyTns-4kQNmg
-Message-ID: <CABPp-BHE662t9aaNcZ4DZ+2AU_C7jR7_VyHZwt2Tm8JSPE3JZw@mail.gmail.com>
-Subject: Re: [PATCH 2/4] pack-objects: ensure tree/tag closure with '--stdin-packs=follow'
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Taylor Blau <ttaylorr@openai.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, Ted Nyman <tnyman@openai.com>, 
-	Elijah Newren <newren@github.com>
+From: Coy Geek <coygeek@gmail.com>
+Date: Thu, 1 Oct 2026 16:54:12 -0700
+X-Gm-Features: AclHuK_j58RsnYNlLI1-RW8WGNPNJoH52p5uWhl71g221PB0h4spJYGUghavsqw
+Message-ID: <CACgTecNrMKHGexWTkm1bqpVzL7SVWD5Hwo17wVokVGe3_Rnx0A@mail.gmail.com>
+Subject: [BUG] merge-ort: --no-overwrite-ignore overwrites an ignored file at
+ a directory-rename destination
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 30, 2026 at 3:23=E2=80=AFPM Derrick Stolee <stolee@gmail.com> w=
-rote:
->
-> On 9/29/2026 9:28 PM, Taylor Blau wrote:
->
-> > Add trees and tags from included and '!' packs (and loose ones with
-> > '--unpacked') as roots in '--stdin-packs=3Dfollow' mode. This rescues
-> > their descendants even when no input commit reaches them. Walk these
-> > roots after the existing traversal, preserving the `SEEN` bit to avoid
-> > redundant traversals. Ensure that the walk takes place *after* the
-> > existing traversal so that we don't lose the path prefix used for trees
-> > and blobs wherever possible.
->
-> > @@ -3807,6 +3807,7 @@ static int stdin_packs_hints_nr;
-> >  struct stdin_packs_context {
-> >       struct rev_info *revs;
-> >       enum stdin_packs_mode mode;
-> > +     struct oid_array extra_roots;
->
-> I believe this should be an oidset to avoid adding duplicate objects
-> that appear multiple times. The order of these extra roots doesn't
-> matter (such as in a --topo-order walk). We only care about the
-> binary "reachable or not?" question.
+Hello,
 
-Is that true? After iterating with copilot for a while, it says:
+Consider the following ...
 
-The walk supplies paths to pack-objects, and those paths affect more
-than reachability. In particular, they affect both namehash-based
-delta selection and path-based attributes.
+`git merge --no-overwrite-ignore` is documented to abort rather than
+overwrite ignored files. When directory rename detection moves a file
+that was added on the current branch into a path that holds an ignored,
+untracked file, the merge replaces that file's contents without any
+warning.
 
-First, it is possible to demonstrate a pack-quality regression with a
-vanilla repository configuration:
+With merge.directoryRenames=true the merge reports success (exit 0).
+With the default, merge.directoryRenames=conflict, it stops with a "file
+location" conflict, but the ignored file has already been overwritten. A
+direct collision with the same ignored path is correctly refused, so the
+protection is bypassed only for the destination path that rename
+detection generates.
 
-test_expect_success '--stdin-packs=3Dfollow preserves namehash ordering' '
-    test_when_finished "rm -rf repo" &&
-    git init repo &&
-    (
-        cd repo &&
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-        mkdir sub &&
-        test-tool genrandom similar 8192 >sub/a &&
-        cp sub/a sub/c &&
-        printf x >>sub/c &&
+Save the script below as repro.sh and run it as "sh repro.sh true", "sh
+repro.sh conflict", or "sh repro.sh default" (no -c override). It works
+in a throwaway repository with empty global and system configuration.
 
-        for name in \
-            b yzz9 zzz9 aazz9 abzz9 aczz9 \
-            adyz9 adzz9 aeyz9 aezz9 afyz9
-        do
-            test-tool genrandom "unrelated-9-$name" 8192 >"$name" ||
-            return 1
-        done &&
-        git add . &&
-        git commit -m base &&
+    #!/bin/sh
+    set -eu
+    mode=${1:-true}
+    unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE GIT_COMMON_DIR
+GIT_CONFIG_PARAMETERS
+    export GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null
+    tmp=$(mktemp -d)
+    cd "$tmp"
+    git init -q -b main repo
+    cd repo
+    git config user.name Example
+    git config user.email example@example.invalid
+    echo new/private.dat >.gitignore
+    mkdir old
+    echo seed >old/seed
+    git add .gitignore old/seed
+    git commit -qm base
+    git checkout -qb incoming
+    git mv old new
+    git commit -qm 'rename old/ to new/'
+    git checkout -q main
+    echo 'committed local bytes' >old/private.dat
+    git add old/private.dat
+    git commit -qm 'add old/private.dat'
+    mkdir new
+    echo 'unique ignored bytes' >new/private.dat
+    git status --porcelain --ignored
+    git version
+    status=0
+    if [ "$mode" = default ]; then set -- ; else set -- -c
+merge.directoryRenames="$mode"; fi
+    git "$@" merge --no-edit --no-overwrite-ignore incoming || status=$?
+    echo "merge exit status: $status"
+    echo "new/private.dat now contains: $(cat new/private.dat)"
 
-        git rev-parse HEAD^{tree} HEAD:sub >in &&
-        P=3D$(git pack-objects --window=3D0 $packdir/pack <in) &&
-        echo "pack-$P.pack" >in &&
+Before the merge, `git status --porcelain --ignored` reports only "!!
+new/": the worktree is clean, and new/private.dat is ignored and
+untracked.
 
-        git pack-objects --stdin-packs=3Dfollow \
-            --no-reuse-delta $packdir/pack <in &&
-        rm "$packdir/pack-$P.pack" "$packdir/pack-$P.idx" &&
-        git prune-packed &&
+What did you expect to happen? (Expected behavior)
 
-        printf "%s\n" HEAD:sub/a HEAD:sub/c |
-            git cat-file --batch-check=3D"%(deltabase)" >actual &&
-        printf "%s\n" "$(git rev-parse HEAD:sub/c)" \
-            "$ZERO_OID" >expect &&
-        test_cmp expect actual
-    )
-'
-The funny-looking names make the test deterministic: their namehashes
-fall between the hashes for a and c, but not between those for sub/a
-and sub/c. There are enough of them to fill the normal default delta
-window. --window=3D0 on the input pack and --no-reuse-delta on the
-output merely ensure that the test observes the new delta search; the
-output pack uses the normal default window.
+As for any other merge result that would overwrite an ignored file under
+--no-overwrite-ignore, Git refuses before touching the worktree, names
+new/private.dat, and leaves its contents as "unique ignored bytes".
 
-With the submitted oid_array, the parent-first input-pack order is
-preserved. sub/a and sub/c remain adjacent in the namehash sort, and
-sub/a is written as a six-byte delta against sub/c.
+What happened instead? (Actual behavior)
 
-With the straightforward oidset conversion, hash iteration visits the
-subtree first. The blobs are named a and c, the unrelated blobs
-separate them in the namehash sort, and both are written in full. Both
-packs are valid, so this is a pack-quality regression rather than
-repository corruption.
+With merge.directoryRenames=true:
 
-There is also a shorter, but admittedly more contrived, example using
-path-based attributes:
+    Path updated: old/private.dat added in HEAD inside a directory
+that was renamed in incoming; moving it to new/private.dat.
+    Merge made by the 'ort' strategy.
+     {old => new}/private.dat | 0
+     {old => new}/seed        | 0
+     2 files changed, 0 insertions(+), 0 deletions(-)
+     rename {old => new}/private.dat (100%)
+     rename {old => new}/seed (100%)
+    merge exit status: 0
+    new/private.dat now contains: committed local bytes
 
-test_expect_success '--stdin-packs=3Dfollow preserves paths for attributes'=
- '
-    test_when_finished "rm -rf repo" &&
-    git init repo &&
-    (
-        cd repo &&
+With the default configuration, or merge.directoryRenames=conflict:
 
-        echo "sub/* -delta" >.gitattributes &&
-        mkdir sub &&
-        test-tool genrandom seed-2 8192 >sub/a &&
-        cp sub/a sub/b &&
-        echo modified >>sub/b &&
-        git add . &&
-        git commit -m base &&
+    CONFLICT (file location): old/private.dat added in HEAD inside a
+directory that was renamed in incoming, suggesting it should perhaps
+be moved to new/private.dat.
+    Automatic merge failed; fix conflicts and then commit the result.
+    merge exit status: 1
+    new/private.dat now contains: committed local bytes
 
-        git rev-parse HEAD^{tree} HEAD:sub >in &&
-        P=3D$(git pack-objects $packdir/pack <in) &&
-        echo "pack-$P.pack" >in &&
+In both cases the ignored bytes are lost. They are not in any commit, in
+the index, or in a stash, so `git merge --abort` cannot restore them.
 
-        git pack-objects --stdin-packs=3Dfollow $packdir/pack <in &&
-        git prune-packed &&
+What's different between what you expected and what actually happened?
 
-        printf "%s\n" HEAD:sub/a HEAD:sub/b |
-            git cat-file --batch-check=3D"%(deltabase)" >actual &&
-        printf "%s\n" "$ZERO_OID" "$ZERO_OID" >expect &&
-        test_cmp expect actual
-    )
-'
-With the oid_array and parent-first pack order, the blobs are visited
-as sub/a and sub/b, so sub/* -delta applies. With the oidset, the
-subtree is visited first and the blobs are seen as a and b, so one is
-delta-compressed. When the root is processed later, the subtree is
-already marked SEEN and is not revisited with the sub/ prefix.
+Control case: if "incoming" instead adds new/private.dat directly (with
+`git add -f`, no rename involved), the same `git merge --no-edit
+--no-overwrite-ignore incoming` aborts with exit 1 and leaves "unique
+ignored bytes" intact:
 
-The oid_array does not manufacture parent-before-child ordering if the
-input pack itself has the subtree first; this path information is
-explicitly best-effort. But it preserves a useful order when one
-exists, whereas an oidset discards it.
+    error: The following untracked working tree files would be
+overwritten by merge:
+            new/private.dat
+    Please move or remove them before you merge.
+    Aborting
+
+So --no-overwrite-ignore works for a direct collision and fails only
+when the destination is produced by directory rename detection in the
+ort strategy.
+
+This matters because --no-overwrite-ignore is the only merge-level guard
+for ignored content such as local configuration, credential files, or
+build inputs that users deliberately keep out of history. A user or tool
+relying on it can lose unique, unversioned data, with no error at all or
+with only an unrelated rename conflict message.
+
+Anything else you want to add:
+
+Reproduced with identical results, in both modes, on:
+
+    git version 2.56.0.138.gc61827130   (built from next)
+    git version 2.56.0.50.gc46c1e3772   (built from master)
+    git version 2.56.0                  (Homebrew)
+    git version 2.55.0                  (Homebrew)
+    git version 2.54.0 (Apple Git-157)
+
+all on macOS 27 (arm64, APFS), using the empty-configuration environment
+shown in the script. I am happy to test a patch.
+
+Regards, CoyGeek
