@@ -1,237 +1,209 @@
-Received: from mail-dy2-f42.google.com (mail-dy2-f42.google.com [74.125.229.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE99443AB9
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 09:04:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790931872; cv=pass; b=cee0Ck8VCb2Fux84EsHAeqLQMxxrzbKdU8ADdDxlseok12rwRdXdraDHAAuzPEZ5Drou73LzJkm4DrMQmBcKY/jKEXIY3CvAK69aB/WALpGwalcmNhRLRD5N/YglrRYfTFxrw6rrg+wYyhY34rWAcmi3ABnqFnX6ATILApdOIxE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790931872; c=relaxed/simple;
-	bh=Fpwgf5FI5pm6nud5VYqV6aZqMNFuCKjuU13Uqh56iYk=;
-	h=In-Reply-To:References:MIME-Version:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LdP+tsgfT+X2XzVvpOgA2p0oZxZbGBpdozNEhsb3rcIHeZRhiyy5SKK+auQ6O/Iw67XrpRKkI47x7a9HWfn8eFcjXwinL66LK8DA1ZuyIvjwFIeq9G8vdtmTgdUel/5B3CkVQhs4GaL+9DA2n8aNck4yfqLbMzcSw4kfxaXgWWI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com; spf=pass smtp.mailfrom=kanamei.com; dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b=N74ZA6+E; arc=pass smtp.client-ip=74.125.229.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kanamei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1394472F69
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 09:10:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790932239; cv=none; b=F3dybgFXYjjgtnjXLwrc/k4rKgnDPGlmWVX9BfUndg00Ge6+ypzghLd8+OHIfeqmVpjv7U1ceZkKj1aDuAwBEDI/AX2hGiZ43Lmz24V8OszJ34gnJk2fzTqravuy9C39WDHMGnrSDLW0lntac6Ek3KMbScyYQ9IJsQigHeWbK20=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790932239; c=relaxed/simple;
+	bh=aywY5UUfBV9iaIah2/tA9YQTFEu6QTFCPrBViQ5qqlA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X46+rT980t6Qsa0tDyaZIJ3+AtQEwtQ/IgIUIjQKxWCl8F6wMGzkEmCAlu5AxXU2rLqq8Sp968ss05nTgUidSVaKAKl2dseKgYVjMzgc4H50sgAMXGS52vnu9IMY3pG3hVkjTaAvrvhEX2+vOp4kNVmQl9WXCdDuaxVZpmYm+zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NDw6yQNM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ENOFjb1q; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b="N74ZA6+E"
-Received: by mail-dy2-f42.google.com with SMTP id 5a478bee46e88-3428f70d7e7so4239232eec.3
-        for <git@vger.kernel.org>; Fri, 02 Oct 2026 02:04:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790931869; cv=none;
-        d=google.com; s=arc-20260327;
-        b=bA0M4KmN811+A6XXExbVxMVtTmgK4aoQi7KOJoHtHTHFbi2q/V5wy/hOue2Lg0G7xZ
-         UsWcLCdp5x/Fdfo5sw+C08L7GWBy1hXDiuPrYxu3OaWIA1drHs0uPMPQxu7QzYCiRgT7
-         FrHuJJRtuxe/Yyz640tIIhEaBo2r9aiZtgojsHDyXN3vs1g+ORUMWFMMgwxT7LjbPfdk
-         N4hY3Pq6HnYM1goqvFR9NEeHlzKptNnC4uxTtIrJBh/Fl76dIDQciyVawRKC/3324/be
-         Hecfr3WUTGfsAf7EcSeldLnQPLCAbVQXTPTTrkaqQM6vWSM2sq83EZKkRI5Z23/hVA4L
-         ao2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:mime-version:references
-         :in-reply-to:dkim-signature;
-        bh=Fpwgf5FI5pm6nud5VYqV6aZqMNFuCKjuU13Uqh56iYk=;
-        fh=wj/qsr0mPslKs5ls5jocKEMICsDU7NgisQsyKhWhtzQ=;
-        b=kv97upVOcqchQ3yrSQ+8focEbrPuaR0lt4l4Jf9jb5aOygM3NVILdg5FjjcljMiOPV
-         hcSFXQ8DT9/aikJsFONXd8lniDkZbNFK8Rv7Z1gcnbh92KBToFzPwY8QyFsrvQeNZbsk
-         dB8PSYWqJzwy+7d4KnaUOy/NSkfJfmSa3hyPqu8+PjsnBXhu4KHEA0gbwtxweSxrW4+c
-         vx9UjYG6IPQlEqi7CGImc8y/5ilgspTdKIUJTHGPvbEwavahms1aIEPsq6kCNx1lgpxQ
-         B15hF4xjIPChjN+pmksWlCaq4KskqZ9NUle/qvozn6ZFXUCj2gLYkxcwoAB5PdcFGPFQ
-         cpkA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kanamei-com.20251104.gappssmtp.com; s=20251104; t=1790931869; x=1791536669; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :references:in-reply-to:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Fpwgf5FI5pm6nud5VYqV6aZqMNFuCKjuU13Uqh56iYk=;
-        b=N74ZA6+ES7awIo7hKHIyIo87uSXhn3ugbqmQhr5RDryUhp0BfbiTLXEBibaW1x0BM5
-         kiPP1A9E68mgufPuyo/OaeBbTl9k74cfPgBSh2x14Z8wN9wkmqa/Jw3LI3t/2RrBq7t6
-         KAIQp76SaAcSvGZ79C4FhtqP7BX9/AzOIO+c0YKW8KX0pbGOpMr3xerRkfIKDK2oBUbC
-         NTVcTvU8/BC4UL8ZpDkPjCueazpYmZvbXeocEqBxUDSMSg2tFunWwefr2invTyfonfWK
-         zbSlk/J+kFV5KByfDJ5E7b6EhAxskcMB6qc0zOO//eDTWzeAdxU7Gs8VqY/Mz+le45pm
-         2MBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790931869; x=1791536669;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :references:in-reply-to:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Fpwgf5FI5pm6nud5VYqV6aZqMNFuCKjuU13Uqh56iYk=;
-        b=ePwTGbyyx4QUh0xVlJMEJO+knZuQ+W+g1opnG7MbFYSOPKBBpvcflx52VNam/qwH8K
-         e28aiikAdhumYeDaKvcWUF4bMd5Uu98/AO9ScdbOpX/INmgp2O74pFD504ovf0tSVri/
-         na2p4lDqMr4sFD0bVhALw70qVa9vaqXXyu4pqt/Zy4S+bAmNSnuoI/xAoiLgChk6th3/
-         pa9MH1VLV8+W8GiZe5gwrL4K0YifjvAWbV/i0DPLduRhVx7LjO1CNA+xdoH3+ul4ufmx
-         a9JI6OsoDwxZRshEdn/CXwLLrrblyDsiq9bpDmosSV+fqPCWklcV+7ui57NGUrCIFRqa
-         VFLw==
-X-Gm-Message-State: AFuF++l3Z9JUPayVINRceDEXm2z/PrAXo0qu003lGWicb6ALOymj8ZRr
-	qQVaro1U9/jyS/ArLePhR0Q/9o8Emu6QNv3NrUXQvhRImBYmvEnBv9jn37R6trrkMC03Aye1Nwc
-	8kcbUL/bzwYWlSGevoH0JxV1dRs4lZP/XN2wrq8KdZg==
-X-Gm-Gg: AYBFou3aLK+1D0gQNoghytbb7ZoxjFnzFlhYso4mWCny+WJJxp4XVax3uZSoBdtm+Yq
-	5VZWutvXNh5HCzYm44ham8+g5ROVWCp2dltdC/MtyAdqQLJ9J4FKZPHvNoaL9H85BHxvuGa7PMi
-	iofWAtJ9eDQXf0uzfMPlP5+1N1sWPAM7btP9UajhZtY+A6DxCX0cX08I/EqT1dF0JVb5cVgfUU5
-	0tr31oa5pw4htaPkLZduVVV7THUhVnX7iLvxssfgH1Wqv/BsollGBScyBfv+wLwr638GJtdPL1s
-	xPYrgCRL1+BFSGFeOnz16VVPIGcRhf6JxLmRB6AgXM4adVq0G3qMAA==
-X-Received: by 2002:a05:693c:20cc:20b0:34e:f948:d7da with SMTP id
- 5a478bee46e88-34f150ead1bmr2192366eec.21.1790931868316; Fri, 02 Oct 2026
- 02:04:28 -0700 (PDT)
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Fri, 2 Oct 2026 05:04:26 -0400
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Fri, 2 Oct 2026 05:04:26 -0400
-In-Reply-To: <xmqq7bk173qm.fsf@gitster.g>
-References: <20260929074222.11942-1-kazumasa.shigeta@kanamei.com>
- <20261001042155.33303-1-kazumasa.shigeta@kanamei.com> <xmqq7bk173qm.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NDw6yQNM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ENOFjb1q"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id A9B17EC027F
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 05:10:36 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Fri, 02 Oct 2026 05:10:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1790932236; x=1791018636; bh=1cdpv5BSBl
+	iDirNcKAjujir0jbTjEZfTcEDFRCHq8no=; b=NDw6yQNM5rVANZpmvQ9nYXYFT0
+	jdbzPDwaQwD2zPikbS100iusbAAny6WjFsuIY3syqEX64V3mrqTwolFxwpK0/CJM
+	MufQyliyk9sm05CaXYqXMi00Q4V0RvHg0Fjaai09VkAcAfUfT8/qVWsbdk0KVhGi
+	RcWQxz5Nlv+21EqGcVHvxQGxTzHj/y5dC2lYT7h3E8Efb0EToPHq8+zaKGLtOeb7
+	uM27YkhMPaNPOs5i9kFuFYPOSd0TYpbGA9WSTyikUUdWSz7bwlCDuX7QecPWuwzO
+	ZE8UuMbS3wWkLy/ryeedrxFMfhkmExdZGCiiU3OvWKCno2nLIka3+Gv3t9Rw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790932236; x=1791018636; bh=1cdpv5BSBliDirNcKAjujir0jbTjEZfTcED
+	FRCHq8no=; b=ENOFjb1q9j+Qq6/nq6DdqVJ0DX6+SMszrjkWMMIdh9u/q+C/6pF
+	gxP1NY33CWZ/31/goOuXzco3mFxY2R3urv65OyQj5GSl90YeshV4QSftSXTfE4o8
+	3okHKQK3sdI1QkmYRRO49cfj7Gr88FbstnjR+fzU41DmwPcV1erCybyH6canmD0I
+	E2oSyvHI77zQGaaUjoqSWHj1/LLueLSXShMz//RD5pS9VAA0ybqhoKAcWcTcwiuB
+	fMrtADANHvOfjU1vMVX2ZFOvCQrA4SmLzgohrhZMbLYfah8FH0edfmoJjbzq5RJV
+	E7InVXQhAnTfysO9vI1oLP33+LfrshQSxiA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1790932236; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:jeKluyuXwbNVe8XX3eacZeNvf24inHY7xXu3lz8K8DBsl0H
+	b31YMiW70gXytUTUSGL62D+eM9RERPrN4Z41Ew3dbGmGwYRnDKVLt/kn/yGnnvc4
+	J+MiNygL34ZrMyQqAgyfo9CluWlB9iIVDVKBARVt9QNjOGcLBHSAlzg0CMKzqFnU
+	qhICItERc5og8bBBugz5OoVc4UNQjH2ZV7M/1WOA3w1SIqH2bRiUKSeR3l3CTSz8
+	qMTSFJapwiZRf/Y7uRQjIyBNpAgWF+yrT3wQZkQzKOv5whV+gAT2F+ewKzaCPzjj
+	gsWwHZmhKFWynjV6lnRIOPUrT4wUvp5uP7Te9aA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:Y43yIYwgMGJxRxutR1IauDZ2cmcjxHX8UaRFtBatf5U=:aywY5UUfBV9iaIah2/tA9YQTFEu6QTFCPrBViQ5qqlA=;
+X-ME-Sender: <xms:DHW_atT9vRf3JEBdS6QG3M4Kz8qNQfOCHmS1WD6Fj7ZpE8r7bREMYQ>
+    <xme:DHW_aswq9X3Glg0imN9LdosZoKFch12P02sGVlo34cOK0Cq_8AXiE-YpLAXN9SYdX
+    knDSSuGi6SH-BnHu0W63gBls5Pyf7PmPanSV8Wa9_nGkyHHWpY_0g>
+X-ME-Received: <xmr:DHW_agd3L3b-6kspyJNQECOcwJ873U1c4hWtQN6yZb3jwp-wpHY5sg>
+X-ME-Proxy-Cause: dmFkZTEuHObYeQF/Y6KzlEzBgd/Kjet4OOL64hMUsLPJ4h36sMEBjnegNal3VOvYZN92r2
+    S7RIiWck3UCwoRa/dm+fdOro6VIbIL5afu/p3JDkaSHUcKCEZ62DCJqWICM0YtGPj7m4YN
+    yxSZzfouz/8ctmG8jJE/8YNieUrOlR+gTUFT4t9EAWG9dkHbYscJ/7TfZt9RNBtajrYJpQ
+    4KdcsECJk/bVfOjLY70MLN8rCP5TLiLqgP5nt5tvTjBqiihhJo/7ksUUwQDU3FYQBqnu1M
+    ScSAUdZVqsfvw8zi71Rk4IiVsb+77lnOEcttgOKwELaXd17VibFMOGCxha8pDORWiRz+qw
+    ozqoYIaaas4j11dPN/wFzls1zpDavEXFFe3rswQHnEKLAA9yY8TuxaZeWlKm5IxQKwiSjt
+    3pVhSOj0oq+cFqOZhBwvuArwP2iWI16t3sQreWvazdYTnadpDjurv+SaK9amaVnUcM6z3y
+    4+4yvAwdwzqLLq9twRiWjhhQsRmNpqWN9F/jhLb9ZVuZr1uQUcQ9n6DyikBpevrFOim/NO
+    xhRQAzAIj7bmLfjW5ISNIgCK7A8XhHORANieiOQx3cB/tu5D/y9NoJhMDY3Lpw2IUxCEwW
+    V3pcCZB0OKSPJMZZ0vE0VubBEqq0F+L+PUh43wSF/XHMzLvZpD+meKMxNRUA
+X-ME-Proxy: <xmx:DHW_agJBdOvkfGbeeN63_7s8BGnm2nzIdVKtO_idxBUxGhoGkbKl4w>
+    <xmx:DHW_apH3hUY5XwKiHhPkCF2dxU0E182BV_fm7pX-xBE7PHfM_3lskQ>
+    <xmx:DHW_aiqauvhQ9m2VoAnBtTbX_jxwOmDcmwe0OOj1MMmI13-Bzayqdg>
+    <xmx:DHW_aqQSQvQ07Xbx-BSTBQibt6yt-DQ5djh0JHP_WVMKGB9nL2Vcog>
+    <xmx:DHW_agqGKro5ev4m2utf0j8GOpX8q6SKpImqzANakP_j9Pxyohf_RsGC>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 2 Oct 2026 05:10:35 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3bd9059f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 2 Oct 2026 09:10:33 +0000 (UTC)
+Date: Fri, 2 Oct 2026 11:10:30 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2026, #01)
+Message-ID: <ar91BoTedI3gHntX@pks.im>
+References: <xmqqv77l2g2e.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?B?6YeN55Sw5LiA6IGW?= <kazumasa.shigeta@kanamei.com>
-Date: Fri, 2 Oct 2026 05:04:26 -0400
-X-Gm-Features: AclHuK-HY2r50YO9VHoJhPfQNBIZi71J9H__HKPaZ2p_bUzwXjH9EFQKJn2M2Ao
-Message-ID: <CANUHOw1eO0HNjU+-PYNDOz9kHhBZYYfhiKJSX4082YSC1NKxww@mail.gmail.com>
-Subject: Re: [PATCH v2] stash: expose untracked modes in create
-To: gitster@pobox.com
-Cc: git@vger.kernel.org, shabbir.r.bhojani@gmail.com, 
-	phillip.wood@dunelm.org.uk
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqv77l2g2e.fsf@gitster.g>
 
-Hi Junio,
+On Thu, Oct 01, 2026 at 03:48:09PM -0700, Junio C Hamano wrote:
+> * ps/reftable-reflog-timezone (2026-09-30) 3 commits
+>  - refs/reftable: fix on-disk representation of reflog timezones
+>  - t/helper: fix segfault in "dump-reftable -t"
+>  - date: add helpers to convert between "+HHMM" timezones and minutes
+> 
+>  The internal representation of timezones in the reflog for the
+>  reftable format has been fixed to match the specification, which
+>  dictates an offset in minutes rather than the parsed "+HHMM" integer
+>  representation.
+> 
+>  Will merge to 'next'?
+>  cf. <CAOLa=ZRVt=e3MqjLY=UkitfSg_YjpsfFjeDsEmqJQm-5YhopxA@mail.gmail.com>
+>  cf. <xmqq33up73dm.fsf@gitster.g>
+>  source: <20261001-pks-reftables-fix-timezone-format-v2-0-a4fd1f7cd21a@pks.im>
 
-> we would prefer to hear what the user visible implication of
-> "passing 0" is more than what mechanically is happening inside a
-> program.
+Yeah, this one should be ready.
 
-The user-visible effect is that stash create cannot currently include
-untracked or ignored files in the stash entry. If those are the only
-changes, it creates no entry at all, while stash push and save can
-include them with -u or -a as appropriate. I should have described that
-difference directly instead of starting from the include_untracked
-implementation detail.
+> * mc/refs-rename-transaction (2026-09-23) 1 commit
+>  - refs: run copy and rename through transactions
+> 
+>  Both reference rename and copy operations have been refactored to
+>  use the generic reference transaction API, ensuring that hooks
+>  observe the updates as unified logical operations rather than
+>  piece-meal internal deletions and additions.
+> 
+>  Needs review.
+>  source: <20260923133651.74120-1-maciej.ciemborowicz@gmail.com>
 
-> ... was what you wanted to say, but I am not sure.
+Oh, I completely missed this series. I'll have a look.
 
-Yes, exactly. I'll explain the backward-compatibility reason rather
-than the mechanics of parse_options().
+> * td/ci-large-test-resources (2026-09-30) 2 commits
+>  - ci: use twice the CPU count on both providers
+>  - t4205: compare huge output without diff
+> 
+>  CI resource exhaustion during test runs on GitHub Actions has been
+>  mitigated by switching a comparison of a huge output to use a binary
+>  comparison, and by capping the parallel jobs on Linux to the number
+>  of available CPUs.
+> 
+>  Will merge to 'next'?
+>  cf. <ar0gon2VE0RlG_cC@pks.im>
+>  source: <20260930-ci-large-test-resources-v3-0-d65ac7c21b5f@gmail.com>
 
-> You already said that with "does not update, reset, or clean".
+I'm happy with this series.
 
-I'll drop that paragraph.
+> * mc/refs-hook-report-old-values (2026-09-24) 1 commit
+>  - refs: report old values to transaction hooks
+> 
+>  The 'reference-transaction' hook has been updated to report the
+>  observed old object IDs and symref targets for unconditional ref
+>  updates and deletions, instead of reporting the null object ID.
+> 
+>  Needs review.
+>  source: <2af3eeadd18806c5298d53072428656885cff89d.1790269745.git.maciej.ciemborowicz@gmail.com>
 
-> if you did not make a breaking change to the established convention,
-> is it worth saying?
+Yeah, this is in my backlog to review.
 
-I don't think it adds anything here. I'll remove the exit-status
-discussion from the commit message as well.
+> * ps/meson-improvements (2026-09-24) 7 commits
+>  - gitlab-ci: fix hanging MSVC jobs
+>  - meson: update wrappers
+>  - meson: fix outdated completion helpers
+>  - meson: use precompiled headers for unit tests
+>  - meson: use precompiled headers for our test-helper
+>  - meson: don't recompile git-remote-http(1) multiple times for tests
+>  - meson: avoid recompiling HTTP sources several times
+> 
+>  The build configurations for Meson have been optimized to avoid
+>  recompiling HTTP sources multiple times and to utilize precompiled
+>  headers for test-helpers and unit tests, reducing clean build times.
+>  Additionally, the shell completion tests and GitLab CI MSVC runner
+>  jobs have been fixed.
+> 
+>  Will merge to 'next'?
+>  cf. <CAOLa=ZS8Exa_WkMLiFNspeYaKFf40eOM19ZgecC=yTnFEAhMzQ@mail.gmail.com>
+>  source: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
 
-> adding tests for comprehensive coverage is not something to boast
-> about. Is it worth saying?
+Yup, I'd be happy to have this merged so that our pipelines are finally
+green again :)
 
-I'll remove the test details from the commit message.
+> * ps/setup-enforce-repo-passed-to-create-repository-has-no-state (2026-09-28) 7 commits
+>  - setup: enforce that passed-in repo does not carry relevant state
+>  - repository: adapt `repo_clear()` to fully reset the repository
+>  - builtin/clone: don't apply "core.sharedRepository" to leading dirs
+>  - builtin/init: move handling of "core.sharedRepository" into "setup.c"
+>  - builtin/init: refactor messy creation of leading directories
+>  - path: introduce `safe_create_leading_directories_no_share_const()`
+>  - path: drop useless `safe_create_leading_directories_1()`
+>  - Merge branch 'ps/odb-alternates-at-creation' into ps/setup-enforce-repo-passed-to-create-repository-has-no-state
+> 
+>  The repository initialization sequence has been refactored to treat
+>  the repository object passed to create_repository() purely as an
+>  out-parameter.
+> 
+>  Waiting for response.
+>  cf. <b0ec2ef9-7aef-4f7d-b31b-7141b39c2d24@gmail.com>
+>  cf. <xmqqtsn9mkog.fsf@gitster.g>
+>  cf. <CAOLa=ZSX0e25wK5qQwznXN9rVM+WHn8631pkTEN9Zm-BrXfEsg@mail.gmail.com>
+>  source: <20260928-pks-create-repository-stateless-v2-0-a03612f703fa@pks.im>
 
-> Why are we singling out only these two?
+Hm. All I can see is the discussion around free(3) vs free(3p). Is the
+expectation to do a reroll with s/free(3p)/free(3)?
 
-I started by looking at the missing -u and -a support in create, and I
-think that led me to focus too narrowly on those two when considering
-the scope. I need to think more about whether this patch should remain
-limited to those two.
-
-Thanks,
-Kazumasa Shigeta
-
-On Thu, 01 Oct 2026 10:03:13 -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> Kazumasa Shigeta <kazumasa.shigeta@kanamei.com> writes:
->
-> > `git stash create` always passes zero for the include_untracked parameter
-> > of do_create_stash(), even though that helper already supports untracked
-> > and ignored files and stash push/save expose those modes as
-> > -u/--include-untracked and -a/--all.
->
-> There may be no lies in what the above says, but we would prefer to
-> hear what the user visible implication of "passing 0" is more than
-> what mechanically is happening inside a program. For example:
->
-> "git stash create", "git stash push", and "git stash save" are
-> commands that create a new stash entry. The latter two are also
-> responsible for storing the resulting stash entry to the reflog
-> of the "refs/stash" ref, but have options to control what is
-> included in the stash entry. Among these options, "create" only
-> supports the equivalent of "-m <message." to record in the stash
-> entry. Most notably, "-u" and "-a" options are missing.
->
-> > Teach create to accept the same options and pass the existing mode
-> > through. Unlike push/save, create continues to only create objects: it
-> > does not update refs/stash, reset the index, or clean the working tree.
->
-> Sure. It is a very concise and good description of what we want to
-> do.
->
-> > Use parse_options() for the new options and stop parsing at the first
-> > non-option message word. This keeps option-like tokens after the message
-> > as message text, while leading option-like arguments now follow Git's
-> > normal option parsing. In particular, unknown or malformed leading
-> > options are rejected instead of silently becoming a message, short
-> > options may be combined, and `--` can be used when a message itself
-> > begins with a dash.
->
-> Why do we need to go into such a detail in the log message? What is
-> the above paragraph designed to convey to the reader? Again, it may
-> not be telling any lies, but it misses the point by being inconsiderate
-> to your readers. What you need to tell them is _WHY_ you chose to
-> use parse_options() in such a way. What were you trying to achieve?
->
-> I am guessing that something along this line ...
->
-> "git stash create" traditionally treated the rest of the command
-> line as a message. For example,
->
-> $ git stash create adding -u option
->
-> has always been a request to create a stash entry with the
-> string "adding -u option" as its message. We should not make it
-> trigger the "-u" (include untracked) behavior for backward
-> compatibility, by using parse_options() with stop-at-the-non-option
-> mode to forbid it from reordering the command line arguments.
->
-> ... was what you wanted to say, but I am not sure.
->
-> How much of all these verbiage was written by AI by the way? You'd
-> need to spend effort to make it readable to humans.
->
-> > Keep create's existing no-change behavior: detect the usual no-change
-> > case before do_create_stash() refreshes and writes the index, and return
-> > success without printing an object name. If do_create_stash() still
-> > reports its internal "nothing to create" result, map that to create's
-> > public success status.
->
-> You already said that with "does not update, reset, or clean".
->
-> > This follows the stash subcommand exit-status convention established by
-> > 786fc390465f (stash: reserve exit status 1 for conflicts, 2026-09-03):
-> > subcommands return 0 on success, negative values on failure, and status 1
-> > when applying a stash results in conflicts. cmd_stash() maps negative
-> > subcommand failures to 128.
->
-> Again, there may not be lies in here, but if you did not make a
-> breaking change to the established convention, is it worth saying?
->
-> > 9ca6326dff29 (stash: refactor stash_create, 2017-02-19) added the
-> > internal include-untracked path while intentionally leaving the user
-> > interface for "git stash create" unchanged. Reuse that machinery and
-> > the existing INCLUDE_ALL_FILES mode rather than adding a separate stash
-> > creation path.
-> >
-> > Add coverage for short and long aliases, combined short options, the
-> > untracked/ignored boundary including an ignored-only worktree, option
-> > parsing and dash-leading messages, no-change behavior, and preservation
-> > of refs/stash, the index state, and the working tree.
->
-> Again, adding tests for comprehensive coverage is not something to
-> boast about. Is it worth saying?
->
-> Aren't -p/-S/-k/-q and pathspec support all about the creating half
-> of "git stash push" that are not available to "git stash create",
-> not just "-u" and "-a"? Why are we singling out only these two? It
-> may be more worthwhile to explain the rationale behind such a design
-> decision.
+Patrick
