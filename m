@@ -1,102 +1,98 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B67E2D0C92
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 17:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A8236B93C
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 17:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790962093; cv=none; b=X/krlWI6+rMnhBQb5K9bFT95wznT+CJ9xEuvA/1QnLIxPYYtxqV5YJxlIC/683BZigCZSzknyvzR6KygeQx5F0XRv4dM/1IChoVjmMz76blL5/67cW/ysvWTTe0oIZXECvH/AijDa/yOei3eqaan3FXC56vtI2UlKijdQlCS48M=
+	t=1790962408; cv=none; b=Xh/tCQjunllb0eQrP+qqWts9EFXS2vr2Rzzguaq2le2ykGI4vD0/ADM+lsAzSgCvis2VXbUX7lA0UplZ0imKjgzBU4N3WE5BuOfxpdadczl914m9V4ssDZVjHf9H3fXW96OE7stq75O7OIKCRNsVFvFzVtJI/SNX7Ts6e6508Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790962093; c=relaxed/simple;
-	bh=eq29R2op+benfrnLggkyx5TuEO//U7AiQ0sia3rvEQc=;
+	s=arc-20240116; t=1790962408; c=relaxed/simple;
+	bh=dDV0lLZSa/x9yxxpKk+hu0Z+VA06hJ+P8i0plLEYJkI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WiFMhPxwj9i691gbwzCxsCYdM84rASwgoavcWkB6ruox7YShJ4zopsybd7hLmTB26IOjS9zyyXFBXJSEK1Fy32PbVcfdLOL8bD/0HQuUW4fUt2cogxKheSyPUo1QAB2lE/itZPerDTCsnJmXmf9JaO7w2dAGTZSZ/JotnHsjrG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LikSL+X9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P68unhpk; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=kcB0gLxBKTGkYvXFFwpbGXM19xEmNl2WeW4g5RQEljGqnqQQm3bjUIkYqL89LHA09kF6b4PMQxBh3KrrDvL/shGiaztnGDb5XjzzBcLdw09e7vubrEo2qB3fhl8vW+iP/qPUjJz7VCfqmpyJwz1k9YpxIJQpeo+1QPo0ggERFlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Obidhlof; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xg8Njwcr; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LikSL+X9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P68unhpk"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Obidhlof";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xg8Njwcr"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3AC3F1D00078
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 13:28:11 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Fri, 02 Oct 2026 13:28:11 -0400
+	by mailfout.stl.internal (Postfix) with ESMTP id 6FF971D000FB
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 13:33:26 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Fri, 02 Oct 2026 13:33:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790962090; x=1791048490; bh=lTlL4LTWTC
-	XFb+DtlHz1jJYbyESj8CdBJrk1vKURWCE=; b=LikSL+X9OQOeoF3HpU/HcKTtEg
-	3fKBWo2APzCckAM7xW8zORr4uWrGATRNtHZMN4C6HlfUqEEP3zlTvnzUPKj4LGTp
-	lXXGj7hE6JfRBm0Wsh81hK+NQ+CerB42RYCqdSyLgmGRcsOQ/eD9pfuoiEhvM24E
-	fV+fw8yDBvVmFv9dlFFj/jy3CYIQpTsb5sOFDSzWv8J4GaIPss4ZXy6XIVZ4s0RO
-	VEQHxIeFgob8HcXu3poYZIuhv5tw9FZkzIz/zx/5uh6p2VaiP8n3xIl1CYcE+EaP
-	meuNRHWccRY3SuEg1Yo3bXJGtNUcqqcMwqf2XN2w8POdWM+hY8btMPNulJwQ==
+	:subject:to:to; s=fm3; t=1790962406; x=1791048806; bh=aqV2KiReDW
+	QZM4iEE+7xeKWaFdYmLQWAC4uskuKvdxQ=; b=ObidhlofPGsdOrZgWlrw08PNik
+	fH4QVIOQdIa+mUJpr0matrs4KvjrHQ+aBn13fM4VZpXBiuke9VRZdjQEWcWD4Dvv
+	1Uec/IOWh5m/qeazEm+JJ2FKJXyjxrqnINfdLFfynvkSJhJlYMviFGHbOCb0luTg
+	VoSi22WPU8Hl846XUJGfkj5kyB1SJRyIhFSKI7T/FRApVjTu384ipJZqb2xLm38w
+	g4l6bFIAFfms013nbT4xR7NoxmYiLYqn8Lm76JltwPL6v8+qWA2AEz1L77l8gVbR
+	amBt/dKFJnu1z0O9A/6AGWjA+CE6qMfXqSJ2eHwcPU/xCG9pNdVdGKhk9tPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790962090; x=1791048490; bh=lTlL4LTWTCXFb+DtlHz1jJYbyESj8CdBJrk
-	1vKURWCE=; b=P68unhpkstTu3PS8v1fzUJNb+eNwqwp47eosSl3ikjJpH9o74U8
-	ge7+X2zTG5L9j8OAOdzF9HcFAFzYmZPYJ3lMtluMN79Viu0TC2wGgyKeDgoSFtlE
-	494YRQgnRb6Yy7U61QVmfLGwNknGCCQnhliUbPNvAw8zVjKv96V/zy+QvEXiRQ6a
-	8k10o5sdfQRVKV4MZk57CtuQshuWa5oNNZcCNo0Xmdj8FV5NRHwCl5c7ardTp/zu
-	5PyFkBQ2ZJmLrCq7FWmAaaLQC9LUOz4UnOAs4zo4xQ4JYqq4OSb9E7+mHdZaHuNq
-	9H0Z+6y6yhJZko+JKdD/gBTOi9aZ20W1gwg==
+	1790962406; x=1791048806; bh=aqV2KiReDWQZM4iEE+7xeKWaFdYmLQWAC4u
+	skuKvdxQ=; b=xg8NjwcrfqdAKZsaz/DpRU0ieJmys7nHENIcKScuXBTuEjgL++m
+	i7h40I1cCq1pa7pMsDx5irkT2A5Jh8Fi8EpqnZ90dogQ15wavqZ6vl0XGsCgG70y
+	mboGnxyFgDL6LJrnm55wLsfPf4uDMHZTwTIfc83pyP29DKGQi/0dPd59Pd1P2ccT
+	9LdCqs97du2TQFepT/uf6kR09Zm2npG3r36ooMSs60pvJe3xNr0RVaxCALHe5tbb
+	efDRjnOJgQghssHoxgsAo3+sJPBqLbNYXVJcOH9jgef780fhEfYKJgxrbAV5X6fL
+	PCKStGdsJ9lruHsquhzltcMjcx26Ax5mxcQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790962090; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1790962406; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:qK8qZmXsK3kzVHctcdOLX8v1k14o/TRJPo/b3mSbtOeoPeE
-	ZEmHfzY/RtJRgA97DwMREIkwlYoAnWnVR9JMQlfeJtfuG4pJ0ogA3Avm/SRvrB70
-	mIQCHB94jDuelQouo8u1yeGQ1agM7VJcFp90b7hhDIM7jr9S64hgfLaVCc174bQ8
-	4wrzkzGbh+t5QjKKYYSUlJzxlLk8ZHsf2I6toW7Dr2+Mqf0rMKXpTi0NoJmC1Eta
-	XJ0FjtvK8lcBWIaQ2G05QgPvBInGAgW1ZYDDF5v49+63mGBB8Kp+6JHKRv9fmXKd
-	hIPmATANy7LTsKrwLuhbzdDmMmsRH50kC7tI8eg==;
+	s=fm3:rsa-sha256:qsLl7KPJ6IpeYDKaX1gKh33He8rv1yhMnA3CCusX/bx4zNF
+	nPFKDSoAQh8H6xJb8Y3bvePU+0O8XYPwreVQ+eNp/NSFfdY1Gtf2JJE3wbD3mpVB
+	f8r2OFLmLDNVQUk7hdG2A6jDpIWAblPKIzQBkGAA6RbbzZn9H5NX2FellK0wpOF1
+	ltErWajR6pVZwutlilpi6uXb7T8dYwQHPt05L/M3IlbosjCxzcagbyse7tD8aDBy
+	ijvFcAemrF8/eLyu6QqjtMwKWyaO6T5/d/L/I09wPhLqWGbNxUWU598H4G+I+TDD
+	BOELHJSZ/o4N0K64MonedeUhz0gWK+hNtCpy3fw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:1et+jL9LHeZGuGrWgia5NeQ3CD4bjQy3vOiGIeKdVBo=:eq29R2op+benfrnLggkyx5TuEO//U7AiQ0sia3rvEQc=;
-X-ME-Sender: <xms:qum_auW2ie0tPL_Rt78WXrfKb4g7R76z_4rk5HQOp177Wrcm1bhuNg>
-    <xme:qum_aheEPSrB1I-xFkA4yYl5vZAmg5OJOKglKQLyOB-XpDhRMAAGWViTNxvBuBEta
-    FXPLrw_tUl_Iv1LICe5QquE-Wndfvebcq6EvuzM_zax190uov8_sQ>
-X-ME-Received: <xmr:qum_aqt6JJtkw7QXhJX33OpbQKUw6M9YLl6QxoSdkhxOEpL_3KieUdHFwKOgbN9_hW1SNwJ5vcEUeUhxWsHLHVjc3K1RYYNFQSZO>
-X-ME-Proxy-Cause: dmFkZTGcd7e0qb5XglNUvX+97kd0AerjurVpdS+j21KerEmlQcZ6j1S+6FTI4tQxkWWSmM
-    u+Ko+G1kmVesEq2hRtvbhsAgTmmJB3ah5IW0XxChbBgTTj+l36EhpINQO1TKP2gZicL4e8
-    9FfsCX9pjI/JVasDTJUlnfgDBwp88MhCQawkbWIHI0gNEbfh8MY7s8LL7zJ1eRXetNVv+G
-    aFWrfib+DGfjmYr5Q2IZX+jYtDY7YegO3uvu2YR1EhB7L3lrZqATcR22UPRZtfodBYSWEW
-    toAzVk4KALOfUwvr6TJf/JH92SQje7UYqhPVRF0h2hhv4QN7cljnImfwmeHpKKQ3oF0ooj
-    BsZOXI9/2wAO2YttSCdKPMXfNUFNhfizK/utxzhdvNcuMGX4TP3JFiGb396Td1RUU2Xx9F
-    fUG+TnN5C7ScoejE8pas0Zx51lmGKDkdvtQi3SNRAxb7nO3+5cDayJdhOnZ8EeI5NomX82
-    EqHH5Cq+F4G3wpaJwe2jJ28gQ8ugIbMVczolFU5ZrEZEwHa4TNQXv/tIUxMIHmUiBsFOjF
-    xRDa0BF7noagg4vqt8/B5Lv2JsULCUvOxiAFfVnMVEWyyVuURJrUvuRXC3VKLjz3/rrPuX
-    67ReCZC01YgUyG4X8ynfxHm0IJ92SEdSLR7Z2GPttQe98HZy/iOzI7rXbmzw
-X-ME-Proxy: <xmx:qum_ag8HA7rKiOGOOxTN0qDnEwql1UKiLCV9yzDhOYhTWMFrHzUL5A>
-    <xmx:qum_al04i6TT5--hfqcnRpD6U_zXbb03hbJrNYChhd4tkt3WNGyTdg>
-    <xmx:qum_alDnosOfGVnKE-Wc0JBefdzKlz-jQWmzR4cXAfhYkMug3anSKg>
-    <xmx:qum_ahelJ5yRVfG_VIqsIz9vqJS7ooybKEXCPA_kn2OOGlPiXstZ6A>
-    <xmx:qum_agMyHMb0DtQEQJsswCGiJ1Tv8mGeiAlfRujhjw4r2Ikt_Ghwfc5f>
+Message-Instance: m=1; h=sha256:CUZrcsoBvgXWlRO0dpl1DFBqcseIbsg7py+l5Py8BTE=:dDV0lLZSa/x9yxxpKk+hu0Z+VA06hJ+P8i0plLEYJkI=;
+X-ME-Sender: <xms:5uq_ajv-OrUiDfTvAOM1UEIQ34Q5Yy8FDujJsqjLWS5_cCQR5vITZw>
+    <xme:5uq_arcBGhZK5nUc2qPthwS28SPi0-uiQFliC7fbcdKvX5ac3In3C9bkzRhzRmv1i
+    WCwaxmcFx-u9sGr7LpszNg5ZnHu3rC-hzjmcY0-UcyTV2Xl0ggj1A>
+X-ME-Received: <xmr:5uq_arwyO3u3d-PaYxC7JjNgQAwzGyPtXot1xpCjB40Bq2jv4eK7IsL-TnrIOM1f7K7CwXgpwLGM3Dndktt2P0xKtYFVFNGHzW1x>
+X-ME-Proxy-Cause: dmFkZTGPtdLAkYDbq3wP3Jb09NUquatvINz9w8RJY4JJnYcyIcIyO8SpEc3dyNOfARGnhz
+    Kvnn1X4Lxk1LfjJ+PqQCLlsmvXBOwxpxp1EZP47NDBbn/8LPY8RxisgyNmJYuW/csEdUb0
+    D44m/QKYJbVHnWCOkJrOoQo0u0l5lMkM67TZlpLm9KpfA3TH3lFE8/SW+6eWUt10RBZW5I
+    +RssjN3R9DSSUBgDCb5OlMhKUKpS+9LWisjrcjVYxGjdSIV/m8JY85kV47tfAmFO1yjB4y
+    pRr4lUC8TH2RWcsk1LZMpzX85crRT4uQWaoMyp4/x3pojXIl4NqINaN6RqEYWTVtvPxDRC
+    YeERFyAuhpqTtxJLXzLCRNCOkU4V/yWGJsaXmkc0jdQMjtTX0QWQil/gbdB0ky7mupe9z/
+    e3RHQmZKBx6m+sKEBl1DK2m0fGHxwJ2SUDxr9WiZdd4Nk3fLyLGbcM5Mqb1/PbgS912rii
+    tZ0sakUjLYCrJy+CU/kbHtQw49a2Yue2rY5l8spNQwSj8YWniOZUeav8y7Zco8naHBX+Vw
+    IkgdN3cjoghIuzsq+L88KEuafQZq6s0IL5QL42i6IeDmaQ5wI1+QisKZJmWKJtbD81MLBs
+    jvCzB3pdYNx9ZXA+Nsy0VwCYmz7TUm/Vg+s6f52/FLu8w8sjAWPP7ZmWG1Hw
+X-ME-Proxy: <xmx:5uq_ahGQOU7GlwyWwQZoD8XV91n6ojG9BcxIOsBVJYgRrt_LsMhBXg>
+    <xmx:5uq_avzS3kCMyqcLTNzxRc3qvqIHbG_9E6g9pfo7Jd1EL8gJZ4QrHw>
+    <xmx:5uq_aiuLVCeUXmXWUlzB9E3vZu9p2UDj1GO5n4_0N_UxPJKsIainhg>
+    <xmx:5uq_as32ltESaezV423AZYMC6V9SIzJCFYHJcN6oL2PQfLl-uBZMxA>
+    <xmx:5uq_avSblhxeM5eqUza3Lmp5GJ5sbErB1CPxi9LequBGEajfEYcqnHjz>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Oct 2026 13:28:10 -0400 (EDT)
+ 2 Oct 2026 13:33:25 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,  "D .
- Ben Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v3 2/2] format-patch: learn --[no-]range-diff-notes
-In-Reply-To: <V3_format-patch_learn_--range-diff-notes.d3b@m5gid.xyz>
-	(kristofferhaugsbakk@fastmail.com's message of "Fri, 2 Oct 2026
-	12:56:39 +0200")
-References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
-	<V3_CV_format-patch_learn_--range-diff-notes.d39@m5gid.xyz>
-	<V3_format-patch_learn_--range-diff-notes.d3b@m5gid.xyz>
-Date: Fri, 02 Oct 2026 10:28:09 -0700
-Message-ID: <xmqqy0cgvwpi.fsf@gitster.g>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH] doc: don't require a SYNOPSIS in section 7
+In-Reply-To: <pull.2246.git.1790957227881.gitgitgadget@gmail.com> (Julia Evans
+	via GitGitGadget's message of "Fri, 02 Oct 2026 16:07:07 +0000")
+References: <pull.2246.git.1790957227881.gitgitgadget@gmail.com>
+Date: Fri, 02 Oct 2026 10:33:24 -0700
+Message-ID: <xmqqv77kvwgr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -106,107 +102,92 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-kristofferhaugsbakk@fastmail.com writes:
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> From: Julia Evans <julia@jvns.ca>
 >
-> git-format-patch(1) passes on the notes behavior that it is using for
-> the patches to git-range-diff(1). In turn you get the same Git notes
-> displayed in the range diff as the ones you used to generate the
-> patches. And that makes sense in most cases.
->
-> However, I often make notes between series versions that mostly prepend
-> ...
-> something like an alias set up with it. But why spend code closing
-> that door? There is no usability upside to erroring out.
+> Remove the SYNOPSIS section from the section 7 man pages where
+> appropriate, to avoid having a section that contains no information.
+> It's not the norm in section 7 to always require a SYNOPSIS.
 
-This is somewhat shared with the next step, but the commit message
-includes a lengthy narrative of the author's thought process ("An
-off/on switch is enough for this behavior...", "But now we are faced
-with a problem...", "Well, we can't. Therefore we need...").
+Very true.
 
-Can we strip out the conversational journey?  The log message should
-be a concise, permanent technical reference explaining the problem
-(range diff notes inherit patch notes, which may contain irrelevant
-iteration changelogs) and the solution (the new options and the
-.override flag).
-
-> diff --git a/Documentation/git-format-patch.adoc b/Documentation/git-format-patch.adoc
-> index 191f64b77d1..5907f299a8d 100644
-> --- a/Documentation/git-format-patch.adoc
-> +++ b/Documentation/git-format-patch.adoc
-> @@ -378,6 +378,21 @@ case is to show comparison with an older iteration of the same
->  topic and the tool should find more correspondence between the two
->  sets of patches.
+> diff --git a/Documentation/gitcli.adoc b/Documentation/gitcli.adoc
+> index 6815d6bfb7..9c4598e29c 100644
+> --- a/Documentation/gitcli.adoc
+> +++ b/Documentation/gitcli.adoc
+> @@ -5,11 +5,6 @@ NAME
+>  ----
+>  gitcli - Git command-line interface and conventions
 >  
-> +`--range-diff-notes=<ref>`::
-> +`--no-range-diff-notes`::
-> +	Used with `--range-diff`, tweak what notes to display in the
-> +	range diff.
-> ++
-> +The default behavior is to display the same notes in the range diff as
-> +on the patches; see `--notes`. But you can use these options to use a
-> +different list of notes. For example, say you have given three notes
-> +refs to `--notes`. At this point those same three notes will be
-> +displayed in the range diff. But then you pass
-> +`--range-diff-notes=<ref>`. Now the range diff will only display
-> +_<ref>_. You can of course pass more refs to this option, just like
-> +`--notes`. And you can also turn off all range diff notes with
-> +`--no-range-diff-notes`.
+> -SYNOPSIS
+> ---------
+> -gitcli
+> -
+> -
+>  DESCRIPTION
+>  -----------
+>  
 
-Very chatty and colloquial.  A technical reference manual should be
-concise and direct.  Here is my attempt to condense it down to make
-it more readable:
+Yup.  Thanks for starting this move.  These "we add meaningless
+filler only because we need to" were always eyesore.
 
-  By default, '--range-diff' displays the same notes as the patches
-  (see '--notes').  Use '--range-diff-notes=<ref>' to specify a
-  different notes ref for the range diff. This option can be given
-  multiple times to show notes from multiple refs.  Use
-  '--no-range-diff-notes' to disable notes in the range diff.
-
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 560af00e2fd..d70101f0755 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -1327,15 +1327,56 @@ static void prepare_cover_text(struct pretty_print_context *pp,
->  	strbuf_release(&subject_sb);
+> diff --git a/Documentation/lint-man-section-order.perl b/Documentation/lint-man-section-order.perl
+> index 02408a0062..e032f6ae53 100755
+> --- a/Documentation/lint-man-section-order.perl
+> +++ b/Documentation/lint-man-section-order.perl
+> @@ -53,6 +53,11 @@ sub report {
+>  	$exit_code = 1;
 >  }
 >  
-> +struct rdiff_notes {
-> +	/*
-> +	 * True if we want to override the notes behavior
-> +	 * of 'format-patch'
-> +	 */
-> +	bool override;
-> +	struct string_list notes;
-> +};
-> +
-> +static int rdiff_notes_cb(const struct option *option,
-> +		       const char *arg,
-> +		       int unset)
-> +{
-> +	struct rdiff_notes *rdiff_notes = option->value;
-> +
-> +	rdiff_notes->override = 1;
-> +
-> +	/*
-> +	 * The rest is the same as
-> +	 * parse-options-cb.c:parse_opt_string_list
-> +	 */
+> +# assume the first line is formatted like 'gitglossary(7)'
+> +my $firstline = <>;
+> +$firstline =~ m/\((\d)\)/;
+> +my $man_section_number = $1;
 
-Hmph, I wonder if it is more future-proof to wrap the string-list
-callback like so ...
+This means that the main loop that has already read all the lines of
+the file no longer sees the first line.  I do not think it would
+immediately break anything (in other words, the current
+implementation of the loop only checks the section header and
+nothing else), but it may be an unhealthy thing to assume that this
+will not change.
 
-        static int rdiff_notes_cb(const struct option *option,
-                               const char *arg,
-                               int unset)
-        {
-                struct option opt = *option;
-                struct rdiff_notes *rdiff_notes = opt.value;
+It would be very simple to move it inside the loop.
 
-                rdiff_notes->override = 1;
-                opt.value = &rdiff_notes->notes;
-                return parse_opt_string_list(&opt, arg, unset);
-        }
+Would it work better to do it this way, I wonder?  The idea is to
+notice what manual sections we are in, and tweak the %SECTIONS
+contents there, to allow us customize behaviour for other sections
+later, and keep such customizations out of the actual code.
 
-... than copying and letting the code drift apart.
+
+ Documentation/lint-man-section-order.perl | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git c/Documentation/lint-man-section-order.perl w/Documentation/lint-man-section-order.perl
+index 02408a0062..ce60c34809 100755
+--- c/Documentation/lint-man-section-order.perl
++++ w/Documentation/lint-man-section-order.perl
+@@ -55,8 +55,23 @@ sub report {
+ 
+ my $last_was_section;
+ my @actual_order;
++my $section_tweak_done;
+ while (my $line = <>) {
+ 	chomp $line;
++
++	if (!$section_tweak_done) {
++		# assume the first line is formatted like 'gitglossary(7)'
++		my $firstline = <>;
++		$firstline =~ m/\((\d)\)/;
++		my $man_section_number = $1;
++
++		if ($man_section_number == "7") {
++			# section 7 usually do not have SYNOPSIS
++			$SECTIONS{SYNOPSIS}{required} = 0;
++		}
++		$section_tweak_done = 1;
++	}
++
+ 	if ($line =~ $SECTION_RX) {
+ 		push @actual_order => $line;
+ 		$last_was_section = 1;
