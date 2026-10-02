@@ -1,141 +1,119 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D733EB0E1
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 19:13:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2313135DA64
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 19:28:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790968423; cv=none; b=LhPSTx2knW95LzGhIHXP5vB/+InDqGdbMPmCqAzXqTOuQ182k/oxDC8OoSPUxBJTmLduCgKxFajNTSq53eUUhRXFaPcdrLuA52+aDv7I2eGTbZTAQjsAr4mT1lE4rWBc4spxm+Mc1Ku5mOrSxm9fVATLZTpfuyjLgFLOYVuVmf0=
+	t=1790969331; cv=none; b=Ort6XE/evhu+eDuIhDWFIPV5AvYSwoeI6+n5yquBiDkbqts3pA/y82PnyaLPzEpDmaWfRXpmc1a6PJq7QKf9hOH0z25GQsfSd+5qyctyjtYT1iZn9ko9i6Yzl3+nXhImCtUIk184s+xkPz6fR0HJ0+Cfpi7hASWKT5xYs1ltcrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790968423; c=relaxed/simple;
-	bh=ue41WEV414641Vvb7YcHAmMXqLF6QCALEirD9Tt4eCs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Xkbk7UyS5M2dU8BHOuU5q8WwEuLldzct0yG7gWYUeMPm9XruyduyDFqf2NHBP66inkBPmoSbjqbVo57Y1OeoEIzTAlxoXAiUQEt2bFl9oUZ8jjVXbLDqeLOABEKQX9IN2SeeqSY+SwdjvqujIRq8Ys355N18YUVfLB7Q3ir523A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=N6uZ4w7J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=drFKJYAW; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1790969331; c=relaxed/simple;
+	bh=g/qe2k4nC7AFTdGa+wEGG3NHRQyHN/xJsxIpAW2WhlE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZhJXh+Z7KIeJi4yt9hni1sJ1EcMrX8xrIwriATrCip0/uNO6rtnErUDsnh4udAGXSIQp2BJW7UCOWeUddxGGuCF8E00xm6OwgOK3twZI+vDrcIkVU5jO7/PNrrsUGxYF93cTvliip5aGd3DlWR3g3yVhznNsrGSDTR8hSWpeUv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=kcNLPRoT; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="N6uZ4w7J";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="drFKJYAW"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 563B214001AC
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 15:13:38 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Fri, 02 Oct 2026 15:13:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790968416;
-	 x=1791054816; bh=zOhmI5pwHNA8lBzp71L13b1AA8D4ZKQLU9E2yqS8rkc=; b=
-	N6uZ4w7JzLKKz3KJ6OulhJ0ZNFSs4ivScFba7amdhe+8m30raeQRIR05taJ6joxm
-	m8UWIDhX4JkEJD0vlHcgvcDhqXT0+ySw6YtDYnJ3CUMOB337pn8r89nzV2CX7w5N
-	87O/Gwu6evu9E+MpNyZezoUq7wxlKqaoezZ0gmRnQJtROlp76D3ePHyuUi2FpP/S
-	k2j35Z1JJ4yFgq3QcLBa64HSJia+IbFoP+FVWOAjMxYAB/q9iWuC4DLQDAA7M4tg
-	iGY0+MP4GORXx7eHN/U9DXo+oSEy4BCY5aDzYTesdBDgVHEUOMjRh/CKu7zvEhJa
-	5gZjncK/Z689ebqJ7Hbl9w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790968416; x=
-	1791054816; bh=zOhmI5pwHNA8lBzp71L13b1AA8D4ZKQLU9E2yqS8rkc=; b=d
-	rFKJYAWzFRFNio5uvZzQ6MfJFY4qwXOZzyPXRXcirEoFmVvVqhRX6VGlP1ifjKDD
-	rMENe4ZL//wq9Wh7x5ZVNkpXGXv3j5aWy+vMLkCexKHvRMipKJdBaF6KgkE/zI9g
-	xDOfVXIJFSBKJvKPx2QfF9IaXdeBYvjyN+0377YEwtJMKJ1x/A4PLu1NhOFD/eXL
-	4We9iqmEYav0AlqkXhrUnLZ0OYdWFwjqyAfuc65iNd61PEd+luT5G5VTpVX8yMjn
-	6FZRz6WAoqm/BiSGWhc+3Bn5g07FCnOHKSnZwgvzsnpmuAJeZwtTIQWVTvgPUTu6
-	rYq3VOjS7vQ+rvfv/B86A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790968416; d=fastmail.com;
-	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:IU05ZK7v0txQxUDSl9dlanwM+eYDAEEopHMPd5zdQsq+iLm
-	F4HoL8lW4KOylLKmxJnlte1CLHEf9mNVYHxQQlnZQqE3VY7c5JM1Y05gYw6AIJzP
-	U2gTdHV3VuPzp257fuoesrTvc26CPvz2xTHWU9LPifuEaBpTmAPz18+dLxz8ct6k
-	shWfbZ6MgT/uEiFPimtIinm/l2KXnLyUuIQIC08D8XTTjLE5pFssaPdbOYfrpdsQ
-	5dQxGE5SuNdaSJKyFNQdd/Cqgq1+aMAThPGyEdnRCma82xkOk2SZJwEVF3jED4pJ
-	9CFtQUT8Hc0jeePTqjT/Mt86j8JHiKswY8Slkcw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:iHDMyFkZnwW+gfHSFfY6Em0oMoja0VqxTRjRghi1od0=:ue41WEV414641Vvb7YcHAmMXqLF6QCALEirD9Tt4eCs=;
-X-ME-Sender: <xms:XwLAalgwObx14kvD_WSpX1LMRcD2Uv-wemPYYOMItadeDWRIYAwsFqY>
-    <xme:XwLAak15d0JPo87-FXx5b5WHm9OnurRrfdC3NCT_Ccv6r3Sj1bHEkCi6du1MOTMO_
-    bVzQ8Q7HzTy8pSN1eW1LUr2jgKdsUmCOtpIVdnIQXMTSvFhMjY>
-X-ME-Proxy-Cause: dmFkZTEisxfR66EqbQQTqsjL1MOKCUGbVQOsxm/Ht4sorvS64hDgcEGRwkQEC01itUwAJ4
-    Uqxeq3H34O5Wv/gN6Ktq+O7qpzAx+7QmB2ri84vCVhZcCe+4neEoFEi4gbeJ0s2Sk1BW4N
-    LfMj+PgaaiufmeKyA2nKqqLjxEXqWHVVipxAVKvpvdSNtSpmzIgh6bTZcWQGhhQ3ddmMks
-    8mzTz3WO2dKUWvfy2+VieFO9WxrqMqZ4604UEz3kYgIDbRNGyD/R6T5p9uc7FYwEPpg92G
-    cQ3MqDZeWJeQEF46DSKOXOQM0nv46sK5bTIk1dZKD4QkFaqi9B39s+/vWaHI60NgRrOZci
-    R3qpqdV7zo1y8qtytSoptsuOlo9qbT4IwWN8EZ3EIzeANgKdXJIqxSzQR/iuxTD2m7ueBO
-    paAVIqwLP6WSzTEnCgG6pqERPJO9nEs28mzokZKTF+ANApaMvfMSOiEBu5olhq7K6SCp64
-    uTka+YpcP/Oxb2Od0GxMlwuxTveSusw1nn1g+9mzNHnw0+fEn13tH3QgNmedCBR2vysbB7
-    QmtMCX6koDUIaXFOSxVnGPwp/DhnRoFsxksH2XqppGwkWi5cB52JWLSzuP0iBB9n6GS5bF
-    wsrCzf1d1P7cUiwtUYoDpdMckvtOhQu+cSSywe8nQpbefLxtAYVo9dMq5mWA
-X-ME-Proxy: <xmx:YALAau9wvBhpJirL0AYq0XylONflFlJtBXM9MckB3H4kQqGhGSWWew>
-    <xmx:YALAamdT0Rx_fGkUSi2klBwvKPWSsJ3oX_1mTE1K8L6ezzS5piJCaw>
-    <xmx:YALAanGIZPX02yK4NVQ2_-iGYDmeHLgD3X8yqnsUmcpatW6x2AXqGQ>
-    <xmx:YALAakcfIZ8Ltzr-JK7xzwWcjXjwJ2PlXDydY9uUPKX1JDV7csyN2A>
-    <xmx:YALAahZhjd3kps25RmcZRqqwhJz02_G78obJ4VLBJAgctA2JispwML6Q>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 5584122C009B; Fri,  2 Oct 2026 15:13:35 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kcNLPRoT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1790969326;
+	bh=g/qe2k4nC7AFTdGa+wEGG3NHRQyHN/xJsxIpAW2WhlE=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=kcNLPRoTB6dNTq2+5cpSLXk9LcRY6SzHOq5t1/YvIwIrdFBBRxVsL71YQga4QzEiV
+	 A/2f/sfr+uzXxlZoArbNTy/Iohsm0H1afMjHyEnb67XszB7oR6aVGdT0YtkvaK+1gW
+	 yMkNEqIrl08eyLfNtb3eP1LMY7kH/wk7J8Gzz7KKSA3CDwXv91II5ILL8DQkkAdI2n
+	 XbGJLp9k6zmbK90UUbgv6mML17/pGm1O3sEI5vIBhveuX0GvMP9ORZ4kw2f/atHJh8
+	 qKLnV30IWkWhiy4Jg+QasDLnofgId9CDmF94fBFfBotMgAc2B7BFzdxWOw5DD9bWib
+	 BBno+QgVS7X9EuGCsRTuuU3GJ9gT6aVB6U/DcJKFyjbF/5d9Oi6DwHYmIuPcowHuCM
+	 MEbk0/sm4AS3kI9vS9tvxtn2VeRmRx+/cjwirMMhGbiBiEbwkjSKHK4qP2jaYJWLrf
+	 8G5lK/yV2GtREI8E6x9j4ler7tUo652lBkdmjbCNXYZ6LS/1Rgr
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:b933:116b:3dd2:3ac4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5D95420075;
+	Fri,  2 Oct 2026 19:28:46 +0000 (UTC)
+Date: Fri, 2 Oct 2026 19:28:45 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Pierre Bruno <pierrebruno@hotmail.ch>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Windows: ~1 GB RAM per git process, many concurrent
+ (2.56.0.windows.1)
+Message-ID: <asAF7D_XefgKtgf6@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Pierre Bruno <pierrebruno@hotmail.ch>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <BL0PR05MB5603A8CE8FD78127FB810BE2D8892@BL0PR05MB5603.namprd05.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AAUWAJQF6URs
-Date: Fri, 02 Oct 2026 21:13:15 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <bf0a9780-4f7f-4eb6-94c8-96a33d129a35@app.fastmail.com>
-In-Reply-To: <30249b7b-b6f7-4065-9a83-db93d69ad0f1@app.fastmail.com>
-References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
- <V3_CV_format-patch_learn_--range-diff-notes.d39@m5gid.xyz>
- <V3_simplify_params.d3a@m5gid.xyz> <xmqqtsn4xd17.fsf@gitster.g>
- <30249b7b-b6f7-4065-9a83-db93d69ad0f1@app.fastmail.com>
-Subject: Re: [PATCH v3 1/2] format-patch: simplify get_notes_arg parameters
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="KVkD5ay31L2YRW4c"
+Content-Disposition: inline
+In-Reply-To: <BL0PR05MB5603A8CE8FD78127FB810BE2D8892@BL0PR05MB5603.namprd05.prod.outlook.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-On Fri, Oct 2, 2026, at 21:07, Kristoffer Haugsbakk wrote:
-> On Fri, Oct 2, 2026, at 19:28, Junio C Hamano wrote:
->> kristofferhaugsbakk@fastmail.com writes:
->>
->>> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>>
->>> git-format-patch(1) passes on the notes behavior that it is using for
->>> the patches to git-range-diff(1). In turn you get the same Git notes
->>> displayed in the range diff as the ones you used to generate the
->>> patches. And that makes sense in most cases.
->>>
->>> However, I often make notes between series versions that mostly prepend
->>> ...
->>> something like an alias set up with it. But why spend code closing
->>> that door? There is no usability upside to erroring out.
->>
->> This is somewhat shared with the next step, but the commit message
->> includes a lengthy narrative of the author's thought process ("An
->> off/on switch is enough for this behavior...", "But now we are faced
->> with a problem...", "Well, we can't. Therefore we need...").
->>
->> Can we strip out the conversational journey?  The log message should
->> be a concise, permanent technical reference explaining the problem
->> (range diff notes inherit patch notes, which may contain irrelevant
->> iteration changelogs) and the solution (the new options and the
->> .override flag).
->
-> Sure.
->[snip]
+--KVkD5ay31L2YRW4c
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sorry about this duplicate that message that replied to the wrong
-email as well.
+On 2026-10-02 at 11:04:00, Pierre Bruno wrote:
+> Hi,
+>=20
+> On Windows, git status-type commands use about 1 GB of RAM per
+> process, and dozens run at once when I use coding agents (OpenCode and
+> Oh My Pi) in a repository. CPU is near 0%, disk I/O is steady, and the
+> total is several GB. Since two unrelated tools cause it, I suspect git
+> or my repo.
+>=20
+> Expected: a few short-lived git processes with far less memory.
+>=20
+> git version 2.56.0.windows.1 (commit 49d759b698127791a5f3f2759c69b9838467=
+11dd,
+> fsmonitor--daemon enabled), Windows <version>
+> Repo: <N files / GB>, <N> untracked files
+> Manual 'git status' with no other tool running: <fast/slow, memory>
+> Stable 2.55.0: <same/different>
+> Command line seen in Task Manager: <paste>
+>=20
+> Is ~1 GB per process expected here, and is there a recommended config to
+> reduce it? Full 'git bugreport' attached.
+
+I think you omitted the attachment, but in any event, I would say that
+this is not normally expected for `git status`.  We'd really need to
+know what the command line of those processes is for us to know what
+they're for; for instance, you may be triggering maintenance on the
+repository, in which case packing a large repository could legitimately
+use that much memory.  Similarly, if you're using a file system monitor
+process, that could consume a large amount of memory in a large
+repository.
+
+I don't personally use Windows, so I'm afraid I can't tell you how to
+get that information there.  Once you have it, though, it should be
+clearer if that's a reasonable amount of memory to be using given the
+size of your repository.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--KVkD5ay31L2YRW4c
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmrABewJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZz3SInxmzokHMPCXaCoyJTJA3MqtlFLHdDifRShZteYW
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAO8XAQDUk8FBHrMjuqYf21cG+nM0e8kZ
+Xv74X30r0JvZYGL2fgEA+NBl9qrwHGkc50o51rZrxjYrFnBCMtcLVBpbXrwDCg4=
+=sPPL
+-----END PGP SIGNATURE-----
+
+--KVkD5ay31L2YRW4c--
