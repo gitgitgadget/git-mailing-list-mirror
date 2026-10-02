@@ -1,70 +1,70 @@
-Received: from mail-dy2-f43.google.com (mail-dy2-f43.google.com [74.125.229.43])
+Received: from mail-dy2-f41.google.com (mail-dy2-f41.google.com [74.125.229.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36FF9423799
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 07:17:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04633422531
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 07:17:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790925480; cv=none; b=jRJ1lCLi6k0sVWx1sUyoXJQnhkvDF+L5jWQxGxmnbzIUMtxsggQZLsDYTL45szROtm6wZpume17wWKMzQqcgobdSXffZz6J7SODGh5/8lkIlSR0fqcyA9173EDCZSSoclzDefLsps5h/MYK/CFU5dl8FKmgoXG35/bzXHvHuJRA=
+	t=1790925482; cv=none; b=IcIVLxzHdIdscBMY3+4kYznfr2juUx4MkX7eOPv95uC/E/NNsXhSaJX06x/IWbgC6jRTnXTIuEbrGifGU5jeLvxssKDdL64ouapguQB2kcdvOvFo6mcf/Mbxh9J4h9OV1T709+yIe9PQBhbAWawrDkCnbDyS2vFUPl5NZ/nq26k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790925480; c=relaxed/simple;
-	bh=LoJOeKiZnjQFhVr1+LZOvSHT/9GmKPF3JMNxJbtNpEU=;
+	s=arc-20240116; t=1790925482; c=relaxed/simple;
+	bh=sRUvPYFqUrQtuQSzjL5GADrs6oL3TuAiSRBYyqe6OU8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=VNWywGVlerGumWVOVUemrQQRC/n0g2c+8noUi+v4GMD/AIB8PlOkYJhHnTBG0iM+1MjpNyhY96g8FabAOlLRl6sxHSGd833nN1/d9+jixflay4XwrsvM6SwQaFDwU+qL++ymG9062vEINu/vDqQQYApCiOL8CZaTKZRbATWj/r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=elIprX2Y; arc=none smtp.client-ip=74.125.229.43
+	 MIME-Version:To:Cc; b=K/uEgHvPyGlPzlqLshjE/v/0pbIzFwD/NSrrPqXHxCjLV60hdoJNDWdHwU/IL0tvpl9hlAkB3CN+t6r5IN/Fo+gUApI4H564nMzvRlOjzUtTvPgwRf7Fta0Q2tmJU3vrkH0q6s1UOPiT8Sb0CStgUK1OoL1DQVRCbU9QSXcIW/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U3FXsw1w; arc=none smtp.client-ip=74.125.229.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="elIprX2Y"
-Received: by mail-dy2-f43.google.com with SMTP id 5a478bee46e88-33e46a15703so6832086eec.0
-        for <git@vger.kernel.org>; Fri, 02 Oct 2026 00:17:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U3FXsw1w"
+Received: by mail-dy2-f41.google.com with SMTP id 5a478bee46e88-33c0d931083so2780737eec.1
+        for <git@vger.kernel.org>; Fri, 02 Oct 2026 00:17:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790925476; x=1791530276; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1790925477; x=1791530277; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=oZqjsJX7EhXfUMjA7tJMODhGWI9NKY/NsNooEV/DVDQ=;
-        b=elIprX2YU8jonMqEpOhhSiOaOTkeVywunLuPku403dTLvJZbHg+b9jVMMcq/XuD7Jo
-         /4BpjXXlLHY5oaw2aULOeZT3Nv7L7kKGQ77N0VfXeM1eg8PKZ7MbmWrAIpFxG4OCk4Kr
-         zCnLVx4p8KX8s4e71jmtO4WLaiwyID9Frdr573A+MNI1E3n2mAAlnzKgCe33web8mTbZ
-         1IXAjceOP2updMkA2i/3veyKkuMOIBSjunur9PbJhbeDVpYKp1vZiufV6DGIunH+tYwx
-         xd1G03LHUKnYMEMUkRYi72HiF+qZ2LQy9vJz09PBC6sHeLtgWBQax2XSFLSNZpf07Gnj
-         uUHg==
+        bh=T9OGEwQUZzOoUzpkQNH66revrkFvSZXLnY08M8a4n3I=;
+        b=U3FXsw1wAYvUt81abdQ1ueQ64ynkDMy5AqxLrPt2gEguF8bpiR9b15+SXaShYHbWVQ
+         QRGcx9Koc8L3jTUCdcJ35J2waqJZviXT+Gakdms33++EtQwTzuqwiZBIdV3oXdkbOsgE
+         fyAy5oeGJ9W6OdgRKri4q3CydkksAesv6KVDha88GRxQJ2q9Weiq6GFpeiuXkgHe+8lC
+         h4CSK53KoTp+AIBC0SyoKNOIonrdQRH3Gr11lfKbh9LKGOg0JYBgLpAq6aMgxux4h+u5
+         cNmumXy4WJ5TaFcPtC2hOQFTHR0wt7vkM8ezFuET4vF7+fWTFzvLP9424atFi9rFQuqD
+         Wesw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790925476; x=1791530276;
+        d=1e100.net; s=20260707; t=1790925477; x=1791530277;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=oZqjsJX7EhXfUMjA7tJMODhGWI9NKY/NsNooEV/DVDQ=;
-        b=ZhwYKExxyS41h224IQ+ra8++ixPjLg1BRBLhETIAoyVV0ualrnAiHUBHaC3eOKRuVn
-         yrL/zGcZ4Zt07NK+xTM35mP9o15gcSqYIT49EIunmuK30U6J04wns87hDetRWE3GXCbs
-         nWJCOv6Oe0+eSkcRv4KLTn95Sk74vMgrQLkhZyZp4tOKmXI9TQreNDGmBHSykhxKdjZt
-         UVLStEi9KrGi4L+iK0GvsJLUP1/D2BDcZBxRmdjuWxLBM3Z0zEVIalvi+04N3DoLKt2J
-         61zVtT3t8tz+PsA2uldnuKbMBLqlzaMvHDJtMCMOGvIm2FES/Ld4pL1sM2iQWb2U2RrT
-         9hyg==
-X-Gm-Message-State: AFq9FYIFLA7ipTGlUiOnCMHi6cV0gogZlB2ADoEOhuopylO6BET+j1N9
-	77hjpeMaVY0dSjCCL65HC0Ca+TDCKH3KlRYu+S5dzmL0QXIpVJPiybrJMFl3ng==
-X-Gm-Gg: AYBFou3G73Tjxb3sCjLRiicbwnLneBhljxsEfvdUhDP4qs3WqO4+IdJat8b8OdL3yd2
-	Xg4YcO9hz8hw8yqT22Nv6ZBZcbq9XhcDjCSwYe8zvV+o0go9aGAB48gK6kS1ktjKagbZdcNBxnL
-	jZNHojlQVlGeSSVaWI+GmZb6TzeHlP7TfF4/AEIQJ9XwLBaFjiQyyCKZaFYwPEEddw+XFwADgZp
-	wcK4zHk5zKbbP+c4boLjxSrlxZbHEG6QxysNIJRhGzTvbj77bYoSQbf6aqjX9Y23VF1bxGvk87U
-	X6OGKXue7j02MKigQQiz1lvV6b41L26puAMBgHoYUDMpjw9VvhHGj5ZTTHoMqkLTRD8DE68aAkT
-	auXIwEi6vushc/BboEWqTbsAiidNVA5vYb0pyGn5Z6mCmrEK16SqWPIY10HPNRLDBYgM/7qiOgX
-	+ms+Ontxp67okuVjsfSFlr82qH9WCNswl4Oj1U44Qjn/1kD9swDpo0MrQ4hzqHHNJYD/Z82zmHh
-	XOfOcAbA0QuHZhJJcnhf/Q=
-X-Received: by 2002:a05:7301:1885:b0:339:7572:7b2b with SMTP id 5a478bee46e88-34f150eeca0mr1635285eec.24.1790925475470;
-        Fri, 02 Oct 2026 00:17:55 -0700 (PDT)
+        bh=T9OGEwQUZzOoUzpkQNH66revrkFvSZXLnY08M8a4n3I=;
+        b=2ewbATiz6HgejLMREtzJRpAYNKoqmYQQdxxjosAqgvSWClYVQjT4YiXu5Hl1r+OPHH
+         UIEtNW/WNYzZmFprbtpHvsRsM6hqnJqV8YlZaMqSQD10XrwoO8xMvJD9d25yQ+292kp9
+         uwI54yF1xcwyDoBDeaMaHqs7GwjCAQ6mV776ByiLHkSIyGkP8JjmjmkhQ266U58if7dC
+         KbrtG+fTStP/X43GJPIn8GXkuhYpjtriTu/nyeb3YAxWDxRnAGBFb8GfU+S1TaF4u6wo
+         w17Pw4K3SmWyknGmOU0zfdpp3tXBAioWqaZ3oeGxrnegMeEqTHafvdV/9KaeyREbV9Ar
+         rJMg==
+X-Gm-Message-State: AFuF++lflJTmwCtVXz4Nm61rn/J7ePgkaQYOPlIm7p5Of2F4nF2weDwG
+	PuBZBcIj5bpV8Jiz3taaB5YSshE+P6/akFhz19+UoXmOaJFOUIgaaYr8P6tQOw==
+X-Gm-Gg: AYBFou3Co+jmEhtDX0YS84UoZZXMf86Xqb+jUh1zN2r9X906AMemSEuVB0e1rgI0nbM
+	xEGp6fZY2cq2dMmads2uHvLRbA89KXiv6j7g8YTNGQf7LxfY1kcIYoycOLJ8PWgk1ryULZ7RnUQ
+	IVDqxJxu7eay3SHHMwz8JiPoMY5SDoGofkYHsJi/uEwxTOhjWWdIhButF2fygmDyR1rnTCf1NT5
+	GMrbvUmXYJSZFEZ15lOTZBYpZnagIhcvs0ksF8OVVHzRkyomcuCtYnelvC7IZg2C09GV0vkX4Do
+	MKyA54uWHKrLx8ouLj5l4DkIE5inopV6OX6Gx7a0qVRrm81qXOujSNGf8AHuQrjehsaTuZver5s
+	osCjQ6wWeEQnCrKXIaIzTR+vScF43VuySrePxxJVC6fSt3TOAFmz9AI6NPwVSXBf0dPm2Aw0lAg
+	QX5dlwW3KBiWeWV6we6yJQOmyqFLH3jIkbVLNjb8wVtn3asJusZQgnupUmkRoeWaN7OcB0LlDtw
+	hXuWjDacFcW
+X-Received: by 2002:a05:7022:f509:b0:144:e259:b1f with SMTP id a92af1059eb24-14f5b414938mr1644470c88.13.1790925477108;
+        Fri, 02 Oct 2026 00:17:57 -0700 (PDT)
 Received: from [127.0.0.1] ([52.159.247.70])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-35105dd1dfasm1717817eec.8.2026.10.02.00.17.54
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14f474774c4sm4010523c88.14.2026.10.02.00.17.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2026 00:17:54 -0700 (PDT)
-Message-Id: <db46b1b51009ec2f9a61cc76f9a2835cd207aeda.1790925472.git.gitgitgadget@gmail.com>
+        Fri, 02 Oct 2026 00:17:56 -0700 (PDT)
+Message-Id: <955709d4ef3aa43a6fb15cf5007daf094b76d427.1790925472.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2423.git.git.1790925472.gitgitgadget@gmail.com>
 References: <pull.2423.git.git.1790925472.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 02 Oct 2026 07:17:51 +0000
-Subject: [PATCH 1/2] remote: factor out lookup of a remote by name
+Date: Fri, 02 Oct 2026 07:17:52 +0000
+Subject: [PATCH 2/2] remote: allow a list of remotes in remote.pushDefault
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,67 +80,135 @@ Cc: Harald Nordgren <haraldnordgren@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-make_remote() looks up an existing remote in the hashmap before
-creating a new one. Move that lookup into find_remote() so that code
-which only wants to know whether a remote is configured can use it
-without creating an entry.
+Someone who pushes to a personal fork in some repositories and to
+origin in others cannot set remote.pushDefault globally. Repositories
+without the named remote fail to push, because git takes the missing
+name for a URL.
+
+Let remote.pushDefault hold a space separated list of remote names and
+push to the first one that is configured in the repository. When none
+of them is configured, fall back to branch.<name>.remote as if the
+variable was not set. A single name keeps working as before, and a
+value set in the repository still overrides one set globally.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- remote.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ Documentation/config/remote.adoc |  7 +++++++
+ remote.c                         | 29 ++++++++++++++++++++++---
+ t/t5516-fetch-push.sh            | 36 ++++++++++++++++++++++++++++++++
+ 3 files changed, 69 insertions(+), 3 deletions(-)
 
+diff --git a/Documentation/config/remote.adoc b/Documentation/config/remote.adoc
+index 3a20d0f752..6a67c97fe8 100644
+--- a/Documentation/config/remote.adoc
++++ b/Documentation/config/remote.adoc
+@@ -2,6 +2,13 @@ remote.pushDefault::
+ 	The remote to push to by default.  Overrides
+ 	`branch.<name>.remote` for all branches, and is overridden by
+ 	`branch.<name>.pushRemote` for specific branches.
+++
++The value may be a space separated list of remote names, in which case
++the first one that is configured in the repository is used. If none of
++them is configured, `branch.<name>.remote` is used as if
++`remote.pushDefault` was not set. This allows setting a list such as
++`fork origin` globally and have repositories without a `fork` remote
++push to `origin`.
+ 
+ remote.<name>.url::
+ 	The URL of a remote repository.  See linkgit:git-fetch[1] or
 diff --git a/remote.c b/remote.c
-index fe62068463..6567ec91cc 100644
+index 6567ec91cc..3cad0673b9 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -128,23 +128,28 @@ static int remotes_hash_cmp(const void *cmp_data UNUSED,
- 		return strcmp(a->name, b->name);
+@@ -700,6 +700,25 @@ const char *remote_for_branch(struct branch *branch, int *explicit)
+ 					 explicit);
  }
  
-+static struct remote *find_remote(struct remote_state *remote_state,
-+				  const char *name, int len)
++static const char *pushdefault_candidate(struct remote_state *remote_state)
 +{
-+	struct remotes_hash_key lookup = { .str = name, .len = len };
-+	struct hashmap_entry lookup_entry, *e;
++	const char *p = remote_state->pushremote_name;
 +
-+	hashmap_entry_init(&lookup_entry, memhash(name, len));
-+	e = hashmap_get(&remote_state->remotes_hash, &lookup_entry, &lookup);
-+	return e ? container_of(e, struct remote, ent) : NULL;
++	if (!strchr(p, ' '))
++		return p;
++
++	while (*p) {
++		size_t len = strcspn(p, " ");
++		struct remote *remote = find_remote(remote_state, p, len);
++
++		if (remote && valid_remote(remote))
++			return remote->name;
++		p += len;
++		p += strspn(p, " ");
++	}
++	return NULL;
 +}
 +
- static struct remote *make_remote(struct remote_state *remote_state,
- 				  const char *name, int len)
- {
- 	struct remote *ret;
--	struct remotes_hash_key lookup;
--	struct hashmap_entry lookup_entry, *e;
+ static const char *
+ remotes_pushremote_for_branch(struct remote_state *remote_state,
+ 			      struct branch *branch, int *explicit)
+@@ -710,9 +729,13 @@ remotes_pushremote_for_branch(struct remote_state *remote_state,
+ 		return branch->pushremote_name;
+ 	}
+ 	if (remote_state->pushremote_name) {
+-		if (explicit)
+-			*explicit = 1;
+-		return remote_state->pushremote_name;
++		const char *name = pushdefault_candidate(remote_state);
++
++		if (name) {
++			if (explicit)
++				*explicit = 1;
++			return name;
++		}
+ 	}
+ 	return remotes_remote_for_branch(remote_state, branch, explicit);
+ }
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index b982b209bf..7a0cdafd65 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -591,6 +591,42 @@ test_expect_success 'push with remote.pushdefault' '
+ 	check_push_result down_repo $the_commit heads/main
+ '
  
- 	if (!len)
- 		len = strlen(name);
- 
--	lookup.str = name;
--	lookup.len = len;
--	hashmap_entry_init(&lookup_entry, memhash(name, len));
--
--	e = hashmap_get(&remote_state->remotes_hash, &lookup_entry, &lookup);
--	if (e)
--		return container_of(e, struct remote, ent);
-+	ret = find_remote(remote_state, name, len);
-+	if (ret)
-+		return ret;
- 
- 	CALLOC_ARRAY(ret, 1);
- 	ret->prune = -1;  /* unspecified */
-@@ -160,7 +165,7 @@ static struct remote *make_remote(struct remote_state *remote_state,
- 		   remote_state->remotes_alloc);
- 	remote_state->remotes[remote_state->remotes_nr++] = ret;
- 
--	hashmap_entry_init(&ret->ent, lookup_entry.hash);
-+	hashmap_entry_init(&ret->ent, memhash(name, len));
- 	if (hashmap_put_entry(&remote_state->remotes_hash, ret, ent))
- 		BUG("hashmap_put overwrote entry after hashmap_get returned NULL");
- 	return ret;
++test_expect_success 'push with remote.pushdefault list picks first existing remote' '
++	mk_test up_repo heads/main &&
++	mk_test down_repo heads/main &&
++	test_config remote.up.url up_repo &&
++	test_config remote.down.url down_repo &&
++	test_config branch.main.remote up &&
++	test_config remote.pushdefault "missing down up" &&
++	test_config push.default matching &&
++	git push &&
++	check_push_result up_repo $the_first_commit heads/main &&
++	check_push_result down_repo $the_commit heads/main
++'
++
++test_expect_success 'push with remote.pushdefault list of missing remotes' '
++	mk_test up_repo heads/main &&
++	test_config remote.up.url up_repo &&
++	test_config branch.main.remote up &&
++	test_config remote.pushdefault "missing also-missing" &&
++	test_config push.default matching &&
++	git push &&
++	check_push_result up_repo $the_commit heads/main
++'
++
++test_expect_success 'repository remote.pushdefault overrides global list' '
++	mk_test up_repo heads/main &&
++	mk_test down_repo heads/main &&
++	test_config remote.up.url up_repo &&
++	test_config remote.down.url down_repo &&
++	test_config_global remote.pushdefault "down up" &&
++	test_config remote.pushdefault up &&
++	test_config push.default matching &&
++	git push &&
++	check_push_result up_repo $the_commit heads/main &&
++	check_push_result down_repo $the_first_commit heads/main
++'
++
+ test_expect_success 'push with config remote.*.pushurl' '
+ 	mk_test testrepo heads/main &&
+ 	git checkout main &&
 -- 
 gitgitgadget
-
