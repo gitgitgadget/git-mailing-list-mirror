@@ -1,150 +1,194 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv2-f42.google.com (mail-qv2-f42.google.com [74.125.230.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2061734F24E
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 07:38:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0BE293458
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 07:50:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790926694; cv=none; b=VoTXUtMCALjeDkqOW8K/VvrDiJqprjXXpqeCZYruNwKzQZWzb5SGC8/j4BwNDVNLv9AWIjdUfWr7tD1LAGKIDydSWnaw5pwKAK++uKlc9wXwbVKCg60G21fPEasaiusohQ2m5BXRhYGeX8GXP23YkOTVBAL7qPhYBn0NTIhI8PQ=
+	t=1790927403; cv=none; b=Ymu3d1xcpv7JHsoqaYkYZrZ6kQEwsnhnEFNbjIB39oueBuqmZ6Qzi3r9CVxuNl8Dza7QuZ4U7emU8rDaCjJThHhnXvk0g5J/rNUehRg4xTLzAmeIY2z0g7QfHVt3JVvrFrd7XFs3ffeJjrlFXbi4GR5JYFE3gY1icmHvVeghp6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790926694; c=relaxed/simple;
-	bh=CcdIBvMI7NwoJQh1BHJpGdPXieJvxJeHaybwo9GbVhs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=edTm4Ff1M7XXnrdj+/bb6JW4wieNq5vpTOXaC761y3VuroxQrPCuqZiV54CjCe7nqwKxdgePkhniXwUk/Yzqfb/aTpWGAVirEX262H3wRi7dCtSPaw22UxiNOzLeRhL1XvVU0XGLDTKGTqRI5lnP3KCddTSVQBVqB3/hs8XCNZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RAE/Zt8V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lQ3BPzf/; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790927403; c=relaxed/simple;
+	bh=6VwNn028JFBk9xWl9N03rmbQZwBx7mCxSj4uDyUakmQ=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=mdS9paeDkjNl49DOXlsvjptXdqyqDiEW9sU2TLlVlDzwvxpLpz45FHB9/twXLNQ/R9KYYHIX+xBXPuhzFevJ8bgnWXBhyTNBoLcCnYnn+iLfgE+CKhoE1HoaerqJDsaKHPAIMFHcdFUJ4KyPtlytqtZ2n3p5a0zJU2ATegZhla0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ReqZblTq; arc=none smtp.client-ip=74.125.230.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RAE/Zt8V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lQ3BPzf/"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2A104EC027D
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 03:38:11 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Fri, 02 Oct 2026 03:38:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790926691; x=1791013091; bh=9fNRukvMqQ
-	Zm+wePhDlYwpUPwjko8B/FqB6wLdredoM=; b=RAE/Zt8VSY0hDrUKCYL/YVdK2J
-	7j9Z9dlxdAG/4VUq9RsNhiq+5Wp/TBshgRZQR8xoOghSxicAksNWjw3xFi/J0q+X
-	I4fwdZoa0YD0uRrGQ6mggR61TR9ozELhYzkPg3/FNpz6/cxq95Oxstpi37mKtSPQ
-	eeVK/GtFOzi+0mW6p/zyzBlKDDQMej82p+dvNPq7YsT034jBDaKYsQ+n+lgnbjsY
-	EzHR81LRgZiNsuSMmBcW2dUzUILGvokfFpxuoOxCZBABQMde94whnznTs+ET/foO
-	1bIavyEH8QaYDKzXuo95V5HFp2o9CrhU75cpJvjMud6xrBJldDADImC5ml2Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790926691; x=1791013091; bh=9fNRukvMqQZm+wePhDlYwpUPwjko8B/FqB6
-	wLdredoM=; b=lQ3BPzf/q6nbbIdOuLJLDLUOY6Tn2glAjEVgM3nqaqHWSLugwAT
-	LLpGP5A3Orm64woRVCqoTYAzuevuwi8r+Zl0CAltjxi3cPKBPofNXYbjZjQxr8Qh
-	BCZJNWbnDjC1XSaMSV1MY2ofvYiJ6o50NsUEtcrpjy/mFOReZGlMa19CfZbyWeP6
-	+o+sRnaG8uEMa0TF0Tcg1MyKWylGx7/6Le+ycWIlBMAsdriULOUMpbkoJALcuWDR
-	GGs72IH28kK2wuwX+Fb6SK1QwyR0KZhrmu3PKw6v+6CT/qtAwDnz2Fz29AWFAZfU
-	29c07HofEfYBcCsvF0st6BuqDO70fSseIHQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790926691; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:xP7tZy5fSLXGfEhqoe/FUxPWaQnaabLz9GQL7jMQcfRuBsP
-	Wb3BMLoVkirgq6Z6ygrve7nXl/DN2XCMFTZEzgOBvdEZdPAEi+KnoxRox+hhOKye
-	UiJV+WmQLttAQRq4RQnBZKXxumXwZBMfljiDCg4vzNmuPEYNTgGY9DEprPQx5dik
-	aHh28EtO/+RpiVGK9Gb/ksEEp5Z5ayLyIShZKFnB7qSUpybJ80vFMw9mFro9zlmw
-	1qtwpn+E2dDz22XGIYaiA14vXUIVWnhCRy4gvBYRFqfdtCJMWoZGozlzCtduHUmb
-	LAC/66rH6BIZIL5wyxZdpAkOTgHduIF2CJA/yiQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:rzm5eMZvU3vcoEyvGI/P07W3NGUReOtf0cX4N5Widq4=:CcdIBvMI7NwoJQh1BHJpGdPXieJvxJeHaybwo9GbVhs=;
-X-ME-Sender: <xms:Yl-_aoSp74vuWX9i-JuFssB98vsMYrtxjVJRThPT61ceEHuuo9XiMw>
-    <xme:Yl-_asyFNgj_j4GjOpB4uf6thEbmENPGaUPZr5GkO0vuCxIxCZcb3RtxFtlqqN_rP
-    nfJlvlhIyODdcCwJ1l7Qcby7psrgDSZEVIMtJb8hYH5KSEXyrHJ7g>
-X-ME-Received: <xmr:Yl-_aq1NZikE3iA8ibPvXC6O-v2KgBrldxQzNI1U-ykxLUQbDrGWP4icyBqbDFpnqNm6ik5rx18uSkXE1qExmljLEMQJTZI6kOZ8>
-X-ME-Proxy-Cause: dmFkZTGiKr4JPjWuyCi5wBT95bi4sPq7PUbzLQbqsDfPEcnpWPB6SR0Ik2XLDf/MR29eVp
-    VAfWTPvTgb/duSfFk/3IRPjr+TjcUntcFeyK7N5Dqv3epdlIJWWipAovQR7KO1YbO4egOJ
-    y0rEzV0kWWNMNTO9Ft+dkaghdwtJqrvoa7Aq2GTeGuNrtiqLqmWE+EY9Wl2A/2Ahm0iLeP
-    sLVlqXE5TcWOH1QjDkIluSOXAjXIJqAgQViCMUspYixnwMkAhb0ejXcJoCnU7KYM/0VVdO
-    iArMRQpI7G43qzV02hJ2MauweTsbkqfgVu3k9AICTSzIgJYO/4bSLMIHqhuCuCTvJ3UqAc
-    TVT9CbhSe7/LRcrRBguSi4xD2jeVIurof1OMd3kQujFvRVqVsGR80cnwlm7yZ4ZW90DBkc
-    Cbgo4AQ44LP89rVP+j34yGmd0ry7g1R3+mgGP/RrLQ7RmE4I5EOYt1cfVg6CuX2m1gL+LH
-    MI2qSy6MuKRv/bLzPO6kJiubpvygssdTEbd6IaSUqLwapzo480jtv9j6C0w38HYNcU1Klk
-    WHD6HHdLl2rKrmwG62x/tKDRwhqE9ZECIXfKHoTw2ibMCDioh2a1hVSUAnmQCi80ETpr60
-    W+XTDQqCcxkqDtHSEIY9rGKsEk0lgcfKVAOd8pbNC2TpfWKOEtMTYHTstCIQ
-X-ME-Proxy: <xmx:Yl-_aq6O9AR1Gb3vbUMKpq-Zovqkr1wdZfed-mnVdif6vDzcdqmYjg>
-    <xmx:Yl-_atVJ-u2v0P43yXQZnnbrhKlijRlyyxilomZyJvsuyX3jY8tA6A>
-    <xmx:Yl-_apAb2UZ2OlRH-UeJ-fZM9nonc8Vrcqpx3TPZpdRQ437CmifJOA>
-    <xmx:Yl-_as4v3wnyhimMUQoVHDEMQ8QyQ_zD_OUAdjk_lKRa-FmK0tFPQA>
-    <xmx:Y1-_aiVuBdJqZyq2QaG2d4M6XnPOsmIMBLKtXvZTMATQBqWDHKlXDrQ8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Oct 2026 03:38:10 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/3] [doc] Remove gittutorial-2
-In-Reply-To: <040938c6-6fc9-4727-901a-9be2b0b3a6cf@app.fastmail.com> (Julia
-	Evans's message of "Thu, 01 Oct 2026 18:21:30 -0400")
-References: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
-	<xmqq5wzojy31.fsf@gitster.g>
-	<8a5b742a-3f11-4bfa-954b-ffdd839b6d43@app.fastmail.com>
-	<xmqqzewzch55.fsf@gitster.g>
-	<040938c6-6fc9-4727-901a-9be2b0b3a6cf@app.fastmail.com>
-Date: Fri, 02 Oct 2026 00:38:09 -0700
-Message-ID: <xmqqfqyo363i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ReqZblTq"
+Received: by mail-qv2-f42.google.com with SMTP id 6a1803df08f44-917bef0d531so10533316d6.3
+        for <git@vger.kernel.org>; Fri, 02 Oct 2026 00:50:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790927401; x=1791532201; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=8KOFSAQr72vMVo64x5L4r6gluGnRxJOinezIPjkYrLA=;
+        b=ReqZblTqihvTeOG9S4TQvWIqQKlm8CHU0Dwo6HNbtTf5kAVl//7RZaIusuaGn2L4xL
+         u841Jz3kEK39u55Y279RKdi3moYUOXFONcW/twTBMTsKkXo5xnMO2XsAGJcjq15dA1sj
+         9hqDqm5yfmuqha1PbgrkxcIqgcRKOqeWbQXx+oMNhEGDvxzy3eHsVIqqQDXj+UkG2mdL
+         TkAKcz/gF/+dOetr70hu7qRjPGo6SpG4n9hQbzJVG1dzAGVMwmCszrs4w/8iVJ4s9ab9
+         2lE4MK/f7sWwrN1mtsaWTy+napMJ3t/64nXfexnNo4uECHP3aUfVRl0r5tWpUiQ7RSE8
+         mNVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790927401; x=1791532201;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=8KOFSAQr72vMVo64x5L4r6gluGnRxJOinezIPjkYrLA=;
+        b=fBprwRBlhYPEcku4rovvVW8+SSR4290lwYbc+TpSYrbZ5SDSKzHJm2hD9Cmz2ygvp+
+         3PRHH5Hgbj83S6lBO00LJCW4uW6SxYe0yBZ4NXd/sMHTWd490BXoWucSZOhuLJWhXeZK
+         BB5ERA+ieouE2qjO3lPe0Lz74oBOUiIj4HrvGB3LKExNR0rpfMbvpraExIHttfEmZvzM
+         DDTI9m1P4RHKBK2dXCLij/cZfXfD8vbkLbmhVGwQz5gFjTZlg4ZnZPjeOdwmJ9dd7ZP7
+         KQplOtYCIQenTbVVPILhsXdkP6JZ4/Zc6j92dvKw8rKEobqjbeqthVitGkv+3EOuo6k3
+         MFhQ==
+X-Gm-Message-State: AFuF++kRq8Ya45K3eOFjQ/x7R4q8gSMDpWvNfDQ62L4J1ttg8kjOy940
+	DsOx4xAgAU0rXeKKPz+y8lam/TsmOZnowMzqk80cmwK6bV7SK6r/OWjD+HaC0A==
+X-Gm-Gg: AYBFou1SgvLB/lvwW9s5r4u2/1PDwpq6yK2xRKb7eyfInPkEXAU9B5AUa0C757ZS9b0
+	OAMyhf27YgjcSHOaYNIPUC2+74XT6vEl1w7Ek0uZIV+SchWHYb/OenfFteBQOeCMCFDE6nRdooD
+	5JGKlctQNIBrLtZjHdM5SfssI7liN9KyflqIMrbMubkmgxO8KKe8a23+N8X/K/8mSkX0Cjrha5N
+	D3l0kNhUv15k9kfffjPm2xrjtR9HNcjOBJTbuA3tb268VRf5MomB/wmfLSCK1gR+Wjm8Gf28qXd
+	u44VyRBYif3nm5DzjgrvAlFUEnzPxIV+O0VnA34ymD27r1iGX4k1QPxqR7vw6c+t1SjUxfkJ3bU
+	iqDQnWnYjbxuLugGc/RZ/pVZqmOROxqjjUfTvN7GTHkRi1kpknxV6nYPg9AoNQdFBMPujy7Qypm
+	XqbS6oWBwQDVf1AHb734uG6xP5KamF14vxl+EiJWk9G4eivpQL0bINxnEn1+rL10ttAL7F0ixkl
+	fg=
+X-Received: by 2002:a05:6214:2242:b0:914:4eff:e88e with SMTP id 6a1803df08f44-917c01ba3bamr36551576d6.41.1790927400890;
+        Fri, 02 Oct 2026 00:50:00 -0700 (PDT)
+Received: from [127.0.0.1] ([74.235.143.215])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-917e0bcf9f5sm13796156d6.32.2026.10.02.00.50.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Oct 2026 00:50:00 -0700 (PDT)
+Message-Id: <pull.2431.v2.git.git.1790927399813.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2431.git.git.1790797186658.gitgitgadget@gmail.com>
+References: <pull.2431.git.git.1790797186658.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 02 Oct 2026 07:49:59 +0000
+Subject: [PATCH v2] object-name: accept @{p} as short for @{push}
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Jeff King <peff@peff.net>,
+    Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-"Julia Evans" <julia@jvns.ca> writes:
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-> 3. 22 people who are new to Git have tested the new draft so far
-> 3.1. Several of the testers said in the post-tutorial survey that they wanted more
->    information on branching and collaboration with Git. This was the most common
->    "what do you wish this tutorial covered?" request.
-> 3.2. Several of the testers also said that the new version is a lot of
->    material, and they were not able to finish it because they didn't have time
-> 4. Writing tutorial material is a lot of work, it will take time to do a good
->    job of covering branching and collaboration
+"git log @{p}" fails with "unknown revision", even though "@{u}"
+works for "@{upstream}".
 
-Good info to share more widely around here.
+The "@{upstream}" notation came with its "@{u}" short form from the
+very beginning in 28fb84382b (Introduce <branch>@{upstream} notation,
+2009-09-10). When "@{push}" was added in adfe5d0434 (sha1_name:
+implement @{push} shorthand, 2015-05-21), "@{p}" was held back to
+avoid confusion with a proposed "@{publish}" and talk of an "@{pull}".
+Neither of those was ever added.
 
-> It's important for us to cover branching, collaboration, and how to restore
-> old work in our tutorial material.
+Add the missing "@{p}" for symmetry with "@{u}".
 
-OK.
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+    object-name: accept @{p} as short for @{push}
+    
+    @{u} works as the short form of @{upstream}, but @{p} fails with
+    "unknown revision". This makes @{p} resolve to the same branch as
+    @{push}, in any case, and documents it next to @{u}.
+    
+    Changes in v2:
+    
+     * Commit message explains history.
 
-> option 1: Refer folks to the contents of the current `gittutorial` (in some new
-> location?) to learn branching and collaboration. I think this is what you are
-> suggesting (?).
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2431%2FHaraldNordgren%2Fpush-shorthand-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2431/HaraldNordgren/push-shorthand-v2
+Pull-Request: https://github.com/git/git/pull/2431
 
-Not at all.  If the material in the existing document is inadequate,
-after examining why it is inadequate (e.g., perhaps it assumes
-certain prerequisite knowledge or work experience that today's new
-users are unlikely to have), we decide if we can salvage it or we
-need to write from scratch.  It is very likely that it is the latter
-case---otherwise we wouldn't be having this conversation to begin
-with.
+Range-diff vs v1:
 
-> option 2: Ship the new tutorial without a guide to branching and collaboration,
-> with that to come later. Not ideal, but I think this is better than option 1,
-> since at least we are not pointing users to a tutorial that we know will not
-> help them.
+ 1:  f772f79954 ! 1:  1097f119a3 object-name: accept @{p} as short for @{push}
+     @@ Metadata
+       ## Commit message ##
+          object-name: accept @{p} as short for @{push}
+      
+     -    Typing "git log @{p}.." fails with "unknown revision", even though
+     -    "@{u}" works as the short form of "@{upstream}". Users who reach for
+     -    the one letter spelling of the push destination by analogy get an
+     -    error.
+     +    "git log @{p}" fails with "unknown revision", even though "@{u}"
+     +    works for "@{upstream}".
+      
+     -    Accept "@{p}" wherever "@{push}" is accepted, in any case, just like
+     -    "@{u}".
+     +    The "@{upstream}" notation came with its "@{u}" short form from the
+     +    very beginning in 28fb84382b (Introduce <branch>@{upstream} notation,
+     +    2009-09-10). When "@{push}" was added in adfe5d0434 (sha1_name:
+     +    implement @{push} shorthand, 2015-05-21), "@{p}" was held back to
+     +    avoid confusion with a proposed "@{publish}" and talk of an "@{pull}".
+     +    Neither of those was ever added.
+     +
+     +    Add the missing "@{p}" for symmetry with "@{u}".
+      
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+      
 
-I think this, #1, and #3 are essentially different sides of the the
-same coin.  If gittutorial can fill the gap, we use it as a stop-gap
-measure while we prepare a better one.  If it is so bad that it
-would contaminate new users' minds, and they are better off learning
-the hard way from more technical documentation and external books
-instead of tutorial, we won't give them any stop-gap.  We may or may
-not have external material we can recommend.
+
+ Documentation/revisions.adoc | 2 +-
+ object-name.c                | 2 +-
+ t/t1514-rev-parse-push.sh    | 7 +++++++
+ 3 files changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/revisions.adoc b/Documentation/revisions.adoc
+index 3fbfbd3d5f..68ce6f3dc2 100644
+--- a/Documentation/revisions.adoc
++++ b/Documentation/revisions.adoc
+@@ -122,7 +122,7 @@ some output processing may assume ref names in UTF-8.
+   `branch.<name>.remote`). B@{u} refers to the remote-tracking branch for
+   the branch X taken from remote R, typically found at `refs/remotes/R/X`.
+ 
+-'[<branchname>]@\{push\}', e.g. 'master@\{push\}', '@\{push\}'::
++'[<branchname>]@\{push\}', e.g. 'master@\{push\}', '@\{p\}'::
+   The suffix '@\{push}' reports the branch "where we would push to" if
+   `git push` were run while `branchname` was checked out (or the current
+   `HEAD` if no branchname is specified). Like for '@\{upstream\}', we report
+diff --git a/object-name.c b/object-name.c
+index 4eda8c8eac..6546685760 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -657,7 +657,7 @@ static inline int upstream_mark(const char *string, int len)
+ 
+ static inline int push_mark(const char *string, int len)
+ {
+-	const char *suffix[] = { "@{push}" };
++	const char *suffix[] = { "@{push}", "@{p}" };
+ 	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
+ }
+ 
+diff --git a/t/t1514-rev-parse-push.sh b/t/t1514-rev-parse-push.sh
+index d868a08110..5a4f16867a 100755
+--- a/t/t1514-rev-parse-push.sh
++++ b/t/t1514-rev-parse-push.sh
+@@ -60,6 +60,13 @@ test_expect_success '@{push} with pushremote defined' '
+ 	resolve topic@{push} refs/remotes/other/topic
+ '
+ 
++test_expect_success '@{p} is short for @{push}' '
++	test_config push.default current &&
++	test_config branch.topic.pushremote other &&
++	resolve topic@{p} refs/remotes/other/topic &&
++	resolve topic@{P} refs/remotes/other/topic
++'
++
+ test_expect_success '@{push} with push refspecs' '
+ 	test_config push.default nothing &&
+ 	test_config remote.origin.push refs/heads/*:refs/heads/magic/* &&
+
+base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
+-- 
+gitgitgadget
