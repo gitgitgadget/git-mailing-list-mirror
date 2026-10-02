@@ -1,100 +1,100 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858944DE720
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 15:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC7E31E84B
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 15:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790955958; cv=none; b=bJgVo0oSSsHYH4A5VS/TrVb7VzurwMlNfMWNkiRRgTZTDpvWS9sz4vXkN4IdeurHIh/71XmO5so/ux5J44cjnnycYQ+bkhJehS55Zfj5Z/npbSKTyY9oiE0jpBDLtvqBMLFU8N1v31BuUL89UWdxdPvL4gbwMgV1BGWD0xANWsI=
+	t=1790956167; cv=none; b=hle68oH1QRIb4EMEhSFC9RKPPr/moQDfQMkkEbqBD7K1u6SpMlMKFGdb4Lv9xy8zRQyd0b6ekZQn/RTFepbE+KEGjoMM/j+J0VyslQXuqoFwA1yGT5dTrcxv3yuXrENIoIt/F8bYSv/vyjwFurBn+EO0puCLg7FAx3fs+YRT71Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790955958; c=relaxed/simple;
-	bh=7z2hxEAL72x78wyoXj6y83Iwhv3C/6B/S5by76igl7Q=;
+	s=arc-20240116; t=1790956167; c=relaxed/simple;
+	bh=lKhO3yR2UZX1WT8WYlc64dhPz0bpn4Oj6J7mgHRbXTI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rBa+BITuMy4raVTsTriFoelYmDZQrBioEe0HRtnndUHKgDORHO/0xShf0QB+vEdTHwWIQJi3FYLe47X1OCOk3JKX6IBA246AmrilkS7m/j3fJ4YwkiS8cvpbTIrxyKMYLTuIBpVDNIIf79jlp/bBY2UOIFtbU+HKvm5uGcb4E4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=w0qDENe8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AojOTiNv; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=tYyh9yzSdaypqZeBDNg3+k/+vP/d7bPloBA3GImeSveibScm+UeOP1SkqSgAHBiN0SPnVEHHeeKvvUxN8pEj6OYwU2HhVAD3+/ZhQ1OWRBLQkr4NJTBOZAcemfPNLGMMtBv7gEQ+07xeMUx477rY9FUgNYka47ATHNMnkORZEUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ajuovLAA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dnTUjq80; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="w0qDENe8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AojOTiNv"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id B9D461D000E0
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 11:45:55 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ajuovLAA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dnTUjq80"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id ADC321D000DB
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 11:49:20 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 02 Oct 2026 11:45:55 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 02 Oct 2026 11:49:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790955955; x=1791042355; bh=TTjk02pZSa
-	XuFvWQQjVSdF8ikiV8eC1iMeA6sDeGEjw=; b=w0qDENe87z7ZNr2mxsdaf/YuJ9
-	FLYj1SigDMK/aCIFWHxS/8ujDZ14TeisAqGGLSmkkmXifS8ASS8VGBU/mg9FfMHT
-	rwxgB+fV4cJpMBYtSS7CcbVfeTbNxSDbQgRyI4e6A4ikT1tVYVD17daQ0QnfB3Ge
-	RWv40E6xt0rADYjIeVcIyfjqSogKhbhrsaSR5rlHAjBP8YEpagmGJL03saDZZ7Oq
-	UFnIFs0W4oeWVscgb1Dg7VhYW3dcAwlfsVnlWQcLCzWjmZ3zjq7LJWmlWciCt9FY
-	XdkRzQX29Y/lWr/YSyVISQ0B2LtRIC4rdSm67EQCAjflK6uCdwJdBCZqsK6w==
+	:subject:to:to; s=fm3; t=1790956160; x=1791042560; bh=wCu0HwyPML
+	9k3hzQA/6Qw0ie32C1GZ4KuuMkHxFldWQ=; b=ajuovLAASzunQ1SYmrxHGj77KJ
+	MBg8VL5crek64pMR2cvaoBJWVAEO9/ff/Rw447HfJgeL2E5E/6P9W6P22K1LGj8d
+	rD3YBDzNdQhkv2MYNNKAY7BzSDYLPHzOBg27SYcR8ZMuR8HzlWOdOPgINz/rqbqY
+	/2jI3SNMln7QTn2ErLZ1QCl5XLjUQnEIKF92a0m+alFwon0JKA/Bo0jpRJ14nwVt
+	8wDOacgSHkQRDwgJ8hBMb+rz0CHeZYSbBs/8ZYovHcAgV8i9L7MbRXLLGL8WxLcs
+	NQNxSWZ+9NgR+pn5vfEYIvtNJFmaK08rIwia1HMKNYAxj9ONVS/XLlfUoRWw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790955955; x=1791042355; bh=TTjk02pZSaXuFvWQQjVSdF8ikiV8eC1iMeA
-	6sDeGEjw=; b=AojOTiNvOeRgmAwhxAWIm71svo+vmGZO5slCQyiq0YBbvj0HydT
-	xhEJTLW5zxGqGlZKCMZEjaHGKzzsdl9f+uvQINnkjKMPyeUNQNQ3kM+u5x6iT9vx
-	nHkmeqAGZboBv9SnAZQH5lEvLp91I3S76dg+eorJ6FHTdI+YtqfJd0Eyw7tt7T1k
-	5Ds2zNPl8aAE1FRRv3bAwyqKqYTZqLGkeKDDMzb+5HQDbLOknMOjQ9VVvsEvjdgp
-	7+c7iLA4NVYKdpwGWz7lZGV7NZentYDESzv/BSDyvpG2kgY+mUaxzZ9lK0UE0jp7
-	0+K9jaNBitmSEpiBy/+RB2ZG/ZdzpkmEEuw==
+	1790956160; x=1791042560; bh=wCu0HwyPML9k3hzQA/6Qw0ie32C1GZ4KuuM
+	kHxFldWQ=; b=dnTUjq80qaqt2vEkbu45XNJB591iWBM+49g1i/xr3QhwwrlJkQs
+	il3WE+ZDFVH4rXp8OLVQSolit1nIItb3gYVFWGCZJni2sS+A98Rq5kJ73RjtfxoO
+	xargd7hxiDYqMvl0E6hUqCwjPTqxqp1uJjBZgUzJ/3GOC8WjI/7VLjMUKuvQqU3U
+	jbHh6mTs0G3hlgDNw9oBcSMEDLui9s6dMfhtHKb5JpHvJO9ir2xajOLBbfDdMwCx
+	ImE32GzldwaipV6DlsuYepichKfac3+T2QqBSmuKGidSaViOibbcZ0JGPaTwqFM9
+	2XqWdxoWyd45Gbr6LxUjIogC3vGgsvfU9yQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790955955; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1790956160; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:thiyFgohR6HZcFubpSlnRV0nlmb1FGIvWURJcOpoGzCZkEg
-	w2lRozv/Bi1lTbwBEk7Vw1FedKa5JI0NiIAan3Vr6+fKworCGzu2oD01pO75Nc3P
-	0/hMFk/bN0n5eYh9pS6EQsYudK5f+LllBo8iqbCXFRKnz9eCs2PQvFs+AXSxjB/c
-	3nlQijPrr49BjeG3bEXqWlm1sCQMk9oWZYItBZaI83XAsLkyFSpNsSVdgirClp4f
-	dbxlFNYZj7HpjHBaFwBofj9e27iymp6qRg0AhDqxwlJqaGGw6JZVlaQcQ6IsxH5s
-	7pUpEtUHDXDuOFJzqpVpy6iaBTikeLYA6bBK14Q==;
+	s=fm3:rsa-sha256:BzFGMZtD5NUYc6JqJITSSl2zJYVxBxp8WQCb0Pr/MfGCbu7
+	W7GT40RtEEu2ZwM5DyiXPOqa0TKxB+xZp5J/GxKTK6BQb6NJVu61eamF6fX7go2r
+	gIqJ3bD9by13I3qtHg93/Q6/9i3X/z/9IcyGMd3sb6zhPS0S+6Lf2DXbDGJfxuCd
+	Z13QG6kRAB/tHbmkQbVsAVqwvESnAvSuuAEPzDKi276/paT/R0rLijwIk9Y02Atc
+	U3EiW8pqTs7Y4EfHjH3vPKpuwHiU6qdxS/gxlfgYU7MOteSneu9Oc9XK+HLcy1S7
+	J1gPKsWuVpBiNKQsayPrB8VZ7cyORTMXSw0F0eQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:XXl95/a6NZASIBKpLhJZj5NRxN/m2NAkSWP/2s8+ddo=:7z2hxEAL72x78wyoXj6y83Iwhv3C/6B/S5by76igl7Q=;
-X-ME-Sender: <xms:s9G_avam8jtxDg7IuQxhF8uVCiPmf8Hl1tlFU2rUTEtqYMrdVT0a1w>
-    <xme:s9G_al0S7HgHL05LTTc6r7Tpmeo-EGgbbekcZ5A6tEPg2zIthl-3VPySsvMD35G4m
-    Nwb-WLaPgpJP4SCi-lXxAjfg3WajnzwKtlY6sAfRVZX_3u2mMzcOA>
-X-ME-Received: <xmr:s9G_avVnPV28eoSU91IdT5YpKoUp9xHtLYyy_sZoqlkd2-z7ONmy80UBC20GXEOxNZlA7xgEJ51ASX0N1uO00SQg--2SbYsL5ZrV>
-X-ME-Proxy-Cause: dmFkZTERuFJR5OstwcPwCTNn8mtNxqsqLjg+wNtJvRPhoPs3SGxuhz03orxC2+VDcsEQLb
-    +1FGh7YMeGoIuzgB+e4Ir3J46JCfYIIkR0t5Jg39FGa2oQYq6opAiscuT6DdIvHBFaySto
-    vgcCQFO1khrEhQf9axyaV/mAW47eZqU96lVY6+E2oYbrRyQZzt7NAtwnKeR2HYNELZRooJ
-    79ihwfAlVSHbzLPZ9PErYSvc5r8NLCPxgJ5d6XOLCPwza9mvl02f/ZCSka5OZ+Kvjdr3mq
-    NTZaIuAXPuN1tdGQ7Ve0AAYfcyoqjkFWCAyax9Vin0jBv46kOpwec1uVjonB4f6RtJkgng
-    bG9roeN9WFZ0XkhR1VJR1HPgbaZeWtiCZ72mnuSnfOo2ygsAIuZE/cpII4poPiLIomX3vn
-    aviz2t1eC6O76AOhjDmcGZWIDHC4J8aHR5AvZ1pOcYPoMl/0D7mNSIbCVoWOUAJw6zrH7g
-    gEkkR2KLx58HLfyJ4/LtRzJvYyGvsdGwENUnQcGi+GiFe3MD5I5PgD9KhblCzRlz9Flm8n
-    7qFhIWewdXxHMD2XGdVUERGhFUla6Sglf9tF+i0j8lFZM+b7yBqdyOmapXLc2jjamAKB+5
-    fhQNSsLsMo/CVDIfE860E0ZjLWvmFdKxy569CFBHcnhe5PadAQlvmX73tTOw
-X-ME-Proxy: <xmx:s9G_avXkMRMEKy2yu8cbvLV92hwvux9KrHDxmvkDbjFBeq6JBDNTJg>
-    <xmx:s9G_aucVMPLDVrfet4RXYq8Y4Ze5P0E8feYnYtCY4hd8QQW8udY2Tg>
-    <xmx:s9G_aoVerN-t58wnlChAUrQ76iAMpRqnU9FSDarCHLfIdn-HRkNnlw>
-    <xmx:s9G_anfGvv_9HLCK9mQzTP4WyVsU-rZ_sVQd56az2nQb3g_yP2CPVA>
-    <xmx:s9G_aidkX3vlMBnxzyL-Gsb_8m5_BaPk7dBIGd_ZYPwqQV7KUbOaeUnu>
+Message-Instance: m=1; h=sha256:wbjUhwVkDuCGcWLNoEz9ae9oCwD2dtsRzP5yCQL+HWg=:lKhO3yR2UZX1WT8WYlc64dhPz0bpn4Oj6J7mgHRbXTI=;
+X-ME-Sender: <xms:gNK_ajEkt83wsjAw76bxlqbeQHlx0HBzmEVR7kR4lG5--D0ampDzJA>
+    <xme:gNK_anxmfK5OnDGDug8eCZT6_wFS1RBt63uVoPxVP8GLD8IxjLn9QNDb7W9X0SJ-o
+    u74R2w9CXjRB7_ayMoWCHkyHRyME_Z3RcTktxyvgNno3xZf4cVpb1M>
+X-ME-Received: <xmr:gNK_aigT2UVWBtuKjfsIKZrpyw8gEIqznU68-xW5-lTncZzNvpSMBSG5dMq6kL_kjvXDXFpH-hiIJPMLxHH93bWR4v7UqxwfK5og>
+X-ME-Proxy-Cause: dmFkZTGYEPMSmm2I0iTev0vt99atrjsfp9THUHxi1sRWHSI9hQ/t1DsZG/QpTTdTwpkrah
+    YzHphhHdhkyfHnlU9qQ6nrVkneeYQN67oxEbFjX6v/WDnSWDceneEs5Qk4GYu3zNIrjoJ3
+    wCNNLNjyNuFbEuOJEoi/oaffSYTbrhbzc2fAF4Iz2ghyRuIlIv0UHE6IeOKuPwBQ761LCJ
+    K+QK51n2C9C9u3E1g74EBjkAvXc64/3QgOcHLx48QG3HCed29S5MEEBNfX78aG3lVe5Sv2
+    ctrcbmRmsCJVLDsoT0ijesxvMaUH1ZBhMJTG3h1bFc2AFty5gsSub7kgUEIILdT8x7ITWA
+    Y9F4LXxG2Uy7jnOcKi1EoBoMI437olFDAFQc589yS73cx/AkTpWLxzjxj20ki9cRPmdT7m
+    Up7u3q35HaxWLql1Q6NZIwZDNMu0lQKc/Ej9PvnKUPg9+Bwj+FQDM7yKrOBLRgGcfAoVsJ
+    5iCLzsONUg6ie7IcfQNZCVV9tpf7HRcse49fCL7XpUj/ltcKEe3PYXkvLLs0VyuKNm6r2x
+    jgJbLS624XMTcpD/WSnREObFSfNFwPkrr1lO5jX4tCYBe/lrwTJpGrbHNbDRsvt+mx9cgC
+    c24nh21zwEnXbeKtizC8AeIJJLvF8ZgaYP+j3GvzMAQVYPpywPffI62XjwVg
+X-ME-Proxy: <xmx:gNK_aqybTQaIXYe2otBiKcF7socVSQ7Gu9sQnctsghPBNofvss9Izw>
+    <xmx:gNK_atJL2X0v4VpwqbVKMe7VJQ9vYfHhGVxwCQC1UlZ4mIYpGSFLSQ>
+    <xmx:gNK_apR1zduiqG9XIaSXEK2W61oO-ZcfFi0X9RY8T4RXql4ZBhc0LQ>
+    <xmx:gNK_atoRYVhkc28Bez78NCkUCE-LXAPL6lcWMVkGgWCVPrHzCc4PEQ>
+    <xmx:gNK_apZRzzGxuELKP_ffylgcEI2xWAZJpaf9A7DsHJ6guVJGTpfh44RH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Oct 2026 11:45:54 -0400 (EDT)
+ 2 Oct 2026 11:49:19 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Scott Chacon <scott@gitbutler.net>
 Cc: git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/4] tree-sha256: hash the contents of a tree with
- SHA-256
-In-Reply-To: <20261002081846.25144-2-scott@gitbutler.net> (Scott Chacon's
-	message of "Fri, 2 Oct 2026 10:18:43 +0200")
+Subject: Re: [RFC PATCH 2/4] tag: add --hash=sha256 to sign a tree-sha256
+ header
+In-Reply-To: <20261002081846.25144-3-scott@gitbutler.net> (Scott Chacon's
+	message of "Fri, 2 Oct 2026 10:18:44 +0200")
 References: <20261002081846.25144-1-scott@gitbutler.net>
-	<20261002081846.25144-2-scott@gitbutler.net>
-Date: Fri, 02 Oct 2026 08:45:53 -0700
-Message-ID: <xmqqtsn4yuku.fsf@gitster.g>
+	<20261002081846.25144-3-scott@gitbutler.net>
+Date: Fri, 02 Oct 2026 08:49:18 -0700
+Message-ID: <xmqqo6dcyuf5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -106,73 +106,26 @@ Content-Type: text/plain
 
 Scott Chacon <scott@gitbutler.net> writes:
 
-> Add a way to compute a SHA-256 digest of the contents of a tree that
-> doesn't depend on the object format, so that it can be put in the
-> signed payload. Each blob in the tree, recursively, becomes one record, 
-> and the digest is SHA-256 over the records sorted by path:
->
->   <hex sha256 of content> SP <path> NUL
+> @@ -316,11 +318,19 @@ static void create_tag(const struct object_id *object, const char *object_ref,
+>  		    "object %s\n"
+>  		    "type %s\n"
+>  		    "tag %s\n"
+> -		    "tagger %s\n\n",
+> +		    "tagger %s\n",
+>  		    oid_to_hex(object),
+>  		    type_name(type),
+>  		    tag,
+>  		    git_committer_info(IDENT_STRICT));
+> +	if (opt->sign && opt->tree_hash) {
+> +		strbuf_addstr(&header, TREE_SHA256_HEADER " ");
+> +		if (tree_sha256_hex(the_repository, object, &header))
+> +			die(_("unable to compute %s for %s"),
+> +			    TREE_SHA256_HEADER, object_ref);
+> +		strbuf_addch(&header, '\n');
+> +	}
+> +	strbuf_addch(&header, '\n');
 
-Would three trees, one records a blob with a single word "hello" at
-a path as an executable regular file, another records the same blob
-at the same path but as a non-executable regular file, and the third
-records a symbolic link whose target is "hello", hash to the same
-result?  Should they?
-
-> +static int hash_tree(struct repository *r, const struct object_id *oid,
-> +		     const char *prefix, struct oid_array *chain,
-> +		     struct walk *walk, unsigned char *digest)
-> +{
-> +	const struct git_hash_algo *sha256 = &hash_algos[GIT_HASH_SHA256];
-> +	struct git_hash_ctx outer;
-> +	struct collect c = { 0 };
-> +	struct pathspec pathspec = { 0 };
-> +	struct strbuf value = STRBUF_INIT;
-> +	struct tree *tree;
-> +	int ret = 0;
-> +
-> +	tree = repo_parse_tree_indirect(r, oid);
-> +	if (!tree)
-> +		return error(_("unable to read tree for %s in %s"),
-> +			     oid_to_hex(oid), *prefix ? prefix : ".");
-> +	if (read_tree(r, tree, &pathspec, collect_entry, &c))
-> +		return error(_("unable to read tree %s"),
-> +			     oid_to_hex(&tree->object.oid));
-> +	QSORT(c.items, c.nr, record_cmp);
-
-I am somewhat torn but moderately against this sorting there.  If
-we have two tree objects that would result in the same checkout,
-but one is corrupt in such a way that whose entries are not sorted
-correctly, we want them to hash to a different value to signal that,
-don't we?
-
-> +	git_hash_init(&outer, sha256);
-> +	for (size_t i = 0; i < c.nr; i++) {
-> +		struct record *rec = &c.items[i];
-> +
-> +		strbuf_reset(&value);
-> +		if (!rec->submodule) {
-> +			struct git_hash_ctx ctx;
-> +			unsigned char blob_digest[GIT_MAX_RAWSZ];
-> +			enum object_type type;
-> +			size_t size;
-> +			void *data;
-> +
-> +			data = odb_read_object(r->objects, &rec->oid, &type, &size);
-> +			if (!data || type != OBJ_BLOB) {
-> +				free(data);
-> +				ret = error(_("unable to read blob %s for %s%s"),
-> +					    oid_to_hex(&rec->oid), prefix, rec->path);
-> +				break;
-> +			}
-> +			git_hash_init(&ctx, sha256);
-> +			git_hash_update(&ctx, data, size);
-> +			git_hash_final(blob_digest, &ctx);
-> +			free(data);
-> +			strbuf_addstr(&value, hash_to_hex_algop(blob_digest, sha256));
-
-This forces us to read the inflated blob contents as a whole in-core
-before we hash.  I wonder if we can use the streaming interface like
-how archive-{tar,zip}.c uses odb_stream_from_object() to read the
-contents in smaller chunks?  Instead of writing the contents out
-like they do, we would instead hash the bytes here.
+This is a very nice reorganization.  The hardcoded double LF at the
+end was a declaration that we wanted to make it hard to add new
+fields, but it becomes a hindrance when we want to add an optional
+field.
