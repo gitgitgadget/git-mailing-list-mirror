@@ -1,221 +1,134 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D634E3E1D05
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 08:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFCB3EC82A
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 08:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790928603; cv=none; b=T0y9R4sPX4KGFyXLOQ0MRJG2HUpX050hAavOkgjkliqTsZ+jRjFm1AMBh+K6ZiMTIYmXQNAWN5HkQDYXzaU1WfVoLreBxlj9yUWxciJ6IYBSgUyOLkenCDFH3TQ2lhRPhf8X+iuFdFsFFbCUhTwC7UaBfXpXogdrcTiKXguJmUg=
+	t=1790928660; cv=none; b=XD8CQUXpbaBwqlXRCwkC7/FQfrXzdNLakjuZvV7AqqaDsPs4CNlHNnNw2SINkmYSXkQxIrVFMGt9F9UI/Cp/AaFd5Cn3D34IilXKi7IwJxEVoU3X2UblgTgEm7bs4FIVCuzesym/eWmivXjjfQit18tX/vQVHYtxRx1rffkXCVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790928603; c=relaxed/simple;
-	bh=GpM44uguJwmw+pqkZirKGAnFqP1NrNxe2a2SoXWdFPs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=svwndHiB4bWmMDq12OaOgCiXigGgRGYUH5VWGDiJM/h7lNSZJIC0S8ZZDhR5H6lgtB7EgKFIh2bp6FnP5jpEK50drEP4IdDrBAY+RjA8IlCW58+6D78KqUPq9IIlgTFdyl1JfE8Dbv2+Y4gv9iGNKuF6JPvxPIJtI5etLPYt76o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZXwP3bpB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pj5XcTE3; arc=none smtp.client-ip=103.168.172.156
+	s=arc-20240116; t=1790928660; c=relaxed/simple;
+	bh=zF5jvNDoazFy1ojl9jAYJSyVxuXjydiB+VBkISUHDzY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lUk1f8NxSTs0rBVT6DGSiRYdoF7tEEdaZCdmCuk5GhDToK7XlUMb/v6r3d67r08jBuFN68bnavaCkQ0MFilmropD+gWbNVXjHPF0hxG4f7txE67gqPxOxfn4Irwet5xsZdSMpMt1jz/T6DGKqmtUoCaubZJ+F6lOdwz4QCewqFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EEJ7l3Q5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XwHARVfn; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZXwP3bpB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pj5XcTE3"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 942E61400090
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 04:10:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EEJ7l3Q5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XwHARVfn"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B346514000BD
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 04:10:48 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 02 Oct 2026 04:10:00 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 02 Oct 2026 04:10:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790928600;
-	 x=1791015000; bh=Ivs7qpVJOjNYyjK6Xq010v8fozVFfYE/RhLYFKqNL48=; b=
-	ZXwP3bpB2XPB99T2rNRY7uASHyVAgXCDLA+eD5Oic2xYMqw+svprz/6pIxj8V6mr
-	RoJe6Yga7MCkiy8GON+2BMBMv5DgW8M2LSoFnJHGpoYJjeLNTXXAEjXE8YSfDma4
-	G4vlZ8DIaCByb2HuugFJSvzfauA+879TP0I/PmvVw+46vC7LqWTzik2kxD0Yfw0j
-	3SUWCLzZQYuY8319Poc+foWDNCSbU1FZUh+iJ8obhtKzvCkuYe+M0Pz8vaOXDshZ
-	E5d38BQ0jbNpVhRS4vpYQqj/dKfYlT2E268CxFHF+qj1Q/4BJURLD7EXQ9Ag6pMI
-	bpDmmjZE4Q37HZ2KDxvZEg==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1790928648; x=1791015048; bh=MoQnblZ0PC
+	hGH/DJ+5iM/Q2HjlneO1rlgDgDVc4mlk4=; b=EEJ7l3Q5llojv7O92KZ8/WEWnA
+	owg1lVKdtWDHpyIlkj7FPUk1eWyJcKa35AKvTolHt0VQMWdy3pYQbWTCKKGiQTZm
+	aAXGM2fCMYrDv9n1RfzGqoPWaHuTom0h8LJslT6wsUDFv7fQR2M+Guo75lmFfUmm
+	rBR6gLnaX3QTtkiZFJypQIiv8nSE+p0tuEWXj42ZH0I1dH2N6GN45dv+BtMbVwzm
+	bqolYA246UkMNnv7Be7adj1MQ4wXX1QQheHKpkIRNlLfZ7OiFNL2l2H9zFcHPh4x
+	Hcht0CkSlN7TL4N7HGoGnKh72NnXb3V2c/fIGVsa/kNMjGttJVolo33SRzVw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790928600; x=
-	1791015000; bh=Ivs7qpVJOjNYyjK6Xq010v8fozVFfYE/RhLYFKqNL48=; b=p
-	j5XcTE30taSYtdv73zW+3K/ZHjYLpKXOHKNBl4xBhF5qShmYpN9b7wiB8zR7oO3p
-	Ih9OHFhkvNVrEYKZPiNS4P0wWrxvYWMAMOlHfdtxxjHOCdrv7YJvHFz4/bo8RhKp
-	jyaTArDtSu9keSf1uc/75vBb4uc5HnTHSRe5aShVXbfhr6TXwnKua6qcTW/AbLCR
-	dSmgQ+Zv2Av97oakIku5jUwKwSQ+Fjovm8aizFAuLhtVfXxxDMjrRzhQ4iOip7fL
-	GQ1odGTorxoe3f+JiR31W5DOQnLgmXDEOE7scVTpNyfQS0dp3oCCi+cefUW+mrKS
-	1AhRc9zd5VAqbfEzTQAHQ==
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790928648; x=1791015048; bh=MoQnblZ0PChGH/DJ+5iM/Q2HjlneO1rlgDg
+	DVc4mlk4=; b=XwHARVfn99/uzGURBxdwEiVnfvdghjGFRnwwnk3svhMPuw3Hk2d
+	ILKm9NmsXQmI+IQaGaGlIxeB0YMT05eNfcUnN0o3tbivHnF2CJea+gw5yKrm3vQm
+	c9uZwJONlyezY+FozlHpEaDmJZ12083qvZ/9S6vsWuEgyyiAYbE1D6AiYZcUOPoT
+	L9E16IXrLlUH5X9xnxF4Cb8tkAZcD5OZ/WFcbxMDfc+P0fsobnUwCT7OeiGdRsof
+	r8Z3smproZ2aZjbrGBZy6ZGz/xbq+yhWjZ6SyT0QI+PWmuJTT2xhmDOwxOSWEvJp
+	2X6TUPZ2352yvQH3JqcQi7OxlptE/EyyI+A==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790928600; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1790928648; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:ZPUeXHrcc1I5Jhtt/mG43TQhCpGejequ0BGs0Bw2hTRYAry
-	jpBa+TyvXlH9otftxfy4LLa9TM8vzr6r0Njm1nnkxdVQs8OB2gsNFsYpxDYUMZe8
-	24HZjMaWWksVdp5L/SumTIP81p9LKzOpP5MZv4t22GRoqUg08bLmcbvHWo4uPzI7
-	V0NMNQrlbSVG2rXvWUxwGoTK18tkHphF/Zhq3aXS5U8tmJ+T5nAJM8N96D2Kvhai
-	DbnEAGEXbDct5D1CN6OGhpwqcbSVXsntrEd8nTlIpfE2B9xrVB0menEuI6l6HJS9
-	ESnp+5/JPHOtAIZS4eYD1+aKxa9CMg7mm8u/ZdA==;
+	s=fm1:rsa-sha256:fzuUZXsvzOnCSs3P8ehLIwU1a3QJb1YcR6a9S6u4k9bNbmb
+	Qd9xtIsUA/5VqGCv6r5XRPvSJaSaI7tdRAYVde6l7CJT8etOSUDvmO2Zj3uOu7ll
+	9/SCe8fm4L+nu5v/1oz3q2UdhU+EUt0oTdMfDmqxLpqlUV3AvipXqCdcc1tg+FWN
+	ci7x1DJVD4moL4/FT5XvY5VUHAD0Q5LLvvxKUOXaVUHTHLMlmNEXa1CZCYD1EPZs
+	Wd4gVusfJJSHatuXaSKVEP/HDYMhVdUsV8XiGiBidMGine48Vsyk75wCbSaJi+4P
+	kJJH4CaHJzxGSuHbgZ8YZNLvK/0hHS+NogzNO2Q==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:0Y+SIjoYRyvMjJRdltPhjyfbQFVk439KP4Di58uAAJQ=:GpM44uguJwmw+pqkZirKGAnFqP1NrNxe2a2SoXWdFPs=;
-X-ME-Sender: <xms:2Ga_arlhGwG-qxmsM1RrSTO_vFnoKpBPjJDGtczWw0QHjxl8sVEheA>
-    <xme:2Ga_ak1xlG9TxLHVFGx57NqMCYa3GpdtGhfsD4-HRoH4Ie7infM-pkwUPtwsRPvw7
-    Mof35eIktVU18pNeZcDodpkgvctaArvSGuR7B2PCxyXUmJqcbUKVxU>
-X-ME-Received: <xmr:2Ga_avRhRE1d1RsrfgCDyjQEy6QnIIOXjNLYW6umFNrpn40Fy206dg>
-X-ME-Proxy-Cause: dmFkZTFiMJY6nxeo/jMccWltefuWy3cn6ea2g2QEG1GiX35x9x/1PEpsdmiCp9WYU3/3FC
-    Lx3VCC7/j/MUylhq2vuiqaR+GJ8hE0hokZMHSIHuglPDy3SbjyR/3TkBILfy/DQc59DsE1
-    sB8ckp1UHUSsuIwN+wEyB1HK3rStTd58Z3hy2qtRjP/ZyR2YZlUMU/6p2g32GbbIIBicsN
-    aC12Dxlhrh+GBIwDkzs/sMQkLkAVa3pXZbBl3RapTLNTG9qbmLmuuzy/ZWykXO0fBK39Uq
-    hV9htYxMjcGJ/jENaybjN6cyLjDTx/JwSZSTeWrzgvI74DM2CsHvizQSY7NsUK2Zh8T7mf
-    2wgulp0iH3RVTYhV3luJedNTA+oWXrTAOrwyPlOU3mJItYaFpuL+AQsPHApumgm+J/XyCn
-    wDzzL3dZ2ifj/XEfuYNzt0WcB0HIo9d5QIHX8UHej+rSn9YmEmuqavKsT5+HIkXh+UyTyX
-    92XyNoORhkqMgXitW7Bb4T3qUYzbtld6GbI0u+puejAYwhYwoS8rtuXgzKgzd0RUDBbQ4p
-    STcBCyZKwWhcBHIrn2gAwG9WUddHVdOQDkbNVbOhcdCo8UFMHj0WsvOPceS+QmJC4tKf3U
-    ifM760brXNldZrFLii/8gVXv5DHUCVZShuDM+lxng2+hBGYvR48Re2EQqaug
-X-ME-Proxy: <xmx:2Ga_aus16WKiOOVtOCp8zixVnREEYntMJDdC-UXCLkGQfW8PpglJcg>
-    <xmx:2Ga_asaUJwz8xfCrtTgnX5nUD7wRJsHTu5dJrxllN-AOiWt9xcYR9Q>
-    <xmx:2Ga_arsnpDR0BLsBpwQ5N8pbGlpMOxky0jAFDkkdKjUQz-QwnGrggA>
-    <xmx:2Ga_amGfj4u3sxD1_flYThIM8MY9NZ8ZdcdsKk-5u5UPEKUKzOHvzw>
-    <xmx:2Ga_am_ACMudJj21AGxFWJ1ZQv0lN0Q8BeN68RSkWReZA-FUQX4aZ0v5>
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:5dTR62IEN7BBrTJlehmhRezlndE/qPXqu3t0WK+xo4w=:zF5jvNDoazFy1ojl9jAYJSyVxuXjydiB+VBkISUHDzY=;
+X-ME-Sender: <xms:CGe_aoLXirH4kw9QySVY70KfIu--lW7V4NQ9Ohcav1FoW3PFOv9L_w>
+    <xme:CGe_avmFZm9Ea9MYuaGkCpBRnVuMyXu7GQjYNUgOCxEhrXQXDKNhvu3b2SJuBNoRz
+    wp5odDY_ra5fICXKssGsFhhmKmgcxYCZuAIKXZPly0SsrihkXBXZ0U>
+X-ME-Received: <xmr:CGe_amHJDi_fFZWcjZvSS0oUNCby-r0PSCuiINSkyciy5n2nFTRSQg>
+X-ME-Proxy-Cause: dmFkZTETSKCAUnnoAnl8JfJFmqoZkGMYrjyqwHQWay+ityo0H1d0fp/dxxCtxF2ChP15V0
+    a3axpQw8WMANh5JCzSvccSfI9xV8tLSS4uhVdKCDDawlbPGKfIEjGtYxuiLWUhA6f+Kl2O
+    ZheJwTRsp8jfUyYWnnyjyxFE8Y0Y+ga2hpNaMouJECYdO+cuWuu8qc5eKaiQXiregGN3le
+    HtxSOyaMUEBmQKAx3Ngl2ZUH2jWBzBDnr7dq1zHqeK5iZVhnitSCeEpzhcnbL1n+gPwssS
+    fqZ1dCu9I3znaCsMuNs8z+RgjBpe67J3D+FDCcsqHDT1SazGqGSV/4rpCAG76pQmxCkGkx
+    8nEFJIFs5dUeUFASyUTB6/Z/iDah1zFSTkZ3j+F59IYq7Y7s/iK8wykyurJxswYKijTVCw
+    11MAP/Xy7o/R7qPBqXXuED2lp6eSGQyWNysognl2Y9G6hzJTpmIWequKmBBhovWxBJVOpV
+    TfQXZzedN0DVOGsia6UprRyWrJ+3AKZ22b3ubOOfCMdj3TnHuPzIYuDQs+PxXjW9NleYuC
+    q0IJqF4wXaNu7lvtYe3dJfZPJkqaiDxsXdZaZQrOrA5WnmBtBXpLQepuq/7fePDprq7Nf6
+    pf6ir2QD253nh+EAyx+6Xwft+NWwqI4GAnY9d2dp6fiKQ6F0JWTdpPkTM7fQ
+X-ME-Proxy: <xmx:CGe_avFnb_6j4lth4gdJRsWG2xFwZ13mQKW5M0sl346gMhsCMU1Jww>
+    <xmx:CGe_ajNDX6ceFxfocMA4q4dqSELIFlQ77OA3RhlUAP1VGkJo5LUlQw>
+    <xmx:CGe_auHvhBEGZsiVaiOW77BjcZSzEqUUwE5K3f0GNcIOWa7T3ddZoA>
+    <xmx:CGe_aqNSXZQueDkii0wlSemxIdLhecRgbbEpPcwEquV956CaEmFhgQ>
+    <xmx:CGe_atBVNPdiCnKvXkB-d898OU2ofRhYH8Y3G34J1xdb0M4wHD6IrbJw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Oct 2026 04:09:59 -0400 (EDT)
+ 2 Oct 2026 04:10:47 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 622e4f7a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 2 Oct 2026 08:09:59 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id d2e18e46 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 2 Oct 2026 08:10:46 +0000 (UTC)
+Date: Fri, 2 Oct 2026 10:10:44 +0200
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 02 Oct 2026 10:09:49 +0200
-Subject: [PATCH v2 4/4] builtin/refs: introduce subcommand groups
+To: Philippe Blain <levraiphilippeblain@gmail.com>
+Cc: Guillaume CHAUVEL <guillaume.chauvel@gmail.com>, git@vger.kernel.org
+Subject: Re: [BUG] submodule merge tries to read B's commit from A
+Message-ID: <ar9nBA2e_sEiFZ4k@pks.im>
+References: <CAP4DsUexEmm1qo6jH+Qzy+n3dQs_OCJ8yg=ReF+aVrcTrC7NeQ@mail.gmail.com>
+ <764b8c2e-cf09-4531-94f2-268f97a889d7@gmail.com>
+ <ar5ppRMQ8NkGnbGp@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261002-b4-pks-parse-options-subcommand-groups-v2-4-3299bee52dea@pks.im>
-References: <20261002-b4-pks-parse-options-subcommand-groups-v2-0-3299bee52dea@pks.im>
-In-Reply-To: <20261002-b4-pks-parse-options-subcommand-groups-v2-0-3299bee52dea@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ar5ppRMQ8NkGnbGp@pks.im>
 
-The git-refs(1) command nowadays has a bunch of different subcommands,
-which makes it hard to figure out what's what at a glance. Now that the
-parse-options subsystem supports grouping subcommands though we can do
-better. The commands roughly fall into the following categories:
+On Thu, Oct 01, 2026 at 04:09:41PM +0200, Patrick Steinhardt wrote:
+> On Wed, Sep 30, 2026 at 02:31:44PM -0400, Philippe Blain wrote:
+> > I did not yet dig further, but I have a few additional observations:
+> > 
+> > - in contrast to the commit-graph bug, disabling the use of commit-graphs via
+> >   'git config --global core.commitGraph false' early in the script, by moving the 'tmpdir'
+> >   definition to the top and setting GIT_CONFIG_GLOBAL=$tmpdir/.gitconfig, does not change
+> >   the behaviour, neither in the "repository corrupt" case, nor in the "hash mismatch" case.
+> > - On Ubuntu 22.02 under WSL, the reproducer does not trigger the bug on v2.56.0-rc2 (on a dozen runs),
+> >   but it does trigger it on v2.55.0. Funnily on that system with v2.56.0-rc2 I get the correct behaviour !
+> >   (no "hash mismatch" either).
+> > - On a Ubuntu 22.04 Docker container, I get the same behaviour as on RHEL 9.
+> > 
+> > > An AI analysis identified a likely cause: a delta-base cache entry may
+> > > remain after its pack is closed. If a pack from another submodule reuses
+> > > the same packed_git address and base offset, Git may return stale cached
+> > > data.
+> 
+> Yup, that seems to be the issue indeed. We should really be clearing
+> packfiles out of the delta base cache when closing packfiles, but we
+> don't right now. I'll investigate tomorrow.
 
-  - Operations that span across the whole reference database.
+I've sent [1] now to fix this issue. Thanks!
 
-  - Operations that read references.
+Patrick
 
-  - Operations that write references.
-
-Introduce these groups accordingly, which results in the following help
-output:
-
-  Reference database
-      migrate               migrate the reference database to a different format
-      verify                verify the consistency of the reference database
-      optimize              optimize the reference database
-
-  Reading references
-      list                  list references
-      exists                check whether a reference exists
-
-  Writing references
-      create                create a new reference
-      delete                delete a reference
-      update                update an existing reference
-      rename                rename a reference
-
-Reorder the usage strings to match the new grouping.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/git-refs.adoc |  2 +-
- builtin/refs.c              | 32 ++++++++++++++++++++++----------
- 2 files changed, 23 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
-index 9dc08cbca9..da7260c416 100644
---- a/Documentation/git-refs.adoc
-+++ b/Documentation/git-refs.adoc
-@@ -11,6 +11,7 @@ SYNOPSIS
- [synopsis]
- git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]
- git refs verify [--strict] [--verbose]
-+git refs optimize [--all] [--no-prune] [--auto] [--include <pattern>] [--exclude <pattern>]
- git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
- 		   [(--sort=<key>)...] [--format=<format>]
- 		   [--include-root-refs] [--points-at=<object>]
-@@ -19,7 +20,6 @@ git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
- 		   [(--exclude=<pattern>)...] [--start-after=<marker>]
- 		   [ --stdin | (<pattern>...)]
- git refs exists <ref>
--git refs optimize [--all] [--no-prune] [--auto] [--include <pattern>] [--exclude <pattern>]
- git refs create [--message=<reason>] [--no-deref] [--create-reflog] <ref> <new-value>
- git refs delete [--message=<reason>] [--no-deref] <ref> [<old-value>]
- git refs update [--message=<reason>] [--no-deref] [--create-reflog] <ref> <new-value> [<old-value>]
-diff --git a/builtin/refs.c b/builtin/refs.c
-index 5cd21c25fe..decccc4364 100644
---- a/builtin/refs.c
-+++ b/builtin/refs.c
-@@ -382,9 +382,9 @@ int cmd_refs(int argc,
- 	const char * const refs_usage[] = {
- 		REFS_MIGRATE_USAGE,
- 		REFS_VERIFY_USAGE,
-+		REFS_OPTIMIZE_USAGE,
- 		"git refs list " COMMON_USAGE_FOR_EACH_REF,
- 		REFS_EXISTS_USAGE,
--		REFS_OPTIMIZE_USAGE,
- 		REFS_CREATE_USAGE,
- 		REFS_DELETE_USAGE,
- 		REFS_UPDATE_USAGE,
-@@ -393,15 +393,27 @@ int cmd_refs(int argc,
- 	};
- 	parse_opt_subcommand_fn *fn = NULL;
- 	struct option opts[] = {
--		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
--		OPT_SUBCOMMAND("verify", &fn, cmd_refs_verify),
--		OPT_SUBCOMMAND("list", &fn, cmd_refs_list),
--		OPT_SUBCOMMAND("exists", &fn, cmd_refs_exists),
--		OPT_SUBCOMMAND("optimize", &fn, cmd_refs_optimize),
--		OPT_SUBCOMMAND("create", &fn, cmd_refs_create),
--		OPT_SUBCOMMAND("delete", &fn, cmd_refs_delete),
--		OPT_SUBCOMMAND("update", &fn, cmd_refs_update),
--		OPT_SUBCOMMAND("rename", &fn, cmd_refs_rename),
-+		OPT_GROUP(N_("Reference database")),
-+		OPT_SUBCOMMAND_F("migrate", &fn, cmd_refs_migrate,
-+				 N_("migrate the reference database to a different format"), 0),
-+		OPT_SUBCOMMAND_F("verify", &fn, cmd_refs_verify,
-+				 N_("verify the consistency of the reference database"), 0),
-+		OPT_SUBCOMMAND_F("optimize", &fn, cmd_refs_optimize,
-+				 N_("optimize the reference database"), 0),
-+		OPT_GROUP(N_("Reading references")),
-+		OPT_SUBCOMMAND_F("list", &fn, cmd_refs_list,
-+				 N_("list references"), 0),
-+		OPT_SUBCOMMAND_F("exists", &fn, cmd_refs_exists,
-+				 N_("check whether a reference exists"), 0),
-+		OPT_GROUP(N_("Writing references")),
-+		OPT_SUBCOMMAND_F("create", &fn, cmd_refs_create,
-+				 N_("create a new reference"), 0),
-+		OPT_SUBCOMMAND_F("delete", &fn, cmd_refs_delete,
-+				 N_("delete a reference"), 0),
-+		OPT_SUBCOMMAND_F("update", &fn, cmd_refs_update,
-+				 N_("update an existing reference"), 0),
-+		OPT_SUBCOMMAND_F("rename", &fn, cmd_refs_rename,
-+				 N_("rename a reference"), 0),
- 		OPT_END(),
- 	};
- 
-
--- 
-2.56.0.353.g0856645cf6.dirty
-
+[1]: <20261002-pks-packfile-stale-delta-base-cache-v1-0-7592a3e31ae0@pks.im>
