@@ -1,209 +1,140 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl2-f42.google.com (mail-dl2-f42.google.com [74.125.229.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1394472F69
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 09:10:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790932239; cv=none; b=F3dybgFXYjjgtnjXLwrc/k4rKgnDPGlmWVX9BfUndg00Ge6+ypzghLd8+OHIfeqmVpjv7U1ceZkKj1aDuAwBEDI/AX2hGiZ43Lmz24V8OszJ34gnJk2fzTqravuy9C39WDHMGnrSDLW0lntac6Ek3KMbScyYQ9IJsQigHeWbK20=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790932239; c=relaxed/simple;
-	bh=aywY5UUfBV9iaIah2/tA9YQTFEu6QTFCPrBViQ5qqlA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X46+rT980t6Qsa0tDyaZIJ3+AtQEwtQ/IgIUIjQKxWCl8F6wMGzkEmCAlu5AxXU2rLqq8Sp968ss05nTgUidSVaKAKl2dseKgYVjMzgc4H50sgAMXGS52vnu9IMY3pG3hVkjTaAvrvhEX2+vOp4kNVmQl9WXCdDuaxVZpmYm+zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NDw6yQNM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ENOFjb1q; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8CD471415
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 09:18:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790932740; cv=pass; b=r1iNhWJDc5mCjSaYANFGvJ9ofx9Qlrd4+eHYeQe9Mv172JMiBIBVH/MvRIvPyCJbUIq5UIsGVevgRFeN36iyo9Jwl2XFaaXt1xNC38jw3KgXEjT+CGNn4M066TVSYYJ8RELrLL8DEHDlbPNvp7bfQiYCxXss1eycXIc4plBQZh0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790932740; c=relaxed/simple;
+	bh=Z8H8TeeflBYsnWOWE1mXO0WdPTQIM0yc2CvSbXJgKPg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Tmq/SsFPjDbdqECUtw0eDy2aAKYPdrRhochmACvINGvuknfUOuOT9DcO5Ba+52apRsRvsyVO211thI1bt8tUQutfg85t/ai4k1mLB1YAB2yLsAh8WetDT8ewX7keVcr637liATr+pfI4rPCvvHoV2ZJk4I7cbXhoVPazWmfbp00=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FSZsvMgC; arc=pass smtp.client-ip=74.125.229.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NDw6yQNM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ENOFjb1q"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id A9B17EC027F
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 05:10:36 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 02 Oct 2026 05:10:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790932236; x=1791018636; bh=1cdpv5BSBl
-	iDirNcKAjujir0jbTjEZfTcEDFRCHq8no=; b=NDw6yQNM5rVANZpmvQ9nYXYFT0
-	jdbzPDwaQwD2zPikbS100iusbAAny6WjFsuIY3syqEX64V3mrqTwolFxwpK0/CJM
-	MufQyliyk9sm05CaXYqXMi00Q4V0RvHg0Fjaai09VkAcAfUfT8/qVWsbdk0KVhGi
-	RcWQxz5Nlv+21EqGcVHvxQGxTzHj/y5dC2lYT7h3E8Efb0EToPHq8+zaKGLtOeb7
-	uM27YkhMPaNPOs5i9kFuFYPOSd0TYpbGA9WSTyikUUdWSz7bwlCDuX7QecPWuwzO
-	ZE8UuMbS3wWkLy/ryeedrxFMfhkmExdZGCiiU3OvWKCno2nLIka3+Gv3t9Rw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790932236; x=1791018636; bh=1cdpv5BSBliDirNcKAjujir0jbTjEZfTcED
-	FRCHq8no=; b=ENOFjb1q9j+Qq6/nq6DdqVJ0DX6+SMszrjkWMMIdh9u/q+C/6pF
-	gxP1NY33CWZ/31/goOuXzco3mFxY2R3urv65OyQj5GSl90YeshV4QSftSXTfE4o8
-	3okHKQK3sdI1QkmYRRO49cfj7Gr88FbstnjR+fzU41DmwPcV1erCybyH6canmD0I
-	E2oSyvHI77zQGaaUjoqSWHj1/LLueLSXShMz//RD5pS9VAA0ybqhoKAcWcTcwiuB
-	fMrtADANHvOfjU1vMVX2ZFOvCQrA4SmLzgohrhZMbLYfah8FH0edfmoJjbzq5RJV
-	E7InVXQhAnTfysO9vI1oLP33+LfrshQSxiA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790932236; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:jeKluyuXwbNVe8XX3eacZeNvf24inHY7xXu3lz8K8DBsl0H
-	b31YMiW70gXytUTUSGL62D+eM9RERPrN4Z41Ew3dbGmGwYRnDKVLt/kn/yGnnvc4
-	J+MiNygL34ZrMyQqAgyfo9CluWlB9iIVDVKBARVt9QNjOGcLBHSAlzg0CMKzqFnU
-	qhICItERc5og8bBBugz5OoVc4UNQjH2ZV7M/1WOA3w1SIqH2bRiUKSeR3l3CTSz8
-	qMTSFJapwiZRf/Y7uRQjIyBNpAgWF+yrT3wQZkQzKOv5whV+gAT2F+ewKzaCPzjj
-	gsWwHZmhKFWynjV6lnRIOPUrT4wUvp5uP7Te9aA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:Y43yIYwgMGJxRxutR1IauDZ2cmcjxHX8UaRFtBatf5U=:aywY5UUfBV9iaIah2/tA9YQTFEu6QTFCPrBViQ5qqlA=;
-X-ME-Sender: <xms:DHW_atT9vRf3JEBdS6QG3M4Kz8qNQfOCHmS1WD6Fj7ZpE8r7bREMYQ>
-    <xme:DHW_aswq9X3Glg0imN9LdosZoKFch12P02sGVlo34cOK0Cq_8AXiE-YpLAXN9SYdX
-    knDSSuGi6SH-BnHu0W63gBls5Pyf7PmPanSV8Wa9_nGkyHHWpY_0g>
-X-ME-Received: <xmr:DHW_agd3L3b-6kspyJNQECOcwJ873U1c4hWtQN6yZb3jwp-wpHY5sg>
-X-ME-Proxy-Cause: dmFkZTEuHObYeQF/Y6KzlEzBgd/Kjet4OOL64hMUsLPJ4h36sMEBjnegNal3VOvYZN92r2
-    S7RIiWck3UCwoRa/dm+fdOro6VIbIL5afu/p3JDkaSHUcKCEZ62DCJqWICM0YtGPj7m4YN
-    yxSZzfouz/8ctmG8jJE/8YNieUrOlR+gTUFT4t9EAWG9dkHbYscJ/7TfZt9RNBtajrYJpQ
-    4KdcsECJk/bVfOjLY70MLN8rCP5TLiLqgP5nt5tvTjBqiihhJo/7ksUUwQDU3FYQBqnu1M
-    ScSAUdZVqsfvw8zi71Rk4IiVsb+77lnOEcttgOKwELaXd17VibFMOGCxha8pDORWiRz+qw
-    ozqoYIaaas4j11dPN/wFzls1zpDavEXFFe3rswQHnEKLAA9yY8TuxaZeWlKm5IxQKwiSjt
-    3pVhSOj0oq+cFqOZhBwvuArwP2iWI16t3sQreWvazdYTnadpDjurv+SaK9amaVnUcM6z3y
-    4+4yvAwdwzqLLq9twRiWjhhQsRmNpqWN9F/jhLb9ZVuZr1uQUcQ9n6DyikBpevrFOim/NO
-    xhRQAzAIj7bmLfjW5ISNIgCK7A8XhHORANieiOQx3cB/tu5D/y9NoJhMDY3Lpw2IUxCEwW
-    V3pcCZB0OKSPJMZZ0vE0VubBEqq0F+L+PUh43wSF/XHMzLvZpD+meKMxNRUA
-X-ME-Proxy: <xmx:DHW_agJBdOvkfGbeeN63_7s8BGnm2nzIdVKtO_idxBUxGhoGkbKl4w>
-    <xmx:DHW_apH3hUY5XwKiHhPkCF2dxU0E182BV_fm7pX-xBE7PHfM_3lskQ>
-    <xmx:DHW_aiqauvhQ9m2VoAnBtTbX_jxwOmDcmwe0OOj1MMmI13-Bzayqdg>
-    <xmx:DHW_aqQSQvQ07Xbx-BSTBQibt6yt-DQ5djh0JHP_WVMKGB9nL2Vcog>
-    <xmx:DHW_agqGKro5ev4m2utf0j8GOpX8q6SKpImqzANakP_j9Pxyohf_RsGC>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Oct 2026 05:10:35 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3bd9059f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 2 Oct 2026 09:10:33 +0000 (UTC)
-Date: Fri, 2 Oct 2026 11:10:30 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2026, #01)
-Message-ID: <ar91BoTedI3gHntX@pks.im>
-References: <xmqqv77l2g2e.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FSZsvMgC"
+Received: by mail-dl2-f42.google.com with SMTP id a92af1059eb24-144f47a9b57so7066767c88.2
+        for <git@vger.kernel.org>; Fri, 02 Oct 2026 02:18:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790932738; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Df/M0hX9tad0qADa69rnDP+tA7YEnLSfeAYQpkl5KtwsfubUwROEAtH8UUBwI4w9o1
+         K7u9p7OANp4q0VhAbWVbpDIczGDfPvWaeTHN8GR4WIuqerlBjY18wOoxQEnvfC7k91wQ
+         QBY+7At/pV1HIUhVz3xVQH8fqdFJlNnImpJbvltWxQTmuDnMaJA4COObZbww/IDG+XhO
+         ovLBzLBLyf4AspXCO+Su3lJJIC+B+2JO6T5Hf6s0XNxzNQGx7fz9paNiVuvRxJFRdr6t
+         J2mUS6QMog/OS7swbztKXhE3+hqXloIVW6APQh3vSKczKUKDP8oLEb+IoeiyEBLGrmqh
+         x21Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=1ve8scoE/H9l0rEsJBfoVnS6Q7fB7F+8GJKxqjX2slM=;
+        fh=5nZn0HRpP9ZszniLRQU6Iy8lvPX91CYXGnNouZ7Jmpo=;
+        b=IcAx+1kbQSO4ajTW5M/zgZFaLWUDCHL0NTTSAY9AwIwnyz8dVBHoRmws2xoL5CdjXt
+         5qygbUvCO1DyK1TdvjatKRKgyPgrYHu3GLwpxRd+G+GsyC6QB4yIntpHwxlms/xVtIbx
+         AfgfRTgdn6e0RCFdD14TdxBjYRHcQZlJDTe9wFvPzceaI2zWvf4uRHBh1yM9xgid37w5
+         IRFkYpxAxqptK149GXMH1i4ljidBP82S3URJxmZRsSoVNsvhlOqCiG3u/fpOmMPQid7i
+         YY4qeqI/0PUmiM5Y/jTatBaXXT5cH4NOsufdqr3erroGiPvgpZg6Xl6dg7Eulh6lp8wD
+         ktWQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790932738; x=1791537538; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=1ve8scoE/H9l0rEsJBfoVnS6Q7fB7F+8GJKxqjX2slM=;
+        b=FSZsvMgCQZS3smlf/dsLR1hTRMjUHQNYaXtvJYqOxHVQD6mKx+Db9J2WV1jecUkQBj
+         JStrQteQX66MTgAeHLZC3ncESM4XzUcIkBjKlBc7OXeStqz6bTXGgEghIY+UKWyDIcPh
+         pmFizNPNaf6QiBx6qlFCtGjMHzfNzjsGgHgn3F4AA3qCNQasFnFP503HuOf9h3BuU4Ot
+         s4z0t4D+xjEzTk8ji4hAM52a1eScruESn4lOpI7+YBFwOQLgjEsZxSTqbwZSa5hdCNke
+         AYwRcigBvF2g5B3rAd5YQwQ+JyNgZCsInj0KsTs7ABpoV9INia0HXEunhnl4WTcg07Kd
+         5V8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790932738; x=1791537538;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=1ve8scoE/H9l0rEsJBfoVnS6Q7fB7F+8GJKxqjX2slM=;
+        b=kVfQTsjvvfuL/AKCN+pYscmDyhriOOWuC6sbbmXOn8htC41sVFUztWufDNstKvNc3Q
+         qG32OFYCaB/6v8idIq65T6DL556dGTMk0VnbwfhsT354n3cHYemGxbcvxqO2hIC5ihZx
+         yx5Bg1Xdg7gA1lbA5R/LCESBww/r79IM55u6mgpYNiy6jSeB5nQQpySWcJin513sYZvL
+         suEzUq4E8u+buLlyDUqL+YyoixP5PjVR3+du4+wf92XMbzmL37nm29KI9ERNoBQxN+SD
+         zjUoNDEb67svYtuxURLkzIiRzFN4Ym5g5C9ajjgA8MSAZnvvQdwEsl2WxXNDkPbWLE7Y
+         F2Tw==
+X-Gm-Message-State: AFuF++mPoirh5cI9OVDXFIlut2OUVou6aDsC4NYtzfe7tbZobC0rtZno
+	ZjAPFnzOp9LROeOgNQQvc1kXYCi8y4mKgVDEBZWTYF9sr0lE1jzy+/FpFAiM6zfULO0W0LzVNT4
+	lk6nNQLj9DieVj8+dNa+CiFBuMp4zFT4=
+X-Gm-Gg: AYBFou2/c8/dGM9iuGsWKFSOmpte3xjDRdtzInaNvGKhO7eGrclYeY8PnkDk8cgLwr3
+	56RgKvVvnQHjmx2M5F99IhGSuS8Wx1jmMxURugVIwMEyPLZitwOjiRISpQnZL9haOfI4hRs9DQV
+	dq2leFUVTkPaROZd/hWdIbOo9FdGe+CoEGO/HntYQi82r6wl3F+RikswaGpQxwr3kCZX6PBYpv/
+	C7ma+dyk7wlyeBUHEG5PtYUsvKilWmrU5x5/IEfrZkik7WHMoQ9XJvM2kV9SedYXUKbFBHrc9AU
+	CQM6wTdlvtVRwav4getfwi+b7FQ/l5g7dfipOs667a34v2LEifc+fO0/zM1qja6guIihJFR8S9v
+	Tu8St02XzgbNfAhGccIsVyBIf3S54Fjf7a592KQDTpGmbsDvHVb+yNNdyE4mh51lJJB0+foEv7j
+	BuEHpfjuZ0mGqlnvy3/PpSWe+B6lBKjkM5QMuXxTg=
+X-Received: by 2002:a05:7022:f90b:b0:149:c766:3629 with SMTP id
+ a92af1059eb24-14f5c5e9661mr2617761c88.23.1790932737647; Fri, 02 Oct 2026
+ 02:18:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqv77l2g2e.fsf@gitster.g>
+References: <20260908164129.560396-1-christian.couder@gmail.com>
+ <20260928133846.2094261-1-christian.couder@gmail.com> <20260928133846.2094261-6-christian.couder@gmail.com>
+ <xmqqse2sgda6.fsf@gitster.g> <CAP8UFD2Ks9mJ+Gdw02VXjpKv16HTxXTtQ3_5_heP_1TOfsHb-A@mail.gmail.com>
+In-Reply-To: <CAP8UFD2Ks9mJ+Gdw02VXjpKv16HTxXTtQ3_5_heP_1TOfsHb-A@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 2 Oct 2026 11:18:45 +0200
+X-Gm-Features: AclHuK9QIG-X-Pwk2VrFxTTrn42-HU1fXAeEnQkRcLl73gg4QdvP1ggumBt1IBA
+Message-ID: <CAP8UFD00nFxs_wXwdJQL2NxojUcnYozjf2pHm0=MZRAEm-nsrA@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] builtin/upload-pack: don't disable lazy fetching
+ on trusted repo
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, "brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>, 
+	Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 01, 2026 at 03:48:09PM -0700, Junio C Hamano wrote:
-> * ps/reftable-reflog-timezone (2026-09-30) 3 commits
->  - refs/reftable: fix on-disk representation of reflog timezones
->  - t/helper: fix segfault in "dump-reftable -t"
->  - date: add helpers to convert between "+HHMM" timezones and minutes
-> 
->  The internal representation of timezones in the reflog for the
->  reftable format has been fixed to match the specification, which
->  dictates an offset in minutes rather than the parsed "+HHMM" integer
->  representation.
-> 
->  Will merge to 'next'?
->  cf. <CAOLa=ZRVt=e3MqjLY=UkitfSg_YjpsfFjeDsEmqJQm-5YhopxA@mail.gmail.com>
->  cf. <xmqq33up73dm.fsf@gitster.g>
->  source: <20261001-pks-reftables-fix-timezone-format-v2-0-a4fd1f7cd21a@pks.im>
+On Fri, Oct 2, 2026 at 10:57=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Tue, Sep 29, 2026 at 7:47=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
+> wrote:
+> >
+> > Christian Couder <christian.couder@gmail.com> writes:
+>
+> > > +uploadpack.lazyFetchTrusted::
+> > > +     A multi-valued configuration variable, each of which contains t=
+he
+> > > +     absolute local path of a repository that `upload-pack` is allow=
+ed to
+> > > +     lazily fetch missing objects for.
+> >
+> > "each of which" lacks a plural noun to modify.  Perhaps
+> >
+> >         each value of which specifies the absolute local path of a
+>
+> Yeah, "each value of which specifies" is used in the v5 I just sent.
+>
+> >         repository from which upload-pack is allowed to lazily fetch
+>
+> "from which" would not be quite right, because the client would lazily
+> fetch from the promisor remotes of this server repo (using the
+> "promisor-remote" capability), not directly from this repo. So the
+> rest of the sentence hasn't changed in v5.
 
-Yeah, this one should be ready.
+Actually "from which" would not be quite right, but not for the reason
+I just gave. Sorry. It is not about the client, nor about the
+"promisor-remote" capability.
 
-> * mc/refs-rename-transaction (2026-09-23) 1 commit
->  - refs: run copy and rename through transactions
-> 
->  Both reference rename and copy operations have been refactored to
->  use the generic reference transaction API, ensuring that hooks
->  observe the updates as unified logical operations rather than
->  piece-meal internal deletions and additions.
-> 
->  Needs review.
->  source: <20260923133651.74120-1-maciej.ciemborowicz@gmail.com>
+"uploadpack.lazyFetchTrusted" controls server-side lazy fetching. So
+when a repo is listed in that config option, the server's
+`upload-pack` (via `pack-objects`), while serving that repo, lazily
+fetches missing objects _for_ that repo (not from it).
 
-Oh, I completely missed this series. I'll have a look.
-
-> * td/ci-large-test-resources (2026-09-30) 2 commits
->  - ci: use twice the CPU count on both providers
->  - t4205: compare huge output without diff
-> 
->  CI resource exhaustion during test runs on GitHub Actions has been
->  mitigated by switching a comparison of a huge output to use a binary
->  comparison, and by capping the parallel jobs on Linux to the number
->  of available CPUs.
-> 
->  Will merge to 'next'?
->  cf. <ar0gon2VE0RlG_cC@pks.im>
->  source: <20260930-ci-large-test-resources-v3-0-d65ac7c21b5f@gmail.com>
-
-I'm happy with this series.
-
-> * mc/refs-hook-report-old-values (2026-09-24) 1 commit
->  - refs: report old values to transaction hooks
-> 
->  The 'reference-transaction' hook has been updated to report the
->  observed old object IDs and symref targets for unconditional ref
->  updates and deletions, instead of reporting the null object ID.
-> 
->  Needs review.
->  source: <2af3eeadd18806c5298d53072428656885cff89d.1790269745.git.maciej.ciemborowicz@gmail.com>
-
-Yeah, this is in my backlog to review.
-
-> * ps/meson-improvements (2026-09-24) 7 commits
->  - gitlab-ci: fix hanging MSVC jobs
->  - meson: update wrappers
->  - meson: fix outdated completion helpers
->  - meson: use precompiled headers for unit tests
->  - meson: use precompiled headers for our test-helper
->  - meson: don't recompile git-remote-http(1) multiple times for tests
->  - meson: avoid recompiling HTTP sources several times
-> 
->  The build configurations for Meson have been optimized to avoid
->  recompiling HTTP sources multiple times and to utilize precompiled
->  headers for test-helpers and unit tests, reducing clean build times.
->  Additionally, the shell completion tests and GitLab CI MSVC runner
->  jobs have been fixed.
-> 
->  Will merge to 'next'?
->  cf. <CAOLa=ZS8Exa_WkMLiFNspeYaKFf40eOM19ZgecC=yTnFEAhMzQ@mail.gmail.com>
->  source: <20260924-pks-meson-improvements-v1-0-90b7f79f1c4e@pks.im>
-
-Yup, I'd be happy to have this merged so that our pipelines are finally
-green again :)
-
-> * ps/setup-enforce-repo-passed-to-create-repository-has-no-state (2026-09-28) 7 commits
->  - setup: enforce that passed-in repo does not carry relevant state
->  - repository: adapt `repo_clear()` to fully reset the repository
->  - builtin/clone: don't apply "core.sharedRepository" to leading dirs
->  - builtin/init: move handling of "core.sharedRepository" into "setup.c"
->  - builtin/init: refactor messy creation of leading directories
->  - path: introduce `safe_create_leading_directories_no_share_const()`
->  - path: drop useless `safe_create_leading_directories_1()`
->  - Merge branch 'ps/odb-alternates-at-creation' into ps/setup-enforce-repo-passed-to-create-repository-has-no-state
-> 
->  The repository initialization sequence has been refactored to treat
->  the repository object passed to create_repository() purely as an
->  out-parameter.
-> 
->  Waiting for response.
->  cf. <b0ec2ef9-7aef-4f7d-b31b-7141b39c2d24@gmail.com>
->  cf. <xmqqtsn9mkog.fsf@gitster.g>
->  cf. <CAOLa=ZSX0e25wK5qQwznXN9rVM+WHn8631pkTEN9Zm-BrXfEsg@mail.gmail.com>
->  source: <20260928-pks-create-repository-stateless-v2-0-a03612f703fa@pks.im>
-
-Hm. All I can see is the discussion around free(3) vs free(3p). Is the
-expectation to do a reroll with s/free(3p)/free(3)?
-
-Patrick
+> >         missing objects.
