@@ -1,325 +1,212 @@
-Received: from mail-yx2-f40.google.com (mail-yx2-f40.google.com [74.125.224.168])
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F14B316905
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 12:40:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.168
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790944859; cv=pass; b=ntypeamlfX0aFmxkxz0FBwYjr/8+wbc1GfG/do0MM9D37Zv7Tnu1Oij6u46uwaWR1Pu5aRjcYwrzU6qrv/dGm49N2Z8Ihi6e0IOb8UI0iNz3DpMvWdKluW1vFx28PuNYPqvL3CodCk4tNaWv+a6u+fcWwOwMIfdYn2qlp9RbgqY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790944859; c=relaxed/simple;
-	bh=zkt3/cl9Ju1lH1yIsujzljwCb795gG7fNincRIiAtbI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nu5B4lMoOU30pWKwbO5HhoAJJ8sWDgIqOQpn/vjZdZL2aLadKnQX1g1Rc9G26zepkGnLS6v4j+FSP8++Ly79Njo3m5RrY+Yua8hKF/K2HptMw1OStRAW/7kwCuT39opXA89woRno6hEMc0gmjR6et/YfACZ6beSUf0M12mj5G9k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=Dj6qhBlk; arc=pass smtp.client-ip=74.125.224.168
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1887842F6F1
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 13:04:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790946305; cv=none; b=cYdWJ/o5u3LlUd7M0XcZdvufOPomkl/QpXkw9UZ3AtgK24BwzCWWfWMebIAyLeCEE4viD9YA6/s2Q5XCAGu0ks+Y6MAHwszkcaHHrKxZEvFzqVMVS9tPRhiFxmi1sSHcihKSlJpZc3jYX6XROf9kr2VtEVcltvUaKXRcNqO8/WE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790946305; c=relaxed/simple;
+	bh=psH0hWZi3RQr7zroniOVEP7BzLEOkmfjNq05BX/z9vw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
+	 In-Reply-To:References:To:Cc; b=DLO2xl3GTdFw03TKQ6MFfkI6qZVVGH8DKOTjIW49y5ifJ8TEzsHoazUkt1UmZjSANlPPAudUuKtTPbH3kM/4tzXA9x/E+tUh28C3QV5YXIMh+YJ7BHiPx1eX5mmvH+Zq8y6fh4Od52jFwoLjJtMCmnuBIEC9g8ACaITYPHzxKHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gkd27j6n; arc=none smtp.client-ip=74.125.225.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="Dj6qhBlk"
-Received: by mail-yx2-f40.google.com with SMTP id 956f58d0204a3-6762de1c77eso2863029d50.1
-        for <git@vger.kernel.org>; Fri, 02 Oct 2026 05:40:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790944856; cv=none;
-        d=google.com; s=arc-20260327;
-        b=fMPHGntAsYg4E1WmOOLoJ+5TwsKWogAnFdy1dZvayO+St3zoJRxLHrZQpwoDiiXnRY
-         OPqBgxL4EIHKZAlH04qsXdtm/RTcG53sw9wDSpP9zMkxx8T25kfNkyMSvV/RCcTu6v49
-         eQ34p2ahv//97kTAwoQ8CBUPREH7AMDi/yEi/+8lpOcNsBTWE4638TkxhQAtDHJHnWzl
-         fQ5AfGeCZAGFTzMFOWi/UKLd41/pn+j65r5rM/DPe41H7IP4QZzsHCi7i1d1Er8nf0at
-         slgGPgX1EDRi9a1LIGrOPAZX74xsG2G9j/ExZUWTQ7Td4+vpjzoE9/7+RdIoQfmeQaz1
-         IOiA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=dYg3yaZwsRyLwDgTLypW6tWcXATyfSSRxtNPgUVgHkA=;
-        fh=qljI9BEnCiy1dYP534k7cwzMOrL3BlNrBzawE+tMD1k=;
-        b=lE7OaYYTRYiKAFFDDF8tgcrJX1vp2JuR287IItszDqz6XXXnBryBgrYoqBammzkXQg
-         yB/gp6k+WWr7Th917hfFGRxM4jFTfPZPnhkbKVwOwIeEzcXCnBOpv4rPTwskdsWpnQd6
-         poS1jmZp68th8oF0gqg8Cs9lPpSCWrDi7D2YuzsEZC+Sbk3OHhZjZafcEw/7l9Hbzujr
-         QFyjJoovHhkcVwcRqDYpZiK6UUmsmN3VD2YV+ksCilU4oZ7BjMJ/J6/50yTG/M96VsZB
-         kOy0KIx8C4wRgL9yjj1hk7BNRB0q3bGZKQwH9nc74MwRgymaz9r2ssdR0AZ87gSDMaCY
-         DYSg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gkd27j6n"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49cd5462b69so200595e9.1
+        for <git@vger.kernel.org>; Fri, 02 Oct 2026 06:04:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1790944856; x=1791549656; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=dYg3yaZwsRyLwDgTLypW6tWcXATyfSSRxtNPgUVgHkA=;
-        b=Dj6qhBlk6TmXunGL5x5Dcc5C1YQjkPkj5DiT72/NuEyqDx2En1xiUXdJg3vrf+cd4i
-         xzFdWd1JqD4f9mjSIGI0Ogf3OylR29NeD5w2S5G+UYmGKXsd1Zcm+tgvdD73IVh8Pafm
-         8J6O5QVaxADqprftVQSS6thm/M2pvPXUtJX4U=
+        d=gmail.com; s=20251104; t=1790946294; x=1791551094; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=vRpoTPkOwu2kHYGd58XTlUABLsElVNkyb/S9ROItkY4=;
+        b=Gkd27j6nZiV6DLPTnD0vGAjKOBJsmL7PXDGtt0/XnIZBJ3lw4od5UxuBzEhXXQfuf8
+         oy/YbY7mJNLLyQcLOITYhkJOxPoyjR+ZvrnwwzihwGbUIut0earp1PuSc+MEbhUkRLIJ
+         rbOt+g73qf/Rr7snwvlAPDJ7MDDSlmi/RZrExOyXkTdaJXBo6aiM10rfGf3gF6IirO0w
+         GR6YfvtwsKx0nY36NUNrpItQ8+HgxtpBLWApyCQ0ZwgQrmHZpPArhY2leGPW7rSarEv9
+         MOFPRkryOPBBoQxZkENKj1APTRPCXZwdOgcxDRliRiRCKMuUGx1NSlgM7vMs55iAH6NH
+         qfsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790944856; x=1791549656;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=dYg3yaZwsRyLwDgTLypW6tWcXATyfSSRxtNPgUVgHkA=;
-        b=1VuA3jYvwU/RIQ1gO5RuVslYtUICiESvNhUGpN/a/tnyYMN3YMnwPdGKAckktAcBnv
-         3KWcH9cU5H+puq6W54t9wfCpXWHQABQ2Uy5/RTpebkW4lBwqT2rBhoAw3Sg3wufj1bEr
-         y5B33Q9Q343dj3rrRuJ94QBh/a4nKCvw0wLgxmvISwY6D1gQ7qq5YfDWGKwRi8POa5q5
-         oWsd8DhnjVOK+hMaVqm88EHnD2yQ4YmagUg3kD9z11Wemk/GHrxzf0O+tBWsiuQF5Sez
-         usLux6JGhiKfk/fAEPEenQfqlLDRMsWXOGgr8mljDIQZxcIOviphyOVDo+aTdjQhVh3l
-         pPag==
-X-Forwarded-Encrypted: i=1; AKwUvBxGAYt5vQ3YvwJ1WF8iud0bkMze0HFxaQtAexwYFl7i5ldMemGUC28RxwgxhkklF1YItBI=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJX+Pm5kz/uYJ/HnPaZO5Hxa61EsfsCl+XYuPFBaGD0bmDubh8V
-	+5B+486Pu+R95oZDo3seh/qEvLhIqRFnwfi3bBj56ELWxtd9MBXSEJjPMT0m5HR3Ep4Pc/Qrdlf
-	gLFRLP2WEyLw5Hs8j3DqswKmomJ0/DDhBTFaMTZOv9w==
-X-Gm-Gg: AYBFou2Kk8pUu3EmH868kKbX+xuNKzQc3z3AUKomJ5kxGQVPkKAGwJb0tq8DvyHyn0a
-	T+pJTBEAKL8a5wLiyA93hELSE4hhzN9iZmJQ1ccmL6isPTAr6ZjtYp0i+zX7ZuWGPxudPV9fcG9
-	vQqUxqW6vqCL1oQVvE6aItaROURquc0oAOh5DLCyeCG8iQ+QoHXinKRiwplmD6DZXGWHAW3g9Hp
-	BvttDYRQGUP14D5ukRcZLGXC9vzEiiOTJbVHIwD/w6QHZcEOeDRttcZ6C5R89z7hQ7/VscSRcmJ
-	Wjy4V60KgcF2Lkm0kbFSiTXLradI7wCJpRcAnPubTeo7TOW/vXFW7xg=
-X-Received: by 2002:a53:a103:0:b0:675:405d:643b with SMTP id
- 956f58d0204a3-677ac0e6b45mr626910d50.98.1790944855598; Fri, 02 Oct 2026
- 05:40:55 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1790946294; x=1791551094;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=vRpoTPkOwu2kHYGd58XTlUABLsElVNkyb/S9ROItkY4=;
+        b=Dz8fukojI122Zu2uNd0Kyrv/8TM0UO7oV9yq+tAkqSbT8nFZB3OsbSXzCBpwUjlpLd
+         z0pg+/YIiJtqT6TFNXiSwTC04I3CImuEPFoCeVSUFI37g+1iP8EuDfIXtIN88s+/imxO
+         hzpTOxRdopAG8iyQs8HDcOKaitdv+clMu1w1KNJraNNDf/m8CpzJE2ocbRIGjdo4ABSN
+         f56Fvf3j1Pn8AFEaAKbCHl7kRmEBjPMAGv4KITRi8LtlPSKjP/9ccAe/Uu5WUS3T89re
+         xHciyPENpDVqb5+vq6KUFKXVjjqnW3ZQ1jLWpMWFlyKJDL8vj+OrIYBTh3yGl9P1vhSD
+         +orQ==
+X-Gm-Message-State: AFuF++ltzfRoUeZG7vbw0oEnIBTtRqEAGgCN7RnED+JdYfrW664yHmHN
+	HjfJXUmlJaGv4uZx7AnRd6e1QWv9p0+ukGNGmzSvfVgVLNe5Kro6L5g7vM3A3A==
+X-Gm-Gg: AYBFou363DCAsFsnkUuE/mCCaQ96DnGj7qtjiZdP2Sj9iwMpGBZlVB8Eqx4BUoYO5oY
+	HGcTu19s/LNGv/OEDoxZ4QDPK5mRYKkce+wVmW2yzagLS9lnoTWe7TDd0Zi4sOsnhMaxlgMri7q
+	pXpBbOau1Deweq5bT4kllkQskaiDz5TnyFOqeqTwEXRZKIJpBrHDCsIv7fr+AzfvvCEeJTqtqrq
+	p3gXEOlFkh9gJ7QzMqduKxlgDBgu6TThJQlm1jlrJ0tuVs8MALKTjKOvOwycI9qUWPG3uC1qtFp
+	0RRUxqXtxlTsaVny27I9/61SMtSgYoG+lSlmD17OjEhscyF3ExlLBe1Kr7tUZsEeddjuDVSE9T5
+	NtyWFRGX1XwfXdKYdNCpopadYd6LJhBkeSjl2OhmFHBmb9/7mZJNbabhuq3nw3PwHeFuEpvDyPq
+	MXFgwAJgODnL4uXqPzjAjH5xA1ACXDFAjmbnFJdco0azcC9d6hfEb+ocJGUyRGjYwvOgRiYQveC
+	PNSwbCZBNrzLgj/i+4xmtgnDnyF16lluszvig==
+X-Received: by 2002:a05:600c:b85:b0:4a0:313:3a12 with SMTP id 5b1f17b1804b1-4a02759b47amr41707765e9.20.1790946294152;
+        Fri, 02 Oct 2026 06:04:54 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:8109:d906:4e00:1c2e:b954:6be3:cd5e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a0280c6597sm84012995e9.9.2026.10.02.06.03.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Oct 2026 06:03:53 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+Date: Fri, 02 Oct 2026 15:03:34 +0200
+Subject: [PATCH v2] packed-refs: use `fwrite()` when passing refs verbatim
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2239.git.1790930019.gitgitgadget@gmail.com>
- <fee92f3c2009f8f282fe98e6b16d403704db9ad9.1790930019.git.gitgitgadget@gmail.com>
- <ar-T2y54X1uDQ4mX@pks.im>
-In-Reply-To: <ar-T2y54X1uDQ4mX@pks.im>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 2 Oct 2026 14:40:44 +0200
-X-Gm-Features: AclHuK9twjDkG-lVsfCd_JL2QA6mg4Xv9Rl1V1WNkBN4J0jurOWpAyfbFC_yQMc
-Message-ID: <CAL71e4OcAg1PYaZZ2474Q5ayQgTeJFR2-7J+0ddrCe+rwwj=3w@mail.gmail.com>
-Subject: Re: [PATCH 2/2] fetch: write commit-graph using updated refs only
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261002-kn-speedup-packed-refs-v2-1-2ae75772ebc1@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNTQ6CMBCFr0K6dkwLkVBX3oOwKO0AIwJNB4iGc
+ HcLHsC81ffyfjbBGAhZ3JNNBFyJaRojpJdE2M6MLQK5yCKVaS51JqEfgT2iWzx4Y3t0ELBh0EV
+ eNDcnTY1axLKPLr3P4bL6MS/1E+18rB2Jjniewud8XtWR+3uyKohSyjqZOV1LfLSDodfVToOo9
+ n3/AiptENrOAAAA
+X-Change-ID: 20260930-kn-speedup-packed-refs-9868f5d0abe9
+In-Reply-To: <20260930-kn-speedup-packed-refs-v1-1-111cd03d9b0e@gmail.com>
+References: <20260930-kn-speedup-packed-refs-v1-1-111cd03d9b0e@gmail.com>
+To: git@vger.kernel.org
+Cc: toon@iotcl.com, Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4199; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=psH0hWZi3RQr7zroniOVEP7BzLEOkmfjNq05BX/z9vw=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGq/q7n7QmjyvXs6BCzpOp6SZPE2/E6FtiSI2
+ ycOx41JuOzVoIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqv6u5AAoJED7VnySO
+ Rox/gwoL+wcyLDL2KACqatDAC7Mq3LWpL8Uwj1iR3GDK+R9ABM+HaLsmsCbM3EjtGu8zqgsNyzL
+ PuifhX5gMtGnpIQpBZRMDl+zU7U7B6x+lOuhIztynT4a+r11FKWM4ExnCM0nGjSGW8wKWzZi7QK
+ FoUiB/ZJFr3fNgeeWWdIDN4iOVcEY8pIYqJOmmj5ZEepRmUTEiLmkkeJfUoFAmMO/JFrCCyRhYp
+ ZP9pJ1zoFfgoclQNSizrnKRzhE/TCvoBYJeBApIBq1x1UVvqSy68E9SCM6EGtYwYreTkkIgB6CZ
+ fAO6ZfHUpE4DgRyzTQjcSt8co17T5a04vV1UCIgcML6iDzJJV8tdPsbmvWwozPFLVk/49vWZGoW
+ BZWvAqni63iaKvYxLnSpMjpcjFJT/utjEED8fWvr8e7BNLsGoCwJ5e82NAgEyW7iJ3e60PWp32t
+ td//XpmaF4X+KEBEoUFLljkdwQwCwKHoi2/aK7NUcD4n2RcXxsdJhNdbk8z83xkTChrMh7rSU65
+ ic=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-On Fri, 2 Oct 2026 at 13:22, Patrick Steinhardt <ps@pks.im> wrote:
->
-> >  1. write_commit_graph() was added, and it accepts an explicit set of
-> >     commits as seeds, enabling more targeted commit-graph updates.
->
-> Hm. The big question here is whether these additional seeds are additive
-> or exclusive. That is, if I have an existing commit graph already, would
-> it basically just extend the commit graph with the additional object IDs
-> or would it replace the commit graph with a new one that only considers
-> the passe object IDs as input?
->
-> I would hope that it's additive, because otherwise you may now lose
-> commit graph coverage for stuff that was covered before the patch.
+The `write_with_updates()` function uses a `struct ref_iterator` to
+iterate over all refs to write to the temporary packed-refs file. It
+receives the iterator from `packed_ref_iterator_begin()` which takes a
+snapshot of the 'packed-refs' file.
 
-Yes, it is additive.  fetch always writes with this flag:
+While writing to the new packed-refs file, writes are routed via
+`write_packed_entry()` which uses `fprintf()`. Even for references which
+haven't changed, we use the same mechanism. Instead, let's track the
+position of unchanged references in the snapshot iterator and directly
+use `fwrite()`.
 
-    int commit_graph_flags = COMMIT_GRAPH_WRITE_SPLIT;
+With this, any sanitation which was happening as a side of reformatting
+is now lost. But that was never the job of this section of the code,
+since the main intention is to simply rewrite the remaining refs post
+deletion of the selective few.
 
-so write_commit_graph() only adds the commits that are not already
-in the graph, as a new layer on top of the existing chain.  When
-layers get merged, the commits of the merged layers are carried over.
+This removes the unnecessary formatting operation involved. We can see a
+consistent ~20% performance improvement when deleting from packed
+references.
 
-You are right that a non-split write without COMMIT_GRAPH_WRITE_APPEND
-would replace the graph with just the closure of the seeds, so this
-relies on fetch using split mode.  I can extend the test to verify
-that commits which were in the graph before the fetch are still there
-afterwards.
+Benchmark 1: update-ref: delete ref (refcount = 100000, revision = master)
+  Time (mean ± σ):      28.7 ms ±   1.7 ms    [User: 22.5 ms, System: 5.9 ms]
+  Range (min … max):    26.7 ms …  33.3 ms    46 runs
 
-> >  2. The ref-scanning callback add_ref_to_set() became more expensive
-> >     in
-> >         630cd5194e (commit-graph.c: peel refs in 'add_ref_to_set',
-> >                     2020-07-22)
-> >     when it started to validate the refs against the odb
-> >     for correctness.  On a repository with many refs, this makes the
-> >     full reachable scan unnecessarily costly for a targeted fetch.
->
-> I was wondering whether incremental commit graphs would also be part of
-> the reasoning. Because in theory, now that we have those, we could even
-> extend the commit graph on a fetch by just writing another layer.
+Benchmark 2: update-ref: delete ref (refcount = 100000, revision = b4/kn-speedup-packed-refs)
+  Time (mean ± σ):      23.8 ms ±   1.2 ms    [User: 17.5 ms, System: 6.0 ms]
+  Range (min … max):    22.1 ms …  27.7 ms    56 runs
 
-Yes, that is exactly what happens: since fetch writes in split mode,
-the newly fetched history ends up in a new layer.  The commit message
-should say so explicitly, and I will update it in the reroll.
+Summary
+  update-ref: delete ref (refcount = 100000, revision = b4/kn-speedup-packed-refs) ran
+    1.21 ± 0.09 times faster than update-ref: delete ref (refformat = files, refcount = 100000, revision = master)
 
-> > Since do_fetch() already knows which refs were updated, collect them
-> > into an oidset and then pass them directly to write_commit_graph().
-> > In split mode, close_reachable() walks from the updated tips and
-> > stops at commits already present in the graph, efficiently adding
-> > the newly fetched history.  This reachability closure also covers
-> > auto-followed tags, since their targets are reachable from the
-> > fetched tips that caused them to be auto-followed.
->
-> Aha! So I wasn't that far off :) Now there's a follow-up question
-> though: what happens in non-split mode?
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+Changes in v2:
+- Instead of using the existing function, introduce a new
+  `write_packed_entry_raw()`.
+- Modify the commit to also note that we lose sanitization.
+- Link to v1: https://patch.msgid.link/20260930-kn-speedup-packed-refs-v1-1-111cd03d9b0e@gmail.com
+---
+ refs/packed-backend.c | 30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
 
-The fetch path never uses non-split mode (see above).  If that ever
-changes, the incremental path would need COMMIT_GRAPH_WRITE_APPEND,
-or a fallback to the reachable scan, to avoid losing coverage.
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index a73fc6aca7..43ad674cf4 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -879,6 +879,12 @@ struct packed_ref_iterator {
+ 	/* The current position in the snapshot's buffer: */
+ 	const char *pos;
+ 
++	/*
++	 * Start of the current record, set when advancing `pos`. Used to
++	 * pass records verbatim to `fwrite()`.
++	 */
++	const char *record_start;
++
+ 	/* The end of the part of the buffer that will be iterated over: */
+ 	const char *eof;
+ 
+@@ -933,6 +939,7 @@ static int next_record(struct packed_ref_iterator *iter)
+ 	if (iter->pos == iter->eof)
+ 		return ITER_DONE;
+ 
++	iter->record_start = iter->pos;
+ 	iter->base.ref.flags = REF_ISPACKED;
+ 	p = iter->pos;
+ 
+@@ -1233,6 +1240,19 @@ static int write_packed_entry(FILE *fh, const char *refname,
+ 	return 0;
+ }
+ 
++/*
++ * Write an entry to the packed-refs file skip any formatting and directly
++ * write to  the file using `fwrite()`. e.g. when deleting references and
++ * remaining refs need to be written verbatim.
++ */
++static int write_packed_entry_raw(FILE *fh, const char *entry, size_t len)
++{
++	if (fwrite(entry, len, 1, fh) != 1)
++		return -1;
++
++	return 0;
++}
++
+ int packed_refs_lock(struct ref_store *ref_store, int flags, struct strbuf *err)
+ {
+ 	struct packed_ref_store *refs =
+@@ -1530,9 +1550,13 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
+ 		}
+ 
+ 		if (cmp < 0) {
+-			/* Pass the old reference through. */
+-			if (write_packed_entry(out, iter->ref.name,
+-					       iter->ref.oid, iter->ref.peeled_oid))
++			const struct packed_ref_iterator *packed_iter =
++				(const struct packed_ref_iterator *)iter;
++			size_t len = packed_iter->pos - packed_iter->record_start;
++
++			if (write_packed_entry_raw(out,
++						   packed_iter->record_start,
++						   len))
+ 				goto write_error;
+ 
+ 			if ((ok = ref_iterator_advance(iter)) != ITER_OK) {
 
-> > After fetch_one() returns, call prepare_commit_graph() (which is
-> > made non-static by this commit) to determine the graph-write mode:
-> >
-> >  - If no commit-graph exists yet, fall back to the full reachable
-> >    scan so the first graph creation covers all refs.
-> >
-> >  - If a commit-graph exists and the fetch updated at least one ref,
-> >    write incrementally using only the new refs as seeds.
-> >
-> >  - If a commit-graph exists but the fetch is a no-op, skip the
-> >    commit-graph write entirely.
-> >
-> >  - For the multi-remote path (fetch --all), where child processes
-> >    do the actual fetching, fall back to the full reachable scan.
->
-> All of these make sense, but the above question is not answered yet.
+---
+base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
+change-id: 20260930-kn-speedup-packed-refs-9868f5d0abe9
 
-I hope the answer above covers it. :)
 
-> Curiously, you mention performance as motivating factor for this change
-> but don't provide a benchmark demonstrating the benefit.
+Thanks
+- Karthik
 
-I left it out since the change avoids work rather than making existing
-work faster: the cost of the full scan grows with the number of refs,
-so the improvement depends mostly on the repository.  But I agree that
-some numbers are useful.  Here is a synthetic setup: git.git with 200K
-extra packed refs (~206K total), a local file:// remote, an existing
-split commit-graph (and a warmed up page-cache).  Times are the median
-of 9 runs and I am looking at the trace2 region for
-fetch/write-commit-graph:
-
-    scenario          before    after
-    no-op fetch       380 ms    (skipped)
-    1 ref updated     357 ms    9.3 ms
-    10 refs updated   359 ms    8.9 ms
-
-I will include these numbers in the cover letter of the reroll,
-or do you think it makes more sense to also have them in the commit
-message?
-
-> > diff --git a/builtin/fetch.c b/builtin/fetch.c
-> > index 533fdfe7d8..8ad7331640 100644
-> > --- a/builtin/fetch.c
-> > +++ b/builtin/fetch.c
-> > @@ -1903,10 +1903,30 @@ out:
-> >       return retcode;
-> >  }
-> >
-> > +static void collect_updated_tips(struct oidset *tips, struct ref *ref_map)
-> > +{
-> > +     struct ref *rm;
-> > +     for (rm = ref_map; rm; rm = rm->next) {
-> > +             struct commit *commit;
-> > +             if (rm->status == REF_STATUS_REJECT_SHALLOW)
-> > +                     continue;
->
-> Hm. Shouldn't we also refuse almost all of the other values here? I'd
-> expect that we only want to consider a tip when it has REF_STATUS_OK.
-
-This confused me at first too.  REF_STATUS_OK and most of the other
-values are only used on the push side.  During fetch, the status stays
-at REF_STATUS_NONE, and the only value that fetch-pack sets is
-REF_STATUS_REJECT_SHALLOW, so that is the only one we need to filter.
-Requiring REF_STATUS_OK would skip every ref.
-
-However, I could change it to use status != REF_STATUS_NONE --
-those are the only two statuses we can get so both would work,
-but I guess which one is best depends on what kind of new statuses
-could be added in the future.
-
-Refs whose local update gets rejected (e.g. a non-fast-forward without
---force) are still harmless to include, since their commits are fully
-present in the object store.
-
-> > +             if (is_null_oid(&rm->old_oid))
-> > +                     continue;
-> > +             if (rm->peer_ref &&
-> > +                 oideq(&rm->old_oid, &rm->peer_ref->old_oid))
-> > +                     continue;
-> > +             commit = lookup_commit_reference_gently(the_repository,
-> > +                                                     &rm->old_oid, 1);
-> > +             if (commit)
-> > +                     oidset_insert(tips, &commit->object.oid);
->
-> This is something that always trips me with `struct ref`, that I'm never
-> quite sure what's what. So please forgive my ignorance, but why do we
-> look up `rm->old_oid` here?
-
-This tripped me up as well.  In the fetch ref_map:
-
-    rm->old_oid            the value advertised by the remote, i.e.
-                           the new tip we are fetching
-    rm->peer_ref           the local ref it maps to via the refspec
-                           (e.g. refs/remotes/origin/main), or NULL
-                           if it only goes to FETCH_HEAD
-    rm->peer_ref->old_oid  the current local value, before the update
-
-So rm->old_oid is the new tip, and the oideq() check skips refs that
-did not change.  rm->new_oid is not set on the ref_map during fetch;
-store_updated_refs() copies rm->old_oid into the new_oid of a
-separate struct ref for the local update.
-
-As a concrete example, say "git fetch origin" with the default
-refspec sees that the remote's main moved from A to B, a new branch
-topic appeared at C, and stable is still at D:
-
-    rm->name           old_oid  peer_ref->name             peer old_oid
-    refs/heads/main    B        refs/remotes/origin/main   A
-    refs/heads/topic   C        refs/remotes/origin/topic  (null)
-    refs/heads/stable  D        refs/remotes/origin/stable D
-
-This collects B and C as tips and skips stable.  When fetching from
-a URL without a configured remote, e.g. "git fetch <url> main", the
-entry has no peer_ref (it only goes to FETCH_HEAD), so B is
-collected unconditionally.
-
-> > @@ -2535,6 +2559,12 @@ int cmd_fetch(int argc,
-> >       int negotiate_only = 0;
-> >       int porcelain = 0;
-> >       int i;
-> > +     enum {
-> > +             GRAPH_WRITE_REACHABLE,
-> > +             GRAPH_WRITE_TIPS,
-> > +             GRAPH_WRITE_SKIP,
-> > +     } graph_write_mode = GRAPH_WRITE_REACHABLE;
-> > +     struct oidset updated_tips = OIDSET_INIT;
-> >
-> >       struct option builtin_fetch_options[] = {
-> >               OPT__VERBOSITY(&verbosity),
-> > @@ -2822,7 +2852,13 @@ int cmd_fetch(int argc,
-> >               }
-> >               trace2_region_enter("fetch", "fetch-one", the_repository);
-> >               result = fetch_one(remote, argc, argv, prune_tags_ok, stdin_refspecs,
-> > -                                &config, &filter_options);
-> > +                                &config, &filter_options, &updated_tips);
-> > +             if (prepare_commit_graph(the_repository)) {
-> > +                     if (oidset_size(&updated_tips))
-> > +                             graph_write_mode = GRAPH_WRITE_TIPS;
-> > +                     else
-> > +                             graph_write_mode = GRAPH_WRITE_SKIP;
-> > +             }
-> >               trace2_region_leave("fetch", "fetch-one", the_repository);
-> >       } else {
-> >               int max_children = max_jobs;
->
-> It's a bit curious that we have `GRAPH_WRITE_SKIP` as an explicit value
-> here as it can be trivially derived from `oidset_size()` anyway. But
-> other than that this is the safeguard that you were talking about: when
-> we have a commit graph already then we only update with new tips,
-> otherwise we use a full reachability walk.
-
-The oidset can be empty for two different reasons:
-
- 1. the fetch was a no-op, in which case skipping is correct, or
-
- 2. fetch_one() was never called because we took the multi-remote
-    path, in which case we must fall back to the reachable scan.
-
-Deriving the mode from oidset_size() alone would make "fetch --all"
-with an existing graph skip the write entirely.  Setting the mode right
-where the fetch happens seemed like the best way to make this more
-explicit and easy to reason about.
-
-> Thanks!
->
-> Patrick
-
-Thanks for the careful review!  I will update the commit message to
-cover the points above, extend the test, and send a reroll (next
-week I suppose, don't want to rush it).
-
-Kristofer
