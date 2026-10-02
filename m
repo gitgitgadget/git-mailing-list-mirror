@@ -1,89 +1,90 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C583F3A2544
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 18:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E930D1BD00C
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 18:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790965270; cv=none; b=tBHS8NFiwhLwEWceZfka6s+s/6amwW0co6vUyASZc0nJ3mFbIJ3t7rUEP7sdz46aQsMdcGnnUE2fgW4/QDEHnw22pAUaj4tyMkmczbqZ6JE6WibEYDgwF+92308vuPMlONXYnfSHx7PDrz/BY3eINb9902f88SOoAZL9vQ9dmBg=
+	t=1790967128; cv=none; b=svi6L9dC1RbnNdQhuAiZAoEPtdxKKjF4BSOGaNp6E7/66pEe5DvSBlgGib76Hatz0KKKXqpSOoahNEJmdo16Iyx6KZZHsLBawOAmf1/A1FDublPBoBbPODecjUh+EDRvWZo1uPLvlt8WRATxYSsC6GyS/TsN4Ak0/f43d5+zZ6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790965270; c=relaxed/simple;
-	bh=HW8T5JV7yCuvxkY7ovu2gFtz3OtTGtK+wZjVM1FL9/E=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=ugXd3WZK63ShLzlvQCp+8Ygz/sQhc15KzRt9TXKtuAIkrZHhf7ersiJ2P5g4m6JovaAe2WSm/HeLi/331ddCfyRbi6oI/Od7OxfrR1vs3cXeeUaTCQX8imiF4k6xiGUCQ42NKX9lysibyOp2hhrWVFuQtCKzzydrUimqRPxp4OQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=2v7YQ7dO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xWb95FuK; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1790967128; c=relaxed/simple;
+	bh=xteJCiuuX1SnAZUl7YhU6oQLndChEZcVlbcCssyZjHY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=BpaYKaTPzFdUVOdHqk6aWigjHGDlJont4NCcm/zCqiZ2DLOruoPqeTjA2G8pNVGaUg8l1YlwvkD/I6wmQYvM4uNarkTX7OATGSj9N1srsIHyvQVid4fMGgg0Z8rhnykKT1RYUYMSRBfGdFrR3zraQUlSRO+WNoeIGvsxiWtmagI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=o+kmj/GW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ftmB8dJH; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="2v7YQ7dO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xWb95FuK"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id A8E44EC03DE
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 14:21:07 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Fri, 02 Oct 2026 14:21:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790965267;
-	 x=1791051667; bh=toONwHvxCk3vvNLoJ4vYRRkJrrCANG9dRGm9Xxxnjws=; b=
-	2v7YQ7dO1shH7kMygHr6VY8QBKQBX6tfvTiC4lwVA89feqT60yDZiw2+KekWr2Vs
-	0Qv+I8MegJ1evXYYCktXUA19a918DNML1v3r3VtTBtL0KQ4WtZ9IEJXS0CPK9irY
-	fnkRAZDlJLN5WlqU066N/LD+Hf1hw8ZoXjZy0hASdIqB+nWGoWvoB+0Nz4VJeLU/
-	3kQSM9mnyuX8yLq8kp6IGS9MLf2c9IPhw+xxICHFIsiXM8/ufk83qsgjCn6O7/tz
-	m0krZ+J3MIuunAroi2qvQmoi5x1TZcJxOF5wpRIjWtnDc55BhrOC7Og28AXA1KvF
-	fsbrPbjod36ErD3K5tN1fQ==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="o+kmj/GW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ftmB8dJH"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.phl.internal (Postfix) with ESMTP id C83EBEC0125
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 14:52:02 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Fri, 02 Oct 2026 14:52:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790967121;
+	 x=1791053521; bh=Zi2mxEpWZkc57ogVe/yHuaehfVyScxZ8lCzyN+8O/Sg=; b=
+	o+kmj/GWgedb+8+74sDljkTUDP2mbNB0/rWOlUYpC9JmFjyPPo2iSYswaMc7w4DE
+	QXLoXd+TqTaK6c2vrrMLJCE/zjEQx+Yg3v0VaiuNj0zVJAiU2AW/sRdDJCo8A+5n
+	IZYPyk/OE9zSjsuFQsghz3VXKaeJ9PdD58V5G4310WDt2M3Wg0A6Q4y1opipKJTY
+	ihhWF5B8opgfRsCywtQXN8NjyaZ+BKB1UdMJz6OWeJzj4rh9hb671EZgZfHY8OME
+	hn4lvWKf5PsCj/EM83wgERTmC/VIPUL1aumzpkQPrG/6jI91owu6xQjIU9OxOm1w
+	dpGegrgXt/EouUA8GdtxCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1790965267; x=1791051667; bh=t
-	oONwHvxCk3vvNLoJ4vYRRkJrrCANG9dRGm9Xxxnjws=; b=xWb95FuKnEVveFN18
-	ZmdQWnDE8I2yN0sZ1kTlRYSfyoDoEmkz3IxsH3pQek1L5gaxt8AFyG9YVHMv9+dC
-	gDr4tskKVLEg2KahvjX6toXvcoLeHi95nu9iyT5P7Etd08yyqNC2+Vuz4x3n7z5j
-	ytKYnHcqNED8OkgmnqqzeKown1072P9x7hj9VW6ufEDfNh2RTkD137zkUJdu1J6C
-	kBKi/K7IFeNyLOnQ8paaWOO0RVimsk9+PbA6ynQGc4vFyVbKLitQ8qI9azyzvc7M
-	8ujgfKhl9T9nND31WnPl8rTsdbdYHNqCoi3Asf4/bviGt8CDYueYwLOq8OQf6Hj7
-	6udYQ==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790967121; x=
+	1791053521; bh=Zi2mxEpWZkc57ogVe/yHuaehfVyScxZ8lCzyN+8O/Sg=; b=f
+	tmB8dJHHWfI2U0R4aQxP7su7Zs5SY3/Wj/wjBOWlLJdHh4CttzcGObKvrs/LjkLC
+	nCaIMzC16QbCXGXwXVg5IfSKKOufdxFSNn7DQ81OOq4PAgTB0wgVtJV6ORQ2EC5D
+	flUcexqVDZANxlQH2SR2TXZafBgyXiuKCs+N4PWxvPqq9xGFYt2pqYPYBjOlNT9Y
+	phMqgnaBhewiYZmsLEGzSumxE3kYaQPXCwYlxMKDYImffg1CX5OKTc4yrs9WKbQK
+	Mz5GIzXAO4oPbhly3axcOYpogTP3P7NQLKqO4OOXvOSac0xSyYuwQw3FfNdY8nAq
+	QSHYRgwdZsFOnq0VMpJXg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790965267; d=jvns.ca;
-	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:KF8N6GeaaWCbte8fGTH4/wqvp3fPZUCPSET7C1PGj8bkUcm
-	bmHJUEo1KiojPGqaWJlqois/QDKjpHa0w5hW2pjZZm8uoi0ZnnzjQP8f8XFldSQn
-	URtTMwyymd6CVzPCCVziJYaVgcVSVL3OcH4rcy58xbrVo2WS43LACDzrjKfR5OSi
-	au+WLYRisWnYuJfegktEqq3JAvH7ZFUDRz6DnVAiWE1x25F54MxAlzeqQ4WX2mz6
-	0WAplIP3i3FsewT8A+li3jaMlQPk3aVPeZBnX+ATFad7lFK3eJkDmMrUdkTDWxiU
-	/mg9/6prFbBhC+3uTjTqIz17sxUTVL9yz2CT2hg==;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1790967121; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:jr4fmuopaPqPm6KB7d02OuLMi57g/ej1rf9GShMK9pP/2db
+	Vok6T4zzSJITL6O7kgoMCAJuekS+YGt/2X1R6nslds0IZTUHqh2GljJ9roLLzA5n
+	kne4NonprjgFNguClGV8zNWZNkA/kRC/HOhImrQ1Gz0pcV7J11LCy0Q7NcX9MIzV
+	j10r6T68U7IlL9tPWYzVrXCzs/47xOOy4hdUF6L4dIUulIccjMZqqeTYa8G+sP1K
+	TMTAF6OMsbRSGPAHz1r4LWXqeEScI42UxXls8vv27pQIWwCxDp47et6XKy77mL+m
+	CoVPW7KrXAjP8aH61f8DrSU9loIeq7NCA0HypBg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=11;
-	hn=content-transfer-encoding,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:nQq+XMfY5LgjCl0hwbJF9lA4bnluVnTLdV4oV7FEQfI=:HW8T5JV7yCuvxkY7ovu2gFtz3OtTGtK+wZjVM1FL9/E=;
-X-ME-Sender: <xms:E_a_aglSxtY7G5oz9g76xXLlGNz2gE0VnrMfce05d4tqcIZjN9l0cw>
-    <xme:E_a_aqrX_-lRGbfRY9ziSVSz4v9IojAm35h8KmtuNPN6rnJfmG_4d4WYPnTQYOasX
-    zgOiVWBYYvt_N7QvvH-UYn5t0rTYFmwZW2d0jlynOEI-FJqkUn4npXu>
-X-ME-Proxy-Cause: dmFkZTF+b3M761Oow5mp7WIwhWj6U0c5LMr5x5PT0VG/aa+GmmvjwXbhzICDQx6n1hknag
-    sGPRQiq4Wn2oW0GPyNGIJe6zZXE9iPEbeXr8vvIHWyf3OxJ9rkoFiV9tOf8aNBAVIh6PNT
-    TkzGpQX1BMbv9K7FHIzWAef+MJ0oXHNDFnubAp4Y4KMee8LEFWN6p7PQrfHE/vSEtbyenA
-    72odkAbV8oqbXKHldQEpadbdRxSTMbQ70x6bVv+z/8LkNyejPCHfvkPnzoh57Biy7FeE5r
-    EseVaaLqk3vll7UY+MnvhUJ9RpvQ+mwA4icU7281mFXWXXVjOOkrJXQ08cjmOgnOi8sTHf
-    DELvuWfRM5NKjiwWfk37EUdZeKbxrN48rN2fokAkdA7ItX1VbJlKYbwsyJC6y/pTMgZDsB
-    2Ls59qmtmMW/jMICTekb1ZX3DJ8Lcaw8yY7ie2qRdVSUh3k6RK2WmrnrJ6DxyU8RyD2BlS
-    0tMMXypQmeGKT3/uUHnS6WkaAxle9zQ0VRMzBwmnCGcwH0cBIHB6N6ZUDVFR20N8JDeq6/
-    2Omlh7qzLpM7IbhzWAnOpkHAtkkiwZGXDt7EaiAEC9MFYKtA5LEHusT466UOC0Lk0scFPR
-    tc5YBOuyQWe0BDych8lO+K5ecRShgRRZDVm9JMzEUlsgzRQlPj8b2DsCeerw
-X-ME-Proxy: <xmx:E_a_anRNXZzh_3yueS7tsRBlVqJKei0jzvMiAGY7WR6yHx__aRYZRA>
-    <xmx:E_a_amt7Go708owpIy0EXgJDFPW0QzcorzCqGGIJetTXmMN5QqRQpA>
-    <xmx:E_a_akYsk8ayu-LVGXuQNTwGLlAzT_FK0ROml4bCFvSz685krO03Qw>
-    <xmx:E_a_ajupkOg3UJupChJbafzXZ3FVZamBIS_AvRok2ciAG42lF4Kh6A>
-    <xmx:E_a_anYQRtAfV5HOEacHDQ85DVaP3Je7Re3pS6G2X54a-Rhq4G2f-o1t>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 8347F780070; Fri,  2 Oct 2026 14:21:07 -0400 (EDT)
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:hQ1BCj/S1MJh00eiOoVs3/lxD5i4cBWweAJ/W+SwNyk=:xteJCiuuX1SnAZUl7YhU6oQLndChEZcVlbcCssyZjHY=;
+X-ME-Sender: <xms:Tv2_ak0czzrW4ShO2rJQYLp2bfLborhvEWgPcIj6PxjXu78PVwVO0Xg>
+    <xme:Tv2_ap4OJ9YjVqRMDj87VkBxfgd9M4GJYl752O-DzqBcFEw3YN-ugsME5dl23l0eZ
+    AN6AdUKVR6v1bzP4zAUP53hnbyr8IgTccLLCkuwB4ynzlySBC3SOA>
+X-ME-Proxy-Cause: dmFkZTGoZGfsgHrrHK173AyOY9slBhL2YhdxiyRw1Tgi2OwHtbXoo8o/nNhK1Cpsf/QiZS
+    iMft+HW+3nKlv/ADewYtSkOblPydSMtNPMnyKkkdz0c+OkftQfRrQAp2bFPQj2xXCYeDSh
+    yGPHJhNrNwlxugno4aqRcHqoKW9oVdDdnZTWfsToj3+O9Dx8mxEr91emrYjM1ivqRmAjwh
+    9YuhW5eTaJ1lIt9VOLbL+uJmJ/CU0UCELfxcpLiwmRrlBlBzWhWnhZXObqkr1Wi4vVF1d/
+    TqEpm449M26RPPVwz88wMfntmII1WUHt+XcPB+jKwDOTHmOGj3hQo1116r7VRYMrs1C/ew
+    krhe1gC1zpkvijTPRC2V4fUrPMtvfWwoNSkHl85uL91YUzaNtNv+i9UYBeeyhYuXaZ16+7
+    MhhzNgVhnGmF4n1n1voMTlRVIBvlOT/rxDSpoNoQgIcUHi97ejy5UkjlM62cA2Bhm/dIom
+    eO736wN9Jq/OX/1EyAPVXp/FkgExT0H4f+NThqdQRJ1jyc2kxSBqiHoCJbBu6oZCOkUDzm
+    /M6mZ06yD9lt1dgEtNirrWDLKwMpDkHW0dC3xwipLn09nZr+zIgNDp48vdwDLZq7WTy8w0
+    q8N82XPlbHQ1YPqGIeB36X8BonPcKuZLInkMZLUuq/6Gwlt1Z9/Wmw8C8VDQ
+X-ME-Proxy: <xmx:UP2_anxy-mPjFrW1WsdlNjKXEPYJ7Zdvm7NcEqlOkCOuyEb67vlJhQ>
+    <xmx:UP2_anCqmI-ihValGkjZpwfvv38k9oiJSnGCY_K2UlnihPIUz_qaZw>
+    <xmx:UP2_akatwvZKYm96SB3sML4miEuCgV4h6ouCyW3VjimnlU0WWx8fGQ>
+    <xmx:UP2_avgrqnMAW9erbI5D4F7qMNVDrehNoG0X101-UYV5WZYnLx7Lng>
+    <xmx:Uf2_attK2s_aEFNjGLqqzWZnTyknO5VSLPs49aZtuf1MVDnni30HCX4p>
+Feedback-ID: i83a1424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 948A422C009A; Fri,  2 Oct 2026 14:51:58 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,39 +92,83 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A7DtHL7goc9V
-Date: Fri, 02 Oct 2026 14:20:47 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Message-Id: <01891b4b-ce04-41aa-8065-d7b88e466dbc@app.fastmail.com>
-In-Reply-To: <pull.2246.git.1790957227881.gitgitgadget@gmail.com>
-References: <pull.2246.git.1790957227881.gitgitgadget@gmail.com>
-Subject: Re: [PATCH] doc: don't require a SYNOPSIS in section 7
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+X-ThreadId: AAUWAJQF6URs
+Date: Fri, 02 Oct 2026 20:51:38 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>
+Message-Id: <d2360e73-6602-4418-af2e-265054ba8e2b@app.fastmail.com>
+In-Reply-To: <xmqqtsn4xd17.fsf@gitster.g>
+References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
+ <V3_CV_format-patch_learn_--range-diff-notes.d39@m5gid.xyz>
+ <V3_simplify_params.d3a@m5gid.xyz> <xmqqtsn4xd17.fsf@gitster.g>
+Subject: Re: [PATCH v3 1/2] format-patch: simplify get_notes_arg parameters
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> +# assume the first line is formatted like 'gitglossary(7)'
-> +my $firstline = <>;
-> +$firstline =~ m/\((\d)\)/;
-> +my $man_section_number = $1;
-> +
->  my $last_was_section;
->  my @actual_order;
->  while (my $line = <>) {
-> @@ -93,6 +98,8 @@ while (my $line = <>) {
-> 
->  		for my $section (sort keys %SECTIONS) {
->  			next if !$SECTIONS{$section}->{required} or exists 
-> $actual_sections{$section};
-> +			# Synopsis is not required in section 7
-> +			next if ($section eq "SYNOPSIS" && $man_section_number eq "7");
->  			report("has no required '$section' section!");
->  		}
+On Fri, Oct 2, 2026, at 18:50, Junio C Hamano wrote:
+> kristofferhaugsbakk@fastmail.com writes:
+>
+>> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>>
+>> 85bd88a7 (revision: add rdiff_log_arg to rev_info, 2025-09-25) added
+>> `rdiff_log_arg` to `struct rev_info`. I changed `get_notes_arg` by
+>> simply replacing the first argument with an access on this struct
+>> member. But the second argument was already `struct rev_info`. So I
+>> should have just simplified to *only* passing that parameter. Let=E2=80=
+=99s do
+>> that now.
+>
+> The readers do not necessarily want to read the "author's journey"
+> narrative in log messages.  Let's be more detached and objective,
+> like
+>
+>   85bd88a7e8 (revision: add rdiff_log_arg to rev_info, 2025-09-25)
+>   updated get_notes_args() to push into rev->rdiff_log_arg instead
+>   of an explicit strvec, but left the rev argument as the second
+>   parameter and strvec *arg as the first. Simplify the signature of
+>   get_notes_args() to take only struct rev_info *rev, dropping the
+>   redundant strvec *arg parameter.
 
+I don=E2=80=99t get what objective improvement there is by replacing =E2=
+=80=9CI did=E2=80=9D
+with =E2=80=9Cit happened=E2=80=9D. This is not a gratuitous incidental =
+biography but
+just says what your alternative says, only with a personal pronoun, less
+technical diction, and one word longer.
 
-I just realized that this script is actually supposed to be able to process multiple
-files as command line arguments, and that this patch won't work for that.
+But I think we can shorten it with a little show-don=E2=80=99t-tell:
 
-I don't understand how Perl's `<>`  works when you pass multiple files as
-command line arguments and that might be too much of a can of worms for me to
-figure right now :/
+    85bd88a7 (revision: add rdiff_log_arg to rev_info, 2025-09-25) added
+    `rdiff_log_arg` to `struct rev_info`. `get_notes_arg` was changed to
+    take a second parameter, namely that member:
+
+        get_notes_args(&(rev.rdiff_log_arg), &rev);
+
+    But this is obviously unnecessary; we can just use `&rev`.
+
+    Now is also a good time to format this `for_each...` line since it=E2=
+=80=99s
+    gotten quite long.
+
+That=E2=80=99s 16 words less than my first version.
+
+>
+> perhaps?
+>
+>> Now is also a good time to format this `for_each...` line since it=E2=
+=80=99s
+>> gotten quite long.
+>>
+>> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>> ---
+>>
+>> Notes (testing):
+>>     just compile tested
+>
+> The code change looks good.  As long as this stays as a static helper
+> function, this is not a loss of flexibility but a simplification of
+> the calling convention.
+>
+
+Thanks for reviewing.
