@@ -1,95 +1,95 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82B1443A91
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 08:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5083A36729C
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 08:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790929135; cv=none; b=imzjwRo+UTXh9uCN5O1ucAiHW1xgkzDEAXL+SNqWOXDb3zIg46/CiOYZLjuw7OJCRd7EvbuzJ8yj+MAryHqWgCUVOA6SUYs9rCjqxTuv/CyoNX2Zi3CQHoQKcAw9MqPYrXk4IStZJoNhtlSSg/CFUg5umwi52S+pMPhjp+6yq6I=
+	t=1790929136; cv=none; b=sbSBcNfS/oJ7WXNWSW1Q9md6etfEduM3a5dyfxchGGEktkXWkg1xm/0ui64kVLTHTwAEMnKnjZSoiqrvHjkwM+wGsDRFTuzUug2TTGXx3vrGgOlaQ+dnNvIXWuXDWr8RQ72fbAY61k4nUs6gGOBIXCCRj+51+nGw7YlW1G98xvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790929135; c=relaxed/simple;
-	bh=/ccd+a4nsAPoYCdd42B3haNB7ZJzklZzTkIeV7w9USU=;
+	s=arc-20240116; t=1790929136; c=relaxed/simple;
+	bh=Z1UAMSxRgrGbup70tNXCIqOluIqI7YeER4E/OXlLPPA=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IhEVYSankvbNF7oOAB8Afmn7OowhWn5500Wpj166cX7xjwx1XAaqF268gwVFMDBQfJcxJt4Z137U5e/V/rS+Xm3oQAH6vwSOSb0Bqx1OJUEZjKvaKJNR1QfWE1Lpx/OWIKQeLG9yUmR2i5EZm+OdfVp2nSaEv42XM8jhhBHGyLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gitbutler.net; spf=pass smtp.mailfrom=gitbutler.net; dkim=pass (2048-bit key) header.d=gitbutler.net header.i=@gitbutler.net header.b=LgXTyqlP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T/vIUuw+; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version; b=sSXxDKXHgRanTkHWj0fV54PBTADbtxcmTWvqSw/4SFLC1GUWsA0kc68Zf0/F7XVL1pZ/3RVWprzsRfF/LwsnDUzMI2rtPlHJyLZ9ffDWWFO+BEfkNaL3sLmOmSE+rPBjPQ4+pqMesnsq9rbDH7k1Eya3Gf4SEYO8gSNNEmB9R5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gitbutler.net; spf=pass smtp.mailfrom=gitbutler.net; dkim=pass (2048-bit key) header.d=gitbutler.net header.i=@gitbutler.net header.b=l3TKFrUq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t3IZ36xv; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gitbutler.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gitbutler.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gitbutler.net header.i=@gitbutler.net header.b="LgXTyqlP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T/vIUuw+"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id CBF91EC0196
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 04:18:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=gitbutler.net header.i=@gitbutler.net header.b="l3TKFrUq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t3IZ36xv"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 72F4EEC0292
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 04:18:53 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 02 Oct 2026 04:18:52 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 02 Oct 2026 04:18:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gitbutler.net;
 	 h=cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1790929132; x=
-	1791015532; bh=ZGPW11qX2Jw10/lTYHU+e0b3dSKx+cx/GhGHrYJEFGQ=; b=L
-	gXTyqlPiVQGeBd4nB+IQaR1OxpVQh2pGZkJGV0VKMZj0HsA5/sClCbUgvaKdMJVB
-	agjp3rGKnJ80EDPOq99evyp88GRIMW/YkJigSz8B8E4C/hERLz2jp5zxEgqYrXW+
-	itJoz2iD1AWkNuR8Jm/nDSu/r+8P3kXn9xSlH8HHIqfo8UOGd82qaBYJg7MBWGNv
-	tHEqkvf8l+F0TZ04E87H4EVxWGlvEWaXxXH7J6iYm5NJg0Wq8o5BplBal2HsGltB
-	nx3ZZ5ll7oRzJbIHeWhWqgKse+pwDRfts9q+GF4GaB3jdm2Nv2l7RFMi+oUkoFrB
-	mCG5dfpcgRdE309WJyiaA==
+	:reply-to:subject:subject:to:to; s=fm2; t=1790929133; x=
+	1791015533; bh=vCvqgQxLar8kB5Pnj0AQIXXvUAgXAQfwgvuadjPzWI0=; b=l
+	3TKFrUqHH5qR1zyDG60P2Jvth842Bzhp4sbjKg9NoRUbFhYcbOKvtWWHr16pfqrl
+	kIKiLw8EGJ32Mc9xmMH+PapPZZfRgBl87wF+uEjGqFYfVaCLn7CRE4EnEV1UEMce
+	6FdRSA4eTuZ4IsAOvYuNOWGjx7r11o2THZUWU46oN+UyE277zrXgrHw+t8wrjgau
+	rOgJciD+myu98k5JBxJp8ODaG2JR78iycXDLyA+dvbO7l7/Ap9p2NFTM1I/o0NkJ
+	1xJYjLS7k87+HAlxtq/spOB7G42KcnQvyXdDEE2KjG1Og50mPH6u81BfCayM848s
+	aJ7QHTBp2Whg/Et8qFcLA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1790929132; x=1791015532; bh=ZGPW11qX2Jw10/lTYHU+e0b3dSKx
-	+cx/GhGHrYJEFGQ=; b=T/vIUuw+JM7IgfJFwi3eFXLedg0B6AN3prsFMFN/V5VQ
-	idE6kM82zlxOHgUqS+uPuHCl9yUPVsI8OUSc26OT5GJ7Wp3E0hUGCkYB6fF3WJld
-	xrRPrNtWRWRCPC7kIOpy1fDGyv+lzNihr1qFNCJKdT10K5ZYJT7lWb1vkMHxNNNh
-	e0EMO+FrxyKQFesDFS67FvdR0lZfise4VZjkPykPZacUjvy7mEgKyOHVMJY0EtSU
-	2pEiCQqIdzAN/dnbmFmWGdBlIht/Vg4uOMknsyHAeVAmsCTajQtPNflvpqK6xpVK
-	VjWvnz5GPIpEaqsESzpX8PxKHQNsA7hfmoAh/Qs7zw==
+	fm1; t=1790929133; x=1791015533; bh=vCvqgQxLar8kB5Pnj0AQIXXvUAgX
+	AQfwgvuadjPzWI0=; b=t3IZ36xvCU3Fv3phbcn2LYjF4n9aVbcFmGTCJxstIxZu
+	9HAPIq5EEunC+NhOCxegE8uUgNPjL8AtF/4e+2wckEJtiHVah6hTC5vG3nC+jZnh
+	j2ZhQaEVQjBGjolkFsoE8IrnqDqzPUTmCe4bih8HnWBttoDmRoe+0yPSVjhCyTqg
+	eiGj3wvwJnFfuTKzfAXLDugsbpTPNwJlNPEeneRswbpQmMolKYNQmLaqrgoeBkUm
+	VGa6sjL56yJBb2Mcn9C3vazk+LtLYEnhuje+ZIa5dRnJ6p9AIZ2ntT8SHJ8pJCet
+	E9sIHwaLR2eefU1m4O3BcKbnf9sIaSsOmwa7gRVCWw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=sign d=gitbutler.net a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790929132; d=gitbutler.net;
+DKIM2-Signature: i=1; m=1; t=1790929133; d=gitbutler.net;
 	mf=PHNjb3R0QGdpdGJ1dGxlci5uZXQ+;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:PV00jiTLFc5vZ4gAnsuuhGVOpYZQf3GART4jPKAAGeoLhym
-	JjIqHTEAaBVXGH2TJu76ivzBoSiUy86RsoqDWYfmmgHfyJ4Gx+TuDfcSmzQWtU1Y
-	gSM8faNXBILuLipxRbHC+x0nF2A0LcWCWwc1agp0j1Jx/0IW5/7e9nP3SAeoutZU
-	QLD4E5t1TIgf1IDucPlCZv/tGzvkxf53+k1C9vd+IndW8O5G4qwfkcvT5j7im1fb
-	g+PCuADWH3OaQLZLrmy/LscH6q1WD5R/eckso7dzLACARVACtQ088uFaYe6GxbLg
-	aZ0IAeSj8CGUBgof9kmFtcPNoD3g9eikEDvGNNQ==;
+	s=fm2:rsa-sha256:k7CMR8k2DqZ7gVjtBOK+JHiYre+6FQYFh+ZiPI9F4YhG/tM
+	7rBDgKiRVNcp9SOPCLqOo62szb5QziULiLejol4fzLCFfKbxcvzo8lVFdKAnO166
+	nOmF7YcSjfi7/COVDGSZvS3PHkKDugoXG/V3rZNZofBVK270wqIObffDCZSTVZ8r
+	Edc1ncwRS5k4MNAohpO4riw4/SxNPvpCbaJ4jgb6VEVwuyVoIutL8Z2KO4eq0UWA
+	wZFop/rV4s/PzSNrwGRCvzgHoJtmfedQYxBNRBZN/BfLqFeSGRzXUj5Q/qtkgvi7
+	a1wwnTGE6ULimV6FF7EZnSpwfEf/DGcx8MuW4WA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=10;
 	hn=content-transfer-encoding,date,feedback-id,from,in-reply-to,
 	message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:uLglJifknHkcs9uDjD6p8XXbWx8S12YNuCwu+c/DnX8=:/ccd+a4nsAPoYCdd42B3haNB7ZJzklZzTkIeV7w9USU=;
-X-ME-Sender: <xms:7Gi_arvLzlusH9BIBX57t6FDlM_YLsC-y49PSJlHSlLyQHIcUeCJJA>
-    <xme:7Gi_ajbVGoPs8DKqpV5mSJKIxw0eAhaAS-5KtZFOD3haIk2nmSrKOS5zRUy2cKAxM
-    efvxl2s1xGoC-qNuv5kIR01tG_d3Fsf0BD33-7mfW0T6opFFqE5qG8>
-X-ME-Received: <xmr:7Gi_aka35cuObU0xZcUdMqZWamRN7Yqdgs1wJp4ZjrYq0pffJqqenoAinQcGDXL7qAumxylcbyAZ>
-X-ME-Proxy-Cause: dmFkZTEif+69Hun6V9bGLTYF9WISorEiD9Un8ZSVGxomN2XY6G62IWpqTgCeUDWgR2Y7Rz
-    H3KMZsAnTPjLAzQ4ns8Rxat+QU3wwvcMS9x+32T5Sf2EGJsC8T3ABkAIe+nUAxfM46nR13
-    pr6ssav0WZM0vosJmalicMtpUeZVxsDOVeiODy5ucFz/f1eOH+GnHloAGSKX3T7pG/Prw0
-    9rJpkQk0c90UuCEUqRjqjVwkuOdnXkZs8HIjMt3JnBTmR8YFjY455GOnblo2wfBm7X2ULg
-    366s4INQI42EuxVF2Q9KF7rsg2JXhyVaP5QMdbOO6Bk1xCrtgAaHVoeGhlAWQCvdmawFqv
-    57ogF5wrxZiHxlEC20sHjhjJndrUluIEmc1fdyAYyZXhjbYAnBnnl6cxiRXz4D27JJYvNe
-    GH+RRjezFwdohW8/xraM9rKNKDKtXQWhAPUqNyG7JKp6RXD/X993fvUQmDCxD/ic8n0x6l
-    rkK6zCYYWsGNJ9poCHelGs9mJbXsE6ljj3pEY9i7JPPrZU8Pm5vuDciP9QBTdFaNjTJhXr
-    Q/gVvNbDTm/piH2e1QB2/nfeDCO5AkLqq+bdgRp1kcNSE1j7x3fRNwhJXBsRFov8edPVOo
-    mtf4R3rh7Wt4l+wbQ6MlYckxcYQztfNWRquaLgTpR+Amu5cvJHr1GLJGsQhg
-X-ME-Proxy: <xmx:7Gi_avVtdURuc17LkFb4_7l8W4U9ESWSi23c4vgiND4X2rKOoGiaMg>
-    <xmx:7Gi_ar3kyhtlkwyCEWTC5_Xfa0oamh_rAoDZQ8UcvcXCj8WdjOQ-2g>
-    <xmx:7Gi_amYfzKRiyxU4gvkyCH-sqlk6ix9eCmoaTC1c9B4ilSc5uh17jg>
-    <xmx:7Gi_auoLJgS4NnkkQ7h8l6SR72xr9IBoz37SUOYIE6c8Zjew-ZMcjQ>
-    <xmx:7Gi_aqckpWFy5gnYOyG5XKhE99sKh_uQlJ4OTTyJiOhAsa3SEcPF8yGf>
+Message-Instance: m=1; h=sha256:QiB71qNaBaQuh3Lx5rKC4p/yPGkaly6fuZhKahp+AvA=:Z1UAMSxRgrGbup70tNXCIqOluIqI7YeER4E/OXlLPPA=;
+X-ME-Sender: <xms:7Wi_akLyMvotIOl-NUy_-rCqd4TQ28C25DsoZIXfsoV9L0H1XSfTPQ>
+    <xme:7Wi_arGG0ITN1vhjU-05Eeb_KxBw4mZW7JC9hQkhUBp-LgxdOHaQHzRLu2QA_B8Ot
+    LECKOr9e8Tq18QoHlZ7wzlRHA-9tv70weaUMm_D54WCBwoDO7Uj0z9N>
+X-ME-Received: <xmr:7Wi_aqXKGgvf1YHB-mcNyh86bAal1sfBxY_WAUCkhHO-3lE-Nmj31ndO8YSfMXE9bGrmy_XJ--k2>
+X-ME-Proxy-Cause: dmFkZTEd2zeuDlEa1fUJIB9wZKgluecjPq8b7le5L/VgxhUPUKgWU3O3YGKYQOcrmr5DnC
+    BlUsi8hBQlbFwalwGHfE6gNCkKjUOUg0w/lXpxgt2M+gBbTxyaUVyj+mTJ172U6LczwzBu
+    aKB72OOJhL6i2/co6UjI3vTcEs4Z/ytRX+7gPSuKKDwfaYX45ZRj2XQPFzNZCZEqg03hPp
+    AO16yM9197LEK11VRTywNoAuASX1t0XjMe3y3B2GYEytaEnC0f/ARXB4DJoH7Uj9fiHdsN
+    JgB8zXVkZ63wkNhLVzwkSa0zh7rK3HTHhznE6N/05Kuyw0NglFYBTEg0Ki58JXfPstcvhF
+    iDs9oBw7NqxNwM6npKIGCU4vpv8Vivrj/yE6poaNQS4qyE9rIN9/FoF+LchXcD1CkLkcAG
+    uhMLTmlIvFSq3mOduDgJC/kExVDIve3vSAhtC17JfxZItYojJ6BqK+j7WDrNirGg3FQEW0
+    2Y0y+FEJKi9d9Hq3ypnDQkaXvwP+nDDRQxBjA47nPOBuBvSjxBYc3jRJMfF9yRH9gSBP98
+    hHyUcAg0RLISG+IRRcKSGnnId0gmDiQuJa1hKBlCLz5XRMX1Moeq8xYA6bMIZrnrzwnUsu
+    gqL2hTqXXBM3dyLVLqeKnVtsi1wXWqgr5wP0f5kakkb2CjM3k97/rm/7h22w
+X-ME-Proxy: <xmx:7Wi_amgHChtc0l4HBSOS-AztcTaXKw0DFsfCmZ-vKLzIenJUPmzLgg>
+    <xmx:7Wi_arSM8Srjoh5huWBvf8R0kzHJ0N5JzddCtADjuyVT0mS2d4YqVw>
+    <xmx:7Wi_apGN3dyAyEs8c69wghAJvjDUmGQf-m9NqZg7ROnebecAtQtDRA>
+    <xmx:7Wi_ajmWMGbhHXGp5rJATiih_ko1OKscFlIewSWKRS_zI6992pXXYQ>
+    <xmx:7Wi_aqNGKd4rtrdqhIZPwdvtJCptKGeY93mWf3rT9kQqLO6vdwJOIkMI>
 Feedback-ID: iecfe4abb:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
  <git@vger.kernel.org>; Fri, 2 Oct 2026 04:18:52 -0400 (EDT)
 From: Scott Chacon <scott@gitbutler.net>
 To: git@vger.kernel.org
-Subject: [RFC PATCH 3/4] commit: add --hash=sha256 to sign a tree-sha256 header
-Date: Fri,  2 Oct 2026 10:18:45 +0200
-Message-ID: <20261002081846.25144-4-scott@gitbutler.net>
+Subject: [RFC PATCH 4/4] gpg: add gpg.treeHash to sign a tree-sha256 header by default
+Date: Fri,  2 Oct 2026 10:18:46 +0200
+Message-ID: <20261002081846.25144-5-scott@gitbutler.net>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20261002081846.25144-1-scott@gitbutler.net>
 References: <20261002081846.25144-1-scott@gitbutler.net>
@@ -101,207 +101,206 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Teach "git commit -S" the same "--hash=sha256" option as "git tag",
-which adds the tree-sha256 of the tree being committed as an extra
-header after "committer":
+Someone who wants their signatures to cover the contents of their
+trees wants it for every tag and commit they sign, and shouldn't have
+to remember "--hash=sha256" each time, much as "tag.gpgSign" and
+"commit.gpgSign" save them from remembering "-s" and "-S".
 
-  tree <tree>
-  parent <parent>
-  author <ident>
-  committer <ident>
-  tree-sha256 <hex>
-  gpgsig <signature>
+Add "gpg.treeHash", which "git tag" and "git commit" use as the
+default for "--hash". It is a single variable rather than one for
+each command, since the reason for wanting it is the same for both.
 
-Extra headers are written before the commit is signed, so the
-signature covers it, and "git verify-commit" works as before.
-
-When amending, we normally carry over the extra headers of the commit
-being amended. Don't do that for tree-sha256, which would be wrong as
-soon as the tree changes, and add a new one only if the amended commit
-is signed with "--hash=sha256".
+It only applies to objects that are signed: with it set, unsigned
+commits and annotated or lightweight tags are made as before, rather
+than failing as an explicit "--hash=sha256" without signing does.
+"--hash=none" overrides it.
 
 ---
- Documentation/git-commit.adoc | 11 +++++++-
- builtin/commit.c              | 38 ++++++++++++++++++++++++---
- t/t7032-tree-sha256-signed.sh | 49 +++++++++++++++++++++++++++++++++++
- 3 files changed, 93 insertions(+), 5 deletions(-)
+ Documentation/config/gpg.adoc |  6 +++++
+ Documentation/git-commit.adoc |  2 +-
+ Documentation/git-tag.adoc    |  2 +-
+ builtin/commit.c              |  8 +++++++
+ builtin/tag.c                 | 14 ++++++++++-
+ t/t7032-tree-sha256-signed.sh | 44 +++++++++++++++++++++++++++++++++++
+ tree-sha256.h                 |  4 ++--
+ 7 files changed, 75 insertions(+), 5 deletions(-)
 
+diff --git a/Documentation/config/gpg.adoc b/Documentation/config/gpg.adoc
+index 240e46c050..6728c13a62 100644
+--- a/Documentation/config/gpg.adoc
++++ b/Documentation/config/gpg.adoc
+@@ -16,6 +16,12 @@ gpg.format::
+ See linkgit:gitformat-signature[5] for the signature format, which differs
+ based on the selected `gpg.format`.
+ 
++gpg.treeHash::
++	When set to `sha256`, `git commit` and `git tag` add a
++	`tree-sha256` header to every commit and tag they sign, as if
++	`--hash=sha256` were given. Defaults to `none`. See the
++	`--hash` option in linkgit:git-commit[1] and linkgit:git-tag[1].
++
+ gpg.<format>.program::
+ 	Use this to customize the program used for the signing format you
+ 	chose. (see `gpg.program` and `gpg.format`) `gpg.program` can still
 diff --git a/Documentation/git-commit.adoc b/Documentation/git-commit.adoc
-index 8329c1034b..c027de2adb 100644
+index c027de2adb..1ed6635eee 100644
 --- a/Documentation/git-commit.adoc
 +++ b/Documentation/git-commit.adoc
-@@ -15,7 +15,7 @@ git commit [-a | --interactive | --patch] [-s] [-v] [-u[<mode>]] [--amend]
- 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
- 	   [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]
- 	   [(--trailer <token>[(=|:)<value>])...] [-S[<keyid>]]
--	   [--] [<pathspec>...]
-+	   [--hash=<algorithm>] [--] [<pathspec>...]
+@@ -405,7 +405,7 @@ changes to tracked files.
+ 	digest of every file in the commit's tree, including the
+ 	contents of checked-out submodules, so that the signature covers
+ 	the content directly rather than only its SHA-1 object names.
+-	_<algorithm>_ is `sha256`, or `none` (the default).
++	_<algorithm>_ is `sha256`, or `none` to override `gpg.treeHash`.
+ 	Giving `--hash=sha256` without signing is an error. All
+ 	submodules must be checked out.
  
- DESCRIPTION
- -----------
-@@ -400,6 +400,15 @@ changes to tracked files.
- 	countermand both `commit.gpgSign` configuration variable, and
- 	earlier `--gpg-sign`.
- 
-+`--hash=<algorithm>`::
-+	When signing, add a `tree-sha256` header holding a SHA-256
-+	digest of every file in the commit's tree, including the
-+	contents of checked-out submodules, so that the signature covers
-+	the content directly rather than only its SHA-1 object names.
-+	_<algorithm>_ is `sha256`, or `none` (the default).
-+	Giving `--hash=sha256` without signing is an error. All
-+	submodules must be checked out.
-+
- `--`::
- 	Do not interpret any more arguments as options.
+diff --git a/Documentation/git-tag.adoc b/Documentation/git-tag.adoc
+index 8901090a6d..445be41db1 100644
+--- a/Documentation/git-tag.adoc
++++ b/Documentation/git-tag.adoc
+@@ -89,7 +89,7 @@ OPTIONS
+ 	digest of every file in the tagged object's tree, including the
+ 	contents of checked-out submodules, so that the signature covers
+ 	the content directly rather than only its SHA-1 object names.
+-	_<algorithm>_ is `sha256`, or `none` (the default).
++	_<algorithm>_ is `sha256`, or `none` to override `gpg.treeHash`.
+ 	Giving `--hash=sha256` without signing is an error. All
+ 	submodules must be checked out.
  
 diff --git a/builtin/commit.c b/builtin/commit.c
-index 840b6b4083..871a2bdcd7 100644
+index 871a2bdcd7..7e56c434db 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -43,6 +43,7 @@
- #include "commit-graph.h"
- #include "pretty.h"
- #include "trailer.h"
-+#include "tree-sha256.h"
- 
- static const char * const builtin_commit_usage[] = {
- 	N_("git commit [-a | --interactive | --patch] [-s] [-v] [-u[<mode>]] [--amend]\n"
-@@ -52,7 +53,7 @@ static const char * const builtin_commit_usage[] = {
- 	   "           [--date=<date>] [--cleanup=<mode>] [--[no-]status]\n"
- 	   "           [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
- 	   "           [(--trailer <token>[(=|:)<value>])...] [-S[<keyid>]]\n"
--	   "           [--] [<pathspec>...]"),
-+	   "           [--hash=<algorithm>] [--] [<pathspec>...]"),
- 	NULL
- };
- 
-@@ -129,7 +130,8 @@ static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
- static int config_commit_verbose = -1; /* unspecified */
- static int no_post_rewrite, allow_empty_message, pathspec_file_nul;
- static const char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ignored_arg;
--static const char *sign_commit, *pathspec_from_file;
-+static const char *sign_commit, *pathspec_from_file, *hash_arg;
-+static int tree_hash;
- static struct strvec trailer_args = STRVEC_INIT;
- 
- /*
-@@ -1737,6 +1739,8 @@ int cmd_commit(int argc,
- 			.flags = PARSE_OPT_OPTARG,
- 			.defval = (intptr_t) "",
- 		},
-+		OPT_STRING(0, "hash", &hash_arg, N_("algorithm"),
-+			   N_("sign a tree-sha256 header of the committed tree (sha256 or none)")),
- 		/* end commit message options */
- 
- 		OPT_GROUP(N_("Commit contents options")),
-@@ -1821,6 +1825,14 @@ int cmd_commit(int argc,
- 	argc = parse_and_validate_options(argc, argv, builtin_commit_options,
- 					  builtin_commit_usage,
- 					  prefix, current_head, &s);
-+	if (hash_arg) {
-+		tree_hash = parse_signing_hash(hash_arg);
+@@ -1687,6 +1687,14 @@ static int git_commit_config(const char *k, const char *v,
+ 		sign_commit = git_config_bool(k, v) ? "" : NULL;
+ 		return 0;
+ 	}
++	if (!strcmp(k, "gpg.treehash")) {
++		if (!v)
++			return config_error_nonbool(k);
++		tree_hash = parse_signing_hash(v);
 +		if (tree_hash < 0)
-+			die(_("unsupported --hash value '%s' (use 'sha256' or 'none')"),
-+			    hash_arg);
-+		if (tree_hash && !sign_commit)
-+			die(_("--hash=%s requires a signed commit (-S)"), hash_arg);
++			return error(_("invalid value for '%s': '%s'"), k, v);
++		return 0;
 +	}
- 	if (trailer_args.nr)
- 		trailer_config_init();
+ 	if (!strcmp(k, "commit.verbose")) {
+ 		int is_bool;
+ 		config_commit_verbose = git_config_bool_or_int(k, v, ctx->kvi,
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 9bc4c946d1..86871317ed 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -51,6 +51,7 @@ static const char * const git_tag_usage[] = {
+ static unsigned int colopts;
+ static int force_sign_annotate;
+ static int config_sign_tag = -1; /* unspecified */
++static int config_tree_hash;
  
-@@ -1928,13 +1940,31 @@ int cmd_commit(int argc,
+ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
+ 		     struct ref_format *format)
+@@ -223,6 +224,15 @@ static int git_tag_config(const char *var, const char *value,
+ 		return 0;
  	}
  
- 	if (amend) {
--		const char *exclude_gpgsig[3] = { "gpgsig", "gpgsig-sha256", NULL };
--		extra = read_commit_extra_headers(current_head, exclude_gpgsig);
-+		const char *exclude[4] = {
-+			"gpgsig", "gpgsig-sha256", TREE_SHA256_HEADER, NULL
-+		};
-+		extra = read_commit_extra_headers(current_head, exclude);
- 	} else {
- 		struct commit_extra_header **tail = &extra;
- 		append_merge_tag_headers(parents, &tail);
- 	}
- 
-+	if (sign_commit && tree_hash) {
-+		struct commit_extra_header **tail = &extra;
-+		struct strbuf hex = STRBUF_INIT;
-+
-+		if (tree_sha256_hex(the_repository,
-+				    &the_repository->index->cache_tree->oid, &hex)) {
-+			rollback_index_files();
-+			die(_("unable to compute %s"), TREE_SHA256_HEADER);
-+		}
-+		while (*tail)
-+			tail = &(*tail)->next;
-+		CALLOC_ARRAY(*tail, 1);
-+		(*tail)->key = xstrdup(TREE_SHA256_HEADER);
-+		(*tail)->value = strbuf_detach(&hex, &(*tail)->len);
++	if (!strcmp(var, "gpg.treehash")) {
++		if (!value)
++			return config_error_nonbool(var);
++		config_tree_hash = parse_signing_hash(value);
++		if (config_tree_hash < 0)
++			return error(_("invalid value for '%s': '%s'"), var, value);
++		return 0;
 +	}
 +
- 	if (commit_tree_extended(sb.buf, sb.len, &the_repository->index->cache_tree->oid,
- 				 parents, &oid, author_ident.buf, NULL,
- 				 sign_commit, extra)) {
+ 	if (!strcmp(var, "tag.forcesignannotated")) {
+ 		force_sign_annotate = git_config_bool(var, value);
+ 		return 0;
+@@ -601,6 +611,8 @@ int cmd_tag(int argc,
+ 	}
+ 	create_tag_object = (opt.sign || annotate || msg.given || msgfile ||
+ 			     edit_flag || trailer_args.nr || opt.tree_hash);
++	if (!hash_arg)
++		opt.tree_hash = config_tree_hash;
+ 
+ 	if ((create_tag_object || force) && (cmdmode != 0))
+ 		usage_with_options(git_tag_usage, options);
+@@ -704,7 +716,7 @@ int cmd_tag(int argc,
+ 	if (create_tag_object) {
+ 		if (force_sign_annotate && !annotate)
+ 			opt.sign = 1;
+-		if (opt.tree_hash && !opt.sign)
++		if (opt.tree_hash && !opt.sign && hash_arg)
+ 			die(_("--hash=%s requires a signed tag (-s or -u)"), hash_arg);
+ 		path = repo_git_path(the_repository, "TAG_EDITMSG");
+ 		create_tag(&object, object_ref, tag, &buf, &opt, &prev, &object,
 diff --git a/t/t7032-tree-sha256-signed.sh b/t/t7032-tree-sha256-signed.sh
-index 083f25e665..44c363b5d2 100755
+index 44c363b5d2..5a656a7816 100755
 --- a/t/t7032-tree-sha256-signed.sh
 +++ b/t/t7032-tree-sha256-signed.sh
-@@ -73,4 +73,53 @@ test_expect_success GPGSSH 'tag --hash=sha256 needs an object with a tree' '
- 	test_must_fail git rev-parse --verify v5
+@@ -122,4 +122,48 @@ test_expect_success GPGSSH 'amending recomputes or drops the header' '
+ 	test_must_be_empty actual
  '
  
-+test_expect_success GPGSSH 'commit -S --hash=sha256 signs a tree-sha256 header' '
-+	test_tick &&
-+	git commit --allow-empty -S --hash=sha256 -m signed &&
-+	header_of commit HEAD >actual &&
++test_expect_success GPGSSH 'gpg.treeHash signs the header by default' '
++	test-tool tree-sha256 HEAD >expect &&
++	test_config gpg.treeHash sha256 &&
++	git tag -s -m release v6 &&
++	header_of tag v6 >actual &&
 +	test_cmp expect actual &&
-+	git verify-commit HEAD
-+'
-+
-+test_expect_success GPGSSH 'commit -S without --hash has no header' '
 +	test_tick &&
 +	git commit --allow-empty -S -m signed &&
 +	header_of commit HEAD >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPGSSH 'gpg.treeHash leaves unsigned objects alone' '
++	test_config gpg.treeHash sha256 &&
++	git tag -a -m annotated v7 &&
++	header_of tag v7 >actual &&
 +	test_must_be_empty actual &&
++	git tag v8 &&
++	test "$(git cat-file -t v8)" = commit &&
++	test_tick &&
++	git commit --allow-empty -m unsigned &&
++	header_of commit HEAD >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_success GPGSSH '--hash=none overrides gpg.treeHash' '
++	test_config gpg.treeHash sha256 &&
++	git tag -s --hash=none -m release v9 &&
++	header_of tag v9 >actual &&
++	test_must_be_empty actual &&
++	test_tick &&
 +	git commit --allow-empty -S --hash=none -m signed &&
 +	header_of commit HEAD >actual &&
 +	test_must_be_empty actual
 +'
 +
-+test_expect_success GPGSSH 'commit --hash=sha256 requires signing' '
-+	git rev-parse HEAD >before &&
-+	test_must_fail git commit --allow-empty --hash=sha256 -m unsigned 2>err &&
-+	test_grep "requires a signed commit" err &&
-+	test_must_fail git commit --allow-empty -S --no-gpg-sign --hash=sha256 \
-+		-m unsigned 2>err &&
-+	test_grep "requires a signed commit" err &&
-+	test_must_fail git commit --allow-empty -S --hash=md5 -m signed 2>err &&
-+	test_grep "unsupported --hash value" err &&
-+	git rev-parse HEAD >after &&
-+	test_cmp before after
-+'
-+
-+test_expect_success GPGSSH 'amending recomputes or drops the header' '
-+	git commit --allow-empty -S --hash=sha256 -m signed &&
-+	echo changed >dir/file &&
-+	git add dir/file &&
-+	test_tick &&
-+	git commit --amend -S --hash=sha256 -m amended &&
-+	test-tool tree-sha256 HEAD >expect-amended &&
-+	! test_cmp expect expect-amended &&
-+	header_of commit HEAD >actual &&
-+	test_cmp expect-amended actual &&
-+	git verify-commit HEAD &&
-+
-+	test_tick &&
-+	git commit --amend -m "amended unsigned" &&
-+	header_of commit HEAD >actual &&
-+	test_must_be_empty actual
++test_expect_success GPGSSH 'invalid gpg.treeHash is an error' '
++	test_config gpg.treeHash md5 &&
++	test_must_fail git tag -s -m release v10 2>err &&
++	test_grep "invalid value for .gpg.treehash." err &&
++	test_must_fail git commit --allow-empty -S -m signed 2>err &&
++	test_grep "invalid value for .gpg.treehash." err
 +'
 +
  test_done
+diff --git a/tree-sha256.h b/tree-sha256.h
+index dc070129ea..6d54c2c9f9 100644
+--- a/tree-sha256.h
++++ b/tree-sha256.h
+@@ -28,8 +28,8 @@ int tree_sha256_hex(struct repository *r, const struct object_id *oid,
+ 		    struct strbuf *hex);
+ 
+ /*
+- * Parse the value of a --hash=<algorithm> option. Returns 1 for
+- * "sha256", 0 for "none", and -1 for anything else.
++ * Parse the value of a --hash=<algorithm> option or of gpg.treeHash.
++ * Returns 1 for "sha256", 0 for "none", and -1 for anything else.
+  */
+ int parse_signing_hash(const char *value);
+ 
 -- 
 2.50.1 (Apple Git-155)
 
