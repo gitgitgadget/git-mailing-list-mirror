@@ -1,128 +1,146 @@
-Received: from bisque.elm.relay.mailchannels.net (bisque.elm.relay.mailchannels.net [23.83.212.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo2-f43.google.com (mail-oo2-f43.google.com [74.125.231.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84904314D34
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 03:19:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.212.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790911198; cv=none; b=FpdUOvNFent0tFl/7KqAaSjY3YqlnfLU1KVKm7q3bM2GJ7snEs+jxSKbrHXf+y6IJPx8MMetUcSGSqVWcxAwvVD6+8y9vT68QCHI14zwubiaOqlubCq3rm/zvHhcVWl8zzJWqlckj7FV3HjJ+a12Dnk6Hi6K3BaVnWayCj6XOuI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790911198; c=relaxed/simple;
-	bh=UzU4No6En1qH1iUhz8/J6UIwu75+/tF0dwIof24Rp20=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KVOECqmuCrqrw0WCFm0WLV+D8Cr8OqaWA2Ei0vKKuC/TO/TnCnROjUDWThAzXel57H8VzPN/3vB2nUX92D4Fb8M7wUY0tuRJZSRdOM2yU203YxRwAKvdO2bLirbhfheDk6UXdHP9pFQ/ZRROi6xQo75GcJeuzeuiaIVuyumfkkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=XS0PKYFU; arc=none smtp.client-ip=23.83.212.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E4A2F8EA3
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 04:13:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790914390; cv=pass; b=ntzL0FSKDU9O11BriW78uMCguS9gAe8raTDRRI4lsix2h0wMLvkxIdhBjIfKHFlBhJfAdZMpD8yF17xBs4phKusazz+T9c1GubOFJtUn9GDN+u6HaDvReiQOJEpMTmvHCm1ixFYgIx5S6sXS83qMHgsPJY+Kpp9gB0T/fJmXqLA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790914390; c=relaxed/simple;
+	bh=LBhh6L8zhjlfYc4VvUnk+lejFIbTOnsIOv8JqprEbhk=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=p79OGBEiTkL1My8wQNJMmUE2fO7L+tKCa8Qok44QB7e8EhOfMwgPbPu3BLYFdYrarx10GNtGaeFcThA80McR0nK4DV/vjRnEIbXJYWbYUwBIX/u4F2C3Ec5aFzTDd3S9gylRoJDWMkeWSuhtWK6cY491Oa/YWdQYE+dmVMhxFXQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WlAJAmCo; arc=pass smtp.client-ip=74.125.231.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="XS0PKYFU"
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id C5D8E3E12B3;
-	Fri, 02 Oct 2026 03:19:51 +0000 (UTC)
-Received: from pdx1-sub0-mail-a237.dreamhost.com (trex-green-1.trex.outbound.svc.cluster.local [100.96.9.161])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 6C5AF3E0A2E;
-	Fri, 02 Oct 2026 03:19:51 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
-X-MailChannels-Auth-Id: dreamhost
-X-Share-Illegal: 3b09d372737df6d7_1790911191654_2116834904
-X-MC-Loop-Signature: 1790911191654:3907766854
-X-MC-Ingress-Time: 1790911191654
-Received: from pdx1-sub0-mail-a237.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.96.9.161 (trex/8.0.2);
-	Fri, 02 Oct 2026 03:19:51 +0000
-Received: from ubby (unknown [24.28.102.31])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a237.dreamhost.com (Postfix) with ESMTPSA id 4hwvCp68bmzymc;
-	Thu,  1 Oct 2026 20:19:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1790911191;
-	bh=nYzlvboWlGv6+Wqod2rOEOVtVBLpSlXJM6DMci/Ks44=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=XS0PKYFUQDYAws0qcKplvy+v5WkIJN0zLt+4adpofBvPmNT/5HmlyFnVbecPg4J43
-	 jvBRTiraA+u2Jv3KzQZk08bww0BjYgwMD+nMdyuRYr2hOFXln6y3C55xBP3RRbtt/r
-	 hwDUP6dX2LrvBBZPWeQTUsqCm3n7Fxd6K9lr3FaVBv5eBI+0Me3Fvl8Svp2mDw4IBJ
-	 XH5YCZE3eNxxPntvybwx+kS2+WacKw/vil8h3s3usdWINemf1Oj+K66IoNpEfFoYNg
-	 ASEf2W5zoDHS8zJaLrbtW8pvNklsb19h19wqQNVzuZ3BqpUEq+N/r7olvta+rOnT6I
-	 Cnr+JPWdRcPVw==
-Date: Thu, 1 Oct 2026 22:19:48 -0500
-From: Nico Williams <nico@cryptonector.com>
-To: Simon Richter <Simon.Richter@hogyros.de>
-Cc: Alejandro Colomar <alx@kernel.org>, git@vger.kernel.org
-Subject: Re: git-rebase-walk
-Message-ID: <ar8i1Pz3Rh5F8ngx@ubby>
-References: <ar5KL4_IKXYbx3Sb@debian>
- <f5859438-f91d-46d2-b80c-25d63937ed7c@hogyros.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WlAJAmCo"
+Received: by mail-oo2-f43.google.com with SMTP id 46e09a7af769-81b15bca7e0so4345248a34.2
+        for <git@vger.kernel.org>; Thu, 01 Oct 2026 21:13:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790914388; cv=none;
+        d=google.com; s=arc-20260327;
+        b=oJy/xHnuanCZ8X0ihY/bnseKPVafOLSdABhgy6ewoMKbJnYL/2/HDeBTZ2o2BaICSr
+         cJXUBtRqcvZKexz4LKsnYpvc6PtC0DGFnmsEdp/iABV8Qr+PQmY9ydEZFYY+gglg1QYL
+         w/6tFINDycd6dSJJkSmMb8t+jLvADxUH1s4bwRLoCEGBDNMBKoz1AdeXLUmhqdcnjMcN
+         qfu4TjuAX/ORhe3kRprq5OvsjTkkvuTfNV95IfxH4xsM2TnK8Q1JFkYTBnjwJJfFIfny
+         jaeoBQHqOVkyl/uG9wsP0uAGLLTc+vNf+pskZ/Xw8M6+mhn6zVkkyLQhF/eCgb1hoQrr
+         bMgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=JEwi1CJNwEnFExPp1FiHJN0yhxHYqDOMNXsRtupPPbA=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=Z3MWhk11ltm2W6fBxXbhZF3rN87HituV4ZN4JWAcsqIAYPH7ysQ6tC4luF5SFni8lL
+         9I5WCEoV53FUrWDKMWUyvR5Js29DC7FDRlD6+5mqbDbkApwcaYvwdq+im9xfesVsk5F2
+         s8BI5Qm617gL04xaD9xPyAASK6BknUGdHt7s0dSm/1RrvzIhGevF2MEtx74zTnLymhNI
+         kIo4lc3lsE7J8u1DP9+SFuK141++nH2oH6MNVJ+MPHeyXTLZNXYjyU1m7eXT+l0rt2NW
+         o6EDl3I1Z3at0SiPf6NSWhYc+ZDKPsPrHBQ45zel9f6f0yZquGTQF8KJk2CjY/PAt9MV
+         k/xg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790914388; x=1791519188; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=JEwi1CJNwEnFExPp1FiHJN0yhxHYqDOMNXsRtupPPbA=;
+        b=WlAJAmCocn2iDsC6CQkCBHRWL5MJ1nq+LTV/91VjSfPVvDNs49t8M11ciX1+7lyPaR
+         nXiaPd9zN8paoNKVeBhGC+KpMe0CC4nkkHR4o1SZb6uS1YomgktxXUYHEbAEkaHiX+1K
+         C4gjNkWuPc/Kz5f/DkoBUfmg3MDBJREDWJUtg0XWLm55jpkd2B0hSGnq8cKF8QK4/GpX
+         gpKOlOvto3PznZnPnV76vhBNNhJnH47NbhKEgCMWkQB+tBRbZPWggQUJGBCCVe2M1+of
+         jjBG9FYbavNNxi3w+NRFMfqCmQAhu3HT5MYYfZNAlDMZmGNCu4tohi1oqWePwwrX3WOb
+         NIQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790914388; x=1791519188;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=JEwi1CJNwEnFExPp1FiHJN0yhxHYqDOMNXsRtupPPbA=;
+        b=picSZLBoewWreskIy51rMXIynnCrHWavyc0e/6H/wRO6mwS4G5xPy/9LAl3SC6MZfx
+         V1dVac+wE3kaQNcSIKr/U55AQA9AVLmanYFsRAjSrtpLsVt/wKvTZI4R8B0MoLYqniPJ
+         tltGR+t+wifeCjvwwjWmqPP5ipm4ThP/Fr4kc7YenkG9PTHXZ12G4OjHCBq9gD75ZcjA
+         MD11sThZtG1JegINKKkzn5M0V7b/aRO6woWlAHKpYBjwsghJrFKbEkWTcv1otGDVBk9j
+         VkZRzmTRTS/30xTIED73N4++6lrbXL/HEYpbM6as71+3Ikpe1TIIO7kOHbskBvH4+oDf
+         nHpA==
+X-Gm-Message-State: AFuF++ntKWprO526n0b3437WN3KH2bOAJgCeTuVQJQ3+0+RCNIBLlqEn
+	x03fdICNWVWVtcxykDpJqNTJ9R6VME/0DaLfpPlheix7QECb/4BhbIUfcKuH4QN404syjzo1b4H
+	8M30rHnOmpIfhtR6xOBo7sZE1TuEnCsULMTdm+9XLew==
+X-Gm-Gg: AYBFou0RoYgEMi8GdGS5Em4XEXjZme2ZjIJWNKlu7DscpZfjzwWI592ZSyGcMkiZD2o
+	O41Lz6kL4HPlnRpupxTXqdKrxvx2ZO/UR87mGzu32p4xfF/XS5D5lgyCTO0+j6xeMuJj/WULb3Y
+	ZQpqyn3ZMJbxYmBeHMfgqh+AWEGhiZn+p4HpqCPA/XbaMs4AlHOUQEURWG+WM+jtwYVMejLGHb5
+	lNGVgkN4yWaEY7JDayWmGhqIU67AqkkbM82XdMDcO/NTZ3+yW+ubO0ibdPLFadtzJA+MWVDsCqX
+	NdTwLT/j6tfn5Q7Ym563Zw1mDEz4DimC8FFK/A7NIDjhi9xU1dJ7rmusXKAVh2Df+lM9tI+xXx3
+	f8uRvdwHJE79G1OsaiwtJK09B
+X-Received: by 2002:a05:6808:1790:b0:4b5:5bfb:f25d with SMTP id
+ 5614622812f47-4f5290f6c0dmr1181861b6e.20.1790914388326; Thu, 01 Oct 2026
+ 21:13:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f5859438-f91d-46d2-b80c-25d63937ed7c@hogyros.de>
+From: =?UTF-8?B?0J3QuNC60LjRgtCwINCf0L7QvdC40LrQsNGA0L7Qsg==?= <nick.ponikarov@gmail.com>
+Date: Fri, 2 Oct 2026 07:12:55 +0300
+X-Gm-Features: AclHuK-lmztzlgrYO3qSygC5SK5lbnU_C4KqdCvLH8HAPNZHd3BcTUXuBA23GHk
+Message-ID: <CAPHjog3wuWOdZS3pHQd20hdZNwA5iXsQMkEfmSnp=NGhLBzuJg@mail.gmail.com>
+Subject: [BUG] branch copy/rename update refs without running the
+ reference-transaction hook
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Oct 02, 2026 at 11:49:26AM +0900, Simon Richter wrote:
-> On 10/1/26 8:58 PM, Alejandro Colomar wrote:
-> > I use this little command to apply iterative rebases, which are easier
-> > to handle when there are large conflicts.  Are you interested in it?
-> 
-> I use something similar:
-> 
-> [alias]
->         slowrebase = "!bash -c 'for i in $(git rev-list --reverse $(git
-> merge-base HEAD @{u})..@{u}); do git rebase $i || break; done'"
->         slowrebasemerges = "!bash -c 'for i in $(git rev-list --merges
-> --reverse $(git merge-base HEAD @{u})..@{u}); do git rebase $i || break;
-> done'"
+Hi,
 
-Nice!
+The report below was investigated and drafted by Claude in the process
+of building a branch-protection tool; I've reviewed it and verified
+the reproduction before sending. Happy to answer questions or test
+patches.
 
-> Alas, this breaks down with merges, and it is slow, so I've been thinking
-> [...]
+---
 
-A slow-rebase or bisect-rebase works best when a) you follow a rebase
-workflow, and b) the upstream has linear history (i.e., they also do a
-rebase workflow).  When the upstream has merges then... improving this
-experience gets difficult, and the easiest thing to do is to treat the
-merge as a single [large] commit and not try to bisect-rebase on the
-merge author's branch side.  But if you're looking for a slow-rebase or
-a bisect-rebase then chances are you're doing (a), and if the upstream
-doesn't have linear history then you accept the trouble.
+githooks(5) says the reference-transaction hook "is invoked by any Git
+command that performs reference updates". Some branch copy and rename
+operations update a ref without invoking it.
 
-> I wonder if it would make sense to have a rebase-bisect (bisect-rebase?)
+Observed on git version 2.55.0.windows.5, with the hook registered both
+in .git/hooks and as a config-defined hook (hook.<name>.event).
 
-We had a whole sub-thread on this thread about just that! :)
+1. `git branch -C <src> <dst>` where <dst> exists and is not checked out
+   anywhere: <dst> is overwritten with <src>'s value and the hook is not
+   invoked in any phase. This happens on both the files and the reftable
+   backend. With every documented hook event registered to a logging
+   script, none of them fired, and a GIT_TRACE2_EVENT log showed no child
+   process.
 
-> command that finds the first commit that the branch cannot be cleanly
-> rebased onto, optionally with a test command to see if there are semantic
-> conflicts.
-> 
-> So given
-> 
->     A --- B --- C --- D --- E --- F (main)
->       \
->         a --- b --- c (feature)
-> 
-> I'd like to be able to use "git bisect rebase main -x 'make check'" to
-> attempt rebasing onto D first, and continue on to B or E, depending on
-> whether the merge goes cleanly and "make check" succeeds, maybe with an
-> option to try F first if the resolution is trivial.
+2. `git branch -c <src> <dst>` where <dst> does not exist: <dst> is
+   created and the hook sees no line for it.
 
-I linked to my version of this, then Alejandro re-wrote it, on this
-thread.
+3. `git branch -m/-M <src> <dst>`:
+   - files backend: the hook sees the deletion of <src> and a
+     "0000... 0000... refs/heads/<dst>" line, but no line carrying
+     <dst>'s new value;
+   - reftable backend: no line names <dst> at all, and renaming a branch
+     away deletes it without a line for it.
 
-I've used mine a few times to rebase across thousands of upstream
-commits.  It works very well, IMO.
+4. `git reflog delete --updateref --rewrite <branch>@{0}` rewinds the
+   branch without invoking the hook, on both backends.
 
-Nico
--- 
+Reproduction (any POSIX shell):
+
+  git init -q -b main t && cd t
+  git commit -q --allow-empty -m one
+  git branch other
+  git commit -q --allow-empty -m two
+  git switch -q other
+  printf '#!/bin/sh\necho "hook $1" >>"$PWD/hook.log"\ncat
+>/dev/null\n' >../h.sh
+  git config hook.log.event reference-transaction
+  git config hook.log.command "sh $(cd ..; pwd)/h.sh"
+  : >hook.log
+  git branch -C other main     # main now points at "one"
+  cat hook.log                 # empty
+
+Expected: the hook runs with a line updating refs/heads/main, as it does
+for `git branch -f main other`. Tools that enforce policy through this
+hook cannot otherwise see these updates.
+
+Note that git already refuses -C/-M onto a branch checked out in any
+worktree, so the gap is limited to branches that are not checked out.
