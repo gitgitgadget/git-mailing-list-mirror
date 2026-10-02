@@ -1,188 +1,98 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy2-f34.google.com (mail-dy2-f34.google.com [74.125.229.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B4B311C32
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 16:50:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B01A4BA1F5
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 16:54:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790959817; cv=none; b=j0kyurHd1Cyt/oKj/6NhKZTsvzaJC38SsjVNm67LY3h3bCfLqxhKNcBNEb/BlttGitarXHIEQaKhsBTMYuSMva6Zb7t2RFCbYkgZe/sHWbfXUQucJKRPfBTzcgNFdI7C3TlG8CuIIxdfhAGVhnp84kW5L7V/DbIMzne+sUQ0dpQ=
+	t=1790960059; cv=none; b=K68/rRD9Pji6clrnYuSkCnLzFLsyUrTp86XNoSCcuRnphshQJam3fkYwR6r0P09bz+WpHxfy39Lul+d8B2q1GoB8YWQue6S7dALYgr93x48+Q9/isVzgEVBFWV8h0d16ahvycc8qC56hgvbmv7X8eKBsZ2MuBYCIbXJY/Xj2Gv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790959817; c=relaxed/simple;
-	bh=CxOxUyJTcyDLJwrp1dk9mVcCvf0lG6uAAy9jIvKWrcc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iXiA7d/mp08/Fnc5IGCPBUenmy8+jxRluwvTQquCGMxcGAqdGmeYbmXpeA/oq6fflD4kOR4vdM1IV3I1BxZAzSKy80YPvmRavuMjqfuLMd/oAfYyjVWTMpPKfPJ9rtt22qgbnCS0lXjQQWVg7pBzAqPhh8kcaN0IW79Xv2nOvCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hSsVonu6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TQSkn2ZK; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790960059; c=relaxed/simple;
+	bh=/13xrUxCMoYmpdN6CCFghOB0LdJ7LVe6MVD6AFozS2k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UslU3phwGEGM+8i5q2oiOIFmy7bjKvsULI5Gr9wMvFeBmQE9p+k2IpqiyrSRuXydFtkJF5LWqJU4w61hi2Ep9JOXFHppYdZMlV51z0+8soAvyATg1AfPRVdseD504BBcVhQpMQcV/j8hO5iwwweYsEkIie3tzMticB1RxB22nmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OhzAjvGt; arc=none smtp.client-ip=74.125.229.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hSsVonu6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TQSkn2ZK"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 596AC1D000F0
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 12:50:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 02 Oct 2026 12:50:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1790959814;
-	 x=1791046214; bh=KH53hp65rC9q74pppqmZ28L3uunt8FAk3YN+aG6c/p0=; b=
-	hSsVonu6QfeLdFGAHkmUJjR5MxyxTce7tNc41a3Z5RH0wOvGECbdvrQ0BbKxeyAg
-	lK0ctr/QSj422VD3IxIdTxdeL5aez0HMjly7OPKebhWMpUMrfmh8XkX8bzsm6Oxr
-	URRLb/7EzRcUesEFFE8lO++fJrd2g28Ebqggg6+Km6TnOkQU76U7yBn4Ts5zQoLK
-	9mVCdxXuQ87DC4Z4+d5GWRjJqsBry15ba2PHd8z28E5w3ryCueY7738fRy+CP1/B
-	9M0PgoweWUlVct6KuTGjOvFS9NGvsGXg/TtzFNhBbBm4K0Urdh57QuII0nzAEsel
-	m2J3faSXqvOcopq03y7iCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790959814; x=
-	1791046214; bh=KH53hp65rC9q74pppqmZ28L3uunt8FAk3YN+aG6c/p0=; b=T
-	QSkn2ZK5WwIb1D1Hna2phF2MQEeAgaA9AZ+fvMuoXyoltmMP6mCsvV/WWXB9aymP
-	x4QeEWCP+g28lv5JnZoowJhRU8xNsKayeWetEWklvclmzZEQeXk8biLIlSXlOXzG
-	Q/KkL/GQSgaVHdrZdtjlbbZkL3FgcdsY6TyWLZcRCotD5OTvaU2R2vVv7wOwcNYQ
-	4h6FhYubvyXPEB3NgIczH4tMaqNMpxqCfkTE99LHZEwSBFSUDh9xN4068fLbo4Xp
-	aNmMauo3iVaon1sFj8G++LY4L3JhbmfQNRMislsZwv1q9o3jOe0abZBJDZtFzvu3
-	c/gKxKqXHl2uHFKXo2buQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790959814; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:B7HbC0K3G/MNs4FWxA7mLCK8P9/8tQVXtDqXCWts4ocvPrj
-	prMn4vDR5ywdfpsZhxAlTzoWMq4ek0mqXrhQxqA1H3nlpjov0tn5OC82Vsnq3bqx
-	uBbVN1GGW3YBj0yYNpcwcYVJ8tCaLP5gPYYWfkr48spXAuAzdcO3wQhkMBxBmAEb
-	avZR5s/a2YZSP0Zp4p6gyom0PSR3j1MtDhHbMtj17zFdo17L+deRhs1w4vdEi+ni
-	cXnj7qBHXC3iaUnLrrDppG+t8Nm12Ew8REenciKX47Ta15PSEv6AdFtsi5x245Xo
-	qLuREMUZIW9Yu37E7cGm/2PV0a1DsigCpnh85Cw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to,
-	user-agent;
-Message-Instance: m=1; h=sha256:vpF0zGV6twS99St3YTdGj7njy7z/An8k8vgiv6XRtjI=:CxOxUyJTcyDLJwrp1dk9mVcCvf0lG6uAAy9jIvKWrcc=;
-X-ME-Sender: <xms:xeC_agE3A4h-cGviXLAhpl2ZDs3cJQsArXP8e4BqTg6OcCUDhfuOVQ>
-    <xme:xeC_agM44nr9VZ238TlcemAX9ICjsexW8SMnPNH_8H8yLETKDUZmDysLI4-2b--GU
-    hp9XosDwbY2ACUyA8WkkB4ezKlhzOsDXyfW-dyen9M3HENE_CgFVIQ>
-X-ME-Received: <xmr:xeC_aicee3AY6Au-SD3ghQOMRZacXT1yqK2D4gyT2sg9oQg32KCw8WtyBMaiPKUNk4G3K6o9nFwYoUauLCJ_6M3L4oPKI6B46HHq>
-X-ME-Proxy-Cause: dmFkZTExO6pnyJ9gNTESC1ZFDvNK0GD/folppKR/YCbXrqFjWO2bHyy0nHnxgdrgiIw6R+
-    pN+TiDlR3W6xnLZh+gAfFVtlJdWTsgx2Lbe4jdNgB+CK7V+GxL9rBsBqgA7WP80DYtcndH
-    GqeWNiGSI3FE2MP1donEIF1bWJXrPXbpIpkuqUWaQyhgZAik2uiBzWW4aZOR/rVPS2zHHR
-    hLtPnN4+N2J1SavtvofRZvIxq52bpdz7c9YMAqeBqYVa6dm5VHMGPeUzygQs9oCVlIezsk
-    Ao5rCl2/aReySxZivWbFLskBE1qi0VPHWBnzc8zsdZUJHEdfzmCkJgPfeAxCiKizJ3iOAm
-    WjmFjXPSRTZn9IxblfITeZl3KSHlm7OfbQaLTHIlOXxy2TpfRZAtX0mE8jOeNz/sx7Yzqw
-    qZoF6mu0cug2Es2JPl/ey73Pw9xn6CAicYF4wF6HGNinc5HkMcyP+lDGfa8xXrZt8V+GAY
-    YCfqQBS7fTRgeORkyiXqkN31srbsj6NSPfZDJiZUFXcVwr5C1XFBpqZOM5ENca7YgX+ud/
-    Thya+r+mN0148wHqBAP6B8tCfaRxPDUgBtmJz/HoR7uPggpdr2yGY6oULzh/W5JmbaaWjA
-    ARKLNATbo5zYR+kErNAh8KDsuGFAZ4xtxQ3tag4BQo9oc88LGikRQEt2N+Dg
-X-ME-Proxy: <xmx:xeC_atsKGKWiT9aZ9Z-XzpGte2fxvhSIbjKbp_DQI9y4nB9k9RrxhQ>
-    <xmx:xeC_ajke9wVIC8IoJin70D8U6mtsE7g7um8COJBlZoGAdin-k8zYtQ>
-    <xmx:xeC_avxt5904_hNFVEylE2pX4iyn6f-wV3KlAWvrXNOxlgYimIrMkg>
-    <xmx:xeC_alOE46roI5tq1-B8UkGU4tZ6R9unM0whyEAaottODrr9BvmorA>
-    <xmx:xuC_as9s4wCZBSW_tSOHDZMIN65qP72iTmoOHVluuFMgybQmoOsz5jwB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Oct 2026 12:50:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,  "D .
- Ben Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v3 1/2] format-patch: simplify get_notes_arg parameters
-In-Reply-To: <V3_simplify_params.d3a@m5gid.xyz>
-	(kristofferhaugsbakk@fastmail.com's message of "Fri, 2 Oct 2026
-	12:56:38 +0200")
-References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
-	<V3_CV_format-patch_learn_--range-diff-notes.d39@m5gid.xyz>
-	<V3_simplify_params.d3a@m5gid.xyz>
-Date: Fri, 02 Oct 2026 09:50:12 -0700
-Message-ID: <xmqqtsn4xd17.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OhzAjvGt"
+Received: by mail-dy2-f34.google.com with SMTP id 5a478bee46e88-33be7dfcfc1so10000230eec.1
+        for <git@vger.kernel.org>; Fri, 02 Oct 2026 09:54:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790960057; x=1791564857; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/13xrUxCMoYmpdN6CCFghOB0LdJ7LVe6MVD6AFozS2k=;
+        b=OhzAjvGtpoIRpcKdU9gxFWftRy8EkAOHTK7UzSlQvsI9IE+zY9pCpJEdW7aBxkAoxd
+         otgm/ikv9r/XJyyOKquEf/JbUiFGDwQ64WpnqQRkziRMw/fNOTx7jo8NYF33FHuzjRjk
+         VI4tb4C2z0OIEMxdQ0FKileO1pa2NhBBkCmimYiAxgTYVh0TQZ+0ZBrbnoQw0g0ijzBr
+         0IqwOqJrb+vfCaI1c6W3gQSktIugVUUI4X3qy16Yf0K2CmTuFAaccXgkj7yGzspVokmS
+         NpI3wPdgDtBqSX18df/nEbTPRxzfKqCHv/NODSOY4BiICLXEfO480s2GeF4tn9IXhI99
+         cSPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790960057; x=1791564857;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=/13xrUxCMoYmpdN6CCFghOB0LdJ7LVe6MVD6AFozS2k=;
+        b=NaBm5x42sQmxYX4HPnIq/Jlf+ZF8X2F30Hol2+l4/Arc9V9u4QXv3RXg2kgAJCF8+a
+         BmxS10P6qMhh6NpDf6ejw8mYDOT28lvkXEztepl/bmKUVpmI90R51pzCAwfsVLsoVoj2
+         G+7px1Q/iJW5qTdY1X3ygxFcCEcx0hGZwJ5l2bwHo0yeOZWJgjec5y9bGRKpzqXlh9Dc
+         2ZDV8mdYhmpDFvMwYuSORRGr96a0sDNS94lv+uj5LiaeWhWeQltp1zbrYtBsrMle6c3V
+         XbSonlTOII3GR7ITS/lrG0Ej1kQfZZqKKf5a/y6ryhzu0I5Q0II/L0etEOIg92HR1kQc
+         axVw==
+X-Gm-Message-State: AFq9FYI9hCG5MIQf/83RWqMx7mTtugqF/9gWy7m+q0NG2iR365nQgyZG
+	b+yrYQkC4/L7tYKRwTYEVkz+tvdtrXc4KgCa+utaGbXJ3v8r5Trrtq4x
+X-Gm-Gg: AYBFou2eb1nY4rxHq67oJ3/i8g0NuTDSpV1mV1gbamD41mcCYjg6WPpT1KQzwg/SBgo
+	U8EtddH+C8GRU5k4BXfXRc2IIOSpNNjIFZn5GGb+xLDzZttME/gBLxkWHoWWHoo5+QaiZEs/ep+
+	A+G2BFD+1FxVIeN1AsBEr7EafMhCrV8A5e5iZOf8XnFH7Y+eZMOk6xO203vV0CepXFLnwKZZn7i
+	anomlhPtkjYf8Ha67xRW/Ylo4S0IGOSSDFkQy6ZK1o4+cE+GNGOPyN7uPgdz6mrud3wgefXUwDX
+	bJVsj+t0rtZHHbaw+X9s+e0HN/5BQVIuZbSL+oyn60l92INa4sxSiVx7kXSDbXIKiQgdOJ9B53h
+	p+i0RfVPHItL/xHqz900BpE4qYwaCoyspycpu4euW/1PXDBoyMCKUJ/v6sruYt5zOg/F3HvKvzq
+	1wotR2IV1XSBRFxjVGoTqSK1zHsVH2ZoSWmOYlvw/AdELp4RQTd6V71JABCB2BUyRn8HWGRgQ/3
+	KpIyogKrCCvO/FPzWI2ZioUgtyEIYEmlObZFeFcTOaxOuY2TFyDxlywwW2MtHSuWVHcZuIBEGBN
+	ORe4CpKo/S+ol2Q+
+X-Received: by 2002:a05:693c:8854:b0:34b:c18d:c28e with SMTP id 5a478bee46e88-34f1509eaaamr3525482eec.7.1790960057415;
+        Fri, 02 Oct 2026 09:54:17 -0700 (PDT)
+Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-34f14f2dfbbsm7721460eec.10.2026.10.02.09.54.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Oct 2026 09:54:17 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git
+Date: Fri,  2 Oct 2026 22:24:06 +0530
+Message-ID: <20261002165407.36721-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.56.0-rc2
+In-Reply-To: <xmqqv77l2g2e.fsf@gitster.g>
+References: <xmqqv77l2g2e.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-kristofferhaugsbakk@fastmail.com writes:
-
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>* kj/repo-info-more-path-keys (2026-09-11) 7 commits
+> - repo: add path.cdup
+> - repo: add path.git-prefix
+> - repo: add path.grafts with absolute and relative suffixes
+> - repo: add path.index with absolute and relative suffixes
+> - repo: add path.hooks with absolute and relative suffixes
+> - repo: add path.superproject-root with absolute and relative suffixes
+> - repo: add path.toplevel with absolute and relative suffix formatting
 >
-> 85bd88a7 (revision: add rdiff_log_arg to rev_info, 2025-09-25) added
-> `rdiff_log_arg` to `struct rev_info`. I changed `get_notes_arg` by
-> simply replacing the first argument with an access on this struct
-> member. But the second argument was already `struct rev_info`. So I
-> should have just simplified to *only* passing that parameter. Let’s do
-> that now.
-
-The readers do not necessarily want to read the "author's journey"
-narrative in log messages.  Let's be more detached and objective,
-like
-
-  85bd88a7e8 (revision: add rdiff_log_arg to rev_info, 2025-09-25)
-  updated get_notes_args() to push into rev->rdiff_log_arg instead
-  of an explicit strvec, but left the rev argument as the second
-  parameter and strvec *arg as the first. Simplify the signature of
-  get_notes_args() to take only struct rev_info *rev, dropping the
-  redundant strvec *arg parameter.
-
-perhaps?
-
-> Now is also a good time to format this `for_each...` line since it’s
-> gotten quite long.
+> The 'git repo info' command has been taught more keys to output
+> paths of various repository components (such as the working tree
+> root, superproject working tree, object database, etc.), supporting
+> both absolute and relative path formats.
 >
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
->
-> Notes (testing):
->     just compile tested
+> Expecting a reroll.
+> cf. <CA+rGoLcRRZPu8SD-vZw+rEjVzKO02=nMn_x+4ANJX7eh9jgBcw@mail.gmail.com>
+> source: <20260911144519.1011780-1-jayatheerthkulkarni2005@gmail.com>
 
-The code change looks good.  As long as this stays as a static helper
-function, this is not a loss of flexibility but a simplification of
-the calling convention.
-
->  builtin/log.c | 12 +++++++-----
->  1 file changed, 7 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 350b35c5563..560af00e2fd 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -1333,16 +1333,18 @@ static int get_notes_refs(struct string_list_item *item, void *arg)
->  	return 0;
->  }
->  
-> -static void get_notes_args(struct strvec *arg, struct rev_info *rev)
-> +static void get_notes_args(struct rev_info *rev)
->  {
->  	if (!rev->show_notes) {
-> -		strvec_push(arg, "--no-notes");
-> +		strvec_push(&rev->rdiff_log_arg, "--no-notes");
->  	} else if (rev->notes_opt.use_default_notes > 0 ||
->  		   (rev->notes_opt.use_default_notes == -1 &&
->  		    !rev->notes_opt.extra_notes_refs.nr)) {
-> -		strvec_push(arg, "--notes");
-> +		strvec_push(&rev->rdiff_log_arg, "--notes");
->  	} else {
-> -		for_each_string_list(&rev->notes_opt.extra_notes_refs, get_notes_refs, arg);
-> +		for_each_string_list(&rev->notes_opt.extra_notes_refs,
-> +				     get_notes_refs,
-> +				     &rev->rdiff_log_arg);
->  	}
->  }
->  
-> @@ -2404,7 +2406,7 @@ int cmd_format_patch(int argc,
->  		rev.rdiff_title = diff_title(&rdiff_title, reroll_count,
->  					     _("Range-diff:"),
->  					     _("Range-diff against v%d:"));
-> -		get_notes_args(&(rev.rdiff_log_arg), &rev);
-> +		get_notes_args(&rev);
->  	}
->  
->  	/*
+Hey Junio, I have sent a new series at the message ID
+<20260927114420.59724-1-jayatheerthkulkarni2005@gmail.com>
