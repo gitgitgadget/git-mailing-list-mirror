@@ -1,122 +1,130 @@
-Received: from flow-a5-smtp.messagingengine.com (flow-a5-smtp.messagingengine.com [103.168.172.140])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF193EB7F4
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 19:02:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37AF8332EBC
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 19:06:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790967755; cv=none; b=iTsn1b7KrkYG2lHtgKZD7MzHTpbAVwoMMVE9LIknO0or6y8AqILXAhjnYnDoqqKQ/Y14jk7iNw4T18R6EJNob8wOOXvtvd8/RRt+ZIScYoOXYRrOPIv7R5JPRcMjqgoFZD8CaSd44DEW3oKkFeMv0SrTcYb6LZuej7/VxS/Cvns=
+	t=1790967978; cv=none; b=XKOxZuUPVdd3pHHZ0ILz040QH4/kfVY6yTUgSBzAp0L8R5/EoxgmpeY+97ufuW4xy/M8CriPRxFni9ELqReZQ9epbg5t/yA8mTWPaCynygmVSY+5yQSoESMpSgD0tKmTC2SeZm3qcQVv7M8U7RCKCCkvoUmJcTon8OV3PxpnS44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790967755; c=relaxed/simple;
-	bh=MjLAFjw/pOxsb0Aac5jsa7qZe0XJDVrdSgca2nidUvQ=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=sA/tBd+eQVFk9q3RW4WMF4WzYW5jbju/QzYr6+RHoMRkGayycnqeuFkC2R3KYDFmzlZaAUUUPHrPOOFQqhKjbxQp5sIlqGr9U30rrXNX9HcyHPACZWg8ix/bH3amSsCrBL1RrTswVosVoOkl52COCnVnAS052OD4Rkxd8t1FAnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=m7rEy/uv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ff9Piqwz; arc=none smtp.client-ip=103.168.172.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1790967978; c=relaxed/simple;
+	bh=wkjYJ1kefSz2dCiG+4dp+8J97Avm4oQsa92jidaqGrk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NDFz+HN+kA4PiM9lX3DugTPlgmpjFzz6rFhm4/EmbgJ3WOCWGTozVPE5B+vksTWsmpLaZsTQ/oFmGKMH4isvnNz6vLfiVBJbFz/zuamEh5L952fkLbK4ksXRip3lcBChpwuzJ4OpKytS92QjmZEV/KkK68yPP73F6ZSQzRtCNiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=diQcR7/I; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="m7rEy/uv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ff9Piqwz"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailflow.phl.internal (Postfix) with ESMTP id 56AF213800B6
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 15:02:32 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 02 Oct 2026 15:02:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790967752;
-	 x=1790971352; bh=MjLAFjw/pOxsb0Aac5jsa7qZe0XJDVrdSgca2nidUvQ=; b=
-	m7rEy/uvg90B7sPR6FDSIx5wiveNxJWojIknJzSemcJhJudILXeSNwga8sTu/FXE
-	bTwkMgcb5hVwK6cPtSISQcMCdXlZg+trP02gJJ/XBsn002lVAkhti8moiVbJNhrG
-	2QBfkeXt+4eRwLMdNOI23A9MSLv4dYXEJuSfzso/yD9wabNWbzbmYLKDrMLMEJla
-	wsY8YuBBDaryMLK1qVPKfYRpI0fH5wTbB2ziSjECFmFylRP1hgFGAH2SDoNZId7v
-	Gtr3C6F3bsJU4FZ+OuJ/iL19eH2J7iu0fdO49TqTLQ3S8VNrn6DMqfjUMYONnGcF
-	jdrJ4iFxyfGOayhEHgJXTg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790967752; x=
-	1790971352; bh=MjLAFjw/pOxsb0Aac5jsa7qZe0XJDVrdSgca2nidUvQ=; b=F
-	f9PiqwzNr82JkE+hXrViMgLRujRwLFi6Tr7tJYautLzBCWofEbusTKtT+P9oMpni
-	pO4I8+xQFAQ9K8zdFW0qEZY9zpuERu9TAmpvmgL1kTeKS4iP9dTpWj3FfGr8E/Xq
-	HA+HIbIZ3m9tRfCofMtjF1+ukSHn+b/e+FYZ0dIo2lGlP4rnTCJdjfLLczrh60nL
-	hxaPEO4m5EV6THgjLVCCjCPQHq5B+d5zrhb61QrVqLRcpfCVYvSK+dTDerTnNDJS
-	T9QJS7iUcM7AXVmKyGFl1nVekK5e3cUbjSj5WskJhIzbHNofWSSqRabh/OhSHcea
-	SmwfohjyA34ZFUsOKyviw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790967752; d=fastmail.com;
-	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:VBVpnBBaq8DQtujHBfoBlB0XN6YPzbApHtqSBA3jyXDSNkv
-	TYvwqFH5HZ/ELeOo/K1o0EFaSHlJJhGl3u1tZApAqeMn3i/FdjX2KsTCo+lKP+2V
-	E1ij5jdbnTK9y2gDPDddi4h1uS07PTLpeQQQ1zSvR1PHI9EV1eG44VFMqFu8AjYI
-	f3WJLMXW9c4TmSYtXo2zwicVNrv6ls+A6lkwSQ/yyoXVEVryir4o3+n4iQ3riQca
-	9CAzpc6VWX+d9C6TvAPrKwmnD75hf7hE2b06mfDxOmMo8TwMaFEcqxNeGo9puCkz
-	T6GjugjrIGDmkZYOotDLGNQvjJL22SZ8B/lIUpw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:kKRS3YKJg+rB/vy9/LinHZ4twsRJNGcYer10aqMbS9o=:MjLAFjw/pOxsb0Aac5jsa7qZe0XJDVrdSgca2nidUvQ=;
-X-ME-Sender: <xms:x_-_akAUl99zlYobCxQbK0Vo31XK84uFfOqhFmHZk_bRB3mnmxctHQ>
-    <xme:x_-_atjfs31Z4TlDKSt5FDXZHcjdvuiZzn8M4UPSOmVKqdCd66hcYDTCGW1_Veci4
-    HvMmx2oiOChqZi6yoZtJtHtWFBgLYB4US5pUd_0COCYqah6pGyfFZ8g>
-X-ME-Received: <xmr:x_-_aslsvDkUdi9mOrWE_t0jlFxYwZDZSWzCaeHOxUik--Pnh3rWh353Sjgre54LCd4KMU_HvMahmrGx-q5R_bjWGj15meWJjTWxOnjiskrlfw-vzwSvxCzzKQ>
-X-ME-Proxy-Cause: dmFkZTGVZqdWyn8PYJ6kb3nJNKjb5lror50D6xmRsDd03SQtUAJ8ObCrUFptWTNXD4ORQS
-    HauJ+Cpphr3GQ6NtA0iVG4m+xoZBYpvU9wyX3Z2qpEChx7cbRdrOzJ1UbhKlyKQiMK7UGq
-    S+Ujxf4oAWokbK9ompwOCTkmjWRIHXnMrmZXeK/CDi79/Q4/hLMK+O+iKoEqJYyuGyLnDX
-    tAdtdReIi7l/d54DyYrdQ34OiPVgzzMGGgrTLZgcWpx8oaTMx0H7FixuQiVTvo04riTmm2
-    E9nl5TNBUC3b3OJdQRpD21HE11IKeodxswJBu6d2+jkYNXt3EcZ6kevvL+oAT4N7ldR1Fj
-    Qy3x9te5C90dsGzPeD9hBNU7s6jPDhzN+Ml+I0WBji2ptJZhfZgBz8RogyWeVVjJAPhx7L
-    0hanZTBQ5Df++qjv0YozicwM9Ym9/uD5wDBQlX3tAEXwacI0nCDAyy5DZCyc0ZZMAIIyqu
-    fsRg1De9ENGA3tvCrjFX4F23TG83Xl8i6mlGE0g73+w9rCAVo/u8MZqtYZyxTkdUXniSv9
-    9zMM1X487liZTBGY0m9EMGKcirFRf8xbNIT214AImomCu44SeYL2eMsPWRPUQPRHjHCUVn
-    a3hl1VM6HIokPn/ghY14Bojz8jFSg30pLQ3g8BAGOslyBbru7DPwwHcvWFTQ
-X-ME-Proxy: <xmx:x_-_apr1Yk9ICzyLn6qOhAqGf3vaGdR8Ux-71yRhZaSjbp1z1fiJxw>
-    <xmx:x_-_alEkBFks9k1yhXwN03ov1qnUmFwocrs5wzSxwpPO_Xj6ondrkw>
-    <xmx:x_-_alyKpqY__pB63H5mXdVxPzV2gSdG2Sim8D2CDhjiNUNfmrS82Q>
-    <xmx:x_-_aqqk8nEA-pKwtwUhuqilvDALQo8TEA9GAnB6YJSwxqWCrPxunw>
-    <xmx:x_-_aj5sFteC0SXxdnbdZhPedG2Hrh-9HFIn_bMODNKWKrJXxUxCzamW>
-Feedback-ID: id2564aa6:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Oct 2026 15:02:31 -0400 (EDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="diQcR7/I"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1790967969;
+	bh=wkjYJ1kefSz2dCiG+4dp+8J97Avm4oQsa92jidaqGrk=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=diQcR7/It6aG3OoznOMHwvwgLjMNc2tgSNYsoaPA342jYx9dnARfMSjN+HT55iQxs
+	 hsvL+C+zsEzsI2b+eANpaaZ7QJCejVqH3HaWrYszrXOcVrCa/fG91FaUTCiw6PUy/x
+	 9LK4QJX+cWl/xYBwAVv1pa1WgygSQ+Q2Fp1lvKaYPYumTgPF9KRcgVHQHVhB2zrBuT
+	 ogJkt7wrThWFNuoAbVzKWBWWViIk4cLt+Hq5G18s+C5GhmlE6l/tD/vxhBGZKvjE9I
+	 /kdkV/Ehqty4IJVTupuP75WdfuxC5/Bas1h452DvSbOd3WqbmECmFZEPbEfk1FFI64
+	 bglIxIse2cfdCwVuobilvGt8XMK+wozgXDL5QD3+Q59ZgA681+KqaM1nHYEQNpTHYn
+	 LHG5Th1kNaXa4CcL+b/Edh2jr+4Zu+O9/N2oInXtG5gP9LIfQiLSskCc7tM5JVlxFr
+	 H7uNwfV1mcWp2RAkGhEhWI7KrS6xcgqr4WeNL2n4QsvJdbiKuQ2
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:b933:116b:3dd2:3ac4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A4F9320075;
+	Fri,  2 Oct 2026 19:06:09 +0000 (UTC)
+Date: Fri, 2 Oct 2026 19:06:08 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Scott Chacon <scott@gitbutler.net>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/4] sign a SHA-256 digest of the tree in commits and
+ tags
+Message-ID: <asAAn8NZwB29WhGR@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Scott Chacon <scott@gitbutler.net>, git@vger.kernel.org
+References: <20261002081846.25144-1-scott@gitbutler.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="rherp020SBs8x4D3"
+Content-Disposition: inline
+In-Reply-To: <20261002081846.25144-1-scott@gitbutler.net>
+User-Agent: Mutt/2.4.1 (2026-07-04)
+
+--rherp020SBs8x4D3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 02 Oct 2026 15:02:30 -0400
-Message-Id: <DLUL2YDALTAV.15LO4AB7BDMLR@fastmail.com>
-From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>, <git@vger.kernel.org>
-Cc: "Guillaume Chauvel" <guillaume.chauvel@gmail.com>, "Philippe Blain"
- <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH 1/2] packfile: move around `close_pack()`
-X-Mailer: aerc 0.21.0
-References: <20261002-pks-packfile-stale-delta-base-cache-v1-0-7592a3e31ae0@pks.im> <20261002-pks-packfile-stale-delta-base-cache-v1-1-7592a3e31ae0@pks.im>
-In-Reply-To: <20261002-pks-packfile-stale-delta-base-cache-v1-1-7592a3e31ae0@pks.im>
 
-On Fri Oct 2, 2026 at 3:34 AM EDT, Patrick Steinhardt wrote:
-> In the next commit we'll want to access the delta base cache in
-> `close_pack()`. Move the function after the declaration of the cache to
-> prepare for this.
+On 2026-10-02 at 08:18:42, Scott Chacon wrote:
+> I'm concerned about the ecosystem impact of moving the `git init` default
+> hashing function to SHA-256 in 3.0. I have suggested that it may be more
+> feasible with similar benefits to add the ability to inject an independen=
+tly
+> calculated and verifiable tree content sha into signed objects instead.
 
-Maybe I'm just being clueless, but how does moving an unmodified function
-help with the subsequent change?
+I don't think this is a good idea.  There are lots of reasons it's not,
+but the simplest one is that Git requires collision resistance because
+it is impossible to store two different colliding blobs.  We don't have
+any such blobs yet, but I fully expect SHA-1 to become as weak as MD5,
+in which case there will be a large number of items that cannot be
+stored in a Git repository.  Even if you don't want to store those
+blobs, there are many people, such as security researchers, who _do_
+want to store those blobs and that requires a SHA-256 repository.  Your
+approach does nothing to address that problem.
 
+Consequently, we need to make the problem better as soon as possible and
+that means moving away from SHA-1.  TLS, OpenPGP, and other major
+ecosystems have already made this transition and we're very far behind
+the times.  The Canadian government already recommends users to have
+moved away from SHA-1 and the U.S. government will no longer allow SHA-1
+for any purpose as of 2030.  I want to be clear that 4 years in the
+large business and government sector is nothing.
+
+I'll also add that the design we have is the design we've had for many
+years and there has been ample opportunity to propose alternative
+designs.  The plan for Git 3.0 is around the March timeframe and making
+substantial changes now is far too late.  Every major forge has support
+for SHA-256, whether publicly or in preview, and no forge has support
+for this design, nor do I anticipate it seeing a lot of traction,
+especially since we explicitly rejected the kind of half-transition
+you're proposing for security and other reasons.  Git 3.0 and the
+requirement for SHA-256 were discussed at Git Merge 2024 in Berlin and
+discussion has happened on the list quite a bit since then, so it
+shouldn't be a surprise to anyone.
+
+The thing you really want is the interoperability work, which can
+automatically rewrite repositories from one hash algorithm to another
+during a clone or fetch operation.  Yes, it isn't quite that simple for
+submodules, but if you recursively clone the repository and all its
+submodules, it should be possible to rewrite it in place, although that
+hasn't been written yet.  That work has not yet been sent upstream
+because some of it was written at $DAYJOB, which requires that we use
+Outlook and we all know that Outlook corrupts patches.  However, there
+is some intention for another company to handle the polishing and
+sending, so it should be available sooner or later.
 --=20
-Mark Craig Chu-Carroll (@MarkChuCarroll at gitlab)
-*** Software Tools/Math Geek - Software Engineer at Gitlab
-*** Work Email: mcarroll@gitlab.com / markchucarroll@fastmail.com
-*** Personal Blog: http://goodmath.org/blog / Personal email: markcc@gmail.=
-com
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
+--rherp020SBs8x4D3
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmrAAJ8JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ81pReEf3Dml75jug9j+mwlJsKhBeHBbRpfz8TyWR+wV
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAGmfAP0UOFHwMMYSH1wJnE1wYeQqtAkK
+Me/f3nQt+lOFOIOPoQEAsZr6Dn/zOduQeI/s+KCknQChLNwCeb1jgZTPTu5caQw=
+=IjgO
+-----END PGP SIGNATURE-----
+
+--rherp020SBs8x4D3--
