@@ -1,94 +1,98 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFF4443C01
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 08:18:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893E6443A83
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 08:18:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790929133; cv=none; b=kbWB/oayd05FFDNbaA22buYUyP9fVxUmmEo8CmeKxhYk17htA/6+tjEhehXFWVh+JWtaVdDe4kMGd7ehTBdFaadIFlv3GBqWG04T6w47LC/niuCpCFSzAd5kOpqWj3KkufEHIefvDr2maEC1nSqci2iCQULOgMhuGizIQcJjOUo=
+	t=1790929135; cv=none; b=L9qAuOuEyRIZzhy0NXp6SgNT7dA/oYNbE8GE5RiVfny3TR5ZHiqf9pQLax5W/7fRAugkCtFfPujJPEJepvA6c9Bgu6Czcaz8rtQtJTpty+uYjIFrVFQ3f91wlr18C3yGsaPeaWlDB4H6oR8tCMV7zBMC4VlGSUK1tyUEI/miN0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790929133; c=relaxed/simple;
-	bh=8KFJzDQ6g4c7Zv9dxzKsuhb1+MFHMBH6cWZ400ayc68=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version; b=C3AVqoNV+FPuwYmQrBwLh292iHW0O5dNRD3IAEdQAnL4OrDfLtVMr08kA97/vj4PUiKI9fnh84OGUG46PlAcn9hxwF/Y8rfQMAnv9mr14BOAHnqVCIMhgmKIO2DRU7KegvNfvzMmRcVojrkCnRuLlRxe1RLGxqvGrijpyLQTZhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gitbutler.net; spf=pass smtp.mailfrom=gitbutler.net; dkim=pass (2048-bit key) header.d=gitbutler.net header.i=@gitbutler.net header.b=K1nhNFMy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fets8hta; arc=none smtp.client-ip=103.168.172.147
+	s=arc-20240116; t=1790929135; c=relaxed/simple;
+	bh=UyzGs7kiK7hG2rkDmOOXnwmnfwE0Ooq2Q3Pa5MOdHiY=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=MX2P7uCogOs7LgcdcJEhMjxONk21QpGLjdLyDVB5PV6JIdqk34uO3drKrEtPh4m1hYQC5zGmKFTOYL1g4WmjqG7y44K1UV+VRJ48AF6CksQOBKOdhiPpnDe20ppcAU8XpN8YJKCHYTmMGQjawsPOZWPiNPHwgiI90tAVCS17DZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gitbutler.net; spf=pass smtp.mailfrom=gitbutler.net; dkim=pass (2048-bit key) header.d=gitbutler.net header.i=@gitbutler.net header.b=CtnTB/3B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r1yY44TN; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gitbutler.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gitbutler.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gitbutler.net header.i=@gitbutler.net header.b="K1nhNFMy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fets8hta"
+	dkim=pass (2048-bit key) header.d=gitbutler.net header.i=@gitbutler.net header.b="CtnTB/3B";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r1yY44TN"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7C4FDEC0180
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 04:18:50 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 64FED140003B
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 04:18:51 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 02 Oct 2026 04:18:50 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 02 Oct 2026 04:18:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gitbutler.net;
 	 h=cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=fm2; t=1790929130; x=1791015530; bh=DLYo51mSkA34/7+a9Fue+
-	QujNoLJpJelcosYS1Ukd8g=; b=K1nhNFMyEhS5NVaoxyPQqf6LsnTE0MrO99pRy
-	kajehqWALmkwlbT7RRiEHQFPt+/GFs4nviS8cF+ceDDaMBMX224DIoKd+fBJq+h2
-	RfwQZCIQi+bblIL6GeEm/ny03NjGfWReCGuhHnRKD2G4cen00iG7Q4e+w0oDHDhp
-	9Gefvb/54yn+mr/Z/KiN43VWdMNgRMgu2mIGN1Aev0MWmtqX1a/z45hurnlcCuPL
-	EzYAnrjnOnOyIe9NXJZoIHmfSAqhxwO7RGcLMm3sonq65piiUbXDgNWLUSsFsKNS
-	Tb1MGNRSLLio7GBSkko4Y5ld4U/CjEPdbY7Jz/03JlcpOf0FA==
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1790929131; x=
+	1791015531; bh=75xNVlGy3lDMMYnNmckQjRlHD3uVJGAav2iwkZlJ6qE=; b=C
+	tnTB/3BmbnUZkpHjVXTqq+QV4Gc+HTGFexL81BY4KFNGNlht0U7l9iENNnTspZ/a
+	hi9inG2a2baRtgpYdEuhF8gXe6Wiz/k5HdhePI4oVkyaViy9vJYHYosOuynM3AbA
+	3RWoTiFHLFKtOkVCiAk4dYY+BuA55i/Ml/6Ql6WDR54220OxhmD2oUlZVE4GYrKG
+	Rosiq8RzSiGpTKjX0e6/5Zo2EJhLFUAVhYfMeh4lEpN3Y6AuQW0J3WSqk06ewLSH
+	fPjLbcVJgpfq5g/M67YBPbNo9YKwGHKFoIUH9pm7Ug89mOL+DNDAAkdNZpjvUYM/
+	gxtb77He58sUvZ4pxezDw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790929130; x=1791015530; bh=DLYo51mSkA34/7+a9Fue+QujNoLJpJelcos
-	YS1Ukd8g=; b=Fets8hta2ktenc8xSfoNAHDuZ8yrTURvy5ZLlB8O9lwHYBu0Ut5
-	sD/SY39HQACiJ93pMmpOOL2M3wlBtCIMhK3vfoCU87iNPGB50aR+pJ/8u2tuIHRJ
-	SIpblZep8uBgTy/KN43/D38Z4si9BEaR8EnfiTIsrYoGoesGFUaci9yajAZbkHxj
-	RfJYuiWiblCN+VXlurboveei3YlZSIgXDd5YN/dRcRZ22QkU1DmGHYTUPYGpr2FF
-	4xtZ+b/AmErgTflZ/Z8iajmKT8DT5kiYEbbcaKqLef5I7pVmB+WwrbMD+3gldPiQ
-	HU/+sX7sMD9Xa1Kj4Xr/E0cO33AXnyfn2GQ==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1790929131; x=1791015531; bh=75xNVlGy3lDMMYnNmckQjRlHD3uV
+	JGAav2iwkZlJ6qE=; b=r1yY44TN/To0i/mE/AgRxQJ/qsicFi23T9gGkkGNpwp3
+	tfozM1UYkYJql7mv8MlgvgyMzXTgeXB27Hufxdxz6ar8k5ucWvE6rKgJzxG9IBeq
+	S5gXMemxsDfRo51lGy8LKXc0Sr+Q5Y25Oi3cyuiBqcD6BrBhceLShnwehm0gMuaI
+	4Yl3Tjey/+t6zgxrFu6XB/WCs9Wm4HVAsw/2T0/Eh7RzfkwwGxyu+tmu0kpY3IaQ
+	9bSw/79STYDaSJPel1L+DzP3e/Rt1kfxJlPgOvqis0oDdoSiYmjygmpxNriaQuZI
+	UF/2CS2hY+j2i9d4UIwM2DiXiEnFStTMyiuVKNK5Zw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=sign d=gitbutler.net a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790929130; d=gitbutler.net;
+DKIM2-Signature: i=1; m=1; t=1790929131; d=gitbutler.net;
 	mf=PHNjb3R0QGdpdGJ1dGxlci5uZXQ+;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:T0O7vQlPz/bxRpTTtUKelt7afvCN05EUR/B7NteGDpdVgPq
-	tjUJ30IegCuIRAKgdI4Ay/8X+z4Nw+e1SNfxwdML0DqigACj3T90nXKKuSlbytnk
-	MPV/p4yZJQYQJ0HOZSfJo67u8iCkbm/xsEfPbifE48OQh/g4gTsioUjZBGj7nGk4
-	hzT6tC4ZhHexBSm1v8ZoCU23vm5U1H9v03Kx/9shQbY5fxjPYWKP5ppSVvfTHF1a
-	GqlHpYuQoi+G08Q3Ne4WvggF4th4aDoWwQYwk4gGWr04YHPAeQK3vEUXd7/BF63C
-	B4O37ePMWt8CXCfZ/69vp+WZHbGl0O4GhDn3ngg==;
+	s=fm2:rsa-sha256:jUCQy3DbWPH2+xKQz8t3rw/7SI89cbw08dfrlT8gWTXCpMf
+	DO9FyXTDxKxDjXlfVzKTVy6UQ2CThOoHdMmR4y9IQK4tjjJ46NbupxlwC9CSttvz
+	BAS+mrRgirtobiTwsKK4CVn8CRxdaoiKyyzfAI16X+qTRMW+AnnHhIyDvMR3R3lD
+	PjH2I/BbbUVHD1Hq9teWY6xh3NQ/YtCuKmlS9jbXrZaKHpT+0qGFIv673NQDrmOw
+	6JeZPFWUUmceAwCAY5Y9EjsSsZRJwSF8S365sLnfmiHv4PyhnjGiXqSv7/Bv/cjv
+	etz/iPoxj/VpUBIwwPapfYGU9PiU4TZkgcDvBzQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=8;
-	hn=content-transfer-encoding,date,feedback-id,from,message-id,
-	mime-version,subject,to;
-Message-Instance: m=1; h=sha256:SUhqfGjFh1AG549C7KV0fRmu+G+D8vn2UC4qAB73uAE=:8KFJzDQ6g4c7Zv9dxzKsuhb1+MFHMBH6cWZ400ayc68=;
-X-ME-Sender: <xms:6mi_atPDBiKfEFg5EdbQOpSkyJ9bOAZsZ2tisyDCkAn8CJwzNTyNjw>
-    <xme:6mi_am4H9bdV3Pp1J9d3j51Is0OVwos7CNLavu9kshpS0xG1ITQWuqayS-FBcn7cO
-    V0IEqn7c6IC0fHJg6H5jVX3hbnn6R4k6GTtWSL5mhOj1o8OzZmSnq8>
-X-ME-Received: <xmr:6mi_ah5pizFz9wU8eu54QN3KfaHicc7F-bjlWlhjzjK9mN95rRcybWWfKsHFrJKU-V1WTFAobtGx>
-X-ME-Proxy-Cause: dmFkZTEi26pwbeot6MEyDQaF807JCRDG8hqmIb4B9S6U9dAhHHH1snUi8gMDAxN4YxcS9h
-    f30E4Nzj3ns96JZ3AhduUmmClJow0J9CAxybi9RsHQIfm/4vaVmuqjhGgjUAyjY/sNUqYo
-    AW7QiEWFq4FGztqtCU1oCGXmmcrB0lg1FsSh1KlxbBtgiBz1B+aMPk7keHABkKAxE2nKEr
-    pwVhaXosq22a1K4mLmI1S1QbJsOINF1Me1g69P9SO75Md+/yDSxfJj3VILYJpmxEo1Oire
-    +ISTEJHWnsz+o+lexToUNoXUhmJ0Vs4aem1f/bMT4m/xzbfN/8dIX9GDMWU2/x/0oBgQbK
-    5vtfpaUaHe1iSyHNpxEMxQc/AQoWFyBFqz6QSfORGt9MwUgFLfFcmcJflRFiKH4kQTpGNe
-    iLFyAbEC/t12vTD2BYtypTOT861hDLtRdCz35amTJR/KhoD/HR6FxMSy/PrKsrWlJQbraa
-    SPeMvMPZPLWMlPDG4S5hWQXgthgzD3yOJF9O7mLAAgS7oztSYQSxC5POzJqQJKay0s50th
-    D/T9+plXUDun+d0yN6J1LMBMtLn19xFurrFT8aWOqOP4ZW+R3vIOgFIffJ6c89SUlhM286
-    fVSWrC86e0g6xI1gLrAJDvDsjnBb71wsu8avDtanURA/a3u8mDlzvcTGpPNA
-X-ME-Proxy: <xmx:6mi_au026qx1zG4vcU-77u47uR_WzZM5zlKmi6Z-btR8cVv4Dim_pA>
-    <xmx:6mi_alVGs9ZYr29XxhUxkRHn-mzPQGG1kxRs-sjsEYr0Ff-XXszzOQ>
-    <xmx:6mi_ah49jMmcrC8b9O8lRSkupfI1JhCMHzumiQk6FEci_YLOpjO6lw>
-    <xmx:6mi_akIDRjo6_JKqmA2ZWiqfq2H3mYG5u3ujL7pBBxkpPUbhQtXN6w>
-    <xmx:6mi_ap8bPuF8Bq6IhYPDmSRi9r_IwTKLomfh-27KuhJQ6rgXezbscw3e>
+	action=mi-m=1; hc=10;
+	hn=content-transfer-encoding,date,feedback-id,from,in-reply-to,
+	message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:vD3CG0IJik/LytU/QAGiX21T+3ftADh41FEvhnlV4bY=:UyzGs7kiK7hG2rkDmOOXnwmnfwE0Ooq2Q3Pa5MOdHiY=;
+X-ME-Sender: <xms:62i_al_0kQPo3mZ7cAExy3OpXKxic3QYCjfTjAqJ9gow9c25IWIWJA>
+    <xme:62i_agp75vaVZgBn3mtLR1M_amspbs0j_KD8mF73X2lnYNhet3B1nfMWjl3PaHch5
+    TG-lR99Ql1PMbFfcf64Ogv3Lsg32apu2vvgar0UAFYRer2owdqlp9w>
+X-ME-Received: <xmr:62i_aorKB8gW96VAdb0rMjtnxRxmqvtIVwdXvea9_yNDFUzaTXZrgAxyF7b6XjT_q-K3GdT1uamD>
+X-ME-Proxy-Cause: dmFkZTE5shk5j/0UYNIwyWlth3ODH7voAtHC7B8rxARENPq0+uH2/7WaOTCarlCSBoyvkR
+    j0uOuT4M5z2izGu2as1WZ3KXgug2xRcOxwK4DpqnV49yFCuIeQrdlSb56pR9O6JoHAD+S6
+    zlnWdTNbpHBl6dg4rL7t1CFh5Jiyv4fbMlw1KxfR9jlqA9bdgO9C8HlmUSUv7z1qxS5PGi
+    FwXKIJWgTG8UqQnUixz356vOXp50M4Pe1CS1+kTPYbwZi8RuD7sVNCG2qiIq8fMxAmjdg+
+    Rx62ck/l101cS5u19XsQieVVnbxHxKAK306cmCoHajrCI8YM/zvUDkgFHGTTVvJNuTKJuD
+    pARzw4W7q+dfGotC9dcMCI3ylxF6xKiajz6dtKN5pBlHMOE9rUZ8Kx7GTz0L1VttWjrBdT
+    +84hI+5BWSq2XvMxaaVQbTJQUEPf1t3zLhRgY+bUMY/z+kmKMc34nJkVT3VAgqdED+WYnK
+    scaRx6+tGx3wfNsKljkIQMM139QYjEXGEwzLFmlhR6PZx0L4Hxad9pC0UZVzwa5ixSF1rP
+    lTsPb5C/m0GdMf2ce5TqADt3LZm4pyLC+FyJFQz5Aa6I+X5B434WWTkfapXk+9ztsfpSjO
+    5uoBYkcUwOQoG3dbGQNjRiAAGfpA4AVFKlvdDHEsBf/y7vQafM2RTuTzhsGA
+X-ME-Proxy: <xmx:62i_aum59vYlEiY8p8jo61Te_LwQ3Ch0piDxdxTiQgryY8m4e04PvQ>
+    <xmx:62i_aqFzBeS90KYZgqNfbcTwrIvnS-epUh7gt_yamXbKiyE1kkaWGQ>
+    <xmx:62i_anrOS_RM4hNhPU2IH20iQlsXEzazh_1zsnTEsrQw1HOvK7m0Yw>
+    <xmx:62i_am6PP1NUxi1Ev7Jn8XtAf2A5Q_f_gBr4fhnPmnMD6CMSsM4H7w>
+    <xmx:62i_aptVoaESB-s3smsSeKH6lW0Ww_B0C6QvTMEGjj5ue4E-yl292rD8>
 Feedback-ID: iecfe4abb:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 2 Oct 2026 04:18:48 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 2 Oct 2026 04:18:50 -0400 (EDT)
 From: Scott Chacon <scott@gitbutler.net>
 To: git@vger.kernel.org
-Subject: [RFC PATCH 0/4] sign a SHA-256 digest of the tree in commits and tags
-Date: Fri,  2 Oct 2026 10:18:42 +0200
-Message-ID: <20261002081846.25144-1-scott@gitbutler.net>
+Subject: [RFC PATCH 1/4] tree-sha256: hash the contents of a tree with SHA-256
+Date: Fri,  2 Oct 2026 10:18:43 +0200
+Message-ID: <20261002081846.25144-2-scott@gitbutler.net>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20261002081846.25144-1-scott@gitbutler.net>
+References: <20261002081846.25144-1-scott@gitbutler.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -97,109 +101,575 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-I'm concerned about the ecosystem impact of moving the `git init` default
-hashing function to SHA-256 in 3.0. I have suggested that it may be more 
-feasible with similar benefits to add the ability to inject an independently
-calculated and verifiable tree content sha into signed objects instead.
-
-This RFC series is meant to demonstrate how this might work.
-
-It adds the ability to directly rehash the full tree contents when signing a
-commit or tag with SHA-256 without the repository needing to be in the sha256
-object format.
-
-In this series "git tag -s --hash=sha256" and "git commit -S --hash=sha256" 
-compute a SHA-256 digest over every file in the tree (and submodules) and put
-that additional hash in a header before signing:
-
-  object 78bd45828aa36fbde3161f49da15272dff3d06f5
-  type commit
-  tag v1.0
-  tagger A U Thor <author@example.com> 1790749714 +0200
-  tree-sha256 775aff90d07c9a73f19ef83ab89bd8e95d1d835325d53cc57a2232b015783d89
-
-  Release 1.0
-  -----BEGIN SSH SIGNATURE-----
-
-For a commit it goes after "committer", before "gpgsig". Setting
-gpg.treeHash=sha256 makes it the default for everything you sign.
-
-The digest is SHA-256 over one record per file, sorted by path:
+Add a way to compute a SHA-256 digest of the contents of a tree that
+doesn't depend on the object format, so that it can be put in the
+signed payload. Each blob in the tree, recursively, becomes one record, 
+and the digest is SHA-256 over the records sorted by path:
 
   <hex sha256 of content> SP <path> NUL
 
-The file mode isn't included. Submodules are followed into their own
-repositories and contribute "<hex digest of their tree> SP <path>/ NUL",
-so the signature covers their contents too; if a submodule isn't
-available, we fail rather than sign something we can't vouch for.
+A gitlink is followed into the submodule's own repository, and the
+tree of the commit it pins is hashed in the same way, giving one record
+with a trailing slash on the path:
 
-Old versions of Git are fine with the new header: fsck ignores extra
-headers after "tagger" by default (and always for commits), and "git
-tag -v" and "git verify-commit" check the signature as before.
+  <hex digest of submodule tree> SP <path>/ NUL
 
-  - Patch 1 adds the digest, with a test-tool helper so it can be
-    tested on its own.
-  - Patches 2 and 3 add --hash to "git tag" and "git commit".
-  - Patch 4 adds gpg.treeHash.
+A path never ends in a slash in a tree, so these can't be confused
+with files. If a submodule isn't available, or doesn't have the pinned
+commit, we can't say anything about its contents and so fail, listing
+every one of them. A submodule that pins a commit already being hashed
+above it would be recorded as "cycle:<commit>" instead, which can't
+happen without a hash collision but keeps the walk from going around
+forever if it does.
 
-From a speed perspective, it's not fast but it's not slow. The default
-build on my M5 is 245ms for a git.git signed tag call, ~5s for the Linux
-tree. An accelerated OpenSSL build is 135ms for git.git, 1.8s for Linux.
+The digest can be reproduced with "git ls-tree -r", "git cat-file"
+and sha256sum, which is how the new test checks it, through a new
+"test-tool tree-sha256". The following patches use it in "git tag"
+and "git commit".
 
-However, this is single threaded. We could easily do parallel hashing which
-should make it many times faster - my previous tests in Rust on 18 threads
-on my M5 did git.git in 36ms and Linux tree in 0.5s (verified the same hash).
-
-Not in this series, and what I'd like opinions on:
-
-  - Any interest? Would the list find this approach a viable alternative
-    to not switching the default hash function to sha-256 in 3.0? Not that
-    it wouldn't be an available object format, but that it wouldn't need to
-    be the default one.
-
-  - Verification. "git tag -v" and "git verify-commit" don't recompute
-    the digest yet. I'd like to agree on the format before adding that.
-
-  - Excluding submodules. Large projects can have submodules that most
-    people never check out, and they can't sign with --hash today. One
-    option is an "excluded:<commit>" header that still covers the
-    pinned commit but not its contents, with a header listing the
-    excluded paths so that verification can report them.
-
-  - Naming. The header is "tree-sha256", the option "--hash", and the
-    config "gpg.treeHash". I'm not attached to any of them.
-
-Scott Chacon (4):
-  tree-sha256: hash the contents of a tree with SHA-256
-  tag: add --hash=sha256 to sign a tree-sha256 header
-  commit: add --hash=sha256 to sign a tree-sha256 header
-  gpg: add gpg.treeHash to sign a tree-sha256 header by default
-
- Documentation/config/gpg.adoc |   6 +
- Documentation/git-commit.adoc |  11 +-
- Documentation/git-tag.adoc    |  11 +-
- Makefile                      |   2 +
- builtin/commit.c              |  46 ++++++-
- builtin/tag.c                 |  41 +++++-
- meson.build                   |   1 +
- t/helper/meson.build          |   1 +
- t/helper/test-tool.c          |   1 +
- t/helper/test-tool.h          |   1 +
- t/helper/test-tree-sha256.c   |  31 +++++
- t/meson.build                 |   2 +
- t/t1018-tree-sha256.sh        | 123 +++++++++++++++++
- t/t7032-tree-sha256-signed.sh | 169 +++++++++++++++++++++++
- tree-sha256.c                 | 247 ++++++++++++++++++++++++++++++++++
- tree-sha256.h                 |  36 +++++
- 16 files changed, 720 insertions(+), 9 deletions(-)
+---
+ Makefile                    |   2 +
+ meson.build                 |   1 +
+ t/helper/meson.build        |   1 +
+ t/helper/test-tool.c        |   1 +
+ t/helper/test-tool.h        |   1 +
+ t/helper/test-tree-sha256.c |  31 +++++
+ t/meson.build               |   1 +
+ t/t1018-tree-sha256.sh      | 123 +++++++++++++++++++
+ tree-sha256.c               | 238 ++++++++++++++++++++++++++++++++++++
+ tree-sha256.h               |  30 +++++
+ 10 files changed, 429 insertions(+)
  create mode 100644 t/helper/test-tree-sha256.c
  create mode 100755 t/t1018-tree-sha256.sh
- create mode 100755 t/t7032-tree-sha256-signed.sh
  create mode 100644 tree-sha256.c
  create mode 100644 tree-sha256.h
 
-
-base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
+diff --git a/Makefile b/Makefile
+index c649c93c51..e042163635 100644
+--- a/Makefile
++++ b/Makefile
+@@ -878,6 +878,7 @@ TEST_BUILTINS_OBJS += test-submodule.o
+ TEST_BUILTINS_OBJS += test-subprocess.o
+ TEST_BUILTINS_OBJS += test-synthesize.o
+ TEST_BUILTINS_OBJS += test-trace2.o
++TEST_BUILTINS_OBJS += test-tree-sha256.o
+ TEST_BUILTINS_OBJS += test-truncate.o
+ TEST_BUILTINS_OBJS += test-userdiff.o
+ TEST_BUILTINS_OBJS += test-wildmatch.o
+@@ -1357,6 +1358,7 @@ LIB_OBJS += trailer.o
+ LIB_OBJS += transport-helper.o
+ LIB_OBJS += transport.o
+ LIB_OBJS += tree-diff.o
++LIB_OBJS += tree-sha256.o
+ LIB_OBJS += tree-walk.o
+ LIB_OBJS += tree.o
+ LIB_OBJS += unpack-trees.o
+diff --git a/meson.build b/meson.build
+index 0a95d90d21..771e1247f7 100644
+--- a/meson.build
++++ b/meson.build
+@@ -562,6 +562,7 @@ libgit_sources = [
+   'transport-helper.c',
+   'transport.c',
+   'tree-diff.c',
++  'tree-sha256.c',
+   'tree-walk.c',
+   'tree.c',
+   'unpack-trees.c',
+diff --git a/t/helper/meson.build b/t/helper/meson.build
+index 3235f10ab8..6f6a4e0a42 100644
+--- a/t/helper/meson.build
++++ b/t/helper/meson.build
+@@ -72,6 +72,7 @@ test_tool_sources = [
+   'test-synthesize.c',
+   'test-tool.c',
+   'test-trace2.c',
++  'test-tree-sha256.c',
+   'test-truncate.c',
+   'test-userdiff.c',
+   'test-wildmatch.c',
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index b71a22b43b..d3452f7297 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -84,6 +84,7 @@ static struct test_cmd cmds[] = {
+ 	{ "subprocess", cmd__subprocess },
+ 	{ "synthesize", cmd__synthesize },
+ 	{ "trace2", cmd__trace2 },
++	{ "tree-sha256", cmd__tree_sha256 },
+ 	{ "truncate", cmd__truncate },
+ 	{ "userdiff", cmd__userdiff },
+ 	{ "xml-encode", cmd__xml_encode },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index f2885b33d5..410d71f6a9 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -77,6 +77,7 @@ int cmd__submodule_nested_repo_config(int argc, const char **argv);
+ int cmd__subprocess(int argc, const char **argv);
+ int cmd__synthesize(int argc, const char **argv);
+ int cmd__trace2(int argc, const char **argv);
++int cmd__tree_sha256(int argc, const char **argv);
+ int cmd__truncate(int argc, const char **argv);
+ int cmd__userdiff(int argc, const char **argv);
+ int cmd__xml_encode(int argc, const char **argv);
+diff --git a/t/helper/test-tree-sha256.c b/t/helper/test-tree-sha256.c
+new file mode 100644
+index 0000000000..d3fca5c0b7
+--- /dev/null
++++ b/t/helper/test-tree-sha256.c
+@@ -0,0 +1,31 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
++#include "test-tool.h"
++#include "git-compat-util.h"
++#include "hash.h"
++#include "object-name.h"
++#include "repository.h"
++#include "setup.h"
++#include "strbuf.h"
++#include "tree-sha256.h"
++
++int cmd__tree_sha256(int argc, const char **argv)
++{
++	struct object_id oid;
++	struct strbuf hex = STRBUF_INIT;
++	int ret = 0;
++
++	setup_git_directory(the_repository);
++	if (argc != 2)
++		die("usage: test-tool tree-sha256 <tree-ish>");
++	if (repo_get_oid(the_repository, argv[1], &oid))
++		die("not a valid object name: %s", argv[1]);
++
++	if (tree_sha256_hex(the_repository, &oid, &hex))
++		ret = 1;
++	else
++		puts(hex.buf);
++
++	strbuf_release(&hex);
++	return ret;
++}
+diff --git a/t/meson.build b/t/meson.build
+index 3ca7b27104..8ff3dbe69d 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -172,6 +172,7 @@ integration_tests = [
+   't1015-read-index-unmerged.sh',
+   't1016-compatObjectFormat.sh',
+   't1017-cat-file-remote-object-info.sh',
++  't1018-tree-sha256.sh',
+   't1020-subdirectory.sh',
+   't1022-read-tree-partial-clone.sh',
+   't1050-large.sh',
+diff --git a/t/t1018-tree-sha256.sh b/t/t1018-tree-sha256.sh
+new file mode 100755
+index 0000000000..ff2edd159e
+--- /dev/null
++++ b/t/t1018-tree-sha256.sh
+@@ -0,0 +1,123 @@
++#!/bin/sh
++
++test_description='SHA-256 digest of the contents of a tree'
++
++. ./test-lib.sh
++
++# Recompute the tree-sha256 of <rev> in repository <dir> by hand: one
++# "<sha256 of content> <path>" record per file and "<digest> <path>/"
++# per submodule, sorted by path, NUL-terminated and hashed together.
++expect_tree_sha256 () {
++	git -C "$1" ls-tree -r --format="%(objectmode) %(objectname) %(path)" "$2" |
++	while read mode oid path
++	do
++		case "$mode" in
++		160000)
++			printf "%s %s/\n" "$(expect_tree_sha256 "$1/$path" "$oid")" "$path" ;;
++		*)
++			printf "%s %s\n" "$(git -C "$1" cat-file blob "$oid" |
++					    test-tool sha256)" "$path" ;;
++		esac
++	done |
++	LC_ALL=C sort -t " " -k2 |
++	tr "\n" "\000" |
++	test-tool sha256
++}
++
++test_expect_success 'setup' '
++	git config --global protocol.file.allow always &&
++
++	git init inner &&
++	test_commit -C inner inner-file &&
++	git init sub &&
++	test_commit -C sub sub-file &&
++	git -C sub submodule add ../inner inner &&
++	git -C sub commit -m "add inner" &&
++
++	mkdir -p a/deeper &&
++	echo one >a/deeper/file &&
++	echo two >a.b &&
++	echo exe >exe &&
++	git add a a.b exe &&
++	test_ln_s_add a.b link &&
++	git commit -m initial
++'
++
++test_expect_success 'digest of files, directories and symlinks' '
++	expect_tree_sha256 . HEAD >expect &&
++	test-tool tree-sha256 HEAD >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'commits, tags and trees give the same digest' '
++	git tag -a -m tag v1 &&
++	test-tool tree-sha256 v1 >tag &&
++	test-tool tree-sha256 HEAD^{tree} >tree &&
++	test_cmp expect tag &&
++	test_cmp expect tree
++'
++
++test_expect_success 'file mode is not part of the digest' '
++	test_chmod +x exe &&
++	git commit -m executable &&
++	test-tool tree-sha256 HEAD >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'content and paths are' '
++	echo changed >a/deeper/file &&
++	git commit -a -m changed &&
++	test-tool tree-sha256 HEAD >changed &&
++	! test_cmp expect changed &&
++
++	git mv a.b a.c &&
++	git commit -m renamed &&
++	test-tool tree-sha256 HEAD >renamed &&
++	! test_cmp changed renamed
++'
++
++test_expect_success 'submodules are hashed recursively' '
++	git submodule add ./sub sub &&
++	git submodule update --init --recursive &&
++	git commit -m "add sub" &&
++	expect_tree_sha256 . HEAD >expect &&
++	test-tool tree-sha256 HEAD >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'submodule contents are part of the digest' '
++	test_commit -C sub/inner more &&
++	git -C sub commit -a -m "update inner" &&
++	git commit -a -m "update sub" &&
++	test-tool tree-sha256 HEAD >updated &&
++	! test_cmp expect updated &&
++	expect_tree_sha256 . HEAD >expect &&
++	test_cmp expect updated
++'
++
++test_expect_success 'submodules are read from their gitdir without a worktree' '
++	mv sub/inner inner.away &&
++	test_when_finished "mv inner.away sub/inner" &&
++	test-tool tree-sha256 HEAD >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'unavailable submodules are an error' '
++	mv sub/inner inner.away &&
++	mv sub/.git/modules/inner inner.git.away &&
++	test_when_finished "mv inner.away sub/inner && mv inner.git.away sub/.git/modules/inner" &&
++	test_must_fail test-tool tree-sha256 HEAD 2>err &&
++	test_grep "sub/inner (not checked out)" err
++'
++
++test_expect_success 'submodule missing the pinned commit is an error' '
++	tree=$(printf "160000 commit %s\tinner\n" $(test_oid deadbeef) |
++	       git -C sub mktree) &&
++	(
++		cd sub &&
++		test_must_fail test-tool tree-sha256 $tree 2>err &&
++		test_grep "inner (checked out, but missing commit $(test_oid deadbeef))" err
++	)
++'
++
++test_done
+diff --git a/tree-sha256.c b/tree-sha256.c
+new file mode 100644
+index 0000000000..fb58962232
+--- /dev/null
++++ b/tree-sha256.c
+@@ -0,0 +1,238 @@
++#include "git-compat-util.h"
++#include "tree-sha256.h"
++#include "commit.h"
++#include "gettext.h"
++#include "hash.h"
++#include "hex.h"
++#include "object.h"
++#include "odb.h"
++#include "oid-array.h"
++#include "pathspec.h"
++#include "repository.h"
++#include "string-list.h"
++#include "strbuf.h"
++#include "tree.h"
++
++struct record {
++	char *path; /* submodules carry a trailing '/' */
++	struct object_id oid;
++	unsigned submodule:1;
++};
++
++struct collect {
++	struct record *items;
++	size_t nr, alloc;
++};
++
++struct walk {
++	/* "<path> (<reason>)" for each submodule that can't be hashed */
++	struct string_list missing;
++};
++
++static int collect_entry(const struct object_id *oid, struct strbuf *base,
++			 const char *pathname, unsigned mode, void *context)
++{
++	struct collect *c = context;
++	struct record *rec;
++
++	if (S_ISDIR(mode))
++		return READ_TREE_RECURSIVE;
++
++	ALLOC_GROW(c->items, c->nr + 1, c->alloc);
++	rec = &c->items[c->nr++];
++	oidcpy(&rec->oid, oid);
++	rec->submodule = S_ISGITLINK(mode);
++	rec->path = xstrfmt("%.*s%s%s", (int)base->len, base->buf, pathname,
++			    rec->submodule ? "/" : "");
++	return 0;
++}
++
++static int record_cmp(const void *a_, const void *b_)
++{
++	const struct record *a = a_, *b = b_;
++	return strcmp(a->path, b->path);
++}
++
++static int hash_tree(struct repository *r, const struct object_id *oid,
++		     const char *prefix, struct oid_array *chain,
++		     struct walk *walk, unsigned char *digest);
++
++static int in_chain(const struct oid_array *chain, const struct object_id *oid)
++{
++	for (size_t i = 0; i < chain->nr; i++)
++		if (oideq(&chain->oid[i], oid))
++			return 1;
++	return 0;
++}
++
++/*
++ * Hash the submodule of "r" at "path", pinned at "commit", and append
++ * its digest in hex to "out". "treeish" is the tree "path" was found
++ * in, which is where .gitmodules is read from if the submodule's
++ * gitdir isn't at "path". "full" is the path from the top repository,
++ * for messages.
++ *
++ * Returns 1 if the submodule is unavailable (recording why in
++ * walk->missing), -1 on other errors and 0 on success.
++ */
++static int hash_submodule(struct repository *r, const struct object_id *treeish,
++			  const char *path, const char *full,
++			  const struct object_id *commit,
++			  struct oid_array *chain, struct walk *walk,
++			  struct strbuf *out)
++{
++	const struct git_hash_algo *sha256 = &hash_algos[GIT_HASH_SHA256];
++	unsigned char digest[GIT_MAX_RAWSZ];
++	struct repository sub;
++	struct strbuf sub_prefix = STRBUF_INIT;
++	int ret;
++
++	if (repo_submodule_init(&sub, r, path, treeish)) {
++		string_list_append_nodup(&walk->missing, xstrfmt("%s (%s)", full,
++				    _("not checked out")));
++		return 1;
++	}
++	if (!odb_has_object(sub.objects, commit, 0)) {
++		string_list_append_nodup(&walk->missing, xstrfmt("%s (%s %s)", full,
++				    _("checked out, but missing commit"),
++				    oid_to_hex(commit)));
++		repo_clear(&sub);
++		return 1;
++	}
++
++	strbuf_addf(&sub_prefix, "%s/", full);
++	oid_array_append(chain, commit);
++	ret = hash_tree(&sub, commit, sub_prefix.buf, chain, walk, digest);
++	chain->nr--;
++	if (!ret)
++		strbuf_addstr(out, hash_to_hex_algop(digest, sha256));
++
++	strbuf_release(&sub_prefix);
++	repo_clear(&sub);
++	return ret;
++}
++
++/*
++ * Hash one tree of repository "r". "prefix" is the path of "r" from the
++ * top repository (empty, or ending in '/'), and "chain" holds the
++ * commits of the submodules being hashed above this one.
++ */
++static int hash_tree(struct repository *r, const struct object_id *oid,
++		     const char *prefix, struct oid_array *chain,
++		     struct walk *walk, unsigned char *digest)
++{
++	const struct git_hash_algo *sha256 = &hash_algos[GIT_HASH_SHA256];
++	struct git_hash_ctx outer;
++	struct collect c = { 0 };
++	struct pathspec pathspec = { 0 };
++	struct strbuf value = STRBUF_INIT;
++	struct tree *tree;
++	int ret = 0;
++
++	tree = repo_parse_tree_indirect(r, oid);
++	if (!tree)
++		return error(_("unable to read tree for %s in %s"),
++			     oid_to_hex(oid), *prefix ? prefix : ".");
++	if (read_tree(r, tree, &pathspec, collect_entry, &c))
++		return error(_("unable to read tree %s"),
++			     oid_to_hex(&tree->object.oid));
++	QSORT(c.items, c.nr, record_cmp);
++
++	git_hash_init(&outer, sha256);
++	for (size_t i = 0; i < c.nr; i++) {
++		struct record *rec = &c.items[i];
++
++		strbuf_reset(&value);
++		if (!rec->submodule) {
++			struct git_hash_ctx ctx;
++			unsigned char blob_digest[GIT_MAX_RAWSZ];
++			enum object_type type;
++			size_t size;
++			void *data;
++
++			data = odb_read_object(r->objects, &rec->oid, &type, &size);
++			if (!data || type != OBJ_BLOB) {
++				free(data);
++				ret = error(_("unable to read blob %s for %s%s"),
++					    oid_to_hex(&rec->oid), prefix, rec->path);
++				break;
++			}
++			git_hash_init(&ctx, sha256);
++			git_hash_update(&ctx, data, size);
++			git_hash_final(blob_digest, &ctx);
++			free(data);
++			strbuf_addstr(&value, hash_to_hex_algop(blob_digest, sha256));
++		} else if (in_chain(chain, &rec->oid)) {
++			/*
++			 * A commit can't contain itself without a hash
++			 * collision, but don't rely on that to stop.
++			 */
++			strbuf_addf(&value, "cycle:%s", oid_to_hex(&rec->oid));
++		} else {
++			char *path = xstrndup(rec->path, strlen(rec->path) - 1);
++			char *full = xstrfmt("%s%s", prefix, path);
++			int res = hash_submodule(r, &tree->object.oid, path, full, &rec->oid,
++						 chain, walk, &value);
++			free(path);
++			free(full);
++			if (res < 0) {
++				ret = -1;
++				break;
++			}
++		}
++
++		git_hash_update(&outer, value.buf, value.len);
++		git_hash_update(&outer, " ", 1);
++		git_hash_update(&outer, rec->path, strlen(rec->path));
++		git_hash_update(&outer, "", 1);
++	}
++	git_hash_final(digest, &outer);
++
++	for (size_t i = 0; i < c.nr; i++)
++		free(c.items[i].path);
++	free(c.items);
++	strbuf_release(&value);
++	return ret;
++}
++
++int tree_sha256_hex(struct repository *r, const struct object_id *oid,
++		    struct strbuf *hex)
++{
++	const struct git_hash_algo *sha256 = &hash_algos[GIT_HASH_SHA256];
++	unsigned char digest[GIT_MAX_RAWSZ];
++	struct walk walk = { .missing = STRING_LIST_INIT_DUP };
++	struct oid_array chain = OID_ARRAY_INIT;
++	struct commit *top;
++	struct tree *tree;
++	int ret;
++
++	tree = repo_parse_tree_indirect(r, oid);
++	if (!tree)
++		return error(_("cannot compute %s: %s does not point to a tree"),
++			     TREE_SHA256_HEADER, oid_to_hex(oid));
++
++	top = lookup_commit_reference_gently(r, oid, 1);
++	if (top)
++		oid_array_append(&chain, &top->object.oid);
++
++	ret = hash_tree(r, &tree->object.oid, "", &chain, &walk, digest);
++
++	if (!ret && walk.missing.nr) {
++		struct strbuf list = STRBUF_INIT;
++
++		string_list_sort(&walk.missing);
++		for (size_t i = 0; i < walk.missing.nr; i++)
++			strbuf_addf(&list, "\n  %s", walk.missing.items[i].string);
++		ret = error(_("%"PRIuMAX" submodule(s) are not available, and "
++			      "a %s can't be computed without their tree hashes:%s\n"
++			      "Check them out with `git submodule update --init --recursive`."),
++			    (uintmax_t)walk.missing.nr, TREE_SHA256_HEADER, list.buf);
++		strbuf_release(&list);
++	}
++	if (!ret)
++		strbuf_addstr(hex, hash_to_hex_algop(digest, sha256));
++
++	string_list_clear(&walk.missing, 0);
++	oid_array_clear(&chain);
++	return ret;
++}
+diff --git a/tree-sha256.h b/tree-sha256.h
+new file mode 100644
+index 0000000000..6d3e5018aa
+--- /dev/null
++++ b/tree-sha256.h
+@@ -0,0 +1,30 @@
++#ifndef TREE_SHA256_H
++#define TREE_SHA256_H
++
++struct repository;
++struct object_id;
++struct strbuf;
++
++/* The header that carries the digest in signed commits and tags. */
++#define TREE_SHA256_HEADER "tree-sha256"
++
++/*
++ * Compute the tree-sha256 of the tree reachable from "oid" (a tree,
++ * commit or tag) and append it to "hex" as 64 lowercase hex digits.
++ *
++ * Every blob and symlink in the tree, recursively, contributes one
++ * record "<hex sha256 of content> SP <path> NUL". Every submodule
++ * contributes "<hex tree-sha256 of submodule> SP <path>/ NUL", hashed
++ * from the checked-out submodule's own repository at the commit the
++ * superproject pins; a submodule whose commit is already being hashed
++ * further up the chain is recorded as "cycle:<commit> SP <path>/ NUL".
++ * Records are sorted by path (byte order) and the digest is SHA-256
++ * over their concatenation.
++ *
++ * Returns 0 on success. On failure (for example a submodule that is
++ * not checked out) reports every problem with error() and returns -1.
++ */
++int tree_sha256_hex(struct repository *r, const struct object_id *oid,
++		    struct strbuf *hex);
++
++#endif /* TREE_SHA256_H */
 -- 
 2.50.1 (Apple Git-155)
 
