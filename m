@@ -1,101 +1,100 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C330835E92B
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 15:04:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858944DE720
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 15:45:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790953462; cv=none; b=MXqwvbnTgFlELWZnf9xsuoq2YhIYW+gGt1glO1rl5wrc0Hbov/PHrq0VF+2a8x3F56xRJICkn36kmOTTAs8zYUbSXZEKqnxnBBFM3h8Ju7reQOrCVHDzeerzXGiOa6oMqvbaPoSb0FKxGSqY37uH0bPix688zypLXtSbN41OTAQ=
+	t=1790955958; cv=none; b=bJgVo0oSSsHYH4A5VS/TrVb7VzurwMlNfMWNkiRRgTZTDpvWS9sz4vXkN4IdeurHIh/71XmO5so/ux5J44cjnnycYQ+bkhJehS55Zfj5Z/npbSKTyY9oiE0jpBDLtvqBMLFU8N1v31BuUL89UWdxdPvL4gbwMgV1BGWD0xANWsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790953462; c=relaxed/simple;
-	bh=4QOuIOP4IDc7rLalC6jTmxA4maKSQS4aj+51aSNlRY8=;
+	s=arc-20240116; t=1790955958; c=relaxed/simple;
+	bh=7z2hxEAL72x78wyoXj6y83Iwhv3C/6B/S5by76igl7Q=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mnWkhp8iylol9WPmuAO6QXOc+36H1QpiVRcOJLknzI1ZawFlnuLT+cxoI3qIco8/eHv4L7MsWcjiUnFXKXm/8TMDUE4OWs44x1ZSpwjcKFnAk173wXqOzbjUZZWfaxknMMBe2cQCLRrNXHsep93dAID7lDfagGs9kpouF6xdZNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cDnp4XdC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZgDLTtDV; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=rBa+BITuMy4raVTsTriFoelYmDZQrBioEe0HRtnndUHKgDORHO/0xShf0QB+vEdTHwWIQJi3FYLe47X1OCOk3JKX6IBA246AmrilkS7m/j3fJ4YwkiS8cvpbTIrxyKMYLTuIBpVDNIIf79jlp/bBY2UOIFtbU+HKvm5uGcb4E4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=w0qDENe8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AojOTiNv; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cDnp4XdC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZgDLTtDV"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E69647A0081
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 11:04:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Fri, 02 Oct 2026 11:04:19 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="w0qDENe8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AojOTiNv"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id B9D461D000E0
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 11:45:55 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 02 Oct 2026 11:45:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790953459; x=1791039859; bh=V6hIT24Wwy
-	faG1qYEj+ZlJVnLakSOXTaqCSlyLCR+Lc=; b=cDnp4XdCJvjD2eyw2krWEPK9x+
-	oAnjKC6r1qSy6MSDbruUBuVWg0fjpMSk+pOl5fohkshRwhfwKVXJOjhjD3SRVxN8
-	gqZ3epNLSawiLt1+UAjpo2+noXL9ae43DLF5i1NNadMJSLC+UR9rV0wJjeq/7myV
-	hKrRdAfw/1y5S4WikShPK3oQgYfWNaIPDxRRdvUv7uCD9Pq1tpgP8VTIZrWt914G
-	KTmK3RspqYlgmH1NGk+ff9o3GIxfxWJ2WKHvp4nfBHoiMP1THoOm5j7itclbTcR5
-	xJK3G/SyhZ5cNshF9HHsTwPLz/90ag7pQuBwFx5dRA7zVK/+/UGwPCIpgRgA==
+	:subject:to:to; s=fm3; t=1790955955; x=1791042355; bh=TTjk02pZSa
+	XuFvWQQjVSdF8ikiV8eC1iMeA6sDeGEjw=; b=w0qDENe87z7ZNr2mxsdaf/YuJ9
+	FLYj1SigDMK/aCIFWHxS/8ujDZ14TeisAqGGLSmkkmXifS8ASS8VGBU/mg9FfMHT
+	rwxgB+fV4cJpMBYtSS7CcbVfeTbNxSDbQgRyI4e6A4ikT1tVYVD17daQ0QnfB3Ge
+	RWv40E6xt0rADYjIeVcIyfjqSogKhbhrsaSR5rlHAjBP8YEpagmGJL03saDZZ7Oq
+	UFnIFs0W4oeWVscgb1Dg7VhYW3dcAwlfsVnlWQcLCzWjmZ3zjq7LJWmlWciCt9FY
+	XdkRzQX29Y/lWr/YSyVISQ0B2LtRIC4rdSm67EQCAjflK6uCdwJdBCZqsK6w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790953459; x=1791039859; bh=V6hIT24WwyfaG1qYEj+ZlJVnLakSOXTaqCS
-	lyLCR+Lc=; b=ZgDLTtDVq17lrpPgsD6Qtfv+TiMWCcm4IWEOH4W4g23ajFBrqNQ
-	CPLP2s1fKfymJ8ZwRRF+D0dcS1ygU/ppv9HWHEaX2veFlDBEqDXVH8r1yysEuixi
-	LiC5ccSOcduJ7kjc3OW+RpNDN6WIZeHpzsE4iWr+1iXNgd46PtRItTjreaKuq+0g
-	45pFftUsUCWZtE2butR9qS5kLXYWyRyFlqZnGX3ZZjfsqbBXRKgmaJxMdi1HBpk5
-	PvanbXzXAsGnIhGvMhMKBKWPu0wF3K/C8HRmvZcMNGLMSTbeviCLifODnEJd8zWY
-	VYMLZq3ASCC0NoLeYBbDf7b4xXlUfzG9p4g==
+	1790955955; x=1791042355; bh=TTjk02pZSaXuFvWQQjVSdF8ikiV8eC1iMeA
+	6sDeGEjw=; b=AojOTiNvOeRgmAwhxAWIm71svo+vmGZO5slCQyiq0YBbvj0HydT
+	xhEJTLW5zxGqGlZKCMZEjaHGKzzsdl9f+uvQINnkjKMPyeUNQNQ3kM+u5x6iT9vx
+	nHkmeqAGZboBv9SnAZQH5lEvLp91I3S76dg+eorJ6FHTdI+YtqfJd0Eyw7tt7T1k
+	5Ds2zNPl8aAE1FRRv3bAwyqKqYTZqLGkeKDDMzb+5HQDbLOknMOjQ9VVvsEvjdgp
+	7+c7iLA4NVYKdpwGWz7lZGV7NZentYDESzv/BSDyvpG2kgY+mUaxzZ9lK0UE0jp7
+	0+K9jaNBitmSEpiBy/+RB2ZG/ZdzpkmEEuw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790953459; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1790955955; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:qUsGtNbQOXJkCu+XAmClRgg0e4xsEXdIbLvA6nRsAEttYf/
-	MJ15I30S+5dENul3hwaTQluZ6eo7QalV/cPhNWXEAAnDUP2aT/xnTr4kqV81F4o6
-	t0ZTg5yS6rSDELIlPcx96lj5KC424IOL+r/mhtpjI8oZCB17x2gpDWhBU/G9zIGl
-	cayBi+XZQOTCSlKYsgOOuwzlK8V0gugwZjEwnRBM1ot+/gBaZfhoFhfo3SLT2rW/
-	R/K8NzlMlU8cVT3lTxh4mmoloP2rge/spBLSFzYtnthyqvzJ+ElnvPa2TYD34/oE
-	CWX6XZ2SNoYuNoDJ6yLcOn+M8UJHWshgJlkQtYQ==;
+	s=fm3:rsa-sha256:thiyFgohR6HZcFubpSlnRV0nlmb1FGIvWURJcOpoGzCZkEg
+	w2lRozv/Bi1lTbwBEk7Vw1FedKa5JI0NiIAan3Vr6+fKworCGzu2oD01pO75Nc3P
+	0/hMFk/bN0n5eYh9pS6EQsYudK5f+LllBo8iqbCXFRKnz9eCs2PQvFs+AXSxjB/c
+	3nlQijPrr49BjeG3bEXqWlm1sCQMk9oWZYItBZaI83XAsLkyFSpNsSVdgirClp4f
+	dbxlFNYZj7HpjHBaFwBofj9e27iymp6qRg0AhDqxwlJqaGGw6JZVlaQcQ6IsxH5s
+	7pUpEtUHDXDuOFJzqpVpy6iaBTikeLYA6bBK14Q==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:L7W5Hf5WWgKtfjM/+g3a/pA1BgmzPAaNPSk+G2x1Rng=:4QOuIOP4IDc7rLalC6jTmxA4maKSQS4aj+51aSNlRY8=;
-X-ME-Sender: <xms:8se_aris3NoX9FoDwgnC1rYD9GZVijIguTEmMFymxReuqiHWAapfWg>
-    <xme:8se_aotIcsvoqGcfNzWpLY9biz2A8_WsMvnqI2llI1le_tM3cs1l__tAbWlXkmgaK
-    IxZfkWC4GvSrY5KHWcFgwRlcTHGaEVk8uriwtG7yshsbMGXeSOYDeA>
-X-ME-Received: <xmr:8se_apSZrv414EchbAAspjWsj3rsAvhZcHkThFN8BGZv0ha7SK8fpT__hWEJZ2ESS9wE5l1-ubIZbpY9GDIboPTZBRUawuHKZXo4>
-X-ME-Proxy-Cause: dmFkZTGeyBj/9fXHuGPyOJd/FCg3//8u4Ygd9w52z3PqJQcyB4+/3SLud/MZ082NdGJgAn
-    ruTCuiVYfokbuyL1qiHY781wSP1KzvzbGk0P97pF1BvHfStmda28UDHWxux+et6zU3oID/
-    nl7zEjSHaKznslbrc6+AMEXhIWjYYB3GGyGy1wjw5QJeZ3sdDoVH2yt+U1jT6nhMEDI3qD
-    UzygRfMViX4uch1VRFJErxsbYhfWqoobco00iGEEH1YsGE1nC9fh5hCOHudHSLdV4oqkZ2
-    yu0M+UmhmeuFGEf4N+5W9r6mO8pg8BOatK8s2J/6BwXguI33bDWfb2IW3AudLPf6NPCjHF
-    Ftwkr42yoMfRh9kJCGV6PmXXQacGknM5FBO8fLpYi8ZXDIx2+t0cdcsi4bk+PjOg4m1zwY
-    8V+Wjn3d/ELwVILsZO6GOacsgm7ihEdXtq7ET/CUApfuTFBIbqD7niaM3JmhswupBgOIeO
-    KxyQyFQxrrybL8B9E5laZELkZssfTtMjuFDYrykosHaxiTOICyAULqGs4OMJ5xXTlHWuEg
-    fn5xv0DhOa4sREoK+l31etHE8wTgN7NkoqDKf5lKV9xi6nZUK+zoBE9YUIjnKyoRlnxScB
-    0zidhhLJnYogfpiPVHbdtoGXWgYsWEfDOWU1LWh1Q3e3PTvLXwTKvU++eWbw
-X-ME-Proxy: <xmx:8se_as27D43_B6ngITnnv7AxCeeOeoRRF5IsSKjHNd02JOkAvXE8zg>
-    <xmx:8se_aut_Q418PBX1KcFfB_byyC3J_eI4bpUQdLEojhRTr6Y18HA0Jw>
-    <xmx:8se_aiiUtw_5Mzi9gtFzB4f0tOllBmQP0R--cxuVou5l_3U7tI_vhw>
-    <xmx:8se_av_CsngQ4G-rnJpWg74n0Tt8VkSMvXy6zYMQCOI9W54lNW_UEA>
-    <xmx:88e_atvgSYw8WCh8sanUzYM5YoJ6CiswJIjONczs5JWq-BpreUtK7jIU>
+Message-Instance: m=1; h=sha256:XXl95/a6NZASIBKpLhJZj5NRxN/m2NAkSWP/2s8+ddo=:7z2hxEAL72x78wyoXj6y83Iwhv3C/6B/S5by76igl7Q=;
+X-ME-Sender: <xms:s9G_avam8jtxDg7IuQxhF8uVCiPmf8Hl1tlFU2rUTEtqYMrdVT0a1w>
+    <xme:s9G_al0S7HgHL05LTTc6r7Tpmeo-EGgbbekcZ5A6tEPg2zIthl-3VPySsvMD35G4m
+    Nwb-WLaPgpJP4SCi-lXxAjfg3WajnzwKtlY6sAfRVZX_3u2mMzcOA>
+X-ME-Received: <xmr:s9G_avVnPV28eoSU91IdT5YpKoUp9xHtLYyy_sZoqlkd2-z7ONmy80UBC20GXEOxNZlA7xgEJ51ASX0N1uO00SQg--2SbYsL5ZrV>
+X-ME-Proxy-Cause: dmFkZTERuFJR5OstwcPwCTNn8mtNxqsqLjg+wNtJvRPhoPs3SGxuhz03orxC2+VDcsEQLb
+    +1FGh7YMeGoIuzgB+e4Ir3J46JCfYIIkR0t5Jg39FGa2oQYq6opAiscuT6DdIvHBFaySto
+    vgcCQFO1khrEhQf9axyaV/mAW47eZqU96lVY6+E2oYbrRyQZzt7NAtwnKeR2HYNELZRooJ
+    79ihwfAlVSHbzLPZ9PErYSvc5r8NLCPxgJ5d6XOLCPwza9mvl02f/ZCSka5OZ+Kvjdr3mq
+    NTZaIuAXPuN1tdGQ7Ve0AAYfcyoqjkFWCAyax9Vin0jBv46kOpwec1uVjonB4f6RtJkgng
+    bG9roeN9WFZ0XkhR1VJR1HPgbaZeWtiCZ72mnuSnfOo2ygsAIuZE/cpII4poPiLIomX3vn
+    aviz2t1eC6O76AOhjDmcGZWIDHC4J8aHR5AvZ1pOcYPoMl/0D7mNSIbCVoWOUAJw6zrH7g
+    gEkkR2KLx58HLfyJ4/LtRzJvYyGvsdGwENUnQcGi+GiFe3MD5I5PgD9KhblCzRlz9Flm8n
+    7qFhIWewdXxHMD2XGdVUERGhFUla6Sglf9tF+i0j8lFZM+b7yBqdyOmapXLc2jjamAKB+5
+    fhQNSsLsMo/CVDIfE860E0ZjLWvmFdKxy569CFBHcnhe5PadAQlvmX73tTOw
+X-ME-Proxy: <xmx:s9G_avXkMRMEKy2yu8cbvLV92hwvux9KrHDxmvkDbjFBeq6JBDNTJg>
+    <xmx:s9G_aucVMPLDVrfet4RXYq8Y4Ze5P0E8feYnYtCY4hd8QQW8udY2Tg>
+    <xmx:s9G_aoVerN-t58wnlChAUrQ76iAMpRqnU9FSDarCHLfIdn-HRkNnlw>
+    <xmx:s9G_anfGvv_9HLCK9mQzTP4WyVsU-rZ_sVQd56az2nQb3g_yP2CPVA>
+    <xmx:s9G_aidkX3vlMBnxzyL-Gsb_8m5_BaPk7dBIGd_ZYPwqQV7KUbOaeUnu>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Oct 2026 11:04:18 -0400 (EDT)
+ 2 Oct 2026 11:45:54 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Thomas Bachem <mail@thomasbachem.com>
-Cc: gitgitgadget@gmail.com,  git@vger.kernel.org,  ben.knoble@gmail.com,
-  phillip.wood@dunelm.org.uk,  ps@pks.im
-Subject: Re: [PATCH v3] t5520: don't expire reflogs where it matters
-In-Reply-To: <CAA0xjtpM6t-Ga57UF0yrv7=ggz5GChHSk7hTQnGbVfAykhVmQw@mail.gmail.com>
-	(Thomas Bachem's message of "Fri, 2 Oct 2026 11:23:49 +0200")
-References: <pull.2243.git.1790606282769.gitgitgadget@gmail.com>
-	<pull.2243.v3.git.1790843056949.gitgitgadget@gmail.com>
-	<CAA0xjtpM6t-Ga57UF0yrv7=ggz5GChHSk7hTQnGbVfAykhVmQw@mail.gmail.com>
-Date: Fri, 02 Oct 2026 08:04:17 -0700
-Message-ID: <xmqqfqyo16vi.fsf@gitster.g>
+To: Scott Chacon <scott@gitbutler.net>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/4] tree-sha256: hash the contents of a tree with
+ SHA-256
+In-Reply-To: <20261002081846.25144-2-scott@gitbutler.net> (Scott Chacon's
+	message of "Fri, 2 Oct 2026 10:18:43 +0200")
+References: <20261002081846.25144-1-scott@gitbutler.net>
+	<20261002081846.25144-2-scott@gitbutler.net>
+Date: Fri, 02 Oct 2026 08:45:53 -0700
+Message-ID: <xmqqtsn4yuku.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -105,17 +104,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Thomas Bachem <mail@thomasbachem.com> writes:
+Scott Chacon <scott@gitbutler.net> writes:
 
-> Hi Junio,
+> Add a way to compute a SHA-256 digest of the contents of a tree that
+> doesn't depend on the object format, so that it can be put in the
+> signed payload. Each blob in the tree, recursively, becomes one record, 
+> and the digest is SHA-256 over the records sorted by path:
 >
-> On 02/10/2026 00:48, Junio C Hamano wrote in What's cooking [1]:
->> The t5520 test script has been updated to disable reflog expiration.
->> This prevents test flakiness caused by auto-maintenance running
->> geometric repack which would otherwise immediately expire the test's
->> reflogs due to them carrying hardcoded timestamps from 2005.
->
-> It's the reflog-expire task of auto maintenance that expires the
-> reflogs, not the geometric repack.
+>   <hex sha256 of content> SP <path> NUL
 
-Indeed.  Thanks.
+Would three trees, one records a blob with a single word "hello" at
+a path as an executable regular file, another records the same blob
+at the same path but as a non-executable regular file, and the third
+records a symbolic link whose target is "hello", hash to the same
+result?  Should they?
+
+> +static int hash_tree(struct repository *r, const struct object_id *oid,
+> +		     const char *prefix, struct oid_array *chain,
+> +		     struct walk *walk, unsigned char *digest)
+> +{
+> +	const struct git_hash_algo *sha256 = &hash_algos[GIT_HASH_SHA256];
+> +	struct git_hash_ctx outer;
+> +	struct collect c = { 0 };
+> +	struct pathspec pathspec = { 0 };
+> +	struct strbuf value = STRBUF_INIT;
+> +	struct tree *tree;
+> +	int ret = 0;
+> +
+> +	tree = repo_parse_tree_indirect(r, oid);
+> +	if (!tree)
+> +		return error(_("unable to read tree for %s in %s"),
+> +			     oid_to_hex(oid), *prefix ? prefix : ".");
+> +	if (read_tree(r, tree, &pathspec, collect_entry, &c))
+> +		return error(_("unable to read tree %s"),
+> +			     oid_to_hex(&tree->object.oid));
+> +	QSORT(c.items, c.nr, record_cmp);
+
+I am somewhat torn but moderately against this sorting there.  If
+we have two tree objects that would result in the same checkout,
+but one is corrupt in such a way that whose entries are not sorted
+correctly, we want them to hash to a different value to signal that,
+don't we?
+
+> +	git_hash_init(&outer, sha256);
+> +	for (size_t i = 0; i < c.nr; i++) {
+> +		struct record *rec = &c.items[i];
+> +
+> +		strbuf_reset(&value);
+> +		if (!rec->submodule) {
+> +			struct git_hash_ctx ctx;
+> +			unsigned char blob_digest[GIT_MAX_RAWSZ];
+> +			enum object_type type;
+> +			size_t size;
+> +			void *data;
+> +
+> +			data = odb_read_object(r->objects, &rec->oid, &type, &size);
+> +			if (!data || type != OBJ_BLOB) {
+> +				free(data);
+> +				ret = error(_("unable to read blob %s for %s%s"),
+> +					    oid_to_hex(&rec->oid), prefix, rec->path);
+> +				break;
+> +			}
+> +			git_hash_init(&ctx, sha256);
+> +			git_hash_update(&ctx, data, size);
+> +			git_hash_final(blob_digest, &ctx);
+> +			free(data);
+> +			strbuf_addstr(&value, hash_to_hex_algop(blob_digest, sha256));
+
+This forces us to read the inflated blob contents as a whole in-core
+before we hash.  I wonder if we can use the streaming interface like
+how archive-{tar,zip}.c uses odb_stream_from_object() to read the
+contents in smaller chunks?  Instead of writing the contents out
+like they do, we would instead hash the bytes here.
