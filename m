@@ -1,215 +1,122 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from flow-a5-smtp.messagingengine.com (flow-a5-smtp.messagingengine.com [103.168.172.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C658B7DA66
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 18:56:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF193EB7F4
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 19:02:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790967391; cv=none; b=EJhPC9MP/KvcZ8iL0h6BvfuvisdCPjd46zAZuRfrhhIQ7PuMqrrJRRgwmCLvAwFwsghlG/vXYUfSuzS/dwPUCqNsVNd7wDfqsQhTw6/0MUWsqQHdhGoGLOX1SeDgxSdr4Zz3LTdlo0b3+HPFtj8PyecFBM1Ti0+EqryubK6VGTI=
+	t=1790967755; cv=none; b=iTsn1b7KrkYG2lHtgKZD7MzHTpbAVwoMMVE9LIknO0or6y8AqILXAhjnYnDoqqKQ/Y14jk7iNw4T18R6EJNob8wOOXvtvd8/RRt+ZIScYoOXYRrOPIv7R5JPRcMjqgoFZD8CaSd44DEW3oKkFeMv0SrTcYb6LZuej7/VxS/Cvns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790967391; c=relaxed/simple;
-	bh=FTkycQNqGrr7JMZfPTbnP6WDZav9W2+clMGrtHLhmS4=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=t2HSPTUAvMw6L7CRiXVUT19A8Tfee/+4ah4INI28gTAXCYjQEOwv4ZcyOQzkjB8SaCudDQCHH4MOeVDFfyYvQt8JgtYy8Y4UjH8TeL7K5H4cgsLGbvXVHMogfZG2yGR30SqyOm2g/YCAEOQk5wd8cgJEMImQ6RAL7K+3TMmgUFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=BNiHaEGe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hq2Q/779; arc=none smtp.client-ip=103.168.172.155
+	s=arc-20240116; t=1790967755; c=relaxed/simple;
+	bh=MjLAFjw/pOxsb0Aac5jsa7qZe0XJDVrdSgca2nidUvQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=sA/tBd+eQVFk9q3RW4WMF4WzYW5jbju/QzYr6+RHoMRkGayycnqeuFkC2R3KYDFmzlZaAUUUPHrPOOFQqhKjbxQp5sIlqGr9U30rrXNX9HcyHPACZWg8ix/bH3amSsCrBL1RrTswVosVoOkl52COCnVnAS052OD4Rkxd8t1FAnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=m7rEy/uv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ff9Piqwz; arc=none smtp.client-ip=103.168.172.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="BNiHaEGe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hq2Q/779"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AEC59140008A
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 14:56:28 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Fri, 02 Oct 2026 14:56:28 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="m7rEy/uv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ff9Piqwz"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailflow.phl.internal (Postfix) with ESMTP id 56AF213800B6
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 15:02:32 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 02 Oct 2026 15:02:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790967387;
-	 x=1791053787; bh=AMuw54D85QHRDZWMelzgl6fiiM17vfMg3gISfpHit0c=; b=
-	BNiHaEGeJpsaEc854nafaTpt/5UszaAEbBold1ZgnExFOCXy/5UqtBV4KHVt+GIh
-	HsaVuJ/I4JlB9CMn17X4xkdrYsmNrPGz1NCQyZEYlAYjBgBapVAUzmsTgLBTmFMh
-	B2jVWQK+WAX3CDbdd42qfrfzWxrIYJt6XJEZkkUZriOPxN0x5WP27X39es2bp1Zk
-	C8qjJdWv1HdKn+yTLAvsSnqt/ZCrbXFYRhvc43JpAV1caV2j0WLY+sBjGtkl51sg
-	6XnXlctCim2X1YDMtv09jeGIWTbB8yokOTBTJil3i5MmCHEtfQoLlUfcLWztPyQh
-	+522fvymmdGgRYlyVrZD6w==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790967752;
+	 x=1790971352; bh=MjLAFjw/pOxsb0Aac5jsa7qZe0XJDVrdSgca2nidUvQ=; b=
+	m7rEy/uvg90B7sPR6FDSIx5wiveNxJWojIknJzSemcJhJudILXeSNwga8sTu/FXE
+	bTwkMgcb5hVwK6cPtSISQcMCdXlZg+trP02gJJ/XBsn002lVAkhti8moiVbJNhrG
+	2QBfkeXt+4eRwLMdNOI23A9MSLv4dYXEJuSfzso/yD9wabNWbzbmYLKDrMLMEJla
+	wsY8YuBBDaryMLK1qVPKfYRpI0fH5wTbB2ziSjECFmFylRP1hgFGAH2SDoNZId7v
+	Gtr3C6F3bsJU4FZ+OuJ/iL19eH2J7iu0fdO49TqTLQ3S8VNrn6DMqfjUMYONnGcF
+	jdrJ4iFxyfGOayhEHgJXTg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790967387; x=
-	1791053787; bh=AMuw54D85QHRDZWMelzgl6fiiM17vfMg3gISfpHit0c=; b=h
-	q2Q/779CThBR2OY2fkpb9tTCjKLD3NUBIjUaQsxEdplxF/LmWHqSZyerkKJlpMGJ
-	8W02PeRo9EQ+lPFPQu+9c7dpPiyIXQFiW/be6yQ7JI/EvGZ0tzqUJqO540RVex0I
-	FFD5WOjr58rrT9aOkTqtxjK6HAijBvNn+YCTzzUKYesMXcMCmbsFdTqLa9BYsm9v
-	Nv3jXcDcbYJCJZjKOv0Q4f4Pin/ma2CbEVKozQFq6sgMjN1VqAnz8jE7ciwsaQGM
-	MaR76GJ4/e+sczzfz/SrFqe4UdatfaMpTtHf332qZ0xSgzSZZ6tOMsaxcnzCguk/
-	1AjzDc/pGv+0X6Hitt9Sw==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790967752; x=
+	1790971352; bh=MjLAFjw/pOxsb0Aac5jsa7qZe0XJDVrdSgca2nidUvQ=; b=F
+	f9PiqwzNr82JkE+hXrViMgLRujRwLFi6Tr7tJYautLzBCWofEbusTKtT+P9oMpni
+	pO4I8+xQFAQ9K8zdFW0qEZY9zpuERu9TAmpvmgL1kTeKS4iP9dTpWj3FfGr8E/Xq
+	HA+HIbIZ3m9tRfCofMtjF1+ukSHn+b/e+FYZ0dIo2lGlP4rnTCJdjfLLczrh60nL
+	hxaPEO4m5EV6THgjLVCCjCPQHq5B+d5zrhb61QrVqLRcpfCVYvSK+dTDerTnNDJS
+	T9QJS7iUcM7AXVmKyGFl1nVekK5e3cUbjSj5WskJhIzbHNofWSSqRabh/OhSHcea
+	SmwfohjyA34ZFUsOKyviw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790967387; d=fastmail.com;
-	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+DKIM2-Signature: i=1; m=1; t=1790967752; d=fastmail.com;
+	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:NcUWctB4daQKNJiDY6h66Uyg5UuLAkdqbMuh0+NXPyO+ke0
-	SgIFXwhipvX+ULgFgpGYn+hv2aKJrBlYKOFlMptSkN3k/EY4Cs3Bw8HczmOzmXWO
-	27cU6go82I2MfoU7slMeNbsvD1/tMTXSxZGcQeeJ2TOqAo2P2oWsEBztj5l6T6uW
-	qF+pal3TXKJvhawUzT8jNgQmuNCeeuu4/G/1FcW6CAxg/XhN7rNoZLhI0tsPgLPx
-	FVjzpS6uioGD3CYoN/j+c9y2N7CRdZjxL7bCQ91jEjKHddTWJ9VM9DFOxzKGuzWx
-	aMvF/+yuPIjhfwXgDUyR2NnTi8Cz7WUMQ+mgFiA==;
+	s=fm1:rsa-sha256:VBVpnBBaq8DQtujHBfoBlB0XN6YPzbApHtqSBA3jyXDSNkv
+	TYvwqFH5HZ/ELeOo/K1o0EFaSHlJJhGl3u1tZApAqeMn3i/FdjX2KsTCo+lKP+2V
+	E1ij5jdbnTK9y2gDPDddi4h1uS07PTLpeQQQ1zSvR1PHI9EV1eG44VFMqFu8AjYI
+	f3WJLMXW9c4TmSYtXo2zwicVNrv6ls+A6lkwSQ/yyoXVEVryir4o3+n4iQ3riQca
+	9CAzpc6VWX+d9C6TvAPrKwmnD75hf7hE2b06mfDxOmMo8TwMaFEcqxNeGo9puCkz
+	T6GjugjrIGDmkZYOotDLGNQvjJL22SZ8B/lIUpw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:reaGYaPYrWoT/f29wGBn28YT3mxLceecDuDu1BNqki4=:FTkycQNqGrr7JMZfPTbnP6WDZav9W2+clMGrtHLhmS4=;
-X-ME-Sender: <xms:Wv6_agJRqcG-pqemUh87tPJYo9MwhxrWUcO4toq8ZScNQEVArqbLa2c>
-    <xme:Wv6_aq8dRtlNez-rEjO4lqvlJkcDYPrF0q6hVEhIAJhSGn57kbHzRsOCxU7kBl8i-
-    w7SS52Q-iDGJB4J5z0S2IzuYo9bxDLKVHPiXjNyqRTBRqxbN-s>
-X-ME-Proxy-Cause: dmFkZTGYOCVB1iwNXhQ0+JO+270KPAetuMJpQRMAAjAS1ZvU/f8C1g1g7NAcv97PvGvD3l
-    i1hlc6AWYmciVWdhz9pbPl6PsQIUu/d1IZZJI3o9CfHoLdiAR+hvFQgyZF0ehVJ17oca2q
-    Xtdp5Lx4YkBUFixNEob4N4IC+EjuDPLoE6WNkacGX+hwq+BSFLWZkp5Sc2OsQEHr7aJ5L2
-    GKzMv5VkdI+0t0W68F71jwKPKJ13Xv0uYWKPB9OQXDoW+jRcjOLfw3b3SyxscJqr+dMRh8
-    8YYBrbOGasyUoz50dWjiXc+rhmejPILTQgw0k0jmKCaE8icSZ730SsoY58EyPivDS12DG8
-    l4XlnqqirKGW74YlPdZirbMPt5LNj8YcwB2rNsjfNoRLSbLSnVU/dTWc8WoyEq8IMl+l4c
-    2eZ8GckRyB4y3AW5UQk0GTDNmv5dfhOks/cbQhPfvcIixmf1iCPGCtZTpeDYfi3dAD58XC
-    9lT7kryLd/7d0MC4aRsiI7xCdt6a5eBeGqLhmbPNETei7F66c25FHloi2RLdo0E2I6NmNa
-    wSsrDPsWsVg/y7kRkek5uq/xWYOYdEHrfJ+ICLhHG33CJPeeBPPfsNrIRZWCsjQ+TH5UuQ
-    PG5SfouOOXxmLAgJ14yHp3P9yZcKT0FOwbSOag5eG4zpQfXsTgLrvGGT/zSg
-X-ME-Proxy: <xmx:Wv6_asmm3uolM94S0hVdpGWK6jHj2GeprBav3M4eUuXIT-ytOus_Og>
-    <xmx:Wv6_ajkdvAJBFc05vuI3c7plXcMi5Fyj9ySH-1SUDgHCCUfKrwQaow>
-    <xmx:Wv6_atsiR_UfE1g8KDbeP7wf4IFlZfk-KpL5O0C7-l9sSphDl2GowA>
-    <xmx:Wv6_amkaEG_Mm5ETl6sy5aywiOW-7DgZu8Qq2nprzph2KqBcYzzB4A>
-    <xmx:W_6_amBpe4GerSY973bOcS2Jrwgn9FoqfHXbioh2yoZvniK7J8KzsgD6>
-Feedback-ID: i83a1424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id E9AC822C009A; Fri,  2 Oct 2026 14:56:25 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+Message-Instance: m=1; h=sha256:kKRS3YKJg+rB/vy9/LinHZ4twsRJNGcYer10aqMbS9o=:MjLAFjw/pOxsb0Aac5jsa7qZe0XJDVrdSgca2nidUvQ=;
+X-ME-Sender: <xms:x_-_akAUl99zlYobCxQbK0Vo31XK84uFfOqhFmHZk_bRB3mnmxctHQ>
+    <xme:x_-_atjfs31Z4TlDKSt5FDXZHcjdvuiZzn8M4UPSOmVKqdCd66hcYDTCGW1_Veci4
+    HvMmx2oiOChqZi6yoZtJtHtWFBgLYB4US5pUd_0COCYqah6pGyfFZ8g>
+X-ME-Received: <xmr:x_-_aslsvDkUdi9mOrWE_t0jlFxYwZDZSWzCaeHOxUik--Pnh3rWh353Sjgre54LCd4KMU_HvMahmrGx-q5R_bjWGj15meWJjTWxOnjiskrlfw-vzwSvxCzzKQ>
+X-ME-Proxy-Cause: dmFkZTGVZqdWyn8PYJ6kb3nJNKjb5lror50D6xmRsDd03SQtUAJ8ObCrUFptWTNXD4ORQS
+    HauJ+Cpphr3GQ6NtA0iVG4m+xoZBYpvU9wyX3Z2qpEChx7cbRdrOzJ1UbhKlyKQiMK7UGq
+    S+Ujxf4oAWokbK9ompwOCTkmjWRIHXnMrmZXeK/CDi79/Q4/hLMK+O+iKoEqJYyuGyLnDX
+    tAdtdReIi7l/d54DyYrdQ34OiPVgzzMGGgrTLZgcWpx8oaTMx0H7FixuQiVTvo04riTmm2
+    E9nl5TNBUC3b3OJdQRpD21HE11IKeodxswJBu6d2+jkYNXt3EcZ6kevvL+oAT4N7ldR1Fj
+    Qy3x9te5C90dsGzPeD9hBNU7s6jPDhzN+Ml+I0WBji2ptJZhfZgBz8RogyWeVVjJAPhx7L
+    0hanZTBQ5Df++qjv0YozicwM9Ym9/uD5wDBQlX3tAEXwacI0nCDAyy5DZCyc0ZZMAIIyqu
+    fsRg1De9ENGA3tvCrjFX4F23TG83Xl8i6mlGE0g73+w9rCAVo/u8MZqtYZyxTkdUXniSv9
+    9zMM1X487liZTBGY0m9EMGKcirFRf8xbNIT214AImomCu44SeYL2eMsPWRPUQPRHjHCUVn
+    a3hl1VM6HIokPn/ghY14Bojz8jFSg30pLQ3g8BAGOslyBbru7DPwwHcvWFTQ
+X-ME-Proxy: <xmx:x_-_apr1Yk9ICzyLn6qOhAqGf3vaGdR8Ux-71yRhZaSjbp1z1fiJxw>
+    <xmx:x_-_alEkBFks9k1yhXwN03ov1qnUmFwocrs5wzSxwpPO_Xj6ondrkw>
+    <xmx:x_-_alyKpqY__pB63H5mXdVxPzV2gSdG2Sim8D2CDhjiNUNfmrS82Q>
+    <xmx:x_-_aqqk8nEA-pKwtwUhuqilvDALQo8TEA9GAnB6YJSwxqWCrPxunw>
+    <xmx:x_-_aj5sFteC0SXxdnbdZhPedG2Hrh-9HFIn_bMODNKWKrJXxUxCzamW>
+Feedback-ID: id2564aa6:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 2 Oct 2026 15:02:31 -0400 (EDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-ThreadId: Aaez0ouLjM7B
-Date: Fri, 02 Oct 2026 20:56:05 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <aea0780b-a390-4c40-80f4-6060da908dc0@app.fastmail.com>
-In-Reply-To: <xmqqy0cgvwpi.fsf@gitster.g>
-References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
- <V3_CV_format-patch_learn_--range-diff-notes.d39@m5gid.xyz>
- <V3_format-patch_learn_--range-diff-notes.d3b@m5gid.xyz>
- <xmqqy0cgvwpi.fsf@gitster.g>
-Subject: Re: [PATCH v3 2/2] format-patch: learn --[no-]range-diff-notes
-Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 02 Oct 2026 15:02:30 -0400
+Message-Id: <DLUL2YDALTAV.15LO4AB7BDMLR@fastmail.com>
+From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>, <git@vger.kernel.org>
+Cc: "Guillaume Chauvel" <guillaume.chauvel@gmail.com>, "Philippe Blain"
+ <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH 1/2] packfile: move around `close_pack()`
+X-Mailer: aerc 0.21.0
+References: <20261002-pks-packfile-stale-delta-base-cache-v1-0-7592a3e31ae0@pks.im> <20261002-pks-packfile-stale-delta-base-cache-v1-1-7592a3e31ae0@pks.im>
+In-Reply-To: <20261002-pks-packfile-stale-delta-base-cache-v1-1-7592a3e31ae0@pks.im>
 
-On Fri, Oct 2, 2026, at 19:28, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
->
->> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>
->> git-format-patch(1) passes on the notes behavior that it is using for
->> the patches to git-range-diff(1). In turn you get the same Git notes
->> displayed in the range diff as the ones you used to generate the
->> patches. And that makes sense in most cases.
->>
->> However, I often make notes between series versions that mostly prepe=
-nd
->> ...
->> something like an alias set up with it. But why spend code closing
->> that door? There is no usability upside to erroring out.
->
-> This is somewhat shared with the next step, but the commit message
-> includes a lengthy narrative of the author's thought process ("An
-> off/on switch is enough for this behavior...", "But now we are faced
-> with a problem...", "Well, we can't. Therefore we need...").
->
-> Can we strip out the conversational journey?  The log message should
-> be a concise, permanent technical reference explaining the problem
-> (range diff notes inherit patch notes, which may contain irrelevant
-> iteration changelogs) and the solution (the new options and the
-> .override flag).
+On Fri Oct 2, 2026 at 3:34 AM EDT, Patrick Steinhardt wrote:
+> In the next commit we'll want to access the delta base cache in
+> `close_pack()`. Move the function after the declaration of the cache to
+> prepare for this.
 
-Sure.
+Maybe I'm just being clueless, but how does moving an unmodified function
+help with the subsequent change?
 
->
->> diff --git a/Documentation/git-format-patch.adoc b/Documentation/git-=
-format-patch.adoc
->> index 191f64b77d1..5907f299a8d 100644
->> --- a/Documentation/git-format-patch.adoc
->> +++ b/Documentation/git-format-patch.adoc
->> @@ -378,6 +378,21 @@ case is to show comparison with an older iterati=
-on of the same
->>  topic and the tool should find more correspondence between the two
->>  sets of patches.
->>
->> +`--range-diff-notes=3D<ref>`::
->> +`--no-range-diff-notes`::
->> +	Used with `--range-diff`, tweak what notes to display in the
->> +	range diff.
->> ++
->> +The default behavior is to display the same notes in the range diff =
-as
->> +on the patches; see `--notes`. But you can use these options to use a
->> +different list of notes. For example, say you have given three notes
->> +refs to `--notes`. At this point those same three notes will be
->> +displayed in the range diff. But then you pass
->> +`--range-diff-notes=3D<ref>`. Now the range diff will only display
->> +_<ref>_. You can of course pass more refs to this option, just like
->> +`--notes`. And you can also turn off all range diff notes with
->> +`--no-range-diff-notes`.
->
-> Very chatty and colloquial.  A technical reference manual should be
-> concise and direct.  Here is my attempt to condense it down to make
-> it more readable:
->
->   By default, '--range-diff' displays the same notes as the patches
->   (see '--notes').  Use '--range-diff-notes=3D<ref>' to specify a
->   different notes ref for the range diff. This option can be given
->   multiple times to show notes from multiple refs.  Use
->   '--no-range-diff-notes' to disable notes in the range diff.
+--=20
+Mark Craig Chu-Carroll (@MarkChuCarroll at gitlab)
+*** Software Tools/Math Geek - Software Engineer at Gitlab
+*** Work Email: mcarroll@gitlab.com / markchucarroll@fastmail.com
+*** Personal Blog: http://goodmath.org/blog / Personal email: markcc@gmail.=
+com
 
-Fine. The only thing I was concerned about was someone jumping to the
-conclusion that the `--range-diff-notes=3D<ref>` would be additive to the
-`--notes` options. But this says =E2=80=9Cdifferent notes ref=E2=80=9D w=
-hich clearly
-means that the intent is to discard the `--notes` for the range diff.
-
-I think that version of yours is better.
-
->[snip]
->> +static int rdiff_notes_cb(const struct option *option,
->> +		       const char *arg,
->> +		       int unset)
->> +{
->> +	struct rdiff_notes *rdiff_notes =3D option->value;
->> +
->> +	rdiff_notes->override =3D 1;
->> +
->> +	/*
->> +	 * The rest is the same as
->> +	 * parse-options-cb.c:parse_opt_string_list
->> +	 */
->
-> Hmph, I wonder if it is more future-proof to wrap the string-list
-> callback like so ...
->
->         static int rdiff_notes_cb(const struct option *option,
->                                const char *arg,
->                                int unset)
->         {
->                 struct option opt =3D *option;
->                 struct rdiff_notes *rdiff_notes =3D opt.value;
->
->                 rdiff_notes->override =3D 1;
->                 opt.value =3D &rdiff_notes->notes;
->                 return parse_opt_string_list(&opt, arg, unset);
->         }
->
-> ... than copying and letting the code drift apart.
-
-Obviously better.
