@@ -1,126 +1,212 @@
-Received: from mail-oo2-f34.google.com (mail-oo2-f34.google.com [74.125.231.162])
+Received: from mail-dy2-f43.google.com (mail-dy2-f43.google.com [74.125.229.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E5B26ED41
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 01:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB02B23B634
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 01:53:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790905952; cv=pass; b=MpiEZiz8tZLpewRL3moKrD1u57AkFLBfVfSa6/Oc+0uG7STRDwuAswGfAYIPFMAgmGVGTyQpy6BKLtlDvyFNZcxpz/KCJmUsoqkq90J7UrVlUqRQAEMJ5V1GOFt5kMCpmJ/z6YbBbC3L3xQ4YeEzmb2KwGc35DUobNwgM7iL81w=
+	t=1790905988; cv=pass; b=FAftO1RX328m7tY0NwTvOOPRk3D0iPhaq7BxOdM6qkPhCwOXjLXUWIWgDuflabs2HX9BpVrjtWvqwVywFa9+pYR/6lQiDXTngXPa3iNAsD6CJx7hhdNPS4V+dVsnGH/jG1bL4cOTSKBEIAjrMZ/Qozbv8SzLaVynlFYYIP1BPE4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790905952; c=relaxed/simple;
-	bh=6cymx+0WTn1RmXVRQEiHZPo0H+yeZKYc4OSNim0lqjc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gu1KhgJsXpvX0NeHiorGxmhs7onK/lfmIarfT2YlcqT0lCnDQXGftxPLDP8VgwwPVXisoIpDnhYAXG8O6gSq/cZ/n8d/VFkznAcLVVqaidDn/7xGjLpL24fCUfJS43GiZbih7zAsphY7qCje+bs87tdDUkk6SIsbvAag4lerKsU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xud0G7bJ; arc=pass smtp.client-ip=74.125.231.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790905988; c=relaxed/simple;
+	bh=DN/cEsI+HI7NUAn40vnvoloWSopGLGiC+1j+N7yBgnc=;
+	h=In-Reply-To:References:MIME-Version:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qq9mZjsD2bMhShWNuJCDBTIULD5Rew69P8amqIf2z0gxdy57ye25tWbV2sT8vt0lHj9ge6zxiRTJhIzi9Fx8fakVd1VSNNHn8VuAQ4j3Ibs5DhhuDf+EzGJ6n1+whLqODUDS3vgVSh6+U1iUXLzgn8wvnmkxGm7TATM44es5gQM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com; spf=pass smtp.mailfrom=kanamei.com; dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b=E1iTinXT; arc=pass smtp.client-ip=74.125.229.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kanamei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xud0G7bJ"
-Received: by mail-oo2-f34.google.com with SMTP id 46e09a7af769-821c01c2fc5so1191567a34.3
-        for <git@vger.kernel.org>; Thu, 01 Oct 2026 18:52:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790905950; cv=none;
+	dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b="E1iTinXT"
+Received: by mail-dy2-f43.google.com with SMTP id 5a478bee46e88-33e46a15703so6675358eec.0
+        for <git@vger.kernel.org>; Thu, 01 Oct 2026 18:53:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790905986; cv=none;
         d=google.com; s=arc-20260327;
-        b=bLQmC6vJ1DuY4fhXqbL9JlJjAe8rhHHe5Tq/5PIpJT5WdAOOxpYx8/wUFhuWBK2bU1
-         PWiUt92w0LInYhRNcwi0oEOXI/19BdZ6nJqi+J2VDadRo8tGGkKnxhmqZEGo5CN6r7AP
-         2vZ52t8lBZ/edsZlfRARaxLwlEpiURCW5Zl9AR5GsbTuEdvMjE6t+65nfD1dd9kLcTNY
-         cBkSh4x8L1jTBI3OfeQ+8pMpLiQ9SvoE7y6Bl6tmUnb7CBiF6QG8YJEpcc5uA9/GwhdO
-         5zBchU4nyiUYMt99K/Qzzp8jRlEOOK9dBGr8HagEwYX/WltvEEwLzrtk+y3IBp1Eb9Q1
-         cRoQ==
+        b=bqXogM8mrk0bTdIV2XW6MAl7K9qL4hVUdcYU8wxZ6iaprnIgNCtUGL35hXqVS7TpSA
+         6PMBnczMGVjE0wadfrlJcz95UAD44tJ4CaYSzLGhPVkCO8+/w4UvTfktu0y9xMNCOG/V
+         lRZK+lPXhpUs3l1OmKudiybRydr8ZJ7ay3/KpacheP92u8n998k+fmAoK7bGQ4jU/Q23
+         6dWmqI74cKqKTjiaPekRp865Metz+IS7KXCceRREFB57pgnf2q6ur92CmwF2hV9k6gXc
+         bmH276hPHNgPjyvhlhwpbPeHK59COYl1EQFORMefXjIznK1EWHr5vsfYJHJGT1w2plcy
+         omig==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=Cw2/l/GYfEbbtJBxFCqpkEaUx6aTPGgXvvPkR9uZA5c=;
-        fh=urkPRB7mpnEfkfj03wlsD03je+w1rBpOOP0ZuXkTb8Q=;
-        b=jfzozCyzWwnqtEEAgWX3otZL4pbC7WwNsQ+u09nlbiTWDvrDxGvtxV177Gt1cjxvoG
-         OzBT9ezAIAcbBR6ppNyth44yESAsSEWVBFkUbSykkm+kzV2etwvjJU09HjJrUZob7EXU
-         0CfNswz0fxOO4ajntlQCTmLSLj7dmFU5LzV3AaDQiFcsN6MvDVqCI8uuwKvsHdBVeQbr
-         dARt6LWrhrpAbCQnP+V/LyUtFTkoT1VtOA8vD4hpit1aGx2fDV4kAoPaHi+lLfw12zXH
-         j11cAmP+w0c3fbmkYRWv1B/qyzWSCVMXk/R8XFLIdeO3N5RBEs0z9dIWUgbUyFhOZeWw
-         Ot5g==;
+        h=cc:to:subject:message-id:date:from:mime-version:references
+         :in-reply-to:dkim-signature;
+        bh=DN/cEsI+HI7NUAn40vnvoloWSopGLGiC+1j+N7yBgnc=;
+        fh=dS7ZYYEQ3xS9uUoit4NbHrS7bRskiJR+qpqNwgt9xSw=;
+        b=SOvuBWEYX2l9t7aI9C7lqhJoStk/JYVovtE0961Jm2XUEc6mg1pw1TieoZa0mrepEH
+         v4iyjTi07CAVzhYUxxzXaXtyZUFORniU4cgYGfhWBUb/9EEbYziX8f7kDtTSfEUgiAJF
+         Joh8buBvR1aYNz46DhE0EnjpIEoNhkeNekbn4+E7wsCXUbeeE5pri6/mcbVig1r7SGp9
+         5zyxPakld+EAvLUXKlpxqFkufKNPtFx7xKTWBV47DBNeMZcZE/2UUNG3y0Pp22elbR9d
+         6gyIZGZG1mS+ZoHLnOYaFML54MdQ/sFTAvZeI+vMBxgS8WYRpz86YJDzXLiuoa0EY/KO
+         1zwA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790905950; x=1791510750; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+        d=kanamei-com.20251104.gappssmtp.com; s=20251104; t=1790905986; x=1791510786; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :references:in-reply-to:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Cw2/l/GYfEbbtJBxFCqpkEaUx6aTPGgXvvPkR9uZA5c=;
-        b=Xud0G7bJ2t3cvBhRv1cF14H3QhfqyI8NdGfm+ppkSDDrGhBP+hG9eDQFQurAEmHbVy
-         JgfIuWUTNEyq87cleNJw7HOV1I61cjjPfgBBrgqSRZn6ueM7Xi8KGUNVBEG5zzP6dg19
-         2R2NdmQDDU3CKqdxnCq8GOO5rbrNqF3q9SpyUmbIGl7C8eBMitae6qOGSan4f2KRRZDQ
-         wKE6owKND+py0Fb98IlG8W4mzXyh6ZiwXOE2nhijDnBdfjZNb8td657aolTwYoLZfOV/
-         2qLw++faMaw2HeYy+LVaA0Rwz7g+3yiyit7/8WIvbI6RZzXChpB0hNEktS7YwZxU7MdN
-         pp8w==
+        bh=DN/cEsI+HI7NUAn40vnvoloWSopGLGiC+1j+N7yBgnc=;
+        b=E1iTinXTEcyI3NWUlXn7ypvl69fVXJObx6f/6YGs4hdlbOCvsacSPon+Dw2w1VYTMo
+         HiuNVlCAvK5DKt+DFOa1LPjc1nQfASLSrG07WSaoocHoN+djqJ7jD6zibrI7bWr4cOPj
+         DdhobsS4fRUcVdGO0yAfDUrL2yZyR1uLVkhvKYtpa4phK0VdHDzuST2IAIHM+cPn94dU
+         2MlNC1oF+y8OKWj32wbKxNg0uhX6X3QuAwm/pmt+p3ryCeTDyfivW6CYxZkl1qQRUg7X
+         KSD2DZ57/oW0OKy4hnbzPOdICpr0GbOYWfoLmC/dbC7gRI8hVhwp1u69VkCO0pVdj5oe
+         tymw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790905950; x=1791510750;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20260707; t=1790905986; x=1791510786;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :references:in-reply-to:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Cw2/l/GYfEbbtJBxFCqpkEaUx6aTPGgXvvPkR9uZA5c=;
-        b=rccQk0ye7H6fIb4hSSSH17A7NfzyqQRUFI6NOl7Qdqlp9G6F7Odj2yroI678+ulmz6
-         gHkfxzajGc39AUwJSc5ZDabiPEwQb6HWgCWQTEV2xT2f8LEcy/gA3uDehRXhYAtgRBLz
-         H5Omsbp8hugx/A7kxAm5UsfqUNl1IFU8QjW8wk5u6Dsq9FA0fhsnPMB6PT2lGht+qqkJ
-         ydl0GQdngEYyF0lOxAYXB/QBXszHD6Aw9pVGKP7hDmGfcAXZZsXSY80gv2I+H53NZCtm
-         4GwOAFyEMjpFRYkrbXfbon3ZLrustH+KTNsEHfdE2KbrnnmruK1VbLEeurlzjbTBS7a9
-         59sw==
-X-Forwarded-Encrypted: i=1; AKwUvBwB+e6obi/+f8bNSrP84/rJkWr9ay9m1r+npEaD6bKdj0lP6H6LmvNeuHRr31sm6JH9sFE=@vger.kernel.org
-X-Gm-Message-State: AFuF++ndTg+MmtkSQHFBxaOJkXGwX4v3Pr8ctFUPoPpc0NR6YdNL/BuX
-	oOUlKoSuvkDKJYhYYB3Dbe3qwNoD4ln+bu8MNrPjkZ1lfkLHNUDCXc8xHzg05w6tiGD8T4rhLRQ
-	blosQx/mVp/J3Hhr/Zvxv6b+wZxFVNxk=
-X-Gm-Gg: AYBFou0VGhPa0GbernhJikZ7tpyiGWzJc55a91IHnWssh9WlSHkg4ySn1ka6HkDdEwx
-	p9Bki/hJtAHQGc9F3QmCKDzl4uwsaL97T5zV2N1oGnYAJq3f+ZyLDfYeQp6ed2bfbRyP85HDo3S
-	y28NT1mvt72FKfE9TsA3GQf/LpOd01ErLdqaYa5ZQV9nKx1kDSkZkBDl3aw766C1s6D7uSGrJS2
-	xQk4/vu7sw9xhHIqRaS5YxT+U7AWtWJSoC8QzjEYf0f6ocds8/W0+id8WdVfge0/2wNgVzIxEOc
-	+lcWKZewFbPvtMYa2ifld+U3iXGLJj+KHwkVnC1ePm8ItYcYPd2unQ8unQO4jdYHMQ81AYKBqPc
-	HZEClF5EsIjtQjdR4eiU+PH+n+Q7E3Q==
-X-Received: by 2002:a05:6808:30a4:b0:4f5:20:d847 with SMTP id
- 5614622812f47-4f52a985746mr1126698b6e.36.1790905949916; Thu, 01 Oct 2026
- 18:52:29 -0700 (PDT)
+        bh=DN/cEsI+HI7NUAn40vnvoloWSopGLGiC+1j+N7yBgnc=;
+        b=P4f7HbXjDEJQZKpkoflP0clFOCSQ3m0gseyjUfCE7svwDUe4hEsl0jMFfhQ+KhGWzx
+         uhYUt9Uu/XWMeE5omBKvV2XsChhcyIcvSOWX1OkIOgdA9t3rwQSjZj9Yond09YvLSGVG
+         HPnvrqpkq+VNvsOsWev4k56nNTkqX4zIi/4WtxCy6/F2h7t6lcUvSt9lbXBRzTW0QO3m
+         Ul5GYyiwZbf3r7OP6L4EWvGkyVhst9Jbf7Aj4hb1STGMhBJMMlq1R7OWCkpRMWmCzgX6
+         UFOKGL3ldlmpbzcM6uK8rlmAHL0rxAcgrHsAFZpKui9rjsySUolthQk1gJR77EnZd+Pn
+         WZ2w==
+X-Gm-Message-State: AFq9FYLNVkY7Qv3AG/Yj+cEQ+h8edKWMhS40E5PioFVvuPPkIM29w5MD
+	Z/BuP2a8cgd3kXYM2XIijjURWurO4qPmXtaBlpmnew3+PZUY8MBvNZBsZkMG9SZ9V+q2YBzeYEq
+	DRD97jOake+NzGK/ttGJ26toBxMQIiyT2pVHA6in1VA==
+X-Gm-Gg: AYBFou25WKTx4USETydZ61WvWXKRsBebvyn74q57nu2tRnl8kvEss71vE6Edp+hbPKF
+	k++NW7fkscxTsNW9b7QRLNSva1zIoOol/EiUzXtvrsQEMnciSH8WVNMn7fLR3QR7wDSqxEpWY/z
+	JCAYtBDc7vnvVb8YMz4w/hJtqFaTQeli9fg/pDgLrhCr/TUGQgHZHKryuKOR7l6YtjCimIgSf5b
+	RulhjcHmXPH4dtM1v79Ff+X1GN8tAtfO4DM74LRaFn5aAY7xyjxKrPYeifkE7mBQd+RpZdvYTBm
+	YL01Bui/+XtGUFr/L4n+IzBg1fwl0iRV784IUtykxXXTVQL53Vyb4rx6KQ==
+X-Received: by 2002:a05:7301:259c:b0:34c:1ddd:baee with SMTP id
+ 5a478bee46e88-34f14f15b5bmr1368100eec.2.1790905985477; Thu, 01 Oct 2026
+ 18:53:05 -0700 (PDT)
+Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
+ Thu, 1 Oct 2026 18:53:04 -0700
+Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
+ Thu, 1 Oct 2026 18:53:04 -0700
+In-Reply-To: <xmqq7bk173qm.fsf@gitster.g>
+References: <20260929074222.11942-1-kazumasa.shigeta@kanamei.com>
+ <20261001042155.33303-1-kazumasa.shigeta@kanamei.com> <xmqq7bk173qm.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAK4AdTRdNEU8cLFQ_7A=CUUL6u6dc327rn_H-SeBBD_dD-K7PA@mail.gmail.com>
- <20260929014415.GB1089022@coredump.intra.peff.net> <DLRSIZ3JV2DF.10GG1YB2D8DHW@iencinas.com>
- <xmqqa4ozg7dk.fsf@gitster.g>
-In-Reply-To: <xmqqa4ozg7dk.fsf@gitster.g>
-From: Isabella Caselli <bellacaselli20@gmail.com>
-Date: Thu, 1 Oct 2026 22:52:18 -0300
-X-Gm-Features: AclHuK98yOBCG8XyO3bLsKg_AfOyeyaoqMzADofKJiVeLZg-5UwAnYAY3xrJ3Ew
-Message-ID: <CAK4AdTSnaAOk649a0GLe1M9C+cYuDa0Nwo54=HT47R53Q4ZdWw@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_hostname=3A_includeIf_condition_=E2=80=94_anyone_already?=
-	=?UTF-8?Q?_working_on_this=3F?=
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ignacio Encinas <ignacio@iencinas.com>, Jeff King <peff@peff.net>, git@vger.kernel.org
+From: =?UTF-8?B?6YeN55Sw5LiA6IGW?= <kazumasa.shigeta@kanamei.com>
+Date: Thu, 1 Oct 2026 18:53:04 -0700
+X-Gm-Features: AclHuK_XScEtxZ3F8elt13SVCqrGV7OSNfntVUuw9oPyDiCzPvR3HmS29KP-NjA
+Message-ID: <CANUHOw2Q1Dg=e7zfAcRUBMyKt+cVW02V5MZV4x7vAyA6iJ=PWw@mail.gmail.com>
+Subject: Re: [PATCH v2] stash: expose untracked modes in create
+To: gitster@pobox.com
+Cc: git@vger.kernel.org, shabbir.r.bhojani@gmail.com, 
+	phillip.wood@dunelm.org.uk, ps@pks.im
 Content-Type: text/plain; charset="UTF-8"
 
-Interesting, I didn't know there had already been a discussion
-about this issue. Thank you, Jeff, for pointing me to the 2024 series.
+Hi Junio,
 
-Junio C Hamano <gitster@pobox.com> writes:
+Sorry for the crossed replies. As you also pointed out, I should have
+replied to Phillip before sending v2. After Patrick raised that point, I
+was writing my response to Phillip, and I did not notice that your
+messages had arrived while I was doing so. I ended up sending my reply
+to Phillip before seeing your comments.
 
-> "Ignacio Encinas" <ignacio@iencinas.com> writes:
->
->> That's what happened. Similar to Isabella, I was looking for a small
->> contribution but it ended up being more complicated than expected. I got
->> a bit overwhelmed and decided to drop it.
->> ...
->> I hope the discussion from 2024 is at least helpful now if this ends up
->> being implemented by Isabella.
+Thank you for the detailed review. I will go through your comments
+carefully before following up.
 
-Ignacio, if you don't mind, I'd like to continue the work based on
-yours and credit you when submitting the series.
-
-> I was re-reading the thread yesterday.  It looked like we were _so_
-> close to the finish line before the discussion stopped, which is a
-> shame.  All the good bits were already designed and the only thing
-> left was to assemble and package them up.
-
-That's encouraging to hear! Sounds like a plan to go through the 2024
-thread, including Jeff's suggestion of exposing the hostname via "git var",
-and send an updated version of the series addressing the comments on v3.
+I am not very quick at writing these emails, so it takes me quite a
+while to respond. Sorry about that. I will do my best to understand the
+points properly and improve the next round.
 
 Thanks,
-Isabella
+Kazumasa Shigeta
+
+On Thu, 01 Oct 2026 10:03:13 -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Kazumasa Shigeta <kazumasa.shigeta@kanamei.com> writes:
+>
+> > `git stash create` always passes zero for the include_untracked parameter
+> > of do_create_stash(), even though that helper already supports untracked
+> > and ignored files and stash push/save expose those modes as
+> > -u/--include-untracked and -a/--all.
+>
+> There may be no lies in what the above says, but we would prefer to
+> hear what the user visible implication of "passing 0" is more than
+> what mechanically is happening inside a program. For example:
+>
+> "git stash create", "git stash push", and "git stash save" are
+> commands that create a new stash entry. The latter two are also
+> responsible for storing the resulting stash entry to the reflog
+> of the "refs/stash" ref, but have options to control what is
+> included in the stash entry. Among these options, "create" only
+> supports the equivalent of "-m <message." to record in the stash
+> entry. Most notably, "-u" and "-a" options are missing.
+>
+> > Teach create to accept the same options and pass the existing mode
+> > through. Unlike push/save, create continues to only create objects: it
+> > does not update refs/stash, reset the index, or clean the working tree.
+>
+> Sure. It is a very concise and good description of what we want to
+> do.
+>
+> > Use parse_options() for the new options and stop parsing at the first
+> > non-option message word. This keeps option-like tokens after the message
+> > as message text, while leading option-like arguments now follow Git's
+> > normal option parsing. In particular, unknown or malformed leading
+> > options are rejected instead of silently becoming a message, short
+> > options may be combined, and `--` can be used when a message itself
+> > begins with a dash.
+>
+> Why do we need to go into such a detail in the log message? What is
+> the above paragraph designed to convey to the reader? Again, it may
+> not be telling any lies, but it misses the point by being inconsiderate
+> to your readers. What you need to tell them is _WHY_ you chose to
+> use parse_options() in such a way. What were you trying to achieve?
+>
+> I am guessing that something along this line ...
+>
+> "git stash create" traditionally treated the rest of the command
+> line as a message. For example,
+>
+> $ git stash create adding -u option
+>
+> has always been a request to create a stash entry with the
+> string "adding -u option" as its message. We should not make it
+> trigger the "-u" (include untracked) behavior for backward
+> compatibility, by using parse_options() with stop-at-the-non-option
+> mode to forbid it from reordering the command line arguments.
+>
+> ... was what you wanted to say, but I am not sure.
+>
+> How much of all these verbiage was written by AI by the way? You'd
+> need to spend effort to make it readable to humans.
+>
+> > Keep create's existing no-change behavior: detect the usual no-change
+> > case before do_create_stash() refreshes and writes the index, and return
+> > success without printing an object name. If do_create_stash() still
+> > reports its internal "nothing to create" result, map that to create's
+> > public success status.
+>
+> You already said that with "does not update, reset, or clean".
+>
+> > This follows the stash subcommand exit-status convention established by
+> > 786fc390465f (stash: reserve exit status 1 for conflicts, 2026-09-03):
+> > subcommands return 0 on success, negative values on failure, and status 1
+> > when applying a stash results in conflicts. cmd_stash() maps negative
+> > subcommand failures to 128.
+>
+> Again, there may not be lies in here, but if you did not make a
+> breaking change to the established convention, is it worth saying?
+>
+> > 9ca6326dff29 (stash: refactor stash_create, 2017-02-19) added the
+> > internal include-untracked path while intentionally leaving the user
+> > interface for "git stash create" unchanged. Reuse that machinery and
+> > the existing INCLUDE_ALL_FILES mode rather than adding a separate stash
+> > creation path.
+> >
+> > Add coverage for short and long aliases, combined short options, the
+> > untracked/ignored boundary including an ignored-only worktree, option
+> > parsing and dash-leading messages, no-change behavior, and preservation
+> > of refs/stash, the index state, and the working tree.
+>
+> Again, adding tests for comprehensive coverage is not something to
+> boast about. Is it worth saying?
+>
+> Aren't -p/-S/-k/-q and pathspec support all about the creating half
+> of "git stash push" that are not available to "git stash create",
+> not just "-u" and "-a"? Why are we singling out only these two? It
+> may be more worthwhile to explain the rationale behind such a design
+> decision.
