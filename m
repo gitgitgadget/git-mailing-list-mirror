@@ -1,117 +1,156 @@
-Received: from mail-ed2-f31.google.com (mail-ed2-f31.google.com [74.125.228.95])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2AA4BB278
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 13:58:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.95
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790949506; cv=pass; b=iDiDrw9rk3cTLAuqLr4CkS3jjI/sIizKH3QoMj1WHuT6u5yBA5Vpz/E7Fqe6gnuyvs+k9kHMBENK+tX1qbGsrKX9O9y+p9ta1mAdtlf1vNGyYk8trMik6PAstpiU5MMfko+AyEeUCBECwTM1wwbG3K3meP1a7KlJ5wVIPO9GFgs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790949506; c=relaxed/simple;
-	bh=e/rICZRgyifl7x9u3xGJWUfJ3OQY8vCRUtB1l2lrQ4Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ugpyukN0GGXJDK1f/TBDT+W3MF/kd0Witi3PnytQtf89QedW0LpNkOoRRGEU15uRd8EYJETEZAEnx5RIoBM77z18Rnh0ZLizZLxZ7o3bXLaVw3K1LKon6SgIejGoUkf/Kq+4o5V3/icdmTfyh0G5ppnfUPVL+7IW5FCfHvO9CeQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lMYht4/I; arc=pass smtp.client-ip=74.125.228.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777483CAE84
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 14:11:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790950297; cv=none; b=HaRef4TWa4Jk89eKSL5OHJmnGGkYgZ3u9a/ICIImAHfOqeLYyVdsssgpJWWTjTMSy7JKiJHOCsejmD16hvMAX9Z6w6vFTeOmN+55VYqg5JbUeoZGMl05ihm2Y9jT2r1aQSWCvC8wg+3/jhZaQHabVvAkUGnGt/hrgQRZMgWDd1Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790950297; c=relaxed/simple;
+	bh=AoK1tkjb/XVt+F3aZQZ6RpqSwWbVqq785v51FaB9n2Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NQSxgpLV1qCjn5JaF7zENSivhdOJzGienYZEMWilbdBi9dJ6Hmv0UvC9+k0oCYowYyoQOSLan2H4NmoCHZ+jXOrxX0hvHhsA/bbwlilveWLyY6hVfWJrc2VPR/5u+4+XQ7i7GXK5EZT12ts7gl0ezopULhMDqSZkBncZx1DhMJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ILr+0Qvz; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lMYht4/I"
-Received: by mail-ed2-f31.google.com with SMTP id 4fb4d7f45d1cf-6afa5b9150eso682864a12.0
-        for <git@vger.kernel.org>; Fri, 02 Oct 2026 06:58:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790949503; cv=none;
-        d=google.com; s=arc-20260327;
-        b=G0ZJv8BtG8AaWp0l4QXutPT+HRy1ULFwec4kagF6/aITuUIowZREHiagUytuCcjrc4
-         OJ7Zc/4b4cJwMawaR25iotkNiu2xbuGp7h4EVSMW233jAtbw5x7H0+dtacji0lIJ0v8N
-         SmoNg2C0CghUs3OMTBnYfdNrPIeLdVqW5trZierftZ4YTIHugBtEg44lfBLCEbNjq5aD
-         GjYDYxwY9C+oLvCVZgLU/XfvMJCw5qyZkRkGv0ewDvmFWPStuTjNfCkwch/bz/j5uqoK
-         rGcEHMgRTf1LUoTsY8e4BJkUpKS0kZKm2VCcyHQmrwkkusDqlfzvPahkCa+clok/CcFt
-         iOSw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=FIpemGrJw1PVM5EBPvH+cvAO3Nha/iyq00o0zMab/No=;
-        fh=/MN4agrpClKW3fwgr/OcBKhLlyRbzF8USnGQ45TIfu0=;
-        b=sx+pA0/tm6Z1kdO9ZBytx+70EzJunkStaCS9YWw/XKrw33PI7Oe5GRjMAsnHe9L48f
-         5B25I+62HsqkV1twepTJDjP/FBqCrrl6l9D9kmyl8N1xV/XJpoQD+mA5qwG97wBX+U/8
-         //wXY+umTB8VhX425IA3INQrW8LCqn0L3KUl+iLZNhKCp98O8wEg8AcfuLGAR1rXQzLB
-         zdqG8hsa/6hXcWN/wEJRUQR+VDtkxqpm1J3KaBth/LajG4ZYvXLdw6oBl/XLfYsA2mR8
-         BeAxEu+NKYXQ8RTLBGr2zNE+XKJiB2cjF2t/vFLWlQlXmQgvQVbX8Yjx+2ufbWsdlrIM
-         2DYg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ILr+0Qvz"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-49e73611928so366635e9.1
+        for <git@vger.kernel.org>; Fri, 02 Oct 2026 07:11:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790949503; x=1791554303; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=FIpemGrJw1PVM5EBPvH+cvAO3Nha/iyq00o0zMab/No=;
-        b=lMYht4/I7qsnXgimjip/ZMDQJ5/f6ukqiFv71R8fezo/ssv6w2NkwPDEwpfZpEKV3N
-         W09JaW9Q6e+34owpuM/uvHDJrKglaKGoLLZjPCdPoF1Fy2ZidHb8iZNoOQhyNnD+Tb8M
-         9le5ph8cPZCNw7Lw5H6dR/AEfeobz+hDfbrAF9HHzKQA6usiIRqSjF3CnFKUvnM06X05
-         TulTqMLf9BjbAngAW3ElH59LrAgTLLjQbHgWEPkB0chRX/kpSZJswvPlehirad7r0C+V
-         R3gXc2LqoOaxfa7Fy8sz//HcnbgLH/km+KYA1RAzpJYEWhGowkAp8TUXYE8QJySR6fRw
-         CD2Q==
+        d=gmail.com; s=20251104; t=1790950291; x=1791555091; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=DIXgv36k36YGz13813HxAaJR9/pHiRcD/T/uphlQgd8=;
+        b=ILr+0QvzfujNQ0wgH5+eTANl8MlyeELQWKw8RmvpnjWMIqypT8gopvLbjngyHM3hL9
+         I/bvIWxPfU2jxxSk7R8LyCvPg+stkPcS0HCwnAtZNaN3N1oLNZIM2yXfYgS6f21AvFA0
+         RJWYBBGeQDXwKVZIjPyY5szwsNEAa19XwobJ0VpWUkOMGYFaJxOTW+sRZ+Ci2qZLGka+
+         dJdqMjOtIKrQ/2BT8sP84fU0GpMifEu/Lgw63Qxlg4cQLe00pHNiOsYAG0MZuIFN9dzF
+         oMbH5CS2Op5sAq/PMXMiKfFBNqhbkwZASBvL2JCLBGuzmdlCplpf1BjbbjBv52MXT9K0
+         3TWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790949503; x=1791554303;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=FIpemGrJw1PVM5EBPvH+cvAO3Nha/iyq00o0zMab/No=;
-        b=J9IesUcTJW27RczT1VrWDlLbzZcHjx2s6dVtaXo7fxmqIQW6q/yqfD6Q9ZXsR8c0az
-         jfD9H4JW9ylmPU3SNrgt4jMeeRUMddJQJhzNmls25UN6UOAbqWgxagsoadbLyqhpwRL6
-         DH48l/NLrY/6pQX37vkTsyNCNifCAEtduSzLmJWN+uq9v6b8iq5SHOQZmVsJE9/07JuI
-         t7ZmqyNGu5fAmsKHcRbeCCrs5IhapvWmID1DM5eXgMS6Rn5d1NyZ97MtQHx9ENCCAidv
-         +YN7qVv9KuTzfQeKTIlg5EEKXESnQK5AyuTZZe42izrM4Q8TcCbrMUHDwdZgUYBpqfkk
-         Dbrw==
-X-Forwarded-Encrypted: i=1; AKwUvBwmKo6eQDVyCvwlUdQC+j8d1tLxGVq0x5sr/dw2hBqRXD/XfeYzRUsP1CDZ3GAmXEm+9aQ=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKiwM4BDrg1bcohetrjySfVtu2yPOeUoLTtDEVmczZD6B4ZNiVA
-	C92q9RxCxYUO7UU5l7SVgtrPtmluR4UHCZxWI77m+ZvdxwpbaFaK+uVlHOvYOaOhF9St1cBoe4b
-	L82hrKBMpAIH3Em2KP9kdxaGmEoL+79prJ80r
-X-Gm-Gg: AYBFou2m9BlQbpu3Li0PdxjMaFaHyZpsBg9iIpGOlV9gqpFkVeFtAzqV2bcS5nvt0PP
-	ifYf8E3xE310irPeU/ck5LX8/x51YvjA5/BLyFrOeC/zuDpaEXu4NWVPhxmimCxEFpTdyYIz5Hv
-	ipYxdMl1ei5ob50gE/NGbD+omrLma05PSxoEwOhL75m/icAPwoPvs1kmFa0SrnJBZcBqoZwH5/G
-	8see+LrqX6yonHxa33D6LfWeT7/T4wv7M+rkB4X268Sw+qZr00wYF3/Uih7Ugc9ZKxUQ1Z5Bcea
-	sSGK4YDusVt2JsrT8XjtF0r1DLM8c7vtSmRdx6CJO//D4eXfPHJDLTM=
-X-Received: by 2002:a05:6402:388d:b0:6a7:e514:1d85 with SMTP id
- 4fb4d7f45d1cf-6af9e2dbda2mr1980266a12.13.1790949503179; Fri, 02 Oct 2026
- 06:58:23 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1790950291; x=1791555091;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=DIXgv36k36YGz13813HxAaJR9/pHiRcD/T/uphlQgd8=;
+        b=sAr9XFgtLdEUVbqjqYG8o2UbeN6p0SMoVURGyh4MkgCnuXa+xWuqZj1fhGXGAugR6y
+         DRc35CE9GuZWvr8NCfzNUR3UWplwl2hWWApJE61XccHgrrlj+P5S+/APSfuYYiOWDWWT
+         mWML2ZZMt6q2ONuaHlpXIgTDJx7X1KhFwm/fDfjQuJpPid58U+doCkW5Oz1KPMQaJEdm
+         bzs0qH8QlKN+eJRenJe1GrsA57Gx7tE6lqP2Zx3H/Ds9q4i5g8dgNXo8ENrsJ8JByVBr
+         v+5n3xw7xLRbrspq9+E70Jj4inAnhPDbiiaPduzPg2nXew4dSwKvuASP929xoTdSadAD
+         81nA==
+X-Forwarded-Encrypted: i=1; AKwUvBwCFhEP5cTmhe6apetgWlR1X5aiZspHHbIcv7mY70iDsvkEHm1bHWin0VW49W+hfs2VbNk=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJE2h/n9TZ9kGa53yRVXh6+plsAfJcww+Qjfcmjq1++gWL0Zdr/
+	QjWRQwK4b9+Fol/tcxqOsmJuT3JTyKjzhvnqYm5+Rz+6njxUUolj7k0GAUObffkc
+X-Gm-Gg: AYBFou1tNOU1jW+p64mrc6XCLwJusPAiGmvQ5xoDmTMezVCKOABjqWqXdKZTCJr5Dld
+	vfJnJWS95VFWnCiWE+BfdDDeTqxnqmN9eB1FeTnMsZW+pEdn/7tQEWRbJ5AilYE1Xe+cIyZXJlA
+	Kstyqf7M/J0mTz696cTfgP/Xed4dHrcNQf/6uh2/WU9Gl9EzKoS6iNf94/uCMUN5Q0FMSeDBR59
+	A8ZW0RUsMuFxlateThBmJH/tzUlFuoQ1YjhlMHINRAf9fRpOUu5/nAJWM9+J6NeA+dV1Cd0YpU+
+	TZuKmLCWyzZM8rGVd0Le8DRtjv2wau+Tff4XA57aHzgArwlXGLtPCiLq8g84gxvADlRCwSaMgL6
+	oIV1hz6XrrpWPhgOdBM94T0ZszkcUbgO8oxIJp17MigG17Y/9w/xd26BTVpQupHONUJGuAfzEbT
+	CTNTDvS3RnW/AzJkItJPa+bfgd2QcpHAabAP3U8ItG7It5DL6Cfy75JY6DwR0G77BZ6HNXuevMD
+	daDoDoFgqmQm51jj8t0UyaFgwIlkoJIp7LUvLS7HBU8/NC+Nd943Q==
+X-Received: by 2002:a05:6000:4b19:b0:488:8a8d:7d15 with SMTP id ffacd0b85a97d-48b068c8c9cmr11442365f8f.28.1790950290646;
+        Fri, 02 Oct 2026 07:11:30 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48b382fe9cesm6283426f8f.42.2026.10.02.07.11.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Oct 2026 07:11:30 -0700 (PDT)
+Message-ID: <3509a23e-9de1-442c-a64c-bc33110f92e7@gmail.com>
+Date: Fri, 2 Oct 2026 15:11:21 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2431.v2.git.git.1790927399813.gitgitgadget@gmail.com> <81BD7B8C-6E7E-451A-9D48-49ABD5FA5F68@gmail.com>
-In-Reply-To: <81BD7B8C-6E7E-451A-9D48-49ABD5FA5F68@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Fri, 2 Oct 2026 15:57:45 +0200
-X-Gm-Features: AclHuK86CB4ulrupyf1GuatfOkySHaKrDXl6qhKL5vkP7Te7CZKj3-4PSppPcF8
-Message-ID: <CAHwyqnV4KzDvqeSt-t6NUyV8L3pkstdYNP9itNKLS2guQ0yJuQ@mail.gmail.com>
-Subject: Re: [PATCH v2] object-name: accept @{p} as short for @{push}
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v9 4/4] var: add broken-out identity variables
+To: Andrew Pleeter <andrewpleeter@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, phillip.wood@dunelm.org.uk, ben.knoble@gmail.com,
+ peff@peff.net, sandals@crustytoothpaste.net
+References: <xmqq33va1lcg.fsf@gitster.g>
+ <20260926162048.30853-5-andrewpleeter@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20260926162048.30853-5-andrewpleeter@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> > +test_expect_success '@{p} is short for @{push}' '
-> > +    test_config push.default current &&
-> > +    test_config branch.topic.pushremote other &&
-> > +    resolve topic@{p} refs/remotes/other/topic &&
-> > +    resolve topic@{P} refs/remotes/other/topic
-> > +'
-> > +
->
-> I don=E2=80=99t recall offhand if @{U} case-variant is supported, but I w=
-onder
-> if we might not want to preserve as many single-character shorthands
-> as we can, since there are a limited number that are reasonable to
-> type.
->
-> If upstream already supports different cases, though, symmetry is probabl=
-y best.
+Hi Andrew
 
-It surprised me too, but '@{U}' is actually supported already.
+The implementation looks good, just one small comment on the tests.
 
+On 26/09/2026 17:20, Andrew Pleeter wrote:
+> +test_expect_success 'get author identity components' '
+> +	test_tick &&
+> +	echo "$GIT_AUTHOR_NAME" >expect.name &&
+> +	echo "$GIT_AUTHOR_EMAIL" >expect.email &&
+> +	echo "$GIT_AUTHOR_DATE" >expect.date &&
+> +	git var GIT_AUTHOR_NAME >actual.name &&
+> +	git var GIT_AUTHOR_EMAIL >actual.email &&
+> +	git var GIT_AUTHOR_DATE >actual.date &&
+> +	test_cmp expect.name actual.name &&
+> +	test_cmp expect.email actual.email &&
+> +	test_cmp expect.date actual.date
+> +'
 
-Harald
+I think it would have been sufficient just to list all the identity 
+components at once, rather than having separate tests for each one, but 
+it is not worth re-rolling just for that.
+
+Thanks
+
+Phillip
+
+> +test_expect_success 'get committer identity components' '
+> +	test_tick &&
+> +	echo "$GIT_COMMITTER_NAME" >expect.name &&
+> +	echo "$GIT_COMMITTER_EMAIL" >expect.email &&
+> +	echo "$GIT_COMMITTER_DATE" >expect.date &&
+> +	git var GIT_COMMITTER_NAME >actual.name &&
+> +	git var GIT_COMMITTER_EMAIL >actual.email &&
+> +	git var GIT_COMMITTER_DATE >actual.date &&
+> +	test_cmp expect.name actual.name &&
+> +	test_cmp expect.email actual.email &&
+> +	test_cmp expect.date actual.date
+> +'
+> +
+> +test_expect_success !FAIL_PREREQS,!AUTOIDENT 'identity components are strict' '
+> +	(
+> +		sane_unset GIT_COMMITTER_NAME &&
+> +		sane_unset GIT_COMMITTER_EMAIL &&
+> +		test_must_fail git var GIT_COMMITTER_NAME
+> +	)
+> +'
+> +
+> +test_expect_success 'get several identity components at once' '
+> +	test_tick &&
+> +	cat >expect <<-EOF &&
+> +	GIT_AUTHOR_NAME=$GIT_AUTHOR_NAME
+> +	GIT_AUTHOR_EMAIL=$GIT_AUTHOR_EMAIL
+> +	GIT_COMMITTER_NAME=$GIT_COMMITTER_NAME
+> +	GIT_COMMITTER_EMAIL=$GIT_COMMITTER_EMAIL
+> +	EOF
+> +	git var GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'git var -l lists the identity components' '
+> +	git var -l >actual &&
+> +	test_grep "^GIT_AUTHOR_NAME=" actual &&
+> +	test_grep "^GIT_AUTHOR_EMAIL=" actual &&
+> +	test_grep "^GIT_AUTHOR_DATE=" actual &&
+> +	test_grep "^GIT_COMMITTER_NAME=" actual &&
+> +	test_grep "^GIT_COMMITTER_EMAIL=" actual &&
+> +	test_grep "^GIT_COMMITTER_DATE=" actual
+> +'
+> +
+>   test_done
+
