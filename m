@@ -1,435 +1,262 @@
-Received: from mail-dl2-f12.google.com (mail-dl2-f12.google.com [74.125.229.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA6E3921E6
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 11:11:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D2E484255
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 11:22:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790939501; cv=none; b=Cz1hXcfgv3LcrL3LZOBaU1/wkKPZUpejvfiTVzlkTvzCZs6YX9tUXIlY2lv2buethpYJlXQEr5MOevrVgUDe1Ry9kvf89qyjQFvYeA9PAQTNONPa1eM2rqDhwApWhoKr7GhfnXixKQ7L9KdE+U+mpughDIMU5WDrnnJznxZCgew=
+	t=1790940133; cv=none; b=ET8SRl8ilCDq1Bm8FBeJQdJVpf0iTwVWOH7CZ75gC5w9oom+YbTsBo9AAp98/LDbLM0ppgdS23uPrEn2f5LS/FDZMMT0EUmwESCLMpf7JJ450JPmiVre753/NMznCTg+6EvKcxpRA0gOokDGhUo3m19Vz9GLpOSInQtDTmhYeHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790939501; c=relaxed/simple;
-	bh=AoJJ6k9FboT6mt27UQhKIe8wUV9lXFbDbFycFg3tsoo=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=jpsJHy0p5gWlXZ3lOu4mSohmCdrXQ0uipjEpq1x/blJtxxnJVBe96acpN/sE9CUH6vOIxRMfVs/CY9fS8k0sUFksWMTY7prSXi9JGvoSg0b/H7hGF55stVi3lfS7nBO0VtunYBznCQtHKK9U/JtAor4lHZawHP+yDEv8SCE4xig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qtseoABl; arc=none smtp.client-ip=74.125.229.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790940133; c=relaxed/simple;
+	bh=Jn0sYFR1JRc5OmZ6sNhvn05BgU4lpG0/69imyiuv7Rk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o4ca3RkCAT03dPNOhpp09inIhgp5WXWH1dRdxHTgtuhVsAZgO20ud6ZaBFH4comVQqIfr2twkKefGNE0JMdslLV17T0mI4pyx2UdaJHd/RnPxc65Cuhp1tu1ZlizyGM8aVkB97Up4PPkiB/6QuFQmnDmSBlEJnOPQd92lmVLL4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eZjUycvg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JHy2lD4U; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qtseoABl"
-Received: by mail-dl2-f12.google.com with SMTP id a92af1059eb24-142dd04f7f2so5879494c88.0
-        for <git@vger.kernel.org>; Fri, 02 Oct 2026 04:11:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790939499; x=1791544299; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=sRBiJTSalX5DVsaRiINZB/aG8O/jUWDPw10Ecj7mOx0=;
-        b=qtseoABlJgiecF4s8bMSTWIs2yikJp+XhEjGT+FH05SIGxWBzOpYazO/Gq/UTlzaYc
-         LrSOmtcw+9ieS3s4Wa45UygfVUlxN6QZBy5EyHCXKqY3dqCzCbSeGr23gYJmCWutqqZ6
-         MFzk697khz4IWnrBwZ3Nra43IwMekZOZU4hYDRgt0v2QQ257qhH0w5mGi6s6wP6nE7i3
-         pTPNIeL/ODj3t+2EbULDAIVyFQgacIDOv+RGNoSLBQUlJirqtGKxOlbb/HQbdLhLWRYn
-         pUj4VnvUq/FQi7/iDKU2t3l+5aaSCK+iDNkFGgiB0r6M/YwDgMrcYmlX8Zgw8RzO6gXA
-         EDmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790939499; x=1791544299;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=sRBiJTSalX5DVsaRiINZB/aG8O/jUWDPw10Ecj7mOx0=;
-        b=zKtxTr7hYOHqszsIB2dncy+5AOG4/xZIL5tpMTKjEC29CN8ZzT7t/fbz9Ms3mO0304
-         Z6SrxrQpTurmcvF2b/ypFJ4FLjRTIEFU1JPoYuu3JwrOqzrhp2pJiLD1OOqIWm7yLONy
-         yvMLMQP2hW+GG63w2vQlsL6zCgn7hBesH9V9BGFoXNFjMBVoJorTuT3sTzxxV6cgSXql
-         Kr0JjiNJ+u73Tt76A59Px4uy3UyWfKKR4N0TicNde295ZwikUfj1g9RmUj72IWJ28mIP
-         zVhFdLjK7lrKjeCcogh/eewGDrHAXffrsOgvhM+sOKST6EV26JDl2e8nZCKEJeCaoowk
-         K4Yg==
-X-Gm-Message-State: AFuF++lnRPxbhz9ZvsRGIfP86D4aPn8AKLzxheRIIHqcjdWvjEE2fOgp
-	5RkIQjOj7o/ya8X0OB4ckhBsgdtu7d/pQcbzaYMTp7RmxE7dsfuwK8qdfkicqA==
-X-Gm-Gg: AYBFou2BZqJexaomGma9asnNodPRgdOMLUBJ0jiNm7bbJSDi4dpjdn+lnNVFMfpWSQz
-	G/sy/OvJpMhHx5F0T+Xd1PkNiXaCgyWu1aDcUrVABz9xeNpsxHTrJd9GogsQLT8LV9dRR9yrick
-	1T4RDtJq0zuozeACPJ7fnixVMpeeJWVU1g0MfoZ+jMqlJlzqZM/gsrfNK8wjcb2iVeKW2sNxnB3
-	DCTvCCZTBTlCyWozvQa1/HL+cdlcEuS7/Gm73hTOcrOE42goXKsx1rEcWFuT0oPaVb8XLP6pIng
-	sksLUNBpQv8ccnnksS+Gv2Qkg1qnYsL/FTI7sWPhrWkwDSnMNJkdhMs5caGgEntnHbWTOF8FKGs
-	s8y4SEd4Ou0nsg8I6zHHR1oJ/KEHo9efzEq5WsicooySts6MwaXqThCc7q+VAChUP6NorWSpZ/r
-	vasu5DsE032ZWFU1DPhyBp2i1g1455YPqPyswE84K1f8ig0K0p3JqS3XfPB6b1HRb+/lRpjg==
-X-Received: by 2002:a05:701b:42c1:20b0:144:c123:4036 with SMTP id a92af1059eb24-14f5cadad4amr2683726c88.35.1790939498835;
-        Fri, 02 Oct 2026 04:11:38 -0700 (PDT)
-Received: from [127.0.0.1] ([52.161.59.3])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14f47a57592sm5327205c88.17.2026.10.02.04.11.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2026 04:11:38 -0700 (PDT)
-Message-Id: <cd018289bbb330753e41a1e5b6156b6e85c12dbe.1790939492.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2214.v6.git.1790939492.gitgitgadget@gmail.com>
-References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
-	<pull.2214.v6.git.1790939492.gitgitgadget@gmail.com>
-From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 02 Oct 2026 11:11:32 +0000
-Subject: [PATCH v6 3/3] rerere: go on at a conflict when the lock stays busy
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eZjUycvg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JHy2lD4U"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 471C8EC02E1
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 07:22:10 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Fri, 02 Oct 2026 07:22:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1790940130; x=1791026530; bh=yQcimWgvwO
+	yTBbsUt5+dUXvwib7GRKIcreLiPlIgUnI=; b=eZjUycvgqagAMe4L2e1i/C68Z0
+	uqQeuNtp3AyGg81e+K0GWqw224HpQ5sBIVJT48jjNosYddwQgkGYhIwBORLepvl6
+	TWkQQidqFwY8ANRlgf/x8KelhkG9QuVwMM9u9XMigCXUfxVUj1JyhcTsJIbfh+1A
+	EoOaYhWCK5t5VpB9gf0rn6GDKEgXnGaTSqXOSGJ3ek5Z8AgCpy3RtY57Lulbxf9T
+	Oy2P/g1sxKoCXYI7jHjWX2I9uERkwLgFq7Hf9e8HhF+mltVcgWNelepfAqLfgfs7
+	BDDqbnwzuzWIr7x18ht0HgEOO9zZvDU3gjFx6C2gmbkgURxSJ9YmQBvVKe3w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790940130; x=1791026530; bh=yQcimWgvwOyTBbsUt5+dUXvwib7GRKIcreL
+	iPlIgUnI=; b=JHy2lD4Ueur1KASUOSP//mvzxer2OKncVQS8xZThaPNWHjVZ2zb
+	t1Vsk2/kfbx8XDDSxKCdA5QV3Fz6WH90y+ey5rtkzNzrId4vTHvAaickjUvuCOMO
+	mJQ41xzs9xyzDCDDiVn5WNJkmv2fMd2G5sksngp9Qn+9ajMt6hgKfSYLotwdiarx
+	90BSbg6hSfd63ATazkAerRHR6haxLjzH99PQEbc4RHpJ+ALahju80QttxegwYhb2
+	g9YOvr/OtF7DJs9M5jh8pUQ+bd2DYcZq3oAGT4l4ZwwCbZL9vOzDUkeUT+SdngV9
+	tWIOGM4gsjTkHGWxY0vsjGGaZiJrbU4LknA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1790940130; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:jsIgFC9oUs4eElqrGL9O6MWt4Owt879q8lUOdlX11a/Txtl
+	9BMwvZuxW4yLclenXW4OBLO/7UbkwDTG0kub0cSYJJfNXAi7CY/TOZO+Y/Uw8Q1t
+	x+ROsxhiEpSgE1f3HmhwEnPGiiqgEOppMuEDIM42kwxWw0huoL2EEvFdHz4MP+6e
+	uZx2jLXAIz0/S/KxwSpykQ/NBuTI6uezTygb5VUYsf2NL+6UF6GIVmUHVVjRVN83
+	/ThqipZKsRoc2hHHP7Mj9vJsfKz5GmCjcZHN2/KhxaNGB0eF4pJ9a6HTepGynRMo
+	O5OyhxL3Q3y+wAe5LqSuuzPF+zV8RDCWGrOH75w==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:zeyPQ2KpuKeZiCrCOzV2O67TVZPbwa+GE4mORqe2s6Q=:Jn0sYFR1JRc5OmZ6sNhvn05BgU4lpG0/69imyiuv7Rk=;
+X-ME-Sender: <xms:4ZO_aiNtHUFLncZIavcYw8USkUVdJ4pc2tpZ2vwQmn7OFrWSiheh4Q>
+    <xme:4ZO_akorShcOM6ZD9YfBQRIycnQiTerBJdATH4oQVjalswc4GzD8JRBZm7Y5s-cSU
+    OpH8VxtRff6UjemAqgKboSa1SDlZna5bf2JSGOL5SWf7psfW4wSRyY>
+X-ME-Received: <xmr:4ZO_ajFFdOp0OZNg_vjUM7y0Fya9p4yFbpyNtsZZ1LzMuBsvFXYRZA>
+X-ME-Proxy-Cause: dmFkZTGjPLKPrmizOma232HJNguG3zzM1P2r/5pIm32zvYlPabp2GOkogy8OHq5FTtJMbA
+    aQUjI6w/BtQwY3OZAZv3ltxjcVUqbVdAGS/whqSQlCzuEEO8/ZdvGNmqeXnJ0bdQYOP+E7
+    aePOTbdSF3oTexBs5IlfFHai9Ryc6LmjBKOG2iyU3NdSdd9y9J3Wx+xWRK6LqVKs550zc+
+    zdBiz1GV4yq812mjoFydSVHwWz0ty9UPMdGhFWELB9ugR0Cw3Bcb5CKqtFJHYhq2NKf5+Y
+    fSJMeFCzsl4wAw0bH90kHBTbAi/YCrnJyv9wPxqmT0BwIf5Fgf6FNXgYAc60NbeTIVAtSv
+    encyJxJljvEmMD7IbKjF+NlQ7iNOF2NxTQa6oE28sJ88dyWqFDstfa4epRdoaUbr9BKWSU
+    UdKUhc8g34dCKjoCsAXDvbiofTI9cOedCiEPLkk33oat+su13MUbao/jKm8KBz/eBEYP9I
+    vYcdCTLLLMbY71MIzcaPNBQejW45Cl7x7tkdPf8+fm7cUaH/BLpWtoZoLHBKb8iufoZ0X8
+    gh2d60fdLvLJUzC215zNd3sCNywpvp9uzuPTDgxbbJQpR6ilKu1TIlSzCnSW0KUvK+LFIi
+    veIXh90+fkQO7BfxvYTDPmEHzalj5piUASrcylRqxff8cVMhgo+TQv/bFGdw
+X-ME-Proxy: <xmx:4pO_aprrxHTxGIqkt_uoyRZCc8k6Q_Zx7aivCWB_5_E7HNCNeYsuhA>
+    <xmx:4pO_asZ78seM9SrnorYao3cENDjeDRZ50qyck5dgjXN3yzPfmgbGXg>
+    <xmx:4pO_aiW2KlsOaK3YZYmkXmFXh3mavSJshq1LlwKGNxJTVwCzjKTn4w>
+    <xmx:4pO_al9C-T7IYsGRIZSB4fK5EsOVe3hOf6sIwS554XnQwQLUgIdcgQ>
+    <xmx:4pO_aqqx6b5T7fkcLmobSaPhcnaIlUrq4wjQ0HDSN9s5fXQ99DzmyP3u>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 2 Oct 2026 07:22:08 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 23fca52a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 2 Oct 2026 11:22:06 +0000 (UTC)
+Date: Fri, 2 Oct 2026 13:22:03 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+	Kristofer Karlsson <krka@spotify.com>
+Subject: Re: [PATCH 2/2] fetch: write commit-graph using updated refs only
+Message-ID: <ar-T2y54X1uDQ4mX@pks.im>
+References: <pull.2239.git.1790930019.gitgitgadget@gmail.com>
+ <fee92f3c2009f8f282fe98e6b16d403704db9ad9.1790930019.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Junio C Hamano <gitster@pobox.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Thomas Bachem <mail@thomasbachem.com>,
-    Thomas Bachem <mail@thomasbachem.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fee92f3c2009f8f282fe98e6b16d403704db9ad9.1790930019.git.gitgitgadget@gmail.com>
 
-From: Thomas Bachem <mail@thomasbachem.com>
+On Fri, Oct 02, 2026 at 08:33:38AM +0000, Kristofer Karlsson via GitGitGadget wrote:
+> From: Kristofer Karlsson <krka@spotify.com>
+> 
+> When fetch.writeCommitGraph was introduced in
+> 
+>     50f26bd035 (fetch: add fetch.writeCommitGraph config
+>                 setting, 2019-09-02),
+> 
+> the stated goal was to stay updated with the latest commits after
+> fetching new objects.  The implementation used
+> write_commit_graph_reachable() because it was the only API available,
+> but two things have changed since then:
+> 
+>  1. write_commit_graph() was added, and it accepts an explicit set of
+>     commits as seeds, enabling more targeted commit-graph updates.
 
-When a merge, rebase, cherry-pick, revert, am, stash or apply stops
-at a conflict, it runs rerere right before it returns to the user.
-If MERGE_RR.lock is still held when rerere.lockTimeout runs out, the
-command dies there. In a rebase, the sequencer has not yet written the
-state that "git rebase --continue" needs. A later
-"git rebase --continue" fails, and the "git commit --amend" that its
-message offers first folds the conflicted pick into the previous
-commit.
+Hm. The big question here is whether these additional seeds are additive
+or exclusive. That is, if I have an existing commit graph already, would
+it basically just extend the commit graph with the additional object IDs
+or would it replace the commit graph with a new one that only considers
+the passe object IDs as input?
 
-So warn and go on without rerere. The conflict is still in place, and
-a hint tells the user to run "git rerere" before resolving it. That
-records the preimage or replays a known resolution, as the command
-would have. The hint is under advice.mergeConflict like other hints
-printed at a conflict stop.
+I would hope that it's additive, because otherwise you may now lose
+commit graph coverage for stuff that was covered before the patch.
 
-Everything else that waits for the lock is left as it is and still
-fails if the wait times out. That includes "git commit" and
-"git am --continue", which run rerere after a resolution. When they
-fail, the rebase or am can still be continued.
+>  2. The ref-scanning callback add_ref_to_set() became more expensive
+>     in
+>         630cd5194e (commit-graph.c: peel refs in 'add_ref_to_set',
+>                     2020-07-22)
+>     when it started to validate the refs against the odb
+>     for correctness.  On a repository with many refs, this makes the
+>     full reachable scan unnecessarily costly for a targeted fetch.
 
-Assisted-by: Claude Fable 5.1
-Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
----
- Documentation/config/rerere.adoc |  12 ++--
- apply.c                          |   2 +-
- builtin/am.c                     |   3 +-
- builtin/merge.c                  |   2 +-
- builtin/stash.c                  |   2 +-
- rerere.c                         |  30 ++++++--
- rerere.h                         |   2 +
- sequencer.c                      |   4 +-
- t/t4200-rerere.sh                | 120 ++++++++++++++++++++++++++++++-
- 9 files changed, 159 insertions(+), 18 deletions(-)
+I was wondering whether incremental commit graphs would also be part of
+the reasoning. Because in theory, now that we have those, we could even
+extend the commit graph on a fetch by just writing another layer.
 
-diff --git a/Documentation/config/rerere.adoc b/Documentation/config/rerere.adoc
-index 80c38ee951..08fb1cd37e 100644
---- a/Documentation/config/rerere.adoc
-+++ b/Documentation/config/rerere.adoc
-@@ -16,7 +16,11 @@ rerere.lockTimeout::
- 	lock when another process holds it, typically a background
- 	`git rerere gc`.  Value 0 means not to wait at all; -1 means
- 	to wait indefinitely.  Default is 1000 (i.e., wait for 1
--	second).  When the time is up, the command fails as it does
--	for any other lock it cannot take.  A `git rerere gc` run by
--	`git maintenance run --auto` or `git gc --auto` does not wait
--	and does nothing while the lock is held.
-+	second).  When the time is up, a command that stops at a
-+	conflict, such as `git merge` or `git rebase`, prints a
-+	warning and goes on without rerere; run `git rerere` before
-+	resolving the conflict to record it after all.  Any other
-+	command fails, as it does for any other lock it cannot take.
-+	A `git rerere gc` run by `git maintenance run --auto` or
-+	`git gc --auto` does not wait and does nothing while the lock
-+	is held.
-diff --git a/apply.c b/apply.c
-index f00b7ba4d3..f2b896af9d 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4865,7 +4865,7 @@ static int write_out_results(struct apply_state *state, struct patch *list)
- 		 * tree with conflict markers, but that isn't written with --cached.
- 		 */
- 		if (!state->cached)
--			repo_rerere(state->repo, 0);
-+			repo_rerere(state->repo, RERERE_WARN_LOCKED);
- 	}
- 
- 	return errs;
-diff --git a/builtin/am.c b/builtin/am.c
-index e9623b8307..aa09211461 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1649,7 +1649,8 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 		o.verbosity = 0;
- 
- 	if (merge_ort_generic(&o, &our_tree, &their_tree, 1, bases, &result)) {
--		repo_rerere(the_repository, state->allow_rerere_autoupdate);
-+		repo_rerere(the_repository, state->allow_rerere_autoupdate |
-+			    RERERE_WARN_LOCKED);
- 		free(their_tree_name);
- 		return error(_("Failed to merge in the changes."));
- 	}
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 5b4eb23a83..68511614c7 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1061,7 +1061,7 @@ static int suggest_conflicts(void)
- 	fputs(msgbuf.buf, fp);
- 	strbuf_release(&msgbuf);
- 	fclose(fp);
--	repo_rerere(the_repository, allow_rerere_auto);
-+	repo_rerere(the_repository, allow_rerere_auto | RERERE_WARN_LOCKED);
- 	printf(_("Automatic merge failed; "
- 			"fix conflicts and then commit the result.\n"));
- 	return 1;
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 7a9843413b..08062512c1 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -732,7 +732,7 @@ static enum stash_apply_result do_apply_stash(const char *prefix,
- 		ret = error(_("could not write index"));
- 
- 	if (ret) {
--		repo_rerere(the_repository, 0);
-+		repo_rerere(the_repository, RERERE_WARN_LOCKED);
- 
- 		if (index)
- 			fprintf_ln(stderr, _("Index was not unstashed."));
-diff --git a/rerere.c b/rerere.c
-index 43c8eb04db..bb7052d3a1 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -3,6 +3,7 @@
- 
- #include "git-compat-util.h"
- #include "abspath.h"
-+#include "advice.h"
- #include "config.h"
- #include "copy.h"
- #include "environment.h"
-@@ -887,11 +888,13 @@ int setup_rerere(struct repository *r, struct string_list *merge_rr, int flags)
- 
- 	if (flags & (RERERE_AUTOUPDATE|RERERE_NOAUTOUPDATE))
- 		rerere_autoupdate = !!(flags & RERERE_AUTOUPDATE);
--	if ((flags & RERERE_READONLY) && (flags & RERERE_NOWAIT))
--		BUG("RERERE_NOWAIT does not apply with RERERE_READONLY");
-+	if ((flags & RERERE_READONLY) &&
-+	    (flags & (RERERE_NOWAIT | RERERE_WARN_LOCKED)))
-+		BUG("RERERE_READONLY takes no lock, so no lock flag applies");
- 	if (flags & RERERE_READONLY) {
- 		fd = 0;
- 	} else {
-+		const char *path = git_path_merge_rr(r);
- 		int lock_flags = LOCK_DIE_ON_ERROR;
- 		int timeout_ms = rerere_lock_timeout_ms;
- 
-@@ -900,17 +903,32 @@ int setup_rerere(struct repository *r, struct string_list *merge_rr, int flags)
- 		 * "git rerere gc" while it prunes rr-cache, so wait for
- 		 * it instead of dying right away.  The gc of an automatic
- 		 * maintenance run does not wait, since skipping one of
--		 * its runs costs nothing.
-+		 * its runs costs nothing.  A command that stops at a
-+		 * conflict must not die here either, so it warns and
-+		 * goes on without rerere.
- 		 */
- 		if (flags & RERERE_NOWAIT) {
- 			lock_flags = 0;
- 			timeout_ms = 0;
- 		}
-+		if (flags & RERERE_WARN_LOCKED)
-+			lock_flags = 0;
- 		fd = repo_hold_lock_file_for_update_timeout(r, &write_lock,
--							    git_path_merge_rr(r),
--							    lock_flags, timeout_ms);
--		if (fd < 0)
-+							    path, lock_flags,
-+							    timeout_ms);
-+		if (fd < 0) {
-+			if (flags & RERERE_WARN_LOCKED) {
-+				warning_errno(_("skipping rerere, "
-+						"unable to create '%s.lock'"),
-+					      path);
-+				advise_if_enabled(ADVICE_MERGE_CONFLICT,
-+						  _("run \"git rerere\" before "
-+						    "resolving the conflict to "
-+						    "record or replay its "
-+						    "resolution"));
-+			}
- 			return -1;
-+		}
- 	}
- 	read_rr(r, merge_rr);
- 	return fd;
-diff --git a/rerere.h b/rerere.h
-index d54c53d0d4..12ff4a8adb 100644
---- a/rerere.h
-+++ b/rerere.h
-@@ -12,6 +12,8 @@ struct repository;
- #define RERERE_READONLY     04
- /* Take MERGE_RR.lock only if it is free, and return quietly otherwise */
- #define RERERE_NOWAIT       010
-+/* Warn and go on without rerere if MERGE_RR.lock cannot be taken in time */
-+#define RERERE_WARN_LOCKED  020
- 
- /*
-  * Marks paths that have been hand-resolved and added to the
-diff --git a/sequencer.c b/sequencer.c
-index 6dae43e4db..17a775806d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2520,7 +2520,7 @@ static enum pick_result do_pick_commit(struct repository *r,
- 		      : _("could not apply %s... %s"),
- 		      short_commit_name(r, commit), msg.subject);
- 		print_advice(r, res == 1, opts);
--		repo_rerere(r, opts->allow_rerere_auto);
-+		repo_rerere(r, opts->allow_rerere_auto | RERERE_WARN_LOCKED);
- 		goto leave;
- 	}
- 
-@@ -4449,7 +4449,7 @@ static int do_merge(struct repository *r,
- 
- 	rollback_lock_file(&lock);
- 	if (ret)
--		repo_rerere(r, opts->allow_rerere_auto);
-+		repo_rerere(r, opts->allow_rerere_auto | RERERE_WARN_LOCKED);
- 	else
- 		/*
- 		 * In case of problems, we now want to return a positive
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index 28152bf456..a9dfe74091 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -277,17 +277,133 @@ test_expect_success 'a held lock is waited out within rerere.lockTimeout' '
- 	test_grep "^=======\$" $rr/preimage
- '
- 
--test_expect_success 'merge fails once rerere.lockTimeout is up' '
-+test_expect_success 'merge goes on without rerere once rerere.lockTimeout is up' '
- 	git reset --hard &&
- 	rm -rf $rr &&
- 	test_when_finished "rm -f .git/MERGE_RR.lock" &&
- 	>.git/MERGE_RR.lock &&
- 	test_must_fail git -c rerere.lockTimeout=0 merge first 2>err &&
--	test_grep "Unable to create" err &&
-+	test_grep "skipping rerere" err &&
-+	test_grep "hint: .*git rerere" err &&
- 	test_grep "^=======\$" a1 &&
- 	test_path_is_missing $rr/preimage
- '
- 
-+test_expect_success 'rerere run at the stop records what was skipped' '
-+	git reset --hard &&
-+	rm -rf $rr &&
-+	git checkout -b lock-held-catch-up third &&
-+	test_when_finished "git checkout third && git branch -D lock-held-catch-up" &&
-+	test_when_finished "rm -f .git/MERGE_RR.lock" &&
-+	>.git/MERGE_RR.lock &&
-+	test_must_fail git -c rerere.lockTimeout=0 merge first &&
-+	test_path_is_missing $rr/preimage &&
-+	rm .git/MERGE_RR.lock &&
-+	git rerere &&
-+	test_grep "^=======\$" $rr/preimage &&
-+	echo resolved >a1 &&
-+	git add a1 &&
-+	git commit -qm resolved &&
-+	test_path_is_file $rr/postimage
-+'
-+
-+test_expect_success 'rebase goes on without rerere once rerere.lockTimeout is up' '
-+	git reset --hard &&
-+	rm -rf $rr &&
-+	git checkout -b lock-held third &&
-+	test_when_finished "git checkout third && git branch -D lock-held" &&
-+	test_when_finished "rm -f .git/MERGE_RR.lock" &&
-+	>.git/MERGE_RR.lock &&
-+	test_must_fail git -c rerere.lockTimeout=0 rebase first 2>err &&
-+	test_grep "skipping rerere" err &&
-+	test_path_is_file .git/rebase-merge/stopped-sha &&
-+	rm .git/MERGE_RR.lock &&
-+	echo resolved >a1 &&
-+	git add a1 &&
-+	git rebase --continue &&
-+	test_path_is_missing .git/rebase-merge &&
-+	test_path_is_missing $rr/preimage
-+'
-+
-+test_expect_success 'rebase -r goes on without rerere once rerere.lockTimeout is up' '
-+	git reset --hard &&
-+	git checkout -b lock-held-merge second &&
-+	test_when_finished "test_might_fail git rebase --abort &&
-+		git checkout third && git branch -D lock-held-merge" &&
-+	test_when_finished "rm -f .git/MERGE_RR.lock" &&
-+	>.git/MERGE_RR.lock &&
-+	test_must_fail git -c rerere.lockTimeout=0 rebase -r --force-rebase main 2>err &&
-+	test_grep "skipping rerere" err &&
-+	test_cmp_rev REBASE_HEAD second &&
-+	rm .git/MERGE_RR.lock &&
-+	git rebase --abort &&
-+	test_path_is_missing .git/rebase-merge
-+'
-+
-+test_expect_success 'commit fails on a lock it cannot take' '
-+	git reset --hard &&
-+	rm -rf $rr &&
-+	git checkout -b lock-held-commit third &&
-+	test_when_finished "git checkout third && git branch -D lock-held-commit" &&
-+	test_must_fail git merge first &&
-+	test_path_is_file $rr/preimage &&
-+	echo resolved >a1 &&
-+	git add a1 &&
-+	test_when_finished "rm -f .git/MERGE_RR.lock" &&
-+	>.git/MERGE_RR.lock &&
-+	test_must_fail git -c rerere.lockTimeout=0 commit -qm resolved 2>err &&
-+	test_grep "Unable to create" err &&
-+	test_path_is_missing $rr/postimage
-+'
-+
-+test_expect_success 'am goes on without rerere once rerere.lockTimeout is up' '
-+	git reset --hard &&
-+	rm -rf $rr &&
-+	git checkout -b lock-held-am third &&
-+	test_when_finished "test_might_fail git am --abort &&
-+		git checkout third && git branch -D lock-held-am" &&
-+	git format-patch -1 --stdout first >first.patch &&
-+	test_when_finished "rm -f .git/MERGE_RR.lock" &&
-+	>.git/MERGE_RR.lock &&
-+	test_must_fail git -c rerere.lockTimeout=0 am --3way first.patch 2>err &&
-+	test_grep "skipping rerere" err &&
-+	test_path_is_dir .git/rebase-apply &&
-+	rm .git/MERGE_RR.lock &&
-+	git am --abort &&
-+	test_path_is_missing .git/rebase-apply
-+'
-+
-+test_expect_success 'stash pop goes on without rerere once rerere.lockTimeout is up' '
-+	git reset --hard &&
-+	rm -rf $rr &&
-+	git checkout -b lock-held-stash third &&
-+	test_when_finished "git reset --hard && git stash drop &&
-+		git checkout third && git branch -D lock-held-stash" &&
-+	echo stashed >>a1 &&
-+	git stash &&
-+	echo committed >>a1 &&
-+	git commit -qam committed &&
-+	test_when_finished "rm -f .git/MERGE_RR.lock" &&
-+	>.git/MERGE_RR.lock &&
-+	test_must_fail git -c rerere.lockTimeout=0 stash pop 2>err &&
-+	test_grep "skipping rerere" err &&
-+	test_grep "^=======\$" a1
-+'
-+
-+test_expect_success 'apply --3way goes on without rerere once rerere.lockTimeout is up' '
-+	git reset --hard &&
-+	rm -rf $rr &&
-+	git checkout -b lock-held-apply third &&
-+	test_when_finished "git reset --hard &&
-+		git checkout third && git branch -D lock-held-apply" &&
-+	git format-patch -1 --stdout first >first.patch &&
-+	test_when_finished "rm -f .git/MERGE_RR.lock" &&
-+	>.git/MERGE_RR.lock &&
-+	test_must_fail git -c rerere.lockTimeout=0 apply --3way first.patch 2>err &&
-+	test_grep "skipping rerere" err &&
-+	test_grep "^=======\$" a1
-+'
-+
- test_expect_success 'rerere, forget, clear and gc fail on a lock they cannot take' '
- 	test_when_finished "rm -f .git/MERGE_RR.lock" &&
- 	>.git/MERGE_RR.lock &&
--- 
-gitgitgadget
+> Optimize the commit-graph write by using only the newly updated refs
+> as seeds instead of scanning all refs after every fetch.  To keep
+> this change small, skip the optimization for multi-remote fetches
+> (since that would require propagating the set of refs across process
+> boundaries).
+
+Yeah, the way we perform fetches can be a bit annoying at times, as all
+these subprocesses make it very hard to exchange information.
+
+> Since do_fetch() already knows which refs were updated, collect them
+> into an oidset and then pass them directly to write_commit_graph().
+> In split mode, close_reachable() walks from the updated tips and
+> stops at commits already present in the graph, efficiently adding
+> the newly fetched history.  This reachability closure also covers
+> auto-followed tags, since their targets are reachable from the
+> fetched tips that caused them to be auto-followed.
+
+Aha! So I wasn't that far off :) Now there's a follow-up question
+though: what happens in non-split mode?
+
+> After fetch_one() returns, call prepare_commit_graph() (which is
+> made non-static by this commit) to determine the graph-write mode:
+> 
+>  - If no commit-graph exists yet, fall back to the full reachable
+>    scan so the first graph creation covers all refs.
+> 
+>  - If a commit-graph exists and the fetch updated at least one ref,
+>    write incrementally using only the new refs as seeds.
+> 
+>  - If a commit-graph exists but the fetch is a no-op, skip the
+>    commit-graph write entirely.
+> 
+>  - For the multi-remote path (fetch --all), where child processes
+>    do the actual fetching, fall back to the full reachable scan.
+
+All of these make sense, but the above question is not answered yet.
+
+> Full commit-graph coverage of all refs remains the responsibility
+> of "git maintenance", "git gc" and "git commit-graph write".
+> Regular Git operations may trigger "git maintenance run --auto",
+> which periodically rebuilds the commit-graph from all reachable
+> refs.
+
+Curiously, you mention performance as motivating factor for this change
+but don't provide a benchmark demonstrating the benefit.
+
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 533fdfe7d8..8ad7331640 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1903,10 +1903,30 @@ out:
+>  	return retcode;
+>  }
+>  
+> +static void collect_updated_tips(struct oidset *tips, struct ref *ref_map)
+> +{
+> +	struct ref *rm;
+> +	for (rm = ref_map; rm; rm = rm->next) {
+> +		struct commit *commit;
+> +		if (rm->status == REF_STATUS_REJECT_SHALLOW)
+> +			continue;
+
+Hm. Shouldn't we also refuse almost all of the other values here? I'd
+expect that we only want to consider a tip when it has REF_STATUS_OK.
+
+> +		if (is_null_oid(&rm->old_oid))
+> +			continue;
+> +		if (rm->peer_ref &&
+> +		    oideq(&rm->old_oid, &rm->peer_ref->old_oid))
+> +			continue;
+> +		commit = lookup_commit_reference_gently(the_repository,
+> +							&rm->old_oid, 1);
+> +		if (commit)
+> +			oidset_insert(tips, &commit->object.oid);
+
+This is something that always trips me with `struct ref`, that I'm never
+quite sure what's what. So please forgive my ignorance, but why do we
+look up `rm->old_oid` here?
+
+> @@ -2535,6 +2559,12 @@ int cmd_fetch(int argc,
+>  	int negotiate_only = 0;
+>  	int porcelain = 0;
+>  	int i;
+> +	enum {
+> +		GRAPH_WRITE_REACHABLE,
+> +		GRAPH_WRITE_TIPS,
+> +		GRAPH_WRITE_SKIP,
+> +	} graph_write_mode = GRAPH_WRITE_REACHABLE;
+> +	struct oidset updated_tips = OIDSET_INIT;
+>  
+>  	struct option builtin_fetch_options[] = {
+>  		OPT__VERBOSITY(&verbosity),
+> @@ -2822,7 +2852,13 @@ int cmd_fetch(int argc,
+>  		}
+>  		trace2_region_enter("fetch", "fetch-one", the_repository);
+>  		result = fetch_one(remote, argc, argv, prune_tags_ok, stdin_refspecs,
+> -				   &config, &filter_options);
+> +				   &config, &filter_options, &updated_tips);
+> +		if (prepare_commit_graph(the_repository)) {
+> +			if (oidset_size(&updated_tips))
+> +				graph_write_mode = GRAPH_WRITE_TIPS;
+> +			else
+> +				graph_write_mode = GRAPH_WRITE_SKIP;
+> +		}
+>  		trace2_region_leave("fetch", "fetch-one", the_repository);
+>  	} else {
+>  		int max_children = max_jobs;
+
+It's a bit curious that we have `GRAPH_WRITE_SKIP` as an explicit value
+here as it can be trivially derived from `oidset_size()` anyway. But
+other than that this is the safeguard that you were talking about: when
+we have a commit graph already then we only update with new tips,
+otherwise we use a full reachability walk.
+
+Thanks!
+
+Patrick
