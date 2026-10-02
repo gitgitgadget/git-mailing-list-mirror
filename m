@@ -1,258 +1,150 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC15443C33
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 07:34:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2061734F24E
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 07:38:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790926477; cv=none; b=QyU9UXyXCBa54S0F0ifFWLIWvxU7fwOzFOwGwYiBJKxVczZsjwZYuf+kg0pBB4F5g4hduIES2EVoa5qryNqdh4Mxi6diYKL0rpYfROy4bO9lITF3BELDxxEr57fp2fYeEPIQ2v3IkaLqEcFHZYaRVhu2xidXbpO/e53Aq5lIk88=
+	t=1790926694; cv=none; b=VoTXUtMCALjeDkqOW8K/VvrDiJqprjXXpqeCZYruNwKzQZWzb5SGC8/j4BwNDVNLv9AWIjdUfWr7tD1LAGKIDydSWnaw5pwKAK++uKlc9wXwbVKCg60G21fPEasaiusohQ2m5BXRhYGeX8GXP23YkOTVBAL7qPhYBn0NTIhI8PQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790926477; c=relaxed/simple;
-	bh=3nj050sKaFz00cSpX7lVG94p2cRpXEWmZ3x9ZUyfdQg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=GL2WeNuJZRIKrwQQ0kuu6Mjb6qZ7hq5Uo8BJS83oPO6m7Htsv5tOx8yhL1lcGu4UfTX7uaPovwu5bhr11m6yq3baRo91V5j99pTQaBm0yskbcDxDaZCa2u8jr9vj4Nm8YhCYFoINRlhMPDN0A8y8vP1uA92HaKucPl0EIpFm8i0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HXd31x17; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HrfO93IN; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1790926694; c=relaxed/simple;
+	bh=CcdIBvMI7NwoJQh1BHJpGdPXieJvxJeHaybwo9GbVhs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=edTm4Ff1M7XXnrdj+/bb6JW4wieNq5vpTOXaC761y3VuroxQrPCuqZiV54CjCe7nqwKxdgePkhniXwUk/Yzqfb/aTpWGAVirEX262H3wRi7dCtSPaw22UxiNOzLeRhL1XvVU0XGLDTKGTqRI5lnP3KCddTSVQBVqB3/hs8XCNZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RAE/Zt8V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lQ3BPzf/; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HXd31x17";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HrfO93IN"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A3C214000F3
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 03:34:34 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 02 Oct 2026 03:34:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790926474;
-	 x=1791012874; bh=i7MMlsiFQFgRQw/1gco7buh4QjxUBe6fVBlLMegv2ao=; b=
-	HXd31x17XLkV6qF99nZ60LfJPcDWircRSCrYSacN4BpXTy87uAUiMvFcuRxFm+yh
-	p2Iy1iuRta8oo/0fff/GL9BSPl4MXL9n+fjHu7cUouSpCfYn5BTD+PoLxgB2fiMY
-	mb3DjbsCmGA72zBjl2TPT8MgyJ9SlsKS1c8xc8lahQPcmYj3spWe4SC6KpY2f2ui
-	s1sL9B1JTd5iuzUmkEw/ARjqNZVyTso4YLukzyonTGHMw+J5G4zmxWmY3o5Lpl00
-	Euq2z3juXSIJTrA5/+L/j+RyJawKelI94d7jn8YXramSaXURzO1mCApsgrM5fbgo
-	6S5K2wBPVCyBzM+mvFb7Qw==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RAE/Zt8V";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lQ3BPzf/"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2A104EC027D
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 03:38:11 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Fri, 02 Oct 2026 03:38:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790926691; x=1791013091; bh=9fNRukvMqQ
+	Zm+wePhDlYwpUPwjko8B/FqB6wLdredoM=; b=RAE/Zt8VSY0hDrUKCYL/YVdK2J
+	7j9Z9dlxdAG/4VUq9RsNhiq+5Wp/TBshgRZQR8xoOghSxicAksNWjw3xFi/J0q+X
+	I4fwdZoa0YD0uRrGQ6mggR61TR9ozELhYzkPg3/FNpz6/cxq95Oxstpi37mKtSPQ
+	eeVK/GtFOzi+0mW6p/zyzBlKDDQMej82p+dvNPq7YsT034jBDaKYsQ+n+lgnbjsY
+	EzHR81LRgZiNsuSMmBcW2dUzUILGvokfFpxuoOxCZBABQMde94whnznTs+ET/foO
+	1bIavyEH8QaYDKzXuo95V5HFp2o9CrhU75cpJvjMud6xrBJldDADImC5ml2Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790926474; x=
-	1791012874; bh=i7MMlsiFQFgRQw/1gco7buh4QjxUBe6fVBlLMegv2ao=; b=H
-	rfO93INGC+pYvAXVCaZ1Tmr5UqqrzK1/zaRJAA43ASFY00YE9BgTN0rO3vPZqCsy
-	pc9kF/K5Q453mxOfgpEgCls0JhzlFZk39Po7Qm0CZMCrmRPbummMrAQyUAV1Vw7z
-	kVnjbNxBUatjB4uKP2ID0u32vbWwR0rEdyLD4cy9wgNwjJIhY6LbQIbBB47rE/4i
-	egK5/25UXiPngXO7fhrjJcVNI9pifLkaGR4M2WPfGptw56Xt0e4DtQ1wVqhGqS7c
-	eSbZW1dbj11YhvKE62F7Xgyc+TSx4udQ1iwMu5Ha++21yIKVqZMBpdxt/Aid/Yyb
-	KhxQj3xn8YOmG042U5FjQ==
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790926691; x=1791013091; bh=9fNRukvMqQZm+wePhDlYwpUPwjko8B/FqB6
+	wLdredoM=; b=lQ3BPzf/q6nbbIdOuLJLDLUOY6Tn2glAjEVgM3nqaqHWSLugwAT
+	LLpGP5A3Orm64woRVCqoTYAzuevuwi8r+Zl0CAltjxi3cPKBPofNXYbjZjQxr8Qh
+	BCZJNWbnDjC1XSaMSV1MY2ofvYiJ6o50NsUEtcrpjy/mFOReZGlMa19CfZbyWeP6
+	+o+sRnaG8uEMa0TF0Tcg1MyKWylGx7/6Le+ycWIlBMAsdriULOUMpbkoJALcuWDR
+	GGs72IH28kK2wuwX+Fb6SK1QwyR0KZhrmu3PKw6v+6CT/qtAwDnz2Fz29AWFAZfU
+	29c07HofEfYBcCsvF0st6BuqDO70fSseIHQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790926474; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1790926691; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:UiTD1TTCXZ7diF1xk+tIZyj44Glhqfij1tLP75QjiP9Tv2w
-	/N1Yd6r/p68mwK+uGUXmwgEQAEy5qKWXeNdVLotrBG5ycDMWQxNrRXzomKrCNaKG
-	2Mu8gQz1ptcS+QsLh6+cGTaCtPXDt/GU7FYVnh7yg0k+YFVP9wY1Bebypk4op/LZ
-	HF1ZoQHKiMrC4MZuFi4FU+h+5ge1l9J1od6rd9Hg11JapM/G5OWUUfcUrXXoPaT2
-	9jMEHqYurSNSeiG4BUO/p9ujNCsmjbUPk3SJjo1EKZs9xIOt9YQfQoh6PArLkNwF
-	w0u9nqDNXWJRmY6FOxfLx41jvhcwhOF8pOqU9xA==;
+	s=fm3:rsa-sha256:xP7tZy5fSLXGfEhqoe/FUxPWaQnaabLz9GQL7jMQcfRuBsP
+	Wb3BMLoVkirgq6Z6ygrve7nXl/DN2XCMFTZEzgOBvdEZdPAEi+KnoxRox+hhOKye
+	UiJV+WmQLttAQRq4RQnBZKXxumXwZBMfljiDCg4vzNmuPEYNTgGY9DEprPQx5dik
+	aHh28EtO/+RpiVGK9Gb/ksEEp5Z5ayLyIShZKFnB7qSUpybJ80vFMw9mFro9zlmw
+	1qtwpn+E2dDz22XGIYaiA14vXUIVWnhCRy4gvBYRFqfdtCJMWoZGozlzCtduHUmb
+	LAC/66rH6BIZIL5wyxZdpAkOTgHduIF2CJA/yiQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:bTfJjDVO/gWlLhfzne2eqHoBRE1GrDuZdo+wsicNjCw=:3nj050sKaFz00cSpX7lVG94p2cRpXEWmZ3x9ZUyfdQg=;
-X-ME-Sender: <xms:il6_ahziAi1zlrf_4uTmupw3raW8C2akPHFhgHQ1W046vNCUWw4W8w>
-    <xme:il6_aotlAS2RxfLwKDMmgZqy4GDHXZsEPDEewHf1mcZwe3qADt3t-Ehc4pUrMnJ0N
-    8UpR_QbY8EJxonA_FWna9XH4ZV_aTAgIJKSJcG-vkZ9Cd4yDMRKmS4q>
-X-ME-Received: <xmr:il6_aosmdcX92gsGgHLKstvp6GhNqD2gs0hJlziw9oZ27VsalJswsg>
-X-ME-Proxy-Cause: dmFkZTEP3KwCkB75OTcWIBCH0pP2HWg7IV8j4L/feKxyHCflRWjjUONKg5GANVXbd+6KEw
-    cfHynXX7LNmxY228ewmjje5LjD6dh/fR4cg4Ds+FB+K1w8g5pGIHkzr5255AATqTZGMhPL
-    RDGH+lEP4yKFRyhPmIyX0ISWFdOJjSVaVRgsruWX8DgET8M8BDp76hB5AJvDQbprcQkWui
-    W70Yhj4RFRYD4w9002sNY94TA7BtZebQ6N5Y3TJplM38pNVszWS1mfEvFsXVJrRJ4eBcbo
-    E/jtqwMNQaXjZvS4FqJfyENB+Vud9IMpWpB/FHWM1FKYyW92YnybG4ozKiv2U+sAJdlnsM
-    qNc6N6V1uHRbMrzV8PMa5oGbg6PwwfudM0b0Io6JSZhwUktsVw1KKXLlMyEP8LA8aFcW3v
-    zSdnYgVPj6xIaZuH8y8PZK2AwqxNjxonGHoh98gblENBq7+LbRS16pykP5cCZsCWptGM91
-    djxw1d/WOI4gPP/cOIKFsGcvbNe8Dm0kSG2f1yQMdW/tJKFCuJf8yarZmqE146PWQocr9U
-    YoyGZRKUGEdYhue91qjYT97R2tb00UGESTR7TLy81rHVr9GnE0ju9tjZinaGQ8j45lGCKW
-    RTmb6vW5vt1gOS5JBk8sfYMV+7+Uun+hqXMAoszJHXw0nOOCAGflXTLfIjTg
-X-ME-Proxy: <xmx:il6_atPOcE4AElyGajYa7Bx20qQ8yt9Q9u53iIUp_OGqsvEDLAxOGg>
-    <xmx:il6_am0dv847imyjt59mGafoFYZq0bnrb0j3CkH17icvDhHFkRCWbQ>
-    <xmx:il6_apP23GznAE0Mg_o1L1F6DogO9tUa6GEpzeCSr5tChx7bdltJCg>
-    <xmx:il6_am0Y9Baus_1sW6vjjsWwlk9csKfUnLi6rReuxJ6wxwrH9ZFKMw>
-    <xmx:il6_aoJe5xAWz8et9MT0MEgO89wu8wRnEj2n5Z94ouM8MuGXUM7sha_Q>
-Feedback-ID: i197146af:Fastmail
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:rzm5eMZvU3vcoEyvGI/P07W3NGUReOtf0cX4N5Widq4=:CcdIBvMI7NwoJQh1BHJpGdPXieJvxJeHaybwo9GbVhs=;
+X-ME-Sender: <xms:Yl-_aoSp74vuWX9i-JuFssB98vsMYrtxjVJRThPT61ceEHuuo9XiMw>
+    <xme:Yl-_asyFNgj_j4GjOpB4uf6thEbmENPGaUPZr5GkO0vuCxIxCZcb3RtxFtlqqN_rP
+    nfJlvlhIyODdcCwJ1l7Qcby7psrgDSZEVIMtJb8hYH5KSEXyrHJ7g>
+X-ME-Received: <xmr:Yl-_aq1NZikE3iA8ibPvXC6O-v2KgBrldxQzNI1U-ykxLUQbDrGWP4icyBqbDFpnqNm6ik5rx18uSkXE1qExmljLEMQJTZI6kOZ8>
+X-ME-Proxy-Cause: dmFkZTGiKr4JPjWuyCi5wBT95bi4sPq7PUbzLQbqsDfPEcnpWPB6SR0Ik2XLDf/MR29eVp
+    VAfWTPvTgb/duSfFk/3IRPjr+TjcUntcFeyK7N5Dqv3epdlIJWWipAovQR7KO1YbO4egOJ
+    y0rEzV0kWWNMNTO9Ft+dkaghdwtJqrvoa7Aq2GTeGuNrtiqLqmWE+EY9Wl2A/2Ahm0iLeP
+    sLVlqXE5TcWOH1QjDkIluSOXAjXIJqAgQViCMUspYixnwMkAhb0ejXcJoCnU7KYM/0VVdO
+    iArMRQpI7G43qzV02hJ2MauweTsbkqfgVu3k9AICTSzIgJYO/4bSLMIHqhuCuCTvJ3UqAc
+    TVT9CbhSe7/LRcrRBguSi4xD2jeVIurof1OMd3kQujFvRVqVsGR80cnwlm7yZ4ZW90DBkc
+    Cbgo4AQ44LP89rVP+j34yGmd0ry7g1R3+mgGP/RrLQ7RmE4I5EOYt1cfVg6CuX2m1gL+LH
+    MI2qSy6MuKRv/bLzPO6kJiubpvygssdTEbd6IaSUqLwapzo480jtv9j6C0w38HYNcU1Klk
+    WHD6HHdLl2rKrmwG62x/tKDRwhqE9ZECIXfKHoTw2ibMCDioh2a1hVSUAnmQCi80ETpr60
+    W+XTDQqCcxkqDtHSEIY9rGKsEk0lgcfKVAOd8pbNC2TpfWKOEtMTYHTstCIQ
+X-ME-Proxy: <xmx:Yl-_aq6O9AR1Gb3vbUMKpq-Zovqkr1wdZfed-mnVdif6vDzcdqmYjg>
+    <xmx:Yl-_atVJ-u2v0P43yXQZnnbrhKlijRlyyxilomZyJvsuyX3jY8tA6A>
+    <xmx:Yl-_apAb2UZ2OlRH-UeJ-fZM9nonc8Vrcqpx3TPZpdRQ437CmifJOA>
+    <xmx:Yl-_as4v3wnyhimMUQoVHDEMQ8QyQ_zD_OUAdjk_lKRa-FmK0tFPQA>
+    <xmx:Y1-_aiVuBdJqZyq2QaG2d4M6XnPOsmIMBLKtXvZTMATQBqWDHKlXDrQ8>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Oct 2026 03:34:33 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 53341b8c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 2 Oct 2026 07:34:33 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 02 Oct 2026 09:34:07 +0200
-Subject: [PATCH 2/2] packfile: fix corruption due to stale delta base cache
- entries
+ 2 Oct 2026 03:38:10 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 0/3] [doc] Remove gittutorial-2
+In-Reply-To: <040938c6-6fc9-4727-901a-9be2b0b3a6cf@app.fastmail.com> (Julia
+	Evans's message of "Thu, 01 Oct 2026 18:21:30 -0400")
+References: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
+	<xmqq5wzojy31.fsf@gitster.g>
+	<8a5b742a-3f11-4bfa-954b-ffdd839b6d43@app.fastmail.com>
+	<xmqqzewzch55.fsf@gitster.g>
+	<040938c6-6fc9-4727-901a-9be2b0b3a6cf@app.fastmail.com>
+Date: Fri, 02 Oct 2026 00:38:09 -0700
+Message-ID: <xmqqfqyo363i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261002-pks-packfile-stale-delta-base-cache-v1-2-7592a3e31ae0@pks.im>
-References: <20261002-pks-packfile-stale-delta-base-cache-v1-0-7592a3e31ae0@pks.im>
-In-Reply-To: <20261002-pks-packfile-stale-delta-base-cache-v1-0-7592a3e31ae0@pks.im>
-To: git@vger.kernel.org
-Cc: Guillaume Chauvel <guillaume.chauvel@gmail.com>, 
- Philippe Blain <levraiphilippeblain@gmail.com>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain
 
-The delta base cache is a process-global hashmap that is keyed by the
-address of the `struct packed_git` plus the offset of the base object
-within that pack. Entries part of the cache are never removed when a
-pack is closed, and neither when the pack is subsequently freed. As a
-consequence, the cache may contain stale entries.
+"Julia Evans" <julia@jvns.ca> writes:
 
-For a long time, the worst consequence of this leaking cache was that we
-held on to memory that we could've released. But the reason for this was
-that we didn't even free the packfiles, either. That has changed in
-6f1e9394e2 (object: fix leaking packfiles when closing object store,
-2024-08-08), where we plugged that leak.
+> 3. 22 people who are new to Git have tested the new draft so far
+> 3.1. Several of the testers said in the post-tutorial survey that they wanted more
+>    information on branching and collaboration with Git. This was the most common
+>    "what do you wish this tutorial covered?" request.
+> 3.2. Several of the testers also said that the new version is a lot of
+>    material, and they were not able to finish it because they didn't have time
+> 4. Writing tutorial material is a lot of work, it will take time to do a good
+>    job of covering branching and collaboration
 
-Now that we free them, a new packfile may be allocated using the exact
-same address as a previously allocated one. And if the new packfile has
-both the same address and a similar layout, it may happen that a
-preexisting entry from a previously-allocated in the delta base cache
-would have the exact same key.
+Good info to share more widely around here.
 
-All of this sounds very theoretical, but we can actually trigger this
-bug somewhat reliably! When doing a merge with "--recurse-submodules" in
-a repository with lots of submodules that have similar-looking packfiles
-we end up opening and then closing the object databases of each of the
-submodules in sequence. Because of the above mentioned commit we would
-close and free each of the packfiles part of the respective databases,
-but we wouldn't evict thire delta base entries from the cache.
+> It's important for us to cover branching, collaboration, and how to restore
+> old work in our tutorial material.
 
-When using glibc, one of the packfiles will eventually get the exact
-same address, and that will then cause Git to read the wrong entry from
-the cache. Git detects this and aborts with an error:
+OK.
 
-    $ git merge branch-b
-    error: Could not read 584ef938be4a749bfa13f68d5ac5545bc029e529
-    error: could not parse commit 584ef938be4a749bfa13f68d5ac5545bc029e529
-    error: failed to merge submodule G (repository corrupt)
+> option 1: Refer folks to the contents of the current `gittutorial` (in some new
+> location?) to learn branching and collaboration. I think this is what you are
+> suggesting (?).
 
-Now in this case we're lucky that Git detects this error because we try
-to read a commit from a different submodule via an object database that
-doesn't have it. But potentially, in an even more contrived scenario, we
-might even silently yield wrong data from the cache.
+Not at all.  If the material in the existing document is inadequate,
+after examining why it is inadequate (e.g., perhaps it assumes
+certain prerequisite knowledge or work experience that today's new
+users are unlikely to have), we decide if we can salvage it or we
+need to write from scratch.  It is very likely that it is the latter
+case---otherwise we wouldn't be having this conversation to begin
+with.
 
-Fix this bug by evicting cache entries that belong to a specific pack
-when closing it.
+> option 2: Ship the new tutorial without a guide to branching and collaboration,
+> with that to come later. Not ideal, but I think this is better than option 1,
+> since at least we are not pointing users to a tutorial that we know will not
+> help them.
 
-Note that the added test reliably reproduces the above bug on my machine
-that uses NixOS at c59305bab206 (cosmic-applets: add missing runtime
-dependency (#566040), 2026-10-01) with glibc 2.44-25. But as we rely on
-specific allocation behaviour of glibc it is very likely that the test
-will not work on other platforms.
-
-Reported-by: Guillaume Chauvel <guillaume.chauvel@gmail.com>
-Helped-by: Philippe Blain <levraiphilippeblain@gmail.com>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- packfile.c                 | 13 +++++++++++++
- t/t6437-submodule-merge.sh | 47 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 60 insertions(+)
-
-diff --git a/packfile.c b/packfile.c
-index af1b837974..365c54c7dc 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1253,6 +1253,18 @@ void clear_delta_base_cache(void)
- 	}
- }
- 
-+static void delta_base_cache_evict_entry(struct packed_git *p)
-+{
-+	struct list_head *lru, *tmp;
-+
-+	list_for_each_safe(lru, tmp, &delta_base_cache_lru) {
-+		struct delta_base_cache_entry *entry =
-+			list_entry(lru, struct delta_base_cache_entry, lru);
-+		if (entry->key.p == p)
-+			release_delta_base_cache(entry);
-+	}
-+}
-+
- void close_pack(struct packed_git *p)
- {
- 	close_pack_windows(p);
-@@ -1261,6 +1273,7 @@ void close_pack(struct packed_git *p)
- 	close_pack_revindex(p);
- 	close_pack_mtimes(p);
- 	oidset_clear(&p->bad_objects);
-+	delta_base_cache_evict_entry(p);
- }
- 
- static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
-diff --git a/t/t6437-submodule-merge.sh b/t/t6437-submodule-merge.sh
-index 1546d5f773..0ee3684206 100755
---- a/t/t6437-submodule-merge.sh
-+++ b/t/t6437-submodule-merge.sh
-@@ -514,4 +514,51 @@ test_expect_success 'merging should fail with no merge base' '
- 	)
- '
- 
-+test_expect_success 'merge with many packed submodules reports conflicts' '
-+	test_config_global protocol.file.allow always &&
-+
-+	# Create 16 submodules with two divergent branches each.
-+	submodules="A B C D E F G H I J K L M N O P" &&
-+	for name in $submodules
-+	do
-+		git init source-$name &&
-+		test_commit -C source-$name $name-main &&
-+		git -C source-$name switch --create branch-a main &&
-+		git -C source-$name commit --allow-empty --message $name-branch-a &&
-+		git -C source-$name switch --create branch-b main &&
-+		git -C source-$name commit --allow-empty --message $name-branch-b || return 1
-+	done &&
-+
-+	# Create the superproject and add all submodules.
-+	git init many-packed &&
-+	for name in $submodules
-+	do
-+		git -C many-packed submodule add --branch main "file://$PWD/source-$name" $name || return 1
-+	done &&
-+	git -C many-packed commit --message main &&
-+
-+	# Create two divergent commits in the superproject that update all
-+	# submodules to the divergent branches.
-+	for branch in branch-a branch-b
-+	do
-+		git -C many-packed switch -c $branch main &&
-+		for name in $submodules
-+		do
-+			git -C many-packed/$name switch $branch || return 1
-+		done &&
-+		git -C many-packed add $submodules &&
-+		git -C many-packed commit --message $branch || return 1
-+	done &&
-+
-+	# Clone the superproject to ensure that everything is well-packed and
-+	# then merge the two branches, creating conflicts for every submodule.
-+	git clone many-packed many-packed-clone &&
-+	git -C many-packed-clone submodule update --init &&
-+	git -C many-packed-clone switch branch-a &&
-+	test_expect_code 1 git -C many-packed-clone -c advice.submoduleMergeConflict=false merge branch-b >out 2>err &&
-+	grep "^CONFLICT (submodule)" out >conflicts &&
-+	test_line_count = 16 conflicts &&
-+	test_must_be_empty err
-+'
-+
- test_done
-
--- 
-2.56.0.353.g0856645cf6.dirty
-
+I think this, #1, and #3 are essentially different sides of the the
+same coin.  If gittutorial can fill the gap, we use it as a stop-gap
+measure while we prepare a better one.  If it is so bad that it
+would contaminate new users' minds, and they are better off learning
+the hard way from more technical documentation and external books
+instead of tutorial, we won't give them any stop-gap.  We may or may
+not have external material we can recommend.
