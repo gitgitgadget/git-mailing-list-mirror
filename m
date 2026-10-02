@@ -1,164 +1,156 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0234041E6DB
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 07:19:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91AD3EC827
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 07:20:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790925598; cv=none; b=rhQzIfOhXISx7QVV4FUusVbv90MVz6swv403sSId8I2uu7cHVGB/9DfWBfOBIeMu1E+iFU/JGgPO4cbU80I9R9yj18kyc2okKBykpsb+SGLSGa632cp3eRy9sFdXxI9MqrJzVTbhmkRv6P/R0YbXh9yCqVwLu72C09Mbg8O6KYE=
+	t=1790925602; cv=none; b=O6zakHsmt9BHlBsLcJyNgvc7wZiX/Tp7rH2yaj7iQ5I5gn6j8Pu39JuuQAuKaW6ospn4BJhm65ckkY2zzQvOt4216AVCM1q2BgGzTfRL+TYM+FZhjaFGhv43l0vzJjxYW55mYw+oimiAjrnLS3ApW4/jgWaEGlYuotFn0gqVIHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790925598; c=relaxed/simple;
-	bh=N9nnUjC1ewddHAMda72ChXPYGArEZ0fLXBvZ2XJJ+j4=;
+	s=arc-20240116; t=1790925602; c=relaxed/simple;
+	bh=Uh8jZ/v1YbWKlYRhNphHcIIhFHD/MR1DA28rMgVnVEk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PMrsXC8gyHdG8YScw4pHZGV8Q2a8Lf76I7kKV7Rf4WNEsvbHQCe3J9WAlPNhxDkmU9ZO9eHAAGLrHXYjTowU2Of27+wNZ6qFEqi9M8d0kWSfznw+aQjajrXwqLHktoYl86rK2VRZLRBPdBSd02wQJBx8sL1ovDSRw5WLACpGH/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uN1712ey; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VXiLfKQk; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=GKsuHz9uLvs7b0UWn8keklhstvF2K8ZOOzIstRee8E5toHYqdWkeuLwtkoouX+0NMFs4isXjnPr6Ih/IBGbsU9uwvsHH1rVlUOkiXOcfDOgJbNoQ0GZDhIbs0nvZJd3e/mG3WOvsLIIS9XfydhBasVQF3pkLEe3ETZD0N0WDS1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cl0sjFaG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uN1712ey";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VXiLfKQk"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id ECED6EC0285
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 03:19:55 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Fri, 02 Oct 2026 03:19:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790925595; x=1791011995; bh=46OIJFu1ED
-	rHPh1+qpF8UefBZgYTkMpuPJIppxpbgEQ=; b=uN1712eyw1YRW3wgWhxxJR1QVs
-	YpTQ8lMIWN9H7hqK898K+S81qnsr3K0Lg8KReXLiprVgwUML8Dkd0rIe0aMS68u2
-	ZozKu/mKKNmqixuF1EGqx9gVx/gT/KpBTQJDJ/eS6hRRlB5R2AIWtR0APJuWKcEr
-	9yDQ0iKofJADFjbh1yqTzOq00wplRXQHJejxs5zEp0dv1jBuhAdqT78nJUzVABjH
-	Ieshkn7lI/Xo+Fiz3pccd+IrentKnTBXdP4KKGtakRovah5ogHM7zF3hjYXYCvWS
-	M243PuWIe7nkuXIyl/7M5miu1azh1G+klGV3r+pDoh0f6Rj3zGBfrf/kIDiA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790925595; x=1791011995; bh=46OIJFu1EDrHPh1+qpF8UefBZgYTkMpuPJI
-	ppxpbgEQ=; b=VXiLfKQk3HKnKFJAsS35c5exJbdmR3HR9wzb3oxEQY5s+9yaD64
-	nMVj3+jHnxn2kKAkMYBlao0a5EMcTXztOt2MBUOKWgqlm3IbsOfxg+2O5hHN4hj7
-	Fj5xdz20B0bamLUxMeaubiXqZO72jbwjrGMmkmR92cSurKcIMavMJPd+97wHvqFc
-	H/hQuBOuluPIc55IQYSBlTkTYnq65CbRiT1Olyyuz+8FgDLW13VLzExB+io3o6v4
-	nMrsHBRTk2Ea40HRm3CjEXTgKR1Glhw/E+WURaj3K/dRmWlYaZ8XUhbZKTKASXQT
-	OzVyiiXpZgvh8RMfxa/6eqJBi33XKXEpvBQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790925595; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:Me9FzAj8podKoBpDDpTuJBZatLHAq10mO4JXS3FwMrEjwak
-	enDeXCe5oMfxij9goi3/Uh83Mg/pKLwP9yKpkxohz+Iea4I5J7oxNwGL0oZ4pSN2
-	5YGQ8wM3d5KcO1U5HGux7EMV/QuhLXNruATG9M5nlQxDpRciQl74HCjPk9nLB2tD
-	Ct0B3pLqXkNabIBTU+EUHlc8BgiDgNTMa2qv8XWezAWSYHoDT9EbNuxofFRPJJFu
-	H2uq1SE1kLjgJUWCsnO9R9knbXQ1NYuRoRo9VCtRs0e4870IZ/3gBlx0+xPnjBfs
-	lzaZxu+c9HRQ5ZFBW6z/Iykr2f3Vy7njbfPP6pw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:4v/55yYxbvl7NO41P7eMnf+BrIlCsQtG+O1mQGHXPkE=:N9nnUjC1ewddHAMda72ChXPYGArEZ0fLXBvZ2XJJ+j4=;
-X-ME-Sender: <xms:G1u_ah0YVxxpabFCxuO8d3_nuLoM_h2KbQ-vzeO-dB_Pi2DuhgU9eQ>
-    <xme:G1u_auHxDorY0EaMESeOWE82TJLfTwXBxJaItZz-fetpHQptgbjACDd6Fv2JJj9Cy
-    qpV9yAFa0SNrHIwFfUSZQEPKOKyjZaMHO4JLFTo3rgHiaBolTtQzec>
-X-ME-Received: <xmr:G1u_avgYYoPUk7PIP8VD5JEFqrcqzkiOzIcZq6w5PcEllOxnNZxeEg>
-X-ME-Proxy-Cause: dmFkZTEukxZF5QZ5MxW1jFkbFdOMivy08vNZIXtjzfFniRrhKe57ukWLoyQu//NdmPYj+y
-    45RXcCtHQ1JKZKtFE3uMP1ppQzMSlxazQANFiir32TVMyNnrDMAWCwDE3ieRZ1x0hZrm/y
-    R26k2XSW6TsUtoxxF7HDaOquuXTYzzjRJ4Qq2g9QBSMSr5IcnrjTyvcqwcTrxmmooRGkPd
-    EacmTG32cXN276EbNPm+kE+kk1FM+W7SJuGyBAVTE4cvtqRvXEcSIxWvDFtzXfMX69X5Vs
-    YOT/Ti1aiOyz5GmKxOGxVbTYFXwlcgRBomRzWwy7G0OMXQX/gQo5+0zb1QNDylQjMtQObS
-    6lxNhOscqHIP/E3A8L5af6vwCB2EO1ksPXPVVkWW52j+XNKoxnG9wH+zvSG+wcT8K8VI7a
-    QbJpBZcnspYkjvuLh7MlYYwqwdyeUuTg7fhHgNgfliUGTXmJkZtWW0dXWh8lFRPs5dttal
-    zfdcEoeEnpl3o+laOOcK2pWI59yL/Ypr7/CTFqYgJAuITTeFC40jQJaB5DwDAdXcZim0Ur
-    n6fAdFEzcUR+J2zWwvuWo4g0DwGo+WKq7SO+kqIJaWbs6wlSk1dtYm1Ooq6eMN+PnxV/DB
-    /H/y/PAjhVWwO7h/8WKqdEviv4WU2A/tAZaIwtKxKWvl2c5NDYZlbwu7rI5w
-X-ME-Proxy: <xmx:G1u_ap-6rU_hkRH7XTcHqVCZwKoj0cyX-iMlTb5UrX-paSsMy9Kw3w>
-    <xmx:G1u_amrN_djwA8TaOTw8zhtJ3i6uen1xS4fUZMTcNsHuMYNcZMyakw>
-    <xmx:G1u_ao-d7VEz9ZjcXXUCO2Lk9d4A3ByaVf7OOc2oZs2dU2Aa0cnohA>
-    <xmx:G1u_aqVCI3sgcmKQChLa2HFmqj6Q_Ay-Afvc60ZVW2Et9gW4lCGyYA>
-    <xmx:G1u_atN48_DqGgPJuWJMXjlmoxGKiwqpEk2X0QTEyN4E7ypjvZfK7t9g>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Oct 2026 03:19:55 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4e5a6050 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 2 Oct 2026 07:19:54 +0000 (UTC)
-Date: Fri, 2 Oct 2026 09:19:52 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cl0sjFaG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BF51F000FF;
+	Fri,  2 Oct 2026 07:19:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790925600;
+	bh=P7PYjSpO6eNvhBB0Gkge5hs2V8F2bQV63Gba/ewqoLs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Cl0sjFaG8EUBfIUL8uMcewVQ8RdOJ74tPN39+IpgDNC056UMIfEIvg5ihfGKkhej4
+	 qObGFkpHC2GnotvjtSspu0Athz5hBMSOwz9fb6F7sbvvnISSwCJrqI5kvVKJNwGkU7
+	 5xPTzwncYZNNUhQFrSzrT7katJJElyxcUaPUBbIeQ+t8FenF5AfKKsvUcBqAoo6KJb
+	 epEGoMepvPR2l/Ygf/U5PkkU74M0eyVut/AIMrPGn0YFzTFLVxUikjXpwovsoTadSJ
+	 RwYlpfMGBTfEDw4/tFb3pvAwA53WZJfp9dwjbenp5Ihn41QaeWixIkyq/5SZ7M8E2d
+	 5NkWbucEHwoKQ==
+Date: Fri, 2 Oct 2026 09:19:56 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] parse-options: allow grouping subcommands
-Message-ID: <ar9bGF9NqIcol256@pks.im>
-References: <20261001-b4-pks-parse-options-subcommand-groups-v1-0-01eb2f4a4c32@pks.im>
- <20261001-b4-pks-parse-options-subcommand-groups-v1-2-01eb2f4a4c32@pks.im>
- <xmqqcxtt5n67.fsf@gitster.g>
+Subject: Re: git-rebase-walk
+Message-ID: <ar9ZRrVyr1-Fk2LZ@debian>
+References: <ar5KL4_IKXYbx3Sb@debian>
+ <ar5eereSq91xldo-@pks.im>
+ <ar5-7ZtM6C23H-8m@debian>
+ <ar9TTB5nmPPAdABE@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="7bd4a74ratk2mh2n"
 Content-Disposition: inline
-In-Reply-To: <xmqqcxtt5n67.fsf@gitster.g>
+In-Reply-To: <ar9TTB5nmPPAdABE@pks.im>
 
-On Thu, Oct 01, 2026 at 10:46:24AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > @@ -1432,35 +1432,39 @@ static enum parse_opt_result usage_with_options_internal(struct parse_opt_ctx_t
-> >  		}
-> >  
-> >  		pos = usage_indent(outfile);
-> > -		if (opts->short_name) {
-> > -			if (opts->flags & PARSE_OPT_NODASH)
-> > -				pos += fprintf(outfile, "%c", opts->short_name);
-> > -			else
-> > -				pos += fprintf(outfile, "-%c", opts->short_name);
-> > -		}
-> > -		if (opts->long_name && opts->short_name)
-> > -			pos += fprintf(outfile, ", ");
-> > -		if (opts->long_name) {
-> > -			const char *long_name = opts->long_name;
-> > -			if ((opts->flags & PARSE_OPT_NONEG) ||
-> > -			    skip_prefix(long_name, "no-", &positive_name))
-> > -				pos += fprintf(outfile, "--%s", long_name);
-> > -			else
-> > -				pos += fprintf(outfile, "--[no-]%s", long_name);
-> > -		}
-> 
-> It may have made it easier to follow if a preliminary step pushed
-> the above to a helper function.  It would have also prevented the
-> nesting becoming too deep as we see below.
 
-Will do.
+--7bd4a74ratk2mh2n
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: git-rebase-walk
+Message-ID: <ar9ZRrVyr1-Fk2LZ@debian>
+References: <ar5KL4_IKXYbx3Sb@debian>
+ <ar5eereSq91xldo-@pks.im>
+ <ar5-7ZtM6C23H-8m@debian>
+ <ar9TTB5nmPPAdABE@pks.im>
+MIME-Version: 1.0
+In-Reply-To: <ar9TTB5nmPPAdABE@pks.im>
 
-> > diff --git a/parse-options.h b/parse-options.h
-> > index d7f896a933..5249404b46 100644
-> > --- a/parse-options.h
-> > +++ b/parse-options.h
-> > @@ -401,6 +401,13 @@ static char *parse_options_noop_ignored_value MAYBE_UNUSED;
-> >  	.subcommand_fn = (fn), \
-> >  }
-> >  #define OPT_SUBCOMMAND(l, v, fn)    OPT_SUBCOMMAND_F((l), (v), (fn), 0)
-> > +#define OPT_SUBCOMMAND_H(l, v, fn, h) { \
-> > +	.type = OPTION_SUBCOMMAND, \
-> > +	.long_name = (l), \
-> > +	.value = (v), \
-> > +	.help = (h), \
-> > +	.subcommand_fn = (fn), \
-> > +}
-> 
-> As presented, _F does not allow you to give it a help, and _H does
-> not allow you to give it a flag word.  I would have preferred to see
-> OPT_SUBCOMMAND_F to be extended to also take the help text, as we
-> only have two existing users in *.c code, rather than adding _H
-> variant that is incomplete and keeping _F incomplete.
+Hi Patrick,
 
-I was a bit torn here because I honestly wasn't quite sure whether the
-_F suffix stands for "full" or "flag". But okay, let's not introduce a
-new macro then.
+> Date: 2026-10-02 08:46:36+0200
+> From: Patrick Steinhardt <ps@pks.im>
+>
+[...]
+> > My script I use it in shadow-utils and in the Linux man-pages project,
+> > and is in use today.  I was wondering if there was interest in
+> > integrating it to git(1).=20
+>=20
+> I guess the answer is "maybe". The fact that multiple folks have solved
+> similar issues over the course of many years is an indicator that the
+> funcitonality may be more generally useful.
 
-Patrick
+Nice.  :)
+
+> But it probably shouldn't be
+> a separate script, so if we wanted to integrate it I'd think the best
+> way forward would be to integrate it into git-rebase(1) directly.
+
+For a git-rebase(1) option, I guess it would have to be named something
+like --first-conflict.  --first conflict because it doesn't really
+rebase on the target commit, but rather on the first commit of that
+branch which causes conflict.
+
+> That's of course more involved though, so I understand in case you're
+> not interested in doing that.
+
+I'd still be interested, but it may take me time, and I'll probably need
+help.
+
+> > If not, I will likely provide it in the man-pages repository as a help
+> > tool (which might end up packed by distros as part of manpages-utils).
+> > Is that okay to you?  (I ask mainly because it's using the git-
+> > namespace for commands, so you should at lease be aware of it.)
+>=20
+> I mean overall this is our primary way of extension, by picking up
+> utilities that have the "git-" prefix. So arguably you don't have to ask
+> us for permission to do that.
+
+I think I'll do this to provide the command in the meantime as an easy
+extension, with the goal of deprecating it eventually once it lands in
+git-rebase(1).
+
+> Whether it makes sense to distribute such a tool as part of
+> manpages-utils is a different question, and one where I myself am of a
+> split mind. But that feels more like a question for distributors rather
+> than for us in the Git project.
+
+We already have other tools that are generally useful, such as grepc(1),
+which finds C source code with a grep(1)-like interface.  It's
+essentially similar to things like ctags, but it has a traditional
+command-line interface, and doesn't use any index or cache (yet it's
+very fast).
+
+So, it wouldn't hurt having this one.
+
+
+Have a lovely day!
+Alex
+
+>=20
+> Thanks!
+>=20
+> Patrick
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--7bd4a74ratk2mh2n
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmq/WxQACgkQ64mZXMKQ
+wqlllQ/+LBsomCXEFAIKabczRDZNL+5JLaXTYR63XAZ3rBVTmemSotTR+kdel3I8
+YLij1m8YnTkYiiJQR8/uvkmgM2OZxCeqgZ7h4ePm8sDhsq37F49cYRrk3BQA7hyI
+xwtakvNv+7WDON0z9CzWMzuW5B6JEFsQvq8yeVJAhN1025Uzi0+PNpvX+7qrjhKi
+l+73AOTIBWsLmgh4anYn/NJsJmYjsBVpWRmCQAwT/1gXqfBFdQx44haOBYc+Ceje
+fiqUHYvb1r06DvalAeH+NnMcX8X3p+OY47VB85tvy/uzJ4vqCadjcJfPJpA599b5
+SHBkViSj45voGot6vo6DVOG6HanjZxzwcnwz95TnnTpueIjiHJ2sp8KLc7pcvqoE
+hoI55ipdwdjj6Ny+/OiUNGEGz1RgIwYSu0ZrMfU9sKEv85DNMgrP4yilC06wgJkw
+MrBGlPjPP0rutqttWAgQ4vgWxkPqYsyjF5MiPrcWlJJijulJL0YEBFhlsuYBQsAr
+DpII/PQIQyUzfwjgmX3X1mf9Auz+pheD5wa6rRoUJJbykSIxswJsSdW6P0FzGded
+W4cTk9CD9M+dlgFjzPXH1mmF4m+3ZrzLWiVtUAJ5HYljC0h7LEkzeBuyhutkNcKH
+uJhVKBEr14X1D5aLNUkybBNcfBX67Hcm8LR+7L+v7JizOCCVr/s=
+=IknU
+-----END PGP SIGNATURE-----
+
+--7bd4a74ratk2mh2n--
