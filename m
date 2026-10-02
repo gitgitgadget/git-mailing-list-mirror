@@ -1,101 +1,98 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D2E484255
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 11:22:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0333B488223
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 11:25:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790940133; cv=none; b=ET8SRl8ilCDq1Bm8FBeJQdJVpf0iTwVWOH7CZ75gC5w9oom+YbTsBo9AAp98/LDbLM0ppgdS23uPrEn2f5LS/FDZMMT0EUmwESCLMpf7JJ450JPmiVre753/NMznCTg+6EvKcxpRA0gOokDGhUo3m19Vz9GLpOSInQtDTmhYeHw=
+	t=1790940315; cv=none; b=d95p42TY+HJM6IzBiT1eavzosfeNWmR82d7pONlOiehlB1agGlsBrf3b1NxSDW7furCxuqioBhFXOkAmq5K3G/9Nkp237ovIz/PParI19QpOyxQ3KF/VXaK/Uj1ND30l4fA8oxk27fqDi0WFKynzBxLhdWaOpfNPNw2z7yP4MJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790940133; c=relaxed/simple;
-	bh=Jn0sYFR1JRc5OmZ6sNhvn05BgU4lpG0/69imyiuv7Rk=;
+	s=arc-20240116; t=1790940315; c=relaxed/simple;
+	bh=HzXb7EIe/NUAeHtSayPxHqlwxyanCaIgTa5Mev6DXjA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o4ca3RkCAT03dPNOhpp09inIhgp5WXWH1dRdxHTgtuhVsAZgO20ud6ZaBFH4comVQqIfr2twkKefGNE0JMdslLV17T0mI4pyx2UdaJHd/RnPxc65Cuhp1tu1ZlizyGM8aVkB97Up4PPkiB/6QuFQmnDmSBlEJnOPQd92lmVLL4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eZjUycvg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JHy2lD4U; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=tLRZT++eLt7WUd7T7eXTUBLr1yCY1WyOq2XrKQNXDCUD9MMJu8MqnWqlD1H8ACAY8d2oMbCbF+cW2tCMBOB66RwcevBy0y79SHOvwazph50u+h81h+NDdp0aSkG5igvOM5OzpNAtm7xQCYqP7TmgwUYFPPg9+ghx3Vmil5CN3vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oJBCKKra; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uqb3a0La; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eZjUycvg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JHy2lD4U"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 471C8EC02E1
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 07:22:10 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 02 Oct 2026 07:22:10 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oJBCKKra";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uqb3a0La"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1422E14000F6
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 07:25:13 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Fri, 02 Oct 2026 07:25:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1790940130; x=1791026530; bh=yQcimWgvwO
-	yTBbsUt5+dUXvwib7GRKIcreLiPlIgUnI=; b=eZjUycvgqagAMe4L2e1i/C68Z0
-	uqQeuNtp3AyGg81e+K0GWqw224HpQ5sBIVJT48jjNosYddwQgkGYhIwBORLepvl6
-	TWkQQidqFwY8ANRlgf/x8KelhkG9QuVwMM9u9XMigCXUfxVUj1JyhcTsJIbfh+1A
-	EoOaYhWCK5t5VpB9gf0rn6GDKEgXnGaTSqXOSGJ3ek5Z8AgCpy3RtY57Lulbxf9T
-	Oy2P/g1sxKoCXYI7jHjWX2I9uERkwLgFq7Hf9e8HhF+mltVcgWNelepfAqLfgfs7
-	BDDqbnwzuzWIr7x18ht0HgEOO9zZvDU3gjFx6C2gmbkgURxSJ9YmQBvVKe3w==
+	:subject:to:to; s=fm1; t=1790940313; x=1791026713; bh=zK33gArVyq
+	7uT2T8iSqbTaDMOm8ihRDNF0o1fLbT24Y=; b=oJBCKKraYEXI6hJJVdeY6Mt43S
+	CLoUdLVP8zCw/RuPnUaDizZfK/XCOIhEWjEqX2xlvG1he9kLzlg/YnOqeFmHloPY
+	y70QbzVKhI/WjwKHjDFXMO1uHbAdddezIWvDZWBl4r/zfqWqIgy11gLCBTd/FLL5
+	iJ0srXhvB0Wh0yFFJf+gFGaNzNlT3aFogAUlbdWLvVLOYHT4UkIT30sbApNIYE5H
+	PXXbQkGsM83CYBT9RdV11gVErtj+Z3WI5fnDtal9eLpN6ie3k0GyAUmrNKkANbuZ
+	Ep6bf+9O8Zfmcbbihiul4SeHCbUtZp4pRAtB0ijPuBFu+H2VtzUoJLTkToSA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790940130; x=1791026530; bh=yQcimWgvwOyTBbsUt5+dUXvwib7GRKIcreL
-	iPlIgUnI=; b=JHy2lD4Ueur1KASUOSP//mvzxer2OKncVQS8xZThaPNWHjVZ2zb
-	t1Vsk2/kfbx8XDDSxKCdA5QV3Fz6WH90y+ey5rtkzNzrId4vTHvAaickjUvuCOMO
-	mJQ41xzs9xyzDCDDiVn5WNJkmv2fMd2G5sksngp9Qn+9ajMt6hgKfSYLotwdiarx
-	90BSbg6hSfd63ATazkAerRHR6haxLjzH99PQEbc4RHpJ+ALahju80QttxegwYhb2
-	g9YOvr/OtF7DJs9M5jh8pUQ+bd2DYcZq3oAGT4l4ZwwCbZL9vOzDUkeUT+SdngV9
-	tWIOGM4gsjTkHGWxY0vsjGGaZiJrbU4LknA==
+	1790940313; x=1791026713; bh=zK33gArVyq7uT2T8iSqbTaDMOm8ihRDNF0o
+	1fLbT24Y=; b=uqb3a0LahhwSSpxmBghJlxvJsswxe7oIfUde8QEQKkWlp+8ABe+
+	MQyqYx/S7IJC7NAJdRbfrayvblXoIIUQgp1T3HsoPOC0Xj8LII0g5f5HwO25f9Gm
+	yrLkxX1Vyd53hf6AuRWp2/CfLItv2fqVpmhkpu0PT4ywCLdd8iFTVBR6suExmLYY
+	PPMWqC99YN69xzymYkPCCsC3rXu3YwBOkOL1BncZWIoCGxdbAY2MALDHZDFWrpwf
+	mGTC6U0cX9ulZYcMJNNkm1i++pm9Ua+fNiicEvUCCKotgJsXBHx6uYgJqDt7XBFx
+	sSTIUrEBSPXNcHrp9Lv8gp+6axSdnBFcAIw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790940130; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1790940313; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:jsIgFC9oUs4eElqrGL9O6MWt4Owt879q8lUOdlX11a/Txtl
-	9BMwvZuxW4yLclenXW4OBLO/7UbkwDTG0kub0cSYJJfNXAi7CY/TOZO+Y/Uw8Q1t
-	x+ROsxhiEpSgE1f3HmhwEnPGiiqgEOppMuEDIM42kwxWw0huoL2EEvFdHz4MP+6e
-	uZx2jLXAIz0/S/KxwSpykQ/NBuTI6uezTygb5VUYsf2NL+6UF6GIVmUHVVjRVN83
-	/ThqipZKsRoc2hHHP7Mj9vJsfKz5GmCjcZHN2/KhxaNGB0eF4pJ9a6HTepGynRMo
-	O5OyhxL3Q3y+wAe5LqSuuzPF+zV8RDCWGrOH75w==;
+	s=fm1:rsa-sha256:no60rwDPKByFW0dSgP7zUopcJr4YA6HA3tZzvFd+HY+ujeE
+	J025CTqMfiETrEM11zbfoKuANVgNMGK1abcZDL1RrAmbfRTVYUhJTFt1jigQTgBi
+	9dMyu3bdFMxRkDSFNAa5PH+vHq3WKpGDbRs5YgbARz75msDlMtcYpiNuokgmNAq7
+	uZhTF2MrQxlyRd54hEWy5WXWFFjjR7nmpn1+rliaIyyRD240FYIkpUKznvuYQTwd
+	rwlPTANN2WzR9CQYyKoZbEDkgf+kiVxCaQS+4yfaYwzU1E2RSHsJYVhrl2B/vsFH
+	eDBIzj4htOuM5N3bhhuJjmKL06uXSUxYFoCu/xw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:zeyPQ2KpuKeZiCrCOzV2O67TVZPbwa+GE4mORqe2s6Q=:Jn0sYFR1JRc5OmZ6sNhvn05BgU4lpG0/69imyiuv7Rk=;
-X-ME-Sender: <xms:4ZO_aiNtHUFLncZIavcYw8USkUVdJ4pc2tpZ2vwQmn7OFrWSiheh4Q>
-    <xme:4ZO_akorShcOM6ZD9YfBQRIycnQiTerBJdATH4oQVjalswc4GzD8JRBZm7Y5s-cSU
-    OpH8VxtRff6UjemAqgKboSa1SDlZna5bf2JSGOL5SWf7psfW4wSRyY>
-X-ME-Received: <xmr:4ZO_ajFFdOp0OZNg_vjUM7y0Fya9p4yFbpyNtsZZ1LzMuBsvFXYRZA>
-X-ME-Proxy-Cause: dmFkZTGjPLKPrmizOma232HJNguG3zzM1P2r/5pIm32zvYlPabp2GOkogy8OHq5FTtJMbA
-    aQUjI6w/BtQwY3OZAZv3ltxjcVUqbVdAGS/whqSQlCzuEEO8/ZdvGNmqeXnJ0bdQYOP+E7
-    aePOTbdSF3oTexBs5IlfFHai9Ryc6LmjBKOG2iyU3NdSdd9y9J3Wx+xWRK6LqVKs550zc+
-    zdBiz1GV4yq812mjoFydSVHwWz0ty9UPMdGhFWELB9ugR0Cw3Bcb5CKqtFJHYhq2NKf5+Y
-    fSJMeFCzsl4wAw0bH90kHBTbAi/YCrnJyv9wPxqmT0BwIf5Fgf6FNXgYAc60NbeTIVAtSv
-    encyJxJljvEmMD7IbKjF+NlQ7iNOF2NxTQa6oE28sJ88dyWqFDstfa4epRdoaUbr9BKWSU
-    UdKUhc8g34dCKjoCsAXDvbiofTI9cOedCiEPLkk33oat+su13MUbao/jKm8KBz/eBEYP9I
-    vYcdCTLLLMbY71MIzcaPNBQejW45Cl7x7tkdPf8+fm7cUaH/BLpWtoZoLHBKb8iufoZ0X8
-    gh2d60fdLvLJUzC215zNd3sCNywpvp9uzuPTDgxbbJQpR6ilKu1TIlSzCnSW0KUvK+LFIi
-    veIXh90+fkQO7BfxvYTDPmEHzalj5piUASrcylRqxff8cVMhgo+TQv/bFGdw
-X-ME-Proxy: <xmx:4pO_aprrxHTxGIqkt_uoyRZCc8k6Q_Zx7aivCWB_5_E7HNCNeYsuhA>
-    <xmx:4pO_asZ78seM9SrnorYao3cENDjeDRZ50qyck5dgjXN3yzPfmgbGXg>
-    <xmx:4pO_aiW2KlsOaK3YZYmkXmFXh3mavSJshq1LlwKGNxJTVwCzjKTn4w>
-    <xmx:4pO_al9C-T7IYsGRIZSB4fK5EsOVe3hOf6sIwS554XnQwQLUgIdcgQ>
-    <xmx:4pO_aqqx6b5T7fkcLmobSaPhcnaIlUrq4wjQ0HDSN9s5fXQ99DzmyP3u>
+Message-Instance: m=1; h=sha256:dxSn/faxbWBZYPFgqROyw9nbVvTHih6OHO8UJLDmBto=:HzXb7EIe/NUAeHtSayPxHqlwxyanCaIgTa5Mev6DXjA=;
+X-ME-Sender: <xms:mJS_amIcVOtyDyoheR0OQ3fnqXGZv9XXYoRLiI3EfVNcGnRf3N0qHw>
+    <xme:mJS_akLBO8MrJMtLTygNaXANq6MQgao6pLqp8PdmhLZz6gtTEiZAjBEZ8hGdZ6M78
+    aIo7ZTS0sgl2qZPKFHPJJ7dK6acE6JpwihV0yhchaXZ5-R6kQRXPnc>
+X-ME-Received: <xmr:mJS_akWLM2l35zZkrMVN1lX86mPtf9YVaY0tea8HLZ8HJWluHn5Bjg>
+X-ME-Proxy-Cause: dmFkZTEcDBOo22Ivu09X1A8CmHZyXVjegjfmTOXOPbpiY4eSnrdb3F2ePsvLhSlqdnShIN
+    vwYhnmdncR95J0vMief42kbGsrCKLEqxrMNrGNaajtHfqG3iuo64KYrCCRYxA39COgU8fE
+    larcRhZHwFB0mzJY76VriwIlgUQ15ApLUZKGdPfx3nD5KFf+XkKhzDlrvsVAzKB3bRiznD
+    QpBIhMlSXpH1EQv31TuUUsAPrxViOByOa8RpxSY4qyeUkIJdeaeKT7NUyjOzFBWh7KH3tf
+    sU796E+ibCe3udQtpgXvmVTGoOVv0GUg8xQnpn2QJSDiK818w+91qUn5Wm8Df5wLhZ/aiJ
+    Pgtzoh1jCva2SAucTTXsh++ZXhiyX41bdPBHIJ8q3LT88aW0SfrmcokKACFimGWQx9FBpo
+    pPqib1G9HVv5nlKLiWm8PBfOaKzF0pHuRDnDeCDPKyqmYMntlpgM6PFs4UguETsgYLfRZf
+    elnv6HcHC/3v9IKti+91Gd3ZRHRwhlYm2fWnf6vfcEEDfxT9Zwa9FOJM65sAdXdkysaXR8
+    Vc5eUtkCkrBsB/xNnoQImAsFzxrVVBZVRLs6PUJ71mkdmEtDCKpYbKQV0C3JbX35PDFlDb
+    C0CYhAnw3Gd8+0BRSxrqLATPNp/Z7HkqkfTxeHknzEl01kMoTAq+JoEBdEOQ
+X-ME-Proxy: <xmx:mJS_amiTiHtPZvDs-u7RGWP0wLdEmsGj6o6syTJ166WdvQP___d_XA>
+    <xmx:mJS_av-wPEs9GqbzXo78aI4RGK_-wsnB2Cy3SrwlZ_lU1bA_DdOyog>
+    <xmx:mJS_agBiiHoBVxunIs2w-8b3L4SxljFFmPv3RWsBlEw45ftyhsvz3A>
+    <xmx:mJS_asJssud6KEr4pAUA5KBSyB7u5g9y9hdH9_2zrv_nls-7KQwaKg>
+    <xmx:mZS_an6NfinKUjnHVrApm1zQspWuJC_Gz1YKfajuoNFvFIsa5jfu0tiG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Oct 2026 07:22:08 -0400 (EDT)
+ 2 Oct 2026 07:25:12 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 23fca52a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 2 Oct 2026 11:22:06 +0000 (UTC)
-Date: Fri, 2 Oct 2026 13:22:03 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 602401b8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 2 Oct 2026 11:25:11 +0000 (UTC)
+Date: Fri, 2 Oct 2026 13:25:07 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-	Kristofer Karlsson <krka@spotify.com>
-Subject: Re: [PATCH 2/2] fetch: write commit-graph using updated refs only
-Message-ID: <ar-T2y54X1uDQ4mX@pks.im>
-References: <pull.2239.git.1790930019.gitgitgadget@gmail.com>
- <fee92f3c2009f8f282fe98e6b16d403704db9ad9.1790930019.git.gitgitgadget@gmail.com>
+To: Khan Zimov <kaliugov@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] doc: fix typo in user manual
+Message-ID: <ar-Uk3BJyKTdQB4N@pks.im>
+References: <20261001181412.846-1-kaliugov@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -104,158 +101,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <fee92f3c2009f8f282fe98e6b16d403704db9ad9.1790930019.git.gitgitgadget@gmail.com>
+In-Reply-To: <20261001181412.846-1-kaliugov@gmail.com>
 
-On Fri, Oct 02, 2026 at 08:33:38AM +0000, Kristofer Karlsson via GitGitGadget wrote:
-> From: Kristofer Karlsson <krka@spotify.com>
+On Thu, Oct 01, 2026 at 10:14:12PM +0400, Khan Zimov wrote:
+> The sentence following the git tag command continues the
+> preceding sentence, so "You" should be lowercase.
 > 
-> When fetch.writeCommitGraph was introduced in
+> Signed-off-by: Khan Zimov <kaliugov@gmail.com>
+> ---
+>  Documentation/user-manual.adoc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
->     50f26bd035 (fetch: add fetch.writeCommitGraph config
->                 setting, 2019-09-02),
-> 
-> the stated goal was to stay updated with the latest commits after
-> fetching new objects.  The implementation used
-> write_commit_graph_reachable() because it was the only API available,
-> but two things have changed since then:
-> 
->  1. write_commit_graph() was added, and it accepts an explicit set of
->     commits as seeds, enabling more targeted commit-graph updates.
-
-Hm. The big question here is whether these additional seeds are additive
-or exclusive. That is, if I have an existing commit graph already, would
-it basically just extend the commit graph with the additional object IDs
-or would it replace the commit graph with a new one that only considers
-the passe object IDs as input?
-
-I would hope that it's additive, because otherwise you may now lose
-commit graph coverage for stuff that was covered before the patch.
-
->  2. The ref-scanning callback add_ref_to_set() became more expensive
->     in
->         630cd5194e (commit-graph.c: peel refs in 'add_ref_to_set',
->                     2020-07-22)
->     when it started to validate the refs against the odb
->     for correctness.  On a repository with many refs, this makes the
->     full reachable scan unnecessarily costly for a targeted fetch.
-
-I was wondering whether incremental commit graphs would also be part of
-the reasoning. Because in theory, now that we have those, we could even
-extend the commit graph on a fetch by just writing another layer.
-
-> Optimize the commit-graph write by using only the newly updated refs
-> as seeds instead of scanning all refs after every fetch.  To keep
-> this change small, skip the optimization for multi-remote fetches
-> (since that would require propagating the set of refs across process
-> boundaries).
-
-Yeah, the way we perform fetches can be a bit annoying at times, as all
-these subprocesses make it very hard to exchange information.
-
-> Since do_fetch() already knows which refs were updated, collect them
-> into an oidset and then pass them directly to write_commit_graph().
-> In split mode, close_reachable() walks from the updated tips and
-> stops at commits already present in the graph, efficiently adding
-> the newly fetched history.  This reachability closure also covers
-> auto-followed tags, since their targets are reachable from the
-> fetched tips that caused them to be auto-followed.
-
-Aha! So I wasn't that far off :) Now there's a follow-up question
-though: what happens in non-split mode?
-
-> After fetch_one() returns, call prepare_commit_graph() (which is
-> made non-static by this commit) to determine the graph-write mode:
-> 
->  - If no commit-graph exists yet, fall back to the full reachable
->    scan so the first graph creation covers all refs.
-> 
->  - If a commit-graph exists and the fetch updated at least one ref,
->    write incrementally using only the new refs as seeds.
-> 
->  - If a commit-graph exists but the fetch is a no-op, skip the
->    commit-graph write entirely.
-> 
->  - For the multi-remote path (fetch --all), where child processes
->    do the actual fetching, fall back to the full reachable scan.
-
-All of these make sense, but the above question is not answered yet.
-
-> Full commit-graph coverage of all refs remains the responsibility
-> of "git maintenance", "git gc" and "git commit-graph write".
-> Regular Git operations may trigger "git maintenance run --auto",
-> which periodically rebuilds the commit-graph from all reachable
-> refs.
-
-Curiously, you mention performance as motivating factor for this change
-but don't provide a benchmark demonstrating the benefit.
-
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 533fdfe7d8..8ad7331640 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1903,10 +1903,30 @@ out:
->  	return retcode;
->  }
+> diff --git a/Documentation/user-manual.adoc b/Documentation/user-manual.adoc
+> index 5ec65cebe2..1652ab3e86 100644
+> --- a/Documentation/user-manual.adoc
+> +++ b/Documentation/user-manual.adoc
+> @@ -632,7 +632,7 @@ running
+>  $ git tag stable-1 1b2e1d63ff
+>  -------------------------------------------------
 >  
-> +static void collect_updated_tips(struct oidset *tips, struct ref *ref_map)
-> +{
-> +	struct ref *rm;
-> +	for (rm = ref_map; rm; rm = rm->next) {
-> +		struct commit *commit;
-> +		if (rm->status == REF_STATUS_REJECT_SHALLOW)
-> +			continue;
-
-Hm. Shouldn't we also refuse almost all of the other values here? I'd
-expect that we only want to consider a tip when it has REF_STATUS_OK.
-
-> +		if (is_null_oid(&rm->old_oid))
-> +			continue;
-> +		if (rm->peer_ref &&
-> +		    oideq(&rm->old_oid, &rm->peer_ref->old_oid))
-> +			continue;
-> +		commit = lookup_commit_reference_gently(the_repository,
-> +							&rm->old_oid, 1);
-> +		if (commit)
-> +			oidset_insert(tips, &commit->object.oid);
-
-This is something that always trips me with `struct ref`, that I'm never
-quite sure what's what. So please forgive my ignorance, but why do we
-look up `rm->old_oid` here?
-
-> @@ -2535,6 +2559,12 @@ int cmd_fetch(int argc,
->  	int negotiate_only = 0;
->  	int porcelain = 0;
->  	int i;
-> +	enum {
-> +		GRAPH_WRITE_REACHABLE,
-> +		GRAPH_WRITE_TIPS,
-> +		GRAPH_WRITE_SKIP,
-> +	} graph_write_mode = GRAPH_WRITE_REACHABLE;
-> +	struct oidset updated_tips = OIDSET_INIT;
+> -You can use `stable-1` to refer to the commit 1b2e1d63ff.
+> +you can use `stable-1` to refer to the commit 1b2e1d63ff.
 >  
->  	struct option builtin_fetch_options[] = {
->  		OPT__VERBOSITY(&verbosity),
-> @@ -2822,7 +2852,13 @@ int cmd_fetch(int argc,
->  		}
->  		trace2_region_enter("fetch", "fetch-one", the_repository);
->  		result = fetch_one(remote, argc, argv, prune_tags_ok, stdin_refspecs,
-> -				   &config, &filter_options);
-> +				   &config, &filter_options, &updated_tips);
-> +		if (prepare_commit_graph(the_repository)) {
-> +			if (oidset_size(&updated_tips))
-> +				graph_write_mode = GRAPH_WRITE_TIPS;
-> +			else
-> +				graph_write_mode = GRAPH_WRITE_SKIP;
-> +		}
->  		trace2_region_leave("fetch", "fetch-one", the_repository);
->  	} else {
->  		int max_children = max_jobs;
+>  This creates a "lightweight" tag.  If you would also like to include a
+>  comment with the tag, and possibly sign it cryptographically, then you
 
-It's a bit curious that we have `GRAPH_WRITE_SKIP` as an explicit value
-here as it can be trivially derived from `oidset_size()` anyway. But
-other than that this is the safeguard that you were talking about: when
-we have a commit graph already then we only update with new tips,
-otherwise we use a full reachability walk.
+This looks a bit funny as a standalone diff, but as you point out in the
+commit message this is indeed a continuation of a sentence. So yes, the
+fix does make sense.
 
 Thanks!
 
