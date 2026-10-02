@@ -1,97 +1,98 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4A9469846
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 10:08:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C63247532A
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 10:08:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790935721; cv=none; b=cAgmsYqDGHvpdD5um2JB2bOntCkW8jpUHmEui4slmCmovjo9uNofQn50T2zDy+d7CnHePdyyeVDjzN7TOJD4+tVkrq/JEzUuStGg5IAuKiZOFZv/V3HY/kldMBtAE1D8GmpHtvCeixfiQyhOsHH+4a1t8tANkucXONX6RunbS44=
+	t=1790935722; cv=none; b=sHhLABsSe8YZ5qi+bPChBeKWqkSp3Kww1YxOcj1iFsteUmpzdpgIrP9BF35HXxtfOsxcEMQn8geDzZq++w1xPxDgBENj9Jzbw5295wwYXmg/n+Ex4NG3Kq2keQhV3d4Re8a7p1N5SoSopdUBY8NY8L7akgDMkB8PkMFfNN3sPN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790935721; c=relaxed/simple;
-	bh=ra9oWB3PQ3MvndfF1Yq+IatKZUQBuU+kzvW8yfH7yQg=;
+	s=arc-20240116; t=1790935722; c=relaxed/simple;
+	bh=HUcypQU0lcOgLxvy2JH7WeqRwKPcyhg9cqlT4apFHiY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QeGQ4xuQ0iPoZ9yc7itqkQc5dB504Yd3RTORbZMLNPQmC3KwZuM8AX7a6T2FRtqY26s6cA9gCkBkmxP7yhnQKDxPAzZRCFSjopCBuXZNkZTphuG6B2iQjPlMFZ1ghdEK3Ktwyn2c8qDTZeLgqheMPA1pqiphJrQrLxpKNnOq4fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZdEQqjwG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pa72ND1r; arc=none smtp.client-ip=103.168.172.145
+	 In-Reply-To:To:Cc; b=J2lTNvAWrX3TYrRwt+Beyk/p1A8Qo/aq6oJRLpusH304CVV+4czl/LYRQwoqwSB2a5lSSlADohExt6oE42IM62Cn8h2523EBvR34drbuKeEYgrSexVLtEz+5PMVL4IlelaLLT4AnGYdBNhI0oVoCc/G5/N2tFcnK/CUPftv0km0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tOlq7Hju; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZP1btKsW; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZdEQqjwG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pa72ND1r"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tOlq7Hju";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZP1btKsW"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id F00DDEC008A
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 06:08:36 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 970C11400100
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 06:08:39 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 02 Oct 2026 06:08:36 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 02 Oct 2026 06:08:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1790935716;
-	 x=1791022116; bh=3T7FHTYFif7DVcDak4+iiwhhSSMnWrXS7HdTRJGO758=; b=
-	ZdEQqjwGoO2Ne5liXLvUPKGR0NbLY2WYj/PqcXO+3cK/T7S9kFsQz31J+m2JHMbt
-	nq46FF0GnvlVz3Gduz8ffODalZsBbGsfDHZ2b2499M2/R8IOxJEdI21dtyy7Aopf
-	+rudQtrvbcHhDYaspb6NBFQ6jtvkYybo2JMOSeAhAZqFgtuwgvhT+FeyEGehSL3k
-	n0dpeVByZ5thjNkWOeeTRCMA0zNqWIL0KEgYRP9IuH0t2QWyNRT1r5lzT8dJ/lks
-	hxiiBqnHOkttEqg4HC/0LzcJ7EvkIXjJzK5kNRzOBTaIuESvk/1TYXALhibTkc3N
-	afFT2q70KUmAKhzqNRIruQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1790935719;
+	 x=1791022119; bh=rHipP7CeZMZdL1TI93UT9snCu0sCT/qrw51F/sGeut8=; b=
+	tOlq7HjuN9tOMFiCekrpwMw5S5IMSDWWUJuh1h8EIpBNv3nKlPFzDsbPcCbr1A6U
+	xIaQ8IBBgdHeUqmxzE1nVhv/4Schi2tJXYvyZNDNKQf3mrEXIZWBSQeYGRppsTMJ
+	/OOJlkZrDBsuad2foz50bMtTjk6Mcb5lTyswA9PdPNkm1s2sTRAtb9TLk5lLumhZ
+	Cnw/Y+LJ/vMxhE3XkRiRngX5ESBKJPogRloj0nmttvFmLNBVZGGVY2VaTfFBSebA
+	UoNEzBE0znzvzSWGkPe9RBD+51v4isIIBl8BhzUUVMgD7k6CLgboHPXLDwerA0R4
+	tUp7ZHC3sgfwvCGLIEheEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790935716; x=
-	1791022116; bh=3T7FHTYFif7DVcDak4+iiwhhSSMnWrXS7HdTRJGO758=; b=P
-	a72ND1rkDla+aFA0eF0sg7tCXCikGLUK1Q0yTL2xn8NRng13U5i3G4UpsGSFMMi9
-	IvRZQgG4seTSo1ydBtJWT9zBbigcmaOnlHwf7J/PIL7f7IhKP9MDXse4mC0STQ83
-	+lzXOmlpyqJo5kfOop+6Xa1tYftMn7r0KPZLAz4er6ZT7gXV+N+wsvnetLPwMlgB
-	vNe+wMoucGq7M8gfp+NZmy778YLGH+PpfKYOYDF58qUkwnVySD6roGdwKlwIY6NT
-	aVCkEJ6JpQ1iUfk1le6Q8fIkC/xu0Kt054Bx9HvyaYlhxcsGr/fjFfApAszh6aOL
-	ywulGScFZXpZSOWxS8bMw==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1790935719; x=
+	1791022119; bh=rHipP7CeZMZdL1TI93UT9snCu0sCT/qrw51F/sGeut8=; b=Z
+	P1btKsWJ3VCtb67qKX/NDlzkV873E03iAOSqGtG23zo5jx0AWysFCv65V0GFtPEI
+	k4WvD54zmob7hmC5BevhfYt2sxenOD7whzzBjjcksw4K6BlgD7gSclFb9xUd8kG9
+	UXUnoZkQTgVBIZRxkRBEYiToEBTyxPjKHE6avVFzE8U2++3+OrEUGIBP+23kW3fi
+	vMJhVUm6NvvpRw1CQujhmDE+Y5BPEJeVTIwFPYRZ9lUfqUeDZKhXox1ssCxXmoBF
+	iQ8EpPdD9IFranq5X94l3biTq7UzJPL8HeBFNYKJle8Ytsq0zQ9SIGila825VK/X
+	Dfam7Sx29bCZdBKQBe2XA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790935716; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1790935719; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:RImUOiMf0AhczwckEMrPNfXHW5fzjfX7Xx9O8JefdY7883j
-	9Szvjt/e9GgvhCIRLriNHyb8e0lcuDgt9Z8N71RH5NsIdsQbY6KMU8jjt4l/p+9j
-	kWnhoCdYuns/h4leGcvOw6Z/dKObaD/3G2sVv/29OVDyEOEYK86FCxjG+w5ZkSpw
-	Oy+voacespMloph/7mj6RRWaJPbu2WX2g2xjQifL7rJ7nEBUtQl4AevCkV9oasAJ
-	36LAEY4Ej5XYVlVAmJH/gDEep3SwOPTkQPf18ua3e0LKdLWxYvAvQaollddh9nHt
-	WJ3mfMFWTmJBFNJTmBLe29CZS87SN/EDLlI1yug==;
+	s=fm1:rsa-sha256:rxZYT5l+W/pxB5jwvokhlpKhyQmaCNDVOEGoCDFqT34vEKN
+	S8FAOES3cbKqEEbRPGRiqFhlxxVq4tLJ4FnQYvbXgioXP9SNojxtKfB/zjojRflp
+	w08eSl3B+NzGbl4PUapoSeH4a4yZMmqlQWchtbBe6ypOw1Y66u9uVNZIdRHe9Pu9
+	03dGrfS8r6V1LdCO802SJ8Q8NyfySAdoaoMnKl0EsrX+HOhcGhA92Vx+mclz57G/
+	xIr7VLnclg2WAP02P9tEPEvnjy70gUHbLiDruxj4eEwrGOAHZF5dUIC2Jhf75PRK
+	739aj5VHrGBHhEg84fUmAHo87v7tzD9PaWnu8ZA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:IMoAPWzVLrIatgFHk2TvCSnxWCyfLK4Yj93GrtMc+jg=:ra9oWB3PQ3MvndfF1Yq+IatKZUQBuU+kzvW8yfH7yQg=;
-X-ME-Sender: <xms:pIK_anq45nwhBIYksWO3kkSmgkXK4utadtmN52goI7l_WNyfxmEaGg>
-    <xme:pIK_aok8Evtzcafx_Yh6FBYMYji8wQDdRgm1iMKOlgmZftVyhr3AJa7vL4vQBzhIA
-    vv2KLqklEwkix6plJyLxElbFPutDJAVk3Kk8rUYk2QWdQvXkA47aw>
-X-ME-Received: <xmr:pIK_ap1HlWFXeTrfoWV3ep5f_wLHFPQA8bMUIbmblHJ3XBrhb7_GfA>
+Message-Instance: m=1; h=sha256:nF74MQaqNxjnWyXqYeCn8GKczTaf2hmPBqGfGfsZIwQ=:HUcypQU0lcOgLxvy2JH7WeqRwKPcyhg9cqlT4apFHiY=;
+X-ME-Sender: <xms:p4K_ajvlWmRnwB8Zd3Oiq2A4P7SfmnZXBmpBbwSC4-T1LHmtezPj4Q>
+    <xme:p4K_arawqocIkMlIzTZTz6NQ0PZLSxBBtZrDbMBe6vat0GuCe_v_df5dfa8t7uHfN
+    uXymGj7dd1Jc1oi6mf85GUouYFtXjZDqZEBdfxgEnkhs_boZs2Geg>
+X-ME-Received: <xmr:p4K_asYsW1amOiKxT8T4dS4TraHkRT5xpzNXeyzrp98PrX_trBUclw>
 X-ME-Proxy-Cause: dmFkZTEk3H+AUKr9O0Ow7GRbgblx4uf2zj4ETyQH6x90LBsT5LiyNUArdbRpTlRPy1OCyO
     1Pd/ECTkc4HK76y6uQMTAO82LMLlywQQqW3fRgX2bjzSdrlWY6Y7SJZjHYxoz3kdkLeJ25
     SpHYKmcs+cLgNX1OvKIPv1aFILPoREvhoS9oIsaWYupItEtfbxfUc1AYfMtJc1t9qGAUib
     Y7xWtP4gOvuK1IAG8w0nKknXHRppHJaeplUN/oAs+ZbWEYKKCh4BuI80dNCs1ZvfqM0npL
-    HkcUWjFH/J8iZ+SQFybm7nSvyDiTAhXb+FcgLnFAq0ZphQwnn0MH6VUejq1KH15YIkWcWG
-    K7n9ydBrE8gtmY7SlIu2BOq+AeBCDzK+MgZhxBhakfZ2t5/12f8cpug6P77LA6V2VSUuh8
-    wscddAF+wF0yhkkKnNHJAVtnNxhsiCaL2p6XKzhWEK9Rw0JcUO5aS5jZuKMrmHq0LLv8oh
-    vxd8Y3C8Om/arQVPaFfnuxWvpgW5VHvUCeU2bVfbeIo/ay/+Q19A9fMDa3Kyh9Uxrnyg2o
-    m8p8AwxJGXeapnAfFyMCaIx8oL05182xuXO2t+694lZkY3uIt76IyQNYGKwVSue5ngHiIE
-    WpqRuacC8JeaTHcTJVE2UHOkVl/MnO8HLT2kYNi80w2fpBhXyMmQ9ik8xMQw
-X-ME-Proxy: <xmx:pIK_agANGD73-rZvRjamliyjASvdHMtyMFmRDtU4bmHs4rxbMttCig>
-    <xmx:pIK_amx-EKkczXltsXn2KGigaQBgeaVffTW7goH1HBEGLooWpp4enw>
-    <xmx:pIK_aunI1cImQbg5XInZgZnmjh8soLyvPpwuAJgfj-YFjnCCr1xl2A>
-    <xmx:pIK_arHqUlsrprRbzHVJe_St7F1VmbOxqBNqqC9avQS20f0sVXd0Dw>
-    <xmx:pIK_anKcKTqD2b1L_Ug4IGVxcWLn1W2R7POAcinp1jWFzL1xBonNPtYl>
+    HkcUWjFH/J8iZ+SQFybm7nSvyDiTAhXb+FcgLnFAq0ZphQwnn0MH6VUejq1KH15YIkWciq
+    rNoFzvItQtjNcEwYV0xfGhkKg3bXZF16Yy6hhRk47RMWPsmJRq4aL2eRvHMp0UWUJ0Im8U
+    p7GifzDoxikd8XBorjlUMkxpqDvlvn8bEvYPr5yXiXY0INyD/2cy9KPnCZo/S7DHHciHpF
+    ikd4IOruXG1rcFvisui2gE5zZibvpY0ulVoN1y1s2tY2JB5ZraRIqtzn52BPUcohGupopZ
+    gIPAppiAE5O+KWGcAGgarDLYFJBxZUSOFHIW+Ag54oZmbGNEN0ZrA0JMNmxB/Jc3MJljGO
+    7pIgwaIudWQtWD9jXlHIp8dVeicT/C8nMkfYByQijbxOUmY/l0W2l3Hbn9+Q
+X-ME-Proxy: <xmx:p4K_anV1CRK0S5d2YF7NvRuaOsAOhw91kcnvXLbiqMu1jcFAjh5zrA>
+    <xmx:p4K_aj0Wj4zzVFY9-Mo5zQo_ycsuSMiCvQP7l6OFfQMa3RYlqJeTdw>
+    <xmx:p4K_auYyzo5O_5w1aDJtV9hk7p3yMjHjsUkJCwtrKZQT_azfa5Tarw>
+    <xmx:p4K_ampZjX6FNybHbEWihxxeBkfsN58RUabLlewJriIB31PUv_jOCw>
+    <xmx:p4K_aicMSiKMdJXz6Jif29pwbt4i0xtg9xWN_jLEWhvOJRjw2qDRcjPO>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 2 Oct 2026 06:08:36 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 2 Oct 2026 06:08:39 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cc40da4e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id d0cb0e01 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 2 Oct 2026 10:08:35 +0000 (UTC)
+	Fri, 2 Oct 2026 10:08:38 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 02 Oct 2026 12:08:14 +0200
-Subject: [PATCH 03/13] odb/source-files: introduce `struct odb_files_dir`
+Date: Fri, 02 Oct 2026 12:08:15 +0200
+Subject: [PATCH 04/13] odb: refactor `odb_for_each_alternate()` to yield
+ dirs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -100,828 +101,201 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261002-pks-odb-move-alternates-v1-3-8a63507b88c4@pks.im>
+Message-Id: <20261002-pks-odb-move-alternates-v1-4-8a63507b88c4@pks.im>
 References: <20261002-pks-odb-move-alternates-v1-0-8a63507b88c4@pks.im>
 In-Reply-To: <20261002-pks-odb-move-alternates-v1-0-8a63507b88c4@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-The "files" object database source consists of two separate backends for
-storing loose and packed objects. These are managed as somewhat separate
-entities even though they derive from the same object directory, whether
-it's the primary object directory or that one from an alternate.
+The function `odb_for_each_alternate()` iterates through all alternates
+of an object database. This is becoming an implementation detail of the
+"files" backend though, where each alternate will be represented by one
+`struct odb_files_dir`.
 
-In a subsequent commit we'll move the handling of alternates into the
-"files" backend completely so that it becomes another implementation
-detail thereof. As part of this, we'll want to keep track of both of
-these sub-sources as a single entity derived from their respective
-object directory.
-
-Prepare for this change by introducing a new `struct odb_files_dir` that
-encapsulates them. For now, every "files" source has exactly one such
-directory. In a subsequent commit though, we'll make it a linked list of
-directories so that we can manage multiple such directories in a single
-"files" source.
+Adapt `odb_for_each_alternate()` to already iterate through these
+structs instead of iterating through sources.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fast-import.c      |  6 ++--
- builtin/index-pack.c       |  2 +-
- builtin/multi-pack-index.c | 14 ++++-----
- builtin/pack-objects.c     | 18 +++++------
- builtin/repack.c           |  4 +--
- commit-graph.c             |  2 +-
- http-walker.c              |  2 +-
- http.c                     |  6 ++--
- loose.c                    |  6 ++--
- midx.c                     | 26 ++++++++--------
- odb/source-files.c         | 77 ++++++++++++++++++++++++++++++----------------
- odb/source-files.h         | 27 ++++++++++++++--
- pack-bitmap.c              |  2 +-
- packfile.c                 |  8 ++---
- packfile.h                 |  4 +--
- repack-geometry.c          |  2 +-
- repack-midx.c              |  6 ++--
- repack.c                   |  2 +-
- t/helper/test-read-midx.c  |  2 +-
- 19 files changed, 131 insertions(+), 85 deletions(-)
+ builtin/count-objects.c     |  4 ++--
+ builtin/submodule--helper.c |  7 ++++---
+ diagnose.c                  |  8 ++++----
+ odb.c                       | 18 +++++++++++-------
+ odb.h                       |  3 ++-
+ 5 files changed, 23 insertions(+), 17 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index fbd919982c..0bf76b028b 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -921,7 +921,7 @@ static void end_packfile(void)
- 		idx_name = keep_pack(create_index());
- 
- 		/* Register the packfile with core git's machinery. */
--		new_p = packfile_store_load_pack(files->packed, idx_name, 1);
-+		new_p = packfile_store_load_pack(files->dirs->packed, idx_name, 1);
- 		if (!new_p)
- 			die(_("core Git rejected index %s"), idx_name);
- 		all_packs[pack_id] = new_p;
-@@ -1005,7 +1005,7 @@ static int store_object(
- 	for (source = the_repository->objects->sources; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
- 
--		if (!packfile_list_find_oid(packfile_store_get_packs(files->packed), &oid))
-+		if (!packfile_list_find_oid(packfile_store_get_packs(files->dirs->packed), &oid))
- 			continue;
- 		e->type = type;
- 		e->pack_id = MAX_PACK_ID;
-@@ -1215,7 +1215,7 @@ static void stream_blob(uintmax_t len, struct object_id *oidout, uintmax_t mark)
- 	for (source = the_repository->objects->sources; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
- 
--		if (!packfile_list_find_oid(packfile_store_get_packs(files->packed), &oid))
-+		if (!packfile_list_find_oid(packfile_store_get_packs(files->dirs->packed), &oid))
- 			continue;
- 		e->type = OBJ_BLOB;
- 		e->pack_id = MAX_PACK_ID;
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 6b2a87e2d3..70860b8f27 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1641,7 +1641,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
- 	if (do_fsck_object && startup_info->have_repository) {
- 		struct odb_source_files *files =
- 			odb_source_files_downcast(the_repository->objects->sources);
--		packfile_store_load_pack(files->packed, final_index_name, 0);
-+		packfile_store_load_pack(files->dirs->packed, final_index_name, 0);
- 	}
- 
- 	if (!from_stdin) {
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 753bd53a70..a170ec80b9 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -213,7 +213,7 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
- 
- 		read_packs_from_stdin(&packs);
- 
--		ret = write_midx_file_only(source->packed, &packs,
-+		ret = write_midx_file_only(source->dirs->packed, &packs,
- 					   opts.preferred_pack,
- 					   opts.refs_snapshot,
- 					   opts.incremental_base, opts.flags);
-@@ -225,7 +225,7 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
- 
- 	}
- 
--	ret = write_midx_file(source->packed, opts.preferred_pack,
-+	ret = write_midx_file(source->dirs->packed, opts.preferred_pack,
- 			      opts.refs_snapshot, opts.flags);
- 
- 	free(opts.refs_snapshot);
-@@ -284,7 +284,7 @@ static int cmd_multi_pack_index_compact(int argc, const char **argv,
- 
- 	FREE_AND_NULL(options);
- 
--	m = get_multi_pack_index(source->packed);
-+	m = get_multi_pack_index(source->dirs->packed);
- 
- 	for (cur = m; cur && !(from_midx && to_midx); cur = cur->base_midx) {
- 		const char *midx_csum = midx_get_checksum_hex(cur);
-@@ -307,7 +307,7 @@ static int cmd_multi_pack_index_compact(int argc, const char **argv,
- 			die(_("MIDX %s must be an ancestor of %s"), argv[0], argv[1]);
- 	}
- 
--	ret = write_midx_file_compact(source->packed, from_midx, to_midx,
-+	ret = write_midx_file_compact(source->dirs->packed, from_midx, to_midx,
- 				      opts.incremental_base, opts.flags);
- 
- 	return ret;
-@@ -339,7 +339,7 @@ static int cmd_multi_pack_index_verify(int argc, const char **argv,
- 
- 	FREE_AND_NULL(options);
- 
--	return verify_midx_file(source->packed, opts.flags);
-+	return verify_midx_file(source->dirs->packed, opts.flags);
- }
- 
- static int cmd_multi_pack_index_expire(int argc, const char **argv,
-@@ -368,7 +368,7 @@ static int cmd_multi_pack_index_expire(int argc, const char **argv,
- 
- 	FREE_AND_NULL(options);
- 
--	return expire_midx_packs(source->packed, opts.flags);
-+	return expire_midx_packs(source->dirs->packed, opts.flags);
- }
- 
- static int cmd_multi_pack_index_repack(int argc, const char **argv,
-@@ -400,7 +400,7 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv,
- 
- 	FREE_AND_NULL(options);
- 
--	return midx_repack(source->packed, (size_t)opts.batch_size, opts.flags);
-+	return midx_repack(source->dirs->packed, (size_t)opts.batch_size, opts.flags);
- }
- 
- int cmd_multi_pack_index(int argc,
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index af9390a46b..070659b6ed 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1570,7 +1570,7 @@ static int want_cruft_object_mtime(struct repository *r,
- 
- 	for (source = r->objects->sources; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
--		struct packed_git **cache = packfile_store_get_kept_pack_cache(files->packed, flags);
-+		struct packed_git **cache = packfile_store_get_kept_pack_cache(files->dirs->packed, flags);
- 
- 		for (; *cache; cache++) {
- 			struct packed_git *p = *cache;
-@@ -1765,7 +1765,7 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
- 		struct odb_source *source = the_repository->objects->sources->next;
- 		for (; source; source = source->next) {
- 			struct odb_source_files *files = odb_source_files_downcast(source);
--			if (!odb_source_read_object_info(&files->loose->base, oid, NULL, 0, NULL))
-+			if (!odb_source_read_object_info(&files->dirs->loose->base, oid, NULL, 0, NULL))
- 				return 0;
- 		}
- 	}
-@@ -1787,7 +1787,7 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
- 
- 	for (source = the_repository->objects->sources; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
--		struct multi_pack_index *m = get_multi_pack_index(files->packed);
-+		struct multi_pack_index *m = get_multi_pack_index(files->dirs->packed);
- 		struct pack_entry e;
- 
- 		if (m && midx_fill_entry(m, oid, &e, NULL) == MIDX_FILL_HIT) {
-@@ -1800,11 +1800,11 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
- 	for (source = the_repository->objects->sources; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
- 
--		for (e = files->packed->packs.head; e; e = e->next) {
-+		for (e = files->dirs->packed->packs.head; e; e = e->next) {
- 			struct packed_git *p = e->pack;
- 			want = want_object_in_pack_one(p, oid, exclude, found_pack, found_offset, found_mtime);
- 			if (!exclude && want > 0)
--				packfile_list_prepend(&files->packed->packs, p);
-+				packfile_list_prepend(&files->dirs->packed->packs, p);
- 			if (want != -1)
- 				return want;
- 		}
-@@ -4175,7 +4175,7 @@ static void add_cruft_object_entry(const struct object_id *oid, enum object_type
- 
- 			for (; !found && source; source = source->next) {
- 				struct odb_source_files *files = odb_source_files_downcast(source);
--				if (!odb_source_read_object_info(&files->loose->base, oid, NULL, 0, NULL))
-+				if (!odb_source_read_object_info(&files->dirs->loose->base, oid, NULL, 0, NULL))
- 					found = 1;
- 			}
- 
-@@ -4532,7 +4532,7 @@ static void add_objects_in_unpacked_packs(void)
- 		if (!source->local)
- 			continue;
- 
--		if (odb_source_for_each_object(&files->packed->base, &oi,
-+		if (odb_source_for_each_object(&files->dirs->packed->base, &oi,
- 					       add_object_in_unpacked_pack, NULL, &opts))
- 			die(_("cannot open pack index"));
- 	}
-@@ -4642,7 +4642,7 @@ static int force_object_loose(struct odb_source *source,
- 
- 	for (struct odb_source *s = source->odb->sources; s; s = s->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(s);
--		if (!odb_source_read_object_info(&files->loose->base, oid, NULL, 0, NULL))
-+		if (!odb_source_read_object_info(&files->dirs->loose->base, oid, NULL, 0, NULL))
- 			return 0;
- 	}
- 
-@@ -4664,7 +4664,7 @@ static int force_object_loose(struct odb_source *source,
- 		compat_oid_p = &compat_oid;
- 	}
- 
--	ret = odb_source_write_object(&files->loose->base, buf, len, type, oid,
-+	ret = odb_source_write_object(&files->dirs->loose->base, buf, len, type, oid,
- 				      compat_oid_p, mtime, 0);
- 
- out:
-diff --git a/builtin/repack.c b/builtin/repack.c
-index c4360382c1..5d06872d77 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -617,7 +617,7 @@ int cmd_repack(int argc,
- 		 * midx_has_unknown_packs() will make the decision for
- 		 * us.
- 		 */
--		if (!get_multi_pack_index(files->packed))
-+		if (!get_multi_pack_index(files->dirs->packed))
- 			midx_must_contain_cruft = 1;
- 	}
- 
-@@ -775,7 +775,7 @@ int cmd_repack(int argc,
- 
- 		if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL, 0))
- 			flags |= MIDX_WRITE_INCREMENTAL;
--		write_midx_file(files->packed, NULL, NULL, flags);
-+		write_midx_file(files->dirs->packed, NULL, NULL, flags);
- 	}
- 
- cleanup:
-diff --git a/commit-graph.c b/commit-graph.c
-index 80ebc6a542..7cc486d140 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -2020,7 +2020,7 @@ static void fill_oids_from_all_packs(struct write_commit_graph_context *ctx)
- 
- 	for (source = ctx->r->objects->sources; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
--		odb_source_for_each_object(&files->packed->base, &oi, add_packed_commits_oi,
-+		odb_source_for_each_object(&files->dirs->packed->base, &oi, add_packed_commits_oi,
- 					   ctx, &opts);
- 	}
- 
-diff --git a/http-walker.c b/http-walker.c
-index abafca84d6..0a6c99f471 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -542,7 +542,7 @@ static int fetch_object(struct walker *walker, const struct object_id *oid)
- 	} else if (req->rename < 0) {
- 		struct odb_source_files *files = odb_source_files_downcast(the_repository->objects->sources);
- 		struct strbuf buf = STRBUF_INIT;
--		odb_loose_path(files->loose, &buf, &req->oid);
-+		odb_loose_path(files->dirs->loose, &buf, &req->oid);
- 		ret = error("unable to write sha1 filename %s", buf.buf);
- 		strbuf_release(&buf);
- 	}
-diff --git a/http.c b/http.c
-index c8fcfd7693..fe6ec88a21 100644
---- a/http.c
-+++ b/http.c
-@@ -2720,7 +2720,7 @@ void http_install_packfile(struct packed_git *p,
- {
- 	struct odb_source_files *files = odb_source_files_downcast(the_repository->objects->sources);
- 	packfile_list_remove(list_to_remove_from, p);
--	packfile_store_add_pack(files->packed, p);
-+	packfile_store_add_pack(files->dirs->packed, p);
- }
- 
- struct http_pack_request *new_http_pack_request(
-@@ -2861,7 +2861,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
- 	oidcpy(&freq->oid, oid);
- 	freq->localfile = -1;
- 
--	odb_loose_path(files->loose, &filename, oid);
-+	odb_loose_path(files->dirs->loose, &filename, oid);
- 	strbuf_addf(&freq->tmpfile, "%s.temp", filename.buf);
- 
- 	strbuf_addf(&prevfile, "%s.prev", filename.buf);
-@@ -3014,7 +3014,7 @@ int finish_http_object_request(struct http_object_request *freq)
- 		unlink_or_warn(freq->tmpfile.buf);
- 		return -1;
- 	}
--	odb_loose_path(files->loose, &filename, &freq->oid);
-+	odb_loose_path(files->dirs->loose, &filename, &freq->oid);
- 	freq->rename = finalize_object_file(the_repository, freq->tmpfile.buf, filename.buf);
- 	strbuf_release(&filename);
- 
-diff --git a/loose.c b/loose.c
-index c159d29d2d..957bf83e6b 100644
---- a/loose.c
-+++ b/loose.c
-@@ -117,7 +117,7 @@ int repo_read_loose_object_map(struct repository *repo)
- 
- 	for (source = repo->objects->sources; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
--		if (loose_object_map_load(files->loose) < 0)
-+		if (loose_object_map_load(files->dirs->loose) < 0)
- 			return -1;
- 	}
- 
-@@ -127,7 +127,7 @@ int repo_read_loose_object_map(struct repository *repo)
- int repo_write_loose_object_map(struct repository *repo)
- {
- 	struct odb_source_files *files = odb_source_files_downcast(repo->objects->sources);
--	kh_oid_map_t *map = files->loose->map->to_compat;
-+	kh_oid_map_t *map = files->dirs->loose->map->to_compat;
- 	struct lock_file lock;
- 	int fd;
- 	khiter_t iter;
-@@ -237,7 +237,7 @@ int repo_loose_object_map_oid(struct repository *repo,
- 
- 	for (source = repo->objects->sources; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
--		struct loose_object_map *loose_map = files->loose->map;
-+		struct loose_object_map *loose_map = files->dirs->loose->map;
- 		if (!loose_map)
- 			continue;
- 		map = (to == repo->compat_hash_algo) ?
-diff --git a/midx.c b/midx.c
-index 6d1c548e3d..c0f82c4163 100644
---- a/midx.c
-+++ b/midx.c
-@@ -837,20 +837,20 @@ void clear_midx_file(struct repository *r)
- 
- 		for (source = r->objects->sources; source; source = source->next) {
- 			files = odb_source_files_downcast(source);
--			if (files->packed->midx)
--				close_midx(files->packed->midx);
--			files->packed->midx = NULL;
-+			if (files->dirs->packed->midx)
-+				close_midx(files->dirs->packed->midx);
-+			files->dirs->packed->midx = NULL;
- 		}
- 	}
- 
- 	files = odb_source_files_downcast(r->objects->sources);
--	get_midx_filename(files->packed, &midx);
-+	get_midx_filename(files->dirs->packed, &midx);
- 
- 	if (remove_path(midx.buf))
- 		die(_("failed to clear multi-pack-index at %s"), midx.buf);
- 
--	clear_midx_files_ext(files->packed, MIDX_EXT_BITMAP, NULL);
--	clear_midx_files_ext(files->packed, MIDX_EXT_REV, NULL);
-+	clear_midx_files_ext(files->dirs->packed, MIDX_EXT_BITMAP, NULL);
-+	clear_midx_files_ext(files->dirs->packed, MIDX_EXT_REV, NULL);
- 
- 	strbuf_release(&midx);
- }
-@@ -864,21 +864,21 @@ void clear_incremental_midx_files(struct repository *r,
- 
- 	for (source = r->objects->sources; source; source = source->next) {
- 		files = odb_source_files_downcast(source);
--		if (files->packed->midx)
--			close_midx(files->packed->midx);
--		files->packed->midx = NULL;
-+		if (files->dirs->packed->midx)
-+			close_midx(files->dirs->packed->midx);
-+		files->dirs->packed->midx = NULL;
- 	}
- 
- 	files = odb_source_files_downcast(r->objects->sources);
--	get_midx_chain_filename(files->packed, &chain);
-+	get_midx_chain_filename(files->dirs->packed, &chain);
- 
- 	if (!keep_hashes && remove_path(chain.buf))
- 		die(_("failed to clear multi-pack-index chain at %s"),
- 		    chain.buf);
- 
--	clear_incremental_midx_files_ext(files->packed, MIDX_EXT_BITMAP, keep_hashes);
--	clear_incremental_midx_files_ext(files->packed, MIDX_EXT_REV, keep_hashes);
--	clear_incremental_midx_files_ext(files->packed, MIDX_EXT_MIDX, keep_hashes);
-+	clear_incremental_midx_files_ext(files->dirs->packed, MIDX_EXT_BITMAP, keep_hashes);
-+	clear_incremental_midx_files_ext(files->dirs->packed, MIDX_EXT_REV, keep_hashes);
-+	clear_incremental_midx_files_ext(files->dirs->packed, MIDX_EXT_MIDX, keep_hashes);
- 
- 	strbuf_release(&chain);
- }
-diff --git a/odb/source-files.c b/odb/source-files.c
-index f2fc4cd9ab..1f4cedaffa 100644
---- a/odb/source-files.c
-+++ b/odb/source-files.c
-@@ -24,6 +24,30 @@
- #include "tree.h"
- #include "write-or-die.h"
- 
-+struct odb_files_dir *odb_files_dir_new(struct object_database *odb,
-+					const char *path, bool local)
-+{
-+	struct odb_files_dir *dir;
-+
-+	CALLOC_ARRAY(dir, 1);
-+	dir->abspath = absolute_pathdup(path);
-+	dir->local = local;
-+	dir->loose = odb_source_loose_new(odb, path, local);
-+	dir->packed = odb_source_packed_new(odb, path, local);
-+
-+	return dir;
-+}
-+
-+void odb_files_dir_free(struct odb_files_dir *dir)
-+{
-+	if (!dir)
-+		return;
-+	odb_source_free(&dir->loose->base);
-+	odb_source_free(&dir->packed->base);
-+	free(dir->abspath);
-+	free(dir);
-+}
-+
- static void odb_source_files_reparent(const char *old_cwd,
- 				      const char *new_cwd,
- 				      void *cb_data)
-@@ -31,6 +55,7 @@ static void odb_source_files_reparent(const char *old_cwd,
- 	struct odb_source_files *files = cb_data;
- 	char *path = reparent_relative_path(old_cwd, new_cwd,
- 					    files->base.path);
-+
- 	free(files->base.path);
- 	files->base.path = path;
- }
-@@ -39,8 +64,7 @@ static void odb_source_files_free(struct odb_source *source)
- {
- 	struct odb_source_files *files = odb_source_files_downcast(source);
- 	chdir_notify_unregister(odb_source_files_reparent, files);
--	odb_source_free(&files->loose->base);
--	odb_source_free(&files->packed->base);
-+	odb_files_dir_free(files->dirs);
- 	odb_source_release(&files->base);
- 	free(files);
- }
-@@ -48,8 +72,8 @@ static void odb_source_files_free(struct odb_source *source)
- static void odb_source_files_close(struct odb_source *source)
- {
- 	struct odb_source_files *files = odb_source_files_downcast(source);
--	odb_source_close(&files->loose->base);
--	odb_source_close(&files->packed->base);
-+	odb_source_close(&files->dirs->loose->base);
-+	odb_source_close(&files->dirs->packed->base);
- }
- 
- static int odb_source_files_create_on_disk(struct odb_source *source,
-@@ -144,8 +168,8 @@ static void odb_source_files_prepare(struct odb_source *source,
- 				     enum odb_prepare_flags flags)
- {
- 	struct odb_source_files *files = odb_source_files_downcast(source);
--	odb_source_prepare(&files->loose->base, flags);
--	odb_source_prepare(&files->packed->base, flags);
-+	odb_source_prepare(&files->dirs->loose->base, flags);
-+	odb_source_prepare(&files->dirs->packed->base, flags);
- }
- 
- static enum odb_read_status odb_source_files_read_object_info(struct odb_source *source,
-@@ -157,12 +181,12 @@ static enum odb_read_status odb_source_files_read_object_info(struct odb_source
- 	struct odb_source_files *files = odb_source_files_downcast(source);
- 	enum odb_read_status ret_packed, ret_loose;
- 
--	ret_packed = odb_source_read_object_info(&files->packed->base, oid, oi,
-+	ret_packed = odb_source_read_object_info(&files->dirs->packed->base, oid, oi,
- 						 flags, errmsg);
- 	if (!ret_packed)
- 		return 0;
- 
--	ret_loose = odb_source_read_object_info(&files->loose->base, oid, oi, flags,
-+	ret_loose = odb_source_read_object_info(&files->dirs->loose->base, oid, oi, flags,
- 						ret_packed == ODB_READ_NOT_FOUND ? errmsg : NULL);
- 	if (!ret_loose)
- 		return 0;
-@@ -184,8 +208,8 @@ static int odb_source_files_read_object_stream(struct odb_stream **out,
- 					       const struct object_id *oid)
- {
- 	struct odb_source_files *files = odb_source_files_downcast(source);
--	if (!odb_source_read_object_stream(out, &files->packed->base, oid) ||
--	    !odb_source_read_object_stream(out, &files->loose->base, oid))
-+	if (!odb_source_read_object_stream(out, &files->dirs->packed->base, oid) ||
-+	    !odb_source_read_object_stream(out, &files->dirs->loose->base, oid))
- 		return 0;
- 	return -1;
- }
-@@ -200,12 +224,12 @@ static int odb_source_files_for_each_object(struct odb_source *source,
- 	int ret;
- 
- 	if (!(opts->flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY)) {
--		ret = odb_source_for_each_object(&files->loose->base, request, cb, cb_data, opts);
-+		ret = odb_source_for_each_object(&files->dirs->loose->base, request, cb, cb_data, opts);
- 		if (ret)
- 			return ret;
- 	}
- 
--	ret = odb_source_for_each_object(&files->packed->base, request, cb, cb_data, opts);
-+	ret = odb_source_for_each_object(&files->dirs->packed->base, request, cb, cb_data, opts);
- 	if (ret)
- 		return ret;
- 
-@@ -220,14 +244,14 @@ static int odb_source_files_count_objects(struct odb_source *source,
- 	unsigned long count;
- 	int ret;
- 
--	ret = odb_source_count_objects(&files->packed->base, flags, &count);
-+	ret = odb_source_count_objects(&files->dirs->packed->base, flags, &count);
- 	if (ret < 0)
- 		goto out;
- 
- 	if (!(flags & ODB_COUNT_OBJECTS_APPROXIMATE)) {
- 		unsigned long loose_count;
- 
--		ret = odb_source_count_objects(&files->loose->base, flags, &loose_count);
-+		ret = odb_source_count_objects(&files->dirs->loose->base, flags, &loose_count);
- 		if (ret < 0)
- 			goto out;
- 
-@@ -250,11 +274,11 @@ static int odb_source_files_find_abbrev_len(struct odb_source *source,
- 	unsigned len = min_len;
- 	int ret;
- 
--	ret = odb_source_find_abbrev_len(&files->packed->base, oid, len, &len);
-+	ret = odb_source_find_abbrev_len(&files->dirs->packed->base, oid, len, &len);
- 	if (ret < 0)
- 		goto out;
- 
--	ret = odb_source_find_abbrev_len(&files->loose->base, oid, len, &len);
-+	ret = odb_source_find_abbrev_len(&files->dirs->loose->base, oid, len, &len);
- 	if (ret < 0)
- 		goto out;
- 
-@@ -270,8 +294,8 @@ static int odb_source_files_freshen_object(struct odb_source *source,
- 					   const time_t *mtime)
- {
- 	struct odb_source_files *files = odb_source_files_downcast(source);
--	if (odb_source_freshen_object(&files->packed->base, oid, mtime) ||
--	    odb_source_freshen_object(&files->loose->base, oid, mtime))
-+	if (odb_source_freshen_object(&files->dirs->packed->base, oid, mtime) ||
-+	    odb_source_freshen_object(&files->dirs->loose->base, oid, mtime))
- 		return 1;
+diff --git a/builtin/count-objects.c b/builtin/count-objects.c
+index 18f6e33b6f..f2abfaccec 100644
+--- a/builtin/count-objects.c
++++ b/builtin/count-objects.c
+@@ -81,10 +81,10 @@ static int count_cruft(const char *basename UNUSED, const char *path,
  	return 0;
  }
-@@ -285,7 +309,7 @@ static int odb_source_files_write_object(struct odb_source *source,
- 					 enum odb_write_object_flags flags)
+ 
+-static int print_alternate(struct odb_source *alternate, void *data UNUSED)
++static int print_alternate(struct odb_files_dir *alternate, void *data UNUSED)
  {
- 	struct odb_source_files *files = odb_source_files_downcast(source);
--	return odb_source_write_object(&files->loose->base, buf, len, type,
-+	return odb_source_write_object(&files->dirs->loose->base, buf, len, type,
- 				       oid, compat_oid, mtime, flags);
+ 	printf("alternate: ");
+-	quote_c_style(alternate->path, NULL, stdout, 0);
++	quote_c_style(alternate->abspath, NULL, stdout, 0);
+ 	putchar('\n');
+ 	return 0;
  }
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 40a052d674..64412adf9f 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -30,6 +30,7 @@
+ #include "object-name.h"
+ #include "odb.h"
+ #include "odb/source.h"
++#include "odb/source-files.h"
+ #include "advice.h"
+ #include "branch.h"
+ #include "list-objects-filter-options.h"
+@@ -1770,7 +1771,7 @@ static const char alternate_error_advice[] = N_(
+ );
  
-@@ -294,7 +318,7 @@ static int odb_source_files_write_object_stream(struct odb_source *source,
- 						struct object_id *oid)
+ static int add_possible_reference_from_superproject(
+-		struct odb_source *alt_odb, void *sas_cb)
++		struct odb_files_dir *alt_odb, void *sas_cb)
  {
- 	struct odb_source_files *files = odb_source_files_downcast(source);
--	return odb_source_write_object_stream(&files->loose->base, stream, oid);
-+	return odb_source_write_object_stream(&files->dirs->loose->base, stream, oid);
+ 	struct submodule_alternate_setup *sas = sas_cb;
+ 	size_t len;
+@@ -1779,12 +1780,12 @@ static int add_possible_reference_from_superproject(
+ 	 * If the alternate object store is another repository, try the
+ 	 * standard layout with .git/(modules/<name>)+/objects
+ 	 */
+-	if (strip_suffix(alt_odb->path, "/objects", &len)) {
++	if (strip_suffix(alt_odb->abspath, "/objects", &len)) {
+ 		struct repository alternate;
+ 		char *sm_alternate;
+ 		struct strbuf sb = STRBUF_INIT;
+ 		struct strbuf err = STRBUF_INIT;
+-		strbuf_add(&sb, alt_odb->path, len);
++		strbuf_add(&sb, alt_odb->abspath, len);
+ 
+ 		if (repo_init(&alternate, sb.buf, NULL) < 0)
+ 			die(_("could not get a repository handle for gitdir '%s'"),
+diff --git a/diagnose.c b/diagnose.c
+index 5092bf80d3..89240e47d6 100644
+--- a/diagnose.c
++++ b/diagnose.c
+@@ -59,13 +59,13 @@ static void dir_file_stats_objects(const char *full_path,
+ 			    (uintmax_t)st.st_size);
  }
  
- static int odb_source_files_begin_transaction(struct odb_source *source,
-@@ -330,7 +354,7 @@ static int too_many_loose_objects(struct odb_source_files *files, int limit)
- 	if (limit <= 0)
- 		return 0;
+-static int dir_file_stats(struct odb_source *source, void *data)
++static int dir_file_stats(struct odb_files_dir *source, void *data)
+ {
+ 	struct strbuf *buf = data;
  
--	if (odb_source_count_objects(&files->loose->base, ODB_COUNT_OBJECTS_APPROXIMATE,
-+	if (odb_source_count_objects(&files->dirs->loose->base, ODB_COUNT_OBJECTS_APPROXIMATE,
- 				     &loose_count) < 0)
- 		return 0;
+-	strbuf_addf(buf, "Contents of %s:\n", source->path);
++	strbuf_addf(buf, "Contents of %s:\n", source->abspath);
  
-@@ -349,7 +373,7 @@ static struct packed_git *find_base_packs(struct odb_source_files *files,
- 	struct packfile_list_entry *e;
- 	struct packed_git *base = NULL;
+-	for_each_file_in_pack_dir(source->path, dir_file_stats_objects,
++	for_each_file_in_pack_dir(source->abspath, dir_file_stats_objects,
+ 				  data);
  
--	for (e = packfile_store_get_packs(files->packed); e; e = e->next) {
-+	for (e = packfile_store_get_packs(files->dirs->packed); e; e = e->next) {
- 		if (e->pack->is_cruft)
- 			continue;
- 		if (limit) {
-@@ -374,7 +398,7 @@ static int too_many_packs(struct odb_source_files *files, int gc_auto_pack_limit
- 	if (gc_auto_pack_limit <= 0)
- 		return 0;
+ 	return 0;
+@@ -228,7 +228,7 @@ int create_diagnostics_archive(struct repository *r,
  
--	for (e = packfile_store_get_packs(files->packed); e; e = e->next) {
-+	for (e = packfile_store_get_packs(files->dirs->packed); e; e = e->next) {
- 		if (e->pack->pack_keep)
- 			continue;
- 		/*
-@@ -937,8 +961,8 @@ static int odb_source_files_fsck(struct odb_source *source,
- 	if (!(opts->flags & ODB_FSCK_FULL) && !source->local)
- 		return 0;
+ 	strbuf_reset(&buf);
+ 	strbuf_addstr(&buf, "--add-virtual-file=packs-local.txt:");
+-	dir_file_stats(r->objects->sources, &buf);
++	dir_file_stats(odb_source_files_downcast(r->objects->sources)->dirs, &buf);
+ 	odb_for_each_alternate(r->objects, dir_file_stats, &buf);
+ 	strvec_push(&archiver_args, buf.buf);
  
--	ret |= odb_source_fsck(&files->loose->base, opts);
--	ret |= odb_source_fsck(&files->packed->base, opts);
-+	ret |= odb_source_fsck(&files->dirs->loose->base, opts);
-+	ret |= odb_source_fsck(&files->dirs->packed->base, opts);
- 
- 	return ret;
+diff --git a/odb.c b/odb.c
+index 0200e26f21..9b70859c23 100644
+--- a/odb.c
++++ b/odb.c
+@@ -14,6 +14,7 @@
+ #include "object-name.h"
+ #include "odb.h"
+ #include "odb/source-inmemory.h"
++#include "odb/source-files.h"
+ #include "path.h"
+ #include "promisor-remote.h"
+ #include "quote.h"
+@@ -435,18 +436,19 @@ static void read_alternate_refs(struct repository *repo,
  }
-@@ -951,8 +975,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
  
- 	CALLOC_ARRAY(files, 1);
- 	odb_source_init(&files->base, odb, ODB_SOURCE_FILES, path, local);
--	files->loose = odb_source_loose_new(odb, path, local);
--	files->packed = odb_source_packed_new(odb, path, local);
-+	files->dirs = odb_files_dir_new(odb, path, local);
- 
- 	files->base.free = odb_source_files_free;
- 	files->base.close = odb_source_files_close;
-diff --git a/odb/source-files.h b/odb/source-files.h
-index 9630b5f962..7f465853b1 100644
---- a/odb/source-files.h
-+++ b/odb/source-files.h
-@@ -6,14 +6,37 @@
- struct odb_source_loose;
- struct odb_source_packed;
- 
-+/*
-+ * A single object directory that encapsulates access to both the loose and
-+ * packed backend. This can either be the primary or an alternate object
-+ * directory.
-+ */
-+struct odb_files_dir {
-+	/* Absolute path to the object directory. */
-+	char *abspath;
-+
-+	/* The two sources derived from this object directory. */
-+	struct odb_source_loose *loose;
-+	struct odb_source_packed *packed;
-+
-+	/*
-+	 * Whether this is the local object directory of the owning
-+	 * repository. Directories added via alternates are not local.
-+	 */
-+	bool local;
-+};
-+
-+struct odb_files_dir *odb_files_dir_new(struct object_database *odb,
-+					const char *path, bool local);
-+void odb_files_dir_free(struct odb_files_dir *dir);
-+
- /*
-  * The files object database source uses a combination of loose objects and
-  * packfiles. It is the default backend used by Git to store objects.
-  */
- struct odb_source_files {
- 	struct odb_source base;
--	struct odb_source_loose *loose;
--	struct odb_source_packed *packed;
-+	struct odb_files_dir *dirs;
+ struct alternate_refs_data {
++	struct repository *repo;
+ 	odb_for_each_alternate_ref_fn *fn;
+ 	void *payload;
  };
  
- /* Allocate and initialize a new object source. */
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 3de8e9590c..52556b4543 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -720,7 +720,7 @@ static int open_bitmap(struct repository *r,
- 	for (source = r->objects->sources; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
- 
--		if (!open_bitmap_for_source(files->packed, bitmap_git))
-+		if (!open_bitmap_for_source(files->dirs->packed, bitmap_git))
- 			found = true;
- 
- 		/*
-diff --git a/packfile.c b/packfile.c
-index 4fa5fd67c8..93b69d7f50 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -280,7 +280,7 @@ static int unuse_one_window(struct object_database *odb)
- 
- 	for (source = odb->sources; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
--		for (e = files->packed->packs.head; e; e = e->next)
-+		for (e = files->dirs->packed->packs.head; e; e = e->next)
- 			scan_windows(e->pack, &lru_p, &lru_w, &lru_l);
- 	}
- 
-@@ -458,7 +458,7 @@ static int close_one_pack(struct repository *r)
- 
- 	for (source = r->objects->sources; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
--		for (e = files->packed->packs.head; e; e = e->next) {
-+		for (e = files->dirs->packed->packs.head; e; e = e->next) {
- 			if (e->pack->pack_fd == -1)
- 				continue;
- 			find_lru_pack(e->pack, &lru_p, &mru_w, &accept_windows_inuse);
-@@ -1925,7 +1925,7 @@ int has_object_pack(struct repository *r, const struct object_id *oid)
- 
- 	for (source = r->objects->sources; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
--		if (!odb_source_read_object_info(&files->packed->base, oid, NULL, 0, NULL))
-+		if (!odb_source_read_object_info(&files->dirs->packed->base, oid, NULL, 0, NULL))
- 			return 1;
- 	}
- 
-@@ -1942,7 +1942,7 @@ int has_object_kept_pack(struct repository *r, const struct object_id *oid,
- 		struct odb_source_files *files = odb_source_files_downcast(source);
- 		struct packed_git **cache;
- 
--		cache = packfile_store_get_kept_pack_cache(files->packed, flags);
-+		cache = packfile_store_get_kept_pack_cache(files->dirs->packed, flags);
- 
- 		for (; *cache; cache++) {
- 			struct packed_git *p = *cache;
-diff --git a/packfile.h b/packfile.h
-index 6d30d15a00..fd1cf0ad6c 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -79,7 +79,7 @@ static inline struct repo_for_each_pack_data repo_for_eack_pack_data_init(struct
- 
- 	for (struct odb_source *source = repo->objects->sources; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
--		struct packfile_list_entry *entry = packfile_store_get_packs(files->packed);
-+		struct packfile_list_entry *entry = packfile_store_get_packs(files->dirs->packed);
- 		if (!entry)
- 			continue;
- 		data.source = source;
-@@ -100,7 +100,7 @@ static inline void repo_for_each_pack_data_next(struct repo_for_each_pack_data *
- 
- 	for (source = data->source->next; source; source = source->next) {
- 		struct odb_source_files *files = odb_source_files_downcast(source);
--		struct packfile_list_entry *entry = packfile_store_get_packs(files->packed);
-+		struct packfile_list_entry *entry = packfile_store_get_packs(files->dirs->packed);
- 		if (!entry)
- 			continue;
- 		data->source = source;
-diff --git a/repack-geometry.c b/repack-geometry.c
-index 15b3412950..b541c34af5 100644
---- a/repack-geometry.c
-+++ b/repack-geometry.c
-@@ -33,7 +33,7 @@ void pack_geometry_init(struct pack_geometry *geometry,
- 	struct packed_git *p;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct odb_source_files *files = odb_source_files_downcast(existing->source);
--	struct multi_pack_index *m = get_multi_pack_index(files->packed);
-+	struct multi_pack_index *m = get_multi_pack_index(files->dirs->packed);
- 
- 	repo_for_each_pack(existing->repo, p) {
- 		if (geometry->midx_layer_threshold_set && m &&
-diff --git a/repack-midx.c b/repack-midx.c
-index 64c7f8d0f4..25140569bd 100644
---- a/repack-midx.c
-+++ b/repack-midx.c
-@@ -564,7 +564,7 @@ static void repack_make_midx_append_plan(struct repack_write_midx_opts *opts,
- 	size_t steps_nr = 0, steps_alloc = 0;
- 
- 	odb_reprepare(opts->existing->repo->objects);
--	m = get_multi_pack_index(files->packed);
-+	m = get_multi_pack_index(files->dirs->packed);
- 
- 	if (opts->names->nr) {
- 		struct strbuf buf = STRBUF_INIT;
-@@ -620,7 +620,7 @@ static int repack_make_midx_compaction_plan(struct repack_write_midx_opts *opts,
- 			    opts->existing->repo);
- 
- 	odb_reprepare(opts->existing->repo->objects);
--	m = get_multi_pack_index(files->packed);
-+	m = get_multi_pack_index(files->dirs->packed);
- 
- 	for (i = 0; m && i < m->num_packs + m->num_packs_in_base; i++) {
- 		if (prepare_midx_pack(m, i)) {
-@@ -949,7 +949,7 @@ static int write_midx_incremental(struct repack_write_midx_opts *opts)
- 	size_t i;
- 	int ret = 0;
- 
--	get_midx_chain_filename(files->packed, &lock_name);
-+	get_midx_chain_filename(files->dirs->packed, &lock_name);
- 	if (safe_create_leading_directories(opts->existing->repo,
- 					    lock_name.buf))
- 		die_errno(_("unable to create leading directories of %s"),
-diff --git a/repack.c b/repack.c
-index d2aa58e134..e20431690c 100644
---- a/repack.c
-+++ b/repack.c
-@@ -60,7 +60,7 @@ void repack_remove_redundant_pack(struct repository *repo, const char *dir_name,
+-static int refs_from_alternate_cb(struct odb_source *alternate,
++static int refs_from_alternate_cb(struct odb_files_dir *alternate,
+ 				  void *payload)
  {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct odb_source_files *files = odb_source_files_downcast(repo->objects->sources);
--	struct multi_pack_index *m = get_multi_pack_index(files->packed);
-+	struct multi_pack_index *m = get_multi_pack_index(files->dirs->packed);
- 	strbuf_addf(&buf, "%s.pack", base_name);
- 	if (m && files->base.local && midx_contains_pack(m, buf.buf)) {
- 		clear_midx_file(repo);
-diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
-index 83b07c6236..3f4bafff61 100644
---- a/t/helper/test-read-midx.c
-+++ b/t/helper/test-read-midx.c
-@@ -22,7 +22,7 @@ static struct multi_pack_index *setup_midx(const char *object_dir,
+ 	struct strbuf path = STRBUF_INIT;
+ 	size_t base_len;
+ 	struct alternate_refs_data *cb = payload;
  
- 	source = odb_find_source(the_repository->objects, object_dir);
- 	if (source) {
--		packed = odb_source_files_downcast(source)->packed;
-+		packed = odb_source_files_downcast(source)->dirs->packed;
- 	} else {
- 		packed = odb_source_packed_new(the_repository->objects,
- 					       object_dir, false);
+-	if (!strbuf_realpath(&path, alternate->path, 0))
++	if (!strbuf_realpath(&path, alternate->abspath, 0))
+ 		goto out;
+ 	if (!strbuf_strip_suffix(&path, "/objects"))
+ 		goto out;
+@@ -458,7 +460,7 @@ static int refs_from_alternate_cb(struct odb_source *alternate,
+ 		goto out;
+ 	strbuf_setlen(&path, base_len);
+ 
+-	read_alternate_refs(alternate->odb->repo, path.buf, cb->fn, cb->payload);
++	read_alternate_refs(cb->repo, path.buf, cb->fn, cb->payload);
+ 
+ out:
+ 	strbuf_release(&path);
+@@ -468,9 +470,11 @@ static int refs_from_alternate_cb(struct odb_source *alternate,
+ void odb_for_each_alternate_ref(struct object_database *odb,
+ 				odb_for_each_alternate_ref_fn cb, void *payload)
+ {
+-	struct alternate_refs_data data;
+-	data.fn = cb;
+-	data.payload = payload;
++	struct alternate_refs_data data = {
++		.fn = cb,
++		.payload = payload,
++		.repo = odb->repo,
++	};
+ 	odb_for_each_alternate(odb, refs_from_alternate_cb, &data);
+ }
+ 
+@@ -481,7 +485,7 @@ int odb_for_each_alternate(struct object_database *odb,
+ 	int r = 0;
+ 
+ 	for (alternate = odb->sources->next; alternate; alternate = alternate->next) {
+-		r = cb(alternate, payload);
++		r = cb(odb_source_files_downcast(alternate)->dirs, payload);
+ 		if (r)
+ 			break;
+ 	}
+diff --git a/odb.h b/odb.h
+index 797eecbb94..3715351bb3 100644
+--- a/odb.h
++++ b/odb.h
+@@ -12,6 +12,7 @@
+ struct cached_object_entry;
+ struct list_objects_filter_options;
+ struct odb_source_inmemory;
++struct odb_files_dir;
+ struct packed_git;
+ struct repository;
+ struct strbuf;
+@@ -257,7 +258,7 @@ void odb_restore_primary_source(struct object_database *odb,
+  * function returns a non-zero value, in which case the value is bubbled up
+  * from the callback.
+  */
+-typedef int odb_for_each_alternate_fn(struct odb_source *, void *);
++typedef int odb_for_each_alternate_fn(struct odb_files_dir *, void *);
+ int odb_for_each_alternate(struct object_database *odb,
+ 			   odb_for_each_alternate_fn cb, void *payload);
+ 
 
 -- 
 2.56.0.379.gc618271300.dirty
