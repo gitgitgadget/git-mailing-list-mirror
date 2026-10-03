@@ -1,410 +1,109 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCCC2931EE
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 13:11:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BE3134CCF
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 13:38:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791033062; cv=none; b=bwEs3lFvdzVmByFK037lpcqLeQyvPVptiHN5CnjU+VqRfwPgCaPdS16d81B/tZyiV3BtgGYMFY9GkcSVUZDGe3nIZIBNObysgEC07VAFQFwDmMslH1+d65ZVOdVOeTVZiLNnKotTMy6WqP0yij4PDBC53RHEp+AzSnnzn7ru8G8=
+	t=1791034738; cv=none; b=dO5xDnWld0oXLXPpb31dOiziLGQ5XgkQHLyQkhDeS2+jZ2fqU2Lyvzhj7uRKmQp0GZuLql+pRb3myvP7AVmsaRmWCCtJY7L2RvAAHVSnvxMCEdkcazh50zhFGlkpNFJr73MsowsFibI2gTkscL6pX1x86/O0nG3PztD56auRJlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791033062; c=relaxed/simple;
-	bh=JEe+DOliG6y2/6drSlnkXMpHqHamvG6xDH9rPBiGK+w=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=tLlF4rqQTHczOD5D+kH6oQR5bbTgalIxIsQjwQbFdf+vJse2h6Q5I8WySf0VJkLdIzpN1gRxVP5OoVfHob9QjfjwXQwLDBqt24FxUsbcJdvLlei+cLi1qjPrvWs6yPmtDHhulhuqlHApi8mvGLwZ+djSbqUdPKWYQFKflvePC3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qL7Rr/xs; arc=none smtp.client-ip=209.85.160.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791034738; c=relaxed/simple;
+	bh=Av33r+ba3fY7J6RVztxLJhQTSgGM6V7MM31zHJTHRDY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=WwvTset1m+1iB477kGFnoax4H4gGXsMZyqly/LoCW/vJRLX6M0zdW71QiGH+3JbnZxlfJDTRPOjF/loNQXGTDZfb/f25DeFF3wHtSZm9DcLUKiRzkWX6rJmQ6kmwXKXPziACx00DdJmIY3tdV4YH3/rVAH9xldKxYNrWVlK3lN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=5ouma.me; spf=pass smtp.mailfrom=5ouma.me; dkim=pass (2048-bit key) header.d=5ouma.me header.i=@5ouma.me header.b=KtBBNWuW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GW5ZeOp+; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=5ouma.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=5ouma.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qL7Rr/xs"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-49dfaa16190so391780fac.1
-        for <git@vger.kernel.org>; Sat, 03 Oct 2026 06:11:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791033060; x=1791637860; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=P9ileaihWDmF0SMPhTL4IHYxY73We02lxeJDFDHNK0E=;
-        b=qL7Rr/xsm5ePCaz9AAlZd2ERGDCX0tAU0ft2iFoNo+5bL3r4egwHXIKXRRqGOCAyjG
-         +GuC5/5+ENQ0i5nQXGqlwarncBxEu28o4bTwNcCyVISdT1GYQN/DsQhlAlZcT3YAnqKa
-         93XJToB0+C7rJ0OpzZ+bML3xDdeJYD71qlVi1HXBBY3acQjQIx2jcGQi597XoFYfieSN
-         en2VAAEc2Er+TFsaDFEmttOhL9RQ17FayMJWfFmDhMPYDgBrcNVLOqewCx3qVglt4Ow6
-         xP7rofN4qb5ZKJPgOPahBsdcYrjsIoBk8sq8kLh6/C16b2MON7fxXUWq6l/wBTep4DSr
-         KnIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791033060; x=1791637860;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=P9ileaihWDmF0SMPhTL4IHYxY73We02lxeJDFDHNK0E=;
-        b=mbk5N5XJ/v6jnCnozDsxFtbNx877gz3NFyVg/+xQApJWpjR/DCb3p7/nRW32n51wNZ
-         aPsdCKLOEHqUmX4P27Tn3/E6GxTF4BbhWHiZonAk/QoHaVeKBLo4/kHiM4PVrO2VyKnJ
-         RacoYHk8ezUIoJR48mA/M7wo3yjvrwya+ykamRkFUapKSmRWbgtOp9XRQytMwg8c8Hfr
-         m3LMZdUPdC/QRFAutcZk6kvGgz546Zu+slZKhMjuLYoTiYZNue0ZYu9EN5VWO17f82W4
-         VOddKTbjOfnuG2N+y9UHZlioLIaVfoghta/2pIboavSMrrK6iQKNUOV1aqXCjGO3WXMQ
-         Pcvw==
-X-Gm-Message-State: AFq9FYLXq3wIcwD6RzVEqAnHGoAUNnRCr/aw0xa55EZY1bhOgSk7slaF
-	T/00mk7VooGbwIU7/0KlTh1CQfu6hb55mWZ85i9sKdvukzNS45J5Q9y5PNx/DpUp
-X-Gm-Gg: AYBFou0/8nGh8SdfpqFN7UW/Rtr5kegi4LaZzY1qq4P105LrD541IAAph+nOQethmNG
-	nt3Q/EiRQ3ksBqK5WksKBzm8jhAuVGGqGDcFE/SnrmxOMGOjtDcJIvRC2a2Kol02IdBYJ2FYMCP
-	OpX5/OKKXrl8eJFGh6BIkIL1ILmW/fgMup75SANNdnP+OMhxVbPRDZmCTHYzoplw5GxkyzFkVvP
-	1Mawh46RDRy/er7PjQggmTFA19QZUp+9vK0dC7xcqvgOvOWy2xZk9sIoZlojNdXMS57N364931U
-	0bdDtIBsHt89JIsXCknRjAqNQRtFSZ+5l3vE1FvHEYmrA0KpGlE/jaSCP2FU420k4jlPgByShby
-	EVTMeYc86s7cjecX4nGPOHv+pM+ZkTY0w7yVl1rSr9L4aFFf2egnESTnoxCVTxqHA8wFKKr8QTJ
-	J6FglwIwtk8bo2FdWW8IwSgOTazzLp6Sv3YxHMtvss9oe3xxzKZDVIvfQQPe3S1b0IoJX7Qxwt9
-	7sKxoAYIZkg
-X-Received: by 2002:a05:6870:3329:b0:470:e97e:8f87 with SMTP id 586e51a60fabf-49df050bb6dmr6737111fac.23.1791033059861;
-        Sat, 03 Oct 2026 06:10:59 -0700 (PDT)
-Received: from [127.0.0.1] ([20.98.133.162])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-49e16f853cfsm4816396fac.17.2026.10.03.06.10.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Oct 2026 06:10:58 -0700 (PDT)
-Message-Id: <pull.2246.v2.git.1791033057232.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2246.git.1790957227881.gitgitgadget@gmail.com>
-References: <pull.2246.git.1790957227881.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 03 Oct 2026 13:10:57 +0000
-Subject: [PATCH v2] doc: don't require a SYNOPSIS in section 7
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=5ouma.me header.i=@5ouma.me header.b="KtBBNWuW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GW5ZeOp+"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id CEE2FEC03DD
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 09:38:55 -0400 (EDT)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-06.internal (MEProxy); Sat, 03 Oct 2026 09:38:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=5ouma.me; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1791034735;
+	 x=1791121135; bh=Av33r+ba3fY7J6RVztxLJhQTSgGM6V7MM31zHJTHRDY=; b=
+	KtBBNWuW9IeqeqbPVGJDj2PNKC3C01s+fwO24s4U2lZXWAK+gli3Rx0I5sfC3RsA
+	IY20SmVmpPzxuX14tLFMg7xM3tC7NS8bvfkjHZXfxijLcnO7Wel4ZHV/0IWwGCDD
+	k2UPk9gTgU68vD3A1mbcnkLLr3+tWRn4zXE0BkudFGhy57IT0+cYRJ5m+jt2SiqG
+	EZFh0oF5fCX5lQ7gLcLFCO3uGPuM48ZiJusR7KkU5dMsO8716ASVr4lLDuB9O/Nk
+	x3nWkeYxt4xuTiKs6Qvd0PHyX3Odufm9qocAIiZl67u3fAP5PlL06WYrajUN0Zrj
+	aWOPwfG3ufqgjqB68wcs2g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791034735; x=
+	1791121135; bh=Av33r+ba3fY7J6RVztxLJhQTSgGM6V7MM31zHJTHRDY=; b=G
+	W5ZeOp+iLuUK5tjaSqXkv3wTcbpQkiS3sU5E0/w2AnqcFDbFj7pRMhXMRiWJWv7C
+	9BpwvZAZHXzNvM3TPqjoJ3fGj4RO/fKVuF7ThvapoSuZTSk366o6JSKVFsHq2tnn
+	jaQgBy0jSCuc5xIi+AeMBgqFGQdcgqvNEFxuHemhxsDNnikm/CtlXWhnIwzcEUhK
+	bOTuo45xcjBQcSobB1m+Jsrj622sLohOqyqY07PN9ixKjhr7OTmnBkBqurBLT8gM
+	D1KwDSFtJXvsew5kLbwWVuv4zYgunJHxiq6F7HhnvsN9iWsdLkV+ZOmozDukJ39T
+	MplxCCqrsP5gXhwsf6nIg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=sign d=5ouma.me a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791034735; d=5ouma.me;
+	mf=PGdpdEA1b3VtYS5tZT4=; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:fLKeXOelPagAngu+zYMF4k6vsG3FxVX2HYmRzPtlla1acgZ
+	9m8aNI2qmVNBuctbSsqgek1SzA1pLEKkDGkrOurRtIZhi9CR8rYn6SlG5CKbfY39
+	nKfP+JX44V3Akngmy7q+2HJImUnTgF5JL1UvMUuR+S3BukyjxGYGY4Qa5Rn8f1Rn
+	bni92FE4/qq9jxc6gybkv3hvJpKxebEKKs9xCoRyg5grmj6naLm21Fe3iVJU5Zfx
+	IQNJhtjW+JDbkcE4g/odfOfd6WNvorfDYmHTWINDtfQPbCygKlP74gAvmiVKjKxV
+	CmzG+KKcXHxkYmKwhb/Yur1R+UgzavQ8iPePsNA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:3J7NIg2ESqBJ4j6zZ5IShsyP0X2hKgIns7dEaXHTPW4=:Av33r+ba3fY7J6RVztxLJhQTSgGM6V7MM31zHJTHRDY=;
+X-ME-Sender: <xms:bwXBat_v_FsIEFgAoxBMG6pbFO4kz8WA0-lry661x44QFZ8ssgaPLw>
+    <xme:bwXBashPV8myHL1RPVfRoaLBsq-osHZpnE9v6T9FXrEfp3KG2Fw6M3lOCjvdIswEi
+    7fDkly9YcEHh_g4ljKaG4UbirVoYoNM2-266jpeB7EXwCF7W4zovGKb>
+X-ME-Proxy-Cause: dmFkZTFxhFrV+AzWa2Pp2W38NqlE1HAQkoVH7Ts5iA+RZtlDVkYtGh2ElUIXsRwN3KJP/N
+    JQ9kSjVeyD0/KP52mwhsXg2AuYD4ajFoPYJhnv4fX68PvirSxgrA9nPdx9qgKw/1U/6TwI
+    5XhD1A6hI8w3MyLjyqCJ3wQHEmgPmzh78I7Wmx5ZIVLT+57hIjattIZFzi8Qu9ryQ58oqs
+    +4u6CAPQJ7ELfSwt+yOs7nQkwCReq2NX89xIKD9C2ZBezQA5LTU7nTZdGfC1EGZZkYYj7l
+    qojvD8+ULabbilM7CB1SyyszK4lJUdpgt4D6/rALfyiN1vbFu+mr97YHjxiRKdB2bzLaqT
+    YfoG9janj1WJjtoDR2dqSpcBNf18OC5jSCDhACzMlhDgJMyrXmmL19hYP390icQsszdyL3
+    +gkPtkiSrgCT53s2bH9qYcC0Qstfle+y6RvP9wpkkrTl4wPFp+HaDf1dYtWSIKTUuiXzjf
+    FoKH4InC/1bO+khUuy18GdOrRepPX+8iM8l7bWiXrMD/f6O9dPUgY914Vc+/SyLOBMiG8k
+    nzA3hX6QMrjLz3l41Kn6X/rP6QKa0RriaDAaih1g+/2nI8D2c5dp5uZFvJkdmqtTzZyr4H
+    oOKhNARX0bOJziWll5AYH/gyftJ2fgEFF06m1sK5jTCJQUGdBZ04OoHJ/4cA
+X-ME-Proxy: <xmx:bwXBav49a-5oOdbQTYy09WUmQh2hjohBVDoPpO7sjJ39Z6eAQ1VL7g>
+    <xmx:bwXBasocTjDVzCNAWndW9erQeR80U7AC_z1XomXXO2515CudcZUF4w>
+    <xmx:bwXBapg5ud8wkp4QXFoHXbeAMV3YSkkeYpDK1G8Jl9mTIvNNkEND7A>
+    <xmx:bwXBauKWTZ6OqJ3xoVX7L83MUbGse66FFXIWY6FyS3Kvvh3X8Yx5jA>
+    <xmx:bwXBajRmKyhFjcKk7XqRcV1VBBkYrngrs0ndMhlt554gUI_dXfdM5Xuz>
+Feedback-ID: i4b264863:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id A1781700065; Sat,  3 Oct 2026 09:38:55 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Tuomas Ahola <taahol@utu.fi>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+Date: Sat, 03 Oct 2026 22:38:35 +0900
+From: Souma <git@5ouma.me>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Message-Id: <2ddd0d1c-82e8-4793-b109-6c37a88bda23@app.fastmail.com>
+In-Reply-To: <xmqq7bjzvhxq.fsf@gitster.g>
+References: <20260703145037.69832-1-git@5ouma.me>
+ <20261002132718.3830-1-git@5ouma.me> <xmqq7bjzvhxq.fsf@gitster.g>
+Subject: Re: [PATCH v4 0/2] history: sign rewritten commits
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Julia Evans <julia@jvns.ca>
-
-Remove the SYNOPSIS section from the section 7 man pages where
-appropriate, to avoid having a section that contains no information.
-It's not the norm in section 7 to always require a SYNOPSIS.
-
-Update the perl script with a special case for section 7.
-
-Tested by running `make lint-docs`, and looked at the renaming synopses
-with this fish script snippet:
-
-for i in *.7
-   echo $i; grep SYNOPSIS -A 5 (string replace .7 .adoc $i)
-end
-
-Co-authored-by: Tuomas Ahola <taahol@utu.fi>
-Signed-off-by: Tuomas Ahola <taahol@utu.fi>
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
-    doc: don't require a SYNOPSIS in section 7
-    
-    Changes in v2: Tuomas rewrote the Perl script changes to be both more
-    declarative and and more correct. Previously it didn't work if there
-    were multiple files passed on the command line.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2246%2Fjvns%2Fno-synopsis-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2246/jvns/no-synopsis-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2246
-
-Range-diff vs v1:
-
- 1:  b6f8878a1f ! 1:  d6004e0c6b doc: don't require a SYNOPSIS in section 7
-     @@ Commit message
-             echo $i; grep SYNOPSIS -A 5 (string replace .7 .adoc $i)
-          end
-      
-     +    Co-authored-by: Tuomas Ahola <taahol@utu.fi>
-     +    Signed-off-by: Tuomas Ahola <taahol@utu.fi>
-          Signed-off-by: Julia Evans <julia@jvns.ca>
-      
-       ## Documentation/gitcli.adoc ##
-     @@ Documentation/gitworkflows.adoc: NAME
-       
-      
-       ## Documentation/lint-man-section-order.perl ##
-     +@@ Documentation/lint-man-section-order.perl: my %SECTIONS;
-     + 		},
-     + 		'SYNOPSIS' => {
-     + 			required => 1,
-     ++			optional_in_man_sections => {
-     ++				'7' => 1,
-     ++			},
-     + 			order => $order++,
-     + 		},
-     + 		'DESCRIPTION' => {
-      @@ Documentation/lint-man-section-order.perl: sub report {
-       	$exit_code = 1;
-       }
-       
-     -+# assume the first line is formatted like 'gitglossary(7)'
-     -+my $firstline = <>;
-     -+$firstline =~ m/\((\d)\)/;
-     -+my $man_section_number = $1;
-     -+
-     ++my $man_section_number;
-       my $last_was_section;
-       my @actual_order;
-       while (my $line = <>) {
-     + 	chomp $line;
-     ++
-     ++	if ($. == 1) {
-     ++		# assume the first line is formatted like 'gitglossary(7)'
-     ++		$line =~ m/\((\d)\)/;
-     ++		$man_section_number = $1;
-     ++	}
-     ++
-     + 	if ($line =~ $SECTION_RX) {
-     + 		push @actual_order => $line;
-     + 		$last_was_section = 1;
-      @@ Documentation/lint-man-section-order.perl: while (my $line = <>) {
-     + 		@actual_sections{@actual_order} = ();
-       
-       		for my $section (sort keys %SECTIONS) {
-     - 			next if !$SECTIONS{$section}->{required} or exists $actual_sections{$section};
-     -+			# Synopsis is not required in section 7
-     -+			next if ($section eq "SYNOPSIS" && $man_section_number eq "7");
-     +-			next if !$SECTIONS{$section}->{required} or exists $actual_sections{$section};
-     ++			next if !$SECTIONS{$section}->{required} or
-     ++				$SECTIONS{$section}->{optional_in_man_sections}->{$man_section_number} or
-     ++				exists $actual_sections{$section};
-       			report("has no required '$section' section!");
-       		}
-       
-
-
- Documentation/gitcli.adoc                 |  5 -----
- Documentation/gitcore-tutorial.adoc       |  4 ----
- Documentation/gitdatamodel.adoc           |  4 ----
- Documentation/giteveryday.adoc            |  5 -----
- Documentation/gitfaq.adoc                 |  4 ----
- Documentation/gitglossary.adoc            |  4 ----
- Documentation/gitpacking.adoc             |  4 ----
- Documentation/gitrevisions.adoc           |  5 -----
- Documentation/gittutorial-2.adoc          |  5 -----
- Documentation/gittutorial.adoc            |  5 -----
- Documentation/gitworkflows.adoc           |  6 ------
- Documentation/lint-man-section-order.perl | 15 ++++++++++++++-
- 12 files changed, 14 insertions(+), 52 deletions(-)
-
-diff --git a/Documentation/gitcli.adoc b/Documentation/gitcli.adoc
-index 6815d6bfb7..9c4598e29c 100644
---- a/Documentation/gitcli.adoc
-+++ b/Documentation/gitcli.adoc
-@@ -5,11 +5,6 @@ NAME
- ----
- gitcli - Git command-line interface and conventions
- 
--SYNOPSIS
----------
--gitcli
--
--
- DESCRIPTION
- -----------
- 
-diff --git a/Documentation/gitcore-tutorial.adoc b/Documentation/gitcore-tutorial.adoc
-index 2122aeb976..71fda63a1c 100644
---- a/Documentation/gitcore-tutorial.adoc
-+++ b/Documentation/gitcore-tutorial.adoc
-@@ -5,10 +5,6 @@ NAME
- ----
- gitcore-tutorial - A Git core tutorial for developers
- 
--SYNOPSIS
----------
--git *
--
- DESCRIPTION
- -----------
- 
-diff --git a/Documentation/gitdatamodel.adoc b/Documentation/gitdatamodel.adoc
-index 56b7635c19..8d9be02036 100644
---- a/Documentation/gitdatamodel.adoc
-+++ b/Documentation/gitdatamodel.adoc
-@@ -5,10 +5,6 @@ NAME
- ----
- gitdatamodel - Git's core data model
- 
--SYNOPSIS
----------
--gitdatamodel
--
- DESCRIPTION
- -----------
- 
-diff --git a/Documentation/giteveryday.adoc b/Documentation/giteveryday.adoc
-index 6cfdd0e07b..0c9db2f150 100644
---- a/Documentation/giteveryday.adoc
-+++ b/Documentation/giteveryday.adoc
-@@ -5,11 +5,6 @@ NAME
- ----
- giteveryday - A useful minimum set of commands for Everyday Git
- 
--SYNOPSIS
----------
--
--Everyday Git With 20 Commands Or So
--
- DESCRIPTION
- -----------
- 
-diff --git a/Documentation/gitfaq.adoc b/Documentation/gitfaq.adoc
-index f6c9b9d9f7..b26e4e3a09 100644
---- a/Documentation/gitfaq.adoc
-+++ b/Documentation/gitfaq.adoc
-@@ -5,10 +5,6 @@ NAME
- ----
- gitfaq - Frequently asked questions about using Git
- 
--SYNOPSIS
----------
--gitfaq
--
- DESCRIPTION
- -----------
- 
-diff --git a/Documentation/gitglossary.adoc b/Documentation/gitglossary.adoc
-index b046d9cb29..eb1e60832e 100644
---- a/Documentation/gitglossary.adoc
-+++ b/Documentation/gitglossary.adoc
-@@ -5,10 +5,6 @@ NAME
- ----
- gitglossary - A Git Glossary
- 
--SYNOPSIS
----------
--*
--
- DESCRIPTION
- -----------
- 
-diff --git a/Documentation/gitpacking.adoc b/Documentation/gitpacking.adoc
-index e6de6ec824..b0d952c797 100644
---- a/Documentation/gitpacking.adoc
-+++ b/Documentation/gitpacking.adoc
-@@ -5,10 +5,6 @@ NAME
- ----
- gitpacking - Advanced concepts related to packing in Git
- 
--SYNOPSIS
----------
--gitpacking
--
- DESCRIPTION
- -----------
- 
-diff --git a/Documentation/gitrevisions.adoc b/Documentation/gitrevisions.adoc
-index 7146117de5..4412f84d83 100644
---- a/Documentation/gitrevisions.adoc
-+++ b/Documentation/gitrevisions.adoc
-@@ -5,11 +5,6 @@ NAME
- ----
- gitrevisions - Specifying revisions and ranges for Git
- 
--SYNOPSIS
----------
--gitrevisions
--
--
- DESCRIPTION
- -----------
- 
-diff --git a/Documentation/gittutorial-2.adoc b/Documentation/gittutorial-2.adoc
-index 8bdb7d0bd3..6a4d482ed6 100644
---- a/Documentation/gittutorial-2.adoc
-+++ b/Documentation/gittutorial-2.adoc
-@@ -5,11 +5,6 @@ NAME
- ----
- gittutorial-2 - A tutorial introduction to Git: part two
- 
--SYNOPSIS
----------
--[verse]
--git *
--
- DESCRIPTION
- -----------
- 
-diff --git a/Documentation/gittutorial.adoc b/Documentation/gittutorial.adoc
-index 519b8d8be2..03120ba191 100644
---- a/Documentation/gittutorial.adoc
-+++ b/Documentation/gittutorial.adoc
-@@ -5,11 +5,6 @@ NAME
- ----
- gittutorial - A tutorial introduction to Git
- 
--SYNOPSIS
----------
--[verse]
--git *
--
- DESCRIPTION
- -----------
- 
-diff --git a/Documentation/gitworkflows.adoc b/Documentation/gitworkflows.adoc
-index 59305265c5..ad02828bff 100644
---- a/Documentation/gitworkflows.adoc
-+++ b/Documentation/gitworkflows.adoc
-@@ -5,12 +5,6 @@ NAME
- ----
- gitworkflows - An overview of recommended workflows with Git
- 
--SYNOPSIS
----------
--[verse]
--git *
--
--
- DESCRIPTION
- -----------
- 
-diff --git a/Documentation/lint-man-section-order.perl b/Documentation/lint-man-section-order.perl
-index 02408a0062..160c65e1be 100755
---- a/Documentation/lint-man-section-order.perl
-+++ b/Documentation/lint-man-section-order.perl
-@@ -13,6 +13,9 @@ my %SECTIONS;
- 		},
- 		'SYNOPSIS' => {
- 			required => 1,
-+			optional_in_man_sections => {
-+				'7' => 1,
-+			},
- 			order => $order++,
- 		},
- 		'DESCRIPTION' => {
-@@ -53,10 +56,18 @@ sub report {
- 	$exit_code = 1;
- }
- 
-+my $man_section_number;
- my $last_was_section;
- my @actual_order;
- while (my $line = <>) {
- 	chomp $line;
-+
-+	if ($. == 1) {
-+		# assume the first line is formatted like 'gitglossary(7)'
-+		$line =~ m/\((\d)\)/;
-+		$man_section_number = $1;
-+	}
-+
- 	if ($line =~ $SECTION_RX) {
- 		push @actual_order => $line;
- 		$last_was_section = 1;
-@@ -92,7 +103,9 @@ while (my $line = <>) {
- 		@actual_sections{@actual_order} = ();
- 
- 		for my $section (sort keys %SECTIONS) {
--			next if !$SECTIONS{$section}->{required} or exists $actual_sections{$section};
-+			next if !$SECTIONS{$section}->{required} or
-+				$SECTIONS{$section}->{optional_in_man_sections}->{$man_section_number} or
-+				exists $actual_sections{$section};
- 			report("has no required '$section' section!");
- 		}
- 
-
-base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
--- 
-gitgitgadget
+Yes, this is expected. The output is an internal completion protocol wit=
+h options before =C2=A0--=C2=A0 and generated negated options after it. =
+Other similar commands, such as git rebase and git commit, use the same =
+parse-options behavior and produce the same pattern.
