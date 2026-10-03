@@ -1,105 +1,216 @@
-Received: from glass.ash.relay.mailchannels.net (glass.ash.relay.mailchannels.net [23.83.222.70])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FBC372661
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 21:17:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.222.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E168538DC71
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 21:17:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791062253; cv=none; b=PK99b8pCcuxN3MReiMcYTbNFzdg+XaXpt4KUYhLjAOEq6zshOxNuGt+HrSWZQSbLWUvtG4mH7jACV/aF6J4qF+UjcUrWCRWE3gyOhUcdgHffNhJpfo5V4eH/C3nSyuIfAU3aYj3V/V6+j1TFhvwXZ7CXlbqSAoZs1vkCLRH21Yc=
+	t=1791062263; cv=none; b=k/Lc0HG531ZL+ylOqO0EIuNGb+iisncNrCs1VhfkILf6doIZD4M8AM7Fg0hJ9Qpy8cE7b1sbj4fRNFGzqRDI4GddiTO0gs61rp8rjf4UufApHsIZxQEC+pFm9MYP/PUllhsPbWC+UnO1DMARc5WuUkSxRDuVSn+HqZuWnCkmojU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791062253; c=relaxed/simple;
-	bh=/G0kaBecXrRK+Wv3iDCtIBb9XyYhtPtBPR4dWo1iEkA=;
+	s=arc-20240116; t=1791062263; c=relaxed/simple;
+	bh=sInEgSP1ptAfEs717opYozv7zEHXUsQID3bMEeSjM4E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GwWpRxZnyLSfYv1y+8ZfuzC8x2eEDb3DxlaO/qbCkS62LYfv+Q5IBUtwKslx4fwwezbP9jV2+yM65Rit0B3xG+sVBEvJ9ptJr3yZlkrf9pHNHQ9SeEqw6+revSh/tUIyUD94w/GC8NacunNtUo6jo70IvMzsqJ1HN2YSRxaDvE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=t7opFO/h; arc=none smtp.client-ip=23.83.222.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=uRlFhBW3hpQR2i4ARNSho6bzOQaNEizCYDxaOxBem50Iuu75+0Qhr1wgF9PWtknyqDH4snGzURV0OyCpffGZZ7Wlak6jaleKjmbEsaqsJgXJDBBcFAtmSx5H10UiJTQ5bvTIMRAx0V9oE1x+v+j5dWUtfQXdVbsEzCfoEn7gBh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kvHRHKlI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="t7opFO/h"
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 6A7A46268C;
-	Sat, 03 Oct 2026 21:17:25 +0000 (UTC)
-Received: from pdx1-sub0-mail-a220.dreamhost.com (100-96-9-38.trex-nlb.outbound.svc.cluster.local [100.96.9.38])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 4243762AB8;
-	Sat, 03 Oct 2026 21:17:25 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
-X-MailChannels-Auth-Id: dreamhost
-X-Befitting-Versed: 7086121e4d9fa700_1791062245327_2464733767
-X-MC-Loop-Signature: 1791062245327:1961212498
-X-MC-Ingress-Time: 1791062245327
-Received: from pdx1-sub0-mail-a220.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.96.9.38 (trex/8.0.2);
-	Sat, 03 Oct 2026 21:17:25 +0000
-Received: from ubby (unknown [24.28.102.31])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a220.dreamhost.com (Postfix) with ESMTPSA id 4hxz4h41mdzWs;
-	Sat,  3 Oct 2026 14:17:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1791062245;
-	bh=W/ri64Woei5tBWbhpynL8m6EjS7hIvTWDP3clKrgfbc=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=t7opFO/hsvX2x37iY9g371dLOTndgMhqtKVkEnF3/xPt0nicLMgnOAMNpo95sd3ws
-	 RAJ59my682mS4F/t6YRhDEVwFM8ox4Q/IL+9CqaB3PI9u8i2qB6klL82KsZjoj4Mrn
-	 9l/U2HIH0PGlTElOrDTytvCw0MZDhHF41vdVj1NGsAMYhrA6hPcxDkJQXb83x4Ky07
-	 hIxAMuhugZwHvHdGpwFFP4/yyr/uLEJDnZ+oAnoCSONmIgjzYzqp0Eb1LBxv5RNleA
-	 Gp4usHlDWTo9DAv81nUFKmk3SON0PoP1p30EF+9ZM9ajjv1z6ZkvYbFCq+q3piQ2l3
-	 JuUo+V4wwjc9Q==
-Date: Sat, 3 Oct 2026 16:17:22 -0500
-From: Nico Williams <nico@cryptonector.com>
-To: Alejandro Colomar <alx@kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ben Boeckel <mathstuf@gmail.com>,
-	Viktor Dukhovni <viktor@openssl.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kvHRHKlI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60FC31F0089B;
+	Sat,  3 Oct 2026 21:17:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791062261;
+	bh=hQteIY0BmHXCXls519TNyku1lC+QIhwZbsX5auDh7cA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=kvHRHKlI+JrFzJQ8QhMVCfbxDZR5SYw3EgEkZjtxn2K9tvFbQXRLrvpKJSjew5i6n
+	 X7ZLS07CPWbwEDZQOQnksVkkTcMfiiSrHXBpLZbsOP0Eu2m3mwBT0fxlMaws0HpFn2
+	 AQKQr+k7vuHen3EultWLYKL7yPe7LzkpJkRk5CwH72RNUZUfP+syMj7EHSbBQbk/3c
+	 YGp7FNgV3WJ8ibvKBLeA78B+KjijN6NEg9iHT0a8Tos8eydOJK9oTt2FJElVO32y1S
+	 zISI91i5/e6ZnTn6X0dzuWpZNkHa09n+IAmwm98kgAJDKWfwFJntR0WK2eScWZ9D4B
+	 UwqHSB2BFX/nQ==
+Date: Sat, 3 Oct 2026 23:17:34 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: Nico Williams <nico@cryptonector.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	Ben Boeckel <mathstuf@gmail.com>, Viktor Dukhovni <viktor@openssl.org>
 Subject: Re: [RFC] git-brebase
-Message-ID: <asFw4gsn253MQtxp@ubby>
+Message-ID: <asFwatHbzTrGMAiK@debian>
 References: <asFRVdMTpshsazgM@debian>
  <asFoDZKscLKqaIf+@ubby>
- <asFqLv3hMEE7yEOC@ubby>
- <asFtLJDJliQBPe1c@debian>
+ <asFoq4gnl1caJM2U@debian>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="zher2donqvx2yob7"
 Content-Disposition: inline
-In-Reply-To: <asFtLJDJliQBPe1c@debian>
+In-Reply-To: <asFoq4gnl1caJM2U@debian>
 
-On Sat, Oct 03, 2026 at 11:07:04PM +0200, Alejandro Colomar wrote:
-> Since --abort doesn't go all the way back, I think --continue shouldn't
-> continue all the way forward, for consistency.
 
-Fair.
+--zher2donqvx2yob7
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: Nico Williams <nico@cryptonector.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	Ben Boeckel <mathstuf@gmail.com>, Viktor Dukhovni <viktor@openssl.org>
+Subject: Re: [RFC] git-brebase
+Message-ID: <asFwatHbzTrGMAiK@debian>
+References: <asFRVdMTpshsazgM@debian>
+ <asFoDZKscLKqaIf+@ubby>
+ <asFoq4gnl1caJM2U@debian>
+MIME-Version: 1.0
+In-Reply-To: <asFoq4gnl1caJM2U@debian>
 
-> If that's desired behavior, it should go in this tool, and not as part
-> of git-rebase(1).  git-rebase(1) is a much simpler and much more
-> fundamental tool, which is used to build this more complex tool.
-> That's one reason I'm rather opposed to having this as part of
-> git-rebase(1); it would confuse about the responsibility of
-> git-rebase(1).  IMO, git-rebase(1) is a plumbing command, and
-> git-brebase would be a porcelain thingy.
-> 
-> > If we take this approach then we'd need an option not to enable this
-> > behavior but to disable it, something like `--direct`.
-> 
-> That hints it might be just be a different command.
+> Date: 2026-10-03 22:56:32+0200
+> From: Alejandro Colomar <alx@kernel.org>
+>
+> Hi Nico,
+>=20
+> > Date: 2026-10-03 15:39:41-0500
+> > From: Nico Williams <nico@cryptonector.com>
+> >
+> [...]
+> > > It might be confusing to have these three flags being dependent on
+> > > another flag, and not being able to use this within a git-bisect(1)
+> >=20
+> > IMO that's not a problem at all.  There are a lot of Unix/Linux commands
+> > that have flags that only make sense when used with other specific
+> > flags.  So I still like a `--first-conflict` or `--onto-first-conflict`
+> > option.
+>=20
+> Yeah, it could make sense.  I'm not sure, but it could be.
+>=20
+> > (I really like `--pre-exec` and `--post-exec`, BTW.)
+>=20
+> :)
+>=20
+> > > session, unlike other git-rebase(1) operations.  That might call for
+> > > a new git command.
+> >=20
+> > That might still be the case in that this will be such a useful tool
+> > that it deserves a name.  But also, `git-rebase(1)` should always have
+> > been this useful, so that argues for this to be either... a new option
+> > like `--onto-first-conflict`, or even a new default behavior.
+> >=20
+> > Does jj have a feature like this?  What do they call it?
+>=20
+> No idea.
+>=20
+> [...]
+> > > while test $# -ge 1; do
+> >=20
+> > I normally use
+> >=20
+> >   while getopts +:<short-options-here> opt; do ...
+> >=20
+> > I also have a getopts_long-like function (see my gists) for bash if you
+> > like.
+>=20
+> I think getopts(1) is not usable for git(1)-related scripts, because
+> getopts(1) interprets '--' as the end of the options, but git(1) uses it
+> for distinguishing commits from paths.  If anyone shows me how it can be
+> used, I'd be interested, because I've hit this issue in the past with
+> other script.
+>=20
+> > > [...]
+> > >=20
+> > > # Set up the callback script for 'git rebase run'.
+> > > mktemp \
+> > > | read -r callback;
+> >=20
+> > I like to set a `trap` to remove temp files.
+>=20
+> Hmmm, makes sense.  If so, I'll also try to filter out the line that
+> prints the name of the command, since 'git bisect run' prints it, and we
+> don't want users to try to open a file that doens't exist.
+>=20
+> > > cat >"$callback" <<__EOF__
+> > > #!/bin/bash
+> > > ...
+> > > __EOF__
+> > > chmod +x "$callback";
+> >=20
+> > Here what might be better is to have a command-line option to execute
+> > this callback without having to write it to a file,
+>=20
+> How would you do it?
+>=20
+> > and use environment
+> > variables to pass arguments to it.
+>=20
+> The callback doesn't really need any arguments, since 'git bisect run'
+> won't pass any arguments to it.
 
-If this was 2007, and you were writing the first version of `rebase`,
-and you had already worked out that you wanted this feature, what would
-you do then?  Would you make it the default?  I _think_ I would.
+Self-correction: 'git rebase run' does actually pass arguments to the
+command.  However, I still don't see the need.
 
-Basically, this makes rebasing much nicer, so why not make it the
-default?
 
-Nico
--- 
+Cheers,
+Alex
+
+>=20
+> > > # Perform the conflicting rebase
+> > > git switch "$branch";
+> >=20
+> > Ah, that came from:
+> >=20
+> > > git rev-parse --abbrev-ref HEAD \
+> > > | read -r branch;
+> >=20
+> > which means I can't use this in detached HEAD mode :(
+>=20
+> Oh!  I wasn't aware that git-rebase(1) supported detached HEAD mode.
+>=20
+> > I work in detached HEAD mode almost exclusively.  I know, that's..
+> > weird.  But it works for me.
+>=20
+> Ouch!  Indeed.  :)
+> Out of curiosity, are there any interesting reasons for such
+> self-implied pain?
+>=20
+> > Can we avoid forcing the user to be on a
+> > branch?
+>=20
+> I guess I could keep a variable that remembers the state of the HEAD
+> across all the rebases.  It should be doable.  I'll have a look (maybe
+> tomorrow).
+>=20
+>=20
+> Have a lovely night!
+> Alex
+>=20
+> > Nico
+> > --=20
+>=20
+> --=20
+> <https://www.alejandro-colomar.es>
+
+
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--zher2donqvx2yob7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrBcOcACgkQ64mZXMKQ
+wqn9PBAAiGXvZJtj7ypdYb0dmRmZLdLYJxxhOimORJ7+CewmioGhBZo17lFi8E45
+yzeTDCQ90nMSXuRC1EASlLT5fTrE5kyTDmSCRVdZyLEdpG3zhk3p0A6q1pIxf+6D
+0rHX/A+9jlMYpgKIEwtoHZhUpaYa5y0TwjG73Ox03xvjdiXgwwEoDLHMfZ5eedfw
+FMbBe+wi4ImTv8N9TOsroTKJKfM745FIDsWPgC/gRrHkdpPO1v9srMvqN9+JORln
+32oOsehkRW+K5TuQcqrL0XArQfNq63dkvGF4MZ+AP/ePA6Cvqkc8Y8LW7Zu8gBCr
+0zZdXbUbWfiHenhKrsF7lXPqAeuaPrEr1R01swfOC47d34Q9KsePpCyq/PlyTNQp
+8OLAg57dwVx1qOQ5E+FVor58z2sv4FQ+RroeO4CdeAXjbGyt8cNiFH5oXIshsGWD
++NAnO5yiSYoc9Sw+khPueXhsGTrrcNCbK/qaGrFI2almou/LeAenjMrqCACLbVEA
+TLu4vwFSlvuxB/G6mBarIVNtM2pvSvXA4pZu+zfjUAMtOUhH9YhwkpwKvpito4+o
+BF240JDd+isM6U4X2ktSSKfYHgPd6BbNk7MAZZa8XRIu2bE4ExZKPFfYoxhL9KKC
+qcrefaBUxQ6icHN1SRW35Y5iKZrDdsz20BSLUGmuWKJy+DGdvVw=
+=M/US
+-----END PGP SIGNATURE-----
+
+--zher2donqvx2yob7--
