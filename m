@@ -1,145 +1,162 @@
-Received: from mail-oi2-f13.google.com (mail-oi2-f13.google.com [74.125.231.205])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11041370AD8
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 11:22:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.205
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F273F5BC3
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 11:39:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791026532; cv=none; b=sKZFZgptXfRJ1UAUFBY2bVSP2kYcETojbO1JFAzZ9VQANm9R1QrfDPGQWmK8fk65FvDj19GMElfB23Mch1yXnidRc5Hzhxo6YTumqdP4WT1d7nl39zdxGfHPmuIBcWT7TI4zuvpwBOq3pyWS+ks7Ik/LrR0ecgPbx8r80h+n4I0=
+	t=1791027554; cv=none; b=O10Lvvc83NXRvCkZlxGQarFKAV5G3zdtFzg1RNZrbisVBy5Kz9ErDJtnEf//27FyFtNq0v5wSIePWyeBqGk+hHs1kkQw7mzAj9601Sv0pTAamcLzb/tGQHeVoDdR2Yao0H1qoUmBhBVHzyXPQPMbMky3uQhGsOW46H8INUN21wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791026532; c=relaxed/simple;
-	bh=nLR+5Ei3zCh0Lgnvgnm9t7J7dXQUlg5gASQQdO95zBY=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=NTEZeCT2jM2q11VFVmbjFj/LAzecHG/7vByRFhqIxCrF8aHBHOc2YpAeSOsdP2xZ03ArsrKnMLr3AlbbTuA14rWwTXCXHhUkpyj7SdFIAaBZkDTZQKiXVcrpPixDUF1idSC1ZyI5N+5hfXQlFYSMCgtdDGdQfxFj1r8XTBXvtjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jeTmYG/q; arc=none smtp.client-ip=74.125.231.205
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791027554; c=relaxed/simple;
+	bh=uqtYU9mfqtJgz/4pNjxz+Rhqv5R9yIsIJ+ap+gS1CCc=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=h16c/kTFhbm1VAvmhBWR1H752+Ei05HuDnSTjntVgoCApcZ821wuh3yJ4QeLJrXmpK7cmh9ZB9TigSF8Bqz9ZMkMNb7ACKuNsTuBKNDUUTu0TIESvRy1actUl+Icuo1hURnWRn9bJPk+975M2mFXSPrA7M3JaeG8HRe5OTFylNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=tKIEZsQX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kN3zLeEv; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jeTmYG/q"
-Received: by mail-oi2-f13.google.com with SMTP id 5614622812f47-4b37a36887bso187864b6e.2
-        for <git@vger.kernel.org>; Sat, 03 Oct 2026 04:22:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791026530; x=1791631330; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=pHOrv2EeUqa+MRoFMJhmvlCFYrWSxxoZpgvqcfEf0K0=;
-        b=jeTmYG/qtBbiRzHqZP9oQ6BXraNL3NXmt1YBYvtv66fl3VzsV7VO5n07OcT7hilO5w
-         X8351kCjCkZZkHPDqYU/1OQY9Jhy3wM9P/eNU9O+Fcxm/kNbPSjVFpclQ18PJJShSSeS
-         JV0qC67UNG7xF+WUHg/VUa3hRoH7RE+SMWRQl6voX704sFpRy2Tqia/l9USc+0g07N+H
-         5jGHH9b7qqz+GiX+mmdJIkhMixkLufJoo67CD+AkSdoIcTxIiuS+H2/uOC/efIYfH/4H
-         q6TyxCiUq4NVy0/2t8jYm8GUkoM6e+8yJ77pHWCnitN9Mbkajm1B77+hTwexo0VaQ8eB
-         kDfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791026530; x=1791631330;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=pHOrv2EeUqa+MRoFMJhmvlCFYrWSxxoZpgvqcfEf0K0=;
-        b=xLNLkFH+Yox9UXrsnUuS1gmrrR1CqSfSXecsKslakFIz+ixn14yIRbO4HpV4AM8vyA
-         vxZlvrVjOWz6D9oGVgsGYV7BR1ezoBlZxVgOU3Dy+M8YPLI9ssB8x+GjSwsBAsdwZLEc
-         9vQmlrjeb8Yl2oNawAoc+vEJC8dQDaZnG3qs/Xr0beKSGGKxW5Coli4m6+SjzdtQHn7f
-         amM8tJeSqQRjrUcc5WbUtUNCA3oHMWAhCt7cw5xM+uQD4ufx7KGYQyP8ewjAWdwAQHV1
-         Q+ee2+OJd0NSlQVIhdoGZtFR0R5zv1W5AIytXXP4EVSi97JXLY8zpOz2MwnhygT1cG2k
-         /oRQ==
-X-Gm-Message-State: AFuF++mCwAj6nH7IZaDcIUr0MH1A3Ki5RiHYgzCruYrhMJL5yYIh0gq1
-	b/u8BwZfzyInkhZAz18jICLjnWy5iuQp8FH9DEnM1Rq2knznFebDPgrg+04MacGj
-X-Gm-Gg: AYBFou2jpZCLGuiIQt+187LpAhXSJf4rXhHrtYZYKVf2fDaVrz9ST9nBRVQgIsn3l4R
-	0mHkt3B6KMEj4/++MO/Bzob+xgnQMu7QRYY3bXcmufNGq6JHKi8Jb64S7K32WtEblCTdrXLR2tq
-	Klw2hOFr5P+9/wTs16igOzS6hAH8l1xVL4pLo42qKd/GUjPStPMFn8NhW4FJMUazHFpcVo2zU3j
-	HKhEWEZf7VaETCkrt10BhEboYdWiO6vcOjO5tKzZCpidothCtY+ztiW+XupwIrTa5MqgsvUwcWr
-	8iyBOGqzD8cDZLohdwn3CG/+xkqcVUsxCFLl48gTb4mhgOmCXV/4ut1cWyNg3S5Wi3onkeyTh37
-	LVYwC5Te6zmLirJKksbhqqMZ+HYkXsGeNQtvrI81hiSzhY+JbfPrBHqwxACZwO/gErUSWPgUpTj
-	ZDFv2CZyBVy94HuBOXC+IWhQFbj9ZQnQesLwATFzSbrdMXMWO4KjuTfpTzIQfJHCTBj4DV+l/gj
-	K11ECBfDXcqMw==
-X-Received: by 2002:a05:6808:c210:b0:4b9:a8ac:488 with SMTP id 5614622812f47-4f52aa7cf2amr5635910b6e.38.1791026529811;
-        Sat, 03 Oct 2026 04:22:09 -0700 (PDT)
-Received: from [127.0.0.1] ([64.236.192.145])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4f5245d16c9sm5927904b6e.10.2026.10.03.04.22.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Oct 2026 04:22:08 -0700 (PDT)
-Message-Id: <pull.2216.git.git.1791026527023.gitgitgadget@gmail.com>
-From: "Fionn via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 03 Oct 2026 11:22:06 +0000
-Subject: [PATCH] completion: exclude previous file arguments in Zsh
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="tKIEZsQX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kN3zLeEv"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A78D37A01A8
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 07:39:11 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Sat, 03 Oct 2026 07:39:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791027551;
+	 x=1791113951; bh=6qliTWQcPam0DmcSRIy9wlgBiVs2l5HtuqCBd9qjVIw=; b=
+	tKIEZsQXMNVDggURafhBk98mPQh4IARJBDx6y9cwJ3Vk82EhAimFL+Z8fuKuCCAz
+	0U2Hfpj/7eZ3xJm0P1ISD3Ycy0xdagDforFraZh2VT+F9h6Nc+j/RPCTA5oaKzek
+	Q4zbENs3ZntqsjKz3FaWlzzQ4mMXDQUKZ30sJzw8uE5gY5R+BpDw4+ahZbzMPRIR
+	d+6bk+i2YgqZ8sqWexjfkHYtJoBDjsm+qCvS+fagZHwED7nOmb+ZkT6gedhZO9d+
+	4lVxKjssVxgk6E0fu5XoS78IV2/J4VOpcRF5dcGiu4uzybh7iEkFovye/SfSjhWY
+	sa/HXtzNud3LtR2CJbhTSQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791027551; x=
+	1791113951; bh=6qliTWQcPam0DmcSRIy9wlgBiVs2l5HtuqCBd9qjVIw=; b=k
+	N3zLeEvMl69/4Xv1+UaS+ih4fJdjjc9vGMorrKqjKDRL+uvsMA1I+PH2ltaRX6ka
+	CuV6t+LtGEA3lHq77dlwOOKpBrVYWgM9tERQz0rgCwRveoF/jkiTxNGiy/T8UNxE
+	YVYiFS409q7rU3vGfmJkBfHz0qRsXyWz6hsngKIhW6maUc6wizIUMVpOonzFKIGt
+	QxHB7xclZdGuWwNN/diPEt1RH7Q6Tjp4jxxw/t1XT+MIFk+NqVoRuo/Bp2r0Nn9K
+	mD6s0N7FupooJVHwsGt/t0H7CScP6t43xBTJoZCyBrLgfvMxIE44nLBJP+FgScXB
+	kSA5NuFMyeIxTQXg9Zg4Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791027551; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:IV88X/7YxkRK30P6N1OvifFYkd6nMrchZt2e2DDmDJ+gMUN
+	420NsMP/qbRKMNbbRHdGN8d/N73NjX+m/ZauryTaK5fSo1oDmL4ccZk/Sso84eSv
+	wyotvEtqDYojQRkGboa0aSZ4CCwxf8Gcnncb9jqAs2iy5s20v8Mki+iWF6x1jCUv
+	5x6PT4wMbTEkDLJLb4PVh7a56VQjRLigMtcmLw4R0LJFQBn/PIERkm5xy5pF7GwU
+	BGbhlCCvECLq6xhWmappoIB50OKdTS0QVX3/K8Lnptv6k4776pf9/XF5lqdyjpsZ
+	VBYX8EVR4f1hC1IF/m6ey6RCE/pKJks5TnoDj2w==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:05xyMfkC0fU/wrWaYcJPc898MWB2qY3kIpNVy2mKzVE=:uqtYU9mfqtJgz/4pNjxz+Rhqv5R9yIsIJ+ap+gS1CCc=;
+X-ME-Sender: <xms:XunAaiX0T_uik5OtGKHRAJV9QN8TCvKs8BgF2Y8LqnQebN_l8PfePg>
+    <xme:XunAapYFD9q70NhcHZjgyR-Kh8QboPt3_xOwwthgTOYusH4NBBVEROEyObtiJNxsW
+    r4Zr8xBahoGSVVmGQdMEgVwzbcTttRSV1u8NNrRn8S5y8ET2qPg2m8E>
+X-ME-Proxy-Cause: dmFkZTEnt+R0FLSQ2tpM5SarBG4eJds0lgcvScikmK2OltE30dF1YFljk+RbwzDIqL79RA
+    OJNv1hI+rMjCU8pjvMjI+4kQm+46NYxc86pJ06SlWOEIiErwZAxdWJE0kB80hxnzgbiaFv
+    7eG6SVyiS6mzaobOlm5AZKri4n2X4Llyn3pAOlkeMqINIWwlZY0ZIO396ZsDwa5Gg6S1ze
+    PK4VCBfeF11YIau9MfdGGA5koN+OEztteagB5zL+UyUA2UCCb8yk+tfkV+hZztEY/3dBEm
+    nx5grmQvc60YytA/ta1p952n0nAiRo85YYNuJy2SiH6hD/ftf6pev8wGzXWMgUqdvBK/Oh
+    uza5f9YjL3oJzciLgPnBYs+gRq7vupw7cvbKQ9r8mEJJu1CyA0tLMRCuwtGTCCAsEpNw0/
+    MJ1qfH6H28swTxmEYPEHxhehownoC9CR2X0st2pYMpW9UAn0n/UaNiZJrP7qTO1vFXBbLz
+    y8Zj9p1XXv+4JQ61JMbW/DNI5gdfGZBhc7xWCDDa5Nnybi0ECJLUd6btLxO4wGHXJuackt
+    5JhVAqSSU3wnHpNKHKH3yb1LPBtIZqqzjNaZ5gSSXQb95lg7CNeiag9xBoFhwFT6PfSHM4
+    1b5nSZH/IkGFRYKbH5gRbjWDpwnLg8nvMq+rzGurh6Zpi8AUmXtadENR8M2Q
+X-ME-Proxy: <xmx:XunAav-P1COm0Mwq9TAYH6gHjaWhLj_d5jb6lPC7i5i875HqylFNfA>
+    <xmx:XunAaph3FPXe5Iv1ZWFT8sqOR4pGG0vxpqUf0xsNTzchI7CBd2fsjw>
+    <xmx:XunAanexinqT04CfiTVnDdgt8lJLcr8tLqhjoEkUBcK_Pr4jVhXlWw>
+    <xmx:XunAaorHyOJT4Aptn4BEabzpEAjiBVt9h4Mk5wQ33CL5obt9wvA3vQ>
+    <xmx:X-nAau-HBKPtERuiKG4njkLlKctp4OCHAybys04Vzp2NqQgKEvP5OGl3>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id BA860780070; Sat,  3 Oct 2026 07:39:10 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-    Fionn <git@fionn.email>,
-    Fionn Fitzmaurice <git@fionn.email>
+X-ThreadId: A7DtHL7goc9V
+Date: Sat, 03 Oct 2026 07:37:00 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Tuomas Ahola" <taahol@utu.fi>, "Junio C Hamano" <gitster@pobox.com>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Message-Id: <79451beb-15c4-42f3-92fe-1b7fd284b21c@app.fastmail.com>
+In-Reply-To: <20261003073303.G-Gck%taahol@utu.fi>
+References: <pull.2246.git.1790957227881.gitgitgadget@gmail.com>
+ <01891b4b-ce04-41aa-8065-d7b88e466dbc@app.fastmail.com>
+ <xmqqo6dbvlaf.fsf@gitster.g> <20261003073303.G-Gck%taahol@utu.fi>
+Subject: Re: [PATCH] doc: don't require a SYNOPSIS in section 7
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-From: Fionn Fitzmaurice <git@fionn.email>
+> Something slightly more declarative I managed to hack up:
+>
+> diff --git a/Documentation/lint-man-section-order.perl 
+> b/Documentation/lint-man-section-order.perl
+> index 02408a0062..160c65e1be 100755
+> --- a/Documentation/lint-man-section-order.perl
+> +++ b/Documentation/lint-man-section-order.perl
+> @@ -13,6 +13,9 @@
+>  		},
+>  		'SYNOPSIS' => {
+>  			required => 1,
+> +			optional_in_man_sections => {
+> +				'7' => 1,
+> +			},
+>  			order => $order++,
+>  		},
+>  		'DESCRIPTION' => {
+> @@ -53,10 +56,18 @@ sub report {
+>  	$exit_code = 1;
+>  }
+> 
+> +my $man_section_number;
+>  my $last_was_section;
+>  my @actual_order;
+>  while (my $line = <>) {
+>  	chomp $line;
+> +
+> +	if ($. == 1) {
+> +		# assume the first line is formatted like 'gitglossary(7)'
+> +		$line =~ m/\((\d)\)/;
+> +		$man_section_number = $1;
+> +	}
+> +
+>  	if ($line =~ $SECTION_RX) {
+>  		push @actual_order => $line;
+>  		$last_was_section = 1;
+> @@ -92,7 +103,9 @@ sub report {
+>  		@actual_sections{@actual_order} = ();
+> 
+>  		for my $section (sort keys %SECTIONS) {
+> -			next if !$SECTIONS{$section}->{required} or exists 
+> $actual_sections{$section};
+> +			next if !$SECTIONS{$section}->{required} or
+> +				$SECTIONS{$section}->{optional_in_man_sections}->{$man_section_number} 
+> or
+> +				exists $actual_sections{$section};
+>  			report("has no required '$section' section!");
+>  		}
 
-When using the _git completion function bundled with Zsh
-(https://sf.net/p/zsh/code/ci/master/tree/Completion/Unix/Command/_git),
-duplicate files in an argument list will not be offered as completion
-candidates.
+This looks great! Will use for v2 and mark you as a coauthor, thank you :D
+(let me know if there's a better way to do that also, still learning the process)
 
-For example, suppose we have untracked files aa and ab (only). Then with
-the Zsh completion,
-
-    git add aa a<tab>
-
-would not offer both aa and ab as completion candidates, rather it would
-complete ab only.
-
-This behaviour is not present in git-completion.zsh shipped with Git,
-which does not deduplicate arguments.
-
-We can get this with minor changes, however. Here we introduce an array
-__git_file_exclude which we populate with existing arguments and then
-tell compadd to exclude them, which closely matches the Zsh _git
-completion behaviour (as well as common programs such as rm).
-
-Signed-off-by: Fionn Fitzmaurice <git@fionn.email>
----
-    completion: exclude previous file arguments in Zsh
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2216%2Ffionn%2Fzsh-completion-exclude-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2216/fionn/zsh-completion-exclude-v1
-Pull-Request: https://github.com/git/git/pull/2216
-
- contrib/completion/git-completion.zsh | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index d5c526665b..26444923c1 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -117,7 +117,7 @@ __gitcomp_file ()
- 	emulate -L zsh
- 
- 	compset -P '*[=:]'
--	compadd -f -p "${2-}" -- ${(f)1} && _ret=0
-+	compadd -f -p "${2-}" -F __git_file_exclude -- ${(f)1} && _ret=0
- }
- 
- __gitcomp_direct_append ()
-@@ -284,6 +284,8 @@ __git_zsh_main ()
- 
- 		(( $+opt_args[--help] )) && command='help'
- 
-+		__git_file_exclude=(${words[2,-1]:#${words[CURRENT]}})
-+
- 		words=( ${orig_words[@]} )
- 
- 		__git_zsh_bash_func $command
-@@ -296,6 +298,7 @@ _git ()
- 	local _ret=1
- 	local cur cword prev
- 	local __git_repo_path
-+	local -a __git_file_exclude
- 
- 	cur=${words[CURRENT]}
- 	prev=${words[CURRENT-1]}
-
-base-commit: c46c1e37724f0478939de636ab8ea5a89086d532
--- 
-gitgitgadget
+I wasn't sure what `$.` was before but this makes it clear that it's the current
+line number (and https://perldoc.perl.org/perlvar agrees). Apparently
+`$ARGV` is the name of the current file. (different from @ARGV)
