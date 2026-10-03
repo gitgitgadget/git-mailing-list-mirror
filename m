@@ -1,54 +1,39 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1430B233924
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 14:22:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9AE3537E5
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 15:13:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791037357; cv=none; b=TFUUoFvpPJwbViGCrQQ5K2H4R1nU3lp8ersRiYJ0s9FkNDUCp0f+ywEveMM3Mdkyf6WmW+saFZPu+60xBp1alcWAwzx/4QKMB7e9gmXGbVo4GdohavWp69uwUPE0LrOZ8KvGyXRQDJW+XuwH06c2D8vOeVImo/POWS984cBmNR0=
+	t=1791040412; cv=none; b=sfDoV4+lQhYKEGF21bFY+iDdPgmCAyeQmWq3k/59BaFC5Kpt1LkvqDuSAvRhET0nvZKGtZuQbG7darA62FYkfaWt20sbZYwAoAFpiuPNmyVpckJK7qeFrTqNHiEW4+egHTEkbt6Acv7XSp0QrG79tRb/oSpvfNxXtZcxjuo4IwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791037357; c=relaxed/simple;
-	bh=Xm3XsFR6LN5E9Qe6h8JqrcfBEIBXBuExGDm5ybF4voI=;
+	s=arc-20240116; t=1791040412; c=relaxed/simple;
+	bh=SstV/d0oJ4BIHLYCbBI/JlPqmSFUZuqUlhA8PRIbIog=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WlKfgKxTsjOg3OY1zn3lxO0i0p2HryEUvkpfksJ6TVmxqhM+qaIV+f5B7dj9pdZrlJGMDKv9wsczySgiTLmF6uSLxr+mVuvBJjdJ0wJMFjJLXBS+A7fOsfTc0TXMMighNnpkLr+r7RcJASOwfi0gYfRpsXlIZ1vRllZNc6GDO6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Cg34cq3b; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=ux9ixZOln70qRSZMuS7fRHQqMX9h5okVAO8zmuPd/IXZCiFwIyB/stHhHgfVyM7xYfWiKPwzwKl4qmfjHoAXNxx+DFEERgF7+4VHnsAdXwnZDV+031hs+zmD6QPmbW5mtjQ+lJsrIX8NfsdP+DuZ+bhFE9g6APsV+9Py9QW2Hqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bpO3EgoM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Cg34cq3b"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1791037353;
-	bh=Xm3XsFR6LN5E9Qe6h8JqrcfBEIBXBuExGDm5ybF4voI=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=Cg34cq3bBcXe3N1RCVwgm86ncwsl8q7ZsBYmfAcrHw932lVA+pGefyR1BqsKJ5FTN
-	 Bj8x6qMHJ1lKKptdTQ4grQIVF8qVozG/4y/6salDLfUW6XTrqdqDpX2ar0AqfbhwWc
-	 gaXNIMWFIuwp9QeNH4GGjZuq8yGJJdLvrParVib9rxEG/ChEZDGWfRaywZWi/tbWIS
-	 K+tAhbq/bDln/yJNTjCBJmg4AiTl0N/gbUcuoPB4idpRhSx5kO+Gp1WAEQmKZlZfjl
-	 LSHcWio+Qg90DVXt/+F5xksyTJg/QcuxuJT01451WeGOp8F6cLeD3YPwcQzw0Te31Z
-	 l271VvDMErnCE2zmzzldQKen6C5RRWtwrN2NUzjGy+2o8QwShzmn3MWuP+4w4CbrMe
-	 xSxtbGckOgGANr7mnqjCw6VTiFWRSwKP8H4HV2K04eUXmePFueSUON0GeffE7cecuD
-	 wFlZo6vUthm5KUIKicdgGlGzA4FjR4xgoJKCzOcIjMfiA06B+rF
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7c1:8d15:f288:f856])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id CBFAF20075;
-	Sat,  3 Oct 2026 14:22:33 +0000 (UTC)
-Date: Sat, 3 Oct 2026 14:22:32 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
-Subject: Re: a "limbo" object-format state for empty repositories?
-Message-ID: <asEPp6Bg3xDpA4e1@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-References: <20261002224400.GA834158@coredump.intra.peff.net>
- <asBVY1WniGUo6bQS@fruit.crustytoothpaste.net>
- <20261003012512.GA1324483@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bpO3EgoM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97741F0089B;
+	Sat,  3 Oct 2026 15:13:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791040410;
+	bh=hmmqOLqlyexNflirD1LrxHVFSWnVA36doCoOxqT03Yw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=bpO3EgoMwZqXNwX11FZv116naezhbKQf5bHofjKooiE29y0e+hzuPZDMCmiwgnSnV
+	 Rr/rmb1busor78M4INEL4OvVHDXUYNr6UYPmjWFYY8uHums846vlmCw/X3IrRYjjem
+	 mWsJQ0tL94IF4bmSFzw4JfNVp98LjYSzJp1THiiip71zIsY6mLq9rdXMpFQzT+qhgd
+	 e414NGl0i4x20OH2y6PaAqLg240eaPLHLqU5fqRmHpcDDqwJkk1rX3Be4UxXK+3l62
+	 /E4zLV/wg6OA71dkpao4WpXDHApNxP7DnhnNRIf3p1caYBBOVXbnEuYu4rsTuKM1o9
+	 bpL7A0PbAdbVQ==
+Date: Sat, 3 Oct 2026 17:13:26 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: git-visualize(1) plumbing equivalent
+Message-ID: <asEa_Lp01DVJ2ThZ@debian>
+References: <asDTWsH-RuIJOyne@debian>
+ <CALnO6CCUY2KF8rEotihdVNy+D10mmzuW0RXbH8nqhSS9jsgQUg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -56,97 +41,128 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="iVAz6Ta4I8OnYBVD"
+	protocol="application/pgp-signature"; boundary="jk6iwv5t33me7fs7"
 Content-Disposition: inline
-In-Reply-To: <20261003012512.GA1324483@coredump.intra.peff.net>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+In-Reply-To: <CALnO6CCUY2KF8rEotihdVNy+D10mmzuW0RXbH8nqhSS9jsgQUg@mail.gmail.com>
 
---iVAz6Ta4I8OnYBVD
-Content-Type: text/plain; charset=utf-8
+
+--jk6iwv5t33me7fs7
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: git-visualize(1) plumbing equivalent
+Message-ID: <asEa_Lp01DVJ2ThZ@debian>
+References: <asDTWsH-RuIJOyne@debian>
+ <CALnO6CCUY2KF8rEotihdVNy+D10mmzuW0RXbH8nqhSS9jsgQUg@mail.gmail.com>
+MIME-Version: 1.0
+In-Reply-To: <CALnO6CCUY2KF8rEotihdVNy+D10mmzuW0RXbH8nqhSS9jsgQUg@mail.gmail.com>
 
-On 2026-10-03 at 01:25:12, Jeff King wrote:
-> Yeah, that is a problem. It breaks older clients (that are at least new
-> enough to understand object-format=3D) worse than a mismatched format
-> does. I was thinking we could solve that with a new capability, let's
-> call it "magic-limbo" for a moment. Older versions would ignore it.
+Hi Ben,
+
+> Date: 2026-10-03 09:45:17-0400
+> From: "D. Ben Knoble" <ben.knoble@gmail.com>
+>
+> On Sat, Oct 3, 2026 at 6:13=E2=80=AFAM Alejandro Colomar <alx@kernel.org>=
+ wrote:
+> >
+> > Hi!
+> >
+> > I have this code, which I use to loop in a script using git-bisect(1):
+> >
+> >         while
+> >                 git bisect visualize --oneline \
+> >                 | wc -l \
+> >                 | xargs -I{} test {} -gt 1;
+> >         do
+> >                 if
+> >                         git rebase $gropts BISECT_HEAD >/dev/null 2>/de=
+v/null;
+> >                         test $? -eq 0;
 >=20
-> But then what do we put in the object-format=3D field? We have to put
-> _something_ valid, as even if we put nothing that is an implicit choice
-> of sha1.
+> Aside: this "test $? -eq 0" is a bit redundant, no? "if cmd" in shell
+> works by checking whether "cmd" exits 0 or not.
+
+Ouch!  Indeed.  IIRC, I originally had the test reversed (-ne 0), and
+later probably flipped without thinking it could be removed.  :)
+
 >=20
-> So I think the best we can do is advertise magic-limbo, and then new
-> limbo-aware clients can always do the right thing. Clients which are new
-> enough to understand object-format but don't understand limbo will use
-> the server's object-format unconditionally. So the choice there does
-> still matter. But if we don't switch to sha256-by-default until
-> magic-limbo is implemented, then anybody who has a local sha256 repo got
-> there intentionally, and presumably knows enough to configure the server
-> side to match. So the sensible protocol advertisement for a limbo repo
-> is "magic-limbo" plus "object-format=3Dsha1".
+> >                 then
+> >                         echo 'Rebase: success';
+> >                         git bisect good BISECT_HEAD;
+> >                 else
+> >                         echo 'Rebase: conflict';
+> >                         git rebase --abort >/dev/null;
+> >                         git bisect bad BISECT_HEAD;
+> >                 fi;
+> >         done;
+> >
+> > (
+> > I know this resembles "git rebase run", but I'm avoiding it, because
+> > passing all of that as a command is non-trivial (and I'd like to avoid
+> > having to write a separate script to pass its name to "git bisect run").
+> > )
+> >
+> > Having read the documentation for git-bisect(1), visualize reads several
+> > environment variables, and thus this code doesn't seem robust.  What
+> > would be the plumbing version of the while-loop condition?
+> >
+> >                 git bisect visualize --oneline \
+> >                 | wc -l \
+> >                 | xargs -I{} test {} -gt 1;
+> >
+> > The goal is to know whether git-bisect(1) has found a commit yet or not,
+> > to stop looping.
+>=20
+> I think you are probably looking for the (size of the) set of commits
+> between bisect/bad and all the bisect/good-* refs. So you might need
+> to "git refs list" the good ones, and feed those as negated refs
+> alongside bisect/bad to rev-list?
 
-We need to declare the other object format as well because we need to
-know that the server specifically supports SHA-256.  If we add a third
-hash algorithm, then maybe SHA-256 is unacceptable for that reason.  So
-maybe `alt-object-format=3Dsha256`.  We do definitely need to be sure that
-multiple options are accepted, though.
+Yup, this seems to work:
 
-As I say below, we probably need to initialize with some hash algorithm
-at first, so we could also have `object-format=3Dsha256` and
-`alt-object-format=3Dsha1`.
+git refs list | grep refs/bisect/ | sed '/good/s/^/^/' | cut -f1 -d' ' | xa=
+rgs git rev-list=20
 
-You hint at delaying SHA-256-by-default until this is implemented, but I
-don't think that's a good idea.  I agree this would be a nice feature to
-implement, but I have no intention of implementing it and you said you
-didn't, either, so unless someone decides that they are going to
-implement it imminently, I don't think we should hold up Git 3.0 or the
-default algorithm change to then.  As I mentioned, Git is really behind
-the times on moving away from SHA-1 and we need our users to choose
-sensible defaults as soon as possible.  Git 3.0 moving to SHA-256 by
-default was announced in 2024 and given that I managed to write a
-functional interoperability implementation in that time, there has been
-plenty of time to say something and implement a solution.
+>=20
+> In the general case, that wouldn't account for skipped commits as I
+> understand it, where multiple commits are left at the end of the
+> bisect, but in your script it doesn't look like you skip any.
 
-> Yeah, I thought about emitting multiple but it seems like that
-> introduces other weird corner cases. I think we really need a new
-> capability so that new versions and use it and old ones will ignore it.
+Hmmmm.  I'm now working on adding the ability to skip commits, so this
+would be a problem.  Do you have any idea on how to deal with that?
 
-The bug I mentioned was apparently not a crasher but an infinite loop:
-aa962fef27 ("v0 protocol: fix infinite loop when parsing multi-valued
-capabilities", 2023-04-14).  However, it was fixed in 2.41, before
-SHA-256 became stable in 2.44.  We could therefore implement it that way
-if we're willing to abandon versions of Git that only have experimental
-support for SHA-256.
 
-> Those parts seem outside of the scope of Git, or at least its protocol.
-> But yeah, I'd expect a forge like GitHub to let you say "do not allow
-> the creation of sha1 repos in this account/org", and the object-format
-> selector for a new repo (at the forge UI) should be a tri-state: sha1,
-> sha256, or limbo. How that translates into Git commands is TBD: whether
-> via config, or more likely, that you have to select the limbo state
-> explicitly with a command-line option to git-init.
+Have a lovely day!
+Alex
 
-I disagree that they're outside the scope of Git, but I do agree that we
-should add support for this either in the config or via a command-line
-option.  I think config would be better here because we also have to
-deal with the fact that someone might use commands other than push to
-write into the repository (on a forge, that might be the API) and we
-need to specify _some_ hash algorithm for that case.
+>=20
+> --=20
+> D. Ben Knoble
+
 --=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+<https://www.alejandro-colomar.es>
 
---iVAz6Ta4I8OnYBVD
-Content-Type: application/pgp-signature; name=signature.asc
+--jk6iwv5t33me7fs7
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-wr0EABYKAG8FgmrBD6cJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZwMIf5V0Q2e/smJeceKJYJBRrnpg5/mSp8FwImr3q/aL
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAKyrAQCDVUzUVUx+P/AwtyFJW511XPE1
-R7ZrzFGsSeJRaTV6jwD9FBJ9AuDKwetqyGXKYMhVGnqKU5c1rvmMVH4oGTaj2AE=
-=s2La
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrBG48ACgkQ64mZXMKQ
+wqnIyxAAmeH+ox+kNFAkzj5L2JkHK1WS7QFBNjqB74Wl9CDBS/OzQq+rIuoglUAC
+Qx1wQ52mE2zWsuDh5+xyjXf0zg8K64tBUxyeRZbk79ouqyXLigZJwdqT8J6qKqdm
+JADvLu6YEGsgdxWaYU1KFV4vFHMI/lvFd/HUs7MB6arpXwwvk/k4V1t8EwFjihX2
+ZVXY8SE4dDFVBCl/ODJKKKxFRpTlJ2pncHNIqMWuSUL5/9GnqzcQ8Ms5ja6CXg/P
+acpUzjohwF+NF3HhSSuKzL2EnW4qJAj/neqOrDwkL1JXFCBUKsqqAG/C+zMmpvYf
+18v3zFPxPHpqqV8ucsrLsD6zyEwWiY+yNT06Q3mjKte2eHDDFFn5F5M8kG33vj3s
+c+334IODGZqNCUulJ2250BR9tdv2b7VYtsLoXLGx8Buwjjj447LyKyfzL2MT/r1G
+io5HoY+o62LzgqB+B0nrhOQCJnytqUfzdi4CA+RRjJxc54CB3l8zBISKRQXBrTnT
+5LqtAhS6sAepd6zD1pvsQLPJ04NYdDOEXWCSW0DTkNsfnI27z900InUl5ceb3mOX
++r97l8Bit9D1eNFinQMm4CE4QOlm7HUkdaIgFkaTUTqfEYocHK5dYkF0QRJUlIlU
+KnJAqh+lDEo5b36G0Qfe1mmRSqcbNMnHhABYwTXZrzpD87016Ek=
+=UAce
 -----END PGP SIGNATURE-----
 
---iVAz6Ta4I8OnYBVD--
+--jk6iwv5t33me7fs7--
