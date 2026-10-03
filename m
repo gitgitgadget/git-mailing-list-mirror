@@ -1,118 +1,149 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from mail-4317.protonmail.ch (mail-4317.protonmail.ch [185.70.43.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F13370ACC
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 01:31:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD48332AADB
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 01:37:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790991113; cv=none; b=X6SmU4/gvNB3c1Rktz8v43WHvNiHc3Fl0L4Mnxy+DQWsO8asKOHLqqdrfDWP7o4hRFB5MZHHhG86GHmP+CgXfvg6HupeGa9JLG+Ij7ON1g9I/Sno51zM+4ay9gh5jJiiDV+qTTjKO2D9IHu7w9ygmzzOMfrQ3kV28DqcjvZIBXo=
+	t=1790991474; cv=none; b=H9d4WGiHbX7SHZLeynZVBWgg0T13+1TbolRWTuWOv6jmj+LcDPE8dWnYVJl8tMe/lRmST4KBnOslV0s3cR9wKUG30Q60S3D9YMQdOY83itbymqAmrsa1AzBL13hrFKte7MiwUwik4KEUkF4D0ckFNhMGCxfCYxN5rbQiTkebTvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790991113; c=relaxed/simple;
-	bh=cOFxtRL7g4VFczRvGGHm5LOh0BIgIq0q3P8prSJkmSc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RXPAkcjLj8UFAeUuDkSqB0mm6GsA+H+0yGoEDNE+fBMuXEEn2S83eBA0veGrs4SzwKOBjk9eWH6bZgohyDdPE++Jb0eFWSzHEp0wFIUB+TWphEi1hG1fyfES7V1bb6fXMizPYhs3mFb9gzjxRs0w2nCzIUPKZMpiRgXVuX3oRLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=muXxi3G4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m1yskvUh; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790991474; c=relaxed/simple;
+	bh=OugeHxMiMCJW3gjOcKK9g6SPK/vrYox2Vx9cxBAA6Ck=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=su/9+5KQ/OBTVxh0xBmcLq/aFXhu2FJbs9JVIgoEHr+1NhooyaKiMvihQhsGW8+skiKGv1VT0wMBib7L3+tdfGGc7GwGb0fT5+BWwWX8iWqtGhUrdo2DsZ1WLOrEzEqdGGe7WtB9zyzW41MWXqUFUJcD0Gnvr21Az6JTOU2dGZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molly.im; spf=pass smtp.mailfrom=molly.im; dkim=pass (1024-bit key) header.d=molly.im header.i=@molly.im header.b=ybRY1Ip7; arc=none smtp.client-ip=185.70.43.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molly.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molly.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="muXxi3G4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m1yskvUh"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 828A414000EB
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 21:31:50 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 02 Oct 2026 21:31:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1790991110; x=1791077510; bh=Y9nqFvEcmy
-	gBKHm+2cPyPrEpbOmbk9AIlSpkt7VpMgY=; b=muXxi3G4GkaWtMATjmITSOfe0q
-	Ojmi3PMMt0shYFj2i9ukUNaiqqhnJh7rJx0SMjSzKCP8X3lfLN3IU2n1CnthLVAo
-	Oy+Ox7KOVVO4hjCrOm+SwwKJvrmtk7G9bt1eTzLYwgNUjyv/CQuwkrZnyBtid8+W
-	Bcjgd/UqVoZxw47j2zAFHmU3svT6fOkFWA4r3Jac0EH4wvBvHABNqP04Ah7rhbA1
-	wmkV52k0t1nsZaXnl/SZ3OVfSw7FyX75Y+lvwB9DKKVH8H+pgQYSFHtRPPL3b4XX
-	pNjp2xihGnVuETQOrfQh2jzSPTWX5XFAkn9EkOnJWSKZnefQmv6CaHHhWWyw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1790991110; x=1791077510; bh=Y9nqFvEcmygBKHm+2cPyPrEpbOmbk9AIlSp
-	kt7VpMgY=; b=m1yskvUhVNhOsR7am3X6mCZ4vBR/P4OJbnWDZnAXK4Q+viObiRC
-	wPg6ZFKhQyOUynan24Qvg9UicsL83rMG0O1UZdMbLf/wh61ySMWSP9QzhI9wQiPm
-	7eLGwBHa6aOHqzirbI3+lm5VcZgZX2mGvhkPpJ8ZDAeRfIobxfgO5VkBIs0++YhE
-	q2NfDN5M1ajATwB+4GmZ+hnlBnXdNjbihp/yyfzrWp9Wofu/0w7BfqVh4daQ6RDO
-	WLnTRXGdM4MswDZ5BUh3ZCFT3YY9DU9v7hBxytkctatjS3+9SIp9pvcl/O+MZYlR
-	1a82d+ohN5aOwL9ieTeiGaGCVgN9G2AYagw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790991110; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:OpiQd17AaiElDlDFEDvAchQV95lV5UtbHxl9xuLBrWfGwX2
-	VL3MysYIqAluqKbzNhvXMJafTTQDBlYMyqFNKpc4wgZA/glfNYIJYAWUs2dywI6C
-	ocAuUC9InBCQqcWaFmsY/puq/PM6IzD22jE2V1cUfiW5CaiqZ9xf4HoYBVhLiCPy
-	RO34o2HMHGzcJovcn22M3whZuiYgD5pBns/8pYQ3uwVggCNqCzO/BQ9na8QbdjSd
-	tMywhEjExqfhJIGJcHjx1nXzNTdRT5rT68B5SU8Rv9+RcGj76wBjl2KtrLJLutJO
-	wclEiu/TlTDZo+MZ5UDLP8yAN/qz3G4P/29j2QA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:4apCcDxPEGWPC10aE0N2AHzf3uGu9arKx2ij+mp+1/g=:cOFxtRL7g4VFczRvGGHm5LOh0BIgIq0q3P8prSJkmSc=;
-X-ME-Sender: <xms:BlvAal9bdt_QbWETk8y52LKk3b6RIWGIJmguEdD_r72D6oXPPq0P0w>
-    <xme:BlvAagkoPTRA2kuSLifD8ECJltWU4GT_oT6xckgz-OKZolEZ32CfmEFFueKpdXwJc
-    v9UM5bnEHOiHNz2fRTO5mDFO3i7eNGIijoF42yzGVCEhUjtN3-fOyo>
-X-ME-Received: <xmr:BlvAarW0YIklRE-_49zoazOFcFb6YfuwbWSd431L5WSaPKxtHt1HcdhKQirYqspg08_WKn5FM0Lvs0ytvLNyW4djZAAHL_Jg8pXe>
-X-ME-Proxy-Cause: dmFkZTGlj0tRlendte76tkJsae1LC1D+gTlT3QY/R5xo9zE6RX47GrbgllXpsjPmGRmfRw
-    PC25HQkJ2iRdE0cY2LcG4RkAGcvrFkyJ5iKGyG13TBlSKg5OcLgU9yVVJ5kEEEf38gZedM
-    y9vgqNLQJ8Em4HmEW9XQRsel2FGqLDVPdUI/raYB3IiliMS8sjzPw6ZgO0Z2YagKasLt+e
-    y8VOD3me0OrSvB0VeUvhx2I8MeXbjT3ujyhgwbE5deuzF+FXZFwS662/NFCTIAfTebyN2u
-    qPZaZxN5gkAWRGDCpart0jPaPQPqI5Z32lHUpK4p08hZZsgO5Su1H0QK4AObIim9G6TYTY
-    ShsBJo+hbLbzr6TIy36yVnzO1nQHmcZPM3eWejB9jj2D4680saiou/NGHD7K2colPKvKmG
-    7WTFWbiMMZ78m32vuuc5bNXnl8xzw7muZ7yR+iVah2Mm+KJLQ6J3YuCxmUIiv19Zpbo/AN
-    hXlCFEQVnSShB44qStmXOjuR4XDS0NF4Mndm7WWtHPs5SGE0D20fVGZtMhxMOYr1Ze1rZI
-    3NgXbRuXXwgLD9h0YBjV/gTkf9X99t+uE66cDhRa/eDNK6kzC0qJXFnFUJamvStBu/nBmL
-    jjHr8iTjdS1PfnGDLg3gqg6wPkquvyp1ygpSksFduRS3SQRWJrWNQ+JTV2Jw
-X-ME-Proxy: <xmx:BlvAalG5BHMlwiU4ZwqeeYN3rgPSIIY7D6uUiaM-N76Zeaed2hVVeQ>
-    <xmx:BlvAandqQ4GbBOe7Sw8FBCX5Wpzlpczzw4SZ-z7NmF4LZ31IlELI3w>
-    <xmx:BlvAamKYC_ezAbqLoYadCrKWXXN4PwTRbCRWtDF0nDS7npjuqGPpNQ>
-    <xmx:BlvAasE1aWcqA-Rux3R0D6cFpWZCGlloBAxBmKc7kZWtbsjGOAOGfQ>
-    <xmx:BlvAai3mXAQ0KmUtdmraJg9HJLAF10rKo5_7I1PQZpQQmBV-nO4aTagG>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Oct 2026 21:31:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Scott Chacon
- <schacon@gmail.com>
-Subject: Re: a "limbo" object-format state for empty repositories?
-In-Reply-To: <asBVY1WniGUo6bQS@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Sat, 3 Oct 2026 01:07:48 +0000")
-References: <20261002224400.GA834158@coredump.intra.peff.net>
-	<asBVY1WniGUo6bQS@fruit.crustytoothpaste.net>
-Date: Fri, 02 Oct 2026 18:31:48 -0700
-Message-ID: <xmqq33unvabf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=molly.im header.i=@molly.im header.b="ybRY1Ip7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=molly.im;
+	s=protonmail; t=1790991469; x=1791250669;
+	bh=HVK8Nk5Ejbq3pJ6YvsyFaTCcVLqQm8bv828sWsKCS9M=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=ybRY1Ip7s1CKvzePdX9MHwvCubtJpzRZO0eQVO8IacdjOceWkxRgwST6zcQ5MFvIY
+	 avpf4sXfPp0dKmoyIoEwMw9psMaqXJyOsLGRdZsvLwIA4b68jLME4vFnYR6VNUil4P
+	 G1W8HeCcMjLkS489+bc7w6BjGWgfOCokZsivwiis=
+Date: Sat, 03 Oct 2026 01:37:44 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: Oscar Mira <valldrac@molly.im>
+Subject: [ANNOUNCE] git-carrier 0.1.0: park a stopped merge, land it later as a real merge
+Message-ID: <DKZjdpQb-rCGMXf5m_vAwXJGqsNM5jacEb_nzx_qS46udko31UhnYZvppt-AmHdOasUzzGfs6xm69ziK4nstKM-ddNNm8HIBj1SLuEVPNMw=@molly.im>
+Feedback-ID: 17485103:user:proton
+X-Pm-Message-ID: 25e5d1afa29b3bf32949523d7acbda562d333c0c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Hello,
 
-> There is some support for multiple `object-format` directives, but I
-> don't know how well it works and I seem to remember that we had some
-> sort of crasher bug in the past.  That would be the best possible way to
-> advertise that, though, if older versions support it.
+I've just published a set of git extensions that park a merge that
+stopped at conflicts as an ordinary commit, and land it later as a
+real merge.
 
-Oh, bad.  Telling the other sides "I can accept this and that hash
-algorithm" with multiple capability advertisement is so obviously
-the right thing to do at the conceptual level.  It would have been
-very nice if it worked.
+An idea like this has been proposed on this list several times, as a
+solution to the problem of working with large merges. I believe ours
+is the first tool to implement it in plain git.
 
+I'm one of the maintainers of Molly, a Signal client fork of Signal
+for Android. Upstream updates arrive in our tree as large merges
+that generate many conflicts. I wrote this tool because we need to
+distribute the resolution work across the team, so the conflict state
+has to travel across clones.
+
+git-carrier is one bash script that implements three git commands,
+with no dependencies beyond git and standard Unix utilities:
+
+  git park --branch carrier/v1.2.3
+      Moves the stopped merge onto a carrier branch, without
+      recreating the merge, and stores the conflicted paths under
+      a .hangar directory in ordinary commits.
+
+  git unpark -- <path>
+      Takes a parked path back out of the hangar. If the file is
+      unchanged, it reopens as the conflict git left, so
+      `git mergetool` works as usual. If you changed or deleted it,
+      the working file is the resolution.
+
+  git land <dst>
+      Stages the finished work onto the destination without the
+      .hangar directory, and writes MERGE_HEAD. Then it stops, and
+      you run `git commit` to finish the two-parent merge.
+
+Everything in between is ordinary git. The carrier branch is pushed,
+reviewed and cloned like any branch. The work left is the
+.hangar/stages/<path>/ directories at HEAD, and a path is released
+by deleting its directory, which shows in any diff. No new ref
+namespaces, no server-side changes.
+
+The tool was designed to meet our needs. We read the list's discussions
+of the same problem only afterward, and it was a happy convergence.
+In June 2020 this list discussed how to pass a partially resolved merge
+on to the next person [1]. Junio's answer was that the important and
+useful part is the data format used for that hand-off [2]. Chris Torek
+sketched what the format holds [3]; his sketch reads like a description
+of the hangar:
+
+    resolved entries          the carrier's own commits
+    stages 1, 2, 3            .hangar/stages/<path>/{1,2,3}
+    the working file          .hangar/stages/<path>/w
+    the merge's own context   .hangar/manifest and .hangar/message
+
+And the 2025 contributor summit expected external tooling to cover this
+until first-class conflicts exist [6].
+
+I want to share the design, because the format is the useful part for
+this list. The spec is on its own page, CC0, and git-carrier is just
+one possible implementation. That said, the spec was written after the
+first implementation and can have gaps; the script does more than it
+explains.
+
+Notes on the decisions, since the list has positions on them:
+
+  * Out of tree. The thread's advice was to implement it outside
+    git [4], and to help distros bundle good tools rather than
+    integrate them [5]. We are not proposing contrib/ or core
+    inclusion. But we would love to list the tool on the git wiki's
+    tools page.
+
+  * If everyone in the loop runs jj, it is a good alternative: jj
+    makes conflicts first-class committable state. This tool is for
+    loops where some resolvers, CI, or agents are plain git.
+
+  * The carrier branch carries conflict markers by design. It is a
+    handoff, never merged directly, and the landed tree is the
+    carrier's tree minus .hangar.
+
+  * Merge conflicts only, for now: no rebase, cherry-pick, or revert
+    parking, one merge source, no octopus, no submodule gitlinks.
+
+A note on confidence: the tool is brand new. The bash code was mostly
+authored through several LLM iterations, and the commits carry
+"Assisted-by: LLM" trailers for that reason. We reviewed and tested it
+extensively, but it could still be wrong somewhere. The bash file grew
+bigger than expected, and I know we pay for that in maintenance.
+
+I built it with care, and I hope it is useful.
+
+  Repo:  https://github.com/git-carrier/git-carrier
+  Spec:  docs/hangar-format.txt in the repository, CC0.
+  Tool:  one bash file, MIT, with a bats test suite. It needs bash
+         3.2 or newer and git 2.34 or newer.
+
+Thanks for reading. Comments welcome, especially on the format.
+Bug reports even more.
+
+Oscar Mira
+
+[1] https://lore.kernel.org/git/BY5PR19MB3400EB9AD87DFE612AFD5CC390810@BY5P=
+R19MB3400.namprd19.prod.outlook.com/
+[2] https://lore.kernel.org/git/xmqq1rmgxo67.fsf@gitster.c.googlers.com/
+[3] https://lore.kernel.org/git/CAPx1GvdT6sZRtu8q1R9=3DfA-mE9pi1Ag-gKEzQfwb=
+Gap+KqSoSg@mail.gmail.com/
+[4] https://lore.kernel.org/git/874kr92xyz.fsf@osv.gnss.ru/
+[5] https://lore.kernel.org/git/xmqqa716zs7w.fsf@gitster.c.googlers.com/
+[6] https://lore.kernel.org/git/aOQV%2Fja9Ltw%2FbTP3@nand.local/
