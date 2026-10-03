@@ -1,150 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej2-f42.google.com (mail-ej2-f42.google.com [74.125.228.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E939334B1B0
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 17:50:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D3430ACE6
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 18:47:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791049835; cv=none; b=BUdb3kdQ5Qy7ChidRVHVtnJI+PLz5/kQZpx0q/0Rcuqecd8rmF2OA/DxgHawr7m/m0bWec13RSLFsslBcqCuxxORpgETT88mPDw3XfAUPzz8LkcHlPb/5NI3lvrodfJXtLChrdxcY4CLKJmh/PSai2EyoW09ZVROa0/OdcacZnI=
+	t=1791053272; cv=none; b=N8Tb79JtrQmTdCHxxYMa2s1JTuh0qqMmkzcuBxif+uZ2WGdIsmnmxKAUWcuH/HhncSKSNJCdQzefL6Rmd8MO8WyGVypCpTUYV2UD/oU7nZFf8z6l2iYtwDBXOrI4TbMgBKfHMxRcHOscN32UMM1aHMtS3SmhVeb9sRkDMMZey50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791049835; c=relaxed/simple;
-	bh=pDpyAUOE5vQh6gFj4wMA2Zcd+4ZwAiSGionFvEzuKhQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TEQI4G96kBsdfgYe/N9AsgnNamdmHBLivknNx/SxDX/Pol0SDOYThwWsxn4W8XeP4x6kGX+5bLPa9IVQtXEmcqkXmvxpmdXRJTA+b+1qluAvsmoyzqFFOimgUJGAZdvrkgciiRKY0vOmb5SbiIaupQZCal4aa5jqD8ZVXojuruc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e8ObFeCI; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791053272; c=relaxed/simple;
+	bh=QGaMFZeGqzM6vFi3evbYOljRGS7ufnh+YVN/IZsJ2Gw=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=gzGoCSNI4UnDrZnvygVkrI8ffyZDxwH7TlMUtfRaGltE2h6zEDn/MKZrRlTks3yb0x6EVrY6zUm9gU5vEfJHtnc4Ox8utg7fZ1n7NgCjnuW0gCFN6XcXpHiLFDnMJwwT7D2lvH/G9WjzedytoNIFyrdPzzzEblLjOK5w1mtqXW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NImGaaFu; arc=none smtp.client-ip=74.125.228.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e8ObFeCI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B551F0089B;
-	Sat,  3 Oct 2026 17:50:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791049833;
-	bh=/SupTvsBkq37dV2WPP/c5DtzJJDWfFGeWNmSnIRs/vc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=e8ObFeCIGdOFvbHBj6egFoKKSXY94QxjcI9lzsDqcuzkINH1zvY1rkLB0cD9LwK71
-	 7lDalgXEuhOUL71/R9m/4bHtcsEgZt5PPnjJewUNsVF21ouYTo/H5TecmS1wpUl00m
-	 qp75R7PPX/y2kU4jt8G2M2tAatAr9iDskyJxk52vmtHq/NAndQb8GAr55FXEMI1bR0
-	 XiEJeRfwE5kWgW3Hj6fhQUosDXNSU2HoYUcfySH+z4+ZAK/Mp6NZ44+qiQkeblIJ4R
-	 i9/8HZ5PXOAy07Tr9KmzMTIeb1P0NJyy/1f/Im4sadyy0Riski7mAdpjfX8/Ss+Vuq
-	 Yt8vnI7rl41jg==
-Date: Sat, 3 Oct 2026 19:50:28 +0200
-From: Alejandro Colomar <alx@kernel.org>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: git-visualize(1) plumbing equivalent
-Message-ID: <asFAEwomFDbC2Dec@debian>
-References: <asDTWsH-RuIJOyne@debian>
- <CALnO6CCUY2KF8rEotihdVNy+D10mmzuW0RXbH8nqhSS9jsgQUg@mail.gmail.com>
- <asEa_Lp01DVJ2ThZ@debian>
- <CALnO6CAsd36-XEnRQWNhAsmH7Bg6ZoHv7qb2xQ1m0cW4-Decmw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NImGaaFu"
+Received: by mail-ej2-f42.google.com with SMTP id a640c23a62f3a-c2e7c1d9202so41159066b.3
+        for <git@vger.kernel.org>; Sat, 03 Oct 2026 11:47:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791053269; x=1791658069; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=QGaMFZeGqzM6vFi3evbYOljRGS7ufnh+YVN/IZsJ2Gw=;
+        b=NImGaaFuEBSrgqOGRGkp3Ka2iBCZ/2PLG1QIpsaWQvk0H81rxJsnzbTd9mZq9ddIqn
+         HQau4vRHxsm/jmgDnVDfO7HAdXVnZkyDkxbNTMPEbe8px3hGCsaO9e/538VFJmZiz6ma
+         mrpWoHu8muf/WGkAyBaqwiFb4+eAEQVlJHISq6JjD/GrCa1KRbCl2MikUocUyinCJobg
+         evzTrGY0WeHI4qa3fjJUjSa+ZyF7lQEBNWWWXwH/SZA0ygzZeSbFpK3xIzg2tkeASELB
+         tXrx65kwNa8n7uSmfPdNjENoGFfavJGjLxeRt6NGgphh+yN/xpDPzm75pq3SUOdnc/1b
+         Dj7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791053269; x=1791658069;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=QGaMFZeGqzM6vFi3evbYOljRGS7ufnh+YVN/IZsJ2Gw=;
+        b=aKGc7nlzhN0lyWMMSqLqzBz9rVYxqgRCEWBiYAmSCnHNk9+gyUc34ORJQL0QSRAHeJ
+         iPGP4u5nwfqYezBSwtsmIUMnp9DyH1muORRVQKOZpo6iwZbhRj5xWmYOtn2HlPpn8sv5
+         vJOyLhuhBIIz02tgJwBZqB/soOJPf9oH0qj8gFtK3c/OjnS2Oh9prTsd0xhIyCMpv7pr
+         TzrBJWQxDOwuTiz/VXamDmiEokSElVNzOPxMC4GZYA1d6ECc8d4PNqS/i0ryf/YtIoMk
+         lW/yuvEiohj1HVtTsnJU8tcGCkSsaU4YnMepGt33rqg/KZ/CTymLkykc8bKNIT/lK0j3
+         YDvA==
+X-Forwarded-Encrypted: i=1; AKwUvBxhf9P2qBK4pnkGkNm3c+gwwCwWfvZjdNrdW79EF9Fyw9gZJmXYVLlPEyPlU8igwDRCtlQ=@vger.kernel.org
+X-Gm-Message-State: AFuF++mN9gjsYjIT3kMEX6s1un8f0oY8uLvAAdzK3919NgJKijcJFZzu
+	r1GQW+NQQ+jIpdGHdaIS2s7vaigtGVoeb/7QipUiZXrhzBVzq+O/WNwh
+X-Gm-Gg: AYBFou2E0SQGybesNEYKYnRfNKmTex5cDG4KbyRP4mBxDbuQYGYae7NXJKOYzgKBpHU
+	iCoNSmb7uLrcLEL6a8yhn782yh5GxNO00fIFjN+1a7lwCLq+tSHqQR5WV8I5AExOSy/fwmiTNhw
+	WdCnUistjXIp/RU/b59BTgIHooliCPGdB5t7Y4PVIYRHNg53FQfYPvdubaXKLGSE19Ueb1F3/g4
+	LcZ0AcjoJwvfvq+EMNpx9yBYiGw2H+u6XUg2NIikoHaRBsmfU/f3AwQMGDUG9jqvEGh77gnlQhp
+	kffAh3bha7NNhwTNuJ5AtxfC4WoGFjKtXaoyEii8IZAtZWHeoozhkYuJ0pd+fod7l8vQPWH6SBS
+	aBkn3wgTvf7jqm5rVQHOpD4rrB3Yz2+gjoijSmCivkZW2ehvuyecZ/loqrnN+V4WuB83+V1rSN2
+	MWxmlkPm6cP8Qa6BK9PFqJcwtUva/lubz5+1MzdD971f8X8Kv/SXMi3nYrJ39urDmrmadDm1MX6
+	EvAPpG6IXMww82I536N/fAGIFyEmJ0yhBtT5raCpNhtGLNwWZjT75l6vR6NwTxJuF+WY2Wy8Lt4
+	IEWLxtMHtigKVFSSu4bxFXfU+Ph9KUXvVzYqbiB38osp7CsAif47mEd2pkTx
+X-Received: by 2002:a17:907:7282:b0:c2d:fc0b:551c with SMTP id a640c23a62f3a-c2e4ad7caa6mr516508966b.16.1791053269172;
+        Sat, 03 Oct 2026 11:47:49 -0700 (PDT)
+Received: from localhost.localdomain ([37.31.50.113])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2e4cd26a43sm219184166b.31.2026.10.03.11.47.47
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 03 Oct 2026 11:47:48 -0700 (PDT)
+From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+To: gitster@pobox.com
+Cc: cdwhite3@pm.me,
+	domen@cachix.org,
+	git@vger.kernel.org,
+	phillip.wood123@gmail.com,
+	sunshine@sunshineco.com,
+	ps@pks.im,
+	avarab@gmail.com
+Subject: Re: [PATCH v2 0/4] worktree: add lifecycle hooks
+Date: Sat,  3 Oct 2026 20:47:25 +0200
+Message-Id: <20261003184725.29917-1-maciej.ciemborowicz@gmail.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <xmqqtsp9tyu0.fsf@gitster.g>
+References: <DKGE5DORETW5.1S9NXEX8KMQHH@pm.me> <xmqqtsp9tyu0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="nysnurtf37cud5bs"
-Content-Disposition: inline
-In-Reply-To: <CALnO6CAsd36-XEnRQWNhAsmH7Bg6ZoHv7qb2xQ1m0cW4-Decmw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
+Hi Junio,
 
---nysnurtf37cud5bs
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: git-visualize(1) plumbing equivalent
-Message-ID: <asFAEwomFDbC2Dec@debian>
-References: <asDTWsH-RuIJOyne@debian>
- <CALnO6CCUY2KF8rEotihdVNy+D10mmzuW0RXbH8nqhSS9jsgQUg@mail.gmail.com>
- <asEa_Lp01DVJ2ThZ@debian>
- <CALnO6CAsd36-XEnRQWNhAsmH7Bg6ZoHv7qb2xQ1m0cW4-Decmw@mail.gmail.com>
-MIME-Version: 1.0
-In-Reply-To: <CALnO6CAsd36-XEnRQWNhAsmH7Bg6ZoHv7qb2xQ1m0cW4-Decmw@mail.gmail.com>
+Thank you for the detailed explanation. I agree that a wrapper is the
+right answer when the user controls the invocation of `git worktree`.
 
-Hi Ben,
+I tried that approach for a tool I am building: it creates an isolated
+container environment for each worktree. This matters in particular for
+projects with databases and migrations, where two agents working in
+parallel must not share an environment.
 
-> Date: 2026-10-03 13:10:43-0400
-> From: "D. Ben Knoble" <ben.knoble@gmail.com>
->
-> On Sat, Oct 3, 2026 at 11:13=E2=80=AFAM Alejandro Colomar <alx@kernel.org=
-> wrote:
-> >
-> > Hi Ben,
-> >
-> > > Date: 2026-10-03 09:45:17-0400
-> > > From: "D. Ben Knoble" <ben.knoble@gmail.com>
-> > >
-> > > On Sat, Oct 3, 2026 at 6:13=E2=80=AFAM Alejandro Colomar <alx@kernel.=
-org> wrote:
->=20
-> [snip]
->=20
-> > > > Having read the documentation for git-bisect(1), visualize reads se=
-veral
-> > > > environment variables, and thus this code doesn't seem robust.  What
-> > > > would be the plumbing version of the while-loop condition?
-> > > >
-> > > >                 git bisect visualize --oneline \
-> > > >                 | wc -l \
-> > > >                 | xargs -I{} test {} -gt 1;
-> > > >
-> > > > The goal is to know whether git-bisect(1) has found a commit yet or=
- not,
-> > > > to stop looping.
-> > >
-> > > I think you are probably looking for the (size of the) set of commits
-> > > between bisect/bad and all the bisect/good-* refs. So you might need
-> > > to "git refs list" the good ones, and feed those as negated refs
-> > > alongside bisect/bad to rev-list?
-> >
-> > Yup, this seems to work:
-> >
-> > git refs list | grep refs/bisect/ | sed '/good/s/^/^/' | cut -f1 -d' ' =
-| xargs git rev-list
-> >
-> > >
-> > > In the general case, that wouldn't account for skipped commits as I
-> > > understand it, where multiple commits are left at the end of the
-> > > bisect, but in your script it doesn't look like you skip any.
-> >
-> > Hmmmm.  I'm now working on adding the ability to skip commits, so this
-> > would be a problem.  Do you have any idea on how to deal with that?
->=20
-> Not offhand, sorry :/ I'm not totally sure how bisect represents that sta=
-te.
+The problem is that, in this case, the worktree is often created by the
+IDE rather than by the user or the agent. For example, Codex in VS Code
+creates worktrees itself when it starts parallel agent sessions. A
+`git-wt` wrapper is therefore bypassed, and asking agents to use one does
+not help: by the time an agent begins work, the worktree may already
+exist and its environment needs to have been provisioned.
 
-Thanks anyway!  I think this is getting hard enough, that it might be
-worth piping a heredocument into a mktemp(1) file within the script, and
-passing that to 'git bisect run'.
+It is possible to approximate this with polling or instructions in an
+AGENTS.md file, but neither provides a reliable lifecycle boundary.
+There is a race between worktree creation and the agent beginning work,
+and cleanup on removal has the same issue.
 
+So I wanted to report a concrete case where wrappers do not reach the
+actor that performs the operation. This has also been the most consistent
+feedback I have heard from people using parallel AI agents: they do not
+want to replace every worktree caller with a wrapper; they need a
+repository-local way to react when Git creates, moves, or removes a
+worktree.
 
-Cheers,
-Alex
-
---=20
-<https://www.alejandro-colomar.es>
-
---nysnurtf37cud5bs
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrBQGQACgkQ64mZXMKQ
-wqnT5Q//fRwY5NgG7d+FnvzP+VAsI6yn+ZSFX6Vgkehwdi9uhSExQJeexpA4TIrE
-PMlammVM/xklR09kOm2+hrix21/9bm8F89vXC3ZuEb1laI8+E5V3tht7EoB6/AFq
-F7ALnDSv+VZEE/4WDaKUAd6qmBoOBTwZ0xaz464Zsg6kxPSrEC1dqPjylMPnt52u
-1PE7q2jYD0yrfar2IS5SFvz2TwAZyXEbXx5Zovt1gm9sLJ9DDQvq9rD4DusLZZhQ
-Whd+ogOhpuC58EAs49uRnxn3S0aXuymRAeYqeYbly9HakcgLcMWC0gzDBBTqBg97
-uFkjoSWkoQm9G+0cVU7xwhCu0nprmt7rNeBJ/g5JX0KX7b7wzUm8RBQTNKaPuN49
-RpOH2TZoP3ahCmUYHQ9YfvMVNiQp7eljRrkgZtADVJBuS09vDdabJTrnBxPgoTie
-BWi4Ke8OO8ozP3kROCVXcl2dX0cusjtd/a1b57nLkI6ZmL5yKj0MvE2jz/7R14Uq
-zmIlQ7Dmq1bJ9wOqxbJIzWFOjFYQIbGoF2TieMjlf6N85WuYWKqjLpQxifwUFH0C
-+B0jiQUL/eEdhETtmK9UM4WBUvePLODGkLqRYmZHMTLqAyReWIWdBT5GKFlvTKBf
-kizR11ZgPEVgyXMSJZtNRcImYJH0LyU7EWRtYceGqx9OaRQzoY4=
-=NBdU
------END PGP SIGNATURE-----
-
---nysnurtf37cud5bs--
+Best regards,
+Maciej Ciemborowicz
