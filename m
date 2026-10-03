@@ -1,149 +1,185 @@
-Received: from mail-4317.protonmail.ch (mail-4317.protonmail.ch [185.70.43.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD48332AADB
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 01:37:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.17
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790991474; cv=none; b=H9d4WGiHbX7SHZLeynZVBWgg0T13+1TbolRWTuWOv6jmj+LcDPE8dWnYVJl8tMe/lRmST4KBnOslV0s3cR9wKUG30Q60S3D9YMQdOY83itbymqAmrsa1AzBL13hrFKte7MiwUwik4KEUkF4D0ckFNhMGCxfCYxN5rbQiTkebTvo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790991474; c=relaxed/simple;
-	bh=OugeHxMiMCJW3gjOcKK9g6SPK/vrYox2Vx9cxBAA6Ck=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=su/9+5KQ/OBTVxh0xBmcLq/aFXhu2FJbs9JVIgoEHr+1NhooyaKiMvihQhsGW8+skiKGv1VT0wMBib7L3+tdfGGc7GwGb0fT5+BWwWX8iWqtGhUrdo2DsZ1WLOrEzEqdGGe7WtB9zyzW41MWXqUFUJcD0Gnvr21Az6JTOU2dGZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molly.im; spf=pass smtp.mailfrom=molly.im; dkim=pass (1024-bit key) header.d=molly.im header.i=@molly.im header.b=ybRY1Ip7; arc=none smtp.client-ip=185.70.43.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molly.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molly.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBAE931AABF
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 02:25:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790994327; cv=pass; b=tZYJPJ7Pj2T/dpYiGZ0iO6BHQ0Y1dWJNsVKx9YXy/dc0huIGQgRqu3Z50cOVRK9fpgCz/AnJ4Tq2Ud4GF5wBVs0GtAx64IN0JcyWxCWf61TjJRwXQmajQuUYvSwzURYuBWoQ1oU0t21MboezDTvllYHwvs/6uDCyZJyJ9jP9VKE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790994327; c=relaxed/simple;
+	bh=xTGj8d/+I+9Pp0f5Lo6S6ID7ft9/YH/7mwyjVaSzzns=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EtkDQWaisuD+cKoUJcJX5jMbIoA75QqnmvffDoFps28yj0NNXr2omp0XlzEyJ6ql09Ni+IxJEyEc0va+wfZJHokkrSP4c7HRQxhx2rOyq6FdorcQJgodyi4MAdNYtZJVEB64hCABcrHMvjmcJBWLoyqJQlD/t69tgdvmUfZAC5Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bOphe2z/; arc=pass smtp.client-ip=74.125.228.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=molly.im header.i=@molly.im header.b="ybRY1Ip7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=molly.im;
-	s=protonmail; t=1790991469; x=1791250669;
-	bh=HVK8Nk5Ejbq3pJ6YvsyFaTCcVLqQm8bv828sWsKCS9M=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=ybRY1Ip7s1CKvzePdX9MHwvCubtJpzRZO0eQVO8IacdjOceWkxRgwST6zcQ5MFvIY
-	 avpf4sXfPp0dKmoyIoEwMw9psMaqXJyOsLGRdZsvLwIA4b68jLME4vFnYR6VNUil4P
-	 G1W8HeCcMjLkS489+bc7w6BjGWgfOCokZsivwiis=
-Date: Sat, 03 Oct 2026 01:37:44 +0000
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-From: Oscar Mira <valldrac@molly.im>
-Subject: [ANNOUNCE] git-carrier 0.1.0: park a stopped merge, land it later as a real merge
-Message-ID: <DKZjdpQb-rCGMXf5m_vAwXJGqsNM5jacEb_nzx_qS46udko31UhnYZvppt-AmHdOasUzzGfs6xm69ziK4nstKM-ddNNm8HIBj1SLuEVPNMw=@molly.im>
-Feedback-ID: 17485103:user:proton
-X-Pm-Message-ID: 25e5d1afa29b3bf32949523d7acbda562d333c0c
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bOphe2z/"
+Received: by mail-pz2-f12.google.com with SMTP id 41be03b00d2f7-cc4aa0f1766so24823a12.0
+        for <git@vger.kernel.org>; Fri, 02 Oct 2026 19:25:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790994325; cv=none;
+        d=google.com; s=arc-20260327;
+        b=OU6T6mPijrccl6r6pFd9IdbXW6pDXDLB0WxAed2J8pecKUjDG8GcvHQShtmco7kx66
+         u4j1M3+HRELV0fyLaIvCJ2q8qZomMRpIE958rIKNKjxR2DRvSpJB72XMR8ZIZR1msT4F
+         PuCKWlT9zppfC4S9rcOd7wZLErsRr4/4qFhm/Lw/UTau/Jh3IeQdjvUUmhWEfk00bufp
+         c3+adrYw58bb1pps9fdoDzaX4f0KX/H/M8ZBnFn+cFjxsNZnMoXZNuxjH8v3oUNNAKkn
+         e99LZju/ObK4NERbdIMQJLlLDxvyFvcPHygDKzSjxB7ZLaYQia20eWfVtbrJ9yA4k8j5
+         TS1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=yA0Mh3b5r9+NcCPlPriEiJrBaBuZKzS8B+F5Qq64CwU=;
+        fh=gPkdGHBI96mSRzA1ftca8ZPBPRdpm25wrXp2I4AuZyA=;
+        b=jbsS5fSe5/nO0gIX13FmDrQ1n9xH9PHLgVvKTfhoCRBik6T9ZOKp04pOGhLLUuVhFb
+         ID2ekMGOYnzHgdUn7kDOz1YnJbJhj5BjMX/lBRCeXQpJhG8DgM5r3bfI/tpeSPVl3R0a
+         4MNV+hJ7ONUfKpRwrxxI+cispI1cqJGAHTPUo6g0B6Kugd3ABOXmLEGYLiEl+U0V2yU4
+         vRTokuRX4zBTjQKau6G5x1ygTpMkqNtSTstaSTJiJeaIy9cms9b/jFOPKhWlo7HNP/01
+         AT9ZwO4n+H+xNgGsGDAJzzTPGcObdMljVaCNajejJOjBPGOVDKbqMrSbijio4saV3HuZ
+         OXJg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790994325; x=1791599125; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=yA0Mh3b5r9+NcCPlPriEiJrBaBuZKzS8B+F5Qq64CwU=;
+        b=bOphe2z/NNjf4z1c8r1G8ODjIez4vDgCIX8S5IkDRyq9D1cIlHcVWyyW8D41yIvLIa
+         uJtNsfU6P/PrCPb0tJezc7uUxaxftuEojYKZIblUsw0Z/XYt6WVdMAVsH7OzOQf2oUBc
+         1qjRGEcvDkYJRSFFv52FkL5xPKeswYmrwtxxduLPjlxAKsRpfsQ9yx/s10ls47JOScIX
+         NNLCs4Ye/yPtTiKf6IvlaRYT0eYJRyosDU2+Ak52VrsI0OWatsDtBUmU/Ch5or+BhrVa
+         O63eDjzqBReZ9LGoAVzi3kOJS2x89Gay0fb667hOXbuF0clDUOkcn1iWYSj6rvMy7gdo
+         WK6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790994325; x=1791599125;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=yA0Mh3b5r9+NcCPlPriEiJrBaBuZKzS8B+F5Qq64CwU=;
+        b=i6aFvoxA7oG6I69RaywFKUrMQjxCYFmEkcqid4Xc4PXtmyGJmRe+zlVrXtW02kE5Ii
+         Bn9l3liPiaS0e1Dg4TNjzr0Ve8ae1QVsWmODx6S2G/8VF0nRZH9m8eDWfq5CdVOj8UAn
+         HISj4Us7HmMO2YPMHzLWIO13OMH/4WS3jV3XPXdX6hlRGEqbcM15RvXP+Gg/3LnmEpdZ
+         ESz+iqmrX8UgxEa9WRy5Rv7DGOotqIvLidacOvxzkhkh7D1SSsp8aDf/Oow8kgjmS0ZQ
+         yKBqk8othSq2VBmHUC+6uREBgdENO3ITYTUdvYIFNrGSqTK3+xCI81uIhZhAnfnt305/
+         DbFA==
+X-Forwarded-Encrypted: i=1; AKwUvBxeIENnnWYXN85xQ6LlcYf8VTvfK7+X+9SHYJOM7tXhArTKfNpMJ+bly1vzpTXEFFlofWA=@vger.kernel.org
+X-Gm-Message-State: AFuF++kHBBeNvat5OOwImaor12s8SVv2onb7NfoM9aU60zPv3Kf6OHjL
+	95Sxaik/eBCL5ua6a+f80T+8Z0ZsYT5vO4qROg7YFSJafq/9QmVT4XqcbteEdJ4RzRG1cSmY/yk
+	v03nmZqgsLYpOaq3FhvyIPRgiPpFJdwA=
+X-Gm-Gg: AYBFou1Q0uSA2Ki2AQ4fVdDtJF17NzM7pW36smwiSSSc4EEWx6XQrEU3w400vSl6BRO
+	cIPPvvuAVLcwvzPrEm/oS4ydmt+5yODwtqu1Cx2pFMa+kocH3bderi2Lz3NOH+vUEAaS35nnQ/+
+	c4FPyFG2Gm1GRRHyQJbcg9ALRA77XhWEsgj1UdTiCBK3ssDrZyA/PZ58ch2kDPO+z3b/NefMxZS
+	Sq7gvobe1atMLRLAq1YYSMg15kXawJ2HiNQahlA1rcssYRGzT3FdLysL2oMU5om9uOOc8IFh8/p
+	5yHBUWk9yiisNi5RMxj5MI5uIaNfNuhldT6VOLoFDkHnOM1jwCocwdhpaSc2+46mq2H1LCAASQp
+	8fq9YBSbuQeQfYDArsSfkA7RkLv8jRwrUwsmimYjv7pp8aeke7O/U0Dp7hiCUs6PjN13GKghu1A
+	==
+X-Received: by 2002:a05:6a20:3d11:b0:3de:b120:bbaa with SMTP id
+ adf61e73a8af0-3e0bcf9e556mr4570093637.44.1790994325182; Fri, 02 Oct 2026
+ 19:25:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
+ <a1686a2d82ef9357ecff07c1247092d3dd5ecf95.1790261062.git.gitgitgadget@gmail.com>
+ <CALnO6CDdoqE2hyZMJg6OZkzNtcnjNXRz=HO4q6cZVpF_wbTXyw@mail.gmail.com>
+ <2f71028f-d58e-400f-a02e-7a25c032d889@app.fastmail.com> <4e579181-e93a-4746-8c2d-b127cb0e053d@app.fastmail.com>
+In-Reply-To: <4e579181-e93a-4746-8c2d-b127cb0e053d@app.fastmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Fri, 2 Oct 2026 22:25:13 -0400
+X-Gm-Features: AclHuK-SzNoL4tQAXGrEGPL_bzvJnEuWteOoVYlqQj1xl5Fi0R4ejW-oGonuDsw
+Message-ID: <CALnO6CDoMTtyPJyOiXVPSZvFGHgGkFT-u_Qk1km+XYn9BR0OHg@mail.gmail.com>
+Subject: Re: [PATCH 2/7] [doc] git-merge: link to new merge conflicts guide
+To: Julia Evans <julia@jvns.ca>
+Cc: Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On Fri, Oct 2, 2026 at 1:01=E2=80=AFPM Julia Evans <julia@jvns.ca> wrote:
+>
+>
+>
+> On Fri, Sep 25, 2026, at 12:59 PM, Julia Evans wrote:
+> > On Fri, Sep 25, 2026, at 12:36 PM, D. Ben Knoble wrote:
+> >> Hi Julia,
+> >>
+> >> On Thu, Sep 24, 2026 at 10:46=E2=80=AFAM Julia Evans via GitGitGadget
+> >> <gitgitgadget@gmail.com> wrote:
+> >>>
+> >>> From: Julia Evans <julia@jvns.ca>
+> >>>
+> >>> All of the info about merge conflicts has been moved to the new guide
+> >>
+> >>> Among the changes made to the common ancestor's version,
+> >>> -non-overlapping ones (that is, you changed an area of the file while=
+ the
+> >>> -other side left that area intact, or vice versa) are incorporated in=
+ the
+> >>> -final result verbatim.  When both sides made changes to the same are=
+a,
+> >>> -however, Git cannot randomly pick one side over the other, and asks =
+you to
+> >>> -resolve it by leaving what both sides did to that area.
+>
+> >> I think these are both valuable pieces of information we have lost in
+> >> the new guide (unless I misremember just having read patch 1 :).
+> >>
+> >> The first explains a bit more about what a conflict *is*. Maybe that's
+> >> old-hat nowadays, but I think it could be nice to keep a statement
+> >> about why conflicts exist.
+> >
+> > Will think about this!
+>
+> After talking this through with my collaborator Marie, we wrote a new
+> "what is a merge conflict?" section which I'll include in the v2.
+>
+> Like I mentioned before elsewhere it takes a super light approach to
+> introducing the 3-way merge. (there is intentionally no mention
+> of "since they diverged from the common ancestor" etc)
+>
+>     WHAT IS A MERGE CONFLICT?
+>     -------------------------
+>
+>     When Git merges two commits together, it looks at the changes that
+>     each side has made and combines those changes. For example, if one si=
+de
+>     edited lines 1-5 of `hello.py` and the other side edited lines 20-25 =
+of
+>     `hello.py`, then it can easily combine them.
+>
+>     But if both sides edited overlapping lines of the same file (for exam=
+ple
+>     one side edited lines 1-5 and the other edited lines 3-6), Git will
+>     not try to guess how to combine those changes. This is called a "merg=
+e
+>     conflict".
+>
+>     When this happens, Git shows you both sides' edits and asks you to pi=
+ck
+>     how to resolve them. It:
+>
+>     * Stages all of the files which were successfully merged
+>     * For the files with conflicts, it leaves them unstaged, puts both
+>       sides' edits in the file, and leaves <<markers, merge conflict mark=
+ers>>
+>       that you need to resolve.
+>
 
-I've just published a set of git extensions that park a merge that
-stopped at conflicts as an ordinary commit, and land it later as a
-real merge.
+I quite like this. I'm sure it oversimplifies somewhere, but at least
+I personally cannot immediately see where (or how it does any harm to)
+;)
 
-An idea like this has been proposed on this list several times, as a
-solution to the problem of working with large merges. I believe ours
-is the first tool to implement it in plain git.
+Thanks!
 
-I'm one of the maintainers of Molly, a Signal client fork of Signal
-for Android. Upstream updates arrive in our tree as large merges
-that generate many conflicts. I wrote this tool because we need to
-distribute the resolution work across the team, so the conflict state
-has to travel across clones.
+PS Unlike Junio---perhaps due to my lack of older Git history and
+terminology, despite using Git since 2016?---I would never have read
+"unstaged" as *deleted* from the index. Just changed and not updated
+in the index (i.e., not "git add"-ed).
 
-git-carrier is one bash script that implements three git commands,
-with no dependencies beyond git and standard Unix utilities:
-
-  git park --branch carrier/v1.2.3
-      Moves the stopped merge onto a carrier branch, without
-      recreating the merge, and stores the conflicted paths under
-      a .hangar directory in ordinary commits.
-
-  git unpark -- <path>
-      Takes a parked path back out of the hangar. If the file is
-      unchanged, it reopens as the conflict git left, so
-      `git mergetool` works as usual. If you changed or deleted it,
-      the working file is the resolution.
-
-  git land <dst>
-      Stages the finished work onto the destination without the
-      .hangar directory, and writes MERGE_HEAD. Then it stops, and
-      you run `git commit` to finish the two-parent merge.
-
-Everything in between is ordinary git. The carrier branch is pushed,
-reviewed and cloned like any branch. The work left is the
-.hangar/stages/<path>/ directories at HEAD, and a path is released
-by deleting its directory, which shows in any diff. No new ref
-namespaces, no server-side changes.
-
-The tool was designed to meet our needs. We read the list's discussions
-of the same problem only afterward, and it was a happy convergence.
-In June 2020 this list discussed how to pass a partially resolved merge
-on to the next person [1]. Junio's answer was that the important and
-useful part is the data format used for that hand-off [2]. Chris Torek
-sketched what the format holds [3]; his sketch reads like a description
-of the hangar:
-
-    resolved entries          the carrier's own commits
-    stages 1, 2, 3            .hangar/stages/<path>/{1,2,3}
-    the working file          .hangar/stages/<path>/w
-    the merge's own context   .hangar/manifest and .hangar/message
-
-And the 2025 contributor summit expected external tooling to cover this
-until first-class conflicts exist [6].
-
-I want to share the design, because the format is the useful part for
-this list. The spec is on its own page, CC0, and git-carrier is just
-one possible implementation. That said, the spec was written after the
-first implementation and can have gaps; the script does more than it
-explains.
-
-Notes on the decisions, since the list has positions on them:
-
-  * Out of tree. The thread's advice was to implement it outside
-    git [4], and to help distros bundle good tools rather than
-    integrate them [5]. We are not proposing contrib/ or core
-    inclusion. But we would love to list the tool on the git wiki's
-    tools page.
-
-  * If everyone in the loop runs jj, it is a good alternative: jj
-    makes conflicts first-class committable state. This tool is for
-    loops where some resolvers, CI, or agents are plain git.
-
-  * The carrier branch carries conflict markers by design. It is a
-    handoff, never merged directly, and the landed tree is the
-    carrier's tree minus .hangar.
-
-  * Merge conflicts only, for now: no rebase, cherry-pick, or revert
-    parking, one merge source, no octopus, no submodule gitlinks.
-
-A note on confidence: the tool is brand new. The bash code was mostly
-authored through several LLM iterations, and the commits carry
-"Assisted-by: LLM" trailers for that reason. We reviewed and tested it
-extensively, but it could still be wrong somewhere. The bash file grew
-bigger than expected, and I know we pay for that in maintenance.
-
-I built it with care, and I hope it is useful.
-
-  Repo:  https://github.com/git-carrier/git-carrier
-  Spec:  docs/hangar-format.txt in the repository, CC0.
-  Tool:  one bash file, MIT, with a bats test suite. It needs bash
-         3.2 or newer and git 2.34 or newer.
-
-Thanks for reading. Comments welcome, especially on the format.
-Bug reports even more.
-
-Oscar Mira
-
-[1] https://lore.kernel.org/git/BY5PR19MB3400EB9AD87DFE612AFD5CC390810@BY5P=
-R19MB3400.namprd19.prod.outlook.com/
-[2] https://lore.kernel.org/git/xmqq1rmgxo67.fsf@gitster.c.googlers.com/
-[3] https://lore.kernel.org/git/CAPx1GvdT6sZRtu8q1R9=3DfA-mE9pi1Ag-gKEzQfwb=
-Gap+KqSoSg@mail.gmail.com/
-[4] https://lore.kernel.org/git/874kr92xyz.fsf@osv.gnss.ru/
-[5] https://lore.kernel.org/git/xmqqa716zs7w.fsf@gitster.c.googlers.com/
-[6] https://lore.kernel.org/git/aOQV%2Fja9Ltw%2FbTP3@nand.local/
+--=20
+D. Ben Knoble
