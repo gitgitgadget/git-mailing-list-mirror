@@ -1,136 +1,133 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19B3221FB4
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 02:29:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790994559; cv=pass; b=HALWaE9Q/au14dLC4GRJK5iv7gvbCStZhELISTE4n5s6BSr/24hidPsY62kriylv+bwPSpxmpywhxP92CXABh8mB8+PRVgWOz7modDoZBFDlAc8C8NuiZEG839/M3wrSZfiENDJcAiEan6NF92NkydEHpjhDwkGW+RRIk352JE0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790994559; c=relaxed/simple;
-	bh=Jwm54tPjIxR9ijqMcV1WtAoHzAPlculq387E8G5bkCU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sBhdOk7yGGFHzD/k4AP0sQXO4EU6qFD2jFTpTMsSHleuN8mcnj8ZM9F0fam8Cky0biTrXBmHsLRkNQwgPdnnuw/RRt90iA5i1YBqRs71fa79NJXmYYdSuCxb/u5OzjA3Zh/NumzmuSLqeMIT9HpbsaIsM9Zm0R4SWlM1EN4DA6Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=daEYg6ql; arc=pass smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2CF1F3B85
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 04:12:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791000758; cv=none; b=EDSQ8yMBqeQ67HeNi/PIy4fF+hAK2maSU/AJ5QvSWTzY41cPifX3ExWQHndeF7puUNJN+9TUrUQOTOlFh7TpgyB5l33+/Bp9GqYWlDIrOiZ/4lVBgeB9Tl2kN/laA+8S1hQSArU8AbriUaIAbMTcCbPcA+sXknx2kw4N2xcfR7c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791000758; c=relaxed/simple;
+	bh=WDUR2NWS1+Nh+QvEGPHn3065O0t96sXw0GsnFGjSqus=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LYtRppi2wk4iKG5KWevJbLqSXkF38nH04Q6iOQJvr7W0axHZ4tlurzFdT5Zjr6f0stwJCd0ydYKBwHVTrZEVDMz1CpHsA2o6JRx+steaoVqnhO8SiAabay+q0yxUAsS5oKhR7qlEAhjGWQACr9bLSB5byZFKrKQ4IIjnYUCAn0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eskjfIQ1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=thcfAC6i; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="daEYg6ql"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-887fb6c0ad1so57136b3a.0
-        for <git@vger.kernel.org>; Fri, 02 Oct 2026 19:29:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790994557; cv=none;
-        d=google.com; s=arc-20260327;
-        b=MpHFIAPMZze5Pb5jX4adUn6O/EO2qXaUh4eY6kfyZNKeDiG5Hr5q8ddluAL6dIMFWN
-         tpXn4Uv9SkVhTL0MHtymZP1ve0my94+edx+WGl1MErW33xStcGON5l3PwjZvTCEXZyPC
-         namEFtwBvbjmWthxzAx3ZPha13Axy8tuu1SzLmQf7W59FT5aM0tlJId/5kiVMZeNIEtv
-         d/8jGIzdTmYsc/atA9RYrOrqJJHy/706uQ1RyCfd1tCZbQZGGq4JgGJ0ohizvU/G4ocZ
-         /YNsr03r+ZP07PHUqnTTkGI6BdPTaRp0FoqtYzttMKjX6IP80KhiKkWLRNohS75gRCfH
-         8yUA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=FlPAulwmWkyz1yahlv2f08wQUUAS4uyz3bf+eAFUR+E=;
-        fh=7Fa4QKZvLZw7SLKmBePNd1gJS64alS5VKEqBnIcJaxQ=;
-        b=JwIIRE2EDKeSEg0xuYe10D1ZNQMjcFZl5bWlr25vb75jnrrIFUosfPrQfh6GncWqoo
-         JkF0um7GKvp0P76OzBrvQX496gEuHqjsPlT/RVkRmBW+4NMPJEDC5zjq7tiRRRlRB80S
-         9A1z7dF1Zaad3VrBqVpICEqHFdgmjK73CGGyCfPobdEYFZiNcZgQbIYUoqqzwkXGB8y5
-         b609ulK4K6j5cVgTTwIKWfr862rIKLz6Rdm+zpF72JRtt23GtQfFLB+RfXmOZHIxF00u
-         ntgvOx/iSjx6K6pzrW1Pq8sCfCIfZgcLBwSSz/9xHoSUOC1VQHdF+ockUDEja8i9ZIxg
-         KNHg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790994557; x=1791599357; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=FlPAulwmWkyz1yahlv2f08wQUUAS4uyz3bf+eAFUR+E=;
-        b=daEYg6qlmdGl7wXp/3oFoRkKVLTjAdK4ayKH99VScCkaerIfwXL8ZaXln4h+g/M5ZM
-         2EcHq+zdU8/e0Ew2zC8PcvJXXBoblZT4l++asiAp+vxj0++ACREp2/DzxwIqurnGl3vQ
-         E8e+oyhjXGm7R2OGi0Hk033P4TT09rm5e35Rnxaq2BB9LAe7Tizcbz7Md2sHYpyZasW2
-         PoHlTTWczniYvHvOqXX+ZOdVlN0bdUAeu7hY4MYUHbVWYnhIE3vw9A5Ab334xOYTnT4Q
-         oln874ASMvm/lgOAU6LMb+YyJzuj5zm9jW5Tmgbd7rDdsBV1q3ZqxDhuIDBnPxXtQ+TA
-         qflw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790994557; x=1791599357;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=FlPAulwmWkyz1yahlv2f08wQUUAS4uyz3bf+eAFUR+E=;
-        b=AnrEtNg39Amc0i+Mgx4BYKrbbGO3KmUKcm+u1LNFMQ6C0mQvYfwePWqynzXTvZ8wdX
-         5iTOX0/eV7XpNda/LB7wIq9990Oi3BjlAmHMq7uuRfvVpaooXCjFxWrkU4+19eip8H0H
-         ddKvxFUZrCSEM0ErHaz9893CthDZr8QS3DN2LFelUQNI4McpNzrARYSym+Ie727t9SVq
-         QeV7YbvH6U4CsqTClkh3WIaki/fbjLXeVa9eEqOB5xjwDYRyz3xV39OBMAf3f4tllwQY
-         wiki1nDMjENRJaSnfftmU7op9sHjmZIL0Q85mBAEV6R65PlIMs9Z0+Dym/NBJaw3kAtb
-         bT8Q==
-X-Forwarded-Encrypted: i=1; AKwUvByJJBIDRRUn9feRsIjutdy2OMICLlpcHoPNIvzEZ4abqCUj7bvILOSLfzVuXI/q0gcUgjI=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJBY79jcrIoyIUUr+vvCOExSyxVN5qxHDl0IDURkreGGvjmZsTl
-	tMIxm4X9/bvlEUnhpXnOgBLGZVLPyDxlKpUFAt4hqc969je4OYaRSvY4aNOVvA3wGDP2yIBf6/N
-	zL2IE7IpsJHBPEMlQerX1tJww8N745jA=
-X-Gm-Gg: AYBFou0i16ov9E5sw6zXE4Pv0/rdeyF1zBpnDrEoLeE8psy7Y4/VYKorHFTe7K9RTYo
-	amma7erxjdy/Ya9K+yhXXdJUEnfdQDrUU1d6jJFZDxbXgGYizWSO6l6vmhMijeKAMUB7Vtiwf1A
-	GiVGhKc+cG093sY9ruH3zgn9Ol2XCsr+dExscV0aupYQP0psRZQxHsogQ3kD8xUQraqwSflK5sa
-	JS6xza7Cm6jKyLmVwm51hbY4n0lG8b7nl8QTPWcDNFnoPzGwIL3yisYgXa3Ww05jlgn32Kqsi7z
-	W5MpJuRFedAxWrwWBRbJk05oZnh/lqwKhxIKYoCmOxrs39bCvtlvyOz00YASf33Jk0dEpnzneEN
-	unEb3yMIR7UeaEt/3SpGh+o3bB3iEUxkZoinJW1v4GdVwicsBkp0Hq0iYXwD9JJxaM2dZ+PaSwQ
-	==
-X-Received: by 2002:a05:6a00:1c86:b0:882:26ea:cd56 with SMTP id
- d2e1a72fcca58-88c63e6f923mr969765b3a.35.1790994557090; Fri, 02 Oct 2026
- 19:29:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eskjfIQ1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="thcfAC6i"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DC809140006D
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 00:12:35 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Sat, 03 Oct 2026 00:12:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1791000755; x=1791087155; bh=qEpm19dTKQ
+	RgpuEkn3eGg+VXooUYG1ngcntGo+pbCWs=; b=eskjfIQ11Uu/duws3mQd8eeZfF
+	1prtFoy1GO52zkaf2OQXQz6jJraK87nJ4u8kXv2BhyB1cWEolupxZwaYoS3Dbu7+
+	BuJoWCOe4sjfJIj7jrVFfSkFbDmTDdGuI9ie0kDOdCElMROwlfgmk3T0xy0nXsxo
+	9WLUUuRa8LNNlZ7/+DTplZq5HZtFC6Ud/XU49butFoGQZqVtUUyk1Q0DJfoDD/e2
+	M1lHrB6DgmR8jW84wSrYE57YlpN5G+4ZhK0RzdAlIISHOPc2Avwt4nLP5HQBzYJQ
+	H2r7UwHhMXYUK3Y8rXCn66nsV/xhefyiYQs8uI5YiK5bm7kBokKPdKTg6sQA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1791000755; x=1791087155; bh=qEpm19dTKQRgpuEkn3eGg+VXooUYG1ngcnt
+	Go+pbCWs=; b=thcfAC6igfQJ9txirD+IgJcGV6oKsTgUm+EDX1EPs7pYS+Cfnzh
+	hCfBQ8R49mT5fvuFaBIk10Owz4cX0I1hzDSQq61gGb8rTpV8O0qsQ2/+4eAPyuM2
+	PQ26IFQsO44EBWzZH9diaml9nO5YiZ7DBRk7RF/ReX5sHxRlNZpRDfCNyxlSKJdk
+	lBNeSmKVdcTpeVD7XInKt+XhKlJ6BCJH19XAANdKnJ/i6jjyUfxQ5ZRofNx1+ngM
+	uenE+/Twl7qK2oCBuTG36RIXgbHdR05CDvuK0COKC2bt70xZSiPrCxjnx3fHv5Qd
+	F9kOf5WNYXs2XkAiDeZdqmKE+TOlxZDsPXA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791000755; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:dSPUALL9HPx7c9U6F0mU8WOb+o3IADo1PWvIacwnApi9qnO
+	OBckw8tQGs5tXw43BkvAS5eXyrqvw5eRQmjQdfoOyG7rR9yh6SaILdmBQBTayLwG
+	86qbZp/BRAI0E1m0UUn+ALlNoHAB00boJHp0j/PQqUllJe4TBBilRCEmwmWuzW34
+	gswUTF2PrMxqFX22t0R8Ni0gE3U08chymzH1ByjcFdPBEve2+6lN+vDtP1R4+IZ0
+	u4KFiPRuJgUuNWRPtV9uMMc7dEwA6guTCPpfsJ6JJBT3C6Ng9wxQ8lg8ZGIm6CQ6
+	4f/bTdtn9P+YOwqEN/S7alm8zNHtRYj7J+7+KsQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:X+2XiinmLqUgc9UTTBIAqPA4amoHnHcbmCBsu9J2wFc=:WDUR2NWS1+Nh+QvEGPHn3065O0t96sXw0GsnFGjSqus=;
+X-ME-Sender: <xms:s4DAaroeuUlR2ID6aaDdY9WCglUH_uyEzE-2MWVxZ4Rc9H6xHossNw>
+    <xme:s4DAapVyVkw4fRDBFDH1PE_wClwfb9sIrI4W5Q1I5u74hmd-A9UQIddvPMMpEPABt
+    ujf7Zv-4Oi1Ycb7597VT9zGuuvp1Z8_qtaV9toG-sm8ED8l81vhVj4>
+X-ME-Received: <xmr:s4DAaiAC4EuBUqu_kUw0eepmkdGBA-8jneNk4THl-svNjLFXK9cq87cKzUZkF2SIm1tOqdzaH5wDbr_UHXCEMBB5aNtd0raATFeO>
+X-ME-Proxy-Cause: dmFkZTERlKI432JrzyJqBRyAzidNckaPg46UgmKPGUFSLG4ghnPWD8qvvmKmFBjm072Cge
+    yhYREtUW8L5bRo0VmfUYb2bCt4TC1yGL/hGPchZx+NiR0NfG4I7V4VROPd2/IQKAqXiXLe
+    29TijdIUa4ebMgrc9LbjrAEXb8eGCqn3N2dZ9kYjxoSxX4gJTi3G5AHI04lgdRXNqZKGrd
+    wwmi3AR+rdg0Gsqw+S35WL0GIsIQ5pPtCJ7Ua7gB2YJna2nx/n4LFxSNKKptv1Q9pAsdsv
+    aJ1yFbToISwgLv7E6TosuATGBah/3+F7zyWR1sJgvDdrLdj/IcvRGCDY+/0V0VKDrNVDbl
+    gwUuBKHWn7+9rrkiuL6cVKARdT0bgrQSin8wWC7Mh52mFPvNZ2BBX48yUxQ+EbHMSJ+Jay
+    DZFdsVJfcM9YESAWWY2UsUOMi/y5RFHaEbuXw15zecw4uejWuWXVvuhiTCw4bb6x9zxmMb
+    VJnaIfw6TPhq8PqbQR7OErBLJ+OLZV4+6H8ODRzZQ3YoYQuUzJKIrYzkCmggZMvvbrD8M2
+    1pSegjXXgANSzL4O8O4WUvEEMwyuLMipTuDJIjY+tu22/JPzY246Ht416TkSlYvZnDEtUp
+    mD1nATIOIzPIXP+momv0MNo7wbVXNrGslUUyLPwz5QTLoWJRDj3Y+Iw0y1Cg
+X-ME-Proxy: <xmx:s4DAal0XtykzM7AXczezRGPlQmLSOv3vmB4qX_sSGiD0goWihLmRzQ>
+    <xmx:s4DAas1PJNi6hBCIDrLBnOXuCnaoYuB-qc7s6EeUpCYhF7VWeZ-XPw>
+    <xmx:s4DAaiBHVI3MO1VJwQB4dllsnF_vOJKa4bvyoT61zSCfs3BLEi46bA>
+    <xmx:s4DAaj5_UUR5y346C0kaHiAAKaAZ6kEBU8OZ6LBuvJO-X3XWHCyIjw>
+    <xmx:s4DAajPWld33Ot7Ja8Snb8KTAB86zeOTVgeXh5macSPXDG0OLjvcmshO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 3 Oct 2026 00:12:35 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Julia Evans <julia@jvns.ca>,  Julia Evans <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 2/7] [doc] git-merge: link to new merge conflicts guide
+In-Reply-To: <CALnO6CDoMTtyPJyOiXVPSZvFGHgGkFT-u_Qk1km+XYn9BR0OHg@mail.gmail.com>
+	(D. Ben Knoble's message of "Fri, 2 Oct 2026 22:25:13 -0400")
+References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
+	<a1686a2d82ef9357ecff07c1247092d3dd5ecf95.1790261062.git.gitgitgadget@gmail.com>
+	<CALnO6CDdoqE2hyZMJg6OZkzNtcnjNXRz=HO4q6cZVpF_wbTXyw@mail.gmail.com>
+	<2f71028f-d58e-400f-a02e-7a25c032d889@app.fastmail.com>
+	<4e579181-e93a-4746-8c2d-b127cb0e053d@app.fastmail.com>
+	<CALnO6CDoMTtyPJyOiXVPSZvFGHgGkFT-u_Qk1km+XYn9BR0OHg@mail.gmail.com>
+Date: Fri, 02 Oct 2026 21:12:33 -0700
+Message-ID: <xmqqik3jtob2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
- <CALnO6CA_=OsznkQ4iT0vBMWf3L=bmVKMBdk1MTHQdaKEcKwn4g@mail.gmail.com> <91396552-f86b-47d7-9805-8f6056c2ed66@app.fastmail.com>
-In-Reply-To: <91396552-f86b-47d7-9805-8f6056c2ed66@app.fastmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 2 Oct 2026 22:29:05 -0400
-X-Gm-Features: AclHuK_n4D_X5kPJBF4dIJLMO1XsCrBae76fMejwyp66Y17a7DENsStH5HADpGU
-Message-ID: <CALnO6CC+h1y=Fu438nm4cd0K-dfPVYq9MqX_+k8fxBU60ot8KA@mail.gmail.com>
-Subject: Re: [PATCH 0/7] [doc] Add new page on merge conflicts
-To: Julia Evans <julia@jvns.ca>
-Cc: Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Oct 2, 2026 at 1:40=E2=80=AFPM Julia Evans <julia@jvns.ca> wrote:
->
-> Thanks for the review!
->
-> >>  * I wrote that git commit does the same thing as git merge --continue
-> >>    during a git merge , but I'm not sure if that's always true.
-> >
-> > See also discussion in
-> > https://lore.kernel.org/git/CABPp-BEQSx4m3BcT28CpVGCtsH75+x3gmv4OJz_ecL=
-VLx+kBWg@mail.gmail.com/T/#t
->
-> Wow, that's a very interesting read. I'm more informed than I was before
-> I read it but also at the same time more confused :). It makes me think
-> that "git commit does the same thing as git merge --continue" is maybe
-> not true but also I don't know what the difference might be.
->
-> I've put an item on my TODO list to remove
-> `git commit does the same thing as git merge --continue`" and to try to
-> replace it with a more vague sentence that I guess says you can use
-> either command without being so specific on whether they are exactly
-> the same.
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-For now I would say the subtleties in that conversation really make me
-lean towards the following:
+> PS Unlike Junio---perhaps due to my lack of older Git history and
+> terminology, despite using Git since 2016?---I would never have read
+> "unstaged" as *deleted* from the index. Just changed and not updated
+> in the index (i.e., not "git add"-ed).
 
-- "git <thing> --continue" is, for most users in most cases, the right
-thing to do. It's what "git status" recommends and will practically
-never do anything surprising (?).
-- However, it may not always be exactly what you *want*---and you'll
-usually know when you want to go "outside" the normal sequencer and
-commit directly (because you'll have understood some nuanced details
-about what can happen).
+I agree such an interpretation is certainly possible.
 
-For merge it may be the case that they're the same, I suppose (I'm
-genuinely not sure), but I would prefer to simplify folks' paths by
-recommending one of the few uniform interfaces we have :)
+The verb "to unstage" would be the opposite of "to stage", but it is
+ambiguous what kind of oppositeness you want to express.  This is
+unlike "to stage" whose possible interpretation is fairly narrow.
+You register the contents that you consider desirable for the path
+using various means.  On the other hand, "to unstage" is undoing the
+result of your earlier act "to stage", but it may mean reverting to
+what is recorded in HEAD (i.e., "git reset HEAD -- path"), undoing
+the fact that you added a path to the index (i.e., "git rm --cached
+-- path").  Neither interpretation is what you want when talking
+about what a conflicted merge does to remember the three stages for
+a conflicted path in the index.
+
+Hence my suggestion to avoid using the verb.
+
