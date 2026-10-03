@@ -1,128 +1,155 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from mx-out2.startmail.com (mx-out2.startmail.com [145.131.90.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9057D33998
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 01:07:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F9333998
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 01:09:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=145.131.90.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790989672; cv=none; b=K0I5+pEYd4rfyq8T12L75Fqp0RglKKf+6WqT5GXtheVaeHU9dd6X4Vl3sN/YPPaaePjR5Br0l0KR87CjGVxVMKWAPT6SPhaYZkqRpwcgj6c2Ir35j4zlPaei70Jhus2IKePHu/ymjimDHyew12NFxPloUJfozLwaVZetUk8snQw=
+	t=1790989742; cv=none; b=CV0mNmu+dLwu5pccWJPR9fy02wpbjr6zhG0N3mw3u51HIBP3asxZFCRf46iMH+KwJj5Gl7BUXfIj7vE0qMdPi5cvJ+mO857NRO+/kI0O139cAHIfaXYEsZPpt4HXi7SACryooEkOI2DZzcjQ2AKN7erJXeaOP8Tm62Y6wq+fut8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790989672; c=relaxed/simple;
-	bh=w4wFTTBXJy8bDS+euGr5F74kvKxzTmIBXVbdLWaW+/4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bP0TiwXtu0y96DAseFE0QVm2qmz+ZwSMzIlfoPqyifr9wyUS+gpGF1XAW3U8AFWIdVnvSfGIqLIWeR3SZS9kTOVzFYzzYrjF/wtuphbJWDth4TAHYGKQNyVeqGM99RX0H2v4PSHk9j6RcKm4P0kEAtSWPgeYs/mJ5STbjShctLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=xvS1QfWo; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1790989742; c=relaxed/simple;
+	bh=jJT7cExrrl1dmfw8C5Cs+PvM+tLxbWXPatBr5st+fFg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Mime-Version; b=tstGZMoca9qsnITOL4K2oMBvrSKSoaYQK4O0MfWkGDD1wXLhEsqiX8owov914xJdVKQ9VYMV29krsV4/Wokdc/hRyNh527UMtH0ad10asfZ+X6s3H7q5iIkh95xkVnde1xd8bF/gtY7bpY7cwnKHteuvqaKSgwJRTsZTlFzzZok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grantmoyer.com; spf=pass smtp.mailfrom=grantmoyer.com; dkim=pass (2048-bit key) header.d=startmail.com header.i=@startmail.com header.b=xLyL7CBO; arc=none smtp.client-ip=145.131.90.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grantmoyer.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grantmoyer.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xvS1QfWo"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1790989669;
-	bh=w4wFTTBXJy8bDS+euGr5F74kvKxzTmIBXVbdLWaW+/4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=xvS1QfWo5gqAHj6MguJMd5sYlQ4p3LXO+8S4t27JehEoqeX4kSchwJ35g0g4iBlqZ
-	 taaLVsNjMjqjgzoCy3Cyg7Gun8Evl4TK1aL41YIgScxp1XNtpKvHgFhjacHHqo6DfK
-	 gr092HMlP4TraDrTQ1OkiMZb0B7cUIt6sK+gOUlrUT74oWbH1m87uxnjsiglKQm4wm
-	 /vpCVQnKHYvcqYumdQ1xPZQfzl1xdTmOKEZ5EnqP/glnINKl8tkGKVTiUNZw/b134v
-	 Aj6ijKM0NAE00k7vcdjzxy6ZImE7xPOdlDd1yw1aXLZ3xvSjhXL5+SuTdA0Fw4+dQo
-	 2jaQjvxUCFwrjDD09kkjMWBM4OXNJNGxeFzfyXJN6rXrH9pOof7GRvdDEsY5CZShL8
-	 eWAbSYRMeUqUL9e7IgxK8rgdfyLnZsgpmG5JItwjE3aNAGas5E1n+AfVrnWSz3UKPx
-	 g16ds0vXpACGGQa0fJ+ItPNcHsqFKushk0mUS5mwc+LdyBkyCLN
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7c1:8d15:f288:f856])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9B5EC20075;
-	Sat,  3 Oct 2026 01:07:49 +0000 (UTC)
-Date: Sat, 3 Oct 2026 01:07:48 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
-Subject: Re: a "limbo" object-format state for empty repositories?
-Message-ID: <asBVY1WniGUo6bQS@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-References: <20261002224400.GA834158@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=startmail.com header.i=@startmail.com header.b="xLyL7CBO"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=startmail.com;
+	s=2020-07; t=1790989348;
+	bh=NfUKzhLwiO94K8SDJ5YORIXiV2leU5ga2HJTLQZBSsQ=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 Mime-Version:Content-Transfer-Encoding:From:Subject:To:Date:Sender:
+	 Content-Type:Content-Transfer-Encoding:Content-Disposition:
+	 Mime-Version:Reply-To:In-Reply-To:References:Message-Id:Autocrypt;
+	b=xLyL7CBOnHw+REYq44vxmTHXSUscrNqqg9uipk2gjR5OthNhx7N3SBjJh8cJVt/3T
+	 zjoxc+JiTL46A3wHZBYm+wUNYfSV9neqp+Sfyk4nqj2y6QoYewLGb8MgA25ngR51v+
+	 +0ni/fX4Y8/XW62DugmS+NPyMcgD7ZdD2LVjM7algPfu/Ay8s1iQKFPPbUtM4zh/L9
+	 0F4IN7qOo1TEyDthGriyPwD+leXwvY05+zbaRFOJMABkn0LQoqjvmKyp7EA+O0ZkW/
+	 EY3MR9+xxQX2npiFNYr8qePLrrmtUdw4XAs81O270RZ+F/TamBRLMrWgas2OZQ/57S
+	 tfm1LgRScPWxg==
+From: Grant Moyer <dev@grantmoyer.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>,
+	Grant Moyer <dev@grantmoyer.com>,
+	Michele Locati <michele@locati.it>
+Subject: [PATCH v3] filter-branch: fix commit map init from state branch
+Date: Fri,  2 Oct 2026 21:01:27 -0400
+Message-ID: <20261003010128.256757-1-dev@grantmoyer.com>
+In-Reply-To: <20261001012347.3998801-1-dev@grantmoyer.com>
+References: <20261001012347.3998801-1-dev@grantmoyer.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="q+9P0WkMnkP4Keak"
-Content-Disposition: inline
-In-Reply-To: <20261002224400.GA834158@coredump.intra.peff.net>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
---q+9P0WkMnkP4Keak
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The "--state-branch" option asks git-filter-branch(1) to write a
+mapping from old to new objects into a branch to enable incremental
+processing of large histories. This object mapping is stored as
+a simple blob at "$state_branch:filter.map" with one object pair
+per line in the format "$from_commit:$to_commit". Before processing
+commits in a subsequent run, the state branch is used to populate an
+object mapping directory, where each file is named "map/$from_commit"
+and has contents "$to_commit".
 
-On 2026-10-02 at 22:44:00, Jeff King wrote:
-> It would be nice if the empty repository could adapt to the object
-> format used by its first push. Then everything would just work from the
-> user's perspective, no matter what they push.
+In f6d855091e (filter-branch: stop depending on Perl, 2025-04-16),
+we refactored git-filter-branch(1) to no longer require Perl,
+but accidentally started to interpret object pairs in reverse (as
+"$to_commit:$from_commit") when populating the map directory from
+the state branch. This can cause all kinds of bad behavior from the
+state-branch being effectively ignored to previously filtered objects
+accidentally being mapped back to unfiltered objects. One especially
+evident case occurs when "git filter-branch --prune-empty ..." maps
+some commits to nothing, then on subsequent runs outputs many errors
+while trying to create files with empty names, like:
 
-I agree that would be nice.
+> /usr/lib/git-core/git-filter-branch: line 305: ../map/: Is a directory
 
-> So what I'm suggesting instead is that the server be allowed to
-> advertise a limbo state: it has no object format yet. And then client
-> can recognize object-format=3Dlimbo, and send back "I'm a <sha1|sha256>
-> repo, so that's what I'm sending you" in its capabilities response.  And
-> then the server receives that and shifts its local object-format to
-> match.
->=20
-> There are some tricky bits on the server side (e.g., you'd want to flip
-> the value atomically so that if you get two simultaneous mismatched
-> pushes, one of them gets rejected). But I can't think of any reason that
-> it couldn't conceptually work, and I feel like it would save a lot of
-> headaches.
->=20
-> But I also did just think of this idea, and haven't implemented anything
-> (nor do I have immediate plans to). So it might be half-baked. But I
-> thought I'd toss it out there and see if any body has thoughts, or feels
-> strongly enough to try implementing it.
+This regression went unnoticed because, since the introduction of
+the only test for "--state-branch" in 709cfe848a (filter-branch: skip
+commits present on --state-branch, 2018-06-26), the test accidentally
+passes even if commits are not skipped. The test checks that after
+populating a state branch with git-filter-branch(1), then running
+it again with that state branch, the resulting filtered commits for
+the first run and second run match. However since the filter used is
+deterministic, the commits always match, even if the commits in the
+state branch are re-filtered.
 
-That is definitely something that could be added, but it's also
-incompatible with every existing implementation.  Specifically using the
-`object-format=3Dlimbo` approach means that no existing client from 2.29
-on will work with the repository since `limbo` is not a valid hash
-algorithm.
+Fix the population of the object mapping dir by interpreting
+object pairs as "$from_commit:$to_commit". Also fix the existing
+"--state-branch" test by directly exiting with a non-zero code if
+any commits from the state branch aren't skipped. Finally, add a new
+"--state-branch" test which directly checks that a commit from the
+state branch is used when incrementally filtering a repo.
 
-There is some support for multiple `object-format` directives, but I
-don't know how well it works and I seem to remember that we had some
-sort of crasher bug in the past.  That would be the best possible way to
-advertise that, though, if older versions support it.
+Tested-by: Michele Locati <michele@locati.it>
+Co-authored-by: Michele Locati <michele@locati.it>
+Signed-off-by: Michele Locati <michele@locati.it>
+Signed-off-by: Grant Moyer <dev@grantmoyer.com>
+---
+ git-filter-branch.sh     |  4 +++-
+ t/t7003-filter-branch.sh | 25 ++++++++++++++++++++++++-
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
-There are also going to be some policy decisions, for instance.  Some
-organizations will not want to allow one algorithm or the other, so
-Git will need some way to allow that behaviour to be expressed.  Or more
-likely, Git needs some way to allow the fact that it's in versatile
-mode to be expressed and that it's safe to rewrite the config on initial
-write into the repository (which, to be clear, need not be a push; it
-could also be a commit or add).
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 24fa317aaa..9aa07be6e1 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -302,7 +302,9 @@ then
+ 		do
+ 			case "$line" in
+ 			*:*)
+-				echo "${line%:*}" >../map/"${line#*:}";;
++				from_commit=${line%:*}
++				to_commit=${line#*:}
++				echo "$to_commit" >../map/"$from_commit";;
+ 			*)
+ 				die "Unable to load state from $state_branch:filter.map";;
+ 			esac
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 86011e7b1f..801cc83e5e 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -121,10 +121,33 @@ W=$(git rev-parse HEAD)
+ test_expect_success 'using --state-branch to skip already rewritten commits' '
+ 	test_when_finished git reset --hard $V &&
+ 	git reset --hard $V &&
+-	git filter-branch --state-branch state -f --tree-filter "touch file || :" HEAD &&
++	git filter-branch --state-branch state -f --tree-filter "exit 1" HEAD &&
+ 	test_cmp_rev $W HEAD
+ '
+ 
++test_expect_success '--state-branch incremental rewrite uses the rewritten parents' '
++	test_when_finished "rm -fr incremental" &&
++	git init incremental &&
++	(
++		cd incremental &&
++		mkdir sub &&
++		test_commit first sub/file &&
++		test_commit outside root-file &&
++		git filter-branch --state-branch refs/state \
++			--prune-empty --subdirectory-filter sub -- HEAD &&
++		rewritten_first=$(git rev-parse HEAD) &&
++		git reset --hard outside &&
++		test_commit second sub/file &&
++		git filter-branch -f --state-branch refs/state \
++			--prune-empty --subdirectory-filter sub -- outside..HEAD &&
++		test_cmp_rev $rewritten_first HEAD^ &&
++		git show refs/state:filter.map >map &&
++		echo "$(git rev-parse second):$(git rev-parse HEAD)" >expect &&
++		grep "^$(git rev-parse second):" map >actual &&
++		test_cmp expect actual
++	)
++'
++
+ git tag oldD HEAD~4
+ test_expect_success 'rewrite one branch, keeping a side branch' '
+ 	git branch modD oldD &&
+-- 
+2.55.0
 
-All that being said, it's not impossible, but it's also not easy.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---q+9P0WkMnkP4Keak
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8FgmrAVWMJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ2hMyTlzAsNVdoTEvzC2L2H0wk6ihGLtq0KRuxUa1Lbr
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAOOKAP9C5NiYnlUO4E039EJOnF7X8MjZ
-MFxf5w87DwSpqAhuCQEAzzd3t50m76GpWfU7vZ+Pg5Vf2RR+7Qddz2wFSHH4Dwc=
-=7xBu
------END PGP SIGNATURE-----
-
---q+9P0WkMnkP4Keak--
