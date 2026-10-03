@@ -1,116 +1,118 @@
-Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD4F272803
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 04:50:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.225.76
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791003054; cv=pass; b=VkThxv5sBIJAIr5DLw/c1zSQn2rshIBaxBzuFlKNK8q9EjubGFXsJ7J/1/j4GJ+Muz+cSkmuAV+XgTkB+HNCBcOr7BEa97SevKvwHKLJ9wfdbvs0RBTQY9GoT8KL6y3nIIAjfWa5hgqOqLMlG6Ex1kAcuGVxZ4Ps8J4HPvfs1GM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791003054; c=relaxed/simple;
-	bh=c3pytUrs9JspRFNFSgbOQSoP60PRF2KABWD5O8RVBmI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bmZzuXtKJD/GIKSFpza0oa5Rvd8to0stddj/FL3q3VXJHxjsKk1vi3T0JtO7cg4QDxcEtFoBfc3dAYqu6HaX/37B1B26KGQFPudm7ckQ5J8Dvz1cYTtuHgi68L2wM1Ttqm3ENEID3adaUvAkuN0GgC7U2rjEMjccmuVo9Qep5Uk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IrevP6e+; arc=pass smtp.client-ip=74.125.225.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717CD230BE9
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 05:59:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791007189; cv=none; b=Y1XwFd9ZuRjGAnTtA3jlwqZ9lFFcJUZaD3Ww3WGgnMhhPc0yW7eLtYLLHW/Kaf16t161c8wfQb+nL+rd742TMumnetRCyHF0+JUACmPfy0IQ3wclNsK4hO9Wt/X0OP0xm0nnkUyV9zivd919qlaDZj3P1c3vn1T41HWJHM2kmcY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791007189; c=relaxed/simple;
+	bh=ar5aG0FPXiXcKwgTqo3uqzKfjZbxSmOjMFVbSKly+dk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZgEriHidAoM4AncSdxyAORLgsqvaW5ap73cNiw0JdqVIJsHfLK0WBoMcVZYSQAUBR3Jhj/SWNvfTVja9ODIntgHw2rUfklVgS/PE5RP3BsDn25ypd+8xpEWLDvOcsl2Upwo4qIFl1NDW+mUFEI0KvlwVvSgGT2L9C8STqHs1A1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RxkQQQFj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IrevP6e+"
-Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-482f6350f89so35467f8f.3
-        for <git@vger.kernel.org>; Fri, 02 Oct 2026 21:50:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791003051; cv=none;
-        d=google.com; s=arc-20260327;
-        b=B/OnyAsUb8jEpPQr7e+0KYMnvUK9OyRfd+rP51pbvIEppc0qFw/dCZqFfFX4AnKJLO
-         EAqww8XjSdULKV2kKAhfDvtH2GMtR5EddGDfgo7+hnwsRJ58/59DaBzGujKS0GCh/CIT
-         QuEcvlNS8LZYl+f6t3a7elfzn92y7kjHoLIJ/Ar1lrLTdd8xxL1MzfRRTCuvd+vq2vz8
-         659/wDP11gwbzrBLQygTmCoTJZICOSx2ihJJEa8fsXRLAvYcoDiBUinvXB9sDiK2E8/v
-         6Qmq9YOue2Ajuas/g1ocqiv7zV5PTaR68Ux/QgKZL3lEe+WrkxJB1MNWzNw67/ucpJgP
-         UXrw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=rNtA7cLctgWrjwqgc7N4+dWNbRYwwQlSY4Te8MHTnQE=;
-        fh=w0Gy0U/6XCy3Ufv+zmlyPYUyPiGuXogm3Rr19TBxFRI=;
-        b=Naw3EyBg0foqhebkhgo21x0Nw3L2GBaRdx7jTWNbJSrFtbsA84n61rf6O1UTPTjQYf
-         q9W7il1vHTrrvlAzaNEgcf49QwX9ZdbqHM4rGWazkZzp2G71TSNydZ/m+dUq4aF0BI3L
-         Kb59GpydqgtPSmV+B2CxfwDCzHDzwV9Kg51SiIqUooeHXinbSEWPy649dIGRyveOdeCr
-         y0SJCEFwfrW7Wc3qV5uNxTmP7oh0wryu+kUlwFmcHfVflu9YnpddmaKvURi3PFZJ2buF
-         YNW4trlyKvBj5dUhstMWtl3maoxq/MTGU9FmCFRN30B2hczdDtmuGDYLq2zLkQrLL77y
-         YEjg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791003051; x=1791607851; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rNtA7cLctgWrjwqgc7N4+dWNbRYwwQlSY4Te8MHTnQE=;
-        b=IrevP6e+W0UoLKmGH16nvGsYC8d6mv/B6Vm25Zp2WS8TTwEqaU8SX2xtJg1NpMhVyj
-         iqvCyybtyNg0Pfa61JfLM7AFh0lIyw4AhQTVsbyu6+KcLJjum93Y4iY1L3mOvLhLiFmQ
-         dxJqn1/L3pZNXn8x0GvVUbS21EPAXjJGf7aAtVbyp9izL3O9zWXBqrmRWBzWjJ7xGJM3
-         MS9zJgUQILZr4T5f67E4Hul4m5w8GpGeph/OyD0iUhe4EED0LiypDwFG4zzFIh9EkV6J
-         vsNlTrFz/kk4NDyD1PlE7mJwoSzqPZ6CNGun7Bnoe2+H/itU0ZO8wO9KZruYTM9Y7Buz
-         dg0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791003051; x=1791607851;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=rNtA7cLctgWrjwqgc7N4+dWNbRYwwQlSY4Te8MHTnQE=;
-        b=Hil91czCgtaEFQ7oHnmLuVDxBqFdlUKWuzNsx21XEwtj2XwC/BZ4pTpRNVoaRS2tqU
-         TqFzfJuY32qceXRu+4q4m20WG0Jcbjjo7EYugoDWqag4W8ba/46nE0s+IeaFa0vNHwrY
-         4CXQdwMW+r3cboL4GWbByjFO5zAdNfvqiRnVasIVqOObVbGeSQRpOuhv+6a+0S+O/XVe
-         iuLpUONEUPEkncdjfmsh3RUV0bZ3L8CWZTGAv+71wIx3BALlZShMMlj23f2Bys/f92Wn
-         BoXCilgiaKh98+hUt3hIyjl2TRRonHjgLumNRAr6cgbSTJdl1pdvPLR+f5KTXvtiMFXc
-         FIag==
-X-Forwarded-Encrypted: i=1; AKwUvBzpWR2wRlbzvgWPx05lcEl/BXE/8jYw+7dl5+DUb/jgL0ctGG8KeMphCuy4LplGUADo3zY=@vger.kernel.org
-X-Gm-Message-State: AFq9FYK3VlqmSKyDT3tK396iKbuk3IZJ7pLYth3j8eFzCm04FTLa19f7
-	rZaQfOI+ZqGk/RVn5icHdfmQlUxuWHI+PI2lS1zIGL5C0jmhtb1KcolvFN1LGvQHCg1nz9Tvc++
-	Z6IOK7BHFybgdFc8D7IfLTiWaRHqai+k=
-X-Gm-Gg: AYBFou1+fspQKnGMMxJb1Kp5qhwycqWIcXwbNiWp0brLvzl1mlYpBhH71Zw3sdeCVXR
-	lYHZX1/n2f5WRiewjRtWp7qIOaRQ/Gbe0T9LFmk8/QLGAyqDcjudNcAB64EU/wPwmdhwZqAm4QN
-	ySJpEcSdKgQYn/m8b+0r7NIYwctB9KdMMuSeTpYYdpRT5wuXmA9aqp8vVoNO6IzOkgqCGz8Egd0
-	AKP2t/cYAYKmIGmaDtWfibN0xkVtGLKeTot4WRgf+2UaBBRqMBK4TaF0bDYrDd7xD1D++PGAaLR
-	bTihzP+18Zgm1a4EX9dTk21CBzUrSJsyE0Rozi8F7HjTSOwDtmLgJdKuMMYHAwc8GET9Jeq18Y7
-	oHjJC1J2AzS+Mrg==
-X-Received: by 2002:a05:6000:4021:b0:48c:41c2:46d6 with SMTP id
- ffacd0b85a97d-48c41c2474bmr6034458f8f.35.1791003051107; Fri, 02 Oct 2026
- 21:50:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RxkQQQFj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E48E61F0089B;
+	Sat,  3 Oct 2026 05:59:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791007188;
+	bh=v7a3fMPPwX4x+utgR9fLUw2XSMxxh2sIHrYIiHv0WzY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=RxkQQQFjrWzJHxs6WRC5eNi6rX/nzBNm9EWj7fZ3hoOJdYOheP3/61OL3IIudTYVX
+	 +yAb2t7lym2Jx7CVScK2hAOIlb6EY4FiwUdjJyu1F5/4KND7AuFsg8A7I/Rk6dPOWg
+	 maLQycFv1NfeTtLkubn1wD4s08H5uckKJhMpau74HA+9Eeu5hXjZYdzK+iwNgiawge
+	 lRb6JNvF+g/JBzmqX04xU+AxIqrX8xxsdPMOxzgaBWvFrRw1pwbSbwJrnOCB4mauN5
+	 rLdA5A+sO9sGixfKO1P5bEvbiwhn82ZAEIDdFYMSv1siU4see7Oi1q31fbgHHmORGc
+	 LbQ8sI6r4/nBA==
+Date: Sat, 3 Oct 2026 07:59:43 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: git-bisect(1) next after finding the commit
+Message-ID: <asCY8kLEV4OAG1BG@debian>
+References: <asAbOSQ4BkuCTPY5@debian>
+ <20261002221154.GA833115@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260922040047.2567-1-colinlewishinton@gmail.com>
- <20260925192658.1166-1-colinlewishinton@gmail.com> <xmqqo6dlt906.fsf@gitster.g>
- <CAHeTm9Pb-fb-ZS_m4UVNZxfp+ENQwBUGDvP1E24dEDTZy5RFFw@mail.gmail.com>
- <DLSD3JY380Q4.2VPO95D7M213G@lfurio.us> <xmqqpkxua87a.fsf@gitster.g>
-In-Reply-To: <xmqqpkxua87a.fsf@gitster.g>
-From: Colin Hinton <colinlewishinton@gmail.com>
-Date: Fri, 2 Oct 2026 21:50:41 -0700
-X-Gm-Features: AclHuK9YENo-p8srQY_wCW7YiN4dx1h2pPbvE77nxaG2fbTc5GIpEUg8FQYcvCM
-Message-ID: <CAHeTm9MBx_ndL1XkdyjtjFaGvoF69AHwP6DLYsirpBVsiNRfAA@mail.gmail.com>
-Subject: Re: [PATCH v2] fetch.c: defer fetch.followRemoteHEAD validation
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Matt Hunter <m@lfurio.us>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="bxt6cdftgzvqxglf"
+Content-Disposition: inline
+In-Reply-To: <20261002221154.GA833115@coredump.intra.peff.net>
 
-> > Perhaps at a minimum, this patch should leave the comment intact (or
-> > reworded) if not yet addressing remote.c.  v3 otherwise is looking good
-> > to me, and functionality seems to work.
->
-> To end users, the annoyance factor due to an irrelevant incorrect
-> setting in fetch.followRemoteHEAD and remote.*.followRemoteHEAD
-> variables killing their "git fetch" are the same.  Correcting one
-> may be better than correcting none, but until both gets corrected,
-> we cannot claim we helped users.
->
-All good points, I will add the NEEDSWORK back into this patch
-as this is a half measure to the entire problem; however, rather than
-leaving the NEEDSWORK in fetch.c, I will move it to remote.c near the
-remaining defect in handle_config(), and maybe add a short comment in
-fetch.c for context of this fix. Unless there are any concerns, V4
-should be released soon.
 
--Colin Hinton
+--bxt6cdftgzvqxglf
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: git-bisect(1) next after finding the commit
+Message-ID: <asCY8kLEV4OAG1BG@debian>
+References: <asAbOSQ4BkuCTPY5@debian>
+ <20261002221154.GA833115@coredump.intra.peff.net>
+MIME-Version: 1.0
+In-Reply-To: <20261002221154.GA833115@coredump.intra.peff.net>
+
+Hi Jeff,
+
+> Date: 2026-10-02 18:11:54-0400
+> From: Jeff King <peff@peff.net>
+>
+> On Fri, Oct 02, 2026 at 11:49:01PM +0200, Alejandro Colomar wrote:
+>=20
+> > Is there a plumbing command for retrieving the bisected commit after
+> > a git-bisect(1) session has successfully found it (and of course before
+> > resetting the session)?
+> >=20
+> > I expected `git bisect next` would bring me to it, and then I'd rev-list
+> > HEAD -1, but it doesn't bring me to it.
+>=20
+> I'm not 100% sure, but I think "git show bisect/bad" should work.
+
+Thanks!  It works.
+
+I guess the plumbing version of it would be
+	git rev-list -1 bisect/bad
+right?
+
+> As the bisection progresses, we advance a single refs/bisect/bad from
+> the bottom of the range (the top is multiple refs/bisect/good-* refs).
+> So at the end, it should point to the blamed commit.
+>=20
+> -Peff
+
+
+Have a lovely day!
+Alex
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--bxt6cdftgzvqxglf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrAmckACgkQ64mZXMKQ
+wqktTg/9GofwNLSbLcg1ND3XWwf9VN1Om1oXYQBNhzwGgpiRqTA1awuQcrnhDLA6
+xhcmwCpafW26HzbDLej1tDt8xQGNmRd58EmUGGojOSdEeaPEVjQu7rfIUalwjEiW
+HGZFKtzAZhE8JmCboxFovaHGfORixvl6veT5QO8aOhKbgPCmSgWUirk4YliutoIb
+pYtdTfPy9kKnY91cObSRT/t3qx29SDNDv2qjeYNTet7IgonDnTJUsb5ddbUnelZI
+Z+ChHirh1GQPQxmupVK5atukVh2hn92ZME9FkB3jgX+hqNILJwJDQ5madHN2yQG5
+TeFBCCqU3j09+KARiQYwmn6JNg2qsSeB3jsXxFip925JiLZcRZv/fDMF5gjeNrVQ
+ct11IDznDnOLQXXIKl08E31ukFnhZ5NVFcCcgjoekdKG7taNviSPPtJrRgD5dABJ
+I6zzgZ3JIiQN6huGntgV/t0HmFBsCzbylYV4jIhIan+103D8RmvgaTJNxKyTUwVM
+xmXlHxAxPEgGMHEMqfAcNF2nwtPeh6kxKMyUuo4iGwGK3xFUc+lXQR+YjZOCCeep
+t3Xl20fuugNHXf+qFwQUU/cfctcdHomG4x3hNwviIK6J2JcKhrUsPL9FAfZsf6ZA
+8XQZKlPQHIWs/aKbqBrpeJ/rlzdJit1IvYDu+LCCcCxlQoCnp0M=
+=IDX5
+-----END PGP SIGNATURE-----
+
+--bxt6cdftgzvqxglf--
