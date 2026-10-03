@@ -1,274 +1,327 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from glass.ash.relay.mailchannels.net (glass.ash.relay.mailchannels.net [23.83.222.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE502882AB
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 21:38:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA0C3ADB94
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 22:19:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.222.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791063517; cv=none; b=EQTB0CbRp2flPSUGG8o5DSqNeKsvnrFqE1FFL2eL2Ex0PIADyGAEfdk5Sx3IkpVkqzNfX34TVpH9vaJBCAC6X6ycFVW0BDzzSLOqHJMaq6EsLc6RQOWtgQG4v4NzpSIOcJh1GFwd1w/E4wp2r4H+WVijubDftHkf0VaVxVPEQl8=
+	t=1791065984; cv=none; b=qFNJfFyfS3JIR6Z7R3diLvlnufj8RkJ85XcZCzr+oIDtulMAl3sEIbu3o80cOtvt31REjAz625SV8BbrBjrjHlb6pGOOzdkgPDI8h6kl5NkoG4+c7UDglc7sAYa5jY9CrY2HrqhKDPOBrdW3PQEOD1Qaw0YS3dldj9bg8jEdNy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791063517; c=relaxed/simple;
-	bh=NRx622UHKNJRskvNmLi/NFUQg2hsvUVDta2HWsYFrEM=;
+	s=arc-20240116; t=1791065984; c=relaxed/simple;
+	bh=gwdwAtUOrlelHEvh65zX19QhsZv8UqgOo0KSv2PfJG8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rO/yN5+jBCljzlcB8V0n7oBf5BtH/Fl4OHOCfmpdlXDBJe9bf4HknGNFMrz2sK2y4zArRasvBvSpgFvc4CVJGYp/AZJtv2MQen77QGg94gGhZZN3MmWPavW7QuUKkWnaHqdESW3LgO4tscVcNOhCYtNFpvyK0Wiwj6X4SnbhWlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G3Jzvw+R; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=dfXFkJEtuXyaKTvs9FFUplus2Pbp6ndDlEGKTX8IYAnHXUuemt8PQSa/O6Hsrpbz3Q4+8MvEoNWnoq0Jy6YxGOnRjGbTNJQlRUCDNp3zC137RjNyQc+6HgXZvqG4qs6reQB5v01vJ3xUnJA+1Rbt0fJk3Z7l4J2B0SQnrQ79pSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=B4gOw3cs; arc=none smtp.client-ip=23.83.222.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G3Jzvw+R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003291F0089C;
-	Sat,  3 Oct 2026 21:38:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791063516;
-	bh=wTQkvnRupmIn5Yxu/Zt00YhrHRUhKHpgOmeCnwNIoXE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=G3Jzvw+R1jSfmSpWAgtWusS9ocxvZleW5UPbM3EsO3U6K5cs5klOuhEOLU4GXQX1/
-	 WViTx63ugDr7YMazywridw1DJnqa3VNoSnAjhIkcYGP20unDp6SpeBKpfAe3NhrHVa
-	 0uE0c0Tf9tjgTZzJrkm8iJL1GFM0fW/pTAmgCy2L7CM/VEjqF6EFLweB+TcNL2ZfUc
-	 nAVfH11byvTJmaTCew2dJ8omrNk1qtau4zAWLyxY1d1wGS4sK2kw1dMbxtWIOrzLHB
-	 Z+wBTVzgvyAi1mSv3Fg+DpPy0bTw5G7tGbZLy0FQ7Qo2N6r+N4LVayqkxvPU+ZTHEU
-	 xn2vDBnaD9TgQ==
-Date: Sat, 3 Oct 2026 23:38:29 +0200
-From: Alejandro Colomar <alx@kernel.org>
-To: Nico Williams <nico@cryptonector.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	Ben Boeckel <mathstuf@gmail.com>, Viktor Dukhovni <viktor@openssl.org>
+	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="B4gOw3cs"
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 6DC76641424;
+	Sat, 03 Oct 2026 22:19:38 +0000 (UTC)
+Received: from pdx1-sub0-mail-a220.dreamhost.com (100-96-3-158.trex-nlb.outbound.svc.cluster.local [100.96.3.158])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 35026641215;
+	Sat, 03 Oct 2026 22:19:38 +0000 (UTC)
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
+X-MailChannels-Auth-Id: dreamhost
+X-Stupid-Madly: 0b7e448c5f937fff_1791065978295_422466173
+X-MC-Loop-Signature: 1791065978295:3987334654
+X-MC-Ingress-Time: 1791065978295
+Received: from pdx1-sub0-mail-a220.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.96.3.158 (trex/8.0.2);
+	Sat, 03 Oct 2026 22:19:38 +0000
+Received: from ubby (unknown [24.28.102.31])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nico@cryptonector.com)
+	by pdx1-sub0-mail-a220.dreamhost.com (Postfix) with ESMTPSA id 4hy0ST3TJVzS6;
+	Sat,  3 Oct 2026 15:19:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
+	s=dreamhost; t=1791065978;
+	bh=yuEBLHsVIK7RzArLvYZs9oSwgoAafb2ZuxitYSMkFH4=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=B4gOw3cs/2F2/wdEnxRlbvID9wH7SMjaNcpLvqp9lQc2zUuBXyByXmK3hSUsh/tf9
+	 qW9aZ/3npehh8dI5+O4VzZtecJTj8i8Jw0lPFOUUwAO4nxlolDDVFTbLZT9QVcrkdW
+	 fpFHBs2S+XE9J09N6mqjdbRaBEoo3gAODif1JhkDUwjr/Y+IlZ6+PSGl5lQDquGvoM
+	 29Km1qVLgdPFdFmg2Ziby0fypLaPuY4AaThefAec9NkuexBn1aHoW8NY4sn6n7yGHK
+	 pqzo1JPiDPXo79rbGA3pAnSgSMSogL2T19X+nZjE3fioUF7zH9SClHEO44r5qRVbM0
+	 3AKPO2TT4Qg/g==
+Date: Sat, 3 Oct 2026 17:19:35 -0500
+From: Nico Williams <nico@cryptonector.com>
+To: Alejandro Colomar <alx@kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ben Boeckel <mathstuf@gmail.com>,
+	Viktor Dukhovni <viktor@openssl.org>
 Subject: Re: [RFC] git-brebase
-Message-ID: <asF0DkNtlnJ9-Sng@debian>
+Message-ID: <asF/d50VkzYSAPXn@ubby>
 References: <asFRVdMTpshsazgM@debian>
  <asFoDZKscLKqaIf+@ubby>
  <asFoq4gnl1caJM2U@debian>
  <asFv9QcpLgzPnnFb@ubby>
+ <asF0DkNtlnJ9-Sng@debian>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="j4e6n5lq4dnf3udx"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <asFv9QcpLgzPnnFb@ubby>
+In-Reply-To: <asF0DkNtlnJ9-Sng@debian>
 
+On Sat, Oct 03, 2026 at 11:38:29PM +0200, Alejandro Colomar wrote:
+> > I'd have an option or sub-command of the main script that says "do the
+> > callback thing", then when you run `git bisect run ...` put in the name
+> > of this script as the command and the "do the callback thing" option
+> > next.
+> 
+> I'd need to see some code.  I'm not seeing it.  :)
 
---j4e6n5lq4dnf3udx
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
-To: Nico Williams <nico@cryptonector.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	Ben Boeckel <mathstuf@gmail.com>, Viktor Dukhovni <viktor@openssl.org>
-Subject: Re: [RFC] git-brebase
-Message-ID: <asF0DkNtlnJ9-Sng@debian>
-References: <asFRVdMTpshsazgM@debian>
- <asFoDZKscLKqaIf+@ubby>
- <asFoq4gnl1caJM2U@debian>
- <asFv9QcpLgzPnnFb@ubby>
-MIME-Version: 1.0
-In-Reply-To: <asFv9QcpLgzPnnFb@ubby>
+Warning: NOT TESTED.
 
-Hi Nico,
+Warning: I did not first adopt your other patch to support detached HEAD
+mode.
 
-> Date: 2026-10-03 16:13:25-0500
-> From: Nico Williams <nico@cryptonector.com>
->
-> On Sat, Oct 03, 2026 at 10:56:25PM +0200, Alejandro Colomar wrote:
-> > > I also have a getopts_long-like function (see my gists) for bash if y=
-ou
-> > > like.
-> >=20
-> > I think getopts(1) is not usable for git(1)-related scripts, because
-> > getopts(1) interprets '--' as the end of the options, but git(1) uses it
-> > for distinguishing commits from paths.  If anyone shows me how it can be
-> > used, I'd be interested, because I've hit this issue in the past with
-> > other script.
->=20
-> https://gist.github.com/nicowilliams/f3fe2b10b380aecdef403acb246dced2
->=20
-> Though there's many ways to do this.
+Look, no temp file in sight:
 
-That one still consumes the '--', but we don't want to consume it.  We
-want it to remain there in $@ after the options have been parsed.
-
-> > > > cat >"$callback" <<__EOF__
-> > > > #!/bin/bash
-> > > > ...
-> > > > __EOF__
-> > > > chmod +x "$callback";
-> > >=20
-> > > Here what might be better is to have a command-line option to execute
-> > > this callback without having to write it to a file,
-> >=20
-> > How would you do it?
->=20
-> I'd have an option or sub-command of the main script that says "do the
-> callback thing", then when you run `git bisect run ...` put in the name
-> of this script as the command and the "do the callback thing" option
-> next.
-
-I'd need to see some code.  I'm not seeing it.  :)
-
-> > > and use environment
-> > > variables to pass arguments to it.
-> >=20
-> > The callback doesn't really need any arguments, since 'git bisect run'
-> > won't pass any arguments to it.
->=20
-> But you're embedding values into the temp executable script -- if you
-> don't have that any more you'll have to pass those in.
-
-But why would we want to not have it?
-That would complicate the script, no?
-
-> > > which means I can't use this in detached HEAD mode :(
-> >=20
-> > Oh!  I wasn't aware that git-rebase(1) supported detached HEAD mode.
->=20
-> Sure does!
->=20
-> > > I work in detached HEAD mode almost exclusively.  I know, that's..
-> > > weird.  But it works for me.
-> >=20
-> > Ouch!  Indeed.  :)
-> > Out of curiosity, are there any interesting reasons for such
-> > self-implied pain?
->=20
-> I often do:
->=20
-> : ; git checkout origin/master
-> : ; <do some work>
-> : ; git add ...; git commit -m '...'
-> : ; git push myfork HEAD:refs/heads/the-branch-name-here  # <-- I name it=
- here
->=20
-> then open a PR.
->=20
-> Now I don't have a branch here, but who cares?  If I switch to other
-> work and later want to come back to this work I'll either a) create a
-> local branch then, and/or b) when I resume work on the first thing I'll
-> `git checkout myfork/the-branch-name-here` and...  once more work in
-> detached HEAD mode.
->=20
-> And if I need to see "what was I doing?" then I use `git log --oneline`
-> and `git reflog` and I quickly see the remote branch of interest.
->=20
-> The remote branches are the symbolic names I need to preserve, and my
-> clone will know them, so I only need local branch names for things I
-> work on w/o a network or over a long time.
->=20
-> I do exaggerate a bit.  I do this a lot, but maybe not quite "almost
-> exclusively".  Often I'm forced to have a local branch by opinionated
-> tools other than git itself.
-
-Hmmm, actually resembles what I do.  I use branches, then push to
-a remote, and once it's in the remote, I remove the local branch.
-I try to remove the local branches as soon as I can, because that way
-I don't need to remember whether there was something I forgot to push,
-or I wanted to explicitly discard it.  If there's no local branch,
-there's no confusion.  Since I work with two local computers, having the
-source of truth be the remote makes it less ambiguous.  But while
-working locally, the branch helps a lot.
-
-Anyway, I've patched it to work with detached HEAD.  (I need to remember
-to add two traps, now.)
-
-	diff --git i/src/bin/git-brebase w/src/bin/git-brebase
-	index d652c37ef08d..a57acc350d7e 100755
-	--- i/src/bin/git-brebase
-	+++ w/src/bin/git-brebase
-	@@ -50,8 +50,16 @@ if test $# -gt 1; then
-	 fi;
-	 git rev-list -1 "$1" \
-	 | read -r tgt;
+	@@ -1,164 +1,164 @@
+	 #!/bin/bash
+	 # Copyright 2026, Alejandro Colomar <alx@kernel.org>
+	 # SPDX-License-Identifier: GPL-3.0-or-later
+	 
+	 set -Eeufo pipefail;
+	 shopt -s lastpipe;
+	 
+	 err()
+	 {
+	 	>&2 printf '%s\n' "$(basename "$0"): error: $*";
+	 	exit 1;
+	 }
+	 
+	 fp='';
+	 other='';
+	 pre='';
+	 post='';
+	+callback=false;
+	 while test $# -ge 1; do
+	 	case "$1" in
+	 	--first-parent)
+	 		fp='--first-parent';
+	 		;;
+	 	--pre-exec=*)
+	 		echo "$1" \
+	 		| sed 's/--pre-exec=//' \
+	 		| read -r pre;
+	 		;;
+	 	--post-exec=*)
+	 		echo "$1" \
+	 		| sed 's/--post-exec=//' \
+	 		| read -r post;
+	 		;;
+	+	--bisect-run-callback)
+	+		callback=true
+	+		break;;
+	 	-*)
+	 		other="$other $1";
+	 		;;
+	 	*)
+	 		break;
+	 		;;
+	 	esac;
+	 	shift;
+	 done;
+	-gbopts="$fp";
+	-gropts="$other";
+	 
+	-if test $# -lt 1; then
+	-	err 'Missing target commit.';
+	-fi;
+	-if test $# -gt 1; then
+	-	err 'Too many arguments.';
+	-fi;
+	-git rev-list -1 "$1" \
+	-| read -r tgt;
 	-git rev-parse --abbrev-ref HEAD \
+	-| read -r branch;
+	-
+	-# Set up the callback script for 'git rebase run'.
+	-mktemp \
+	-| read -r callback;
+	-cat >"$callback" <<__EOF__
+	-#!/bin/bash
+	-
+	-	set -Eeufo pipefail;
+	-	shopt -s lastpipe;
+	+if $callback; then
+	+	# Positional arguments to the bisect run callback
+	+	branch="$1"
+	+	gropts="$2"
+	+	pre="${3:-}"
+	+	post="${4:-}"
+	 
+	 	git rev-list -1 HEAD \
+	 	| read -r bisect_head;
+	 
+	-	if test -n '$pre'; then
+	+	if test -n "$pre"; then
+	 		printf '%s' 'Pre-rebase exec: ';
+	-		pre='$pre';
+	 		if
+	-			\$pre;
+	-			x="\$?";
+	+			$pre;
+	+			x="$?";
+	 			true;
+	 		then
+	-			case "\$x" in
+	+			case "$x" in
+	 			0)
+	 				echo 'success';
+	 				;;
+	 			125)
+	 				echo 'skip';
+	-				git checkout --detach "\$bisect_head" 2>/dev/null;
+	+				git checkout --detach "$bisect_head" 2>/dev/null;
+	 				exit 125;
+	 				;;
+	 			*)
+	-				echo "failure (\$x)";
+	-				git checkout --detach "\$bisect_head" 2>/dev/null;
+	-				exit "\$x";
+	+				echo "failure ($x)";
+	+				git checkout --detach "$bisect_head" 2>/dev/null;
+	+				exit "$x";
+	 				;;
+	 			esac;
+	 		fi;
+	 	fi;
+	 
+	-	git switch '$branch' >/dev/null 2>/dev/null;
+	+	git switch "$branch" >/dev/null 2>/dev/null;
+	 	git rev-list -1 HEAD \
+	 	| read -r old_head;
+	 	printf '%s' 'Rebase: ';
+	-	if git rebase $gropts "\$bisect_head" >/dev/null 2>/dev/null; then
+	+	if git rebase $gropts "$bisect_head" >/dev/null 2>/dev/null; then
+	 		echo 'success';
+	 	else
+	 		echo 'conflict';
+	 		git rebase --abort >/dev/null;
+	-		git checkout --detach "\$bisect_head" 2>/dev/null;
+	+		git checkout --detach "$bisect_head" 2>/dev/null;
+	 		exit 1;
+	 	fi;
+	 
+	-	if test -n '$post'; then
+	+	if test -n "$post"; then
+	 		printf '%s' 'Post-rebase exec: ';
+	-		post='$post';
+	 		if
+	-			\$post;
+	-			x="\$?";
+	+			$post;
+	+			x="$?";
+	 			true;
+	 		then
+	-			case "\$x" in
+	+			case "$x" in
+	 			0)
+	 				echo 'success';
+	 				;;
+	 			125)
+	 				echo 'skip';
+	-				git reset --hard "\$old_head";
+	-				git checkout --detach "\$bisect_head" 2>/dev/null;
+	+				git reset --hard "$old_head";
+	+				git checkout --detach "$bisect_head" 2>/dev/null;
+	 				exit 125;
+	 				;;
+	 			*)
+	 				echo "failure (\$x)";
+	-				git reset --hard "\$old_head";
+	-				git checkout --detach "\$bisect_head" 2>/dev/null;
+	-				exit "\$x";
+	+				git reset --hard "$old_head";
+	+				git checkout --detach "$bisect_head" 2>/dev/null;
+	+				exit "$x";
+	 				;;
+	 			esac;
+	 		fi;
+	 	fi;
+	-	git checkout --detach "\$bisect_head" 2>/dev/null;
+	+	git checkout --detach "$bisect_head" 2>/dev/null;
+	 	exit 0;
+	-__EOF__
+	-chmod +x "$callback";
+	+fi
 	+
-	+mktemp \
-	 | read -r branch;
-	+{
-	+       git rev-parse --abbrev-ref HEAD;
-	+       git rev-list -1 HEAD;
-	+} \
-	+| sed '/^HEAD$/d' \
-	+| sed '1!d' \
-	+>"$branch";
-	=20
-	 # Set up the callback script for 'git rebase run'.
-	 mktemp \
-	@@ -91,7 +99,8 @@ cat >"$callback" <<__EOF__
-			fi;
-		fi;
-	=20
-	-       git switch '$branch' >/dev/null 2>/dev/null;
-	+       cat '$branch' \
-	+       | xargs -I{} git checkout {} >/dev/null 2>/dev/null;
-		git rev-list -1 HEAD \
-		| read -r old_head;
-		printf '%s' 'Rebase: ';
-	@@ -103,6 +112,13 @@ cat >"$callback" <<__EOF__
-			git checkout --detach "\$bisect_head" 2>/dev/null;
-			exit 1;
-		fi;
-	+       {
-	+               git rev-parse --abbrev-ref HEAD;
-	+               git rev-list -1 HEAD;
-	+       } \
-	+       | sed '/^HEAD$/d' \
-	+       | sed '1!d' \
-	+       >"$branch";
-	=20
-		if test -n '$post'; then
-			printf '%s' 'Post-rebase exec: ';
-	@@ -146,7 +162,8 @@ fi;
-	 # shellcheck disable=3DSC2248  # gbopts may hold multiple options
+	+gbopts="$fp";
+	+gropts="$other";
+	+
+	+if test $# -lt 1; then
+	+	err 'Missing target commit.';
+	+fi;
+	+if test $# -gt 1; then
+	+	err 'Too many arguments.';
+	+fi;
+	+git rev-list -1 "$1" \
+	+| read -r tgt;
+	+git rev-parse --abbrev-ref HEAD \
+	+| read -r branch;
+	 
+	 # Try the target first.
+	 git checkout --detach "$tgt" 2>/dev/null;
+	-if "$callback"; then
+	+if "$callback" "$branch" "$gropts" "$pre" "$post"; then
+	 	exit 0;
+	 fi;
+	 git status;
+	 
+	 # Bisect.
+	 # shellcheck disable=SC2248  # gbopts may hold multiple options
 	 git bisect start $gbopts >/dev/null;
 	 git bisect bad "$tgt" >/dev/null;
-	-git merge-base "$branch" "$tgt" \
-	+cat "$branch" \
-	+| xargs -I{} git merge-base {} "$tgt" \
+	 git merge-base "$branch" "$tgt" \
 	 | xargs -I{} git bisect good {};
-	 git bisect run "$callback";
+	-git bisect run "$callback";
+	+git bisect run "$0" --bisect-run-callback "$branch" "$gropts" "$pre" "$post";
 	 git rev-list -1 bisect/bad \
-	@@ -154,7 +171,8 @@ git rev-list -1 bisect/bad \
+	 | read -r bad;
 	 git bisect reset >/dev/null 2>/dev/null;
-	=20
+	 
 	 # Perform the conflicting rebase
-	-git switch "$branch";
-	+cat "$branch" \
-	+| xargs -I{} git checkout {};
-	 # shellcheck disable=3DSC2086  # gropts may hold multiple options
+	 git switch "$branch";
+	 # shellcheck disable=SC2086  # gropts may hold multiple options
 	 git rebase $gropts "$bad";
 	 if test -v post; then
+	 	echo 'Running post-rebase exec.';
+	 	$post;
+	 fi;
 
-I've tested it, and it works fine with a detached HEAD.
+> > > > and use environment
+> > > > variables to pass arguments to it.
+> > > 
+> > > The callback doesn't really need any arguments, since 'git bisect run'
+> > > won't pass any arguments to it.
+> > 
+> > But you're embedding values into the temp executable script -- if you
+> > don't have that any more you'll have to pass those in.
+> 
+> But why would we want to not have it?
+> That would complicate the script, no?
 
+Because I don't want it writing temp files unless absolutely necessary.
+Even with a `trap` this can leave garbage behind.  Better to avoid it.
 
-Cheers,
-Alex
+Plus I... just don't like that style of bash scripting, and sure, that's
+just personal preference.
 
->=20
-> Nico
-> --=20
-
---=20
-<https://www.alejandro-colomar.es>
-
---j4e6n5lq4dnf3udx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrBddUACgkQ64mZXMKQ
-wqlh0hAAmewl12QbhwyN3INRC00qntMo32XyarrY3HoShYphYjcms2Sd4S4aFpNb
-5yeq2wOT6maEBWLXRt1ywG4ohaaqZMja3DGOuLAjc4W/timvP173NXYOB1IiOG2k
-dYWg3hnwyo9xgILKiJBZyHlRmUGXJx0hx0SJASLlwp0sgEYLDAFUeNfMFQe5og+x
-ecQnoCPv9dB2iYNNZnLmyum23CCWmOPBTTH2WyV42GFObggbaEATLxzUauMFHrjl
-j4U9gHd2dtfgdJ2LkrI0pVZTg6WH8gBybQn2lemE54TDL1DF08W0/iQqf0UIju1b
-6VKL0D6tsKnRXBOA0WxYWnxUMQGV1X9/eXdeNxtEfKWaiBnJWCze9ldOurx5NLni
-1GjoW0Le1WUkfpzB/aiWx2eJjuLVkWPp8lby2l2wc+yxgA8SjkyyLUbuGD7H7Ty1
-S6KSV4/VAdwUhKoYIcdb/8Z8fvz2PCq/oixdPN+7TGigpDvKZVft6RLlcKbcqPf1
-w5rntxxRxOJmvJhKxgZE3MJQZTXZPS17ppI4ktlrdnvXnum7+TW+SCFgN0jvCWMN
-jiadBhDCnozVkmG4LQhNWiKQC6vLIy+sUCh0F3VLB3vVnJktu3tUH/zyBFnQV/yR
-8h1ZsVNjMN36iUsVOf7WfjZ6xVVPWrKU5WIXoOQcgXbzQ0BtaJ0=
-=40Ko
------END PGP SIGNATURE-----
-
---j4e6n5lq4dnf3udx--
+Nico
+-- 
