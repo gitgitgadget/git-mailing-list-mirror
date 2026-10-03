@@ -1,103 +1,118 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FA0343D8F
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 01:25:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F13370ACC
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 01:31:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790990718; cv=none; b=sC5/GtTSuuXzu6joIUUxYeBMUWZ0rwQyu9CrpXkpzy9ehkzsEf+3bfhRGjcJUty/jVHF5XqqBqP9hSf+lmJHNdfT4/RmXhlF0tLBW7wCDpUVc9EkLHjcAHxvFiyZJtXUyoXkqNMPDPXHm6wgqj6rR067Pf1ZFxyma+sGLbXya88=
+	t=1790991113; cv=none; b=X6SmU4/gvNB3c1Rktz8v43WHvNiHc3Fl0L4Mnxy+DQWsO8asKOHLqqdrfDWP7o4hRFB5MZHHhG86GHmP+CgXfvg6HupeGa9JLG+Ij7ON1g9I/Sno51zM+4ay9gh5jJiiDV+qTTjKO2D9IHu7w9ygmzzOMfrQ3kV28DqcjvZIBXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790990718; c=relaxed/simple;
-	bh=pAGGHHHT7oUOV8oGaHtN3tlbIhlWaPEV4L9x3ew4qns=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V7UMQb7EXGCqziDELWnJhAJ8dWHmiP7kbi7sNrJN9bIjYL2c+hOn5Y8yTvDiahk3jIiZgZJVH+x3Mbr9Jx5gq7XxB6jw/W0s2+kPNBZvyxu8yZDuUsBP5/wf1yJBjv9avFxjbEmZ+rPdxv4bFRLpXAtPdVOo/3Mb+Ok9P7RpWv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=hKq+fF3s; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1790991113; c=relaxed/simple;
+	bh=cOFxtRL7g4VFczRvGGHm5LOh0BIgIq0q3P8prSJkmSc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RXPAkcjLj8UFAeUuDkSqB0mm6GsA+H+0yGoEDNE+fBMuXEEn2S83eBA0veGrs4SzwKOBjk9eWH6bZgohyDdPE++Jb0eFWSzHEp0wFIUB+TWphEi1hG1fyfES7V1bb6fXMizPYhs3mFb9gzjxRs0w2nCzIUPKZMpiRgXVuX3oRLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=muXxi3G4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m1yskvUh; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="hKq+fF3s"
-Received: (qmail 17243 invoked by uid 106); 3 Oct 2026 01:25:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=pAGGHHHT7oUOV8oGaHtN3tlbIhlWaPEV4L9x3ew4qns=; b=hKq+fF3sFixQD62f1D/aRIOT1jAQQ/yZG1q+MGwhAkZc7Jix8irFG//Q2ZgdhnOZnFhLbHZxQB6SIWt/ApJOaJl+vd/X7PbGnNqR25IitIqnXIZcYnWiThPf8EiuZiiwM9BD6v2c22dfEKcLkxWZlvEp5J/6zOtoRKhrnVCh0uGtvuLZse+kCA7cwzFIkNdypugvdDfet/s0uTWywWvbFTA0dxQY2l/8eugdvw3ohWswxI65B6O3omItqJ/NkQ7ew1SQkYyIjvkqTl4svRl1QmxcTCd9J1mqK67slHAyC9Le9TVhHroHyA9WQKwNQyMtswaHs7/+IJE9AJpK7b5uGA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 03 Oct 2026 01:25:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 50729 invoked by uid 111); 3 Oct 2026 01:25:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 02 Oct 2026 21:25:16 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 2 Oct 2026 21:25:12 -0400
-From: Jeff King <peff@peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="muXxi3G4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m1yskvUh"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 828A414000EB
+	for <git@vger.kernel.org>; Fri,  2 Oct 2026 21:31:50 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 02 Oct 2026 21:31:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1790991110; x=1791077510; bh=Y9nqFvEcmy
+	gBKHm+2cPyPrEpbOmbk9AIlSpkt7VpMgY=; b=muXxi3G4GkaWtMATjmITSOfe0q
+	Ojmi3PMMt0shYFj2i9ukUNaiqqhnJh7rJx0SMjSzKCP8X3lfLN3IU2n1CnthLVAo
+	Oy+Ox7KOVVO4hjCrOm+SwwKJvrmtk7G9bt1eTzLYwgNUjyv/CQuwkrZnyBtid8+W
+	Bcjgd/UqVoZxw47j2zAFHmU3svT6fOkFWA4r3Jac0EH4wvBvHABNqP04Ah7rhbA1
+	wmkV52k0t1nsZaXnl/SZ3OVfSw7FyX75Y+lvwB9DKKVH8H+pgQYSFHtRPPL3b4XX
+	pNjp2xihGnVuETQOrfQh2jzSPTWX5XFAkn9EkOnJWSKZnefQmv6CaHHhWWyw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1790991110; x=1791077510; bh=Y9nqFvEcmygBKHm+2cPyPrEpbOmbk9AIlSp
+	kt7VpMgY=; b=m1yskvUhVNhOsR7am3X6mCZ4vBR/P4OJbnWDZnAXK4Q+viObiRC
+	wPg6ZFKhQyOUynan24Qvg9UicsL83rMG0O1UZdMbLf/wh61ySMWSP9QzhI9wQiPm
+	7eLGwBHa6aOHqzirbI3+lm5VcZgZX2mGvhkPpJ8ZDAeRfIobxfgO5VkBIs0++YhE
+	q2NfDN5M1ajATwB+4GmZ+hnlBnXdNjbihp/yyfzrWp9Wofu/0w7BfqVh4daQ6RDO
+	WLnTRXGdM4MswDZ5BUh3ZCFT3YY9DU9v7hBxytkctatjS3+9SIp9pvcl/O+MZYlR
+	1a82d+ohN5aOwL9ieTeiGaGCVgN9G2AYagw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1790991110; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:OpiQd17AaiElDlDFEDvAchQV95lV5UtbHxl9xuLBrWfGwX2
+	VL3MysYIqAluqKbzNhvXMJafTTQDBlYMyqFNKpc4wgZA/glfNYIJYAWUs2dywI6C
+	ocAuUC9InBCQqcWaFmsY/puq/PM6IzD22jE2V1cUfiW5CaiqZ9xf4HoYBVhLiCPy
+	RO34o2HMHGzcJovcn22M3whZuiYgD5pBns/8pYQ3uwVggCNqCzO/BQ9na8QbdjSd
+	tMywhEjExqfhJIGJcHjx1nXzNTdRT5rT68B5SU8Rv9+RcGj76wBjl2KtrLJLutJO
+	wclEiu/TlTDZo+MZ5UDLP8yAN/qz3G4P/29j2QA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:4apCcDxPEGWPC10aE0N2AHzf3uGu9arKx2ij+mp+1/g=:cOFxtRL7g4VFczRvGGHm5LOh0BIgIq0q3P8prSJkmSc=;
+X-ME-Sender: <xms:BlvAal9bdt_QbWETk8y52LKk3b6RIWGIJmguEdD_r72D6oXPPq0P0w>
+    <xme:BlvAagkoPTRA2kuSLifD8ECJltWU4GT_oT6xckgz-OKZolEZ32CfmEFFueKpdXwJc
+    v9UM5bnEHOiHNz2fRTO5mDFO3i7eNGIijoF42yzGVCEhUjtN3-fOyo>
+X-ME-Received: <xmr:BlvAarW0YIklRE-_49zoazOFcFb6YfuwbWSd431L5WSaPKxtHt1HcdhKQirYqspg08_WKn5FM0Lvs0ytvLNyW4djZAAHL_Jg8pXe>
+X-ME-Proxy-Cause: dmFkZTGlj0tRlendte76tkJsae1LC1D+gTlT3QY/R5xo9zE6RX47GrbgllXpsjPmGRmfRw
+    PC25HQkJ2iRdE0cY2LcG4RkAGcvrFkyJ5iKGyG13TBlSKg5OcLgU9yVVJ5kEEEf38gZedM
+    y9vgqNLQJ8Em4HmEW9XQRsel2FGqLDVPdUI/raYB3IiliMS8sjzPw6ZgO0Z2YagKasLt+e
+    y8VOD3me0OrSvB0VeUvhx2I8MeXbjT3ujyhgwbE5deuzF+FXZFwS662/NFCTIAfTebyN2u
+    qPZaZxN5gkAWRGDCpart0jPaPQPqI5Z32lHUpK4p08hZZsgO5Su1H0QK4AObIim9G6TYTY
+    ShsBJo+hbLbzr6TIy36yVnzO1nQHmcZPM3eWejB9jj2D4680saiou/NGHD7K2colPKvKmG
+    7WTFWbiMMZ78m32vuuc5bNXnl8xzw7muZ7yR+iVah2Mm+KJLQ6J3YuCxmUIiv19Zpbo/AN
+    hXlCFEQVnSShB44qStmXOjuR4XDS0NF4Mndm7WWtHPs5SGE0D20fVGZtMhxMOYr1Ze1rZI
+    3NgXbRuXXwgLD9h0YBjV/gTkf9X99t+uE66cDhRa/eDNK6kzC0qJXFnFUJamvStBu/nBmL
+    jjHr8iTjdS1PfnGDLg3gqg6wPkquvyp1ygpSksFduRS3SQRWJrWNQ+JTV2Jw
+X-ME-Proxy: <xmx:BlvAalG5BHMlwiU4ZwqeeYN3rgPSIIY7D6uUiaM-N76Zeaed2hVVeQ>
+    <xmx:BlvAandqQ4GbBOe7Sw8FBCX5Wpzlpczzw4SZ-z7NmF4LZ31IlELI3w>
+    <xmx:BlvAamKYC_ezAbqLoYadCrKWXXN4PwTRbCRWtDF0nDS7npjuqGPpNQ>
+    <xmx:BlvAasE1aWcqA-Rux3R0D6cFpWZCGlloBAxBmKc7kZWtbsjGOAOGfQ>
+    <xmx:BlvAai3mXAQ0KmUtdmraJg9HJLAF10rKo5_7I1PQZpQQmBV-nO4aTagG>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 2 Oct 2026 21:31:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Scott Chacon
+ <schacon@gmail.com>
 Subject: Re: a "limbo" object-format state for empty repositories?
-Message-ID: <20261003012512.GA1324483@coredump.intra.peff.net>
+In-Reply-To: <asBVY1WniGUo6bQS@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Sat, 3 Oct 2026 01:07:48 +0000")
 References: <20261002224400.GA834158@coredump.intra.peff.net>
- <asBVY1WniGUo6bQS@fruit.crustytoothpaste.net>
+	<asBVY1WniGUo6bQS@fruit.crustytoothpaste.net>
+Date: Fri, 02 Oct 2026 18:31:48 -0700
+Message-ID: <xmqq33unvabf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <asBVY1WniGUo6bQS@fruit.crustytoothpaste.net>
+Content-Type: text/plain
 
-On Sat, Oct 03, 2026 at 01:07:48AM +0000, brian m. carlson wrote:
-
-> > But I also did just think of this idea, and haven't implemented anything
-> > (nor do I have immediate plans to). So it might be half-baked. But I
-> > thought I'd toss it out there and see if any body has thoughts, or feels
-> > strongly enough to try implementing it.
-> 
-> That is definitely something that could be added, but it's also
-> incompatible with every existing implementation.  Specifically using the
-> `object-format=limbo` approach means that no existing client from 2.29
-> on will work with the repository since `limbo` is not a valid hash
-> algorithm.
-
-Yeah, that is a problem. It breaks older clients (that are at least new
-enough to understand object-format=) worse than a mismatched format
-does. I was thinking we could solve that with a new capability, let's
-call it "magic-limbo" for a moment. Older versions would ignore it.
-
-But then what do we put in the object-format= field? We have to put
-_something_ valid, as even if we put nothing that is an implicit choice
-of sha1.
-
-So I think the best we can do is advertise magic-limbo, and then new
-limbo-aware clients can always do the right thing. Clients which are new
-enough to understand object-format but don't understand limbo will use
-the server's object-format unconditionally. So the choice there does
-still matter. But if we don't switch to sha256-by-default until
-magic-limbo is implemented, then anybody who has a local sha256 repo got
-there intentionally, and presumably knows enough to configure the server
-side to match. So the sensible protocol advertisement for a limbo repo
-is "magic-limbo" plus "object-format=sha1".
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
 > There is some support for multiple `object-format` directives, but I
 > don't know how well it works and I seem to remember that we had some
 > sort of crasher bug in the past.  That would be the best possible way to
 > advertise that, though, if older versions support it.
 
-Yeah, I thought about emitting multiple but it seems like that
-introduces other weird corner cases. I think we really need a new
-capability so that new versions and use it and old ones will ignore it.
+Oh, bad.  Telling the other sides "I can accept this and that hash
+algorithm" with multiple capability advertisement is so obviously
+the right thing to do at the conceptual level.  It would have been
+very nice if it worked.
 
-> There are also going to be some policy decisions, for instance.  Some
-> organizations will not want to allow one algorithm or the other, so
-> Git will need some way to allow that behaviour to be expressed.  Or more
-> likely, Git needs some way to allow the fact that it's in versatile
-> mode to be expressed and that it's safe to rewrite the config on initial
-> write into the repository (which, to be clear, need not be a push; it
-> could also be a commit or add).
-
-Those parts seem outside of the scope of Git, or at least its protocol.
-But yeah, I'd expect a forge like GitHub to let you say "do not allow
-the creation of sha1 repos in this account/org", and the object-format
-selector for a new repo (at the forge UI) should be a tri-state: sha1,
-sha256, or limbo. How that translates into Git commands is TBD: whether
-via config, or more likely, that you have to select the limbo state
-explicitly with a command-line option to git-init.
-
--Peff
