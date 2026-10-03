@@ -1,176 +1,127 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-wr2-f33.google.com (mail-wr2-f33.google.com [74.125.225.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E15739CD00
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 19:00:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0A336C0CD
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 19:02:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.97
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791054043; cv=none; b=RYvnUFWuRhL2OV9jPUH4ndgdrM7e/vSE4pne1xFR6wrH5x/SW1smj1+dqJhC7fmSa2mzOR4P+JANHqu9FrtVwPqQqrcDKMcXMKk85+eDwkgtU1OIFNahimpNLvo2blLejitHY52NJ4h+BrsfQtNCPBsm6asnVvbflzG4wH05SA8=
+	t=1791054135; cv=none; b=GOqfqdfe92j9caKTpD9ELMGwd7h/E0QFWoJOaDskydxfczUx8h0sXW4t1NuPJ+ryHM9JZLumpNYqZcgHiWik9RAUVZvtcMbEgw/QRT4VSarqTZ81i7c2q3PKXYdnGiuK1eNB0wEvQekm8Tfxo+wiuSElYs1tJg60XIJ7tViCOlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791054043; c=relaxed/simple;
-	bh=w9iooeRHQPR6vUqHETtKUOwYN1togmShOQ986bFYjPM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TkFP2Ag8ysu9gyywO3+3gQAicS2SRkbvlzCa8Ax7qC4a6bE3Pv3g8KBZQwiFdcQPz4ztf3gVito645BgLqiK0YryXKTPDgM94MWZ/7xpE+ExgsmAQiVvYD9vEsIUg74R1hd0s0WJslTSCMdrY7ylkyaKuhha6uxgoqLZlUzqpHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=McAoWCWO; arc=none smtp.client-ip=209.85.218.53
+	s=arc-20240116; t=1791054135; c=relaxed/simple;
+	bh=QpOVrCCfxRzk/JAVVO6sAC09H1OPp6YZvhGFNpP7Qpk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AkKYpwQx4q/sa6X0HZk8cmxlOhD6wuBraQzXvxS1JZvc/u0FKb1PPis7miiN5alrUd6syNrXEbmgdh3FyWAp2VtgrgXUAAoMDolbaipln9yqw1BPgZFrudDRLL1Kv+A8JdhkGfx9/1gG/kq87SUHQfTVQbXpzePOz4K0WE9TFcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i9XJZkXr; arc=none smtp.client-ip=74.125.225.97
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="McAoWCWO"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c2e36c3478aso99342466b.0
-        for <git@vger.kernel.org>; Sat, 03 Oct 2026 12:00:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i9XJZkXr"
+Received: by mail-wr2-f33.google.com with SMTP id ffacd0b85a97d-48b104f6aa3so244612f8f.0
+        for <git@vger.kernel.org>; Sat, 03 Oct 2026 12:02:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791054023; x=1791658823; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=QHRLBcat9AzTfNflwAZxjA3y8p7xXdV4zOOgZLwqHx8=;
-        b=McAoWCWOpnA40j0xkC434XeL3zm4MqPxtitKUH6sb4u+8BxcsFPRRgdbn7tIBck/3i
-         I5cvVlnnTYXG/7Xr+QCoctXIXLvRBjuC9WaMk+AiMJCvkz05bOr2QR8j4GPo2R96HvNY
-         RU+PxFGji/ozomvflm98ZW32/DvYtLLEzb4puDW1VZAu4QVw+kyv22M6KhSME2bPk+XQ
-         SVBAzPWH0MQeCaT1ksTP8ZK2VflXQ9BlUI0q4nXudSnqlbqU65RkHZ3tNk/Q23Tp1VRK
-         JtPENcFX83/Qrk4X3qCvaWRIlxeVueOQInqvijOg4gcHUsW7vFPpBr8Lp7RElYzNN6P0
-         D+jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791054023; x=1791658823;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20251104; t=1791054132; x=1791658932; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=QHRLBcat9AzTfNflwAZxjA3y8p7xXdV4zOOgZLwqHx8=;
-        b=PCjHzsQJsq1K5DG6OQXnZcLGGSIStOFouQIx1mmBbgizUcUJEOUqP2R2cOD6atZ0R4
-         juvgS9/r2Y6TPcLm4YDLLHPSgANnn5rwNiA05G0OgMXgMiTbaheqIhZbOoSEcLwxpwa+
-         TPKtTdbVsDLGIo84BBUnDcawK6X/5hbqIjcF3BAsmLB54lqRDTY3SQiyNEpx6N+BexeT
-         A7OykFWbFZxR/ckLAY+uh9EYUMadAO/B6sNVZ9/izsE6Xj+mkMvFm8sJyjsKHmczK9ps
-         RpQvHJievMhcyeNzou8ZdJUqJocDTMS9nrBPzGZlDHA1FP4cHL029xtCQsUU1oQ2SY8h
-         pJjQ==
-X-Gm-Message-State: AFq9FYLppsoKMugmiwE7DkZ6jfn5BhdHTKv/NUHc2C8j1U2A7WeYO/HK
-	SMNiLiiyzAoyjlly52+Rm7jwML01wU3srXysivvpeEtTk6fXsAU7Zo+3850fIg==
-X-Gm-Gg: AYBFou0nznDPJWAUEMAh5rxPzCk/7ZeueOC19L7Lyy5uq17+DpxsPHOA4jWKe2SlprL
-	UXW2v4D9igZ8S7JScCZ6N/z9DnywpvDNX9rQmfV29G+GqkjPM/vgEWhP405eV7Qe4OZDJsycTj/
-	U05LNj3lGFxPV5RTbaq6nzdjj0dk66C33lrO1yGX+FWKr2pjhNjz9PS+CLv0NMND9DofTz1JeK2
-	W4DdlvWPmaFiONtTm9a80JBozk83/5GWu9MM2KLyxcU3PacYsn+Mqq3k74CcubgZzvST+uXotKt
-	ji5CshxdKlOVoyDfGEQrrmeAMGVRvAyWFa3lZSj4Fj1Fok9a3xR5WUWi9NY9KA9Z/p2wVoTxYbe
-	4BdlBLvRznWiaCw+/Ny5ljuLRIjTRLMubsVtOdLWK1N2ugW0mYv1bSIJGUMD5JEmdDllufPJGh5
-	A0nPgOUlvICBV21IW4zlX/UvKtWGW9fsLIvvOeLeZKD78QV8Par7oW0TRy6tD13TMvV5czLqgzG
-	Rda5bQj/GG/Ef5/tivlVjmiWfK3GPDSmA==
-X-Received: by 2002:a17:907:6d06:b0:c20:53c7:488d with SMTP id a640c23a62f3a-c2e6ed157cfmr241653266b.14.1791054023017;
-        Sat, 03 Oct 2026 12:00:23 -0700 (PDT)
-Received: from localhost (94-21-29-91.pool.digikabel.hu. [94.21.29.91])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2e4cd26a38sm218062266b.32.2026.10.03.12.00.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Oct 2026 12:00:22 -0700 (PDT)
-Date: Sat, 3 Oct 2026 21:00:21 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/4] Makefile: precompile "git-compat-util.h"
-Message-ID: <asFQxeh+IUGrlu6W@szeder.dev>
-References: <20260909195006.2179119-1-szeder.dev@gmail.com>
- <20260915060952.569535-1-szeder.dev@gmail.com>
- <20260915060952.569535-5-szeder.dev@gmail.com>
+        bh=OtGk5x1j7JskCQFOqRFoF4b+/de48WojVg+W2EueAIg=;
+        b=i9XJZkXrPOjDVEB6D+qa4VuN9yAjmO9BSbfNsXXP3cVdcmwR8MT2XB3//2cE00J6vS
+         o2xg8Y2cvyRLyy0Cc3kEK/ctaQMxuyeRCyoaFRoHT0nnXRA9qUQbZwTUsz6D6c1tS7Eb
+         Nk2xkcYV94tbxrs57EfxFbV7kjx033LK74LBs/9ZHIoZWje6GJUkVoHBXt2ilCDad9Tg
+         MBiVKVKcTTttMP7/uRiwmbD1kVU/gJtMHGw40qkpVA46hRvAKarGIG+VkamHHPBFIBOo
+         yNmJWPDcAQSligs2ZeS4J4GRUhvHNDgGi8iSalnC1wWDNigzk7x50BqfufDL28OnlzRj
+         BwWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791054132; x=1791658932;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=OtGk5x1j7JskCQFOqRFoF4b+/de48WojVg+W2EueAIg=;
+        b=CzOR3EQbSG0Sjgiau30XQRa3ycUJHOHMvEKtrw+4rrAxLUyzQz5ig1HMq8Izv6IHyy
+         skLThidfNJCjor7mMMowESCt7rYCpve8RO7t0W8noghQKfE2HKQuQxzTC/zdRbeJEaoN
+         U1r797GAudZBWOZ0acnYPTrgbFh5w2Qjzh1Mby2FQ6MYf+evbm66J0Yy6pIu4SKxZeZa
+         QypSZbLi3EneNUGjxPA3Z1XTvWL6tURq9HwtN4ukATmVr0a2PzbOq919IaVCUGFBoa3I
+         LZgO28e+XPVwmTzsogi8peTi/Lm8TIfQjJQu9MCaNT1Ry+5xCH8MxHlYJ/3WdGS9hbiy
+         e0YA==
+X-Forwarded-Encrypted: i=1; AKwUvBwYNzOu94LoVHINvk1yyKTYHE7+WiS1o3Spk3o8EzyZK8G0E3KGUbFXVGqCs2Zq6m+TL+c=@vger.kernel.org
+X-Gm-Message-State: AFq9FYIQ+37XYmIVvAnliJ7IcL7oai8Hbbz+xBfrLCPlBRf1fP4E/Do+
+	1gnsH1n64Tpz0qgp5G+2SXOpBfzyoAUArBDUbZHmm63OJ7490QntP0nW
+X-Gm-Gg: AYBFou01KL5L1u4dkGmXsHevkR6euje9bGrktSZYMVr33NWxPOQjly8QP6fz1IZj4UB
+	5Eg6xXKvrFti1X1z5ckgvjsDsLnqz/gKG/1rFd/Tt+on7VULGUsqTkNAw1+EavSZu8YlSE7Ew2J
+	TPRM4Ya5VMdt4eAkTcDD7hIuGvZ2mZemFCyRvFv/jVF1W+k+5BSSrQFFRLKdtbUs25eHQtFBgmv
+	/oHltE5i2XUfKpcZoM0EsY7HS/UZ+I3PeMPTYKIPS/wEQCLbNr86ej6Fn6HzjnizhrkqdbiCM9W
+	RAckBCCp0cDZH6tvLq1bAgVPbP7+3MJYgwLaATVuzvoYxxKRPDvvgriwPkoB2GOddqs3CwNPaZX
+	volYiOdfM7UKXfIXE2hDCSlBMX1WpCJwQaWPuv7LV2aa3XG+gx64c0Rn/JaFqqZkKsicHq2BrO0
+	UnYSxu3MJCA9EoIzlo3/KQGrxhWiM5YEBJH/dKzVBFGVxs/lpYck1b0K4Iil1U6PLxFI+ZBrDjj
+	Eg7iF4Zx0PS008fg+I2qoZNNKi7g//IdnCT8u2KliXkW5iG8DTjp3Q=
+X-Received: by 2002:a05:6000:40ca:b0:487:ab6:bc1b with SMTP id ffacd0b85a97d-48b12754456mr11957926f8f.9.1791054131618;
+        Sat, 03 Oct 2026 12:02:11 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48b380f04e2sm12250571f8f.15.2026.10.03.12.02.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 03 Oct 2026 12:02:11 -0700 (PDT)
+Message-ID: <8b873f2e-b395-4044-ab15-f1eab4148447@gmail.com>
+Date: Sat, 3 Oct 2026 20:02:09 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260915060952.569535-5-szeder.dev@gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 0/2] ci: link failure and leak annotations to the test
+ script
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Ben Knoble <ben.knoble@gmail.com>,
+ Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
+ <pull.2419.v5.git.git.1791015117.gitgitgadget@gmail.com>
+ <3587bf44-1b3b-422f-a926-f8481104dfd8@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <3587bf44-1b3b-422f-a926-f8481104dfd8@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 15, 2026 at 08:09:52AM +0200, SZEDER Gábor wrote:
->     - The precompiled header should not change what actually gets
->       compiled.  Therefore, use the precompiled header only when
->       compiling source files that start with including
->       "git-compat-util.h" (directly or indirectly, e.g. via
->       "builtin.h"), or its inclusion is only preceeded by #define
->       directives that don't influence "git-compat-util.h" between its
->       include guards [2] (currently DISABLE_SIGN_COMPARE_WARNINGS,
->       USE_THE_REPOSITORY_VARIABLE or GIT_TEST_PROGRESS_ONLY). [3]
+On 03/10/2026 14:03, Phillip Wood wrote:
+> After spending some time clicking around in Github I 
+> think what that patch changes is not the test output of individual jobs 
+> which you linked to above, but what is displayed on the summary page at
+> 
+> https://github.com/git/git/actions/runs/36979818141?pr=2426
+> 
+> That page shows a list of annotations with links to the changes in the 
+> failed test file. That is a useful improvement
 
-Well, it turns out the precompiled header does change what gets
-compiled, and it causes a visible behavior difference, though I think
-it's really minor.
+But it seems it is only useful if the test changed is in that example. 
+If I look at the summary for the CI run from v3 of this series [1] then 
+I can see a test failure in t1022
 
-The crux of the issue is that without the precompiled header the
-compiler processes "git-compat-util.h", but with it, for some reason,
-it processes "./git-compat-util.h".
+     linux-leaks(ubuntu-rolling): t/t1022-read-tree-partial-clone.sh#L8
+     failed: t1022.1 read-tree in partial clone prefetches in one batch
 
-This is visible when expanding __FILE__ in "git-compat-util.h", e.g.
-in the assert macro in regexec_buf().  When the assertion is
-triggered, e.g. with this diff:
+If I click on the link [2] it does not take me to that test file though, 
+because it was not changed. That makes this somewhat less useful than I 
+initially thought. The current behavior is that when you click on those 
+links in the summary page it takes you to the test output for the job 
+that failed which seems more useful. For example [3] is recent test run 
+that had a leak and clicking on
 
-diff --git a/common-main.c b/common-main.c
-index 6b7ab077b0..dd2a90c849 100644
---- a/common-main.c
-+++ b/common-main.c
-@@ -5,6 +5,9 @@ int main(int argc, const char **argv)
- {
- 	int result;
- 
-+	/* Intentionally bogus regexec_buf() call to trigger its assert() */
-+	regexec_buf(NULL, NULL, 0, 0, NULL, 0);
-+
- 	init_git(argv);
- 	result = cmd_main(argc, argv);
- 
-Then without the precompiled header we get:
+     linux-leaks:(ubuntu-rolling):
+     failed: t1092.58 submodule handling
 
-  $ ./git
-  git: git-compat-util.h:1002: regexec_buf: Assertion `nmatch > 0 && pmatch' failed.
-  Aborted (core dumped)
+Takes me to [4] which where I can click to expand the output of the 
+failing test.
 
-But with the precompiled header:
+Thanks
 
-  $ ./git
-  git: ./git-compat-util.h:1002: regexec_buf: Assertion `nmatch > 0 && pmatch' failed.
-  Aborted (core dumped)
+Phillip
 
-Similar could happen when the ALLOC_GROW_BY() macro is invoked with
-bogus parameters to trigger a BUG().
-
-(Sidenote: While this assert does prevent us from invoking regexec()
-with nonsense, the source file name and line number in the resulting
-error message are not as useful as they could be, it would be better
-to show the caller's filename and line number.)
-
-Since in "git-compat-util.h" __FILE__ is only expanded in error
-messages that should basically never happen (BUG() and assert()), I
-think this is acceptable.
-
-
-BTW, this is also visible in compiler error messages:
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index a0f901ce79..00c1f26911 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1,6 +1,8 @@
- #ifndef GIT_COMPAT_UTIL_H
- #define GIT_COMPAT_UTIL_H
- 
-+trigger_compiler_error
-+
- #if __STDC_VERSION__ - 0 < 199901L
- /*
-  * Git is in a testing period for mandatory C99 support in the compiler.  If
-
-Without precompiled header:
-
-      CC daemon.o
-  In file included from daemon.c:3:
-  git-compat-util.h:4:23: error: expected ‘;’ before ‘typedef’
-      4 | trigger_compiler_error
-        |                       ^
-        |                       ;
-
-With precompiled header:
-
-      CC tools/precompiled.h.gch
-  In file included from tools/precompiled.h:1:
-  ./git-compat-util.h:4:23: error: expected ‘;’ before ‘typedef’
-      4 | trigger_compiler_error
-        |                       ^
-        |                       ;
-
+[1] https://github.com/git/git/actions/runs/36537917146?pr=2426
+[2] https://github.com/git/git/pull/2426/files#annotation_82189987516
+[3] https://github.com/benknoble/git/actions/runs/36033463504
+[4] 
+https://github.com/benknoble/git/actions/runs/36033463504/job/107747745741#step:9:5333
