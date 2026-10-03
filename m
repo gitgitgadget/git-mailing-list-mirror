@@ -1,162 +1,144 @@
-Received: from mail-dl2-f39.google.com (mail-dl2-f39.google.com [74.125.229.167])
+Received: from mail-oi2-f1.google.com (mail-oi2-f1.google.com [74.125.231.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC421E9919
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 08:12:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.167
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791015126; cv=none; b=XWDur/fba5KfPaTxg9kwCuelVOuYob0KUtVnm7xT76b8LEIVPJa6aEOdte6CP9pAdnm2g9qEhcOlRY70RsDpJ3xKRq08GeUnZZMwp/rP+Y/vuPCs65uzm7GA/2H2unFHJh6RzGsE1OZ5ZbIL0P1NYO+ovHaSoC6YAH5Z1kgdwbg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791015126; c=relaxed/simple;
-	bh=/k0RQODN+a7TRj2OIZCK2Xvt8Z5kXLaycIgLSAdaNZk=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=FJQSKYmJwD8wbO5vhxuk7G21QF2Xd8Qf4IBjV/z9LAw9Qc2VGI5RhUrVB3PNWskEmgLSiYL14cJIauexQUE7gZ+eRGpfhiJjJKzTFcxM+ChIbG5IP9ALloKwHgx4dS0si6r5TauHbfM0utCHEUITie7xVCnYRjwLUjuKXSdkql0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rCLwpLiJ; arc=none smtp.client-ip=74.125.229.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA3B3932DC
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 08:54:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.193
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791017696; cv=pass; b=cY1+b7lWEPGSVsK1vrPigbrHG/FAXPfI+n7wZrXNFPTgoky7QZDSIK9w9X3PTQ6EeSHB8qDZJuOhpzk0LSDTnMQuTe2RERruz3YjF767tmPSzNF8SC17kweRt84EmJtUonc1JGixDNPMtWZ62T4LPjM8D2o5uVkjskXNEbaAN0M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791017696; c=relaxed/simple;
+	bh=DxNcD06TM1uXWQaKS3BbLUlb99IYPsB8269B7SxzF1g=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=jDlRW5766lr3ocSoyQ9rraDs2RJscScY1U78AajEKSN36tw39xy5qJr/G6ALUOlVP6+R5uNc+GzNSHaDpdT/YrbeHF8qw1HoyfIG5nmTA2S5bGMMUj8xGuVPv4Sy5G0yKIUwDJC39ArrT7r/DjNjdouAkibg4P42ol30Hl1Zpec=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rpnuqiSa; arc=pass smtp.client-ip=74.125.231.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rCLwpLiJ"
-Received: by mail-dl2-f39.google.com with SMTP id a92af1059eb24-1438cb9b3a3so92170c88.2
-        for <git@vger.kernel.org>; Sat, 03 Oct 2026 01:12:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rpnuqiSa"
+Received: by mail-oi2-f1.google.com with SMTP id 5614622812f47-4b3780fb4f5so70432b6e.1
+        for <git@vger.kernel.org>; Sat, 03 Oct 2026 01:54:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791017693; cv=none;
+        d=google.com; s=arc-20260327;
+        b=YPXSxylhUaovpm/KMBv2hFbpSrZGysy4FtKko8dJSURApqvssMLRWNtWaf07PS03R3
+         lab/RKQSx8uD8xb0NvMMMJSJK4rOc187ffYDfsm74BzLgMRudVUkRPLJyQGvdilKXNqe
+         qHw/SiEle0GiJflT9Ggo0AtO/3U/9XuCBZ3nGSplVKpSD50MSqRm6QvozSBUoGwOcHXj
+         P8ITf1uafPEI7nFtJZtUClc2tbLKCy1c331dLffYtWhMirAQmsyzGVzejNsxTYKWYSn5
+         YSw5bRRpjJ+q+a2BYGnErKsilEMav58qKC/JE4IEHkmydcHw4lFnsDPqFhLNbSD6d+EN
+         nJhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:dkim-signature;
+        bh=DxNcD06TM1uXWQaKS3BbLUlb99IYPsB8269B7SxzF1g=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=C0XTJLKlPgFdHkBRZ+JSloU9NJdue5N/ZfCQeXfnjWlXaN9SfL8knw8JKin8hgO//q
+         b+hKWmtGOLTmQ/CmtvmNBqvMvw+puIpr6hpr0Ugn1pLRnL0CIAGeyVtIijYvDw1Tr7vw
+         TbNkJ10RBVC4Daa7/riqL4V+N5KOfElkmv9RPcz5QVO9lvjkAbVg6+KsqNQaHGQjhdoe
+         mWe2rW06+N6iM7S5KyxbtGi2MCSFD2Cl25bh8fowv7k+ghvTzUSU4lLD+M+VioYTiCJQ
+         9YcL5lF+RMlVPs8gVvnfriU7lTGC5NPf1BtSp9F/uhmRlNki3UKKcNXYMi+08Or95dOO
+         4HQg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791015122; x=1791619922; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=OL3OJD8pGj6IcymzG4wkEWIL2aRo0qoxvJA1VOlKbR4=;
-        b=rCLwpLiJFx/GdxQDrLv1dlLA/i7SW7K5p0zyM1BRxyOntdZWj3RXmK3DgH4GDqj9Mj
-         wXq9WzgyutVJl2N20xMuX2DyPjKX3LhNm9A3GX+dBTt3dz1C8vti4PCtq8JmhXgH1Z5K
-         4pNWRyd8L8YNGd4pEWvVggL6DI9AeT3eh66vfhaEzx+0jzaihyMfO5pTdU3NnyMGVeZR
-         P2N6SeubBXkJLNtYTqZ5TXq789uKsGINSJtoYcqtoMZyCaBiPWucvzEmkvxRpadT/9NA
-         eN2b4VBvDc61T2D3Qgj9oGDnBrZwd4XG/uu6SOitBiQMvEp0zwTqI0O1QXZ/0FAYQmT3
-         R0bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791015122; x=1791619922;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1791017693; x=1791622493; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=OL3OJD8pGj6IcymzG4wkEWIL2aRo0qoxvJA1VOlKbR4=;
-        b=frtaFfPmk2aWkQcZPcqjZowpuVURezp4t+rZXpPntBeI7+DR0MSFW4sfCIc4531IzN
-         lb9VrgzylSpk74/5xEoyCPvWBtEa5CH5EEGCJ+aQfppvEVIr90s7lI9OkdzNkPHBmOmI
-         dviiVuK6gycK4CIsfTN51d5IxeC/uaETzmJ1uMcjE/JQtCAL8vtJ10Qrby+Z+BrMaqNd
-         9OoH63BUBkzLKrudk6lPHCD4RNnJ6529L0NLdr4ccai0MdlCSWwFS0zqSc6Szb+BQ2kQ
-         4HIPGOafdf3TQzTtiZWYzHvUCnyboOmXU7j/1K56oro04SFPrfHKde0o2iLC0u76yqgD
-         S+iA==
-X-Gm-Message-State: AFuF++mhArxx48Hn1d38T5I0VEqEdOclJhDSnSR7DbeJUmSsFLH/CXlv
-	o0/dXPMm/9SMT2Yl6RvVm5mzzE1uSfoSaLzdlXIoJRQKI9Bf9yKTLFA9dxDQRQ==
-X-Gm-Gg: AYBFou0Oh3bxBmUHnzHZY4kyBtdX9iQVe6Sil3yAe2fRifM+yUO7jJ6pk2MBSGVyM7s
-	chb7rN8iUo5KM5NCgVh1KUUGHdfoEiEKIXvgZgCr6Mmrl9NccZWBTPq9e6C+hOTrfELZEEW7r7q
-	lIAwTPKGwgKX82SfzvVkPYOKgQnYdENA4ZqyLrGozB11kaFiS5WrMe+28SA7FK/P32yG8ktWRuY
-	U9v429tI/1QM74sdCd+0b6n1J5KsKLUUF4eFLPJlzeyOAvssYVrH4XMFTOL3D/dqxzxmnWhi3W1
-	eI80i6ch9HPLdmbfj0dWDct2wdDuJUjkp6ChrELHY1JW8qd25omVXneGG7/j0dUVyaJvF5u+Wdo
-	iHL880qi48tzZEtywww9ojl0G4HbXgUPS2ErdIwoQA/9hC7lXoeesVgWPK8jrPGGytAAGtfiDfa
-	PyipOplFekESgbjAenMKk3okhKUsGpY2yzbYmV+OSHYOPfApXqmuMsdTuQOu3j63U0O5QnZ2NUH
-	Bk=
-X-Received: by 2002:a05:7022:130b:b0:14d:5a09:5cd0 with SMTP id a92af1059eb24-14f5cfbf92cmr6167357c88.42.1791015122313;
-        Sat, 03 Oct 2026 01:12:02 -0700 (PDT)
-Received: from [127.0.0.1] ([20.189.187.214])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-151fcd83fadsm4379932c88.11.2026.10.03.01.12.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Oct 2026 01:12:01 -0700 (PDT)
-Message-Id: <46f93a9e16e27966391a1cedb02a156b26fbd77f.1791015117.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2419.v5.git.git.1791015117.gitgitgadget@gmail.com>
-References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
-	<pull.2419.v5.git.git.1791015117.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 03 Oct 2026 08:11:57 +0000
-Subject: [PATCH v5 2/2] ci: point test failures and fixed known breakages at
- their file and line
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=DxNcD06TM1uXWQaKS3BbLUlb99IYPsB8269B7SxzF1g=;
+        b=rpnuqiSaTDgAl4T3viaz0BNe72+6xwJIbU0Lf/hTv6M53Z8gzSMe4fzdKyr9mpYcXd
+         6xNkRHiO0D08N3pqm7dvWA0OPwYQyxfdxCQD/70qPKxdC3gCqmF1QAYa1EWsw6KNbPdT
+         Ke1KjCZfyiuGIVUmNZpv8b1eFOMs2I44iHzkb5X7Q3Ba7nnoX4P4Zy5Q29nxHHTvRXRs
+         cGPyiC6CCDW0xQ1MgFCIna7UzMr6yv7ZqCAOxVbOYT7FcBxBvIMJ2QEoKbs6xqjBv7BH
+         8wKAJMn8WcjLZtwrMLf8bs0eoQmCbhs/+hZmlvve60H1T5rC0i6u3YBKIfRKb1WOr2E0
+         5x4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791017693; x=1791622493;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=DxNcD06TM1uXWQaKS3BbLUlb99IYPsB8269B7SxzF1g=;
+        b=r8Dqu05UaLFbyL9hWAASIIXmNBh3gJt9S2c/0JuUTVaRGOdOtYKBArx+/0wrOaNl6R
+         NcPKxb2Gux2kCaZle2wfPrdF9IVjhXlJNIUM8no8f15LihuCq3xF+tcRhbvdjuQgcDtm
+         kdtQgO33OAf+0CS4S9bSY2bu9npkZ3djhmb+IjF3ZKoQGIrZVKHKyNBjNrlJ+Y/apBJz
+         Cswxrqf7wmCZymUDNIDMFCl6HmhdRiGj9g3GlI5FopMo99jos7mo/vEpcSJnSlplid+J
+         ZlF6e1nRbWwKihQSdBFi3ItKWD4YmRn/91C0tFwQeB//xsPeqEkajHIhJTaptdyFKxVi
+         P+TA==
+X-Gm-Message-State: AFuF++mYhvwwgv1l2jGi/FA9Pjv205+lL/X6aPJZeIP8MWBwevRyH/7Y
+	S+oa05Haf8c354kUGk6T//yGKKDe2JWHg0AevLyoYExwzWpgQmuvy0dsewBlOE0US79TYe54EvK
+	wivQqbwL4thpoIKB6RzQuThqX73yNJpa7TnE/ZddXiPl0iI/hYg==
+X-Gm-Gg: AYBFou1RtYZtsHiJ78uBMiHUF1xAF9S1j5FOwTBgCinP/CaSNOyy9DQucApXvqmLGTz
+	m6mjeO3YWzgCaxSlkeEqED1CIcu5BjXurvO+rMKMQVl42cGAPFWJYO7/+zxcVHTF0scLvrN3fwE
+	2i4gp6T5y45b43ghDVTNyKXhKugIutIvuyVSh0/W5ASvWcpZJF6m+/ju0ht5naU5AQcQCUFbKn2
+	BBRzPpLqo+8GbaMvfSEJU+Q4zYoUEr4Vn/hcqSEIOY+yHOcQYK6mIedkpmw+ajc5xxVlWYBslRf
+	rbeDExniHQynxBApSPdnc32I9HQ8PEn4YyXtEg97Ce7or7jZ6dDdoAifAz2KUq5/Qa/0i+0=
+X-Received: by 2002:a05:6808:1997:b0:4b3:80c6:4bd4 with SMTP id
+ 5614622812f47-4f677447392mr2216132b6e.5.1791017693072; Sat, 03 Oct 2026
+ 01:54:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: Sphinx <sphinx9692@gmail.com>
+Date: Sat, 3 Oct 2026 14:24:42 +0530
+X-Gm-Features: AclHuK9vAyeMb_bmCx6_sTStno-4RvqNcH5u2cUKmwceo06j1DpHhg0a58k2rJQ
+Message-ID: <CALfz8Qx63qNoSbXq7C7u+KwX4=HCL7=uOUahpXd6j7KvW_c_Eg@mail.gmail.com>
+Subject: Question: behavior when reverting a commit from a shallow clone
 To: git@vger.kernel.org
-Cc: Ben Knoble <ben.knoble@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Hi Git maintainers,
 
-When a test fails, GitHub shows an annotation naming it, for example:
+I have been investigating Git's behavior in a particular destructive
+scenario and wanted to verify my understanding with the maintainers.
 
-    failed: t1060.17 partial clone of corrupted repository
+Consider the following repository history:
 
-but the location GitHub attaches to that annotation is the CI
-workflow file itself, not the test script, so there is nothing
-pointing at where the test actually lives.
+A -> B
 
-Find the line a test is defined on by searching its script for the
-test's own description as a fixed string, using the first match, and
-attach that file and line to the annotation instead. Fall back to
-line 1 when the description is not found verbatim, which happens when
-a test builds its description at runtime instead of writing it out
-literally.
+where A contains the repository's files and B is the current HEAD.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- t/test-lib-github-workflow-markup.sh | 30 ++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+The repository is then cloned with:
 
-diff --git a/t/test-lib-github-workflow-markup.sh b/t/test-lib-github-workflow-markup.sh
-index 0d54496358..ac8c536231 100644
---- a/t/test-lib-github-workflow-markup.sh
-+++ b/t/test-lib-github-workflow-markup.sh
-@@ -31,6 +31,15 @@ start_test_output () {
- 	github_markup_script_name=${0##*/}
- }
- 
-+find_test_case_line_ () {
-+	# A description can contain characters like [ or * that would
-+	# corrupt a regex search, so match it literally and take the first
-+	# hit. The -- keeps a description starting with "-" from being read
-+	# as an option.
-+	grep -n -F -- "$1" "$TEST_DIRECTORY/$github_markup_script_name" |
-+	head -n 1 | cut -d: -f1
-+}
-+
- github_annotation_ () {
- 	echo >>$github_markup_output "::$1 file=$2,line=$3::$4"
- }
-@@ -40,18 +49,27 @@ github_annotation_ () {
- finalize_test_case_output () {
- 	test_case_result=$1
- 	shift
-+
-+	case "$test_case_result" in
-+	ok|broken)
-+		# Exit without printing the "ok" or "broken" tests
-+		return
-+		;;
-+	esac
-+
-+	test_case_line=$(find_test_case_line_ "$1")
-+
- 	case "$test_case_result" in
- 	failure)
--		echo >>$github_markup_output "::error::failed: $this_test.$test_count $1"
-+		github_annotation_ error "t/$github_markup_script_name" "${test_case_line:-1}" \
-+			"failed: $this_test.$test_count $1"
- 		;;
- 	fixed)
--		echo >>$github_markup_output "::notice::fixed: $this_test.$test_count $1"
--		;;
--	ok|broken)
--		# Exit without printing the "ok" or ""broken" tests
--		return
-+		github_annotation_ notice "t/$github_markup_script_name" "${test_case_line:-1}" \
-+			"fixed: $this_test.$test_count $1"
- 		;;
- 	esac
-+
- 	echo >>$github_markup_output "::group::$test_case_result: $this_test.$test_count $*"
- 	test-tool >>$github_markup_output path-utils skip-n-bytes \
- 		"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET
--- 
-gitgitgadget
+git clone --depth=3D1 <repository>
+
+so only B is available locally and its parent A is not present in the
+shallow clone.
+
+If an operation is then performed to restore/revert B, I was looking
+into the behavior when the resulting working tree/index becomes empty
+=E2=80=94 effectively causing all tracked files to be removed.
+
+I have gone through the Git documentation and experimented with the
+relevant Git commands, including the behavior of shallow repositories,
+branch deletion, working-tree changes, resets, restores, and other
+destructive operations. Based on my investigation, I have not been
+able to find evidence that Git provides a warning or confirmation
+specifically when an operation results in all tracked files being
+removed or produces an empty tree.
+
+Before drawing any conclusions, I wanted to verify this with the Git develo=
+pers.
+
+Is the following understanding correct?
+
+An empty tree is a valid Git state, so Git does not generally consider
+transitioning from a non-empty tree to an empty tree inherently
+erroneous.
+
+Git does not have a general safeguard that warns when an operation
+will delete all tracked files.
+
+If there are existing safeguards, warnings, configuration options, or
+historical discussions that I may have missed, I would appreciate any
+pointers.
+
+The reason I am asking is that I am trying to establish precisely
+where Git's safety boundary is in this scenario specifically, whether
+Git itself is expected to warn about the resulting empty tree, or
+whether detecting an unexpectedly destructive tree change is
+considered the responsibility of the tooling performing the operation.
+
+Thanks,
+A fellow git user
