@@ -1,89 +1,90 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F273F5BC3
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 11:39:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D473FBB5E
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 11:52:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791027554; cv=none; b=O10Lvvc83NXRvCkZlxGQarFKAV5G3zdtFzg1RNZrbisVBy5Kz9ErDJtnEf//27FyFtNq0v5wSIePWyeBqGk+hHs1kkQw7mzAj9601Sv0pTAamcLzb/tGQHeVoDdR2Yao0H1qoUmBhBVHzyXPQPMbMky3uQhGsOW46H8INUN21wc=
+	t=1791028350; cv=none; b=rWNOrKgBoF+khtklrTEspgQjDeCNWhrotoXk7x0RjQS3vstL6Wyzr4Ykv58SOhcmRBRaZ70FIcT4w3TnmKJJTvOklQzfqWrUNahmWjFCS04wePeiszRVzTfZov0xj9DuRn8pS1Au+lfZO1HZs5dWzBQ17e0ZM/v+iz91M6RUXa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791027554; c=relaxed/simple;
-	bh=uqtYU9mfqtJgz/4pNjxz+Rhqv5R9yIsIJ+ap+gS1CCc=;
+	s=arc-20240116; t=1791028350; c=relaxed/simple;
+	bh=stOn/GQBWQ21lEHgtw/AbB7FzlthDdJq6WgUd3Fbmlc=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=h16c/kTFhbm1VAvmhBWR1H752+Ei05HuDnSTjntVgoCApcZ821wuh3yJ4QeLJrXmpK7cmh9ZB9TigSF8Bqz9ZMkMNb7ACKuNsTuBKNDUUTu0TIESvRy1actUl+Icuo1hURnWRn9bJPk+975M2mFXSPrA7M3JaeG8HRe5OTFylNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=tKIEZsQX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kN3zLeEv; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	 Subject:Content-Type; b=VE4olUH3Vxm2gXx/9NvWvZQuKXwmfiBvIRqWVpmuQO1H9npj30f8K19AFNrHnklMFYn7e/yg13CQSQtvPnXSsejkEZgwveM7DGQqKH7GIOWkOW+Af7MwtQf9R7Vb7D0SePZVOtUzO1DunsfxGEakVOVpGPVJt01OviNk0ABjjxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=aE0C9lIW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VFJclJxY; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="tKIEZsQX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kN3zLeEv"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A78D37A01A8
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 07:39:11 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Sat, 03 Oct 2026 07:39:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791027551;
-	 x=1791113951; bh=6qliTWQcPam0DmcSRIy9wlgBiVs2l5HtuqCBd9qjVIw=; b=
-	tKIEZsQXMNVDggURafhBk98mPQh4IARJBDx6y9cwJ3Vk82EhAimFL+Z8fuKuCCAz
-	0U2Hfpj/7eZ3xJm0P1ISD3Ycy0xdagDforFraZh2VT+F9h6Nc+j/RPCTA5oaKzek
-	Q4zbENs3ZntqsjKz3FaWlzzQ4mMXDQUKZ30sJzw8uE5gY5R+BpDw4+ahZbzMPRIR
-	d+6bk+i2YgqZ8sqWexjfkHYtJoBDjsm+qCvS+fagZHwED7nOmb+ZkT6gedhZO9d+
-	4lVxKjssVxgk6E0fu5XoS78IV2/J4VOpcRF5dcGiu4uzybh7iEkFovye/SfSjhWY
-	sa/HXtzNud3LtR2CJbhTSQ==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="aE0C9lIW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VFJclJxY"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6A073EC03DD
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 07:52:25 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Sat, 03 Oct 2026 07:52:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791028343;
+	 x=1791114743; bh=MBBeTUlVwGcqqACNmiwy+DMHuf+E8hQDLb45RRItY2s=; b=
+	aE0C9lIWSUkGKT0GDO2cTv1xCiWCyVn8B0zWWj3MXqmK/y0jghfSB3kP7a38vtUR
+	fNQ0Hz9cIM6xlP4LJAqhZzSISMNP2c41ZqeCnDERyZnGWVBAXz/Tt3upOo+BWy9p
+	M6AwLG8Gn+N9VCiQD5b3nyH+sFk9aa5bMuKDR4QRo+gPZ/nVyljJNk4a03+nGcYa
+	zGJYf9DeZIcqBxCBxI9uBiDOCJU0ZvuTLHGgvkLSurBf0o4mdU6i62nBI1iVEFfQ
+	WX7lhGS/Vj+dwlAqybd3SdzdaGsF/mnUISNcx0gapHrgX3/4GTemnP52sZK9Kg2j
+	QcTBTLZV9Uect4Yf128hSA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791027551; x=
-	1791113951; bh=6qliTWQcPam0DmcSRIy9wlgBiVs2l5HtuqCBd9qjVIw=; b=k
-	N3zLeEvMl69/4Xv1+UaS+ih4fJdjjc9vGMorrKqjKDRL+uvsMA1I+PH2ltaRX6ka
-	CuV6t+LtGEA3lHq77dlwOOKpBrVYWgM9tERQz0rgCwRveoF/jkiTxNGiy/T8UNxE
-	YVYiFS409q7rU3vGfmJkBfHz0qRsXyWz6hsngKIhW6maUc6wizIUMVpOonzFKIGt
-	QxHB7xclZdGuWwNN/diPEt1RH7Q6Tjp4jxxw/t1XT+MIFk+NqVoRuo/Bp2r0Nn9K
-	mD6s0N7FupooJVHwsGt/t0H7CScP6t43xBTJoZCyBrLgfvMxIE44nLBJP+FgScXB
-	kSA5NuFMyeIxTQXg9Zg4Q==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791028343; x=
+	1791114743; bh=MBBeTUlVwGcqqACNmiwy+DMHuf+E8hQDLb45RRItY2s=; b=V
+	FJclJxYWuKYdpjAQ1JEZuT81tzD4h+f31PzUM+1zH881/gYCmOf6Wp2lMR/ppXM2
+	NjI84wDGl31DtiUsticzOVCQQj9W0Jh8e2gq9xbQTB9lAWzJ7vvgFQlcHrbpoFHp
+	OUCi0aD05BmS1ry32YAs7s6YjQASkbUHORggi0NPbKpcaSPMlqQRanT1yS3mpCe0
+	PeqGlOfFaV1rtPZ6DpMiOObr8dLc9Y0bsWJgF9gwkkTX+gLEbvCefJy0ssyJ3Aw4
+	m3yOwm5vNRJlrZ/U9SkKkyLikwFVFEGpaWTquHdfxI16uu5/FCYb6tBx0HbHdhoO
+	iEPoXaXvTNRCt2WwEi+sg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791027551; d=jvns.ca;
-	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:IV88X/7YxkRK30P6N1OvifFYkd6nMrchZt2e2DDmDJ+gMUN
-	420NsMP/qbRKMNbbRHdGN8d/N73NjX+m/ZauryTaK5fSo1oDmL4ccZk/Sso84eSv
-	wyotvEtqDYojQRkGboa0aSZ4CCwxf8Gcnncb9jqAs2iy5s20v8Mki+iWF6x1jCUv
-	5x6PT4wMbTEkDLJLb4PVh7a56VQjRLigMtcmLw4R0LJFQBn/PIERkm5xy5pF7GwU
-	BGbhlCCvECLq6xhWmappoIB50OKdTS0QVX3/K8Lnptv6k4776pf9/XF5lqdyjpsZ
-	VBYX8EVR4f1hC1IF/m6ey6RCE/pKJks5TnoDj2w==;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791028343; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:d1bJO0bCaZVoew6gpvWXM9Pc0JxVxnZiMCaNc/mrzsXrwa+
+	ViPEO8R8PmtO8Cdxv+LDpb4YpzL0DgmRkj7YyQ2VOHK47Eq81jIkIH1CxdNkKuAy
+	PuZTf3vr4oKBJf/BNqaPBI1c2vofvRgOXDbiwkf7mOJ44RXrAQldhkaWhwqbE216
+	7WhcYN1UCXtRDZ+A+xIfRIb52d/DsTyCqXR6QQUVX6vz4EntZEvv75oxA/iclPMr
+	242d4iCBo1T7GzMQUbmPd8uHhqZEkJfXJnmzC0Vnu1q5ZB7pl/D+Rsjrn0MTixw7
+	EWiwjoK44JTD5m7lZlC6iLCeXc+OmkoLiyyPaBw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:05xyMfkC0fU/wrWaYcJPc898MWB2qY3kIpNVy2mKzVE=:uqtYU9mfqtJgz/4pNjxz+Rhqv5R9yIsIJ+ap+gS1CCc=;
-X-ME-Sender: <xms:XunAaiX0T_uik5OtGKHRAJV9QN8TCvKs8BgF2Y8LqnQebN_l8PfePg>
-    <xme:XunAapYFD9q70NhcHZjgyR-Kh8QboPt3_xOwwthgTOYusH4NBBVEROEyObtiJNxsW
-    r4Zr8xBahoGSVVmGQdMEgVwzbcTttRSV1u8NNrRn8S5y8ET2qPg2m8E>
-X-ME-Proxy-Cause: dmFkZTEnt+R0FLSQ2tpM5SarBG4eJds0lgcvScikmK2OltE30dF1YFljk+RbwzDIqL79RA
-    OJNv1hI+rMjCU8pjvMjI+4kQm+46NYxc86pJ06SlWOEIiErwZAxdWJE0kB80hxnzgbiaFv
-    7eG6SVyiS6mzaobOlm5AZKri4n2X4Llyn3pAOlkeMqINIWwlZY0ZIO396ZsDwa5Gg6S1ze
-    PK4VCBfeF11YIau9MfdGGA5koN+OEztteagB5zL+UyUA2UCCb8yk+tfkV+hZztEY/3dBEm
-    nx5grmQvc60YytA/ta1p952n0nAiRo85YYNuJy2SiH6hD/ftf6pev8wGzXWMgUqdvBK/Oh
-    uza5f9YjL3oJzciLgPnBYs+gRq7vupw7cvbKQ9r8mEJJu1CyA0tLMRCuwtGTCCAsEpNw0/
-    MJ1qfH6H28swTxmEYPEHxhehownoC9CR2X0st2pYMpW9UAn0n/UaNiZJrP7qTO1vFXBbLz
-    y8Zj9p1XXv+4JQ61JMbW/DNI5gdfGZBhc7xWCDDa5Nnybi0ECJLUd6btLxO4wGHXJuackt
-    5JhVAqSSU3wnHpNKHKH3yb1LPBtIZqqzjNaZ5gSSXQb95lg7CNeiag9xBoFhwFT6PfSHM4
-    1b5nSZH/IkGFRYKbH5gRbjWDpwnLg8nvMq+rzGurh6Zpi8AUmXtadENR8M2Q
-X-ME-Proxy: <xmx:XunAav-P1COm0Mwq9TAYH6gHjaWhLj_d5jb6lPC7i5i875HqylFNfA>
-    <xmx:XunAaph3FPXe5Iv1ZWFT8sqOR4pGG0vxpqUf0xsNTzchI7CBd2fsjw>
-    <xmx:XunAanexinqT04CfiTVnDdgt8lJLcr8tLqhjoEkUBcK_Pr4jVhXlWw>
-    <xmx:XunAaorHyOJT4Aptn4BEabzpEAjiBVt9h4Mk5wQ33CL5obt9wvA3vQ>
-    <xmx:X-nAau-HBKPtERuiKG4njkLlKctp4OCHAybys04Vzp2NqQgKEvP5OGl3>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id BA860780070; Sat,  3 Oct 2026 07:39:10 -0400 (EDT)
+Message-Instance: m=1; h=sha256:IaqTYqSHWYpxR2y12xnXs8S9AvPWYkdaI/1FK+il+Lk=:stOn/GQBWQ21lEHgtw/AbB7FzlthDdJq6WgUd3Fbmlc=;
+X-ME-Sender: <xms:dezAamKVwKrbH1lNJswA-EDFpdwUKnay5d9mU_1uZ3uVSS33t36TuZA>
+    <xme:dezAao96HEiL2CJgU_HVLUNcxeM7o-h4TPoZibZxlciKfqRLdSXBjwieH8uuB3LkQ
+    gS_k8X9PRliglUFDIOTTRPtjl_7ab7wvG59yhJoqaDVrN9fvJKVYg>
+X-ME-Proxy-Cause: dmFkZTGXf+JB/h9wIMmjFfaKF6PsdeGzWYthJtIbEOfFtJVrI67wSptOUQXEtF+o/YY4Wn
+    e8nfvKyV7HkjC4/7j8+kC6kpCAVcdbOKOkOtMMbxh1OIUPnYduLHxVJdMY8sZvUUuGItKf
+    tmNLHhB+m/EP7Ssw0e4jx63iBDp6HDRh2vW/fuXh8Fmby4lI2goaoNlfvxJaT8q+KaH2ir
+    IS05VXwaHMtWjRqHh3VAGn1AJvL9QXyhP8W8D7+HlUfByLfL1uvcYlIDU6AzlaXCgPC2rA
+    EP/dIPdFD9FSPSJZgMqejmshlizEiNUJ8iFyFTwwFTJ7XlH49gZJTILtdO8aI4osDLeJHu
+    zZS1lTqJdJCbVRnxYSc5ePHtlJ3u0+TtemPizNwStStN/b1XvIs3NSMQkFYVDIULgy7qLF
+    82dRVznZOGWhVpKUcM1ODLS+Banw7/saN02sDeWjLSBlJtLrHJsfMfEEFA73nH2+pNgXxk
+    hBwKdemrKGri2gY7B8EmFWt1WsJ1goAEZGRIz2LYKIzQJqiSW8BLZDu1khL10ho+4xEWlN
+    OeNQTP8xii25jYalacSzB+LcI4Kh3NhhYF6L9iNiq/9XtB8H0ptfTI38noviW94bwb4AM9
+    5W8tMuIjVJWsQFlChh/zJrVlPJ2x630gsvbUiuUqVvF0zLDkI6AaecOk7Eng
+X-ME-Proxy: <xmx:duzAaingRW6gTz9XXvg5__aq1vdgvFVBmwThtMDuRKkastOY87d2ZQ>
+    <xmx:duzAahnLu9efWJ1EVgxzQQlgU08_BIRfnMJJBZ3UlcjrUYIlNAx3YA>
+    <xmx:duzAajtr2-aEq8Gi9FpguVdVDxKBJVFBBR9zsbrmWsPAklmw2IW8sw>
+    <xmx:duzAakkruXxTmFxJHf50vOZGpav1oFDYdGS-sIm7YgcH8BlILOnpgg>
+    <xmx:d-zAaifJqzr6jxdHeF7q7XubRJh_uqH6wCFSjqbXO9rqUivSwTgY8cE6>
+Feedback-ID: i83a1424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id CEE1122C009B; Sat,  3 Oct 2026 07:52:21 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,72 +92,92 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A7DtHL7goc9V
-Date: Sat, 03 Oct 2026 07:37:00 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Tuomas Ahola" <taahol@utu.fi>, "Junio C Hamano" <gitster@pobox.com>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Message-Id: <79451beb-15c4-42f3-92fe-1b7fd284b21c@app.fastmail.com>
-In-Reply-To: <20261003073303.G-Gck%taahol@utu.fi>
-References: <pull.2246.git.1790957227881.gitgitgadget@gmail.com>
- <01891b4b-ce04-41aa-8065-d7b88e466dbc@app.fastmail.com>
- <xmqqo6dbvlaf.fsf@gitster.g> <20261003073303.G-Gck%taahol@utu.fi>
-Subject: Re: [PATCH] doc: don't require a SYNOPSIS in section 7
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+X-ThreadId: A5YEOc4Hum2Z
+Date: Sat, 03 Oct 2026 13:52:01 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>
+Cc: git@vger.kernel.org
+Message-Id: <533e2f52-2c9c-459a-9fa1-dff3ef4bb2f9@app.fastmail.com>
+In-Reply-To: <xmqqeceaa5h9.fsf@gitster.g>
+References: <CV_gitbrchanges7_please.d1c@m5gid.xyz>
+ <URLs_not_just_msg_ids.d1e@m5gid.xyz> <ar0OltAkeTiCx81c@pks.im>
+ <xmqqeceaa5h9.fsf@gitster.g>
+Subject: Re: [RFC PATCH 2/4] doc: gitbreaking-changes: replace msg-ids with URLs
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> Something slightly more declarative I managed to hack up:
+On Wed, Sep 30, 2026, at 21:45, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>> On Mon, Sep 28, 2026 at 12:41:26PM +0200, kristofferhaugsbakk@fastmai=
+l.com wrote:
+>>> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>>>[snip]
+>>
+>> Fair. The links may of course break if at any point in time
+>> lore.kernel.org were to vanish or change its interface. But if so we =
+can
+>> adapt accordingly, also because the message ID can still be extracted
+>> trivially.
 >
-> diff --git a/Documentation/lint-man-section-order.perl 
-> b/Documentation/lint-man-section-order.perl
-> index 02408a0062..160c65e1be 100755
-> --- a/Documentation/lint-man-section-order.perl
-> +++ b/Documentation/lint-man-section-order.perl
-> @@ -13,6 +13,9 @@
->  		},
->  		'SYNOPSIS' => {
->  			required => 1,
-> +			optional_in_man_sections => {
-> +				'7' => 1,
-> +			},
->  			order => $order++,
->  		},
->  		'DESCRIPTION' => {
-> @@ -53,10 +56,18 @@ sub report {
->  	$exit_code = 1;
->  }
-> 
-> +my $man_section_number;
->  my $last_was_section;
->  my @actual_order;
->  while (my $line = <>) {
->  	chomp $line;
-> +
-> +	if ($. == 1) {
-> +		# assume the first line is formatted like 'gitglossary(7)'
-> +		$line =~ m/\((\d)\)/;
-> +		$man_section_number = $1;
-> +	}
-> +
->  	if ($line =~ $SECTION_RX) {
->  		push @actual_order => $line;
->  		$last_was_section = 1;
-> @@ -92,7 +103,9 @@ sub report {
->  		@actual_sections{@actual_order} = ();
-> 
->  		for my $section (sort keys %SECTIONS) {
-> -			next if !$SECTIONS{$section}->{required} or exists 
-> $actual_sections{$section};
-> +			next if !$SECTIONS{$section}->{required} or
-> +				$SECTIONS{$section}->{optional_in_man_sections}->{$man_section_number} 
-> or
-> +				exists $actual_sections{$section};
->  			report("has no required '$section' section!");
->  		}
+> One caveat is that some "funny characters" in message IDs need to be
+> URL-encoded.
+>
+> A recent example I saw was <20260930061524.GNkIK%taahol@utu.fi>;
+> https://lore.kernel.org/git/20260930061524.GNkIK%25taahol@utu.fi/ is
+> the URL you need to visit to view the message.
+>
+> Having said that, I am somewhat negative on what this particular
+> patch does.  We should instead give both, having something like
+>
+>  cf.
+> https://lore.kernel.org/git/xmqqa59i45wc.fsf@gitster.g/[<xmqqa59i45wc.=
+fsf@gitster.g>^]
+>
+> in the source, and render a readable link text with reachable href
+> when shown in the browser.
 
-This looks great! Will use for v2 and mark you as a coauthor, thank you :D
-(let me know if there's a better way to do that also, still learning the process)
+With that I get a regular `href` and a `mailto` href.
 
-I wasn't sure what `$.` was before but this makes it clear that it's the current
-line number (and https://perldoc.perl.org/perlvar agrees). Apparently
-`$ARGV` is the name of the current file. (different from @ARGV)
+    <div class=3D"paragraph"><p>cf. <a href=3D"https://lore.kernel.org/g=
+it/xmqqa59i45wc.fsf@gitster.g/">&lt;<a href=3D"mailto:xmqqa59i45wc.fsf@g=
+itster.g">xmqqa59i45wc.fsf@gitster.g</a>&gt;^</a></p></div>
+
+The `mailto` wins and prepares to send an email.
+
+For HTML output at least (I haven=E2=80=99t tested man yet) you can use
+`&commat;`:
+
+    cf. https://lore.kernel.org/git/xmqqa59i45wc.fsf@gitster.g/[<xmqqa59=
+i45wc.fsf&commat;gitster.g>^]
+
+And that works.
+
+But with this rendered output:
+
+    =E2=80=A2 Support for core.commentString=3Dauto has been deprecated =
+and will
+      be removed in Git 3.0.
+
+      cf. <xmqqa59i45wc.fsf@gitster.g>^
+
+You have an exceptionally short (cf. UUID monstrosity) msg-id, like all
+your msg-ids,[1] to the point that it looks as long as an email address
+but more random-looking and with a weird domain name. And the exception
+for email addresses (looking) that are formatted as links are that they
+are `mailto` links. So what would the expectation be for someone who
+hasn=E2=80=99t read a preamble about what these things with @-symbols ar=
+e? That
+they are contact addresses perhaps?
+
+I don=E2=80=99t think this is an improvement. Now people unaccustomed to=
+ using
+msg-ids have to be cognizant of these things as links (not as weird
+email addresses), which is even assuming that they read the
+preamble. But with regular URLs you don=E2=80=99t even need a preamble.
+
+As for the man format: my terminal lets me open links.
+
+Maybe we should drop this patch if we disagree that either choice here
+is an improvement.
+
+=E2=80=A0 1: 3/11 of the existing msg-ids are from the maintainer
