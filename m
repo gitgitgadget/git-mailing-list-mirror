@@ -1,152 +1,122 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi2-f13.google.com (mail-oi2-f13.google.com [74.125.231.205])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA22368D76
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 23:42:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8572E975E
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 00:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.205
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790984558; cv=none; b=pufqNqFI91L0X3Uwon99iWQoM9Qkskaf1xEau2Po4AogJgEDg6lakDQn1JbkLQ2Y528t6nsXieAuzKCuEbuaTeLw2NDsqqd0fMQJgdhgfirBRooSPix3vXAtWGRMUQ7zR6I8vu6lVz1EKD+C8wL9pUYO5PlIO3CjnU0rD6DJGA4=
+	t=1790988664; cv=none; b=Og3Z6Q6Gf7IAxls729XKW9pITruOzctCCOkYhfHORlSn8yyrTt7N/Lkxtu9VB51lJWJia+EVH+J+wCFqIC0JmWe54pSayGQ+EAUFWWXQ6tEX297W2mVGceItA9Mu+G1vX5kyEj3GikFG7UswvSvAwQ8NwlQXFntifXY4RjEnamo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790984558; c=relaxed/simple;
-	bh=Y5EOx4yGMgg/hDVD3HIVEva+amYfruvSqNQ+rKKI+lY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hjIzYi+/b7W1/ls2Fr+6F8jBrE4VtmR9HHjr+zib9r/KLictMgCUmYVwWFhou5/pOYugPzHpzLPL/2K5NoMkg2eMaSOgkRCQ6+lV9x1jYcQzvCl16nDqRsfSKaF3Kz12dBDcmiqcHfX+6UHt8CyHAxZFKkfR2SGFdwhhgKOsxwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j/gClDtq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NoYWptYA; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1790988664; c=relaxed/simple;
+	bh=Kows5J8Y75w8dMMVb/WkBmYVxpRlqNp3nii5Wk6L0CM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MUDYt4a6bnx4E+P+b34di8fciYX3nkpcZk3ax/7DnpSqNffUqLqRW2IejuFPyt4i/TVND0BADIowVwaAtIv15p+K62ASity/aHloF+WsM3htnqLd4+n3SJFouBLeJ/fxi9JLSpD1+mjlUV+6gzSN5ULNTUn2J55yhOTmE/dugKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=QEYoCjgA; arc=none smtp.client-ip=74.125.231.205
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j/gClDtq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NoYWptYA"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2B586EC0101
-	for <git@vger.kernel.org>; Fri,  2 Oct 2026 19:42:35 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Fri, 02 Oct 2026 19:42:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1790984555; x=
-	1791070955; bh=+296PFePgePzBE5rbhL2Skva27y1RV4PFHEydHaqJs0=; b=j
-	/gClDtqYPT9+KHRlh1Wsz5L0Bl7hmTxLl4WqJ6cKIRIA8tPIRDFkUDKkwd2QvNec
-	VGsbQZpngKpn/avR0dhKMtx7+mM3Y1oWJ3h1GDljpt85IxcFqk/A6eZGvmhTfSmW
-	EsdLgYpbFY9WRbBalt31nA8rizJ0QYFDjWE1kPlR9cB/MZ+ALeqmC+KC9MQOU+Mz
-	IMIwnLcMUvY5u15EE7hkBssdHJkkOvLCT2hdQo6Ba+khUc2bb7/d5oTSXr3c6b+O
-	X3+DD4BRaIM+IIKr+m+HX6GBW1SXjVEbk6bEaZXYHDWtBfXIEV11fuXEu7sXxy0L
-	iCQXmIPeRt9YXthyLYfxg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1790984555; x=1791070955; bh=+
-	296PFePgePzBE5rbhL2Skva27y1RV4PFHEydHaqJs0=; b=NoYWptYATGmZ9ikmL
-	ebTPNbiOqtI0M1ruDthf4b91alQ4V+lALti/wbX9QuPfTOSfwv+Pk5y9qt6A7smZ
-	qVUeSooNUFGAhp/wGPL/n576faxyL+Imxxoyr+zNaKy0l1xi74r95nxjfp5HFAOs
-	vHgUmJRbAX3PdXqsHK0UO9kTRznMyOd9DAsdeRAzWyOMDjeo5ttLfc0gto9KO1Wz
-	lxG8usMVSet0Z9ZRHZxJKVtjEyDbGT2nQAzfwzqEoyfKr1f1y1dffinF6TYHVUB5
-	fRrMic5ixYRYI7BAE56mnbYL444GCrnjDCoczr0SWdtp2rtYo/R+KLnvC9roAx88
-	zujJA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1790984555; d=pobox.com;
-	mf=PHRtekBwb2JveC5jb20+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:nQcm3xHe+skRhe4rj0QmOQZeYZerYzUt49VgrSvgUgHbSgP
-	ZDsPLYcxbAKlCISlAN4stfplPqT544wRl4aLKyHsMSNDoKuWve4Knj/nTXFsFjFS
-	ujQqYOyfSyfv8FXxJmATAjdzoFiUoosUUNBO2rAbb/lVfFiDAKc7FAgUyBh/DJEf
-	OJmXZmQHaqd0pYtUa9lNlbjKLLpH1aAp+wVLqmcJ9gMv9QdE2VWj1YR2iBdL1zI0
-	tKcGeaVV1GWKXFpjY6S5QkxwYEu2L3pXwffO3i1h8EakhV2tRjyHRjNaba0eMSc4
-	szihmcffyyqfBDlC5l8KcGijRRC4F3YvirL0O3w==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=11;
-	hn=cc,content-transfer-encoding,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:ippRpE2ZobXPBOil+r9edzFDuZ2EakUqoWnHb9disbY=:Y5EOx4yGMgg/hDVD3HIVEva+amYfruvSqNQ+rKKI+lY=;
-X-ME-Sender: <xms:a0HAauCQNEEacAcRfnOBjJ2HTNULMWowt-vno4ndefdyyaOJ-kL14A>
-    <xme:a0HAav_m3H1Pu9h9SpbDF3h1V7nAS7H2EMC94I3-xX39xcLxe406BoUH0JrHn3VTH
-    LBKJUBtcBfb0o7cCuRBqNtqrfk0_k7SZ6V0_3QI_AdUkhb06XUiitw>
-X-ME-Received: <xmr:a0HAau98KVhdYGwIXG4JZYq6ymn9AVmdfIHzuUAVOEzZavkCUqQ0NHGnn4rKMacE6JQ6Dj2xxwkaXunBA5lr-e51MXbrfIuxN1I47MPShL_wGgTLSYWmMc1RowvNUHkO6qcJ2QzPFrnlIgGy>
-X-ME-Proxy-Cause: dmFkZTFit0yMEKtouVXwjMZQL0BSyzLANuYGQ7bbKzCiAv7i8xpt5DhEyschXA3wmftHrT
-    Wn0f3hLWX6oUSdJcBllxmR4e5linkjJuv+qGPSx5u8g0Y5OC6M7N2pMRjyRNAzwt/2kRhi
-    Ch2edHmjKhUs88rY/7B10/n6VT8D6ryJMiO1fZbkXfBDvIWR3ga7fMxO61mPOXv2U7uGF4
-    q/oBYjjhaG4kyPi8pKeecJ0+Gru5BqTzMhDmB9QbrGwMac0CLBRGlIFVX6F+xoHUJSUl/d
-    vOWzxBeslRfXUtTKvm01PMymx8AeSiEpCmkh2O2LD4XxhBMVaFLhZfnAU8yvmAY2EfPder
-    Ik4EaRU+ggacXtUoRE2NjTHchY7Sku+0TGH5yYvGxhM+K6dvky/0jPcM/a1yxDEdWuadOy
-    EhCMiJv0isO8FIdPOQRu2mdZkFKThE9r9ZkHOk6gbVcuu8MCLfWRnZtxw1BBz3A/KtzwsP
-    UsrUt6U1JEBaYUu57AWlKoAKdSQpPbpm9qfHHGqLOW1um6HulHxilGmSTJgiAhWHMKwQkf
-    qsN0w0mxgVI8UxBueukwM3+WMMQuewv1iwfHN0Ks5zA17DVpHBKKzzFwxQbzh++Q0vIidI
-    C+T8hDZVa1nbandV/e2QRjix48iw9S1YBBzo6Cr5GA/UCvk2c+ndD+ItFdKA
-X-ME-Proxy: <xmx:a0HAamdvByfuPyU00fbyrpS5yt33fP3m-7ABzDsdg_TCQ-phhBmhQA>
-    <xmx:a0HAanF0lrslOV42G3in_ox-nJwKJz-CS6oiR3SzTdVTn0E7T4arQA>
-    <xmx:a0HAakebamwNuAFedgZUthwIxTVlVUlgPAppzPWDKNDQhC0lXqc0vA>
-    <xmx:a0HAahHxLBaJeaVn-n_GtHbLrToRmYrch4D-QcyVzeDigXvyEIWJug>
-    <xmx:a0HAarqQtKqSBdCi7MlRYVzRtu3AUkoKRqKzNbCwEUpzaBpsIqSSb4uO>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Oct 2026 19:42:34 -0400 (EDT)
-From: Todd Zullinger <tmz@pobox.com>
-To: git@vger.kernel.org
-Cc: Francisco Boni <boboniboni@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH] doc: add more examples of overriding LESS in core.pager
-Date: Fri,  2 Oct 2026 19:41:52 -0400
-Message-ID: <20261002234203.4064847-1-tmz@pobox.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20260919163725.TExDduTp@teonanacatl.net>
-References: 
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="QEYoCjgA"
+Received: by mail-oi2-f13.google.com with SMTP id 5614622812f47-4c13f2685f2so13391b6e.1
+        for <git@vger.kernel.org>; Fri, 02 Oct 2026 17:51:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1790988660; x=1791593460; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=c7SEDd7Q/CzMh18glby9ZDe+IZlSBkyYtkigz+uhScU=;
+        b=QEYoCjgAr9XFP90wXQjFWN3rcJz45xlmPkfcE6skCxZR7PIkyAOWTQ/CP1iWHbuyap
+         8rYXtWNNFWiginGLtOC4w0DCB7wvbHdtiwWrp+ojpBmIBe1EbF2dxbEUQeAsqm3D/8EQ
+         LtaGZak6kjLFRYz9CrlBWGbvKZnAgs8Cd5yGY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790988660; x=1791593460;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=c7SEDd7Q/CzMh18glby9ZDe+IZlSBkyYtkigz+uhScU=;
+        b=iXmcmo0E47rXkSGLc6CVKwtDqr8h/+poa93Bwz8Q1Pu03t7Nk1BK0y0D1P8lujkrZB
+         AVjvjI4ICR2fFP01F2n1PQ1yAUoZ7+YeC1cEhZyszpjPRjYX+gxRN7iL4G+/n/xl5M2g
+         +eyfuMzqk8qGBYZbiP79hjFifWBKuWUmWl00HDZUR+1QqKkHYXxOKN8H2kVEsxqANx1t
+         zJr6g9rH/NuuSMrdwAoZHN1JJK1/NdhpuDJu/rO+jHZnwJVWD0Hc3++Jsc6YBe+fK5oZ
+         licGd2evcXC41gAdi7oUDBqGJ2K2n382gUCTTTrZjCboqbJGr7b/gTE5IPJh8z4ODNGv
+         FouA==
+X-Gm-Message-State: AFuF++n7VQ0dStCB1uZvnB8ANQXGFQTswQkKbbMtRP1pJr0YoTxSiorn
+	ifhaB2x3H088Pouwsls0gUKC8KGGfOKcA53Cfw47rJEcR+Fagvbk9JUeXsIHJ98EyQc=
+X-Gm-Gg: AYBFou3T2+K0q3LyvMNolvvUoDbMfQmdOpnwDfISv47Oow9yn5lfO02ipM+cOeqgb8M
+	mzxRJetu9jEU5spbD6jAu2D/8a/JbW0vCYo3/WABQzHy1B2LUdiaYITOFueAcFOw8B0UDE0fdr4
+	lzXoeOVrRmWGcPlOmearE9a/J5GIvzlIiwh4SP2GF3EUohKT06QHYdnLp2I+/x6fKeoEN2hR76K
+	luhO/qomJX93hgMD/ABX0i7ZDGBJ5ko+ZzSv5ZJQydbbwRnafZjHm/qTLI1ZBRho059pLYRQByG
+	qLDojhDtuOKBmaKUbyzfMvkZcEo7c1cv07k8S/gTFEKfUWRs25xDY8fP/YhpGY25c2lbkS22rp5
+	tTP/ZDA5Jo2y+jMAF3TmSyJ1M3msHp8d3Ni0G6D0I64XoQNKQi3bWdxKqmvfqQAhgDQ30/zy0+T
+	jhpb+zIUdshA7Po6N7O/xm2WwnULXzZI+WxWRcg227v0bQ1ODI0foZvOkyF6TqyY21Q4UW4Tdu3
+	YoxYfZqwCsGE4frRebi4RjFvSBvsUGEKhMjNH6rbLFSX/JCxUJflPHus1NaIrfJ7ORcSBQSZOs9
+	5FFYx5AnqoV6XA==
+X-Received: by 2002:a05:6808:4f50:b0:4f6:cda3:ec05 with SMTP id 5614622812f47-4f6cda3ef7fmr310662b6e.55.1790988659631;
+        Fri, 02 Oct 2026 17:50:59 -0700 (PDT)
+Received: from com-79390 (vpn-centralus-02.tradc-corp.com. [20.98.136.114])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4f5252e3207sm3768587b6e.16.2026.10.02.17.50.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Oct 2026 17:50:59 -0700 (PDT)
+Date: Fri, 2 Oct 2026 19:50:51 -0500
+From: Taylor Blau <ttaylorr@openai.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Ted Nyman <tnyman@openai.com>, Elijah Newren <newren@github.com>
+Subject: Re: [PATCH v2 5/8] repack: follow kept packs when omitting cruft
+ from the MIDX
+Message-ID: <asBRayrg2RvzjevI@com-79390>
+References: <cover.1790731662.git.me@ttaylorr.com>
+ <cover.1790827875.git.me@ttaylorr.com>
+ <51e20444dac1223f0e0485dc5799ed6d592f7614.1790827875.git.me@ttaylorr.com>
+ <20261002232529.GD834759@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261002232529.GD834759@coredump.intra.peff.net>
 
-We set the LESS environment variable unconditionally which can surprise
-users of pagers which respect it but presume we'd only set LESS when
-`core.pager` calls less.
+On Fri, Oct 02, 2026 at 07:25:29PM -0400, Jeff King wrote:
+> On Wed, Sep 30, 2026 at 11:11:51PM -0500, Taylor Blau wrote:
+>
+> > diff --git a/builtin/repack.c b/builtin/repack.c
+> > index 88b05e96b5b..27d6668a4ab 100644
+> > --- a/builtin/repack.c
+> > +++ b/builtin/repack.c
+> > @@ -476,9 +476,11 @@ int cmd_repack(int argc,
+> >  	show_progress = !po_args.quiet && isatty(2);
+> >
+> >  	strvec_push(&cmd.args, "--keep-true-parents");
+> > -	for (i = 0; i < keep_pack_list.nr; i++)
+> > -		strvec_pushf(&cmd.args, "--keep-pack=%s",
+> > -			     keep_pack_list.items[i].string);
+> > +	/* Geometric follow walks exclude these packs through stdin instead. */
+> > +	if (!(geometry.split_factor && !midx_must_contain_cruft))
+> > +		for (i = 0; i < keep_pack_list.nr; i++)
+> > +			strvec_pushf(&cmd.args, "--keep-pack=%s",
+> > +				     keep_pack_list.items[i].string);
+>
+> This conditional makes my head hurt because of the double-negation. By
+> De Morgan's it is just:
+>
+>   if (!geometry.split_factor || midx_must_contain_cruft)
 
-Provide examples of setting LESS in `core.pager` as an additional way to
-override the options we set in LESS.
+Yeah, I struggled a bit when writing it TBH and flip-flopped between the
+two. I read the conditional (as proposed in my patch) as:
 
-Reported-by: Francisco Boni <boboniboni@gmail.com>
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
-Now that 2.56.0 is out the door, I offer this up to see if
-it feels like a useful improvement to the docs.
+    "If we aren't doing a geometric repack where the MIDX is allowed to
+    omit cruft objects".
 
-Cheers,
-Todd
+But I think the original sin here is midx_must_contain_cruft, which
+probably should have been midx_may_exclude_cruft, which defaults to
+false as opposed to the former which defaults to true.
 
- Documentation/config/core.adoc | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+It's not quite a double negation, but I agree that it's a little
+awkward. TBH I find the rewritten version just as confusing if not more
+so.
 
-diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
-index 0b697f53f1..bdc74d291c 100644
---- a/Documentation/config/core.adoc
-+++ b/Documentation/config/core.adoc
-@@ -621,9 +621,17 @@ command to `LESS=FRX less -S`. The environment does not set the
- long lines. Similarly, setting `core.pager` to `less -+F` will
- deactivate the `F` option specified by the environment from the
- command-line, deactivating the "quit if one screen" behavior of
--`less`.  One can specifically activate some flags for particular
--commands: for example, setting `pager.blame` to `less -S` enables
--line truncation only for `git blame`.
-+`less`.
-++
-+Another way to deactivate an option is prefixing `core.pager` with
-+`LESS="RX"` to remove `-F` or `LESS=""` to override all options.
-+This is useful if the `core.pager` command eventually runs `less` or
-+a command which respects the `LESS` environment variable but lacks
-+command line options to override `LESS` options.
-++
-+One can specifically activate some flags for particular commands: for
-+example, setting `pager.blame` to `less -S` enables line truncation
-+only for `git blame`.
- +
- Likewise, when the `LV` environment variable is unset, Git sets it
- to `-c`.  You can override this setting by exporting `LV` with
--- 
-2.56.0
-
+Thanks,
+Taylor
