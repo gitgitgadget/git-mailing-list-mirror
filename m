@@ -1,162 +1,146 @@
-Received: from sienna.cherry.relay.mailchannels.net (sienna.cherry.relay.mailchannels.net [23.83.223.165])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E964743B6FA
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 21:22:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.223.165
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B496B443E5E
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 21:29:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791062579; cv=none; b=ugf+m8VZOgjyeakp/M+7LE+Pbx5pfHHxW+uAqHIKSK44X7yUmmajwTljCbjSe9eo5CryGvUIFEjiybPTRNHVPtvgZnnROygt9VXrxDmGtek0kr2bxC8x0Twb2GBQhl+Yk/nlXo5llkzj1iHU5ZAeNU+wwZ01eL8r9yTa42eR44g=
+	t=1791062987; cv=none; b=W/nYM5kV1bfOzk9Jr9nwSqNtNAnklau7gaKIyky2c17uYIuUGNFJplLiNo7wTe0t3ZfXZEbJKZ/TfU9d902uH1IK4hAu2yNgsnZ7Lvmd2T3ZoVNrQ+HQliBpjbOwilXdfLiEY5ySvEvlVcCcpFwQt7ZMPdyG7KrdfcU0C3ddsIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791062579; c=relaxed/simple;
-	bh=OlLTZmBX1uJcZe9z9DG4ok22U4VJiyEKM9krpXH4ryE=;
+	s=arc-20240116; t=1791062987; c=relaxed/simple;
+	bh=GFfRluGbK2/cD7kkiqaYJZ0BlNWJqqbUqJwdvm7549k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ugs/mGpO3xV9wfOzq9uDvbYPeyGH6ykDeQS68giMRl0k+TmJ8LwKKjkY3T1tg1HvlIFUqaUgPfz2sWgD3W8ZG4Ep9RrFRBagTnU0uYHEALxFp95WD/Tuh/IrZUHYhBXzx+xo2GXtBM5T42CCjfL7sM//I85yd0A9W7j18ZxdF8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=SX1lBKdR; arc=none smtp.client-ip=23.83.223.165
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=g4HyCuY304gSvGeGwyjVtTvIzj9i5gx/yeSYmZRvSzEiKlsYujmak5eDQmytc7I/B7d+8MTK0LxNpNu7vYTv7Xjg/jMEGruuUNQ/f39yMPyoROCbBn4NlOBrOZnMU0OUHsdL/00Ya7EKaWs1LA9KXoUZwqa654+CZ81L09QxU8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OaFlg8wV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="SX1lBKdR"
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id DB4F4161660;
-	Sat, 03 Oct 2026 20:39:48 +0000 (UTC)
-Received: from pdx1-sub0-mail-a220.dreamhost.com (100-96-12-121.trex-nlb.outbound.svc.cluster.local [100.96.12.121])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 7465D161712;
-	Sat, 03 Oct 2026 20:39:44 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
-X-MailChannels-Auth-Id: dreamhost
-X-Sponge-Fumbling: 2290c45f402ac97e_1791059988737_1530337231
-X-MC-Loop-Signature: 1791059988737:2223425599
-X-MC-Ingress-Time: 1791059988737
-Received: from pdx1-sub0-mail-a220.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.96.12.121 (trex/8.0.2);
-	Sat, 03 Oct 2026 20:39:48 +0000
-Received: from ubby (unknown [24.28.102.31])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a220.dreamhost.com (Postfix) with ESMTPSA id 4hxyFC5NMrzS7;
-	Sat,  3 Oct 2026 13:39:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1791059984;
-	bh=6kQcbViWtoW6I+dp4uvXF4duVomGzIpgut1ZZAQbG/4=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=SX1lBKdRbjWjPEoU1gqdGYuIGwZY86kxtCF2V9XPPrjW9IyDMYNz2BpICkTQ2xEfT
-	 zwAz2UfMoloy5lth8TBDFE+ejMpNmiEOQFm0Ca8+DwuT6oBQUQSNYbE1QkWjXohjkI
-	 ddW7Uv1PqttxyTZQEP1YCAzAcMwCOQOE0LRF1Zu82f+65VZxbDWzNvxWkepTCca9a7
-	 9GkmA9GMvGF3lSgaGk8ttv+KxjXWFmWqJVR5dw7JrEY3qiISu+yygeX7DrMQE5L9Mc
-	 RWM4VNcS9Joz4rb1mb6oFb5S168ffxU1bqONKUIMINv0NrSGM9Syja2iZx8v7TxqOt
-	 4U6tplP0czoWA==
-Date: Sat, 3 Oct 2026 15:39:41 -0500
-From: Nico Williams <nico@cryptonector.com>
-To: Alejandro Colomar <alx@kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ben Boeckel <mathstuf@gmail.com>,
-	Viktor Dukhovni <viktor@openssl.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OaFlg8wV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D351F00A04;
+	Sat,  3 Oct 2026 21:29:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791062986;
+	bh=yeRlslWFxV00a68WrJ8VnsyQc4H/wYIpQ4aLXqLtv2s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=OaFlg8wVhUKf94rMpGIx1EJLAOuEN1PUAAUZl+fHcFdrz9oW1vCqRFdyfkG8ed0ZH
+	 a8n1jI4hTiO4rofzEJoCltMlIGMZ6MzR/EVq1VlYkc0y+51DDUUiMm6oJVJG8WILRB
+	 bmHlrGd5teR1uarnVOMqT7buyHlzp6foNWCjPqfESbhtnRHSp+PzGCAzRu/pNywmg7
+	 AzNAF6PSyuno+3RS3DOZaJsDBypRwpBMwK9Y/Rvflxl+U9yDCeHDcieGLq+XKf1afh
+	 0pw4kPx1ygfaMuiiV9uJTcbuylXKGmFUQquUYexX4uXWW6HS03oj7a9JYR+cfGGrof
+	 PrbXMt2WcvpJQ==
+Date: Sat, 3 Oct 2026 23:29:40 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: Nico Williams <nico@cryptonector.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	Ben Boeckel <mathstuf@gmail.com>, Viktor Dukhovni <viktor@openssl.org>
 Subject: Re: [RFC] git-brebase
-Message-ID: <asFoDZKscLKqaIf+@ubby>
+Message-ID: <asFy2kOZe7WDy38I@debian>
 References: <asFRVdMTpshsazgM@debian>
+ <asFoDZKscLKqaIf+@ubby>
+ <asFqLv3hMEE7yEOC@ubby>
+ <asFtLJDJliQBPe1c@debian>
+ <asFw4gsn253MQtxp@ubby>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="yoy5ki4qev2cpkzn"
 Content-Disposition: inline
-In-Reply-To: <asFRVdMTpshsazgM@debian>
+In-Reply-To: <asFw4gsn253MQtxp@ubby>
 
-On Sat, Oct 03, 2026 at 10:11:47PM +0200, Alejandro Colomar wrote:
-> We'll discuss the exact way it should be integrated within git(1), but
-> first it'd be interesting to get feedback about the tool itself,
-> regardless of the actual form.  Actually, because of the specialized
-> flags --pre-exec and --post-exec, and the --first-parent flag from
-> git-bisect(1) --and the fact that it runs git-bisect(1) machinery--, I'm
-> not entirely sure that it should be just a new flag to git-rebase(1).
-> It might be confusing to have these three flags being dependent on
-> another flag, and not being able to use this within a git-bisect(1)
 
-IMO that's not a problem at all.  There are a lot of Unix/Linux commands
-that have flags that only make sense when used with other specific
-flags.  So I still like a `--first-conflict` or `--onto-first-conflict`
-option.
+--yoy5ki4qev2cpkzn
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: Nico Williams <nico@cryptonector.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	Ben Boeckel <mathstuf@gmail.com>, Viktor Dukhovni <viktor@openssl.org>
+Subject: Re: [RFC] git-brebase
+Message-ID: <asFy2kOZe7WDy38I@debian>
+References: <asFRVdMTpshsazgM@debian>
+ <asFoDZKscLKqaIf+@ubby>
+ <asFqLv3hMEE7yEOC@ubby>
+ <asFtLJDJliQBPe1c@debian>
+ <asFw4gsn253MQtxp@ubby>
+MIME-Version: 1.0
+In-Reply-To: <asFw4gsn253MQtxp@ubby>
 
-(I really like `--pre-exec` and `--post-exec`, BTW.)
+Hi Nico,
 
-> session, unlike other git-rebase(1) operations.  That might call for
-> a new git command.
+> Date: 2026-10-03 16:17:22-0500
+> From: Nico Williams <nico@cryptonector.com>
+>
+> On Sat, Oct 03, 2026 at 11:07:04PM +0200, Alejandro Colomar wrote:
+> > Since --abort doesn't go all the way back, I think --continue shouldn't
+> > continue all the way forward, for consistency.
+>=20
+> Fair.
+>=20
+> > If that's desired behavior, it should go in this tool, and not as part
+> > of git-rebase(1).  git-rebase(1) is a much simpler and much more
+> > fundamental tool, which is used to build this more complex tool.
+> > That's one reason I'm rather opposed to having this as part of
+> > git-rebase(1); it would confuse about the responsibility of
+> > git-rebase(1).  IMO, git-rebase(1) is a plumbing command, and
+> > git-brebase would be a porcelain thingy.
+> >=20
+> > > If we take this approach then we'd need an option not to enable this
+> > > behavior but to disable it, something like `--direct`.
+> >=20
+> > That hints it might be just be a different command.
+>=20
+> If this was 2007, and you were writing the first version of `rebase`,
+> and you had already worked out that you wanted this feature, what would
+> you do then?  Would you make it the default?  I _think_ I would.
+>=20
+> Basically, this makes rebasing much nicer, so why not make it the
+> default?
 
-That might still be the case in that this will be such a useful tool
-that it deserves a name.  But also, `git-rebase(1)` should always have
-been this useful, so that argues for this to be either... a new option
-like `--onto-first-conflict`, or even a new default behavior.
+I'm currently defaulting to brebase for every rebase I want to do.
 
-Does jj have a feature like this?  What do they call it?
+However, I still use the regular git-rebase(1) for more precise
+operations.  To be specific, I use it for changing history (without
+moving the base), and I also use it for resolving conflicts as part of
+a git-brebase operation.  They seem to me to be different tools, even
+though they're clearly related.
 
-> ---
-> #!/bin/bash
-> # Copyright 2026, Alejandro Colomar <alx@kernel.org>
-> # SPDX-License-Identifier: GPL-3.0-or-later
-> 
-> set -Eeufo pipefail;
-> shopt -s lastpipe;
-> 
-> err()
-> {
-> 	>&2 printf '%s\n' "$(basename "$0"): error: $*";
-> 	exit 1;
-> }
-> 
-> fp='';
-> other='';
-> pre='';
-> post='';
-> while test $# -ge 1; do
+I think we use git-rebase(1) for what we should be using git-brebase
+only because we didn't have the latter.  That might be the reason we
+confuse them and think they're the same tool.  They're used for very
+different operations.
 
-I normally use
 
-  while getopts +:<short-options-here> opt; do ...
+Cheers,
+Alex
 
-I also have a getopts_long-like function (see my gists) for bash if you
-like.
+>=20
+> Nico
+> --=20
 
-> [...]
-> 
-> # Set up the callback script for 'git rebase run'.
-> mktemp \
-> | read -r callback;
+--=20
+<https://www.alejandro-colomar.es>
 
-I like to set a `trap` to remove temp files.
+--yoy5ki4qev2cpkzn
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> cat >"$callback" <<__EOF__
-> #!/bin/bash
-> ...
-> __EOF__
-> chmod +x "$callback";
+-----BEGIN PGP SIGNATURE-----
 
-Here what might be better is to have a command-line option to execute
-this callback without having to write it to a file, and use environment
-variables to pass arguments to it.
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrBc8QACgkQ64mZXMKQ
+wqnx1xAAlaDUI7ZcoCWpeMgAiU9C2KXhu8PATHsl1RO6rE6vNV5iKx5lfonmZaW5
+syqKniLST8Dw4WOkabKHMg/txW+AQQKPW+iu7tGpt9lYVvbQ7igY/h6sardP0xXn
+YTO+NVgJ04zt4qeFufshl1tctqnGs2evYCybq5kvBpmLtPi1BWPAdbEfCRbnUMe0
+4u5C3S+LAzxTfyW8+Gt42+d0CpbovaiK2Vf9ovO5hEZZNZdods9MFHeL4lECIdHF
+x2qgUukKgOrcRea318Xii3F051oGzoCuBhN2EXGMBKgR4eh/vEOyjKi/Jyw4ZFFL
+8AHE6rHvzX3k8fQZpbEiMXclOJbo8eJmcEoAGxbvYyzIg+2S7KaPbDxAiywfqU6S
++8gD+ClV4YcrLhFrX+5ljiAxb1c2wKeJStahW6goP/alaNkxSOsGKOI9z97SGb1C
+jgOFf4YDOdxTsZnJvZs1ufzPEm15H8QEoNhKYc0P/74lkY0E3CUFVGwWUy9+8XX/
++Ri3T0WwmYpUcHvBUjDj6NtukoBVTX4YMp/5kDm86UyzA/UGbiQjl+AwdESWczSx
+sRf4lxCdmK8KsXFhbAqh3zVYQRMUN29qX2gtUCXPs3jFK3GqVjItZzJeZTc/4/YY
+3mH1lowvVOnItbjSV8/2KEDAEL99hCSZTc1KiWF00pnWwX9zHa4=
+=4vbF
+-----END PGP SIGNATURE-----
 
-> # Perform the conflicting rebase
-> git switch "$branch";
-
-Ah, that came from:
-
-> git rev-parse --abbrev-ref HEAD \
-> | read -r branch;
-
-which means I can't use this in detached HEAD mode :(
-
-I work in detached HEAD mode almost exclusively.  I know, that's..
-weird.  But it works for me.  Can we avoid forcing the user to be on a
-branch?
-
-Nico
--- 
+--yoy5ki4qev2cpkzn--
