@@ -1,68 +1,40 @@
-Received: from mail-wr2-f33.google.com (mail-wr2-f33.google.com [74.125.225.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0A336C0CD
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 19:02:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.97
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B18D377ECC
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 19:41:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791054135; cv=none; b=GOqfqdfe92j9caKTpD9ELMGwd7h/E0QFWoJOaDskydxfczUx8h0sXW4t1NuPJ+ryHM9JZLumpNYqZcgHiWik9RAUVZvtcMbEgw/QRT4VSarqTZ81i7c2q3PKXYdnGiuK1eNB0wEvQekm8Tfxo+wiuSElYs1tJg60XIJ7tViCOlQ=
+	t=1791056514; cv=none; b=TWDVy59qm1k5wQROZ97Vs8L9txug8y6vr/56Fb9Iuf5sGkr09BXhJ2fh8Niij+vFcy8zgPE3+8nPPPsB6XXfGESguVZasOe/F02lrtd+yGrYGc5T3O6fxNaXYGPSaJJlhXKCUurpKzLIn28nELqDcXe0ZT7ngl1dcdi5tEep9t0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791054135; c=relaxed/simple;
-	bh=QpOVrCCfxRzk/JAVVO6sAC09H1OPp6YZvhGFNpP7Qpk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AkKYpwQx4q/sa6X0HZk8cmxlOhD6wuBraQzXvxS1JZvc/u0FKb1PPis7miiN5alrUd6syNrXEbmgdh3FyWAp2VtgrgXUAAoMDolbaipln9yqw1BPgZFrudDRLL1Kv+A8JdhkGfx9/1gG/kq87SUHQfTVQbXpzePOz4K0WE9TFcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i9XJZkXr; arc=none smtp.client-ip=74.125.225.97
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791056514; c=relaxed/simple;
+	bh=cB3B4nUtvnjsppqKyU36rLZTlSGq9i+1sRxJMhET7Iw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=RGdsPFs4STIBP5l/eQF12fUSrrZfUz0MKlieoguaFsJPOC6i7ZSnEOA0NXyEBwcb6ulxvJQxn6CMYmM5Ad0Hidt2fLVOZGiY6X74PyDx/3lTCzrIqB9mTOB+Mi40fqiaTFmxQEx687IqZFRwb6sdenBJ4K9tswpYDrq8jZdIsHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com; spf=pass smtp.mailfrom=gmx.com; dkim=pass (2048-bit key) header.d=gmx.com header.i=hamlin.carlisle@gmx.com header.b=DzBIn8RV; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i9XJZkXr"
-Received: by mail-wr2-f33.google.com with SMTP id ffacd0b85a97d-48b104f6aa3so244612f8f.0
-        for <git@vger.kernel.org>; Sat, 03 Oct 2026 12:02:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791054132; x=1791658932; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=OtGk5x1j7JskCQFOqRFoF4b+/de48WojVg+W2EueAIg=;
-        b=i9XJZkXrPOjDVEB6D+qa4VuN9yAjmO9BSbfNsXXP3cVdcmwR8MT2XB3//2cE00J6vS
-         o2xg8Y2cvyRLyy0Cc3kEK/ctaQMxuyeRCyoaFRoHT0nnXRA9qUQbZwTUsz6D6c1tS7Eb
-         Nk2xkcYV94tbxrs57EfxFbV7kjx033LK74LBs/9ZHIoZWje6GJUkVoHBXt2ilCDad9Tg
-         MBiVKVKcTTttMP7/uRiwmbD1kVU/gJtMHGw40qkpVA46hRvAKarGIG+VkamHHPBFIBOo
-         yNmJWPDcAQSligs2ZeS4J4GRUhvHNDgGi8iSalnC1wWDNigzk7x50BqfufDL28OnlzRj
-         BwWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791054132; x=1791658932;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=OtGk5x1j7JskCQFOqRFoF4b+/de48WojVg+W2EueAIg=;
-        b=CzOR3EQbSG0Sjgiau30XQRa3ycUJHOHMvEKtrw+4rrAxLUyzQz5ig1HMq8Izv6IHyy
-         skLThidfNJCjor7mMMowESCt7rYCpve8RO7t0W8noghQKfE2HKQuQxzTC/zdRbeJEaoN
-         U1r797GAudZBWOZ0acnYPTrgbFh5w2Qjzh1Mby2FQ6MYf+evbm66J0Yy6pIu4SKxZeZa
-         QypSZbLi3EneNUGjxPA3Z1XTvWL6tURq9HwtN4ukATmVr0a2PzbOq919IaVCUGFBoa3I
-         LZgO28e+XPVwmTzsogi8peTi/Lm8TIfQjJQu9MCaNT1Ry+5xCH8MxHlYJ/3WdGS9hbiy
-         e0YA==
-X-Forwarded-Encrypted: i=1; AKwUvBwYNzOu94LoVHINvk1yyKTYHE7+WiS1o3Spk3o8EzyZK8G0E3KGUbFXVGqCs2Zq6m+TL+c=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIQ+37XYmIVvAnliJ7IcL7oai8Hbbz+xBfrLCPlBRf1fP4E/Do+
-	1gnsH1n64Tpz0qgp5G+2SXOpBfzyoAUArBDUbZHmm63OJ7490QntP0nW
-X-Gm-Gg: AYBFou01KL5L1u4dkGmXsHevkR6euje9bGrktSZYMVr33NWxPOQjly8QP6fz1IZj4UB
-	5Eg6xXKvrFti1X1z5ckgvjsDsLnqz/gKG/1rFd/Tt+on7VULGUsqTkNAw1+EavSZu8YlSE7Ew2J
-	TPRM4Ya5VMdt4eAkTcDD7hIuGvZ2mZemFCyRvFv/jVF1W+k+5BSSrQFFRLKdtbUs25eHQtFBgmv
-	/oHltE5i2XUfKpcZoM0EsY7HS/UZ+I3PeMPTYKIPS/wEQCLbNr86ej6Fn6HzjnizhrkqdbiCM9W
-	RAckBCCp0cDZH6tvLq1bAgVPbP7+3MJYgwLaATVuzvoYxxKRPDvvgriwPkoB2GOddqs3CwNPaZX
-	volYiOdfM7UKXfIXE2hDCSlBMX1WpCJwQaWPuv7LV2aa3XG+gx64c0Rn/JaFqqZkKsicHq2BrO0
-	UnYSxu3MJCA9EoIzlo3/KQGrxhWiM5YEBJH/dKzVBFGVxs/lpYck1b0K4Iil1U6PLxFI+ZBrDjj
-	Eg7iF4Zx0PS008fg+I2qoZNNKi7g//IdnCT8u2KliXkW5iG8DTjp3Q=
-X-Received: by 2002:a05:6000:40ca:b0:487:ab6:bc1b with SMTP id ffacd0b85a97d-48b12754456mr11957926f8f.9.1791054131618;
-        Sat, 03 Oct 2026 12:02:11 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48b380f04e2sm12250571f8f.15.2026.10.03.12.02.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 03 Oct 2026 12:02:11 -0700 (PDT)
-Message-ID: <8b873f2e-b395-4044-ab15-f1eab4148447@gmail.com>
-Date: Sat, 3 Oct 2026 20:02:09 +0100
+	dkim=pass (2048-bit key) header.d=gmx.com header.i=hamlin.carlisle@gmx.com header.b="DzBIn8RV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
+	s=s31663417; t=1791056509; x=1791661309; i=hamlin.carlisle@gmx.com;
+	bh=cB3B4nUtvnjsppqKyU36rLZTlSGq9i+1sRxJMhET7Iw=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=DzBIn8RVMl9Y0DEG1V/gE6zAjUYpCsDfxccRxgWB7OtALUSDILdba9kqTK6ae8Ic
+	 PEOwj1K8lHOKQDIC2Uyx94qNulKrNL8XZq7zTn0CMtR+1OlKPtFVQ8+SWnQmGNhbX
+	 ybh0CdKAjz70PByqejVQ23twwZoUwMt/2dFxwwqlvNR9SFNFbqv9g17RccUpAK0gk
+	 L1oAO2jXvGPST+NXuRxFu8/Db4Ia+5OHXymdkedbtFIoX4DNK63qHnISV5tOo35Aj
+	 /FFq8tzvvAB8m+lEWj5trQ9eXHaD5LVt8HdfNaWrkC7tQH/2JTZ2tyvnAyHk4MXW3
+	 8/wk58VZAitNVwmrEg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
+ [212.227.17.174]) with ESMTPSA (Nemesis) id 1MUosT-1x3yua1uld-00JwvQ; Sat, 03
+ Oct 2026 21:41:49 +0200
+Message-ID: <54fac5f4-e49b-4384-af2c-615d7cc04ff5@gmx.com>
+Date: Sat, 3 Oct 2026 12:41:47 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,58 +42,324 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 0/2] ci: link failure and leak annotations to the test
- script
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Ben Knoble <ben.knoble@gmail.com>,
- Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
- <pull.2419.v5.git.git.1791015117.gitgitgadget@gmail.com>
- <3587bf44-1b3b-422f-a926-f8481104dfd8@gmail.com>
+Subject: Re: Question: behavior when reverting a commit from a shallow clone
+To: Sphinx <sphinx9692@gmail.com>, git@vger.kernel.org
+References: <CALfz8Qx63qNoSbXq7C7u+KwX4=HCL7=uOUahpXd6j7KvW_c_Eg@mail.gmail.com>
 Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <3587bf44-1b3b-422f-a926-f8481104dfd8@gmail.com>
+From: "Carlisle T. Hamlin" <hamlin.carlisle@gmx.com>
+Autocrypt: addr=hamlin.carlisle@gmx.com; keydata=
+ xsAiBEfLBpcRAgD8qfOOlcAEezHtcm6xrrZbwjKLXlIfKXUf/YiTeuaLk7TkfnvTVU5fwUam
+ iewb7AN+t3mzKxcgwxViDnFQ8spDAKDtjKSLxKSCTYDVT8WR5w0NwOI3dwH9GetPPjCjJvnk
+ JOr7yJOcyF0+T0bwR/cEUJ6nuQfbh2eVSNyWSiixsr14dQWphJf7CwGsTfIfv7vsZ+fIwP39
+ rgIA+g8d2waPxl76gDjIygL6TrF6hhTt7KUb2yNgSng9IldkMfcdBYlg3dWOpZNNcZrTGOyd
+ 6xvhvmMuojRRx8r54c0oQ2FybCBULiBIYW1saW4gPGhhbWxpbi5jYXJsaXNsZUBnbXguY29t
+ PsJjBBMRAgAjBQJYh9SnAhsDBwsJCAcDAgEGFQgCCQoLBBYCAwECHgECF4AACgkQyLm4ydrA
+ Bve9TgCdGob4qLVTBIOjrTrY+/PmPPGby4AAn21LQfE5TXjJP298WdZNVCmAzXarzsFNBEfL
+ B4oBEADbRPe1kVPw4r1YTMTRjRGKz1zF1juy+w7rgYmbwGE7g59jyb2jQYkiuUykupPom63I
+ UAiHsTm7rt+GrHqJ2WjgBfDC7rUM0tWst5pKkt9Ma27l/O9J0T4YDr0kRDGhEUJPHI27V2D2
+ NX52bDFgKiPl5WyRxtgAtTZC9KOdCPJ4t9c8waUIWlFn/YeWYerC2b15Sf3AB6bKVhP+2v91
+ j/vOsTEFIlfg57fbQpEknGsLRIbO1V5Gx5FhFgycNh50zk86LiTz7pzZ19E6UnYuUEgaozru
+ UjTQubdqPYOdgCnReTgcwo4ylon12sXjWHBScODgIYooPEUjAyn8H/m5i7jaSV5l2eZOUPvF
+ 8NPuuGUUWgMmQ+pCah3DnO3ccdaOOjW2z02Skx1XGep7Zyyn4hzV3cZpIhnOP5udwE1D3Pxr
+ ljwVKs4uroPo28Eeh1KiYf95kP5KfzYafOpVx3QyykkiqQ4MEd1k61Y1ZoQ4pz+XskOym1DD
+ 9w6JdoAimsb7YGAqMQbSrtNSVpDMcYIDpXboDDussRmRD+Xoko/mhhQ2ZpUUyeqnlPHHmzSJ
+ va0+hvBhw3QEv0QV7or3V1tN9r72o0KGp1un1n9IZv7JA4CKvs2oWPlR593d+pmHzZswK01Y
+ ozFV+96kRXULHziVesdtlJCa+/341vc/p9teqKEJSQARAQABwkkEGBECAAkFAkfLB4oCGwwA
+ CgkQyLm4ydrABvf1ogCfcujflHLQUSahVKgWtF/qDpK10+gAmwQ6EVxuZ3Z1GO6EbFxyRtm3 kOwI
+In-Reply-To: <CALfz8Qx63qNoSbXq7C7u+KwX4=HCL7=uOUahpXd6j7KvW_c_Eg@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------Wc0dxpXsdkxpjLZfZA7Xx5Zz"
+X-Provags-ID: V03:K1:9N591npltQvJccIwnzTdRSZ53nCmyWIPKKqd6ouiHefQ/oxp3dH
+ IPSYylHlWPxxckN5IOa4WGbFv8zHAju4I3jL38eEA8idn4tp3zs/l0rbG0pTFr+ulYX3UgX
+ O0xuh7miREOONWN92dY0eNq/DDUD3Ej2o3JUt1ArGx0za04xppY2VAPyp7jpP7zS/rDjP4+
+ 93r+dgK07zQ0yYBT29+Og==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:ZvvPRbVXsUc=;TL+NLDYnD+Gkgba4cLmPeOkZ2+1
+ 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
+
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------Wc0dxpXsdkxpjLZfZA7Xx5Zz
+Content-Type: multipart/mixed; boundary="------------9sUul4tN70wGRyUNlYneonU1";
+ protected-headers="v1"
+From: "Carlisle T. Hamlin" <hamlin.carlisle@gmx.com>
+To: Sphinx <sphinx9692@gmail.com>, git@vger.kernel.org
+Message-ID: <54fac5f4-e49b-4384-af2c-615d7cc04ff5@gmx.com>
+Subject: Re: Question: behavior when reverting a commit from a shallow clone
+References: <CALfz8Qx63qNoSbXq7C7u+KwX4=HCL7=uOUahpXd6j7KvW_c_Eg@mail.gmail.com>
+In-Reply-To: <CALfz8Qx63qNoSbXq7C7u+KwX4=HCL7=uOUahpXd6j7KvW_c_Eg@mail.gmail.com>
+
+--------------9sUul4tN70wGRyUNlYneonU1
+Content-Type: multipart/mixed; boundary="------------lwAyA0wwY2BgshZHMweVr7r8"
+
+--------------lwAyA0wwY2BgshZHMweVr7r8
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
 
-On 03/10/2026 14:03, Phillip Wood wrote:
-> After spending some time clicking around in Github I 
-> think what that patch changes is not the test output of individual jobs 
-> which you linked to above, but what is displayed on the summary page at
-> 
-> https://github.com/git/git/actions/runs/36979818141?pr=2426
-> 
-> That page shows a list of annotations with links to the changes in the 
-> failed test file. That is a useful improvement
+T24gMTAvMy8yNiAxOjU0IEFNLCBTcGhpbnggd3JvdGU6DQo+IElzIHRoZSBmb2xsb3dpbmcg
+dW5kZXJzdGFuZGluZyBjb3JyZWN0Pw0KPiANCj4gQW4gZW1wdHkgdHJlZSBpcyBhIHZhbGlk
+IEdpdCBzdGF0ZSwgc28gR2l0IGRvZXMgbm90IGdlbmVyYWxseSBjb25zaWRlcg0KPiB0cmFu
+c2l0aW9uaW5nIGZyb20gYSBub24tZW1wdHkgdHJlZSB0byBhbiBlbXB0eSB0cmVlIGluaGVy
+ZW50bHkNCj4gZXJyb25lb3VzLg0KPiANCj4gR2l0IGRvZXMgbm90IGhhdmUgYSBnZW5lcmFs
+IHNhZmVndWFyZCB0aGF0IHdhcm5zIHdoZW4gYW4gb3BlcmF0aW9uDQo+IHdpbGwgZGVsZXRl
+IGFsbCB0cmFja2VkIGZpbGVzLg0KPiANCj4gSWYgdGhlcmUgYXJlIGV4aXN0aW5nIHNhZmVn
+dWFyZHMsIHdhcm5pbmdzLCBjb25maWd1cmF0aW9uIG9wdGlvbnMsIG9yDQo+IGhpc3Rvcmlj
+YWwgZGlzY3Vzc2lvbnMgdGhhdCBJIG1heSBoYXZlIG1pc3NlZCwgSSB3b3VsZCBhcHByZWNp
+YXRlIGFueQ0KPiBwb2ludGVycy4NCj4gDQo+IFRoZSByZWFzb24gSSBhbSBhc2tpbmcgaXMg
+dGhhdCBJIGFtIHRyeWluZyB0byBlc3RhYmxpc2ggcHJlY2lzZWx5DQo+IHdoZXJlIEdpdCdz
+IHNhZmV0eSBib3VuZGFyeSBpcyBpbiB0aGlzIHNjZW5hcmlvIHNwZWNpZmljYWxseSwgd2hl
+dGhlcg0KPiBHaXQgaXRzZWxmIGlzIGV4cGVjdGVkIHRvIHdhcm4gYWJvdXQgdGhlIHJlc3Vs
+dGluZyBlbXB0eSB0cmVlLCBvcg0KPiB3aGV0aGVyIGRldGVjdGluZyBhbiB1bmV4cGVjdGVk
+bHkgZGVzdHJ1Y3RpdmUgdHJlZSBjaGFuZ2UgaXMNCj4gY29uc2lkZXJlZCB0aGUgcmVzcG9u
+c2liaWxpdHkgb2YgdGhlIHRvb2xpbmcgcGVyZm9ybWluZyB0aGUgb3BlcmF0aW9uLg0KWW91
+IGtub3csIGl0IHNlZW1zIHRvIG1lIHRoYXQgaXQgc2hvdWxkIGJlIHJlYXNvbmFibGUgZm9y
+IEdpdCB0byBhc3N1bWUgDQp0aGF0IHNvbWVvbmUgd2l0aCB0aGUgd2hlcmV3aXRoYWwgdG8g
+c2V0IHVwIGFuZCBvcGVyYXRlIGEgZ2l0IHJlcG9zaXRvcnkgDQoob3IgYXQgdGhlIHZlcnkg
+bGVhc3Qgb3BlcmF0ZSBvbmUgdGhhdCBzb21lb25lIGVsc2Ugc2V0IHVwKSBrbm93cyBlbm91
+Z2ggDQp0byB1bmRlcnN0YW5kIHdoYXQncyBnb2luZyB0byBoYXBwZW4gaWYgdGhleSBvYmxp
+dGVyYXRlIHRoZSBvbmx5IGNvbW1pdCANCmluIHRoZWlyIHRyZWUuDQoNClRoZXJlIHJlYWxs
+eSBpcyBvbmx5ICpzbyogbXVjaCBob2xkaW5nIG9mIHRoZSBoYW5kIEkgdGhpbmsgd2Ugc2hv
+dWxkIGJlIA0KZXhwZWN0ZWQgdG8gcGVyZm9ybSBiZWZvcmUgaXQncyBub3Qgb25seSBpbnN1
+bHRpbmcgdG8gdGhlIHByb2plY3QgDQpkZXZlbG9wZXJzLCBidXQgYWxzbyB0byB0aGUgKnVz
+ZXIqLg0KDQpNeSB0d28gY2VudHMuIEkga25vdyBmb2xrIHVzZSBHaXQgZm9yIGFsbCBzb3J0
+cyBvZiBzdHVmZi4gSnVzdCwgbWF5YmUuLi4gDQp0aGUgc29ydCBvZiBwZXJzb24gd2hvIHdv
+dWxkIGJlIHN1cnByaXNlZCBjYXRhc3Ryb3BoaWNhbGx5IGJ5IHRoaXMgDQpiZWhhdmlvdXIu
+Li4gd2VsbC4uLiBzaG91bGRuJ3QuDQoNCg0K
+--------------lwAyA0wwY2BgshZHMweVr7r8
+Content-Type: application/pgp-keys; name="OpenPGP_0xC8B9B8C9DAC006F7.asc"
+Content-Disposition: attachment; filename="OpenPGP_0xC8B9B8C9DAC006F7.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
-But it seems it is only useful if the test changed is in that example. 
-If I look at the summary for the CI run from v3 of this series [1] then 
-I can see a test failure in t1022
+-----BEGIN PGP PUBLIC KEY BLOCK-----
 
-     linux-leaks(ubuntu-rolling): t/t1022-read-tree-partial-clone.sh#L8
-     failed: t1022.1 read-tree in partial clone prefetches in one batch
+xsAiBEfLBpcRAgD8qfOOlcAEezHtcm6xrrZbwjKLXlIfKXUf/YiTeuaLk7TkfnvT
+VU5fwUamiewb7AN+t3mzKxcgwxViDnFQ8spDAKDtjKSLxKSCTYDVT8WR5w0NwOI3
+dwH9GetPPjCjJvnkJOr7yJOcyF0+T0bwR/cEUJ6nuQfbh2eVSNyWSiixsr14dQWp
+hJf7CwGsTfIfv7vsZ+fIwP39rgIA+g8d2waPxl76gDjIygL6TrF6hhTt7KUb2yNg
+Sng9IldkMfcdBYlg3dWOpZNNcZrTGOyd6xvhvmMuojRRx8r54c0OQ2FybCBULiBI
+YW1saW7CYAQTEQIAIAUCR8sGlwIbAwYLCQgHAwIEFQIIAwQWAgMBAh4BAheAAAoJ
+EMi5uMnawAb37vkAn3gRz3XtPiu/pA9fKtuYGEsd/9qDAJ94V1l4aY2f8h1emQ5v
+wEiFt0WQtsKOBDARCABOFiEEtNz5W458f1i2/ed9yLm4ydrABvcFAmXqScIwHSBU
+cmltbWluZyBrZXkgZG93biAtIGxvdHMgb2YgY3J1ZnQgb24gdGhpcyBvbmUuAAoJ
+EMi5uMnawAb3jygAoN4O7gnTc3P5ylwzirGAMUvYshmGAJ9AP8XRmDOBKjxBDYIP
+u1XgMKvfntHOmc6XARAAAQEAAAAAAAAAAAAAAAD/2P/gABBKRklGAAEBAQBIAEgA
+AP/hABZFeGlmAABNTQAqAAAACAAAAAAAAP/bAEMAKBweIx4ZKCMhIy0rKDA8ZEE8
+Nzc8e1hdSWSRgJmWj4CMiqC05sOgqtqtiozI/8va7vX///+bwf////r/5v3/+P/b
+AEMBKy0tPDU8dkFBdviljKX4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4
++Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+P/AABEIAUoAywMBIgACEQEDEQH/xAAZAAACAwEA
+AAAAAAAAAAAAAAAAAQIDBAX/xAA0EAACAgEDAgQDBwQDAQEAAAAAAQIRAxIhMQRB
+IlFhcRMygQUjM0JykbE0UqHBFCTRgvD/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAQID
+/8QAGREBAQEBAQEAAAAAAAAAAAAAAAERMRIC/9oADAMBAAIRAxEAPwDpDADTAAAA
+aY9REAJagsiAErCxAFOwEMAJIiOwGAmyNkQ2xAI0gAAAYgAAAAAAAAEMAAAAAAAA
+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
+i/mY0AJ1K/ImptJtXfG7vYgCdbWBZhelOTKid1jrzYlGUoNpbLkiorkbg+wl8yL8
+ablXYqKowsJQcV5ljTjNkkr9gMxp6V7SfeLTKpw0vbgfTz0ZPR7MC/qsFPXHe9yl
+K1bOpjxLL02m/EuPUzRxKt9n5Ac4AAAAAABiAAAAACace5AYE3KDfDr3I2tQkC2k
+gB8saYn8zGkBZjrfa/dDzKNpxVWuCUcf3fxFJeVMrnJPTqvyZNCkvAi3B+Bl9Yiy
+ePC5ceIfTrwSXmmFZy6PKe+5SzT08VlhKOpKUd0n3KhTi7tcBj2NWOWH4aU5NvyU
+eGVyyQjqjKNN7p32ApzRVWZ1szVkyqcVHQ1S7dzO4tS8gOj0WZuOi+ODVKEZO65O
+Rhmsc1LXX0OgutwpUmn7pgcgAAAAAAAAdWgEADa2AQ0IaALD8yDaxqtQCfLBCfI0
+BKNyajdJsi1Tp7FmPRHNH4kW43ulyTzTcsj5SWyXoRUNX3OnzZd0u/7md7mnpHW/
+kyEZZKpNeoQk4TUkSzKs0vcgWC6M4uVLHqt7KzQ3kgo1DDj8t7ZnaUtDbUU1zXA5
+YlHeElJeaKh5p5aerJF32RnfrbNEckPh6ZR38yiXIBFFiTrhlceS4DOAAAAAAA4s
+Q4gMTJMiwECAAGqsa+ciiS+YBPZgiW0o78kUBoyr7zHt+VCzqsrtF6h8XHGD+aSq
+Po1wVZHHJGM5PS6p7GVUGjBtFSXsyhK02lskX4Pw2KRV1O2aRUXdV+IvYoLCr8KU
+scl3i7SLvi+FxUUlLyRmwTUcivh7M24Pj+PHia9nRUZtFN2vYpntI05oTi/FSkvU
+zT5AEWJ7Faol9AKwAAAAAAGhDXIEmRJMiwEAAAxx+YiNcgNPYAiAG3F44JLZv/Hq
+Lq9M4LNWmV6ckVtv5i6P5mR6z5pf/P8ADMzrVZ9W1LZdzR01NVZliX4O4qQdVzFd
+0ZzR1XMTOWFBrxy1xhJumnpbMhbh4l9Co05oxT2ya/XTRjnybOo5+hkyfMAojCIw
+P//ZwlsEExECABsFAkfLCH8CGwMDCwwLAhUDBBYDAQICHgECF4AACgkQyLm4ydrA
+BveZZgCg3CHp3qUSKOISZ5JjsTQXRAauxWUAnixVaRUZ1Ck0sRRuwr/0X9Yw76b4
+zSxDYXJsIFQuIEhhbWxpbiA8dGluLmNhbnMuYW5kLnN0cmluZ0BnbXguY29tPsJi
+BBMRAgAiBQJMve0BAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRDIubjJ
+2sAG98lQAJ41zRZ+edFtiACVKt816kTpwXnmswCdFjC2h6DvHSA0BDtI+oSpiv1O
+ZRTCYAQwEQgAIBYhBLTc+VuOfH9Ytv3nfci5uMnawAb3BQJl6knxAh0gAAoJEMi5
+uMnawAb34lwAoOwXptu+k5Mxw30Z1EUULxWZQlUmAJwLokDdfVVqUr1vNZJocjAc
+veXxx80qQ2FybCBULiBIYW1saW4gPGhhbWxpbi5jYXJsaXNsZUBnbWFpbC5jb20+
+wmIEExECACIFAky97RoCGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEMi5
+uMnawAb36rMAoOqXsZlxmoC9UGn9znwIQT785qDiAKCeVDxHrZ3SinMardLkn44T
+/7/97s0oQ2FybCBULiBIYW1saW4gPGhhbWxpbi5jYXJsaXNsZUBnbXguY29tPsJj
+BBMRAgAjBQJYh9SnAhsDBwsJCAcDAgEGFQgCCQoLBBYCAwECHgECF4AACgkQyLm4
+ydrABve9TgCdGob4qLVTBIOjrTrY+/PmPPGby4AAn21LQfE5TXjJP298WdZNVCmA
+zXarzsFNBEfLB4oBEADbRPe1kVPw4r1YTMTRjRGKz1zF1juy+w7rgYmbwGE7g59j
+yb2jQYkiuUykupPom63IUAiHsTm7rt+GrHqJ2WjgBfDC7rUM0tWst5pKkt9Ma27l
+/O9J0T4YDr0kRDGhEUJPHI27V2D2NX52bDFgKiPl5WyRxtgAtTZC9KOdCPJ4t9c8
+waUIWlFn/YeWYerC2b15Sf3AB6bKVhP+2v91j/vOsTEFIlfg57fbQpEknGsLRIbO
+1V5Gx5FhFgycNh50zk86LiTz7pzZ19E6UnYuUEgaozruUjTQubdqPYOdgCnReTgc
+wo4ylon12sXjWHBScODgIYooPEUjAyn8H/m5i7jaSV5l2eZOUPvF8NPuuGUUWgMm
+Q+pCah3DnO3ccdaOOjW2z02Skx1XGep7Zyyn4hzV3cZpIhnOP5udwE1D3PxrljwV
+Ks4uroPo28Eeh1KiYf95kP5KfzYafOpVx3QyykkiqQ4MEd1k61Y1ZoQ4pz+XskOy
+m1DD9w6JdoAimsb7YGAqMQbSrtNSVpDMcYIDpXboDDussRmRD+Xoko/mhhQ2ZpUU
+yeqnlPHHmzSJva0+hvBhw3QEv0QV7or3V1tN9r72o0KGp1un1n9IZv7JA4CKvs2o
+WPlR593d+pmHzZswK01YozFV+96kRXULHziVesdtlJCa+/341vc/p9teqKEJSQAR
+AQABwkkEGBECAAkFAkfLB4oCGwwACgkQyLm4ydrABvf1ogCeN98H/EE39WaSoZ34
+uxgYcHfRL9sAn3LooRvS2o7l73Qdhbte45qcsK+NwkkEGBECAAkFAkfLB4oCGwwA
+CgkQyLm4ydrABvf1ogCfcujflHLQUSahVKgWtF/qDpK10+gAmwQ6EVxuZ3Z1GO6E
+bFxyRtm3kOwI
+=3Dwllu
+-----END PGP PUBLIC KEY BLOCK-----
 
-If I click on the link [2] it does not take me to that test file though, 
-because it was not changed. That makes this somewhat less useful than I 
-initially thought. The current behavior is that when you click on those 
-links in the summary page it takes you to the test output for the job 
-that failed which seems more useful. For example [3] is recent test run 
-that had a leak and clicking on
+--------------lwAyA0wwY2BgshZHMweVr7r8--
 
-     linux-leaks:(ubuntu-rolling):
-     failed: t1092.58 submodule handling
+--------------9sUul4tN70wGRyUNlYneonU1--
 
-Takes me to [4] which where I can click to expand the output of the 
-failing test.
+--------------Wc0dxpXsdkxpjLZfZA7Xx5Zz
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-Thanks
+-----BEGIN PGP SIGNATURE-----
 
-Phillip
+wmMEABEIACMWIQS03Plbjnx/WLb9533IubjJ2sAG9wUCasFaewUDAAAAAAAKCRDIubjJ2sAG95o3
+AKC/RyJc0jhMFBMCg4rdoXsdgX7hMACfc8ztb9i6qM/gqrghRJTwoRg+6K0=
+=/Vn8
+-----END PGP SIGNATURE-----
 
-[1] https://github.com/git/git/actions/runs/36537917146?pr=2426
-[2] https://github.com/git/git/pull/2426/files#annotation_82189987516
-[3] https://github.com/benknoble/git/actions/runs/36033463504
-[4] 
-https://github.com/benknoble/git/actions/runs/36033463504/job/107747745741#step:9:5333
+--------------Wc0dxpXsdkxpjLZfZA7Xx5Zz--
