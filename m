@@ -1,74 +1,74 @@
-Received: from mail-oo2-f43.google.com (mail-oo2-f43.google.com [74.125.231.171])
+Received: from mail-oo2-f37.google.com (mail-oo2-f37.google.com [74.125.231.165])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEF32248AF
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 01:00:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827E478F26
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 01:02:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.165
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790989262; cv=none; b=mdUHJ/tYUzLbVcXScM9tBuwYRNhwjUkyH9MvUxlTMTS9tFR41169+8ugVNKpTpA+wpJD9Zh5osik2uk/A0Eakh2J8qnIQWh/ybwKGtj/UDrSF6Iok2mNdSdtPITb+Bs500RQ7G8/rC+6xP6dvcnBa902A5FrTQ/DeaUsPZhEWPg=
+	t=1790989327; cv=none; b=tU1Fkr71R3akJ/OC6r1d3U2pHuzyw171r8aJ0+DyfyX6i+lq0X4sbmYAN4ylA2fVuu+8vLkTIK05JfXxReZpKWSMHlz7UFwowqoqAkE74T/BDvQKqKQ5WH0SL6C+m6HMfgIDPFGtGrkDZg25pPf/UtdUWhCpy8ytI0TBie5GSo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790989262; c=relaxed/simple;
-	bh=j7xV978IHydXxBF3u+kuX7qUySfIIiVp/H1MBbyJrjI=;
+	s=arc-20240116; t=1790989327; c=relaxed/simple;
+	bh=rpBxAjRqkHnZQcpIRKAG52dTcZGsPhs3+2LJfXXW7xk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IoYTW8XcDcihf0vgUyE8bSdTmte7pHOM9Bvi6HGqJAdLMjt9WblxDIubQPvOQwicNq5fDHrtai0CgNHo0VaMSMVG9a2wnulNNENNUo/eELrlliqnmGhgL2f7NiSzbp8xfni/ZqLTRMyPuw3IOKNO0jkZT2PbcChFg9OB9UIPlVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=H8dA4seg; arc=none smtp.client-ip=74.125.231.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=SK9fT5s073HAR1XWSLGZKkh+B418v2jUz/I6Ts+4yhzfAJv/3SBiGtPCYIdPdMteQegvdddj7hSCIiNk8TYFXhaoTQatXqgvqvamuloDU0pUQqq8Azy9lK8ZsAYRgNuV2DxkjI7jnOM+IbcTAlBsYvuDDrJHGqpaIa5vWf9/JXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=ZND7WwUU; arc=none smtp.client-ip=74.125.231.165
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="H8dA4seg"
-Received: by mail-oo2-f43.google.com with SMTP id 46e09a7af769-81b15bca7dfso377318a34.0
-        for <git@vger.kernel.org>; Fri, 02 Oct 2026 18:00:59 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="ZND7WwUU"
+Received: by mail-oo2-f37.google.com with SMTP id 46e09a7af769-7fcb425fc2bso341153a34.3
+        for <git@vger.kernel.org>; Fri, 02 Oct 2026 18:02:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1790989258; x=1791594058; darn=vger.kernel.org;
+        d=openai.com; s=google; t=1790989323; x=1791594123; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=MR7FPm+bup/8kPQkrmOcyRJAVlWDQF6gKRdxZ0JGx0E=;
-        b=H8dA4segojap5t+ku7OEIsg+xVOTRu3voo9cgPJf2WUhTUiIQvm0mT440o5Bvrgzkv
-         U+qqpIgpVWt62VcP+5vy7NMf37Wmzi7Z6f/s5zHX3mClsdTO2YqZSrju+7MllRtAKepW
-         BNDZb4wLJ3jAzwqZCM06ohAB0ImlrDYsOQwVg=
+        bh=6jdxxOtS6U7OWE32XXmMvH18BONzUdts2oPkPovY6Lo=;
+        b=ZND7WwUUV99jyaUyuYJF5xIxpjSw4ZektSsYzMrSyY+68vn5o3bciTYU1jXbgGy14i
+         h2p6sHP2imnZP9B3QeOmRl35I3PhLbFA6PB/FxS773tPHnQzjJKwzlxi7UowGK3b13Ws
+         FPqbxPvIztJyDfxutoik6sCJZM1kTfORZuJoc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790989258; x=1791594058;
+        d=1e100.net; s=20260707; t=1790989323; x=1791594123;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=MR7FPm+bup/8kPQkrmOcyRJAVlWDQF6gKRdxZ0JGx0E=;
-        b=PKFxXIbPhxsE6f7EcMz4EsmozKUzVXCp352THHHJmBwC6Mdnps+UMswSKGHHrmQwWz
-         bcApflKI+1LdTRUFplq9/07Djh7ju0QE6NLNn6YgDZ2kDLrojSVVSxC//WItOHFmdwcJ
-         4LFgdcZZHv4OpEd9WzpQ+U/ZXt3P2GB0MJ0wbV8qUSt98QowIiRbsa3XlT7692Po9cea
-         SB2IFH/64JGFWTqmTywI/1qrncdE3SkG28z80RMqxbrFDLOdjkl8/tzwBW2FUJfm4FgK
-         FJ7lFLfRLbObszxWvcOBVY79lV6Y4AQFvABNGyoJvRyg81Lqf7eRfAziWuQs7IXKjCeo
-         A3lQ==
-X-Gm-Message-State: AFuF++nSCYI3YyTj9xqMg+NFRTVD3OjaLqbAXaPpGaisoQ6HLx8fTPAd
-	iRlCaqb7carterWH95Ftjci8sVMup8Zby9pmaYCUQSqk+nGcpdBGGhPEWH35lDqNnJ4=
-X-Gm-Gg: AYBFou2RcQXOJdGYDshwCUuH2//9Q2+naLdhAc2e517F8+AnJhpnqp3srRD25Upz3BD
-	zQQWK7vNzmaHnDarR/1yqJgF81JOg+rTJOPL/v/rRBu43FONwAupPLCQ4pP0k2IvtiHiY0QMIrY
-	/DN0Z1I1Pvu7bGlTLpygl7lVuYVK5yj6uDo0oRYrGQcY5jVjlpE36COYqbmTlxls5lQhkxDQcaO
-	8E2ua9EDmKeHQGlzaocG8MCutrIG+ts7WNZknHDcARcmAyr7lzMUO9U+rWav8+8Lcxpd56pzCxC
-	JRlxbaqUaQdndoX2wYowToULpiXFPJlXKFD2fxu67cLGs/Ss69VYtRub7JP6pDjdOKr2fHb7IkO
-	OizjqZKIzaltoTiUyNOpxk18EEESRSeS4XIAutv1GXcJeC+9MNo5pc+eYG11JMiJ/gTBharKNMg
-	FKZED0O4OOAX7ShXQOA+d4m4Skf6TSKZSZXAlKboZSBF9FbXlMY+TX6tCSttKcXEff7NLBxuOA3
-	f6e/6hbg3VHX26leI+VwKv0vlfOUkFmLhGLet4JW6TtGc7CRr8Esw8F6JcpOxkMI7yaXTGM9umw
-	ar/TriAm+n0iGw==
-X-Received: by 2002:a05:6820:a0a:b0:6b9:8413:89b8 with SMTP id 006d021491bc7-6df34b73393mr3434626eaf.57.1790989257753;
-        Fri, 02 Oct 2026 18:00:57 -0700 (PDT)
+        bh=6jdxxOtS6U7OWE32XXmMvH18BONzUdts2oPkPovY6Lo=;
+        b=KIVrbDUfr6mwurh38BezfLNjYFWLV3D7tlaiJ1ywkWtVlnb7rKYf5lfeqTNfjS0OfO
+         mv3QgF/OeMFfJHnS6QOAOuiPpIiPVz2AEXjKtPJ/ntQJwgWbCxjg3b/DqYvgWYZVZoIK
+         c+QzIcypsGhQi7F0FQkcOQ12B4sNbEnb82nNRNnFLAhmH3Gr2EqZ6MdquSa0e7yBbMwd
+         OSQFnZE51/3nYD3949DYHmkZsFT/r6xW927UjA+x573DbMquGL7ol0GVcOq83ioZdqAg
+         Mftmk7Nc2c1aHTNKziyrFeiWf/z6oYUWg+/to+uupCRcgumSuIGVn0G5M7S0TQtXIwzQ
+         3U9Q==
+X-Gm-Message-State: AFuF++mxZ92z+Ah3qIRQgXQjGJE5bTJEjtHLn1s/Pa4SBUZZCV3bih8q
+	tYx7iyHjNHhaLfhGqAQoTJunuCUMkBK+xusvmzO13EqxHshhvH2bWBztxb5jCIBkEAU=
+X-Gm-Gg: AYBFou0n3+C1Dz58Qg45CzS4AsRCqRM46ejpEujY1uQ5mcxrIQxC2VaC6OumPsnwUmi
+	hcTvmPNd+JOqSamZksW8t6e/m9WQ/b2xBNfsSZx4kxDvk1aqAha0/zGqzmuHTn9t+X6OZqjsAoG
+	8DNATcQTx8ichKJ2TFUWnV6P6pCBRyV4VZStB0L1Q2O+ttmFzK8m9M/fOUydKYqPuJjgodpLdV2
+	N3OQtvwC0QZBoX5BDMSosU0GdvHXyzmTIvSmcmKTA5sbX2d9McuoXx/QPH/ZBxhoA+lrbYcnl7u
+	sek6QxMzK7BCFxTC0H8vynqqHzUS0Zup73lltYYk4I8R0ZN7pQwGTTkCxCjaR4RwpypsoSn0tHl
+	Kl89KlE4maOvNUOFvbmmcnQGJI55DICCi2BSfR0dMlEqtrETeeBQdsyG8X/2i761bKqd38Si0nX
+	UCpd5SkVMkzpQkrzSk+QgWdOwwiTLVr1ashVz3ZfsLrOWN8AJ1SOhfEOnGh9BrnvxR3QoVXGOpq
+	pRmxyDdKxRYkAQC4s3KdHIpuE7O51Osn18w9qYcQBH7VJhlhtFYFYksqqDcNX36jg+fj57C3rhF
+	8OR36EvcRx/9hw==
+X-Received: by 2002:a05:6820:810a:b0:6be:5642:7e65 with SMTP id 006d021491bc7-6df3389e6f0mr3532085eaf.43.1790989323349;
+        Fri, 02 Oct 2026 18:02:03 -0700 (PDT)
 Received: from com-79390 (vpn-centralus-02.tradc-corp.com. [20.98.136.114])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6df3b2aa19bsm4455840eaf.11.2026.10.02.18.00.54
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6df37fe2a90sm3908332eaf.2.2026.10.02.18.02.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2026 18:00:55 -0700 (PDT)
-Date: Fri, 2 Oct 2026 20:00:52 -0500
+        Fri, 02 Oct 2026 18:02:02 -0700 (PDT)
+Date: Fri, 2 Oct 2026 20:01:59 -0500
 From: Taylor Blau <ttaylorr@openai.com>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Ted Nyman <tnyman@openai.com>, Elijah Newren <newren@github.com>
-Subject: Re: [PATCH v2 6/8] repack: track the preferred pack explicitly in
- MIDX write steps
-Message-ID: <asBTxLW9j2AIVlxZ@com-79390>
+Subject: Re: [PATCH v2 8/8] repack: include required packs in incremental
+ MIDX writes
+Message-ID: <asBUBwM2N8lQM602@com-79390>
 References: <cover.1790731662.git.me@ttaylorr.com>
  <cover.1790827875.git.me@ttaylorr.com>
- <a85dbcd04c7957756848e5f3102744d20b509fc4.1790827875.git.me@ttaylorr.com>
- <20261002232834.GE834759@coredump.intra.peff.net>
+ <a42f775cbe27b385bfc8ff38f33604b3913dc340.1790827875.git.me@ttaylorr.com>
+ <20261002234157.GF834759@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,44 +77,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261002232834.GE834759@coredump.intra.peff.net>
+In-Reply-To: <20261002234157.GF834759@coredump.intra.peff.net>
 
-On Fri, Oct 02, 2026 at 07:28:34PM -0400, Jeff King wrote:
-> On Wed, Sep 30, 2026 at 11:11:58PM -0500, Taylor Blau wrote:
+On Fri, Oct 02, 2026 at 07:41:57PM -0400, Jeff King wrote:
+> On Wed, Sep 30, 2026 at 11:12:05PM -0500, Taylor Blau wrote:
 >
-> > A MIDX write step marks preferred packs in its string-list entries and
-> > chooses the last marked entry when executing the step. That makes the
-> > choice depend on list order, preventing the list from being sorted for
-> > membership checks.
+> > The geometric plan from 1da62fb5c86 (repack: implement incremental MIDX
+> > repacking, 2026-05-19) can omit kept and cruft packs, since neither
+> > necessarily participates in the geometric repack. Such packs can also be
+> > lost when replacing a tip layer that contains them. Neither plan
+> > consults `midx_included_packs()`, so the rules for retaining cruft in
+> > ordinary MIDX writes do not protect incremental writes.
 > >
-> > Record the last candidate directly in the step, borrowing its name from
-> > the write list. This preserves preferred-pack selection while allowing
-> > the list to be sorted without changing that choice.
+> > Use that selection logic to add missing packs to each plan's write step.
+> > Skip packs in retained base layers, but include required packs from a
+> > replaced tip. Count added objects when choosing which layers to compact,
+> > without changing the preferred pack.
 >
-> This is certainly cleaner, though it looks like the existing code works
-> by marking item->util and then doing a linear search for it. So wouldn't
-> that work even after sorting?
-
-It would if only one entry were marked, but we can mark several.
-
-For example, when `repack_make_midx_compaction_plan()` folds multiple
-MIDX layers into one via a WRITE step, it marks each layer's preferred pack
-without clearing the earlier marks. The scan doesn't stop at the first
-such mark, and the last marked entry wins.
-
-So sorting would of course preserve the marks, but may change which one
-comes last.
-
-> > @@ -719,7 +713,7 @@ static int repack_make_midx_compaction_plan(struct repack_write_midx_opts *opts,
-> >
-> >  		item = string_list_append(&step.u.write, buf.buf);
-> >  		if (p->multi_pack_index || i == opts->geometry->pack_nr - 1)
-> > -			item->util = (void *)1; /* mark as preferred */
-> > +			step.preferred_pack = item->string;
+> I admit I had a hard time following this patch. I think the point is
+> that we're going to include some packs in the midx that were not covered
+> previously. But it was hard to see where that happens. I think the magic
+> bit is this:
 >
-> I am certainly happy to see these gross casts go away, though.
+> > @@ -557,17 +604,20 @@ static void repack_make_midx_append_plan(struct repack_write_midx_opts *opts,
+> >  					 size_t *steps_nr_p)
+> > [..]
+> > -	for (i = 0; i < opts->names->nr; i++) {
+> > +	midx_included_packs(&include, opts, m);
+>
+> where we rely on midx_included_packs() to do that selection.
 
-Me too ;-).
+Yeah, that's right. I wrote this code in the first place, and it wasn't
+even *that* long ago and I had to spend a not-insignificant amount of
+time (re)acquainting myself with this area before writing this patch.
 
 Thanks,
 Taylor
