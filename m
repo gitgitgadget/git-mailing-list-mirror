@@ -1,365 +1,434 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B18D377ECC
-	for <git@vger.kernel.org>; Sat,  3 Oct 2026 19:41:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBC7385D7F
+	for <git@vger.kernel.org>; Sat,  3 Oct 2026 20:11:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791056514; cv=none; b=TWDVy59qm1k5wQROZ97Vs8L9txug8y6vr/56Fb9Iuf5sGkr09BXhJ2fh8Niij+vFcy8zgPE3+8nPPPsB6XXfGESguVZasOe/F02lrtd+yGrYGc5T3O6fxNaXYGPSaJJlhXKCUurpKzLIn28nELqDcXe0ZT7ngl1dcdi5tEep9t0=
+	t=1791058315; cv=none; b=CMRhYPRTN+cuYG/p1xeBqClSplXwYvSQXmaFDB2KAsbX4SH8VPi0+DddNYXG7zzvgHFKy8JKTCp+sAutj+8u41QokbCKOpeDA08lEw6rNReFt0x7yTQyKeTopKSBekLvDfKUUckka9nMZSVquReeDtW74B8A39BvkAAH/hBHfus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791056514; c=relaxed/simple;
-	bh=cB3B4nUtvnjsppqKyU36rLZTlSGq9i+1sRxJMhET7Iw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=RGdsPFs4STIBP5l/eQF12fUSrrZfUz0MKlieoguaFsJPOC6i7ZSnEOA0NXyEBwcb6ulxvJQxn6CMYmM5Ad0Hidt2fLVOZGiY6X74PyDx/3lTCzrIqB9mTOB+Mi40fqiaTFmxQEx687IqZFRwb6sdenBJ4K9tswpYDrq8jZdIsHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com; spf=pass smtp.mailfrom=gmx.com; dkim=pass (2048-bit key) header.d=gmx.com header.i=hamlin.carlisle@gmx.com header.b=DzBIn8RV; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
+	s=arc-20240116; t=1791058315; c=relaxed/simple;
+	bh=rLw4TrJrCrDZvvhzWExUrXVaDzC+fkur3NCrFxivGg4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Kz65C+EBO736050yduNm/0ei43AzOFjNIVwdwrWkB7ugYYF9usgUByPKaP5obdkUOelZ0BSKzUDclB/PF6h+q2J+6zLv4h4LkCFbBYUE//WE4VRgOco31OkTEYTu/AQ/8dpM1SJ19nCnIk/7ePcYGANyafMt+PPaBh6vnU4KeTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d7V/dEHM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.com header.i=hamlin.carlisle@gmx.com header.b="DzBIn8RV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
-	s=s31663417; t=1791056509; x=1791661309; i=hamlin.carlisle@gmx.com;
-	bh=cB3B4nUtvnjsppqKyU36rLZTlSGq9i+1sRxJMhET7Iw=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
-	 References:From:In-Reply-To:Content-Type:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=DzBIn8RVMl9Y0DEG1V/gE6zAjUYpCsDfxccRxgWB7OtALUSDILdba9kqTK6ae8Ic
-	 PEOwj1K8lHOKQDIC2Uyx94qNulKrNL8XZq7zTn0CMtR+1OlKPtFVQ8+SWnQmGNhbX
-	 ybh0CdKAjz70PByqejVQ23twwZoUwMt/2dFxwwqlvNR9SFNFbqv9g17RccUpAK0gk
-	 L1oAO2jXvGPST+NXuRxFu8/Db4Ia+5OHXymdkedbtFIoX4DNK63qHnISV5tOo35Aj
-	 /FFq8tzvvAB8m+lEWj5trQ9eXHaD5LVt8HdfNaWrkC7tQH/2JTZ2tyvnAyHk4MXW3
-	 8/wk58VZAitNVwmrEg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
- [212.227.17.174]) with ESMTPSA (Nemesis) id 1MUosT-1x3yua1uld-00JwvQ; Sat, 03
- Oct 2026 21:41:49 +0200
-Message-ID: <54fac5f4-e49b-4384-af2c-615d7cc04ff5@gmx.com>
-Date: Sat, 3 Oct 2026 12:41:47 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d7V/dEHM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5BF1F0089B;
+	Sat,  3 Oct 2026 20:11:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791058313;
+	bh=JkzvX9WYDAROfbKi3yAr2RmXNpPYWJWy7phYD37z4Tg=;
+	h=Date:From:To:Cc:Subject;
+	b=d7V/dEHMiCc5bjbDYGDOe0fDDk3tsOPmD46sGzfgu2xrQ4RvNUjIYPOo1hNU/pvAf
+	 BXaYqWIVmpAdEkOe1kRJ07SR8eBguP3SSdS50QJbIyvG3SZD+QzFc7s+iuK+A8BSCn
+	 7HkbAvb4z4PtzHL/T7s8xuQXtvtn/GYsCN4j+RJ43plZp9+orKkoZHe6SPjTXgRvyB
+	 WEUJ/fDqr/775ZOCpqdVjNpoMIz1bF8wG9Rw3fyTIaGGKQ0SxV+W8kQg1SNuqlyoF5
+	 L7zDmqiBE3wZRErD3X9gz2Hvb/9TpfAF7FCrJvwLq3PgYjiLjuKAGKM1vYK3TGWu6s
+	 l/MOLXlUQOFdA==
+Date: Sat, 3 Oct 2026 22:11:47 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Ben Boeckel <mathstuf@gmail.com>, 
+	Nico Williams <nico@cryptonector.com>, Viktor Dukhovni <viktor@openssl.org>
+Subject: [RFC] git-brebase
+Message-ID: <asFRVdMTpshsazgM@debian>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Question: behavior when reverting a commit from a shallow clone
-To: Sphinx <sphinx9692@gmail.com>, git@vger.kernel.org
-References: <CALfz8Qx63qNoSbXq7C7u+KwX4=HCL7=uOUahpXd6j7KvW_c_Eg@mail.gmail.com>
-Content-Language: en-US
-From: "Carlisle T. Hamlin" <hamlin.carlisle@gmx.com>
-Autocrypt: addr=hamlin.carlisle@gmx.com; keydata=
- xsAiBEfLBpcRAgD8qfOOlcAEezHtcm6xrrZbwjKLXlIfKXUf/YiTeuaLk7TkfnvTVU5fwUam
- iewb7AN+t3mzKxcgwxViDnFQ8spDAKDtjKSLxKSCTYDVT8WR5w0NwOI3dwH9GetPPjCjJvnk
- JOr7yJOcyF0+T0bwR/cEUJ6nuQfbh2eVSNyWSiixsr14dQWphJf7CwGsTfIfv7vsZ+fIwP39
- rgIA+g8d2waPxl76gDjIygL6TrF6hhTt7KUb2yNgSng9IldkMfcdBYlg3dWOpZNNcZrTGOyd
- 6xvhvmMuojRRx8r54c0oQ2FybCBULiBIYW1saW4gPGhhbWxpbi5jYXJsaXNsZUBnbXguY29t
- PsJjBBMRAgAjBQJYh9SnAhsDBwsJCAcDAgEGFQgCCQoLBBYCAwECHgECF4AACgkQyLm4ydrA
- Bve9TgCdGob4qLVTBIOjrTrY+/PmPPGby4AAn21LQfE5TXjJP298WdZNVCmAzXarzsFNBEfL
- B4oBEADbRPe1kVPw4r1YTMTRjRGKz1zF1juy+w7rgYmbwGE7g59jyb2jQYkiuUykupPom63I
- UAiHsTm7rt+GrHqJ2WjgBfDC7rUM0tWst5pKkt9Ma27l/O9J0T4YDr0kRDGhEUJPHI27V2D2
- NX52bDFgKiPl5WyRxtgAtTZC9KOdCPJ4t9c8waUIWlFn/YeWYerC2b15Sf3AB6bKVhP+2v91
- j/vOsTEFIlfg57fbQpEknGsLRIbO1V5Gx5FhFgycNh50zk86LiTz7pzZ19E6UnYuUEgaozru
- UjTQubdqPYOdgCnReTgcwo4ylon12sXjWHBScODgIYooPEUjAyn8H/m5i7jaSV5l2eZOUPvF
- 8NPuuGUUWgMmQ+pCah3DnO3ccdaOOjW2z02Skx1XGep7Zyyn4hzV3cZpIhnOP5udwE1D3Pxr
- ljwVKs4uroPo28Eeh1KiYf95kP5KfzYafOpVx3QyykkiqQ4MEd1k61Y1ZoQ4pz+XskOym1DD
- 9w6JdoAimsb7YGAqMQbSrtNSVpDMcYIDpXboDDussRmRD+Xoko/mhhQ2ZpUUyeqnlPHHmzSJ
- va0+hvBhw3QEv0QV7or3V1tN9r72o0KGp1un1n9IZv7JA4CKvs2oWPlR593d+pmHzZswK01Y
- ozFV+96kRXULHziVesdtlJCa+/341vc/p9teqKEJSQARAQABwkkEGBECAAkFAkfLB4oCGwwA
- CgkQyLm4ydrABvf1ogCfcujflHLQUSahVKgWtF/qDpK10+gAmwQ6EVxuZ3Z1GO6EbFxyRtm3 kOwI
-In-Reply-To: <CALfz8Qx63qNoSbXq7C7u+KwX4=HCL7=uOUahpXd6j7KvW_c_Eg@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------Wc0dxpXsdkxpjLZfZA7Xx5Zz"
-X-Provags-ID: V03:K1:9N591npltQvJccIwnzTdRSZ53nCmyWIPKKqd6ouiHefQ/oxp3dH
- IPSYylHlWPxxckN5IOa4WGbFv8zHAju4I3jL38eEA8idn4tp3zs/l0rbG0pTFr+ulYX3UgX
- O0xuh7miREOONWN92dY0eNq/DDUD3Ej2o3JUt1ArGx0za04xppY2VAPyp7jpP7zS/rDjP4+
- 93r+dgK07zQ0yYBT29+Og==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:ZvvPRbVXsUc=;TL+NLDYnD+Gkgba4cLmPeOkZ2+1
- 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
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="hw4ffy3fb3ra7ngc"
+Content-Disposition: inline
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------Wc0dxpXsdkxpjLZfZA7Xx5Zz
-Content-Type: multipart/mixed; boundary="------------9sUul4tN70wGRyUNlYneonU1";
- protected-headers="v1"
-From: "Carlisle T. Hamlin" <hamlin.carlisle@gmx.com>
-To: Sphinx <sphinx9692@gmail.com>, git@vger.kernel.org
-Message-ID: <54fac5f4-e49b-4384-af2c-615d7cc04ff5@gmx.com>
-Subject: Re: Question: behavior when reverting a commit from a shallow clone
-References: <CALfz8Qx63qNoSbXq7C7u+KwX4=HCL7=uOUahpXd6j7KvW_c_Eg@mail.gmail.com>
-In-Reply-To: <CALfz8Qx63qNoSbXq7C7u+KwX4=HCL7=uOUahpXd6j7KvW_c_Eg@mail.gmail.com>
 
---------------9sUul4tN70wGRyUNlYneonU1
-Content-Type: multipart/mixed; boundary="------------lwAyA0wwY2BgshZHMweVr7r8"
-
---------------lwAyA0wwY2BgshZHMweVr7r8
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-
-T24gMTAvMy8yNiAxOjU0IEFNLCBTcGhpbnggd3JvdGU6DQo+IElzIHRoZSBmb2xsb3dpbmcg
-dW5kZXJzdGFuZGluZyBjb3JyZWN0Pw0KPiANCj4gQW4gZW1wdHkgdHJlZSBpcyBhIHZhbGlk
-IEdpdCBzdGF0ZSwgc28gR2l0IGRvZXMgbm90IGdlbmVyYWxseSBjb25zaWRlcg0KPiB0cmFu
-c2l0aW9uaW5nIGZyb20gYSBub24tZW1wdHkgdHJlZSB0byBhbiBlbXB0eSB0cmVlIGluaGVy
-ZW50bHkNCj4gZXJyb25lb3VzLg0KPiANCj4gR2l0IGRvZXMgbm90IGhhdmUgYSBnZW5lcmFs
-IHNhZmVndWFyZCB0aGF0IHdhcm5zIHdoZW4gYW4gb3BlcmF0aW9uDQo+IHdpbGwgZGVsZXRl
-IGFsbCB0cmFja2VkIGZpbGVzLg0KPiANCj4gSWYgdGhlcmUgYXJlIGV4aXN0aW5nIHNhZmVn
-dWFyZHMsIHdhcm5pbmdzLCBjb25maWd1cmF0aW9uIG9wdGlvbnMsIG9yDQo+IGhpc3Rvcmlj
-YWwgZGlzY3Vzc2lvbnMgdGhhdCBJIG1heSBoYXZlIG1pc3NlZCwgSSB3b3VsZCBhcHByZWNp
-YXRlIGFueQ0KPiBwb2ludGVycy4NCj4gDQo+IFRoZSByZWFzb24gSSBhbSBhc2tpbmcgaXMg
-dGhhdCBJIGFtIHRyeWluZyB0byBlc3RhYmxpc2ggcHJlY2lzZWx5DQo+IHdoZXJlIEdpdCdz
-IHNhZmV0eSBib3VuZGFyeSBpcyBpbiB0aGlzIHNjZW5hcmlvIHNwZWNpZmljYWxseSwgd2hl
-dGhlcg0KPiBHaXQgaXRzZWxmIGlzIGV4cGVjdGVkIHRvIHdhcm4gYWJvdXQgdGhlIHJlc3Vs
-dGluZyBlbXB0eSB0cmVlLCBvcg0KPiB3aGV0aGVyIGRldGVjdGluZyBhbiB1bmV4cGVjdGVk
-bHkgZGVzdHJ1Y3RpdmUgdHJlZSBjaGFuZ2UgaXMNCj4gY29uc2lkZXJlZCB0aGUgcmVzcG9u
-c2liaWxpdHkgb2YgdGhlIHRvb2xpbmcgcGVyZm9ybWluZyB0aGUgb3BlcmF0aW9uLg0KWW91
-IGtub3csIGl0IHNlZW1zIHRvIG1lIHRoYXQgaXQgc2hvdWxkIGJlIHJlYXNvbmFibGUgZm9y
-IEdpdCB0byBhc3N1bWUgDQp0aGF0IHNvbWVvbmUgd2l0aCB0aGUgd2hlcmV3aXRoYWwgdG8g
-c2V0IHVwIGFuZCBvcGVyYXRlIGEgZ2l0IHJlcG9zaXRvcnkgDQoob3IgYXQgdGhlIHZlcnkg
-bGVhc3Qgb3BlcmF0ZSBvbmUgdGhhdCBzb21lb25lIGVsc2Ugc2V0IHVwKSBrbm93cyBlbm91
-Z2ggDQp0byB1bmRlcnN0YW5kIHdoYXQncyBnb2luZyB0byBoYXBwZW4gaWYgdGhleSBvYmxp
-dGVyYXRlIHRoZSBvbmx5IGNvbW1pdCANCmluIHRoZWlyIHRyZWUuDQoNClRoZXJlIHJlYWxs
-eSBpcyBvbmx5ICpzbyogbXVjaCBob2xkaW5nIG9mIHRoZSBoYW5kIEkgdGhpbmsgd2Ugc2hv
-dWxkIGJlIA0KZXhwZWN0ZWQgdG8gcGVyZm9ybSBiZWZvcmUgaXQncyBub3Qgb25seSBpbnN1
-bHRpbmcgdG8gdGhlIHByb2plY3QgDQpkZXZlbG9wZXJzLCBidXQgYWxzbyB0byB0aGUgKnVz
-ZXIqLg0KDQpNeSB0d28gY2VudHMuIEkga25vdyBmb2xrIHVzZSBHaXQgZm9yIGFsbCBzb3J0
-cyBvZiBzdHVmZi4gSnVzdCwgbWF5YmUuLi4gDQp0aGUgc29ydCBvZiBwZXJzb24gd2hvIHdv
-dWxkIGJlIHN1cnByaXNlZCBjYXRhc3Ryb3BoaWNhbGx5IGJ5IHRoaXMgDQpiZWhhdmlvdXIu
-Li4gd2VsbC4uLiBzaG91bGRuJ3QuDQoNCg0K
---------------lwAyA0wwY2BgshZHMweVr7r8
-Content-Type: application/pgp-keys; name="OpenPGP_0xC8B9B8C9DAC006F7.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xC8B9B8C9DAC006F7.asc"
-Content-Description: OpenPGP public key
+--hw4ffy3fb3ra7ngc
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Ben Boeckel <mathstuf@gmail.com>, 
+	Nico Williams <nico@cryptonector.com>, Viktor Dukhovni <viktor@openssl.org>
+Subject: [RFC] git-brebase
+Message-ID: <asFRVdMTpshsazgM@debian>
+MIME-Version: 1.0
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+Hi!
 
-xsAiBEfLBpcRAgD8qfOOlcAEezHtcm6xrrZbwjKLXlIfKXUf/YiTeuaLk7TkfnvT
-VU5fwUamiewb7AN+t3mzKxcgwxViDnFQ8spDAKDtjKSLxKSCTYDVT8WR5w0NwOI3
-dwH9GetPPjCjJvnkJOr7yJOcyF0+T0bwR/cEUJ6nuQfbh2eVSNyWSiixsr14dQWp
-hJf7CwGsTfIfv7vsZ+fIwP39rgIA+g8d2waPxl76gDjIygL6TrF6hhTt7KUb2yNg
-Sng9IldkMfcdBYlg3dWOpZNNcZrTGOyd6xvhvmMuojRRx8r54c0OQ2FybCBULiBI
-YW1saW7CYAQTEQIAIAUCR8sGlwIbAwYLCQgHAwIEFQIIAwQWAgMBAh4BAheAAAoJ
-EMi5uMnawAb37vkAn3gRz3XtPiu/pA9fKtuYGEsd/9qDAJ94V1l4aY2f8h1emQ5v
-wEiFt0WQtsKOBDARCABOFiEEtNz5W458f1i2/ed9yLm4ydrABvcFAmXqScIwHSBU
-cmltbWluZyBrZXkgZG93biAtIGxvdHMgb2YgY3J1ZnQgb24gdGhpcyBvbmUuAAoJ
-EMi5uMnawAb3jygAoN4O7gnTc3P5ylwzirGAMUvYshmGAJ9AP8XRmDOBKjxBDYIP
-u1XgMKvfntHOmc6XARAAAQEAAAAAAAAAAAAAAAD/2P/gABBKRklGAAEBAQBIAEgA
-AP/hABZFeGlmAABNTQAqAAAACAAAAAAAAP/bAEMAKBweIx4ZKCMhIy0rKDA8ZEE8
-Nzc8e1hdSWSRgJmWj4CMiqC05sOgqtqtiozI/8va7vX///+bwf////r/5v3/+P/b
-AEMBKy0tPDU8dkFBdviljKX4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4
-+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+P/AABEIAUoAywMBIgACEQEDEQH/xAAZAAACAwEA
-AAAAAAAAAAAAAAAAAQIDBAX/xAA0EAACAgEDAgQDBwQDAQEAAAAAAQIRAxIhMQRB
-IlFhcRMygQUjM0JykbE0UqHBFCTRgvD/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAQID
-/8QAGREBAQEBAQEAAAAAAAAAAAAAAAERMRIC/9oADAMBAAIRAxEAPwDpDADTAAAA
-aY9REAJagsiAErCxAFOwEMAJIiOwGAmyNkQ2xAI0gAAAYgAAAAAAAAEMAAAAAAAA
-AACMpJLkCVhZnlkb717CU2vMitNg5pLdmb423PBmnnblu9kNXG2WeC7sh/yY3VnP
-lk5fcUclvczq46izRZJZE+Ec2GXyLY5a3sumN3xF6j1I56nK9V0rLo5vu075e5dT
-y0615jTTMfxblVl+NNO32Gpi8BIZUAAAAAABW9dbOMf8lM801OKVU381bMtl4pRj
-Xh3vYp6qaUsPbxVwRYv1uPzql/cuCxKxqmttyOiUN4U1/a/9E0w9LEyWtWou1LyY
-MumIS2RlnkSb7JFmfLvojz/Bmmtm2xasglmXkReeT7maWS5cgpLuY1vF2t+e5Tke
-/qO/UrnICDb333EpSpsTYdgJxm0vQtx5L7mZe5ZCVAat2tlZByktuKHCT89ia0sB
-4Fb3NsHskYoJxnzcTSpNx2LKzWpEijA273tF5tgAAAAAABkjsmuU9jH1UWnilJR+
-btybZNNUzH1zemD2+byMtNbjT2dP0BT7PZglYNbUyglTVS3RW3KPe16vdE6aWz/c
-py0o3ppgUutVya3duzN1GZO1HhBnytNqjJKfmZakDmvIE7WxWvFKi1RSRFJyfBFu
-yTQtIURjbBxLIqlSG40gM7Fe5OUSOncC7DlSdMtns1JOrM0VTTL1vAC2En5lsJ7p
-8GVOmTWStmEx0cbpX3/ktjLVwc9ZGlSexfhyV3s1KzY2ASVNJoKLrJJD0saQyaYr
-Zk6/8KH6v9Goy/aG2GH6/wDTLVjXF+FexIrh8kfZDbBTKM2SKi48vyQZZSfhjsu9
-clOSUcMba9kBz5u5OzPkLNfibe9kZxWm0YbLEWleMssABCCwqa2Y20kV2MKKBx2G
-lZKqRBAeqlQiLAsTTg/PsV6m2RuhJ07CNWLxyin5mpwWKaSWzZkxPeLuvY122vmd
-Lh2WM1vxbQSZYinE24Kmyy2vJ/4NMpWFkdfnFoNcfMCBl+0X9xH9f+mabMv2i/uI
-/rX8MpGrH+HH2QSexHE7xQ/SiMpVKrIITlXLo53U5nkm64Xkb89aG5S/c5M2t9/Y
-LFbe7HexF8guTKrMZYQxok2kFAUK0FhToAsVgXRXBKSKlOibyWiKg0Rkq2Hq3Jyj
-cUwKH7EdyU5aZtUCm5FZSjxyaMUrjv2MsXurdF2N26TsDr9Ncseq6svV96Kenf3S
-LbNsC35L9x6vRisLAjRk+0tunj+tfwzYZPtP+mj+tfwxSdX4PwMf6UE4qUWnT90L
-pv6bH+knJpIheuZnxxU32XqYckafK+h0OsyJbLdcnOk7IsQDhjGo20RpYvlK5X5l
-mlxT7lLdsoLY9TIsAiabJJkYjaaCk5MNTIt7jtjEWKEtHxNquud/2Lcc5S27Ga7L
-+m3fsSrKrzfPsRg9LsnnjU//AEqAnF9zZgxPQ5bvazHBcG2ORxgovZNAdHp391Hf
-sW2ZujbeN9lZo+q/c3GKdhZFyiuZR/cXxIf3oInZk+0v6dfrX+zUzL9o/wBOv1r/
-AGFW9I/+tj9iWWLcHXkQ6P8ApcZbLgk4XrjZ5tbSe62MrdnQ6qcE2nGLb9DnyfoS
-rDjX7Dh+IiEXUi6KppkaTlwZ5RpmqSsrkgqgEibjuNIupgjGjRGClD3IY1b4NHhS
-2IsYJRpsiassKk3WzIRgm+S6mKYxcnUVZswYmmod+ZE4OMYbJbFuGlHV3ZLVkZeu
-jpmq7mTubOt8WRLyRjfIiVOMq8izGnOabdlUFua8aUXsBoiqjVsde4RdoZWSoK9C
-QAa9cWk9/E6W3cyddlhPBUZW9SfDK5TuWqTSSZDJkWTG4xilTVUT0Y29E/8Aqw+p
-e9zDgyvHh07tq9ky9ZnLGtMWpXVNln1MLGXPBLJPI1cnx6HOlF3udXNLUtMpJ+hh
-yaF/4NGV0gUmu5KdN3ZAK2RdxXsRkRwu4EmRqIMV0DFQE1k+hJTp3exS0KgL55ta
-ohdEYpeY3QFidrk04pXsY4c0XwlpUpPsiCjqMmrLOuLop7iu2SRpE8UbyJeZrjja
-n6FeDHab9djYkRCSokAFQAAAY046HbdKXyknNKPhil3VFC2bb5asm4tJXscsaWrI
-5q7/AMBknoXh/kqjSWlNu2VZIy1Wt1+5ZEWRyub3ashmW9kpJ6dklp52FnXFeRqQ
-Z2IdB3NC3E6iW2UY+GWJkUmLT6kmrEFRaYtyTbFbAaQVXA1Y6AcdtyOafhUfMkUS
-eqTYQqJLkjVl2FXNbFRq6aMlu7o0kIrbgmRKAACgAAAwZJqUaUafd+YY3JP0Y44V
-N2m1FOmyKWjxXZzaWSVzTT4dpkZvwK+FXDFKTe7bocWnur478BNR1+Bqrd2GaqVE
-UmpSfcjkyK6W5qIhatkRkTSpwJ2QgMKkmNsgG5BIFyJMLAm+QsirJJAD2iUF2R+E
-pCVfDBqVqSosji0zVOyGHhK2ix5IwWz5/wAgaFkUVT3YPI+yRRGe1tbkll2eyC4t
-Wf8AujXsNZsb/NRmc9S4Fj3i/chjZrg18yD4kP7kZ1BNEGtxq4inXsRd0qXoSjo3
-1SryK3k507+5JGRJSa3XAto8v6Ii5OXzNsgzeInPI36exAQBT7iGIBp7kyslECQA
-AU0SoiiVkUwEOwI5OCktm9iosZq/CrlE0PFGe7TTW1oq6fS4Nb6luvJo1ppVsVFE
-scktvEUO090zp49N6WtnuvQWSEVwyYuuc0/h2SwzSck+5ocU9mkUvBFu4yr33JYs
-q7HPehNKyGmUOf3sNS8yY1rNKblK5NyfqRsQG3MMiMRFAxDABDQgAaEAE0MimSAa
-HYqAimFjSFNbAVt2IlpZGSp0EaeiWubhzaL4trZ8FHQOuoXkXzWnI97Ki/C01ytv
-MhOeVVp0yri5dv2IYLbddnxZopTjLevzJX+6CsU82S3eOm/UjDJN7aV9WW9RHwqX
-kZVOmwjZFzfMLT/taZCSwqTt0/Jui3B1GPE4QnC7W79TUskX+YDhiYCCgAAAGIAA
-AAAAAAZOG5WTgwLKCgQ6IoRZWpQ22seLE8kqLM3gy6F+Vb+5KqlpWzPk/EZpk1Rm
-yqsjERb0Tf8AyY02n6Kzd1Wz3TUn9L9jm4p/Dyxmuzs63XT14Mcn5XsaRkwPxNd2
-XytWm+N9kZ+nWqzReqoTT1LbbugiF25QfdWjny2nRrnqhy7eN7+z4M2anO13CpZX
-4k77ImsrSW7Kpu4wfoICsAAABgAAAAAAAAAAAAAABOM2u5fhXxOKtdjNRZ08tOeD
-9aCuvgxKELZz3LVKc33Z0uql8Pp5teyOVF/d/Uyob2oqzfiv6F0d5UUZd8kn6liI
-o25crfSYU2rqjGmk+CepS4dpdio09JvZdKLa1LlblPSxerbuaUm+1BFWWnKM3el+
-GV+RhyxcZaZfNF0zW3Cc9HCfJV1WOUfnXii6k/Pyf/7yCqeca9GAofmQLgCAAAAA
-AAAAAAAAAAAADjyIlH5wFVpjg6kn62C5Bcr3A6PW51kxQUXs9zHj3bX1DE9aeJ7v
-mPuEYTjkppptX9DLVWQac6XJnn88vctwb5n7lMt2xERBOgA0jV0+dR+aWl+dG/F1
-SlstEk+akl/JxgA25oacmqFL/wCl/wCkHli7hOWzjTrf2Mpp6apRlBpbrYCiL3Du
-DTU6Y5LdgQAAAAAAABgAgAAAaVuhE8fIDljca2sX50TuSlV0GhLNUmqXdAVXUiXc
-i/mY0AJ1K/ImptJtXfG7vYgCdbWBZhelOTKid1jrzYlGUoNpbLkiorkbg+wl8yL8
-ablXYqKowsJQcV5ljTjNkkr9gMxp6V7SfeLTKpw0vbgfTz0ZPR7MC/qsFPXHe9yl
-K1bOpjxLL02m/EuPUzRxKt9n5Ac4AAAAAABiAAAAACace5AYE3KDfDr3I2tQkC2k
-gB8saYn8zGkBZjrfa/dDzKNpxVWuCUcf3fxFJeVMrnJPTqvyZNCkvAi3B+Bl9Yiy
-ePC5ceIfTrwSXmmFZy6PKe+5SzT08VlhKOpKUd0n3KhTi7tcBj2NWOWH4aU5NvyU
-eGVyyQjqjKNN7p32ApzRVWZ1szVkyqcVHQ1S7dzO4tS8gOj0WZuOi+ODVKEZO65O
-Rhmsc1LXX0OgutwpUmn7pgcgAAAAAAAAdWgEADa2AQ0IaALD8yDaxqtQCfLBCfI0
-BKNyajdJsi1Tp7FmPRHNH4kW43ulyTzTcsj5SWyXoRUNX3OnzZd0u/7md7mnpHW/
-kyEZZKpNeoQk4TUkSzKs0vcgWC6M4uVLHqt7KzQ3kgo1DDj8t7ZnaUtDbUU1zXA5
-YlHeElJeaKh5p5aerJF32RnfrbNEckPh6ZR38yiXIBFFiTrhlceS4DOAAAAAAA4s
-Q4gMTJMiwECAAGqsa+ciiS+YBPZgiW0o78kUBoyr7zHt+VCzqsrtF6h8XHGD+aSq
-Po1wVZHHJGM5PS6p7GVUGjBtFSXsyhK02lskX4Pw2KRV1O2aRUXdV+IvYoLCr8KU
-scl3i7SLvi+FxUUlLyRmwTUcivh7M24Pj+PHia9nRUZtFN2vYpntI05oTi/FSkvU
-zT5AEWJ7Faol9AKwAAAAAAGhDXIEmRJMiwEAAAxx+YiNcgNPYAiAG3F44JLZv/Hq
-Lq9M4LNWmV6ckVtv5i6P5mR6z5pf/P8ADMzrVZ9W1LZdzR01NVZliX4O4qQdVzFd
-0ZzR1XMTOWFBrxy1xhJumnpbMhbh4l9Co05oxT2ya/XTRjnybOo5+hkyfMAojCIw
-P//ZwlsEExECABsFAkfLCH8CGwMDCwwLAhUDBBYDAQICHgECF4AACgkQyLm4ydrA
-BveZZgCg3CHp3qUSKOISZ5JjsTQXRAauxWUAnixVaRUZ1Ck0sRRuwr/0X9Yw76b4
-zSxDYXJsIFQuIEhhbWxpbiA8dGluLmNhbnMuYW5kLnN0cmluZ0BnbXguY29tPsJi
-BBMRAgAiBQJMve0BAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRDIubjJ
-2sAG98lQAJ41zRZ+edFtiACVKt816kTpwXnmswCdFjC2h6DvHSA0BDtI+oSpiv1O
-ZRTCYAQwEQgAIBYhBLTc+VuOfH9Ytv3nfci5uMnawAb3BQJl6knxAh0gAAoJEMi5
-uMnawAb34lwAoOwXptu+k5Mxw30Z1EUULxWZQlUmAJwLokDdfVVqUr1vNZJocjAc
-veXxx80qQ2FybCBULiBIYW1saW4gPGhhbWxpbi5jYXJsaXNsZUBnbWFpbC5jb20+
-wmIEExECACIFAky97RoCGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEMi5
-uMnawAb36rMAoOqXsZlxmoC9UGn9znwIQT785qDiAKCeVDxHrZ3SinMardLkn44T
-/7/97s0oQ2FybCBULiBIYW1saW4gPGhhbWxpbi5jYXJsaXNsZUBnbXguY29tPsJj
-BBMRAgAjBQJYh9SnAhsDBwsJCAcDAgEGFQgCCQoLBBYCAwECHgECF4AACgkQyLm4
-ydrABve9TgCdGob4qLVTBIOjrTrY+/PmPPGby4AAn21LQfE5TXjJP298WdZNVCmA
-zXarzsFNBEfLB4oBEADbRPe1kVPw4r1YTMTRjRGKz1zF1juy+w7rgYmbwGE7g59j
-yb2jQYkiuUykupPom63IUAiHsTm7rt+GrHqJ2WjgBfDC7rUM0tWst5pKkt9Ma27l
-/O9J0T4YDr0kRDGhEUJPHI27V2D2NX52bDFgKiPl5WyRxtgAtTZC9KOdCPJ4t9c8
-waUIWlFn/YeWYerC2b15Sf3AB6bKVhP+2v91j/vOsTEFIlfg57fbQpEknGsLRIbO
-1V5Gx5FhFgycNh50zk86LiTz7pzZ19E6UnYuUEgaozruUjTQubdqPYOdgCnReTgc
-wo4ylon12sXjWHBScODgIYooPEUjAyn8H/m5i7jaSV5l2eZOUPvF8NPuuGUUWgMm
-Q+pCah3DnO3ccdaOOjW2z02Skx1XGep7Zyyn4hzV3cZpIhnOP5udwE1D3PxrljwV
-Ks4uroPo28Eeh1KiYf95kP5KfzYafOpVx3QyykkiqQ4MEd1k61Y1ZoQ4pz+XskOy
-m1DD9w6JdoAimsb7YGAqMQbSrtNSVpDMcYIDpXboDDussRmRD+Xoko/mhhQ2ZpUU
-yeqnlPHHmzSJva0+hvBhw3QEv0QV7or3V1tN9r72o0KGp1un1n9IZv7JA4CKvs2o
-WPlR593d+pmHzZswK01YozFV+96kRXULHziVesdtlJCa+/341vc/p9teqKEJSQAR
-AQABwkkEGBECAAkFAkfLB4oCGwwACgkQyLm4ydrABvf1ogCeN98H/EE39WaSoZ34
-uxgYcHfRL9sAn3LooRvS2o7l73Qdhbte45qcsK+NwkkEGBECAAkFAkfLB4oCGwwA
-CgkQyLm4ydrABvf1ogCfcujflHLQUSahVKgWtF/qDpK10+gAmwQ6EVxuZ3Z1GO6E
-bFxyRtm3kOwI
-=3Dwllu
------END PGP PUBLIC KEY BLOCK-----
+I've significantly improved the idea from the original thread, thanks to
+suggestions from several people (the most fundamental, by Nico Williams
+and Ben Boeckel), and inspired to write it after knowing about the tool
+written by Nico Williams and Viktor Dukhovni (but I implemented it from
+scratch, without reading their implementation, other than looking at the
+file size --which, being under 100 LoC, gave me the confidence that it
+could be implemented easily--).
 
---------------lwAyA0wwY2BgshZHMweVr7r8--
+I believe now, after several improvements, it is not only simpler than
+git-imerge, but also more powerful.
 
---------------9sUul4tN70wGRyUNlYneonU1--
+I've not used git-imerge, but I've watched the youtube video of the talk
+in which the author explains how it works (and it's quite nice, to be
+fair).  First some similarities between both:
 
---------------Wc0dxpXsdkxpjLZfZA7Xx5Zz
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+-  Both git-imerge and my tool support --first-parent (per the README of
+   git-imerge).  My tool has support for this by using git-bisect(1)
+   interally for the bisection.
+
+   This feature was suggested to me by Ben Boeckel.
+
+-  Both git-imerge and my tool reach the same tip after a successful
+   session.  They differ in the intermediate history.
+
+Below goes an overview of key limitations of the git-imerge approach
+(IMO), and which are not present in mine.  If git-imerge supports any of
+this, I'm sorry; I didn't find them in their README.
+
+-  git-imerge creates a 2D matrix of conflict resolutions.  This is nice
+   for the case of two flat branches.  However, the branch to be rebased
+   might also contain merge commits.  This is less common than having
+   merge commits in the target branch, but it happens, and in those
+   cases, it's frequent to want to keep the structure of the branch,
+   with --rebase-merges.  My tool has support for this by using
+   git-rebase(1) internally for the rebases.
+
+-  One may want to skip arbitrary commits (because they're known to be
+   broken, and possibly immediately reverted).  For that, I've provided
+   a specific flag, --pre-exec, which is similar to git-rebase(1)'s
+   --exec, but which is executed before each rebase operation, at the
+   BISECT_HEAD commit.  An exit code of 125 skips that revision
+   immediately, without trying to do any rebases.
+
+   This feature was suggested to me by Ben Boeckel.
+
+-  One may also want to find and resolve semantic conflicts that do not
+   appear as physical text conflicts.  For that, I've provided a
+   specific flag, --post-exec, which is similar to --pre-exec, but runs
+   after each successful git-rebase(1) operation.  This would usually
+   build and test the software itself.
+
+   This feature was suggested to me by Ben Boeckel.
+
+-  git-imerge is limited when rebasing trees of branches.  Let's
+   consider something more complex:
+
+	*---*---*---*---*---M
+	 \
+	  *---*---A---*---B
+	   \ /     \
+	    *       *---C---D
+
+   Let's say M is master, to which we want to rebase the tree composed
+   of branches A, B, and C, so that it results in this:
+
+	*---*---*---*---*---M
+	                     \
+	                      *---*---A'--*---B'
+	                       \ /     \
+	                        *       *---C'--D'
+
+   With my tool, this becomes trivial (I've been doing this all day
+   earlier today, resolving in a few hours what would have taken me
+   days).  The approach in this case would be to rebase from root to
+   leaves, but to solve conlicts from leaves to root:
+
+	1)  Use git-brebase to rebase A until the first conflict with M.
+
+	2)  Abort the conflicting rebase.  We don't want to resolve the
+	    conflict yet, or we'd have to repeat the same resolution
+	    later.
+
+	3)  Rebase all its direct descendants into the new A, by
+	    performing operations 1 and 2 but with the descendant
+	    branches.  Do this recursively with children of children.
+
+	4)  Once all descendants have been moved below the new A, it's
+	    time to solve the conflicts in A.  This will result in
+	    advancing A by just one commit of M, since we had aborted
+	    exactly at the conflicting rebase.
+
+	5)  Rebase the direct descendants on top of the new A, this time
+	    with git-rebase(1) --not brebase!-- with --interactive,
+	    dropping all commits that exist in A.  This avoids resolving
+	    the same conflicts again.  Do this recursively with children
+	    of children.
+
+	6)  Rinse and repeat since step 1, until everything is
+	    successful.  At that point, we have reached the end of the
+	    session.
+
+   This approach is different from git-imerge, in that git-imerge
+   manages in a single session the entire rebase operation until
+   success, while my tool performs each conflict resolution in a single
+   step, and they are entirely independent, and can be interrupted to do
+   other work.  My tool requires repeated invocations until reaching the
+   end point, denoted by a successful exit status.
+
+Something that git-imerge has that my tool hasn't is the ability to do
+merge commits.  My tool exclusively does rebases.  However, once the end
+commit is reached, creating that could be used to produce a merge
+commit.  It could be done by first reaching the rebase tip in a
+disposable branch, then perform a regular merge commit with
+git-merge(1), and resolve conflicts by doing something like
+	$ git checkout disposable -- .
+and then finish the merge.  It's not a critical limitation of my tool,
+IMO.  (Although, admittedly, it's a trick that not everyone would know
+to do.)
+
+Another difference is that, by doing rebases, my tool doesn't remember
+the entire history matrix that git-imerge holds while doing the work.
+I see this as an advantage, as once we've finished one conflict step,
+and we've verified with git-range-diff(1) and with proper testing that
+it's correct, the extra history would clutter the
+'git log --graph --oneline HEAD target current' (something essential
+when doing these operations).  Having a lean history in the process
+helps get it right, being able to check important commits in the log.
+
+Now about details of the implementaion:
+
+-  The tool supports --first-parent, and passes it transparently to
+   git-bisect(1).
+
+-  The tool supports the flags --pre-exec and --post-exec, which are
+   interpreted especially by the tool.
+
+-  The tool accepts other flags, and passes them transparently to
+   git-rebase(1).  If some flag isn't supported by git-rebase(1), it
+   will be that program which will complain.  Also, I haven't made an
+   attempt to validate that the flags passed make sense with this tool
+   (for example, passing --abort would be accepted by git-rebase(1), but
+    it wouldn't make sense, and would probably fail at some point).
+
+   It would be good to curate a list of flags that make sense.
+
+-  My tool, being a simple shell script with rudimentary option parsing,
+   only accepts flags that take a single shell argument.  That is,
+   --foo=3Dbar is ok, but --foo bar is not okay (and will probably result
+   in parsing errors).
+
+-  The tool is meant to be used almost as a drop-in of git-rebase(1).
+   It does the same thing, except that instead of rebasing on the
+   target, it rebases on the first commit of the target branch which
+   has conflicts.
+
+(It has grown a bit fatter than it was, but it's still way below
+ git-imerge.)
+
+	$ wc -l <src/bin/git-brebase=20
+	164
+
+We'll discuss the exact way it should be integrated within git(1), but
+first it'd be interesting to get feedback about the tool itself,
+regardless of the actual form.  Actually, because of the specialized
+flags --pre-exec and --post-exec, and the --first-parent flag from
+git-bisect(1) --and the fact that it runs git-bisect(1) machinery--, I'm
+not entirely sure that it should be just a new flag to git-rebase(1).
+It might be confusing to have these three flags being dependent on
+another flag, and not being able to use this within a git-bisect(1)
+session, unlike other git-rebase(1) operations.  That might call for
+a new git command.
+
+Please let me know any feedback!  :)
+
+Junio, since you seemed to love git-imerge, I wonder what you'll think
+of this tool.  :-)
+
+Having presented the tool, below goes the implementation.
+
+
+Have a lovely day!
+Alex
+
+---
+#!/bin/bash
+# Copyright 2026, Alejandro Colomar <alx@kernel.org>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+set -Eeufo pipefail;
+shopt -s lastpipe;
+
+err()
+{
+	>&2 printf '%s\n' "$(basename "$0"): error: $*";
+	exit 1;
+}
+
+fp=3D'';
+other=3D'';
+pre=3D'';
+post=3D'';
+while test $# -ge 1; do
+	case "$1" in
+	--first-parent)
+		fp=3D'--first-parent';
+		;;
+	--pre-exec=3D*)
+		echo "$1" \
+		| sed 's/--pre-exec=3D//' \
+		| read -r pre;
+		;;
+	--post-exec=3D*)
+		echo "$1" \
+		| sed 's/--post-exec=3D//' \
+		| read -r post;
+		;;
+	-*)
+		other=3D"$other $1";
+		;;
+	*)
+		break;
+		;;
+	esac;
+	shift;
+done;
+gbopts=3D"$fp";
+gropts=3D"$other";
+
+if test $# -lt 1; then
+	err 'Missing target commit.';
+fi;
+if test $# -gt 1; then
+	err 'Too many arguments.';
+fi;
+git rev-list -1 "$1" \
+| read -r tgt;
+git rev-parse --abbrev-ref HEAD \
+| read -r branch;
+
+# Set up the callback script for 'git rebase run'.
+mktemp \
+| read -r callback;
+cat >"$callback" <<__EOF__
+#!/bin/bash
+
+	set -Eeufo pipefail;
+	shopt -s lastpipe;
+
+	git rev-list -1 HEAD \
+	| read -r bisect_head;
+
+	if test -n '$pre'; then
+		printf '%s' 'Pre-rebase exec: ';
+		pre=3D'$pre';
+		if
+			\$pre;
+			x=3D"\$?";
+			true;
+		then
+			case "\$x" in
+			0)
+				echo 'success';
+				;;
+			125)
+				echo 'skip';
+				git checkout --detach "\$bisect_head" 2>/dev/null;
+				exit 125;
+				;;
+			*)
+				echo "failure (\$x)";
+				git checkout --detach "\$bisect_head" 2>/dev/null;
+				exit "\$x";
+				;;
+			esac;
+		fi;
+	fi;
+
+	git switch '$branch' >/dev/null 2>/dev/null;
+	git rev-list -1 HEAD \
+	| read -r old_head;
+	printf '%s' 'Rebase: ';
+	if git rebase $gropts "\$bisect_head" >/dev/null 2>/dev/null; then
+		echo 'success';
+	else
+		echo 'conflict';
+		git rebase --abort >/dev/null;
+		git checkout --detach "\$bisect_head" 2>/dev/null;
+		exit 1;
+	fi;
+
+	if test -n '$post'; then
+		printf '%s' 'Post-rebase exec: ';
+		post=3D'$post';
+		if
+			\$post;
+			x=3D"\$?";
+			true;
+		then
+			case "\$x" in
+			0)
+				echo 'success';
+				;;
+			125)
+				echo 'skip';
+				git reset --hard "\$old_head";
+				git checkout --detach "\$bisect_head" 2>/dev/null;
+				exit 125;
+				;;
+			*)
+				echo "failure (\$x)";
+				git reset --hard "\$old_head";
+				git checkout --detach "\$bisect_head" 2>/dev/null;
+				exit "\$x";
+				;;
+			esac;
+		fi;
+	fi;
+	git checkout --detach "\$bisect_head" 2>/dev/null;
+	exit 0;
+__EOF__
+chmod +x "$callback";
+
+# Try the target first.
+git checkout --detach "$tgt" 2>/dev/null;
+if "$callback"; then
+	exit 0;
+fi;
+git status;
+
+# Bisect.
+# shellcheck disable=3DSC2248  # gbopts may hold multiple options
+git bisect start $gbopts >/dev/null;
+git bisect bad "$tgt" >/dev/null;
+git merge-base "$branch" "$tgt" \
+| xargs -I{} git bisect good {};
+git bisect run "$callback";
+git rev-list -1 bisect/bad \
+| read -r bad;
+git bisect reset >/dev/null 2>/dev/null;
+
+# Perform the conflicting rebase
+git switch "$branch";
+# shellcheck disable=3DSC2086  # gropts may hold multiple options
+git rebase $gropts "$bad";
+if test -v post; then
+	echo 'Running post-rebase exec.';
+	$post;
+fi;
+
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--hw4ffy3fb3ra7ngc
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-wmMEABEIACMWIQS03Plbjnx/WLb9533IubjJ2sAG9wUCasFaewUDAAAAAAAKCRDIubjJ2sAG95o3
-AKC/RyJc0jhMFBMCg4rdoXsdgX7hMACfc8ztb9i6qM/gqrghRJTwoRg+6K0=
-=/Vn8
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrBYXwACgkQ64mZXMKQ
+wqnX+A//Xq9HhJvBF0Si+xN+VtLOpPeF39JYjbf/G08kh6/m15fDxT4q95jU9151
+/kxGLS14+xGXHhenr4np7vReTJ/fgPXN5OVP6sPrjw+4zyuidZg/xUlGLerdiw8b
+ZeqmwYrx6XhPbijaVsb0xAwd32RCz/swwgF6nFP8myiO/X5dkVlMuPO0KDRtid0S
+qZOYVdEsv6gWJ7sg4M/KvzuaFWIkeJ43y4/YtpOMw/hkNAOfA/Ocgos31WiijeZC
+rfsmYm3LuYA0mzjqpN2cLrJJb5xY97BajtliMpLZwM0Q0UxNtkAattNFWIT2q9mw
+sZjeqMdYDicii+Sqx2xXSsqCFRbgT56rJdWKLvfLcBDxybzpaa1jj8hGdTs/gVrT
+KUm8JKBSlJa15Z+AophQ+0Jk76Fv2m5vm44wXJOX/vxNaWg7MiCItLGLdRCQT0XF
+FiIxPgHl0e6EoEBt5nClF07Bs6dFuUH1Gght5Had5sRPtVyJ5FJLq9E6M4DIAyCd
++cXM3G1qXnWb3p8YC/ts5Gd486zISBlsNTgU2ADlNCLo6QBk/Ki4c5BskP9hjUYW
+ujsYk51CQwlSShTpZ5KZOm5qtHpfZsMm+XneOYRn4AGCQLXd7JI0MMArS2Isd0QD
+Gd7lmYL22i00Js0Nla5EdfwLlbKS5r0bUa7NuW/TUhh7LJ8TlFQ=
+=apEd
 -----END PGP SIGNATURE-----
 
---------------Wc0dxpXsdkxpjLZfZA7Xx5Zz--
+--hw4ffy3fb3ra7ngc--
