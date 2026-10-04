@@ -1,71 +1,70 @@
-Received: from mail-dy2-f42.google.com (mail-dy2-f42.google.com [74.125.229.42])
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFC02737FC
-	for <git@vger.kernel.org>; Sun,  4 Oct 2026 08:31:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9D73B14C7
+	for <git@vger.kernel.org>; Sun,  4 Oct 2026 08:34:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791102696; cv=none; b=TQoUl6bdoxKA3ctIYy53rZDP6Uw+mcROXS0ozMY2rNCnDsvXmbCH3r54+V4NJoZEp7sW1NDbHDTX/66yRq7rlCvooPeZq2dtBMMZbf2EAG+Py86BCv+i9aeOwYD37nO4XyoqF8DaTUHjitNnVU8N700UwLSOK+pHrQte2GG5vt4=
+	t=1791102893; cv=none; b=s/HuLDeUt2YsayS0D3lDdfuSoF+g72Rld7F3JvdaRGQgvSe8djbhEDx3Ka2C1nae7IXvVjyY0s6CdJgHRsWo1xE2JlESd8wQxmiZnK/kfg8ZBp9O98GylAATRaegdIX+fxvNftqKALLmqXTbuK/1QTO5RK2R4xwrXXCbdjwNzUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791102696; c=relaxed/simple;
-	bh=nOI/bylgDt7ow3Dvcym8KOQ3qu18gKP7Q8o5LYOkzJ0=;
+	s=arc-20240116; t=1791102893; c=relaxed/simple;
+	bh=DVaRUIf3bS8xK3OMvm09YI5tGWeIiKGyMmW0+W9giJM=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=hQBC79L/uiuosCWxfO/6tR+tvtTnvHmYvpfC3Cwwjp8H2jzCQDhMx/g0TOpTufmDCU8aQtNQd/1SYNBiE5AbQeznxVvHGHB72kDvTcbv/nn5bfu2wR2wfaqVDWt8m6Eak+DxaF/TKH5VJg1EsubxatiU3fFOOrpmeL7ZsoQJ07M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I8Ci40D/; arc=none smtp.client-ip=74.125.229.42
+	 MIME-Version:To:Cc; b=j0UxDn6fhnmxyLIPc88/4iWAO98NYNxe89EOVMAoXGU/2LF2cX321rKH4VxvYMyLlgvZH9xVreUUqDEEdDmmc8MEvar3zMIcrW+IGAm9SGc1W24E/g2PVIFs/jYVrPL4zqWr3Ha4EfLn4hWYONSUVABlbcHEZLPoTPPSWdrsykg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kBq2OuQY; arc=none smtp.client-ip=209.85.210.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I8Ci40D/"
-Received: by mail-dy2-f42.google.com with SMTP id 5a478bee46e88-35122ae71e9so181326eec.1
-        for <git@vger.kernel.org>; Sun, 04 Oct 2026 01:31:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kBq2OuQY"
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-824e6e6ed71so591814a34.1
+        for <git@vger.kernel.org>; Sun, 04 Oct 2026 01:34:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791102691; x=1791707491; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791102890; x=1791707690; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=wWhbVinzEes10GXoSlAHYkAXLv2YhYEFRcaWEcIBX78=;
-        b=I8Ci40D/BcbWFLGcjdCUsYfmvnpeKcnCYdglCHvMWtzTpy+UehPkJk/pYyV2An+In7
-         CmfsFkZY5nCL8xSCveEalcXqvKird8+AEVpvPuArszxrnnGe9LvcpgWvFb1tw7bSlCwh
-         XAzl4gzMgAyOlc3YVPRRFiCci8JVwXmGW3C5fued0yBajtNQcquPMnSus7g7lJy2HEmo
-         SBtd4TPMUkeGnAX00tCLgkHuv7RNfhWgKLfR1Lypog39sXa/giKQI7BWEAX10Yydq6rR
-         xXbwv0yLAoCyDTFofNy17KAmAwyeTDaASEfq1PiC1i8+T+bHks22AwH4Wxn2GGybGsdN
-         I6uA==
+        bh=hM3FQhCle8xEohq9GLnJZweyAnudT9wikXH6iLT2X0Y=;
+        b=kBq2OuQYhpP9DuvmHn+oJepZNkj73qzJ5J5i9Pv7RQLJjZO4Gc/5DOHfo4X/LET4Mr
+         3FKDBIhkG2rRgvt9O2puGhqfIuOgbmUm3vMHuL/yrqf8O4g+Dl+LdzX/ts8nXK0dTBCZ
+         ARmRKtZikLLV9zJK0JIyo+lYMWlWJX0UH9Ge5pBq+aafXE+qfmnACJUCs7DeNQC+1FYi
+         xXKF1oOtu9vQZcTK0kO/3IruX1PxKX3VhPSObn0/GZx+0zYHNJcYrl+A94+i4TVx8fMh
+         OsfwU6KJp0jyXlKcG0d6d/Cqcbhr29cOW29aG3ifUwZ8AeMsrg6+HWeSiMCnr7wlchbL
+         G0Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791102691; x=1791707491;
+        d=1e100.net; s=20260707; t=1791102890; x=1791707690;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=wWhbVinzEes10GXoSlAHYkAXLv2YhYEFRcaWEcIBX78=;
-        b=XJVJvoPZ0MOai8Z8uuvoNzMJjubcYEpk83rNxYbMH2XoEBV2AzJFr1bAgTKFBbfW7K
-         iNBJasKelNbvSow76QLkW09TFjglROQLwnOWzqns8RRdwymYCut0DUWqNSVw3RatwddD
-         rtKw5H6SlZFmRLZSPSKcpxdl3+dwpUnozmF4Zh5LV9HlmKx2yusR+J2mBYoofnlLFbAA
-         sqYKsah6dTN4bk0wt5TfGcAG9PgOIx9DhVu6o+eSLTwlhPpNuDIG8ZXKA1jDdnEBeUN0
-         sgajeQ3nzy4ZlDWCbLTOtnngefu35mj0mLK1lnZ+O51q421+tWXWKW7id7DB9uj7V19N
-         Lghg==
-X-Gm-Message-State: AFq9FYL5R9RPZE5zxIS4nNC12qGBwmdUHw80VokQVgrmYXcGf4/a6+MT
-	qBJzvMqDBcd6ddbQYR28Wz6u9w5lLIIhzXHrNJ4cibZLZ83maKG1vn7qjxQnrw==
-X-Gm-Gg: AYBFou1uFBt0o+mjopaa8ZRb/ZfNwrgNftA8bHZeq/ztukkzJhfcXNkXrpqrsBq0Rrb
-	2ZJdz8kqoG19jv6oDAbr3+F0c+e+9AZz9agqy9ZbV9CifdlEuugOBYCByWvh/sflcEWay6tS/t2
-	21O+5+4JNqZxskby4QejGOES4FAsjwNe07IiOL7kNlxQc6keYRekkYFDtPjicbSvGJSHtJYHbbm
-	j8trL0sSwztxioGM6JCzsiUecH7s0wPgwNItvdlF8ltmj86RJAdhobL0pbpsw67/Wgvd9SDiNvM
-	lCIk+HnNHFsS9Tv+xf1EC/y/pb//CDgju97jh7LG3Wvug5JGxewE+agAk9PZeh398UpB07kXBfA
-	o59R25JlaAjHN0sb3NdWN5AlU/mBVyoM4NC2mNKgcfegONQ6sftkq1/8LWc1vZef/hFHwkEgMzc
-	k5YtU0Nua2tXr3Bdi/G7TgkqaRb5Yc3DiEqU86vtNMxm57J+pL+9CZunZjwMnYQUjffr+bIqyAR
-	w==
-X-Received: by 2002:a05:693c:821b:b0:351:25b6:c867 with SMTP id 5a478bee46e88-35125b6c996mr1633471eec.2.1791102690473;
-        Sun, 04 Oct 2026 01:31:30 -0700 (PDT)
-Received: from [127.0.0.1] ([52.159.140.53])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3512718a18esm3659356eec.17.2026.10.04.01.31.29
+        bh=hM3FQhCle8xEohq9GLnJZweyAnudT9wikXH6iLT2X0Y=;
+        b=2DxhvwqJV1kvFQEaAXtCE2nB9W8rl1BCPS2Yq282wF/z1+4FdNyAwcjd3ozGOFzFsk
+         +40poxcPIn+9/CJlbbjHHZ9ooGQpo+6w+XpgGohFpIu0u/B/d7P6EsOL26zXCGN6iVz3
+         LNyadtBlxtGoH8uBioXIQ/45JwksBxBTMQdoMYf3aL3eymaS5RO9LNgIq9d5aiCN8VD8
+         y3MPsUIE5+31Hcw0/j5YlGewGaJX9uequPtPbVdlnDyh/xMz3dq794wL27nMJed6PBpm
+         ZYHQ8al3aea7ly7Rl5BFwO+oRXGQzVAbtgQFuIh+OPUQk5UPO8okzYwPCm+iMWuLM3b+
+         QS5A==
+X-Gm-Message-State: AFuF++npQPNT+XoSbsK71ZfCfgYt4DArC7UMfo8+YgphwBsWoAGJTEXw
+	PLdk0nwNDK2by0V8UzxT13gkL/0hFwzV7xS1Ud8DHK6PFNJWae1t34VUFujPFxoo
+X-Gm-Gg: AYBFou3vc191JAlX4vK30PkgRBknQu+d7zSUAuAFwACaDE2RCLX3FQcIX9Rs26QEujT
+	iYpWIxvVXmjyNvLcmttqZhGa8elf5Bf/SPrPjfIL+ClKkPYzg7MeLPritSPfCvTwzwsIuwXr2br
+	/CuXuo5B27aXOuzHqs1lWeN02fQ+GSMLZ/bI2TXWU/MMXXM1u2tK62Dq2uIdI3FB58H4Ld638zX
+	C6xhyKOsNxUp1y14r1NDkl7J6gW4R6GA6CQl9IUKjYnzxyjkXzjt2SsXBQrGrKm8UQS8kYItCxo
+	LFmDLgCVUb2dUwWuFmaIAmtdHYNK+aWhUcDUTe4FRJyiFhcYpLpogQRX6wRQbNwI2o+kkwkuvLd
+	L+sZfUxqd8WNhE2Y9bmdYJyecl3OEHQF8q68QD8m8s+LThaMahv1j4lgZeoenlGwFzQU2N8ufDC
+	SWF/sG+ti/VlvMaDmcfbn18dvGXupLgOoN86Tg2W7uGkIiU6E72We7HUCp5Q5OuDTovf7UEVZpv
+	A==
+X-Received: by 2002:a05:6808:5094:b0:4b5:5bfd:518f with SMTP id 5614622812f47-4f679fe0439mr5464353b6e.21.1791102889543;
+        Sun, 04 Oct 2026 01:34:49 -0700 (PDT)
+Received: from [127.0.0.1] ([20.15.229.147])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4f5251e3956sm6696010b6e.15.2026.10.04.01.34.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Oct 2026 01:31:29 -0700 (PDT)
-Message-Id: <3abcc8915b4aa199d95a4eeb39a57de2fc491d3d.1791102684.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2412.v6.git.git.1791102684.gitgitgadget@gmail.com>
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
-	<pull.2412.v6.git.git.1791102684.gitgitgadget@gmail.com>
+        Sun, 04 Oct 2026 01:34:48 -0700 (PDT)
+Message-Id: <pull.2428.v2.git.git.1791102886740.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2428.git.git.1790960147943.gitgitgadget@gmail.com>
+References: <pull.2428.git.git.1790960147943.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 04 Oct 2026 08:31:23 +0000
-Subject: [PATCH v6 3/4] remote: add "git remote add --limited-fetch"
+Date: Sun, 04 Oct 2026 08:34:46 +0000
+Subject: [PATCH v2] branch: let --delete-merged default to every upstream
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,147 +75,159 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
     Harald Nordgren <haraldnordgren@gmail.com>
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-A remote added the ordinary way tracks every branch it has, via a
-wildcard remote.<name>.fetch refspec. That is wasteful for a remote
-whose history is only worth following for the branches actually in
-use locally, and it can make "git fetch" negotiate history for
-branches nobody asked for.
+Cleaning up every branch whose work has landed upstream required
+typing '**' as the pattern.
 
-Give "git remote add" a --limited-fetch option that sets up
-remote.<name>.refmap instead of remote.<name>.fetch, so that
-"git fetch <name>" only fetches the branches already tracked, as
-described in the previous commit. It is rejected together with
--t/--track or --mirror, since those already say explicitly what to
-fetch.
+Let a bare "git branch --delete-merged" consider every upstream. This
+applies only when the option comes last, so
+"git branch --dry-run --delete-merged" previews the cleanup.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- Documentation/git-remote.adoc |  8 +++++++-
- builtin/remote.c              | 28 ++++++++++++++++++++++------
- t/t5505-remote.sh             | 16 ++++++++++++++++
- 3 files changed, 45 insertions(+), 7 deletions(-)
+    branch: let --delete-merged default to every upstream
+    
+    A bare git branch --delete-merged now considers every upstream.
+    
+    Changes in v2:
+    
+     * Name the default pattern ** instead of */*. Drop reference to
+       --merged.
 
-diff --git a/Documentation/git-remote.adoc b/Documentation/git-remote.adoc
-index eaae30aa88..4255f8b3e6 100644
---- a/Documentation/git-remote.adoc
-+++ b/Documentation/git-remote.adoc
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [synopsis]
- git remote [-v | --verbose]
--git remote add [-t <branch>] [-m <master>] [-f] [--[no-]tags] [--mirror=(fetch|push)] <name> <URL>
-+git remote add [-t <branch>] [-m <master>] [-f] [--[no-]tags] [--mirror=(fetch|push)] [--[no-]limited-fetch] <name> <URL>
- git remote rename [--[no-]progress] <old> <new>
- git remote remove <name>
- git remote set-head <name> (-a | --auto | -d | --delete | <branch>)
-@@ -70,6 +70,12 @@ the `refs/remotes/<name>/` namespace, a refspec to track only _<branch>_
- is created.  You can give more than one `-t <branch>` to track
- multiple branches without grabbing all branches.
- +
-+With `--limited-fetch` option, instead of a `remote.<name>.fetch` refspec
-+that tracks all branches, `remote.<name>.refmap` is set up so that a
-+refspec-less `git fetch <name>` only fetches branches our local branches
-+are built on. See the `--refmap` entry in linkgit:git-fetch[1] for
-+details.
-++
- With `-m <master>` option, a symbolic-ref `refs/remotes/<name>/HEAD` is set
- up to point at remote's _<master>_ branch. See also the set-head command.
- +
-diff --git a/builtin/remote.c b/builtin/remote.c
-index de989ea3ba..f036dd5d6f 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -179,6 +179,7 @@ static int add(int argc, const char **argv, const char *prefix,
- {
- 	int fetch = 0, fetch_tags = TAGS_DEFAULT;
- 	unsigned mirror = MIRROR_NONE;
-+	int limited_fetch = -1; /* unspecified */
- 	struct string_list track = STRING_LIST_INIT_NODUP;
- 	const char *master = NULL;
- 	struct remote *remote;
-@@ -198,6 +199,8 @@ static int add(int argc, const char **argv, const char *prefix,
- 		OPT_CALLBACK_F(0, "mirror", &mirror, "(push|fetch)",
- 			N_("set up remote as a mirror to push to or fetch from"),
- 			PARSE_OPT_OPTARG | PARSE_OPT_COMP_ARG, parse_mirror_opt),
-+		OPT_BOOL(0, "limited-fetch", &limited_fetch,
-+			N_("fetch only the branches we build on, instead of every branch")),
- 		OPT_END()
- 	};
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2428%2FHaraldNordgren%2Fbranch-delete-merged-default-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2428/HaraldNordgren/branch-delete-merged-default-v2
+Pull-Request: https://github.com/git/git/pull/2428
+
+Range-diff vs v1:
+
+ 1:  9a576d941c ! 1:  c496777c0b branch: let --delete-merged default to every upstream
+     @@ Commit message
+          branch: let --delete-merged default to every upstream
+      
+          Cleaning up every branch whose work has landed upstream required
+     -    typing '*/*' as the pattern.
+     +    typing '**' as the pattern.
+      
+     -    Let a bare "git branch --delete-merged" consider every upstream. As
+     -    with "--merged" without a commit, this applies only when the option
+     -    comes last, so "git branch --dry-run --delete-merged" previews the
+     -    cleanup.
+     +    Let a bare "git branch --delete-merged" consider every upstream. This
+     +    applies only when the option comes last, so
+     +    "git branch --dry-run --delete-merged" previews the cleanup.
+      
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+      
+
+
+ Documentation/git-branch.adoc |  6 ++++--
+ builtin/branch.c              | 14 +++++++++++---
+ t/t3200-branch.sh             | 25 ++++++++++++++++++++++---
+ 3 files changed, 37 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
+index bfdf459329..4a91ae6879 100644
+--- a/Documentation/git-branch.adoc
++++ b/Documentation/git-branch.adoc
+@@ -25,6 +25,7 @@ git branch (-m|-M) [<old-branch>] <new-branch>
+ git branch (-c|-C) [<old-branch>] <new-branch>
+ git branch (-d|-D) [-r] <branch-name>...
+ git branch --edit-description [<branch-name>]
++git branch [--dry-run] --delete-merged
+ git branch [--dry-run] (--delete-merged <pattern>)... [<branch-pattern>...]
  
-@@ -211,6 +214,10 @@ static int add(int argc, const char **argv, const char *prefix,
- 		die(_("specifying a master branch makes no sense with --mirror"));
- 	if (mirror && !(mirror & MIRROR_FETCH) && track.nr)
- 		die(_("specifying branches to track makes sense only with fetch mirrors"));
-+	if (limited_fetch == 1 && track.nr)
-+		die(_("--limited-fetch does not make sense with -t/--track"));
-+	if (limited_fetch == 1 && mirror)
-+		die(_("--limited-fetch does not make sense with --mirror"));
+ DESCRIPTION
+@@ -202,14 +203,15 @@ This option is only applicable in non-verbose mode.
+ 	Print the name of the current branch. In detached `HEAD` state,
+ 	nothing is printed.
  
- 	name = argv[0];
- 	url = argv[1];
-@@ -230,13 +237,22 @@ static int add(int argc, const char **argv, const char *prefix,
- 	repo_config_set(the_repository, buf.buf, url);
- 
- 	if (!mirror || mirror & MIRROR_FETCH) {
-+		int use_limited_fetch = mirror == MIRROR_NONE && track.nr == 0 &&
-+			limited_fetch == 1;
-+
- 		strbuf_reset(&buf);
--		strbuf_addf(&buf, "remote.%s.fetch", name);
--		if (track.nr == 0)
--			string_list_append(&track, "*");
--		for (size_t i = 0; i < track.nr; i++) {
--			add_branch(buf.buf, track.items[i].string,
--				   name, mirror, &buf2);
-+		if (use_limited_fetch) {
-+			strbuf_addf(&buf, "remote.%s.refmap", name);
-+			strbuf_reset(&buf2);
-+			strbuf_addf(&buf2, "+refs/heads/*:refs/remotes/%s/*", name);
-+			repo_config_set(the_repository, buf.buf, buf2.buf);
-+		} else {
-+			strbuf_addf(&buf, "remote.%s.fetch", name);
-+			if (track.nr == 0)
-+				string_list_append(&track, "*");
-+			for (size_t i = 0; i < track.nr; i++)
-+				add_branch(buf.buf, track.items[i].string,
-+					   name, mirror, &buf2);
- 		}
- 	}
- 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 5fbfcb0848..0168d5abfe 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -137,6 +137,22 @@ test_expect_success 'filters are listed by git remote -v only' '
- 	test_grep ! "\[blob:none\]" out
+-`--delete-merged <pattern>`::
++`--delete-merged [<pattern>]`::
+ 	Delete local branches whose configured upstream matches
+ 	_<pattern>_, but only when their tip is reachable from that
+ 	upstream. In other words, the work on the branch has already
+ 	landed on the upstream it tracks, so the local copy is no longer
+ 	needed. _<pattern>_ may name a ref, a remote (using the branch its
+ 	`HEAD` points at), or a shell-style glob. The option can be
+-	repeated to widen the upstream match.
++	repeated to widen the upstream match. Without _<pattern>_, every
++	upstream matches.
+ 	Optional _<branch-pattern>_ arguments limit which local branches
+ 	are considered, e.g. `git branch --delete-merged 'origin/*'
+ 	'topic-*'`.
+diff --git a/builtin/branch.c b/builtin/branch.c
+index a613148fc7..f2a4e117dc 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -39,6 +39,7 @@ static const char * const builtin_branch_usage[] = {
+ 	N_("git branch [<options>] (-c | -C) [<old-branch>] <new-branch>"),
+ 	N_("git branch [<options>] [-r | -a] [--points-at]"),
+ 	N_("git branch [<options>] [-r | -a] [--format]"),
++	N_("git branch [<options>] --delete-merged"),
+ 	N_("git branch [<options>] (--delete-merged <pattern>)... "
+ 	   "[<branch-pattern>...]"),
+ 	NULL
+@@ -1029,9 +1030,16 @@ int cmd_branch(int argc,
+ 		OPT_BOOL(0, "create-reflog", &reflog, N_("create the branch's reflog")),
+ 		OPT_BOOL(0, "edit-description", &edit_description,
+ 			 N_("edit the description for the branch")),
+-		OPT_CALLBACK_F(0, "delete-merged", &delete_merged, N_("pattern"),
+-			N_("delete merged branches whose upstream matches <pattern> (repeatable)"),
+-			PARSE_OPT_NONEG, parse_opt_strvec),
++		{
++			.type = OPTION_CALLBACK,
++			.long_name = "delete-merged",
++			.value = &delete_merged,
++			.argh = N_("pattern"),
++			.help = N_("delete merged branches whose upstream matches <pattern> (repeatable)"),
++			.flags = PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG,
++			.callback = parse_opt_strvec,
++			.defval = (intptr_t) "**",
++		},
+ 		OPT_BOOL(0, "dry-run", &dry_run,
+ 			N_("with --delete-merged, only print which branches would be deleted")),
+ 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index cdb6c6a634..e60f4794c8 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -2133,9 +2133,28 @@ test_expect_success '--delete-merged result is independent of stacked branch nam
+ 	)
  '
  
-+test_expect_success '--limited-fetch works in a full repository too' '
-+	test_when_finished "rm -rf full-add" &&
-+	git clone --no-local one full-add &&
+-test_expect_success '--delete-merged requires a value' '
+-	test_must_fail git -C forked branch --delete-merged 2>err &&
+-	test_grep "requires a value" err
++test_expect_success '--delete-merged without a pattern matches every upstream' '
++	setup_repo_for_delete_merged &&
++	create_merged_branch merged &&
 +	(
-+		cd full-add &&
-+		git remote add --limited-fetch upstream ../two &&
-+		test_cmp_config "+refs/heads/*:refs/remotes/upstream/*" \
-+			remote.upstream.refmap &&
-+		test_must_fail git config get remote.upstream.fetch
++		cd repo &&
++		git branch --track local-topic main &&
++		git checkout --detach &&
++
++		git branch --dry-run --delete-merged &&
++
++		check_branches <<-\EOF &&
++		local-topic
++		main
++		merged
++		EOF
++
++		git branch --delete-merged &&
++
++		check_branches <<-\EOF
++		main
++		EOF
 +	)
-+'
-+
-+test_expect_success '--limited-fetch conflicts with -t' '
-+	test_must_fail git remote add --limited-fetch -t main upstream ../two
-+'
-+
- test_expect_success 'check remote-tracking' '
- 	(
- 		cd test &&
+ '
+ 
+ test_expect_success '--delete-merged honours branch.<name>.deleteMerged=false' '
+
+base-commit: c46c1e37724f0478939de636ab8ea5a89086d532
 -- 
 gitgitgadget
-
