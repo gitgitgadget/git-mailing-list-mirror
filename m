@@ -1,143 +1,183 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DB4353EC0
-	for <git@vger.kernel.org>; Sun,  4 Oct 2026 16:17:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504D2364929
+	for <git@vger.kernel.org>; Sun,  4 Oct 2026 16:25:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791130629; cv=none; b=S9uVVKc7/+hs9WE2di0bjKoLgwvcMZSvW42PIAe3vdvmO3j/4RYjzZ/TO3t6aLx2qUDXeMrmBjuK5w7dBDN8xElf7SnX7XNoIlpBAK2PfVONB4amCThH0iHVEJP7yOO2a3hbtKgKBwLUkejBXc4r2g3kgXdMldz4mVEls1U3vtE=
+	t=1791131131; cv=none; b=aNYX1BckXvsAzLxsWXviMQ9KGHBZAjYtwLhqBAjhFMKbd5qcbYiX1xD3zMSj3VmgIAoQ2K7TOsDIWHg9GWNYlKKpGvoYI8Zp6AgMTQbiSlH1ba1O2iJ4Vb5DqA7QDrg0qwsO6+b0TzPJx7MoLJPr27LCD0OfMdzsj8vTVFkLFkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791130629; c=relaxed/simple;
-	bh=e0ITVnE0q9+k4NFl+VhehxVVBSXzlYp5kxxFirgdHiw=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=aZOcfByDIlWy3prJfJQJJcTrAnRGC1L/Sjv7BRCOkGoegZJ4Ah0EzOHtz36dpnCoZzy+ttTl0MR57JHx2u2/kS2Hzyn5Npu3G0rN3Znf0b9t1/69aSsi5xl56HxKups8rxgjQaixDW8JxtD02p8tGXn9xKgfGJFdsqA5qQiK6II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fionn.email; spf=pass smtp.mailfrom=fionn.email; dkim=pass (2048-bit key) header.d=fionn.email header.i=@fionn.email header.b=J9OPERDK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e/WIoTVg; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fionn.email
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fionn.email
+	s=arc-20240116; t=1791131131; c=relaxed/simple;
+	bh=PUIisq8fPM8r4kIvtpGDzZjN7H2H5zC9N/BSmk8u+AI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rM7gLm8NfgMZreMeEJtzR76vKYuOz3SfkXhgB+MCxmTUVJafpiXXbNdvJVi6M71c+1aGj+L8ne+VcgGL48dHsHj/+KX+MkYHafYxsUMUZZha/1jGfswB90w2AbfOtEmLfMQLZTTYPMAA6R1DaA2QTBOYYIBWrHu9J1vwjZry55o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=noT/HP+0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sQQ9A3Xn; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fionn.email header.i=@fionn.email header.b="J9OPERDK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e/WIoTVg"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="noT/HP+0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sQQ9A3Xn"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4298C14000B3
-	for <git@vger.kernel.org>; Sun,  4 Oct 2026 12:17:06 -0400 (EDT)
-Received: from phl-imap-02 ([10.202.2.81])
-  by phl-compute-03.internal (MEProxy); Sun, 04 Oct 2026 12:17:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fionn.email; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6F75F7A017E
+	for <git@vger.kernel.org>; Sun,  4 Oct 2026 12:25:28 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Sun, 04 Oct 2026 12:25:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791130626;
-	 x=1791217026; bh=PMctTMxaziFbFjcNga4rOQA/3GYzHRgW2E3g2Cx/3JU=; b=
-	J9OPERDKi6Fxsv4VzM2UkmW6bk66ozcqQNPGtJUq/+NxbABNx/Xu6Z6Wd+CfDrYq
-	yDe7dFLSZy/2oo8Ab0C0AxxOKstYfJfW/RPEFgXO8x5BmIFxrcJpkp4JKY3nYGAg
-	o2ahlu2iBgKmBBUUPDpH9nh8R9vNkTHdd3wwmBPLKK/kUor9mNv7h6+0sLmzhBP/
-	Lh9a7Hiu2N9xiWjZFxHMWCj+KWEI1orbn6q2uakw3GPQr5DK7HH/W8O4uOm2PFx4
-	VNvf7Sg3CtNUJfF/Wfg/JJGdS6kGW9GO9ppnNkp8iDJSHQkHrbSN9Vk23atPCCkY
-	db4d4nIFMWgYSX3uNv7NUQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1791131128;
+	 x=1791217528; bh=U3GfCTLzoQh7vzdwt1B3dQFjQG/QKghCpsmw5QV2CLY=; b=
+	noT/HP+0DYofPiHtxCUh5iok5TUCKhARtfyfLe6KGZu/aFJuNxla3KfphLcj6o64
+	0n45/QLss5l6KDtXZNC5VFLjq+WKZ9P+Rw+4kltkK/ZExd2nrgp3nydHZMRouW33
+	LoLwTnE4e5cYuQN76sos65nnh36AYTm6ua+jdf1QGUlC9u/jd+hRX97FKrD1E582
+	pXh97uq+KCae1SM38g52RUJRIIT44IBcV2BhGhO+P88h4yqaPHmJ43VWJ3VjH5Wu
+	B9W4gm9zt4PAVZirdP+C1Y9fERcy9wxO+B5GxTf4XQ4kDM1KvVG0U052kttcnfso
+	rnuqmbOlEKI+d/249bU4IA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791130626; x=
-	1791217026; bh=PMctTMxaziFbFjcNga4rOQA/3GYzHRgW2E3g2Cx/3JU=; b=e
-	/WIoTVg5Ipkoy0si8e519XR497DZu8Vk2tdqTPc7YkR1avkDrlMw5ctrMRX6PtPS
-	mSq/6BefohUvZSEtGV5QQbue28r1XJXt1unLQQjPkxmQ+9t9EN0E0lawhHNqu73n
-	0NLWDG2M8xtz1EAs0GzUlU4qpBD1kh9lj1GdADuajU/LZmn5wctqNMv5ZQNr8gJa
-	aIaf50Xi4qQN+Hkvmlf8XEjrb8+TbNgaNDi5DbOWMbNuM9EQAmft3qlb/cLDWrXD
-	skP5Ef4tjJy3znI79uIVSrA8cH+67hABIta6Zx5cApd7c+WjJuvfTqDTlz9lU8ZY
-	MTN2PjUIvNQ62nyuGvIsA==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791131128; x=
+	1791217528; bh=U3GfCTLzoQh7vzdwt1B3dQFjQG/QKghCpsmw5QV2CLY=; b=s
+	QQ9A3XnCL09fSTU67t9aQ+b0zVmNxFVt9Nk3SQDAstyZmR/+LRu0m10Stb8nx7IS
+	entlybdlBrcKY98UITML2nArm8hD9IqjlhS8R1XThq3YfA9I3VtN0HIExX7iis+X
+	m82+6SkOISXka8t5lfZpJdyjPKaDiMXU5Q7C8WZb3gEiUysm4Iwt9vFC/Tnfv813
+	aDkyJ6Wt4x9wTrU2TG1K0ICnxURLRg7ZfUT+xkQettLT7dcnECP6WML9F1fuYITw
+	zhdMm4rRJRqN0nqPtC6mME/UrWkQ4/W6JK0kzXKK5EI9aUcs2A3n8gvjf3/icfSe
+	3Zwrx0bD2jo/LMMZ+jQbQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=fionn.email a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791130626; d=fionn.email;
-	mf=PGZpb25uQGZpb25uLmVtYWlsPg==;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791131128; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:NTPIxDoLQUv5eFEgPX7H2Ixnr4/vFwpVz9adbIw/vglCI9q
-	GEMF19RtaQVx2q7tVqitgnCOv/pJBziZsiU55lD7wnkwnm9XR/iOkxQnWcWTEWOZ
-	JCaT0HY5BnuXBRGXM0o2D62MxihoBEclBv7b3qpgOzHPxgB1i6/G+7FhxyxS4qUJ
-	u2qMBJ5ZfSVTtPfu3M1R3aqm1gZaUNDKdRpFTtryGt/C6oes7irpT8NEfzEwsoSF
-	8KSMTxxDE09Q6NA1PNkj8+ppOj7FwooWlDnGi+ywJqDiGHudiq1ffCbqu2stbUDA
-	gtSAPIc5epCRzAO4dqkULMyBGllMSxk7TuFoqZA==;
+	s=fm1:rsa-sha256:F2SmdXOSC4D9QOMKTVV6/OH0YSvCZuvNphjLohxP3iiYhd0
+	Jp/t7J1lmd7IvfzH5LaEUB7eCff7QLcn4i1KEXFXa7kSJF2VupBtHVsEsPC8kMTB
+	rgAn1nkShucy3n8+wozFE1bwDILD5em6PZPy1TackNVdGDjmLsUo/deN93Mhr8CG
+	2m4wse0WXNFjbVU88zWPqnwRSBtHqVlKFFu4E9ZgOh5CxKyjrbC4rFDl+wMEaalp
+	5BxJROdPr2WmlvSsLdq+tJugmWPms12WkqHQ+0lX6GE9IpiEMd60uxaS02BJzspg
+	LN+5/3w7EqwzFuj8FFB2PTpRQmbAbBpNMnAAUWQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=12;
+	action=mi-m=1; hc=13;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:yMU5mZb+9u2ViBa3boZ370Kf01qL67RbzN2YmQ0S184=:e0ITVnE0q9+k4NFl+VhehxVVBSXzlYp5kxxFirgdHiw=;
-X-ME-Sender: <xms:AXzCakqIeudcowJcCktfGnsN9rHBNmESXaXj46VnPjws-5cZSdfdpA>
-    <xme:AXzCaldXZVHOLZ4yPmaEy0OSsnOk7GoDePoCNBHjcGacf3lZpywfC4xaLZTZTVg5v
-    Ki6Po-u8YdIv7k0BpjzX6DDSiUB8gxNfdrRHMRekMWM2I7ix7SpRw>
-X-ME-Proxy-Cause: dmFkZTFlkmp2QDk29tvjGfgcBhBteKNJjebdjkRYAB7SOSwrsWp8/wAJPfs7eAHb/6MpPK
-    o6p0zF1INN79GQ/ckzbcZb7+W2Dh+RmXKvecGML9rEUfDrvjglisJGPBYIgGkjjkzMZs3V
-    p7ef08JPc64bRH5I2zvlOd4vy01SdwcT2n6Cv0oJEOZzte3JDbsRgRDb3Q+T5jdTOuWahR
-    hhQ6PVQpHqDC54o7aIlPE+3UQ88nU8L6GvISNP/DvSYffRb0C2JzYQztyRYddFfreJsEof
-    3QQGt+gXzHmSOQJMhuLVxgM0HGcqe8CYM31+9JBd7UfZGkKqqZHXrJq20BNQibDyY8YqXU
-    J3tmaY8nsaTUK3pRWo1ZbR4fi+Uz7xF9MEAoKmIwgNGbBoMd4hRIcT//+VgS2OUz7F6W4i
-    UPVuNreAJvY8wUF03QxO1TiA0ninRxgVeAVJtRcs7U0Fs9UG6+Kgz90oRdb9l+K0lVaMXL
-    MgxDgbqdcL8FW0y/BUu110zqwe9IzTRtF3GGqydk3rccS25KCEX5I/MUjGYMhU/W3MLBTQ
-    rLOe7olsqGIu5iQylPWXaY2BhUShXkd0RJYBM88IqbNwfPGNurt5cWlwzQJyBzOrIXzNc8
-    SFnk4uKz2t64WJ81noSA6C9Kazd9pJW2AdJ3skNM1OuUhBENyVI/rcH7+rWg
-X-ME-Proxy: <xmx:AXzCaqt7O7BvVb6iEMRT8mOxTICQSoNIP7KTxeMHXuhuLwDLwACAsA>
-    <xmx:AXzCag90tEvmY0A6jKGM4X7R10zEDF_rgJk7LYIuSOa8K5GBe3bRdg>
-    <xmx:AXzCal2hBJEQSwu2F5fFEKwjO0xDxySXDnqd7GUPKgJZrg38L7Q1GA>
-    <xmx:AXzCalCcqlPbduehE9DrqXhy3FEC4xoPyOIUS-alY-eYQj19e4cXxw>
-    <xmx:AnzCavAA4iUhNCkhteW9wUUhYz8vio6P12E0TYRwNSzTvxdhQ6mIACT3>
-Feedback-ID: idcb64834:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id CBB37700065; Sun,  4 Oct 2026 12:17:05 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	from,in-reply-to,message-id,mime-version,references,subject,to,
+	user-agent;
+Message-Instance: m=1; h=sha256:Uxy8ho0bPgenqsylOB++Q6w9KDKx2TuB1QREhFKMlDU=:PUIisq8fPM8r4kIvtpGDzZjN7H2H5zC9N/BSmk8u+AI=;
+X-ME-Sender: <xms:-H3CaqT-ARXmWfaMMw747QCPt5WJkowP8Dw-64NSOX9lGROt7oO1OQ>
+    <xme:-H3Camqq_c4kBus__jzkCxuP-hY4r25OoB5dXxTY398gsTafid8HCiqgoj23iacVN
+    ZlKRMuP1WGjUIaLO2x_Cu_RbtLjMjW4T6rMvkM94KQtqwR2MoMhvg>
+X-ME-Received: <xmr:-H3CagJe57FLlbBlyf_-VP84yEg_UKpYNu8Ssbt9zDSOzG62fkyMlH1NvRWxkPpQsqZW_lOMk7WFsoaJElDCoBOOM4yoyYE4YuKL>
+X-ME-Proxy-Cause: dmFkZTG2oDs4hZLkaYWZKFpHwrquwR3rw0LINeUU/u7JVETAaCd11hwBGswaJekpCUq9Y6
+    n56YtwpBiv6TI7OFS8e0krv29agUbmrpOtQdw4zT4jtMM2aes06WwoQx8i1p0snbjH9hJ4
+    fe/KFNFnfR2cddschys6jYrZu/aTsarVxIyNCQi/zXfCk+nKf8vvnFllJs+bCWBYJ2frCH
+    qCzAZeWkZGku3lAap2krBtPx/x5QYqoXLJD7qxpNTWFUHmt+JfXskqzmM1eSKPWXpEi14g
+    ifyEshUACmA2XH5HIXw0Jv9SK3ZRNWciLFHT7fB0QEYKat3daipk+hydzsvq8kuObA5spD
+    I9TPKVntELRibf1exG+DCiBTTmKee8caqDe8UdZw+tEK4ol/GHBfQ6Xw2wvNbzSilNnI9/
+    gVnylE/RH9Masyc4VLXcJG+DcGQirEoCIqMdJecVcOo78e+eyMPOq7pBmP0DBA1935eW9S
+    JKbqEhAWBp6U+/VgsQDConZJNh75tD5UANCHPeX2HVq9qZHVctudebEFOTykv2w57lftuj
+    wRhNZ5AooIqanI1Li6Zd2cTMfG59IL8LBPu2ipkb74JCLjZOnREC+TD+hqTOr8QCGcGH2t
+    Mk+jlfqATMFPax1C8hFzp7C3oj2wYsQ/4a/LIiZ5zrjMw9dzsJK02Cfp+Qsg
+X-ME-Proxy: <xmx:-H3Cahr9cYlw4pQp7NBG0K8Ii2jKfUpxvtRIxXN5BRz0kaxKA03F1Q>
+    <xmx:-H3Cagzd-wO-Z77J2hNjqOkOY4S8_AoqDD27U9a2RjHpcCSSo1bZsw>
+    <xmx:-H3CatM_4i2YZNP6eXBEdmC5iWFetslDTA3mCc6bxNOOeFUlEYJVNg>
+    <xmx:-H3Cat4GavUKhFOmkWiHH7pSOP9OhwA-t0MgmaDzfVHCguRJAIN7lg>
+    <xmx:-H3Cas4DrKaxuXMnXTGyyLHz4vO_qpW8Pz3O0o9t6TABFoaJmlAb2aKh>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 4 Oct 2026 12:25:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,  "D .
+ Ben Knoble" <ben.knoble@gmail.com>
+Subject: Re: [PATCH v4 2/2] format-patch: learn --[no-]range-diff-notes
+In-Reply-To: <V4_format-patch_learn_--range-diff-notes.d5e@m5gid.xyz>
+	(kristofferhaugsbakk@fastmail.com's message of "Sun, 4 Oct 2026
+	12:17:54 +0200")
+References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
+	<V4_CV_format-patch_learn_--range-diff-notes.d5c@m5gid.xyz>
+	<V4_format-patch_learn_--range-diff-notes.d5e@m5gid.xyz>
+Date: Sun, 04 Oct 2026 09:25:26 -0700
+Message-ID: <xmqqqzi5touh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8; format=Flowed
-Date: Mon, 05 Oct 2026 00:17:04 +0800
-Message-Id: <DLW6TDPQ9DA8.3CY39XL14GO9E@fionn.email>
-To: =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, "Fionn via
- GitGitGadget" <gitgitgadget@gmail.com>
-Cc: <git@vger.kernel.org>, "Felipe Contreras" <felipe.contreras@gmail.com>,
- "Fionn" <git@fionn.email>
-Subject: Re: [PATCH] completion: exclude previous file arguments in Zsh
-From: "Fionn" <fionn@fionn.email>
-X-Mailer: aerc 0.22.0
-References: <pull.2216.git.git.1791026527023.gitgitgadget@gmail.com>
- <asIJO3CZ/P/2L4qi@szeder.dev>
-In-Reply-To: <asIJO3CZ/P/2L4qi@szeder.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-> "existing arguments" of what?
+kristofferhaugsbakk@fastmail.com writes:
 
-Of a subcommand that takes paths.
-
-> I don't do Zsh, but that 2 as index looks suspicious.
-
-Fair to be suspicious. word[1] is the subcommand (e.g. "add"), so we=20
-index from 2 on in order to skip it. This is independent of where the=20
-subcommand appears in the entire command line.
-
-> What will be excluded in the following command line:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
->   git -C dir -C subdir -c foo.bar=3Dbaz add file1 file2 <TAB>
+> git-format-patch(1) passes on the notes behavior that it is using for
+> the patches to git-range-diff(1). In turn you get the same Git notes
+> displayed in the range diff as the ones you used to generate the
+> patches. And that makes sense in most cases.
 >
-> I think we should exclude only those arguments that come after the git
-> command, in this case after "add", i.e. "file1" and "file2", but I
-> suspect that everything starting with "dir" will get excluded.
+> However, I often make notes between series versions that mostly prepend
+> to the original. They end up looking like this:
+>
+>     v3:
+>     [desc.]
+>     v2:
+>     [descr.]
+>     v1:
+>     [descr.]
+>
+> These notes are meant for the git-format-patch(1) output since they
+> document the iterations. But including them also includes them in the
+> range diff. And they have nothing useful to say there.
+>
+> Let’s teach git-format-patch(1) `--[no-]range-diff-notes` so that we
+> can pass in different notes refs to the range diff, or just turn them
+> off entirely.
+>
+> In addition to storing the list of notes, we also need a boolean
+> `override` to distinguish these two cases:
+>
+> 1. No such options were given and empty list (use `--notes`)
+> 2. Options were given and empty list (`--no-...` given; don’t use notes)
 
-In my testing this works correctly (i.e. file1 and file2 are not offered=20
-as completion candidates any more, but if e.g. dir or foo exist in the=20
-subdirectory, they would be offered).
+Nicely described.
 
-I've been dogfooding this for about 8 months on and off. Occasionally=20
-completion candidates I'd hope would be excluded are present, but this=20
-is because the fallback completion bypasses __gitcomp_file, which is a=20
-separate issue. I have not yet encountered completion candidates being=20
-unexpectedly excluded.
+> ***
+> Note that using `--creation-factor` without `--range-diff` will cause
+> the command to die. But this is not the case for `--[no-]range-diff-
+> notes`; we would have to check `rdiff_notes.override`, which is a sticky
+> value (cannot be turned off). The reason is that it is potentially
+> inconvenient to error out since it would not let you turn off
+> `--range-diff` in, say, some alias that uses `--no-range-diff-
+> notes`. Granted, it is difficult for me to come up with a concrete use
+> case since `--range-diff` requires a value, specifically a value which
+> is probably not that reusable (revision range), and yet you have
+> something like an alias set up with it. But why spend code closing
+> that door? There is no usability upside to erroring out.
 
-An easy way to test this is to link git-completion.zsh to _git and then=20
-add
+In short, do you mean something like this?
 
-    fpath=3D(/path/to/directory/containing/_git/file $fpath[@])
+  Unlike `--creation-factor`, `--[no-]range-diff-notes` does not
+  error out when used without `--range-diff`.  This flexibility
+  accommodates workflows where users might configure default options
+  in aliases or wrapper scripts, allowing `--range-diff` to be
+  toggled independently.
 
-to ~/.zshrc, or similar.
+I suspect that erroring out when only creation-factor is given,
+perhaps via an alias, was a design mistake.  A user who wants to use
+a setting customized for their workflow must resort to an alias
+because there is no configuration variable to control its default.
+In that light, the same argument for --[no-]range-diff-notes applies
+here.  On the other hand, perhaps if we had a configuration variable
+to control which notes are compared in range-diff and shown in the
+output, we would not have to worry about these things.  I do not
+know.
+
+Other than that (no, not the "shall we also add a configuration?",
+which I consider is outside the topic, but the overly verbose log
+message that gives wandering thought process that does not help the
+readers with crisp reasoning that leads to the decision which they
+may or may not agree with), it looks good.
