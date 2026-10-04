@@ -1,125 +1,143 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675E334D382
-	for <git@vger.kernel.org>; Sun,  4 Oct 2026 16:10:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DB4353EC0
+	for <git@vger.kernel.org>; Sun,  4 Oct 2026 16:17:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791130218; cv=none; b=GIWWNHvgC2AJ2bdhc4OEyj3Xd37A4ShFAvRAz6hzfPXpLEQVz0NWIydfyKt273EsjP/+x7CjMOlb+pnYi/6S27QC31dhVji5ibx0gplt6/TIFm4wiCIxy46BxuezO+RJTPyCaS1JJfGdI/mqomR10UoBQFEY2fVLoYKgzQnedNo=
+	t=1791130629; cv=none; b=S9uVVKc7/+hs9WE2di0bjKoLgwvcMZSvW42PIAe3vdvmO3j/4RYjzZ/TO3t6aLx2qUDXeMrmBjuK5w7dBDN8xElf7SnX7XNoIlpBAK2PfVONB4amCThH0iHVEJP7yOO2a3hbtKgKBwLUkejBXc4r2g3kgXdMldz4mVEls1U3vtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791130218; c=relaxed/simple;
-	bh=PkmJuZWABpQ1P58MIZhAszRHAvvC65vq2jvLl9muAUE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bMy31AkJnBYma//Xo9+xSId32ksZwl7zneDiRpeqVE5mnSqGzpq6nmtWiqUpNKbADfRS/wfcRRA/pNlgzuGkKxJKkvVh4MCCy4boPyun/i09gyYGYWF5eMnph0plhUa/kiB7ILbbfFVU5jAOIs/sjCqffynMdMkh+g3KDBXrLKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VtQ4ikMN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D/joS2ac; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1791130629; c=relaxed/simple;
+	bh=e0ITVnE0q9+k4NFl+VhehxVVBSXzlYp5kxxFirgdHiw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=aZOcfByDIlWy3prJfJQJJcTrAnRGC1L/Sjv7BRCOkGoegZJ4Ah0EzOHtz36dpnCoZzy+ttTl0MR57JHx2u2/kS2Hzyn5Npu3G0rN3Znf0b9t1/69aSsi5xl56HxKups8rxgjQaixDW8JxtD02p8tGXn9xKgfGJFdsqA5qQiK6II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fionn.email; spf=pass smtp.mailfrom=fionn.email; dkim=pass (2048-bit key) header.d=fionn.email header.i=@fionn.email header.b=J9OPERDK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e/WIoTVg; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fionn.email
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fionn.email
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VtQ4ikMN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D/joS2ac"
+	dkim=pass (2048-bit key) header.d=fionn.email header.i=@fionn.email header.b="J9OPERDK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e/WIoTVg"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 86E3F7A014E
-	for <git@vger.kernel.org>; Sun,  4 Oct 2026 12:10:15 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sun, 04 Oct 2026 12:10:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791130215; x=1791216615; bh=07Wrm1yn+1
-	oyL0SCGhmaXZSQUP4aHBy5iprIzwNUedI=; b=VtQ4ikMNMSRtbI5diju9OZGXnL
-	hynzHFNz1rBkLGn1bY4oFTifZa15JpnO90obWlLVi/ef2JGiPrxaI3pZU2kwUPEH
-	Urj8ghf6MXvKpirE/xFjNd5tRGUFh4D91Sav9B1E+tXkhqjCgP+8awBq0Zwg6hll
-	scmQIzDRW14AP2zf4PGfayHomcRUHiGx8zQ868zVCRw4Hud3ZZKcd6dQoIlbGQeO
-	8NKkZQbOpkoYon3v3/ORgBlhqLqOmVDGprbAbVZnY203ugojyIUKcCt2meCj5Yro
-	BzOuiOGj2AQ3YH+5/a0nht53vjSz8L3R631iMb0dBrCIQV/Bvru/6LJNZzcg==
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4298C14000B3
+	for <git@vger.kernel.org>; Sun,  4 Oct 2026 12:17:06 -0400 (EDT)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-03.internal (MEProxy); Sun, 04 Oct 2026 12:17:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fionn.email; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791130626;
+	 x=1791217026; bh=PMctTMxaziFbFjcNga4rOQA/3GYzHRgW2E3g2Cx/3JU=; b=
+	J9OPERDKi6Fxsv4VzM2UkmW6bk66ozcqQNPGtJUq/+NxbABNx/Xu6Z6Wd+CfDrYq
+	yDe7dFLSZy/2oo8Ab0C0AxxOKstYfJfW/RPEFgXO8x5BmIFxrcJpkp4JKY3nYGAg
+	o2ahlu2iBgKmBBUUPDpH9nh8R9vNkTHdd3wwmBPLKK/kUor9mNv7h6+0sLmzhBP/
+	Lh9a7Hiu2N9xiWjZFxHMWCj+KWEI1orbn6q2uakw3GPQr5DK7HH/W8O4uOm2PFx4
+	VNvf7Sg3CtNUJfF/Wfg/JJGdS6kGW9GO9ppnNkp8iDJSHQkHrbSN9Vk23atPCCkY
+	db4d4nIFMWgYSX3uNv7NUQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791130215; x=1791216615; bh=07Wrm1yn+1oyL0SCGhmaXZSQUP4aHBy5ipr
-	IzwNUedI=; b=D/joS2acs6Vwwr9USQKxDuuUFkh2vS9Yb2ukJ4AxK6a8R6evVqU
-	f9SHN11/sd5o2vKyrpcxKg0/Nfq0pI22hfZvvynAkgWelbqtle578F/zIE62qAWw
-	4gpirOnOHVOWSu3nERkNd515MGeYAiaYLSYZ4OsW3AvEGx2ju1fX3s93KRpoaWWW
-	4at2tzvQxQl1U2Wue/n3UrgpyaMtuML/RDcREkQprZaGSo2PaguyCdJjTwdSBxxN
-	HyrsvGGXv611Whun751lFY11KVblWLd1hj2oiWWdpZ8vGJTQHK9N2TQOyp0vK6Hx
-	r5UjVTur/UXjxDiQ6uYKbu+Loeu/2eH5FXQ==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791130626; x=
+	1791217026; bh=PMctTMxaziFbFjcNga4rOQA/3GYzHRgW2E3g2Cx/3JU=; b=e
+	/WIoTVg5Ipkoy0si8e519XR497DZu8Vk2tdqTPc7YkR1avkDrlMw5ctrMRX6PtPS
+	mSq/6BefohUvZSEtGV5QQbue28r1XJXt1unLQQjPkxmQ+9t9EN0E0lawhHNqu73n
+	0NLWDG2M8xtz1EAs0GzUlU4qpBD1kh9lj1GdADuajU/LZmn5wctqNMv5ZQNr8gJa
+	aIaf50Xi4qQN+Hkvmlf8XEjrb8+TbNgaNDi5DbOWMbNuM9EQAmft3qlb/cLDWrXD
+	skP5Ef4tjJy3znI79uIVSrA8cH+67hABIta6Zx5cApd7c+WjJuvfTqDTlz9lU8ZY
+	MTN2PjUIvNQ62nyuGvIsA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791130215; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	action=sign d=fionn.email a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791130626; d=fionn.email;
+	mf=PGZpb25uQGZpb25uLmVtYWlsPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:WwOVnzgCaVqB5Cc5yIDex8w+urnwTviE65NvsSMJe/RNGEz
-	CBJak4v3XTZaQKTsPUnjwebMPK+xTY7irXq/OWBIw1lMC9Z05ly2FyafTKv262+4
-	YhN12xOjvqd9e47YdHNkpqKARvCtTiLPXa/a1/rWumMLHK0aPFGZFitYE7mN+JHt
-	A9JWWJXpDCEJ2ftCPteB1pqhHCIbzJoP8ZWO1DEch4aKAE1xviihKIEXdSYwpOPv
-	NKD4JV7ImgxxgcckDWKJZOL3R7tyOXZpevG/yMyWcZnIa2kXRsjAaNvQzXjxgtta
-	WXGR9PVHAnZwe/gvCD8LC9So/mvC2M2sy+iU4BQ==;
+	s=fm2:rsa-sha256:NTPIxDoLQUv5eFEgPX7H2Ixnr4/vFwpVz9adbIw/vglCI9q
+	GEMF19RtaQVx2q7tVqitgnCOv/pJBziZsiU55lD7wnkwnm9XR/iOkxQnWcWTEWOZ
+	JCaT0HY5BnuXBRGXM0o2D62MxihoBEclBv7b3qpgOzHPxgB1i6/G+7FhxyxS4qUJ
+	u2qMBJ5ZfSVTtPfu3M1R3aqm1gZaUNDKdRpFTtryGt/C6oes7irpT8NEfzEwsoSF
+	8KSMTxxDE09Q6NA1PNkj8+ppOj7FwooWlDnGi+ywJqDiGHudiq1ffCbqu2stbUDA
+	gtSAPIc5epCRzAO4dqkULMyBGllMSxk7TuFoqZA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:CgRTvVXnf/1gkLQDHjK/HAGeVsGnQrKLC1jP03CiVfs=:PkmJuZWABpQ1P58MIZhAszRHAvvC65vq2jvLl9muAUE=;
-X-ME-Sender: <xms:Z3rCail_jiY-0nkFAaCw3u7QXlanZRfnJYWOiNu5tMKUnSXC97YjzQ>
-    <xme:Z3rCag275ZuQL-8BoACsyZywITqv8PXIW_FcBK_BEI_Icf2muH5R2Eq9gQPY9Y6cx
-    aKxGrWB4vf0xfqj3ezUIf7Fr2kgIy2HVjZ7o_L_4BeRR4O1xkvC>
-X-ME-Received: <xmr:Z3rCalpgxOoAMsj98M_pY_kcWJ4qv4m3Y_HM3Qc5eqd4XmWqRQ6PV7ZKdYRgzLDOyRZiD-VbkJeoA9-KADnO-wO-A4V8rXlgTaFO>
-X-ME-Proxy-Cause: dmFkZTF1VQtVpkdp+Jw8w58hM9GYOyd4W8caE0SCPIa8XouslEj1Cyd/p1Bgfz61bt5mIL
-    ueYNPkpeopqaSGoGtdDnTx++s/eFzi9DX9ESAj/8b+OZ3AS2DFAVBbCQgzFvzz/Ij8DFZu
-    s9ZpL/YQw4rA+0+F9oatPRP7qaoE7lj2fvekyATjtO7Z5+qrRVgxWTzxr0wRdxzrTg2nNl
-    pgK90xCu8jLy4n+FYcOD3SiC3Nj4zy8oX2U+k5I6azjh1E+5OMx2sv3sTf5SdUk74QhQFp
-    pzT1Sn3hDoCxV/XjAX9GVipfWsV8rQozav/xzUisK48MjLCCCRU3wvp/snN0tkgLNwmoeA
-    s5vlLPWvz0n5rd8BEvcrLEwqybOG4S2TVe0F578l00rTjYPBV1KHXMbgZgImGu/2wxJUQV
-    YzhyiocVTUtE+qYvQ/fgrpQpQlUf/jlzoAYt2PCwdSDB6oJtdMDMq2/ZM/D6ZQpQxheRKj
-    ovTZmR3PwwYCwKTX/iMMj0ufrY6Y9734VCrqfeasaGtbZgqmDSfJmfagNCBUBLi+oFEkii
-    s1cVzlw3mYWeMUkGUY54FJt3ekz6c1qg/Z/Sp9tfoBcQU+0ybi9XkSdO47JFCCdNcvtmrm
-    vPkQPWQACJYNSwulVA+Rg3QB/Ka7aOGfa2JFEoDQZnY2Brx2V2TIXLWqFUFA
-X-ME-Proxy: <xmx:Z3rCalfwRRzemCx5vg074PtTjRZZJ8RDDB_63bnWQHiSqCQUTl4R1g>
-    <xmx:Z3rCasq0Ko8PddONoPyfIGcwcDR0o42KDT47Jopjsx30tdvwEiYCzQ>
-    <xmx:Z3rCauHDanino7UpSpGDPwIiEn0YHi6XFtmeoXAWojcRNfodvTKdUA>
-    <xmx:Z3rCakugyGohwH8fxnW2God_Yo-lkEdymVpNUx5hUb1-hUIQg5Hcdg>
-    <xmx:Z3rCasQJq3mPUD9f57D0ozdLM4KWqAXnF0Yg_ZI2gt4iNYYcjaNOJNnC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 4 Oct 2026 12:10:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH v2] doc: interpret-trailers: fix cmd examples
-In-Reply-To: <V2_doc_trailers_cmd_examples.d49@m5gid.xyz>
-	(kristofferhaugsbakk@fastmail.com's message of "Sat, 3 Oct 2026
-	18:03:19 +0200")
-References: <doc_trailers_cmd_examples.ce1@m5gid.xyz>
-	<V2_doc_trailers_cmd_examples.d49@m5gid.xyz>
-Date: Sun, 04 Oct 2026 09:10:13 -0700
-Message-ID: <xmqq1pa5v44a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:yMU5mZb+9u2ViBa3boZ370Kf01qL67RbzN2YmQ0S184=:e0ITVnE0q9+k4NFl+VhehxVVBSXzlYp5kxxFirgdHiw=;
+X-ME-Sender: <xms:AXzCakqIeudcowJcCktfGnsN9rHBNmESXaXj46VnPjws-5cZSdfdpA>
+    <xme:AXzCaldXZVHOLZ4yPmaEy0OSsnOk7GoDePoCNBHjcGacf3lZpywfC4xaLZTZTVg5v
+    Ki6Po-u8YdIv7k0BpjzX6DDSiUB8gxNfdrRHMRekMWM2I7ix7SpRw>
+X-ME-Proxy-Cause: dmFkZTFlkmp2QDk29tvjGfgcBhBteKNJjebdjkRYAB7SOSwrsWp8/wAJPfs7eAHb/6MpPK
+    o6p0zF1INN79GQ/ckzbcZb7+W2Dh+RmXKvecGML9rEUfDrvjglisJGPBYIgGkjjkzMZs3V
+    p7ef08JPc64bRH5I2zvlOd4vy01SdwcT2n6Cv0oJEOZzte3JDbsRgRDb3Q+T5jdTOuWahR
+    hhQ6PVQpHqDC54o7aIlPE+3UQ88nU8L6GvISNP/DvSYffRb0C2JzYQztyRYddFfreJsEof
+    3QQGt+gXzHmSOQJMhuLVxgM0HGcqe8CYM31+9JBd7UfZGkKqqZHXrJq20BNQibDyY8YqXU
+    J3tmaY8nsaTUK3pRWo1ZbR4fi+Uz7xF9MEAoKmIwgNGbBoMd4hRIcT//+VgS2OUz7F6W4i
+    UPVuNreAJvY8wUF03QxO1TiA0ninRxgVeAVJtRcs7U0Fs9UG6+Kgz90oRdb9l+K0lVaMXL
+    MgxDgbqdcL8FW0y/BUu110zqwe9IzTRtF3GGqydk3rccS25KCEX5I/MUjGYMhU/W3MLBTQ
+    rLOe7olsqGIu5iQylPWXaY2BhUShXkd0RJYBM88IqbNwfPGNurt5cWlwzQJyBzOrIXzNc8
+    SFnk4uKz2t64WJ81noSA6C9Kazd9pJW2AdJ3skNM1OuUhBENyVI/rcH7+rWg
+X-ME-Proxy: <xmx:AXzCaqt7O7BvVb6iEMRT8mOxTICQSoNIP7KTxeMHXuhuLwDLwACAsA>
+    <xmx:AXzCag90tEvmY0A6jKGM4X7R10zEDF_rgJk7LYIuSOa8K5GBe3bRdg>
+    <xmx:AXzCal2hBJEQSwu2F5fFEKwjO0xDxySXDnqd7GUPKgJZrg38L7Q1GA>
+    <xmx:AXzCalCcqlPbduehE9DrqXhy3FEC4xoPyOIUS-alY-eYQj19e4cXxw>
+    <xmx:AnzCavAA4iUhNCkhteW9wUUhYz8vio6P12E0TYRwNSzTvxdhQ6mIACT3>
+Feedback-ID: idcb64834:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id CBB37700065; Sun,  4 Oct 2026 12:17:05 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8; format=Flowed
+Date: Mon, 05 Oct 2026 00:17:04 +0800
+Message-Id: <DLW6TDPQ9DA8.3CY39XL14GO9E@fionn.email>
+To: =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, "Fionn via
+ GitGitGadget" <gitgitgadget@gmail.com>
+Cc: <git@vger.kernel.org>, "Felipe Contreras" <felipe.contreras@gmail.com>,
+ "Fionn" <git@fionn.email>
+Subject: Re: [PATCH] completion: exclude previous file arguments in Zsh
+From: "Fionn" <fionn@fionn.email>
+X-Mailer: aerc 0.22.0
+References: <pull.2216.git.git.1791026527023.gitgitgadget@gmail.com>
+ <asIJO3CZ/P/2L4qi@szeder.dev>
+In-Reply-To: <asIJO3CZ/P/2L4qi@szeder.dev>
 
-kristofferhaugsbakk@fastmail.com writes:
+> "existing arguments" of what?
 
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->
-> Fix `trailer.<key-alias>.cmd` examples which have remained unchanged
-> since they were written in c364b7ef (trailer: add new .cmd config
-> option, 2021-05-03). (Modulo formatting changes.)
->
-> Steal how the `see` example is phrased and use that as a template:
->
->     Configure a `see` trailer with a command to show the subject of a
->     commit that is related, and show how it works:
->
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
+Of a subcommand that takes paths.
 
-Let me mark the topic for 'next'.
-Thanks.
+> I don't do Zsh, but that 2 as index looks suspicious.
 
+Fair to be suspicious. word[1] is the subcommand (e.g. "add"), so we=20
+index from 2 on in order to skip it. This is independent of where the=20
+subcommand appears in the entire command line.
+
+> What will be excluded in the following command line:
+>
+>   git -C dir -C subdir -c foo.bar=3Dbaz add file1 file2 <TAB>
+>
+> I think we should exclude only those arguments that come after the git
+> command, in this case after "add", i.e. "file1" and "file2", but I
+> suspect that everything starting with "dir" will get excluded.
+
+In my testing this works correctly (i.e. file1 and file2 are not offered=20
+as completion candidates any more, but if e.g. dir or foo exist in the=20
+subdirectory, they would be offered).
+
+I've been dogfooding this for about 8 months on and off. Occasionally=20
+completion candidates I'd hope would be excluded are present, but this=20
+is because the fallback completion bypasses __gitcomp_file, which is a=20
+separate issue. I have not yet encountered completion candidates being=20
+unexpectedly excluded.
+
+An easy way to test this is to link git-completion.zsh to _git and then=20
+add
+
+    fpath=3D(/path/to/directory/containing/_git/file $fpath[@])
+
+to ~/.zshrc, or similar.
