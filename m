@@ -1,130 +1,117 @@
-Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+Received: from mail-wr2-f35.google.com (mail-wr2-f35.google.com [74.125.225.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC53613CF82
-	for <git@vger.kernel.org>; Sun,  4 Oct 2026 10:03:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2004C3F9270
+	for <git@vger.kernel.org>; Sun,  4 Oct 2026 10:06:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.99
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791108224; cv=none; b=ns6O9jRNW2fb7JE5tX/+CkvRj+tXkVNByaCkmGFrUnzaAYGHmHiSiBCi0IhWwzDjSEUdtI1FxAjoBleJWgreyVF4HBhFM/8dnBURuuwmtBsxZ8HsrupLp1bT9JWUW5255qslXe8ijc3ncpzNm/6fdEy0E/q5BjJL/9lTNpo2Uqg=
+	t=1791108373; cv=none; b=SEuzzAdBhnTeVSzo4/JoGtOXbXs6V3lJfGRGE3kpBky3xoZ513BmeK7Oyhs1N4EF6+6bjg0j/ANMTXYGS4AZm/h+j/iYNzf4iVcj5H7RwzVXWyxfuWBEFwXGClBNT3T0Y+6/tYC3w0ExN23r2Fl5+f060XEipgh5OL79m2h7fM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791108224; c=relaxed/simple;
-	bh=nqxu65u9Uztik3k608st/0cSihPBUNUVrUXpIWFAD+I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G03Ld5wO0Op1qwmAdfTmFuw0uxWLrNjwzLqvagDl207sap5cd6iot3kve0clvJtbnE1FhuHvOo+1YxvARQKp+TQ7Tjx6+fReKia/T1KLvVrcV2pVacmm4H7F4Mr4Zk2yU8383UbpbLnea3yyWL1/iTTWnQvadYHHjgdRT2kWPjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cC6SWY26; arc=none smtp.client-ip=74.125.225.140
+	s=arc-20240116; t=1791108373; c=relaxed/simple;
+	bh=xysX9PZG5F/530OhDTl/dEAfKIYg0jzAELbEjLI7GRA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=RbHgwM6kvDfCal/PypSOCtqg1b0Rp8iSSleB0Gtn5seOkCvqFiwqhb7a+TNbh7c4KgHSmS6PFxzH+DVKKGJOG1WayPgC3IikdcmVEGBuX/2IVJjVaovkqcMANA9MLmGAJDIjmSd4/IdstLg0z+8jjUBKPBfdJ+5GxlO2YK9P6fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b+GdU//s; arc=none smtp.client-ip=74.125.225.99
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cC6SWY26"
-Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49fff6f0f87so9369875e9.3
-        for <git@vger.kernel.org>; Sun, 04 Oct 2026 03:03:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b+GdU//s"
+Received: by mail-wr2-f35.google.com with SMTP id ffacd0b85a97d-48b042e00f7so375336f8f.0
+        for <git@vger.kernel.org>; Sun, 04 Oct 2026 03:06:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791108221; x=1791713021; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=/XTFxe0+OkrO2XintCgAxst4y3L3LLuiCEo5jluxk+4=;
-        b=cC6SWY2667Kjntap8I49XgUxf8jX7OQkoCSLI7czalMNYQmCbp7r7FrPZx4kz1o05Q
-         FkyWaK5T1DfUT+zVwz6JgMC/dSrFGR6uVgQ5Zj5ulDWOmAgpRHgwVANrAMXhYGZEGZma
-         MnIfhEKN7P39o1+9jCE5JqTiIGnjmsulthlAeOhwr5adkyFpiWo/cK3r3EE7PdqWigy9
-         XttNBo7QTzMrow2iZ3w/PWn/FV5bmCvyUDV2srT0DK5SU+YrXEW1sLaSVwvpnWnzOaMv
-         oRGyP+waF1EuBCuvLU50Hnu0tDcdLe8ehtrnwO6vtUCgaXKf3xIH3cOYiM8gyOjFC5Hv
-         /8nQ==
+        d=gmail.com; s=20251104; t=1791108369; x=1791713169; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=P/oKypZl2uE7NroenYvoTuXbAu0pnJZR2kfkSyQcrKc=;
+        b=b+GdU//s/WMUb3jNIzSDR8TUL4u6eTVwWdVGai1h8M9nVltqiKsGyuBg4QrDY6bcvC
+         8U9moW7kDSuttBboQKOfUOE4TPJEkmdxGYHopArH0aeu5VE1vv3J/rkkdZ9qFEhtjuGi
+         V3fuiuiEWhDtEe6E7LMOJcnEhQlyEHSDYVSxAU49kiHaytXuct5yreyV0Oz5YBwbNpZg
+         SonU3lWkpBYcGL/HU8t3vJN/YfHM30QcSrlW1LbNe5R4nBKoatmyJ+IJC6KMCtmpvuMP
+         14qM1XK3mc5MAE4I6yBIPIhMju400jFZgRZRGZ0Mmpi4dSKdshaEtQqoOHhtenFcCN2C
+         HSbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791108221; x=1791713021;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=/XTFxe0+OkrO2XintCgAxst4y3L3LLuiCEo5jluxk+4=;
-        b=mCatWKDoKNHMjyamRpUaacvQawmfvVOu3HCNkuVhvG1hNPEb4qVJFjBNqbV7I3IRTH
-         MBDs3bMU/vkyRCfmiQgLNC0939x6LXFdFb2xo8vb6vvlHGh83+Fk2zN85Dc/4OpdpXSt
-         4xd+aE91EMCa1suCanX9bljbLN8Vze+hDZ7xBwpecdTDBQqy+0sdUb/3DkN1vdaY21VX
-         ytodPk7mIgZd5Ax3Ooh9FymlCl8UzokLvzD0vKRt32XhgRe34aHSzWlLCHREKkNkgIQZ
-         NNVltKNiOnyZG6Id1uQQczlEP0+n67+EwHL+20mxWNIoG2MsFqZVURM2htRazreu4sn6
-         3lzg==
-X-Gm-Message-State: AFuF++lIDBeNNlkA8w9XwbTz+wvt/LQCsdfDhpjZmK7Hl+brilhsQ4vY
-	h6Gurr/jkYfQL4xsHxrhnUeQhGfeJb3vO+80unkO2geIqYGJ8IA9ZyNR
-X-Gm-Gg: AYBFou3Rcjods1PXeKF0o8vU9QT+Zveyy5e0j8BpHTtOgKyVowvRfiXFgfSCfKE7WO6
-	T11b/dDQi0rJChuPJQihsGqf1fRG2T1Ef0gGWLjoBgPCoWG6zBPaa0IsTM6igFkTD2W0ivSKmpm
-	TbcnHH5SRCrr3dm/n39Wqe3e3LCHPNqY6PIohi7wH1QvZTSwuQeZWXNT2e6cZTAvmSnCRtnCYmS
-	IxgI/U2HREBWVdktLGC9JbmNFuknNPNTJhK2SIX1F/CxNo0qC73RExlv2RpWjT3yxkFJlEU2tlq
-	TaKDUCgvTedvk+3G9fFjVN8exlxOzWm3xVI73pypjMlXJKbszAA1bmdHvngyOQmbV83X0Nvx2WO
-	BzS6b7R4xzGLVwg4+c6NGYNJrHUf91LM6mD1bz5sg558hNQLGxXQQXyUbA9ETe0VgKSfYAD9+/G
-	mCm5+0o+ISkMXPmHSDrUMhWEo39UnBTCEMj+NBpLcRo2me1bLYUW/A1fMcJ/807W6EOJjft02X4
-	oIthiwgTm0w5XTnb6mHA3I1IbN7fwrVx5llcm3PtS1ftYz8+12cSA==
-X-Received: by 2002:a05:600c:3510:b0:4a0:c4:a1e0 with SMTP id 5b1f17b1804b1-4a02756729dmr136797825e9.9.1791108220842;
-        Sun, 04 Oct 2026 03:03:40 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a0276fa954sm245101955e9.3.2026.10.04.03.03.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 Oct 2026 03:03:40 -0700 (PDT)
-Message-ID: <95796d0d-5928-4108-bc27-b7ace4459d2a@gmail.com>
-Date: Sun, 4 Oct 2026 11:03:39 +0100
+        d=1e100.net; s=20260707; t=1791108369; x=1791713169;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=P/oKypZl2uE7NroenYvoTuXbAu0pnJZR2kfkSyQcrKc=;
+        b=qMO9MfgEJQnBdIDzSGnqkFQBUjsei/neLS4gvXkbTgM0rsWBJuCU2PXTtEiUXAZfcQ
+         H+dlI3C/OcNStROVdY/kZ3mz0GTnoyRCF8duhp8DA1Fary+7KGPT/1+XjJH0Twqn5YSs
+         VdsIbUQEzDl0tHraB42RK1IslcPBV+kJwooxImKPSMoNPiF1agTwaOZxAGQ6vywvqMCU
+         stFdUIE9Dw/wOzOlCHBnvfxJwfGTwkO3sfRXcMOJg1FW5g+4qiWxjbE/ajur9u2TVPKM
+         uqDpaaUKnRd85yfe7X7HTlnx+VQgAcvftW5+i4YVnQLHDw7GkBnJ87URplXtmbf0DPVr
+         FqGg==
+X-Gm-Message-State: AFq9FYLLGaYaRpdmHba/9YhWaD7I7OxFCEzUy3hzrj0fuYXHD/dw6SQ8
+	9LzO2FJUxxp4j+wm8iZWis5TUK1+fr9GCMwng0kKf+OxytIEyq7kuXB2vWPAsL48
+X-Gm-Gg: AYBFou3D1C4CESWiWsXK7dE7/JS3rcp0ekyV0sdztpsvstHYUJVybMPkOJo0VbP2m1l
+	GMIcUkgmEha2lySsrOdq0UHWtDV4L/1ZwOMASGac8gixGO4ANyZPbeMJYh+f02UxNY8Iy7QsSds
+	FSoZoD6hEUu4u/eFamc/5pvRx96WM7Dggo03w/R0P//pjuL79TUsJzNyiXKj8z9vs6ns8UOAdtr
+	QN7FutOeYNoZEvYpICoxlVBvLqAq4wddwr7z6lnMZfbHiHAlLXGyU6d8Qhro/4wlCarRCS78O4u
+	PfaLT3ksXSMpi1W0P9citXnoSj0viruBnn2IwtjbZKf2OxECT8Yd1jQtHx6hXZbHf3FLr4jhoY6
+	vTZ24IZsmBhY1Mu/inDGEaz2nkxGB+gcpR9W2J2yc0Y2UBKHg6pshcEP+OnZ/KdEj3zNaaFP7qo
+	w/PpmuGbrBHH3yBY87n1iz/3USvJMzvUvdZggfFhKDz+xIleea1RYVoK/I43Bd+MYfIyTxDgBl2
+	iGj
+X-Received: by 2002:a05:6000:1a8b:b0:48a:f929:e140 with SMTP id ffacd0b85a97d-48b1270ff59mr14602151f8f.10.1791108369071;
+        Sun, 04 Oct 2026 03:06:09 -0700 (PDT)
+Received: from berwick ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48b382f8ab4sm16464323f8f.35.2026.10.04.03.06.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 04 Oct 2026 03:06:08 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH] stash: use named constant when parsing "--all"
+Date: Sun,  4 Oct 2026 11:05:52 +0100
+Message-ID: <06b58ae0a1d81f4d1518eadecc3385072a72155a.1791108351.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.56.0.134.g299a3c16181
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: git-rebase-walk
-To: Patrick Steinhardt <ps@pks.im>, Alejandro Colomar <alx@kernel.org>
-Cc: git@vger.kernel.org, Nico Williams <nico@cryptonector.com>
-References: <ar5KL4_IKXYbx3Sb@debian> <ar5eereSq91xldo-@pks.im>
- <ar5-7ZtM6C23H-8m@debian> <ar9TTB5nmPPAdABE@pks.im>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <ar9TTB5nmPPAdABE@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 02/10/2026 07:46, Patrick Steinhardt wrote:
-> On Thu, Oct 01, 2026 at 05:51:58PM +0200, Alejandro Colomar wrote:
->>
->> My script I use it in shadow-utils and in the Linux man-pages project,
->> and is in use today.  I was wondering if there was interest in
->> integrating it to git(1).
-> 
-> I guess the answer is "maybe". The fact that multiple folks have solved
-> similar issues over the course of many years is an indicator that the
-> funcitonality may be more generally useful. But it probably shouldn't be
-> a separate script, so if we wanted to integrate it I'd think the best
-> way forward would be to integrate it into git-rebase(1) directly.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-I agree that would be the best way forward. Adding an "--incremental", 
-or "--progressive" option to rebase would be useful I think. For ease of 
-use, I have a strong preference for an implementation where "rebase 
---continue" handles rebasing onto progressively more recent bases, 
-rather than the multi shot approach where the user has to run "git 
-rebase --incremental" multiple times. Having a multi-shot approach makes 
-it much less clear when we've successfully rebased onto the desired base.
+The code that stashes all untracked files compares the value of the
+"include_untracked" variable to the constant "INCLUDE_ALL_FILES",
+however the option parsing code for "--all" uses a hard coded integer
+instead. Replace the integer with the named constant.
 
-Thanks
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fstash-all-untracked-use-named-constant%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/a01895368...06b58ae0a
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/stash-all-untracked-use-named-constant/v1
 
-Phillip
+ builtin/stash.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-
-> That's of course more involved though, so I understand in case you're
-> not interested in doing that.
-> 
->> If not, I will likely provide it in the man-pages repository as a help
->> tool (which might end up packed by distros as part of manpages-utils).
->> Is that okay to you?  (I ask mainly because it's using the git-
->> namespace for commands, so you should at lease be aware of it.)
-> 
-> I mean overall this is our primary way of extension, by picking up
-> utilities that have the "git-" prefix. So arguably you don't have to ask
-> us for permission to do that.
-> 
-> Whether it makes sense to distribute such a tool as part of
-> manpages-utils is a different question, and one where I myself am of a
-> split mind. But that feels more like a question for distributors rather
-> than for us in the Git project.
-> 
-> Thanks!
-> 
-> Patrick
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 7a9843413b1..4bdd51cd49f 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1932,7 +1932,7 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 		OPT_BOOL('u', "include-untracked", &include_untracked,
+ 			 N_("include untracked files in stash")),
+ 		OPT_SET_INT('a', "all", &include_untracked,
+-			    N_("include ignore files"), 2),
++			    N_("include ignore files"), INCLUDE_ALL_FILES),
+ 		OPT_STRING('m', "message", &stash_msg, N_("message"),
+ 			   N_("stash message")),
+ 		OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
+@@ -2039,7 +2039,7 @@ static int save_stash(int argc, const char **argv, const char *prefix,
+ 		OPT_BOOL('u', "include-untracked", &include_untracked,
+ 			 N_("include untracked files in stash")),
+ 		OPT_SET_INT('a', "all", &include_untracked,
+-			    N_("include ignore files"), 2),
++			    N_("include ignore files"), INCLUDE_ALL_FILES),
+ 		OPT_STRING('m', "message", &stash_msg, "message",
+ 			   N_("stash message")),
+ 		OPT_END()
+-- 
+2.56.0.134.g299a3c16181
 
