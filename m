@@ -1,99 +1,99 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC1112B143
-	for <git@vger.kernel.org>; Sun,  4 Oct 2026 10:18:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98853EDE43
+	for <git@vger.kernel.org>; Sun,  4 Oct 2026 10:19:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791109129; cv=none; b=hcEtr/jdyNfnmhg8+KIjpMCwYeUT63nyrZAd+D9zn3uU8Y4mlGLFe58qKXmNjQBmgSIH13XxTgWJwjyv9ZNaGXCdhRPl7M3avB0BrYr+/tLWaFmQzQIWTiG/M9Qa75IwMcFQxtJYTY3l5YSuOyrVIyjddmKCuasfcp51qBD2n3U=
+	t=1791109146; cv=none; b=t2J69/rM/WhO12bWgiWmUMl0k2m37f4qRzlNPk2RPQsV0cSW2Uqp1lRDeSB3+CgjarS3iXHJKdQkVWWF+nNheKHI+R18cEymyC3vAqiEb5jrToelNSP4JI2OXRsKEQiQN/mBRmtMMCfF9QuhIyqzm1rFRhlShy8B4aQg5Q4bcT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791109129; c=relaxed/simple;
-	bh=593lunBRqi8CTJU9ojLLYg4S/gZ6vGRF0zci33+1w0Q=;
+	s=arc-20240116; t=1791109146; c=relaxed/simple;
+	bh=NuByyoFJMPTRW9buReqfsY3MWYdlMarMTELl/3X5o+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fh8N8uPDltLoJ/ePqDhxWm7Lcix/gISzBIHH/b7c+OoawbmOp+qVtNBLew5k2LjTB8in/lQsa0FuDYGUwCfNeMkoQLe6Y53b6zpl1FBbh5CaWIvE+MvOGVg9T2lg6lm8i3g27ulFIgmfk6BORa/HXqZ76+o15qQ69xqkK1u50RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=sPnHV5Zh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U+4D6YqP; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=LwijeBuwAXPG+UmvvuSW+M9vNaQ4Wxo65b4+Fj9yy3J8Tgh74KMm9Vdqa+NVs/0fJW7YekngJS6MfAGKgzNyDxdVvowxcGadvH31c4rB7JH2stfiwS23XMfZwn8ElIL6ePPSXwIn8VSn1zs/oBKozNl+FUsmLF3lFNVAgtqQ9tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=g2u0cN/j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b9qyE92a; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="sPnHV5Zh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U+4D6YqP"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="g2u0cN/j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b9qyE92a"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 622AA14000E7
-	for <git@vger.kernel.org>; Sun,  4 Oct 2026 06:18:46 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id D08B8EC0319
+	for <git@vger.kernel.org>; Sun,  4 Oct 2026 06:19:03 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Sun, 04 Oct 2026 06:18:46 -0400
+  by phl-compute-02.internal (MEProxy); Sun, 04 Oct 2026 06:19:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791109126;
-	 x=1791195526; bh=Uh8OuQgmcee4Wg9mQJEZ73lN9dTnbWxySDgZ4rwVBjE=; b=
-	sPnHV5Zh5TLeMpHsBZvulfjMcpYfmB/76XqasNLd5OMa/aecJivonS9zg1mAstMF
-	Y4l1tNojVi7Vyzur7gBXfaFHVx43j7zFwx7j42V+EDMEwVxA0M4mCnsTRqUBqIDg
-	ordAkukxI/AwjhNIWZg39iZ1vV8Rwgw8sgg+weQQkxoQz94ZFPPuLTMPP7FAeDts
-	/WVS7/OhcRZS433cfGY2ZhpJsgU8P52XJScwxL5WFLUGEC/N7O7ns+Kn/y3ASKe4
-	vH4KUp8+GJCOQxRAN1uu5zwwjg1376ZZBPBMrsL/GAO1vFd5Rd9ve9YX0M7KtCPF
-	u2/4XWvteLTh9vD+C0KD9g==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791109143;
+	 x=1791195543; bh=2taAtjnrFhdM9Zgr2wbR0cR5od5lt0d+40YNYKK7TU0=; b=
+	g2u0cN/jjPdzn4ohhEwV/onwAM/ra3d5htMcv1ak03AYBwRwajBERKM6hw1/WjyR
+	3KaejjAtDosnkPbVIS33ZgxevIjjRx2ma811E9vybLhVTUxFA6iDhm2X6GZvcSur
+	+5HxhjgUiH/4kspl76/j6dPYnRJUWiNjsCuiM6QIkxsRbGCubmihRGOUskRUtN1w
+	37ZiWM1TcXBUhA10Fso50ppB08OTboWUFOZVlwXyRXBBc4DLaKd2xAylrhiH8ZtD
+	TKi4uECxOPipPvG65hys20iP+4gfTDxkB9VtS0qYMANyunG46PT2DUbczPtcriHA
+	QEZOiKy4bcKeP4qJuI9w+w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791109126; x=
-	1791195526; bh=Uh8OuQgmcee4Wg9mQJEZ73lN9dTnbWxySDgZ4rwVBjE=; b=U
-	+4D6YqP7JH0q5kMJdHh5/dK9ClcslHME5Y1pCMnAEUHEtEACayZKxG9hgwApGzfR
-	wxMFQfqtQIOAZ+2HMihx77MzvktseF1g3YG8qlXp9RhQ0Wau9aLoV7z5g8OL7e/k
-	iNijetFntCNJyWkARopVwTudr4yxPQYwM2RjtDrGyX4/GBi04ffY1OxPc4oAKdHW
-	hng/o6Bk1+OZ9FnN/Cbnwc0VxAjp2Seuezl4avkzXzv/bnP+gkUD5Ropj9b0koAX
-	BxEJbqXj8qlzjJkMZKQEy1nuUpZfNm3cZRPXTjXJF62wHKoAlA9lxEAAk5DLnnNp
-	PmM41UFqRRIF2koPdFnKg==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791109143; x=
+	1791195543; bh=2taAtjnrFhdM9Zgr2wbR0cR5od5lt0d+40YNYKK7TU0=; b=b
+	9qyE92aEg11najCUAxgIPooXRGIYLajKkfuFawYVY5ScpNRWzUf+8mU2Y3gdbzq2
+	Y1w7HqUfwvf+xtt6izrOb7Sarq5hSkzwwq6p2i2MfPxYPR0de0hneBkbp+W/07ll
+	ANGF8koF+Pc8+ukh50A+eo4GTyJ41AYGWY9CDcuFgKP5HFJMWLN9MDUDAvIXL+Xq
+	Eb6suFKU5g7WlaTfx0RqTfVCpU3CEo6R+TT2p5Fzk2AMmsnQPtrGxIBVPsumiCKy
+	o9848upASAShhJm2bWdrW744CZCERoBqanJG8xqkaon9hgS67OEB9Db/7Fq2ZH4K
+	wFi3CeIJoWWatEUGKPkNw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791109126; d=fastmail.com;
+DKIM2-Signature: i=1; m=1; t=1791109143; d=fastmail.com;
 	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:f4qhSCx4c7iyGnm+RvmP6OQB5OHEYhnaX27Wqx98KyIWSaj
-	oKVDJJ9ex7/4jwx3Amma9vjoIQIgz2nnWBTlkE7zB6cYR8Ifp4f7R7hF4gUnhS0t
-	InuBz9xs2EkKLIoPGA+N254FWbow/hXbSWWaGquK6WmO0arWIeT9UNmiNZjxakRk
-	mvImE4q1YHJdjWum3aAUjj4SDSRSM0w7CTZbgDiTwwimuebr2oqWM3ocve9xAFRm
-	TXCy3voJnI93uk/5TK4iVj/+8e1uana7KE/Mc6ADoatP3x0+z7SdQUDiKP9ypCzA
-	0OFXd3geiu9EWhD9UVCCiu9CHC4Pz8A71tqu48g==;
+	s=fm2:rsa-sha256:sSb0nPnU2jUyNodwcxphgkn3mqzmo5qcMd6gqkz4Q66xFHw
+	EHYAqb5waCBwi5uivs8WvTb7PuhAti3RK0X6OnKxPR3ig71fnSOTT6ddQrJGwLRq
+	3vawY9/Am/F/Q1oEZJxyx8vqWvja1vMqq0Ijw25fP54AbcLyH/Zns8t0OGu/eK50
+	Jc90VYdnpO/4TcFeQCxY7rGHb1bdp+uE7YkiSgDZSpMZX1HoSvk8sxE1xtsgRmbC
+	i7U6iukE0pFr/MTj3PS4TbeOYaVUeAuf3plVtZpRt9a73Tr3bTIDrhrCTrR5D08b
+	4YehaVRrHFdjDO68yB/j+TZ9i5b+cvsM4cYVIIg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:pbspYb029scoEDYgnMVt2106KNJHrkMDVtHtvtyXBqc=:593lunBRqi8CTJU9ojLLYg4S/gZ6vGRF0zci33+1w0Q=;
-X-ME-Sender: <xms:BijCasPPhFEQkiQPVNVWwS3fxtsVuQ7tnqkVPrNdgbzqV-zrPoLjSdM>
-    <xme:BijCap9oKA0BzCRg8LkUDXqbb8xhZ7m3QtDtZb66lO6yH0sSdcw2uHFaAqr0cItKi
-    z08zTrR0xbc524oIpt9HapcSOM3e0Y-uUF2QGJH8HcXzRtjdl8Syg>
-X-ME-Received: <xmr:BijCaoRzsaqiExUXmq7Wq2hdit2H991RITRgRKANByLuzhE5qwj6HqQiLDmb2tS3rPh9S5xrKyStFZT4GQptomkU3S6A6yICep5LdzFwr-ccPV2Xnh9Zvc8>
-X-ME-Proxy-Cause: dmFkZTFW2xsfmInjB1RlfFRcMlcVYJDMBjMfVwLPvxcZXErz0cDsDgiVO1ZXOG7orXx7es
-    77zQZY2P3C1kUIoabwaC7G+mjVKsWQkXaK5caisWfyyibiUjQDMnFCouxnmyUwy4PvCLKf
-    8ulpKGsLfBxVZieE+cUUXIidTvLQifaD9D3piP6Eej5WMYmaEQIMu5NDBCmzJ2mziMqs6p
-    s/v+9hEi31e3QBqZN30MlKHtEQJD8DucUVoCYeIazI4BILSBs6DDWiruQPUvAHly1m3mwP
-    AsaEEJn7SWVmyxjKj97sj1q4KqYn0vagmW8lLysHwytAwhuEfufRf3srxPgW92FVKsE1s0
-    cyixkYICPk/NishBZC5KEZdKV2/Je9XEplLC37UF1vreZrjeqYWaYN5A4kOXVi959chH2r
-    8FrlU+Zh3mH1iNl+msTkfaEhyeKUNUbln5YClSW7SaJs859ivWxYFj06V51zeqwjEygn3K
-    3WNPDLO4E0bNZSaaHUGVu1O0yCE7Fi0ql5aGTc61aDf+x7szjTqn5XPigtSP8m5UPHa7mD
-    vFONQOKa7c8Wh+s33J0580xkOjZv/CPNmSTY08LIBBVaFnegkXAdcQPMPGWq85hFjC5lcE
-    1OAwwD3886DGj478mQrROY0V6e9JiKadf8ItYc7L60ng9o2eDcNIvE5z/3nQ
-X-ME-Proxy: <xmx:BijCajnVJuraPZPSgg-qLRn0IpLp6tTOs32ctqfiF2737UT5wnetzw>
-    <xmx:BijCagQ150ERnOuQCXX60XJlg9hN3TAo25giLuz69bxMXQG0hpMIEQ>
-    <xmx:BijCapN4WW_I4JTc96iwUjuGwZ8oiyfhDD6mZ-P8MNAQjuHuwyPU_w>
-    <xmx:BijCahV82_SuHaq-dkQQX6EhHmSkk3K02B-61Jhy6SNLK3pIV9R8Ew>
-    <xmx:BijCarymUpggadSYtfwyyXhGB6ts-7Q36X-wvgAWuXNG2zmubAe5txpi>
+Message-Instance: m=1; h=sha256:f9IsOA2y05mFJSj9arVpIAZKtftWR+3xr0b435GbHDQ=:NuByyoFJMPTRW9buReqfsY3MWYdlMarMTELl/3X5o+E=;
+X-ME-Sender: <xms:FyjCavBK6E_Ej99iKbwEyd4jM9Is2CFsdP2WBDRbQ0X0g1oY3kZc740>
+    <xme:FyjCashIqlF8dAh3iiJlcrk7zjZ_uyE_DHkGG0CZThADVyYbxL50I74tabC1hUFAw
+    a5L38OW6cfUvUGy6DWQBQKAhcXykLog58BesYmPHFBgPU-Sk-bVu7Q>
+X-ME-Received: <xmr:FyjCavm6LrllcdFL7jGL-6BCZcZFAIgPkqoid2lG5mg-uDnozz9t7LzY4tIHVgqDmUmhnZzt8DxtcIpLhbvdoM88Lo2yS5DW7ySb4esMFs6sEMcPQsAR4MY>
+X-ME-Proxy-Cause: dmFkZTEqU11RHsWOTGi2xHzBOzbuhNvPX2SfEGFm0r/3HKnubuzFuhYArARJODE5hbis/G
+    CUafZg+UO0HkrSKgVC3sXY4gOAM2g0YAiB3O9gqgocT52iYMXWF6zEU1luriyIdbCKT3ue
+    yDpjgfkPDrBXN7SneTpC2rdUCUmwQftv8Vt3AocYu6HDEgenpQOvBkb5/Gnn6hffxub/A9
+    s0rctstTyfrnObSY7Cez8+T56CVrRhcDVyWJ0/rRH32J7DFkxQoLEIbDr8xv0zN66oX9+B
+    j0dEu9di9Mm7dCNrGotQjfos7aPvscyLYCxeKn/WFqTsJtLOZAFGUoLPesi/vmvECTWkik
+    XuqjsDAUhPFbRBtErwzNbLnD4WmJAG+pXiw916jpaRN/B0nbwJPB/goSWbylzBOtTLvDzm
+    do9okC5+B2YrGvWHHnpb0jem6uFf/47j+bJVE7Gz73wIdYkgDH8HXiFxYeLnINiXNanLXq
+    mKfvbA/BdmNyMgb5JoPo14H0WVOFr+Vi4FwJB1+gxuf0hy6AjCKT6JnpDkdrhIBadtbvca
+    qjHdOYxktaqTgHmQnf8fEHH4AIJz+A/yzvFYH5yBekdx/zhOdcFnlrsw2q+6AWGMzjkNkf
+    lY/hs3KjPSIstDneOzQXctrqgJxQ7OUBtkDvs+jFYxj9OqX2ErJLKD5JrDNA
+X-ME-Proxy: <xmx:FyjCagpgjfkw8cIztQ-XYtg5RZbqIG6OIm6GVj26Wci6B8U_Jj9v3Q>
+    <xmx:FyjCagEW9Ccdzu4RTRYO3nns0dPKlOP4fvPPJcNGekL3W87zEFm50w>
+    <xmx:FyjCakySNMRZq1qYQhjiRWFKyWPIPQqSMLBTFjbUXYKrYZbQlApcew>
+    <xmx:FyjCatqlzROq5PQ6roQaRMHtXxizElRxUAcGXO0QStcclLT4R5RgxA>
+    <xmx:FyjCalQ-B6TGUCZIANSs3k6VOmDffr2r8llpneowFwthTXsh7xqqD4t3>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 4 Oct 2026 06:18:45 -0400 (EDT)
+ 4 Oct 2026 06:19:02 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	"D . Ben Knoble" <ben.knoble@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 1/2] format-patch: simplify get_notes_arg parameters
-Date: Sun,  4 Oct 2026 12:17:53 +0200
-Message-ID: <V4_simplify_params.d5d@m5gid.xyz>
+Subject: [PATCH v4 2/2] format-patch: learn --[no-]range-diff-notes
+Date: Sun,  4 Oct 2026 12:17:54 +0200
+Message-ID: <V4_format-patch_learn_--range-diff-notes.d5e@m5gid.xyz>
 X-Mailer: git-send-email 2.55.0.793.gc667de3f2c5
 In-Reply-To: <V4_CV_format-patch_learn_--range-diff-notes.d5c@m5gid.xyz>
 References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz> <V4_CV_format-patch_learn_--range-diff-notes.d5c@m5gid.xyz>
@@ -108,68 +108,349 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-85bd88a7 (revision: add rdiff_log_arg to rev_info, 2025-09-25) added
-`rdiff_log_arg` to `struct rev_info`. `get_notes_arg` was changed to
-take a second parameter, namely that member:
+git-format-patch(1) passes on the notes behavior that it is using for
+the patches to git-range-diff(1). In turn you get the same Git notes
+displayed in the range diff as the ones you used to generate the
+patches. And that makes sense in most cases.
 
-    get_notes_args(&(rev.rdiff_log_arg), &rev);
+However, I often make notes between series versions that mostly prepend
+to the original. They end up looking like this:
 
-But this is obviously unnecessary; we can just use `&rev`.
+    v3:
+    [desc.]
+    v2:
+    [descr.]
+    v1:
+    [descr.]
 
-Now is also a good time to format this `for_each...` line since it’s
-gotten quite long.
+These notes are meant for the git-format-patch(1) output since they
+document the iterations. But including them also includes them in the
+range diff. And they have nothing useful to say there.
 
+Let’s teach git-format-patch(1) `--[no-]range-diff-notes` so that we
+can pass in different notes refs to the range diff, or just turn them
+off entirely.
+
+In addition to storing the list of notes, we also need a boolean
+`override` to distinguish these two cases:
+
+1. No such options were given and empty list (use `--notes`)
+2. Options were given and empty list (`--no-...` given; don’t use notes)
+
+***
+
+Note that using `--creation-factor` without `--range-diff` will cause
+the command to die. But this is not the case for `--[no-]range-diff-
+notes`; we would have to check `rdiff_notes.override`, which is a sticky
+value (cannot be turned off). The reason is that it is potentially
+inconvenient to error out since it would not let you turn off
+`--range-diff` in, say, some alias that uses `--no-range-diff-
+notes`. Granted, it is difficult for me to come up with a concrete use
+case since `--range-diff` requires a value, specifically a value which
+is probably not that reusable (revision range), and yet you have
+something like an alias set up with it. But why spend code closing
+that door? There is no usability upside to erroring out.
+
+***
+
+Add two tests here for the single-patch case, i.e. the case where the
+range diff is on the patch and not in the cover letter. These are meant
+as regression tests based on my encounter with single-patch range diff
+notes handling bug.[1]
+
+† 1: 155986b4 (format-patch: handle range-diff on notes correctly for
+     single patches, 2025-09-25)
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
     v4:
-    • Shorter commit message. No I.[1]
-      🔗 1: https://lore.kernel.org/git/CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz/T/#mfbb107570d497be5bfe54fe209014b607f5d5830
+    • Msg: Trim all the expository fat, which only loses the footnote
+      about “what if you had a changelog and testing notes” (in terms
+      of “real substance”) as a trade for getting to the point quite
+      quickly (relatively speaking)[1]
+      🔗 1: https://lore.kernel.org/git/30249b7b-b6f7-4065-9a83-db93d69ad0f1@app.fastmail.com/#t
+    • An obvious refactor: call `parse_opt_string_list` instead of
+      manually inlining it along with a comment saying “we inlined
+      it”[1]
+    • Trim the fat from the doc. Straightforward explanation: use this to get
+      `<ref>` instead. Use multiple times for more refs. `--no-...` to
+      turn off. Lifted from the proposal by Junio with some
+      modifications (use `<ref>` to more tersely discuss “a different
+      notes ref”)[1]
+    • Msg: credit help
+    • `clang-format` on `rdiff_notes_cb`
+    
+    🔗 1: https://lore.kernel.org/git/xmqqy0cgvwpi.fsf@gitster.g/
+    
+    ---
+    
+    v3:
+    • Remove repeated and redundant `test_when_finished` on
+      patch files[1]
+    
+      🔗 1: https://lore.kernel.org/git/CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz/T/#m06803e233a2e385e694432d45ecf402f7a67e482
+    ---
+    v2:
+    This version drops the whole functionality around being able to *go
+    back* (and forth) to using `--notes` for the range diff.[1] The
+    behavior was too complex to explain and motivate compared to the
+    utility (little).
+    
+    🔗 1: https://lore.kernel.org/git/8f0a076b-4822-44e2-a842-cc1e39ae1c1d@app.fastmail.com/#t
+    
+    Also:
+    
+    • Use a parse-options callback for the option instead of
+      `revision.c:handle_revision_opt`
+    • Msg: Rewrite the (former last) paragraph about why we are not
+      erroring when `--range-diff-notes` is given without
+      `--range-diff`. Partly because the facts have changed; now we
+      cannot turn off the `override` bit/flag. But it’s just many words
+      to say that: why spend code disallowing something that you might
+      as well allow?
+    • Add a couple more tests, so simple that they also have an
+      accompanying comment each explaining why they exist
+    • Msg: Add a paragraph explaining why there are two tests specifically
+      for the single-patch case. It’s not just to cover every permutation.
+    • Remove useless `>actual` in tests that don’t test `actual` (they
+      test the patch files instead)
+    • Fix (kind of) the tests that use `$prev` as in:
+    
+          git format-patch --range-diff=$prev
+    
+      This is a very questionable and indirect use from this part of the
+      suite:
+    
+          for prev in topic main..topic
+          do
+              [body]
+          done
+    
+      I.e. it is just `main..topic`. This is monkey-see-monkey-do code
+      from my previous visit of this file. Which then turns out in turn
+      is a monkey-_ from *another* author. I think the existing `$prev`
+      should get a cleanup (separately).
 
 Notes (testing):
-    v1:
-    just compile tested
+    v4:
+    • Compiled and ran `t3206-range-diff`.
+    • Ran `make html` and looked at git-format-patch(1).
 
- builtin/log.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ Documentation/git-format-patch.adoc | 11 ++++
+ builtin/log.c                       | 42 +++++++++++++-
+ t/t3206-range-diff.sh               | 86 +++++++++++++++++++++++++++++
+ 3 files changed, 136 insertions(+), 3 deletions(-)
 
+diff --git a/Documentation/git-format-patch.adoc b/Documentation/git-format-patch.adoc
+index 191f64b77d1..2399ba24454 100644
+--- a/Documentation/git-format-patch.adoc
++++ b/Documentation/git-format-patch.adoc
+@@ -378,6 +378,17 @@ case is to show comparison with an older iteration of the same
+ topic and the tool should find more correspondence between the two
+ sets of patches.
+ 
++`--range-diff-notes=<ref>`::
++`--no-range-diff-notes`::
++	Used with `--range-diff`, tweak what notes to display in the
++	range diff.
+++
++The default behavior is to display the same notes in the range diff as
++on the patches; see `--notes`. Use `--range-diff-notes=<ref>` to use
++_<ref>_ for the range diff instead. This option can be given multiple
++times to show notes from multiple refs. Use `--no-range-diff-notes` to
++disable notes in the range diff.
++
+ `--notes[=<ref>]`::
+ `--no-notes`::
+ 	Append the notes (see linkgit:git-notes[1]) for the commit
 diff --git a/builtin/log.c b/builtin/log.c
-index 350b35c5563..560af00e2fd 100644
+index 560af00e2fd..445400ba782 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -1333,16 +1333,18 @@ static int get_notes_refs(struct string_list_item *item, void *arg)
+@@ -1327,15 +1327,44 @@ static void prepare_cover_text(struct pretty_print_context *pp,
+ 	strbuf_release(&subject_sb);
+ }
+ 
++struct rdiff_notes {
++	/*
++	 * True if we want to override the notes behavior
++	 * of 'format-patch'
++	 */
++	bool override;
++	struct string_list notes;
++};
++
++static int rdiff_notes_cb(const struct option *option,
++			  const char *arg,
++			  int unset)
++{
++	struct option opt = *option;
++	struct rdiff_notes *rdiff_notes = option->value;
++
++	rdiff_notes->override = 1;
++	opt.value = &rdiff_notes->notes;
++	return parse_opt_string_list(&opt, arg, unset);
++}
++
+ static int get_notes_refs(struct string_list_item *item, void *arg)
+ {
+ 	strvec_pushf(arg, "--notes=%s", item->string);
  	return 0;
  }
  
--static void get_notes_args(struct strvec *arg, struct rev_info *rev)
-+static void get_notes_args(struct rev_info *rev)
+-static void get_notes_args(struct rev_info *rev)
++static void get_notes_args(struct rdiff_notes *rdiff_notes,
++			   struct rev_info *rev)
  {
- 	if (!rev->show_notes) {
--		strvec_push(arg, "--no-notes");
-+		strvec_push(&rev->rdiff_log_arg, "--no-notes");
+-	if (!rev->show_notes) {
++	if (rdiff_notes->override) {
++		if (rdiff_notes->notes.nr)
++			for_each_string_list(&rdiff_notes->notes,
++					     get_notes_refs,
++					     &rev->rdiff_log_arg);
++		else
++			strvec_push(&rev->rdiff_log_arg, "--no-notes");
++	} else if (!rev->show_notes) {
+ 		strvec_push(&rev->rdiff_log_arg, "--no-notes");
  	} else if (rev->notes_opt.use_default_notes > 0 ||
  		   (rev->notes_opt.use_default_notes == -1 &&
- 		    !rev->notes_opt.extra_notes_refs.nr)) {
--		strvec_push(arg, "--notes");
-+		strvec_push(&rev->rdiff_log_arg, "--notes");
- 	} else {
--		for_each_string_list(&rev->notes_opt.extra_notes_refs, get_notes_refs, arg);
-+		for_each_string_list(&rev->notes_opt.extra_notes_refs,
-+				     get_notes_refs,
-+				     &rev->rdiff_log_arg);
- 	}
- }
- 
-@@ -2404,7 +2406,7 @@ int cmd_format_patch(int argc,
+@@ -1995,6 +2024,9 @@ int cmd_format_patch(int argc,
+ 	struct strbuf rdiff1 = STRBUF_INIT;
+ 	struct strbuf rdiff2 = STRBUF_INIT;
+ 	struct strbuf rdiff_title = STRBUF_INIT;
++	struct rdiff_notes rdiff_notes = {
++		.notes = STRING_LIST_INIT_NODUP,
++	};
+ 	const char *rfc = NULL;
+ 	int creation_factor = -1;
+ 	const char *signature = git_version_string;
+@@ -2091,6 +2123,9 @@ int cmd_format_patch(int argc,
+ 			     parse_opt_object_name),
+ 		OPT_STRING(0, "range-diff", &rdiff_prev, N_("refspec"),
+ 			   N_("show changes against <refspec> in cover letter or single patch")),
++		OPT_CALLBACK_F(0, "range-diff-notes", &rdiff_notes, N_("note"),
++			       N_("override notes behavior for the range diff"),
++			       0, rdiff_notes_cb),
+ 		OPT_INTEGER(0, "creation-factor", &creation_factor,
+ 			    N_("percentage by which creation is weighted")),
+ 		OPT_BOOL(0, "force-in-body-from", &force_in_body_from,
+@@ -2406,7 +2441,7 @@ int cmd_format_patch(int argc,
  		rev.rdiff_title = diff_title(&rdiff_title, reroll_count,
  					     _("Range-diff:"),
  					     _("Range-diff against v%d:"));
--		get_notes_args(&(rev.rdiff_log_arg), &rev);
-+		get_notes_args(&rev);
+-		get_notes_args(&rev);
++		get_notes_args(&rdiff_notes, &rev);
  	}
  
  	/*
+@@ -2570,6 +2605,7 @@ int cmd_format_patch(int argc,
+ 	release_revisions(&rev);
+ 	format_config_release(&cfg);
+ 	strvec_clear(&rev.rdiff_log_arg);
++	string_list_clear(&rdiff_notes.notes, 0);
+ 	return 0;
+ }
+ 
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index ef92704de39..679a707c873 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -845,6 +845,92 @@ test_expect_success 'format-patch --range-diff with multiple notes' '
+ 	test_cmp expect actual
+ '
+ 
++# Unlike '--notes', '--range-diff-notes' requires a value
++test_expect_success 'format-patch --range-diff-notes requires a value' '
++	cat >expect <<-EOF &&
++	error: option \`range-diff-notes${SQ} requires a value
++	EOF
++	test_must_fail git format-patch --range-diff=main..topic \
++		--cover-letter --range-diff-notes 2>actual &&
++	test_cmp expect actual
++'
++
++# The '--range-diff-notes' has no effect but is allowed
++test_expect_success 'format-patch --range-diff-notes=not-a-note (no --range-diff)' '
++	test_when_finished "rm -f 000?-*" &&
++	git format-patch --range-diff-notes=not-a-note --cover-letter \
++		main..unmodified &&
++	test_file_not_empty 0000-cover-letter* &&
++	test_grep ! "^Range-diff:" 0000-cover-letter* &&
++	test_grep ! "## Notes " 0000-cover-letter*
++'
++
++test_expect_success 'format-patch --range-diff --notes=custom --no-range-diff-notes' '
++	test_when_finished "git notes --ref=custom remove topic unmodified || :" &&
++	git notes --ref=custom add -m "topic note1" topic &&
++	git notes --ref=custom add -m "unmodified note1" unmodified &&
++	test_when_finished "rm -f 000?-*" &&
++	git format-patch --range-diff=main..topic --notes=custom \
++		--no-range-diff-notes --cover-letter \
++		main..unmodified &&
++	test_grep "^Notes (custom):" 0004-* &&
++	test_grep "^Range-diff:" 0000-cover-letter* &&
++	test_grep ! "## Notes (custom) ##" 0000-cover-letter*
++'
++
++test_expect_success 'format-patch --range-diff --no-notes --range-diff-notes=custom' '
++	test_when_finished "git notes --ref=custom remove topic unmodified || :" &&
++	git notes --ref=custom add -m "topic note1" topic &&
++	git notes --ref=custom add -m "unmodified note1" unmodified &&
++	test_when_finished "rm -f 000?-*" &&
++	git format-patch --range-diff=main..topic --no-notes \
++		--range-diff-notes=custom --cover-letter \
++		main..unmodified &&
++	test_grep ! "^Notes (custom):" 0004-* &&
++	test_grep "^Range-diff:" 0000-cover-letter* &&
++	test_grep "## Notes (custom) ##" 0000-cover-letter*
++'
++
++test_expect_success 'format-patch --range-diff --notes=patch --range-diff-notes=rdiff' '
++	test_when_finished "git notes --ref=patch remove topic unmodified || :" &&
++	git notes --ref=patch add -m "only for patch 1" topic &&
++	git notes --ref=patch add -m "only for patch 2" unmodified &&
++	test_when_finished "git notes --ref=rdiff remove topic unmodified || :" &&
++	git notes --ref=rdiff add -m "only for range diff 1" topic &&
++	git notes --ref=rdiff add -m "only for range diff 2" unmodified &&
++	test_when_finished "rm -f 000?-*" &&
++	git format-patch --range-diff=main..topic --notes=patch \
++		--range-diff-notes=rdiff --cover-letter \
++		main..unmodified &&
++	test_grep "^Notes (patch):" 0004-* &&
++	test_grep ! "^Notes (rdiff):" 0004-* &&
++	test_grep "^Range-diff:" 0000-cover-letter* &&
++	test_grep "## Notes (rdiff) ##" 0000-cover-letter* &&
++	test_grep ! "## Notes (patch) ##" 0000-cover-letter*
++'
++
++test_expect_success 'format-patch --range-diff --no-range-diff-notes on single patch' '
++	test_when_finished "git notes --ref=custom remove HEAD unmodified || :" &&
++	git notes --ref=custom add -m "topic note (custom)" HEAD &&
++	git notes --ref=custom add -m "unmodified note (custom)" unmodified &&
++	git format-patch --notes=custom --range-diff=main..topic \
++		--no-range-diff-notes -1 --stdout >actual &&
++	test_grep "Notes (custom):" actual &&
++	test_grep "^Range-diff:" actual &&
++	test_grep ! "## Notes (custom) ##" actual
++'
++
++test_expect_success 'format-patch --range-diff --range-diff-notes=custom on single patch' '
++	test_when_finished "git notes --ref=custom remove HEAD unmodified || :" &&
++	git notes --ref=custom add -m "topic note (custom)" HEAD &&
++	git notes --ref=custom add -m "unmodified note (custom)" unmodified &&
++	git format-patch --range-diff=main..topic \
++		--range-diff-notes=custom -1 --stdout >actual &&
++	test_grep ! "Notes (custom):" actual &&
++	test_grep "^Range-diff:" actual &&
++	test_grep "## Notes (custom) ##" actual
++'
++
+ test_expect_success '--left-only/--right-only' '
+ 	git switch --orphan left-right &&
+ 	test_commit first &&
 -- 
 2.55.0.793.gc667de3f2c5
 
