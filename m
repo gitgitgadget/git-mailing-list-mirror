@@ -1,233 +1,165 @@
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9D73B14C7
-	for <git@vger.kernel.org>; Sun,  4 Oct 2026 08:34:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04584190462
+	for <git@vger.kernel.org>; Sun,  4 Oct 2026 09:54:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791102893; cv=none; b=s/HuLDeUt2YsayS0D3lDdfuSoF+g72Rld7F3JvdaRGQgvSe8djbhEDx3Ka2C1nae7IXvVjyY0s6CdJgHRsWo1xE2JlESd8wQxmiZnK/kfg8ZBp9O98GylAATRaegdIX+fxvNftqKALLmqXTbuK/1QTO5RK2R4xwrXXCbdjwNzUI=
+	t=1791107656; cv=none; b=WJLB5Ir23MHVNhx/JhJt0aqNHKpZtg4/Om8wdc51ryxSS9NDVM+w7HccPLVJ8u3I0aKQI7Gcx4npp/ylWttSi/r6gtNOOoJGSypZ4/FysGhJx93q2vthbD73w+eXRmte2oCXKyE0BMnra02R9bentz1Y+7QQ/ebW5MmVuM8aiw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791102893; c=relaxed/simple;
-	bh=DVaRUIf3bS8xK3OMvm09YI5tGWeIiKGyMmW0+W9giJM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=j0UxDn6fhnmxyLIPc88/4iWAO98NYNxe89EOVMAoXGU/2LF2cX321rKH4VxvYMyLlgvZH9xVreUUqDEEdDmmc8MEvar3zMIcrW+IGAm9SGc1W24E/g2PVIFs/jYVrPL4zqWr3Ha4EfLn4hWYONSUVABlbcHEZLPoTPPSWdrsykg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kBq2OuQY; arc=none smtp.client-ip=209.85.210.54
+	s=arc-20240116; t=1791107656; c=relaxed/simple;
+	bh=sX9oPSxImsg5hzn0iHQ//FI/jCVsHeTiEOv7zf1view=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=abqVtqcrqjBtv5OdRNNSD/+2KU5FRiErSeXamLoE/lZeQIJBehy2ecfNvSHEU7/ixXzSLLWLDQLgtU93B062GY/Hvzvi0VZLK9NDUz2f2uJyUN4QycAMw3PuzkmpQFidojxhr8iJR8hLvyAs0pteLLNDyzosxN5ujvTlZ+Xq2ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WIHc5XNf; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kBq2OuQY"
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-824e6e6ed71so591814a34.1
-        for <git@vger.kernel.org>; Sun, 04 Oct 2026 01:34:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WIHc5XNf"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-48441a2ba1bso457678f8f.1
+        for <git@vger.kernel.org>; Sun, 04 Oct 2026 02:54:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791102890; x=1791707690; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=hM3FQhCle8xEohq9GLnJZweyAnudT9wikXH6iLT2X0Y=;
-        b=kBq2OuQYhpP9DuvmHn+oJepZNkj73qzJ5J5i9Pv7RQLJjZO4Gc/5DOHfo4X/LET4Mr
-         3FKDBIhkG2rRgvt9O2puGhqfIuOgbmUm3vMHuL/yrqf8O4g+Dl+LdzX/ts8nXK0dTBCZ
-         ARmRKtZikLLV9zJK0JIyo+lYMWlWJX0UH9Ge5pBq+aafXE+qfmnACJUCs7DeNQC+1FYi
-         xXKF1oOtu9vQZcTK0kO/3IruX1PxKX3VhPSObn0/GZx+0zYHNJcYrl+A94+i4TVx8fMh
-         OsfwU6KJp0jyXlKcG0d6d/Cqcbhr29cOW29aG3ifUwZ8AeMsrg6+HWeSiMCnr7wlchbL
-         G0Bw==
+        d=gmail.com; s=20251104; t=1791107653; x=1791712453; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=35lSXvRkw6bk+JrFGOq57MCb89WYCsXsbeylBvMX6zY=;
+        b=WIHc5XNfzeQwPsUU/BtK3DsaIXS5CIWb8zr1ZtMgMFCjawsl2f15tJnIGItU/SF4hk
+         4m457IgHTs9OSl6xOUnXttWUbJu21sDRi0JAb8GjkfpS/A54Y1Akpt7piK1I1zkex91f
+         S5e4YfieImjTkLtkqteB5KzB+fdPZ+8vtVd7/rGQrsWE0NAYHmswUK41cdalVDFWNZ1Z
+         U2K8LUQo6bCOvYYdcnOakR3vqc3VQuJdw3ovEzrNcA4uvkeW1kDwcG0Uya2sTiOA/h0V
+         wc/1LRCnhrVJLonElT2+dsG1jJ7/ferUqwiDAi2lTbY96nKFwngyJ7I2jzlSZV7rzqEJ
+         4M5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791102890; x=1791707690;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hM3FQhCle8xEohq9GLnJZweyAnudT9wikXH6iLT2X0Y=;
-        b=2DxhvwqJV1kvFQEaAXtCE2nB9W8rl1BCPS2Yq282wF/z1+4FdNyAwcjd3ozGOFzFsk
-         +40poxcPIn+9/CJlbbjHHZ9ooGQpo+6w+XpgGohFpIu0u/B/d7P6EsOL26zXCGN6iVz3
-         LNyadtBlxtGoH8uBioXIQ/45JwksBxBTMQdoMYf3aL3eymaS5RO9LNgIq9d5aiCN8VD8
-         y3MPsUIE5+31Hcw0/j5YlGewGaJX9uequPtPbVdlnDyh/xMz3dq794wL27nMJed6PBpm
-         ZYHQ8al3aea7ly7Rl5BFwO+oRXGQzVAbtgQFuIh+OPUQk5UPO8okzYwPCm+iMWuLM3b+
-         QS5A==
-X-Gm-Message-State: AFuF++npQPNT+XoSbsK71ZfCfgYt4DArC7UMfo8+YgphwBsWoAGJTEXw
-	PLdk0nwNDK2by0V8UzxT13gkL/0hFwzV7xS1Ud8DHK6PFNJWae1t34VUFujPFxoo
-X-Gm-Gg: AYBFou3vc191JAlX4vK30PkgRBknQu+d7zSUAuAFwACaDE2RCLX3FQcIX9Rs26QEujT
-	iYpWIxvVXmjyNvLcmttqZhGa8elf5Bf/SPrPjfIL+ClKkPYzg7MeLPritSPfCvTwzwsIuwXr2br
-	/CuXuo5B27aXOuzHqs1lWeN02fQ+GSMLZ/bI2TXWU/MMXXM1u2tK62Dq2uIdI3FB58H4Ld638zX
-	C6xhyKOsNxUp1y14r1NDkl7J6gW4R6GA6CQl9IUKjYnzxyjkXzjt2SsXBQrGrKm8UQS8kYItCxo
-	LFmDLgCVUb2dUwWuFmaIAmtdHYNK+aWhUcDUTe4FRJyiFhcYpLpogQRX6wRQbNwI2o+kkwkuvLd
-	L+sZfUxqd8WNhE2Y9bmdYJyecl3OEHQF8q68QD8m8s+LThaMahv1j4lgZeoenlGwFzQU2N8ufDC
-	SWF/sG+ti/VlvMaDmcfbn18dvGXupLgOoN86Tg2W7uGkIiU6E72We7HUCp5Q5OuDTovf7UEVZpv
-	A==
-X-Received: by 2002:a05:6808:5094:b0:4b5:5bfd:518f with SMTP id 5614622812f47-4f679fe0439mr5464353b6e.21.1791102889543;
-        Sun, 04 Oct 2026 01:34:49 -0700 (PDT)
-Received: from [127.0.0.1] ([20.15.229.147])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4f5251e3956sm6696010b6e.15.2026.10.04.01.34.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Oct 2026 01:34:48 -0700 (PDT)
-Message-Id: <pull.2428.v2.git.git.1791102886740.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2428.git.git.1790960147943.gitgitgadget@gmail.com>
-References: <pull.2428.git.git.1790960147943.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 04 Oct 2026 08:34:46 +0000
-Subject: [PATCH v2] branch: let --delete-merged default to every upstream
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20260707; t=1791107653; x=1791712453;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=35lSXvRkw6bk+JrFGOq57MCb89WYCsXsbeylBvMX6zY=;
+        b=aS3+wbTUxROuicv3Q8hmdmKgYPaAHIBj8iJZJuy0wYXkf4poIudfuvyr2gIMBNQmqR
+         rquQGti70cTikIKDYrB/RleeJB0njslNRIHvkqJ4osEDyL7SUnSETpCqpwqpyK8puudc
+         eWjebnENoiyVFY/kYW1BSuMoFeuWu8DAKB1lXbfCgFPErBCV9I0Uj4Pk/+Dcuw/u2D6p
+         pGg0LeGwxAkMJfsYYz29OtLGZEEs+rpu7mXgVE+/x+2cjg0MsSIC+D142oLBkHYvl5rN
+         VtXIGb0kHF2NV0VVgYzqb8Ro2fYECGkAB4/gZNlCRJLZYSWzBX6HIzXCWapslgPOaz6I
+         7J9Q==
+X-Gm-Message-State: AFuF++ksoESKN0sL8IGEDlDTkhX916m6o5lu8gfnT1gDCOiP0dwFMtQm
+	ttiQhVuo9ixE9LM7EI9AqTeYg0NeOjHCRC2vpeiBchryDV8j15t5sMUs
+X-Gm-Gg: AYBFou2AOgkh4aReU/pA62AqIhc8adLdnuhhlZrTjM/2bNKnk6oH7l0DDrjnti3cPzf
+	TD+/Bl1ELl5VlCUFXfziHUEtii97/aG7kXUpxgjlAD7cf6jBvLWXcTdDJ7c2lxNcDeAPmUybQM7
+	j8kIjHRPLCFB2nFbpgmhFc/onZrOcUbK7Q86e6uC0NuEPLBm9lYx2E9nTGyZ1pgfVvyaauJgrOr
+	kvDzNPbRjKk6J37kLGeEGJoLjWIUx26xK+OA3YwedfuSODI1IVjbvb9Ijw39WGjvS/d8tMWK60m
+	c2XgMkiE2bJou2MHP4YNrRv9aUc2rb8egt4iu9zt+weueJegMVxDcPrJeq9zF1kI78ONC5Q/FSL
+	NSl2oSBBjshA7U2+5dAeNN65fMSrPaQ3BbwUH+F/R0+57HXonepKly8KRhYLIq8GrTaAOFrZ8bD
+	rCFXiH1TDcVBLqJxCtX2GP3+0T9gmHOJUWhsEs1l3eHe1iogoN/RqX9rCdYlXIJ3/jBsEqhpcRZ
+	bD6F1udvDHHZfk5Alq2iqYGxzQwZ55JCoPF1c9r9m8O4LXqnz1ehA==
+X-Received: by 2002:a05:600c:1913:b0:49f:fed0:fc47 with SMTP id 5b1f17b1804b1-4a1680b47famr67557995e9.1.1791107652975;
+        Sun, 04 Oct 2026 02:54:12 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48c57d920c3sm2561580f8f.5.2026.10.04.02.54.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 04 Oct 2026 02:54:12 -0700 (PDT)
+Message-ID: <39a28064-1698-4971-a80f-4a4c4dcdd8d9@gmail.com>
+Date: Sun, 4 Oct 2026 10:54:10 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] branch: let --delete-merged find squash merged branches
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+ <CALnO6CBwWy3aafyDJPKFk5vuWy2EF1n1Oc=W7+RVAE3rxpXwiw@mail.gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CALnO6CBwWy3aafyDJPKFk5vuWy2EF1n1Oc=W7+RVAE3rxpXwiw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+On 29/09/2026 12:26, D. Ben Knoble wrote:
+> On Tue, Sep 29, 2026 at 3:33 AM Harald Nordgren via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> 
+> …in the rebase case, I would expect something like git-log's
+> --cherry-mark option (or really the algorithm behind it, git-cherry,
+> and git-range-diff) 
 
-Cleaning up every branch whose work has landed upstream required
-typing '**' as the pattern.
+That's what I was expecting as well. It would be worth carefully 
+studying the implementation of git-cherry. "git cherry A...B" 
+precalculates the patch-ids from the side of the merge base that has the 
+fewest commits and then walks the other side to compare them. While it 
+is walking the other side I think it also looks at which paths were 
+changed to avoid calculating the patch-id for commits that cannot match. 
+It also batches fetches the blobs it needs in partial clones.
 
-Let a bare "git branch --delete-merged" consider every upstream. This
-applies only when the option comes last, so
-"git branch --dry-run --delete-merged" previews the cleanup.
+As far as I can see the implementation here makes a separate upstream 
+revision walk for each branch, and recalculates the upstream diffs each 
+time which seems less efficient than it could be.
+> to be useful for identifying rebased branches. But
+> of course even rebase-merged branches can end up with minor
+> differences (say, a commit was made upstream before that branch was
+> rebased with an identical change; no conflict occurs, but the new
+> commit differs from the old by not having that change).
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
-    branch: let --delete-merged default to every upstream
-    
-    A bare git branch --delete-merged now considers every upstream.
-    
-    Changes in v2:
-    
-     * Name the default pattern ** instead of */*. Drop reference to
-       --merged.
+Yes if a branch has been rebased before it is merged it may be altered 
+such that we cannot detect it.
+> In the squash case, I suppose the best we can do is check that all our
+> changes were applied at some point between the merge-base and the tip.
+> There probably won't be any tree-same commits, though maybe a
+> (premature?) optimization can return early if the trees match exactly.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2428%2FHaraldNordgren%2Fbranch-delete-merged-default-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2428/HaraldNordgren/branch-delete-merged-default-v2
-Pull-Request: https://github.com/git/git/pull/2428
+If we have
 
-Range-diff vs v1:
+(topic)  D - C - B - A
+                       \
+  (main)    M - Q - P - O -
+             \          /
+               - - S - -
 
- 1:  9a576d941c ! 1:  c496777c0b branch: let --delete-merged default to every upstream
-     @@ Commit message
-          branch: let --delete-merged default to every upstream
-      
-          Cleaning up every branch whose work has landed upstream required
-     -    typing '*/*' as the pattern.
-     +    typing '**' as the pattern.
-      
-     -    Let a bare "git branch --delete-merged" consider every upstream. As
-     -    with "--merged" without a commit, this applies only when the option
-     -    comes last, so "git branch --dry-run --delete-merged" previews the
-     -    cleanup.
-     +    Let a bare "git branch --delete-merged" consider every upstream. This
-     +    applies only when the option comes last, so
-     +    "git branch --dry-run --delete-merged" previews the cleanup.
-      
-          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-      
+where M is a squashed merge of topic I think we have
 
+     M^2^{tree} == topic^{tree}
+     Merge-base(M^1, M^2) == Merge-base(topic, topic@{upstream})
+     $(git rev-list --count --right-only M^1...M^2) == 1
 
- Documentation/git-branch.adoc |  6 ++++--
- builtin/branch.c              | 14 +++++++++++---
- t/t3200-branch.sh             | 25 ++++++++++++++++++++++---
- 3 files changed, 37 insertions(+), 8 deletions(-)
+If you know your repository only has squash merges that were not rebased 
+it would be a lot more efficient to just look at the trees and 
+merge-bases, especially in a blobless clone. Having an option to turn 
+off the patch-id based detection would probably be useful in that case.
 
-diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index bfdf459329..4a91ae6879 100644
---- a/Documentation/git-branch.adoc
-+++ b/Documentation/git-branch.adoc
-@@ -25,6 +25,7 @@ git branch (-m|-M) [<old-branch>] <new-branch>
- git branch (-c|-C) [<old-branch>] <new-branch>
- git branch (-d|-D) [-r] <branch-name>...
- git branch --edit-description [<branch-name>]
-+git branch [--dry-run] --delete-merged
- git branch [--dry-run] (--delete-merged <pattern>)... [<branch-pattern>...]
- 
- DESCRIPTION
-@@ -202,14 +203,15 @@ This option is only applicable in non-verbose mode.
- 	Print the name of the current branch. In detached `HEAD` state,
- 	nothing is printed.
- 
--`--delete-merged <pattern>`::
-+`--delete-merged [<pattern>]`::
- 	Delete local branches whose configured upstream matches
- 	_<pattern>_, but only when their tip is reachable from that
- 	upstream. In other words, the work on the branch has already
- 	landed on the upstream it tracks, so the local copy is no longer
- 	needed. _<pattern>_ may name a ref, a remote (using the branch its
- 	`HEAD` points at), or a shell-style glob. The option can be
--	repeated to widen the upstream match.
-+	repeated to widen the upstream match. Without _<pattern>_, every
-+	upstream matches.
- 	Optional _<branch-pattern>_ arguments limit which local branches
- 	are considered, e.g. `git branch --delete-merged 'origin/*'
- 	'topic-*'`.
-diff --git a/builtin/branch.c b/builtin/branch.c
-index a613148fc7..f2a4e117dc 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -39,6 +39,7 @@ static const char * const builtin_branch_usage[] = {
- 	N_("git branch [<options>] (-c | -C) [<old-branch>] <new-branch>"),
- 	N_("git branch [<options>] [-r | -a] [--points-at]"),
- 	N_("git branch [<options>] [-r | -a] [--format]"),
-+	N_("git branch [<options>] --delete-merged"),
- 	N_("git branch [<options>] (--delete-merged <pattern>)... "
- 	   "[<branch-pattern>...]"),
- 	NULL
-@@ -1029,9 +1030,16 @@ int cmd_branch(int argc,
- 		OPT_BOOL(0, "create-reflog", &reflog, N_("create the branch's reflog")),
- 		OPT_BOOL(0, "edit-description", &edit_description,
- 			 N_("edit the description for the branch")),
--		OPT_CALLBACK_F(0, "delete-merged", &delete_merged, N_("pattern"),
--			N_("delete merged branches whose upstream matches <pattern> (repeatable)"),
--			PARSE_OPT_NONEG, parse_opt_strvec),
-+		{
-+			.type = OPTION_CALLBACK,
-+			.long_name = "delete-merged",
-+			.value = &delete_merged,
-+			.argh = N_("pattern"),
-+			.help = N_("delete merged branches whose upstream matches <pattern> (repeatable)"),
-+			.flags = PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG,
-+			.callback = parse_opt_strvec,
-+			.defval = (intptr_t) "**",
-+		},
- 		OPT_BOOL(0, "dry-run", &dry_run,
- 			N_("with --delete-merged, only print which branches would be deleted")),
- 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index cdb6c6a634..e60f4794c8 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -2133,9 +2133,28 @@ test_expect_success '--delete-merged result is independent of stacked branch nam
- 	)
- '
- 
--test_expect_success '--delete-merged requires a value' '
--	test_must_fail git -C forked branch --delete-merged 2>err &&
--	test_grep "requires a value" err
-+test_expect_success '--delete-merged without a pattern matches every upstream' '
-+	setup_repo_for_delete_merged &&
-+	create_merged_branch merged &&
-+	(
-+		cd repo &&
-+		git branch --track local-topic main &&
-+		git checkout --detach &&
-+
-+		git branch --dry-run --delete-merged &&
-+
-+		check_branches <<-\EOF &&
-+		local-topic
-+		main
-+		merged
-+		EOF
-+
-+		git branch --delete-merged &&
-+
-+		check_branches <<-\EOF
-+		main
-+		EOF
-+	)
- '
- 
- test_expect_success '--delete-merged honours branch.<name>.deleteMerged=false' '
+I think detecting branches that have been squashed and/or rebased is a 
+useful improvement, but it needs careful implementation to be efficient 
+enough that it is practical in large repositories and I'm unlikely to 
+have time to closely review it.
 
-base-commit: c46c1e37724f0478939de636ab8ea5a89086d532
--- 
-gitgitgadget
+Thanks
+
+Phillip
+
+> It looked like you don't distinguish the 2 cases in the code, and I
+> think that's reasonable: we wouldn't know a priori whether to check
+> for a rebased series or a squashed commit, so we'd have to run both
+> checks, and the latter presumably subsumes the former.
+> 
+> Anyway, I can see how this would all be fairly expensive---on one repo
+> I work in, git-range-diff can be somewhat slow depending on how many
+> commits are in the range, I think. I don't know if it's worth trying
+> to state that for folks, though? If we ever make improvements to
+> performance, we'd have to remember to remove the "this may be slow"
+> text.
+> 
+>> After the release of 2.56, I saw people liking the --delete-merged
+>>     feature, but asking for this. A lot of people, me included prefer
+>>     squash-merge and it currently doesn't work with --delete-merged.
+> 
+> Btw, I wonder if you can share where you saw this? 2.56 was released
+> so recently I'm (pleasantly) surprised there's already feedback on
+> this!
+> 
+
