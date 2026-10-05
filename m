@@ -1,103 +1,108 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D6B4C33EC
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 16:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644EF44C66A
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 16:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791218339; cv=none; b=QM3pqPOhsuwo48NgUAYJifjSyGogPE2xAJzrLiU+YDrqvio4t+LX/td2Pp/2MNhPCGuQ4vG6OYr/HJ5asT18/tu0aNVTzV6ITJNgDgewFKRs0gYKd66eHB588ymJ7ShxGFfqGfd83xyiNVM2+CPX5f/43hJTi1TrTYZCqyQneuc=
+	t=1791218587; cv=none; b=do8RfGMD/wu8mPB6D2pZu27Voz0TOGJY/Nq932lEuVTbgxH3Wzkra6Q8W6FxY2qdA5hwkqpv9tQsWDrsRFaO7nxEBXiC50QN203RzcST66IRstEN0Rd+ioQSB8k4CHRjg8EQzhofnAaGuFKzTT/wACHF2QT2B+XuPeR+pg8LQbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791218339; c=relaxed/simple;
-	bh=ZlFAp/V2ydPUTIHTyi5RrIDvW2OMXatGlRDKOKw7Qs8=;
+	s=arc-20240116; t=1791218587; c=relaxed/simple;
+	bh=m5vtmU6UZIIohJ6Crt5IwPb+2w8s0TW/CkJSTUPa/ao=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eVcy4qcQDy/AInKVNlZsBAp2VuW41pmoa0WHuV2hNVXgTT772cbtG3HlbthFrAdOF3Kq/H12cRdbfeqU55M9yE0R2UIZAPkAI7poqWPxBUsVmiLGX92/82scYw4gSZHnWu4sh/MGtg3rWu9cgQe7JG79A3Igj/y63s4cP0lgeiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BsWOAZd1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ivLk6L9L; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=EsW3AMv1UenmRDwKiIwWeWSzxXEtNBddmrPjOheAG+ASR16bcsxKGpioaKtBQNsRRzbR4eplAeuLv0zDkzQyTo1mDNtL4R306VXqFM++VuttcjFTktO8Up/X11UJ3ORw4XUOeeLX2yya8DdGuR1w+7GM5f0hvomGbWGPQdnx3ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KcbuEDgy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uIqqy9KH; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BsWOAZd1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ivLk6L9L"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8D2341400162
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 12:38:55 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 05 Oct 2026 12:38:55 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KcbuEDgy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uIqqy9KH"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 60B3B1400186
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 12:43:05 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 05 Oct 2026 12:43:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1791218335;
-	 x=1791304735; bh=J7ISegOjmqE6jOeEW5/YSmXN3Y1f5sv2vNY9Ky0Bbkg=; b=
-	BsWOAZd1NrBLcVrpVBgc6aE0h5Xj7vURAEcGz3Vg/pE5jKe9qmHm3prDXNhd8+tT
-	SxQYDErCu2v0UuN3WWwzhWFNrcfRHkpRZKGOTFkQnoWLn8TgKguHfhfsBXvB0dcr
-	5dy2wYTVFQytv0T48Y8+60K73haEWBFcA7ggf3CqDVOtQvuQscsvTfJwcAgrwoF/
-	kZBfJXFY6wc2Q6MmdXtMQCShpY/FdLLBx21K1AD576ZQO8wSKs6oHvMeh/xnS0tp
-	xXFr1MlIThYeytxxT8pv35FrVL02V7wtfsIZZcYCnhUJSRd/qgfxN6fUKLLJxewH
-	hrfj6plchlrA9eADmnW6GQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1791218585;
+	 x=1791304985; bh=OsyFtuXmRxWKhsKHFdQbrI3oWwMLJPxHeytuER9Q1u8=; b=
+	KcbuEDgyL3LWod+Kvg8zrTkseS2WMV0reUcedsp8FSbmRw58a/3OZrzbfbW3DRpI
+	Eh4aGWuwFGNwzlO4KXAvbY57EJTY+Nft5KW5LY4yj13A08hvPVFDtSBMZ4duQla1
+	/mJaMoT2Phm74byKFDWHdQ5NYsDdhtag+YP+bM499VGJbB9mN/MtgyvWtkyYgCGJ
+	l60nEVqfnUOI4xUu6GTc9NLIVDCbjJ9NPeCMopXXkM66fxA4DJQkLDVM0qO1cN0g
+	jy4YqkUTP0Pc31hiplLYIni2MRubRC+zxLfkz5C/ViaXUTgokgi97Gv6EBJaGFta
+	EHDgazf6ipm8XcbqGvTNTg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791218335; x=
-	1791304735; bh=J7ISegOjmqE6jOeEW5/YSmXN3Y1f5sv2vNY9Ky0Bbkg=; b=i
-	vLk6L9LLGUvwh4Fu8VU5KxWrSB8Bwr/Wb7jmExlnNqxARcCw69nAMk1rVXuCcTPa
-	hfKk18QTI7ptJoNa7ZJst2aMAqgv/o2rqGvbu+nS712I2moqqEfziP0BgVn1IK2W
-	FmcTDtSE4lGQAeTvV5046xRYjOO72y3Z3LO/MRL4fNxvfeQsE117Ejj6mQGcpXBo
-	0pMUjNOef3M0MSE5YaKY1l8SsbWAdKVB5V6uKksDCDcVOJmTRdq1LXu+DnPOeXE+
-	Hpv/egy97v4dwQbIJ3lJMlGKu2zAEFLslUEhv6hEOwq91snv67yNRb8vdsKHoSPY
-	RYta6twpPxIZM4RtcbjnA==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791218585; x=
+	1791304985; bh=OsyFtuXmRxWKhsKHFdQbrI3oWwMLJPxHeytuER9Q1u8=; b=u
+	Iqqy9KHXomlZzkE3mHDkj4rBJsvovdUScfxZGARQsANMUb4XMZdCnFkG/QamUwLj
+	RCUTyrUBdVTm34QE9Q1s4lFvAOwrB2o0UeQt2PUT597neoCbhO4whSOLK927NrI3
+	RoN64FIvkoo1edwuI1Lp8QgaMu+468raIhaeTD7MUlyfKJ82w14lwHBj1Av2Ws5c
+	wZm370ThGaBvilk+yWgeJdT1NkcZ4EjDs6pS8Ndf/fjLXDUTQBejyE6VUe7hwTFQ
+	kA895lSsip3MJz0QNwQ2HuF8b0dL6HVnzQlFX/9CfSmB9kMmYkobQlX1lJSzfBqS
+	DqsQ8CHK13JKsvFWFA4qA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791218335; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1791218585; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:DYh2HEEpwwBMhdkW5Y7osXRVF/ZFU/UVbd/jBWCwnZkBa7H
-	idUfMxJkxSy9g+/F+iKSJn8yHruJFfHolrZ09WJNzMvyVRPZKPYOS9eZfItrSym3
-	rMX3tR9KwON46uK7ey94uANUz8lPvoycL1NxM9TVf+XxFaHib+qDeS35o8um4ZLl
-	6r7Ke3vpt+ZZSvczTfiX0+lkH6dlDeUMtxySobApT1ch/k3GStk3VWNxEnRSCXEe
-	tBuQFuK6PeUK9p92Irr8xoq10aKdXH7/syhofcmIWPO9PDjQHoZteduAWxg+DCZS
-	LIu2pkSqK9d1WL8jFH1ytdl/lTwSM9/AgmUpT9g==;
+	s=fm1:rsa-sha256:oDphbNiPCx3m3MrT0q+niFdNCxw2QpyNUA5dl1g5q4NwYhb
+	0m+xE95pAgSoUKL8vG9YDs3gnJ9LitfOtzVmIw45/OVlc3LIMZ0DYQ3F7nZa9MJ4
+	prj8bLsEW/jm1cINywtJoRK78XnfXLTa/xbbhImvi/hqa+hpnR+9P2lW7ZEp6l38
+	2e8mglqBCHGccT1MKNDwBwuLuWHgTeGGQorrdQ+iyOvCCExXMguGD2CIBwMH42qg
+	4vlB7fCKOgu1/jMj88WIJrvF/zuQLyuAEkSXJtU1pfjRsUIDfKVwwrx+fUQ1ZFs9
+	WnvKbzO0ygmOvnQ2Xr1CsnpSsh/mYpRwGzokt8g==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=13;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to,
 	user-agent;
-Message-Instance: m=1; h=sha256:kkkRgr3olzkMxHbsBrH8S1Ruks+3ST0dl++AeDwH5pc=:ZlFAp/V2ydPUTIHTyi5RrIDvW2OMXatGlRDKOKw7Qs8=;
-X-ME-Sender: <xms:n9LDahBjoyHOKXebVKv6YxwTLui5uEe332OgYGTLU2OePZ-O5UR1fA>
-    <xme:n9LDamZ0fmuNvVoyQtTuOA23c4iQL2pDIWRKOWRhhuR1zFZhvRAPQSpmdmxh52AmL
-    o3F4AQb27CeB3UJoW8vJE3X_-e84mTnT2PZYvApbxctQzfCf_T4tA>
-X-ME-Received: <xmr:n9LDak7GhcYfQA2MEgWaTGL8EskKeo_VxR-oKdF7-fIJLQTREo4x5VzBGPhkcZodbqztFLTTIlKm2tcTlDBVf1WOdFCAUuVzQc2_>
-X-ME-Proxy-Cause: dmFkZTEwNyoLRcMH9+d6ijP5DPrCWeAcaVLfcl0yidfPaBmYYpiXf6SNCX9yWXqLR8DQOV
-    dzkvYdtGhu1XNPiYOjRDoIWrGuTCpD3lZFQxj9529uYSqdr14w0YlXR3qqg+PORGLD4cwC
-    jgYLWxl0V3wgQ2AoDYS3oTOkpqo2tiNYiCJ5cVtbx4c7KKOGvW8scLawODnWAsW1ehgFKH
-    i18oRXnhp8KEY18qsRGJNC0z/7q1bcCoC2pMZHWChVJHQuCjMPgbc8GfDCUG/4vexVK/Ix
-    +4lhI8/xlW0rXfyWjl2oA08Sp9TbzyuF4ObGalLnt3owrZ/wu5bv3RvhwoNgSqha+SPCEM
-    RNrml/vYBuPcv3tTZ6QjgQQn4rBZhjIhkYhrOq2Wl9cl+3P14jub+orTxtqyUuQuox3JwZ
-    lYJ3r4OhcS4uMz7t+0APATNM4qPMubxdhHzIstuxKBfWruzdZ50Z1h8OpbYFjU1Kej4sAV
-    oTrnulJOQZR7CavBvFs5pNC0XikBCtMP9GpNSWeV0knmsLhAWiRkhCOsQha9w1nsYZ8/qV
-    3W8lBj3nPlTurTlKkWNiHgxguh0iEHleHq0DSoSOhf1AE2v3mXF8BZNV9iC6HEBLscl1wF
-    WI3Pvb5LI7yGRAniBBmOdan5Ug/6F2pVX9HeS+7cPfwS3KkRsbaPoAB78+TA
-X-ME-Proxy: <xmx:n9LDanatqLCJOQ5yX_HJAs25rCtZX6oaFKicJUue2YmXkbhgHFQGmw>
-    <xmx:n9LDajichzV6DzsW7BX7XB8ggCv4whm0VXA8YDfBO3MopbzS23Htzg>
-    <xmx:n9LDao8ttDi2ITlQUXEmSRFIHyTp9RRHu35OhLVh5JB-EXKQqQTP6A>
-    <xmx:n9LDauons10zC7c8hdskWVPNmndrPQdViiuj8CCbFXzprDkgk2MXVQ>
-    <xmx:n9LDatoMbUDiYWQnJgjYiJn7cTeeyuiWlhoqk_o1dmsB2Pu4G-CNqzWx>
+Message-Instance: m=1; h=sha256:YA4g6YI4fWVNbZ30mRu90ihMCvTD0liupz2PU65Gpls=:m5vtmU6UZIIohJ6Crt5IwPb+2w8s0TW/CkJSTUPa/ao=;
+X-ME-Sender: <xms:mdPDaqmW1kVvzGca7NS7xtlvBVBKcQmq1w4PEOBnpyWRrghZQOFUig>
+    <xme:mdPDarJrc93zCMbraqp1vVWWkf5veehFW1OFr_bKGFOkYfk6SM6hwj2nu1q47w27K
+    6vQiWx7Hnye2XVhqKLEWMlIBdMX6hovQhNR3N5NZoZCtWBjipWs38Q>
+X-ME-Received: <xmr:mdPDav6VdAe2oLv1HCglM1tQvDnGRFrO7Ym09p5f-EIS7XUbAfUqhQP--BL7AuQzdJzI8mnPXJQCdxs_TTDGtjqpUGq8-IWYcvhf>
+X-ME-Proxy-Cause: dmFkZTFDRUontDxMDUZ3KuTB2Jq5eiudjCwXB6+Pd5KnvyPcmYayFGDxA5LWCTHte4fUnX
+    naH2EqC/E1B7NqvQVbHrdktecVgOZRn+ivrm3I9DX2cCay/Yjp/rihcKOohqJUbXAys98a
+    j6h5CegthiKni6xAXbZCw5Td/jd6CBeQlyhJb7FMWUnw/nNImzYEClPCFzV5rmiWYd7EoX
+    auSnzt4bDfBRnDoC9aJbDV20IAyXeXa7qd7lVJ/qtBS5b7TvS8LL6h69xfv8qXb2a8zg6L
+    FhFbJELde5eQv+ufcCkqyOiGxhFZRXQQLEFziCEXcIyvDdbGoYemNd8UfHmJ8cbKUUqhi3
+    36xsiwiE8guxEtuTSEdHB4VLjxqU2N5C7M0G0nHhs0QzFt4dQM6qMej0waFpKWHEtzaiPm
+    l9TzMNSeLn6FVNf+cKv34DFWvU1Xzzf/G0efD1oz8Wq6n/YQA5PNAsVWLimrSjL/U5kG1X
+    8FYl8nd+i029okGvE20VBkaoCTLuZiLZ48pnyFxx5MwEm/gRZJF7RiRrvrGjmg3t7JQwxj
+    /VACGcLMMXjtEyq5AHH6/iLKndDmocoelf56WxVIgKWJ3x5lMU3Re2QkB1t6C+DqMCeTd6
+    3gglEOEIOlpexNtZ8iJ/vvyKRsS1TLVdqUWNBn2CYGQs5W79T3AJCtMnElHg
+X-ME-Proxy: <xmx:mdPDav0vvgRwsy-CYY-UOs5Le2f0R5dlPNMlD5DsMJobuL3wMGF8JA>
+    <xmx:mdPDalczXJW1_mXVuAWDzJU1zhwvv98noy76VwdDltMu7fQJoooVVQ>
+    <xmx:mdPDalcKZDPpTm1yUQNAJegG3cJlmo9-N0AwX8px6NsP5yNtiZpt4A>
+    <xmx:mdPDagxtWqhxvDIt7b9DtTaoNmhgwEpc9zgp-rDffZZsX_7Xtv75sw>
+    <xmx:mdPDapF-oLFWUsMhbcKq1yFnXvKRqyTw-ZnmIvuHoh33vOtFcHsDufzs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 Oct 2026 12:38:54 -0400 (EDT)
+ 5 Oct 2026 12:43:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Matt Hunter" <m@lfurio.us>
-Cc: "Patrick Steinhardt" <ps@pks.im>,  "Sphinx" <sphinx9692@gmail.com>,
-  <git@vger.kernel.org>
-Subject: Re: Question: behavior when reverting a commit from a shallow clone
-In-Reply-To: <DLWUB05MOV7T.2XA7NG57870ZD@lfurio.us> (Matt Hunter's message of
-	"Mon, 05 Oct 2026 06:41:31 -0400")
-References: <CALfz8Qx63qNoSbXq7C7u+KwX4=HCL7=uOUahpXd6j7KvW_c_Eg@mail.gmail.com>
-	<asNKZpxiuFhVkVQd@pks.im> <DLWUB05MOV7T.2XA7NG57870ZD@lfurio.us>
-Date: Mon, 05 Oct 2026 09:38:53 -0700
-Message-ID: <xmqq7bjwkspu.fsf@gitster.g>
+To: =?utf-8?B?6YeN55Sw5LiA6IGW?= <kazumasa.shigeta@kanamei.com>
+Cc: git@vger.kernel.org,  shabbir.r.bhojani@gmail.com,
+  phillip.wood@dunelm.org.uk,  ps@pks.im
+Subject: Re: [PATCH v2] stash: expose untracked modes in create
+In-Reply-To: <CANUHOw3gynMRGN7A-wOnL3PQtgFbMtsB2gyZxaq+0Z5bHp-H8A@mail.gmail.com>
+	(=?utf-8?B?IumHjeeUsOS4gOiBliIncw==?= message of "Mon, 5 Oct 2026 01:55:18
+ -0400")
+References: <20260929074222.11942-1-kazumasa.shigeta@kanamei.com>
+	<20261001042155.33303-1-kazumasa.shigeta@kanamei.com>
+	<xmqq7bk173qm.fsf@gitster.g>
+	<CANUHOw1eO0HNjU+-PYNDOz9kHhBZYYfhiKJSX4082YSC1NKxww@mail.gmail.com>
+	<CANUHOw3gynMRGN7A-wOnL3PQtgFbMtsB2gyZxaq+0Z5bHp-H8A@mail.gmail.com>
+X-Gnus-Delayed: Mon, 05 Oct 2026 10:48:34 -0700
+Date: Mon, 05 Oct 2026 09:43:03 -0700
+Message-ID: <xmqq1pa4ksiw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -108,28 +113,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-"Matt Hunter" <m@lfurio.us> writes:
+重田一聖 <kazumasa.shigeta@kanamei.com> writes:
 
-> On Mon Oct 5, 2026 at 2:57 AM EDT, Patrick Steinhardt wrote:
->> On Sat, Oct 03, 2026 at 02:24:42PM +0530, Sphinx wrote:
->>> 
->>> If an operation is then performed to restore/revert B, I was looking
->>> into the behavior when the resulting working tree/index becomes empty
->>> — effectively causing all tracked files to be removed.
->>
->> Yeah, this can indeed be surprising behaviour. The reason for it is that
->> in a shallow clone, we rewrite the boundary commit (so in your case B)
->> so that it doesn't have any parents anymore. It thus looks like just
->> another root commit that has added all files in a single go. And the
->> consequence of that is that reverting it will then delete everything.
->
-> Separate question from the sidelines:  As a non shallow clone user, this
-> makes me wonder if/how these boundary commits might be munged to
-> preserve original commit ids in the clone?  eg: so a fast-forward
-> pull still works for future content
+> Your question made me realize that I had focused too narrowly on the
+> untracked modes. The larger issue is not simply that `do_create_stash()`
+> has capabilities that `git stash create` does not expose.
 
-Something similar to "graft" (and now "replace") is done under the
-hood, to stop history traversal machinery seeing the true parents
-of these boundary commits.  As the commit object itself (specifically
-its "parent " lines in the header part) is not modified in any way,
-this does not affect object names.
+Brilliant.  I agree that is the right way to frame the issue.
+
+> Making more of those capabilities available through `create` would
+> therefore mean either changing that contract or designing around it.
+> That is a much larger interface decision than I appreciated when I sent
+> the patch.
+
+Perhaps, but I do not think it is too huge a backward-compatibility
+breakage to forbid giving a message lazily (i.e., all strings in
+argv[] after 'git stash create' gets concatenated and becomes a
+single message) that begins with "-", with an escape hatch that a
+leading "-m" will take the next argv[] element as the message, for
+example.
+
+> 2. Add a new stash subcommand for the creation functionality.
+
+This is essentially how 'git stash save' came about, to give us ways
+to control how a new stash entry is created and how the working tree
+is cleared with command line options.  In the beginning, you did not
+even have to say 'save', because 'git stash <message>' was invented
+as a way to say "the boss is here and tells me to work on something
+unrelated. clear the slate with minimum number of keystrokes to
+continue working on what I have been working on later."  And that
+later became 'git stash push'.
+
+> 3. Add something like `--create-only` to `git stash push`.
+
+This also would work and sounds the safest.
