@@ -1,160 +1,143 @@
-Received: from mail-oo2-f2.google.com (mail-oo2-f2.google.com [74.125.231.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from flow-b3-smtp.messagingengine.com (flow-b3-smtp.messagingengine.com [202.12.124.138])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0323930C637
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 17:35:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.130
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791221751; cv=pass; b=ARRVKpW6ZVjc9pnS5z9k12HHmna2TljbOlnB+9+VBGPzFPGL69JHGZ+pwxStBH3BC4b1KozADSDMZA2SArb77wkqjsT4qWS+2daGnnsLtZjox4ZNeaUUza6XZXOm80hCp/6Jy2c+7um/hvAaJFl/GkQEjm5i8Ai5luvl27VQpYk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791221751; c=relaxed/simple;
-	bh=1LnhvNl0nBj+G8sNlsQZekmVdxWldLC7fMl5BqgWcEA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Sp1imFNjVckdIJsTY5TDaj9drRtv7YmeuYs7D5RlEd4F9V5T98ak3PNzUDrEBxLwj/o+lmKQTkZCiyB6AyG1dT55L8itCkg/B+1L2Q/8Z5LatBxIRHX/P1yX+P6BwATWs3JkSuH0LSMGDLucD+pZle2LywprXfjBpsfku+M+hYE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ocYkfrHK; arc=pass smtp.client-ip=74.125.231.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E4A47F3B6
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 17:40:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.138
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791222053; cv=none; b=Ak1POocfjqpMMVwYDREO/NgdJLQGyqrKDnkUmT7yEk7cbr/xVlFXMUpKhXLAKbO/xuo2nSw6pp2eGXQIuSD+ixBJW37eMHKs/swFgQRtPyS3fdvqno0KpN93YaNTf2YGxxnD6Jdp1ltWfU3BCLzY65YNxa67Tri4I02gL9GaLCU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791222053; c=relaxed/simple;
+	bh=8bH6mtB+CtvkuOwW250HACHDFPXchaNGg0QeUtAfWdM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=TSxTyDuw5JTlOe8xN6wCbBPK57F3vtm6zd+VL+4jh9R/flF9kCRfv8QAQsom5y28y8c/lNXGOK0Oaw54XTk0w7NjlrBOGcjBgV3S3Li1Tl9ApYrsWSGCeVlp3dWyyG+Vq0+W2iX+01ZR5NZv3wjdqmxb6epVzYgS/BbKiepPSdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=qZjB+pgm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UD3zCDNx; arc=none smtp.client-ip=202.12.124.138
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ocYkfrHK"
-Received: by mail-oo2-f2.google.com with SMTP id 46e09a7af769-824fdec5521so1400573a34.0
-        for <git@vger.kernel.org>; Mon, 05 Oct 2026 10:35:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791221749; cv=none;
-        d=google.com; s=arc-20260327;
-        b=BnyAMD53/ym3hOdncrTAAUYbf6OaXc3T/akhjUy5YrAbFov1uV9g9rcvbL/kVwa1u9
-         Zs2SW9vPL2DUvm+I2eP9qEoMob5eU7+K8bxfj4ezcnJX29lfj4EljZl+m2Ut+1/dOesy
-         CRhrkwVtCRUakQZbAHRZGqZKWx3uqAZYJ3Uz3zRgRsfySWtCt1Ft82ZXgQ4NJ33OCDKX
-         RHQSQnaXshdNff3fgkMvnZlN7QhhDvlSR/q9L4mJzGJdU3fFgq8eutTIRhre2NzuAFWT
-         Sbcr5BLhn7oUwvuQ7d1KP3mHIJlDEUGJvde9bSzk6Zgr93vERQ+GGOqEADbMV8J/nQOI
-         Pu4w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=IznhUxquWfbhynSlgIJQ//1g//9VADCP4kP/QGPnZC0=;
-        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
-        b=nDgz+9szvjU6Sqn4gjwQ4/9Z+UHWXgfGpI23EOBijjDUj0yzdr4JaApqtKSb+eWCdj
-         lS6YJ+wcA1QMvSWvwZ4x39yvCkICuUW1IShgW3jLI46xMa8gC6cs91r+qcMyVx6VmyJ8
-         couKKSohiC/2iRHwnYozEEPMQPZI1FAEmHAUFGrY/aDQ9q7g9Xy94/siUyzJyfmycW6X
-         6K+pZK1DK4bv/NezHlg1b2r60kwvYXmFqbglamYDIYT57dn34w2jd8G6c2SDN6CWv4p5
-         L1jY0e3BRq2FoYfysQKSJCp2XAk/k3QgYKSfh+BlPKhfMwxZBBhLGpJeUnHVqx0FiwVf
-         oBuQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791221749; x=1791826549; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=IznhUxquWfbhynSlgIJQ//1g//9VADCP4kP/QGPnZC0=;
-        b=ocYkfrHKHbdd3+Ke+1ZxpMA5/EHBNTsmPr/y9RNvl/ImWOpbIvE/yVPcaET3eqIUtE
-         fyUTIakLlFG+kRj8N1XdvnHOs8FX8viRBzJl3P+iqk0E6t8UtCxxfCj+wrnmjpE8z+Jk
-         EdWuVPexucVl8wnRdDjtBA6RRvKuD/zZHW3TaZEoLfadNHlbhAPnYSFffNcyC2wwch+j
-         RMWh0u1O5oUTTqym4ZDL2hNMfDKTjcUdo913wIuuB8jnLylIKnodk7HV4sjXxY7/3Cqa
-         McPR9dak0j0sq2mtEpHMdqGdtohSciU4lX1S4SEZ56NLTSmvy5HS4dX+M2MLOMoqALU0
-         PDNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791221749; x=1791826549;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=IznhUxquWfbhynSlgIJQ//1g//9VADCP4kP/QGPnZC0=;
-        b=C8h0MAw357HEzPdpArn+1NoHMKIRjFTCrVgjb5Tvt18Cq7ABJMYJLulqAKL+3dY2B7
-         PtE+s9dAhqUeMHbaeCq75JzSY1YnGiH1vW2i8c4aojp6s6f4WAT9JubhzQqkdh2NzJG2
-         D4X21Evgt+MGoNJquli0dvIlgiYMI1/J9toQE3mWLT7c6IUwYqvPSsy86hvtW9i/aZcH
-         P2CBmxZAb952GoZyRWitnSrBEBuYp5+yK6i9OyMNQNRC70s4vGDn1iOBCGX3Wa8yD68R
-         Uio3+B/GBjdeWo0Oa1qHCp1+Jh7hgEXG4E/Dq99TjArYC2Zfd4vfpoatm4fTajPZgGLZ
-         5sGQ==
-X-Gm-Message-State: AFuF++nUb6lKh5N8YQya0kK2sRIht9R9R5XF2OkxdiUbYBebx9bjjdaC
-	2AnVVZG/PFWqr2V+F5eHY2CsxFSm/KyxvDcLJqvruqWKD6304fOvEg5eqBgEDxUAtkvy+Nsxlpf
-	sz+4fDha9qd+bir2hnN5ciaSFguo2Em0BUwJaPmwdOL/e
-X-Gm-Gg: AYBFou3u0wGPjmqZMz9PuRh35BeI/35UMXqgnYJT6PT8zHpn2qZuDiYEiZzPbt7FHy4
-	xymET+nJrdSZ8hjw7zEClROB8LmP9xto/88D6bBoSN1jbTR2FcQIgs5VwOr8c5fLkUKbTl777Xj
-	xOALBWjKLWv/yJXDvhGZGGR+LQmnRWoTPH6PeEGyIGAv+nlu/QTXZSmiTw+T2YBUgdVTVlg/o7a
-	uS3xQIZDrjl8ErwoSZ3gASl6NDC6Ji/0p3tcIsucCz2By3INZZCEaOPayQwtEfodLHAIepOV28v
-	X9mOwWyd6r/qqmSBf2av2Df+KnHLHvEzV3bB44Z7JQknFYH8VYnikQ==
-X-Received: by 2002:a05:6808:159f:b0:4b3:7efc:e970 with SMTP id
- 5614622812f47-4f67703d73cmr9072326b6e.5.1791221747801; Mon, 05 Oct 2026
- 10:35:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="qZjB+pgm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UD3zCDNx"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailflow.stl.internal (Postfix) with ESMTP id A39671300922
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 13:40:50 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 05 Oct 2026 13:40:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1791222050; x=
+	1791225650; bh=KWP1d0CHLAdq3BDE7C4xxl+0UoLZmOcraiZuJrFK1vE=; b=q
+	ZjB+pgmOGbA0CCIb8tV2EOFn759YpXdwSgqYjOxO3G1yfdG2K2PUIggQ5O/fhgiS
+	eI4nwUitXuAUTUnYOIZGZlFXszdJogAtENhsvbxKhYdQhklXrwArBr6P80sgqIx7
+	3/YhDy7MjhOPg7QEVI33VWZ5RWmfbOA00KF2BnxYI4Bd+PeMt+RhZ/lzDxhOK1bD
+	5OPcX1aWFSW4t+17C/mh7WirCjXdoG9kq4jJ1Kh3fDZIIhOtbF83lahfHjBnonE5
+	eAd4LaoIGw1VullUY/T8Rf630wG+pfQwlUVfBQf+wu79koDggZdNzM628S1gkGsO
+	oKK3JV4ShoL2VksujoSUg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1791222050; x=1791225650; bh=K
+	WP1d0CHLAdq3BDE7C4xxl+0UoLZmOcraiZuJrFK1vE=; b=UD3zCDNxNQR2/bS9H
+	hmenGhuoP9KQAGOHh8LzSnGF2CqDTloOoIWJBYQ6+Ff+OPmtIxvT1DWOpnzSoiC0
+	XzGvGnJo15dwQc0N4TV3J3XSVAc+O+Q3vm9q7g6EwIkKncjpcN0gHr46tN1sliGJ
+	+cIDRZzYjk6ZY/uqhC4sfYprxNPKfiEooSjKCtv+VfoEhCpug4i9EOUgmI2v9R1V
+	+cE3UST0eoxg7yGz9367zaEtKOiCgGMIR6m3d8OK8BRdaJ+cgwD4ALQSGBD0YBmu
+	/TwcxuUoG7IoP7gHihoMwWrje6c7k5tbLiDwAMVoijOLGZNXK6m8sIY+/Sv5WwpI
+	rYajg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791222050; d=fastmail.com;
+	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:RtHKaj9MQzahcgtud/qkwE0IwbNFHUDBPIJPZi1hA5u5/ww
+	X/4tA+yQ6RoFyYY4OHvoMSTUImTfm6HfXRolIH2vjeD8mibyx3uuORzNAG1AwJM0
+	ZZFNCmSQ1kaj7NLrlRvGx36SjB9Inbz1gN6aSutDb4zls/XVGIBpm0EzW/2l9VXh
+	ZCiV4bT5VBHWUdelflELuRLwM0YrFkq7jDKd/dOVjtkO+ESXS7YkjR2S6lmpQfsW
+	5D6ZOWUYIQ9kkhk4LLWbrq+RC5aIMADH6hDN2olJvsyzQBi0seXnWTEx72wHHA7a
+	4l9ratIwRMVKcQk58m15VYQWR/XIW0QRbWj9+9w==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=mi-m=1; hc=11;
+	hn=cc,content-transfer-encoding,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:2vJxtMEXXnI5XlUpKnfayFfmQed+ozchnI5oxZudI3k=:8bH6mtB+CtvkuOwW250HACHDFPXchaNGg0QeUtAfWdM=;
+X-ME-Sender: <xms:IuHDagz-U8r-Rqpm_-dzeWVrH5Fc0PEZlX7sUuzcjYezdx3-RZvWoA>
+    <xme:IuHDarSzQJoIIYFKoIyaloE0N57rWNB6n7-biVoL9YftqI7XtnrIXB1dZ18RahqRy
+    KBbiquMQIbyd5io8RlA2EF1EttONk1-hvK1WKlM3N8NzIWPvQlQJuAe>
+X-ME-Received: <xmr:IuHDanVJ2v6pZWaU22tBsRnhswNI0KNzIljp3-DxNJ3O4NOqpZG_VyeIpRxvvr1X9gbuf6zh20BDduSDc_nYa7iOHjx-XZxKDp7Fia0IJ9Rdey4_QDgRRZHSrSKilUAblSHsBB__VpGvX3B4Vzij>
+X-ME-Proxy-Cause: dmFkZTFgT4h9e38redA35qat/9rSF0gSQgkcMwuFif5Hw7VNMOKdUVsaaCTz4YT6KWZSK3
+    o7iWklL06JhQ4OKagh8dgeRV41kveiThJjXLoRK3ZIi1v3906Z07MsC9Uu6MgFMR92Gv/U
+    SY1qHg89Bgqtxh1WoF1IQyReBikb2u47F9egBgEcqFmPghusoLFtUFT7YgGp5m0doMzo5D
+    a6nakdGBFV30+fTp3sxERyhzQERXUyN8CNyCZYdcSTnepkQxq3N5/Tfm+3Bq5ziJtEwWD5
+    ZtVLrnSRZTqkn11pnzGblTZDr3KD/GGuYcNqaBiPjpnrCa4rRFu5+EDraacCc8w1rXhGIT
+    UnGwZalAUajSYUqyAdg7V0EybSaD1kw+9H7eLPDWOsfpMN+z6Zb/T50v+9fAQ66EBX2rk/
+    pdn1C9tQ4YKS685F7ckmgL0lBOSgAWj+/TF8+auRYgwaGRy7Uh4cY6L/0J4reMfIBc+QGD
+    amcDOmqjp70dLIuTjwxM1sGUBQodiAQ4oJ/k/txggdO12ceR+KEOQkKJYyTmqH6OTNYzmF
+    S9ukaOXkrxJ1hbsMhYbxkweWY2FszE8c+6VqZMoJPn08nki0v0Z+7Tg0mvzV4hyAp54VJl
+    cAoBCOcSnyf7FHvuSXt64ilRygPQ2E00ir0k5DPKnaSQnueDqSjd3Cf54zgg
+X-ME-Proxy: <xmx:IuHDatZy7KfLxSUymmorX2DlZ3mBC-AfzxU7NIjGTj9_w6sQPluomQ>
+    <xmx:IuHDat1eYg29a1KQc1Q2cyGz3SJEVYll-yuo2nXmCOsucipUUb4YPg>
+    <xmx:IuHDavg_b3ydoqhuV-cCLd5cN6jqzH4ng7eQXjXOgUYT4FfdM6OIEQ>
+    <xmx:IuHDahYgYn9geru-8KLVhaSN8WniCse_W4M6vRBq65J9oTr4KWdKZQ>
+    <xmx:IuHDahorJN8PEUI8SSVogVbfYZBoMndxXhnX0T2Zy-MU6kXhvSZwsUtM>
+Feedback-ID: id2564aa6:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 Oct 2026 13:40:50 -0400 (EDT)
+From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+To: git@vger.kernel.org
+Cc: jltobler@gmail.com,
+	ps@pks.im,
+	"Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+Subject: [PATCH v2 0/1] repo: add filtering options to "repo structure" 
+Date: Mon,  5 Oct 2026 13:40:43 -0400
+Message-ID: <20261005174045.1900391-1-markchucarroll@fastmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260924164503.119506-2-markchucarroll@fastmail.com>
+References: <20260924164503.119506-2-markchucarroll@fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALfz8Qx63qNoSbXq7C7u+KwX4=HCL7=uOUahpXd6j7KvW_c_Eg@mail.gmail.com>
- <asNKZpxiuFhVkVQd@pks.im> <DLWUB05MOV7T.2XA7NG57870ZD@lfurio.us>
- <xmqq7bjwkspu.fsf@gitster.g> <CALfz8QzymKxvzYGWLwdtzERDm1apa8ebZEVyLne18hpTaB=D0g@mail.gmail.com>
-In-Reply-To: <CALfz8QzymKxvzYGWLwdtzERDm1apa8ebZEVyLne18hpTaB=D0g@mail.gmail.com>
-From: Sphinx <sphinx9692@gmail.com>
-Date: Mon, 5 Oct 2026 23:05:36 +0530
-X-Gm-Features: AclHuK96YdvAZEy0bDn6jxbMlkOPIci0ZR0512ox_8myuN_fTxoYobVPPmdmHEY
-Message-ID: <CALfz8QxzXJ_0EC=a2AEO-_Qy+MGGnjHbE_8dBky23BLN-WnGPA@mail.gmail.com>
-Subject: Re: Question: behavior when reverting a commit from a shallow clone
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Thanks, Patrick. That makes it much clearer.
+"git repo structure" provides a collection of useful information
+about the information stored in a repo. In particular, it's
+valuable for diagnosing performance issues caused by large objects
+stored in a repo.
 
-I was initially thinking of the empty tree as the potentially unsafe
-part, but from your explanation, it's clear that the empty tree itself
-isn't really the problem it's the shallow boundary that makes this
-behavior surprising.
+The current implementation of "git repo stucture" provides summary
+information about everything in the repository - all of the
+branches, remotes, tags, stashes, and notes. But sometimes
+to properly diagnose a problem, it's useful to be able to
+get information about the specific part of the repo that's
+exhibiting a problem.
 
-The absence of a safeguard specifically for editing a shallow boundary
-commit, and the possibility of warning or refusing such operations by
-default, is exactly what I was trying to understand.
+Add the option to specify a set of filters in the form
+of a list of include and exclude queries. Each of these
+specifies a commit or ref or range. The set of objects processed
+will consist of all objects reachable from any of the
+includes which are _not_ reached exclusively by paths
+including any of the excludes.
 
-Thanks again for taking the time to explain it.
+Updates since v1: this change has been completely rewritten. The
+original version implemented filters the same way as
+"git-sizer", by selecting object types to include or exclude.
+This version drops he type-based filters in favor of
+specifying object traversal roots and exclusions.
 
+Mark C. Chu-Carroll (1):
+  repo: add filtering options to "repo structure"
 
-On Mon, Oct 5, 2026 at 10:44=E2=80=AFPM Sphinx <sphinx9692@gmail.com> wrote=
-:
->
-> Thanks, Patrick. That makes it much clearer.
->
-> I was initially thinking of the empty tree as the potentially unsafe part=
-, but from your explanation, it's clear that the empty tree itself isn't re=
-ally the problem it's the shallow boundary that makes this behavior surpris=
-ing.
->
-> The absence of a safeguard specifically for editing a shallow boundary co=
-mmit, and the possibility of warning or refusing such operations by default=
-, is exactly what I was trying to understand.
->
-> Thanks again for taking the time to explain it.
->
->
-> On Mon, 5 Oct, 2026, 10:08=E2=80=AFpm Junio C Hamano, <gitster@pobox.com>=
- wrote:
->>
->> "Matt Hunter" <m@lfurio.us> writes:
->>
->> > On Mon Oct 5, 2026 at 2:57 AM EDT, Patrick Steinhardt wrote:
->> >> On Sat, Oct 03, 2026 at 02:24:42PM +0530, Sphinx wrote:
->> >>>
->> >>> If an operation is then performed to restore/revert B, I was looking
->> >>> into the behavior when the resulting working tree/index becomes empt=
-y
->> >>> =E2=80=94 effectively causing all tracked files to be removed.
->> >>
->> >> Yeah, this can indeed be surprising behaviour. The reason for it is t=
-hat
->> >> in a shallow clone, we rewrite the boundary commit (so in your case B=
-)
->> >> so that it doesn't have any parents anymore. It thus looks like just
->> >> another root commit that has added all files in a single go. And the
->> >> consequence of that is that reverting it will then delete everything.
->> >
->> > Separate question from the sidelines:  As a non shallow clone user, th=
-is
->> > makes me wonder if/how these boundary commits might be munged to
->> > preserve original commit ids in the clone?  eg: so a fast-forward
->> > pull still works for future content
->>
->> Something similar to "graft" (and now "replace") is done under the
->> hood, to stop history traversal machinery seeing the true parents
->> of these boundary commits.  As the commit object itself (specifically
->> its "parent " lines in the header part) is not modified in any way,
->> this does not affect object names.
+ Documentation/git-repo.adoc | 41 ++++++++++++++++--
+ builtin/repo.c              | 16 +++++--
+ t/t1901-repo-structure.sh   | 84 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 133 insertions(+), 8 deletions(-)
+
+-- 
+2.53.0
+
