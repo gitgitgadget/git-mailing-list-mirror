@@ -1,110 +1,124 @@
-Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com [209.85.222.69])
+Received: from mail-oo2-f36.google.com (mail-oo2-f36.google.com [74.125.231.164])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17EE3DBD53
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 21:12:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486DD3FBEC1
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 21:26:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.164
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791234737; cv=none; b=BQhkvqwXa2/g6ZLAssCZv1a9Bih3cGa/riDCksae6WNiTFgtAjjrLziRQQ5WfyxWjdVzpKsfThM+k5cfZaKwfqlLSTS2Okz4QufWju4zWPqFHFpgowHbdTY1sgC/kLVe7y8v6cPPFy749dRkEmezTiJmD62MD+hj8XQP85Qk5aA=
+	t=1791235571; cv=none; b=Eqm9jjQM+xSED+Dkg7mtSID8KnXPTAzdTEPswSwYfhH6FEGDbip9o5BVHH4JJzxiBICzTatXXzXtbfPwEguS4Eje19WzOyZj8vtsJhIvmfMD/W4dRScYsOHYAYGsakgt0j5H/luVkeD1zRiA86AWEjlj5LRdKjs9wF4xwBCfrws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791234737; c=relaxed/simple;
-	bh=4g0zmzGw3TdCf65tZRmY9Io3bkuvlIN35Dk3diuG2HY=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=VjkioeHqcgko12z5DXgnR6zZe4uxz80VV6/S7k0pQKLqjR43kFgVPEpT7hpEHAAkQyhKefrsWK/193JjUcx3DcYY5b9mi06h7CXLSp+TQc/6Wtm6Rowo4giFwNFJIUAssZY/AzKm4Cv7E+HIlNiKkJwxIbWWoABhhU3JA1pK4n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--rmistry.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vTwWAjM/; arc=none smtp.client-ip=209.85.222.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--rmistry.bounces.google.com
+	s=arc-20240116; t=1791235571; c=relaxed/simple;
+	bh=qloI7fPoamjS8JA6ZD3Wqjy+du1l0gutU50R0UQGIdY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IWtvhwJ9CoEHQcWo6IM/LnOXk34veWjF5Bv9W9gNQw7vBH9HKBdAghfo6zs0AXJwH8YhdX0wCw2vpuaC4HFEFFHZWGWkHrB0KO7pstEjp8LWcGsXoJRPq93phaFZtTvBFlY94VLUFP38E09+zy6zPdts2fgXg5gpgRYJMUEqan0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com; spf=none smtp.mailfrom=tylercipriani.com; dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b=xv5ziKlW; arc=none smtp.client-ip=74.125.231.164
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tylercipriani.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vTwWAjM/"
-Received: by mail-ua1-f69.google.com with SMTP id a1e0cc1a2514c-988bbb0ed9aso1634443241.3
-        for <git@vger.kernel.org>; Mon, 05 Oct 2026 14:12:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b="xv5ziKlW"
+Received: by mail-oo2-f36.google.com with SMTP id 006d021491bc7-6dcf2ba1fa0so1367413eaf.2
+        for <git@vger.kernel.org>; Mon, 05 Oct 2026 14:26:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1791234735; x=1791839535; darn=vger.kernel.org;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=baJPW+W5xUii2vInoj/ocaHf03bsK5E92UqeZJfGgWk=;
-        b=vTwWAjM/FJN624RDGPnK8h7lu4SCgBgirsap4laSdpSBIXxrUouLSCd+Lm3VTY0GoF
-         OIM32ZjEhWLTIKUfGugl2q3V75K+lsA3RcfuOaF1Ylz0QtxCgiHxg1r0xJ+85jSEKnrf
-         g79g3vDizx7+fW67Y9xctevOyd9/9PsoemXmqwZwrhGpNxM/O6PO7EG/BRboiQOqPwsQ
-         OJEoYz8/BdBF7g0S3ej3ugEwigWL8Qe5ao3UPOONx1c7hLQ1VVZ4krhej+kbM4c918JS
-         Ntna1EfSwjU4CQ8CkiEqh+RxKGuP6D3tkvCBiXOtUlj66Uv6RHoZubT/o5eM8oSGzanL
-         XyxA==
+        d=tylercipriani-com.20251104.gappssmtp.com; s=20251104; t=1791235569; x=1791840369; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=qloI7fPoamjS8JA6ZD3Wqjy+du1l0gutU50R0UQGIdY=;
+        b=xv5ziKlWKOVfYGjVA1g/PUR9pRROrc7cvgHWx29UCUYMzyyNfcsIP2+RsrMqit4Jir
+         GL+8epUJXXjpmANDjFU3yrCJ0/wFcQ1hsjxKUpj/m7WCNSHsXAGJqLx7SzGIQKHvxBhQ
+         stSV0FOM6ecYMPvqVz+J56Q/RfXzaOzzgyepotChjjhCQTwSsUG1wXZIEiOOBkyoNXiz
+         rGBOupqbQ7hFPEm5Xpc2AlgofSYv/qq8+9/tppKyY4fhANsVQG2rlmmwZ13Rik8HoRqq
+         w3KBs09HbthJJEAk1+lOf+nmtceCd8YlMnE8uJkGxWEhwoz5mnDndn8kR4XAklpnvG8J
+         0KXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791234735; x=1791839535;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=baJPW+W5xUii2vInoj/ocaHf03bsK5E92UqeZJfGgWk=;
-        b=1PrMU9wLazl6JJf5xPx3muL2v87YCbGF26PNmBgHfmXlseMRUUq6iDIAP2BFGHV1RJ
-         59d20mna2wd3aa8Vbo/9LsuZUTh4JjydaBA73Sf22E6CBteInLflev+qrdKoSNx0oDVq
-         4tPvc4aqd12nDv6IPrJn2ds4yXrQs8czwgEBWKM7czzEH+bLTMbu4n2gpD9TizAPCVs1
-         Pj427mzNP+4GQ0SZzPJo83hGyWg118IzolWOVjeIZxTbfeVbg+TkaHEDBuC0V8rjKHU+
-         C4/qb03Rmdm834lfXrpiqePQNB1eNaFnEF1BtVOfw1VVnDPNIdRhE3Hyz+K5684NZMpb
-         zGsg==
-X-Gm-Message-State: AFq9FYJa1n9CdszBYE0mtq8gNF5fj3X6JVzCGbca2tKvGCRgaCZujqB3
-	ScJ5ZElc0Yur7yksHaYhIAl5eerx1IAMo5gEHvSEyo6D8SZ11pXFWpOX8ZprCSW36u03O7Poj7e
-	3HxvYcJzD1A==
-X-Received: from vsts15.prod.google.com ([2002:a05:6102:370f:b0:7b9:f047:3116])
- (user=rmistry job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6102:a183:10b0:7c1:f386:1b7a
- with SMTP id ada2fe7eead31-7c1f3861eabmr1979243137.27.1791234734334; Mon, 05
- Oct 2026 14:12:14 -0700 (PDT)
-Date: Mon,  5 Oct 2026 21:12:13 +0000
-In-Reply-To: <xmqqse2kma4o.fsf@gitster.g>
+        d=1e100.net; s=20260707; t=1791235569; x=1791840369;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=qloI7fPoamjS8JA6ZD3Wqjy+du1l0gutU50R0UQGIdY=;
+        b=vWMtfPtJRFcnaPF0vUFsCfOiI1gI7D1AgYQlQKNOtlvaKX1TolGbAJuOuyz4vxX361
+         vV2OLkhq2OsDRsVVwIqDWNGt18XUJrmG8o5QITneVSwsNTM3FYCiQRmoG3d6rX/DEXir
+         rycKMSoUDsV6SxFeJ+WfVUwiunT4JVD1XXA0hAaieBCO9RMwcXTTwoWW9VLrSbPn4J7H
+         JiZeWUvnArRCde6g09RZw1qRckDYW/PQwYCzfoZZ0C6HyodbWbkPZeiIsEPLCaav96PV
+         eRRw2e3B7DynxUnUQnPoi/jWdopTynvCX6P0h1dNQoNuLXC2oHwUtSv79dAen9vKvhsz
+         bzNQ==
+X-Gm-Message-State: AFuF++m8k0qq4khn+sUlo34gNO/H3xrWibYSuDhBTWFKh+zWN4/tyU8a
+	a8UI93Dr6DCmHjEklkDY4kw8R9Au6fj8WSD7AIFhah8lNwPunK79rCse0c01iS9gT4xL2BrZbnz
+	uODMy
+X-Gm-Gg: AYBFou1Xy0ULTtop9lm06A7dpPqfWxuejdE3l3Pw7AmAbP9vhIajQaoYQVixBV0a80G
+	v+65NEMyLQO0n+LRiJMsZdwCSiSq1Ek521Drry1s6gFbLTOjCp2m1eaakjSdN1apbZgHKpltrvN
+	g83C4FlCHuRuFh8iLXh1STO5AzLuzhe2wqAiFA78Ed3YhSATn1tjb6Du378Ob+WT+gd660HK6kv
+	Aw1kO/etF5OEOLCGBJxJZr3ll59oXavTs+WkUZhQsf9/85r1BiVpKrBJN8UKrxyNeHCLge050Xq
+	aEYvgX4LfOiW7f/BrULBbYzw3MPlkUmqaklJhmO45Qku71l+h3ywS576Z0/IF2zccZGjlF6CgUz
+	UgmRhpcB+1fRoyzwAvoZFBdP2rS/LYOGMy7fje2be5GJMah5mPOlmwuNn9anz2JGxWyu/jnBCut
+	EpiSdH3tnH2wU9P/xtuMS+TKi0b4iwb51dcJWDc16Y1dQ8rLyyyqILlhNrnDAksjh70FW1mKdh
+X-Received: by 2002:a05:6820:1387:b0:6d8:171b:58ae with SMTP id 006d021491bc7-6df2c3f835emr11317765eaf.0.1791235568973;
+        Mon, 05 Oct 2026 14:26:08 -0700 (PDT)
+Received: from localhost ([161.97.204.248])
+        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-6e4c2c750f4sm459383eaf.7.2026.10.05.14.26.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Oct 2026 14:26:08 -0700 (PDT)
+Date: Mon, 5 Oct 2026 15:26:05 -0600
+From: Tyler Cipriani <tyler@tylercipriani.com>
+To: git@vger.kernel.org
+Cc: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>,
+	Stefan Haller <lists@haller-berlin.de>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	Aleksei Sviridkin <f@lex.la>
+Subject: Re: [PATCH v6 0/3] push: check pushed ref for --force-if-includes
+Message-ID: <asQV7QpGglThldfD@localhost.localdomain>
+References: <20260904210122.431757-1-tyler@tylercipriani.com>
+ <20260917224351.57171-1-tyler@tylercipriani.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.2224.git.1789169384240.gitgitgadget@gmail.com> <xmqqse2kma4o.fsf@gitster.g>
-X-Mailer: git-send-email 2.56.0.rc0.1.g22a100d00d
-Message-ID: <20261005211213.1896012-1-rmistry@google.com>
-Subject: Re: [PATCH] blame: default to ignoring revisions in .git-blame-ignore-revs
-From: Ravi Mistry <rmistry@google.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk, code@khaugsbakk.name, 
-	sunshine@sunshineco.com, abhijeet040403@gmail.com, rmistry@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260917224351.57171-1-tyler@tylercipriani.com>
+X-PGP-Key: https://tylercipriani.com/018FAC02.asc
 
-"Junio C Hamano" <gitster@pobox.com> writes:
+Adding Patrick to CC, like I should've from v4 onwards. Whoops!
 
-> While wanting consistency is reasonable, the description above does
-> not quite match that goal.  If an untracked '.git-blame-ignore-revs'
-> file exists at the root of the working tree, or if a tracked one has
-> local changes relative to HEAD, the local repository behaves
-> differently from hosting sites that operate on the
-> 'HEAD:.git-blame-ignore-revs' blob.  It may make more sense to say:
-> "If the 'HEAD:.git-blame-ignore-revs' blob exists, it is added as
-> the initial element in the list of ignore-revs files.  Other files
-> listed in the configuration are also used, but an empty element
-> makes all elements that appeared before in the list forgotten."
-> This rule should apply whether the repository is bare or not.
+Patrick: to address your review, since v4, I no longer special-case HEAD
+(as in v3), and, instead, resolve any passed source ref. Now, if the
+source ref resolves to a branch, we check that branch's reflog for the
+remote tip. But for any other source (e.g., tag, oid, detached HEAD), I
+reject the push as unverifiable. I'd value your opinion on whether that
+matches up with what you meant.
 
-Thank you very much for the detailed feedback, Junio! Reading the
-committed blob from HEAD instead of the working tree totally makes
-sense.
+I'm rejecting anything other than a branch reflog as "unverifiable" as
+other reflogs fail to record the integration info we need for
+--force-if-includes. HEAD's reflog spans all branches (rejected in the
+OG review, c. 2020), tag reflogs (when they exist) record where the tag
+pointed. And while a source tag/oid may be the same oid as the tip of a
+branch, using that to map a tag/oid to a branch seems specious: many
+branches could point to the same commit with no way to say which
+branch's reflog to check.
 
-> Somebody has to audit the parser for these files (one unabbreviated
-> object name per line, ignoring whitespace and lines starting with
-> '#') and ensure that the implementation is truly secure.
+Ben and I have talked a bit about the consequences of rejecting
+non-branch pushes with --force-if-includes, viz: it breaks workflows
+that give the appearance of working today. For example, pushing
+<tag>:hotfix is allowed today (if you have a local "hotfix" branch whose
+reflog looks right), but --force-if-includes has never checked anything
+about the tag. 3/3 lets fast-forward, non-branch pushes through; 2/3's
+advice points to --force-with-lease=<ref>:<expect> for the rest.
 
-I looked through the parser in oidset.c (which we can share for
-both the HEAD blob and configured files) and peel_to_commit_oid in
-builtin/blame.c. Mostly looks good, IMHO, but there may be two edge
-cases we can tighten up:
+Very interested in others' opinions about this tradeoff.
 
-1. Rejecting lines with embedded NUL bytes via memchr in oidset.c
-   (where strchr and the check after parse_oid_hex_algop currently
-   stop at the first NUL byte and ignore trailing bytes on the
-   line).
+Note: Junio flagged a trivial textual conflict in t5533 with
+as/push-force-if-includes-no-reflog: both topics add tests after the
+same existing test.
 
-2. Passing OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK in
-   peel_to_commit_oid and peeling tags step by step so missing OIDs
-   or tag targets do not trigger lazy promisor fetches in partial
-   clones.
+There's a small conflict against the tip of maint now, too. a85a43c480
+(push: suggest <remote> <branch> for a slash slip, 2026-06-27) adds some
+advice that sorts alphabetically after my 2/3. Happy to send a rebased
+v7 if that's helpful.
 
-Does this plan sound good to you for v2?
-
-Thanks,
-Ravi
+Thanks.
