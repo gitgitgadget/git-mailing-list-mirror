@@ -1,125 +1,123 @@
-Received: from mail-qv2-f43.google.com (mail-qv2-f43.google.com [74.125.230.171])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D07346AC5
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 13:48:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CAD495034
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 14:00:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791208105; cv=pass; b=q0p23i6hncihO5lC7sVdpfzbcQZXI6Viwb+f2ZWtxmdEIvTJe/RvZH3URxhcYwuVLI2kyvkXR0H1mZWvMy9DQIuJWmd2k+802gyPcnpBucdvZtJSn1Xe31QXPTYZJraJ6dZEfQKm4iWL59IMUnUaN74bhcANF8g6d1GsAqSMv0s=
+	t=1791208830; cv=pass; b=JrOYGiEFycNHKj71b0oczL4SoxJhQG5CgeWeROedAD6/OqlaY5IzZJCfYLOX5t1hW7o6NLVBqwiXqz8HNEHYz3SgJ1EybOsmSPXAjOsWppC3kaBtzuRPU1tImOdGYMMzpEOrdrxvGvR09czzmC/20xzV9u0qdwRVz0DDfGFBmVk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791208105; c=relaxed/simple;
-	bh=g7p4WY4CyTbDZgvNL1JKBiZc7IdPmHpLZ5a4MBjy51o=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=ZV3rv+3LtnQ61ujEyVOkd4Y9CB0cyzv8jFJ5WZ6AL1m90rrxVljZC02dTOAt/SrNx+wmZTRXtt8RYJACN7OHZ6ZhWiNeAkBdOnVV2G8QwaUdFOSORuuZk5YggYiB6rb95A6L43fvooeCxBlgmfoP420oE/rX+09WXumJfPKp/X4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sph3r3.com; spf=none smtp.mailfrom=sph3r3.com; dkim=pass (2048-bit key) header.d=sph3r3-com.20251104.gappssmtp.com header.i=@sph3r3-com.20251104.gappssmtp.com header.b=Yo975Yaf; arc=pass smtp.client-ip=74.125.230.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sph3r3.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=sph3r3.com
+	s=arc-20240116; t=1791208830; c=relaxed/simple;
+	bh=N4qFBO5aOJYZ9gNIpgRdfmEkarf6pDYFsJ38MlaXZbA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nShR/Biu0KdzBZYyposZiCbWY7y1SodO+4b+52OscNaXIn1xL9gArLRhGZy4+mkzyT6KJY6ItaSYzD9AKPjFH/1WsPOHu6xySSUVzynRq65JSDyQnb/fi3xy2blDY/Jka1kR/mxKh/VoGVNOrNUjr/Ot+4shryBTrJ0Z63CU7v8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oOKOKOZj; arc=pass smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sph3r3-com.20251104.gappssmtp.com header.i=@sph3r3-com.20251104.gappssmtp.com header.b="Yo975Yaf"
-Received: by mail-qv2-f43.google.com with SMTP id 6a1803df08f44-919552173fbso22317686d6.3
-        for <git@vger.kernel.org>; Mon, 05 Oct 2026 06:48:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791208102; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oOKOKOZj"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6ae14eecc64so2318202a12.1
+        for <git@vger.kernel.org>; Mon, 05 Oct 2026 07:00:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791208827; cv=none;
         d=google.com; s=arc-20260327;
-        b=KIuSU9ZPkaEb8/gVFha0lwxhHvY2+v3mZ8wbaODlA6+qUfCGhu9mBgqasEKg27+YJL
-         rO9Qshx6fi+Uzms9sxBOvlSQRx7aWSbUY71n7CkpusSq/2lIERS0vwOFWLDlS+BVtuzf
-         8mPviuRlz3RzqRloIifxKweeftIMhXTvbHOH2Ih9iKKtl5clfIpZU/2Xf+JRqsbYGk5h
-         xqJnPhTHb6v/imEEnWBqC07hSTojMziw81HG06sayWUFgSMBkju96cJ4pYMdNQF5horE
-         i0t+lDNU+PuWm67OfXN1MFElJdsWb2TnRmkZhpHKc8JvZe8ihfX7KP4vW3JOCPTTC4QE
-         Z1+A==
+        b=NnKLqgJq8k+RmLRfV6m/vu0ue/+t4Xvy3K2ECJtM/HWUbmQdyadYP0gq5mLjdFCMRx
+         AvvVkNx7RckIsJJEoxPm+7jpPTUYNyZcVLUrPJ2HTx576vAWN419dNg/rCqK/3TIQnz9
+         q3uCp/C+zT8FwKFLXKLofu3187LTrEZWJeRCpo/Wok6YsJg5Mo8CKlscdZoRfkhH/Kpu
+         VtrMB1L7m6Q5TJxstrets0WcXBFR0x1guHBsZDx8iQzzy3CFKQJoKw+E4ym7428xT/2Y
+         9a7Dga4xR0gDoHp5KIhv4YL+2eD6FwJZvas1dtFXqRg7HGGZcFGfOUBn7rW7XANpwJm9
+         XghQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=5ZVsJYARL+0gPSzPA2XMUBdfiRvwp17Eew+BmvYENrE=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=NFZoBymnNmTjjbF62m3UaImdJmYD8czKNFiAa18DvmPrIH0MmwMxPyczcPKliEifHP
-         6+cFAib4RhW4WiQY4DFO6o34HyAml9cFH6c/6M1vUzGoWsz0sMFwBTFr6PX9HTYqkwMy
-         DsZhn0c9Ote+MbhgCqi5pyAzQ1NRUu6Cd+kCIaMpMyI3FGRc8A1R4TCFbD2fbwg1L16f
-         XUOaum54oX6xjNWpCClEl3L5WEB3XCQQFNHLR0XGpu0dWyVUc8CUZLhZS/qdMVMpJBwX
-         K6LO1zB0MiBOW9rr3lmUmB6iQTy+K0zAP5Aju9KUar0bc5W4L5BNBOucMqXFhU5ihhFM
-         h6bw==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=IvynUgmj0dUT50Yabo4IAoSOw/vVAeAGzBOU3ysJI84=;
+        fh=uyNcxC6giguqSMZjKxO6s8/nM9tN1ePibm83fnCpdZQ=;
+        b=Cfu3xGF929GGnRLeZjK6GWZU8/eqyIF3YOhcjfslCJhvY8n00lUMZhk/gUZnRMEEpi
+         eSqwKXGaA/3+EQCnVyJw7AM8D0sjI7av3Pv3VokgEe104p2OrPP1G+4ifpBtOXu+AaY4
+         b/bTqNk8XdmmIaHJ2SabxM4Ty8ObRSEpbQ8rCxIKAFKvFD4enMnBvDHlDrmIsbUSnTSI
+         bm1zMhJYMBIpBmcj2vUo182CVWmJCzJH8Z0ZRORZYF6DJvWM7yWMiasz+V1Fiouvb1rh
+         Fwqhr0qXGmKrwYNJJnla+dwYnPjjy4PT534QuD0606PtS7U4x39Fp8UqsyJzDnVh/17H
+         cAeA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sph3r3-com.20251104.gappssmtp.com; s=20251104; t=1791208102; x=1791812902; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:mime-version:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=5ZVsJYARL+0gPSzPA2XMUBdfiRvwp17Eew+BmvYENrE=;
-        b=Yo975Yafq2tlyD+UHr/uGoqSEJfYSTVn6ylwfnrqLBy8xzI4sYdr0tBydDXgLyHFKQ
-         dMvx+dJ6ShYHKasHqanV+3Mvz1M1T1rwcUohwYNJU41mDC5+Z+Df0tRHkXUy0mL8euHb
-         BUNSSBai0ciLFUBL3ZREomRYxgBaqI9hptK7z3T3gG0iyoNdXfOXJYmBLXb8ps1YpnF+
-         9RrRJlpBnbzVNMFHYHFw23yQ//4RNnl/sj/GaTuAJ+Rxrt4GNgZ0KVbfwuzxk1TyrmF4
-         LF/dW2V/FHLVwTKjLZNXu4y6j0F8fhIJJrFIx+IT7+JeLtvRF4+mH40Szv0uanOpmoF8
-         PjTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791208102; x=1791812902;
-        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1791208827; x=1791813627; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=5ZVsJYARL+0gPSzPA2XMUBdfiRvwp17Eew+BmvYENrE=;
-        b=hUWDmrGtyyfTEzvau4++FZExJ/Vmd8n2w/u4Gmy4uRbb1nSpS+wUTxVXhEAwxB9e0p
-         /WavCvK8H/nPmihOCWgPrL7s/cpwtKS5han9JMMBx3Y1l7I+oNmVGAHzA5meiiE1noeX
-         2oADNV222wZUPxcm2XsadjPFhC1uj/gpDAJ7d10Zgk0e/9DkKsW/up3ebJ5NPuEjtixy
-         RoSZdgNKMEXLcHC/v2kh+dHRdTVru14/yAJrE7pMP8vkTFiQwsB2BQfwdy1QD9nThJUj
-         7rk+hLN0I37oaMiw7H6V78eY054pqzBiROgyZ2e1wM/yEJEGXPV6PpTaonFsGKQ+5/OY
-         rFlQ==
-X-Gm-Message-State: AFuF++mMnR9TCfV6OmKaXxI3ZHkyCDjHv/4k2PRaNlihbvVFh10sQlKH
-	/2BBmmiTMzZIJxjz2G33Wp/0OhPJbS8CzhilheGjw/M2XDNHzAdsfzuVtRm8Vt56KncGYed0LtK
-	0ehTdBv17zIsNDETtddn2ElPBpFfc9lU76Y3AoHh0mrzEbbjO10EN
-X-Gm-Gg: AYBFou1y3yX4o5fpaR0YGpX4GwYMpoJhqysrKM7UkIY0PfPCKGLIOr0QKJtuDdlEWgs
-	d+MoqOOhpniuSCOrX75ji60LXS3snWTOludeLrHCaFpdKw1Gf30p8xRLpnWsiAnVW8O2/5J4nZv
-	MkDtJuIEHYmWJJ0SftspSGQBIJJ9MpYHF8O+9t947KWFn5DQV7Eanatc+ZoseEBQipcE9CAe96q
-	JFNcezBhbdatQfztAzNlcBV1M8wXIvjXkeST+n97/y3fMvxXK53zb+cIsrccb0wb6Qeb5vEn+9j
-	aTXscsY6StRN8WFI8PX1CspXka70SRkp0d0ZuqbccxKAsYoIwaPkrfj0mPMYFGz0Pc/Q8IMdAQs
-	ogSa/GgQZPi5g0A5D4AUvyvfUUxF6zvGOtpmEV2S+1XqBV58cjzXM94iGMkh6XWSGCQ0arkRSq9
-	kcB1b2PbEnr/e69oSDgA6cuTNfkUOTq7q3los2wwHwNowh5Q==
-X-Received: by 2002:a05:6214:2527:b0:90e:8be9:c384 with SMTP id
- 6a1803df08f44-917c00c2d69mr212860236d6.27.1791208101778; Mon, 05 Oct 2026
- 06:48:21 -0700 (PDT)
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Mon, 5 Oct 2026 09:48:20 -0400
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Mon, 5 Oct 2026 09:48:20 -0400
+        bh=IvynUgmj0dUT50Yabo4IAoSOw/vVAeAGzBOU3ysJI84=;
+        b=oOKOKOZjp9MqvA07zdZlgeTlCnFf7tGRicGN9OIVoS8jlTJl3hbjZYzZO+bUhhhAT9
+         YwexSjqoGgBbq7aXUScuIq4pVQv2NKy8zs9R6zokYByL8zSvx6OzDCGFeRl9N5pX06uA
+         THZNhCnn2ld7tCXlBV9JgkvB/xAPrLvVccuMdCLTbC852EuybG1YfBKHwoHqncVhF0Kt
+         GOn9cnTFCj8/uw0CkXmz2RbFrJeOoXesKpQDUcXVSzw1nFnR4cAf2PdDT0FMc70whS+i
+         LKu+Y0Y1SYZF+6SQ3CCkfw6zdqCxG7hZwg9qOCkO7olrN9VfROzH6llmFAPIQ82N8dhh
+         yM3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791208827; x=1791813627;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=IvynUgmj0dUT50Yabo4IAoSOw/vVAeAGzBOU3ysJI84=;
+        b=PbMHzKSIXWetStKyjEGE4K5vraYrNb2PuO2MsHHYks/sPHLCmPxAQu4lZ3Jy2AnkTq
+         VKMni6GkIx9nhXF1zEhB/40/xtbo3mEALZAgSTj050orbDWBP5K8vmyJW2iosG+rebhY
+         eIX3AwPzM67JH4cxi4D7obRi9BhCKba2To2NJUu67DCSEpHsMN0aqGUqHzLVMFlODw/p
+         yQjsiRZYMErFMckzk1PItxDHRw8JILkKUCNrwVDxrhhYq5EBbd+2Io4Z4Oy0YjJ2hQQm
+         /OR9ln9WQJ0kQRy+FkQ7vWbdWt2Ea316v0lhP8xZbcoo/49CnYu4W/fQl2OQTn4dQvbr
+         cc8A==
+X-Forwarded-Encrypted: i=1; AKwUvBwJPxQ+mWt/O9iksFVZM4hvKPJ9jnpiwVQ6Gwp7fslORCIycswVBRpFhwMcmfEbVDS3+oE=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJzY+3J5S1s+TAAZYU5QTtNUMNrPi9YWgJJtmJHsxReaXIKjzM/
+	fr+X4WB+nBA6Fp+HfG9BBDkx4X4ihl22GafqO7h7hjwipHJknOkqSURB/ATI/6xi5ZUq/78EFvQ
+	fvVsPXLuBf5F54WtXOSCcguk/DNzPDjU=
+X-Gm-Gg: AYBFou1l8qN5/LaTUpVCaf+Ukxrbd1OXU9MstDgK/T6DQKvdMgpccuncvD7kKRTHFTg
+	LmKMzGo9wdy+ZwK77PHz3h1XvQf2E/QEscHj1zn0nVJBpGM70CrVURfXkg8JWn0tWfxpTqeC82B
+	7TZZLZjGgs5nJ5mSQ2fI732dV5aG/PI/9Hi83Rjq6ooUPzcS+7Qc88kx1LCbLS+bW09jfWRY96O
+	HNaOFkYUe/Le5EmO38fd81izxbSFCP9wCR+s+ntLFiiVNjDt3WmFhbBRKZl5bzrKsWITbHvrfoV
+	fnS0wsGxv5/3Wc81DCYDMy4hSHPZoJY5djMJn9JN1KnfkcVVGYXnIM4=
+X-Received: by 2002:a05:6402:2b97:b0:6ad:22cd:1712 with SMTP id
+ 4fb4d7f45d1cf-6afada2f7cbmr7182117a12.41.1791208826535; Mon, 05 Oct 2026
+ 07:00:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Matthew E. Luallen" <m@sph3r3.com>
-Date: Mon, 5 Oct 2026 09:48:20 -0400
-X-Gm-Features: AclHuK-Ajw3IzJ9QkbBsdSIOdWYp9nK6O2aeR9P08Xp1YDeYFG4HL1eTzjLXVDc
-Message-ID: <CA+h9NxRT-9QzLGihdL_Bp-yyt1AdXJ79YYgpK-OaegUz8e+HcA@mail.gmail.com>
-Subject: [BUG] ZIP timestamp conversion and strict fast-import date validation
-To: git@vger.kernel.org
+References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
+ <pull.2419.v5.git.git.1791015117.gitgitgadget@gmail.com> <3587bf44-1b3b-422f-a926-f8481104dfd8@gmail.com>
+ <8b873f2e-b395-4044-ab15-f1eab4148447@gmail.com> <CAHwyqnXBLiAA+aX8uLA3UvsfD4zaMTcvj96H8DX8BhMVopwcfQ@mail.gmail.com>
+ <ea988ec0-ef3d-4250-a0d6-ffdf3794b9cf@gmail.com>
+In-Reply-To: <ea988ec0-ef3d-4250-a0d6-ffdf3794b9cf@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Mon, 5 Oct 2026 15:59:48 +0200
+X-Gm-Features: AclHuK8SC8tWgsEOGRdqYka-YCcNJjV-k7bnVvYp_3mZRrQmwYq9UxVRDFHYWFI
+Message-ID: <CAHwyqnUO0zvr+hPT2t0CG-7D9vZuWBRdj1RjC356WEuXaZ9Faw@mail.gmail.com>
+Subject: Re: [PATCH v5 0/2] ci: link failure and leak annotations to the test script
+To: phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Ben Knoble <ben.knoble@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Hello Git community,
+> > Is this enough to call this a regression? Then maybe it's not worth
+> > doing this part at all.
+>
+> Yes, I think we should drop this patch. The first step to debugging a
+> test failure is to look at the test output, so the current behavior
+> where clicking on the links on the summary page takes you to the test
+> output is more useful than taking you to a diff that may not even show
+> the test that failed. The first patch is definitely worth keeping as it
+> makes it much easier to see the LSAN output.
 
-I'm reporting three date-handling bugs reproduced on Apple Git 2.50.1
-and upstream Git 2.56.0:
+I played with instead showing the file name (and line when available)
+as part of the annotation text, and leaving the linking as it is. I
+think it could gives us the best of both worlds:
 
-1. Exporting a 1972-dated commit with git archive --format=zip produces
-   a legacy DOS date interpreted as 2100, while the extended Unix
-   timestamp retains 1972.
-2. Exporting a commit at epoch 4294967296 (2106-02-07 06:28:16 UTC)
-   wraps ZIP's four-byte extended timestamp to zero (1970). Exporting
-   the same commit as TAR preserves the original value.
-3. git fast-import --date-format=raw accepts -32184000 +0000, but
-   git fsck --strict then reports badDate and ISO rendering returns
-   literal placeholders. This occurs in strict raw mode, not just
-   the deliberately permissive import mode.
+    memory leak logged in t1060 (t1060-object-corruption.sh)
 
-For the archive cases, export the dated commit with:
+and
 
-    git archive --format=zip <commit> > test.zip
-    git archive --format=tar <commit> > test.tar
+    failed: t1060.17 partial clone of corrupted repository
+(t1060-object-corruption.sh:141)
 
-Compare the ZIP DOS and extended timestamp fields with the TAR mtime.
-The overflow affects consumer behavior: in macOS tests, UnZip update
-mode retained different existing 2025 content because the 2106 ZIP
-appeared older. An in-range 2038 ZIP replaced that content.
+What do you think?
 
-What range-handling policy should ZIP use, and should strict raw import
-reject timestamps that fsck considers invalid?
 
-Thank you,
-Matthew E. Luallen (@meluallen)
-With research, reproduction, and drafting assistance from OpenAI Codex.
+Harald
