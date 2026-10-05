@@ -1,176 +1,169 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from flow-a7-smtp.messagingengine.com (flow-a7-smtp.messagingengine.com [103.168.172.142])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3641930F7FF
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 18:50:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48024CEE65
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 18:52:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791226220; cv=none; b=BuZygWDUjmRK4OUpsrJTOVk04k6pEZFawxGIOVgSYmBYgE+HN54kejQTQopah2wknLVDWi40g4vYh8ASl/6x4occJx8f2H2m2zsGL87DQlpl2H5mX3AzusCvzEikqyvNBqdNSBVvfehGWPrUEE0QNO5wjyT7QgBIh6o0TTWim5E=
+	t=1791226353; cv=none; b=PzYW4tZ/Y89h9rAxUPqQeEirifCfl7S9j9pXRgggqztGyECE5cy2WqKBNGPNGiVGQeiRipvyZajIsCzM89vZI1BezYBWJEosswPL1B3D0G+aGgLMLg9G+49slXAv03qLMemv/VdQbnrRKChITKN4VcpCXF1U54VE59T1aRcgcY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791226220; c=relaxed/simple;
-	bh=5r1HK+h20F5QCjA9FD/dS3dFC/T2dgbvBIqdmMkgG/o=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=AvNoAAwANpduD6GlWlIsq5c27BfDd3nczNQAWV8aqgoZFKqW5TO3QUAjGTomlpTY/KNVSdFT/bTcGHfTMplY4kxx2i+CETv/aDXhflN4sMsrg7Qv0pOnxAARm0de1aU98XoNgmBQHVNsuUrVVHzOMsXlpfkNIPM5oCFFfkTribQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=cQawg2pP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NZM8w4Qo; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1791226353; c=relaxed/simple;
+	bh=V8qSNvcCHohBJJEIP/Ooj8giPWrOoQsJjeW4z5LIJ0k=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=EwikBA9ArhfkHI1BJgh+3DgnVAF2SD9wCIx1n4yzYX9h2OrekW3h5P0JK3siKocZjwOsU8BuTmkbgWpInLu0Xhq9tofWA0QK/8oKbSSnqyU7OF7qAWVN7P5Mummn8nfMBytYKw2eYDM+sfVtRSs5lFPtYKVjg58EKPR09b/KSik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Ab1zOg79; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FtE+Hlli; arc=none smtp.client-ip=103.168.172.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="cQawg2pP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NZM8w4Qo"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 46B3FEC08DB
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 14:50:17 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Mon, 05 Oct 2026 14:50:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791226217;
-	 x=1791312617; bh=CVsbwIcbJLuFTUX+w29e/S3e7D7teDPcKyMvBtvg7Bc=; b=
-	cQawg2pPCxPyvtk0xfwrBbExj9snWonTCLJs+8ZXqwd0d8dS+ygXYRvYH37SKhEu
-	Knj7EYM8VY+t7iAXxPJGqhqTCEURgUFO+sIZCLjQ4P0na4H03mm9K7CTFf3YNR+K
-	dj9R39mXGoHd3EF8jubwKGnV06mDyTbJVW8+Mgl2H6f5hjO8PRaRP5lUDeXT/JWx
-	rRYBjeE+U5YJER/K4js/beD6Itx/TiBQtZhzhnu2M5x1te36GpP/pem9slh1thmh
-	nn4jeELuWGcrYKj/VDvIq28wU4BomJI0cePGJlrZiPCxR0Qiw9FMbqNFOyWOQjM2
-	YHnOCAyzlX0rI1YV0w509g==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Ab1zOg79";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FtE+Hlli"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailflow.phl.internal (Postfix) with ESMTP id 87BEA1380213
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 14:52:28 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Mon, 05 Oct 2026 14:52:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791226348;
+	 x=1791229948; bh=/Qkki0VTM4a5u/Qk/ZzqFFb5W/NKrknoqMdBjECFszA=; b=
+	Ab1zOg79klVRRegbfIfVab5Ec5KABckjTEnXpcEZj1TuKdJmu1xQmlHC1Sn4OLaB
+	NOTvIJ/DLygxBoK3+j0g10l73kuDDIFcR/nBTSGgwRnFW8WRIl25ZzL7um25kmyl
+	qLkfyD2NGJW++PXrfDReWEWPX1s40GFpr1EV3UkwJsrwZl9ew4o7pOgAFIt++Zpf
+	BC74JMKazr36R1yokIanl/0mPnq+WMo64PR6mvCrBsUtfX4fe1KVRjCnLtg3jh8K
+	VGl3jkQJukz06hR+GocuihlTWZFEalaMS/pNmdzqIRMqv0Vicpe1Z7j1+FTrvnNJ
+	3Qc0CSFdUK/MQoQmkjvzRQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791226217; x=
-	1791312617; bh=CVsbwIcbJLuFTUX+w29e/S3e7D7teDPcKyMvBtvg7Bc=; b=N
-	ZM8w4Qo9rvgooqGGoPKymRD8AekOBGIgp8Hi1M/4zXuYZxvZ/B78QZIzvOdLeRFS
-	Bef7gsMyNG32GtmdZtFv9TrLycL9MIPAvolRSenyxR8PggOVkRO0WgXwPi93gISz
-	Woh4RLiRJ9lgCwWgPbf6B8IzmsVWXrjWHgisWBfbcYpX1Tvg0WZDLUfyurTf46Oa
-	lXm0SK6K78VjRksr0/QoTUjc5iAXlfxK3EB667rcafKOEZnp/II40mCzMlqFetuP
-	zvtJZmRAMtxl+piMSZwV7tD3eYv77G3E/qaS2C+SvUPYRhmRPOse2PyxT/j8WyjK
-	PPLaAVYaa0cuKbyuUknNA==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791226348; x=
+	1791229948; bh=/Qkki0VTM4a5u/Qk/ZzqFFb5W/NKrknoqMdBjECFszA=; b=F
+	tE+HlliMTTEgaEfFKcKheoa8TcqcdHUmwMqBula26ScYbND3apksL5GSVzYkSEGu
+	goqQJM35WBP1rErYl/ZxP0M53HQKhIIFgVhqk76e3m9Ly3CjQrFFmdoopTvtOuYp
+	xinRjKMw6AN4lLVH+AWuB/NG28V+POAVBn58yCPH9eJY1diQX+Ftd55cIiKMKluh
+	qEzyG0k9aEukDc2Vryqr58+2EZKzkXMEoFIeOFh1j4OzTgqvlztbdHOvGsPcGhZx
+	T4MWwKmDjA1ChOXuy6KzIyqdFUgpdoIPoTafVIP5joM4aia35A3aksl1q4zXet9S
+	TCiFkneo4lz1D1ReL35uA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791226217; d=jvns.ca;
-	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:O85kaDBZMJup/VQHrwWWsOojURd4W67F+2fZa6TpeH29gpx
-	brMwJBvt3XNwx1RZu3dEYl50il0W+kQhQU72XuZGQ4UJpBRo5sVxObtuFiNIrDYm
-	ZWsHa49T7LJZg4+260Zyppsx2lYIa7RwWpeZldfUVfW/gOoQjZriuXeXSt7HA3N+
-	UZ1JMn0zXRq2LcYsOFPGM3TH1w85az122mLRfG2uM0XxZZXdkqFYpXIV6l4COf0g
-	08UtkzEqyylHye5/jBzuXFdpUmzw848ECiRsd9t3tMrA1wv9J6dSXfhEWgtG9w9E
-	l2SGiy3f6sriA6QycskZTA2xhZdXGrCdCMm03TA==;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791226348; d=fastmail.com;
+	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:d8gnjDpCzzHjncrPXPKUwnd5K/Lla77clk2mWU3djjegijO
+	m/vJxDPEtd8oWme1l+1qHNtWcMdaQlcVzmLNhbROz7+yW+E5h4ZdCYWZgdccXgLO
+	1Wqus53uyrJ3yKkZ6F4jR1ELY7KmBaYDCvQ4/L6Ek8H8PC8E+zFZ+QVR1P24RotN
+	oS3jkuu0ZrOnK5d2Y8EEarL5W8+UUZ1rtpSNZUlmw11yNTlZzTKF2I6vPOwZhIXi
+	7QZoXW+3fQCXT82wZowjlcp6STqno4yqmHjiC63z1fCf+VOs2isFxRU6lPzauzZL
+	yhdsGHGKn+KtcKJ2UiJWaQtuXwBBAgPznqwEiMw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:JA80plYvENpv/z9p4xvbC3cvphlUZGBBX8DvhUm7Jgw=:5r1HK+h20F5QCjA9FD/dS3dFC/T2dgbvBIqdmMkgG/o=;
-X-ME-Sender: <xms:afHDasAhR-tGfMAMxzuuL5cyzGmDPvYZktEifBflCrsFjhQ0kJv8fg>
-    <xme:afHDapHshSD96G9tFZfxWYnO0vsRHNi9gmihkPoPxglQdV3C2Mzfbaezk4COnMiWv
-    Dv1mBNaDeRPQCr75lZGDLYFzasDtfgqRSaYGevXk8nXAtC6teZ2ANrx>
-X-ME-Proxy-Cause: dmFkZTGZyvi2bhPMI/fLbv9BFXjH/yn8A5XaWge4rn9znKlIv/Gjyda56w4lIzUylm/++h
-    XePV47U5+CD1ZfK/qaRIGjuldnuYz6kwLhtZYX9dJRFXwqVuh0Zfq3Q5cHvXsOJl1pT3tT
-    py6vRoHFTX0a2jWnUOOMHUjIrjtTJquy9v7Ukc03uy6jgqnWaoupsxnKmBWV1k+BwibTbY
-    3Ded7tTgszJVIV7syBQnEMoEd+vN6LPnO3py7Y+dvfm2R35Gu/U2d5MxEYbz4eYN9K+G5z
-    r8YT/z2gcxdC8zMoamoLWFhjJJ2D5PIdNCvVtrZtVtI4JxFJnoaCf+06XGXrFYmAxVNwO0
-    Yx3IIeYePl69w49T9MG/M+G+Nh1r9mspgb4cXnSQ9lZMdFnp6K34QI9WuNbUhEG95hbP9a
-    1keDeYjztgk95+Uxaz1hg2oOIFVuM5Wtf81ldB/FeSmKvWhkMOBbGV8n0+PqYPvtSYY/Qr
-    GhNdVYO5WzaLOWy60pd+6brzuWDcnuekQs+tDIjb6MNwrMy3LDoIRZwOQm6LcMtHr2kMCl
-    CitsOMnS8YvEaYBDzKWLwndHxZatwQRxX2L6XKgFEUo1baaw2x8wIqp31cmqoY9IRHt8yf
-    QJk4p2tkXAUS1fO/njeruXnQxIa4peYYVgU0wcfy04I/m/X4FSPoQKLTdLaQ
-X-ME-Proxy: <xmx:afHDauuQz26tR0ficPGj0zqs1CZwE6Vy-u7aHPNBLTJ-4R8dcXhkCQ>
-    <xmx:afHDaqMm-48oDhaxx0T_HOTvCVlQxsiuf_fWYGkw4lSyMa5q938OMg>
-    <xmx:afHDarjFnR2h83HSChWQ99X0MtDR2OZ6I6E35v8hSbqInMxnQT90bQ>
-    <xmx:afHDak5UjrhV3LPXUPxg5HxI-soK9CfGBs2VRbxVtKsp5E19_kiW8A>
-    <xmx:afHDak38NShJYvbm2p7M2IerdvXyldWjljMGe6cQ0_j-tLbHJutMDXrM>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id F3EEA780077; Mon,  5 Oct 2026 14:50:16 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+Message-Instance: m=1; h=sha256:yFSLXp4DmjDQdSJPP764wEBPkzR58uCSxXltRC7uRRM=:V8qSNvcCHohBJJEIP/Ooj8giPWrOoQsJjeW4z5LIJ0k=;
+X-ME-Sender: <xms:7PHDagSvfHlPoK3uxpHQl4sdAeeoj6QsZzB8kVgaOKLr4TCjctSeaQ>
+    <xme:7PHDakzdMvJWoCm1Kosh7SqXeLPzxd4OBeWjkdjKQkE9HdFiLoRTldSMEg3RAbXJ9
+    FnWcGdx2Wutux-Zidj8ZnR7znh1iBPqMLOKTbD5Ygi1pOjWvyAMU8U>
+X-ME-Received: <xmr:7PHDai2PdCp5ukloXkuZecTfG03LZ8twWm9vyuExOU3SeB7Ejtm4GdcaeeutKqqIcGjBdJqE54S7VYiOOwKFpcmyarwKVy9vmal0ukBSZlBVIw4D3AtvTxpfSw>
+X-ME-Proxy-Cause: dmFkZTE3/12xZX0gXRO+ZuIzE9M6d0gHBF3+BjkwjkkOovH4iPxUWAsHZBCqZPQolAyKSu
+    zd3w5RI2GOrMx8PVq/AcAjX0yy4ILD0ZRcmg3YDGJjM7D70R18+KhZhNJVUkvruuEnZRXe
+    S+QdiGy4msSSP7CmQMpkqAVTQhPnjIRXfc7QUKbxnyrjqSvK9g7smoMpmF7O7NzT4t0R8s
+    TtOf6retK2jVgxcswiiHWm1SkZwGem5P/wMzYEHhbTpEvp11R+7ddeDcvdqlIV+8BE1yhy
+    QrOG9Ptn/lholZlAerEsTay7YW08nrNctyPdpkO2rRwFtGhyxbPfZPBDZUyIRDjL7czKfN
+    eMUg2zgdv0QgcdU9vzSaUqP1i6SLYAEn/KgMaY2z3J1cxMw58acDclAxK2GuqdnKcpnyO9
+    WqIKn9TLOsjNqv8MHrVVTF0hZyYoh6P+NkJccVjaOLLlBZV6h73Dmujw9CFugBg5iJ3Zmn
+    2S8/tY1ZRjcG12WTiIzUj6gQYr1Zv1iU+Ibgfq7xc5R1wiSpiiXih/UVsXX7aq9z42siZ+
+    lo5pMTp3uwvqMwWMlV/OGHuMj5rxiF9ZYa0tKv74nABgbRzndlMgpvalGjsVkOvka/yElC
+    DKbiywIc2IOx2769CBMKqp9bmo2MKGs6xyYSkysH6TLyAbitqYRv8gS0EhVw
+X-ME-Proxy: <xmx:7PHDai5y36hYDk5FQYCk2F1-dtoRXS0yjzisaU00opSYNzRfuMAQ7w>
+    <xmx:7PHDalUnYntMHDeCLdDkyl0IhVghBxAudGDSu1L6grseQTyguhxx2w>
+    <xmx:7PHDahBrE_9jNvr5opCVwVYfLBMB9imHf_w7SWzbQAkF6soRRyL6Fw>
+    <xmx:7PHDak4JICjPTD9XC_d6hWhskP838FsfinuEmFGxWOCuqp90oswbGA>
+    <xmx:7PHDarJCOXPiAVvHX3iWHsC7bV-ZM5d04-papid_INN3y8Ke0gwd-X6e>
+Feedback-ID: id2564aa6:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 Oct 2026 14:52:27 -0400 (EDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-ThreadId: AWFTbsbb2HAJ
-Date: Mon, 05 Oct 2026 14:49:56 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
- "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <623cdf71-8076-4967-aff1-3ebeb57d1e3a@app.fastmail.com>
-In-Reply-To: 
- <CALnO6CC+h1y=Fu438nm4cd0K-dfPVYq9MqX_+k8fxBU60ot8KA@mail.gmail.com>
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
- <CALnO6CA_=OsznkQ4iT0vBMWf3L=bmVKMBdk1MTHQdaKEcKwn4g@mail.gmail.com>
- <91396552-f86b-47d7-9805-8f6056c2ed66@app.fastmail.com>
- <CALnO6CC+h1y=Fu438nm4cd0K-dfPVYq9MqX_+k8fxBU60ot8KA@mail.gmail.com>
-Subject: Re: [PATCH 0/7] [doc] Add new page on merge conflicts
-Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 05 Oct 2026 14:52:27 -0400
+Message-Id: <DLX4QVXQJTQ4.24JR7ES0P3H@fastmail.com>
+Subject: Re: [PATCH 1/1] repo: add filtering options to "repo structure"
+From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>, "Mark C. Chu-Carroll"
+ <markchucarroll@fastmail.com>
+Cc: <git@vger.kernel.org>, <jltobler@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <20260924164503.119506-1-markchucarroll@fastmail.com>
+ <20260924164503.119506-2-markchucarroll@fastmail.com>
+ <ar04uStCZ4pnEJ38@pks.im>
+In-Reply-To: <ar04uStCZ4pnEJ38@pks.im>
 
-
-
-On Fri, Oct 2, 2026, at 10:29 PM, D. Ben Knoble wrote:
-> On Fri, Oct 2, 2026 at 1:40=E2=80=AFPM Julia Evans <julia@jvns.ca> wro=
-te:
->>
->> Thanks for the review!
->>
->> >>  * I wrote that git commit does the same thing as git merge --cont=
-inue
->> >>    during a git merge , but I'm not sure if that's always true.
->> >
->> > See also discussion in
->> > https://lore.kernel.org/git/CABPp-BEQSx4m3BcT28CpVGCtsH75+x3gmv4OJz=
-_ecLVLx+kBWg@mail.gmail.com/T/#t
->>
->> Wow, that's a very interesting read. I'm more informed than I was bef=
-ore
->> I read it but also at the same time more confused :). It makes me thi=
-nk
->> that "git commit does the same thing as git merge --continue" is maybe
->> not true but also I don't know what the difference might be.
->>
->> I've put an item on my TODO list to remove
->> `git commit does the same thing as git merge --continue`" and to try =
-to
->> replace it with a more vague sentence that I guess says you can use
->> either command without being so specific on whether they are exactly
->> the same.
+On Wed Sep 30, 2026 at 12:28 PM EDT, Patrick Steinhardt wrote:
+> On Thu, Sep 24, 2026 at 12:45:03PM -0400, Mark C. Chu-Carroll wrote:
+>> "git repo structure" provides a collection of useful information
+>> about the information stored in a repo. In particular, it's
+>> valuable for diagnosing performance issues caused by large objects
+>> stored in a repo.
+>>=20
+>> The current implementation of "git repo stucture" provides summary
+>> information about everything in the repository - all of the
+>> branches, remotes, tags, stashes, and notes. But sometimes
+>> to properly diagnose a problem, it's useful to be able to exclude
+>> refs that are known to not be relevant to the issue at hand.
 >
-> For now I would say the subtleties in that conversation really make me
-> lean towards the following:
+> Yes, indeed. Sometimes you may for example want to figure out where
+> exactly the storage size of a particular repository is going. Or in the
+> case of GitLab for example, we may have bookkeeping references that are
+> not controllable by customers. So we may only want to get the structure
+> for all the customer-controllable branches there.
 >
-> - "git <thing> --continue" is, for most users in most cases, the right
-> thing to do. It's what "git status" recommends and will practically
-> never do anything surprising (?).
-
-I was actually surprised to discover that `git status` does not recommend
-`git merge --continue`: it recommends `git commit`.
-Maybe we should change that though?
-
-I agree it makes sense to be consistent with what `git status` recommend=
-s.
-
-> - However, it may not always be exactly what you *want*---and you'll
-> usually know when you want to go "outside" the normal sequencer and
-> commit directly (because you'll have understood some nuanced details
-> about what can happen).
+>> Add a set of flags that allow a user to selective exclude
+>> reference types from the report generated by "git repo structure".
+>> When a ref type is excluded by the filter, it no longer appears
+>> in the report (ie, if "--no-tags" is passed, the report line
+>> for "Branches" will no longer appear under "* References").
+>> Following the pattern of flags that are only used to
+>> disable functionality (eg, "--no-verify" in "builtins/push.c"),
+>> only the "--no-<reftype>" syntax is listed in the updated
+>> documentation.
 >
-> For merge it may be the case that they're the same, I suppose (I'm
-> genuinely not sure), but I would prefer to simplify folks' paths by
-> recommending one of the few uniform interfaces we have :)
+> Hmm, okay. I would have expected that the user can essentially pass
+> arbitrary revisions as understood by git-log(1) et al. And if they pass
+> any such revisions, we should not enumerate anything but what they have
+> passed, so the flags shouldn't only be used to exclude.
+>
+> So, for example:
+>
+>     $ git repo structure --branches
+>     $ git repo structure master
+>     $ git repo structure --all --not --branches
+>
+> I would hope that git-repo(1) can achieve that rather easily because I
+> expect that it uses `struct rev_info`, but let's read on.
 
-The only other thing that gives me pause about recommending folks
-`git merge --continue` too strongly is that as we know Git users are slo=
-w to
-change their habits, and we don't want to confuse anyone. If someone is
-currently using `git commit` I want to know that they can keep doing
-it the same way with no worries.
+That makes sense. My initial understanding was that most of what=20
+"git repo structure" does is internalize the functionality of git-sizer
+into the core of git. The only filters offered by git-sizer are=20
+type-based. But I agree that a commit list based filter is a lot=20
+more useful, so I've updated the patch set to implement it.
 
-Maybe if we change `git status` to recommend `git merge --continue`,
-and we think there are no real advantages to using `git commit` instead
-of `git merge --continue`, then we could say something like this:
+   -Mark
 
-  NOTE: `git commit` is an older alternative to `git merge --continue`.
-  You can use either one after resolving a `git merge`.
+
+
+--=20
+Mark Craig Chu-Carroll (@MarkChuCarroll at gitlab)
+*** Software Tools/Math Geek - Software Engineer at Gitlab
+*** Work Email: mcarroll@gitlab.com / markchucarroll@fastmail.com
+*** Personal Blog: http://goodmath.org/blog / Personal email: markcc@gmail.=
+com
+
