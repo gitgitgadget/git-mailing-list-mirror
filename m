@@ -1,121 +1,145 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D3B54707B
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 05:27:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28C330F7FF
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 05:32:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791178052; cv=none; b=nPAUwxTG+n0U3NFBkhjjdCXcP3jTgFJnS6aAvTvhTkIAGiRnDILpysxUV88NckUh9IK3VVrSrlMG0mysVjjPpi1p+qFLy2nLDzsFPy9zf9+GTrqJz5+O+KWAA/mDknywjGttv7Edj8QKl0O1Iv0W3RraCkFx2dhgC6Rkcq5X/Sw=
+	t=1791178348; cv=none; b=Muwa3OR9GW2i0kcOY5garo1nJqHT6c8FYaPtEOxzWK/Bf2LpaeWhE0+YxsnANvolD6bxGHMuLDneg7DQd4l27+ufCkLqD1mmGM0ds2E6AxBUHxLytkwi0naWbwugQvQpDX698La61inpQDYaMfiIaqMg28+1U4zrREJQEcL0eIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791178052; c=relaxed/simple;
-	bh=fbkEk2p4IblheaO5MaTq6VeG2nuemMlD/PKsyGXFFcI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jyYQ/S+exT5l4W6jZCq8d5ZzRKnWwRG/aZTrEYYvo+ZIYxWjZKJTlZS/KELVNfzk6l7hcOmo7fslFmKRIWO1e1+sb+FX814Ay2HGQerEkOa5NIrqYzB25Z6BaaYIUuwfxF4hOAJEkQNWQZf5YRTJcP6DS7ptb+UWceB4nrb4wMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HuZAm9eB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mtI5H95z; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1791178348; c=relaxed/simple;
+	bh=9NUwJoMnueV+ZZXeEj8Zql6epBMJjLzcub5aF7qRfHE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hX3ClVzj+nyKlaUIDOgDIThgaNEaqWnTBeJ4sJeqdf5mX/rE5vxaoeO8WX5P0OoMVxoO21KHugyiQ9VQvhXVfm6QoqPqYNC9z/TJy7M4MtuKHabCxKt6CJDPGcmdnOjow6IfHDhmVbskWDGSH6b72V87xo+YnhFVUGtMrZ8C6/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nadtJAQr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=htlV0bLO; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HuZAm9eB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mtI5H95z"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nadtJAQr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="htlV0bLO"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6DB9414000F9
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 01:27:29 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 05 Oct 2026 01:27:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	by mailfout.phl.internal (Postfix) with ESMTP id 82948EC03AF
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 01:32:25 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 05 Oct 2026 01:32:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791178049; x=1791264449; bh=wZ81tKAyPv
-	/JHAWcKKgTZubokl/p3G7bONiReZ+SJMQ=; b=HuZAm9eBBIJZSTHg2p6l/qf4P7
-	Je369R1jSfvyygN2Me/ntaO0zNHXsFDDqMc58os7DDO6MBXlIz42OqVhlXzJw+PN
-	EfLPXhH3b+flP1hK9tIV+NegMIRaRvD/KKq4u6X8Jb10z+J8qZsG4gNgtSQQbcie
-	X+bGBOoIkW4gexO2YYU7+vDZO0TNNdtug8Hz6SQn+fh9lqRcpsG1KR/5PJNSi6nh
-	fWoeadpDl4Ka8mdS9F8MCXImIpRRyjKyyla6OKBxGpHTwymyIy0G7If9BqDsFM4y
-	SSVuyG2BE9KBh6ENxxkjqAoE5E0YG1aFA5RsdgsMKKy35dU5QkqXL7UsPA/w==
+	:subject:to:to; s=fm2; t=1791178345; x=1791264745; bh=gMr+KItwbc
+	RqjQ1ADAjriK8qtPxTL0FevJ6nJ99XyhE=; b=nadtJAQrlTHK4yDNz4qF/zH/Er
+	2h2Uu2QpZRh7LXI10AnlF0JoRczVYnHGnZyEkv8EtN7XS4XbCJK1uTDcNoHm1XmF
+	6JNAblAQpmRpatpIJcnPTN+6FMUrpWsxIJNlVbCIUxw/FPkVG0uPoxAJOTwydvHt
+	nWGBNE10vEWV6h+2+Q+12GZj5jp3HdZ4Rmmqc+g0N6YpKKc1k8cYPgghO1aLe7we
+	Ro2VzXLqpehSjbSKk7fBcvrDUE75OZW0dYsgpJhaQd15IsOyzOQba5jXkt2y9Iys
+	4Mdu8IoAjlROaddEGe1jZDyYj8HXFCpiEAa8CrVDxmZe7snrmo2ujExD4Lbw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791178049; x=1791264449; bh=wZ81tKAyPv/JHAWcKKgTZubokl/p3G7bONi
-	ReZ+SJMQ=; b=mtI5H95zs9/C6czMSKYj2lV7F3CDyVBc7gxN1XgQCApl/iEBPdI
-	QLdxcL7DRy7Yu8mah4qdKa8yYId6g6Ref8ik4QI03MuEsCHMvwiB2oOPQ7YuCf7l
-	wnJHy1vllI01ZPSd9aSm2SsTUVTRUdkbLFBrOqDvsxnIsfyJ3e2geOXheoDmVmeQ
-	BzBR0pusSXRvAF6RS62SQk0vun748tJDK1OkLfDmp6RWRYgyxflBMLzqgW06VDIA
-	EnxJ6hU/rL577FX7JJyXl81sWI4eAIHFa95ixIIH0NKLqwZ50BlPNPGPhA2L/l5S
-	kJ6J53N4PytmIb8jcoN+xkojdr6voSPweFw==
+	1791178345; x=1791264745; bh=gMr+KItwbcRqjQ1ADAjriK8qtPxTL0FevJ6
+	nJ99XyhE=; b=htlV0bLO3B4D2JIGF+OcYrAXgwXdbWs0FVt/zMi72cmIPUS93Od
+	oCBj5KLkwDZ3WY+yJCuqfUA7vVCU+y6o5CHcVry4UcQ3rO3yIr56gUPuWqz/9Ddr
+	lqgr8XsXZ6sBWiLU2Obx4BOHkQVGDlWMuEKU2AhLq0TFw0w25xXPD/KU37dGnLO8
+	0qzjff8loEtVGUW6U9noozZqb3YcK5sASEWQETM55gcGUDzlM3LX45fy7j3e8tCw
+	/A3JgBA72IQxLBQzGBSWOIXnI8+jeIVnqtOpTxXk8vfqOxyeGnCPKc0gLS/krvJn
+	1xhrivkyQpwWjEQpoWtWVHJjjp4a+XctoxA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791178049; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791178345; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:HFCCc1tNA++c/bChzeXkbYRIF+SUPylRTSV3e/D9+nTC078
-	QRyex4bQWjMcTunGpYTjSRcPcRMd2eSiDrAVFggW+bRcyBavqa/Fej7OZAa3+csO
-	2TxI32u94uNT3VuVumz8T1NbpcSd9LKokqA9gBRq/u066QQys+Ey1Fo2EpzV+XVI
-	c6M8v3LyYxsbhZonqz4WPO2LggLA/9EPhhHW6RDkQ1unnKR4HA+GERtOig2GUL5M
-	a+Q8/GYvQf23NRrveALRBv/rv/Z4A2CpKBEFZAYKTCWd+HqUHoZ3ymbEERjsW7oZ
-	iqFFDYQh9QVJjurr/4EEW/nR8/wn82em3r1986Q==;
+	s=fm2:rsa-sha256:FARsctrqG3VBn0w9wiKLyyljM0QFjmWi7M/gEQL7dxrmQGm
+	jfPplHqew2gLpnZZmgodeUckHoJx0cgFMZXq6wk6UwWv/ZOLwBhkZgYtREg8Fxzh
+	7k2avMulqzb+DSdGcCKlbEqFqNPi20eiAf9B4xxeYD7Tu1cZXB0VXIfm4oQmKmab
+	Xy9bqd8o7f3sbe+BYFwbmv0LOwDAqeCWuIaDC4+W3LGKShIFjTI14Vbl3YqyKd1/
+	ueCzymwVVmD5j6GOcShd8DvI7oBWsD4MkOYlr5B8njQIKCIHlG9Wb+KW2AgFArAo
+	kAKG1LqMSqz6Q8vTCgXfKJArKv3U6ega+oTiGfg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:lnEiAM+imjM93qY+oAOQNdat+XPXh0XfFclypj4yAvY=:fbkEk2p4IblheaO5MaTq6VeG2nuemMlD/PKsyGXFFcI=;
-X-ME-Sender: <xms:QTXDan0ndHNuhWQvbgrlC11YP9Rya3xCNb1dCuoSKyEbFHFjVLKVfw>
-    <xme:QTXDatgV_QIjvz0EqNepIJp02kwIl1SLBawSFTG-sHN8SUtSonvZ09D2fN5pWnmez
-    bh6Cb3IYHHd6bg5bxp69O6JMjLjN_uHPTcxNV0qrTSxK1_t6lcO>
-X-ME-Received: <xmr:QTXDalRlAE_li__J6HKMeufiroR77ucnvwtOYhuP9WjDhyjBkELl5vz6atdGghwY-g9f3mFbImygEGegXDkmPsS6p3roUOvB8oNX>
-X-ME-Proxy-Cause: dmFkZTE3MVLSYXmnbY8EeXSIF4jdr4WkE+DFG5fp6w2B9bGtETRRjThGYrP6/L3tcuYvmm
-    VsyN1qYh9jDM235iQp69ku3659+S7XxtcyWrdZ0nPQPKWpgua7kvbmLU4uzYoQrhlVjZSf
-    tgwbEUSirYQJgiejHhqlzjZXvBH2jvEKPFyEq0oa6lQKZu6D8+HWWyQ8SFii7qMPjcgQww
-    YHIagsjuH43HoK2WArhIpd+AqtQlYbuAmP85A0jWJ31lFd44sP0UrN7X8TdGMpiO74dj/T
-    JyC5sXCdZxGHNxxI5WwYHmvjfx2kZ56s3tvGDvu72eM9XhRiKxiVQdjOa7CR/OU2bjenmh
-    6IFQXTA92fUZIyoX8bRKrTJd6QNmJiQZVSUZQLet/9wxr7HlLi8DAuFVTaoxZoEdBWlqvi
-    A/cdDc6C1WkQC8B5xPJdZWqG9FKsNNZFhGfVllvVlfN/72mmfV9B9jBZn4VGwst1K+j2Dc
-    1TyLFUDXC9w879WwTX8tuV86FILq8T4wjskuD9WHnmzHFH9V+xOOzwIhjsLPkSpdC749PH
-    NxuTnUdGLEQ84p3uNY7JDqIsggMJW9OnM8ZZCy1Bv0biGx3BvMaxpjeyBdOdc7cJWiRfrh
-    fI2pd40LIQAa6B4uJj4sLvkSXIBkallR3nlZK3cgBw5zVFA+j4y1mpL669UA
-X-ME-Proxy: <xmx:QTXDamggbygmqzdmmgzEP4oJekiqqnd59Xkcu7E1DctZRFhR16KbkQ>
-    <xmx:QTXDat63r4hvSoVsNgb8QuvyIgzpWf5_EDShJ6lMhECAq6VupNRenA>
-    <xmx:QTXDarA-PCHa6R3WEL9m-tht__eMifD1DHTdzpUEYlXt0vl3sq3l-A>
-    <xmx:QTXDasbaCx9ezDvSYHftjYLp9B1N2jyrM5NEBH14WXkJrcEe_M2gdw>
-    <xmx:QTXDahh-Vx-VUa_ckVgHdsm5S5wwAhBlInhH9q7j8PMj9dyOzhyLSNNk>
-Feedback-ID: if26b431b:Fastmail
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:2CC+EaYkyD2uzrMJYRsNakdE+THQzVDJRgo7JfqesA8=:9NUwJoMnueV+ZZXeEj8Zql6epBMJjLzcub5aF7qRfHE=;
+X-ME-Sender: <xms:aTbDaugNKlANtBoFLJhFoCKlADJNsZx6fE3rkFFXYBvQD-LaSvEFSQ>
+    <xme:aTbDamAcdU_kqmieD_3l9t6_WWHCF0PZQGYrx_WIATLTr0bQXllwpNo7IJWkiMLCO
+    Sedi7YIEGluCpJr7H2KDl1RakpcplphsReUeP9h9FcuyyjTR5RR9II>
+X-ME-Received: <xmr:aTbDarFixeJVB4dMl70ulzC0-oBgJgpjFhtGm0uhsWVEr2YPyoNFj7vC2ETDf5KdS3QxL18>
+X-ME-Proxy-Cause: dmFkZTFnlg6z/hEcm2gXeAUgxHUNZHvQ+qJrqwI01KpD2L+apOqpT8Ur+EJSBBJEaKoH3w
+    AMw9qN2fswj78uvZaFkLzi6H3o9brURwIBvy5sFQB9p0D7lKOmazuSNuIK8em/paxQ5BmN
+    x9BxpZ2hE8zxQPJ0iP4VAg/dbES/V7AsueckSuqriP8ohaqbBa7heuP52q5NeKkDHaAHDD
+    Szjld80r/o5bI+l5DkXQNycxrS/Z0/Wjl51pq0RWqL0YtvQe3NJHTfeIxIHujiiODehrTM
+    zY4WYhFQTLw1iFCT1yzUoTw91+XEl200F4S9pFl25wNPPLfoMNzIVnpxIF+R+/NXUrGQJE
+    IDZ/PJJhdWBtUlsIImMsnlV1L/KyqAge9hhF/3W0DWBvHEgo9X9/mC4lfym3fupYU/tqos
+    tSaQCATMFXPzskCZrNduCXzPJqKu5ugVGnDqe0VYWW2KsykiUdOMIIaK5tLSITZISeGzdz
+    c9r48jzmyt42/hQs/ptzqFNe4RZ0irbmoQiHuLJNQq2hq7syrFwUvaWoAa4RKFIq3/4bxX
+    6Vl1DFmLconTw0zplosq45tugnwq2Jw1B8R6QOq54Gi0R9jIYv70KRyPFEO3gWREi1PZd5
+    4HirJicQdylv0rJ+qC06raaRQY7HB//9HIv9CvdmHelNPrUzB0M/I2nAfA0A
+X-ME-Proxy: <xmx:aTbDamIZAjf8r4nxaf0zXxic8Mp-NJqUlrq19Yi9imc5VGC6E-jrhA>
+    <xmx:aTbDankQTF6-_ZDprcUhtYph_Pt8FPCRmH6l_wTCp6RZufTV_fh7Jg>
+    <xmx:aTbDamQHUukV9SLXKr-XROD1AicFsUpK52psjbs2EVsksYwJrM2P9A>
+    <xmx:aTbDahIRrBo7djCfwqqjR2khkMQdJqK7m5HzazsI9VgWCDZ-bHlsfw>
+    <xmx:aTbDajJ1ANgvenqREKCgrN_B7Xf_2fIQDri6YAKnIqK8Zmov1Fr5kikh>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 Oct 2026 01:27:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] stash: use named constant when parsing "--all"
-In-Reply-To: <06b58ae0a1d81f4d1518eadecc3385072a72155a.1791108351.git.phillip.wood@dunelm.org.uk>
-	(Phillip Wood's message of "Sun, 4 Oct 2026 11:05:52 +0100")
-References: <06b58ae0a1d81f4d1518eadecc3385072a72155a.1791108351.git.phillip.wood@dunelm.org.uk>
-Date: Sun, 04 Oct 2026 22:27:27 -0700
-Message-ID: <xmqqzewsogxs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 5 Oct 2026 01:32:24 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 499fe2bf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 5 Oct 2026 05:32:21 +0000 (UTC)
+Date: Mon, 5 Oct 2026 07:32:18 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Guillaume Chauvel <guillaume.chauvel@gmail.com>,
+	Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH 2/2] packfile: fix corruption due to stale delta base
+ cache entries
+Message-ID: <asM2YoImN8bHLHj8@pks.im>
+References: <20261002-pks-packfile-stale-delta-base-cache-v1-0-7592a3e31ae0@pks.im>
+ <20261002-pks-packfile-stale-delta-base-cache-v1-2-7592a3e31ae0@pks.im>
+ <20261002222335.GC833115@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261002222335.GC833115@coredump.intra.peff.net>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On Fri, Oct 02, 2026 at 06:23:35PM -0400, Jeff King wrote:
+> On Fri, Oct 02, 2026 at 09:34:07AM +0200, Patrick Steinhardt wrote:
+> 
+> > Note that the added test reliably reproduces the above bug on my machine
+> > that uses NixOS at c59305bab206 (cosmic-applets: add missing runtime
+> > dependency (#566040), 2026-10-01) with glibc 2.44-25. But as we rely on
+> > specific allocation behaviour of glibc it is very likely that the test
+> > will not work on other platforms.
+> 
+> At its core this is a user-after-free bug, isn't it? If so, I think it
+> would be fine to say that ASan will reliably find it (and we don't even
+> really need to demonstrate the complex case where the packed_git has the
+> same address; all bets are off once we access the freed pointer).
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> The code that stashes all untracked files compares the value of the
-> "include_untracked" variable to the constant "INCLUDE_ALL_FILES",
-> however the option parsing code for "--all" uses a hard coded integer
-> instead. Replace the integer with the named constant.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
-> -			    N_("include ignore files"), 2),
-> +			    N_("include ignore files"), INCLUDE_ALL_FILES),
-> -			    N_("include ignore files"), 2),
-> +			    N_("include ignore files"), INCLUDE_ALL_FILES),
+It doesn't though. The key of the cache is the address of the freed
+object, but the value is a still-live object:
 
-So obviously right.  I wish all patches were like this ;-).
+	struct delta_base_cache_key {
+		struct packed_git *p;
+		off_t base_offset;
+	};
+	
+	struct delta_base_cache_entry {
+		struct hashmap_entry ent;
+		struct delta_base_cache_key key;
+		struct list_head lru;
+		void *data;
+		size_t size;
+		enum object_type type;
+	};
+
+We only use the value of `p`, but never dereference it. In fact, when
+I enable ASan I cannot reproduce the bug at all anymore because it will
+hand out unique addresses.
+
+Patrick
