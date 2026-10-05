@@ -1,208 +1,194 @@
-Received: from mail-dl2-f43.google.com (mail-dl2-f43.google.com [74.125.229.171])
+Received: from mail-qv2-f41.google.com (mail-qv2-f41.google.com [74.125.230.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5D84AD4C8
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 20:20:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791231619; cv=none; b=LurtZCb1u2W6nqgQfk32X8EjAlBZcptr6/dguc/MYDScVk1ESKGb/azjhT/pZLima7MZTSdzGmlEpFR6non0b7exOXA9J1dqE+8cL/7p9doaBL0wSaGE5nzl5Mcby1jhxD8jM/ASIkp5s8JLxlmaxODhB95RkCp343x8ZqB7koA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791231619; c=relaxed/simple;
-	bh=xIam5YYthpaql0wpX8dEw61l6K5Bw17t4xctKFI/fAk=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OAMLSDQDiVpuejCk3pwArpP3EmOEpfQFuUSpNyKPvVxQgQiiTMuXHFVr494doN37hMLFo4b4v5wSQwAc1lyvJEGo23zOVIEpVYkqNatdKwSYv1jcYVW7LByai+w9kWtI1wTckffjAHNtdKMpI3VPY9yYb8PYrdEBQ9RP0cOWOc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ghUG6DJN; arc=none smtp.client-ip=74.125.229.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568C6394798
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 20:33:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.169
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791232394; cv=pass; b=MTnZc3byLwZuTaFDuSHwB8L2JEKEI49/b0/vrVy/mBLQ3cGF1kDGf4/bk572GesLrf2k+25qkzbtF3qoAW0KhiuSl8bVTb88feblGD+pyidBi9kYU0Hgm/j12nX/llBYA3yMUXESzClgEtZsQWMSgcqrk8NM808V8ZSVa1PKRIg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791232394; c=relaxed/simple;
+	bh=+1OJOUc43RwKvril424DQwpE8DqaJTsjqlj0HKvKFYg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GohRhxUSzaVk6tikgECkniRcc0ziCaPYhc63ada6Ag3ZMQsYjK+nzsgMF2NDociPcFS9EeEB3EenJxGWi0/Rrvj3tW36hdOH2VMtl0O9XIeFKPiRnaDV6R1lCGRhUo4kVVTQLinpBkMMv3nJrB2XHcnYx6gkWIXZdTdzQAty0uc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sph3r3.com; spf=none smtp.mailfrom=sph3r3.com; dkim=pass (2048-bit key) header.d=sph3r3-com.20251104.gappssmtp.com header.i=@sph3r3-com.20251104.gappssmtp.com header.b=r98XiUta; arc=pass smtp.client-ip=74.125.230.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sph3r3.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=sph3r3.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ghUG6DJN"
-Received: by mail-dl2-f43.google.com with SMTP id a92af1059eb24-142dd025d07so420868c88.2
-        for <git@vger.kernel.org>; Mon, 05 Oct 2026 13:20:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=sph3r3-com.20251104.gappssmtp.com header.i=@sph3r3-com.20251104.gappssmtp.com header.b="r98XiUta"
+Received: by mail-qv2-f41.google.com with SMTP id 6a1803df08f44-91782a91a3aso32036366d6.0
+        for <git@vger.kernel.org>; Mon, 05 Oct 2026 13:33:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791232390; cv=none;
+        d=google.com; s=arc-20260327;
+        b=mtlNshkWCN+BCG9CM7GJ2qd9uCWnzKThO/dTkUZo5ebSPNPPgb5GzitMPGAptjDwPG
+         sfxrS+DuOgDku01Aja3/qEyTUEJ519+bSAOWWCXFPYFtH2k/JvQBMW5IBTg5WJDarFuc
+         iPbaf4r4aQwWoZ5I0Nv5pO+knGPwGIY45f4T+TGnDvclE4i136vYBCCxCy+2kVesxb2T
+         KzHP0RAta+0zNUSpvxkKrYpaiQDDAAkv+bC2HK4wLJPI7oAfO1uor5b3podDzQ4l2H1N
+         8afGkrhbJdnkkdMrmURKK2et0f3lXnGkyxvc/Sv6H/Yf55yxiX/Yw+k1YHfvt7uXG7R+
+         TvYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=UK+mN1MlmKPOb6ipLS7fQfE7U2b9Yc/6TYiqRQjFlz8=;
+        fh=71a8gNWjjH3jDnCK3/PRHZEeOlOeFkLaM81Nc2bGo4I=;
+        b=PuVfZaY1CkSRvFxqyODC0EzB++alPQ7zoRtxWICmYd4yysXriLkpUDmci91GMQpS/X
+         AkodcBO+zSJ4eZD4ARRitLC50aUy3eVoTracO4oZFtJbxoXwmfLHSb8ay/p5BqezNA5X
+         nu5PdoRTOdj5zJv4hQ0JUSy7vwHQke2/B0SG0dkVonW2pwifU6dW4IwMx9HG2Zg+9Ycd
+         ZXva8+UV+/MeopfaucCoGP9rOeDkDsVjogKUf0K9ljni1uGI5xh8uwzolQQk0GVpkC8J
+         pldtQdXv89TKVipBRtRuYns7SoVDTz2NtYYpo/LSsYYV5YDvwVNoHoimy8tY+m5H2ktS
+         3PpQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791231617; x=1791836417; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Gra3gPehtwgUDKxIrPdKC+qgfC93Bf3lbkoIoIXTjbg=;
-        b=ghUG6DJNP3BqjMsnTM4gTaawwcV040WxCpj+cr1yzru9XA+iiuoUfez0S+ItKktT/t
-         O7eYu5vPnaM50UomXfgwnbcF6WmU/SYO04SxkzVJoegENupMgkgtbX77FlMMsX82XGKl
-         ajN4ZY1acg2Vsf8b+mycqw12JHTkeaH8diDykXIkhyOxoKOpz4B3HXPogFJhkzcP5vee
-         8KYVv0CDQS38+3feFoKmXY55t+I0BTzouvajeR0Xrlo9hMzAcIIrsrUXJcTKA6atMN5e
-         ok3v9d41+l/AJ1m10V0t1ovAO0w9B/dzE0pdIWZzAJiDRJyzZHcKzvEgXLCsdJ5SXKqx
-         zBNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791231617; x=1791836417;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=sph3r3-com.20251104.gappssmtp.com; s=20251104; t=1791232390; x=1791837190; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Gra3gPehtwgUDKxIrPdKC+qgfC93Bf3lbkoIoIXTjbg=;
-        b=qjZ344Bva07q+0FH+ob6yCbdxP9zIM3dhZkiXdxrqjOmT0st30s/HMXQposjiaWU2l
-         31Bb+hlEq+daCRjVcdV2SfMxT/p8EwnOAK9BOVhWfnhGRfhFLZ+vJFdWvWQEHN2sy9wR
-         rzSMm+608Ru6z9J2o8OUSheD9XoOoZpwRZAExB2NHCkzkJrgUJ8iSIzod79YUiDQ+9jG
-         gPQYgfkZY7n9rOwDiqTtoCu1uMWF5Nx/7u3q6iPXah43v8j/3yiFF/aqj5GL/aPqfyyA
-         3q0hvdOotV8obc3zMPCpCtHK5fw0S4KTUNFQH3Vu9EHlPluehQLAtm1NesTDTSatCM2+
-         qXBQ==
-X-Gm-Message-State: AFuF++mXa8gIEa0NaB0UA09XqdRYCOyD6DXOnkH82S/CqtGtFlPN4AhB
-	Uly6dX1ZJgT/e2S+WVD766KR8BRRxwZuWQXlIsOAzrEgVLAgA3MnBBwAom6VvQ==
-X-Gm-Gg: AYBFou07ZsqzoEgQ4pqjA5hC2SmkL5+NFtTxoV1m2Tz0S6ip6JjuWfole0yqvfN881p
-	DJZK9z4l6V+X2z/xBmgtXyIFlTLvGAQyKvK44fEyp+P6Rx2CMew83ozzDuZh9YZgE9WfKVTYVZs
-	hTEj3V6bIN0cKhwHpeMjMIUEp5QuzasmQUaHVgIs38yKNia/UPR36QjwK4on/hl+yIchm4/TSOR
-	Mb8bpYD67jsA1WILXI3RF6VxUVPr1uu/HxAdc+1kw2JOGyxBoT2sP+HKqgVUK/EN612TUVNId47
-	ZfAkHcrPSaJyUISTrnjswtw7pCfN15E8eIblBmW/XYZRzNcOwAu7rF3UYdEQfywLwGM9EWwX4TQ
-	c4Aetri+hVn/YTz/cZiMkrKNu3yiEFZISauPj7GQS1x3AB6v298mzkULy0XO6ZxrmasGNir6vSG
-	4lE0B0492DlpheY0+Z1qItrSVeEO0hh/sPv8x0YI3R5bpXCgR1GnMFlML4kxFzrQL23BW5YtI=
-X-Received: by 2002:a05:701b:2707:b0:15b:afce:62c2 with SMTP id a92af1059eb24-15bafce674bmr2290525c88.41.1791231616431;
-        Mon, 05 Oct 2026 13:20:16 -0700 (PDT)
-Received: from [127.0.0.1] ([52.234.2.52])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-15d83d6af11sm664151c88.10.2026.10.05.13.20.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2026 13:20:15 -0700 (PDT)
-Message-Id: <68867aa3fcc7f901b615f1b882612de56a0d86fc.1791231610.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2241.v2.git.1791231610.gitgitgadget@gmail.com>
-References: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
-	<pull.2241.v2.git.1791231610.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 05 Oct 2026 20:20:10 +0000
-Subject: [PATCH v2 2/2] doc: remove references to gittutorial-2
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=UK+mN1MlmKPOb6ipLS7fQfE7U2b9Yc/6TYiqRQjFlz8=;
+        b=r98XiUtaqmdaqefzEJlMO1vv4asrshqo/JNvf8osGFGPXetBYODkhFx07behm9gPAH
+         0+7ecFcRCKSGwvKNeow5lru3ZF/qiyNpNWfjFBDKl3s/h8nIeNDmxUcGNiUzebPUmarU
+         jm+y/8OEWi8+mD0V7IUaoj+6nl8sY/CsGRtRHvpowjjdcy8+a5LaglO6m1JEvQwYJZMW
+         Vk6qTTefK4ebb2ESDs6U0ukWMlIZRpFjjEPrumwtHAnLc8yme1sDVOcwI/cQSnOxXsPs
+         s8jKu6E0+O2r72PqwV1o9V6r+fQUcRD0UfwjfPGvvUx2Htul/1HbZaF0esFDraCOGnTR
+         fHAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791232390; x=1791837190;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=UK+mN1MlmKPOb6ipLS7fQfE7U2b9Yc/6TYiqRQjFlz8=;
+        b=n3iru3CtqlOhXT2wb0bRY+BTM0tWUHcEFAZjQi6GjjPPoGbcae9qNpehvnvnoh7KLV
+         /pV9E6RKsrXjsvOGO46cmZFyqvNlzqfUbuZgyrzQk7tZFqLuSF0ovCJ2lyZyrlH1JLjb
+         hNsoPqUjjfEpehJmGTsXBixlrSF9G7/rSIwQ1NeH4SNAlfbv8sfc9KvCVTa/DmR7k+/X
+         mqDUAIB1869TCjjYcDTvcjp+FI2eHr8fUF1Cr5FvIzyxiSv6St3RaxD+CX6RUxtzTVCl
+         Y7V6qSjfC0+QRBkntaCFC1YUu0sQczGIg0R+NTytSzH0uTHt88QCi8VzwxLcI7rI4Aur
+         /oew==
+X-Gm-Message-State: AFq9FYIx2Wkg77mLQxdcR8wTmjMF5+KRy75eXaEi7iZ0ppm6BycV2UmP
+	XVheKz60P2Pov5WRZs6YBme373ET1rV4NVusUWk9cTVkIWzFg/bSLwSfTbJ/4TRfMrJGmDhdMP/
+	LYV8q2jIZWL3TFcxdIEkzRawYLC9tA+sWr+RxATofPA==
+X-Gm-Gg: AYBFou2n5h3shItVXI0iSAjb4EFxBxnqUcgtGByWnKKdgWvCP0ZKkjvTDLaIuyE/pD1
+	tJGmhu/KNXeQTE+397VtbPaqhrNyg0a/POLizY/B9gUmri31r8+zcgkUBogVZJdco7P8MP1+s8J
+	2FYcJISDn7Rx789xMLRnFafR97FNCq3h6z/00ZxMTJigmmfhwyJHX32EVWtQ1Hd7vuhYSoDr9Sn
+	Ivvw+lsifmRlSLAj/lrqE8eSuHvLYhJTvOwYYcHo5OV7jEvvEVvexbgDUR4z+GmfJD2KQ2QYZyU
+	eFEasRBdXtaH8jnDz+uLdWRmwuoBnsJY6oLMHBK6Xvj1Ha4/zsLMqJrSdGtBNz0r4Gw6Rnyn8A1
+	yHgCdIAkutFlKUTPujmB0LijQ4m2xb3gLp0HxcLXw0Ez2X4VpvzzL865aoys/eqZNWZfEoYJxbl
+	vqJCroLBGs1Xoo0A3tolZ15yqcDIhD2QvxurIuLfVW1XwfGL+HSIpnnFpIlvHFvFSMewRWxhpGr
+	K4xOr21dTg=
+X-Received: by 2002:a05:6214:3305:b0:919:65f6:e47c with SMTP id
+ 6a1803df08f44-91965f6e4bamr113893146d6.36.1791232389422; Mon, 05 Oct 2026
+ 13:33:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Tuomas Ahola <taahol@utu.fi>,
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+References: <CA+h9NxRT-9QzLGihdL_Bp-yyt1AdXJ79YYgpK-OaegUz8e+HcA@mail.gmail.com>
+ <f8dc40a4-920d-4dc5-9f71-7686bfc6255b@web.de>
+In-Reply-To: <f8dc40a4-920d-4dc5-9f71-7686bfc6255b@web.de>
+From: "Matthew E. Luallen" <m@sph3r3.com>
+Date: Mon, 5 Oct 2026 15:32:32 -0500
+X-Gm-Features: AclHuK_pkLjj3-vu5_CIE3DnGOO_Gyn82irsqFV31q-HH77sp_IsRzN8_F6n1mA
+Message-ID: <CA+h9NxQEJaKrbTXUeryEhNMfOfuU0EykiJRi3PaJE9dRFo5tWw@mail.gmail.com>
+Subject: Re: [BUG] ZIP timestamp conversion and strict fast-import date validation
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000489f1e065d1dca6e"
 
-From: Julia Evans <julia@jvns.ca>
+--000000000000489f1e065d1dca6e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Redirect folks to `gitdatamodel` instead, since every time it's
-referenced the intent is to explain objects, references, blobs, etc.
+Hi Ren=C3=A9,
 
-The update to `gittutorial` isn't very carefully thought through since
-we're planning to delete that entire document anyway. It's just there to
-maintain some internal consistency.
+Thank you for the thoughtful response. I appreciate your help.
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
- Documentation/MyFirstObjectWalk.adoc |  2 +-
- Documentation/git.adoc               |  2 +-
- Documentation/gitcore-tutorial.adoc  |  1 -
- Documentation/gitcvs-migration.adoc  |  2 +-
- Documentation/gitglossary.adoc       |  1 -
- Documentation/gittutorial.adoc       | 23 +++++------------------
- 6 files changed, 8 insertions(+), 23 deletions(-)
+- Reader example: Python 3.14.7's ZipInfo.date_time reports 2100 for
+  the 1972 ZIP despite its correct Unix timestamp. Our tested UnZip
+  and bsdtar restored 1972 correctly; this is a metadata-reading example.
 
-diff --git a/Documentation/MyFirstObjectWalk.adoc b/Documentation/MyFirstObjectWalk.adoc
-index 413a9fdb05..76e635b93a 100644
---- a/Documentation/MyFirstObjectWalk.adoc
-+++ b/Documentation/MyFirstObjectWalk.adoc
-@@ -145,7 +145,7 @@ used to track the allocated size of the list.
- Per entry, we find:
- 
- `item` is the object provided upon which to base the object walk. Items in Git
--can be blobs, trees, commits, or tags. (See `Documentation/gittutorial-2.adoc`.)
-+can be blobs, trees, commits, or tags. (See `Documentation/gitdatamodel.adoc`.)
- 
- `name` is the object ID (OID) of the object - a hex string you may be familiar
- with from using Git to organize your source in the past. Check the tutorial
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 6f0075f918..1f0cbaee7a 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -1200,7 +1200,7 @@ the Git Security mailing list <git-security@googlegroups.com>.
- 
- SEE ALSO
- --------
--linkgit:gittutorial[7], linkgit:gittutorial-2[7],
-+linkgit:gittutorial[7],
- linkgit:giteveryday[7], linkgit:gitcvs-migration[7],
- linkgit:gitglossary[7], linkgit:gitdatamodel[7],
- linkgit:gitcore-tutorial[7], linkgit:gitcli[7],
-diff --git a/Documentation/gitcore-tutorial.adoc b/Documentation/gitcore-tutorial.adoc
-index 2122aeb976..abbe193056 100644
---- a/Documentation/gitcore-tutorial.adoc
-+++ b/Documentation/gitcore-tutorial.adoc
-@@ -1649,7 +1649,6 @@ to follow, not easier.
- SEE ALSO
- --------
- linkgit:gittutorial[7],
--linkgit:gittutorial-2[7],
- linkgit:gitcvs-migration[7],
- linkgit:git-help[1],
- linkgit:giteveryday[7],
-diff --git a/Documentation/gitcvs-migration.adoc b/Documentation/gitcvs-migration.adoc
-index 905d08cd5f..66a5c3ed6d 100644
---- a/Documentation/gitcvs-migration.adoc
-+++ b/Documentation/gitcvs-migration.adoc
-@@ -194,7 +194,7 @@ repositories without the need for a central maintainer.
- SEE ALSO
- --------
- linkgit:gittutorial[7],
--linkgit:gittutorial-2[7],
-+linkgit:gitdatamodel[7],
- linkgit:gitcore-tutorial[7],
- linkgit:gitglossary[7],
- linkgit:giteveryday[7],
-diff --git a/Documentation/gitglossary.adoc b/Documentation/gitglossary.adoc
-index b046d9cb29..6051f494d3 100644
---- a/Documentation/gitglossary.adoc
-+++ b/Documentation/gitglossary.adoc
-@@ -18,7 +18,6 @@ SEE ALSO
- --------
- linkgit:gitdatamodel[7],
- linkgit:gittutorial[7],
--linkgit:gittutorial-2[7],
- linkgit:gitcvs-migration[7],
- linkgit:giteveryday[7],
- link:user-manual.html[The Git User's Manual]
-diff --git a/Documentation/gittutorial.adoc b/Documentation/gittutorial.adoc
-index 519b8d8be2..006e534778 100644
---- a/Documentation/gittutorial.adoc
-+++ b/Documentation/gittutorial.adoc
-@@ -622,24 +622,12 @@ Next Steps
- ----------
- 
- This tutorial should be enough to perform basic distributed revision
--control for your projects.  However, to fully understand the depth
--and power of Git you need to understand two simple ideas on which it
--is based:
-+control for your projects.  However, to fully understand the Git
-+documentation, it's useful to learn how Git stores the history of
-+your project in its database. See linkgit:gitdatamodel[7] for an
-+explanation.
- 
--  * The object database is the rather elegant system used to
--    store the history of your project--files, directories, and
--    commits.
--
--  * The index file is a cache of the state of a directory tree,
--    used to create commits, check out working directories, and
--    hold the various trees involved in a merge.
--
--Part two of this tutorial explains the object
--database, the index file, and a few other odds and ends that you'll
--need to make the most of Git. You can find it at linkgit:gittutorial-2[7].
--
--If you don't want to continue with that right away, a few other
--digressions that may be interesting at this point are:
-+A few other commands that may be interesting:
- 
-   * linkgit:git-format-patch[1], linkgit:git-am[1]: These convert
-     series of git commits into emailed patches, and vice versa,
-@@ -662,7 +650,6 @@ digressions that may be interesting at this point are:
- 
- SEE ALSO
- --------
--linkgit:gittutorial-2[7],
- linkgit:gitcvs-migration[7],
- linkgit:gitcore-tutorial[7],
- linkgit:gitglossary[7],
--- 
-gitgitgadget
+- Separate consequence: the 2106-to-1970 wrap caused UnZip update mode
+  to retain different existing 2025 content. The 2038 control updated
+  correctly. No deployed security bypass has been demonstrated.
+
+- Fix direction: would you prefer clamping or rejecting ZIP timestamps
+  beyond the Unix field's range? Our candidate rejects them. Would
+  rejecting negative dates in strict raw import be a useful first step?
+
+Attached is brief guidance on misinterpretation risks, clearer date
+labels, and safer downstream decisions. These suggestions complement
+the ordinary bug fixes without asserting a security classification.
+
+Best,
+Matt
+
+--000000000000489f1e065d1dca6e
+Content-Type: text/plain; charset="US-ASCII"; name="git-timestamp-guidance.txt"
+Content-Disposition: attachment; filename="git-timestamp-guidance.txt"
+Content-Transfer-Encoding: base64
+Content-ID: <>
+X-Attachment-Id: 
+
+R0lUIFRJTUVTVEFNUCBHVUlEQU5DRTogSU5URVJQUkVUQVRJT04sIElOVEVHUklUWSBBTkQgUkVN
+RURJQVRJT04KNSBPY3RvYmVyIDIwMjYgfCBDb21wYW5pb24gdG8gdGhlIHB1YmxpYyBHaXQgZGF0
+ZS1oYW5kbGluZyBkaXNjdXNzaW9uCgpXSFkgSVQgTUFUVEVSUwoKLSBJbnRlcnByZXRhdGlvbjog
+ZGF0ZXMgY2FuIGJlIG1pc3Rha2VuIGZvciBjcmVhdGlvbiwgcHVibGljYXRpb24gb3IKICBhcHBy
+b3ZhbCB0aW1lcy4gQ29udmVyc2lvbiBlcnJvcnMgY2FuIG1pc2xlYWQgd2l0aG91dCBtYWxpY2lv
+dXMgaW50ZW50LgotIFNjYWxlOiByZXBlYXRlZCByZWxpYW5jZSBvbiBkYXRlcyBhY3Jvc3MgdXBk
+YXRlLCByZXZpZXcgYW5kIGF1ZGl0CiAgcGlwZWxpbmVzIGNvdWxkIG11bHRpcGx5IGVycm9ycy4g
+UHJldmFsZW5jZSBoYXMgbm90IGJlZW4gbWVhc3VyZWQuCi0gU2VjdXJpdHkgaW1wYWN0IHJlcXVp
+cmVzIGF0dGFja2VyLWluZmx1ZW5jZWQgbWV0YWRhdGEgdG8gYWZmZWN0IGEKICBzZWN1cml0eSBk
+ZWNpc2lvbiB3aXRob3V0IGluZGVwZW5kZW50IGNoZWNrcy4gQSBsb2NhbCB1cGRhdGUgZGVjaXNp
+b24KICBjaGFuZ2VkOyBhIHByb2R1Y3Rpb24gc2VjdXJpdHkgYnlwYXNzIGhhcyBub3QgYmVlbiBk
+ZW1vbnN0cmF0ZWQuCgpPQlNFUlZFRCwgV0lUSCBDT05UUk9MUwoKLSBQeXRob24gMy4xNC43IHJl
+YWRzIHRoZSAxOTcyIFpJUCdzIERPUyBkYXRlIGFzIDIxMDAgZGVzcGl0ZSB0aGUgY29ycmVjdAog
+IFVuaXggZXh0cmEgZmllbGQuIFVuWmlwIDYuMDAgYW5kIGJzZHRhciAzLjUuMyByZXN0b3JlZCAx
+OTcyOyBQeXRob24ncwogIG9yZGluYXJ5IGV4dHJhY3Rpb24gdXNlZCBhIGN1cnJlbnQgbG9jYWwg
+bW9kaWZpY2F0aW9uIHRpbWUuCi0gQSAyMTA2IGNvbW1pdCdzIFpJUCBVbml4IHRpbWVzdGFtcCB3
+cmFwcGVkIHRvIDE5NzA7IFVuWmlwIHVwZGF0ZSBtb2RlCiAga2VwdCBkaWZmZXJlbnQgZXhpc3Rp
+bmcgMjAyNSBieXRlcy4gQSAyMDM4IGNvbnRyb2wgcmVwbGFjZWQgdGhlbTsKICBUQVIgcHJlc2Vy
+dmVkIDIxMDYuIFN0cmljdCByYXcgaW1wb3J0IGFsc28gYWNjZXB0ZWQgYSBuZWdhdGl2ZSBkYXRl
+CiAgc3Vic2VxdWVudGx5IHJlamVjdGVkIGJ5IHN0cmljdCBmc2NrLiBSZWFkZXIgYmVoYXZpb3Ig
+dmFyaWVzIGJ5IHBsYXRmb3JtLgoKUFJBQ1RJQ0FMIE9QVElPTlMKCi0gRXhwb3J0ZXJzOiB2YWxp
+ZGF0ZSByYW5nZXMgYmVmb3JlIGVuY29kaW5nLiBDbGFtcCBwcmUtMTk4MCBET1MgZGF0ZXMKICB3
+aGlsZSBwcmVzZXJ2aW5nIHJlcHJlc2VudGFibGUgVW5peCBkYXRlcy4gRm9yIFVuaXgtZmllbGQg
+b3ZlcmZsb3csCiAgY2hvb3NlIHJlamVjdGlvbiBvciBkb2N1bWVudGVkIGNsYW1waW5nOyBjbGFt
+cGluZyBsb3NlcyB0aGUgb3JpZ2luYWwKICB2YWx1ZS4gT3VyIGNhbmRpZGF0ZSByZWplY3RzIG92
+ZXJmbG93LiBUaGVzZSBhcmUgcHJvcG9zZWQgcG9saWNpZXMuCi0gSW1wb3J0ZXJzOiBhbGlnbiBz
+dHJpY3QgcGFyc2luZyB3aXRoIHZhbGlkYXRpb247IGNoZWNrIG5lZ2F0aXZlIHZhbHVlcywKICBj
+b21wbGV0ZSBudW1lcmljIGlucHV0IGFuZCBvdmVyZmxvdy4gS2VlcCBwZXJtaXNzaXZlIG1vZGVz
+IGV4cGxpY2l0LgogIFRlc3QgYm91bmRhcmllcyBhY3Jvc3MgdGltZXpvbmVzIGFuZCBhcmNoaXZl
+IHJlYWRlcnMuCi0gQ29uc3VtZXJzOiBkZWNpZGUgdXBkYXRlcyB1c2luZyBleHBlY3RlZCBjb250
+ZW50L3ZlcnNpb24gaW5mb3JtYXRpb24KICBmcm9tIGEgdHJ1c3RlZCBzb3VyY2UsIG5vdCBtb2Rp
+ZmljYXRpb24gdGltZSBhbG9uZS4gRm9yIGNoYW5nZSByZXZpZXcsCiAgcmV0YWluIGEgdHJ1c3Rl
+ZCBiYXNlbGluZSBjb21taXQgYW5kIGNvbXBhcmUgcmVhY2hhYmxlIGNoYW5nZXM7IGhhbmRsZQog
+IG1pc3Npbmcgb3IgcmV3cml0dGVuIGhpc3RvcnkgZXhwbGljaXRseS4gRGF0ZSB3aW5kb3dzIGRv
+IG5vdCBlc3RhYmxpc2gKICBjb21wbGV0ZSBjb3ZlcmFnZSBvZiBuZXdseSByZWNlaXZlZCBjb250
+ZW50LgotIERpc3BsYXlzOiBkaXN0aW5ndWlzaCAnY29tbWl0dGVyLXN1cHBsaWVkIGRhdGUnLCAn
+YXJjaGl2ZSBtb2RpZmljYXRpb24KICB0aW1lJyBhbmQgJ3NlcnZlciBvYnNlcnZlZCBhdCcuIEV4
+cGxhaW4gY2xhbXBpbmcgYW5kIG1pc3NpbmcgZXZpZGVuY2UuCiAgU2VydmVyIHJlY2VpcHQgaXMg
+bm90IG9yaWdpbmFsIGNyZWF0aW9uIG9yIGZpcnN0IHB1YmxpY2F0aW9uIGVsc2V3aGVyZS4KLSBF
+dmlkZW5jZTogcHJlc2VydmUgb3JpZ2luYWwgYnl0ZXMgYW5kIGluZGVwZW5kZW50IHJlY2VpcHQg
+cmVjb3Jkcy4KICBDb21taXQgc2lnbmF0dXJlcyBiaW5kIHNpZ25lZCBjb250ZW50IHRvIGEga2V5
+IHVuZGVyIGEgdHJ1c3QgcG9saWN5OwogIHRoZXkgZG8gbm90IGluZGVwZW5kZW50bHkgcHJvdmUg
+aXRzIGNsYWltZWQgY3JlYXRpb24gdGltZS4gQSB2YWxpZGF0ZWQKICB0cnVzdGVkIHRpbWVzdGFt
+cCBjYW4gc3VwcG9ydCBleGlzdGVuY2UgYnkgYSB0aW1lLCBub3QgZXhhY3QgY3JlYXRpb24uCgpS
+SVNLIFRBWE9OT01ZLCBOT1QgQSBWVUxORVJBQklMSVRZIEFTU0lHTk1FTlQKCi0gTnVtZXJpYyBy
+ZXByZXNlbnRhdGlvbi90cnVuY2F0aW9uOiBDV0UtMTk3OyB3cmFwYXJvdW5kOiBDV0UtMTkwLgot
+IFZhbGlkYXRpb246IENXRS0yMCAoYnJvYWQgY2F0ZWdvcnkpLiBEb3duc3RyZWFtIHRydXN0OiBD
+V0UtODA3IG9ubHkKICB3aGVyZSBhIHNlY3VyaXR5IGRlY2lzaW9uIHJlbGllcyBvbiB1bnRydXN0
+ZWQgaW5wdXQuIERpc3BsYXkgY29uZnVzaW9uCiAgYWxvbmUgZG9lcyBub3QgZXN0YWJsaXNoIGl0
+LiBUaGVzZSBsYWJlbHMgZG8gbm90IGVzdGFibGlzaCBzZXZlcml0eS4KClJFRkVSRU5DRVMgQU5E
+IEVWSURFTkNFCgpHaXQgZGF0ZSBjb250cm9sczogaHR0cHM6Ly9naXQtc2NtLmNvbS9kb2NzL2dp
+dC1jb21taXQjX2NvbW1pdF9pbmZvcm1hdGlvbgpBcmNoaXZlIGJlaGF2aW9yOiBodHRwczovL2dp
+dC1zY20uY29tL2RvY3MvZ2l0LWFyY2hpdmUjX2Rlc2NyaXB0aW9uCkNXRSB0YXhvbm9teTogaHR0
+cHM6Ly9jd2UubWl0cmUub3JnL2RhdGEvZGVmaW5pdGlvbnMvMTk3Lmh0bWwKaHR0cHM6Ly9jd2Uu
+bWl0cmUub3JnL2RhdGEvZGVmaW5pdGlvbnMvMTkwLmh0bWwKaHR0cHM6Ly9jd2UubWl0cmUub3Jn
+L2RhdGEvZGVmaW5pdGlvbnMvMjAuaHRtbApodHRwczovL2N3ZS5taXRyZS5vcmcvZGF0YS9kZWZp
+bml0aW9ucy84MDcuaHRtbApUcnVzdGVkIHRpbWVzdGFtcCBzZW1hbnRpY3M6IGh0dHBzOi8vd3d3
+LnJmYy1lZGl0b3Iub3JnL3JmYy9yZmMzMTYxCkV2aWRlbmNlOiByZWNvcmRlZCAyMDI2LTEwLTAx
+IGNvbnN1bWVyLWRhdGUtaW1wYWN0IHJlc3VsdHMgYW5kIEdpdCBtYXRyaXg7Cm5vIG5ldyBleHBl
+cmltZW50IGlzIGNsYWltZWQgYnkgdGhpcyBndWlkYW5jZS4KCk1hdHRoZXcgRS4gTHVhbGxlbiAo
+QG1lbHVhbGxlbiksIHdpdGggcmVzZWFyY2gsIHJlcHJvZHVjdGlvbiBhbmQgZHJhZnRpbmcKYXNz
+aXN0YW5jZSBmcm9tIE9wZW5BSSBDb2RleC4K
+--000000000000489f1e065d1dca6e--
