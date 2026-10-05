@@ -1,352 +1,196 @@
-Received: from mail-dy2-f34.google.com (mail-dy2-f34.google.com [74.125.229.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1534031E835
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 05:55:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.34
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791179722; cv=pass; b=CubcTMOnj83alygxS+bkCnr3q1BVmxOOf4SbuKP0rcKHXfyW8Sl5WkaTTPsbFNSAEHY2R2oMAIS2WInfH6yN5WW/OvyHhu5FxuF6LgbrcY2PDkH1+90pFmIDmFhRJL90T7xY38k3KsEW8K2Iz/VlkZXIwfl4mLfTvzCF9uIJz5s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791179722; c=relaxed/simple;
-	bh=oLQQDSkskPpSrSmp9luYoGeSzaeJ4ShGV2tPY+TFjY4=;
-	h=In-Reply-To:References:MIME-Version:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=emwtOAt4Tj4C1A7jweiMbaEo36oEXiMzGQVcS1bhb+mecoYhNDevDbZlbTi79YFziGbXciEH4GcwlMTtlYgAothM9a4lufwFSpCwkMn/es1XznZ+AuGRjyYllUlOEnUaTaPY1Vyso0+QwmPs+87B5uJUzTyrQ70Li97CMOqlVdA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com; spf=pass smtp.mailfrom=kanamei.com; dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b=T/c/l79U; arc=pass smtp.client-ip=74.125.229.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kanamei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kanamei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CAC233126
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 06:03:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791180200; cv=none; b=sxtcwnN6c9nxejrIC2wnuoDr7RDcrh/9/q1qoTIVh+p2XMz/OSYgwG7qF6H3a3AJQjKWtGca5ilVY/l0VcsvDoVwAFZITUYSPhR8h61hxaU2v9qDez1Xj1hlqt9Oe6BK8Kpb1tqg7FDJKbYFgnLrCevxBpqJDyXZedZ/+G+Nb1M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791180200; c=relaxed/simple;
+	bh=aarCsKQVxsIkVa+Tz0LmnGv+0U/acel1xg06aST6KZE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=h75ISbnxTZvNnaZPbKSEDLAzU42pn/6LHQnd62PYIMxIz1TZW85AvkPdtibU/vbDVi+KhALiAbjDIq7HJO53bA523qYtautU7UusmRW1k6O7pxem/M4YrQTT6r1ovH9RxRCAtfk0GAFbVvPuwbtfTazULofD5B62XGZ7rSMNcl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NMyaFg6N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JxT2tb9q; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kanamei-com.20251104.gappssmtp.com header.i=@kanamei-com.20251104.gappssmtp.com header.b="T/c/l79U"
-Received: by mail-dy2-f34.google.com with SMTP id 5a478bee46e88-33be7dfcfc1so1785440eec.1
-        for <git@vger.kernel.org>; Sun, 04 Oct 2026 22:55:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791179719; cv=none;
-        d=google.com; s=arc-20260327;
-        b=cVxrTzXm3NzDvjZhtQb0fy19xax9rWqiRAJMmIgOonNgWl+S7S1hF7OvY40x5QhvRc
-         u0Pu2gy4N4t0gbfbdnE8wyA6PjUiKDZKBhvUtkG9hjIYXHznWs3YYNu7zX7PcqAJgTVq
-         EkN7CdRag8no1Hvde8GOP13OgkSIgzVPw3408QkohWSdd3G5WWuNAYjHBeFtWzKKTia3
-         RfnGzZGsll7bLFWvFFs0Vox5Q/mZSZveE3pwDCBw6A7m1KVc6ASeGDqxdmyE1AIG6FPj
-         DjvvM7Ez33QPbBI/b42XjSc9cph6Hpz3XmrcnLZDGvVvvQwaLzUvp+cYaI/TWp9+OmpA
-         HG5A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:references:in-reply-to:dkim-signature;
-        bh=VSeMKRwiNGrLBbqvJujkzAnFb0MMN4emXRESg058oV0=;
-        fh=dS7ZYYEQ3xS9uUoit4NbHrS7bRskiJR+qpqNwgt9xSw=;
-        b=Uq33aBsnqYmqblOrZpc5+sjTJW1Utm15aYQrW2/8o1nyuziGgTyyt7lTLd9O3KE28o
-         Xb5HmRD53j03riqBWS/Kd7lUqKTBM4+MeykgYFC9wIcNkT2pL6tqCSSs2++Nw3H8G12B
-         EJrgzQ8FSkdtyi1siZruBen0AND6dC0UEKMeL89jhwiCwtDCO7Z+2wmCjeDiHIITAlbV
-         UHdFdnBI52hWDBERvPxMrZudUCxO9XQwJgBrvafEIWRHEv2WD2CLxBSbrJ4crvH8MjcA
-         cRhkQgkjHu6Be3FcPEycBqSc6GXIHUz0pGXX54ulRqa3+VYIs/Bz7/bEChAoaN5c/Qym
-         6O5Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kanamei-com.20251104.gappssmtp.com; s=20251104; t=1791179719; x=1791784519; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:mime-version:references:in-reply-to:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=VSeMKRwiNGrLBbqvJujkzAnFb0MMN4emXRESg058oV0=;
-        b=T/c/l79UevS7JVxK9y578U1+LU+z1jQH8ddgGaz+FXJxq9NRbdKameDFANfoCmRHdm
-         aZoUhzOQaayd/1XpoK43tdomyC/bdOmioCZAbjKpI5LkaMzwC5T2k1Xmf4kAW/bDtjne
-         jy2syvJXgTSmg+nVmWTUibfU86laQZ1cujH6ilcOoU6m2OeYUt2kubuyhsrmOQJcWVKc
-         GbrAkeWIXEXgeWo5x7Jbx/ouSXp3+zcBL8uFmZp3lIHsYi9khq32gtPrA2eQOTrjJSpP
-         BVpEoRpaVJHJVXCA146JG3ndHIZQkMdSaRUdKdwWQ6LCmoKQ1LHsCxUEWsj7MBTeNs4Y
-         nQfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791179719; x=1791784519;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:mime-version:references:in-reply-to:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=VSeMKRwiNGrLBbqvJujkzAnFb0MMN4emXRESg058oV0=;
-        b=Xp/l9RpURuH0siY6Uh2/2a26GxQA0RBDyeVseOnBSuYk/pngv8vj3QSp7Y+F1misBJ
-         2qlxtfdL4AU8ENiFPRo4tbcCw9EZUUf+Cym3xCUAWLjoaQWujISsbpcPmMm4YmWAFM31
-         +ekhSmTISs/7rObLpPbqev38jxar4xbGaixKM95AkNKBmIMyzMQ674Jl/UScCzxWx63c
-         BLPVMZ0gvq2TOHZbNCoUVCI/CKofjvQXF7wmTREen+PciJiGps2jtkgopUx6HNztwJlY
-         SVe4ZZmYyg+5Jpozm+dlHvqUpWqAaLg/i6nkVIzL8ah2+jj+XH4RXZw/DgBuDoDLRsmb
-         rL1g==
-X-Gm-Message-State: AFuF++lIa2Gt+eaTydpbAD4tAU38RpjlskvLRTZEwIcOC/7MALcO002R
-	So8i/2MLPFnnqLWCMf7B5rMdWU4uJ24j/MlZfHnYa6nKzV2N43xSv7F8rj/7gW82/Nsy0pLy5R+
-	ZlDoUbWNezlj8xqfF9eGmuMklBmt948KeENn4DEHF1Q==
-X-Gm-Gg: AYBFou0x9UBbJ7WFHANwWsZbeIjDZyamZidI2ia3PR16SrHLm7QrXJdnJ+SRQGFuONn
-	gj6L3ohI6oq91y2cHElOfGSL5cQHCitzzo/ig2bfGwlvDrxgTGrY06kguyzFuv6ZgkM9GZIjfFL
-	DZY20rov0k5DdBiDdxp4zhozTuGCXzZCIwDsn5tatWdp+wu5DuN5T7ff3brD9HbbtWVwwSbPV8Z
-	tqE/vqVp4jIPzU0Gx3uxwSJT7vxfuHsV1axV7KgHZFmSHTalgtkHfMICnaYXiTpfNRF4+DGGWm0
-	EbN/W6+AwD+H5o31ye1t4vtFG6cJ4Zz1f31GTW4ebmmmrSd7CbXeaQ==
-X-Received: by 2002:a05:693c:8641:10b0:351:232c:6d79 with SMTP id
- 5a478bee46e88-351232c8e7bmr5507302eec.12.1791179718926; Sun, 04 Oct 2026
- 22:55:18 -0700 (PDT)
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Mon, 5 Oct 2026 01:55:18 -0400
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Mon, 5 Oct 2026 01:55:18 -0400
-In-Reply-To: <CANUHOw1eO0HNjU+-PYNDOz9kHhBZYYfhiKJSX4082YSC1NKxww@mail.gmail.com>
-References: <20260929074222.11942-1-kazumasa.shigeta@kanamei.com>
- <20261001042155.33303-1-kazumasa.shigeta@kanamei.com> <xmqq7bk173qm.fsf@gitster.g>
- <CANUHOw1eO0HNjU+-PYNDOz9kHhBZYYfhiKJSX4082YSC1NKxww@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NMyaFg6N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JxT2tb9q"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7DAB51400094
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 02:03:17 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 05 Oct 2026 02:03:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791180197;
+	 x=1791266597; bh=DWeGYES5rlKB6u71kok0jSZy3+xwJ7+ZGo3shJYjdw4=; b=
+	NMyaFg6Nc2gZxeBTCXdMj8qTVsTwJcp7elk0gzz6Vh5/tBpaokVD5N1+pIM2dxiz
+	fW3Q85f3Flb3Pqe+SlPQfSADdaRyDihZz69tRYpG8s1TwrKIDC7FgTOUB1HgOLRd
+	+iYLk5f4YY8Dh9Wel/celsvPrC25dkuzolFjhBoA7Ro3BXRtBaK5NJj0UNLceDzs
+	K2ifCh7bvL9tk1AYagF/LGOExN99c3+ASlOabkE7WxTseMyZX6ut8s+Yy4WRUiXO
+	7DTYYa0BKgoD4PIyHccPPQFiVElYwZppXPxkzZXIswFYjv11TTCKnUMeW/rzFr1j
+	l//dmLkXgrBOU8mcU5IWEA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791180197; x=
+	1791266597; bh=DWeGYES5rlKB6u71kok0jSZy3+xwJ7+ZGo3shJYjdw4=; b=J
+	xT2tb9qq/vYEXCB+F/8MO7k8jNLUrmqv6I7WGJ5FpNo+q6VyF3Mm6nokyoSDtlfZ
+	WJEbH5xc3hCcLEv16mVx7MS0dTLkzBSywPztAr7z7Y2792Iv66QqzaL+TfbnMcj8
+	CZPc9a6TN0le9pp4Ndt9Z8ch2ERJaSp3ZN4MlDKax3jO+kGbSouaojWb9P00JT1O
+	2z3L8JmdWpPlc8Uc7J5GRZ65Y04AIilis5ynL/OmmMAtF8BJTQGVUHVxQ5UhAijH
+	V5ttck138bFwKWNS3BkG63yX89ZyEGP/rTv+DSAlBp3KqBV29vWzWPTVFbNsJyfi
+	ZDAGWAwrvpCH/FQBPLvcw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791180197; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:VdivYNnMwyHSsP5d8ClaybyGmYVEXCS5g1jpztFiR84sX3K
+	mz9WQUFDgTEZHXowOe/6m5KjsVxzxIidjBlDk3NsnH/zFrE+N6DG4H7mST+QwEdW
+	2u/Wf8rEQHm6UThy8AnfKw+4QbxAUcbSeEqwbPDFqiSPYxTFa1gcI3Fn26BC0yiu
+	WAAfqlD+yan1U7RRWVgVQniRVsFGe+3Yq+5Sla8UEn6/blkwThfe7enGKzhDzHwC
+	1BO6mFLM5dcolTlsasm6pDAq2AXpNbDZKjKaT44KBk6KkHGVUn7bostcc6hOqoMU
+	k6aXvUQdqYioW4O1fhP62RmCbLJ7iQ29KZaI/iw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
+	action=mi-m=1; hc=13;
+	hn=cc,content-disposition,content-transfer-encoding,
+	content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:+XF6U+OdaIygqeFJORQQavvI4zkRq+lq2CiUGkZc6RM=:aarCsKQVxsIkVa+Tz0LmnGv+0U/acel1xg06aST6KZE=;
+X-ME-Sender: <xms:pT3Dat4G9pfYS_Lbie7BzraabNmAy38j2p2RqXmk46GpvWo-Nv1YNA>
+    <xme:pT3Dah4hw_mTN7Wgt15cMf2wVF_F8z-mlH0Vj860dqTeDVyf93s2GFfV31rYWinU9
+    oM8uPy7NUK9gpLA8mCSUU6-4EIGE8HOguv8Hus9Lm9F908P-2hD8w>
+X-ME-Received: <xmr:pT3DapcbaKHv79mUd0sUfWPcEXLqM4rjO8THPS_L77y1j4V_7njzAXPdkxIHWZ1I3ITaxX4>
+X-ME-Proxy-Cause: dmFkZTGA3om02MEqX9VGn8igTXeuy2X0lEUouSzBJWH1BfTwf8Hnr1LG68n4o6//USC8J3
+    GsTe4TYzCmgRh1srMJn+Fib5l0wFgs5i0V4t7ZcqTcXi8MdF+J2XGbwoDwlaZX3jUrGhXi
+    eBcd+I8QToMpCPY/jIbvpcpsSTqhr4kZn59DEwOH/C+1T3ObFL96UyDFbXJP9PxXOBR+2A
+    /B70YZyWH4zs2YRkfbEin6GBp0QtD7HHklNipaObD3auyAByx/dwkP3OTxrQ+ACJSnoxlr
+    89tx5HjIw8wNRIPnKlvoKcTv42Y2QK3H9lYJPBPXcSsxXoQi9Ry0vbX6KDmy/6vnofegVE
+    1Pl3emasMUzN4xc3FD/eS+g9fctWSvzS8hyg11pJmdX6VrNDbpRu2g7laco7Cn+QnpQFOW
+    5mzMHc57dbvahhlFTnC/NznysE5+Q12vkCiqFCkzPaWh82WeSSNlJjs8Wp25Tp8xx1e/QT
+    zkljYm8l0jst7oq2G9H3E0DQ/NZV76cEgZGl06+GT83Xk0Z+h3n4iqOCsT3z/xacml6eds
+    bks90N+Nkpj8RjJhW8IND4PJSvTYCvSDE3gLcR9DISWp36hmg04GokfVjeVUc2/6sYqMxs
+    DlP64B2NW6FUjYRyWLC/OkJLzedUhyHBc2s/OUxIaotEd1WFI9YO5UuCG5vg
+X-ME-Proxy: <xmx:pT3DalB3cXxe5-buI0xnbf6gIa14nOtARW7JzBFXnIBBWwDKo7P5zg>
+    <xmx:pT3Das_igvgCDHWK-5RP0liP5ji22sDUO_RFqFsz1N2m-3xnvr0w8w>
+    <xmx:pT3DagLa6k62FfSi5WXCJVuuJ3pW72Wnf8KFLVByVIrtz-gECP6eiw>
+    <xmx:pT3Daliyn9eOFohtuac9cRNhvLzKCdP3qacFG-5i0AsCVTaDP0J-ug>
+    <xmx:pT3Dao8E8pxa8zOVjAnUv_UohwCEOWdOTJ9MGD7hERsgx5F_xF-hfcpL>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 Oct 2026 02:03:16 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a34abadd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 5 Oct 2026 06:03:14 +0000 (UTC)
+Date: Mon, 5 Oct 2026 08:03:07 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, karthik.188@gmail.com
+Subject: Re: [PATCH v2] refs: run copy and rename through transactions
+Message-ID: <asM9m-_ZoX_5UQ-I@pks.im>
+References: <20260920165037.88524-1-maciej.ciemborowicz@gmail.com>
+ <20260923133651.74120-1-maciej.ciemborowicz@gmail.com>
+ <ar-N7SA63fN_xx9P@pks.im>
+ <CACQ=SRGSEsbNz3v3obd3JUOs2MrROnvuHkx1Dm51seCcv+12Cw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?B?6YeN55Sw5LiA6IGW?= <kazumasa.shigeta@kanamei.com>
-Date: Mon, 5 Oct 2026 01:55:18 -0400
-X-Gm-Features: AclHuK-ezyHPoyLyEpobqorEQSV7yUbRj5F3aYt_NdNxae80WO1ec5w5Ic1UtGo
-Message-ID: <CANUHOw3gynMRGN7A-wOnL3PQtgFbMtsB2gyZxaq+0Z5bHp-H8A@mail.gmail.com>
-Subject: Re: [PATCH v2] stash: expose untracked modes in create
-To: gitster@pobox.com
-Cc: git@vger.kernel.org, shabbir.r.bhojani@gmail.com, 
-	phillip.wood@dunelm.org.uk, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACQ=SRGSEsbNz3v3obd3JUOs2MrROnvuHkx1Dm51seCcv+12Cw@mail.gmail.com>
 
-Hi Junio,
+On Fri, Oct 02, 2026 at 04:16:08PM +0200, Maciej Ciemborowicz wrote:
+> On Fri, Oct 2, 2026 at 12:56 PM Patrick Steinhardt <ps@pks.im> wrote:
+> > why can't we make this whole mechanism completely agnostic of the
+> > backend and implement this via pure transactions?
+> 
+> The part I was trying to preserve is the existing reflog semantics. A
+> normal ref transaction can express the logical ref updates. In example
+> deleting the old ref and creating/updating the destination. But branch
+> rename/copy also moves or copies the existing reflog history. For the
+> files backend that currently involves filesystem-level reflog
+> rename/copy and D/F handling, while reftable represents the same
+> operation differently. So my assumption was that the logical ref
+> updates could go through the generic transaction API, while the
+> reflog-history operation would remain backend-specific.
 
-> Why are we singling out only these two?
+Yes, the reflog semantics should of course stay the same. But nowadays,
+this would also be achievable with only backend-agnostic logic as the
+reference transactions have learned to write many reflog entries for a
+single reference. This was added back when we introduced the migration
+logic to convert between two different backends.
 
-After looking more carefully at both the history and the current stash
-code, I don't think there is a good reason to single out only `-u` and
-`-a`.
+Now there's potentially two caveats:
 
-Your question made me realize that I had focused too narrowly on the
-untracked modes. The larger issue is not simply that `do_create_stash()`
-has capabilities that `git stash create` does not expose. The existing
-`git stash create <message>` grammar is a long-standing compatibility
-contract that has been deliberately preserved.
+  - I don't think we have a way to delete many old reflog entries yet.
 
-Making more of those capabilities available through `create` would
-therefore mean either changing that contract or designing around it.
-That is a much larger interface decision than I appreciated when I sent
-the patch.
+  - There may be a significant impact on performance.
 
-I moved too quickly here and sent the patch before understanding that
-constraint well enough. I am sorry about that. Thanks to you, Phillip,
-Patrick, and everyone else who took the time to review it. I should
-have investigated this compatibility history first.
+The question thus is whether we can avoid or fix those caveats somehow
+and thus arrive at a more future-proof mechanism.
 
-Even so, I still think it would be useful to make more of the existing
-`do_create_stash()` capabilities available through the public command
-line.
+> > Is this new behaviour? Is this retaining old behaviour?
+> 
+> The source/destination revalidation is new validation required by
+> introducing the preparing hook before the backend locks are taken. The
+> hook can itself change one of the refs. Without revalidation, the hook
+> payload could describe one state while the rename/copy later operates
+> on another state. The intention is therefore to reject an operation
+> when the state observed by the preparing hook is no longer the state
+> being committed.
 
-So I no longer think the question is simply which additional options
-`stash create` should expose. The broader question is how to make those
-capabilities available through a public interface while dealing
-appropriately with the existing `git stash create <message>`
-compatibility contract.
+I don't feel like that's sensible. The "preparing" hook is explicitly
+run before we perform locking and is documented as such. So it is fully
+expected that the on-disk state may still change between executing this
+and the "prepared" phase. It is the responsibility of the hook author to
+handle such cases, we shouldn't do this ourselves as we're now starting
+to assume semantics of the hook itself.
 
-From that perspective, I can see three possible directions.
+> > Sorry, but I'm going to stop reading here. This is not in a state that
+> > is reviewable and has way too much stuff that is obviously generated by
+> > an AI without much thought being put into it by the author. I don't want
+> > to invest my time into a topic where the author has obviously not spent
+> > their time thinking about it, either.
+> 
+> I'm really sorry to hear that. Yes, the patches I prepared were
+> AI-assisted, but I do feel that I understand what I am doing. I would
+> appreciate some understanding, though, as I do not work with C on a
+> daily basis. The bug report and my attempt to fix it came from the
+> fact that I am working on a Ruby gem for per-branch and per-worktree
+> containerization. That is why I had to write git-hooks-ext, which is
+> how I ended up running into this bug in the first place.
+> 
+> I am not insisting that my patch should be merged. I simply thought
+> that submitting a patch might help get the bug fixed faster, and
+> getting the bug fixed is what I care about most. Karthik Nayak offered
+> to help fix it, so perhaps it would be better for someone who works
+> with C on a daily basis to take it over.
+> 
+> I can, of course, also prepare a v3, split it into more commits, and
+> explain my reasoning more clearly. But I cannot guarantee that it will
+> meet your standards, simply because I am not yet familiar with them.
 
-1. Keep extending `stash create`.
+I'd suggest to iterate then. In the current version this patch is not in
+a shape that is ready for review. The patch needs to be split up, and
+there are a lot of gaps in the commit message. Taken together that gives
+the signal that you don't really understand what you are doing.
 
-   We could expose more of the existing `do_create_stash()`
-   functionality through `stash create`, following the conventions of
-   `stash push` for the creation-related options they have in common.
+That doesn't mean that you cannot fix that with another iteration
+though. But I'd suggest to take your time prepping the next iteration to
+read through the code, understand the concepts and doubt what AI spits
+out.
 
-   This seems implementable, but even with
-   `PARSE_OPT_STOP_AT_NON_OPTION` it would change the handling of
-   messages that begin with an option-like argument. Those would need
-   explicit disambiguation, such as `--`.
+Thanks!
 
-   There is also the pathspec question. If positional arguments
-   continue to be joined to form the message, pathspecs need some other
-   way to be distinguished from that message.
-
-2. Add a new stash subcommand for the creation functionality.
-
-   This would leave the existing `stash create <message>` contract
-   unchanged. Because the new command would not inherit `create`'s
-   positional message grammar, its creation-related options and
-   pathspec handling could follow conventions similar to `stash push`.
-
-   This preserves the existing `create` grammar while avoiding the need
-   to fit additional creation capabilities into it. The trade-off is
-   adding another public stash subcommand and its long-term maintenance
-   cost.
-
-3. Add something like `--create-only` to `git stash push`.
-
-   This would reuse the existing `push` option grammar without adding
-   another subcommand.
-
-   I also read the 2019 discussion around `git stash push --snapshot`.
-   One concern there was that approximately the same end state could
-   already be obtained with `git stash push && git stash apply`.
-
-   I do not think that particular concern carries over directly here.
-   `git stash create` already stops at object creation, but its public
-   interface does not expose more of the creation capabilities already
-   available in `do_create_stash()`. There is currently no public stash
-   command that exposes those capabilities while retaining that
-   create-only boundary.
-
-   That does not mean a similar result cannot be constructed by other
-   means. The missing piece is a public interface to the existing stash
-   creation machinery at that boundary.
-
-   Even so, there is still the separate question of whether `push` is
-   the right place for a creation-only operation in the first place.
-   The push-specific work around `do_create_stash()` would also need to
-   be separated carefully.
-
-All three seem substantially broader than the original `-u` / `-a`
-patch.
-
-If this is worth pursuing further, which of these directions seems the
-most plausible? Also, is this the right thread to continue that design
-discussion, or would it be better to discuss it separately?
-
-Thanks again for the guidance,
-Kazumasa Shigeta
-
-On Fri, 2 Oct 2026 05:04:26 -0400, "=E9=87=8D=E7=94=B0=E4=B8=80=E8=81=96" <=
-kazumasa.shigeta@kanamei.com> wrote:
-> Hi Junio,
->
-> > we would prefer to hear what the user visible implication of
-> > "passing 0" is more than what mechanically is happening inside a
-> > program.
->
-> The user-visible effect is that stash create cannot currently include
-> untracked or ignored files in the stash entry. If those are the only
-> changes, it creates no entry at all, while stash push and save can
-> include them with -u or -a as appropriate. I should have described that
-> difference directly instead of starting from the include_untracked
-> implementation detail.
->
-> > ... was what you wanted to say, but I am not sure.
->
-> Yes, exactly. I'll explain the backward-compatibility reason rather
-> than the mechanics of parse_options().
->
-> > You already said that with "does not update, reset, or clean".
->
-> I'll drop that paragraph.
->
-> > if you did not make a breaking change to the established convention,
-> > is it worth saying?
->
-> I don't think it adds anything here. I'll remove the exit-status
-> discussion from the commit message as well.
->
-> > adding tests for comprehensive coverage is not something to boast
-> > about. Is it worth saying?
->
-> I'll remove the test details from the commit message.
->
-> > Why are we singling out only these two?
->
-> I started by looking at the missing -u and -a support in create, and I
-> think that led me to focus too narrowly on those two when considering
-> the scope. I need to think more about whether this patch should remain
-> limited to those two.
->
-> Thanks,
-> Kazumasa Shigeta
->
-> On Thu, 01 Oct 2026 10:03:13 -0700, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> > Kazumasa Shigeta <kazumasa.shigeta@kanamei.com> writes:
-> >
-> > > `git stash create` always passes zero for the include_untracked param=
-eter
-> > > of do_create_stash(), even though that helper already supports untrac=
-ked
-> > > and ignored files and stash push/save expose those modes as
-> > > -u/--include-untracked and -a/--all.
-> >
-> > There may be no lies in what the above says, but we would prefer to
-> > hear what the user visible implication of "passing 0" is more than
-> > what mechanically is happening inside a program. For example:
-> >
-> > "git stash create", "git stash push", and "git stash save" are
-> > commands that create a new stash entry. The latter two are also
-> > responsible for storing the resulting stash entry to the reflog
-> > of the "refs/stash" ref, but have options to control what is
-> > included in the stash entry. Among these options, "create" only
-> > supports the equivalent of "-m <message." to record in the stash
-> > entry. Most notably, "-u" and "-a" options are missing.
-> >
-> > > Teach create to accept the same options and pass the existing mode
-> > > through. Unlike push/save, create continues to only create objects: i=
-t
-> > > does not update refs/stash, reset the index, or clean the working tre=
-e.
-> >
-> > Sure. It is a very concise and good description of what we want to
-> > do.
-> >
-> > > Use parse_options() for the new options and stop parsing at the first
-> > > non-option message word. This keeps option-like tokens after the mess=
-age
-> > > as message text, while leading option-like arguments now follow Git's
-> > > normal option parsing. In particular, unknown or malformed leading
-> > > options are rejected instead of silently becoming a message, short
-> > > options may be combined, and `--` can be used when a message itself
-> > > begins with a dash.
-> >
-> > Why do we need to go into such a detail in the log message? What is
-> > the above paragraph designed to convey to the reader? Again, it may
-> > not be telling any lies, but it misses the point by being inconsiderate
-> > to your readers. What you need to tell them is _WHY_ you chose to
-> > use parse_options() in such a way. What were you trying to achieve?
-> >
-> > I am guessing that something along this line ...
-> >
-> > "git stash create" traditionally treated the rest of the command
-> > line as a message. For example,
-> >
-> > $ git stash create adding -u option
-> >
-> > has always been a request to create a stash entry with the
-> > string "adding -u option" as its message. We should not make it
-> > trigger the "-u" (include untracked) behavior for backward
-> > compatibility, by using parse_options() with stop-at-the-non-option
-> > mode to forbid it from reordering the command line arguments.
-> >
-> > ... was what you wanted to say, but I am not sure.
-> >
-> > How much of all these verbiage was written by AI by the way? You'd
-> > need to spend effort to make it readable to humans.
-> >
-> > > Keep create's existing no-change behavior: detect the usual no-change
-> > > case before do_create_stash() refreshes and writes the index, and ret=
-urn
-> > > success without printing an object name. If do_create_stash() still
-> > > reports its internal "nothing to create" result, map that to create's
-> > > public success status.
-> >
-> > You already said that with "does not update, reset, or clean".
-> >
-> > > This follows the stash subcommand exit-status convention established =
-by
-> > > 786fc390465f (stash: reserve exit status 1 for conflicts, 2026-09-03)=
-:
-> > > subcommands return 0 on success, negative values on failure, and stat=
-us 1
-> > > when applying a stash results in conflicts. cmd_stash() maps negative
-> > > subcommand failures to 128.
-> >
-> > Again, there may not be lies in here, but if you did not make a
-> > breaking change to the established convention, is it worth saying?
-> >
-> > > 9ca6326dff29 (stash: refactor stash_create, 2017-02-19) added the
-> > > internal include-untracked path while intentionally leaving the user
-> > > interface for "git stash create" unchanged. Reuse that machinery and
-> > > the existing INCLUDE_ALL_FILES mode rather than adding a separate sta=
-sh
-> > > creation path.
-> > >
-> > > Add coverage for short and long aliases, combined short options, the
-> > > untracked/ignored boundary including an ignored-only worktree, option
-> > > parsing and dash-leading messages, no-change behavior, and preservati=
-on
-> > > of refs/stash, the index state, and the working tree.
-> >
-> > Again, adding tests for comprehensive coverage is not something to
-> > boast about. Is it worth saying?
-> >
-> > Aren't -p/-S/-k/-q and pathspec support all about the creating half
-> > of "git stash push" that are not available to "git stash create",
-> > not just "-u" and "-a"? Why are we singling out only these two? It
-> > may be more worthwhile to explain the rationale behind such a design
-> > decision.
+Patrick
