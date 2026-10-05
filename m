@@ -1,157 +1,659 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C4C48B374
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 13:25:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80674486406
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 13:28:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791206781; cv=none; b=N6Y5cm0Q5maRGOfDbAZ2G17moS5YqXR0MUSJ/ktTdbMyT/1lAtOEzwUknGmVzYPU6THw11/DLAm3jOfzwnY/FXtvttJU2EMCNsJUWGO7bTBLE3vW4yVzHaYTB8W1MbtgUaQVSTUnOBq87pa2GegnvfOdnI/QBccPN+bJERqKegU=
+	t=1791206918; cv=none; b=bwzEPrEpPEJJVgS10VgSVrXAnQrjaYoWHAAp36ePrIoIFYjFDYy/b7oZUNAQgz7dYhkdLB187PzHk8fN1DatuhIpA5fF1521KczC7AHePxLUKk5zBqsHtKBvxPSw0kLGy3j+3fY2+SMV6FkQTWWSXk8nv12cknD6tpIsvhFhu0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791206781; c=relaxed/simple;
-	bh=JNi9O/G873ZdorLoR0Kq1mkwlrxJlVuRhx0YKblxmnQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dvVR6N4T4DCNdyiC1x4qDL80uQPABdWQnjBvc+Cn+V+NPYlGYGWcZPAA6gHYv78pMT5nJpYruEwXJq69XXRE1l3YGImuNn6IiBRIY9bdYHZ9gHO6yS3kGsuAjSMa/rSRPQIid54140B659CbieE72Y52DSAOwYmpGnyYopgPjZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WUAQ7QHR; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791206918; c=relaxed/simple;
+	bh=GeQWMlhUCIYev/xownz0oeLTixlLqhUfdDBVW7ibiLo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n6PQ+fTg8b4ww/J/Ju1/Ya4/VBzfgQNxJgYHTi2+GNU4FDkZxcFt6bfeGUBPF4l5Y6M/TK2sxurfekirmlcvHpMiJyx4Wnl6Aj36jjBxTvrUjhyBfM6BM6TAkT8eOsI0UrrQt0DfKwkwwLEkGTX2l3VzB8jTmu1PLIqqct2D6Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EpS2DbB8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WUAQ7QHR"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-49ff680331aso17755715e9.3
-        for <git@vger.kernel.org>; Mon, 05 Oct 2026 06:25:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791206702; x=1791811502; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=utd/Nf3k+OrpRR2oXkxSjpCtjrbSZ0s3AerQyUQWqX0=;
-        b=WUAQ7QHRyExLGembvoa0OFuMdsHTt5qAZDqDVNYycP+ffpSS58+2HGSlz/9sX6dDnq
-         Y5G5IrwQcdCXEdVZM84H0/4TxAuTddhKI4ONJLnYLAHqr1pd2z+om2lemf4q9pJ7RZJ/
-         dULuzBnQKWyCwhiBZ+d6IHqjxb9+lbHrHiwFwmebiKkOl1IME1Er5UKs1t4qAe7tFfR6
-         MjHi45Nm6zDhzBNHuC+UjtyqtH75A2isGSKR3RfTOIsjJhwIFdPjtMYm2pPvQE1FC7CD
-         bSxRTDzyvkWvUi0qZeVvHtoRXXwNPyPxlPc9HUYpzFYEOdf5oVdKUbA2km4LvIDpOOeZ
-         SG+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791206702; x=1791811502;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=utd/Nf3k+OrpRR2oXkxSjpCtjrbSZ0s3AerQyUQWqX0=;
-        b=fK5Isz3H991rQVLT+beWtoujYueSbzNPLdmfTkIh+h6axzluplLlWiiZr6cJKqaElr
-         uqZMUKECs70JQyb46xfjtZjImC3YcvG0gBNzcyMV1YsPa7LtRuqeGuZPOA3hGbrLAYeO
-         Qbj/lE9RdeFTGvVzVYGQ+nLPa6484AzpgMj3PiJxi4FXD/PQoijzo0gqyVk9k4S3lf6z
-         ohsby063sXL6QvM8mHYkzfdW6HinHpCeGQaE1P4ugBpeVuA5vsJD/Yp91bke7RV7lVW5
-         Pr/AFYDfhi7G2I11JtTKpxjshWBi1gM8lOgQH8gIN5ShQvbv2X/Bp+DFn/opHXIyoNTJ
-         VrDw==
-X-Gm-Message-State: AFuF++m5m3+JuTlpvR1XAV36HKHPlUWtGq3E9L9QnqEVU7yg446Lgg3S
-	U4R59eLvvgbp7IUkDzOWZXZN52b58vva1RzXoOs1SLMTibWBeH1VsqTSg7m8VqVY
-X-Gm-Gg: AYBFou2YojGj+sBAyJ7Rx/IUmSQNz+EaRHMOu0pyOUvgkvyTd6mQ2bMxqzoQTm3Rjct
-	XQW6dPD0O+Pm09sKldRFJikHPW3c9KoIeX8Ng/Uw/zR3bRVJbecML/zh6pJvGx8hKMgrVjkiPoY
-	LMuetXG29xIGwFUIYg53PlmBEAsrdW7Mlg9Bzry4IbkCrxskq+kb5tO6ZpfFQq5gC9S74fYx6cl
-	lB7Liwgo0fC/a/C2VLUmv2Bj0+DLbH6EpeDeOb1zboLJ9WY4+AzzpqzuDSuRMRTB0Jq61KJm5WV
-	Z1z7Uq7oSkgDdxBh77QFzpWj9ecjxieaMN9LHmuWVRSj3vQc+SzirUO7oROJnFrv6HScev577Jo
-	n9V4pcPxNM62lVMLQ7v86zxVSj4CdOJHdddgKK+IzJhO5HkHBdstJAszClr2/qRyuvyXU44ffuW
-	NaCDRvjSC2LvecZJX+aLl8qLB0/2T9eSexGh4/aAKNoOH2i64PEGEckigy0jqVSOCYKK9kqpqND
-	w==
-X-Received: by 2002:a05:600c:348a:b0:4a1:746e:5898 with SMTP id 5b1f17b1804b1-4a1746e5ba6mr25980495e9.13.1791206702063;
-        Mon, 05 Oct 2026 06:25:02 -0700 (PDT)
-Received: from berwick ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a0280b2e3csm398123325e9.5.2026.10.05.06.25.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2026 06:25:01 -0700 (PDT)
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 1/2] remove_branch_state: convert boolean argument to flags
-Date: Mon,  5 Oct 2026 14:24:48 +0100
-Message-ID: <86ef0f848a35c66b2d68f96c5f307a6c80f74c78.1791206658.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.56.0.134.g299a3c16181
-In-Reply-To: <cover.1791206658.git.phillip.wood@dunelm.org.uk>
-References: <cover.1790761727.git.phillip.wood@dunelm.org.uk> <cover.1791206658.git.phillip.wood@dunelm.org.uk>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EpS2DbB8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E653F1F00893;
+	Mon,  5 Oct 2026 13:28:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791206908;
+	bh=N7zAXDqwWfZkSx8tqw6Rw6QWAanVnBkgHucgyrmzgSw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=EpS2DbB8KP+v6ukAFN+3bb1k9AF9U4LiL+27oGRT+26Q6C78W/BLwI3g/Y3OX3MOv
+	 9aqSjV8TSlXSET0GG3joDg/dsxH0D6h79qQ91QT++eZ2FlfaCfvDABC9kldgnYLybe
+	 g/uQPTpKQ7rcNmmNXSkWxb9bROmR+qriqdYJUDrRrF+pGQ9FgJuUwj1zrP7uIZNvSV
+	 ZQ9pB4/q41VUGpNDzo0KEH5rIWMmrhFOaOaqkjxwCtWH475+7JVtJh2RmvRsReStPa
+	 vfORt5W2qU8Lk58bD47Gy8fn46aLxpawJyWiC30OgTUunNPZNtILzyq/lEwbLm8PxB
+	 JgEiEj23KEHvw==
+Date: Mon, 5 Oct 2026 15:28:21 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: phillip.wood@dunelm.org.uk
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Nico Williams <nico@cryptonector.com>
+Subject: Re: git-rebase-walk
+Message-ID: <asOaLyiJUmINFFFH@debian>
+References: <ar5KL4_IKXYbx3Sb@debian>
+ <ar5eereSq91xldo-@pks.im>
+ <ar5-7ZtM6C23H-8m@debian>
+ <ar9TTB5nmPPAdABE@pks.im>
+ <95796d0d-5928-4108-bc27-b7ace4459d2a@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ndydnequjpg3k43h"
+Content-Disposition: inline
+In-Reply-To: <95796d0d-5928-4108-bc27-b7ace4459d2a@gmail.com>
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Convert the "verbose" boolean argument to a flag so that we can add
-more flags in a future commit.
+--ndydnequjpg3k43h
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: phillip.wood@dunelm.org.uk
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Nico Williams <nico@cryptonector.com>
+Subject: Re: git-rebase-walk
+Message-ID: <asOaLyiJUmINFFFH@debian>
+References: <ar5KL4_IKXYbx3Sb@debian>
+ <ar5eereSq91xldo-@pks.im>
+ <ar5-7ZtM6C23H-8m@debian>
+ <ar9TTB5nmPPAdABE@pks.im>
+ <95796d0d-5928-4108-bc27-b7ace4459d2a@gmail.com>
+MIME-Version: 1.0
+In-Reply-To: <95796d0d-5928-4108-bc27-b7ace4459d2a@gmail.com>
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- branch.c           | 4 ++--
- branch.h           | 3 ++-
- builtin/checkout.c | 6 +++++-
- 3 files changed, 9 insertions(+), 4 deletions(-)
+Hi Phillip,
 
-diff --git a/branch.c b/branch.c
-index 22f4f46b96..8bc7a395a7 100644
---- a/branch.c
-+++ b/branch.c
-@@ -871,9 +871,9 @@ void remove_merge_branch_state(struct repository *r)
- 	save_autostash_ref(r, "MERGE_AUTOSTASH");
- }
- 
--void remove_branch_state(struct repository *r, int verbose)
-+void remove_branch_state(struct repository *r, unsigned flags)
- {
--	sequencer_post_commit_cleanup(r, verbose);
-+	sequencer_post_commit_cleanup(r, flags & REMOVE_BRANCH_STATE_VERBOSE);
- 	unlink(git_path_squash_msg(r));
- 	remove_merge_branch_state(r);
- }
-diff --git a/branch.h b/branch.h
-index e9b1f7b37d..42d1b12918 100644
---- a/branch.h
-+++ b/branch.h
-@@ -127,6 +127,7 @@ int validate_branchname(const char *name, struct strbuf *ref);
-  */
- int validate_new_branchname(const char *name, struct strbuf *ref, int force);
- 
-+#define REMOVE_BRANCH_STATE_VERBOSE (1u << 0)
- /*
-  * Remove information about the merge state on the current
-  * branch. (E.g., MERGE_HEAD)
-@@ -137,7 +138,7 @@ void remove_merge_branch_state(struct repository *r);
-  * Remove information about the state of working on the current
-  * branch. (E.g., MERGE_HEAD)
-  */
--void remove_branch_state(struct repository *r, int verbose);
-+void remove_branch_state(struct repository *r, unsigned flags);
- 
- /*
-  * Configure local branch "local" as downstream to branch "remote"
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index c0f0d2c700..bdd2d816b6 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -950,6 +950,8 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- {
- 	struct strbuf msg = STRBUF_INIT;
- 	const char *old_desc, *reflog_msg;
-+	unsigned flags = 0;
-+
- 	if (opts->new_branch) {
- 		if (opts->new_orphan_branch) {
- 			enum log_refs_config log_all_ref_updates = LOG_REFS_UNSET;
-@@ -1044,7 +1046,9 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 						   old_branch_info->path);
- 		}
- 	}
--	remove_branch_state(the_repository, !opts->quiet);
-+	if (!opts->quiet)
-+		flags |= REMOVE_BRANCH_STATE_VERBOSE;
-+	remove_branch_state(the_repository, flags);
- 	strbuf_release(&msg);
- 	if (!opts->quiet &&
- 	    !opts->force_detach &&
--- 
-2.56.0.134.g299a3c16181
+> Date: 2026-10-04 11:03:39+0100
+> From: Phillip Wood <phillip.wood123@gmail.com>
+>
+> On 02/10/2026 07:46, Patrick Steinhardt wrote:
+> > On Thu, Oct 01, 2026 at 05:51:58PM +0200, Alejandro Colomar wrote:
+> > >=20
+> > > My script I use it in shadow-utils and in the Linux man-pages project,
+> > > and is in use today.  I was wondering if there was interest in
+> > > integrating it to git(1).
+> >=20
+> > I guess the answer is "maybe". The fact that multiple folks have solved
+> > similar issues over the course of many years is an indicator that the
+> > funcitonality may be more generally useful. But it probably shouldn't be
+> > a separate script, so if we wanted to integrate it I'd think the best
+> > way forward would be to integrate it into git-rebase(1) directly.
+>=20
+> I agree that would be the best way forward. Adding an "--incremental", or
+> "--progressive" option to rebase would be useful I think. For ease of use=
+, I
+> have a strong preference for an implementation where "rebase --continue"
+> handles rebasing onto progressively more recent bases, rather than the mu=
+lti
+> shot approach where the user has to run "git rebase --incremental" multip=
+le
+> times. Having a multi-shot approach makes it much less clear when we've
+> successfully rebased onto the desired base.
 
+For rebasing a single branch, having --continue do what you suggest
+wouldn't be too problematic.
+
+However, for when rebasing a tree of branches, I really need a
+multi-shot operation, since I want to advance branches in a very
+specific order.
+
+Below is a shell session performing such a rebase, which hopefully shows
+why I need this to be multi-shot.
+
+On the simpler case of a single branch, I'd still prefer a multi-shot
+approach where --continue only advances one rebase operation, because at
+the end of it I want to stop, and check git-range-diff(1) to make sure
+it all makes sense.
+
+I've indented the output of commands, so that they are easier to
+distinguish.
+
+	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
+		* G ada8aff4f08a (r/B, B) foo j
+		* G d6163efdc2db bar i
+		| * G 450f3a7f4f25 (r/HEAD, r/C, C) bar l
+		| * G f7309b21ebfa bar k
+		|/ =20
+		* G e949e24ba457 (HEAD -> A, r/A) bar h
+		*   G 607b450498be bar g
+		|\ =20
+		| * G b787bcd373d9 bar e
+		* | G c496b325576f baz f
+		|/ =20
+		| * G dfd9156d099a (r/main, main) foo d
+		| * G 4940c7d739be bar c
+		| * G cebc8fde25bb foo b
+		|/ =20
+		* G 1dcb901ebf60 foo a
+	alx@debian:~/tmp/brebase$ git brebase --rebase-merges main
+		Rebase: conflict
+		Bisecting: 0 revisions left to test after this (roughly 1 step)
+		[4940c7d739be44c0ca32c1d610b85fd5650e1528] bar c
+		running '.git/bisect-rebase/git-bisect-run-callback'
+		Rebase: conflict
+		Bisecting: 0 revisions left to test after this (roughly 0 steps)
+		[cebc8fde25bbe16c0f5f48e39642b3551f4f56e6] foo b
+		running '.git/bisect-rebase/git-bisect-run-callback'
+		Rebase: success
+		4940c7d739be44c0ca32c1d610b85fd5650e1528 is the first 'bad' commit
+		commit 4940c7d739be44c0ca32c1d610b85fd5650e1528
+		Author: Alejandro Colomar <alx@kernel.org>
+		Date:   2026-10-05 14:42:32 +0200
+
+		    bar c
+
+		 bar | 1 +
+		 1 file changed, 1 insertion(+)
+		 create mode 100644 bar
+		bisect found first 'bad' commit
+		Auto-merging bar
+		CONFLICT (add/add): Merge conflict in bar
+		error: could not apply 899eeb5c4e32... bar e
+		hint: Resolve all conflicts manually, mark them as resolved with
+		hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+		hint: You can instead skip this commit: run "git rebase --skip".
+		hint: To abort and get back to the state before "git rebase", run "git re=
+base --abort".
+		hint: Disable this message with "git config set advice.mergeConflict fals=
+e"
+		Could not apply 899eeb5c4e32... # bar e
+	alx@debian:~/tmp/brebase$ git rebase --abort=20
+	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
+		* 655c38e3cee8 (HEAD -> A) bar h
+		*   1ababced193d bar g
+		|\ =20
+		| * 899eeb5c4e32 bar e
+		* | 761c9dbcfa5b baz f
+		|/ =20
+		| * ada8aff4f08a (r/B, B) foo j
+		| * d6163efdc2db bar i
+		| | * 450f3a7f4f25 (r/HEAD, r/C, C) bar l
+		| | * f7309b21ebfa bar k
+		| |/ =20
+		| * e949e24ba457 (r/A) bar h
+		| *   607b450498be bar g
+		| |\ =20
+		| | * b787bcd373d9 bar e
+		| * | c496b325576f baz f
+		| |/ =20
+		| | * dfd9156d099a (r/main, main) foo d
+		| | * 4940c7d739be bar c
+		| |/ =20
+		|/|  =20
+		* | cebc8fde25bb foo b
+		|/ =20
+		* 1dcb901ebf60 foo a
+	alx@debian:~/tmp/brebase$ git switch B=20
+		Switched to branch 'B'
+		Your branch is up to date with 'r/B'.
+	alx@debian:~/tmp/brebase$ git brebase A
+		Rebase: conflict
+		Bisecting: 2 revisions left to test after this (roughly 1 step)
+		[899eeb5c4e32397f0fe138c5b9f486d4682939cb] bar e
+		running '.git/bisect-rebase/git-bisect-run-callback'
+		Rebase: conflict
+		Bisecting: 0 revisions left to test after this (roughly 0 steps)
+		[cebc8fde25bbe16c0f5f48e39642b3551f4f56e6] foo b
+		running '.git/bisect-rebase/git-bisect-run-callback'
+		Rebase: conflict
+		cebc8fde25bbe16c0f5f48e39642b3551f4f56e6 is the first 'bad' commit
+		commit cebc8fde25bbe16c0f5f48e39642b3551f4f56e6
+		Author: Alejandro Colomar <alx@kernel.org>
+		Date:   2026-10-05 14:42:04 +0200
+
+		    foo b
+
+		 foo | 2 +-
+		 1 file changed, 1 insertion(+), 1 deletion(-)
+		bisect found first 'bad' commit
+		Auto-merging foo
+		CONFLICT (content): Merge conflict in foo
+		error: could not apply ada8aff4f08a... foo j
+		hint: Resolve all conflicts manually, mark them as resolved with
+		hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+		hint: You can instead skip this commit: run "git rebase --skip".
+		hint: To abort and get back to the state before "git rebase", run "git re=
+base --abort".
+		hint: Disable this message with "git config set advice.mergeConflict fals=
+e"
+		Could not apply ada8aff4f08a... # foo j
+	alx@debian:~/tmp/brebase$ echo j >foo
+	alx@debian:~/tmp/brebase$ git add foo=20
+	alx@debian:~/tmp/brebase$ git rebase --continue=20
+		[detached HEAD 2e0b72e7440a] foo j
+		 1 file changed, 1 insertion(+), 1 deletion(-)
+		Successfully rebased and updated refs/heads/B.
+	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
+		* 2e0b72e7440a (HEAD -> B) foo j
+		* a1c6c1fb7ca2 bar i
+		* d8fa6c4da463 bar h
+		* bef9f1c4da4d bar e
+		* 0bac26895b94 baz f
+		| * 655c38e3cee8 (A) bar h
+		| *   1ababced193d bar g
+		| |\ =20
+		| | * 899eeb5c4e32 bar e
+		| |/ =20
+		|/|  =20
+		| * 761c9dbcfa5b baz f
+		|/ =20
+		| * ada8aff4f08a (r/B) foo j
+		| * d6163efdc2db bar i
+		| | * 450f3a7f4f25 (r/HEAD, r/C, C) bar l
+		| | * f7309b21ebfa bar k
+		| |/ =20
+		| * e949e24ba457 (r/A) bar h
+		| *   607b450498be bar g
+		| |\ =20
+		| | * b787bcd373d9 bar e
+		| * | c496b325576f baz f
+		| |/ =20
+		| | * dfd9156d099a (r/main, main) foo d
+		| | * 4940c7d739be bar c
+		| |/ =20
+		|/|  =20
+		* | cebc8fde25bb foo b
+		|/ =20
+		* 1dcb901ebf60 foo a
+	alx@debian:~/tmp/brebase$ git brebase A
+		Rebase: success
+	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
+		* 5ff93a00f9f2 (HEAD -> B) foo j
+		* 01522206a7bc bar i
+		* 655c38e3cee8 (A) bar h
+		*   1ababced193d bar g
+		|\ =20
+		| * 899eeb5c4e32 bar e
+		* | 761c9dbcfa5b baz f
+		|/ =20
+		| * ada8aff4f08a (r/B) foo j
+		| * d6163efdc2db bar i
+		| | * 450f3a7f4f25 (r/HEAD, r/C, C) bar l
+		| | * f7309b21ebfa bar k
+		| |/ =20
+		| * e949e24ba457 (r/A) bar h
+		| *   607b450498be bar g
+		| |\ =20
+		| | * b787bcd373d9 bar e
+		| * | c496b325576f baz f
+		| |/ =20
+		| | * dfd9156d099a (r/main, main) foo d
+		| | * 4940c7d739be bar c
+		| |/ =20
+		|/|  =20
+		* | cebc8fde25bb foo b
+		|/ =20
+		* 1dcb901ebf60 foo a
+	alx@debian:~/tmp/brebase$ git switch C
+		Switched to branch 'C'
+	alx@debian:~/tmp/brebase$ git brebase A
+		Rebase: success
+	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
+		* 06d462903420 (HEAD -> C) bar l
+		* 20f0a887b83b bar k
+		| * 5ff93a00f9f2 (B) foo j
+		| * 01522206a7bc bar i
+		|/ =20
+		* 655c38e3cee8 (A) bar h
+		*   1ababced193d bar g
+		|\ =20
+		| * 899eeb5c4e32 bar e
+		* | 761c9dbcfa5b baz f
+		|/ =20
+		| * ada8aff4f08a (r/B) foo j
+		| * d6163efdc2db bar i
+		| | * 450f3a7f4f25 (r/HEAD, r/C) bar l
+		| | * f7309b21ebfa bar k
+		| |/ =20
+		| * e949e24ba457 (r/A) bar h
+		| *   607b450498be bar g
+		| |\ =20
+		| | * b787bcd373d9 bar e
+		| * | c496b325576f baz f
+		| |/ =20
+		| | * dfd9156d099a (r/main, main) foo d
+		| | * 4940c7d739be bar c
+		| |/ =20
+		|/|  =20
+		* | cebc8fde25bb foo b
+		|/ =20
+		* 1dcb901ebf60 foo a
+	alx@debian:~/tmp/brebase$ git switch A
+		Switched to branch 'A'
+	alx@debian:~/tmp/brebase$ git brebase --rebase-merges main
+		Rebase: conflict
+		Bisecting: 0 revisions left to test after this (roughly 0 steps)
+		[4940c7d739be44c0ca32c1d610b85fd5650e1528] bar c
+		running '.git/bisect-rebase/git-bisect-run-callback'
+		Rebase: conflict
+		4940c7d739be44c0ca32c1d610b85fd5650e1528 is the first 'bad' commit
+		commit 4940c7d739be44c0ca32c1d610b85fd5650e1528
+		Author: Alejandro Colomar <alx@kernel.org>
+		Date:   2026-10-05 14:42:32 +0200
+
+		    bar c
+
+		 bar | 1 +
+		 1 file changed, 1 insertion(+)
+		 create mode 100644 bar
+		bisect found first 'bad' commit
+		Auto-merging bar
+		CONFLICT (add/add): Merge conflict in bar
+		error: could not apply 899eeb5c4e32... bar e
+		hint: Resolve all conflicts manually, mark them as resolved with
+		hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+		hint: You can instead skip this commit: run "git rebase --skip".
+		hint: To abort and get back to the state before "git rebase", run "git re=
+base --abort".
+		hint: Disable this message with "git config set advice.mergeConflict fals=
+e"
+		Could not apply 899eeb5c4e32... # bar e
+	alx@debian:~/tmp/brebase$ echo e >bar
+	alx@debian:~/tmp/brebase$ git add bar=20
+	alx@debian:~/tmp/brebase$ git rebase --continue=20
+		[detached HEAD 2a4fa7fe2f44] bar e
+		 1 file changed, 1 insertion(+), 1 deletion(-)
+		Successfully rebased and updated refs/heads/A.
+	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
+		* 0954f3d9b9e1 (HEAD -> A) bar h
+		*   4f09c21bf2ca bar g
+		|\ =20
+		| * 2a4fa7fe2f44 bar e
+		* | e42246e75159 baz f
+		|/ =20
+		| * 06d462903420 (C) bar l
+		| * 20f0a887b83b bar k
+		| | * 5ff93a00f9f2 (B) foo j
+		| | * 01522206a7bc bar i
+		| |/ =20
+		| * 655c38e3cee8 bar h
+		| *   1ababced193d bar g
+		| |\ =20
+		| | * 899eeb5c4e32 bar e
+		| * | 761c9dbcfa5b baz f
+		| |/ =20
+		| | * ada8aff4f08a (r/B) foo j
+		| | * d6163efdc2db bar i
+		| | | * 450f3a7f4f25 (r/HEAD, r/C) bar l
+		| | | * f7309b21ebfa bar k
+		| | |/ =20
+		| | * e949e24ba457 (r/A) bar h
+		| | *   607b450498be bar g
+		| | |\ =20
+		| | | * b787bcd373d9 bar e
+		| | * | c496b325576f baz f
+		| | |/ =20
+		| | | * dfd9156d099a (r/main, main) foo d
+		| |_|/ =20
+		|/| |  =20
+		* | | 4940c7d739be bar c
+		|/ / =20
+		* / cebc8fde25bb foo b
+		|/ =20
+		* 1dcb901ebf60 foo a
+	alx@debian:~/tmp/brebase$ git rebase --onto A 655c38e3cee8 B
+		Successfully rebased and updated refs/heads/B.
+	alx@debian:~/tmp/brebase$ git rebase --onto A 655c38e3cee8 C
+		Successfully rebased and updated refs/heads/C.
+	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
+		* 4a4ba76f55a4 (HEAD -> C) bar l
+		* 86350e1490f3 bar k
+		| * 4b6b40b14255 (B) foo j
+		| * ba5a233ee4bc bar i
+		|/ =20
+		* 0954f3d9b9e1 (A) bar h
+		*   4f09c21bf2ca bar g
+		|\ =20
+		| * 2a4fa7fe2f44 bar e
+		* | e42246e75159 baz f
+		|/ =20
+		| * ada8aff4f08a (r/B) foo j
+		| * d6163efdc2db bar i
+		| | * 450f3a7f4f25 (r/HEAD, r/C) bar l
+		| | * f7309b21ebfa bar k
+		| |/ =20
+		| * e949e24ba457 (r/A) bar h
+		| *   607b450498be bar g
+		| |\ =20
+		| | * b787bcd373d9 bar e
+		| * | c496b325576f baz f
+		| |/ =20
+		| | * dfd9156d099a (r/main, main) foo d
+		| |/ =20
+		|/|  =20
+		* | 4940c7d739be bar c
+		* | cebc8fde25bb foo b
+		|/ =20
+		* 1dcb901ebf60 foo a
+	alx@debian:~/tmp/brebase$ git switch A
+		Switched to branch 'A'
+	alx@debian:~/tmp/brebase$ git brebase --rebase-merges main
+		Rebase: success
+	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
+		* 30e2d96b3da5 (HEAD -> A) bar h
+		*   01702a5b5d6b bar g
+		|\ =20
+		| * c961883d543a bar e
+		* | e17aadb725c4 baz f
+		|/ =20
+		* dfd9156d099a (r/main, main) foo d
+		| * 4a4ba76f55a4 (C) bar l
+		| * 86350e1490f3 bar k
+		| | * 4b6b40b14255 (B) foo j
+		| | * ba5a233ee4bc bar i
+		| |/ =20
+		| * 0954f3d9b9e1 bar h
+		| *   4f09c21bf2ca bar g
+		| |\ =20
+		| | * 2a4fa7fe2f44 bar e
+		| |/ =20
+		|/|  =20
+		| * e42246e75159 baz f
+		|/ =20
+		* 4940c7d739be bar c
+		* cebc8fde25bb foo b
+		| * ada8aff4f08a (r/B) foo j
+		| * d6163efdc2db bar i
+		| | * 450f3a7f4f25 (r/HEAD, r/C) bar l
+		| | * f7309b21ebfa bar k
+		| |/ =20
+		| * e949e24ba457 (r/A) bar h
+		| *   607b450498be bar g
+		| |\ =20
+		| | * b787bcd373d9 bar e
+		| |/ =20
+		|/|  =20
+		| * c496b325576f baz f
+		|/ =20
+		* 1dcb901ebf60 foo a
+	alx@debian:~/tmp/brebase$ git rebase --onto A 0954f3d9b9e1 C
+		Successfully rebased and updated refs/heads/C.
+	alx@debian:~/tmp/brebase$ git rebase --onto A 0954f3d9b9e1 B
+		Auto-merging foo
+		CONFLICT (content): Merge conflict in foo
+		error: could not apply 4b6b40b14255... foo j
+		hint: Resolve all conflicts manually, mark them as resolved with
+		hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+		hint: You can instead skip this commit: run "git rebase --skip".
+		hint: To abort and get back to the state before "git rebase", run "git re=
+base --abort".
+		hint: Disable this message with "git config set advice.mergeConflict fals=
+e"
+		Could not apply 4b6b40b14255... # foo j
+	alx@debian:~/tmp/brebase$ git rebase --abort=20
+	alx@debian:~/tmp/brebase$ git switch B
+		Already on 'B'
+		Your branch and 'r/B' have diverged,
+		and have 8 and 6 different commits each, respectively.
+		  (use "git pull" if you want to integrate the remote branch with yours)
+	alx@debian:~/tmp/brebase$ git brebase A
+		Rebase: conflict
+		Bisecting: 2 revisions left to test after this (roughly 1 step)
+		[c961883d543a2393aacfd6a8345e1d29e6857f7f] bar e
+		running '.git/bisect-rebase/git-bisect-run-callback'
+		Rebase: conflict
+		Bisecting: 0 revisions left to test after this (roughly 0 steps)
+		[dfd9156d099ad3507a2850294c7a584b80712f04] foo d
+		running '.git/bisect-rebase/git-bisect-run-callback'
+		Rebase: conflict
+		dfd9156d099ad3507a2850294c7a584b80712f04 is the first 'bad' commit
+		commit dfd9156d099ad3507a2850294c7a584b80712f04
+		Author: Alejandro Colomar <alx@kernel.org>
+		Date:   2026-10-05 14:42:50 +0200
+
+		    foo d
+
+		 foo | 2 +-
+		 1 file changed, 1 insertion(+), 1 deletion(-)
+		bisect found first 'bad' commit
+		Auto-merging foo
+		CONFLICT (content): Merge conflict in foo
+		error: could not apply 4b6b40b14255... foo j
+		hint: Resolve all conflicts manually, mark them as resolved with
+		hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+		hint: You can instead skip this commit: run "git rebase --skip".
+		hint: To abort and get back to the state before "git rebase", run "git re=
+base --abort".
+		hint: Disable this message with "git config set advice.mergeConflict fals=
+e"
+		Could not apply 4b6b40b14255... # foo j
+	alx@debian:~/tmp/brebase$ echo j >foo
+	alx@debian:~/tmp/brebase$ git add foo=20
+	alx@debian:~/tmp/brebase$ git rebase --continue=20
+		[detached HEAD e7fdf07fd077] foo j
+		 1 file changed, 1 insertion(+), 1 deletion(-)
+		Successfully rebased and updated refs/heads/B.
+	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
+		* e7fdf07fd077 (HEAD -> B) foo j
+		* dddf632a735f bar i
+		* 7ac284de12ba bar h
+		* e4541508ab3e bar e
+		* cefec5878c67 baz f
+		| * 6c7952d6fec5 (C) bar l
+		| * bd43684f73c8 bar k
+		| * 30e2d96b3da5 (A) bar h
+		| *   01702a5b5d6b bar g
+		| |\ =20
+		| | * c961883d543a bar e
+		| |/ =20
+		|/|  =20
+		| * e17aadb725c4 baz f
+		|/ =20
+		* dfd9156d099a (r/main, main) foo d
+		* 4940c7d739be bar c
+		* cebc8fde25bb foo b
+		| * ada8aff4f08a (r/B) foo j
+		| * d6163efdc2db bar i
+		| | * 450f3a7f4f25 (r/HEAD, r/C) bar l
+		| | * f7309b21ebfa bar k
+		| |/ =20
+		| * e949e24ba457 (r/A) bar h
+		| *   607b450498be bar g
+		| |\ =20
+		| | * b787bcd373d9 bar e
+		| |/ =20
+		|/|  =20
+		| * c496b325576f baz f
+		|/ =20
+		* 1dcb901ebf60 foo a
+	alx@debian:~/tmp/brebase$ git brebase A
+		Rebase: success
+	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
+		* 1201c4f20b19 (HEAD -> B) foo j
+		* 44103f51a783 bar i
+		| * 6c7952d6fec5 (C) bar l
+		| * bd43684f73c8 bar k
+		|/ =20
+		* 30e2d96b3da5 (A) bar h
+		*   01702a5b5d6b bar g
+		|\ =20
+		| * c961883d543a bar e
+		* | e17aadb725c4 baz f
+		|/ =20
+		* dfd9156d099a (r/main, main) foo d
+		* 4940c7d739be bar c
+		* cebc8fde25bb foo b
+		| * ada8aff4f08a (r/B) foo j
+		| * d6163efdc2db bar i
+		| | * 450f3a7f4f25 (r/HEAD, r/C) bar l
+		| | * f7309b21ebfa bar k
+		| |/ =20
+		| * e949e24ba457 (r/A) bar h
+		| *   607b450498be bar g
+		| |\ =20
+		| | * b787bcd373d9 bar e
+		| |/ =20
+		|/|  =20
+		| * c496b325576f baz f
+		|/ =20
+		* 1dcb901ebf60 foo a
+
+This would be impossible with an approach that handles all the way until
+the end.  I need to be able to stop a bisect-rebase operation on one
+branch in the middle, then do a bisect-rebase on its descendants, then
+come back to bisect-rebase the parent branch.  Does this make sense?
+
+
+Have a lovely day!
+Alex
+
+
+>=20
+> Thanks
+>=20
+> Phillip
+>=20
+>=20
+> > That's of course more involved though, so I understand in case you're
+> > not interested in doing that.
+> >=20
+> > > If not, I will likely provide it in the man-pages repository as a help
+> > > tool (which might end up packed by distros as part of manpages-utils).
+> > > Is that okay to you?  (I ask mainly because it's using the git-
+> > > namespace for commands, so you should at lease be aware of it.)
+> >=20
+> > I mean overall this is our primary way of extension, by picking up
+> > utilities that have the "git-" prefix. So arguably you don't have to ask
+> > us for permission to do that.
+> >=20
+> > Whether it makes sense to distribute such a tool as part of
+> > manpages-utils is a different question, and one where I myself am of a
+> > split mind. But that feels more like a question for distributors rather
+> > than for us in the Git project.
+> >=20
+> > Thanks!
+> >=20
+> > Patrick
+>=20
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--ndydnequjpg3k43h
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrDpfUACgkQ64mZXMKQ
+wqkWjRAAi5moW/PQ31y1/mzwhy6gIXcqTwDpaiiGQHDgiMqlteE/L+1p4XcDVfCy
+L2exOu/IZY+aHu0LS08dElUSYojn42jLkGL8rxm3yv5u6G8wHqFlSen1nrORzLgW
+0G35di+2zHEbS3VGgBY39x0E2s7xQtO0z0J6Gm4xSqt8Q4rfiv+zHlJbUGeFKavB
+kVuuwxNZbd/MUCBbj37aBUyH/sTOIhjJXndZAy5th5eXdnVv7c0RKjVnL+NyTGpP
+uv55HXnk2UFCdxmFa11YsCagfgSJ+qpZIXD/wWx7kwptFK7R+2vWO8TVR4Xc9+u7
+Ila16GcgVvE1A2MYZ1XSBNtd9gJ0A04G4IC8RWc9ywEbdR/fETtrxKOZxMNzh8Yj
+CXyw4xZmM4tKQhaN2bEF8SFC0o8818f5rx7IO4dE4KecNhQpsxfOCAh2FANP6AxM
+CW8s9YnxL+uMZNAmhxEYtvEEF2NjpYm6dX+O2MD/7Pknyn4RMsZoqo3Kb9yxY4es
+2UxHbabgD003pGZ50ZBTLi/VpXew+jXK8oeCbH/FfoklWXohtwmD4P8V8uddl4ZF
+hxOSgusPTCUuIo/fYbv1DHy/xDGcdowLhxHrPXXl5ZEfQbm4COAM7KArHjiAEw5n
+5+5rnFfu5TRtoWl+BWkMcySF+p8Yw/70AMHgeSERFoBVMQ9Ll44=
+=XqKD
+-----END PGP SIGNATURE-----
+
+--ndydnequjpg3k43h--
