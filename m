@@ -1,146 +1,132 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CD343802B
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 13:07:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D398A485CFC
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 13:23:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791205652; cv=none; b=QxeHJjeE+9Mhkpd6TlA37Qlmhfb2DLAynt8n7q57vgF2d+lyX1aSuKAtv2cw/Dr1yTAYOXzg/prrUvhINGx0PMRdwycnp6Tj89T1mTS41MtorPXa9QZhCA8ZXQYgcWACUwM8AIvQdzbgW50YUGY4WdSuapQF998IhRk316TUUaY=
+	t=1791206652; cv=none; b=YRmdbqAhV0asxdeDVv79B60wpiAXdkvRZd/EeyqiBAxA+sHcfUz3zauZrMK92SdHKLRN2h7vael7F7pz+O10kigmUDzOV+gkCA0WzXOdASlq5tzfK0w+yGy11RFVy6rygGdcTg/ExYEf+PH+6OAwiGUy/stdLi5qRBFVD32V7uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791205652; c=relaxed/simple;
-	bh=fcfzXt07ZrlykIMUZGny7PJWajdic4HIeU1UTzfrbWM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bZpEMy8RtNYmEwK+nb1/XYcGJ/NHu306JYODh9mRwjWhHLiunmbjprM6w8BlXBRYXqL1dmZ5SEhyzGvWVT9BKFbq/WhI0ovmZ7CEE8u2SsEMaU2RKfi1hyMFqx8WUtSo00kjV0MLyzFIPNdZ3p41KJug5URNqJUr/S+AoYVr+1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cdT8Z1nQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UT/0Wt/J; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1791206652; c=relaxed/simple;
+	bh=zuBn4M+a7k8VaWvAernBTFV0hwucyIjdIItXpdLKgR0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QfWdF3cbQYZx+II2pni4WSIjseYHcyyD1dC/1G1yiJOe/8Xd5HHJcz+Z5gGegOyLLfLnwyO3aG007qZaiX4W5KDE7Wh2pmMMI2oZDqajI8IPxeoh9Z3i3qBGbVTZTiBqnhl2r1Nt5JNtfstG2+InBwYJ3korzIWzvg4K9NtXuBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s4QSyujo; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cdT8Z1nQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UT/0Wt/J"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 876CDEC08CF
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 09:07:29 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 05 Oct 2026 09:07:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791205649; x=1791292049; bh=Pvj8qgZywM
-	ISxRE2kOuSJ47RUF5t7CtiMhJIrKAq8Xc=; b=cdT8Z1nQY5YyzlYFS4zNt9g36k
-	pfGvYBkct+/SD8SCz6ZlOwc1OtpuGT3T0tU5Ik74vnA2okyPAMXImgTYjuH4KAPa
-	EwPJ5Q/mHoSiJphEZRxWrPii2kF1ChufnIhTAHRSl+xqH/fzuyFf53gbCW0s4pSm
-	7WJZFX7y2so+/vGLM3FHGWcvj6+Bhqo4cFTX2FolKfWzeCL7lFxqdozgUNXHdiQi
-	wWlOeWBcmSJfDYh86vvvL6qJPWvQ8LKDMGQsC4tkYRi3PEUnvFfnMXtdrEp+o6QL
-	jvh1LBZXXSis15eRw3gKpTYWqG4gQH9VI5Zc8iy4eA6HJAxWIPqwj9Dyglrw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791205649; x=1791292049; bh=Pvj8qgZywMISxRE2kOuSJ47RUF5t7CtiMhJ
-	IrKAq8Xc=; b=UT/0Wt/J+qlu1RD7Wp7CJC3+3P3X0g6/a88ezwoZXeOxkdZpVHx
-	tpVuXnN5AAOC7yLOUzXbeGrKAKdZxpCBEQ8QvVsN1Y6M+pcgCAYH3K+pEFHhzC7c
-	HO1LjAMT4PSeyhbKEn18zOL6ttqF2nmXJe01o3RtmeVyPyknFGvApENZkzibEWPw
-	RJA430HpJXHlP0ssemf3LZBxmEHcPiX2yVSPvmrG8cWdP6WT1eobk+ljS4PJ8tLe
-	FzGqFwhdm7lFb/sUVHBFspW7atgLoC1j0TejF8mUYnrcs6z17DQfsPyEqnAPVdtt
-	sL3uRuj0ANDVG92O49rmGWfv4YnMIQzkKgw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791205649; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:XZI7MY2TEdyOo46ICe54eAw/oi8KuGdttYdwPs61bGsnsaL
-	CXliOk1VymzgxNzVbvdmgdp144rEgzx+XClhJygoFxGoDFCuMtzixo7r92llLB3k
-	CMTTz5uknsDu5l+03u1tsHXXDWJA4Y9ngJZUhnF/1LwSILvXUMll8NOtPBvK1iz5
-	EPI2sMULKxp6WdZ97LklHgR8gGXi5zPRTbwdEkhLPXtEun3e1hgljHCw/N+UOc5y
-	6SgK/6cpT9NyDZTTZhwAmYIOKrOB4sjCCCE1wixA0kgcQtGEKy4zJoU4tG4tboJ6
-	6Y8MvG9JbnjR8xa0ZOIwA9WzeBFpu/nQE6Gzv8g==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:Cg3bEcpi59um8HzX2mP8XJkx2QsHpJj2fQqmpvdyJDw=:fcfzXt07ZrlykIMUZGny7PJWajdic4HIeU1UTzfrbWM=;
-X-ME-Sender: <xms:EaHDaistoh9OPV2A4_H20eLgqpKyvjvlaCYgC5dordRcNuL5cJucJQ>
-    <xme:EaHDaueddH0IcAxt5L9y-keqB7_GyZgKp_cyCT2nd6Kou_LLxWIGLeDhgEfNpgcze
-    5BH2TtK0dgjl4M36JCxOL6XgEWPiKYLjZ1BUDJBoq8Q2H5d0oQNCVqa>
-X-ME-Received: <xmr:EaHDaizTYoH5N-ZyF1lZgT5JgRnPHjPpKfSzcvie5GzoVoxNLR2mCNEWpBU5B6671Y4uC0r8UvtYHtsl6K85b2LU6Xmbjo_HXRVq>
-X-ME-Proxy-Cause: dmFkZTFigF8eVFkZbmDfo27SxM0z4eBCxdGhdNeJM3N3CAsdX5dEFNGowaYeUnsD6wNGc4
-    x6Akqw1rayUHVo2tAZvX2SZvJ3k1YacX/tPKcuHqJtfvwZ057nd0Td0gX/pkAi+LPX4qI1
-    bwTJn0JTVNduFOtpUdG/q/XHd91aHY9gDOCCM/mXhg6sPHyfNzTGmEs8XgI7k+tAznVtoi
-    7tqpkXv25dvrbaeUeJY7oR07INo1JcuqiYAl0CWzssUqDJuoKQRQrfIlbn7cBFauiaq12i
-    NOQPn1eh+rl9cbFncp/8juiQ81l/2BvTtgifOabfbor8xVg/VKPxTJMPZsHR89PQpI/LSN
-    +pv8awWJwN0RFewvIqQ2dnn8WV+IZ5lC6IYjHnYTWA6Ng6jnsnE9/ZjC80+SGrdhRwvJx5
-    PIeHfSouf1qQ2wkSVdcsLH9nGOTRZo6c0uo4XWCAxv8yQudaNIalu5XrrH0eOnBiMCO19R
-    JRg4sQemzAhqhdzftqIiZvU/IGrXNPeljhb0LIzyjRozCYLgQoYzSmLC/IJGU/m7gxbrXe
-    GI+86pNyT/nUGhZBhnFSdj2mNdLEkuR1zyEic83v8Wu/JHzhzXqq/4WIfMD8LPOyyhDFkw
-    EPLWM6VoyhKn0iuLnqYcvqEeFM9syQlWmR+up7BrQj2irVrER6FFSl1RMGVQ
-X-ME-Proxy: <xmx:EaHDasF_fY6BpgAqEfiKK4UssVOHSemsv2fncV2ukUBhej9UzIYKyw>
-    <xmx:EaHDauwAZD1YNqaljBb7xwjypHOFQBNro0j_v5_Gs92SOd8GEGyoFA>
-    <xmx:EaHDalu6jszjowDh6P_ecxxIEF8D-2o2mKakClzVr1XKU0cilMDyyg>
-    <xmx:EaHDaj0uApInwWwsGAj8w7-R_XUHDIGlywYG0hL5mOstigtRKN9E_Q>
-    <xmx:EaHDagjxCwKN2asRN3RAFFcIP0Zzh1_fS1ln3b-UW8yoxpK5VV_rbB9m>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 Oct 2026 09:07:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Colin Hinton <colinlewishinton@gmail.com>
-Cc: git@vger.kernel.org,  m@lfurio.us
-Subject: Re: [PATCH v5] fetch.c: defer fetch.followRemoteHEAD validation
-In-Reply-To: <20261004201428.5210-1-colinlewishinton@gmail.com> (Colin
-	Hinton's message of "Sun, 4 Oct 2026 13:14:27 -0700")
-References: <20261003231422.6004-1-colinlewishinton@gmail.com>
-	<20261004201428.5210-1-colinlewishinton@gmail.com>
-Date: Mon, 05 Oct 2026 06:07:27 -0700
-Message-ID: <xmqqqzi4nvn4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s4QSyujo"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4a140e7405dso18265655e9.3
+        for <git@vger.kernel.org>; Mon, 05 Oct 2026 06:23:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791206603; x=1791811403; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=iPUPwpzvEtS0rpTmoFMeazzmPDzoZvxULNTC+YmMUw8=;
+        b=s4QSyujolkWNKNEBLGSarBew+vXU69+H+ggVqiJL87Ds5O4QuH/pdHSE/0S3xHo58s
+         ooOKyWhqoeZQFn3P7znjnDkvyOxcRc+UEGeL9nKj0bEtaE5AdEPbdwihRi3OGxUzi8q4
+         MmvPuQHpawkDh5FyNRTBtQOgw0YvSfwwYonHSDGVrvtt9+r+Zm/dt+PVLuMNkGqgQNbR
+         lnINJlRrzUSaRLXFlgaJL8SlsoRN8brr2MrJmA/XTOVWNwX/FtO2D+pi+e/ha5+uGKYm
+         8ljHapU1f1HvLJ1htFLrqgiP5BC9yU2n6KM9dZau0hGQCv3nt8fBF9RkbWyeGyuVDt3B
+         XH+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791206603; x=1791811403;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=iPUPwpzvEtS0rpTmoFMeazzmPDzoZvxULNTC+YmMUw8=;
+        b=l+OOIpqnvMNBvL07U0rdlR3ATmMnlVACP5YtBPJfbNVsrslytyoqPxmViMI78xZVBf
+         pyNzg99AiMsk2E5tNd/ipIWo0lV4rgaJ/CCrRo9iBWkRIxGeCWYdpAAGEhpg3md9IRcs
+         A75rBjunxEK1Yj1tapNpRkp/qFkaVAWRb5E9GNyQCf9ejEXJJyFHFs5bBJD6dQgdHTw8
+         +sVutr1cFQUzTkIFeVwp0QRh1ZVUsbu+34g5P/Ysha5Nn49TPPhtPv7yzC8yn0xvkPM/
+         2wZdDPG6AOZpaC+puptRJm1mkdw34OiKSJlm8A88Ty4VurhTTy5uHa+uu/2Pck3GOMGl
+         zUPA==
+X-Forwarded-Encrypted: i=1; AKwUvBwjMvoNfndNQrPrDENesvW9eriLxniP+TEZxSw3FAWMxotDWYaRQh4xscaPCfG582Q1cRo=@vger.kernel.org
+X-Gm-Message-State: AFuF++lKlHKi4KohrcparFycRhLHgF/8p5RAAgo0uTuSJaaGB697f4R2
+	gsXbVbMBhQEIAf6VJDZci/PATZNldJNM4jsJQhJA19Mp1IdK05RQdr4Z
+X-Gm-Gg: AYBFou25+3LgY3TgWlIaUxtw4psZCIfK+GFMusR3NF9b1Zvp6Hoybh6aL6nROxulBcI
+	uPZidVlTmi/842GxjjMxnShwTl9O8JhknN2DkhpHqwijC5++pNCE5IgcPrhNB3jA8TVsD0n78eh
+	Y1zTYV61gx6R/uvOlSwYY2F9bDmAuFKEc/xQrnigbZyLho+vIrS6b+MoDa24qwuZmryNrk6qP9n
+	49KKtYGnKnacEaorA95MJ2ikXwQQA2rn6p/7Gz2dUxem7Yyz+2EF4s01jDYDRgP/vO+YMZGk0Qm
+	1u90c4O/7jwgBK1jzlOPxzuXVgoUQNZDUjappyeOA3CsLSrRsaRWCYZzxOdXqg4LcqaKLTd55qa
+	SAeUgiFIpV+dSiaHyp/FHzNjpQMv1/XypOs+6qhRhqmvfY/b32erRDbn2Ph5eQCWhCDK0nqHuXB
+	xbkk1PPfZ74T6Gk5QO69pSy5uA1X+jWALjny8WWe6d/OP8xlYbLiLSdY9hzD09cNRs6nyfCzaxW
+	XS0bUD6SYKkEDjrsZdcC1mwtbEaRRQ9UBWJWll4llF/kLgBmYem
+X-Received: by 2002:a05:600c:6208:b0:49f:e772:6ddf with SMTP id 5b1f17b1804b1-4a168105df5mr108779675e9.32.1791206602503;
+        Mon, 05 Oct 2026 06:23:22 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48c62eda863sm3091167f8f.43.2026.10.05.06.23.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Oct 2026 06:23:22 -0700 (PDT)
+Message-ID: <ea988ec0-ef3d-4250-a0d6-ffdf3794b9cf@gmail.com>
+Date: Mon, 5 Oct 2026 14:23:21 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 0/2] ci: link failure and leak annotations to the test
+ script
+To: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Ben Knoble <ben.knoble@gmail.com>
+References: <pull.2419.git.git.1790362443893.gitgitgadget@gmail.com>
+ <pull.2419.v5.git.git.1791015117.gitgitgadget@gmail.com>
+ <3587bf44-1b3b-422f-a926-f8481104dfd8@gmail.com>
+ <8b873f2e-b395-4044-ab15-f1eab4148447@gmail.com>
+ <CAHwyqnXBLiAA+aX8uLA3UvsfD4zaMTcvj96H8DX8BhMVopwcfQ@mail.gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CAHwyqnXBLiAA+aX8uLA3UvsfD4zaMTcvj96H8DX8BhMVopwcfQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Colin Hinton <colinlewishinton@gmail.com> writes:
+Hi Harald
 
-I see there are only two minor things remaining in this iteration.
+On 04/10/2026 12:51, Harald Nordgren wrote:
+> On Sat, Oct 3, 2026 at 9:02 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>> If I click on the link [2] it does not take me to that test file though,
+>> because it was not changed.
+> 
+> Yes, unfortunately GitHub won't let us link to a line that was not
+> changed in that PR.
+> 
+>> That makes this somewhat less useful than I
+>> initially thought. The current behavior is that when you click on those
+>> links in the summary page it takes you to the test output for the job
+>> that failed which seems more useful. For example [3] is recent test run
+>> that had a leak and clicking on
+>>
+>>       linux-leaks:(ubuntu-rolling):
+>>       failed: t1092.58 submodule handling
+>>
+>> Takes me to [4] which where I can click to expand the output of the
+>> failing test.
+>> ...
+>> [1] https://github.com/git/git/actions/runs/36537917146?pr=2426
+>> [2] https://github.com/git/git/pull/2426/files#annotation_82189987516
+>> [3] https://github.com/benknoble/git/actions/runs/36033463504
+>> [4]
+>> https://github.com/benknoble/git/actions/runs/36033463504/job/107747745741#step:9:5333
+> 
+> Is this enough to call this a regression? Then maybe it's not worth
+> doing this part at all.
 
-> fetch. Leave NEEDSWORK comments at both the now unresolved call site
-> in do_fetch() and at the actual defect in handle_config(), so the
-> remaining scope is easy to find for a follow-up patch.
+Yes, I think we should drop this patch. The first step to debugging a 
+test failure is to look at the test output, so the current behavior 
+where clicking on the links on the summary page takes you to the test 
+output is more useful than taking you to a diff that may not even show 
+the test that failed. The first patch is definitely worth keeping as it 
+makes it much easier to see the LSAN output.
 
-Here is one of the two.  There is only one NEEDSWORK, not "at both".
+Thanks
 
-	Leave a NEEDSWORK comment at remote.c:handle_config() that
-	has a defect similar to what is fixed by this patch, so ...
+Phillip
 
-should be sufficient.
-
-Another is that 
-
-        int cmd_fetch(int argc,
-                      const char **argv,
-                      const char *prefix,
-                      struct repository *repo UNUSED)
-        {
-                struct fetch_config config = {
-                        .display_format = DISPLAY_FORMAT_FULL,
-                        .follow_remote_head_raw = NULL,
-                        .follow_remote_head_seen = 0,
-                        .prune = -1,
-                        .prune_tags = -1,
-                        .show_forced_updates = 1,
-                        .recurse_submodules = RECURSE_SUBMODULES_DEFAULT,
-                        .parallel = 1,
-                        .submodule_fetch_jobs = -1,
-                };
-
-will hold onto a copy of config.follow_remote_head_seen that was
-read from the configuration and never frees it, so when cmd_fetch()
-leaves, it technically leaks a string.
-
-Other than these two points, this round looks very good.
-
-Thanks.
