@@ -1,686 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv2-f43.google.com (mail-qv2-f43.google.com [74.125.230.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC41C489894
-	for <git@vger.kernel.org>; Mon,  5 Oct 2026 13:37:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791207448; cv=none; b=dkoqjjyOMQloxBY85NyYTbC0YH1ilXaP2eRpvlmJyUc9v4vfz2vIibafpXuOUifVgrkuOKJ96MS2xaAOfo7HnE+UR6f0MOOcghFq7igQzyFuk/4yvb2qiWa8MT7VPtQlq0sj11nVf0qkRupwugFeynnvPOF/lBw6npKjY1Mk59w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791207448; c=relaxed/simple;
-	bh=aTzDNAUJT15K6o0oYvWgb5UX2ylfEazyGZsArNIIElE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F+x47NAPT8d3t7TioXl+1Y3ApfnK1iGj5am/vLBVXhS+XVZodRI53ZuetGR3mmijQtUZRcR5Uz+9t9YieM47D+AWuzp1xwjnq8Vqj1M5XcsM8GHo/lKA+goXIfWWSnz8gXYecCq6n7R/Vw90XnetUCzmudD4VgCMIf9X0kJIvkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CuwZrPcl; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D07346AC5
+	for <git@vger.kernel.org>; Mon,  5 Oct 2026 13:48:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791208105; cv=pass; b=q0p23i6hncihO5lC7sVdpfzbcQZXI6Viwb+f2ZWtxmdEIvTJe/RvZH3URxhcYwuVLI2kyvkXR0H1mZWvMy9DQIuJWmd2k+802gyPcnpBucdvZtJSn1Xe31QXPTYZJraJ6dZEfQKm4iWL59IMUnUaN74bhcANF8g6d1GsAqSMv0s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791208105; c=relaxed/simple;
+	bh=g7p4WY4CyTbDZgvNL1JKBiZc7IdPmHpLZ5a4MBjy51o=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=ZV3rv+3LtnQ61ujEyVOkd4Y9CB0cyzv8jFJ5WZ6AL1m90rrxVljZC02dTOAt/SrNx+wmZTRXtt8RYJACN7OHZ6ZhWiNeAkBdOnVV2G8QwaUdFOSORuuZk5YggYiB6rb95A6L43fvooeCxBlgmfoP420oE/rX+09WXumJfPKp/X4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sph3r3.com; spf=none smtp.mailfrom=sph3r3.com; dkim=pass (2048-bit key) header.d=sph3r3-com.20251104.gappssmtp.com header.i=@sph3r3-com.20251104.gappssmtp.com header.b=Yo975Yaf; arc=pass smtp.client-ip=74.125.230.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sph3r3.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=sph3r3.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CuwZrPcl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1571F000FF;
-	Mon,  5 Oct 2026 13:37:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791207446;
-	bh=/I651f0kXvHIyl5XTTyo4JWDSLK/br3c5n5FENOoI3s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=CuwZrPcluoEVB/Y6r+T8QjebJ4763H51G4z19He1BZWguTBHYMcVpKDntkmWHqpt3
-	 uqEmPRgIShZIKgh8CxJnShcA3260X+PuHkhkcPL+e4IPS5dseilS+VFtwsdw9vUZ2t
-	 eX1J9U62/pIMB3EgSbRjoEqlkiE7qFgL1UY6iPeyZz1JAiAV63Fm5r6azJwler7HtA
-	 oec/CwrYqI+8SFRe8lxQkSXLW5fjpzqgTOtij4Kc4UqUviQJ8kUiDOhZaMJGGxIeI3
-	 u0lJV3Hx4xHp8tDWzCJhtt1wtK/9qsM7JCuTsuHkdWSZik6iF3OMR1M3sET+4Rp3Ci
-	 6W7kkE5ixeCQw==
-Date: Mon, 5 Oct 2026 15:37:21 +0200
-From: Alejandro Colomar <alx@kernel.org>
-To: phillip.wood@dunelm.org.uk
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	Nico Williams <nico@cryptonector.com>
-Subject: Re: git-rebase-walk
-Message-ID: <asOnp8ed6AGStH60@debian>
-References: <ar5KL4_IKXYbx3Sb@debian>
- <ar5eereSq91xldo-@pks.im>
- <ar5-7ZtM6C23H-8m@debian>
- <ar9TTB5nmPPAdABE@pks.im>
- <95796d0d-5928-4108-bc27-b7ace4459d2a@gmail.com>
- <asOaLyiJUmINFFFH@debian>
+	dkim=pass (2048-bit key) header.d=sph3r3-com.20251104.gappssmtp.com header.i=@sph3r3-com.20251104.gappssmtp.com header.b="Yo975Yaf"
+Received: by mail-qv2-f43.google.com with SMTP id 6a1803df08f44-919552173fbso22317686d6.3
+        for <git@vger.kernel.org>; Mon, 05 Oct 2026 06:48:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791208102; cv=none;
+        d=google.com; s=arc-20260327;
+        b=KIuSU9ZPkaEb8/gVFha0lwxhHvY2+v3mZ8wbaODlA6+qUfCGhu9mBgqasEKg27+YJL
+         rO9Qshx6fi+Uzms9sxBOvlSQRx7aWSbUY71n7CkpusSq/2lIERS0vwOFWLDlS+BVtuzf
+         8mPviuRlz3RzqRloIifxKweeftIMhXTvbHOH2Ih9iKKtl5clfIpZU/2Xf+JRqsbYGk5h
+         xqJnPhTHb6v/imEEnWBqC07hSTojMziw81HG06sayWUFgSMBkju96cJ4pYMdNQF5horE
+         i0t+lDNU+PuWm67OfXN1MFElJdsWb2TnRmkZhpHKc8JvZe8ihfX7KP4vW3JOCPTTC4QE
+         Z1+A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=5ZVsJYARL+0gPSzPA2XMUBdfiRvwp17Eew+BmvYENrE=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=NFZoBymnNmTjjbF62m3UaImdJmYD8czKNFiAa18DvmPrIH0MmwMxPyczcPKliEifHP
+         6+cFAib4RhW4WiQY4DFO6o34HyAml9cFH6c/6M1vUzGoWsz0sMFwBTFr6PX9HTYqkwMy
+         DsZhn0c9Ote+MbhgCqi5pyAzQ1NRUu6Cd+kCIaMpMyI3FGRc8A1R4TCFbD2fbwg1L16f
+         XUOaum54oX6xjNWpCClEl3L5WEB3XCQQFNHLR0XGpu0dWyVUc8CUZLhZS/qdMVMpJBwX
+         K6LO1zB0MiBOW9rr3lmUmB6iQTy+K0zAP5Aju9KUar0bc5W4L5BNBOucMqXFhU5ihhFM
+         h6bw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sph3r3-com.20251104.gappssmtp.com; s=20251104; t=1791208102; x=1791812902; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=5ZVsJYARL+0gPSzPA2XMUBdfiRvwp17Eew+BmvYENrE=;
+        b=Yo975Yafq2tlyD+UHr/uGoqSEJfYSTVn6ylwfnrqLBy8xzI4sYdr0tBydDXgLyHFKQ
+         dMvx+dJ6ShYHKasHqanV+3Mvz1M1T1rwcUohwYNJU41mDC5+Z+Df0tRHkXUy0mL8euHb
+         BUNSSBai0ciLFUBL3ZREomRYxgBaqI9hptK7z3T3gG0iyoNdXfOXJYmBLXb8ps1YpnF+
+         9RrRJlpBnbzVNMFHYHFw23yQ//4RNnl/sj/GaTuAJ+Rxrt4GNgZ0KVbfwuzxk1TyrmF4
+         LF/dW2V/FHLVwTKjLZNXu4y6j0F8fhIJJrFIx+IT7+JeLtvRF4+mH40Szv0uanOpmoF8
+         PjTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791208102; x=1791812902;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=5ZVsJYARL+0gPSzPA2XMUBdfiRvwp17Eew+BmvYENrE=;
+        b=hUWDmrGtyyfTEzvau4++FZExJ/Vmd8n2w/u4Gmy4uRbb1nSpS+wUTxVXhEAwxB9e0p
+         /WavCvK8H/nPmihOCWgPrL7s/cpwtKS5han9JMMBx3Y1l7I+oNmVGAHzA5meiiE1noeX
+         2oADNV222wZUPxcm2XsadjPFhC1uj/gpDAJ7d10Zgk0e/9DkKsW/up3ebJ5NPuEjtixy
+         RoSZdgNKMEXLcHC/v2kh+dHRdTVru14/yAJrE7pMP8vkTFiQwsB2BQfwdy1QD9nThJUj
+         7rk+hLN0I37oaMiw7H6V78eY054pqzBiROgyZ2e1wM/yEJEGXPV6PpTaonFsGKQ+5/OY
+         rFlQ==
+X-Gm-Message-State: AFuF++mMnR9TCfV6OmKaXxI3ZHkyCDjHv/4k2PRaNlihbvVFh10sQlKH
+	/2BBmmiTMzZIJxjz2G33Wp/0OhPJbS8CzhilheGjw/M2XDNHzAdsfzuVtRm8Vt56KncGYed0LtK
+	0ehTdBv17zIsNDETtddn2ElPBpFfc9lU76Y3AoHh0mrzEbbjO10EN
+X-Gm-Gg: AYBFou1y3yX4o5fpaR0YGpX4GwYMpoJhqysrKM7UkIY0PfPCKGLIOr0QKJtuDdlEWgs
+	d+MoqOOhpniuSCOrX75ji60LXS3snWTOludeLrHCaFpdKw1Gf30p8xRLpnWsiAnVW8O2/5J4nZv
+	MkDtJuIEHYmWJJ0SftspSGQBIJJ9MpYHF8O+9t947KWFn5DQV7Eanatc+ZoseEBQipcE9CAe96q
+	JFNcezBhbdatQfztAzNlcBV1M8wXIvjXkeST+n97/y3fMvxXK53zb+cIsrccb0wb6Qeb5vEn+9j
+	aTXscsY6StRN8WFI8PX1CspXka70SRkp0d0ZuqbccxKAsYoIwaPkrfj0mPMYFGz0Pc/Q8IMdAQs
+	ogSa/GgQZPi5g0A5D4AUvyvfUUxF6zvGOtpmEV2S+1XqBV58cjzXM94iGMkh6XWSGCQ0arkRSq9
+	kcB1b2PbEnr/e69oSDgA6cuTNfkUOTq7q3los2wwHwNowh5Q==
+X-Received: by 2002:a05:6214:2527:b0:90e:8be9:c384 with SMTP id
+ 6a1803df08f44-917c00c2d69mr212860236d6.27.1791208101778; Mon, 05 Oct 2026
+ 06:48:21 -0700 (PDT)
+Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
+ Mon, 5 Oct 2026 09:48:20 -0400
+Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
+ Mon, 5 Oct 2026 09:48:20 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="o6x6wd2kvkobwo3e"
-Content-Disposition: inline
-In-Reply-To: <asOaLyiJUmINFFFH@debian>
+From: "Matthew E. Luallen" <m@sph3r3.com>
+Date: Mon, 5 Oct 2026 09:48:20 -0400
+X-Gm-Features: AclHuK-Ajw3IzJ9QkbBsdSIOdWYp9nK6O2aeR9P08Xp1YDeYFG4HL1eTzjLXVDc
+Message-ID: <CA+h9NxRT-9QzLGihdL_Bp-yyt1AdXJ79YYgpK-OaegUz8e+HcA@mail.gmail.com>
+Subject: [BUG] ZIP timestamp conversion and strict fast-import date validation
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Hello Git community,
 
---o6x6wd2kvkobwo3e
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
-To: phillip.wood@dunelm.org.uk
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	Nico Williams <nico@cryptonector.com>
-Subject: Re: git-rebase-walk
-Message-ID: <asOnp8ed6AGStH60@debian>
-References: <ar5KL4_IKXYbx3Sb@debian>
- <ar5eereSq91xldo-@pks.im>
- <ar5-7ZtM6C23H-8m@debian>
- <ar9TTB5nmPPAdABE@pks.im>
- <95796d0d-5928-4108-bc27-b7ace4459d2a@gmail.com>
- <asOaLyiJUmINFFFH@debian>
-MIME-Version: 1.0
-In-Reply-To: <asOaLyiJUmINFFFH@debian>
+I'm reporting three date-handling bugs reproduced on Apple Git 2.50.1
+and upstream Git 2.56.0:
 
-> Date: 2026-10-05 15:28:28+0200
-> From: Alejandro Colomar <alx@kernel.org>
->
-> Hi Phillip,
->=20
-> > Date: 2026-10-04 11:03:39+0100
-> > From: Phillip Wood <phillip.wood123@gmail.com>
-> >
-> > On 02/10/2026 07:46, Patrick Steinhardt wrote:
-> > > On Thu, Oct 01, 2026 at 05:51:58PM +0200, Alejandro Colomar wrote:
-> > > >=20
-> > > > My script I use it in shadow-utils and in the Linux man-pages proje=
-ct,
-> > > > and is in use today.  I was wondering if there was interest in
-> > > > integrating it to git(1).
-> > >=20
-> > > I guess the answer is "maybe". The fact that multiple folks have solv=
-ed
-> > > similar issues over the course of many years is an indicator that the
-> > > funcitonality may be more generally useful. But it probably shouldn't=
- be
-> > > a separate script, so if we wanted to integrate it I'd think the best
-> > > way forward would be to integrate it into git-rebase(1) directly.
-> >=20
-> > I agree that would be the best way forward. Adding an "--incremental", =
-or
-> > "--progressive" option to rebase would be useful I think. For ease of u=
-se, I
-> > have a strong preference for an implementation where "rebase --continue"
-> > handles rebasing onto progressively more recent bases, rather than the =
-multi
-> > shot approach where the user has to run "git rebase --incremental" mult=
-iple
-> > times. Having a multi-shot approach makes it much less clear when we've
-> > successfully rebased onto the desired base.
->=20
-> For rebasing a single branch, having --continue do what you suggest
-> wouldn't be too problematic.
->=20
-> However, for when rebasing a tree of branches, I really need a
-> multi-shot operation, since I want to advance branches in a very
-> specific order.
->=20
-> Below is a shell session performing such a rebase, which hopefully shows
-> why I need this to be multi-shot.
->=20
-> On the simpler case of a single branch, I'd still prefer a multi-shot
-> approach where --continue only advances one rebase operation, because at
-> the end of it I want to stop, and check git-range-diff(1) to make sure
-> it all makes sense.
->=20
-> I've indented the output of commands, so that they are easier to
-> distinguish.
->=20
-> 	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
-> 		* G ada8aff4f08a (r/B, B) foo j
-> 		* G d6163efdc2db bar i
-> 		| * G 450f3a7f4f25 (r/HEAD, r/C, C) bar l
-> 		| * G f7309b21ebfa bar k
-> 		|/ =20
-> 		* G e949e24ba457 (HEAD -> A, r/A) bar h
-> 		*   G 607b450498be bar g
-> 		|\ =20
-> 		| * G b787bcd373d9 bar e
-> 		* | G c496b325576f baz f
-> 		|/ =20
-> 		| * G dfd9156d099a (r/main, main) foo d
-> 		| * G 4940c7d739be bar c
-> 		| * G cebc8fde25bb foo b
-> 		|/ =20
-> 		* G 1dcb901ebf60 foo a
-> 	alx@debian:~/tmp/brebase$ git brebase --rebase-merges main
-> 		Rebase: conflict
-> 		Bisecting: 0 revisions left to test after this (roughly 1 step)
-> 		[4940c7d739be44c0ca32c1d610b85fd5650e1528] bar c
-> 		running '.git/bisect-rebase/git-bisect-run-callback'
-> 		Rebase: conflict
-> 		Bisecting: 0 revisions left to test after this (roughly 0 steps)
-> 		[cebc8fde25bbe16c0f5f48e39642b3551f4f56e6] foo b
-> 		running '.git/bisect-rebase/git-bisect-run-callback'
-> 		Rebase: success
-> 		4940c7d739be44c0ca32c1d610b85fd5650e1528 is the first 'bad' commit
-> 		commit 4940c7d739be44c0ca32c1d610b85fd5650e1528
-> 		Author: Alejandro Colomar <alx@kernel.org>
-> 		Date:   2026-10-05 14:42:32 +0200
->=20
-> 		    bar c
->=20
-> 		 bar | 1 +
-> 		 1 file changed, 1 insertion(+)
-> 		 create mode 100644 bar
-> 		bisect found first 'bad' commit
-> 		Auto-merging bar
-> 		CONFLICT (add/add): Merge conflict in bar
-> 		error: could not apply 899eeb5c4e32... bar e
-> 		hint: Resolve all conflicts manually, mark them as resolved with
-> 		hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-> 		hint: You can instead skip this commit: run "git rebase --skip".
-> 		hint: To abort and get back to the state before "git rebase", run "git =
-rebase --abort".
-> 		hint: Disable this message with "git config set advice.mergeConflict fa=
-lse"
-> 		Could not apply 899eeb5c4e32... # bar e
-> 	alx@debian:~/tmp/brebase$ git rebase --abort=20
-> 	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
-> 		* 655c38e3cee8 (HEAD -> A) bar h
-> 		*   1ababced193d bar g
-> 		|\ =20
-> 		| * 899eeb5c4e32 bar e
-> 		* | 761c9dbcfa5b baz f
-> 		|/ =20
-> 		| * ada8aff4f08a (r/B, B) foo j
-> 		| * d6163efdc2db bar i
-> 		| | * 450f3a7f4f25 (r/HEAD, r/C, C) bar l
-> 		| | * f7309b21ebfa bar k
-> 		| |/ =20
-> 		| * e949e24ba457 (r/A) bar h
-> 		| *   607b450498be bar g
-> 		| |\ =20
-> 		| | * b787bcd373d9 bar e
-> 		| * | c496b325576f baz f
-> 		| |/ =20
-> 		| | * dfd9156d099a (r/main, main) foo d
-> 		| | * 4940c7d739be bar c
-> 		| |/ =20
-> 		|/|  =20
-> 		* | cebc8fde25bb foo b
-> 		|/ =20
-> 		* 1dcb901ebf60 foo a
-> 	alx@debian:~/tmp/brebase$ git switch B=20
-> 		Switched to branch 'B'
-> 		Your branch is up to date with 'r/B'.
-> 	alx@debian:~/tmp/brebase$ git brebase A
-> 		Rebase: conflict
-> 		Bisecting: 2 revisions left to test after this (roughly 1 step)
-> 		[899eeb5c4e32397f0fe138c5b9f486d4682939cb] bar e
-> 		running '.git/bisect-rebase/git-bisect-run-callback'
-> 		Rebase: conflict
-> 		Bisecting: 0 revisions left to test after this (roughly 0 steps)
-> 		[cebc8fde25bbe16c0f5f48e39642b3551f4f56e6] foo b
-> 		running '.git/bisect-rebase/git-bisect-run-callback'
-> 		Rebase: conflict
-> 		cebc8fde25bbe16c0f5f48e39642b3551f4f56e6 is the first 'bad' commit
-> 		commit cebc8fde25bbe16c0f5f48e39642b3551f4f56e6
-> 		Author: Alejandro Colomar <alx@kernel.org>
-> 		Date:   2026-10-05 14:42:04 +0200
->=20
-> 		    foo b
->=20
-> 		 foo | 2 +-
-> 		 1 file changed, 1 insertion(+), 1 deletion(-)
-> 		bisect found first 'bad' commit
-> 		Auto-merging foo
-> 		CONFLICT (content): Merge conflict in foo
-> 		error: could not apply ada8aff4f08a... foo j
-> 		hint: Resolve all conflicts manually, mark them as resolved with
-> 		hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-> 		hint: You can instead skip this commit: run "git rebase --skip".
-> 		hint: To abort and get back to the state before "git rebase", run "git =
-rebase --abort".
-> 		hint: Disable this message with "git config set advice.mergeConflict fa=
-lse"
-> 		Could not apply ada8aff4f08a... # foo j
-> 	alx@debian:~/tmp/brebase$ echo j >foo
-> 	alx@debian:~/tmp/brebase$ git add foo=20
-> 	alx@debian:~/tmp/brebase$ git rebase --continue=20
-> 		[detached HEAD 2e0b72e7440a] foo j
-> 		 1 file changed, 1 insertion(+), 1 deletion(-)
-> 		Successfully rebased and updated refs/heads/B.
-> 	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
-> 		* 2e0b72e7440a (HEAD -> B) foo j
-> 		* a1c6c1fb7ca2 bar i
-> 		* d8fa6c4da463 bar h
-> 		* bef9f1c4da4d bar e
-> 		* 0bac26895b94 baz f
-> 		| * 655c38e3cee8 (A) bar h
-> 		| *   1ababced193d bar g
-> 		| |\ =20
-> 		| | * 899eeb5c4e32 bar e
-> 		| |/ =20
-> 		|/|  =20
-> 		| * 761c9dbcfa5b baz f
-> 		|/ =20
-> 		| * ada8aff4f08a (r/B) foo j
-> 		| * d6163efdc2db bar i
-> 		| | * 450f3a7f4f25 (r/HEAD, r/C, C) bar l
-> 		| | * f7309b21ebfa bar k
-> 		| |/ =20
-> 		| * e949e24ba457 (r/A) bar h
-> 		| *   607b450498be bar g
-> 		| |\ =20
-> 		| | * b787bcd373d9 bar e
-> 		| * | c496b325576f baz f
-> 		| |/ =20
-> 		| | * dfd9156d099a (r/main, main) foo d
-> 		| | * 4940c7d739be bar c
-> 		| |/ =20
-> 		|/|  =20
-> 		* | cebc8fde25bb foo b
-> 		|/ =20
-> 		* 1dcb901ebf60 foo a
-> 	alx@debian:~/tmp/brebase$ git brebase A
-> 		Rebase: success
-> 	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
-> 		* 5ff93a00f9f2 (HEAD -> B) foo j
-> 		* 01522206a7bc bar i
-> 		* 655c38e3cee8 (A) bar h
-> 		*   1ababced193d bar g
-> 		|\ =20
-> 		| * 899eeb5c4e32 bar e
-> 		* | 761c9dbcfa5b baz f
-> 		|/ =20
-> 		| * ada8aff4f08a (r/B) foo j
-> 		| * d6163efdc2db bar i
-> 		| | * 450f3a7f4f25 (r/HEAD, r/C, C) bar l
-> 		| | * f7309b21ebfa bar k
-> 		| |/ =20
-> 		| * e949e24ba457 (r/A) bar h
-> 		| *   607b450498be bar g
-> 		| |\ =20
-> 		| | * b787bcd373d9 bar e
-> 		| * | c496b325576f baz f
-> 		| |/ =20
-> 		| | * dfd9156d099a (r/main, main) foo d
-> 		| | * 4940c7d739be bar c
-> 		| |/ =20
-> 		|/|  =20
-> 		* | cebc8fde25bb foo b
-> 		|/ =20
-> 		* 1dcb901ebf60 foo a
-> 	alx@debian:~/tmp/brebase$ git switch C
-> 		Switched to branch 'C'
-> 	alx@debian:~/tmp/brebase$ git brebase A
-> 		Rebase: success
-> 	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
-> 		* 06d462903420 (HEAD -> C) bar l
-> 		* 20f0a887b83b bar k
-> 		| * 5ff93a00f9f2 (B) foo j
-> 		| * 01522206a7bc bar i
-> 		|/ =20
-> 		* 655c38e3cee8 (A) bar h
-> 		*   1ababced193d bar g
-> 		|\ =20
-> 		| * 899eeb5c4e32 bar e
-> 		* | 761c9dbcfa5b baz f
-> 		|/ =20
-> 		| * ada8aff4f08a (r/B) foo j
-> 		| * d6163efdc2db bar i
-> 		| | * 450f3a7f4f25 (r/HEAD, r/C) bar l
-> 		| | * f7309b21ebfa bar k
-> 		| |/ =20
-> 		| * e949e24ba457 (r/A) bar h
-> 		| *   607b450498be bar g
-> 		| |\ =20
-> 		| | * b787bcd373d9 bar e
-> 		| * | c496b325576f baz f
-> 		| |/ =20
-> 		| | * dfd9156d099a (r/main, main) foo d
-> 		| | * 4940c7d739be bar c
-> 		| |/ =20
-> 		|/|  =20
-> 		* | cebc8fde25bb foo b
-> 		|/ =20
-> 		* 1dcb901ebf60 foo a
-> 	alx@debian:~/tmp/brebase$ git switch A
-> 		Switched to branch 'A'
-> 	alx@debian:~/tmp/brebase$ git brebase --rebase-merges main
-> 		Rebase: conflict
-> 		Bisecting: 0 revisions left to test after this (roughly 0 steps)
-> 		[4940c7d739be44c0ca32c1d610b85fd5650e1528] bar c
-> 		running '.git/bisect-rebase/git-bisect-run-callback'
-> 		Rebase: conflict
-> 		4940c7d739be44c0ca32c1d610b85fd5650e1528 is the first 'bad' commit
-> 		commit 4940c7d739be44c0ca32c1d610b85fd5650e1528
-> 		Author: Alejandro Colomar <alx@kernel.org>
-> 		Date:   2026-10-05 14:42:32 +0200
->=20
-> 		    bar c
->=20
-> 		 bar | 1 +
-> 		 1 file changed, 1 insertion(+)
-> 		 create mode 100644 bar
-> 		bisect found first 'bad' commit
-> 		Auto-merging bar
-> 		CONFLICT (add/add): Merge conflict in bar
-> 		error: could not apply 899eeb5c4e32... bar e
-> 		hint: Resolve all conflicts manually, mark them as resolved with
-> 		hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-> 		hint: You can instead skip this commit: run "git rebase --skip".
-> 		hint: To abort and get back to the state before "git rebase", run "git =
-rebase --abort".
-> 		hint: Disable this message with "git config set advice.mergeConflict fa=
-lse"
-> 		Could not apply 899eeb5c4e32... # bar e
-> 	alx@debian:~/tmp/brebase$ echo e >bar
-> 	alx@debian:~/tmp/brebase$ git add bar=20
-> 	alx@debian:~/tmp/brebase$ git rebase --continue=20
-> 		[detached HEAD 2a4fa7fe2f44] bar e
-> 		 1 file changed, 1 insertion(+), 1 deletion(-)
-> 		Successfully rebased and updated refs/heads/A.
-> 	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
-> 		* 0954f3d9b9e1 (HEAD -> A) bar h
-> 		*   4f09c21bf2ca bar g
-> 		|\ =20
-> 		| * 2a4fa7fe2f44 bar e
-> 		* | e42246e75159 baz f
-> 		|/ =20
-> 		| * 06d462903420 (C) bar l
-> 		| * 20f0a887b83b bar k
-> 		| | * 5ff93a00f9f2 (B) foo j
-> 		| | * 01522206a7bc bar i
-> 		| |/ =20
-> 		| * 655c38e3cee8 bar h
-> 		| *   1ababced193d bar g
-> 		| |\ =20
-> 		| | * 899eeb5c4e32 bar e
-> 		| * | 761c9dbcfa5b baz f
-> 		| |/ =20
-> 		| | * ada8aff4f08a (r/B) foo j
-> 		| | * d6163efdc2db bar i
-> 		| | | * 450f3a7f4f25 (r/HEAD, r/C) bar l
-> 		| | | * f7309b21ebfa bar k
-> 		| | |/ =20
-> 		| | * e949e24ba457 (r/A) bar h
-> 		| | *   607b450498be bar g
-> 		| | |\ =20
-> 		| | | * b787bcd373d9 bar e
-> 		| | * | c496b325576f baz f
-> 		| | |/ =20
-> 		| | | * dfd9156d099a (r/main, main) foo d
-> 		| |_|/ =20
-> 		|/| |  =20
-> 		* | | 4940c7d739be bar c
-> 		|/ / =20
-> 		* / cebc8fde25bb foo b
-> 		|/ =20
-> 		* 1dcb901ebf60 foo a
-> 	alx@debian:~/tmp/brebase$ git rebase --onto A 655c38e3cee8 B
-> 		Successfully rebased and updated refs/heads/B.
-> 	alx@debian:~/tmp/brebase$ git rebase --onto A 655c38e3cee8 C
-> 		Successfully rebased and updated refs/heads/C.
-> 	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
-> 		* 4a4ba76f55a4 (HEAD -> C) bar l
-> 		* 86350e1490f3 bar k
-> 		| * 4b6b40b14255 (B) foo j
-> 		| * ba5a233ee4bc bar i
-> 		|/ =20
-> 		* 0954f3d9b9e1 (A) bar h
-> 		*   4f09c21bf2ca bar g
-> 		|\ =20
-> 		| * 2a4fa7fe2f44 bar e
-> 		* | e42246e75159 baz f
-> 		|/ =20
-> 		| * ada8aff4f08a (r/B) foo j
-> 		| * d6163efdc2db bar i
-> 		| | * 450f3a7f4f25 (r/HEAD, r/C) bar l
-> 		| | * f7309b21ebfa bar k
-> 		| |/ =20
-> 		| * e949e24ba457 (r/A) bar h
-> 		| *   607b450498be bar g
-> 		| |\ =20
-> 		| | * b787bcd373d9 bar e
-> 		| * | c496b325576f baz f
-> 		| |/ =20
-> 		| | * dfd9156d099a (r/main, main) foo d
-> 		| |/ =20
-> 		|/|  =20
-> 		* | 4940c7d739be bar c
-> 		* | cebc8fde25bb foo b
-> 		|/ =20
-> 		* 1dcb901ebf60 foo a
-> 	alx@debian:~/tmp/brebase$ git switch A
-> 		Switched to branch 'A'
-> 	alx@debian:~/tmp/brebase$ git brebase --rebase-merges main
-> 		Rebase: success
-> 	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
-> 		* 30e2d96b3da5 (HEAD -> A) bar h
-> 		*   01702a5b5d6b bar g
-> 		|\ =20
-> 		| * c961883d543a bar e
-> 		* | e17aadb725c4 baz f
-> 		|/ =20
-> 		* dfd9156d099a (r/main, main) foo d
-> 		| * 4a4ba76f55a4 (C) bar l
-> 		| * 86350e1490f3 bar k
-> 		| | * 4b6b40b14255 (B) foo j
-> 		| | * ba5a233ee4bc bar i
-> 		| |/ =20
-> 		| * 0954f3d9b9e1 bar h
-> 		| *   4f09c21bf2ca bar g
-> 		| |\ =20
-> 		| | * 2a4fa7fe2f44 bar e
-> 		| |/ =20
-> 		|/|  =20
-> 		| * e42246e75159 baz f
-> 		|/ =20
-> 		* 4940c7d739be bar c
-> 		* cebc8fde25bb foo b
-> 		| * ada8aff4f08a (r/B) foo j
-> 		| * d6163efdc2db bar i
-> 		| | * 450f3a7f4f25 (r/HEAD, r/C) bar l
-> 		| | * f7309b21ebfa bar k
-> 		| |/ =20
-> 		| * e949e24ba457 (r/A) bar h
-> 		| *   607b450498be bar g
-> 		| |\ =20
-> 		| | * b787bcd373d9 bar e
-> 		| |/ =20
-> 		|/|  =20
-> 		| * c496b325576f baz f
-> 		|/ =20
-> 		* 1dcb901ebf60 foo a
-> 	alx@debian:~/tmp/brebase$ git rebase --onto A 0954f3d9b9e1 C
-> 		Successfully rebased and updated refs/heads/C.
-> 	alx@debian:~/tmp/brebase$ git rebase --onto A 0954f3d9b9e1 B
-> 		Auto-merging foo
-> 		CONFLICT (content): Merge conflict in foo
-> 		error: could not apply 4b6b40b14255... foo j
-> 		hint: Resolve all conflicts manually, mark them as resolved with
-> 		hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-> 		hint: You can instead skip this commit: run "git rebase --skip".
-> 		hint: To abort and get back to the state before "git rebase", run "git =
-rebase --abort".
-> 		hint: Disable this message with "git config set advice.mergeConflict fa=
-lse"
-> 		Could not apply 4b6b40b14255... # foo j
-> 	alx@debian:~/tmp/brebase$ git rebase --abort=20
+1. Exporting a 1972-dated commit with git archive --format=zip produces
+   a legacy DOS date interpreted as 2100, while the extended Unix
+   timestamp retains 1972.
+2. Exporting a commit at epoch 4294967296 (2106-02-07 06:28:16 UTC)
+   wraps ZIP's four-byte extended timestamp to zero (1970). Exporting
+   the same commit as TAR preserves the original value.
+3. git fast-import --date-format=raw accepts -32184000 +0000, but
+   git fsck --strict then reports badDate and ISO rendering returns
+   literal placeholders. This occurs in strict raw mode, not just
+   the deliberately permissive import mode.
 
-Oh, this was a mistake;  I should have resolved the conflict here
-instead of using brebase below.  (brebase produced the same exact
-conflict).  :)
+For the archive cases, export the dated commit with:
 
+    git archive --format=zip <commit> > test.zip
+    git archive --format=tar <commit> > test.tar
 
-Cheers,
-Alex
+Compare the ZIP DOS and extended timestamp fields with the TAR mtime.
+The overflow affects consumer behavior: in macOS tests, UnZip update
+mode retained different existing 2025 content because the 2106 ZIP
+appeared older. An in-range 2038 ZIP replaced that content.
 
-> 	alx@debian:~/tmp/brebase$ git switch B
-> 		Already on 'B'
-> 		Your branch and 'r/B' have diverged,
-> 		and have 8 and 6 different commits each, respectively.
-> 		  (use "git pull" if you want to integrate the remote branch with yours)
-> 	alx@debian:~/tmp/brebase$ git brebase A
-> 		Rebase: conflict
-> 		Bisecting: 2 revisions left to test after this (roughly 1 step)
-> 		[c961883d543a2393aacfd6a8345e1d29e6857f7f] bar e
-> 		running '.git/bisect-rebase/git-bisect-run-callback'
-> 		Rebase: conflict
-> 		Bisecting: 0 revisions left to test after this (roughly 0 steps)
-> 		[dfd9156d099ad3507a2850294c7a584b80712f04] foo d
-> 		running '.git/bisect-rebase/git-bisect-run-callback'
-> 		Rebase: conflict
-> 		dfd9156d099ad3507a2850294c7a584b80712f04 is the first 'bad' commit
-> 		commit dfd9156d099ad3507a2850294c7a584b80712f04
-> 		Author: Alejandro Colomar <alx@kernel.org>
-> 		Date:   2026-10-05 14:42:50 +0200
->=20
-> 		    foo d
->=20
-> 		 foo | 2 +-
-> 		 1 file changed, 1 insertion(+), 1 deletion(-)
-> 		bisect found first 'bad' commit
-> 		Auto-merging foo
-> 		CONFLICT (content): Merge conflict in foo
-> 		error: could not apply 4b6b40b14255... foo j
-> 		hint: Resolve all conflicts manually, mark them as resolved with
-> 		hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-> 		hint: You can instead skip this commit: run "git rebase --skip".
-> 		hint: To abort and get back to the state before "git rebase", run "git =
-rebase --abort".
-> 		hint: Disable this message with "git config set advice.mergeConflict fa=
-lse"
-> 		Could not apply 4b6b40b14255... # foo j
-> 	alx@debian:~/tmp/brebase$ echo j >foo
-> 	alx@debian:~/tmp/brebase$ git add foo=20
-> 	alx@debian:~/tmp/brebase$ git rebase --continue=20
-> 		[detached HEAD e7fdf07fd077] foo j
-> 		 1 file changed, 1 insertion(+), 1 deletion(-)
-> 		Successfully rebased and updated refs/heads/B.
-> 	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
-> 		* e7fdf07fd077 (HEAD -> B) foo j
-> 		* dddf632a735f bar i
-> 		* 7ac284de12ba bar h
-> 		* e4541508ab3e bar e
-> 		* cefec5878c67 baz f
-> 		| * 6c7952d6fec5 (C) bar l
-> 		| * bd43684f73c8 bar k
-> 		| * 30e2d96b3da5 (A) bar h
-> 		| *   01702a5b5d6b bar g
-> 		| |\ =20
-> 		| | * c961883d543a bar e
-> 		| |/ =20
-> 		|/|  =20
-> 		| * e17aadb725c4 baz f
-> 		|/ =20
-> 		* dfd9156d099a (r/main, main) foo d
-> 		* 4940c7d739be bar c
-> 		* cebc8fde25bb foo b
-> 		| * ada8aff4f08a (r/B) foo j
-> 		| * d6163efdc2db bar i
-> 		| | * 450f3a7f4f25 (r/HEAD, r/C) bar l
-> 		| | * f7309b21ebfa bar k
-> 		| |/ =20
-> 		| * e949e24ba457 (r/A) bar h
-> 		| *   607b450498be bar g
-> 		| |\ =20
-> 		| | * b787bcd373d9 bar e
-> 		| |/ =20
-> 		|/|  =20
-> 		| * c496b325576f baz f
-> 		|/ =20
-> 		* 1dcb901ebf60 foo a
-> 	alx@debian:~/tmp/brebase$ git brebase A
-> 		Rebase: success
-> 	alx@debian:~/tmp/brebase$ git log --all --graph --oneline
-> 		* 1201c4f20b19 (HEAD -> B) foo j
-> 		* 44103f51a783 bar i
-> 		| * 6c7952d6fec5 (C) bar l
-> 		| * bd43684f73c8 bar k
-> 		|/ =20
-> 		* 30e2d96b3da5 (A) bar h
-> 		*   01702a5b5d6b bar g
-> 		|\ =20
-> 		| * c961883d543a bar e
-> 		* | e17aadb725c4 baz f
-> 		|/ =20
-> 		* dfd9156d099a (r/main, main) foo d
-> 		* 4940c7d739be bar c
-> 		* cebc8fde25bb foo b
-> 		| * ada8aff4f08a (r/B) foo j
-> 		| * d6163efdc2db bar i
-> 		| | * 450f3a7f4f25 (r/HEAD, r/C) bar l
-> 		| | * f7309b21ebfa bar k
-> 		| |/ =20
-> 		| * e949e24ba457 (r/A) bar h
-> 		| *   607b450498be bar g
-> 		| |\ =20
-> 		| | * b787bcd373d9 bar e
-> 		| |/ =20
-> 		|/|  =20
-> 		| * c496b325576f baz f
-> 		|/ =20
-> 		* 1dcb901ebf60 foo a
->=20
-> This would be impossible with an approach that handles all the way until
-> the end.  I need to be able to stop a bisect-rebase operation on one
-> branch in the middle, then do a bisect-rebase on its descendants, then
-> come back to bisect-rebase the parent branch.  Does this make sense?
->=20
->=20
-> Have a lovely day!
-> Alex
->=20
->=20
-> >=20
-> > Thanks
-> >=20
-> > Phillip
-> >=20
-> >=20
-> > > That's of course more involved though, so I understand in case you're
-> > > not interested in doing that.
-> > >=20
-> > > > If not, I will likely provide it in the man-pages repository as a h=
-elp
-> > > > tool (which might end up packed by distros as part of manpages-util=
-s).
-> > > > Is that okay to you?  (I ask mainly because it's using the git-
-> > > > namespace for commands, so you should at lease be aware of it.)
-> > >=20
-> > > I mean overall this is our primary way of extension, by picking up
-> > > utilities that have the "git-" prefix. So arguably you don't have to =
-ask
-> > > us for permission to do that.
-> > >=20
-> > > Whether it makes sense to distribute such a tool as part of
-> > > manpages-utils is a different question, and one where I myself am of a
-> > > split mind. But that feels more like a question for distributors rath=
-er
-> > > than for us in the Git project.
-> > >=20
-> > > Thanks!
-> > >=20
-> > > Patrick
-> >=20
->=20
-> --=20
-> <https://www.alejandro-colomar.es>
+What range-handling policy should ZIP use, and should strict raw import
+reject timestamps that fsck considers invalid?
 
-
-
---=20
-<https://www.alejandro-colomar.es>
-
---o6x6wd2kvkobwo3e
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIyBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrDqBEACgkQ64mZXMKQ
-wqkp7g/2L6nh1TqhtV/zfvNnMzNLzLRjgD/QTxcmUskXGNj2p84jM0ad4pSdUPQG
-Av6vQQ7lE3Oji7P8f4Mjr6oYKVAr9Zkz+X9zuCzVwrcOz3g2FSqWIR9Pbz4TzzYj
-VLmNSmrmpfFXZDw7E9E757QTuWHStEzG5yc6DbnBnqbn+ruC7mnqWLe4+rnoqMnd
-F+GS8dLwdrIGuna08QBwOXf8YNMd9qwoyNDM+sQUsPxyXeeLYg1f2rUZJkxvmOpR
-HpTGUSLO89+Fb90kbxGlojsALK2U+8ASuPip/4myvbzVJ5tGl+1C1EqlnAjq4ucY
-6kTZcergQifx/9why3jiw/khtcmmZFhIy7tVZWiJ9UqbPl1jaqImEK6ycGw3DwRq
-43xxGbPiPrIfWJJjCBdbMp0Tn1JsoL7HqCp6XFhmbjMS6x7abT3RVcoFU1VN6nbo
-1Ld2/SCWVPomda4l88kbCK9sD072U5524RZirCzRw/20bJ9t2lh+Y+2/zovDMAJb
-Gxsp72sOJPfABgK1OjQradePs1UwRtse7dIjZg3wcwfpiVU3w8v2Z4DRAjNKT4km
-E33rE8Kq1olcyN9Cg6uJGVBfQEm1ovUTCkJe7Q+5rQeeiLGCOk/JfXLJAZgFsr3K
-s6fu6oj9w+pkrTgnvrMSatbPlHAoKyufJmI0jK5baDfVb2sg6Q==
-=wuly
------END PGP SIGNATURE-----
-
---o6x6wd2kvkobwo3e--
+Thank you,
+Matthew E. Luallen (@meluallen)
+With research, reproduction, and drafting assistance from OpenAI Codex.
