@@ -1,173 +1,131 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF19140D594
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 12:36:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791290217; cv=pass; b=OePsGOdX59dIlvz086eHmkSuRTzyI5INcjzAu7byvey7L4eO502McvMNacPoxUWUfo0gzYS90S3/xefB6oVRXZZUcbG4A5dzKNpF9SqbenDsV/grcpLUY7Xk0yilgh0oZQV5v1Z1exSy0MuXHOYu9uBog+4I/8rUa3jkqsN5pEo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791290217; c=relaxed/simple;
-	bh=KE4PCX1EVUcelZoHgTETd1QGAbSGk6TS6wvPjNLRjm0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rkPCHz4binsZVODxVH9qYx4CTTWR9byKyMDyuZqkhzv4ONuuE9jD7ixKqt4WRSwEk+O5ikdlXTxTe1EXxHFn7AHnkGSVfrBttdZtQGyrO/+8wcgBLRHJKWP3itnLz6nCfCMh5NQPdNAzs4OLbwnAv7UQ8KiOjNALXkLB2q+8jBc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=L/aX4ccZ; arc=pass smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19C641441E
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 12:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791290668; cv=none; b=gDPD0pdEUe/AJWLhh+DOJMpMgvzqF3FzVT3JIiZCxcCU9F6iOKAzggqg8+LVkTt4vlc5aIQvBVFx6IHQDTInT3vbScDWEMEDGm9hxiih0Uw9soyvTYqpxYt7Z588I61I74PIYkyqudXLaYTH0WubUp0Z/5w3ZsHKvJ8d7I+gg44=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791290668; c=relaxed/simple;
+	bh=l16I6uT9898TJ7k+18NxKpnygwgFolwBEvDqM3OfLMs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RoBl2Q6V0fRACkpxKWVoT3P3LdDmH7FfS1HPwI5sa5lrcBuDY0A0NhvCgpqhUHBTJuLqQ38EFCenEKE37EhEe1dTAxpv9ktWBgkgs+uCSOht9j2cQy8+nEAT+D8/31qZsRh6vZgHfgkfa62j+cXjp3dQ3QCXTOrj8SOemH8pCy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BolxGMZS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g2KWC+F0; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="L/aX4ccZ"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-8b056d58f2aso464637b3.2
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 05:36:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791290200; cv=none;
-        d=google.com; s=arc-20260327;
-        b=OKL2Rc19f0+nnKS/qUo8VB83pkOYf/2aamLKEkLgrCMHQdaw/NJDVydRC+haTILyyx
-         ehb7NtPlbcrVgR3HO2JAtyfacxu8o2RsvyQd/ODJVyZC/JE3pBfeylNPyk8ZA+0V/dW4
-         Lug5um3j6feOvNYBVcir/3o4xElc0DGRHi/YzX0z7pKHwvYVJYibTggWQ/E+5xZ9PMXB
-         jYsZDJw8Wczid6jadL45Url/iukOIw8T4YUSacRSh1pa8vJUnwYhwkHVKoTkV0OuZohH
-         Ay5mtE1ZjcvTJoaPkpAcLZhu0W5e9wrDdB9fwoo+ZAoB7F4PbmtokyKWWDMnct7zjseA
-         dZrA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=qUgS+3cbU+A/9ALhhAJODyOr0Xf8ZZEvF4xBGAIrHPs=;
-        fh=OJApakPN8vYE4NXkSranaX+DQuTMbsHo+nN46QoenqU=;
-        b=HWuaNI0zaCkdNoPwyTmk9Muc5vyZLExuLMDBdHuBvaWSQ/u8dnSEq0+AL6go6qAsBy
-         /Z5xSx5RaklOcNWSgrX1++jUMiHGymr6JapURsNzKdPcMN5yFRjgYGLkbHYJpatv6RqD
-         VIcn0/MgVMsb9BNr6e+pvU0QiaeQp/btLcenvHTcowHZiv2KRrxuJthxbu1nme2gY+Ha
-         E8N4RgNi0PdRCK254GVY9w2jU3GQRA6QWXivEvr7VAhlKfZY7ZaY4weBtbKY329NrQt9
-         sSD1pXP/RFmfY6qpa5D32VYUQykGjuUzt3R2dIwpSBFQHooqNE0V86ps8hL1TUN8P0Oa
-         5oHg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1791290200; x=1791895000; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=qUgS+3cbU+A/9ALhhAJODyOr0Xf8ZZEvF4xBGAIrHPs=;
-        b=L/aX4ccZm2L0b2RUprsJ4bHn5P9LDntlgeVwiRNvz1OYsGvDLmqNaGA43zUyhIlGf7
-         2WL0qdVvWPyeD8vQi3ZSKmuxqbyy4/POq2EgL4Jda9LN4Ql/yQ/UjNi7+QeKx2/ma1zW
-         GHQDS9geN9S2ZOIDhB09uVtfZrKxSYJVdhDv0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791290200; x=1791895000;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=qUgS+3cbU+A/9ALhhAJODyOr0Xf8ZZEvF4xBGAIrHPs=;
-        b=wEQDL16lpxDI2lh2wctXjkYbbiRBb6hBbOMOsGODyNIV5ouJcEYfo7wrImvG8SuQr7
-         jyCZjdWQzmDW0SZk5vJv0ItiRwxAy0QeqJ5INu+Ry54UPuxKcJe4HSfjnr95S9Ovby88
-         Jbmpc6ejISCwSf4vTaRWngTCsvD8ZtUpB8BPNppn9I+ISgvu4FsaqaJUmXib2OSqK+oH
-         S764iM8FiuOPR8KSZtvLJm9WBUx/4UwHkNmP0FGu/iC8PRY9HkN6HDlGsXniiwRe1fyv
-         0hUEQ/wwPMhaNkfVRGiniMU/o3VSRCjqgL1mAr49mI8coVl5sVwzPy/xKsgQsMxh03HI
-         W2ag==
-X-Forwarded-Encrypted: i=1; AKwUvBzPQF8QkqczBXNdCL+1g/S6y3YYtIjJEG3osDnI3+bvg/X/8ltF10nVvu2VGJ2CJnkP9hY=@vger.kernel.org
-X-Gm-Message-State: AFq9FYK0BZ4PuWg1OYtWDuX3sIwwT81OpODmNe/09mE/FIaoxofR8lxe
-	n23wmXh9/L5zlmro6HeLvFWgMmAJ/rXyEjY+RmPUMjeM4h/bl7t5FTkqzK3F5ypui+uoYF42rvj
-	OPtG0SaNXIwTv452GI57ywewcafsgWLdaPgFbk0hnbw==
-X-Gm-Gg: AYBFou0jeHY6IspPxi0UcN94Vuinf1oSd3JXd0b3e4jylHjmRh1r3644XcBWfpnxp3U
-	JNj5UY5vACbXPBJLNHah5HkP6w7SwzBLILdMZr+Qw2f6wYJCA3V7QAWJKKY1XOSVNoAxn/mnZF3
-	jFdkJGhgeHut9y6ddrIJ+R6TTIiz5Iz+zElW8V7Ps8TkyTxEOeIr2G1TYeFvXluuScggia92VZI
-	pQGfz7bNSPC6fmYa16rwWdKscp4Y1FB+09OraPe2r5qJfVARf9/R+zzaLKyue4+27EE5FMNyMhN
-	xW2bWFjCSZRM4OdV9pDnlsRV2QSxXVdf8ku71UYgh4FDjTDtRIoC1l0=
-X-Received: by 2002:a05:690c:16:b0:8ae:9448:14cf with SMTP id
- 00721157ae682-8b04f492294mr3999977b3.88.1791290199907; Tue, 06 Oct 2026
- 05:36:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BolxGMZS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g2KWC+F0"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E07A814000DA
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 08:44:20 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 06 Oct 2026 08:44:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791290660; x=1791377060; bh=jSb+TjlM2I
+	cxsW7LjI8ql5N5FzculPuAdBMQNM1Rym0=; b=BolxGMZSpcVqlKii5FzyDN2Xpe
+	N4tzKCP9k44zJaPc0l+x3HpEWxaoObmvCDG2ET0PAI76ZcatRdzEjqV2f22GpgBk
+	gL2q8sjcX2AUVKf5wU8yaZ8QYAfKaE5rFCyWa1DlpPMHveXAyb9MQ6/sUDkcZgxm
+	a2MYHdxOq8rC9AD9G8SV9cc4JcTHF76WOkL3tD+/Crf5xk+OSjmzZikntVMpGV8u
+	8de+Or1022iJvlj5wdvQcsLeLHPZvceVMViDbZMnhFa3DfvMWmhjSxPGfTwjezoj
+	u0tHk9ZyBfSsWhF+rMoJbvRHcsLuUmpbuDEWChiuxo/6trX5tF2Z2gV5oOSw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791290660; x=1791377060; bh=jSb+TjlM2IcxsW7LjI8ql5N5FzculPuAdBM
+	QNM1Rym0=; b=g2KWC+F0RdZ1t4XyE2BLQdXvzW59uXcqAJAyUMCGPW5NbOv2bRD
+	zYjO2rS6fbi95ob0rVtxY6AWYxy0dDV6x12y0N94hxCQraKmecjqHKPMBfjHwCu9
+	ZG5w9FG3ZS2HDqXksspIyONuRbtY0g90fTX/bAWio8VcJCY/IlCwtWS2G16tvVjl
+	KTOzHQeFKRZRvYSR+0HRWo9YlmTuZxaYjyuLg0cEFzKZCfj8+o4Gg8bwIPglWZjz
+	0gJiwJrcQTj3Y+E0D9PnGmn0p92gg9Ra4cqWVrBHykU2ZpkF6Tv2grureaQLoDC4
+	UD8eBD15SAz7gcgSie7a614XjKkjnQpCDNQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791290660; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:CEFJI6r+MCCGZLe4WuVI3l8qZjpaVc/zSOTm+Fo1i32+YMX
+	StNY1EN6PEmsEHDccXvWHmColrA15XAdY1AXTStEMp/S5dkVs8fotKpUKwH4Nkbj
+	eWmYzRCWhGvkTqh05r8mwBstmSKrQpR2FMC08oHhLjkRIOxVZrQPdhzaCMj9aMLP
+	j4pN1azbAqwdvqZ+BjbdGDG4WzXfwQCN0xQJivEwo6tVifd6Dj0i6Nsqh/Y0yyT0
+	sUZVrxNUsubWA4riVP04o+8kg7VUuJWq2SEY+Vp4BGSYV20kJM5EkjvaBBSW8tKx
+	JZKxVB3ECwjJmL5l2al4/WIt/CHVMnmPSJ5+DPA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:nzXdpDTJRsWxD0GIAN78cKY11B+tv7MPg0mtq2Y+yoM=:l16I6uT9898TJ7k+18NxKpnygwgFolwBEvDqM3OfLMs=;
+X-ME-Sender: <xms:JO3EanwCiKcSz4zzyzqFB1Vwhw1h9jCKdFHFuNzKkMAS4qDFvabq7A>
+    <xme:JO3EatGElDIQRcmU-YceM39dN9f55JALeJr8mZvuZLfb6k8AdKVAvMTcB396_JStL
+    WGIUKkjUe6iElVPt1YYCzSYOqGeNFTzkeCHWKYO8mZl0AvCum9_0yXM>
+X-ME-Received: <xmr:JO3EaryIfVQeI0jMKUeLrlnL30cssQn5NP7fNpjAQgv_Oo2I_hJ73URO_KghugUeLRB-vaWWhSdyPjJYH396tY_oR7mLXgTUAcWJ>
+X-ME-Proxy-Cause: dmFkZTEBzjtyKenRzP4ML3oMWP/EEDv3JSKlGCRQhDCr+1lxIXBc9BXlDI6LGl8UhSDEQp
+    g9eV7tbW1vA+UupX3oO93EpKNQkWpBZ8mblPXnCIfSb8dVw2sRHhWUPyzkldP/CM2uxrCG
+    77WNmBd+kpbz9DCFkkwt4XhMRdzRTAstmLlUokXec4UbkkVgce00lHlTYWn4ZoD2sL3wm7
+    oYbwdfPCQP9UsmBYy/1K+72e1uVUHf0d3HuF0GEqa7Y+XGqfVq0WXo0NuRuJwtF0uVH29Q
+    IFOSW8lD/3UXb8ix0sK7eaNHH7JcZzBvaADhGqeP4ErbGMObi4RJ17AUL2A3mRGB3SdpRO
+    Se0BivANYjjkre/b4rAhlYmttrA9jkRgxUKpNZ7vlzyGJ2N7xXs+tNx8ej3TKuJg8nX0K0
+    PZSqwuYj+L2gl+nWqlqirQl5FpW0SHjyFxKkpJ8S7UQahzgQ4QqLr3ddhNG36QjSrZsiUr
+    vTKkuQ0DUcQ05qv04OXqNWn4Md6UsrSr9+ce321AXdqjkqEmlxKXOoDnr63GMB0SfiSTdh
+    eU2rHYam6waH6wherwd3GpVSAjQIkM+AJ9tKJxnSBki1tmhn2P/xCtn31j/NjfP6ZaVx7+
+    ALKwn53y2jWfkcSJK2VHYCcuu9GTzSMdqr9hhTXMHg15P5u6qgR1cLKvWhfQ
+X-ME-Proxy: <xmx:JO3EauttMiaX55lEFFQNd9QSA6KvBvJPiHI82lhD_OZU76T00RWuKA>
+    <xmx:JO3Eao0CyTjwNjkst4e6ht0NGpBxpXOfT-7SAPokAYTK3gKgGkonMw>
+    <xmx:JO3Eap-qCYHwNT5l9dG8ru1cldL1e23KYBeLAT1Lxt3xFzF-GxzVgQ>
+    <xmx:JO3EapMSD3BpHf9B8nMLUBxCIVVeIA7qdV1UkNtugK60N-nig3Q10g>
+    <xmx:JO3EaugXMHV4uySnajymfRA3wAuZiDTT3hlGkso3w48o2kP1r4eju6PG>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Oct 2026 08:44:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?B?6YeN55Sw5LiA6IGW?=
+ <kazumasa.shigeta@kanamei.com>
+Subject: Re: [PATCH 1/2] stash create: remove duplicate changes detection
+In-Reply-To: <1617d92942d283017272ca6f27f1254f8f9389b0.1791218125.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Mon, 5 Oct 2026 17:35:30 +0100")
+References: <cover.1791218125.git.phillip.wood@dunelm.org.uk>
+	<1617d92942d283017272ca6f27f1254f8f9389b0.1791218125.git.phillip.wood@dunelm.org.uk>
+Date: Tue, 06 Oct 2026 05:44:19 -0700
+Message-ID: <xmqqpkxngfrw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
- <pull.2211.v2.git.1790600552.gitgitgadget@gmail.com> <6ad528f4bb42a960910eb4fe917a3766fa55d598.1790600552.git.gitgitgadget@gmail.com>
- <asNZD7AOC6QL9q1d@pks.im> <CAL71e4PFpMPoSxFdnscRFiMB3ozudr64TjeQc8VKcO_M_MfJ=w@mail.gmail.com>
- <asTkyiIZvX1ztMrH@pks.im>
-In-Reply-To: <asTkyiIZvX1ztMrH@pks.im>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Tue, 6 Oct 2026 14:36:27 +0200
-X-Gm-Features: AclHuK_3aM0aC5xK3f88ajwIblnKfw-7UZLgkq5qutX1mIQg_oLQH_N0JvALDdQ
-Message-ID: <CAL71e4OCuwT=Wj8eMF0DJ3UXFocb24yssLf4buyFDGEnTR6mgw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] connected: add incremental connectivity check via rev-list
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-On Tue, 6 Oct 2026 at 14:08, Patrick Steinhardt <ps@pks.im> wrote:
-> > Parent is always defined relative to the commit we are
-> > currently verifying.  For example, a push may come with
-> > 3 commits (let's call the tip T), and then we do the
-> > following comparisons:
-> >
-> >     T   vs T^1, T^2
-> >     T~1 vs T~1^1, T~1^2
-> >     T~2 vs T~2^1, T~2^2
-> >
-> > T~2^1 and T~2^2 must already exist and be reachable and
-> > so we can trust them to be connected.  And since this is
-> > relying on memoizing already seen results, it's important
-> > to run the checks bottom-up (reverse topological order).
+Phillip Wood <phillip.wood123@gmail.com> writes:
+
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> This is the part that still eludes me though. How do we know that T~2^1
-> and T~2^2 must already exist and be reachable?
+> Before it creates a stash, git checks if there are any unstaged,
+> or uncommitted changes. If there isn't anything to stash it bails
+> out. Since ef0f0b4509 (stash: optimize `get_untracked_files()`
+> and `check_changes()`, 2019-02-25) "git stash store" has checked
 
-Since T~2 is the bottom of the incoming commits, its parent
-commits must be part of the boundary -- by definition, since
-otherwise they would instead by included by rev-list --not --all.
+"store"?  Aren't we talking about "create"?
 
-Here is a concrete example with a push of 3 commits, where N1
-is a merge commit and we have two pre-existing refs R1 and R2
-(T, T~1, T~2 maps to N3, N2 and N1 respectively here):
+> unreliable (the scripted version of "git stash store", called "git
+> update-index -q --refresh" before looking for any changes).
 
-    B1---R1
-     \
-      N1---N2---N3
-     /
-    B2---R2
+Ditto.
 
-    --not --all produces: {N1, N2, N3}
+> Avoid checking for changes twice by removing the call to
+> check_changes_tracked_files() from store_stash() and restore the return
+> code handling in store_stash() that was removed by ef0f0b4509 so that
+> we continue to exit 0 when there are no changes to stash. In principle
+> we could remove the call to check_changes() from do_store_stash()
+> instead, but then we'd need to pass in the list of untracked files.
 
-    B1 and B2 are boundary (reachable from existing refs R1 and R2)
+Again "(do_)?store" -> "\1create"?
 
-    Verification (bottom-up):
-    N1: compare N1.tree vs B1.tree and B2.tree
-        (B1, B2 are boundary -- not in incoming set,
-         so connected by definition)
-    N2: compare N2.tree vs N1.tree
-        (N1 just verified, trusted inductively)
-    N3:  compare N3.tree vs N2.tree
-        (N2 just verified, trusted inductively)
-
-We never walk B1 or B2's full trees to mark objects
-uninteresting.  We only read their root trees as comparison
-bases when they are direct parents of an incoming commit.
-That is where the savings come from.
-
-So to directly answer your question: we know T~2's parents
-(B1 and B2 in this example) are connected because --not --all
-told us so -- they were not produced by the commit walk, which
-means they are reachable from existing refs.  This is the same
-trust boundary the full check uses.  The only new idea is the
-inductive step: once we verify a commit just above the boundary,
-it itself becomes trusted and extends the boundary upward.
-
->
-> I think I was coming in with a false expectation that we're somehow
-> getting rid of marking preexistingrefs as uninteresting, and that is
-> where my confusion comes from. Because ultimately, that does not seem to
-> be the case -- we still mark reference tips as uninteresting, as far as
-> I can see. And then we can of course easily determine whether a specific
-> commit is preexisting because we marked the boundary as uninteresting.
-
-Yes, precisely.
-
-> I was probably primed by my own earlier patch series in this context
-> that focussed on refs, and that may be the reason why I had skewed
-> expectations.
-
-Yes, I've noted a few other workstreams that are sort of
-touching similar areas, though not directly the connectivity
-check, so it's a lot of context to juggle at the same time
-(and I will need to take that into account for the next steps).
-
-Thanks,
-Kristofer
