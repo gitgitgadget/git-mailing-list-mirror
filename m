@@ -1,70 +1,66 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15184AA02F
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 19:37:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9514A4A5EA6
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 19:37:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791315432; cv=none; b=EWQqnsmXD8UvA3holigjvETQwL3AMokzdFA4pwgLEzrv99bfMKRG+7+XAEzc1HpkojInWLGQD3ZzpBcaVKKSFMt7jXbobSSbSrVXY8HRW4MrSswhb3LibQHyjwm9krn/F3UXRKfG3eY2CrznSVlB6Vc7/0AVSTr1H88rW251L7w=
+	t=1791315434; cv=none; b=cwhk+uPfFxJ25U56iB116hBi7lAH+LNhIIqik1//uy4KsoUYFoGg8JCoUrQB1XRNzDdEaNN/46ik92C2GUk+LAjGyoRk0YX9PAKBVPDoT3W6u+1oKlhydAoPVwKx9MZwh7oP/UNx+1U3df8olOUQfMbyxWGn0/1P3zL24rdefLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791315432; c=relaxed/simple;
-	bh=hBy7njl4y412pS5ZVU3qZV7EmUIn0Cic/RpU38E11II=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=IvhiuXPpBESKQHjhmgsoJNH6oS8OdRRHgLmjt+DMd2Nxfuzg4jBIHod5RKZ5Yj4Rldqjr1Akr6nvLolDBd5J5hC8BY/PcD3/BkEMij4IwprKJ2gFnKCEzRJw/KsRstN9R2ATuahYigDIDksnGHhv8MCPNkZFZi0VSovb4RUeYI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=anxHAE7i; arc=none smtp.client-ip=209.85.160.169
+	s=arc-20240116; t=1791315434; c=relaxed/simple;
+	bh=wVveqzP1SeY6X64TdcY3Pcc/0QrO84FPs8Td7ny1t+Y=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=bM0hl27Y49DpOgyR1Yt/nbHQVlhgCtfO6hOE9NZQfHy4zcpyBkZZ7V6aIELLQQ89XchiIaljy/YfkBcCJHbccfg37OqCFUvcxTJSKOKgN3ySRGJr/QLXYZf91Val7T4UKgIhLz3qBJK/NbyqrO8ptYWzkIN97HWGBOvUV4xb0m8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QHiBUB/u; arc=none smtp.client-ip=209.85.219.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="anxHAE7i"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-530fa1d2b31so35099541cf.2
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 12:37:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QHiBUB/u"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-91968804af0so9908896d6.2
+        for <git@vger.kernel.org>; Tue, 06 Oct 2026 12:37:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791315425; x=1791920225; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791315423; x=1791920223; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=VHJfkDphL+3oQXQ7CzRAOL2aiS2SpSsfm86uAi3rs20=;
-        b=anxHAE7iYIKKYSA2QqgSeKYMbo9Ps9STfF1XgPql1h27XKm8Yv/LbDlutQvZsRwjNx
-         nfiF61Gc6wSs2MTB5YxS+suspHx65ZqUw2B7G+5RWNNw0IOEZQBj9hI690Z1Ly8GT6Ww
-         kQFAYjTtWL17yeel9jPce40ocr4L081d2vzXhN/0CrcuyCo/1lOpR8emyWOBW9twvR6a
-         ZSBILQkwHE6GltYcRGbL1UzGBFJXAblgLdu/0v6SHWQ4oqXKz2yrM2dKoTEBdXfwDVdG
-         L/EtcL65kNb3+AK0N/Fb6ZFowB3Q4u+KyujuwVWE6a9NrSamY67P4kCLkF6zazk0KY7v
-         ABIA==
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=Z8Ax5iOdo1lhgUOIDFtVYdojy3xO3augQ87Smo/kuAg=;
+        b=QHiBUB/uAUrgNZlmtc8wnm6MbypTyDFrKsiuWSyzBz9MNnBtFdPZUdktvXNt0Pe/RF
+         Vyizh/FeiEoNWyEoD3suoGuRBl2b7l6gFeWchcoHj4+V25Btk/E57000oIkFCR0IO3Ym
+         X4351XdUYDJFHhHy1tLRbPtDVpRivWitbMyorfarVaC81K0CJG46GX0WcEH78ckzjJh5
+         Q2t01jnVPwxjG583fiAfKxbGdkR7L5EB3kMRjQClHjPkTMUyWgSwW1YwMCyZUe8ByFIu
+         9Z27QRyogrqRcody26T4dQy2ERJThCqe87TbdNVVNx4SbjwdIDKOaCbmuwaU8kwCj2P1
+         gm4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791315425; x=1791920225;
+        d=1e100.net; s=20260707; t=1791315423; x=1791920223;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=VHJfkDphL+3oQXQ7CzRAOL2aiS2SpSsfm86uAi3rs20=;
-        b=MQsiQZ2+0ysLuSJWVQNP6HjhFdOFuFmkJJM3H8lNtZ6CxhZTODioVXqDp/sZ2HvTob
-         AuLPRwxZ28b7lRAh1zUY66KeSIPMihWMViXg6b7bGtZcntDtu9KGv43Yp3qcVeQSn1IQ
-         OQZ3dbvkRFmF2Pp2IwmPBnb3drgZtUzUwjsL0OnV9Hy+XOyRBi2G7/qf/C0pxFHxzWa/
-         TgJaPgT8jpDMH2H8jssdQo4IT7QwmOIGD35dWhau64q83wsjO3WPps3S1AjaczEwOhBV
-         n+WGheFXBKIRYCMVma7WK63gqmPOEkek+engoSO89ibL2LJbYBSF7Y/Zq5/plFrxeNd6
-         EogA==
-X-Gm-Message-State: AFuF++kbObAZDTAfgNnhnJpPjlwEg6q9UvLF/wh+qFpu0lKJIRd7h3mN
-	scJufXs9GTquaEC8qf4j6Fr/TW8B5MGOVbNOgdAv3jpSlj3IrNsNZS1/EKU80A==
-X-Gm-Gg: AYBFou3Oo4S/n+cDPfDVvCrZnbgkXiXLsPMpOAu76V0Zo8vDzQnhehp24BAWv9Z50sJ
-	b/9zaXNmvRGxH5mrjq4YHFflS/Ux2faZD5U/M5dTbw048IMEDd0oqxH/3FCZp26H5xiQ0c6lp50
-	21rqXMqJKpL5NQUmDVdZaaLVvukeOtuQ9JI1dUJMw4y5rA7sjjaxWz9wuEq4Gy+udIifuFNGdsT
-	dwQ/KRxNZIlYYpW9zFPiFMdqNPxLyFRyGZJUNN3iDghnEk2jDMXvLMncuF2Gml+uFV9wzSILXRp
-	uRSV/+VWjvOOns7t5vGtYCNV4SNBtFZYKzk/ZZhgrFfoP1dk8pUkQOC0pPpzUuOA97UgFiYuZKD
-	M1CgoAauMw3Yy0PJHDxrw5WW16I57WAUmK8PSrInVJArlkkhiQDHQE+WHw2wQ9AXCroY+QUmkkO
-	HSmWJBjdvP8NZ+gwjL/ZdFN1XCP4KJND5RywUYwaT/nic08OBh9rKhj2/cjMzQsjQTlnzCsMcRM
-	so=
-X-Received: by 2002:a05:622a:8ca:b0:530:b2e4:4e30 with SMTP id d75a77b69052e-535671bcf5fmr44080921cf.61.1791315424284;
-        Tue, 06 Oct 2026 12:37:04 -0700 (PDT)
-Received: from [127.0.0.1] ([172.172.206.32])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5357219c0ecsm3141141cf.24.2026.10.06.12.37.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Z8Ax5iOdo1lhgUOIDFtVYdojy3xO3augQ87Smo/kuAg=;
+        b=TTkQXdEPhWKdfaqXYTISwpAbDfezQ7EITUEN7UFbYex7xTszxsS9WbiuBhplLWmghb
+         73rnfIq13d3vJY1CQTTB5Xyoc89EdvcEGlpEBe/695pBFGzi4vdctghSkh5oE2cyzMOk
+         3bpEQkwXotpiWM7OvXVKPqYSCbfCRweiOH1xtBKEPxkUHjUYIkopRkk02ABjbszqt+gA
+         M/UEeFlsde9eYl/ClVf4U3k950cRoNFCeHkouJZOib2G8c3OXWNnTW6f7PKcySbdasNz
+         UR3WnnjkRWdsfoWra4Y7fPjAmE4v1VkGeXPH80ZpdVLoykpZYm84zV+c/MZO5/1XoBda
+         qnXA==
+X-Gm-Message-State: AFuF++lUgh1FyLKHCZH9m3crGU31S+s4onUGbj6KkvnSiR1+M80m3zEy
+	7cT0NpMpkVNWj6kUCR+b6URNhutJPNqYbYczpwaIIa3idM/AhDZ9hmIv8xAl0A==
+X-Gm-Gg: AYBFou2iK0UMiSGJbbOTrgM40rMis+Vzs2TkXR9Q7Zh/XDgYLxrZP44tCumEachzTl9
+	qT6yMuMV8IYSToMAqkbH/S8sgyxCN80fg0r10ui0U0nojknuZIT0np/m6TludYcXHf+eD6pdbTL
+	EdZqdOso/PK+VXeZz7DUE8OBn2VDRBgp4u2rgJG6z+pgCaT9TNbhymm2jL0Plgc6B3/uKhoaamP
+	02IdjTeMVDe6lpCWJ6J4apynKooLBCtYkCFzzlN64UtNk5oOUNPPr14G/CJ0llZ3z/ajr8Scez4
+	sJT9k9foGRjFKn/fcGbdUju5p67PuXByEUPyzNL9AFTIJldY35/67GxJFdZ+iHRdMuo+AY2nnek
+	tLyiabC9lkPJGbeaap1VeGlrmcVg6pTMriS73HcI8tHxO9Aq8UTPiz+/RvIsMqw380TVIfpqOc0
+	LilOV+4NnnEiooMjWcoxy8Otq1503yYj7sn+/gDLX4f/TAPJ9zC6Vk5TQzmM9iaSWXRLL7629Pw
+	RNHSKDbHyJY7w==
+X-Received: by 2002:a05:6214:4612:b0:919:546a:43c9 with SMTP id 6a1803df08f44-9198b790bdbmr51799106d6.14.1791315423284;
         Tue, 06 Oct 2026 12:37:03 -0700 (PDT)
-Message-Id: <d47c73043100132659bac910ff2fff9ec4034c50.1791315422.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
-References: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([172.172.206.32])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91996cb5bd3sm1452616d6.11.2026.10.06.12.37.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Oct 2026 12:37:02 -0700 (PDT)
+Message-Id: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 06 Oct 2026 19:37:01 +0000
-Subject: [PATCH 1/2] doc: remove gittutorial
+Date: Tue, 06 Oct 2026 19:37:00 +0000
+Subject: [PATCH 0/2] WIP: doc: add new git tutorial
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,705 +71,99 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+Cc: Julia Evans <julia@jvns.ca>
 
-From: Julia Evans <julia@jvns.ca>
+This is the first draft of a tutorial which introduces Git in two parts:
 
-The next commit replaces it with a new tutorial.
+Part 1: Create an empty repo & make 2 commits (git init, git add, git
+commit, git status, git diff) Part 2: Push the repo to a remote host like
+GitHub or GitLab (git remote add, git push)
 
-Do this as a remove/add instead of just replacing the file in a single
-commit to make the patches easier to read on the mailing list, since the
-existing content isn't being reused.
+So far we've gotten 112 comments from 22 beta testers who have tried to
+learn Git for the first using this tutorial. Most of them were able to
+finish it successfully. I'd like to avoid getting into the details of every
+single thing in the tutorial at this stage (we're still planning to do a
+second round of feedback with the beta testers, and the beginning especially
+will likely change)
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
- Documentation/gittutorial.adoc | 676 ---------------------------------
- 1 file changed, 676 deletions(-)
- delete mode 100644 Documentation/gittutorial.adoc
+There are 2 questions I'd like feedback on since they both could affect the
+structure of the tutorial. I don't think either of these is a dealbreaker,
+since folks generally were able to finish the tutorial despite all these
+issues and said that they enjoyed it and learned a lot. But it would be
+great if there were an easy way to make the process less messy.
 
-diff --git a/Documentation/gittutorial.adoc b/Documentation/gittutorial.adoc
-deleted file mode 100644
-index 519b8d8be2..0000000000
---- a/Documentation/gittutorial.adoc
-+++ /dev/null
-@@ -1,676 +0,0 @@
--gittutorial(7)
--==============
--
--NAME
------
--gittutorial - A tutorial introduction to Git
--
--SYNOPSIS
----------
--[verse]
--git *
--
--DESCRIPTION
-------------
--
--This tutorial explains how to import a new project into Git, make
--changes to it, and share changes with other developers.
--
--If you are instead primarily interested in using Git to fetch a project,
--for example, to test the latest version, you may prefer to start with
--the first two chapters of link:user-manual.html[The Git User's Manual].
--
--First, note that you can get documentation for a command such as
--`git log --graph` with:
--
--------------------------------------------------
--$ man git-log
--------------------------------------------------
--
--or:
--
--------------------------------------------------
--$ git help log
--------------------------------------------------
--
--With the latter, you can use the manual viewer of your choice; see
--linkgit:git-help[1] for more information.
--
--It is a good idea to introduce yourself to Git with your name and
--public email address before doing any operation.  The easiest
--way to do so is:
--
--------------------------------------------------
--$ git config --global user.name "Your Name Comes Here"
--$ git config --global user.email you@yourdomain.example.com
--------------------------------------------------
--
--
--Importing a new project
-------------------------
--
--Assume you have a tarball `project.tar.gz` with your initial work.  You
--can place it under Git revision control as follows.
--
--------------------------------------------------
--$ tar xzf project.tar.gz
--$ cd project
--$ git init
--------------------------------------------------
--
--Git will reply
--
--------------------------------------------------
--Initialized empty Git repository in .git/
--------------------------------------------------
--
--You've now initialized the working directory--you may notice a new
--directory created, named `.git`.
--
--Next, tell Git to take a snapshot of the contents of all files under the
--current directory (note the `.`), with `git add`:
--
--------------------------------------------------
--$ git add .
--------------------------------------------------
--
--This snapshot is now stored in a temporary staging area which Git calls
--the "index".  You can permanently store the contents of the index in the
--repository with `git commit`:
--
--------------------------------------------------
--$ git commit
--------------------------------------------------
--
--This will prompt you for a commit message.  You've now stored the first
--version of your project in Git.
--
--Making changes
----------------
--
--Modify some files, then add their updated contents to the index:
--
--------------------------------------------------
--$ git add file1 file2 file3
--------------------------------------------------
--
--You are now ready to commit.  You can see what is about to be committed
--using `git diff` with the `--cached` option:
--
--------------------------------------------------
--$ git diff --cached
--------------------------------------------------
--
--(Without `--cached`, `git diff` will show you any changes that
--you've made but not yet added to the index.)  You can also get a brief
--summary of the situation with `git status`:
--
--------------------------------------------------
--$ git status
--On branch master
--Changes to be committed:
--  (use "git restore --staged <file>..." to unstage)
--
--	modified:   file1
--	modified:   file2
--	modified:   file3
--
--------------------------------------------------
--
--If you need to make any further adjustments, do so now, and then add any
--newly modified content to the index.  Finally, commit your changes with:
--
--------------------------------------------------
--$ git commit
--------------------------------------------------
--
--This will again prompt you for a message describing the change, and then
--record a new version of the project.
--
--Alternatively, instead of running `git add` beforehand, you can use
--
--------------------------------------------------
--$ git commit -a
--------------------------------------------------
--
--which will automatically notice any modified (but not new) files, add
--them to the index, and commit, all in one step.
--
--A note on commit messages: Though not required, it's a good idea to
--begin the commit message with a single short (no more than 50
--characters) line summarizing the change, followed by a blank line and
--then a more thorough description. The text up to the first blank line in
--a commit message is treated as the commit title, and that title is used
--throughout Git.  For example, linkgit:git-format-patch[1] turns a
--commit into email, and it uses the title on the Subject line and the
--rest of the commit in the body.
--
--Git tracks content not files
------------------------------
--
--Many revision control systems provide an `add` command that tells the
--system to start tracking changes to a new file.  Git's `add` command
--does something simpler and more powerful: `git add` is used both for new
--and newly modified files, and in both cases it takes a snapshot of the
--given files and stages that content in the index, ready for inclusion in
--the next commit.
--
--Viewing project history
-------------------------
--
--At any point you can view the history of your changes using
--
--------------------------------------------------
--$ git log
--------------------------------------------------
--
--If you also want to see complete diffs at each step, use
--
--------------------------------------------------
--$ git log -p
--------------------------------------------------
--
--Often the overview of the change is useful to get a feel of
--each step
--
--------------------------------------------------
--$ git log --stat --summary
--------------------------------------------------
--
--Managing branches
-------------------
--
--A single Git repository can maintain multiple branches of
--development.  To create a new branch named `experimental`, use
--
--------------------------------------------------
--$ git branch experimental
--------------------------------------------------
--
--If you now run
--
--------------------------------------------------
--$ git branch
--------------------------------------------------
--
--you'll get a list of all existing branches:
--
--------------------------------------------------
--  experimental
--* master
--------------------------------------------------
--
--The `experimental` branch is the one you just created, and the
--`master` branch is a default branch that was created for you
--automatically.  The asterisk marks the branch you are currently on;
--type
--
--------------------------------------------------
--$ git switch experimental
--------------------------------------------------
--
--to switch to the `experimental` branch.  Now edit a file, commit the
--change, and switch back to the `master` branch:
--
--------------------------------------------------
--(edit file)
--$ git commit -a
--$ git switch master
--------------------------------------------------
--
--Check that the change you made is no longer visible, since it was
--made on the `experimental` branch and you're back on the `master` branch.
--
--You can make a different change on the `master` branch:
--
--------------------------------------------------
--(edit file)
--$ git commit -a
--------------------------------------------------
--
--at this point the two branches have diverged, with different changes
--made in each.  To merge the changes made in `experimental` into `master`, run
--
--------------------------------------------------
--$ git merge experimental
--------------------------------------------------
--
--If the changes don't conflict, you're done.  If there are conflicts,
--markers will be left in the problematic files showing the conflict;
--
--------------------------------------------------
--$ git diff
--------------------------------------------------
--
--will show this.  Once you've edited the files to resolve the
--conflicts,
--
--------------------------------------------------
--$ git commit -a
--------------------------------------------------
--
--will commit the result of the merge. Finally,
--
--------------------------------------------------
--$ gitk
--------------------------------------------------
--
--will show a nice graphical representation of the resulting history.
--
--At this point you could delete the `experimental` branch with
--
--------------------------------------------------
--$ git branch -d experimental
--------------------------------------------------
--
--This command ensures that the changes in the `experimental` branch are
--already in the current branch.
--
--If you develop on a branch `crazy-idea`, then regret it, you can always
--delete the branch with
--
---------------------------------------
--$ git branch -D crazy-idea
---------------------------------------
--
--Branches are cheap and easy, so this is a good way to try something
--out.
--
--Using Git for collaboration
-----------------------------
--
--Suppose that Alice has started a new project with a Git repository in
--`/home/alice/project`, and that Bob, who has a home directory on the
--same machine, wants to contribute.
--
--Bob begins with:
--
--------------------------------------------------
--bob$ git clone /home/alice/project myrepo
--------------------------------------------------
--
--This creates a new directory `myrepo` containing a clone of Alice's
--repository.  The clone is on an equal footing with the original
--project, possessing its own copy of the original project's history.
--
--Bob then makes some changes and commits them:
--
--------------------------------------------------
--(edit files)
--bob$ git commit -a
--(repeat as necessary)
--------------------------------------------------
--
--When he's ready, he tells Alice to pull changes from the repository
--at `/home/bob/myrepo`.  She does this with:
--
--------------------------------------------------
--alice$ cd /home/alice/project
--alice$ git pull /home/bob/myrepo master
--------------------------------------------------
--
--This merges the changes from Bob's `master` branch into Alice's
--current branch.  If Alice has made her own changes in the meantime,
--then she may need to manually fix any conflicts.
--
--The `pull` command thus performs two operations: it fetches changes
--from a remote branch, then merges them into the current branch.
--
--Note that in general, Alice would want her local changes committed before
--initiating this `pull`.  If Bob's work conflicts with what Alice did since
--their histories forked, Alice will use her working tree and the index to
--resolve conflicts, and existing local changes will interfere with the
--conflict resolution process (Git will still perform the fetch but will
--refuse to merge -- Alice will have to get rid of her local changes in
--some way and pull again when this happens).
--
--Alice can peek at what Bob did without merging first, using the `fetch`
--command; this allows Alice to inspect what Bob did, using a special
--symbol `FETCH_HEAD`, in order to determine if he has anything worth
--pulling, like this:
--
--------------------------------------------------
--alice$ git fetch /home/bob/myrepo master
--alice$ git log -p HEAD..FETCH_HEAD
--------------------------------------------------
--
--This operation is safe even if Alice has uncommitted local changes.
--The range notation `HEAD..FETCH_HEAD` means "show everything that is reachable
--from the `FETCH_HEAD` but exclude anything that is reachable from `HEAD`".
--Alice already knows everything that leads to her current state (`HEAD`),
--and reviews what Bob has in his state (`FETCH_HEAD`) that she has not
--seen with this command.
--
--If Alice wants to visualize what Bob did since their histories forked
--she can issue the following command:
--
--------------------------------------------------
--$ gitk HEAD..FETCH_HEAD
--------------------------------------------------
--
--This uses the same two-dot range notation we saw earlier with `git log`.
--
--Alice may want to view what both of them did since they forked.
--She can use three-dot form instead of the two-dot form:
--
--------------------------------------------------
--$ gitk HEAD...FETCH_HEAD
--------------------------------------------------
--
--This means "show everything that is reachable from either one, but
--exclude anything that is reachable from both of them".
--
--Please note that these range notations can be used with both `gitk`
--and `git log`.
--
--After inspecting what Bob did, if there is nothing urgent, Alice may
--decide to continue working without pulling from Bob.  If Bob's history
--does have something Alice would immediately need, Alice may choose to
--stash her work-in-progress first, do a `pull`, and then finally unstash
--her work-in-progress on top of the resulting history.
--
--When you are working in a small closely knit group, it is not
--unusual to interact with the same repository over and over
--again.  By defining 'remote' repository shorthand, you can make
--it easier:
--
--------------------------------------------------
--alice$ git remote add bob /home/bob/myrepo
--------------------------------------------------
--
--With this, Alice can perform the first part of the `pull` operation
--alone using the `git fetch` command without merging them with her own
--branch, using:
--
---------------------------------------
--alice$ git fetch bob
---------------------------------------
--
--Unlike the longhand form, when Alice fetches from Bob using a
--remote repository shorthand set up with `git remote`, what was
--fetched is stored in a remote-tracking branch, in this case
--`bob/master`.  So after this:
--
---------------------------------------
--alice$ git log -p master..bob/master
---------------------------------------
--
--shows a list of all the changes that Bob made since he branched from
--Alice's `master` branch.
--
--After examining those changes, Alice
--could merge the changes into her `master` branch:
--
---------------------------------------
--alice$ git merge bob/master
---------------------------------------
--
--This `merge` can also be done by 'pulling from her own remote-tracking
--branch', like this:
--
---------------------------------------
--alice$ git pull . remotes/bob/master
---------------------------------------
--
--Note that git pull always merges into the current branch,
--regardless of what else is given on the command line.
--
--Later, Bob can update his repo with Alice's latest changes using
--
---------------------------------------
--bob$ git pull
---------------------------------------
--
--Note that he doesn't need to give the path to Alice's repository;
--when Bob cloned Alice's repository, Git stored the location of her
--repository in the repository configuration, and that location is
--used for pulls:
--
---------------------------------------
--bob$ git config --get remote.origin.url
--/home/alice/project
---------------------------------------
--
--(The complete configuration created by `git clone` is visible using
--`git config list`, and the linkgit:git-config[1] man page
--explains the meaning of each option.)
--
--Git also keeps a pristine copy of Alice's `master` branch under the
--name `origin/master`:
--
---------------------------------------
--bob$ git branch -r
--  origin/master
---------------------------------------
--
--If Bob later decides to work from a different host, he can still
--perform clones and pulls using the ssh protocol:
--
---------------------------------------
--bob$ git clone alice.org:/home/alice/project myrepo
---------------------------------------
--
--Alternatively, Git has a native protocol, or can use http;
--see linkgit:git-pull[1] for details.
--
--Git can also be used in a CVS-like mode, with a central repository
--that various users push changes to; see linkgit:git-push[1] and
--linkgit:gitcvs-migration[7].
--
--Exploring history
-------------------
--
--Git history is represented as a series of interrelated commits.  We
--have already seen that the `git log` command can list those commits.
--Note that first line of each `git log` entry also gives a name for the
--commit:
--
---------------------------------------
--$ git log
--commit c82a22c39cbc32576f64f5c6b3f24b99ea8149c7
--Author: Junio C Hamano <junkio@cox.net>
--Date:   Tue May 16 17:18:22 2006 -0700
--
--    merge-base: Clarify the comments on post processing.
---------------------------------------
--
--We can give this name to `git show` to see the details about this
--commit.
--
---------------------------------------
--$ git show c82a22c39cbc32576f64f5c6b3f24b99ea8149c7
---------------------------------------
--
--But there are other ways to refer to commits.  You can use any initial
--part of the name that is long enough to uniquely identify the commit:
--
---------------------------------------
--$ git show c82a22c39c	# the first few characters of the name are
--			# usually enough
--$ git show HEAD		# the tip of the current branch
--$ git show experimental	# the tip of the "experimental" branch
---------------------------------------
--
--Every commit usually has one "parent" commit
--which points to the previous state of the project:
--
---------------------------------------
--$ git show HEAD^  # to see the parent of HEAD
--$ git show HEAD^^ # to see the grandparent of HEAD
--$ git show HEAD~4 # to see the great-great grandparent of HEAD
---------------------------------------
--
--Note that merge commits may have more than one parent:
--
---------------------------------------
--$ git show HEAD^1 # show the first parent of HEAD (same as HEAD^)
--$ git show HEAD^2 # show the second parent of HEAD
---------------------------------------
--
--You can also give commits names of your own; after running
--
---------------------------------------
--$ git tag v2.5 1b2e1d63ff
---------------------------------------
--
--you can refer to `1b2e1d63ff` by the name `v2.5`.  If you intend to
--share this name with other people (for example, to identify a release
--version), you should create a "tag" object, and perhaps sign it; see
--linkgit:git-tag[1] for details.
--
--Any Git command that needs to know a commit can take any of these
--names.  For example:
--
---------------------------------------
--$ git diff v2.5 HEAD	 # compare the current HEAD to v2.5
--$ git branch stable v2.5 # start a new branch named "stable" based
--			 # at v2.5
--$ git reset --hard HEAD^ # reset your current branch and working
--			 # directory to its state at HEAD^
---------------------------------------
--
--Be careful with that last command: in addition to losing any changes
--in the working directory, it will also remove all later commits from
--this branch.  If this branch is the only branch containing those
--commits, they will be lost.  Also, don't use `git reset` on a
--publicly-visible branch that other developers pull from, as it will
--force needless merges on other developers to clean up the history.
--If you need to undo changes that you have pushed, use `git revert`
--instead.
--
--The `git grep` command can search for strings in any version of your
--project, so
--
---------------------------------------
--$ git grep "hello" v2.5
---------------------------------------
--
--searches for all occurrences of "hello" in `v2.5`.
--
--If you leave out the commit name, `git grep` will search any of the
--files it manages in your current directory.  So
--
---------------------------------------
--$ git grep "hello"
---------------------------------------
--
--is a quick way to search just the files that are tracked by Git.
--
--Many Git commands also take sets of commits, which can be specified
--in a number of ways.  Here are some examples with `git log`:
--
---------------------------------------
--$ git log v2.5..v2.6            # commits between v2.5 and v2.6
--$ git log v2.5..                # commits since v2.5
--$ git log --since="2 weeks ago" # commits from the last 2 weeks
--$ git log v2.5.. Makefile       # commits since v2.5 which modify
--				# Makefile
---------------------------------------
--
--You can also give `git log` a "range" of commits where the first is not
--necessarily an ancestor of the second; for example, if the tips of
--the branches `stable` and `master` diverged from a common
--commit some time ago, then
--
---------------------------------------
--$ git log stable..master
---------------------------------------
--
--will list commits made in the `master` branch but not in the
--stable branch, while
--
---------------------------------------
--$ git log master..stable
---------------------------------------
--
--will show the list of commits made on the stable branch but not
--the `master` branch.
--
--The `git log` command has a weakness: it must present commits in a
--list.  When the history has lines of development that diverged and
--then merged back together, the order in which `git log` presents
--those commits is meaningless.
--
--Most projects with multiple contributors (such as the Linux kernel,
--or Git itself) have frequent merges, and `gitk` does a better job of
--visualizing their history.  For example,
--
---------------------------------------
--$ gitk --since="2 weeks ago" drivers/
---------------------------------------
--
--allows you to browse any commits from the last 2 weeks of commits
--that modified files under the `drivers` directory.  (Note: you can
--adjust gitk's fonts by holding down the control key while pressing
--"-" or "+".)
--
--Finally, most commands that take filenames will optionally allow you
--to precede any filename by a commit, to specify a particular version
--of the file:
--
---------------------------------------
--$ git diff v2.5:Makefile HEAD:Makefile.in
---------------------------------------
--
--You can also use `git show` to see any such file:
--
---------------------------------------
--$ git show v2.5:Makefile
---------------------------------------
--
--Next Steps
------------
--
--This tutorial should be enough to perform basic distributed revision
--control for your projects.  However, to fully understand the depth
--and power of Git you need to understand two simple ideas on which it
--is based:
--
--  * The object database is the rather elegant system used to
--    store the history of your project--files, directories, and
--    commits.
--
--  * The index file is a cache of the state of a directory tree,
--    used to create commits, check out working directories, and
--    hold the various trees involved in a merge.
--
--Part two of this tutorial explains the object
--database, the index file, and a few other odds and ends that you'll
--need to make the most of Git. You can find it at linkgit:gittutorial-2[7].
--
--If you don't want to continue with that right away, a few other
--digressions that may be interesting at this point are:
--
--  * linkgit:git-format-patch[1], linkgit:git-am[1]: These convert
--    series of git commits into emailed patches, and vice versa,
--    useful for projects such as the Linux kernel which rely heavily
--    on emailed patches.
--
--  * linkgit:git-bisect[1]: When there is a regression in your
--    project, one way to track down the bug is by searching through
--    the history to find the exact commit that's to blame.  `git bisect`
--    can help you perform a binary search for that commit.  It is
--    smart enough to perform a close-to-optimal search even in the
--    case of complex non-linear history with lots of merged branches.
--
--  * linkgit:gitworkflows[7]: Gives an overview of recommended
--    workflows.
--
--  * linkgit:giteveryday[7]: Everyday Git with 20 Commands Or So.
--
--  * linkgit:gitcvs-migration[7]: Git for CVS users.
--
--SEE ALSO
----------
--linkgit:gittutorial-2[7],
--linkgit:gitcvs-migration[7],
--linkgit:gitcore-tutorial[7],
--linkgit:gitglossary[7],
--linkgit:git-help[1],
--linkgit:gitworkflows[7],
--linkgit:giteveryday[7],
--link:user-manual.html[The Git User's Manual]
--
--GIT
-----
--Part of the linkgit:git[1] suite
+
+question 1: create the repo on the command line, or in the forge?
+=================================================================
+
+One issue that came up a lot in our testing is that the tutorials explains
+how to run git init in a repo to create it locally and then later choose a
+forge to host that repo (GitLab, GitHub, etc) and push to the remote on that
+forge.
+
+Several users ran into the issue that GitLab by default creates a README.md,
+which means that when you run your first git push, the push fails since
+there's already a commit.
+
+A few options I see:
+
+a. Suggest that they instead create the repo on the forge and then clone it.
+I think this is easier and usually I support suggesting things that are
+easier, but in this case I think it's our role (as the official Git
+documentation) to make it clear that you do not need a forge to use Git. IMO
+this approach really confuses that issues and makes it seem like the forge
+is more important than it is. b. Suggest git push --force. This is an easy
+fix but I don't like suggesting that people use --force so early since it's
+so dangerous. c. Just try to get users to try to figure the right way in the
+GitLab/GitHub/etc UI to actually create an empty repository that it's
+possible to just push to. This is really hard because the UIs constantly
+change.
+
+
+current solution 1
+==================
+
+Right now we're working on Option C since it seems least bad
+
+
+question 2: How to handle authentication
+========================================
+
+ * How should the tutorial tell users to authenticate? I know there are
+   commands like gh auth login for GitHub and IIRC GitLab and it seems like
+   there are some advantages to using those, but also AFAIK they're all
+   pretty specific to the individual Git forge and I don't see how it's
+   possible to discuss them in a generic tutorial.
+ * Whether to explain the process of creating an SSH key etc. Arguably this
+   is the job of the SSH documentation, but since https://www.openssh.org/
+   doesn't have such a guide, it feels bad to tell users "you should go read
+   a guide on how to use SSH to do this but by the way that guide does not
+   exist so good luck I guess".
+ * A lot of testers found it hard to find the SSH URL on GitLab/GitHub
+
+
+current solution 2
+==================
+
+Right now we're solving these by:
+
+ 1. Using SSH
+ 2. Explaining how to set up SSH in the easiest way possible (with
+    disclaimers to check your security team's policy if applicable since the
+    "easiest way" may not be the best)
+ 3. Giving some instructions for how to translate an HTTPS URL to an SSH URL
+
+Julia Evans (2):
+  doc: remove gittutorial
+  doc: add new Git tutorial for beginners
+
+ Documentation/gittutorial.adoc | 854 +++++++++++++++------------------
+ 1 file changed, 397 insertions(+), 457 deletions(-)
+
+
+base-commit: 5a7d1e8045ce66c908f62598e26cbb8df7b39a90
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2248%2Fjvns%2Fgit-tutorial-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2248/jvns/git-tutorial-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2248
 -- 
 gitgitgadget
-
