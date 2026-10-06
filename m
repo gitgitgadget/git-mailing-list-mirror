@@ -1,167 +1,141 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f53.google.com (mail-dl1-f53.google.com [74.125.82.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6925F3B83EF
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 11:17:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791285481; cv=none; b=gJoj4/1wJIhP0rPmPxzKcJvEnSUFQ4cmoGivwMBqP7jZ/Q6aCL6Yqgql9bVtBBw1JMWSP1LvXbUpi5+napPnT3er8fojI62cfy47XP+qCsZ2DsqSvV7bEreqcQQ75f45BrUWPUlKUyEiys3sGaUnCOT+guF1Dn/BpkBukVFkjWQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791285481; c=relaxed/simple;
-	bh=n3isS5TZg8zRXd9Nw3ncpX6FAO8a+gh4YaJZZt+W79Q=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=OkhKseerRakEgLiArp+x4WiXpdlci+uohzpW0rgtkv0AZ+C9ZqHU20oXcHEtyXhzTBt3u8kSjR8G+xgbyKR1GIKRpnF+BJStRL8gIWqG/3JkRZdQKFqEQXVLxyz3d1JRx1yYEzyv2IiewI0tHIVTp6daYSCqYgD7ZzEDk7VebY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=UKw8ruFd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tRUog2Xj; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFE2370ADF
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 11:47:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791287280; cv=pass; b=o0MNHLndJpFlWtN3foUNpT6R27XoP7IXvWUStQb1VHjoFvKfOsqbaSbB70GTEmhGIiIse8BMCzlfGnDdqh0wBLlcaV4Z4MDf95vr3AntFy93F9eC94KnoRzuM/4uwTiABkvEtqEFeEfer12BBpvrkc18+CJ933PsQ8wkP6N3f4w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791287280; c=relaxed/simple;
+	bh=iIO324KDH/dHEIl4pXsOOfa+VCyE1zviFivT28SZZ4Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EyRYgVvMJhg140fHiNun3eGcwVXn3rDLbpjZ2kRoV/tiTC5k2OQE+QZdpNV7fRo2Axn1sgvIeISZLNq94ZAYMBhhjsXOcN5ZrbGz28mqew8dKX/+pLOnQ2hY0IjDfW+pY+y+rl7trcGDolQCaD2OOIxGCM7jUJzeYDYctE9U7/s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XvbDjqFg; arc=pass smtp.client-ip=74.125.82.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="UKw8ruFd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tRUog2Xj"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6D6C21D00156
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 07:17:58 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Tue, 06 Oct 2026 07:17:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791285477;
-	 x=1791371877; bh=2geDUkbvpZNHTbiaMZIriWAWtjylBwJP02dNk5IXlSQ=; b=
-	UKw8ruFd0ylt6RCB7rwSk7E3+EctiHTHW1ZPULHDIB0mOtqXZN4iQen2opIaNIW7
-	YIBFLT32G+rWnUSiaDJ8q5V/Y7J6QwrnjK0/qpame4pRVbXxECAaID5vkYj2KXaO
-	NrCwOgz6AnDu8cktNc3ZMohtE1xc6vWuJEEosymqZOcwq+/fiuoU2UKnMBLYZAJU
-	/snI0H1zrUbNebuSjNYGMhfcGSO78FK5Px4AI1i02xa4qjBbiRiN6Z17RBr691aG
-	NhMuRm7nfymLHn9Qb+E0Dz3ykWzTnTSoinKXj+4BgBDtHGprSrGsHQ71PJzdf/Z0
-	Pd+Zap33l/WARFQrv+KIEQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791285477; x=
-	1791371877; bh=2geDUkbvpZNHTbiaMZIriWAWtjylBwJP02dNk5IXlSQ=; b=t
-	RUog2XjHH+oBMjiyyhH0CxvP3bd7S8hH1a/rLTyD+bxUvC5WLBCS7QifRmH+/uyI
-	W4pOhTInQxLsOri1VvCZdrInH8JpdEjJ836FBfURfrQ70m/dFc+FAzpV7CUwQZay
-	lmAXw3qoYDiMMHMnt3MPyI/7DZdXWTlo7XIPpoyP2W2Ed243y1yT++Pl2OjI/Qj3
-	SGf4Me3qgxxGK+oPFckMes4SXWT7LVzPOnc+P0DmZ48+HMNuA8zD84VobIW5/gQF
-	ZetpOIk6FSw5SzU3HxFD9orWH0BXd0tmV8ZCEIExEIEHKpYAXCDr75vkdtijrv1S
-	6e1n8klx/JGUXddvhz9dA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791285477; d=jvns.ca;
-	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Qn2NuK42u5N+wAUbvo8RJ2/E9ewf4uayZsLEHGrXlkVDjb6
-	cCJndnJHI1Je3nwH1pdCp0KcMztuhCiEQ3fIX6trd2j/PEFR0LmBVemrpQ1sPtmU
-	/o4WU44QBAocTS2o4xXvveqb/Sf+PFnkKaC3Ma5XJTnxTtckEAH9tRssPpiRI+cv
-	KdfC5K0/oKo8UdnnbXURVwJaJMISpS9ACdLbwcT6e6sLgIlYWqLiwFG+TVt3fhnE
-	BZqxFDNTWWfXHyatc9jUlhGd6XkXeHgBBFplO7l1+nCPtmNu0NMz3NmMNEeyPF0G
-	Dj0xi47wBDxgt781ZAsBLwxFNLsALSKpm08qZiQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:9No0hjLq2+WBm01FCTi676kOFunwMpkWZ1eIvHsnQBo=:n3isS5TZg8zRXd9Nw3ncpX6FAO8a+gh4YaJZZt+W79Q=;
-X-ME-Sender: <xms:5djEatV1gA5WAt3bdtOWscAi2vpVsntqOaBCGIkjn4_FSwoMQ-VRRw>
-    <xme:5djEaoZdesi3HTKcHaiSv3vptiMuSix_psE_pboMDJNERBweHG6SosLzJGnpNGIzr
-    ORW8TwPyK7U_Y6DRbc-Nz7iYDfLSpTLcY_UGhtxQV2F25oiGnfGaaFH>
-X-ME-Proxy-Cause: dmFkZTE7c5ihfHKv5WhyOqs5OZu39hhCiQLK+U1tDl+KuEDFqLUifYW9CTomDRcJ3EDJFQ
-    4DpBY8FRGY/wP+TNH8dynJa1PCdq6lAXZVUPccLN4M85cbF1VjAYO8HqtbCR0ueOERb2IN
-    nQwW13mSBZQuE7kCdHVEzfLzEvTWb8mQ/jCba/CRMgxaVjfT3w23mDApNg5J0lUVtPM0l0
-    Zg0J4/ci1LJojoH54Tx2uUrp4rrGVyPUoIsVu66Bijx3igFaCTBjsdyyrNivffBl144iOD
-    riy0UQaQ4kjGrHkeUmkTk4liHrf7UuZ6CyuWlYl55P+HanL6ElyLmax5UQaAEyItQTGube
-    65SVOVCSGGgYBVX4t83UliqdTd5squi77c7/zwf/mf0/EICOAg44FlVyLsvuJIzM6hTwig
-    wqfKNF5qpchm9UfzGwS8iG2OVRKBlGqAtOKirMT30LIBTjfTqwUHL40aYz1j1SZSJkir6p
-    5+sDJ15CdDX01ekqRhyw+vJockhOT/sJ96CRoSzOu1An37e4o8tJftLxIsWydMtNcIB9HJ
-    2swteP3gJ+rVWBAcwYyrDZ9NgDTkkrAKqXvVzINCqrZjB/5Ia3KECd4f6GX+LuHwHupO9j
-    swgHT+TiX743UXOrGguUbr5/WAElO2QbmXZF7M1cK7nI0E5g1YSl0n45DlsQ
-X-ME-Proxy: <xmx:5djEaq9uVuk_FaBKwszVI1cC25Xm6G1gl60nUi0wdii4tJ3bIthZtg>
-    <xmx:5djEaohosqVlxQp5dwVHFRg7zzicd4dWIoaYYZx81hQeMn8YBpltzQ>
-    <xmx:5djEaqfngdF5avgZfnEej8nhVheveHoMC_QjuGbMKM6xy9F-hdZWIQ>
-    <xmx:5djEavr5-ZixJq3XTE2AwmzHa3JKlfpHnjtR5zsW_S-OTO7h_rXWgw>
-    <xmx:5djEat_jc3OYe_Ne46qgOwxjY1Mxgp5bXAs-iSeIrG9Bx5NwQqfunqkb>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 8A4C4780075; Tue,  6 Oct 2026 07:17:57 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XvbDjqFg"
+Received: by mail-dl1-f53.google.com with SMTP id a92af1059eb24-1438d9363fbso766995c88.0
+        for <git@vger.kernel.org>; Tue, 06 Oct 2026 04:47:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791287278; cv=none;
+        d=google.com; s=arc-20260327;
+        b=k+j5SCKT30g4AOOSBa5xt+bLXx9eHnJDRclidDJX38zROuSo6kLdjLWsBAbAFwUnKO
+         p7IpuTuj8f1BSH6yyS+oHA8sZQQrNg5kYcfNqeF3TCso9c5e29zu4DWKkxd8yJv6U4UU
+         8p9YMmRrdxSecQlWvFFFbpBrXKOC+j4AC+B2bkJzI8Qvnhk3rqepxtTyyCPiZzfVQLGF
+         YwSAkySiGGJ8w5QjG5T/TwGvqPBDPlxNhfXfX/dvkAV96cKI7skL622NwG6GNoFApgWW
+         l4peVsVoI80oLLlKnyrXJo8NCRJsO7NCh85VuZqdkxC/5dZZEjel89iJQy1TiIHn+ap1
+         1BGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=iIO324KDH/dHEIl4pXsOOfa+VCyE1zviFivT28SZZ4Q=;
+        fh=JXGMLNtPAui4mFNW3Wh1EqCGPedQ221v0W7YN7wEIgA=;
+        b=F4SYYtDbqzhziH/qRHYA4N1SFzPktFUl6QiQXjmme++ABBkx8aiFx1uYeu/TztT0PS
+         PJGWuIdopgK5N0TR5cs8Xu4bVnxXw0klbTbyAD4nPPPBFDIwUyqZm142BAhci1SMenbd
+         buE59jGqrY/OIasYERnaebqISEZCQ3w8A946yAiiG76ZqwKEJT3Gwjye1AcSsoKbY9sB
+         CKSJa2UyOE7jobEN4JJdqcqNny0NrMbM/s7zfy2HnvbcCAd47frSkumQ7QDWCNUrUP7i
+         2jvSe6IfoSUKKkytslideGaykhQKoq7TJx8B9oTEHPqB8mzls9mi1Sr9M6kcfed3qhld
+         nEbA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791287278; x=1791892078; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=iIO324KDH/dHEIl4pXsOOfa+VCyE1zviFivT28SZZ4Q=;
+        b=XvbDjqFg2zeQo1OnirEQm4c32LhCiMPAcZMOZgvcjq/J4YKaMapEdMlDStGG1iypMw
+         tkGiEEgazcu+nEbIMobvtB2ME9ZaQtzU3Udnf6yCj4wGzGZ4DW2T7vBUNXYXBq2if2bt
+         9/nIzQeqyLzXNAxDRIqFK8ADmlgER50ovxpnd4uSjZHZ9WbdrPJltQT+KkIz5FH4axWr
+         wAuwK/XPub6VOd5gFcdk51XSzDtxvSCjykJHqT1uKalj+mfwzhs8GW3lWAheDUYRheut
+         wTXhnbYAnH8TeZv35epxQIMJz5Rwu+NwRm/outry6v0kIzM7OWRfRHdTGOJAGEGdXOoO
+         BJqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791287278; x=1791892078;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=iIO324KDH/dHEIl4pXsOOfa+VCyE1zviFivT28SZZ4Q=;
+        b=0Y+z6IOrtTdIZPlNWhLVxpDHdCzQ2XjFWtKGyn2RrCwzEol6Qfc3PYc/X17wp0stc1
+         GCYcx+WljVJIm9DaLVeka6FjZHNUeEQCGW0TVeUUiL9G5V8hmW1p4ZHkiBWmftZqFMTE
+         KiOL7s5FOYx8Wc6mS5XanKv3+fJKC/wjKE10E2aEPrkk+Zg2glj8iFk+KfyqGdj87hne
+         ZXhUXkdURnzRpAatbNeiP/OYS1Wgf77x+np2k9DjBdk1HUOQ/ARroEZSUHcUN08N9JjT
+         yIt3y+PbED7q19iQ12YkDZM+1GB7SaBeXYQ4VRiZN1YoInLve0dviPVfBHtyjNRmPZgk
+         5X0Q==
+X-Gm-Message-State: AFuF++lmgHPMl4GpoEKSOgHR3D0Lr3cs9CwpvB5bj1iHc/95tFJQZ4af
+	E1qpyPEJaa2E9DUJMMA57yne5mVLy0nv0F2gHiI4pIf7WsxNZ6PFLRvqcGN1ZYCHvwexlKJNQEi
+	3sCrQtrYHfG5N4hLD0GGLxi7k5g8KJ6jN2QejjYeSqA==
+X-Gm-Gg: AYBFou03YdR1lG1kmSlzUNO7nOmE/b6Roulx++bserawm8mq9ed/qi4q+0TT+7c30Yz
+	ka8iAPwCYQqCkexUQyrnBOZiOxo2RI2W9i2tfcb0e1cx/CjBNNHv/yXsVs5NBFSE7pS5YQh/evs
+	EwPjY9IovHjoGiQ8KGybUZVNRQ0EgP0PhhiIJMZ4ERkk/9Lku2w+WzPH9XibfgM6T/jnfjKuefi
+	y5rpiBCzUNUG28+E2iiW3AlE5dpE93KDaXTCpOetMmnHKk/meFuVXI8qpR0LJ084/M8p2xwXDX4
+	Y0D9UQuHkEnRnwcygEeFiEY+dmaRH/8FUaxwJlMWdyvxxYBH1VRNJSt6priNMw/uzR0Np6coGU0
+	mMyHQLsnyZrm+3ztAoD+rDScmV+IcNORXfM8tMlqrpgiFsm2eTzZTMJAHCaXMU3ni74cWML+W6J
+	iQ4iuOCVpw24ZIxn/7zC9WW/gfErglmEH/+7rpX0c=
+X-Received: by 2002:a05:701b:2602:b0:144:eb3f:563a with SMTP id
+ a92af1059eb24-15d2f291f14mr2915029c88.15.1791287277677; Tue, 06 Oct 2026
+ 04:47:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A7DtHL7goc9V
-Date: Tue, 06 Oct 2026 07:17:36 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "Tuomas Ahola" <taahol@utu.fi>
-Message-Id: <afb72458-bc22-4a7a-87ec-83c77e83aeaf@app.fastmail.com>
-In-Reply-To: <xmqqece5vc48.fsf@gitster.g>
-References: <pull.2246.git.1790957227881.gitgitgadget@gmail.com>
- <pull.2246.v2.git.1791033057232.gitgitgadget@gmail.com>
- <xmqqece5vc48.fsf@gitster.g>
-Subject: Re: [PATCH v2] doc: don't require a SYNOPSIS in section 7
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+References: <1aee1829-d7ad-47e2-b7d1-1a946bd59991@delpeuch.eu>
+ <xmqq7bkel0i3.fsf@gitster.g> <33b3ab6d-b2cc-49c3-9a06-3c4070ede57e@delpeuch.eu>
+ <97c58bb0-5030-4e66-b183-44db2ab216db@delpeuch.eu>
+In-Reply-To: <97c58bb0-5030-4e66-b183-44db2ab216db@delpeuch.eu>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 6 Oct 2026 13:47:46 +0200
+X-Gm-Features: AclHuK9Wh9NOfTh4iGES_pVWU7ZZlvPxeOXpd5U2zz2vVLAy4f6XgqSZRpX27h4
+Message-ID: <CAP8UFD1yx_Z+TyxYP6GA3xKOq12Y5OWfEbiHOEhx9bVZwZ0egw@mail.gmail.com>
+Subject: Re: Documenting the governance of the git project?
+To: Antonin Delpeuch <antonin@delpeuch.eu>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Antonin,
 
+On Tue, Oct 6, 2026 at 1:13=E2=80=AFPM Antonin Delpeuch <antonin@delpeuch.e=
+u> wrote:
+>
+> Hi all,
+>
+> I am planning to go ahead with this project, unless anyone thinks it's a
+> bad idea.
+>
+> My plan is to write an initial document based on the information I can
+> find on my own, and then fill the gaps by asking questions about the
+> points I couldn't figure out myself.
+>
+> It would be great if I don't have to bother Junio too much with those
+> questions, so if you have a good grasp of the social structures in place
+> in this project, I'd appreciate it a lot if you could let me know you're
+> available to help.
 
-On Sun, Oct 4, 2026, at 9:17 AM, Junio C Hamano wrote:
-> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->>     Changes in v2: Tuomas rewrote the Perl script changes to be both more
->>     declarative and and more correct. Previously it didn't work if there
->>     were multiple files passed on the command line.
->
->> diff --git a/Documentation/lint-man-section-order.perl b/Documentation/lint-man-section-order.perl
->> index 02408a0062..160c65e1be 100755
->> --- a/Documentation/lint-man-section-order.perl
->> +++ b/Documentation/lint-man-section-order.perl
->> @@ -13,6 +13,9 @@ my %SECTIONS;
->>  		},
->>  		'SYNOPSIS' => {
->>  			required => 1,
->> +			optional_in_man_sections => {
->> +				'7' => 1,
->> +			},
->>  			order => $order++,
->>  		},
->>  		'DESCRIPTION' => {
->> @@ -53,10 +56,18 @@ sub report {
->>  	$exit_code = 1;
->>  }
->>  
->> +my $man_section_number;
->>  my $last_was_section;
->>  my @actual_order;
->>  while (my $line = <>) {
->>  	chomp $line;
->> +
->> +	if ($. == 1) {
->
-> OK, this, together with the explicit "close ARGV" later in
-> postcontext upon seeing eof, lets us do a "special" thing on the
-> first line.
->
->
-> I think for the purpose of "doc lint", this implementation is good
-> enough, especially with documented "assumption".
->
-> If we wanted to shoot for a bit more robustness, on the other hand,
-> we would want to handle when $1 is left undef ...
->
->> +		# assume the first line is formatted like 'gitglossary(7)'
->> +		$line =~ m/\((\d)\)/;
->> +		$man_section_number = $1;
->
-> ... here.  Perhaps like
->
-> 	$man_section_number = ($line =~ /\((\d)\)/) ? $1 : "0";
+If you write an initial document and send it to the list as a patch to
+add that document to the Git code base, that would be a good start.
 
-Or maybe like
+The people who will reply to your patch will be the people willing to
+help. That's how it works here. Someone could tell you they are
+willing to help but then for example get sick or have a vacation when
+your first draft is ready, and cannot actually help. That's why it's
+better if the process does not rely on people making such promises.
 
-   `$line =~ m/\((\d)\)/ or report("first line should look like `somename(1)`");`
+> My goal will be to write something that you are happy to include in the
+> official documentation or website, but if that doesn't work out, I'll
+> publish it externally (making its unofficial status clear, of course).
 
-or some similar error message
+Sure, no worries. I think we are not perfect, but overall do a good
+job at helping people who are willing to put some effort in useful
+quality work. In this case, if it's not accepted in the code base, nor
+on the git-scm.org website, maybe we will accept it on the Git
+Developer Pages at https://git.github.io/ or as a "How the Git project
+works" article in Git Rev News. Just trust the process and community
+as a whole that you are going to describe in your document ;-)
+
+Best,
+Christian.
