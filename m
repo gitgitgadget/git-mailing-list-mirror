@@ -1,100 +1,98 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A843EB111
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 12:18:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C362EEE7E
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 12:24:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791289106; cv=none; b=iRCVzIDZ6n4JrnEvYxYzPsFtSOskCflmWika7uWUW05bO0oliPGv2qLzQmgHOQp3hKS6Cx8hejpYGteEZvA3gmrHUffoi+Z5/q+iGLGPaGkxdiwDdxrdiClJ//SnBGajakK4QkRnE/TPC5z/qZggw3GXzvOJ1JbaJ3nJI47mC7k=
+	t=1791289442; cv=none; b=j0r7DTsvsA3N0FBid5ke6kbS+2S3ekkYXU2H98L+w39C2amEIZyCaMHqzk/yrzcbbVyQfinFN3v7acELmfGsScRTkrGeCqBp6MGC05uKK7UWI2eCuuT86vW7YCYHmpeqT+NmBUux97Hm04nUczGgxye3TxKm/jkZWSUflXL+48E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791289106; c=relaxed/simple;
-	bh=S/0mdPPNWP12ki7GCileW9Pkh0LNNFb9JEWE5j5qx+w=;
+	s=arc-20240116; t=1791289442; c=relaxed/simple;
+	bh=JaFl17obraDhT1FGjKgwf7f05gpEA9U5XqlSRbcMVLA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lUZxnrKNlDeUFIb779bfWGcak9Ezfs9GSF6oR11GontyEQd7ImjYS2aWV5Y/sp1tKhMvl7rE7j7gTS9XqmXtY54FBBBhD8OxMbYJ8ar7eCFIxxJG12B8qPo2xPq+m/7d35U3B3ep6CmX3zsOXE8MQ7PaAiPIFUnnx/8U90aBeQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QthsKK4e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gp7QX6ls; arc=none smtp.client-ip=202.12.124.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=APFSx8Pw2Yr2rANsmyyMZk7u6JWtRhNX5GV76jXwj3U+4VKXw9SDkWhv3iCvDztU+ZojOXAULNAeWiSbIcvHJEW6ZLGnbWCh5s6RKpTWiYCmfhSQGRWYAugiAYolGbquNg4gIxrRlE6Ma/DEKBqVmEwam3G41hk/r2y2/+jZ9CI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ozuL2QyM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rsG44yco; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QthsKK4e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gp7QX6ls"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4C3817A00D5
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 08:18:24 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ozuL2QyM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rsG44yco"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id CC44F1D000D2
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 08:23:59 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 06 Oct 2026 08:18:24 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 06 Oct 2026 08:23:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1791289104; x=1791375504; bh=FFJLhqstk/
-	1RLFGQEAAd/MUwJCH7zwI2ZEyRttYbm24=; b=QthsKK4eeca+wW2fKrx/kVI4W7
-	cmBq7khazvuldtKdACG8+q5JRQpKUL/4KThz0+ZxeEfkPqsfwa+EjQyqihNzafLb
-	Te+2J4Hs8BNUr9wfeDMr4qZyVyVafNbBy5YTQFvwDdZtDki04s4A30sCGDMkKNnf
-	+cvAdJI33n1QtNKhypnWjsngaoJfGQRamZ4gsRN38jJvqjrEbPlFiKBoAWQn/at9
-	dE6+Kg3quT7vJkFKr2HHRMqO2zs6t3Yb8YC5xJILngHX+nOY4/kZxVLE48lE7+4D
-	dJAiFMRngguNvnBAt/kjEPFPq+KmByO/a2HPlEBDbENh/NPXSs1ON/zwL23A==
+	:subject:to:to; s=fm2; t=1791289439; x=1791375839; bh=mDOHj6Sw9y
+	Ohpg0MmVi6OPYupemJQ9WGJBs8SirCiAs=; b=ozuL2QyMhX9g5+ubFHog1RofI5
+	zFmJx/jXJA4ljGvpa8pe3X3bkda1JDGELVfzTah64q5RQ2kJ8TJ1g1lavpNjrmpq
+	8qmQa2pHsI1dw6aFgISrjrqpoMuchqb35cCOt7CVXGMg8zDY4iRGaWelG0OF2sIf
+	6vsoH67vtbWT4UWlAbjkvACrhAGcuNdtapzDC3WANRMC1UP6vYZIdWmrWgeDQc8p
+	slZwnXf8m2WjN7d696PedeCCKSazGQmFt3oQT6fFRqWXwhWG0UCzqoTokwT494XI
+	v1EGbcq+0neCscGUEY578Pz35JRnbFOom3v1xUV8I8Mimj6nq6OuINXBQ1dQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791289104; x=1791375504; bh=FFJLhqstk/1RLFGQEAAd/MUwJCH7zwI2ZEy
-	RttYbm24=; b=gp7QX6lsd4j3X8ImWZB6yzu3KiyJDqiB4/Sp/L7zcMaPertHwtC
-	yHQS0pLxc1i0BR+JbOLjJpAUyAkMlmjEsAVCrSyl34Pki4eNOgA8GGXEIC3YjNAD
-	1ce/Wv+Qyd/XgSllUxG8QZ7lwcdTvaYQ9xgRpXTUp8scDY1yIj7dUhb/+jPV1NM1
-	YOLvjbuU/6M53wbtNIs5vZ6TNRzVA3oiQUSWIHZlgIXXkRIvdqKfgKWAunkCDpbg
-	tQjvEnutxf5QXilNJMMjfRZ989DKhdtD51ruZgRc2nWUPJ/o8p5qw7pIBDTbsEG8
-	I5Q1EvAbguYENT4BxF3ekIF3T5SiJsIbBSw==
+	1791289439; x=1791375839; bh=mDOHj6Sw9yOhpg0MmVi6OPYupemJQ9WGJBs
+	8SirCiAs=; b=rsG44ycovDTChKATvUsj2dEzMfSJKIYluJhiBpHMiGO+2qaqUty
+	0CNjUW0jfVrelEcRXIehLLXr2GOGEZ2Aj9krcnAentGPVBRAXzSnYZYJv9u82hRn
+	obLad4E2DR/gwpxtyRvHvUsmWvWkttv/ESCW4R5wtl0gOKXgSHE4t17hHq5q+EeL
+	EjJM2sU3/Tpn8Weu1zmVynksBClubI2l0DnbQH360YREZCb7rFX69DtI8nW9HGqx
+	OU0FFfKDOX/3aX48x47f6Pgd/okwRfdkVaYBTcLxn2JME9ie18p/upB5oUSZFLaf
+	z5hArS1l43Ut+G831EYjUm6gx6TcH0ybeCg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791289104; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1791289439; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:FVu7RRQaHejkwLYDGdUhEsGiK5BvgaFqp+RMbx/dWy9wJAn
-	Bl+kY2dS9hEc4g2cY05rEWLRoTEjtDbh20L/LkpdxyhYuEZBqipB8Rsa2BJZniGg
-	+Qi2qDzL+b05wcNF8gqb5plfbltl0hfl8QfgfUYJbUt1WtH3m/qkGVuc1RFZNjYp
-	oA3+DxmjEwofE4cLDmDxEi5t+YFZEuC/4VkFyguEeEJVIUYcRAaEJ+momaehe4GF
-	brZtTDVT8YW9VFN1wXeUE7rnunjX/dc5ZBqe3pJEan9q+2/S9OvpYW2gApW5bKib
-	XWANupXnJqH4tKFPDa+Mk1FKFdv4E5vpkHvvBBw==;
+	s=fm2:rsa-sha256:BMkDhkZugxVJxJREJqdQuyVRD7B2PwNAN9NOVz5SQizXVih
+	v1BvbfEN3dnMR+M3X/MQMn2iCkJtafsuFgcisWtTDQ5Jw3D0/nChImkglYAlLn8p
+	+IYqH/25ft7DnXU7sOi3qAIwYV1CkC3uzxIqarBjfgd6sITy9NIOSMFZM4AYq79j
+	8JH2lnlVPv2XdCGXmaoyCvAbqk4gNs/z+QN6AobheEt5iTJYOpjHvjkmsNzDzdve
+	tD3WAMrcYY2NeoItX6dC646+rSUXPUyzydirbpC/EM5w50Cvd3cAAXYw/zKJ+4oW
+	LLmIkV9Bh7uZH9ikdPivnnqAAIeL3A+9BMsPU+w==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:bX0AqtYeGre+zkG9hfHJ7Ve1MyMMVYxVhXfSz7dcREI=:S/0mdPPNWP12ki7GCileW9Pkh0LNNFb9JEWE5j5qx+w=;
-X-ME-Sender: <xms:EOfEatM9DmGmFK-Sxod8tIoYIouslmFTdheo_TGEBmmMjtVbNYa_HQ>
-    <xme:EOfEal-Es--roMj84rYWSQlHMRzfhQrs1nQA18lvWhq3mobMkZrH3jDaTfPCOtBJP
-    Twr0ulyybPSbuxWEkreRjXXzRcHovwtDEX6IHcJmCPSsCLOcH8XyYdO>
-X-ME-Received: <xmr:EOfEap6sOfa8DrQ8xZKkIvyNP8L7IfwpEXo-flaDiwggDlXd_N7bYFnVth6EFDaRBf2qQQ>
-X-ME-Proxy-Cause: dmFkZTEgd8L4Cuw5BPDNNThyrFCYLN9bX0xEU42AXwnxe4B0TMOWU7vAPn5K1+6cgOy54l
-    Rz9aKZjqX/wc5iMBVK3ZeZQZeAJdoEPYq+85l0ENIS3Bb/4IVz0Y0rI00RoowZ9DsYNG6O
-    C9rXLHLjqde0y1gUj83hHZlso05vs+3901Zp7NR0lqMFDOUctHAyL8HG9lqKUgsI4FkFGy
-    /V3sWuIz3ynBmQLialw4b1m6U88SqVsVoQUhL12mIg/Mb9dmXnrOJ2UIuhE8Okjs7qG0SF
-    m8o7rJcpvmgpoZD9wy1LVakaes34p5g1ICNDqLXoXBEKZYaHsDXCZM5FolBjD4XPI0GeGN
-    ZaxJ+ZQE+FLvqiGaUasl3DSrwV9DiXh4WLuu9e0LRywmK4HsHK+fgkXBm8dRp+EfiGpzrs
-    445IvghNsjNrj8slZqs7IWrdbujStJLbulEGGLOLDJ+mhJ/y3L9YiAUxFmzCCuII5cu2qU
-    HOTlNMtTeVd71iwBZwNpu7lU+At8/1tqUibSM/yfEV9nveFcGXqi9eWWU83Es8oR7/BHaO
-    wSzcVaqTMP4leATwvem1VUW/Ik6HOMeSDbIey1vBN4TPtFeP1VXFVhOoLz93EMjn6coyJB
-    VMwEgulrA4Br0JDpbiwo9g3PnIJ9klkrlnSzDpgt/WxIVDoe3aU2NOsBIVFA
-X-ME-Proxy: <xmx:EOfEak28JvXgN7e59Xm0_UbSAROXxjMkjt-m3ZHRrUNE3YJ2gXJreQ>
-    <xmx:EOfEaoDYbXUYDVt-tZ38TSvShtU64xR5NvFif6J--x91AuP9rXm1Wg>
-    <xmx:EOfEau0Z4OOEoaSBa1yYBpk8WJs71t_PtxxbYERI6O4RyZgJPqmmeg>
-    <xmx:EOfEaquqxqVmmLc_HSVZMKm09Lx-3aU-plcSowLean9Gs4WOGc2wFw>
-    <xmx:EOfEav-dYXqTUd6hZcRkNAsRc6KaQ4vwWlajmWqD1_AS6BNCtktANk2W>
+Message-Instance: m=1; h=sha256:ySCrVWYnIBRzFpTrs9PPGju727bh4SR6NydvivlfEJ8=:JaFl17obraDhT1FGjKgwf7f05gpEA9U5XqlSRbcMVLA=;
+X-ME-Sender: <xms:X-jEatiEvompMchvVWjv6FYUoyNd8yQ6a5czdwUfngC-XNXRWPBPjQ>
+    <xme:X-jEaoA_LHHH4O_8r904YrvhBGcZACIsuKa5Qo6zk1Ca0zHdHddkACx6BxDrobyco
+    xbD6X6Oy_IUjXeJ_i6vlv8waXpTJkaQukIFO-kUP5SBe8r0IPX0Q3E>
+X-ME-Received: <xmr:X-jEaqv_LK_AvKPzaCnYUMaw_k1P-AbICG3c6ei8yU5Q-37oFGAcJECKn24xuJWj7qS4Og>
+X-ME-Proxy-Cause: dmFkZTFQz55Ihd09OKZcu9fNFJLomD4+Q7GT0cGLXReMV/uQcYlfZW3bbV4SvsyyCZFcO+
+    e5drco242Aogj8m080Rm6pjC1DkJfy13ocXaHLvLSBR87lyrMFE402N3V4OwvPIEFYAtX8
+    UD0dEQAAOtdFnUL7QD4bRzHRL96qi0bf2BB9OJJDE3aAf1jpSw6pYPzuI2AfWoBV8Zm2K5
+    18wqf3V2+HcjqPxwjrqLyoLacww7vks7yqgwskZb8bRWLOMHlufhvYZhflNBy78fVKlc9w
+    imfyNoc2oy7ogolYzINTs0JP2sboPGTS0tL2FDsO7Z4SmUJ/5ek/AC9KWSB38SWHn8XjZV
+    2R6Vzx7Un+WSQBi6hYdwqJkw95+xIDUf29gu6CRR1zPaHStMinFx9saHOdDWN3ab9DdVgF
+    mPrO9txAGkzYJPXHn7LWfUkLR3efDne21DUfrGAFG0KQqLWc2ijf3YZZxuaAYU3gMUK209
+    G8t4uByGQ112ThtNz23ymz8tMczCkGUL9BIOfR0qPU995e+MP0BdateEpzKEdpxU9AInT4
+    V647dzSTh67YIr92B7y9EDtX1ct4DviKXbZiNxz5URMBHfn/i245Z7I/Dl2pO8RthEVrR/
+    9TtIYeHpl6DWLTyizsXZg2+shOsNcuo8Lv1fLTt80wRJgF4kGkGLjw2ElO0g
+X-ME-Proxy: <xmx:X-jEatbGWiddf4lV_UBlp_SElLwi-9v9DKBpiU3YmgNdjkExaEsJNg>
+    <xmx:X-jEatVqWRtitssbySfn700d47Xoo5lELoUGiQHCWn2x9Gm7FqgARQ>
+    <xmx:X-jEah7GAcs-jIPqoYrvDMV9-MgPDX4kD5yUL0d_wEumK-KqyhZOMQ>
+    <xmx:X-jEaogB_YoY9jL0_PCMRgdpKnGj9hU7U9iXctj72z9XxuAAuZDCbA>
+    <xmx:X-jEalQNKEGkYEzs5iB9Ei0LQQ8S9Qz1kgEo-mwkMYfOcu0vEkAe39kh>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 08:18:23 -0400 (EDT)
+ 6 Oct 2026 08:23:58 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2e6ab028 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Oct 2026 12:18:23 +0000 (UTC)
-Date: Tue, 6 Oct 2026 14:18:20 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 91512a4d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Oct 2026 12:23:57 +0000 (UTC)
+Date: Tue, 6 Oct 2026 14:23:55 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
+To: Muhammed Dilshad A <dilsheddilu123@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 02/13] commit-graph: stop depending on `struct odb_source`
-Message-ID: <asTnDMrTjUWHVSwR@pks.im>
-References: <20261002-pks-odb-move-alternates-v1-0-8a63507b88c4@pks.im>
- <20261002-pks-odb-move-alternates-v1-2-8a63507b88c4@pks.im>
- <CAOLa=ZSNHWFw5Vj_5qg16ipp1QA0pDcV8h=hOA=ma4hy6F_LcQ@mail.gmail.com>
+Subject: Re: [PATCH] t0450: use test_path_is_file and test_path_is_missing
+Message-ID: <asToW_aXYGCg0xuv@pks.im>
+References: <20261006101458.604775-1-dilsheddilu123@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -103,42 +101,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZSNHWFw5Vj_5qg16ipp1QA0pDcV8h=hOA=ma4hy6F_LcQ@mail.gmail.com>
+In-Reply-To: <20261006101458.604775-1-dilsheddilu123@gmail.com>
 
-On Mon, Oct 05, 2026 at 03:43:44PM -0400, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Oct 06, 2026 at 03:44:58PM +0530, Muhammed Dilshad A wrote:
+> Replace raw 'test -f' and '! test -f' assertions with the test helper
+> functions 'test_path_is_file' and 'test_path_is_missing' to provide
+> diagnostic output when an assertion fails.
 > 
-> [snip]
+> Signed-off-by: Muhammed Dilshad A <dilsheddilu123@gmail.com>
 
-Thanks for trimming! One more ask though: it's helpful to retain the
-diff header itself so that one knows which file this is that you are
-commenting on :)
+Good commit message, pinpointing exactly why we even bother to do this
+change.
 
-> > @@ -28,7 +29,7 @@
-> >  #include "tree.h"
-> >  #include "chunk-format.h"
-> >
-> > -void git_test_write_commit_graph_or_die(struct odb_source *source)
-> > +void git_test_write_commit_graph_or_die(struct repository *repo)
-> >  {
-> >  	int flags = 0;
-> >  	if (!git_env_bool(GIT_TEST_COMMIT_GRAPH, 0))
-> > @@ -37,7 +38,7 @@ void git_test_write_commit_graph_or_die(struct odb_source *source)
-> >  	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS, 0))
-> >  		flags = COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
-> >
-> > -	if (write_commit_graph_reachable(source, flags, NULL))
-> > +	if (write_commit_graph_reachable(repo, repo->objects->sources->path, flags, NULL))
-> >  		die("failed to write commit-graph under GIT_TEST_COMMIT_GRAPH");
-> >  }
-> >
-> 
-> Shouldn't the caller of `git_test_write_commit_graph_or_die()` send in
-> (repo, path) and we forward that path, instead of using the path from
-> `repo->objects->sources->path`?
+> diff --git a/t/t0450-txt-doc-vs-help.sh b/t/t0450-txt-doc-vs-help.sh
+> index 55c0fb3cb7..a2da2b0192 100755
+> --- a/t/t0450-txt-doc-vs-help.sh
+> +++ b/t/t0450-txt-doc-vs-help.sh
+> @@ -116,13 +116,13 @@ do
+>  	if grep -q "^$builtin$" "$TEST_DIRECTORY"/t0450/adoc-missing
+>  	then
+>  		test_expect_success "$builtin appropriately marked as not having .adoc" '
+> -			! test -f "$adoc"
+> +			test_path_is_missing "$adoc"
+>  		'
+>  	else
+>  		test_set_prereq "$preq"
+>  
+>  		test_expect_success "$builtin appropriately marked as having .adoc" '
+> -			test -f "$adoc"
+> +			test_path_is_file "$adoc"
+>  		'
+>  	fi
 
-I'd agree if this were a properly designed function. But it's basically
-just a hack for our test suite, so I was aiming for the easiest fix
-possible to make this work.
+And the change looks obviously good to me, as well. Thanks!
 
 Patrick
