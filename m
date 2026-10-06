@@ -1,223 +1,134 @@
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44E43DDAE4
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 21:12:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791321122; cv=pass; b=VUPz863OgXLYU6M/zX+J+2lDhb9PXHSWJEf//xLmjweofG+PlRwI239z6oTggQ3nGXgZwqeewHBUdMazaTWPgJyAewxvOljJCWOfNEs5ANHtW6XX8R+HpM1Kq4ySMO9gk/V1ozS6qT9UCJcQaOMcUg2ZltzYX4xXmTM4sVE0unM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791321122; c=relaxed/simple;
-	bh=AsF96pOrjEhi0gXfH+M/6Z4CXRkDQOrl6v2q/khSoD0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=q/a5jWqXgSUa4uyL/5NuJn3FO9DSFdaLN1+cnTnV2uEwJWdJ+HYIaPFFdnvKOoBBoLngcaIV4Z588e+wnDK7e//AInbu8Vx4sedfWFa7jpXjSpwDjMAErajp6FJhdKC0RzUyKcBhpvUe363Ia6snYJ6whO4WJ1qgBmTGHeg/vVM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qi7NIp2T; arc=pass smtp.client-ip=209.85.222.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE95938656C
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 21:50:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791323454; cv=none; b=hpt01ThcgaiNnt3GeEAVWVazOuQWR4hH2pCcQ0HzOQGdyU4+sBHtM4cUHkappMYtfqKzHmlshmdo1KFtTVYO//biP7YiXmw3ob/Ume77PY55h6Me4idozTSc5+9msxNQEXVDkGtMEguIQeFWQhULMush7tW4CvJ8loQoOhT/7jI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791323454; c=relaxed/simple;
+	bh=2YwDWKqqmMvqlhhpNv2b9qa55gLIvLbhj5bvv0je85k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OcMq1BKBv9VQAVHDsLuUBM/GoBWKzm3dSzyKSSc/11VxRlY/084TjcyYg8ZdtkwZO7vJunxU0HAVQY9Zc5FxZ8Rn3PLseBmp3dnOoA+mPapow77pj6BDmswu25OwhQSAFKS9uDIzYXWorJuIWUexeWu3Uu4NrZKLIZdBbmylTd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oXEtGWek; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j3oXfVS3; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qi7NIp2T"
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-988d2fdcdc4so2047946241.1
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 14:12:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791321119; cv=none;
-        d=google.com; s=arc-20260327;
-        b=NjSfj8cNquui+h4r86GxfP4A6eZ3t2dvc2wOUB9KWKZpF6M9jihq2DAdxAVSXW1Tyg
-         bvWIOHdUYE4a4spjN77ajLNskjlH6tj8aUDPfpOt5uWPlCP2xqC1Xz+Sza87darGoArG
-         wHiwf4a9B/D1vxdisiODZDkTyvSStckVgBIa4uZnM27aj9pFar7VqJO0q2BaviHveotQ
-         GIBumKJP1R5KwRUBUzR3PfLkfoNGZHeiiATHv0feoHas7AYd0baLFPxCgSY5ivzS+W8D
-         lvVTqPYtJK+hyVSam46Sz0HKuBDGYIGcNlB1w0poDf7mVKGoODgjmyEVfTXvRBqJZAuh
-         FEdg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=qqxdhwE6rYGOym1eoYB4X2Ootdgy9iZnKctJtNewIes=;
-        fh=Uv3BoY/4RM9pxrqM1sEzEr9JvpUQwCc0FATUaMK8DqE=;
-        b=APxd0NXkOCUgBsY87xp6HOB7dPN/AsGKEYcD7Uou2n9cIHGwD1iQqsIAKJdO0XKdZU
-         v4uE1HLJSJkb0qH3TQdIo5D5GOidIPCiC0x/UdFhHbm18R1JV6Pgr7v8jXB5xRVBLuFS
-         qKUBcOY6GTJZbrS0KU9rNBXqIx0e2Ggr0CsMIJ4CxuRqZhwgF8RJwPaZFlpoFLEqLlkb
-         K+hm39/vNry8QEZEzN4ehYMx+pl3sWGmfR2TrzEwJjQ0z8+X5guzIgzr6elIc5JRTiOm
-         tucQc9+1glbPS6goXzlPqsPEe9Z+cljJqp/vBspRgrvicC5uOd2ZU79hDoGl5DLMelMp
-         peWA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791321119; x=1791925919; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=qqxdhwE6rYGOym1eoYB4X2Ootdgy9iZnKctJtNewIes=;
-        b=Qi7NIp2TtFrLRJTWUa/f5c8Vd3Lo44KxIpSPabnh6FRZw3iIG/WziciOETmr9HfZxW
-         wKdmF0z9p93PpdqNd4yLJ0iEkaBGdwwmw4CjGBGlhzigyrQ9ozz5J3nuyN07/c/PbCrD
-         STCVPx54jEs24SwAxBEtE3maEcwS7jLIoBkYaK1G7pIF9fv32RrHShjrw1h3RhlRaHHL
-         uk3cxv4RzqVTgOFQPGhs3CrO+cWV2X6/dOf9AIoPCOX8/ClVQ0u2hpJrxM1O8Y/GjGFU
-         BYKpeME42qKAKfhDf73KqzYj3AmLm3fWeH+gmxUi5tytCkT1n741eSrWvIvwmjr4SL/0
-         pW0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791321119; x=1791925919;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=qqxdhwE6rYGOym1eoYB4X2Ootdgy9iZnKctJtNewIes=;
-        b=hGP+E8UUmA6xFIwflxV4XQEtbk1e4eJ8heN7C+3jUnWA/Hl93THPV8V3DFAkhYCDb4
-         bSx4udpL9xTq/TiVGtT1yIP2F78M/FpvL6NYRD2oDAliy7VzrgcM/FwPwmUYgDR5apkr
-         0r233uPpoiH4n9jacrdKCjXD16lSnPDw2yjcsc2bfCyS4kQsrotimTi2KcKhGvQjQ1mL
-         tQZFh8i+IIqxTK7RO/lhmeqVdn5Cm1B6uJiVrVSxMUPl0tMcY6iPCNaBnOb49zrw82s8
-         FVy0M4NKKLNMj93kRsev4NBmaP4jMGQ4HIWQomZwwDiFYlKiivRohvIudef1jOAJ85NE
-         VUWA==
-X-Gm-Message-State: AFq9FYIb5fyisYqykO2CtWdMuWoVbhYIiRiYxA+6H26v+RwC3KYbS8uB
-	Nv2xLVQ21N5KVkaueeF/pRAecUpTA4GSZ2em4fzKKJ7b+94RFAqjW4BfOyHAJDPnEAWtj/NL1PE
-	1FrtUMkwUgPP1PRIM4QVV4EI/0gGR51Y=
-X-Gm-Gg: AYBFou09LOV2yF7vboRtK6O/LDSX+tUf6zffDqEji0TsM/fisDppz19ODxfiVHT8YPS
-	mI0+3R9BFEvSFaYADqULUy2gPOgs9WQqzYPHFwvQ1iHMerT6MQ/YRCcq6GY68UdgdBoDG6ntgRR
-	O/FzcSIzdJ5eXYWQsVxEXpRiT3+D6avZ5wsIfhyLUK4C7IYdPgW+QuGUAitc6iTM8VS47d27Mzt
-	n0nbNQt3Dcn3myNAgpPRzhXd8+u/2CF9r0eLO8/VQcrnw6l6Hou3pdeeorFEMmCTHFzps1wVD8L
-	RzAdO0OBJZv8vdiPEJJNaDkbrDwIAHtON3skOPYM4VofmfEdxgCxGEiTUPU6LMlkAvKJxEqHgR4
-	4zGyR75lBWzlf1WWvEpppYOjWaQVkZCTNbDFXDy/bLeoTG/g=
-X-Received: by 2002:a67:e714:0:b0:7a6:c647:cf50 with SMTP id
- ada2fe7eead31-7ca386f371cmr17444137.8.1791321119454; Tue, 06 Oct 2026
- 14:11:59 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 6 Oct 2026 17:11:57 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 6 Oct 2026 17:11:57 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <asTqPcCl3RdS8YN4@pks.im>
-References: <20260930-kn-speedup-packed-refs-v1-1-111cd03d9b0e@gmail.com>
- <20261006-kn-speedup-packed-refs-v3-1-a1c76b1df9e0@gmail.com> <asTqPcCl3RdS8YN4@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oXEtGWek";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j3oXfVS3"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0CB057A0048
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 17:50:51 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 06 Oct 2026 17:50:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791323450; x=1791409850; bh=oxeNxzNE89
+	nLWmSZmwm+0VDwMByi4e8L8V5qakoPqRk=; b=oXEtGWekpcVOTxvy3k/uOXKCfH
+	sbW+uz3CGLRUQUQ/r02Vc/GsUYNO7s7EWDIx1e5FpVU0JQDYz60vgoZBRr9jF96t
+	XFlUvcDfQCCSrfRfAmDKHVrsmeknbxWCj3G4PHWw24TzyVEmx12Wp21ZWaZeNEMs
+	IzdqV4GjgBKkyNb2QYGb0FQKIgYLITMbXghV+AEUqzQ+IGAt6QF2mxz2vXgB8JLZ
+	Ihz/LPiANhElnqF0KYHxFyp9I8eNo4aPn4akIimSZ2Ei/1tB7vYrM/A6kj2xdsdt
+	8YhmGaPjVZiV5N1gkEsdKqV6OCSTwdJ6TSiztv2DblfQ65Imp9TQp2bXeDKA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791323450; x=1791409850; bh=oxeNxzNE89nLWmSZmwm+0VDwMByi4e8L8V5
+	qakoPqRk=; b=j3oXfVS3hs9AtyW5rpGQabWP51u4PrPp6ILUn7EbqsW6QZMNelp
+	NS+UIf7VN1D3mvwvCv54S/wvwqxqxtUEZfJr8vvOVe7nG9LShJznVcubuebD4rY6
+	0CZOmMaYMl0K/PXawVJQTRCsNwQZTY2KLqbmLvzGh2TWSeiRJTKV4IQk9D4rtTOp
+	k07as5uv97gxGhYRgYTWgFwHOpwqRnzwddkRxQ0SG/DZ77kSBmkfQpc5cCOEldP2
+	0EHWCtJp3v34cp6X9WH5bBgro/4WISM1zSETHIxoSs4ha2aDqz5PLwZXV0ygNC0A
+	yAM2Y+r7II0mIsYlsb4/BLCF8PlW1ROS3nw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791323450; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:FGz4UGBtsNE4KST/KbLLXvJ2ZGg4cqB82U2NElnZuQdCAjL
+	Ef0QbZ1bvEUQouROvGYpa40GgQINinny/oObehTSqLvYMWHCE8cL8U9+BQWmEnGl
+	jm4W1EGLjJNnMDg9SwkY/6ZQYhIuJlI/q2bQW2x6xBkOJYwVSbb66rhkMC5d0let
+	tgUhhGeU3iQyuNz0sZ4ayxsZpnAwf0DPfMC2zFEGbphGwEKsRbPmRpnOJSQIus9O
+	NYPn0CWWwEaqDudVtsLAdmOodnQmFnbsYI/KTsQ9RR8+ZC/ggAj3kD275WVQl4xe
+	LxZUpEbTsr4sIcqGjK9XwKHaDngn7EPwM3qfOjA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:ffYp2mCb9hPH0IZL7HJ5t3WbHWllIJAjwfrwJfmyfuQ=:2YwDWKqqmMvqlhhpNv2b9qa55gLIvLbhj5bvv0je85k=;
+X-ME-Sender: <xms:Om3FalDpUriQfeKYAGa8nuA1L8J17oi7NiM__Y05dz0-0QOdNa2-FQ>
+    <xme:Om3Faqj32dEA6iXDR4ur9UvSGKn_fKiG5XAqFjjTDw4d26B5Dhb-mX_22vh4lX26F
+    6Pn_GfpVcTMKsPCLPSqBhF57Odbwbj95XUQzGldXb6_0KEtz0Gsow>
+X-ME-Received: <xmr:Om3FallwGZtZEV5--_obuoJJSq8leU3OLzkamsG9u7P_ubn5pOldXuOsMkPPL3LPtDvboGpX1EtEhmhr78hl8sKVl8ioM22KoAQs>
+X-ME-Proxy-Cause: dmFkZTG0ZB8OFz0vxjjlpRnKN3pOJOxhNMGdmKruFeZRhERNACRDNv3tLGTjJF33ZG50Uk
+    XEREebX7Y+eO/6fsrrqMM9PfSJhXfPJj/hf01jIo+a9DsTMEb2LIYu0wsEvEOxiI07FLKO
+    QslzyvzcizBBsed4he7wzea/otuBS5gakr0VeVvCMyo4Odek0ISrQ0/x0jwUnUIyTNSI4v
+    sgyTGQPLjde3EL+ba/GtAJhwBymW9jJLJrCxvKlxALndV4BE2+UvPEWuwoI1ZYMnEb28RP
+    /oBeE+QpTeL1+uWS3+qWpT9K1aTYLE3czjbKv7PVLMKUGRfRvcs81dOlil/2Hoj7ukXbaE
+    VijMq6VKyjwNn2U30Z2RfXfB01kLNUF5xMRfTmkHDIWvtn4aOizXGUPFbU54GbVzq+7Zp9
+    qu05qHyYf4BUs4tKzgn7vqiZIZmfISudhUS509Jj7ggFVqollYSsPwiCWJ5N29ldbX2kn7
+    zcceSsiKVljTP6SKYsdsTApCHtHdKLDeatvHM+odY12LgdA72Pwap7WmeDWQPrWTGZl1qQ
+    Ich8QDjtJ84PxSjeGJZ3lla/t9oqqMJ0MRYnp9PNqnkGFk/BfsY1440cPLtni2SoI1W6cI
+    W0y3QMh/chbm35N/8nJ8ketaJWhtr+awwkBWFA1GG4dG6suAtuu0R7jw55NA
+X-ME-Proxy: <xmx:Om3FaurZ8H0wczxdWAYzvQleXI46U0po6zdym2ngAAdS7YmQvQU6Sw>
+    <xmx:Om3FamE6ToBvzV7zbNpBHe39r96IQ16GzKewPBT2umRChy7osFnteQ>
+    <xmx:Om3FaixPxCc3mNYnsR7uEd92Za5J-_6HsaCQ5SuN0JzFD0j_-k-P5w>
+    <xmx:Om3FajpRMvrpLlLESyWGZIlQhRhj1XDmr5AxySPQmyxO-_7RwH38qw>
+    <xmx:Om3Fagm9GTegZ5Eq3soQH6D62XnnRKmNj8dGk8kT_bSXmw6znI4fOcIA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Oct 2026 17:50:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org,  Mae Eckert <mae.eckert@albellus.de>
+Subject: Re: [PATCH] doc: fix shattered.io link
+In-Reply-To: <89f21a129df21b115d5faded2a74a8a5921d62cf.1791307032.git.ben.knoble@gmail.com>
+	(D. Ben Knoble's message of "Tue, 6 Oct 2026 13:17:19 -0400")
+References: <164ef290-463c-4a7a-92d4-00a56aab71be@albellus.de>
+	<89f21a129df21b115d5faded2a74a8a5921d62cf.1791307032.git.ben.knoble@gmail.com>
+Date: Tue, 06 Oct 2026 14:50:48 -0700
+Message-ID: <xmqq4ieycxc7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 6 Oct 2026 17:11:57 -0400
-X-Gm-Features: AclHuK_etyMjOJ18PpposOxTRDbx0mfAQTUOu3qPfdBZLU34TxBdvIj72nUU1ps
-Message-ID: <CAOLa=ZSbT6AHfU178khN7n9rHAmNE5HEM1acr96HXqXpRcSzmg@mail.gmail.com>
-Subject: Re: [PATCH v3] packed-refs: use `fwrite()` when passing refs verbatim
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, toon@iotcl.com
-Content-Type: multipart/mixed; boundary="000000000000011679065d3273f3"
+Content-Type: text/plain
 
---000000000000011679065d3273f3
-Content-Type: text/plain; charset="UTF-8"
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Tue, Oct 06, 2026 at 11:18:40AM +0200, Karthik Nayak wrote:
->> The `write_with_updates()` function uses a `struct ref_iterator` to
->> iterate over all refs to write to the temporary packed-refs file. It
->> receives the iterator from `packed_ref_iterator_begin()` which takes a
->> snapshot of the 'packed-refs' file.
->>
->> While writing to the new packed-refs file, writes are routed via
->> `write_packed_entry()` which uses `fprintf()`. Even for references which
->> haven't changed, we use the same mechanism. Instead, let's track the
->> position of unchanged references in the snapshot iterator and directly
->> use `fwrite()`.
+> Since we published this document the domain has been taken over and no
+> longer reflects the original content. Link to the last good Web Archive
+> snapshot so folks can still retrieve the SHAttered information.
 >
-> Nit, not worth a reroll on its own: you state the status quo and then
-> jump to the solution right away without stating what the problem is with
-> the status quo.
+> Suggested-by: Mae Eckert <mae.eckert@albellus.de>
+> Signed-off-by: D. Ben Knoble <ben.knoble@gmail.com>
+> ---
+>  Documentation/technical/hash-function-transition.adoc | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
+> diff --git a/Documentation/technical/hash-function-transition.adoc b/Documentation/technical/hash-function-transition.adoc
+> index 241d2f763d..f6b38ddd50 100644
+> --- a/Documentation/technical/hash-function-transition.adoc
+> +++ b/Documentation/technical/hash-function-transition.adoc
+> @@ -29,7 +29,8 @@ advantages:
+>  
+>  Over time some flaws in SHA-1 have been discovered by security
+>  researchers. On 23 February 2017 the SHAttered attack
+> -(https://shattered.io) demonstrated a practical SHA-1 hash collision.
+> +(https://web.archive.org/web/20260207211148/https://shattered.io/)
+> +demonstrated a practical SHA-1 hash collision.
 
-Fair, let me amend.
+Thanks.  Will queue.
 
->> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
->> index a73fc6aca7..43ad674cf4 100644
->> --- a/refs/packed-backend.c
->> +++ b/refs/packed-backend.c
->> @@ -879,6 +879,12 @@ struct packed_ref_iterator {
->>  	/* The current position in the snapshot's buffer: */
->>  	const char *pos;
->>
->> +	/*
->> +	 * Start of the current record, set when advancing `pos`. Used to
->> +	 * pass records verbatim to `fwrite()`.
->> +	 */
->> +	const char *record_start;
->
-> The way this is written makes you think that `pos == record_start`, and
-> thus one wonders why we even need this separate variable in the first
-> place. So I assume that we modify `pos` in some cases without modifying
-> the new variable at the same point in time. But if so, the above comment
-> is not true anymore.
->
-
-Hmm. I only state that this is 'set _when_ advancing `pos`', Why do you
-think that this would mean `pos == record_start`?
-
->> @@ -1233,6 +1240,19 @@ static int write_packed_entry(FILE *fh, const char *refname,
->>  	return 0;
->>  }
->>
->> +/*
->> + * Write an entry to the packed-refs file skip any formatting and directly
->> + * write to  the file using `fwrite()`. e.g. when deleting references and
->> + * remaining refs need to be written verbatim.
->> + */
->> +static int write_packed_entry_raw(FILE *fh, const char *entry, size_t len)
->> +{
->> +	if (fwrite(entry, len, 1, fh) != 1)
->> +		return -1;
->> +
->> +	return 0;
->> +}
->
-> Nit: this function is somewhat ponitless as it's a trivial wrapper
-> around fwrite(3).
-
-Yeah fair, we can simply inline this.
-
->> @@ -1530,9 +1550,13 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
->>  		}
->>
->>  		if (cmp < 0) {
->> -			/* Pass the old reference through. */
->> -			if (write_packed_entry(out, iter->ref.name,
->> -					       iter->ref.oid, iter->ref.peeled_oid))
->> +			const struct packed_ref_iterator *packed_iter =
->> +				(const struct packed_ref_iterator *)iter;
->> +			size_t len = packed_iter->pos - packed_iter->record_start;
->
-> Alright, so `pos` and `record_start` do get advanced independent from
-> one another. So the comment that you have for `record_start` is
-> inaccurate indeed.
->
->> +			if (write_packed_entry_raw(out,
->> +						   packed_iter->record_start,
->> +						   len))
->>  				goto write_error;
->
-> Other than those nits though I'm quite happy about this change. A 20%
-> win is nothing to scoff at, doubly so because reference deletions are
-> extremely expensive once your repository reaches a certain number of
-> refs.
->
-> Thanks!
->
-> Patrick
-
-Yeah I agree, I'm quite happy to see the 20% drop too :)
-
-Thanks for the review. Will send in a new version once we sort out the
-comment on the field.
-
---000000000000011679065d3273f3
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f68a62c66c143bef_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1yRlpCc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNk9tQy8wWFNFdDVYN1ZPZWhXVWZYYzZ0S3BxOHNZVAptdTVlaUhHOXZx
-aHQvQlY5ZXB1cEZHTlJtdTRLcXhxeUZ5ZmhIQjliUU9vQ3RHRU04VDYxUW1XWVFVbWNBWmp4ClhW
-WStMdmtzbkF0RU11dTd5M0k5dzdRR1JVRFB4M24zV1BvWGwwUUdnVzhXczlZRFlhV24xWG5vSWtv
-YzdJMWIKSWhzUzh0eWROMXRXd3g1YlNIUnllTlVJb29WREY1S21LbUozNld0WHhpeS9saGdvcmo4
-UEJGanA5VjhLWlRBUgowM3l5ODF2RkVlLytQOHhhMm1JWHYrUmZOMnZJRmM5NVNGcjd2eDA5WnA0
-ODZsZ2htTkVzdmZXUG0xYTY0d1g5Cko4YkhaY3hhVXM3MHhhK1JPZ3dtK3RtODcyWHJTbGMwUVJr
-dkhzL01wZHlpWk9qSTdaRFk3Y0FjS2VXVnl5MXEKQjgxNFdOb2xteUx1WkVDUExUNzVLUUhlZFpW
-clJIbCszR3VkQ0dnV0NROHlLVUtWKzcxc1IvLzc3ZkdKdnFjSwpiaDh4VktVYzdNNjhoVnhYR2pL
-ZWVpb3V5ZTUrRU5XVE15bXRyWm9yWUI1UlUvV2ZMRlgwNDRTU3F2U3c2NGh5Cm1BZTBWOXE2UnBH
-SnhMdUtpaWNhNjBFKzlUenZORDBaUnJ4VU1aWT0KPXBMUjgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000011679065d3273f3--
+>  
+>  Git v2.13.0 and later subsequently moved to a hardened SHA-1
+>  implementation by default, which isn't vulnerable to the SHAttered
