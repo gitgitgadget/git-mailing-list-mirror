@@ -1,100 +1,103 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6EA39659A
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 05:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D07A3769E6
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 05:59:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791266014; cv=none; b=Q5Vpyzbp97n1iZDqYHTgQgVIaKnttkILwnuX+pj5VEFFonoxvciUxjxYP93S+fXzdhCuq8uWBPWKkPxc0/bWlkw91ONXIeVuVJTW+zh4wM05vE3jmD5fKuiXv9Jm28Zvf8+ZV4zknQJawOlCyhwOr1ovcGI48D6J9FLOp+P8wGY=
+	t=1791266349; cv=none; b=lGZfWFefqXQKnPAlN2oWuiy0ssGYer73MIgfMZ8ydL+4WH/QXQTna2QZfthBdSELODpKYDJY6+8jb3VwYSFo4+Rqm2RsVP2V9heU52jsBccrocqDgaF18wBkaANTSPObIjlSxYUI0pzIxWmu27C6dk100Lzm7UnktnT7Gi3hqoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791266014; c=relaxed/simple;
-	bh=DQNTLVc9KhRvF2yW67zVRkRL7I98cORdBMzvZisDHgQ=;
+	s=arc-20240116; t=1791266349; c=relaxed/simple;
+	bh=zaV399V7Lh7vSkaw9SIbHgTVA2dmxeSC4MuuUwvUCoY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WEUy2ewabn1zvu/a2jWSq6oOJPb6Ad58feDKPBA6E/+vQUbShYw+QVVYw60hSQoqeErEgmQt1F/oiJHVQlDG9NZEH2iy+mBXm40SwHf3ZaGP82i+UHLbMkw1aIIpssHvVXZfdsxVIJU2PFTAEa3uE8P/AAuhggJR/LqI4rfWbLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZRO7iDPi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fojpGeZ3; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=E/fd5N5DR7krDAxVVSGqXqwfFbu9Ae2VdME82zi9HirTJyc8qj9NfmF20e9pt8JDNgaao6njVB3ZY8v4266sO6AskkkhvJPejPDIda2EVP4M5EddJqp/Aj6X2rxXB4wG0Jn7zj1S4bORlZOeAzvstvZzuvAFxyjA0pFpl3ltJBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Lgi9jmbC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OFXFZ145; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZRO7iDPi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fojpGeZ3"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id E39C4EC0B9E
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 01:53:31 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Tue, 06 Oct 2026 01:53:31 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Lgi9jmbC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OFXFZ145"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9B57AEC0AC6
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 01:59:06 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Tue, 06 Oct 2026 01:59:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1791266011; x=1791352411; bh=AFLVwMzfi7
-	FPAMBlg+FlB2Do2J8ctM8KqjsU3pDwa5A=; b=ZRO7iDPiBirfG81CNassEqrHmr
-	yjJyTEnT5mdXm6yEaS/uZyAT1mPB5iy7JjBJXAHBwr+AF2wF+OOX37MQqfKG2Yqj
-	+wmJkgM+DIzXi6uIUlgs2E5UWOpk/TL1LhK6lZJ7QFlnj2zht3H/tle/01dDupse
-	Xx26oeG0jq/2/iUBnRckZ1P9OggkwvQwO5t1JtNFDCTaKuwz/y9NA2HAZObsb50w
-	qMc63gidVRIbkGsqjj2WAsNCjtNVGQ87oCsFQGS5O8wyT2Zzg3kiNevaiDw7ENbP
-	kAhmxYt22qfCa7kN2hAQ1B84bn0Ju75b2KDLtnrkivwWsI1RGpwUG4rQF5Cg==
+	:subject:to:to; s=fm2; t=1791266346; x=1791352746; bh=r+ste86LZ4
+	qPy46YGlobD0ac5afQVzGhtSc32Iwhv28=; b=Lgi9jmbCa9B9bzKhZ11t4HRjS1
+	poh7/+D31er6rmnWck74tFO1uK03pPOQUjbqTWatAf1poQ3WY7c6YI4tOl/DJERX
+	f6a8wTx+r8/eiMOixHUr5b4b9VujHxMel8xMsNPiK5x1P/xCQ/UrH8NESCIbrZpA
+	00QP1PN9OxmH8DC9ZQMB2aE1jXcXlB/SQ2GmcXTH057VGN4jl2V1g41JaMpn2OWB
+	9gct9cEGsB5lCGSYwQiva9fcuZyOBRfKluCUZ9/UerN1Fgaw8F+zdkMiIWhLsxJl
+	fe/j18Mhe0ii7MFb80PYTVPvhd/JAFHb0W7AVkYAEXNKWI8lt5fxAEgSlm7Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791266011; x=1791352411; bh=AFLVwMzfi7FPAMBlg+FlB2Do2J8ctM8Kqjs
-	U3pDwa5A=; b=fojpGeZ3U+w9qbD6/bucf8XA8cE2QvsvFo9F0q7X8AYmeWXnCwT
-	0D2oTDwBKK/Fuxe72IhlMc5k6GA2U0r3byoSNTV/0YeWtDxJcYrxFTyedX/8OlIb
-	F6vFkIUvAbQ56SYUrnyBHKB+h5/LWjNmxf7dsV/VXHpf+luOSgifa3dVrV/GgePm
-	oFMPeJFWbMhDSgqmF8tVFaetC4RdCeWaaMUUZeWbMg7nEjlj39aEcLJb/QG35Vr5
-	7Z+MfQuTb9/GdX569YQQ2/Q/Brm6mOkIhe+5/tKRFAjJtHp3yQF8g9p/qBzPB/gT
-	jFs8ETSd1NdNsW0GMlOZgyrbD7U2kwh5xcQ==
+	1791266346; x=1791352746; bh=r+ste86LZ4qPy46YGlobD0ac5afQVzGhtSc
+	32Iwhv28=; b=OFXFZ145K6XbiV/HiF4CZNbSz5MHix5Hwrg3akDiWPURkz5lnOg
+	TB9q5x+JNttjGmwm1TPLhkio0J+jVN8cgun7fIEGxyvATlDmNSe/0KxgdZf2v0Lb
+	BW/+G6Z/N8eWf8/aPWJpo5kmLpzbkXRK1D1fZyyXi8bwwjMG929DQQIti+jNxVQA
+	VHD9gCyGdZHDfPcKLotNN0f0zgPP7a5GL29nxms4OD/DtciT+c06p07aNDtY3Rqk
+	eavzbDtolX2O+UPY+K1GmvBcyiAJ6b31330lqkCNYLk3v4Qfhbc0iwKd4vut1Pz8
+	Zt6CTTRZsD+xso4CFTCSYJvb9OaZgYS1leg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791266011; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1791266346; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:vaP1DcJb5rHm1hfWuR9qx3+9BEF71J7huQ6NL+ZqEfjFNtk
-	fYOLvxE7w8RKscxtrroUhUg3EUlRcJjwZ49xT307TOhKlilLW52os3UWRlO8qMrs
-	GYasEtswl3lysU2E6bTEt452HP9sA7TZX0JtwK4Y5+U0bEayWENd2ASW+TVMqvTJ
-	QD9l8nlSburce/BFicsZZtgVL0J5aOIDIMeqQvYQC0g6l/9Qg4+VyKcNmDTbMVdP
-	LwQd3169HxT5VXZv8My/AzvdYOreTgl4zAsVdaMoUoI6L6d+pdOggpXqvoVigr30
-	YXyZGDIwwvm4anMncQrm249F5WDrAqU/bFBXGkg==;
+	s=fm2:rsa-sha256:ShfDbonPszbZbnl6SuZFV8N0jGnmwS2KmBPNUvFKBFmBwUw
+	OiT2+vAfJB/r7PZrYB2AWXGaa4DaovW0YBbX5OyOfHEhuoRDCiLIKCKrSSh7HTMI
+	3Xuq9yhfQUVGxeZ/Ox1D+UG+GpoD1YaPB5k1+s+/dpzxx+iyW1zIeAUzOC44EoOU
+	gM4FvyOzJiIvfMqGQ38vbQRLNryZabYg8ZOPy77ppyZa/lSNIPS2lTqmPPEXCZAD
+	B8kJzWqxb9glporj1aCMbY8jGHpEkFoPqkE7pRjSENi1Xr5UhQgbxrxlUeEsplcD
+	QpsyZoXoSZdXBYX0rzsft9p6/JFBGfEs3H6cIyg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:VNHzQWy8c7x6zwpDkboREBinRGOaAA8Sz5fzb0AY0fI=:DQNTLVc9KhRvF2yW67zVRkRL7I98cORdBMzvZisDHgQ=;
-X-ME-Sender: <xms:24zEapLd5onj_lp1gIPqKLmgh8YXxXf381HqUp4ZCdfjJCJ3jkpg6w>
-    <xme:24zEarIiidniM6rl78OYwXN3vM1Odje8rV-5v7kZGY1F9YHcKOM_bKwvefx9u0geL
-    OHe3k4Z-T07yXORkeHceHL1vP7Pn1aMRVI2gJhFWABbPf7tfRCFug>
-X-ME-Received: <xmr:24zEavWn8GCt4_Jd8wE5V_pfl7F8ep8JSHIxayKDZxRnpfWWdZ9uzNIEY7eUTTceGzhZog>
-X-ME-Proxy-Cause: dmFkZTGH03yASWLhQfsQ600cZuy3wlmD7pLdi8MoKmaWkml0SbTsW9UYwr1nx0+t1OqW+5
-    8VoRtjJU31Okfc3s/+bwkNurCNk8SydQrhwLRNZnbkCkuCTSqZl+a8N39XkZ69ZX1wPY64
-    J0TRP6i2V6VXDhsog3KMHTagDgrmk7kSogm3+nt4i4lrnOEOYMuFJcOQG1QJ1sGxI6cGx2
-    tjcqHoiV0oX5+IswqiL4LDiYlHzOEFuA/s1kr8hDv0+8rSJViCkLtTynnN/D1pSvvEtwy2
-    F52Ei/vNozllXaZmBg2i+xBbnTdXy3JD2gK0XsZxviSAlIeYaKbytaT10BAX6nli3FucNP
-    /vXxs8nlR9PL/ORHVrPHLE5AFb/W26P/6v1jcNPBRh3qiLX0wdtbCO4nEYepJYxfJ8wrEP
-    qP4h2vlWe60ULe4W16IJM8PGX/iAWoCjJZz8A/XG3L+lXGvfJcWTejR3yzTDRSAcyNFWnZ
-    11yUl4nW/7OLa5ulukNA6DfheswnFSLyDvgN6uZQHBPvD6AZgwuT2fdkO02YItVIQ6Pgg1
-    IPeGumspwU1bHzoGjhIHtlXIe73I+FGatyEvipjsQ7VZYcrH909fpQpwEs+uilqF9R0Qup
-    ZVMNWCh1Q9896/MhFq+8Noe6VwzRjAfcaqpOgBq1Q1up1xi1AkhNTbKp3a3g
-X-ME-Proxy: <xmx:24zEaljqE_El0G2OEhfTcxwC2jJrF6bFaVIqV4Q8CkRsfgvmQXE_CQ>
-    <xmx:24zEai9V7Myh5G8HhaYwiDOyEpCtK_Tnni0qXxbz_vQ7J4d_ULv_7w>
-    <xmx:24zEanBqFHxjvs_JRu8P2vfQ_efgG-DNDodE8WYs4A_k2dOBSmK8tw>
-    <xmx:24zEanKkJkdkZCoLVhKY9Yz3Me4-v3Som2uanfkuP7ZG1egoCIROvQ>
-    <xmx:24zEaq7hJcUhQ83cubWqXLW34IqKaMaivVd6Fd1-g1UJjB1cOAYSahPs>
+Message-Instance: m=1; h=sha256:b+jn2CdmxzUIYaBAixBDn6Rm0L8UCBVkp5Kn25NagzU=:zaV399V7Lh7vSkaw9SIbHgTVA2dmxeSC4MuuUwvUCoY=;
+X-ME-Sender: <xms:Ko7EaqSIRgXTyXEgDpvIHWJoJzSUSXQJB7A6hhjgnVuUYQSOAQVPWw>
+    <xme:Ko7EamxGKjBzKTld1QLFcC6jhe6eliK5Ea8kF9UHVgw1S-GjAYUX3yTGhYaD4WBrF
+    Xqz1BIFeCKcDQJMs2oCmyKQzY3EblzNImUkDpwI5l4TEZtBhsb8FHX_>
+X-ME-Received: <xmr:Ko7Eas0Rv37S1Sd2Bus7mKkuuEAJZxkaT9_k9sZnEaU8YJ_7SnmnrSb-qE9gC74t6F4s2Q>
+X-ME-Proxy-Cause: dmFkZTGDddFa73sywFWyXiv4FYPkbWM//dkeDYoQilWytsNBrZ9J9BO5LW4RH+UR2ELKAs
+    I4ejDoFxPEpvpt+qJYn9h/ndShR1anRRBwJXe3CoY5DrbkqDnRprtuQzVp5YsLeUp63xeo
+    X2WU5xQCaenWAAu3pyCeTsjpAM9RDHu9+Zvd0JUzRIxRwNIvfHe55NOeQuBedmRapg4HY0
+    5tovVb/M7YeTJg6UMYtaYhD6/7nHVdRVQm+qcesFWNmUxnISCII6Sjl5sb66L0qBPU9NZZ
+    pnET9fRLN+1b7y6cakcBRduBF22ooamnutlar6SRI1iD2I6OaDdKPBUAAGcSRljCD0gWEr
+    eC8fXuIKANHfEp1ljU+F67E6VhVoWOerhlF/a7JiCTE9xeZCyUGdzXV7RJ4i8H514QZCz+
+    tXFp6OGa4Vvf3jjzbJ3uPLwD0A1xBbpDcwYUxbbOU8hzSSboOKPgTLre7PG3M6WUclUbRA
+    u/x7xv0M83lSz7fYU3kx0ytdmpOpkYm7egKjRctg9lhbEYUYQgJKI0T/DFekGQ6Pms0m8F
+    t8vfWoiDu5cXPKDhS4dDMLo22J4alQe+OrYJXTh/T2EfA7riMOeYZMIfYVjay/N6N9ey9m
+    LFM0TV5G9XGqQLfBXgDxTvwn9zxZfRf2+buYcaEaEG4XRMB/iEWfsoEhE3Nw
+X-ME-Proxy: <xmx:Ko7Eak7QdKnxty--Gsp2uiPFH1WsqwyHsBtEjAmB177mumjYc8_P3Q>
+    <xmx:Ko7EavX6C3MhHP89N2x9QYW1YUnv1QqmeW0WDSutGxjwPxz3qnqqsw>
+    <xmx:Ko7EajBGBN7zqkOgU18Ktjrmk36wAtrmtkKFCfYzku_yRP_X2wWjKw>
+    <xmx:Ko7Eau4VDDvZkAebPFdP4Sp5V7Yweidg28mqS4UB_GRkUcsaYjja2A>
+    <xmx:Ko7Ean8F9XPHU8wyJf1MVWGbbSZG4X5PUhNSaISyjzs8LuQsl_UfuMR5>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 01:53:31 -0400 (EDT)
+ 6 Oct 2026 01:59:05 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 64e13146 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Oct 2026 05:53:30 +0000 (UTC)
-Date: Tue, 6 Oct 2026 07:53:27 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 18a9778f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Oct 2026 05:59:04 +0000 (UTC)
+Date: Tue, 6 Oct 2026 07:59:01 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] builtin/repo: rename "references.format" to
- "references.storageFormat"
-Message-ID: <asSM12B35oka08Nu@pks.im>
-References: <20261005-pks-repo-ref-storage-format-v1-1-819a181572a9@pks.im>
- <CAOLa=ZTNNY_XuixqZ96TK0zFfDpWvxSupxVGOnH1VGXK4KF_0w@mail.gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>
+Subject: Re: [PATCH v2 1/2] Documentation: describe connectivity checking
+Message-ID: <asSOJVUTS3BMq6kS@pks.im>
+References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
+ <pull.2211.v2.git.1790600552.gitgitgadget@gmail.com>
+ <97c11449aeae924436ba22a00a2545254e988a58.1790600552.git.gitgitgadget@gmail.com>
+ <asNY7SfEohsOSf0J@pks.im>
+ <xmqqece4j6t4.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -103,27 +106,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTNNY_XuixqZ96TK0zFfDpWvxSupxVGOnH1VGXK4KF_0w@mail.gmail.com>
+In-Reply-To: <xmqqece4j6t4.fsf@gitster.g>
 
-On Mon, Oct 05, 2026 at 03:11:19PM +0000, Karthik Nayak wrote:
+On Mon, Oct 05, 2026 at 12:17:27PM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > As part of 2f28db44d5 (Merge branch 'ps/ref-storage-format', 2026-10-01)
-> > we have adapt all sites that used to say "reference format" to instead
-> > say "reference storage format".
+> >> +Full connectivity check
+> >> +-----------------------
+> >> +
+> >> +`check_connected()` (see `connected.c`) normally performs the
 > >
-> > One missed spot though was in git-repo(1), where we still print the
-> > "references.format" key. Fix that oversight by renaming the key to
-> > "references.storageFormat".
+> > I'm always a bit hesitant to directly refer to code in our docs. We
+> > should either make this documentation part of "connected.c" directly, or
+> > we should not refer to code. Otherwise, chances that this documentation
+> > grows stale is very high.
 > 
-> The patch looks good, but this does break backward compatibility. But
-> since the command it marked as experimental, this should be okay.
+> This is totally outside the topic of documentation updates, but it
+> makes me wonder if we should pay attention to connectivity roots
+> other than refs (like index entries) that we use when we run fsck.
 
-Right, I should've probably mentioned this as part of the commit
-message. We could for a while carry both keys of course. But given that
-it's marked as experimental I think it's okay to break the format and
-drop the old key.
+Hmm, I'm not sure. I guess performance of the connectivity check is
+typically an issue on the server side only, much less so on the client
+side. And the server would of course typically not even have an index
+entry at all. Same for reflogs, at least in many setups.
 
-Thanks!
+I also wonder whether that'd really speed things up if we add more data
+sources. At GitLab we typically have the problem that we have too many
+connectivity roots with refs alone, and that is making the whole check
+painfully slow in some repositories. So adding more connectivity roots
+to it would probably be counterproductive.
 
 Patrick
