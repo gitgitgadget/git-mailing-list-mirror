@@ -1,101 +1,100 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B30F3B5850
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 12:18:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A843EB111
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 12:18:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791289102; cv=none; b=KhuoW16FqyzFxKUqHjX9ECOoO1Jkb23VzIyWM580TncJ05hLv3UIuvoeX/fszTi626yiZuE0qultzextMecR1tJViNPbnXYPj+Ff1w+aYfQq7e3XZys+/zYqCFs+S+4p3hNMJI1CBkig8pptRlDkjSVA/C2par4KFcZXtCs8shQ=
+	t=1791289106; cv=none; b=iRCVzIDZ6n4JrnEvYxYzPsFtSOskCflmWika7uWUW05bO0oliPGv2qLzQmgHOQp3hKS6Cx8hejpYGteEZvA3gmrHUffoi+Z5/q+iGLGPaGkxdiwDdxrdiClJ//SnBGajakK4QkRnE/TPC5z/qZggw3GXzvOJ1JbaJ3nJI47mC7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791289102; c=relaxed/simple;
-	bh=EoKg5c1tTbiGUlJFo0At63qRyVQ9vuRrPdA2lwgDhC4=;
+	s=arc-20240116; t=1791289106; c=relaxed/simple;
+	bh=S/0mdPPNWP12ki7GCileW9Pkh0LNNFb9JEWE5j5qx+w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c5ZUqdYIxFuk4v3KEQ1QTOK5EHeRWGh4Evs737CBSNogtR+iMFyGypm7p+OmSdtmBzkCv1L/FmEuP08lpSvhDbkwZ0mQb5OliCa2kn5MQq+O/WrvnSzqgBcDXwpgmwihWogPgLQCGsOHZXwgDlO6k0lD1EupkvPSohnH5w3lxJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cCGY8Xjg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Frt2e45G; arc=none smtp.client-ip=202.12.124.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=lUZxnrKNlDeUFIb779bfWGcak9Ezfs9GSF6oR11GontyEQd7ImjYS2aWV5Y/sp1tKhMvl7rE7j7gTS9XqmXtY54FBBBhD8OxMbYJ8ar7eCFIxxJG12B8qPo2xPq+m/7d35U3B3ep6CmX3zsOXE8MQ7PaAiPIFUnnx/8U90aBeQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QthsKK4e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gp7QX6ls; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cCGY8Xjg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Frt2e45G"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 213551D000F1
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 08:18:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QthsKK4e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gp7QX6ls"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4C3817A00D5
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 08:18:24 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 06 Oct 2026 08:18:20 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 06 Oct 2026 08:18:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1791289099; x=1791375499; bh=aU3H7Pb8gm
-	W8/o8zjkMc/T1fHOrR2JFb5oIinNf2IrM=; b=cCGY8Xjgwv2yM0JzZLVweyXE3n
-	qtHB1Yk5xpJmLbYAse/Q+c7gBXREd60yQ4rlBS8tpcUJZb9WgwK+w1oRLd7/T0ip
-	WZ4H6XZtRHy0/3WhFrL+xUum1jMdb0L4N0Zs2W/o1mAMRt+6Gp+tbETl9m/5n7SF
-	Tz/ijDSXdXcVRLVT7nUIL53sA+N57me4+qpyqEzhXYAxaEmg1Pwgpp/CaDxjsOFH
-	FbhPxBUiPOZ4v7y3xEEuQavQAlMuzYPWT3H+58S5nfz3YhPv0eTrqmQ04B4vhF7D
-	pG3PNBR3ZJptlTrE9RVVOSXlznN00Rs99ILWulnIx/ZubxJsT/V/YrpVo25g==
+	:subject:to:to; s=fm2; t=1791289104; x=1791375504; bh=FFJLhqstk/
+	1RLFGQEAAd/MUwJCH7zwI2ZEyRttYbm24=; b=QthsKK4eeca+wW2fKrx/kVI4W7
+	cmBq7khazvuldtKdACG8+q5JRQpKUL/4KThz0+ZxeEfkPqsfwa+EjQyqihNzafLb
+	Te+2J4Hs8BNUr9wfeDMr4qZyVyVafNbBy5YTQFvwDdZtDki04s4A30sCGDMkKNnf
+	+cvAdJI33n1QtNKhypnWjsngaoJfGQRamZ4gsRN38jJvqjrEbPlFiKBoAWQn/at9
+	dE6+Kg3quT7vJkFKr2HHRMqO2zs6t3Yb8YC5xJILngHX+nOY4/kZxVLE48lE7+4D
+	dJAiFMRngguNvnBAt/kjEPFPq+KmByO/a2HPlEBDbENh/NPXSs1ON/zwL23A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791289099; x=1791375499; bh=aU3H7Pb8gmW8/o8zjkMc/T1fHOrR2JFb5oI
-	inNf2IrM=; b=Frt2e45G+efxuKlRQVUPtyooFsnQuNUecKN1zJ3y8OPGhKd1AjU
-	d8yny6GBKC+l0z4I+B20rHB5gz4HCmi/TBNn4CXAwmIL3b1W1dGzcsyDFz1BVfcN
-	4xDLaR8WT6b0WGAdMBmE7Z8ED42w/5oZhZqRC0IE+P6H9vEUsfzkMB8KLyLNUGKp
-	aHsvlahyvw2a1MSwSuetE5U0G0zjBf56CB7ZUFynCMC0sOPqnx0XwjmLq86UwpR+
-	hkQ6Gq2ep+Pe4O9mx47GEw6gPuVFITuuiMaNnttXC05xfcXfq1oQhi+qwO9YdaER
-	Ej2uIwx0ROWrxTkBPetpIKMLVPYiVCX0zQQ==
+	1791289104; x=1791375504; bh=FFJLhqstk/1RLFGQEAAd/MUwJCH7zwI2ZEy
+	RttYbm24=; b=gp7QX6lsd4j3X8ImWZB6yzu3KiyJDqiB4/Sp/L7zcMaPertHwtC
+	yHQS0pLxc1i0BR+JbOLjJpAUyAkMlmjEsAVCrSyl34Pki4eNOgA8GGXEIC3YjNAD
+	1ce/Wv+Qyd/XgSllUxG8QZ7lwcdTvaYQ9xgRpXTUp8scDY1yIj7dUhb/+jPV1NM1
+	YOLvjbuU/6M53wbtNIs5vZ6TNRzVA3oiQUSWIHZlgIXXkRIvdqKfgKWAunkCDpbg
+	tQjvEnutxf5QXilNJMMjfRZ989DKhdtD51ruZgRc2nWUPJ/o8p5qw7pIBDTbsEG8
+	I5Q1EvAbguYENT4BxF3ekIF3T5SiJsIbBSw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791289099; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1791289104; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:vLruHCeBw8XU46WhX/b5FtCk7g1X4U5b1KkhSlub6uNhOk0
-	R8WboYdTDbD1Y/Vfn5Yy2TB67cJv2EwDHbPhb2xmjI+nqFdXbzzMc8ruAfypecT6
-	LdKH0gDX6hHuITw9HjwWYug265/yuG83nFoS0t9NIHhyILKbJv52sEQsi6mkcCzL
-	waW17OxD6jqwC4ueNgGhKtKXQhZUxeIWRG9yL/sQOOPfg4YFJZFLkAKkthly/5Bm
-	D4PNhgBWK21M4dI7AhQYfD3FmL3jcdKVRrk6lFPQU0WfcmWqvfUza8Zw1T1pHcus
-	L4f9cyc/t1LMb2g4/+N5ejc7HuGxaQBUopQFwSw==;
+	s=fm2:rsa-sha256:FVu7RRQaHejkwLYDGdUhEsGiK5BvgaFqp+RMbx/dWy9wJAn
+	Bl+kY2dS9hEc4g2cY05rEWLRoTEjtDbh20L/LkpdxyhYuEZBqipB8Rsa2BJZniGg
+	+Qi2qDzL+b05wcNF8gqb5plfbltl0hfl8QfgfUYJbUt1WtH3m/qkGVuc1RFZNjYp
+	oA3+DxmjEwofE4cLDmDxEi5t+YFZEuC/4VkFyguEeEJVIUYcRAaEJ+momaehe4GF
+	brZtTDVT8YW9VFN1wXeUE7rnunjX/dc5ZBqe3pJEan9q+2/S9OvpYW2gApW5bKib
+	XWANupXnJqH4tKFPDa+Mk1FKFdv4E5vpkHvvBBw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:yv6JJvwTO9ALny0o6fpKOTuD2GLCjjzGZNzXD3EMTDM=:EoKg5c1tTbiGUlJFo0At63qRyVQ9vuRrPdA2lwgDhC4=;
-X-ME-Sender: <xms:C-fEavErJsAISzZuPkEplyEl3GFMa6NwsBEjQWIY-sPuiwjmullhnw>
-    <xme:C-fEaiXbenSy7B3jsm3Y9peDJxWrcwpnuaIqPKEyyWzBR6BtNOEUp-HoWxbu33Zpu
-    lun7jTHgdnr7qUQ7Fx7hvjbNv5MIfYpQp8hTDZc6IuG4i9w7CcAh0s>
-X-ME-Received: <xmr:C-fEauyCl0n6ry95V5Jods5089GxqtWi7QvQuGD6_4HMncVwgSwARAaWxQW0_0SCXA-P-g>
-X-ME-Proxy-Cause: dmFkZTEF0L99oYUMzJXGZpA4ofOyNnRBlHizyaiugAYDwy2FHltS+Y2IaGErp910eMvqGR
-    JzxkcCIqo2yhI4uEsmwS394aea8oDVmU6kMNe5TsqlOYLUbnETCYYzy2KVLO97bh6kUHx/
-    snVi/pE2TnpHexcIJ2nx6DU9FWqCiLLOGW+9HAxROVPbnxs+RvJJTz2X4GuZvZTnnC6cP1
-    MTE3vXOM6ND8q3VT5PZyWdGZ2O3jFFF+K+hrfD6BrH2ONawpPkKosXWk2ZyKa6oLrtrk4u
-    MjcyFgJQFr3go1Zh1Y2fuZnBxnVCxdtyU//B7KwbuutIpXguOQ1UUUAw5m8782jqdXcXlI
-    cvIuAQKytI79cMHd9Vw0lHJUirL2rOLKBd1HmfgvLxhAxgnCGS7hY8tZB0CTbw+jYnpkWP
-    mzw7L4Rg+Cw3671P8sTuM/u+KVSf9lWj6zvTz4dXTgmR++x20yVRs/4t/e/ZoX7z+rAqGV
-    wUTHL4KuS8/z+XE2W8gD91arE6mkdXkWqk3BIXdrPEKfqZNiYP7uaUIr8ARqxVmAjKwy6H
-    IjmESoe+tjz1gjtqe3xelPNNIqZGyOmjSaThrBhWG5tXv2mREyHl8oEfIzxjHWVyOtST6U
-    boxgj8GSOkXERDIwIlKtVRFmLwMYhNCfBGEfVvyCVsNy5X9knk7X1AhQs0Iw
-X-ME-Proxy: <xmx:C-fEaoMPjfaaPyFlK_X-QGTC1JaZifDw7YH4ZrLX1webrZVwWloa7w>
-    <xmx:C-fEan7KiYZwKhAc2EWhmMFjrWPBsNqtYsfJOgP727lpy2ztoqWZjw>
-    <xmx:C-fEahNXWKIWLjhufBXT2zWpzJlIEqDpbnCayvb0OiXWRDdsSiF0TA>
-    <xmx:C-fEatnX8BgdHx56tCTGfhSxRaFqZIyd62w-nfek35Ev3OX1LwSyzg>
-    <xmx:C-fEav29wgQqdPWMVfMDBAno262sKJF3fDYUKAN5lwAAf9A07pxkDZ3r>
+Message-Instance: m=1; h=sha256:bX0AqtYeGre+zkG9hfHJ7Ve1MyMMVYxVhXfSz7dcREI=:S/0mdPPNWP12ki7GCileW9Pkh0LNNFb9JEWE5j5qx+w=;
+X-ME-Sender: <xms:EOfEatM9DmGmFK-Sxod8tIoYIouslmFTdheo_TGEBmmMjtVbNYa_HQ>
+    <xme:EOfEal-Es--roMj84rYWSQlHMRzfhQrs1nQA18lvWhq3mobMkZrH3jDaTfPCOtBJP
+    Twr0ulyybPSbuxWEkreRjXXzRcHovwtDEX6IHcJmCPSsCLOcH8XyYdO>
+X-ME-Received: <xmr:EOfEap6sOfa8DrQ8xZKkIvyNP8L7IfwpEXo-flaDiwggDlXd_N7bYFnVth6EFDaRBf2qQQ>
+X-ME-Proxy-Cause: dmFkZTEgd8L4Cuw5BPDNNThyrFCYLN9bX0xEU42AXwnxe4B0TMOWU7vAPn5K1+6cgOy54l
+    Rz9aKZjqX/wc5iMBVK3ZeZQZeAJdoEPYq+85l0ENIS3Bb/4IVz0Y0rI00RoowZ9DsYNG6O
+    C9rXLHLjqde0y1gUj83hHZlso05vs+3901Zp7NR0lqMFDOUctHAyL8HG9lqKUgsI4FkFGy
+    /V3sWuIz3ynBmQLialw4b1m6U88SqVsVoQUhL12mIg/Mb9dmXnrOJ2UIuhE8Okjs7qG0SF
+    m8o7rJcpvmgpoZD9wy1LVakaes34p5g1ICNDqLXoXBEKZYaHsDXCZM5FolBjD4XPI0GeGN
+    ZaxJ+ZQE+FLvqiGaUasl3DSrwV9DiXh4WLuu9e0LRywmK4HsHK+fgkXBm8dRp+EfiGpzrs
+    445IvghNsjNrj8slZqs7IWrdbujStJLbulEGGLOLDJ+mhJ/y3L9YiAUxFmzCCuII5cu2qU
+    HOTlNMtTeVd71iwBZwNpu7lU+At8/1tqUibSM/yfEV9nveFcGXqi9eWWU83Es8oR7/BHaO
+    wSzcVaqTMP4leATwvem1VUW/Ik6HOMeSDbIey1vBN4TPtFeP1VXFVhOoLz93EMjn6coyJB
+    VMwEgulrA4Br0JDpbiwo9g3PnIJ9klkrlnSzDpgt/WxIVDoe3aU2NOsBIVFA
+X-ME-Proxy: <xmx:EOfEak28JvXgN7e59Xm0_UbSAROXxjMkjt-m3ZHRrUNE3YJ2gXJreQ>
+    <xmx:EOfEaoDYbXUYDVt-tZ38TSvShtU64xR5NvFif6J--x91AuP9rXm1Wg>
+    <xmx:EOfEau0Z4OOEoaSBa1yYBpk8WJs71t_PtxxbYERI6O4RyZgJPqmmeg>
+    <xmx:EOfEaquqxqVmmLc_HSVZMKm09Lx-3aU-plcSowLean9Gs4WOGc2wFw>
+    <xmx:EOfEav-dYXqTUd6hZcRkNAsRc6KaQ4vwWlajmWqD1_AS6BNCtktANk2W>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 08:18:19 -0400 (EDT)
+ 6 Oct 2026 08:18:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a05a99d3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Oct 2026 12:18:17 +0000 (UTC)
-Date: Tue, 6 Oct 2026 14:18:14 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 2e6ab028 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Oct 2026 12:18:23 +0000 (UTC)
+Date: Tue, 6 Oct 2026 14:18:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/13] commit-graph: require resolved packfile paths for
- `stdin_packs`
-Message-ID: <asTnBsWxEvgphOV7@pks.im>
+Subject: Re: [PATCH 02/13] commit-graph: stop depending on `struct odb_source`
+Message-ID: <asTnDMrTjUWHVSwR@pks.im>
 References: <20261002-pks-odb-move-alternates-v1-0-8a63507b88c4@pks.im>
- <20261002-pks-odb-move-alternates-v1-1-8a63507b88c4@pks.im>
- <CAOLa=ZS_S3bYXEufor7AgXpX76NwtV4NJdGRO57-bpSkYZrzvw@mail.gmail.com>
+ <20261002-pks-odb-move-alternates-v1-2-8a63507b88c4@pks.im>
+ <CAOLa=ZSNHWFw5Vj_5qg16ipp1QA0pDcV8h=hOA=ma4hy6F_LcQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -104,36 +103,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZS_S3bYXEufor7AgXpX76NwtV4NJdGRO57-bpSkYZrzvw@mail.gmail.com>
+In-Reply-To: <CAOLa=ZSNHWFw5Vj_5qg16ipp1QA0pDcV8h=hOA=ma4hy6F_LcQ@mail.gmail.com>
 
-On Mon, Oct 05, 2026 at 03:27:27PM -0400, Karthik Nayak wrote:
+On Mon, Oct 05, 2026 at 03:43:44PM -0400, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > Users can ask git-commit-graph(1) to write a commit graph specifically
-> > for a set of packfiles via the "--stdin-packs" option. Those users are
-> > expected to pass in relative paths, and those eventually get resolved in
-> > `fill_oids_from_packs()`. This ties the logic in "commit-graph.c" to the
-> > specific object database source.
+> [snip]
+
+Thanks for trimming! One more ask though: it's helpful to retain the
+diff header itself so that one knows which file this is that you are
+commenting on :)
+
+> > @@ -28,7 +29,7 @@
+> >  #include "tree.h"
+> >  #include "chunk-format.h"
 > >
-> > Refactor the logic to instead require the caller to pass in resolved
-> > packfiles to untangle that dependency.
+> > -void git_test_write_commit_graph_or_die(struct odb_source *source)
+> > +void git_test_write_commit_graph_or_die(struct repository *repo)
+> >  {
+> >  	int flags = 0;
+> >  	if (!git_env_bool(GIT_TEST_COMMIT_GRAPH, 0))
+> > @@ -37,7 +38,7 @@ void git_test_write_commit_graph_or_die(struct odb_source *source)
+> >  	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS, 0))
+> >  		flags = COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
+> >
+> > -	if (write_commit_graph_reachable(source, flags, NULL))
+> > +	if (write_commit_graph_reachable(repo, repo->objects->sources->path, flags, NULL))
+> >  		die("failed to write commit-graph under GIT_TEST_COMMIT_GRAPH");
+> >  }
 > >
 > 
-> Nit: the changes look good, what I'm missing is 'why' are we doing this
-> change.
+> Shouldn't the caller of `git_test_write_commit_graph_or_die()` send in
+> (repo, path) and we forward that path, instead of using the path from
+> `repo->objects->sources->path`?
 
-It's basically this sentence:
-
-  This ties the logic in "commit-graph.c" to the specific object
-  database source.
-
-With the current logic we have assumptions in "commit-graph.c" about
-where a specific packfile lives relative to an object database source.
-But with the next commit that becomes a bit harder to realize So
-resolving packfile paths early on gets rid of parts of these
-assumptions, so that we don't have to resolve those paths in
-"commit-graph.c" anymore.
-
-I'll rephrase this a bit.
+I'd agree if this were a properly designed function. But it's basically
+just a hack for our test suite, so I was aiming for the easiest fix
+possible to make this work.
 
 Patrick
