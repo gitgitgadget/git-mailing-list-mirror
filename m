@@ -1,134 +1,211 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE95938656C
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 21:50:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E05383982
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 21:55:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791323454; cv=none; b=hpt01ThcgaiNnt3GeEAVWVazOuQWR4hH2pCcQ0HzOQGdyU4+sBHtM4cUHkappMYtfqKzHmlshmdo1KFtTVYO//biP7YiXmw3ob/Ume77PY55h6Me4idozTSc5+9msxNQEXVDkGtMEguIQeFWQhULMush7tW4CvJ8loQoOhT/7jI=
+	t=1791323759; cv=none; b=K6MgReCEMFwY1cBpZz4sGJcZawRigKPMqMT0BkX6vRkRtQLtLP/lytY+bm8FJ27lr6gCyaOdy+yan6/B1vOFUsU+AdYVN0ry6e+E8wHxvBn6D4x0eeL7yBfyFysj2czHdvq1gLg4Uz0gWbSGL55khDQw+PI4YiiZUmXBhH3Q1/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791323454; c=relaxed/simple;
-	bh=2YwDWKqqmMvqlhhpNv2b9qa55gLIvLbhj5bvv0je85k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OcMq1BKBv9VQAVHDsLuUBM/GoBWKzm3dSzyKSSc/11VxRlY/084TjcyYg8ZdtkwZO7vJunxU0HAVQY9Zc5FxZ8Rn3PLseBmp3dnOoA+mPapow77pj6BDmswu25OwhQSAFKS9uDIzYXWorJuIWUexeWu3Uu4NrZKLIZdBbmylTd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oXEtGWek; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j3oXfVS3; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1791323759; c=relaxed/simple;
+	bh=7fnP5+9PRd8uuhaw9eo91HwN0Fbe+krKAmxJGdzBRco=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S48HXa5KVO2y3AmaRZCCWLwq5//nFdkqQ4LN3im6n+yARVndvdPmiEgaymlxThXkqOXgFU4eTMpBzIXpjOtfwem4hRp70nwPR7eQScCORarFsI131IWaNOWUu3gHoN/HD7OgcSZofbfVn4KJW14EG4LOOJCzPE42kfpD36aKPyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=hAWVEGXO; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oXEtGWek";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j3oXfVS3"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0CB057A0048
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 17:50:51 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 06 Oct 2026 17:50:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791323450; x=1791409850; bh=oxeNxzNE89
-	nLWmSZmwm+0VDwMByi4e8L8V5qakoPqRk=; b=oXEtGWekpcVOTxvy3k/uOXKCfH
-	sbW+uz3CGLRUQUQ/r02Vc/GsUYNO7s7EWDIx1e5FpVU0JQDYz60vgoZBRr9jF96t
-	XFlUvcDfQCCSrfRfAmDKHVrsmeknbxWCj3G4PHWw24TzyVEmx12Wp21ZWaZeNEMs
-	IzdqV4GjgBKkyNb2QYGb0FQKIgYLITMbXghV+AEUqzQ+IGAt6QF2mxz2vXgB8JLZ
-	Ihz/LPiANhElnqF0KYHxFyp9I8eNo4aPn4akIimSZ2Ei/1tB7vYrM/A6kj2xdsdt
-	8YhmGaPjVZiV5N1gkEsdKqV6OCSTwdJ6TSiztv2DblfQ65Imp9TQp2bXeDKA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791323450; x=1791409850; bh=oxeNxzNE89nLWmSZmwm+0VDwMByi4e8L8V5
-	qakoPqRk=; b=j3oXfVS3hs9AtyW5rpGQabWP51u4PrPp6ILUn7EbqsW6QZMNelp
-	NS+UIf7VN1D3mvwvCv54S/wvwqxqxtUEZfJr8vvOVe7nG9LShJznVcubuebD4rY6
-	0CZOmMaYMl0K/PXawVJQTRCsNwQZTY2KLqbmLvzGh2TWSeiRJTKV4IQk9D4rtTOp
-	k07as5uv97gxGhYRgYTWgFwHOpwqRnzwddkRxQ0SG/DZ77kSBmkfQpc5cCOEldP2
-	0EHWCtJp3v34cp6X9WH5bBgro/4WISM1zSETHIxoSs4ha2aDqz5PLwZXV0ygNC0A
-	yAM2Y+r7II0mIsYlsb4/BLCF8PlW1ROS3nw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791323450; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:FGz4UGBtsNE4KST/KbLLXvJ2ZGg4cqB82U2NElnZuQdCAjL
-	Ef0QbZ1bvEUQouROvGYpa40GgQINinny/oObehTSqLvYMWHCE8cL8U9+BQWmEnGl
-	jm4W1EGLjJNnMDg9SwkY/6ZQYhIuJlI/q2bQW2x6xBkOJYwVSbb66rhkMC5d0let
-	tgUhhGeU3iQyuNz0sZ4ayxsZpnAwf0DPfMC2zFEGbphGwEKsRbPmRpnOJSQIus9O
-	NYPn0CWWwEaqDudVtsLAdmOodnQmFnbsYI/KTsQ9RR8+ZC/ggAj3kD275WVQl4xe
-	LxZUpEbTsr4sIcqGjK9XwKHaDngn7EPwM3qfOjA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:ffYp2mCb9hPH0IZL7HJ5t3WbHWllIJAjwfrwJfmyfuQ=:2YwDWKqqmMvqlhhpNv2b9qa55gLIvLbhj5bvv0je85k=;
-X-ME-Sender: <xms:Om3FalDpUriQfeKYAGa8nuA1L8J17oi7NiM__Y05dz0-0QOdNa2-FQ>
-    <xme:Om3Faqj32dEA6iXDR4ur9UvSGKn_fKiG5XAqFjjTDw4d26B5Dhb-mX_22vh4lX26F
-    6Pn_GfpVcTMKsPCLPSqBhF57Odbwbj95XUQzGldXb6_0KEtz0Gsow>
-X-ME-Received: <xmr:Om3FallwGZtZEV5--_obuoJJSq8leU3OLzkamsG9u7P_ubn5pOldXuOsMkPPL3LPtDvboGpX1EtEhmhr78hl8sKVl8ioM22KoAQs>
-X-ME-Proxy-Cause: dmFkZTG0ZB8OFz0vxjjlpRnKN3pOJOxhNMGdmKruFeZRhERNACRDNv3tLGTjJF33ZG50Uk
-    XEREebX7Y+eO/6fsrrqMM9PfSJhXfPJj/hf01jIo+a9DsTMEb2LIYu0wsEvEOxiI07FLKO
-    QslzyvzcizBBsed4he7wzea/otuBS5gakr0VeVvCMyo4Odek0ISrQ0/x0jwUnUIyTNSI4v
-    sgyTGQPLjde3EL+ba/GtAJhwBymW9jJLJrCxvKlxALndV4BE2+UvPEWuwoI1ZYMnEb28RP
-    /oBeE+QpTeL1+uWS3+qWpT9K1aTYLE3czjbKv7PVLMKUGRfRvcs81dOlil/2Hoj7ukXbaE
-    VijMq6VKyjwNn2U30Z2RfXfB01kLNUF5xMRfTmkHDIWvtn4aOizXGUPFbU54GbVzq+7Zp9
-    qu05qHyYf4BUs4tKzgn7vqiZIZmfISudhUS509Jj7ggFVqollYSsPwiCWJ5N29ldbX2kn7
-    zcceSsiKVljTP6SKYsdsTApCHtHdKLDeatvHM+odY12LgdA72Pwap7WmeDWQPrWTGZl1qQ
-    Ich8QDjtJ84PxSjeGJZ3lla/t9oqqMJ0MRYnp9PNqnkGFk/BfsY1440cPLtni2SoI1W6cI
-    W0y3QMh/chbm35N/8nJ8ketaJWhtr+awwkBWFA1GG4dG6suAtuu0R7jw55NA
-X-ME-Proxy: <xmx:Om3FaurZ8H0wczxdWAYzvQleXI46U0po6zdym2ngAAdS7YmQvQU6Sw>
-    <xmx:Om3FamE6ToBvzV7zbNpBHe39r96IQ16GzKewPBT2umRChy7osFnteQ>
-    <xmx:Om3FaixPxCc3mNYnsR7uEd92Za5J-_6HsaCQ5SuN0JzFD0j_-k-P5w>
-    <xmx:Om3FajpRMvrpLlLESyWGZIlQhRhj1XDmr5AxySPQmyxO-_7RwH38qw>
-    <xmx:Om3Fagm9GTegZ5Eq3soQH6D62XnnRKmNj8dGk8kT_bSXmw6znI4fOcIA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 17:50:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org,  Mae Eckert <mae.eckert@albellus.de>
-Subject: Re: [PATCH] doc: fix shattered.io link
-In-Reply-To: <89f21a129df21b115d5faded2a74a8a5921d62cf.1791307032.git.ben.knoble@gmail.com>
-	(D. Ben Knoble's message of "Tue, 6 Oct 2026 13:17:19 -0400")
-References: <164ef290-463c-4a7a-92d4-00a56aab71be@albellus.de>
-	<89f21a129df21b115d5faded2a74a8a5921d62cf.1791307032.git.ben.knoble@gmail.com>
-Date: Tue, 06 Oct 2026 14:50:48 -0700
-Message-ID: <xmqq4ieycxc7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hAWVEGXO"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1791323755;
+	bh=7fnP5+9PRd8uuhaw9eo91HwN0Fbe+krKAmxJGdzBRco=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=hAWVEGXOYTobmVIfNa/06Yj9KLotYZGMaiirLTyfqvG2J2eNYSp0Z/mdllQrFpT5M
+	 GJhhwEEO3Z75FqB+UbRpbTa4yMseWptsNA33MVsn/2HM6Yrw4pAhe9iLtUvzBCT+a2
+	 1JYjYQ8EFf0ZmvoT6GtPpgFOXdRIzCyoZbfXCEHBYgHs+maQzCBIPatBwAkP6wUgSD
+	 p+bdxFwWYZ6iFktiQKoilo/WcvQh6T0Entl1Ob3yqDZDaFPOKEiCoEaxuV0C7mq2OX
+	 RgolD4DUiXcaw/4Y+uR25KAKJnbzAWOq/2qYzvjE/BudDZSwnSPCLhKZtmmUoB6WhH
+	 8c+VK7lP6KwjlBexqQSeoXxjzLKoxmKzkx/sqq8CKVY8yv+mSrwcrs+/BG2I/dbrcK
+	 /jn3waBaHu70f5PheGiqJ+9CTiFCDaJdqVQIblz6Kg0TdvSL5DHzpTk0DSSC+O1T0K
+	 FUT+mEBT3VdjLU9jbqO7ZMZjtDf6CJAbrJtDWVzcMoEwgREpbc0
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:1808:f548:d307:7e36])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8A8EE20077;
+	Tue,  6 Oct 2026 21:55:55 +0000 (UTC)
+Date: Tue, 6 Oct 2026 21:55:54 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Scott Chacon <scott@gitbutler.net>,
+	git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
+Subject: Re: [RFC PATCH 0/4] sign a SHA-256 digest of the tree in commits and
+ tags
+Message-ID: <asVuadq79SNc-1y1@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Patrick Steinhardt <ps@pks.im>, Scott Chacon <scott@gitbutler.net>,
+	git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
+References: <20261002081846.25144-1-scott@gitbutler.net>
+ <asAAn8NZwB29WhGR@fruit.crustytoothpaste.net>
+ <CAP2yMaKF4CRvtfTQDVe51SqEm_DnoVOmED5kcUSg7UvLkBp4Xg@mail.gmail.com>
+ <asOa6dgpj0qV5QAU@pks.im>
+ <d59dfe7e-5958-4a72-92d7-788521f3e55f@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5E8R5rDBEyPnh/8D"
+Content-Disposition: inline
+In-Reply-To: <d59dfe7e-5958-4a72-92d7-788521f3e55f@app.fastmail.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+--5E8R5rDBEyPnh/8D
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Since we published this document the domain has been taken over and no
-> longer reflects the original content. Link to the last good Web Archive
-> snapshot so folks can still retrieve the SHAttered information.
->
-> Suggested-by: Mae Eckert <mae.eckert@albellus.de>
-> Signed-off-by: D. Ben Knoble <ben.knoble@gmail.com>
-> ---
->  Documentation/technical/hash-function-transition.adoc | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/technical/hash-function-transition.adoc b/Documentation/technical/hash-function-transition.adoc
-> index 241d2f763d..f6b38ddd50 100644
-> --- a/Documentation/technical/hash-function-transition.adoc
-> +++ b/Documentation/technical/hash-function-transition.adoc
-> @@ -29,7 +29,8 @@ advantages:
->  
->  Over time some flaws in SHA-1 have been discovered by security
->  researchers. On 23 February 2017 the SHAttered attack
-> -(https://shattered.io) demonstrated a practical SHA-1 hash collision.
-> +(https://web.archive.org/web/20260207211148/https://shattered.io/)
-> +demonstrated a practical SHA-1 hash collision.
+On 2026-10-06 at 16:16:07, Kristoffer Haugsbakk wrote:
+> And that was okay. The Git repo seems to have a bit of cruft, and
+> git-fast-export(1) fails on the first error then suggests a fix so that
+> you can continue on to the next error. But that=E2=80=99s fine for a one-=
+shot
+> program. For anyone interested:
+>=20
+>     git fast-export --all --reencode=3Dyes --mark-tags \
+>         --signed-tags=3Dverbatim \
+>         --tag-of-filtered-object=3Drewrite >SHA1HERE
+>=20
+> Some real loss of fidelity was there though:
+>=20
+> 1. You can=E2=80=99t for some reason export refs that point to blobs or t=
+rees
+> 2. Your Git notes will be effectively lost since they will retain their
+>    SHA-1 filenames. (This is mentioned in hash-function-transition)
+>=20
+> Then you import it with
+>=20
+>     git fast-import
+>=20
+> But to no one=E2=80=99s surprise (here) this does not work because of the=
+ SHA-1
+> collision submodule.
 
-Thanks.  Will queue.
+We actually have support for rewriting submodules in fast-export and
+fast-import.  It's a little fussy because you have to rewrite all the
+submodules before you rewrite the main repository, but it works.  Here's
+a command to handle git.git:
 
->  
->  Git v2.13.0 and later subsequently moved to a hardened SHA-1
->  implementation by default, which isn't vulnerable to the SHAttered
+----
+#!/bin/sh
+
+temp=3D$(mktemp -d)
+trap 'rm -fr "$temp"' EXIT
+
+GIT_LOCATION=3D"$1"
+RESULT=3D"$2"
+
+git -C "$GIT_LOCATION/sha1collisiondetection" fast-export --signed-tags=3Dv=
+erbatim --tag-of-filtered-object=3Ddrop --export-marks=3D"$temp/sha1dc-sha1=
+=2Emarks" --all >"$temp/sha1dc.export"
+
+git init --bare --object-format=3Dsha256 "$temp/sha1dc"
+git -C "$temp/sha1dc" fast-import --export-marks=3D"$temp/sha1dc-sha256.mar=
+ks" < "$temp/sha1dc.export"
+
+git -C "$GIT_LOCATION" fast-export --reencode=3Dno --signed-tags=3Dverbatim=
+ --tag-of-filtered-object=3Ddrop --branches --tags >"$temp/git.export"
+git init --object-format=3Dsha256 "$RESULT"
+git -C "$RESULT" fast-import --rewrite-submodules-from=3Dsha1dc:"$temp/sha1=
+dc-sha1.marks" --rewrite-submodules-to=3Dsha1dc:"$temp/sha1dc-sha256.marks"=
+ <"$temp/git.export"
+----
+
+And here's an example running it right now (my main branch following
+`master` is `dev`):
+
+----
+% ./convert-git ~/checkouts/git git-sha256.git
+[elided]
+% git -C git-sha256.git log -1 --format=3Doneline dev
+05370fd7088edf77bfcd09c8c909450e764a9d10d8304dc333f39f01697c5a84 4th batch =
+for -rc1
+----
+
+The downside is that it doesn't produce the same results as the true
+interoperability code and it's much slower, and, as I pointed out above,
+the user experience is poor.  The advantage is that it's been available
+since the original SHA-256 work in about 2.30 or so, so you can totally
+make it work almost anywhere.  The above script could also probably be
+nicely converted into a generic script that would work on any repository
+without too much effort.
+
+> Okay, dropping that exercise for a second. I would personally be okay
+> with trying out this migration on my existing repos that are =E2=80=9Cloc=
+al
+> only=E2=80=9D. It would clearly be in my interest to find any bugs that a=
+re
+> particular to my workflows. But for that I would that migration where
+> you keep a mapping of SHA-1 to SHA-256. Or else I will lose Git notes
+> forever (which I use a lot).
+>=20
+> But reading brian=E2=80=99s cousin response:
+> <asQrWAKQXV9zn1Vq@fruit.crustytoothpaste.net> ... it seems that there is
+> not enough in git(1) or anywhere else to do that.
+
+The interoperability work doesn't rewrite notes because it only happens
+when cloning or fetching from a repository and notes aren't usually
+copied in that case.  In-place rewriting is not yet implemented,
+although that's a thing I'd like to work on.  Hooking notes into that
+shouldn't be very difficult to do.
+
+The reason more of the interoperability work has not gone upstream is
+because the pluggable ODB work has really ended up breaking a lot of
+things[0], so sending almost anything requires a bunch of rebasing and
+fixing, and I'm presently very burnt out, so I'm doing very little
+coding in my free time and doing more cycling, reading, and Factorio:
+Space Age.
+
+> The above scenario would be very hyperbolic and too cynical if not for
+> the context: one person is leading the direct implementation work[2] in
+> their spare time. In order to migrate Git from a to-be government-wide
+> banned hash algorithm. That seems like an institutional malfunction.
+> Somewhere.
+
+This is the problem with open source, unfortunately.  In the ideal
+world, would other people and very especially major companies help out
+more?  Sure.  But macOS and FreeBSD also ship one person's bc/dc
+implementation as a core part of the OS, there's only one maintainer
+each for bash and ncurses, and a lot of other cases.  This is basically
+https://xkcd.com/2347/, which, as we all know, is a widespread problem.
+
+As I said elsewhere, everyone is interested in scaling Git to larger and
+larger repositories and improving performance, but little else gets
+attention.  Those are things I _don't_ really want to work on, which is
+why my job is not working on Git.
+
+[0] To be clear, I think it's a great project and I'm very happy to see
+the work come in, but it has impacts throughout the codebase.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--5E8R5rDBEyPnh/8D
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmrFbmkJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZycMu9762icEy5MmYXthJK5tIPqGW4mbZjSdZxu9R/Kd
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAOiFAQDnZIFr+nTre2ZbM1ZU6t6Vok5B
+5h67aL2dwuzzlKyQ5gEAsRUmXWjYCRE1YF9VolAjjI8tSsJQg4wV2on2lIbVeAQ=
+=xCGk
+-----END PGP SIGNATURE-----
+
+--5E8R5rDBEyPnh/8D--
