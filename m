@@ -1,149 +1,221 @@
-Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C5E39A06A
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 11:57:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791287831; cv=pass; b=eoA71peLE/YVGaIZUFG64WGqX+sgEy6zWAjRuv66CW4AaVJtPXesKpenDtdYwXLP/oDTNfEH//yz0sOk4l8h+vXDOzwPIt+Ucvcunm1rkFEuBx6d83bUkhs43ldu2xP+vDYtYuoDd875pAvDun5ICbFoR73fUr34C9XgXJXGncc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791287831; c=relaxed/simple;
-	bh=IuHp9xILHBISk/CbPfPnuBe8nTiVSs61L/HHDUz1QFw=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d+GRgvOE1x0Q8l1fsO7pZ06vodNDAYzG41KJPox1d61ZTi1saD3X1vsfc5AzoXITLKR0mnBNcW1JYIzHPFjrYiYcj5bmtBMHGWBQke/n4fK75NCxCWoqo371mq88iZ7BPGx0WdlZML446vC6+cpZ2D+EUzCCV1JnjmhLRSkjavs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=beSWMJXr; arc=pass smtp.client-ip=209.85.221.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A900359A90
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 12:08:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791288531; cv=none; b=FgC1vi14RoX8KNl/fJnYc4L0CXo56U2tcVaYnvvivfme60QaFn8GGAVIsMk+D4U0v686iCOyu3sH82ttdrwIs6LH8ymMlJBbSIbhUy8RVjnmRSq6kn62yAO0lMw9N7TWYKcozQZOZO+diEENy1jQbRDVElDemiKA54ctA/hM6f0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791288531; c=relaxed/simple;
+	bh=4nX12nYsjmC7OI3mb76cLQxSwrsOysZvDINIua5waZg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jvxzRQ1VRBWXNmX4d/N986pwMraagEudHjwcLy7xok0P6N0BunO2OZ2MOzlRSDeXRqQ4PYQVA7hQAefMIYN7xcRg9D/8pt0a2G4CcSm/8oosOiSXYG3T/mOeXD30SRWDBQqQbakg+PQLNKu98rKpSf3NO/p4HTXSXuuUAswXt1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SzFS26Dd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CfveIBHd; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="beSWMJXr"
-Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-5cdb9cb8019so1241008e0c.2
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 04:57:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791287828; cv=none;
-        d=google.com; s=arc-20260327;
-        b=aihpCf5VXsMK5zRmLMnFEN2+PeKg/u+CCs/QCLy51eRwMezxNvunl7qlmRcEn4hd0j
-         ZHC2uP9Rv1CftEtd51CXbOfCEkW4XP/i0bUWLhFrSjfobWZ5ZkVOF5IPFE0Lyt/x+0IU
-         XZEXX1JJ00yXXo8DQDmmz2XMrgaB1TjlEkUm4SPsApFCxpmpKbp87AishLDWTOtje4CV
-         LpcTf0vW6hwPXrX+yhlMZWkbPJlCDp2w812wLCOhsxDZV5OOHGxtjW5/qzpWP/dGoDq+
-         gSSAEmpvy0oUmcO6xcfPx5FWri0a+7cfEazJ49xWOT+6bJrzPUBcAlUonwFWumlysyzF
-         wE6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=IuHp9xILHBISk/CbPfPnuBe8nTiVSs61L/HHDUz1QFw=;
-        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
-        b=frLQ+YWBMX7sFEvppH8uhfd8mAF1HW8EsDjlqPpMP3caajplrqFOU7LsqvCRYZnSLI
-         aToRBM0308NGhAT7hWT9EhjuNyj+8rombr/O7wLSkbLeDkISgIF3qjFfSgnGoQFE5R1/
-         YZfYVbcErW7PIZBvG+QlxfoS8xjcVWgRZVNoLUetRDZstCpvVIdX/oN92eGWAyO6OAdV
-         tw2HnbaEvJnwGOpqPgYLG3447VN7TB3FsEXD5lipQU+b6DwiRiUwLX40n7c5b0VG1ikG
-         bK0YMR1mFRQtJU5y1pd4SALMFWOBvvvksZyCCb6VePm8wyckE7DEiJ7UxQaUi5C/uAWy
-         FT/A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791287828; x=1791892628; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=IuHp9xILHBISk/CbPfPnuBe8nTiVSs61L/HHDUz1QFw=;
-        b=beSWMJXrHFgDrxGMa5dhN2Rc0gXSCT9/iW/sElflS1VMu11DlgRY+Ida196WuuOB05
-         QEUm7D+bBtOL8DWRooFkNnzZJiHuj+jBz2XgNoCGPWyrkljBEe+4hu7BJhMbqK1+PMJU
-         sJs3XhBTZriW76/7DRZXR+uXGwxgKPn5NainmclKp5rQA1zGYtkvPHXrpOm1k224Xzdi
-         WSuXSNLmu52zglAQEs+ojEBKagt/J0ctRPWye831929WrghDzobgrFFjz1op6twVP72t
-         CTBS2ZUaRX9z4LoSI15MslUbMTfGtnEntA5vp9qocKRfHgNtCa4TVjCgYw9WoEicG+H/
-         tCsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791287828; x=1791892628;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=IuHp9xILHBISk/CbPfPnuBe8nTiVSs61L/HHDUz1QFw=;
-        b=QiqzCtNNrB87cjA+33qBEkWKMfXPHI1mbXoeLhYt+7klFPNZY0MxeLaROL4LhzeNog
-         twKLLvs0KtoK5any8yFbLKZexa3RK7gF9z+c1x+ZhsP7IDGmEk+mAyhC9U05LQD4r6h7
-         IiiTIyVPyW6kqEclD9T6ceJeFGgUUYh+wR9t2/o0ikNouZdyuER4ZRUHgR3kBygPJFTv
-         ihLNxZl9K40x8wXys5Efkcfsq6v6FyEEVzB56PeauMIUvIJq7CTTzeljW6Hx9XBfzAoA
-         GEaC3BtN/fl63yL01o/3sZk7YFaGjA61XtLwg7bEwSOrGWR0MzFrUMwyqyipZpBhSlPV
-         fBlA==
-X-Gm-Message-State: AFq9FYKaErhfeS2NDPHEkktzZCPkvf3e6ZwM8x8PqsUFZg+NTp1bm1xm
-	F7CqF7DJ10LmV/oWuyniQACMlmpgwrj2ChR6K4jIC0a9ZH9VOpzXegFjAq0YP2zF4c1mgFtRfpD
-	hvLpMeMWrL+jk1xm5OaDQ3BMUYjyC+T6sIA==
-X-Gm-Gg: AYBFou3B9+swx3PpCoW+lzce2WXtcjoIvgMYbKoC19IcUPFmkBe9Q+bpyHifS3hiKyV
-	MQP8qoP9U+G7xYNWwR9gfZfk3e7OpwFbN/KOFVFaVjXVttuCWj2WoV/BVVGG6T1/jcMgpY0LZFA
-	0v1TwZSbCH2oE1k9OvHR6LI4ECCpC+QwwT/KDE09HQ3+NAD35diyQzhqAP+libuVrwp9lNfcakh
-	vuyc/j/mSwmQWcMZ8TbTDPJuJVjh3uoeFgLOo/YACzBmXUxQmEtbkX4GPQ2jWq+K22x4xpQmgMu
-	GgMwQEJxsfjnJyaRH6w3B7mkZW4YZlYiNF+oUUMz+Rkx0vjIbukgu4GKaeIpQP1l+sIgEZ1pVHL
-	V/Jj8XqBmmTdjZB8hYd7tVAegC7DihJfafIwF6ttg2nvH5w==
-X-Received: by 2002:a05:6102:3713:b0:7c3:6caf:bdc6 with SMTP id
- ada2fe7eead31-7c36cafc094mr2169609137.21.1791287828176; Tue, 06 Oct 2026
- 04:57:08 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 6 Oct 2026 04:57:06 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 6 Oct 2026 04:57:06 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <asSM12B35oka08Nu@pks.im>
-References: <20261005-pks-repo-ref-storage-format-v1-1-819a181572a9@pks.im>
- <CAOLa=ZTNNY_XuixqZ96TK0zFfDpWvxSupxVGOnH1VGXK4KF_0w@mail.gmail.com> <asSM12B35oka08Nu@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SzFS26Dd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CfveIBHd"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 22E211D00170
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 08:08:48 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Tue, 06 Oct 2026 08:08:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1791288527; x=1791374927; bh=7VCnA9HKS/
+	kJw9ZASxZQWUejYnTLD7kKnfQPyrOr3Ms=; b=SzFS26DdkMEWDztByHGeAs6LZV
+	R4YXz5P7zQmiaLnSCs5UerI9BxjD70pKalrgtnj5uGw2q3mNbpJz6GAAz0emvEP3
+	CcPPDJhjCeuJxtbO05WY+kIkF1AAEoTX9ve52AXjwHzcqAZ2mx5M5p9E38j7WcVg
+	VCDl086QDZTPWvYWEyvXxt6ovZNOossUGiMsqjC3a4IF7ZI9LLKCoHSdEYwkCtKg
+	SzoUA114NpraU4XHC7w+EYNqCjj3FjNbnUqVTZrtOZYMphA4dLJ+zBn8CXVAHIhj
+	wsWVgzXyWFm1i3Mr6mHuxuV8fvICEYqVDSo7ZC4rbJyjjJ9jqCj/poKgLhgw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791288527; x=1791374927; bh=7VCnA9HKS/kJw9ZASxZQWUejYnTLD7kKnfQ
+	PyrOr3Ms=; b=CfveIBHduvGYzems4o9mtLP+aK8CDHlVkPKujSAokV+mcS510Zl
+	aaSaqEDoCdJR1Ke6iaA871K2qh0skyffQBUqLYtr8bmbPC+kP0CLMNNlv2mBH6nh
+	5Ac9LGTX8SBKRzrKzV6Sqo0kpsAEFBTBnWYiXDNSPt0coC5hIBkLsqwqSr8+sb4J
+	dapTt56LdChj+1s1Q8ZbBsss180xYiZD4cgFMDySS2AiJxmRDWmyg498WJ6KC6DP
+	VVj6btsNCCfWn331l3BCSIx0qh0eR3C8poSi22ae2EEnNYhWr95HemeDJryBWJnk
+	WA9rjbPUGeSe/ZwE9pJu9JmpHQQpM0YuYYQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791288527; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:rJXcy0adZm4nmriS6mhlnxdfy2KSee8IENrWlYeL3jylQ0i
+	1hz+8EEOX9BfPl1xpQ0oIjr7IPFir+RbaruPSJJLfNiqjQ20v1mIfhcQ5YNIhXqh
+	+ahYNMSBluUJd7KH9UxfebHn4AyS395x7dqf7NubJwaTIGvFpW5eVt8WfeLj3wLN
+	7uMfUOXinRbkghLGUlcZ+JevRrLP2zkizgBDQXS5qpS4LImW/ngenP4qypK0KgQ3
+	LxHbKd3VzVaRjb3PhpQpkjYqG9zGNiYASpcL9xGhSWH+WxqG7WDs6t9g4fzE1JFC
+	XqokVmD3o+0ykkGqb+QJ7Oof4Xox2HqPWDThbkw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:2U1LbeGj1o0uoePWWBXJfflj0SMJOaRbez6moa8GlH8=:4nX12nYsjmC7OI3mb76cLQxSwrsOysZvDINIua5waZg=;
+X-ME-Sender: <xms:z-TEammdADroH9szEqNpECqE9bP0tnw6yApP0g8E4Y0dTk0zK_Wgeg>
+    <xme:z-TEalRTTRwOgG3zjLqVyByxRvWDgt142DCFcbZvuSYMVUI5e2_woU-T0KJ0-lTou
+    zcUKP9FICI-ibg1dozjFUMSMyK58fh7q9_UdpPhKqQyzKZ0u9fz8g>
+X-ME-Received: <xmr:z-TEaiD7t2OZFFrLwz8A9zNfykTolh2SxRS2_-PbgiV-0f9kCOw0rNZ5Us1EXodmQbdoLA>
+X-ME-Proxy-Cause: dmFkZTEys02T7K1UT2ZkGHPuxNggpwC2ugiQtYm2+1OyFxBxZNMOqGGT5DLNRyteUW+yAP
+    /8g8RoeAZBLsgCTyBwFU125SZuE7rJb3wI8DveKsHVucpqy7ZanRo1G2aK6OEkSsVe/erl
+    LBiyNh57h6S6XV/rjWt2hcU0DUdpBT87jWG1dvYj+GYqHZiS5Q9dPP6Sw/ZurhfLXCQ/ky
+    aZOb25G0uOi3RjJGNP1aBl8SBGV8HfzUPiVyQ23UOevVOoTREoM9KnWsLp6dpQxRs3AEB3
+    rHk9IRSOx7c6BtiXrpFhffJvnp3Uwv6aRKMRwT2pDyrj6uLfeiwdQgXOklZSsSNpNIfOPa
+    VfZwXmyKCZYdkqszXcMIPp/AiktpzMyXiNQwE71qI+IszFuFYvj5R21NgoRAciHvLoczpu
+    d8W4CrabZW0REFAdk2iZvMjpN4vERp6g/4PiFrPzXk6qKCL54aUA+JF5npnJGpqGv3XreE
+    6k8YmBig6z5gJ/R4AxBHA2ECoHTzOBH1g/MFDTa8GuOCKhDzxG+yrFmM8yhm/I2vy+MIVa
+    4vxYFdVlApg7fXEkFo6/AZVDyBb7mpFF9Efawa0GQq37o7t3aUjgAyCraQy7ymqx8HLEzc
+    N6E1h3S9JiPsyCRZH+py778iGDVfIhIdpd+E6mFQYY+a8kk6Vp/iRNPsgbKw
+X-ME-Proxy: <xmx:z-TEakQwP-tuLDn-oaPjz7bKudLxLbXzp8yxMSyqQGvXkuGa_nihVw>
+    <xmx:z-TEaoogVtAz-3HyOcP3Ua5J600K-OK_hjM87p6U954YcF0BgiekOQ>
+    <xmx:z-TEauxXsctI0y1Q4XUkXqrrZNSuI53gf8jKX8zxT3UwlpFatCDwpg>
+    <xmx:z-TEalKB4zJROwxzTpPlaDuIwHzeKisWxwfBszahN6erkYf7TLfA7g>
+    <xmx:z-TEaqj55KqLVBiOh-7BaAJ7d5QlHJCml1lPtXrKFlwEtNxHuetCPAdm>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Oct 2026 08:08:47 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 2d979c30 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Oct 2026 12:08:44 +0000 (UTC)
+Date: Tue, 6 Oct 2026 14:08:42 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] connected: add incremental connectivity check via
+ rev-list
+Message-ID: <asTkyiIZvX1ztMrH@pks.im>
+References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
+ <pull.2211.v2.git.1790600552.gitgitgadget@gmail.com>
+ <6ad528f4bb42a960910eb4fe917a3766fa55d598.1790600552.git.gitgitgadget@gmail.com>
+ <asNZD7AOC6QL9q1d@pks.im>
+ <CAL71e4PFpMPoSxFdnscRFiMB3ozudr64TjeQc8VKcO_M_MfJ=w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 6 Oct 2026 04:57:06 -0700
-X-Gm-Features: AclHuK-JV5wjQ83Z-X1ImNOC9pdA79AMwOt9HTELQTuE8PPBX0M_kFrj28rpXzI
-Message-ID: <CAOLa=ZTULXyr0+rdByroEjs1ncjjt3w66z7enOprJ=7gPY64JQ@mail.gmail.com>
-Subject: Re: [PATCH] builtin/repo: rename "references.format" to "references.storageFormat"
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000b08dd9065d2ab263"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAL71e4PFpMPoSxFdnscRFiMB3ozudr64TjeQc8VKcO_M_MfJ=w@mail.gmail.com>
 
---000000000000b08dd9065d2ab263
-Content-Type: text/plain; charset="UTF-8"
+On Tue, Oct 06, 2026 at 12:37:40PM +0200, Kristofer Karlsson wrote:
+> On Mon, 5 Oct 2026 at 10:00, Patrick Steinhardt <ps@pks.im> wrote:
+[snip]
+> > > +The incremental mode, selected by
+> > > +`transfer.connectivityCheck=incremental`, avoids traversing the
+> > > +full tree walk of the boundary commits.  Instead, it verifies
+> > > +each incoming commit's tree against the already-trusted trees of
+> > > +its parents.
+> >
+> > Can we define "parents" here? Specifically, I wonder how you define
+> > "parent" in the case where you perform a force push or when creating a
+> > new reference. Is it the parent of the first new commit? Is it the old
+> > state of the ref, if it even exists?
+> 
+> Parent is always defined relative to the commit we are
+> currently verifying.  For example, a push may come with
+> 3 commits (let's call the tip T), and then we do the
+> following comparisons:
+> 
+>     T   vs T^1, T^2
+>     T~1 vs T~1^1, T~1^2
+>     T~2 vs T~2^1, T~2^2
+> 
+> T~2^1 and T~2^2 must already exist and be reachable and
+> so we can trust them to be connected.  And since this is
+> relying on memoizing already seen results, it's important
+> to run the checks bottom-up (reverse topological order).
 
-Patrick Steinhardt <ps@pks.im> writes:
+This is the part that still eludes me though. How do we know that T~2^1
+and T~2^2 must already exist and be reachable?
 
-> On Mon, Oct 05, 2026 at 03:11:19PM +0000, Karthik Nayak wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->> > As part of 2f28db44d5 (Merge branch 'ps/ref-storage-format', 2026-10-01)
->> > we have adapt all sites that used to say "reference format" to instead
->> > say "reference storage format".
->> >
->> > One missed spot though was in git-repo(1), where we still print the
->> > "references.format" key. Fix that oversight by renaming the key to
->> > "references.storageFormat".
->>
->> The patch looks good, but this does break backward compatibility. But
->> since the command it marked as experimental, this should be okay.
->
-> Right, I should've probably mentioned this as part of the commit
-> message. We could for a while carry both keys of course. But given that
-> it's marked as experimental I think it's okay to break the format and
-> drop the old key.
->
-> Thanks!
->
-> Patrick
+I think I was coming in with a false expectation that we're somehow
+getting rid of marking preexistingrefs as uninteresting, and that is
+where my confusion comes from. Because ultimately, that does not seem to
+be the case -- we still mark reference tips as uninteresting, as far as
+I can see. And then we can of course easily determine whether a specific
+commit is preexisting because we marked the boundary as uninteresting.
 
-Yeah, all good, no need to iterate just for that I think.
+I was probably primed by my own earlier patch series in this context
+that focussed on refs, and that may be the reason why I had skewed
+expectations.
 
---000000000000b08dd9065d2ab263
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 58d71dbe366105a5_0.1
+> > > +Incoming commits are processed with ancestors before descendants.
+> > > +Once an incoming commit's tree has been verified, it is trusted
+> > > +and can be used as a comparison base for later descendants.
+> > > +
+> > > +This gives an inductive correctness argument: every parent of the
+> > > +commit currently being verified is either already connected or is
+> > > +an earlier incoming commit whose tree has already been verified.
+> >
+> > Right. The big question to me still is how you identify
+> > already-connected trees without having to read all references.
+> 
+> That part works just as before -- rev-list finds the
+> already-connected commits implicitly with the --not --all query.
+> It actually finds all the new commits, but we can deduce the
+> boundary from there (and the pre-existing rev-list code also does
+> that).
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1yRTRnNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM01LQy85WXZZbmdsK1NJUWRseHZONVB2bm5TUGFodgoyTGJsK1B5OE9p
-OVB5L1prWUdOY2VGRWlyVEdydXUvYXpBaTZ3ZG41eC80VnFGYzQyQS82VFh0aWxYTG1idjRpClNC
-SC95aVhlL1NXZlROekJ0R3ZYY0krUjZQWUZmdVdqVElmMElUOXdvUWl0NzZ1ZHhDNDJ1QlErUUly
-eEhYcEgKNFJlUGpUbjY3RG5vNjdYbC9PTytLRUppQWFlU1FvbGZNT2hCTEEyZ3JwMVhjU05hQjZ2
-aTVIZWkyM3BKVWZHNQptcWdtT21VNThLN2lEQzN4dEliRWV3eUppRVM5aGVycXlRK2dLK0pnSzBa
-NzNCS2NIbXN6b0FOSUhjVGU5djJMCktVVmxYV0VpS2tqSS80RDhOSjZlTmJzOXJURGZhSmJXSXg1
-SkJXRnJqd0E0UjhJU0Q0UXRDWUlPelArQUJMMWkKaVh1WGJyU2NOcDNYbE9yQ3p3TzhGRTBKYXdV
-dmV5SEJDejIrM2k1YVJFTnBIOEl1a3drZXR6VVZDaHYrZnhFWgpOWGc2SEZHQU5HdXJJZnhIaktS
-SmdmLzVDN3JNR3lOWmlCaWZZZVoyNnVFY1RIZE5QTkhSSWhBVFlXZ0hQSTBYCmlJdE9jSnlBaXNp
-clFSMHlxaEJNMUJ5WmVQa0M4L1BFckwzbUtNdz0KPWVqQkIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000b08dd9065d2ab263--
+Yeah.
+
+> > > diff --git a/tree-verify.c b/tree-verify.c
+> > > new file mode 100644
+> > > index 0000000000..5c11c2251a
+> > > --- /dev/null
+> > > +++ b/tree-verify.c
+> > > @@ -0,0 +1,316 @@
+> > [snip]
+> > > +static void verify_commit_tree(struct repository *repo,
+> > > +                            struct commit *commit,
+> > > +                            struct verify_state *vs)
+> > > +{
+> > > +     struct oid_array base_trees = OID_ARRAY_INIT;
+> > > +     struct commit_list *p;
+> > > +
+> > > +     /*
+> > > +      * Parent trees are trusted: boundary parents are already
+> > > +      * connected, and earlier incoming parents were verified
+> > > +      * first due to the topological processing order.
+> > > +      */
+> >
+> > I feel like I still miss where exactly you establish the trust boundary
+> > between preexisting fully-connected commits and new commits.
+> 
+> This is the same as before -- git rev-list produces the trust
+> boundary based on reachability.  I think the only new thing here
+> is the inductive leap.  Once we have verified a commit just above
+> the trust boundary, that itself becomes a new trust boundary.
+> 
+> > > +     if (commit_list_count(*commits) < nr_before)
+> > > +             die(_("cycle detected in incoming commit graph"));
+> >
+> > I don't think we should just die, should we? That may not interact well
+> > with git-receive-pack(1) and others that expect a broken connectivity
+> > check to bubble up errors so that they can properly report those to the
+> > client and clean up their local state.
+> 
+> This is one of the advantages of running within a sub-process --
+> we can safely die without breaking things -- and this is in fact
+> how the existing rev-list based implementation work, it will also
+> die with an error message / return code that the parent process
+> picks up.
+
+Ah, right, I forgot that we're running in a separate process. I think
+this will also become a bit clearer once this series is split up into
+smaller individual steps.
+
+Thanks!
+
+Patrick
