@@ -1,223 +1,168 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301F737DE9F
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 20:06:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791317167; cv=none; b=kkvMvD81DBog4nRuXkVI8NZ+sdSXEUVGwlxN1Sass1FcbBKszPklfOD5zS3l1B6p7U7Cay2Y7ffvt4/KGFcHjntjVpaZvQlVBkAy390yON+MWOji4suiI2n8kh9c9wxcVAm7bUWwxBwLK2z+L8r2ImCmDRB3hLa1aJOFdD2h9C4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791317167; c=relaxed/simple;
-	bh=VO04pjeg0qHWhI8VqyjwaY3YbomGnTS1thFJNYWsTq4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Bf9R/2jWHYYAt8t50gYggpbkagfJAMRaEO13Wwh0vtnFtovXaLCc+CNtmzvAhPQySQ7R13iaAkw19aXkI3VUPTvIfZ/3zwlrA1i8tqkk6DSqfX0E9fMzGVlcclNrbWZTVulu42YnVwvuvKVOsQUl+EG/C33UaF6Iix+rcavw7AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DHjDI3bT; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EEA339364
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 20:11:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.178
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791317515; cv=pass; b=hMXJmHf4Anpm9t8ujHjUh2q1fIpxv4elwHoI8c7SELlsD/PDfaDsLjbQ/H71ntgsAf72Fg0CPgzMJwRw3jDv8TkZWu0vb/07N114vFsUhfOf0mk3V5TbQJwwbRmSxbOxhDnwkwEp1WytTDK3ka5xj06kBixqupP4aenrcxrfFvc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791317515; c=relaxed/simple;
+	bh=69TOlVqlfKWB8lm8daLywcJZS8ds4d2sdATGg+jZP5Q=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=A3ja4gCTTVttPAopRmJfVDOB6V6odZhgJy2p3Mr7lWjyw6CZKlV6SbqLZlxF7MqVipx15axX61Sddp1x0a3OqZE33YD7PAK2Yp+qeBi5q1fxlLWVy30PfvIFr6bVwJX0vujxqxKANMhKEbk75Tby1NhQAFO2WYCWm7kEiIPTemg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RsVBKzqp; arc=pass smtp.client-ip=209.85.221.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DHjDI3bT"
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-91957ec41e1so16948866d6.0
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 13:06:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RsVBKzqp"
+Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-5e23be41cf8so423959e0c.2
+        for <git@vger.kernel.org>; Tue, 06 Oct 2026 13:11:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791317513; cv=none;
+        d=google.com; s=arc-20260327;
+        b=jeE0LSdVc3Ft37eJ7wt5rzwH9p4vCt3+KoR3IEAikdhfgbneOwrX4rNyWN+5dxdqjI
+         NgRQ2PpDVuQRKzECizkg1izfBICFyEj3uZnCv4IRIpjvJASpOR4Fg7YX/dlIwog6dxro
+         Kk1fJ9wJk8LRpVQyfckPyp2uir5wmeFKe3c5vi7aFsg9HVFMetYHmB1zHDwtnuQfRzDs
+         BVLcxbQ+fQVb16BCh5cp0Bb9pBAoZT4TNphgU3Q6fGejnytQTvcc0vtQpeLuw6eEK2r3
+         b7Bhcp0gMzgJoKnUWSYzV/yGFAKHs2ImCmKteExY1JAefsSgwf5HVQHdQJ7Q+whkgTF9
+         TY4g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=8oZj9qu26wrDtVz4uiZjhHyE+6Qa7LkZGUWC9W9aWi4=;
+        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
+        b=qMm2JX1ky7NMI7tRuYMXet0/X9Pyt5SBGvAXIUJU/IUMuascMKlkBoa06ET6KOjYMC
+         BAzTFoZ7xN0dkGwC+gp2takjSMZ9jX2qLNIT+JLyW7v7Z1wu8UBbxtMAycA/4fGnPAMv
+         LG1q7O0E84xyKI7vOSGYbeAg2Q89V9ov40AtFGoa7uGV5aW+JgAeFz3zwf2R65H+vKQ0
+         28KZXMKGaHM/UMLU5SJpLLS91450P4P1+oNkvJ+HsMpYhPL6W8GIqiIiYN2WtsCqsqRm
+         Y6zZ/qW3b1d3WXooc3CxKG6jLeX2JMzmxxkoqoUPus7jfTHZb5ZprYC1+0xiyy3EXlC9
+         fJBw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791317165; x=1791921965; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Pgp7qJJZSzUu/1TyFFrTdSL20K+LZxTQUV6j18rMY5A=;
-        b=DHjDI3bTDfteJcjB3+BkCiaTECXSmr8WJ/s0Y/koEMikhtCXmpGDcdEVAeGWM7RwWQ
-         so1sf8Jc5Q5NkM+nw/BIZeThoTYIHi5ePdC+aofVkNPSOKgPJOG/H+PFQH6ye+bJGegb
-         7GtO5rnGoadBRTECZ/GNiexV4rqQ+/K1umfwxAmWbh2+y5ZFH8YjdIZ+WJcpMV1tOpKV
-         GWbNMUt6EoXXFH4E9jLYabm1ygQmdXlgZqVWFKfJS96uQmmcwrWT24kdSJsnrLcP/CT+
-         h4Zokd8Rm/YkYw6v4mZ+f2g8GvOlQzY+/kTATOsjsxMddyAYGakUggj26wk9StCmwJM5
-         bKTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791317165; x=1791921965;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1791317513; x=1791922313; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Pgp7qJJZSzUu/1TyFFrTdSL20K+LZxTQUV6j18rMY5A=;
-        b=prHFKnvJ3qQPCh25RIousbfEd2/qHU1SrtH4EYq4nIitReOgzX9+CVe5W2yy28EYUl
-         UOVlBoWLiCIGhS7V8a2ymCCoEDkhrKjjoaiWjVydjCZoklo+DQLi/hzH7L1PiiUkX4Nn
-         uTaPH+htbkNpFnfOP8qYWH8bm4WPRkVgAtBP8xogQRUu/B9gs7XlsOnrOGcXn/ld0+Ko
-         SvO5CuZ76HAgeh9ikyf9KPKtTh3ob13R1h9SqmXoB7a8bDyKFoRwELFwaQTOOCXttMMd
-         ltwmqbR3uwb+lnjKKYbEJzS8HI2sUHPNt/i5bKurpq+34wwG5EeNR7v+4Hn86+HZSi16
-         jiYA==
-X-Gm-Message-State: AFuF++kzykVM+y08U59NBfhaqH6lcAZnSyKNvUpWd/gn07ArfHPqUA/T
-	by/LIjHzGaJ4/Ab/EUC4JyXx+3Hczbms3zSIW7JOno3yG4iI/bb82Q6CHxTX8g==
-X-Gm-Gg: AYBFou3L2Kz7rdr8g25TpECDfUYiZBu8nqto3GcezrylYkw5LyWRtNvW9FlKLbFbBaR
-	5up8hcpHVwzbGD/VkO/T1/IdFyYs92lLHNBnluSBkCveNBUdtQ4uN+QOKiCVRVDxc8CEKmZH8gl
-	iqTWaGDkfgIauI0PVfBMy31H+lcHSjtSkmjDX18bSHn8T9A7do0FaHSIsCGbvpKsx2Gu5c1h+lO
-	NV68SlyHP4xNbqxzIfj4dboh3NI0KAgU5wOgTzWg4dpvFslAvASIyp8nnGMGwrpUEJ2+Ka+S85w
-	1sPtSCfq89gpjTlHqHDq4OLWUR4Og5B5BF0s/VQt/zPOlhD8bkZ0kE9ahyJIbe024B91LHP7+/g
-	CvGDUt6G80yyP218jOtLymiXKCpQjxSUuHQ9buocMglMH8I2cpQGgzX+ARtSrvmoHmU0+p2iC0Z
-	Yk5ll13eEtkJeWkiUqDAjMPh9PLJP5fKDQhUlcAXhlFZpMRPQu/q6AEE3QvYO/K2icfGjxRY11G
-	VogGkCwl5A=
-X-Received: by 2002:ad4:5dc6:0:b0:917:a943:c4c2 with SMTP id 6a1803df08f44-919977fe5c4mr569016d6.23.1791317164646;
-        Tue, 06 Oct 2026 13:06:04 -0700 (PDT)
-Received: from [127.0.0.1] ([20.62.255.24])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91996a40d41sm2491996d6.0.2026.10.06.13.06.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Oct 2026 13:06:04 -0700 (PDT)
-Message-Id: <pull.2242.v2.git.1791317163584.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2242.git.1790627574093.gitgitgadget@gmail.com>
-References: <pull.2242.git.1790627574093.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 06 Oct 2026 20:06:03 +0000
-Subject: [PATCH v2] doc: use `man git` to teach users how to navigate the docs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=8oZj9qu26wrDtVz4uiZjhHyE+6Qa7LkZGUWC9W9aWi4=;
+        b=RsVBKzqpgp8VdjRKJ2Kh/CmlsPIFvWoGtNDbbqxB2qrGGXArEcSho7SHK3CywyFvH8
+         47PR7l3Qb5jNZ03cB+ZhkBEpOnzGCs+SnOtEDLP5oDQMEPpA9frzBMozTKrcTvQGscWk
+         sIRfXEf01ck5FIdXe61XCqSWpnYnuEq0V/cEaYOIpwgV3z2vXn0fkBEpF0p50UgqNpFu
+         +bX9PQxEMbqPdATVhlK4Jm95B81sN+MHOvc4PC0+A3D9JklawHtp866IsetF9p64EZGs
+         in3jZY63CasWR0enJ4+/3lnP5zOZJ7Q3J+3mCBhzK/NTKmtZDUDcm1DoDQbYn62UPZCN
+         IZYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791317513; x=1791922313;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=8oZj9qu26wrDtVz4uiZjhHyE+6Qa7LkZGUWC9W9aWi4=;
+        b=gRHoJQ2tpJlQaHpLfqtKRX8SDVqM2pJ5eg3aOwirJ9JCTyKL+OWLW5m2Bp3FBo53Lt
+         igiJcJJVWot7SdI2to7BGYxdy1NuNxz6X+aRd0B3o1nkCbwOY0Y3dyejrgbMitvFL0WG
+         3Q/v+TSUCDVmAoOr4NkPCcGf6UAFroEUzVyFU615Z5qHVEOZFSShxV5ODYcU9YqTJhbF
+         0zAN5+vKms/Wlcxx9m/OiNeXf2vJcHzW/SxsAaNYAfHFXili9vHqMvdnxtj6XoQlG1fD
+         ftW8jJEo1FcXOU3Vvm/AaWL7NZL9PhKXCSQvOVQ+Uv8EFzQyvV1y6ZNRpZ8AhXXTcwrt
+         f8OA==
+X-Gm-Message-State: AFq9FYL60fphJZ0VeBF3MzZ9+HGoEF82rY8V+jBlDWDneMeiQtt9ADxk
+	6Ogrv/R4+ANRrtSiv7j4+bKroFKdZqVuFdo/tOq5ZbKVxPJclubU7eWikQ0xw3zXIhX6lnZzUTk
+	76fGZC7YaGB2T0lcHp0s4NQLE48LvaZkvAw==
+X-Gm-Gg: AYBFou0LvR+yXrbAItkYl3mzjKtLWYhi1Lq3BCSuVnaCcdJ2+qYBuItq5Afk0vRwXTb
+	3P7VY1CU8TGPdRR58GK96demrwlGHaF53eoEGSBJGp+RN8HJ5+OPHZCdPgUgzJrmCggI0keABQL
+	lbO0ejqxh2nA9oKO4UYAnohxZRUblUEx7ETD3cNaOYoezuoAGOdP44R/Ztq2rIGnTBFaHsUDWyl
+	aYaAsHg8LEWPbDn7YxbJGmSaGoL5WCx4nw65kqFe8nDGQVPHqUXRy2vx650IEffzfgTYvrauf1V
+	krdvEgRADU5l/QzH3dd2fyodKlQjhviuv0Naj1BtREUQLsyzrItKZ7nCIAIu5yweuxvw9URn/Fm
+	g8iZ/0OQjZgoION3dP9U9qI3xehmQ4/x0p5n6gk0tqGUAtQ==
+X-Received: by 2002:a67:e701:0:b0:7ba:3572:2789 with SMTP id
+ ada2fe7eead31-7c877fe763amr577785137.3.1791317512617; Tue, 06 Oct 2026
+ 13:11:52 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 6 Oct 2026 13:11:50 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 6 Oct 2026 13:11:50 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <asTnDMrTjUWHVSwR@pks.im>
+References: <20261002-pks-odb-move-alternates-v1-0-8a63507b88c4@pks.im>
+ <20261002-pks-odb-move-alternates-v1-2-8a63507b88c4@pks.im>
+ <CAOLa=ZSNHWFw5Vj_5qg16ipp1QA0pDcV8h=hOA=ma4hy6F_LcQ@mail.gmail.com> <asTnDMrTjUWHVSwR@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Ben Knoble <ben.knoble@gmail.com>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+Date: Tue, 6 Oct 2026 13:11:50 -0700
+X-Gm-Features: AclHuK_tsk_tXENEG3RQFqMTABzHKa2ibLodl-Hk4s3iA77fm9zWUq4CYaorqzU
+Message-ID: <CAOLa=ZSbgtBStEWz_gnqDTUVp_GdFfu0qghq_rzzfqUPqb3Stg@mail.gmail.com>
+Subject: Re: [PATCH 02/13] commit-graph: stop depending on `struct odb_source`
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000057262065d319c32"
 
-From: Julia Evans <julia@jvns.ca>
+--000000000000057262065d319c32
+Content-Type: text/plain; charset="UTF-8"
 
-Many existing users of Git don't know how Git's documentation is
-structured, and a lot of folks have expressed frustration that `man git`
-doesn't make it easy to find out how to get help with using Git.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Explain how Git's help system works in `man git`
-(`git push -h` gives a short help, `git push --help` is the full docs),
-since it's a slightly unusual approach.
+> On Mon, Oct 05, 2026 at 03:43:44PM -0400, Karthik Nayak wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>>
+>> [snip]
+>
+> Thanks for trimming! One more ask though: it's helpful to retain the
+> diff header itself so that one knows which file this is that you are
+> commenting on :)
+>
 
-Remove the references to gittutorial and giteveryday since they're
-unlikely to help new users learn Git. Currently they feel very
-aspirational (it would be nice to have a tutorial and a guide to
-everyday Git commands!), but we should give users a realistic view of
-what the documentation actually provides.
+Sure! Next time!
 
-Mention `git help` instead of `giteveryday` for now, which does a better
-job of giving an overview of everyday commands.
+>> > @@ -28,7 +29,7 @@
+>> >  #include "tree.h"
+>> >  #include "chunk-format.h"
+>> >
+>> > -void git_test_write_commit_graph_or_die(struct odb_source *source)
+>> > +void git_test_write_commit_graph_or_die(struct repository *repo)
+>> >  {
+>> >  	int flags = 0;
+>> >  	if (!git_env_bool(GIT_TEST_COMMIT_GRAPH, 0))
+>> > @@ -37,7 +38,7 @@ void git_test_write_commit_graph_or_die(struct odb_source *source)
+>> >  	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS, 0))
+>> >  		flags = COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
+>> >
+>> > -	if (write_commit_graph_reachable(source, flags, NULL))
+>> > +	if (write_commit_graph_reachable(repo, repo->objects->sources->path, flags, NULL))
+>> >  		die("failed to write commit-graph under GIT_TEST_COMMIT_GRAPH");
+>> >  }
+>> >
+>>
+>> Shouldn't the caller of `git_test_write_commit_graph_or_die()` send in
+>> (repo, path) and we forward that path, instead of using the path from
+>> `repo->objects->sources->path`?
+>
+> I'd agree if this were a properly designed function. But it's basically
+> just a hack for our test suite, so I was aiming for the easiest fix
+> possible to make this work.
+>
+> Patrick
 
-Also mention `git help --guides` and `git help --user-interfaces`,
-since those parts of the documentation are useful and hard to discover.
+All good!
 
-Do not mention `git help --developer-interfaces` since it's not relevant
-to users.
+--000000000000057262065d319c32
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 72ae839f6874d2a6_0.1
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
-    [doc] Use man git to teach users how to navigate the docs
-    
-    Changes in v2:
-    
-     * mention the git help push form too
-     * mention you can get HTML docs with git help --web push at the end to
-       advertise git help's great features, and remove
-       https://git.github.io/htmldocs/git.html since
-       https://git-scm.com/docs has a nicer view and 3 different options is
-       a lot.
-     * some minor wording changes
-     * fix commit message style (doc: not [doc])
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2242%2Fjvns%2Fupdate-git-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2242/jvns/update-git-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2242
-
-Range-diff vs v1:
-
- 1:  5da3881760 ! 1:  18f373a8f3 [doc] Use `man git` to teach users how to navigate the docs
-     @@ Metadata
-      Author: Julia Evans <julia@jvns.ca>
-      
-       ## Commit message ##
-     -    [doc] Use `man git` to teach users how to navigate the docs
-     +    doc: use `man git` to teach users how to navigate the docs
-      
-          Many existing users of Git don't know how Git's documentation is
-          structured, and a lot of folks have expressed frustration that `man git`
-     @@ Documentation/git.adoc: Git is a fast, scalable, distributed revision control sy
-      -commands.  The link:user-manual.html[Git User's Manual] has a more
-      -in-depth introduction.  See linkgit:gitdatamodel[7] if you want to
-      -learn about the data model and important terminology.
-     --
-     ++There are two ways to get help with any Git subcommand (replace "push"
-     ++with the command you want help with):
-     + 
-      -After you mastered the basic concepts, you can come back to this
-      -page to learn what commands Git offers.  You can learn more about
-      -individual Git commands with "git help command".  linkgit:gitcli[7]
-      -manual page gives you an overview of the command-line command syntax.
-     -+There are two ways to get help on any Git subcommand (replace "push"
-     -+with the command you want help with):
-     -+
-      +- `git push -h` for a short help
-     -+- `git push --help` for the full documentation
-     -+
-     ++- `git push --help` or `git help push` for the full documentation
-     + 
-     +-A formatted and hyperlinked copy of the latest Git documentation
-     +-can be viewed at https://git.github.io/htmldocs/git.html
-     +-or https://git-scm.com/docs.
-      +There are also guides explaining Git's concepts and more:
-     -+
-     + 
-      +- `git help` shows the most frequently used Git subcommands
-      +- `git help --guides` lists Git's concept guides
-      +- `git help --user-interfaces` lists guides for various
-      +  special files you can use to change Git's behaviour
-     ++
-     ++You can view an HTML version of the documentation with `git help --web`
-     ++(for example `git help --web push`) or at https://git-scm.com/docs.
-       
-     - A formatted and hyperlinked copy of the latest Git documentation
-     - can be viewed at https://git.github.io/htmldocs/git.html
-     + OPTIONS
-     + -------
-
-
- Documentation/git.adoc | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
-
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 6f0075f918..6dfb829a7e 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -22,21 +22,21 @@ Git is a fast, scalable, distributed revision control system with an
- unusually rich command set that provides both high-level operations
- and full access to internals.
- 
--See linkgit:gittutorial[7] to get started, then see
--linkgit:giteveryday[7] for a useful minimum set of
--commands.  The link:user-manual.html[Git User's Manual] has a more
--in-depth introduction.  See linkgit:gitdatamodel[7] if you want to
--learn about the data model and important terminology.
-+There are two ways to get help with any Git subcommand (replace "push"
-+with the command you want help with):
- 
--After you mastered the basic concepts, you can come back to this
--page to learn what commands Git offers.  You can learn more about
--individual Git commands with "git help command".  linkgit:gitcli[7]
--manual page gives you an overview of the command-line command syntax.
-+- `git push -h` for a short help
-+- `git push --help` or `git help push` for the full documentation
- 
--A formatted and hyperlinked copy of the latest Git documentation
--can be viewed at https://git.github.io/htmldocs/git.html
--or https://git-scm.com/docs.
-+There are also guides explaining Git's concepts and more:
- 
-+- `git help` shows the most frequently used Git subcommands
-+- `git help --guides` lists Git's concept guides
-+- `git help --user-interfaces` lists guides for various
-+  special files you can use to change Git's behaviour
-+
-+You can view an HTML version of the documentation with `git help --web`
-+(for example `git help --web push`) or at https://git-scm.com/docs.
- 
- OPTIONS
- -------
-
-base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
--- 
-gitgitgadget
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1yRlZnUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMXRxREFDTEozTnZRN2NPaEtYby9wK0w1c3lrSDRqMQpyM011ZEJZcnVV
+TUlvK04zK2dydzhCMVhwbzdEcktTL05RSllEbGowYVBsME52eFNqK3g0bEJQMlhDTkw1UjJUCis5
+YWJ3RHZHTEhjRW1mZnpoa082NHJKSHgzS0hMREcvT3BoaTVnWU1BdVg0SnRBa0h3U2dtNEJ1b2tI
+ZXZXZnMKRkhIRTFrSmpDWE94dzdXMGtNU21yeElPK295d2VBczZZKzJpYjl5Z1QxZkd2WUtBL0pP
+SHhPQmZ6RGF2WUtKVwp4SFNrcDlBZWVmdnpXdGs1L2FXSUpSTFJaQklLOTlSMm9VS2lHMEFvYXk3
+ZHdZNVFmYTMwc0J0WHRta3E3U1FhCjM1dGNqdVl0UmlFM1BMUzIyVFZGRmZ1R3V2TlpjY2tmK0x5
+NXNEdW9jN1IvV3lMV1J0MzFjaEE3ZElEcEhjZVcKRVh0aENwOStOU1JpMlZJSytyV24vU08rNFIr
+QjY1YkdLZzV4bGhkYXd4MHEyMFMvNkpYYkZDcXdUTjNpdlUxNQp4YndCNkRMK0ZqdWtoM1NaMkR2
+ZkVFYVI5OXIxTmp0Zjd0WTV4d2JneWcvSm9XcWU2dzhLbFNHU0ZBOWZlSDVmCkUwa3dUU2ltaGph
+RnY0enRSSTM0T1hiMkg1Z0xXcjUwRjZMR2lWMD0KPTdIL3kKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000057262065d319c32--
