@@ -1,268 +1,260 @@
-Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5671F3DDDDD
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 10:37:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791283076; cv=pass; b=oooX6dXTyqtMV7rJxFs2Zpmub1gJrIokooS9LMswXgufOx8blZP+6/M0A+e2RgzLufd2cksp1oAVcJae497k9yMB76jcJkp1qj+TTQO/IM8TCObIPqVvSwgXO7fv+NtZrs9mMxzRMPFJC/QzOeRmuYMTBdsD+RxG7Jp5zVxN3mM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791283076; c=relaxed/simple;
-	bh=6EF0+w7zYrXHR8VCOcmkbzvnYQhcfNPaArF2bTWERKc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Wa7rUU91gJtulZCoftrIPx6Lpj8+5ckan5QKCifBGmRVz54BPyH8yeTQkpdCowNhZk9bFSU6T7tBLOfmGa7MuTkyo23/Ke0rmAzulsuH1SLGndhhI1/yZ9Vz2fN8q/GqKyn9UOoL9rXCldcRpk5Aenn5beYHsxFrLUdEw4S6axs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=bHAshVRg; arc=pass smtp.client-ip=74.125.224.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EC8375AC4
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 11:09:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.187
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791284992; cv=none; b=Ctv2E6n1+k4E9H+L780pLg1uIJ6mtXk7QjHnHsucTe5/U0JmKOCUbuJfk70nQ5SvqNTtNicku2CLloO8In2WBiRLvHt8kfmUWiX0ajhTSDurkSuINFiP9I4NrbACcsfuGzp2H0t+4HYWHd7OyDb19BMoqYgpZwvJ/06IhpSvQtM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791284992; c=relaxed/simple;
+	bh=tV8of6T5Ep1e/aE4feEpy9+DsL9V74HpVTIT1Emyfzs=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=SgO9PmLFmrg3483EYbEN8Xv4Wrorl81/YAcEIV0IcyKSb7cusflKW9JoTlJqNvJoVM6Ns7JwHfWR3+zyK+5bejInd312476OWNB/ZUMvI5p984b5ZEPPQEnrXYOa8nHJbTkSkU2PhfpzjFg7Y8hL1gJcJxDbWi5CJv+OrYdjbWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=delpeuch.eu; spf=pass smtp.mailfrom=delpeuch.eu; dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b=GpWHmy+o; arc=none smtp.client-ip=212.227.126.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=delpeuch.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delpeuch.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="bHAshVRg"
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-677bc4704cbso379567d50.0
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 03:37:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791283072; cv=none;
-        d=google.com; s=arc-20260327;
-        b=SQd2KzqW9dfGpiGQDbxBIB217RZy62I2yGc0+ScR5mKzqmvCoKY5YwK9427HLI59ph
-         h4a625R4QjNLQqIB1RSjiHDcBtfgLEr3CeymlKdTEg0IixORnPN+YGtB13e1hwrKuqSD
-         MuLfvsGoBt87/kYRNgrOnnwBCCKkc9udvwDvxjHZlbaLfqB2PxvTdJdhfVAKdot1y4c2
-         6FzlWuoe2OJheAcgWTsB3DpN4UE2D2QAh1dS0lJq/KR8TuXUylEeyMUl54BPJhnLiRX/
-         tZHkf2fqdK7QH5EHsr02Ggf0m9839KPm2JUrEF9GIZK93lMb4rS1lHmaqDCQ6YVKFdXl
-         7c2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=vuPvo+IELA52BELZ685z1M7/fqklNSuJ9Oc4fl+VZE8=;
-        fh=fqeg7iAc3C/7n5OnTd0SdG/I0d7ad16qkzp4+mNlmpQ=;
-        b=sQ5CBiYZymjOShsxjpuT7ocWUntN09pl1cyx5zqhP8FDBqaUBh+e1CPvfblRPVoNdJ
-         0RE5rBhp/ifaSr+pUDCg8o/MxvGgGkGD0BahouftUEy6F+p2K9G5R1vNiiCi0EH0TFmt
-         d9aQJQ2sVVIq2Xb32OaK4xgz2fI6uznOPgk6A88I6VC9wYPugNFCUExYgUmVFNrJAa6+
-         vnNlx3/bU1fEet50P/VGlcelSg6gTK3vnh9fzoI4gS9EqmvLq4dCvkETyoZtfHpSA5eA
-         vBUJfk2hJHe8pN6yBGttTtw3yFDhY2vePUAEXTYWKDzHgX913+2pZ5X8GwaGuA12E7Cv
-         /xqA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1791283072; x=1791887872; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=vuPvo+IELA52BELZ685z1M7/fqklNSuJ9Oc4fl+VZE8=;
-        b=bHAshVRgEtb0d/HdiYYntTEDDxu6uzs8OWY0JTshPwQJfNiwjWOg9cJseZWkfeKncY
-         R6zdWuBBvax92oxBgYCL2VlnWI5WGDHVx4gRggDseEk1AvPSkR+EVuL4aq6PUx6lLI60
-         j9+7DVuB8Srt9xH3mmbWfeC7Sk/LYoltL+6GY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791283072; x=1791887872;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=vuPvo+IELA52BELZ685z1M7/fqklNSuJ9Oc4fl+VZE8=;
-        b=Ma8h3kz1ZJ5z1Mak3ACZGv/P5VId20rbhOX9YAgB3BTySqFk/CgDiaeP/Fv6HftlJG
-         tv6uoBRoPZ9SaRb/1fZz6ULXju3xcl4PDsmQhNj0KyKzSWUb4+i2UgSVCU5DQR56ZD0A
-         RyWHD4lS/erKnPs4cOnBiqEqKnQSlnb+yfkjZtJa/2oTqeT558YQ9jcYv7+mcu52MYIA
-         F02pMXLH3pVAAou2GFpmBkk8YG/YbQblki9bs8Rj48IcJXsOAz0A3pBBjFNylnr38gI7
-         5eI4Vng3GHH98jFMDz90d/ma9paBLllJ8gAagaaHU9qgdCG35hnuy3UNDzb7y3suZuNT
-         L4gw==
-X-Forwarded-Encrypted: i=1; AKwUvBz2VTYt6fci9TxGS4kNLIwPWF2nQpHlLvy3GqkTJVhWFO653IQ703XO1M0Ef7xAKEtr5HU=@vger.kernel.org
-X-Gm-Message-State: AFq9FYImDJXC1Dc469ZV8Wq/90C3narlLTJSRkMtvezKDdvHdzz4r4Vt
-	XDwfkBZ001XF2/MyShz0gUv7Y335UP1fIMbv7llRYUAh5XwMr8gul7wnhFmUTaXWSFjjiPeXdl+
-	CEoHksbnfhddz6gEHtNom1BX5qxV4WEBpJWkEWqiaFFXBrtP2Oixqb1NOFg==
-X-Gm-Gg: AYBFou1nWe35Wvjlc5WEqGe9i5DSKUuJVhmbZKnT5ERwLdEeS6T6uD9SDRAN108/XDY
-	gKuxosanlR4M48xkvl80wbtK/Dl4UKRfbE0UHRvkFTelXs72qsBupnXF6/6H2tOdV5tLJkDh3zM
-	j0ZBY5bxUB9omCEdos2626aIMIYu1dS7/iMBhIUT5MPdxldmvX71SOfEOuJf6XT+gD+a6yVxJ8K
-	XrCKWp5UIEM2Wbj5+XU4whI4QuWkVHyIFcCEOYw4ZgDi99gP4IuSdAVxjhZJMdwqOk/X7ndBpg9
-	v6ZVhZ9A2h2Gf2By8MhjMnYa9DlfX3MYtLY7QzD3AH0rVTVQ0IpDJpM=
-X-Received: by 2002:a05:690e:d0f:b0:678:907b:3014 with SMTP id
- 956f58d0204a3-678fcdde7e0mr246685d50.63.1791283071810; Tue, 06 Oct 2026
- 03:37:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b="GpWHmy+o"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delpeuch.eu;
+	s=s1-ionos; t=1791284982; x=1791889782; i=antonin@delpeuch.eu;
+	bh=tV8of6T5Ep1e/aE4feEpy9+DsL9V74HpVTIT1Emyfzs=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
+	 References:In-Reply-To:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=GpWHmy+oYBlQFyBLzlbzixxGcwi1PeS5jYN73JSpVlPQuxFMEuAHoFfK8bYcEjzR
+	 S5ybhmjPXilnosXNFIm6PYliscR5gCkDK6CgwOWwbyADRJDvjWSalS3/YwMizBNS6
+	 5vQTkXNBBHLO8pZzowTiHarDBw2qTKxcmd6O+zLNhmSFkFmasZuAkF5jKgQtPSUgs
+	 3XOwldgfYiw9lwntvOa62g+zxCsI9mZnS4suh2na0Bn3Tb6DbMDvlMybDtrUoYn/C
+	 qSVrkEzd6q94llrVESqWPXX7dy7OVr6jfeTUjA5OepcRbinSeesDTTvoMS2bidaoZ
+	 Em4zrifkMbr1rv/v4A==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue012
+ [212.227.15.167]) with ESMTPSA (Nemesis) id 1MAtoX-1xPMmS3LvV-00AzqM for
+ <git@vger.kernel.org>; Tue, 06 Oct 2026 13:09:41 +0200
+Message-ID: <97c58bb0-5030-4e66-b183-44db2ab216db@delpeuch.eu>
+Date: Tue, 6 Oct 2026 13:09:39 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
- <pull.2211.v2.git.1790600552.gitgitgadget@gmail.com> <6ad528f4bb42a960910eb4fe917a3766fa55d598.1790600552.git.gitgitgadget@gmail.com>
- <asNZD7AOC6QL9q1d@pks.im>
-In-Reply-To: <asNZD7AOC6QL9q1d@pks.im>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Tue, 6 Oct 2026 12:37:40 +0200
-X-Gm-Features: AclHuK-cNy0Fg4LnyD2-ig0FMdDmAQ9EjXBB8XC_jUpBwbbzGguUK9KZvKNgZfY
-Message-ID: <CAL71e4PFpMPoSxFdnscRFiMB3ozudr64TjeQc8VKcO_M_MfJ=w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] connected: add incremental connectivity check via rev-list
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: Documenting the governance of the git project?
+From: Antonin Delpeuch <antonin@delpeuch.eu>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+References: <1aee1829-d7ad-47e2-b7d1-1a946bd59991@delpeuch.eu>
+ <xmqq7bkel0i3.fsf@gitster.g>
+ <33b3ab6d-b2cc-49c3-9a06-3c4070ede57e@delpeuch.eu>
+Content-Language: en-US
+Autocrypt: addr=antonin@delpeuch.eu; keydata=
+ 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
+In-Reply-To: <33b3ab6d-b2cc-49c3-9a06-3c4070ede57e@delpeuch.eu>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------Jn72qF4pyDz80Gu8bds52S2D"
+X-Provags-ID: V03:K1:w4hpLsbzmggzeSc1VnhBniRU0X3CDYjozIMT2XYP5JXdFaczpsA
+ PvysqtPqcMM+K5xgMJViCHxHeF1l/I4BjISGeOrNnTgp3lJjpNOtxn4j+iuOvQf70FLgGNm
+ +Zklicn6q1yXqmkTvz+pZbbQPTjOs5pheVozhtJiOMRLLAwAwh+qacxcXxzlf5fu01ku7sB
+ tnugHcXR7+iZ1A/t79xBg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:oxDttoXgr8o=;vmnRkmddZxPif/XifJYnb9G0Ply
+ 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
 
-On Mon, 5 Oct 2026 at 10:00, Patrick Steinhardt <ps@pks.im> wrote:
->
-> ... whereas in the new world you propose to skip marking trees/blobs as
-> uninteresting. Instead, the idea is to compare the trees/blobs of the
-> old tips directly with the trees/blobs of the new tips and only verify
-> those parts that have changed between the two?
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------Jn72qF4pyDz80Gu8bds52S2D
+Content-Type: multipart/mixed; boundary="------------YKZ4JZBjyaANZ7RFokgngWJr";
+ protected-headers="v1"
+From: Antonin Delpeuch <antonin@delpeuch.eu>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <97c58bb0-5030-4e66-b183-44db2ab216db@delpeuch.eu>
+Subject: Re: Documenting the governance of the git project?
+References: <1aee1829-d7ad-47e2-b7d1-1a946bd59991@delpeuch.eu>
+ <xmqq7bkel0i3.fsf@gitster.g>
+ <33b3ab6d-b2cc-49c3-9a06-3c4070ede57e@delpeuch.eu>
+In-Reply-To: <33b3ab6d-b2cc-49c3-9a06-3c4070ede57e@delpeuch.eu>
 
-Yes, kind of, but I am not sure what you meant by old tips and
-new tips -- to be clear (and I should also write this more
-clearly) we only verify the commit-trees for all incoming
-commits, and the comparisons are always between a commit and
-its parents (i.e. X and X^1, X^2, ...).  The key insight that
-makes the approach work is that we can skip any object we have
-seen from a trusted base (e.g. a commit that was already
-reachable before).
+--------------YKZ4JZBjyaANZ7RFokgngWJr
+Content-Type: multipart/mixed; boundary="------------IEormHfCkq93LFg1Nbcn4Ym9"
 
->
-> This can of course cause us to verify significantly more objects in some
-> scenarios. But it does have the consequence that we scale with the
-> number of changes, not with the number of preexisting objects in the
-> repository. And that's something I'd really appreciate, because marking
-> reachable objects as uninteresting is extremely expensive.
+--------------IEormHfCkq93LFg1Nbcn4Ym9
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Yes, that's the goal in the happy case -- and I would argue it
-does not produce significantly more work in the worst case,
-due to caching and remembering everything we've seen so far
-(only more work within a 2x bound or so).
+SGkgYWxsLA0KDQpJIGFtIHBsYW5uaW5nIHRvIGdvIGFoZWFkIHdpdGggdGhpcyBwcm9qZWN0
+LCB1bmxlc3MgYW55b25lIHRoaW5rcyBpdCdzIGEgDQpiYWQgaWRlYS4NCg0KTXkgcGxhbiBp
+cyB0byB3cml0ZSBhbiBpbml0aWFsIGRvY3VtZW50IGJhc2VkIG9uIHRoZSBpbmZvcm1hdGlv
+biBJIGNhbiANCmZpbmQgb24gbXkgb3duLCBhbmQgdGhlbiBmaWxsIHRoZSBnYXBzIGJ5IGFz
+a2luZyBxdWVzdGlvbnMgYWJvdXQgdGhlIA0KcG9pbnRzIEkgY291bGRuJ3QgZmlndXJlIG91
+dCBteXNlbGYuDQoNCkl0IHdvdWxkIGJlIGdyZWF0IGlmIEkgZG9uJ3QgaGF2ZSB0byBib3Ro
+ZXIgSnVuaW8gdG9vIG11Y2ggd2l0aCB0aG9zZSANCnF1ZXN0aW9ucywgc28gaWYgeW91IGhh
+dmUgYSBnb29kIGdyYXNwIG9mIHRoZSBzb2NpYWwgc3RydWN0dXJlcyBpbiBwbGFjZSANCmlu
+IHRoaXMgcHJvamVjdCwgSSdkIGFwcHJlY2lhdGUgaXQgYSBsb3QgaWYgeW91IGNvdWxkIGxl
+dCBtZSBrbm93IHlvdSdyZSANCmF2YWlsYWJsZSB0byBoZWxwLg0KDQpNeSBnb2FsIHdpbGwg
+YmUgdG8gd3JpdGUgc29tZXRoaW5nIHRoYXQgeW91IGFyZSBoYXBweSB0byBpbmNsdWRlIGlu
+IHRoZSANCm9mZmljaWFsIGRvY3VtZW50YXRpb24gb3Igd2Vic2l0ZSwgYnV0IGlmIHRoYXQg
+ZG9lc24ndCB3b3JrIG91dCwgSSdsbCANCnB1Ymxpc2ggaXQgZXh0ZXJuYWxseSAobWFraW5n
+IGl0cyB1bm9mZmljaWFsIHN0YXR1cyBjbGVhciwgb2YgY291cnNlKS4NCg0KVGhhbmtzLA0K
+DQpBbnRvbmluDQoNCg==
+--------------IEormHfCkq93LFg1Nbcn4Ym9
+Content-Type: application/pgp-keys; name="OpenPGP_0x922C1B66A3D3D022.asc"
+Content-Disposition: attachment; filename="OpenPGP_0x922C1B66A3D3D022.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
-> One thing I wonder though... does this help with the scenario where we
-> have tons of references or do we still end up passing "--not --all"? I
-> have seen many times that parsing the refs by itself is dominating the
-> time of the connectivity check quite significantly. So ideally, I'd like
-> to have a solution that also catches this case. Your benchmarks do not
-> cover that scenario though.
+-----BEGIN PGP PUBLIC KEY BLOCK-----
 
-Yes, the problem of scaling out with number of refs is a real
-problem (and often a bigger one) and I want to address that
-too, but it's out of scope for this particular patch series.
+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
+L6U=3D
+=3DFqrj
+-----END PGP PUBLIC KEY BLOCK-----
 
-> May I suggest splitting up this patch in the following way?
->
->   - One commit that introduces the new option, but for now only accepts
->     "full" as the algorithm.
->
->   - One commit that introduces the benchmark.
->
->   - One commit that introduces the new flag for git-rev-list(1).
->
->   - One commit that then introduces the new strategy.
->
-> That may make it a bit easier to focus on the actual change.
+--------------IEormHfCkq93LFg1Nbcn4Ym9--
 
-Yes, I can definitely do that.  Initially I was thinking that
-since it was basically only additions no obvious good in-between
-state, it wouldn't help much to split it up, but I think you
-convinced me there.
+--------------YKZ4JZBjyaANZ7RFokgngWJr--
 
-> > +The incremental mode, selected by
-> > +`transfer.connectivityCheck=incremental`, avoids traversing the
-> > +full tree walk of the boundary commits.  Instead, it verifies
-> > +each incoming commit's tree against the already-trusted trees of
-> > +its parents.
->
-> Can we define "parents" here? Specifically, I wonder how you define
-> "parent" in the case where you perform a force push or when creating a
-> new reference. Is it the parent of the first new commit? Is it the old
-> state of the ref, if it even exists?
+--------------Jn72qF4pyDz80Gu8bds52S2D
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-Parent is always defined relative to the commit we are
-currently verifying.  For example, a push may come with
-3 commits (let's call the tip T), and then we do the
-following comparisons:
+-----BEGIN PGP SIGNATURE-----
 
-    T   vs T^1, T^2
-    T~1 vs T~1^1, T~1^2
-    T~2 vs T~2^1, T~2^2
+wsF5BAABCAAjFiEEJUVxpLyjfMNrm7SYkiwbZqPT0CIFAmrE1vMFAwAAAAAACgkQkiwbZqPT0CLe
+ghAAkrlqbDXK/xR+Hpob3jbeyC9S1VA1dz547vr5AbqOXlYRCcCA5KcOk/8KtMuzhDuEFxd1hsua
+vsC6l2lX3+NZ6h720fZ0PjA9PAQ6kH6C/BYPZhUwsxr+CiIRnaIAcTOY++7IvW0X4+zxEvrOpEKD
+f6w/ly7M/76bMIcAzq0fOMdSWKbtONLgQE3sxcRorLEtm8+WqRrx2ZcQKciLEFPSl8mFXb+cTs6P
+f09DZwgTrSlY0DRdyQwhrqdzUNMJuKxgwVogfnBsu8H9MwxPGUUw69+uEM6aaSnWM4aHNIalK0bs
+aHgKyO+hW/aMj+Ca/MFGAfsohrmnGQvzF+GZZwUF8ySyNIw6oBrUd6oovZNjKu/DYrPVspnHUpn+
+Sf679ssNdbbPFt+siNp/xD6A//2vt5inZEZiAno08B+iK3UWUFvPtxfOWs9Cvq4dpHPxAWxXm5gz
+oZhX6NVKy+dTzFC6PMpn7JjVt61rxTu1G1qtrQOzZrwr8Lwu0nokESyp5smiH4OyawUtjOxZbjiH
+CX3XDles0Mde8n/bxQSzANBjTUzpajx6qX3yPXdcwdQ28YtjE6o9Ep0ED0SQhvPVIyEXae57KxxO
+BzOpHR143JfvwlOonYosFgZNbdn0KXizlry/DReWfiP8QeqOmUNU1CAYOWmfgOFFzP/FF7mRbpKD
+C9Q=
+=1W/d
+-----END PGP SIGNATURE-----
 
-T~2^1 and T~2^2 must already exist and be reachable and
-so we can trust them to be connected.  And since this is
-relying on memoizing already seen results, it's important
-to run the checks bottom-up (reverse topological order).
-
-I will see if I can make this more obvious in the commit
-message or documentation somehow.
-
-> > +Trust model
-> > +~~~~~~~~~~~
-> > +
-> > +A tree is trusted when its transitive object closure is known to
-> > +be connected.  Trees reachable from commits on the
-> > +already-connected side of the boundary are therefore trusted.
->
-> Where the "already-connected side of the boundary" is anything reachable
-> via a reference.
-
-Yes, precisely.
-
-> > +Incoming commits are processed with ancestors before descendants.
-> > +Once an incoming commit's tree has been verified, it is trusted
-> > +and can be used as a comparison base for later descendants.
-> > +
-> > +This gives an inductive correctness argument: every parent of the
-> > +commit currently being verified is either already connected or is
-> > +an earlier incoming commit whose tree has already been verified.
->
-> Right. The big question to me still is how you identify
-> already-connected trees without having to read all references.
-
-That part works just as before -- rev-list finds the
-already-connected commits implicitly with the --not --all query.
-It actually finds all the new commits, but we can deduce the
-boundary from there (and the pre-existing rev-list code also does
-that).
-
-> > +Worked example
->
-> Worked?
-
-Hm, I suppose I could just use the phrase "Example" here instead.
-Will change.
-
->
-> [snip]
-> > diff --git a/tree-verify.c b/tree-verify.c
-> > new file mode 100644
-> > index 0000000000..5c11c2251a
-> > --- /dev/null
-> > +++ b/tree-verify.c
-> > @@ -0,0 +1,316 @@
-> [snip]
-> > +static void verify_commit_tree(struct repository *repo,
-> > +                            struct commit *commit,
-> > +                            struct verify_state *vs)
-> > +{
-> > +     struct oid_array base_trees = OID_ARRAY_INIT;
-> > +     struct commit_list *p;
-> > +
-> > +     /*
-> > +      * Parent trees are trusted: boundary parents are already
-> > +      * connected, and earlier incoming parents were verified
-> > +      * first due to the topological processing order.
-> > +      */
->
-> I feel like I still miss where exactly you establish the trust boundary
-> between preexisting fully-connected commits and new commits.
-
-This is the same as before -- git rev-list produces the trust
-boundary based on reachability.  I think the only new thing here
-is the inductive leap.  Once we have verified a commit just above
-the trust boundary, that itself becomes a new trust boundary.
-
-> > +     if (commit_list_count(*commits) < nr_before)
-> > +             die(_("cycle detected in incoming commit graph"));
->
-> I don't think we should just die, should we? That may not interact well
-> with git-receive-pack(1) and others that expect a broken connectivity
-> check to bubble up errors so that they can properly report those to the
-> client and clean up their local state.
-
-This is one of the advantages of running within a sub-process --
-we can safely die without breaking things -- and this is in fact
-how the existing rev-list based implementation work, it will also
-die with an error message / return code that the parent process
-picks up.
-
-My original implementation tried to do it all within a single
-process but it became painful because a lot of the internal
-machinery did not have non-fatal variants.
-
-That said, I think long term it would be good to rework it
-into a single process and have the right infrastructure in place
-to avoid dying.
-
-Thanks,
-Kristofer
+--------------Jn72qF4pyDz80Gu8bds52S2D--
