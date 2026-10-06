@@ -1,69 +1,69 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0881738F930
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 18:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D726380FD5
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 18:06:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791309983; cv=none; b=og8p3s/o7DyYUzEmiE0HfNRNYUMsiFvDvhOx89JQGdwTHcZJKzYJ3PjP2I4J0BYUmge+bEX2AXMMRMhCRZy8j5pt/kBaD1edM7UgGvAB21A6Ll+gI5BbHMwaih1NGk3tXqHxj37gceCSPeeJqWXbi3Dy4XxRKsJAcpBPyMpytZM=
+	t=1791309989; cv=none; b=H2/LT/zrEAhMbaa4NZGJizvuDtU4IK6GXmRuAakn3F+RgToPB0Zy1PI37f11+Nf9NulyY57/7Z2zk4Znp5f+EV2URQCmvte9yA9wMNcvlWvplYY1CBDZuOwkiQ2zVDiXvEq7nb0OdSQQ9+d+wxdrrtwmFr0KR8S4PON0jdasnig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791309983; c=relaxed/simple;
-	bh=n0C5gWJ8OjAyXkj6tNF/oTyP4s7iH6Dh0rUcrhGr2Kg=;
+	s=arc-20240116; t=1791309989; c=relaxed/simple;
+	bh=7mysGIFQTSgL+eiCYXzpWnxtuO0fiisAXmcHpZ9Edyg=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RBbSe89bi9eAQUWClzCl8cehg3ZVUU3SDcfX+9y20ILOI1t5Qb86vrZaqUnvDpZ6YqyensVHOtDXvHftX/8jaEmLbry6e0ufFKwRW/Du13OW1rpkwQ65end0P9Yz9T3VxiB+gBqHU35CsiA6vBdx/GP47JCe7vLlPJPgPOdhjoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=B4SKvcnL; arc=none smtp.client-ip=209.85.219.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=C4YF5zWLyJZ8c3tPX+9kfwYGonbtzvm1yChfqhls0iewDsjT/wK5fLByPxe7CsFhr/s480eYZ56/zimsaj5l6CHMo5v3Mrluk6po7O+vvJ/vTob23iUhi+Lc3IKUX5mlaVGW4y083MHvb/m8IthiqfU+TcyftS52cttqLOeHiWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=Tqc1TCTT; arc=none smtp.client-ip=209.85.160.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="B4SKvcnL"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-917866225aaso13257566d6.1
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 11:06:21 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="Tqc1TCTT"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-5351e6a2230so7075111cf.3
+        for <git@vger.kernel.org>; Tue, 06 Oct 2026 11:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1791309981; x=1791914781; darn=vger.kernel.org;
+        d=openai.com; s=google; t=1791309987; x=1791914787; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:to:from:date:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=DGKz4LQl9XB0+GD1hMFzD3wxcAcnowGe8Bc0fiNkskE=;
-        b=B4SKvcnLpMSwnMO1oohMAl2mSwXFAwC+ykypcTvI7TaF0Pxxqr6c836/sc9KJd0rYf
-         M6AmNL0GntdHyo8RORzsdTRT+QbfA2J2UCfDhzUEkoitLhQ0NAAk43JgRt3VTDVpq6k/
-         8P5+sj9znaCJV8LvRsjlp/rW/SUugnm8sVhLo=
+        bh=QWaLL2NsvqixQBf4jjG0DnSopocvNz6aSzON8YQjbGM=;
+        b=Tqc1TCTT5RvnB6XNrX7Y7jEQpOKQ/uH2BWYhBlMzsLEr71vXpmdMA3TsbkmCY1cnQB
+         iBeZL/KI3PetLW9CRLPfXwg5JBjpb8p5KFkFurpH2/ZLpUDMqIHnzoB8SMXIIsmNFEEH
+         BNVX7E0yWtTcBG5pB+zgF2T0XRLBrNDHHeE34=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791309981; x=1791914781;
+        d=1e100.net; s=20260707; t=1791309987; x=1791914787;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=DGKz4LQl9XB0+GD1hMFzD3wxcAcnowGe8Bc0fiNkskE=;
-        b=S6VAccceBRE1H2P96OkfEbm2yFRUrIuZyxeQQd6ha5ahjz2Isu+wXXF/ouq7XuPri6
-         MRO1W6gzsGd1ojUY7Vd9UPQxbLobIA+UWy8i4SmakXFA9Z7QdJDny7OP6ZDMKfwoB+aj
-         EYQYAOyEQmxoEnLxdkhAsGhsu4BOE0iTExdGN2jc/NVMT9/7k0kghKLtcezOsj/l1nR7
-         9Kbk/VqPIi4W2NTCOI7wkgS/KNvFmqustehObgmxG7a/HCKX4D5Oaq5JKPZ/SbOIdEm3
-         OZhhP+8Uh71NvDlEo0YFIe2mnutkX4my5tpDgazJ1XwnMo5hR/w3YlcJYx4aRGFIwji1
-         be9w==
-X-Gm-Message-State: AFq9FYJozM1tq2azG41m0SGJ+ToFcY3XdN3JIeLkWDcSaOGbYT9IU7VV
-	PHSEYR/3RcFAUSUt2rzU5G7YrcWqQB3oXngNYFtMb4vy3r9W1VRWQm26jrSiqGbhOQn12WNrrDq
-	q1+uCDAQ=
-X-Gm-Gg: AYBFou0MaGH2WzpHXv64nhNdgOfp653msM0YuapE4/5EhfQdoy2EgR5jc6J7v1Vodsl
-	9NZ4nAzkp/AZiZGB0Y7ffuEBDq+aTcukgbPjuguzNincLGUC9m3j/D2zx3cb+vioH36iu2hqO48
-	nKoF5tUmIcyjKnFN5yBJAiJq7H3C+m1oBj3Z8WFjUZnJ/0BN2cvAu7VERFXAIPUr3mIsFhWytfJ
-	muG7VZ1jzTRJEfg68I6YcO4cieXqQyF2iFyDGgzPDk3xIVQHlwJl4g61rSsl46v9HqxFmS20p65
-	QAKLPE8IGBtvoEMPPrAOvquhJEuJTMGMX8yuBzaIwXc8Mjy/jRyiLUuBCK6NIrbv9OOrpFfyHi9
-	KPGZO77Bh0OhO3JW/+lELCPvJVSr6G14iGga8zsKZFPlLr9dj02diHKiyPHkBbV++RlOWKp7Nox
-	0gBDK/rne25LC3UcJqKLC4NKSe4N1GvIa17msOkXXYS9J1JsS81GGQX1MZFdZKJaNBwrQ7f0uN/
-	P71KOwiG96ZLjVTmlQSnfrqbVPD1KLS8Q5MDcJ7sEBpIfKJVbU8EFVFIVPGp/+ru7GuxfCUxeUX
-	mU5Ue/bvIiDTYtB4Jrnl6w==
-X-Received: by 2002:a05:6214:4993:b0:919:8604:33bf with SMTP id 6a1803df08f44-9198b3afbefmr43003496d6.0.1791309980437;
-        Tue, 06 Oct 2026 11:06:20 -0700 (PDT)
+        bh=QWaLL2NsvqixQBf4jjG0DnSopocvNz6aSzON8YQjbGM=;
+        b=XoQjzCRQDIDSeoHqVLIgb42L/fyweXVzE1MHZ1VKDezyyoujtsbMP0amIfoD5eySc+
+         GFFKOTY5xPlILTu7iiDnnCGo8pSBSr7fCAW04XALfNEHRVRWF2ejt7ZyM7Esu5IRjse9
+         BRYFNpcciqTAVDFZWBI5CViSRy8YSk/F4xowC/W2UoYD7tv0qT1zOALk/PwRVy3WY1N9
+         tvmo6zWzza05U2zmK2xyGO3By74o8xGNZgs5sIR5Z68sH0yax13KexP2VxDAf/1fDqiE
+         woCNOtX0rtyhtPsFtwAsP009Gt2rPjw3HhWDOmnHJSTB74NCwY3VQJOtvH7C8b1skf1b
+         YPdA==
+X-Gm-Message-State: AFuF++m5Ha31iEvACmw7lqIc9vX7G3z1eUMs6Izq1vgE5SZTvUws3SyX
+	++PgsaJyVpxpniWfHonCM+nrte2AYuISKmLBttzg4nEC72Mvo4Mfx8Ahc2YJh9kXtZsrPMuTS/R
+	qF1paOY8=
+X-Gm-Gg: AYBFou1Q5SHnbeESHemnZQ61vkV4P3dJ7Hi+ad+GAV1II17CxHUsdfuEVEKzZxwq7eO
+	NyDLOrQAmyek/wIbdqX2BcUh+FEaLrx1MTjRhvPZzFaOv2WxBsR3jFV2Z502o9Jex8oY4kFZlBs
+	VoF20Em4ogpkFRR+Z4aPOPT6H8wWTk5LlPLF2UEYhQbIw7rxCNP4Ss9wC/helXpkm50BZBZjUvg
+	ejPf7XhGGDvM15yLT+zwWu1wNZVinlARbqUJ0vxYM478I0MyuI7cORoDVFJk0jm193KHnIMZvio
+	mkqU3gcbCd3w3E7f3yYJVeqryh3LPJaL2DeCiIY3Kh2dmoJUwqhIac5h5evmL2Ls9vEgNxw5H2H
+	ZgSOIjxxRsT1JWT6Woan5XkPzBeiGHQhgLVsNQRj5m9NYcDhwfWe6fNNxQusa9Jc3m2Ou3DGxHI
+	Iq+g9bFJiIwv2PEBqTZTKcRAF56JbQkMEOxqR3SJ7qH5I3tl1sCz6NpoGOG/JYwPO+vbWe5XcQh
+	76uhW4bZPPXpRWriTx7Oh9+ewisc76iyfvSjJ+N6OAjS2/UQUQRE0SESHGwiQg5OPvguTaPdEuj
+	Xh7CdMZi1Zw=
+X-Received: by 2002:a05:622a:4c13:b0:533:3572:250f with SMTP id d75a77b69052e-53566f8ba74mr38296791cf.36.1791309984374;
+        Tue, 06 Oct 2026 11:06:24 -0700 (PDT)
 Received: from com-79390 (vpn-eastus-01.tradc-corp.com. [172.190.114.39])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-917e0b1aef0sm119980886d6.12.2026.10.06.11.06.19
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-535721e3da9sm1373061cf.29.2026.10.06.11.06.23
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Oct 2026 11:06:19 -0700 (PDT)
-Date: Tue, 6 Oct 2026 11:06:17 -0700
+        Tue, 06 Oct 2026 11:06:24 -0700 (PDT)
+Date: Tue, 6 Oct 2026 11:06:21 -0700
 From: Taylor Blau <ttaylorr@openai.com>
 To: git@vger.kernel.org
-Subject: [NOTES 02/07] Git 3.0
-Message-ID: <summit-2026.94e33e9ddf234334.02@ttaylorr.com>
+Subject: [NOTES 03/07] Documentation
+Message-ID: <summit-2026.94e33e9ddf234334.03@ttaylorr.com>
 References: <summit-2026.94e33e9ddf234334.00@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -75,83 +75,179 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <summit-2026.94e33e9ddf234334.00@ttaylorr.com>
 
-Topic: Git 3.0
-Leader: Patrick Steinhardt
-Notetaker: Justin
+Topic: Documentation
 
-* Patrick: The blocker was GitHub not having SHA-256 support. When will
-  GitHub fully support it?
+* Julia: There is a big gap between contributors who know Git's concepts
+  and users who do not know what objects or the index are. I have been
+  working on a website to bridge that gap. We do not explain some basic
+  terms, such as "upstream". Some documentation receives hundreds of
+  comments. How can we bring that feedback to the mailing list without
+  overwhelming it, and improve the documentation with very little
+  funding?
 
-* brian: GitHub has shipped it experimentally, with general availability
-  probably in November.
+* Patrick: Could we expand the funding? This work is important, and we
+  are not technical writers.
 
-* Patrick: GitLab already has public, non-experimental support. We are
-  looking at spring next year for Git 3.0. libgit2 has support; JGit
-  does not.
+* brian: We have gitglossary and the Pro Git book, but it would be good
+  to have beginner documentation. Many users arrive from university
+  without knowing these concepts. I have submitted some documentation in
+  this area.
 
-* Emily: Google will not fund SHA-256 support in JGit.
+* Patrick: Pro Git may be outdated in places. Scott wants a new version
+  and could fund somebody to work on it.
 
-* brian: It does not look like Bitbucket will support it.
+* Emily: We can suggest a huge book to somebody who is new and just
+  wants to use Git.
 
-* Emily: Gitoxide may have funding for SHA-256 support.
+* Peff: The manpages are reference material, so they should be terse.
+  Most users also need something less terse. If somebody is interested
+  in working on this, we should consider replacing outdated
+  documentation rather than preserving it for its own sake.
 
-* brian: There will be a couple more releases: 2.56, then 2.9x, and so
-  on.
+* Patrick: We should allow iterative work. Review can be nitpicky, but
+  perhaps we can be more accommodating so this can move faster.
 
-* Taylor: We could use 2.99 and then 2.999 if needed.
+* Julia: Being able to merge quickly and iterate would help.
+  Mailing-list feedback is useful.
 
-* Patrick: 2.99 would be a stronger signal than 2.95.
+* brian: Thank you for working on the documentation. Bad documentation,
+  or no documentation, makes software hard to use.
 
-* Peff: Why might users not want to jump to 3.0? Rust support will be
-  mandatory.
+* Patrick: Terse does not necessarily mean accessible. We could learn
+  from TLDR and include examples.
 
-* Patrick: A possible schedule is 2.56 in September 2026, 2.98 in
-  December 2026, and 2.99 and 3.0 in March 2027. We need to find out
-  whether anybody is interested in an LTS release.
+* Julia: Examples are useful, and we should update the existing ones.
 
-* brian: Gentoo would be interested in a 2.99 LTS release.
+* Josh: We could consider Diataxis, which separates tutorials, guides,
+  explanations, and reference material:
+  https://diataxis.fr/
 
-* Patrick: We could potentially cut out one of the releases.
+* Julia: The format of the reference manpages makes sense.
 
-* Peff: We could make one of the cycles shorter.
+* Peff: I did not mean to defend the manpages. New-user documentation
+  and manpages are two separate things, and both need work.
 
-* Taylor: The 3.0 release could be small, containing only the changes to
-  the defaults.
+* Julia: Git has guides and manpages, which is a useful separation. The
+  guides are harder to discover; the manpages are more accessible.
 
-* Patrick: The counterargument is that we want to use 2.99 as a signal.
+* Patrick: How much time do you have funding for?
 
-* Peff: We should release 2.99.1 and 3.0 at the same time, with only the
-  BREAKING_CHANGES defaults flipped in 3.0.
+* Julia: We have 100 hours split between two people.
 
-* [Consensus among the attendees.]
+* Patrick and others: Perhaps we could use the Git fund.
 
-* brian: Are there any objections to Rust in 3.0?
+* Peff: Other companies might also be interested in funding the work.
 
-* [No objections recorded.]
+* [OpenAI, GitHub, and GitButler were mentioned as possibilities.]
 
-* Peff: Are there timing concerns around distribution release cycles? We
-  might want to synchronize with them.
+* brian / Emily / Mark: We can ask about funding.
 
-* brian: If we do 2.99 and 3.0 back to back, that puts us in the April
-  timeframe.
+* Mark: We have both machine-readable and human-readable material.
 
-* Patrick: Do we want to drop 2.57?
+* Toon: We are only discussing written documentation.
 
-* [The notes record dropping 2.57 in favor of an earlier 2.98.]
+* Peff: Costs can escalate with video. I am biased toward written
+  documentation.
 
-* Peff: GitHub might encounter bugs once users start using SHA-256.
-  Would we see similar bugs in Git?
+* Patrick: GitButler has resources, and younger users may prefer videos.
 
-* brian: Codeberg exposes this in its UI, and has a decent number of
-  users.
+* Julia: We could link good Git videos from the website.
 
-* Patrick: GitLab has test suites covering this, and we have upstreamed
-  a few fixes. I am confident there are very few bugs.
+* Emily: There are links on Discord that we could include.
 
-* Patrick: Should we migrate?
+* Julia: We do not have a good entry point on the Git website explaining
+  how to learn Git.
 
-* Taylor: I may be a little behind on the interoperability work. Would
-  it also handle historical tags?
+* Peff: The site had one, but it gets outdated. We should refresh it as
+  we go.
 
-* brian: Yes. The work is done, but not on the list. You can clone a
-  normal SHA-1 repository and get interoperability with SHA-256.
+* Julia: Some documentation says "see section XYZ" without linking it.
+  We cannot link to subsections of manpages.
+
+* Peff: I spent some time generating subsection links.
+
+* Julia: We have links to other pages, but not to subsections.
+
+* Peff: References in the text need the linkgit markup. This could be an
+  incremental project.
+
+* Julia: I added a cheatsheet to the website. Do we want to move away
+  from ASCII diagrams?
+
+* Patrick: Could we use different sources for different outputs, with
+  SVG for HTML and ASCII for manpages?
+
+* brian: We could do that.
+
+* Patrick: Perhaps Mermaid would let us keep a plain-text source and
+  choose the output format.
+
+* Julia: It should be possible. We have CI scripts that Johannes worked
+  on, and we used Graphviz.
+
+* brian: There are extensions, but they are not packaged for
+  distributions.
+
+* Peff: We support both AsciiDoc and Asciidoctor. Would it help to get
+  out of that dual world?
+
+* Patrick: Traditionally this was for migration. AsciiDoc was thought to
+  be unmaintained, but it is maintained now.
+
+* Peff: We could move to Asciidoctor.
+
+* brian: Fedora still uses AsciiDoc. Asciidoctor is well maintained,
+  written in Ruby, and reasonably portable. It depends on how much we
+  want to support. I do not know whether Fedora is still an obstacle.
+
+* Peff: Who would object to moving, and how strongly?
+
+* Junio: We could include it in Git 3.0 and add it to BreakingChanges.
+
+* Josh: Some documentation already renders poorly with old versions of
+  AsciiDoc.
+
+* Peff: Send those bugs to the list; somebody may be interested in
+  fixing them.
+
+* Josh: We could use this to fix the build pipeline and move away from
+  AsciiDoc.
+
+* Patrick: Fedora does have Asciidoctor, version 2.0.26.
+
+* Peff: I tried Asciidoctor on Debian, and it works well. There are some
+  rendering issues, though it mostly gets things right. Julia, would you
+  be interested in using doc-diff to compare the outputs?
+
+* [Patrick created an issue during the discussion.]
+
+* Emily: Do we have traffic metrics for git-scm.com?
+
+* Taylor: Some high-level metrics in Cloudflare.
+
+* Peff: We had Google Analytics, but were not comfortable with it and
+  removed it.
+
+* Emily: It would be useful to know how many users read the
+  documentation.
+
+* brian: It would be useful to know which manpages people read, while
+  being mindful of privacy as an open-source project.
+
+* Taylor: Could we self-host metrics, or use a third party that supports
+  this?
+
+* Mark: Fathom is one privacy-focused option:
+  https://usefathom.com/
+
+* brian: Even webserver logs would be useful for getting some numbers.
+
+* Peff: On Heroku, the caching layer meant we did not see accurate
+  numbers.
+
+* Patrick: Will AI scrapers drown out the useful signal?
+
+* Toon: I opened an issue about this some time ago:
+  https://github.com/git/git-scm.com/issues/2054
+
+* Taylor: We enabled it, but did not see useful information.
