@@ -1,244 +1,176 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0D733123D
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 18:06:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512F74A33F5
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 18:20:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791310005; cv=none; b=V/+xfgpPnb874Eze0iKXemKWJIgcQLEiPIoqYQhgZMx7V0qY+0FcrJO5a6AotHp5LMGXVwJfVbtvuaM3+dHtHaGLnsnqyNBhMJnQs3+W4EdMXaNq1mObEHgQU64PYYXnkdqZXldDhgpt1E8WnL6n5pCyEhcyHdev9ZJJh75EZj8=
+	t=1791310861; cv=none; b=XTgiDh3MeHzMd95sms2fYF/QrVOKNBoKVH6xb2KB8BupNiOtC4Efae9L7aglwxcGtT3hWnFiTRsfB2ZXj8DOyUuaYwlDCUgHLODLdhJcNRsXO56vfOml588werFHQJHj7h6qWYzbC3DZWmh2MVmZ03w8UBDoe3e7umiK9IObqF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791310005; c=relaxed/simple;
-	bh=rf57foQy53aPPqI1gmMrpn/7qMsdhKNEE9j6KBgIgbc=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hjg4f6d1s//GrItBnFXyrNgfw4iN5QIDcYqIuE/heSSld9bpqsPWbMJVmXnHY7Pe5GU1Laa2qEuzom3bwHLXwS9JO3nb5F9V94WymJLkBQx6WpIm9rRuY05FMCRU2e3u0lH+dOFCN7LaMtjO3Zs4rS7AEinlOoN64SMunzwFuN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=ZMZjK9Aq; arc=none smtp.client-ip=74.125.224.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	s=arc-20240116; t=1791310861; c=relaxed/simple;
+	bh=rhjepCubF2XEKl4sRKKqMDqXd3KzaFny7BWoA78bxLw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eOz+rtWpu3pooS8e77PHLXBLs+r0Ctues9Eow+KVCkwjU48SEZpfBT43p3LJQygg+EeW/v1RbQbD07Pyjoj/aVWZ+8cjABWDdckJid/Z8WaSGiq4ecX0NnD79/yjyDuJgoe58/QG2iOqDveyumtqMbZj+1TRwMjBpaM+MuzdJrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hub0HLCF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R7d9svxF; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="ZMZjK9Aq"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-6768ced47aeso1189731d50.1
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 11:06:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1791310003; x=1791914803; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=WyxC60HhIksLcHpNc6VholbmLS9cwnApBZ6FEmWYx/w=;
-        b=ZMZjK9Aq+4dNMtcw9lgkqrBbQcRRoLGnmPZYFJBB4yhFerkH50BEJ9hFMEXXSvjur0
-         FsAxcLTW7hxXUD1WP8XYDh3vt9Fo42+lF25CASz8/Mgsfr3+1j4tD24BHTHkMZ68tnSS
-         sEY1TqDjk5m96mMXZUgw+OTMZTi4BISicZr/I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791310003; x=1791914803;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=WyxC60HhIksLcHpNc6VholbmLS9cwnApBZ6FEmWYx/w=;
-        b=oESUTdjA3Zoada9KhWU7EBXBbcS2AmmeUONFdee0DsiyMrMeyuy1qZJcgHRwz+E6bN
-         xm8AKPXWeHAzPVpMoWSL5fkJ95JNfGSNbyOGVkXTdFTfKgkTrrh0Hj3tEaK25HRQPwcB
-         OLbYszR/zPomOCNPWti8DR2Xh9oDBRT+QhdWC8c1Eqi26YZI1xPPsQzrA9jG0hpDAKwD
-         JuVEwjY4msLavhFvj3UUGyddv2K7hVE4LbEja79dSSMxvBRavrgPPdh7q8zKjT8fLwxF
-         4wWTqJm/K64R+3B/Z11Mh1u5J6q1hqVUj/V6e0lwxAMILNzDV0za0dbi6pfwxbcPSh8j
-         gUgQ==
-X-Gm-Message-State: AFq9FYKFw1rsnt9KyO7cPR8DuaMU+G7/1D5tm4tZSu7Wbc+8ROcu2CEh
-	af6oUHFmClWGCk7Y2Qa09/tpiMhnTnY8n6lKKjyELOViWIz+y2sm9wxt8HeLxgr4WoVxLPpjcEk
-	Te+LZ81I=
-X-Gm-Gg: AYBFou1hiRa+RVpUJ5U0ATaI8bwr1aS8j4MnTy2zX8kA7hGUOITpcg6O9YpTXyucP03
-	p2CE74LO6jAZIkKd5sDgyBLv8BRRyqPfbrIDBY0/drw2zAXT1uWL8fDUR8DpqAgaL7ZrKVB4cWf
-	02sv79SRepzVzHsT1RlURoFEGgX4VslJdIYlrGnT0Wx+k9fASKPoSh110ChqrQcVQH+xz5dkRnk
-	qtu2i530js+QqYGPKUatIk6SnhctGRUf+KP259ietfwyTIjyhe/N5UF41X2+EUx5mwvm9T9HbcU
-	CLy5+CvPYuqp2btGluU8xevy2gtu0nV2BCpUA38de8In1pLc1uxJqAwyKeoqIN2huUH3nlZf30j
-	M23eVA1SC2VPUMALrcrzD1leh54FyVXinE/wCg66ohSAMOUajXPiWx6doeOusivik9UGdQ2qbMT
-	fr6isKAfZ7A5bGStQFaanavvK0WA3uxacCv3+/p0Yqce9dO302i5REqKeL4KiuDXZMG6OxotjSW
-	wVpdOWmVl06ywlaDs+p8QDhX7aoCe8gdhB81JCEy73i8g6M5kn7/u+DQ8xV3Mk3zMZbR25NzYUf
-	K/d8h/uNx60=
-X-Received: by 2002:a05:690e:813:10b0:677:ce4d:5b2b with SMTP id 956f58d0204a3-678fce3dac6mr986178d50.22.1791310002877;
-        Tue, 06 Oct 2026 11:06:42 -0700 (PDT)
-Received: from com-79390 (vpn-eastus-01.tradc-corp.com. [172.190.114.39])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-917e0c06ec0sm118742876d6.37.2026.10.06.11.06.40
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Oct 2026 11:06:41 -0700 (PDT)
-Date: Tue, 6 Oct 2026 11:06:38 -0700
-From: Taylor Blau <ttaylorr@openai.com>
-To: git@vger.kernel.org
-Subject: [NOTES 07/07] Protocol v2 for pushes
-Message-ID: <summit-2026.94e33e9ddf234334.07@ttaylorr.com>
-References: <summit-2026.94e33e9ddf234334.00@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hub0HLCF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R7d9svxF"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id A4BF21D00180
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 14:20:58 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 06 Oct 2026 14:20:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791310858; x=1791397258; bh=+FwrUe9Mjr
+	8erDepuaNWwUTQorlekbaR4XI+/iSQGMs=; b=hub0HLCFaRoMNCrNe7AUEmC7qY
+	LFlVUSxN2gf+oE/0VOXuoiA0SEu+TDLoOxwBqeyi3yR2fHK69AOgOGqF36t1xEG3
+	ozhSxBVYtIT93DLJXMs+iraDO3JgBYoHPxQEvVWLJ8HDsyW2R9J+9uiTE9XR/B0S
+	ssjcSrUQCeGjJSbnqEnHYsF6q7nq2fPK3s0TpcKZIVuWSCIOhP8oEDE+BxTSFg98
+	iWpPhhZWC3GB0t/Oz9TvmNeNxiTcev+wt+SyBU0arq9M7Q0SGnncE4HtUTw9TvcI
+	luIb+l1ACWWSNKXWnPuitztRTLWXDlSgG+dtDCj9OvXiFbyvu6ieAO+COK3w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791310858; x=1791397258; bh=+FwrUe9Mjr8erDepuaNWwUTQorlekbaR4XI
+	+/iSQGMs=; b=R7d9svxFq4c/EeXfQ8Dp9XSrYYa90BTou/t8hFoaWUcThUQjZhX
+	lybJ0t3UpopHXv1eZezM3hx46f+obyYJXuu/eTtiU2mMMQwafU62+Am5/4SMCiOb
+	1F6QAVgKWV5br8kfC9fbDJkdxWp92onqkAz+iyuvm4CdRrPpQ+1FwlQXdXMOl65A
+	bODA2FEP3HFtmEN9LRbYgqhRI4gNShPdn/50nCyKtT0ZVskfNN7fJoYyTrYwo0CM
+	LOwR/gNNYTYHQ4Tc7GR+jv/cInc1b8zeW3dzoxQzR1Ubdv6sLs5/1RNuYrECSnE1
+	QtU7x+/XubbxjYf3/2LsIMF9voU4Mp2vJtA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791310858; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:FSige1wK5wmHzAivg8xEAKPuo3o4qVDKG6k7IEz3ctJQS8V
+	o5/6aXAfChPO3lOPBhxBXPb/wOtA/VM01rREzSoVl0MavaA38qoS/dvD1Kz5b7gF
+	mHHIoA9szSvTJ+PNVHeZuJKiO5v02gvunoVvPjgBa9IgOt2LB1CmHLWGLe8zXULd
+	eqmOFlb5xb+crKBO6M6G7b6fVcibp/YdqmTAc7iy0Uh7zT1mCmyXHLb/Fk67bsPG
+	/xAJ+cXk0Pj/ndlNY+2v4dlbGNKcjs3nnHh52rURkeG2yPSe6ZkM3uFqL7t6yJ3s
+	M5Hci9Y6keop9MbOewWMnu2jbLUiUhDw79GT9gA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:YzJnOwk2/bPlF7pzmzRiTyo7adodQWpFJbLXG/Tg54k=:rhjepCubF2XEKl4sRKKqMDqXd3KzaFny7BWoA78bxLw=;
+X-ME-Sender: <xms:CjzFaioEyK_WSSI18-XE9DnzaVOgheMQHOvBVWAccBqL6KwK3ZXr-w>
+    <xme:CjzFanhozOndhzWY-3VFF-AMkzwt3pvqNxmh2hU4tRsGzqLoyqZBI5OYxrPQdF8nA
+    9fbjTClKGMuU8ceaRj11xM100u6TIACHJjY1XNcW5cC_XLg1iHxpmY>
+X-ME-Received: <xmr:CjzFavjdljPmB4w7uUPub9fiqlJSASsM_EGIdoJ1CB02EJdI3dUgIQGllN1gaFSixbSyajXOrluc6aDUYWgOqAgqu8sJEQQrLipH>
+X-ME-Proxy-Cause: dmFkZTGhllY/xbcH5HCzaYbb+gqVaqJqOYe/NDVbUOWrL373ZNnsA/4cSXBz1EBrXzdz84
+    R1KwmGcAscPlbQ1126SwERjDdZT7Xbq/G5eHLaqNTGA3B29NWR2h8VodcTHj7+Hy6LN2bo
+    xOUcalQzTfUIFozCmWh5I9ao8B71rn6JYIx6io7M3KkfSMjrCc5ofZqxbGMxofvCmfQmnY
+    3Hgc4d3/iOJzBmBi7wzC8YmjhlyChyBdW57G2EDkG4vtl1aViqnY1Gaxq0bragRFSBbqrV
+    Gqkzy4shy3Kz7+FLcu5FIz66YPIKFWPMQmMK1Vww0D3y/g8HowIF1Kf+cyvonrB4J6d3Iq
+    sNtij3A9rexGv8pOe/QG3oKcETDlqILlilkNg7wYrpkpCWSiMHlJL3fHcWO8Jbsd7zlBd5
+    SATL1MsD0JsRnRib0iOiSx8PEv1J0SPN1X9SyHwHvUMjoI8VoKYR6ZXGDWoOlQiu7gez1G
+    bE8yiAt1QEWfPxEwq0DgYNacC3n6bSvU8Qg18bTfDg1Q3NQVOPDnX0WVzBrJ810aTPe19y
+    HK67/d7YVuXV6+58oFx2j1QTh6L+vOAZXcqMLfgILIW7YmTWScb6CO1aVgSiRwBKT0tJ53
+    D07Wa+plMYcqQFBUv/q/S7cIa11kydDrgAlHAruV3D6UOyav1C2UJOw4q+EQ
+X-ME-Proxy: <xmx:CjzFath86rj6WvE7BRWXQWFlrZxx4rITlZgWx_VYfrRQzzh9j2PpWg>
+    <xmx:CjzFavL0NgT0QfZhnD1iXBWn8jfv64pqk65t-bx_t9eMS-izBAGFwg>
+    <xmx:CjzFasEQjNq8sUOTDwmaUrAmVTCsjcra1HhJJ4mTvGSkNWkiSd-mpw>
+    <xmx:CjzFajTQ1QqfWIOLeJzf58RuiLQgHhNl56O33wqorwoT6cAEUyoTHA>
+    <xmx:CjzFagxdXJ-bA11D_1HwpQeGcW6OYoiR3F2h8pjVSQykoQI7XdbNI8UE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Oct 2026 14:20:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+  "D. Ben Knoble" <ben.knoble@gmail.com>,
+  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH] status: suggest `git merge --continue`, not `git commit`
+In-Reply-To: <pull.2249.git.1791291762665.gitgitgadget@gmail.com> (Julia Evans
+	via GitGitGadget's message of "Tue, 06 Oct 2026 13:02:42 +0000")
+References: <pull.2249.git.1791291762665.gitgitgadget@gmail.com>
+Date: Tue, 06 Oct 2026 11:20:56 -0700
+Message-ID: <xmqq5wzeelmf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <summit-2026.94e33e9ddf234334.00@ttaylorr.com>
+Content-Type: text/plain
 
-Topic: Protocol v2 for pushes
-Notetaker: Emily
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-* brian: Some customers have millions of refs. Reftable has helped us
-  push up to 100k at a time, which was a big increase. AI means more
-  branches and refs, so the problem keeps getting worse. One customer
-  was unhappy about an 896 MB ref advertisement. Protocol v2 for pushes
-  would help. Much of the code already exists and needs wiring up.
+[Administrivia]
 
-* Peff: We were waiting for somebody with a use case they care about.
-  Protocol v2 has a capability advertisement that leaves room for
-  further extensions.
+As you have
 
-* Elijah: With fetch v2, it would be useful to request only a handful of
-  heads rather than advertise all refs and tags.
+    cc: D. Ben Knoble" ben.knoble@gmail.com
 
-* Jonathan Tan: We have prefix filtering for fetch v2. A client can
-  request refs/heads/somename, and the server sends refs matching that
-  prefix.
+at the end of your pull request that you gave to GitGitGadget, you
+ended up with a bogus Cc: address that reads
 
-* Peff: The client needs a better refspec, and the user interface is
-  hard. How do we specify the mainline? Even excluding HEAD can speed
-  things up. This is an optimization; a push is correct as long as the
-  objects are reachable.
+    "D. Ben Knoble <ben.knoble"@gmail.com>
 
-* Peff: Could we use multiple passes, trying a smaller set and falling
-  back to a larger one if some objects are still unreachable? Many
-  advertised refs are not useful, such as abandoned development
-  branches.
+you may want to help improving GGG by raising an issue to reject (or
+ignore) such a malformed address.
 
-* [There was a related discussion about showing fewer refs in GitHub's
-  UI.]
+[end of administrivia]
 
-* Peff: Could a server-side configuration limit the advertisement and UI
-  to a smaller set of refs, with the client ignoring the others?
+> diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
+> index 942ddbbf0e..a9b435b5e3 100755
+> --- a/t/t7060-wtstatus.sh
+> +++ b/t/t7060-wtstatus.sh
+> @@ -37,7 +37,7 @@ test_expect_success 'M/D conflict does not segfault' '
+>  	cat >expect <<EOF &&
+>  On branch side
+>  You have unmerged paths.
+> -  (fix conflicts and run "git commit")
+> +  (fix conflicts and run "git merge --continue")
+>    (use "git merge --abort" to abort the merge)
 
-* brian: It is useful to control what the client requests. During a
-  push, we want to say that we care about only a handful of branches.
+This message comes from show_merge_in_progress(), which is called
+only when the code is convinced that it is seeing an unmerged
+index due to a conflicted git merge.  We can therefore make this
+message as merge-specific as we want.  The suggestion to use
+'git merge --abort' already does this.
 
-* Peff: That still sounds like a refspec problem; the default asks for
-  too much.
+> diff --git a/wt-status.c b/wt-status.c
+> index 57772c7501..f7b0dc29d5 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1273,7 +1273,7 @@ static void show_merge_in_progress(struct wt_status *s,
+>  		status_printf_ln(s, color, _("You have unmerged paths."));
+>  		if (s->hints) {
+>  			status_printf_ln(s, color,
+> -					 _("  (fix conflicts and run \"git commit\")"));
+> +					 _("  (fix conflicts and run \"git merge --continue\")"));
+>  			status_printf_ln(s, color,
+>  					 _("  (use \"git merge --abort\" to abort the merge)"));
+>  		}
+> @@ -1282,7 +1282,7 @@ static void show_merge_in_progress(struct wt_status *s,
+>  			_("All conflicts fixed but you are still merging."));
+>  		if (s->hints)
+>  			status_printf_ln(s, color,
+> -				_("  (use \"git commit\" to conclude merge)"));
+> +				_("  (use \"git merge --continue\" to conclude merge)"));
+>  	}
+>  	wt_longstatus_print_trailer(s);
+>  }
 
-* Jonathan Tan: This is push, though.
+We could tighten "You have unmerged paths." even further to indicate
+that these paths came from a conflicted 'git merge'.  In the same
+file, show_cherry_pick_in_progress() and show_revert_in_progress()
+already provide instructions very specific to these commands.  Since
+the message for 'git merge' is the oldest, it is not surprising that
+we did not update it when 'git merge --continue', the instructions
+for cherry-pick and revert, or 'git merge --abort' instruction were
+added to the system.  This commit moves us belatedly in the right
+direction, and as always, it is better late than never.
 
-* Peff: The client could suggest useful branches more intelligently.
-  Guessing the main branches is a heuristic, but upstream tracking
-  branches might be useful.
-
-* brian: A project setup script, perhaps linked from its documentation,
-  could provide useful initial configuration.
-
-* Jonathan Tan: Instead of a ref advertisement during push, it would be
-  useful to negotiate. Restricting the advertised refs may cause the
-  client to send everything if the optimization does not work. Relying
-  on the remote to know what matters is error-prone. We would be happier
-  with a few round trips: advertise capabilities, exchange haves and
-  acknowledgments, negotiate the push, and send the pack.
-
-* Elijah: During a repack, the server might give a false negative. This
-  may be relevant to shallow clones.
-
-* Peff: We could race and miss a common commit, then be unable to look
-  further back because the client is shallow.
-
-* Elijah: Geometric repacking may help because it is less likely to miss
-  something. A push to the wrong place should fail quickly. Let us leave
-  shallow clones to develop their own story.
-
-* Peff: Successful negotiation could also make connectivity checks
-  easier. We could cache information in receive-pack and pass it to
-  check-connected.
-
-* brian: Shallow clones can spend much more time trying to minimize the
-  wire transfer. One push went from two seconds to 35 seconds because of
-  that optimization. `objects-edge-aggressive` is relevant here.
-
-* Jonathan Tan: We might get substantial savings from simply disabling
-  ref advertisements with a configuration option.
-
-* Peff: Even without a protocol change, the server could decide which
-  refs are interesting and limit its advertisement. That might be easier
-  than introducing v2 for pushes.
-
-* Jonathan Tan: The client needs to tell the server that it wants to
-  negotiate.
-
-* Peff: It might not need to negotiate.
-
-* Jonathan Tan: Would that not be bad?
-
-* Peff: In practice the drawback may be small, though completely
-  unrelated histories would be a bad case.
-
-* Elijah: That can happen when appending a shallow commit.
-
-* brian: I have seen that happen too.
-
-* Peff: In that degenerate case, do these optimizations already have
-  problems?
-
-* Jonathan Tan: Negotiation does not have as much trouble because it
-  starts at the tip the client is pushing.
-
-* [General agreement that putting unrelated histories into one
-  repository is best avoided.]
-
-* Peff: Nobody objects to push v2. We have the hooks and the fetch-v2
-  infrastructure. There may be an easier place to start, though.
-
-* brian: Another benefit of push v2 is interoperability. Currently a
-  client must push using the server's hash algorithm; it cannot
-  negotiate a different one. Fetch can do some negotiation.
-
-* Peff: If v2 makes interoperability easier, go for it.
-
-* Emily: What is the failure mode?
-
-* brian: Without it, the client must know the server's main hash
-  algorithm and the mapping from object IDs in that algorithm to
-  content.
-
-* Martin Fick: I would like push v2 for automated replication, where a
-  forge pushes to mirrors. Gerrit does this with thousands of targets.
-  Ref advertisements are expensive when checking all of them. We need a
-  way to know whether an advertisement differs from ours, so we can skip
-  targets that are already up to date.
-
-* Emily: Push negotiation?
-
-* Martin Fick: The ref advertisement happens before negotiation.
-
-* Peff: You want an answer in tens of bytes rather than thousands. A
-  checksum could provide a small initial step.
-
-* brian: With reftable, generation numbers make this easy.
-
-* Martin Fick: That might work for this case, but assumes the
-  repositories are in lockstep and covers fewer cases than a full
-  protocol change.
-
-* Peff: Would the rest of the push not fix it?
-
-* Martin Fick: Parallelism makes that assumption harder.
-
-* Peff: We discussed an ETag-style approach with reftable at GitHub
-  years ago. It would be useful to see an implementation, and it could
-  fit as an option in the existing protocol.
-
-* Martin Fick: The server could also send a diff or a leaner pack.
-
-* [Caching was also mentioned.]
-
-* Patrick: Should we shrink the advertisement format?
-
-* Peff: Perhaps compress it with zlib.
-
-* Patrick: Let us explore options and benchmark them. We need v2 on the
-  push side. We also proposed sending reftable directly.
-
-* Martin Fick: A reftable could contain extra information.
-
-* Patrick: A compressed format may be simpler.
-
-* brian: We also do not want to send hidden refs.
-
-* Patrick: I mean using the reftable format, rather than sending the
-  whole reftable.
+The changes look good.  Thanks.
