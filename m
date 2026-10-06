@@ -1,147 +1,248 @@
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F7D36AB77
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 09:00:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791277259; cv=pass; b=V1uHak3q0NPd19iRkBzO2agtsENeKV0cjMzXesPuCV+XlWJkBxG3sGuxQ2c9DIHK3zBEAbgOEXpBJYb818DyVEg8jx1U6M0/VmuAlrIEcUop+CA7uMUR6mNI0RsZGJdXTgpRZeEW9qg1L8wbBfHViFM8kYvhuGbhU1XUbnIZo4c=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791277259; c=relaxed/simple;
-	bh=KcqYQAy4GVsfjdU4KrgmT7BzObWnSUKiykA8a0luRq4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=RxGkI99LvXJIAl5FpNrdy2s5M7bx6+5C+jGslXMpKhSGwLo2mFpyoS09IhumRXzx7zSZ2b2As66ZF6UfmM38PPdHKS8PxKXZGsCwXw7MzWT30QuDhWgR1ONO+dVue6TGumEs2fYP0MzfwD4ePbYfQ6Q9p4jqMMijoqaAk9zVld0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f/t7l76N; arc=pass smtp.client-ip=74.125.82.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EE4381AE3
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 09:16:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791278191; cv=none; b=Efypn/DjnyoAH4QdFV4gADv+4XHXo6qirff9+z9xijixbuFWIx+1buy7KO6H3OfOImXyOip+OkVKMTfKK+c4W2VXRmdQ4KA/FmXocg6rA7oQMrItEro2FX27beMOQjgq0qUQrsOrFhHQQXZCvk0GI+BCFIHPj0JS9MdzjsQW2bs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791278191; c=relaxed/simple;
+	bh=YVeNy6K59J4PeyChtt9KmvPDNb4d0sCdictrDVYcbwo=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=gFFMI3uiSfOlAJj6yIb0T1e34U8sQjuv/IAv6KSOK6KlLCSrcwBKrSvQUzQXcqKm7ndj8FhijJg2VYEZtAlmtIYi+QoC03p20KbE4/dlLlqzsUuPO/J1JpIVgMQ3WAHf9LqtQSn9UopNcz9HD09rUTfqwrg7PoL8bYwdPfvxkdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=s+AZr8rF; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f/t7l76N"
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-144f7915346so872720c88.0
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 02:00:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791277257; cv=none;
-        d=google.com; s=arc-20260327;
-        b=RzYcHsQFmE3sFNuzPjiGYuRCp8ohQd7GkDOUekxSBqoK0QTEBlL87uKbfPj/w41NEW
-         a5Tr5fESt/tgEXCdpy4tmxoKyICAM8j0Kqv7IJSJpnu2PPi01eT0ir3PPVqgiYRe5s9F
-         EFtXbQfd8hoUkWQ7WFH4H/R2drQcbXTIWDamesPSD8fZ0Fnsd+hTCSVIbnZM2w60Pvdf
-         SqfSWoJArSQzCterq+pZG6Q/mBVsH8XK6IDysnxNQ210md9yJG2dmbjENQLx0jxMXXAw
-         svaWMOe3bI9fghHvTwVM/DcbihP75wRdLmEq821LTjPQrNiEjOWRnmvvbweRo6gNc5fn
-         B4Hg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=kBSkLmj69CO8qC1ZynyxPQIZA2KWGRasduxuu/yo9+M=;
-        fh=7F/J42sidoT4dlkENlyDsTm/pakBxdK3+eJXQe0jiXo=;
-        b=PCGrfQG59kWhzQZ3cMZIa+OfqW/MtXq2GSr3OwRUig+BDBgtRjcoGPMNDdj/i01rt3
-         E9E/1JTOALaa8SeqEXDJiLep/UJDsnh8PYgWVIWEugr68Scs3eL13USlR+0xCsu9BlyE
-         K6wQEFarJbYiYfrv+faxSnzgF9RQn5wNiCwgGqBVuvT+nY98j16D2+qALmp8mau0dhX4
-         m3Kpt0qHcUtPKtRupXbZhnmpGfrfymNVbrsNEUGgPFZbgxyURolqxQB/5sYzbrCGOKOi
-         b6ys+ylKL8aJ7RNlVsR07AeH0qj/65yhd7vzygRDENUbUKyga/yW6qGkRYY6fXIyqMjT
-         fdhQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791277257; x=1791882057; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=kBSkLmj69CO8qC1ZynyxPQIZA2KWGRasduxuu/yo9+M=;
-        b=f/t7l76NzgRw0cs6ByJWZLsLhaOYi3RuxwLPTn2z/tN9PJ+ZUT+oTZskkOnckpa7K4
-         /q83fWITjT1W+qBmw6r8PRw2Bb2kTjJdDoInvqqnCuOr6Tgs/kCgtygUB1qf+/TlDXwl
-         n6j9VDufUuw4wuhu0NkL4lElbqEHAQcLJQ4L7jX4swnlVW8RoTSR6Chu7EqiuU0tOdHX
-         un95MVogA6mHjAHPCTHJcTW6uUgNlPN/nRY4pX3KCFcBRf33UPO8Gd5UfrRqgsgSmR/M
-         U1fuVklg9oz4we5DFC9x9TQN6UCDJ3gT8ke3V6x0rEQCsK3PCXiwvqap0y22sEeXUzkJ
-         FX9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791277257; x=1791882057;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=kBSkLmj69CO8qC1ZynyxPQIZA2KWGRasduxuu/yo9+M=;
-        b=is7lkWZICO1rOu71QH5orY/5XBwcXc2t1ufr8ggIEYUQ+f8mtXqvQ4JeTlxhLBZAmE
-         9SQPbxHmqIcAMpJ7XJzHAU2jcOBrZfu0AmyVazIbPJeisol3PMZs+msC10wwY5CLVPWe
-         C8CBUj6baohcTFpUe49OiZFnEXccp5IZj9LcWTmikPuawsaQiy8jHvC55LuTyWavE2rK
-         jNB8Ums0wU/lcWQMaJI3NEIeRqe7czcvFVYbg/O+4QFppZX6jetwUK5rdk1v96ieKobK
-         Ke8+4q35SnVKi/mVvf937pdQYSSZO/WYRgXRYCVIfL+daoBPQ1a701H8+RQjIGN3jkxY
-         YGwg==
-X-Forwarded-Encrypted: i=1; AKwUvBxmGjfCjxQj/CWd+vCBCgoog3yWovR00Utwd6CWG4CKx8tkiI0etwnvmz4MneFEf744QFE=@vger.kernel.org
-X-Gm-Message-State: AFuF++lKiDXcy7XtlEELPCTxeohJfM/o3Fb0RWEefAYR/l4YYXAS18pR
-	5hqHEcLLhojlQzrYqcyIo99/nd3wKIXjeEE5dxjf2+8AfV/AwVwbiZmM120K5/ZFwGxUQ6Qa3Xu
-	x5d4BlycGgpec1Yv7JTM4cyCwXVmVx/Dgxhs7yFKZ9A==
-X-Gm-Gg: AYBFou0p+3YQtUghwAAYHX/lZRGYqUvrdko3+Qe9HJ6JUaLfHkC7T97OA9axdAdDow1
-	xzBs0/V0cZRk5yWA4e5lEYbsit0McEc+wk9+konD+51COsqVOgg9nrrHpu0kuT+6wlRMyENC8mg
-	Wz6+rrGfiTcuxSXM4q6dN7ZmY5K7bxcYyLS8lUbGVOHDPsJqreoFeQ7GDKC1Plh70wk1XIOkumQ
-	Fq/mbe+quD8GGHfZg95vaJg+i3XC7qUZqM6BDgl68tc8wA8G9hEnzGVgGX8zYWIIFNwKUPmiv4C
-	qqTq74m8ZEt8OFmnxE+F7voA3/ZlIC2esrlssdes9i1A58CIh82GLLT77sRAUorvbNXQngneUwC
-	CW+5jMpFxyQ96/YrVIroq8HNLSQl7h3xYa0TEr1DsDgPAY53ppAAVViKkSSkmmCtOl9SwQjnOmr
-	r5B/W3ii75Ca+8RKbAkd+0jUowmCkT7DJPJCTl+E8=
-X-Received: by 2002:a05:701b:4588:20b0:147:9ad0:cf10 with SMTP id
- a92af1059eb24-15ece6d2ce6mr1133084c88.47.1791277257348; Tue, 06 Oct 2026
- 02:00:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="s+AZr8rF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1791278187; x=1791882987;
+	i=johannes.schindelin@gmx.de;
+	bh=uCow+i22/T0APeyjZOdC30bALHAj2NjEBVlcztEvPKU=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=s+AZr8rFe+/PGXYJvn+hGnT+OdKLm8ErArpnhVCwnnRI88dG8gx5ztGeSRztIFAH
+	 GKed0a7iP1bcokJpB9Wjza2yLveOkdcvnKD90WR2vV9Aeju/BVSvaSiw2CWnAEKHX
+	 FckYnabLx5WPBbS9SVnHOinK4eFWh6Y0xFXt/hJhj5e+MMRB9lpgGXAAhQJ7iWRG7
+	 C1U4CChTF0yaV5ekJ3aF4c8avQtFcgNawC48VNdp7h3TqSeuc4k/jnAxWgtSk33S6
+	 xm9jdJzrItbEmBjVKhww/npVd0b+2BpRWmZn92gisGp6TgefQriLd0hhl+Gry554b
+	 sD5CoVAcb17uFop2XQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MdNY2-1wegX50x6W-00laB0; Tue, 06
+ Oct 2026 11:16:27 +0200
+Date: Tue, 6 Oct 2026 11:16:25 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jeff King <peff@peff.net>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] t5551: fix quoting in curl version bug prereq
+In-Reply-To: <20261006034331.GA1325722@coredump.intra.peff.net>
+Message-ID: <4526e397-734e-d378-bb1d-31dd969c90ea@gmx.de>
+References: <pull.2236.git.1790118373340.gitgitgadget@gmail.com> <pull.2236.v2.git.1790283229626.gitgitgadget@gmail.com> <20261006034331.GA1325722@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20261002081846.25144-1-scott@gitbutler.net> <asAAn8NZwB29WhGR@fruit.crustytoothpaste.net>
-In-Reply-To: <asAAn8NZwB29WhGR@fruit.crustytoothpaste.net>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 6 Oct 2026 11:00:45 +0200
-X-Gm-Features: AclHuK8c5LCqXcI_NvK5ONV8i3SgPQuldDWwwNCEouMzFt5BgRUAlmzo9sGpscg
-Message-ID: <CAP8UFD096CdR9MXd+VHk7Zf9rCJEnGTEiBhCc0mJdMmE3U_gOg@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/4] sign a SHA-256 digest of the tree in commits and tags
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Scott Chacon <scott@gitbutler.net>, 
-	git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+X-Provags-ID: V03:K1:fs+QaZv+CBd12LoEeNMQHBP7wmC4XmIwTa8AFbS4WIAkULbgTvj
+ Hj1Xn1Z//uvtpvJchIxsd9Yzm2kdCp0N00yZmECWRaUUztsh28RA3/DEkbe0K0HkpZIymZi
+ VKClTTjzQN7WgEtwiJLBNArDH9KWvNWa4GXDC/kxSg2DKiThlkTOJe6HITbUCuy37Yzwcx/
+ UX9HN+bKvIhqsncJG5u8Q==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:62Qa6XZWiMY=;ORShbBVz2Te3FfNfmXNV2qxukKb
+ XYnnBOVlAfMGseX6GbSykYAHrJFtGVwYuL2YPFwZW3z1kgjaiVyk3x4NUJE/0zKLuyGLJRIDO
+ 8BIFgUo6C3IYBa8P8gVd+v+m7XNLH28S0cIEIhCWgtxiMaLt4iP60iz3Y+/yY4hNaDZA2JQxs
+ qT5vy2cw0SSBk0UmKQ1q9o+FaCoPkgksM/4q4kf7thPtR8IJ3EkfasbYjIbm73T0N10CuXFQr
+ cLdeky9P2G0lVQbRtyLVwZXfGcMZgPqKaSkm7uk3XZPWYNtQQAyzWLN9i4NPEfsd5Rjo9tDWt
+ DM3/M7NwKwEK1RLM7ESk1PB5eWgxPol02a+C0BtvId317KfddVeNW3h1Wbs93f4OxPp8xqUVm
+ hGVXpeKwueCpFQl+7KiTnFAqHDnXYGubKXLikS/46rn5xoswdN9hEwP134tugwiLsAjhXnRTY
+ ISQtzJ89SK7HRCSjMxRVIGEnd/bvLaOLS1nrYgtY+OZhGRrd5aV0H2hiYXOaiEZnsxqotITvP
+ v9JrIRgta8fD85Ba9F+cvd465t39bcszgykzB3GpIAUWy/P+FrVVMiHYs8/d9wzfnjdiPYoe+
+ BH4O/HIHzcF7ytbQe5PdCE+8KgdhYTgB9/AuAZ788lLd7poWDVI0H4lH0VO6w+nQ/jzr5snXh
+ LZEhcCfJHSmcI7/T0T+VcC7jVlkyYOFKlvTcpGJSUx0KVp3yjgQMWRwTaArTqZ4ZbNezEkvfn
+ lprxgSBBmQHQtBGxRf/5aHH3Ocjc6AHs3HiGIdOLqiE0+C/Ji36PPaQU/pWDE0ztlzsa18irZ
+ 9weUW8A5LufipAK7axWuV5FIDRzvK/Oie9sR0Uzuaw3rGdpsv46L6QNT9PJ6gNAd546Bizp0e
+ QMDu3mkUN/Q581LwE2TEdW6mC4KN1DL8t4fNU9rjiT7yYUh8oS4XadvKrATdFsCP/fyfuAASh
+ liedgw4R8VMZO7JXl3ap+XLWboTbqYvnrPzbL5IS2QjUpukAbW6sgnlkHQMDQAA1aUDK40kKn
+ vuknrDblejBoZ6UZZW3oH9FjTPbhnlRhQXm3XBk++vnnDbOg1s9vxridx0IwwLXILYukgtdKk
+ Y49mZPzs6zlvGO7aqLGPHAwrCg1Cj4LX8YBFzNB6796TTAMi+L50TFy94xjlBbjx/PHXTFXa7
+ DOENf4GkIS3pOfr4EwmFIntOmcIqgoI3WrSbtdjHoNg8jbxAx5WKDdeuEuaO7+CN68M551+oP
+ VK5I4CJGrBlRBa/CsK168MVhz/araAYjb1qYJyfiHvC0HMrRx4RmqWKK0rjpeAuYhn7jd0cts
+ 4piM+a7XxNtpFZAKzJoCJxud4EHsuWZJbQao0MArsQbwiwZV/zlU6HPdZ0ZWMhYq1n3b3Y4H4
+ JqLVkAVbeq+LRrsl9OPCcPmMq6EhD6MexnvOcSOP3WLDIYOEYQOnQgruROkdTOw6d/JDoRxud
+ Ovnn5dfcCYX1exZsq1XBkywdtmkLcBzFSQjt93U5HxiUZqrNLmqOIiop6V773BCuuuuLydly/
+ r4fYpHwKfo2v+I6bJErUonHSvFQ6p76S+/Trjdi0BVGbIImyeA6Qh62dm41LouEHvu5KNi0Iz
+ 3a2ZNolt+EwED0IluLhoPVHgd8/SM9yLNGuIgBtwZYAX8P4+i3Q0zO7YbWX84Jui9vhfO9aOO
+ BhzmEzdJs1FAg2QcQ7JW3W4pK33fSswiZgiHsQ4s2hRBqTiZc41xmDCRkdi46SxTRnGHpo3XB
+ eT6RFX55wiGgyNsbi2gkvepOJcxefNTwZQEwlrtd6xgX9f/tgaQgfmr99MpWVb0TZnEmBkZcO
+ IHsLiPz2IegLfNFr6w84u33vjJc1JVeHA+ykvR9835SfunZT5/Wpj/xI7t5KBx79WJMuN2zQI
+ c7tXh3ClDMaMwro11Rw1HBN1EvSNDVLXELWiezq8bs50/2hOjenBoViKxrBPhO+zLJ+E9WqtJ
+ p0+8DmAt4iz6Fyhd7O6x1Ud8OeVOy2bDIpPr/aeu9LKx+utJ7I34FuYHJ4XDkxlb9eafFixVj
+ PCmxRSg7KjhVbC/ln8uysbvOT3WMgD+FmioRhuL3mJzm5EsiZbLsRWc0d8U8Fcm6X8okSKFiG
+ NBXbvcO9v4v5sKqstV3aA8g5Wa04DujASBmi0Nh0HiPmDNNE19AcLaAjj4aTHwrA2kIdoW46d
+ 6Rk7eNF/EYTPGHO/ebZEix012KPMVdvNCvGwTi1XlkGoKU8vNWBu3cemwzbvqJP1nxv2jOWls
+ UHDBGNr/vDyvxL4MhrvKNsxLDmIol6WOj5tH2Uljye3i+fivP86zGrxmkReIb+o1MSL4k1SG4
+ Gz4M6YD7lS1M1evdzyFxWAjm2EMuN+mJFYvZhr7LOw0DX8oGetlWnTDqsbOKQePcyV9JsHorp
+ 6+ZWh4fBS7tRca8PNd1MBoGSxtiFt57Bfv3Atio0UeRt4rjs3xBd2dMA0H9U5LPMl6duwQQ18
+ cfl4Inl+HOlxDsldcxpuiF/IrWDozEm2/femYSslQ9EtUxE8J6KvQyhpOCcbV+4c5ygHeWlgJ
+ BzyCNyyo7fo5cefD+mmajXV7oFNDbY1QjCnc0CbRxBF1C5jfNQY0W1fAoZKjO16uXg4/sZBe1
+ niS14gWJSQRsjir/mAcP7EOVHEyrTVlWT4BH7EMIZW5YfjJCS3e5ZyJ/InFLYCAGE5C6Iq/+v
+ m8AeEPne/FzpvLG3v0MUrelhiJ1qX87fR3D7oBw40ohlwQVK9qB6Z+iwqJH56P1hUghF16alm
+ edOdIgDmEQeaos9LnE1zpiyDbmOwRMtCjcKitbvEZsJ+uGMDdex5TKNnzob0Aqt8tp7TMDiw2
+ 3kI4NAtJVK/hukl0BbVar3h6MVvU533dDLVLwXC/JKybSqp+FnBgsrdXHDiAqdE2BqXoLLepN
+ zT/BlZ87XhG5fOejR48imMS4W9UdSw/Vo0eZ/877KroAT2buHMma9bxi5RZ7c/z9ex5/eAoih
+ ACp+QFwh4DN7sHfYAkah7VlfoXMAB/NvTnadBqEocihgL4etr+3cw26q+ivnh0dNbfstN/R7k
+ GaKIDaQ2dgTllVYqEz/drLn2e1jiMYF6lLlUk3jWwCAMnrbpAL92/LHmNR6aKHNG+R/DqZHcF
+ eyQs2FxFmsCewwiP1UZ20raiUx7qlzWnA5YJkC808wqNbsW38QJgGF//JCUoi3y1GBcTE1I9V
+ /0AY0ueOW/Uy2JTPw0/cnj6kN09DuztG2fNuvoleCuAcFxLZYvc/c8+iNkd6p3WzEnXjJYJ6E
+ xCut3uHtSNr2yr9FdJz6pTleHoudUKygarhaOXQeeoDpnPanhWcC5JregXoOpBM3gIoc3J1tj
+ ihTX6+xRtNzUUZMMe1QMZMC9XQXXm30gaistq4zslIOFGuoaSvHyCMtV6pAvwMjUKdHVbdPU8
+ pmc3hQS59n/slQXSgWFAWS2ESzpA2gwSKsq2sg9FgrUQhHmH3JyS54apFPfC62aT2AYdrUJVL
+ 4PPtzuHf8mHjjN7q28F37TGsadGKIiGjHSAz20kHWuh/ay5rE0YEzz1MEeYfPZqGD/X3ufj+a
+ K3ZaZvg0zrWB88m1hWRBei94o6orZfVoXKNQVthfuG10UAqynfVYK1TkOzNEzIFXjHv/SiAWP
+ xeA3QR9gDE8NdTl78p4v7oNLpI6ywPX0piaplzM19QuEM0UlRuMTVd1HWj/9RYFIP6ZvY4llX
+ 5lJ5ektqSP92XqJH2HYSWaoO4SxIh8EclpOJ0UECHQhNCvi4gXv/tHtv4VayBhbTu5OQV4r6g
+ WDkTh4Z4OdT3e1mm/7aGwCxHyL4iDUOgSOLi5LsRqJ5xrKjtQxFti4j6kmUHV4beliVQQWQXK
+ hVNCZU47AVB1BfSIjmFKZDe8WxmH8cLERKWSaJ+IdcuUxnCDusgA0gniQUX88Oo2IW6PcvUuu
+ A6zy0S3x3vEqWYqjPJeWTr6oiAZhUFfJ6G7gk/peA2Xuz9LJmzsl0X+P2x+TkopAiBpwAaEfW
+ A5CC+ceYavYXZA8u/7gsLdNs8/PbApq6zDziL59wWFskD2os4TxdEQa2zRn3vyyp4V1GIT7ZL
+ a9OlWIPzysHh68KVHhP7N95qcJ8SdXk+YsXRgEVzC2w1//4iEU6zyjmMzmhumHzrFKWAa+6LB
+ W84WuuC/LcQJQjMWO1QBvBokDoA3JzhfV1N6Cm7bo3ViJmBpt4oTQo9fuDOUS4E/+fjt94PgS
+ eWfOIt2rvCHYkN9Es4aMT1qBN9wG6Beij3Aie05VjeUk+tx8zVCe3N5Whz+nNGRhcwqx7T3DL
+ Sx0EtVbpMtcSwB7ihgnvt32Gt+zY9bmOf2Eoqgsfjj/kGLL2RfjU+jx55jHDJIgyAKkocvgnv
+ 2uk/T/l81NUeieXdtBb3V+kL3VCTVPmZGRTzsdO6qCYKLsc3KNtphWQgPEt08wqz/fUb+PvL9
+ LBXyGHl0ufXF1/WoJCjKBB8urSGRNVxCb5mlLHN8F1dcOYD+rsmRcfgoIuyFuBMPcEhiSf/Zz
+ 3GtGaZuQBE16FmENW8rekEqDIGE6I/sNEpexajV91w9IkCxaNVUKWvpLuctUgOFciDYBjIJKn
+ PzJj57u9l9/Ei4/HiWPXryNkLP6Tb/IHOsfF1jwGVMbUgJkp4yKzc2bHpCNSrrsET+W7ydSeG
+ /K+O6XfW/HgLAnAZdIMIhLsMkNrRlbPB81KWeYnmBvPdnYDN29kINPDNA2e775uDO3TwRjp5t
+ BchYCXuZbJnDUCnVy/NgdXo4rIXG6mn3SwWc5R1ImU85IjddYZ+dzGdzpgWrR8Ool17uyKYMT
+ 5s5wOHH7na0gk8GJ3QmZE82Srnl88jf33f9XPd29kwuKunt34H8rON/yy8WvJbbMO5EY7TuhH
+ n5dZ9KwRHmWeslMUqji6Id9fJykJ2iHZhCwCOrxbf+UIifCnh4qj97FDlfMr7fio/dp9TMATl
+ +caMVcKTrTPg/bMbW9F/fU49cLHXgS6b/6GVK2pOX3+A7C9IW2cgUkcfjJ8OBa8Uz90zCLoVd
+ +xXlau4lFXnCBHfllKKUrT71yooTNJilNLLf0BWjbnzn6t9bsoqF57Az0O1AfJPnZ7PuCEEwk
+ All83HsKQKC30ZrPOC55c6zRttkR/80ATV0SpoKO1chm2iojZdLM5Tb5/jTkk50rrb2bmHtLU
+ 7J9FpF8HMDQRUlqcJFVsC7Dcgkvke7vcuy46kzqmrBd8PFRBpw69uPa/MNRSy2pi/PpnLY9Qn
+ uTV9DiPR7T91rRG+bWMSI7R/vhIPw9r5vD7QD9fujApeg6UhG1azoxhRACaEB2ATf/zTNnT2s
+ Ii0oKWsbYzdSTZdOytRGuUDcS2Izz2mTat1ceUn+6cgqRH91LE8gkZlcKZ4ZwCTnIpT3l+qq1
+ FJoyUPwbPCe93i2DWvqlekVYRnqgu5IfpbFnQHwJLikGehi5GDwxyx1eMwTyceA1OEhJRKwCC
+ g8RCKX1vE3nQmL+SdAZlERmCYTaxfvpGwgfYAW8Di15d7fjxxVWFAkPFRRT5Q0eLviJS69D+V
+ 3WELDhvFMaN3qAtyxI38IODleItl4UskzMufKICYb/fnbk7DrhqNK3fRue5r32PVWTEYi0xYU
+ q3fdIfejnqGqi0UT3+MP0xqXoxltNQCS0BUXFzUqry4Jar5EYqUyloPejVea0RK3RJlOFpaYB
+ mFfaN6iPFGx4dyIU4Zw7sNSjkmu8R9i7Khe1FJEWs6D/NDgDAHvDIdtmD5SxIvzZSCkNCQv3l
+ rWywpgZAvGaxTREj6uNczEseU627JCSJu2Y2TFzi6QuG5jH0+R9tdRUZMADjdVnLopBpdmU0k
+ 47PlPbc3tAhEX6jGOFJwWVxzRncCZji52hyl9bLTTZvRnUUHInochLaYUvpLOvj+bBVnk/vFu
+ Ij8bQ2/lgmS/2H2s86aEDu+utJVG79/ySPBiqOyQ4MS114uze7mwlxLgndSSJPRysIFJF4RMF
+ 6A6z04AQUTDqNA1gyW4bI0eTfsttKGp9HVEdX2EYU/q2zcid11xb1ZUC+36/SmywT/NMQA0hw
+ iZjb4dbQ7Vgp+HOPUIbNBinuvEFO8DnOmqsHA189ZCIaUuqVhbQrHHuAVuK9mOb2pLkScdihd
+ CQi7DOM1Xh2rkBX2Tf6vfpQpqy59U9O3YG8DUMpCPvEaNyTVZ8jQQ2Sk3bz1kq60mOI/1qqr6
+ +hYFVoLFAL+ZKmmfJmKGaK0tKYYFNj9zl8zF0kTg77zij3IH46v7Lkq85xpEZlqJJFGnI9iB/
+ lSakaIHrKh6kp+/yKc0cn3Spqe+YEI0eYgDl259cVeTJE52YBdmv6tAXPnzLy4ST1W3jyyiGB
+ SJ+ZGlj5z8SW00UliUU7OtAZQKLGCjYSl9ubLVN1pXV0QE53AvQU50Oq2It+NgpQSYV5yi0N/
+ PRPecvqBv2rEiKikfxjgZzENSkGPq3ILF/RW+SCBI4wmbycmFbzEVHU54TT7UK6BqmbncTBAn
+ SQPVXwr9dRyJvStHS1B6QKGRbeLLj0SIRGLWhOUyww98mfUYse+2ry6mnvoWXIswYFeIhZVpZ
+ NflPi/spdc28IcFW6LehhUnWPArhWpoeO/q2CBhjg0ZsVAPaCWDyloD/p09rDNPveAh0uzF5A
+ UjU0HHeIYnzHi7RiWvfMzYVd7ni0M=
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 2, 2026 at 9:15=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+Hi Jeff,
 
-> The thing you really want is the interoperability work, which can
-> automatically rewrite repositories from one hash algorithm to another
-> during a clone or fetch operation.  Yes, it isn't quite that simple for
-> submodules, but if you recursively clone the repository and all its
-> submodules, it should be possible to rewrite it in place, although that
-> hasn't been written yet.  That work has not yet been sent upstream
-> because some of it was written at $DAYJOB, which requires that we use
-> Outlook and we all know that Outlook corrupts patches.  However, there
-> is some intention for another company to handle the polishing and
-> sending, so it should be available sooner or later.
+On Mon, 5 Oct 2026, Jeff King wrote:
 
-Sorry for the possibly stupid following questions, but I think the
-answers might help us get a better idea of what might be needed to get
-a smoother transition.
+> On Thu, Sep 24, 2026 at 08:53:49PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+>=20
+> > +# The cURL version which Debian 12 ships (v7.88.1) can fail to retry
+> > +# authentication after an early HTTP/2 response. This bug was introdu=
+ced
+> > +# in cURL v7.88.0 (8c762f5998 (http2: minor buffer and error path fix=
+es,
+> > +# 2023-02-08)) and fixed in v8.3.0 (https://github.com/curl/curl/pull=
+/11756).
+> > +test_lazy_prereq HAVE_CURL_HTTP2_BUG "
+> > +	test_have_prereq HTTP2 &&
+> > +	build_option libcurl |
+> > +	awk -F. '
+> > +		($1 =3D=3D 7 && $2 >=3D 88) || ($1 =3D=3D 8 && $2 < 3) { broken =3D=
+ 1 }
+> > +		END { exit !broken }
+> > +	'
+> > +"
+>=20
+> Doh, this is totally broken. The prereq snippet is in double-quotes, so
+> the $1, etc in the awk invocation are interpolated before we even eval
+> it.
 
-And yeah, I know that many people have said that merging all your
-interoperability work should not block Git 3.0. But if it can ensure a
-smoother transition, we might want to get at least part of it merged
-soon, and the rest in a good shape, anyway.
+True, I'm sorry.
 
-Is the current state of the work publicly available somewhere? Or
-could you make it publicly available somewhere? (Fine if it's only as
-patches in a tarball.)
+> [...]
+>=20
+> Since I know we both used GPT to work on this, I was curious if this
+> slipped past it. Doesn't look like it from what I sent (which used
+> option 2 above). I wonder if your agent flipped it, or if you saw how
+> ugly it was and flipped it yourself. Not blaming, but it's just a funny
+> and interesting data point if a human second-guessing the AI output
+> introduced a bug.
 
-Is the submodule work the only missing part of the interoperability work?
+I introduced that bug; I meant to double-check the quoting, saw the
+single-quote characters, and that's where I stopped.
 
-How much work is this? (At one point it seemed to me that it was
-around 200 patches.)
+FWIW my preference would have been to move the entire code into its own
+shell function, like so:
 
-If you were to work full time on upstreaming it, how long would you
-expect it would take you?
+=2D- snip --
+curl_has_http2_bug () {
+	test_have_prereq HTTP2 &&
+	build_option libcurl |
+	awk -F. '
+		($1 =3D=3D 7 && $2 >=3D 88) || ($1 =3D=3D 8 && $2 < 3) { broken =3D 1 }
+		END { exit !broken }
+	'
+}
+test_lazy_prereq HAVE_CURL_HTTP2_BUG curl_has_http2_bug
+=2D- snap --
 
-If some of us could help you, how could we best help?
+Ciao,
+Johannes
 
-Could you say which company is interested in helping with this? Would
-that company be willing to work openly with others on this?
-
-Are there some tests or kinds of automated ways to check that things
-work as expected under realistic conditions like:
-
-- using real world repos (large ones, old ones, with submodules, etc),
-- mixing a number of new and old clients and servers,
-- interacting with other implementations (JGit, libgit2, gitoxide,
-forges, CI, etc)?
-
-Thanks for all your work on this in your free time,
-Christian.
+>=20
+>  t/t5551-http-fetch-smart.sh | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+> index f66d7ce7ac..cb681e644f 100755
+> --- a/t/t5551-http-fetch-smart.sh
+> +++ b/t/t5551-http-fetch-smart.sh
+> @@ -21,14 +21,14 @@ start_httpd
+>  # authentication after an early HTTP/2 response. This bug was introduce=
+d
+>  # in cURL v7.88.0 (8c762f5998 (http2: minor buffer and error path fixes=
+,
+>  # 2023-02-08)) and fixed in v8.3.0 (https://github.com/curl/curl/pull/1=
+1756).
+> -test_lazy_prereq HAVE_CURL_HTTP2_BUG "
+> +test_lazy_prereq HAVE_CURL_HTTP2_BUG '
+>  	test_have_prereq HTTP2 &&
+>  	build_option libcurl |
+> -	awk -F. '
+> +	awk -F. '\''
+>  		($1 =3D=3D 7 && $2 >=3D 88) || ($1 =3D=3D 8 && $2 < 3) { broken =3D 1=
+ }
+>  		END { exit !broken }
+> -	'
+> -"
+> +	'\''
+> +'
+> =20
+>  test_expect_success HTTP2 'enable client-side http/2' '
+>  	git config --global http.version HTTP/2
+> --=20
+> 2.56.0.399.g9e0ddc9b37
+>=20
+>=20
+>=20
