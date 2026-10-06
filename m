@@ -1,190 +1,173 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EAE1378828
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 12:32:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791289925; cv=none; b=AV2pzSsxpWp5tHRbbhk+wD55suqoaMIdMkwiC6fL8QBDGdXHBnL99xel3if9yOm8wGPa3lHxEW0Bi8pqc1B9ffTvJf6qjbIU/tPXHTkv0krioVQmPeuLwO1lywy69s7roFoWuaCCZLRfxs4kP53VKHpytbNhQ74rBGHwkk59VEQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791289925; c=relaxed/simple;
-	bh=bGCoOr/Ppxj6yFv8Hj7ROWFwahjbCPtAuNLtoVDpPMg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=otlUUBi20BAAgNIiTVVXlRIMjPLQMYod92IkXsmqc7P9G/DvH3ltdIvVxFCVfZ/8mfb6UaEi1A97CAiU018sir+MYxXsWtkYLHzqwqBWxFseaGzaZ+842EOl2yNW6Cyo6H4N6CvXOPzsfn2jHUH36Z+vKzeG/QXJLMexw/ybxZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eavjvlQJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sMGTcfbh; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF19140D594
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 12:36:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791290217; cv=pass; b=OePsGOdX59dIlvz086eHmkSuRTzyI5INcjzAu7byvey7L4eO502McvMNacPoxUWUfo0gzYS90S3/xefB6oVRXZZUcbG4A5dzKNpF9SqbenDsV/grcpLUY7Xk0yilgh0oZQV5v1Z1exSy0MuXHOYu9uBog+4I/8rUa3jkqsN5pEo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791290217; c=relaxed/simple;
+	bh=KE4PCX1EVUcelZoHgTETd1QGAbSGk6TS6wvPjNLRjm0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rkPCHz4binsZVODxVH9qYx4CTTWR9byKyMDyuZqkhzv4ONuuE9jD7ixKqt4WRSwEk+O5ikdlXTxTe1EXxHFn7AHnkGSVfrBttdZtQGyrO/+8wcgBLRHJKWP3itnLz6nCfCMh5NQPdNAzs4OLbwnAv7UQ8KiOjNALXkLB2q+8jBc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=L/aX4ccZ; arc=pass smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eavjvlQJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sMGTcfbh"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 70CEA7A007D
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 08:32:02 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 06 Oct 2026 08:32:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1791289922; x=1791376322; bh=myZRjhil+X
-	lyjUHUBZIcqShg0BNbeQzQCwLLJt7FK/M=; b=eavjvlQJdO/SNhyPAz0Lj6FrQN
-	rHYVgzt78w8xp24LDvz2tJ/4WwsL4imA1INVWE9CQvpZdpeDiqZooUvhx5rOlmrQ
-	mPr4/207pOMULIvkrqgV9SNzF2/gu0Ut8RckHym3bkNXpzVBxfaNfw4oTUtqfwy1
-	OA2+EIWM1+KLnytF/axo//sy03a/SPUZA6WIMfn90KHK9xD1o3TIxSaioPanMx9u
-	sAk/JyHsunXl7AIIWsdwpUhNl4rr5OX0/YjT0cZkSyRFdV9SKjmm4hjgHs6Z3xzA
-	fr2ulVKr1Xv3x8GXN8zk2P8IwhVO2pW6F6OhkVmW/iBCk96L67eU6iN4Hr2A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791289922; x=1791376322; bh=myZRjhil+XlyjUHUBZIcqShg0BNbeQzQCwL
-	LJt7FK/M=; b=sMGTcfbhHiNPRjEB9dDslWo2DHwNBHVKJScu8Q/MfMrfJUvMEVo
-	OG8ZAmM1m4Yjf9EmwnYrX+ETv0umSNISuxSK5Jy7GxUW1lagTqp9FX/xFpSgFilW
-	RLVFuQl0WmfPo27SDdb0X+XHUHB2iPhmW2eMLvSC1WJmmOyPVCwnQ6YCspXDt7xm
-	NnavLGbcpKQssM6QAR9akmWUqYTpXtH/eoLzbQz/eV+XKJqAT63+OYBqkiYvMGpW
-	cLYi4AvzeM33it7zdpUmP7lncuzr9au2A9RsvOcyrtDC62QdTqSzwMYVdsRFy4zq
-	BMJkXgvWv7mdEGyqwQurWQNmFyyHcO7ClQA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791289922; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:KvELAo9XqXMJ0jQBDwzEm8TxntkJU/5axjr1uxZci652Zal
-	Tb1i49zbyUaBX1qbBwDY1BgjDmD4G3EpJblih5py0oGU3SySJZBGU0C4rrfrDIge
-	yGBT4nDyCFaEYuD/btFujETHQwYIyR77UXrf3nnyuQjoKN9LDgKbuDunrnj1FJYO
-	d52FaKra1aOdiKGOKVcYwCz64S0KUHS1LwNnpEO03oCXx11DfocQjH84PXnOTGIi
-	VfNXJDAnMO1i1DR9Anh1BDiuzRSoHGQ3tk32/Roqb89v8NnPKFosV+CzLMBkreHr
-	E9ipE70hj7Tta++yl+WUSyFZAd6J1S3Q/Y2EErA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:RWIbN8wryxQb6Aj0I1rgAQ5Roh6RC1HGzzWkEJjcD2U=:bGCoOr/Ppxj6yFv8Hj7ROWFwahjbCPtAuNLtoVDpPMg=;
-X-ME-Sender: <xms:QurEavIP-ZoVmzPLs94rBavc88IBt21ay9EPnlAbWCGTy7kRzMQ0lQ>
-    <xme:QurEaqktSQFWC2fbVwEAlLIbDU0iNAzoXwT3UQczwvrb-hiKtvGDBFw3cj7PiNO6M
-    aywPIdtrbmte_J4G2tB7msk2AMyN1nnvqgTvOLYMqQ3tFJVBvDL>
-X-ME-Received: <xmr:QurEalFPeCXNPT7BUxcYCkb2o7CLSJHsUIf_xwbM1e4FrghlhROw7VZiGxoTJMp8-5R2XA>
-X-ME-Proxy-Cause: dmFkZTE7PaBuRyfloPFlxyBTgxZn64y4ID6+A2w4HXMTQ9gaDHPNUdYoI4wWhlwsGZ6Khx
-    pS/Nl1S2maC+1op1V6Eecm5pzoCbQDXyfhLS//HZCQWATeILgRhGGFsbMvlM332rsIbsx6
-    kn57sfvoLfyL999lsOx26nDQR0BTQcA1MSg8KpVDiKuaZ2CH2SfiweQAE7ExclugXy+MBt
-    B1OSLZuib2RhuRLr/ce3h3wHKbwNx5S+LEjefN4WsIgKN4X6fithVVY1xa62YNHWDP1szh
-    atZVh4sFORoh/vfB3s/GPpA/2qOGjufXrTLM3GFLSFP5CE+TA7DISWPjZwzyD1aw1F4oTp
-    TcN7gJ0XB/+B2u8s6Q7p9lbysUOsFI4YQ4dw76S8rLpZco4j3bgBZ1+fWwekD8xNr5dd4e
-    mJVYoL0g2ttn5XEuXW4ObJrky6eFMrVBAlqnvVWKIhfIKxirYYIGYSYjlVH8vF2hZDVQmD
-    7u4I+U4c/kCWKj1cO2KyaKPSA1emSJQ03GMGllahG9EI1zVAsiJ2FfSPMzmtZzWvHy1Vkg
-    XG9+lLHZzsad6/iIVhFFUgKFYkhVWXiyfGtWXCwKa6d0zLy+cUzv0cKRa4ayW5TsyYp4oy
-    t8dtW+f+ED3BFyZlTKXGJMC+sQbk8Erc0JDtRc+REWrZgsMUQEekgbgHUpJQ
-X-ME-Proxy: <xmx:QurEaiEP81AuxDr_2FzuVVIdOu8uorzb-8fGl0qRf4-AM6DNSiTSCA>
-    <xmx:QurEaqOS4tH_KsFcJN8oyQNT3pIilJYbK0uycRQqlAjspUBV0XH8iQ>
-    <xmx:QurEapFiDICLNXHj3igpaF0Kcy9MT2cy95H-LEGubdmaeWk7oeiCiw>
-    <xmx:QurEapNHU68ckV6x-63jSF4H0tyv0z_LDmUqsdpVytxP9R9WeGWsIg>
-    <xmx:QurEaiklUHBs_Wflnzw0cIwAiIYRsha5C02X1alNvZtm8XJSmMC4AqKW>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 08:32:01 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e436b3b1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Oct 2026 12:31:59 +0000 (UTC)
-Date: Tue, 6 Oct 2026 14:31:57 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, toon@iotcl.com
-Subject: Re: [PATCH v3] packed-refs: use `fwrite()` when passing refs verbatim
-Message-ID: <asTqPcCl3RdS8YN4@pks.im>
-References: <20260930-kn-speedup-packed-refs-v1-1-111cd03d9b0e@gmail.com>
- <20261006-kn-speedup-packed-refs-v3-1-a1c76b1df9e0@gmail.com>
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="L/aX4ccZ"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-8b056d58f2aso464637b3.2
+        for <git@vger.kernel.org>; Tue, 06 Oct 2026 05:36:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791290200; cv=none;
+        d=google.com; s=arc-20260327;
+        b=OKL2Rc19f0+nnKS/qUo8VB83pkOYf/2aamLKEkLgrCMHQdaw/NJDVydRC+haTILyyx
+         ehb7NtPlbcrVgR3HO2JAtyfacxu8o2RsvyQd/ODJVyZC/JE3pBfeylNPyk8ZA+0V/dW4
+         Lug5um3j6feOvNYBVcir/3o4xElc0DGRHi/YzX0z7pKHwvYVJYibTggWQ/E+5xZ9PMXB
+         jYsZDJw8Wczid6jadL45Url/iukOIw8T4YUSacRSh1pa8vJUnwYhwkHVKoTkV0OuZohH
+         Ay5mtE1ZjcvTJoaPkpAcLZhu0W5e9wrDdB9fwoo+ZAoB7F4PbmtokyKWWDMnct7zjseA
+         dZrA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=qUgS+3cbU+A/9ALhhAJODyOr0Xf8ZZEvF4xBGAIrHPs=;
+        fh=OJApakPN8vYE4NXkSranaX+DQuTMbsHo+nN46QoenqU=;
+        b=HWuaNI0zaCkdNoPwyTmk9Muc5vyZLExuLMDBdHuBvaWSQ/u8dnSEq0+AL6go6qAsBy
+         /Z5xSx5RaklOcNWSgrX1++jUMiHGymr6JapURsNzKdPcMN5yFRjgYGLkbHYJpatv6RqD
+         VIcn0/MgVMsb9BNr6e+pvU0QiaeQp/btLcenvHTcowHZiv2KRrxuJthxbu1nme2gY+Ha
+         E8N4RgNi0PdRCK254GVY9w2jU3GQRA6QWXivEvr7VAhlKfZY7ZaY4weBtbKY329NrQt9
+         sSD1pXP/RFmfY6qpa5D32VYUQykGjuUzt3R2dIwpSBFQHooqNE0V86ps8hL1TUN8P0Oa
+         5oHg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1791290200; x=1791895000; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=qUgS+3cbU+A/9ALhhAJODyOr0Xf8ZZEvF4xBGAIrHPs=;
+        b=L/aX4ccZm2L0b2RUprsJ4bHn5P9LDntlgeVwiRNvz1OYsGvDLmqNaGA43zUyhIlGf7
+         2WL0qdVvWPyeD8vQi3ZSKmuxqbyy4/POq2EgL4Jda9LN4Ql/yQ/UjNi7+QeKx2/ma1zW
+         GHQDS9geN9S2ZOIDhB09uVtfZrKxSYJVdhDv0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791290200; x=1791895000;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=qUgS+3cbU+A/9ALhhAJODyOr0Xf8ZZEvF4xBGAIrHPs=;
+        b=wEQDL16lpxDI2lh2wctXjkYbbiRBb6hBbOMOsGODyNIV5ouJcEYfo7wrImvG8SuQr7
+         jyCZjdWQzmDW0SZk5vJv0ItiRwxAy0QeqJ5INu+Ry54UPuxKcJe4HSfjnr95S9Ovby88
+         Jbmpc6ejISCwSf4vTaRWngTCsvD8ZtUpB8BPNppn9I+ISgvu4FsaqaJUmXib2OSqK+oH
+         S764iM8FiuOPR8KSZtvLJm9WBUx/4UwHkNmP0FGu/iC8PRY9HkN6HDlGsXniiwRe1fyv
+         0hUEQ/wwPMhaNkfVRGiniMU/o3VSRCjqgL1mAr49mI8coVl5sVwzPy/xKsgQsMxh03HI
+         W2ag==
+X-Forwarded-Encrypted: i=1; AKwUvBzPQF8QkqczBXNdCL+1g/S6y3YYtIjJEG3osDnI3+bvg/X/8ltF10nVvu2VGJ2CJnkP9hY=@vger.kernel.org
+X-Gm-Message-State: AFq9FYK0BZ4PuWg1OYtWDuX3sIwwT81OpODmNe/09mE/FIaoxofR8lxe
+	n23wmXh9/L5zlmro6HeLvFWgMmAJ/rXyEjY+RmPUMjeM4h/bl7t5FTkqzK3F5ypui+uoYF42rvj
+	OPtG0SaNXIwTv452GI57ywewcafsgWLdaPgFbk0hnbw==
+X-Gm-Gg: AYBFou0jeHY6IspPxi0UcN94Vuinf1oSd3JXd0b3e4jylHjmRh1r3644XcBWfpnxp3U
+	JNj5UY5vACbXPBJLNHah5HkP6w7SwzBLILdMZr+Qw2f6wYJCA3V7QAWJKKY1XOSVNoAxn/mnZF3
+	jFdkJGhgeHut9y6ddrIJ+R6TTIiz5Iz+zElW8V7Ps8TkyTxEOeIr2G1TYeFvXluuScggia92VZI
+	pQGfz7bNSPC6fmYa16rwWdKscp4Y1FB+09OraPe2r5qJfVARf9/R+zzaLKyue4+27EE5FMNyMhN
+	xW2bWFjCSZRM4OdV9pDnlsRV2QSxXVdf8ku71UYgh4FDjTDtRIoC1l0=
+X-Received: by 2002:a05:690c:16:b0:8ae:9448:14cf with SMTP id
+ 00721157ae682-8b04f492294mr3999977b3.88.1791290199907; Tue, 06 Oct 2026
+ 05:36:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261006-kn-speedup-packed-refs-v3-1-a1c76b1df9e0@gmail.com>
+References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
+ <pull.2211.v2.git.1790600552.gitgitgadget@gmail.com> <6ad528f4bb42a960910eb4fe917a3766fa55d598.1790600552.git.gitgitgadget@gmail.com>
+ <asNZD7AOC6QL9q1d@pks.im> <CAL71e4PFpMPoSxFdnscRFiMB3ozudr64TjeQc8VKcO_M_MfJ=w@mail.gmail.com>
+ <asTkyiIZvX1ztMrH@pks.im>
+In-Reply-To: <asTkyiIZvX1ztMrH@pks.im>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Tue, 6 Oct 2026 14:36:27 +0200
+X-Gm-Features: AclHuK_3aM0aC5xK3f88ajwIblnKfw-7UZLgkq5qutX1mIQg_oLQH_N0JvALDdQ
+Message-ID: <CAL71e4OCuwT=Wj8eMF0DJ3UXFocb24yssLf4buyFDGEnTR6mgw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] connected: add incremental connectivity check via rev-list
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Oct 06, 2026 at 11:18:40AM +0200, Karthik Nayak wrote:
-> The `write_with_updates()` function uses a `struct ref_iterator` to
-> iterate over all refs to write to the temporary packed-refs file. It
-> receives the iterator from `packed_ref_iterator_begin()` which takes a
-> snapshot of the 'packed-refs' file.
-> 
-> While writing to the new packed-refs file, writes are routed via
-> `write_packed_entry()` which uses `fprintf()`. Even for references which
-> haven't changed, we use the same mechanism. Instead, let's track the
-> position of unchanged references in the snapshot iterator and directly
-> use `fwrite()`.
+On Tue, 6 Oct 2026 at 14:08, Patrick Steinhardt <ps@pks.im> wrote:
+> > Parent is always defined relative to the commit we are
+> > currently verifying.  For example, a push may come with
+> > 3 commits (let's call the tip T), and then we do the
+> > following comparisons:
+> >
+> >     T   vs T^1, T^2
+> >     T~1 vs T~1^1, T~1^2
+> >     T~2 vs T~2^1, T~2^2
+> >
+> > T~2^1 and T~2^2 must already exist and be reachable and
+> > so we can trust them to be connected.  And since this is
+> > relying on memoizing already seen results, it's important
+> > to run the checks bottom-up (reverse topological order).
+>
+> This is the part that still eludes me though. How do we know that T~2^1
+> and T~2^2 must already exist and be reachable?
 
-Nit, not worth a reroll on its own: you state the status quo and then
-jump to the solution right away without stating what the problem is with
-the status quo.
+Since T~2 is the bottom of the incoming commits, its parent
+commits must be part of the boundary -- by definition, since
+otherwise they would instead by included by rev-list --not --all.
 
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index a73fc6aca7..43ad674cf4 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -879,6 +879,12 @@ struct packed_ref_iterator {
->  	/* The current position in the snapshot's buffer: */
->  	const char *pos;
->  
-> +	/*
-> +	 * Start of the current record, set when advancing `pos`. Used to
-> +	 * pass records verbatim to `fwrite()`.
-> +	 */
-> +	const char *record_start;
+Here is a concrete example with a push of 3 commits, where N1
+is a merge commit and we have two pre-existing refs R1 and R2
+(T, T~1, T~2 maps to N3, N2 and N1 respectively here):
 
-The way this is written makes you think that `pos == record_start`, and
-thus one wonders why we even need this separate variable in the first
-place. So I assume that we modify `pos` in some cases without modifying
-the new variable at the same point in time. But if so, the above comment
-is not true anymore.
+    B1---R1
+     \
+      N1---N2---N3
+     /
+    B2---R2
 
-> @@ -1233,6 +1240,19 @@ static int write_packed_entry(FILE *fh, const char *refname,
->  	return 0;
->  }
->  
-> +/*
-> + * Write an entry to the packed-refs file skip any formatting and directly
-> + * write to  the file using `fwrite()`. e.g. when deleting references and
-> + * remaining refs need to be written verbatim.
-> + */
-> +static int write_packed_entry_raw(FILE *fh, const char *entry, size_t len)
-> +{
-> +	if (fwrite(entry, len, 1, fh) != 1)
-> +		return -1;
-> +
-> +	return 0;
-> +}
+    --not --all produces: {N1, N2, N3}
 
-Nit: this function is somewhat ponitless as it's a trivial wrapper
-around fwrite(3).
+    B1 and B2 are boundary (reachable from existing refs R1 and R2)
 
-> @@ -1530,9 +1550,13 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
->  		}
->  
->  		if (cmp < 0) {
-> -			/* Pass the old reference through. */
-> -			if (write_packed_entry(out, iter->ref.name,
-> -					       iter->ref.oid, iter->ref.peeled_oid))
-> +			const struct packed_ref_iterator *packed_iter =
-> +				(const struct packed_ref_iterator *)iter;
-> +			size_t len = packed_iter->pos - packed_iter->record_start;
+    Verification (bottom-up):
+    N1: compare N1.tree vs B1.tree and B2.tree
+        (B1, B2 are boundary -- not in incoming set,
+         so connected by definition)
+    N2: compare N2.tree vs N1.tree
+        (N1 just verified, trusted inductively)
+    N3:  compare N3.tree vs N2.tree
+        (N2 just verified, trusted inductively)
 
-Alright, so `pos` and `record_start` do get advanced independent from
-one another. So the comment that you have for `record_start` is
-inaccurate indeed.
+We never walk B1 or B2's full trees to mark objects
+uninteresting.  We only read their root trees as comparison
+bases when they are direct parents of an incoming commit.
+That is where the savings come from.
 
-> +			if (write_packed_entry_raw(out,
-> +						   packed_iter->record_start,
-> +						   len))
->  				goto write_error;
+So to directly answer your question: we know T~2's parents
+(B1 and B2 in this example) are connected because --not --all
+told us so -- they were not produced by the commit walk, which
+means they are reachable from existing refs.  This is the same
+trust boundary the full check uses.  The only new idea is the
+inductive step: once we verify a commit just above the boundary,
+it itself becomes trusted and extends the boundary upward.
 
-Other than those nits though I'm quite happy about this change. A 20%
-win is nothing to scoff at, doubly so because reference deletions are
-extremely expensive once your repository reaches a certain number of
-refs.
+>
+> I think I was coming in with a false expectation that we're somehow
+> getting rid of marking preexistingrefs as uninteresting, and that is
+> where my confusion comes from. Because ultimately, that does not seem to
+> be the case -- we still mark reference tips as uninteresting, as far as
+> I can see. And then we can of course easily determine whether a specific
+> commit is preexisting because we marked the boundary as uninteresting.
 
-Thanks!
+Yes, precisely.
 
-Patrick
+> I was probably primed by my own earlier patch series in this context
+> that focussed on refs, and that may be the reason why I had skewed
+> expectations.
+
+Yes, I've noted a few other workstreams that are sort of
+touching similar areas, though not directly the connectivity
+check, so it's a lot of context to juggle at the same time
+(and I will need to take that into account for the next steps).
+
+Thanks,
+Kristofer
