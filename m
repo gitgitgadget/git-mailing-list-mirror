@@ -1,69 +1,69 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5361533123D
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 18:06:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0D733123D
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 18:06:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791310000; cv=none; b=BEGdutP/vhDuzImPwBWLbcysc6O08IV4YzEXu9g+9pe7MYCTut+4ZyfFmB5moJRKMmH3F18bO7GPclauy22mOrdrKHf/tAnDaTX64vjyzL1Bf39+TsEQoMXKtEjlZUYOL6rD4WyLrMgRsY0bQMTWShrxmvdEqqfAp1Ta7+MyTe4=
+	t=1791310005; cv=none; b=V/+xfgpPnb874Eze0iKXemKWJIgcQLEiPIoqYQhgZMx7V0qY+0FcrJO5a6AotHp5LMGXVwJfVbtvuaM3+dHtHaGLnsnqyNBhMJnQs3+W4EdMXaNq1mObEHgQU64PYYXnkdqZXldDhgpt1E8WnL6n5pCyEhcyHdev9ZJJh75EZj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791310000; c=relaxed/simple;
-	bh=/SID74dflLEBFVlfpJMdgGhvc++gsJiErJDrAhPzWvM=;
+	s=arc-20240116; t=1791310005; c=relaxed/simple;
+	bh=rf57foQy53aPPqI1gmMrpn/7qMsdhKNEE9j6KBgIgbc=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DA3c5Mq+rUBHGFzUU6IFzrasUCkyXrHlc+/WxvZhKs15oQWIk8dzOcd+DW+YBEIWwbgF+KhmpBMc2e5HF0XOXdgNp5zW3SjEY8ssN3PY5VK2/AOgJA03k6Te6GEBoFl1o6p4V/i4mqgmeagoXygK6eGO8qnSXGpbOkw9v2Tqg8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=Jyuwia9b; arc=none smtp.client-ip=209.85.160.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=Hjg4f6d1s//GrItBnFXyrNgfw4iN5QIDcYqIuE/heSSld9bpqsPWbMJVmXnHY7Pe5GU1Laa2qEuzom3bwHLXwS9JO3nb5F9V94WymJLkBQx6WpIm9rRuY05FMCRU2e3u0lH+dOFCN7LaMtjO3Zs4rS7AEinlOoN64SMunzwFuN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=ZMZjK9Aq; arc=none smtp.client-ip=74.125.224.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="Jyuwia9b"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-533797e72e8so19737761cf.2
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 11:06:39 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="ZMZjK9Aq"
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-6768ced47aeso1189731d50.1
+        for <git@vger.kernel.org>; Tue, 06 Oct 2026 11:06:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1791309998; x=1791914798; darn=vger.kernel.org;
+        d=openai.com; s=google; t=1791310003; x=1791914803; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:to:from:date:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=2ewVTWcl9azdFjdOicrNl9QjcBY97Wv98ze7tYFSfv0=;
-        b=Jyuwia9b61I305hW+yY7D7BUKHr+vxymm4RXh1S/1vgrtoOB1qExYRjh+zkta0/FA0
-         l63kAQIwpmfVhYSSCk14iZ1mQrH4C/FyHvGggwzoAXUtgBeDaeQcUBLRWbkjzUm7lNN3
-         nubw0jdm/GcNf1fslF0I4WlyWHyHyDP24894Q=
+        bh=WyxC60HhIksLcHpNc6VholbmLS9cwnApBZ6FEmWYx/w=;
+        b=ZMZjK9Aq+4dNMtcw9lgkqrBbQcRRoLGnmPZYFJBB4yhFerkH50BEJ9hFMEXXSvjur0
+         FsAxcLTW7hxXUD1WP8XYDh3vt9Fo42+lF25CASz8/Mgsfr3+1j4tD24BHTHkMZ68tnSS
+         sEY1TqDjk5m96mMXZUgw+OTMZTi4BISicZr/I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791309998; x=1791914798;
+        d=1e100.net; s=20260707; t=1791310003; x=1791914803;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=2ewVTWcl9azdFjdOicrNl9QjcBY97Wv98ze7tYFSfv0=;
-        b=qu9G7PxANzpxSAYQq9Z29MNI4VXdQ5H6dspP0bk98mCc0BYV5VhmupygJi6spncfjs
-         Szy6bi4HlHdhCFVpNzhHAiI1braBtt47u8e4YnvBtSU7A3Iv1Wa++umi66P/uIZz4PyJ
-         t68nD3MN1WqPheV/5NB6tztCjmqxzJRph8Nk5Geto/9j7uVhwhYL8zblP6ozPv72b5fu
-         7XVNxWuJA79F/lEFtyk8dQ9rFp8eOxIdMvKVXzodeA39r9CqKC+IfNLU7DoD1IrYjsQ+
-         DBDErlH2mlZayLzPWbepe1wPoqS61RCcwXamh37AqJINHIXbJuZpO9DXW43ZwE1qpy0a
-         19Gg==
-X-Gm-Message-State: AFuF++l8/8Y4NUm3Vsaxpzcx4L8a32TJXde2/i7uvi1nRK9375Ndd95T
-	+RcVircG/EuKfOOze/qHOcQfwSWhhQFoh6hR7bqp3V4mZ/q9dls44ahVLhiddoNuN4qOoLt2ZkU
-	/uzznPxk=
-X-Gm-Gg: AYBFou0dyRxpchfWIOWzNTNyC09Ldl8fDtVVN6Ep5+g9Y5EOgmAiKpru8Lhh07UXZq0
-	SAS4UJY7q4gwFtJEH3P5WKqAwSqNiR3NEidKNhwfOc+KdHEASaf1eUgWe7WoIzRDQiS7oFuXp92
-	A4XO1HlJwY5qffJrOwL881jfT8SIIhPkWgUtv/O1Sftw6+iFnru4KaD4jIhY/eZNYEjhDoRlWst
-	T8n8eLuqtv2BuIiYxf/HlU8E3XiaMeadi6Re0WyGA68PvgppB6oF/w93TBIX4OgPPwZmi7YFllw
-	08VNtPK0tn5Y0KG4aza2oHcs9d5uVRDeSoTt5gNAZVrqbcHFDxodfAou0NN/eSjZ+26XvBEIpyh
-	YUNdJvd8SPHIRZW8vPYqqxnPJ+tK+WPK2TBFOvs4ixZbvkhOoJyFmkubTRL6IR4V6PtQDSYMODG
-	0nsEkdbJGZz0Ts/WyKoPd71m0fIT8s8xt4XB+XGzIMMH1J6+IhKHfqrozR7Q8Cl6e1WcKFPN+zy
-	P5B3sSpQibKD6xibPa9ilH1Dky4TLHeBTJmajy//4FxMEkfax/hHJCBgS67J5zoC3fToSqXVb2L
-	bejaahAKEOI=
-X-Received: by 2002:ac8:7fcc:0:b0:532:d176:5d55 with SMTP id d75a77b69052e-53511d19626mr216051431cf.17.1791309997940;
-        Tue, 06 Oct 2026 11:06:37 -0700 (PDT)
+        bh=WyxC60HhIksLcHpNc6VholbmLS9cwnApBZ6FEmWYx/w=;
+        b=oESUTdjA3Zoada9KhWU7EBXBbcS2AmmeUONFdee0DsiyMrMeyuy1qZJcgHRwz+E6bN
+         xm8AKPXWeHAzPVpMoWSL5fkJ95JNfGSNbyOGVkXTdFTfKgkTrrh0Hj3tEaK25HRQPwcB
+         OLbYszR/zPomOCNPWti8DR2Xh9oDBRT+QhdWC8c1Eqi26YZI1xPPsQzrA9jG0hpDAKwD
+         JuVEwjY4msLavhFvj3UUGyddv2K7hVE4LbEja79dSSMxvBRavrgPPdh7q8zKjT8fLwxF
+         4wWTqJm/K64R+3B/Z11Mh1u5J6q1hqVUj/V6e0lwxAMILNzDV0za0dbi6pfwxbcPSh8j
+         gUgQ==
+X-Gm-Message-State: AFq9FYKFw1rsnt9KyO7cPR8DuaMU+G7/1D5tm4tZSu7Wbc+8ROcu2CEh
+	af6oUHFmClWGCk7Y2Qa09/tpiMhnTnY8n6lKKjyELOViWIz+y2sm9wxt8HeLxgr4WoVxLPpjcEk
+	Te+LZ81I=
+X-Gm-Gg: AYBFou1hiRa+RVpUJ5U0ATaI8bwr1aS8j4MnTy2zX8kA7hGUOITpcg6O9YpTXyucP03
+	p2CE74LO6jAZIkKd5sDgyBLv8BRRyqPfbrIDBY0/drw2zAXT1uWL8fDUR8DpqAgaL7ZrKVB4cWf
+	02sv79SRepzVzHsT1RlURoFEGgX4VslJdIYlrGnT0Wx+k9fASKPoSh110ChqrQcVQH+xz5dkRnk
+	qtu2i530js+QqYGPKUatIk6SnhctGRUf+KP259ietfwyTIjyhe/N5UF41X2+EUx5mwvm9T9HbcU
+	CLy5+CvPYuqp2btGluU8xevy2gtu0nV2BCpUA38de8In1pLc1uxJqAwyKeoqIN2huUH3nlZf30j
+	M23eVA1SC2VPUMALrcrzD1leh54FyVXinE/wCg66ohSAMOUajXPiWx6doeOusivik9UGdQ2qbMT
+	fr6isKAfZ7A5bGStQFaanavvK0WA3uxacCv3+/p0Yqce9dO302i5REqKeL4KiuDXZMG6OxotjSW
+	wVpdOWmVl06ywlaDs+p8QDhX7aoCe8gdhB81JCEy73i8g6M5kn7/u+DQ8xV3Mk3zMZbR25NzYUf
+	K/d8h/uNx60=
+X-Received: by 2002:a05:690e:813:10b0:677:ce4d:5b2b with SMTP id 956f58d0204a3-678fce3dac6mr986178d50.22.1791310002877;
+        Tue, 06 Oct 2026 11:06:42 -0700 (PDT)
 Received: from com-79390 (vpn-eastus-01.tradc-corp.com. [172.190.114.39])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-53572163ceesm1417191cf.20.2026.10.06.11.06.37
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-917e0c06ec0sm118742876d6.37.2026.10.06.11.06.40
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Oct 2026 11:06:37 -0700 (PDT)
-Date: Tue, 6 Oct 2026 11:06:35 -0700
+        Tue, 06 Oct 2026 11:06:41 -0700 (PDT)
+Date: Tue, 6 Oct 2026 11:06:38 -0700
 From: Taylor Blau <ttaylorr@openai.com>
 To: git@vger.kernel.org
-Subject: [NOTES 06/07] AI contribution policy
-Message-ID: <summit-2026.94e33e9ddf234334.06@ttaylorr.com>
+Subject: [NOTES 07/07] Protocol v2 for pushes
+Message-ID: <summit-2026.94e33e9ddf234334.07@ttaylorr.com>
 References: <summit-2026.94e33e9ddf234334.00@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -75,134 +75,170 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <summit-2026.94e33e9ddf234334.00@ttaylorr.com>
 
-Topic: AI contribution policy
+Topic: Protocol v2 for pushes
+Notetaker: Emily
 
-* Josh: What is the current AI policy?
+* brian: Some customers have millions of refs. Reftable has helped us
+  push up to 100k at a time, which was a big increase. AI means more
+  branches and refs, so the problem keeps getting worse. One customer
+  was unhappy about an 896 MB ref advertisement. Protocol v2 for pushes
+  would help. Much of the code already exists and needs wiring up.
 
-* Elijah: [Reading from SubmittingPatches.] The DCO requires
-  contributors to certify their contributions, and it is not clear
-  whether they can do that for AI-generated output.
+* Peff: We were waiting for somebody with a use case they care about.
+  Protocol v2 has a capability advertisement that leaves room for
+  further extensions.
 
-* Taylor: If we take AI out of the picture, is any of that inconsistent
-  with how we already treat patches?
+* Elijah: With fetch v2, it would be useful to request only a handful of
+  heads rather than advertise all refs and tags.
 
-* brian: It often has a distinct character. It may get better, but
-  currently it can be noticeable and awkward to read.
+* Jonathan Tan: We have prefix filtering for fetch v2. A client can
+  request refs/heads/somename, and the server sends refs matching that
+  prefix.
 
-* Elijah: It is often useful for proofreading and improving writing.
+* Peff: The client needs a better refspec, and the user interface is
+  hard. How do we specify the mainline? Even excluding HEAD can speed
+  things up. This is an optimization; a push is correct as long as the
+  objects are reachable.
 
-* Emily: One thing missing from the policy is attribution. Johannes sent
-  something with an Assisted-by trailer, which helps us understand
-  whether and how a tool was used.
+* Peff: Could we use multiple passes, trying a smaller set and falling
+  back to a larger one if some objects are still unreachable? Many
+  advertised refs are not useful, such as abandoned development
+  branches.
 
-* Taylor: Would I review Johannes's patches differently if I knew AI was
-  used?
+* [There was a related discussion about showing fewer refs in GitHub's
+  UI.]
 
-* Emily: It is different for new contributors and people with whom we
-  have established trust.
+* Peff: Could a server-side configuration limit the advertisement and UI
+  to a smaller set of refs, with the client ignoring the others?
 
-* Patrick: Sometimes knowing helps us avoid reading complete garbage.
+* brian: It is useful to control what the client requests. During a
+  push, we want to say that we care about only a handful of branches.
 
-* Emily: Having the policy in SubmittingPatches helps because people and
-  agents will read it.
+* Peff: That still sounds like a refspec problem; the default asks for
+  too much.
 
-* brian: Many people do not read SubmittingPatches often, but honesty
-  about where code came from is useful. Using AI for language cleanup is
-  useful too.
+* Jonathan Tan: This is push, though.
 
-* Taylor: The policy effectively says we cannot do anything significant
-  with these tools.
+* Peff: The client could suggest useful branches more intelligently.
+  Guessing the main branches is a heuristic, but upstream tracking
+  branches might be useful.
 
-* Peff: We are seeing more contributions where an agent makes the
-  changes and a person acts as a "meat proxy".
+* brian: A project setup script, perhaps linked from its documentation,
+  could provide useful initial configuration.
 
-* Emily: Those proxies are getting thinner.
+* Jonathan Tan: Instead of a ref advertisement during push, it would be
+  useful to negotiate. Restricting the advertised refs may cause the
+  client to send everything if the optimization does not work. Relying
+  on the remote to know what matters is error-prone. We would be happier
+  with a few round trips: advertise capabilities, exchange haves and
+  acknowledgments, negotiate the push, and send the pack.
 
-* brian: The Linux kernel requires people to state that they have
-  authority to submit the code.
+* Elijah: During a repack, the server might give a false negative. This
+  may be relevant to shallow clones.
 
-* Peff: What is the rest of the open-source world doing? Are we missing
-  useful tools by being conservative?
+* Peff: We could race and miss a common commit, then be unable to look
+  further back because the client is shallow.
 
-* brian: Some people will no longer trust us if we accept AI-generated
-  code.
+* Elijah: Geometric repacking may help because it is less likely to miss
+  something. A push to the wrong place should fail quickly. Let us leave
+  shallow clones to develop their own story.
 
-* Taylor: The Linux kernel is much more permissive than we are.
+* Peff: Successful negotiation could also make connectivity checks
+  easier. We could cache information in receive-pack and pass it to
+  check-connected.
 
-* Peff: We imagine that we will be sued, while the rest of the world
-  does not seem to.
+* brian: Shallow clones can spend much more time trying to minimize the
+  wire transfer. One push went from two seconds to 35 seconds because of
+  that optimization. `objects-edge-aggressive` is relevant here.
 
-* Patrick: Opening the policy further would open the door to an even
-  greater influx of contributions.
+* Jonathan Tan: We might get substantial savings from simply disabling
+  ref advertisements with a configuration option.
 
-* Emily: That is why I want more attribution.
+* Peff: Even without a protocol change, the server could decide which
+  refs are interesting and limit its advertisement. That might be easier
+  than introducing v2 for pushes.
 
-* brian: When I contribute to open source, I am attributed as the
-  author. With AI-written code, I am implicitly using other people's
-  code.
+* Jonathan Tan: The client needs to tell the server that it wants to
+  negotiate.
 
-* Taylor: When I read code from a project with a license incompatible
-  with Git's, I learn from it, and that knowledge may implicitly
-  influence my work on Git.
+* Peff: It might not need to negotiate.
 
-* brian: That is a coherent position, but not everybody agrees. The
-  project has to decide.
+* Jonathan Tan: Would that not be bad?
 
-* Emily: Have we used a voting process for something like this before?
+* Peff: In practice the drawback may be small, though completely
+  unrelated histories would be a bad case.
 
-* Patrick: We need proposals and a vote. Who would be allowed to vote?
+* Elijah: That can happen when appending a shallow commit.
 
-* Peff: Active developers with a track record; perhaps a threshold such
-  as 50 merged patches.
+* brian: I have seen that happen too.
 
-* Taylor: We asked the SFC lawyers, and the result is what is in
-  SubmittingPatches.
+* Peff: In that degenerate case, do these optimizations already have
+  problems?
 
-* brian: SFC is very American in its legal approach.
+* Jonathan Tan: Negotiation does not have as much trouble because it
+  starts at the tip the client is pushing.
 
-* Peff: We should give SFC more credit; it is more worldwide than that.
+* [General agreement that putting unrelated histories into one
+  repository is best avoided.]
 
-* Emily: This was a problem with GSoC. There was a record amount of
-  contributions, but the quality was poor.
+* Peff: Nobody objects to push v2. We have the hooks and the fetch-v2
+  infrastructure. There may be an easier place to start, though.
 
-* Peff: We need to agree on a policy. Do we accept AI at all, and to
-  what degree?
+* brian: Another benefit of push v2 is interoperability. Currently a
+  client must push using the server's hash algorithm; it cannot
+  negotiate a different one. Fetch can do some negotiation.
 
-* Taylor: One possibility is a process similar to Debian's, with
-  proposals and voting.
+* Peff: If v2 makes interoperability easier, go for it.
 
-* Patrick: We need to follow legal counsel, and we do not need to use
-  the same proposals as Debian.
+* Emily: What is the failure mode?
 
-* Peff: We got legal advice on the current text. We should work out the
-  voting options, take them through SFC counsel, communicate the risks
-  and concerns, and then hold the vote.
+* brian: Without it, the client must know the server's main hash
+  algorithm and the mapping from object IDs in that algorithm to
+  content.
 
-* Emily: I am happy to set this up. I have been doing something similar
-  with Jujutsu.
+* Martin Fick: I would like push v2 for automated replication, where a
+  forge pushes to mirrors. Gerrit does this with thousands of targets.
+  Ref advertisements are expensive when checking all of them. We need a
+  way to know whether an advertisement differs from ours, so we can skip
+  targets that are already up to date.
 
-* Peff: We depend on Junio. If people disagree with the policy, they
-  could fork into Git-AI.
+* Emily: Push negotiation?
 
-* Josh: Let a few key people put forward their opinions and see how much
-  they differ.
+* Martin Fick: The ref advertisement happens before negotiation.
 
-* Patrick: Let us do that on the mailing list.
+* Peff: You want an answer in tens of bytes rather than thousands. A
+  checksum could provide a small initial step.
 
-* Peff: brian, would you champion one position?
+* brian: With reftable, generation numbers make this easy.
 
-* brian: Sure. I will take some things from the Debian project.
+* Martin Fick: That might work for this case, but assumes the
+  repositories are in lockstep and covers fewer cases than a full
+  protocol change.
 
-* Peff: Taylor, would you put forward another position?
+* Peff: Would the rest of the push not fix it?
 
-* Taylor: Sure, though I am not yet sure what it would be.
+* Martin Fick: Parallelism makes that assumption harder.
 
-* Patrick: Then we need to decide what the vote would be.
+* Peff: We discussed an ETag-style approach with reftable at GitHub
+  years ago. It would be useful to see an implementation, and it could
+  fit as an option in the existing protocol.
 
-* Martin: If there is a vote, how would the result be enforced?
+* Martin Fick: The server could also send a diff or a leaner pack.
 
-* Peff: Junio is the source of authority, and usually follows the crowd.
+* [Caching was also mentioned.]
 
-* Peff: Emily, are you leading the voting procedure?
+* Patrick: Should we shrink the advertisement format?
 
-* Emily: Yes.
+* Peff: Perhaps compress it with zlib.
+
+* Patrick: Let us explore options and benchmark them. We need v2 on the
+  push side. We also proposed sending reftable directly.
+
+* Martin Fick: A reftable could contain extra information.
+
+* Patrick: A compressed format may be simpler.
+
+* brian: We also do not want to send hidden refs.
+
+* Patrick: I mean using the reftable format, rather than sending the
+  whole reftable.
