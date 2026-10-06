@@ -1,206 +1,190 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66EF43EC68E
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 12:25:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EAE1378828
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 12:32:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791289523; cv=none; b=eqH2onoa+bCPoab/bGH8G8m5SEMiPnIAxp/e6LLqaD4nJd0BVPRJx8HaxCiuxNmjkRRvd4EbiI7VNq6aWoQ2CUhAE8e5XtuGpuZTw1nG5ZQwtzxnmuLWdW+Bi/hfGPZek+dEWQrpbbVD4qpl82eWrGH//dAilK2Uwk4AOK8bkhg=
+	t=1791289925; cv=none; b=AV2pzSsxpWp5tHRbbhk+wD55suqoaMIdMkwiC6fL8QBDGdXHBnL99xel3if9yOm8wGPa3lHxEW0Bi8pqc1B9ffTvJf6qjbIU/tPXHTkv0krioVQmPeuLwO1lywy69s7roFoWuaCCZLRfxs4kP53VKHpytbNhQ74rBGHwkk59VEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791289523; c=relaxed/simple;
-	bh=DFOcIeeP237vu5sXjX0IxsNUu5RsRzriRtVxeUL/SDA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ITL64s5zQJpa5G9Bd2/ydH5GpUI1sCqxl9XPWI9uwiqmFpXTuZS7mQ372d9UFD3mYUbuvfSZ50XTGycqSKV7nOUJivTMqmVJ+kcgit/ESWZ2GlRZXywBm7wiMCDS/53DcxedtFxLaSF9EfiFPgFj7yTtfs6DVSUidKpVdzYPrCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JuzDhFL5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tYdPLBJv; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1791289925; c=relaxed/simple;
+	bh=bGCoOr/Ppxj6yFv8Hj7ROWFwahjbCPtAuNLtoVDpPMg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=otlUUBi20BAAgNIiTVVXlRIMjPLQMYod92IkXsmqc7P9G/DvH3ltdIvVxFCVfZ/8mfb6UaEi1A97CAiU018sir+MYxXsWtkYLHzqwqBWxFseaGzaZ+842EOl2yNW6Cyo6H4N6CvXOPzsfn2jHUH36Z+vKzeG/QXJLMexw/ybxZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eavjvlQJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sMGTcfbh; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JuzDhFL5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tYdPLBJv"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1542CEC01A3
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 08:25:20 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 06 Oct 2026 08:25:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eavjvlQJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sMGTcfbh"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 70CEA7A007D
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 08:32:02 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Tue, 06 Oct 2026 08:32:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791289520; x=1791375920; bh=WISYLoXAZK
-	HIYvxqpdOHv3aBNpyjq6oyUoxsfrFThGE=; b=JuzDhFL5+Y5mSKN+KZyG14xah7
-	DbX/iovvealFBWq3XTG1Bae4HJ5nd5eR4PsK1wgBkassgJawrhlH3LKzYhucmXjq
-	W+0WoF7feBEHAi2O2/5lmRT8WKoXbn4HTlZk17pj3ZI+O3q70VE3xqFJyq7CteCX
-	SMsdJUu1H/XGZov7LCPwh6kMoy5/3nvUzqbn/b4+jMHy7+vA0aFNQFNOTfhpuJY1
-	jf4pO0M6KLdY1Fmhuhv8EXNsGWsrLumIikbmGDzJZbRkpeA2BGAVNrkKrveE7bzL
-	+p2k9oqPX2o4yxXa6+PVr+ibJqz+KWHlCobxzpPOF11C6mhj+YSRP5oXKauw==
+	:subject:to:to; s=fm2; t=1791289922; x=1791376322; bh=myZRjhil+X
+	lyjUHUBZIcqShg0BNbeQzQCwLLJt7FK/M=; b=eavjvlQJdO/SNhyPAz0Lj6FrQN
+	rHYVgzt78w8xp24LDvz2tJ/4WwsL4imA1INVWE9CQvpZdpeDiqZooUvhx5rOlmrQ
+	mPr4/207pOMULIvkrqgV9SNzF2/gu0Ut8RckHym3bkNXpzVBxfaNfw4oTUtqfwy1
+	OA2+EIWM1+KLnytF/axo//sy03a/SPUZA6WIMfn90KHK9xD1o3TIxSaioPanMx9u
+	sAk/JyHsunXl7AIIWsdwpUhNl4rr5OX0/YjT0cZkSyRFdV9SKjmm4hjgHs6Z3xzA
+	fr2ulVKr1Xv3x8GXN8zk2P8IwhVO2pW6F6OhkVmW/iBCk96L67eU6iN4Hr2A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791289520; x=1791375920; bh=WISYLoXAZKHIYvxqpdOHv3aBNpyjq6oyUox
-	sfrFThGE=; b=tYdPLBJvWrDlgkMZijCsCRe2SowzAWnKwQskyTA4L+4LMpfVFKZ
-	n5pItzCuL7GPtNSV+jvRZiAFwZUZGa90Rw1NgiYWOEL1WeMyAixOlzdf49/yhgQ0
-	ex0k+7G7HUMhprKNckFuaQtMhklZk7IQIcv1IREz6mr5CVfzCCmKIL+Gfib/Ec0h
-	s2xSzHF7vuFHUrsibiUZSnJK5fkcBvNoE0D57TRLF0OIcl3onvEapLipYjAvDvCx
-	sGBGaXy7ta5erhHXJZ6iJpl36Sn+1uLLDq5GVMq4oyKufiSJIS5H2u/kWWjGvsvZ
-	5VznlRnYqJxxZ4rIogeXRh6Xo5fsm2z0xZA==
+	1791289922; x=1791376322; bh=myZRjhil+XlyjUHUBZIcqShg0BNbeQzQCwL
+	LJt7FK/M=; b=sMGTcfbhHiNPRjEB9dDslWo2DHwNBHVKJScu8Q/MfMrfJUvMEVo
+	OG8ZAmM1m4Yjf9EmwnYrX+ETv0umSNISuxSK5Jy7GxUW1lagTqp9FX/xFpSgFilW
+	RLVFuQl0WmfPo27SDdb0X+XHUHB2iPhmW2eMLvSC1WJmmOyPVCwnQ6YCspXDt7xm
+	NnavLGbcpKQssM6QAR9akmWUqYTpXtH/eoLzbQz/eV+XKJqAT63+OYBqkiYvMGpW
+	cLYi4AvzeM33it7zdpUmP7lncuzr9au2A9RsvOcyrtDC62QdTqSzwMYVdsRFy4zq
+	BMJkXgvWv7mdEGyqwQurWQNmFyyHcO7ClQA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791289520; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791289922; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:jqfbcqEyFnWjY9fGYHST4yEpngWwSXlEtNp5XYs5YrxhvN5
-	xE+Y9m1pD2uexuTP01ALg932mS+6Y0afeflNcIUWZvvmmSzVjWU4Cq/Dc2jh0Uew
-	Ai+E5P6jsIw/KsJSUABuWpW0xedUP+HXxbetvuaVPANqWO4DlTu/B4U1JFrNErPq
-	eIU2+4UuP1UmAyGJi/p972qKxOpaWI8pozu63vtIb9Ndowore+9FIZDszschnxKt
-	Bwodg1zZs2b7swOjMyMduRQlRf317CV45p/GEeABE66Yj3OvSTcotwHde0HyzbRw
-	n7U050Kr8nk2zIzMOzwslG1vubu8v1pF59sAXSg==;
+	s=fm2:rsa-sha256:KvELAo9XqXMJ0jQBDwzEm8TxntkJU/5axjr1uxZci652Zal
+	Tb1i49zbyUaBX1qbBwDY1BgjDmD4G3EpJblih5py0oGU3SySJZBGU0C4rrfrDIge
+	yGBT4nDyCFaEYuD/btFujETHQwYIyR77UXrf3nnyuQjoKN9LDgKbuDunrnj1FJYO
+	d52FaKra1aOdiKGOKVcYwCz64S0KUHS1LwNnpEO03oCXx11DfocQjH84PXnOTGIi
+	VfNXJDAnMO1i1DR9Anh1BDiuzRSoHGQ3tk32/Roqb89v8NnPKFosV+CzLMBkreHr
+	E9ipE70hj7Tta++yl+WUSyFZAd6J1S3Q/Y2EErA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:lflZOX1CKpjCVesjoG6DKo1AZnw50FvSbrQsjqe6Yds=:DFOcIeeP237vu5sXjX0IxsNUu5RsRzriRtVxeUL/SDA=;
-X-ME-Sender: <xms:r-jEahB81dZrXnse7jHDlLW_mS4UwLQAnWrp4KSPbKCLbubCF0WJLA>
-    <xme:r-jEamYZSaBKA_ltOrGbaLJy3SRbRvEp4BuF70zPCtjBN2JZrlI-J2WSKkqLVK9WU
-    GXu4g4nWLjesg9Tp1zVWkdnxue7JaWx0sDrVrfS7AmifqrFnyUf-sA>
-X-ME-Received: <xmr:r-jEak4HDG37Jmr8L1QjI4Bz9DTpL5FtCpm0U6m_NGmbJJD757DaFClvfchDaxM5biOE1TMJBVhHWuxrG-IeBJrwThgKAHSuN5vy>
-X-ME-Proxy-Cause: dmFkZTFIu9imQzCn7ZHgmaJDYA+43WgR5IzX3aMV2z+wWHSo2haY2v+zEIHohKtBMdTuYC
-    TRcPiICAZx2F8jQfkMPA47zLLUB/HLBpCK2Y2JxKMXlVbWx/Ngrxhj9ifUjKGHbeRlrjH8
-    SmNlRBOGUVHQFL8p8IDTmu0B4strV9i9voS3aP29dFBoeJMP2BLZcEA3QyhaiICz2kg6fI
-    UwCOnyVteBgCFz9+To8ygb9pFF5u00cPLsvKVIof3KGayqPUl4s0b5p73w/UBnuuoy0kSA
-    66+3sOs8nqvM42O0n6oFkyeWIoj8J4qcFSkLAz3XDhf+CkrkPAsLQQAUU0P7dTg7fBUtn+
-    Qo0AcNwIT3kb37tvsHes8NtEpmH102ohZ5fuxELq2C6FTxOIUtR9+AOjbwYXeCLYpnqj9B
-    s0aS6OzJf/apzwwwlX4BdRibS9wjMEqvg2I2HZf3Dcn8Mn3leH535wJ8nG1zjL7iAj4pfq
-    H+8AZjH7ZNaiTCBesoHHStN/6vy/czjdfqJOeVZT2ec2qeIdXYbz0uFqhPniFMR/oUZM5C
-    fYqVpxqZ1K3+xwrDl04atxxiJJ769njP5HHKUhBnOy40oAGyB8EdRbX6QLUobPIMFeTWV9
-    PvPX+i5y566nEhiug/qeBbToXx+Y+Fo6REVh20bEtvd7h9IuV9FwQRW1Vx9A
-X-ME-Proxy: <xmx:r-jEanZaOCJS-olrhoRnXAhsD-CQ1TBBQK20VDwok6aWs645ErQiHA>
-    <xmx:r-jEajhFIiHGJM7zX5zwZBPEpRE7dVK3fBI4fsDTm-BNhbNHV4NADQ>
-    <xmx:r-jEao8iZEmmcNPswBDI_hwKiuTJaKzIgqft2znVwfiQsIklKEr4UA>
-    <xmx:r-jEaup4vGoHv68kjrR5MmYXFpBBWELw5dH0AgCmVtqjdU7JaW0IPA>
-    <xmx:sOjEau1IdBhvhA6mZbespQh5UFb5cBBBQMblkHhxrF8ZF54sWHr9PCtf>
-Feedback-ID: if26b431b:Fastmail
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:RWIbN8wryxQb6Aj0I1rgAQ5Roh6RC1HGzzWkEJjcD2U=:bGCoOr/Ppxj6yFv8Hj7ROWFwahjbCPtAuNLtoVDpPMg=;
+X-ME-Sender: <xms:QurEavIP-ZoVmzPLs94rBavc88IBt21ay9EPnlAbWCGTy7kRzMQ0lQ>
+    <xme:QurEaqktSQFWC2fbVwEAlLIbDU0iNAzoXwT3UQczwvrb-hiKtvGDBFw3cj7PiNO6M
+    aywPIdtrbmte_J4G2tB7msk2AMyN1nnvqgTvOLYMqQ3tFJVBvDL>
+X-ME-Received: <xmr:QurEalFPeCXNPT7BUxcYCkb2o7CLSJHsUIf_xwbM1e4FrghlhROw7VZiGxoTJMp8-5R2XA>
+X-ME-Proxy-Cause: dmFkZTE7PaBuRyfloPFlxyBTgxZn64y4ID6+A2w4HXMTQ9gaDHPNUdYoI4wWhlwsGZ6Khx
+    pS/Nl1S2maC+1op1V6Eecm5pzoCbQDXyfhLS//HZCQWATeILgRhGGFsbMvlM332rsIbsx6
+    kn57sfvoLfyL999lsOx26nDQR0BTQcA1MSg8KpVDiKuaZ2CH2SfiweQAE7ExclugXy+MBt
+    B1OSLZuib2RhuRLr/ce3h3wHKbwNx5S+LEjefN4WsIgKN4X6fithVVY1xa62YNHWDP1szh
+    atZVh4sFORoh/vfB3s/GPpA/2qOGjufXrTLM3GFLSFP5CE+TA7DISWPjZwzyD1aw1F4oTp
+    TcN7gJ0XB/+B2u8s6Q7p9lbysUOsFI4YQ4dw76S8rLpZco4j3bgBZ1+fWwekD8xNr5dd4e
+    mJVYoL0g2ttn5XEuXW4ObJrky6eFMrVBAlqnvVWKIhfIKxirYYIGYSYjlVH8vF2hZDVQmD
+    7u4I+U4c/kCWKj1cO2KyaKPSA1emSJQ03GMGllahG9EI1zVAsiJ2FfSPMzmtZzWvHy1Vkg
+    XG9+lLHZzsad6/iIVhFFUgKFYkhVWXiyfGtWXCwKa6d0zLy+cUzv0cKRa4ayW5TsyYp4oy
+    t8dtW+f+ED3BFyZlTKXGJMC+sQbk8Erc0JDtRc+REWrZgsMUQEekgbgHUpJQ
+X-ME-Proxy: <xmx:QurEaiEP81AuxDr_2FzuVVIdOu8uorzb-8fGl0qRf4-AM6DNSiTSCA>
+    <xmx:QurEaqOS4tH_KsFcJN8oyQNT3pIilJYbK0uycRQqlAjspUBV0XH8iQ>
+    <xmx:QurEapFiDICLNXHj3igpaF0Kcy9MT2cy95H-LEGubdmaeWk7oeiCiw>
+    <xmx:QurEapNHU68ckV6x-63jSF4H0tyv0z_LDmUqsdpVytxP9R9WeGWsIg>
+    <xmx:QurEaiklUHBs_Wflnzw0cIwAiIYRsha5C02X1alNvZtm8XJSmMC4AqKW>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 08:25:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] t5551: fix quoting in curl version bug prereq
-In-Reply-To: <20261006034331.GA1325722@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 5 Oct 2026 23:43:31 -0400")
-References: <pull.2236.git.1790118373340.gitgitgadget@gmail.com>
-	<pull.2236.v2.git.1790283229626.gitgitgadget@gmail.com>
-	<20261006034331.GA1325722@coredump.intra.peff.net>
-Date: Tue, 06 Oct 2026 05:25:18 -0700
-Message-ID: <xmqqik3fhv81.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 6 Oct 2026 08:32:01 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id e436b3b1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Oct 2026 12:31:59 +0000 (UTC)
+Date: Tue, 6 Oct 2026 14:31:57 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, toon@iotcl.com
+Subject: Re: [PATCH v3] packed-refs: use `fwrite()` when passing refs verbatim
+Message-ID: <asTqPcCl3RdS8YN4@pks.im>
+References: <20260930-kn-speedup-packed-refs-v1-1-111cd03d9b0e@gmail.com>
+ <20261006-kn-speedup-packed-refs-v3-1-a1c76b1df9e0@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261006-kn-speedup-packed-refs-v3-1-a1c76b1df9e0@gmail.com>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Oct 06, 2026 at 11:18:40AM +0200, Karthik Nayak wrote:
+> The `write_with_updates()` function uses a `struct ref_iterator` to
+> iterate over all refs to write to the temporary packed-refs file. It
+> receives the iterator from `packed_ref_iterator_begin()` which takes a
+> snapshot of the 'packed-refs' file.
+> 
+> While writing to the new packed-refs file, writes are routed via
+> `write_packed_entry()` which uses `fprintf()`. Even for references which
+> haven't changed, we use the same mechanism. Instead, let's track the
+> position of unchanged references in the snapshot iterator and directly
+> use `fwrite()`.
 
-> On Thu, Sep 24, 2026 at 08:53:49PM +0000, Johannes Schindelin via GitGitGadget wrote:
->
->> +# The cURL version which Debian 12 ships (v7.88.1) can fail to retry
->> +# authentication after an early HTTP/2 response. This bug was introduced
->> +# in cURL v7.88.0 (8c762f5998 (http2: minor buffer and error path fixes,
->> +# 2023-02-08)) and fixed in v8.3.0 (https://github.com/curl/curl/pull/11756).
->> +test_lazy_prereq HAVE_CURL_HTTP2_BUG "
->> +	test_have_prereq HTTP2 &&
->> +	build_option libcurl |
->> +	awk -F. '
->> +		($1 == 7 && $2 >= 88) || ($1 == 8 && $2 < 3) { broken = 1 }
->> +		END { exit !broken }
->> +	'
->> +"
->
-> Doh, this is totally broken. The prereq snippet is in double-quotes, so
-> the $1, etc in the awk invocation are interpolated before we even eval
-> it. Fix is below.
+Nit, not worth a reroll on its own: you state the status quo and then
+jump to the solution right away without stating what the problem is with
+the status quo.
 
-Ah, I missed that "double-quote outside, single-quote inside"
-anti-pattern.
-
-I also like your "HERE-doc solves many such issues" approach in the
-other message.
-
-Thanks.
-
-
-
-> -- >8 --
-> Subject: [PATCH] t5551: fix quoting in curl version bug prereq
->
-> We have a prereq snippet that invokes awk. The awk script's $1, etc,
-> variables need to be quoted to avoid shell interpolation. We correctly
-> use a single-quote inside the prereq snippet, but the snippet itself is
-> contained in double-quotes. So we interpolate "$1" into whatever value
-> that happens to have in the outer shell, and eval nonsense like:
->
->   awk '(--some-garbage == 7 && --other-garbage >= 88) ...'
->
-> As a result, we don't think we have a buggy curl version even when we
-> do, and run the test anyway. But of course it's easy not to notice,
-> since this prereq was protecting us from a racy bug. It only breaks
-> sometimes.
->
-> There are a few options for fixing the quoting:
->
->   1. Backslash-escaping the dollar signs. This is perhaps the least-ugly
->      version, but it's a minor hassle to remember if somebody touches
->      the code later.
->
->   2. Single-quote the snippet, then quote interior single-quotes as
->      '\''. Reasonably obvious, but ugly.
->
->   3. Use the '<<\EOT' here-doc trick to specify the snippet. This would
->      look nice, but we don't yet support it for prereqs. ;)
->
-> This patch uses (2), and we can circle back to (3) to make it look nicer
-> later.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This should go on top of js/ci-debian-12-http2-workaround.
->
-> Since I know we both used GPT to work on this, I was curious if this
-> slipped past it. Doesn't look like it from what I sent (which used
-> option 2 above). I wonder if your agent flipped it, or if you saw how
-> ugly it was and flipped it yourself. Not blaming, but it's just a funny
-> and interesting data point if a human second-guessing the AI output
-> introduced a bug.
->
->  t/t5551-http-fetch-smart.sh | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-> index f66d7ce7ac..cb681e644f 100755
-> --- a/t/t5551-http-fetch-smart.sh
-> +++ b/t/t5551-http-fetch-smart.sh
-> @@ -21,14 +21,14 @@ start_httpd
->  # authentication after an early HTTP/2 response. This bug was introduced
->  # in cURL v7.88.0 (8c762f5998 (http2: minor buffer and error path fixes,
->  # 2023-02-08)) and fixed in v8.3.0 (https://github.com/curl/curl/pull/11756).
-> -test_lazy_prereq HAVE_CURL_HTTP2_BUG "
-> +test_lazy_prereq HAVE_CURL_HTTP2_BUG '
->  	test_have_prereq HTTP2 &&
->  	build_option libcurl |
-> -	awk -F. '
-> +	awk -F. '\''
->  		($1 == 7 && $2 >= 88) || ($1 == 8 && $2 < 3) { broken = 1 }
->  		END { exit !broken }
-> -	'
-> -"
-> +	'\''
-> +'
+> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+> index a73fc6aca7..43ad674cf4 100644
+> --- a/refs/packed-backend.c
+> +++ b/refs/packed-backend.c
+> @@ -879,6 +879,12 @@ struct packed_ref_iterator {
+>  	/* The current position in the snapshot's buffer: */
+>  	const char *pos;
 >  
->  test_expect_success HTTP2 'enable client-side http/2' '
->  	git config --global http.version HTTP/2
+> +	/*
+> +	 * Start of the current record, set when advancing `pos`. Used to
+> +	 * pass records verbatim to `fwrite()`.
+> +	 */
+> +	const char *record_start;
+
+The way this is written makes you think that `pos == record_start`, and
+thus one wonders why we even need this separate variable in the first
+place. So I assume that we modify `pos` in some cases without modifying
+the new variable at the same point in time. But if so, the above comment
+is not true anymore.
+
+> @@ -1233,6 +1240,19 @@ static int write_packed_entry(FILE *fh, const char *refname,
+>  	return 0;
+>  }
+>  
+> +/*
+> + * Write an entry to the packed-refs file skip any formatting and directly
+> + * write to  the file using `fwrite()`. e.g. when deleting references and
+> + * remaining refs need to be written verbatim.
+> + */
+> +static int write_packed_entry_raw(FILE *fh, const char *entry, size_t len)
+> +{
+> +	if (fwrite(entry, len, 1, fh) != 1)
+> +		return -1;
+> +
+> +	return 0;
+> +}
+
+Nit: this function is somewhat ponitless as it's a trivial wrapper
+around fwrite(3).
+
+> @@ -1530,9 +1550,13 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
+>  		}
+>  
+>  		if (cmp < 0) {
+> -			/* Pass the old reference through. */
+> -			if (write_packed_entry(out, iter->ref.name,
+> -					       iter->ref.oid, iter->ref.peeled_oid))
+> +			const struct packed_ref_iterator *packed_iter =
+> +				(const struct packed_ref_iterator *)iter;
+> +			size_t len = packed_iter->pos - packed_iter->record_start;
+
+Alright, so `pos` and `record_start` do get advanced independent from
+one another. So the comment that you have for `record_start` is
+inaccurate indeed.
+
+> +			if (write_packed_entry_raw(out,
+> +						   packed_iter->record_start,
+> +						   len))
+>  				goto write_error;
+
+Other than those nits though I'm quite happy about this change. A 20%
+win is nothing to scoff at, doubly so because reference deletions are
+extremely expensive once your repository reaches a certain number of
+refs.
+
+Thanks!
+
+Patrick
