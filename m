@@ -1,162 +1,271 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70FD296BB8
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 03:22:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791256960; cv=pass; b=dPwkHsNWgkfNq1Pm/Zmp+RUlUySBA4N0epdzvUBTPNcF7adKOay+qqjblocsT/dGaMxAmKPznIaqDk0prIRe3bxdQvBS3bPFIiGFMb3cPZWcf3H2QF2M4E6wjWEIKCv4tda2mnmOQgAIq+tSC4MR/G7i3WLABfCofDiM6atukO0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791256960; c=relaxed/simple;
-	bh=2YP9kvJYn/sTqJOspAiBeFdCksWNrTnWxwJlw1Z2JB0=;
-	h=MIME-Version:From:In-Reply-To:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UA14Sfa3S7KASx7718xBoCJnPNW6qQLp4GquRhUzan3JvEuQzAedHguTZIm8lqywiPJcM98U9oXsprI4Ht0cVArMSVgPGJgIv76AfB+S2oYzQlgmp4HwDjgW8TKNDJ3uh2loFgwKe6YuEWP8o0lkLS7OWt0ahnfxExmb0ZfGobc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sph3r3.com; spf=none smtp.mailfrom=sph3r3.com; dkim=pass (2048-bit key) header.d=sph3r3-com.20251104.gappssmtp.com header.i=@sph3r3-com.20251104.gappssmtp.com header.b=F7GTNR8t; arc=pass smtp.client-ip=209.85.219.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sph3r3.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=sph3r3.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C2E2D73A6
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 03:23:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791256985; cv=none; b=AuXvnYyrFCOysmWDZaLRMjeshP5Mi6AxMty9pAYqn4ZasGtyvAbFa2Q4BwqD4kZ48ggzX0sIdfqLsmsF293MaaYXz0YABOmJ8putMO07ZGoRFcsxqC1fDKLXUBDRE3eKZKky5bs2AX/0w+/I4L3G3I/eVmOOCe3fWsDq/XQkXlU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791256985; c=relaxed/simple;
+	bh=ogXSUfHMA7nJcB0+TzBQls0GgRQHv77TUQy/RcmObIo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=LkmZakD5SkTDPbt0SC8iw4wmPl4r8rrr5PHXeKYoCsTgRU0jv8R6G5k0PMGt5sYJyS+5UsWndSpBfRNqlFYojoFvgtDRlIvnHapYKjcNfCbsjsOK/ofKcJMH0JDUClSH+5ulbnmTjAKagphnRgUTLHBocwv56IGk7jvQRgvjrzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g6IGW+vH; arc=none smtp.client-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sph3r3-com.20251104.gappssmtp.com header.i=@sph3r3-com.20251104.gappssmtp.com header.b="F7GTNR8t"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-9142e83204aso4284606d6.1
-        for <git@vger.kernel.org>; Mon, 05 Oct 2026 20:22:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791256957; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Ok8xqqN6hXMKyJchQ6EVHFLMPacJt2chfasgLJHCZd1+bsZHucJubs2Ma722F5o3M6
-         u/OQuKSmN8mwvSwkBthmccDVtNQ+a63GevuQVp0NSc2w7TlxHtzLsvaqnlULRC4hAN2Q
-         PulozgSmV8XEPNPRw1HFxB73ofDOam4BeEy7g00VkexH4eyCz1lzdFmZwrPy7kYzY0UM
-         bCjN+cJlOR5ZTtmVvtQelrdIhn/qBubFLywlOGQ7HPkiqoSo8Wef37ZqLHgtsIaysJBY
-         mEoD5G3KnRNbjvSksSUcALQ/wjz03aTbDZoI32IGp7EIxEt/xm/b0kZRgunzr62sHcCP
-         UsnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:references
-         :in-reply-to:from:mime-version:dkim-signature;
-        bh=zboVP/l0brJfRc41EASAH4BTesT2EDJBChCuGJMRCw8=;
-        fh=71a8gNWjjH3jDnCK3/PRHZEeOlOeFkLaM81Nc2bGo4I=;
-        b=IC0XG/WX0/NcuRUPO5xSYESFAEOpldP+xYXtD79DCCEDlfzRnDtVoM/vs1u+0IrX72
-         ObbfS80c/gEYyj1B+FP2JVVbWQYB8hwQichsFLcN+QB3dedq7l71IxOmpXTE5bgUpZEd
-         LwIw5STio52K7kxPa7RM8mg+0KzEJLXMmDCZ2OUiD3s1k9g4SC3jLsHUmw7RjaVA8/nV
-         5r35pDt3T5Ic8hPCMCBa+z2m7zYkmqVj2NrPxcBdK4ZelGLSH2mhVJy3F6Pu9i732dDj
-         u65rDoanCMymti1WKPJ7hNISQ2+Vswc8hLWM/+VhfO0mLKMhg+YkvTUHcrd9ThsoXib5
-         cwQQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g6IGW+vH"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-33fb4680717so6861970eec.1
+        for <git@vger.kernel.org>; Mon, 05 Oct 2026 20:23:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sph3r3-com.20251104.gappssmtp.com; s=20251104; t=1791256957; x=1791861757; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:references:in-reply-to:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=zboVP/l0brJfRc41EASAH4BTesT2EDJBChCuGJMRCw8=;
-        b=F7GTNR8t/lLUGnXxvkxZihsea3Z7dVfHxUVMEPLh1qsDsmiW4MnF8wH9mnNzY5Yd0J
-         hGgJKEA44K3qU27xyjLN/O5c6PX7AQpkCB3mRTO1g8qCXCUnjsX9uSextiJITk3EyEW/
-         fcZTvrsr2cqYz7V3rF8d9Y3A1p/hj5e1ujqAN353AeLjTNwvlDncPRFRdAjFBYCEjT+P
-         Ow5trZcgeo4RwNS+XG8Va37ZIHcuAZQu+lx5XjJ/Upcu4XoOqHNqubpJSycErTv6Z+e9
-         IAyYNTg4XY+HSRP6hl0lSLgV+f8RcJ/8nG5Cg4NOTMx+qYyq7v0IcxGbUcjfe7WNAMkC
-         qvxw==
+        d=gmail.com; s=20251104; t=1791256983; x=1791861783; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Li3ObDinwHxUYBSy9WgU3SH9zc5fnHV7Qp94wcEMsvs=;
+        b=g6IGW+vHGGx8dtGExMo8QtSIpuNvhgQ2/lj0v4FVjYktabWhpCh0jl8a5gPsaGXlnl
+         FReLX5VfTKpJnsk1n0HCBOoXVvtZRHLJ2h7P4zz0U0pL8Ct17/g3RiAJoc9SPshihbql
+         /kx3KjxKOP5xvptb/swqhX+eLnjL/iDB/Dp4mUlih7URtCi/yvOEBtkdimg0vcwkpuAl
+         wDLTPAFFV4sIbI4mjKDTGk6+lkGIAWRpsPcqWC0Vd3IoYMke7MqL7MOk/bOSxDD1o837
+         65Cmc1ltvMG1/nOzw38dFFxhMmY4t6/ZLe9C80EFTqnz2FLCHmuROy7kgv191J+2SV18
+         XTqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791256957; x=1791861757;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:references:in-reply-to:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=zboVP/l0brJfRc41EASAH4BTesT2EDJBChCuGJMRCw8=;
-        b=ugAW3lgicJZJbCQz/Xr9QbHFZKeqebCRrvwlmb8OYSgTe/poHAY6HPUQvFuYlMAdSb
-         L0KGIlcbkjqIXk68tw1wDTECGyDrg6FhSzy2LNyj8s5wxs57ncGntuzITHqI1uz6betH
-         QJ4o7M+t55Wz8iqIxfczUkCRQpavo2y0vrprjE8hfeWFveXYPr6rVOx2rY/KfAR+wD95
-         LxZ7CnETTvaMoR5Ath1dHherc7ELz13HemKIs6AVBfk0mYJSkMBTa7vOp1kBjo8+3Ugd
-         Ib3/rt9x3DRLnYBVjpOJdnFor4sgt3u1rA9ukos9KryQwfmrGAqUL5Dv3zezKlzz6l/h
-         bdUw==
-X-Gm-Message-State: AFq9FYI8igv8fBN6HMsMcf5mMnw8CYjkzmt6U/hPZBxVEOSA/7JrNUOr
-	Ovl9bVAARJGT6DplgVXgoGpkkxRR51ChdBNfHLDOxxjLWru2cctUEOS8rOJ+WGrJmpHm4zydiUR
-	KARnhpCIQZEPOq3c8/2gNEgMrkHxK+rQAcyestNei4PYNtv4l4Cry
-X-Gm-Gg: AYBFou1wbfpZCTEHNE0D0gqBQ4QRIa/KR1ykYnLL25ClBFnsUTKh3xHEwXSGQbrf7YK
-	c2/v6saZcVaETgou3qSDx4jWuUpgMzM/gNNY9JPAngdZtUX1h9x0rkazhVl5xav05+AngHa3iUZ
-	ozUsefu65e+fYxGHn90iX4CdR7SLgyEcoEaNCVVe7dBu2rklYU/6tQsG1b5qyRN6Dpc5fZElJcV
-	zXqx9B8Gdkjaxf720zzXP9enY3i84SkBoAhXDbbDCSX95M/xzErukDPkI9UXYsXKzkedx7WLq3A
-	mZfIb63J5HRi1cGU1pr0Oo+MkrJsoe0Zwty+ShK/yQbrRjHB8aDtM/PwXe9Ri74ah3syzqnLQWt
-	N6yfITtxJzKdSaNMfTkuQiqinerA9h8nTwf86039JQO6jC1GbU8UIMVawUib+S53fVg6mHMKFDI
-	ofFRESCsFUd50KxnaliyWMftLslhw5t9ymnKzE4kbQczjkZA==
-X-Received: by 2002:a05:6214:440f:b0:917:ad01:d2ec with SMTP id
- 6a1803df08f44-9198580ee81mr28269466d6.9.1791256957506; Mon, 05 Oct 2026
- 20:22:37 -0700 (PDT)
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Mon, 5 Oct 2026 23:22:36 -0400
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Mon, 5 Oct 2026 23:22:36 -0400
+        d=1e100.net; s=20260707; t=1791256983; x=1791861783;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Li3ObDinwHxUYBSy9WgU3SH9zc5fnHV7Qp94wcEMsvs=;
+        b=iWAVGIDWlpw42dgEC5z3wXIyPPbiuNvrG8GCHql7tv3Rk4edjj7ZWC+ihs4SEemSal
+         Ulb/TRZmWSGS5sU4Mkpl94SuNkiLNSxiUzIv0JRO/ik91cK39UdPtkt+80XBUsUTdix5
+         vUNkv6CC2Kij94X01dMRgSJLIePCUFEC9veC7sx0YaI4I1IhF+DdEWyamFPRT9g/of5Z
+         pMWmhFomFpZvbHIg5eTtH4ynS+PqYRiYruqFGNOxxfJNegJhPObrE6eWIAp0iCNeYql3
+         tYsFbko1cdZAi+ApeV07cASaolbLu74HtBRJRZeAKDQId704/hfqfWN6uY9jc3TJMOrZ
+         2pMg==
+X-Gm-Message-State: AFuF++m6LXcXHXsfw8Q5CLkr5sZanFekn8SXSa4pEwHzGjuzuZo8dweQ
+	ayIjkxLmDauQVjwx76MionaYmuy9ZGNPrXJroy/WqYmUxChpde3GGBgqhVKBNo1K
+X-Gm-Gg: AYBFou3vzDCqWM9u5JDHxjdu+NGQXCRu7iaAazvl6pMWKxGGJXW0GlRBASdEyuIYmCy
+	lZ30SkxO9KlycZXcRVlMbjegzQbE9AAsuHoWAtWiitwQWN+bIqzQjOg76xZ61JtCjROZpciZkvC
+	GV7wc4GfWjAdPh6xtzOmPtqPATuZrF7gfPTQE1Gcrl1D7IC1vI7tvaLcosToxxpXEb2wvZHTNs5
+	osxbnpu2zN58zQdFPDPKHJN1V0k27n/xGbEuacKccqg3JM6zhtQTTdqhO1+pXdOa90ILAvpulkn
+	4s6taHWYn6spwQpgqrCnNkCooqrOgYNLM+pqIFuD4blIeFxBPugB359tE1musiq3JkU/7KBpLHG
+	LU1lX6qdvXyjC8eFwwYcj6CFyTbRJm4TLeP3pVyUezjIry2PMNh3MEBu1haK+ZfO78lRRpOMpiB
+	y1pBDV8nVUubMqscB+5yJn8vZFnglpTybzvMHHRP6fAzvAkyXjJera4PsdwmhUXufbKJwWu6Zxo
+	rxqmebJYovwSBiXzw==
+X-Received: by 2002:a05:7300:24c9:b0:351:2696:bf86 with SMTP id 5a478bee46e88-3512696c138mr8654724eec.14.1791256982749;
+        Mon, 05 Oct 2026 20:23:02 -0700 (PDT)
+Received: from Velociraptor ([2603:8002:cb00:3bb7:be3b:8505:4aaf:999b])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-35146b0fdc4sm2971456eec.25.2026.10.05.20.23.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Oct 2026 20:23:02 -0700 (PDT)
+From: Colin Hinton <colinlewishinton@gmail.com>
+To: git@vger.kernel.org
+Cc: m@lfurio.us,
+	gitster@pobox.com,
+	Colin Hinton <colinlewishinton@gmail.com>
+Subject: [PATCH v6] fetch.c: defer fetch.followRemoteHEAD validation
+Date: Mon,  5 Oct 2026 20:22:58 -0700
+Message-ID: <20261006032258.6561-1-colinlewishinton@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.3
+In-Reply-To: <20261004201428.5210-1-colinlewishinton@gmail.com>
+References: <20261004201428.5210-1-colinlewishinton@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: m@sph3r3.com
-In-Reply-To: <f8dc40a4-920d-4dc5-9f71-7686bfc6255b@web.de>
-References: <CA+h9NxRT-9QzLGihdL_Bp-yyt1AdXJ79YYgpK-OaegUz8e+HcA@mail.gmail.com>
- <f8dc40a4-920d-4dc5-9f71-7686bfc6255b@web.de>
-Date: Mon, 5 Oct 2026 23:22:36 -0400
-X-Gm-Features: AclHuK8kkK_Ci8XwH5p6GRI591I9u-dwVFQWGSVwj6LOYXSt632tDyx_csqLsu4
-Message-ID: <CA+h9NxSzuNNQZ0pKKso9Y8BkXKZYgrGFLL050Pi3O7PC_gi65g@mail.gmail.com>
-Subject: Re: [BUG] ZIP timestamp conversion and strict fast-import date validation
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Ren=C3=A9,
+The value of the fetch.followRemoteHEAD configuration variable is
+validated while the configuration file is being parsed, which
+produces a warning even when this particular "git fetch" invocation
+will never consult it.
 
-Thanks for the explanation. Python 3.14.7=E2=80=99s ZipInfo.date_time is on=
-e
-example: it reads the DOS date as 2100 for the 1972 archive, even
-though the correct Unix timestamp is present. This affects metadata
-reading; the tested UnZip and bsdtar restored 1972 correctly.
+Store the raw config string instead, and resolve/validate it lazily
+at the one place in do_fetch() that actually uses it, so a mistyped
+value only warns, and a missing value only dies, when this fetch
+would have consulted it.
 
-The 2106 case is separate: the Unix timestamp wraps to 1970, causing
-UnZip update mode to retain different existing 2025 content. The 2038
-control replaced that content as expected.
+remote.c's handle_config() has the same problem for
+remote.<name>.followRemoteHEAD, but is left unaddressed here since
+it touches shared remote-parsing infrastructure used well beyond
+fetch. Leave a NEEDSWORK comment at remote.c:handle_config()
+that has a defect similar to what is fixed by this patch,
+so the remaining scope is easy to find for a follow-up patch.
 
-Best,
-Matthew
+Signed-off-by: Colin Hinton <colinlewishinton@gmail.com>
+---
+ builtin/fetch.c | 73 +++++++++++++++++++++++++------------------------
+ remote.c        |  7 +++++
+ 2 files changed, 44 insertions(+), 36 deletions(-)
 
-On Mon, 05 Oct 2026 21:49:33 +0200, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> On 10/5/26 3:48 PM, Matthew E. Luallen wrote:
-> > Hello Git community,
-> >
-> > I'm reporting three date-handling bugs reproduced on Apple Git 2.50.1
-> > and upstream Git 2.56.0:
-> >
-> > 1. Exporting a 1972-dated commit with git archive --format=3Dzip produc=
-es
-> >    a legacy DOS date interpreted as 2100, while the extended Unix
-> >    timestamp retains 1972.
->
-> DOS timestamps can express years starting from 1980.  Unix timestamps
-> start at 1970.  We can't provide a DOS timestamp for 1972, but can we do
-> better?  zip(1) clamps DOS timestamps to zero =3D the DOS epoch =3D
-> 1980-01-01 00:00:00.
->
-> Is anything using the DOS timestamp even though a Unix timestamp is
-> present?
->
-> > 2. Exporting a commit at epoch 4294967296 (2106-02-07 06:28:16 UTC)
-> >    wraps ZIP's four-byte extended timestamp to zero (1970). Exporting
-> >    the same commit as TAR preserves the original value.
->
-> tar's timestamp can range from 1970 to 2242 with standard headers and
-> beyond indefinitely with extended headers.
->
-> We cannot put a higher value than 4294967295 into the four-byte field
-> provided by the Unix time extension for ZIP, but we could clamp to that
-> value.  zip(1) wraps around as well, though..
->
-> (I'm using "Zip 3.0 (July 5th 2008), by Info-ZIP, with modifications by
-> Apple Inc.")
->
-> > 3. git fast-import --date-format=3Draw accepts -32184000 +0000, but
-> >    git fsck --strict then reports badDate and ISO rendering returns
-> >    literal placeholders. This occurs in strict raw mode, not just
-> >    the deliberately permissive import mode.
->
-> Well, raw mode passes on the timestamp value with only little checks.
-> strtoul(3) used in builtin/fast-import.c::validate_raw_date() happily
-> accepts negative numbers.  The latter function contains two NEEDSWORK
-> comments about perhaps adding more checks, though.
->
-> Ren=C3=A9
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 533fdfe7d8..d800978c38 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -103,7 +103,8 @@ static struct string_list negotiation_include = STRING_LIST_INIT_NODUP;
+ 
+ struct fetch_config {
+ 	enum display_format display_format;
+-	enum follow_remote_head_settings follow_remote_head;
++	char *follow_remote_head_raw;
++	int follow_remote_head_seen;
+ 	int all;
+ 	int prune;
+ 	int prune_tags;
+@@ -176,24 +177,31 @@ static int git_fetch_config(const char *k, const char *v,
+ 	}
+ 
+ 	if (!strcmp(k, "fetch.followremotehead")) {
+-		if (!v)
+-			return config_error_nonbool(k);
+-		else if (!strcmp(v, "never"))
+-			fetch_config->follow_remote_head = FOLLOW_REMOTE_NEVER;
+-		else if (!strcmp(v, "create"))
+-			fetch_config->follow_remote_head = FOLLOW_REMOTE_CREATE;
+-		else if (!strcmp(v, "warn"))
+-			fetch_config->follow_remote_head = FOLLOW_REMOTE_WARN;
+-		else if (!strcmp(v, "always"))
+-			fetch_config->follow_remote_head = FOLLOW_REMOTE_ALWAYS;
+-		else
+-			warning(_("unrecognized fetch.followRemoteHEAD value '%s' ignored"), v);
++		free(fetch_config->follow_remote_head_raw);
++		fetch_config->follow_remote_head_raw = xstrdup_or_null(v);
++		fetch_config->follow_remote_head_seen = 1;
+ 		return 0;
+ 	}
+ 
+ 	return git_default_config(k, v, ctx, cb);
+ }
+ 
++static enum follow_remote_head_settings get_follow_remote_head(const char *setting)
++{
++	if (!setting)
++		die(_("missing value for 'fetch.followRemoteHEAD'"));
++	else if (!strcmp(setting, "never"))
++		return FOLLOW_REMOTE_NEVER;
++	else if (!strcmp(setting, "create"))
++		return FOLLOW_REMOTE_CREATE;
++	else if (!strcmp(setting, "warn"))
++		return FOLLOW_REMOTE_WARN;
++	else if (!strcmp(setting, "always"))
++		return FOLLOW_REMOTE_ALWAYS;
++	warning(_("unrecognized fetch.followRemoteHEAD value '%s' ignored"), setting);
++	return BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
++}
++
+ static int parse_refmap_arg(const struct option *opt, const char *arg, int unset)
+ {
+ 	BUG_ON_OPT_NEG(unset);
+@@ -1918,11 +1926,10 @@ static int do_fetch(struct transport *transport,
+ 		TRANSPORT_LS_REFS_OPTIONS_INIT;
+ 	struct fetch_head fetch_head = { 0 };
+ 	struct strbuf err = STRBUF_INIT;
+-	int do_set_head = 0;
+ 	struct ref_update_display_info_array display_array = { 0 };
+ 	struct strmap rejected_refs = STRMAP_INIT;
+ 	int summary_width = 0;
+-	int follow_remote_head;
++	int follow_remote_head = FOLLOW_REMOTE_NEVER;
+ 
+ 	if (tags == TAGS_DEFAULT) {
+ 		if (transport->remote->fetch_tags == 2)
+@@ -1938,22 +1945,6 @@ static int do_fetch(struct transport *transport,
+ 			goto cleanup;
+ 	}
+ 
+-	/*
+-	 * NEEDSWORK: By the time this function executes, we have already parsed
+-	 * all such followRemoteHEAD values from the external configuration,
+-	 * potentially emitting warning messages for bogus values.  Ideally, if
+-	 * this fetch ends up not needing to consult these values, then git would
+-	 * not ever output a value warning. (eg: when pulling from a URL directly -
+-	 * rather than a configured remote, or when a remote's followRemoteHEAD
+-	 * overrides the fallback fetch setting)
+-	 */
+-	if (transport->remote->follow_remote_head)
+-		follow_remote_head = transport->remote->follow_remote_head;
+-	else if (config->follow_remote_head)
+-		follow_remote_head = config->follow_remote_head;
+-	else
+-		follow_remote_head = BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
+-
+ 	if (rs->nr) {
+ 		refspec_ref_prefixes(rs, &transport_ls_refs_options.ref_prefixes);
+ 	} else {
+@@ -1962,8 +1953,16 @@ static int do_fetch(struct transport *transport,
+ 		if (transport->remote->fetch.nr) {
+ 			refspec_ref_prefixes(&transport->remote->fetch,
+ 					     &transport_ls_refs_options.ref_prefixes);
+-			if (follow_remote_head != FOLLOW_REMOTE_NEVER)
+-				do_set_head = 1;
++			/*
++			 * See remote.c's handling of remote.<name>.followRemoteHEAD
++			 * for the analogous, still-unresolved case.
++			 */
++			if (transport->remote->follow_remote_head)
++				follow_remote_head = transport->remote->follow_remote_head;
++			else if (config->follow_remote_head_seen)
++				follow_remote_head = get_follow_remote_head(config->follow_remote_head_raw);
++			else
++				follow_remote_head = BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
+ 		}
+ 		if (branch && branch_has_merge_config(branch) &&
+ 		    !strcmp(branch->remote_name, transport->remote->name)) {
+@@ -1987,7 +1986,7 @@ static int do_fetch(struct transport *transport,
+ 		strvec_push(&transport_ls_refs_options.ref_prefixes,
+ 			    "refs/tags/");
+ 
+-	if (do_set_head)
++	if (follow_remote_head != FOLLOW_REMOTE_NEVER)
+ 		strvec_push(&transport_ls_refs_options.ref_prefixes,
+ 			    "HEAD");
+ 
+@@ -2164,7 +2163,7 @@ static int do_fetch(struct transport *transport,
+ 				  "you need to specify exactly one branch with the --set-upstream option"));
+ 		}
+ 	}
+-	if (do_set_head) {
++	if (follow_remote_head != FOLLOW_REMOTE_NEVER) {
+ 		/*
+ 		 * Way too many cases where this can go wrong so let's just
+ 		 * ignore errors and fail silently for now.
+@@ -2509,7 +2508,8 @@ int cmd_fetch(int argc,
+ {
+ 	struct fetch_config config = {
+ 		.display_format = DISPLAY_FORMAT_FULL,
+-		.follow_remote_head = FOLLOW_REMOTE_UNCONFIGURED,
++		.follow_remote_head_raw = NULL,
++		.follow_remote_head_seen = 0,
+ 		.prune = -1,
+ 		.prune_tags = -1,
+ 		.show_forced_updates = 1,
+@@ -2929,5 +2929,6 @@ int cmd_fetch(int argc,
+  cleanup:
+ 	string_list_clear(&list, 0);
+ 	list_objects_filter_release(&filter_options);
++	free(config.follow_remote_head_raw);
+ 	return result;
+ }
+diff --git a/remote.c b/remote.c
+index fe62068463..58f3436222 100644
+--- a/remote.c
++++ b/remote.c
+@@ -582,6 +582,13 @@ static int handle_config(const char *key, const char *value,
+ 					      &remote->negotiation_include);
+ 	} else if (!strcmp(subkey, "followremotehead")) {
+ 		const char *no_warn_branch;
++		/*
++		 * NEEDSWORK: this is validated/warned about here, during config
++		 * parsing, regardless of whether the fetch that triggered this
++		 * parse will ever consult it for this particular remote. See
++		 * fetch.c's deferred handling of fetch.followRemoteHEAD for the
++		 * pattern this should likely follow.
++		 */
+ 		if (!strcmp(value, "never"))
+ 			remote->follow_remote_head = FOLLOW_REMOTE_NEVER;
+ 		else if (!strcmp(value, "create"))
+-- 
+2.55.0.windows.3
+
