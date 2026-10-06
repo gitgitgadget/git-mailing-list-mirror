@@ -1,130 +1,149 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399751F192E
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 19:57:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791316665; cv=none; b=ERWXbOHz8h+gX6kVRPqeco/BQdeztK2Y4rja18Kl/lYDrgA2Vfwk2B5o/Dpz37tK92i0WhlpmB5pENHo5/wkRTdjYilOZ59a58iygWGq3Ue/5GYeogZ0a8HCIS3oovsK45EyJtpmSa4iXTpvIUGYGZWFkw4gpEXnVHCxTuiJC1Q=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791316665; c=relaxed/simple;
-	bh=DCSELAmPAKlOc0vaptQO4eNYiOZ4xbw0aCtnpU6uWg4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Rrd2bmR/2jZp/sgE2YMEEi/wEblLtvADa7wLWHYp/eClVKCRl12PIFyozRqZbGR/BziwyjGL791cm/6VZoEbJBuaysf3PkPY7BvNXEFOTsUDv3POGCYYhq7ylrNcLvHbz9zkQYwP1Zz2zSPGVfq69mykZAz33XUz8iJcozSP9PE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FOU/bIAh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ti+HqG8n; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AF215E5BB
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 20:04:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.179
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791317042; cv=pass; b=UyjTUXMEL7RrEb8i5vwzULlAN0NwgPe4JcSK0brjHmkf31wD3DIVntto8UMz29ZX1d+tRUXiYIrvelYSggicngaemr7QHE23BjVtebavCMkB13iEwuoA0eosmG6e+sEyRePb/2kjr4hDjQmrAi7mL+o7mCh609ELWyVJPqHX5so=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791317042; c=relaxed/simple;
+	bh=cYw0I8buhnEuLKpEYH36/+Z9sgwJ3ZM2KDV6FhZKV80=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dHWM8XlO49ktPvfuGd28ZABNAgOUOnjURJwZ6HTSOZ4DlQhIh7AxF2I6F+v+Ov7t8E+H45j54tUk3F8EgvltmWnxIDArU82otqvaKpqvFFyzMP9bqmvrh75lj3AbUofS5BIpp1yu+EaL54oQ6xFGBJJAQiUrFiUNQXr1CjF2y3M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YG+DbpCr; arc=pass smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FOU/bIAh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ti+HqG8n"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7FD851D000C5
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 15:57:43 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 06 Oct 2026 15:57:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791316663; x=1791403063; bh=utj+yXqe/w
-	MiAgBRLrMy4Tc2pI3lUeUGsLHFxyJEInE=; b=FOU/bIAh9RNcEACJYcH146hPfw
-	5qo4O9JuvHm3wavIkOE9lLqiTEMiOjKC6WOEKQeYUnlol0hPFObhh1X9cgPxpAUv
-	RccU0GUWNqmz7btcWU52D7+zRiw2JPEjgjnURg9AScQXJ9xyeUtDXPk8lzN/+N9n
-	u2R74NdJISehIWKtDjSEh8HC8yHP9tEU3DUZJ9iNoe7gsU5LonkMa8jrJXoT+A+y
-	OUjii4fTPcxjSZTHxdtkdFHT9lX75DUfPFt0fq/8ATqX1Ak6swIXInzCAmgr2fcd
-	kOE1xDSsGACEaFSLH2rGNat39pt/gJv+0R8+P/jtWBu9coNDiwoQDBaJsBcQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791316663; x=1791403063; bh=utj+yXqe/wMiAgBRLrMy4Tc2pI3lUeUGsLH
-	FxyJEInE=; b=ti+HqG8nrOifQW/0BszKt92DgVGiGQ1wHwhXDfm6z2kluOHY3be
-	eMPLllKhSUckSyBNakxLa7lzFZQOkUdkPubJFHoSLjY/aDTh2e4WxWZNGYfFfB81
-	dZlM1nB/+a7DyYgF/L4aZHX1Rdz+ExgS8f920FTo3uJBSNfcbe9UWa2CpaVSE/mt
-	07ZTHmJjy7CUr2xqsMrKfMjZzQn3L5uecArUx4F+lJ+hky8aqMCHYzKj5xzgVYuk
-	DAbc3jIedSneiJV+iDFYjASEA5ah/jrtc4hlbSdwX988+OawiK41WrihOIaQD4td
-	7hhxUSJnF1hHBlu47b12YhKuBD4N2WUTD3Q==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791316663; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:hAH1rjkxbXdcw7hEp72l2rjhOhedBRxZTNCy41UJdEV5RxT
-	Sz09IT90ydK5V2QcEFjI+62ipJ87A/HyrjZRJKPDjJJ1YpqsIBGevgXPnAE67Zzr
-	owvLt2Q3nMw7PmLPP3F/p35TZ2oRW1A4VUeb0Fk1VVA4FE4Vk7ppwmw338Qkh5X6
-	mr4Jgi//zpyrNWW2G3DixF3yoLaGlTQtuTKM+zqyhILb5W5PPci/OFFJ1psVBN+d
-	3po/Xgg166lLHh9b3rlyL8oPkwfsTT9FGdvuo90nNKS6Bs6feZZMyE6+tt7a3KD0
-	P89vFf/+ckIQkJQrolliqNodlzaDGCOCRIkpDhg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:Fkt/60ePtgL53xgTGht47oX800OliZDt28v5AR7f+/Q=:DCSELAmPAKlOc0vaptQO4eNYiOZ4xbw0aCtnpU6uWg4=;
-X-ME-Sender: <xms:t1LFajZ34ktvNX8W1JZL_wa_tvB-cPPj4OKS2z_Qd47yfmv3KpBGzw>
-    <xme:t1LFakpKHX9piPQo5cpo6n_ecLzkbEhwNPXEqxe9ug4nKaTb5QoNLXfiQM_egfjEe
-    WqyYRi_vzk6f6KIYXcBNb4yT6YqOGexFn6xyIgat9VwFrIBro645g>
-X-ME-Received: <xmr:t1LFaoP5sgPqaBR7fwNtPxHiG8uemv7-I2rVkYXD8XQh47bHevkXBFhc_5kPyITcC3JNyKJJk5bot0xVwvYHhcL-IAwDFhEXzqvx>
-X-ME-Proxy-Cause: dmFkZTGjMyLeS6PT5m+o0rsqJcbF4HDYJdHVMVdlng68d6z8evKG/vpzsj16e4h36z8ygm
-    HAxDZWPhgQ7FFFCSpomnChbXWtbXXSbeUI9KYCWb4Ks4LTZsF4kMb3hEVEbtHVvvN1gH7l
-    FHV4HbnA+mj9qGNJ+LLancP+iXcIsifNSqVKTub2FwVkWrwt1L31ft8iMwOvzEDJVV+0o3
-    KxgfUyxv1gGaqnQw1rlS3beYOo1yJNONSUJHo4B1fZToRm5mTtetlpEnHjDD8o7bpXIxtz
-    N8fKlt/c8bonY4LHOh0SogVuAd6g3TlHQ+3gaDlGzwqHFogI4CRenuzyljSth6P+sNiVTS
-    +g8qrnqv/w7MxGcsWBH7aquyUf4bzr5o1YZek/Q1AfZ/U2lxkK5HcX66UT0/ozgZxvtpKG
-    jCxdH0QlsSGlFgI/uQU4kDHML7r3FjM+KdfsPFpHHzDkGE7bC9rw6AX6TDuxBgP2yK8y0j
-    Lx4aOGy9boTl8n7UebwXuhV6BbndpoUGwzsiq+LKJeH7Yogtly91KjCJ5ku4grXbrxmm+1
-    39UPqU7PVe/GYxgfts2KreUP0UjXjQ/mt+BxPjr5xIufntyROt1Gr9E5fFzGw0eyhqZSFb
-    1/ba+pHaBRG54fw7sVh1pvR/Owq3+ZyiYIN0VaZ5QrzV0FjJfFJv+plj8kaA
-X-ME-Proxy: <xmx:t1LFavpc04yJXjZv9K6ULgx0EqOjA6RRkn-jv-UvHsg6yAg4l0drBQ>
-    <xmx:t1LFatcGtKUUjXwmJQKbc45STByUykI4R6MSjdQmuSFmtix4tMI_pw>
-    <xmx:t1LFalRzTV5zugzQ9Xyph4oUhMZEuqXNnI6SdjS1zwi5qRQ1i-362Q>
-    <xmx:t1LFambu4VnwwqvWv1L52urVF57DPyMq-F3Q3GR4Q07mWq4OT50BXA>
-    <xmx:t1LFaksdkZHvIkY_F6ehym8fXuVHbcX9BvcBBowPbip4JoNGXyBQeEE->
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 15:57:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Guillaume Chauvel <guillaume.chauvel@gmail.com>,
-  Philippe Blain <levraiphilippeblain@gmail.com>,  "Mark C. Chu-Carroll"
- <markchucarroll@fastmail.com>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/2] packfile: fix corruption due to stale delta base
- cache entries
-In-Reply-To: <20261006-pks-packfile-stale-delta-base-cache-v2-2-69669a2fc6ce@pks.im>
-	(Patrick Steinhardt's message of "Tue, 06 Oct 2026 12:20:15 +0200")
-References: <20261006-pks-packfile-stale-delta-base-cache-v2-0-69669a2fc6ce@pks.im>
-	<20261006-pks-packfile-stale-delta-base-cache-v2-2-69669a2fc6ce@pks.im>
-Date: Tue, 06 Oct 2026 12:57:41 -0700
-Message-ID: <xmqqse2id2kq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YG+DbpCr"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2e4a341d177so19105565ad.0
+        for <git@vger.kernel.org>; Tue, 06 Oct 2026 13:04:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791317040; cv=none;
+        d=google.com; s=arc-20260327;
+        b=oSlsF52RFGZLgZ1Ag1k389I2yr2JySqnLri/VCuBJ9A0t4bzC08wdkWpIoYvYO+9oC
+         k+Xir0eqoCNG2b0kibKaOF7t7IMZWF+IYa4jwlb2xLlO9BAszwIy0l0NUzvCx+Ujo2of
+         EblBcTmKuIf5RSPoj30R+0bGHrOSAaNHB6dwZKWhepqUXpWAX8pOpigJHr2op+DGcD9o
+         nmpNPxv8twvLoxK02B9D0Ue1BXXpmvQeeJM4byeUavgHDsNCFaWHBELM/LEb1n8UJxTE
+         Czx+wRQIZvkY2+5/faKOnLcZlgvidW9EfvfOYPGK3uYxW3saAYPtAWL5uK6n3yc5kLEJ
+         OiCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=uHNuEI24XDIFxKpSAygtuTw8JVWL340WrzvqsFuDCdA=;
+        fh=aJ5M2waAHRLtBDQiO9CVMVKG66TyW174IWgd5Sq2sSI=;
+        b=rmkoRpDXuZ3FwCd7jgTedH0tZH6JTSgU/vjG1w1hAf+UIDHv9UNgp2yjvcF1CpuLPt
+         Z1esCCuhVCRKzKDix4KWCs9egv4/L05mcxk2oa3z2yhtPVDsQ2MTOI6qTm49PCwd13ZE
+         lgcLtbGABJytNhisZwgnEJ6GoitMlXKyKo3Ijt0EJZbD1bqFrrHoqNQghvOdWp5y4Qc0
+         Lth29U38WWs/0DZVbk81Eop51h9pqK1cPb62gKPpbHtJA7mC3EcXMkiXv/DobVb7tPbu
+         c7Ru+BvGwb/+zlHS1hZK17Ka1FTJcPAo5TMN2QGXffQS+FsDVrQUHgHJ9rWYjiEE01gf
+         j8+A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791317040; x=1791921840; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=uHNuEI24XDIFxKpSAygtuTw8JVWL340WrzvqsFuDCdA=;
+        b=YG+DbpCre+5gdogCWqLGofj97wgTMrpYJLeFQgqO5WTTcG/hR3/e69C//CNI+lZ5rJ
+         yjQjxFJGeSOOfbWQIHycLmCusA+6FlMKXRb6D1DLse5btGRet1Y5zj1zD1TODmQ1+PDw
+         dUpb1flTiymhuTDduFEg9lmQYF/gEJzkoWq2x+DlawnsUYPLPXRfIPAjNcqEJ/OK5UPC
+         rtL68zfm7sI1EqJCkSMIvXPUC3mpm2Rmv6lnyn18eu+uFsfuiBF+zRnMoxH+GOlNqEKZ
+         U49cP/rJ16e4TOubDZFbfP26uUpasv9iKaV8hLjMDsKaAokpSMj4mQkUvERclZxKlEoe
+         sRvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791317040; x=1791921840;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=uHNuEI24XDIFxKpSAygtuTw8JVWL340WrzvqsFuDCdA=;
+        b=H77Tl1qbtnruvehOIis09Fy8xFrJTltwkowtjzdGICTJ+q9R9MQMfJ8GAEtN7xCTRN
+         rXfPO3NnsHy6KfvKblOfcYbM86l1P9oXMoF+jA1Io9Ro3jCNiQCtSwiNQJq5mWOMuCvb
+         BASz4+rKQLGxRylbFAow0o/MFm9xbNHSmKSVms6lRI2t+KIgNVhG0JgyuzYUAyw9Cg7V
+         MbtljzsJeZInOX1rq7xTHFQ5pEefIV+c8V0nX4S9ISXP/1LSyQk4hVaru1m/XMjpSpgS
+         6sOotu6YBdRgCWFMN2BnisKFSy9+wc5ME0LH7YJYl7XbIENNs9Z6HyVu8IeccEOsakDa
+         swmg==
+X-Gm-Message-State: AFq9FYJI4H8U3GUyc8e5zJ/jShuGGxoQwb1h+Dm0io8dUfE1h64rDprI
+	q8EPfXb95HR+XWZ7lVmouJlJDxK4ZjInX9yYq+FMjqORPvh8zvLPhBcL1wROVVLQerXn3YFR/WV
+	eIUmVEOh4iFjPVITkkAvE7BYcTnPAvqw=
+X-Gm-Gg: AYBFou3L7jsJkzW+LJLHLWiJK16/0jHBjuSs9bAR8bkNDCi0zUe4WKASEdtj64vyYbw
+	Dr0ENrnJihovdoH7rmab3zMfLrBwAQHFDfmTfHru7xjd0ldVj7g+6X2Xw6q/rDTr7/NnGc+KAzS
+	DuVWhQlVpAJ9gpsNTikx6l0ClNspK2CQRS2hvOqUUEC5cMZspKm2/BCM0Xv76xR0NK4KB87bKTL
+	x6+FJbkguk85qiY4o+XobIIcoPGrP1hvxJoryG8AVvzsZ0FMWZ+BMCB1nmctDvDhVCx0r+/EWPX
+	PP4h1v6zgOWQ0GgfSvOnC6NbHT65sUWD1Ee52RmZd3dKC4VYTBG3JMrfCLC0rsd0UUn70j7fGCp
+	swskZilAb00GtZUvrpIhziDuk76swdFdD1jnrXi+xzW+qp1wyVx5nqhponS/azoa/8pngCGv+yc
+	5hoWpZzEYQwSBJzmstUHkyiXnCz8Sv
+X-Received: by 2002:a17:902:ce0d:b0:2e5:cf33:80ca with SMTP id
+ d9443c01a7336-2e60059e355mr3066715ad.52.1791317040158; Tue, 06 Oct 2026
+ 13:04:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CA+tGzvYYKm=Yo88knZb4oavG9dH5smUCXnoqa-RR9-7YEBycVA@mail.gmail.com>
+In-Reply-To: <CA+tGzvYYKm=Yo88knZb4oavG9dH5smUCXnoqa-RR9-7YEBycVA@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 6 Oct 2026 16:03:48 -0400
+X-Gm-Features: AclHuK8m7xvpXoiDDVAPanMxHHCD0qidOUyyHP9mwXixveohhCsJPEHEa5CLLgs
+Message-ID: <CALnO6CAAGgKK=cQ6Gycn9Y4K7rW8_vxkzpgFUYQANY=yg3Y17A@mail.gmail.com>
+Subject: Re: [BUG] push resends common history after repack during pre-push
+ (2.54.0, 2.56.0)
+To: =?UTF-8?B?SmVucyBSw7Zja2Vy?= <jens.roecker@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+I'm out of my depth here, but maybe others will have the same question=E2=
+=80=A6
 
-> Note that the added test reliably reproduces the above bug on my machine
-> that uses NixOS at c59305bab206 (cosmic-applets: add missing runtime
-> dependency (#566040), 2026-10-01) with glibc 2.44-25. But as we rely on
-> specific allocation behaviour of glibc it is very likely that the test
-> will not work on other platforms.
+On Tue, Oct 6, 2026 at 1:39=E2=80=AFPM Jens R=C3=B6cker <jens.roecker@gmail=
+.com> wrote:
+>
+> Hello Git developers,
+>
+> A push can resend common history if its pre-push hook repacks the local
+> object database and removes previously loose common objects. I reproduced
+> this with Apple Git 2.54.0 (Apple Git-157) and an unmodified build of the
+> current upstream Git 2.56.0 release on macOS 27.0 / arm64.
+>
+> The attached inline Python script creates fresh local repositories, seeds
+> a bare receiver with a deterministic, incompressible 4-MiB historical blo=
+b,
+> and pushes one tiny text-file commit. The common base is initially loose.
+> The receiver uses receive.unpackLimit=3D1 so the added pack is measurable=
+.
+> Each case starts from a separate fresh repository pair. All pushes succee=
+d
+> and the receiver ends at the expected tip.
+>
+> Observed added receiver pack sizes, in bytes:
+>
+>                         Apple Git 2.54.0    upstream Git 2.56.0
+>   no hook                      300                  300
+>   repack in pre-push      4,196,026            4,196,026
+>   repack + negotiate     4,196,026            4,196,026
+>
+> The repacking hook is simply:
+>
+>   #!/bin/sh
+>   set -eu
+>   cat >/dev/null
+>   git repack -adq
+>   git prune-packed
+>
+> Expected: the already-advertised common history should still be excluded
+> when its storage moves from loose objects to a newly created pack.
+> Actual: the historical blob is transmitted again. The receiver stores a
+> new pack roughly the size of the historical blob. Enabling
+> push.negotiate=3Dtrue does not prevent the redundant transfer in this tes=
+t.
 
-In other words, the test will not detect the bug, when the fix is
-reverted, unless the glibc allocator is used?
+=E2=80=A6I've lost the main idea at this point. Is the problem that you see
+objects sent from pusher to receiver more than once because of the
+repack hook? Or something else?
 
-Adding an unreliable reproducer for a bug that is already fixed may
-be of dubious value.  However, even if the test is unreliable (since
-other allocators might hide the bug when the fix is reverted), it
-may be OK as long as it catches the bug on widely used
-configurations and does not trigger false positives.  On the other
-hand, the earlier suggestion to write custom low-level code to
-simulate a colliding allocation address somehow smells like a
-maintenance burden to me.
-
-Thanks.
-
+--=20
+D. Ben Knoble
