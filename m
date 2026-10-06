@@ -1,115 +1,171 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EAE416842
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 17:10:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.175
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791306613; cv=pass; b=mSM77I0vR05gDAeKWerASAQwS6QWvAUtH+c1rFkQbgnU61jrh7b81TLOkGUC3HgcGlsb0xSjeZuphUWzPaDzp2uxIHUadCtlzST21EG/G9OvNHztVZYcAUygCgLpyXIlHDKhFjw75HyX41KuwfAj4KnzeJYSDtBCv6L4RVWED/I=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791306613; c=relaxed/simple;
-	bh=RiFx+I/UyxDAZ0vQnKsRHuR0jhz1MuEFRM8S3Rjyw2A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Sx9B7qptJs6H8NO9JpwyV+1f+JBeoJ+0QjyE2YWK16aRjqaInilOIJ6Szzp/Nhk1qIzdquNav7ZEb0JiHCP4qxQQpUFcalfKbx40aGGwWCgMuSv7xAudqDKXzzvGFBdS0ImnV6khKGITb8NNt5qkSOBW8MOH/AqKGxby/TjgFZw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UmQ1NayR; arc=pass smtp.client-ip=209.85.215.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2783BED46
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 17:17:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791307047; cv=none; b=qtBO7bmlkcReXkAYehRYIq09B3geJqWp5xK62fA9orUBorrpUAxdDt08av3AntWGMOZ7ESNByTEk9FcjB4fsT9eJ8Br4VTrxJlJlCgupbINqBmwqT5V1kD0T+JSDat9CUX8QN89JsEU0QNxLYadDzS4mhcXnhz/Erd8T/g/9YCg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791307047; c=relaxed/simple;
+	bh=vq+6Jbh9yMsgtsURzLYYAJyTs6s1f4yHahY++j+fO+Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YtnRavK2lcQN9vVsDZ547IG0rH8j8jTMFN815qRXTF/SdpwjgHN83wRGVbaO6juUWFCZfttMIijkwtUsCO6Og935dJqwJKau0RXo4iTgWoVzG0GmEiDR3xlw223MDLTp4Hi446idJ+SqUuEscWlYRkblUzTvJu+MJ8p05xpl+kY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ILpjQ2T1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ii5nIZc9; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UmQ1NayR"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-cbe6295f05bso595224a12.1
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 10:10:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791306612; cv=none;
-        d=google.com; s=arc-20260327;
-        b=JEDGVOwxkn6p3MZJvaGw+kbroizzi2VYFOIL427WCUZjlO0rvS1fMNj4Nj1+6swP8L
-         +CKCEuCuebgSvGqWUH/kqPU39/7haQfmMpHu84GuQuRi3djfpH1w/jndAIBueQct2V7K
-         5tT5YrSyTKim0VBmNo+i1hHzBoKPiB20dubssRNXSCJ14zPniZc+b4G2yf8in6rieGno
-         HyFGxVMOS0R77J6VyJXjXmXAlgbVZ6/84NxTi0gnLb+ukanIqALWyIk016b0UnYsS3Ko
-         ay9bsWfWgXUcwGiuhzaAF4Vmq+3flFqLpi6m/Ska2P+h2NXr9at67ZqGNlSbnC2zCZAq
-         eZtw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=RiFx+I/UyxDAZ0vQnKsRHuR0jhz1MuEFRM8S3Rjyw2A=;
-        fh=hEXyd38UiZswtpv54Ix2zjKNA7LuE6K48WzeXbo5dvc=;
-        b=cjwouoJsdsmDNjwvqMaJV0Lz/29KxrNuNs8N+uXE88xzkwUpZrFH/W6OxzxWvuZQbM
-         SgBQyUVDNf7dN0YvL+lzdVxrSDclnHjXgoEhfruWnOVliTgjZOAmI42fsbstU+Y1CBpl
-         o/WWfmpqPwZiaiW+q/Q+MoBaIqLA9kIyXwoLDfy30AlRcSmUB4Lv9LBhFKvpfOQZJK80
-         Ltm4HCQ09nB3x/BL73kAb06MGrnKCa173HGtGqW2B7/NbAIhxmvIFVMxOW3SRenF1uN6
-         hYllzoKLosyUCQ77o+i/fvtX66/pFjIdHtnly/XJlH5Ah9XTWDmhppfVtUypalyaoFaV
-         JrRw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791306612; x=1791911412; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=RiFx+I/UyxDAZ0vQnKsRHuR0jhz1MuEFRM8S3Rjyw2A=;
-        b=UmQ1NayR6GDeb78jVX0XvW1kITiUhGYu8pG+K+9ocUM90MuazO/RaskMEBr1uE4ZII
-         7+vJ3ceCqKv4qxPeXA7tPB7hd4r2FU+nXul7Rmn2Cizi4Stzz2WWyTtVc2SYPfls8n2Q
-         WK1iNQ7Zn2PhxzyCAev0LB6byg6t6YsSU8z22iprMzwCL9HAuMq7TjSjXGXXEaYljRvT
-         rt5IscwsSjQYqR7JvOwz4OyXUFXFfAfU6vrcFIWXOkIYpeF1S6KxAj4AvskTTCMRKgsn
-         D56ClE098M3nUO4L6/pR+oJOfzAxxDf+JVwVJYjO+UwkYvKiHTsQ4rUWg15xzjF6cupq
-         AghQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791306612; x=1791911412;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RiFx+I/UyxDAZ0vQnKsRHuR0jhz1MuEFRM8S3Rjyw2A=;
-        b=Rqy15W+dYBIrS//iQBx/tGb1BcT0MMGwYHmFA9oHRVEMOKDRe/Pe9KFxmhG53WTfIv
-         81AuemrEEQJl7KiGkk5NSxDj+gdksywyP9RG4mpRjNdPx879lLlq5MpoV/fslN1b+ClX
-         kbdntjhwkgGq81yKW4HsYxeu16BdXYMJGxu8/3M1lbJoB3lbK9/OWIWsK7BaOfrVfNJq
-         mM8dF46mezL3d5Z01sI0Y4J8pGqLnDRuxXBZs/YUBDbMUuVlMPFpYgSki6a5DcYFOIX/
-         JSSlPEka4b165+s++6Lq/D1LBNPVE3ulJtW/2++NPKuLCvgzLmNy4l4iew++iVSggemg
-         ttqw==
-X-Forwarded-Encrypted: i=1; AKwUvBxJ8fiD3bHCG5vqsJiPlZRGQt19YwwBRo+lp069gQBISjuKXI+keA0ijAisXy2FxoZpyJk=@vger.kernel.org
-X-Gm-Message-State: AFq9FYI9Gt5fB4cnvzfarSIdn1DQyGgaVBBROXEtHjsKe518d3Hf8HQM
-	N0GOGz2+U036+tBTioKc/EFtOB2ENVuzV8BVsHj1aZCnWR5h//K4zPyNkVdi00MJRl6Xz1i+kf2
-	ZzLhXp3ZQi2/C6kE7+0xPYYQFtGQTQDg=
-X-Gm-Gg: AYBFou0759SvT2uH3MyW8tf7KP897xy55ThehJluxBlFQEAHDFnTKFpf7neUd/L07n9
-	o+K+ar29bioT4YiOApwQj9tBhmqW3nBbaodaAoYY38XguTpMxe88GkOPbQbcZmovgQUwNznSYIw
-	his3/EjoDBC8YJ0OlgVp97vl12DR+/ls4ztOyJ+MwNDlKMGGetPMF3QfZgP2QXsKyrNv4bRn09v
-	wj6sVt5tG5EDN6V1jVeqInjsukK2/RDAjGpxim8wR2b6rNK3nWahj7K0Jboq4ZoizdKXx9fZW9f
-	5kuxkrKu0gmlO8SB9fLlcve5owHIkwCV/9tk7Qt/PWwVyaNaG5mmrONiBYgyOs2wIChgknBH5MG
-	psQYb0MTn/ATkUgFQwCmf9p8qqlQAHEMEmxNZyip/TYTTQM2sWELK7F6X0I27+LEligVawFeZux
-	MoayEYyS453WOlc390g5iQh5ccr3FksA==
-X-Received: by 2002:a17:90b:53cb:b0:3a8:6efa:294d with SMTP id
- 98e67ed59e1d1-3a873739036mr1036459a91.26.1791306611672; Tue, 06 Oct 2026
- 10:10:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ILpjQ2T1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ii5nIZc9"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 68770EC0176
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 13:17:24 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 06 Oct 2026 13:17:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791307044; x=1791393444; bh=bhBltvDOSc
+	bz1BLr38XKMFA7vrRnaaKBdg3e0vD5h3Q=; b=ILpjQ2T1ZDZ1beIqHQBv0/9jLg
+	Gr0gwNvcYYo18VglW6nWiHAj8k6tsO7alq9ul4qaIPocPAUSgpjRXf5nMOrsAnrx
+	fdRHmYFMXwWZSdRYkPT9hw4wL/SzRodE3YyVzyPnHMmEDmi4uKowAZUITAdhfjKq
+	2GRFD/c4mnQXOjzfzpUMjuIDuuim2pNT+kwD4KVkamdLUvmYG1HxXJ7/EJ2vSoPz
+	ztf/tMUzHurNMA2PSuh8CbzCttJqQtIgfWfskUAJ5VE8j8GtZnEYHE7qQfelNI08
+	Kl8yp8sQSubsp9/q/DIll3BQ8ozTFI61pzZ9SiGKmYndpEX1oMWah/k4a24w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791307044; x=1791393444; bh=bhBltvDOScbz1BLr38XKMFA7vrRnaaKBdg3
+	e0vD5h3Q=; b=Ii5nIZc9cvuXBLkb168dawIhUppx8tvD4RT9l0hQWx0g9p0BmMI
+	VzSigQwbOmve0ucDkOmWLtFQNR4I5xvk9GxbiM8PmACa422I7sQznem2fKJVOYfs
+	39J60YYrjyKYgsv9CyNBjYg/0vbEE43hGRQYE1FUZAZ7LweZthP+6GEPEnOA1sJF
+	O4vXrkroPajxf50iq4jO6IKDB73PewFkHJHqKUu+m3fmMrC8FG68UKFheORWO9qH
+	yLBIQI93AUucFzymjl9qs8LlMOmxiezkQnLIbYZxKjdpIfcveit34xn9FcW5YE4l
+	IqA83Rn0CTPsRtJslSu8eLVIGLamhh2WEKQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791307044; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:oQ1iaoEytXuRZk8ZtThx3ba2t0R7sUyzHvQv+Q5XascYdrP
+	WD+Ax3meWmOWwECFVBKdKbwFxVQj1NiZMdYSsfaiVPP5pUHPZ3BkPc+QwmhBlrvq
+	a4mIC+nXbqrw01UP3xc0RFgGdsz5UtWM43o8ls9MbSJuc/q7fdO+RrOCM42/T0i+
+	Ur+hiEBdktpr9738tREFOPQOVmS5TeCLwQTMXQxBXyrbSF/G+/ceOYoZSvtYy//B
+	ROJfIMlTw0uivXRh8KZJ3gHtJBIhwbyJEiW5tLXdDKyBER7UlGLAByoedtrvz0RU
+	H3YzfTcUqLvsXXl9sIDyhGnn4jvA338J+Sd7X0w==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:bjnb11TFxeKnqxbRasW7A1efqK3TUFFIS7T5RH7LBTg=:vq+6Jbh9yMsgtsURzLYYAJyTs6s1f4yHahY++j+fO+Q=;
+X-ME-Sender: <xms:JC3Fal_HGJBtQ6hh6VcYn0Z6RO4d9DD9PX9yhAaeY6TlTUL7OcmuGA>
+    <xme:JC3FatZ-scJQJKfxaYVytTDWxEtigz_yiD9bcJQmPa6u5MJVO1zeL77ksAaCes-LZ
+    THLPKwXdaLpHp7SvOjJww8_KhlhgYuGvVytU3iiqCLxn96wtGygehw>
+X-ME-Received: <xmr:JC3Fas2fkieztIrsKF0ALLyKDKHLfYDQxqtoV4KeDhpcroNP1LlHvKdn4bZnTrZRoF_XSnj_F0I_nR8-aFdKzjHHizXbN4xxTwUG>
+X-ME-Proxy-Cause: dmFkZTEn+lbHeyqvV3ec6OED/0C1P5Sm9+D6DAuSntylfOuFxNm1mgm46P3LoZDvtWqnia
+    2a5I0KegeyznFe8FnBgHGE7mNS7vP1tA57xIXQVjGL25mkNPgIvR3yRhDlqzCYtMcWhY3p
+    NkZ9x7n61xrBiFLs9ngI34wPU7HWvYbrVJXEVsBMkggmy3dTJr+p0xJkjXMiC49dosUajX
+    zJh0L2CYLcdJD9TtWQjV2ULbPucOknhu3lFF0i3bXw8CZJUpAPj97JVFfJ202j0wCIxYC5
+    WWG2oLVy19NQLV9cPk8QiN76h00kpBnHlotLc+mGqVhHUX9pneGbYDa2V1lOSlobW0p+ol
+    CbKi+D/JrsaOEsM/3QFWH6UFcE9FK4Ewjght2Ha1FJSVhfRin94h+AN/SEH64iFJB624p/
+    mkEFITquV80Uo1PYarPBAQpqyu1aWMG02EzvdKfPvOTiXzVWKJUoTbL9U9cnZsEAYts0iE
+    0MEpA9e9+X/fY6WoDdHhCD9q7oh7/EA/pHOh6Q/UDkEIdzkNKvLXSsMe7NTU725lpwJ6yo
+    FxjYDoAsOKbTmxRqRohs2yjeLPGwrXLE9X72oEOGAYxDuFiruZ6ruoyfThSaCDhV6yq7Ct
+    B5JKyYgRhSSn0OOx+0cdigu0Tdlo5SOFper4ajsepXZCFbuRaO3LbLAa3VAQ
+X-ME-Proxy: <xmx:JC3Fagao6Y8gHEJrH5nHUEmzmUVUwWd0uTWXw1p4HP6a1CpGzYYOPg>
+    <xmx:JC3FasK9b7PHcT5SExvj4lgiLESLTuG3SukBJSQfwQQeanIkJRLNzQ>
+    <xmx:JC3FanE2GIUS09sLAhyVjeJDZ4PorUOuwBWx-IGcIDpaP2NYsua1lQ>
+    <xmx:JC3FarsqbahBGHbtu3XdNICVKYFinn6HnGxHkcKyudeM-5y9HPzI9A>
+    <xmx:JC3Faur4xB7zUQcV4XaFgQGng9pTIMlM9JLdRpbwC7dyIav_FvHYp86W>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Oct 2026 13:17:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
+  <git@vger.kernel.org>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v2 0/2] [doc] Remove gittutorial-2
+In-Reply-To: <20261006055002.M9X9O%taahol@utu.fi> (Tuomas Ahola's message of
+	"Tue, 6 Oct 2026 08:50:02 +0300")
+References: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
+	<pull.2241.v2.git.1791231610.gitgitgadget@gmail.com>
+	<20261006055002.M9X9O%taahol@utu.fi>
+Date: Tue, 06 Oct 2026 10:17:22 -0700
+Message-ID: <xmqqfqyieokd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
- <CALnO6CA_=OsznkQ4iT0vBMWf3L=bmVKMBdk1MTHQdaKEcKwn4g@mail.gmail.com>
- <91396552-f86b-47d7-9805-8f6056c2ed66@app.fastmail.com> <CALnO6CC+h1y=Fu438nm4cd0K-dfPVYq9MqX_+k8fxBU60ot8KA@mail.gmail.com>
- <623cdf71-8076-4967-aff1-3ebeb57d1e3a@app.fastmail.com> <CALnO6CAG-z8B2zXj+QEvZNb-Ufiq=qgyPR5VvQShyH1H_+bgNA@mail.gmail.com>
-In-Reply-To: <CALnO6CAG-z8B2zXj+QEvZNb-Ufiq=qgyPR5VvQShyH1H_+bgNA@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 6 Oct 2026 13:09:59 -0400
-X-Gm-Features: AclHuK_dG9MbvN5kn775qPGPsT4tVPnV41nLLLWyP9hvF7I6e5IxfIpJbxQTX7Y
-Message-ID: <CALnO6CBBL6f-HTVtHOf2TrgYV3SCTLU3Jw8amJ6MTM+DHQ+5TQ@mail.gmail.com>
-Subject: Re: [PATCH 0/7] [doc] Add new page on merge conflicts
-To: Julia Evans <julia@jvns.ca>
-Cc: Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Oct 6, 2026 at 12:53=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com=
-> wrote:
+Tuomas Ahola <taahol@utu.fi> writes:
+
+>> Changes in v2:
+>> 
+>>  * Remove changes to .po files (thanks to Junio)
+>>  * Reword commit messages to doc: ... (thanks to Tuomas)
+>> 
+>> To deal with the conflict with 4ce144a1 (which requires that all guides be
+>> listed in command-list.txt) I think we need to add another exception to
+>> lint-manpages.sh (like Tuomas said).
+>> 
 >
-> I'd love to hear from others on either changing status output to
-> recommend "merge --continue" or admitting that, for merges, "commit"
-> is the same thing.
+> Excluding the po/ stuff, the v1->v2 interdiff looks like this:
+>
+> $ git diff je/doc-remove-gittutorial-2@{1} je/doc-remove-gittutorial-2 -- ':!po/'
+> diff --git a/command-list.txt b/command-list.txt
+> index 5c649c882e..63ae2a67c9 100644
+> --- a/command-list.txt
+> +++ b/command-list.txt
+> @@ -244,6 +244,7 @@ gitrepository-layout                    userinterfaces
+>  gitrevisions                            userinterfaces
+>  gitsubmodules                           guide
+>  gittutorial                             guide
+> +gittutorial-2                           guide
+>  gitweb                                  ancillaryinterrogators
+>  gitworkflows                            guide
+>  scalar                                  mainporcelain
+>
+> That, as can be guessed, causes git(1) to advertize this "obsolete tutorial".
+> Perhaps we would like to avoid that.
+>
+> $ (cd Documentation/ && ./doc-diff je/doc-remove-gittutorial-2@{1} je/doc-remove-gittutorial-2)
+> diff --git a/7da429d7fb86fe400c48984ea1506a9e0477e80e/home/taahol/share/man/man1/git.1 b/0bf477ce01b45853195f5f3da63642712dc35579/home/taahol/share/man/man1/git.1
+> index efc100186b..57a7f270c8 100644
+> --- a/7da429d7fb86fe400c48984ea1506a9e0477e80e/home/taahol/share/man/man1/git.1
+> +++ b/0bf477ce01b45853195f5f3da63642712dc35579/home/taahol/share/man/man1/git.1
+> @@ -800,6 +800,9 @@ GUIDES
+>         gittutorial(7)
+>             A tutorial introduction to Git.
+>  
+> +       gittutorial-2(7)
+> +           Obsolete tutorial.
+> +
+>         gitworkflows(7)
+>             An overview of recommended workflows with Git.
+>  
+>
+> And let's not worry about that exception you mentioned.  After this topic hits
+> 'next', I can rebase mine on top on of this, and deal with all necessary
+> integration work.
 
-I see now there's a patch in-flight (downside of reading mail oldest
-to newest). I'll expect to discuss this particular point there,
-thanks!
+OK.  So ...
 
---=20
-D. Ben Knoble
+ - I'll tentatively eject both topics out of my tree,
+
+ - Julia will send in a replacement that does not add gittutorial-2
+   to the command-list, which will be merged to 'next',
+
+ - and then your topic will be queued again with an evil merge (by
+   me) to add gittutorial-2 back to the command-list file.
+
+... and both topics will be happy?
+
