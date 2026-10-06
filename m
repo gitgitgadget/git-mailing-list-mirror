@@ -1,125 +1,136 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50222AE76
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 03:52:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A688230ACF0
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 05:50:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791258762; cv=none; b=iAv2jEmOhZNkCV9Gtf1xa+ebG1ffa/7M2Uk6Q+TAWFayJEBYJR27Xp/78OBG3nGMbn73YFhFd15LGI1FPoye5tVwxURDSbmc+BwwkfHXRED/Rix+HPLRmVxtZDOq9MAgUuWTMtdiafEV0j5O1CRkCtJatKinVpA/IiGyiH0l5bU=
+	t=1791265824; cv=none; b=YP9IgE3ZvGZaTVl8mCTdc+WIi2PjyYfgIbcjZxebufkEalwLPEbDKhurASYSTYu/gcofsZIG+sdNiIHAAaFryFeaPGVsV7KZPY8ZvWm/8ki5Svj/e33ylcdCzGELEI2nORuwGXzRRIcwfQtNd4lLUDnW3kx/rB4jBbgSJ3eDs8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791258762; c=relaxed/simple;
-	bh=eIV359VEDIeyhdDu0m/mqg83tHxO8N787ZGByzeB7ow=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IXTxXYOfjx/C6pat9i1vUe12bheDHdLPsItCh69ZAWlJ4IjzJKgQMQw66bIvuJg9Fkue83kVnSi/cYHTDFyb8zxEA6rSj5EBbyCZm/pwSGz+iItys3YS4CmP2ZP/+1nm6lyFy+X986gFx8Z5k4AQ3hb9N8OCoAN/nan3GGZ0PbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HRIcZ8ix; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1791265824; c=relaxed/simple;
+	bh=Knlte3bTrQq3x2Iqp/RUH+E8sJAasUTe5mFKSpMEVWE=;
+	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=MFc+qQXJG5X/Dcu4clAlPGHCMEsDCOceYHWVuMRxg/lbPiDKyqiPZrA+qzm0S8kNCXPHsCYKQUGcNOfZ36zDsaBUbvIm7yOJPebpPE9pr4PJL54AsNPEPFE7GiL38sLqKgEMt8FbbW0Zb2qaKm+VZ9PSG3ob+YpDW8eWVrJhPO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=TxhKGDZe; arc=none smtp.client-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HRIcZ8ix"
-Received: (qmail 29669 invoked by uid 106); 6 Oct 2026 03:52:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=eIV359VEDIeyhdDu0m/mqg83tHxO8N787ZGByzeB7ow=; b=HRIcZ8ixD/rTlZpaVBAlQ8R2l/td6EvDK5sD7q3oM4vRrKEXYl5Yeac7jW18anYomq4OGf5XCWQkeooaPStzo3N4JqHAo2ALhlCuzWCc8+mLN/Us/bnSJys6IVVZrL12gjcez2bV/6svoDy6gmdq9h1W3rCnCf/H7Tfu75SHEsDt/AADhtKYK2WMy1hJauGRNEXVLkErTnsGriJ4UXu0fIzRX1fVoUtdeRAYy6HRMURAfszhPBVrXm386Ves3oNOoxSFxLP4Gs7LWjpIdkAJO7RU8u2EPMJOrHm+JdCnZOA+2lu+2stFmMKv4X0X51Str+iZ3dpuW75Q/ZKO975Rtw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Oct 2026 03:52:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 114941 invoked by uid 111); 6 Oct 2026 03:52:43 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 Oct 2026 23:52:43 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 5 Oct 2026 23:52:39 -0400
-From: Jeff King <peff@peff.net>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 2/1] test-lib: allow lazy prerequisite snippets as here-docs
-Message-ID: <20261006035239.GA1335881@coredump.intra.peff.net>
-References: <pull.2236.git.1790118373340.gitgitgadget@gmail.com>
- <pull.2236.v2.git.1790283229626.gitgitgadget@gmail.com>
- <20261006034331.GA1325722@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="TxhKGDZe"
+Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
+	by fortymile.utu.fi  with ESMTPS id 6965o3VT012730-6965o3VV012730
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Tue, 6 Oct 2026 08:50:03 +0300
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1xDy3v-00CWG7-Ez;
+	Tue, 06 Oct 2026 08:50:03 +0300
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Tue, 6 Oct
+ 2026 08:50:03 +0300
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id ac4fd5aa;
+	Tue, 6 Oct 2026 05:50:02 +0000 (UTC)
+Date: Tue, 6 Oct 2026 08:50:02 +0300
+From: Tuomas Ahola <taahol@utu.fi>
+To: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
+CC: <git@vger.kernel.org>, Kristoffer Haugsbakk
+	<kristofferhaugsbakk@fastmail.com>, Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v2 0/2] [doc] Remove gittutorial-2
+Message-ID: <20261006055002.M9X9O%taahol@utu.fi>
+In-Reply-To: <pull.2241.v2.git.1791231610.gitgitgadget@gmail.com>
+References: <pull.2241.git.1790627122.gitgitgadget@gmail.com>
+ <pull.2241.v2.git.1791231610.gitgitgadget@gmail.com>
+User-Agent: s-nail v14.9.22
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261006034331.GA1325722@coredump.intra.peff.net>
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-14.utu.fi (130.232.247.54) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZUUgPARwoHg8NGkYDDRoGDQRG
+ BxoPSFhIWkhZXEhZW1hGWltaRlpYX0ZbWEhQSFhIWEhcSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWEhaWkgPARwPARwPCQwPDRwoDwUJAQRGCwcFSFhIWVtI
+ Ah0EAQkoAh4GG0YLCUhYSFtaSAMaARscBw4ODRoACR0PGwoJAwMoDgkbHAUJAQRGCwcFSFg=
+X-FEAS-Client-IP: 130.232.207.30
+X-FE-Last-Public-Client-IP: 130.232.207.30
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
+ bh=UK1F6K4rWLoLPFoEGxDhox/Bx0iLfHjdFLq0c3EcrPk=;
+ b=TxhKGDZerayr+Ue1LImr6l8mcphE7aGOgtI6QegMHkfOv5bA4OokYv2U2x6DTsQSSHRsnj0sdIkQ
+	NQUfA18Pq8LZ4ukTGm307q/YJ4kjGXNvveqD9sG2h/o7i8vsQfAuvHTriODq9cMM1NmwAK75PYvg
+	LWvj7caLwpxvb2xQCMGG80Cq3PNZlulo2XGtqd8gdwXtBoLRSaNvcjZJkx9yfTXcxJNMd5XZd/HA
+	G2x5EME7j654GL80E48fX98r3U0yR2ZW2wgOlgNBkWQ+dREkSz01QrnU725vTZFU5d1ZeMv8ROH+
+	0Zjy0O/5ThKHz3yPs35ZDe1c6tCA+KSp2hRk3w==
 
-On Mon, Oct 05, 2026 at 11:43:32PM -0400, Jeff King wrote:
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> wrote:
 
->   2. Single-quote the snippet, then quote interior single-quotes as
->      '\''. Reasonably obvious, but ugly.
+> This patch series removes gittutorial-2 and all references to it, leaving a
+> stub behind to help out any users who might be looking for this
+> documentation.
 > 
->   3. Use the '<<\EOT' here-doc trick to specify the snippet. This would
->      look nice, but we don't yet support it for prereqs. ;)
+> The goal is to remove obsolete documentation and make it easier to improve
+> our tutorial material in the future.
 > 
-> This patch uses (2), and we can circle back to (3) to make it look nicer
-> later.
+> I tested that the docs are staying internally consistent by running git grep
+> tutorial-2 and making sure that the only remaining references are in the
+> Makefiles, the document itself, and some example output in user-manual.adoc
+> which isn't relevant to the actual manual.
+> 
+> Changes in v2:
+> 
+>  * Remove changes to .po files (thanks to Junio)
+>  * Reword commit messages to doc: ... (thanks to Tuomas)
+> 
+> To deal with the conflict with 4ce144a1 (which requires that all guides be
+> listed in command-list.txt) I think we need to add another exception to
+> lint-manpages.sh (like Tuomas said).
+> 
 
-Doing (3) turned out easier than I thought it would. Patch is below. I
-think it still makes sense to do the immediate fix with (2), and then
-this on top as cleanup (or as a separate topic, though obviously there
-is a textual dependency).
+Excluding the po/ stuff, the v1->v2 interdiff looks like this:
 
--- >8 --
-Subject: test-lib: allow lazy prerequisite snippets as here-docs
+$ git diff je/doc-remove-gittutorial-2@{1} je/doc-remove-gittutorial-2 -- ':!po/'
+diff --git a/command-list.txt b/command-list.txt
+index 5c649c882e..63ae2a67c9 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -244,6 +244,7 @@ gitrepository-layout                    userinterfaces
+ gitrevisions                            userinterfaces
+ gitsubmodules                           guide
+ gittutorial                             guide
++gittutorial-2                           guide
+ gitweb                                  ancillaryinterrogators
+ gitworkflows                            guide
+ scalar                                  mainporcelain
 
-Commit 1d133ae91f (test-lib: allow test snippets as here-docs, 2024-07-10)
-let test_expect_success and test_expect_failure read their snippets from
-stdin, making it easier to use single quotes within them. I mentioned
-there that we could extend this to lazy prerequisites, but left it for
-later.
 
-Let's finish that off now. Since test_body_or_stdin() takes the name of
-the variable to fill, we can use it directly to populate the saved prereq
-snippet. We read the body when the prereq is declared, but still evaluate
-it only when the prereq is used.
+That, as can be guessed, causes git(1) to advertize this "obsolete tutorial".
+Perhaps we would like to avoid that.
 
-Converting the curl version check in t5551 shows how this can reduce
-awkward quoting.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t5551-http-fetch-smart.sh | 8 ++++----
- t/test-lib-functions.sh     | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index cb681e644f..9dd20d1c65 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -21,14 +21,14 @@ start_httpd
- # authentication after an early HTTP/2 response. This bug was introduced
- # in cURL v7.88.0 (8c762f5998 (http2: minor buffer and error path fixes,
- # 2023-02-08)) and fixed in v8.3.0 (https://github.com/curl/curl/pull/11756).
--test_lazy_prereq HAVE_CURL_HTTP2_BUG '
-+test_lazy_prereq HAVE_CURL_HTTP2_BUG - <<\EOT
- 	test_have_prereq HTTP2 &&
- 	build_option libcurl |
--	awk -F. '\''
-+	awk -F. '
- 		($1 == 7 && $2 >= 88) || ($1 == 8 && $2 < 3) { broken = 1 }
- 		END { exit !broken }
--	'\''
--'
-+	'
-+EOT
+$ (cd Documentation/ && ./doc-diff je/doc-remove-gittutorial-2@{1} je/doc-remove-gittutorial-2)
+diff --git a/7da429d7fb86fe400c48984ea1506a9e0477e80e/home/taahol/share/man/man1/git.1 b/0bf477ce01b45853195f5f3da63642712dc35579/home/taahol/share/man/man1/git.1
+index efc100186b..57a7f270c8 100644
+--- a/7da429d7fb86fe400c48984ea1506a9e0477e80e/home/taahol/share/man/man1/git.1
++++ b/0bf477ce01b45853195f5f3da63642712dc35579/home/taahol/share/man/man1/git.1
+@@ -800,6 +800,9 @@ GUIDES
+        gittutorial(7)
+            A tutorial introduction to Git.
  
- test_expect_success HTTP2 'enable client-side http/2' '
- 	git config --global http.version HTTP/2
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 809c662124..de75ae842c 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -760,7 +760,7 @@ lazily_testable_prereq= lazily_tested_prereq=
- # Usage: test_lazy_prereq PREREQ 'script'
- test_lazy_prereq () {
- 	lazily_testable_prereq="$lazily_testable_prereq$1 "
--	eval test_prereq_lazily_$1=\$2
-+	test_body_or_stdin "test_prereq_lazily_$1" "$2"
- }
++       gittutorial-2(7)
++           Obsolete tutorial.
++
+        gitworkflows(7)
+            An overview of recommended workflows with Git.
  
- test_run_lazy_prereq_ () {
--- 
-2.56.0.399.g9e0ddc9b37
 
+And let's not worry about that exception you mentioned.  After this topic hits
+'next', I can rebase mine on top on of this, and deal with all necessary
+integration work.
+
+Thanks!
