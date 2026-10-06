@@ -1,104 +1,100 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC723B810D
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 20:33:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1513CAE7F
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 20:40:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791318829; cv=none; b=tBjVdYYmBNaqWD3Qaa99r2+F6N1oJRJQt3GzQJgOYh10RppkFSYPypsQZjHQeZZL1x4+tOgT+O+ydN+9MDgLxFFxm0lLvMN3haZyIjmF7xfxGN/3qFySjLrtf6TMDCbshNMJr8P972QeaDJlPiE6nrcsJraJnnaqfb3D6+6JE+s=
+	t=1791319238; cv=none; b=crmn+Qhf2GnyFsPgLAWmGiLb5sDoYuNP/7eiridoR+AJYfZUp0WdUbs9mN9gj0L+PNAZeavkp8aVunJ6kJsAXQK/8PvIqQi8u6nYCXCQ+PZuBrrCdgrh4cHH0zuVVNsSHv9D6i1He9wkJ5UL8BAz5IGpbMto4oEVQchC/Smyi98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791318829; c=relaxed/simple;
-	bh=aA9N3Q7m/ijm0Y9PwaU3uTxA+Kf8pD41lbSoMmJtq7Q=;
+	s=arc-20240116; t=1791319238; c=relaxed/simple;
+	bh=UCrHGLvZIUYyosrtWwCvn437HExCBI9vFiM+DWmg+1o=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SnfIN5XlzyyBOTbEtXo/5FLPpauD1D+iSJ1EboA9a5X/f9zSMbJeA4cf0Nq1RruO0ozbvEQK5AGjv0X4DISMyqZaLjfM4liLv1B5xv9PJ0inGIbiQRH4usglsC/hAqvcMRxeo1GqqdeklZXeLSAsmZJzdXRt2dEy8s/t/ruS/tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MssnaiRg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b/7UENaV; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=gxUAQSolSTqQla5Z788imQIzD/RNcBuZuC6jeSsl/s1iv2KU+jkr+t5cU+nrIWYRt9zhtCSx8CA+yczGHy9+5rMCW3t7EjKpQYkiVlfr8ecfPkUsj357iEnjWiLsoatMSKFRDrzEgPzkRgA/gJiJRLJDQmZC3fPtQ/Ami1EYxuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ANm47oWv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lM9tSfaM; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MssnaiRg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b/7UENaV"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 31ABB7A0179
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 16:33:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ANm47oWv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lM9tSfaM"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id AEF781D001CE
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 16:40:36 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 06 Oct 2026 16:33:47 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 06 Oct 2026 16:40:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791318826; x=1791405226; bh=nugpkFOtt7
-	SJ3We8bax46sYNuPIphezv1jmm+Nn11Z0=; b=MssnaiRg+IDROu6QtQ+2eecxad
-	CVJbVL4szkvL2/na/1ACmGuxXytDQYXgXNuPIC97g3qtRRXVoCcISnn9kDwtLppD
-	elB+RuLG7qnTMpduHOXPj4gOy61JBkXG3//4RgsWAgUBaeyl/ctgLxhuCKHHQH7H
-	bglONd2UQP8Yq6lQMpc7eCEUzahAuVkodoZ91emD1vlMXXWp+GshcYvnJUAYW2g4
-	8ed3fbMPMmQtCt7viRgZ1bCDwwIrNRDNKLDCjjHxFXaMlsl0aj9Gx/XY+brcHOsE
-	sjwodxI/i/IwgJE+VHlKciToAUJGg/Bq/pWJZG6So2ryFyfkxDDSFYUmjXYA==
+	:subject:to:to; s=fm1; t=1791319236; x=1791405636; bh=x42CW6XfWA
+	yTvKj1keMskFnLvbxENV5FklhRLthFqnU=; b=ANm47oWvJogHSH9lkkmaHzVwC5
+	hZMUbvWgSH7YuIObSD57uCFQn+qyp7MCq4hymxxEQUgifvSC3teKJAKHZIENEovZ
+	lySVqimgtcJIkke8RY84DLiPf/jGDDY+wS4b9AklyyojySQnJ2beR48J1zSuwrFN
+	6snGE4yBoscAO0WxSvIxyqV7u2c5EeV2D0CGYA/YReypy7sECIOq7qnGkOYp3pg8
+	d44yoswnVxi24TfdCIy7Gy0I+bydRB606AGOlgErigkzBLwIQBdm9LrFflWtVpwd
+	EEcmotlSGfnDH1QNoKc4NYRcj+BZCVz/QnrX5zH+L4fxdh3JC0M3PWMNrv3g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791318826; x=1791405226; bh=nugpkFOtt7SJ3We8bax46sYNuPIphezv1jm
-	m+Nn11Z0=; b=b/7UENaV2tBCxZmKfOyVbUpykSZDwGO8LWcwnggWXXKvnZF2963
-	YuNNujSFHz/Z3yE9gT7EHFkKiVQt1wm9TKWAncIK6p2XWlLl5gwzC6wvXgukhxUt
-	NX27AFR2/+LP/QH2I3r+BCTXefqaJPWBpH617jZ9WGPLKnst9pcvAmdVQhX9Ql8m
-	rveb5M27fsRvCXOvyxy+qM6FHPppGw1CgnZyh0uBpi/bIEzKAiwARaAM1Sno9q9u
-	cPgwYtUQtCE7ptjpufXGFxHe27gNJRp0gL9vCJgy40s64L0PYjC63NKnfcuvQm6R
-	sVgdLW3u9T+GC/MMNdvhBjdWlZWABqwaJ4A==
+	1791319236; x=1791405636; bh=x42CW6XfWAyTvKj1keMskFnLvbxENV5Fklh
+	RLthFqnU=; b=lM9tSfaMkg4DitjEf1PY0lf7xj2dMvOvMoa5WTX7Te5RAbWHRBN
+	ne+2vqFmR6/9yu8aT6R5ThVkBYObFAxl1S6mL+TFRBy0jXdV05+r7nIfrC1hNOJH
+	ZUekGwO2flqpIpQxZZ63rhuDZvyYl/whWU07rUjZoogCUPfAaCBFE+AFc83jiopX
+	TsCw1FZxVy5XbyGgRKkLRvCwE5rXsqAMWLonrRMpyKIgUwiAzINTPBX20cVCAvOr
+	7pCJeqDyMiS5OED6VjrtyDeuE/4dLMY2fXTk0G1R7XxlJUmR6kgxYGEbHQdzoC09
+	/d6QGVvCA1c5EYfw4Nrum52jOEaslGvtl2g==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791318826; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1791319236; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:jwV3/E8DE+q/HQPWpV2x/wttuEdEIVsNVawTBfZbwDC2Fu9
-	6kX1BK5yRmP/3EWoOapHt75qRRco1MF1XDcv5sx180kFHdJHgXwpwjog3quRG+dj
-	IiKK/vNHh10GSXsas2kcHkECXn7CkzrXg4ZzxZWiM1BEDTzCWD/lm2FQ/UuijiL/
-	DD/l9qm/LwQJV7Kb2R9U2ONBWlRvxS7QYeh5h9hGgh6qactYj8oHygdhJd8pbuac
-	ub8FvS1JpppJTwTaQg5mXa4+B+yviyFI0c4ZKXMwh+kOyl3CJP9tEQCTv/ZYLyyj
-	P2XA06FYg8hU4hvB3mXXro7tkp0BSM4vP8cfMJg==;
+	s=fm1:rsa-sha256:nipHx5vj0MYziks1K4Cbdp877K2i6C5Au2ugxqr+hZruAKa
+	takXarqXP7WGI6BkAPIwSwoF/iinjybv9vcOKcVStoDbqBE7cg7UwTwrARf0kOWg
+	89GeRE6xVsShWSB89CmLpYbNKUqnuvy7BY3CWBr9jZVd6xmfZbxxdK5FXV/jpJIg
+	aCMxBrjES0f2JfgGX3ZDqpnN+bbRENHuMHIaIIdkWU8XOCFMLWlMoIGagvhQL0VL
+	68x/bijJraXJHtYDVV4NEgL7sjeiQDwxFSc4xHEgWFvBbuO2Xzx9Kl780xaXS9+0
+	CVbXXNu4hWsIL6PhlHxYAV5jCaenlDCrtIs+S7g==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:m98ocKa80u6TvxIxteEdINArKLNr/DbCloSYinFfUSE=:aA9N3Q7m/ijm0Y9PwaU3uTxA+Kf8pD41lbSoMmJtq7Q=;
-X-ME-Sender: <xms:KlvFaoeLsdvoA3hZsG2PeZ2dfWVCxWy5CdOYKt6auay5bCby9s5OqA>
-    <xme:KlvFahNzliNwGRydXGlu1_y1LZjeB9PBZ7CTNGyb4ggV2pu9y-cB4Gze3dq8npAib
-    bij7Jqp0dHTh-JAT3Jg0oQ_LkjpBIBWl84bqpcqil-zW7s-xlOPng>
-X-ME-Received: <xmr:KlvFauge4E8OY_hhSe-H5vVizFNSwWh-8NH-S49Hc3XPtpbGnpKvt6RSl8LYiGMy-PKSUL8_8JHUJ1smlePtECOjs4vBQdg37y_h>
-X-ME-Proxy-Cause: dmFkZTGa3IFQ3HgO1bvaQRiWWz6Rs94BNZu6rGsISjqNvph9GTkrsgRhJ/zZ600BRw9eJN
-    cYHXCE0ADcsxasXBz/Fuko/XAA4NX+agolxgY7sj3WgJ04j4uSmdpAONtlFAHVF2KRh2LH
-    RAgMZYphDvVUwy3BDzTVmDDmoe9/2yU0YHHeUHtfC4rcBhKCy8eumHuXzzs/tt8RoyjE0e
-    j2txv2Cp3Klslbar7Yp4SB9Ti9oEHrrVQo4R+7ijyYfcLkUXsMTgvOfKqop0bqPen/yuKU
-    QgQSLjB+Xu0vCoMXmZZRfcmrj70GWV1qMCQxatWErjV9jeQAMa0pcyebFrTBWWoJ1kBElM
-    dCgTobgBQyEfdwOE+wF47oDh/vXH+w/XPeVLH5+3AcHvrB23lUDcr7a7pRHSXaBGYnaT2Q
-    t4IyniYMR5t5+dH+8Ij7+cWlKiNcYa1rv/2z7NoEi9x65cCaz3eKDDLZgOvRpyJuFyXRT9
-    Odo1/RCuY1cUs8pvJDw9n+w2p8JTIaJYJaqy6cz9zsJC5KF21rBXARD6loKc5DYgAaSdVN
-    vGVg8J/8TABrQJnpl7W048gjnORbiOQ+2sYMO46xmRx39w8jLhD1eKv4xaQgbnyM78wDUS
-    GoU1fuk40Ukw1dDIUFsaolTra4kNBjq8rDzagJBUtLquPDQtGdeBI0GjKGCQ
-X-ME-Proxy: <xmx:KlvFas2mMeWQQSFb-UDt2nAUFufDqNG319aKdkxKZutyiscSsH4deA>
-    <xmx:KlvFaghpPWqPh2kQI0R_t7CQywiSeJv5ylektHK7uYswPIF6y-5jsQ>
-    <xmx:KlvFakc2eXphJMM-gQ0YBLtvUut-6nF74VkxzB4EHGkPG8P9gzS0uw>
-    <xmx:KlvFarn5vi_mPY1CMoVEV7c71e2mj_JRgZIWo3O4a7ZFWx-Z2Su1Dw>
-    <xmx:KlvFalIn_wybB_Ums4aeUEgfXXCz3rLSBT2WyqZi275nCjUGHywUCI1I>
+Message-Instance: m=1; h=sha256:G+p4NkULFm9LxsAfUonSkMzcdaQO17f/XIO+6YUztJo=:UCrHGLvZIUYyosrtWwCvn437HExCBI9vFiM+DWmg+1o=;
+X-ME-Sender: <xms:xFzFaslBrWGoWud3tmFj_f-tHZM3me2hsp8UhTVfSYvHoNniyueEuw>
+    <xme:xFzFait_WE6nx8SLrtamkU_j-0xaga4jSMB7ttoWxJlewt9dC96P_g9m4ZoQb5mot
+    hGRL79roCn6ZsZdtst-d2ygRTEm43z0bXYePF4D3i_C5D3LG-a1Xsc>
+X-ME-Received: <xmr:xFzFai9apQZ8UREQep1Rc-XjpJmQxSH__lMA51jpAl5KLu6O7t03KDkjC1BNsy_iOi2Mm83y3CBinmQqv04HKOJJymLK1TFZEVB4>
+X-ME-Proxy-Cause: dmFkZTF5s4FslVTA6XXQLI+rFHT5d7Nk5in5BFioIqfAY04GbXOMmjXkMIy5tEnapDT5aT
+    vz7vKZ0lXTmwK3WPMOWoo3wNd32H4ALdbQHGnDZfK0+w6b2z9HICGxkuiMBH9HYhRh5g5G
+    ByLk0TrVOlWrlNBhsgOMdvwG2dClVvrlh0cSSMSGhznLHXjNvvf5Sg6u3HiXdrJnCOWtLM
+    3W25mN45sahfg7LTuQf5AoxwIUXT5vjJpnL2Ee7Mb6GeFDuRQ216NBDzzlnToCGM2BUhwL
+    89alX6f3c5Y5NVyc1u3cxyN46M8zXAKacMdmonwHkby32ZkNFrMGn34Td6ZUCZ8PsCy2NB
+    UUo2xdRBSVYDRjLJru2/iJCr4M3s6QAgzCRdA+RzyjDezqW6oFVDO8UjrTuGyO4XQkoTn/
+    g0T/lO9Awcmx1dYXfgBxdsGYB0u01gkh6QiArXYgj7Wtt+o3A3s/jVEWdStTsSl98StNaf
+    JpFk3VWZWVa+GpA3Hilag1BW2jVYEfM9f+S/LoMiO8xuPHPLu/IwanSsVTgx3erunbwFdv
+    pWxiqTowbHehnoMwdln0Lu2IwctqpownMfN8vHkK+fgC+T93L9g/HMooUIlf6PU3fVvOI0
+    nazaBnn7Q6bJ/l9zmAFEbBdICiOOhJiQhX6tkNIfNbKmMLzdvPr79DiLoozw
+X-ME-Proxy: <xmx:xFzFakPKYs6rXbE3fIF9tdaH9jCCHEDawUQdHyv6PnPncJZIfDWoSg>
+    <xmx:xFzFaoENomZ_aqYj02_eISFeeAAoDT0Nf0aoqatU7JYjec3HFo4rdw>
+    <xmx:xFzFaqT_CaBrX9GeyAIe_VECK4J_l9LGF8L-PeUt4mJoNuQr2_qZfw>
+    <xmx:xFzFatt4WFkhpujjZqyHSCdZEhZIZKhNG_Fj8cLiAoZpe4As3Ly3Mg>
+    <xmx:xFzFan_bJKshmPG6t6oBRwa_uMYiWraOeaY7k6Jxp5d7Cd3Z2Xzv3ZqY>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 16:33:46 -0400 (EDT)
+ 6 Oct 2026 16:40:35 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: "Patrick Steinhardt" <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [RFC PATCH 2/4] doc: gitbreaking-changes: replace msg-ids with
- URLs
-In-Reply-To: <c85f5906-630b-4335-a7ae-09af665bb335@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Tue, 06 Oct 2026 18:38:30 +0200")
-References: <CV_gitbrchanges7_please.d1c@m5gid.xyz>
-	<URLs_not_just_msg_ids.d1e@m5gid.xyz> <ar0OltAkeTiCx81c@pks.im>
-	<xmqqeceaa5h9.fsf@gitster.g>
-	<533e2f52-2c9c-459a-9fa1-dff3ef4bb2f9@app.fastmail.com>
-	<xmqq8q4ew604.fsf@gitster.g>
-	<c85f5906-630b-4335-a7ae-09af665bb335@app.fastmail.com>
-Date: Tue, 06 Oct 2026 13:33:44 -0700
-Message-ID: <xmqqjynud0wn.fsf@gitster.g>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Tuomas Ahola <taahol@utu.fi>,  Julia Evans
+ <julia@jvns.ca>
+Subject: Re: [PATCH v3] doc: don't require a SYNOPSIS in section 7
+In-Reply-To: <pull.2246.v3.git.1791305670386.gitgitgadget@gmail.com> (Julia
+	Evans via GitGitGadget's message of "Tue, 06 Oct 2026 16:54:30 +0000")
+References: <pull.2246.git.1790957227881.gitgitgadget@gmail.com>
+	<pull.2246.v3.git.1791305670386.gitgitgadget@gmail.com>
+Date: Tue, 06 Oct 2026 13:40:34 -0700
+Message-ID: <xmqqfqyid0l9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -108,35 +104,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> What if we used footnotes for all of the original msg-ids?
+> From: Julia Evans <julia@jvns.ca>
 >
->     <URL>[1]
+> Remove the SYNOPSIS section from the section 7 man pages where
+> appropriate, to avoid having a section that contains no information.
+> It's not the norm in section 7 to always require a SYNOPSIS.
 >
->     [...]
+> Update the perl script with a special case for section 7.
 >
->     [1]: <msg-id>
+> Tested by running `make lint-docs`, and looked at the renaming synopses
+> with this fish script snippet:
 >
-> Or maybe just for the ones that need URL encoding? I personally think it
-> would be better to use them for all if we go for this approach.
+> for i in *.7
+>    echo $i; grep SYNOPSIS -A 5 (string replace .7 .adoc $i)
+> end
+>
+> Co-authored-by: Tuomas Ahola <taahol@utu.fi>
+> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+> Signed-off-by: Julia Evans <julia@jvns.ca>
+> ---
+>     doc: don't require a SYNOPSIS in section 7
+>     
+>     Changes in v3: Make sure that $man_section_number doesn't become
+>     undefined if the first line doesn't match the regex
+>     
+>     Tested on a file with a first line that isn't well-formatted to make
+>     sure it works and got this output:
+>     
+>     gitdatamodel.adoc:1: first line must be formatted like 'gitfaq(7)'
 
-If this is an attempt to cater to those who prefer raw message IDs
-over URLs that encode them, I doubt it is an improvement.
+And it aborts the whole thing?  That does count as a lint.  We are
+promoting the "assume the first line is ..." to require the format,
+which is probably a good thing to do.
 
-A footnote placed far down the document that merely repeats what is
-already in the URL is uglier than simply using the URL without such
-a footnote layout.  The cost of avoiding this ugliness is rather
-small for such users.  They have to extract the encoded message ID
-from the URL, perhaps decoding it manually, before using it.  That
-is not too much work.
-
-So, unless we can use a clickable link whose text can be copied
-to get the raw message ID (which even novice users would clearly
-recognize as a link rather than an e-mail address), which we
-already agreed is impossible, let's just provide the URL.  Users
-can copy and paste it into their browsers, and many terminal
-emulators will let them click it directly, as you mentioned
-earlier.
-
-Thanks.
+Will replace.  Thanks.
