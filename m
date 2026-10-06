@@ -1,156 +1,142 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3E1388E5B
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 20:27:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791318451; cv=pass; b=InKwda3KGC5pOybNmInM1IbYcNR61FrMXHbvEs1TMKl2ZCz4ZWM44jM72MxKFPHQQ660KHqn1Jj2s5fgKjxxAE6wFOw4DXGqyWVnu355x/TVWk8/bYL8kz9RLoD74oGSabgj5AX0B+tFUjuJHyFLKBXbE5OtQsJQHrlnQbp1Mzo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791318451; c=relaxed/simple;
-	bh=GpbUWEzN0dPBZQ3FIUP/6bnuT5dg/h37e7CScQDGBow=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=nTA+mivm0h99wMur/35kR3RsYbo/ft1zuzhNmf0ZdXGExKHTN6nn9Gm1/2wAI7CvFFVrS2nKBfY7u74joF0vIzXjxrn3gWAW36i4xkb8EzEYcNHbdy3E0wsvTgBuFJFygIDIWf1o6cyTWqO3MeBRrQVYmDEcfrzYVGP2DivlLLI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HxWO5oBy; arc=pass smtp.client-ip=209.85.222.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC723B810D
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 20:33:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791318829; cv=none; b=tBjVdYYmBNaqWD3Qaa99r2+F6N1oJRJQt3GzQJgOYh10RppkFSYPypsQZjHQeZZL1x4+tOgT+O+ydN+9MDgLxFFxm0lLvMN3haZyIjmF7xfxGN/3qFySjLrtf6TMDCbshNMJr8P972QeaDJlPiE6nrcsJraJnnaqfb3D6+6JE+s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791318829; c=relaxed/simple;
+	bh=aA9N3Q7m/ijm0Y9PwaU3uTxA+Kf8pD41lbSoMmJtq7Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SnfIN5XlzyyBOTbEtXo/5FLPpauD1D+iSJ1EboA9a5X/f9zSMbJeA4cf0Nq1RruO0ozbvEQK5AGjv0X4DISMyqZaLjfM4liLv1B5xv9PJ0inGIbiQRH4usglsC/hAqvcMRxeo1GqqdeklZXeLSAsmZJzdXRt2dEy8s/t/ruS/tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MssnaiRg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b/7UENaV; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HxWO5oBy"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-98076bb236eso537503241.0
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 13:27:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791318449; cv=none;
-        d=google.com; s=arc-20260327;
-        b=B70pEYX6PQ2e6B1gfMrdKIbLpBVRjpPP6EdZYypzJVgApShY6YioUWLXuJUjXePqhp
-         esKkjhbrbi6gsmTl6jsfBb23L0KO4cgvsM1TaGyc7JnSjB1/vTpPtzli/6XfjFPtFkr/
-         2rGH0/sNfyGKPjRci+2eHxfQUXOHcYvKO65ZCa/nuL6SPdBY5V1ESG4hEY2NE6rMcFi7
-         DOFe/USCOKxqKHwauTRP13msH622MDnUhffjOle10K6xB75a80cEJCqXSE/JiYW41K7U
-         ZAdM06bgFQvVLh0EBHYpxFjj+8uIjWvJUQ0yllFv8CSzVEatRs+6MsiV6F+gSbXIGTVA
-         HEEA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=GpbUWEzN0dPBZQ3FIUP/6bnuT5dg/h37e7CScQDGBow=;
-        fh=jtgE51wPZMyrw4IlX8IzlnMZfRYUlqk9Z9x9bMB7qFY=;
-        b=FTbivLpYjEgxRX/2So2GoUxtSHkZXzXYQ6Rt9G+5BlI7k5cuzbFH28ULS8ZpsnRFml
-         Dutu/ot8LiqpKnmqICWxT7tet2u9pG/YoEPozKRC44/U1fO2D6RhXc8F6EC7P6H148PQ
-         zukOv5vsaSWBHRo2LmzEAz1a6YRub9KJrJSyS50iJ/g/92OiXNE73sn/MU1s9SeJVvE0
-         O0+PUK9Sbs1qKobj24SNfL+5OwqUeq989XYwkrqeoZgo7dmhzGnUKSnHEqUE+SyrPouD
-         NyQyC8tPtDWxyMUd6Z7Xz26zxFN/kagHfNEl9uMi0k+Jwa1/DS58ottBq9mbLxA6FPlR
-         S4Xg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791318449; x=1791923249; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=GpbUWEzN0dPBZQ3FIUP/6bnuT5dg/h37e7CScQDGBow=;
-        b=HxWO5oByIXKKa6ryH1xo9UCfk82Nm81udjS6WVcFMuHHQbdyRsf6lDvHemXuoA+Dis
-         epLp8Z9VUn7eqzxjc5BUm5uxj0ZzFsTmuyPepXJiWJ4DdlaZreAlxJKbaWcrzyLzJNeE
-         oNWKhN8mlsMI/r65HB5hyloGOTp7/0cI9NFjL5/kjqN9BwXuqT5ly8XSsz8LBfA+YTao
-         eBrE1x6Em2q86iRkGxqBeIHe9vm0EFOl/qUHmJfPW34EvAWYzWu0W6HZaGmn/OMiieTp
-         ddcCn8LgCDCLhTz4kcjnfU6QsxjuzFwN6XGYinL1h+s023tDxAcTYPlTzrd7Vv5OSq3j
-         iOTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791318449; x=1791923249;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=GpbUWEzN0dPBZQ3FIUP/6bnuT5dg/h37e7CScQDGBow=;
-        b=LDSX6n4VUFRPkwoXtPcIbw1mOq3Mtb0WSslKZl3BEGMGyGgiEU11EJJfKKCFmMmsKa
-         1NGCK7buSXAUl2eK26OAWeEufR1qqlhpAPpVSO/53Pxu0VGCe7cer7h8WjgAv4CFrFew
-         0JGT86bc3WEqzS8SsfgzRmHeQ80NEZ71pAx0pMhwLJado1p+8J80gQks8N4vQBrYR7T8
-         QqTmDWfO12adr0+fs3HyQU7waMnmZoL2VrhcajJTmFUhpYmz+JNJIwj7ZVvnwN4ZXYA5
-         QeyBIeWmyMD2R0QPlNLbIfxKZlrYiMjm4ByuKjgsfte6XR4swtW4yYOIsrR/MkgW1tnt
-         FtsA==
-X-Forwarded-Encrypted: i=1; AKwUvByhbKGdWwEk8XDvot8GX3IjsUnohgtqiVJDanuP3NmrKldicI9Mc3OcFn1dqW6xJXzr6EM=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIXnoIKFvoG7ue/67YEE21NRL0ubcw2kO9ab6iFLbrPQJj0MhRN
-	iJTHyKdnF/ARKqtjvpIusBuncIRpoHkP2goM3TTCzAc/iGLB5oR/pLRhZ0dkbAsHzi13b8RYyBM
-	g5hVZAHHd0aL0Q7xmRfQzZTywL0v7tLs=
-X-Gm-Gg: AYBFou2I65fR8UZHRSNMBcjtZ4ENBmp57b954HctcnMPFdfzSCrGXuic3VGR0LaBGek
-	2NJ2tj1QOi4PRvcVBu1sLsaoF5XlSp7iWYn8x9xOkGFQnwMbfceyCa3+DDTm9ptLxvbWwPLgnRM
-	ol9L6e46zWigdFA2QZMGdmeRhuxJwbqSeub84ZnM1NK76Oy9eVLT/YO6XKGGw9ENb0cZWxz0CMu
-	oIGQtU2It9WZt2IIGJYSp1eMqW6iBbGZBPDUyuvPIDiXlt/9JupJeTnPO1GF/C/qhW6atHJpisG
-	be+5YIqBupEluyuOjdd7aUyVzfF1lIoOcqKs140OWO5xoJVOleceHNmmefuRQ8BOLc1upGAyJXU
-	jRJR1d//8SYdBcHyhQUSTuZ+9/vVHetkr8IkCikrBKg0O6A==
-X-Received: by 2002:a05:6102:4414:b0:7a1:88cc:6787 with SMTP id
- ada2fe7eead31-7c879e06c23mr880882137.12.1791318448516; Tue, 06 Oct 2026
- 13:27:28 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 6 Oct 2026 20:27:27 +0000
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 6 Oct 2026 20:27:27 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <CAOLa=ZT7tOCBtd3hHfXgkFaqgMgCt99HquD=hZ7WB0g3PbErKg@mail.gmail.com>
-References: <20261002-pks-odb-move-alternates-v1-0-8a63507b88c4@pks.im>
- <20261002-pks-odb-move-alternates-v1-8-8a63507b88c4@pks.im> <CAOLa=ZT7tOCBtd3hHfXgkFaqgMgCt99HquD=hZ7WB0g3PbErKg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MssnaiRg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b/7UENaV"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 31ABB7A0179
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 16:33:47 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 06 Oct 2026 16:33:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791318826; x=1791405226; bh=nugpkFOtt7
+	SJ3We8bax46sYNuPIphezv1jmm+Nn11Z0=; b=MssnaiRg+IDROu6QtQ+2eecxad
+	CVJbVL4szkvL2/na/1ACmGuxXytDQYXgXNuPIC97g3qtRRXVoCcISnn9kDwtLppD
+	elB+RuLG7qnTMpduHOXPj4gOy61JBkXG3//4RgsWAgUBaeyl/ctgLxhuCKHHQH7H
+	bglONd2UQP8Yq6lQMpc7eCEUzahAuVkodoZ91emD1vlMXXWp+GshcYvnJUAYW2g4
+	8ed3fbMPMmQtCt7viRgZ1bCDwwIrNRDNKLDCjjHxFXaMlsl0aj9Gx/XY+brcHOsE
+	sjwodxI/i/IwgJE+VHlKciToAUJGg/Bq/pWJZG6So2ryFyfkxDDSFYUmjXYA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791318826; x=1791405226; bh=nugpkFOtt7SJ3We8bax46sYNuPIphezv1jm
+	m+Nn11Z0=; b=b/7UENaV2tBCxZmKfOyVbUpykSZDwGO8LWcwnggWXXKvnZF2963
+	YuNNujSFHz/Z3yE9gT7EHFkKiVQt1wm9TKWAncIK6p2XWlLl5gwzC6wvXgukhxUt
+	NX27AFR2/+LP/QH2I3r+BCTXefqaJPWBpH617jZ9WGPLKnst9pcvAmdVQhX9Ql8m
+	rveb5M27fsRvCXOvyxy+qM6FHPppGw1CgnZyh0uBpi/bIEzKAiwARaAM1Sno9q9u
+	cPgwYtUQtCE7ptjpufXGFxHe27gNJRp0gL9vCJgy40s64L0PYjC63NKnfcuvQm6R
+	sVgdLW3u9T+GC/MMNdvhBjdWlZWABqwaJ4A==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791318826; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:jwV3/E8DE+q/HQPWpV2x/wttuEdEIVsNVawTBfZbwDC2Fu9
+	6kX1BK5yRmP/3EWoOapHt75qRRco1MF1XDcv5sx180kFHdJHgXwpwjog3quRG+dj
+	IiKK/vNHh10GSXsas2kcHkECXn7CkzrXg4ZzxZWiM1BEDTzCWD/lm2FQ/UuijiL/
+	DD/l9qm/LwQJV7Kb2R9U2ONBWlRvxS7QYeh5h9hGgh6qactYj8oHygdhJd8pbuac
+	ub8FvS1JpppJTwTaQg5mXa4+B+yviyFI0c4ZKXMwh+kOyl3CJP9tEQCTv/ZYLyyj
+	P2XA06FYg8hU4hvB3mXXro7tkp0BSM4vP8cfMJg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:m98ocKa80u6TvxIxteEdINArKLNr/DbCloSYinFfUSE=:aA9N3Q7m/ijm0Y9PwaU3uTxA+Kf8pD41lbSoMmJtq7Q=;
+X-ME-Sender: <xms:KlvFaoeLsdvoA3hZsG2PeZ2dfWVCxWy5CdOYKt6auay5bCby9s5OqA>
+    <xme:KlvFahNzliNwGRydXGlu1_y1LZjeB9PBZ7CTNGyb4ggV2pu9y-cB4Gze3dq8npAib
+    bij7Jqp0dHTh-JAT3Jg0oQ_LkjpBIBWl84bqpcqil-zW7s-xlOPng>
+X-ME-Received: <xmr:KlvFauge4E8OY_hhSe-H5vVizFNSwWh-8NH-S49Hc3XPtpbGnpKvt6RSl8LYiGMy-PKSUL8_8JHUJ1smlePtECOjs4vBQdg37y_h>
+X-ME-Proxy-Cause: dmFkZTGa3IFQ3HgO1bvaQRiWWz6Rs94BNZu6rGsISjqNvph9GTkrsgRhJ/zZ600BRw9eJN
+    cYHXCE0ADcsxasXBz/Fuko/XAA4NX+agolxgY7sj3WgJ04j4uSmdpAONtlFAHVF2KRh2LH
+    RAgMZYphDvVUwy3BDzTVmDDmoe9/2yU0YHHeUHtfC4rcBhKCy8eumHuXzzs/tt8RoyjE0e
+    j2txv2Cp3Klslbar7Yp4SB9Ti9oEHrrVQo4R+7ijyYfcLkUXsMTgvOfKqop0bqPen/yuKU
+    QgQSLjB+Xu0vCoMXmZZRfcmrj70GWV1qMCQxatWErjV9jeQAMa0pcyebFrTBWWoJ1kBElM
+    dCgTobgBQyEfdwOE+wF47oDh/vXH+w/XPeVLH5+3AcHvrB23lUDcr7a7pRHSXaBGYnaT2Q
+    t4IyniYMR5t5+dH+8Ij7+cWlKiNcYa1rv/2z7NoEi9x65cCaz3eKDDLZgOvRpyJuFyXRT9
+    Odo1/RCuY1cUs8pvJDw9n+w2p8JTIaJYJaqy6cz9zsJC5KF21rBXARD6loKc5DYgAaSdVN
+    vGVg8J/8TABrQJnpl7W048gjnORbiOQ+2sYMO46xmRx39w8jLhD1eKv4xaQgbnyM78wDUS
+    GoU1fuk40Ukw1dDIUFsaolTra4kNBjq8rDzagJBUtLquPDQtGdeBI0GjKGCQ
+X-ME-Proxy: <xmx:KlvFas2mMeWQQSFb-UDt2nAUFufDqNG319aKdkxKZutyiscSsH4deA>
+    <xmx:KlvFaghpPWqPh2kQI0R_t7CQywiSeJv5ylektHK7uYswPIF6y-5jsQ>
+    <xmx:KlvFakc2eXphJMM-gQ0YBLtvUut-6nF74VkxzB4EHGkPG8P9gzS0uw>
+    <xmx:KlvFarn5vi_mPY1CMoVEV7c71e2mj_JRgZIWo3O4a7ZFWx-Z2Su1Dw>
+    <xmx:KlvFalIn_wybB_Ums4aeUEgfXXCz3rLSBT2WyqZi275nCjUGHywUCI1I>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Oct 2026 16:33:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Patrick Steinhardt" <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [RFC PATCH 2/4] doc: gitbreaking-changes: replace msg-ids with
+ URLs
+In-Reply-To: <c85f5906-630b-4335-a7ae-09af665bb335@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Tue, 06 Oct 2026 18:38:30 +0200")
+References: <CV_gitbrchanges7_please.d1c@m5gid.xyz>
+	<URLs_not_just_msg_ids.d1e@m5gid.xyz> <ar0OltAkeTiCx81c@pks.im>
+	<xmqqeceaa5h9.fsf@gitster.g>
+	<533e2f52-2c9c-459a-9fa1-dff3ef4bb2f9@app.fastmail.com>
+	<xmqq8q4ew604.fsf@gitster.g>
+	<c85f5906-630b-4335-a7ae-09af665bb335@app.fastmail.com>
+Date: Tue, 06 Oct 2026 13:33:44 -0700
+Message-ID: <xmqqjynud0wn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 6 Oct 2026 20:27:27 +0000
-X-Gm-Features: AclHuK_InbLbeiQgVwSip9M1c8dVvPR1q7yRP1tQGeMTqFgciJBOFq5RgOytTlw
-Message-ID: <CAOLa=ZSXdYjfX3Q=e9CTq6d7bLReZZD9QECUWYKqe3RJFttUCA@mail.gmail.com>
-Subject: Re: [PATCH 08/13] tmp-objdir: manage quarantine as an object directory
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000d362aa065d31d3c2"
+Content-Type: text/plain
 
---000000000000d362aa065d31d3c2
-Content-Type: text/plain; charset="UTF-8"
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-Karthik Nayak <karthik.188@gmail.com> writes:
-
-> Patrick Steinhardt <ps@pks.im> writes:
+> What if we used footnotes for all of the original msg-ids?
 >
->> When creating a quarantine directory via the "tmp-objdir" subsystem we
->> create a new "files" backend that new objects part of the transaction
->> can be written to. In a future commit though we'll move handling of
->> alternates into the "files" backend, and as part of that it will no
->> longer be possible for us to have multiple sources attached to a single
->> object database.
+>     <URL>[1]
 >
-> I understand the moving of the alternates to the files source, I didn't
-> grasp the need for removal of multiples sources from the object
-> database. Wouldn't it hypothetically make sense to have different
-> sources which use different strategies based on the type of objects?
+>     [...]
 >
-
-I see this is explained further down in 12/13, so ignore this!
-
->> In a preceding commit, we have prepared the "files" backend to be able
->> to handle multiple object directories. We don't use that mechanism for
->> alternates yet, but will start doing so in a subsequent commit. But with
->> that infrastructure ready we can already migrate tmp-objdirs over to use
->> this new mechanism.
->>
->> Adapt the subsystem so we create a `struct odb_files_dir` instead of a
->> new "files" source.
->>
->> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>     [1]: <msg-id>
 >
-> [snip]
->
-> The changes themselves look good to me!
+> Or maybe just for the ones that need URL encoding? I personally think it
+> would be better to use them for all if we go for this approach.
 
---000000000000d362aa065d31d3c2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: b783259cd85c4040_0.1
+If this is an attempt to cater to those who prefer raw message IDs
+over URLs that encode them, I doubt it is an improvement.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1yRldhMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md3ZTQy85L2ltZFRtWHIrUS8yajVBV0FoWC9mWEFFZQpYYlNwTjBKeWtO
-UmhJeW5OUXpueW5HaGovemwzdzA4dTNnd2hQWThQYURmdlFKQndxUEpGWEx6YWh2N2cwSWRPCmtD
-ekgybGU3WVZ5d2cxcjB5SERLRnJqaUpYWVUvZ0JqRHBUUXhia2NabFdNbW4rZGVtU0J3MmZYMkU2
-SmNDaUYKUHdYUVhmSzc2ek1zeWQ4MlBqaSt0RTNqMmRueXVLZ1RTSDdiNkdsNFVTZkRzRFVkejJx
-OHBtMkY1cHV0ODByNwp6bmU5S21ua0VhS1FDOHZwaFpSWEE3MmllOEhTQ055S2lyNHozY2pnQWNN
-MjBmL0NWU0k0N08wa3E3RDZJVHk0ClhjL1orbm1lUXlLNHhKS09BSFZKOEJVU1NEcVY1VkE3cDQr
-eURtRjNsMGxtNVlCV0IySmRlSll2clcxbSswZDgKd0JhcFAxRkMzSVJCaitIRERsaURDMnRBZXRt
-elRmUDQzRkhwVjh3NGMzSE9lZk93U1Q5clVPUEFtbXZoZUF2NgpJNVF4ZjJhaWR3TGhIZUtRV2xn
-ZENjclRKd1Nyd1pkMVNDSWdSRUFYbnk1N2w2cWFOUlpPbStIT0pPd3prRjNoCjdBNEZjMlFrMDBO
-Zkhrc3JsVlhkc3FNU2lmZ1l0d3dLUzUraDZCMD0KPW9sVVgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000d362aa065d31d3c2--
+A footnote placed far down the document that merely repeats what is
+already in the URL is uglier than simply using the URL without such
+a footnote layout.  The cost of avoiding this ugliness is rather
+small for such users.  They have to extract the encoded message ID
+from the URL, perhaps decoding it manually, before using it.  That
+is not too much work.
+
+So, unless we can use a clickable link whose text can be copied
+to get the raw message ID (which even novice users would clearly
+recognize as a link rather than an e-mail address), which we
+already agreed is impossible, let's just provide the URL.  Users
+can copy and paste it into their browsers, and many terminal
+emulators will let them click it directly, as you mentioned
+earlier.
+
+Thanks.
