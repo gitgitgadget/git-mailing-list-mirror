@@ -1,99 +1,103 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D18145C71C
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 15:54:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DA43B3C12
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 15:58:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791302052; cv=none; b=B3RjtpjyjGqUZS1SxsUdmDJSlB+xHl1VRX2NetkjOyO3ebzoEavc8V7mnBopqtSaQkHxSD6tuR74rOpn36xlET/zciJH8IEUeW+D769idHjtdPApj1pWW1gaFgdxfEj19F1nGJiBOZt1ZmaJDU3pbmqh9EHS/VG1elbnqWFRwlg=
+	t=1791302299; cv=none; b=jK90PQyInlEx6NTUBsKchmfrY/XxGZewHJZStrMVbePfmxObDe/EQ5mLx9wLwpsNxVUxXXueG+UxtJIc/e4aDMvz98u0aU9GpmDySs+DcyQfA1+tyueCL+rBSWO/QvE+gSfM4DESe3DzDQYiXmorCb4xatto09BpQEat+XjHrrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791302052; c=relaxed/simple;
-	bh=5DN23onDVEmO/zro5Dwiw8h6mpCzyAfcA6opQZ5k4aw=;
+	s=arc-20240116; t=1791302299; c=relaxed/simple;
+	bh=39Fbnl1WXdqI9USyFms1how0PKR9Wqz7koryqJSCZlo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JxeQ7sbpDlvkRhVRAsuQIJDDDdCfMjdNISmb8BUVp05e+5fwuBgKrYmJJJrxsUx/gK5lQnv+jCadcxFO532uNRjLb/fkbFZz+TsRSf9yL47CU+1HLb4s7xaTFPJy7PLJT+YZwPdwBq4T9dTsPNM+vWerT0ki3x/rWlVDdiyu6YQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gI/qh+gk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HqJMMiIJ; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=PME0ocNY4W6bOX2egenfcpdtvFoGoTSp/Rj4bwSScO9qtxPKO9mOWXpKXGpbpoezg5Co1JOG9k1FrCpURDxryY+IKMT9Or2W20Bzj9bmWOFvAUGcFm2JQPDucB7X7xYWGj6YAZoTBRF7ai5GSV69eok+Rrc3SITr+eVg+O5oINE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FSej/OND; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UW9gLCIu; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gI/qh+gk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HqJMMiIJ"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 73796EC00E5
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 11:54:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 06 Oct 2026 11:54:10 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FSej/OND";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UW9gLCIu"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BEFC814000A9
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 11:58:16 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 06 Oct 2026 11:58:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791302050; x=1791388450; bh=KORPhUlcA0
-	KPfVBwmvQcBdcSWyN0TgoY1D2GZdDUnVA=; b=gI/qh+gkRBQ6OtppYtGuByEr3r
-	PQ1feOgjpE38TWQbe52LSR1jxDEyBAvemhVBxrGzjA3w7bRa6CQiPusHfEfQCgwK
-	6ddRyfY8u+puPWhoNXTYJo0D9Sw0BSMxl78Pf0pKKJfCYGt1eyFuIurtUgQZYARi
-	TGlSZZsg2NBk4t0y2XPP89n4+Ut5HpXhTFnLlOCT9kxbHZY8L7sUv+8J0gL2kKIU
-	VVDHKHhU/H/7CRvj1PflKrgkLUEHRC+kXdHmA3qJBh/iO0hIfj4Vl4J8qhbAbn2X
-	a2UkBfUPwxB5K/9/15AsYf7idTVURCg+m2YPDtIeSNnNk9uYvw+bYpqFnp5g==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1791302296;
+	 x=1791388696; bh=9F6fmY8zEXjdczfHD88Rnfmmu/cLsdWoOrB31S3wQZw=; b=
+	FSej/ONDHKn3JiyId1ymEaik+n9VA8LFgQ8ihjT10gG10l/LY5k7oHgLBajsg6aM
+	uDzIxOwhfyxqylvVQPaEgkUzkSme/K979DFF71heyr7sjGYexNCYeIx/N6wDSF+g
+	hqdz5Z2MJ1I1h5PDfUqeQ7ddMJDBsXBI/Ew1M13GqnWHxuusLfIv0p/nZXFlXWoh
+	Iv3VNDc/55n37IjiXGFTDbm59inM0gzbCErTdOeW9wqkIESEZuC/r9sxWGmdGsZc
+	9v4JwiHi4bOuu1i81RH3m3q4mFuf5kUsQwi3J9o532NGKRox0SO1Y12Sb5m6ML2Z
+	JyWmzc1USCKjoXGzMgPUCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791302050; x=1791388450; bh=KORPhUlcA0KPfVBwmvQcBdcSWyN0TgoY1D2
-	GZdDUnVA=; b=HqJMMiIJHyrlGK3mQR2G/gXVSvc8XWlxnjjViWDpOtcPC1qgSbY
-	0/EVa4BR4URwJgmOl2o5gMYStxc2Ltm3xLiYkk0sX4LODQWV1Std420cs/pa0+84
-	pD5HwjcQlnFm4H2Lmnefj++n8nufCwWjflUW5qhtGLKdc1Na8JoIvx6epHgLkE2x
-	yRqQvjmvFhvvo757WxpZhZZ+9pK9ouPkrx4S7kK1iMCEZ8E+l94II7okV1+wBCzS
-	Ynmbi9GXUuL2cKH/hi1FM6rBgD1w5Gy/vdfYkhrPQ6nBAeaRD0+rojpsvH1WzBmJ
-	hgn5V8kUfK/Uz+S7XPR1pd1FTFaFLkJcTUg==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791302296; x=
+	1791388696; bh=9F6fmY8zEXjdczfHD88Rnfmmu/cLsdWoOrB31S3wQZw=; b=U
+	W9gLCIuZNptHv4mZbDc6CrmkgacjbjyB2Yz8sJgradIWHK05EBqNmzqG5HIMWLjC
+	ccdAPGVxtUxj9pMfg/O710jl83SXJj+2C8WJwnT58e0bno873OSElpurJW3rajBD
+	injLWGDuMurxIscPeL8rO3Xe77S7YeXMz9hTOXmn+868Cl3F/ifVao/QZaEDmXN2
+	UTpPd022yoxbYqZROWWaOknCdR257ZFMGC5Nkoj60FXJLa7T1hc4mL0loaEzAjYq
+	6mR0Fp5mURl51eAYmnUrBNdbrzL38ohAO7tU4m9BoTCpeW98oxYv3pZx3tLzfUum
+	Mlv9X6qdhuq5oQ1I/57KA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791302050; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1791302296; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:Hb4aZCjE6BYdYCa3AilFkDcfD1igb1Co6oJrZKyr/RDbcc4
-	MAFqOON3jYi58ZGrkA0yb3/1kfOdPBgPOVdCyUsDcqPfbuZXBsa+MfaUkRs/GaeL
-	N9prOz+lQiIq+0VyO5Uu8c6bMi3mIelA8bqAYkVt6VzAdsHfHz3iPYMRtwQkwOk/
-	0UR4wgQ/YnLDchbXR8fv1Yw8yKXigNbXqQ3Oeybe7qvncoFZABgzhFI9LyHVjXUv
-	tgnaCl1stYy9lwzuOBYu2g8T+AlUTr/Xvr5YE0xxl7X4UM9QLWcRUfBDRQjbvSA5
-	fg4FM7i+QUop9hTrGVKB4j3WenQlPefw5cRCPNA==;
+	s=fm1:rsa-sha256:TthFoChgIDWq2vI69XSaqtpmi5KZHJ5y/jO7myKln/nuo4q
+	w+ekpvDXyORwnL8AWQKBOgoVGyt4dA3DeQoVwfoOK8si9KWSYxXnNO/h7ESSQCLA
+	HsRlbqJd9h3Yu2dcox+YaDBZUs0bogexC/j9vKBLK1dPS+r/1PAX5nqLTWVL0r1R
+	bY88Ws2bpQ231wlrY1vhBlHoAxK4Ho1BQRQ8xBDU9Q6OeX1fGwPf729mYyrB1lsY
+	4rPOvtwant6vD1rJSqKRNp4UfqpplGWzoLV65fs1mijFlEAPURpuSnct4On780tp
+	9Exm+X2/2bZNlbALtNU6Zr1S0xwx/OQm/kLi52Q==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:zdFck2G+5DwtTOKPHKnGxy3LZO6GacB6t2L3/Q6f7Iw=:5DN23onDVEmO/zro5Dwiw8h6mpCzyAfcA6opQZ5k4aw=;
-X-ME-Sender: <xms:ohnFarWfbSsQwA9PxIzfhAz_FDjag5gZBuWzecRRVQpHDYKmojBubg>
-    <xme:ohnFaqleNI9wtOcgT5SicMHdBHCvK6Wr4VzSovuZEpUYiXxwNDYlPNTki_SM7Pl1R
-    4JaxYjtfFE57LPt_vXNIyXjDiWNNPsUqGsGpddTz35s1QH2_UuDaw>
-X-ME-Received: <xmr:ohnFasYxDkZKp3OFC4schYFwmX64jV9uRks0FqLjkDI4X2jnz3o3jk8IADlX0BIu7CdCB9DlJrQi3yOJXG6iwD-Kzz2prp5W4yRf>
-X-ME-Proxy-Cause: dmFkZTFdEzq36cykNoc2OqXsRhkBF2KzPbU3OJ0JNOoTPpLH2AASO7BcdlFUJjXxeUKm3j
-    /OxoLEdr+RKxjjOuKFR6s7dih0CPJud0eka9wSaVJI+uHIfWBb4/iZrfouCXqIw2eZjzJt
-    EIL/csYBIczEZ5iVNxgZnkE/K8MUJebPGOx09uRmZY7uCvhwHEsvAG4nYKbULi5YqU1hj4
-    oQG1MAv4bZmLJ/pP0Ca+wV2/qDun+21oyj8aH9fiOliRnh7yb34rN8fWwoxcN1bt8AjXb9
-    EaQOQ2Mac80jxj5KhwVtUK707fHu+klM4RC4vlx+5vFY//F8EpJrO7ceXfQVWW5n7sXMjz
-    VJkP3KkJiwqqXGzL7llSkgoVmGxye0UHllKOL9Mp8Z98WSFQ/AA9c3oMwkP44FkQ5/mkWV
-    w8X+va3zFPnujQuwIywO5gGmBicfUKISaDG85xLEqj5yv57BSFnvIQG4SjF0E82PoISn4X
-    NF1meMtGceMfuUjliDZ5kniGLS0eeC99W4YtWIQnVpYWdEwVcD5hf9g9eDQdDxWCsY3WUv
-    WP8s/46MLf716FS7eyBb2Ym13E8TNyPMkGwwfWWXwMBBN8wmVIBkGZL9/nvpnDFTrFP093
-    lWvQ578F1fy1ki8wRIEx0KMw+BYaf8jwduKTFpGNrdngVYT1WwrCOhGr62xw
-X-ME-Proxy: <xmx:ohnFalMjawRVOtpPPnBYWD_drkiCrDhzQ724fknzwzOgqBVFTBrvxg>
-    <xmx:ohnFahbSH1uTe07IkLPB4yjEUXNUfNR1BEqHdXcGdVOfI2qS1YWHEA>
-    <xmx:ohnFaj2FKnI9TNShS6kWT2CpKuuXYRyW2MA1mmJuhCCKCmNil0HJ1A>
-    <xmx:ohnFanec9hEcLEPNJw6YdYwc8a4Fm3UKTxexRjjVJb10GehThL1Okg>
-    <xmx:ohnFan4LMVTaoTkDMg1Djq5j0NZ7LEA0Q77WfV-6P-xiWGR6TOktHbVh>
+	action=mi-m=1; hc=13;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to,
+	user-agent;
+Message-Instance: m=1; h=sha256:BeSDWeivzbfo4+Jjczhg2tLl/Gfv+hkwD4xo3SISeJU=:39Fbnl1WXdqI9USyFms1how0PKR9Wqz7koryqJSCZlo=;
+X-ME-Sender: <xms:mBrFagxUYsTaE0i5Ylu6u1smxyufVDCYQu9YpYL1bPvijRQXYcvmyA>
+    <xme:mBrFarRRnzs_zAYEQ7go7Z4pF-CMIVVWP_HUdsZyqb_32GA2Jo0NfRNi8LfG_RFUs
+    tehhyoKPRkc9B6GN5Zm9mXh16C7c8f-Zd4zV9gaI7ECRqvJKxpLz3Ye>
+X-ME-Received: <xmr:mBrFanWPF16WH3r8-qcYY7oXMnyegNIuTZEOG8qvLrTWzNL40k-Tf-kXhia4V_tElMOuZ5oaZr9mTURqYt3Fqdl8AEH7wTA7hZ0c>
+X-ME-Proxy-Cause: dmFkZTEH4v0KrLjhYjFTItwT1jhalj+dDT0IUDy2hkZ65XDnXhLuLlArIJzN6QAfmqdNNQ
+    yoJpyHJG1AGh9iUmTv/okwhYr6rJ4LkzB8iVYL1x/j/hb7SH1SYeme7GpnBW9oZMcHK7dZ
+    Jk+QCKawZ06I8uxnx8pzZ+a21oTwgluJ0zQOlQg7fHJvd3mwpl6eZnQLDONqbbXE4y8RTT
+    jHRfvtyP6YJA5JNi2Wn3vIYcbNG6c1z2F0p3IcmvH+QwstnZXHwIX8FlqZKzEnTdLL8Vs9
+    K9P4DoCkDSQN+MCKkduaYYGTKMShFFZkPfoz/8SUs8FNDrOrPF6Y5Z61ykXmGnQ3UlxeWo
+    rj/ooEteStDj8FFBTnLlVE8eD1GRN7TnmdPary0jmEXPrEPlPSF0gMgiMQbGXjwkvPVyEu
+    kdzBHCSXci0z3bFgA0BC8J7XUffyph9XNbJHZ+b/GZVzCC2REOEDyj/8QArghjyK5W9UrB
+    XcQtBIRVw7GNO3QyRBHtSK7wmsqc0JO12GUx2mgbRs0AO6h/VoQo+/HpxLK4iVeDUD4F0d
+    ICVI8V3H6zWodflXP7GXj7uMuofTVNyG2dQljLVEhy0seNPEuPjlv1Y5KQ6K+h+g/oms6i
+    XYQTKUaE04wpLfH5GBbCpsAZCtHQa4j0suyZEDmDwxa4hC2vWIj+BWXrE4/g
+X-ME-Proxy: <xmx:mBrFatZA58lwH2Ouu5K6tVpSUZi9Ln8QiYvbvsdEqhRaTq0TmSMu8w>
+    <xmx:mBrFat0UQMLd2UDujfu6JB_qDpLQwgtwGkFQRw6kLG8ewjh3AT0ItA>
+    <xmx:mBrFavi9WXhFKSOcrAWw3ZMCnzPxcl6ddkK6u0wOxTxJD42z9ED6ew>
+    <xmx:mBrFahbGbZdlKBp-E69a8SJBEnGjtn8SiMlJhHV8JnUataVSiNl4iw>
+    <xmx:mBrFal_iQgCezmwhzFMGxbjDc9jb_G6Jf2YJF1aHpd6utXdcW19OXDTV>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 11:54:09 -0400 (EDT)
+ 6 Oct 2026 11:58:15 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Sphinx <sphinx9692@gmail.com>,  git@vger.kernel.org
-Subject: Re: Question: behavior when reverting a commit from a shallow clone
-In-Reply-To: <asNKZpxiuFhVkVQd@pks.im> (Patrick Steinhardt's message of "Mon,
-	5 Oct 2026 08:57:42 +0200")
-References: <CALfz8Qx63qNoSbXq7C7u+KwX4=HCL7=uOUahpXd6j7KvW_c_Eg@mail.gmail.com>
-	<asNKZpxiuFhVkVQd@pks.im>
-Date: Tue, 06 Oct 2026 08:54:08 -0700
-Message-ID: <xmqqbj96g6zj.fsf@gitster.g>
+To: Souma <git@5ouma.me>
+Cc: git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v5 0/2] history: sign rewritten commits
+In-Reply-To: <f86f6cfc-56b4-4358-a9b5-95630c6504ed@app.fastmail.com> (Souma's
+	message of "Mon, 05 Oct 2026 15:59:20 +0900")
+References: <20260703145037.69832-1-git@5ouma.me>
+	<20261003134058.23494-1-git@5ouma.me> <xmqq5wzhv9c8.fsf@gitster.g>
+	<f86f6cfc-56b4-4358-a9b5-95630c6504ed@app.fastmail.com>
+Date: Tue, 06 Oct 2026 08:58:14 -0700
+Message-ID: <xmqq7bjug6sp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -101,41 +105,22 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Souma <git@5ouma.me> writes:
 
-> Yeah, this can indeed be surprising behaviour. The reason for it is that
-> in a shallow clone, we rewrite the boundary commit (so in your case B)
-> so that it doesn't have any parents anymore. It thus looks like just
-> another root commit that has added all files in a single go. And the
-> consequence of that is that reverting it will then delete everything.
->
-> Now arguably, Git could be improved here. We just recently had a similar
-> discussion around maybe forbidding to "git commit --amend" such a
-> shallow commit. Your scenario is a second one where Git should probably
-> at least warn about what's happening.
->
-> Arguably we should even completely refuse editing such a shallow commit
-> by default. I would guess that in 99% of all the cases where a user does
-> it it's unintended. And for the 1% where it's actually intended we could
-> give users a way to override this safeguard.
+> It’s a deliberate literal placeholder, not a real option. It
+> indicates that more  --no-*  options are available; typing
+>  --no- expands them like --no-dry-run.
 
-Yeah, I think that line of thinking is going in the right direction.
 
-It is not surprising that these non-core features (read: as opposed
-to really core features that were already considered mature even
-back in Git 1.5.3) that had many years to mature still has rough
-edges even today around corners that practicaly nobody has touched,
-and we should not be afraid to round them further.
+Ah, yes, indeed.  It is normal to see us show, without expanding to
+it on the command line, "--no-..." in response to a <TAB>.
 
-> I wouldn't warn about an empty tree in general. But editing a commit
-> that is a shallow boundary is something that I'd agree Git should warn
-> about, if not even refuse by default.
+    $ git commit --n<TAB>TAB>
 
-Yes.  Committing an empty tree, whether at the beginning of a
-project or in the middle of a project after you fed up with too many
-bugs in your early attempts and want to start clean, is a perfectly
-normal, if wasteful, thing to do.
+is an easy example.
 
 Thanks.
+
