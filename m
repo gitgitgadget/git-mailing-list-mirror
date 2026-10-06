@@ -1,169 +1,130 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9514A4A5EA6
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 19:37:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399751F192E
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 19:57:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791315434; cv=none; b=cwhk+uPfFxJ25U56iB116hBi7lAH+LNhIIqik1//uy4KsoUYFoGg8JCoUrQB1XRNzDdEaNN/46ik92C2GUk+LAjGyoRk0YX9PAKBVPDoT3W6u+1oKlhydAoPVwKx9MZwh7oP/UNx+1U3df8olOUQfMbyxWGn0/1P3zL24rdefLc=
+	t=1791316665; cv=none; b=ERWXbOHz8h+gX6kVRPqeco/BQdeztK2Y4rja18Kl/lYDrgA2Vfwk2B5o/Dpz37tK92i0WhlpmB5pENHo5/wkRTdjYilOZ59a58iygWGq3Ue/5GYeogZ0a8HCIS3oovsK45EyJtpmSa4iXTpvIUGYGZWFkw4gpEXnVHCxTuiJC1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791315434; c=relaxed/simple;
-	bh=wVveqzP1SeY6X64TdcY3Pcc/0QrO84FPs8Td7ny1t+Y=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=bM0hl27Y49DpOgyR1Yt/nbHQVlhgCtfO6hOE9NZQfHy4zcpyBkZZ7V6aIELLQQ89XchiIaljy/YfkBcCJHbccfg37OqCFUvcxTJSKOKgN3ySRGJr/QLXYZf91Val7T4UKgIhLz3qBJK/NbyqrO8ptYWzkIN97HWGBOvUV4xb0m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QHiBUB/u; arc=none smtp.client-ip=209.85.219.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791316665; c=relaxed/simple;
+	bh=DCSELAmPAKlOc0vaptQO4eNYiOZ4xbw0aCtnpU6uWg4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Rrd2bmR/2jZp/sgE2YMEEi/wEblLtvADa7wLWHYp/eClVKCRl12PIFyozRqZbGR/BziwyjGL791cm/6VZoEbJBuaysf3PkPY7BvNXEFOTsUDv3POGCYYhq7ylrNcLvHbz9zkQYwP1Zz2zSPGVfq69mykZAz33XUz8iJcozSP9PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FOU/bIAh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ti+HqG8n; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QHiBUB/u"
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-91968804af0so9908896d6.2
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 12:37:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791315423; x=1791920223; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=Z8Ax5iOdo1lhgUOIDFtVYdojy3xO3augQ87Smo/kuAg=;
-        b=QHiBUB/uAUrgNZlmtc8wnm6MbypTyDFrKsiuWSyzBz9MNnBtFdPZUdktvXNt0Pe/RF
-         Vyizh/FeiEoNWyEoD3suoGuRBl2b7l6gFeWchcoHj4+V25Btk/E57000oIkFCR0IO3Ym
-         X4351XdUYDJFHhHy1tLRbPtDVpRivWitbMyorfarVaC81K0CJG46GX0WcEH78ckzjJh5
-         Q2t01jnVPwxjG583fiAfKxbGdkR7L5EB3kMRjQClHjPkTMUyWgSwW1YwMCyZUe8ByFIu
-         9Z27QRyogrqRcody26T4dQy2ERJThCqe87TbdNVVNx4SbjwdIDKOaCbmuwaU8kwCj2P1
-         gm4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791315423; x=1791920223;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Z8Ax5iOdo1lhgUOIDFtVYdojy3xO3augQ87Smo/kuAg=;
-        b=TTkQXdEPhWKdfaqXYTISwpAbDfezQ7EITUEN7UFbYex7xTszxsS9WbiuBhplLWmghb
-         73rnfIq13d3vJY1CQTTB5Xyoc89EdvcEGlpEBe/695pBFGzi4vdctghSkh5oE2cyzMOk
-         3bpEQkwXotpiWM7OvXVKPqYSCbfCRweiOH1xtBKEPxkUHjUYIkopRkk02ABjbszqt+gA
-         M/UEeFlsde9eYl/ClVf4U3k950cRoNFCeHkouJZOib2G8c3OXWNnTW6f7PKcySbdasNz
-         UR3WnnjkRWdsfoWra4Y7fPjAmE4v1VkGeXPH80ZpdVLoykpZYm84zV+c/MZO5/1XoBda
-         qnXA==
-X-Gm-Message-State: AFuF++lUgh1FyLKHCZH9m3crGU31S+s4onUGbj6KkvnSiR1+M80m3zEy
-	7cT0NpMpkVNWj6kUCR+b6URNhutJPNqYbYczpwaIIa3idM/AhDZ9hmIv8xAl0A==
-X-Gm-Gg: AYBFou2iK0UMiSGJbbOTrgM40rMis+Vzs2TkXR9Q7Zh/XDgYLxrZP44tCumEachzTl9
-	qT6yMuMV8IYSToMAqkbH/S8sgyxCN80fg0r10ui0U0nojknuZIT0np/m6TludYcXHf+eD6pdbTL
-	EdZqdOso/PK+VXeZz7DUE8OBn2VDRBgp4u2rgJG6z+pgCaT9TNbhymm2jL0Plgc6B3/uKhoaamP
-	02IdjTeMVDe6lpCWJ6J4apynKooLBCtYkCFzzlN64UtNk5oOUNPPr14G/CJ0llZ3z/ajr8Scez4
-	sJT9k9foGRjFKn/fcGbdUju5p67PuXByEUPyzNL9AFTIJldY35/67GxJFdZ+iHRdMuo+AY2nnek
-	tLyiabC9lkPJGbeaap1VeGlrmcVg6pTMriS73HcI8tHxO9Aq8UTPiz+/RvIsMqw380TVIfpqOc0
-	LilOV+4NnnEiooMjWcoxy8Otq1503yYj7sn+/gDLX4f/TAPJ9zC6Vk5TQzmM9iaSWXRLL7629Pw
-	RNHSKDbHyJY7w==
-X-Received: by 2002:a05:6214:4612:b0:919:546a:43c9 with SMTP id 6a1803df08f44-9198b790bdbmr51799106d6.14.1791315423284;
-        Tue, 06 Oct 2026 12:37:03 -0700 (PDT)
-Received: from [127.0.0.1] ([172.172.206.32])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91996cb5bd3sm1452616d6.11.2026.10.06.12.37.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Oct 2026 12:37:02 -0700 (PDT)
-Message-Id: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 06 Oct 2026 19:37:00 +0000
-Subject: [PATCH 0/2] WIP: doc: add new git tutorial
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FOU/bIAh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ti+HqG8n"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7FD851D000C5
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 15:57:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Tue, 06 Oct 2026 15:57:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791316663; x=1791403063; bh=utj+yXqe/w
+	MiAgBRLrMy4Tc2pI3lUeUGsLHFxyJEInE=; b=FOU/bIAh9RNcEACJYcH146hPfw
+	5qo4O9JuvHm3wavIkOE9lLqiTEMiOjKC6WOEKQeYUnlol0hPFObhh1X9cgPxpAUv
+	RccU0GUWNqmz7btcWU52D7+zRiw2JPEjgjnURg9AScQXJ9xyeUtDXPk8lzN/+N9n
+	u2R74NdJISehIWKtDjSEh8HC8yHP9tEU3DUZJ9iNoe7gsU5LonkMa8jrJXoT+A+y
+	OUjii4fTPcxjSZTHxdtkdFHT9lX75DUfPFt0fq/8ATqX1Ak6swIXInzCAmgr2fcd
+	kOE1xDSsGACEaFSLH2rGNat39pt/gJv+0R8+P/jtWBu9coNDiwoQDBaJsBcQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791316663; x=1791403063; bh=utj+yXqe/wMiAgBRLrMy4Tc2pI3lUeUGsLH
+	FxyJEInE=; b=ti+HqG8nrOifQW/0BszKt92DgVGiGQ1wHwhXDfm6z2kluOHY3be
+	eMPLllKhSUckSyBNakxLa7lzFZQOkUdkPubJFHoSLjY/aDTh2e4WxWZNGYfFfB81
+	dZlM1nB/+a7DyYgF/L4aZHX1Rdz+ExgS8f920FTo3uJBSNfcbe9UWa2CpaVSE/mt
+	07ZTHmJjy7CUr2xqsMrKfMjZzQn3L5uecArUx4F+lJ+hky8aqMCHYzKj5xzgVYuk
+	DAbc3jIedSneiJV+iDFYjASEA5ah/jrtc4hlbSdwX988+OawiK41WrihOIaQD4td
+	7hhxUSJnF1hHBlu47b12YhKuBD4N2WUTD3Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791316663; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:hAH1rjkxbXdcw7hEp72l2rjhOhedBRxZTNCy41UJdEV5RxT
+	Sz09IT90ydK5V2QcEFjI+62ipJ87A/HyrjZRJKPDjJJ1YpqsIBGevgXPnAE67Zzr
+	owvLt2Q3nMw7PmLPP3F/p35TZ2oRW1A4VUeb0Fk1VVA4FE4Vk7ppwmw338Qkh5X6
+	mr4Jgi//zpyrNWW2G3DixF3yoLaGlTQtuTKM+zqyhILb5W5PPci/OFFJ1psVBN+d
+	3po/Xgg166lLHh9b3rlyL8oPkwfsTT9FGdvuo90nNKS6Bs6feZZMyE6+tt7a3KD0
+	P89vFf/+ckIQkJQrolliqNodlzaDGCOCRIkpDhg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:Fkt/60ePtgL53xgTGht47oX800OliZDt28v5AR7f+/Q=:DCSELAmPAKlOc0vaptQO4eNYiOZ4xbw0aCtnpU6uWg4=;
+X-ME-Sender: <xms:t1LFajZ34ktvNX8W1JZL_wa_tvB-cPPj4OKS2z_Qd47yfmv3KpBGzw>
+    <xme:t1LFakpKHX9piPQo5cpo6n_ecLzkbEhwNPXEqxe9ug4nKaTb5QoNLXfiQM_egfjEe
+    WqyYRi_vzk6f6KIYXcBNb4yT6YqOGexFn6xyIgat9VwFrIBro645g>
+X-ME-Received: <xmr:t1LFaoP5sgPqaBR7fwNtPxHiG8uemv7-I2rVkYXD8XQh47bHevkXBFhc_5kPyITcC3JNyKJJk5bot0xVwvYHhcL-IAwDFhEXzqvx>
+X-ME-Proxy-Cause: dmFkZTGjMyLeS6PT5m+o0rsqJcbF4HDYJdHVMVdlng68d6z8evKG/vpzsj16e4h36z8ygm
+    HAxDZWPhgQ7FFFCSpomnChbXWtbXXSbeUI9KYCWb4Ks4LTZsF4kMb3hEVEbtHVvvN1gH7l
+    FHV4HbnA+mj9qGNJ+LLancP+iXcIsifNSqVKTub2FwVkWrwt1L31ft8iMwOvzEDJVV+0o3
+    KxgfUyxv1gGaqnQw1rlS3beYOo1yJNONSUJHo4B1fZToRm5mTtetlpEnHjDD8o7bpXIxtz
+    N8fKlt/c8bonY4LHOh0SogVuAd6g3TlHQ+3gaDlGzwqHFogI4CRenuzyljSth6P+sNiVTS
+    +g8qrnqv/w7MxGcsWBH7aquyUf4bzr5o1YZek/Q1AfZ/U2lxkK5HcX66UT0/ozgZxvtpKG
+    jCxdH0QlsSGlFgI/uQU4kDHML7r3FjM+KdfsPFpHHzDkGE7bC9rw6AX6TDuxBgP2yK8y0j
+    Lx4aOGy9boTl8n7UebwXuhV6BbndpoUGwzsiq+LKJeH7Yogtly91KjCJ5ku4grXbrxmm+1
+    39UPqU7PVe/GYxgfts2KreUP0UjXjQ/mt+BxPjr5xIufntyROt1Gr9E5fFzGw0eyhqZSFb
+    1/ba+pHaBRG54fw7sVh1pvR/Owq3+ZyiYIN0VaZ5QrzV0FjJfFJv+plj8kaA
+X-ME-Proxy: <xmx:t1LFavpc04yJXjZv9K6ULgx0EqOjA6RRkn-jv-UvHsg6yAg4l0drBQ>
+    <xmx:t1LFatcGtKUUjXwmJQKbc45STByUykI4R6MSjdQmuSFmtix4tMI_pw>
+    <xmx:t1LFalRzTV5zugzQ9Xyph4oUhMZEuqXNnI6SdjS1zwi5qRQ1i-362Q>
+    <xmx:t1LFambu4VnwwqvWv1L52urVF57DPyMq-F3Q3GR4Q07mWq4OT50BXA>
+    <xmx:t1LFaksdkZHvIkY_F6ehym8fXuVHbcX9BvcBBowPbip4JoNGXyBQeEE->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Oct 2026 15:57:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Guillaume Chauvel <guillaume.chauvel@gmail.com>,
+  Philippe Blain <levraiphilippeblain@gmail.com>,  "Mark C. Chu-Carroll"
+ <markchucarroll@fastmail.com>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/2] packfile: fix corruption due to stale delta base
+ cache entries
+In-Reply-To: <20261006-pks-packfile-stale-delta-base-cache-v2-2-69669a2fc6ce@pks.im>
+	(Patrick Steinhardt's message of "Tue, 06 Oct 2026 12:20:15 +0200")
+References: <20261006-pks-packfile-stale-delta-base-cache-v2-0-69669a2fc6ce@pks.im>
+	<20261006-pks-packfile-stale-delta-base-cache-v2-2-69669a2fc6ce@pks.im>
+Date: Tue, 06 Oct 2026 12:57:41 -0700
+Message-ID: <xmqqse2id2kq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Julia Evans <julia@jvns.ca>
+Content-Type: text/plain
 
-This is the first draft of a tutorial which introduces Git in two parts:
+Patrick Steinhardt <ps@pks.im> writes:
 
-Part 1: Create an empty repo & make 2 commits (git init, git add, git
-commit, git status, git diff) Part 2: Push the repo to a remote host like
-GitHub or GitLab (git remote add, git push)
+> Note that the added test reliably reproduces the above bug on my machine
+> that uses NixOS at c59305bab206 (cosmic-applets: add missing runtime
+> dependency (#566040), 2026-10-01) with glibc 2.44-25. But as we rely on
+> specific allocation behaviour of glibc it is very likely that the test
+> will not work on other platforms.
 
-So far we've gotten 112 comments from 22 beta testers who have tried to
-learn Git for the first using this tutorial. Most of them were able to
-finish it successfully. I'd like to avoid getting into the details of every
-single thing in the tutorial at this stage (we're still planning to do a
-second round of feedback with the beta testers, and the beginning especially
-will likely change)
+In other words, the test will not detect the bug, when the fix is
+reverted, unless the glibc allocator is used?
 
-There are 2 questions I'd like feedback on since they both could affect the
-structure of the tutorial. I don't think either of these is a dealbreaker,
-since folks generally were able to finish the tutorial despite all these
-issues and said that they enjoyed it and learned a lot. But it would be
-great if there were an easy way to make the process less messy.
+Adding an unreliable reproducer for a bug that is already fixed may
+be of dubious value.  However, even if the test is unreliable (since
+other allocators might hide the bug when the fix is reverted), it
+may be OK as long as it catches the bug on widely used
+configurations and does not trigger false positives.  On the other
+hand, the earlier suggestion to write custom low-level code to
+simulate a colliding allocation address somehow smells like a
+maintenance burden to me.
 
+Thanks.
 
-question 1: create the repo on the command line, or in the forge?
-=================================================================
-
-One issue that came up a lot in our testing is that the tutorials explains
-how to run git init in a repo to create it locally and then later choose a
-forge to host that repo (GitLab, GitHub, etc) and push to the remote on that
-forge.
-
-Several users ran into the issue that GitLab by default creates a README.md,
-which means that when you run your first git push, the push fails since
-there's already a commit.
-
-A few options I see:
-
-a. Suggest that they instead create the repo on the forge and then clone it.
-I think this is easier and usually I support suggesting things that are
-easier, but in this case I think it's our role (as the official Git
-documentation) to make it clear that you do not need a forge to use Git. IMO
-this approach really confuses that issues and makes it seem like the forge
-is more important than it is. b. Suggest git push --force. This is an easy
-fix but I don't like suggesting that people use --force so early since it's
-so dangerous. c. Just try to get users to try to figure the right way in the
-GitLab/GitHub/etc UI to actually create an empty repository that it's
-possible to just push to. This is really hard because the UIs constantly
-change.
-
-
-current solution 1
-==================
-
-Right now we're working on Option C since it seems least bad
-
-
-question 2: How to handle authentication
-========================================
-
- * How should the tutorial tell users to authenticate? I know there are
-   commands like gh auth login for GitHub and IIRC GitLab and it seems like
-   there are some advantages to using those, but also AFAIK they're all
-   pretty specific to the individual Git forge and I don't see how it's
-   possible to discuss them in a generic tutorial.
- * Whether to explain the process of creating an SSH key etc. Arguably this
-   is the job of the SSH documentation, but since https://www.openssh.org/
-   doesn't have such a guide, it feels bad to tell users "you should go read
-   a guide on how to use SSH to do this but by the way that guide does not
-   exist so good luck I guess".
- * A lot of testers found it hard to find the SSH URL on GitLab/GitHub
-
-
-current solution 2
-==================
-
-Right now we're solving these by:
-
- 1. Using SSH
- 2. Explaining how to set up SSH in the easiest way possible (with
-    disclaimers to check your security team's policy if applicable since the
-    "easiest way" may not be the best)
- 3. Giving some instructions for how to translate an HTTPS URL to an SSH URL
-
-Julia Evans (2):
-  doc: remove gittutorial
-  doc: add new Git tutorial for beginners
-
- Documentation/gittutorial.adoc | 854 +++++++++++++++------------------
- 1 file changed, 397 insertions(+), 457 deletions(-)
-
-
-base-commit: 5a7d1e8045ce66c908f62598e26cbb8df7b39a90
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2248%2Fjvns%2Fgit-tutorial-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2248/jvns/git-tutorial-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2248
--- 
-gitgitgadget
