@@ -1,153 +1,206 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1EAC2FDC20
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 16:42:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C1D47209F
+	for <git@vger.kernel.org>; Tue,  6 Oct 2026 16:45:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791304969; cv=none; b=d2+qfxUSnjxOaR3j/uHKVWNNVGkGqRk/QmABivHj926M612WQlJ/XhFoI3GPnnRgJzDvApmCmBfeP/3HIo8DlXH6bZLW8wU+KG/JW+0BSMQ70oADk8qEjK7ATMIrL9MM8KcxWKq+BcdiLrLPSuNm4k0QKu75nzJSjfwBFbdt/LU=
+	t=1791305159; cv=none; b=W0HV8s4PigBVmc2eeFYs3tr/4TIGQcywhFvVRpCwogL+mZ2706dcONGZgiz6E2aafE/ufsSZtuZ3cx/sRUP6KYZHujizPRiZrgVLu8neksGXrlh14vgH58tELMkplrjN0uWqvsXhpDhpxmMd3D50znUd+To+Tr0GmZ9a1i8QoeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791304969; c=relaxed/simple;
-	bh=fRBIy4YIQmnRqficuw4LMMPPLcNPF8Llch6XRUZJEus=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=pApYOjB+647JOUBVtri1rvzpXaGrFhDP3+oQnhcYjlCCA/dx0qqTMjuwVaRFIw9hpmwd/Dy8voSeJpIJMerFpU7yb51FjPEFyBY0QIm7fFv4rl2C9oObGSVPgAf5RrDKkPq9BoDgN/00MXfb2FPyUquee5QhTvtMpZoeSB055oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Wf/ihTi5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kElbZQof; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1791305159; c=relaxed/simple;
+	bh=j487JfcVa0EaY/y39ITYRY9BXOTs5W+OxUF34QPVbSQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I33yVd2hINQpKaYUK+O9dTdoFDGIyvJQoAeX4TusHJBLjkAhADyEDbSUe60yRh5taNwWPgOiHkkQhScr3UkJGMNaQjAZ4Som1tF6eYr3nYUdfv3jf7XjcwXJu1k+hzbuV2iCCIJFOfA8BFD3oV0jthRFcALHcE5sbNI4rH9agYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IJjhY3x0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Wf/ihTi5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kElbZQof"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C301514000A2
-	for <git@vger.kernel.org>; Tue,  6 Oct 2026 12:42:46 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Tue, 06 Oct 2026 12:42:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791304957;
-	 x=1791391357; bh=81HZ3jJRtH9aLlxBgJUpVjZ6PYXTDswkejkD55T6eRs=; b=
-	Wf/ihTi5PDYCXx/Ni3RiqFBmc1dNIwyeXGZGgA9kNCdV+zOjusyScWFi+ArswlUj
-	WUcw7ydrs1290Did7uYkTfiX5oPkALRzHnVQP3ja8dOJe5likouhvc+PEBRjcaFf
-	K7jTEpk8IoUlXLSwfOrE176yL5++BJ8OuFbAbhkq/Rgry9YfisW5r1EipbajUYng
-	nIszIgHyqNxQmoBe6fAInjJF6dn7hM9SnF1MlXgLXGym0gzuuCOk2/RaGUmc+V1R
-	msit4y+hYKJcjCmLvslIiuI2tsH2FMwkvfDvLrjgB6A5UWzMT+/56iQ0mArLWN+z
-	jwQAOTu0S0gfomDPtIVtAA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791304957; x=
-	1791391357; bh=81HZ3jJRtH9aLlxBgJUpVjZ6PYXTDswkejkD55T6eRs=; b=k
-	ElbZQofE70+OXbvVJQNxhE3KvX+hElunSYEnYe+I5WgnVz8rUAwDavSHQs5hd/8v
-	/YI17b2C+Yu35tl2O7IDf6WqIM5drsNw2jkwH5cXt5Ez9uX7LzfZvtD+lvER9A7I
-	778I5RwyTs03+gopwsXWoDIyyirzZc9p2LINHvq52/BH3EUixh/cbYQRo7nfSNTj
-	UrZFq+l6wXieqbbZcmxkFjxf3hHswfwzYEhdxFIUvr8EmZSmlR55zC8/VfhF2Joi
-	iSXkVmGx+9h+7yweIy5JezXHNZAra6/NR031krhxCrbW9hzh0QEjSqCRPTpp7Abl
-	IhYsQuIT7cSzEaMUsBlUQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791304957; d=fastmail.com;
-	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:ZQ0TU8Uw4bLFPE4ghJP+fnvwunSZxbmtGRV4QyxOp/GgAon
-	MD7oa+ziRO9cHfYkcu6l9hMzwGRjtWKoZ3KPqbvEagodi5xtYLqrlkcETttypvVu
-	L2vPpZfuX7MB1LT495lIb5GQm+lc5oxK0Yyzi+uPecUNNd+0VRmiTOTT0Ni8Q8jw
-	drF6/FM6aLbiVxC+Ls7O/HPA1xPofdxhYRhVhGaImeFtcicdVhCeyW3HFir09/Dw
-	F5xgAuIF0sPHkI7CrvyCnXoxnelMFYuBvvycpdGZSJd1jiaYjGVu7TexOHrTZvyY
-	7dkxSjUnjZZ7qGE5JjixWhcajyVvYPTINo1qh9g==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:6fY0pAenWzEZZo9Mkhr7wLtRwZDfvW94txriYTube60=:fRBIy4YIQmnRqficuw4LMMPPLcNPF8Llch6XRUZJEus=;
-X-ME-Sender: <xms:-CTFahLeiCzTPCy91zgZCHngJYn7jTfrA10Ym4ixNJLPHmb0uYZNz5M>
-    <xme:-CTFan-N8R2P200xhtEnZw6lZXxjHambj3ZsOI1VscPWfhRM0PK7jf-fEXUqGxsgM
-    XB19TCDeohioWjwI9tRUk3LVtqbh3xDvrr3ogmJaBosej3z5o47ig>
-X-ME-Proxy-Cause: dmFkZTEP7t37g5QNrFHJyqztkzIwCPGNJyWDQClrnHwCAxw91jfDNhEngjzJXzMK8kM1aZ
-    tW6iavVWzo90ibviuyEqyXCTdvLGUXqK4mMsj9CjHA00II4tYabqiaAzp7hQ8ThdKJjyRH
-    VTugtOjpe8SnEC72n9JgnShTJ5e5RTZuyrx9xpINCiHZWHZcyLl3/fHg22rsEDgeuVvASw
-    kUrzu5+KmPIoPLixYV5rIfU3jiMahf1F3B89qQUKd+c1ZSRlR1qWcd9U42+PdTZckAyFn3
-    K8orTxHPQ4WBrRbeYkHRok4H0/mRZpQMlVme5GppfFHgzen+o/cAcF2aAy81qn0mKVx6mp
-    w5v2KGXqHRbKRZvd670aXpHltaWer02uKNMgH9lseO+fASXFj8myjhyBijD2v59JX2jS5G
-    t6iiYiD6lQy5zC8OZsFp+74zdCmw9hCJenQUknX0axuc7P7YfNRdBzAPd2R1hBn1VgAmBy
-    mCQA90rKbjkkWcFEsC4Xe7b8Ixtul7NEdGJnueYKvQQIob4YTbhHH/9yRA9GYXlVyXlO91
-    vEFadnD4/jVLsyo3NmaB1Lbvn3eqEwp0kCwwhSto7074DfBZ5oi5Xg1r1LAyGtYO+YZtK0
-    OL/Iz0RDqzgydkUl0LFlsLIG/1UvjNEUIm7d5bcjHJMk5hh0ssLbv/ItjQRw
-X-ME-Proxy: <xmx:-yTFandvDpIBCaWQOdRzrzT3Drr4bOzXVm19vQBQNnqYY-ezwmYq2g>
-    <xmx:-yTFaun2GH57ldFCaA7l3YmD3RExKXqNtWMDRV6lwfRL46ZHYpskhw>
-    <xmx:-yTFapw2-Wba8FAHcCpriuoj9wodZHQ0PwpKAYaBHhH4gjbkya9bcg>
-    <xmx:-yTFahMf82KuwtfGb8P6RLScS6aAL-z-T0CgXqLd8bOALOVpicb8cA>
-    <xmx:_STFaiYPc58h-6Y98atVU8DfpvxiIXFLi1ZvC98gYWajfLjDuG7MkVrN>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 1E3D422C0095; Tue,  6 Oct 2026 12:42:32 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IJjhY3x0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8AC1F0089B;
+	Tue,  6 Oct 2026 16:45:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791305158;
+	bh=q60AydLe9rgzj02I65XIp+XCEFOUHYFCqyBOqilvABc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=IJjhY3x0s8njTCFzZY/c1DLSrMYZJUkTySD0xNI7pPi/s54DTDqw2x4JgtVzZ2yA1
+	 8Glxx9xq/ykLR8YvJEj63lg89o9+pBaF4ls9c3UQ59K/ZX7u/wpOpiltGP13Hvuy5Z
+	 SU1SjOocIqCE4LDS4bUbIbFTguGNDf+bNTuMhPYTqJTtI4odlQ4fip9J+biCgRwd1L
+	 n9dqMdLLCIogdhsvVWBS4Mw6lLFC8r3uNgtlAi8iM1+Y0QtizRpqC2iI6Yyyue6KMa
+	 N6c64DBcOKx4TbxtvDHrGpfDtkxSIK6YoWO86C+Wo/ULjFQ87puSDSsGWva8CdBGZy
+	 t1jdT8oQAfrcg==
+Date: Tue, 6 Oct 2026 18:45:52 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: Nico Williams <nico@cryptonector.com>
+Cc: phillip.wood@dunelm.org.uk, Patrick Steinhardt <ps@pks.im>, 
+	git@vger.kernel.org
+Subject: Re: git-rebase-walk
+Message-ID: <asUiQhNERzwT_hWa@debian>
+References: <ar5KL4_IKXYbx3Sb@debian>
+ <ar5eereSq91xldo-@pks.im>
+ <ar5-7ZtM6C23H-8m@debian>
+ <ar9TTB5nmPPAdABE@pks.im>
+ <95796d0d-5928-4108-bc27-b7ace4459d2a@gmail.com>
+ <asOaLyiJUmINFFFH@debian>
+ <asOnp8ed6AGStH60@debian>
+ <792f4d41-bd60-4fae-a426-bd70cbad996c@gmail.com>
+ <asUMkBi9NG0k6fu4@ubby>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AliR8QpupZkJ
-Date: Tue, 06 Oct 2026 18:42:11 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Christian Couder" <christian.couder@gmail.com>, git <git@vger.kernel.org>
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Jakub Narebski" <jnareb@gmail.com>,
- "Markus Jansen" <mja@jansen-preisler.de>,
- "Kaartic Sivaraam" <kaartic.sivaraam@gmail.com>,
- =?UTF-8?Q?=C5=A0t=C4=9Bp=C3=A1n_N=C4=9Bmec?= <stepnem@gmail.com>,
- "Taylor Blau" <me@ttaylorr.com>, "Elijah Newren" <newren@gmail.com>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- "Jeff King" <peff@peff.net>, "Patrick Steinhardt" <ps@pks.im>,
- "D. Ben Knoble" <ben.knoble@gmail.com>,
- "Harald Nordgren" <haraldnordgren@gmail.com>, "Toon Claes" <toon@iotcl.com>,
- "Maciej Ciemborowicz" <maciej.ciemborowicz@gmail.com>,
- DaiAoki <a.dai.0814ap@gmail.com>, Salami <salamiiiiiiiiii9@gmail.com>,
- lwn@lwn.net
-Message-Id: <d8660b71-9a2e-4724-a97c-3b82fab22fd0@app.fastmail.com>
-In-Reply-To: 
- <CAP8UFD0KAHvXvV-SqLd=sYohTvcgm2Dd52EfEY1XEbt3649Htg@mail.gmail.com>
-References: 
- <CAP8UFD0KAHvXvV-SqLd=sYohTvcgm2Dd52EfEY1XEbt3649Htg@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git Rev News edition 139
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ne4iscmrapggpzlx"
+Content-Disposition: inline
+In-Reply-To: <asUMkBi9NG0k6fu4@ubby>
+
+
+--ne4iscmrapggpzlx
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: Nico Williams <nico@cryptonector.com>
+Cc: phillip.wood@dunelm.org.uk, Patrick Steinhardt <ps@pks.im>, 
+	git@vger.kernel.org
+Subject: Re: git-rebase-walk
+Message-ID: <asUiQhNERzwT_hWa@debian>
+References: <ar5KL4_IKXYbx3Sb@debian>
+ <ar5eereSq91xldo-@pks.im>
+ <ar5-7ZtM6C23H-8m@debian>
+ <ar9TTB5nmPPAdABE@pks.im>
+ <95796d0d-5928-4108-bc27-b7ace4459d2a@gmail.com>
+ <asOaLyiJUmINFFFH@debian>
+ <asOnp8ed6AGStH60@debian>
+ <792f4d41-bd60-4fae-a426-bd70cbad996c@gmail.com>
+ <asUMkBi9NG0k6fu4@ubby>
+MIME-Version: 1.0
+In-Reply-To: <asUMkBi9NG0k6fu4@ubby>
 
-On Fri, Oct 2, 2026, at 18:25, Christian Couder wrote:
-> Hi everyone,
->
-> The 139th edition of Git Rev News is now published:
->
->   https://git.github.io/rev_news/2026/09/30/edition-139/
->
-> Thanks a lot to Harald Nordgren, Maciej Ciemborowicz, Toon Claes,
-> @Sal-ami, @DaiAoki and =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec who helped thi=
-s month!
->
-> Enjoy,
-> Christian, Jakub, Markus and Kaartic.
->
-> PS: An issue for the next edition is already opened and contributions
-> are welcome:
->
->   https://github.com/git/git.github.io/issues/872
+Hi Nico, Phillip,
 
--
+> Date: 2026-10-06 09:58:24-0500
+> From: Nico Williams <nico@cryptonector.com>
+>
+> On Tue, Oct 06, 2026 at 03:01:29PM +0100, Phillip Wood wrote:
+> > On 05/10/2026 14:37, Alejandro Colomar wrote:
+> > > > Below is a shell session performing such a rebase, which hopefully =
+shows
+> > > > why I need this to be multi-shot.
+> >=20
+> > To me it shows that we need to improve "git rebase --update-refs" so th=
+at it
+> > can rebase a tree of branches automatically. Doing it manually is labor
+> > intensive and error-prone (your example output shows it is easy to forg=
+et
+> > when you're meant to be resolving a conflict instead aborting the rebas=
+e and
+> > checking out another branch).
 
-> But AI writes the code for me nowadays. I bring the idea and get a
-> first draft (if it=E2=80=99s horrible I start over) and when I have so=
-mething
-> that feels sound, I =E2=80=9Cquick save=E2=80=9D by committing/pushing=
- and then
-> feedback on the solution until it=E2=80=99s nice. I use one AI session=
- per
-> topic, and keep them open for the reviews so it maintains the
-> context. It=E2=80=99s incredible to have a sparring partner that never=
- gets
-> tired!
+It's easy to forget, but that's inconsequential.  What happened if
+I abort and try again is that I'll meet the conflict again.  It's like
+there's a barrier, and I won't cross it until I decide to cross it.
 
-The reviewers were not untiring.
+The very worst case is when bisect-rebase presents a conflict and you
+forget to abort before solving it (to bring children closer before the
+conflict), is that I'd have to resolve the conflict twice.  You face it
+a few times, then you learn it.  But aborting too much is not a problem.
+That doesn't increase your work.  It's just one more command, but the
+same amount of conflict resolutions.  To summarize: aborting too much is
+fine (which is what happened to me); forgetting to abort will lead to
+having to resolve the same conflict twice (you'll eventually learn to
+abort early, even a bit too much, just in case).
+
+> > In the example below
+> >=20
+> >     git rebase --update-refs --rebase-merges main B
+> >=20
+> > will rebase A and B, but we don't have a way of including C.
+
+--update-refs would need to present conflicts too.  After each conflict,
+I --abort the current rebase, and do a bisect-rebase for each child that
+brings childs into place.  Those bisect-rebase may themselves present
+conflicts, which must be resolved immediately (before continuing the
+main bisect-rebase), in case there are no grandchilds; but if there are
+grandchilds, that also needs to be aborted, and grandchilds need to be
+bisect-rebased to the child.  It's a recursive problem, and I don't
+think we want to get into implementing a recursive rebase within rebase.
+
+Plus, the order in which the recursion is made could be problematic (I
+may prefer to tackle the branches in a certain order, due to personal
+preferences).  It's not easy.
+
+For now, I think the safest thing is to keep it multi-shot.  Once you're
+familiar with the interface, we may discuss whether it can be integrated
+into git-rebase(1).
+
+Please, play with it for some time.  Try it with trees of branches, and
+see how it works, and what you'd improve from it.  I've used it to
+rebase some very old work of mine that had never found the energy to
+rebase.  And it was amazing!  Nico seems to be having the same
+experience.  I'm not convinced I'd have the same experience.
+
+> But it's not the same problem.  This isn't about rebasing a set of
+> stacked branches all at once.  This is about rebasing quickly across
+> thousands of upstream commits.
+>=20
+> Naturally one _could_ use `--update-refs` with a bisect-rebase.  The two
+> features are orthogonal.
+>=20
+> I've been using this bisect-rebase script to rebase an old branch off PG
+> to the latest upstream -- that's 10,135 commits in my case(!).
+>=20
+> > > > On the simpler case of a single branch, I'd still prefer a multi-sh=
+ot
+> > > > approach where --continue only advances one rebase operation, becau=
+se at
+> > > > the end of it I want to stop, and check git-range-diff(1) to make s=
+ure
+> > > > it all makes sense.
+> >=20
+> > Perhaps we could insert "break" commands after each branch is rebased s=
+o the
+> > user can check the range-diff.
+>=20
+> The bisect-rebase scripts do stop when a conflict is found that the user
+> should resolve.  The noise from the bisection's search for that
+> appropriate commit is not that interesting except as a sort of progress
+> meter.  Stopping at each point in the bisection where the bisection
+> would continue is not going to be that useful unless the user could
+> check if the conflicts are simple and obvious enough at each point and
+> skip the rest of the bisection -- is that your idea?  But if so then the
+> bisection will be very painful if the user would mostly elect to
+> continue it.  That could be an option -- if it works, great, and if not
+> start over without that option.
+
+I guess we could insert break points at the end only in the rebases that
+are known to fail (the "conflicting rebase" at the end of my script).
+That "could" work.  I'm not convinced though.
+
+
+Cheers,
+Alex
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--ne4iscmrapggpzlx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrFJbkACgkQ64mZXMKQ
+wqkIBg//cbRiqWvCFgtp7EGaA5tRz3+Rz75sGdaTCD5M1E1xMxIFYpYmvOHChrd4
+bfsdI1RARKVVneqtZrsLT2Ana7iCO58mlAZM/TCwoJnJWoY6G8TOiq9E9P2xFNM1
+zFnx4300I/lXW+3RtXtx0ExwTvZxY+cI/vcoCKDFuIBcXs+gteqerkzd5h9HIwT1
+ye64ztloWcMgY2V6q2efE4jhLJaMxub4CB5rbwrgfjVHrHNuWeIarW7EOxleFUEe
+2cTGyW1eoLYDRcfmEEp0sh6LXhbJGjhD9RyJSdZRZL9CBhEUlR1V44rIs5/iEpwT
+SZ1WRFHoB2JgdVMpEP5y4gFfi7ZeNLtn9XrMvbOaFV4IJfjtErB6JNcW2rxHtFxR
+m8ASoj6tkgfyatfFLgA4y2kT+SLYYdiPb+sKKgRisnW59XVm+DTROalSLZ5zkKoG
+2IJBU7T5/U2cNBZqISUqH3QLSbbAz+w7SfuF6liTnFQp2m8pBIxQsxFFB0GPLn+n
++Zrxddwi/xFXgZstlA62y3FZmxJtAxW8Ep7FLfhdZRiOJpMWUQeyLwNpeh1iLkWs
+31wKT7w7ITDjAHsTbtcGnyHa8J0URBQNmHDNjpntXBpUn/GSOFCQfGnxbwV1yDRU
+iamlfR5awijH4yyQPQsojSZZa9ptH9tmDaEc1xF5HhxyAoSoscs=
+=voPl
+-----END PGP SIGNATURE-----
+
+--ne4iscmrapggpzlx--
