@@ -1,127 +1,257 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FA33C1D62
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 06:32:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877383F1078
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 06:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791354722; cv=none; b=uYsmmSPiR6t8HAuX8UIurFVAfBr4CxxWvcOHsvnFQGb5G6BgZ3isLwZHipDo66MYOnqBpuwqKCw5kcKZPpZKybOHjlElhmvvkdLZ3AHszI4O34zCXhIA5a3gR9p/CiWTlgAQCm3fAZJVEqN2kYhkRu+2oyrW0dH0veH4e0JauTg=
+	t=1791355160; cv=none; b=qSNSCYOEIixFxi6l7s1CNEanXrRC80tFoYqF6MLba2IIMaaFZz/Dklu77wqHiqevfHSJscP/xmO8vO39aviOg9p/U7MLy1AQZTxF+J1RnFFVq4AuH8SYUfOlmCR+lD4oIuVU0T7k+uDP2NE8+kjOg+hPbEWBh9UApfKCzfPtPRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791354722; c=relaxed/simple;
-	bh=InWkRYbaQmPu17aPdaix+dYJ8Jk0uvDApzq/ogHtOG4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rqubiL2aIeUKj/lQRXUGHGpoMylRZXhym40L2xTvpeKVq9/yPjCka/rc1Ql9iSLnzseCv1ECNF0QMIKgUhmV5fz3tyYFwObl9IYtVtx4rMLg2wvoa8L0EyGtKAAtT1f0Kx+WwJ9AvGd6HfkzqMiMS9s/ctNFvGMO2Vr0bCan3XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GMfxkgax; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791355160; c=relaxed/simple;
+	bh=u1XsFTK9+u6NbJQg4lDpdC5t6KCUf7Wi7fp5Hp2g058=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sMt9yFzR2j+GRtQ6a4si6R/mkJ1IL+C2PDDP8U8q4KyuTPQpQEiki2bW7FLqQDHjH6hnQrbRjhgtFqKyEmmOehYj06YjRJ9hI4SWYuhiM0pLy1371r6PsLUen7TaTMbLVEGEKhSZcI+IamyqzMXvnsz7MQs16HF+fp6dpCRo3J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lXWlOxPn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fuhKK9W/; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GMfxkgax"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4a16c399641so14545145e9.2
-        for <git@vger.kernel.org>; Tue, 06 Oct 2026 23:32:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791354719; x=1791959519; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Hu9Mkbh0v5YNMNtnIlMwjKo4DvSI0epksm1cZizQo48=;
-        b=GMfxkgaxGamMAjFMezzzU4V4Cxsq+MbbmbV6AFxz+k5LPf1ARmy9eVQcTQvTD8GYWA
-         JbiNRwOr9Qo6CcAwQFIr0UwvUrgqffP+iq0qRg3JCLqniXyhKp8pChyrok0m+P9abIYR
-         jO42Q5AJtbVAqxLdMrTbn6UnXLwNIDxK+BW1KERFtdQW+GqC1jI+2R+ZhvQp+mhjcsg3
-         U+H1xKTlSfuoxvVe3f81wtlYNSqOfma+9q9JmltgJluaieNWk4ShW7ks0Gh4w7+IOo6Y
-         mxIjEcd/ArD08ERC3wEQlzArwVRXtHHyQ8GD0/2W8XvEoj22/j4m66h5iCFN3ZnMFQSa
-         tEAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791354719; x=1791959519;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Hu9Mkbh0v5YNMNtnIlMwjKo4DvSI0epksm1cZizQo48=;
-        b=uHB/+CfzOcJK4aEqe9lcNQHBdl6nO+mYRAOXG+nZxo3nKEbLYLlFGHEnJ6qWY8t5c1
-         cfsHEJY8vym0RoPhe7HS1xEmQmkosat/4QTgiMwXSMnU24sCVrBvpeED6rngMoJSE2rN
-         dl3dRuutoRScDfO5nurmDa+oAFeWeBjA96aq4ycU0OiCi8nKoAJVKolkbgjLG4ICSf9H
-         raC/8p29yjvvOVxKoz2jMLhxsGFxKeL2KCWdX7o6UlSldj0iULnSnTIWES+ygHiuGQ9B
-         nBwVZaFvUbIBBqn0alwNih7n4qupxp3uOLQ0CSfDwtM3HQpGYV9NTpOmd1zX0yelZbVI
-         cBdA==
-X-Forwarded-Encrypted: i=1; AKwUvBzgsC4I0rEHe86DLMOMwHsT5fz20KQ8DqI5OlNkS9McM+47vlJS9hM1j3ssL/6f7bE9umQ=@vger.kernel.org
-X-Gm-Message-State: AFuF++lA+mQgrW26R0zpxJuouul0UTXqSYaappZyDauWDKj0p53CuZPU
-	bdODAYUMys27Kweq+CiOGhTVBH2//esZhDmZHklDhlHBtEMzVCp9p00K/OOO96OIoNs=
-X-Gm-Gg: AYBFou0H6dDd0jub3iIzzSNMtvJDMgprjzvwSjQLt6aWL1h7BxPVPXDBXuWsa7W2QB+
-	oR3KYrjSWtTo701LfDmrrW5jzAAWkXSSuM4b2DqGERPVpg5OokqqJk+1CoAEsyhplR/35Xt5V1q
-	OaNTNAvJi8G7py9Fde+82GaoSY2dEoJrSDa/syKZl/89cZWG45G8NJ6d9Nhueq8z9hpPjwxHb1S
-	Uc5PPfpYfW6GyNAYgNYm/VtFUb+4uZacim2p/m8xOyPPbffNNUKi5GWJlXF1ZhV0HQnHH1ZxAsR
-	+QouqEovXTyShPuzSkkstwXNas1tHuY3xzjfba9hHeNxzelJpewqydQ6eMACaV9bAe4kjZ1Nwi0
-	SsXkWQX4cowUqsCSPAldDAvDHfm7+rkIukhwcPVwB1UJrxfUeYsAKnc17WUS0XRoWjaCNQ9+DaI
-	nVuhgcgdu5yy4jiWk33EdMWcYJ3ZpMefSbpSCXxZyf4WR5UUWFXFIqLacrqvpr6XV2CuDV0H5+i
-	JX3P3UGKxwfyPHY9GxjYLKCGjzA
-X-Received: by 2002:a05:600c:6099:b0:4a0:1fb9:2f51 with SMTP id 5b1f17b1804b1-4a18043be70mr14054775e9.14.1791354719209;
-        Tue, 06 Oct 2026 23:31:59 -0700 (PDT)
-Received: from SSI-H-ARSHAD-LP.ssilhr.com.pk ([182.188.28.123])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a17f558028sm48089855e9.10.2026.10.06.23.31.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Oct 2026 23:31:58 -0700 (PDT)
-From: Hanan Arshad <hananarshad619@gmail.com>
-To: gitster@pobox.com
-Cc: j6t@kdbg.org,
-	git@vger.kernel.org,
-	sandals@crustytoothpaste.net
-Subject: Re: [RFC] git stash: add porcelain for sharing stashes through remotes
-Date: Wed,  7 Oct 2026 11:31:55 +0500
-Message-ID: <20261007063155.4573-1-hananarshad619@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <xmqqzewsmaod.fsf@gitster.g>
-References: <arw5XxJPNlUxU8TS@fruit.crustytoothpaste.net> <20261005055337.7579-1-hananarshad619@gmail.com> <e1635b9c-bc03-4835-805f-5fa52f09364d@kdbg.org> <CAKPibBx6364BcB2nqyQ7jhTaQMaUuR2TNKzZ-9H8VopcRjXbZw@mail.gmail.com> <7012706b-516b-4cd9-abf3-0144093e0779@kdbg.org> <CAKPibBwjRSb5cXd2iWo8bbYby1odcXNazEg-D9hcqbehrR6g3w@mail.gmail.com> <xmqqzewsmaod.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lXWlOxPn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fuhKK9W/"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9752EEC0397
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 02:39:17 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Wed, 07 Oct 2026 02:39:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1791355157; x=1791441557; bh=UFB+0V2dVM
+	ytkOkh4LL34NnwSMzzwTKUfp4cCYS6Nck=; b=lXWlOxPncpVW9wBmbWuTSQhDwu
+	JSpsRLRe95tjwFfoZu+0k2cFoiz8G4wS1MAluf34sU9nEa/SUbxrahOPjwVKsiD3
+	byPUCt2Uqmq/YQvQ484Os00uhJWeK9NqMt+5lkaD8n4NY/kYg/SiVBLvSCARHHcX
+	cBMY9DfzVGTtfWnzXfmEufrswt6yy2Svf5EvTTWIc4yoo5QBIz4MsItklDx/TE4l
+	UJCZHTd2Ff3T6k78SQJHg8afzI/+kUnIgKggWXNnEM/5ZlGJE0KOEXqOaHxHB17D
+	ShxECvO+VHrGcbDaWrF6pfFPbfeLs5WOO6V95H8OqNSK92NK2b6OiNaESUkw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791355157; x=1791441557; bh=UFB+0V2dVMytkOkh4LL34NnwSMzzwTKUfp4
+	cCYS6Nck=; b=fuhKK9W/YP5R822fu5bXu3OJ7F4AdquI9bBIUZtrlvYbvrTPiOL
+	8pLpv1aYi7K8RrExtW8GpMgeQv5Z6aY0gWhf8DDIQ0Ujx8aUHH852bTNBREDKFxh
+	Ry57NnWScFnEBhDp8gYydTgXBOcnS51eYBqbcWdn5iYkmzk1MJd732YraLylUeXM
+	vvk+nMDbjQE3eRmukp/noG6X+Sp3TsqUgf1jr9siDzWRmvH550pJejNfuQPqdzLl
+	JNqgJd/Lg7XXHqm++grjRQuT74nWDYd5L8ZgxfMeCYit+7bXaG9RBBXOLLNNvbMu
+	14DEbH1JEcTaYSJxu+9wGg6SiF/TC0n27PQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791355157; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:F2zt/YkQBSPH+LpnP8jN7qt/ecSB5jCJuxaZ2J4/TJoSqIv
+	mfG4L5V/aCKz92WhpYFlP5iBmG4Cl3NbCGiY44siF/s5h74SFngS0lNDini1/IvY
+	kT5B7GWbGPKbOj9GXufXJk3IG+B9nfPfWbakehLNHtUfKxmoqfFPNICTmxHswB52
+	H2uj4nMxd8mBTM36Dy5lj/SqCFUAnU+W/VTk90QfnO8C1WqS2I9901KBSn0j8DJE
+	aagUHb1b3LhHf+rV2VK6FiTBtVaNicZHLkA6t1RlNZI5rxgtU9RVxZktsIEmI0Io
+	3+4Kh+Un7jF6PvkfkeUwbOtqAvvCZcEqyaXsMbQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:lXMHIqTcRvvywtxdEsDJBItJuU1JirOUkeuOWvLqk8U=:u1XsFTK9+u6NbJQg4lDpdC5t6KCUf7Wi7fp5Hp2g058=;
+X-ME-Sender: <xms:FenFag8R6hphYzKoHIIbFcW106lIUfy6JWks90xGv2VA0IJkwV-UkQ>
+    <xme:FenFasb-QXT-cGhE52t25y6Brv0NdTsbo3EQeo25-9JbPgvXqBSe-zkG8h7tJy-r4
+    yoNX-vtEfZhJSNI5I7E8PBS9S_5uiv1KZwRUizH-YssfaXOnJGeYA>
+X-ME-Received: <xmr:FenFav24Sqa88jxkte0TVxLtncWRIc1jaHrMslg0Fv7czzVWdNFkSg>
+X-ME-Proxy-Cause: dmFkZTFR7NRXzuXu1wWao+SPKmede6sCG5Zk/8lFYNda1e5MydCOeDwzA3/r7WZSL0sSPS
+    VmxL9R2TnieWdoBC5JvFmd9F3mbS87jXPBxyEwW7qB7EdVMvP1rsQ4P3Pm0F0p+ztLsQcW
+    SZW8cpEitZ5cJkRvmEM9pdQDUzRnY6PoMKBnHcDxBRRaNxkSxvxa70rrQVjKJpz4TdR3dk
+    ewq4pMhkQxZ9ChoJAvWLJ9L7Q226VC6k2UimUpv4R4LT+NEQfcJJdw/XIlfsUcHhLvtl6C
+    fsMcIf9qbXvKeXQnKKY2UEq3d2g3IeEYRloP3pJ6XplsBBqfA2Wgw7xD9mH8oPSNk4YmAW
+    BTnmNOE1glunCEdlYDj02ImA84CQ8ZllDwwRZrREX7PLhK1pTIhv2HiARQqayfUt3EkJXm
+    eC77C0bp2/rcU79ahfbIabHe6GXWR3obXNL/VdFHjiqpTqE6+q+DDxZIA9/0WaywJh/tiJ
+    8eU+e9IDKI+mSBj5LGr03kjVIGJ3EfeLPuVclykMyskqkBawmbheh8kWACiSTjOCg6YGSL
+    tJz0G9Ks9W7rVgXs7Z0PUME/rSOUKDx2r9uAnPYAxa/RHDagrTmGUVUzG/0NdExS+2eJmj
+    yxUIMb+U5yr0ZQDdVDrsXvyxQd8Ht2jDlPdfz0M0LFuN8zwTkj39YFORs0dg
+X-ME-Proxy: <xmx:FenFanaBLcPTUDJscetprTqzBi7JvVEtXgMwm-beQ__fFlvJCZhLTQ>
+    <xmx:FenFanLy7Q9T0i_qcnseGfehX1Wn5f3ip2QUqwR5WbHbtt8EkijwMw>
+    <xmx:FenFamHFanx6oJu1YRhYgXZ8bAxjVTU6SPhq-MN4nOvicTMEjjwttw>
+    <xmx:FenFauumPwh7X60OoOBjcCXDr3mJbqxT-iezH0kbgtF8KcmdzWNJTQ>
+    <xmx:FenFalZA-tTyvCUfXTf5Fx_LqtagBOzUgrarluohCFEZLLLcPx09Wprw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 Oct 2026 02:39:16 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 1bc1428e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 7 Oct 2026 06:39:14 +0000 (UTC)
+Date: Wed, 7 Oct 2026 08:39:11 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+	Kristofer Karlsson <krka@spotify.com>
+Subject: Re: [PATCH v2 2/2] fetch: write commit-graph using updated refs only
+Message-ID: <asXpD2YB_MpunVFs@pks.im>
+References: <pull.2239.git.1790930019.gitgitgadget@gmail.com>
+ <pull.2239.v2.git.1791279992.gitgitgadget@gmail.com>
+ <7507354cc97bb63b3bcdc4a089b5387da28500a0.1791279992.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7507354cc97bb63b3bcdc4a089b5387da28500a0.1791279992.git.gitgitgadget@gmail.com>
 
-> All of the three you listed (discovery, transfer, clean-up) become
-> easier to work with if you used branches, branches have always had
-> good support for these three (and other) operations, and I do not
-> see a good reason to add a parallel support to do something similar.
+On Tue, Oct 06, 2026 at 09:46:32AM +0000, Kristofer Karlsson via GitGitGadget wrote:
+> From: Kristofer Karlsson <krka@spotify.com>
+> 
+> When fetch.writeCommitGraph was introduced in
+> 
+>     50f26bd035 (fetch: add fetch.writeCommitGraph config
+>                 setting, 2019-09-02),
 
-I understand the concern. I think I did not explain the workflow that
-originally motivated the RFC clearly enough.
+Tiny nit, not worth a reroll and something I missed in the first round:
+it's rather uncustomary to have this commit stand out like this, we
+typically have it embedded in the free-flowing text.
 
-The idea came from a workflow I used with Perforce shelves. One concrete
-case is build configuration. The repository contains configuration
-templates, while I may have several local configuration variants that
-should not become part of the normal project history.
+> the stated goal was to stay updated with the latest commits after
+> fetching new objects.  The implementation used
+> write_commit_graph_reachable() because it was the only API available,
+> but two things have changed since then:
+> 
+>  1. write_commit_graph() was added, and it accepts an explicit set of
+>     commits as seeds, enabling more targeted commit-graph updates.
+> 
+>  2. The ref-scanning callback add_ref_to_set() became more expensive
+>     in
+>         630cd5194e (commit-graph.c: peel refs in 'add_ref_to_set',
+>                     2020-07-22)
 
-A tester may need to apply the same configuration while testing
-different branches or revisions, for example:
+Likewise.
 
-    branch A       + configuration X
-    branch B       + configuration X
-    release branch + configuration X
+>     when it started to validate the refs against the odb
+>     for correctness.  On a repository with many refs, this makes the
+>     full reachable scan unnecessarily costly for a targeted fetch.
+> 
+> Optimize the commit-graph write by using only the newly updated refs
+> as seeds instead of scanning all refs after every fetch.  To keep
+> this change small, skip the optimization for multi-remote fetches
+> (since that would require propagating the set of refs across process
+> boundaries).
+> 
+> Since do_fetch() already knows which refs were updated, collect them
+> into an oidset and then pass them directly to write_commit_graph().
+> fetch always writes the commit-graph in split mode, so this adds a
+> new layer on top of the existing chain rather than replacing it:
+> close_reachable() walks from the updated tips and stops at commits
+> already present in the graph, so the new layer only contains the
+> newly fetched history, and commits covered by the existing layers
+> remain covered.  This relies on split mode; a non-split write would
+> replace the graph with just the closure of the seeds.
 
-Using a branch for configuration X makes it another line of history
-based on some revision. When the code being tested changes, that
-configuration then has to be merged, rebased, cherry-picked, or
-otherwise combined with the revision being tested.
+The part about split commit graphs is important to point out here, as
+this is what we rely on to make this whole infra even work. The other
+parts about how we collect the object IDs feels overly verbose though,
+as you're basically just explaining the diff without providing much
+context.
 
-What I want instead is an overlay: the tester chooses the code revision
-and the temporary configuration independently, applies the
-configuration for the test, and then discards it.
+> The reachability closure also covers auto-followed tags, since their
+> targets are reachable from the fetched tips that caused them to be
+> auto-followed.
 
-Perforce shelves give this kind of temporary handoff a straightforward
-user-facing workflow. Git already has the underlying functionality as
-well; that became clearer to me during this discussion. A stash can
-already be pushed as a ref, so I agree that adding a separate
-"publish" command would not be justified.
+This piece of information feels a bit random to me. Tags aren't even
+part of the commit graph, are they? And for auto-followed tags we'd
+of course naturally cover the commits they point to, but that's just
+business as usual and nothing that we specifically had to make sure
+keeps on working, right?. So I wonder why this is explicitly being
+pointed out now.
 
-My motivation for the RFC is therefore not to add another transport or
-storage mechanism. It is to see whether the existing stash/ref
-functionality could have a more coherent UX for this kind of temporary
-handoff, instead of requiring users to compose the generic ref,
-push/fetch, and stash operations themselves.
+> Refs that are rejected because they would require changes to
+> .git/shallow are skipped, just like store_updated_refs() does.  Their
+> objects are received but their history is incomplete, so walking from
+> them would make the commit-graph write fail.
 
-This configuration-overlay workflow is one concrete use case that
-motivated the idea. There may be other temporary handoff use cases, but
-I do not want to rely on hypothetical cases to justify it.
+And this bordering on the line of getting too verbose, as well. You
+already explain this in code with a comment already, so you're basically
+just repeating that.
 
-Thanks,
-Hanan
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 533fdfe7d8..574c361530 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1903,10 +1903,34 @@ out:
+>  	return retcode;
+>  }
+>  
+> +static void collect_updated_tips(struct oidset *tips, struct ref *ref_map)
+> +{
+> +	struct ref *rm;
+> +	for (rm = ref_map; rm; rm = rm->next) {
+> +		struct commit *commit;
+> +		/*
+> +		 * Like store_updated_refs(), skip shallow-rejected refs:
+> +		 * they are not stored, and their history is incomplete.
+> +		 */
+
+Okay. It's unclear why the reference to `store_updated_refs()` exists
+here, as it doesn't seem to give me any useful context. But the other
+part about why we skip this is helpful.
+
+> diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+> index f323ceebd2..624bd124be 100755
+> --- a/t/t5537-fetch-shallow.sh
+> +++ b/t/t5537-fetch-shallow.sh
+> @@ -135,6 +135,34 @@ test_expect_success 'fetch that requires changes in .git/shallow is filtered' '
+>  	)
+>  '
+>  
+> +test_expect_success 'fetch.writeCommitGraph skips refs that require changes in .git/shallow' '
+> +	git clone --no-local --depth=2 .git shallow-graph &&
+> +	(
+> +		cd shallow-graph &&
+> +		git checkout --orphan no-shallow &&
+> +		commit no-shallow
+> +	) &&
+
+Can't we instead:
+
+    git -C shallow-graph checkout --orphan no-shallow &&
+    test_commit -C shallow-graph no-shallow
+
+> +	git init notshallow-graph &&
+> +	git -C notshallow-graph -c fetch.writeCommitGraph=true \
+> +		fetch ../shallow-graph/.git "refs/heads/*:refs/remotes/shallow/*" &&
+> +	(
+> +		cd shallow-graph &&
+> +		commit no-shallow-2
+> +	) &&
+
+And likewise, `test_commit -C shallow-graph no-shallow-2`?
+
+> +	rejected=$(git -C shallow-graph rev-parse main) &&
+> +	(
+> +		cd notshallow-graph &&
+> +		git -c fetch.writeCommitGraph=true \
+> +			fetch ../shallow-graph/.git "refs/heads/*:refs/remotes/shallow/*" &&
+> +		git for-each-ref --format="%(refname)" >actual.refs &&
+> +		echo refs/remotes/shallow/no-shallow >expect.refs &&
+> +		test_cmp expect.refs actual.refs &&
+> +		test-tool read-graph commit-info shallow/no-shallow &&
+> +		test_expect_code 1 \
+> +			test-tool read-graph commit-info $rejected 2>/dev/null
+
+Okay. So if I understand correctly, this test here verifies that we can
+read the non-shallow commit from the graph, but not the shallow one.
+Makes sense.
+
+> +	)
+> +'
+
+Thanks!
+
+Patrick
