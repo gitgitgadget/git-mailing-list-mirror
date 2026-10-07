@@ -1,252 +1,127 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B0F3033CB
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 06:13:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FA33C1D62
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 06:32:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791353604; cv=none; b=qLiSto0FcWBxL2y5cuuHalzyRhC1tCs2qZoOwmWoRxK9K0HLmCBRVG0hqG5HT75CY51jjVB1TWG67O8RSPBfqI9er2oJjyC6kTfk9TaSUIFVjnAj1U/+KPWk+c8d3kHo7IoiWQQ9pXWWInubAtGfw20E0SZyxKHa0KSrHJCx/qI=
+	t=1791354722; cv=none; b=uYsmmSPiR6t8HAuX8UIurFVAfBr4CxxWvcOHsvnFQGb5G6BgZ3isLwZHipDo66MYOnqBpuwqKCw5kcKZPpZKybOHjlElhmvvkdLZ3AHszI4O34zCXhIA5a3gR9p/CiWTlgAQCm3fAZJVEqN2kYhkRu+2oyrW0dH0veH4e0JauTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791353604; c=relaxed/simple;
-	bh=EtQVHn9Rdijn3/yxhyWRcZGHsKpwYVRdYjsLpd7wulw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OkjoA4QgTaAGFWKw2HW/og4mBMFp9O8FR3q6pHh4pFKolZSVU6kBa296Ppc78E1xF45wjfNlTbqXiNfZtyiafPfXrP1bY5EZum4/WDdkRfzGQK4YAX9ydDmSlr3+ECncCFeFUpnY8V9kHY+DeUVuND/Th0Ek6QLbfFMzSX+3mnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WIE9PYyy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cGQnwXyj; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1791354722; c=relaxed/simple;
+	bh=InWkRYbaQmPu17aPdaix+dYJ8Jk0uvDApzq/ogHtOG4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=rqubiL2aIeUKj/lQRXUGHGpoMylRZXhym40L2xTvpeKVq9/yPjCka/rc1Ql9iSLnzseCv1ECNF0QMIKgUhmV5fz3tyYFwObl9IYtVtx4rMLg2wvoa8L0EyGtKAAtT1f0Kx+WwJ9AvGd6HfkzqMiMS9s/ctNFvGMO2Vr0bCan3XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GMfxkgax; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WIE9PYyy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cGQnwXyj"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AD94614000C4
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 02:13:21 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 07 Oct 2026 02:13:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1791353601; x=1791440001; bh=5Zad8raSNZ
-	oLU7YTdQNQog6qBR699Lcx1IFZrB8xulc=; b=WIE9PYyy7SmTIff0TpMK/mVm78
-	E4sG8K5ABbQRppgWnTwOc2Hx1LLg63h1voswOb27XEcGLscBD42OYBsqUWXEWtOj
-	5lrPbsCzFy2xfjnpUMNx1LnBESIbMFUjrVQcWh9slsuX/cZ+C+CYZym/GehE4nHt
-	g57/TtXSW4D1ecoQy5Hsd6PTj3s31eXUFASx/sMCij3ivDRzxXOa54uhMsZW3zfE
-	Y7WBt6KREWYKLerSrJs256eMgW3VdjXLdoRSur+ZOW+k9znTjQr/xImCi/Vt5DYs
-	podm+72X7j5/VRj7ID9iTqlLcMVEMd1Stq9zVf06MrWlRyQtIljttAAdQItQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791353601; x=1791440001; bh=5Zad8raSNZoLU7YTdQNQog6qBR699Lcx1IF
-	ZrB8xulc=; b=cGQnwXyjNDX7mmshVXz0hHfKRC4OV6rSRQma8ACfaKhMSpUfOSx
-	FD0/2yl5thcwkhJBxnHnbFx6a+n2jKDf6tP+9kHKJtzWUCyUE7CVEhIhiFi4Y130
-	TqH+GG5YGwU4nd2xvDYREdiMi62vIc81oiLLlktW0C1kNl8y2Uldmedle7Aje2gr
-	IRPLkip/jYrYCbI7Uxovv98pSNR7HxTuA7DFS1IHVXOZNkVc4HiXX1ZJ6cT2FVHM
-	MMWOCEk+cpBnFwEQkogvss0+JpZd1qTPiuAKlEMYlFkPPVYvH7mpb7HgWDVMb9Xl
-	pceIJ/QGSFyfIGuvpuEqNUtVcyN1KjpdBiA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791353601; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:sC4hPSla0OLqrrFYRIAusqegWAzYiW1QQGs+ascv85iuz/e
-	przDp71wKfXDSPE2NAdN9TlEvEPjcumjoHSpKKi8uYFM3/tO984LNNmE71X+L2L8
-	Qh2LuFaxfMAXd6BIrNWRoyCjaJaLwI6qwKHrtAUj3jILWX/U2pxUycW5eC+alzOI
-	gkh6s/55DCYNuKhH5+Kj4mQuR9Hkwv1gdJ5giyx0be7wnVVaAt5+EhA+9hO3vSi4
-	abWAPXKokO3bAdAayIiESofDRZUlr0WwIVuyl5YiWiunlUXjBqDrGcwA3Q55WN7K
-	/5QNrF6HdGnuG/75uDniOi6g7Py4glSkw+6Qf7w==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:wesi5HANJEh6Yo2M6R88PFtFMKTlF68lfVRWgoR/loM=:EtQVHn9Rdijn3/yxhyWRcZGHsKpwYVRdYjsLpd7wulw=;
-X-ME-Sender: <xms:AePFaqf_lLhjfrNNUw8KS6keNOYuaGcqCHfU0yelzMigGo2_msdJYw>
-    <xme:AePFakbaXSmSNxqSjdIiy9Rz50X2hxJIyqucGRUtZ4L0vNySOBjt7MCov-f6a9yJV
-    oxfZiGCLY5K7-Zr9YDzWUozgHQqdGjbwZz2Eit8LP9l8ez-pByhlgw>
-X-ME-Received: <xmr:AePFatUccwPi9FKdFfD65RUEp567cVPvXS5zXIcYAwvn_Xfq1eFHlA>
-X-ME-Proxy-Cause: dmFkZTGsPn5rD5vuqgoQXXrjOZKj/sdhs0mc1/mYqQZ70fZGv/fz0UVTvvJFN7X1zUUkEA
-    tMbIbrtflq9WDoBexXVKXy0xjS60GcSYQ5fAwMiUEJJdukNjWUA3y10imRQngo8WzUuu63
-    u6rF/pyNwe0wf632Mp/dO/3Rd5eIS9PAGkB/qk7d03r7vy2yyA9zPik22UW97knDCZylAJ
-    4J+HSC/HBfN0kzNV+Z4NQCWlbCfvhlwWn/+P2Hngu/f/sFtCEqulvYfWYByRrTnpeTghYC
-    kJNQ2+RxCnIwe3zJLLJKTA+2LLloX1tChVfEQ8uILVDnUbZ+0nRbHYCgahLpot/O8QqOi0
-    FqkSt6NCZ6m+axk1JFmaGiJ4uBaD8du52cWI0GZip5ofG0q3ZzgbzKgxv6OSZCS1eViVo+
-    phVilFWpP1K5XyfugVDKZMiU8JTc4Da8fuoCtH9YBiSp5flJ8Rc04c94UmFfiiI0rj4bo6
-    DEBDGZSSRlFlqx3dyNOqtKclHwyEZ6YhB6Mz6jMHefDqvJEn5mfyrMWH8751GpqFIDwVkA
-    c76aum1lcnJ05eKeoqTsFQrfJ8WsiDRT2OAGxD8E3jwziH8BrvQvyId8M5gt/a0igpbw6n
-    p84H8O/TraX0KzKlP3YDYdJR/9BGVE2ak6T6w4ZIhPf6I+NVn1IATcJQJr0w
-X-ME-Proxy: <xmx:AePFamgiDRiv64TpS9rtAOM6qcatR_4oVsaeIjDEx0uu2V6aUijfxA>
-    <xmx:AePFarUB-Y-CkGWc_Xe1GIwGAdEeVn7Aw5KFquz8z6jdrGu4BEXBog>
-    <xmx:AePFatMK_2hGQOowJFTh5CO7nLHKTy9SUZaE-t_g1EYU-lDniRAmOA>
-    <xmx:AePFanYlp35jB6iTRdBg5jG2canA2mw1ph0_DgD8y19HqngA_Gxu6g>
-    <xmx:AePFauvunlU5BKjqkYuUmw9Xc69DfsIT4eEhEx7M-GXSO4rc_pfVoECt>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Oct 2026 02:13:21 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 50d8fa29 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 7 Oct 2026 06:13:18 +0000 (UTC)
-Date: Wed, 7 Oct 2026 08:13:15 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Muhammed Dilshad A <dilsheddilu123@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] test-mergesort: plug memory leaks in sort_stdin()
-Message-ID: <asXi-1RlWhqPMWjL@pks.im>
-References: <20261007034205.32619-1-dilsheddilu123@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GMfxkgax"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4a16c399641so14545145e9.2
+        for <git@vger.kernel.org>; Tue, 06 Oct 2026 23:32:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791354719; x=1791959519; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Hu9Mkbh0v5YNMNtnIlMwjKo4DvSI0epksm1cZizQo48=;
+        b=GMfxkgaxGamMAjFMezzzU4V4Cxsq+MbbmbV6AFxz+k5LPf1ARmy9eVQcTQvTD8GYWA
+         JbiNRwOr9Qo6CcAwQFIr0UwvUrgqffP+iq0qRg3JCLqniXyhKp8pChyrok0m+P9abIYR
+         jO42Q5AJtbVAqxLdMrTbn6UnXLwNIDxK+BW1KERFtdQW+GqC1jI+2R+ZhvQp+mhjcsg3
+         U+H1xKTlSfuoxvVe3f81wtlYNSqOfma+9q9JmltgJluaieNWk4ShW7ks0Gh4w7+IOo6Y
+         mxIjEcd/ArD08ERC3wEQlzArwVRXtHHyQ8GD0/2W8XvEoj22/j4m66h5iCFN3ZnMFQSa
+         tEAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791354719; x=1791959519;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Hu9Mkbh0v5YNMNtnIlMwjKo4DvSI0epksm1cZizQo48=;
+        b=uHB/+CfzOcJK4aEqe9lcNQHBdl6nO+mYRAOXG+nZxo3nKEbLYLlFGHEnJ6qWY8t5c1
+         cfsHEJY8vym0RoPhe7HS1xEmQmkosat/4QTgiMwXSMnU24sCVrBvpeED6rngMoJSE2rN
+         dl3dRuutoRScDfO5nurmDa+oAFeWeBjA96aq4ycU0OiCi8nKoAJVKolkbgjLG4ICSf9H
+         raC/8p29yjvvOVxKoz2jMLhxsGFxKeL2KCWdX7o6UlSldj0iULnSnTIWES+ygHiuGQ9B
+         nBwVZaFvUbIBBqn0alwNih7n4qupxp3uOLQ0CSfDwtM3HQpGYV9NTpOmd1zX0yelZbVI
+         cBdA==
+X-Forwarded-Encrypted: i=1; AKwUvBzgsC4I0rEHe86DLMOMwHsT5fz20KQ8DqI5OlNkS9McM+47vlJS9hM1j3ssL/6f7bE9umQ=@vger.kernel.org
+X-Gm-Message-State: AFuF++lA+mQgrW26R0zpxJuouul0UTXqSYaappZyDauWDKj0p53CuZPU
+	bdODAYUMys27Kweq+CiOGhTVBH2//esZhDmZHklDhlHBtEMzVCp9p00K/OOO96OIoNs=
+X-Gm-Gg: AYBFou0H6dDd0jub3iIzzSNMtvJDMgprjzvwSjQLt6aWL1h7BxPVPXDBXuWsa7W2QB+
+	oR3KYrjSWtTo701LfDmrrW5jzAAWkXSSuM4b2DqGERPVpg5OokqqJk+1CoAEsyhplR/35Xt5V1q
+	OaNTNAvJi8G7py9Fde+82GaoSY2dEoJrSDa/syKZl/89cZWG45G8NJ6d9Nhueq8z9hpPjwxHb1S
+	Uc5PPfpYfW6GyNAYgNYm/VtFUb+4uZacim2p/m8xOyPPbffNNUKi5GWJlXF1ZhV0HQnHH1ZxAsR
+	+QouqEovXTyShPuzSkkstwXNas1tHuY3xzjfba9hHeNxzelJpewqydQ6eMACaV9bAe4kjZ1Nwi0
+	SsXkWQX4cowUqsCSPAldDAvDHfm7+rkIukhwcPVwB1UJrxfUeYsAKnc17WUS0XRoWjaCNQ9+DaI
+	nVuhgcgdu5yy4jiWk33EdMWcYJ3ZpMefSbpSCXxZyf4WR5UUWFXFIqLacrqvpr6XV2CuDV0H5+i
+	JX3P3UGKxwfyPHY9GxjYLKCGjzA
+X-Received: by 2002:a05:600c:6099:b0:4a0:1fb9:2f51 with SMTP id 5b1f17b1804b1-4a18043be70mr14054775e9.14.1791354719209;
+        Tue, 06 Oct 2026 23:31:59 -0700 (PDT)
+Received: from SSI-H-ARSHAD-LP.ssilhr.com.pk ([182.188.28.123])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a17f558028sm48089855e9.10.2026.10.06.23.31.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Oct 2026 23:31:58 -0700 (PDT)
+From: Hanan Arshad <hananarshad619@gmail.com>
+To: gitster@pobox.com
+Cc: j6t@kdbg.org,
+	git@vger.kernel.org,
+	sandals@crustytoothpaste.net
+Subject: Re: [RFC] git stash: add porcelain for sharing stashes through remotes
+Date: Wed,  7 Oct 2026 11:31:55 +0500
+Message-ID: <20261007063155.4573-1-hananarshad619@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <xmqqzewsmaod.fsf@gitster.g>
+References: <arw5XxJPNlUxU8TS@fruit.crustytoothpaste.net> <20261005055337.7579-1-hananarshad619@gmail.com> <e1635b9c-bc03-4835-805f-5fa52f09364d@kdbg.org> <CAKPibBx6364BcB2nqyQ7jhTaQMaUuR2TNKzZ-9H8VopcRjXbZw@mail.gmail.com> <7012706b-516b-4cd9-abf3-0144093e0779@kdbg.org> <CAKPibBwjRSb5cXd2iWo8bbYby1odcXNazEg-D9hcqbehrR6g3w@mail.gmail.com> <xmqqzewsmaod.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261007034205.32619-1-dilsheddilu123@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 07, 2026 at 09:12:05AM +0530, Muhammed Dilshad A wrote:
-> The sort_stdin() helper allocates an input buffer and a memory pool for
-> the list of lines, but returns without releasing either. Discard the
-> pool and release the strbuf after printing the sorted lines.
+> All of the three you listed (discovery, transfer, clean-up) become
+> easier to work with if you used branches, branches have always had
+> good support for these three (and other) operations, and I do not
+> see a good reason to add a parallel support to do something similar.
 
-Makes sense.
+I understand the concern. I think I did not explain the workflow that
+originally motivated the RFC clearly enough.
 
-> Add a test for the sort subcommand to t0071. The existing test only
-> exercises the test subcommand, leaving these leaks undetected by the
-> regular leak-sanitized test suite.
+The idea came from a workflow I used with Perforce shelves. One concrete
+case is build configuration. The repository contains configuration
+templates, while I may have several local configuration variants that
+should not become part of the normal project history.
 
-I was briefly wondering whether we could get rid of t0071 altogether in
-favor of converting the tests into a unit test, and then drop the test
-helper. And that's certainly doable, and I'd argue it would also be the
-right thing to do. But unfortunately it wouldn't allow us to get rid of
-the test helper completely as the "mergesort sort" subcommand is used as
-part of our performance tests.
+A tester may need to apply the same configuration while testing
+different branches or revisions, for example:
 
-I would claim that the benchmark itself is of dubious value. It was nice
-enough to have some numbers when we were working on the implementation
-of the mergesort, but carrying it with us nowadays feels like a bit of a
-waste as chances for regression are somewhat slim here. And if we ever
-wanted to iterate further on the merge sort implementation we could
-still introduce a new benchmark, that's easy enough to do.
+    branch A       + configuration X
+    branch B       + configuration X
+    release branch + configuration X
 
-But anyway, that's of course a much bigger scope, and I'm fine to just
-fix the bugs for now.
+Using a branch for configuration X makes it another line of history
+based on some revision. When the code being tested changes, that
+configuration then has to be merged, rebased, cherry-picked, or
+otherwise combined with the revision being tested.
 
-> diff --git a/t/helper/test-mergesort.c b/t/helper/test-mergesort.c
-> index 791e128793..3b8c428b14 100644
-> --- a/t/helper/test-mergesort.c
-> +++ b/t/helper/test-mergesort.c
-> @@ -61,6 +61,8 @@ static int sort_stdin(void)
->  		puts(lines->text);
->  		lines = lines->next;
->  	}
-> +	mem_pool_discard(&lines_pool, 0);
-> +	strbuf_release(&sb);
->  	return 0;
->  }
+What I want instead is an overlay: the tester chooses the code revision
+and the temporary configuration independently, applies the
+configuration for the test, and then discards it.
 
-The fix is obviously correct.
+Perforce shelves give this kind of temporary handoff a straightforward
+user-facing workflow. Git already has the underlying functionality as
+well; that became clearer to me during this discussion. A stash can
+already be pushed as a ref, so I agree that adding a separate
+"publish" command would not be justified.
 
-> diff --git a/t/t0071-sort.sh b/t/t0071-sort.sh
-> index 2236a7e956..97890da29f 100755
-> --- a/t/t0071-sort.sh
-> +++ b/t/t0071-sort.sh
-> @@ -8,4 +8,11 @@ test_expect_success 'DEFINE_LIST_SORT_DEBUG' '
->  	test-tool mergesort test
->  '
->  
-> +test_expect_success 'sort stdin' '
-> +	printf "%s\n" c a b >input &&
-> +	printf "%s\n" a b c >expect &&
-> +	test-tool mergesort sort <input >actual &&
-> +	test_cmp expect actual
-> +'
+My motivation for the RFC is therefore not to add another transport or
+storage mechanism. It is to see whether the existing stash/ref
+functionality could have a more coherent UX for this kind of temporary
+handoff, instead of requiring users to compose the generic ref,
+push/fetch, and stash operations themselves.
 
-And having a test makes sense, I guess.
+This configuration-overlay workflow is one concrete use case that
+motivated the idea. There may be other temporary handoff use cases, but
+I do not want to rely on hypothetical cases to justify it.
 
-I noticed that there's another "generate" subcommand here that is
-entirely unused. Do we maybe want to also remove it while at it? The
-test suite passes with the below diff.
-
-Thanks!
-
-Patrick
-
-diff --git a/t/helper/test-mergesort.c b/t/helper/test-mergesort.c
-index 791e128793..9200c4bb4a 100644
---- a/t/helper/test-mergesort.c
-+++ b/t/helper/test-mergesort.c
-@@ -114,16 +114,6 @@ static struct dist {
- 	DIST(shuffle),
- };
- 
--static const struct dist *get_dist_by_name(const char *name)
--{
--	int i;
--	for (i = 0; i < ARRAY_SIZE(dist); i++) {
--	       if (!strcmp(dist[i].name, name))
--		       return &dist[i];
--	}
--	return NULL;
--}
--
- static void mode_copy(int *arr UNUSED, int n UNUSED)
- {
- 	/* nothing */
-@@ -237,41 +227,6 @@ static struct mode {
- 	MODE(unriffle_skewed),
- };
- 
--static const struct mode *get_mode_by_name(const char *name)
--{
--	int i;
--	for (i = 0; i < ARRAY_SIZE(mode); i++) {
--	       if (!strcmp(mode[i].name, name))
--		       return &mode[i];
--	}
--	return NULL;
--}
--
--static int generate(int argc, const char **argv)
--{
--	const struct dist *dist = NULL;
--	const struct mode *mode = NULL;
--	int i, n, m, *arr;
--
--	if (argc != 4)
--		return 1;
--
--	dist = get_dist_by_name(argv[0]);
--	mode = get_mode_by_name(argv[1]);
--	n = strtol(argv[2], NULL, 10);
--	m = strtol(argv[3], NULL, 10);
--	if (!dist || !mode)
--		return 1;
--
--	ALLOC_ARRAY(arr, n);
--	dist->fn(arr, n, m);
--	mode->fn(arr, n);
--	for (i = 0; i < n; i++)
--		printf("%08x\n", arr[i]);
--	free(arr);
--	return 0;
--}
--
- static struct stats {
- 	int get_next, set_next, compare;
- } stats;
-@@ -388,14 +343,11 @@ int cmd__mergesort(int argc, const char **argv)
- 	int i;
- 	const char *sep;
- 
--	if (argc == 6 && !strcmp(argv[1], "generate"))
--		return generate(argc - 2, argv + 2);
- 	if (argc == 2 && !strcmp(argv[1], "sort"))
- 		return sort_stdin();
- 	if (argc > 1 && !strcmp(argv[1], "test"))
- 		return run_tests(argc - 2, argv + 2);
--	fprintf(stderr, "usage: test-tool mergesort generate <distribution> <mode> <n> <m>\n");
--	fprintf(stderr, "   or: test-tool mergesort sort\n");
-+	fprintf(stderr, "usage: test-tool mergesort sort\n");
- 	fprintf(stderr, "   or: test-tool mergesort test [<n>...]\n");
- 	fprintf(stderr, "\n");
- 	for (i = 0, sep = "distributions: "; i < ARRAY_SIZE(dist); i++, sep = ", ")
+Thanks,
+Hanan
