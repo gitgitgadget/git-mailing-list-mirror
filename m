@@ -1,115 +1,267 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48434435515
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 08:40:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A9949B5AD
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 09:03:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791362444; cv=none; b=K1CuXQkcTVHeNCQGZ1EAf26qzCp68F1tZbuMaL0R96yqgUY4GTtDD4ZaYxtQ83CQd9xvw1+RQaZlbKJypHQAHul8RzMdyFYVQQ1hEbqpz4btaJG12RA/v5rrtIaMWbnL767u8reJwklugvY3US5Lve3xK+aMdbbetKv+D89kM8s=
+	t=1791363990; cv=none; b=qydFfWkXhkVn8VJjV/iciLkW/4S/cKUUsG54ZSIP0G9jOPV7fVm33mhJr03Bj7V1cjCuIxfrutNa6twXNp6tr6IDvMWNAM1rhSJykeS5k030lXneUlfbrVhAF5BAr2/1f7Je+GfOY0Ac7f1yIUfwnt065X2PlMzT2jRFT8eU7G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791362444; c=relaxed/simple;
-	bh=e3pNEx/Js4SpLGMfYuaDXl5iIvEmhHIcRvKpAHxGksY=;
-	h=MIME-Version:Date:From:To:Message-Id:Subject:Content-Type; b=TkDq6uofvD/1v687Eg+jajxoFQydKCGaLcHv4OIFvu5yWywRx7se28VlFJ6b3t/VW20ClIiFqg3KSGDestxlCfyMoJNjZ6ld55JyUONOZhVySmLpxZBNIyTAa6XTbB2pirtmrXIJaKNi3WE5BFb49YBlB/To+7r2JChkGZBCeLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dicarlo.email; spf=pass smtp.mailfrom=dicarlo.email; dkim=pass (2048-bit key) header.d=dicarlo.email header.i=@dicarlo.email header.b=RfEjRATF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=y2G9CgLt; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dicarlo.email
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dicarlo.email
+	s=arc-20240116; t=1791363990; c=relaxed/simple;
+	bh=c7bTY+CqgLR35WduFs97BMNnQyjt9jjEEYZx4ThMO8U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P4KtZ+aoQDCoQ6xoVLWQiQ6rDuSlehO2P4UUfcGaY/1c68jvKFVqUcM8h9SezBzZ9T2/WdKhHUs4lQM5IW8oCIXq+ZCd+NzPyclPBd9Ve5I+k77ygSPjsXBekGvqy3Q82w8GZQgsmqti+Q2Bql4WeZpazpWkICAYiFVxlTh2/Vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SWM6e25t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HexoE6GX; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=dicarlo.email header.i=@dicarlo.email header.b="RfEjRATF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="y2G9CgLt"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1B2401D00157
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 04:40:40 -0400 (EDT)
-Received: from ams-imap-11 ([10.64.2.31])
-  by ams-compute-01.internal (MEProxy); Wed, 07 Oct 2026 04:40:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dicarlo.email;
-	 h=cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm1; t=1791362439; x=1791448839; bh=ta
-	tk6Y5NNnxqAT3DXjVeYBDq9a0wJPXMZI85YNBH748=; b=RfEjRATF5y4z+gs14J
-	cd4AiaUw1mQ6dLWgx1Cg4c9svu6V6iwhy6ec8QXrGgZRdySfKD2InQpMr9xriGTQ
-	7+2F6Y5pGKulZN3iJDC3gl/h0aaHUr0PWJy7ZnJgRRsYj1d5ti2jmIYpmZd1HWjm
-	f0Ipn8zD1pUNAjQCIgYOHGwImOkLE0JJHfUWusM48wxV/m6uctN9vJ1K4i0Z4/jZ
-	uZa1VomIY0fngIvF7FW21I3G/KS2JfIKz86frq6OwRWn+eMLP5e/9qP5ximTfv56
-	BQFgxeRnNGnm5AX6bwJAOTfAhNQHDN4tasHMs013CLPCK4rsHMoGEJjn5Jr4sxPP
-	Driw==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SWM6e25t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HexoE6GX"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 687C8140012F
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 05:03:44 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Wed, 07 Oct 2026 05:03:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791363824;
+	 x=1791450224; bh=sGhr8jfV7IRdfAq+eaMKNKjl7CGEHp0bDDO1g0EROPg=; b=
+	SWM6e25t0upkJYwJht6DETwH2WFmOBAnxYd5t6QfBmg3RCUKKwC32lCdz5dh2ITa
+	N+4qgSHLcbOhkI4htML78AQHr1VAupUtE3Ww3qRUaTEpZ0lFp71F2GcdyTxnZg7J
+	s62Pv56b8Z7SgMcuDcezpU5VUWU65kyREIBeEWzuQM9exmLaZMOpFczTTX4jA50/
+	N1Evih12fnQrusmrTf2G+nEO81G0fIx6CHbOTioqvS5tDkZ6brdQpBCLi3iAw3hI
+	CW3Yc99Jk38hSKyGUtIjjOoJrHpKa97D1V0ur5dXTyQ6E3HaWs3X942LUsjEpmLo
+	ToJhIyuqwPxvpsWdhk8C6Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791362439; x=1791448839; bh=tatk6Y5NNnxqAT3DXjVeYBDq9a0wJPXMZI8
-	5YNBH748=; b=y2G9CgLtujRotqjVP5eeE+XLDvOMwG9cwfgvODTCmxkurTtTceS
-	nZvdICw93zCV8bKMhhyRrqUgk7pJ83wwM7MVaIIB2kaPBYR8OGps4wfxCuj2ivjQ
-	hj5pNPUNyFCIVcnRDQc9RxspRkS6/5xy0KNGtGCAJBSm1Q+a1jgUp9ANb4FxhdYo
-	r+HXee4znykks2JlIGSM+OWc7lKP8ncwMq4A2jrAi9vP5q+e0+0zm3kyj9kdqYdY
-	kWM6NmtRe83MfZ41i3Hs1RtvQrXHvvSOzu2iyfkLwdE/rYNvtw/FsiSEDjVQxbIc
-	/4JQHv3b1ZBvr0o8azycKDq3CWu5j20KWvg==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791363824; x=
+	1791450224; bh=sGhr8jfV7IRdfAq+eaMKNKjl7CGEHp0bDDO1g0EROPg=; b=H
+	exoE6GXDVYS6dySCdD1AvrU0Avvb24gGOZhjDTeJqvZED3sabZJj2/Y1mLE6rD2l
+	j2gUuYme8+wg8doZcgWexd2+IaEA0bCTqPhWD6aEaVC2Py987NcaVG52GupM/70Q
+	aHWw7Nm3DZZqFL5OMzMnJLM1ZzOtw+C8WIjbp9mY9GuurMiyMhpb/dOtDm+WcXmV
+	M/fsCtQS48t9HqhHVih0nWKynLbY6ekXuejKxdNKsfeQex3ggfRcqyeaIQdyIMC8
+	aonURq9moI5AtlynP4ahJEInpF/bX9cspoCtXjOd4/AKUVz8ffxV16xxEA1GAoEv
+	AyJwT99h5HluOK9k6ccxw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=dicarlo.email a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791362439; d=dicarlo.email;
-	mf=PGx1Y2FAZGljYXJsby5lbWFpbD4=;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791363824; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:cncokKbD02HB48JQO3KYmWcmWg+iCSM0fgQcGklnT2zofFi
-	w+jrnFMTP98GpXsTm2teYNxzQ5KI44/Q4x37LgfApyleWIqxkkwHj4m1c9J7hS6n
-	jfrf8Y6Cx2CMQ6Ob/sBZe+Eji2vbKk7kLEsndjR7xNfvg4lA1OyMLaSwzQw/PJRt
-	uGANv5ULpFBUQmjCgRLyQh+RcnMN5VeGg596XjJQiqRdDqZ51ZADLTSAK6mIyP7M
-	+qT04R8KmM9k3zO9Vb+BDepMvn+LZ/6XjkXVSi0NhvQu4oUGd41IOwKFeVixnTHF
-	ZZahZvOGBtINhB7n7umudJaT18xaXqM2yZ+7WIA==;
+	s=fm2:rsa-sha256:NBfkaobP++8UPK0/JttWKFycTVowhRdIxEafEvlJxNJT+fU
+	AWhmywyx96318a38lv3o9uWLzcHwa4tV6gPvkxPQKW5hiE1yg9jjBMsHBK7KDzfB
+	tKjx3RVsgtJqCqdDDKxLqRrJRKeiNkQXDxLWlCQMHF7lLmlXsBfswvePeZi78rVA
+	sMf2D8h0tPW2YTrB0DAZQ/et3S1ndngq6GebMFHjpX7ocVEHqbH1zISNKMhva5ye
+	07lNXDW4vkhYCKKOlOp5JxviomK4q5NRXlZ/6wMkmd1xataGbJeK4KFVRhWaXXwI
+	L+SNmXkf6STNv2d2bhjNfStmsQJo8oyC7NrzmUA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=9;
-	hn=content-transfer-encoding,content-type,date,feedback-id,from,
-	message-id,mime-version,subject,to;
-Message-Instance: m=1; h=sha256:SwRc2Nq9uhjD8jElHaUYlEswLp458lW19nB/khKiRGA=:e3pNEx/Js4SpLGMfYuaDXl5iIvEmhHIcRvKpAHxGksY=;
-X-ME-Sender: <xms:hgXGamAEKNrx8oyzB_RChbXQFi7UJ0WPoE1sejFdIewiUyg5-4QchA>
-    <xme:hgXGarXwBvvtcWOMl8wV2iYOfuY0MjusQf2S00k-WlE7hPZxiwIqHRi6R30QXtBsv
-    MtHl94NxxK4qUq_WP6RDqAI0Wn736Rk1TpM18YIxQz9qdsmQJom-G26>
-X-ME-Proxy-Cause: dmFkZTEwK4Xv0hsV45wHhu7npil+d2dgCrgYzZLhRHymgXHxAbRXJTgjhFohk6/uSMAM3F
-    YvsRObF7/j8vwB+6ZpbLADqivnAMuHDnH289+ktcc/vTBmX0b8fQ1KKRNgTT0e+l8L+VJ2
-    K2sIPzmpcJTkbT3SBBvb4MfK7dyRsCoNVPocub8HjPScGDqAoOgBhByMZAi2Mvrxbew09V
-    IAPnuUgG0/BSknuV2xr8WNeM9IScv4u3WOZl4qc6KORyBakzY+vaEcENYElN8P2VxgZMuV
-    dLXvyHGQbjNiwkfu6EnxLZdtAHXSBShaTqzXI4fLEq5+DbgpgtpVtprZgJXg6Wncxt8DNi
-    oxMKRPE1tSFBhIY0CmJLJPCthb2whLKXLdYFUcP3NMWdfZ/2Je4HgI95L/GK594tGxQu0I
-    0Dc2mPsg1QPMdiBI/Oks4nsIJOQSmYnxdRyOf9K4l8rHeV9aa+7jECI8LV99LaxAsWdO8t
-    H59KL0n29ZHNhUUYA059OHTivxgW4M+ps6DM2JvX/QJyMoMi20fHNQcF03VTvI0pWhJyFU
-    v08HRB2JPfdcR19tC4KJWMcj1+w/l4aqogZ3R7vgWmiznu1v9h7QZxDF+mnyTG6OXmkJqB
-    CZB1zXsVbOMCBRinSMnAeEoB0jqmQfQ5ApiuP5Aip1vXb0BvZbHxj99nynCg
-X-ME-Proxy: <xmx:hgXGajS4fS8biql6zvcB8m7pUjQ_nlD8mv9p_Mq_8W7RyzeUeYL1qg>
-    <xmx:hgXGakuna3xswD-qHIzbVs2pn3FTW9eOWPbBJMXeP9H-q_wBpfX7XA>
-    <xmx:hgXGaluSbJahSpHJJGF3A6QVW1ZcmWuCh9k-tJi9AxY_S7plfUhwfg>
-    <xmx:hgXGaqz_Ri_-SafF3IuZDkRNcaRvynq9p3j7GdLgyQZBC_DkNAnj7w>
-    <xmx:hwXGalmveQD_rNw_alMfl4SYKqntccMPEJ44Pv9pWewzbdrAkAmVlyJj>
-Feedback-ID: i3269492f:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 4729FF8008E; Wed,  7 Oct 2026 04:40:38 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	action=mi-m=1; hc=13;
+	hn=cc,content-disposition,content-transfer-encoding,
+	content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:Wi7Akl0prsahEcR0hVsKIkQocBaSHS8FP3j+4WnwXRE=:c7bTY+CqgLR35WduFs97BMNnQyjt9jjEEYZx4ThMO8U=;
+X-ME-Sender: <xms:8ArGanEBXuJ8ukkYOVngDb5Tj3RjYPDorNTVS25izy-fr8rZGV9QZg>
+    <xme:8ArGaqXCEQI74MU4jkP9E90VaD9FJ_fy69VpuZg-rT9BDeWlvvEai8BeUPQRDOlcX
+    5zx1e4jIFgieE7cDA0az842IFeRExdJMZDc_mWMsuwpT6ryoH_afQhV>
+X-ME-Received: <xmr:8ArGamwU1ZB5EP1h9ZABFtk_5igiXDf0EQlyUF9zRr2t16M4hwsOjg>
+X-ME-Proxy-Cause: dmFkZTEJdiSh/Ibb8fhHkTzk9UV6+egzxnC7UK8eY83MeFSHI7EJXHzaeYLxG/DzngYJvg
+    rOAEo0pAwcnZUZoX7xQtGtM8uM8UHngG1tm2rrojYyWTNxFm/F+ksZuGQ25aY/MXlCU0+4
+    shwCnBjTK9pn3St4OtYNgbjBWAbM5Au8w2YHDI8iMKySgslsq8t0xfE5BtkOw4TlK70zkF
+    u4mwZcZHnpt1C3rRGcXci8untuHXwyP2kwwdNnR51mFqk4dh+Ye9/K5iS19aiqIVCRrgj1
+    VjMupvPmEkN+SrJSlL6jrwqiutOR3jRPhbwD/otm040nSSeGvIat/ynyi/RJJqjtyeY3po
+    EHMVPX7ePQFffMdIuMW0TwDD3IyGwoDwX4KncWqd97tul00TNc4ngN9qvUwslPJZk21KHh
+    p+lQRhZ5jhyIYJaFRNyFqycyj8El2zMKJXNHtY8rXjZ8qp1din5EWsqk6KocA9EdYkbfBh
+    /iAwjHL7NdyWxacNajZaLKLa+h6HAnp3MqPEgEECde1/VPyozQuNUlSE3cdRHElgyVKehT
+    JZ00NRvEt12fGO6NcBS6euGWH+S0fZADf3xjM6PDqTnQHSKuQKeQvpW+Vcu5F46nTnv5q6
+    xV+dPQzcMT3vjHLkz07rJzclpKPUZgy72B8FfGv25HIfRXwKxY15OjnlDq3w
+X-ME-Proxy: <xmx:8ArGagMDfb5frYahpbc_0cQOGZG5-SC9nPZenmpd3S3zXlZjTVspmw>
+    <xmx:8ArGav53ebYlNVQ4EwpjSRsAyufXHMNdrwS7Bmotete796H48v_6zA>
+    <xmx:8ArGapM2RlNLo7tEVZGSLYqv1nyTIYu-tyhwsFdL8JZ2EAjz6jv5FA>
+    <xmx:8ArGalkBBi_sOw3cJTZ8Z_ndqp6AH82HC6NulEuLhTCtcyiaKDhZSQ>
+    <xmx:8ArGan3r2-dO6xuqJzCyovr_CA1hhhr9Iaun3XvNzXc4mfYyvj5CVQz6>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 Oct 2026 05:03:43 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 0bc474f9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 7 Oct 2026 09:03:41 +0000 (UTC)
+Date: Wed, 7 Oct 2026 11:03:38 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jens =?utf-8?Q?R=C3=B6cker?= <jens.roecker@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [BUG] push resends common history after repack during pre-push
+ (2.54.0, 2.56.0)
+Message-ID: <asYK6ld53e8lJ4Ir@pks.im>
+References: <CA+tGzvYYKm=Yo88knZb4oavG9dH5smUCXnoqa-RR9-7YEBycVA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 07 Oct 2026 10:40:13 +0200
-From: "Luca Di Carlo" <luca@dicarlo.email>
-To: git@vger.kernel.org
-Message-Id: <e30c5b13-5ca3-43d1-a87a-d807b71bad7b@app.fastmail.com>
-Subject: git non-intrusive clone
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+tGzvYYKm=Yo88knZb4oavG9dH5smUCXnoqa-RR9-7YEBycVA@mail.gmail.com>
 
-Hey everyone,
-I am reading more and more blog posts about job interviews that require the people to git clone a malicious repo with commands executed using git hooks. 
-I wonder if we could have a 
-`git clone --non-intrusive ...` 
-That would disable all git settings set within the repo. 
-Maybe by adding a `.nogitconfig` file or something, so that the developers remember that because of this file, he cannot push or fetch, or use any `.git/` defined stuff. 
+On Tue, Oct 06, 2026 at 07:37:47PM +0200, Jens Röcker wrote:
+[snip]
+> Possible mechanism, based on source inspection:
+> 
+> In 2.54.0, send-pack.c:feed_object() drops negative OIDs when
+> odb_has_object(..., 0) returns false. In 2.56.0, the same quick check is in
+> append_negative_object(). In both versions, odb_has_object() uses
+> OBJECT_INFO_QUICK unless ODB_HAS_OBJECT_RECHECK_PACKED is set. A parent
+> process with a stale pack catalogue may therefore miss the base after the
+> hook removes the loose copy; the fresh pack generator then sees the new
+> pack and walks history without that excluded base. This is a proposed
+> explanation of the measured effect, not an instrumented proof of the
+> parent process's in-memory state.
 
-I hope this is the right channel, sorry if it's not. 
+Right, that makes sense, `odb_has_object()` can have false negatives by
+default. So in case the object database has been concurrently repacked
+we'll potentially end up thinking that the object does not exist at all.
+And in `append_negative_object()` (which is the modern equivalent to
+`feed_object()`) we'll then silently skip such objects:
 
-Thank you for all your work,
-Kind regards
-Luca
+	static void append_negative_object(struct repository *r,
+					   struct oid_array *haves,
+					   const struct object_id *oid)
+	{
+		/*
+		 * The remote end may have advertised objects that we do not have in
+		 * our object database. Skip those, as we cannot use them as boundary.
+		 */
+		if (!odb_has_object(r->objects, oid, 0))
+			return;
+		oid_array_append(haves, oid);
+	}
 
-Cordialement
-Luca Di Carlo 
+Consequently, we won't mark the object as negative boundary for the graph
+walk and thus end up pushing too many objects.
+
+The question is how to fix this. The obvious fix is of course to just
+pass `ODB_HAS_OBJECT_RECHECK_PACKED`. But as the comment above explains,
+it is expected that we will receive potentially-many object IDs that we
+don't even have. And we certainly don't want to reload the object
+database every single time we see an object that we truly don't have at
+all, as that may be somewhat expensive.
+
+I wonder whether we could maybe batch this check: instead of checking
+each negative object separately, we could gather all of them and then
+check them for existence. And if any of them are missing, we reload the
+object database once and then re-check only those.
+
+That'd be more efficient for sure compared to potentially reloading on
+every single missing object. We still have the chance of racing with a
+concurrent repack in that case. But maybe that's good enough?
+
+Something like the below (untested) patch.
+
+Thanks!
+
+Patrick
+
+diff --git a/send-pack.c b/send-pack.c
+index f20460fbf4..aecc73209e 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -42,17 +42,46 @@ int option_parse_push_signed(const struct option *opt,
+ 	die("bad %s argument: %s", opt->long_name, arg);
+ }
+ 
+-static void append_negative_object(struct repository *r,
+-				   struct oid_array *haves,
+-				   const struct object_id *oid)
++static void append_negative_objects(struct repository *r,
++				    struct oid_array *haves,
++				    const struct oidset *oids)
+ {
++	struct oidset missing = OIDSET_INIT;
++	const struct object_id *oid;
++	struct oidset_iter it;
++
++	oidset_iter_init(oids, &it);
++	while ((oid = oidset_iter_next(&it))) {
++		/*
++		 * The remote end may have advertised objects that we do not have in
++		 * our object database. Skip those, as we cannot use them as boundary.
++		 */
++		if (!odb_has_object(r->objects, oid, 0)) {
++			oidset_insert(&missing, oid);
++			continue;
++		}
++
++		oid_array_append(haves, oid);
++	}
++
++	if (!oidset_size(&missing))
++		return;
++
+ 	/*
+-	 * The remote end may have advertised objects that we do not have in
+-	 * our object database. Skip those, as we cannot use them as boundary.
++	 * A concurrent process may have repacked objects. Reprepare the object
++	 * database once and re-try. Note that we explicitly batch this check
++	 * so that we don't reload the object database for every truly-missing
++	 * object.
+ 	 */
+-	if (!odb_has_object(r->objects, oid, 0))
+-		return;
+-	oid_array_append(haves, oid);
++	odb_reprepare(r->objects);
++
++	oidset_iter_init(&missing, &it);
++	while ((oid = oidset_iter_next(&it))) {
++		if (odb_has_object(r->objects, oid, 0))
++			oid_array_append(haves, oid);
++	}
++
++	oidset_clear(&missing);
+ }
+ 
+ /*
+@@ -64,6 +93,7 @@ static int pack_objects(struct repository *r,
+ 			struct send_pack_args *args)
+ {
+ 	struct odb_generate_pack_options opts = ODB_GENERATE_PACK_OPTIONS_INIT;
++	struct oidset negative_oids = OIDSET_INIT;
+ 	struct odb_pack_generator *generator;
+ 	int rc;
+ 
+@@ -84,18 +114,20 @@ static int pack_objects(struct repository *r,
+ 	opts.pack_fd = args->stateless_rpc ? -1 : fd;
+ 
+ 	for (size_t i = 0; i < advertised->nr; i++)
+-		append_negative_object(r, &opts.haves, &advertised->oid[i]);
++		oidset_insert(&negative_oids, &advertised->oid[i]);
+ 	for (size_t i = 0; i < negotiated->nr; i++)
+-		append_negative_object(r, &opts.haves, &negotiated->oid[i]);
++		oidset_insert(&negative_oids, &negotiated->oid[i]);
+ 
+ 	while (refs) {
+ 		if (!is_null_oid(&refs->old_oid))
+-			append_negative_object(r, &opts.haves, &refs->old_oid);
++			oidset_insert(&negative_oids, &refs->old_oid);
+ 		if (!is_null_oid(&refs->new_oid))
+ 			oid_array_append(&opts.wants, &refs->new_oid);
+ 		refs = refs->next;
+ 	}
+ 
++	append_negative_objects(r, &opts.haves, &negative_oids);
++
+ 	if (odb_generate_pack(r->objects, &generator, &opts))
+ 		die("git pack-objects failed");
+ 	odb_generate_pack_options_release(&opts);
+@@ -114,6 +146,7 @@ static int pack_objects(struct repository *r,
+ 
+ 	rc = odb_pack_generator_finish(generator);
+ 	trace2_region_leave("send_pack", "pack_objects", r);
++	oidset_clear(&negative_oids);
+ 	return rc;
+ }
+ 
