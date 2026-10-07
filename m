@@ -1,73 +1,74 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1F84DA9AD
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 18:05:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E993BB669
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 18:05:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791396322; cv=none; b=YVWriF8aCZBaewRMZe/d+WrVAPuHMDcxkpE7gHKAQYzK2uxd/i4VsKeQZfMAN5gf45Sa2hxuLSLMoCvTR7MMR+6jBUx0jQ3EV2+XXAsNF1pJMoC5yi7wI2gBtILP/QfGHjdj3tBisWdbp3A+2ilZZgBp9Q4kpdCzEJZQtojgxxk=
+	t=1791396324; cv=none; b=F2m+1NuhWS4bRkrgrAS+UWtGX4sI9LrwFLVLDsxov4MAORF1pUgeHPSuoxkR6Xx0qw/OsiDwHTIhWDao69R0rQ5kS04UH7YiIfJl+z3ZwqpDyPinVj9cpoeja7FJSS01axSJhNCaq+NVDtS52kMsEFdYSCDbxTN1B4QiQK9nPrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791396322; c=relaxed/simple;
-	bh=8ZLazNSNKvdrUr2+S2MtvNd1cvlXl/r1rPFVmmSdzNk=;
+	s=arc-20240116; t=1791396324; c=relaxed/simple;
+	bh=5xOzblL1EhAggmtqUFmF+WeGSNy4Rufg5iR2PW3YBx8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:To:Cc:
-	 MIME-Version:Content-Type; b=tmfsfEeSq8H8QSzDQ6WtOI+DASO96iH7z8uCicAYu2rHElBtlvLz0idlA75cO4NwVr32U9wIJ2GPBgrnvsPK9VBdF43xsyjvosKJHVXDleYCOrzEhmAh/L0gJl3RjJ6wqBtn6ECFVYRIx3gvh5Kgp5wOra2ER61Ic2BYIz/Ptf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X5HWpDcc; arc=none smtp.client-ip=209.85.208.47
+	 MIME-Version:Content-Type; b=nUUvKSI6PxfcXKC3jU4LWAhMBwo+GrXgD5vxLl3kKV9ZN899pjZ6iJjFjq+VWes2oqhka61taY6c+rAfO0erUBZTd9oEpflUpIpJ3PXG19KHLS27jz+4m33c7JugMex6MT7rxql/1EixKKZJD6YmbktqpAZDZ0vMOO3yIkmlly4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pKYWQMMM; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X5HWpDcc"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6afa6bf3b45so3307847a12.3
-        for <git@vger.kernel.org>; Wed, 07 Oct 2026 11:05:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pKYWQMMM"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c263415982eso301516466b.0
+        for <git@vger.kernel.org>; Wed, 07 Oct 2026 11:05:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791396319; x=1792001119; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791396321; x=1792001121; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:mime-version:cc:to:subject
          :date:from:references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=zsTuK4YNl7KWfBYN91fW4LbLNZmThWx/zKDLjrZwL6w=;
-        b=X5HWpDccXNZQO6swIzgczVBWyVERkg4FVAhGhwjT//NJQ6VcpoRy76laTZASci4hUD
-         3EE9GpK/ql/SEddznSOSN+50JHLFhlYFLTJCXuse+b0vHlJ8UICU68TpEkRjMAs4/4g/
-         Kc3u2V+Ee1KCh+r6PHBrs1XIwwg0WF+HqzMHLSQ1v+6nMqlY4seyOchGCidLciZqUu/Q
-         qz5Skb59YE9aNwllkLj3N2LIus+HvecaIvW03mds2G2R1M1CJmPW6HUwKcTNjnKO/x4T
-         qBR6KJmofeFWY6HPTUirv3QbyUoDAkUQIOWH8JoRTJSamtoOn4aEPAtkp6Y16tSSYb5A
-         +FNA==
+        bh=njA+3Oh72tyJ2YsDPYi/upFiRlLaUAK1AyvNO5eDmgg=;
+        b=pKYWQMMMlue9A1C+wpY9l9u//t0G75xzG7b06SJdwr7KvYdCbb9OvExpKaEnzka1mX
+         D61Jk4CN5n/KZY+dAArYALQD+Ui1wUJVp/8olLRV1yweJh3t6lWESBiJkHtB1pyq5FM2
+         sqfjUboZeBSTMIWBN/imNVmI8blQ1xrwk4x7zSsn71dcojcXErh4nqTBPjVYiRcwKSrk
+         nqbHEum+kxe9fZ5T1JEq7TCTFK4sOEZgXf1GdsfvkIeP4ujkXTW9/jEfH0UNK821yIMl
+         cOMDsmyagQ5C0VKjQ8DwntnUZG2Tp5DZBx9mq5/ZiyJ0JAqQp6uEeCsilBPCS7w0TQCL
+         155g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791396319; x=1792001119;
+        d=1e100.net; s=20260707; t=1791396321; x=1792001121;
         h=content-transfer-encoding:content-type:mime-version:cc:to:subject
          :date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zsTuK4YNl7KWfBYN91fW4LbLNZmThWx/zKDLjrZwL6w=;
-        b=UBNoR4rwAk9cffZekL51cItznaSKxf5KGq+926KVyYW6LXLMOknNZXBvQOzjtf40Me
-         7vZIbBcPp/ou3v1vqZrcGJji2dhLGrQONdEOxv+hllhuC1nilX7SbZ9Evu85i5Fmhyf0
-         oh679cYAIqPWWz2cvfz6sUDns8lvf20ujX2Sr2VQcnY8q4S8m2Kf2745OYDJWxGeDvy6
-         58J3dAKuS5CkdcZXdDkjIxpAEJICjsNrdWjGZYOn5MiiIvLao1pcTGy7xn1dfcWZlrDZ
-         o0BBDAM03H9alemELFmHQpyVtVEtIE2/0JlPkvQVNo6RFsHES2zw7DC4UQV+EpJsSEQn
-         lcNw==
-X-Gm-Message-State: AFuF++nubaKRP2Kdh/bVaKNHviB1wyKn6BGpxVXqHDh6Yu+Se2QUrNs/
-	gvTmGirBJHn8Aun9Lpm+lD+DGvcsNfbo+BAfDJDjCPZ5Ojujl9Yz6t47HyTRbg==
-X-Gm-Gg: AYBFou1EDvcWXxVE6yQ9oAso10aNatHpjaXwUSwK3lMBIOkvZtfy8EpTnm41ah50KGd
-	1453JMDRUwQgauiMWYeIRlTFyiBhjVuH7Qq+94n5/OpV5VK4saxhArNufEja+/umvZARdpBW/O6
-	e41mFTqqPVZ7zf7oqRDw64W128327IuvS/TYAvH3sXW2MTLpj+1/+oKU5LhJVOGyv/yYx0McK8k
-	aGPmK/Umkkl/VO5t4iRYO+Xr9Xj+ZRc8CbmuL+QnCPqRIltPV+QhapGRfLFlsz9NZjhCZ6X9SWu
-	NPeZxBADhA6eRQbSBVVk3ZIxhfr3P1lIha+u8xoEtCIoUeqR1JoMLc0RgezUCQWhKBHPrbSQK/l
-	Rq2x6H5588YBvHN52XICx+9yfIcD3iQI3RXFaLPjRL9JyV+8NNJnt8omALdvxQiKxlHqvMtKHC/
-	j/ZUfhXUrttN1CVmrpELZs/Cl8IQ+mPVTehwyzrkv1ROLPCcnK0kD3YDKOGqFNLm9BHzRC1emq9
-	0hvrlJqKXrxAh0FGyhkb4wzLPQYQZAuTBkHjYRUCund42g7ykhPH8Z0dTOkuG2f/0F9iyV9lm0L
-	8FgRMVRApw5r3ZNm2oNRAZRgXgUml1OVffL2Ug0AuLG47LAHKcWMzdTcTaH2uJ0dG9tBOPC3QVb
-	KT6w+Cyj0mtZUKPbN7c2GVNo1kL8N2vpe9e00z9qZ
-X-Received: by 2002:a17:907:3f0f:b0:c2e:2b9b:f16a with SMTP id a640c23a62f3a-c317c177b4amr317569366b.39.1791396318351;
-        Wed, 07 Oct 2026 11:05:18 -0700 (PDT)
+        bh=njA+3Oh72tyJ2YsDPYi/upFiRlLaUAK1AyvNO5eDmgg=;
+        b=HSQzW/5gvhX9lQQQzcF/JfD8SuaoKaydvcBL7FE5Jzz2djyhCWp/eK/hjsSgt3+dYy
+         wWvm63jxfcBuYM/zGiz08LCIh9mh+ERYp0Sd29vChe9QjCrbsPRJByi/cBRAtkkODMiC
+         IgFclGJIGd35dtGWeur98Wkt+/6dfZT0JTdwSwjnM+cy/vEzTMy9nJF8l0np8ufmRIiS
+         eP3KonmdAHLgdhNVo+SrOJmKb214bIOFeCCHI7F4XNQbpKuJNptxfIqFnVIEu0MmlO1d
+         Xk79u//s4c14i9qRi3Fl2P5zdtbAkQk8Ah46AIjt4n4aEl7KFGnOY2a59z+DsDD2CG3n
+         1wLQ==
+X-Gm-Message-State: AFuF++nxs2jgaa2AoKtMa5D+NAegArAvbUNOVP2hJroo9y0hPBrkiwot
+	ruUwOPThAcAHZwAQv7b2BBN1K+GZdks1QUn1Zpyqi6NxHZ7j9wUG8zO+z9aLHQ==
+X-Gm-Gg: AYBFou2yDVtvO7nnkQMS0/l4R9s+H9b3JXCLAfcbT04QNIccS+CxIVQ4EO3pYjmsLFk
+	dBkN9gWxLCmwl85P47LJRoUlnDYrrD62PcJoe7v0JibdGw1sUYlmxkIV4BOJR57qsFTY4z3X653
+	uFeabykhCa7Aemsn/qX9qbNoEbmPEYl81adwN2HO2WkEkiVQXedAhxSbYgO0gWVVopf+cySoLOC
+	pw8pcNV7DjbWiRHjHPJUaSru7V53NbPtP1kKn6ny8TQAYn0yOa9SKROiz+DcxizLvHZzEZq/NAi
+	2OuNSiAMMHkxGo8NQP4cwXuk1fkGiqD/xjzz1clr+UEDCtlOGV5i0kuSmijzBEmQ4nNIAfjjdJT
+	mpsjkd3fqIEq6sAOlo5IB5kdmUK5yi84ekR49q4KGXQ3Ty3xMjZ/uSRPGqLNAstPqlGIgM90tLu
+	D+15qEggm5JAyvZghSW2DXzelFU3zvlMZMYEen/EnZg5GbVPS8hLNH2UxUrpQbVOkCggfkV4Eua
+	xc8T0SJ5tnO0pDYtu3Wn/4/hd76wMejhwD2KG14LisudstCzGFn4dxzNDZ20kpnShVuGAMGCqlM
+	Kumq3LzI1GTBvesNSaH0TuqnjhWVe12W35oi7CcafE0OU7ymsECHijqjlv9JsgAHeDpyFkrqQ5J
+	Zi2BoV4dgrwytw79JaZ3AtRCeL+rKUBdFSBuTuYi7
+X-Received: by 2002:a17:907:1c84:b0:c2e:4705:467c with SMTP id a640c23a62f3a-c317bd450f0mr314475966b.10.1791396320570;
+        Wed, 07 Oct 2026 11:05:20 -0700 (PDT)
 Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([37.31.50.62])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c317c2f19bdsm129986066b.47.2026.10.07.11.05.16
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c317c2f19bdsm129986066b.47.2026.10.07.11.05.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Oct 2026 11:05:17 -0700 (PDT)
-Message-Id: <5c3ec4eb493e300b74418ef0f3e35c7820abf399.1791395643.git.maciej.ciemborowicz@gmail.com>
+        Wed, 07 Oct 2026 11:05:20 -0700 (PDT)
+Message-Id: <83fa644fb3dbf1807e232cac22f9dd7528b766c1.1791395643.git.maciej.ciemborowicz@gmail.com>
 In-Reply-To: <cover.1791395643.git.maciej.ciemborowicz@gmail.com>
 References: <20260920165037.88524-1-maciej.ciemborowicz@gmail.com>
 	<cover.1791395643.git.maciej.ciemborowicz@gmail.com>
 From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-Date: Wed, 07 Oct 2026 20:05:15 +0200
-Subject: [PATCH v3 2/4] refs: support replacing reflogs in a transaction
+Date: Wed, 07 Oct 2026 20:05:17 +0200
+Subject: [PATCH v3 4/4] refs: remove backend-specific copy and rename
+ callbacks
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
     Junio C Hamano <gitster@pobox.com>,
@@ -81,531 +82,767 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
 
-Explicit log-only updates can already recreate a reflog during
-migration. Add ref_transaction_replace_reflog() to replace existing
-history with these entries without changing the reference itself. Keep
-its marker flag private to the refs implementation so callers cannot
-attach this cross-update behavior to an ordinary ref update
-accidentally.
-
-Stage files-backend replacements in unique temporary files beside the
-logs and install them only during finish. Buffer writes and order
-entries by their requested index. Aborting prepare only removes staging
-files. In reftable, tombstone the previous entries in the same table as
-the replacement.
-
-Do not treat a log-only entry with a null new OID as a reference
-deletion: it is part of the history being replayed. Propagate read
-errors instead of silently copying a partial log.
-
-Test preservation of null-OID entries, ordering, removal, hook rejection
-and duplicate replacement. This is preparation for copying and renaming
-through the ordinary transaction path.
+Copy and rename now use the transaction API for refs and reflogs. Remove
+the unused callbacks, backend implementations, and their private
+helpers. The files backend no longer needs a shared temporary reflog
+name or rollback writes that reconstruct previously visible refs and
+logs.
 
 Signed-off-by: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
 ---
- refs.c                        |  34 ++++++-
- refs.h                        |   9 ++
- refs/files-backend.c          | 180 +++++++++++++++++++++++++++++++---
- refs/refs-internal.h          |   3 +
- refs/reftable-backend.c       |  10 +-
- t/helper/test-ref-store.c     |  40 ++++++++
- t/t1425-reflog-transaction.sh |  59 +++++++++++
- 7 files changed, 320 insertions(+), 15 deletions(-)
- create mode 100755 t/t1425-reflog-transaction.sh
+ refs/debug.c            |  24 ---
+ refs/files-backend.c    | 334 ----------------------------------------
+ refs/packed-backend.c   |   2 -
+ refs/refs-internal.h    |   9 --
+ refs/reftable-backend.c | 287 ----------------------------------
+ 5 files changed, 656 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 00b1b51280..bf219573cd 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1413,7 +1413,6 @@ enum ref_transaction_error ref_transaction_update(struct ref_transaction *transa
- 		strbuf_addstr(err, _("refusing to force and skip creation of reflog"));
- 		return REF_TRANSACTION_ERROR_GENERIC;
- 	}
--
- 	if (!transaction_refname_valid(refname, new_oid, flags, err))
- 		return REF_TRANSACTION_ERROR_GENERIC;
- 
-@@ -1496,6 +1495,39 @@ int ref_transaction_update_reflog(struct ref_transaction *transaction,
- 	return 0;
+diff --git a/refs/debug.c b/refs/debug.c
+index 639db0f26e..b4991f71ae 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -143,28 +143,6 @@ static int debug_optimize_required(struct ref_store *ref_store,
+ 	return res;
  }
  
-+int ref_transaction_replace_reflog(struct ref_transaction *transaction,
-+				    const char *refname,
-+				    struct strbuf *err)
-+{
-+	size_t i;
-+	unsigned int flags = REF_LOG_ONLY | REF_NO_DEREF |
-+		REF_SKIP_CREATE_REFLOG | REF_REPLACE_REFLOG;
-+
-+	assert(err);
-+	if (transaction->flags &
-+	    (REF_TRANSACTION_FLAG_INITIAL | REF_TRANSACTION_ALLOW_FAILURE)) {
-+		strbuf_addstr(err, _("reflog replacement requires an "
-+				     "all-or-nothing, non-initial transaction"));
-+		return REF_TRANSACTION_ERROR_GENERIC;
-+	}
-+	if (!transaction_refname_valid(refname, NULL, flags, err))
-+		return REF_TRANSACTION_ERROR_GENERIC;
-+	for (i = 0; i < transaction->nr; i++) {
-+		struct ref_update *update = transaction->updates[i];
-+
-+		if ((update->flags & REF_REPLACE_REFLOG) &&
-+		    !strcmp(update->refname, refname)) {
-+			strbuf_addf(err, _("reflog replacement for '%s' already queued"),
-+				    refname);
-+			return REF_TRANSACTION_ERROR_NAME_CONFLICT;
-+		}
-+	}
-+
-+	ref_transaction_add_update(transaction, refname, flags,
-+				   NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-+	return 0;
-+}
-+
- int ref_transaction_create(struct ref_transaction *transaction,
- 			   const char *refname,
- 			   const struct object_id *new_oid,
-diff --git a/refs.h b/refs.h
-index 9979446d15..7e80d0bdfb 100644
---- a/refs.h
-+++ b/refs.h
-@@ -939,6 +939,15 @@ int ref_transaction_update_reflog(struct ref_transaction *transaction,
- 				  uint64_t index,
- 				  struct strbuf *err);
+-static int debug_rename_ref(struct ref_store *ref_store, const char *oldref,
+-			    const char *newref, const char *logmsg)
+-{
+-	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
+-	int res = drefs->refs->be->rename_ref(drefs->refs, oldref, newref,
+-					      logmsg);
+-	trace_printf_key(&trace_refs, "rename_ref: %s -> %s \"%s\": %d\n", oldref, newref,
+-		logmsg, res);
+-	return res;
+-}
+-
+-static int debug_copy_ref(struct ref_store *ref_store, const char *oldref,
+-			  const char *newref, const char *logmsg)
+-{
+-	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
+-	int res =
+-		drefs->refs->be->copy_ref(drefs->refs, oldref, newref, logmsg);
+-	trace_printf_key(&trace_refs, "copy_ref: %s -> %s \"%s\": %d\n", oldref, newref,
+-		logmsg, res);
+-	return res;
+-}
+-
+ struct debug_ref_iterator {
+ 	struct ref_iterator base;
+ 	struct ref_iterator *iter;
+@@ -453,8 +431,6 @@ struct ref_storage_be refs_be_debug = {
+ 	.optimize = debug_optimize,
+ 	.optimize_required = debug_optimize_required,
  
-+/*
-+ * Replace a reference's reflog with the explicit entries added to the same
-+ * transaction via ref_transaction_update_reflog(). Without such entries,
-+ * remove the reflog. This operation does not change the reference itself.
-+ */
-+int ref_transaction_replace_reflog(struct ref_transaction *transaction,
-+				    const char *refname,
-+				    struct strbuf *err);
-+
- /*
-  * Add a reference creation to transaction. new_oid is the value that
-  * the reference should have after the update; it must not be
+-	.rename_ref = debug_rename_ref,
+-	.copy_ref = debug_copy_ref,
+ 
+ 	.iterator_begin = debug_ref_iterator_begin,
+ 	.read_raw_ref = debug_read_raw_ref,
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 71628550f2..70d1ff80c4 100644
+index 9e22f62d3f..a00cfc6be5 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1983,6 +1983,22 @@ static int files_create_reflog(struct ref_store *ref_store, const char *refname,
+@@ -1623,273 +1623,6 @@ static int files_optimize_required(struct ref_store *ref_store,
  	return 0;
  }
  
-+static void format_reflog_entry(struct strbuf *sb,
-+				const struct object_id *old_oid,
-+				const struct object_id *new_oid,
-+				const char *committer, const char *msg)
-+{
-+	if (!committer)
-+		committer = git_committer_info(0);
-+
-+	strbuf_addf(sb, "%s %s %s", oid_to_hex(old_oid), oid_to_hex(new_oid), committer);
-+	if (msg && *msg) {
-+		strbuf_addch(sb, '\t');
-+		strbuf_addstr(sb, msg);
-+	}
-+	strbuf_addch(sb, '\n');
-+}
-+
- static int log_ref_write_fd(int fd, const struct object_id *old_oid,
- 			    const struct object_id *new_oid,
- 			    const char *committer, const char *msg)
-@@ -1990,15 +2006,7 @@ static int log_ref_write_fd(int fd, const struct object_id *old_oid,
- 	struct strbuf sb = STRBUF_INIT;
- 	int ret = 0;
- 
--	if (!committer)
--		committer = git_committer_info(0);
+-/*
+- * People using contrib's git-new-workdir have .git/logs/refs ->
+- * /some/other/path/.git/logs/refs, and that may live on another device.
+- *
+- * IOW, to avoid cross device rename errors, the temporary renamed log must
+- * live into logs/refs.
+- */
+-#define TMP_RENAMED_LOG  "refs/.tmp-renamed-log"
 -
--	strbuf_addf(&sb, "%s %s %s", oid_to_hex(old_oid), oid_to_hex(new_oid), committer);
--	if (msg && *msg) {
--		strbuf_addch(&sb, '\t');
--		strbuf_addstr(&sb, msg);
+-struct rename_cb {
+-	const char *tmp_renamed_log;
+-	int true_errno;
+-};
+-
+-static int rename_tmp_log_callback(const char *path, void *cb_data)
+-{
+-	struct rename_cb *cb = cb_data;
+-
+-	if (rename(cb->tmp_renamed_log, path)) {
+-		/*
+-		 * rename(a, b) when b is an existing directory ought
+-		 * to result in ISDIR, but Solaris 5.8 gives ENOTDIR.
+-		 * Sheesh. Record the true errno for error reporting,
+-		 * but report EISDIR to raceproof_create_file() so
+-		 * that it knows to retry.
+-		 */
+-		cb->true_errno = errno;
+-		if (errno == ENOTDIR)
+-			errno = EISDIR;
+-		return -1;
+-	} else {
+-		return 0;
 -	}
--	strbuf_addch(&sb, '\n');
-+	format_reflog_entry(&sb, old_oid, new_oid, committer, msg);
- 	if (write_in_full(fd, sb.buf, sb.len) < 0)
- 		ret = -1;
- 	strbuf_release(&sb);
-@@ -2397,6 +2405,8 @@ static int files_for_each_reflog_ent(struct ref_store *ref_store,
- 
- 	while (!ret && !strbuf_getwholeline(&sb, logfp, '\n'))
- 		ret = show_one_reflog_ent(refs, refname, &sb, fn, cb_data);
-+	if (ferror(logfp))
-+		ret = -1;
- 	fclose(logfp);
- 	strbuf_release(&sb);
- 	return ret;
-@@ -2665,12 +2675,120 @@ static enum ref_transaction_error check_old_oid(struct ref_update *update,
- 	return REF_TRANSACTION_ERROR_INCORRECT_OLD_VALUE;
+-}
+-
+-static int rename_tmp_log(struct files_ref_store *refs, const char *newrefname)
+-{
+-	struct strbuf path = STRBUF_INIT;
+-	struct strbuf tmp = STRBUF_INIT;
+-	struct rename_cb cb;
+-	int ret;
+-
+-	files_reflog_path(refs, &path, newrefname);
+-	files_reflog_path(refs, &tmp, TMP_RENAMED_LOG);
+-	cb.tmp_renamed_log = tmp.buf;
+-	ret = raceproof_create_file(refs, path.buf, rename_tmp_log_callback, &cb);
+-	if (ret) {
+-		if (errno == EISDIR)
+-			error("directory not empty: %s", path.buf);
+-		else
+-			error("unable to move logfile %s to %s: %s",
+-			      tmp.buf, path.buf,
+-			      strerror(cb.true_errno));
+-	}
+-
+-	strbuf_release(&path);
+-	strbuf_release(&tmp);
+-	return ret;
+-}
+-
+-static enum ref_transaction_error write_ref_to_lockfile(struct files_ref_store *refs,
+-							struct ref_lock *lock,
+-							const struct object_id *oid,
+-							struct strbuf *err);
+-static int commit_ref_update(struct files_ref_store *refs,
+-			     struct ref_lock *lock,
+-			     const struct object_id *oid, const char *logmsg,
+-			     int flags,
+-			     struct strbuf *err);
+-
+-/*
+- * Emit a better error message than lockfile.c's
+- * unable_to_lock_message() would in case there is a D/F conflict with
+- * another existing reference. If there would be a conflict, emit an error
+- * message and return false; otherwise, return true.
+- *
+- * Note that this function is not safe against all races with other
+- * processes, and that's not its job. We'll emit a more verbose error on D/f
+- * conflicts if we get past it into lock_ref_oid_basic().
+- */
+-static int refs_rename_ref_available(struct ref_store *refs,
+-			      const char *old_refname,
+-			      const char *new_refname)
+-{
+-	struct string_list skip = STRING_LIST_INIT_NODUP;
+-	struct strbuf err = STRBUF_INIT;
+-	int ok;
+-
+-	string_list_insert(&skip, old_refname);
+-	ok = !refs_verify_refname_available(refs, new_refname,
+-					    NULL, &skip, 0, &err);
+-	if (!ok)
+-		error("%s", err.buf);
+-
+-	string_list_clear(&skip, 0);
+-	strbuf_release(&err);
+-	return ok;
+-}
+-
+-static int files_copy_or_rename_ref(struct ref_store *ref_store,
+-			    const char *oldrefname, const char *newrefname,
+-			    const char *logmsg, int copy)
+-{
+-	struct files_ref_store *refs =
+-		files_downcast(ref_store, REF_STORE_WRITE, "rename_ref");
+-	struct object_id orig_oid;
+-	int flag = 0, logmoved = 0;
+-	struct ref_lock *lock;
+-	struct stat loginfo;
+-	struct strbuf sb_oldref = STRBUF_INIT;
+-	struct strbuf sb_newref = STRBUF_INIT;
+-	struct strbuf tmp_renamed_log = STRBUF_INIT;
+-	int log, ret;
+-	struct strbuf err = STRBUF_INIT;
+-
+-	files_reflog_path(refs, &sb_oldref, oldrefname);
+-	files_reflog_path(refs, &sb_newref, newrefname);
+-	files_reflog_path(refs, &tmp_renamed_log, TMP_RENAMED_LOG);
+-
+-	log = !lstat(sb_oldref.buf, &loginfo);
+-	if (log && S_ISLNK(loginfo.st_mode)) {
+-		ret = error("reflog for %s is a symlink", oldrefname);
+-		goto out;
+-	}
+-
+-	if (!refs_resolve_ref_unsafe(&refs->base, oldrefname,
+-				     RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+-				     &orig_oid, &flag)) {
+-		ret = error("refname %s not found", oldrefname);
+-		goto out;
+-	}
+-
+-	if (flag & REF_ISSYMREF) {
+-		if (copy)
+-			ret = error("refname %s is a symbolic ref, copying it is not supported",
+-				    oldrefname);
+-		else
+-			ret = error("refname %s is a symbolic ref, renaming it is not supported",
+-				    oldrefname);
+-		goto out;
+-	}
+-	if (!refs_rename_ref_available(&refs->base, oldrefname, newrefname)) {
+-		ret = 1;
+-		goto out;
+-	}
+-
+-	if (!copy && log && rename(sb_oldref.buf, tmp_renamed_log.buf)) {
+-		ret = error("unable to move logfile logs/%s to logs/"TMP_RENAMED_LOG": %s",
+-			    oldrefname, strerror(errno));
+-		goto out;
+-	}
+-
+-	if (copy && log && copy_file(refs->base.repo, tmp_renamed_log.buf, sb_oldref.buf, 0644)) {
+-		ret = error("unable to copy logfile logs/%s to logs/"TMP_RENAMED_LOG": %s",
+-			    oldrefname, strerror(errno));
+-		goto out;
+-	}
+-
+-	if (!copy && refs_delete_ref(&refs->base, logmsg, oldrefname,
+-			    &orig_oid, REF_NO_DEREF)) {
+-		error("unable to delete old %s", oldrefname);
+-		goto rollback;
+-	}
+-
+-	/*
+-	 * Since we are doing a shallow lookup, oid is not the
+-	 * correct value to pass to delete_ref as old_oid. But that
+-	 * doesn't matter, because an old_oid check wouldn't add to
+-	 * the safety anyway; we want to delete the reference whatever
+-	 * its current value.
+-	 */
+-	if (!copy && refs_resolve_ref_unsafe(&refs->base, newrefname,
+-					     RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+-					     NULL, NULL) &&
+-	    refs_delete_ref(&refs->base, NULL, newrefname,
+-			    NULL, REF_NO_DEREF)) {
+-		if (errno == EISDIR) {
+-			struct strbuf path = STRBUF_INIT;
+-			int result;
+-
+-			files_ref_path(refs, &path, newrefname);
+-			result = remove_empty_directories(&path);
+-			strbuf_release(&path);
+-
+-			if (result) {
+-				error("Directory not empty: %s", newrefname);
+-				goto rollback;
+-			}
+-		} else {
+-			error("unable to delete existing %s", newrefname);
+-			goto rollback;
+-		}
+-	}
+-
+-	if (log && rename_tmp_log(refs, newrefname))
+-		goto rollback;
+-
+-	logmoved = log;
+-
+-	lock = lock_ref_oid_basic(refs, newrefname, &err);
+-	if (!lock) {
+-		if (copy)
+-			error("unable to copy '%s' to '%s': %s", oldrefname, newrefname, err.buf);
+-		else
+-			error("unable to rename '%s' to '%s': %s", oldrefname, newrefname, err.buf);
+-		strbuf_release(&err);
+-		goto rollback;
+-	}
+-	oidcpy(&lock->old_oid, &orig_oid);
+-
+-	if (write_ref_to_lockfile(refs, lock, &orig_oid, &err) ||
+-	    commit_ref_update(refs, lock, &orig_oid, logmsg, 0, &err)) {
+-		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
+-		strbuf_release(&err);
+-		goto rollback;
+-	}
+-
+-	ret = 0;
+-	goto out;
+-
+- rollback:
+-	lock = lock_ref_oid_basic(refs, oldrefname, &err);
+-	if (!lock) {
+-		error("unable to lock %s for rollback: %s", oldrefname, err.buf);
+-		strbuf_release(&err);
+-		goto rollbacklog;
+-	}
+-
+-	if (write_ref_to_lockfile(refs, lock, &orig_oid, &err) ||
+-	    commit_ref_update(refs, lock, &orig_oid, NULL, REF_SKIP_CREATE_REFLOG, &err)) {
+-		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
+-		strbuf_release(&err);
+-	}
+-
+- rollbacklog:
+-	if (logmoved && rename(sb_newref.buf, sb_oldref.buf))
+-		error("unable to restore logfile %s from %s: %s",
+-			oldrefname, newrefname, strerror(errno));
+-	if (!logmoved && log &&
+-	    rename(tmp_renamed_log.buf, sb_oldref.buf))
+-		error("unable to restore logfile %s from logs/"TMP_RENAMED_LOG": %s",
+-			oldrefname, strerror(errno));
+-	ret = 1;
+- out:
+-	strbuf_release(&sb_newref);
+-	strbuf_release(&sb_oldref);
+-	strbuf_release(&tmp_renamed_log);
+-
+-	return ret;
+-}
+-
+-static int files_rename_ref(struct ref_store *ref_store,
+-			    const char *oldrefname, const char *newrefname,
+-			    const char *logmsg)
+-{
+-	return files_copy_or_rename_ref(ref_store, oldrefname,
+-				 newrefname, logmsg, 0);
+-}
+-
+-static int files_copy_ref(struct ref_store *ref_store,
+-			    const char *oldrefname, const char *newrefname,
+-			    const char *logmsg)
+-{
+-	return files_copy_or_rename_ref(ref_store, oldrefname,
+-				 newrefname, logmsg, 1);
+-}
+-
+ static int close_ref_gently(struct ref_lock *lock)
+ {
+ 	if (close_lock_file_gently(&lock->lk))
+@@ -2121,71 +1854,6 @@ static enum ref_transaction_error write_ref_to_lockfile(struct files_ref_store *
+ 	return 0;
  }
  
-+struct staged_reflog {
-+	struct tempfile *file;
-+	struct ref_update **updates;
-+	size_t nr, alloc;
-+};
-+
- struct files_transaction_backend_data {
- 	struct ref_transaction *packed_transaction;
- 	int packed_refs_locked;
- 	struct strmap ref_locks;
-+	struct strmap reflog_files;
- };
+-/*
+- * Commit a change to a loose reference that has already been written
+- * to the loose reference lockfile. Also update the reflogs if
+- * necessary, using the specified lockmsg (which can be NULL).
+- */
+-static int commit_ref_update(struct files_ref_store *refs,
+-			     struct ref_lock *lock,
+-			     const struct object_id *oid, const char *logmsg,
+-			     int flags,
+-			     struct strbuf *err)
+-{
+-	files_assert_main_repository(refs, "commit_ref_update");
+-
+-	clear_loose_ref_cache(refs);
+-	if (files_log_ref_write(refs, lock->ref_name, &lock->old_oid, oid, NULL,
+-				logmsg, flags, err)) {
+-		char *old_msg = strbuf_detach(err, NULL);
+-		strbuf_addf(err, "cannot update the ref '%s': %s",
+-			    lock->ref_name, old_msg);
+-		free(old_msg);
+-		unlock_ref(lock);
+-		return -1;
+-	}
+-
+-	if (strcmp(lock->ref_name, "HEAD") != 0) {
+-		/*
+-		 * Special hack: If a branch is updated directly and HEAD
+-		 * points to it (may happen on the remote side of a push
+-		 * for example) then logically the HEAD reflog should be
+-		 * updated too.
+-		 * A generic solution implies reverse symref information,
+-		 * but finding all symrefs pointing to the given branch
+-		 * would be rather costly for this rare event (the direct
+-		 * update of a branch) to be worth it.  So let's cheat and
+-		 * check with HEAD only which should cover 99% of all usage
+-		 * scenarios (even 100% of the default ones).
+-		 */
+-		int head_flag;
+-		const char *head_ref;
+-
+-		head_ref = refs_resolve_ref_unsafe(&refs->base, "HEAD",
+-						   RESOLVE_REF_READING,
+-						   NULL, &head_flag);
+-		if (head_ref && (head_flag & REF_ISSYMREF) &&
+-		    !strcmp(head_ref, lock->ref_name)) {
+-			struct strbuf log_err = STRBUF_INIT;
+-			if (files_log_ref_write(refs, "HEAD", &lock->old_oid,
+-						oid, NULL, logmsg, flags,
+-						&log_err)) {
+-				error("%s", log_err.buf);
+-				strbuf_release(&log_err);
+-			}
+-		}
+-	}
+-
+-	if (commit_ref(lock)) {
+-		strbuf_addf(err, "couldn't set '%s'", lock->ref_name);
+-		unlock_ref(lock);
+-		return -1;
+-	}
+-
+-	unlock_ref(lock);
+-	return 0;
+-}
+-
+ #if defined(NO_SYMLINK_HEAD) || defined(WITH_BREAKING_CHANGES)
+ #define create_ref_symlink(a, b) (-1)
+ #else
+@@ -4468,8 +4136,6 @@ struct ref_storage_be refs_be_files = {
  
-+static int reflog_update_cmp(const void *a, const void *b)
-+{
-+	const struct ref_update *one = *(struct ref_update * const *)a;
-+	const struct ref_update *two = *(struct ref_update * const *)b;
-+
-+	return (one->index > two->index) - (one->index < two->index);
-+}
-+
-+static int prepare_reflog_replacements(struct files_ref_store *refs,
-+				      struct ref_transaction *transaction,
-+				      struct strbuf *err)
-+{
-+	struct files_transaction_backend_data *data = transaction->backend_data;
-+	struct strbuf path = STRBUF_INIT;
-+	struct strbuf contents = STRBUF_INIT;
-+	struct hashmap_iter iter;
-+	struct strmap_entry *entry;
-+	size_t i;
-+	int ret = -1;
-+
-+	for (i = 0; i < transaction->nr; i++) {
-+		struct ref_update *update = transaction->updates[i];
-+		struct staged_reflog *log;
-+
-+		if (!(update->flags & REF_REPLACE_REFLOG))
-+			continue;
-+		CALLOC_ARRAY(log, 1);
-+		strmap_put(&data->reflog_files, update->refname, log);
-+	}
-+	for (i = 0; i < transaction->nr; i++) {
-+		struct ref_update *update = transaction->updates[i];
-+		struct staged_reflog *log = strmap_get(&data->reflog_files, update->refname);
-+
-+		if (!log || !(update->flags & REF_LOG_ONLY) ||
-+		    !(update->flags & REF_HAVE_NEW))
-+			continue;
-+		if (!(update->flags & REF_LOG_USE_PROVIDED_OIDS)) {
-+			strbuf_addf(err, "replacing reflog '%s' requires explicit OIDs",
-+				    update->refname);
-+			goto out;
-+		}
-+		ALLOC_GROW(log->updates, log->nr + 1, log->alloc);
-+		log->updates[log->nr++] = update;
-+	}
-+	strmap_for_each_entry(&data->reflog_files, &iter, entry) {
-+		struct staged_reflog *log = entry->value;
-+		int fd;
-+
-+		if (!log->nr)
-+			continue;
-+		QSORT(log->updates, log->nr, reflog_update_cmp);
-+		/* Keep the staging file beside the logs, which may be on another device. */
-+		strbuf_reset(&path);
-+		files_reflog_path(refs, &path, is_root_ref(entry->key) ?
-+				 ".tmp-reflog-XXXXXX" : "refs/.tmp-reflog-XXXXXX");
-+		if (safe_create_leading_directories(refs->base.repo, path.buf))
-+			goto write_error;
-+		log->file = mks_tempfile_m(path.buf, 0666);
-+		if (!log->file)
-+			goto write_error;
-+		fd = get_tempfile_fd(log->file);
-+		for (i = 0; i < log->nr; i++) {
-+			struct ref_update *update = log->updates[i];
-+
-+			format_reflog_entry(&contents, &update->old_oid, &update->new_oid,
-+					    update->committer_info, update->msg);
-+			if (contents.len >= 65536) {
-+				if (write_in_full(fd, contents.buf, contents.len) < 0)
-+					goto write_error;
-+				strbuf_reset(&contents);
-+			}
-+		}
-+		if (write_in_full(fd, contents.buf, contents.len) < 0)
-+			goto write_error;
-+		strbuf_reset(&contents);
-+		if (adjust_shared_perm(refs->base.repo, get_tempfile_path(log->file)) ||
-+		    close_tempfile_gently(log->file))
-+			goto write_error;
-+	}
-+	ret = 0;
-+	goto out;
-+
-+write_error:
-+	strbuf_addf(err, "cannot write staged reflog: %s", strerror(errno));
-+out:
-+	strbuf_release(&path);
-+	strbuf_release(&contents);
-+	return ret;
-+}
-+
-+static int install_reflog(const char *path, void *data)
-+{
-+	struct staged_reflog *log = data;
-+	int ret = rename(get_tempfile_path(log->file), path);
-+
-+	/* Some systems report ENOTDIR when the destination is a directory. */
-+	if (ret && errno == ENOTDIR)
-+		errno = EISDIR;
-+	return ret;
-+}
-+
- /*
-  * Prepare for carrying out update:
-  * - Lock the reference referred to by update.
-@@ -2929,6 +3047,17 @@ static void files_transaction_cleanup(struct files_ref_store *refs,
- 	}
+ 	.optimize = files_optimize,
+ 	.optimize_required = files_optimize_required,
+-	.rename_ref = files_rename_ref,
+-	.copy_ref = files_copy_ref,
  
- 	if (backend_data) {
-+		struct hashmap_iter iter;
-+		struct strmap_entry *entry;
-+
-+		strmap_for_each_entry(&backend_data->reflog_files, &iter, entry) {
-+			struct staged_reflog *log = entry->value;
-+
-+			delete_tempfile(&log->file);
-+			free(log->updates);
-+			free(log);
-+		}
-+		strmap_clear(&backend_data->reflog_files, 0);
- 		if (backend_data->packed_transaction &&
- 		    ref_transaction_abort(backend_data->packed_transaction, &err)) {
- 			error("error aborting transaction: %s", err.buf);
-@@ -2970,6 +3099,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 	.iterator_begin = files_ref_iterator_begin,
+ 	.read_raw_ref = files_read_raw_ref,
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index a73fc6aca7..364a912912 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -2164,8 +2164,6 @@ struct ref_storage_be refs_be_packed = {
+ 	.optimize = packed_optimize,
+ 	.optimize_required = packed_optimize_required,
  
- 	CALLOC_ARRAY(backend_data, 1);
- 	strmap_init(&backend_data->ref_locks);
-+	strmap_init(&backend_data->reflog_files);
- 	transaction->backend_data = backend_data;
+-	.rename_ref = NULL,
+-	.copy_ref = NULL,
  
- 	/*
-@@ -3120,6 +3250,8 @@ static int files_transaction_prepare(struct ref_store *ref_store,
- 		}
- 	}
- 
-+	ret = prepare_reflog_replacements(refs, transaction, err);
-+
- cleanup:
- 	free(head_ref);
- 	string_list_clear(&refnames_to_check, 1);
-@@ -3344,6 +3476,31 @@ static int files_transaction_finish(struct ref_store *ref_store,
- 	backend_data = transaction->backend_data;
- 	packed_transaction = backend_data->packed_transaction;
- 
-+	for (i = 0; i < transaction->nr; i++) {
-+		struct ref_update *update = transaction->updates[i];
-+		struct staged_reflog *log;
-+
-+		if (!(update->flags & REF_REPLACE_REFLOG))
-+			continue;
-+		log = strmap_get(&backend_data->reflog_files, update->refname);
-+		strbuf_reset(&sb);
-+		files_reflog_path(refs, &sb, update->refname);
-+		if (!log->file) {
-+			if (unlink(sb.buf) && errno != ENOENT && errno != EISDIR)
-+				ret = -1;
-+		} else if (raceproof_create_file(refs, sb.buf, install_reflog, log)) {
-+			ret = -1;
-+		} else {
-+			delete_tempfile(&log->file);
-+		}
-+		if (ret) {
-+			strbuf_addf(err, "cannot replace reflog '%s': %s",
-+				    update->refname, strerror(errno));
-+		}
-+		if (ret)
-+			goto cleanup;
-+	}
-+
- 	/* Perform updates first so live commits remain referenced */
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
-@@ -3352,8 +3509,9 @@ static int files_transaction_finish(struct ref_store *ref_store,
- 		if (update->rejection_err)
- 			continue;
- 
--		if (update->flags & REF_NEEDS_COMMIT ||
--		    update->flags & REF_LOG_ONLY) {
-+		if ((update->flags & REF_NEEDS_COMMIT ||
-+		     update->flags & REF_LOG_ONLY) &&
-+		    !strmap_contains(&backend_data->reflog_files, update->refname)) {
- 			if (parse_and_write_reflog(refs, update, lock, err)) {
- 				ret = REF_TRANSACTION_ERROR_GENERIC;
- 				goto cleanup;
+ 	.iterator_begin = packed_ref_iterator_begin,
+ 	.read_raw_ref = packed_read_raw_ref,
 diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 0b41f5fa4b..19fdf39d1d 100644
+index 2746ce5b49..c415ba0a4e 100644
 --- a/refs/refs-internal.h
 +++ b/refs/refs-internal.h
-@@ -49,6 +49,9 @@ struct ref_transaction;
-  */
- #define REF_HAVE_PEELED (1 << 15)
+@@ -470,13 +470,6 @@ typedef int optimize_required_fn(struct ref_store *ref_store,
+ 				 struct refs_optimize_opts *opts,
+ 				 bool *required);
  
-+/* Replace a reflog with the explicit log-only updates in the transaction. */
-+#define REF_REPLACE_REFLOG (1 << 16)
-+
+-typedef int rename_ref_fn(struct ref_store *ref_store,
+-			  const char *oldref, const char *newref,
+-			  const char *logmsg);
+-typedef int copy_ref_fn(struct ref_store *ref_store,
+-			  const char *oldref, const char *newref,
+-			  const char *logmsg);
+-
  /*
-  * Return the length of time to retry acquiring a loose reference lock
-  * before giving up, in milliseconds:
+  * Iterate over the references in `ref_store` whose names start with
+  * `prefix`. `prefix` is matched as a literal string, without regard
+@@ -596,8 +589,6 @@ struct ref_storage_be {
+ 
+ 	optimize_fn *optimize;
+ 	optimize_required_fn *optimize_required;
+-	rename_ref_fn *rename_ref;
+-	copy_ref_fn *copy_ref;
+ 
+ 	ref_iterator_begin_fn *iterator_begin;
+ 	read_raw_ref_fn *read_raw_ref;
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 10db03991e..203b111f3d 100644
+index 72c1596c11..ef3bab69ee 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -1503,9 +1503,11 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
- 		 * - `core.logAllRefUpdates` tells us to create the reflog for
- 		 *   the given ref.
- 		 */
--		if ((u->flags & REF_HAVE_NEW) &&
-+		if ((u->flags & REF_REPLACE_REFLOG) ||
-+		    ((u->flags & REF_HAVE_NEW) &&
-+		    !(u->flags & REF_LOG_ONLY) &&
- 		    !(u->type & REF_ISSYMREF) &&
--		    ref_update_has_null_new_value(u)) {
-+		    ref_update_has_null_new_value(u))) {
- 			struct reftable_log_record log = {0};
- 			struct reftable_iterator it = {0};
+@@ -1798,290 +1798,6 @@ struct write_create_symref_arg {
+ 	const char *logmsg;
+ };
  
-@@ -1548,8 +1550,10 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
+-struct write_copy_arg {
+-	struct reftable_ref_store *refs;
+-	struct reftable_backend *be;
+-	const char *oldname;
+-	const char *newname;
+-	const char *logmsg;
+-	int delete_old;
+-};
+-
+-static int write_copy_table(struct reftable_writer *writer, void *cb_data)
+-{
+-	struct write_copy_arg *arg = cb_data;
+-	uint64_t deletion_ts, creation_ts;
+-	struct reftable_ref_record old_ref = {0}, refs[2] = {0};
+-	struct reftable_log_record old_log = {0}, *logs = NULL;
+-	struct reftable_iterator it = {0};
+-	struct string_list skip = STRING_LIST_INIT_NODUP;
+-	struct ident_split committer_ident = {0};
+-	struct strbuf errbuf = STRBUF_INIT;
+-	size_t logs_nr = 0, logs_alloc = 0, i;
+-	const char *committer_info;
+-	int ret;
+-
+-	committer_info = git_committer_info(0);
+-	if (split_ident_line(&committer_ident, committer_info, strlen(committer_info)))
+-		BUG("failed splitting committer info");
+-
+-	if (reftable_stack_read_ref(arg->be->stack, arg->oldname, &old_ref)) {
+-		ret = error(_("refname %s not found"), arg->oldname);
+-		goto done;
+-	}
+-	if (old_ref.value_type == REFTABLE_REF_SYMREF) {
+-		ret = error(_("refname %s is a symbolic ref, copying it is not supported"),
+-			    arg->oldname);
+-		goto done;
+-	}
+-
+-	/*
+-	 * There's nothing to do in case the old and new name are the same, so
+-	 * we exit early in that case.
+-	 */
+-	if (!strcmp(arg->oldname, arg->newname)) {
+-		ret = 0;
+-		goto done;
+-	}
+-
+-	/*
+-	 * Verify that the new refname is available.
+-	 */
+-	if (arg->delete_old)
+-		string_list_insert(&skip, arg->oldname);
+-	ret = refs_verify_refname_available(&arg->refs->base, arg->newname,
+-					    NULL, &skip, 0, &errbuf);
+-	if (ret < 0) {
+-		error("%s", errbuf.buf);
+-		goto done;
+-	}
+-
+-	/*
+-	 * When deleting the old reference we have to use two update indices:
+-	 * once to delete the old ref and its reflog, and once to create the
+-	 * new ref and its reflog. They need to be staged with two separate
+-	 * indices because the new reflog needs to encode both the deletion of
+-	 * the old branch and the creation of the new branch, and we cannot do
+-	 * two changes to a reflog in a single update.
+-	 */
+-	deletion_ts = creation_ts = reftable_stack_next_update_index(arg->be->stack);
+-	if (arg->delete_old)
+-		creation_ts++;
+-	ret = reftable_writer_set_limits(writer, deletion_ts, creation_ts);
+-	if (ret < 0)
+-		goto done;
+-
+-	/*
+-	 * Add the new reference. If this is a rename then we also delete the
+-	 * old reference.
+-	 */
+-	refs[0] = old_ref;
+-	refs[0].refname = xstrdup(arg->newname);
+-	refs[0].update_index = creation_ts;
+-	if (arg->delete_old) {
+-		refs[1].refname = xstrdup(arg->oldname);
+-		refs[1].value_type = REFTABLE_REF_DELETION;
+-		refs[1].update_index = deletion_ts;
+-	}
+-	ret = reftable_writer_add_refs(writer, refs, arg->delete_old ? 2 : 1);
+-	if (ret < 0)
+-		goto done;
+-
+-	/*
+-	 * When deleting the old branch we need to create a reflog entry on the
+-	 * new branch name that indicates that the old branch has been deleted
+-	 * and then recreated. This is a tad weird, but matches what the files
+-	 * backend does.
+-	 */
+-	if (arg->delete_old) {
+-		struct strbuf head_referent = STRBUF_INIT;
+-		struct object_id head_oid;
+-		int append_head_reflog;
+-		unsigned head_type = 0;
+-
+-		ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+-		memset(&logs[logs_nr], 0, sizeof(logs[logs_nr]));
+-		fill_reftable_log_record(&logs[logs_nr], &committer_ident);
+-		logs[logs_nr].refname = xstrdup(arg->newname);
+-		logs[logs_nr].update_index = deletion_ts;
+-		logs[logs_nr].value.update.message =
+-			xstrndup(arg->logmsg, reftable_be_write_options(arg->refs)->opts.block_size / 2);
+-		memcpy(logs[logs_nr].value.update.old_hash, old_ref.value.val1, GIT_MAX_RAWSZ);
+-		logs_nr++;
+-
+-		ret = reftable_backend_read_ref(arg->be, "HEAD", &head_oid,
+-						&head_referent, &head_type);
+-		if (ret < 0)
+-			goto done;
+-		append_head_reflog = (head_type & REF_ISSYMREF) && !strcmp(head_referent.buf, arg->oldname);
+-		strbuf_release(&head_referent);
+-
+-		/*
+-		 * The files backend uses `refs_delete_ref()` to delete the old
+-		 * branch name, which will append a reflog entry for HEAD in
+-		 * case it points to the old branch.
+-		 */
+-		if (append_head_reflog) {
+-			ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+-			logs[logs_nr] = logs[logs_nr - 1];
+-			logs[logs_nr].refname = xstrdup("HEAD");
+-			logs[logs_nr].value.update.name =
+-				xstrdup(logs[logs_nr].value.update.name);
+-			logs[logs_nr].value.update.email =
+-				xstrdup(logs[logs_nr].value.update.email);
+-			logs[logs_nr].value.update.message =
+-				xstrdup(logs[logs_nr].value.update.message);
+-			logs_nr++;
+-		}
+-	}
+-
+-	/*
+-	 * Create the reflog entry for the newly created branch.
+-	 */
+-	ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+-	memset(&logs[logs_nr], 0, sizeof(logs[logs_nr]));
+-	fill_reftable_log_record(&logs[logs_nr], &committer_ident);
+-	logs[logs_nr].refname = xstrdup(arg->newname);
+-	logs[logs_nr].update_index = creation_ts;
+-	logs[logs_nr].value.update.message =
+-		xstrndup(arg->logmsg, reftable_be_write_options(arg->refs)->opts.block_size / 2);
+-	memcpy(logs[logs_nr].value.update.new_hash, old_ref.value.val1, GIT_MAX_RAWSZ);
+-	logs_nr++;
+-
+-	/*
+-	 * In addition to writing the reflog entry for the new branch, we also
+-	 * copy over all log entries from the old reflog. Last but not least,
+-	 * when renaming we also have to delete all the old reflog entries.
+-	 */
+-	ret = reftable_stack_init_log_iterator(arg->be->stack, &it);
+-	if (ret < 0)
+-		goto done;
+-
+-	ret = reftable_iterator_seek_log(&it, arg->oldname);
+-	if (ret < 0)
+-		goto done;
+-
+-	while (1) {
+-		ret = reftable_iterator_next_log(&it, &old_log);
+-		if (ret < 0)
+-			goto done;
+-		if (ret > 0 || strcmp(old_log.refname, arg->oldname)) {
+-			ret = 0;
+-			break;
+-		}
+-		if (reftable_log_record_is_deletion(&old_log))
+-			continue;
+-
+-		free(old_log.refname);
+-
+-		/*
+-		 * Copy over the old reflog entry with the new refname.
+-		 */
+-		ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+-		logs[logs_nr] = old_log;
+-		logs[logs_nr].refname = xstrdup(arg->newname);
+-		logs_nr++;
+-
+-		/*
+-		 * Delete the old reflog entry in case we are renaming.
+-		 */
+-		if (arg->delete_old) {
+-			ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+-			memset(&logs[logs_nr], 0, sizeof(logs[logs_nr]));
+-			logs[logs_nr].refname = xstrdup(arg->oldname);
+-			logs[logs_nr].value_type = REFTABLE_LOG_DELETION;
+-			logs[logs_nr].update_index = old_log.update_index;
+-			logs_nr++;
+-		}
+-
+-		/*
+-		 * Transfer ownership of the log record we're iterating over to
+-		 * the array of log records. Otherwise, the pointers would get
+-		 * free'd or reallocated by the iterator.
+-		 */
+-		memset(&old_log, 0, sizeof(old_log));
+-	}
+-
+-	ret = reftable_writer_add_logs(writer, logs, logs_nr);
+-	if (ret < 0)
+-		goto done;
+-
+-done:
+-	assert(ret != REFTABLE_API_ERROR);
+-	reftable_iterator_destroy(&it);
+-	string_list_clear(&skip, 0);
+-	strbuf_release(&errbuf);
+-	for (i = 0; i < logs_nr; i++)
+-		reftable_log_record_release(&logs[i]);
+-	free(logs);
+-	for (i = 0; i < ARRAY_SIZE(refs); i++)
+-		reftable_ref_record_release(&refs[i]);
+-	reftable_ref_record_release(&old_ref);
+-	reftable_log_record_release(&old_log);
+-	return ret;
+-}
+-
+-static int reftable_be_rename_ref(struct ref_store *ref_store,
+-				  const char *oldrefname,
+-				  const char *newrefname,
+-				  const char *logmsg)
+-{
+-	struct reftable_ref_store *refs =
+-		reftable_be_downcast(ref_store, REF_STORE_WRITE, "rename_ref");
+-	struct write_copy_arg arg = {
+-		.refs = refs,
+-		.oldname = oldrefname,
+-		.newname = newrefname,
+-		.logmsg = logmsg,
+-		.delete_old = 1,
+-	};
+-	int ret;
+-
+-	ret = refs->err;
+-	if (ret < 0)
+-		goto done;
+-
+-	ret = backend_for(&arg.be, refs, newrefname, &newrefname, 1);
+-	if (ret)
+-		goto done;
+-	ret = reftable_stack_add(arg.be->stack, &write_copy_table, &arg,
+-				 &reftable_be_write_options(refs)->opts);
+-
+-done:
+-	assert(ret != REFTABLE_API_ERROR);
+-	return ret;
+-}
+-
+-static int reftable_be_copy_ref(struct ref_store *ref_store,
+-				const char *oldrefname,
+-				const char *newrefname,
+-				const char *logmsg)
+-{
+-	struct reftable_ref_store *refs =
+-		reftable_be_downcast(ref_store, REF_STORE_WRITE, "copy_ref");
+-	struct write_copy_arg arg = {
+-		.refs = refs,
+-		.oldname = oldrefname,
+-		.newname = newrefname,
+-		.logmsg = logmsg,
+-	};
+-	int ret;
+-
+-	ret = refs->err;
+-	if (ret < 0)
+-		goto done;
+-
+-	ret = backend_for(&arg.be, refs, newrefname, &newrefname, 1);
+-	if (ret)
+-		goto done;
+-	ret = reftable_stack_add(arg.be->stack, &write_copy_table, &arg,
+-				 &reftable_be_write_options(refs)->opts);
+-
+-done:
+-	assert(ret != REFTABLE_API_ERROR);
+-	return ret;
+-}
+-
+ struct reftable_reflog_iterator {
+ 	struct ref_iterator base;
+ 	struct reftable_ref_store *refs;
+@@ -2909,9 +2625,6 @@ struct ref_storage_be refs_be_reftable = {
+ 	.optimize = reftable_be_optimize,
+ 	.optimize_required = reftable_be_optimize_required,
  
- 			if (ret)
- 				goto done;
--		} else if (!(u->flags & REF_SKIP_CREATE_REFLOG) &&
-+		}
-+		if (!(u->flags & REF_SKIP_CREATE_REFLOG) &&
- 			   (u->flags & REF_HAVE_NEW) &&
-+			   (!ref_update_has_null_new_value(u) || (u->flags & REF_LOG_ONLY)) &&
- 			   (u->flags & REF_FORCE_CREATE_REFLOG ||
- 			    should_write_log(arg->refs, u->refname))) {
- 			struct reftable_log_record *log;
-diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-index db58f00589..7ce10c28af 100644
---- a/t/helper/test-ref-store.c
-+++ b/t/helper/test-ref-store.c
-@@ -146,6 +146,45 @@ static int cmd_rename_ref(struct ref_store *refs, const char **argv)
- 	return refs_rename_ref(refs, oldref, newref, logmsg);
- }
- 
-+static int cmd_reflog_transaction(struct ref_store *refs, const char **argv)
-+{
-+	const char *refname = notnull(*argv++, "refname");
-+	const char *mode = notnull(*argv++, "mode");
-+	struct strbuf err = STRBUF_INIT;
-+	struct ref_transaction *transaction = ref_store_transaction_begin(refs, 0, &err);
-+	int ret = !transaction;
-+
-+	if (!ret) {
-+		if (!strcmp(mode, "replace")) {
-+			ret = ref_transaction_replace_reflog(transaction, refname, &err);
-+		} else if (!strcmp(mode, "replace-twice")) {
-+			ret = ref_transaction_replace_reflog(transaction, refname, &err) ||
-+				ref_transaction_replace_reflog(transaction, refname, &err);
-+		} else if (strcmp(mode, "append")) {
-+			die("unknown reflog transaction mode: %s", mode);
-+		}
-+	}
-+	while (!ret && *argv) {
-+		uint64_t index = strtoumax(notnull(*argv++, "index"), NULL, 10);
-+		struct object_id old_oid, new_oid;
-+		const char *message;
-+
-+		if (get_oid_hex(notnull(*argv++, "old-oid"), &old_oid) ||
-+		    get_oid_hex(notnull(*argv++, "new-oid"), &new_oid))
-+			die("invalid object ID");
-+		message = notnull(*argv++, "message");
-+		ret = ref_transaction_update_reflog(transaction, refname,
-+				&new_oid, &old_oid, NULL, message, index, &err);
-+	}
-+	if (!ret)
-+		ret = ref_transaction_commit(transaction, &err);
-+	if (ret)
-+		error("%s", err.buf);
-+	ref_transaction_free(transaction);
-+	strbuf_release(&err);
-+	return ret;
-+}
-+
- static int each_ref(const struct reference *ref, void *cb_data UNUSED)
- {
- 	printf("%s %s 0x%x\n", oid_to_hex(ref->oid), ref->name, ref->flags);
-@@ -308,6 +347,7 @@ static struct command commands[] = {
- 	{ "create-symref", cmd_create_symref },
- 	{ "delete-refs", cmd_delete_refs },
- 	{ "rename-ref", cmd_rename_ref },
-+	{ "reflog-transaction", cmd_reflog_transaction },
- 	{ "for-each-ref", cmd_for_each_ref },
- 	{ "for-each-ref--exclude", cmd_for_each_ref__exclude },
- 	{ "resolve-ref", cmd_resolve_ref },
-diff --git a/t/t1425-reflog-transaction.sh b/t/t1425-reflog-transaction.sh
-new file mode 100755
-index 0000000000..ee5278045e
---- /dev/null
-+++ b/t/t1425-reflog-transaction.sh
-@@ -0,0 +1,59 @@
-+#!/bin/sh
-+
-+test_description='explicit reflog entries in reference transactions'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit A &&
-+	test_commit B &&
-+	A=$(git rev-parse A) &&
-+	B=$(git rev-parse B)
-+'
-+
-+test_expect_success 'log-only entry with null new OID does not delete existing history' '
-+	git branch source "$A" &&
-+	test-tool ref-store main for-each-reflog-ent refs/heads/source >before &&
-+	test-tool ref-store main reflog-transaction refs/heads/source append \
-+		1 "$A" "$ZERO_OID" deletion &&
-+	test-tool ref-store main for-each-reflog-ent refs/heads/source >after &&
-+	sed "$ d" after >history &&
-+	test_cmp before history &&
-+	test_grep "$A $ZERO_OID .*deletion" after &&
-+	test_cmp_rev "$A" source
-+'
-+
-+test_expect_success 'replace reflog with entries ordered by index' '
-+	test-tool ref-store main reflog-transaction refs/heads/source replace \
-+		2 "$A" "$B" second \
-+		1 "$ZERO_OID" "$A" first &&
-+	git reflog show --format=%gs source >actual &&
-+	printf "%s\n" second first >expect &&
-+	test_cmp expect actual &&
-+	test_cmp_rev "$A" source
-+'
-+
-+test_expect_success 'prepared hook can reject replacement without losing history' '
-+	test_when_finished "rm -f .git/hooks/reference-transaction" &&
-+	test-tool ref-store main for-each-reflog-ent refs/heads/source >before &&
-+	write_script .git/hooks/reference-transaction <<-\EOF &&
-+		test "$1" != prepared
-+	EOF
-+	test_must_fail test-tool ref-store main reflog-transaction refs/heads/source replace \
-+		1 "$ZERO_OID" "$B" replacement &&
-+	test-tool ref-store main for-each-reflog-ent refs/heads/source >after &&
-+	test_cmp before after
-+'
-+
-+test_expect_success 'replacement with no entries removes only the reflog' '
-+	test-tool ref-store main reflog-transaction refs/heads/source replace &&
-+	test_must_fail git reflog exists refs/heads/source &&
-+	test_cmp_rev "$A" source
-+'
-+
-+test_expect_success 'duplicate replacement is rejected' '
-+	test_must_fail test-tool ref-store main reflog-transaction \
-+		refs/heads/source replace-twice
-+'
-+
-+test_done
+-	.rename_ref = reftable_be_rename_ref,
+-	.copy_ref = reftable_be_copy_ref,
+-
+ 	.iterator_begin = reftable_be_iterator_begin,
+ 	.read_raw_ref = reftable_be_read_raw_ref,
+ 	.read_symbolic_ref = reftable_be_read_symbolic_ref,
 -- 
 2.39.3 (Apple Git-146)
 
