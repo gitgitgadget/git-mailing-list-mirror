@@ -1,158 +1,373 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492AD381B04
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 14:45:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8583955C4
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 14:52:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791384341; cv=none; b=YKBApTwvrwcza52FLsTlYLEfmzL556oafBWWICR4Po02Pgezf+pY332aAyqk6Q7i0ktBAjuE0eOC5nlj+Uf2vFsI2N9WX7tBpyqNMEzoQe3aPGwFfMRer/o/mUYlEzktPIE5ZUoP+PfM2YIYPouyg9ZVZYHUcbTtPWsZhK93RI8=
+	t=1791384730; cv=none; b=bxGDUEtAaTJ9+USn3m0AOltphgX/XsQ4dMyVICoZbCKIktnKH3SjYT1b3mJj6F+rbH8yYZfRyDYXuxSs591wYlZwK883je4G4OEE8FcBDtvtWADANpNPeQ2j2ylqFM2V9liqiXnwPIxv+TL9c52HveSsqrb3VSHjJlXmwJWBvDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791384341; c=relaxed/simple;
-	bh=xTokpMs9Jq7EAR7Vsx7xagMPxFq9U/kH/bmhsMn8yaw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EvpMgpUcXmn6PPHmStUmZiIRkIaJX3QWSpalNz3HSxI6Asd3lp/9Kdy32Lguth3XSzMoHiBw+1LJSJ5oFlYyTwM3x3LJsNGtdAIxIX406hCik5RdslZs5ZFNnay1LeafSf2qV/g/fLo+kq6iG21U+qTqWqEmjGlwNNUvKHuZ0/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YcuJrlLe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nXdph2+U; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1791384730; c=relaxed/simple;
+	bh=6sxhZt+FjTfaLCoTHsOFIzhVR9d7VAhGBfaQP6d/8YY=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Ankfcom+yPQcF70iRdeK9oOwrOP2qoeYhB/kkAdRFiE0p1vmisJet7LKMpRbHCmAy9UPvhbAXOVi2ktwfxdOeL2ogJMe7HB0YA/+5oTYErtp71iOMmnV8fF1Y3D4PjQvI+1FondU9+a12bSH6ErVRVuTftkZIOzNOHYmGfO7Te8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XpiEeNHW; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YcuJrlLe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nXdph2+U"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id F038DEC0403
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 10:45:31 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Wed, 07 Oct 2026 10:45:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791384331; x=1791470731; bh=Y75WWf8X2G
-	8eLCNDuEq0PI55alXmP1EFV7eZnf0HdmU=; b=YcuJrlLeouS+Tk6FtPeX6tITsz
-	IEc4l6u7UV7O6SXQDomLiVCIKxgk/64gWFjcK3dNkskMYs78TpVzKnfQt5cH+T+c
-	899U48d5ZiK/lBp/7Y3KkbEf6XRPoftxdv/fBZrShEgkVBjCsEGxvzB1RhjB87Rh
-	Lm+l1XMRfj0AIb7jPbZKZopbwN41N629Q3XstD3UccXep1v7IGvsG/zpN17InuF6
-	QkWI1/kRG8pfsElaTt8Id+sUaPSLWqAAwD0suudNsHRVz5HRcEfjaVw0HiOg9F77
-	FzlXOLttgIHLMuuFiGT0WQNjptWXA28b1ivil2aMxxzBR5dojP6Sab4J8FSg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791384331; x=1791470731; bh=Y75WWf8X2G8eLCNDuEq0PI55alXmP1EFV7e
-	Znf0HdmU=; b=nXdph2+UesUAxDnjyUMhHHc8krIrHe3MEAmYt7z4PiNlpeduXxm
-	95870B9YYpaYcX74OiZ1Ec84qT3qc9dieEjmyOd0cP5EyhidGr8VTGoFtdKtuDOV
-	3yw/GSC9DGf/HYpFlVVHSKJFf99WDrOnfrjuh/wwOA5bkAHdCVsdiCOlJrkFxyQO
-	P2g9Lrsnsv82+7p6oZTUnp9enrvbdY+4HX/3eRQGLtrMlqIii2rMqXLE95t+WD0E
-	8P3RlLOm1ois8+Q3dF1x8Mrz5S9xIOUjDH01B2iTeRdnBLKus7EPIpzxHxbm6avp
-	Rdu0DTuzx02JVMV9A0/bD2WY9LhmpByaIqw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791384331; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:YQt8iDO2BjviLFiBxXFy8MGh2L/7VMU6TsJdMECdK2YnLMY
-	fsR3EpthC5JFJXSJZTI7NpjipGedztIi2XY3FSqUxkwGc5EQ5Btok+TVGQmiqIui
-	4E43MthHakELrZ+PfynrSuz5e8vR518rU/txo7ODh8Y93g088XFIzabf3m6KRkkT
-	9VFR6Pvpmszi+u53U6e3cwL7cDxpu2mYj+xks14zbO3m0KuMOpK4mCwzznUi7p7G
-	HyrXvRvlzBUXOpCVV1q7zQRUEx/1D7aLBoOnAzpcaeSFD6kCgqdYXLPmzY18kaOa
-	O4Oy8LB51pce2PRBzMc4tu0ynctJ4uE+tSduUxQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:FWCJdYbBhloMTzTy2y7WkSqeTsD+qEGikZYsWKcuWCA=:xTokpMs9Jq7EAR7Vsx7xagMPxFq9U/kH/bmhsMn8yaw=;
-X-ME-Sender: <xms:C1vGaolzCLEdw3ny-rLoFH0ctxoeK-7VrmL7q7BOEFYpMvzUtA8hzw>
-    <xme:C1vGavQ-hPomihIjtSjI20T8Wp7x0-fmj-yFu-_zrOH8fb5EtGlRiWvtgy66wlnC0
-    V8aFa13OegVxN8c2hdR5IHth2tjY4TSWeIhYiyu8Jpv0Fq8TZwmCg>
-X-ME-Received: <xmr:C1vGakAOTFBTlY6HYVOWj82cdWxGvFYcKDOtp-jUn099NE-xoeD7x1y6w99PkRXEOj0_0Na9cmj7dRLSIHb1zFkZnE6ChVu4-XP7>
-X-ME-Proxy-Cause: dmFkZTEE7Q04awpJR9aQ0X73zHSD85Dpu0yl9yUjOa/3+4/uUDghQzEPuvGmOYAxcIvxa2
-    DgLzOnRVT4XuWFus36G/0Sy/enD/wGaRbTDgKqyft6Z4Ctcy6wNiMXnOOXZ5fun34GOEdR
-    eNgsFVa1EyBCe54MNv4H9bX+WwqfW7zaE4RsSvfVFabeDeHvz1qZA50ucuGD1sGuxrxD1b
-    RSjrZzU5Mm6H9wKGCfGzDy1M5DI0+Wrg8M5mp/aVEB27KIX0TH/dQXQ1UVaXJhpfKEeZ8I
-    J/jnUswI+y4jB07KNxmAiosb1QLyg/qMEpw6trnNrOiZF/0Us2Ca7Mwklhxy+eAFafx6f3
-    C86Vh/HTbgx6/aUTIEJp0oksSpoNEI4KDk/mk0wjQ7DD8O+Dyuaqno43FP20uhoVOxV5YB
-    JhHyBj+vsbfIFzFLjrwKhB4CXzjfHhomlKY8VfbFxxmaWv5ei6RJ3T1L5Nv/u3GpMtLf78
-    nX0u1fpqZ6gd6588gU59cuMm8NRVbL7QU4zPCwg3m72ez9hHqQzBMNp+aCX/qGcGaL8We8
-    +ywPbrNewVpycjlkjMbScFrLCe+ywyBxeEcHL5hyENkt513VWmobZ8W+03H7B4vzeQcl8x
-    nCvI02CQLfQ8GoLxRsBlQkxgoTx1aZlcpAgGWvvlXbwdrWsnY/C7BrauytPg
-X-ME-Proxy: <xmx:C1vGauQU-hCC8OYV1BD2DwZjvdtB34hpCG22kUY2QNqB8HtM3pdxVA>
-    <xmx:C1vGaqo40U3l0RbD5MjGyw63navaFnJaCLNW8BSCdUqe9ZGLSlROjg>
-    <xmx:C1vGaoxdR87tlr2pRFRNZccBL-O1hX3hG-7DpSh7tkqvMUKHElU-fA>
-    <xmx:C1vGanKmUQVYKkCJI_2fvngB-tZjTpDsdGqJlhxqkkNwf-OTqiGgwQ>
-    <xmx:C1vGajSiZoWXmzdPx6O9qPqJEPepNqkBGgOsksBijmPmSHWAqeg91K1w>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Oct 2026 10:45:31 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Muhammed Dilshad A <dilsheddilu123@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] combine-diff: honor --relative when printing paths
-In-Reply-To: <20261007051734.62590-1-dilsheddilu123@gmail.com> (Muhammed
-	Dilshad A.'s message of "Wed, 7 Oct 2026 10:47:34 +0530")
-References: <20261007051734.62590-1-dilsheddilu123@gmail.com>
-Date: Wed, 07 Oct 2026 07:45:30 -0700
-Message-ID: <xmqqld89bmd1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XpiEeNHW"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2e5d0ee1951so10512015ad.0
+        for <git@vger.kernel.org>; Wed, 07 Oct 2026 07:52:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791384724; x=1791989524; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=1CkASThfhP0uhR04SC3+WAPxEZRP1gJNDEgJrTNnJGo=;
+        b=XpiEeNHWzUf/1QSpX4JgyAkjriIVTQZukPURQ8psH9EaXw9Na8raslyUHgB57H0uBO
+         3fqMZUJDUsC/PIcA+9PfVFXdFdCEtC7/raFM8Uwho8mhy/xE1eqIMZ3vuWgnWLXFdQgt
+         two/Y5D84ThW//dyI+Xw6Y9/LCgyX8rDjVvUcg/rkdmTk4rfDATpz3/7ZhJp4MsrcOXe
+         ZjcqnK7jCBwZXaW8jgom9WcHlt7xR8YbcpKPjYwk+3e0LJG15O6EQYBIaAsaq/TBZw+B
+         rmYzuzQZIUtRJMZyPW5T0/L+BVU9rsVEq4ak2E4es5/I0J0KE4PQ5NUetTtRdpouPcZw
+         FPXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791384724; x=1791989524;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=1CkASThfhP0uhR04SC3+WAPxEZRP1gJNDEgJrTNnJGo=;
+        b=idR0YG6nS6cUGbdtyVdHWK+9hTlxJZmDyZrlJM+OdzF01Fj/T/wd2qora4fssqke9p
+         Km4k8LuKxB8Tfm4SoLNjM4ib4dXeoQjNh3MGwV5/NKgt/Xwc1k4gAXqjoNQYP+NtNaiH
+         4xd7hTx6rDavxjgDZ4N1l0Cv874P6nR1am8B0DzjBzjbur/pXXoWY/wrx1V+apT4YTZI
+         qapuCiZtkwbK2dJYbAcO7DBUe9Zm01NqddhkvYaT8mwR4rW/BvD4roqhJW8+1LtgCbvK
+         NqUT0i0EW9tJDuR7YI/zxwFzg7pb4J82SEmlzGrtCAVWWtLqcBu9ha1as1JBE8MbJYH+
+         8+tg==
+X-Gm-Message-State: AFq9FYIPOXT7LbHfSYr/yfr/GRSZfvS2yJO3yh2HpZ+VmLIhvDwiQHoK
+	/JZ2LDvxTJ2+jejQqLEI4xMlt4atqqV+Ujq/ddYt9oFi6DcsPf4PjhmbG0AGOA==
+X-Gm-Gg: AYBFou1Kl9Iv6Lo/KBvwR4fiQrKp4qgXdjDZpfPe0W3OABNZguQ4BaqwL1DEEAgYElx
+	ETtyU8YoTJtpSR6GwvciONuRdcRGgrus+jlUAZNb5X+N0YDEn5VSUdv3jiG2scacYOC7XKoK51c
+	JTJT6eSIeKCaizJx/kXZgvmyvA+4NHIkX2VqZ+72XwzMtpGjogxoE16+AgLRtdaoyc5S4h8Rh9e
+	AzDYPCJqMfYruhqqQpeglFTTcuSaTOCsrnV3BZtIc7OCe8e34IhBwCteHh/5K4FzkAIsX0ZZbGw
+	EnOEh1h9scGFn5zki3JETMgtwof1NJXDeMagLumaopgHYoOIi7CoZM8ae6SrH0ctZbESuQE2hBt
+	W1dSOmAcNtam0mc5VWoI/3JpTDZkK+rQ+UZK/q8G6ZwS+0o3lWnJdEMDEWXTejmQDEj+ZCskdMs
+	Xoo95scplhrLagDWQSqY3u925qu8FzElKV4Bjba+zm2CO+kL5WiP8VjPyiDsDKZhH72lDcayDnS
+	E6s3e4UrA==
+X-Received: by 2002:a17:903:2ac3:b0:2dd:ad73:c936 with SMTP id d9443c01a7336-2e6003bdaf7mr21292635ad.23.1791384723584;
+        Wed, 07 Oct 2026 07:52:03 -0700 (PDT)
+Received: from [127.0.0.1] ([57.154.5.132])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e6046fe0c1sm12413425ad.21.2026.10.07.07.52.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Oct 2026 07:52:02 -0700 (PDT)
+Message-Id: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 07 Oct 2026 14:52:01 +0000
+Subject: [PATCH] doc: checkout: rewrite detached HEAD state explanation
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Julia Evans <julia@jvns.ca>,
+    Julia Evans <julia@jvns.ca>
 
-Muhammed Dilshad A <dilsheddilu123@gmail.com> writes:
+From: Julia Evans <julia@jvns.ca>
 
-> +static const char *strip_relative_prefix(const struct diff_options *opt,
-> +					const char *path)
-> +{
-> +	if (opt->prefix && skip_prefix(path, opt->prefix, &path) && *path == '/')
-> +		path++;
-> +	return path;
-> +}
+The current explanation has the following issues:
 
-That's quite a long line.  Read about coding guidelines in our
-Documentation/ directory.
+- Says detached HEAD state is useful but doesn't explain why
+- Takes many paragraphs before explaining what detached HEAD state is
+- It's common for users to accidentally end up in detached HEAD state,
+  but it doesn't explain why that might happen
+- One of the UI improvements in `git switch` is to make it harder
+  to detach accidentally, but that isn't advertised.
+  See 7968bef06b (switch: only allow explicit detached HEAD, 2019-03-29)
+- Too many confusing diagrams
 
-Also, do callers guarantee that path may have only up to one
-trailing slashes and never two or more?
+Write a new explanation addressing these issues, and put it in a
+standalone guide so that we can easily reference it from advice
+("see `git help detachedhead`").
+The result is a shorter guide that covers more material.
 
-> @@ -932,6 +940,7 @@ static void show_combined_header(struct combine_diff_path *elem,
->  	const char *b_prefix = opt->b_prefix ? opt->b_prefix : "b/";
->  	const char *c_meta = diff_get_color_opt(opt, DIFF_METAINFO);
->  	const char *c_reset = diff_get_color_opt(opt, DIFF_RESET);
-> +	const char *name = strip_relative_prefix(opt, elem->path);
->  	const char *abb;
->  	int added = 0;
->  	int deleted = 0;
-> @@ -942,7 +951,7 @@ static void show_combined_header(struct combine_diff_path *elem,
->  		show_log(rev);
->  
->  	dump_quoted_path(dense ? "diff --cc " : "diff --combined ",
-> -			 "", elem->path, line_prefix, c_meta, c_reset);
-> +			 "", name, line_prefix, c_meta, c_reset);
->  	printf("%s%sindex ", line_prefix, c_meta);
->  	for (i = 0; i < num_parent; i++) {
->  		abb = repo_find_unique_abbrev(the_repository,
-> @@ -987,6 +996,7 @@ static void show_combined_header(struct combine_diff_path *elem,
->  			const char *path = elem->parent[i].path ?
->  					   elem->parent[i].path :
->  					   elem->path;
-> +			path = strip_relative_prefix(opt, path);
+The framing that "Git considers commits that aren't on a branch/other
+reference to be garbage" is taken from Steve Klabnik's tutorial
+https://steveklabnik.github.io/jujutsu-tutorial/branching-merging-and-conflicts/anonymous-branches.html.
+It's funny and it's consistent with the way Git uses the term
+"garbage collection".
 
-When a rename is involved (e.g., originally the contents was in
-here/file we have made our changes in place, while the other side
-moved the file to there/file and made changes there, these were
-matched up and are shown as a merge into here/file.  Wouldn't a
-elem->parent[].path point at here/file while another points at
-there/file in such a case?  What should happen when our prefix is in
-"here/"?  I know "here/file" should become "file", but what about
-"there/file" that they bring into the picture?
+Co-authored-by: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
+Signed-off-by: Julia Evans <julia@jvns.ca>
+---
+    doc: checkout: rewrite detached HEAD state explanation
+    
+    Often when rewriting these explanations I go through a process where I
+    ask users' feedback on the old explanation. Here I didn't do that
+    basically because that process takes a long time and I'm working on a
+    bunch of other time consuming docs projects so I did a quick rewrite
+    based on my previous experience explaining detached HEAD state to folks.
+    
+    I thought this could be a nice quick docs win on a topic which many
+    users find quite confusing. If the changes here are too controversial I
+    can drop it for now.
+    
+    Also if folks object to making a separate git help detachedhead guide
+    I'm happy to drop that too. Personally I'm excited about the idea of
+    being able to reference the guides in our advice (which is one of our
+    best tools for getting users info about how to use Git!), but it's not
+    possible to let users jump to a subsection, so this is sort of a hack
+    around that.
 
-Not striping anything does give consistent result and would not
-mislead the readers as long as they understand --relative is
-ignored.  Contrasting to that, "we strip if the path is inside our
-prefix, but otherwise we give full path" would give ambiguous
-output, wouldn't it?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2250%2Fjvns%2Fdetached-head-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2250/jvns/detached-head-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2250
 
+ Documentation/detached-head.adoc   |  43 ++++++++++
+ Documentation/git-checkout.adoc    | 129 +----------------------------
+ Documentation/gitdetachedhead.adoc |  14 ++++
+ advice.c                           |   1 +
+ command-list.txt                   |   1 +
+ 5 files changed, 60 insertions(+), 128 deletions(-)
+ create mode 100644 Documentation/detached-head.adoc
+ create mode 100644 Documentation/gitdetachedhead.adoc
+
+diff --git a/Documentation/detached-head.adoc b/Documentation/detached-head.adoc
+new file mode 100644
+index 0000000000..1e00712124
+--- /dev/null
++++ b/Documentation/detached-head.adoc
+@@ -0,0 +1,43 @@
++`HEAD` is where Git stores your current branch. `HEAD` can either be:
++
++1. A branch, which is your current branch.
++2. A commit ID, when you don't have a current branch.
++   This is called "detached HEAD state".
++
++It can sometimes be useful for `HEAD` to be a commit ID.
++For example, it lets you look at an old version of your code
++(with `git checkout COMMIT_ID`).
++
++The only problem is that if you create new commits while in detached
++HEAD state, those commits won't be on a branch. This makes those new
++commits much harder to find later. Also, Git considers commits that
++aren't on any branch (or a tag or other reference) to be garbage.
++Git will eventually permanently delete those "garbage" commits during
++garbage collection.
++
++There are 3 main ways you can end up in detached HEAD state
++unintentionally:
++
++1. `git checkout COMMIT_ID`, where `COMMIT_ID` is a commit ID
++2. `git checkout v1.3`, where v1.3 is a tag name
++3. `git checkout origin/main`, where `origin/main` is
++   a remote-tracking branch
++
++Checking out a tag puts you in detached HEAD state because `HEAD` can
++only be a branch or a commit, not a tag or any other reference.
++So `git checkout TAG` will set HEAD to the commit for that tag.
++
++The easiest way to avoid accidentally ending up in detached HEAD state
++is to use linkgit:git-switch[1] instead of linkgit:git-checkout[1] to
++switch branches. `git switch` won't let you detach unless you explicitly
++pass the `--detach` argument.
++
++To get back onto a branch, you can:
++
++1. Switch to the branch you want to be on, with `git switch BRANCHNAME`.
++2. Create a new branch at the current commit, with `git switch -c BRANCHNAME`.
++   You might want to do this if you've created new commits, so that you can
++   find the commit later and so that it won't be garbage collected.
++
++If you create commits in detached HEAD state that aren't on a branch,
++you can find them later using linkgit:git-reflog[1].
+diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
+index 2aefea0228..4e9e94e24d 100644
+--- a/Documentation/git-checkout.adoc
++++ b/Documentation/git-checkout.adoc
+@@ -376,135 +376,8 @@ For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
+ [[DETACHED_HEAD]]
+ DETACHED HEAD
+ -------------
+-`HEAD` normally refers to a named branch (e.g. `master`). Meanwhile, each
+-branch refers to a specific commit. Let's look at a repo with three
+-commits, one of them tagged, and with branch `master` checked out:
+ 
+-------------
+-           HEAD (refers to branch 'master')
+-            |
+-            v
+-a---b---c  branch 'master' (refers to commit 'c')
+-    ^
+-    |
+-  tag 'v2.0' (refers to commit 'b')
+-------------
+-
+-When a commit is created in this state, the branch is updated to refer to
+-the new commit. Specifically, `git commit` creates a new commit `d`, whose
+-parent is commit `c`, and then updates branch `master` to refer to new
+-commit `d`. `HEAD` still refers to branch `master` and so indirectly now refers
+-to commit `d`:
+-
+-------------
+-$ edit; git add; git commit
+-
+-               HEAD (refers to branch 'master')
+-                |
+-                v
+-a---b---c---d  branch 'master' (refers to commit 'd')
+-    ^
+-    |
+-  tag 'v2.0' (refers to commit 'b')
+-------------
+-
+-It is sometimes useful to be able to checkout a commit that is not at
+-the tip of any named branch, or even to create a new commit that is not
+-referenced by a named branch. Let's look at what happens when we
+-checkout commit `b` (here we show two ways this may be done):
+-
+-------------
+-$ git checkout v2.0  # or
+-$ git checkout master^^
+-
+-   HEAD (refers to commit 'b')
+-    |
+-    v
+-a---b---c---d  branch 'master' (refers to commit 'd')
+-    ^
+-    |
+-  tag 'v2.0' (refers to commit 'b')
+-------------
+-
+-Notice that regardless of which checkout command we use, `HEAD` now refers
+-directly to commit `b`. This is known as being in detached `HEAD` state.
+-It means simply that `HEAD` refers to a specific commit, as opposed to
+-referring to a named branch. Let's see what happens when we create a commit:
+-
+-------------
+-$ edit; git add; git commit
+-
+-     HEAD (refers to commit 'e')
+-      |
+-      v
+-      e
+-     /
+-a---b---c---d  branch 'master' (refers to commit 'd')
+-    ^
+-    |
+-  tag 'v2.0' (refers to commit 'b')
+-------------
+-
+-There is now a new commit `e`, but it is referenced only by `HEAD`. We can
+-of course add yet another commit in this state:
+-
+-------------
+-$ edit; git add; git commit
+-
+-	 HEAD (refers to commit 'f')
+-	  |
+-	  v
+-      e---f
+-     /
+-a---b---c---d  branch 'master' (refers to commit 'd')
+-    ^
+-    |
+-  tag 'v2.0' (refers to commit 'b')
+-------------
+-
+-In fact, we can perform all the normal Git operations. But, let's look
+-at what happens when we then checkout `master`:
+-
+-------------
+-$ git checkout master
+-
+-               HEAD (refers to branch 'master')
+-      e---f     |
+-     /          v
+-a---b---c---d  branch 'master' (refers to commit 'd')
+-    ^
+-    |
+-  tag 'v2.0' (refers to commit 'b')
+-------------
+-
+-It is important to realize that at this point nothing refers to commit
+-`f`. Eventually commit `f` (and by extension commit `e`) will be deleted
+-by the routine Git garbage collection process, unless we create a reference
+-before that happens. If we have not yet moved away from commit `f`,
+-any of these will create a reference to it:
+-
+-------------
+-$ git checkout -b foo  # or "git switch -c foo"  <1>
+-$ git branch foo                                 <2>
+-$ git tag foo                                    <3>
+-------------
+-<1> creates a new branch `foo`, which refers to commit `f`, and then
+-    updates `HEAD` to refer to branch `foo`. In other words, we'll no longer
+-    be in detached `HEAD` state after this command.
+-<2> similarly creates a new branch `foo`, which refers to commit `f`,
+-    but leaves `HEAD` detached.
+-<3> creates a new tag `foo`, which refers to commit `f`,
+-    leaving `HEAD` detached.
+-
+-If we have moved away from commit `f`, then we must first recover its object
+-name (typically by using git reflog), and then we can create a reference to
+-it. For example, to see the last two commits to which `HEAD` referred, we
+-can use either of these commands:
+-
+-------------
+-$ git reflog -2 HEAD # or
+-$ git log -g -2 HEAD
+-------------
++include::detached-head.adoc[]
+ 
+ [[ARGUMENT_DISAMBIGUATION]]
+ ARGUMENT DISAMBIGUATION
+diff --git a/Documentation/gitdetachedhead.adoc b/Documentation/gitdetachedhead.adoc
+new file mode 100644
+index 0000000000..0aeecd159c
+--- /dev/null
++++ b/Documentation/gitdetachedhead.adoc
+@@ -0,0 +1,14 @@
++gitdetachedhead(7)
++===============
++
++NAME
++----
++gitdetachedhead - How detached HEAD state works
++
++DESCRIPTION
++-----------
++include::detached-head.adoc[]
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/advice.c b/advice.c
+index 401d047391..43f86c2eaf 100644
+--- a/advice.c
++++ b/advice.c
+@@ -291,6 +291,7 @@ void detach_advice(const char *new_name)
+ 	"\n"
+ 	"  git switch -\n"
+ 	"\n"
++	"Run `git help detachedhead` to learn more.\n"
+ 	"Turn off this advice by setting config variable advice.detachedHead to false\n\n");
+ 
+ 	fprintf(stderr, fmt, new_name);
+diff --git a/command-list.txt b/command-list.txt
+index 63ae2a67c9..313689335f 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -218,6 +218,7 @@ gitcore-tutorial                        guide
+ gitcredentials                          guide
+ gitcvs-migration                        guide
+ gitdatamodel                            guide
++gitdetachedhead                         guide
+ gitdiffcore                             guide
+ giteveryday                             guide
+ gitfaq                                  guide
+
+base-commit: 5a7d1e8045ce66c908f62598e26cbb8df7b39a90
+-- 
+gitgitgadget
