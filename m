@@ -1,90 +1,99 @@
-Received: from bumble.birch.relay.mailchannels.net (bumble.birch.relay.mailchannels.net [23.83.209.25])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98354379EE0
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 20:44:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.209.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D243D353A7E
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 21:07:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791405895; cv=none; b=Npu++ewep9UNLnDrnCOU0edoeqGvQocs+GS0FhBxZ5RvpwlGQxuru2kmq0h5t3XvQlchciqtNE5EM0WfltQG+9NGAw5fcKQyfxkC9j7/MikmgEiR2Ms2NzuYLFpBqWeBiKSHzdSswWS83GRAfqKn0qN5n3/QmcQvh2aX8VRFrsg=
+	t=1791407272; cv=none; b=XiJNJONGEVAbgOYuxtTGwfU+XazqSV42VPvwmAIZNfh85vF0gYsBvj0V4tItY/rGV/5SYVuvjYa9pn2u33oO4lnRk19VkABM0e9taP963cuF09Fu1ot1gToIyxG+8IwLcQtOtJngL4v7w2MeurnrYolQG8Fdh0M15Q6EMUCRWeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791405895; c=relaxed/simple;
-	bh=KDxyqFPlnSmrfg4LiMz/gbuoTR3uGfCCbHFTtfr6c1M=;
+	s=arc-20240116; t=1791407272; c=relaxed/simple;
+	bh=Wm0DrMK9ryvIxm+jfpu4Jt5wGs9naKHdlhF3cMI+q20=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CtiIApwq0XuDPkl1KuGo2vf27FOPUIQn5X8DNiDaMWW1dtPrxqXjoGj+IGTuPr8ZiqkvZv5QHpcPTavgZkdSuQbFOGCtukMhBO/81RZ1TFYPoexNleVcX8sebI2CBBVhT7Mzd5fphLXgWOJG0OS9fzEIB+DtZCrYrM2oh6QKfM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=gSruUSch; arc=none smtp.client-ip=23.83.209.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=VJEoNsf0jHJtpMKTU0Sg08UtEmE2Cgng21SKAeUU2p0/QkWwGzqFXfu6nFpuZaDxOKjG/cb3/iAB0bOKLZJk5XQaViJvi8qYtNGIaSWxfpAn7pp5XynjRwB7Gz5Nnf+7tj5qtVtahtQCeHsULnSpVen7sI9hU35XBDDstf+2v5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=NHqpNcCI; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="gSruUSch"
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id D9720160FDD;
-	Wed, 07 Oct 2026 20:26:32 +0000 (UTC)
-Received: from pdx1-sub0-mail-a203.dreamhost.com (100-96-11-196.trex-nlb.outbound.svc.cluster.local [100.96.11.196])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 8F074162AD8;
-	Wed, 07 Oct 2026 20:26:32 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
-X-MailChannels-Auth-Id: dreamhost
-X-Imminent-Share: 2941735a2282b5c1_1791404792725_880058077
-X-MC-Loop-Signature: 1791404792725:2863480831
-X-MC-Ingress-Time: 1791404792725
-Received: from pdx1-sub0-mail-a203.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.96.11.196 (trex/8.0.2);
-	Wed, 07 Oct 2026 20:26:32 +0000
-Received: from ubby (unknown [24.28.102.31])
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="NHqpNcCI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1791407268;
+	bh=Wm0DrMK9ryvIxm+jfpu4Jt5wGs9naKHdlhF3cMI+q20=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=NHqpNcCIb8SwCdDhLxmMb6BxWjBKwP9yN2hG1NH6PCr8pp/R1libkhvLBa6SuBvg6
+	 ReIU0bSqnZXUbBvVHDvuow57CNM/2IBpBTSTaiCrWanFLj7rKpAM1Rse9WSwcSKCm/
+	 8xFjzhD5QjezFYo0BO299XNR+jblN+a58KUEQM+pEacWerq217igZaZ8oCN+qeVGGf
+	 JpO3fECPsSASTNWGwYrfFzGowYySObHqUVwN/b7eM99n3Vpgu/5BYxrtzZMXtQ3E7s
+	 PW89bdSZrWZte4uTRRx98Ufbucg7v39Ai/ONMxd1CIzqy0ib4cibZz73fB1b6Ms/xt
+	 S3SJjeDP83lOvXwD1DiwCIrfN80hI4zdu2XxlP7XWUu+MopYixX8eK6UPzKfBTdl+Z
+	 SrwfSWBiNABezOVKlgkHZgKuwUNqdT7woARVtoS1+tKtgyrDD4mkvgHXC8Unp5J2tv
+	 VzyrCBlHTkqfERo+lu/66RdbCg7W/+MemCp6336tkN9f75kd1MP
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:66aa:1c10:d66e:dab7])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a203.dreamhost.com (Postfix) with ESMTPSA id 4j0Pm73KdTz2S;
-	Wed,  7 Oct 2026 13:26:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1791404791;
-	bh=xt75cXG7eCxXnQKLUCMN25fxI+1nx3cHqJTl/9m/MQI=;
-	h=Date:From:To:Cc:Subject:Content-Type:Content-Transfer-Encoding;
-	b=gSruUSchuMDbyu3XWXPbWfadh53Mmf7K8yeCkJ8uXRCno5scMC5jMg8G27cBgISPn
-	 MEpa1iuanZafQ7nycA2VzfJL/x7uecgZcdOCBVKNksWQ6W4hYJTO+sV9Q5hH2PLtRp
-	 xgTfb6c5lbnOlRaK6zwkkV04RIgXvcMf18ckG6MdRgjIIjJ36ilsFB4oNwI2Qu98xF
-	 M/QVPs4dGZudAy5QLoRCOzHYOpTZK+nd9yi/h2Ha7PQlQbCf8+HOPQcaAnhpvmiHmo
-	 31XghFuHkujENhlnKnF9rNiKdRsOAqfm/qTEdoTbmObeMh8Tvd4IZ9F5uT/SscHybk
-	 mFBWuxaQeWPCQ==
-Date: Wed, 7 Oct 2026 15:26:28 -0500
-From: Nico Williams <nico@cryptonector.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Luca Di Carlo <luca@dicarlo.email>, git@vger.kernel.org
-Subject: Re: git non-intrusive clone
-Message-ID: <asaq9MaTvtuFyrpm@ubby>
-References: <e30c5b13-5ca3-43d1-a87a-d807b71bad7b@app.fastmail.com>
- <CALnO6CCTbWLn2rO9ASr+5K07vqkaWCx+H8NsCxaAMgHUYR=z5g@mail.gmail.com>
- <d6dc70f6-f155-4a5a-b647-ac24b2b1ed37@app.fastmail.com>
- <CALnO6CA5tY5Ebw5JyA8c-e00PqLcXMAijA5VF6DrPJNDCX=raA@mail.gmail.com>
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 92D5D20077;
+	Wed,  7 Oct 2026 21:07:48 +0000 (UTC)
+Date: Wed, 7 Oct 2026 21:07:47 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Scott Chacon <scott@gitbutler.net>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [RFC PATCH 0/4] sign a SHA-256 digest of the tree in commits and
+ tags
+Message-ID: <asa0e64qw7gzhI23@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	Scott Chacon <scott@gitbutler.net>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+References: <20261002081846.25144-1-scott@gitbutler.net>
+ <asAAn8NZwB29WhGR@fruit.crustytoothpaste.net>
+ <CAP8UFD096CdR9MXd+VHk7Zf9rCJEnGTEiBhCc0mJdMmE3U_gOg@mail.gmail.com>
+ <asV1oB_avuEbgRVe@fruit.crustytoothpaste.net>
+ <CAP8UFD3dnx3u6LL78pPSzreaTsSmoiJvofoR_R0Pyk7H6-8NXw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="FoPJjEml4IqOTTpB"
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD3dnx3u6LL78pPSzreaTsSmoiJvofoR_R0Pyk7H6-8NXw@mail.gmail.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
+
+--FoPJjEml4IqOTTpB
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALnO6CA5tY5Ebw5JyA8c-e00PqLcXMAijA5VF6DrPJNDCX=raA@mail.gmail.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 07, 2026 at 03:50:43PM -0400, D. Ben Knoble wrote:
-> Still, definitely worth having the conversation, and I'm glad we
-> figured it out together. I'm still somewhat interested in what we can
-> do besides "try to tell folks not to blindly trust downloaded files"…
-> but that's never going to stop being bad advice :)
+On 2026-10-07 at 12:26:39, Christian Couder wrote:
+> I am willing to help, but it's not likely I will have a lot of time to
+> work on it before the end of next month. Anyway let me see if I can
+> upstream some parts of the `sha256-interop-part-2` series this week or
+> next week...
 
-There have been horror stories about phishing via fake interviews.
-There is no easy way to ascertain the trustworthiness of such code.
-Just don't run that code.  Use a hosted VM service for this or insist
-that they use a code pad type web application -- that they don't use
-those is a red flag.
+I appreciate any assistance possible.  Getting that series upstream
+unblocks a lot of stuff because then we'll have pack index v3 and object
+map support.  That will allow a lot of work to progress in parallel.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Nico
--- 
+--FoPJjEml4IqOTTpB
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmrGtHsJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ270GPy8fzRnOzFXgfE2kmDLROgNj0C1pJFAgpeesdVp
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAHoHAQDGHhUWRd+PEsA/sxhA618g3Av4
+1HlJ1WyVGyGonYJ+ngD9HigP+i6cjv9Px2JnflCVHiuHHMbn/3WAGrtnhbAbFgg=
+=s58B
+-----END PGP SIGNATURE-----
+
+--FoPJjEml4IqOTTpB--
