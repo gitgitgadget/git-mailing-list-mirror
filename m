@@ -1,146 +1,180 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A7B4E36F8
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 19:20:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791400822; cv=none; b=CnDCG0Au7A5vzOd9kDCkTcqhKGhnGA9ytxSLNRdMQlMwowePhWtNsK0roFCXJSNtkSM+Okwm5/dBinpOPKAVkF7VEQysfS+2+5ogYPytxaDpQvUZ8U/KN36l0AwARh52lx2aaKS8pBnxAmA1YNd50uWUe1yTKyFd+1qZ79b7o70=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791400822; c=relaxed/simple;
-	bh=laZExpenkr6pf9XCly7/weCkeiSIV8WKzDxx/dKwu/U=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=CYbDJvqrjB+29xe69L4magoBv5i2nj73xb1KkExNQyjdaOfNjb/bQXWELQoloU8imRYwP1uPum7DrLrho3mQq4uVcXdQ0PpjpFqltuFolpRuQTpz2q7NC1T3q5XsHTZkJWFLzvSVvCwuU9636T1CLmG8RaihHAT5hbtecDG8iWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dicarlo.email; spf=pass smtp.mailfrom=dicarlo.email; dkim=pass (2048-bit key) header.d=dicarlo.email header.i=@dicarlo.email header.b=Bu97nZjk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RkhewT0V; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dicarlo.email
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dicarlo.email
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2F14DE721
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 19:27:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791401243; cv=pass; b=uxsbVnJcMwtyNymT0i5/gpDUVxwTUO6SFtSZ4JlPehcV9zMWAfBAtkNGhGKQdgjVw/i5K3PmMgNcj91mfuaEYTeEeONd9C7Fq6AyDXkDcbabVdigTydrleaUUp1B/aYS93K7wAsEPTLxC4rmQ6KWxETV/uqaa5CYMs4EdiPHd5M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791401243; c=relaxed/simple;
+	bh=EzxCXSskmbJGZ0Qz7miykR/9WtURkVTpX3Wf/JmcepA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GMOs1OMcNc1j/3Ci2LIh8yjDbua1uXSBhc/CKF4EFwHjmOtlAncgYQ7bHR3ca/PApMs1i7JqkrDL5YR5XD/adMfLkF2RJ4vDIhXjurGDUWNWKp+Q7xr7zBJJ4MYW2Qkij5YnlZwM0qXekLl8L+S/2UbVZ/1qKg8KqMoN7xN5uKk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kvMz9vLH; arc=pass smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=dicarlo.email header.i=@dicarlo.email header.b="Bu97nZjk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RkhewT0V"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 147D014000C2
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 15:20:18 -0400 (EDT)
-Received: from ams-imap-11 ([10.64.2.31])
-  by ams-compute-01.internal (MEProxy); Wed, 07 Oct 2026 15:20:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dicarlo.email;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1791400817; x=1791487217; bh=laZExpenkr6pf9XCly7/weCkeiSIV8WK
-	zDxx/dKwu/U=; b=Bu97nZjk4ybTnBlQuurR19qCGE/McEVPVKtyhZLcCpHdWGks
-	iECVIhvWHrNrrFsDuejhh5lMAH6B32e1KDzHmtdRH1AKi53VVb6/jbTe5vzHckfA
-	X3eGcy5CF/ma1OgNRkOmCwwN6/FWbhEXjuGXPS2BYPyzRrisGp0isYYPkS0BAKKQ
-	gZDQDQSq8iTg99ImYlePT8X3pFSyxmKhnz8Se736Meer01twwDFSc60ZXFlhRSBs
-	tLpKi445yy7bh/ztijkGOWUVfjLJOdDHWjCd8N57tRSNNt6brDAJV4cGj4RU1Hyn
-	qdImqbdleVeNpVfnfOG4EL1CGDiF9GJW830hVw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791400817; x=
-	1791487217; bh=laZExpenkr6pf9XCly7/weCkeiSIV8WKzDxx/dKwu/U=; b=R
-	khewT0VF3339AEUlvGArLg0dCvsvVY5fKSMu7or3SADv2eduhYFM1PTDoAwadxuC
-	9bLxVCSE4xH+hDaTToqsguoCMTlHVMwo+BlyhIpw/Rb/i1nKyK7AgjIntThgKi/f
-	76PDgNbywDIfPkJ8yFrt/YQ0wT8y2+cIjp9Oeng+kdDy+s1wEtS1knZZj8cBcIhH
-	y9YKoxMcl/5O1Pb3+ILdsiwhmFvFMN00PND+XCs1bSkk81e10GjkVMmAr1GUqCZe
-	lRGyxslR21VK0sr6/0TRXoFnqkxVrZwc5tKlgvyxgZqQRxO/bFxVZmXkPLYXf8UE
-	EjccQdu5/GrlJOqMiKalQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=dicarlo.email a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791400817; d=dicarlo.email;
-	mf=PGx1Y2FAZGljYXJsby5lbWFpbD4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:kcxf8gz6R2Z/tvTt8IwJqN91E6dkP/jJKgGVuvGs2G12aLu
-	21dYrDKELdsyYK/rGj3zWfhetYRRFSnGdOmGeEyMPobPLmfDl5k81aZEtqjdKA+Q
-	cc1BTXXFaIderagmwqNppJHWnM3uX9XgQ3dqIrXDB9w/5INwtpXytDWpRFaYBRAY
-	jYbwqWFsaBKoOgTHtTtecdCpThQij1BPJSrb20e9V2b6MrMlZPONNJ744ctjk5r+
-	DZjHjH+rMfrYQhMKbdABwMRrN2z/vu7rksUs8cItFL0xeeYsFkJ5Pmary6epSiiq
-	atMCf6TAAk3vLsWizqc3dxyHqSVNjPdZdQgNYqg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:x/iJHPb/ek31ucvcy9MfUdXV5/sFxaH8KWPe+LpCymY=:laZExpenkr6pf9XCly7/weCkeiSIV8WKzDxx/dKwu/U=;
-X-ME-Sender: <xms:b5vGar-EICUIDjv_Oy7BOdqWfKjPasdn774p-cob7rpSZslvRtq1RQ>
-    <xme:b5vGaijzvuP4rSzW7KjwLbqZZNND9OT8Vfgg97e2s6FnmNDUUBLbWexpRNfkTjK5v
-    mAmOrFusDlwenxCkGnURl2l32H4t7p1BHxehPeKuwjK1GomwFoHv0WQ>
-X-ME-Proxy-Cause: dmFkZTEM/CzZRB6jKMo+5g6aP8aPQn+5OS8bujmwxTsB8ZRChJMRE5zAIDJqRw5B6tTF96
-    uIujw+mvqu24JNpIEhUHd3LrU1qdD8ggkl+NgJnZqQiWJ02RQRJo3OH2DxjK4wCPMReCTo
-    9pa9xxfYZbHLCi+olFho4fDvMzOY61ORkEKH8F+pcxO370Kx7jQ0olBaC5lPphQhGELedb
-    ApKYaKD8BxAmkWPPdX8OSB/FSQOGEsVO1jARslC6bfCXG0ESO3rdv0wscP+7c4Gc1PT2RH
-    ZvxPbsYAVcayTf10jLYsaJVRoAZxZtXoAlP40INSMd+0DysCCUbR3kph2R+f47mbnicgJG
-    3M/N9HBIMxpvUn/DOQ6f/2lFYmiKdW5TQAsa/vyaBUsGYI5hJmvAKhzdaiM11nE+OjpCgp
-    OfE+1JJpINZXRxTCxHZIbCZLG1BN8j1CWhYxiYNjST8O3qq2O3ZQN7htyrEKKsXwiWJQu9
-    45S3TPDs2Wx3lnyMPi5zDfk/8Ha6a9yQF3AP6Dj1vaWhtz+Sf0KB6jOHEFtkBPg8gtVnfw
-    fZkVfLj+Cu+/rzU335czhh2mJi1Vrdr8Q6L1yeNJfdleKFqC+jEjwBGMwEYtjQd0bM7QIF
-    RMYs9xDoMtij619f/lxDW/Jv/4r2lu5RqQ0lRwzvBTtdgPf0Cl9VWEXZZH2Q
-X-ME-Proxy: <xmx:cJvGaqqZIXC-6jJ6jTgEikYlf9Z8WcIvqZ5LzlNWrVWDvrXT0BxTMA>
-    <xmx:cJvGamly7yoZmPfGqikZZ68Bm97FPhvWJAQyHomug94r8xsxwBsFZQ>
-    <xmx:cJvGamyKUNm3JSYgM0Cx9NApdwOEJbUl75dO76SLU1RIP2vDVuPwOQ>
-    <xmx:cJvGamnjz8TCIxSm0e9NHg2rrsiXcJ7pr7yOcvHEkJbepa36ZPhkog>
-    <xmx:cZvGanQ1bT83hftf37aB54uawTAeBzlcdbeAubZjgBKyhNVnc-bcDSyj>
-Feedback-ID: i3269492f:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 51CEEF8008C; Wed,  7 Oct 2026 15:20:15 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kvMz9vLH"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2e49851734cso14996975ad.3
+        for <git@vger.kernel.org>; Wed, 07 Oct 2026 12:27:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791401241; cv=none;
+        d=google.com; s=arc-20260327;
+        b=V3PxxjFbhcFkP3ye4VoghqL9DvffebgtlN2sq35S/6gy7qANf80pZIu0qk+Z30nEXm
+         +Kn59MEemMs3VwpFfVLr6VYu+IguuQswQ9qbpvekQMgyxfFdf8GcXRIlsuMEOMut+nCl
+         MNR1GJoLTnQ1jj7/Jhe4k1qMuMC6rIXrqd+ga/0vIPpTEcUAL5c5gxX67XL9EYGWdq/G
+         S7YuAfbm+n/fZmsveIOziKog1E8HFULFos6TbGkHxL6fleLvCbScB34I+4/rY6uzSqM4
+         ASnVaQT0Z2bg0LTEJD/CU59ghlESlWoT4gFF4V34rMmutUbdiHlWp+TrPUp1HUoKYmw4
+         kTeQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=4+/WB0B1L/+Fvigrl6GjaT+G7RqKAoaHSDaVDqTwvGc=;
+        fh=bzNSpxKo5LnoMuBj1zux8p/hcP2mdIHFfB1NDkOktHM=;
+        b=eXYcCRWOf8NFNO4XI+yeAKIc4z2BaPhHkNN5wt+GMi41phdFoUPo/QdJ5hJvCrJp7K
+         0NCKCVcv2qckrR9R+9mS1mn74DEsnkwIv0T9MrSqZEmHjNwVNG/4sz840h8+bVF+qTI0
+         GbvoEfZ9oUPm/NRG6wm+dpw93Q5RawRVY7613PXayG62HN0J3uabatCnKIBP0S0MsKAr
+         CV8NQeMweHrw2KtgfjDy3j8Q3KwnES9mVAzjcFOV2AXzxV/laMylOzu5o6IZnnPCld9l
+         aMtIvmb3yujWISjIV5LhPBCfVWhpvIvP8NzU88g6m11/VfvAFUe/r+NSbE/ehjzIL80A
+         5aTw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791401241; x=1792006041; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=4+/WB0B1L/+Fvigrl6GjaT+G7RqKAoaHSDaVDqTwvGc=;
+        b=kvMz9vLHxF+I1WMJqNbz8mFjoFJyyywHMmpnEhwGiILXVrwZIBHCulnFaVgkfne80M
+         CwT+G3k/ocym5iIqGGQE4s50Xy8dx+2I+7FUIICQICSu0kkaFlQr7E+llNjJKN3qi51m
+         fpmUqOnV4Jdn4GoGUd03Th0dQarL0qzu/1CWyjrzVCHx8s/zoG/+bUFoQFRYyObkShxR
+         Zqc0vEl2WXfmcQwJ9286wRAcbMTiom6obT72lHlRvKN+MNK1R0bZScTzM+rCFewuTPfD
+         eg+RBRa3U9ZSmU0BMRFmy1019aJ/5XshNLNSG9kSN8+wt42T2Bg+Nzei3dO3uYjCjH0m
+         jiQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791401241; x=1792006041;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=4+/WB0B1L/+Fvigrl6GjaT+G7RqKAoaHSDaVDqTwvGc=;
+        b=VKoRPMER19AGNsw9veoB54gfcysTC1U1+DQwztRp5MCjSe9+poiX3/RInkZ2OBrOfC
+         qu8TOQFFvcYxhUGl7lQM+DFv0PL2o5RQc9jV6HbJlvxwuuJPujGt6ZuVTH632wXYD6N7
+         H8Tg+V2oM0jiYFQJfY+vuPZzszAeQqXfIdthTu8NwHn+SHH2F+m2memGoNlzCsah2qTr
+         b8NzVxSmmxLeI8jyvlYt/DpXQsK1PxzZ3KBKKj97w6baSB66NKm49lQlq58wRs2esW+N
+         C6Vv+Ep67cNPjLULeF2c2zAi6qxsB8EoWDJW3R4N8xKYrhv1aZ2mHfa3077ilywQSQjd
+         /2KA==
+X-Gm-Message-State: AFq9FYKZ3D3VCOAZzBKn1CR70M5QKGoi1UA8m2rLEOiTqgs0hoYuI9Yc
+	/wDwrvR49ZCHHr5Vnnmz0PgviyE+l1yfi8dYwX6X8FYS/ohQpLtdhvPJpYwbVAnat3oBYMLi4gH
+	ZozAqgOehEDMJgV44IbHYP+4od4PkJQ4=
+X-Gm-Gg: AYBFou0OA6eiygjl36q+2eX5juGWy9ROfZBbPxlDwtcqnjtjexmLWOMeX/m57MXywFA
+	RrEgoj0gBw03bPJpw5JhUh8E0Xk8KAgQteMXjbuKvBLiutTviXMWdFtWmUExGDXmUAGxNyZULso
+	E14BW/oBopKiLk7Hp53NBrDsHlWM+QxJce89OXy7dWlwyRnFmo0qETpZ2W+sDdZ7MKawyWm/Yyl
+	q3fISBly1F503mH2cSh4AHZ56baspfT6z5LE1psUefZFgJmYyJUNAnhISM/RHaVLBJfz6L/NLy0
+	Z5Nor+2qyNjCHMVvHiLrshc3HrJt2tvfMr+7Ej2WBTiwkFN9wmMRQDJUiihYZ1uXaULWVTvAx0k
+	oCU2oKXXE/PSYq18dGch8Q1IPHW4HtXHrjvAFkRuWoLeWNHTT+cJXylDCfbgTh68Xuiw//cv/2Z
+	/0diUVfchMlbr+vS0yxJiSFyC6r1SOag==
+X-Received: by 2002:a17:903:41c6:b0:2e6:c39:b250 with SMTP id
+ d9443c01a7336-2e60c39bfd2mr21945345ad.25.1791401241059; Wed, 07 Oct 2026
+ 12:27:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 07 Oct 2026 21:19:02 +0200
-From: "Luca Di Carlo" <luca@dicarlo.email>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org
-Message-Id: <d6dc70f6-f155-4a5a-b647-ac24b2b1ed37@app.fastmail.com>
-In-Reply-To: 
- <CALnO6CCTbWLn2rO9ASr+5K07vqkaWCx+H8NsCxaAMgHUYR=z5g@mail.gmail.com>
-References: <e30c5b13-5ca3-43d1-a87a-d807b71bad7b@app.fastmail.com>
- <CALnO6CCTbWLn2rO9ASr+5K07vqkaWCx+H8NsCxaAMgHUYR=z5g@mail.gmail.com>
-Subject: Re: git non-intrusive clone
-Content-Type: text/plain; charset=utf-8
+References: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Wed, 7 Oct 2026 15:26:15 -0400
+X-Gm-Features: AclHuK_1ZQfWJGe8ZQdQuC8q0FdIbofPQlwwrZ5Lp1YEgqaEFziA2O19BXWnaB8
+Message-ID: <CALnO6CDBFri-MYXEg0TGF7-Oc49hf48qEQCQLYpdXKMkJzbYhw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] WIP: doc: add new git tutorial
+To: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Julia Evans <julia@jvns.ca>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hey,
-You are right, I've re-read the article that I had in mind, he downloads=
- it as zip before, not as clone.
-`.git` is not cloned.=20
-Sorry for that.=20
-Thanks
+On Tue, Oct 6, 2026 at 3:40=E2=80=AFPM Julia Evans via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> This is the first draft of a tutorial which introduces Git in two parts:
+>
+> Part 1: Create an empty repo & make 2 commits (git init, git add, git
+> commit, git status, git diff) Part 2: Push the repo to a remote host like
+> GitHub or GitLab (git remote add, git push)
+>
+> So far we've gotten 112 comments from 22 beta testers who have tried to
+> learn Git for the first using this tutorial. Most of them were able to
+> finish it successfully. I'd like to avoid getting into the details of eve=
+ry
+> single thing in the tutorial at this stage (we're still planning to do a
+> second round of feedback with the beta testers, and the beginning especia=
+lly
+> will likely change)
+>
+> There are 2 questions I'd like feedback on since they both could affect t=
+he
+> structure of the tutorial. I don't think either of these is a dealbreaker=
+,
+> since folks generally were able to finish the tutorial despite all these
+> issues and said that they enjoyed it and learned a lot. But it would be
+> great if there were an easy way to make the process less messy.
+>
+>
+> question 1: create the repo on the command line, or in the forge?
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-On Wed, Oct 7, 2026, at 20:54, D. Ben Knoble wrote:
-> I may have misunderstood, but=E2=80=A6
->=20
-> On Wed, Oct 7, 2026 at 4:40=E2=80=AFAM Luca Di Carlo wrote:
-> >
-> > Hey everyone,
-> > I am reading more and more blog posts about job interviews that requ=
-ire the people to git clone a malicious repo with commands executed usin=
-g git hooks.
->=20
-> I don't think a _clone_ can ship and enable hooks on its own. (I know
-> of at least one npm package that wants to install Git hooks when you
-> run "npm i"/"npm ci", though=E2=80=A6 turn on "ignore-scripts" for tha=
-t.) That
-> is, you should be very careful executing anything from a cloned
-> repository you don't trust, but I don't think a clone can ship
-> executable hooks in a meaningful way.
->=20
-> What *can* get you is an archive that includes ".git/", since it can
-> contain hooks that Git will execute (modulo safe.directory, I think,
-> but that typically doesn't apply in these situations). So: also be
-> careful extracting arbitrary archives!
->=20
-> Maybe you had other security flaw in mind, or maybe someone else can
-> tell me how we fix this beyond "tell folks to be careful" (which I
-> agree doesn't scale well).
->=20
-> --=20
-> D. Ben Knoble
->=20
+> c. Just try to get users to try to figure the right way in the
+> GitLab/GitHub/etc UI to actually create an empty repository that it's
+> possible to just push to. This is really hard because the UIs constantly
+> change.
+>
+>
+> current solution 1
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> Right now we're working on Option C since it seems least bad
+>
+>
+> question 2: How to handle authentication
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Luca
+> current solution 2
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> Right now we're solving these by:
+>
+>  1. Using SSH
+>  2. Explaining how to set up SSH in the easiest way possible (with
+>     disclaimers to check your security team's policy if applicable since =
+the
+>     "easiest way" may not be the best)
+>  3. Giving some instructions for how to translate an HTTPS URL to an SSH =
+URL
+
+Disclaimer, I haven't read the patches yet.
+
+Both of these approaches sound like the right one to me. Assuming
+we're suggesting up-to-date key algorithms for SSH, I think that
+should be fine. (Memory says ECDSA and ED22519, I think? I'm not sure
+about the differences, but my regularly-used keys are the latter and
+my newest is the former.)
+
+I happen to use a somewhat convoluted "new key for each host" policy
+for myself, which ends up with lots of "Host <host> IdentifyFile
+<key>" in ~/.ssh/config and "Include"d files. I think separate keys
+per host is a good idea, but I certainly wouldn't want to foist that
+mess on new users. OTOH, even leaving an admonition "you probably want
+to set up one key per host later, so consider this just a starting
+point" is how such starting points become prolific use practice ;)
+
+So, idk on that front. Probably it's over-complicated to do that here,
+and point to better guides (or worry about making one externally if
+none exist), leaving the admonition in.
+
+Thanks for letting me think aloud,
+Ben
