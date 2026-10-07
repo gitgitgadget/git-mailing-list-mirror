@@ -1,69 +1,70 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729EB44AB73
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 14:23:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16224A5ED4
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 14:23:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791382989; cv=none; b=i4DrBA07o3tgo7YJs4C8/1SBQIf5E7dkRoqU9OIEStu5fJ30DYNpcCVN47bC6jG5fElTD6txq5ppDYKWkSVAoCbwyhfMJhy8f8C96wUz/AwKrTSB2nNzXP0RKiBLE33/daXZUaZeCZJhe8jis8ZcIWHopvoNyMnHO0b+eFFUXeU=
+	t=1791382991; cv=none; b=qTkNyxiuu1QKCN8pHV34ymvGlHiEdDx0OUvcpLl8UZuX8fjUJShB94PlC0KSZMHNQ2GRBsA3a7Swk+IG8Wm+RtLRdtSGXIlEOPha3JAE1DheiXeRUselV0D0R2L6ACi5jAvInzCWNTbSCR+Z2r5ksX6d5m1TTPe9cWVhMnPvUac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791382989; c=relaxed/simple;
-	bh=NWvMjutzeO3SLgS9E824NyuA6TpyMhHVy/6OHRg6y/Q=;
+	s=arc-20240116; t=1791382991; c=relaxed/simple;
+	bh=daPuBZxej5Tbwwfw+uX+pdJy2zKISZLcmSbLGDOXpxM=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=KaSdcgvkSdBVlaiCKJa8Lxjj2RnB+NeoegZx+Yc4UET1mmOq8WeoAPdSAeOmgDEYaZM5JRL3iwkidzh0y2apVeCN6FysU86vnRq70tZ4jo2xfRI4lirAJ/QebBeBS9cprXtsG+rMAh3EH4etai0NtW1Kn/vzAx9RrRnq6/esyYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JbSQVovD; arc=none smtp.client-ip=209.85.160.171
+	 MIME-Version:To:Cc; b=rzZT1RPFCFg4aHKe9VZF7WmmfzZ2rK8WWD8y3Ic8JI/fUPuwpIL6q0aVFmHnE5oIJF8Hyr0k+VaBphzwCaziPJtKwT+95A45ubTpTOffls/5qO2re7eOmt02kBMd57jon8isGeWqMu5Si2VnSHG3Rjh/yzIt9DG+4Hap1IlWCyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qrFe6cQ6; arc=none smtp.client-ip=209.85.219.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JbSQVovD"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-5351748222cso32217151cf.1
-        for <git@vger.kernel.org>; Wed, 07 Oct 2026 07:23:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qrFe6cQ6"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-91957ec41e1so26622376d6.0
+        for <git@vger.kernel.org>; Wed, 07 Oct 2026 07:23:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791382982; x=1791987782; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791382985; x=1791987785; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=HsmDMKK9svmLKVawYI5H62XAJE3iKUpimxV516kRAXc=;
-        b=JbSQVovDtlHRpGw2NW+aBeUsdC0Dn5ygWSjJUNbSnZzmAQ37GjogUZyx6KxT6ye6TC
-         abqnmT1oc4H6CwMaytilBlEUrzyLmUBF5MU8OD0sIbWS0dzsMBQs4TxT6cQLfGAKAREU
-         p2FCuGdqdYlQEzEzcmFzZkR82oqgEFdGIcfkHNOdz31+Emvcs07XN4g5/ypteXHk1OAi
-         LVF43EzouOxEo4CkyJkG3sr9KSCj29Rst/h79umvMnTSTdknIMw5OunGkHxlQXjw2nDl
-         /LYAD85pGnevmbOHG86spAFS8JBpuTxFZuUC+MSZysDvq0ra47rRPKJlRQIsbhVTLOQD
-         JkJw==
+        bh=Mt61OoTv8AC0hKQRW1/JUbxzcBWeExNkI2Fl80rCR4w=;
+        b=qrFe6cQ6qUS/sYSE91GHH5LAB8VMe/clE7cyFBjmKucqyQWqywg35aorA0tVWC+NXq
+         18nEiJaa/TgNgE8D2vrepyeD7g5XIB2HhtTf2xO/RvFHJR7f9fBdzJELrDj1dpse0sI8
+         GGw6aGHs0wnHJkvCKQu0nhFoxkTHzQW5o1xHTC2iMW7g6WeeUlMP0/QwBfyBJBMjI4hS
+         0VKSVw01BDtVA8GtdX/RSAZpL8pF3Sfl6cmT1DgoPtDUTSbymlqJXn8LcJ82MncyjJpt
+         LcmPhcM74B4Zsn/Pwf4XV6YQEIzPuM76iPWXjC6rROt6Vyx5Fa/98D6Dj91EgpHpUGbg
+         TLyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791382982; x=1791987782;
+        d=1e100.net; s=20260707; t=1791382985; x=1791987785;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=HsmDMKK9svmLKVawYI5H62XAJE3iKUpimxV516kRAXc=;
-        b=SBb4WWjuWs+d6JhPD7GY4wPMiNQ6UkeRaX2SFr/LvklYxhFEAzBZW7z5Jm9x/W/+wJ
-         ycGSHYtAMg5XgOjBL7HeNuZQ5ZcV/gopDV66fIIMqQ+nGuKa9hQJ33ZEEe0WZ7mbispV
-         A1R/4CPbyuwBr0csJZr4GKI+Zs+1F5/X9X6MxImg6/p4EGIDgjbBuAj09Rj0ex1bLW+9
-         roiweuIyhuz5ax77o5sJsjF0NrRQoAfYU9YTgZvESdp9u9VCtb5tE/CG83R/AE2r92BG
-         r1uO89z7jbbQQq+eplAnqTQU02gA4F3QTXG1Wp2yBVL6Q+AcLDp/Gq/ytgcVRpPNJKoH
-         gqeQ==
-X-Gm-Message-State: AFuF++n38j9ZKXnR4vQnQ6Zt+yvw7Bqu78Q29mfMYwMHd/6OEx/qmRUA
-	Vww2Iod/Yg2CB7AGourtUNA2Cx7j4hWa6uY26WsFnAlGylVGowPCMqmLPcGKPA==
-X-Gm-Gg: AYBFou2hHFOhzoy0mkH5kC4vs9NTxfZOsevrWUuRiborHMyxHMjD2Wu+XM5fa3IgR3G
-	OpdVKMlYxyACSeRq3S4OTT7luh+vkJiyxvOBe3xqxkPzRQM5vglzT8fAJwR/f/75zidCT/Z/dL7
-	N1k1g9pwGjLYFBnXnvyJHg8vcPTl2jIrGu9aklcprZZP+jf3uSbKYEwg9Hov04rkJ3utyt3WhSG
-	8Y1e9goeLKedLv+RfSbvp8qbsJrgEI1NJIxG7YUpZ3GCeMmdcT6CPd+AXTvHSSXM+V4ckIRgfL/
-	KoRLI3CMEaO+Ay2Jtt1SX3hKwcpPqehnR62CeaonxG0XKv/DyZKlqj3o1oobfIxU4FBplA/1bz1
-	CRsM0UpO1Kx221Rtbh8xjYop4oHrv8f9kGpPWHI186SVwIBNbAAjjNGMpYhZyGG2chuHBL48NtG
-	sLwHEJrmHLdKqjoktXqBSMfEobXIpqvqTMLRWpHuFUeUmOuwFZrV4Cl5nsYFR5fvFE1Qp+QqmK
-X-Received: by 2002:a05:620a:1b93:b0:93e:8774:fba2 with SMTP id af79cd13be357-93e9b7ec7d6mr429828785a.58.1791382981793;
-        Wed, 07 Oct 2026 07:23:01 -0700 (PDT)
+        bh=Mt61OoTv8AC0hKQRW1/JUbxzcBWeExNkI2Fl80rCR4w=;
+        b=o0ywJfbpM2kKC0hXCwP843TAUP/DgfkI3CyckINv27Rp7b3Prpnj0jEEbVmexXkKNU
+         YHlM4N3UWhc/WpDtD8muOapO/vvmHr4cUVnk88NT8xSrg/brI3DZsUguT0NeWAcOOcFw
+         XPkoFtDhWBYTMMTIeN5+daVA1p6hYLcDyzTZLVqBa8FVRKsdBNeP2bW8cQHHntP5On99
+         MBWChFnJWjoVkFJhKHrqAA2SFr68CkqZSIwg2eJjmvBkDioWHhYk7lITXBXOu9RGCTGg
+         eYSLebPynoKBR8Hz3JfScyIGNw39XNzivHV32J/VSzmXTsTilbGGYHbxAVeZledtcKBU
+         qUWQ==
+X-Gm-Message-State: AFuF++nrcALbPMZA92M6JZiWxOHvr1z2k3/v48dlyljLjVm8mxj82PVj
+	6W1WPZBkWCLVdh3L2lGIh13EKBnKdteIjLxd2c9q1YcXFB7I/12C4+41FlVG3g==
+X-Gm-Gg: AYBFou2+HCMM7RkYuY5k5UeSAuQ3ldY1hjB2PDNcI3PAUfdHgMqmQXxP/VluncyjPb3
+	33xMGRoujNZN8NhBUhB8x0GAs22ghXBb909pT3X5decOIRlxCd06cTK8l2qSjgYXGzjHSax4Z3N
+	gULchIDdNbXeUzHzHCKlqs/W58si1uSn4iJ5RYDTFVnT4bvQEmmLJkgkxA3koeLQQqe94feCsUY
+	8sbXZ7B3EfIVZ2YOAEuXqQdbZKJgc7xrsOK1v427o/v1AaK2LDmhgds5CPmoJEbWwjzQ2SFovsB
+	iipwDWA7AaTbdxGXb5kp83kcgMPeG0ZvotdMJQVBbJlviYYEH8P9agrimQAmUSs0c6jMj3NE5IL
+	KlybeaD2b2Yb65XQTBbe6m5G5ND9YxSQuwnlUO8c5L8YeEtZY+pdiZrtfZQo2+OfMUk5HxAPm+d
+	k9RDHP5ytZFxLhAWbIwq8cyT5IZ6+XbjimPmVwYnDGtbPJ2a0xkveuv+norTGfXstBzT9RHOwY
+X-Received: by 2002:a05:6214:2684:b0:919:860d:3df9 with SMTP id 6a1803df08f44-919977d2c2dmr46543176d6.16.1791382983794;
+        Wed, 07 Oct 2026 07:23:03 -0700 (PDT)
 Received: from [127.0.0.1] ([20.55.87.50])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93e991e9e5csm223264085a.37.2026.10.07.07.22.58
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91996d2146fsm21514206d6.28.2026.10.07.07.23.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Oct 2026 07:22:58 -0700 (PDT)
-Message-Id: <pull.2239.v3.git.1791382977.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2239.git.1790930019.gitgitgadget@gmail.com>
+        Wed, 07 Oct 2026 07:23:02 -0700 (PDT)
+Message-Id: <36cc3ff3b329375d9d87d7ffbaf33b019f91b4b0.1791382977.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2239.v3.git.1791382977.gitgitgadget@gmail.com>
 References: <pull.2239.git.1790930019.gitgitgadget@gmail.com>
+	<pull.2239.v3.git.1791382977.gitgitgadget@gmail.com>
 From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 07 Oct 2026 14:22:55 +0000
-Subject: [PATCH v3 0/2] fetch: write commit-graph using updated refs only
+Date: Wed, 07 Oct 2026 14:22:56 +0000
+Subject: [PATCH v3 1/2] test-tool read-graph: add commit-info subcommand
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,187 +80,65 @@ Cc: Derrick Stolee <stolee@gmail.com>,
     Jeff King <peff@peff.net>,
     Patrick Steinhardt <ps@pks.im>,
     Kristofer Karlsson <krka@spotify.com>,
+    Kristofer Karlsson <krka@spotify.com>,
     Kristofer Karlsson <krka@spotify.com>
 
-When fetch.writeCommitGraph is enabled, the commit-graph is rebuilt from all
-reachable refs after every fetch. This is unnecessarily expensive on
-repositories with many refs, since add_ref_to_set() validates each ref
-against the odb.
+From: Kristofer Karlsson <krka@spotify.com>
 
-This series optimizes the commit-graph write by using only the newly updated
-refs as seeds instead of scanning all refs. Since fetch writes the
-commit-graph in split mode, the newly fetched history is added as a new
-layer on top of the existing chain. A three-mode enum (REACHABLE / TIPS /
-SKIP) makes the policy explicit:
+The test infrastructure has no way to check whether a specific commit
+is present in the commit-graph, making it hard to verify graph state
+after operations like fetch.
 
- * No-op fetch: skip the commit-graph write entirely
- * Updated refs + existing graph: write incrementally from updated tips only
- * No existing graph or multi-remote fetch: fall back to full reachable scan
+Add a "commit-info" subcommand to test-tool read-graph that queries
+whether specific commits are present in the commit-graph and prints
+their generation numbers.  Returns 1 if any commit is not found.
 
-Patch 1 adds a commit-info subcommand to test-tool read-graph for verifying
-graph contents in tests.
+Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+---
+ t/helper/test-read-graph.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-Patch 2 implements the optimization in builtin/fetch.c with tests covering
-the incremental, unrelated-commit, no-op, fallback, and shallow-rejected
-cases.
-
-Benchmark on a synthetic setup: git.git with 200K extra packed refs (~206K
-total), a local file:// remote, an existing split commit-graph and a warm
-page cache. Times are the median of 9 runs of the trace2 region
-fetch/write-commit-graph:
-
-scenario          before    after
-no-op fetch       380 ms    (skipped)
-1 ref updated     357 ms    9.3 ms
-10 refs updated   359 ms    8.9 ms
-
-
-Changes since v2:
-
- * Trim the commit message: inline the commit references, keep the
-   explanation of why the incremental write relies on split mode, and drop
-   the paragraphs that only restated the diff (collecting the tips,
-   auto-followed tags, skipping shallow-rejected refs).
- * Reword the comment on skipping shallow-rejected refs without the
-   reference to store_updated_refs().
- * Simplify the t5537 test by using "test_commit -C ... --no-tag" instead of
-   subshells.
-
-Changes since v1:
-
- * Explain in the commit message that fetch writes in split mode, so the new
-   tips are added as a new layer on top of the existing chain, and that the
-   incremental path relies on this (a non-split write would replace the
-   graph with only the closure of the seeds).
- * Extend the incremental test to check that a local-only commit, which was
-   in the graph before the fetch but is not reachable from the fetched tips,
-   is still in the graph afterwards.
- * Add benchmark numbers to the commit message.
- * Add a comment explaining why shallow-rejected refs are skipped when
-   collecting the updated tips (like store_updated_refs(), since their
-   history is incomplete), and mention it in the commit message.
- * Add a test in t5537 for a fetch with fetch.writeCommitGraph where a ref
-   is rejected because it would require changes to .git/shallow. Without the
-   check, the commit-graph write dies on the missing parent.
-
-Kristofer Karlsson (2):
-  test-tool read-graph: add commit-info subcommand
-  fetch: write commit-graph using updated refs only
-
- builtin/fetch.c            | 69 +++++++++++++++++++++++++++++++++-----
- commit-graph.c             |  2 +-
- commit-graph.h             |  1 +
- t/helper/test-read-graph.c | 23 ++++++++++++-
- t/t5510-fetch.sh           | 59 ++++++++++++++++++++++++++++++++
- t/t5537-fetch-shallow.sh   | 22 ++++++++++++
- 6 files changed, 165 insertions(+), 11 deletions(-)
-
-
-base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2239%2Fspkrka%2Fkrka%2Fincremental-commit-graph-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2239/spkrka/krka/incremental-commit-graph-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/2239
-
-Range-diff vs v2:
-
- 1:  36cc3ff3b3 = 1:  36cc3ff3b3 test-tool read-graph: add commit-info subcommand
- 2:  7507354cc9 ! 2:  01da9857bc fetch: write commit-graph using updated refs only
-     @@ Metadata
-       ## Commit message ##
-          fetch: write commit-graph using updated refs only
-      
-     -    When fetch.writeCommitGraph was introduced in
-     -
-     -        50f26bd035 (fetch: add fetch.writeCommitGraph config
-     -                    setting, 2019-09-02),
-     -
-     -    the stated goal was to stay updated with the latest commits after
-     -    fetching new objects.  The implementation used
-     -    write_commit_graph_reachable() because it was the only API available,
-     -    but two things have changed since then:
-     +    When fetch.writeCommitGraph was introduced in 50f26bd035 (fetch: add
-     +    fetch.writeCommitGraph config setting, 2019-09-02), the stated goal
-     +    was to stay updated with the latest commits after fetching new
-     +    objects.  The implementation used write_commit_graph_reachable()
-     +    because it was the only API available, but two things have changed
-     +    since then:
-      
-           1. write_commit_graph() was added, and it accepts an explicit set of
-              commits as seeds, enabling more targeted commit-graph updates.
-      
-           2. The ref-scanning callback add_ref_to_set() became more expensive
-     -        in
-     -            630cd5194e (commit-graph.c: peel refs in 'add_ref_to_set',
-     -                        2020-07-22)
-     -        when it started to validate the refs against the odb
-     +        in 630cd5194e (commit-graph.c: peel refs in 'add_ref_to_set',
-     +        2020-07-22) when it started to validate the refs against the odb
-              for correctness.  On a repository with many refs, this makes the
-              full reachable scan unnecessarily costly for a targeted fetch.
-      
-     @@ Commit message
-          (since that would require propagating the set of refs across process
-          boundaries).
-      
-     -    Since do_fetch() already knows which refs were updated, collect them
-     -    into an oidset and then pass them directly to write_commit_graph().
-     -    fetch always writes the commit-graph in split mode, so this adds a
-     -    new layer on top of the existing chain rather than replacing it:
-     -    close_reachable() walks from the updated tips and stops at commits
-     -    already present in the graph, so the new layer only contains the
-     -    newly fetched history, and commits covered by the existing layers
-     -    remain covered.  This relies on split mode; a non-split write would
-     -    replace the graph with just the closure of the seeds.
-     -
-     -    The reachability closure also covers auto-followed tags, since their
-     -    targets are reachable from the fetched tips that caused them to be
-     -    auto-followed.
-     -
-     -    Refs that are rejected because they would require changes to
-     -    .git/shallow are skipped, just like store_updated_refs() does.  Their
-     -    objects are received but their history is incomplete, so walking from
-     -    them would make the commit-graph write fail.
-     +    This relies on the commit-graph write being additive, keeping the
-     +    commits that are already in the graph.  fetch already operates in
-     +    this mode (COMMIT_GRAPH_WRITE_SPLIT) and now that becomes
-     +    required for correctness.  Without that mode, the write would
-     +    replace the commit-graph and lose other commits.
-      
-          After fetch_one() returns, call prepare_commit_graph() (which is
-          made non-static by this commit) to determine the graph-write mode:
-     @@ builtin/fetch.c: out:
-      +	for (rm = ref_map; rm; rm = rm->next) {
-      +		struct commit *commit;
-      +		/*
-     -+		 * Like store_updated_refs(), skip shallow-rejected refs:
-     -+		 * they are not stored, and their history is incomplete.
-     ++		 * Shallow-rejected refs are not stored and their history
-     ++		 * is incomplete, so skip them.
-      +		 */
-      +		if (rm->status == REF_STATUS_REJECT_SHALLOW)
-      +			continue;
-     @@ t/t5537-fetch-shallow.sh: test_expect_success 'fetch that requires changes in .g
-       
-      +test_expect_success 'fetch.writeCommitGraph skips refs that require changes in .git/shallow' '
-      +	git clone --no-local --depth=2 .git shallow-graph &&
-     -+	(
-     -+		cd shallow-graph &&
-     -+		git checkout --orphan no-shallow &&
-     -+		commit no-shallow
-     -+	) &&
-     ++	git -C shallow-graph checkout --orphan no-shallow &&
-     ++	test_commit -C shallow-graph --no-tag no-shallow &&
-      +	git init notshallow-graph &&
-      +	git -C notshallow-graph -c fetch.writeCommitGraph=true \
-      +		fetch ../shallow-graph/.git "refs/heads/*:refs/remotes/shallow/*" &&
-     -+	(
-     -+		cd shallow-graph &&
-     -+		commit no-shallow-2
-     -+	) &&
-     ++	test_commit -C shallow-graph --no-tag no-shallow-2 &&
-      +	rejected=$(git -C shallow-graph rev-parse main) &&
-      +	(
-      +		cd notshallow-graph &&
-
+diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
+index 9f07b9c25a..0ab9cf8f2b 100644
+--- a/t/helper/test-read-graph.c
++++ b/t/helper/test-read-graph.c
+@@ -2,6 +2,9 @@
+ 
+ #include "test-tool.h"
+ #include "commit-graph.h"
++#include "commit.h"
++#include "hex.h"
++#include "object-name.h"
+ #include "repository.h"
+ #include "odb.h"
+ #include "bloom.h"
+@@ -91,7 +94,25 @@ int cmd__read_graph(int argc, const char **argv)
+ 		dump_graph_info(graph);
+ 	else if (!strcmp(argv[1], "bloom-filters"))
+ 		dump_graph_bloom_filters(graph);
+-	else {
++	else if (!strcmp(argv[1], "commit-info")) {
++		int i;
++		for (i = 2; i < argc; i++) {
++			struct object_id oid;
++			struct commit *c;
++
++			if (repo_get_oid(the_repository, argv[i], &oid))
++				die("not a valid object name: '%s'", argv[i]);
++			c = lookup_commit_in_graph(the_repository, &oid);
++			if (!c) {
++				fprintf(stderr, "%s: not in graph\n", argv[i]);
++				ret = 1;
++				continue;
++			}
++			printf("%s generation %"PRIuMAX"\n",
++			       oid_to_hex(&oid),
++			       (uintmax_t)commit_graph_generation(c));
++		}
++	} else {
+ 		fprintf(stderr, "unknown sub-command: '%s'\n", argv[1]);
+ 		ret = 1;
+ 	}
 -- 
 gitgitgadget
+
