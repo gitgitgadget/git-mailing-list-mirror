@@ -1,158 +1,184 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE55E24886E
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 05:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD61D378D6B
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 06:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791352228; cv=none; b=fBY0unsdy/ZKd9CNdosoAbWiLmv1MR6pRjOlsCD6JjreGeK01mdTHvekzP2Ufssh9m2Rz9ZWHMgCLzdL/OM2fDE8AQybRmwkd8C2abmavuEIrF6YFVLeFwMTG1bt9BwoCMQFmKYpKR71/Ir5t9cRKkhV4PD2my1BMe2d1QNVEyU=
+	t=1791353208; cv=none; b=fw10TE1jdpgIuidcQctjGgxGB0oaY307l+LFPWThNlvoyBWX8+iCercPrHS8wwdlhSdq4jXaBQnnAPvK2RzIi4GEJe9wKqhkPKsHXEx1cLLPO7h9tGzU8yQ9x/bBoEihzkKrvXzrNuAEfF/tcAMWex2LSlEU4uMqrKbIhMuv+Fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791352228; c=relaxed/simple;
-	bh=1j7Guku2yFHh1jFKR9bguSiT2irmveEpgPAAWdlC/Wg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ac5Zgdh/TkmggtcvCv1njjvyRqnRmvy0FV2OgjTWtsYuCsWuWuCSZwRMSGPqcwE2P755kFfr9YgJkfYBD+3okWTkwebuZYtEDxQNmHASVv6pav+Uvxeln8rQBZilWsd9+GDl8yF5ouN7B7aqxAdTqI4NSPueCws4I+6WiQkHu2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Hh4lLeec; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cdn+/vpP; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1791353208; c=relaxed/simple;
+	bh=Pf0zHR907rsw6GdohjrF9wqMa6aeHss7NoJcxBlFblg=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=NudSqYmq6V/XGPAdmL2n24Dny11CgOH8nPb8EntE8j808VftpqzsoPLrrZUEW9QDTjf4cyTEZSgCZWjWV9IJgf8tlt5N/Jp3iSqCLQYn/fq4uObsfqhBjVPjX8PCbitPJESCHDaTzQdaIl5udiYVVPpP6mqL5LIl1nBeghEkk9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=h1QuTj3G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KcxLB6F0; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Hh4lLeec";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cdn+/vpP"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id EB1B2EC03BF
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 01:50:25 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 07 Oct 2026 01:50:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1791352225; x=1791438625; bh=V20VWecLAa
-	ZIS8LNEA0BoePMs8xJIl+KFNvYBciQKl8=; b=Hh4lLeecDpSCxkq+cwrUiSuPTs
-	ejiJnZ8ZxUvYF7T1ND42JSorkZF5+tLJKPaxtwpKFTK/ydgJb67eYVU+XPzVm7nF
-	sqJMAYiNHCqlzn5i0das3FmEay5NIMyyToBa9s1C8Ob4DCZQHTiNnWAovuLeaCDN
-	gtReVvfWEQQmtR2MewAlO5UDhdFhEcv0GjtcpkUl8epIpodg7uo7updnoEEmF2dL
-	YjwTsahUkS5Tx0g7Q0EGh0v4tz0zAyq5Mmmh/mQf/urjaR4JX8nyUTJ4bjSLyzpF
-	C6T5p9jlTOJJ9ETHudxTiU/2S2+P1kC/lffD/vp/m1xNHVVnJdsiQb1uCoVQ==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="h1QuTj3G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KcxLB6F0"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8A54BEC01BD
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 02:06:45 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Wed, 07 Oct 2026 02:06:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791353203;
+	 x=1791439603; bh=w9z1X8vlNbdJS6n/ekacnXwgH1CEYfyF4klsEydKB74=; b=
+	h1QuTj3GPYL4fxQ0MyrQ0P8ulR+4EqRPbCg1uPXIux3Ns6et3LRNma2HLcKHxn4n
+	Zb0kl8VzCn0el0bq8x/sorD6QcQZmR5eBbriZnR0NGl/791Ds1jytDguu5q1MLFj
+	8Wjw99qAQkN8P3P88h5/9kd40nq7yoevApT21m7rlAkWnPshyjij5K/JAE1eciTd
+	J1pzcu1+tD1wbaPowmOW9TwEA0C7xmpcOf1fpBe/BmT4aExs71Ql3DcWZbdpucBj
+	SrEHIdhIt5970q5Wcv9Wz84jsRH9Yheqyqxz1uTta+ek30vOKyCuqzkxR011W0EX
+	key66jXKjYDyLgjZKgWBdw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791352225; x=1791438625; bh=V20VWecLAaZIS8LNEA0BoePMs8xJIl+KFNv
-	YBciQKl8=; b=Cdn+/vpPphmhaJt1+3pnJop8re4f0ksRw8mEk33133/uwKPx3ci
-	QWJsGvEtFka1RDGXgpyRiyXuXHhQKHv9wEldnG0adz/IB472bXgFSbT5MhoVLrO8
-	wClrIJPT+Znaj/9KwQW8WBOcULnfNMcT1llvzta1nMYrOIm2UIDupP1gnCBADfPc
-	d44uLdU4FinRYyTszruHGWMY9p/XtQyNoO3uNroJWX3Z8LZ6x/YbGZKsx891Gr3K
-	HN/lkgfFi9y0kkjdgg42CbUTRXUlk7M7q75zi5dyCPGZe/cJnVz4wdrS7dnTaoBL
-	s2sq0EIbOotL9oZnuI0IT0gWXb5qBida6FQ==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791353203; x=
+	1791439603; bh=w9z1X8vlNbdJS6n/ekacnXwgH1CEYfyF4klsEydKB74=; b=K
+	cxLB6F0LCzC0oEd40NsIgcVKVia3OXkrU5+geEkAS2r7cv8jRAl/a0xbEc1/F+AG
+	3MiIrzFOVZOZZjyKLvlE4ToQy+dtaOOM0KgccpnjqKozFRbFgEXEvE4JjhPGr1ev
+	Vdow/AQRBugXvUZoGOFY+6POp08mJ4BuUhEgF8vWgk9aD4YRKpIF9jWAggkh+W1O
+	396RuQ9BFwPZTT7ViCiXCvU6SIOTyonsJgeHvZVHzd7nxSbsKgEKY8v/hYRy0Hfx
+	NBfaJUyr+mLAQ4xmPm2xYVAuJGUXUT7WlUmGdSubhnGo1PDrTQ1dtIxeCHYvO7p8
+	PUHHeN+QIBryXkkYJYuiw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791352225; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791353203; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:g+t7K4FlEqidWxMw4R7id2KCbJZ43Z1Wm15qrlwXewlr760
-	RO6az9mVoT0sjm4YX0bGu6HYiYhYIuqAkMGSTRNjjN3Rnufr6mrDAuP9OBQCZC2r
-	7Zw7hk6GL+5ee/ukQT1+QBGvQyLB5g2Gl8FjU0+MwzM0e358BUlUpETFhyng1/vq
-	IuhlkWzRrFq6cyJ7g72mzfns5HrvzIbkIJGeoaCVHbCHP9QtBt8ehDKqORI2acxW
-	pgoG+QgWJ2T4wzoRreCBLwiw90I3o/Y1MWtFWGx3ydRsxEji7URXUcAXNNM4cxKg
-	7Bg2jS4wMBRbV6ATbHpUtWoRNTt55z7q8wuhc3w==;
+	s=fm2:rsa-sha256:cUdajYK7yxDvoV1ftDLYJC+JqxqXHWcIoXjkROIjiP5M/sY
+	hpqQZ2ptj726JQJOavVEZzsUW5fiUn+LqmYeojG0KSj4E4fA5eqq8a6UTzsiMc1m
+	HMoG1wvErziUmGyjKBBgBYeAGqvSCPLoufH05Fu/j6dI7Bnn7mwNUIiTbfBgMrjv
+	j50AcJVR72aTrbZ/AjtilhVzfB9s+aGduDvpbM0f5zHr4FbyIZhhArYb2i5xdg1W
+	/WFyo/fYFajAMbimEjnh7YJRUbQSgW+VA1c0JDuPZ69qcN6d0Cnqq6bvoavvl5kf
+	hY4uT+dTxvCm2Y4g4gw1z9dy+L9xV95eqsmdCnw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:71ZP6W4imPfZG5GWytqrJysDSunbD9pcIGZ3NEYBVFY=:1j7Guku2yFHh1jFKR9bguSiT2irmveEpgPAAWdlC/Wg=;
-X-ME-Sender: <xms:od3Fatq9jW55Zxr_If4sCrhFVu_8JJHJdzsCpg_9ZQ8XRLUUTLCuHw>
-    <xme:od3FalpRd1Qoy_VsEBh5J6rw9XYlQeYfGPAYAUedSz2fzouSO_oVBdBeqd5mag5va
-    QflsjKaay6P8qq6jRE82tfdOR6FyR3tnk1An_tL27t6hkO77AaeebM>
-X-ME-Received: <xmr:od3Fan11JWkpMHJAyKbgIt9h6jflnE9wtYr_Hv0Z_1l49k947zKr0Q>
-X-ME-Proxy-Cause: dmFkZTEL4fV0w+SUOwR+DyGmNu23u4zYoDaFSdB2lYApbnEk1+3cclwag4ZhDus0DyEXbC
-    GRhqsgYGQmJf2oEjyfk/LwVZCJOYxyZlLH51QTgG8nZ9OvFFPkYV0omLVA/WF1hl27sIKy
-    IA4ltvCAU41PFcCdSISOT1Adrb+TZJluLDOgofbWfR4+tg9CXpRR/q9qKNyce2usKZsjRa
-    U6726tQbczW22BCz7tSYgVXdyWTillD25IBe51/QuEb+wDO88iU+Ufy3Hd8RMoLIGFR9mB
-    1wKlFBFzkU9IxhtGi0EV1/aHUmZGouQvmpxYZtgKmQQQ9TzhRAGWjq/hkiWZ8GCufRWjs2
-    SCtxrhZI+g0f2PRK1zBlWrpWLI1Tg68Zgytgi0OmrV0EDLoGp9f1oDDXhnX2yUWDlor3gx
-    Hq+JPjOqrnAzEuoUlLedoynbOCvavAvuNnQZUbO8Mo1lhlm/oxqle1qr0wqbS3FolVkKwx
-    XQ321KLqyhActtt2R6I+aX8jIVqVMfHCvdQ7kVGJAkEmGonzgChvN5b291kWXdaflLcqFd
-    l1h9EXMZlx1SD99r96BDdEWXUo8cWYnF7ScRlJZepVUrZdj00Epr5W8GtaCgzOI2J7RqDw
-    MFJmJOAW/AmAheEw7YxEuKI2WBPsP5m3knxD0Ep44AtyGeYTep3jLFTxKh9A
-X-ME-Proxy: <xmx:od3FakCdl0nfSPoM7SV5FZs4tSbLueOwixqrFKFu2wNPm2BGzr5-tg>
-    <xmx:od3Favfxm-2KwcsYXE8dGgI1fMxz5i7uriOydkaeOFfQqiyCjn1bIw>
-    <xmx:od3FapjbFSb4vkQK2F6zR5ObGOOdqcHTudAJ_bJzzh-eLBc5yVxBsw>
-    <xmx:od3FanrCTfYIPLTnwdeSAr34vuCy222b_IOd0ta2qL9uR03GnOUl4A>
-    <xmx:od3FanaGk3f1Il7K7Kktq-tFd9LaM4B5_5Zb0RKhhy66sZMA1buvMfaQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Oct 2026 01:50:25 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 87110095 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 7 Oct 2026 05:50:24 +0000 (UTC)
-Date: Wed, 7 Oct 2026 07:50:21 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/13] odb/source-files: move alternates into the backend
-Message-ID: <asXdne7-Vujgkud1@pks.im>
-References: <20261002-pks-odb-move-alternates-v1-0-8a63507b88c4@pks.im>
- <CAOLa=ZTHSRmwJgsxi9Fq5ek5wVsFYUHD_ohwSmzWLQjcM3TYLA@mail.gmail.com>
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:2drdHYiZTlUfGWOr3AeL0ezE7C70KsD+w0VVWxF/SEA=:Pf0zHR907rsw6GdohjrF9wqMa6aeHss7NoJcxBlFblg=;
+X-ME-Sender: <xms:cOHFaqoeR0y48hwduP2D7pKDzoSFxJhwu6a-QgGmlfPHtsxG6FEM0o4>
+    <xme:cOHFajeeG-z2fl127NVw6EoAnyY53Of9WvIAJXlQDLdnEcDf8s7_-DHjimf93PkgI
+    jfXfp50oJnSKkA1fOrmZLwKE6fTmecj9DQQfbUpVBRbW5K0diL9eQ>
+X-ME-Proxy-Cause: dmFkZTGZf9zUXosmVuSM7EdXT53z4kVqFzcON46vfg6I35zVRzmEUxiUSXs2e7H+kTcO+K
+    1i4dTm2y4OEoHdeRayXSMYGO6ue1VLvcglBlrKar07FqRKtHXxQTLbgkTbPfwNzkstSrSt
+    HuOLYPRLTGUk1nzK8ZAbRktuHHUhShZ00oYhlfktwlR6IrxYAF90dJwViiuU37gV2nMrnp
+    ksRg29LfFvxJstIhZTXfuCAI/J4il84R+U2ul3XKbA1llQ1ug+fzZKSrbXjrqR1byt+AsN
+    w+OWgppUfqMpmoSd+AEDcT2mLNzj75xhLFv6eCryk9Omm1GQpdH9oUDzBcsUu/0QcOWcZt
+    cYd+HCbr1fG4eabfH2Pps87ohfc1d2bi3ZyblNVtGA4VYHKdLxYkhCnRPd/nIj1KIOsGHR
+    9gFZXqTagbUbSgX5gx3esPbPjm9prw3/2CYix8lKEpjbEIZIC+ayWbfpPc4PgI0zexn7C1
+    cvp9XVzxipx/oY45YgdDMLb2BrngwVtQC4kSqQLv4LrUQwBHB2LYIHsJDcGheDv4DWpGRm
+    NOUbSZc7Frs/33Y4TqHk/DLQ2B1g5nUjViIAERJxY0v1TSmO3qJMBpjpPv2owmf9C5OSQw
+    170RvATHAQvzTlf1vw3VGBNrE0gjPebg5xKvXTJW6IIRfnOBaRu2l7J8wNUQ
+X-ME-Proxy: <xmx:cuHFarSK_645aI7lDx37GWDULk5_9tVDQGtCVIlOjKhDffQ8Y3Qzfw>
+    <xmx:cuHFaqnUe-icWBt7ii6NSj7ZJ_vjG9H21MaoN0nk_xtd1WMMlc3Ysw>
+    <xmx:cuHFarSX1oSFF2Im7aNJ6C_6feoyc_W22FHUTcZQNDUpFV7m8BAM0g>
+    <xmx:cuHFaoOdMJw7cW9Nhri3308S9IV9qj-R1RJEspTPXiileV-BERf38Q>
+    <xmx:c-HFauyZQ827z5QIdy1w5_9LVD90yTdqxTEfQt9WiQCana_HEaSXTrXm>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id DE2D322C0098; Wed,  7 Oct 2026 02:06:40 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTHSRmwJgsxi9Fq5ek5wVsFYUHD_ohwSmzWLQjcM3TYLA@mail.gmail.com>
+X-ThreadId: Abh5d3WMFOiR
+Date: Wed, 07 Oct 2026 08:06:20 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: git@vger.kernel.org, GGG <gitgitgadget@gmail.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, "Julia Evans" <julia@jvns.ca>
+Message-Id: <ea29fe74-7f76-440c-9597-fdbc173be90f@app.fastmail.com>
+In-Reply-To: <pull.2242.v2.git.1791317163584.gitgitgadget@gmail.com>
+References: <pull.2242.git.1790627574093.gitgitgadget@gmail.com>
+ <pull.2242.v2.git.1791317163584.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v2] doc: use `man git` to teach users how to navigate the docs
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 06, 2026 at 01:53:24PM -0700, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Hi,
-> >
-> > Originally, when designing pluggable object databases the goal was that
-> > the object database can have multiple sources, and every source attached
-> > to it could use a different backend. This would have allowed for quite a
-> > lot of flexibility, as you could trivially mix and match different kinds
-> > of object storages in whatever way you like.
-> >
-> > But while well-intentioned, this design led to a bunch of conceptual
-> > problems:
-> >
-> >   - We're now trying to read objects in source order, whereas we
-> >     previously tried to read objects via packfiles before trying to read
-> >     them via loose objects. This led to a performance regression when
-> >     using alternates or when using a quarantine directory.
-> >
-> >   - Some data structures are supposed to only ever exist once, like for
-> >     example bitmaps and commit graphs. At the same time, those data
-> >     structures also span across the union of all objects, so they may
-> >     cross sources.
-> >
-> >   - It is unclear how we can extend GIT_OBJECT_DIRECTORY or
-> >     GIT_ALTERNATE_OBJECT_DIRECTORIES to become backend-agnostic in a
-> >     backwards-compatible way. In general, introducing an object storage
-> >     extension into the current status quo where alternates may have to
-> >     be extended to become generic was proving to be painful.
-> >
-> >   - Some mechanisms of alternates assume way too much about how exactly
-> >     their backends work. Alternate refs for example assume that the
-> >     alternate is backed by a filesystem path, and that this filesystem
-> >     path may also allow us to read references. This is not a given
-> >     though, as backends may not even have local data at all.
-> >
-> > In short, there are a bunch of conceptual mismatches when we have
-> > alternates and pluggable object databases coexist. So while the original
-> > idea was nice, it does not result in a system that is easy to reason
-> > about.
-> >
-> > This patch series corrects course by moving alternates into the "files"
-> > backend itself so that they become another implementation detail. It's
-> > unfortunately on the bigger side, and I'm sorry about that, but I
-> > couldn't really find a way to split it up further in a sensible way.
-> 
-> I went through the series, took attention split over two days. The
-> changes look good to me, but would definitely like to see another review :)
+On Tue, Oct 6, 2026, at 22:06, Julia Evans via GitGitGadget wrote:
+> From: Julia Evans <julia@jvns.ca>
+>
+> Many existing users of Git don't know how Git's documentation is
+> structured, and a lot of folks have expressed frustration that `man gi=
+t`
+> doesn't make it easy to find out how to get help with using Git.
 
-Thanks for your review!
+Yeah I can imagine.
 
-Patrick
+>
+> Explain how Git's help system works in `man git`
+> (`git push -h` gives a short help, `git push --help` is the full docs),
+> since it's a slightly unusual approach.
+
+I recall only relatively recently learning that `-h` is not just a
+shorter way to type `--help`.
+
+> Remove the references to gittutorial and giteveryday since they're
+> unlikely to help new users learn Git. Currently they feel very
+> aspirational (it would be nice to have a tutorial and a guide to
+> everyday Git commands!), but we should give users a realistic view of
+> what the documentation actually provides.
+
+Right, aspirations are not good enough when it comes to the bread and
+butter everyday howtos.
+
+> Mention `git help` instead of `giteveryday` for now, which does a bett=
+er
+> job of giving an overview of everyday commands.
+>
+> Also mention `git help --guides` and `git help --user-interfaces`,
+> since those parts of the documentation are useful and hard to discover.
+>
+> Do not mention `git help --developer-interfaces` since it's not releva=
+nt
+> to users.
+
+Okay, so now we don=E2=80=99t have to list out every guide that might be=
+ of
+interest. That=E2=80=99s cool.
+
+I see that this would conflict with my topic
+kh/doc-gitbreaking-changes7.[1] Just would since my topic hasn=E2=80=99t
+been integrated yet (RFC). I use the old style of mentioning the
+new gitbreaking-changes(7) (=E2=80=9Csee <here> for ...=E2=80=9D. I will=
+ remove
+that change in order to stay consistent with this topic.
+
+=F0=9F=94=97 1: https://lore.kernel.org/git/CV_gitbrchanges7_please.d1c@=
+m5gid.xyz/
+
+>
+> Signed-off-by: Julia Evans <julia@jvns.ca>
+> ---
+>     [doc] Use man git to teach users how to navigate the docs
+>
+>     Changes in v2:
+>
+>      * mention the git help push form too
+>      * mention you can get HTML docs with git help --web push at the e=
+nd to
+>        advertise git help's great features, and remove
+>        https://git.github.io/htmldocs/git.html since
+>        https://git-scm.com/docs has a nicer view and 3 different optio=
+ns is
+>        a lot.
+
+Nitpick: Okay, but with the current commit message I don=E2=80=99t really
+understand why the git.github.io link is gone. I have to guess that it
+is an effective duplicate of git-scm or something since git-scm does
+remain after this change.
+
+>      * some minor wording changes
+>      * fix commit message style (doc: not [doc])
+>
+>[snip]
