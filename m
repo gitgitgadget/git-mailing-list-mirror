@@ -1,135 +1,207 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABE94D4873
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 18:00:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E3A4D9F78
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 18:05:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791396062; cv=none; b=XINllDk9U5O1EY1GPwlKISfh1bP40w99ouAmwXAsbXOz2hMP8Wt3/FhTI+KCwI4enBLpv7R65TYpuuxZ7GqAzFN69DDe06NjMusWrM0owOePo8JyhVvsRwQZn9UHJ21q1c+1KxME04nPpALtR5/lwTkBgSDYF6Q1sjGDoclfaWg=
+	t=1791396319; cv=none; b=gtYi4d4A6URYIlN3CIXSIlXlJKOBGiPua+kjgRg2YP+Usvvh5o811nTRfg+MjLdOPKjXN9PEIz7aqJkC3C/lMh23XBKtr3QpJ1SddMpSF7i7tusip9cT+M6drebJNgOdEx5KJu/QPWg8XKIXUHNofUSIsxx476PAHFkZLrLs93w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791396062; c=relaxed/simple;
-	bh=ycwYBa9JTYaoGnkzyN/TlO+1hrMkpqUoj3XUXdV3Meg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R6UExzbYSYTwgSjQr7r1AaRCEbyLQwOcLFlaLPD+dg4QybpiurcM588oxm0O52dJh8ZAZQkkts9TmaOwUHUzrCcPgiWl8ZnDib8lZI+PGjY00zD4vr9MuzzYmK8TRj/g4cYvJsY99v5JY360mkmdwsT97x9shUmZWfJbze+Gvpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KBW3f6rj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ALY5Gq7w; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1791396319; c=relaxed/simple;
+	bh=mhCPTVp41rMdDFc/bDnFvmbKTWtnEjriCqbvDdcmhm8=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:To:Cc:
+	 MIME-Version:Content-Type; b=WEjG+0Z434e7TaOYFPsvSUPf12Gr6h0nS/K8C32XcM8VXrBnpdxF0uloYBwRBbodpIuAq18UZ6x9Ru8Wp7TEJgqL2/wV2tZTiaRB5JZYecdKkxp/ZazSqJeoFXRuNWAiOrDPtEE6fsJKOokJ6US3+W2CU1C2gXwdnQwhurcwnAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NGbSk+AG; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KBW3f6rj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ALY5Gq7w"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 838E41D00190
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 14:00:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 07 Oct 2026 14:00:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791396058; x=1791482458; bh=Tmmg3NzwdJ
-	qzDXc/ZVbZK5um978ITWign4rwj5VXOrw=; b=KBW3f6rj+xsE0AisiH4k9BVJmP
-	HD2gIkIybFvOicgDpoaHXgDDX9Hzn0kFCdDSJcpNbFUEUaZaUK3zB/MiXlE45BzG
-	egyopO6Zy6D/Ms1aAXUmRsKdxm8lp2kkeOLUpYWZ3QwMibsDQ7sHQRt6S0mQ/AfD
-	NUX6MzeZhkZIi3OthLkHfcaaCexfkatUBWA34V2cNsVR/xhN+iNZrCcVXJfWZban
-	P2FcVprQsrsJsnrqvnYUy0HINwX/SyFyhRu6/epcAJeYiArITxDBbPEs90q1sZL/
-	XzFqPfBjoKHvVe1r5O7e72RjGE6ynwKEreTYiea9blneRQt9jimZjbBSR59w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791396058; x=1791482458; bh=Tmmg3NzwdJqzDXc/ZVbZK5um978ITWign4r
-	wj5VXOrw=; b=ALY5Gq7wwCg4qLMY7RkcT1bVOiAQuCqVz4xNXwoHioyRi6s/TIo
-	DAvapnAtOepQWAvV/vxt752W2rTLhvausNgF53GqhJjOAXaP0rLJ2qGxLQCYpK3+
-	+7xrBMPDtW4rKgWlofvIfBYabqQbw7IcPV8uY7B2/AfPNmPKTGEIBYp9KehHQ9uj
-	ZWOipnzV4oTiE6BrS3D+P0l+i3t2cgKE91oRwjXZfO5tdCPDaLvLg0zqzG8g363c
-	3+Ub1n3J2Zxv3D02malqA4ux2nvwRxsUH7C9k0WesIcnIDc2IHZsA0AJqG26nJJT
-	gMjX7iXhoz9LM8sGikYggnUQ5HIuf6QbCUw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791396058; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:iMMbIFFUiRpb48wyTHeDwlvn0Wp3r+6cIFCk5tRBUgl1xsZ
-	sutj0Pe3XlsCct8i6nILOZOXqI7QAHbLk2vml/mvJRVgMHWENBUAkoQanV2s41bt
-	a39hxWy6qmkNc8Z1jgKXW+YB2LATnKC9cj8l6pxmqdZbgQCPU55DN8RVlgRX9lKp
-	vNyz++kRVha2N7D07xVvYmqfMcf2wI1+7WhXlKa8Jne0ZWLJqq4m3ZAMP5/MAAAu
-	fLLEMbt3GsL0KRHPXoWQz2GiBWYiprA5Sg5DszS6KiVILzcutBhYiOfL1uB00O5/
-	mek5w9rSuDVTZI9uBNM4Q4x7JdA+6QFvLjxvEaA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:Y7NoYSl//mVGiQe6/rk3uK6b1ga0hZDyK4OCyLyXkwo=:ycwYBa9JTYaoGnkzyN/TlO+1hrMkpqUoj3XUXdV3Meg=;
-X-ME-Sender: <xms:2YjGah2d6xQejhEqE_xE1fjYD9sZzF-2Oe1n4bOTa9PwEGhSP4NUVQ>
-    <xme:2YjGaghO-dwCfMYn07NBLlNPFxdzBFBx4KsO8A39K8bU820nC55-77KFUAUrngTe-
-    pA8iopcOSHvMsW6Bm2loi57M5dcBNZSGD198cgaCDS1SsbD0JhjL8Y>
-X-ME-Received: <xmr:2YjGaiXZjtXb_rnHa8sBwukHwHWDHrHiP2rWh7_95ZEWeFR_VrwMUI7xHbJkUG4E5IhrcABehNm4Qe67eNN_oTQV3dLIERhNhZbt>
-X-ME-Proxy-Cause: dmFkZTGg+byOYNZFoLn08igJjJtb4OjDyZa2hywa9i+CaFSngpffifbP+rZYk8NaJFSaaU
-    0Fn2u+vmre8ctAYFmYJ7zEUu5a1Tg0d+S9xX3dYyJlyyYfNniBWkb0uCj6dCwGltkc1Frz
-    YK/ac55JComMLYTI5hvuNcANHUTz7kIhVlvHqYNrFxxX7j1cb3tJRmnxVCIC15e2bjlpek
-    Erea14eYqxvhGSpTzwbCYFDS2K1bdzkxPBRFcjDWNm6IddrGO0bV8A9iByCIrI9jJiSPvk
-    skT2UTnMo6tyntsQ6e8JnzeYb0z+7xAZdbTx4x3MrMf5h5IhMPtDgoHMns5kL2+GMFaJAv
-    RjFRuzKfWVb8HVkuAi1Yre7kakhUTfkdPI7VE5s0ZcOvl9CtKTmB3bI5Mv0aNUtQeuW3W+
-    VkBOZEiQbeSRNd2PGxFOgJmD5nOjiFa2JMZTvwyhUSYmKxNMNCdxKRfgcvxu23wv6e8ILK
-    QpjUq0eQPcRDCW+1lWTtTZfMJCgBQp3+6g1haWGS659pMM3IQ2ZMjwFPwXVoXt9t8nxtLV
-    z+xl56LGfxDwFLMN8NXGOWabQbVmsLBU0S2EjBOZ8FXnGu7ibWlE6QC+7GZME3ymNF/Ts0
-    kgmFA6ylBPs8Pc4SxnNZ9Futab0SnXSC6ByhV2W63eFJliwGe7URF+rppSPQ
-X-ME-Proxy: <xmx:2YjGavWBe-_uxfcEQuZlj-O25OjYzpqEpfml5S3ZXXmP__QloWwUaQ>
-    <xmx:2YjGaiiSZMHFF-cfrcolUyoRINt1kF05aFRtyPKb6FEy0-HRVJ-yJQ>
-    <xmx:2YjGaqahCi53BZ3o5wyAXUSAV0qrWwQ5uoj0NN7w1BKdwwQRahDrOA>
-    <xmx:2YjGavr7lx99CzTSaJc6f8azapxO6m0yumfj_q45shBFoHLW6BDIew>
-    <xmx:2ojGanS0iIKF6fzxwb02Y2T43aadWkGrxQmwzSrRVcg-S6doahCm6FbI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Oct 2026 14:00:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Guillaume Chauvel
- <guillaume.chauvel@gmail.com>,  Philippe Blain
- <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH 2/2] packfile: fix corruption due to stale delta base
- cache entries
-In-Reply-To: <20261007081844.GA606386@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 7 Oct 2026 04:18:44 -0400")
-References: <20261002-pks-packfile-stale-delta-base-cache-v1-0-7592a3e31ae0@pks.im>
-	<20261002-pks-packfile-stale-delta-base-cache-v1-2-7592a3e31ae0@pks.im>
-	<20261002222335.GC833115@coredump.intra.peff.net>
-	<asM2YoImN8bHLHj8@pks.im>
-	<20261007081844.GA606386@coredump.intra.peff.net>
-Date: Wed, 07 Oct 2026 11:00:56 -0700
-Message-ID: <xmqqcxtl8k6f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NGbSk+AG"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c2e8e738ae0so321500066b.1
+        for <git@vger.kernel.org>; Wed, 07 Oct 2026 11:05:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791396316; x=1792001116; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:cc:to:subject
+         :date:from:references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=B64tLgJv1Hb7KJGOkumXlmXS+feVl2pNhBA8LSZza6U=;
+        b=NGbSk+AGE1h++C2B0zMPhsM+ozsKEGSmRKz+NV3CJxqF3rUmRm7q3PGQWEvsUJZtMB
+         GS6qNPSAzUkoYriC1EAVMS2hh4yUEUBcx7a4tbwXelQmKU31Af4vPIWQI4jVw3sX7rfW
+         +mAKIiXnozOpHLdroMF/QUPQvDd0IZsrg8nXevBpRvZkI0UMRAt8OfT6KOThKUitJ/6n
+         z/dQqQXR8KJUcyEHP0YcHkq+KiAejvbMeaL1eZVlCAeampS/2EIejm3AdmDAmzxK8zSO
+         593OhqxtN4ZxEYR4gfQ2zzoMYo9JkEvXwfNNZB+NugbA99HW4IilG6tTL+XI92bXOSEa
+         OHFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791396316; x=1792001116;
+        h=content-transfer-encoding:content-type:mime-version:cc:to:subject
+         :date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=B64tLgJv1Hb7KJGOkumXlmXS+feVl2pNhBA8LSZza6U=;
+        b=ORbz2kR9r+O6QS2Tq9/hvVh7Cafv167kI2yRTre8N5lpkZxnwmGhgalNXql+CaRj9R
+         HZ5scv4DSCRUDaziOoH9/v/YVfAFHm4cMv3UG9nfYCpmQ4NJgbn0qxwru0N+FWiEYH+y
+         52Qej00pHqCOEcv8QpwX4h0PSoox5r+apWV3jzqYMABX+j3A0pPWY2jhdEIqFpPvs9HJ
+         tDiUbQGJEJ5EcMmZ0cNrB0PrMrJpPaz6MAXFwGuNE6hExKkfbv+TCVPEiwC8o6rvqU/L
+         mTFsI1HUt9q5MzboHVKXw/G6FacezMo990Tuh0P0xDdRXaolWox8wUJHKEvovIpq8dnD
+         TFdw==
+X-Gm-Message-State: AFuF++m+CBj2sDB0GguzUJbjjLyTjdIPFWcVvOUXTAc+7oxjujoIcPXE
+	T+Q1sk/3yLyRKlmomd4oV+24AIoIuHKaQJo/vIxzDVXwXn1sV0oQ5gDHt06ytgfx
+X-Gm-Gg: AYBFou3Ax9dvT667si+6CFIaeQ0VtVRSZRGMWrOdYLgAV/pTw878zX9YldIKb1Emru7
+	FlKalkZNC6vLphBJfdb9XSsMAREVDyIwm8+4645i3ou42ZDafnWnu1vH33ELcfsCpHL4p2OXaVE
+	5SlaEczJwae1GrwaeoDzuiz/FXYRxmh2zjxbR34AfNCwA2PapMa2ucAGAMC+T+sFc3sC/npH9KF
+	RC0wroS8p8b91/JTvbyNBoqaqfkQapKSmHCHWrGWiBkL+aKsqOpVTfDmnPV1UsiBPcJz8JN1m0Z
+	vwtIhPkqOGjmaFGq+kwx/ncHbfL2ocTeQS+y/xFSVOj089IYYiuKhGknxHTu8TnsPZlk+K8oXI7
+	CJuQ2wkWsJaRrcsR4DH+sdak9T2wXNsxC+dCOLg9AQCGsKIpIhp4mmGDBnQbi+hGYwro88PA9q6
+	RA21dWj0a4047qP3lnSpbyZ728rWY6xq2BfbhaiJmPxst3aT0fsgk6oKV84nTiqgfeGMqCbxa+h
+	OA1OBZ5GRIPnYvlvO4H6JT7pqzyWdGhybOkAbmqYl/+q5ahRO/ZTjg8NIsirmAAEnWoj0jXsBW6
+	tYo0ddVbPo/bT6AF3XzIhkt4znwFVwXd8lHQuFslOT5A5r7SYfYV/lV4NZcVIJPfxoJ+Blv1BtS
+	eGjXUMJ4Yuw432lkGHrRDTFxcPyxJiiunLFVQRT88
+X-Received: by 2002:a17:907:d01:b0:c26:1649:47af with SMTP id a640c23a62f3a-c317c06f9d9mr303275766b.37.1791396315776;
+        Wed, 07 Oct 2026 11:05:15 -0700 (PDT)
+Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([37.31.50.62])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c317c2f19bdsm129986066b.47.2026.10.07.11.05.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Oct 2026 11:05:15 -0700 (PDT)
+Message-Id: <cover.1791395643.git.maciej.ciemborowicz@gmail.com>
+In-Reply-To: <20260920165037.88524-1-maciej.ciemborowicz@gmail.com>
+References: <20260920165037.88524-1-maciej.ciemborowicz@gmail.com>
+From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+Date: Wed, 07 Oct 2026 20:05:13 +0200
+Subject: [PATCH v3 0/4] refs: run copy and rename through transactions
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Junio C Hamano <gitster@pobox.com>,
+    Karthik Nayak <karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+Reference copy and rename bypass the transaction API. With files, the
+reference-transaction hook sees only the source deletion; with reftable,
+it sees neither endpoint. This series puts the logical ref updates and
+the reflog history into ordinary transactions so hooks can observe and
+reject the complete operation.
 
-> Ah, I get it now. It is a little funny to key the hash on the in-core
-> pointer we happen to have, but it does provide a certain uniqueness. I
-> suspect that doing this would be mostly correct:
-> ...
-> and would trigger the use-after-free, but:
->
->   1. It introduces weird semantic questions, like: what if you freed and
->      then reopened a pack of the same name and it didn't have the same
->      contents?
->
->   2. It's more expensive.
->
->   3. Changing the bug from "hard to detect hash equality mismatch" to
->      "undefined behavior" is not really much of an improvement. ;)
->
-> So I think just fixing the bug is good, along with accepting that it
-> only triggered in certain specific cases and testing that. And your
-> patch looks like the obviously correct fix.
+Thanks to Patrick, Junio and Karthik for their feedback. Following the
+review of v2, this version uses ref_transaction_update_reflog(), the API
+used by backend migration, to replay history. A new
+ref_transaction_replace_reflog() operation supplies the missing ability
+to discard destination history before installing the queued entries.
 
-Thanks for writing and reviewing, all.  Very much appreciated.
+Changes since v2:
 
-Let me mark the topic for 'next'.
+* Split the work into four patches: internal hook suppression, reflog
+  replacement, copy/rename integration, and removal of the old callbacks.
+* Remove the special copy/rename dispatch from backend prepare, finish
+  and abort. Each destination points to its source update, so multiple
+  copies, renames and ordinary updates can share one transaction.
+* Keep the hook-suppression flag private and check it centrally in
+  run_transaction_hook(). It is used for the physical packed-refs child
+  transaction, whose changes the parent already reports.
+* Drop the pre-lock snapshot revalidation. A preparing hook may change
+  the source; prepared and committed report the value read under lock.
+  Copy sources are locked but are not reported as changes to the hook.
+* Stage reflog replacements during prepare. A prepared veto discards
+  staging files without restoring old values over live refs or changing
+  the source, destination or HEAD history.
+* Add coverage for complete reflog contents, mixed transactions, hook
+  vetoes, source races and failure paths, and measure the performance
+  cost of replaying history.
+
+Backend-specific work remains necessary to implement the transaction
+primitives. Files stages logs beside logs/refs using unique temporary
+files. For directory/file conflicts and case-only renames, it queues
+the destination in packed-refs: the loose source cannot remain visible
+while also making room for a loose destination lock. During finish, a
+backup preserves the source log until the destination log is installed;
+an installation error restores that backup. Reftable writes tombstones
+for old destination entries in the same table as the replacement.
+
+The backends' final reflog records remain distinct: files appends
+old->old; reftable appends old->zero and zero->old for rename, or
+zero->old for copy. Forced reftable copies do change behavior: unrelated
+destination history is replaced by source history, matching files when
+the source has a reflog.
+
+Replaying history requires O(N) time and memory. Buffered staging avoids
+a write system call per entry, but files rename loses its constant-time
+reflog move. On macOS/arm64, with no hook configured, median milliseconds
+per operation over seven samples of ten operations were:
+
+                    entries       base        v3
+  files copy             10       5.05      5.08
+  files rename           10       4.88      5.26
+  files copy          10000      13.20     16.11
+  files rename        10000       5.09     17.09
+  reftable copy          10       5.25      6.11
+  reftable rename        10       5.81      6.50
+  reftable copy       10000      53.39     68.06
+  reftable rename     10000      43.44     54.06
+
+Process startup is included. Copy overwrites the same destination;
+rename alternates between two names. Reftable starts from a migration
+of the same files fixture. Repeated operations add normal log entries
+and incur normal reftable compaction. Patch 3 adds
+t/perf/p1424-ref-copy-rename.sh; these measurements used a separate
+monotonic-clock driver because GNU time is not installed here. The
+files rename regression is a cost of this design, not just hook overhead.
+
+Validation covered 15 relevant suites with files and reftable, including
+branch, update-ref, hooks, migration, reflogs and worktree refs. The two
+new suites contain 34 tests, with backend-specific skips; they also
+passed with SHA-256 and AddressSanitizer/UndefinedBehaviorSanitizer.
+The reflog prerequisite and main change were tested as intermediate
+trees. This was not a full test-suite run or a Linux/Windows run.
+
+Files transactions are still not crash-atomic. A later failure in
+finish may leave partial ref changes, as with ordinary transactions.
+The source-log backup covers an installation error, not a process crash.
+Unrelated nested renames can also contend for the global packed-refs
+lock.
+
+The base is 0f8e75abeb. This series is independent of the separate
+batched-deletion old-OID fix discussed elsewhere in the thread.
+
+Original patch:
+https://lore.kernel.org/git/20260920165037.88524-1-maciej.ciemborowicz@gmail.com/
+
+The range-diff below treats the rewritten and split implementation as
+four new commits, so the changes above describe the mapping from v2.
+
+Maciej Ciemborowicz (4):
+  refs: distinguish internal transactions from logical updates
+  refs: support replacing reflogs in a transaction
+  refs: run copy and rename through ordinary transactions
+  refs: remove backend-specific copy and rename callbacks
+
+ Documentation/githooks.adoc     |  10 +
+ refs.c                          | 200 ++++++++-
+ refs.h                          |  25 ++
+ refs/debug.c                    |  24 --
+ refs/files-backend.c            | 739 +++++++++++++++++---------------
+ refs/packed-backend.c           |   2 -
+ refs/refs-internal.h            |  28 +-
+ refs/reftable-backend.c         | 334 ++-------------
+ t/helper/test-ref-store.c       |  76 ++++
+ t/perf/p1424-ref-copy-rename.sh |  48 +++
+ t/t1424-ref-copy-transaction.sh | 352 +++++++++++++++
+ t/t1425-reflog-transaction.sh   |  59 +++
+ 12 files changed, 1206 insertions(+), 691 deletions(-)
+ create mode 100755 t/perf/p1424-ref-copy-rename.sh
+ create mode 100755 t/t1424-ref-copy-transaction.sh
+ create mode 100755 t/t1425-reflog-transaction.sh
+
+Range-diff against v2:
+1:  d852537d8c < -:  ---------- refs: run copy and rename through transactions
+-:  ---------- > 1:  6d7c146e57 refs: distinguish internal transactions from logical updates
+-:  ---------- > 2:  5c3ec4eb49 refs: support replacing reflogs in a transaction
+-:  ---------- > 3:  77af4e809c refs: run copy and rename through ordinary transactions
+-:  ---------- > 4:  83fa644fb3 refs: remove backend-specific copy and rename callbacks
+
+base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
+-- 
+2.39.3 (Apple Git-146)
