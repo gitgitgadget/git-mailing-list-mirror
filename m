@@ -1,373 +1,209 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8583955C4
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 14:52:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313F24A0933
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 15:57:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791384730; cv=none; b=bxGDUEtAaTJ9+USn3m0AOltphgX/XsQ4dMyVICoZbCKIktnKH3SjYT1b3mJj6F+rbH8yYZfRyDYXuxSs591wYlZwK883je4G4OEE8FcBDtvtWADANpNPeQ2j2ylqFM2V9liqiXnwPIxv+TL9c52HveSsqrb3VSHjJlXmwJWBvDs=
+	t=1791388674; cv=none; b=XF4FiuNDViXo+uYDJ++h55yUXzeT0iovr0fxYeapvWqnNxeJRBXImh5DuK7leA7MjbLVOeQMhn907jXoyt4LjKqyvj8RKrO8yLZ/crgEkAji86fb9GQmk901QS9tzZmHWCAOP3aeq9F/FJr05y/ZRIA0vx565aJzhFg0soGxfI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791384730; c=relaxed/simple;
-	bh=6sxhZt+FjTfaLCoTHsOFIzhVR9d7VAhGBfaQP6d/8YY=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Ankfcom+yPQcF70iRdeK9oOwrOP2qoeYhB/kkAdRFiE0p1vmisJet7LKMpRbHCmAy9UPvhbAXOVi2ktwfxdOeL2ogJMe7HB0YA/+5oTYErtp71iOMmnV8fF1Y3D4PjQvI+1FondU9+a12bSH6ErVRVuTftkZIOzNOHYmGfO7Te8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XpiEeNHW; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791388674; c=relaxed/simple;
+	bh=7zGCOBVDOZ2QzhVqXAe081hz1GCGQUehOJUtQTV/52g=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=AtNM3iOVwPotOXotSWzK0ZneyeuL8Vn0pKheZ240eNNsAxHp0fv4gOBr2u5gN+TC6YubWgsjiH960mT/ZIfvEnY0UlVS7dkCAxWehi9MZ+dkMS3eYA8vMch5QCRm7XJcWDXf1udMouWVX2uqw1BW8wBPc0TzElYgSH6Sp5IwRp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=GhuZAz+/; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XpiEeNHW"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2e5d0ee1951so10512015ad.0
-        for <git@vger.kernel.org>; Wed, 07 Oct 2026 07:52:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791384724; x=1791989524; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=1CkASThfhP0uhR04SC3+WAPxEZRP1gJNDEgJrTNnJGo=;
-        b=XpiEeNHWzUf/1QSpX4JgyAkjriIVTQZukPURQ8psH9EaXw9Na8raslyUHgB57H0uBO
-         3fqMZUJDUsC/PIcA+9PfVFXdFdCEtC7/raFM8Uwho8mhy/xE1eqIMZ3vuWgnWLXFdQgt
-         two/Y5D84ThW//dyI+Xw6Y9/LCgyX8rDjVvUcg/rkdmTk4rfDATpz3/7ZhJp4MsrcOXe
-         ZjcqnK7jCBwZXaW8jgom9WcHlt7xR8YbcpKPjYwk+3e0LJG15O6EQYBIaAsaq/TBZw+B
-         rmYzuzQZIUtRJMZyPW5T0/L+BVU9rsVEq4ak2E4es5/I0J0KE4PQ5NUetTtRdpouPcZw
-         FPXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791384724; x=1791989524;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=1CkASThfhP0uhR04SC3+WAPxEZRP1gJNDEgJrTNnJGo=;
-        b=idR0YG6nS6cUGbdtyVdHWK+9hTlxJZmDyZrlJM+OdzF01Fj/T/wd2qora4fssqke9p
-         Km4k8LuKxB8Tfm4SoLNjM4ib4dXeoQjNh3MGwV5/NKgt/Xwc1k4gAXqjoNQYP+NtNaiH
-         4xd7hTx6rDavxjgDZ4N1l0Cv874P6nR1am8B0DzjBzjbur/pXXoWY/wrx1V+apT4YTZI
-         qapuCiZtkwbK2dJYbAcO7DBUe9Zm01NqddhkvYaT8mwR4rW/BvD4roqhJW8+1LtgCbvK
-         NqUT0i0EW9tJDuR7YI/zxwFzg7pb4J82SEmlzGrtCAVWWtLqcBu9ha1as1JBE8MbJYH+
-         8+tg==
-X-Gm-Message-State: AFq9FYIPOXT7LbHfSYr/yfr/GRSZfvS2yJO3yh2HpZ+VmLIhvDwiQHoK
-	/JZ2LDvxTJ2+jejQqLEI4xMlt4atqqV+Ujq/ddYt9oFi6DcsPf4PjhmbG0AGOA==
-X-Gm-Gg: AYBFou1Kl9Iv6Lo/KBvwR4fiQrKp4qgXdjDZpfPe0W3OABNZguQ4BaqwL1DEEAgYElx
-	ETtyU8YoTJtpSR6GwvciONuRdcRGgrus+jlUAZNb5X+N0YDEn5VSUdv3jiG2scacYOC7XKoK51c
-	JTJT6eSIeKCaizJx/kXZgvmyvA+4NHIkX2VqZ+72XwzMtpGjogxoE16+AgLRtdaoyc5S4h8Rh9e
-	AzDYPCJqMfYruhqqQpeglFTTcuSaTOCsrnV3BZtIc7OCe8e34IhBwCteHh/5K4FzkAIsX0ZZbGw
-	EnOEh1h9scGFn5zki3JETMgtwof1NJXDeMagLumaopgHYoOIi7CoZM8ae6SrH0ctZbESuQE2hBt
-	W1dSOmAcNtam0mc5VWoI/3JpTDZkK+rQ+UZK/q8G6ZwS+0o3lWnJdEMDEWXTejmQDEj+ZCskdMs
-	Xoo95scplhrLagDWQSqY3u925qu8FzElKV4Bjba+zm2CO+kL5WiP8VjPyiDsDKZhH72lDcayDnS
-	E6s3e4UrA==
-X-Received: by 2002:a17:903:2ac3:b0:2dd:ad73:c936 with SMTP id d9443c01a7336-2e6003bdaf7mr21292635ad.23.1791384723584;
-        Wed, 07 Oct 2026 07:52:03 -0700 (PDT)
-Received: from [127.0.0.1] ([57.154.5.132])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e6046fe0c1sm12413425ad.21.2026.10.07.07.52.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Oct 2026 07:52:02 -0700 (PDT)
-Message-Id: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 07 Oct 2026 14:52:01 +0000
-Subject: [PATCH] doc: checkout: rewrite detached HEAD state explanation
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="GhuZAz+/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1791388670; x=1791993470; i=l.s.r@web.de;
+	bh=/G/AjydFxEVEpu9jGI/4RWJkTrrYe8vgFYg8+vJ9/ps=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=GhuZAz+/D4tHMiGTRik9FOc287YjvBt99y0AV9lx+Iqt9VeBw27fThro1ve9On4U
+	 D/0vLizr+P6PLXKuwOj/NQiT82d3YYsIAe7PBfKL3aSeW+GH79JFKtWernZPxx9zT
+	 om6ZC7Jof+XyNT9+WmruOvdbyeT/JvYfaikWD4yN1qleKBZ5j6uOrxvxmz4Of612H
+	 PWeJ1bcMgBMBidOI1d0k2jh3cr6lxpNrRTufg1hnHvD2gx+cBnUsMI0XnCmk2KcYv
+	 iHII+u3bn+eQKjR4ZyzOJ6y+iM9zWHhhB09APMZYqQbcLuX6qsbglV1LeHz1dfpTi
+	 nAt1CNRiixHGXyQqFA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N1u6d-1wZ01v0TMX-012rwC; Wed, 07
+ Oct 2026 17:33:10 +0200
+Message-ID: <6abe7f35-a1e4-4870-88d5-45ee40f5a061@web.de>
+Date: Wed, 7 Oct 2026 17:33:09 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [BUG] ZIP timestamp conversion and strict fast-import date
+ validation
+To: "Matthew E. Luallen" <m@sph3r3.com>
+Cc: git@vger.kernel.org
+References: <CA+h9NxRT-9QzLGihdL_Bp-yyt1AdXJ79YYgpK-OaegUz8e+HcA@mail.gmail.com>
+ <f8dc40a4-920d-4dc5-9f71-7686bfc6255b@web.de>
+ <CA+h9NxQEJaKrbTXUeryEhNMfOfuU0EykiJRi3PaJE9dRFo5tWw@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CA+h9NxQEJaKrbTXUeryEhNMfOfuU0EykiJRi3PaJE9dRFo5tWw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:VcX50tdRwZUQuSvK+9kez5W0is6THa0PJeJeBpjqI/nRz6SfUQN
+ vLiFTf6GWGySyxW0AqQY12+bIxq0K6MROycuOBWMXm2Q6DUg9Y4ew6aWtRol48qnchJ1dc1
+ SfW6/VGIVcZsXgPVkUytZTZlfz2G+drAiZobXMEsYNcQaeu1WMcFXhcmqGSWsCMKMW/y+HO
+ zC0fs0yFqTA5bl1CnvaXA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:JbeaJDjQR/w=;9ZRNV30J9QAbobsWKwp3qktVW4j
+ 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
+ T4xefaBlNW5ji4Q7rhyV81XuvA==
 
-From: Julia Evans <julia@jvns.ca>
+On 10/5/26 10:32 PM, Matthew E. Luallen wrote:
+>=20
+> - Reader example: Python 3.14.7's ZipInfo.date_time reports 2100 for
+>   the 1972 ZIP despite its correct Unix timestamp.
 
-The current explanation has the following issues:
+Makes sense.  Its source code,
+https://github.com/python/cpython/blob/3.14/Lib/zipfile/__init__.py,
+contains a decode function for two extra fields, Zip64 (0x0001) and
+Info-ZIP Unicode Path (0x7075), but no support for UNIX (0x000d).
+And why should it?
 
-- Says detached HEAD state is useful but doesn't explain why
-- Takes many paragraphs before explaining what detached HEAD state is
-- It's common for users to accidentally end up in detached HEAD state,
-  but it doesn't explain why that might happen
-- One of the UI improvements in `git switch` is to make it harder
-  to detach accidentally, but that isn't advertised.
-  See 7968bef06b (switch: only allow explicit detached HEAD, 2019-03-29)
-- Too many confusing diagrams
+> - Separate consequence: the 2106-to-1970 wrap caused UnZip update mode
+>   to retain different existing 2025 content. The 2038 control updated
+>   correctly. No deployed security bypass has been demonstrated.
 
-Write a new explanation addressing these issues, and put it in a
-standalone guide so that we can easily reference it from advice
-("see `git help detachedhead`").
-The result is a shorter guide that covers more material.
+I'm not aware of a ZIP extension that allows storing arbitrary dates.
+I see three options:
 
-The framing that "Git considers commits that aren't on a branch/other
-reference to be garbage" is taken from Steve Klabnik's tutorial
-https://steveklabnik.github.io/jujutsu-tutorial/branching-merging-and-conflicts/anonymous-branches.html.
-It's funny and it's consistent with the way Git uses the term
-"garbage collection".
+- Don't color outside the lines, only emit ZIP files with valid DOS
+  and UNIX timestamps and refuse to write earlier or later ones,
 
-Co-authored-by: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
-    doc: checkout: rewrite detached HEAD state explanation
-    
-    Often when rewriting these explanations I go through a process where I
-    ask users' feedback on the old explanation. Here I didn't do that
-    basically because that process takes a long time and I'm working on a
-    bunch of other time consuming docs projects so I did a quick rewrite
-    based on my previous experience explaining detached HEAD state to folks.
-    
-    I thought this could be a nice quick docs win on a topic which many
-    users find quite confusing. If the changes here are too controversial I
-    can drop it for now.
-    
-    Also if folks object to making a separate git help detachedhead guide
-    I'm happy to drop that too. Personally I'm excited about the idea of
-    being able to reference the guides in our advice (which is one of our
-    best tools for getting users info about how to use Git!), but it's not
-    possible to let users jump to a subsection, so this is sort of a hack
-    around that.
+- wrap consistently, which can be confusing, but allows users to
+  recover the original timestamp when they supply the higher bits
+  (like we can say twenties now to mean 202x and 30 years ago we
+  meant 192x), or
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2250%2Fjvns%2Fdetached-head-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2250/jvns/detached-head-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2250
+- map all earlier timestamps to the epoch and later ones to the maximum
+  value, effectively stopping time at the borders -- all mtimes will be
+  0xffffffff forever after that point is crossed, making them useless,
+  except as a marker that a yet to be invented extension needs to be
+  consulted to get the real mtime value.
 
- Documentation/detached-head.adoc   |  43 ++++++++++
- Documentation/git-checkout.adoc    | 129 +----------------------------
- Documentation/gitdetachedhead.adoc |  14 ++++
- advice.c                           |   1 +
- command-list.txt                   |   1 +
- 5 files changed, 60 insertions(+), 128 deletions(-)
- create mode 100644 Documentation/detached-head.adoc
- create mode 100644 Documentation/gitdetachedhead.adoc
+> - Fix direction: would you prefer clamping or rejecting ZIP timestamps
+>   beyond the Unix field's range? Our candidate rejects them. Would
+>   rejecting negative dates in strict raw import be a useful first step?
 
-diff --git a/Documentation/detached-head.adoc b/Documentation/detached-head.adoc
-new file mode 100644
-index 0000000000..1e00712124
---- /dev/null
-+++ b/Documentation/detached-head.adoc
-@@ -0,0 +1,43 @@
-+`HEAD` is where Git stores your current branch. `HEAD` can either be:
-+
-+1. A branch, which is your current branch.
-+2. A commit ID, when you don't have a current branch.
-+   This is called "detached HEAD state".
-+
-+It can sometimes be useful for `HEAD` to be a commit ID.
-+For example, it lets you look at an old version of your code
-+(with `git checkout COMMIT_ID`).
-+
-+The only problem is that if you create new commits while in detached
-+HEAD state, those commits won't be on a branch. This makes those new
-+commits much harder to find later. Also, Git considers commits that
-+aren't on any branch (or a tag or other reference) to be garbage.
-+Git will eventually permanently delete those "garbage" commits during
-+garbage collection.
-+
-+There are 3 main ways you can end up in detached HEAD state
-+unintentionally:
-+
-+1. `git checkout COMMIT_ID`, where `COMMIT_ID` is a commit ID
-+2. `git checkout v1.3`, where v1.3 is a tag name
-+3. `git checkout origin/main`, where `origin/main` is
-+   a remote-tracking branch
-+
-+Checking out a tag puts you in detached HEAD state because `HEAD` can
-+only be a branch or a commit, not a tag or any other reference.
-+So `git checkout TAG` will set HEAD to the commit for that tag.
-+
-+The easiest way to avoid accidentally ending up in detached HEAD state
-+is to use linkgit:git-switch[1] instead of linkgit:git-checkout[1] to
-+switch branches. `git switch` won't let you detach unless you explicitly
-+pass the `--detach` argument.
-+
-+To get back onto a branch, you can:
-+
-+1. Switch to the branch you want to be on, with `git switch BRANCHNAME`.
-+2. Create a new branch at the current commit, with `git switch -c BRANCHNAME`.
-+   You might want to do this if you've created new commits, so that you can
-+   find the commit later and so that it won't be garbage collected.
-+
-+If you create commits in detached HEAD state that aren't on a branch,
-+you can find them later using linkgit:git-reflog[1].
-diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
-index 2aefea0228..4e9e94e24d 100644
---- a/Documentation/git-checkout.adoc
-+++ b/Documentation/git-checkout.adoc
-@@ -376,135 +376,8 @@ For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
- [[DETACHED_HEAD]]
- DETACHED HEAD
- -------------
--`HEAD` normally refers to a named branch (e.g. `master`). Meanwhile, each
--branch refers to a specific commit. Let's look at a repo with three
--commits, one of them tagged, and with branch `master` checked out:
- 
--------------
--           HEAD (refers to branch 'master')
--            |
--            v
--a---b---c  branch 'master' (refers to commit 'c')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--When a commit is created in this state, the branch is updated to refer to
--the new commit. Specifically, `git commit` creates a new commit `d`, whose
--parent is commit `c`, and then updates branch `master` to refer to new
--commit `d`. `HEAD` still refers to branch `master` and so indirectly now refers
--to commit `d`:
--
--------------
--$ edit; git add; git commit
--
--               HEAD (refers to branch 'master')
--                |
--                v
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--It is sometimes useful to be able to checkout a commit that is not at
--the tip of any named branch, or even to create a new commit that is not
--referenced by a named branch. Let's look at what happens when we
--checkout commit `b` (here we show two ways this may be done):
--
--------------
--$ git checkout v2.0  # or
--$ git checkout master^^
--
--   HEAD (refers to commit 'b')
--    |
--    v
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--Notice that regardless of which checkout command we use, `HEAD` now refers
--directly to commit `b`. This is known as being in detached `HEAD` state.
--It means simply that `HEAD` refers to a specific commit, as opposed to
--referring to a named branch. Let's see what happens when we create a commit:
--
--------------
--$ edit; git add; git commit
--
--     HEAD (refers to commit 'e')
--      |
--      v
--      e
--     /
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--There is now a new commit `e`, but it is referenced only by `HEAD`. We can
--of course add yet another commit in this state:
--
--------------
--$ edit; git add; git commit
--
--	 HEAD (refers to commit 'f')
--	  |
--	  v
--      e---f
--     /
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--In fact, we can perform all the normal Git operations. But, let's look
--at what happens when we then checkout `master`:
--
--------------
--$ git checkout master
--
--               HEAD (refers to branch 'master')
--      e---f     |
--     /          v
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--It is important to realize that at this point nothing refers to commit
--`f`. Eventually commit `f` (and by extension commit `e`) will be deleted
--by the routine Git garbage collection process, unless we create a reference
--before that happens. If we have not yet moved away from commit `f`,
--any of these will create a reference to it:
--
--------------
--$ git checkout -b foo  # or "git switch -c foo"  <1>
--$ git branch foo                                 <2>
--$ git tag foo                                    <3>
--------------
--<1> creates a new branch `foo`, which refers to commit `f`, and then
--    updates `HEAD` to refer to branch `foo`. In other words, we'll no longer
--    be in detached `HEAD` state after this command.
--<2> similarly creates a new branch `foo`, which refers to commit `f`,
--    but leaves `HEAD` detached.
--<3> creates a new tag `foo`, which refers to commit `f`,
--    leaving `HEAD` detached.
--
--If we have moved away from commit `f`, then we must first recover its object
--name (typically by using git reflog), and then we can create a reference to
--it. For example, to see the last two commits to which `HEAD` referred, we
--can use either of these commands:
--
--------------
--$ git reflog -2 HEAD # or
--$ git log -g -2 HEAD
--------------
-+include::detached-head.adoc[]
- 
- [[ARGUMENT_DISAMBIGUATION]]
- ARGUMENT DISAMBIGUATION
-diff --git a/Documentation/gitdetachedhead.adoc b/Documentation/gitdetachedhead.adoc
-new file mode 100644
-index 0000000000..0aeecd159c
---- /dev/null
-+++ b/Documentation/gitdetachedhead.adoc
-@@ -0,0 +1,14 @@
-+gitdetachedhead(7)
-+===============
-+
-+NAME
-+----
-+gitdetachedhead - How detached HEAD state works
-+
-+DESCRIPTION
-+-----------
-+include::detached-head.adoc[]
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/advice.c b/advice.c
-index 401d047391..43f86c2eaf 100644
---- a/advice.c
-+++ b/advice.c
-@@ -291,6 +291,7 @@ void detach_advice(const char *new_name)
- 	"\n"
- 	"  git switch -\n"
- 	"\n"
-+	"Run `git help detachedhead` to learn more.\n"
- 	"Turn off this advice by setting config variable advice.detachedHead to false\n\n");
- 
- 	fprintf(stderr, fmt, new_name);
-diff --git a/command-list.txt b/command-list.txt
-index 63ae2a67c9..313689335f 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -218,6 +218,7 @@ gitcore-tutorial                        guide
- gitcredentials                          guide
- gitcvs-migration                        guide
- gitdatamodel                            guide
-+gitdetachedhead                         guide
- gitdiffcore                             guide
- giteveryday                             guide
- gitfaq                                  guide
+Rejecting non-representable timestamps when creating ZIP files seems
+like the most honest option.  Perhaps it's annoying enough to motivate
+people to find a proper solution?  Which could be "use the tar format".
 
-base-commit: 5a7d1e8045ce66c908f62598e26cbb8df7b39a90
--- 
-gitgitgadget
+It would be nice if there was an example to follow.  Info-ZIP zip(1)
+clamping at the low end and rolling over at the high end seems odd,
+though.
+
+Rejecting negative timestamps on fast-import or at all seems bad for
+people who want to import ancient records.  Git commit objects store
+timestamps as decimal numeric strings, so they can support arbitrarily
+high and low values.  Importing mainframe file versions from the
+sixties or versions of legal documents from the last few hundred years
+don't seem too outlandish.
+
+timestamp_t, Git's in-memory representation, is unsigned for
+historical reasons, but that is not necessarily fixed in stone.
+
+Ren=C3=A9
+
