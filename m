@@ -1,136 +1,149 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9723C8705
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 21:32:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF62D37647B
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 21:42:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791408766; cv=none; b=GrPSK8dgOSGK4zX4ROgFDHnRYceDNI8m2JofWB8kGm6BfRDLihBV8/KfVp/Jf3A6UpfN0gf94d0IeTwu66MsbVZvowMKsFMaOmRGoIjVnstevGnjxbP1Nm6QrAWXmLQ7rvYK2cXmVoSs86oGWrL4gM95sqRzYz5PYLelb+HSa3g=
+	t=1791409359; cv=none; b=Hj4sZa7AR1pWwMP3I+Jt1Is0axXiXAY+MII2SwSl0KjW8goW2NyuiC4xEU7kwYsAG46w7iuemODFnQHJh18MhCLUkpENpEbraxoDwQ94bEE1FkP6RNVp26ZTPm/DfI/MbpkngcRO8bEwj2fS7dGgMXdM1FMZargg0ruwIDrgrcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791408766; c=relaxed/simple;
-	bh=SWwdc4eTg2LdyFX3jHmFPZwJTrDv3j/geKbmTrZjbko=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=r2u2uTEirdUIHuT07hUdD6g24gRd38t1W19P0W6iIWYMjxIP+lmNj2Z96DwuOuOMjvgQzs25AkAf6mefb9VCGy7NBXxbE1mFb/j+dvS+Dn+uS0ZNrj/djggBDlBYvKU8ekBUNjT3jo2LQMNiYUz+xVmv+h+9BQSYqBZS0aAiVFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TVY7Bz2p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ORwKxpsW; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1791409359; c=relaxed/simple;
+	bh=qWHnAXEaJMNwIkgYcCjWDDAns1fzo9t3+7DfjnZRjw8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QTfL2adCju5eIUSHNSj+8ZHtatR3Z9zZ5J91BW+YeVs+iZLaNfL00QLRk5etR8FsxMix3R7tYdA4QFewr8ikBmRPZH3FSV7b4fwwmFRCVP+8oxLHi+Dk4t9CehwPxI9zSgQ+Z0S1BishYRLH2ivXsEd4/hhuT9Y7q9uTMp61x7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=vHjpY/Ps; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TVY7Bz2p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ORwKxpsW"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B01327A013A
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 17:32:44 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Wed, 07 Oct 2026 17:32:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791408764; x=1791495164; bh=j19AkidUZ9
-	HO1qoV5+JvUQQ5Zpwrat8+wRcCAofGCnI=; b=TVY7Bz2pj3kCivCytEpGDIej4Q
-	ROXAnArRoLzlfwqTJdH/NYIceOdWZlJyPHGglZkQREN0BQDujXpu76/YOk4mXu5u
-	L8G0bJvXwGLkmjmj97PV7Ujc42q+vCRrYteI9AA6LFlSG5XZYl4asIIbGf16Yj5N
-	pORgL8pVE6ZKuoWrx73S/DlbCFpakHrKIZzh81u1gjJgjdMGYUYo9ydB1kvL5F9z
-	sR40O+SKI7Q3KbPGtYIanB8gASZbV/w/bZ6B9BWfHLo4qyDOSdt+yAYf4eK/VuLY
-	3pPvhTLUBar7WDftyjIuKEd9oDIx368xA/EKeuP8Lpbpwa7dnfnBulWpHTeA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791408764; x=1791495164; bh=j19AkidUZ9HO1qoV5+JvUQQ5Zpwrat8+wRc
-	CAofGCnI=; b=ORwKxpsW9/pC1NAQqKfBUfVHweCi11NVFeMEi67hGr87QUGzIUx
-	vesijDlSGStbHA1qLzbUgC5VvBGR8cBgiUH2mM7KAxfftYgGT/VmGZzE1esX51SI
-	Mzzb0GsE9VK/eFfcJjDE4FHX5kGyX1ZWzh3Idv/QafYig3yBbzkK5jkeKAFlgDOj
-	FQtqsIHeZQ7Ymucld4d1IFCikARNlqYPb+bEqOFfXjLx3G0BOKgCPcyPIBJzkdBz
-	q9NjU98vBBb0BHY8j8exQykPP4ka799WWVAfKRGWMXG6qcV+BaqjyHVAh8wKczxb
-	r6c4zHLY4Esl5rZ7jiLB6vZX/Hp8TFW7ilA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791408764; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:NQ9RzHS0cv3TIGKZDbHJX900TfGeqg+lmZLiB2ivmPc2Au+
-	ab1FYkflY9UERoNlHin/RaOo636IxE+PTqg22c1E1cHP8wUc4T+EUAH3IyEAPoNA
-	lYcsEqJPdSQ0CmTf75fnfg/DVl85aMiNwxcCZ458DCb4s//hnqP4IrpgPyePSW4x
-	EF42oF1PkYod3RjKQ2fCK5InwcO40pROp2TuJfM4zwqCk6RQGggTH/M3bkQ87JH9
-	bZeSfYUPXTpintzKCLt/t7st5xHE1TwD3x1+GXjVSplYd4T901cmW6y3ff3STY89
-	yu1RfjawlunLb/WtgHuMAuhYnThY3a8TSg+CZIw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:2ZiARkKGZav/D6UuokeaUKueROV6uOqNIHxOCaXuHsI=:SWwdc4eTg2LdyFX3jHmFPZwJTrDv3j/geKbmTrZjbko=;
-X-ME-Sender: <xms:fLrGaqei3YMzIYHLPkZ8BUjrPT-__csMcD0vW6Xl2ipHoK5aaWx_xA>
-    <xme:fLrGarMLo2wVs0QK_ncQ1nnrGTLgjXT7LIUl0B8WonsZj5xFaiSEQjCiOK-noGEfX
-    W6ZatJyLbkS4cZZ9zpERT7JcTuurwyVfBSa44uTqDejkVo1A4CyO3U>
-X-ME-Received: <xmr:fLrGagjb3C61StY7jmZQ2k4XA6wYb4iww9yH17aM3zyFgoXz2itER0fso9q9cYnJbz9kPPKLQS0ZDa6TJ6ZDJ3NyHlMWFJ0XFi_8>
-X-ME-Proxy-Cause: dmFkZTGGZKcSCAYWU0jNafQKKscqGQuqbmD+6M4FHM9pUt9UbR8sLoY4B1G5+Ev5cXaOr8
-    GJ99qiUlKHqCra+GcOu0qLqhwk+trBbGHp8rbGyzRNIVXPiqevtWVESeF/i7GKSV16OPUW
-    r4GMA5aDlEwqJ5D6hLZw/X5NOKy9FvlOq07pSpMrzRXROWgGjXchny38yiazkVhBrSQAlD
-    6MtQMp3InkA5+GeLYo+50x5Y1/o85ajBJ9QTGBzFtZxu2GGzMOEhWsJRrEWk8/sJpLhVW7
-    L6xR7hC4ThrYyXjHGLu5YlIzwGAOQ3yNRv2ewUFdUFx5/D9HmpA4AN++IiLsM8LkMbDhSJ
-    QZkHg46nEH01EVM4hBiwK/ODD88obGuKoEDjHgbCsAAfNVedwCvHFdVJ1vKS/TaxCLsnFr
-    jFx95M+CfnScgsTcnFy8jQDqjbehgP90Uri1qHeRJrajKt3jGv/6gHdhtTqo/ExW4rt9Ab
-    pq8YbSSqcapT8MaTOwZUhcFYse8RlUZaBXxNnG8qXBGxxs1nVrjrXi3XB0cek8l8KpKW7l
-    Z+jzbMVfH0eP907Yk9UuFhNciUdaOCMDyndmJPCyzBpd6RtxAV6iqMrZw5oxrSqNJMQl7N
-    W4JrqzJfUF3lLdzl15Ujcy+ijdXmzdRgJ0nVpzKLM5SMvj5vIuZZXYnDxY2Q
-X-ME-Proxy: <xmx:fLrGam2AUhUSP4YPCOsSPIwmsjUFEgD-Jrfgy7Z6M9kx3jYDZJDbEw>
-    <xmx:fLrGaijSP8vLR2tmaUDLaQv9U0eeFU7D5ZG0T40299gsTf0Sa7keEw>
-    <xmx:fLrGaue4cpxpHX37yVs5_gF7Zj8MfoiohLWbtnVci1uY2-4YTi7DXg>
-    <xmx:fLrGatlX1_3oFR_9sdkLy-3OZHTBsIerVf77WwbAjtJjcAgvJcP-1Q>
-    <xmx:fLrGau1hDZb5mE0zfBkjCGY_y6NG9y3QQauHD4aVxsMDsd3Y4wql8rxK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Oct 2026 17:32:43 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Scott Chacon <scott@gitbutler.net>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/4] sha1dc-accel: vectorize the
- unavoidable-bitconditions check
-In-Reply-To: <3d640489-5db4-5527-0ec1-c2abac7a2de3@gmx.de> (Johannes
-	Schindelin's message of "Wed, 7 Oct 2026 14:17:41 +0200 (CEST)")
-References: <20260929112544.86511-1-scott@gitbutler.net>
-	<20260929112544.86511-3-scott@gitbutler.net>
-	<3d640489-5db4-5527-0ec1-c2abac7a2de3@gmx.de>
-Date: Wed, 07 Oct 2026 14:32:42 -0700
-Message-ID: <xmqqh5ix5h8l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="vHjpY/Ps"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1791409356;
+	bh=qWHnAXEaJMNwIkgYcCjWDDAns1fzo9t3+7DfjnZRjw8=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=vHjpY/PsOhn9vsbTLbKCk1wK1ZkWBkc8i82tho+XoY5fXwbOFhcpcJNyimH6rJJnn
+	 LcuLAx/eqjQGYuOxw0cIuOM3OFB6faS8nyt6TzFhN4LeX8khNxHLjbkFLhFzp+0g5x
+	 jFLLKsWVfZXyjfq5WM6UEMOPUTZvMNM3lKzhaungfqPPiq3nP8Lx0NGinWG/Nile1N
+	 43wIsTOjT8ElaMig3FT/d9KzlxLzJp3w3FaEZ9QCyrBdqJRRR8gUfOnDaknl9Yne+e
+	 aw83qR0R4oBQm+o+b/ybMc43e39KYP5e3Ut0u30cElUwoYaua5SV0dri5W/4Epxm8k
+	 USPVP+MTAVBEDUWE/gcGdfS8dXIz0tAOcGvyj90lcx0QGzHZtl5Gy3NQ8+6kCkvHNo
+	 ofD1BEsY1H7NKafQSC+l6eEwXe3WMtircjoN0wDfwAdzStIk0+s5RrvKTVVgDhz8nZ
+	 O3VdHyOB1VgWQYZVYaVhIwsVJ033KMKjir9rQTlAt/ytKJO+wQR
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:66aa:1c10:d66e:dab7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id CFAC62012C;
+	Wed,  7 Oct 2026 21:42:36 +0000 (UTC)
+Date: Wed, 7 Oct 2026 21:42:35 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Scott Chacon <scott@gitbutler.net>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/1] SubmittingPatches: allow responsible AI
+ assistance
+Message-ID: <asa8ymCv4hoRJcZM@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Scott Chacon <scott@gitbutler.net>, git@vger.kernel.org
+References: <20261007142954.31761-1-scott@gitbutler.net>
+ <20261007142954.31761-2-scott@gitbutler.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Beyn1L3MANAGhpTG"
+Content-Disposition: inline
+In-Reply-To: <20261007142954.31761-2-scott@gitbutler.net>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+--Beyn1L3MANAGhpTG
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> This Perl script reproduces the tables (although with different
-> formatting, and without the inline comments, I verified it with
-> `--patience --color-words="[A-Za-z0-9_]+|."`).
-> ...
-> With all that out of the way, I would like to ask to include this script
-> in the patch (or in a follow-up patch) so that the lengthy `ubc_check.c`
-> file's tables can be validated/regenerated independently.
-> ...
-> While this code is correct, I think it is slightly misleading: depending
-> on `want`, it either subtracts `set` from `dvs`, or takes the minimum. But
-> that only happens to be what is desired because each lane of `set` is all
-> ones or all zero. What we actually want is to mask either those lanes or
-> everything but those lanes, i.e. `dvs & ~set` or `dvs & set`,
-> respectively. That would be:
->
-> 		fail = g->want ? vbicq_u32(dvs, set) : vandq_u32(dvs, set);
->
-> This has no speed impact nor does it produce a "more correct" result, but
-> it might improve readability a bit.
->
-> I haven't looked very closely whether there are similar issues elsewhere
-> (it is relatively tedious for me to learn all this NEON stuff on the go,
-> this is all new to me). If you're familiar with NEON, it might be
-> worthwhile looking for similarly "correct but misleading" statements.
+On 2026-10-07 at 14:29:54, Scott Chacon wrote:
+> The AI section encourages careful use of AI tools, but also says we
+> will reject anything that looks AI generated. That leaves contributors
+> without a clear path for submitting useful, reviewed, understood work and
+> can discourage disclosure of the assistance they received.
+>=20
+> Allow AI-assisted contributions under the usual quality and licensing
+> requirements. Require human understanding, appropriate testing, and
+> disclosure of substantial assistance. Retain the DCO without changing
+> its terms, and require contributors to consider provenance and meet
+> applicable license obligations. Reviewers can ask for further evidence
+> or decline work they cannot confidently assess.
+>=20
+> Replace the appearance-based rejection rule with these concrete
+> expectations. AI assistance neither excuses an inadequate submission
+> nor prevents an otherwise acceptable one from being considered.
+>=20
+> As an example, an OpenAI model was used to help me research, compare and
+> craft the appropriate legal language for this policy change to help us
+> match the modern, legally reviewed approaches now taken by peer GPL
+> projects such as the Linux kernel [1].
 
-Thanks for offering a very thoughtful help and offering to work well
-together.
+I don't think I'm in favour of this policy.  All the major models have
+been trained on a large variety of code from a large variety of sources,
+including sources such as news reports or personal websites that do not
+allow copying, modification, or distribution.  Given that LLMs are known
+to reproduce portions of their training set or craft code or text which
+is very similar to items in the training set, how can anyone honestly
+assert the DCO without knowing all of the sources that were used to
+create it?
+
+Even if the model were, for instance, trained only on MIT-licensed code,
+the license still requires a copyright and permission notice on every
+copy, so the fact that the code generated from an LLM doesn't contain
+that would seem to violate the license and prohibit us from using it.
+
+The DCO was created to help us unambiguously state that the code is
+acceptable to be included to avoid any later claims that the code was
+copied from somewhere that it shouldn't have been.  Given the fact that
+nobody knows what the sources are with a current LLM, it doesn't seem
+that a reasonable person could make such an assertion.
+
+I'm a distributor of Git and I don't want to be sued or arrested because
+I end up distributing code that I don't have the right to distribute.
+Large companies may have lawyers and lots of money to fight those
+claims, but I do not (nor does the Git project) and I don't want to
+spend my resources fighting allegations of copyright infringement or
+have my reputation besmirched for that reason.  Just because other
+projects think it's okay to do legally and ethically questionable things
+doesn't mean we should as well.
+
+I'll add that if Git were to include a portion of my MIT- or
+BSD-licensed code without including a copyright or permission notice
+because it was laundered through an LLM, I would absolutely file a
+copyright complaint, and rightfully so.
+
+I refer you to policies from other major open source projects that cover
+this exact provenance issue:
+
+* Gentoo: https://wiki.gentoo.org/wiki/Project:Council/AI_policy
+* NetBSD: https://www.netbsd.org/developers/commit-guidelines.html
+
+I also will point out the notes from the Contributor Summit where we
+discussed this issue in some depth and proposed an approach for further
+discussion.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--Beyn1L3MANAGhpTG
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmrGvMsJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ10HQ5pBzQ5U907mimQmoMCYieBHYOFfxZk76O9bU5Nn
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAA3cAQDylBlEfFTypfl/muuGKxfUkwqG
+n6lpl2r4WXnSqjIywgEAnoQW9cay3sejSiLmhSPjdaw1qBMLJYQ+GYQsofA70w4=
+=Q4Rs
+-----END PGP SIGNATURE-----
+
+--Beyn1L3MANAGhpTG--
