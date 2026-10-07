@@ -1,128 +1,139 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764384AE8A4
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 13:47:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7718F3B6C16
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 13:49:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791380873; cv=none; b=WNEXuFqRcCh6BTRaNtx8JWD2Y2wW9tPtOyUz26mh7j1Kw+nSHXrG0IMmJDNOqmr+HWbUkzY6hItDgNleIhZRoZjlvr55WnhR+ePNfGSnaMee8Rk6bE3oHkSzOruNDTLYyoXmpb/ed2FBu1+wYZWw7oSWLBolV1E0HBXj0fuEm+s=
+	t=1791380969; cv=none; b=LXApLm3vHJmRu4rXoJL5obairIkJuYLMsWRowyJogFdgB7Ng8wSxSJjRFCcEQCJtJ71AAKdUI4A7rAfS1al5ujeM4lvmxCiAwZJReoWKSLFWoWID0psFPTbpPI98kqAEFpEl4iwOY16DJG1zS6wcSInIBs/J8ARrS8xkw9W3q/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791380873; c=relaxed/simple;
-	bh=AE2wDGl6ZpV8CSYdgVjAVRwr7BtpG0aP4BL5BoXXEww=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=scIt2VWPAsYKqseypksAEYWnqmcMFEjHg8RdRgkwf2TC8oQu3nVNKxLXB14euf02EDR6rN/eq/Z/ULWRtSqlyUE9a4vIY+3eKA+3PKafJgEiQ5MWt4kXz9qJUTxADYNoRguRCivM2wVFh7LUeFnkb+Hw97dbAtOEEXL412SyjU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J9kU6Eqc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MND5tu0a; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1791380969; c=relaxed/simple;
+	bh=rIcnmcSTGrnE5pHvFNpuNsHuzYiW+skwHiFL3hAKeFI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=YK/+Wzcf02847l7rUfEdvadxOWncRYJASwzeGax1/Yk8ATdptTeTwBZ3uNGqRd+tbCCnHmwryiG+tcTP/1Lj6lJn7+ich6p3zy6JSOgUbP0spYNgSt5E0MU7tmeM2UMM46nYGssHSyJkFBsTOhys+R1vQQxhxN+sbmPTx97JrnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PcnNBVZJ; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J9kU6Eqc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MND5tu0a"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 44671EC008A
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 09:47:43 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 07 Oct 2026 09:47:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1791380863;
-	 x=1791467263; bh=do1GLrwgr6XRTCm9mCHMwfELHTu1OfdsrarfX6BFHCo=; b=
-	J9kU6EqcO3jesi1PkwF7W76DEKRqTL9mvGshUoZQS3r+s/pHr9ZdtSS3R7wpbFzp
-	8LpV5cBQXHmQUC1EbXCy0j304xSmnYKZzhYiXC2yZHe/GbpMaFS82NAnUv2w6bPC
-	uVAZ0E52k9NvQfXsTeumfKYVfV8kIVlF8kXSBmVw0rEI41Jukpdqc50bPrqG+Qh+
-	C9AvLeowneihQcLTfDWiLujHJNLoDCxGHG8+lA1M+kBbeeO3cUeESQwo2OSPOGnG
-	BiSNi5TKCB2D1s6TvrIwUEFE8ilypIqySnMR1cQkhnJCSnOVyHIF1WBj7M3rFxjl
-	MHIU3cbjAERbY/Ke7/RgRw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791380863; x=
-	1791467263; bh=do1GLrwgr6XRTCm9mCHMwfELHTu1OfdsrarfX6BFHCo=; b=M
-	ND5tu0adODwT/rv0OzC0GYHUoNijsHevLKCk//TFVkTGX9WeyDEKjT2feFcvuuzH
-	siju/G1/l3Ab6oRczJvRVvTlwuKDr3CoKWXaJJTzv2D83AL8tFDbH/fDf//MTC8J
-	+Y9kBEHlQJJN2o3xrHEvzYTZLsQGlktZIKrNSgWTQZT8mwrvJQw6ROIn1JL7p8qF
-	5J5gnOPlwtOZreII8KC/KVsvKY0jR3G396hePhOeCTpkVxjWHWhc22blQoFYzwGz
-	gn773m7ka6MUzsX9u54PBgfdJgXJGNUPfGKx3A6pke1fYKRQ3MawQdjJpiTXHd4R
-	3L7OsL+us+IzI0gA/28Vg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791380863; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:hafi4S2vGK14s4Cos9k4R6vJ7F7jxfhZ5UPOuXy57PBcUgw
-	x8E5+UyCdG3eyC0Svv6+rcvUGBnO0Mm3hdoPJe18iCngReV3ldvsqPIrkj2FpQY2
-	0voZgEwDMVeCKhbgCfd44LHVWrPRixSKSgitXWiBR5gre+rTx3WCrH2wMsAy7/71
-	Lu35fVVz5J5ZgYAkWwgGhjM91EmNMg6TsXg2g3btfBgIxP3FVj02KWXAVPiUy2GD
-	gXzQTFjuIBK4mvLQZe5+XgPiJ+wzRyPYILeUnRAZpINvwHDngFh+vxYAkMW/sYw2
-	TQytcwWWAEakCck4O73XIOMqUC7gfMsuMjbOXsQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to,
-	user-agent;
-Message-Instance: m=1; h=sha256:MObsrxuBQuGdjNaEGlNrPZUpEOuQIPSwBo4U39Mi3jE=:AE2wDGl6ZpV8CSYdgVjAVRwr7BtpG0aP4BL5BoXXEww=;
-X-ME-Sender: <xms:f03GarMXGyRA5jS3wW3rk6tg55o_37WM5AwnSR9WzPUavtBIjdf_Gw>
-    <xme:f03GapoqScFoil-LL7cjdi6AUfbF11Se6fHUdTppTrUVMM0kQakbT419Lp7YBCS8v
-    AE63MfOsSS7_JJfaJ5WppA7Te8nT4Ztq_PLN3aj4H7mXeQ10LoIFIQ>
-X-ME-Received: <xmr:f03GakHaKCObhZcCiqD7bIk6Kcb3g2LfSAg-hnJqq-IvTeUt7eQUPmLiUb1TCMUQa8Qm8Jgi8ddNvmSGVw19Dfflw-nSanQ4F2wV>
-X-ME-Proxy-Cause: dmFkZTGRRXGOiIDLALQU3AzBOb8o5FL97U/gP19yTMyMElzAUll6N1coWavGjnz4PR73IR
-    n5Xy1gmcgLRar/l3H49Pcgd7QIxOACKdrfQaMbDm3XgD6Y1DQiJFnLZ+7ZkM7gStcze6IH
-    JOPS1NihUGv10GPGhrAhy50EMbYdpoSiK688QQTqB8+ERxYlcMRhoEz7JCMNPBNVkjRPNi
-    PPIJYvbOcSQwdvSICtS112cDuWo4pnfDLzYByr7tEFTQ4TPBfYbA3v62EkqzDQCxaJ2DK1
-    x69iu46vnXcuLVkeug3SKYIziF1XRLzCDwFSwDWbJY+Z+rahkoMD3fE8zmnHqAXs5RknXz
-    vgiUs3Td9kxRFz8foqOmJiRxCrZSEwYFGwZBdXUxqXsH8WPsY5xl65IJHTFjp2Xz5Z0Q6n
-    C8coZhWEqNZIFAXlnk23fHoUgzHsSFccZPr7z5lxipIPRVXJ9Hmyag4/Wr1905x5FpludD
-    YtoB+r2YTT+i/z8mC755rX3czSy/oJSCE0DfORTd4ghZ8P+eUcuThR9EE1XfQpshw36daV
-    xpdngM0vNypHJMSPG6MB7IjlGYlNzQbEmL6UbJEsQubUag9VjW/KsdIqxYHUU0vadvymSU
-    RrcJHhkqKq0inb/57yo43rSJRvmIohX0zV8jEuZ3eBCLZamWgr36bCrvOM2A
-X-ME-Proxy: <xmx:f03GamrDVCJuxkx94YH-I7FEIKYFR3LkRmvLY3NhEe2GfRbt_t-s4w>
-    <xmx:f03GalY_1j3q4ZR7dnSJX1p4YKiVIBeXBBLjR429juG4M4fw8TS3dw>
-    <xmx:f03GanVamFdg9wjblFzQANcFBRUMFdYzvXxfw9HLDYBgF41vGQObEA>
-    <xmx:f03Gam8YCBUHZYu7C_bh9t0RKlUkaEVVWl-0lMUIHegyzhj82E_3Eg>
-    <xmx:f03GavwqEoS_i1CD_b0PkpaU60v0FX6dw2k8u9aYBbXep--yeemDWkbC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Oct 2026 09:47:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
-  git@vger.kernel.org,  "Julia Evans" <gitgitgadget@gmail.com>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v2] doc: use `man git` to teach users how to navigate
- the docs
-In-Reply-To: <99bc9624-47a5-469d-bcae-8daa9b01581a@app.fastmail.com> (Julia
-	Evans's message of "Wed, 07 Oct 2026 08:13:22 -0400")
-References: <pull.2242.git.1790627574093.gitgitgadget@gmail.com>
-	<pull.2242.v2.git.1791317163584.gitgitgadget@gmail.com>
-	<ea29fe74-7f76-440c-9597-fdbc173be90f@app.fastmail.com>
-	<99bc9624-47a5-469d-bcae-8daa9b01581a@app.fastmail.com>
-Date: Wed, 07 Oct 2026 06:47:41 -0700
-Message-ID: <xmqqv77dbp1e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PcnNBVZJ"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6afe29c08ccso2441659a12.1
+        for <git@vger.kernel.org>; Wed, 07 Oct 2026 06:49:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791380957; x=1791985757; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Gv1exei/UPZFFSuQsvjDgDXXPep0jmSd/yBrQS807c8=;
+        b=PcnNBVZJoCPf0vY5sjQpRpA40rPQ0+TzI9Tb6D3pZ2ny3DdfadWx9dCkqVCh1wSkpV
+         ZHsIN3SfoLDfuqjDhx3nKX1FTClwB4oCJbzCzQj/jsMnBLhcvfSyUhulgxvqAbta8aWF
+         hIW5/GywoYJiE1Mpzy4zUZO94hQNr3h4kgriPKqMTe4+aHsD2iD77kF5eoZvxcGlYuh5
+         mNVv+lPFyFXjRcjZxuS1veDOjFwXRDrZeCwE1Lz5MLPAoS8oh85r7HS2g+QYt5XVOmjj
+         gLNjfVS1YFy0I2O5HnKGjA/H43eegaekDUry8PwV7Eo8xEg9QAFuB4SIMpDSSlfKYoki
+         pu+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791380957; x=1791985757;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Gv1exei/UPZFFSuQsvjDgDXXPep0jmSd/yBrQS807c8=;
+        b=149+m1F0944eC07EnGBslQxlHuq18ynygE7Jib/hcbFIvEJe0DPPqXxYd58PK14Izu
+         Po65AULynDm144gYoFEgZK03+1D6IBwFTMDMFeKQMRTpNxAP2IFr0ZNzMLOeHljjvgv6
+         wLtkgGlHDivN+IljRvpniCllyV8HyW9+IUFcEHRtUGuyfpL73xxGF+zafFPU4WJ0ev3D
+         7uWpyWIdFPwEt7MxXYmU9rqg1czFSaLJ+ojxm83JLa43FX2JyHP/sInWRChAxfXNmwQK
+         0opS1gI1GPHojdG3e3syh1JdtnT3OmXVVKy+K15/v9HJvnTph9Q+sL0+pT1OuVhBSW9H
+         T37w==
+X-Gm-Message-State: AFuF++muiFbsePUV+nVGMcgGbxbKipBJC1CSfant2Fq4wT1rdF2FVP3s
+	aKyVivpxINX3371YAdYPkoesBGFCx+xCzdfePHaezrq7b+xZtbZySFXd
+X-Gm-Gg: AYBFou0bS4bMxqIWSC4AuCczAOwIUftSCVz38ygOsV6qZ4I8SZAaoile9aQIlqMnN05
+	k7VJY0yMOlsmTKMxA+bKAy27mqCVY7deMcvqkh4ec5DQv7SJGps1Uu9Kk/SW14VJIXqT4Z6kXL7
+	fSapkptql6PBnFptp7mtDjs6ndchXQC2TYaWdoWirgT55Wx9NPaBw+nwgs5hcLG1/+5lKSGHxpr
+	VG9haCD89E2fY0kqRbmqA3K2wU+d93kibPSTrIUyAx/gqWsthyDTiALi1svRgBwJlqbWu3U4K4B
+	7uu/QUbsUMrAdCQt/Q2OATuYV8YAS27yyfVQc2txRp0Accr34l4ClQE13HGkpT7H9PqxRbVY/q2
+	ghfZB2rZXBUpiqrZ37xDmlN4nNlydzkYQ6xjXNLXCIVRPyKF49TQoMalPzwo9ZlFeKiau6A1S1N
+	Z9bzL/i8ugic/cCTAOejNmgrixiKxcgTtaWFWyajiTQ5iFIIhuUpR4Y4kklkt9boCj86GK+NVQU
+	G0u2yur+XJLuDolK8t430sN+p4MMxpYg91/VZMQofffrexsYcv7
+X-Received: by 2002:a17:907:9693:b0:c2e:2d8c:4585 with SMTP id a640c23a62f3a-c317c109165mr211136166b.36.1791380957342;
+        Wed, 07 Oct 2026 06:49:17 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c3184863732sm64872966b.4.2026.10.07.06.49.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Oct 2026 06:49:16 -0700 (PDT)
+Message-ID: <771a2364-7e5e-4d6f-be34-1764e609c514@gmail.com>
+Date: Wed, 7 Oct 2026 14:49:16 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] stash create: remove duplicate changes detection
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, =?UTF-8?B?6YeN55Sw5LiA6IGW?=
+ <kazumasa.shigeta@kanamei.com>
+References: <cover.1791218125.git.phillip.wood@dunelm.org.uk>
+ <1617d92942d283017272ca6f27f1254f8f9389b0.1791218125.git.phillip.wood@dunelm.org.uk>
+ <xmqqpkxngfrw.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqpkxngfrw.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-"Julia Evans" <julia@jvns.ca> writes:
+On 06/10/2026 13:44, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> Before it creates a stash, git checks if there are any unstaged,
+>> or uncommitted changes. If there isn't anything to stash it bails
+>> out. Since ef0f0b4509 (stash: optimize `get_untracked_files()`
+>> and `check_changes()`, 2019-02-25) "git stash store" has checked
+> 
+> "store"?  Aren't we talking about "create"?
 
->> Nitpick: Okay, but with the current commit message I don’t really
->> understand why the git.github.io link is gone. I have to guess that it
->> is an effective duplicate of git-scm or something since git-scm does
->> remain after this change.
->
-> Yep! It has the same content as https://git-scm.com as far as I know,
+Sorry, it looks like I managed to confuse "create" with "store" when I 
+wrote the message. It should be
 
-Correct.  That is direct rendition of what we ship.  git-scm.com has
-some fruff around it (grouping and other meaningful usability
-improvements besides coloring and fonts), but I do not know how
-up-to-date the contents or the grouping is and how they are kept
-synchronized to the originals at git.github.io/htmldocs/git.html.
+stash create: remove duplicate changes detection
+
+Before it creates a stash, git checks if there are any unstaged,
+or uncommitted changes. If there isn't anything to stash it bails
+out. Since ef0f0b4509 (stash: optimize `get_untracked_files()`
+and `check_changes()`, 2019-02-25) "git stash create" has checked
+for changes twice, once in create_stash() before we refresh the
+index and then again in do_create_stash() after the index has been
+refreshed. That commit claims it is an optimization but it is not
+clear what it is trying to optimize by checking for changes twice,
+especially as checking for changes before refreshing the index is
+unreliable (the scripted version of "git stash create", called "git
+update-index -q --refresh" before looking for any changes).
+
+Avoid checking for changes twice by removing the call to
+check_changes_tracked_files() from create_stash() and restore the return
+code handling in create_stash() that was removed by ef0f0b4509 so that
+we continue to exit 0 when there are no changes to stash. In principle
+we could remove the call to check_changes() from do_create_stash()
+instead, but then we'd need to pass in the list of untracked files.
+
+Thanks
+
+Phillip
+
+> 
+>> unreliable (the scripted version of "git stash store", called "git
+>> update-index -q --refresh" before looking for any changes).
+> 
+> Ditto.
+> 
+>> Avoid checking for changes twice by removing the call to
+>> check_changes_tracked_files() from store_stash() and restore the return
+>> code handling in store_stash() that was removed by ef0f0b4509 so that
+>> we continue to exit 0 when there are no changes to stash. In principle
+>> we could remove the call to check_changes() from do_store_stash()
+>> instead, but then we'd need to pass in the list of untracked files.
+> 
+> Again "(do_)?store" -> "\1create"?
+
