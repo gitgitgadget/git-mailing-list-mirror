@@ -1,296 +1,281 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-00318502.pphosted.com (mx0b-00318502.pphosted.com [66.159.239.161])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A314BD378
-	for <git@vger.kernel.org>; Wed,  7 Oct 2026 13:50:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791381068; cv=none; b=MVwxnJFVutFxbaeauW2/7U4eDdxH4ZG3J6HFtQSJGmjYwAbFTnBrdh4kiyQLtak5EYGYo8q1nnE1UGVDZVIulaV6+y6haMZ7cYxErJp8i7vp2ZMBsp1Y56HLSvkVwxcZAyc7gIKneluznJQDR6KtyisktvDyzFifDTFtNKOWJOg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791381068; c=relaxed/simple;
-	bh=j8ktTAI11hDKdOCL9/VVDLVp0OZ+hjBbyTSzEmBhDkE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f8VMn7+cmccJ2DHIWenq6fyIjpbhWOMq3EcN5qihaA73tR8MwVTo3KTD8zfynFkdEAQD719j5ZI8sCRx4yOJHD+DLTCKgyej29D8yErvWDOycmTZJl1PeHYvUocx9iGXZBgF/EwXVlRaOedNGJsmetWj2kewthbYeD+NGwNYjeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ScBJ/F79; arc=none smtp.client-ip=209.85.215.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149473D1CA5
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 13:53:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=66.159.239.161
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791381241; cv=fail; b=G41iNVB+HXW9oOeJK32Uz3OtPt85kQ9wZ4oOti+K4r+3vtCJLWylUB3B185ZjwV2lta52zNc+pz8kCzxAyrgc+HBs8fA4fvAUcsFY35N4EmyxhU34qF+DYkkrcVe1LFrYtN91CFEm6prT5ZDYB9AAqX98DpQaHEbILZRfyWYiN8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791381241; c=relaxed/simple;
+	bh=vcDgXJnfgcmNKCwsFSRoCAcFDHvgZdmMJtLx2PiU1tk=;
+	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=O8YqzCLcJEMfolTUj09Qs0Y+sI33zfdXP/MTlm5rZyX++btirCt0F5W77K+smSO4QXt8rJaG9YoNoyunsY86Ekr+kWacxKDOZ5JLCB4xv45Pg2Cs24I9VDTmF2tlsWGns2o5OVaMAe0eHBA2Xw0DdYNHp6W4r/r7kFWH4+Ko56g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mmm.com; spf=pass smtp.mailfrom=mmm.com; dkim=pass (2048-bit key) header.d=mmm.com header.i=@mmm.com header.b=g6T4Ra8N; arc=fail smtp.client-ip=66.159.239.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mmm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mmm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ScBJ/F79"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-cc4d192643dso835248a12.1
-        for <git@vger.kernel.org>; Wed, 07 Oct 2026 06:50:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791381057; x=1791985857; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=0BVDDWbnzA/6iAbUwqabyvf4riHnyp1wW3g6URSrb3I=;
-        b=ScBJ/F79NXZDHAB6omNoUQ/+CHqwj4FEfl9zq5gnpuIugFgJpUD4NIhztj+3gMSrxc
-         zzKdC1cuyzGYFR46PcO8fUqMZ64XfIgDnn3WPEKF2YZiBuKnCJuPfvgKJVxhZQwWLPKL
-         x3ulY6gF9KuUop2F5T2t/cD8u9G3l1FkM1pPOpz3RqGu4Po+LZmhRXTohF0YdI37s2R0
-         0HLP67k7COThrNUjGEBv4QPS2vtjxQzmWQxlc6Y5SRDIMelZ6SkyBFmjbzwLxMZPWmeF
-         8rqHq+Tluewxlijf92jsWyKPXVLCcPyzmuBfIh02CoCspZcL8bZS0RYjC4ZIcszy8jtK
-         wbag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791381057; x=1791985857;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0BVDDWbnzA/6iAbUwqabyvf4riHnyp1wW3g6URSrb3I=;
-        b=JQFzONA8ml3HdWpJx94kQQj1HGHkmfFyiEQeTL1puoebVgU/7r2F5ptilHFukXXf/j
-         a8kVp5ymsW8vqz+VBkP1kHwM9i2R6GQ9F14NDQ/rCvR0IgsqVGx9lg82R8Ngw6gU4cGR
-         pBQjUGkhrpCsj1BaMerJpZ7WGVcIABNWz0UMoTRx+N2Q73Nufp/K3wUDFi77B05U9B3I
-         ztxpp9EIjvTVtjA62VNjYx3sWFm3vL9CfbZoWRDcxZQivHHacPpqf/F6bQf1jAdxb93l
-         XagzOyw0LlTD8jh1Ng4PCyGLK+3mK7bOnGEUrIl5KRxTBBtbWCF2gKcwUFjq66IgUa/z
-         obfw==
-X-Gm-Message-State: AFq9FYKV4dJ/C9sRSDDMTCQ5qtIy4oEGSIg1+VvKlN9q+wdbnATFT8/B
-	V+0ngcfYkZUmR/ms8MGB/YoIo/TRhN9Eo4dKfUdjKtf+7DXJIn6Cq7XwFNQrmfEu
-X-Gm-Gg: AYBFou19XD2n1SEzHfqDN1LL/0zICGreKbEtO5ybL9Zj/YqUrNf2QOe8xSTPM04581j
-	f3BYKUCwivOUnzQU1d7k9WYxlG93OZ3twMI6EHOMyqpHHFZe41H+gUY7GuKx0T+OZvYvDnqIhYa
-	gOCQv/8AmU8eIBOpsPcg31JQS1L1Z0jwpeMKPlwFrjotPdYYhSHzgjHuocbj69CKLBRHXrLfm/l
-	mY8WpgWZZAVHl+vjE1bX8Uo7qsEEmQMlwpRg74jh3hAoVM7xBe9oJ6B+3+XFv4lBRxNDxv9CLMq
-	6nlrJCrh88nQSJqQCrrpduaoHp5vHlon715eB4YP9sYygvQf+2r0ABlPYWQGJXhzlbgQj9Xd4xh
-	r8WfvJ8J1z9+kY/1vcY1Ph8uTmSNKkUhMm9UGExV8OAKdxcYVmnjY2puj0ZOTMGhyVWOGyEtrOb
-	n+T0BrqMVaEgMq5xX7MjL9zepuTJW23eeag0Xp/cBYtdb5C2Ax3xztzp6UK0fqivi4YFMIdUrLC
-	+MotUA=
-X-Received: by 2002:a17:90b:4b86:b0:3a4:ca46:840f with SMTP id 98e67ed59e1d1-3a89f6878f9mr1750796a91.8.1791381056968;
-        Wed, 07 Oct 2026 06:50:56 -0700 (PDT)
-Received: from archlinux ([2409:40f4:314a:a1e2:9855:ada9:1db7:a1fd])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a8533abe0asm10577916a91.1.2026.10.07.06.50.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Oct 2026 06:50:56 -0700 (PDT)
-Sender: Dilshad <hello.dilshad.in@gmail.com>
-From: Muhammed Dilshad A <dilsheddilu123@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	Muhammed Dilshad A <dilsheddilu123@gmail.com>
-Subject: [PATCH v2 3/3] t: retire the sorting benchmark and mergesort helper
-Date: Wed,  7 Oct 2026 19:20:25 +0530
-Message-ID: <b540e3a3d2c30bccaaa0d8dca3428a77c1d2ea76.1791365181.git.dilsheddilu123@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <cover.1791365181.git.dilsheddilu123@gmail.com>
-References: <20261007034205.32619-1-dilsheddilu123@gmail.com> <cover.1791365181.git.dilsheddilu123@gmail.com>
+	dkim=pass (2048-bit key) header.d=mmm.com header.i=@mmm.com header.b="g6T4Ra8N"
+Received: from pps.filterd (m0437337.ppops.net [127.0.0.1])
+	by mx0b-00318502.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 697BVtQX2839909
+	for <git@vger.kernel.org>; Wed, 7 Oct 2026 13:21:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mmm.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=ppp01-25-mmm;
+	 bh=vcDgXJnfgcmNKCwsFSRoCAcFDHvgZdmMJtLx2PiU1tk=; b=g6T4Ra8NqBS4
+	vXgpLidOYdCRn1xM5Fxn8vyQAZ06+26OrGR4WsgCNpRY0l+bhXTxtHqYUu/b3Uzm
+	kgSIi0ji3hvYvv7cYWmEj3S0QNqPtF8Y8tf+3fHsDjoDEPoetC5TyWWbjmeSYcKW
+	x5LxVROc9iepxgLykc15Yj4bwlRKP6IF1YTIqE9boE1WBkEGLN9RZjciK/ObNKZj
+	fLJIBsJSvzMlwiHlxd0+1jvyCEkwSBWd+IwsVJ6SSKQMw/ReNJjoxtuUGUb4krZi
+	02Y+E9ga+/ZC47KggP3opaMFesw2TAhxueC5W4zKyXn13zp/S7o3KRdqClBOWEiR
+	6Pwkt9hsCQ==
+Received: from smtp-277a-c.mmm.com ([192.28.24.1])
+	by mx0b-00318502.pphosted.com (PPS) with ESMTPS id 4h54t2x54m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 07 Oct 2026 13:21:16 +0000 (GMT)
+Received: from CY7PR03CU001.outbound.protection.outlook.com (unknown [10.88.0.103])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by Forcepoint Email with ESMTPS id 3CD2311AACE0AD6C2385
+	for <git@vger.kernel.org>; Wed,  7 Oct 2026 08:21:15 -0500 (CDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=X7hcvX3w+46aSeVtix2ZBPWs3U/m6djoAMVIOLP6zW0fGT/FDhnxf4bNNqJUPUzZvvRES144B1G1N2X9xKKmMscqKSMfIbLi4kpw/hEFWr6WCgXpKMHUCnAG5VVV7TKuFJuY8Z+EYQ1VCnN4zMVRpd/R1D70Dy6dcblxCIeScoc6Bs+/8qvmSPH6hNhSrRoTuBpwvKX5PkAHs5q9vxgwPm2XSYekTiKnxttGhveoWsvSP7rkenf6rStvDjsAo1Kwli6vA4xbPfwVrucU0H1aez8NAu4zxOeLNyT/hYtYs/hGMw8a1FL5VYpBhokiRICmP3kKQvGs8Z1FaeLg6O+51Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vcDgXJnfgcmNKCwsFSRoCAcFDHvgZdmMJtLx2PiU1tk=;
+ b=Tq3uDAAx/DPcwyXqmbz/YoEFAIsB1UUCHVT+tgVvAzcAtsyREaXERY9CvOZjuq19zZodvR3s70nO/O3YmC9h4DGF1aG2uiANqUovmRsC1W0qyAeey5lxqBEzLAIc+aE27yHMzqtPde2bZjBY0P8eMGWuIoj6E32WgF05k8V0aU5w/D6p/K4g0yub8H1i3BqnanUNsERx8V1I94QuPd2sGunQx72BrPcYvAiJ/Q7I5/v8OEa4L9w1jdPEwSY+AycWgr+PPVFhGa4ImXbZ2n8r+pvYO/qqqUCnLl5xqiysQ5fSUNaArqqtK2SMFKg5e50rvGFHyWKGdg7nL2eMD4Ptig==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=mmm.com; dmarc=pass action=none header.from=mmm.com; dkim=pass
+ header.d=mmm.com; arc=none
+Received: from PH0PR03MB5944.namprd03.prod.outlook.com (2603:10b6:510:36::13)
+ by SJ2PR03MB7110.namprd03.prod.outlook.com (2603:10b6:a03:4fd::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Wed, 7 Oct
+ 2026 13:21:12 +0000
+Received: from PH0PR03MB5944.namprd03.prod.outlook.com
+ ([fe80::3194:820c:80c2:3506]) by PH0PR03MB5944.namprd03.prod.outlook.com
+ ([fe80::3194:820c:80c2:3506%4]) with mapi id 15.21.0472.016; Wed, 7 Oct 2026
+ 13:21:11 +0000
+From: Daniel Gullberg <daniel.gullberg@mmm.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: FW: [Windows] safe.directory: unreachable UNC entry stalls every
+ command in a repo that fails the ownership check (~25 s)
+Thread-Topic: [Windows] safe.directory: unreachable UNC entry stalls every
+ command in a repo that fails the ownership check (~25 s)
+Thread-Index: Ad1WWoEoK70hv43RT/qfG/44VWo6vwABBhaw
+Date: Wed, 7 Oct 2026 13:21:11 +0000
+Message-ID:
+ <PH0PR03MB594476FBBE28305EA52BB482FD942@PH0PR03MB5944.namprd03.prod.outlook.com>
+References:
+ <PH0PR03MB59443B1A6BA969CD509B8C22FD942@PH0PR03MB5944.namprd03.prod.outlook.com>
+In-Reply-To:
+ <PH0PR03MB59443B1A6BA969CD509B8C22FD942@PH0PR03MB5944.namprd03.prod.outlook.com>
+Accept-Language: en-US, sv-SE
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=mmm.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH0PR03MB5944:EE_|SJ2PR03MB7110:EE_
+x-ms-office365-filtering-correlation-id: 248ad05b-1f68-447d-a8f5-08df2475db4e
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|10067099003|56012099006|11063799006|3023799007|6133799003|22082099003|18002099003|38070700021;
+x-microsoft-antispam-message-info:
+ AYLctgJ3G3WZMwA6ZpbUH6S/KmLv6UhnlpceW2Kb1bjzkAjrz3BVGwE6zbgzCFr64/5QAV9Ux8/l3/ET8+jwUH78q4ZCb/BCH4qYwgnaCOb0NBV8Lq87GYfFePAzG3OZdCpriHDIZ/E5LfSRL+XiWy4+GbXbX/vPckmP7rGUPkzAPhPVTBhO4ClkOJVWxc8E6udKH4HpG/mTuVwOBMgheZ2HU7Wf+z3IAT5yhxhL1aKOWO8tSOesWs9v6q+QXryYTlGH9wCz0wJoukAPNtUukNkSkpjeTGDsswHFOSQCZPDsl4jo1j6NKRZSHaywllS3V2/9wsK35Wqdcc0AtKNaq3hTNh3kWXLNYLui3SnR2nCsHTXYME2b9fcA+X/W4AslsH//bjEYnRV6Hj37W5uQ00auZ4EBOINRXTA2rB5vC1JBdkMPt37P99pThgvjdfnAu+Fj+xUpxsWEVSld3Bgfrbd5KbVeoK+Zwgig2B/sNWEfWovnZi+xZv+GKwc59kW7YmUC/ivyPYyuMPnIQjLOjBi/ETaV+Qq6SWus1Ib98KWYjYowE5jZwGSevV7WDoLbTDe1g5YDCiEg46yh6QptGLF8imFhn+Ph9iR1UczvekS3njKIOm6v3jHaWSPRONLqvVJxN4QctUij2TXZ12ng9o3faz+g+2TnXQITdrjt2y2lCsFHPfGvJg5nXQRL6O66AgOmw5XjPoZWWBfeYnUVoatvWdIj2vOPXqHqLVki7Sc=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR03MB5944.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(10067099003)(56012099006)(11063799006)(3023799007)(6133799003)(22082099003)(18002099003)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?wJX6XTyoZJ9eBIjJfPu6kl0OAyzEwuNSCX3K9ktX+NiHjtUzp5VnmZlme5?=
+ =?iso-8859-1?Q?cYgGAaRd+izs6uTcBqVWoBiakU2bDIZj3poYaCuE45HwfCE1QHmunPOAFR?=
+ =?iso-8859-1?Q?uT2nP1LLicR5aSmAMpsh9xh9midfGT80CisYgylLdY6iipzw926I/nYpfq?=
+ =?iso-8859-1?Q?j3SP3Jx+0+CYyMK8gJWTPwIEx4pOvvYvAAL8j+qBAq+UYoEllUzxK6WCQU?=
+ =?iso-8859-1?Q?DKU/9KMLeEnU4btwG/ys/T/gMy5lVJ1hxUorEVOYhEgurTkKkLbA/VMPvO?=
+ =?iso-8859-1?Q?9fQ2noIIxc5INPS/75LFjVoxqKnWsZOLdC6UlrFx//JguB8EECEx+CYH1E?=
+ =?iso-8859-1?Q?fWtCv8PiTJZxSIAeLtW2l0Mbucsssy77o3g4kFe4eR6h8kDim1KOMutSY7?=
+ =?iso-8859-1?Q?nU30PtAQjc+QoLO+Hq915Sfy1/L44Um92nH/2Z0c51sfzeCAP+D4U0uGd4?=
+ =?iso-8859-1?Q?h501tZ5GXwwrc7l6UucJd0BMd5z7pplQY4IwcO0cNCJn/abXyqKuZ+AjbU?=
+ =?iso-8859-1?Q?uqwJjVCs+MA9ll3P/u8vvT+cozZDzWvtvWUue5a0w4Xf7iANM+8XG3CITp?=
+ =?iso-8859-1?Q?lzVQ1kb7UgKkAFJIIMoBQQaQStWRDUSVCw8asmHlDc+S6cpg9MOOIXctok?=
+ =?iso-8859-1?Q?uNAMy6zrtn9GrU05egSJDlXbso3zOELzA15w4+yPGRbMww+WR/hOf4w0mE?=
+ =?iso-8859-1?Q?t/RmPU8vx5GQIlvuVdIZ05qe4yDQrVSwrEu1V9hbbJlOTUvggi4lwZAuJ3?=
+ =?iso-8859-1?Q?NM4abNLPe6VeHMk7DJ3AB10oAnBSWOJDR5haOKPsCpLN8Vd/Who4+Jhs9H?=
+ =?iso-8859-1?Q?RQFc1hd4X3MUaVDSl+zlkS1TVd73zy0bR1WJoWaBHqB98t32dyDfxhelEg?=
+ =?iso-8859-1?Q?w2BGfW1T2Z7z8C5RZWuZRND7hZVgaBPOsZYxktm+wO0T9GrPCYrPyCaVbx?=
+ =?iso-8859-1?Q?1eYUeo6bZa9FFf5UYZOuCb47yoDs88vYcFLvXLU1ZjJC+g1mARiGyJ5i4r?=
+ =?iso-8859-1?Q?SZN6JUkOt20Ix9I0ELYkRMWP+ppwhk/pkUbFvLEUJBwxRONUme54lyM8l/?=
+ =?iso-8859-1?Q?HuC2+GD9hwFJdJINrJGK3jBrtejULtnqW/kOZQ6i14c3AJf0LOZjrADu0V?=
+ =?iso-8859-1?Q?iQLQoAvYFHjKpSvJV612Pa82ir0aw6T1liRR5J0aKPVvDwdB82rZdY8f4q?=
+ =?iso-8859-1?Q?LpJjqXnsjheOMfQyD6xJcq6imCZ8kLHP7jOeLSzaaTJfm50fSkEsCXV4yX?=
+ =?iso-8859-1?Q?mr3sFN5FnFVNr8PbVdIjPQVtiBaIQsjIm5Z2XTbiVkSAJL6ZTljEewJumT?=
+ =?iso-8859-1?Q?GxXBauFfLo7VcFg6Fy/vBkQ87EJsoTv0jFFaJ73u/dvA0+foGdrqHR82TT?=
+ =?iso-8859-1?Q?QMBos6cxVRZ/1zMfkRA+TM8PvMNIfcxV/tTsy6PIztfysBP5sWsqNQK0s7?=
+ =?iso-8859-1?Q?Pf25td8uTEawkWuFwYbAgy+rFyNbbWl8Hl3KI1jX8vA/B2wvf30wkNmoWn?=
+ =?iso-8859-1?Q?ygoo9zsEv9pSOQUkdo6zDTKpfla7b4gxNP6op6JQBWjL4Lc9kIbUONw594?=
+ =?iso-8859-1?Q?4gcFq+iDFj8Xa0+5MF6H+RYlDqEVKNJVxyN37ZB5wAT2EZUCgGbjAVkjBk?=
+ =?iso-8859-1?Q?bmOd83uYzvM+zTfoBK2/3kgJjeXyrtgb0MFONwZ5ANNN9TvkgZ8yjB4ghJ?=
+ =?iso-8859-1?Q?JV/x43o1OFVEMAMDPgU9B+PZtJj6xbKw6MpGg4j2R16E/CaZNmvlljx0Mw?=
+ =?iso-8859-1?Q?xRnbEw7ZPCDrHlOeGK06nTI8I/QA0SZYfVUu+x5GJQV2xS?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Exchange-RoutingPolicyChecked:
+	AV45CSwE9MuuI4xN8LJpMlJ5VyhOPtHJc/jLlVuFy2UocyjyA2NXRspfxAo1LRn7iy1LdZjjPX8fwS0LWbV/92QWyKPSI3h1ZFoSGyDcudNtIU5SVz6fyoERz5ZLUNIYtvdRGAFFoxjoh2EkG4NRNiIHwTJNNZXasG260RO98RK+85cPpFIuF8k9iaWaYYw/WnVVxMj5Baw46yLAXfXiibQYBrS2Oe/m7Roq20ZSLU75eedLLHGTRyjMq8OKXGd4DTvJ/11Xp5pQcNo7T4Vcd/w+LwHk62v7C6GcSMFSMH6Dn+5HbQmzqe6VzUA3sJPPKvs7uqa7lDTc1SInfEb43Q==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	FZsEllmKijBoxU5F7U179Cf6yShuTuIayCRGW8Xn+hXwIj49q+HRpPV5WHla71DXch7n90yi91Y4nt0WJLPKUHHoAmljSXF+H7tmaS1UzEL7aM886Y2XHU8WY8Y713xbsKVcbM0RmTRuiqm2yUljFBTm4yfppC8yxozBMO5UW73OEZLxNgY9qaWBcC9Qsg5wSp1zk8s7MrH3CIdQxT8vNaLRr88DUbKwbgeEtjc8SUnub/Uip+bAZDY0avfe79uGav1KWLX1b8RJNcPJEDgDcMv0NwaiZhxp55evz6GZo/nlNNomHxZwPPXaxca/WhCgNtALEhwj/aLMFvzkt8a3rzeadiuqlykLz4sfwJnCe18bLMThNYXpuVae/5aQC5Ko3he0mjJto+7Wq3OPamtRFTE34NcEkRqw054ggDFW4TZ/Lv0FbHy7H+/Ijt4sCst0SdPNjPRRvc5D7UxH3d6ojM8GvWsviLg4rmMUh+iA+5pPpymlDt6AZ8BeVXl3QuHpgoh/6zXWMwhTaXkqjp1HI3zWb/eQy+UpiyNVW8M1DCf+F8NSZQ6L3Vtpa3DGoW8n78UEAh5GOI2OVnnHPxEOyYNCGpubpJA1ThsqfxNAQkqCjcGJoLRzf1bZV1QrMcnr
+X-OriginatorOrg: mmm.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR03MB5944.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 248ad05b-1f68-447d-a8f5-08df2475db4e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Oct 2026 13:21:11.8588
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: facac3c4-e2a5-4257-af76-205c8a821ddb
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: NpqQ1GIIKDG/1S/5l9cfer5cm3akRUvzyu2AmnBQq/sR2fVQWwbUn1S7rCJR2hM8
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR03MB7110
+X-Proofpoint-GUID: AfBNgG2wwHfKey7vtzVfCGU0lHf7G0AH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA1MyBTYWx0ZWRfX3VJtwmJaRpFF
+ 7BXyFsn9hqlvw7B76fY4K+Mo0pI4/Qtrt3PuoaC6qBgNV+wO9oolrPxRr9bt+FOjO5TtuVUuxO9
+ zp2846EeToF6QBGtmwt651XADF2KVD3v2SyEkdYXVCrdVb6imLfi3AblTDdQPrZ8bzIS6SCs13D
+ mtAwRyrKJc1TQRfvK3xXqLEGwnTtVopMJRB/PCXtqzl9JKDkNSZPKYjw/EmyT2YA+1jwFFGufg6
+ gb7ZJl3Mvu7V12Iy+xYP15odjEIiKyqzlhp3t2x57jBg2XOh5FUcKt7b92TyTaGc3GY9KgIg8Ic
+ gHrQrKs6lP57+y6nW1FofxxUmBm4aBA4ifUHOCZ6JcZoBw9RM6G1I9zCvfMgHD2CNe5e9RHwn/t
+ 0bNZ5jYn7PcIyiPQW7neXRqw2Ca6kCxuB9i0D271EGaCp5UzeXTvtLsEpC2zw0AQFH7+blX4haj
+ 0S77eMQAF0cnjogcdgA==
+X-Authority-Analysis: v=2.4 cv=KKbPn1Fo c=1 sm=1 tr=0 ts=6ac6474c cx=c_pps
+ a=pNE5+r34OR9oZdTVbUeSDw==:117 a=pNE5+r34OR9oZdTVbUeSDw==:17
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10 a=660iZSQnnn4A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=zaMZgybHLTuKVbT8q-ld:22 a=xwsepRW8owwziKdWbztK:22
+ a=NEAV23lmAAAA:8 a=flTH6UCbAAAA:8 a=A7YcJicIsup7aEF5nMMA:9 a=lqcHg5cX4UMA:10
+ a=wPNLvfGTeEIA:10 a=9eB-evr0Qm0WS-MQJWAA:22
+X-Proofpoint-ORIG-GUID: AfBNgG2wwHfKey7vtzVfCGU0lHf7G0AH
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA1MyBTYWx0ZWRfXyCfXO7EWXKpO
+ MqU+2AaH/Desc0VWXIg5k9iv88OSVhWkv8FYdtut5ryGdsglsE7vNSTCe2xgWboZEM1dxXCnalu
+ GoPOeyULxjUb9cMo2PAShUNq8N3mjX8=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-07_04,2026-10-06_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 suspectscore=0 malwarescore=0 phishscore=0 priorityscore=1501
+ spamscore=0 impostorscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070053
 
-p0071 compared sorting implementations during mergesort development.
-Retire it as suggested during the unit-test conversion. A new benchmark
-can be added if later optimization work needs performance measurements.
+What did you do before the bug happened?
 
-The benchmark was the last caller of the sort-only mergesort helper.
-Removing it allows us to delete the helper and its build and command
-registrations as well.
+On Windows, a repository on an SMB share mapped to a drive letter
+(P: =3D file://192.168.56.101/TestDir, Samba on a VM; files are owned by a
+different SID than the current user) is used with a global config
+that lists several safe.directory entries. One entry points to a UNC
+path on a host that is currently not reachable:
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Muhammed Dilshad A <dilsheddilu123@gmail.com>
----
- Makefile                  |  1 -
- t/helper/meson.build      |  1 -
- t/helper/test-mergesort.c | 67 ---------------------------------------
- t/helper/test-tool.c      |  1 -
- t/helper/test-tool.h      |  1 -
- t/meson.build             |  1 -
- t/perf/p0071-sort.sh      | 52 ------------------------------
- 7 files changed, 124 deletions(-)
- delete mode 100644 t/helper/test-mergesort.c
- delete mode 100755 t/perf/p0071-sort.sh
+=A0 git config --global --add safe.directory \
+=A0=A0=A0=A0=A0 '//192.168.1.190/dummy-test/repo.git'
 
-diff --git a/Makefile b/Makefile
-index cac535ba19..4b35808b2e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -835,7 +835,6 @@ TEST_BUILTINS_OBJS += test-hexdump.o
- TEST_BUILTINS_OBJS += test-json-writer.o
- TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
- TEST_BUILTINS_OBJS += test-match-trees.o
--TEST_BUILTINS_OBJS += test-mergesort.o
- TEST_BUILTINS_OBJS += test-mktemp.o
- TEST_BUILTINS_OBJS += test-name-hash.o
- TEST_BUILTINS_OBJS += test-online-cpus.o
-diff --git a/t/helper/meson.build b/t/helper/meson.build
-index 3235f10ab8..e94e6f10fb 100644
---- a/t/helper/meson.build
-+++ b/t/helper/meson.build
-@@ -32,7 +32,6 @@ test_tool_sources = [
-   'test-json-writer.c',
-   'test-lazy-init-name-hash.c',
-   'test-match-trees.c',
--  'test-mergesort.c',
-   'test-mktemp.c',
-   'test-name-hash.c',
-   'test-online-cpus.c',
-diff --git a/t/helper/test-mergesort.c b/t/helper/test-mergesort.c
-deleted file mode 100644
-index e8b8de239b..0000000000
---- a/t/helper/test-mergesort.c
-+++ /dev/null
-@@ -1,67 +0,0 @@
--#include "test-tool.h"
--#include "mem-pool.h"
--#include "mergesort.h"
--#include "strbuf.h"
--
--struct line {
--	char *text;
--	struct line *next;
--};
--
--DEFINE_LIST_SORT(static, sort_lines, struct line, next);
--
--static int compare_strings(const struct line *x, const struct line *y)
--{
--	return strcmp(x->text, y->text);
--}
--
--static int sort_stdin(void)
--{
--	struct line *lines;
--	struct line **tail = &lines;
--	struct strbuf sb = STRBUF_INIT;
--	struct mem_pool lines_pool;
--	char *p;
--
--	strbuf_read(&sb, 0, 0);
--
--	/*
--	 * Split by newline, but don't create an item
--	 * for the empty string after the last separator.
--	 */
--	if (sb.len && sb.buf[sb.len - 1] == '\n')
--		strbuf_setlen(&sb, sb.len - 1);
--
--	mem_pool_init(&lines_pool, 0);
--	p = sb.buf;
--	for (;;) {
--		char *eol = strchr(p, '\n');
--		struct line *line = mem_pool_alloc(&lines_pool, sizeof(*line));
--		line->text = p;
--		*tail = line;
--		tail = &line->next;
--		if (!eol)
--			break;
--		*eol = '\0';
--		p = eol + 1;
--	}
--	*tail = NULL;
--
--	sort_lines(&lines, compare_strings);
--
--	while (lines) {
--		puts(lines->text);
--		lines = lines->next;
--	}
--	mem_pool_discard(&lines_pool, 0);
--	strbuf_release(&sb);
--	return 0;
--}
--
--int cmd__mergesort(int argc, const char **argv)
--{
--	if (argc == 2 && !strcmp(argv[1], "sort"))
--		return sort_stdin();
--	fprintf(stderr, "usage: test-tool mergesort sort\n");
--	return 129;
--}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index b71a22b43b..2e80dc7ab8 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -42,7 +42,6 @@ static struct test_cmd cmds[] = {
- 	{ "json-writer", cmd__json_writer },
- 	{ "lazy-init-name-hash", cmd__lazy_init_name_hash },
- 	{ "match-trees", cmd__match_trees },
--	{ "mergesort", cmd__mergesort },
- 	{ "mktemp", cmd__mktemp },
- 	{ "name-hash", cmd__name_hash },
- 	{ "online-cpus", cmd__online_cpus },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index f2885b33d5..9442c61ffd 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -35,7 +35,6 @@ int cmd__hexdump(int argc, const char **argv);
- int cmd__json_writer(int argc, const char **argv);
- int cmd__lazy_init_name_hash(int argc, const char **argv);
- int cmd__match_trees(int argc, const char **argv);
--int cmd__mergesort(int argc, const char **argv);
- int cmd__mktemp(int argc, const char **argv);
- int cmd__name_hash(int argc, const char **argv);
- int cmd__online_cpus(int argc, const char **argv);
-diff --git a/t/meson.build b/t/meson.build
-index 2752321e0d..07436b63f4 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -1146,7 +1146,6 @@ benchmarks = [
-   'perf/p0006-read-tree-checkout.sh',
-   'perf/p0007-write-cache.sh',
-   'perf/p0008-odb-fsync.sh',
--  'perf/p0071-sort.sh',
-   'perf/p0090-cache-tree.sh',
-   'perf/p0100-globbing.sh',
-   'perf/p1006-cat-file.sh',
-diff --git a/t/perf/p0071-sort.sh b/t/perf/p0071-sort.sh
-deleted file mode 100755
-index ae4ddac864..0000000000
---- a/t/perf/p0071-sort.sh
-+++ /dev/null
-@@ -1,52 +0,0 @@
--#!/bin/sh
--
--test_description='Basic sort performance tests'
--. ./perf-lib.sh
--
--test_perf_default_repo
--
--test_expect_success 'setup' '
--	git ls-files --stage "*.[ch]" "*.sh" |
--	cut -f2 -d" " |
--	git cat-file --batch >unsorted
--'
--
--test_perf 'sort(1) unsorted' '
--	sort <unsorted >sorted
--'
--
--test_expect_success 'reverse' '
--	sort -r <unsorted >reversed
--'
--
--for file in sorted reversed
--do
--	test_perf "sort(1) $file" "
--		sort <$file >actual
--	"
--done
--
--for file in unsorted sorted reversed
--do
--
--	test_perf "string_list_sort() $file" "
--		test-tool string-list sort <$file >actual
--	"
--
--	test_expect_success "string_list_sort() $file sorts like sort(1)" "
--		test_cmp_bin sorted actual
--	"
--done
--
--for file in unsorted sorted reversed
--do
--	test_perf "DEFINE_LIST_SORT $file" "
--		test-tool mergesort sort <$file >actual
--	"
--
--	test_expect_success "DEFINE_LIST_SORT $file sorts like sort(1)" "
--		test_cmp_bin sorted actual
--	"
--done
--
--test_done
--- 
-2.55.0
+=A0 cd P:\
+=A0 git status
+
+What did you expect to happen?
+
+An entry that cannot match the repository being opened should not
+slow down the command. "git status" should take about 2 s, as it
+does without the entry.
+
+What happened instead?
+
+The first "git status" takes about 29 s. Repeated runs shortly
+afterwards take about 1.8 s (Windows seems to cache the failed host
+lookup for a while). Removing the single unreachable entry from the
+global config brings the first run down to about 2.3 s.
+
+Timings (same repo, same session):
+=A0 with unreachable safe.directory entry:=A0 29.07 s, 1.93 s, 1.78 s
+=A0 entry removed:=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0 2.27 s, 1.58 s
+
+GIT_TRACE2_PERF shows the time is spent before the worktree is set
+up, with no git work in between:
+
+=A0 13:43:00.798=A0 main=A0 ancestry: git.exe, powershell.exe, ...
+=A0 13:43:21.973=A0 main=A0 worktree://192.168.56.101/TestDir
+=A0 (exit after 26.2 s total, of which about 5 s are git work)
+
+A plain filesystem probe of the dead host root from PowerShell
+(Test-Path '//192.168.1.190/dummy/') also takes about 25 s to fail,
+so the wait appears to be the Windows network connect timeout.
+
+My hypothesis, not verified in the source: the configured
+safe.directory values are normalized (resolved to a real path) when
+checked, which makes Windows contact the unreachable host. The
+ownership check is only done when the repository is not owned by
+the current user, which is always the case on this share. Comparing
+the entry against the repository path first, and only resolving
+entries that could match, would avoid contacting unrelated hosts.
+
+Impact: tools that run git often, such as TortoiseGit, pay the delay
+repeatedly (our Commit dialog took ~30 s to update). Stale entries
+for old or offline network locations are common, so this is easy to
+hit.
+
+What's different between what you expected and what happened?
+
+An unrelated, unreachable safe.directory entry makes git commands
+wait about 25 s.
+
+Anything else you want to add:
+
+Reproduced with Git for Windows 2.56.0.windows.2 and 2.46.1.windows.1.
+Related reports (not the same problem):
+=A0 https://github.com/git-for-windows/git/issues/5673
+=A0 https://github.com/git-for-windows/git/issues/6359
+
+[System Info]
+git version:
+git version 2.56.0.windows.2
+cpu: x86_64
+built from commit: cc4dbf752a05efdc0e04e71fd3e8110d11bdd35c
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: D:/git-sdk-64-build-installers/usr/bin/sh
+rust: disabled
+feature: fsmonitor--daemon
+gettext: enabled
+libcurl: 8.22.0
+OpenSSL: OpenSSL 3.5.9 29 Sep 2026
+zlib: 1.3.2
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+uname: Windows 10.0 26200
+compiler info: gnuc: 16.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): C:\Programs\Git\usr\bin\bash.exe
+
+
+
+
+Best regards
+
+Daniel Gullberg
+3M Personal Safety Division | Welding Center of Excellence
+3M Svenska AB, Ernst Hedlunds v.35 | 785 30 Gagnef | Sweden
+Time: GMT +1:00
+mailto:daniel.gullberg@mmm.com
+
+
+
+
 
