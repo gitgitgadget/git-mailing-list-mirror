@@ -1,97 +1,97 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BCD47255E
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 08:36:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E7C4718D6
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 08:36:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791448592; cv=none; b=KYtPxo++HiKE5p6mEWBddOJh6swaR+JTd/GlwBEOJvt2clpu8xFSELFVcBXDOwCuLQ980Y0nnjtPCjS+rj77/s0HUSHl7xVf4DpxPY8V56vxchqZihwV7BAApQq0PDE79q+0V4B8STEIyBKv+UZ8nw1P+K5cIhIdUUa3IZuMNaA=
+	t=1791448596; cv=none; b=qTgEcXc9fEceiP+Eb8OPdIr6+1hg0+TYKD0fjaTkmK5eMeZd/oUFD9Ktg6WXRujcgtkuIhCEh10I0e1+uYGoQOBI54XhSdqknKYVt2eHL2pGO3cGk5fDek7uSbDsMBLVx/6ThtulnQiRqjFTvdIJyeYCsiL6rCmcwiNSWpOjWtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791448592; c=relaxed/simple;
-	bh=8IDyyJQEgC7Py4Op2waTtBeOpsgZsEhxanEUskD1+3o=;
+	s=arc-20240116; t=1791448596; c=relaxed/simple;
+	bh=4jONM9VOKRIkZnzo+m7Vpzd+n8KQ48fTzI1MGq9NiQs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=smI9f58Lg/mSeamTBZKZeM5sV8drQBkNFAMx9A7mSEz2rk8Svy0Z9HNXgBi8rXO5ggpefPWLoHPk9D9iSjt16mo0xJia/GsKZ2an1Bzg3pWWjMmk0BfFklZxDJsEW+Obtakn1+xekuuX+83Lr/p+lnZ+sSWpiXlr+rLAe29Pgko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V618dkie; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=whstQF52; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=p0VASJmWiWfDGcXFwE86URIXq5MZgQxwHGqQl62r0uaJoUeaRsZEXqFv8s0YydyN0YDizRaLCtfyBD3DSn7sTMrpojWvEVxL6Y13LEUkU5OCVcNmtz9DgfUIBpS1+fPLu7vZ7rGu9Vn4+HasYnOJEw+MWu2hII+y1mCfRS23rnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fU5vuTTt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iKnq0d+9; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V618dkie";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="whstQF52"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fU5vuTTt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iKnq0d+9"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id E9394EC0104
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 04:36:29 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F3FFC1400153
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 04:36:33 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 08 Oct 2026 04:36:29 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 08 Oct 2026 04:36:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791448589;
-	 x=1791534989; bh=V8L1yDWBuB+hOYJV6weFzPpsiuf8VheC9GaF5tAfKiI=; b=
-	V618dkieLhK3u0MkCAN5EIh+87wfyWmIIXix0Xvtl+l/5IVB3ZtyQbkMcOet9Una
-	Nc4W/aqO8X3TJWFYV/tMzyJLEVQvg8/r44EWtUj45mbw7NwntG3gqUPUwS8sOz/j
-	FsExPuTm1BXKyhHR3bn+DJFXJpc6d0Z/i9iKg8wJyRIwbNC8R8LtkPoyEFT5HJ5E
-	60RZwlELbd4qn+JXlmn4IGvMd0QmA24eObjfCcTsS0pnqCvL8UBOZm5M0mgnXPPh
-	5cBZkr2g+cx5R0QDiyTVPscWvG/2l05vxpJj1DqkxrN8Rha/AOmBPCbHHgITlyWP
-	LI2PN9+54wFLvuKDLZM94g==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791448593;
+	 x=1791534993; bh=Fve1EB7aeeiIJpxl22g1EeRiqhg8+M1ICIRObHKCdAk=; b=
+	fU5vuTTtz/DY4pnhzQIcqEhzYAMjp91ttwMg1UqVX3MbqyFnUwacNu21+VRIYR3K
+	ltJvWDF3rfkBpZs5088u7x3Un2tXrwdUrtg/t70t6lgUkft/jgZKmwSwDkDq61Gc
+	Ky53S9QRGZnHp2Yd+wZSDsCUSU9tZfgsQ4/cSN8NeXUoELcCkCa5vNcgUgTVOEwb
+	HOCck+jwHbPG1qW7BvjCj9X6HItrGMsIjmCtIfcYPU0yGNkhOWUiglZqfZALoQCM
+	83KgyHyNQI0Fxx4EpaRVe5KGp9VOXLumQSw1SgKCo4X2o9mNwqVSkyFffk0K+g+7
+	x4NQhngJXJEW3+Qe2X+lpw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791448589; x=
-	1791534989; bh=V8L1yDWBuB+hOYJV6weFzPpsiuf8VheC9GaF5tAfKiI=; b=w
-	hstQF52DHs3B23rbEvx26qlEmqcaU2eiJWA8b355PeBbfKGbH/8Gemgj/E4MF3Ra
-	xvu0Vn4gWDigdQ6X3995zIOF59rrGo53u0C2RHFWBZ83sp89QxPShrRnorBeDjUq
-	4z/0eXMN6V6pvZya8DtZuyFcw4l50qEJq9W4O0OE4prKFVpMWYRhmTMkwf2oqVwk
-	ztJQycUYhdZ7ef/CJuoWaqIUnT0rBHkNZyKnUOm9ZPIcP9NHFotdFOZb1U7W9f3m
-	sQqUux8R4cD9mGG1clkhLNjrPU3hHnos9QLVb1SmjFxBL9eXsKlMHWDJti7Cxx0X
-	VWWp7hKxrq18mdb29pSfw==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791448593; x=
+	1791534993; bh=Fve1EB7aeeiIJpxl22g1EeRiqhg8+M1ICIRObHKCdAk=; b=i
+	Knq0d+9PRmhsUlNmOnhubdYFpplw0P0NIqVy8bjOPIKIsvvJ6j79N4XzyACZVkq9
+	Jo4Obr1Rs/resQ0/+gqv2a9K8iBal/s+sJ2UQ/PUvNNK4gGYEJg4R+5oj13c7fqt
+	ZlAuBQly3+XIyDi8qIYwN5R2ZXusXtSqH+sqzq0B4Ymk7b5OUnTE0SVRJhZurBMg
+	q7j5thADkQLCRIyvRQ8ZM31KIpv2On7XwB4hAnUAg52s7Ca7Yr6Vs6DUP37D2Mk/
+	q0JFFhKKBfAAmrtA1GipMMWw/l4qUTe8Ar6QnsMzDYh6rL0PXkdkTjv1zMovloxK
+	ygM7z+k5OnvjR/IZKAWZw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791448589; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1791448593; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:H12LcB+IWV9nmq7I03PTQ2z4bstAlcAhe/X5l2GCh10FqQw
-	I5jWMtYvn4gcStvvHSGy5Ix89A2EItPqOoa5QGEA6OzwdRzSC27mOe3bs0Qf+Tc9
-	HHA14ILsPU/L81w0ErHJs/MX/OQ+cSpdd8K7ukyeqpTLK5SLSH2+fYlZFW/2cwjB
-	4CA1d9ksja9HwckA6lH2FysQ4njadP8mBwEJwvvuDUpHO03M0SNYnhLN+YzGblW+
-	0xPTDHsAR//zJ1NAQ0dK7kaKcVPGUh9f3eVkZyqx49CzU26xceazfyAAgZSHQbIA
-	4UlRyQPMrMBWkiUGNY0/Atq4y80NHBxh3TXkDVg==;
+	s=fm2:rsa-sha256:iyx4QNONEXlyACI+PE9qrEvU7/uGJTLFUTFormQ6WjKLp8I
+	BLkeHIC58BCcB++XpUgxUh/NDr4+py7tErOzRebD6llaeSWbOXqW/dxhtaIziIgE
+	3dSsv4cSnrXT7d7oH9Z6+3QRSeIqERUSD4YyvR3LfLNxNLQ1Wk2emzsRQYqpEjtx
+	sJ15ji7dMT7z2lwsNlNcGB2YKGLNmcXZMw3YLIi5UydZiA2WgPBgqvx9jckSf9mM
+	2OyWW+DTLjIleg29YGbkWSZS5fsEflB0D+BEyGHnbbPJ7YIPdnRA/w5VU3xfE6A9
+	Gs/1cxhw5Fv1lej2jz9kUedEXQFuUjsxgxk0Wkw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:p3b6MrdUU8Hkwd6gGALwfg7V+71X8wi/4ve2ysJDQoA=:8IDyyJQEgC7Py4Op2waTtBeOpsgZsEhxanEUskD1+3o=;
-X-ME-Sender: <xms:DVbHahj_p4-0ZmH7NuwgWNy16M22CVTnvamIjlp4DpAcoqTwp4PBrw>
-    <xme:DVbHasDMauzl0RCtMmpcr-dX6BkCES4gtVLJ3xGuXI3keQwwwEaNpEsI1-0du7gxG
-    fIx582FyvbWV39ANTAYIiHYpit6Yi_Iu4FeLWYjJYXLx5VQDqqDcnY>
-X-ME-Received: <xmr:DVbHauujthLw8Kz2dDvtpeuA8v0WKQUDl_nRkLRrkQyeoKZPRUx9QQ>
-X-ME-Proxy-Cause: dmFkZTEJ12PrM6lPkulG2HrVHQhK7W+nzWtv82fCmVg5Srp1vYOBsOZXk+3zbaSKR1o9q9
-    zgaDeQtd8exjkN8iOx8gK+wWQ1lxo0Q9l5NbSN30f6p85fJAxnBnfB37gvWssqHY0VvvFk
-    PiSqXLopWAifncYeDTw784/UzhaCYudHQhaoZVmElltXFrtbNxE9yoMHYjh+fC+7+cmO4F
-    trDv6wR/hEYFDz8+qQNhsJOcx0mrPE3FW04oN9df+1q7n0ABLdhTxdS8UQHC0rVd1KtZxV
-    7/37M0p9gjidiOzO6b0dZkeD/ejphFx+/vQQFlrVrQqcWyOiFkr2KBwIfyyln8WZPtNoUq
-    iqauGbzvoo7/w6LiPRaMnJCgPz0p2U+KrN8hJpDSdf5ORZkNsVzb0zmdG9rHUAb1+/cs85
-    T2xdDxGkpzF+PLh0mAmD8VBDWlFtZ2KYoPCyeT0A0KTgsizEVVOXXyxWx494FLK0y/V/Ob
-    ZODI06f5ewy7FE3gOa+hxfF/IRgmI7ZUsW0ZIiy/06vLCS528iiKY64bOzSWSLInc8+5zE
-    NWKW210sx5sXy1eNiqriO/7S0E757lT+uzTwOs2/IbMNv0W32lTFt/rxMwG0VmiKb+gho1
-    Qp9/cw+LfZm9cPXGt2V/KbG39yyfFPhRzPjYsSK5mcRuRoruI0MFyLZJ+nEw
-X-ME-Proxy: <xmx:DVbHahY2hx1QjvT4oQyMzVRdCE6IhiaIp73QHnzCOTgZ5lvGpLUgBg>
-    <xmx:DVbHahVJOOcPboZqOJVWmgn5Ravok2TxVRY_B_kBce8sTEGyK9PkKQ>
-    <xmx:DVbHal7nkzdwa746uXYzwRuh9OdKEvcCuziDhZwrCYrJn4tVNuhK8Q>
-    <xmx:DVbHasipFDZZi0t7zQtFMoAvPXzKOqSNk64R6bzvnwl47Defj_ZSOw>
-    <xmx:DVbHapQrr9nvegQnMy_TJ5JZa4ksAYEPhy-sY3e4Zu4PqzL7dkCv80sD>
+Message-Instance: m=1; h=sha256:Iqrye6W90ADGdtsXv9uWVU76sHxSYSI7GWx/MIJTxuk=:4jONM9VOKRIkZnzo+m7Vpzd+n8KQ48fTzI1MGq9NiQs=;
+X-ME-Sender: <xms:EVbHak_rAESfsJjyzvWNGnvVTyVd8Bmhf68esdRNyzmsZykIjZdbCg>
+    <xme:EVbHaivKNA876MyTALQttK1YfZpza7H_jQ_jLYYBadt0oFc892AuvpPbBXL6r9dd4
+    byIQvlrEsQVq0_YkFhA6APIlAvLQR1zfVV5jM0U3s5z7nfe-98VOlw>
+X-ME-Received: <xmr:EVbHanqsCcWtCf2royLTsXxg-6x9BJUGKbC0czIWMsEYmnV4a8UIFA>
+X-ME-Proxy-Cause: dmFkZTGTrBFKl8Y2D728a6iHluzdbQuClsZJrd0NvUJl/r6aTED1ekGkS+lTIgah9AM/RC
+    XXqQZO3rKxKtgp/ow35kMpuPzpMxleBx4D6Md1g4fLMSmK6McoeoO85W2idnzSkPwg6LLG
+    k6WgF0EuWvlfBJtWoMBu8t5FtKqdId600Ld1bcgoiAaVpLbMriJIx+tZY/vOaSJjIWvhab
+    kUk/5kmIsR/r+o8ZpLrcaLQUs+7UpxyjziarEpXIgTRuSc8yXiN23HTk7CZJd3CvmVxWIK
+    NQbXjgwnjv/oQMjXA3NIad6nTLt4378hsZpcRU5JLJJwT9R280Rh9egURr0HAQlDQrDciZ
+    g2xu+M0wSP260mikxLzw1e+JteIQf63jxzxRuNYA0tLlJFzQeXerRIFMnw8byy1JaZ+ueG
+    2VT3GOxozOXRkoCU3Cb+lnJCj78K+zbQlmjn8s64tn+0T3GF7fHTmnkUEJZG2NTwD+DACl
+    +8QxN0YyQ75TFXfpu6y+q06v0fv1hLqb0mFnmZwfSm3RmqVfrwRE6dbmcWCgJJdRCtYvha
+    W4665oUrs9kE061RNAS5qrsJkHttthQhTwZj/+HXaC7pVHAueB/nHdTIg0iyAxJpfuqTM6
+    tw0BlyPsE7TAD9Q8G8S3yY0eggs6vq6/OZoyDJiAc8djBYpxgcygjTD18+Tw
+X-ME-Proxy: <xmx:EVbHavlUZopCG18BI1PV70MHdFbqr_J3zSIZ-XPoFSawMTUjzXCqCg>
+    <xmx:EVbHarxhPAuPed6mHaG2dAa2kqhKsS-qTCLRfF9VEx6h34Zco7ZyBQ>
+    <xmx:EVbHanlwbMfTc4j8zAXlGOuVunD8gioVhDQuoZKMAj9IVH78FGiIzA>
+    <xmx:EVbHakdMWc8guq4q7lQZ6eO-52wsQEHxPxQ3Bcy0C_n3DTkeDC1bTg>
+    <xmx:EVbHaq_B-JnwdROC15_kIRD5CjrKn2PfypgbzI33gBIz61izxAwUGLsg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Oct 2026 04:36:29 -0400 (EDT)
+ 8 Oct 2026 04:36:32 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b920c3c1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Oct 2026 08:36:29 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id e8b6671d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Oct 2026 08:36:31 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 08 Oct 2026 10:35:59 +0200
-Subject: [PATCH v2 09/13] tmp-objdir: replace primary source at creation
- time
+Date: Thu, 08 Oct 2026 10:36:00 +0200
+Subject: [PATCH v2 10/13] odb/source: make `will_destroy` an implementation
+ detail
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -100,217 +100,101 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261008-pks-odb-move-alternates-v2-9-b47e8189baa5@pks.im>
+Message-Id: <20261008-pks-odb-move-alternates-v2-10-b47e8189baa5@pks.im>
 References: <20261008-pks-odb-move-alternates-v2-0-b47e8189baa5@pks.im>
 In-Reply-To: <20261008-pks-odb-move-alternates-v2-0-b47e8189baa5@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
 
-When creating transactions via the "tmp-objdir" subsystem callers are
-expected to first call `tmp_objdir_create()` to create the quarantine
-directory and then `tmp_objdir_replace_primary_odb()` to activate that
-quarantine directory as the primary object database source so that all
-newly written objects are written into it.
+The `struct odb_source::will_destroy` flag tracks whether a source is
+part of a transaction that we know we'll destruct anyway. If so, the
+backend can optimize for that particular case, for example by not
+flushing any data to disk.
 
-This dance is performed by all users of temporary object directories, so
-that makes the setup unnecessarily involved. Merge the logic to replace
-the primary object database source into `tmp_objdir_create()` to
-simplify the dance.
+While the intent is sensible, it assumes that transactions are backed by
+a separate source that's being linked into the object database. But that
+may or may not be true, as backends may have significantly better ways
+to achieve the same. So the assumption doesn't make much sense in the
+first place, as we're now tracking backend-specific details on the
+generic `struct odb_source` level.
 
-Note that with the quarantine directory being installed by
-`tmp_objdir_create()`, users of this function no longer get a pointer to
-the underlying quarantine directory. So instead of repreparing only that
-directory, we now reprepare the whole source instead, and as we know
-that the source has wired up the quarantine directory already, this will
-cause us to reprepare the quarantine directory, too.
+Move the field from the generic source into the "loose" source, as this
+is the only source that ever makes use of it anyway.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- log-tree.c    |  3 +--
- object-file.c |  8 ++------
- tmp-objdir.c  | 47 +++++++++++++++++++----------------------------
- tmp-objdir.h  | 18 +++++-------------
- 4 files changed, 27 insertions(+), 49 deletions(-)
+ odb/source-loose.c | 2 +-
+ odb/source-loose.h | 3 +++
+ odb/source.h       | 5 -----
+ tmp-objdir.c       | 4 +---
+ 4 files changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/log-tree.c b/log-tree.c
-index 83a3c4bf9b..361dfadbb3 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -1043,10 +1043,9 @@ static int do_remerge_diff(struct rev_info *opt,
- 	 * into the alternative object store list as the primary.
+diff --git a/odb/source-loose.c b/odb/source-loose.c
+index 3c9edba46a..b2fbccd3c0 100644
+--- a/odb/source-loose.c
++++ b/odb/source-loose.c
+@@ -599,7 +599,7 @@ static int odb_source_loose_freshen_object(struct odb_source *source,
+ static void close_loose_object(struct odb_source_loose *loose,
+ 			       int fd, const char *filename)
+ {
+-	if (loose->base.will_destroy)
++	if (loose->will_destroy)
+ 		goto out;
+ 
+ 	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
+diff --git a/odb/source-loose.h b/odb/source-loose.h
+index 3cf2e1f8f1..7c7e845fe3 100644
+--- a/odb/source-loose.h
++++ b/odb/source-loose.h
+@@ -28,6 +28,9 @@ struct odb_source_loose {
+ 
+ 	/* Map between object IDs for loose objects. */
+ 	struct loose_object_map *map;
++
++	/* Whether this is a source that will never be committed to disk. */
++	int will_destroy;
+ };
+ 
+ struct odb_source_loose *odb_source_loose_new(struct object_database *odb,
+diff --git a/odb/source.h b/odb/source.h
+index ea00873763..9fd2b2e5b5 100644
+--- a/odb/source.h
++++ b/odb/source.h
+@@ -81,11 +81,6 @@ struct odb_source {
  	 */
- 	if (opt->remerge_diff && !opt->remerge_objdir) {
--		opt->remerge_objdir = tmp_objdir_create(the_repository, "remerge-diff");
-+		opt->remerge_objdir = tmp_objdir_create(the_repository, "remerge-diff", 1);
- 		if (!opt->remerge_objdir)
- 			return error(_("unable to create temporary object directory"));
--		tmp_objdir_replace_primary_odb(opt->remerge_objdir, 1);
- 	}
+ 	bool local;
  
- 	/* Setup merge options */
-diff --git a/object-file.c b/object-file.c
-index fe9139c96d..02521afcaf 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -488,7 +488,6 @@ struct odb_transaction_files {
- 	enum odb_transaction_flags flags;
- 
- 	struct tmp_objdir *objdir;
--	struct odb_files_dir *quarantine;
- 	struct transaction_packfile packfile;
- 	const char *prefix;
- 
-@@ -511,12 +510,10 @@ int odb_transaction_files_prepare(struct odb_transaction *base)
- 	if (!transaction || transaction->objdir)
- 		return 0;
- 
--	transaction->objdir = tmp_objdir_create(base->source->odb->repo, transaction->prefix);
-+	transaction->objdir = tmp_objdir_create(base->source->odb->repo, transaction->prefix, 0);
- 	if (!transaction->objdir)
- 		return error(_("unable to create temporary object directory"));
- 
--	transaction->quarantine = tmp_objdir_replace_primary_odb(transaction->objdir, 0);
+-	/*
+-	 * This object store is ephemeral, so there is no need to fsync.
+-	 */
+-	int will_destroy;
 -
- 	return 0;
- }
- 
-@@ -1443,8 +1440,7 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
- 			return -1;
- 		}
- 
--		odb_source_prepare(&transaction->quarantine->packed->base,
--				   ODB_PREPARE_FLUSH_CACHES);
-+		odb_source_prepare(base->source, ODB_PREPARE_FLUSH_CACHES);
- 	}
- 
- 	return 0;
+ 	/*
+ 	 * Path to the source. If this is a relative path, it is relative to
+ 	 * the current working directory.
 diff --git a/tmp-objdir.c b/tmp-objdir.c
-index a3903b6e6d..719b55e580 100644
+index 719b55e580..2f2ffbbc7d 100644
 --- a/tmp-objdir.c
 +++ b/tmp-objdir.c
-@@ -57,7 +57,7 @@ static void tmp_objdir_reparent(const char *old_cwd,
+@@ -14,7 +14,6 @@
+ #include "odb/source.h"
+ #include "odb/source-files.h"
+ #include "odb/source-loose.h"
+-#include "odb/source-packed.h"
+ #include "repository.h"
  
- /*
-  * Restore the primary source that was previously replaced by
-- * `tmp_objdir_replace_primary_odb()`.
-+ * `tmp_objdir_create()`.
-  */
- static void tmp_objdir_restore_source(struct tmp_objdir *t)
- {
-@@ -157,8 +157,10 @@ static int setup_tmp_objdir(const char *root)
- }
- 
- struct tmp_objdir *tmp_objdir_create(struct repository *r,
--				     const char *prefix)
-+				     const char *prefix,
-+				     int will_destroy)
- {
-+	struct odb_source_files *files = odb_source_files_downcast(r->objects->sources);
- 	static int installed_handlers;
- 	struct tmp_objdir *t;
- 
-@@ -167,6 +169,7 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
- 
- 	t = xcalloc(1, sizeof(*t));
- 	t->repo = r;
-+	t->will_destroy = will_destroy;
- 	strbuf_init(&t->path, 0);
- 	strvec_init(&t->env);
- 
-@@ -204,6 +207,20 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
- 	env_replace(&t->env, GIT_QUARANTINE_ENVIRONMENT,
- 		    absolute_path(t->path.buf));
- 
-+	/*
-+	 * Make a new primary source and link the old primary source in as an
-+	 * alternate. Disable ref updates while a temporary source is active,
-+	 * since the objects in the database may roll back.
-+	 */
-+	t->temp_dir = odb_files_dir_new(t->repo->objects, t->path.buf, false);
-+	t->temp_dir->loose->base.will_destroy = will_destroy;
-+	t->temp_dir->packed->base.will_destroy = will_destroy;
-+	t->temp_dir->next = files->dirs;
-+
-+	t->orig_dir = files->dirs;
-+	files->dirs = t->temp_dir;
-+	t->repo->disable_ref_updates = true;
-+
- 	return t;
- }
- 
-@@ -345,29 +362,3 @@ const char **tmp_objdir_env(const struct tmp_objdir *t)
- 		return NULL;
- 	return t->env.v;
- }
--
--struct odb_files_dir *tmp_objdir_replace_primary_odb(struct tmp_objdir *t,
--						     int will_destroy)
--{
--	struct odb_source_files *files = odb_source_files_downcast(t->repo->objects->sources);
--
--	if (t->temp_dir)
--		BUG("the primary object database is already replaced");
--	t->will_destroy = will_destroy;
--
--	/*
--	 * Make a new primary source and link the old primary source in as an
--	 * alternate. Disable ref updates while a temporary source is active,
--	 * since the objects in the database may roll back.
--	 */
--	t->temp_dir = odb_files_dir_new(t->repo->objects, t->path.buf, false);
+ struct tmp_objdir {
+@@ -213,8 +212,7 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
+ 	 * since the objects in the database may roll back.
+ 	 */
+ 	t->temp_dir = odb_files_dir_new(t->repo->objects, t->path.buf, false);
 -	t->temp_dir->loose->base.will_destroy = will_destroy;
 -	t->temp_dir->packed->base.will_destroy = will_destroy;
--	t->temp_dir->next = files->dirs;
--
--	t->orig_dir = files->dirs;
--	files->dirs = t->temp_dir;
--	t->repo->disable_ref_updates = true;
--
--	return t->temp_dir;
--}
-diff --git a/tmp-objdir.h b/tmp-objdir.h
-index 5ed0db1ee0..a301b01d84 100644
---- a/tmp-objdir.h
-+++ b/tmp-objdir.h
-@@ -11,7 +11,7 @@
-  * Example:
-  *
-  *	struct child_process child = CHILD_PROCESS_INIT;
-- *	struct tmp_objdir *t = tmp_objdir_create(repo, "incoming");
-+ *	struct tmp_objdir *t = tmp_objdir_create(repo, "incoming", 0);
-  *	strvec_push(&child.args, cmd);
-  *	strvec_pushv(&child.env, tmp_objdir_env(t));
-  *	if (!run_command(&child)) && !tmp_objdir_migrate(t))
-@@ -25,10 +25,11 @@ struct repository;
- struct tmp_objdir;
++	t->temp_dir->loose->will_destroy = will_destroy;
+ 	t->temp_dir->next = files->dirs;
  
- /*
-- * Create a new temporary object directory with the specified prefix;
-- * returns NULL on failure.
-+ * Create a new temporary object directory with the specified prefix and
-+ * install the directory as the primary write target; returns NULL on failure.
-  */
--struct tmp_objdir *tmp_objdir_create(struct repository *r, const char *prefix);
-+struct tmp_objdir *tmp_objdir_create(struct repository *r, const char *prefix,
-+				     int will_destroy);
- 
- /*
-  * Return a list of environment strings, suitable for use with
-@@ -55,13 +56,4 @@ int tmp_objdir_destroy(struct tmp_objdir *);
-  */
- void tmp_objdir_discard_objects(struct tmp_objdir *);
- 
--/*
-- * Replaces the writable object store in the current process with the temporary
-- * object directory and makes the former main object store an alternate.
-- * If will_destroy is nonzero, the object directory may not be migrated. Returns
-- * the newly installed primary source.
-- */
--struct odb_files_dir *tmp_objdir_replace_primary_odb(struct tmp_objdir *,
--						     int will_destroy);
--
- #endif /* TMP_OBJDIR_H */
+ 	t->orig_dir = files->dirs;
 
 -- 
 2.56.0.406.ga2d225a756.dirty
