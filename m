@@ -1,176 +1,139 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CBD3CB540
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 19:06:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791486410; cv=pass; b=iOg+sroMkoa/rZHuysQxC6DfjWujng5MixAhRgMMko97W1ocVrlkN0pqTfi3szpWlV4Z/AE4ki4izK2t4AfMLOLvR82ZNshRNAj2b2Lv6GGUUhDsEnIUKSrWWB0KLZtxqpgeBjG/OHR5rK7/eRV6uoosMMM2Lsx1mkIWBS0QP4k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791486410; c=relaxed/simple;
-	bh=e/WYtWhi2VzOkWg8GOeMNLRDMNcsJ+KMMmyD00cR+Mk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ucI2VK6A/XxIZ60il7S1s81yAXAOr2sTY5RhfX7a7a/mBX5Lu+FAuFtksBfgM/vkFXXqbXRgk3IMqwsgJVcWm/StwNc9eFoZrcNB8wWC+xQYQJhXMnvzyj/Y3QLen/KEDkbT71Zwxh6UFhYVdM9vRqgOeWOf/OMsM3C7OKwdszU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nn5R9D26; arc=pass smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A991CDFCA
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 19:19:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791487158; cv=none; b=siA8tEheT49+maVZVFADp30hKZXoozJl3F4NZ3u7MNGwxROGJE+5GNlVDiu1TyC3EADswutij323tTeLRFAyu6Ajm2fFoNf+Lo4bADElS3t0e13V/r4nAz4KQlPj75zRoUCGnGcYDM/3Ip5k/Vs+42WpLZpIM2vNLnGvOrsbSP4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791487158; c=relaxed/simple;
+	bh=9g+rt05aWlHLfuqFXymAPhkMNuvmeiSlU7kid8YDR1E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BGYqGmkZFuUIPkyEm7Dlbj6GGv1SsDr+2mV6KxDfS6o4EYq0k7nUqHVjJ1tTwNMdKKVgBMJkoI4tYNpcIaJKmcgwn8FrTAZORbhl3lOwHs+FmMYnSyO0OSIL4OlfHuBo/hf6tyZHxdKbwEUN1DWa+vSOiqEnErF9Ale5KdF6GUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gzxFuDp1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lb52kYmR; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nn5R9D26"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-3a772ec8389so27686081fa.3
-        for <git@vger.kernel.org>; Thu, 08 Oct 2026 12:06:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791486405; cv=none;
-        d=google.com; s=arc-20260327;
-        b=RFn+IhzPzpyHhdwAaeAZtK2ZkMG0md7VU5Z3Hps22zSy3MUczTxkMYls7Wd+2mF87P
-         2VOhWDNtPQH9knx9wDmrFC77CNiOm6pFuhzmHGiV+f99Iy2anBPIV7reJnnNhY0e8iAE
-         LBsGbiX60CIGYXvo4PUIygeRm65CLt0M0fj+yT2qwnN/ik4UFpqO6mmd0gBu3oyUP1Wr
-         aYEa2NAyjzhXIgbiBpADrvvHpOSwdPbV7ug5gDNN2NcB1IsmULDevWl+Xhp4jwv3bRo7
-         NEDwmSsd/ZckjoHk5TrtfVmv+APYCKde+qEBKyPWV/XObQ5TQdyw73MQYbfy3PUGqyKy
-         1CBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=tw6ZYd75IN/jRLjuwVizvQWP11TPHQplTLX1BHeIK4o=;
-        fh=hQDIabKvi6qTfAtrYBXJqXyNz6uQZC8CwsxejGRhIkk=;
-        b=qc0TUm4WfmVlJaC3M+9AMVBBpkZiGELKseZV9WH05iz6cGS58DP7LFRnobrb/2PQwk
-         eEPXtFs+ZJkVSbszOWLASoiI5tdf6M5ApYtCYnYDxdJali0wa+BssgRJMrvtmAk4d085
-         g4oF25B3GJdj+wbZLxXS29g0RdeRHa4MNpjDm1KhhNWI/pPcj9Eq/IywWQsiTvuimJ3/
-         eclrjprX4yYAVtXXbef7kmJPU8HxYDYIW6kmyP76xU6WWaIheyqa0Me5V+710jfLHM/G
-         EH14WYFTTc2q7h3l2zYmc6jF8JJpxUKNLKdYiBD/CqAaFCsyYyiMdzrVCfu4UQXplot1
-         AlYA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791486405; x=1792091205; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=tw6ZYd75IN/jRLjuwVizvQWP11TPHQplTLX1BHeIK4o=;
-        b=Nn5R9D26FhA9AxjOdtKXAZI9fTPCMfKFku78pOsfdzuhodTYA5ufALWntIRbzTs9TN
-         fArEFbnqjmRr9x57SaoGA39UhvHjfp+1fx6FftWREQKVE19dJDi3TsvvzUp2CmnqZFqn
-         Nu/fkeYrR6lwIABIGVDtrUuxLT75xkuTVTMxBkO/c8CZLERwc/Qw/4GKdHN9SL4gaeOx
-         vyMhrIDkcdtzrej1AwsgmvH5gmtcgn90zECFLBV8y21JaPZXd6VgWfh3Eru7tbAlVz32
-         mRNOh/57WVl6GlN4ae4LRoQFxrGX7bBgOiOsUtda96IZ/1OeP8Mkz7MH1aBtzEr6hzdo
-         jMZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791486405; x=1792091205;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=tw6ZYd75IN/jRLjuwVizvQWP11TPHQplTLX1BHeIK4o=;
-        b=OqP8ZYsR9zNlZO4phQPE95+4obB1jOKS/+SoFG7mZqgru2YAUh4uK4RfIkXWt+xT5K
-         HvwswglJIBoJBrMyQ8Bymy0r3V+LpFfWr8BgKIwJgIErU2V/ohu4ueliuyQZ1kOIyfe6
-         p78RYG9SQ0m3i4n0fu5jKDjR2jBr6Bd9HWRoxvHw05L2m65EpeInBoX8kHJZDwsvvjQJ
-         IFSDSirqIkQmF0+r1T2mofpU/dgRq4qL792YaDYH5R8tI0qi+/4THj7aj2h+FXsTMwTR
-         bgRW33TmIvJBm1X2ta7VdUD4Af94VTznrQVdiMH+WCc3Hz3uZfvGebrlbMTs9hYB89tr
-         lwGg==
-X-Forwarded-Encrypted: i=1; AKwUvBx3sOAqo+OBXmPYGNfyRYucQcED3huC7T1ME0VlZCMepxYpgrcUvIO4r07auzRxls/z2sw=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJIJikvDjc9s9SbHs96j5UU3GWxU7xBhDQBNQqGQaP7tPvRZsgD
-	ILS3bT5O7sFLTDf0GrT70QUQeiowv6E+HE/QHBC578EzASFekOP6kRdmmBvTuiQ5mXbE09TzNsQ
-	XrK9DGYi7+yiKeCBWox8/QuCtc65hOtE=
-X-Gm-Gg: AYBFou28y+eUA+8es98ypt1zAQE9DkkNap2yxS0HgLdQCB0BFQh7UUs0lOazT7hVmAP
-	XXcM4psl+bILEQZSXaNCyG3ZI3J8K8RAR60lWvEexqcA5qo3Eqd81oUBu1B+fI0ra9LX4pTVqYv
-	7y+DHcS+dI9VzLy6CucRQ6ZwOFxcpvjOGnaQXJbbvWENvtB5NhnRAvgJP+a9GyOiR5xyusylYKi
-	mW5JPaAaW+EtC+KSI/BvlcZhHtws6ECw0hsU3Sur5idOzTXGAXR2qCWxYoQGXWYDn2aiTGscvgU
-	HwEgFKyDV2rCH+1suJGqloiv6f95sbLCQ4AW2hFhYu0mhXtjtMxhU2A2hdyGrIRa2TQgzAdenrb
-	YGu0By5PwJwCt1Av4zU4TUpHKYn1EAxjIYmtn4PIpIwXbrGn6ANpMrsUNzYIRb77kkMRW5C0s0t
-	/9FtXiBMk=
-X-Received: by 2002:a05:651c:a394:10b0:3a6:5ec0:796c with SMTP id
- 38308e7fff4ca-3a9a2c9d3cemr11636721fa.19.1791486405342; Thu, 08 Oct 2026
- 12:06:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gzxFuDp1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lb52kYmR"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id A57F61D0006C
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 15:19:15 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Thu, 08 Oct 2026 15:19:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791487155; x=1791573555; bh=FrO01sUzXt
+	/jSFtmJezINUk0asdC+DE9XymsWzSGj3E=; b=gzxFuDp1Z4/dnhfzow8uTsplKo
+	82wTMGvgwJA2RNR7/UCT6vJcaintA7E4AooBrIDnpO4Y3QTq/mvT5kB/Q7GHbqXH
+	g92br2RGLGO/HDgeIhxUHZaZJJTFMoNo7n4xkdyNqKxcgrp+sT4bI9FX3upa9vL8
+	F+rfb1EsdaFEpC4q6DuYiXaNz4XVSLHfbnloimXo+cdy8IuUIkE6yjPLGI2FIhNr
+	M2aj4uA3onjbRUsOF1i6hjqFD5iw3eIiENNPIUOcsLTq8O388eUNaXWztTgNHj/c
+	pgAr1TE3Tsm6SMwwuGsqoHMIdttW0yIia/dcL8KvNhswOMmUY6OORCteWEbw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791487155; x=1791573555; bh=FrO01sUzXt/jSFtmJezINUk0asdC+DE9Xym
+	sWzSGj3E=; b=lb52kYmRIZkwziKFEPRqoEJBGdTrSkwRqvtChkU7cfRfJmRaJ8R
+	MEJJxgohPPKkgyc7KytrL0RwC5WNUxRyWmASSS7YYsmN4o9OIfV562+kaL4B4L3y
+	SUzqB1gF6N3o+Mq3l4LaeGrlQ5goWgAh0Z8zAndMS0uT66DzkEfJMfx/HNpekZrw
+	ZiI8aT7ou0IuHdvw/FWs403+EhQUjFcJic5UoBvHCvfUbOxlO35AO1VdyIsidK9K
+	D4OmWSOMzX2AEVYeUYo1FIi3iz7af+f9r8ykjKExbLGzePgRLPltMFWnfQ5p10VF
+	kYoi6yeaBcXTz/nY1qKLZfzm6VhFrn0K6lA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791487155; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:J3P7d9cd/oUPIsVUtNjzNL50rmZgz0dHxcyfZIPxhMOQ7Ua
+	6U5Gk6L4nDn7mSYQT5JtNCRdr5O9o6BpIldL8//tPG3I0oyIErj8ktJR0jk1slih
+	3oGmxwtVESKbx2eufPAx5FMMiBWcYD9S/JW1uI+RgPaX8eQ3vYtC1gVM9HQAiONq
+	zQ8Bqqn5qMo4yZvzYu5/+ljcD9WKsu44q7y+wcC2VslAi2E8CEqHY4c0COuZlQmD
+	CsuIQUOkTnShOQm+Hiv0CoM7c1saDdHaY6oSSEYShlVeaNa7s/UolHRPYHGF6xuG
+	t7GLY8AnU65VFqkekFJJx3FG/eFrrjct/SqJwOQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:Br+owB5Pe1j94N9tmZHmKHu31+yzg2G7QKu0giJY+Ao=:9g+rt05aWlHLfuqFXymAPhkMNuvmeiSlU7kid8YDR1E=;
+X-ME-Sender: <xms:s-zHakHTc0_FViPp6YDl7Zt0u6wwwwML43mTqEveSY8thOE_fejATg>
+    <xme:s-zHavlc1wDN7BrMZsI4ANL2RPVT0Q2Ty57VTmqalG0virzVEbiiLWng-oVvCqsBA
+    xfE4irGTegh30Q28p_MICtN8Sc_SSb-pTq_RF02ZuJWFxJgLGO7QrA>
+X-ME-Received: <xmr:s-zHagYoCmi89wNmOYmA0r1NNxep13OnU5X9HstMTY-DnxsxOwmigLD8M8iNmOS3jEYxLnZocYkGiEBagRa0Ph9Ux_5vxGGkHWEC>
+X-ME-Proxy-Cause: dmFkZTFUf9phGKYaPXJJqQjSDEXsGOWV5cO5hnJFtL2ZEKZP+fruX38vFopB+n7TfPHmt4
+    ceuvkQkvYLy1EwjcESchqLSD8HBbuoA3y3emfKugQcZcuQ40SsPy22GwE0kBoov++m0pJy
+    1FYnhjEsykJ1jL2b2Xa/rq6bNVla15TVPm0dMhF3DyPUNgJxPSBLde85C+LVuDMuXB57UI
+    OWpkTpY5u0b7Sexk2zyjqyz/O8fVQjqgr6Ucwbww2+Y31W25bXijMPnwechYTdQHx2iVSB
+    FG3wz95gnEyVLBEcdpucbgUX5qqvE8aAyz87Gbba85LKI7vQ2ArRDo8Ki3Q4FVnv2Hm1g7
+    IwFyU2Ze0uz+SD4KfwPNnR/9eq1+wQM0BXisNoEOYd4QQ+3XpPNOQOdbuidbZrMr+RJF/v
+    QSWe2uME2sljAtyu9vD0B6mNctFtzcjudOATLtPgvcPkVLmx1SYxCynqmuReNuVy3JPm/s
+    Ei1ycLt9J/bxgCGSHvAi8GT5+Zf8yV+ZzhGVR7D8ayK93klPa6GgT8O4FFYM9qL/5AMME1
+    wMCuvTLIoaxrGtka1wqttQjZ6buGdaJuKV60ZTk3hQdqnycsqvugyvIH9YzIMezKzD4oOv
+    g+Z9yJ0qOi2KA++WagxJ8hrFEyxP7hOB+AkS5tTaUwuYDtMLi/UEblUEUBhQ
+X-ME-Proxy: <xmx:s-zHasHcfxQZpDby4l_Cq9wCwmAMi_wm_Alvpzl5b7ttsdSSubL76A>
+    <xmx:s-zHapI4Z8LsrbkkOShG11qPbL6gocWDZonYd3a_O7X-X2-RJ6SFpg>
+    <xmx:s-zHavOhq5fEG3iq3Ke5o-jtjMKIAlThZiqFDtC9ec1eFKJ299zTpQ>
+    <xmx:s-zHahmickHNZQJ0Q3eAK9HxB25moVo-YsO8E8HEn-svYSJqT9oCuA>
+    <xmx:s-zHanlnllQQ9G4UWL7CxtNpA1wyqxp07DIKJI2T13K1Nnxqgu1jrWwI>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 8 Oct 2026 15:19:14 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "qeesung via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
+ <ttaylorr@openai.com>,  Justin Tobler <jltobler@gmail.com>,  qeesung
+ <qeesung@live.com>
+Subject: Re: [PATCH v3 0/5] repack: don't lose objects to a ".keep" that
+ appears mid-run
+In-Reply-To: <pull.2219.v3.git.1791453141.gitgitgadget@gmail.com> (qeesung via
+	GitGitGadget's message of "Thu, 08 Oct 2026 09:52:16 +0000")
+References: <pull.2219.git.1789385483.gitgitgadget@gmail.com>
+	<pull.2219.v3.git.1791453141.gitgitgadget@gmail.com>
+Date: Thu, 08 Oct 2026 12:19:13 -0700
+Message-ID: <xmqqv77cyp8u.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260920165037.88524-1-maciej.ciemborowicz@gmail.com>
- <cover.1791452597.git.maciej.ciemborowicz@gmail.com> <asdsIjNEUOpaAnX5@pks.im>
- <CACQ=SRGtpYLCcAaJz+yUR564wTm8wsMy1qn7hZ_iJfDTc_KTeQ@mail.gmail.com>
- <CACQ=SRGOdtUvxDEBeXz93nrC01oRaTALx6EztyBEfuCtnmTk-Q@mail.gmail.com> <xmqqqzi02o22.fsf@gitster.g>
-In-Reply-To: <xmqqqzi02o22.fsf@gitster.g>
-From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
-Date: Thu, 8 Oct 2026 21:06:32 +0200
-X-Gm-Features: AclHuK9HBRHBHnrp2ROirDKrM4Wu5Jw3tR6FQjia4egn4Obym2qw3OoNLoDSx5o
-Message-ID: <CACQ=SRHRp4vKpV5JagAXS1n4iX-LJ7fm78OwMGB5fke2CTC4FQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/4] refs: run copy and rename through transactions
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Oct 8, 2026 at 5:46=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
+"qeesung via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> A response to reviews on the N-th round must come long before
-> sending the v(N+1) round of patches.  Some contributors send them
-> after v(N+1), or immediately before, but the proper time to respond
-> is soon after receiving the reviews on vN and having had enough time
-> to understand the comments, before starting work on v(N+1).  Only
-> after that work is complete would you send the new patches.  Hence,
-> we expect the time between vN and v(N+1) from real contributors to
-> be measured in days, not hours.  Whenever I see vN responses arrive
-> after or immediately before the v(N+1) patches, or worse, no
-> response at all but just the new patches, it smells fishy.
+> Interaction with topics in seen:
+>
+>  * ps/odb-files-alternates turns the list of object sources into a single
+>    files source with a list of object directories, so
+>    repo_invalidate_kept_pack_caches() from 2/5 needs to walk those instead.
+>    The textual merge is clean, but the build breaks; this resolution follows
+>    has_object_kept_pack() on that topic:
+>    
+>    void repo_invalidate_kept_pack_caches(struct repository *r) { struct
+>    odb_source_files *files = odb_source_files_downcast(r->objects->source);
+>    for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next)
+>    invalidate_kept_pack_cache(dir->packed); }
 
-I wouldn't rely on that. It's easy to fake. I'd rather ask for transparency=
-.
+I do not know if you meant to cram a function on four lines this
+way, but I suspect that it may be easier for everybody to stop and
+wait until the other topic solidifies a bit more, and then create a
+synthetic base that merges the other topic into the tip of 'master'
+and rebase these five patches on top of the resulting merge.
 
-> And thanks to your learning, the next patch series you will write would b=
-e of much higher quality.
+I wonder how close ps/odb-files-alternates topic is to the finish
+line?  Karthik did read through the initial round and then gave a
+thumbs up on the current iteration.  We would benefit from a
+different set of eyes on the series [*].
 
-TL;DR: I'm facing a moral dilemma: should I refrain from submitting a
-patch, or submit one written with the help of AI? If what I'm
-submitting isn't useful, feel free to say so or simply ignore the
-patch. If it has value and people are willing to accept it, I'm happy
-to continue.
+Thanks.
 
-My current workflow looks like this:
+[Reference]
 
-1. I give an AI agent a task.
-2. I check whether the solution works. If it doesn't, I refine the
-instructions until it does.
-3. I check for edge cases.
-4. I do a code review, ask the AI agent to explain what it wrote, and
-have it make corrections. My own code review is pretty weak, though,
-because I haven't spent (and won't spend) thousands of hours working
-with C and Git internals.
-5. I ask another AI agent to review the code and think through its
-findings. I usually conclude that its review is better than mine.
-6. I go back to "writing" code, and the agent implements the changes
-suggested during the review.
-7. GOTO 4 if I'm still not satisfied.
-
-At this point, I face a moral dilemma, because the next step is to
-hand the patch over to other people to read, which means asking them
-to spend their time on it. I have the following options:
-
-1. Report the bug without submitting a patch.
-2. Report the bug and spend a month writing the patch myself, learning
-Git internals and C along the way. Unfortunately, I'm not planning a
-career in C. I've been programming for well over a decade in a
-completely different stack, and I simply can't afford to devote that
-much time to it. It might be worthwhile if I intended to spend the
-next several years working with Git and C, but unfortunately, that's
-not an option for me. On top of that, I can't shake the feeling that
-AI is already learning faster than I am.
-3. Report the bug and solve the problem as well as I can with the help
-of an AI agent.
-
-So realistically, my choice comes down to options 1 and 3. And that's
-my moral dilemma: I don't know whether it's better not to submit a
-patch at all, or to do the best I can with the time I have, using AI.
-
-Choosing option 3, however, creates another dilemma before submitting
-the patch: Have I reviewed the code thoroughly enough myself? Do I
-understand what I'm doing well enough?
-
-I chose option 3, and out of respect for other people's time, I'm
-doing my best to understand what I'm submitting.
-
-And the only thing I can do to feel that I'm being honest about it is
-to be transparent and explain exactly what my workflow for developing
-this patch looks like.
-
-Thanks,
-Maciej
+* <CAOLa=ZTjrzNbuvZ-kr6k5TZSMyGGMFTb4iar6DZwdnCDvUrH9Q@mail.gmail.com>
