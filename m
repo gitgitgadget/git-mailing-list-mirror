@@ -1,217 +1,151 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1E149E5FB
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 12:56:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791464185; cv=pass; b=E6uExapSoQO8rDJ8caBuSZomAX6NJgN8KZgH3KDg7ZDkHvQON4y6tgVzLY/DMOw2cGMYvCsbawVwhlSMfgDrPEtzoWE7MCQkS64cV7+nPdz3d280B29kPdbV0cUBEP6kERxF60lF62ikosmlXXIGV3sqJbLKz9uDE4ZkLdzapPU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791464185; c=relaxed/simple;
-	bh=Vs8EGuI2P2uuMV0ttAt1L6iqs01zz6b4Ux4+bGDZE88=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WDQHWUIZf61Vw/niKjEpnQ8x8WNAc+S/VuO6BibgmnpsOSbe3JgtyhbjbTiLFySGw0tQOCG/0uggdbgukgmm0fN/SxHrd3G3u7tE60kNOUHmZnr/ZzAuhvFoYOHWwedZJLTgVWQvSmOm0ol3fyTsWn3rN3mHYIyTUZYfjSdPmV4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FG92o4xY; arc=pass smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA8B450410
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 13:20:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791465632; cv=none; b=Gz6GU+1ElC8QU2byNK+k4gyhYKi6N/51S35zbfrbX4TpdwcO7QqCLIVsG1zvzY5LvkiG0EnIo2vrKfBBdkSPOyMH31oyGJ0hJpe8kF4Ip1hUjSqH1Fa9A5D/K0Q7QlnfZLUSS4n8AHXDDHL7A7R/SDAOQ3vW2cI8cOZygkf1zQo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791465632; c=relaxed/simple;
+	bh=FT4gvzyDwAmAMLNgrUkWT1b03cmbRlI6iY8I63X5QL4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RPyVEzoZY2Iw+Ss/LHV+cfvfSccDbDtJOOmjxvhufbI9ct60IoMQnbDqeiJW8XmVGApQxeKBPglKSFeq2grnS8x+JVVkKkaETc7ijPAHwJPmkEABpLokqdw+ROkkC/lhRu5bCRc4ZmmD+dzR8QvSz85zaE8obU3hHYi1bXBblWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BkuasKhY; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FG92o4xY"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8875d220446so1553036b3a.3
-        for <git@vger.kernel.org>; Thu, 08 Oct 2026 05:56:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791464183; cv=none;
-        d=google.com; s=arc-20260327;
-        b=lRjIzICpcURaV9wDDGipBDk4vBtZDCe1/+tqZ384yZayrjM304bhmZCpFN+SntDcYV
-         6o40JwbPq+lNT1pl7G4uvuV6DZrsP8M0HrCGFFjelxSRKrcs0n4+GRAH1lXVVfALRVt3
-         1WYMs86V4XQpifzgFaAxC4e/dBcYwYLvY5KsbFb3/pOxDzqZjxI8GaEAewlXwt7nQmGo
-         5LCJkH5ERBuRS59y92tDiVeoe9Lo/WypXUTthEt9rHdGHf7nRThdeBFg7aGBSfPvUtSq
-         frHJ60aYrWEBmjD7yy752pS6Or18zAqONiDzqRrjpNZPIqb/kOLgdaY8Feaf15Yl7Y+A
-         u/Mw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=qrg5rDyIfisk02lD3K77xusluohGNRXcpJwgDOCMjzI=;
-        fh=Z4J1+AR61sp4gi0UHVqEqnniduPfCGneOHKt83rHMjo=;
-        b=C4PrU1OlDAOmB2Yesf6P1RXBg5KvQHMBxF0lUPbJyFkt21XGEFbm6va+m8OTbZu3BA
-         53il2+tmesp9f3AKg5dUipklnFZrRGNYgjuEApKQEVhbWIlUjZyH17Tqa8/BKcxBdDAw
-         HMAg/zkVlAnG0Tsjh9nBBS5QmMHpTO9dqMz4tZD5vxrmaZarDPjSJBaCqgewyRdot+aX
-         EjWmC4h94gzXsNFum/JE519DpJTKgPgX1dYXI6+gPIeNihRBDrToVY8RhckcSBeUdvEe
-         prwgwXI2TnzmAjvLT3xDpAx0YxH8HINbVRavGHBDMIxg0NBrwO3oNnSalPniEJ8lnIiZ
-         nrKQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BkuasKhY"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-cc4b62d118aso1840149a12.2
+        for <git@vger.kernel.org>; Thu, 08 Oct 2026 06:20:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791464183; x=1792068983; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=qrg5rDyIfisk02lD3K77xusluohGNRXcpJwgDOCMjzI=;
-        b=FG92o4xY2M0WGGAeGGuGD5UZc4rlIMz5sLEgXpxjV6rDMlGv1MwQ44+zfgJkpIX2UJ
-         pizdaoccPymW93oTBskLnWmzceWSueOWLYIKvIJNbY0BXW9/DCE/t8ay7bsUFlxfCgmH
-         nxWZrw3kZvp5mIYeX13GtRCAY45sx2O3PPt8dnwBwALRzX1ap3fi81pRWqFzOiAUPTlt
-         iwo/6UQFpsr4TlXnbkO24SdjzI2qA8R3DxtrCGq3Uqd9bKnmFBdi2Rcz7OqJqV5pZy9O
-         JYpZW6DGKqgwQCfJt7gHRWIZs5jWaUoAy6OypuszKiFH8+jyVk6DDJlYWEw2Ah2YhhIc
-         gaCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791464183; x=1792068983;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1791465630; x=1792070430; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=qrg5rDyIfisk02lD3K77xusluohGNRXcpJwgDOCMjzI=;
-        b=cgoyOISN/kYRe5Cxgwp1kEgtX447yadgdmBD4xQ6HlpBfu7PfP5tkrfb8ZGYqzBM3o
-         AFYjktYhr1rhOxholXzrEWfGEkgzggunyuudQUuS858SVdvrmxvm+CTOuT0eF2g4rjvq
-         /Y5AmiWHc4ahHLQ4wK1xY+azLhFQAoaPbKJsMK/MpmNZEAt9MtSiwdyGICxLYZkGZPk2
-         wU9ct6v5Gt4XSuRNerM4nBx1GUJdLFIBhig1an/zZocFT5QcHLsy+zI6tl8kBo9Z7diK
-         /9TlWHJwApYs//CmJpV/0vVCcVYPJ3O7DMsHQ+Xw9gxK/MJtwE3u8zLK/dlO6UlxxVgy
-         MT5A==
-X-Gm-Message-State: AFq9FYL2r33dyVpHplgQbxSExWP4VhgVY32apUXVMrrfmn3U2dLZX+SI
-	Od0TPLKcnUP3N6PjkrMW8hFs1BYa0d98C+UmhZ4XY7ux1yBRk/6ZH1bhx2H5DQy4sUj2XKW+pIO
-	LrJpDNMqhviJmInwfi6oeQBNbaqVHg8s=
-X-Gm-Gg: AYBFou1iHPneoW2++T2h9ClY+g9poTuRvlMVI0a+M2LztMfrTT1x33K5Ky5EWu+MaII
-	tDUP5HGX4blj0f785dxSkmiP5yQc3aPb+TbAe9MMY2+QGIqIXHIcRfFn50xTTaRVLqWAkXY7X/N
-	zqydvyzP7fthLrwqH6g/+hpei+/egaTu4LGHWm16+aQSJIL/+G4DKaB8NXaKHIA9RkZN0YGwwKF
-	eqAjNRofPeF1jSb99zn6FnDe5RIxM4wu5Iz8gxGIfcIMIr++MgiDHHyx4ecCG0g8F1v/GAE6fRf
-	UQTikuwmcbfx0fKex19j8X71kdqKD64WgWUFb+rI8N9PvRfZs1z3BGgVJWveSr+1qqSwWprOh1o
-	X50MPEq3wzKmgxWrI2HakOWiy4wmhJejsyAv6r5HHhIfNqut/miGUQTd9rTF4wYEC8URD217cVE
-	CTOvngLvZ6WqJTjZ/kIQ==
-X-Received: by 2002:a05:6a00:331b:b0:893:32df:ebe6 with SMTP id
- d2e1a72fcca58-89332dff690mr1585828b3a.23.1791464183363; Thu, 08 Oct 2026
- 05:56:23 -0700 (PDT)
+        bh=8wYAxSjTQm7OzPG2hAvgWyHcQBbZ8M2Ypwyo8EwRWK8=;
+        b=BkuasKhYDEiVpK8ZATpk97k08GU12BpmtEIIwN6uoAvj83rXrARa0ZWngXTSfdy5KE
+         l02HvJ4Giv16Vw9zJnp6yO2uCelnU2YIPPJB/gWnXKbLfj8pywIeV6CcZfzMblTt2jyB
+         fxsMsPhnKOj5nyHfqok1UGqw3tCKgdDrZs0C4PsoeGAkkJ01S0ORACwLFgJn5k/NfQJu
+         4uGJ/azYV2vomyNF3Pdx8fHlR1TCc4BYAnqx93B7LhFSTepm8672xTTjzM0P9YAMQR0j
+         eJuGEn8HD7bstNGM++KNx/jPugg3aVVaCUokWiFMaZxSbYnTXh3mm4D+1ARYAGPd0HS5
+         +lfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791465630; x=1792070430;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=8wYAxSjTQm7OzPG2hAvgWyHcQBbZ8M2Ypwyo8EwRWK8=;
+        b=FyP+JzV+SiVGfyfzsOmARvEEgqdgvnOj22RlCSSJSXSG9g2tbC44ySymPOCue87Tl3
+         ZnnHTqVmDuKzbBourdQJgAdNIJh1AiT3RVOOVfowJ6p9lhlxhmeM5zUeG9r7oZmNgsTN
+         /6LbZuhxrQJqYqCA7e70WJV1pNxa6Sph6fEY6KCm2WjFs4Jc5+aqv6xmyUnhZrEKDmzU
+         Y0yd2nO6bnluovIq/cgwtyxmRjxDDUHi8XipQJvWlxzVWwd9+FRx8IoAvI58fZvALzTF
+         I4CEx0I/glY+jOsc5g07bt/D9HZNQAHhIiYqG33zp4HZnbiJtOykMOio3S0OpG6PUhqF
+         DL0A==
+X-Gm-Message-State: AFq9FYIYsrZtgyZRHwJK5iBi7IuMTr9eQySCjmhuA7yQoDt/1Ggcgzqd
+	NomUYHq4LVaubA80hZU3a+oOC/eV6vz61f8wDwUNKXwgBqoJsXF9PHK5
+X-Gm-Gg: AYBFou13qBnxr7P/muKy/aZNLnkYqQ/yMtP8OsRVk6cY8sJ9XP30GeS4jUkT0hovJXE
+	NBIou9B79eou9Fnwm5JI7nMMdvw1NibNnYxwHEpyBJ5c6Y5aNt9umg1ZuonNf1QjgjtNQAXb1cT
+	/VUzQNx1jb970K206hWCUK2cYjlO154fDohgyO498GGgJeg1B0PKcgyYFkUPGAkRIsmLNXeXT1A
+	0GG10QSmLoMh8v9+lk3OO7WolHg74ye73XJKRfNfjWspHtegdRPgVmB1lmtKFVwJ0Fanx294im7
+	YgYXbyAj13INCQjuUbllzOlsYnkUoPWurLMR6bnTw+CuCUGE8hmoD9MnGCyWeZFzxdE7pSpHaXM
+	0rCs8xyqcvc2Y5ybiOi88wAEOp1shYoK/fXvKHcKkrtKBsjEISYB3G292jCn0mX7NkjLyn14Ibd
+	A+hH6ziIFdU1CigIu3F0TA88lp6E7XDcgNFKF703uGvmDe6S7Lm0NiwSHc1SyRMu9DMAkUEPG92
+	0/UOWlIXoPCaQ==
+X-Received: by 2002:a17:90b:3b48:b0:3a4:97ea:f0d8 with SMTP id 98e67ed59e1d1-3a8a1187f01mr5405138a91.51.1791465630009;
+        Thu, 08 Oct 2026 06:20:30 -0700 (PDT)
+Received: from [192.168.25.219] ([115.108.41.154])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cd0a97c2e9dsm2981530a12.19.2026.10.08.06.20.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Oct 2026 06:20:29 -0700 (PDT)
+Message-ID: <077dca6e-27dc-43fe-9acc-20cf53651b42@gmail.com>
+Date: Thu, 8 Oct 2026 18:50:21 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20261008062521.25505-1-r.siddharth.shrimali@gmail.com>
-In-Reply-To: <20261008062521.25505-1-r.siddharth.shrimali@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 8 Oct 2026 08:56:12 -0400
-X-Gm-Features: AclHuK9yZ-9bON4QWwJCLOxJ5NucP27aMaUNiy4uG5bksXF6aEVrTuWkXxps0LU
-Message-ID: <CALnO6CD9roPhKsYRVXRuZXQckTmbCskKmvxiUyxp6vkJ03S8rQ@mail.gmail.com>
-Subject: Re: [PATCH] repack: do not rebuild packs on --dry-run
-To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Cc: git@vger.kernel.org, coygeek@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: Participating in Outreachy's December 2026 cohort
+To: Pablo Sabater <pabloosabaterr@gmail.com>,
+ Christian Couder <christian.couder@gmail.com>
+Cc: git <git@vger.kernel.org>, Git at SFC <git@sfconservancy.org>,
+ Usman Akinyemi <usmanakinyemi202@gmail.com>, Tian Yuchen <cat@malon.dev>
+References: <CAP8UFD367UD=AomNVHEBnhY-2DQmqTNRcBX6NW7YZywWgOmxTQ@mail.gmail.com>
+ <CAP8UFD0oYnoXgQ84wHbGg3+QhX78Ucn_CXXYOe8uFpReb7X1Ng@mail.gmail.com>
+ <CAP8UFD1hAjtPuWL8asZ2LzEMJKHGh2oO73n_tsUSADtEHh9b-g@mail.gmail.com>
+ <DLEWITFIKFFK.NSANTRY5XBCB@gmail.com>
+ <1b904e64-e681-4744-b83e-690f3ca94ea1@gmail.com>
+ <CAP8UFD3kd=6QHp2oB+t+g-2D8bY-Oe5+_Vk+RJeaCa_xhxGrsA@mail.gmail.com>
+ <fbed7a60-57ab-439b-a550-2d2b76ff24c0@gmail.com>
+ <CAP8UFD2VutDBA54c1e5uiCjFB8v3Y6yS3MTtY2P6sM5+Z9y7PA@mail.gmail.com>
+ <DLX41DP10SBK.3JNC50ICRW1RO@gmail.com>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <DLX41DP10SBK.3JNC50ICRW1RO@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Siddharth,
-
-On Thu, Oct 8, 2026 at 2:25=E2=80=AFAM Siddharth Shrimali
-<r.siddharth.shrimali@gmail.com> wrote:
+On 10/5/26 23:49, Pablo Sabater wrote:
+> On Sat Sep 19, 2026 at 2:43 PM WEST, Christian Couder wrote:
+>> On Thu, Sep 17, 2026 at 1:07 PM Kaartic Sivaraam
+>> <kaartic.sivaraam@gmail.com> wrote:
+> 
+> I wanted to let you know that I'm no longer sure I'll have the time
+> needed to properly co-mentor, and I'm worried about ruining an
+> intern's experience.
+> 
+> I'll still try to review patches and help where I can, but I think
+> it's better if I'm not an official co-mentor.
 >
-> "git repack --drop-filtered --dry-run" is documented to list the
-> objects that would be dropped "without rebuilding any pack or
-> deleting anything", but it does both.
->
-> This is a bug in cmd_repack(): after printing the candidates, the
-> --dry-run block falls through into the regular repack code.
-> repack_promisor_objects() writes a new promisor pack, and with -d,
-> existing_packs_remove_redundant() deletes the old packs. The command
-> still exits successfully, so the user is not told that the repository
-> was modified.
->
-> The existing guard only skips the implied "delete_redundant =3D 1", so
-> it does not stop an explicit -d, nor the new pack from being written.
->
-> Fix it by returning right after the candidates are listed, and add a
-> test that checks the pack directory is unchanged with and without -d.
 
-Makes sense
+No worries, Pablo. Thank you for letting us know earler.
+> I'll wait before withdrawing on the Outreachy site, in case you'd like
+> to reorganize things first.
+> 
 
-> Reported-by: Coy Geek <coygeek@gmail.com>
-> Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-> ---
-> Bug report:
-> https://lore.kernel.org/git/CACgTecOm+=3Dvbf50tZNXhcYvRi1ZTsQwbjVoJAbQqs2=
-CmXdJCxg@mail.gmail.com/
->
->  builtin/repack.c                |  8 ++++++++
->  t/t7706-repack-drop-filtered.sh | 19 +++++++++++++++++++
->  2 files changed, 27 insertions(+)
->
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index c4360382c1..c048053912 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -391,6 +391,14 @@ int cmd_repack(int argc,
->                         oidset_iter_init(&drop_oids, &iter);
->                         while ((oid =3D oidset_iter_next(&iter)))
->                                 printf("%s\n", oid_to_hex(oid));
+Cool. Feel free to withdraw, though. I think it shouldn't affect us from 
+reorganizing.
 
-Just outside the patch context is the "if (dry_run)" conditional, so
-this is the right place. (In this case, formatting with a larger "-U"
-value might help.)
+With this change, I think we can stick to our mentoring capacity of 2. 
+We can mentor 2 out of the following 3 projects:
 
-> +
-> +                       /*
-> +                        * add an exit here, so that dry run does not
-> +                        * go on to rebuild any pack or delete anything, =
-even
-> +                        * if the user explicitly asked for -d
-> +                        */
+   - Reduce Git’s global state to enable Git's libification
 
-2 notes:
+   - Improve how command arguments and options are scanned and parsed
 
-1. "add an exit" will stop making sense as soon as the patch becomes a
-commit; that is, it only makes sense in the context of proposed
-changes. Once those changes are part of the code base, the comment and
-code are not adding anything. They simply are. So, if we need a
-comment (see 2), it might be best phrased as "exit here so that [=E2=80=A6]=
-",
-keeping some of your original wording. Or we could be more terse:
-"skip non-dry-run operations" or something.
-2. Do we need such a comment, I wonder? git-blame will point folks
-towards this commit :)
+   - Implement promisor remote fetch ordering
 
-> +                       ret =3D 0;
-> +                       goto cleanup;
+We previously had the following mentor allocation:
 
-This matches the pattern elsewhere in this procedure, so that looks good.
+    - Reduce Git’s global state to enable Git's libification
 
->                 }
->         }
->
-> diff --git a/t/t7706-repack-drop-filtered.sh b/t/t7706-repack-drop-filter=
-ed.sh
-> index cb36115834..a1c475e4ec 100755
-> --- a/t/t7706-repack-drop-filtered.sh
-> +++ b/t/t7706-repack-drop-filtered.sh
-> @@ -135,6 +135,25 @@ test_expect_success '--dry-run does not remove the f=
-iltered objects' '
->         git -C repo cat-file -e "$BIG"
->  '
->
-> +test_expect_success '--dry-run leaves the pack directory untouched' '
-> +       BIG=3D$(cat big_oid) &&
-> +       packdir=3Drepo/.git/objects/pack &&
-> +
-> +       for opt in "" -d
-> +       do
-> +               ls $packdir >before &&
-> +
-> +               git -C repo -c repack.writeBitmaps=3Dfalse \
-> +                       repack --drop-filtered --filter=3Dblob:limit=3D1k=
- \
-> +                       --dry-run -a $opt >out &&
-> +
-> +               ls $packdir >after &&
-> +               test_cmp before after &&
-> +               test_grep "$BIG" out &&
-> +               git -C repo cat-file -e "$BIG" || return 1
-> +       done
-> +'
-> +
->  test_expect_success '--drop-filtered removes the promisor blob locally' =
-'
->         BIG=3D$(cat big_oid) &&
->         SMALL=3D$(cat small_oid) &&
-> --
-> 2.56.0
+      - Usman Akinyemi
+      - Pablo Sabater
 
-Thanks for adding a test to cover this. It looks reasonable to me, but
-I didn't study the surrounding tests to think very critically about
-it.
+    - Improve how command arguments and options are scanned and parsed
 
---=20
-D. Ben Knoble
+      - Christian Couder
+      - Siddarth Asthana
+
+    - Implement promisor remote fetch ordering
+
+      - Kaartic Sivaraam
+
+With Pablo dropping off, I think we can keep mentor pair of Christian 
+and Siddarth for the "Improve command arguments" project. I can pair 
+with Usman to mentor the "Reduce global state" project.
+
+If we get strong proposals for both the "promisor remote fetch ordering" 
+project and the "Reduce global state" project, we might have to discuss 
+how to break the tie. I suppose we can only pick one out of the two 
+projects.
+
+Feel free to share your thoughts.
+
+-- 
+Sivaraam
+
