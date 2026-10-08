@@ -1,96 +1,96 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6DE483804
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 10:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2476C4915BC
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 10:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791453700; cv=none; b=n8QrEcK1h1+zH45wrpJOfGjL22bUdJpFSVNLOS/q7mbcSrZkelqeys8U3zEz5g5gjCll/UTKQSjU2eM0MWIjzJf2De44sgz2+vq084GsQ5KXs2P1i5xbkB/cwtp9moT8d5/y2+iXsyO/+TTQrDAvy6QKzSSw+6lR75Rn/wTsySo=
+	t=1791453702; cv=none; b=TjKyQdLSUiCioLknJNCsFjPnxth2p2qHTWRtPrdrjgiZtZRgGzgU6mNV3mwZFfhzrMv26YMECARAxD04/w2U7za9U1GjpONIjJOPHIG5JN4Fq+nBxnWHBsW9lwAmCs0jWx/0fIq+e42QEFlCOgipmzkvRrUlGXctSIc5C/z/k2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791453700; c=relaxed/simple;
-	bh=SxuwyhvsKwK1be7LnYWwzNMGmwaYVRsiH/Q6Kld6F/c=;
+	s=arc-20240116; t=1791453702; c=relaxed/simple;
+	bh=+gQ/hNNrZvTD8eRyZ4a0c6FK7UBohxx1r7/bIX2mMyU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gSq+4UJ/Yjcc/l3T0Oa6mKZppbe78lk8UfTEv+kyna9Hbq10Fzg+Kuq7ZFqa3kskAFvkVD0oon0kUpbPorrcz2uLb2vJ6V5agM0aIau6TKzjfQeNR3MsgYt2amJ+DYvSGvUOn16UEHumnnHtcEN6ZmU3dNWji651D0H5gp2IJnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Jj6Udrb5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SE/bffGA; arc=none smtp.client-ip=103.168.172.146
+	 In-Reply-To:To:Cc; b=LMnrhMV0bBgL3KugSqny+b7P0kkjQsDqY9M8atqmcM1rq49GrXzLo32Dz6VEUw3exaUn5yBDfhXgSG/CBTjpkR6kJk/QW4zEREjNTHu05svGUCB5CTQ9ApDmHV04vJbfBXGN+apLydBYjQaMdK0A53UXEJjfjMiqTXKUKEz7Jrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QGm2uQyQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UnTJ/vni; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Jj6Udrb5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SE/bffGA"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 41F09EC00B9
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 06:01:38 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QGm2uQyQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UnTJ/vni"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 42953EC00F3
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 06:01:40 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 08 Oct 2026 06:01:38 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 08 Oct 2026 06:01:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791453698;
-	 x=1791540098; bh=JcsJkB6HwkNR7RMTEuaKqAZV6RAsHycMC0vXnKFI1dI=; b=
-	Jj6Udrb5G9s2iXuJdyMxxLW5q9GHmoZCVRc6YEthBjF0VLiSdo0+j7lo9harzE7h
-	RVOpNon51mej+klRUQtVJhwLRus7OTpfEP1o6F0pcgGU0yiVD/tTt5YHj5mthvUj
-	Jt0ek4EXmoUMmi65PMyCqyJng1AAEBH3IMmgFwLvHirTJuo7N6J8n3vIRxO/GHne
-	GZrkxlGBVEkYxz2UDGWgcFgArGXVTg8UF60kd3jHRZnLAPXKdlAbXhjl1pDeONEr
-	erlgakbRMgRK6EVVDkhwYOqN7kePMpLTZ9h6D4YH6e6TMaUUi8YmDpNAeDeoPb6X
-	MynUX4FnODuJhh1IoWyiiw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791453700;
+	 x=1791540100; bh=BBliUku6FFoIqZVtE4SuJX/eWkHGyWEGdGysraLS1iE=; b=
+	QGm2uQyQvwO636rvWcYK8OfaqpQbrV+cLi6+F6jnAuqdmNeOAf7vCpZoK1mYd3Gn
+	zZ2+nTVnyg0ABHYY5V6nXwiH+eI7znapcGQsptUbMYKD0qh/GoBylzmkYwpkfKKF
+	cixNL9kEO4xMyFSn9Qp3g9QDBwcOvbPsQEeLYwKP1lD1FvCEDQZokRfcHp6/O2yL
+	D8tP0MkwZ1e5DaUG5b0S0mDCHxuy0ke0wnVvdVF9U+wNZxZfMIHc323JLib/DwYM
+	Mt51WX1r2LKvZ5qWSzFSCqiMN97ByOLaldtp7QN4dHJM8bK9SzlLjk5+SKLYd9Hd
+	e+3aTJGv9hcuqLrwimHluQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791453698; x=
-	1791540098; bh=JcsJkB6HwkNR7RMTEuaKqAZV6RAsHycMC0vXnKFI1dI=; b=S
-	E/bffGAvNS80/lA5qYgPTDWeOORU6jSWIilm6FA8Ihj1C00FSuxR3iDdivF+jpuw
-	hfcEmlvzJLvp2frJ9U4c9RTHhnVcRtEyR1G4zV8Yfv8qlFeM2coNH8vnGIF7yobR
-	CAUtIBTOoKL+5/wIY7Rqa/ktwdBLLSWfGAha8H+f/g4MNS03lVIhU7gUzF/iz+Rt
-	woWEAh19BwpSdD6gzgrfXGvFhaGflKg15VzrN8vSg+7w3HFXyO37ETtKXVnUWEtX
-	25ZH/Y4vKT3bMeLEMSa/kHgjuJxVpOkPIC1NSp31cleh4t6eExTZej6G5EjhJD4B
-	OyaJkI9yNiIIdIDHWrxIA==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791453700; x=
+	1791540100; bh=BBliUku6FFoIqZVtE4SuJX/eWkHGyWEGdGysraLS1iE=; b=U
+	nTJ/vninUwae7GyZfnd/+FkJll41Uix5hF1XaZmcqZYPSLmkY9SYV/0K8Rlz9aXw
+	CFDSn7BsAvK3N/PyFmNR6bPlhipNW2lVFss3ruhqyQCWgdOgYwt5BIi/34nQPCkg
+	/W/CirAQyOJXOTaZGoBHP882nCzgbmdipY+VSgriyRtsjIaOPCJbRMPxsBegsoA9
+	esZPWIAa+gKTGZiiIsKxAR1/f4Q1FgS/D3Ev9/5qLPq+exkxCnZjRCPWkTDiy6TT
+	WWLFQHOoqIPphx7PB6G+Zjvs9MAXS4+VWrT494CIzA0UDwdejzvk3YGp3BT8LAfu
+	whoN/YhBQh006HjaT5fJA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791453698; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1791453700; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:RApYtDm3k6qhi927nc/kWRYtjgWFu0YzXLoxlTXSYwU83jG
-	dOsLqOWfJa6WXbJyjO958wjsdq/DgHZDIrgvv5vvverqQm29/aBS0ufNNxf31RCw
-	OoFZ6FnQY0KpqTkGF4guDjOhhheD7AN2PVGCD/AV6bja8Tn3OHqymMoNPehXkhkb
-	izfiq60ht6OxP1PJvpUiDX/vllUaWxCkVsp+A8akLBHgj1MbxZH58hgXQx58fD8t
-	QIN7M1THhKuzJ1rfSjHBUp9hDc+I37N8lC3XSL++G6f1qnlEj0h4JYlS0p1H5TQY
-	Kugr1INJfk9y3vQPTP6IcmGzlIIpYKV+c0Bmb6g==;
+	s=fm2:rsa-sha256:viQUpf0DPwfMWDD/FMLLWaUjdgBGgxuaH6rCJKAQ/yeZiXf
+	+9Uc9hGwUrTFD19okRJM8Z56RwatjeavMMRDgjHEepGTMPp5yLY5GFWouZhwyJM7
+	C5KNe4b5b+Gn67L4dlsCuk6+kIPStcJ5aNdeLNXNGZ7xm8WkjcxU4a6eMqqkBjt4
+	nd2NzYj1t56egJw2wfQ05F5q4oxzgKmcaPN9zsLiPVYXyrvQbZeBYIxrMKOJmhbQ
+	Bw3cIJVs1i/Xbjv9py8XNtbmPIzyQt9F3mircXAYkDNvFhmy2/53v562VL7b39ob
+	a2DHS5hBB+PmSz5FgUpY7c/4qznfyJvH5/bcxkg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:dgsBJ0aN7/VNwG3KO0FCt7dDqXL870evX9JsTaOOQz0=:SxuwyhvsKwK1be7LnYWwzNMGmwaYVRsiH/Q6Kld6F/c=;
-X-ME-Sender: <xms:AmrHamKAmiO5cNn0xKnysVlCfeUv51Ioa5gR4DweKg9WqXxuW8BT-w>
-    <xme:AmrHalmtSgBeRR-jmflJmQ4Xnc2snD9MWke310ph1vCAoQj69vNtgdn7py7ixT_Az
-    pZVd7HzIdREo8_Rby1wJG4xLq0Pmn57OKNvZaChF6qX91FVWp5L3UQ>
-X-ME-Received: <xmr:AmrHakHNE2h7EBbTbyoM0U-1rZRGHiVZA-3r7S-HfWq6TRQtHbSltQ>
-X-ME-Proxy-Cause: dmFkZTF1TMUiJElJKzw4Q4owyK0NmN7jx85VJ9WFfw4Eq5MX1TznpKHyu5EGuqNrnD8GFj
-    0Oc/d9I+HRtN5KtZFME8v5GJqqQDVsbWzoyWAfuf9v9Yj12bhi+OJpSeAjBQtQzrnTLny2
-    65mHCxorYeKn5bWuoclobu054tDp9SmvXqaIODlYoK4Xr8hAym9RySIrJUYVJTH+GnmK+G
-    rwmNtT/ntuZQ4AgC0iLy2eOQjs7dvl+aC3QduhiHDLvs1B/H7spORu+h74jjFFlJ4XMtr2
-    MtPB6cEeavVTAld9ndnbzCnL6XS6Uy/9M6d+Eep0BZl8TPz+wcY3IdoJ69u37DhhuMzvLe
-    7TdBGOx2bgyNI5FkvaI5olQ18l8M5KB+g3K3Tdsglr2EesBHwPWIxsXGZpRXdHlToB0vei
-    KQsRE1QmbP6cop/xfqDG9Iluo6XAweTPlwGrkQgWzdE+NPtl2ONSu4cm+t1+f29d5zh3YX
-    f/XUhfI7pO/8b3gJTY5TbZ/5aaZcFHva2uFOw9WiZwmc5XzDGZE+aHuTzXaIehHSt9mEXG
-    8Ir6HQhof1NlXCfhsv3E1SUHJx3jzH0iEfM4loQCmFk67+fpeGuAl5fsC+0hXoTBHrnDrd
-    hLhmDEhPTA8Zy0ur9EJhfiy756RCYz8SdBXulWSc/Tcx5Z+0ch/YU9bGIzRw
-X-ME-Proxy: <xmx:AmrHalFOjZnbkCIgntd0ELaOA2weS24t2u1Xmpf9opGV_pzAxi_lJQ>
-    <xmx:AmrHahOalDD6b2XK7nAex4CmEotjtZIifpYF8Vjpl26B1ibOjdonMA>
-    <xmx:AmrHakEtyL9F3QDhDepjn3ef6kbGQaQ7l77x6uyiis_Wza8X8TEsZw>
-    <xmx:AmrHaoO0ogSsS-fC_z-n3FRaJU7lHWOyAV8D9aLVJBEJxGJpNcUkPA>
-    <xmx:AmrHakWQaGn52XJIzJAe_7EIDkbK-taBuz4Hda7P2rHyviGw5rAeNwVb>
+Message-Instance: m=1; h=sha256:Fsk54hZ9G7ZFTSDk1q/jDjEtwVCjOj8A0Bi2x1aBIJs=:+gQ/hNNrZvTD8eRyZ4a0c6FK7UBohxx1r7/bIX2mMyU=;
+X-ME-Sender: <xms:BGrHatbiJ-dfPah0MwlPJMeljJ3rAdwICJ0XrZysFltsJfu1PDvvfw>
+    <xme:BGrHar3Q4aTOc9aKTdvc_yMY6t4gardrGrCSWuCTZCGDFTYwQHToL3Er8DCU8T23E
+    vLH060QnyuAks2L49_52iLpL9ix_NNxcgv5zKp6watsYxmwbEKp5aM>
+X-ME-Received: <xmr:BGrHatW2aZ6pi4LK8us9YmatoegMhILNpH-jrwrIZKvUgINKI6XRFw>
+X-ME-Proxy-Cause: dmFkZTFcPkAz1MwdF9G91Q2HHt/DMwRQeFnKx+x68D7GybYDQ/i0KpIs24O8mGC97InV5x
+    l9pAW0ts/UU9KH515tlBDmv+WZ0+KYrQRh6xeKbZfQat2Qz+Sg1rXt3b5uJznUCyp0m8uY
+    71BCRA4fNnv9oBdGpbiziYXhCQjhE8NT9KNX8KIfhb0V1qRTBvsVj704A31+Hni2pY1ggP
+    a3q+zc2dU5mDDUUOQmy2j1zpr2bNPvsQxh6Ysa48mXJ+zQrThKKxZGkcT5LdtAIGkRdeOf
+    ck2bD2X0g14DJXkT4iu1Awq0JBVy1rhu1vpE3BYH9j6MP3iwrywFfxgjL3LV3YpxuArGK0
+    uPhxXpLa8/zIlHKOxXqx8DD9nScZq5vtTDZZ/dt3WHgeizpneLH7psKYL9mQCJfKIisIEh
+    m5Y/Wf3Lt6wSgV+H735veHjg/QUpQ1HSkEAdcYAJ5+w8Tgn08iCGFHiowSC2gjvskcpVMH
+    8mJbmRBEYNkpaTqmjJcK0jmMbmmuISb1WPI9/GJWShazq1QoXIVvYqFXOVvEHYnGprUiQW
+    GhKThST6T0FM6rcyi43H+QPYQWeGwjaogogwjqmYQt7eb1zwBr4EPFBP8bMB38X7DBQoJr
+    ZPVvxfidgM/mibbWURxKt3gGtvseGpfie0dL0kIS0MH0+qhlUTQLAQq+Rxvw
+X-ME-Proxy: <xmx:BGrHalW6bJiKhdoBbeTL5rpUOsbM2wYs4HjILXPCUZTMnsyK5Aq2pw>
+    <xmx:BGrHascvcXwsxZ8k0kIDr_QNQIAKDw-RcruxgndYaPnob5nd2STo-g>
+    <xmx:BGrHauWiI1WIzgayS5G2cZKF6vUSUaXqEvUD3ziGNsNcKjdJyZzGzA>
+    <xmx:BGrHalcjdXMENbseushNWx2ye4FmyHJXJ9oQ8fXg7jPK8qNRc-3wlg>
+    <xmx:BGrHain-Kg6YoF1YjxyuGQ3LIJN1kAfK7ZPrd73tEeBVVxnZqmeBKmQp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Oct 2026 06:01:37 -0400 (EDT)
+ 8 Oct 2026 06:01:39 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c80d3925 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Oct 2026 10:01:37 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 46059ff0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Oct 2026 10:01:39 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 08 Oct 2026 12:01:22 +0200
-Subject: [PATCH 4/8] ci: switch away from unsupported i386/ubuntu image
+Date: Thu, 08 Oct 2026 12:01:23 +0200
+Subject: [PATCH 5/8] ci: rename linux-TEST-vars job
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -99,101 +99,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261008-pks-ci-housekeeping-v1-4-baf015c589c0@pks.im>
+Message-Id: <20261008-pks-ci-housekeeping-v1-5-baf015c589c0@pks.im>
 References: <20261008-pks-ci-housekeeping-v1-0-baf015c589c0@pks.im>
 In-Reply-To: <20261008-pks-ci-housekeeping-v1-0-baf015c589c0@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.15.2
 
-The linux32 job is used to exercise Git on a 32 bit platform. That job
-uses i386/ubuntu:20.04 though, and that version of Ubuntu is end of life
-nowadays. Furthermore, Ubuntu has dropped support for 32 bit entirely
-with the 20.04 release, so we cannot easily upgrade it to a more recent
-image anymore.
+The "linux-TEST-vars" job exercises Git with a bunch of non-default
+options enabled. The name of that job makes you want to cry though due
+to the weird upper-casing and because it doesn't really tell you what it
+even intends to do.
 
-Switch the job over to use i386/debian instead. Note that starting with
-Debian 13, support for i386 has been reduced [1]. But Debian still
-releases 32 bit Docker images for the latest release nowadays, so we
-will have coverage until at least 2030.
-
-[1]: https://www.debian.org/releases/trixie/release-notes/issues.en.html#i386-reduced-support
+Rename the job to "linux-exotic" instead.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .github/workflows/main.yml | 3 +--
- .gitlab-ci.yml             | 3 +--
- ci/install-dependencies.sh | 6 +-----
- ci/lib.sh                  | 2 +-
- 4 files changed, 4 insertions(+), 10 deletions(-)
+ .github/workflows/main.yml | 2 +-
+ .gitlab-ci.yml             | 2 +-
+ ci/run-build-and-tests.sh  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index b229739be8..6d1e37c8f1 100644
+index 6d1e37c8f1..d7a301ec98 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -431,9 +431,8 @@ jobs:
+@@ -408,7 +408,7 @@ jobs:
+         - jobname: linux-reftable
+           image: ubuntu:rolling
+           cc: clang
+-        - jobname: linux-TEST-vars
++        - jobname: linux-exotic
+           image: ubuntu:20.04
            cc: gcc
-         - jobname: linux-musl-meson
-           image: alpine:latest
--        # Supported until 2025-04-02.
-         - jobname: linux32
--          image: i386/ubuntu:20.04
-+          image: i386/debian:latest
-         # A RHEL 8 compatible distro.  Supported until 2029-05-31.
-         - jobname: almalinux-8
-           image: almalinux:8
+           cc_package: gcc-8
 diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index 3f24835500..7d972f0c8b 100644
+index 7d972f0c8b..27a16ed086 100644
 --- a/.gitlab-ci.yml
 +++ b/.gitlab-ci.yml
-@@ -65,9 +65,8 @@ test:linux:
+@@ -42,7 +42,7 @@ test:linux:
+       - jobname: linux-reftable
+         image: ubuntu:rolling
+         CC: clang
+-      - jobname: linux-TEST-vars
++      - jobname: linux-exotic
+         image: ubuntu:20.04
          CC: gcc
-       - jobname: linux-musl-meson
-         image: alpine:latest
--        # Supported until 2025-04-02.
-       - jobname: linux32
--        image: i386/ubuntu:20.04
-+        image: i386/debian:latest
-       # A RHEL 8 compatible distro.  Supported until 2029-05-31.
-       - jobname: almalinux-8
-         image: almalinux:8
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index d57dce5663..8783b48951 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -39,7 +39,7 @@ fedora-*|almalinux-*)
- 	dnf -yq update >/dev/null &&
- 	dnf -yq install shadow-utils sudo make pkg-config gcc findutils diffutils perl python3 gawk gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel $MESON_DEPS cargo >/dev/null
+         CC_PACKAGE: gcc-8
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 23e87cbbd6..9381ff8893 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -22,7 +22,7 @@ fedora-breaking-changes-meson|linux-breaking-changes)
+ 	export WITH_BREAKING_CHANGES=YesPlease
+ 	MESONFLAGS="$MESONFLAGS -Dbreaking_changes=true"
  	;;
--ubuntu-*|i386/ubuntu-*|debian-*)
-+ubuntu-*|i386/debian-*|debian-*)
- 	# Required so that apt doesn't wait for user input on certain packages.
- 	export DEBIAN_FRONTEND=noninteractive
- 
-@@ -48,10 +48,6 @@ ubuntu-*|i386/ubuntu-*|debian-*)
- 		SVN='libsvn-perl subversion'
- 		LANGUAGES='language-pack-is'
- 		;;
--	i386/ubuntu-*)
--		SVN=
--		LANGUAGES='language-pack-is'
--		;;
- 	*)
- 		SVN='libsvn-perl subversion'
- 		LANGUAGES='locales-all'
-diff --git a/ci/lib.sh b/ci/lib.sh
-index c6ccbf8c17..d99e7b9da1 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -262,7 +262,7 @@ then
- 		CI_OS_NAME=osx
- 		JOBS=$(nproc)
- 		;;
--	*,almalinux:*|*,alpine:*|*,debian:*|*,fedora:*|*,ubuntu:*|*,i386/ubuntu:*)
-+	*,almalinux:*|*,alpine:*|*,debian:*|*,fedora:*|*,ubuntu:*|*,i386/debian:*)
- 		CI_OS_NAME=linux
- 		JOBS=$(nproc)
- 		;;
+-linux-TEST-vars)
++linux-exotic)
+ 	export OPENSSL_SHA1_UNSAFE=YesPlease
+ 	export GIT_TEST_SPLIT_INDEX=yes
+ 	export GIT_TEST_FULL_IN_PACK_ARRAY=true
 
 -- 
 2.56.0.406.ga2d225a756.dirty
