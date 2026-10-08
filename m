@@ -1,129 +1,172 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F1E42050
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 17:46:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C3842050
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 17:52:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.41
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791481598; cv=pass; b=gJdi4c3SAVJuBb79tbDzQJI/e468qenqR/cP+kgnhdpg8lWhECth3HSvedPapj8DLbD2FBlF54ViTZkt6p4tvnn+eXyCwSmVIUP83UmF1kP4BBAuItrJAZPO7MqUFbl+1sf9Vk/I4myKBptByk5XOUY9Ye4rzotE//vvbRpLHjs=
+	t=1791481921; cv=pass; b=CsDDchHR+YUaoswRucIP4nMdVtEN4IxjsRLjDq85+HZPvmyf8BpvBh1f/oNa7PuARR6X0RjP8K3pa42G2cSQOzfoVMEGmGQu/ed1rwLl3omodhXUVh2VNHFpyHeQhWaXdk2IoUjl54aWx+HE88JuzF5/Q9gyzsRd0+J5+TwFxnM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791481598; c=relaxed/simple;
-	bh=duOL+mwptXqYMfNa/mKTsXdFZuWjaPtnHqbnJyzlMCc=;
+	s=arc-20240116; t=1791481921; c=relaxed/simple;
+	bh=hmudmU5HXXcBARJ/9T7gu4q9yA9zxGMymqRwwxAUsdI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hzoVTj+K+iQEH17qd212Y8eceum0w/7rP1huEyN74izoEa1ABiwlw2LKFpnnCGR5Lbi/hwv1NutzZERDRsqMg9yHc3WRgMVcWYCTOQBrRprObrbtVHU4IRjn5cUnwmCA2YD8iY3df+lRmkQ4dMCR9Y4Bqj0U9Hd1fgUiJ3NOR0o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pHNMz4yt; arc=pass smtp.client-ip=209.85.215.178
+	 To:Cc:Content-Type; b=cgWuq4DcDazoBB0tci/C90ETwlhonAnWxgNlMNwYv4oCHXiSwyqX+h50v7fvigEEc6XxbzQj+vgdA9EbGVxV9QzdGb9wqP1a3Yue/UeZbZxyBfchmy/du8ppzKgTj0Q4goRwrbFV/lY0g84rElS6XxQZZXjOV0c+kxZNfoAbFbg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dTDetOOG; arc=pass smtp.client-ip=74.125.224.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pHNMz4yt"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-ccc6b11a19aso1912096a12.0
-        for <git@vger.kernel.org>; Thu, 08 Oct 2026 10:46:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791481597; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dTDetOOG"
+Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-677d35fd1d2so4743222d50.1
+        for <git@vger.kernel.org>; Thu, 08 Oct 2026 10:52:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791481919; cv=none;
         d=google.com; s=arc-20260327;
-        b=YYV3bqYUAxdjyRFaR23wrUzVB94ZQFeRRvk2xjswCi5s0Skg0i7D6h1QfpiKpQpbfO
-         gFCteYILGpdevkJtw1CS8QFrbS2ibaoYmVy9NCiLIwRqTQSprdrJXFc4EOzkcYl51RBa
-         9fG9ju/1toVhEhgHdEWJjbMuMp9NT3tNZA2YV/J/QRTN60e6H8jDTkeQ0B7X+QD4VF9Y
-         pTUQxTZwlJz055nN88zoDBN2Ng7Zir+YYDZ4qWc6ZbOcXGUBkTqGAXz8XRGxOPQoD6zd
-         CbOp5tEK9v5MSTMNo9DJK9RmzHYdgGPTqcWnCQ9kAXFRk+6nKwpE4Kyy0aXWDtEtwqCf
-         SB7A==
+        b=qId6f2RDbIg23lKTtkmOrfL9FxvHI0aoneovGmWzNBvChbW9/q4hlXgT6ihVg5wEmy
+         jBlUKqS/VSByqIH9ansPmgFV0ldH4IqEA3cgcKMpT0J0JaQKXQap4+d8K6eMosUggBtZ
+         pflbn41yrzOKADEcL1INmFj5I2AtCpPj6CCc0Aui+4wGDTil1+ehA1sOD2tYmCO3vmPN
+         NWEoRl9XFkbndJIqiPXvPKbN9nnsVFliOc0TCt4TSG0gy69Mhm/Lx6T88ZtjhT5RlCtJ
+         iDWbL7LcIYfTBeWpkydCxxnqvtfIy3DGCO+uvoXy3Z4/QMcqrWnhKRRQYO/KcVm2PZdu
+         eI7A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=duOL+mwptXqYMfNa/mKTsXdFZuWjaPtnHqbnJyzlMCc=;
-        fh=06CT0CqfSxAqTJxa1ls/La6m6lSWgw1DvXGZzSeBAh0=;
-        b=oibn+XiamVMhYZzNjtTtiUdiAD0SdBgpsai6LCSua3SQvVyziDPX/7bKh1oNHJ2Pfm
-         x4azv2K8vtakUiIWyXdKNuCTFVwfPBpWkSSdFFn8OsM2B3QLzWpzzCsZYYJbo8kidiyH
-         /nf+Vfwixpd+yCKXHC5wNNmR6aOBCJ96HOUS9D+j7OL3v8pKHw3029oukIYUZtRfdkG/
-         9xNCW526nUUT7fCbetzTKDKtpDbeCH90H4jSGNMRaIth/rMJUFbkLlqWQHpR+OfqAckH
-         zanMeL+bcFAK2jBAzNx8shJZCf9+sRcq4f4ATOhKMSqnnn4zMoErwzTQ4oz/lI/s30fq
-         QIPg==;
+        bh=0Rc4Rq4hvgNRoKzzn+sbVLyLjRkZFsbaqpmKKcFccgc=;
+        fh=/opYg0j/WR5zb9/hW111lZ8jIa5Hncq/emCCHZTgIvM=;
+        b=IDj4U88q92RVebweSK9xu63uiqQRpy6t5JbAav1JucBkFevkm10RITozgBI4E5FITk
+         tm8ULpzUodind8KAVpy9cOtqgIOYnwkxsRO6wH/9W8+YhZovfcK2me8FarRKGkk0GFir
+         WMhsLKEJKpzWwX4QRu8fqNeqGCUIaHEi7t3NR147J4zgcPCSqDyKIJyDxLjRuWuclNFL
+         Nlbs2uRUQ0RJwJDpb8U0ETW3HuozpuaMiQWBhOJUGhfvEUBEdibSVJ8GRDS79bj2DeQR
+         HYeNaYMOuAyDx9XMawwgN9GRibQJ92fpyPCvTt4xWPhAo/8aES5dxodXb9QzR3/AqM6j
+         pYSQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791481597; x=1792086397; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791481919; x=1792086719; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=duOL+mwptXqYMfNa/mKTsXdFZuWjaPtnHqbnJyzlMCc=;
-        b=pHNMz4ytuLfqowl5l8BbtiXFTL0GV53Pq0TvfM+9fKX0Yxr8u4wrJfr823sD8g3nsw
-         cLUd3vZek7IcwEhjqlJSsIy+HvyNOyudNUVQOURXYEqA1dN+9o90TbZdXOpgRTPTYQVx
-         zznbp1+Ya7DGlRDNMve5t1m3NTG/1qX7Wj4gA88zhc/A9p1jfhgfJdEeaYWAG26XjNn6
-         8PMlXXM0KOGqHvHG/uxtm9VIjQXKZCL7mMy8qM7ncx3xGPHBerEG4wzZpq93WlK6JmMD
-         qrHa2nmJe9DYFbae4NdykgXTP9MrxxQQrwsIQK3AaHCi01xXYARC7FWAoIh7izpIbUpG
-         LJ0A==
+        bh=0Rc4Rq4hvgNRoKzzn+sbVLyLjRkZFsbaqpmKKcFccgc=;
+        b=dTDetOOGqCB+k+XTuldDNCbeWCIr76Pl5oZZSdS7rOuj8YD8i+PGU09KtRr1FJDls+
+         /ZzPB+qrZHnb5zcm/7BZ+N3u+/s/YC9ISqWXtkNQ55CrYDrF/Mg5D3LdgjHhGF6HOaZT
+         iA1FrOlq3K10+1gRd8IyOaW/l4BUy+aykF6vEB/pllZorrHp0UotZb1opb4QtRFJXaHb
+         c0T5Tb85udQZQMKqsvjuoNDVvgSlt93TvCsVENMkbKB15OoRUGNpKlbVcRLhmDXwayg4
+         yT87NTOBbEneA6erXxfOF8Swx0ge/TVcZC2EW2HthbilDcFBcs6mt0W97zTB8UatZltv
+         efyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791481597; x=1792086397;
+        d=1e100.net; s=20260707; t=1791481919; x=1792086719;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=duOL+mwptXqYMfNa/mKTsXdFZuWjaPtnHqbnJyzlMCc=;
-        b=YhCk5WpIZtzeQp8ja8hJMdOhwdfLCBzZVEiYe2GybJmkXmdE0Qj9Hh7YBBUDbSARhV
-         FRMBwhxl2xVXM1A+2ag3na8l/U6e++E7HB7bI8EVnC1R3mXQ2PagueiC/BtXUiyLRI0R
-         lcEmcDQ5EsmwaLHGzJtkZOZOvreekDVxpYcOLLJdLybI7dmDuTRtfLr6IxMv4iFaKJSE
-         uCpKkbGDFzdzcRaRajGrD7aAs1eAhkPvCE+xKTTj0PscUtcSNZZp0zZRzr8juYETZHYN
-         ++mJ1nsa9GRjeQ/nO0gH2v9BYQuboRaG53jPs/375rf5zQGOW4JNQ3PwrwnBZY3Q/+iv
-         CdEg==
-X-Forwarded-Encrypted: i=1; AKwUvBwsStSZiXquqIt1LlqTbS4BM4DBpDkgHgiUhXCHbP3Qe+kWvCBc+prIAXGrBwfbynjWUpM=@vger.kernel.org
-X-Gm-Message-State: AFuF++kX0PRUdAvhBuEBe4bfJ/Y+KIoWjVGDvrnWB28A9FfwPBz8WyAT
-	TU2SdpstX825hdSlvpTdADdW30S5d/JaU+XFOguMGZnhydqd25Khcso7fLQPn/PKtZ8P+qyRjAQ
-	cCHCoB25Z9qqO87MHDKCKuHV0P3pqP+Y=
-X-Gm-Gg: AYBFou3/Dc9Fn2FR/3vSM1zA0gP5ALDDaYxfCmToOvgc+po+WCWs8CBFfow12BMjaRa
-	IrkVLUDw3mEfvOESszvISt8aGuMoClsMO8QEFOtgPkK2zI0UbYI1+1gHe5d7/aZYo4qV3VoIdlI
-	8/6oZeuSnFvor9Hxx4af/itxmsJrJ3iTngxxO0qe0ZQuX8sGu85TG9369vBl5kTsEQsc2NuXEBo
-	qkWvt2+OxZLYNcixQhX4hQTBOq6jpQqC7cFZxdngIqdsB1GSajrWFb6BJ2HRI623iqCJPrYxGMS
-	cd2QPD/eoA2seMNvWQfonwOH0OdAyChmtnmxUawlBq/XFR1K/2f3WtvERiG0b4/Dqrspfqt1bKa
-	chGl73qnHsE1tvaoeOGu4HDv6zWJevKDfi547aRL+8C97XrqVZ3wmVO13KY0GUiilpXAYUbtz2f
-	JW1gkKfzZTilr4tPiTbHuiBpfNHnESsg==
-X-Received: by 2002:a05:6a20:d4c:b0:3de:7bd5:fb47 with SMTP id
- adf61e73a8af0-3e164cffc74mr47306637.39.1791481596609; Thu, 08 Oct 2026
- 10:46:36 -0700 (PDT)
+        bh=0Rc4Rq4hvgNRoKzzn+sbVLyLjRkZFsbaqpmKKcFccgc=;
+        b=FIyoGraueMpFkwIhba/odiKSDcGu4Kd0BsR/f+CAtRzBWy8h8wpXgGacOY6Vs2I+4K
+         TJ5ypv/h0o+/aLTK3o/l0TnPkk3tQlNEaNN/6fWBGlduYn5NGrhFGt9b1bPrpSivLhwY
+         kHECiWUnDadOMUV5barcN573RRvi7axyWErtAUd42gzRK1PYElN9ofb2+iu/Dda6dwyR
+         KxrxQvURsCdoOVN+Gte2ZDXIGJ3gZ/fxWmiISyDpdAlM9RevcMfz3JRHCSL1cBUVcUvz
+         W3L5Y65DV2UYSXOcr/+YZJ+GpTgRDq+HQibwohKF21r29A990iXcNPMNoYToxzsJvxIX
+         rcOQ==
+X-Forwarded-Encrypted: i=1; AKwUvBxvxbXLPbw4HD9eCFk74Rwdapgt7JhGMmbU611/64F29Y9CYM94Pn9Zz/dankYVY6Md1GY=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKxBI5Er8e9hakdkky2Cn53qvCRKhwVsmq4h+RGHDFNGl0odrh2
+	rBAg9FdBWX7ItijTMayV8qXSXDlJap8VbzFdSOOJfjzt1+SK9QdlN5XRBtePwQwpbQpafDzX1JC
+	8fbgvpBL61JIaAlkq415A0K71piMg9Vo=
+X-Gm-Gg: AYBFou2Z3FwATqGNnchY8PwkVAP30K1+lcP6GFeLuJL4SWgWh2hzDnNWXQNkesQTDOk
+	5CcgQKnP0NXkWIqkmCHrTu1PyuHGlLLBzzVac01E7+Rkp5Ps7dIeeNJ8+xKItsBlYy2V7efRjvH
+	Cxfe0GWfyNj1e0tn0BFQdWlvJYoQs1loZTqLqbBBTliYOnE/bwe5cgMboxNZPkhSLkhvBMT5iv8
+	eIuEocbo5xMdj2yR6AhOBgnLwcYfu5qjfEjBub8jAafcQVTr29odJM59OLWzRLxcnkeNHsaf5CA
+	bEAtGBt6iAXpq34d2GDiCMvpDRvysEn6FziBhuR2dyysrF0P2QEiPIZowG+nlFrRqxJGQNWZ4UY
+	U1wkhC6ie1Wt2B6AzQApVyaeK9ZFvUXXHGXHt9/fN/zqzX5AVQuLG7uT+VBTHl7TcTmDi33Dsct
+	PR5BwJsgs1bLWQc8GVtFSpMqnZ72S9N6Q=
+X-Received: by 2002:a05:690e:4503:10b0:672:e7e1:f3de with SMTP id
+ 956f58d0204a3-679329e9632mr78048d50.73.1791481919088; Thu, 08 Oct 2026
+ 10:51:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260929112544.86511-1-scott@gitbutler.net> <xmqq5wzda0h6.fsf@gitster.g>
- <CAP2yMaL51H1OAG25nQ0NuLQLb0wevd4CicCG1_ezsJfrZDqfUA@mail.gmail.com>
- <79ae606b-cf99-4867-9db3-bcd7ff03626d@icloud.com> <CA+Te0V+-O3avrvH353KfCDjAEzMa=_H57G4OmiJ8+d1dDzZ6aA@mail.gmail.com>
- <CALnO6CBbtKomawqc81MPV5Ngtc9J3M1ej4enGD3ZUzWnPSfsgw@mail.gmail.com> <xmqqece015k1.fsf@gitster.g>
-In-Reply-To: <xmqqece015k1.fsf@gitster.g>
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+ <CALnO6CBwWy3aafyDJPKFk5vuWy2EF1n1Oc=W7+RVAE3rxpXwiw@mail.gmail.com> <39a28064-1698-4971-a80f-4a4c4dcdd8d9@gmail.com>
+In-Reply-To: <39a28064-1698-4971-a80f-4a4c4dcdd8d9@gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 8 Oct 2026 13:46:24 -0400
-X-Gm-Features: AclHuK9Yz9UhIrk2hT_Fx_bWBlZGwuMj0kq4ua9pT6nPaKCy8KRI_a8MsXXPMD8
-Message-ID: <CALnO6CDNm2cRNqBU6GKNK4axn2ij5uDgKnAm_itj36oFECfPQw@mail.gmail.com>
-Subject: Re: [PATCH 0/4] faster SHA-1 collision detection
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Sam Reis <sam@opencanopy.dev>, Sebastian Thiel <sebastian.thiel@icloud.com>, 
-	Scott Chacon <schacon@gmail.com>, Scott Chacon <scott@gitbutler.net>, git@vger.kernel.org
+Date: Thu, 8 Oct 2026 13:51:47 -0400
+X-Gm-Features: AclHuK-tqRd9l2IVM-CxgPT5N0JUw0VqmYknkom6GNke8SgoDwn_LQ2Vs1sSqgc
+Message-ID: <CALnO6CB2qPtv6Cr4LL1x=ZPmD_zLw1GzLUKgXE-NcTWObbiLkA@mail.gmail.com>
+Subject: Re: [PATCH] branch: let --delete-merged find squash merged branches
+To: phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Harald Nordgren <haraldnordgren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 8, 2026 at 1:10=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
+On Sun, Oct 4, 2026 at 5:54=E2=80=AFAM Phillip Wood <phillip.wood123@gmail.=
+com> wrote:
 >
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+> On 29/09/2026 12:26, D. Ben Knoble wrote:
+> > On Tue, Sep 29, 2026 at 3:33=E2=80=AFAM Harald Nordgren via GitGitGadge=
+t
+> > <gitgitgadget@gmail.com> wrote:
+> >
+> > =E2=80=A6in the rebase case, I would expect something like git-log's
+> > --cherry-mark option (or really the algorithm behind it, git-cherry,
+> > and git-range-diff)
 >
-> > but I didn't see a discussion of licensing at that time. Perhaps the
-> > idea is that we are clear that such code carries a different license
-> > from Git?
+> That's what I was expecting as well. It would be worth carefully
+> studying the implementation of git-cherry. "git cherry A...B"
+> precalculates the patch-ids from the side of the merge base that has the
+> fewest commits and then walks the other side to compare them. While it
+> is walking the other side I think it also looks at which paths were
+> changed to avoid calculating the patch-id for commits that cannot match.
+> It also batches fetches the blobs it needs in partial clones.
 >
-> We are GPL-2 only, which means we can incorporate BSD-licensed
-> software as long as we satisfy its license and copyright notice
-> requirements.
->
-> The above is not an AI-bot-supplied answer, but what one learns when
-> talking to copyright lawyers or reading books on software licensing.
+> As far as I can see the implementation here makes a separate upstream
+> revision walk for each branch, and recalculates the upstream diffs each
+> time which seems less efficient than it could be.
 
-Thanks, that's good to know---but in this case I thought we were
-talking about the MIT license?
+Thanks for spelling that out!
 
-Assuming a similar analysis applies (not clear to me, but not
-implausible either), that might also answer my question about Gentoo's
-license descriptor. The product is GPL-2 even if one input was MIT
-(though it feels strange to effectively "re-license" someone else's
-code this way).
+> > to be useful for identifying rebased branches. But
+> > of course even rebase-merged branches can end up with minor
+> > differences (say, a commit was made upstream before that branch was
+> > rebased with an identical change; no conflict occurs, but the new
+> > commit differs from the old by not having that change).
+>
+> Yes if a branch has been rebased before it is merged it may be altered
+> such that we cannot detect it.
+
+Yep. I'm not sure what Harald (or we) would want to do here.
+git-range-diff has trouble detecting these scenarios today, so maybe
+matching that and later finding a way to improve is ok.
+
+> > In the squash case, I suppose the best we can do is check that all our
+> > changes were applied at some point between the merge-base and the tip.
+> > There probably won't be any tree-same commits, though maybe a
+> > (premature?) optimization can return early if the trees match exactly.
+>
+> If we have
+>
+> (topic)  D - C - B - A
+>                        \
+>   (main)    M - Q - P - O -
+>              \          /
+>                - - S - -
+>
+> where M is a squashed merge of topic I think we have
+>
+>      M^2^{tree} =3D=3D topic^{tree}
+>      Merge-base(M^1, M^2) =3D=3D Merge-base(topic, topic@{upstream})
+>      $(git rev-list --count --right-only M^1...M^2) =3D=3D 1
+
+Perhaps we are thinking of 2 different things? In practice when I see
+a merge created using GitHub's squash and merge option (and, I think,
+also when using `merge --squash`), there is no second parent. You
+could instead just get
+
+    (main) S - Q - P - O
+
+where S is A+B+C+D applied to Q (i.e., closer to a cherry-pick with
+--no-commit).
+
+And we know that S is not necessarily tree-same to topic's D, so=E2=80=A6?
 
 --=20
 D. Ben Knoble
