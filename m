@@ -1,99 +1,99 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5199435200C
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 19:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE0D3CB574
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 19:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791487725; cv=none; b=DEOuaclrToAb1x6OZMIL99HWuSYOAgB7QRIbOqmNfYcWqqaueVJcxVh2GGzPApokXZb4bSfRz2C7FEECcYYbXHuFBWmjRiIoJnCI8v48sAgahGqjMEYzqoGfcoAbUeRIR8nZ172VRZOVL21FAGNFiumNV1mz/o7yznCRgkisHXo=
+	t=1791487743; cv=none; b=WqSYdZXbOPhj4Sb8rBt1PzORAk8w5ku3qvyG8/VjDBdf8tMtNugnJR14N90GJlaoPEBBO541rp9Ofb+hqM2sZRnsH2Q2StQRqvs1Cx7xsMb7Z/WAmnWfQfaKYVrWwFsaDqC+rue7fqeYwwHiFmhQgzst57lrbvCnfViLG9yw3iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791487725; c=relaxed/simple;
-	bh=3LsuNWvNY1rG8dG1jZ38wr4NFGkTTkYTloRY63RWnfg=;
+	s=arc-20240116; t=1791487743; c=relaxed/simple;
+	bh=ToJjR9rE6kHQ+irRi3FOITIlBO+K4L31LGerrPguS78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hwtAX0Pbi1dtG0X2/bCGiJ+OZP6unCuYHVo7x+hiS5dgy90JoEsHTOLyZxqsv4ErGv6Bnnh83MkLc9uI13C2FDe0Q947Ifhq8/WsAafVfrKPDygWqZBl+pcutrKD2d0sCFfLrwH7dj7CfJz9/yvX3aeJhOV5EeyUnoOQUQZjSCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=FzR0Z98s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ywsCnW5b; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=VO9SiVg57rwD1E7KyIFghaqzL3eLC+8+/4kkMnkxSmHk34WW8DaNKNQ82sXkYVzg+FJiJxP6XZ1jbqlzGYppFRoBV1YB5ATScognEJmCx3gS3cdE9ectb9pZwvh/190GY+wl8tdXWhXjariOMiszoVlmhOpvYwjRDL8NRHo5W0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=U0SrqIo8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oYU8hVCj; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="FzR0Z98s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ywsCnW5b"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8074BEC0354
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 15:28:43 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 08 Oct 2026 15:28:43 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="U0SrqIo8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oYU8hVCj"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 253D2EC031C
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 15:29:01 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Thu, 08 Oct 2026 15:29:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791487723;
-	 x=1791574123; bh=OO/d4bwr5IX2ooXE2PhO7rdU5SaVSJ5h45ulm21xVWA=; b=
-	FzR0Z98s0yb8mfDrPkEvl7ffJJ7Glj7dI+9semHUcerNmfZwmAwYFmq2hf8M54xG
-	1QHac+p08rIJBkHbmdl9ANo360PhuN58+rh98/fQK4SBMg8Abk8bwFdtIakQ/i5+
-	JabNrj57kRn7mYsHkHKefpUEDGEStvdZX0fg+RXWuRG0UJ7W0uPVmPz4f5hu7tvX
-	YaTXy6if+hAe/yB0iwwyyCc9BOoE1nxXOF5E1HkLAHW4XBS+Q2eeIRGDdzlBLAFi
-	YNUYHkAZ5IsIPY51ivjRnVdeqbtHRJfDeNpOJ0zpHt1pAfCVp9prIishKhvcLOOQ
-	XiY4basAk/rMF6D8VHZy7Q==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791487741;
+	 x=1791574141; bh=dvSJzjfHFPwMWOrEVW6HiF/BsG6GOK9L/YtulaTRQ4E=; b=
+	U0SrqIo8ENpgle/3cYhgHQ3IvJbKftGKswfwRCabpMn1SxEoeg1ZJpFRvTnR0t2P
+	nRqYL3TY7G22jEuwkJx2ypOPbyPcRHN1QjYxyDRyr9oBwTf1xwe/bW6Z9xZVtUA7
+	ikoWJDl4ghJsf3tXIyXDkhp6N5GF/g4shJdIFGF+kW0ZieP3ADrzHVpoezDOzhZT
+	/UYkqI3oD4AQc5ioEItBaCKHVRDZYhQUdZYQAQjprN/xA4QgeyQH7UmPdhKrL5dv
+	Z9brRIP8bdAsLJP7a+l25vdHdWuz1T+zs25fEpgSugu4sOAxylROXPfo+Q56xEa2
+	UOHxmqe0RDebW/p8OzWaEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791487723; x=
-	1791574123; bh=OO/d4bwr5IX2ooXE2PhO7rdU5SaVSJ5h45ulm21xVWA=; b=y
-	wsCnW5bZwHyN5ETvXNzw9h8FWoVgNE/yRPHdFYESzKRrDIPeIfM8zoAI/IYl2J9N
-	v088uIdpA3HuKpze3HOu2dCNveKyY8VKJCPtp0blSOAKI7umrGvM9YhxepLqsePG
-	IwntnRe3heF58rUc+KKOpM2AUhd4EbYHFoYypqnv9ilPo6Hh7W1QovgijwUOAgs/
-	jiz+kMqbCexxKMahQl1OQjp6fQJIIkF/V7Wwe5yYf0J1IWHB8xUsIs8wlVpc/AJp
-	hb3kxVc3CS6gLHcLkyTTG6PWaKfHEdx5/YUQvLmjkCFKEwdKW2oW0UCGTclYdYdW
-	5DcNlNz8S99k9N1/iYupA==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791487741; x=
+	1791574141; bh=dvSJzjfHFPwMWOrEVW6HiF/BsG6GOK9L/YtulaTRQ4E=; b=o
+	YU8hVCj/leusPX03Z9jd9Zo1c1KX6+HC5oH7uvK6iSBpTD3HD2bfBWiWwUb2oOnO
+	N1sQdnKd237VaClHSupTYAohXPEN6RyLXG51ovTYHdC35YzTzel4wcAlp8Dig/rn
+	GpwcXyFMlxGHinkxy+dQ021n3hIZs60L6ElfXARIgFM7ORud4NXaCLKyOB4fpmRT
+	uNmuJUCYq2UNoIPp8OFJkW7gmCB8BfjR8cA4Ks5FdWL+XdDtNe4c8sk0V8E2oIM8
+	KxXYo2pu4m6nftUzvc6prz0V4jHjjnmpJQVFW0PFjXimCEu0TbBRrnYN3bYDQs/F
+	SNj30+WA7YAaeHWbbaZFQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791487723; d=fastmail.com;
+DKIM2-Signature: i=1; m=1; t=1791487741; d=fastmail.com;
 	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:b/sLUWjrx4EZP5jmvftVEepNjdOpfHG9nWTcYhv2DOrU0hI
-	B0Rm9JUpsUpMGTPNpdLBQrJtRGlSiFoJFlPY07PfKNGDNYmwF1OfR9Pz5f2X7lEU
-	wbM3XIXcKwLSV3U8SjO6/JCJqJ8p6Tr9P1wkJ3Xa+Ct09brLKIp+V062Jo76CErI
-	9g7KiY9mVlyp1t/rI7bO2Zt9hUI3XfjS/VzUmQJ5AZCWVRU+11E8C1h5ky0s7Y4C
-	onrRAaTEt+ypn9XtWC9jXL5aQEQpRJuIbVNSYiUTG1L9oGkytoKbjSDEXckPBW3T
-	TQmXnkGoY7ODDiEKC5qq0Y2UzXxccbab8RvJJvg==;
+	s=fm2:rsa-sha256:UmqG4plbI7onKTPJjhiiaDNSlINRcXmY3aT1qzBwV05uMqK
+	3n1TwsFr+wm3MmRteoXfUI++JaBqKRVItE2ku6gEPDN+cQmSaZ95GpnPOUHxEpxd
+	U1NIjlsn3vPlsg5tp8FWrEss5XgiOtCk43xhNApe7H0/nMv778dsCAIg/a3PcoAa
+	1CE/VSOee94607T5Xhbg75ndJU1JhQoELyrDmXNoOWuSWADc1a5CvaXYqxVAuEmx
+	EAZGyf2K6iYm7+Q/AFfTWi3GmK5jZKThQPu/JB3iNqzX69BwCn9t2hWxD8Lteo9M
+	IJtJ7W6XFUA1I0rqjN0Wrh0/5ovec+0Wr63RgEQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:L7g6yLeR/gPVOAxJ5Jfol0OgLfb3baeeXKDafXbibNc=:3LsuNWvNY1rG8dG1jZ38wr4NFGkTTkYTloRY63RWnfg=;
-X-ME-Sender: <xms:6-7HaoGlBjJmiClhiuJZjNst4PoOfZcb6TBPeFVxifuCIz3srq97J9w>
-    <xme:6-7HaoUeoRka6Q0Ni4dDK7PNwerpYXty9TGjmxmatwYxC7VqhHc5a0mMYYjNClpHs
-    plCK4SIoGkTI4m9iMjno8x3albEEfkdGgzDn0SA0BOnN3BEzmaQ_-0>
-X-ME-Received: <xmr:6-7HanKKi5Hd49eQofqk-BaRTiiKlxvz2-sRwfY9jAokuBm_uQpk9II1x8CG2JAPqSXhAdzPH52OFVTU--iLqrWxRMt20CulxScMjerQPnc4ebZ68--n9TE>
-X-ME-Proxy-Cause: dmFkZTGesTBw5oiZR92fd3sIt498LDbCc4G8WdMSpWCT6ufsuQAF9udgwnW7zLMwWM8RUM
-    6ZHb4V+cN2wglOYldC4u5KD5xGr6MQFCHXZEY1em8Iha0StJfyflpgRhDbHXnD6mETueIE
-    ghIqBbMnwur0NqwZGODwKTOG+FaJt3Zf2nRxgRcA39jZ37CKj/8l/L8mAoYm3NfVBaIZJG
-    1OPPjIoK5ECuGe/9QZLxO+G2AEDjrNGZRKlurdW8QjxyXDFWPJEXrMkAC2JoeLZDifMPZD
-    oRmpMHJv9Wrg1If/gd3rOfBBIbj6xKDnhZ7XCI2nPrqy0AWpWfmbVSe1s+MyZmeBWc0bXi
-    zGkCkfTVk253H7SWXjutH8pXPLbMRsaYN9mIc/jkOThPpuniNR65TAxycIO+o00FzKZkid
-    xU5VFWRTypaTOEjGlM98KwoJK7i/atJLdZdPlVC+5K8CBcJ7opC9VOvqGuN7xfwH3CRASk
-    02FsmGOu3DGoR1w3tkP37LqjYf5j545c496LhnYIRr3ArWa4qaOPhUv5kgwG2x+/7MdaeL
-    N3a+AQ2ZlMjv/PPeRs/W/QHR1ZxTgjHQyOnvoUJwKrbJf0NKjX1c9zYY98/0vvZ8NVl/BU
-    /zMotR+6VDq/ispCP+jmAFcvQGao/z1GiVPpyjuelNVV2FCT4D/eWR3fbagA
-X-ME-Proxy: <xmx:6-7Hao9sBK1FbyU2uCLidf9QgWFBUcCwxTfBf0Fr80u7SAB4Vp9iYA>
-    <xmx:6-7HaqLof2duPjx6NqK3dFeeW2A2OIhZfxPQJLV4Dzxj7zhf4JzGag>
-    <xmx:6-7HatnmZTwVgcX_g6u4Lq-oJqVcAPROsdJAmtSNdNE0hCde4o2NHw>
-    <xmx:6-7HauNTwcro1O3PlXLIOcDaaK9z-3BQCGBq1Co0zHB6x6DRoZ0F7Q>
-    <xmx:6-7HatwfifvMhl4gZfh6vQwsQlp-LkvNav2PSbu2sfYR5TuxHLzcIei8>
+Message-Instance: m=1; h=sha256:hm5S926y4OdB7NcEcDhbil/0mHGguCABHyJk+ZSJMCA=:ToJjR9rE6kHQ+irRi3FOITIlBO+K4L31LGerrPguS78=;
+X-ME-Sender: <xms:_e7HakobZ-KQPJHLMb8Um0FeW63R_O38I-vbBqneQI6XrVKKUYTofLY>
+    <xme:_e7Hahrb0b_gRDjsVoNRTLm8yVHD53mCvPVo1x6fHLIPzHAqH2UmutKoqYpcF_VaM
+    LjcYbIRsDkF3O8OdqglUDtF7Pgqb2PQVabZmUsj20DUeVCli71Lbbc>
+X-ME-Received: <xmr:_e7HauOzFS3A5dkL4M5fNgXSZ6LeeEzjtz_NzPcTY6gEf3Xcty2QLFocN8tDRJsShWQYD9frjF29bAcZN_RmyyK2INGiwL-XWE1IQRdJD7w2E9gbepEgpJo>
+X-ME-Proxy-Cause: dmFkZTGB+uPsGxAVpx8HDgbPj3bD98k5KeivRy+i3QijGldlr8/eCq09jjeSGKFnTZ/EdV
+    YZ2ciL0lynUwGtN8xgfPg/PIc4mbTOw9aA+wSXfSaLpPWqKSylAUxpsTiE3YsEkuRA8fAU
+    0kX98vEzlb2E3fwTnmTEIT1be2walK2l2xVLRDJldiOm7K6SCns0vJuPpGHpi6EvCheqHg
+    KcuPvaZIul9lZOUaXirjBP4Ct+e0k8aTJ9Iqi7lFSJbTN3UiJ6Ckl+hT77X+A776Fo/FR7
+    YZr+JBSFzBkK04+ryJqs+pAL5woi4Xs8Y62XfcsNbYwqZMe/FPuK5Xo3pRk/GUfoBfIfZh
+    LWxkU/1OkmSQJ1JMeczTv96ImXYXpvfauv8WAb6UWkjqVNDPSN4uQTKsRSUrzrL+aQmGf/
+    nIcsvzLZaMU4D0SRtCDgI6oRaCANEGnamr1U1ZcIBooppNK1OJ0fnipL6htEDeLMhvW5L0
+    6qLVgktc2DHLUXy/H9yhPY1f8R5ZgMM27ZCEks6qbdKabhREbTjghEnMOlH7fV5Bbg2CSE
+    5ym2oxd8vT4Etkjv0BUMTfIzR1ijfMtkFmkr06r4Yh9cXzkpkd2+cPODIDUtOnqlm8Jxk5
+    1fY5pM2QSCFHV8MFG+nYaGsWQjqvtABn5+G0gNgeTummEYuRH3zPaNy2HqoA
+X-ME-Proxy: <xmx:_e7HaqyXPzolKJY3UxyucI9Is5zoQmi5QhzKtAbjS-NQlkEVwS44mw>
+    <xmx:_e7HavtRKZd61N1Xk7KlKkTTRH-WjScDVY4OiIKi8r3RpBIXQ_3srg>
+    <xmx:_e7Har63OQjH12sFCsazDzPkM9fDbZQA65xEkdFUx9xX0acddu8BOQ>
+    <xmx:_e7HamQDuwr08rEkOIUVs6ZBJRwfmC6sHANylenIp0NqnWINQiNdfg>
+    <xmx:_e7Has3VAa9EwzEASteaDwPtkkTqHvdFC25yXtbyXoBIh-SoSFf-Tw-K>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Oct 2026 15:28:42 -0400 (EDT)
+ 8 Oct 2026 15:29:00 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 4/5] doc: gitbreaking-changes: add note about living document
-Date: Thu,  8 Oct 2026 21:27:19 +0200
-Message-ID: <V2_gitbrchanges7_living_doc.dc8@m5gid.xyz>
+Subject: [PATCH v2 5/5] doc: gitbreaking-changes: move new-items discussion to the end
+Date: Thu,  8 Oct 2026 21:27:20 +0200
+Message-ID: <V2_move_new-items_disc.dc9@m5gid.xyz>
 X-Mailer: git-send-email 2.55.0.793.gc667de3f2c5
 In-Reply-To: <V2_CV_gitbrchanges7_please.dc4@m5gid.xyz>
 References: <CV_gitbrchanges7_please.d1c@m5gid.xyz> <V2_CV_gitbrchanges7_please.dc4@m5gid.xyz>
@@ -108,49 +108,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-This document has always stated that it is a “living document”, subject
-to change. With that in mind, we should be mindful of a potentially
-larger readerbase now that this is a more public-facing page. One could
-imagine that someone reads this document on a released version,
-disagrees with a point there, and posts feedback to the project—but this
-decision could have already been reverted in the live document.[1]
+The target audience for this page is expanding. That means that this
+discussion about how to add new entries will not be as relevant to the
+average reader. Let’s move it to the end of the page.
 
-Let’s add a note (admonition) following the “live document” with such
-a reminder. Let’s keep it short and simple though and not go into how
-to fetch the source. They can figure that out themselves.
-
-† 1: Let’s say that someone on Git for Debian Stable reads about the
-     breaking changes for Git 3.0. They don’t like something about it
-     so they post it to the mailing list. Then the mailing list informs
-     them that Git 3.0 was released two years ago and that the current
-     document is about Git 4.0.
-
+Suggested-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- Documentation/gitbreaking-changes.adoc | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+
+Notes (series):
+    v2:
+    • New: <ar0OltAkeTiCx81c@pks.im>
+
+ Documentation/gitbreaking-changes.adoc | 30 ++++++++++++++------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
 diff --git a/Documentation/gitbreaking-changes.adoc b/Documentation/gitbreaking-changes.adoc
-index 2bb9f877256..b94759260d9 100644
+index b94759260d9..e984c2c8ca5 100644
 --- a/Documentation/gitbreaking-changes.adoc
 +++ b/Documentation/gitbreaking-changes.adoc
-@@ -73,6 +73,16 @@ over time. If circumstances change, an earlier decision to deprecate or change
+@@ -54,20 +54,6 @@ breaking releases. Furthermore, this document also tracks what will _not_ be
+ deprecated. This is done such that the outcome of discussions document both
+ when the discussion favors deprecation, but also when it rejects a deprecation.
+ 
+-Items should have a clear summary of the reasons why we do or do not want to
+-make the described change that can be easily understood without having to read
+-the mailing list discussions. If there are alternatives to the changed feature,
+-those alternatives should be pointed out to our users.
+-
+-All items should be accompanied by links to relevant mailing list threads
+-where the deprecation was discussed. These links use this format:
+-
+-  https://lore.kernel.org/git/$message_id/
+-
+-I.e. they link to the `Message-ID` of the email on the mailing
+-list. These references are there to make it easier for you to find how
+-the project reached consensus on the described item back then.
+-
+ This is a living document as the environment surrounding the project changes
+ over time. If circumstances change, an earlier decision to deprecate or change
  something may need to be revisited from time to time. So do not take items on
- this list to mean "it is settled, do not waste our time bringing it up again".
+@@ -382,6 +368,22 @@ Cf. https://lore.kernel.org/git/xmqqttjazwwa.fsf@gitster.g,
+     https://lore.kernel.org/git/xmqqleeubork.fsf@gitster.g,
+     https://lore.kernel.org/git/112b6568912a6de6672bf5592c3a718e@manjaro.org.
  
-+[NOTE]
-+--
-+In case you are reading this document from a released version: this
-+being a _living document_ means that you might want to consult what
-+the current, development version of the document looks like in case
-+anything here motivates you to post some feedback to the project.
-+Because specific details you read here might have been changed in the
-+development version.
-+--
++== Adding new items
 +
- == Procedure
- 
- Discussing the desire to make breaking changes, declaring that breaking
++Items should have a clear summary of the reasons why we do or do not want to
++make the described change that can be easily understood without having to read
++the mailing list discussions. If there are alternatives to the changed feature,
++those alternatives should be pointed out to our users.
++
++All items should be accompanied by links to relevant mailing list threads
++where the deprecation was discussed. These links use this format:
++
++  https://lore.kernel.org/git/$message_id/
++
++I.e. they link to the `Message-ID` of the email on the mailing
++list. These references are there to make it easier for you to find how
++the project reached consensus on the described item back then.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 -- 
 2.55.0.793.gc667de3f2c5
 
