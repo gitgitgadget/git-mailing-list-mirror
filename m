@@ -1,119 +1,146 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388304AE102
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 15:55:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183ED35E948
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 16:15:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791474960; cv=none; b=LWKIyIuEtpacJAqQxboDoXc13VHk7W5M2Ma2ofS+rNhnaRt8QWXYf5CJqpPImFQT4iiwqvimw5qA6P/2T1cYu3F1DXqEDFm0Lk995ESjFcScM02xqiyVsRPmnliin+09+DizlsJYFCayXieySoGd7QBZirrXLW1o8nWfqkm5U6I=
+	t=1791476158; cv=none; b=ctUaDl8mUAnKE5BVXpjikun1cLZFAH9y4JbDsqjjUx4mrTIy9PH9+CHV035RGuIAImmvB4xXPaejKeICGTvX5nLru3rMi5FYUaneucbUYPFPIoBvEdTUiijQBnCpW7tOHTNuiUfy6j12fkqzv3MmgHttQE5QDH0+NQEpjKbWvFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791474960; c=relaxed/simple;
-	bh=PxKAngd54g2TgHmfuEXLBA5ywG1q8I5nu9ZgtTrgDbQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lWkKmcAUGEoF9/oNfgbDvd8JL9vMj9E7SSzgso6RUXwR7KwhoDkbMqOXRLpRxK+r2s2+srBLKN1L8vCjDzqQJDo3v50aQqJtzbpjD7AqjqYOyGrbPHqISAfALjo+O2WCG1zO9SvKs/BP3nXK0/kZbmIv1Gu/YybBOADYkOhSK4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=idF1efCv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KmJm0fTR; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1791476158; c=relaxed/simple;
+	bh=bmQOSd8vR+LC8FVEL0PwOICMi2iPhAWKAzpjycu1y40=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bYidnhVYFd5qBtKNnp6bd1hJIPaHVD33cwAZLmho7ZuI7sIqHyC4NItKt60iVghEU131riI03Fh7UEx7UADZb4RIDBnHgKxr7r3G7UAwFUwwLaV0vFi2DV4Xt0FXsvleylcn7iu5EvLY2Nbu8D19sVCVqJN9i+Bu+LqMelpHf08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=SmfCe0+v; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="idF1efCv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KmJm0fTR"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 70C587A010E
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 11:55:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 08 Oct 2026 11:55:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791474957; x=1791561357; bh=i1/PaeG7aO
-	CH3wZ87AB347iFzXqqCT9ksJ+9QEKNCcs=; b=idF1efCvxkv5ts/b7ZqZE9PkD4
-	6ZyYSehkrt0STCPAkf1kfyTvL30hmiTY3e3+yXbBDl5RYDVkDGg3TopH3pdz5PfL
-	KN+4J/WEW6Eyfrbt8GbhY4znujtlHrOonRwwOoiFK1xCyeRq6JQ6NBoXRK5Id/Nv
-	QH/Gc1mNlT1WFjjkdeRO27nUWik70bwHd8JAK43NMzqU0sYqFQMFgwANUTgJHFSP
-	eE4TPgci8TuECXeM8QeeqdKLjq436edkojbOXxKMRgNwNsj1nZwKsy65OXynqtqX
-	VPsUJ7haM7ZL1am4eDu1xSv4rEERGHM9Jezcnv5aTi7DsK5niouSPdIyp5pA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791474957; x=1791561357; bh=i1/PaeG7aOCH3wZ87AB347iFzXqqCT9ksJ+
-	9QEKNCcs=; b=KmJm0fTRi6y0M6W9iZw4jyfjU6pa39U2JZ8I1k8N9SPYMRc1wh1
-	p2+Guz9kLuMA/aRQMMnpazNf2TLo4PJnuNBxEklzHLfGmiqNz78OKBy/jsQEqTEh
-	DBOQ1Thin+u4yhjtCPy/lZirKZ6eFAsPZWRNRzuaaHrQE9B5nSs4gVcVFzb/8HFc
-	VK2A6VQy5PT5wfDQtu7TWqvkVSsleZbRTmJIhOFKDrEbKDK9wYYKgNhrOPhc1UKS
-	2qK5Av0TOFSwPMfPnQcGUSFh9hQWlPOepJHAEHPNG9A90gZxw9CQSxw7u+01ybub
-	KPVDr6JwJBrmkeve6cRMEL8BLKvVZ82y1mA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791474957; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:ppxBp7COJT/OTknQUSGrMDlPjAj6fDzSKX7uQZWLz9KAllo
-	4PpPfdmoDja5ff/kmBXg6bjm+jPRUYxmbTubYZo/xE5+l2XB0o+0qgZ+J4bOIjGN
-	C5j1vw0nAKgRPcFiNYMm78fSPyvQccBKD371vw6orkkapNLz7Ju8QYT4ATwJMwVX
-	5GCPp2K/kDJsxw96egM9mhHsTOUHED/l8MB4ENgT8RO76RiOftpmqWzx120Dmubb
-	ok9X3rm8eHUIJdt5buO8jjg5unAH0+I4URfLfn63Ax/TqIloSnTXU7ihNIQOh2eW
-	4ErF6bIoala6zFf50sYkG0XC1UCTo89aWtvxijw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:gEx5A7cOhn50pDQIFRgqGqe/ZHSsUTiUqFPhNFi5MEQ=:PxKAngd54g2TgHmfuEXLBA5ywG1q8I5nu9ZgtTrgDbQ=;
-X-ME-Sender: <xms:Db3HaseAX5PwuilMss-83CnsXl_wJQe0BhLWnrlyhVKYGljXLoWZfA>
-    <xme:Db3Hah7gQc70Y2Dy_p49w7hP9KlIbovEqLhQN1wO3RpYmygWNUjNm0I91kJRuF92h
-    nTw4l4sLUMMXAq2ZEgo9RKqokhBhGFfLuv5n-28Z1Ho_aZQysB3fH_W>
-X-ME-Received: <xmr:Db3HanW70umKjFhB8m-EONXuaxYtd_awAms2SSMiY8Rbmub3GU7LqZjIIQhIiiVzzEWrMRPjJfEOS9DTSavtDANNl4hjUojdLa-X>
-X-ME-Proxy-Cause: dmFkZTGgxtZGkmvYwRLYNtm3v1Ayps5lupG9ZA2STGAn3+7Pnaj77GxU2PQiUiFnhE3mCO
-    my6fWWSXhfF1g0HTQ4h+C8DFGlbTDslkAxHpHwLNHfhFsmy2ATsM2iKl1mKoT/6pNo76Ae
-    6qHYl2f6Yz1RH7bVNnzuFbf13ppguGXwLcUwPCeD2o9L6tsORgjXd0hI9pbfWE7mW9Xe/B
-    eYltUn15BBnszsJSEbGfizTGrKUuxpt6SeurEkYDF85ja4PioVNBx7MZt34v7eXPVybVpT
-    ryf9PbrE4F9pxjZGezpWRaePbskph66UoJxyRFmg5bY3HI2qIzKRLNLDBvzut9kkuhhsF3
-    rI3f5H1N6ul73Kw0005sYQM8D9HuYAK0aT7CxGqxnESAHgHRVFjWW3bGoZS/16CiSNnCUr
-    PzWDPWklNjnFf7E+QHNI48cla3NHs55aTduEoFOaYbO8IUjP1yRUKIpQrGZki62oGbs0W9
-    T1GLogtrq9ecE5FhDR3EZTdKLpCtitjHOOha4+c38ruRoTFA7VFaGKwIjetMzohpc1Kl5r
-    /EuIasYwiWLuEdY6/wYHaNMUCO3QgzrNPbIAGfDtlAEay3vfTZA2muJ+zGIUw8V0QxKbSq
-    TL5RgGIRF9AO6fbTCFAYZhkeau0SBERzkDcdPMd3DQjOPMLyK+W57UEZXrsw
-X-ME-Proxy: <xmx:Db3Hao5e7gzQjMcVcvjOS_nPLrnSHRiHCXJzoQL1bqrvQ7UcQaG5-w>
-    <xmx:Db3Haqqlz1_dLsh-lRBRkpnzdFB9R0_xUO0noDG2r59X87cqDIsfDA>
-    <xmx:Db3HajlkKA7hhjIgLDssUrYEKu7VT8g5Oec20EXzWkRWZxBNQxQ4Zw>
-    <xmx:Db3HauNY0jGETp3Cv_yXjaBUXYMzTav2YljPRTxAWYUSTm2Of1lxGg>
-    <xmx:Db3Haix-CMVVJ5IRdRvpv8LRhigUICLza3Pjkyc7G99zFX3lzvnGXwYV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Oct 2026 11:55:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Sam Reis <sam@opencanopy.dev>
-Cc: Sebastian Thiel <sebastian.thiel@icloud.com>,  Scott Chacon
- <schacon@gmail.com>,  Scott Chacon <scott@gitbutler.net>,
-  git@vger.kernel.org
-Subject: Re: [PATCH 0/4] faster SHA-1 collision detection
-In-Reply-To: <CA+Te0V+-O3avrvH353KfCDjAEzMa=_H57G4OmiJ8+d1dDzZ6aA@mail.gmail.com>
-	(Sam Reis's message of "Thu, 8 Oct 2026 13:20:33 +0200")
-References: <20260929112544.86511-1-scott@gitbutler.net>
-	<xmqq5wzda0h6.fsf@gitster.g>
-	<CAP2yMaL51H1OAG25nQ0NuLQLb0wevd4CicCG1_ezsJfrZDqfUA@mail.gmail.com>
-	<79ae606b-cf99-4867-9db3-bcd7ff03626d@icloud.com>
-	<CA+Te0V+-O3avrvH353KfCDjAEzMa=_H57G4OmiJ8+d1dDzZ6aA@mail.gmail.com>
-Date: Thu, 08 Oct 2026 08:55:55 -0700
-Message-ID: <xmqqa4oo2nlg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="SmfCe0+v"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1791476149;
+	bh=bmQOSd8vR+LC8FVEL0PwOICMi2iPhAWKAzpjycu1y40=;
+	h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
+	 In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
+	 Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=SmfCe0+vtNV8dd1aPr/9OTIg6BIaNtH98GcoKllcbNkfdVE30x0ALjpSZ33qamisV
+	 Rxv0Byiw5ZP0P0qTLLppy+L8TcIOYO1hONhsnnBJ1K4bpYwgEiiaBwUZTOvV00K2cH
+	 oLHUCYO/Xd0KXH2jn0RwWWjtx/HdURwNBRluVVolNXXAHn3ckIeLkDiOklSFLY3h0r
+	 yHlbEyoIuOg9B92RGCxIyuGWRRJondCNfc+j0GqP++HZ4/rBDs4r03nPVrK2cFnW/F
+	 hGfvGyunQubv9q2Paw51EZDXZJZGeMdyp9AyPt9nHBnbK0pmHMh3v4NAI3nHBLeveI
+	 IjeCI2gjhg23/dP00gfRDJRJydMZbFMmc3SEe5VmdrrHPxFP6faVqZwRnelVCKxgan
+	 7JKkcjHq/oFTrSsspV69tMx2a3RbOzNW5R4p5hKtBJLrc4Th/cgQWzLfV3mIyqmCAu
+	 o1hi83gFKb7KVDWKIaB1qTb+FXSc33H9M6P74YpmdsDKAL5ysB0
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:66aa:1c10:d66e:dab7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4F993200FF;
+	Thu,  8 Oct 2026 16:15:49 +0000 (UTC)
+Date: Thu, 8 Oct 2026 16:15:47 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/1] SubmittingPatches: allow responsible AI
+ assistance
+Message-ID: <asfBs6CdPwcuZ9Bn@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+References: <20261007142954.31761-1-scott@gitbutler.net>
+ <20261007142954.31761-2-scott@gitbutler.net>
+ <asa8ymCv4hoRJcZM@fruit.crustytoothpaste.net>
+ <CAP2yMa+kgphMe-cpcZSvPSqwm-npUDVp=HaNRW+MPmPzZ_aOXw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="t3DtcHK28R7lDe6k"
+Content-Disposition: inline
+In-Reply-To: <CAP2yMa+kgphMe-cpcZSvPSqwm-npUDVp=HaNRW+MPmPzZ_aOXw@mail.gmail.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Sam Reis <sam@opencanopy.dev> writes:
+--t3DtcHK28R7lDe6k
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Hey everyone. Just for the avoidance of doubt, very happy to see
-> Scott's patch here land and for git to benefit from faster sha1dc
-> hashing. Let me know if I can do anything to support!
+On 2026-10-08 at 04:49:27, Scott Chacon wrote:
+> Again, a lot of my argumentation here was directly taken from the
+> SFC's recommendations [1], which Git is a member project of.
+>=20
+> https://sfconservancy.org/llm-gen-ai/llm-backed-generative-ai-recommendat=
+ions.html
 
-Thanks.  Just to make sure I understand, are you endorsing the idea
-of your work geting ported to help Git, or are you also happy with
-the actual code Scott submitted?
+I'm in agreement with most of those policies.  I'm just not in agreement
+that we should accept LLM-generated contributions and that document
+doesn't say we should.
+
+What it does say is that we shouldn't shun people who submit
+LLM-generated contributions even if that violates our policies, and I
+think we've respected that.  Every time this comes up=E2=80=94and it comes =
+up
+more often than it should, given that we have a documented policy and
+that people should know to look for one=E2=80=94we've handled this gracious=
+ly.
+As far as I know, nobody has been blocked or excluded for having sent an
+LLM-generated patch to Git and we usually explain the policy in a calm,
+rational way.
+
+Section 8 says we should avoid jumping to legal conclusions.  I agree; I
+have said consistently on the list that one of the reasons we should
+reject LLM-generated contributions is because the legal status is
+unclear.  I have strong views that LLMs are unethical because of the way
+they've been trained and the lack of credit, among other reasons, but I
+have been very clear that the legality is uncertain.
+
+The final thing that it says that kind of supports your argument is =C2=A71=
+1.
+However, it's not the case that accepting LLM-generated contributions
+would massively accelerate improvements to our codebase.  Git has a
+reputation for high quality and we perform thorough reviews.  Those are
+already a bottleneck for us even with only human-generated code and
+welcoming LLM-generated code and documentation would submerge us under a
+deluge of patches.  As we discussed at the Contributor's Summit, we're
+already underwater on the security list due to the flood of LLM-assisted
+bug reports, a number of which are of dubious quality, and we shouldn't
+replicate that on the public list as well.
+
+One thing that supports my argument is that we should support people who
+"outright reject LLM-gen-AI systems."  Because of the way this list
+works, if we accept LLM-generated code, contributors who don't want to
+work with that content are going to receive unwanted patches that are
+CC'd to them and then have to deal with those, whereas in a project like
+Rust, one can simply block the LLM bots and then never have to deal with
+that content at all.  So I don't think we can honour that term while we
+allow LLM-generated content unless we change our development approach.
+
+I would also say that we are not obligated to follow SFC's guidance at
+all.  SFC also recommends that we leave GitHub[0], which obviously
+neither of us are following, nor are most of our contributors, and many
+people would disagree.  Regardless of their guidance, our project can
+set our own policies and structure as we see fit.  QEMU is also an SFC
+project and has adopted a policy very similar to ours[1], so there is
+clearly precedent here.
+
+[0] https://sfconservancy.org/GiveUpGitHub/
+[1] https://gitlab.com/qemu-project/qemu/-/blob/master/docs/devel/code-prov=
+enance.rst?ref_type=3Dheads
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--t3DtcHK28R7lDe6k
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmrHwbMJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ+HD0SVNARN3z+anZ+nZ4tl6J/rqymtv/MbzVNKdVkDr
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAALZYAP0U7mIYi0z48uDtzQQmkLQJOCem
+6SZySdnnCVs5elYF6AEA82cjViSab1kajr/Nu1R3oSdtoSpu4OqwJY4X9eXUcAI=
+=f3lk
+-----END PGP SIGNATURE-----
+
+--t3DtcHK28R7lDe6k--
