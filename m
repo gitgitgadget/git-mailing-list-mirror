@@ -1,160 +1,146 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from outbound.pv.icloud.com (pv-2005g-snip4-1.eps.apple.com [57.103.66.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74443C2B9B
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 06:15:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A773C2BB0
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 06:21:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.66.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791440134; cv=none; b=B4gAAfTfJCzA1zLTnLnnFaMOZt1ywm4pzklYAjifa4JP4YSZC7rNpQkN0wlcMArHKzjLlNnEzjjpgl1aOF92rH2NMWzeDQIpQmiHN/bAWzHZ3pWC7KMxziVUP3CV+XBXpf2z5BCoGOcHQ/obvCIhoS9c50l0jniUTnrXi7fdIxU=
+	t=1791440492; cv=none; b=uihAmkOr5tJInUKTO0o+fOOYw4Uq5oO0Vr2HYiuepWR52/toh2T/QuVbFEZZ/IfcBBM2TCR+6uhH7jAe69jITY39eVa0vLwu3lIy8HZRIqE3sgReHBxuf2jHXqPfOH42VhFjW22Ft9NFOB8idzkES369VUBRWS7oOEFeMMj1irk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791440134; c=relaxed/simple;
-	bh=q1AefQ3K0sNC2yRTR7qo4E57jYGYy5FQXDOTUj6eBHQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XHDQKwBpO2k7JVPF1tW13jXugtbF+O9QvltxfP/bnr0ySq5mH0Qy1lqvPISuOJQKusXtKHH4foeaQW0e6AJlp0jZLc0nnD+z5RjxPDSCxiZ1eF6bdo6m+a7ewdraKN+ImfDMNEg2cElHZJqPMiOmhSP5Z2LSnTlzFiSWzGHVZGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N0Pp1u/G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RtksbuUL; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1791440492; c=relaxed/simple;
+	bh=dqAXnZbX9cLdhWcuC5/VGpJFJDLSU+Bez3b3ckQ9Rqk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZYsJ3+3jzIvr/0tZ9PqTwhphsszCAmYwg6fUJmqVxgBpKYhaGcZ2RNVZn/VpC98rLNpoji5DMLx/JIDHxrSuCO2JdjaqFO35I5CaGckUj+wOrPjPVydqRK1xPKJ6hVPA2/kINp08RLGp3IRxM1e/ctfrDx3fB/cifwl8Qimg1E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=NS6YOO0V; arc=none smtp.client-ip=57.103.66.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N0Pp1u/G";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RtksbuUL"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id E2692EC00CF
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 02:15:31 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 08 Oct 2026 02:15:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1791440131; x=1791526531; bh=QlSqXmRvvM
-	Ay2lZwxN7OsdtSGUKTcxXx8C1cM56sN9g=; b=N0Pp1u/GtcyzTSkkJYeFFRXh9u
-	xbV1wSNC7v4in5tDTytYevDF46nSXbgcja61Et7h0lv5YEVutbkuP8FKtM+CpbkV
-	iMi0BdLzIWFS1y/kXC7gbNTGbnj1af+UG/LQkCEBjfZq2YZgnONMwlvCRSy4wkDz
-	O9m1HhqwFI5ErQkbolZFE6R4JFGz/C2+94NKwIhlmlr+Ew+Qzja8TOzaVc9p6spv
-	l1PV5bZFrKXvlj1vTCKktB1P9cX6Mi95/qnHcZJLX5Gmj5WpBVunr4xoAz2xtRLu
-	rrvcB6ncrM2feJrx1GH4RmlgpEcQswa5YusdkeZ8sUCwqBTOKHHmCnqGP9kA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791440131; x=1791526531; bh=QlSqXmRvvMAy2lZwxN7OsdtSGUKTcxXx8C1
-	cM56sN9g=; b=RtksbuULGueCoeqTvZ6jZf2Wgsv8gWStDJazDB4/6SuFALUzeLx
-	24jMAWeDe/LTu7Gz6JmXsYGJorRGuDVhKDPYrLEMx7cxC9ZmU7eQPC//JuKISrtE
-	I3LMBIEv0pVfvg3ubwpcBI60nqUyusPwiD/gH09grT1g/ZqU3Gy3AbVr5il1OF26
-	bClpS62sCEEoqKhRoFY92M6BHE1lcHQgyqYpJfaySYeGO1umhkJJY/N8DRmAU+4d
-	k6hA65jGTNGB4AnY7Jg2s/oxGLmFxJnYKqDqDyqfnZ7TrdrFXEHxc57Y0Jim2SsM
-	s1WwDQxiQezZygpnciclX/JqmlN8QmosEzg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791440131; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:nam7D4YCSD50wusgfXPGK5XyYPePwaS/OnuqminzuZCdDxL
-	JzXieJhbjUKnQwBip5BumfnV+yISB1TMcQ80TFau6XUN6czuOCvn0rXfmd+ExtOQ
-	UMdj14B9X/2u5lGtCJkwBWC4zdAz7tjA8Sspor5uOsX6U4bSzwXhHkcKFZxTj9MO
-	D1Bx5xZ8eiwi0bPFpXqg1XYBxeXmO9v0/021n6I4vQ30mUbWNOFvkt0uf4M9WDOZ
-	zzR3epo4pZqXHAB87YcNcLA2bpNpBf1hlMpZ+gXlSeya+zGdi9Qk0V7SWwT1v1QG
-	PjBVdX83aXT9tjU+QLxOQhBQvlSGuRG0tpFhO3A==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:X6SRJ5QQ8R+kw/YuPyZTGpeEyr7Sfw/TjpoHYLUnTBc=:q1AefQ3K0sNC2yRTR7qo4E57jYGYy5FQXDOTUj6eBHQ=;
-X-ME-Sender: <xms:AzXHamQsiiv9mjVe-bwDMdLQaOa9yIzMF1-oz_xTuAskfFOgV4siOw>
-    <xme:AzXHaix_FbVgMdJ52vdJCNrdFg9m362pnp5LJW-B9EaznNJs0pJ5yF-s-vNjqgbH3
-    BPKzNi2LT47hwa5AKYQZuKphgIGZal9goxsJ0t8i92LMTqJsUu3xQ>
-X-ME-Received: <xmr:AzXHao274jxeiqrqFcOO10yuRpn-n6ng5VGRCnRze9wDwDGbHSSVkg>
-X-ME-Proxy-Cause: dmFkZTEq7f3JZpY38BvQkmOqRAumaW7K7/LC01GnYiwiE03GgMehkYI1zz/zgaRzOwIb2X
-    i8nJJXo0OUvxxfYinu5e6TN9i/kuyGpNyjCtcJmtjClH02SlhiVsziI3I63kJ8JUVjQARj
-    +rNvfMn4qpvtnLs0LrISYzYG+lWBHPZjh5NJH8CjtmWhSggXt/PokNHigj55gT0uee38HS
-    Bweu1y3GPL0vWRRkDIRH5gr0KZ1VAaZCbSG+a5M3whSlxHr/YAc9vzke1OcQwySxFp4NmE
-    pJP0sLEc5f5zfeSZQZNZ2HPgMdC4EKoEB3CuMIk8LEeNNhfIfk22yQigk+aI0tL1cCVYnq
-    fnvSnYySHXlUZ2Fll+IjhNTXWUiO/ByogR91mTmtVmmI/UdRl/e+DCXiOVctrmwOw2nMUg
-    lZNBNvcMYQC2ASNGAPwwhw2mIRA/ivEf6wa4IM1ZnTMZ2vIpqfhYZ7Yr2RtVHVU5j9nAPp
-    CiGMBNeHDw7hdQFCXRgDvJoBCr/gFywgE/nrV0tXbTwtLYoqee4B5cYPGVVz3nDXM0Rp6y
-    IUCTwY73VvnjSHFrOwnXMq/hLdjtctUOQoEfiRB5g+lF0n9JQWntvFOBeuJAddJ4EKfGos
-    7FF5vznJ0CSJWYONbzQo4Ad/TN+w7W67U7v84MR3GPQALI6+vBRSfjsfM8fg
-X-ME-Proxy: <xmx:AzXHag6XJqa9_a-_XEJNFVm8IG7LIzO5vx002Q8ELIwSFL0ZFvgqOw>
-    <xmx:AzXHarUaTnzFQqYVgxZSECpGv05XXctQUoyPU2wwEH--Ikj-J-xbxQ>
-    <xmx:AzXHavBKsvy4V2dxktUjazg5yukkneaMRLH6aDTu5WJ4chmv2bcuuQ>
-    <xmx:AzXHaq6baIQgavkc0qCHlomm4zXY560-r9vJGvuLU8hdirltFazrnQ>
-    <xmx:AzXHava966kOLLRMBrh2opfhZNQdUH-et8DT7xifuDHLH1mpT4pp_rVh>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Oct 2026 02:15:30 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id aeda4761 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Oct 2026 06:15:29 +0000 (UTC)
-Date: Thu, 8 Oct 2026 08:15:26 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] ci: bump debian-11 job to debian-12
-Message-ID: <asc0_sjw8beWy2y5@pks.im>
-References: <20260905135822.GA3914811@coredump.intra.peff.net>
- <20260906151137.GA328152@coredump.intra.peff.net>
- <xmqqzewp5jhi.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="NS6YOO0V"
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-west-1a-100-percent-9 (Postfix) with ESMTPS id 752E0180016E;
+	Thu, 08 Oct 2026 06:21:24 +0000 (UTC)
+X-ICL-RepId: 01a11a2c-7843-7a0a-be1b-a04c1df2a70d
+X-ICL-Out-Info: HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTQFIHVwPXBxIDFYFWxcOVk1KHVEMRB9bEVdWRwVeDl4wUBtfAkIPHBNWFRMLU1ZbE1UXRgkZCF0dGQpQUAJLWhVVFw4CQh9QH0wWV0NHHRwZWhRcGFNFUR9UWEMZRVZpQQtPHV0ZWxxCZFhXCQoCURxWDVdDVARfUFQRV1ALXAsRXE4DW1VGURYAQR5ZD10FXQAcUV4aCVEUDh5VXQRdAEZdOFoOWwRHFBcbXAAJS0YJSR0OBFQHXQVd
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1791440485; x=1822976485; bh=Cw+nPPAPlqMw/Kno350KkeX/OuLESqLL6S/LetJHRJw=; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:x-icloud-hme; b=NS6YOO0VDbPzJjqK2V61y40+tVO9wIXMhyRbgRHIctS0tH6ib3vb8ajc2VlUY2wLfRKKpx/V2BKDtnHbdlEgWCC8ZsQsVwQDTjVgig/Qvq/r4DwFixdLl+Of4GOjdEOw3vCdBAOvo9cCCdL426JX4J9k7i1F0bfs5FpGmMUSti2YKYTC04UCwEAVjLLSlXlZufehtI955ZCr8rbw1l0el8v/2enn9ZiwBzB3SmTUvxOAMWGK/6ubx2JhX/nBcycnJPzhWFtfcuvj+ccDRMqb4XN3TO4q9TCrErBxBJA0vEUYAuW/m2k052YFvNlzHK30TXPHToCDzg64molOMq7Exg==
+Received: from [IPV6:2a01:599:117:a94a:6df6:9d68:f6e6:e3f6] (unknown [17.156.192.29])
+	by p00-icloudmta-asmtp-us-west-1a-100-percent-9 (Postfix) with ESMTPSA id DF2D91800125;
+	Thu, 08 Oct 2026 06:21:22 +0000 (UTC)
+Message-ID: <79ae606b-cf99-4867-9db3-bcd7ff03626d@icloud.com>
+Date: Thu, 8 Oct 2026 08:21:20 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqzewp5jhi.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] faster SHA-1 collision detection
+To: Scott Chacon <schacon@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc: Scott Chacon <scott@gitbutler.net>, git@vger.kernel.org,
+ Sam Reis <sam@opencanopy.dev>
+References: <20260929112544.86511-1-scott@gitbutler.net>
+ <xmqq5wzda0h6.fsf@gitster.g>
+ <CAP2yMaL51H1OAG25nQ0NuLQLb0wevd4CicCG1_ezsJfrZDqfUA@mail.gmail.com>
+Content-Language: en-US
+From: Sebastian Thiel <sebastian.thiel@icloud.com>
+In-Reply-To: <CAP2yMaL51H1OAG25nQ0NuLQLb0wevd4CicCG1_ezsJfrZDqfUA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDAyNSBTYWx0ZWRfX9x8rgVplY43V
+ ZTFd922FMofGz68If+UfgP7mL3KBdoTADB9r05o1D2FxpT6/HjtX1gXOv0KXxxqilK5cKrGG401
+ 25DGNw16dZvDCx7/rs5SKFlqv7o0gNc0Kd0y4huHQvVZA7GRzh9akwYHsSkLm2IAop8OICCzKs5
+ 2jR0i9oZuQZsQu/8tPZNWwleLLt0cmfGxHcs7VuCHF2KmEB4+Q2SAhkKOEw8yw8VdezSya4iznm
+ 0lfHIk0Qr8lkxdrgJohSVIuULq8CGlovhsYy6IruL8V/vORwMkEiP5ajtWGYkfsdIWwDFd5Uhbg
+ TKlh+6FfPy1hlyRw5cgzppMxaYh77AtRVHhQkq30ES+zuZv72bS5PiWmAHBJno=
+X-Proofpoint-GUID: -f9a_HsztUXZOVkptg9myghYH4zRdJ1d
+X-Authority-Info-Out: v=2.4 cv=Pf/yRyhd c=1 sm=1 tr=0 ts=6ac73664
+ cx=c_apl:c_pps:t_out a=aW9mcIavGNWWFvFFKOxBSA==:117
+ a=aW9mcIavGNWWFvFFKOxBSA==:17 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=660iZSQnnn4A:10 a=x7bEGLp0ZPQA:10 a=zqz4MmORN-0A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=iuz-Q6SNAAAA:8 a=NEAV23lmAAAA:8 a=ybZZDoGAAAAA:8
+ a=3MHYrfD4mWe6iT6ZG4sA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=i-ZYw75UE7XCnyHD8pkS:22 a=0RhZnL1DYvcuLYC8JZ5M:22
+X-Proofpoint-ORIG-GUID: -f9a_HsztUXZOVkptg9myghYH4zRdJ1d
+X-JNJ: AAAAAAAButpU6XZccVkITGIMyNYQX5QrRXZUJgUNfrXVDMol7Shu0D9RHq/yXR+wF8KQKAP8pXrtfiLvNppfWjsuUKv5u+FotGDEe4o5nFkQXQEo2myPJ2n4GKCt6dXemA9yQlMwNiJFVOetYgxyp6A+aoMZ/HGupRYEmlCjtLmsJmXKOW30S7X8j0huZF8yI1jcL/tvbeF7eDVl8iAawT/X0moGT7MN2ug/dwzq7F5V6Hh8QkA0VUEGzzFRfVtnnG8TjiicuexFlmedOA0/IBRwFKcxGBbnl77U1kk2Q3vTq//DVp/sxQygZNmM9hhQNR1oj10mi7dxte/nng5xY8SE3x6nnGuf9LUwjdTheR0Ilw7vWx3ykUBzDvtF9BYqxvhof0X0UL0Z8IIYpIZj2UwzPpLHGx5FNv9+fZEwUl126n2wcdVrGKKVD87qJ7xjl1fiUk9oX5NkzFkF94IkrBlltCjj+cCm9X/Nb3n0gMf7tOlJjIxbiJPaWBbX9xYTdrWGR99/DPhjteRvjXGIUa14rwmta/lsAOwnHBeP8HyrMbgJLSMGqnc9be2xY2fgQje+EQBYL4YwGFussv3j2RsmeuT3wrhPerTWtUEyWxrqs8O3zSe8iLE9l7hVhbL/lQGFeGMp7ocoWWWp/JBH6r+2Kif6uBAvMPJUyKLxISSpPTXgJKQcbXRMFABNZkoge6OwXwVSLXmth4bIbeIH7KM4/exgWkvJXIJ2BT049jmuOAbMOc4paZztyOavvjhbNdFri1JvzrHKWxbacERvTEOPt1J1KYovIZd8rcypB3yJLWF6IpMXSv3JUC9ktmZa3B5RxLhNgQvEJHMDaLuqRkQ1ThmYIZtuvWwPj4R3kGNaLnouB55Ddc3N01EpmNnlO1/6HnXIkBze8swb5FCL/Q4hT5jUMwFnWkaJDiLDeu7mQlJGdwCfScbmsPO5qPlHOjY5eEsSdPD6ZcT2pSGR2xcwlEt+4hP
+ zVGLKK77LmyVSznrpBZTau8kZY3SK3+iwY6OmtM35afGeJynYf/7zt3ap8/QQ0EdLgnDIxtfcWotFwg9ova1w0q81PlbIeqQ4g5bS9W6Sb9hYOaGUTItq86SrXOOYyIwau+emfxnxu3qUS5RpKgtVofSxTdE8kLhd3tC2UzjGIrk+a/TXs6rZxsx7TYSnCPnhX5Xrmio81d4ZkZHgR1B77x7ir5NYf4c9JGsSYrBjnv+rqs7hvsBOaZEyxepgbXwSeiqTedron/UpAL/90GC6ibY6ngY2xljrTxI/n+nkiCypTTPltRbD
 
-On Wed, Oct 07, 2026 at 01:44:09PM -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> > BTW, I noticed that the linux32 build is using ubuntu 20.04, which has
-> > been out of LTS for a year. But bumping isn't really an option; they
-> > dropped i386 platform support, and so has Debian.
-> >
-> > I'm mostly inclined to leave it unless/until it starts creating
-> > headaches. To some degree, if we cannot even find an image to test
-> > again, it might not be an important enough platform to care about. But I
-> > can also imagine there is a long tail of oddball 32-bit platforms that
-> > Git does run on (like small ARM chips), and it's nice to at least have
-> > some coverage. Possibly there's an ARM image we could use (looks like
-> > armhf?).
-> >
-> > We also seem to use 20.04 for linux-TEST-vars. On the surface there's no
-> > reason it couldn't be using ubuntu-latest, though I think this may be
-> > one of those cases where it's doing double duty as "test exotic configs"
-> > and "test on an older platform". But might be worth bumping to the
-> > oldest in-scope LTS.
-> >
-> > All out of scope for this patch, and mostly I'm inclined to ignore it
-> > for now until we hit problems (and then decide if it's worth
-> > accommodating or if old systems are too old).
-> 
-> I am getting annoyed enough to see that the lack of 20.04 is finally
-> giving failures more often than it used to.  And am planning to
-> suggest to:
-> 
->  * drop linux32 job
-> 
->  * update linux-TEST-vars to run with ubuntu:rolling like everybody
->    else with the default version of gcc
-> 
-> I personally do not see much value in the test-vars job in that
-> enabling all exotic configs all at once would not match use patterns
-> of any real world users, which may likely to enable only some but
-> not all of them, and for that reason am also tempted to propose to
-> just remove it at the same time as we remove linux32 job.
+Thanks for reeling me in, Scott!
 
-I think it'd be great to continue exercising i386, and Debian still has
-supported images for that.
+First of all, I am very happy to see that overall, everyone here is
+making an effort to find a way to speed up SHA-1dc again.
+It's so impactful!
 
-Ialso think that we should keep the TEST-vars job. It has catched
-regressions several times for me in the past. Sure, the combination of
-flags in typically not exercised. But I think that by itself is not a
-good enough argument to drop this entirely.
 
-But, oh well, you probably just want to snipe somebody into doing this.
-So fine, I'll bite and will send patches later today.
+It really did hurt when I finally had to add SHA-1dc to Gitoxide and see 
+the performance of clones plummet. And it still hurts me knowing that
+an incredible amount of CPU time is wasted doing something that we now
+know can be done much faster. At GitHub scale, this must be more than
+a blip.
 
-Patrick
+While it's my dream to one day have a GitHub action that uses `gix` to
+clone and safe even more power, I think Git is in a far better spot
+to achieve significant savings much sooner.
+
+On 07.10.26 20:13, Scott Chacon wrote:
+> Hey,
+> 
+> On Wed, Oct 7, 2026 at 7:23 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>> This series ports the approach of Sam Reis's sha1dc Rust crate [1],
+>>> which gitoxide recently switched to [2], to C.
+>>
+>> Which means license-wise the original is compatible with us, I
+>> presume, as they are "Apache2 or MIT, your choice".
+>>
+>> How can you/we be sure, with respect to the current AI policy in
+>> SubmittingPatches (which by the way was vetted by SFC lawyers), that
+>> your "AI generated" code did not "borrow" from places that gets
+>> you/us into trouble?
+> 
+> It's a good question. I actually just submitted a proposed update to
+> that policy based on SFC's updated guidelines, but either way, I
+> learned about this from Sam and have talked to him about the port and
+> he seemed excited about it. I can triple check, but I'm fairly
+> confident that he's fine with this and I am fine signing off on it
+> under the terms of the DCO language.
+> 
+> Of course, he in turn used AI tooling to produce _his_ library, but
+> within the guidelines of the updated SFC guidelines. Johannes's
+> alternative series is the original Rust code of Sam that my agent
+> looked at to produce this (in addition to his blog post explaining
+> it), so I'm not sure how that might be materially different.
+> 
+>>> The end result hashes roughly 2.7x faster on the Xeon and 2.85x faster
+>>> on the M5 Max. Single-threaded index-pack of git.git goes from 24.3s to
+>>> 12.7s on the Xeon, and from 16.1s to 8.7s on the M5 Max.
+>>>
+>>> Hashing throughput on the Xeon, in MiB/s:
+>>>
+>>>                                  16KiB    1MiB   vs OpenSSL
+>>>    OpenSSL SHA-1 (no detection)   1234    1129      1.00x
+>>>    sha1dc/ (today)                 435     450      2.67x
+>>>    shani+avx2 (default here)      1002     901      1.24x
+>>>    shani+sse2                     1075    1008      1.13x
+>>>    portable+avx2                   553     654      1.96x
+>>>    portable+sse2                   603     681      1.84x
+>>>    portable                        466     565      2.29x
+>>>
+>>> In other words, currently collision detection costs about 1.5–2.5x on
+>>> top of the hashing itself today, but only about 0.2x with the series.
+>>
+>> Thanks for these numbers.
+> 
+> It would have been better had I provided the same relative scale (it
+> should be 1.5-2.5x vs 1.2x, but whatever, you probably get it. It's
+> 20% overhead here vs 50%-150% overhead previously).
+> 
+>>> [1] https://sam.dev/blog/faster-sha1-collision-detection
+>>> [2] https://github.com/GitoxideLabs/gitoxide/pull/3008
+>>
+>> And the pointers to the original sources.
+> 
+> CC'ing Sam (sha1dc rust guy) and Sebastian (Gitoxide) on this, just in
+> case they have an opinion but I'm pretty sure they would be more than
+> happy for this to be integrated.
+> 
+> Scott
+
