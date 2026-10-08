@@ -1,440 +1,150 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D454C48E0D4
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 09:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71AE3F1071
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 10:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791453153; cv=none; b=RaTpxLV2KQ+EUQnBSbWRlBOC22hd2JW4XAk/A0omZ85Gj5NynSMPA5yDZwyw/vEI1Y/Bg4fk1EGRWw+Jg8PmLS5uD9gyQlNp1npOgaJ3kuaObX6c3gqwVF7sRyMF8qGf8KjqXI88p183NRhpCJjF2QEWz6IRYrBo0Fvvhx9KtrM=
+	t=1791453694; cv=none; b=OfxkaZr10Gi/MoGXfW8LNG5s1znGT5Cuhcsmom7O/IFZeCIf+py0t4txSgzSYeHn+3nMi2kZoQ0ZRcvqWuuNGPw9hk7kPOnZ7uOWAdZZBjkZ/pLowYY8NY8J+Z5HnARfOuMgsavx5UtEkfk9Go4+Rih1rmGPH9/hw4fO/mQCmTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791453153; c=relaxed/simple;
-	bh=OGrv+8Ic8AQ3sL0FmySEPvYJwjETY2cvzcPnTxZMn2c=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=VToQH3r3PoME61cyfxSHOr9n4UtpMxOOP5wQ4wv+IfsCa57taCnn6zunHeYqFkwm3J4QgevLSuflHG5iAGqjEJkz5kpnDKEAcMtVm/4/aklFTznOu/NT9wOv3WoVACyegngDRzW6JiQAO+aWj7Q/hh3BkGXlGdL8X+ZHGlOH1n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L5HUwgvO; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791453694; c=relaxed/simple;
+	bh=u3MDMl8durDNvLzVNd2J+jM1dn0mvPSwQLnB0gJjcpk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=pLVUJSdipiF9GHgrAmpG2nrTdENrSxOBcXn7e4zRcR8u6zxUkvBgIkDysNiEKUd5W7BjvqJx1eWC6/38/VH4taJHW/Zbr1cvWATFbj+GDAXELMFQYvUBsjNAM+Z+W4gPxx9/tGWw1WwwZqMUTaRp8jKmgdIW+wypc2HQb6+ZUd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uBorAXRQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yZ649dIp; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L5HUwgvO"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-887beafb714so1525258b3a.1
-        for <git@vger.kernel.org>; Thu, 08 Oct 2026 02:52:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791453151; x=1792057951; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=8l9CGjNaP1uUchG/zgQfgsJtCPkExDJYB2RN3owJXJg=;
-        b=L5HUwgvOJMdp0SHAp/53JxIb/TBg+1pUZCBL/wUGhRmjBcyUl/QWM0HvRwzrl4uM46
-         bCHZGJzXcwdNxpIL4VXaNDEe1tkjSiQrya/71E73yvZK5l4UVsXAX5CCwO7G2KZsBV5g
-         ZXv29lXCtPWCAy0AbL2Iqw+NO9/zNp0q+MJfK1Z8NUKj/1diGD0lF9SHcYg6HSPe6nq2
-         kmIqo52+NiHHL98v1CQDWibDFTXjWVLk2Cc9z7sfn0VptcYm8r7sG8EG9cRtZRVfgXEQ
-         qrx/oa7U6U59droMUz5fOdjcCXqIF+DDC7J17kR1oWONlfCi0j8Rz4A9AUj3S5UnVeZo
-         YEaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791453151; x=1792057951;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8l9CGjNaP1uUchG/zgQfgsJtCPkExDJYB2RN3owJXJg=;
-        b=vaKJfmjmFMk04KJzbWPcu+DnmH1yTld819j90Ei8+la+SBytLnT5OGO0b04671kdov
-         QrjxSd/rwChBCCA8kl+yA3gi+ehiHjDWT1BZShDD9vEuacsGsZ6o7SsvBREEDBnZTlj4
-         sGjOQDjMllWHlCbf4cSoD+WNTX2MBu5MvEfQi0IkDdqQnVrBrfQDWNyB6OKoi/XYv4EK
-         kDJpUQU7lpU2suDzTDiBXJHbkb1NnrhO+cX4HcNwKvDA5Q9JSql9HYtqUTKTQMc9o6E3
-         7vNxSFaLhI8bnjZmyPU8vjJJU7MOvbB193+sbM5VMfPwnHIv5066A4JU0HSViIGbYAvL
-         1DGg==
-X-Gm-Message-State: AFuF++mB0FRkotSvf+uQEKA248ovMPwlmodcQtnAzOE9IUDS8zf2v7Al
-	89ui2V2+6JyLOUFlQmXx/vfT9uKyTiR/YuQTBgp0KkJR1vzTz+5bV2CBZxxyDNwb
-X-Gm-Gg: AYBFou2STr14eFjB1s2NNZ6IYl7nsv8et2IG7Nhhf5k8eLZ/qeOlRMT59WUNCUl7xN9
-	Wcr95ANkPcnC4jZkRf0FxH2TD5WQ/M/NhWrVk1DG5cXsgRma0NZeqwo9n85HswZ/OmHeYwuTIEt
-	TlBwbt37VM7Gy568UUq/q+n1YES0R24dRyZiLghagOUA+yBqZe3xl8EzgpAMdFwLxShxOqY6UMQ
-	8fhxVW8sRVGuG8epi7MuGqfnBPHz1Lei2l0LCvIcIEtuZVPSES/btujzByCYrcDnfFdssLFkub5
-	l5KdrybR6F/S8ceacGC5pvP7/XKjyKEZJgPhk2saPEGP6Co+1c0TCTQpdj7AK69fChPcvbpscMY
-	1oonKrb7CuGhFB4YrfjH0mzeQVsRGPkuM7EPUwqGNo0wkGUV0+qH8YuzoPGvQHvyBD8CBoNJM/e
-	+VCP9RKQRQ1WoORavr0PjXRnn9eB1eBieIJcN70ueNpFu5UlRcrSMxVb7yarpT5+FghbOhXMMdM
-	g==
-X-Received: by 2002:a05:6a21:7084:b0:3dd:a195:dd65 with SMTP id adf61e73a8af0-3e13411b32amr3807524637.71.1791453151046;
-        Thu, 08 Oct 2026 02:52:31 -0700 (PDT)
-Received: from [127.0.0.1] ([4.154.246.147])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cd0a92d6161sm2609142a12.16.2026.10.08.02.52.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Oct 2026 02:52:30 -0700 (PDT)
-Message-Id: <8f3b9d9ee06e81a89413af7b50d71074a55e3cbd.1791453141.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2219.v3.git.1791453141.gitgitgadget@gmail.com>
-References: <pull.2219.git.1789385483.gitgitgadget@gmail.com>
-	<pull.2219.v3.git.1791453141.gitgitgadget@gmail.com>
-From: "Qin ShiCheng via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 08 Oct 2026 09:52:21 +0000
-Subject: [PATCH v3 5/5] repack: tell pack-objects which packs are kept
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uBorAXRQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yZ649dIp"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0D22B1400169
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 06:01:32 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Thu, 08 Oct 2026 06:01:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791453692;
+	 x=1791540092; bh=j9XxqzUxNYfctcOK+HbWUI3EVsRC89//JsDE9PIU9pc=; b=
+	uBorAXRQFaWVVWGCGmCBlyECMHGkYF46tr7dg7z+buYmJ4sGvLPe21aolSKkpCXF
+	CwbT8ac/IJKcSVgQD6DK1ObWnK4xGGhPnvh9Amp3B1ddYeSQvyqnDQLN5mNmySbb
+	Vw+fAmyOi7NvqhBu29wrEVrOp/sn7GB0eZBJN4hRiCqZupcwIKVl//CKqDaSF1E9
+	thXkUty/WDgyIoEww0XEuqD1VRJh5ZQzYPPuk0y43uygRblD4mUscQX0aRDMGXEB
+	4WX3bSEMkns8IwIZ2AkgkW1Sw9tIjE+p+Zmx1s5wYaMTDdf5F6ejiyaN2pomlIth
+	rWK+nc+5KwRn2sg2qD0lFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791453692; x=
+	1791540092; bh=j9XxqzUxNYfctcOK+HbWUI3EVsRC89//JsDE9PIU9pc=; b=y
+	Z649dIpibx0oS27JAorWRrc22ME4XUsUf4HphylDBGI/9OvAx5d/XEyS8nVkWUwN
+	3xnnn22dQ+s+6WHEbq6QdrqLmPytz9/iPaz4j55Fu3olbzdd4gBdA0/vlkmHIO9f
+	GzyNtQsRxcw9LLpGhefyxwtCjWVbBNJ1kmW02PcYvKjFq4TGdam38FEluGqQxsHm
+	tT/1HZVX0OZXyx0MzTzveVbkCs3D8KJ1G/RBtn2NfrzOJM7b6xhFnTfrub613Lkf
+	gPv23waj1Bo306mmw+cH563FxLZDlawQdzP5h+MqCDoCc0x9hi9ZD9jcUZVnlYiq
+	/vU0gv4mXR7kzSw5gikjg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791453692; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:Mu559ZOC4OQyWRNmQxSkw1pAss4Vet2ICcFCTcRyJH7jl0C
+	yyOKl0/TiKBQRD9tMhQ/cOj+0KVFQ2kD8DzKNOHRDxKrcJmuRrwzPj1Zt/mUUR0Y
+	Ta3juKt5PLSGgEniu9HhwB2I9EO0s929yuDYoUO3Qhqj7LUOaW0cmhI7gn94dbca
+	cNAjzflDza74rVpCiZyFA3X/FG1itwTxsuPcBEW0a2jnJY7ivRW0Qay3sDqypszL
+	ZqiK8cSM8QBOqKVdelKAdEN/ZYiHph0gberSm395t0Chpzf8LV2UEseie8uL4g09
+	YggNTaTlUqFdzN/DqN4zRlbK5yrRXfvsIauFIrQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:1llMQdD55WKR8+knC6KwgBRDXE74Do8Ku4M/E7Jih0M=:u3MDMl8durDNvLzVNd2J+jM1dn0mvPSwQLnB0gJjcpk=;
+X-ME-Sender: <xms:_GnHap70TEn-opgCYd91Fejo-xiTr6a2Yqy9KHoHNAhzgpuzdQhxrw>
+    <xme:_GnHauUSBJFAOI1j9Wxy80R6mYjxspitPQvlIaqpRHoye19RPFPlflpK6onm9lrdF
+    sy85UQNaXpP7asNFxFlMdH0G47U3FJmaunZtbuRa_0opfuIOmjcYz4>
+X-ME-Received: <xmr:_GnHat3RT53WQZ2eR47OWv40sVjm3kRewWq6D4KqkPYOTTmXamEoOg>
+X-ME-Proxy-Cause: dmFkZTFcPkAz1MwdF9G91Q2HHt/DMwRQeFnKx+x68D7GybYDQ/i0KpIs24O8mGC97InV5x
+    l9pAW0ts/UU9KH515tlBDmv+WZ0+KYrQRh6xeKbZfQat2Qz+Sg1rXt3b5uJznUCyp0m8uY
+    71BCRA4fNnv9oBdGpbiziYXhCQjhE8NT9KNX8KIfhb0V1qRTBvsVj704A31+Hni2pY1ggP
+    a3q+zc2dU5mDDUUOQmy2j1zpr2bNPvsQxh6Ysa48mXJ+zQrThKKxZGkcT5LdtAIGkRdeOf
+    ck2bD2X0g14DJXkT4iu1Awq0JBVy1rhu1vpE3BYH9j6MP3iwrywFfxgjL3LV3YpxuArGRS
+    3D+Q6mtI55aJAqaZVFdh55C0TeNjgY7AKB7904xyEchXZ89z48g9A/LsFTQQMdqEDlaiim
+    0hfgACataEj9YO6RPg2eZD30ciuDSza9yrwLmj78soKitMqRHe6oK5YGcRCYSt/h8eqx/a
+    Abcl6AuZcasUlFdyej9z2kW6/rCUw0hwtmibC61MViQyd7DeZRWSKoi97oBW5vRGDNjg7X
+    OI04w+63MxbZPL1SvEayy3jarN7c+KamFI1lcDj5RD4Q9S+Wd7DF05EU02pmy/lVbjiA7y
+    RzOkfXlH547hIlyf4sXlCTdyY6srFIkQH+E6Z8lbucLnKKW7thToXV4in5KQ
+X-ME-Proxy: <xmx:_GnHar1sD7gdOZTBmuJR3Qsiy18SoKonWYphi-TiSXbtM8NyUs9apQ>
+    <xmx:_GnHag-W4MjSShJocvGbMZqhHmQ-1MJokZ7G4wGUImg1OrdNn8XskA>
+    <xmx:_GnHao3f1rBrdoQvnE_ekhUaFQR3f4H2fGJDxinip9tcHgx0NXzbDA>
+    <xmx:_GnHat_mJCIel0dA_7HLk_2X8vomtfewyTDaaG851NzAOoCeNDuGsg>
+    <xmx:_GnHalERmzX79ij7We1pbnKKRQY29IaPSYwy7515jh8i49aUveFMdr9q>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 8 Oct 2026 06:01:31 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3364d47f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Oct 2026 10:01:29 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Thu, 08 Oct 2026 12:01:19 +0200
+Subject: [PATCH 1/8] t5004: skip SHA-1-only test in SHA-256 repository
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261008-pks-ci-housekeeping-v1-1-baf015c589c0@pks.im>
+References: <20261008-pks-ci-housekeeping-v1-0-baf015c589c0@pks.im>
+In-Reply-To: <20261008-pks-ci-housekeeping-v1-0-baf015c589c0@pks.im>
 To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Taylor Blau <ttaylorr@openai.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Justin Tobler <jltobler@gmail.com>,
-    qeesung <qeesung@live.com>,
-    Qin ShiCheng <qeesung@live.com>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.15.2
 
-From: Qin ShiCheng <qeesung@live.com>
+One of the tests in t5004 extracts a ZIP file that contains some objects
+larger than 4GB and then double-checks whether we can read and archive
+such an object. That test has a bunch of prerequities: it requires a 64
+bit `long`, unzip with 64-bit support and it only runs when EXPENSIVE is
+enabled. Consequently, not a lot of jobs even exercise this.
 
-repack works out which packs are redundant by looking for ".keep"
-files when it starts, then passes "--honor-pack-keep" to the
-pack-objects it spawns, which looks for them all over again. Two scans
-of the same directory, seconds apart, with nothing holding them
-together.
+One of the jobs that does run it though our Fedora-based job, as it
+ticks all the necessary boxes. But that job was silently broken: while
+the intent was to run on Fedora with breaking changes enabled, they are
+in fact disabled due to a typo.
 
-A ".keep" that turns up in between loses objects. The parent did not
-see it, so the pack is on its list to delete. The child does see it,
-so it leaves that pack's objects out of the replacement. The parent
-deletes the pack regardless: repack_remove_redundant_pack() passes
-force_delete, which skips the ".keep" check in unlink_pack_path(). The
-objects are gone and repack exits successfully.
+We're about to fix that typo in the next commit, but this will also
+uncover that the above test case is broken when running in SHA-256
+repositories. The extracted objects are SHA-1 objects, so extracting
+them into a SHA-256 repository is not going to yield anything good. So
+once we fix the Fedora-based job to enable breaking changes, which will
+make tests use SHA-256 by default, the test will break.
 
-The gap is easy to land in. index-pack writes its ".keep" before it
-renames the packfile into place, so a "git fetch" or a push being
-migrated out of its quarantine will do it. Checking for the ".keep"
-once more right before deleting would not help: a push holds it for a
-fraction of a second, and it may well be gone again by the time
-pack-objects has finished.
+Fix this issue by adding the SHA1 prerequisite.
 
-Hand pack-objects the kept packs we collected at startup and drop
-"--honor-pack-keep". Both processes then work from one snapshot, and a
-".keep" appearing or disappearing while we run cannot make them
-disagree. An earlier commit made sure a pack kept this way is no more
-of a boundary to the traversal than a ".keep" file was.
-
-The list goes into a file next to the refs snapshot we already write
-for "git multi-pack-index write", and is passed with
-"--keep-pack-from-file" to every pack-objects we spawn when
-"--pack-kept-objects" is not in effect, which is when
-"--honor-pack-keep" used to be. The cruft pack-objects already has the
-kept packs on its stdin; the file is redundant there, but it sees the
-same list as everybody else. With nothing to keep, no file is written
-and nothing is passed, which is what "--honor-pack-keep" came down to
-when it found no ".keep".
-
-The names go one per line, so a name with a newline in it cannot be
-passed. "--stdin-packs" and "--cruft" have the same limit and die on a
-name they cannot find, but "--keep-pack" ignores such a name, and the
-two halves of a garbled one could go on to exclude some other pack;
-refuse it up front instead.
-
-The user's own "--keep-pack" arguments keep being forwarded, since
-they apply either way. write_filtered_pack() had a loop passing the
-kept packs too, but without the ".pack" suffix pack-objects compares
-against; it goes. Kept packs borrowed from an alternate object
-directory were covered by "--honor-pack-keep" and are not by the
-snapshot, which only ever held local packs; repack never deletes
-those, so their objects now get packed rather than skipped, which
-costs room but cannot lose anything.
-
-Signed-off-by: Qin ShiCheng <qeesung@live.com>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/repack.c            | 15 ++++++++
- repack-filtered.c           |  3 --
- repack.c                    | 34 ++++++++++++++++--
- repack.h                    | 17 +++++++--
- t/t7700-repack.sh           | 43 ++++++++++++++++++++++
- t/t7703-repack-geometric.sh | 72 +++++++++++++++++++++++++++++++++++++
- 6 files changed, 177 insertions(+), 7 deletions(-)
+ t/t5004-archive-corner-cases.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index c4360382c1..78bc98c4f1 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -167,6 +167,7 @@ int cmd_repack(int argc,
- 	struct oidset drop_oids = OIDSET_INIT;
- 	struct pack_geometry geometry = { 0 };
- 	struct tempfile *refs_snapshot = NULL;
-+	struct tempfile *kept_packs_snapshot = NULL;
- 	int i, ret;
- 	int show_progress;
- 
-@@ -456,6 +457,19 @@ int cmd_repack(int argc,
- 
- 	existing.repo = repo;
- 	existing_packs_collect(&existing, &keep_pack_list);
-+	if (existing.kept_packs.nr) {
-+		struct strbuf path = STRBUF_INIT;
-+
-+		strbuf_addf(&path, "%s/%s_XXXXXX",
-+			    repo_get_object_directory(repo), "kept-packs");
-+
-+		kept_packs_snapshot = xmks_tempfile(path.buf);
-+		existing_packs_snapshot_kept(&existing, kept_packs_snapshot);
-+		po_args.kept_packs_snapshot =
-+			get_tempfile_path(kept_packs_snapshot);
-+
-+		strbuf_release(&path);
-+	}
- 
- 	if (geometry.split_factor) {
- 		if (pack_everything)
-@@ -644,6 +658,7 @@ int cmd_repack(int argc,
- 		cruft_po_args.quiet = po_args.quiet;
- 		cruft_po_args.delta_base_offset = po_args.delta_base_offset;
- 		cruft_po_args.pack_kept_objects = 0;
-+		cruft_po_args.kept_packs_snapshot = po_args.kept_packs_snapshot;
- 
- 		ret = write_cruft_pack(&opts, cruft_expiration,
- 				       combine_cruft_below_size, &names,
-diff --git a/repack-filtered.c b/repack-filtered.c
-index 869b9fc6e3..db8de9f633 100644
---- a/repack-filtered.c
-+++ b/repack-filtered.c
-@@ -25,9 +25,6 @@ int write_filtered_pack(const struct write_pack_opts *opts,
- 
- 	strvec_push(&cmd.args, "--stdin-packs");
- 
--	for_each_string_list_item(item, &existing->kept_packs)
--		strvec_pushf(&cmd.args, "--keep-pack=%s", item->string);
--
- 	cmd.in = -1;
- 
- 	ret = start_command(&cmd);
-diff --git a/repack.c b/repack.c
-index d2aa58e134..a794486035 100644
---- a/repack.c
-+++ b/repack.c
-@@ -38,8 +38,9 @@ void prepare_pack_objects(struct child_process *cmd,
- 		strvec_push(&cmd->args,  "--quiet");
- 	if (args->delta_base_offset)
- 		strvec_push(&cmd->args,  "--delta-base-offset");
--	if (!args->pack_kept_objects)
--		strvec_push(&cmd->args,  "--honor-pack-keep");
-+	if (!args->pack_kept_objects && args->kept_packs_snapshot)
-+		strvec_pushf(&cmd->args, "--keep-pack-from-file=%s",
-+			     args->kept_packs_snapshot);
- 	strvec_push(&cmd->args, out);
- 	cmd->git_cmd = 1;
- 	cmd->out = -1;
-@@ -167,6 +168,35 @@ void existing_packs_collect(struct existing_packs *existing,
- 	strbuf_release(&buf);
- }
- 
-+void existing_packs_snapshot_kept(const struct existing_packs *existing,
-+				  struct tempfile *f)
-+{
-+	struct string_list_item *item;
-+	FILE *out = fdopen_tempfile(f, "w");
-+
-+	if (!out)
-+		die(_("could not open tempfile %s for writing"),
-+		    get_tempfile_path(f));
-+
-+	for_each_string_list_item(item, &existing->kept_packs) {
-+		/*
-+		 * A newline would split the name in two, and pack-objects
-+		 * quietly keeps whichever packs the halves happen to name.
-+		 */
-+		if (strchr(item->string, '\n'))
-+			die(_("cannot keep pack '%s': its name contains a newline"),
-+			    item->string);
-+		fprintf(out, "%s.pack\n", item->string);
-+	}
-+
-+	if (close_tempfile_gently(f)) {
-+		int save_errno = errno;
-+		delete_tempfile(&f);
-+		errno = save_errno;
-+		die_errno(_("could not close kept packs snapshot tempfile"));
-+	}
-+}
-+
- int existing_packs_has_non_kept(const struct existing_packs *existing)
- {
- 	return existing->non_kept_packs.nr || existing->cruft_packs.nr;
-diff --git a/repack.h b/repack.h
-index 61e554e4ed..1c0aeca3e8 100644
---- a/repack.h
-+++ b/repack.h
-@@ -19,6 +19,14 @@ struct pack_objects_args {
- 	int path_walk;
- 	int delta_base_offset;
- 	int pack_kept_objects;
-+	/*
-+	 * File naming the packs to leave alone, one "<name>.pack" per line;
-+	 * NULL when there are none. pack-objects reads it rather than
-+	 * looking for ".keep" files itself, so that a ".keep" created or
-+	 * removed while we run cannot make the two of us disagree over
-+	 * which packs are being repacked.
-+	 */
-+	const char *kept_packs_snapshot;
- 	struct list_objects_filter_options filter_options;
- };
- 
-@@ -28,6 +36,7 @@ struct pack_objects_args {
- }
- 
- struct child_process;
-+struct tempfile;
- 
- void prepare_pack_objects(struct child_process *cmd,
- 			  const struct pack_objects_args *args,
-@@ -79,6 +88,12 @@ struct existing_packs {
-  */
- void existing_packs_collect(struct existing_packs *existing,
- 			    const struct string_list *extra_keep);
-+/*
-+ * Writes the names of the kept packs, one "<name>.pack" per line, into
-+ * the given tempfile, for pack-objects to read with --keep-pack-from-file.
-+ */
-+void existing_packs_snapshot_kept(const struct existing_packs *existing,
-+				  struct tempfile *f);
- int existing_packs_has_non_kept(const struct existing_packs *existing);
- int existing_pack_is_marked_for_deletion(struct string_list_item *item);
- void existing_packs_retain_cruft(struct existing_packs *existing,
-@@ -138,8 +153,6 @@ void pack_geometry_remove_redundant(struct pack_geometry *geometry,
- 				    bool wrote_incremental_midx);
- void pack_geometry_release(struct pack_geometry *geometry);
- 
--struct tempfile;
--
- enum repack_write_midx_mode {
- 	REPACK_WRITE_MIDX_NONE,
- 	REPACK_WRITE_MIDX_DEFAULT,
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index f0a390e3c6..845f032bea 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -254,6 +254,49 @@ test_expect_success 'repack --keep-pack' '
- 	)
+diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
+index 768b0ff85d..c9c879cc5f 100755
+--- a/t/t5004-archive-corner-cases.sh
++++ b/t/t5004-archive-corner-cases.sh
+@@ -185,7 +185,7 @@ test_expect_success EXPENSIVE,UNZIP,UNZIP_ZIP64_SUPPORT \
+ 	"$GIT_UNZIP" -t many-big.zip
  '
  
-+test_expect_success 'repack --keep-pack with --pack-kept-objects' '
-+	test_create_repo keep-pack-kept-objects &&
-+	(
-+		cd keep-pack-kept-objects &&
-+		git config pack.window 0 &&
-+		git config maintenance.auto false &&
-+		P1=$(commit_and_pack 1) &&
-+		P2=$(commit_and_pack 2) &&
-+
-+		# "--pack-kept-objects" is about packs that have a ".keep"
-+		# file. A pack named with "--keep-pack" stays out of the
-+		# result regardless, objects included.
-+		git repack -a -d --pack-kept-objects --keep-pack $P1 &&
-+		ls .git/objects/pack/*.pack >counts &&
-+		test_line_count = 2 counts &&
-+		test-tool find-pack -c 1 HEAD~1 &&
-+		test-tool find-pack -c 1 HEAD~1: &&
-+		git fsck
-+	)
-+'
-+
-+test_expect_success FUNNYNAMES 'a kept pack whose name has a newline is refused' '
-+	test_create_repo keep-pack-newline &&
-+	(
-+		cd keep-pack-newline &&
-+		git config maintenance.auto false &&
-+		test_commit base &&
-+		git repack -ad &&
-+
-+		# The names pack-objects is told to keep go one per line, so
-+		# this one would come out as two, and the first of them is
-+		# the name of the pack holding everything else.
-+		victim="$(basename "$(ls .git/objects/pack/pack-*.pack)")" &&
-+		name="$(printf "%s\nother" "$victim")" &&
-+		P=$(git rev-parse HEAD | git pack-objects ".git/objects/pack/$name") &&
-+		>".git/objects/pack/$name-$P.keep" &&
-+
-+		test_must_fail git repack -ad 2>err &&
-+		test_grep "contains a newline" err &&
-+		git fsck
-+	)
-+'
-+
- test_expect_success 'repacking fails when missing .pack actually means missing objects' '
- 	test_create_repo idx-without-pack &&
- 	(
-diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index f3a0650cfe..6b914a2a80 100755
---- a/t/t7703-repack-geometric.sh
-+++ b/t/t7703-repack-geometric.sh
-@@ -541,4 +541,76 @@ test_expect_success 'geometric repack works with promisor packs' '
- 	)
- '
- 
-+test_expect_success 'a ".keep" that shows up mid-repack does not lose objects' '
-+	test_when_finished "rm -fr race" &&
-+	git init race &&
-+	(
-+		cd race &&
-+
-+		test_commit kept &&
-+		test_commit pack &&
-+
-+		KEPT=$(git pack-objects --revs $packdir/pack <<-EOF
-+		refs/tags/kept
-+		EOF
-+		) &&
-+		git pack-objects --revs $packdir/pack <<-EOF &&
-+		refs/tags/pack
-+		^refs/tags/kept
-+		EOF
-+		git prune-packed &&
-+
-+		# Neither pack is twice the size of the other, so both are
-+		# redundant and get deleted. Have a ".keep" appear on one of
-+		# them as pack-objects starts, after the repack has decided
-+		# to delete it: pack-objects used to notice the ".keep" and
-+		# leave those objects out of the replacement pack.
-+		mkdir shim &&
-+		write_script shim/git <<-EOF &&
-+		test "\$1" = "pack-objects" && >"$(pwd)/$packdir/pack-$KEPT.keep"
-+		GIT_EXEC_PATH="$GIT_EXEC_PATH" exec "$GIT_EXEC_PATH/git" "\$@"
-+		EOF
-+
-+		git --exec-path="$(pwd)/shim" repack --geometric 2 -d &&
-+
-+		git fsck
-+	)
-+'
-+
-+test_expect_success 'a kept pack does not stop the traversal from rescuing objects' '
-+	test_when_finished "rm -fr kept-open" &&
-+	git init kept-open &&
-+	(
-+		cd kept-open &&
-+		git config repack.midxMustContainCruft false &&
-+
-+		test_commit a &&
-+		test_commit b &&
-+		b=$(git rev-parse b) &&
-+		git repack -ad &&
-+
-+		# Make "b" unreachable and sweep it, together with its tree
-+		# and blob, into a cruft pack.
-+		git tag -d b &&
-+		git reset --hard a &&
-+		git reflog expire --all --expire=all &&
-+		git repack -ad --cruft &&
-+
-+		# Bring the commit back on its own, in a pack marked as kept.
-+		# Its tree and blob are still only in the cruft pack.
-+		kept=$(echo $b | git pack-objects $packdir/pack) &&
-+		>$packdir/pack-$kept.keep &&
-+
-+		# Build on top of it, so that the repack has to look through
-+		# the kept pack to find out what the new commit depends on.
-+		git update-ref refs/heads/master \
-+			$(git commit-tree a^{tree} -p $b -m c) &&
-+
-+		git repack --geometric 2 -d --write-midx --write-bitmap-index &&
-+		test_path_is_file $packdir/multi-pack-index &&
-+		ls $packdir/multi-pack-index-*.bitmap >bitmaps &&
-+		test_line_count = 1 bitmaps
-+	)
-+'
-+
- test_done
+-test_expect_success EXPENSIVE,LONG_IS_64BIT,UNZIP,UNZIP_ZIP64_SUPPORT,ZIPINFO \
++test_expect_success EXPENSIVE,LONG_IS_64BIT,UNZIP,UNZIP_ZIP64_SUPPORT,ZIPINFO,SHA1 \
+ 	'zip archive with files bigger than 4GB' '
+ 	# Pack created with:
+ 	#   dd if=/dev/zero of=file bs=1M count=4100 && git hash-object -w file
+
 -- 
-gitgitgadget
+2.56.0.406.ga2d225a756.dirty
+
