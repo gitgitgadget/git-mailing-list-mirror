@@ -1,173 +1,278 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2EA23CBE79
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 06:56:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791442597; cv=pass; b=p9uL8qiMe54/vUH4chjKEpUc5Prqqy85Gfgw+UNw377p1HWzZhfO/aDyk54lv9OKe/FjKiIkUZqd61Plry3xhsTzvRTWNEfSoRBoMMcL5fDYs80ueLELF43yfqd/QDJAcdLGVLl/S9Tm3g0i5uUnmaTl9oLUVa9CRwRMOr5oGfY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791442597; c=relaxed/simple;
-	bh=QzbM7LlrDpwrCk2J8OCdiilIDv43KI9T55X+m7qmkW8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=iv5CE+VfyQ2HJIT6lf02sl1blQYehih4P6QBZaCMKbga348aSzXj5zxaf8N6U9yg66LfN2XTdlCyNFCcimjtILd1zBxifeY4GzJfK8yxqCo1E5uvyC6YXGEMj+UlN+nXBC520KetGVvy8k98MDl9R65pMf1dHNRcTsU4ciYHkIk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nortesoftware.dev; spf=pass smtp.mailfrom=nortesoftware.dev; dkim=pass (2048-bit key) header.d=nortesoftware.dev header.i=@nortesoftware.dev header.b=I6nWNgjR; arc=pass smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nortesoftware.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nortesoftware.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554403BD638
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 08:36:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791448571; cv=none; b=q/cXHsqyrsHqHmi/nSpWITkTWnj1Qrlq2Jz8kdFVaRqy7sufFqvy0LrlUnvqv24EjFznLSm3tSWhXySLMXtExzY9L/jsv9Eyl0SqusGoDpCmAvrD5058kWhOZ7QYxa0e6ZJkQrz5/u01FmKZbpGK/T2DSTIIRmySs3YMvLoIqY0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791448571; c=relaxed/simple;
+	bh=f3ARSM2NCHCkWIzCm8oBPbiDq64tcR/hDvM4zbMZRs8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=GPu9x1tUlnn8MESsW03CHAiU/lQbv6dkd23WONWmHX6TMYZ+DVH7ELi1Vi8nOsOUmWojaj64lQDfKaIfvphXuOlN+2zhbqYYFpWJVdotX5ISlKD44oCVPuY+PTraylRDIIa8hfXYfOz2bcBG76++aMpmjM/PT1LMQhwEYZgcQA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kKSy4zfg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qpVwbV3o; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nortesoftware.dev header.i=@nortesoftware.dev header.b="I6nWNgjR"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-5352a876d5aso30945771cf.1
-        for <git@vger.kernel.org>; Wed, 07 Oct 2026 23:56:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791442594; cv=none;
-        d=google.com; s=arc-20260327;
-        b=BCCtdJizUQuWN0gU2+W4a+fUvosHddyNIf6EP+YoZGbPzLlOPa6KLBLBsMds8bd1Ea
-         Dwi5xLhJyYSYsj5qN1qmQEq/QZPAy3gyjAZQcnEaa6kpEtUddSfF1XgiywhV5cMB3rMm
-         mtck+GaGhK/dRk3UfegCW1JqTu2W8mm/dtBj06Q+OmNjtRrCLXuU+3ZBGB9+VOOIstXR
-         kargpK+EkU9lA4u5KxqBEeZRutrSgXFuaSwT3lzv/XynZfqDwxY/xN0bV8vyvv/pq6+A
-         JR6udDGIMEZwfNsBFPFJWehprVBlCq9lMxeDpPFalJTktx4j1GnDZwZeHEZZ6jeH01r3
-         xtHw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=x1Al5R19kJCxHAvKKnW6p32D1sVcQARr8h72ZAzOC24=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=gX44SxeW66VLe2Lsa0fLPNL/OoRASNciyMITwgmHxT3q7d8G+wZyq11VeWNSkKW/q6
-         h02sNXog6UoDd5yfiOkNTqIm0p3pBv8E5kQbVb+7sj9wMvyBTyYvtsPgHBIrCHro/N8f
-         kOwKIQNF2KUVI9azV/j4sBiwAzDzYdCb1AuIpulcmGPRdhGh0CswroBhkXysoFbYPCGA
-         TfBC6w8cVPrRy8khVXPAwPJvM3m4/AXmWEvwcgv4Soci8gKO9pN+jKc6GO7B3YJkcE3/
-         ApIeU1Qn3jD4D8Nyw3gbgTWnP4FtBUwTR3z/nNuQpAA70SgRx1+gd7PMeTJUO6qNFTPG
-         e9HA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nortesoftware.dev; s=google; t=1791442594; x=1792047394; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:mime-version:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=x1Al5R19kJCxHAvKKnW6p32D1sVcQARr8h72ZAzOC24=;
-        b=I6nWNgjRFMdir5sAImdpQbC8R5718KA3WuYKmQku2p/8OiI7WuBsMzyi6jijg/dKFd
-         NqlPIoK1FsDod0qI11kWUZrj3lfhSgGOpGTnzMo0EuLeyfxhiU+ceFqXGM2IpPolXxit
-         TPF2YUQ8aHnccGXKQVzC2zghvZ6uYqkXd1lRwvkd8LJs0ck9XfKIeDibUdXh+ZvK3p/I
-         6gcIzSyG1UoDBxf7XFBW0kplnMFkOF8O900i9ykCE2XYUsmT2YKNSZS2LWJnmFIXraEe
-         vjoW+ZFRV27YhDeJo94tqAmnWVmPxWI/opjFZIJzxDbqvvj0B6vtwvRRyDV+etlZi+NV
-         PVRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791442594; x=1792047394;
-        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=x1Al5R19kJCxHAvKKnW6p32D1sVcQARr8h72ZAzOC24=;
-        b=xch4ttO9yeW1wP9qBNTADoGRkYC5WdIRv93sV1baCsGB2ucwaFT5Ro4y54JmqSKNUd
-         ARY6Y55LoQSzhN/QUFPnxwcbo6yT7RS/QYjVBMGrmU098kEcFs4zZTyROramlEeDIiLM
-         4bozR8J8e+QTz8X6NHGtbW0mWlNE/g4vGRu4l4xVaXtfHgc4/jh01oTGV9Ol9IKkiFVO
-         HIGh3lZXpZW5rr7P2HYlWHCxcjKyQTSDeL3lqQOdUZfwwtiljMs8+6wq4EhZ3KJztc7E
-         qsuTdzORIT75D+grhKo+gn1q9fhZBy6ysOKwFNnfiOw4eFpCU+a8IDg909lJAlHNjljh
-         m3/g==
-X-Gm-Message-State: AFuF++kTo4nDDOVD4LA6tu/kT+Ygk6GQKtzFGW3p6Jm/5fh0E4/Vgvjp
-	4j2O5FzXrvAWaZCrbGZ6HOqS2PyB3qfaepPR2JemKK7Gz90jzp8B8GQIjmfq4tm0OtfCj0OgtN4
-	FmnZWZmYJ98OVo7opn8LqUQpJTg7f4sLD3fYz+k4+HdAOKmeGtsz8EwE+
-X-Gm-Gg: AYBFou06+OHv3ruVHqUwKt0kWC+PS3EVo3zk19E1vb/BWvEKZtAfyuOHqz1qS86cSbS
-	P88pdDYZaFeIpRLlVqp6xqH+YOrr3fRgmatBA+iFBslcTcRbCW8EzWbxEnz8ISB/MTEgsWeTcK0
-	Yq2bPZTuWZIcfTKvNRpPT4nQFzAZfolxJBQeKAZxhaq8NAQuwTYt/nw1f5hi+y6xSBYcwNvoxE0
-	Ah/cx9rEYNnQkwrV/7UavgdBmdTEDpeiVvssUDDSO4GDu2X72ummNVrwGnGJBRSshQAMshmTzpT
-	G0PLnGcEEeyKWGUHuRT5G5r1KLIZZAgxbZn9lT9w5+3FMibw0JdgYon4nzGSUzzy2MVDcfsUYi9
-	hlGsjX1gfCkVHk83Hzq2Uc37yWLIAdffX9b8tVw==
-X-Received: by 2002:a05:622a:4d9b:b0:532:c82e:7481 with SMTP id
- d75a77b69052e-535756328damr75851451cf.51.1791442594495; Wed, 07 Oct 2026
- 23:56:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kKSy4zfg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qpVwbV3o"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7565FEC0038
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 04:36:09 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Thu, 08 Oct 2026 04:36:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791448569;
+	 x=1791534969; bh=eq1uCQGG42RRVyt44jRa0pD3kRpfoacMjozCgynjwfM=; b=
+	kKSy4zfgmXUDGH8Pcjci10kYRtMV1PlN9EeEG7Pd2LLxbt911V8gF3FI1cxlomHG
+	hFP6V+DG7P3dqqXAUvaIxDoC0etmXB6qc2jG4QZ9y3XsE7z0Xwzl4pHOngrCso3q
+	oufn/OJAtZCJFz0DTW7pmNFofuZqM95Z5wU2qDENF3Zv++V2gFyCPgJwDHR1crqL
+	PJ3QA8UQYrqe0+Z9Tmqi5oxFLti/CvSFNTC05OT6X8fjdF8BgoqXROEkGLMpQkt2
+	87AItOUpvfwyqAJzK71pMqyR1Bxrzw3gpgmLgyxZ3u4PbqcbXOoNwedwN084YPZg
+	Y2uKjEc2KHq/jc430/wL1g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791448569; x=
+	1791534969; bh=eq1uCQGG42RRVyt44jRa0pD3kRpfoacMjozCgynjwfM=; b=q
+	pVwbV3osLF4oaTUzPNmOzD12Ji/oxW07Ul9oiDL/pAT5TI1ZcCr7/xJ2xJKXLvO1
+	pewqODhYdj+N2C2VL08GXPqFVEyFoX029v5EI/nzVcOneFEj4usQX9gN1xgXWyWo
+	9ClwDjTKRYACBE10mEceyHPPb02VBxp02iL0pPL6V8/UsCzdmGYhZhJeCee+nQX0
+	UKCplGBIY5V3RS80ro7j7y6uEAp/aUfHsbzWHbus8RlCRPGqaF3MoHhWxI4LcGNn
+	fmB8Hkx/T0YmwCVpQluX0UkuQdomccjvm1lJb2gWC7RbnZ+h+nNEq8u8OQR91NDS
+	Lq5jsxPSYT39CuBvdDTMQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791448569; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:CZItWBqQLRw97cw9T8E+F+MWeheAfRrp9C0+v8W8HM5GNaD
+	stRqwgEIwUZFa+0lMqXFDlrB3FUknpq3Ef69nvKfs9AnXQZVc+R/8Pay2B0K3WiA
+	u5XRwN34XR1BKMVlvg8uB8KuFdhZZBLLZ/1ZYkcDmytKH0jBqvATzptD5YZ+iaMf
+	+1ksQHgxxd5/YuApHkyZU+OOKJnGJ95kRx7ISZ8dL35Fu9DykEXSv+i97WMPizpD
+	MEwd1BtzcGKas9Ue04rmCELB8M569BDre5lYy92Nv0LEX7AtWDeSzG853Z7mrEs4
+	Q0bGoZGOJuyEeBQWUZP/zAoRoqCnlsJtt/CT8lQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:tUBMMSzYFIV8Axq5/yznClGgIOU8W0EOejVj76i6Vww=:f3ARSM2NCHCkWIzCm8oBPbiDq64tcR/hDvM4zbMZRs8=;
+X-ME-Sender: <xms:-VXHat1rRrh54z_bIi3B8kuf20mzOjDMhbdZW2SJAMmh1a77Gd0aAw>
+    <xme:-VXHaqEaNKnW8dq1hW3QD013Z_LAVI9FPAXE0jzGX4IyuEGxkdjT-qt_JtsA5BLke
+    6kXRu9jBtXtyHNMsMwuY9NoBVrlXLB-ZDW1aQ1rqJvOQbjunpDACLA>
+X-ME-Received: <xmr:-VXHarjy0Dl7VrVMytiB3PYWkaSg1ocPi75KkFeDA1GeSo9qo-USrg>
+X-ME-Proxy-Cause: dmFkZTFBvpV0N/F2kiSdqDaiGrDb3nQhMfI38R5x2mFwHbmKcsI0ufXpl9u5i34sZv2+F2
+    iyiETa9OGlrER4+ZlYep0MmEaGVgj+fbrRV6dMIwbjR6bepCrUCR5EB8Sf3AbdPOmMJrhv
+    gEVgmnWL1+oct19ynvxplAnJBkcKgIBOdAKkyJP4fITcHa7N0iOfdANuICDGVjH3EIboJD
+    iZhERV9eZFuGV1wmurZOwFlvi65XTJk0OaFAIuLpjokbUmOX/9n0SLbqWr1TSZCYWJHRgM
+    kug3KO2O8BfenDpLS/DmixtrHoI5lXrcJ5svmNO+nQLj2PpOldc+jtDj7Tt/TISq4qI3Nb
+    CJRlINrygrpgqXeB3LZUXG5KK6N7tzdvqPrh9aR0MkD5QesEniaDc3Db7N22Bmp2/e9S99
+    E5aLpkCuifXnXgZaHAHIzK8HHxynaOJNo33ozXt+1iBxOPMuREoM8sJfhQ5oIKJRMtFyhp
+    dTBZzbUF8w/4fyRvPpKvo0r8sVyrqcODTiw57sCT8uomVHjd62uA7bz9pGtExR79cpaBHF
+    w5iNRamF+2pnV4266YS6w5RhKyio/mn8QOEbcZLeWGL3tFOI/iQx7wHu5Y7V7Db4DZrUcJ
+    CW0t8S0NoRc2QHkFcKlPhezj7vbBfdMzeN6nSnPXL8+kIVujqrsAKpTjebng
+X-ME-Proxy: <xmx:-VXHal_xgtHRCbF0bh9RT5NGc-4rxMdI2AzfZLTVJw2NAuwJmXK6ng>
+    <xmx:-VXHaiqd9qikcBw2OtIlC5ioLcdVwAZgrDG57PK1Rgb6Xs9MSosHZA>
+    <xmx:-VXHak-ShG5PyFTtpG3Uvs8Zx1gzc948bR36RZWTt_bnGDCgz9M4ig>
+    <xmx:-VXHamX4TWhNlp6ml5eDcN7RHPWTTrfaw_43zmFav6ntunFyKw1_qg>
+    <xmx:-VXHaqkcQIpICTMjEVqJ99kZ-GqBmJOWKvoV4V1wEH4zqjs2S1gXQL7l>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 8 Oct 2026 04:36:08 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 0ca6a09f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Oct 2026 08:36:06 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 00/13] odb/source-files: move alternates into the
+ backend
+Date: Thu, 08 Oct 2026 10:35:50 +0200
+Message-Id: <20261008-pks-odb-move-alternates-v2-0-b47e8189baa5@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?Q?Christian_No=C3=A9_Ramos_L=C3=B3pez?= <chris@nortesoftware.dev>
-Date: Thu, 8 Oct 2026 00:56:22 -0600
-X-Gm-Features: AclHuK90XBM9xRdCRo8Cjtqo3cLnd5gU-Zh0ye7BFdUzD2WsbKJMYh6z3R0As2k
-Message-ID: <CAHGSfbZ_Q8Ujt3om0POapkjWZed1pZVUrB-mV-e+UjmPgCNvWQ@mail.gmail.com>
-Subject: ssh signing: valid-before is checked at the signer's own date, and a
- missing revocationFile fails open
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3WNQQ6CMBBFr0K6dsxQKqIr72FYtDDIqFDS1kZDu
+ LsF1y5f8v5/s/DkmLw4Z7NwFNmzHRPIXSaaXo83Am4TC4myxJNUMD082NbAYCOBfgZyow7kQWk
+ 02pAy2BUirSdHHb+352v9Y/8yd2rCercaPftg3WdLx3z1tkqOKP9WYg4IlS6LAx5NVTXqksw9D
+ 6JeluULn5574c0AAAA=
+X-Change-ID: 20260924-pks-odb-move-alternates-4a0babe4b0f3
+In-Reply-To: <20261002-pks-odb-move-alternates-v1-0-8a63507b88c4@pks.im>
+References: <20261002-pks-odb-move-alternates-v1-0-8a63507b88c4@pks.im>
 To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc: Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.15.2
 
-Two things that, together, mean an SSH signing key cannot be reliably
-stopped from being trusted. git 2.47.3, OpenSSH 10.0p2, Debian 13;
-source read at v2.47.3 and at master (c46c1e37724f).
+Hi,
 
-1. valid-before is checked at a date the signer writes.
+Originally, when designing pluggable object databases the goal was that
+the object database can have multiple sources, and every source attached
+to it could use a different backend. This would have allowed for quite a
+lot of flexibility, as you could trivially mix and match different kinds
+of object storages in whatever way you like.
 
-SSH signatures carry no time of their own, so git passes -Overify-time
-from the committer or tagger line (gpg-interface.c,
-parse_payload_metadata). alice's key is in the allowed signers file
-with valid-before="20260101":
+But while well-intentioned, this design led to a bunch of conceptual
+problems:
 
-    ssh-old        %G?=G 2025-06-01 12:00:00 +0000 verify-commit=0 merge=0
-    ssh-backdated  %G?=G 2025-06-01 12:00:00 +0000 verify-commit=0 merge=0
-    ssh-honest     %G?=U 2026-10-08 02:15:15 -0400 verify-commit=1 merge=128
+  - We're now trying to read objects in source order, whereas we
+    previously tried to read objects via packfiles before trying to read
+    them via loose objects. This led to a performance regression when
+    using alternates or when using a quarantine directory.
 
-ssh-backdated was signed today, with only the committer and author
-dates set to 2025-06-01. Nothing distinguishes it from ssh-old except
-when it was made, which only its author knows. ssh-honest, signed and
-dated today, is refused: "key has expired: verify time ... >
-valid-before 2026-01-01T00:00:00".
+  - Some data structures are supposed to only ever exist once, like for
+    example bitmaps and commit graphs. At the same time, those data
+    structures also span across the union of all objects, so they may
+    cross sources.
 
-The GPG backend refuses both:
+  - It is unclear how we can extend GIT_OBJECT_DIRECTORY or
+    GIT_ALTERNATE_OBJECT_DIRECTORIES to become backend-agnostic in a
+    backwards-compatible way. In general, introducing an object storage
+    extension into the current status quo where alternates may have to
+    be extended to become generic was proving to be painful.
 
-    gpg-old        %G?=Y verify-commit=1 merge=128
-    gpg-backdated  %G?=Y verify-commit=1 merge=128
+  - Some mechanisms of alternates assume way too much about how exactly
+    their backends work. Alternate refs for example assume that the
+    alternate is backed by a filesystem path, and that this filesystem
+    path may also allow us to read references. This is not a given
+    though, as backends may not even have local data at all.
 
-The documentation for gpg.ssh.allowedSignersFile says "Git will mark
-signatures as valid if the signing key was valid at the time of the
-signature's creation", which is the intent, but does not say the time
-comes from the commit. So valid-before rotates a key; it does not
-retire one.
+In short, there are a bunch of conceptual mismatches when we have
+alternates and pluggable object databases coexist. So while the original
+idea was nice, it does not result in a system that is easy to reason
+about.
 
-2. A configured revocation file that does not exist fails open.
+This patch series corrects course by moving alternates into the "files"
+backend itself so that they become another implementation detail. It's
+unfortunately on the bigger side, and I'm sorry about that, but I
+couldn't really find a way to split it up further in a sensible way.
 
-gpg-interface.c:568-574 at v2.47.3 (579-586 at master): if the
-revocation file exists, pass -r; otherwise warn and verify without it.
-The same file, present and listing alice's key, refuses:
+Note that the above problems aren't fixed by this series yet, but it is
+the prerequisite to fix them in subsequent patch series.
 
-    S2-revoked       %G?=B verify-commit=1 merged=no
-    S3-revfile-gone  %G?=G verify-commit=0 merged=yes
-                     warning: ssh signing revocation file configured
-but not found
+The series is built on top of c46c1e3772 (Start Git 2.98 cycle,
+2026-09-30). See the first version of this patch series for the conflict
+resolution that's required for this merge base.
 
-S3 merged under `git merge --ff-only --verify-signatures`. An
-unreadable file and a directory both fail closed:
+Changes in v2:
+  - Adapt the first commit message to better motivate the refactoring.
+  - Link to v1: https://patch.msgid.link/20261002-pks-odb-move-alternates-v1-0-8a63507b88c4@pks.im
 
-    S4-revfile-0000  %G?=B verify-commit=1 merged=no
-    S6-revfile-dir   %G?=B verify-commit=1 merged=no
+Thanks!
 
-ssh-keygen, given the same missing path, refuses: exit 255, "Could not
-verify signature". git avoids that by not passing -r. OpenSSH's
-RevokedKeys says, in sshd_config(5), "Note that if this file is not
-readable, then public key authentication will be refused for all
-users."
+Patrick
 
-No test in git exercises gpg.ssh.revocationFile; it appears only in
-Documentation/config/gpg.adoc and gpg-interface.c.
+---
+Patrick Steinhardt (13):
+      commit-graph: require resolved packfile paths for `stdin_packs`
+      commit-graph: stop depending on `struct odb_source`
+      odb/source-files: introduce `struct odb_files_dir`
+      odb: refactor `odb_for_each_alternate()` to yield dirs
+      odb: refactor `odb_find_source()` to yield dirs
+      odb/source-files: add the ability to have multiple object dirs
+      tmp-objdir: absorb logic to set and restore primary sources
+      tmp-objdir: manage quarantine as an object directory
+      tmp-objdir: replace primary source at creation time
+      odb/source: make `will_destroy` an implementation detail
+      odb/source-files: extract reading alternates
+      odb/source-files: move alternates into the backend
+      odb/source: drop `read_alternates` callback
 
-Controls for both runs, fixed beforehand: a good signature gives G and
-merges; an unsigned commit gives N and is refused; the revocation file
-present and listing the key gives B and is refused; a commit with its
-message changed and the signature kept gives B and is refused.
+ builtin/commit-graph.c      |  41 ++--
+ builtin/commit.c            |   2 +-
+ builtin/count-objects.c     |   6 +-
+ builtin/fast-import.c       |  20 +-
+ builtin/fetch.c             |   4 +-
+ builtin/fsck.c              |   6 +-
+ builtin/gc.c                |  15 +-
+ builtin/index-pack.c        |   4 +-
+ builtin/merge.c             |   2 +-
+ builtin/multi-pack-index.c  |  48 ++---
+ builtin/pack-objects.c      |  66 +++---
+ builtin/prune.c             |   2 +-
+ builtin/repack.c            |   4 +-
+ builtin/submodule--helper.c |   7 +-
+ bundle.c                    |   2 +-
+ commit-graph.c              | 150 +++++++-------
+ commit-graph.h              |  31 ++-
+ diagnose.c                  |   8 +-
+ fetch-pack.c                |   2 +-
+ http-walker.c               |   4 +-
+ http.c                      |  12 +-
+ log-tree.c                  |   3 +-
+ loose.c                     |  18 +-
+ midx.c                      |  43 ++--
+ object-file.c               |   8 +-
+ odb.c                       | 439 +++++-----------------------------------
+ odb.h                       |  62 +-----
+ odb/source-files.c          | 482 ++++++++++++++++++++++++++++++++++++--------
+ odb/source-files.h          |  65 +++++-
+ odb/source-inmemory.c       |   7 -
+ odb/source-loose.c          |   9 +-
+ odb/source-loose.h          |   3 +
+ odb/source-packed.c         |   7 -
+ odb/source.c                |   5 +-
+ odb/source.h                |  57 +-----
+ odb/streaming.c             |   8 +-
+ odb/transaction.c           |   2 +-
+ pack-bitmap.c               |   8 +-
+ packfile.c                  |  28 ++-
+ packfile.h                  |  21 +-
+ path.c                      |   2 +-
+ prune-packed.c              |   2 +-
+ repack-geometry.c           |   2 +-
+ repack-midx.c               |   6 +-
+ repack.c                    |   6 +-
+ repository.c                |   4 +-
+ setup.c                     |   2 +-
+ t/helper/test-read-graph.c  |   5 +-
+ t/helper/test-read-midx.c   |   8 +-
+ t/t4216-log-bloom.sh        |   4 +-
+ tmp-objdir.c                |  67 ++++--
+ tmp-objdir.h                |  18 +-
+ 52 files changed, 883 insertions(+), 954 deletions(-)
 
-Together: the two ways to stop trusting an SSH signing key are
-valid-before, which the signer can date around, and revocationFile,
-which does nothing if its path is wrong. Either would be enough on its
-own if it held.
+Range-diff versus v1:
 
-What I would ask for: refuse when the revocation file is configured and
-missing, as ssh-keygen and sshd do, or say in the documentation that it
-is ignored; and say, under valid-before, where the time compared
-against it comes from.
+ 1:  985b068271 !  1:  43a288604d commit-graph: require resolved packfile paths for `stdin_packs`
+    @@ Commit message
+         for a set of packfiles via the "--stdin-packs" option. Those users are
+         expected to pass in relative paths, and those eventually get resolved in
+         `fill_oids_from_packs()`. This ties the logic in "commit-graph.c" to the
+    -    specific object database source.
+    +    specific object database source, as the subsystem now needs to assume
+    +    where a specific packfile is located relative to the source itself.
+     
+         Refactor the logic to instead require the caller to pass in resolved
+    -    packfiles to untangle that dependency.
+    +    packfiles to untangle that dependency. This also makes the next change
+    +    easier to implement, where we'll get rid of passing the source to the
+    +    commit-graph subsystem.
+     
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+ 2:  537c2895a9 =  2:  f455f1986c commit-graph: stop depending on `struct odb_source`
+ 3:  ce5ade106a =  3:  062f8b02d6 odb/source-files: introduce `struct odb_files_dir`
+ 4:  4336f3d53d =  4:  68e73bbdc6 odb: refactor `odb_for_each_alternate()` to yield dirs
+ 5:  77c5749db8 =  5:  078d51c82d odb: refactor `odb_find_source()` to yield dirs
+ 6:  3d59418c91 =  6:  b203565c43 odb/source-files: add the ability to have multiple object dirs
+ 7:  38b3658234 =  7:  c53ba11900 tmp-objdir: absorb logic to set and restore primary sources
+ 8:  928edd062b =  8:  92c0a38193 tmp-objdir: manage quarantine as an object directory
+ 9:  f51db68dea =  9:  e1fc5be9a7 tmp-objdir: replace primary source at creation time
+10:  a71a69e2c3 = 10:  98605aa991 odb/source: make `will_destroy` an implementation detail
+11:  fd434eaa74 = 11:  2ce6282162 odb/source-files: extract reading alternates
+12:  a4a8e53216 = 12:  bc2a33d360 odb/source-files: move alternates into the backend
+13:  39a3e9e1dd = 13:  41834f9155 odb/source: drop `read_alternates` callback
 
-On prior art: the ssh signing series (Fabian Stelzer, 2021) carried the
-warning from before v4, and the review raised the config name's case,
-not what a missing file should do. The key-lifetime series (RFC
-2021-10-15 to v6 2021-12-09) passes the commit date to the check, and
-the replies are about style. The N for an unconfigured allowed signers
-file is already on the list (Grayson Tinker, 2026-06-25) and is not
-part of this.
+---
+base-commit: 2f92b2890ddaf3d7ea29470c02418271c1a4cd79
+change-id: 20260924-pks-odb-move-alternates-4a0babe4b0f3
 
-Christian Ramos
-Norte Software
-chris@nortesoftware.dev
