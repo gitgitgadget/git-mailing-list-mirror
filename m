@@ -1,218 +1,154 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171013019D6
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 13:59:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7831145A1F
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 14:05:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791467978; cv=pass; b=i/cLZQVGXIV25s/HrAnOuPHcwQworcwCP4UsUNXzSCGKO4JEMoz78JZDHuiBw2nyQMF0TvbEv19xzWwk/T0Yq/jcugyuUQRdpLSrJwWzfkgwMm1jkB/m0+cEDuTa7OLXkGsWH7V4mTToGTo2XqO3xQnhkvxBE49xS51zJ2u4rQg=
+	t=1791468341; cv=pass; b=SYpqglNdH2KClSEJntZS8lEmNKTVCsm+/K+v3xYpPa0eI2O5QhtOSHB2OQh7Sc+SLmRdGCsjlT+W/aU/ByG7LiKDm2gC8FNHxppjIwd9K9CW9+yXMtt3mQtSOkeBsLvpDbA/4KYVWdjxNtNHJ25LpimLzEcv4aemQ7XyrYqlQF8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791467978; c=relaxed/simple;
-	bh=4UOwDNt9IM5IqBeVmJ7V7Cllq3+FH6Ui+Uhc0v/9j9A=;
+	s=arc-20240116; t=1791468341; c=relaxed/simple;
+	bh=TwHz7CyrPFygKaQGSlSL/JkR3cnYhbTAQGKb6VoIzvg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Vsmd5/Yk28BuCyQicQqNdcJYX2vij08gRqEhaQr8w+0l4Dz53uwLqAm41DP5whWVxb6TNE/+Zep9MJ6CrSVzUhyfkRM+1+yiHa2ErFlXgEJMZj2F2nklk+YvgiJVEKnLaBSQSMoD3tOK96PeYDtluCE2viWx3elAkbY62nBqXV0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=opencanopy.dev; spf=none smtp.mailfrom=opencanopy.dev; dkim=pass (2048-bit key) header.d=opencanopy.dev header.i=@opencanopy.dev header.b=VlouN1af; arc=pass smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=opencanopy.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=opencanopy.dev
+	 To:Cc:Content-Type; b=PqAEDmKNfmrHeE37KPLi/7f+fZc1/CAjY6qwsnC7C6zMQwh0SQ8iJIpCttxnhBQwgAxb00Hme/nrP+qMKtlKdodHGu3tWpmkgNA8Oj9I1UPSEZZs4rW1RU1te4pv+hfpMFAsHmlwxE7nvsm49M4a/nbZ3UA8V4rKyJbEIrIF9K0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sRmgoE98; arc=pass smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=opencanopy.dev header.i=@opencanopy.dev header.b="VlouN1af"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a0e1b0681bso20205385e9.3
-        for <git@vger.kernel.org>; Thu, 08 Oct 2026 06:59:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791467975; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sRmgoE98"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6afafc89b48so4805378a12.2
+        for <git@vger.kernel.org>; Thu, 08 Oct 2026 07:05:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791468338; cv=none;
         d=google.com; s=arc-20260327;
-        b=qJaaVL1A3TLfHXLPYOpdYyvCDdFhvwvzv7d2OH+2ZvRIre+hJuo0yAMNk7p+MiFsYL
-         BMqJPMQZe65I1q3IFYEP2OkL0OrSBdUV5uxYMi4tyfZN2ORd/O+LjW80B0L+QXzya7kW
-         qXqNZ9tuxWkVCRmLnzOM/1g7o9TQoirJ1z637VFIHbSc5hGfSBgfgxcYCFPcUDvc0kwi
-         1tERJyBNzDdG9b9n/w0/468VrGgxBtvi44nYw1/w/U7BL3KvOjGiOHezEf8OLe30Gv4I
-         ad4vY7K0L3KeiK1R6QtW5b2lXeGAF1r2rQ3HzVDGDKNHYs0JV2u36zryMoLiDW+49TlE
-         h18A==
+        b=nHzcBO48T/FLXQ72+3/Fzbj9adf76HuTjK5Ae6Ca2qh2fg+tIxAY43x5Bg6EIfesAS
+         uuKAfy+k8wlT0shMg3oPW1objckzXBmaK2u3FGRAwROK0lL8rhgnjPa97/G/wKeA7Izs
+         YCPniwxFLWigCnBcvAjDUz9N6a+RZrcCwHyDoRdI1crnJdUaNrbgKJlgMhE3X1CxOKj7
+         GVyzzcRYLuME1cZeKk/CuKewqPUxM09dPqlJa2DoHWipGW4SFfiE4e8tnDWCoHU39zRx
+         zHWFj+a7NiNvSxNv9dOAo3SJOSga/u75rR0YSDpwYVXfTOZIeqyRc2NENNxV2sLwY3Lv
+         FJMg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=4UOwDNt9IM5IqBeVmJ7V7Cllq3+FH6Ui+Uhc0v/9j9A=;
-        fh=+6v/RTDEntvgLEIG7sPuYM+20sl+JBjtSX3HkQTTByg=;
-        b=rwvORRC0Dv5B2OKt1n94kyq2N8YwdJX5ppn8QlwKs8ym5VE78MkWcBtCVMGCT4SBFk
-         qWKSxkSVgICSCVPCqpq2k9EB8f+sAsa30Qrrek+MW6/g1XU1x4oUSD6zlWax9QGZlfGf
-         guOPbYL3RFajLs8PzBJhHSD/JAJ2Og7BBN6FAJGzKW0cP31PEWA2KG4T3sZaYziuPyK8
-         k4W5Eh+GfacbLXnjhlWs87ED+OqB+QwL9mgj3Zgu/8C17KXtoej/pmm7Mnivwr3wbHFd
-         DCoHG9mSE9oy8I4taNgU32R+BlKqCO12gRNkXrayh6HE6rCEdIkhd8soQTNEh0C++ipW
-         7qag==;
+        bh=kDyep13COIuFzxQtHcTDbgJcUdyK2yBdkxBXjyeXny4=;
+        fh=SzJQUV4DVO7z3YextDGlGutlCJqbj2tKW7jl0TZBG74=;
+        b=GLymK8fo+K4WAhsHM5hTDirjAUnSVwrj37nZL0L9zBurauE4YMaGx4c7dtQdRSq8G9
+         HcPLtBKaS6ij7jW/NZ5GVO3cAbeCOLb3zK8OoYp6SWskwPEC++vLY8osuCPZgA82TEeE
+         bsIyu2afRIDlLty0K6zWwLhc0wKsdgv/HXcI3QX4ExsFVQqg2QIfBApZSYekm4NxfMuh
+         MMtSn0Z2E6x+5wnKeJiMCjFk6CvM+rL2Z/RebuCFnpl0S1EFPFmiPaB16iTXcx2Ir77Z
+         G12bCGAlldrh7kM0m1b+F/Scsfqe4wmkSIpA+vfq4emCGJ/Jqs+LV8+S47XAoiO0ZTo6
+         5mEA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=opencanopy.dev; s=google; t=1791467975; x=1792072775; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791468338; x=1792073138; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=4UOwDNt9IM5IqBeVmJ7V7Cllq3+FH6Ui+Uhc0v/9j9A=;
-        b=VlouN1afwk3J0geiKuhs9HRjS6YTj/TPSEEtkl9ijsU4Pe32D4yT7mVwZkxqN7hFjV
-         z2FT2GJfiZQipeA5XcjwD5A70uh4zUKjxPQmNHy8VSY8NfRRutSUmGGyjwLIyCkSkvRi
-         WJKL+wz7RfidJltYEFJFy4d6X+6yCxi93Ioe4k8O/GSyINnCZ5kjzs/igWDhcBA3H0WX
-         XHzwutjKau4HeKzmppX8OIBwbKyiGuxE9jGLshiB1HkjZAzLtE9QsnYimOM923IlOGna
-         9+q39KpaUAkjTYO9+C5aisNU5CFD4I+U4xObjgy9XT28ZJaUZkg7Y0jn7Ho72vCdX7k7
-         h0hQ==
+        bh=kDyep13COIuFzxQtHcTDbgJcUdyK2yBdkxBXjyeXny4=;
+        b=sRmgoE98bLKsYaa8AAZcH9PTN7Wgl8ojf+uKBE66xcnKE5wWxgQxllkAnwLPWGYJy4
+         j/LFehWxmRG2HIjPf18C0Sql6eGkqwfHzoEbtAndGde2CizdjY/1CU0jZG+2DiEKSbJN
+         JKJQPNY1Ivq2d/wAd9EEeyUU1KPy5fzrqL7Q9Z9gnuuHXe548YTQdyR0zx3NRq67uuI9
+         kYiBEVCbzUoRIjPCfdvrgD/EmLBtVMHpdpLSksJH6G7/g5c9F3nM5wGwZlzyyCuo7BAz
+         KvIURY2bJKtKlJHTgneV4TYG5CCkWQ1Ac1w0n0pIAdBvZpjLHq+EJ+sV9vnX3xa2iv9Z
+         vG/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791467975; x=1792072775;
+        d=1e100.net; s=20260707; t=1791468338; x=1792073138;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=4UOwDNt9IM5IqBeVmJ7V7Cllq3+FH6Ui+Uhc0v/9j9A=;
-        b=tXQyYLG8/ydHvplILHT9CF0OYXHNQYkD+LUqnuOpZzC+XrmM4KeUxj8wyLmgFPZh5P
-         CenpTTusXeDnRRxaLm48WhR5LWp9wLNbWfdG9Y/pFFEfrhVll9KU+j3Iq3lbXz65scP+
-         TYgalYqDpJmWudg1hJIgmFoAjs+mdOtyvqapxFq3iRsnSoBi1lHLA8eVChO67N3n6Wso
-         6PkPRJbcF0huRgbv07OfTxqK1/4Nx6TBYaKTIbKPRZuD5xqwDXI5nAEqP86yreLnv7um
-         mAqIhfNL3sJQ92A4HtTgz7ocl1o5kbeLfxiwum/jINxGmti1y1U0G9dF28M+P6fO9zQH
-         hO/A==
-X-Forwarded-Encrypted: i=1; AKwUvByVSElyLC4ljyKYy0NafdcaoQDEy0pW/q/LyzGCgpjT4IweZR6AAIS11LgiJjQ1NKH9iPM=@vger.kernel.org
-X-Gm-Message-State: AFuF++kYH6T0jFQebWk5csSR8udMNLD+RaOMffJEYdjYM6ew0liODkOW
-	vDZRcPYZfAee/h0C2W1NkioU1HWzIuraJzzjkpMMmXfRZralKGf/bfMI9XSa04vXY8Ha1BS1O1V
-	v7XpnYAf9dU8mwBXHF3eEm5SqTQQSslzMrrX7WQwi8FM=
-X-Gm-Gg: AYBFou3ms2eaT6fayXFQEIV94jM7aJGKqP/wszOb/0Mc1P8sIUcj3LlRJO4RkGVuZxP
-	lX5CWyppoAKwyxJiQRw8a6CvCyEFwqomMb6i0Im1dWljwhPMtMAdpJS6o2yg/GlVxbCB4n8/Ooj
-	egWE3Tn1OgA9vrJPYsCdYY7BB5Bl2TFyJHqo9WdCIQEvLmY6ZqAbSTe8GZ7s+ZYqkoTJK4LYjaY
-	DAyBsL7LuFEo3MOf8SM8y6l2DtY9piHmixKTsefKRMc2+XcEt2E1qD83kV5lVLdwUn+D8/7Vuu4
-	k3FujSpd7yO0Lq4kS/5NVtj04WCu7zxQQm6U9/hsd3cDCUKBdZ/L64lK3g==
-X-Received: by 2002:a05:600c:8211:b0:4a1:7bae:d80a with SMTP id
- 5b1f17b1804b1-4a180419367mr97857645e9.9.1791467974983; Thu, 08 Oct 2026
- 06:59:34 -0700 (PDT)
+        bh=kDyep13COIuFzxQtHcTDbgJcUdyK2yBdkxBXjyeXny4=;
+        b=VkB29XARcqj778jTu8Fw4nVfyzUbVMluLEdbq73sPPgL4eR89rX7u69buQVpLg9h+m
+         KYmgBeD7iczYZJaO8WpcOl4Tm0b36ge7cKmlUE6zQvxuROAO2TEvzfJHoY1ekDIX2zqy
+         BfCfqruyUInamDa0ljgxQcUyffOVheF/oDejrTdkFjRkCQq7Pd/D50+sz7U5VDAyexUc
+         LrfbFWAYqEJAMHgpMDHIrReuet+K2W+hl9268vGg+/Vs2CY+NcVbz5XyIBSzvhdLDRnw
+         d+E8q1VNWVEpNoFUAv4GjZZzLB3hsFVHsRl3h9058WRarbUmqwE36+8mTtfJVN7NPdID
+         m2KQ==
+X-Forwarded-Encrypted: i=1; AKwUvByEIJZn5dI6tkP0mbyXSeUAx6mcGREv830n8KiEqoD4SaYrnz3kLI/+EtSXtAe9blz1vYE=@vger.kernel.org
+X-Gm-Message-State: AFq9FYINhf7VGd0mYYJvl/L9ISg7Mp0FVBcsB6qi1w2hHo/MDPZ/iRAS
+	PMc9/VHAvBGkRpsWbIbiObq4NV4F7ZA0nMTPjtP/3kthTLH25JguwS5t8ZTgJFP2k5353+eIuCd
+	0t4JEGtJjO4zZLMNAUzQ1DUdGyVs+5bY=
+X-Gm-Gg: AYBFou2P2TQIc0GPMqYWXCar4UbAuq/Ed16olucxgupbxu4qTh482rXGiy0SWthdmTL
+	QTFzT59wD6TGFYncDadSsQuK2y8hWSNWHFjw6AFo3DXDspcn+IfPy1cPU6+sL1Xsi1j4wfFVN35
+	rt6YMteBmjkzbYtgeIj1gzxMvkCsrbPFSKgF8kC06ij8dXQQZpygUM2weBKlgpUhPxDA7f0laZH
+	wjRrttZAk7RcT9pKbD5O754MyEQurTsiq16BwFJVyJ74RVWZksgevjDKsP+P86DGttew/w2N63d
+	pg+hZwAkYL2iuMl0sjQQQeQivtEv6gW1D++z9I4PClk/EzsO2LELueTYOdMvkq07WsnNw/9qk9y
+	PlFTsPq1Uq2we
+X-Received: by 2002:a17:907:1ca2:b0:c2e:969:a4b0 with SMTP id
+ a640c23a62f3a-c317c11a3efmr516731366b.38.1791468337788; Thu, 08 Oct 2026
+ 07:05:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260929112544.86511-1-scott@gitbutler.net> <xmqq5wzda0h6.fsf@gitster.g>
- <CAP2yMaL51H1OAG25nQ0NuLQLb0wevd4CicCG1_ezsJfrZDqfUA@mail.gmail.com>
- <79ae606b-cf99-4867-9db3-bcd7ff03626d@icloud.com> <CA+Te0V+-O3avrvH353KfCDjAEzMa=_H57G4OmiJ8+d1dDzZ6aA@mail.gmail.com>
- <CALnO6CBbtKomawqc81MPV5Ngtc9J3M1ej4enGD3ZUzWnPSfsgw@mail.gmail.com>
-In-Reply-To: <CALnO6CBbtKomawqc81MPV5Ngtc9J3M1ej4enGD3ZUzWnPSfsgw@mail.gmail.com>
-From: Sam Reis <sam@opencanopy.dev>
-Date: Thu, 8 Oct 2026 15:59:23 +0200
-X-Gm-Features: AclHuK_U2YxSg1rX4mANS-aCR1QoQiC6OvQIWIIDTu76uxP_E4Urt5ZYkmp1kXA
-Message-ID: <CA+Te0V+PYvsv5pTdwNVmhu8acCJ_68V_9aWmCArh6qszboe2aQ@mail.gmail.com>
-Subject: Re: [PATCH 0/4] faster SHA-1 collision detection
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Sebastian Thiel <sebastian.thiel@icloud.com>, Scott Chacon <schacon@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Scott Chacon <scott@gitbutler.net>, git@vger.kernel.org
+References: <CAP8UFD367UD=AomNVHEBnhY-2DQmqTNRcBX6NW7YZywWgOmxTQ@mail.gmail.com>
+ <CAP8UFD0oYnoXgQ84wHbGg3+QhX78Ucn_CXXYOe8uFpReb7X1Ng@mail.gmail.com>
+ <CAP8UFD1hAjtPuWL8asZ2LzEMJKHGh2oO73n_tsUSADtEHh9b-g@mail.gmail.com>
+ <DLEWITFIKFFK.NSANTRY5XBCB@gmail.com> <1b904e64-e681-4744-b83e-690f3ca94ea1@gmail.com>
+ <CAP8UFD3kd=6QHp2oB+t+g-2D8bY-Oe5+_Vk+RJeaCa_xhxGrsA@mail.gmail.com>
+ <fbed7a60-57ab-439b-a550-2d2b76ff24c0@gmail.com> <CAP8UFD2VutDBA54c1e5uiCjFB8v3Y6yS3MTtY2P6sM5+Z9y7PA@mail.gmail.com>
+ <DLX41DP10SBK.3JNC50ICRW1RO@gmail.com> <077dca6e-27dc-43fe-9acc-20cf53651b42@gmail.com>
+In-Reply-To: <077dca6e-27dc-43fe-9acc-20cf53651b42@gmail.com>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Thu, 8 Oct 2026 15:05:25 +0100
+X-Gm-Features: AclHuK9X5cAgYYA8aFp_l1dDQtQGdjUq3XPjIgC8dhy3GNo7hxUsGD_oM3NYpgo
+Message-ID: <CAPSxiM8_VM_U_pLzS0yCk0Ph+4Y3bqToZGHTuVi6DfPVnQ=fDw@mail.gmail.com>
+Subject: Re: Participating in Outreachy's December 2026 cohort
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>, Christian Couder <christian.couder@gmail.com>, 
+	git <git@vger.kernel.org>, Git at SFC <git@sfconservancy.org>, Tian Yuchen <cat@malon.dev>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Ben,
-
-On Thu, Oct 8, 2026 at 3:25=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com>=
- wrote:
 >
-> Hi Sam,
->
-> On Thu, Oct 8, 2026 at 7:23=E2=80=AFAM Sam Reis <sam@opencanopy.dev> wrot=
-e:
+> No worries, Pablo. Thank you for letting us know earler.
+> > I'll wait before withdrawing on the Outreachy site, in case you'd like
+> > to reorganize things first.
 > >
-> > Hey everyone. Just for the avoidance of doubt, very happy to see
-> > Scott's patch here land and for git to benefit from faster sha1dc
-> > hashing. Let me know if I can do anything to support!
 >
-> [We bottom-post here]
-
-No problem!
-
+> Cool. Feel free to withdraw, though. I think it shouldn't affect us from
+> reorganizing.
 >
-> > > On 07.10.26 20:13, Scott Chacon wrote:
-> > > > Hey,
-> > > >
-> > > > On Wed, Oct 7, 2026 at 7:23=E2=80=AFPM Junio C Hamano <gitster@pobo=
-x.com> wrote:
-> > > >>> This series ports the approach of Sam Reis's sha1dc Rust crate [1=
-],
-> > > >>> which gitoxide recently switched to [2], to C.
-> > > >>
-> > > >> Which means license-wise the original is compatible with us, I
-> > > >> presume, as they are "Apache2 or MIT, your choice".
+> With this change, I think we can stick to our mentoring capacity of 2.
+> We can mentor 2 out of the following 3 projects:
 >
-> Leaving aside the question below about AI policy, I think the
-> important question for Sam and Sebastien is license compatibility?
-
-I can try answering as best as possible from my perspective. I think
-it's important
-to note, insofar this wasn't clear before, that the actual code for
-the ubc checks is
-fully autogenerated rather than written by hand.
-
-The generator for it was written from scratch by me with LLM
-assistance, and based
-on the methodology described in the 2017 paper from Marc Stevens and Dan Sh=
-umow.
-Nonetheless I ended up crediting Stevens and Shumow in the copyright notice
-to be on the safe side.
-
+>    - Reduce Git=E2=80=99s global state to enable Git's libification
 >
-> The sha1collisiondetection submodule and the sha1dc code (extracted
-> from that submodule's upstream, if I'm reading 28dc98e343 (sha1dc: add
-> collision-detecting sha1 implementation, 2017-03-16) correctly?) are
-> MIT licensed, too, so there is some precedent for Git here. I skimmed
-> what I could find of the original threads:
+>    - Improve how command arguments and options are scanned and parsed
 >
-> - https://lore.kernel.org/git/20170223195753.ppsat2gwd3jq22by@sigill.intr=
-a.peff.net/
-> - https://lore.kernel.org/git/?q=3Dsha1dc%3A+add+collision-detecting+sha1=
-+implementation
+>    - Implement promisor remote fetch ordering
 >
-> but I didn't see a discussion of licensing at that time. Perhaps the
-> idea is that we are clear that such code carries a different license
-> from Git?
+> We previously had the following mentor allocation:
 >
-> Anyway, I suppose the fair thing would then be for Scott's code to be
-> MIT (and/or Apache2), in which case it would need similar
-> clarifications? (Or are we prepared to take the stance that de nouveau
-> code based on existing code can be license-washed, in this case to
-> GPL-2?)
+>     - Reduce Git=E2=80=99s global state to enable Git's libification
 >
-> Interestingly, Gentoo claims Git's license is only GPL-2, but I think
-> they compile in the sha1dc code since it's the default in meson.
-> Should we be claiming the Git package (with sha1dc) is actually GPL-2
-> and MIT?
-
-Again IANAL, but my understanding was always that MIT is GPL-compatible.
-From https://en.wikipedia.org/wiki/License_compatibility#GPL_compatibility:
-
-"Many of the most common free-software licenses [...] are GPL-compatible.
-That is, their code can be combined with a program under the GPL without
-conflict, and the new combination would have the GPL applied to the whole
-(but the other license would not so apply)."
-
-So as long as it's correctly attributed, that might not be an issue?
-
+>       - Usman Akinyemi
+>       - Pablo Sabater
 >
-> (This is complex territory and I'm sure to have gotten it wrong;
-> pointers to past discussions, esp. those by copyright and licensing
-> professionals, welcome.)
+>     - Improve how command arguments and options are scanned and parsed
 >
-> > > >> How can you/we be sure, with respect to the current AI policy in
-> > > >> SubmittingPatches (which by the way was vetted by SFC lawyers), th=
-at
-> > > >> your "AI generated" code did not "borrow" from places that gets
-> > > >> you/us into trouble?
-> > > >
-> > > > It's a good question. I actually just submitted a proposed update t=
-o
-> > > > that policy based on SFC's updated guidelines, but either way, I
-> > > > learned about this from Sam and have talked to him about the port a=
-nd
-> > > > he seemed excited about it. I can triple check, but I'm fairly
-> > > > confident that he's fine with this and I am fine signing off on it
-> > > > under the terms of the DCO language.
-> > > >
-> > > > Of course, he in turn used AI tooling to produce _his_ library, but
-> > > > within the guidelines of the updated SFC guidelines. Johannes's
-> > > > alternative series is the original Rust code of Sam that my agent
-> > > > looked at to produce this (in addition to his blog post explaining
-> > > > it), so I'm not sure how that might be materially different.
+>       - Christian Couder
+>       - Siddarth Asthana
 >
-> [snip]
+>     - Implement promisor remote fetch ordering
 >
-> > > >>> [1] https://sam.dev/blog/faster-sha1-collision-detection
-> > > >>> [2] https://github.com/GitoxideLabs/gitoxide/pull/3008
+>       - Kaartic Sivaraam
 >
+> With Pablo dropping off, I think we can keep mentor pair of Christian
+> and Siddarth for the "Improve command arguments" project. I can pair
+> with Usman to mentor the "Reduce global state" project.
+Good.
+>
+> If we get strong proposals for both the "promisor remote fetch ordering"
+> project and the "Reduce global state" project, we might have to discuss
+> how to break the tie. I suppose we can only pick one out of the two
+> projects.
+Valid.
+>
+> Feel free to share your thoughts.
 >
 > --
-> D. Ben Knoble
+> Sivaraam
+>
