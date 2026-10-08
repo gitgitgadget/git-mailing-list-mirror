@@ -1,71 +1,71 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43880489877
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 09:52:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77909489FAC
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 09:52:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791453149; cv=none; b=paM2vbwh3JLaceBoSP8O9CoJDKThSDe5ghU3m283jEasO2t7MCdrM6BY82MAQiLDVlYCYFmi6eh5t/i1Y0v0CfHn/VjVaJzHtqVneXMuAFr8KXFkx/kD6GXRRcK1kVJwMKmKAvigiUkkxX68XVSMVvaFSOaSRP+DVLF8RYxncMI=
+	t=1791453150; cv=none; b=F9uOdKbaNng/vwQnu862KMydViDtR4+Elrj9v2/T1JcW2qoQ7FDU8nBiIhhJtiBrGYHF62nfHyMdTGBVHBzmUyAh7ho025ibF6Y6ae7Rjel6RB9j5f84wBN+elW5kkdJFvNA/eVj6bCGV2JJHrYTXlWTUINIF8nNHNWblRcH7XM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791453149; c=relaxed/simple;
-	bh=6FxxC9cFm7OAYttq0f8nLwvwmjDyi/kesNGQL1TeqTQ=;
+	s=arc-20240116; t=1791453150; c=relaxed/simple;
+	bh=9nvaJKW7pNK/DyewnxQxLdaCkTxguIYzfrAipEATYN4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=d4MA7MIiaXB6oRy/WE0sT/UuyNPY6tGXqUJU/jw9k3SB+pX1qG3qmtNUv4kBlOV42zw31yXu411FIvzTNSbrzK2W3A0SrMDL00NE4iwC4rhJQmZUhH1/11XwBmMT+rSG4rlHXz20Cii9KpNS1q3bDuP0b7DdtauFZp77vy8GBlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PNFKX1wG; arc=none smtp.client-ip=209.85.214.181
+	 MIME-Version:To:Cc; b=avJks2/EnlBmn9yOGU4LneHfrQa+sG9rQxJfj7a9rw1iso53i5UlAqRrIhTpHjuaGvOq3D+OEfU+ln6WNqeuTpFitbpUpeVZ5VP8NzkLlkK71HiECs54PjKa2Xz/dLXDkJ9ddu5SOSFYjEOMAm9I7XF2gKS1ssi8o3hfIyi3L4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NVe5yoY+; arc=none smtp.client-ip=209.85.216.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PNFKX1wG"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2e812e2b31bso2903355ad.3
-        for <git@vger.kernel.org>; Thu, 08 Oct 2026 02:52:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NVe5yoY+"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-39647aa9d52so393377a91.0
+        for <git@vger.kernel.org>; Thu, 08 Oct 2026 02:52:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791453147; x=1792057947; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791453149; x=1792057949; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=CM1OYxRfHK4A6qb344+GTN4yBljVk8zZhWc6HwIgYkA=;
-        b=PNFKX1wGkzC6aqgTqZWIqxA7+6zsW+7N1G7E6305I4mmihlFbWQ8Oe+KVe8JFPJPyN
-         PRQmpotZwJBlUPtnwkm2E2nhdXI2GP0A+iGBci+X49uWhfEsRqEO8jf/6rqDLGP8Vda5
-         W941Mt6t0o4c7pFLrtZ5hQcjfllN+25tP0vw7eBw0A1Uy9tb5eVVgWPFbCRUM2BBqQ3d
-         m11MDPz15VqsY6CmVPg9g0RskwzSJZT2SfIdOp4m9sxhu+3+PyRZ+6M223pJ/lxBvMrD
-         MJ+gEVJDjcDR4XYuu5L5/sPSocHQLkCcZQfdh+hT7lVLG7XfaeMiLmBvbEk1nfQQ2W57
-         F4vw==
+        bh=+ruc0jIUeiNpk79acWhxRIJf5ZMdx5fEoltFYtCSISY=;
+        b=NVe5yoY+usfvbqrzWQeiGx2QDI2A9Yavnfah/BDlnMshjFRK8rPCY+Zk268wq4jzoH
+         o4ILUPAIiNcf9ahHZtAEsrXcYaPuU17QxH4axjVdW413U1wQouDsVBiccBM8CGf8g0MU
+         ulvmopITchQXSSBgVujkPoYoS0pGJttLPZoC39l6xGLe6eVXtbOwnpdYtS59RnMwEudM
+         uuKAdoymhGfomcil2SbLDjNTdjaRVyH49TzLSwmNSvfAFAfRmQIwmNj2tFrRSmxYKBZS
+         dkvO2XQZLyozuM0MeRK4bJqRwpwnnzlaXF8nGQnULU0+/XIwSbD4rIM8bPfbkG3p+xqE
+         OcEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791453147; x=1792057947;
+        d=1e100.net; s=20260707; t=1791453149; x=1792057949;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=CM1OYxRfHK4A6qb344+GTN4yBljVk8zZhWc6HwIgYkA=;
-        b=dw93m2EJ80zNbw4Ordwf6Ztf7xbl/3Agfy8TRr1SmXxEabgXA7DK1OLSTvfjXaGPQO
-         zrv8ihjqM1K8gy8AIs7M52PHESQOf4pxmVjSzTNPZn7bLgtHXUrX0fAhqX8vX4tfTCF/
-         f5uyadqD2h0cW8MndsEhyl6KvVEBJnPUk3abI3LowgUDn4lrh54g9sXIf6sw7ZL0IpfI
-         AwprvvCE5mGXIPvScW+oY7wfg0jcp9E+1GiO8Dkq6DHVFqHsNHcTs8c7AFSUuJdR0iTH
-         NwPuzOhwpsKIjefar/iKZmueyU+LBj9qPujMEbFKh3BgiYt8AGyDczAr3XhZCKpWEIWr
-         7T3g==
-X-Gm-Message-State: AFq9FYI43GvHGvM7l5QBXxQqpuW7+hm7XWVZe70j0Je2bjb1G4ToCZtT
-	e+pZa1TGIXqLESurw1CnPUjnNJN6EjcxkdKZmLDjTXLIF4tIcSPacSUzCLunXQ==
-X-Gm-Gg: AYBFou2TDTXxeDswIAjXX1F9kd/WdSF+gLz/+tAhQ3nfv+j+Fg62BTxO08fGd7YhGsy
-	jnB4hCqIW6/t7R56VU6S21iF4RxhL2fErsMwkQsC9bboafWg5z0HyzdFH4+Hq1rRaP4OOYE6gYk
-	rH0s6PpyljtsNBJKVAPrIs09UTR80bda43d6UTQI/M7s+pjkbS9yaYfySoMuneQWaSRL/K9wbQJ
-	V/OmwzPNpRM3LSlCquQ22Ki2PgzV1Gi8r1f41E54Z+zxxt/9xU/XHTJ3ahWOk3Mr/C6Lm5Drh5+
-	Ggfj7jBLCwjGYtK2A8bMmNCPqzfXjqJTZ5PSdx/hLyPf1nLx417nlbYTmfxn/rAj4yQ9ZlN9O4L
-	Dew9oOQ0srEFPx3QC23uIVAdbKwxvOo8mMrMkzU9LOMKrmLpB4el2LI3MecqXOleo7VUdPgRk6Z
-	vz0RP+NCm1T4ot2gEBuJEviwjSfHg/wn3MiueJlnq77MUVMdEYDJgf/GcNVUmEJY0UJoWd/4mk4
-	Q==
-X-Received: by 2002:a17:903:2ac5:b0:2e2:aa17:477f with SMTP id d9443c01a7336-2e600554231mr46308745ad.58.1791453147418;
-        Thu, 08 Oct 2026 02:52:27 -0700 (PDT)
+        bh=+ruc0jIUeiNpk79acWhxRIJf5ZMdx5fEoltFYtCSISY=;
+        b=UjS1wH57epjmR6ELEOPCxcHCugipdmyI2FbJQyTjw/RpecRAjE1eJwzWK46NJZL9Fl
+         Q3GSpxAH5LH0ywmRH/sDAV2SY3H5WOaDorNtLcZhclqUiYA+4q/IXh7uAohrj042xs+p
+         z32EKDCraQY4QvJpVQpjDYWvG6wkM9+Z4izjmyLytgHvlBPYTCIxKR+KBWrDDOJng1dr
+         npAS5OM1xQuqIvE1nrL4IcaDeDBbWVMcNN+NXptfjX6jVnkFaz1C68ho9N8HyqqbvyM3
+         QaLv8orL7pHxOknK82x1dZsouu6bf59Ua7xy9oUnxSHILWlt9AMVSmjoRe+NzmrrCIX6
+         k3Eg==
+X-Gm-Message-State: AFq9FYI5dIrUPdLhsXdhVZBNfYQv100urbfi3Q5hHW/ghJ3yGtGhNyK/
+	+Xu+LTfUZVOego1LAXuf3VnjT4YafMJ3h8utJm5fbtuc0mqmV2tDMcnB1NKM8nH9
+X-Gm-Gg: AYBFou2nLYgXZ2LraXQEIFxdrOV9B1fZf54LJCZCcBb6DFpelr9DCqlG0dI4mUl56z1
+	0WHfw1Hu6iHEPqlc0WTZHs+7/DPsX4mde29WVX5aN8vZ36P3/64Zi/08dJolaQJ6yGpqv8F45UB
+	8k0f0Gl+hyAIIS1LK3Xo+fA6JsPDI7/Bg0sRDp+nobUTHvVpfl2BXw747Z7pmM9HE87IB25UPUu
+	q45pkVwfVTcFEh+fQW8Ks/Xo+dj6qF+ktgAbN9WBO5+JAg1TdWeOYQBWXxMI9iHwp+xngHvN8OG
+	5qJPBBuBOEBx1OImAfGul/9ZKllxljkhQSbvMT64mDR0zAiVVYs4wjF/v6NDtRJWXN9RIciW8jr
+	+qHoJLkw3J6QuDozICeiARMaer3qzSxvHoNPq+YiAVlfXbd5sDprdNMIXr4t+xagWi3wAxWichP
+	E17ctQdXfHU6OLav6cwD6ETqaQ/EfoXR+j1a0/TX3wS88wGurA2K3g7NE1IVJGFGsUSz8fK2F81
+	A==
+X-Received: by 2002:a17:90a:610:b0:3a0:e568:ed63 with SMTP id 98e67ed59e1d1-3aadff48952mr672672a91.8.1791453148734;
+        Thu, 08 Oct 2026 02:52:28 -0700 (PDT)
 Received: from [127.0.0.1] ([4.154.246.147])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e6044389e7sm22237735ad.4.2026.10.08.02.52.24
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a89d416348sm4649804a91.0.2026.10.08.02.52.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Oct 2026 02:52:25 -0700 (PDT)
-Message-Id: <58019e4983586888191ca16e042511d257f46d4b.1791453141.git.gitgitgadget@gmail.com>
+        Thu, 08 Oct 2026 02:52:28 -0700 (PDT)
+Message-Id: <ff2146d002289f92897a4defb3204bfca2350c1b.1791453141.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2219.v3.git.1791453141.gitgitgadget@gmail.com>
 References: <pull.2219.git.1789385483.gitgitgadget@gmail.com>
 	<pull.2219.v3.git.1791453141.gitgitgadget@gmail.com>
 From: "Qin ShiCheng via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 08 Oct 2026 09:52:18 +0000
-Subject: [PATCH v3 2/5] pack-objects: reset kept-pack cache for cruft walk
+Date: Thu, 08 Oct 2026 09:52:19 +0000
+Subject: [PATCH v3 3/5] pack-objects: sort --keep-pack list for lookup
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,188 +85,67 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Qin ShiCheng <qeesung@live.com>
 
-When writing a cruft pack with an expiration, pack-objects first
-collects the recent objects and then walks from them to rescue
-whatever they reach, expired or not. A pack the caller did not list is
-marked kept while collecting, so that its objects are not copied into
-the cruft pack, and unmarked before the walk, so that the walk can go
-through it.
+add_extra_kept_packs() scans the whole "--keep-pack" list once per
+pack in the repository. That is fine for the handful of names it gets
+today, but the next commit lets a caller name every kept pack in the
+repository, and with thousands of them the scan dominates: matching
+20,000 kept packs against 20,000 names takes 11 seconds here, against
+under a second with "--honor-pack-keep".
 
-The walk does not see the unmarking. Whether an object sits in a kept
-pack is answered from a cache that is built on first use and only
-dropped when asked about a different kind of kept pack. Collecting
-builds it while the unlisted pack is still marked, the walk asks the
-same kind of question, and so the unlisted pack stays in it: the walk
-stops there, and whatever lies beyond it in an expired pack is left
-out of the cruft pack, to go when that pack is deleted.
-
-This went unnoticed because of "--honor-pack-keep". repack passes it,
-and when there is a ".keep" file it makes the collecting side ask
-about on-disk and in-core kept packs together while the walk asks
-about in-core ones alone; the cache is rebuilt each time the question
-changes, and by accident the walk sees the current marks. Take the
-".keep" file away and the objects are lost today. A later commit stops
-repack from passing "--honor-pack-keep" at all, so fix this first.
-
-Drop the cache after re-marking. The loop over the object sources
-that does so lives in packfile.c, as repo_invalidate_kept_pack_caches(),
-next to has_object_kept_pack() which reads the cache. Like it, the
-loop assumes every source is a files backend; keeping that assumption
-in packfile.c rather than adding it to pack-objects means the two can
-move together once packfile management is pushed down into that
-backend.
-
-The test builds an unreachable chain whose middle commit sits in a
-pack pack-objects is not told about and whose oldest objects have
-expired; without the fix the cruft pack holds only the recent tip.
+Sort the list once and look each pack up in it. The comparison stays
+fspathcmp(), so what matches does not change.
 
 Signed-off-by: Qin ShiCheng <qeesung@live.com>
 ---
- builtin/pack-objects.c        |  3 +++
- odb/source-packed.h           |  3 ++-
- packfile.c                    | 19 +++++++++++++++--
- packfile.h                    |  7 ++++++
- t/t5329-pack-objects-cruft.sh | 40 +++++++++++++++++++++++++++++++++++
- 5 files changed, 69 insertions(+), 3 deletions(-)
+ builtin/pack-objects.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 6f579173b0..f86b3661c5 100644
+index f86b3661c5..48faef2227 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -4301,10 +4301,13 @@ static void enumerate_and_traverse_cruft_objects(struct string_list *fresh_packs
- 	/*
- 	 * Re-mark only the fresh packs as kept so that objects in
- 	 * unknown packs do not halt the reachability traversal early.
-+	 * The kept-pack cache was built while those packs were still
-+	 * marked, so drop it too.
- 	 */
- 	repo_for_each_pack(the_repository, p)
- 		p->pack_keep_in_core = 0;
- 	mark_pack_kept_in_core(fresh_packs, 1);
-+	repo_invalidate_kept_pack_caches(the_repository);
- 
- 	if (prepare_revision_walk(&revs))
- 		die(_("revision walk setup failed"));
-diff --git a/odb/source-packed.h b/odb/source-packed.h
-index a0f6b5096d..c8c6088a69 100644
---- a/odb/source-packed.h
-+++ b/odb/source-packed.h
-@@ -25,7 +25,8 @@ struct odb_source_packed {
- 	 * Should not be accessed directly, but via
- 	 * `packfile_store_get_kept_pack_cache()`. The list of packs gets
- 	 * invalidated when the stored flags and the flags passed to
--	 * `packfile_store_get_kept_pack_cache()` mismatch.
-+	 * `packfile_store_get_kept_pack_cache()` mismatch, or explicitly via
-+	 * `repo_invalidate_kept_pack_caches()`.
- 	 */
- 	struct {
- 		struct packed_git **packs;
-diff --git a/packfile.c b/packfile.c
-index 4fa5fd67c8..399c0622cd 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1870,6 +1870,22 @@ int packfile_fill_entry(struct packed_git *p,
- 	return 1;
+@@ -5002,7 +5002,7 @@ static void get_object_list(struct rev_info *revs, struct strvec *argv)
+ 	oid_array_clear(&recent_objects);
  }
  
-+static void invalidate_kept_pack_cache(struct odb_source_packed *store)
-+{
-+	FREE_AND_NULL(store->kept_cache.packs);
-+	store->kept_cache.flags = 0;
-+}
-+
-+void repo_invalidate_kept_pack_caches(struct repository *r)
-+{
-+	struct odb_source *source;
-+
-+	for (source = r->objects->sources; source; source = source->next) {
-+		struct odb_source_files *files = odb_source_files_downcast(source);
-+		invalidate_kept_pack_cache(files->packed);
-+	}
-+}
-+
- static void maybe_invalidate_kept_pack_cache(struct odb_source_packed *store,
- 					     unsigned flags)
+-static void add_extra_kept_packs(const struct string_list *names,
++static void add_extra_kept_packs(struct string_list *names,
+ 				 enum stdin_packs_mode stdin_packs)
  {
-@@ -1877,8 +1893,7 @@ static void maybe_invalidate_kept_pack_cache(struct odb_source_packed *store,
+ 	struct packed_git *p;
+@@ -5010,18 +5010,13 @@ static void add_extra_kept_packs(const struct string_list *names,
+ 	if (!names->nr)
  		return;
- 	if (store->kept_cache.flags == flags)
- 		return;
--	FREE_AND_NULL(store->kept_cache.packs);
--	store->kept_cache.flags = 0;
-+	invalidate_kept_pack_cache(store);
- }
  
- struct packed_git **packfile_store_get_kept_pack_cache(struct odb_source_packed *store,
-diff --git a/packfile.h b/packfile.h
-index 6d30d15a00..e2db6bfff7 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -144,6 +144,13 @@ enum kept_pack_type {
- struct packed_git **packfile_store_get_kept_pack_cache(struct odb_source_packed *store,
- 						       unsigned flags);
+-	repo_for_each_pack(the_repository, p) {
+-		const char *name = basename(p->pack_name);
+-		int i;
++	string_list_sort(names);
  
-+/*
-+ * Drop every packfile store's cache of kept packs, so that the next call
-+ * to `packfile_store_get_kept_pack_cache()` rebuilds it, e.g. after
-+ * changing which packs are kept in core.
-+ */
-+void repo_invalidate_kept_pack_caches(struct repository *r);
-+
- struct pack_window {
- 	struct pack_window *next;
- 	unsigned char *base;
-diff --git a/t/t5329-pack-objects-cruft.sh b/t/t5329-pack-objects-cruft.sh
-index 12cda06373..6302f60b75 100755
---- a/t/t5329-pack-objects-cruft.sh
-+++ b/t/t5329-pack-objects-cruft.sh
-@@ -332,6 +332,46 @@ test_expect_success 'cruft trees rescue sub-trees, blobs' '
- 	)
- '
++	repo_for_each_pack(the_repository, p) {
+ 		if (!p->pack_local)
+ 			continue;
  
-+test_expect_success 'cruft traversal rescues through a pack it was not told about' '
-+	git init repo &&
-+	test_when_finished "rm -fr repo" &&
-+	(
-+		cd repo &&
-+
-+		test_commit packed &&
-+		git repack -Ad &&
-+		keep="$(basename "$(ls $packdir/pack-*.pack)")" &&
-+
-+		test_commit old &&
-+		test_commit mid &&
-+		test_commit new &&
-+
-+		# "old" has expired, "new" is recent, and "mid" sits in a
-+		# pack that pack-objects is not told about. Rescuing "old"
-+		# from "new" means walking through that pack.
-+		git rev-list --objects --no-object-names packed..old >old &&
-+		while read object
-+		do
-+			test-tool chmtime -1000 \
-+				"$objdir/$(test_oid_to_path $object)" || exit 1
-+		done <old &&
-+		git rev-list --objects --no-object-names old..mid |
-+		git pack-objects $packdir/pack >/dev/null &&
-+		git prune-packed &&
-+
-+		cruft="$(echo $keep | git pack-objects --cruft \
-+			--cruft-expiration=750.seconds.ago \
-+			$packdir/pack)" &&
-+		test-tool pack-mtimes "pack-$cruft.mtimes" >actual.raw &&
-+
-+		cut -d" " -f1 <actual.raw | sort >actual &&
-+		git rev-list --objects --no-object-names packed..new >expect.raw &&
-+		sort <expect.raw >expect &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'expired objects are pruned' '
- 	git init repo &&
- 	test_when_finished "rm -fr repo" &&
+-		for (i = 0; i < names->nr; i++)
+-			if (!fspathcmp(name, names->items[i].string))
+-				break;
+-
+-		if (i < names->nr) {
++		if (string_list_has_string(names, basename(p->pack_name))) {
+ 			/*
+ 			 * When following, treat the pack like a "!" pack, not
+ 			 * a "^" one: nobody said it is closed under
+@@ -5146,7 +5141,9 @@ int cmd_pack_objects(int argc,
+ 	int rev_list_unpacked = 0, rev_list_all = 0, rev_list_reflog = 0;
+ 	int rev_list_index = 0;
+ 	enum stdin_packs_mode stdin_packs = STDIN_PACKS_MODE_NONE;
+-	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
++	struct string_list keep_pack_list = {
++		.cmp = fspathcmp,
++	};
+ 	struct list_objects_filter_options filter_options =
+ 		LIST_OBJECTS_FILTER_INIT;
+ 	struct repo_config_values *cfg = repo_config_values(the_repository);
 -- 
 gitgitgadget
 
