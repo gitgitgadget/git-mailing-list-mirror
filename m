@@ -1,191 +1,252 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565354F5E0
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 13:42:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791466971; cv=none; b=SKJcpfcRI9pEbFg7pzAOV5v85hSLZhoPKKnaPJhjkOcypVaNkabsZWpE6hT6Azn65KdbIQeVKl5Ydie7YJ4KkivSiBBN8cv3aCOwJV+C+Qhd6UJEQB4KK/SLm4fG0z1U3Dh4FQGk3F7wwESeJZo6pNdKtE4n3D06ipVOnS9X1/w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791466971; c=relaxed/simple;
-	bh=572jgkbevtpZFk2WaxLzgn3O1+XeHYVAgcLrZNVMT3c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=oMfl5ZPwREeXrmPnx+16qqMbXKE6n3CYnhSrBG647aJ5Lsks0JeTjg4NaAyH1phxfh6pGDfWPdtjd592Q73yRCQF6yaCFh1CLAe924ejsIqbp0aObKmvLsRYYHZToH/TW2NXpBBgquTfJLQcFMhkJiSpIGu3ZC8XD5q5qfGKl+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=snlD9fAy; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDAA23019D6
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 13:53:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791467607; cv=pass; b=E+dKZTV7DheD2+iMp8qXEaJbPOhMLnqcxTX2Zkudi44eOdyjN81vSx8BS/9RtuDPP7k3/pXI0afyFInkV2//NX0ttkhat497DM337D0mRtOQDrwCjTHELzTP7mQLxkgfFo5NFV2jIr/EiDsrCLou0ImHMtAkEJnVrF80/pCHNIQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791467607; c=relaxed/simple;
+	bh=fokNH2mvKDx0uuqV5zlhjhQmR6piPRLVjpklXpmwuQk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Jl+2rnLmE3dNjxAvrNJh4lQbhi49pkcQuj7LtfkZ1mTKjjGIPZsUCSWX+mLBTMUpmB1x2JiYuFTaQ5BTBBMxm+geD6SIuh4USkF5BglJPIptJ165FP3kbFSc4FnYBNGcf0YKxTO8/jLyubZFR85z/B3py5V+xVACGLInST/H7L0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ej5z14GX; arc=pass smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="snlD9fAy"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-48c4be28b82so2732457f8f.2
-        for <git@vger.kernel.org>; Thu, 08 Oct 2026 06:42:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ej5z14GX"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6b16824c0fcso702852a12.3
+        for <git@vger.kernel.org>; Thu, 08 Oct 2026 06:53:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791467604; cv=none;
+        d=google.com; s=arc-20260327;
+        b=PIgbrbZtijTLsT+gl5KooXIRp1jN21hCeqWlixxkjikULAmrzYy8EJOfGdgv4624SF
+         uBZs1BnPkxl+tI3EPq7G0XdPLyWiidJjjuvlK++MT0IUXEATSk9f+2zrR2rmcCIAcCDc
+         /UHVHBcVlL3hT6C+MK1rIF4P29W4170oTt1Odmyf+GSBOu04Ab9TSKROeIJJhZkvhBIi
+         o06lD3z1+M8tdRMqDqjuyp9UVFt61iCBYIEPnI4znwaczuzZBll8gJRL8BlHOI9ThaU+
+         CknsnVbf3kNR1gHyjOXIRUehg9rqzzDRlmaFpRs2zmH7OBJxGscyyTw310xV05Pq+nu8
+         ChVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=d2cHz/mTjiqTZdKy7oFQihnsVKggSZF5bJQIJqbMa7c=;
+        fh=Bwembv9g3I6lImp0Mqr2Rn4B5Tuvflk6W/VLzAwPGtI=;
+        b=Qb3UUTs2a/yyW03gd+y71a5xzGKaSydu/DCn/pCRtzbpk/Cx+N75qGe18Tm4qJhCNM
+         bDSaoEnq9cF1COBnaQshBHWTbGTEQJm0CLBVEXQf1rr9UAJ59vrPtisHGXiqPLIo8vHt
+         ZF3kWA422zQGr+Kzoaya4eTPxPF0FRDdwY8/6uH8lmrtF+HndvcLyU44OOGooow1o2c1
+         dVtguAbr5ZZxtp4HaAw3k7Z/64HmW+WotOzrLnlqq+2OANWk5bndGNy+uM4VxXmXfME/
+         8Ec3sbw/igfjgdyrda/JyLE5rKdVp9CEFJbc6VpL8WsmvdvbLK2APG9PJarWU0v8IGCX
+         onHg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791466968; x=1792071768; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=rV1wLyMj/BR1t6R64g19km74dhVAyFPysaUdzMvCy40=;
-        b=snlD9fAyxj5wQ+DotTdmF3Y7b78W8sOFWO+Jx6t8Sl7PSFpWCsDA2l3Y+FaNXsyORV
-         sNsAg9fq1t0PWvLtIjDlkFY8T54TI06cu3pZnzndLJ1BgM5EEhxRpOAQxrQqaoQbj5e2
-         H4AA7UF9yy9OtiYAKZUcCUkGA0Ygw+wQ0lmQvuGK6Fw8E3Q52j5dMsMsMU7vONboWaaB
-         Vp+DJtrFDNE7L76R2harjgmbf1fGHrMd8wS5akj+3eMiZsnBXnvg/5L37WljJYXTBtz7
-         nQL2zDbxKUGSc72DxJksg3RGA/s5Y837dux7/74GoIy2PMexH4ayBkSp7FF0CKZYUP3d
-         /FbA==
+        d=gmail.com; s=20251104; t=1791467604; x=1792072404; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=d2cHz/mTjiqTZdKy7oFQihnsVKggSZF5bJQIJqbMa7c=;
+        b=ej5z14GXjlkxrfqLJF5mZYBh4uY6b0aH0gs2FwjxM8tTBTNiaK5GskySDpAW/gQtbp
+         wHPYmhNyY/W0pl6Ic2lYfTdfVViNMuLQyXDKGML+rfPXj5bnIRehus2pPtwioVrmPTs4
+         MJRyyAQcSX7w8rHBsFlNPih0AidEVX+ecCQ2595UlZrdq1esvRfeQ04DQSQU6lt7jfIq
+         aalKmywWWSGtcihP8EVDF0xYzZZxEq+WNouNVnVVOqAebGycE8xMZH9HpTnXk6A4uTem
+         O6fI9h8guAkKVA6xFEEdcYAQ0GRRbj8nywPT6mW0hNVPc81KMvg4W3T/CZ2l59ET6vzb
+         H/4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791466968; x=1792071768;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=rV1wLyMj/BR1t6R64g19km74dhVAyFPysaUdzMvCy40=;
-        b=JPIrRdLh2gL46cpg45Z5fSUQXJ0WIipVfCSrN61ZPTE/PhiAYPdMRn8oFnbGT70vt+
-         vqVsYXFNl2QG0DgRwTUrr+GBPXCIdQcg3uQs3BTPT/g1dx0xklm6s2dBvwIxYR43iHTS
-         N5Or5rU2YtwkHisENrZAb+L2Ycl2dI3eAmbZG/kcoGa+YRrpjYOSTwPIckeSAmCY9xKW
-         RsjuivCkWemkZ9VggxrabRgLJyNzY4hZXa7rtPkhms0GjltwvGdpHX37VKrhSEzyHIDR
-         XB20SHg73eCm5QspT3sp8hieQjoO/78oBi2ccUsPhsAeokO9ocM0+S4Jkd3+RCc9kSib
-         fBnQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzguiCRtKc/DiJkFhcgzsWCQDOtGcEiQp6qtJGyhc/2bo1LQkL0R0pRc8eUgQqjVU66jtg=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLremat04wx+XFP3/x0GmK4PWm+89hIivf0OlR2gHORw++5fvUw
-	nXiLphrK9kSD55P4UliqzqohSQbJgfapmB+I8MljTL2o7rj+ciEHPhrv937Z4No9
-X-Gm-Gg: AYBFou0YxEdGkqctZqLlY+HFn3ZjkN1RGNtlwXdhJFnWL8E+xpEAqdYxurLG5svD9B8
-	60bnIt3oar/ghAPcXDvCe3HZmwBdFKktvll+I2QMj32/1RSHhX8Ti94SkrTdv4tQrgU5g14RBWr
-	TFBeKlK0PGEnXsOCaesQtzADo+gMw9OkoOMACcLOHCDDXi1pkPKobK83emQl7vB1F51h3/x3fld
-	uatS4RQHWEloXh4ax6pClZo7qM39T0qlR8R1jDo4ioMCjPF7SzP3Wc1FtszKqh+ukIoEMFrx1EY
-	VzirKFiziTJKCr/VjjQc2/HNoZ56vJU3f72M1AgdJkSAAe4zLFxuL+Wa48Dzks1RrTWfDaHUidd
-	eFIROnoDsYr4Se0dMM3XmU7Fw97lARFMNlTVPO0NvvAEio+a6bh7CvsoJzYw9NL5goi+03bsUcf
-	nmt+RJ42FyvLc49PjO8XmD9fbuwz6v5L4r4nDELifRN+zD4L4ja2dXyshRFgJ60s0J4X1sYeazu
-	XY109IZBG6+5+JzORKZ+vhLmPXzoiM/J28K2jSuNpfiLIknI2Jh
-X-Received: by 2002:a05:6000:3cd:b0:488:8568:bb02 with SMTP id ffacd0b85a97d-48c7278837emr9450973f8f.23.1791466968366;
-        Thu, 08 Oct 2026 06:42:48 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48c71c0b7f4sm12105389f8f.17.2026.10.08.06.42.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Oct 2026 06:42:47 -0700 (PDT)
-Message-ID: <ec4de165-c7d1-43d9-979b-08c1cb67022d@gmail.com>
-Date: Thu, 8 Oct 2026 14:42:42 +0100
+        d=1e100.net; s=20260707; t=1791467604; x=1792072404;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=d2cHz/mTjiqTZdKy7oFQihnsVKggSZF5bJQIJqbMa7c=;
+        b=q+lpeBJrAngolkjAIuhcqsrkhtSS5N5WEtcItgCfg+qZoyO1UTCvzxfCW2GixqQlzK
+         lFLdpsoGOfoXz2WU2z33ybHr5cVFGmYLfUr565aWAJLceZFhE8W55nyRu7p5usiNwmOZ
+         tWd0F0nHoxIcJjbCyoRreAyO9lN7nuRFq2uIyhkGXD29It3qrv62qBsZxC3dwKKltzcM
+         QRhZ7CjJeXsakZvrE8vVo5UByBqOjGmB8WbAAaYdB02vbrNTgurIiN/V7Ih6u2qa/5K2
+         T4nZ6gnfYcH7dMZOHMCRLPszwM9yHrwL2mYoVP3tFyDe91n1lLZDmmPOnkUe63DmCB8c
+         QI5w==
+X-Forwarded-Encrypted: i=1; AKwUvBwTES2eOO71Xp//xJUF61qZ7fIzANktjsORKfVO/zVsIfOdXh8klgATE8ISjVpM7xP+bmM=@vger.kernel.org
+X-Gm-Message-State: AFuF++nDO4IXc78MbTTLl4EdqNYuoa6JPSmH8tDQCJ1LyN9K5uIPSHjD
+	idw98a0mXCtPtTzq2iu1pGX1f7DoAC66FEloZyin088033Qs/swlYQoTPYKZTNM4tM4nNLpgiPT
+	Gv0va/vm8apbDlJyT+6DeY21ZZS2M5I4nn4IZtGxZOZDc
+X-Gm-Gg: AYBFou1Y3bQKGv9CRGwXwD5G1D3gU47FdlB9k4V8VG13+0kjwmzuTq8QZRaToDCeNpI
+	rIIrt2YKQp5x95Xea0eBByd7nyP8v1cDJa8MZo5WUxfTlG7s3EGKXwAI3JiHz/rh11N0XACcfRU
+	NvH7O+CCM3qXYc9Q20Am2KYqUxH/aVDSPlw5Y1JatEb37PWcs+e3v2+TCkK+SFC/KcVm7qSOE7z
+	JBCO+shRVkVb5svnhVtZxO/IbdQ3VgkFISpg1+xMz8Z+MFoNt6dQj6S4olbgronKIYdK4iUw4VD
+	COMlNqHHKBXVeDtIju1emtUdibV2EtNLQM/uaPmSHh2/CPAhTuNXyM+gwjcMfFkgwQr97uSdPtn
+	OGk7w6JGBrw+piHDwkLzMhg==
+X-Received: by 2002:a17:906:dc8d:b0:c2e:378c:8cee with SMTP id
+ a640c23a62f3a-c317bf5bc3dmr590366366b.34.1791467603730; Thu, 08 Oct 2026
+ 06:53:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: ssh signing: valid-before is checked at the signer's own date,
- and a missing revocationFile fails open
-To: =?UTF-8?Q?Christian_No=C3=A9_Ramos_L=C3=B3pez?=
- <chris@nortesoftware.dev>, git@vger.kernel.org
-References: <CAHGSfbZ_Q8Ujt3om0POapkjWZed1pZVUrB-mV-e+UjmPgCNvWQ@mail.gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAHGSfbZ_Q8Ujt3om0POapkjWZed1pZVUrB-mV-e+UjmPgCNvWQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20261007142954.31761-1-scott@gitbutler.net> <20261007142954.31761-2-scott@gitbutler.net>
+ <xmqqcxtl3zda.fsf@gitster.g>
+In-Reply-To: <xmqqcxtl3zda.fsf@gitster.g>
+From: Scott Chacon <schacon@gmail.com>
+Date: Thu, 8 Oct 2026 15:53:11 +0200
+X-Gm-Features: AclHuK9gRRvO5VdhelDA88K6YD1imjgyjj-DN75oI1wideJAX1dauNUwhq3kO78
+Message-ID: <CAP2yMa+o7zv=8bzHUa8FRkTaU46BQ3w_ZAr6zQ=rFC_a4cg2yA@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/1] SubmittingPatches: allow responsible AI assistance
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Scott Chacon <scott@gitbutler.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Christian
+On Thu, Oct 8, 2026 at 12:44=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Scott Chacon <scott@gitbutler.net> writes:
+> > As an example, an OpenAI model was used to help me research, compare an=
+d
+> > craft the appropriate legal language for this policy change to help us
+> > match the modern, legally reviewed approaches now taken by peer GPL
+> > projects such as the Linux kernel [1].
+> >
+> > [1] https://docs.kernel.org/process/coding-assistants.html
+>
+> That makes it sound as if this is just as legally sound as what the
+> kernel project uses.  However, the only assurance we get (unless you
+> are willing to act as our lawyer, and I do not know if you are one)
+> is that an OpenAI model produced plausible-sounding utterances.
 
-Having waded through this here is a human readable summary:
+Well, honestly, most lawyers I know only barely produce plausible
+sounding utterances.
 
-(1) Our documentation implies that we check the expiry date of the key 
-(which is recorded in the allowed signers file) against the date the 
-commit was signed, but we actually use the committer date which can 
-easily be faked.
+I read the change and edited it where I thought clarification was
+needed. But this is different from, say, a blog post or emails, which
+I personally never write via LLM because I don't like the voice.
+SubmittingPatches is supposed to be dry and factual. Legal guidance is
+supposed to be neutral. I've found LLMs quite good at producing
+correct legal documents. Again, unjokingly this time, better than most
+human lawyers (and I deal with a lot of them).
 
-(2) If the revocation file does not exist we print a warning rather than 
-failing the operation like the gpg backend does.
+It's not unlike a code-based LLM contribution. I had it generated with
+specific guidance and context of what I wanted the change to be,
+because it's faster, and I spent my time reviewing and editing the
+result to get the text I was looking for.
 
-For (1) I'd be happy to see a patch that tightens the wording, but we 
-should also note that the timestamp in the gpg signature can also be faked.
+I would love to have you pass this by the SFC, because most of the
+guidance I gave my agent was _their_ guidelines.
 
-For (2) I agree failing seems like the safer option.
+> It looks, at least to me, that there is not much that can be
+> meaningfully enforced by reviewers and followed by contributors in
+> the above text.  It seems to be little more than "the world would be
+> a wonderful place if everybody behaved this way."
+>
+> A violation of "concise and relevant" seems to be the recent trend
+> of much AI-generated slop, so it may be a good suggestion to give
+> today.  But would we need to update it once the trend of text
+> generated by AI tools becomes "concise and relevant" nonsense that
+> merely sounds plausible?  What if an "AI-assisted" contributor lacks
+> common sense to tell between plausible-sounding nonsense and a
+> well-written description?  What if reviewers get too many such
+> "contributions" and cannot allocate enough review bandwidth to sift
+> good contributions from plausible-sounding nonsense?
 
-Thanks
+This is a fair point, but you'll get unreviewed crap either way. I'm
+sure you already are. However, I don't think people who submit
+complete bullshit are reading the SubmittingPatches file in the first
+place, so I'm not sure that opening this wording up a little is going
+to make much of a difference here.
 
-Phillip
+My recent patch series converting the sha1dc is a possible example. I
+don't understand all of the code it wrote. I read through it, but
+there are some crazy tables and complex math in there. The first pass
+did a weird Rust to C machine translation rather than reimplement it
+in more idiomatic C, so I had it rewrite that - so there was some
+approach guidance, but again, I wasn't hand crafting the code. I did,
+however, spend a lot of time and resources testing and benchmarking it
+on multiple architectures so that I was reasonably confident that it
+was fast and correct.
 
-On 08/10/2026 07:56, Christian Noé Ramos López wrote:
-> Two things that, together, mean an SSH signing key cannot be reliably
-> stopped from being trusted. git 2.47.3, OpenSSH 10.0p2, Debian 13;
-> source read at v2.47.3 and at master (c46c1e37724f).
-> 
-> 1. valid-before is checked at a date the signer writes.
-> 
-> SSH signatures carry no time of their own, so git passes -Overify-time
-> from the committer or tagger line (gpg-interface.c,
-> parse_payload_metadata). alice's key is in the allowed signers file
-> with valid-before="20260101":
-> 
->      ssh-old        %G?=G 2025-06-01 12:00:00 +0000 verify-commit=0 merge=0
->      ssh-backdated  %G?=G 2025-06-01 12:00:00 +0000 verify-commit=0 merge=0
->      ssh-honest     %G?=U 2026-10-08 02:15:15 -0400 verify-commit=1 merge=128
-> 
-> ssh-backdated was signed today, with only the committer and author
-> dates set to 2025-06-01. Nothing distinguishes it from ssh-old except
-> when it was made, which only its author knows. ssh-honest, signed and
-> dated today, is refused: "key has expired: verify time ... >
-> valid-before 2026-01-01T00:00:00".
-> 
-> The GPG backend refuses both:
-> 
->      gpg-old        %G?=Y verify-commit=1 merge=128
->      gpg-backdated  %G?=Y verify-commit=1 merge=128
-> 
-> The documentation for gpg.ssh.allowedSignersFile says "Git will mark
-> signatures as valid if the signing key was valid at the time of the
-> signature's creation", which is the intent, but does not say the time
-> comes from the commit. So valid-before rotates a key; it does not
-> retire one.
-> 
-> 2. A configured revocation file that does not exist fails open.
-> 
-> gpg-interface.c:568-574 at v2.47.3 (579-586 at master): if the
-> revocation file exists, pass -r; otherwise warn and verify without it.
-> The same file, present and listing alice's key, refuses:
-> 
->      S2-revoked       %G?=B verify-commit=1 merged=no
->      S3-revfile-gone  %G?=G verify-commit=0 merged=yes
->                       warning: ssh signing revocation file configured
-> but not found
-> 
-> S3 merged under `git merge --ff-only --verify-signatures`. An
-> unreadable file and a directory both fail closed:
-> 
->      S4-revfile-0000  %G?=B verify-commit=1 merged=no
->      S6-revfile-dir   %G?=B verify-commit=1 merged=no
-> 
-> ssh-keygen, given the same missing path, refuses: exit 255, "Could not
-> verify signature". git avoids that by not passing -r. OpenSSH's
-> RevokedKeys says, in sshd_config(5), "Note that if this file is not
-> readable, then public key authentication will be refused for all
-> users."
-> 
-> No test in git exercises gpg.ssh.revocationFile; it appears only in
-> Documentation/config/gpg.adoc and gpg-interface.c.
-> 
-> Controls for both runs, fixed beforehand: a good signature gives G and
-> merges; an unsigned commit gives N and is refused; the revocation file
-> present and listing the key gives B and is refused; a commit with its
-> message changed and the signature kept gives B and is refused.
-> 
-> Together: the two ways to stop trusting an SSH signing key are
-> valid-before, which the signer can date around, and revocationFile,
-> which does nothing if its path is wrong. Either would be enough on its
-> own if it held.
-> 
-> What I would ask for: refuse when the revocation file is configured and
-> missing, as ssh-keygen and sshd do, or say in the documentation that it
-> is ignored; and say, under valid-before, where the time compared
-> against it comes from.
-> 
-> On prior art: the ssh signing series (Fabian Stelzer, 2021) carried the
-> warning from before v4, and the review raised the config name's case,
-> not what a missing file should do. The key-lifetime series (RFC
-> 2021-10-15 to v6 2021-12-09) passes the commit date to the check, and
-> the replies are about style. The N for an unconfigured allowed signers
-> file is already on the list (Grayson Tinker, 2026-06-25) and is not
-> part of this.
-> 
-> Christian Ramos
-> Norte Software
-> chris@nortesoftware.dev
+But I hesitated to submit it at all because I knew the policy. I only
+sent it so that if someone at GitHub or OpenAI or whatever wanted to
+use it in an internal fork so they could save a ton of CPU, this would
+be a way to get the implementation. I was aware that, although I
+believe the patch is quite reasonable and valuable, due to the
+conservative AI policies of this project, it would not seriously be
+considered no matter what.
 
+My point with this change is to open the possibility for AI assisted
+change that is reasonable, similar to the Linux kernel's approach.
+
+> > +The <<dco,Developer's Certificate of Origin>> applies unchanged. Only =
+a
+> > +human can make that certification; an AI tool cannot sign off on your
+> > +behalf. Consider the origin and licensing of generated material,
+> > +including any third-party material it reproduces, and comply with
+> > +applicable license and attribution requirements. A tool's assurance
+> > +that its output is original or compatible with our license is not a
+> > +substitute for checking those requirements. If you cannot certify the
+> > +DCO for a contribution, do not submit it.
+>
+> Again, this is a good aspiration to have, but I doubt that anyone
+> can practically certify that the output of an LLM is devoid of
+> content borrowed from problematic sources under the rule the text
+> above gives.  Would it not be more useful to help contributors by
+> defining what not to do more clearly?  Our current text says as much
+> more directly: you cannot practically certify, so do not send in
+> AI-generated slop, period.
+
+There is a good section on this DCO issue in the Red Hat article on
+navigating legal issues around AI [1] where they state that "the DCO
+has never been interpreted to require that every line of a
+contribution must be the personal creative expression of the
+contributor or another human developer". I think that this suggested
+paragraph in my patch is a fairly clear interpretation of this stance,
+but I can give it another pass if there are more specifics you would
+like covered.
+
+[1] https://www.redhat.com/en/blog/ai-assisted-development-and-open-source-=
+navigating-legal-issues
+
+> > +Disclose substantial AI assistance in each affected commit with an
+> > +`Assisted-by:` trailer naming the tool and, when available, its model
+> > +or version. For example:
+> > +
+> > +....
+> > +     Assisted-by: ExampleTool version 1.2
+> > +....
+>
+> I thought the kernel guidelines instructed us to say only "LLM"
+> these days, to avoid giving free advertising.  On the other hand,
+> they ask contributors to also list non-LLM tools, like coccinelle
+> and clang-tidy, that were used in their machine-assisted
+> contributions.  I am undecided on the merit of specifying the
+> exact model and version, but listing non-LLM tools alongside
+> materials for independent reproduction looks like a good idea.
+
+The kernel guidelines do say "LLM" only, but the SFC guidelines (part 5) sa=
+ys:
+
+"Part of the contribution process should (at least) include a
+disclosure of what LLM-gen-AI system was used, its version (as these
+system change over time), and a brief description of how the system
+assisted the contributor. This information should be included in a
+machine-readable format in commit logs."
+
+I'm happy to go back to the kernel guidelines, but since Git is an SFC
+project, I figured this is what they would be more comfortable with.
+
+> > +Maintainers may request more explanation, testing, or information abou=
+t
+> > +provenance, and may decline contributions they cannot confidently
+> > +assess.
+>
+> The text of the kernel guidelines appears to give maintainers more
+> latitude (cf. https://docs.kernel.org/process/generated-content.html).
+> They can treat it just like any other contribution, reject it
+> outright, or choose any approach in between.  The proposed text above
+> does not account for cases where reviewers simply lack the bandwidth
+> to even think about what explanation and proof to request, and it
+> makes it sound as if declining a submission in such a case an unfair
+> rejection.
+
+I mean, no matter what this says, you can pretty much do whatever you
+want. I'm happy to change it to any amount of latitude the maintainer
+has that you want to convey. Or remove it entirely.
+
+Scott
