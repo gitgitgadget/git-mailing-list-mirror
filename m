@@ -1,169 +1,130 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E414D4885
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 18:11:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791483061; cv=pass; b=j+rToO+SpWSLNAj9H2KQyf9+hOQe3CTLF7y+gFQ/8yLXGRc4N0x/Olt4a1jEa3WI9/oC6B9rNq9icHYDkUK9rBVrSl8XdvZNE6vNC3B6XXi8j/hnZ7jEnWVacG4MzBgE4F7iZUZixkSsX7yCQySSSjQKj7xuDCJKX6YDwrSZi/g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791483061; c=relaxed/simple;
-	bh=3WJILIEqCdZWgI5/wLvhd/HT9qHJ4HVj8kDkvWna+vY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kSvrJX/yFGivOXi5V7n6qdirssBay+s0yftHmkSktbhVGLn6nWJA0DcNgq/vPpIdF4XcM1dx5pKKBf8DIq0sBV8WUZw2GzJjSrRIq5MWgdCtgZ3i8CiJJkYSVngI7YA9OcDsLO6ja0A5XzhLazx/BXtLCrvRk9m89EoQRC87isQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HHTMKJH1; arc=pass smtp.client-ip=209.85.215.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437D131ED7C
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 18:12:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791483135; cv=none; b=TUAdLTcM2sW0agCb8nTSxalUnhzTOKoBo9NmBKhSCQml3CYBLM4xB9gBwCsE1z5C437DNb/jdePuBUz1DiJ6lMUzLfxK2oghMbYYlPvfXCN+G7nG+SmWV96ysQ7zlj6yblWHXzzGhQp0rA7JHNMx10p2hmmQZRTsZeO3tJN/cQE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791483135; c=relaxed/simple;
+	bh=Sldq26vFnDAiWpBFkIUUFlpoIlq88pwqhUMhQvI/u+E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Z42531I1FhsJ+Z+3uYsdRtYowM1rc9mZ1Bh+4WuhvzOjR6ic51C/7A8OOaIhrT33so7Co/3KJv5ZePw6ujS88O1PcZgrWY+rireXGStD9mX8b+TOoGaL8u6uEDwpaEZWB7ZiBk3zQJO47T5CEwd+gTH7FP85TMjXacfEouePuOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S14Tqrw5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LA4IxtIN; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HHTMKJH1"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-cbee846deecso3985931a12.1
-        for <git@vger.kernel.org>; Thu, 08 Oct 2026 11:11:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791483060; cv=none;
-        d=google.com; s=arc-20260327;
-        b=WvLLPyTWwkJHUL5iuuQ38LyUw1VDXW0QDAV+DuFHbKEomQNgulzr9P+DOjZ7cYarXu
-         Z0lrlxNIRLTzAREywtXbH3BIP07lFqrI67XgRpt4tq0xRuuehri9bbBf0vTfmKW1hgiM
-         sU1kE0lZoIfGBEFdjeV7Su4FHi1060XiaGxor6u5Ge+Vs30cen8TIf5poQ5x8krRLJfv
-         A1Zck0r8VRVEWNL9CqdnIb6hthl6+fZpAvBCnraQuynBAOBs6HE7EnYbSg9AHvgSkct7
-         SQ5/8u6qrfP4ZYulICe6p1A5XQqhYnjL5vtzA++ycX8RgJclhwfq0STvvhmDo7DgHyHK
-         DtYw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=3WJILIEqCdZWgI5/wLvhd/HT9qHJ4HVj8kDkvWna+vY=;
-        fh=1lA9mv6eQeASw2iw4K5jGFda0lnI9rvSEJBUbRs88X8=;
-        b=MOGd2SUMUD99xvuhcIv9GVl5JkWfIfH0DBuNq+By5AG7WWVkLeQhon4lBKBAnRxUtV
-         nMdNudk4GWyNjUs98zTuFXAgkQfDvQs16tCWYje3Da8W7NHsCBzAq5qoxhofy7TfhTfk
-         NbUYTATfeVewV6TYPKkaVR/t1I07r+HnSpuWMWmdzjcxBwyAN5voHWZABeN34liyFlxW
-         4bDPP3AZguicPI/dCz/mkak2BIuT5L2G4Vj3pGYBdC0cxIiXzF/onxXLD5Qa/VW4m2VS
-         GyBnKNEReZwUoSe6/fLNSzX3D73Jg7OdFL4jHiGCDXzCzsOhxqBsVBhz86+LLNVjIyeJ
-         wteA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791483060; x=1792087860; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=3WJILIEqCdZWgI5/wLvhd/HT9qHJ4HVj8kDkvWna+vY=;
-        b=HHTMKJH1ufq05ww5D41UnUdHO/q+qSV1P6W/cowaE0vpZ2K/jlNGREjbX26+6ruawN
-         UBwXGJzmUzCT2opBsecr6GFtzET247I4siSr4EheTM1sKCIA9uz5yEPCEUWq6qvoU+rW
-         zLYClEvS7GHBPp3XKRl1ncMXf086GsRJ0lQGNhrtI/BFZNBqV8skh1JqduOX7dS9ZTPa
-         qoURtziIiJPjFEje3sE6CGpY7e/drqy+OCffm+ViycVEuOEDFDCuyoXleruASBIdCyeo
-         uoFd9QI3HbCZbVlFDwDWWXWm+FgqPVCfsdw/dG3pJqNOX80BxRyvxHZCo4nygK5JUFQr
-         mE8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791483060; x=1792087860;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3WJILIEqCdZWgI5/wLvhd/HT9qHJ4HVj8kDkvWna+vY=;
-        b=kDdyYszdUgCm3Ag73YB5zKYoG411nRM5rLbyBiuwxuNUXAZqniJy4urBggCLSPYUC9
-         XSLGmctct9uAp91gDDmRe+DqtABJ53MxAk5cIkYnBwNL2ki/zM7mW79xg/si6z+/UaDx
-         zE59EedATzi6DzoP0sPmdPPJ8D5l3o7oPY7JlsnV4FI5Cw5HgfZY5beZZu9yGSgypcOH
-         K5vwOY6F/7uUfSPwngTsq3gFAAabur//M7r6Itkg7qeHnxtRXRWkoqLmVeOoWXg4hOQ2
-         kddlJYbezXc3v6j9qjuBhzX+hfvcCf708pAhuIG4eQbeWojR1i+x/1Xq2EPuWgt9Kauy
-         MQPQ==
-X-Gm-Message-State: AFuF++k9GTPbtO/1fO18AdBLnU0EeDrq6MOGkkzAdmRV7YSJsW/Ebe1N
-	mHHzTf0bYSBEEzEfMfdoVy8k2CwkYtLOnO7r+hggs1oSMHLIsuKbBBoMpW5e4Xv4pRsWCNx4l2q
-	tFYtaUWS+QXdh19BB5DQ+fXceTMO5254ksneiy6E=
-X-Gm-Gg: AYBFou3NPyrVjHhlTJ1T81qDtskCNrj8Lyez4IRUKdeVAzhcVnYBFs9pYnhyhxCwn/k
-	Q+s2AEH0yC/QlLy9bpGK5VGZrfAzzfZFKP65rvJCwmnOYVcmHAtcxy0Fu/F0rsFfJrXnptmx9d/
-	9pXfR3lKJ7ahphuuKtQEsgQn55kJxUW35xrgmpDVa/S+l2mJy7JaqAM/kEr8bh+L2lDENOdL13U
-	WyJJtDyQ0Rb9NX8zZY+iH7xkQ+lHOp1n9dqghiLlGJk83vWo/yP2/LLkmS2bl3NCJqqv5RseQpI
-	UqQ6wiCRZ+vTuVfDKkdoqAOwVh/qZEcMLssPfKDAKEHzlsa8zS9yoQWYd23zdxpbR7WrLwSbcY6
-	9VhPcAeyNlu5FdNd1C7IQFwdKaVcK5X6z88AMEK0/574aRDRdeVHsoYTJB2dOJe2boKaIAoTnjN
-	1NtMB95+5klwUd+gWXF8brA/XRfnueYw==
-X-Received: by 2002:a05:6a21:1507:b0:3dd:a197:edf4 with SMTP id
- adf61e73a8af0-3e134113d52mr6235663637.67.1791483059440; Thu, 08 Oct 2026
- 11:10:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S14Tqrw5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LA4IxtIN"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 798327A00FE
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 14:12:13 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 08 Oct 2026 14:12:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791483133; x=1791569533; bh=2web6DBvPg
+	+aeWz7XSTHQJwIehZLp6yy3MiIRE8KxZI=; b=S14Tqrw5X22VM+F4yazr3SgtbN
+	GaIHR5EHKyiNIDIZ+0289Zk0DAI/1igBevDHmtZSSR+vUcf8ciVt6vuEX95CXtQK
+	/9DwvF5QzFep8bqPLH7VBLsntaWDnyoNyjoArQS6Hc7+ggmxdq6veLd2DMscG4rs
+	EbNCks6puMer5fPGfvUzYPWVKallvhFaECK5ObmGYDVU3mhWz/D+wHSEbc+GSVOO
+	U9+hT0C+jEYa416jEAxfNB99RrEy8nRYA0S6bty2xtonwDPu75Hu4UaPbMLjQa4T
+	Lm4oKrhXdsLhvfvOnqrF5+LyuTKp61so+DFx1wN8T36WgZx0TepqX4sZ3WGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791483133; x=1791569533; bh=2web6DBvPg+aeWz7XSTHQJwIehZLp6yy3Mi
+	IRE8KxZI=; b=LA4IxtINPhrnR+ru/gGOwzfQwLkeWUd54UkwozyQ7pzZCHHsJeM
+	oCdoB+qKhRsHkyMQ+2VVyoTrT39VAEWxWvHyFknlOYC3oxsZJLee16C695Ccou09
+	bxjwCobNC8S9FXpCgMV2I3SbD89ZKWN8/0/3oMuKlt1JF4qTcB3lLFU2bO+m6I1C
+	xsXqg+FvwRkGH7iB7URDDhO30u08hdR7kHT2crkneNRPxeT2SSPvorb0ZV87EUuG
+	GpKQq1Pho1I6NYbIkr04uX0r5JXJxhoeaGjr7/s1WPHbfTLpCRgrfNpVaBPAOPU9
+	qnYEm7R+WPb+skbLfI1QtlBSX0KPYRugZxA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791483133; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:mqMxuDGTx78xRrooVCOPUAfQHtXXZO4iGJrnx7NQ9Te49/u
+	QXgHk0w6pd7GQpfbwe1qdhX68lpfgkmfv4W7wxWkpkwfCtA2RqDKNOfkh3bdcPPm
+	ZwEIy1NUKEKbt6pNuGlRbaaY60q7zg+SzKvQmgeTLzcweVK7mXU8Egy/Sjvxey1m
+	qgfIog/JQUbBRUc3dWEfLiFjpVgKDHPSsOln0kKDXB1IIc45aj822bacMFz1dtSL
+	i9OWLibWs1PPqJCKzzuHNi1QAhhx2SXwwoA1gV7M4E7AXsHRgB5vYBZMZMfanqfW
+	9Gesct99HSAUZ5c/sy0gxl1sfHKX7Y9EkVV8q8A==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:jSnOiNmfzaVtbXNV6iDxaSQHcbYtvwxEzZIbfGgTUnY=:Sldq26vFnDAiWpBFkIUUFlpoIlq88pwqhUMhQvI/u+E=;
+X-ME-Sender: <xms:_NzHahVN2YgZeMHsNlo6Y-5nAV1D9llXvqu43Hg2TunwvnAYdLrF1Q>
+    <xme:_NzHaoeWT-Cm-ZjScGehZfRW65h00rXagPhPjDSojrxKPejsvGOEV_N13f1gRJesY
+    GkEXnpdbTzZPa-jqFpWYPxWLccZ2zr9djdst6zamMeMGQ10P6wURgWt>
+X-ME-Received: <xmr:_NzHalv0pnxfxS_lvwTNawmllGF0n-v9Xgd0muekVyB59_59RyeWoV65J2Sy7wmkK-cjQY65Yt6B0Aw9zy2PtBvejn1qxpzGHl7V>
+X-ME-Proxy-Cause: dmFkZTEEpOPSdr+lZ8kWfItkmF7CsYGtT2XGo+dki53K5vqGC4BD2V/F4iUlzvqSPNm+ge
+    3Ck2Aakufhb6odMJOaJ5nCX2mQFffFZ/lfpJpenVmw8ClxhL2wv3/3LfGCwaSbzNV1x69M
+    sMrjev1cTOZ20J8ZIgN2AB+8SVWUJWS2osSdwo4bA0PCXes3e/C7iF2XcurOMr42xxV7Mg
+    UZHhnHOpYajo9Pskjj2IkqFXZnU9qT+3U6dWrVzbSzr+4mJSPs3n72Cb8WijuFdHZieSam
+    J1FiXcf5SnIxBdYRkQpwBZguB9X9wC2FN/89Bq7up0v3blWQj9cx0YgSMT6mB5N4FHs+HN
+    iJZU8F0fccPtIIJhYQBEJ3TrJjF/aT6qqvyTKFrm2arjGFiZv+DSMFgcAm4wHNODv9jLHg
+    mpoNgX9Jh0Mvg5TrH6hm/u/0nTW5jBPzgoPju4MbbHxXt39JVYRP+ehr6kmHPJ9Mz/1+0D
+    IzbOdnHKFK2H6BjR1nPFFuF8f0NdhI+b1gZOGlMC9uHPgBEwk2wjBbpTKfWDeKA1UlJhaW
+    FJzI40sVgbHEAIQXkaLytna32uK/XetGQY7nHvtAd2m7yUj1w1Yg3EIkeba0eAnlU4/3jw
+    +z6bLzBmV+VyYmVBZG0A0CTeOny0vO10hjoYy9KY83iHwsSNLJH6VtK/agMA
+X-ME-Proxy: <xmx:_NzHav_2JMZ-R15kNlKCmJtnVkeu52h7B6LqcqM-MtCzW98wk7WKTA>
+    <xmx:_NzHao0B0J0SkbjukRbK9Krcimt_rbEn8Qg_RVils3AT8uqT36TPdg>
+    <xmx:_NzHasCw7criIvaqdIUOKUyn8sH2uvxhaInbQlI7hO796LvohbdlXQ>
+    <xmx:_NzHascJOruThZ9uYaXb3IeqSgxoCsxY8Ol5rEqpwBijCNZI4HiF2w>
+    <xmx:_dzHaqnka2lHQA8LI7El80rlCZhs3Pn2l73f3TP0ja84vs36MrsA1W5Y>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 8 Oct 2026 14:12:12 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Todd Zullinger <tmz@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH 4/8] ci: switch away from unsupported i386/ubuntu image
+In-Reply-To: <20261008150336.CzZS-oEZ@teonanacatl.net> (Todd Zullinger's
+	message of "Thu, 8 Oct 2026 11:03:36 -0400")
+References: <20261008-pks-ci-housekeeping-v1-0-baf015c589c0@pks.im>
+	<20261008-pks-ci-housekeeping-v1-4-baf015c589c0@pks.im>
+	<20261008150336.CzZS-oEZ@teonanacatl.net>
+Date: Thu, 08 Oct 2026 11:12:11 -0700
+Message-ID: <xmqq4iew12pw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20261007142954.31761-1-scott@gitbutler.net>
-In-Reply-To: <20261007142954.31761-1-scott@gitbutler.net>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 8 Oct 2026 14:10:47 -0400
-X-Gm-Features: AclHuK9eG2AFUYfFdD48AudVGX_rxXDDbKbj_DESDABFLVJu0lJB4Vi9DmNnOpM
-Message-ID: <CALnO6CCc77K6bg0tUNnYg_yORTELnJ=UgoL610YJeQUe6UWBjQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/1] SubmittingPatches: allow responsible AI assistance
-To: Scott Chacon <scott@gitbutler.net>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Oct 7, 2026 at 10:35=E2=80=AFAM Scott Chacon <scott@gitbutler.net> =
-wrote:
+Todd Zullinger <tmz@pobox.com> writes:
+
+> Patrick Steinhardt wrote:
+>> The linux32 job is used to exercise Git on a 32 bit platform. That job
+>> uses i386/ubuntu:20.04 though, and that version of Ubuntu is end of life
+>> nowadays. Furthermore, Ubuntu has dropped support for 32 bit entirely
+>> with the 20.04 release, so we cannot easily upgrade it to a more recent
+>> image anymore.
 >
-> After the AI discussion at the contributors' summit [1], I'd like to subm=
-it
-> a concrete alternative for allowing AI generated work responsibly. This m=
-oves
-> us closer to Linux's approach: use the tools you find helpful, but take
-> responsibility for what you send.
+> Should "with the 20.04 release" be 22.04 (or whatever
+> release dropped i386)?
 
-If you'll forgive me going a *bit* off-topic, I'd like to point
-interested readers towards some starting points for fascinating
-historical reading. It turns out, folks have questioned the use of AI
-and tools for a long time, and we have a body of writing that examines
-the impact tools have on us and we on them. So there's really no such
-thing as "just a tool", in an important sense :)
+FWIW, I read the above to mean "32bit support, together with 20.04,
+are now gone", and did not feel any need for rephrasing.  But
+reading it again, yes, it can be read both ways.
 
-Some starting points for going deeper are linked in the following
-articles (on my personal blog, but most of the thinking and references
-belong to others):
+    Ubuntu has dropped support for 32-bit entirely, together with
+    20.04 release, so upgrading it to a more recent image would not
+    help us keeping 32-bit support.
 
-- https://benknoble.github.io/blog/2026/09/02/tool-dialogue/
-- https://benknoble.github.io/blog/2026/09/20/turkle/
-- https://benknoble.github.io/blog/2026/09/21/once-more/
+perhaps?
 
-And relatedly, some reading notes on folks studying what it's like to
-actually *use* LLMs (albeit not exactly in our context):
-https://benknoble.github.io/blog/2026/10/02/reading-notes-configuration-wor=
-k/
 
-I don't think this has much bearing on the conversation about Git's
-policy other than to say: I don't think we ought to justify our use by
-saying it's "just a tool like any other"---not because it's unlike
-other tools so much as because the tools we choose and use matter;
-they affect us and the people around us.
-
-(I do appreciate that Scott's proposal has elements of taking
-responsibility for what you produce. At RacketCon last weekend, a
-maintainer put it a bit differently: "Review scales less than code;
-manage your own backpressure.")
-
-Somewhat more on the policy side, there is also the (polemically
-written, but valuable nonetheless?) "AI Pascal's wager"
-(https://ploum.net/2026-10-01-pascal_wager.html). To quote the
-conclusion (note: "abandon your project" *also* seems like a
-fear-mongering the stance the author tries to reject from AI boosters,
-but let's try to take the rest of the argument in good faith in spite
-of that):
-
-> While mass marketing is trying to instil a Fear of Missing Out hysteria, =
-the most rational and pragmatic approach is to strongly reject all AI-gener=
-ated contributions to your projects. For now.
->
-> Someday, we might realise that LLMs are doing good in the world, that the=
-y are evolving toward ethical, reliable, sustainable solutions, and that pe=
-ople who use them are happier (try to read that sentence again without roll=
-ing your eyes). If that really happens, you could always change your AI pol=
-icy. It will cost you nothing.
->
-> But if you let the slop in now, you may regret it forever=E2=80=A6 You ma=
-y be forced to abandon your project.
->
-> On the other hand, if you refuse AI-generated contributions to your proje=
-ct right now, the worst very hypothetical regret you could ever have is "I =
-should probably have done it sooner".
->
-> The conclusion is simple: If you are AI-agnostic, the pragmatic course of=
- action is to strongly refuse any AI-generated contribution to your project=
-.
-
-"Wish we'd done it sooner" is definitely the boat I'd, personally,
-rather be in down the line.
