@@ -1,288 +1,346 @@
-Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C7543712D
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 20:48:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47BD37E5DF
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 20:55:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791492509; cv=none; b=hxED01xO0pLpHPfBtKI3TA8ypEKoyz+wGqUhNHKhKiLQTpzsFZzr3s9CsJ6HEI40useQS+oNXz5KIVvAdabmllkhHbduJ7398idyNF7ihi2VyBe/XweocuAFbtSE+ezo30jVQ5wElmJWfMeeZO7UwHWUyDtpv2IH9EVwPKvyG5I=
+	t=1791492947; cv=none; b=YPc7AqHLQOUscfvWjR13hLP/05ixVaQ9FQyO1MODQYjEB+ByTz2Y5PgS7TPnUgNiyNpa/xkuwXYUd7mhrtgOx/baaO8OrJ+WQ/MYc7nImrfzP8dDZ7xdIaA+jGjehVoKro0ot7jVi3QvvQ22fxZ23nxymXiMUKYiedM8bGZFmQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791492509; c=relaxed/simple;
-	bh=Wf6cgB7vyipEu80CjzH09S0O6M2VeMj6Upy3mCFmjkE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W5FrBuJnOngxLN9ioI75XrMnwfpsa0y4ec+suWE9gtrqx5tplO9JGYSh/Jh7ivNeNh59Kj12PKwv5PaF1aABIxQRrcEVPFGTHEhGnqj5FjLau9hpZfvdY5EdTF7ocLuPYowqUvdoIWO+poudFto+ILt53wyhgFAqjQ8aJD9ZaUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C6nxdQto; arc=none smtp.client-ip=74.125.82.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791492947; c=relaxed/simple;
+	bh=L2KRDrIqFTO0+YhzrT7C1L2jj8j0drAtOpH/QUsD5t0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=J5JMarl2rIRBU+XvWsrjGVONXSeVHmCIDZeiWPn2pGUAKQCe2tQzYFfacNMaTrC1sECgkb4cl3bGrVHCf70L7giJ6oEKXqsr9eWr5GvySHJDwqW+WqTeh+HT6HRnq2A3EcleWgbJrdCYKjquY1pAETMvI0A5uK3tfLyXUXDOL1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=B0oPYDl9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fn8PE16u; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C6nxdQto"
-Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-3535aa147d8so52816eec.2
-        for <git@vger.kernel.org>; Thu, 08 Oct 2026 13:48:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791492507; x=1792097307; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=eRlfrtvT4ZEIJS3OCRoQ4Lr2Q+bRDhE9oUxp6l56oaQ=;
-        b=C6nxdQto7aWLlFluQPXTHr1HOR/vCcCSrzjxXRSE4sJtchHp31vLZClVfxun+UU3G5
-         SyxMUhH0nKuv4vtfu9xH5bqaPrcE3FnJ0ZLtm0FIlaYOvZjRx0J4PM+UOEuMm05MdkH5
-         GlHP12eGbEgRFDuJ5i72rInBo3L30MoVxHJIQs2cHb3jN85UyO+Rgv2Kzg8GsehfTbbb
-         BRiJfIxaFd3aPnJaTcy1DRl3jTneM5Mbjk7WOqBeqJQBg0lMJhcDrggz0BpKVd/ptErU
-         mg8R0RLafr5eTUHGsPQ27vVU+Apv2cGU1JtHS25ELV3x9W3nWEIQv68e0lhqlM5cPLOU
-         D+rQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791492507; x=1792097307;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=eRlfrtvT4ZEIJS3OCRoQ4Lr2Q+bRDhE9oUxp6l56oaQ=;
-        b=OaLPufuOYxJJmtDKZEd2AIEQz9zdqnGy1S7amo+cnu9hikdAGIc5NJmZqRzMJEgZgU
-         8RW3AmdIfQyNATe99SrtXBF+IRJxbfkUF3BxLD1LRgwzrPT5P2b7I3Nd5jPqVLhrrqK7
-         XoGVjiP+NUWjJ7A9gd+P+UUrgHbKhAHnxkvJFKabiZOIusXNgm+aKjfQzrlQbLbPpaoX
-         QCilGLLSOQw7BwqMzHKLMKLDq9NRrN2tLRAd3PgxsvDfJ+nDVad+eOxiwY8H4PWii3s4
-         eIokh+avVrSiNjnct6e9gWiDbEkFea+McACh7aSioSkKHgYUA4WIspbvK4P4e36F+UTq
-         gw0A==
-X-Gm-Message-State: AFq9FYLBHHY0H2oIhC8DmZWhlh03bsSgkyXGKkR4pW8cnjeQlZM1Uryl
-	Q8cxRQs+6G5WHy82ycxpz5VYF6txvrg4jv7C2joder70/eQObXwRcKNzjtrNEw==
-X-Gm-Gg: AYBFou1hL9I8tlLP4YS7ovi6TEwPPcpD9tL14qPu+LMuN+ESGMpT2ltnmk8+2BWfeaC
-	OK+sUSlZNh+o1bpNCL1BfdnuDqQg4yFIgUw66aSxucRrJNB8o4xDr6TbSXR4x5sKu8PXBlLVj9i
-	EihGl/dtFlAFrkhB8W43w0Tw0OGMiEnMPGep7VDiRnghGpfvF9zp4uDDU/2z11XrOaqnelUdNRS
-	fKAnCzt/OVR4XaKfd329e3yJPgXsX4FPJpewd89KBPaXnpunww5R9y93DDFPdMpr7l5x01K5T0X
-	tESiBAziUUP9NICtXCp0HJP5kUnPiWbU1mkZq6v6xf5RPU6iw6BvmohSyk+aAiToMWWTCjG/99t
-	7fm7tLmMUm6LlmLcRBFK5ki01FiHLTF6PLax7wW26nC4v39rMf4V9oXno3yyrodhxUwdyHylNer
-	8TA2RqNe5Aya2sAFxx31IcCe3qOQtzrkscDW4Zhfj/XR20+cQlvYA1sQTTHX4dfr+0R1OQUQfuK
-	vkhQpv+7dn6iqiCGYd+pXKFq+Hlz10T0O48EsbPqspr9qbo
-X-Received: by 2002:a05:7301:4d0b:b0:33e:6714:3945 with SMTP id 5a478bee46e88-3537e0129e3mr62566eec.2.1791492506763;
-        Thu, 08 Oct 2026 13:48:26 -0700 (PDT)
-Received: from WF-A7VVAKE ([2605:a601:9a29:ec00:9c8c:3311:1812:c51c])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3537cb2fd33sm433930eec.28.2026.10.08.13.48.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Oct 2026 13:48:25 -0700 (PDT)
-From: Curtis Allen Smith <curtis.allen.smith@gmail.com>
-To: git@vger.kernel.org
-Cc: Curtis Allen Smith <curtis.allen.smith@gmail.com>,
-	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH 2/2] core: add core.convertAwareStatus to opt out of the content check
-Date: Thu,  8 Oct 2026 14:45:04 -0600
-Message-ID: <20261008204603.1988-3-curtis.allen.smith@gmail.com>
-X-Mailer: git-send-email 2.56.0.windows.1
-In-Reply-To: <20261008204603.1988-1-curtis.allen.smith@gmail.com>
-References: <20261008204603.1988-1-curtis.allen.smith@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="B0oPYDl9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fn8PE16u"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1D96A1D0004F
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 16:55:45 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Thu, 08 Oct 2026 16:55:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791492944; x=1791579344; bh=MgblgFaU0f
+	23v6HLlfO9G5IxW+ZqhzIy9CX/IP3ePB4=; b=B0oPYDl92a9t7vQbzoaeR679sR
+	tD2WD1zJVjHa1k7ADUbCr37bDvS9ZmPD0Aw8m/QFzu2+nH+sS0QQPeY6ruQtLgVU
+	q4lpnGlFlENpsbNkzTAtnFhSwYS5kERRz5wdSLswTLVILiv15G0Kpyhta7CFijJU
+	U5hPp5UntnPfkYelw8M2+PyMLV5Ex1ygDVn9zZ8ghS+bMZll2ABq4hr7l/svI9Um
+	pcCbMjd/+TIzkjU4noj8XFSUpveo+SLu3/JfZjz37AzSCIh8yDGUAXJmYntMNAPa
+	fEBvxIttue1c2sWr70Vv5uUVaxL5zcj4KRC3DBww95yRhY1ZGWsZyjoJtsEg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791492944; x=1791579344; bh=MgblgFaU0f23v6HLlfO9G5IxW+ZqhzIy9CX
+	/IP3ePB4=; b=fn8PE16uIvvuRB6/M18yy8l3DmSWJxsq8zE4LgM/4Gd2/QVqjnI
+	8E310RSqSyZJ+8hvZrPzZ2AtnWBCXEaHlJoLCXRTakAQQToUaDFfUm1wI1SJKptg
+	lw9bCin6xVJ+X3tyFb5F3vGBsW16Xz8f+Y/I1ncK5b9kWBob3s7O17glTzS2bcDW
+	JP+W2pXnCEpw4E1pu3yFec6kmjHu8CmIKaq0p+5b04CiJY6Zfk4x8jyIkofmrPqU
+	uWKd0cL60A6XhaBKesw6CzLYdx1f6UIbU79uFMlJTn55nuAVLTxnW1TKA/DW+b8N
+	LtvBcIw7AvAggLNW2zE8fF8GvnDIUQhYehg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791492944; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:P6zsztut5D8Yfv3xB/8NgCUqhPWiw9DIWHag4HQQvyWk9Y4
+	+VnhBovFqmPnqwKRJG9KsvSExXgME+eVQL/mX3MTIdIujhUlEYUcsOzMpEI+pAeF
+	hicaIdZMfMys73TP1QJNmZNdeOMzXFroYo/+WPKMmFouM1O6CuXB1XR4+StNfYom
+	QLVdq+CC2gKM9iwNowVx+JSDEqYt8LbI2ljXuew8h+hgcmYLvwHaUwM6fBQwS3ji
+	kyZMH5ahCFiKH/gAQS2gnAIilEMmr1uFgxM6S0Ee1MNomLvIj9KQ9INDZg1eFnKs
+	7g8cUjg5/8vqmwiNxcj5bJq+2TvZats4Wk+Payg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:dRDoRO63cIRyDpw5uBqtREV9nsJd7q3wAy9EqqKeBe4=:L2KRDrIqFTO0+YhzrT7C1L2jj8j0drAtOpH/QUsD5t0=;
+X-ME-Sender: <xms:UAPIanvLOw0dlpscaIuG2Uvdpt5mvEX9OvtFsHKhXU--yMsrfyBnJA>
+    <xme:UAPIavUL17X37QSmbM___TJ3wUJgyTUNOHvPTL98p11-7kZRyQoWa58Dy6P5yz3Rr
+    b8kAhEnVGZOxV23GFW9BF62QDeylzWU8ca23q1CTp8AAOE1J49zwhs>
+X-ME-Received: <xmr:UAPIajHIPMCWFib_dr1ufZXL_1Eo3zQ_zSZk-toPDRYsHF_2oQyNZkOP70TUbnHyLHra0f6F0szj5vI0ywM5crvydbv76l9KvUk5>
+X-ME-Proxy-Cause: dmFkZTGct7K+PzrweevIEFW2P+g3aIKOoyQsG1ocf8/OWY3wPVl2CyVhBzzKbozXTwyx5w
+    P0d6Q2rx+MNcpEwXl0/47q58C5yuMvSvnvh2hMQuJiYBcMvqrWmjtK8qjy5oUuphxenR1Q
+    fHhbv8ICZC4Xi/RATUSSFHNmUaAYGzkekYY7AptDBsQCnpEjYNgiP8Yr4nBLHBq2q0yvBY
+    JsgwcXOxxVykLDfAMpTG8oV6cIzhtLaxHLyID2z9+uzsroScJ1RGCfM7cc4tq02tHI2Ecm
+    99KPi7hN7h9X3tmeGTvAwbBInbuPA99bNbm9PtfysHAfpE9tZpLVqe1Oa40Z7FEOoKqZjX
+    Ef+a7Z/vqe/etFpuBJ+E+PJIELTZ7zO82tAyR9y8GL4AerdHxchob1KMFuL4l1CTujn9i+
+    tlZZCi6XrYXKFwnwXOhO62Zfb9SiCrY/92btiQSnvTwicE8AgmZLS0MIwUWWc5kuugFqX/
+    qAYEeuveOIWNE85Wml/4Fc779s/nu8nmPreQT76/4ZMORhP3gSzrOVZxX0vTtvs3NQusua
+    TAlG2vFDykqsQePo3APqm2kBQA/m5yXx0o8zgwsiXxx5/INidfW45DfwNftIPvT++nZIpv
+    su9B2eHbsnKPgZLQWEcDfwCtvcEAzRhZlU08NB/2gkTpgFviqfWUQkPll1kA
+X-ME-Proxy: <xmx:UAPIah1tigbea05U4otIh--f6BmVO8XLR9SjvW3xgO7uNASpHtQ3_A>
+    <xmx:UAPIalNAyhi2DCSn6x1bZU5hm76m1SVa47aPFrkseHOR4OXGrBOliw>
+    <xmx:UAPIag5PaI6AZ-VAzKYZ9zKeAVXxzx8PQR3bt1puq6ZmDGnW1slprg>
+    <xmx:UAPIav2EkbR8_sx88-Yo7EhDkl1EtyC6istyXddNsV2ULKK1YGOJ1Q>
+    <xmx:UAPIamYr6WuHaxtHLfAUszqYVcGw1_YUkqnxo7gCcQyDVEVYeLyHUFQy>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 8 Oct 2026 16:55:44 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Yoichi
+ NAKAYAMA <yoichi.nakayama@gmail.com>
+Subject: Re: [PATCH 1/2] worktree repair: refactor and reduce .git file reads
+In-Reply-To: <dc7ebb427bedc7318ebbf84c05ecd02063408353.1789269613.git.gitgitgadget@gmail.com>
+	(Yoichi NAKAYAMA via GitGitGadget's message of "Sun, 13 Sep 2026
+	03:20:12 +0000")
+References: <pull.2225.git.1789269613.gitgitgadget@gmail.com>
+	<dc7ebb427bedc7318ebbf84c05ecd02063408353.1789269613.git.gitgitgadget@gmail.com>
+Date: Thu, 08 Oct 2026 13:55:42 -0700
+Message-ID: <xmqqh5ivyks1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The previous commit makes an index refresh read and convert a path
-whose size changed when conversion is active for it, so that "git
-status" agrees with "git diff" and "git add".  Reading costs more than
-trusting the size, and when the path has a clean filter configured the
-cost includes running that filter -- Git LFS on a large file, say.
+"Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Reading is cheap enough on current hardware that agreeing with
-"git diff" is the better default, but nobody should be stuck with it
-if their filters are expensive.  Add core.convertAwareStatus:
+> +static const char *get_worktree_id(const char *dotgit_contents)
+> +{
+> +	const char *slash = find_last_dir_sep(dotgit_contents);
+> +	if (!slash)
+> +		return "";
+> +	return slash + 1;
+> +}
 
-	true (default)  consult the conversion for any path that has one,
-	                including paths with a clean filter
-	no-filter       consult only the conversions Git performs itself,
-	                and decide a path with a clean filter on its size
-	false           always treat a size change as a modification, as
-	                Git did before
+This returns a pointer into dotgit_contents; it is the last
+component of a pathname, similar to what basename(3) gives us.
 
-Being ordinary configuration, it can equally be given for a single
-command:
+> @@ -798,30 +806,20 @@ static int is_main_worktree_path(struct repository *repo, const char *path)
 
-	git -c core.convertAwareStatus=no-filter status
+The unified diff is a bit hard to follow, so let's see if we can
+compare preimage and postimage more easily.
 
-Paths that are not subject to conversion are decided on their size
-alone in every mode, so this costs nothing in a repository that does
-not use conversion.
+>  static ssize_t infer_backlink(struct repository *repo,
+> -			      const char *gitfile,
+>  			      struct strbuf *inferred)
+>  {
+> -	struct strbuf actual = STRBUF_INIT;
+>  	const char *id;
+>  
+> -	if (strbuf_read_file(&actual, gitfile, 0) < 0)
+> -		goto error;
+> -	if (!starts_with(actual.buf, "gitdir:"))
+> -		goto error;
+> -	if (!(id = find_last_dir_sep(actual.buf)))
+> -		goto error;
+> -	strbuf_trim(&actual);
+> -	id++; /* advance past '/' to point at <id> */
+>  	if (!*id)
+>  		goto error;
+>  	repo_common_path_replace(repo, inferred, "worktrees/%s", id);
+>  	if (!is_directory(inferred->buf))
+>  		goto error;
+>  
+> -	strbuf_release(&actual);
+>  	return inferred->len;
+>  error:
+> -	strbuf_release(&actual);
+>  	strbuf_reset(inferred); /* clear invalid path */
+>  	return -1;
 
-Signed-off-by: Curtis Allen Smith <curtis.allen.smith@gmail.com>
----
- Documentation/config/core.adoc | 22 ++++++++++++++++
- environment.c                  | 14 ++++++++++
- environment.h                  |  7 +++++
- read-cache.c                   | 12 +++++++++
- t/t0020-crlf.sh                | 47 ++++++++++++++++++++++++++++++++++
- 5 files changed, 102 insertions(+)
+We used to receive the filename of ".git", read it and made sure we
+have "gitdir:" prefix, and find the last component, but then trimmed
+the actual buffer.  Which means a few things.
 
-diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
-index 0b697f53f..9737c804f 100644
---- a/Documentation/config/core.adoc
-+++ b/Documentation/config/core.adoc
-@@ -156,6 +156,28 @@ some fields (e.g. JGit); by excluding these fields from the
- comparison, the `minimal` mode may help interoperability when the
- same repository is used by these other systems at the same time.
- 
-+core.convertAwareStatus::
-+	When a path is subject to content conversion -- the `text` and
-+	`eol` attributes, `core.autocrlf`, a `working-tree-encoding`,
-+	or a clean filter -- the size of the file in the working tree
-+	is not determined by its contents alone, so a change in size
-+	does not prove that the contents changed.  When this variable
-+	is missing or set to `true`, Git reads and converts such a
-+	file before reporting it as modified, which keeps 'git status'
-+	in agreement with 'git diff' and 'git add'.  When set to
-+	`no-filter`, Git does this only for the conversions it
-+	performs itself, and a path with a clean filter configured
-+	(Git LFS, for example) is reported as modified on a size
-+	change without running the filter.  When set to `false`, a
-+	size change is always taken as a modification, which is what
-+	Git did before this variable existed.
-++
-+Reading the file costs more than trusting its size, so `no-filter`
-+and `false` trade this consistency for speed in repositories where
-+running the filter, or reading the file at all, is too expensive.
-+Paths that are not subject to conversion are decided on the size
-+alone in every mode.
-+
- core.quotePath::
- 	Commands that output paths (e.g. 'ls-files', 'diff'), will
- 	quote "unusual" characters in the pathname by enclosing the
-diff --git a/environment.c b/environment.c
-index c83cf4483..b079262c8 100644
---- a/environment.c
-+++ b/environment.c
-@@ -344,6 +344,19 @@ int git_default_core_config(const char *var, const char *value,
- 				     var, value);
- 	}
- 
-+	if (!strcmp(var, "core.convertawarestatus")) {
-+		int b = git_parse_maybe_bool(value);
-+		if (0 <= b)
-+			cfg->convert_aware_status = b ? CONVERT_AWARE_STATUS_ALL
-+						      : CONVERT_AWARE_STATUS_NEVER;
-+		else if (value && !strcasecmp(value, "no-filter"))
-+			cfg->convert_aware_status = CONVERT_AWARE_STATUS_IN_PROCESS;
-+		else
-+			return error(_("invalid value for '%s': '%s'"),
-+				     var, value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "core.quotepath")) {
- 		quote_path_fully = git_config_bool(var, value);
- 		return 0;
-@@ -766,6 +779,7 @@ void repo_config_values_init(struct repo_config_values *cfg)
- 	cfg->apply_sparse_checkout = 0;
- 	cfg->trust_ctime = 1;
- 	cfg->check_stat = 1;
-+	cfg->convert_aware_status = CONVERT_AWARE_STATUS_ALL;
- 	cfg->zlib_compression_level = Z_BEST_SPEED;
- 	cfg->pack_compression_level = Z_DEFAULT_COMPRESSION;
- 	cfg->precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
-diff --git a/environment.h b/environment.h
-index b336459e9..49a88de27 100644
---- a/environment.h
-+++ b/environment.h
-@@ -115,6 +115,12 @@ enum object_creation_mode {
- 	OBJECT_CREATION_USES_RENAMES = 1
- };
- 
-+enum convert_aware_status {
-+	CONVERT_AWARE_STATUS_NEVER = 0,
-+	CONVERT_AWARE_STATUS_IN_PROCESS,
-+	CONVERT_AWARE_STATUS_ALL
-+};
-+
- struct repo_config_values {
- 	/* section "core" config values */
- 	char *attributes_file;
-@@ -130,6 +136,7 @@ struct repo_config_values {
- 	int apply_sparse_checkout;
- 	int trust_ctime;
- 	int check_stat;
-+	enum convert_aware_status convert_aware_status;
- 	int zlib_compression_level;
- 	int pack_compression_level;
- 	int precomposed_unicode;
-diff --git a/read-cache.c b/read-cache.c
-index 8875706d8..2bb27a388 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -554,9 +554,21 @@ static int size_change_is_conclusive(struct index_state *istate,
- 				     const struct cache_entry *ce,
- 				     struct stat *st)
- {
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
-+	struct conv_attrs ca;
-+
-+	if (cfg->convert_aware_status == CONVERT_AWARE_STATUS_NEVER)
-+		return 1;
-+
- 	if (!S_ISREG(st->st_mode))
- 		return 1;
- 
-+	if (cfg->convert_aware_status == CONVERT_AWARE_STATUS_IN_PROCESS) {
-+		convert_attrs(istate, &ca, ce->name);
-+		if (ca.drv)
-+			return 1;
-+	}
-+
- 	return !would_convert_to_git(istate, ce->name);
- }
- 
-diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-index 88b728d50..4c127207e 100755
---- a/t/t0020-crlf.sh
-+++ b/t/t0020-crlf.sh
-@@ -442,4 +442,51 @@ test_expect_success 'status sizes a text file by its CRLF pairs, not its CRs' '
- 	)
- '
- 
-+test_expect_success 'core.convertAwareStatus=false restores the size shortcut' '
-+	git init convert-aware &&
-+	(
-+		cd convert-aware &&
-+		echo "* text eol=lf" >.gitattributes &&
-+		printf "one\ntwo\nthree\n" >file.txt &&
-+		git add .gitattributes file.txt &&
-+		git commit -m initial &&
-+		printf "one\r\ntwo\r\nthree\r\n" >file.txt &&
-+
-+		git -c core.convertAwareStatus=false status --porcelain -uno >actual &&
-+		echo " M file.txt" >expect &&
-+		test_cmp expect actual &&
-+
-+		git -c core.convertAwareStatus=true status --porcelain -uno >actual &&
-+		test_must_be_empty actual
-+	)
-+'
-+
-+test_expect_success 'core.convertAwareStatus=no-filter leaves clean filters alone' '
-+	git init convert-aware-filter &&
-+	(
-+		cd convert-aware-filter &&
-+		write_script stripcr <<-\EOF &&
-+		tr -d "\015"
-+		EOF
-+		echo "file.txt filter=stripcr" >.gitattributes &&
-+		git config filter.stripcr.clean ./stripcr &&
-+		printf "one\ntwo\nthree\n" >file.txt &&
-+		git add .gitattributes file.txt &&
-+		git commit -m initial &&
-+		printf "one\r\ntwo\r\nthree\r\n" >file.txt &&
-+
-+		git -c core.convertAwareStatus=no-filter status --porcelain -uno >actual &&
-+		echo " M file.txt" >expect &&
-+		test_cmp expect actual &&
-+
-+		git status --porcelain -uno >actual &&
-+		test_must_be_empty actual
-+	)
-+'
-+
-+test_expect_success 'core.convertAwareStatus rejects an unknown value' '
-+	test_must_fail git -c core.convertAwareStatus=bogus status 2>err &&
-+	test_grep "invalid value" err
-+'
-+
- test_done
--- 
-2.53.0
+ - If the contents of the gitfile were "gitdir:foo/bar/baz \n", our
+   id pointer found the slash after "foo/bar", trimmed the buffer to
+   have "gitdir:foo/bar/baz", and then incremented id, which now
+   points at "baz".
 
+ - If the contents of the gitfile were "gitdir: foo/bar/   \n", then
+   after triming, the buffer would have "gitdir: foo/bar/" and id
+   would be pointing at the NUL at the end, which would have lead us
+   to error.
+
+Now let's look at the new code.
+
+> @@ -798,30 +806,20 @@ static int is_main_worktree_path(struct repository *repo, const char *path)
+>   * Returns -1 on failure and strbuf.len on success.
+>   */
+>  static ssize_t infer_backlink(struct repository *repo,
+> +			      const char *dotgit_contents,
+>  			      struct strbuf *inferred)
+>  {
+>  	const char *id;
+>  
+> +	id = get_worktree_id(dotgit_contents);
+>  	if (!*id)
+>  		goto error;
+>  	repo_common_path_replace(repo, inferred, "worktrees/%s", id);
+>  	if (!is_directory(inferred->buf))
+>  		goto error;
+>  
+>  	return inferred->len;
+>  error:
+>  	strbuf_reset(inferred); /* clear invalid path */
+>  	return -1;
+
+The caller is expected to give us the contents of gitfile read by
+setup.c:read_gitfile_raw(), which reads the file in full, validates
+that the file begins with "gitdir: " (notice the trailing space),
+removes arbitrary run of CR or LF from the end, and then returns
+the string after skipping "gitdir: " prefix (8 bytes).
+
+In the normal case, read_gitfile_raw() would see "gitdir: foo/bar/baz\n" 
+in the file and returns "foo/bar/baz" to our caller.  In fishy cases
+we examined for the preimage above:
+
+ - If the contents of the gitfile were "gitdir:foo/bar/baz \n", our
+   caller would have received an error from read_gitfile_raw() and
+   wouldn't have called us.
+
+ - If the contents of the gitfile were "gitdir: foo/bar/   \n", our
+   caller would have given us "foo/bar/   ".
+
+get_worktree_id() will give us "baz" in the normal case, and "   "
+in the last case.  We fail to error out in the latter with "*id"
+check, but is_directory() check will catch us, as the inferred
+directory is "worktrees/   " in that bad case.
+
+So there are certain differences in error cases, but they behave the
+same in the most basic cases.
+
+
+Now, this is the caller in the preimage (i.e., what we used to do).
+
+> @@ -856,51 +855,49 @@ void repair_worktree_at_path(struct repository *repo,
+>  		goto done;
+>  	}
+>  
+> -	infer_backlink(repo, dotgit.buf, &inferred_backlink);
+> -	strbuf_realpath_forgiving(&inferred_backlink, inferred_backlink.buf, 0);
+> -	dotgit_contents = xstrdup_or_null(read_gitfile_gently(dotgit.buf, &err));
+
+We used to have infer_backlink() read the .git file to compute "worktree/$id",
+then again called read_gitfile_gently() to read it again.
+
+> -	if (dotgit_contents) {
+> -		strbuf_addstr(&backlink, dotgit_contents);
+
+This is the happy path.  We successfully read from .git and use it.
+
+> -	} else if (err == READ_GITFILE_ERR_NOT_A_FILE ||
+> -			err == READ_GITFILE_ERR_IS_A_DIR) {
+>  		fn(1, dotgit.buf, _("unable to locate repository; .git is not a file"), cb_data);
+>  		goto done;
+
+This is inherited badness, but overly long lines like this one needs
+to be fixed.
+
+> -	} else if (err == READ_GITFILE_ERR_NOT_A_REPO) {
+
+The _gently() did read something, but that does not point at a git
+directory.
+
+> -		if (inferred_backlink.len) {
+> -			/*
+> -			 * Worktree's .git file does not point at a repository
+> -			 * but we found a .git/worktrees/<id> in this
+> -			 * repository with the same <id> as recorded in the
+> -			 * worktree's .git file so make the worktree point at
+> -			 * the discovered .git/worktrees/<id>.
+> -			 */
+> -			strbuf_swap(&backlink, &inferred_backlink);
+
+If we had the "worktree/$id" thing, we use it.
+
+> -		} else {
+> -			fn(1, dotgit.buf, _("unable to locate repository; .git file does not reference a repository"), cb_data);
+> -			goto done;
+> -		}
+> -	} else {
+>  		fn(1, dotgit.buf, _("unable to locate repository; .git file broken"), cb_data);
+>  		goto done;
+>  	}
+
+These lines to show error messages should also be folded to avoid
+overly long lines.
+
+So, what does the updated code in the postimage do?
+
+> @@ -856,51 +855,49 @@ void repair_worktree_at_path(struct repository *repo,
+>  		goto done;
+>  	}
+>  
+> +	err = read_gitfile_raw(&contents, dotgit.buf);
+
+We use read_gitfile_raw() just once.
+
+> +	if (err == READ_GITFILE_ERR_NOT_A_FILE ||
+> +	    err == READ_GITFILE_ERR_IS_A_DIR) {
+>  		fn(1, dotgit.buf, _("unable to locate repository; .git is not a file"), cb_data);
+>  		goto done;
+> +	} else if (err) {
+>  		fn(1, dotgit.buf, _("unable to locate repository; .git file broken"), cb_data);
+>  		goto done;
+>  	}
+
+The original code handled the happy case that read_gitfile_gently()
+successfully returned first.  Underlying read_gitfile_raw() would
+not have given any of these errors when read_gitfile_gently()
+succeeded, so handling the error cases first would not affect the
+behaviour of the code in these cases.  Again, these overlong lines
+are annoying.
+
+Now the simplest error cases are behind us.  How would we do in the
+happy case?
+
+> +	dotgit_contents = contents.buf;
+> +	infer_backlink(repo, dotgit_contents, &inferred_backlink);
+> +	strbuf_realpath_forgiving(&inferred_backlink, inferred_backlink.buf, 0);
+
+We reuse what we already read with read_gitfile_raw(), which
+prepared "worktrees/$id", and do the same realpath_forgiving()
+the original used to do a bit earlier.
+
+> +	if (is_absolute_path(dotgit_contents)) {
+> +		strbuf_addstr(&backlink, dotgit_contents);
+
+I am not sure which part of the original this logic corresponds to.
+If the result from read_gitfile_raw() is an absolute path, even if
+it later turns out not to be is_git_directory(), the inferred backlink
+is not given a chance to act as a fallback.  The original made a
+call to read_gitfile_gently() which checked is_git_directory() to
+give us an error, and that is how it allowed inferred backlink to
+substitute for a bad contents stored in .git file.  Now we do not
+allow that fallback if .git file has an absolute path?
+
+Ah, outside the context of this patch, before we barf for "unable to
+locate repository" when we complain backlink.buf is not naming a git
+directory, there is the fallback logic, and in order to reach there,
+we have "if (!is_git_directory(backlink.buf) && !inferred_backlink.len)"
+there.  OK, so this may be doing the same thing as the original, but
+it is rather hard to follow and convince readers that this is a
+no-op conversion.
+
+> +	} else {
+> +		strbuf_addbuf(&backlink, &dotgit);
+> +		strbuf_strip_suffix(&backlink, ".git");
+> +		strbuf_addstr(&backlink, dotgit_contents);
+> +		strbuf_realpath_forgiving(&backlink, backlink.buf, 0);
+
+This converts dotgit_contents relative to the computed backlink,
+which needs to be done here because read_gitfile_gently() used to do
+that for us, which we no longer use.
+
+> +	}
+> +
+> +	if (!is_git_directory(backlink.buf) && !inferred_backlink.len) {
+> +		fn(1, dotgit.buf, _("unable to locate repository; .git file does not reference a repository"), cb_data);
+> +		goto done;
+> +	}
+
+I'll stop here.
