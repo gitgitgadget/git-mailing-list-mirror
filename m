@@ -1,97 +1,96 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E7C4718D6
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 08:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893393EB80E
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 08:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791448596; cv=none; b=qTgEcXc9fEceiP+Eb8OPdIr6+1hg0+TYKD0fjaTkmK5eMeZd/oUFD9Ktg6WXRujcgtkuIhCEh10I0e1+uYGoQOBI54XhSdqknKYVt2eHL2pGO3cGk5fDek7uSbDsMBLVx/6ThtulnQiRqjFTvdIJyeYCsiL6rCmcwiNSWpOjWtQ=
+	t=1791448597; cv=none; b=eMATtyN1wM9MJXlfOwHlKr4SNwgqyjA1ub+6N9vHu6BmPXbZh2pWWUr+TICgDwMi/9O/R+XZmUNTJZBzS6Wcci+RgKdibcILIikFUH80IcS0pFpNljyXrPYH7Mj2pqEE2OX1Zj/I+WNAtYyLMN/fIGks3rCShCIsJ/8yH5F8OiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791448596; c=relaxed/simple;
-	bh=4jONM9VOKRIkZnzo+m7Vpzd+n8KQ48fTzI1MGq9NiQs=;
+	s=arc-20240116; t=1791448597; c=relaxed/simple;
+	bh=yCw/KqWM12oHSs7BIX9GEguKv2GYzeN4SZKYvy6cjcc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=p0VASJmWiWfDGcXFwE86URIXq5MZgQxwHGqQl62r0uaJoUeaRsZEXqFv8s0YydyN0YDizRaLCtfyBD3DSn7sTMrpojWvEVxL6Y13LEUkU5OCVcNmtz9DgfUIBpS1+fPLu7vZ7rGu9Vn4+HasYnOJEw+MWu2hII+y1mCfRS23rnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fU5vuTTt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iKnq0d+9; arc=none smtp.client-ip=103.168.172.158
+	 In-Reply-To:To:Cc; b=jrZUwAZqKhSwQeSY7J0fJyB2heyeE1M+mZT7Hxi4LpQ4RHhIKYnvs87uvzXuYM17ufgGqQjZPwybp1PTalf3GfwTe6IfbgoB3afpn9/R8zrXM9Khh6MmyhqnZ7YsxOVyW3jDI7x+96YJrQirmw4g9Zq4apatB70+Z3iD2JbBaKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BaYoXsXI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iCLaEXwE; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fU5vuTTt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iKnq0d+9"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F3FFC1400153
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 04:36:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BaYoXsXI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iCLaEXwE"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BBA6B140015E
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 04:36:35 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 08 Oct 2026 04:36:33 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 08 Oct 2026 04:36:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791448593;
-	 x=1791534993; bh=Fve1EB7aeeiIJpxl22g1EeRiqhg8+M1ICIRObHKCdAk=; b=
-	fU5vuTTtz/DY4pnhzQIcqEhzYAMjp91ttwMg1UqVX3MbqyFnUwacNu21+VRIYR3K
-	ltJvWDF3rfkBpZs5088u7x3Un2tXrwdUrtg/t70t6lgUkft/jgZKmwSwDkDq61Gc
-	Ky53S9QRGZnHp2Yd+wZSDsCUSU9tZfgsQ4/cSN8NeXUoELcCkCa5vNcgUgTVOEwb
-	HOCck+jwHbPG1qW7BvjCj9X6HItrGMsIjmCtIfcYPU0yGNkhOWUiglZqfZALoQCM
-	83KgyHyNQI0Fxx4EpaRVe5KGp9VOXLumQSw1SgKCo4X2o9mNwqVSkyFffk0K+g+7
-	x4NQhngJXJEW3+Qe2X+lpw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791448595;
+	 x=1791534995; bh=6zZ7whboiVUwmTqsHJwqUTdKhFg3iNcfCKLMq8AR35A=; b=
+	BaYoXsXIz+9NvFwfQpLEIBJ9TUhU0agAsNsr25W0e92FWQkm2g6UMLbfgx/aGyri
+	gCRN7kPqHT2c+dy0qi9KpwEqzImN3AnI8A19mrh9HX7TNg4SBTALt+enwIEnqb/o
+	cAtawCQXOenx/UT+wI4Yxb6FA44WrdkN7u9twsL7ga1Fd3SLNFJjuMEom5LPwR/d
+	E8MLArkOBCN23XjOHCeLdOq/so08VDx2KhniEtFYnzMGcyKL+GfOH9cVYgUpxRK/
+	rckh2dV6OYkPqzMIsb6L4Q3Yezj0M9B9q5lPbsIM+l4fNnXzC+YCoRWtj8JdQhIc
+	O14b9TonN5uM83sBxUyhgg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791448593; x=
-	1791534993; bh=Fve1EB7aeeiIJpxl22g1EeRiqhg8+M1ICIRObHKCdAk=; b=i
-	Knq0d+9PRmhsUlNmOnhubdYFpplw0P0NIqVy8bjOPIKIsvvJ6j79N4XzyACZVkq9
-	Jo4Obr1Rs/resQ0/+gqv2a9K8iBal/s+sJ2UQ/PUvNNK4gGYEJg4R+5oj13c7fqt
-	ZlAuBQly3+XIyDi8qIYwN5R2ZXusXtSqH+sqzq0B4Ymk7b5OUnTE0SVRJhZurBMg
-	q7j5thADkQLCRIyvRQ8ZM31KIpv2On7XwB4hAnUAg52s7Ca7Yr6Vs6DUP37D2Mk/
-	q0JFFhKKBfAAmrtA1GipMMWw/l4qUTe8Ar6QnsMzDYh6rL0PXkdkTjv1zMovloxK
-	ygM7z+k5OnvjR/IZKAWZw==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791448595; x=
+	1791534995; bh=6zZ7whboiVUwmTqsHJwqUTdKhFg3iNcfCKLMq8AR35A=; b=i
+	CLaEXwEgyoV6Twf5AJQQfy5KWrhNLh0Va6jeQFtXy+liNKDb4OEO/oUW4kDH18cJ
+	nwTI60oXA0kMV6pbmWlbTxxOcSehTW/SDb8I9tR4VyUsjpBJzeTxhPKcLuGwlJ75
+	phSnNFAmqdbww8EMR7xiuPRvLddclgm7g+/RxjW7+Ly7CYNwYpdpATA5bgql3zmg
+	QCWUkMzr8XNLBd8fAw7oDbdRbPBkvSE8IXvilGQ6Zug8wshHzukZrxdJytEX6z+O
+	x62RPGCpmQm9sB+PkY0+se5pa0amvF2VDZe058cHbjvgo/hPUPfYqUR6JYygM7Pt
+	nMocSTrEDqJc/PTpHkjuA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791448593; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1791448595; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:iyx4QNONEXlyACI+PE9qrEvU7/uGJTLFUTFormQ6WjKLp8I
-	BLkeHIC58BCcB++XpUgxUh/NDr4+py7tErOzRebD6llaeSWbOXqW/dxhtaIziIgE
-	3dSsv4cSnrXT7d7oH9Z6+3QRSeIqERUSD4YyvR3LfLNxNLQ1Wk2emzsRQYqpEjtx
-	sJ15ji7dMT7z2lwsNlNcGB2YKGLNmcXZMw3YLIi5UydZiA2WgPBgqvx9jckSf9mM
-	2OyWW+DTLjIleg29YGbkWSZS5fsEflB0D+BEyGHnbbPJ7YIPdnRA/w5VU3xfE6A9
-	Gs/1cxhw5Fv1lej2jz9kUedEXQFuUjsxgxk0Wkw==;
+	s=fm2:rsa-sha256:NZGDXDc1j1YRyc7ijey4TvlJ5QXUfbIX1UJC+ndHa773lWR
+	x4EqevmTL84yovfU3HV4VRZf+gfr1HldLqzDYakMBf4RWFGu7mvm14UEfq8LGi5M
+	/KRlnPqB9saX1p3PibWNnI3u1hFLbe+ITqVW4krRqkneT82vM0RQ7BnW0zz4KKqA
+	dXNcGiDAfD5/A3t7bWL6mENDji01ie7e/rxI9GrOEW4WHCgHz68UEPJRhf0RJssu
+	8bAmzNxtEkS1rNN0z2K9sWSbEoFeGMQqeE2GCJ5yQURp96RtxDolSkg57jJQKQ05
+	Oou4ZwodVJfMnMBPT1v3kD+MmNPgy7hAPoiAJ2Q==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:Iqrye6W90ADGdtsXv9uWVU76sHxSYSI7GWx/MIJTxuk=:4jONM9VOKRIkZnzo+m7Vpzd+n8KQ48fTzI1MGq9NiQs=;
-X-ME-Sender: <xms:EVbHak_rAESfsJjyzvWNGnvVTyVd8Bmhf68esdRNyzmsZykIjZdbCg>
-    <xme:EVbHaivKNA876MyTALQttK1YfZpza7H_jQ_jLYYBadt0oFc892AuvpPbBXL6r9dd4
-    byIQvlrEsQVq0_YkFhA6APIlAvLQR1zfVV5jM0U3s5z7nfe-98VOlw>
-X-ME-Received: <xmr:EVbHanqsCcWtCf2royLTsXxg-6x9BJUGKbC0czIWMsEYmnV4a8UIFA>
-X-ME-Proxy-Cause: dmFkZTGTrBFKl8Y2D728a6iHluzdbQuClsZJrd0NvUJl/r6aTED1ekGkS+lTIgah9AM/RC
-    XXqQZO3rKxKtgp/ow35kMpuPzpMxleBx4D6Md1g4fLMSmK6McoeoO85W2idnzSkPwg6LLG
-    k6WgF0EuWvlfBJtWoMBu8t5FtKqdId600Ld1bcgoiAaVpLbMriJIx+tZY/vOaSJjIWvhab
-    kUk/5kmIsR/r+o8ZpLrcaLQUs+7UpxyjziarEpXIgTRuSc8yXiN23HTk7CZJd3CvmVxWIK
-    NQbXjgwnjv/oQMjXA3NIad6nTLt4378hsZpcRU5JLJJwT9R280Rh9egURr0HAQlDQrDciZ
-    g2xu+M0wSP260mikxLzw1e+JteIQf63jxzxRuNYA0tLlJFzQeXerRIFMnw8byy1JaZ+ueG
-    2VT3GOxozOXRkoCU3Cb+lnJCj78K+zbQlmjn8s64tn+0T3GF7fHTmnkUEJZG2NTwD+DACl
-    +8QxN0YyQ75TFXfpu6y+q06v0fv1hLqb0mFnmZwfSm3RmqVfrwRE6dbmcWCgJJdRCtYvha
-    W4665oUrs9kE061RNAS5qrsJkHttthQhTwZj/+HXaC7pVHAueB/nHdTIg0iyAxJpfuqTM6
-    tw0BlyPsE7TAD9Q8G8S3yY0eggs6vq6/OZoyDJiAc8djBYpxgcygjTD18+Tw
-X-ME-Proxy: <xmx:EVbHavlUZopCG18BI1PV70MHdFbqr_J3zSIZ-XPoFSawMTUjzXCqCg>
-    <xmx:EVbHarxhPAuPed6mHaG2dAa2kqhKsS-qTCLRfF9VEx6h34Zco7ZyBQ>
-    <xmx:EVbHanlwbMfTc4j8zAXlGOuVunD8gioVhDQuoZKMAj9IVH78FGiIzA>
-    <xmx:EVbHakdMWc8guq4q7lQZ6eO-52wsQEHxPxQ3Bcy0C_n3DTkeDC1bTg>
-    <xmx:EVbHaq_B-JnwdROC15_kIRD5CjrKn2PfypgbzI33gBIz61izxAwUGLsg>
+Message-Instance: m=1; h=sha256:MtEEnzgX8YVYfU2SzF3greX++lxzfnnLDJ6/Q3Qp5V8=:yCw/KqWM12oHSs7BIX9GEguKv2GYzeN4SZKYvy6cjcc=;
+X-ME-Sender: <xms:E1bHahaeiINEt8Gsoa3yfXQ7v-Ql8chSvZxzWFRXWVtCF5AxYRTJNQ>
+    <xme:E1bHauayDmjwH7Q_YWJtZz-nH2ReVNJcuxPB9HTTI331VyIA4ivwrzSq1oEuX0E27
+    4ypQ5XVLnJG1EfRTR439DG8xGnS2N_X-L29R1Fn4r-ayaYwbftzkso>
+X-ME-Received: <xmr:E1bHahnGTReaqh1nmZn2mDWEvs5z39I10ruv4AFPEJxvsoe-zG9fPw>
+X-ME-Proxy-Cause: dmFkZTEocIhRSWW7R76AdnGp/zz/VhKki2f52Q6P92mveZbe1h1oUnxvuC7EbAVZ8Ju1rk
+    ySiXLO+wq9krMVD6yhxJxeJDzHcOQGRK2KXq5oOsOHUElaxmyx+YVZYDFEHLaycRdrhEYR
+    3HePyFDzvanDS6q01NCAqtYeR9yc/UyY/WN0ytSP+sjuIB306QBtdjP/QqtTPVXq6EJK+3
+    8ZDYyLtye7Ou8Cj2Xl85TBSoFPQ0KkDwnVAGIILZArvZAjuDv/KvFRswlfOrbnuQNvOmiD
+    XleM+3txX0RQTg7jac9WnxuK95Hdwb7dkzaWgaocE8TjiuJSOQvd0b8UlmemuzGjsk/WFR
+    Qn9ea+p1P9isMUOzqF5j/1hUZb+FJpnAlDBU6GnTgl2t9nRH5zZAtbKIQ3oKo2Ak9gw1++
+    e0BCg/Q6gC51dqdlU6zaQZQ6ruppxtgPffsfw/qB11hW1r14Vi+EqWWFe2b/qYF1k0F08L
+    FGUo2aUXoy7jLxv3HFjQk57u6EZK6oNlpvMph9Umj1biaUFJhcU2pwccL0adN5bFsvB1Am
+    NNRneYOrjZEAtkMDLMYSIRC3+Nv7QQVNmrXCIoqjOCQ090SgVwMANS0Sx9MizMjCfv1Bs9
+    3uSmvva/MfoKIKx65/clQRFd6oB71dNtSWf8BN9ntVHuEE2b4wiePJoMyrtw
+X-ME-Proxy: <xmx:E1bHaqwX_kCgRQWJg3UV5fcgj8byBKL6I1wrJP-Naw9P6iKvWAmYBQ>
+    <xmx:E1bHavMZy9mSVTX6E50sZR7d3AQiyJyEaYvDhCp7dQEyA351x_5chw>
+    <xmx:E1bHauRJZnhKR1D6LDaF3jrQfHoznpqqmfEWXQxRjHoe_jePJ6LHyg>
+    <xmx:E1bHatYAtduVAX6HFcG3Aq2gU1kHnWnCF4obEjmR_PRjOowOVByiCA>
+    <xmx:E1bHanIKMTkiKkajO3xWMWqI_s3bCpjnIQYG9XEc_65qbAOwDM1TEmh1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Oct 2026 04:36:32 -0400 (EDT)
+ 8 Oct 2026 04:36:35 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e8b6671d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Oct 2026 08:36:31 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id d5f4f64a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Oct 2026 08:36:34 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 08 Oct 2026 10:36:00 +0200
-Subject: [PATCH v2 10/13] odb/source: make `will_destroy` an implementation
- detail
+Date: Thu, 08 Oct 2026 10:36:01 +0200
+Subject: [PATCH v2 11/13] odb/source-files: extract reading alternates
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -100,101 +99,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261008-pks-odb-move-alternates-v2-10-b47e8189baa5@pks.im>
+Message-Id: <20261008-pks-odb-move-alternates-v2-11-b47e8189baa5@pks.im>
 References: <20261008-pks-odb-move-alternates-v2-0-b47e8189baa5@pks.im>
 In-Reply-To: <20261008-pks-odb-move-alternates-v2-0-b47e8189baa5@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
 
-The `struct odb_source::will_destroy` flag tracks whether a source is
-part of a transaction that we know we'll destruct anyway. If so, the
-backend can optimize for that particular case, for example by not
-flushing any data to disk.
-
-While the intent is sensible, it assumes that transactions are backed by
-a separate source that's being linked into the object database. But that
-may or may not be true, as backends may have significantly better ways
-to achieve the same. So the assumption doesn't make much sense in the
-first place, as we're now tracking backend-specific details on the
-generic `struct odb_source` level.
-
-Move the field from the generic source into the "loose" source, as this
-is the only source that ever makes use of it anyway.
+In the next commit we'll add a new callsite that wants to read
+alternates without having a proper object database source for a given
+alternate available to it. Prepare for this by extracting the logic into
+a separate function that only requires an object directory path as
+input.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb/source-loose.c | 2 +-
- odb/source-loose.h | 3 +++
- odb/source.h       | 5 -----
- tmp-objdir.c       | 4 +---
- 4 files changed, 5 insertions(+), 9 deletions(-)
+ odb/source-files.c | 33 +++++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
-diff --git a/odb/source-loose.c b/odb/source-loose.c
-index 3c9edba46a..b2fbccd3c0 100644
---- a/odb/source-loose.c
-+++ b/odb/source-loose.c
-@@ -599,7 +599,7 @@ static int odb_source_loose_freshen_object(struct odb_source *source,
- static void close_loose_object(struct odb_source_loose *loose,
- 			       int fd, const char *filename)
- {
--	if (loose->base.will_destroy)
-+	if (loose->will_destroy)
- 		goto out;
+diff --git a/odb/source-files.c b/odb/source-files.c
+index 9389546b3e..6aaf625352 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -174,6 +174,24 @@ static int odb_source_files_create_on_disk(struct odb_source *source,
+ 	return ret;
+ }
  
- 	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
-diff --git a/odb/source-loose.h b/odb/source-loose.h
-index 3cf2e1f8f1..7c7e845fe3 100644
---- a/odb/source-loose.h
-+++ b/odb/source-loose.h
-@@ -28,6 +28,9 @@ struct odb_source_loose {
- 
- 	/* Map between object IDs for loose objects. */
- 	struct loose_object_map *map;
++static int read_alternates(const char *object_dir, struct strvec *out)
++{
++	struct strbuf buf = STRBUF_INIT;
++	char *path;
 +
-+	/* Whether this is a source that will never be committed to disk. */
-+	int will_destroy;
- };
- 
- struct odb_source_loose *odb_source_loose_new(struct object_database *odb,
-diff --git a/odb/source.h b/odb/source.h
-index ea00873763..9fd2b2e5b5 100644
---- a/odb/source.h
-+++ b/odb/source.h
-@@ -81,11 +81,6 @@ struct odb_source {
- 	 */
- 	bool local;
- 
--	/*
--	 * This object store is ephemeral, so there is no need to fsync.
--	 */
--	int will_destroy;
++	path = xstrfmt("%s/info/alternates", object_dir);
++	if (strbuf_read_file(&buf, path, 1024) < 0) {
++		warn_on_fopen_errors(path);
++		free(path);
++		return 0;
++	}
++	parse_alternates(buf.buf, '\n', object_dir, out);
++
++	strbuf_release(&buf);
++	free(path);
++	return 0;
++}
++
+ static void odb_source_files_prepare(struct odb_source *source,
+ 				     enum odb_prepare_flags flags)
+ {
+@@ -364,20 +382,7 @@ static int odb_source_files_begin_transaction(struct odb_source *source,
+ static int odb_source_files_read_alternates(struct odb_source *source,
+ 					    struct strvec *out)
+ {
+-	struct strbuf buf = STRBUF_INIT;
+-	char *path;
 -
- 	/*
- 	 * Path to the source. If this is a relative path, it is relative to
- 	 * the current working directory.
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index 719b55e580..2f2ffbbc7d 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -14,7 +14,6 @@
- #include "odb/source.h"
- #include "odb/source-files.h"
- #include "odb/source-loose.h"
--#include "odb/source-packed.h"
- #include "repository.h"
+-	path = xstrfmt("%s/info/alternates", source->path);
+-	if (strbuf_read_file(&buf, path, 1024) < 0) {
+-		warn_on_fopen_errors(path);
+-		free(path);
+-		return 0;
+-	}
+-	parse_alternates(buf.buf, '\n', source->path, out);
+-
+-	strbuf_release(&buf);
+-	free(path);
+-	return 0;
++	return read_alternates(source->path, out);
+ }
  
- struct tmp_objdir {
-@@ -213,8 +212,7 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
- 	 * since the objects in the database may roll back.
- 	 */
- 	t->temp_dir = odb_files_dir_new(t->repo->objects, t->path.buf, false);
--	t->temp_dir->loose->base.will_destroy = will_destroy;
--	t->temp_dir->packed->base.will_destroy = will_destroy;
-+	t->temp_dir->loose->will_destroy = will_destroy;
- 	t->temp_dir->next = files->dirs;
- 
- 	t->orig_dir = files->dirs;
+ static int too_many_loose_objects(struct odb_source_files *files, int limit)
 
 -- 
 2.56.0.406.ga2d225a756.dirty
