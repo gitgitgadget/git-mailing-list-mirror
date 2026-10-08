@@ -1,97 +1,97 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E457470E91
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 08:36:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDAF3E832B
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 08:36:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791448577; cv=none; b=ll1vqdzEpYG1OP1vd1357UkBmr7YNGBrSmoPTA7iif/uPooUr2+EqeGVOWcj34v+8L42gvuKMfNIjJMo985Ne4MvVmKnLdGW+wV6APyoHmI2gzsZk7E5QTWaD24qNGGE/ZJ8xjZ2B9TfNmu8YbaIiiFYL00lYW7OWkZIkzWHu/c=
+	t=1791448578; cv=none; b=i8YHITMyiQ/lNFE+l358upBkMfJWMUmzFod2t0j76WKI6p+GcHnjXekXi46MzBiM7CQby3jalX0HPlgKlhRIlIzTIkA9y/vKyoHef8pIXqMfGVaBZpdgAlmD+4riPIthlDUhbP2LUAiJKbL2Wlge/pYYhzt99XhwbEge6YizKuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791448577; c=relaxed/simple;
-	bh=550QPb0vasyrlmbAO5odvnc12+R+miC6ATqOoe+0Yts=;
+	s=arc-20240116; t=1791448578; c=relaxed/simple;
+	bh=bcwLossni3pK/t4fM2sJD5xhv8KmXAwbSd5XPabG4/Y=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kIuV5/Ogqoa6YhP8LgVlZq999Hnx1drrAA/jm5avmrmfdA3QO7WqNaCCZX0J5uSU356I1KSpRybX1tEcja9x8XS9DhvVMWP4re2ZkZcWPOKI9xMhAVHdx96AP1nCV4OEUo5Zv3Nj6SaGPTrbgmaGU8UqlwBG9M/okNQD/I0B2F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rAzxyyJ0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jxJKKBCK; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=Q8Fh+8ex9iXCvaSp/fscaRiASEpYlocc9got5er8sa61ncYvnYk+XxTwnI0s3e3/uGttOJ4gsJT7lJpVHnD1+GtO9sLsbfxEtC8shIKX7qBqLNnBLmkvIu78u7lEg/JQ5kmh8M7ZaqorrM5f5XSF3yhZ/ia93JtI2CMj0Q2N3Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KKfdfh/A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZdllXvXr; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rAzxyyJ0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jxJKKBCK"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3C47AEC0053
-	for <git@vger.kernel.org>; Thu,  8 Oct 2026 04:36:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KKfdfh/A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZdllXvXr"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 19B041400153
+	for <git@vger.kernel.org>; Thu,  8 Oct 2026 04:36:15 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Thu, 08 Oct 2026 04:36:13 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 08 Oct 2026 04:36:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791448573;
-	 x=1791534973; bh=QSCPCnyS/zjv7EGCXpgz3eCEzaXKp1JUUh50/LM15Vk=; b=
-	rAzxyyJ0sNBa1xXn/nLL1EcErlpgVHUSt2sqj6ykV9N9tp27qDe0sqwCbY/NBkW5
-	Dv2Cyk0LHas/js6kTmObhDUfLHf1JKUCB2YwohBfkzVj3q4QJ05ilrz1QDF+jwWk
-	d0UZAWF7wSppSqwp4sDBumR3V5d0ypqWTp3VAoTM3Cg2U0WadAFo+1mrhdHfKk+E
-	6glkEnd9A+tO01vA5AazBMD1qCRNArOMN0Ph/+nQxdT2bSWOPVxlyV3QXW/ogpvh
-	BKrO9jb+UQSNV53PR5MAG7A/A7p3h+q9DI6ASN20lixXAJhstv8QByvtjZljORWM
-	nT2iqAWEOM2mUakQ+Dm6Yg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791448575;
+	 x=1791534975; bh=uF9xkFsc4t5lzdi0JG9TknMVmC90hWpGoc5i2kLb0tg=; b=
+	KKfdfh/AKDffopj2tpTW0DJytloT6fV9ml8MCAkgvrdpSakeZmpUUguUftziB44G
+	UJEkV39Bhk+BYYQcT/Zc/wWc35Oh/QyXacAHPVCmvXV7VP8KAtwkEffxj34USpvf
+	ksCMRW40DsQONpMQHP4F5oF0kwfB5p5DawBRObHmXtnMtR+oz2BhSACANbBUgm9n
+	bv34WY9bTZyG2yF+RDss+Urzx5jLTtWN+fay2u2YkQAhxnLEqHxIYwh42/4+BKtB
+	JvkaYiAyYS020tER3ZE5K94VgeTpBIsrAYewmGlVhLMxdi1movKpLnnYrOInQ6qV
+	dHl+lgx89YoZWl8j6IKpeQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791448573; x=
-	1791534973; bh=QSCPCnyS/zjv7EGCXpgz3eCEzaXKp1JUUh50/LM15Vk=; b=j
-	xJKKBCK4eZ9YkA8Jn/2lrd2eds+TqhJCZ/er3zdcT0ayOmESlBO2UMrlJoCkMMO0
-	yTO5BQ1Vl+y4Vbf4eVo+a29HpvY4Jns8eykcT2Yd6dKxl70igC/1mJQ+gvi6cJty
-	df0wfuip1g/7V6UCOoB5nTt5ACjjcBzwOg0mJyw5rcbJAIA2yb5eg19j766q8E5b
-	z0Y1ZUnQXWtP+BlbpxUefU+BeS3bcyp/Z4hs53Q0Jjkio9gVnRaTioUnT27tvfAQ
-	DWCKG070SuPME3UdVtBiJKbzNUqrufVQZLh2OzHZgSidPxfMxGztdz9cQmmnvBLE
-	UIVOeL/YtZqhYf5ahYbfw==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791448575; x=
+	1791534975; bh=uF9xkFsc4t5lzdi0JG9TknMVmC90hWpGoc5i2kLb0tg=; b=Z
+	dllXvXrMkO1Tfvu9ouUzSWe1uyNIOswRu1h/LA63yFFusyy7TCsirWLvh+dvGjID
+	nunaX4mW7u8g5aUMkwFuxrtPDedtEi+DsgaLYFEFLsEehGurcLLTUEhUS48dfPaC
+	3wFDKK9Mg0fh9O2THnoSSDVrGFokuvmLqSCfrVLb5QJ5cWckeBh0tCNZkcqcWwo/
+	rHyTHn7tps0MlExDvLB5G2Ltui2qUo5G+CpAGR8Ufspl97+MSJaZXmIwmT/FCVZf
+	KawmdEjnDEE5R3zodn8AHgoIzY/ZQEgcGRjDQZ6MPsOFMDOTUq8pSnQK448v4olC
+	xxePTtQ3hEkgwKfxaITFw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791448573; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1791448575; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:LD4LfZQITOa/zbGucNG9VY5/INjZvetTIM1aLAu5kH9hi7P
-	cNRLCzzA6DNSASOdu8Qx8Dlj1qoHq9p915cCAn0fb+dMLiZrv+hKbsVu6nUcohBm
-	pDR0CF1B9HQYEoCxZ6hAQE9et7RhlEaQD4vPAq9s8yci3y44JmKG4vbjH2NkIvZB
-	/Lzzw8SMr22DPG1zDFQnSxbxA/Uow3BvDoWtFCAi7htXwBmOt3RrW52ygvksrYCt
-	3dkxIp98cBW+rmVUpzvzbMhiI8JgYqgNhlIQiEqtFMwkiNTxt4M0eQo9+LAFALEr
-	Xc/OAFGgp02quanMbeGuMRxzyl6GasayR15JE+w==;
+	s=fm2:rsa-sha256:HKEuVUAscX4FgsLRBdqSuRN3JTOL80bUfd7y0ptBPzxiNnT
+	b0S4BkMEliUxlRLd3c1lB+3z7Hzn285HnSAOD7wuL1JRUQHMOrhLp3HMoYyyge0d
+	clNDTsrL6YvtVJBTDxVd9lNZfozQKJqyVB5Ovqa43PcyVua0+vxmlr9N62FFBUby
+	4mDOK9cqT/ee+RfrOQ/yBgpWCi8oN1ZRe1IrDiR4x+ZPke3n2N+aMYp1d3WHEpL5
+	mGv9rHpv3FMGMvlJY0536bI1N17lqDz+rBHUcgl+RrU11JOIaBQ3Tm2pp8z+tIjV
+	kJgaYg9mejcA7hMEpMvGY/nsWQh4AKwnzqUBvLQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:HrgqYFmUm/4n0ek1eR8oYLQ1frGWsIKtrmVQ6XSxpX0=:550QPb0vasyrlmbAO5odvnc12+R+miC6ATqOoe+0Yts=;
-X-ME-Sender: <xms:_VXHamSiC7NiEOkHqFwlHAlP8XteG35Tv24wZ1LGEyL9aJvqe9gJ6A>
-    <xme:_VXHahycnfSQjZ6se6LzMS8Am_8wnELKN7WwGVZEcyiIBlm32x2Jj0k9DHPTK2llM
-    1yixICFPQPEwUdn7fWQBDx7QpPLDfoqRIgV5SHMjxhBettRR1JxYLQ>
-X-ME-Received: <xmr:_VXHaheWdSdyg1KQEvL5I88QcChT1-zdi4MuSzB8o2uoHW27ks0rCA>
-X-ME-Proxy-Cause: dmFkZTFM+ESHzMLvk3zeUx2ODARupHW3sMHrPsl3CnMe1Ktq4y6bx23zY/qC2//OvxrQfd
-    B8uXrDVryRhIcOlllhKQ9PnlkspWrr6Wbg86cdj68t6U/NqGy0E7VVj1TpAcUnZwO2TW9N
-    HtapTDjp3jhzIVJw2+aCuW/ZF1UarUug8fSczp+/ndKUnJB8M6QhEUPjAktUzdXHq/bP9n
-    Q/fk4hn/LPKSUQCv0ygN5qSin6W1EuX0KEAk86qSs0GagPawyU7tHX1wMA+7rQOPlxlfVv
-    UTqcdvcyhBop61sUOa2KJTGq50DVbj+En6zPSkpWIHSi6sbmYSrlMxGDkNx/VT4PEEhTR8
-    cDPbT2xILna+bqE7EUwyejjzYjQXxOK72/ZTG/WhwAIo3aDgudMDMbL174CNeABVES7nP9
-    K3pSwKUyOaHCfJqrVbV9cqsnaGbvf2VFjwATOH4KBo3+0646G+tFbK2oFD5M9b2ppFdvte
-    zdIAdzfwGBDPN2XOr8BBFVjVeGFH8A/wB9HdAONW5x5fu2tqaYFVswF0jTEhNe/VCCkpf3
-    cokFMRHeyFW9Vl+GsTqcR1s0CoISknTrB4NNFLZt4kl5BD0XlW7lQS/2pIhXMbiQ4VWSDz
-    1MrNqvF/43fW69z8vjY8i85einBGkIv61FO++b94ZEGhTOBTW98g8I5RVg0Q
-X-ME-Proxy: <xmx:_VXHatLa9-gjbS8LtQXGf81My1eXAA8jT529PZvqS7GrziHA_1IuOw>
-    <xmx:_VXHaiFVf58jhFdi-TmRaJTCftmOxBETihrJj9O-CGMHY6V7XPwV5Q>
-    <xmx:_VXHanrQtgVdAF97K7fJ7-lw1RqRG9Jz-dbJl4yBZDhTF6A5H0Wg2Q>
-    <xmx:_VXHarQSMYY0ZEwMOaTFjBjIW8aImaJY4dMOig1cl6XJVH9Jyr2A9Q>
-    <xmx:_VXHaqAjzzPk-S4Lf6YEtkL3dH4NLa1qVDEc-28XcvDAiQTdmyTerctN>
+Message-Instance: m=1; h=sha256:1pTba6a9rt6QvOnusos1KRupnjCFZcrhFgKu+XxD7mw=:bcwLossni3pK/t4fM2sJD5xhv8KmXAwbSd5XPabG4/Y=;
+X-ME-Sender: <xms:_lXHanjZ31oezpr5rSYIxd5EOS9eeZ-w3XFz0yZ8W8BY2-52v-T7sQ>
+    <xme:_lXHaqAH5TFDadklXwnB2YA1tJl2-8VQlgehhxL7QhDxt9eP4FLcqySX5uxrbfHmi
+    HZJ79Ii35mEmEzBA5WcPKM5D_mGh67ITdA3fBbT4JFInS7XyozbqlA>
+X-ME-Received: <xmr:_lXHakv1Jv_4pT-yKqnxb3uvOhoRYoejBwBqStK2oA62zhczkgF8fg>
+X-ME-Proxy-Cause: dmFkZTEJ12PrM6lPkulG2HrVHQhK7W+nzWtv82fCmVg5Srp1vYOBsOZXk+3zbaSKR1o9q9
+    zgaDeQtd8exjkN8iOx8gK+wWQ1lxo0Q9l5NbSN30f6p85fJAxnBnfB37gvWssqHY0VvvFk
+    PiSqXLopWAifncYeDTw784/UzhaCYudHQhaoZVmElltXFrtbNxE9yoMHYjh+fC+7+cmO4F
+    trDv6wR/hEYFDz8+qQNhsJOcx0mrPE3FW04oN9df+1q7n0ABLdhTxdS8UQHC0rVd1KtZxV
+    7/37M0p9gjidiOzO6b0dZkeD/ejphFx+/vQQFlrVrQqcWyOiFkr2KBwIfyyln8WZPtNoCs
+    dQDfSuQdxzLOUn0Qk71PqXmNrTWJWHHMvHxodfB+4c4IbNprFNLISFI7XYElOtplLehura
+    u9tY/n3sQT5jO71n44iIC1IOwsUB51nIesh9Co5iM/OVbufAe+kw4+XbutL8lVNo9bg4mi
+    S5tWsR5YyaayrMqjS5bcI6il8Bx8jcCxB/dY7+R8b4DdRtY5Sb55EkMDdqcJ3Oncuf+M42
+    gbhqxl4toA9LWa8trI1bmG76DPtnYgnojPcqSZ0wgaHstzlHG8qBDPh8RVfX9WomqNvjSK
+    VQuJ7KcHzIlbek08V0c1orfJkraYULZCXeaRhd3Z3+K7dNH6AhJqIFqDp44Q
+X-ME-Proxy: <xmx:_lXHavYb9vZ_ygknUd186U9NvaX3zrsutJxpqI6FtcNDWtK0-ERWew>
+    <xmx:_1XHanVpd0i1BDnTcFr1FA5_ZqE5nziVGcW6WxlXSdTB978C2kgiwg>
+    <xmx:_1XHaj7wCm8iRBREIlss8jDoIRqOAO7cAZvQ888D5Bbw33nXsSLL5Q>
+    <xmx:_1XHaiixPDSOj1b4NN6PxUYCIw41SshhL9a6oT-oBp6bkLYx-X7Sdg>
+    <xmx:_1XHavSrdY6JMfZ-jD8bZS85OhFpzc85g9VeCgpz5fE-45WJiFfYI0qb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Oct 2026 04:36:12 -0400 (EDT)
+ 8 Oct 2026 04:36:14 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d5f9cd4e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Oct 2026 08:36:11 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 64ab45c4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Oct 2026 08:36:14 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 08 Oct 2026 10:35:52 +0200
-Subject: [PATCH v2 02/13] commit-graph: stop depending on `struct
- odb_source`
+Date: Thu, 08 Oct 2026 10:35:53 +0200
+Subject: [PATCH v2 03/13] odb/source-files: introduce `struct
+ odb_files_dir`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -100,688 +100,828 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261008-pks-odb-move-alternates-v2-2-b47e8189baa5@pks.im>
+Message-Id: <20261008-pks-odb-move-alternates-v2-3-b47e8189baa5@pks.im>
 References: <20261008-pks-odb-move-alternates-v2-0-b47e8189baa5@pks.im>
 In-Reply-To: <20261008-pks-odb-move-alternates-v2-0-b47e8189baa5@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
 
-To read or write a commit graph we require access to the repository that
-the graph should be read from or written for as well as the object
-directory to derive its location. Instead of passing in these two bits
-of information explicitly though, we pass in a `struct odb_source`,
-which carries with it both of these pieces of information.
+The "files" object database source consists of two separate backends for
+storing loose and packed objects. These are managed as somewhat separate
+entities even though they derive from the same object directory, whether
+it's the primary object directory or that one from an alternate.
 
-But ultimately, this is somewhat flawed as we now assume that the source
-even has an on-disk representation, and furthermore we assume that the
-commit graphs would live in ".git/objects/info". This is true for the
-"files" backend, but it's not necessarily true for any other backend
-that we may eventually want to introduce. So eventually, we'll want to
-evolve the commit-graph subsystem to become agnostic of the backend's
-layout and let the backend itself decide where to read a commit graph
-from or where to write it to.
+In a subsequent commit we'll move the handling of alternates into the
+"files" backend completely so that it becomes another implementation
+detail thereof. As part of this, we'll want to keep track of both of
+these sub-sources as a single entity derived from their respective
+object directory.
 
-We're not there yet to do that switch, but the current design is already
-causing issues for the intent of this patch series where we want to move
-alternates into the "files" backend.
-
-Convert the subsystem to take a repository plus an object directory path
-instead. This unblocks moving around alternates, and it's also a step
-in the right direction for moving commit graphs into the source in a
-later series.
-
-Note that we previously compared the `struct odb_source` pointers of two
-commit graphs to figure out whether they were located in the same object
-directory, whereas we now have to compare their paths. Callers may pass
-in those paths in different forms though, for example relative to the
-current working directory or as absolute paths. Convert the object
-directory into an absolute path both when loading and when writing
-commit graphs so that the comparisons become more robust.
+Prepare for this change by introducing a new `struct odb_files_dir` that
+encapsulates them. For now, every "files" source has exactly one such
+directory. In a subsequent commit though, we'll make it a linked list of
+directories so that we can manage multiple such directories in a single
+"files" source.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/commit-graph.c     |  10 ++--
- builtin/commit.c           |   2 +-
- builtin/fetch.c            |   4 +-
- builtin/gc.c               |   3 +-
- builtin/merge.c            |   2 +-
- commit-graph.c             | 115 +++++++++++++++++++++++++--------------------
- commit-graph.h             |  31 ++++++++----
- t/helper/test-read-graph.c |   3 +-
- t/t4216-log-bloom.sh       |   4 +-
- 9 files changed, 102 insertions(+), 72 deletions(-)
+ builtin/fast-import.c      |  6 ++--
+ builtin/index-pack.c       |  2 +-
+ builtin/multi-pack-index.c | 14 ++++-----
+ builtin/pack-objects.c     | 18 +++++------
+ builtin/repack.c           |  4 +--
+ commit-graph.c             |  2 +-
+ http-walker.c              |  2 +-
+ http.c                     |  6 ++--
+ loose.c                    |  6 ++--
+ midx.c                     | 26 ++++++++--------
+ odb/source-files.c         | 77 ++++++++++++++++++++++++++++++----------------
+ odb/source-files.h         | 27 ++++++++++++++--
+ pack-bitmap.c              |  2 +-
+ packfile.c                 |  8 ++---
+ packfile.h                 |  4 +--
+ repack-geometry.c          |  2 +-
+ repack-midx.c              |  6 ++--
+ repack.c                   |  2 +-
+ t/helper/test-read-midx.c  |  2 +-
+ 19 files changed, 131 insertions(+), 85 deletions(-)
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index b5784ad3c7..a986f08a94 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -104,8 +104,8 @@ static int graph_verify(int argc, const char **argv, const char *prefix,
- 		flags |= COMMIT_GRAPH_WRITE_PROGRESS;
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index fbd919982c..0bf76b028b 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -921,7 +921,7 @@ static void end_packfile(void)
+ 		idx_name = keep_pack(create_index());
  
- 	source = odb_find_source_or_die(the_repository->objects, opts.obj_dir);
--	graph_name = get_commit_graph_filename(source);
--	chain_name = get_commit_graph_chain_filename(source);
-+	graph_name = get_commit_graph_filename(source->path);
-+	chain_name = get_commit_graph_chain_filename(source->path);
- 	if (open_commit_graph(graph_name, &fd, &st))
- 		opened = OPENED_GRAPH;
- 	else if (errno != ENOENT)
-@@ -123,7 +123,7 @@ static int graph_verify(int argc, const char **argv, const char *prefix,
- 	if (opened == OPENED_NONE)
- 		return 0;
- 	else if (opened == OPENED_GRAPH)
--		graph = load_commit_graph_one_fd_st(source, fd, &st);
-+		graph = load_commit_graph_one_fd_st(the_repository, source->path, fd, &st);
- 	else
- 		graph = load_commit_graph_chain_fd_st(the_repository->objects, fd, &st,
- 						      &incomplete_chain);
-@@ -297,7 +297,7 @@ static int graph_write(int argc, const char **argv, const char *prefix,
- 	source = odb_find_source_or_die(the_repository->objects, opts.obj_dir);
+ 		/* Register the packfile with core git's machinery. */
+-		new_p = packfile_store_load_pack(files->packed, idx_name, 1);
++		new_p = packfile_store_load_pack(files->dirs->packed, idx_name, 1);
+ 		if (!new_p)
+ 			die(_("core Git rejected index %s"), idx_name);
+ 		all_packs[pack_id] = new_p;
+@@ -1005,7 +1005,7 @@ static int store_object(
+ 	for (source = the_repository->objects->sources; source; source = source->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
  
- 	if (opts.reachable) {
--		if (write_commit_graph_reachable(source, flags, &write_opts))
-+		if (write_commit_graph_reachable(the_repository, source->path, flags, &write_opts))
- 			result = 1;
- 		goto cleanup;
- 	}
-@@ -334,7 +334,7 @@ static int graph_write(int argc, const char **argv, const char *prefix,
- 		stop_progress(&progress);
- 	}
+-		if (!packfile_list_find_oid(packfile_store_get_packs(files->packed), &oid))
++		if (!packfile_list_find_oid(packfile_store_get_packs(files->dirs->packed), &oid))
+ 			continue;
+ 		e->type = type;
+ 		e->pack_id = MAX_PACK_ID;
+@@ -1215,7 +1215,7 @@ static void stream_blob(uintmax_t len, struct object_id *oidout, uintmax_t mark)
+ 	for (source = the_repository->objects->sources; source; source = source->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
  
--	if (write_commit_graph(source,
-+	if (write_commit_graph(the_repository, source->path,
- 			       opts.stdin_packs ? &pack_indexes : NULL,
- 			       opts.stdin_commits ? &commits : NULL,
- 			       flags,
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 840b6b4083..0e750f6157 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1959,7 +1959,7 @@ int cmd_commit(int argc,
- 		      "new index file. Check that disk is not full and quota is\n"
- 		      "not exceeded, and then \"git restore --staged :/\" to recover."));
- 
--	git_test_write_commit_graph_or_die(the_repository->objects->sources);
-+	git_test_write_commit_graph_or_die(the_repository);
- 
- 	repo_rerere(the_repository, 0);
- 	run_auto_maintenance(the_repository, quiet);
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b2decc6cfd..a4b21d2651 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -15,6 +15,7 @@
- #include "refspec.h"
- #include "object-name.h"
- #include "odb.h"
-+#include "odb/source.h"
- #include "oidset.h"
- #include "oid-array.h"
- #include "commit.h"
-@@ -2900,7 +2901,8 @@ int cmd_fetch(int argc,
- 			commit_graph_flags |= COMMIT_GRAPH_WRITE_PROGRESS;
- 
- 		trace2_region_enter("fetch", "write-commit-graph", the_repository);
--		write_commit_graph_reachable(the_repository->objects->sources,
-+		write_commit_graph_reachable(the_repository,
-+					     the_repository->objects->sources->path,
- 					     commit_graph_flags,
- 					     NULL);
- 		trace2_region_leave("fetch", "write-commit-graph", the_repository);
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 57a3520263..7acd4f3215 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -733,7 +733,8 @@ int cmd_gc(int argc,
+-		if (!packfile_list_find_oid(packfile_store_get_packs(files->packed), &oid))
++		if (!packfile_list_find_oid(packfile_store_get_packs(files->dirs->packed), &oid))
+ 			continue;
+ 		e->type = OBJ_BLOB;
+ 		e->pack_id = MAX_PACK_ID;
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 6b2a87e2d3..70860b8f27 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1641,7 +1641,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 	if (do_fsck_object && startup_info->have_repository) {
+ 		struct odb_source_files *files =
+ 			odb_source_files_downcast(the_repository->objects->sources);
+-		packfile_store_load_pack(files->packed, final_index_name, 0);
++		packfile_store_load_pack(files->dirs->packed, final_index_name, 0);
  	}
  
- 	if (the_repository->settings.gc_write_commit_graph == 1)
--		write_commit_graph_reachable(the_repository->objects->sources,
-+		write_commit_graph_reachable(the_repository,
-+					     the_repository->objects->sources->path,
- 					     !opts.quiet && !daemonized ? COMMIT_GRAPH_WRITE_PROGRESS : 0,
- 					     NULL);
+ 	if (!from_stdin) {
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 753bd53a70..a170ec80b9 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -213,7 +213,7 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
  
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 5b4eb23a83..d7bf209114 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1863,7 +1863,7 @@ int cmd_merge(int argc,
- 	if (squash) {
- 		finish(head_commit, remoteheads, NULL, NULL);
+ 		read_packs_from_stdin(&packs);
  
--		git_test_write_commit_graph_or_die(the_repository->objects->sources);
-+		git_test_write_commit_graph_or_die(the_repository);
- 	} else
- 		write_merge_state(remoteheads);
+-		ret = write_midx_file_only(source->packed, &packs,
++		ret = write_midx_file_only(source->dirs->packed, &packs,
+ 					   opts.preferred_pack,
+ 					   opts.refs_snapshot,
+ 					   opts.incremental_base, opts.flags);
+@@ -225,7 +225,7 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
  
-diff --git a/commit-graph.c b/commit-graph.c
-index 73814c1622..80ebc6a542 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1,6 +1,7 @@
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
-+#include "abspath.h"
- #include "config.h"
- #include "csum-file.h"
- #include "environment.h"
-@@ -28,7 +29,7 @@
- #include "tree.h"
- #include "chunk-format.h"
- 
--void git_test_write_commit_graph_or_die(struct odb_source *source)
-+void git_test_write_commit_graph_or_die(struct repository *repo)
- {
- 	int flags = 0;
- 	if (!git_env_bool(GIT_TEST_COMMIT_GRAPH, 0))
-@@ -37,7 +38,7 @@ void git_test_write_commit_graph_or_die(struct odb_source *source)
- 	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS, 0))
- 		flags = COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
- 
--	if (write_commit_graph_reachable(source, flags, NULL))
-+	if (write_commit_graph_reachable(repo, repo->objects->sources->path, flags, NULL))
- 		die("failed to write commit-graph under GIT_TEST_COMMIT_GRAPH");
- }
- 
-@@ -196,21 +197,21 @@ static int commit_gen_cmp(const void *va, const void *vb)
- 	return 0;
- }
- 
--char *get_commit_graph_filename(struct odb_source *source)
-+char *get_commit_graph_filename(const char *dir)
- {
--	return xstrfmt("%s/info/commit-graph", source->path);
-+	return xstrfmt("%s/info/commit-graph", dir);
- }
- 
--static char *get_split_graph_filename(struct odb_source *source,
-+static char *get_split_graph_filename(const char *dir,
- 				      const char *oid_hex)
- {
--	return xstrfmt("%s/info/commit-graphs/graph-%s.graph", source->path,
-+	return xstrfmt("%s/info/commit-graphs/graph-%s.graph", dir,
- 		       oid_hex);
- }
- 
--char *get_commit_graph_chain_filename(struct odb_source *source)
-+char *get_commit_graph_chain_filename(const char *dir)
- {
--	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", source->path);
-+	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", dir);
- }
- 
- static struct commit_graph *alloc_commit_graph(void)
-@@ -253,7 +254,8 @@ int open_commit_graph(const char *graph_file, int *fd, struct stat *st)
- 	return 1;
- }
- 
--struct commit_graph *load_commit_graph_one_fd_st(struct odb_source *source,
-+struct commit_graph *load_commit_graph_one_fd_st(struct repository *repo,
-+						 const char *dir,
- 						 int fd, struct stat *st)
- {
- 	void *graph_map;
-@@ -262,7 +264,7 @@ struct commit_graph *load_commit_graph_one_fd_st(struct odb_source *source,
- 
- 	graph_size = xsize_t(st->st_size);
- 
--	if (graph_size < graph_min_size(source->odb->repo->hash_algo)) {
-+	if (graph_size < graph_min_size(repo->hash_algo)) {
- 		close(fd);
- 		error(_("commit-graph file is too small"));
- 		return NULL;
-@@ -270,9 +272,9 @@ struct commit_graph *load_commit_graph_one_fd_st(struct odb_source *source,
- 	graph_map = xmmap(NULL, graph_size, PROT_READ, MAP_PRIVATE, fd, 0);
- 	close(fd);
- 
--	ret = parse_commit_graph(source->odb->repo, graph_map, graph_size);
-+	ret = parse_commit_graph(repo, graph_map, graph_size);
- 	if (ret)
--		ret->odb_source = source;
-+		ret->dir = absolute_pathdup(dir);
- 	else
- 		munmap(graph_map, graph_size);
- 
-@@ -410,6 +412,7 @@ struct commit_graph *parse_commit_graph(struct repository *r,
- 
- 	graph = alloc_commit_graph();
- 
-+	graph->repo = r;
- 	graph->hash_algo = r->hash_algo;
- 	graph->num_chunks = *(unsigned char*)(data + 6);
- 	graph->data = graph_map;
-@@ -490,7 +493,8 @@ struct commit_graph *parse_commit_graph(struct repository *r,
- 	return NULL;
- }
- 
--static struct commit_graph *load_commit_graph_one(struct odb_source *source,
-+static struct commit_graph *load_commit_graph_one(struct repository *repo,
-+						  const char *dir,
- 						  const char *graph_file)
- {
- 	struct stat st;
-@@ -501,17 +505,18 @@ static struct commit_graph *load_commit_graph_one(struct odb_source *source,
- 	if (!open_ok)
- 		return NULL;
- 
--	g = load_commit_graph_one_fd_st(source, fd, &st);
-+	g = load_commit_graph_one_fd_st(repo, dir, fd, &st);
- 	if (g)
--		g->filename = xstrdup(graph_file);
-+		g->filename = absolute_pathdup(graph_file);
- 
- 	return g;
- }
- 
--static struct commit_graph *load_commit_graph_v1(struct odb_source *source)
-+static struct commit_graph *load_commit_graph_v1(struct repository *repo,
-+						 const char *dir)
- {
--	char *graph_name = get_commit_graph_filename(source);
--	struct commit_graph *g = load_commit_graph_one(source, graph_name);
-+	char *graph_name = get_commit_graph_filename(dir);
-+	struct commit_graph *g = load_commit_graph_one(repo, dir, graph_name);
- 	free(graph_name);
- 
- 	return g;
-@@ -666,8 +671,8 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
- 
- 		valid = 0;
- 		for (source = odb->sources; source; source = source->next) {
--			char *graph_name = get_split_graph_filename(source, line.buf);
--			struct commit_graph *g = load_commit_graph_one(source, graph_name);
-+			char *graph_name = get_split_graph_filename(source->path, line.buf);
-+			struct commit_graph *g = load_commit_graph_one(odb->repo, source->path, graph_name);
- 
- 			free(graph_name);
- 
-@@ -700,29 +705,31 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
- 	return graph_chain;
- }
- 
--static struct commit_graph *load_commit_graph_chain(struct odb_source *source)
-+static struct commit_graph *load_commit_graph_chain(struct repository *repo,
-+						    const char *dir)
- {
--	char *chain_file = get_commit_graph_chain_filename(source);
-+	char *chain_file = get_commit_graph_chain_filename(dir);
- 	struct stat st;
- 	int fd;
- 	struct commit_graph *g = NULL;
- 
--	if (open_commit_graph_chain(chain_file, &fd, &st, source->odb->repo->hash_algo)) {
-+	if (open_commit_graph_chain(chain_file, &fd, &st, repo->hash_algo)) {
- 		int incomplete;
- 		/* ownership of fd is taken over by load function */
--		g = load_commit_graph_chain_fd_st(source->odb, fd, &st, &incomplete);
-+		g = load_commit_graph_chain_fd_st(repo->objects, fd, &st, &incomplete);
  	}
  
- 	free(chain_file);
- 	return g;
+-	ret = write_midx_file(source->packed, opts.preferred_pack,
++	ret = write_midx_file(source->dirs->packed, opts.preferred_pack,
+ 			      opts.refs_snapshot, opts.flags);
+ 
+ 	free(opts.refs_snapshot);
+@@ -284,7 +284,7 @@ static int cmd_multi_pack_index_compact(int argc, const char **argv,
+ 
+ 	FREE_AND_NULL(options);
+ 
+-	m = get_multi_pack_index(source->packed);
++	m = get_multi_pack_index(source->dirs->packed);
+ 
+ 	for (cur = m; cur && !(from_midx && to_midx); cur = cur->base_midx) {
+ 		const char *midx_csum = midx_get_checksum_hex(cur);
+@@ -307,7 +307,7 @@ static int cmd_multi_pack_index_compact(int argc, const char **argv,
+ 			die(_("MIDX %s must be an ancestor of %s"), argv[0], argv[1]);
+ 	}
+ 
+-	ret = write_midx_file_compact(source->packed, from_midx, to_midx,
++	ret = write_midx_file_compact(source->dirs->packed, from_midx, to_midx,
+ 				      opts.incremental_base, opts.flags);
+ 
+ 	return ret;
+@@ -339,7 +339,7 @@ static int cmd_multi_pack_index_verify(int argc, const char **argv,
+ 
+ 	FREE_AND_NULL(options);
+ 
+-	return verify_midx_file(source->packed, opts.flags);
++	return verify_midx_file(source->dirs->packed, opts.flags);
  }
  
--struct commit_graph *read_commit_graph_one(struct odb_source *source)
-+struct commit_graph *read_commit_graph_one(struct repository *repo,
-+					   const char *dir)
- {
--	struct commit_graph *g = load_commit_graph_v1(source);
-+	struct commit_graph *g = load_commit_graph_v1(repo, dir);
+ static int cmd_multi_pack_index_expire(int argc, const char **argv,
+@@ -368,7 +368,7 @@ static int cmd_multi_pack_index_expire(int argc, const char **argv,
  
- 	if (!g)
--		g = load_commit_graph_chain(source);
-+		g = load_commit_graph_chain(repo, dir);
+ 	FREE_AND_NULL(options);
  
- 	return g;
+-	return expire_midx_packs(source->packed, opts.flags);
++	return expire_midx_packs(source->dirs->packed, opts.flags);
  }
-@@ -767,7 +774,7 @@ static struct commit_graph *prepare_commit_graph(struct repository *r)
- 		return NULL;
+ 
+ static int cmd_multi_pack_index_repack(int argc, const char **argv,
+@@ -400,7 +400,7 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv,
+ 
+ 	FREE_AND_NULL(options);
+ 
+-	return midx_repack(source->packed, (size_t)opts.batch_size, opts.flags);
++	return midx_repack(source->dirs->packed, (size_t)opts.batch_size, opts.flags);
+ }
+ 
+ int cmd_multi_pack_index(int argc,
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index af9390a46b..070659b6ed 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1570,7 +1570,7 @@ static int want_cruft_object_mtime(struct repository *r,
  
  	for (source = r->objects->sources; source; source = source->next) {
--		r->objects->commit_graph = read_commit_graph_one(source);
-+		r->objects->commit_graph = read_commit_graph_one(r, source->path);
- 		if (r->objects->commit_graph)
- 			break;
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
+-		struct packed_git **cache = packfile_store_get_kept_pack_cache(files->packed, flags);
++		struct packed_git **cache = packfile_store_get_kept_pack_cache(files->dirs->packed, flags);
+ 
+ 		for (; *cache; cache++) {
+ 			struct packed_git *p = *cache;
+@@ -1765,7 +1765,7 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
+ 		struct odb_source *source = the_repository->objects->sources->next;
+ 		for (; source; source = source->next) {
+ 			struct odb_source_files *files = odb_source_files_downcast(source);
+-			if (!odb_source_read_object_info(&files->loose->base, oid, NULL, 0, NULL))
++			if (!odb_source_read_object_info(&files->dirs->loose->base, oid, NULL, 0, NULL))
+ 				return 0;
+ 		}
  	}
-@@ -866,7 +873,7 @@ static struct commit_list **insert_parent_or_die(struct commit_graph *g,
- 		die("invalid parent position %"PRIu32, pos);
+@@ -1787,7 +1787,7 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
  
- 	load_oid_from_graph(g, pos, &oid);
--	c = lookup_commit(g->odb_source->odb->repo, &oid);
-+	c = lookup_commit(g->repo, &oid);
- 	if (!c)
- 		die(_("could not find commit %s"), oid_to_hex(&oid));
- 	commit_graph_data_at(c)->graph_pos = pos;
-@@ -1103,7 +1110,7 @@ static struct tree *load_tree_for_commit(struct commit_graph *g,
- 				graph_pos - g->num_commits_in_base);
+ 	for (source = the_repository->objects->sources; source; source = source->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
+-		struct multi_pack_index *m = get_multi_pack_index(files->packed);
++		struct multi_pack_index *m = get_multi_pack_index(files->dirs->packed);
+ 		struct pack_entry e;
  
- 	oidread(&oid, commit_data, g->hash_algo);
--	set_commit_tree(c, lookup_tree(g->odb_source->odb->repo, &oid));
-+	set_commit_tree(c, lookup_tree(g->repo, &oid));
+ 		if (m && midx_fill_entry(m, oid, &e, NULL) == MIDX_FILL_HIT) {
+@@ -1800,11 +1800,11 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
+ 	for (source = the_repository->objects->sources; source; source = source->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
  
- 	return c->maybe_tree;
+-		for (e = files->packed->packs.head; e; e = e->next) {
++		for (e = files->dirs->packed->packs.head; e; e = e->next) {
+ 			struct packed_git *p = e->pack;
+ 			want = want_object_in_pack_one(p, oid, exclude, found_pack, found_offset, found_mtime);
+ 			if (!exclude && want > 0)
+-				packfile_list_prepend(&files->packed->packs, p);
++				packfile_list_prepend(&files->dirs->packed->packs, p);
+ 			if (want != -1)
+ 				return want;
+ 		}
+@@ -4175,7 +4175,7 @@ static void add_cruft_object_entry(const struct object_id *oid, enum object_type
+ 
+ 			for (; !found && source; source = source->next) {
+ 				struct odb_source_files *files = odb_source_files_downcast(source);
+-				if (!odb_source_read_object_info(&files->loose->base, oid, NULL, 0, NULL))
++				if (!odb_source_read_object_info(&files->dirs->loose->base, oid, NULL, 0, NULL))
+ 					found = 1;
+ 			}
+ 
+@@ -4532,7 +4532,7 @@ static void add_objects_in_unpacked_packs(void)
+ 		if (!source->local)
+ 			continue;
+ 
+-		if (odb_source_for_each_object(&files->packed->base, &oi,
++		if (odb_source_for_each_object(&files->dirs->packed->base, &oi,
+ 					       add_object_in_unpacked_pack, NULL, &opts))
+ 			die(_("cannot open pack index"));
+ 	}
+@@ -4642,7 +4642,7 @@ static int force_object_loose(struct odb_source *source,
+ 
+ 	for (struct odb_source *s = source->odb->sources; s; s = s->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(s);
+-		if (!odb_source_read_object_info(&files->loose->base, oid, NULL, 0, NULL))
++		if (!odb_source_read_object_info(&files->dirs->loose->base, oid, NULL, 0, NULL))
+ 			return 0;
+ 	}
+ 
+@@ -4664,7 +4664,7 @@ static int force_object_loose(struct odb_source *source,
+ 		compat_oid_p = &compat_oid;
+ 	}
+ 
+-	ret = odb_source_write_object(&files->loose->base, buf, len, type, oid,
++	ret = odb_source_write_object(&files->dirs->loose->base, buf, len, type, oid,
+ 				      compat_oid_p, mtime, 0);
+ 
+ out:
+diff --git a/builtin/repack.c b/builtin/repack.c
+index c4360382c1..5d06872d77 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -617,7 +617,7 @@ int cmd_repack(int argc,
+ 		 * midx_has_unknown_packs() will make the decision for
+ 		 * us.
+ 		 */
+-		if (!get_multi_pack_index(files->packed))
++		if (!get_multi_pack_index(files->dirs->packed))
+ 			midx_must_contain_cruft = 1;
+ 	}
+ 
+@@ -775,7 +775,7 @@ int cmd_repack(int argc,
+ 
+ 		if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL, 0))
+ 			flags |= MIDX_WRITE_INCREMENTAL;
+-		write_midx_file(files->packed, NULL, NULL, flags);
++		write_midx_file(files->dirs->packed, NULL, NULL, flags);
+ 	}
+ 
+ cleanup:
+diff --git a/commit-graph.c b/commit-graph.c
+index 80ebc6a542..7cc486d140 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -2020,7 +2020,7 @@ static void fill_oids_from_all_packs(struct write_commit_graph_context *ctx)
+ 
+ 	for (source = ctx->r->objects->sources; source; source = source->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
+-		odb_source_for_each_object(&files->packed->base, &oi, add_packed_commits_oi,
++		odb_source_for_each_object(&files->dirs->packed->base, &oi, add_packed_commits_oi,
+ 					   ctx, &opts);
+ 	}
+ 
+diff --git a/http-walker.c b/http-walker.c
+index abafca84d6..0a6c99f471 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -542,7 +542,7 @@ static int fetch_object(struct walker *walker, const struct object_id *oid)
+ 	} else if (req->rename < 0) {
+ 		struct odb_source_files *files = odb_source_files_downcast(the_repository->objects->sources);
+ 		struct strbuf buf = STRBUF_INIT;
+-		odb_loose_path(files->loose, &buf, &req->oid);
++		odb_loose_path(files->dirs->loose, &buf, &req->oid);
+ 		ret = error("unable to write sha1 filename %s", buf.buf);
+ 		strbuf_release(&buf);
+ 	}
+diff --git a/http.c b/http.c
+index c8fcfd7693..fe6ec88a21 100644
+--- a/http.c
++++ b/http.c
+@@ -2720,7 +2720,7 @@ void http_install_packfile(struct packed_git *p,
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(the_repository->objects->sources);
+ 	packfile_list_remove(list_to_remove_from, p);
+-	packfile_store_add_pack(files->packed, p);
++	packfile_store_add_pack(files->dirs->packed, p);
  }
-@@ -1126,7 +1133,7 @@ struct tree *get_commit_tree_in_graph(struct repository *r, const struct commit
  
- struct write_commit_graph_context {
- 	struct repository *r;
--	struct odb_source *odb_source;
-+	char *dir;
- 	char *graph_name;
- 	struct oid_array oids;
- 	struct commit_stack commits;
-@@ -1902,7 +1909,8 @@ static int add_ref_to_set(const struct reference *ref, void *cb_data)
+ struct http_pack_request *new_http_pack_request(
+@@ -2861,7 +2861,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 	oidcpy(&freq->oid, oid);
+ 	freq->localfile = -1;
+ 
+-	odb_loose_path(files->loose, &filename, oid);
++	odb_loose_path(files->dirs->loose, &filename, oid);
+ 	strbuf_addf(&freq->tmpfile, "%s.temp", filename.buf);
+ 
+ 	strbuf_addf(&prevfile, "%s.prev", filename.buf);
+@@ -3014,7 +3014,7 @@ int finish_http_object_request(struct http_object_request *freq)
+ 		unlink_or_warn(freq->tmpfile.buf);
+ 		return -1;
+ 	}
+-	odb_loose_path(files->loose, &filename, &freq->oid);
++	odb_loose_path(files->dirs->loose, &filename, &freq->oid);
+ 	freq->rename = finalize_object_file(the_repository, freq->tmpfile.buf, filename.buf);
+ 	strbuf_release(&filename);
+ 
+diff --git a/loose.c b/loose.c
+index c159d29d2d..957bf83e6b 100644
+--- a/loose.c
++++ b/loose.c
+@@ -117,7 +117,7 @@ int repo_read_loose_object_map(struct repository *repo)
+ 
+ 	for (source = repo->objects->sources; source; source = source->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
+-		if (loose_object_map_load(files->loose) < 0)
++		if (loose_object_map_load(files->dirs->loose) < 0)
+ 			return -1;
+ 	}
+ 
+@@ -127,7 +127,7 @@ int repo_read_loose_object_map(struct repository *repo)
+ int repo_write_loose_object_map(struct repository *repo)
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(repo->objects->sources);
+-	kh_oid_map_t *map = files->loose->map->to_compat;
++	kh_oid_map_t *map = files->dirs->loose->map->to_compat;
+ 	struct lock_file lock;
+ 	int fd;
+ 	khiter_t iter;
+@@ -237,7 +237,7 @@ int repo_loose_object_map_oid(struct repository *repo,
+ 
+ 	for (source = repo->objects->sources; source; source = source->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
+-		struct loose_object_map *loose_map = files->loose->map;
++		struct loose_object_map *loose_map = files->dirs->loose->map;
+ 		if (!loose_map)
+ 			continue;
+ 		map = (to == repo->compat_hash_algo) ?
+diff --git a/midx.c b/midx.c
+index 6d1c548e3d..c0f82c4163 100644
+--- a/midx.c
++++ b/midx.c
+@@ -837,20 +837,20 @@ void clear_midx_file(struct repository *r)
+ 
+ 		for (source = r->objects->sources; source; source = source->next) {
+ 			files = odb_source_files_downcast(source);
+-			if (files->packed->midx)
+-				close_midx(files->packed->midx);
+-			files->packed->midx = NULL;
++			if (files->dirs->packed->midx)
++				close_midx(files->dirs->packed->midx);
++			files->dirs->packed->midx = NULL;
+ 		}
+ 	}
+ 
+ 	files = odb_source_files_downcast(r->objects->sources);
+-	get_midx_filename(files->packed, &midx);
++	get_midx_filename(files->dirs->packed, &midx);
+ 
+ 	if (remove_path(midx.buf))
+ 		die(_("failed to clear multi-pack-index at %s"), midx.buf);
+ 
+-	clear_midx_files_ext(files->packed, MIDX_EXT_BITMAP, NULL);
+-	clear_midx_files_ext(files->packed, MIDX_EXT_REV, NULL);
++	clear_midx_files_ext(files->dirs->packed, MIDX_EXT_BITMAP, NULL);
++	clear_midx_files_ext(files->dirs->packed, MIDX_EXT_REV, NULL);
+ 
+ 	strbuf_release(&midx);
+ }
+@@ -864,21 +864,21 @@ void clear_incremental_midx_files(struct repository *r,
+ 
+ 	for (source = r->objects->sources; source; source = source->next) {
+ 		files = odb_source_files_downcast(source);
+-		if (files->packed->midx)
+-			close_midx(files->packed->midx);
+-		files->packed->midx = NULL;
++		if (files->dirs->packed->midx)
++			close_midx(files->dirs->packed->midx);
++		files->dirs->packed->midx = NULL;
+ 	}
+ 
+ 	files = odb_source_files_downcast(r->objects->sources);
+-	get_midx_chain_filename(files->packed, &chain);
++	get_midx_chain_filename(files->dirs->packed, &chain);
+ 
+ 	if (!keep_hashes && remove_path(chain.buf))
+ 		die(_("failed to clear multi-pack-index chain at %s"),
+ 		    chain.buf);
+ 
+-	clear_incremental_midx_files_ext(files->packed, MIDX_EXT_BITMAP, keep_hashes);
+-	clear_incremental_midx_files_ext(files->packed, MIDX_EXT_REV, keep_hashes);
+-	clear_incremental_midx_files_ext(files->packed, MIDX_EXT_MIDX, keep_hashes);
++	clear_incremental_midx_files_ext(files->dirs->packed, MIDX_EXT_BITMAP, keep_hashes);
++	clear_incremental_midx_files_ext(files->dirs->packed, MIDX_EXT_REV, keep_hashes);
++	clear_incremental_midx_files_ext(files->dirs->packed, MIDX_EXT_MIDX, keep_hashes);
+ 
+ 	strbuf_release(&chain);
+ }
+diff --git a/odb/source-files.c b/odb/source-files.c
+index f2fc4cd9ab..1f4cedaffa 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -24,6 +24,30 @@
+ #include "tree.h"
+ #include "write-or-die.h"
+ 
++struct odb_files_dir *odb_files_dir_new(struct object_database *odb,
++					const char *path, bool local)
++{
++	struct odb_files_dir *dir;
++
++	CALLOC_ARRAY(dir, 1);
++	dir->abspath = absolute_pathdup(path);
++	dir->local = local;
++	dir->loose = odb_source_loose_new(odb, path, local);
++	dir->packed = odb_source_packed_new(odb, path, local);
++
++	return dir;
++}
++
++void odb_files_dir_free(struct odb_files_dir *dir)
++{
++	if (!dir)
++		return;
++	odb_source_free(&dir->loose->base);
++	odb_source_free(&dir->packed->base);
++	free(dir->abspath);
++	free(dir);
++}
++
+ static void odb_source_files_reparent(const char *old_cwd,
+ 				      const char *new_cwd,
+ 				      void *cb_data)
+@@ -31,6 +55,7 @@ static void odb_source_files_reparent(const char *old_cwd,
+ 	struct odb_source_files *files = cb_data;
+ 	char *path = reparent_relative_path(old_cwd, new_cwd,
+ 					    files->base.path);
++
+ 	free(files->base.path);
+ 	files->base.path = path;
+ }
+@@ -39,8 +64,7 @@ static void odb_source_files_free(struct odb_source *source)
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+ 	chdir_notify_unregister(odb_source_files_reparent, files);
+-	odb_source_free(&files->loose->base);
+-	odb_source_free(&files->packed->base);
++	odb_files_dir_free(files->dirs);
+ 	odb_source_release(&files->base);
+ 	free(files);
+ }
+@@ -48,8 +72,8 @@ static void odb_source_files_free(struct odb_source *source)
+ static void odb_source_files_close(struct odb_source *source)
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+-	odb_source_close(&files->loose->base);
+-	odb_source_close(&files->packed->base);
++	odb_source_close(&files->dirs->loose->base);
++	odb_source_close(&files->dirs->packed->base);
+ }
+ 
+ static int odb_source_files_create_on_disk(struct odb_source *source,
+@@ -144,8 +168,8 @@ static void odb_source_files_prepare(struct odb_source *source,
+ 				     enum odb_prepare_flags flags)
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+-	odb_source_prepare(&files->loose->base, flags);
+-	odb_source_prepare(&files->packed->base, flags);
++	odb_source_prepare(&files->dirs->loose->base, flags);
++	odb_source_prepare(&files->dirs->packed->base, flags);
+ }
+ 
+ static enum odb_read_status odb_source_files_read_object_info(struct odb_source *source,
+@@ -157,12 +181,12 @@ static enum odb_read_status odb_source_files_read_object_info(struct odb_source
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+ 	enum odb_read_status ret_packed, ret_loose;
+ 
+-	ret_packed = odb_source_read_object_info(&files->packed->base, oid, oi,
++	ret_packed = odb_source_read_object_info(&files->dirs->packed->base, oid, oi,
+ 						 flags, errmsg);
+ 	if (!ret_packed)
+ 		return 0;
+ 
+-	ret_loose = odb_source_read_object_info(&files->loose->base, oid, oi, flags,
++	ret_loose = odb_source_read_object_info(&files->dirs->loose->base, oid, oi, flags,
+ 						ret_packed == ODB_READ_NOT_FOUND ? errmsg : NULL);
+ 	if (!ret_loose)
+ 		return 0;
+@@ -184,8 +208,8 @@ static int odb_source_files_read_object_stream(struct odb_stream **out,
+ 					       const struct object_id *oid)
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+-	if (!odb_source_read_object_stream(out, &files->packed->base, oid) ||
+-	    !odb_source_read_object_stream(out, &files->loose->base, oid))
++	if (!odb_source_read_object_stream(out, &files->dirs->packed->base, oid) ||
++	    !odb_source_read_object_stream(out, &files->dirs->loose->base, oid))
+ 		return 0;
+ 	return -1;
+ }
+@@ -200,12 +224,12 @@ static int odb_source_files_for_each_object(struct odb_source *source,
+ 	int ret;
+ 
+ 	if (!(opts->flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY)) {
+-		ret = odb_source_for_each_object(&files->loose->base, request, cb, cb_data, opts);
++		ret = odb_source_for_each_object(&files->dirs->loose->base, request, cb, cb_data, opts);
+ 		if (ret)
+ 			return ret;
+ 	}
+ 
+-	ret = odb_source_for_each_object(&files->packed->base, request, cb, cb_data, opts);
++	ret = odb_source_for_each_object(&files->dirs->packed->base, request, cb, cb_data, opts);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -220,14 +244,14 @@ static int odb_source_files_count_objects(struct odb_source *source,
+ 	unsigned long count;
+ 	int ret;
+ 
+-	ret = odb_source_count_objects(&files->packed->base, flags, &count);
++	ret = odb_source_count_objects(&files->dirs->packed->base, flags, &count);
+ 	if (ret < 0)
+ 		goto out;
+ 
+ 	if (!(flags & ODB_COUNT_OBJECTS_APPROXIMATE)) {
+ 		unsigned long loose_count;
+ 
+-		ret = odb_source_count_objects(&files->loose->base, flags, &loose_count);
++		ret = odb_source_count_objects(&files->dirs->loose->base, flags, &loose_count);
+ 		if (ret < 0)
+ 			goto out;
+ 
+@@ -250,11 +274,11 @@ static int odb_source_files_find_abbrev_len(struct odb_source *source,
+ 	unsigned len = min_len;
+ 	int ret;
+ 
+-	ret = odb_source_find_abbrev_len(&files->packed->base, oid, len, &len);
++	ret = odb_source_find_abbrev_len(&files->dirs->packed->base, oid, len, &len);
+ 	if (ret < 0)
+ 		goto out;
+ 
+-	ret = odb_source_find_abbrev_len(&files->loose->base, oid, len, &len);
++	ret = odb_source_find_abbrev_len(&files->dirs->loose->base, oid, len, &len);
+ 	if (ret < 0)
+ 		goto out;
+ 
+@@ -270,8 +294,8 @@ static int odb_source_files_freshen_object(struct odb_source *source,
+ 					   const time_t *mtime)
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+-	if (odb_source_freshen_object(&files->packed->base, oid, mtime) ||
+-	    odb_source_freshen_object(&files->loose->base, oid, mtime))
++	if (odb_source_freshen_object(&files->dirs->packed->base, oid, mtime) ||
++	    odb_source_freshen_object(&files->dirs->loose->base, oid, mtime))
+ 		return 1;
  	return 0;
  }
- 
--int write_commit_graph_reachable(struct odb_source *source,
-+int write_commit_graph_reachable(struct repository *repo,
-+				 const char *dir,
- 				 enum commit_graph_write_flags flags,
- 				 const struct commit_graph_opts *opts)
+@@ -285,7 +309,7 @@ static int odb_source_files_write_object(struct odb_source *source,
+ 					 enum odb_write_object_flags flags)
  {
-@@ -1911,20 +1919,20 @@ int write_commit_graph_reachable(struct odb_source *source,
- 	int result;
- 
- 	memset(&data, 0, sizeof(data));
--	data.repo = source->odb->repo;
-+	data.repo = repo;
- 	data.commits = &commits;
- 
- 	if (flags & COMMIT_GRAPH_WRITE_PROGRESS)
- 		data.progress = start_delayed_progress(
--			source->odb->repo,
-+			repo,
- 			_("Collecting referenced commits"), 0);
- 
--	refs_for_each_ref(get_main_ref_store(source->odb->repo), add_ref_to_set,
-+	refs_for_each_ref(get_main_ref_store(repo), add_ref_to_set,
- 			  &data);
- 
- 	stop_progress(&data.progress);
- 
--	result = write_commit_graph(source, NULL, &commits,
-+	result = write_commit_graph(repo, dir, NULL, &commits,
- 				    flags, opts);
- 
- 	oidset_clear(&commits);
-@@ -2103,10 +2111,10 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 
- 		strbuf_addf(&tmp_file,
- 			    "%s/info/commit-graphs/tmp_graph_XXXXXX",
--			    ctx->odb_source->path);
-+			    ctx->dir);
- 		ctx->graph_name = strbuf_detach(&tmp_file, NULL);
- 	} else {
--		ctx->graph_name = get_commit_graph_filename(ctx->odb_source);
-+		ctx->graph_name = get_commit_graph_filename(ctx->dir);
- 	}
- 
- 	if (safe_create_leading_directories(ctx->r, ctx->graph_name)) {
-@@ -2116,7 +2124,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 	}
- 
- 	if (ctx->split) {
--		char *lock_name = get_commit_graph_chain_filename(ctx->odb_source);
-+		char *lock_name = get_commit_graph_chain_filename(ctx->dir);
- 
- 		repo_hold_lock_file_for_update_mode(ctx->r, &lk, lock_name,
- 						    LOCK_DIE_ON_ERROR, 0444);
-@@ -2205,7 +2213,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 
- 	if (ctx->split && ctx->base_graph_name && ctx->num_commit_graphs_after > 1) {
- 		char *new_base_hash = xstrdup(oid_to_hex(&ctx->new_base_graph->oid));
--		char *new_base_name = get_split_graph_filename(ctx->new_base_graph->odb_source, new_base_hash);
-+		char *new_base_name = get_split_graph_filename(ctx->new_base_graph->dir, new_base_hash);
- 
- 		free(ctx->commit_graph_filenames_after[ctx->num_commit_graphs_after - 2]);
- 		free(ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 2]);
-@@ -2245,7 +2253,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 				}
- 			}
- 		} else {
--			char *graph_name = get_commit_graph_filename(ctx->odb_source);
-+			char *graph_name = get_commit_graph_filename(ctx->dir);
- 			unlink(graph_name);
- 			free(graph_name);
- 		}
-@@ -2253,7 +2261,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 		free(ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 1]);
- 		ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 1] =
- 			xstrdup(hash_to_hex_algop(file_hash, ctx->r->hash_algo));
--		final_graph_name = get_split_graph_filename(ctx->odb_source,
-+		final_graph_name = get_split_graph_filename(ctx->dir,
- 					ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 1]);
- 		free(ctx->commit_graph_filenames_after[ctx->num_commit_graphs_after - 1]);
- 		ctx->commit_graph_filenames_after[ctx->num_commit_graphs_after - 1] = final_graph_name;
-@@ -2305,7 +2313,7 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx,
- 	    flags != COMMIT_GRAPH_SPLIT_REPLACE) {
- 		while (g && (g->num_commits <= st_mult(size_mult, num_commits) ||
- 			    (max_commits && num_commits > max_commits))) {
--			if (g->odb_source != ctx->odb_source)
-+			if (strcmp(g->dir, ctx->dir))
- 				break;
- 
- 			if (unsigned_add_overflows(num_commits, g->num_commits))
-@@ -2327,10 +2335,10 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx,
- 		    "should be 1 with --split=replace");
- 
- 	if (ctx->num_commit_graphs_after == 2) {
--		char *old_graph_name = get_commit_graph_filename(g->odb_source);
-+		char *old_graph_name = get_commit_graph_filename(g->dir);
- 
- 		if (!strcmp(g->filename, old_graph_name) &&
--		    g->odb_source != ctx->odb_source) {
-+		    strcmp(g->dir, ctx->dir)) {
- 			ctx->num_commit_graphs_after = 1;
- 			ctx->new_base_graph = NULL;
- 		}
-@@ -2500,13 +2508,13 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
- 	if (ctx->opts && ctx->opts->expire_time)
- 		expire_time = ctx->opts->expire_time;
- 	if (!ctx->split) {
--		char *chain_file_name = get_commit_graph_chain_filename(ctx->odb_source);
-+		char *chain_file_name = get_commit_graph_chain_filename(ctx->dir);
- 		unlink(chain_file_name);
- 		free(chain_file_name);
- 		ctx->num_commit_graphs_after = 0;
- 	}
- 
--	strbuf_addstr(&path, ctx->odb_source->path);
-+	strbuf_addstr(&path, ctx->dir);
- 	strbuf_addstr(&path, "/info/commit-graphs");
- 	dir = opendir(path.buf);
- 
-@@ -2548,16 +2556,15 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
- 	strbuf_release(&path);
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+-	return odb_source_write_object(&files->loose->base, buf, len, type,
++	return odb_source_write_object(&files->dirs->loose->base, buf, len, type,
+ 				       oid, compat_oid, mtime, flags);
  }
  
--int write_commit_graph(struct odb_source *source,
-+int write_commit_graph(struct repository *r,
-+		       const char *dir,
- 		       const struct string_list *const pack_indexes,
- 		       struct oidset *commits,
- 		       enum commit_graph_write_flags flags,
- 		       const struct commit_graph_opts *opts)
+@@ -294,7 +318,7 @@ static int odb_source_files_write_object_stream(struct odb_source *source,
+ 						struct object_id *oid)
  {
--	struct repository *r = source->odb->repo;
- 	struct write_commit_graph_context ctx = {
- 		.r = r,
--		.odb_source = source,
- 		.append = flags & COMMIT_GRAPH_WRITE_APPEND ? 1 : 0,
- 		.report_progress = flags & COMMIT_GRAPH_WRITE_PROGRESS ? 1 : 0,
- 		.split = flags & COMMIT_GRAPH_WRITE_SPLIT ? 1 : 0,
-@@ -2588,6 +2595,8 @@ int write_commit_graph(struct odb_source *source,
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+-	return odb_source_write_object_stream(&files->loose->base, stream, oid);
++	return odb_source_write_object_stream(&files->dirs->loose->base, stream, oid);
+ }
+ 
+ static int odb_source_files_begin_transaction(struct odb_source *source,
+@@ -330,7 +354,7 @@ static int too_many_loose_objects(struct odb_source_files *files, int limit)
+ 	if (limit <= 0)
  		return 0;
- 	}
  
-+	ctx.dir = absolute_pathdup(dir);
+-	if (odb_source_count_objects(&files->loose->base, ODB_COUNT_OBJECTS_APPROXIMATE,
++	if (odb_source_count_objects(&files->dirs->loose->base, ODB_COUNT_OBJECTS_APPROXIMATE,
+ 				     &loose_count) < 0)
+ 		return 0;
+ 
+@@ -349,7 +373,7 @@ static struct packed_git *find_base_packs(struct odb_source_files *files,
+ 	struct packfile_list_entry *e;
+ 	struct packed_git *base = NULL;
+ 
+-	for (e = packfile_store_get_packs(files->packed); e; e = e->next) {
++	for (e = packfile_store_get_packs(files->dirs->packed); e; e = e->next) {
+ 		if (e->pack->is_cruft)
+ 			continue;
+ 		if (limit) {
+@@ -374,7 +398,7 @@ static int too_many_packs(struct odb_source_files *files, int gc_auto_pack_limit
+ 	if (gc_auto_pack_limit <= 0)
+ 		return 0;
+ 
+-	for (e = packfile_store_get_packs(files->packed); e; e = e->next) {
++	for (e = packfile_store_get_packs(files->dirs->packed); e; e = e->next) {
+ 		if (e->pack->pack_keep)
+ 			continue;
+ 		/*
+@@ -937,8 +961,8 @@ static int odb_source_files_fsck(struct odb_source *source,
+ 	if (!(opts->flags & ODB_FSCK_FULL) && !source->local)
+ 		return 0;
+ 
+-	ret |= odb_source_fsck(&files->loose->base, opts);
+-	ret |= odb_source_fsck(&files->packed->base, opts);
++	ret |= odb_source_fsck(&files->dirs->loose->base, opts);
++	ret |= odb_source_fsck(&files->dirs->packed->base, opts);
+ 
+ 	return ret;
+ }
+@@ -951,8 +975,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
+ 
+ 	CALLOC_ARRAY(files, 1);
+ 	odb_source_init(&files->base, odb, ODB_SOURCE_FILES, path, local);
+-	files->loose = odb_source_loose_new(odb, path, local);
+-	files->packed = odb_source_packed_new(odb, path, local);
++	files->dirs = odb_files_dir_new(odb, path, local);
+ 
+ 	files->base.free = odb_source_files_free;
+ 	files->base.close = odb_source_files_close;
+diff --git a/odb/source-files.h b/odb/source-files.h
+index 9630b5f962..7f465853b1 100644
+--- a/odb/source-files.h
++++ b/odb/source-files.h
+@@ -6,14 +6,37 @@
+ struct odb_source_loose;
+ struct odb_source_packed;
+ 
++/*
++ * A single object directory that encapsulates access to both the loose and
++ * packed backend. This can either be the primary or an alternate object
++ * directory.
++ */
++struct odb_files_dir {
++	/* Absolute path to the object directory. */
++	char *abspath;
 +
- 	bloom_settings.hash_version = r->settings.commit_graph_changed_paths_version;
- 	bloom_settings.bits_per_entry = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_BITS_PER_ENTRY",
- 						      bloom_settings.bits_per_entry);
-@@ -2710,6 +2719,7 @@ int write_commit_graph(struct odb_source *source,
- cleanup:
- 	free(ctx.graph_name);
- 	free(ctx.base_graph_name);
-+	free(ctx.dir);
- 	commit_stack_clear(&ctx.commits);
- 	oid_array_clear(&ctx.oids);
- 	clear_topo_level_slab(&topo_levels);
-@@ -2762,7 +2772,7 @@ static int verify_one_commit_graph(struct commit_graph *g,
- 				   struct progress *progress,
- 				   uint64_t *seen)
- {
--	struct repository *r = g->odb_source->odb->repo;
-+	struct repository *r = g->repo;
- 	uint32_t i, cur_fanout_pos = 0;
- 	struct object_id prev_oid, cur_oid;
- 	struct commit *seen_gen_zero = NULL;
-@@ -2926,7 +2936,7 @@ int verify_commit_graph(struct commit_graph *g, int flags)
- 		if (!(flags & COMMIT_GRAPH_VERIFY_SHALLOW))
- 			total += g->num_commits_in_base;
- 
--		progress = start_progress(g->odb_source->odb->repo,
-+		progress = start_progress(g->repo,
- 					  _("Verifying commits in commit graph"),
- 					  total);
- 	}
-@@ -2949,6 +2959,7 @@ void free_commit_graph(struct commit_graph *g)
- 
- 		if (g->data)
- 			munmap((void *)g->data, g->data_len);
-+		free(g->dir);
- 		free(g->filename);
- 		free(g->bloom_filter_settings);
- 		free(g);
-diff --git a/commit-graph.h b/commit-graph.h
-index 13ca4ff010..bccf9c5c84 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -21,7 +21,7 @@
-  * call this method outside of a builtin, and only if you know what
-  * you are doing!
++	/* The two sources derived from this object directory. */
++	struct odb_source_loose *loose;
++	struct odb_source_packed *packed;
++
++	/*
++	 * Whether this is the local object directory of the owning
++	 * repository. Directories added via alternates are not local.
++	 */
++	bool local;
++};
++
++struct odb_files_dir *odb_files_dir_new(struct object_database *odb,
++					const char *path, bool local);
++void odb_files_dir_free(struct odb_files_dir *dir);
++
+ /*
+  * The files object database source uses a combination of loose objects and
+  * packfiles. It is the default backend used by Git to store objects.
   */
--void git_test_write_commit_graph_or_die(struct odb_source *source);
-+void git_test_write_commit_graph_or_die(struct repository *repo);
- 
- struct commit;
- struct bloom_filter_settings;
-@@ -29,8 +29,8 @@ struct repository;
- struct object_database;
- struct string_list;
- 
--char *get_commit_graph_filename(struct odb_source *source);
--char *get_commit_graph_chain_filename(struct odb_source *source);
-+char *get_commit_graph_filename(const char *dir);
-+char *get_commit_graph_chain_filename(const char *dir);
- int open_commit_graph(const char *graph_file, int *fd, struct stat *st);
- int open_commit_graph_chain(const char *chain_file, int *fd, struct stat *st,
- 			    const struct git_hash_algo *hash_algo);
-@@ -85,12 +85,13 @@ struct commit_graph {
- 	const unsigned char *data;
- 	size_t data_len;
- 
-+	struct repository *repo;
- 	const struct git_hash_algo *hash_algo;
- 	unsigned char num_chunks;
- 	uint32_t num_commits;
- 	struct object_id oid;
-+	char *dir;
- 	char *filename;
--	struct odb_source *odb_source;
- 
- 	uint32_t num_commits_in_base;
- 	unsigned int read_generation_data;
-@@ -114,12 +115,20 @@ struct commit_graph {
- 	struct bloom_filter_settings *bloom_filter_settings;
+ struct odb_source_files {
+ 	struct odb_source base;
+-	struct odb_source_loose *loose;
+-	struct odb_source_packed *packed;
++	struct odb_files_dir *dirs;
  };
  
--struct commit_graph *load_commit_graph_one_fd_st(struct odb_source *source,
-+/*
-+ * Load commit graphs from the given object directory `dir`. The directory may
-+ * be given as a relative path; it is canonicalized internally so that graphs
-+ * loaded from the same directory compare equal regardless of how the caller
-+ * spelled the path.
-+ */
-+struct commit_graph *load_commit_graph_one_fd_st(struct repository *repo,
-+						 const char *dir,
- 						 int fd, struct stat *st);
- struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
- 						   int fd, struct stat *st,
- 						   int *incomplete_chain);
--struct commit_graph *read_commit_graph_one(struct odb_source *source);
-+struct commit_graph *read_commit_graph_one(struct repository *repo,
-+					   const char *dir);
+ /* Allocate and initialize a new object source. */
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 3de8e9590c..52556b4543 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -720,7 +720,7 @@ static int open_bitmap(struct repository *r,
+ 	for (source = r->objects->sources; source; source = source->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
  
- struct repo_settings;
+-		if (!open_bitmap_for_source(files->packed, bitmap_git))
++		if (!open_bitmap_for_source(files->dirs->packed, bitmap_git))
+ 			found = true;
  
-@@ -171,11 +180,17 @@ struct commit_graph_opts {
-  * and a negative value on failure. Note that if the repository
-  * is not compatible with the commit-graph feature, then the
-  * methods will return 0 without writing a commit-graph.
-+ *
-+ * The object directory `dir` may be given as a relative path; it is
-+ * canonicalized internally so that it compares equal to the directory of
-+ * graphs that have already been loaded.
-  */
--int write_commit_graph_reachable(struct odb_source *source,
-+int write_commit_graph_reachable(struct repository *repo,
-+				 const char *dir,
- 				 enum commit_graph_write_flags flags,
- 				 const struct commit_graph_opts *opts);
--int write_commit_graph(struct odb_source *source,
-+int write_commit_graph(struct repository *r,
-+		       const char *dir,
- 		       const struct string_list *pack_indexes,
- 		       struct oidset *commits,
- 		       enum commit_graph_write_flags flags,
-diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
-index 9f07b9c25a..a75c817e47 100644
---- a/t/helper/test-read-graph.c
-+++ b/t/helper/test-read-graph.c
-@@ -4,6 +4,7 @@
- #include "commit-graph.h"
- #include "repository.h"
- #include "odb.h"
-+#include "odb/source.h"
- #include "bloom.h"
- #include "setup.h"
+ 		/*
+diff --git a/packfile.c b/packfile.c
+index 4fa5fd67c8..93b69d7f50 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -280,7 +280,7 @@ static int unuse_one_window(struct object_database *odb)
  
-@@ -81,7 +82,7 @@ int cmd__read_graph(int argc, const char **argv)
+ 	for (source = odb->sources; source; source = source->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
+-		for (e = files->packed->packs.head; e; e = e->next)
++		for (e = files->dirs->packed->packs.head; e; e = e->next)
+ 			scan_windows(e->pack, &lru_p, &lru_w, &lru_l);
+ 	}
  
- 	prepare_repo_settings(the_repository);
+@@ -458,7 +458,7 @@ static int close_one_pack(struct repository *r)
  
--	graph = read_commit_graph_one(source);
-+	graph = read_commit_graph_one(the_repository, source->path);
- 	if (!graph) {
- 		ret = 1;
- 		goto done;
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index ad2686669d..f57a3d6621 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -755,7 +755,7 @@ test_expect_success PERL_TEST_HELPERS 'Bloom reader notices too-small data chunk
- test_expect_success PERL_TEST_HELPERS 'Bloom reader notices out-of-bounds filter offsets' '
- 	check_corrupt_graph BIDX 12 FFFFFFFF &&
- 	# use grep to avoid depending on exact chunk size
--	test_grep "warning: ignoring out-of-range offset (4294967295) for changed-path filter at pos 3 of .git/objects/info/commit-graph" err
-+	test_grep "warning: ignoring out-of-range offset (4294967295) for changed-path filter at pos 3 of $(pwd)/.git/objects/info/commit-graph" err
- '
+ 	for (source = r->objects->sources; source; source = source->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
+-		for (e = files->packed->packs.head; e; e = e->next) {
++		for (e = files->dirs->packed->packs.head; e; e = e->next) {
+ 			if (e->pack->pack_fd == -1)
+ 				continue;
+ 			find_lru_pack(e->pack, &lru_p, &mru_w, &accept_windows_inuse);
+@@ -1925,7 +1925,7 @@ int has_object_pack(struct repository *r, const struct object_id *oid)
  
- test_expect_success PERL_TEST_HELPERS 'Bloom reader notices too-small index chunk' '
-@@ -773,7 +773,7 @@ test_expect_success PERL_TEST_HELPERS 'Bloom reader notices out-of-order index o
- 	# actually reading from the bogus offsets anyway.
- 	corrupt_graph BIDX 4 0000000c00000005 &&
- 	echo "warning: ignoring decreasing changed-path index offsets" \
--		"(12 > 5) for positions 1 and 2 of .git/objects/info/commit-graph" >expect.err &&
-+		"(12 > 5) for positions 1 and 2 of $(pwd)/.git/objects/info/commit-graph" >expect.err &&
- 	git -c core.commitGraph=false log -- A/B/file2 >expect.out &&
- 	git -c core.commitGraph=true log -- A/B/file2 >out 2>err &&
- 	test_cmp expect.out out &&
+ 	for (source = r->objects->sources; source; source = source->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
+-		if (!odb_source_read_object_info(&files->packed->base, oid, NULL, 0, NULL))
++		if (!odb_source_read_object_info(&files->dirs->packed->base, oid, NULL, 0, NULL))
+ 			return 1;
+ 	}
+ 
+@@ -1942,7 +1942,7 @@ int has_object_kept_pack(struct repository *r, const struct object_id *oid,
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
+ 		struct packed_git **cache;
+ 
+-		cache = packfile_store_get_kept_pack_cache(files->packed, flags);
++		cache = packfile_store_get_kept_pack_cache(files->dirs->packed, flags);
+ 
+ 		for (; *cache; cache++) {
+ 			struct packed_git *p = *cache;
+diff --git a/packfile.h b/packfile.h
+index 6d30d15a00..fd1cf0ad6c 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -79,7 +79,7 @@ static inline struct repo_for_each_pack_data repo_for_eack_pack_data_init(struct
+ 
+ 	for (struct odb_source *source = repo->objects->sources; source; source = source->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
+-		struct packfile_list_entry *entry = packfile_store_get_packs(files->packed);
++		struct packfile_list_entry *entry = packfile_store_get_packs(files->dirs->packed);
+ 		if (!entry)
+ 			continue;
+ 		data.source = source;
+@@ -100,7 +100,7 @@ static inline void repo_for_each_pack_data_next(struct repo_for_each_pack_data *
+ 
+ 	for (source = data->source->next; source; source = source->next) {
+ 		struct odb_source_files *files = odb_source_files_downcast(source);
+-		struct packfile_list_entry *entry = packfile_store_get_packs(files->packed);
++		struct packfile_list_entry *entry = packfile_store_get_packs(files->dirs->packed);
+ 		if (!entry)
+ 			continue;
+ 		data->source = source;
+diff --git a/repack-geometry.c b/repack-geometry.c
+index 15b3412950..b541c34af5 100644
+--- a/repack-geometry.c
++++ b/repack-geometry.c
+@@ -33,7 +33,7 @@ void pack_geometry_init(struct pack_geometry *geometry,
+ 	struct packed_git *p;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct odb_source_files *files = odb_source_files_downcast(existing->source);
+-	struct multi_pack_index *m = get_multi_pack_index(files->packed);
++	struct multi_pack_index *m = get_multi_pack_index(files->dirs->packed);
+ 
+ 	repo_for_each_pack(existing->repo, p) {
+ 		if (geometry->midx_layer_threshold_set && m &&
+diff --git a/repack-midx.c b/repack-midx.c
+index 64c7f8d0f4..25140569bd 100644
+--- a/repack-midx.c
++++ b/repack-midx.c
+@@ -564,7 +564,7 @@ static void repack_make_midx_append_plan(struct repack_write_midx_opts *opts,
+ 	size_t steps_nr = 0, steps_alloc = 0;
+ 
+ 	odb_reprepare(opts->existing->repo->objects);
+-	m = get_multi_pack_index(files->packed);
++	m = get_multi_pack_index(files->dirs->packed);
+ 
+ 	if (opts->names->nr) {
+ 		struct strbuf buf = STRBUF_INIT;
+@@ -620,7 +620,7 @@ static int repack_make_midx_compaction_plan(struct repack_write_midx_opts *opts,
+ 			    opts->existing->repo);
+ 
+ 	odb_reprepare(opts->existing->repo->objects);
+-	m = get_multi_pack_index(files->packed);
++	m = get_multi_pack_index(files->dirs->packed);
+ 
+ 	for (i = 0; m && i < m->num_packs + m->num_packs_in_base; i++) {
+ 		if (prepare_midx_pack(m, i)) {
+@@ -949,7 +949,7 @@ static int write_midx_incremental(struct repack_write_midx_opts *opts)
+ 	size_t i;
+ 	int ret = 0;
+ 
+-	get_midx_chain_filename(files->packed, &lock_name);
++	get_midx_chain_filename(files->dirs->packed, &lock_name);
+ 	if (safe_create_leading_directories(opts->existing->repo,
+ 					    lock_name.buf))
+ 		die_errno(_("unable to create leading directories of %s"),
+diff --git a/repack.c b/repack.c
+index d2aa58e134..e20431690c 100644
+--- a/repack.c
++++ b/repack.c
+@@ -60,7 +60,7 @@ void repack_remove_redundant_pack(struct repository *repo, const char *dir_name,
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct odb_source_files *files = odb_source_files_downcast(repo->objects->sources);
+-	struct multi_pack_index *m = get_multi_pack_index(files->packed);
++	struct multi_pack_index *m = get_multi_pack_index(files->dirs->packed);
+ 	strbuf_addf(&buf, "%s.pack", base_name);
+ 	if (m && files->base.local && midx_contains_pack(m, buf.buf)) {
+ 		clear_midx_file(repo);
+diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
+index 83b07c6236..3f4bafff61 100644
+--- a/t/helper/test-read-midx.c
++++ b/t/helper/test-read-midx.c
+@@ -22,7 +22,7 @@ static struct multi_pack_index *setup_midx(const char *object_dir,
+ 
+ 	source = odb_find_source(the_repository->objects, object_dir);
+ 	if (source) {
+-		packed = odb_source_files_downcast(source)->packed;
++		packed = odb_source_files_downcast(source)->dirs->packed;
+ 	} else {
+ 		packed = odb_source_packed_new(the_repository->objects,
+ 					       object_dir, false);
 
 -- 
 2.56.0.406.ga2d225a756.dirty
