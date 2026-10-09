@@ -1,323 +1,163 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0058D36A361
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 21:16:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791580579; cv=none; b=M6waZDQR3nrZmXeSFIC74Gu1UcSyP/iAQ8vruB3naeMQRcgVOeHPhdrx12GuGlK/uf3aBAG9TXEP7BxxoBnPEPwgzmBZfvIMLbiTiSp29mztd9GjZFsTTgkcfjnHE2+lbAiKy0dXhFLy3/NZhIts7bVdBvF5W1tL96J6AljHyxU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791580579; c=relaxed/simple;
-	bh=RxHOy4oXAYzhbVlD2UdtnjYHxsAzzYwJPokVG23j6xM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZBwC32PhvZkHcyCubnFBC4FEy4dPY2EfJqs4nwJRDoDsp/qyh02k4BB9pgEU2TsBWMZKEpWppg2a9wLtLCiFAnp0Xi9IMAvvdF3oSklFkxt5PotlyHINO7JipcsYQCmUFhUiD1KYVaEFM2bfyCX8XEZFLFgsbyxUULUFiD/c89M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UzFyFlVg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v0ohiKXI; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D908E397338
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 21:21:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791580905; cv=pass; b=X1A3tFevVAEPUBJmUpJGSv2KhWeFW9A021EFTDxzwhjzD7wNQmwOai3ZpMYuTrJMMrV/MMTVElkJCxwd67PaPTvnH8vR3i2Pq9oCFin/8/BKkmLJwO+4J8GG+BAA8yW4VgdnJqPDRbSWi8nJTmUfFtQt6PxHKXD8UyJgA3QrEcE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791580905; c=relaxed/simple;
+	bh=zGi8sMRZa8obfmI2tG4A5LRG9Vn5ooLdfUmS5lwb8/4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XspTCiRGJAxf7Wg9VLsNg3rIdFuKV8btiUCxBtksNYeKzuYQi0AIK+Zdjm9S0vCOcgLQ70yp9/bBNfx4TGHGfhH2rd1QtIDkiHiVQsxPyTgXu6VkjdMx8s5tfLQjQu0NTzZ5R0QrO0vn6FRN0LbWFvkiQJMelvDQ4fXECSeWIcc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FB5mtkLc; arc=pass smtp.client-ip=209.85.217.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UzFyFlVg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v0ohiKXI"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 30CC07A00EF
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 17:16:15 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 09 Oct 2026 17:16:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791580574; x=1791666974; bh=mhpQrJEvue
-	Bg7oW+FZvai9roXK7p24H4OElb+kI3SWA=; b=UzFyFlVg1+SlVNGzEMnttss2tt
-	KIPanGSvoyVqw1MTsN6kKVy7l1vBZjHEftHW8aphXLBUHgrwgXtIGvHXsO47T/Sq
-	B9m7zoI1urODsoFhbF0NrqorPiT06KO26Gn27mdgLLLa3hHTDKEbUd6hRM0TEMMH
-	oDZ3VvSwTPCMiy+Bm5zaV34KP3afdAJzS3xuVOY+/lbRTMu8M4YM0rZayj7PPMS/
-	NgVjuRrI1YRC1zt42WGjLOOjItkv1q73TczxS8XjupjZCYCcWnqHkiJlTQwnT+Vr
-	TtMbYsDH7cXM1aDxGAS8GY6rjR5GlgVN0jM83RNIKE/TYtQ34SIwFskA5v7A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791580574; x=1791666974; bh=mhpQrJEvueBg7oW+FZvai9roXK7p24H4OEl
-	b+kI3SWA=; b=v0ohiKXIgicPRYrF9VXWPtdWd2dJ3TB8/R7ChcBgmrpc/9zoBzT
-	Iphp0Dg7wbLE1coh3AcDs0c8XAk6ILvF8e4AJnydUXVjwL+rcIFBmRFqu0S8JHLA
-	TT89phpbwBSAboRw+cWBRiwFTGxUUE1JNb4PfIOgTxYSvMQjF6bjo6ZQ8cKK7/27
-	WGp+84qPXhahkA9vzjO/O+JrOXpseYPBi5rGP3zq0taV/JbqCZTj85x/oWrkovjY
-	oEyUXOjmqw5G4/sRxcDP/LqlllV5QYzpn+9jRbc3H/yRrLGBzfRkgGHfS6rQxMFA
-	Z4wT7iYjJ4tY+bnxv6P6CiO73UQPRzZLhcQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791580574; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:Lt814RzpwsD5VZ/54KqradGI4AClR+uSvBKvJVavjx8Bg0T
-	C6pmOWqbh/ulqi2E/9LJ0EqPmurLYJ35v8cHvLukwTghh3+Nj02TF/1J6dPt+wcb
-	9Gz7N0Q96kqRF2SXhx5vWzgHV+YpGRYfah9Bc5tLvlijgIQPVKfrPtbbsfOfHtTf
-	cFW7FXrNr9cCdCnWRQzpsetrdepsFdruUEFS128Zlh74ijr3llEeR1sPElsQ3VkT
-	ktrR2W7eNkSTxxXy98mYVNh6rNM6Xo1dhe0rpRqmEzDsczMSlclAIsqbwQZHh6kK
-	exoBk5CxlbV74dAJH1yYx445avweI+PtY9dqplw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:iprSV1o3EnAhMKQ/S6X5rSCTt0g7+zjTOm+1+XImYKo=:RxHOy4oXAYzhbVlD2UdtnjYHxsAzzYwJPokVG23j6xM=;
-X-ME-Sender: <xms:nlnJashpFsu7fce-mJe5FGXbc9kKowGmkU96t054PleHMx05GoN80g>
-    <xme:nlnJasB6I_MxlL_PNDKOCKn76tEF2HhyFmnrhQ9W-X3Se4sNwkgkyldcuxmow1DLE
-    0TpgN0el-7-KRz_-VrBkUswYfAAlV7IvO_F0DlxO09W8S_K3mn9qXY>
-X-ME-Received: <xmr:nlnJapHRTX1VogwSuAlv6SkH4l82FkxN7oDbwMikeGdXazzWahbTojZk32Svnv3tcI-OqqWGehowmFvZYj7PlBPcX3qatluHU_Rk>
-X-ME-Proxy-Cause: dmFkZTGm6lft28kWzN/EVFXIGuRw7uBsTMvn3tyl0qLqtYWQbLaiqfosyzILjnjUmyA29f
-    T4G8dBifYFNC/5IO1tX8k1hYVnCQuFiyWB83y/Q9cNuhPOrhJAPIOr36DTmkTRFDgletl9
-    Z6VS+yunq6b5zDqsBARxe73SuKEjGlpJEwvs1EkcXUz0SdGIQkpRozdv++KTUMEyk1wbbg
-    7nYRhm+WapntkRexvamF+XSvUQqqs/QW4FztK14QBCnT8Xrlx1NvPiJMrG+52s0KiTIY/W
-    ejufsA/SGVSi/TaX1w2OrQRmUs1OJSbwToeYDa8PANTi2UehDFyIZ0dAyEePiCtfEZ9til
-    bsCOK56WiU3ffUELFg4ZHGodZO5Y2dkZzzSggvCWo4O+3krYJaS/CO3mX+irdbFRm/rtqe
-    aVeYvrmwXMfoiMHzVIJmE6jibyhgh5ekJiVZdOfMP2CLxH2/BsQDgCRB2rPjv1491eKPQ+
-    djI1937r+hNSPvRrjnrC9yUqN71KRLHdI/n+vJAUSIzL+lZZDkGbc4/fczscZaoUm7NLiW
-    56rWblAw54iVI3MPq2WKqB623fq7A0SHlweAcCLV7qTaLCiyBcsE0vnWTgO1wU8XAnmHtt
-    eqi7ClniAeLCehTnWbyHkKu28GwjSFhr/ZYeH5JLyxtM6aoVm4AsCGmKUl3g
-X-ME-Proxy: <xmx:nlnJasKONg3Slo47jliimMZgFBPxlxpgrv681iTc-TwzjpoLaAKEqQ>
-    <xmx:nlnJallKlii_CFzWjcvMQBsjP2sOSZPnTdAITbgMmfBWumNgFvxP9A>
-    <xmx:nlnJasTra1VEk_UT1xxw2K3YT5IwOzXkxAEnSh2q4U4s3iP3HT74tQ>
-    <xmx:nlnJavKNYC2fB419XbLG-wy7TBShziEF11NNIDYM0CqQytGysX3ANw>
-    <xmx:nlnJauelt0jfAn6CPyON97pBcZkK6ryzXKGvk2ofDwWNC0m3YI5HiOH6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Oct 2026 17:16:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Marc Becker via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Marc Becker <becm@gmx.de>
-Subject: Re: [PATCH] wincred: fix line split of secret blob content
-In-Reply-To: <pull.2251.git.1791553518774.gitgitgadget@gmail.com> (Marc Becker
-	via GitGitGadget's message of "Fri, 09 Oct 2026 13:45:18 +0000")
-References: <pull.2251.git.1791553518774.gitgitgadget@gmail.com>
-Date: Fri, 09 Oct 2026 14:16:12 -0700
-Message-ID: <xmqq1p9ymv6r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FB5mtkLc"
+Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-78fb1fb9508so2132342137.1
+        for <git@vger.kernel.org>; Fri, 09 Oct 2026 14:21:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791580902; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ThNCoI2rDfoyt8IZaAlhh9gJbebqGoSvWfEx1MniPnwDgBLPlrKGxxSfvK6r0eLn64
+         TEVl40h2RN+NrnZ0UIyeT305cmeb+xzza5HK+R4Vte3KWRIXMDIrKqB5tP1qI/zo4G2R
+         k8KVZJdcB/u7azrQdflPlA9LrnoOdt2UX4Kjyv1RGCsM/d9o3IxNPTVynLI30T7ltPcB
+         N/p4Y0ieFdOfQBqdRjhxvYeUtsDUny8xVtk0nlJotVbUjBvxDaWibC51tpiMUq8M8MaT
+         T9YRmHKzXjTHQHTIqt6v0HMgRF2PGJtZ4CstNc1U9s4TLeJMQ2hjRy/aOuXig4CrnfZQ
+         46IQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=Z3laEchAqdsgXaryPvRsQxjKlR8xvt9jV8zh8s+HZGc=;
+        fh=p8dGKdGyZ7HpwKJJ55CVJP8Mc7CjSHTY4kMSeekFtHg=;
+        b=h5kPkd5dQ23AJvhHsXwXvdBi6+p9sj1jaFQV/62A2iJLMPCpcncTTLkGEJjlSh1OCz
+         gmb9lKrw8IEsa23qjha0K88dAzHWXHexfgl+RiLf8gA7dxWeOG5qnJJrFyO34ORgp45o
+         OQdZ706iNtmYqBzaXUxIAwIrP7gAc1TDpEiu7wWXDOYAA0Ey9HC61zASzGVbx3yRZ+c0
+         AdFpE/INYPxtyd1faHgn7pQ9hx2wlkiQjOsqDRkDhNpqE4jyqrbjNQkf72r8MTGICND9
+         +gRFa+eI3eNNCRtkDNLCVNYXVfjVdYukvZIRJUERbvLtiqdHz7BY6YFaXIUsnFf4lwKF
+         fAtg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791580902; x=1792185702; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Z3laEchAqdsgXaryPvRsQxjKlR8xvt9jV8zh8s+HZGc=;
+        b=FB5mtkLcNe5DhU+pI+KXrXY7KQ5Yb0ExfhKkH63jkUzgDXHITCCo7TIZLzIFI/2cZx
+         MZuTj3LdPXesaVyJNK709rYp5+EHywydPgQMHud/uVFFU/ILQHGBtCmQc8kNh6hk0/Ns
+         toMHvQ5V9HV5bbOBUuqWzoEs1GxJJfqIsP0kiQhXd6yuTb/iLJVciBEpHveKcBVXzoD+
+         Dc9BFnfIK0iBWa2jnCwziZ44V4uHBG+R2oG1AyYk+pi8y0TKjb6B2tExCtIlC4K9YNz/
+         xrjVHa6i7AIbL8UA/3bV0MdgZGiXNwvpDaLbFsiIz1xJ3D3uFdavmUZmFTFozzd3Up+/
+         IUjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791580902; x=1792185702;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Z3laEchAqdsgXaryPvRsQxjKlR8xvt9jV8zh8s+HZGc=;
+        b=r+JpLUXGODb0kj6Aq6k7Avry5AzmfLutjviXPMyvgap8LORsi/VEjayFLcn1Tq7/bZ
+         nVUvXPoG2mIxGrVFsm+AebPk2qJEFyy14dZjeYKMMDy5SoeeVGIcESLyA2dusHU7KiZz
+         qyuZ8PUmyCrUVWPAF4pOfZCInUFEzvvou+PdYLQzw2mBNH4//rKkulCcu5lfOszu7D8u
+         IAMxW9WwNzN5f2+LoTLHCaEArs+bmoFoCeQFpIWFTkEugEyvhfZTQjskod+jWs2b8bJf
+         bVeOYfzTDEuBYTE5TiiodBN6kqISomZXYis8N0tRUCWTlfOxhJN10ucGvElU1CuuLih4
+         dWcg==
+X-Forwarded-Encrypted: i=1; AKwUvBwI9L09qDa0aap9+5xzpGWtDIfdVRw1OcNLYJL3D4nYhhU+kLEuFAF8zHFZnt/JeBS5NAg=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKeFiba1Xg1RkXCYgIuQiynpBeJRo1fGp0JAHBJH/qi46Z6vVbC
+	8DMgOlZIoySKROxOHvMGBKVLW3kAa+9h+R9j0A4ISQ7zTVCPMZEowDpSoVaapck3NN3YKRJtvJz
+	1kGXin8U13+k6O8UxxCReLxCCJ5ceZBk=
+X-Gm-Gg: AYBFou0DwUI+f1s3LZwm3WN7J5WPbQPfpYk3TY1TIYGb/Z8xkoNa4puIYYB1lb9XmAS
+	2ITB81aZ1sdMB77RxHeyQOgTkOegWJvz+QJNatF5QJtxv+3RhE2sIIAQSbAtYp+9DE2QlJo1Z/O
+	L7JR7GahB8LOIrFWmznh0Ly4OeRkLLqnY9EUQXc4iUk7f2VjUv2VICVQdNmlfsrvKxlgHXR/sl4
+	yyU5fClW/xPg4gdNKhmiXUK1wpubByKK++5XvUdyKeQvjarmDB8qTqWyswCSYX7aO27k0Ekf8RU
+	I+He0i4N7jjMynM4vAVisU/eKqhMYYHGyNXA7xAtggoathneUv1oBXtRxsywx8h4wY0CKD6UOfC
+	ZlM0r7XcfniINizbZkbRLtmV4K86r8LKVilF85BIjqcA+sA==
+X-Received: by 2002:a05:6102:b11:b0:7b5:8fd9:27e9 with SMTP id
+ ada2fe7eead31-7cb42386482mr711462137.2.1791580902569; Fri, 09 Oct 2026
+ 14:21:42 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 9 Oct 2026 17:21:40 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 9 Oct 2026 17:21:40 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqece02no9.fsf@gitster.g>
+References: <20260920165037.88524-1-maciej.ciemborowicz@gmail.com>
+ <cover.1791452597.git.maciej.ciemborowicz@gmail.com> <asdsIjNEUOpaAnX5@pks.im>
+ <xmqqece02no9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Fri, 9 Oct 2026 17:21:40 -0400
+X-Gm-Features: AclHuK_jYkcM8jcu7AWTQx8GVKIV9eKeoNBpgnmHXmvQe-_qOz4mV3rKdM5xMbU
+Message-ID: <CAOLa=ZTtLcSPop-A3y-kOv5h-0D-Kq2P+QUpKTEcmU5z77eJYg@mail.gmail.com>
+Subject: Re: [PATCH v4 0/4] refs: run copy and rename through transactions
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000048d84c065d6eef29"
 
-"Marc Becker via GitGitGadget" <gitgitgadget@gmail.com> writes:
+--00000000000048d84c065d6eef29
+Content-Type: text/plain; charset="UTF-8"
 
-> From: Marc Becker <becm@gmx.de>
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> operate on immutable blob data (wcsncpy_s still had invalid target size)
-> split on newline character to avoid bleed-over on multi-line content
-
-This needs a bit more work to make it more readable than a bulleted
-list of lowercase fragments.
-
-When in doubt, keep in mind that the usual way to compose a log
-message of this project is to:
-
- - Give an observation on how the current system works in the
-   present tense (so no need to say "Currently X is Y", or
-   "Previously X was Y" to describe the state before your change;
-   just "X is Y" is enough), and discuss what you perceive as a
-   problem in it.
-
- - Propose a solution (optional---often, problem description
-   trivially leads to an obvious solution in reader's minds).
-
- - Give commands to somebody editing the codebase to "make it so",
-   instead of saying "This commit does X".
-
-in this order.
-
- - It mentions wcsncpy_s having an invalid target size, but does not
-   explain why it was invalid or the consequences. Is the issue that
-   wcsncpy_s expects the buffer size in wide characters, but was
-   being passed a size in bytes, which obviously cannot always
-   agree?
-
- - It mentions "bleed-over on multi-line content", but does not
-   describe the observable symptoms.  Is the issue that when the
-   password is empty, the skipping by wcstok_s delimiter would cause
-   the oauth_refresh_token line to be erroneously parsed as the
-   password?
-
- - The final sentence should be an imperative command to the
-   codebase, e.g., "Parse the blob in-place without copying and
-   split lines manually using wmemchr()."
-
+>> On Thu, Oct 08, 2026 at 11:44:15AM +0200, Maciej Ciemborowicz wrote:
+>>> Changes since v3:
+>>>
+>>> * Rebase onto 6de20f6092 (The 4th batch, 2026-10-06), the master commit
+>>>   used in Junio's report.
+>>> * Preserve the packed preparation error in patch 2 as described above.
+>>> * Register t1425 and t1424 in t/meson.build in the commits adding them.
+>>
+>> Please engage with the reviewers. Just posting new versions without
+>> replying to them at all will very likely not get you anywhere. This kind
+>> of behaviour is nowadays a red flag and often hints at contributors who
+>> are basically just a meat proxy. And as a consequence, reviewers are
+>> very likely to disengage and stop reviewing your patch series
+>> altogether, which is frustrating to everyone involved.
 >
-> Signed-off-by: Marc Becker <becm@gmx.de>
-> ---
->     wincred: fix line split of secret blob content
+> Thanks for bringing this up.
 >
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2251%2Fbecm%2Ffix-wincred-secret-linesplit-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2251/becm/fix-wincred-secret-linesplit-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2251
->
->  .../wincred/git-credential-wincred.c          | 86 ++++++++++++-------
->  1 file changed, 55 insertions(+), 31 deletions(-)
->
-> diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
-> index 22eb27ca31..584f457774 100644
-> --- a/contrib/credential/wincred/git-credential-wincred.c
-> +++ b/contrib/credential/wincred/git-credential-wincred.c
-> @@ -6,6 +6,7 @@
->  #include <stdio.h>
->  #include <io.h>
->  #include <fcntl.h>
-> +#include <wchar.h>
->  #include <wincred.h>
->  
->  /* common helpers */
-> @@ -148,51 +149,74 @@ static void get_credential(void)
->  {
->  	CREDENTIALW **creds;
->  	DWORD num_creds;
-> -	int i;
-> -	CREDENTIAL_ATTRIBUTEW *attr;
-> -	WCHAR *secret;
-> -	WCHAR *line;
-> -	WCHAR *remaining_lines;
-> -	WCHAR *part;
-> -	WCHAR *remaining_parts;
->  
->  	if (!CredEnumerateW(L"git:*", 0, &num_creds, &creds))
->  		return;
->  
-> -	/* search for the first credential that matches username */
-> -	for (i = 0; i < num_creds; ++i)
-> +	/* search for the first credential that matches target and username */
-> +	for (int i = 0; i < num_creds; ++i) {
->  		if (match_cred(creds[i], 0)) {
-> -			write_item("username", creds[i]->UserName,
-> -				creds[i]->UserName ? wcslen(creds[i]->UserName) : 0);
-> -			if (creds[i]->CredentialBlobSize > 0) {
-> -				secret = xmalloc(creds[i]->CredentialBlobSize + sizeof(WCHAR));
-> -				wcsncpy_s(secret, creds[i]->CredentialBlobSize, (LPCWSTR)creds[i]->CredentialBlob, creds[i]->CredentialBlobSize / sizeof(WCHAR));
-> -				line = wcstok_s(secret, L"\r\n", &remaining_lines);
-> -				write_item("password", line, line ? wcslen(line) : 0);
-> -				while(line != NULL) {
-> -					part = wcstok_s(line, L"=", &remaining_parts);
-> -					if (!wcscmp(part, L"oauth_refresh_token")) {
-> -						write_item("oauth_refresh_token", remaining_parts, remaining_parts ? wcslen(remaining_parts) : 0);
-> -					}
-> -					line = wcstok_s(NULL, L"\r\n", &remaining_lines);
-> -				}
-> -				free(secret);
+> A response to reviews on the N-th round must come long before
+> sending the v(N+1) round of patches.  Some contributors send them
+> after v(N+1), or immediately before, but the proper time to respond
+> is soon after receiving the reviews on vN and having had enough time
+> to understand the comments, before starting work on v(N+1).  Only
+> after that work is complete would you send the new patches.  Hence,
+> we expect the time between vN and v(N+1) from real contributors to
+> be measured in days, not hours.  Whenever I see vN responses arrive
+> after or immediately before the v(N+1) patches, or worse, no
+> response at all but just the new patches, it smells fishy.
 
-The original was already bad, but this makes it even worse to have
-the code nested too deeply.  Would separating out the body of the
-for loop into a separate helper function, or perhaps standard tricks
-like this
+This is kinda why I stopped reviewing the other patches [1] from the
+author, my reviews were simply met with N+1 version of the series. At
+some point I felt it would've been faster if I used a LLM locally for
+the same task and reviewed its code instead.
 
-	for (...) {
-		if (!match_cred(...))
-			continue;
-		... rest of the loop dedented by one tab stop ...
-	}
+[1]: https://lore.kernel.org/git/CACQ=SRGTTdQ+dHXhN6F52dBv5KxZBRfk_Em2fvmEmGJDoB6oTg@mail.gmail.com/
 
-make it readable?
+--00000000000048d84c065d6eef29
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: be6da53d082c3563_0.1
 
-> +			LPCWSTR username = creds[i]->UserName;
-> +			LPCWSTR blob = (LPCWSTR)creds[i]->CredentialBlob;
-> +			LPCWSTR end;
-> +			DWORD wlen;
-> +
-> +			write_item("username", username, username ? wcslen(username) : 0);
-> +
-> +			wlen = creds[i]->CredentialBlobSize / sizeof(WCHAR);
-> +
-> +			// check if content is single line
-
-			/* our single line comment should look like this */
-
-> +			if ((end = wmemchr(blob, '\n', wlen)) == NULL) {
-
-I do not do Windows and I do not often deal with wchar_t, so I do
-not know how much practitioners of code like this one cares, but
-would it be better to make the fact clear that we are not dealing
-with a regular 'char' by writing a wchar_t literal like this as
-L'\n'?  This is not a correctness suggestion, but a readability one.
-Having a function prototype would coerse the parameter types, so
-you may end up passing L'\n' either way.
-
-> +				write_item("password", blob, wlen);
->  			} else {
-> -				write_item("password",
-> -						(LPCWSTR)creds[i]->CredentialBlob,
-> -						creds[i]->CredentialBlobSize / sizeof(WCHAR));
-> +				DWORD length = end++ - blob;
-
-Here, "end" is of LPCWSTR type, aka "wchar_t *".  So is "blob".  The
-difference would give us how many wide characters are in there.
-That is not necessarily number of bytes starting at &blob[0].
-
-> +				// correct remaining size and drop carriage return at line end
-> +				wlen -= length + 1;
-> +				if (length && blob[length - 1] == '\r') {
-
-This CR is also side, right?
-
-> +					--length;
-> +				}
-> +				write_item("password", blob, length);
-> +
-> +				// key/value content starting on next line
-> +				blob = end;
-> +				do {
-> +					LPCWSTR value;
-> +
-> +					// find line end
-> +					if ((end = wmemchr(blob, '\n', wlen)) == NULL) {
-> +						length = wlen;
-> +					} else {
-> +						length = end++ - blob;
-> +						// correct remaining size and drop carriage return at line end
-> +						wlen -= length + 1;
-> +						if (length && blob[length - 1] == '\r') {
-> +							--length;
-> +						}
-> +					}
-> +					// find key/value separator for extended credential info
-> +					if ((value = wmemchr(blob, '=', length)) != NULL) {
-> +						static const LPCWSTR refresh = L"oauth_refresh_token";
-> +						DWORD klen = value - blob;
-
-Value is also "wchar_t *", so klen counts the length in wchar_t,
-which may be wider than a byte.  So is
-
-> +						// write entries known to git credential protocol
-> +						if (klen == wcslen(refresh) && memcmp(blob, refresh, klen) == 0) {
-
-klen that counts number of wchar_t letters in refresh[] string.
-
-So, is the memcmp() used to check if early part of blob[] match the
-refresh[] as a whole correct, or is it only checking an early half
-(or one fourth, depending on how much wider your wchar_t is compared
-to char) of the string?
-
-> +							write_item("oauth_refresh_token", value + 1, length - klen - 1);
-> +						}
-> +					}
-> +				} while ((blob = end));
->  			}
->  			for (int j = 0; j < creds[i]->AttributeCount; j++) {
-> -				attr = creds[i]->Attributes + j;
-> +				CREDENTIAL_ATTRIBUTEW *attr = creds[i]->Attributes + j;
-> +
->  				if (!wcscmp(attr->Keyword, L"git_password_expiry_utc")) {
-> -					write_item("password_expiry_utc", (LPCWSTR)attr->Value,
-> -					attr->ValueSize / sizeof(WCHAR));
-> +					write_item("password_expiry_utc", (LPCWSTR)attr->Value, attr->ValueSize / sizeof(WCHAR));
->  					break;
->  				}
->  			}
->  			break;
->  		}
-> -
-> +	}
->  	CredFree(creds);
->  }
->  
->
-> base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ySld1SVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOXJ6Qy8wVVBzUTUvTUh1Mm56Z0pFZ1UrSElQRzRMdAp2a1J1N3FvQkFO
+b2dSZ3ZpRUhzN2tEeFlaNEdjV0YyaWw4SWJaZW9FNnlhOHZmL09SNmc3NXB2RlNjSzNicTlnClhU
+YXlkYzQwNEZIaHJOOFczQ3dDR0wzZXZHVk5VdkM2UGFWN2FCMVlHSG91bDZsQjBZWlFVZ2ZaSFYv
+bUVDeW0KMFgwRlA0RkNrTmJQRnhPbWxzcndRQ2lhV1pLTkYyV1dnZCsxL24zQlVjZmMvMkVmRFIw
+QTZmM2pvNUxsQ2hsRwphM1FjSHhYUExZL0srcWRhdTJPQjJJVlVzdVljbXlWSk1sMzJiYkFtUGFv
+ZjNHQmxDQUh2bzRQTVV6bGQzYkpXClRndG9NOFFHeElXUWowKzZRTHZ3dUVPbnRUUUloU1pTdzJV
+T3BDV0FEbmdvTStMNXZSOGQ5V2xkOWtPUmNKNmgKMG8rS09Zd2phWnc1V1lQV29WTGEvS2dzNFUr
+RGpXZHFIemJ0YjN4R2Z1VlBwV2FpRXREMDdKQ045eWZtOEQ1cwovRGxtWndVNTJTbnBzdC9mVWoy
+Vm9ZNW1PYnA2dGRxaCtaWjF1Z1ZyVzI0S0FWQzZuU1c0NjNoVVBtZ2tkZnE1CnA0YzExRCsySGpw
+eXJDWUphck53TTkrcHdXdE56UnE1NUN1WEtzRT0KPU9la1AKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000048d84c065d6eef29--
