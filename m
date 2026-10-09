@@ -1,116 +1,223 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884504A4EE2
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 15:11:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0513B5DED
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 15:13:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791558703; cv=none; b=q7mZeeAEbJhkrJ8Yoxv+JTmotbgeHDIdGNFegW0t1F/y+uO7MBBw0EcNx7T3ca3cknc49WqvCMBpJSxewoZRHZcx0fVVX/QiVFNbcUZX8EcxjMsb6dcnUrxcTXZ8wNcift5ttnBEqjCdrEHzlnqPOpbLLTn+w0QkZ8ECGCvjsrU=
+	t=1791558827; cv=none; b=JbdvmNNnUGk/60l6uHFv8FaIyY9lIU3N/F00yl1Uf3JGvAERsx4lPDzXFwMASaNTsN1Db8A/GvOUqQD1vF3pTUAVsEhX/JOsvUhodS1C4v2NMjHMaFtg4SzFI95QowDSWFjMhTJPbzLWJzdpNgipZPEBId+ktvQ2FgMF6Fp3ZW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791558703; c=relaxed/simple;
-	bh=RGvadsL8HA25uYpy6PfyPLJApSjEEAdohuCULnvfcfQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hi6SEVyoIzd7DXpPvnMDFRHHeVtJfg3p7EQlDLAGFSnXO5ac6byH7oBvDeAxN/4imN6LlX9LEFG/I5uwsnVIGQoJqWI5OC4qESQSoC8joeHJb3vqd1B7ukVEccFZwNpAGAePTW0Yalv7ya5hG6fkJYxVHfU9XBX3Wo2oNd6sWeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mIiHK+tr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sUxAbZvQ; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1791558827; c=relaxed/simple;
+	bh=mKxhxSyWv2+GCqCbOoK0OIpzqakpZzNCoCM6gwLWupk=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=av4V7aGYcIWiFf5Fru/kHdHTkQ3p84Pu6ZoJ+Ju8WmmsmsXcuR9ZKHQlE0XI13yycXtd+I9P3TsWFdxWAZ6lZi/Y4FVKyWpXzcQ5qnCY1OuLt8rL+tP2aB2kiADhxL2cegbXWwo/i8jFeXbQQFlCNZGDgkigY/cUdZUtOBxYQVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ltby6gtk; arc=none smtp.client-ip=209.85.161.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mIiHK+tr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sUxAbZvQ"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id A012CEC0072
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 11:11:40 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 09 Oct 2026 11:11:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791558700; x=1791645100; bh=iJCgmTrPSe
-	xwvbQLmVIy3LgdD/Tcga5wR+WHERsRedI=; b=mIiHK+tr05eONvPmpFcVHX9Zny
-	GWBO7SjJ4GDzk4tWUj0ksqjizPAMcquK5KTF2OwmiwKE0jgPx5vozfX6JeKHcti1
-	UqUDfjR/pHj+mBkebDRum4+UyqhjTXuZ1cbYQw4gG9MNYk1nP45xB4KHZOv6H2LB
-	pZjZOp62c8CgsjGEXK8z4eV4D4PX84TwtaSAMzzq93Sg1ZD5GTHTvELpGJaUd41o
-	MeJHN9Q/swj2u54IowaWxNCSAYQNmh9f4kY39iGKRJcg3G2RhpmNYmlhQD/otZI7
-	ohU5P5U+MBE6IyImKUhyQpgsI+YgK8TPN2jGMCzEV6IGLZsPAEFQAlixBryw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791558700; x=1791645100; bh=iJCgmTrPSexwvbQLmVIy3LgdD/Tcga5wR+W
-	HERsRedI=; b=sUxAbZvQ88VLs2XQ/1GLwqT7NnCQWQ6qWXjn+1O5N1tAawrVgEb
-	HFMLnILfPB48Xb501dVCjgX03ps/iMN4A0/RwZgBNsFF7qedk++OM1eZKSgwcH7E
-	UdJLTfSAWZ+MSkP2XJJNJxy+kpDbjZB8pYQPAtAVm6lsBqYBUxfAYpMc9ANgGwv9
-	QE4cp1FV1IMkYX/dp3pfd2FjSJxximR90PDb+T46VVl/tn3FG7uoYiAZCZDYudJw
-	ecH2cDCRJRVP6AdfBb92LXDl3b7zgOvzTtgTTpiJgozY2/Jjgvq2cp9US4QPTh4M
-	FTx+I30TsBdZXk8egJSwk9JOxSde1qV/l1g==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791558700; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:QJfxgWzDyDhyQcC2w/9MR62CONF528NuNYSKR60cZX0NDOR
-	uZAVu0jLOnvteK6jR+ZkEUQ4/RBMulRRkHBqB9ajnK+B/wQmODklRp3kLx3+fXqi
-	rF6NVwYmHwEln8D86eb2ua2RrwbTWEyzkuP+8EvknibevdcIugC0uR3c5ajyXZck
-	3Ci2eo+AHCImBkIOsjaetSeeSoz46glXJB1g/PPt8IrPKA+GIHpfwKJVLbs7EDDs
-	a/ZEJsLLKk0MBh3Wk/Yvh2BZuQvRM6RlLHcAfcbEVjb/klqmpADIu2wkJI1FoPKU
-	xBY/HnusuvX/QqRbwYXm+DD6Qj7zkrs0jyEPkhQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:MeSNfyAm5LrEgvnr/Ns3u6gOgyb/21APe/gal7qFeXU=:RGvadsL8HA25uYpy6PfyPLJApSjEEAdohuCULnvfcfQ=;
-X-ME-Sender: <xms:LATJaumw_xYaj91HEe0fWnZ3S3k8nsp4KSbO6woH5lc2LD6Dcq1TdA>
-    <xme:LATJapjqDKBqHhbiHr9aDck9lCD2-q0voqI9Repk9z55negzXcM6XVUb1jIuD8yWt
-    U552RFYyoHrUZkq0JouzgO_fHH6-a2Lr_arZz3-hI5mb7F1qi_sdgs>
-X-ME-Received: <xmr:LATJamfNJx2Wp8b7eJAKHc-fn6u2iehz4A37W_eVHb2J_TG_1XMPMHYanHLjKHwBjNVNk7fz-US20zxobLMU4UHHxEYMhJm933Ii>
-X-ME-Proxy-Cause: dmFkZTFjPzB/lADbmrFEQrn86mapCAuPdinJ8WO5NVZCicVhMm1PVZifjZnz8GERk/JtBt
-    pK6bKVXH7kWlFOJ+ZOwDf9fgTvUQu1DG0HWDx4FRwbW65KO74cBVSV+IAqw4BzZBhy6pQv
-    BHZWOyzKe/WaLRyLz+YEeuv1idS7LlfL+TouAlSp54rXEQRj9q2e3ltScMsockTm5E0Bd2
-    nTZGq7sGFa70/lIL7ETuRD/65KuIzZ9NL6eY6GmUZK4LuPAfXK7OCp4m/p87T2KgHCFAuv
-    F9wHA+sSIB4xjb9jFr5UvDb6mRxh36gERNJQ4GbutsbbT/ZfozqF6QJKQwqcQRyNCQnEUn
-    gbhg8Rlnoa1FzkL0IAYFx6gjFugcppSosLVSV9j90aNDIWyi0vdyais2Icn4OQqUgsWicY
-    iuYECkwOLpPLCryQUlTguwRTAOlnfmJfNt9UHKCSsGWThb2+CKwdwZ40IMUupc1K9vjxHl
-    VJOzVtQm1ASorYrSAgtact/CHId/UahHTS5VN690dzx/Z8OIHJ7MoPzn+ED/k0dRWramiw
-    xnl1SPByWKONxA46c7Hf8wwx/Kc8tK+BbGRnT/igsMyslcvkrwTgaUrYurYrGqkPPGT/lm
-    pKdQ/sHoVJXqNhjDNDKoFishH5SPz5eGX6Sq02GptXO2hJPqXDoarjYkbVLQ
-X-ME-Proxy: <xmx:LATJaphuXr2DGTjfzuDuSXXSvR4EaIaKoYYMfl1UbReTu69yJPgMyg>
-    <xmx:LATJaux1J6OttlfA-k2pNlg_l78PQgX_IaN72svZNREskBb49JVR9g>
-    <xmx:LATJalNcf9i6HpJgZNGxw0_ktNhJW24vHXiX4OYfRzRda8nUClwp1w>
-    <xmx:LATJavVXub8xBN8gvoLpgRwk887EK6SW4V_Lc5qkPiYsZ2kS7kLsQQ>
-    <xmx:LATJaobOO23Wkv-hF9A8OsnLt6__5Qh_aK39GHwoJ3JJCnABnPABffc7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Oct 2026 11:11:39 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Qin ShiCheng <qeesung@live.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
- <ttaylorr@openai.com>,  Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v3 0/5] repack: don't lose objects to a ".keep" that
- appears mid-run
-In-Reply-To: <SJ0PR84MB29933F55E298B09B37F2778EDD922@SJ0PR84MB2993.NAMPRD84.PROD.OUTLOOK.COM>
-	(Qin ShiCheng's message of "Fri, 9 Oct 2026 11:07:27 +0800")
-References: <pull.2219.v3.git.1791453141.gitgitgadget@gmail.com>
-	<xmqqv77cyp8u.fsf@gitster.g>
-	<SJ0PR84MB29933F55E298B09B37F2778EDD922@SJ0PR84MB2993.NAMPRD84.PROD.OUTLOOK.COM>
-Date: Fri, 09 Oct 2026 08:11:38 -0700
-Message-ID: <xmqq5wzax61h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ltby6gtk"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-6d7e06dbcccso3008781eaf.3
+        for <git@vger.kernel.org>; Fri, 09 Oct 2026 08:13:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791558825; x=1792163625; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ixnF9oIAduazWco89trgc3EC22IABj3esX75Ju6OJw8=;
+        b=ltby6gtkVmbTG7IFQQvg2hrXwH8z4u0Sl3eG7OgVAE+GmXJLJhkmzr+Dsu4ZM8DY/e
+         7QY9JipayRUShoDGbaEHjRyYtS412dgfmbb/XSUIpIb5plj32/pmBdDQBIKPy0cSzouT
+         K269w9lUDEFeGOvjaaqdbkYcOhinOEsNh/QbXTDrX09WguzE6tRTX6xMwQbwjAPEzT5e
+         qAdlym+Mvy4WIJJOurfgE4pSF0tVNbSOMDLj0/fNHMw55zQuli/rHtECvYs/ueQszimi
+         LTreCTXrR5fzvGRzD+33nbjMhs7hER3vi3c9s05MCjPJBpHWo1NzPjuRkGmerFw9yzwk
+         5rFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791558825; x=1792163625;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ixnF9oIAduazWco89trgc3EC22IABj3esX75Ju6OJw8=;
+        b=sPjO4yM7xTGp92N/Gn3dBPIvTNAngNyUi9sJ7PhVd4IdHBhwEvbtFmom8M3U7mgJI+
+         RXS9jBaaz4I5ahJUKthvWaI71WILVynnig6N5EmGD4LcQV7GlK9P+Is5zEel1p/gOrOP
+         h1Qd7FEhBPbfjXvh5KsmesipC/Vra2UHncmpp6f3bsofB2JdmT4KzEy9WmDJKEZkDrfP
+         +kg118RsPXn1gtcnjzbalfWpd9GufGQnW/s8Lvvf/duc8rQ5vrv6FiUk6Re7v8cB3We7
+         /FnvOtFN0T6ip8A6ZdPg2TnCzBqHAM1H68sJlRKUiCTeKlVaMx6wZoCgbaUfkADXtMjA
+         OVfw==
+X-Gm-Message-State: AFuF++lDuUGY+uAX3QyR95S9M8hRCtHhZsppnedokgTOTcgkcaS0fn5f
+	/JqkzQ5ItTdur3DZnRgG7BXhAnplO5NchkPNaP/FZLD1Hq9Pq04hkhfJwme+og==
+X-Gm-Gg: AYBFou3aQGOOFCPCYgrrybBSq9K1Ad+4IINDcVzjbBOnpwtdStbdgicrCMrN3FSdQhS
+	Zrk51TLRotLDGPNzGcfEAzOzQcPQNXCj254NA8A8UHPmk3tBXkeH3w30tSPDWmyu2nLSRQDBPE7
+	wOhxxu8ovM9ggcomoj1E2++Fs5y67EvzhJM4K8E9ktItMRvTjP2yepzuI/iuU4BtG4vNxo/Hzyd
+	QPTDDBTqmk/TNefR140whx1CJ4uRtGdKm0p5r7+pj5EMBkvPi1IIM8UjHGP4qXXdz/8dLQwY6KV
+	N13yWKtFiiNHGpdys9CZD5av5Z9U4cxT0Mu9sMy4iDUScbbzwP9cxf0JwN2sUe0AiF5NKXfqXaE
+	gACzcSE4DoOx7DvrJ4gOFvdUaDtz5KxgceT2sputKGyD5jjTnLGn9p5jPFo31+0NGfzWWQT3wfk
+	k/b87UsPZt0RSfBaH5IFSeM/Tdz5EGvxjV4n9U4k4wZdwuuNxsiIEVQVB29XW+Gf11BtQ+kis=
+X-Received: by 2002:a05:6820:290b:b0:6d8:9568:840a with SMTP id 006d021491bc7-6ef0eec174dmr1688426eaf.46.1791558824650;
+        Fri, 09 Oct 2026 08:13:44 -0700 (PDT)
+Received: from [127.0.0.1] ([20.29.29.27])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6ef011ecbedsm1823143eaf.8.2026.10.09.08.13.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Oct 2026 08:13:44 -0700 (PDT)
+Message-Id: <pull.2249.v3.git.1791558823445.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2249.git.1791291762665.gitgitgadget@gmail.com>
+References: <pull.2249.git.1791291762665.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 09 Oct 2026 15:13:43 +0000
+Subject: [PATCH v3] status: suggest `git merge --continue`, not `git commit`
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Julia Evans <julia@jvns.ca>,
+    Julia Evans <julia@jvns.ca>
 
-Qin ShiCheng <qeesung@live.com> writes:
+From: Julia Evans <julia@jvns.ca>
 
-> Makes sense. I will hold off until ps/odb-files-alternates settles,
-> then send v4 on top of master with that topic merged in, and say so
-> in the cover letter.
+During a merge conflict, we suggest using --continue to continue the
+merge for rebase, revert, and cherry-pick.
 
-Thanks.  In the meantime you can participate in reviewing Patrick's
-topic, of course, and that may help it move forward a bit faster ;-)
+Change the `git merge` advice to be consistent. 367ff69428
+(merge: add '--continue' option as a synonym for 'git commit', 2016-12-14)
+says that `git merge --continue` is intended to be a synonym for
+`git commit`, and the `git merge` man page already suggests to use
+`git merge --continue`.
+
+Signed-off-by: Julia Evans <julia@jvns.ca>
+---
+    status: suggest git merge --continue, not git commit
+    
+    Changes in v2:
+    
+     * Use git show -s --format=reference to format the reference in the
+       commit message (thanks to Phillip)
+     * change to "conclude the merge" (thanks to Phillip)
+    
+    Changes in v3:
+    
+     * Actually format the reference correctly (oops)
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2249%2Fjvns%2Fadvice-merge-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2249/jvns/advice-merge-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2249
+
+Range-diff vs v2:
+
+ 1:  afc69ffeb8 ! 1:  27678e07a8 status: suggest `git merge --continue`, not `git commit`
+     @@ Commit message
+          During a merge conflict, we suggest using --continue to continue the
+          merge for rebase, revert, and cherry-pick.
+      
+     -    Change the `git merge` advice to be consistent.
+     -    Commit 367ff694281ce569edd8f6e444fc770f92f5d215 says that
+     -    `git merge --continue` is intended to be a synonym for `git commit`,
+     -    and the `git merge` man page already suggests to use
+     +    Change the `git merge` advice to be consistent. 367ff69428
+     +    (merge: add '--continue' option as a synonym for 'git commit', 2016-12-14)
+     +    says that `git merge --continue` is intended to be a synonym for
+     +    `git commit`, and the `git merge` man page already suggests to use
+          `git merge --continue`.
+      
+          Signed-off-by: Julia Evans <julia@jvns.ca>
+
+
+ t/t7060-wtstatus.sh    | 8 ++++----
+ t/t7512-status-help.sh | 4 ++--
+ wt-status.c            | 4 ++--
+ 3 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
+index 942ddbbf0e..a9b435b5e3 100755
+--- a/t/t7060-wtstatus.sh
++++ b/t/t7060-wtstatus.sh
+@@ -37,7 +37,7 @@ test_expect_success 'M/D conflict does not segfault' '
+ 	cat >expect <<EOF &&
+ On branch side
+ You have unmerged paths.
+-  (fix conflicts and run "git commit")
++  (fix conflicts and run "git merge --continue")
+   (use "git merge --abort" to abort the merge)
+ 
+ Unmerged paths:
+@@ -141,7 +141,7 @@ test_expect_success 'status when conflicts with add and rm advice (deleted by th
+ 	cat >expected <<\EOF &&
+ On branch main
+ You have unmerged paths.
+-  (fix conflicts and run "git commit")
++  (fix conflicts and run "git merge --continue")
+   (use "git merge --abort" to abort the merge)
+ 
+ Unmerged paths:
+@@ -174,7 +174,7 @@ test_expect_success 'status when conflicts with add and rm advice (both deleted)
+ 	cat >expected <<\EOF &&
+ On branch conflict_second
+ You have unmerged paths.
+-  (fix conflicts and run "git commit")
++  (fix conflicts and run "git merge --continue")
+   (use "git merge --abort" to abort the merge)
+ 
+ Unmerged paths:
+@@ -198,7 +198,7 @@ test_expect_success 'status when conflicts with only rm advice (both deleted)' '
+ 	cat >expected <<\EOF &&
+ On branch conflict_second
+ You have unmerged paths.
+-  (fix conflicts and run "git commit")
++  (fix conflicts and run "git merge --continue")
+   (use "git merge --abort" to abort the merge)
+ 
+ Changes to be committed:
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index aca4b6d332..f2e712ac39 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -31,7 +31,7 @@ test_expect_success 'status when conflicts unresolved' '
+ 	cat >expected <<\EOF &&
+ On branch conflicts
+ You have unmerged paths.
+-  (fix conflicts and run "git commit")
++  (fix conflicts and run "git merge --continue")
+   (use "git merge --abort" to abort the merge)
+ 
+ Unmerged paths:
+@@ -53,7 +53,7 @@ test_expect_success 'status when conflicts resolved before commit' '
+ 	cat >expected <<\EOF &&
+ On branch conflicts
+ All conflicts fixed but you are still merging.
+-  (use "git commit" to conclude merge)
++  (use "git merge --continue" to conclude the merge)
+ 
+ Changes to be committed:
+ 	modified:   main.txt
+diff --git a/wt-status.c b/wt-status.c
+index 57772c7501..238bb48643 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1273,7 +1273,7 @@ static void show_merge_in_progress(struct wt_status *s,
+ 		status_printf_ln(s, color, _("You have unmerged paths."));
+ 		if (s->hints) {
+ 			status_printf_ln(s, color,
+-					 _("  (fix conflicts and run \"git commit\")"));
++					 _("  (fix conflicts and run \"git merge --continue\")"));
+ 			status_printf_ln(s, color,
+ 					 _("  (use \"git merge --abort\" to abort the merge)"));
+ 		}
+@@ -1282,7 +1282,7 @@ static void show_merge_in_progress(struct wt_status *s,
+ 			_("All conflicts fixed but you are still merging."));
+ 		if (s->hints)
+ 			status_printf_ln(s, color,
+-				_("  (use \"git commit\" to conclude merge)"));
++				_("  (use \"git merge --continue\" to conclude the merge)"));
+ 	}
+ 	wt_longstatus_print_trailer(s);
+ }
+
+base-commit: 5a7d1e8045ce66c908f62598e26cbb8df7b39a90
+-- 
+gitgitgadget
