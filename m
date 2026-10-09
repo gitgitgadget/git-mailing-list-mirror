@@ -1,89 +1,89 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACFD2931F7
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 13:06:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15E42236F7
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 13:10:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791551168; cv=none; b=n3n3sG1IoczrKAmwj5kbDLeLnG98ov7gX2tRY9tUZlaaYlDkdOqcEgv4G6Oe8HNCEE0c2jVHKJMdyIuML/SF72MXdQLlLMI5EWJehcGPVkE4nHwhrnT3Apptytn37QiFl36nyxfNLGbZkdMeQzjxjKdrfvjRXdLZq9NjtIi+mC0=
+	t=1791551418; cv=none; b=DR1pEIZqnpZsOPZMyLF4ySYME7wp2ln99JVpYm+h9fqnjP7xWkfeNRLqrxLxzvwhPMjgHBxwaFNEUeildmgL5hJ9kZRfHu2hbK/RN1tFthQGE4ERMqK9nAirhrvjraKdOb6WjYIGh+a1LPeTnZuy7XWAnJ6sG0j7ZvioGf/5kko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791551168; c=relaxed/simple;
-	bh=XRNyPuP+GJ8AzGaSco3/wM4DoQcmMB0D6AXtEdUzvOA=;
+	s=arc-20240116; t=1791551418; c=relaxed/simple;
+	bh=6eSo5vaEippKa8Bsyn6+l+fNfSizLOzuHw/0NYaVU0I=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=gch0UNHarIKCfpHZRABCySnveuDWJd5zdSMEQrmrizuk1lkZhcPuCH8QupcxrmzA/BUVH8iC+iPSsIW1U3mm/7LAGpL4+m8+E0vy/MARk+ErJgyLLingj/CGwhNKs8kVZMchcZKSsTjr2hjq+mBWawIow3eykLdKW5pxQaxGa/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=Fkjv0hkZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vWQyNzIL; arc=none smtp.client-ip=103.168.172.144
+	 Subject:Content-Type; b=debh0g6N8Xb8MBwwbFL8cWmEtFaIn8BFm++sIJ0Z2AF+z240PRkgOXD7LwPZKWwVPkANzcpg7iLU8eJF5dR6d1kU1sn4XoIIp9TyLcuKwBivFoG1Q5CounWF8iPyM+IYC5Vn9uH6ruDS1x6eMGZqD1UMTxmTzJsSINY1Qdc3IxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=Be3iYCz4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AJDFA7vP; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="Fkjv0hkZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vWQyNzIL"
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="Be3iYCz4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AJDFA7vP"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id DE7CBEC09D3
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 09:06:05 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C726F14000F5
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 09:10:15 -0400 (EDT)
 Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Fri, 09 Oct 2026 09:06:05 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 09 Oct 2026 09:10:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791551165;
-	 x=1791637565; bh=bDao9z8MqoY8Yau+BbktrD3BG1V76D6L52jGDa9mNl0=; b=
-	Fkjv0hkZNHaP/h6A2jVhB2Z81nh9gZfq+KTzRjEGqMGYofCwauG7zIQM1E65QNxD
-	dXL/k0N2Yy62bl0gTWZDbaWeU/fUlj8ybUKT0GOWupMHOmMvZSlmeib4j36d1reY
-	lHLCmFdK6F8kkP3hBAd1K76UK78itJ0j9Jr57aFED2Lbn8A3go2XgkAV0lC73hon
-	PIEKWuAIhEgLxm71DRkA0Oe3MzuaTbhPqQXx6qw4sNeXXOzKE0CTdj5SaVdLOUwK
-	w2kpfH9qVX3tSvABpTeq+N/OGsqY5W36Eohzn+Zm/t4vSg/7JdsYkE8L/KkmUOMz
-	MqlwelY6FukzUKT6Es8epg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791551415;
+	 x=1791637815; bh=crlgDhesCf5JuS5ihfVvJoQVcFEdpkcYQ6v2/EVTCLU=; b=
+	Be3iYCz4sJVLooow75HA4e7FX/JYGtWX0viuiXbxJTE8gVIIBvyh184dEiehTdTu
+	gW5Rmq955Ey36wKrFVJXzddTRGvJ3nvZttd5WY7UvXuZrCo803G8yqnEwo+DXBYA
+	X+OSOZILaQ6BOg00yNiM6ndQ8apZUpoDkGlSj2b4TkdzUFik1Lprv4DRcVFkHt9W
+	ospLgBQBZgtb3fCLJWf+9N6NzPPWgawgruUFo7eDYwDbRSNzpGYNng3Nh6J0JZHh
+	HFBTz/w16/PLQvGgZ1PiTIyjRhwPL1aHWCqOLRlIIpJe+c4tai1S4gV2lEZK+bXI
+	QS0R9cS4lKDrgmAnY41PLA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791551165; x=
-	1791637565; bh=bDao9z8MqoY8Yau+BbktrD3BG1V76D6L52jGDa9mNl0=; b=v
-	WQyNzILGUZ5DfoEfgTfr1/n2tOLuqJAZgjXsNbhFNnF5o0GPduxdS5uZiuRHcijA
-	c5oh9mZr1ieRS25fh7yLCOrbs4QHdcQswuf48L5TdSQG7o0RRaHrjLVzRs4Uh6DL
-	R9gAtDyBY+musOahdumemKrxf0JkL8WxhdDNktGhQIZj36h/VlIlxTLtGrFTFvUt
-	zBO9yiX2qIkZISBpgCYa1D6U3CBOEo7db9GDUAscyh7mq4nVMv1EIMbVNqMKqzqc
-	o2KFD8t2wQEi58nYQoU5bVN+UfgnIkpSVt8p7IjEzJgFgx0KD2jpwS6wg811Dvjz
-	MbvaTwE+wy5q638nG4PAQ==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791551415; x=
+	1791637815; bh=crlgDhesCf5JuS5ihfVvJoQVcFEdpkcYQ6v2/EVTCLU=; b=A
+	JDFA7vPwtgiIM0j5juvQy6m1zWjSNGQkGnOj9W0Oe4G95NQOWmlYdbTe0NubiLe8
+	tGG7zKsIJ8sDgsy+K++bauPTXmexf47rb1cme1qzHBQWLfoarbHuPBjNZOoqhjUI
+	AKEKA43y+NNo7zlErhxzJBSc7rGQHbjWhd6yPiFxTRQUtHySdR/lUeG1yplf8OZ3
+	nU5hljapZH1DeWOs9adwF8j1ZmvhwVR/VUeuzSXPyRdZGmGWxGuVq/BfbeOvIQFv
+	I6siOuCR4+VF6ykD/79Bpe0uCZK+pyOzsnAJdp6OJqVzrPqxaXVeeCM6UTgAWGGs
+	OcMsu7m8Cj6MvG50299XQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791551165; d=jvns.ca;
+DKIM2-Signature: i=1; m=1; t=1791551415; d=jvns.ca;
 	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:GB5oEsrCOL1qsJ+gUpi/h/1ZAEaGzf0q4sxNtju2QB8ADb7
-	1pqf7kdRzyzCnaFjc1MGP5WddQRJUbFXQ/zF1ZdpBFloI/k/E6Arojqjry1R1pCG
-	SL2cSrEziqaO2JnD3hjIK1vKk0Rc476iZQU2VjvKrbySA6KSMf68EBovcux6p6lm
-	i+D+WireN/JcAfugCep4Ia1udYbFUztTTus7QO458pInPHLmCdFvUDCgSiEG64Jp
-	/GY5THhEJdouZ0cIG11GRwFJ8528jubhcnp3+83JXFa4G/f1AdFzASYwzl4YGbrR
-	/B2K/ESK/oyzQCixFBauo4dx4HHO/ZhEm1EVmQQ==;
+	s=fm2:rsa-sha256:Gh7gTAPcDC4hVTuwxhSfpfLysrFz4rwxkpEFiY9ffXnP7Dm
+	89ozG8AAdnnZNJ8L/BSY8FBuj+7qdtT1r5NmDmwb17Z+DqMwYc9OvtNUm3aDtJCV
+	lroB0VCzyPSs9gMzxHCWp+FXRRWZsUnIqVgi0svKoPsKJb0kSO+Nbkas2Wvys4O/
+	RmGPyurDiOEPlOV26yz+3p8vTlLtkuyn7W6pFrU4MbN5PTqvb4siXErySL2rl+i3
+	2p9zfsVe/3oq3/IIM+g+xQqJcu2PglwkZcD8oUhcSc70LHzaU3H/7QcD1pf5K8kW
+	8GsBASMzOLby5eovz6zw1q4zeDMt7HY8OtFSdzQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:A3+A0R8H4kaRzKZz4+5TosKhmptIpR8IggrNCNMDrpU=:XRNyPuP+GJ8AzGaSco3/wM4DoQcmMB0D6AXtEdUzvOA=;
-X-ME-Sender: <xms:vebIaqLJqHEw5-W1dq3TUi6iuuR-QBmLTequf8ni2QNLuDlfcX_aEQ>
-    <xme:vebIas857EJ6eU9ObLF60Mtp-Eq--r0riVcPcpq-DksKOUIhY0e6NGxgfBXbQkNkf
-    y14n-6VQJyrZEdFpJdLiyALIVX62yxOZ9h6GBovthBJNVSxuHMtXawC>
-X-ME-Proxy-Cause: dmFkZTGJiIpE19LNQ0czhe2m76CoMTrZ/LfiruruHD4AQ/X+KJ2Lcsj+T18npIDy9YCAPS
-    Y0FT7vPRNRpkhV28/2uckelQVMo+gEuGKyLwOkiDNCFAAyQJ8AVhzA8X+ARIRjH3HGtkw5
-    Fp+QbGhoLRIjTDUcEDPDoixZj8z2aHq9+w1Mk/I1DD8V5pMPKAQKQgAdSPyEU07LDRCV70
-    2UKtk8e/MyAwS3KfDWoV425YtA5//D/23oWA3CAImwygZTPMiF2WbUVvxOyQk04Ir0KyOQ
-    fMFk432X2vGAopiBsi8itD5swT4DjmciCZ1MveDbC322KbsLKvzcmJx7gxWAa/iAs/3pAF
-    0Kw0WOJqYhb6a9yNGEtcBNNQZZ90ONWD3w5zxnomaJcOFSGVVoCmloaJS+ig5jS8LwouyT
-    /7bFJVDIEVY2k/hvQFO9RvxxBKo7vI5+j4BMvKEJ1rjz85p34N60lvrgzLw4doe556vC6k
-    YOebVd4VytRuKzYW2Wh4I2qvvpT85QvDjOC10izCFWj1trjwBS4xVGLT27izZrDrMqwsYH
-    VWAfAFi0oehfnynddGtA+A56KSux6u8vbtVZfqzhafgP1xP3JA5jWX+zl1R/mWQLIuzEfd
-    AENCPGfXlmrvhtEoR+Zto5tu8UJX3jAtIt0shNPrTZLfinnhijxBavTmdBLw
-X-ME-Proxy: <xmx:vebIaltFpM6YioMhLlZsIBEBd8Gsu4ntiKriVhuGqhZgJFXLjLMq0A>
-    <xmx:vebIaj1dEPQiSNDspY_SQ6bV1oaOG8EmZQh4ajoI0WhRofUw_VgCCA>
-    <xmx:vebIao9nJZQTEhhgH3gmPpFA47NpqfejJU_1MNCSyEyfI75eJcJyeQ>
-    <xmx:vebIasMk3ss7gepEYOS1HqtCFntNkJ1Z_FZTqwF-7moByPZGsDxz5Q>
-    <xmx:vebIaoe61wIWucZJ2xnOQrduq8AFWsyF1H4pFFzFep9RvPWEa7HgRtbg>
+Message-Instance: m=1; h=sha256:NUKJiYSFEOpSuIv93pAeZg/25avLlKJ1JLyo97CfhF8=:6eSo5vaEippKa8Bsyn6+l+fNfSizLOzuHw/0NYaVU0I=;
+X-ME-Sender: <xms:t-fIahMkZ4B4XSGAZoQCsJQgTtL43XM4qLxF169JJdhz9hFhbsVhig>
+    <xme:t-fIauxBZu0w7Zi-XQgQ5ikx-xnTppm_Oygmid1nC-NYkaBL3hgmlbjah5ByX291i
+    zHO3tx5BHgO6jLjoUEsyjMjlIRgjPxCxv_FJQIXkYXpva15JF-g5N0>
+X-ME-Proxy-Cause: dmFkZTEHFvp/jIMi5Us3Biv6DNPo4lY2K4v9aqj6p4Ib+qdNzooAboXidyvLe+PScAZXbB
+    7hunn5xsuwcWIvx8ipuaZ1/QVDlHeLUd8NoYldwpq9sAB+YfmihjNQ36e9eZGotwWRkyOU
+    l4FDkUtyXTdzmNLe6Hu9xhyp+U+lg9BQ88C1HWurJ2bT1xCTHFr6vjK42GVzDsqcz5sL5o
+    YNc5vWmJtffK3zUoVb9DECaoxtep3fWhRHbPzNChFi7ilVx3/IrPnbOCmsUlPfGafHhf1M
+    xz2JNLFknIM/YdAYZDclZ3U1xkjILcD9f0Rl23PLToWq4CLwyaNGYuKcXJ3SF+iCNDo4ls
+    Jhm5RBOaH/IVag08lu+mKWcr1OQUJN/Tscf5/nV8vBfc5tzZpl5Km9KpPCG1PpCOYo79cC
+    oZSv0LbHE5z/nz+yAaeRib/Y3surLN2F+/cUmCKQGqRgJ4nBmxSwzs+wstpJCs0FCIMyaT
+    4o/8qKfpSnfvWuxRUOdCGVgFFpWDBKqv7pBuSkVfySMZRC777zu/MaD7Ak4if2t0Pv2I3Z
+    ixe5MNygsDpWxvDy7JPOoo/ISP/Ulgc0jv4YnUKuZDeW8XYx7xCVSSYU/8egm9ck/w1n6C
+    vPjFvwRX/GL/UgwB99txU//lB5WQvG2bTnKr0qfXxdg1OeQq43lRhSW1sd2Q
+X-ME-Proxy: <xmx:t-fIag1cGvCG6qpOdj7zzmW2x1f8xbBTM4-icAXdWWcVBaAvxwjpRw>
+    <xmx:t-fIao7tCOVvMudubGKRcyQp4Gxs-c5YA5-5OAwr5e5yPdIbUsiHbA>
+    <xmx:t-fIajXvY1o9o9aPuneBNG2HYFN3tDePFj46GpTWo3U_d5y_pBufgw>
+    <xmx:t-fIanDF6A6bniIhFRzebDVohldZ5v3ZDnOCG9JachOGGmlQnIdtug>
+    <xmx:t-fIahLvELRDXuExLRLHBJ-nSipbVQp07CfMbSkuo-5EyOz5bs61A9fJ>
 Feedback-ID: i2aa947c3:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 6BFD3780070; Fri,  9 Oct 2026 09:06:05 -0400 (EDT)
+	id 931B9780070; Fri,  9 Oct 2026 09:10:15 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,46 +92,92 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-ThreadId: Aisr1WIbeEPB
-Date: Fri, 09 Oct 2026 09:05:45 -0400
+Date: Fri, 09 Oct 2026 09:09:55 -0400
 From: "Julia Evans" <julia@jvns.ca>
-To: phillip.wood@dunelm.org.uk, "Julia Evans" <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <2423115b-aed4-4af3-a200-15939824d1b5@app.fastmail.com>
-In-Reply-To: <3a716db0-4c40-4407-9237-f83c0dd37ad8@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>
+Message-Id: <23b09149-ddd6-4b29-9a30-3ce3ab323e22@app.fastmail.com>
+In-Reply-To: <xmqq5wzeelmf.fsf@gitster.g>
 References: <pull.2249.git.1791291762665.gitgitgadget@gmail.com>
- <3a716db0-4c40-4407-9237-f83c0dd37ad8@gmail.com>
+ <xmqq5wzeelmf.fsf@gitster.g>
 Subject: Re: [PATCH] status: suggest `git merge --continue`, not `git commit`
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
+On Tue, Oct 6, 2026, at 2:20 PM, Junio C Hamano wrote:
+> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> [Administrivia]
+>
+> As you have
+>
+>     cc: D. Ben Knoble" ben.knoble@gmail.com
+>
+> at the end of your pull request that you gave to GitGitGadget, you
+> ended up with a bogus Cc: address that reads
+>
+>     "D. Ben Knoble <ben.knoble"@gmail.com>
+>
+> you may want to help improving GGG by raising an issue to reject (or
+> ignore) such a malformed address.
 
->> During a merge conflict, we suggest using --continue to continue the
->> merge for rebase, revert, and cherry-pick.
->> 
->> Change the `git merge` advice to be consistent.
->> Commit 367ff694281ce569edd8f6e444fc770f92f5d215 says that
->
-> When we use the output of "git show -s --format=reference" when 
-> referring to previous commits, so this would be
->
-> 367ff69428 (merge: add '--continue' option as a synonym for 'git 
-> commit', 2016-12-14)
+done: https://github.com/gitgitgadget/gitgitgadget/issues/2385
 
-Thanks, will fix in v2.
+> [end of administrivia]
+>
+>> diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
+>> index 942ddbbf0e..a9b435b5e3 100755
+>> --- a/t/t7060-wtstatus.sh
+>> +++ b/t/t7060-wtstatus.sh
+>> @@ -37,7 +37,7 @@ test_expect_success 'M/D conflict does not segfault' '
+>>  	cat >expect <<EOF &&
+>>  On branch side
+>>  You have unmerged paths.
+>> -  (fix conflicts and run "git commit")
+>> +  (fix conflicts and run "git merge --continue")
+>>    (use "git merge --abort" to abort the merge)
+>
+> This message comes from show_merge_in_progress(), which is called
+> only when the code is convinced that it is seeing an unmerged
+> index due to a conflicted git merge.  We can therefore make this
+> message as merge-specific as we want.  The suggestion to use
+> 'git merge --abort' already does this.
+>
+>> diff --git a/wt-status.c b/wt-status.c
+>> index 57772c7501..f7b0dc29d5 100644
+>> --- a/wt-status.c
+>> +++ b/wt-status.c
+>> @@ -1273,7 +1273,7 @@ static void show_merge_in_progress(struct wt_status *s,
+>>  		status_printf_ln(s, color, _("You have unmerged paths."));
+>>  		if (s->hints) {
+>>  			status_printf_ln(s, color,
+>> -					 _("  (fix conflicts and run \"git commit\")"));
+>> +					 _("  (fix conflicts and run \"git merge --continue\")"));
+>>  			status_printf_ln(s, color,
+>>  					 _("  (use \"git merge --abort\" to abort the merge)"));
+>>  		}
+>> @@ -1282,7 +1282,7 @@ static void show_merge_in_progress(struct wt_status *s,
+>>  			_("All conflicts fixed but you are still merging."));
+>>  		if (s->hints)
+>>  			status_printf_ln(s, color,
+>> -				_("  (use \"git commit\" to conclude merge)"));
+>> +				_("  (use \"git merge --continue\" to conclude merge)"));
+>>  	}
+>>  	wt_longstatus_print_trailer(s);
+>>  }
+>
+> We could tighten "You have unmerged paths." even further to indicate
+> that these paths came from a conflicted 'git merge'.  In the same
+> file, show_cherry_pick_in_progress() and show_revert_in_progress()
+> already provide instructions very specific to these commands.  Since
+> the message for 'git merge' is the oldest, it is not surprising that
+> we did not update it when 'git merge --continue', the instructions
+> for cherry-pick and revert, or 'git merge --abort' instruction were
+> added to the system.  This commit moves us belatedly in the right
+> direction, and as always, it is better late than never.
 
->> `git merge --continue` is intended to be a synonym for `git commit`,
->> and the `git merge` man page already suggests to use
->> `git merge --continue`.
->
-> This looks like a sensible improvement. I wonder if we should fix the 
-> grammar at the same time so it says
->
->      (use "git merge --continue" to conclude the merge)
->
-> rather than
->
->      (use "git merge --continue" to conclude merge)
+Yeah I agree that "You have unmerged paths." could likely be made
+clearer. Appreciate the note about how the implementation works.
 
-
-Makes sense to me, will change that too.
+> The changes look good.  Thanks.
