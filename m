@@ -1,110 +1,174 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A71E3DAABD
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 22:10:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791583820; cv=none; b=s77zZdVR1tEpdEq4bYFvmtxQSSLRLhxer0nK653Akj4BdBrjw/5fOlXk1Z13N94amYh57FG+JA/mpf7fSCr76t5WT5pJG4HNjk5NGRyOhj2UGR1xf8s2YO73ZYURa3yVP5eK/1jOSISGQvyjGTkFW1HzcpIWkCEb8MQsheNJhAA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791583820; c=relaxed/simple;
-	bh=gJ0D9gEXxlHGAekbMII0uztgb1FPcigBRDYh0GtgoTs=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=BsBTHsvK1sn1KzSBoo6sWjCcmVPu4qr9VwuTaojB9RqvbRTcpSLRqe/UIpIpfsm/CLvHPcXR4LkXEoUeOnkiOY3CdruF/UHII7G40GiF15T3PebIA51e3h2f6k67YCjp9r8LIazVOHDDr6QVOnXeuDzknBLpdAlcPhGppuowoBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lZB5bnhx; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6D93CBE6D
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 22:16:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.180
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791584206; cv=pass; b=nm/CRYGAR2G1mo2ATtRJ06Q7zY4kj5baD4ZcCryIk0x1+kH6+4oBDzhE8i1BesVjBHvNXwuc9pWYqw+DJr3Obnz+1tT1fj1RcrhYZrFFTSLF2O+ixaEZGzyZ0ltJuW2ce9JROy+LHku47GX1jM77n7dBLAGYNy6RYB3QL5m6wjo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791584206; c=relaxed/simple;
+	bh=3tiO5IEptDbQh5QcytBsdrJM09A04XUZ/pK2mALN8SM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=azzXD+g+C8YWG3GjYoLeSS1z6RbE+hSXNflpbWP5KFjXMWUqHyIcGxqLIR3lH58kAd+UXfNQnuak+EntLbDlgAqQdtka9LqLjHVIbVjUvXIlUUK2sFHYZYTqYsb4de5A4tnytBl9PKGsTsNXUwoepphgr4I7Fm0qWeIw8Nkxmrc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YcHn/Pw2; arc=pass smtp.client-ip=209.85.221.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lZB5bnhx"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-5339381b46eso1804941cf.1
-        for <git@vger.kernel.org>; Fri, 09 Oct 2026 15:10:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YcHn/Pw2"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-5e78346891fso160745e0c.1
+        for <git@vger.kernel.org>; Fri, 09 Oct 2026 15:16:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791584204; cv=none;
+        d=google.com; s=arc-20260327;
+        b=gumQEgRGhrEWPVt7Sq1I6V+2JiNE4rEdqS0ee/W27hnp1SufL/5a4YISvCqdid02/f
+         usdxXv2NTMcJvb7uBfCb3n1XkZNF3mV5m+fhgT8ev0kT2o16eVUA3CGNbOPRa7yq2IP/
+         8skMDxasnAiZWOceUCaGVabGYqIFa1O89/Vh2gy/wtx6T7902H/EQPk6y6q70Bj7r8Fs
+         OYgSjH4vCD+hJ+ccz2MVhyckTSLZudLaoFOso//Oso124DGkJO4AYGDLt4gf9lX0KeWi
+         IhCCHESJ1R460No0v/XVk8+7TQu4vzCQ2IEsWKYB/a/mHqH2ftthrIUg27Xd86PTpfTv
+         YPFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=7qYa3XZ1m9zRvy95tqytKxsWHhV7e50n6QJhFGxza7M=;
+        fh=+kRAkb12Ma0Jt9TqX64HJGFo1HKzeZ9mtOnavejOXZA=;
+        b=l6GQL51rxDWYV3HabwsxuYiWzNTAJDofZKFcULRBSVUcCAN+GeF314Ywh8s2muR7oq
+         +bg5tw6viGov8LJ1H2GZDrOjBPpcsgMjIRrjks5tqOgNYUeKc2/Pvhrd81JkkeeFevdK
+         fAGWbLB0jsSER6C9T6+4WmLeYf4pdOQ044snlremmYzpUhJBsCNMeJ/dC8ZWulmzS5Gc
+         XdZgjVZDHfJeGPUAf/IF41YDkWZ0bhiL9mmfP6d5amuAGEYoPM8r8FPfWhVva1sxcIZM
+         VwjPeeQydu7I2msE3oZGrzlHwU6/wJvjIfzG6nI4Ld4yp/6VjA1ovq9chBd/7sEMUGNy
+         H/+w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791583818; x=1792188618; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=m21QT9A5CNwDPFpIUR/2VsccC1KEBbj88r+Mbwe+sAQ=;
-        b=lZB5bnhxSHrBtc5sUogWuf+AAyBpoLGRZigUmvmDCMjqyh69TgQ2BLQ3ndRZi+kHA3
-         hvrqkO9KWvXcVYaAf/H8QAo32rM9wFuNWrVZgPxfRYFrBrV+H4XUdVAkUr5p0hGemOYH
-         SnPtAdcUlmWFF46jjRgIp/0nyGe6kU1YFwifrps5fyuXyiLRohY9A6rrqA7uadPndWyj
-         BECl/7sNVEh7qTf4ECiVCra8gfSv20AxRswo4etza3NKzYPlMNHmjXiHQQChDHZG4Xol
-         EtJBbDP7Ga1OhUFXiu0CpMHdfsgs9J6kac0HFa1T8L5h6UVBbL99xjZtgiOKZ5VMvdwG
-         SJTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791583818; x=1792188618;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1791584204; x=1792189004; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=m21QT9A5CNwDPFpIUR/2VsccC1KEBbj88r+Mbwe+sAQ=;
-        b=U1FX7ud5FR8Wqh/f++6OlxoUMwEQbebsplH4CXkDFWoQW2gRq09WuSH3ZgoP4buoG1
-         85QKJfTEetvLd7jWH6yyH5OUukfO1lF1DIUpocG5lSl88U78GxB2ZD31mhlasohgG4Z1
-         AHX7BjPkUzniM1lgBH0DQfaElFeH8ywrRfrPQqCSdJU9pANV/kWXEVfqqTjb1KTqn1Oy
-         e57g82Qdo95IJlCDQklftyV2YT7XFBI0x78rPc9DEXCVHmW0TRoVJ/Fs+wWJKiuaM/d1
-         2jssOHBRr7VvD3jXmwExNkll/g452TJX+e0/J+b7q8zhJhu8SqXLbz7jtD9x377zbg6B
-         Lv0A==
-X-Forwarded-Encrypted: i=1; AKwUvBz6hof7anzOIztau/6UFRs8pzl1i/nuznKm/HEqcX4K1ZF+vQONlboaiu+RlVc6QRiVA1c=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKGKvpIovcL19IBLl5JT8nn5lZKUZxzcITLshhBKAIlzzxi8aOm
-	o5KGDiRGJEC9gqMKqKSJCjxtjbTXdcK6/tB1o9xOEJIrTUXZbf4TLlem
-X-Gm-Gg: AYBFou1Q9Va9B0OofcBUvqS6uVXcg5GUgnalCjA/Tf+mlfdv/RRU8BGg1iKy99+U/E0
-	6hwJmPYFuzeUYDN4kKRE7vpBZ67Ihtigihhp0PoIvmTvTie+1Rq8SJ2LqdjHHSQLHHUtq88N8jo
-	Z9FYgA1Etjw3lds7oUEpXQnOOJ3uLmqnhnPw9/E5KMVsnsrsOhDSh8NpCOhddDitO198V9wBaLu
-	iPky8GPPvCDIjQeWLXbpuS0PncJFsh2i+ZgB6VznupWSEx3njcTtExvrtnhWJatgCmmZVZX3SNR
-	hVxo7fC3vpdF3pqT0l3TGFB2PwUwAPOe8hp2PLRZ26+SAB2u/t6QzYwYfY1oYWSexsGjQnlwHDA
-	jLIiaecYR5I2sd3upAiZ754dvxa91CC73hQCPpNkB7zBXtY9pvzn/b+EF97XP3huI4ZB6yPA5Ku
-	v705Uogm8eJbIYBQiu7FNO439gO6fRHBZuhsBzXNXUjLYqsjGhvstmWOgcQwsFxUWUu3v4CUyL1
-	sTZL1jLP3H5N6tHV7Ot/WaN0sxlx/cXiG3qI3hanZBmIwu6GmipUKxyyOSAUfTiKVhD1lPnpKck
-	m/7qS/LJbwym/EU2dlMVA+teSnvjUhKuEOtK676aPXAGfBWw+S2M4FHtCSZG
-X-Received: by 2002:ac8:610b:0:b0:535:1b18:20f with SMTP id d75a77b69052e-5359fb287e9mr50326931cf.29.1791583817797;
-        Fri, 09 Oct 2026 15:10:17 -0700 (PDT)
-Received: from smtpclient.apple ([2600:1004:b03a:5519:e4dd:bcda:db98:5ebd])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5359b6fa0f9sm27600511cf.8.2026.10.09.15.10.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Oct 2026 15:10:17 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        bh=7qYa3XZ1m9zRvy95tqytKxsWHhV7e50n6QJhFGxza7M=;
+        b=YcHn/Pw2XhhymB+nzN7MeRBqKQpnL1dvFghz888F0VEUqAD3j2pEXd4RTYD27QcU9K
+         8/ck9ibk0EJVeC55r1fnoKRXaut7O2io52WtLbKKIzZSwkP6ZKrR0+8YIg5znTlY5qQI
+         RkgsWl46W/iaAQLKbt+OLkRDt7Bhq1aZ8A93wTZqJ1y2DUjgvfsEJnG5EEAoaJCR9hk7
+         euKrxk0ojobbH9xeTRAqbCKjz+Wpv6Arp35ITzqDobe7eMF6I7iEKJnPQIZJAFaYF0mw
+         go2fATWcyKqMkkClTJv+RFTvvVs7H9jlTw23NhlR4jgYalMnU50a9lXZSFTDs4KftcnR
+         09+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791584204; x=1792189004;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=7qYa3XZ1m9zRvy95tqytKxsWHhV7e50n6QJhFGxza7M=;
+        b=zJ/H8pNyQp+SjHiW0K2SdTXPWPLI4hXd3qZPVs6J72VdOpKyrOszj1Q5dsq2xXqgvB
+         F+aUEqC2vBD5UjDKLjjdJznn0nVpnFbYiUmczjrfeNSaUw+avSrNhl0xLqvG/3rcgn5m
+         AZqV5ot2i19M581ACTfNI1SPN+9dEcfJwPCLlN8xlJxeQuHT+bJBehMZycMhiHkJ26ge
+         VhnLLrA5yy69QjEVLeztiE0SlmBmqIELdo1CKtSoLico98pTMSBhOFXqzpt/jX+oe5OX
+         oxtQ0AQOA7s1cHqAKBmaw7BQejxqXhfNJ61DYnhnCau+Cl1FrFTEbjg37HbPD1kWx4iv
+         uH7g==
+X-Gm-Message-State: AFq9FYL1U7Jqtvqu7sGV0qQdhkX1km8/7uYnHUZeb9QpyoLrE3sJ5p/0
+	fe8oXuKIiV6i1oh1pYBa7kEOXsAVZh6F4Rllm9UhqSK18cTV/rXnUiEWCO5l6PvegZgqwk/j3yY
+	Rg/Iz/VQAmK5jr2X5LcAxC81HQF8tvGU=
+X-Gm-Gg: AYBFou2hm5xEwGpTu7/avWJn1JBu9gpzx3t7k7SW8Syb/UlzSWSvD6k0u1+SD5PZD8Y
+	ZWW7WcjCGfePO2wQVFQH5mx+GoxSs6R5scIIO/vLU/3otsbtdE7F4s1sGWT7NzLbUQTCJY7EMOy
+	4lI4/Y6dsetyxrwS5oN1W8P5c7YuAiQOTSDVRIJ5W8nn/I3gV3WcBSyT9nzHLDePqWph48nMstb
+	0m+Rk1Kbuu7CnZGLhsmApUgy46KlVTuZkdooFZ24fzr17iBMskU8+9ceW0eAF3DV+gB5llk04QS
+	r6ZoPyDwYXjePTsXlOQL7fQ1yM2ZOnJv3/6DgYhh+WGqIJ3JELv04PVHO6DxPgwXjQ1iVLFFxBo
+	bkWUylzsMj3ckc+58vsAWN1ZIjrfGDaeXJYjmjWzuZarTAg==
+X-Received: by 2002:a05:6122:468d:b0:5c9:c26b:528e with SMTP id
+ 71dfb90a1353d-5e91f4e235amr1273829e0c.20.1791584203985; Fri, 09 Oct 2026
+ 15:16:43 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 9 Oct 2026 18:16:42 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 9 Oct 2026 18:16:42 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <askY2aq8--2I2lEN@denethor>
+References: <20261009-799-shallow-fetch-with-tags-v1-1-379d61504af5@gmail.com>
+ <asjPWXAO3Cwpkerk@pks.im> <askY2aq8--2I2lEN@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v2 0/6] [doc] Add new page on merge conflicts
-Date: Fri, 9 Oct 2026 18:10:05 -0400
-Message-Id: <E227CF3E-65FA-447E-936B-BF23DE5A2649@gmail.com>
-References: <xmqqse2evq2k.fsf@gitster.g>
-Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, ps@pks.im, Jeff King <peff@peff.net>,
- Julia Evans <julia@jvns.ca>
-In-Reply-To: <xmqqse2evq2k.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Date: Fri, 9 Oct 2026 18:16:42 -0400
+X-Gm-Features: AclHuK8wYcgWKQazvG3ItwG013hxKsDl3VxvCL5qWCUQjgVvu_G1waSLImPqFZo
+Message-ID: <CAOLa=ZRML58095JPz1kzOyDTFwsdcoVx9jyxyf4gRppX1h8tVw@mail.gmail.com>
+Subject: Re: [PATCH] fetch: commit references fetched before backfilling tags
+To: Justin Tobler <jltobler@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, =?UTF-8?Q?Mitja_Bezen=C5=A1ek?= <mitja.bezensek@login5.org>
+Content-Type: multipart/mixed; boundary="0000000000001086a0065d6fb4e4"
 
+--0000000000001086a0065d6fb4e4
+Content-Type: text/plain; charset="UTF-8"
 
-> Le 9 oct. 2026 =C3=A0 11:41, Junio C Hamano <gitster@pobox.com> a =C3=A9cr=
-it :
->=20
-> > =EF=BB=BF"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:=
+Justin Tobler <jltobler@gmail.com> writes:
 
->=20
-> For example, you added Ben and Patrick to the trailer of patch #1.
->=20
->> Range-diff vs v1:
->>=20
->> 1:  ad4853dc36 ! 1:  ab0344f947 [doc] Add new gitmergeconflicts man page
->>     @@ Metadata
->>      Author: Julia Evans <julia@jvns.ca>
->>=20
->>       ## Commit message ##
->>     -    [doc] Add new gitmergeconflicts man page
->>     +    doc: add new gitmergeconflicts man page
->> ...
->>          Co-Authored-By: Marie Claire LeBlanc Flanagan <hello@marieflanag=
-an.com>
->>     +    Reviewed-by: D. Ben Knoble <ben.knoble+github@gmail.com>
->>     +    Reviewed-by: Patrick Steinhardt <ps@pks.im>
->>          Signed-off-by: Julia Evans <julia@jvns.ca>
+> On 26/10/09 01:26PM, Patrick Steinhardt wrote:
+>> On Fri, Oct 09, 2026 at 12:10:37AM +0200, Karthik Nayak wrote:
+>> > In 0e358de64a (fetch: use batched reference updates, 2025-05-19), the
+>> > fetch code was modified to use batched updates to provide a good
+>> > performance improvement. Wherein batched updates were used to fetch both
+>> > references and backfill tags.
+>> >
+>> > When using batched updates, the references aren't yet committed to disk
+>> > when we start backfilling tags. This means in situations such as shallow
+>> > fetching the negotiation during backfilling tags, the client doesn't
+>> > have any references to report in the 'have' section. Since backfilling
+>> > doesn't use a depth limit, this can cause the server to send all the
+>> > objects present in the repository.
+>>
+>> So in my own words: the server sends the reference, we queue them in a
+>> transaction, but don't commit it yet. We then try to backfill tags, and
+>> because we don't have the refs committed yet the backfill will think we
+>> don't have any of the relevant commits that those tags point to.
+>> Consequently, the packfile negotiation will result in way more objects
+>> being fetched than necessary.
+>>
+>> This makes me wonder why we even do a proper fetch. In theory, we could
+>> basically just ask the server for the individual tagged objects without
+>> performing any negotiation, right?
+>>
+>> Or... well, would that work with nested annotated tags? No idea.
+>
+> IIUC, when we backfill tags, we only fetch tags that reference objects
+> that we have locally. The server advertises the tag reference OID and
+> its recursively peeled non-tag OID so the client can figure this out:
+>
+>   efe1aaafb77990c4f023cec81b198e0af55bbfb5	refs/tags/foo
+>   c8dd1e3bb1152844983558802a52c9e4c17652b4	refs/tags/foo^{}
+>
+> So because there could be nested annontated tags, I think we would need
+> to fetch to get the intermediate objects.
+>
+> -Justin
 
-PS I think I just use my non-suffixed email on this project;=20
-see our .mailmap :)=
+Yup exactly this. Afaik the protocol also works by transferring the set
+of objects that form the closure of between have <> want.
+
+So for:
+
+   foo -> [tag A] -> [tag B] -> [commit C]
+
+We cannot simply request for A without saying we have C. We have C and
+we know it, but the haves are obtained from the committed refs, so
+until refs are written to disk we never advertise C.
+
+--0000000000001086a0065d6fb4e4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 8db4cb6d457dd9b5_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ySlo4Z1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMktBQy85bUhjdlBPaVhoSmJRUzJGMDhQdGtkeEpvcgpPVS9WWW40SWNQ
+VjE4YnJGcDBpS0hYVlMxYnpMV2dtL1hLSWxGMWM0dHk1NEs2RnZ3eFlkRmNoTDMxQ1psL2N2CkY4
+TEVMU2cxYzFWcWVLUlBXZHJVTUJOb0U4bjhMZ1NCRFFnN0lRS2dBTlRweHdzTjI4QmFQd3V0RUpG
+ak5zSXMKOFVHUFZ3RmNXOUxQbWNOK3RmUzVmSzZXVXVQOFZpZElUakFUc3k5bHRqWVlFY0w5bTNw
+dGlXaW5FUFBzU3FxagpTQzFGYzFtQ1phTTJzemcxMk9naVpQbFBqWDBubzFBd0pUVjlEMytRdkZj
+c3RobEo1ck5iWUVEaDJZNmdqY3FKCkFYeG45VHhmQ0dmOGJsejhQQnRJRTRKYThxaUdsKzNNQnRX
+Rm9ZM05KWGY2U2QyTWZQK0RIbWVIeDdxRkRaK3AKSnhqc21aYjJTSjV5STRZTzZybXR3NlQ0Mm5C
+SU9iVzNIMm1Qak5pRVlWRWFnV2ZIWEp2OU41MjBLdlU3aFRQcgpuemM2QUxoWGUzczV6STVsdElF
+V1QvTFF1TlZRSUZIb0JEVVZraVIxVlVCL25vN3JKVUcxamR2VUFkZm0xQnJRCnJuRUVrUGQvdXo3
+S2FXVENsZDVqRE1wdHJ0c3RVczBKSTRBYmtQST0KPVJuMHAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000001086a0065d6fb4e4--
