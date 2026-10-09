@@ -1,71 +1,71 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61EA4D9F63
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 12:00:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33E74CE677
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 12:00:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791547229; cv=none; b=uKvvH0otpzBHRQpdjTOjCl6NrHXIv6AiKEHVk/ebOzCvzgrsaq5DGY2eaUCfJDdrCseiRTU1RB6w4ibzl7N44WmTcI9Q0ozyi27Q+v76diHW5X9oUPx4d1wVxlKDM9gVgs4DQnXNbEYzYzvsZmZB9sRaZ3LOJy8FYWukwZyYUBk=
+	t=1791547233; cv=none; b=sAPLKD9/eWzRf6ajOtiisBFkJVe0sfaEqmhnNrVu8Bwz4965rWtjCkglAForCZf1N4mW3kaIbuRKNyVHlbF2/685JtooqBr//I3lHZj9W/9VOCtJEuPFlhDxNldUv6kxBkgr1LGUOVKdcUmlx6sbC0FYib+Jl5j01NVn/8OMrhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791547229; c=relaxed/simple;
-	bh=g5L+TdGhM7kiKpvoWxQHPfzNGvCA9WXP8yRZ1KLJ80I=;
+	s=arc-20240116; t=1791547233; c=relaxed/simple;
+	bh=jbBC8mKqHAcJ2SbJY8jbXtKqQmex0cwsWxAysmp9w4Y=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=B8wz8esj6gAV5HOCN/ZPiO2pg8YcJkC2+Z1wpnh0wNhGGvl08lzibLSsF8J5dmYYL/yk0b54Hy7LxZa4ck2K5cx0t2qaxP9lPeeifLje2VJZvnpaR6Bwv6c8pm4i++4e6Wu8Rne+kPINxCr2yKf5dMOlAstMhV6TiObkdaWnTL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tqayau1H; arc=none smtp.client-ip=209.85.210.46
+	 MIME-Version:To:Cc; b=qDM+mWzvzZD0TbuD7tmBZFtWyKKNYJtVOSLMvO5a8Xks0r9UBGRjP+TMqn0NFrOJpqSIytNo6lOMDMGz+p0vmh4AOoXUqMeve7gOEWtBkJjmvFA73AbIqaJB00J09PbudHwm3Y8CPsmcsnux3VaNuTj1huIGttwx1qPmPqjdojg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NcyzkYGo; arc=none smtp.client-ip=209.85.161.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tqayau1H"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7fccba9c675so1879555a34.0
-        for <git@vger.kernel.org>; Fri, 09 Oct 2026 05:00:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NcyzkYGo"
+Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-6d290b10a35so1522075eaf.2
+        for <git@vger.kernel.org>; Fri, 09 Oct 2026 05:00:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791547220; x=1792152020; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791547223; x=1792152023; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=I5GHsg0noH+hWn+QRRhKjsN0jcEKv4tTLeGwHYzMHfw=;
-        b=Tqayau1H6VJ80VbQf35kGMzwgJHFeHVwyVOk3vND5pCaT6S0sWtbUwMOKERUJvQmFf
-         b0eEpKEATaQdYwarjadn0pRkw2GyuONutoMAYzHqi4MxICrvdbtVt8UMKElkDybfKcvW
-         93Dy7KSY+rIevCzGpHVy49EpcQvfg0dxJPMb6gOQTRPoOye2LOI2zR7cfYR7b7oxODmY
-         G4uLyiuubVFd43m6JDsvvzC7tyYkjKTMkNPiXqVjkY5YJTcHCBGdT5PMsuSWAQdKJb4I
-         T++YdNVLw0DK0FHBF08f7XCJJLOLVt2N8EWq22s1xwzMw//iZzhIAb974KMSNTFtWt+n
-         qB9A==
+        bh=n7Uh+pWqPKvAUTaGhd5kOTyN5HRS0QYmdbI4NNYYCM8=;
+        b=NcyzkYGooEzT/oCjhomsx4uWe3XTgTjbEd+yiLC0ZNIWCc/V9WAlzHvbs7Bj2jCkHn
+         M/7F6dmwaIrOlEhxSDVFhCFsZmmCp/bG2/2tA9d46OwJz/0UtHMXBv32BbIyDESDZFE8
+         JWgD/m5xGZZ94XuqLZFpzae0jsADIJOQekaqicC0TZR8o0ayyR5BG14401H4swNT2JmL
+         J1+hlHCATM9LtyZ2TH5bGwVUzwr2PPv/KrhFmawbck3gITvJyryOGmnPV8RyIcNJvPXO
+         QzPik5pU5UmxJXXgUWKsUxJHWFeUqggegqt0eQFPRCzHCi6O42MOowzht16tMxYHdVWj
+         /CTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791547220; x=1792152020;
+        d=1e100.net; s=20260707; t=1791547223; x=1792152023;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=I5GHsg0noH+hWn+QRRhKjsN0jcEKv4tTLeGwHYzMHfw=;
-        b=y4XqByTVnjcDB8d78Xt2CGu+2LnSBE3QT2wzRc5nBxvi6EFEZXEUhTVYi+LjM6UkQZ
-         7q6juxyfuT+PD/yxlGna1ScXcmm5jsOE66T3SPLm6+aYn9iohx0StwAzdNsBqIyfoBML
-         sjxuEy+EVlxdWE+PRLTbZl+It08bGpU9JFejVjVpAZB31rtgigYkNI40mj0xGC+mYxhO
-         c3PbeF1dNhvvKQfl7z+BSZ3LOQHbosjhgKaqTq0eazdg845cOKRSNIs0W4PCkzeY0vEQ
-         vkWtAK+oyLiG+oICawwGbKuKE0SxMWFFQqPtsrt0muuNku2Ny2HxMCvY7/76sree/X9q
-         2fBA==
-X-Gm-Message-State: AFuF++ko70/DzZot1LA7mmxKy7yERR2PtK2Q6ClS9zuOitmHa0IFOget
-	TRUUIdkWzesZd+VvfC4bYg46bPMsJ4B/leaFPLELZAXWsZ6gjddT9oPDkdGbjQ==
-X-Gm-Gg: AYBFou3REs/5/oRuh0vQL+DHt5BF6fVLuWDoFhOA1NZtuCMqCWk0GCKV56m6xnErtxO
-	9TiFb1R5COGzRDNf3o7h9a3GAVtCjE16u0HOZX+fwmTZUJsOwz7WkzlWiG51RNa923qBpFUcCtU
-	oWvnqnuVM+UXok5PQvsWgfDzqVMUplAg7oYBeDTrYRu/OjxPkzjJHZpO3BR55E1CNnNvubm6wUv
-	Wu87bNOBRv+6NlGcG17zFJJdFlqU7v+dVkftj6ppm7dGqYv04rgLqh6/4y6v0oki6m3X5RnL9Nb
-	ahEf6DgZlseAHDFC6Hhf+ut/9qYtsmQneAtX84cRFDSexAQdseBZ9G7RuYWtYBGCRyBKDGHZXK/
-	lZHD+RyV/6aNADMqfnTwjZzhJpxkQLVG1hSaPX5TIOa8NX06MI8P5CxzmyzKl1cs5g6c0XEQSaa
-	iHUAlr2H8Xso+LOeO0/tVb4alQdaacd8+4H30IOLYFqWtLJRzWNi+EsaV9jMtUDJf+v/CcIv5C0
-	ds=
-X-Received: by 2002:a05:6808:1583:b0:4ec:1bf1:fa82 with SMTP id 5614622812f47-50b6865d010mr1393093b6e.46.1791547219459;
-        Fri, 09 Oct 2026 05:00:19 -0700 (PDT)
+        bh=n7Uh+pWqPKvAUTaGhd5kOTyN5HRS0QYmdbI4NNYYCM8=;
+        b=U97TVr12PCi9QHBV6FPmfWnPeaLaGlQDGoHHkEdGJhMxAep+IQOggb4HNsbHhY+W8/
+         Ogb+7kWgHLZlhjsQjAHCCx6B5IRT6OtBMB2ZsjdkSpJ+hDRnXdLEJ3piyMVdZV+r4XDq
+         OrDiLnMl55Cy/Oqy3JaEY1UB1ojuynL7uDj57bJe4xRghEOybkQyFEPE0c3Bb4g5gkeI
+         B6DLRSKwYqdG0zGxttcfUKzKb6Ihd+SLfXNLCyBoineX197Oimn8+gAbwyPOy+76mHF0
+         T/VxOcv3Mgs+lILb+SEkGREVmb2y75jkL//vvvrouGuYo5P27QoVMZUSiUfWjQr58hJC
+         SzrA==
+X-Gm-Message-State: AFuF++ktr96A3CPFbUeaOqm1DMw1XKrh5B9PVX5T/I6S5Yt3KmCvvoY6
+	mRvnTRmaxrFEdBDBuQdIcu8gScK9IXEuUfIo/LTWVkAcrkJWkfP6MW3QMIbzqA==
+X-Gm-Gg: AYBFou3R3B6dAGyocx0OsiirWHTU8Mjv1YeTwITH682zGHP5naax61ooVK8j0mDNA7s
+	5O7sRA5sw52zgQRF3LFGIHMy36vW129TFoWzxha7hLLQLunzlbTwAs6APLWtslNaT1R/6c0PuM0
+	sg00JQw3YuZqZUtqNNR6VQ1FR99S4GP0va0Rg3vu6wAGLXmQ0CxFGpRHuIlKGKMdymKBQs1i3oE
+	UXel61cN5w+KNIT0110R0T7ND/3Q2RWkrqKMxf2HqdN4iQ17A8AU7DsFeiOC+vbiBSMyzMxXGJn
+	UlvR4zpkVuyLIlH9D4XyUMUZaVOH7Atw5jhwtxp++XUNjsqwbcBaOZnlTOZSGvWf5nSEP6eOwhH
+	OMUiiZMv2vbN39tq8KNMTXogBT+qWdTmcZbyRBGl7AF32jGlzJw6g+Jbg2jzbKjdv7lyvjHboAa
+	6tpPOeDo+IMr+gKlOoXUbaJpHNdQM0owfK0JqIwgj5czh7bg6z22QHwtUePjldEh14oLV+bb20P
+	EvnCytPZzKXXw==
+X-Received: by 2002:a05:6820:1c83:b0:6e0:6c72:774 with SMTP id 006d021491bc7-6ef08e71046mr1254389eaf.6.1791547223121;
+        Fri, 09 Oct 2026 05:00:23 -0700 (PDT)
 Received: from [127.0.0.1] ([172.171.13.148])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-50c0c5fe916sm1720535b6e.1.2026.10.09.05.00.16
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-8303a328ee6sm1572376a34.23.2026.10.09.05.00.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Oct 2026 05:00:17 -0700 (PDT)
-Message-Id: <ab0344f947c252b1b7c8bb386586b8641223ba38.1791547213.git.gitgitgadget@gmail.com>
+        Fri, 09 Oct 2026 05:00:21 -0700 (PDT)
+Message-Id: <d5241eb901a2cc405bdebedc30d7e8c359898ba4.1791547213.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2237.v2.git.1791547213.gitgitgadget@gmail.com>
 References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
 	<pull.2237.v2.git.1791547213.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 09 Oct 2026 12:00:08 +0000
-Subject: [PATCH v2 1/6] doc: add new gitmergeconflicts man page
+Date: Fri, 09 Oct 2026 12:00:09 +0000
+Subject: [PATCH v2 2/6] doc: git-merge: link to new merge conflicts guide
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,435 +84,163 @@ Cc: ps@pks.im,
 
 From: Julia Evans <julia@jvns.ca>
 
-Introduce a new page, `gitmergeconflicts`, that explains the process of
-handling a merge conflict in a way that addresses the following issues,
-which came from feedback from Git users on the current explanation of
-merge conflicts in the `git merge` man page:
+All of the info about merge conflicts has been moved to the new guide
 
-- The process for resolving a merge conflict is only explained in the
-  `git merge` man page, even though there are several other commands
-  which can result in conflicts
-- Sometimes we use "ours" and "theirs" to refer to the two sides of
-  the merge conflicts and sometimes we use HEAD and MERGE_HEAD. It should
-  be consistent. Also the terms "ours" and "theirs" are not explained.
-  Similarly, it says "The part before the `=======` is typically your
-  side...", but doesn't explain what "typically" means.
-- It introduces the merge format using an analogy to RCS, which very few
-  Git users have ever used
-- In "The only clean-ups you need are to reset the index file to the
-  `HEAD` commit to reverse 2. and to clean up working tree changes made
-  by 2. and 3.", it's not clear to users what "2" and "3" are supposed
-  to mean
-- It uses a cultural reference ("Conflict resolution is hard; let's go
-  shopping.") which is confusing or unfamiliar to some people. I think it
-  would be clearer for users to use a code example instead.
-- It doesn't explain the difference between diff3 and zdiff3
-- It sometimes uses the term "area" and sometimes uses the term "hunk"
-
-Also document the unified `--abort`, `--continue` workflow in one
-place, since it's a really nice example of a place Git has a consistent
-interface between similar commands.
-
-Co-Authored-By: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
-Reviewed-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-Reviewed-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Julia Evans <julia@jvns.ca>
 ---
- .gitattributes                       |   1 +
- Documentation/Makefile               |   1 +
- Documentation/gitmergeconflicts.adoc | 333 +++++++++++++++++++++++++++
- Documentation/meson.build            |   1 +
- command-list.txt                     |   1 +
- 5 files changed, 337 insertions(+)
- create mode 100644 Documentation/gitmergeconflicts.adoc
+ Documentation/git-merge.adoc | 125 +----------------------------------
+ 1 file changed, 3 insertions(+), 122 deletions(-)
 
-diff --git a/.gitattributes b/.gitattributes
-index 26490ad60a..0a0fc950b1 100644
---- a/.gitattributes
-+++ b/.gitattributes
-@@ -14,6 +14,7 @@ CODE_OF_CONDUCT.md -whitespace
- /t/oid-info/* text eol=lf
- /Documentation/git-merge.adoc conflict-marker-size=32
- /Documentation/git-merge-file.adoc conflict-marker-size=32
-+/Documentation/gitmergeconflicts.adoc conflict-marker-size=32
- /Documentation/gitk.adoc conflict-marker-size=32
- /Documentation/user-manual.adoc conflict-marker-size=32
- /t/t????-*.sh conflict-marker-size=32
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index f8dea4b395..bc49641dda 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -58,6 +58,7 @@ MAN7_TXT += gitdiffcore.adoc
- MAN7_TXT += giteveryday.adoc
- MAN7_TXT += gitfaq.adoc
- MAN7_TXT += gitglossary.adoc
-+MAN7_TXT += gitmergeconflicts.adoc
- MAN7_TXT += gitpacking.adoc
- MAN7_TXT += gitnamespaces.adoc
- MAN7_TXT += gitremote-helpers.adoc
-diff --git a/Documentation/gitmergeconflicts.adoc b/Documentation/gitmergeconflicts.adoc
-new file mode 100644
-index 0000000000..5b0ba1a1de
---- /dev/null
-+++ b/Documentation/gitmergeconflicts.adoc
-@@ -0,0 +1,333 @@
-+gitmergeconflicts(7)
-+====================
-+
-+NAME
-+----
-+gitmergeconflicts - Guide to handling merge conflicts
-+
-+DESCRIPTION
-+-----------
-+
-+Merge conflicts can happen during a `git merge`, `git rebase`, `git
-+cherry-pick`, `git pull`, or `git revert`. All of those commands use
-+the same merge algorithm, and the process for resolving a merge conflict
-+is always very similar.
-+
-+The most common ways to handle a merge conflict are:
-+
-+* Resolve the conflict. (see <<resolve,HOW TO RESOLVE A MERGE CONFLICT>>
-+  below for details)
-+* Or stop the operation and return your branch to its original state
-+  with the appropriate `--abort` command, for example `git merge --abort`
-+  or `git rebase --abort`. See <<git_status,EXAMPLE: GIT STATUS OUTPUT>> below
-+  for how to find the command to run.
-+
-+WHAT IS A MERGE CONFLICT?
-+-------------------------
-+
-+When Git merges two commits together, it looks at the changes that
-+each side has made and combines those changes. For example, if one side
-+edited lines 1-5 of `hello.py` and the other side edited lines 20-25 of
-+the same file, then it can easily combine them since there's no overlap.
-+
-+But if both sides edited overlapping lines of the same file (for example
-+one side edited lines 1-5 and the other edited lines 3-6), Git will
-+not try to guess how to combine those changes. This is called a "merge
-+conflict".
-+
-+When this happens, Git shows you both sides' edits and asks you to pick
-+how to resolve them. It:
-+
-+* Stages all of the files which were successfully merged
-+* For the files with conflicts, it marks them as conflicted, puts both
-+  sides' edits in the file, and leaves <<markers, merge conflict markers>>
-+  that you need to resolve.
-+
-+[[markers]]
-+MERGE CONFLICT MARKERS
-+----------------------
-+
-+When there's a merge conflict, Git will update the conflicted file
-+to include merge conflict markers `<<<<<<<`, `=======`, and `>>>>>>>`.
-+For example, here's a merge conflict where both sides edited a list of
-+fruits in different ways:
-+
-+----
-+FRUITS = [
-+    "apple",
-+<<<<<<< HEAD
-+    "cherry",
-+=======
-+    "banana",
-+>>>>>>> add-fruit
-+    "mango",
-+    "orange",
-+]
-+----
-+
-+The code from one side of the merge conflict is between `<<<<<<<` and
-+`=======`, and the code for the other side is between `=======` and
-+`>>>>>>>`. See <<ours,"OURS" AND "THEIRS">> below for a full explanation
-+of which side is which.
-+
-+
-+[[resolve]]
-+HOW TO RESOLVE A MERGE CONFLICT
-+-------------------------------
-+
-+The process for resolving a merge conflict is:
-+
-+1. Run `git status` to get a list of files with merge conflicts
-+2. For each one, find the conflict markers
-+   (the `<<<<<<<`, `=======`, `>>>>>>>`) and edit the code to
-+   fix the conflict
-+3. Run `git add FILENAME` for each file to mark the conflict as resolved
-+4. Run the appropriate `--continue` command to continue the operation
-+   that was interrupted by the conflict, for example `git merge --continue`
-+   or `git rebase --continue`. See <<git_status,EXAMPLE: GIT STATUS OUTPUT>>
-+   below for how to find the command to run.
-++
-+Note: During a `git merge`, `git commit` and `git merge --continue` do
-+the same thing.
-+
-+
-+[[example]]
-+EXAMPLE OF RESOLVING A MERGE CONFLICT
-+-------------------------------------
-+
-+If you see this in your code during a merge conflict:
-+
-+----
-+FRUITS = [
-+    "apple",
-+<<<<<<< HEAD
-+    "cherry",
-+    "mango",
-+=======
-+    "banana",
-+    "mango",
-+>>>>>>> add-fruit
-+    "orange",
-+]
-+----
-+
-+Then you might edit that part of the code like this,
-+which includes the fruits from both sides of the conflict:
-+
-+----
-+FRUITS = [
-+    "apple",
-+    "banana",
-+    "cherry",
-+    "mango",
-+    "orange",
-+]
-+----
-+
-+
-+[[tools]]
-+TOOLS FOR HANDLING MERGE CONFLICTS
-+----------------------------------
-+
-+Here are some ways to get extra context while handling a merge conflict:
-+
-+* There are many graphical "merge tools" for Git, which will normally
-+  show you the different versions of the code side by side.
-+  If you have a mergetool configured, `git mergetool` will launch it.
-+  See also `merge.tool` in linkgit:git-config[1] for a list of
-+  the mergetools Git supports.
-+
-+* You can set the configuration option `merge.conflictstyle=diff3`.
-+  See <<diff3,DIFF3 AND ZDIFF3>> below for more.
-+
-+* `git log --merge -p <filename>`  will list all commits which
-+  caused the merge conflict for `<filename>`, and the diff
-+  of how they changed the file.
-+
-+* Look at the original files.  `git show :1:filename` shows the
-+  common ancestor, `git show :2:filename` shows the "ours"
-+  version, and `git show :3:filename` shows the "theirs"
-+  version.
-+
-+Here are some ways to track your progress while handling a conflict:
-+
-+* Use `git status` to get a list of files with conflicts
-+
-+* Use `git diff --check` to make sure you haven't left any merge
-+  conflict markers in a file by accident. It will print "leftover
-+  conflict marker" if it finds any.
-+
-+* Use `git diff AUTO_MERGE` to show what changes you've made so far to
-+  resolve the conflicts.
-+
-+[[git_status]]
-+EXAMPLE: GIT STATUS OUTPUT
-+--------------------------
-+
-+When you're in a merge conflict, you can find out what commands to run
-+to handle the conflict by running `git status`.
-+
-+For example, this `git status` output tells you that:
-+
-+* `git rebase --abort` will safely bring your branch back to its
-+  original state
-+* you should run `git rebase --continue` when you're done resolving all
-+  the conflicts
-+* there's one file left with conflicts in it: `fruits.py`
-+
-+----
-+$ git status
-+You are currently rebasing branch 'main' on '58a9fcc'.
-+  (fix conflicts and then run "git rebase --continue")
-+  (use "git rebase --skip" to skip this patch)
-+  (use "git rebase --abort" to check out the original branch)
-+
-+Unmerged paths:
-+  (use "git restore --staged <file>..." to unstage)
-+  (use "git add <file>..." to mark resolution)
-+        both modified:   fruits.py
-+----
-+
-+
-+[[diff3]]
-+DIFF3 AND ZDIFF3
-+----------------
-+
-+By default, Git doesn't include the original code when formatting
-+a merge conflict. To include the original code, you can set the
-+configuration option `merge.conflictstyle` to `diff3` or `zdiff3`.
-+This extra context can make it much easier to understand what's
-+happening in a merge conflict.
-+
-+Here's an example of what a merge conflict would look like when using
-+`diff3`. It shows, in order, the "ours" side of the conflict, the
-+original code (`"mangoooo"`), and the "theirs" side of the
-+conflict. With this view, you can see that both sides fixed the spelling
-+mistake in "mango", and each added one fruit to the list.
-+
-+----
-+FRUITS = [
-+    "apple",
-+<<<<<<< HEAD
-+    "cherry",
-+    "mango",
-+||||||| 1c22e48
-+    "mangoooo",
-+=======
-+    "banana",
-+    "mango",
-+>>>>>>> add-fruit
-+    "orange",
-+]
-+----
-+
-+Here's the same example using `zdiff3`. `zdiff3` takes lines that are
-+shared between both sides (the `"mango"` line) and moves them outside
-+the conflicted area. This makes the conflicted area shorter, but the
-+downside is that it's impossible to tell if `"mango"` was part of the
-+original list of fruits or not.
-+
-+----
-+FRUITS = [
-+    "apple",
-+<<<<<<< HEAD
-+    "cherry",
-+||||||| 1c22e48
-+    "mangoooo",
-+=======
-+    "banana",
-+>>>>>>> add-fruit
-+    "mango",
-+    "orange",
-+]
-+----
-+
-+
-+[[ours]]
-+"OURS" AND "THEIRS"
-+-------------------
-+
-+Sometimes during a merge conflict, Git will use the terms "ours" and
-+"theirs" (or "us" and "them"). For example, `git status` might say that
-+a file was `deleted by us`.
-+
-+"Ours" and "theirs" are both commits: "ours" is the current
-+`HEAD` commit, and "theirs" is the other side being merged.
-+
-+The first part of a merge conflict (between `<<<<<<<` and `=======`) is
-+from the "ours" side, and the second part (between `=======` and
-+`>>>>>>>`) is from the "theirs" side.
-+
-+----
-+FRUITS = [
-+    "apple",
-+<<<<<<< HEAD
-+    "cherry",                      <- ours
-+=======
-+    "banana",                      <- theirs
-+>>>>>>> add-fruit
-+    "mango",
-+    "orange",
-+]
-+----
-+
-+During a rebase, it can seem "upside down" because the "ours" commit is
-+from the branch you're rebasing on (for instance `main` in `git rebase
-+main`).
-+
-+These terms in Git all mean the same thing when dealing with a merge
-+conflict:
-+
-+* "common ancestor" and "base". The files from this commit are "in stage 1".
-+* "ours", "us", and `HEAD`. The files from this commit are "in stage 2".
-+* "theirs", "them". The files from this commit are "in stage 3".
-+
-+If you're confused about what something like "deleted by us" means, it's
-+often easiest to use some of the tools from
-+<<tools,TOOLS FOR HANDLING MERGE CONFLICTS>> above to get more context.
-+Finding the commit that deleted the file and seeing why is usually more
-+helpful than trying to abstractly reason through what "us" means.
-+
-+[[automerge]]
-+EXAMPLE OF USING `AUTO_MERGE`
-+-----------------------------
-+
-+`git diff AUTO_MERGE` will show what changes you've made so far to
-+resolve conflicts. `AUTO_MERGE` is a reference that Git creates during a
-+merge. It contains the result of running the merge algorithm.
-+
-+For example, if we resolved the conflict by adding both "banana" and
-+"cherry" in order, the diff would look like this:
-+
-+----
-+ FRUITS = [
-+     "apple",
-+-<<<<<<< HEAD
-+-    "cherry",
-+-=======
-+     "banana",
-+->>>>>>> add-fruit
-++    "cherry",
-+     "mango",
-+     "orange",
-+ ]
-+----
-+
-+[NOTE]
-+`AUTO_MERGE` is only set if you're using the default Git merge algorithm.
-+
-+
-+SEE ALSO
-+--------
-+
-+linkgit:git-revert[1]
-+linkgit:git-merge[1]
-+linkgit:git-rebase[1]
-+linkgit:git-cherry-pick[1]
-+linkgit:git-pull[1]
-+linkgit:git-diff[1]
-+
-+GIT
-+---
-+
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index f4854f802d..51647957e0 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -202,6 +202,7 @@ manpages = {
-   'gitfaq.adoc' : 7,
-   'gitglossary.adoc' : 7,
-   'gitpacking.adoc' : 7,
-+  'gitmergeconflicts.adoc' : 7,
-   'gitnamespaces.adoc' : 7,
-   'gitremote-helpers.adoc' : 7,
-   'gitrevisions.adoc' : 7,
-diff --git a/command-list.txt b/command-list.txt
-index 63ae2a67c9..f6e49c3c85 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -232,6 +232,7 @@ githooks                                userinterfaces
- gitignore                               userinterfaces
- gitk                                    mainporcelain
- gitmailmap                              userinterfaces
-+gitmergeconflicts                       guide
- gitmodules                              userinterfaces
- gitnamespaces                           guide
- gitprotocol-capabilities                developerinterfaces
+diff --git a/Documentation/git-merge.adoc b/Documentation/git-merge.adoc
+index a055384ad6..5b7b41cd10 100644
+--- a/Documentation/git-merge.adoc
++++ b/Documentation/git-merge.adoc
+@@ -49,7 +49,8 @@ a log message from the user describing the changes. Before the operation,
+ A merge stops if there's a conflict that cannot be resolved
+ automatically or if `--no-commit` was provided when initiating the
+ merge. At that point you can run `git merge --abort` or `git merge
+---continue`.
++--continue`. See linkgit:gitmergeconflicts[7]
++(or `git help mergeconflicts`) for a guide to handling merge conflicts.
+ 
+ `git merge --abort` will abort the merge process and try to reconstruct
+ the pre-merge state. However, if there were uncommitted changes when the
+@@ -231,127 +232,6 @@ git merge v1.2.3^0
+ git merge --ff-only v1.2.3
+ ----
+ 
+-HOW CONFLICTS ARE PRESENTED
+----------------------------
+-
+-During a merge, the working tree files are updated to reflect the result
+-of the merge.  Among the changes made to the common ancestor's version,
+-non-overlapping ones (that is, you changed an area of the file while the
+-other side left that area intact, or vice versa) are incorporated in the
+-final result verbatim.  When both sides made changes to the same area,
+-however, Git cannot randomly pick one side over the other, and asks you to
+-resolve it by leaving what both sides did to that area.
+-
+-By default, Git uses the same style as the one used by the "merge" program
+-from the RCS suite to present such a conflicted hunk, like this:
+-
+-------------
+-Here are lines that are either unchanged from the common
+-ancestor, or cleanly resolved because only one side changed,
+-or cleanly resolved because both sides changed the same way.
+-<<<<<<< yours:sample.txt
+-Conflict resolution is hard;
+-let's go shopping.
+-=======
+-Git makes conflict resolution easy.
+->>>>>>> theirs:sample.txt
+-And here is another line that is cleanly resolved or unmodified.
+-------------
+-
+-The area where a pair of conflicting changes happened is marked with markers
+-+<<<<<<<+, `=======`, and +>>>>>>>+.  The part before the `=======`
+-is typically your side, and the part afterwards is typically their side.
+-
+-The default format does not show what the original said in the conflicting
+-area.  You cannot tell how many lines are deleted and replaced with
+-Barbie's remark on your side.  The only thing you can tell is that your
+-side wants to say it is hard and you'd prefer to go shopping, while the
+-other side wants to claim it is easy.
+-
+-An alternative style can be used by setting the `merge.conflictStyle`
+-configuration variable to either `diff3` or `zdiff3`.  In `diff3`
+-style, the above conflict may look like this:
+-
+-------------
+-Here are lines that are either unchanged from the common
+-ancestor, or cleanly resolved because only one side changed,
+-<<<<<<< yours:sample.txt
+-or cleanly resolved because both sides changed the same way.
+-Conflict resolution is hard;
+-let's go shopping.
+-||||||| base:sample.txt
+-or cleanly resolved because both sides changed identically.
+-Conflict resolution is hard.
+-=======
+-or cleanly resolved because both sides changed the same way.
+-Git makes conflict resolution easy.
+->>>>>>> theirs:sample.txt
+-And here is another line that is cleanly resolved or unmodified.
+-------------
+-
+-while in `zdiff3` style, it may look like this:
+-
+-------------
+-Here are lines that are either unchanged from the common
+-ancestor, or cleanly resolved because only one side changed,
+-or cleanly resolved because both sides changed the same way.
+-<<<<<<< yours:sample.txt
+-Conflict resolution is hard;
+-let's go shopping.
+-||||||| base:sample.txt
+-or cleanly resolved because both sides changed identically.
+-Conflict resolution is hard.
+-=======
+-Git makes conflict resolution easy.
+->>>>>>> theirs:sample.txt
+-And here is another line that is cleanly resolved or unmodified.
+-------------
+-
+-In addition to the +<<<<<<<+, `=======`, and +>>>>>>>+ markers, it uses
+-another +|||||||+ marker that is followed by the original text.  You can
+-tell that the original just stated a fact, and your side simply gave in to
+-that statement and gave up, while the other side tried to have a more
+-positive attitude.  You can sometimes come up with a better resolution by
+-viewing the original.
+-
+-
+-HOW TO RESOLVE CONFLICTS
+-------------------------
+-
+-After seeing a conflict, you can do two things:
+-
+- * Decide not to merge.  The only clean-ups you need are to reset
+-   the index file to the `HEAD` commit to reverse 2. and to clean
+-   up working tree changes made by 2. and 3.; `git merge --abort`
+-   can be used for this.
+-
+- * Resolve the conflicts.  Git will mark the conflicts in
+-   the working tree.  Edit the files into shape and
+-   `git add` them to the index.  Use `git commit` or
+-   `git merge --continue` to seal the deal. The latter command
+-   checks whether there is a (interrupted) merge in progress
+-   before calling `git commit`.
+-
+-You can work through the conflict with a number of tools:
+-
+- * Use a mergetool.  `git mergetool` to launch a graphical
+-   mergetool which will work through the merge with you.
+-
+- * Look at the diffs.  `git diff` will show a three-way diff,
+-   highlighting changes from both the `HEAD` and `MERGE_HEAD`
+-   versions. `git diff AUTO_MERGE` will show what changes you've
+-   made so far to resolve textual conflicts.
+-
+- * Look at the diffs from each branch. `git log --merge -p <path>`
+-   will show diffs first for the `HEAD` version and then the
+-   `MERGE_HEAD` version.
+-
+- * Look at the originals.  `git show :1:filename` shows the
+-   common ancestor, `git show :2:filename` shows the `HEAD`
+-   version, and `git show :3:filename` shows the `MERGE_HEAD`
+-   version.
+-
+-
+ EXAMPLES
+ --------
+ 
+@@ -406,6 +286,7 @@ linkgit:git-reset[1],
+ linkgit:git-diff[1], linkgit:git-ls-files[1],
+ linkgit:git-add[1], linkgit:git-rm[1],
+ linkgit:git-mergetool[1]
++linkgit:gitmergeconflicts[7]
+ 
+ GIT
+ ---
 -- 
 gitgitgadget
 
