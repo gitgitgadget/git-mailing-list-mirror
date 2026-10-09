@@ -1,37 +1,37 @@
 Received: from smtp90.iad3b.emailsrvr.com (smtp90.iad3b.emailsrvr.com [146.20.161.90])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44A04F4CF5
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 19:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98ACA37A822
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 19:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=146.20.161.90
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791574648; cv=none; b=YDIZbwwzSiwoGy71gkW4zOMrG7Sp2OazCXzk74fZzcwthWwsLfTls9WmLf8rK94NFp0LtDMnhgoWIXDh64ijHmcT+I8uBya25ZaTkxCQEyx+aXt1Ws+bUWRp4XHOwTuvDoUDGwXPgPBCKW2fqoDgrNCDGpFZE0a2K775es6cgpo=
+	t=1791574655; cv=none; b=MUGHIwn5c4fkaQkm9EkXs3FBDZOOdmREZ67EqrGvxq4QlkA4zokSOA4li3WPV7jCEsGe5R1Jkoc1VzWEO4tUHkRrmLRFN9PMyxZYMaGdVsiAsztIsfgPJsDWT9D0/xHL7uIg72t2bUVZNm3ozKi9qTycPH6Bwf19IQaRCiFOjuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791574648; c=relaxed/simple;
-	bh=AOni52puZc9fZ+yFX2ZrEkRvI2ifRX8kqH77gs9BpNk=;
+	s=arc-20240116; t=1791574655; c=relaxed/simple;
+	bh=AFfwUTOgTxVIaceXOP8b476P6MlCOz2lsbFaeV97aCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+o2TiDGOq2aNHRcOuHb11EBKOcBXXkDy8kJH6Jxg8YwYxZQ13FUyiSEFtik96CRWm2WHaeDTc3TNueQH7ODX80tQa45XwZA38qRsF021Nj8DtBeb1ToXZZV6DtiT3+XVwBHdjSH2Hqo78kLfdR3c6HfhUjEdRMcodjlnZbbyCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jonsimons.org; spf=pass smtp.mailfrom=jonsimons.org; dkim=pass (1024-bit key) header.d=jonsimons.org header.i=@jonsimons.org header.b=ArkkuXR8; arc=none smtp.client-ip=146.20.161.90
+	 MIME-Version; b=gs9oVWL3wylFg0oilmWFWUnw8A3A8nQPhWhwa6WdMCKdvyvz+Ze5wUkB7QhoSEdYbd4BWTIGD1sT+CbJvZAm+3yScDI94HMlTf2fEHZurn+9qh1pqQHm+QE9UHSgwX9GH6Rl7Sv2aZFpHiyaZHGQWzyS8kUKCXzln8w/6ufIckg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jonsimons.org; spf=pass smtp.mailfrom=jonsimons.org; dkim=pass (1024-bit key) header.d=jonsimons.org header.i=@jonsimons.org header.b=izshtp2l; arc=none smtp.client-ip=146.20.161.90
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jonsimons.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jonsimons.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=jonsimons.org header.i=@jonsimons.org header.b="ArkkuXR8"
+	dkim=pass (1024-bit key) header.d=jonsimons.org header.i=@jonsimons.org header.b="izshtp2l"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=jonsimons.org;
-	s=20200911-u7gnnm7o; t=1791574222;
-	bh=AOni52puZc9fZ+yFX2ZrEkRvI2ifRX8kqH77gs9BpNk=;
+	s=20200911-u7gnnm7o; t=1791574220;
+	bh=AFfwUTOgTxVIaceXOP8b476P6MlCOz2lsbFaeV97aCA=;
 	h=From:To:Subject:Date:From;
-	b=ArkkuXR8O1WFqmxgDvQxmH9Zl1liVICQyaQNST8MLRYKrtePzT7C8pgzYU0veZlpn
-	 V7q4FXU/8lkk/HFxDeBbycRTlI8kDf96dawMvLqaih2Tsl/EzwvdGAcWSVmnkZn30O
-	 EuQjm+gpked1F0m6/OlEVdbnbNkeqS9mtXgfACnQ=
+	b=izshtp2lWG7AHQHmyqT8J2Rn5mfBbuKf/3vh0fx3Lbr/Ecb6GpDltBluomH3vRZUk
+	 dqbLYHIEVpIVEu2sSeeMIie/POz4R5mo0NF1BX48kWauA0txtMJQRMI/mNRsgKV7sB
+	 hhseBBiT81dCgdgx5j8JqdeaMjhNsIufIMnsr77s=
 X-Auth-ID: jon@jonsimons.org
-Received: by smtp4.relay.iad3b.emailsrvr.com (Authenticated sender: jon-AT-jonsimons.org) with ESMTPSA id 2C96420391;
-	Fri,  9 Oct 2026 15:30:22 -0400 (EDT)
+Received: by smtp4.relay.iad3b.emailsrvr.com (Authenticated sender: jon-AT-jonsimons.org) with ESMTPSA id 2BE232038B;
+	Fri,  9 Oct 2026 15:30:20 -0400 (EDT)
 From: Jon Simons <jon@jonsimons.org>
 To: git@vger.kernel.org
 Cc: Jon Simons <jon@jonsimons.org>
-Subject: [PATCH 08/15] t5408, t5410: test duplicate updates without relying on the client
-Date: Fri,  9 Oct 2026 15:29:46 -0400
-Message-ID: <20261009192953.81794-9-jon@jonsimons.org>
+Subject: [PATCH 02/15] t5516: demonstrate push with "./"-prefixed source
+Date: Fri,  9 Oct 2026 15:29:40 -0400
+Message-ID: <20261009192953.81794-3-jon@jonsimons.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261009192953.81794-1-jon@jonsimons.org>
 References: <20261009192953.81794-1-jon@jonsimons.org>
@@ -42,98 +42,41 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Classification-ID: 523ad08c-aaf2-41d9-9ffc-58ea03a01763-9-1
+X-Classification-ID: 523ad08c-aaf2-41d9-9ffc-58ea03a01763-3-1
 
-The existing t5408 tests that use send-pack to transmit duplicate
-updates for the same destination happen to rely on the client not
-recognizing the duplicates when the remote is empty.
+'git push <repo> ./refs/heads/main:refs/heads/frotz' succeeds today
+and pushes refs/heads/main, although "./refs/heads/main" is not a
+valid refname.  count_refspec_match() compares the source to each
+local ref using refname_match(), which formats its given name with
+mkpath(), whose cleanup_path() strips leading "./".
 
-As a result, they are the only push tests that exercise each of:
-
- - receive-pack rejection of multiple updates for the same ref, from
-   9d2962a7c4 (receive-pack: use batched reference updates, 2025-05-19)
-
- - send-pack's receive_status() handling of a ref reported twice by the
-   remote, from 77188b5bba (send-pack: fix memory leak around duplicate
-   refs, 2025-05-19)
-
-Add explicit tests for each of those paths, in preparation of an
-upcoming commit that fixes the client to reject such pushes before
-sending any update.
+Add a test_expect_failure asserting that such a source is rejected
+with "src refspec ./refs/heads/main does not match any".  An upcoming
+commit stops using mkpath() in refname_match(), at which point the
+test is toggled to test_expect_success.
 
 Signed-off-by: Jon Simons <jon@jonsimons.org>
 ---
- t/t5408-send-pack-stdin.sh | 12 ++++++++++++
- t/t5410-receive-pack.sh    | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
+ t/t5516-fetch-push.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/t/t5408-send-pack-stdin.sh b/t/t5408-send-pack-stdin.sh
-index ec339761c2..3c47be1af8 100755
---- a/t/t5408-send-pack-stdin.sh
-+++ b/t/t5408-send-pack-stdin.sh
-@@ -89,6 +89,18 @@ test_expect_success '--stdin refs come after cmdline' '
- 	test_must_fail git --git-dir=remote.git rev-parse foo
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index b982b209bf..aaeb251e2f 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -433,6 +433,12 @@ test_expect_success 'push with onelevel ref' '
+ 	test_must_fail git push testrepo HEAD:refs/onelevel
  '
  
-+test_expect_success 'send-pack handles repeated status for the same ref' '
-+	clear_remote &&
-+	test_hook -C remote.git receive-report <<-\EOF &&
-+	cat >/dev/null &&
-+	printf "%s\n" "unpack ok" "ng refs/heads/foo first" \
-+		"ng refs/heads/foo second" 0000 |
-+	test-tool pkt-line pack
-+	EOF
-+	test_must_fail git send-pack remote.git A:foo 2>err &&
-+	test_grep "remote rejected.*A -> foo (second)" err
++test_expect_failure 'push with "./"-prefixed src does not match any ref' '
++	mk_test testrepo heads/main &&
++	test_must_fail git push testrepo ./refs/heads/main:refs/heads/frotz 2>err &&
++	test_grep "src refspec ./refs/heads/main does not match any" err
 +'
 +
- test_expect_success 'refspecs and --mirror do not mix (cmdline)' '
- 	clear_remote &&
- 	test_must_fail git send-pack remote.git --mirror $(cat refs)
-diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
-index 09d6bfd2a1..8fbc0c6bc9 100755
---- a/t/t5410-receive-pack.sh
-+++ b/t/t5410-receive-pack.sh
-@@ -97,4 +97,39 @@ test_expect_success TEE_DOES_NOT_HANG \
- 	test_must_fail git -C remote.git rev-list $(git -C repo rev-parse HEAD)
- '
- 
-+test_expect_success 'receive-pack rejects multiple updates for the same ref' '
-+	test_when_finished "rm -rf repo remote.git" &&
-+
-+	git init repo &&
-+	git -C repo commit --allow-empty -m A &&
-+	git -C repo branch A &&
-+	git -C repo commit --allow-empty -m B &&
-+	git -C repo branch B &&
-+	git init --bare remote.git &&
-+	git -C repo send-pack ../remote.git A B &&
-+	A=$(git -C repo rev-parse A) &&
-+	B=$(git -C repo rev-parse B) &&
-+	{
-+		printf "%s %s refs/heads/foo\0report-status object-format=%s" \
-+			$ZERO_OID $A "$(test_oid algo)" |
-+		test-tool pkt-line pack-raw-stdin &&
-+		printf "%s %s refs/heads/foo" $ZERO_OID $B |
-+		test-tool pkt-line pack-raw-stdin &&
-+		printf 0000 &&
-+		git pack-objects --stdout </dev/null
-+	} >request &&
-+	git receive-pack remote.git <request >response 2>err &&
-+	test_grep "multiple updates for ref ${SQ}refs/heads/foo${SQ} not allowed" err &&
-+	test-tool pkt-line unpack <response >report &&
-+	sed -n "/^unpack /,\$p" report >actual &&
-+	cat >expect <<-\EOF &&
-+	unpack ok
-+	ng refs/heads/foo failed to update refs
-+	ng refs/heads/foo failed to update refs
-+	0000
-+	EOF
-+	test_cmp expect actual &&
-+	test_must_fail git --git-dir=remote.git rev-parse --verify refs/heads/foo
-+'
-+
- test_done
+ test_expect_success 'push with colon-less refspec (1)' '
+ 	mk_test testrepo heads/frotz tags/frotz &&
+ 	git branch -f frotz main &&
 -- 
 2.55.0
 
