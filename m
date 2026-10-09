@@ -1,294 +1,116 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401444E532F
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 15:09:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884504A4EE2
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 15:11:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791558576; cv=none; b=KWES00/4vB09dBqPIwpuGwonKoJVcy5RJlIAWQMIErURRqghup87QfR+duM5gABxN0ajpSs96loXtjiP+0FJRhQKiWIS8XWmAUnZzNReQoBHMmijk7Com8BhQs47D8RmXl5bbjHoL6sQxnIB4zwlN0k7NYjl84+z/FVJQRYdCB4=
+	t=1791558703; cv=none; b=q7mZeeAEbJhkrJ8Yoxv+JTmotbgeHDIdGNFegW0t1F/y+uO7MBBw0EcNx7T3ca3cknc49WqvCMBpJSxewoZRHZcx0fVVX/QiVFNbcUZX8EcxjMsb6dcnUrxcTXZ8wNcift5ttnBEqjCdrEHzlnqPOpbLLTn+w0QkZ8ECGCvjsrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791558576; c=relaxed/simple;
-	bh=0JJLVpGxbJQBnY+SwwzHxxF2Unih382yPWR5N/bh0Ko=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q10F8wsuV/Y0Z8Q+lS7MFYNgoNR6yZHDU0WIe9j8vWLTEp96WDO/XNQkvW0Jlg1hTKftNqGi5oiH+8qy7tSy8D59UQDP786IVirBqpI6xm4J2h0ABZNAlxInl4/bCIKwP/YvnAhn/I5gY+iW5AuZ+z6q4F8tc2qDyjf0Rsq68pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UCNsRW1E; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791558703; c=relaxed/simple;
+	bh=RGvadsL8HA25uYpy6PfyPLJApSjEEAdohuCULnvfcfQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hi6SEVyoIzd7DXpPvnMDFRHHeVtJfg3p7EQlDLAGFSnXO5ac6byH7oBvDeAxN/4imN6LlX9LEFG/I5uwsnVIGQoJqWI5OC4qESQSoC8joeHJb3vqd1B7ukVEccFZwNpAGAePTW0Yalv7ya5hG6fkJYxVHfU9XBX3Wo2oNd6sWeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mIiHK+tr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sUxAbZvQ; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UCNsRW1E"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-38d489b6b71so2171862a91.0
-        for <git@vger.kernel.org>; Fri, 09 Oct 2026 08:09:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791558574; x=1792163374; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=qJrJpJ7BFHj5+2g7FGW4UZWuZ6Crmssb0Gw6er7lVhY=;
-        b=UCNsRW1EwDpdARTK15s348OW1xzUQO3vLPOoxFwdT4u1fV5eTDnWSgoK6S973Bg3UF
-         diH2fRyHHU0u2NbciZJPyZMSVSMWPsuo1DDSYNubl4zbFwlt+UI+ktVMbKcUmEai7r34
-         B1KbNQw5+ecHmC2HdjgRK6hg0VLmq29mwZngJQBj+XEQLKJQ8gZN7/VP+0RJIhJ8/2HE
-         ixNEPoyJ7Cj2+W6PRbUkHN+W5mEalbGKXIz+2eoJAbSGBvsBu5hsGJrUIU345NoB3A4c
-         REzAA/+usGZOef9wte7J3uRr4aIgaLZxTKJvBceTxTjeAckbauis0g5AAuWnHXSoQmp/
-         sxgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791558574; x=1792163374;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:sender:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=qJrJpJ7BFHj5+2g7FGW4UZWuZ6Crmssb0Gw6er7lVhY=;
-        b=QQGeEpzjaxAaMuzezeg1WyILIOJG9yoNrLFm6eYLsbX6FQfjBizohGj/xIwvJyk4wh
-         /hmoHYnq7j9HTAWNV3CrP8tDRsCHgR6qbuZzzlzc3HbR9F1YujeEWQaaQTkosViqREuu
-         iT6JZbMt6E9QEYzYV8Ie5ocy/6CjYUT2Z7k5U0X89mL77w22RHY/zCRA0EGpX+/+zhwA
-         SonciioW70/TxT2RT1khcrRdGUmTrkoUMmyY9kR2Oz/lps68BINdSOF7yGPu0kP4fldY
-         8jzyDV4PDSYHC0oi+mKoBCUYb5DdRDpP/yYhy1IRBTTYirM31XVvv8prg+huqAQT5h8Y
-         NQqw==
-X-Gm-Message-State: AFq9FYIJ+Pvc6pp4WJxRFlCZyjukI/kcYLoV19yhSXA2OVh2q75r4awP
-	qOJFlExgnsWaUlUUdDY6I9vxaNvZZLBa6w3xd/neZ3PXS6swml1+E9FH1Yij31oo974=
-X-Gm-Gg: AYBFou39knCOmZXezp0R91ockApaTYafUqL+KkHAjoUtYPDciGN4vFLE/n7XxmGKm+L
-	7jg29+jUqd9x5lbAqEQFYbC+GW9QTuWILR6KslO49zdMf0hmicA46XrrFyH2ibc3L/Yxc3h2own
-	dkat2pj8vjDgbkvOV+JGuj2PcD55371uWAlr4Adk0MfcJccS1mVwDmQ1JJoqozLY/XtBxhhSDu7
-	A0gIsMWOXWN1LSYt2+ejHeFMlmyItOVt37/vEmoWdmh9CNUpwX5m3v5RceWdz/Nz72LtzpFwwVB
-	qer6pa19PzSn7SIZ1D6PnEhrQ1V+q134IpQ931sPDaRfddm2gC1Y3YTEEw0GSsXItz0F3RUv1X5
-	LltpwvTGvCViBGYbUev+PJhDStnqrttcBHKGgw2kV/N7FbpxwCQIYSg3uo/4+DKw1WWp1stl4VA
-	uZGEsjiq093uujrGMXySV9GX4hUVNo2oSHCM+CViM5i4pBaZlOb+STAd6jdJd7LYJtC1xSJ/UY+
-	jjm5g==
-X-Received: by 2002:a17:90b:1850:b0:3a6:d94d:e147 with SMTP id 98e67ed59e1d1-3ab3a94fffemr1759960a91.15.1791558569752;
-        Fri, 09 Oct 2026 08:09:29 -0700 (PDT)
-Received: from archlinux ([2409:40f4:3151:37e2:36ef:bf3c:7f30:217e])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cd3da03f449sm1113553a12.28.2026.10.09.08.09.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Oct 2026 08:09:29 -0700 (PDT)
-Sender: Dilshad <hello.dilshad.in@gmail.com>
-From: Muhammed Dilshad A <dilsheddilu123@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	Muhammed Dilshad A <dilsheddilu123@gmail.com>
-Subject: [PATCH v3 4/4] t: retire the sorting benchmark and mergesort helper
-Date: Fri,  9 Oct 2026 20:38:50 +0530
-Message-ID: <d4814912d234fa1347a823b1a411159b50ae3449.1791556668.git.dilsheddilu123@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <cover.1791556668.git.dilsheddilu123@gmail.com>
-References: <cover.1791365181.git.dilsheddilu123@gmail.com> <cover.1791556668.git.dilsheddilu123@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mIiHK+tr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sUxAbZvQ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id A012CEC0072
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 11:11:40 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 09 Oct 2026 11:11:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791558700; x=1791645100; bh=iJCgmTrPSe
+	xwvbQLmVIy3LgdD/Tcga5wR+WHERsRedI=; b=mIiHK+tr05eONvPmpFcVHX9Zny
+	GWBO7SjJ4GDzk4tWUj0ksqjizPAMcquK5KTF2OwmiwKE0jgPx5vozfX6JeKHcti1
+	UqUDfjR/pHj+mBkebDRum4+UyqhjTXuZ1cbYQw4gG9MNYk1nP45xB4KHZOv6H2LB
+	pZjZOp62c8CgsjGEXK8z4eV4D4PX84TwtaSAMzzq93Sg1ZD5GTHTvELpGJaUd41o
+	MeJHN9Q/swj2u54IowaWxNCSAYQNmh9f4kY39iGKRJcg3G2RhpmNYmlhQD/otZI7
+	ohU5P5U+MBE6IyImKUhyQpgsI+YgK8TPN2jGMCzEV6IGLZsPAEFQAlixBryw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791558700; x=1791645100; bh=iJCgmTrPSexwvbQLmVIy3LgdD/Tcga5wR+W
+	HERsRedI=; b=sUxAbZvQ88VLs2XQ/1GLwqT7NnCQWQ6qWXjn+1O5N1tAawrVgEb
+	HFMLnILfPB48Xb501dVCjgX03ps/iMN4A0/RwZgBNsFF7qedk++OM1eZKSgwcH7E
+	UdJLTfSAWZ+MSkP2XJJNJxy+kpDbjZB8pYQPAtAVm6lsBqYBUxfAYpMc9ANgGwv9
+	QE4cp1FV1IMkYX/dp3pfd2FjSJxximR90PDb+T46VVl/tn3FG7uoYiAZCZDYudJw
+	ecH2cDCRJRVP6AdfBb92LXDl3b7zgOvzTtgTTpiJgozY2/Jjgvq2cp9US4QPTh4M
+	FTx+I30TsBdZXk8egJSwk9JOxSde1qV/l1g==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791558700; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:QJfxgWzDyDhyQcC2w/9MR62CONF528NuNYSKR60cZX0NDOR
+	uZAVu0jLOnvteK6jR+ZkEUQ4/RBMulRRkHBqB9ajnK+B/wQmODklRp3kLx3+fXqi
+	rF6NVwYmHwEln8D86eb2ua2RrwbTWEyzkuP+8EvknibevdcIugC0uR3c5ajyXZck
+	3Ci2eo+AHCImBkIOsjaetSeeSoz46glXJB1g/PPt8IrPKA+GIHpfwKJVLbs7EDDs
+	a/ZEJsLLKk0MBh3Wk/Yvh2BZuQvRM6RlLHcAfcbEVjb/klqmpADIu2wkJI1FoPKU
+	xBY/HnusuvX/QqRbwYXm+DD6Qj7zkrs0jyEPkhQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:MeSNfyAm5LrEgvnr/Ns3u6gOgyb/21APe/gal7qFeXU=:RGvadsL8HA25uYpy6PfyPLJApSjEEAdohuCULnvfcfQ=;
+X-ME-Sender: <xms:LATJaumw_xYaj91HEe0fWnZ3S3k8nsp4KSbO6woH5lc2LD6Dcq1TdA>
+    <xme:LATJapjqDKBqHhbiHr9aDck9lCD2-q0voqI9Repk9z55negzXcM6XVUb1jIuD8yWt
+    U552RFYyoHrUZkq0JouzgO_fHH6-a2Lr_arZz3-hI5mb7F1qi_sdgs>
+X-ME-Received: <xmr:LATJamfNJx2Wp8b7eJAKHc-fn6u2iehz4A37W_eVHb2J_TG_1XMPMHYanHLjKHwBjNVNk7fz-US20zxobLMU4UHHxEYMhJm933Ii>
+X-ME-Proxy-Cause: dmFkZTFjPzB/lADbmrFEQrn86mapCAuPdinJ8WO5NVZCicVhMm1PVZifjZnz8GERk/JtBt
+    pK6bKVXH7kWlFOJ+ZOwDf9fgTvUQu1DG0HWDx4FRwbW65KO74cBVSV+IAqw4BzZBhy6pQv
+    BHZWOyzKe/WaLRyLz+YEeuv1idS7LlfL+TouAlSp54rXEQRj9q2e3ltScMsockTm5E0Bd2
+    nTZGq7sGFa70/lIL7ETuRD/65KuIzZ9NL6eY6GmUZK4LuPAfXK7OCp4m/p87T2KgHCFAuv
+    F9wHA+sSIB4xjb9jFr5UvDb6mRxh36gERNJQ4GbutsbbT/ZfozqF6QJKQwqcQRyNCQnEUn
+    gbhg8Rlnoa1FzkL0IAYFx6gjFugcppSosLVSV9j90aNDIWyi0vdyais2Icn4OQqUgsWicY
+    iuYECkwOLpPLCryQUlTguwRTAOlnfmJfNt9UHKCSsGWThb2+CKwdwZ40IMUupc1K9vjxHl
+    VJOzVtQm1ASorYrSAgtact/CHId/UahHTS5VN690dzx/Z8OIHJ7MoPzn+ED/k0dRWramiw
+    xnl1SPByWKONxA46c7Hf8wwx/Kc8tK+BbGRnT/igsMyslcvkrwTgaUrYurYrGqkPPGT/lm
+    pKdQ/sHoVJXqNhjDNDKoFishH5SPz5eGX6Sq02GptXO2hJPqXDoarjYkbVLQ
+X-ME-Proxy: <xmx:LATJaphuXr2DGTjfzuDuSXXSvR4EaIaKoYYMfl1UbReTu69yJPgMyg>
+    <xmx:LATJaux1J6OttlfA-k2pNlg_l78PQgX_IaN72svZNREskBb49JVR9g>
+    <xmx:LATJalNcf9i6HpJgZNGxw0_ktNhJW24vHXiX4OYfRzRda8nUClwp1w>
+    <xmx:LATJavVXub8xBN8gvoLpgRwk887EK6SW4V_Lc5qkPiYsZ2kS7kLsQQ>
+    <xmx:LATJaobOO23Wkv-hF9A8OsnLt6__5Qh_aK39GHwoJ3JJCnABnPABffc7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 9 Oct 2026 11:11:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Qin ShiCheng <qeesung@live.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
+ <ttaylorr@openai.com>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v3 0/5] repack: don't lose objects to a ".keep" that
+ appears mid-run
+In-Reply-To: <SJ0PR84MB29933F55E298B09B37F2778EDD922@SJ0PR84MB2993.NAMPRD84.PROD.OUTLOOK.COM>
+	(Qin ShiCheng's message of "Fri, 9 Oct 2026 11:07:27 +0800")
+References: <pull.2219.v3.git.1791453141.gitgitgadget@gmail.com>
+	<xmqqv77cyp8u.fsf@gitster.g>
+	<SJ0PR84MB29933F55E298B09B37F2778EDD922@SJ0PR84MB2993.NAMPRD84.PROD.OUTLOOK.COM>
+Date: Fri, 09 Oct 2026 08:11:38 -0700
+Message-ID: <xmqq5wzax61h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-p0071 was added to compare sorting implementations during mergesort
-development. Retire that benchmark. A benchmark can be added again if
-future sorting changes need measurements.
+Qin ShiCheng <qeesung@live.com> writes:
 
-With the numeric tests now in Clar, p0071 is the last user of test-tool
-mergesort. Remove the helper and its command and build registrations.
+> Makes sense. I will hold off until ps/odb-files-alternates settles,
+> then send v4 on top of master with that topic merged in, and say so
+> in the cover letter.
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Muhammed Dilshad A <dilsheddilu123@gmail.com>
----
- Makefile                  |  1 -
- t/helper/meson.build      |  1 -
- t/helper/test-mergesort.c | 65 ---------------------------------------
- t/helper/test-tool.c      |  1 -
- t/helper/test-tool.h      |  1 -
- t/meson.build             |  1 -
- t/perf/p0071-sort.sh      | 52 -------------------------------
- 7 files changed, 122 deletions(-)
- delete mode 100644 t/helper/test-mergesort.c
- delete mode 100755 t/perf/p0071-sort.sh
-
-diff --git a/Makefile b/Makefile
-index cac535ba19..4b35808b2e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -835,7 +835,6 @@ TEST_BUILTINS_OBJS += test-hexdump.o
- TEST_BUILTINS_OBJS += test-json-writer.o
- TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
- TEST_BUILTINS_OBJS += test-match-trees.o
--TEST_BUILTINS_OBJS += test-mergesort.o
- TEST_BUILTINS_OBJS += test-mktemp.o
- TEST_BUILTINS_OBJS += test-name-hash.o
- TEST_BUILTINS_OBJS += test-online-cpus.o
-diff --git a/t/helper/meson.build b/t/helper/meson.build
-index 3235f10ab8..e94e6f10fb 100644
---- a/t/helper/meson.build
-+++ b/t/helper/meson.build
-@@ -32,7 +32,6 @@ test_tool_sources = [
-   'test-json-writer.c',
-   'test-lazy-init-name-hash.c',
-   'test-match-trees.c',
--  'test-mergesort.c',
-   'test-mktemp.c',
-   'test-name-hash.c',
-   'test-online-cpus.c',
-diff --git a/t/helper/test-mergesort.c b/t/helper/test-mergesort.c
-deleted file mode 100644
-index d22a139f9e..0000000000
---- a/t/helper/test-mergesort.c
-+++ /dev/null
-@@ -1,65 +0,0 @@
--#include "test-tool.h"
--#include "mem-pool.h"
--#include "mergesort.h"
--#include "strbuf.h"
--
--struct line {
--	char *text;
--	struct line *next;
--};
--
--DEFINE_LIST_SORT(static, sort_lines, struct line, next);
--
--static int compare_strings(const struct line *x, const struct line *y)
--{
--	return strcmp(x->text, y->text);
--}
--
--static int sort_stdin(void)
--{
--	struct line *lines;
--	struct line **tail = &lines;
--	struct strbuf sb = STRBUF_INIT;
--	struct mem_pool lines_pool;
--	char *p;
--
--	strbuf_read(&sb, 0, 0);
--
--	/*
--	 * Split by newline, but don't create an item
--	 * for the empty string after the last separator.
--	 */
--	if (sb.len && sb.buf[sb.len - 1] == '\n')
--		strbuf_setlen(&sb, sb.len - 1);
--
--	mem_pool_init(&lines_pool, 0);
--	p = sb.buf;
--	for (;;) {
--		char *eol = strchr(p, '\n');
--		struct line *line = mem_pool_alloc(&lines_pool, sizeof(*line));
--		line->text = p;
--		*tail = line;
--		tail = &line->next;
--		if (!eol)
--			break;
--		*eol = '\0';
--		p = eol + 1;
--	}
--	*tail = NULL;
--
--	sort_lines(&lines, compare_strings);
--
--	while (lines) {
--		puts(lines->text);
--		lines = lines->next;
--	}
--	return 0;
--}
--
--int cmd__mergesort(int argc, const char **argv)
--{
--	if (argc == 2 && !strcmp(argv[1], "sort"))
--		return sort_stdin();
--	fprintf(stderr, "usage: test-tool mergesort sort\n");
--	return 129;
--}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index b71a22b43b..2e80dc7ab8 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -42,7 +42,6 @@ static struct test_cmd cmds[] = {
- 	{ "json-writer", cmd__json_writer },
- 	{ "lazy-init-name-hash", cmd__lazy_init_name_hash },
- 	{ "match-trees", cmd__match_trees },
--	{ "mergesort", cmd__mergesort },
- 	{ "mktemp", cmd__mktemp },
- 	{ "name-hash", cmd__name_hash },
- 	{ "online-cpus", cmd__online_cpus },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index f2885b33d5..9442c61ffd 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -35,7 +35,6 @@ int cmd__hexdump(int argc, const char **argv);
- int cmd__json_writer(int argc, const char **argv);
- int cmd__lazy_init_name_hash(int argc, const char **argv);
- int cmd__match_trees(int argc, const char **argv);
--int cmd__mergesort(int argc, const char **argv);
- int cmd__mktemp(int argc, const char **argv);
- int cmd__name_hash(int argc, const char **argv);
- int cmd__online_cpus(int argc, const char **argv);
-diff --git a/t/meson.build b/t/meson.build
-index 2752321e0d..07436b63f4 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -1146,7 +1146,6 @@ benchmarks = [
-   'perf/p0006-read-tree-checkout.sh',
-   'perf/p0007-write-cache.sh',
-   'perf/p0008-odb-fsync.sh',
--  'perf/p0071-sort.sh',
-   'perf/p0090-cache-tree.sh',
-   'perf/p0100-globbing.sh',
-   'perf/p1006-cat-file.sh',
-diff --git a/t/perf/p0071-sort.sh b/t/perf/p0071-sort.sh
-deleted file mode 100755
-index ae4ddac864..0000000000
---- a/t/perf/p0071-sort.sh
-+++ /dev/null
-@@ -1,52 +0,0 @@
--#!/bin/sh
--
--test_description='Basic sort performance tests'
--. ./perf-lib.sh
--
--test_perf_default_repo
--
--test_expect_success 'setup' '
--	git ls-files --stage "*.[ch]" "*.sh" |
--	cut -f2 -d" " |
--	git cat-file --batch >unsorted
--'
--
--test_perf 'sort(1) unsorted' '
--	sort <unsorted >sorted
--'
--
--test_expect_success 'reverse' '
--	sort -r <unsorted >reversed
--'
--
--for file in sorted reversed
--do
--	test_perf "sort(1) $file" "
--		sort <$file >actual
--	"
--done
--
--for file in unsorted sorted reversed
--do
--
--	test_perf "string_list_sort() $file" "
--		test-tool string-list sort <$file >actual
--	"
--
--	test_expect_success "string_list_sort() $file sorts like sort(1)" "
--		test_cmp_bin sorted actual
--	"
--done
--
--for file in unsorted sorted reversed
--do
--	test_perf "DEFINE_LIST_SORT $file" "
--		test-tool mergesort sort <$file >actual
--	"
--
--	test_expect_success "DEFINE_LIST_SORT $file sorts like sort(1)" "
--		test_cmp_bin sorted actual
--	"
--done
--
--test_done
--- 
-2.55.0
-
+Thanks.  In the meantime you can participate in reviewing Patrick's
+topic, of course, and that may help it move forward a bit faster ;-)
