@@ -1,328 +1,105 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D254D7D4B
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 13:40:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97C73D6CD4
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 13:40:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791553218; cv=none; b=qpSd6qTlXYmZHc9RFi2r+JynAPoGCMBo9Te/x57GNCgaz9TA9/uv0I8pFZn6r/+06dzIOACgZX+sHU+11531XcdJVyOF54Scj+9RrjV38VL6C0ATst4QcG6tk6+aot/Ous8t9VWA8cGxtkxm1VSpCLXZfR9zZQgXmnigGUjYMDc=
+	t=1791553225; cv=none; b=GcMTkfuBik2Z1UPIJ3bRc5AxxlqW7dpuJvkaAvHpWz0nnq7+VWoyYrdeBeZwMaJWOocj5tGWb0GcOu8hTJR895U14uEQE1ZcucM63/m3JCSJXXaGMhhX/KOt+pGBPrRA7IZl1uTOAn8Cq7qYfs+VelbmjAWyER5sQwXWc58dlQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791553218; c=relaxed/simple;
-	bh=O39DMlHChtD77gi/pn8jzifGHlNu6OnCZsXx9PkRIU4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lpjm0poO4G5b+u6XF7Ss3GxcKoyynao8hk/IN8X+QKmKSvF5q4FgFRaLm+PyMC27HNMbuCLVWt8lcYhshYex5T8Hd0qsd1D+TI8TiyK5IxKXTNTn34uf9JIQhAortmROUKtwNRxBi/8ef9k6L8lfSxO3kkovBXmA4WdMSSPpqJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JyqLdgS4; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1791553225; c=relaxed/simple;
+	bh=OJEiRqKhEJ8b8ceqUITo1FlLM5SCb3D2PmwsL1TlnZA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=V0Fc3XoGSdLY8kMMTL0lGUurk7dj+2g6ab4G+ROcseYZFrDFHp/xdKdFOcK2gc/iiq2qlrmwhYlDwrXhDEyhpd2Z7OOVpgX8ulErVGwm04z3Vr/ZBQw7CpXzOpn8VeA5AOfVyz+m8dBztcdt27VGZ6yzfUNyXz5tELiqLQ07Emc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SuFOIJc6; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JyqLdgS4"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-48afcfc4bf5so5517150f8f.1
-        for <git@vger.kernel.org>; Fri, 09 Oct 2026 06:40:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SuFOIJc6"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4980fe6b3beso10879235e9.0
+        for <git@vger.kernel.org>; Fri, 09 Oct 2026 06:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791553214; x=1792158014; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=cyfBPM2X7EwkLzB1jLlA1gkgWKOOJo5tY5erMX/wG5A=;
-        b=JyqLdgS4RI3YBAsipuaE/T6ZV3FR2velZQ/WlLUe6BHcImB0BC07N8qv/f/ZmNwOiq
-         nfFIt4Yq8NTu38HgugCp7/H0/shATkIVULNSIWgDfcUx+jB3QiForJGekcFqxiHRHuzw
-         BTeFQ4BEOETr8VwWd5zuvFSoW5DRbIf3COGdXmONiDvrXeCGIBVZsFU9Bkz0hlsjzZdl
-         pRczrW5LwapoKMFdc6fx0leAHTY7cDKvp4Phh1oZt6YD6Z0wLn35EGf4ADDvuEyp9wgQ
-         15Zd9H8xTkvAYghU3Jc1I4XY7v2FIRnTBjVzGVdTwwbwCBYuxn2EqgQg71zoRYMARz5n
-         iNkw==
+        d=gmail.com; s=20251104; t=1791553222; x=1792158022; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=4Q6cGKOCtoHMFJ78xtqEYfn+Sor6KLkLgTuvC8jSUSY=;
+        b=SuFOIJc6Q4VCkcSxGiRbJPDSWalkZ+fsrEFIoTlqE4q6HEzsTMgC6yEE4Hv/IR8hFB
+         K+RZtR0avPO/WhSLM/mAqRsAAqExrvLpOUobm6DzbmpPKWoa/2NjMpr548Tvmg4zwxN6
+         TVNIcpzWY7rcxx58jfuMQZWbNRmNJ0SLiGGDlxSMJauUKhfdx99hyBEG4hjrcse4Ho66
+         VlJ6YwspKgRXEEh/PdWyzXhf3fQDSGyNCqwxI2q3uAi4cn/vOoyt0HLjTi2MrWCBoC4n
+         kRq5N/dp7S7gzZRu8yNwQufcJ0PbYnshBxwTIm5bXT5zz06pown2ubdLo2fZaKxn5TgI
+         MY4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791553214; x=1792158014;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20260707; t=1791553222; x=1792158022;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=cyfBPM2X7EwkLzB1jLlA1gkgWKOOJo5tY5erMX/wG5A=;
-        b=uJDmr9r781AkHBUO2ukaRMBwEiiezqtFFejyGojLk36xj3IGaR6/KoxHxvy9ZX/ncj
-         V6gli2Q43rvFR1y4PL3UV4ecAyNEDiu5/0UJ3MkO7h/zMLSRIZ4FhtEJMcFEaywWey00
-         UdiJ1LtJ9s3yNnCyx1qMAub8l9exlgHb4W49q/TASJl0Ey3GzVWsUaYw41wgsAJQdXT9
-         zkbjt0IRuwpbSg6kJFVWAv5YmsyouoeMrOqX03+PhdquoXWdwZivbBDqggP8Ekuzv8of
-         4vvJakKRlWlP7B73F2bU7o7Boom/4vPnIu40EDxTd4Bj1n2Z65QSJvxkiBC9Dyz7HOdV
-         /cOQ==
-X-Gm-Message-State: AFq9FYL50kzqzNRef87UYb2xflj3WaA59A/s8pCR3tMJnT3GTemrx+Wv
-	82dOKlOJKTHFapSmd3eFkJLmu6DJJxpe3IOTQtwSX1TOeIScCigmv+I3718H/sJz
-X-Gm-Gg: AYBFou2UslzuQQNrEUparTU7cbE9tomNgDmnYD/1GRuoczirowIRkkAQpSZ4RxBwgXS
-	hjZo3Xx3J5VbABKbzPTG025RLWZc4aHhIe/nVS/g5HWGRNsp8SPeqnVi1veVEG++IF3spUTM8o4
-	GuFrEpYtjGCUJJEJnNjhf4XD3RZevvTkJlRZhJESq+HdeeXNDN2H747hpANe7BgLUL78poQzXxc
-	sKfivnU7qsDxwQ5yVZxDtkoZ5iNenVekHMXlM+U9zEr6tK3Fv9SqBoLml1nVI+WFYcHUfpJskTs
-	98HTgZZ3x9huoEmIxPr1IK3nKmSqYCZNXy6cVtXQ/QJSamkMc8b1bMcCxbh6hfdFTlMtdIL5+AH
-	Atbe5PUaZXYo6o/4c9OMzd4k+0TrSOVFv5UMWbq91k6DVXAZxkadctcxFMp7PxOsFHITzSEGPES
-	p5ADqNBL0mpGcz6jfXNV8FBo01HH9+eT5sv8wYuMvvl+9CV/1T0UCb+AHMpF1vs1/QiCqO8izLu
-	EB9zK7zbaor68VdT4MKyGeTzvo3UXA=
-X-Received: by 2002:a05:6000:46d6:b0:488:83b1:16a1 with SMTP id ffacd0b85a97d-48dba789368mr2284405f8f.7.1791553214049;
-        Fri, 09 Oct 2026 06:40:14 -0700 (PDT)
-Received: from ubuntu26lts1.example.com ([151.28.158.9])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48db9adf5e6sm3898850f8f.56.2026.10.09.06.40.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Oct 2026 06:40:13 -0700 (PDT)
-From: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Harald Nordgren <haraldnordgren@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Elia Pinto <gitter.spiros@gmail.com>
-Subject: [RFC PATCH] status: reword message for a missing upstream branch
-Date: Fri,  9 Oct 2026 15:40:04 +0200
-Message-ID: <20261009134004.188952-1-gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.56.0.116.g6de20f6092.dirty
+        bh=4Q6cGKOCtoHMFJ78xtqEYfn+Sor6KLkLgTuvC8jSUSY=;
+        b=fYoWL/NZALqpGZkDLIjCHhUm+KTNo3+kB+8MeHsv4q4OEn8/fD6T9P7OdKVkYBg2Fb
+         1/+QBd4uQcNZFqLuUTl8qq8Wqe7PCK2bDxxJqN1IVnKfvXsKRk6J1qouPTjd5u/XZkeD
+         uTD0k7ABT5v1Ye8OzksH3XS+/12JjSuwGezQ0m3KiOk0kxeoRkVG+r/pEQoxi8/dSUEM
+         2wuGlgb1sA9U9QGEGlES2bmPaYl3oI/L6QWZ1lgY7/0USY1HTjEF4q9lxJWW++y+OjJy
+         Mc2c25hrUl9F1x8DKvYFRMgjGoZx+XWEt49Y7dwu+Uwd6CtfAEkfGfTFqrci+oKM89ye
+         7+mg==
+X-Forwarded-Encrypted: i=1; AKwUvBzmagpjT9GKwgWvFPzUi6TOUPgHZxkcaEPeXWQXgSfWweM8Skkh9iMIV1UF3zE/T0f5cj8=@vger.kernel.org
+X-Gm-Message-State: AFuF++m6f8VQqwNScSlZSp/PAn7WgIeNSynrckbZ1lrIMEQZup3Sy7Hm
+	C7dmZaX3Otu8RY+B5wvrpKdRJ7LsL/epnXmz1K74r3ZB37LfDUwZqtHH
+X-Gm-Gg: AYBFou3FZ1fXljXsJgaQ1RIR6hhngjfmbMDOR2NobsXC+j/ZEmzwfaooiL9KqQuTdjI
+	L452KLMzWzeXn6/0C9XbZcsmHCcJb83w8VsleATCXl3OjrLgzGbqOdhydB7mJjPyrgf6whRCab7
+	NnUrHsejuXr3nboiY8mYR4BfRx3tpd/ekZAIOPM2toSBLM6+KlJMikWCGLkuZAWwE9DN0yjWZj1
+	rHeY3xHws8hGvlMZzeeGU9tbgtJvUmhslxEIg8p9LeVKGmFJmudwWvgA8AIfdMTe1VvT3GFj8P2
+	aexoyfMH55LBVpfXH9oZ9P3ZjxEJttoGtAmVjsvHAwo29/p/kVHgjsdRTTWWRPqN+ahv4Wuw8cy
+	0Hs2ceWXP50ZElU/0qzGXXwQXzXAkftfKqoJPWeKLmIsu0oeNGknG2L9b28qKUsS8C8MjZNbBoa
+	aCOeTG2n5ioanFEYmdYzqXAsgK1/AgxWsa7BlHMsmgU4Muj8a93ycTbPZnatdeUFKOLZxRhH1Z7
+	Owja3BMYllRPh+MKzDD2t1dQ6zW8rS5CJlE823NmbskExwrMKIq
+X-Received: by 2002:a05:600c:3e0b:b0:49f:fbad:29ae with SMTP id 5b1f17b1804b1-4a18e4b1311mr37041655e9.17.1791553221783;
+        Fri, 09 Oct 2026 06:40:21 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a18bea0f1csm96287355e9.9.2026.10.09.06.40.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Oct 2026 06:40:21 -0700 (PDT)
+Message-ID: <8f0ec8ae-5622-4d07-a4cc-753cf7e64982@gmail.com>
+Date: Fri, 9 Oct 2026 14:40:20 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] branch: let --delete-merged find squash merged branches
+To: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+ <CALnO6CBwWy3aafyDJPKFk5vuWy2EF1n1Oc=W7+RVAE3rxpXwiw@mail.gmail.com>
+ <39a28064-1698-4971-a80f-4a4c4dcdd8d9@gmail.com>
+ <CAHwyqnVoMnO_fYGJ0N29bQv=Lh5naZ0jc5uSpiS2urQMZVG5-Q@mail.gmail.com>
+ <61ae371a-225c-4400-b878-8547547d1269@gmail.com>
+ <CAHwyqnWkTvicU+U99j0MzzUUXeVnUj=FJJwUDR1F7DGk1hmtrA@mail.gmail.com>
+ <CAHwyqnWmXM0fEn2X9p7g3fpzmXhfAJAqAj9SG0=6kOpunqfVUg@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAHwyqnWmXM0fEn2X9p7g3fpzmXhfAJAqAj9SG0=6kOpunqfVUg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Clone an empty repository, make a commit and run "git status":
+Hi Harald
 
-    $ git init --bare empty.git
-    $ git clone empty.git work && cd work
-    $ git commit --allow-empty -m initial
-    $ git status
-    On branch master
-    Your branch is based on 'origin/master', but the upstream is gone.
-      (use "git branch --unset-upstream" to fixup)
+On 09/10/2026 12:18, Harald Nordgren wrote:
+> Interesting to note is that merged branches inside our repo change
+> when Junio signs off on them. So without this functionality they are
+> not cleaned either.
+That's true for a patched based workflow like the one on this list 
+whether or not the maintainer signs off the commits. It is slightly 
+different from the squash merge case because you need to look for the 
+individual commits upstream, rather than the combined changes from the 
+branch.
 
-The upstream is not gone, it was never there: the remote is empty,
-so origin/master has not been created yet. The advice is also not
-what the user needs; "git push" creates origin/master and the
-message goes away.
+Thanks
 
-The message was added in f2e087395b (branch: report invalid tracking
-branch as gone, 2013-08-26), assuming that a configured upstream that
-cannot be resolved must have been deleted. But "git clone" of an empty
-repository configures the upstream anyway, and Git has no way to tell
-"deleted" from "not created yet".
-
-Since we cannot tell the two cases apart, change the message for both,
-including the "deleted" case that has been reported as "gone" since
-2013, so that it is correct either way:
-
-    Your branch is set up to track 'origin/master', which does not exist.
-      (use "git push" to create it)
-      (use "git branch --unset-upstream" to stop tracking it)
-
-Only suggest "git push" when it would actually create the upstream,
-that is when the push destination of the branch (what "@{push}"
-resolves to) is the upstream itself. This is not the case, for
-example, with push.default set to "nothing", or when pushing to a
-different remote (branch.<name>.pushRemote or remote.pushDefault).
-It is also not the case with push.default set to "matching": it only
-pushes branches that already exist on the remote, so it would not
-create the missing upstream. In all these cases only suggest
-"git branch --unset-upstream".
-
-"git checkout" prints the same message, so it changes too. The
-"[gone]" shown by "git status -sb", "git branch -vv" and
-"%(upstream:track)" is not changed, as scripts may depend on it.
-
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
-This is an RFC mainly about the wording. The case of a freshly cloned
-empty repository has been confusing users for a while, e.g.
-https://stackoverflow.com/questions/24870145
-
-I could not find a previous discussion of this case on the list.
-Opinions on whether "status:" or "remote:" is the better area prefix
-are also welcome, as "git checkout" shows the same message.
-
- remote.c                 |  34 +++++++++--
- t/t6040-tracking-info.sh | 120 ++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 146 insertions(+), 8 deletions(-)
-
-diff --git a/remote.c b/remote.c
-index 71170f36a9..4ed4d1ee2f 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2442,6 +2442,31 @@ static void format_branch_comparison(struct strbuf *sb,
- 	}
- }
- 
-+/*
-+ * Would a plain "git push" create the remote-tracking ref "upstream"?
-+ * Not with "matching", which only updates branches that already exist
-+ * on the remote.
-+ */
-+static bool push_creates(const char *push_ref, const char *upstream)
-+{
-+	return push_ref && !strcmp(push_ref, upstream) &&
-+	       repo_config_values(the_repository)->push_default !=
-+	       PUSH_DEFAULT_MATCHING;
-+}
-+
-+static void format_missing_upstream(struct strbuf *sb, const char *name,
-+				    bool suggest_push)
-+{
-+	strbuf_addf(sb, _("Your branch is set up to track '%s', "
-+			  "which does not exist.\n"), name);
-+	if (!advice_enabled(ADVICE_STATUS_HINTS))
-+		return;
-+	if (suggest_push)
-+		strbuf_addstr(sb, _("  (use \"git push\" to create it)\n"));
-+	strbuf_addstr(sb, _("  (use \"git branch --unset-upstream\" "
-+			    "to stop tracking it)\n"));
-+}
-+
- /*
-  * Return true when there is anything to report, otherwise false.
-  */
-@@ -2503,12 +2528,9 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
- 
- 		if (cmp < 0) {
- 			if (is_upstream) {
--				strbuf_addf(sb,
--					_("Your branch is based on '%s', but the upstream is gone.\n"),
--					short_ref);
--				if (advice_enabled(ADVICE_STATUS_HINTS))
--					strbuf_addstr(sb,
--						_("  (use \"git branch --unset-upstream\" to fixup)\n"));
-+				format_missing_upstream(sb, short_ref,
-+							push_creates(push_ref,
-+								     full_ref));
- 				reported = 1;
- 			}
- 			free(full_ref);
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index e95d420972..39cb755ccc 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -96,7 +96,7 @@ test_expect_success 'checkout (upstream is gone)' '
- 		cd test &&
- 		git checkout b5
- 	) >actual &&
--	test_grep "is based on .*, but the upstream is gone." actual
-+	test_grep "set up to track .*, which does not exist." actual
- '
- 
- test_expect_success 'checkout (up-to-date with upstream)' '
-@@ -123,7 +123,123 @@ test_expect_success 'status (upstream is gone)' '
- 		# reports nothing to commit
- 		test_must_fail git commit --dry-run
- 	) >actual &&
--	test_grep "is based on .*, but the upstream is gone." actual
-+	test_grep "set up to track .*, which does not exist." actual
-+'
-+
-+test_expect_success 'setup clone of an empty repository' '
-+	git init --bare empty.git &&
-+	git clone empty.git empty-clone &&
-+	git -C empty-clone commit --allow-empty -m initial
-+'
-+
-+test_expect_success 'status (upstream not yet pushed after empty clone)' '
-+	cat >expect <<-EOF &&
-+	On branch main
-+	Your branch is set up to track ${SQ}origin/main${SQ}, which does not exist.
-+	  (use "git push" to create it)
-+	  (use "git branch --unset-upstream" to stop tracking it)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	git -C empty-clone status >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'checkout (upstream not yet pushed after empty clone)' '
-+	test_when_finished "git -C empty-clone branch -D tmp" &&
-+	cat >expect <<-EOF &&
-+	Your branch is set up to track ${SQ}origin/main${SQ}, which does not exist.
-+	  (use "git push" to create it)
-+	  (use "git branch --unset-upstream" to stop tracking it)
-+	EOF
-+	git -C empty-clone checkout -b tmp &&
-+	git -C empty-clone checkout main >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status -s -b (upstream not yet pushed after empty clone)' '
-+	echo "## main...origin/main [gone]" >expect &&
-+	git -C empty-clone status -s -b >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup expected output without "git push" advice' '
-+	cat >expect-no-push <<-EOF
-+	On branch main
-+	Your branch is set up to track ${SQ}origin/main${SQ}, which does not exist.
-+	  (use "git branch --unset-upstream" to stop tracking it)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+'
-+
-+test_expect_success 'status (missing upstream, push.default=nothing)' '
-+	git -C empty-clone -c push.default=nothing status >actual &&
-+	test_cmp expect-no-push actual
-+'
-+
-+# "matching" only updates branches that already exist on the remote
-+test_expect_success 'status (missing upstream, push.default=matching)' '
-+	git -C empty-clone -c push.default=matching status >actual &&
-+	test_cmp expect-no-push actual
-+'
-+
-+test_expect_success 'status (missing upstream, pushRemote is another remote)' '
-+	git init --bare fork.git &&
-+	git -C empty-clone remote add fork ../fork.git &&
-+	git -C empty-clone -c branch.main.pushRemote=fork status >actual &&
-+	test_cmp expect-no-push actual
-+'
-+
-+test_expect_success 'status (missing upstream, advice.statusHints=false)' '
-+	cat >expect <<-EOF &&
-+	On branch main
-+	Your branch is set up to track ${SQ}origin/main${SQ}, which does not exist.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	git -C empty-clone -c advice.statusHints=false status >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup upstream deleted on the remote and pruned' '
-+	git init --bare pruned.git &&
-+	git clone pruned.git pruned-clone &&
-+	(
-+		cd pruned-clone &&
-+		git commit --allow-empty -m initial &&
-+		git push origin main &&
-+		git checkout -b topic &&
-+		git push -u origin topic
-+	) &&
-+	git -C pruned.git branch -D topic &&
-+	git -C pruned-clone fetch --prune
-+'
-+
-+test_expect_success 'status (upstream deleted on the remote and pruned)' '
-+	cat >expect <<-EOF &&
-+	On branch topic
-+	Your branch is set up to track ${SQ}origin/topic${SQ}, which does not exist.
-+	  (use "git push" to create it)
-+	  (use "git branch --unset-upstream" to stop tracking it)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	git -C pruned-clone status >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'short formats still show "gone" for a deleted upstream' '
-+	echo "## topic...origin/topic [gone]" >expect &&
-+	git -C pruned-clone status -s -b >actual &&
-+	test_cmp expect actual &&
-+	git -C pruned-clone branch -vv >actual &&
-+	test_grep "^\* topic .* \[origin/topic: gone\] initial$" actual &&
-+	echo "topic [gone]" >expect &&
-+	git -C pruned-clone for-each-ref \
-+		--format="%(refname:short) %(upstream:track)" \
-+		refs/heads/topic >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'status (up-to-date with upstream)' '
-
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
--- 
-2.56.0.116.g6de20f6092.dirty
-
+Phillip
