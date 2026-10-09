@@ -1,122 +1,147 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73CF5368D46
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 20:31:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D2E35C6AB
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 20:37:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791577895; cv=none; b=dicNQ28jCHu4hc9e0je0tZB0Fu7lgxwF0ZvL+L4vKxLonjjwJ7UgMLTF6Xb7G94Dqh6hWFUeQ7QSnmv11SpdnLymOId8ppHDCY7CaXK4xDvFXKUteza+XStUF+M5kehzLy+cV2lTM0wx6m9UuWSGloOijH98gqZrXn2Iqpz4N20=
+	t=1791578275; cv=none; b=GfVVqnYwy9f1OgUQ4ITuFQqviMNMvatmrz+KRdLxrsddz4Bey8n4ANJbRTl1rhZb07mARAdSOyKU+m6hTmGxH1ITP4ABw/L15751znN2t6NdoDBSRMFphSMShEBLzwS5QxuGPneScSVDmxMNzb2Wpb5915FKj7ZGXMSiYYJDPBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791577895; c=relaxed/simple;
-	bh=HoeTdrsVIjfh5cL/SWMtSWWaOuLIpg+qDGL4YUoq+u4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FKBBdOW2F9YnpAOjcXjNkOudbMsR5s6FVmYLbxWr26ud7e4emDNVuOj4ipbv872rUkZ8APvveOlWzelqeiQPkXR9fyWx6ICQBIvXu5J+ABHfFUejR7MIyQr6/B0d1nzChAKlB7jX+EiBM3BoIAs03ZDr/556q3V4cTYzxzlqnx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=b6EWb+pF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NiSkODai; arc=none smtp.client-ip=202.12.124.146
+	s=arc-20240116; t=1791578275; c=relaxed/simple;
+	bh=xcR7v+90fOOsO+p+qaFrXoOQeloFx+v+frbx4glET9Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=omg/N9PqT00JjXgtBHs96/Z1Qc+ndH3zXaHI5CfjW11SRbzPoV+Pf6/iRClPXEu43EgnOmD0n1Kc92kUpc+Oj1w/HgkAh5xfbutgImBOmqRzxVW3tl4e9Nhj5EtP0oL31M2y4JTCP6+Eokiko5U0H66dlM4Nk3QVSghwm8AsTDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=p9cGZakl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wTnDp9aN; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="b6EWb+pF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NiSkODai"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="p9cGZakl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wTnDp9aN"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 74EFF1D0010B
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 16:31:33 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 09 Oct 2026 16:31:33 -0400
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4AD4A7A00D9
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 16:37:53 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 09 Oct 2026 16:37:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791577893; x=1791664293; bh=cVUuLWgsld
-	7Q5nRb33rs33lwBBrUE3+AEB71eUT2zRU=; b=b6EWb+pF8M7ZrgA36vDnUt0oEu
-	1qx7I6iC0dseLx/e3sI58za4epQ82o7DFMhlMTItCYmzEBgwItOCQLE+f29a86ZT
-	96aWDoV625+84kyOPA5U1V/5GEu0ZWIoMXIwBULAAPL/zJl1XzjUmTZsgOhTk4K8
-	NQoP70LZxrjtPy1jmerM1S4S33aap31zUTyp8+n5yTblmxtZp+9HUc4UN4Jjo54E
-	at+gHI9uIOW/ta9JBF9cXOoxiA2UHSnlQWDmty0zNv7m2ww2ymKS5RhFWDz9luo3
-	pX1xsoHUyuKx3e38vFY3EZbtsXQD6I5nCpkj8nXIdMYOaou93ZHFtrfKw70w==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1791578272;
+	 x=1791664672; bh=De2DvGKwADcGX39RIusGck94AsScTSYU+A3JXCkl11g=; b=
+	p9cGZaklPoZ3Aw6RihnMrhs9IBp5mzunBEZmkOVDSiM8Myajoq3wLel9lQVI2rhn
+	v9xVjTiV0clcsCYz4egqPLUlc7jdpjhYOX3mkPF/4YWBmWJP+W9EbXFfyTmst+Iv
+	w1LOMhItfRAVLni77gnnhtV6jcMzaGwJqNnS7/+gL8FwZovncGPzxQha2T6M1uqV
+	rgl/vT2OeMv/V5ZCuCurYOJjMfJZhgCtzvFQk08SshTm0yy9xIBeY5/c4EkRbtvZ
+	45ODM65U5d/vF/GXXYT45ay9V+BuUG3ftuqx0sh8DzFMkNpc8Lfbp0ZpY+JLAn89
+	NgbBiqPh0ZGP+H+7madR5g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791577893; x=1791664293; bh=cVUuLWgsld7Q5nRb33rs33lwBBrUE3+AEB7
-	1eUT2zRU=; b=NiSkODai7pJtRTDdtg3ga7bscpDFj4eTCH4xV9tX2EPzmvyyiov
-	t9Smxice+MPGTWtPR2byjjtM23VxH1SmTddUzt7uM5iC2MvPxlbDfk+SOWfWVtxt
-	smONa9fkxavWdpEDHV5o+ugsfcZCzifnGLyydUO2zWCYNffOv08JEO3Gwj22LuJF
-	1Ny/21MyvvMA/pEdsJChbWB9vnOMYUSTg6rXfYM/7B0d6eLao4JJknahhPmDDrqX
-	/po1/jam0pwiDMuWA8Xt/KRkNZ3HId5Beiaqv/7OpN/UNDtmwVtmbpuE1OPmy2Wy
-	dVXzM3SlvfgEiUjPuHHX8l/qrtv83Yk2C1Q==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791578272; x=
+	1791664672; bh=De2DvGKwADcGX39RIusGck94AsScTSYU+A3JXCkl11g=; b=w
+	TnDp9aNPD8CSlSYs0I6WPbKHJfo6k8PhkvYrRX8DJ1KeS65QicqfkLhNBoEqVgo7
+	5vAzk6s8xVgdYWtgpZ4J6pUOoBfd5vInz0ClzsasIIAVQsvns5QdlsLGh0pSfOK7
+	fWCFNx7+nDhvrQe37gled+0yIsc/W7CO4B+44woCpK3Ac98P8M6v07q5BMn3GmP4
+	IGjadIMk8w9vEJKT7znE/K8Cp5SAKLRVnNK2lETC7QAKCZbbRkYxP8ASq3ax6s4f
+	zQTGawsETCSMe9W37ivt25svcLx090l9AJcPYcTN/YszCJwWH1BT5NIChP/BhZfj
+	19HTot+7U54UYNSCv9jTA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791577893; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:kkFOZqi/+qQpydPFHq0DNl/ESbBiBwv8/E4gcABIj+fYXeF
-	rRNIeWTgHankSN1mm8/h4mY/EsLNxeTvq/hETsaliH23Dobi98BOZWd31PFoNCVx
-	m70sT16j41Ru7jfIWHw3EIces6J6IADyLZWgbdoq6w6P2V+DyTBuJpyl1Hy3eUps
-	fS2i4oMCQxT17+VbF7meAtEOFxeUy1hWLVF5iB7oHVRc1IJeLmw2GB2cHNcVdE8c
-	GW6hIG23Iz2IRLC6QBEUpX7m251CYJNkab5LiJFAEC7zlILHMA5WPMJ3TvB6Zk88
-	pjtExtzpUkQHGXYrZYzFuWNj+zOdKTRKajkgQFg==;
+DKIM2-Signature: i=1; m=1; t=1791578272; d=pobox.com;
+	mf=PHRtekBwb2JveC5jb20+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:KgyTSfH7nGcLJPmtD4r7r+ciMz00/NXdYSRlPd9jcLQkbj9
+	f3OzFY46zKSzOc9beTIa43uXD/9s4iUrqKJlA/tjYARbsOK/ErTlh5TH8xlHQyct
+	wSe/peC7H1g3uQ9/aVU5Gmat/KqBWS2epdO0Foko4h6IO0Ahv69dcg/3lrlOMZyF
+	+IIgJkRQQWheJaWfZRTfr6GrmXLEDzLQGFR5gl3rrftRGnidT/qQ93JPt3fJ6jT2
+	Ih5g9gXe5Eb761OQIWXaCHhh3Vs8h1N67GYRHwfgzaTtv66zfA/iXnKb3ShUUdxN
+	zw5dNIBwVp2U7mqJyQh18B9l7L3wCz4eoMoPS2g==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:wC0hbcsrba/JZCmNCmtJfeIZ24lql0pMeC4uElAGdQE=:HoeTdrsVIjfh5cL/SWMtSWWaOuLIpg+qDGL4YUoq+u4=;
-X-ME-Sender: <xms:JU_JakFdguz9_pg6tWAdAQW-z6BLbaHHR00xIg-mrl2JnglsC7E7yw>
-    <xme:JU_JakMBY0TWaYREUOyse2_dC_LNdkfIJqlI7_yPqLVrRe0mBgS5hlt4n-uhQaq1v
-    o8YY8fqiBw0yMQD5eOcZsucGXZnfulTJmxlCbOS_d_gpI--qaNNdQ>
-X-ME-Received: <xmr:JU_JamdOIPgLwXwUO5Eb4cNOnyRYoIBHZOeFEki7HMT09mvL6MjDzfWbWKxQLAeAvaC64TQzkYmFwYheqgp7i_jveP39yql4fADk>
-X-ME-Proxy-Cause: dmFkZTGqzE61sOeE79cnr9/mzh+WTT+hn9yYh+5Z3AeFB1X8Psl95HM41tTdPdFb7Pe5g4
-    Tp77rcnTw97nf0U+PuUgekpUTkIb3EkLdBEXyFAbNORvzwWWVQViBegY31DXULR/7I96yu
-    AsQtWLgnfVCuALYKr6X2X0e4qh6iG/TRkVsPsh3p5Ri6IgVS/0SyUuL2qzibPhDrFjP9pX
-    fOBoBmW2PLgN1Ea4/C+RgxTzQsu9J3oF/+DmPuvFM9lcLukM7x3MaY7uu4lCj3I2BgpY+e
-    qY6njGiXzCtqRUlag9zjWQ48Kk+eJzw1lT5P5G2Tg6ywy+2+ZRbWEzK0WOBWtDVnhcqVWf
-    iDxRJNbDS+XMKCdhsXhPH8Rik6yjA8d3oKNw8aVqyVxu3hEck3zsGBSyYWh6O9z9+6xGUe
-    Bn6lmySUonL0RutODr850eCfi2Nm1ymR5W/NCasDomey5799bKeAHND/I9jkJJ3QIwakrB
-    cfYxYQC+934zswqf/6pZlly9/Mi0xu7N6ygFsLYH8DuLy5NLpla8PCTsNbsPrwFLXswNlD
-    2yvr5AQ9O32lqx02CE6AT85j/Geo8sk7MN0rbmeaO8REHBO/8Y58kUGB0l3WHgpzm+ihHO
-    ea88Xc1rDSEl4GuEBAZpqtUlOG1qXR5yGfKueEQnCA5J8H0ss9mJAYanHEVg
-X-ME-Proxy: <xmx:JU_JahsWx8psMJJLONx8pzx5Nd7_5k4L2v32FeaID0FpfZ5VNEnbrw>
-    <xmx:JU_JanlomjTmj_hUdlgP8f44JNT1PgaJ90G3KKvddx9fdFmiITeMdA>
-    <xmx:JU_JajyLI2E-7muE1DFKeYpZtuXgNTZzF_m1v8EheaK8s17oq5I2QA>
-    <xmx:JU_JapN4wwSlfBQ4kWXPl4jhjqM8R8VcN9Jjir7Z3t1BuY1CZ8AgSQ>
-    <xmx:JU_JapfWHnbVmXR147wk-Usll4Z9dXhZqVU8W7nP0Go_82TsqbfhNV94>
-Feedback-ID: if26b431b:Fastmail
+	action=mi-m=1; hc=13;
+	hn=cc,content-disposition,content-transfer-encoding,
+	content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:lKNYAAHJn86Gn7oO/jnci3dJxWpj8+ik69/PNXEiE44=:xcR7v+90fOOsO+p+qaFrXoOQeloFx+v+frbx4glET9Y=;
+X-ME-Sender: <xms:n1DJaoEr70zPwcjZOGkYhBP6KFMT_ZE5c0gPsqS1j7B58rKU4-dK4g>
+    <xme:n1DJajlwpZoqjbPfarz_U96SzwK7Ii1jdF4FwpqENFgvWJE_CTakQe_HRv8nNulBm
+    ulvn2HOftvUuFoHEwU8_VSa4tEI3FIg9N_Gb37q2kHbjNNfoJkXmw>
+X-ME-Received: <xmr:n1DJakbaE0ly2Y4hHCxAQv-yY2hG7WOOTIgm5zk_B81CMYx8zResRu9KUiVqpkPd80NONcdRd3kmBoGuJ0tFsZYY2XpdDKG0GDDrhnavfgDZlJ1OrPXuabk>
+X-ME-Proxy-Cause: dmFkZTFKiE6GfEnhUA9LxMRPM7UBaLWGJA8+8RgOjGOkxDVOIYC+1X3Gy0AjYDwEqS1MzN
+    /3BfiGRe3q/lQJJZ5fUHzz8Bni4L8cpc582TRQpYvKLZcI3ImQV3EK446tcmPSHis8ksKm
+    r7k+z08triZERxyFVfSI0FUq5yfAL5Kmtpg1h79oKU6LkcH+aC1Uq+XtFlez1iTajyzzfm
+    ZS1LNjyj2q+R2fNOohKDMtsGZXNem9TuBObwcSErkvs/4VmlRxOa3ecRn4uReDbs9suoWR
+    Iu88Ph4jGhqROqtcEu5p9hULaioYHqw9mpEzIb5N3TXX+8OSgCtGUWY5Yl+nKac68NX4YZ
+    +AcCTQC3VSYn3HhkbviEQzmxkHdBjf1TyzhX7kN+zVUl6zR7BGlmSof3zDWZpuv2Vl7xcP
+    3ZuC4G6lbkZ8bAZPCZH0GZsLL9s2jBEne85qXg0AlkL6HYuNN2jx9PjYwQ20VLT8LLx0vK
+    AYPfSlyP8yjfxMOy4IPiCchwTRqRJ1OKc5mZoMFJMZZgWMltBvzGBge/8Cuogmc2PPj/q8
+    KczVUSvX6htNRp45mEFSTXnUZy2/FXe0ptxbg/ZJuh1uA428QZ0Z5OTUySlaE8OpuAT05m
+    dnQeJcj91Vx5FCtCSbSMSoAnSqbDI20BWnCqdxjEPZiJepnFZWqKv1r8Xbpg
+X-ME-Proxy: <xmx:n1DJagFCxm5Chq7p6kyTUMZmo7jHy_TadYKnJvJCclWyEzJN_dC-vA>
+    <xmx:oFDJatLUV0jLhrMU2vkByHoEdLY4UmFX3CuFQSCdQqGSJ79x9zqS7Q>
+    <xmx:oFDJajOpf1aeb3asTx5ZFCzia9qUimjBZeOqxrU7ITkQKZdRRcQAZg>
+    <xmx:oFDJalk4PS8wQZMCQqjGQuaEbFnsG_c4_ptXmt6VpB5iT3jo2m89iQ>
+    <xmx:oFDJal13RRjBAftMozskqpmn2YBg52bzgKbVsoQ3xtDQSsFhOinf3lQx>
+Feedback-ID: ia13843cf:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Oct 2026 16:31:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Johannes Sixt
- <j6t@kdbg.org>
-Subject: Re: [PATCH v3 0/2] checkout -m: recreate conflict labels
-In-Reply-To: <cover.1791537203.git.phillip.wood@dunelm.org.uk> (Phillip Wood's
-	message of "Fri, 9 Oct 2026 10:13:23 +0100")
-References: <cover.1790761727.git.phillip.wood@dunelm.org.uk>
-	<cover.1791537203.git.phillip.wood@dunelm.org.uk>
-Date: Fri, 09 Oct 2026 13:31:31 -0700
-Message-ID: <xmqq33ueobto.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 9 Oct 2026 16:37:51 -0400 (EDT)
+Date: Fri, 9 Oct 2026 16:37:49 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Sam Reis <sam@opencanopy.dev>,
+	Sebastian Thiel <sebastian.thiel@icloud.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <scott@gitbutler.net>, git@vger.kernel.org
+Subject: Re: [PATCH 0/4] faster SHA-1 collision detection
+Message-ID: <20261009203749.x4V9kN18@teonanacatl.net>
+References: <20260929112544.86511-1-scott@gitbutler.net>
+ <xmqq5wzda0h6.fsf@gitster.g>
+ <CAP2yMaL51H1OAG25nQ0NuLQLb0wevd4CicCG1_ezsJfrZDqfUA@mail.gmail.com>
+ <79ae606b-cf99-4867-9db3-bcd7ff03626d@icloud.com>
+ <CA+Te0V+-O3avrvH353KfCDjAEzMa=_H57G4OmiJ8+d1dDzZ6aA@mail.gmail.com>
+ <CALnO6CBbtKomawqc81MPV5Ngtc9J3M1ej4enGD3ZUzWnPSfsgw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALnO6CBbtKomawqc81MPV5Ngtc9J3M1ej4enGD3ZUzWnPSfsgw@mail.gmail.com>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+D. Ben Knoble wrote:
+> Interestingly, Gentoo claims Git's license is only GPL-2, but I think
+> they compile in the sha1dc code since it's the default in meson.
+> Should we be claiming the Git package (with sha1dc) is actually GPL-2
+> and MIT?
 
-> Changes since V2:
->
->  - only write ".git/MERGE_LABELS" when there are conflicts and added
->    a check to an existing "checkout -m <branch>" test
->  - change write_merge_labels() to take an array of labels
->  - use a local variable to store the internal merge state when writing
->    labels
->  - use strbuf_detach() rather than xmemdupz() when reading labels
->  - add a comment to say we ignore trailing cruft when reading the
->    labels file
+I _think_ that that depends on whether Gentoo's license tag
+is meant to be the "effective" license they are distributing
+their Git package or attempting to encompass the license of
+all of the code which goes into the Git package.
 
-These patches looked nicely done.
+Fedora's Git package has:
 
-Will replace.  Thanks.
+    BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
+
+I think I was the last to touch that, in ef75bcd (update
+license data and convert to SPDX format, 2022-11-07).  I
+attempted to capture all of the licensing, but I most
+certainly could have missed some things.  And things may
+have changed since then too.
+
+Fedora's guidelines have a lengthy page on the License tag².
+It includes a 'No "effective license" analysis' section
+discussing this.
+
+I don't know if any of that helps. :)
+
+¹ https://src.fedoraproject.org/rpms/git/c/ef75bcd
+² https://docs.fedoraproject.org/en-US/legal/license-field/
+
+-- 
+Todd
