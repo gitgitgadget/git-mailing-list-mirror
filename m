@@ -1,169 +1,148 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from flow-a1-smtp.messagingengine.com (flow-a1-smtp.messagingengine.com [103.168.172.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E11340A57
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 15:41:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DCE246783
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 15:49:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.136
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791560519; cv=none; b=ANE5QEuqCBW/0RDOyNhCcrOMi9cTtVhX7x5kruDNKd/wcyNaVoooXAxfecq4Agw6i2h4i0M0qCbXmaOxLdG3P+yNnRgWbjiehlgN8RwXMfJiWddF7BOgmTFZay65EhOqMVnay1ZRUZib7QoV5Ss6ONaB2uaINYSkKZ6pd0+fToY=
+	t=1791560984; cv=none; b=d9sJHyiFQPE7ul7OeTeFewNwYT44qtBVjkuWPGwFnMJqfPo7RRlLXDrcB/CjSdu9m/rHE2bPwzHmYUdeESYixufeKKloklKTLyIuuK0j1k4VkqrbeKXUJqvpb0KlHY4I/zT7Zyc/h8opCrk3H1bBEEX6rNW0oQHp5TNX5pObM7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791560519; c=relaxed/simple;
-	bh=THGIgb3nuKkFWyJYhppW64kiyPkaG4noGd4Hd+282j4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rZN89KblHqe9lEmACGWPRW8eeb1b0w4T8EfZBx9PVd1qOXAZ+5zyqQdVGj3ArUzpSnkkcV5Pjs3W0u3aXRF2ryIY5JjI4RoxlNMesgv5zU1racefvG4BqOR/N3YytlUvCZtjBuRcgtQkBVCy408qHksg0Bi910w1aZVzZnfhT9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ntQueKcz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XtegZyPH; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1791560984; c=relaxed/simple;
+	bh=0S4RYWo/1GNdEp63xexcL2gmNjczx+ioAqY2FEiddeU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=T47FPPEJ6UcBdYhvS9aSmbsz021vwIc+EBVoxoxhJmffbdLqgoKKcD1g06gG3uVWIoVl8Uk0MesULNIikNER8K0CKJp2HdLg38u151c7oLP9t3mqDUl4txzudLXiK63Qk7+JYbKHeR3CznhA0JLQN1pnFlMFwQQCnkvgPSsODfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Lu/PqZuh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e8Eh+SKF; arc=none smtp.client-ip=103.168.172.136
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ntQueKcz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XtegZyPH"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Lu/PqZuh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e8Eh+SKF"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AAA0414000B2
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 11:41:57 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 09 Oct 2026 11:41:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791560517; x=1791646917; bh=5uoLd6SCUv
-	rJkWqgkmLagSHu4Ji+8eCdUCwj+RPdBHY=; b=ntQueKczP7mkT8z7TlwTw5TEjw
-	iB4sHUVXQE1qswQ80svc7zAorQ8GE2hIlR/hVwI49Jr6k9USs/45Rb/23SuvRdN7
-	InkGbS0S165sqgrs33Y26AVVFuelzsSII6+ryaX1sj92w06iWCOFTerFkpT2AEKh
-	5o7drDkDEerzf6Lz9J6A2WgUPAmnT7lAnI/Tx+534FYjexO5qCBu4exTWJWqc5c7
-	59rbskY6b6JW/+Li0XehNioTmO/ZaNZT1J6s6QfOHeO6gY7JaDeIRV2B/G9+VYOC
-	fXia6QeH9/wnxxAg1sLJnexliECPJH192N+a+Q2AwUDV/oZ1l3h9yyLKbOFg==
+	by mailflow.phl.internal (Postfix) with ESMTP id DD65C13800F6
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 11:49:41 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Fri, 09 Oct 2026 11:49:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791560981;
+	 x=1791564581; bh=zeJQk3tmqWLU4qeEbq1ItkmIqd7Lbp78I7NuZ/N1VzE=; b=
+	Lu/PqZuht1VsPyLlHjAozVx8+dJHpVpcpXayDKmVEYNqvL/1kWy7rrJtuj6FRoWp
+	oO05WK4cSTJQjoXoYntBUOJHMqaANbAP3z4mpyR0Bdy5wlmVZ/s+0iwcTjk8wzf+
+	joH8XPNrlfFZrxEF+X9dNxvKeBVr8tZIXod1qNGG4rqhYHMTCVJcZ2LA7+YBwFmz
+	UAtCqYcOmhKUngqoMtjbTVJ+fZ4MvOCB1Wn2nOh0U9NdBwFRZTLIhWFg/Z3XYvK3
+	WGOSgIY65Vj+WZpCs8B7MepJLgz8nXR1Y/wKvB9l5LbHIpxpqwNmvaJpmvtK8W7y
+	UN0GNUfRlTwWtr/zdYRouA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791560517; x=1791646917; bh=5uoLd6SCUvrJkWqgkmLagSHu4Ji+8eCdUCw
-	j+RPdBHY=; b=XtegZyPH+An3jkreOQwelEdqsoSMy7/jU+2Jy6t55j92Hw0OWuA
-	7WcqRml6RDH/X7y6b0hRUklBkzHDZnrGk7FJaEKV8a7YGp/4J0ZFKLmFxbgaAXK7
-	XsgRaLxyYsmeiGXDi6lXIbV8u7qpS/KnD6NDrdX3BtDTR5dEXp1pCqiIEYyG+2ae
-	KT1aoROnznTsEXcU/C6ThDJ0i959yQHRTcNbgj5CiqJLnorbUbSICBqzhL8wOmaD
-	qhafolEzOzOR/DiAwYaqFZPO9PN41kXxtTWgEZE4dXdR5BPrgExzYCo2EFEC17Fz
-	jwxkdKMNCwcQPuDFSf4SStRU4Qi2AmsARnQ==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791560981; x=
+	1791564581; bh=zeJQk3tmqWLU4qeEbq1ItkmIqd7Lbp78I7NuZ/N1VzE=; b=e
+	8Eh+SKFFZ8oKAE01Ei51SVkfkeQ3towsXQ5PPE8rwdxdyI9tTLreYZIlVHVjD5Zp
+	UnyU0sP7Ov3mi91EDWE9eGfEqDbVTEMtF+4M36aJiV9BVZ6bKxTRvqo6izG21E9b
+	YChOcjnRvRbueKqjvgr73/4y7VDNFZ44YOV0dQO6Br/eYJW28cDfXttu8tkUcQ4M
+	f4IzJx+/1/J9lhw/ZfxDmmSsrTD+eeNG7L6am4DXv47YunvOV20vJ+tYNRTOFfSh
+	/WOg/XWsaQWKVbbtYE17BddIv1Ksb1Zz7/xXtGxAxs9vgHqTK++iCbwb20SfM3rZ
+	14MqwBpiCD4by4FK33Nfg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791560517; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791560981; d=fastmail.com;
+	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:pP43c1Cll1gdrqxTUdEX4WZeJmWre0PS9dQSQ9u6jXTzKQR
-	DhDnTriy3Ot5KV3LYR0sJyhf18FTohSUdcCcH+tObEkYL6HuhWza678SSIWu+9Wj
-	/RApUZ8ky/SRLitBsq8GlxMH2GzaG4KEzpeetA0vIF8Nwd+Wu8v7b9D7YLOOio9D
-	ijDosVpjUIcOHxi7huuDe3B5O5VauBHSip45UqyRIhuJOQQr4ocY3ORYAmlas06W
-	DwYDwwRZDGmeRRy1RydN3rkMsQa+PPkd4y493/7TIhpkcqxYoZCe27V/e8pj5uCN
-	JeJsnQ8MxNewwvFO2Yhtz6oBaSXdqv1tfeDB3tQ==;
+	s=fm2:rsa-sha256:Y6ArXpTUnQdldnwrk/orwpT5NEoi/5j1dwTsuYXzkf00OH0
+	llxJy+WVwuI7thnSeE5FZ+TJhxlqFDe03XZN0TXnT+paPfbn3JfaO47wwUte8uCy
+	VhhqPYbvEVqUN+QxHZKOKoFS9CUlu9Qa4DdMNdUm88hkgdcdcNhzIny9udQTLVfq
+	qEtwS5R/G8ZjdEOThbQcvq4i76P+2WfLkt9vFgIttTq/Mwcoun3N6yDp/BjFgGnk
+	XsA2/DqnnNn5zUJhiimP16d+CBUZLPjOlqjygDkA9TWDhxRW9tn4z6mFpH047zhb
+	lv0sm/i8azc7xPpz0fKhp0zhk8QfD0RsRMITpBw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:FqTnN1jc7GEPsVHerQvKQqNobOw9bM0rSfgBiJvF2Ys=:THGIgb3nuKkFWyJYhppW64kiyPkaG4noGd4Hd+282j4=;
-X-ME-Sender: <xms:RQvJahltZiyEZGxzAtu8KCumFLFzhCxccMj6ka4BaeEUT8VGGUbvlg>
-    <xme:RQvJavHtei39l7rWesiMfIbAhbPyDenHtUH5duNfDXLoOatIqiuSvfFcHjDHO-hqN
-    YcVlvI4cMjsgf7A2Z1_fHokRq2M9d7ElWENUVgJsEXzKVug0rNlEDE>
-X-ME-Received: <xmr:RQvJap6xjRIcg1XHbx1yxlmbs6hLyRwM8WiBTg3q1BNisscf9RQtkYGFtHjZdfsUDSd31_e5uNUJTAJbJGlq21-GQRlM8AmbQ4Ye>
-X-ME-Proxy-Cause: dmFkZTGLCUffWFglxU+Jb2bnx0Ct/AkTcdn8CvgT5x/BOly1laKiNVs9QpH5Xt3iMuKwlO
-    WZfUdwtHzPxNHMlwdBH5cUQPrT2T/wPbXbm2UA9VpTqu1IgkuDW16dHODiOdITSY2H1aiF
-    ZlExiCbiTKAbfjjiC9PL6h2QX6V6vN9g61s+V32BHKSkpUMgmte673xP4ZlvIffgSk3H9m
-    QTFccWpnupOhiYhrVILL6TmTSyrGDYKX4wkr5bh/x3AjeXRTxVb0eYqhDSucQJLrE3GvU4
-    M9rIoH1vYcE5k0fE+UYwHr9Jsp8ntP7OKUkZZBj4tNMBLidny9wlkV5GbsZYLrX9z6GHof
-    Z8Vr7ouJtJdJpuaaraADL9szQkUHNaIQR5FANKGPZioptBMu29RbEpn5Ew570GGnM/Hgsj
-    y2wFjyGjC/jqxVcD9qkZqxWhXrov0GxFElOd9bqksoQdwwBvmRw9SBCPPeeHsu0PqB6yCW
-    ImdQpI6E0wc3VenEU9mWdGvYuKbhjdVezO6AnkUNYkM8/QijqEGGKqpOiyjx13j8QeO7jW
-    EWvi+w7x0NEIkBwKSN25Gu8JJfIqMdnLpkBBOxeWgRbyxoHcfUISNlkpPf8iuLWr9+cTkF
-    eP7JtaOHphCpKIQ4Rh0Gjb4yqeWzFUX/8W6xl4hA444jLib0VWZ55B9peF7w
-X-ME-Proxy: <xmx:RQvJankCQIToBfu3BIFePm_RU4JuGNYFIIpx-3YVarPpxX2vqPFA1Q>
-    <xmx:RQvJauqXuk4vS0OlDdDUf1azZKRHb-Z0MEwOnbh3KVQGTOD6WXGYZQ>
-    <xmx:RQvJamtK9HMAfn8pMlzfhv9H7FwS94uCDWw4xukOvQmcuIVUa1iLkA>
-    <xmx:RQvJajEtXrLN3i8sDhY1VzqMwAXcHLZWnbeoeV2jqCy9gyqhb6w3Hw>
-    <xmx:RQvJagLbqm1PGjLzD2ngOYVvuOSGDcWPBTWloe5szthpOxlKMreubNmj>
-Feedback-ID: if26b431b:Fastmail
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:FhcVYzO2abYIoSksrDxQN4sdxH0SN7UX+R87ihBj+Qc=:0S4RYWo/1GNdEp63xexcL2gmNjczx+ioAqY2FEiddeU=;
+X-ME-Sender: <xms:FQ3JarA0VoXygIqTGW_pcOngso-7oyUPrteaCRSX7MYnRP0WVqzDVQ>
+    <xme:FQ3JaoZ1d4Yj_Vo9ERwml9FGXsxKbqGw5hC7QuFog1yyB-ULgsYZ_ralzI4qjvghF
+    hT45FFQ0-aUTf8tz5RSuYrKWDbn_WRTh9yOgpq-QetwNFPc7zYfxKcF>
+X-ME-Received: <xmr:FQ3Jau4ADsN9sOO6DSFmOJ_YncljXlOk3CbJFnV1Ypto5nwl8YqCGAEOrV20-5IuFBToXvhoOeJ1D_YxIrIx8NOe4oST8bKNWEbXIFdki63MGRGqHpV-qNTWzg>
+X-ME-Proxy-Cause: dmFkZTEwGHtCyoech8RKqlRWCju7WrJRU8J19jP96do2BceKeH4wLohaEH8v9XSAnNkgCH
+    6eDFDekXi0ZX5mlPtC5/YwsNfBdFhZ6gS/h8rRTAqTOOT7sG1jFyUxclo35EfFsRvwo9ie
+    kZWwiGsN5o7Iq2Ku2bXJPP7aWa686SB+uueQpldCySK9bm+Nla+Ic2a8TCnwpyU/ad8pox
+    xnSziS87+vL0yBLCUpYsIJnOYjg3dc+K/jbTzYfadC90dt0Ni31XDnMfyCbuyfM85HGsiy
+    wLkX7/wi/6VmXAZAgK36pvdv+KaTpGq6psP1KtrjAIYcJhtJSmkKSUvVzs3O7gHx4YiLgf
+    tAjYD8d3KUJ58HOWzCAitTIxjDlX90PMmT+V7zPzFFcaMECaQrPN//rMlV5N8sFsFEhf0i
+    te15KfQ7TRGHg9UvgMEHuCabWrF2GckEYdyQ2RppPJ8WN+ly4zrzChuKJaM/xnws7ltDHg
+    XosQmiuowPrVBARm1lUtU29lZlnBMchDabfyvDK+w17z9p5rw2bOOW47KKc5A7Kf1efQCO
+    LIb1GOiM4AzOpu+Hvl1ORGxn6dBnwaF2FCCUqYeH8J+nmAuef6Lxy882HuQ4zWzXsId3WK
+    uGztVmnBgiGSwkWw58XYqRz+YfccHqKuptYoZ24d4rtPQT9BxjkbIM4gsblQ
+X-ME-Proxy: <xmx:FQ3JapZj1WYmc2TT3DVeI-B-sNumd3fUSQnXWo_OMB1ciyUSCOeQdg>
+    <xmx:FQ3JatjnsZckfJLjo3frrHfMvYdJ-oLreQKA0aMSLDARAsBiNl7UjQ>
+    <xmx:FQ3Jaq8gKHwYGwRoedW0BUPmofRIPBnFi-ob8UhpMjjQC9SX422zAg>
+    <xmx:FQ3JaopsACQvyEc0xTOkTAf6qnIxBmCYvkNhvVOGc9sPeaKoOBFl9g>
+    <xmx:FQ3Jakrd5e-Fat6uMO8527TKjUqY_fJGPdorjupWSfeKi2_K7zZl3HrR>
+Feedback-ID: id2564aa6:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Oct 2026 11:41:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  Jeff King <peff@peff.net>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH v2 0/6] [doc] Add new page on merge conflicts
-In-Reply-To: <pull.2237.v2.git.1791547213.gitgitgadget@gmail.com> (Julia Evans
-	via GitGitGadget's message of "Fri, 09 Oct 2026 12:00:07 +0000")
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
-	<pull.2237.v2.git.1791547213.gitgitgadget@gmail.com>
-Date: Fri, 09 Oct 2026 08:41:55 -0700
-Message-ID: <xmqqse2evq2k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 9 Oct 2026 11:49:41 -0400 (EDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 09 Oct 2026 11:49:40 -0400
+Message-Id: <DM0FD46SBK3O.1YAZ1A9YPENY@fastmail.com>
+Cc: <git@vger.kernel.org>, <jltobler@gmail.com>
+Subject: Re: [PATCH v2 1/1] repo: add filtering options to "repo structure"
+From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+To: "Kaartic Sivaraam" <kaartic.sivaraam@gmail.com>, "Patrick Steinhardt"
+ <ps@pks.im>, "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+X-Mailer: aerc 0.21.0
+References: <20260924164503.119506-2-markchucarroll@fastmail.com>
+ <20261005174045.1900391-1-markchucarroll@fastmail.com>
+ <20261005174045.1900391-2-markchucarroll@fastmail.com>
+ <asSMX-K2qLsaXc3v@pks.im> <07eeee7c-4086-4b7f-b59c-74ba7227d6e0@gmail.com>
+In-Reply-To: <07eeee7c-4086-4b7f-b59c-74ba7227d6e0@gmail.com>
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
->  * [x] list reviewers in Reviewed-by
-
-We may have a bit of misunderstanding in the process regarding this.
-
-. `Reviewed-by:`, unlike the other trailers, can only be offered by the
-  reviewers themselves when they are completely satisfied with the
-  patch after a detailed analysis.
-
-is how SubmittingPatches describes it.
-
-ReviewingGuidelines.adoc tells reviewers
-
-  If you are happy with the state of the patch series, explicitly
-  indicate your approval (typically with a reply to the latest
-  version's cover letter). Optionally, you can let the author know
-  that they can add a "Reviewed-by: <you>" trailer if they resubmit
-  the reviewed patch verbatim in a later iteration of the series.
-
-For example, you added Ben and Patrick to the trailer of patch #1.
-
-> Range-diff vs v1:
+On Thu Oct 8, 2026 at 11:46 AM EDT, Kaartic Sivaraam wrote:
+> On 10/6/26 11:21, Patrick Steinhardt wrote:
+>> On Mon, Oct 05, 2026 at 01:40:44PM -0400, Mark C. Chu-Carroll wrote:
+>>> Implement filtering for repo structure, imitating the mechanism
+>>> used in "git log".
+>>=20
+>> The message should give an explanation of what this change does, and
+>> what the motivation behind it is.
+>>=20
 >
->  1:  ad4853dc36 ! 1:  ab0344f947 [doc] Add new gitmergeconflicts man page
->      @@ Metadata
->       Author: Julia Evans <julia@jvns.ca>
->       
->        ## Commit message ##
->      -    [doc] Add new gitmergeconflicts man page
->      +    doc: add new gitmergeconflicts man page
-> ...
->           Co-Authored-By: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
->      +    Reviewed-by: D. Ben Knoble <ben.knoble+github@gmail.com>
->      +    Reviewed-by: Patrick Steinhardt <ps@pks.im>
->           Signed-off-by: Julia Evans <julia@jvns.ca>
+> Indeed. The cover letter provides more context about the change. I think=
+=20
+> it makes sense to include a significant portion of the cover letter in=20
+> the commit message. We could even likely drop the cover letter=20
+> altogether if it feels to add no value.
+>
+> That said,
+>
+>  > repo: add filtering options to "repo structure"
+>
+> I think the following may be a better commit title:
+>
+>    repo: add revision filtering support to "repo structure"
+=20
+You're right - that's much better.
 
-Going back to the review thread of the previous round of this patch,
-https://lore.kernel.org/git/ar3sGzEknG2_Un_E@pks.im/
+    -Mark
 
-2026-09-24 14:44 ` [PATCH 1/7] [doc] Add new gitmergeconflicts man page Julia Evans via GitGitGadget
-2026-09-24 20:36   ` Junio C Hamano
-2026-09-24 22:04     ` Junio C Hamano
-2026-09-30 13:19   ` Patrick Steinhardt
-2026-09-30 19:53     ` Julia Evans
-2026-09-30 20:37       ` Junio C Hamano
-2026-10-01  5:14         ` Patrick Steinhardt [this message]
-2026-10-01 12:10           ` Julia Evans
-2026-10-02 17:58         ` Junio C Hamano
-2026-10-05 16:54       ` Julia Evans
-2026-10-05 17:22         ` Junio C Hamano
-2026-10-05 19:11           ` Julia Evans
 
-There are many messages that reply to the cover letter of the same
-iteration by Ben that gave a lot of good input, and I know Patrick
-also helped during the discussion to improve the document.  I do not
-think neither of them said anything about reviewed-by.
 
-We do want to credit the reviewers of previous rounds for their
-input that contributed to improvements in the latest round.  But the
-way to do so is by mentioning them on "Helped-by:" you add.
 
-Thanks.
+--=20
+Mark Craig Chu-Carroll (@MarkChuCarroll at gitlab)
+*** Software Tools/Math Geek - Software Engineer at Gitlab
+*** Work Email: mcarroll@gitlab.com / markchucarroll@fastmail.com
+*** Personal Blog: http://goodmath.org/blog / Personal email: markcc@gmail.=
+com
+
