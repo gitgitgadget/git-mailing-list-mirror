@@ -1,103 +1,98 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B4F3F20F9
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 20:39:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0058D36A361
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 21:16:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791578378; cv=none; b=BZ/pRyBJuhn/l6xsHlAJEe62S9A7SPNebRfFO2vll9+2eMFwfh5poyWaTMnbriSTFF7RWWLx1bY6O7B/VSRVIvNq2ohxRcBajkucAUDQUC685QPm72joh06lWGMd69j4POcwalA/IvagddLu3MrQc9tIWPJf+oBEh1yKbrOQieI=
+	t=1791580579; cv=none; b=M6waZDQR3nrZmXeSFIC74Gu1UcSyP/iAQ8vruB3naeMQRcgVOeHPhdrx12GuGlK/uf3aBAG9TXEP7BxxoBnPEPwgzmBZfvIMLbiTiSp29mztd9GjZFsTTgkcfjnHE2+lbAiKy0dXhFLy3/NZhIts7bVdBvF5W1tL96J6AljHyxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791578378; c=relaxed/simple;
-	bh=wVlyUTiNXvJgFz81tfG5KMtVYQ+mT6aMJHI+pltgtp0=;
+	s=arc-20240116; t=1791580579; c=relaxed/simple;
+	bh=RxHOy4oXAYzhbVlD2UdtnjYHxsAzzYwJPokVG23j6xM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=i4H6yodqaOuWZimCgPgq7h1cCsftwT84SrEtEe3rHyjULeyveBFtTssUvqUPe48r8s2OOLqrCy1lN+AEsuGvf2VLPW02e/1awTW4GYewI7XKvGUBwilWAiR32zgc385gmgsB2684n0E5eiMT0XuoFbInRBFyhIyzdzL137alaFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CjTCNe5Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yFcmOSb2; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=ZBwC32PhvZkHcyCubnFBC4FEy4dPY2EfJqs4nwJRDoDsp/qyh02k4BB9pgEU2TsBWMZKEpWppg2a9wLtLCiFAnp0Xi9IMAvvdF3oSklFkxt5PotlyHINO7JipcsYQCmUFhUiD1KYVaEFM2bfyCX8XEZFLFgsbyxUULUFiD/c89M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UzFyFlVg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v0ohiKXI; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CjTCNe5Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yFcmOSb2"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 61A231D000A6
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 16:39:36 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 09 Oct 2026 16:39:36 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UzFyFlVg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v0ohiKXI"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 30CC07A00EF
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 17:16:15 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 09 Oct 2026 17:16:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791578375; x=1791664775; bh=J+LeZO1Q9C
-	xm2FWY4d2tLHK1Hii/QubZanzXHBn+NB8=; b=CjTCNe5QUBxQI2Ws0d/0xUi7iR
-	EXPmeFIfjFkNaOhlC9DU07qDAJh8BlWdgbsXoHfg/W4MgOoHz0/dq0uKCFbF4BaH
-	leFiRC/9YLqNuqD5cuPHkfe4BtUAujZw504IKFBpXXo7mSspTpUG4TxWnwpJtvLb
-	hA36bm2afxpjUOm10ww72UB/eOd3b0QH/0slc5bv28bxbpPtRXiGvJj8AH4WiA5I
-	felawJWzXmNwMkg+7CcLfQk9s3jJm1SjXhHgkUr4XOSLNd7JAMbsy7A2j4JbDhAc
-	xPkA+MLIGlWPY7Zka0KveXONDfiVBxNssUcuab/aYwnizS535OJUMnHa0gDA==
+	:subject:to:to; s=fm1; t=1791580574; x=1791666974; bh=mhpQrJEvue
+	Bg7oW+FZvai9roXK7p24H4OElb+kI3SWA=; b=UzFyFlVg1+SlVNGzEMnttss2tt
+	KIPanGSvoyVqw1MTsN6kKVy7l1vBZjHEftHW8aphXLBUHgrwgXtIGvHXsO47T/Sq
+	B9m7zoI1urODsoFhbF0NrqorPiT06KO26Gn27mdgLLLa3hHTDKEbUd6hRM0TEMMH
+	oDZ3VvSwTPCMiy+Bm5zaV34KP3afdAJzS3xuVOY+/lbRTMu8M4YM0rZayj7PPMS/
+	NgVjuRrI1YRC1zt42WGjLOOjItkv1q73TczxS8XjupjZCYCcWnqHkiJlTQwnT+Vr
+	TtMbYsDH7cXM1aDxGAS8GY6rjR5GlgVN0jM83RNIKE/TYtQ34SIwFskA5v7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791578375; x=1791664775; bh=J+LeZO1Q9Cxm2FWY4d2tLHK1Hii/QubZanz
-	XHBn+NB8=; b=yFcmOSb2nM9m0AQdufj5pOW9HoGv7IhOMawkuvIflWKnG6aKZE7
-	XrR3Rw/eC1/qPX4oQJtbXsAsLFQsaw5iS7bzplJ80oaBx0lZPf4HMN5YqvUooX4q
-	OFg9hQiYMT7K8THUDStfJZOxgpdbpfh3rBBLUJYy581+aqTueS9fXs3OXod0k4Zj
-	atV3ButlV4ojsZY7dJTjGXczCE9UB/hfZ+BBmbFO9LDrZcWaFsgcH7L1U/X9BYbL
-	E+yEJOJzU+bwpreMTvHHbmNQQEOFkWrkEnl78mHZ9L+hjcDU7hQFNPBSkVpU6PYx
-	DXNXxjog0XDMzu3WVYepJlztKIaPyt8ZbmQ==
+	1791580574; x=1791666974; bh=mhpQrJEvueBg7oW+FZvai9roXK7p24H4OEl
+	b+kI3SWA=; b=v0ohiKXIgicPRYrF9VXWPtdWd2dJ3TB8/R7ChcBgmrpc/9zoBzT
+	Iphp0Dg7wbLE1coh3AcDs0c8XAk6ILvF8e4AJnydUXVjwL+rcIFBmRFqu0S8JHLA
+	TT89phpbwBSAboRw+cWBRiwFTGxUUE1JNb4PfIOgTxYSvMQjF6bjo6ZQ8cKK7/27
+	WGp+84qPXhahkA9vzjO/O+JrOXpseYPBi5rGP3zq0taV/JbqCZTj85x/oWrkovjY
+	oEyUXOjmqw5G4/sRxcDP/LqlllV5QYzpn+9jRbc3H/yRrLGBzfRkgGHfS6rQxMFA
+	Z4wT7iYjJ4tY+bnxv6P6CiO73UQPRzZLhcQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791578375; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1791580574; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:CVrmZspHkAgmZfho0DazQ0FCnXTq90beofxyLXhkuwvTGqT
-	dJL+ePyzdaQIKrSp8qW6y1JfSs8mHbn1xxkUI+pj1QLBl1X3ru6ciKYkF0ymP2lI
-	C61vFliEhI3jOU8+mEhEMD+hHNkZ8Q/Pv8sbCs3CiaDkRMbpvJUBU+wEKq1wFiEZ
-	/77pc/N3SCnyV83FTqgNdHJYYa1J9l62CPREcFAQanP1G+XMgW+MIYXto9G7OPt6
-	U3cZIualJqQ7Xs4uM7M55/MdGZ0PaVBOmia4CIhhAEz/zbyMvpy8ZW6iR9whaQuH
-	TY89akDPiDOlTInT8RxBMyyxHVbtmT9wWXQyWFQ==;
+	s=fm1:rsa-sha256:Lt814RzpwsD5VZ/54KqradGI4AClR+uSvBKvJVavjx8Bg0T
+	C6pmOWqbh/ulqi2E/9LJ0EqPmurLYJ35v8cHvLukwTghh3+Nj02TF/1J6dPt+wcb
+	9Gz7N0Q96kqRF2SXhx5vWzgHV+YpGRYfah9Bc5tLvlijgIQPVKfrPtbbsfOfHtTf
+	cFW7FXrNr9cCdCnWRQzpsetrdepsFdruUEFS128Zlh74ijr3llEeR1sPElsQ3VkT
+	ktrR2W7eNkSTxxXy98mYVNh6rNM6Xo1dhe0rpRqmEzDsczMSlclAIsqbwQZHh6kK
+	exoBk5CxlbV74dAJH1yYx445avweI+PtY9dqplw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:axPrxqXB0M4KPyPkA3BvWD2JkWjbciF+vJT2hS5muK0=:wVlyUTiNXvJgFz81tfG5KMtVYQ+mT6aMJHI+pltgtp0=;
-X-ME-Sender: <xms:B1HJajHYX6JueZpqiXpz1H-y8H1a8DsFhIO6XHD8mnG6erRV2jslSQ>
-    <xme:B1HJanP5YyW9MlR7QB17iMUP5-qTmRibfjUlekwt9GXbiW1mg7Q0rQjzu7j807tl8
-    ZY_lQVKy1qyVOVV1y3AFTe8v70H76BbgnYtdGqNZlnxHd6L_Ci84vA>
-X-ME-Received: <xmr:B1HJatcaxRBpA-xWvuK2L2i-iRlraSKC6JQs4zzsyPDn9U1h5daLI1Rbqv_L7QZHjvTvb_U9yu1JtH63h4rFmWbYV1x9kPyY1b0S>
-X-ME-Proxy-Cause: dmFkZTFBm9hM3YgNQSkjItsZcpxvTsCAcKI8/Eze4/q150KkprbMcbUF+sOBFSRbdBiVua
-    tP5PrAhLPzWrNPa4fjSG/n7NYSTJGaaFFLFF/H0AHeayKtyBZXs3zfkVPSpKRbzcqKKsm+
-    rcbWea8YP5Ix52M0U745tfo4l5/NC+YNG8wvWZgzPO9XYSnNJ2jyiWWlNYgZejQY5aac3V
-    v6A+114jLCaO5IPYZHG6qoR3dN6eyuja5ClV8aNt0I1Ja0zcE4L/ycfjNKYt5Zd/8bTfNl
-    oT0UWTK1T+0Z26Wo3iBYRvbiwVAkZoyTggru+gbKb6BswBpo8qEv8N6KKfHKjedGCGnRbt
-    Y9SxQX47ssCHETZIropn6vQ046g/8bgSgLEpHxqVdBB7/jpsEyR/1AGl9iNG2yuvd6DD8S
-    /01bSEHnSsBlccgcoj9ZHT4YrzN3SBfg6dxJMkBmK/s5t/UBQ1Ci0FrkRG4CAzQo6bejvI
-    /E5RCcHf/SvD/SV2k+wUrrlq8WhTUXmrkuAX1ylf9PtU9X1ODzXiM4kNYfxOfbBPiq3o/9
-    +J+MLm6qdNkqlsazH+fcR9K+LfOVHEgAC0Ku3cnWLgr87rlzoQBvGWw0as+kLBPkj00sBP
-    2xyi2102+u4DDN6+rBb7MjLkhTbNEcyI5cfHraAXtfYnzrXl737GkHmbW7HA
-X-ME-Proxy: <xmx:B1HJasvB3u99A5Dg8U862RN2aJyKDH0hdVOjEyeuFBvOVwEjvoPmfQ>
-    <xmx:B1HJammiLiqiEdgzdcaOZ53YllthY4bB4uO4T5yUY5S57qOnZQmHtQ>
-    <xmx:B1HJamzWjaYKtwUW4685p1ARh8b6bHFgyNMHoBM3KgqAf1R7IElcXA>
-    <xmx:B1HJagOc0gKab-pHL1vFeKrJERxoBTNKyjGJRX2exKPg0d-SRaMu5Q>
-    <xmx:B1HJapIjT5jDQLZ98SRyxlmGVEF1eKfhUmjEIQUARKQH1mlrkNKwQOVo>
+Message-Instance: m=1; h=sha256:iprSV1o3EnAhMKQ/S6X5rSCTt0g7+zjTOm+1+XImYKo=:RxHOy4oXAYzhbVlD2UdtnjYHxsAzzYwJPokVG23j6xM=;
+X-ME-Sender: <xms:nlnJashpFsu7fce-mJe5FGXbc9kKowGmkU96t054PleHMx05GoN80g>
+    <xme:nlnJasB6I_MxlL_PNDKOCKn76tEF2HhyFmnrhQ9W-X3Se4sNwkgkyldcuxmow1DLE
+    0TpgN0el-7-KRz_-VrBkUswYfAAlV7IvO_F0DlxO09W8S_K3mn9qXY>
+X-ME-Received: <xmr:nlnJapHRTX1VogwSuAlv6SkH4l82FkxN7oDbwMikeGdXazzWahbTojZk32Svnv3tcI-OqqWGehowmFvZYj7PlBPcX3qatluHU_Rk>
+X-ME-Proxy-Cause: dmFkZTGm6lft28kWzN/EVFXIGuRw7uBsTMvn3tyl0qLqtYWQbLaiqfosyzILjnjUmyA29f
+    T4G8dBifYFNC/5IO1tX8k1hYVnCQuFiyWB83y/Q9cNuhPOrhJAPIOr36DTmkTRFDgletl9
+    Z6VS+yunq6b5zDqsBARxe73SuKEjGlpJEwvs1EkcXUz0SdGIQkpRozdv++KTUMEyk1wbbg
+    7nYRhm+WapntkRexvamF+XSvUQqqs/QW4FztK14QBCnT8Xrlx1NvPiJMrG+52s0KiTIY/W
+    ejufsA/SGVSi/TaX1w2OrQRmUs1OJSbwToeYDa8PANTi2UehDFyIZ0dAyEePiCtfEZ9til
+    bsCOK56WiU3ffUELFg4ZHGodZO5Y2dkZzzSggvCWo4O+3krYJaS/CO3mX+irdbFRm/rtqe
+    aVeYvrmwXMfoiMHzVIJmE6jibyhgh5ekJiVZdOfMP2CLxH2/BsQDgCRB2rPjv1491eKPQ+
+    djI1937r+hNSPvRrjnrC9yUqN71KRLHdI/n+vJAUSIzL+lZZDkGbc4/fczscZaoUm7NLiW
+    56rWblAw54iVI3MPq2WKqB623fq7A0SHlweAcCLV7qTaLCiyBcsE0vnWTgO1wU8XAnmHtt
+    eqi7ClniAeLCehTnWbyHkKu28GwjSFhr/ZYeH5JLyxtM6aoVm4AsCGmKUl3g
+X-ME-Proxy: <xmx:nlnJasKONg3Slo47jliimMZgFBPxlxpgrv681iTc-TwzjpoLaAKEqQ>
+    <xmx:nlnJallKlii_CFzWjcvMQBsjP2sOSZPnTdAITbgMmfBWumNgFvxP9A>
+    <xmx:nlnJasTra1VEk_UT1xxw2K3YT5IwOzXkxAEnSh2q4U4s3iP3HT74tQ>
+    <xmx:nlnJavKNYC2fB419XbLG-wy7TBShziEF11NNIDYM0CqQytGysX3ANw>
+    <xmx:nlnJauelt0jfAn6CPyON97pBcZkK6ryzXKGvk2ofDwWNC0m3YI5HiOH6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Oct 2026 16:39:35 -0400 (EDT)
+ 9 Oct 2026 17:16:13 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Scott Chacon <schacon@gmail.com>,  Scott Chacon <scott@gitbutler.net>,
-  git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/1] SubmittingPatches: allow responsible AI assistance
-In-Reply-To: <asjAVQD6mFnes00l@pks.im> (Patrick Steinhardt's message of "Fri,
-	9 Oct 2026 12:22:13 +0200")
-References: <20261007142954.31761-1-scott@gitbutler.net>
-	<20261007142954.31761-2-scott@gitbutler.net>
-	<xmqqcxtl3zda.fsf@gitster.g>
-	<CAP2yMa+o7zv=8bzHUa8FRkTaU46BQ3w_ZAr6zQ=rFC_a4cg2yA@mail.gmail.com>
-	<asjAVQD6mFnes00l@pks.im>
-Date: Fri, 09 Oct 2026 13:39:34 -0700
-Message-ID: <xmqqwlrqmwvt.fsf@gitster.g>
+To: "Marc Becker via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Marc Becker <becm@gmx.de>
+Subject: Re: [PATCH] wincred: fix line split of secret blob content
+In-Reply-To: <pull.2251.git.1791553518774.gitgitgadget@gmail.com> (Marc Becker
+	via GitGitGadget's message of "Fri, 09 Oct 2026 13:45:18 +0000")
+References: <pull.2251.git.1791553518774.gitgitgadget@gmail.com>
+Date: Fri, 09 Oct 2026 14:16:12 -0700
+Message-ID: <xmqq1p9ymv6r.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -107,10 +102,222 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Marc Becker via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> So I think loosening our AI policy shouldn't go without finding
-> solutions for this problem first, because otherwise I feel like we are
-> just going to make a preexisting problem significantly worse.
+> From: Marc Becker <becm@gmx.de>
+>
+> operate on immutable blob data (wcsncpy_s still had invalid target size)
+> split on newline character to avoid bleed-over on multi-line content
 
-Well articulated.  I have nothing more to add.  Thanks.
+This needs a bit more work to make it more readable than a bulleted
+list of lowercase fragments.
+
+When in doubt, keep in mind that the usual way to compose a log
+message of this project is to:
+
+ - Give an observation on how the current system works in the
+   present tense (so no need to say "Currently X is Y", or
+   "Previously X was Y" to describe the state before your change;
+   just "X is Y" is enough), and discuss what you perceive as a
+   problem in it.
+
+ - Propose a solution (optional---often, problem description
+   trivially leads to an obvious solution in reader's minds).
+
+ - Give commands to somebody editing the codebase to "make it so",
+   instead of saying "This commit does X".
+
+in this order.
+
+ - It mentions wcsncpy_s having an invalid target size, but does not
+   explain why it was invalid or the consequences. Is the issue that
+   wcsncpy_s expects the buffer size in wide characters, but was
+   being passed a size in bytes, which obviously cannot always
+   agree?
+
+ - It mentions "bleed-over on multi-line content", but does not
+   describe the observable symptoms.  Is the issue that when the
+   password is empty, the skipping by wcstok_s delimiter would cause
+   the oauth_refresh_token line to be erroneously parsed as the
+   password?
+
+ - The final sentence should be an imperative command to the
+   codebase, e.g., "Parse the blob in-place without copying and
+   split lines manually using wmemchr()."
+
+>
+> Signed-off-by: Marc Becker <becm@gmx.de>
+> ---
+>     wincred: fix line split of secret blob content
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2251%2Fbecm%2Ffix-wincred-secret-linesplit-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2251/becm/fix-wincred-secret-linesplit-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2251
+>
+>  .../wincred/git-credential-wincred.c          | 86 ++++++++++++-------
+>  1 file changed, 55 insertions(+), 31 deletions(-)
+>
+> diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
+> index 22eb27ca31..584f457774 100644
+> --- a/contrib/credential/wincred/git-credential-wincred.c
+> +++ b/contrib/credential/wincred/git-credential-wincred.c
+> @@ -6,6 +6,7 @@
+>  #include <stdio.h>
+>  #include <io.h>
+>  #include <fcntl.h>
+> +#include <wchar.h>
+>  #include <wincred.h>
+>  
+>  /* common helpers */
+> @@ -148,51 +149,74 @@ static void get_credential(void)
+>  {
+>  	CREDENTIALW **creds;
+>  	DWORD num_creds;
+> -	int i;
+> -	CREDENTIAL_ATTRIBUTEW *attr;
+> -	WCHAR *secret;
+> -	WCHAR *line;
+> -	WCHAR *remaining_lines;
+> -	WCHAR *part;
+> -	WCHAR *remaining_parts;
+>  
+>  	if (!CredEnumerateW(L"git:*", 0, &num_creds, &creds))
+>  		return;
+>  
+> -	/* search for the first credential that matches username */
+> -	for (i = 0; i < num_creds; ++i)
+> +	/* search for the first credential that matches target and username */
+> +	for (int i = 0; i < num_creds; ++i) {
+>  		if (match_cred(creds[i], 0)) {
+> -			write_item("username", creds[i]->UserName,
+> -				creds[i]->UserName ? wcslen(creds[i]->UserName) : 0);
+> -			if (creds[i]->CredentialBlobSize > 0) {
+> -				secret = xmalloc(creds[i]->CredentialBlobSize + sizeof(WCHAR));
+> -				wcsncpy_s(secret, creds[i]->CredentialBlobSize, (LPCWSTR)creds[i]->CredentialBlob, creds[i]->CredentialBlobSize / sizeof(WCHAR));
+> -				line = wcstok_s(secret, L"\r\n", &remaining_lines);
+> -				write_item("password", line, line ? wcslen(line) : 0);
+> -				while(line != NULL) {
+> -					part = wcstok_s(line, L"=", &remaining_parts);
+> -					if (!wcscmp(part, L"oauth_refresh_token")) {
+> -						write_item("oauth_refresh_token", remaining_parts, remaining_parts ? wcslen(remaining_parts) : 0);
+> -					}
+> -					line = wcstok_s(NULL, L"\r\n", &remaining_lines);
+> -				}
+> -				free(secret);
+
+The original was already bad, but this makes it even worse to have
+the code nested too deeply.  Would separating out the body of the
+for loop into a separate helper function, or perhaps standard tricks
+like this
+
+	for (...) {
+		if (!match_cred(...))
+			continue;
+		... rest of the loop dedented by one tab stop ...
+	}
+
+make it readable?
+
+> +			LPCWSTR username = creds[i]->UserName;
+> +			LPCWSTR blob = (LPCWSTR)creds[i]->CredentialBlob;
+> +			LPCWSTR end;
+> +			DWORD wlen;
+> +
+> +			write_item("username", username, username ? wcslen(username) : 0);
+> +
+> +			wlen = creds[i]->CredentialBlobSize / sizeof(WCHAR);
+> +
+> +			// check if content is single line
+
+			/* our single line comment should look like this */
+
+> +			if ((end = wmemchr(blob, '\n', wlen)) == NULL) {
+
+I do not do Windows and I do not often deal with wchar_t, so I do
+not know how much practitioners of code like this one cares, but
+would it be better to make the fact clear that we are not dealing
+with a regular 'char' by writing a wchar_t literal like this as
+L'\n'?  This is not a correctness suggestion, but a readability one.
+Having a function prototype would coerse the parameter types, so
+you may end up passing L'\n' either way.
+
+> +				write_item("password", blob, wlen);
+>  			} else {
+> -				write_item("password",
+> -						(LPCWSTR)creds[i]->CredentialBlob,
+> -						creds[i]->CredentialBlobSize / sizeof(WCHAR));
+> +				DWORD length = end++ - blob;
+
+Here, "end" is of LPCWSTR type, aka "wchar_t *".  So is "blob".  The
+difference would give us how many wide characters are in there.
+That is not necessarily number of bytes starting at &blob[0].
+
+> +				// correct remaining size and drop carriage return at line end
+> +				wlen -= length + 1;
+> +				if (length && blob[length - 1] == '\r') {
+
+This CR is also side, right?
+
+> +					--length;
+> +				}
+> +				write_item("password", blob, length);
+> +
+> +				// key/value content starting on next line
+> +				blob = end;
+> +				do {
+> +					LPCWSTR value;
+> +
+> +					// find line end
+> +					if ((end = wmemchr(blob, '\n', wlen)) == NULL) {
+> +						length = wlen;
+> +					} else {
+> +						length = end++ - blob;
+> +						// correct remaining size and drop carriage return at line end
+> +						wlen -= length + 1;
+> +						if (length && blob[length - 1] == '\r') {
+> +							--length;
+> +						}
+> +					}
+> +					// find key/value separator for extended credential info
+> +					if ((value = wmemchr(blob, '=', length)) != NULL) {
+> +						static const LPCWSTR refresh = L"oauth_refresh_token";
+> +						DWORD klen = value - blob;
+
+Value is also "wchar_t *", so klen counts the length in wchar_t,
+which may be wider than a byte.  So is
+
+> +						// write entries known to git credential protocol
+> +						if (klen == wcslen(refresh) && memcmp(blob, refresh, klen) == 0) {
+
+klen that counts number of wchar_t letters in refresh[] string.
+
+So, is the memcmp() used to check if early part of blob[] match the
+refresh[] as a whole correct, or is it only checking an early half
+(or one fourth, depending on how much wider your wchar_t is compared
+to char) of the string?
+
+> +							write_item("oauth_refresh_token", value + 1, length - klen - 1);
+> +						}
+> +					}
+> +				} while ((blob = end));
+>  			}
+>  			for (int j = 0; j < creds[i]->AttributeCount; j++) {
+> -				attr = creds[i]->Attributes + j;
+> +				CREDENTIAL_ATTRIBUTEW *attr = creds[i]->Attributes + j;
+> +
+>  				if (!wcscmp(attr->Keyword, L"git_password_expiry_utc")) {
+> -					write_item("password_expiry_utc", (LPCWSTR)attr->Value,
+> -					attr->ValueSize / sizeof(WCHAR));
+> +					write_item("password_expiry_utc", (LPCWSTR)attr->Value, attr->ValueSize / sizeof(WCHAR));
+>  					break;
+>  				}
+>  			}
+>  			break;
+>  		}
+> -
+> +	}
+>  	CredFree(creds);
+>  }
+>  
+>
+> base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
