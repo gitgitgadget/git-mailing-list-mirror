@@ -1,223 +1,242 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B449F2C08CF
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 13:11:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710CC4DA9D8
+	for <git@vger.kernel.org>; Fri,  9 Oct 2026 13:29:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791551490; cv=none; b=Kze5XbR83KKRJrc8UM8TLUA9buRwoWdMNfA9D3o0DoKCaureb81ETujBoS/+1pBv8K7utIfIuZrLbTivYT0Oy4ILKgrQwtTvV4WPlO2+Q9TUJYE//PPvy0UsdBR5RfZS4ygl8icdowmTMJ7d1yoj2T7O0Yum9us/c8DnBZPHuyU=
+	t=1791552573; cv=none; b=aCLG/hBDDkQ+tr8MBuN1wa2dCLhY7KTKOZNepi0qKT3mt8JqWw+taNk5kohMtbLfJDEJi9Y+kvoV70A3xHZgQeAS2e7PoaZSgFAx3qSv7JRdMX9OxX7EQQcCBpdmQSjCgRZ4pT1WEv4Q8kpYuT2P17GK+7/8jK/D+qSu0MZ6W3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791551490; c=relaxed/simple;
-	bh=GUmIsLqLwE2xKPe0pubAeJN3FfcuyYHwut75JeBop6I=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=N/I4rBMtE6GN8+fJ/g7DcadkRmMC42s3AGcagxoMcI4LJiu5pdU+UKe99u8bWNv2ykDV6S5viUx0mBsTdcXE3aT5PVvzszQYiXKM+Tl+DiWDzzVtT2S/iV27HIxvONH/E6xSI3cqAYGMvvibsKR89/QQfZKY+UU+0E+mTIBMF9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nrNh+chZ; arc=none smtp.client-ip=209.85.222.174
+	s=arc-20240116; t=1791552573; c=relaxed/simple;
+	bh=LYakip4Du2cIJrUq5GtEF2Aee8wKjA1+tKl31BKOli4=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:References:Cc:
+	 In-Reply-To:Content-Type; b=Lc/s4HNMZp8+j2ExgfuZc6TU6yZQzdrPVr2hGjA4PZeWlLgECYQyHiSY0mlJyiRn6yGv+wAOBIc9uvNaskosWWwCb8hI3XOWzhmZ3D5NIosHbfK6Npn2znCqgXcZyXisMbGlHylO93svC50Ui5/eQOTsvtemInkGlcMBCOsLm+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=p6dHTAce; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nrNh+chZ"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-93e55db58cfso570938085a.1
-        for <git@vger.kernel.org>; Fri, 09 Oct 2026 06:11:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p6dHTAce"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-48afe0081a6so2089760f8f.2
+        for <git@vger.kernel.org>; Fri, 09 Oct 2026 06:29:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791551488; x=1792156288; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=c+sNHnw/KTImI6nmVXHj2a3Zl3Ttlq2io6qPn/hWlSk=;
-        b=nrNh+chZcyMYFTq2jyfCfL62BSqYPaCZ9deocFmmOGikgYycx99Ggxmv7SAZ2/qpLq
-         qRyry0nGypFw7glmm/zsjAvnqsNM8TgU65+I1g0KHMVsltGA4L8gaWeH7jZZXqayrE7z
-         dgBCOG9AZJ7YS89LLy84zwxlXKIlv320VYg/PY5it3yeXOFtWqdkehA6Z2xbDqecOdky
-         9Z1pb7IjTRIBCCwTUMnCNdU91UzhjcSKzXdTegiF16jV+BtirbGa/A5fLC7kulaqOaYR
-         CUcWiSdFHKob3clMXTXBYH1By/5UXseH6V/KIFWWvjhRjYh9QuFmwRnmuPDaVQbmGD9x
-         Y9oA==
+        d=gmail.com; s=20251104; t=1791552570; x=1792157370; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:cc
+         :content-language:references:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=QkvkajTxbNXdwX9Q+ZA74Y02b/rtIbbSHBmd0YKjvDc=;
+        b=p6dHTAcemTd29CoUCRaYEOZo6LOt4KD7PE8rEwt7gFrNp4di5BUKkN7s0WEU0Na9Z4
+         3gnQ1QVIWyweUNmlXjBCahJRyyz/Th8HZ3pGFqVEY5AsjZIFe0mghFulTV/EG8mKvL1g
+         91r+z+/Rven5U6Cvl9hDX7vE/VHd9hMjZNWgQZyxqwqC7JdmZXHA5nWVeGb81cMsyaUT
+         dCNSBWtC3OzrRcEXIGZcq124JzIfDr4T7yFe1qf2/jxuBe/oqGdGWHEU5fqf2tuT1lzh
+         6d4dZfjAeSNqv3Dm+nZh22C1L452cx+6Nx8O6N+8CmqF9dgy4X7Qpvx4hCdT4pVKb6Ij
+         ZkCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791551488; x=1792156288;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=c+sNHnw/KTImI6nmVXHj2a3Zl3Ttlq2io6qPn/hWlSk=;
-        b=FxKkNPA/bYtzR/PGV2FoHSgF+5ikacybROxPBLo0s48kVHsO9l6jcgnuls8l09DJ68
-         PhaxVXWRWP2SY3xN7qPfrfMouIfwCeCXDVZ0Vb2YYYvIj5dM76n77j9P6OHt2bYk7TLv
-         wE3SvIU1zjAFl/44fyJyx+QVnyRFkRX5A9UWAgQ0EpIMC5YzNGpBYW0P7c47/22TrFUp
-         g6Rd4EcN9SUiGPdCjTw2RXNHqcWZyuE0ugspRp+kv4/ADrjyQarlfO0OZxlA40xfOqrD
-         Xnc+BdIET5kQ7MD6zXPyzjSn+IOpktQHanBkU394aCXxqfXfm38CiNp6l9ZJ571w6biF
-         jqyA==
-X-Gm-Message-State: AFuF++lf2diTZ1nq0XM9irrA2A9/A3E/hhJdDNiJZeIsroY3tuto12Rh
-	cN4QayLItFiHun9dHt85ON69lEeQxnRaml03ntva4jx1TPKLfAlA0qUn9ud3eg==
-X-Gm-Gg: AYBFou0+4ugT5g5pvyx/540jzC8u2ZEkc6SATZO56BpvRXMjw9qD7BvZzxQP78LvuBW
-	7k34D4aQbZEvKXhmbTrppF/s+219i4DsKEF6CFadGTkEu6QdReXsr78Fze4NT9SEjftTn3pnISR
-	iSehYZOU9yVp8QNi7m4pdUP2YtIMCFm6gp0s0aavYO8YD2uvwbaLR9jiP1XZvGcYwojDObt86KX
-	jEtgBrdsf+Ntefpo5UdWmEvos3wTUHY5/P/rYCoX/crnrMp9CKSK80u+DQEoEVB6W6zkhzglDAc
-	elwWsrJUtt+Pi11gEhPUbNAhsGB3B/ha1f9KouwOE7T28no8y9aPdRBm2NcwdoMudlHbJJnlmyY
-	WsTTbli8/n/K/OXoKSWa4rCXf/PQQpSzs1Aq/VZQHs/2ywJv7lVF63DnVbyBuEH5n2PgTJ9CMm+
-	dwCdsNlxaEaK8a+ZTR3mDnpnD+u7cf9Ce3NqrfAwwfTRqkxNgfas/Fk/c39FfigAq+yPE/aNLsA
-	Mxx
-X-Received: by 2002:a05:620a:2719:b0:93e:c12c:9b6c with SMTP id af79cd13be357-93ec12c9f75mr141722285a.71.1791551487530;
-        Fri, 09 Oct 2026 06:11:27 -0700 (PDT)
-Received: from [127.0.0.1] ([172.172.237.219])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93eb986c0c4sm181712185a.18.2026.10.09.06.11.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Oct 2026 06:11:26 -0700 (PDT)
-Message-Id: <pull.2249.v2.git.1791551486318.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2249.git.1791291762665.gitgitgadget@gmail.com>
-References: <pull.2249.git.1791291762665.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 09 Oct 2026 13:11:26 +0000
-Subject: [PATCH v2] status: suggest `git merge --continue`, not `git commit`
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20260707; t=1791552570; x=1792157370;
+        h=content-transfer-encoding:content-type:in-reply-to:cc
+         :content-language:references:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=QkvkajTxbNXdwX9Q+ZA74Y02b/rtIbbSHBmd0YKjvDc=;
+        b=uhLo7gSYFWUi9oTg1rYzgFeszTz+qILkAIxns/BEsYb0kdBrSjg7pQz1npG6Dcx4Yv
+         bEWGNoTeRiRpztsCojTlOzCniO3Qw1VHZ+sCyR/OvSw/x0YVGPOL5XbqomEG9b3hVX95
+         hehC8trvbPYZESxUbgw9jY2eVxWZHVE+Ue1b40R3zjZFWNqP++0sxyL1ZrB3n38BlSBc
+         BiIUVh9Q/DQoU+6N5g63a8mpE2+2M+QbbzID86iL5cXLHnQjMK6t1chqnMyRR0Rk7iGD
+         UfLfhVDJGpukd/+q6qZThmIAIdZNrOwbR+1TswnswzTSz+nFhGuzv+twGd9Dml5m81hX
+         IcmQ==
+X-Forwarded-Encrypted: i=1; AKwUvBzi6Vv5Y2upgOafvbMoxRpz6KTuNemFNAyHBso0MPzE7Ha6/Aoa9+XXXhyHNyFKoLL9XbU=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKW19+Y63VvvChXJIEpWiRODoH7lYjJuTsO/m7sKOUhK4V60Ls9
+	t9NrFmWmoklsjZuFd6adRVo23dfSaiZACjQl6cCecZDqjnp6dYVgrrls
+X-Gm-Gg: AYBFou1gabUHsVl+PmU3DBGvWDUjncQDKi2iANTDjRaa3Ac5qNsJFUtgOPU0d5qawkZ
+	xHdeGncm7Q0ZtWd7fUExMvRTHJNK2xwUhFBpBGTuZai+Eud0i38OeZkQrGyAJcCAGK9ma29/TS6
+	wqY+xLVTEc6W6zD3QJvK4uxN0b4CWR6NUpAKJxbFjoJILLumOPhfzMuCLRb8qi2O4K5kl641JhQ
+	7rc9HNtlIksrpuyrfoHPG781SiCIQAyVKS5EWOS/NQl2DBY7b/rGY6uyo2BhZI0y+umaNu6Eb07
+	sl1Ygd8thigh9Yno150Tg23p2LHlmaXdsSBn6KHf79sT4ANvpG9FAB29r7ZMXwbjNTY0EGm4l1+
+	o5rYgk9k3MIOt4wOqvh7T3XikZce+bO2blXg31yOp2+1N9H4tSr49Zwgy09tsGMfU4sJqewnFYe
+	aPJXkL6+0F00WAUV+H6aIHGs3g8zCHPKgNof5i5fPCALFxCN+5elcp7Cd3DMuexWPAXrJs0kvhb
+	xKM0H21EDd3SD3cGCYqESPnJIDMtYI8qxg6G2jg6hWDCyH5z3jg+rTSWFHCJIo=
+X-Received: by 2002:a5d:5e8e:0:b0:48b:1e7:aeb4 with SMTP id ffacd0b85a97d-48dbace16f8mr3398211f8f.41.1791552569137;
+        Fri, 09 Oct 2026 06:29:29 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48db946323bsm4733302f8f.2.2026.10.09.06.29.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Oct 2026 06:29:28 -0700 (PDT)
+Message-ID: <6e921d1d-b7d8-4f42-add3-67931e4ffba8@gmail.com>
+Date: Fri, 9 Oct 2026 14:29:27 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: ssh signing: valid-before is checked at the signer's own date,
+ and a missing revocationFile fails open
+To: =?UTF-8?Q?Christian_No=C3=A9_Ramos_L=C3=B3pez?=
+ <chris@nortesoftware.dev>, phillip.wood@dunelm.org.uk
+References: <CAHGSfbZ_Q8Ujt3om0POapkjWZed1pZVUrB-mV-e+UjmPgCNvWQ@mail.gmail.com>
+ <ec4de165-c7d1-43d9-979b-08c1cb67022d@gmail.com>
+ <CAHGSfba9Td+Lg=Nf+nfwZY2r1_eq2Mcejn__6X=VPQkmcJttfQ@mail.gmail.com>
+Content-Language: en-US
+Cc: Patrick Steinhardt <ps@pks.im>, Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <CAHGSfba9Td+Lg=Nf+nfwZY2r1_eq2Mcejn__6X=VPQkmcJttfQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-From: Julia Evans <julia@jvns.ca>
+Hi Chirstian
 
-During a merge conflict, we suggest using --continue to continue the
-merge for rebase, revert, and cherry-pick.
+I've add back the the mailing list cc so others can comment as well.
 
-Change the `git merge` advice to be consistent.
-Commit 367ff694281ce569edd8f6e444fc770f92f5d215 says that
-`git merge --continue` is intended to be a synonym for `git commit`,
-and the `git merge` man page already suggests to use
-`git merge --continue`.
+On 08/10/2026 20:40, Christian Noé Ramos López wrote:
+> 
+>> Having waded through this here is a human readable summary:
+> 
+> Fair -- your summary is the shape I should have sent. Next time.
+> 
+> (1) You are right, and I did not test it. gpg takes the signature's own
+> creation time, so a manipulated clock moves that too. What I measured is
+> narrower: backdating the committer and author dates does not move it --
+> ssh-backdated is accepted, gpg-backdated is refused. A difference in cost,
+> not in kind.
+> 
+> So the wording should say two things: that the time compared against
+> valid-before comes from the commit, and that a signature timestamp is not
+> evidence of when the signing happened. That covers both backends. I will
+> send that patch.
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
-    status: suggest git merge --continue, not git commit
-    
-    Changes in v2:
-    
-     * Use git show -s --format=reference to format the reference in the
-       commit message (thanks to Phillip)
-     * change to "conclude the merge" (thanks to Phillip)
+That sounds sensible - a valid signature doesn't tell us anything about 
+when the commit was signed.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2249%2Fjvns%2Fadvice-merge-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2249/jvns/advice-merge-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2249
+> (2) One thing before I write it. Failing closed changes behaviour for
+> anyone whose configured path is already wrong, from a warning to a failed
+> verification. I think that is the right trade, but it is a behaviour
+> change and not only a fix. There is no test for gpg.ssh.revocationFile
+> today, so the patch should add one either way.
 
-Range-diff vs v1:
+A test would be very welcome. Patrick had a good suggestion for allowing 
+the path to be optional if the user wanted.
 
- 1:  551b0e79b0 ! 1:  afc69ffeb8 status: suggest `git merge --continue`, not `git commit`
-     @@ t/t7512-status-help.sh: test_expect_success 'status when conflicts resolved befo
-       On branch conflicts
-       All conflicts fixed but you are still merging.
-      -  (use "git commit" to conclude merge)
-     -+  (use "git merge --continue" to conclude merge)
-     ++  (use "git merge --continue" to conclude the merge)
-       
-       Changes to be committed:
-       	modified:   main.txt
-     @@ wt-status.c: static void show_merge_in_progress(struct wt_status *s,
-       		if (s->hints)
-       			status_printf_ln(s, color,
-      -				_("  (use \"git commit\" to conclude merge)"));
-     -+				_("  (use \"git merge --continue\" to conclude merge)"));
-     ++				_("  (use \"git merge --continue\" to conclude the merge)"));
-       	}
-       	wt_longstatus_print_trailer(s);
-       }
+Thanks
 
+Phillip
 
- t/t7060-wtstatus.sh    | 8 ++++----
- t/t7512-status-help.sh | 4 ++--
- wt-status.c            | 4 ++--
- 3 files changed, 8 insertions(+), 8 deletions(-)
+> Christian Ramos
+> Norte Software
+> chris@nortesoftware.dev
+> 
+> 
+> El jue, 8 oct 2026 a la(s) 7:42 a.m., Phillip Wood
+> (phillip.wood123@gmail.com) escribió:
+>>
+>> Hi Christian
+>>
+>> Having waded through this here is a human readable summary:
+>>
+>> (1) Our documentation implies that we check the expiry date of the key
+>> (which is recorded in the allowed signers file) against the date the
+>> commit was signed, but we actually use the committer date which can
+>> easily be faked.
+>>
+>> (2) If the revocation file does not exist we print a warning rather than
+>> failing the operation like the gpg backend does.
+>>
+>> For (1) I'd be happy to see a patch that tightens the wording, but we
+>> should also note that the timestamp in the gpg signature can also be faked.
+>>
+>> For (2) I agree failing seems like the safer option.
+>>
+>> Thanks
+>>
+>> Phillip
+>>
+>> On 08/10/2026 07:56, Christian Noé Ramos López wrote:
+>>> Two things that, together, mean an SSH signing key cannot be reliably
+>>> stopped from being trusted. git 2.47.3, OpenSSH 10.0p2, Debian 13;
+>>> source read at v2.47.3 and at master (c46c1e37724f).
+>>>
+>>> 1. valid-before is checked at a date the signer writes.
+>>>
+>>> SSH signatures carry no time of their own, so git passes -Overify-time
+>>> from the committer or tagger line (gpg-interface.c,
+>>> parse_payload_metadata). alice's key is in the allowed signers file
+>>> with valid-before="20260101":
+>>>
+>>>       ssh-old        %G?=G 2025-06-01 12:00:00 +0000 verify-commit=0 merge=0
+>>>       ssh-backdated  %G?=G 2025-06-01 12:00:00 +0000 verify-commit=0 merge=0
+>>>       ssh-honest     %G?=U 2026-10-08 02:15:15 -0400 verify-commit=1 merge=128
+>>>
+>>> ssh-backdated was signed today, with only the committer and author
+>>> dates set to 2025-06-01. Nothing distinguishes it from ssh-old except
+>>> when it was made, which only its author knows. ssh-honest, signed and
+>>> dated today, is refused: "key has expired: verify time ... >
+>>> valid-before 2026-01-01T00:00:00".
+>>>
+>>> The GPG backend refuses both:
+>>>
+>>>       gpg-old        %G?=Y verify-commit=1 merge=128
+>>>       gpg-backdated  %G?=Y verify-commit=1 merge=128
+>>>
+>>> The documentation for gpg.ssh.allowedSignersFile says "Git will mark
+>>> signatures as valid if the signing key was valid at the time of the
+>>> signature's creation", which is the intent, but does not say the time
+>>> comes from the commit. So valid-before rotates a key; it does not
+>>> retire one.
+>>>
+>>> 2. A configured revocation file that does not exist fails open.
+>>>
+>>> gpg-interface.c:568-574 at v2.47.3 (579-586 at master): if the
+>>> revocation file exists, pass -r; otherwise warn and verify without it.
+>>> The same file, present and listing alice's key, refuses:
+>>>
+>>>       S2-revoked       %G?=B verify-commit=1 merged=no
+>>>       S3-revfile-gone  %G?=G verify-commit=0 merged=yes
+>>>                        warning: ssh signing revocation file configured
+>>> but not found
+>>>
+>>> S3 merged under `git merge --ff-only --verify-signatures`. An
+>>> unreadable file and a directory both fail closed:
+>>>
+>>>       S4-revfile-0000  %G?=B verify-commit=1 merged=no
+>>>       S6-revfile-dir   %G?=B verify-commit=1 merged=no
+>>>
+>>> ssh-keygen, given the same missing path, refuses: exit 255, "Could not
+>>> verify signature". git avoids that by not passing -r. OpenSSH's
+>>> RevokedKeys says, in sshd_config(5), "Note that if this file is not
+>>> readable, then public key authentication will be refused for all
+>>> users."
+>>>
+>>> No test in git exercises gpg.ssh.revocationFile; it appears only in
+>>> Documentation/config/gpg.adoc and gpg-interface.c.
+>>>
+>>> Controls for both runs, fixed beforehand: a good signature gives G and
+>>> merges; an unsigned commit gives N and is refused; the revocation file
+>>> present and listing the key gives B and is refused; a commit with its
+>>> message changed and the signature kept gives B and is refused.
+>>>
+>>> Together: the two ways to stop trusting an SSH signing key are
+>>> valid-before, which the signer can date around, and revocationFile,
+>>> which does nothing if its path is wrong. Either would be enough on its
+>>> own if it held.
+>>>
+>>> What I would ask for: refuse when the revocation file is configured and
+>>> missing, as ssh-keygen and sshd do, or say in the documentation that it
+>>> is ignored; and say, under valid-before, where the time compared
+>>> against it comes from.
+>>>
+>>> On prior art: the ssh signing series (Fabian Stelzer, 2021) carried the
+>>> warning from before v4, and the review raised the config name's case,
+>>> not what a missing file should do. The key-lifetime series (RFC
+>>> 2021-10-15 to v6 2021-12-09) passes the commit date to the check, and
+>>> the replies are about style. The N for an unconfigured allowed signers
+>>> file is already on the list (Grayson Tinker, 2026-06-25) and is not
+>>> part of this.
+>>>
+>>> Christian Ramos
+>>> Norte Software
+>>> chris@nortesoftware.dev
+>>
+> 
+> 
 
-diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
-index 942ddbbf0e..a9b435b5e3 100755
---- a/t/t7060-wtstatus.sh
-+++ b/t/t7060-wtstatus.sh
-@@ -37,7 +37,7 @@ test_expect_success 'M/D conflict does not segfault' '
- 	cat >expect <<EOF &&
- On branch side
- You have unmerged paths.
--  (fix conflicts and run "git commit")
-+  (fix conflicts and run "git merge --continue")
-   (use "git merge --abort" to abort the merge)
- 
- Unmerged paths:
-@@ -141,7 +141,7 @@ test_expect_success 'status when conflicts with add and rm advice (deleted by th
- 	cat >expected <<\EOF &&
- On branch main
- You have unmerged paths.
--  (fix conflicts and run "git commit")
-+  (fix conflicts and run "git merge --continue")
-   (use "git merge --abort" to abort the merge)
- 
- Unmerged paths:
-@@ -174,7 +174,7 @@ test_expect_success 'status when conflicts with add and rm advice (both deleted)
- 	cat >expected <<\EOF &&
- On branch conflict_second
- You have unmerged paths.
--  (fix conflicts and run "git commit")
-+  (fix conflicts and run "git merge --continue")
-   (use "git merge --abort" to abort the merge)
- 
- Unmerged paths:
-@@ -198,7 +198,7 @@ test_expect_success 'status when conflicts with only rm advice (both deleted)' '
- 	cat >expected <<\EOF &&
- On branch conflict_second
- You have unmerged paths.
--  (fix conflicts and run "git commit")
-+  (fix conflicts and run "git merge --continue")
-   (use "git merge --abort" to abort the merge)
- 
- Changes to be committed:
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index aca4b6d332..f2e712ac39 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -31,7 +31,7 @@ test_expect_success 'status when conflicts unresolved' '
- 	cat >expected <<\EOF &&
- On branch conflicts
- You have unmerged paths.
--  (fix conflicts and run "git commit")
-+  (fix conflicts and run "git merge --continue")
-   (use "git merge --abort" to abort the merge)
- 
- Unmerged paths:
-@@ -53,7 +53,7 @@ test_expect_success 'status when conflicts resolved before commit' '
- 	cat >expected <<\EOF &&
- On branch conflicts
- All conflicts fixed but you are still merging.
--  (use "git commit" to conclude merge)
-+  (use "git merge --continue" to conclude the merge)
- 
- Changes to be committed:
- 	modified:   main.txt
-diff --git a/wt-status.c b/wt-status.c
-index 57772c7501..238bb48643 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1273,7 +1273,7 @@ static void show_merge_in_progress(struct wt_status *s,
- 		status_printf_ln(s, color, _("You have unmerged paths."));
- 		if (s->hints) {
- 			status_printf_ln(s, color,
--					 _("  (fix conflicts and run \"git commit\")"));
-+					 _("  (fix conflicts and run \"git merge --continue\")"));
- 			status_printf_ln(s, color,
- 					 _("  (use \"git merge --abort\" to abort the merge)"));
- 		}
-@@ -1282,7 +1282,7 @@ static void show_merge_in_progress(struct wt_status *s,
- 			_("All conflicts fixed but you are still merging."));
- 		if (s->hints)
- 			status_printf_ln(s, color,
--				_("  (use \"git commit\" to conclude merge)"));
-+				_("  (use \"git merge --continue\" to conclude the merge)"));
- 	}
- 	wt_longstatus_print_trailer(s);
- }
-
-base-commit: 5a7d1e8045ce66c908f62598e26cbb8df7b39a90
--- 
-gitgitgadget
