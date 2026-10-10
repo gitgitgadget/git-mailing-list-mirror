@@ -1,70 +1,71 @@
-Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED004439F62
-	for <git@vger.kernel.org>; Sat, 10 Oct 2026 10:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F5C314D13
+	for <git@vger.kernel.org>; Sat, 10 Oct 2026 10:13:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791627211; cv=none; b=rXcxi2bAIu0mWHHeWPfmD6WZp31cyUuwc1iHo3CXAHan7QTuX5UmWwa4GMx25c9+P2fqIfNzBKCpfVembtfAuwCsuEuVL2GLbkUWvy59vGG4++tM9E9xb/1TDZWdrQzqq8EX4xEtngguOmPG0sH4flxzQlDmEqNeCcpR5dL0rZQ=
+	t=1791627213; cv=none; b=DBMIlziYR3Erkw7O8kysdwEgqAIj8KD7qnj8TugXQrlulBtksGxUAIn38zfzDFYls3LjjjiumDbL0mK3F1b9OB6gcCsGeBCVJ7fmpAoA6a1VGkghfJNX0ohlk6MpMcmDgNEl1m8L5R8VBW69Ferwy+fCxx7LJ6pAIf0QVtOOD08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791627211; c=relaxed/simple;
-	bh=O9Myz+ZimIM3RJnIXtetDP426YwFoHvB6ujFu2NOauo=;
+	s=arc-20240116; t=1791627213; c=relaxed/simple;
+	bh=CUmHLF1cqEwuIalXqxPmsUelZQvTiVT3YcaPB5lkePA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=gwH0fYx9WZfNjjaoctVWAnxJ/3iPDkM9L28Z4igDbucso82O958uumvl5mQ0oA2g4MVbsgk+Aw6TE/eITUALFZ2+pftQ3wvEYRKlRrzyyxnGwjFyWtazYySeseCSAhpB9ilJyGnb/vNatc4b/GQbtxQglDPY39Ch5mRuiQK5BhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b1MJbJHk; arc=none smtp.client-ip=209.85.161.52
+	 MIME-Version:To:Cc; b=AtRGiwNICtohEKP1JZEfG5P3uQij4hbuZ1SGjSklntt1xl97u3fqyFBhATwPOLSif9BKoF69Ys6QHjRgBFG68RKAN1vaIpgyCgoBBcDIhjQa8oo4h06ynJaWn0JLGEQwOuUKfhSjZJQTVP1bhxb4QvpWWtrBPIR0Opy87Tvjzkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gF8aMkfi; arc=none smtp.client-ip=209.85.167.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b1MJbJHk"
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-6d7a9e2eb24so292954eaf.1
-        for <git@vger.kernel.org>; Sat, 10 Oct 2026 03:13:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gF8aMkfi"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-4f6d98ff6c7so414324b6e.0
+        for <git@vger.kernel.org>; Sat, 10 Oct 2026 03:13:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791627207; x=1792232007; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791627210; x=1792232010; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=t3bRMsOu8GBCqYuv/84JosOKJBtL/2Dj3N1j4GMPWhk=;
-        b=b1MJbJHk4ii20CbGCQtrrkedu/zUXdNSiEc7EoaBsd60uZ8zqXDPUdJwFAQscNxSio
-         KVuuRRoDePYfwz2l7QteHM33Z6AErouyh8fS3HU1htRp4ePsV+obtx4J0OLud1KLShEi
-         mxn58BdlsilFJXJfjAHlldBGaxb7p+vKyPqj5zl9jMLAbToY9+/MpOnrhUoortxhvW+z
-         9N5kVRmi+LXvPVbGCIYtIk3MsvJb5frmEbX4N4gB+1Gv2/H9PnHNUPWupGDw1cJDleKK
-         6VNJaEDLm0H/GCk+ti87WJcs9M6uMCaOAwfrg0ezShSm0wV0nUF38hPRqB4rwTYsnyHj
-         6uvg==
+        bh=CLCPjoW3ghJIxFZ/PH27G0ZixLDpQ2GzU4amH579QMA=;
+        b=gF8aMkfiAVRkdVqtLUxxbSDCXPTym/qC8nHB7fH0sqc7P0kPinou6MlkoRWfmvGQND
+         g0+nE8pU9g/3HNoiIXzH8blYHPgrDoGZFCnn3qtDWJa7xf2QI4GdBaowWItMwro9qOQe
+         jNnIVWkv9k2r1m+Hgvn4vxQOWZ6IhFlhyAwE2Ob12mX1eMKKeu9jkpc+cTH9Et7RS0y0
+         2sMcWrIZwijSt4PejgqBvF9cf6U39MlETK/AIPcAaPeXjLBAY/l7JAUoEaqTISqEPDlu
+         hzCqQsXT9pgi0BuBED2dOZlcy7mW8uT+zBykFH5X/Yj9ta1xC+CNzsRqBGaGCoLQFaii
+         pDCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791627207; x=1792232007;
+        d=1e100.net; s=20260707; t=1791627210; x=1792232010;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=t3bRMsOu8GBCqYuv/84JosOKJBtL/2Dj3N1j4GMPWhk=;
-        b=U00n0Dtt9XWAdG2xJ7TMC0+1HWUk+JFsjs18V8Sp6N1Cc0AlcUUaiX4re48ueMDQx1
-         czKUFrflJHQdTrTs/n9FIokCrcv0P8Gvu06N08xkuzdGzfU9Eea6ICH53jdMxVKPGk9s
-         uI09b3Ch//UQvPTeCVgQtanS+J2jveWNI7UjMoriq0R/hDzZopezB3xyQokFBtlsyCiM
-         dMW1xIS8s9uZYJQDm+rba5rXgXqEMVMb5GLn2tZRQwgJr7iA5AehDho3I7UuFV4wpwR2
-         ehAYX3gbRaL3yNuPFMgIT5pEulmY4uohdICq7cTEGCtf3CHZyYgQy7PyomWb8DiOu5YW
-         YAFw==
-X-Gm-Message-State: AFq9FYJiF7kgUs66rb/0Q9uEXjSTTTPKWKa7xhvE1E+lxHVrI/3j8wnu
-	/9Fj0d3JXcs16Pbli9kpsIO1uNZQyh/MSyHgMUNMzE5k36DMg6G42inRE9KUnNDz
-X-Gm-Gg: AYBFou2VWmzqgbEevPxmeIwv4w5FO6mkZuHMX05KlO+wLVj1qUo65c2Uzx6MSoay2Qt
-	/ygL1arADp4Imi/57al3+xsWlqfvniFcmWea1z5gRuN/k9XYJB8AFsxlpUOmFfVhEPN3f9TQu2s
-	F/WLguB3pWfvGZxaH7VVy59TwnBkR7zUXRdelqGuMJZJbxsnuu7fYrxXV9jJnegZMPddGNzRSKg
-	sdKs0TI4aRktMReWNr6vhfPu7CSIXalbdYaFcrmy0yjuBpDVRZnZd7BoKvHhy7bSv6beDziOLz/
-	eozbl07cAWIJKXsgESgyChKhSojJYBp5fGEkmylSQSYY5wRez8tPydMT5Wl42fVsRC9HIRFw63y
-	nEQ2fhGTXikyyHfvMMii/GrziwLXLKgKCUBVy+hK7zUrrc/GIx11Qrodm91j+Cv2lWOqR9K1Obl
-	FFh/YYG/bDWHezXOj2NWzPDjA7JGWAKFMj0ldJsR5I9I4oksV09ySS6oWEQLsc8UDtR6tXcMdOE
-	DkjRMCBaBbORw==
-X-Received: by 2002:a05:6820:1795:b0:6d8:4e2e:9973 with SMTP id 006d021491bc7-6ef0f99b8b0mr3040972eaf.63.1791627207456;
-        Sat, 10 Oct 2026 03:13:27 -0700 (PDT)
+        bh=CLCPjoW3ghJIxFZ/PH27G0ZixLDpQ2GzU4amH579QMA=;
+        b=l9aV8KVwegOXWlPegDSQ5nNfoLrSY3htePwOThXoyoSUFi3Zlk7wK+oYnjvnik8dj1
+         1mvezPKWqF/aj0t3qyD92DeHLMHoOzbVlb8Oxt+/F1Dn/bdoeyExx9n0mes/HpM0TlvM
+         UboLPAyvR0b2hwPDrB407qLW8D115nKP94xEW7bVGgy7MI1C9jpzQVKWPsrSQ+ZFoHEM
+         VhgW5BoOmbKciTFd0WIYgj++V4dI7DirFyaOeUlE45X3Ku7ISeb956UZjwEgcXkNKwCS
+         1dRry3kIekVRIHMiHybwndDmQzmtcvDB9BNLMel/Vkt7HLvEL0C+v7L73e24All3kjvH
+         asKg==
+X-Gm-Message-State: AFq9FYK55592Dzk4++aLWACavHgb0WYupQDJf5ivZgSZX7Wkeyr47N5Y
+	iSMRDLlH1Ga4Rbf5fz3Dawy4A+zVSofDQHaQzbbtpGXcVZ2wWEM3H1YZ8BLi/L6W
+X-Gm-Gg: AYBFou1mASGy4fLUrdj9ij5UkJysX14HqNZ39obOcrrM3yhiyXbnFZLcmt6TBZ1ECWr
+	FcG5SHNjCqAzSfaNx3YusPUPZEvcLyt/SgH36TjHXg1gzMZTKxwFa/9RZX8rxF1PbilPYCTIh/S
+	H4xRGqCKDyxSRb+1/xgU2rmlVXpi196SpQdLRmrgUG/T0VVQm3vvR9GHzwuSmVm0xWBtTy75/J5
+	pO/zzZkXUAtuClizCX/JK73SjPiMMuQdSIJudiCtYZRcv/l46YxJJ/EDSZ4jnUI6dcgImqk19/T
+	LaaIryHuacE2XNpxogP0oNP19ggZv/Mmf8joiZNfsEZPnxZDoNX3n4ajrtgKNyFXk7KZ+N29/m0
+	24SxS6RoO2zx0ybdyGREeLnLth/dxrWe7CeO9nKEnQB1qdhHEFj2qdKyfHGiQdFpUz1hzPQLcZu
+	6igfccF9ThTG6VsvKuz5Ri8ydNceb0+PyIxnwRFBG3Kk95Dl/cre08vHVnnQYOLGdViJRtvcmo/
+	bfKMqonvJ+t5w==
+X-Received: by 2002:a05:6808:4fe3:b0:4f5:c4b9:dbfa with SMTP id 5614622812f47-50c57f42facmr4699660b6e.48.1791627210440;
+        Sat, 10 Oct 2026 03:13:30 -0700 (PDT)
 Received: from [127.0.0.1] ([20.118.239.199])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6eefc38911esm4459475eaf.1.2026.10.10.03.13.24
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-50c1674ddf8sm4640712b6e.4.2026.10.10.03.13.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Oct 2026 03:13:25 -0700 (PDT)
-Message-Id: <pull.2214.v7.git.1791627204.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
+        Sat, 10 Oct 2026 03:13:29 -0700 (PDT)
+Message-Id: <3dc3d02f12a3118ac9e270c19960815f6b8170cb.1791627204.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2214.v7.git.1791627204.gitgitgadget@gmail.com>
 References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
+	<pull.2214.v7.git.1791627204.gitgitgadget@gmail.com>
 From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 10 Oct 2026 10:13:22 +0000
-Subject: [PATCH v7 0/2] rerere: wait for MERGE_RR.lock, but not in auto maintenance
+Date: Sat, 10 Oct 2026 10:13:23 +0000
+Subject: [PATCH v7 1/2] rerere: wait for MERGE_RR.lock before giving up
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,190 +80,164 @@ Cc: Patrick Steinhardt <ps@pks.im>,
     Phillip Wood <phillip.wood@dunelm.org.uk>,
     Junio C Hamano <gitster@pobox.com>,
     Phillip Wood <phillip.wood123@gmail.com>,
+    Thomas Bachem <mail@thomasbachem.com>,
     Thomas Bachem <mail@thomasbachem.com>
 
-A rebase dies at a conflict when a background "git rerere gc" holds
-MERGE_RR.lock at that moment. With the first patch, rerere waits for the
-lock instead of dying at once. With the second, the "git rerere gc" started
-by auto maintenance does nothing while the lock is held.
+From: Thomas Bachem <mail@thomasbachem.com>
 
-For v7 I took Patrick's suggestions on patches 2 and 3. Changes since v6:
+setup_rerere() takes MERGE_RR.lock with LOCK_DIE_ON_ERROR, so of two
+processes that want it at the same time the second one dies. That
+used to be rare. Since 452b12c2e0 (builtin/maintenance: use
+"geometric" strategy by default, 2026-02-24) the auto maintenance
+after a commit runs "git rerere gc" whenever rr-cache has enough
+stale entries, and the gc holds the lock while it prunes.
 
- * Patch 3, which let a command that stops at a conflict go on without
-   rerere, is gone. It can come back if users still run into the lock
-   (Patrick).
+A rebase whose next pick conflicts while that happens dies inside
+repo_rerere(), before the sequencer has written the state that
+"git rebase --continue" needs. Every later "git rebase --continue"
+then fails with "you have staged changes in your working tree".
 
- * Patch 2's log message is Patrick's, plus a last paragraph on why the
-   option is hidden.
+Wait for the lock for up to rerere.lockTimeout milliseconds, 1000 by
+default, and only then fail as before. Pruning a few thousand entries
+takes well under a second, so the default covers a rebase that runs
+into the gc.
 
- * rerere_gc() takes its own flags, enum rerere_gc_flags, with
-   RERERE_GC_NOWAIT (Patrick).
+Assisted-by: Claude Fable 5.1
+Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
+---
+ Documentation/config/rerere.adoc |  8 +++++
+ rerere.c                         | 22 ++++++++++---
+ t/t4200-rerere.sh                | 53 ++++++++++++++++++++++++++++++++
+ 3 files changed, 78 insertions(+), 5 deletions(-)
 
- * The comment in setup_rerere() no longer says who passes RERERE_NOWAIT,
-   and the one on RERERE_NOWAIT now says that setup_rerere() then returns -1
-   as if rerere were disabled (Patrick).
-
- * "git rerere gc --skip-locked" without a held lock is a test of its own
-   (Patrick).
-
-Thomas Bachem (2):
-  rerere: wait for MERGE_RR.lock before giving up
-  rerere: add "gc --skip-locked" for auto maintenance
-
- Documentation/config/rerere.adoc | 10 ++++
- builtin/gc.c                     |  4 +-
- builtin/rerere.c                 | 10 +++-
- rerere.c                         | 38 ++++++++++++---
- rerere.h                         | 11 ++++-
- t/t4200-rerere.sh                | 79 ++++++++++++++++++++++++++++++++
- t/t7900-maintenance.sh           | 25 +++++++++-
- 7 files changed, 165 insertions(+), 12 deletions(-)
-
-
-base-commit: 34f06850c16c7f7ac822b1adc71354f11b0f2ca3
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2214%2Fthomasbachem%2Frerere-gc-lock-v7
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2214/thomasbachem/rerere-gc-lock-v7
-Pull-Request: https://github.com/gitgitgadget/git/pull/2214
-
-Range-diff vs v6:
-
- 1:  3dc3d02f12 = 1:  3dc3d02f12 rerere: wait for MERGE_RR.lock before giving up
- 2:  2ef141410a ! 2:  0002881196 rerere: add "gc --skip-locked" for auto maintenance
-     @@ Metadata
-       ## Commit message ##
-          rerere: add "gc --skip-locked" for auto maintenance
-      
-     -    Since the previous commit, "git rerere gc" waits for MERGE_RR.lock
-     -    like every other command that takes it, and fails only if the wait
-     -    times out. That suits a user who runs it by hand and wants to know
-     -    when nothing was pruned. But the user did not ask for the gc that auto
-     -    maintenance starts after a commit, and the next commit starts another
-     -    one.
-     +    Starting with the preceding commit, processes that want to acquire
-     +    the rerere cache's MERGE_RR.lock by default know to wait up to one
-     +    second until that lock has been released. This is a sensible default
-     +    for many commands that happen to write rerere entries, as we would
-     +    otherwise die immediately when the lock is taken by another process.
-      
-     -    So add "--skip-locked", with which "git rerere gc" quietly does
-     -    nothing while the lock is held, and pass it from
-     -    "git maintenance run --auto" and "git gc --auto". Only these two need
-     -    the option, so hide it and leave it undocumented, like the
-     -    "--skip-foreground-tasks" that "git maintenance run" passes to
-     -    "git gc". A run without it, from the command line or a maintenance
-     -    schedule, still waits for the lock and fails if the wait times out.
-     +    But for repository maintenance it's a bit more complicated, as there
-     +    are two cases that we have to care about. When the user explicitly
-     +    asks us to garbage collect rerere entries via `git rerere gc` they
-     +    probably want us to try our best to perform this operation. It's thus
-     +    sensible to wait for the lock and then die if we weren't able to
-     +    acquire it.
-      
-     +    But we also prune rerere entries as part of auto-maintenance, which is
-     +    only executed on a best-effort basis anyway. Delaying the whole
-     +    operation to acquire the lock is somewhat heavy-handed, and neither
-     +    does it make sense to die in case we haven't been able to garbage
-     +    collect rerere entries as that would impede other housekeeping tasks.
-     +    Furthermore, it's totally fine to skip the operation when the rerere
-     +    cache is locked already, as we will retry during the next run anyway.
-     +
-     +    But we do not have an easy way to tell `git rerere gc` to skip the
-     +    operation in case the cache is locked already. Add a new
-     +    "--skip-locked" flag to plug that gap and have auto-maintenance pass
-     +    that flag.
-     +
-     +    Only auto-maintenance needs that flag, so hide it, like the
-     +    "--skip-foreground-tasks" flag that `git maintenance run` passes to
-     +    `git gc`.
-     +
-     +    Helped-by: Patrick Steinhardt <ps@pks.im>
-          Assisted-by: Claude Fable 5.1
-          Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
-      
-     @@ builtin/rerere.c: int cmd_rerere(int argc,
-       	} else if (!strcmp(argv[0], "gc"))
-      -		rerere_gc(the_repository, &merge_rr);
-      +		rerere_gc(the_repository, &merge_rr,
-     -+			  skip_locked ? RERERE_NOWAIT : 0);
-     ++			  skip_locked ? RERERE_GC_NOWAIT : 0);
-       	else if (!strcmp(argv[0], "status")) {
-       		if (setup_rerere(the_repository, &merge_rr,
-       				 flags | RERERE_READONLY) < 0)
-     @@ rerere.c: int setup_rerere(struct repository *r, struct string_list *merge_rr, i
-       		/*
-       		 * Another process may hold the lock for a while, e.g.
-       		 * "git rerere gc" while it prunes rr-cache, so wait for
-     --		 * it instead of dying right away.
-     -+		 * it instead of dying right away.  The gc of an automatic
-     -+		 * maintenance run does not wait, since skipping one of
-     -+		 * its runs costs nothing.
-     + 		 * it instead of dying right away.
-       		 */
-      +		if (flags & RERERE_NOWAIT) {
-      +			lock_flags = 0;
-     @@ rerere.c: out:
-       }
-       
-      -void rerere_gc(struct repository *r, struct string_list *rr)
-     -+void rerere_gc(struct repository *r, struct string_list *rr, int flags)
-     ++void rerere_gc(struct repository *r, struct string_list *rr,
-     ++	       enum rerere_gc_flags flags)
-       {
-       	struct string_list to_remove = STRING_LIST_INIT_DUP;
-       	DIR *dir;
-     @@ rerere.c: void rerere_gc(struct repository *r, struct string_list *rr)
-       	struct strbuf buf = STRBUF_INIT;
-       
-      -	if (setup_rerere(r, rr, 0) < 0)
-     -+	if (setup_rerere(r, rr, flags) < 0)
-     ++	if (setup_rerere(r, rr,
-     ++			 (flags & RERERE_GC_NOWAIT) ? RERERE_NOWAIT : 0) < 0)
-       		return;
-       
-       	rerere_gc_cutoffs(r, &cutoff_resolve, &cutoff_noresolve);
-     @@ rerere.h: struct repository;
-       #define RERERE_AUTOUPDATE   01
-       #define RERERE_NOAUTOUPDATE 02
-       #define RERERE_READONLY     04
-     -+/* Take MERGE_RR.lock only if it is free, and return quietly otherwise */
-     ++/* If MERGE_RR.lock is taken, return -1 as if rerere were disabled */
-      +#define RERERE_NOWAIT       010
-       
-       /*
-     @@ rerere.h: const char *rerere_path(struct strbuf *buf, const struct rerere_id *,
-       int rerere_remaining(struct repository *, struct string_list *);
-       void rerere_clear(struct repository *, struct string_list *);
-      -void rerere_gc(struct repository *, struct string_list *);
-     -+void rerere_gc(struct repository *, struct string_list *, int);
-     ++
-     ++enum rerere_gc_flags {
-     ++	/* Skip the operation in case the MERGE_RR.lock is already taken. */
-     ++	RERERE_GC_NOWAIT = (1 << 0),
-     ++};
-     ++
-     ++void rerere_gc(struct repository *, struct string_list *,
-     ++	       enum rerere_gc_flags flags);
-       
-       /*
-        * Check whether garbage collection for rerere entries is needed, which is
-     @@ t/t4200-rerere.sh: test_expect_success 'old records rest in peace' '
-      +	>.git/MERGE_RR.lock &&
-      +	git rerere gc --skip-locked 2>err &&
-      +	test_must_be_empty err &&
-     -+	test_path_is_file $rr2/preimage &&
-     ++	test_path_is_file $rr2/preimage
-     ++'
-     ++
-     ++test_expect_success 'gc --skip-locked prunes while MERGE_RR is not locked' '
-     ++	mkdir -p $rr2 &&
-     ++	echo Hello >$rr2/preimage &&
-     ++	test-tool chmtime =$just_over_15_days_ago $rr2/preimage &&
-      +
-     -+	rm .git/MERGE_RR.lock &&
-      +	git rerere gc --skip-locked &&
-      +	test_path_is_missing $rr2/preimage
-      +'
- 3:  cd018289bb < -:  ---------- rerere: go on at a conflict when the lock stays busy
-
+diff --git a/Documentation/config/rerere.adoc b/Documentation/config/rerere.adoc
+index 3a78b5ebb1..30e827f32b 100644
+--- a/Documentation/config/rerere.adoc
++++ b/Documentation/config/rerere.adoc
+@@ -10,3 +10,11 @@ rerere.enabled::
+ 	enabled if there is an `rr-cache` directory under the
+ 	`$GIT_DIR`, e.g. if "rerere" was previously used in the
+ 	repository.
++
++rerere.lockTimeout::
++	The length of time, in milliseconds, to wait for the rerere
++	lock when another process holds it, typically a background
++	`git rerere gc`.  Value 0 means not to wait at all; -1 means
++	to wait indefinitely.  Default is 1000 (i.e., wait for 1
++	second).  When the time is up, the command fails as it does
++	for any other lock it cannot take.
+diff --git a/rerere.c b/rerere.c
+index 1c3745d9e3..64fac07c71 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -33,6 +33,9 @@ static int rerere_enabled = -1;
+ /* automatically update cleanly resolved paths to the index */
+ static int rerere_autoupdate;
+ 
++/* how long to wait for MERGE_RR.lock, in milliseconds */
++static int rerere_lock_timeout_ms = 1000;
++
+ #define RR_HAS_POSTIMAGE 1
+ #define RR_HAS_PREIMAGE 2
+ struct rerere_dir {
+@@ -850,6 +853,8 @@ static void git_rerere_config(void)
+ {
+ 	repo_config_get_bool(the_repository, "rerere.enabled", &rerere_enabled);
+ 	repo_config_get_bool(the_repository, "rerere.autoupdate", &rerere_autoupdate);
++	repo_config_get_int(the_repository, "rerere.locktimeout",
++			    &rerere_lock_timeout_ms);
+ 	repo_config(the_repository, git_default_config, NULL);
+ }
+ 
+@@ -882,12 +887,19 @@ int setup_rerere(struct repository *r, struct string_list *merge_rr, int flags)
+ 
+ 	if (flags & (RERERE_AUTOUPDATE|RERERE_NOAUTOUPDATE))
+ 		rerere_autoupdate = !!(flags & RERERE_AUTOUPDATE);
+-	if (flags & RERERE_READONLY)
++	if (flags & RERERE_READONLY) {
+ 		fd = 0;
+-	else
+-		fd = repo_hold_lock_file_for_update(r, &write_lock,
+-						    git_path_merge_rr(r),
+-						    LOCK_DIE_ON_ERROR);
++	} else {
++		/*
++		 * Another process may hold the lock for a while, e.g.
++		 * "git rerere gc" while it prunes rr-cache, so wait for
++		 * it instead of dying right away.
++		 */
++		fd = repo_hold_lock_file_for_update_timeout(r, &write_lock,
++							    git_path_merge_rr(r),
++							    LOCK_DIE_ON_ERROR,
++							    rerere_lock_timeout_ms);
++	}
+ 	read_rr(r, merge_rr);
+ 	return fd;
+ }
+diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+index 7bb601e117..7bd92235dc 100755
+--- a/t/t4200-rerere.sh
++++ b/t/t4200-rerere.sh
+@@ -242,6 +242,59 @@ test_expect_success 'old records rest in peace' '
+ 	test_path_is_missing $rr2/preimage
+ '
+ 
++test_expect_success 'a held lock is waited out within rerere.lockTimeout' '
++	git reset --hard &&
++	rm -rf $rr &&
++	test_when_finished "rm -f .git/MERGE_RR.lock" &&
++	>.git/MERGE_RR.lock &&
++	{
++		( sleep 1 && rm -f .git/MERGE_RR.lock ) &
++	} &&
++	test_must_fail git -c rerere.lockTimeout=5000 merge first 2>err &&
++	wait &&
++	test_grep ! "MERGE_RR" err &&
++	test_grep "^=======\$" $rr/preimage
++'
++
++test_expect_success 'merge fails once rerere.lockTimeout is up' '
++	git reset --hard &&
++	rm -rf $rr &&
++	test_when_finished "rm -f .git/MERGE_RR.lock" &&
++	>.git/MERGE_RR.lock &&
++	test_must_fail git -c rerere.lockTimeout=0 merge first 2>err &&
++	test_grep "Unable to create" err &&
++	test_grep "^=======\$" a1 &&
++	test_path_is_missing $rr/preimage
++'
++
++test_expect_success 'rerere, forget, clear and gc fail on a lock they cannot take' '
++	test_when_finished "rm -f .git/MERGE_RR.lock" &&
++	>.git/MERGE_RR.lock &&
++	test_must_fail git -c rerere.lockTimeout=0 rerere 2>err &&
++	test_grep "Unable to create" err &&
++	test_must_fail git -c rerere.lockTimeout=0 rerere forget a1 2>err &&
++	test_grep "Unable to create" err &&
++	test_must_fail git -c rerere.lockTimeout=0 rerere clear 2>err &&
++	test_grep "Unable to create" err &&
++	test_must_fail git -c rerere.lockTimeout=0 rerere gc 2>err &&
++	test_grep "Unable to create" err
++'
++
++test_expect_success 'rebase --abort fails on a lock it cannot take' '
++	git reset --hard &&
++	git checkout -b lock-held-abort third &&
++	test_when_finished "git checkout third && git branch -D lock-held-abort" &&
++	test_must_fail git rebase first &&
++	test_when_finished "rm -f .git/MERGE_RR.lock" &&
++	>.git/MERGE_RR.lock &&
++	test_must_fail git -c rerere.lockTimeout=0 rebase --abort 2>err &&
++	test_grep "Unable to create" err &&
++	test_path_is_dir .git/rebase-merge &&
++	rm .git/MERGE_RR.lock &&
++	git rebase --abort &&
++	test_path_is_missing .git/rebase-merge
++'
++
+ rerere_gc_custom_expiry_test () {
+ 	five_days="$1" right_now="$2"
+ 	test_expect_success "rerere gc with custom expiry ($five_days, $right_now)" '
 -- 
 gitgitgadget
+
