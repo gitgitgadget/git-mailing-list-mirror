@@ -1,145 +1,137 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4BE344D92
-	for <git@vger.kernel.org>; Sat, 10 Oct 2026 17:24:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791653084; cv=none; b=CZrB/ZHd6rFuEnfxl8W6OGxD6Nkdy/R5qvWwZTPuiZw3j1lQ7GGCsrotvHoADGx+1n/gnrL6bYax/oRrs1P79zLZ1YBxVchXQbmRvqIjwvq9vvENyiHoy5ANEYDmuYSL5OK6/2rjuZjXvmQ1JWRLiYWE+2+9ZKz/dkH8v/rmIQQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791653084; c=relaxed/simple;
-	bh=9XO0z8u9rQt74yE8xUvTJrswCNpcQZtWej7XyyyWFKI=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=dFauZNTjC9pHMYGJDJ3cSd4kSAekIjwlGZfqgndzMCZAByR966baQFQ7NFrucTTzC3UoW+id+zPJkmqkE9bFMaTlMMzP0qwMwuz6GDFOZywPLOq3PQpPS8bZH3i9SUabhDvOukOiMWG84otaqIQ7sUqw+z+AYTpySXqVilwdKt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gjAtx0ww; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9331733A70E
+	for <git@vger.kernel.org>; Sat, 10 Oct 2026 17:57:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791655068; cv=pass; b=VREK3uw921c9AzO9ZYpxwT17+6jw9X7ukfEzgHQ3IGMh0bT+EBwo75Ku8GdusYealsUHuiMNPWT53R9mEXjr7B0mc+nAZEXJAqCtTJ5GwVWLQa9F4jk2qIU1/ecuSq/ljrC+34tSyXjTS41ukUuQ4irKwU1zQjhlb2wQHEuFsk0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791655068; c=relaxed/simple;
+	bh=UazJqykVSrylb6J7S33jPvKzIT6ZgwAAfjzR9He9ZLg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RntoYC2WErVH2Ml8eX8uVgj/YynXwYhw5OqAGr2hQ6KMMptZdD9JN5hu1MZi7jp9IO4gROouAlYybth6/GCKRnZh2quJ/Tu3APAP6Cn7pS6Vczi5IPCO9FdjVHX7TjsBD3wQ/RRjmeiKHkT/HmDC1zmsv35b0eixI6FfbxIJRkk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P8g8Zjn/; arc=pass smtp.client-ip=209.85.219.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gjAtx0ww"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-4f699fe49b3so640256b6e.3
-        for <git@vger.kernel.org>; Sat, 10 Oct 2026 10:24:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P8g8Zjn/"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-917917023d7so2240466d6.0
+        for <git@vger.kernel.org>; Sat, 10 Oct 2026 10:57:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791655066; cv=none;
+        d=google.com; s=arc-20260327;
+        b=nw9z59XJjIlyCJBVoDlCktyI2TkQkBUybuF2QoYM9S+Io2AJ5P8s8SZ2RMbWnO6oVo
+         61Gu/jqmrjUEnNPi3F5BqubnKM1JZOPDIPEQoLnzmsAjEXd5dtkyPWEi+2idDv1rGPAR
+         yNext40tJeTExmOavko50H3firp4Ivj+9vTZYi7kKgMO4D8rliuSwHQRe88jkcVBzGIZ
+         1v64yZRMAtrJKOn1zOT/dGnEQRWjezc9qaoUyNF9yGHONZl8HKvieiv0EkKvcmGukGF0
+         tB90xoSZ4Tx4ababSOecKOpytKFrZsXZme68A03WntqYscxAxceK9GUCiD0aWXB1Godl
+         Hf7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=5Y9Ve3yvtmX4w6ct/Lrt3hnrurHp0EadPBCRtQXrhgA=;
+        fh=bEkOUHB+vibrBffVlPn3HxK9B9lJkw0crHqnzwJCGis=;
+        b=pLNcL9InzjMWi2H9pADUjO9heLb6defAhek8G+N5pfEW0I5vDnh8MGlHss2cBfLBFs
+         9c6z3Bobt2Ra05rxXitscO7Yp3a5ohU8razvoU9xRUkD4jGHnww+PqKkNX8YUOvM4dGg
+         wpqfAkvDgBB1oMKwwEhqgBDjMi7djKROSmb0j+7+WSbUPEBJQ0C70dKov7Ra/Nb2TCLk
+         yCdNq7KBlYvyMvdIY6nIN60A4YX4E+rCk9aTEQJMkJ3vA6qxEOJyMk5gM23cVjWQV3om
+         aHQekQkdD2VczGaWg9v3X2hM4gCa9e5EvSFhJF6ftq5vCfptLn+OLKQy+58I4hYVo/uv
+         DaTA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791653082; x=1792257882; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=6A1LApuOCagUAOf1Bmpy4XsRUnNrzoYz6F6XH7YsuIo=;
-        b=gjAtx0ww7erOm4Mpwjma864WJ3T06yaqwN9uV2nIu3PmWV76vAxJKpCtZapdDxxqhC
-         jSY5Dfu0ukG/BSWKyI5fLk6WZDDC0NCaJFWjjcdLc111UwSWgdalklMyfppcu7kAQC25
-         ZcX5CEjfcM9PryqNEp6PL2s00GXzoibezgdxVz2nbhvBIyfLBQKBhiZ+J872g8KMtwIm
-         tpbQmlivb8xRufmxa6pNJ53mubWn/z12c0ouCfHA2iQvapkEI5q7aFojvD46mjQaXr3w
-         DGTK0tX18UWrR4EbqKoMqvXXTnFf1QgbvkyXTW2Ezcn1qaEJnSKJMgRI3WT6IhmItajM
-         x7sg==
+        d=gmail.com; s=20251104; t=1791655066; x=1792259866; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=5Y9Ve3yvtmX4w6ct/Lrt3hnrurHp0EadPBCRtQXrhgA=;
+        b=P8g8Zjn/Ie01QglR63Y4bCz/UFx8zy9ibmnMWKDjKvbO+GRvwUj1VLJtdgs/l0IzMS
+         yhTPPmj9yarKXyCe0va8BXLXqP+fxVU3M9/uqZq41j213mY10PnjCOOVSZ5H45qIZrA0
+         XhZdvwVN1LrfjtQ6DAulzBtjoLdNanHLhhyp9zw6t+r4DQZpXaFN/W9qgTl1GqLYX7LV
+         1YutqmAizxOuwoC11RL66B/DcZMN5KwZDuxo5IBGjyWadBc2VLQFcOCZZLWD/HQNuRhL
+         SZrTWt3vV1Tphm8Q26D0/uX6yc2OCTuL11Xwe0FY1o25gRBggBagPf+8vOLlPp8mewHR
+         iBRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791653082; x=1792257882;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20260707; t=1791655066; x=1792259866;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=6A1LApuOCagUAOf1Bmpy4XsRUnNrzoYz6F6XH7YsuIo=;
-        b=XYtMdkVQRzp0Van0lLVx3huLyupzNUsfWwCyUPG6u7zCk3kiN+RzzcOAS3QndDYoU2
-         XsjlLZSOJ77hrX++w9aCM9RxlDHh3yRLbcQXOohpuoCuvpj3+IfP/nh8gFTVsv1iAy1Y
-         uHCikC+FxayyDhhN5419gp1+bcBls2cD4faZufvMjD5OI7HyOWqRdgxk3Wx8uxU6eXM7
-         VveH7swTP49KN4CmxbYl+Yi0N67dJ9mYK5b3PAS6YUwTVH6lPzhOfq56mz8hJBGPFNOb
-         1DHM8zdsBKAeP9NQqLheXxIQ46+XM3KVMYqCLer2ISpN3EbNoXCRl5MinxWL2ltH3PaZ
-         u02Q==
-X-Gm-Message-State: AFq9FYIZN2dSM9YLy99ekD69KtNxnXBnigi7AJiZJUQjPFui2dOUWZsQ
-	TATrZUOBRi0C429R1/XfV/VTtpTORuBzwo2zllgRYtm+XdxJIbUAroYs40VtchJIuAs=
-X-Gm-Gg: AYBFou0hfvf6nIAtfjzIztBlodcSiUTdUR1bMS1BAhWOLmaKoO7jvYfps79wds9K3au
-	cOZZ7AQM/SzQ8ECHJQSPRZxhSsgysWVf0jpDx6v4fhe8JbIQoJVI8adecGCt0hjylCEdULjCXfB
-	bl+LQVdKyNd9FKrwmVJyiypZkyNCKSAwssMJAQ628olBebXR7CBa+XCJtue+eQ8oPdYltm4LEZC
-	zoL7czl0vPipFd0ppoOV7rklMO635gjNDESLGVL6U8UxmcDVZfktBeMUqjsu70fZscsI15LZK/H
-	vkEPXpwKINRGH6NJNrijZ8ahuDg6FTIJePnrUS/sIWh32wtlqQBQa+J4AKpGV+L89bfyeiq78ry
-	DcjGOS8H49nmEvIi1EiCRRiDi7OdRv1ZPP6t2p8KJ/ehh60GKzRD8w7zyzJBdiMv2Wj3PBjNE1I
-	KGQrc7XB0TEtm2CsC5i0tfrQ1ypAwGhBaZJyfDf7tMvFUHMbeCBW01ajVohr+t1mU6TzVcDiNWv
-	A==
-X-Received: by 2002:a05:6808:c1a9:b0:4f1:a873:6efc with SMTP id 5614622812f47-50c5759799amr4390489b6e.64.1791653081797;
-        Sat, 10 Oct 2026 10:24:41 -0700 (PDT)
-Received: from [127.0.0.1] ([158.23.147.99])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-50c1c0248fbsm5784182b6e.15.2026.10.10.10.24.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Oct 2026 10:24:40 -0700 (PDT)
-Message-Id: <pull.2252.git.1791653078449.gitgitgadget@gmail.com>
-From: "Marc Becker via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 10 Oct 2026 17:24:38 +0000
-Subject: [PATCH] fast-import: fix lookup for new commits
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=5Y9Ve3yvtmX4w6ct/Lrt3hnrurHp0EadPBCRtQXrhgA=;
+        b=IsO/Yyjqe5WDDcA3uEHRGtiBuL9VfRuSkdQM86lnVY+FAqpUOjfgo+PIsgHLSNyPXo
+         eq5gJvmB93zcVk8PxW5PzcVTPbbQ1t2nj5UZpiPOsHJ1U6pJ7UOgSQ47Qe2G1ZSrGIxe
+         9vQCV6DTW+EXcvWRQ0kr0BvUYLBCUjz4ybsfQW6r5WfoFzt9E4dfcohwxtcvSqhHg7GK
+         wl5ku40g1Zns9zlRFK1QnRnRTF69lSaGrKY1eYU4nwBDEoqKAaUDEAsIaT2QZNlI7CIb
+         JIOlRghhOyybvggo/y5/LE7pWd+zWcDEDiA1jD/e3EPVA+UGmCNC6K5DRa9ZTpy3sIq1
+         63Ew==
+X-Gm-Message-State: AFq9FYKErkLr/uGHxeS3JJKPwaXQAVcYkzwKp48RuqCzJ1RmeHMzHiLV
+	+K8cVoNcnVoQwyMBIE7sI3aAWnUNqp+1smygED+ad03jnZ4V6SFy6XSu1vHRefhyILW64b0oeWV
+	31Bo5+EVQ5sUqKAoDSdLIs6qwXrPlZOvitA==
+X-Gm-Gg: AYBFou3gApXsNY0Am6GmuM+/zzQzzUpBq2hx9+xcF3R90mh8Y9DGjLcjKcNPL+u3jif
+	LnykTzAV5EokuYAdWb/Np7phZzn5FR6bU9IsHsPrINRJkr7P/4S8vXqU7tUZKZ3lrLLPVis14Bp
+	OdnHvtYT42i7okb0LOsNwCq4SuKxCm/SeC0GcyVVqpfsjHHuFQndNSNaESPOr9Hccif7MVKlk9y
+	xXOibPrtq4gTgHx0q8aEb6fwQfqrlZBm/JE0mvdfJZV/f8tAW/860r2dVlpwCu/WVZO/Ks0EaB4
+	XqYBBmTdi6WbbIvjmnpsLcYkTwqUkU6k8iXg6eztVpOIeilAthqhxVcAxSFV+nH6i7U5dhEyrEZ
+	4IVpvxx1EJFPJeuN3WTIajka4xEEaHUUgzTBMYwqmBsBfFHU=
+X-Received: by 2002:a05:620a:2995:b0:93e:acdd:b566 with SMTP id
+ af79cd13be357-93ebd10bc2emr980063385a.2.1791655066348; Sat, 10 Oct 2026
+ 10:57:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Marc Becker <becm@gmx.de>,
-    Marc Becker <becm@gmx.de>
+References: <20261008204603.1988-1-curtis.allen.smith@gmail.com>
+ <20261008204603.1988-2-curtis.allen.smith@gmail.com> <xmqqfqyfwi20.fsf@gitster.g>
+In-Reply-To: <xmqqfqyfwi20.fsf@gitster.g>
+From: Curtis Smith <curtis.allen.smith@gmail.com>
+Date: Sat, 10 Oct 2026 11:57:34 -0600
+X-Gm-Features: AclHuK-7bgp0njf3MoK9JFjSQs8jm1xnnHi7xI82KzBnupkA6VA-aWPad9yonXo
+Message-ID: <CACnh8rJznfBDS9tfG49mFqB4J05KbxRWUh_q-OaCc5zfr3pgDw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] read-cache: do not trust a size change when
+ conversion is active
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Marc Becker <becm@gmx.de>
+Junio C Hamano <gitster@pobox.com> writes:
 
-Queries for commits created during the same 'git fast-import'  session
-result in a crash:
-    < reset refs/heads/newbranch
-    < from <new-commit-oid>
-    > fatal: not a valid commit: <new-commit-oid>
+> That's overly verbose.
 
-Getting file content for commit has no issue (working implementation):
-    < ls <new-commit-oid> file-in-new-commit.txt
-    > {file content}
+Will fix.
 
-During import, new objects may not (yet) be reachable via the ODB layer.
-Try to resolve requested tag/commit via object cache first
-to avoid crash and (eventually) improve lookup speed.
+> ... Why do we need to add a new function that compares converted
+> data?
 
-Signed-off-by: Marc Becker <becm@gmx.de>
----
-    fast-import: fix lookup for new commits
+We don't.  The fix is only this:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2252%2Fbecm%2Ffix-fast-import-commit-from-existing-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2252/becm/fix-fast-import-commit-from-existing-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2252
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -9,6 +9,7 @@
+ #include "git-compat-util.h"
+ #include "config.h"
++#include "convert.h"
+ #include "date.h"
+@@ -480,7 +481,8 @@ int ie_modified(struct index_state *istate,
+-        (S_ISGITLINK(ce->ce_mode) || ce->ce_stat_data.sd_size != 0))
++        (S_ISGITLINK(ce->ce_mode) || ce->ce_stat_data.sd_size != 0) &&
++        !(S_ISREG(st->st_mode) && would_convert_to_git(istate, ce->name)))
+         return changed;
 
- builtin/fast-import.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+The existing index_fd() path then does the comparison, as it does when
+only the mtime changed.  I have built and tested the fix by itself on
+top of 6de20f6: the new t0020 tests pass with it and fail without it.
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index fbd919982c..4b93148551 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -292,6 +292,8 @@ static void fast_import_state_init(struct fast_import_state *state,
- 	state->option = option;
- }
- 
-+static struct object_entry *dereference(struct object_entry *oe, struct object_id *oid);
-+
- static void parse_argv(struct fast_import_state *state);
- static void parse_get_mark(struct fast_import_state *state, const char *p);
- static void parse_cat_blob(struct fast_import_state *state, const char *p);
-@@ -2658,12 +2660,20 @@ static void parse_from_existing(struct branch *b)
- 		oidclr(&b->branch_tree.versions[1].oid, the_repository->hash_algo);
- 	} else {
- 		unsigned long size;
--		size_t size_st = 0;
- 		char *buf;
-+		struct object_entry *e = find_object(&b->oid);
- 
--		buf = odb_read_object_peeled(the_repository->objects, &b->oid,
--					     OBJ_COMMIT, &size_st, &b->oid);
--		size = cast_size_t_to_ulong(size_st);
-+		while (e && e->type == OBJ_TAG)
-+			e = dereference(e, &b->oid);
-+
-+		if (e && e->type == OBJ_COMMIT && e->pack_id != MAX_PACK_ID) {
-+			buf = gfi_unpack_entry(e, &size);
-+		} else {
-+			size_t size_st = 0;
-+			buf = odb_read_object_peeled(the_repository->objects, &b->oid,
-+						     OBJ_COMMIT, &size_st, &b->oid);
-+			size = cast_size_t_to_ulong(size_st);
-+		}
- 		parse_from_commit(b, buf, size);
- 		free(buf);
- 	}
+The rest is an optimization that skips converting and hashing when the
+length already rules out a match.  I added it, and patch 2, expecting
+cost to be the objection.  It belongs in a separate patch.
 
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
--- 
-gitgitgadget
+Without it, status on 200 modified 1 MB files under "* text=auto"
+takes 507ms instead of 3ms, and on 10000 modified 2.6 KB files 129ms
+instead of 20ms -- the same work the mtime branch already does.
+
+After the first run, status on 10000 CRLF-rewritten 2.6 KB files
+drops from 21ms to 5ms, because the index records their new sizes.
+
+Shall I send v2 as only the fix, with a short log message, and offer
+the rest separately if wanted?
