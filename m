@@ -1,148 +1,106 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39E81A683D
-	for <git@vger.kernel.org>; Sat, 10 Oct 2026 01:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791596737; cv=none; b=EQsLWX2SS1wLFzC5pwtI/9ioPcCxHa9s4pFDRypd3riPyVRZllL4DeDse+mtFc3+Emttkzu7Z/maoJVwFD27uZIP42T6FPGiekFytVHzSFyU06yIlBEqn6+I7SdEv3cGlzQoYrYTufp6DMtNbfwew/WhnaOq/0rNualv1V0VWoc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791596737; c=relaxed/simple;
-	bh=VhUiYbFwuZshPcFTJ5ScnAhru/aXt8NKtZldlJ64Ekw=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=YyRBiT8WJyCWO+4U7RKYKhDJzFI/du7H9w3zK081LxDGiiSBWrwOWgw8gINdX2StuXhuz4YhSK6GmzwoHYRBphwAqNgmOmUjKjLrLjzi/MHbmtcY3kDkFgLFUIxdyBoDRW17HRRuHxF/olUzXA1BYuBccePTQ3D995X0WBNqjm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WIz562KZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vxAJc8qN; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WIz562KZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vxAJc8qN"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E92067A00B7
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 21:45:34 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Fri, 09 Oct 2026 21:45:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791596734; x=1791683134; bh=K74kigvhiK
-	ZWhRhPlDKKLWJHc5MiGDUgdag7M1h51Io=; b=WIz562KZBwAjWqnIeKY/Wk6y40
-	hkcB3Ig3J5+Ctvmf9e6h+id5WoBUPisYBQr6PtT7ceuEHcKVU0h8IDtGQVx4HZZ7
-	2/GfFGnlSYWETOsYDm2lXC7tVIy/9Ua8cwCiNJgLcyLD7hHoW0fqBOtvBhCIB3wo
-	dtVA/WCmjzqmMZ8GG/mS/RWvRP1pR7BDz2HCegCU0hkeQ5tbkI1irDTK7R9aARBn
-	V+Tg6QM1JYTqr1qA0obX4Snq+HE4ZllWIihqsHtzzZrYup8ERbE3uzxL0cRRGiiC
-	2Hj9PEebkDsX2SxZWdwFQE70MJ5CmoYyB0CkVIie9oakBdLxVYHfVVFC/SQg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791596734; x=1791683134; bh=K74kigvhiKZWhRhPlDKKLWJHc5MiGDUgdag
-	7M1h51Io=; b=vxAJc8qN2ofTFW+2UcToZeA7qpAfnbuG+iyDGwCvD9YfxpMoGqj
-	Lwi6TbY0Ud6nBgDKFkrCl71ZJZVzLtohKwARS68ZNJUYLScHHwCLXK23V1TCaIRk
-	o1Ob1UMMSCP/MlHHVhOZ3P6GTUKRXp2iZ0DpmV9wRhX7/wgpnUrpD82t7BkUtzTG
-	XcLClWCxHH/3J6hdoy57u94TJiWNeNs8zhnfeha8rdXOnfb7MyInxhXmJ2m8aADZ
-	Zuu6ncRdGxJ5wMOwOjB8On5WnS/033QXwXSUy7KFw32y3M+1cD70HGldIuJtSqh+
-	xlCQVFWYBNrTjuh9W9YceSGFWaoZIDsfxBQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791596734; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:dc9qOZiIx/R/qWDuURPhr5Np0qBkLfsThtcbCgMP8V1kS2Y
-	APvCtZUxAaMMAYlMF8jEUxnaynsqgDMYIzwHy9qCAtvDJh+wFidavmFXDGIvJQ4B
-	m2qC50u+FPU4IrHXDzLcs5mXb+tUkEzoTf+JPG5hymJfrqYOohyWyPu/kK6s8YEp
-	PgvY87bFvRwXYYkA7DErqQW2Qm7r6CC7iAVs9lLjMmBWwSz20Y3wegE30tAHU7ZC
-	vOdMlqMv/3De0eWQe51N78jwMf2XuyaAgoFfD6SYzFicHtSoWo8bMTmSDBuf+Fl6
-	26hhBqU8WooYHbNGWA2Xn/GsHqR/D1kVAOLAyLg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:eopjW6/BrQbVzxNc/gIM+MnPtizKyPPJ0I8tBCSEA9s=:VhUiYbFwuZshPcFTJ5ScnAhru/aXt8NKtZldlJ64Ekw=;
-X-ME-Sender: <xms:vpjJaoNXaOTX0XYbc6mZCItyeRTEJiQev6kSNlbao66GUoNWkjKukw>
-    <xme:vpjJahP5nkTDDDwGXAWPotaJcjMFKcTGdJlfDhXLaOQDeVCAkmC-T7Z-6L9n4WRpw
-    80Ddy_-HaG52rgNDceH1cl28FgWZIV-BCE9HUOjvK9fRn70MM7_WMk>
-X-ME-Received: <xmr:vpjJahj7Pg7xAvHgJAtRYtBUgVmzcsXgmzR_d0iqgMtQbzqU0klAjlOlWS8>
-X-ME-Proxy-Cause: dmFkZTF5dTe3glZ4qmwcztV5XhpUPEpDE+ROxwVa4xV3uO2VX4XI6WK7ewc/T+Uhn+pTdn
-    mXeum2L0NSYSHSs3GACUoJy+jm5XMJwCUrvpExVLkG73ifqHH4Q+bxJiAuRv2Wq8FmGfTc
-    6dmawajr9Qm7GHI1RbGtYCQZtvPV+fUlXR4655IYMrfunNE8EdHIJ7huFoUM29XEAOzQE4
-    rE3ISDpb5kxyYT8IKRFSjvc5B6i9Eu2wU9ID85sRpVqVM8V7ME/8aXq8jfRiXuP0OAi0hI
-    fp+P74jIkoIUTlqtXM4ceNzl7ybLdPR7v9WoXP7x5QtCFi0zFmXvKVr8KZM/CabImTPMe0
-    GgR8tNHAqumGnRImJ/dB3fpghXz6huMoTWX1fqj/hz9SlUPkb2m7xKUPKAi2R6i06Uvx3Y
-    XrW1BaM8cFbewZIIj4hZ4QqgKDqye7eiNyEtfNzzi/aPc3YYcAI2ZDP9iNGHlJlRlcSsf1
-    erU5+3/PDgD+TRnCiE/oElW46GQXEazwqFDA7odDKgFj5lrCGX93eBKU5i0kqmlO/XnceM
-    1RB/CkdE56RFeNM/ueBZVyozlWneqvWp7qogU7FwaUg83/GbN40da8gA0b+LtKUmK9Ssoi
-    Gznz80f9cq/cuN2apmSL7Yc1LDCyIbAlpCqVEHApdjdhTkOlVaoK43g9csag
-X-ME-Proxy: <xmx:vpjJamvnN3_KKuv5eXe9yrS5Kr5ldMI3goMUa2p9eOVhG_297tIXSQ>
-    <xmx:vpjJavR-EM28PRn45zWR-mAfpE9ojLUJUtECWoUH3b32gGCYZdW0oQ>
-    <xmx:vpjJaq2lUhUodmkznb3UT89xdXpfKNogBrfQxyW8Z8KWfEdUb0IPRw>
-    <xmx:vpjJaktUYIqhWDtYt7EwFOhaxHPaGMeZRT9ccqkHuOYi3M9x4NTgIQ>
-    <xmx:vpjJagTTerAAhNG7LZHeW9y1e2fXPDtBZcgaRK4YXVrkWsSo7S8prQ7K>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Oct 2026 21:45:33 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "Patrick
- Steinhardt" <ps@pks.im>,  "Jeff King" <peff@peff.net>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>
-Subject: Re: [PATCH v2 1/6] doc: add new gitmergeconflicts man page
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
-	<pull.2237.v2.git.1791547213.gitgitgadget@gmail.com>
-	<ab0344f947c252b1b7c8bb386586b8641223ba38.1791547213.git.gitgitgadget@gmail.com>
-	<xmqqik3arc2d.fsf@gitster.g>
-	<b40960d8-3033-4458-973a-67fc41e02b77@app.fastmail.com>
-Date: Fri, 09 Oct 2026 18:45:29 -0700
-In-Reply-To: <b40960d8-3033-4458-973a-67fc41e02b77@app.fastmail.com> (Julia
-	Evans's message of "Fri, 09 Oct 2026 14:53:58 -0400")
-Message-ID: <87tsmucoqu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8184D3C1985
+	for <git@vger.kernel.org>; Sat, 10 Oct 2026 06:12:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791612739; cv=pass; b=Wx0zz3eHTOuxPsKKkYGvibdy0Yaa0MBfXSzM8MGZ9sn3q7n56Eh9iEnYwHiaL40LksEVpABcxMobQ2mEZO3PENNSlJ2PhOjsozpsXmLHuGqZbRJ49AoTXIDlwQmKW7fbC0oV7Z4L/hQp9WfC89jQsNHvV/VcjwkNUlgFKG9XNoM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791612739; c=relaxed/simple;
+	bh=ohM+FQkzYG2l3+E4rw3V6kcrOq6MErSlcouXVhFP6FM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lrHPEvqr4Rvgq9bQKKAt1im2vx89/4495TiaMVVqBgMlTLpZH83EmN9POVRQxJe8x/Lgixq1EO2a2WbEq2dyKJLCuDY+PKdw7sWNGZP3LNmK2YRfvVdqdLRpuWD/dpE3rpfCSFxk9sXN5aUKgAGLL6X/CNAvQ71vJIOaEuPkPHw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-355724d032fso36234eec.3
+        for <git@vger.kernel.org>; Fri, 09 Oct 2026 23:12:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791612736; cv=none;
+        d=google.com; s=arc-20260327;
+        b=eCFoGjv+NzmxzNxf1iUamuEB6dwweWjH7YFdsX7fPhJk15NvZQSIyi+SHcEftm0F/C
+         IjprJmnYVeVlhC/BFqmN1+m0e6deZL9PUxBTtUd4vfPEamTGfYhzbarltaQLtE7biTRd
+         oF6wvj9ihst7s+ulMaodCcbD0EhfvsA/guYRvpYxr214vdvMz5bHK6nHSThAsXJNlTVy
+         xgdG9pGCSbmbhsy/xWtwySPULQviP+o5T2TcDiVqWajHn914dNRA0iekCVwT6A3vNTzo
+         wqbiH3cx5SXu80LkkEUnV1SqFL02z4mPjeH+8321d6ZbKC2NXVJ3kmpcMXNs1wYcxIgn
+         ZBBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=QQRnZ+iYpAA0/uQk4cDrAkl0QsPCEReOQcF3h4IancU=;
+        fh=No3IyoikrV+Z8ojXdCX7LzC69n44giKeX5JPRHOzuLI=;
+        b=hucR8OKzcxWHU2n5NIFQUVjN14QtTGsB5+xfusPAmh7EYX9aI0k7rp35hgvS8RF/lt
+         gnQ2YYMvH+qb35vuurfS/tWZC+gjMRjoULPXZSqLg6DkIv7G9G/NAGWz01aFVNDrEeQ3
+         Wm7hcoeYmADwJxVbqxsMaDQJabTUCXMTr5whGk+YiNk7DiSHPLslHfXvpqkfL/hN+Ui1
+         9UYMjCUJFXRjETorM+D7fFT1Nu+ewwUEkhr5zGS2R3Ue3uniF0TsxonTp6qY83djTSwH
+         AuzNdIE8uHY+7EKbWsh25GdaGjYWuSqS/AMAZVuZrYHJExwpaLG2ARrS3iLIoUDHD59k
+         WlhA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791612736; x=1792217536;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=QQRnZ+iYpAA0/uQk4cDrAkl0QsPCEReOQcF3h4IancU=;
+        b=axN+2SSlThQE7kAm1bdRrOr7PXe2bX2gjEaKEJ6BZqxO4FAqIkj5J3oIjMb+ekWorL
+         2xFclL1DGL56YWNF6DKny4gW4nhftRVJTuuzSkuqz3OM6Rk/ZBbl7b/uZ9lhgcwfvwp1
+         DUoxBiO2L1b3fHkAuJwAuJ+jn8RgvIdJVWig08W3m/7rBAy2lVohk+WHS6xg5r0OiAdt
+         enpbdyqCUpUoVjzG/WnXjLBi7ylP1rpQCxziY//eIeyxfMpC3JthSHvr6BJLL361gFRK
+         r0HPzgYQnzUwtg5jCuzAiE2dobwybl374eJrkZOcNeCOvdvQ7Rt1r8V7WqfgW0O5ZDuI
+         X+GA==
+X-Forwarded-Encrypted: i=1; AKwUvBwa4I4IqJ0Klp9FMNRVjm2n/sezbHC7VjCvWvil7rZoCsQNFgNOTDUDgfMyaFGzew67qLI=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKUU05fu91iHBm0DV5az/zAhQj5b25NGOR0qgaa2aTc30/Hs7bQ
+	4otk/iGW7uux6jgInntPboSs4JC7kEdXCfoHmvvY6hPA9P+2jvTiBTRCntXfbeQm4VuRHSIZQCZ
+	cBF8tp2wVBJJkeKug1K8YAn7SqMe68Y0=
+X-Gm-Gg: AYBFou2GRh6bg+w+HEsG02/ai7sK9n1/4d10M9fpf9QtjoqARFyUldfNg5c+qCtvMm+
+	hKsqTV2Wx4+JJAfjpzuKEL1ihykpw58VlD6OqfdI+W7YGVDFVxBSsEA/81nejZ7kOCd+VbkGa3U
+	n6TMCKGO20JZSbljAbTyabPf5pvrFC5hXLrSW3AqpbC8CHVM3Ps13zA7ByyX/cICkBjjl4X+kPT
+	IA5i0Px7Ilbg8Qb19QsSixq6asJ9hVHX/xDMmIxcqrBj6zxqOjTkXsFNkTcuqCJX8kHwvB22hLz
+	P3udGKefY0KPl58+NdVjuCqvyM6tQUY0kO3Bw41KjVYM+zX3YHK1xQPOMxyMNBYOfm6odlwjF1J
+	1DlqYd5H/JmcAYQ==
+X-Received: by 2002:a05:7300:c8c5:b0:351:7e15:9c59 with SMTP id
+ 5a478bee46e88-3537dc89f58mr8103973eec.0.1791612736451; Fri, 09 Oct 2026
+ 23:12:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2224.git.1789169384240.gitgitgadget@gmail.com>
+ <pull.2224.v2.git.1791493644.gitgitgadget@gmail.com> <35e303d65bc378e733b1e9e8d6908a829352e857.1791493644.git.gitgitgadget@gmail.com>
+ <xmqqbj92ochm.fsf@gitster.g>
+In-Reply-To: <xmqqbj92ochm.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sat, 10 Oct 2026 02:12:05 -0400
+X-Gm-Features: AclHuK9zRiv8p6p9uRXqjigK22C9roL9c82ilzXGimUtSdCc3EEunkv_fiObdbY
+Message-ID: <CAPig+cTZsbYq3=9AnN+00EiWZPNhQiF2iG7gFdmEQqjFcGfM+Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] blame: ignore revs in HEAD:.git-blame-ignore-revs
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ravi Mistry via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Abhijeetsingh Meena <abhijeet040403@gmail.com>, Kristoffer Haugsbakk <code@khaugsbakk.name>, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>, Ravi Mistry <rmistry@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Julia Evans" <julia@jvns.ca> writes:
-
-Comments on a few more points.
-
->> Is it deliberate to omit 'am -3' and 'checkout -m', perhaps in order
->> to limit ourselves to most common ways to help new people by keeping
->> the description to the absolute minimum?
+On Fri, Oct 9, 2026 at 4:17=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+> "Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> > Based-on-patch-by: Abhijeetsingh Meena <abhijeet040403@gmail.com>
+> > Helped-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> > Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> > Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 >
-> It's deliberate, we talked about that a bit in the discussion of the v1.
-> Can add a note in the commit message.
-
-Being a part of _the_ technical manual on Git, I would like to see
-us aim for completeness, and where we don't leave a note that the
-description is not complete.  In this case,  between
-
-    Merge conflicts can happen during a `git merge`, `git rebase`, `git
-    cherry-pick`, `git pull`, `git am -3`, `git checkout -m`, `git
-    stash pop`, or `git revert`.
-
-that aims for completeness and
-
-    Merge conflicts can happen during a `git merge`, `git rebase`, `git
-    cherry-pick`, `git pull`, or `git revert`, and other operations.
-
-that admits the list is not complete, I have slight preference to
-the first one.
-
->> By the way, is it just me who finds those "Here's", "there's"
->> contractions disturbing in an official manual?  I've seen many of
->> them while reviewing this to be annoyed enough and had to blurt it
->> out X-<.
+> These Helped-by: drew my attention as none of these folks commented
+> on v1 of this series.  I do see they have helped the original series
+> <pull.1809.v2.git.1728707867.gitgitgadget@gmail.com>, but it is not
+> clear how much their inputs have survivied to this version.
 >
-> I find "here is" and "there is" to be distracting and overly formal,
-> different people are different I guess :)
+> They are all CC'ed so they can give their Acked-by: or Reviewed-by:
+> on this round if they want.
 
-But I wouldn't want you to be "different" here.  This is not your
-diary or personal note.  This being a part of the technical manual,
-I would prefer to see the same formalness applied everywhere.
+For what it's worth, having skimmed the old thread, if anything did
+survive from my reviews/recommendations, it would have been only
+extremely minor style fixups.
