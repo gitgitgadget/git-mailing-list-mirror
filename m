@@ -1,116 +1,268 @@
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BF72DECBF
-	for <git@vger.kernel.org>; Sat, 10 Oct 2026 09:09:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791623392; cv=pass; b=U9eQzDgZwELq1Q1EYZODgWSkSpHRY6azs4HYCSEnDT9hZcfHzGsk9nadZOoaV8+Gs/NbMMhCXvh7zdF25u4pV+ir0dWXI9QEJVJgApBfouk1WGJa9Tlwxlc0+xNHbCE6PwQlyjnH6sgNUjt2dF3jS/6b71sV/5if8k54D0DkC7Q=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791623392; c=relaxed/simple;
-	bh=Gsk5R+LhO0VRDdb4i8sgDEvtDqQKCoDLidQ4yYSDCvY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ISFSbayCUiPzTRI7SZ29ZXkkPF9iwvTHBwTbzy8Vtf1HuSrueSBJHcAwf4RjRWIOdzuwkhcYRXKiMnO0Pg/V822yjkytanSgDtHgg59PQyhaPwXp44SreZbND/ygRGro4rqPTiaMZKchems99KwF/We9LguR7T24CKmU9yEWFt4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com; spf=pass smtp.mailfrom=thomasbachem.com; dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b=Ro4r830Z; arc=pass smtp.client-ip=74.125.224.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thomasbachem.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED004439F62
+	for <git@vger.kernel.org>; Sat, 10 Oct 2026 10:13:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791627211; cv=none; b=rXcxi2bAIu0mWHHeWPfmD6WZp31cyUuwc1iHo3CXAHan7QTuX5UmWwa4GMx25c9+P2fqIfNzBKCpfVembtfAuwCsuEuVL2GLbkUWvy59vGG4++tM9E9xb/1TDZWdrQzqq8EX4xEtngguOmPG0sH4flxzQlDmEqNeCcpR5dL0rZQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791627211; c=relaxed/simple;
+	bh=O9Myz+ZimIM3RJnIXtetDP426YwFoHvB6ujFu2NOauo=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=gwH0fYx9WZfNjjaoctVWAnxJ/3iPDkM9L28Z4igDbucso82O958uumvl5mQ0oA2g4MVbsgk+Aw6TE/eITUALFZ2+pftQ3wvEYRKlRrzyyxnGwjFyWtazYySeseCSAhpB9ilJyGnb/vNatc4b/GQbtxQglDPY39Ch5mRuiQK5BhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b1MJbJHk; arc=none smtp.client-ip=209.85.161.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b="Ro4r830Z"
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-676858d42f8so274468d50.2
-        for <git@vger.kernel.org>; Sat, 10 Oct 2026 02:09:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791623389; cv=none;
-        d=google.com; s=arc-20260327;
-        b=FjuC9fCz0n5SHTTH1smMPRm91Ez2Ddb/8jQASbeBSS82mg+sh3aWOxBtZEWU2QY9AP
-         GbogUZyB+Z6L97T9qeiKDMLFRGhokxhCfpCt8MVYpv8JB4wTQEs4qUfaJWJ1+jACEkRF
-         E4IPex8fIIi1J0grn7wdCY/wg4SmrOyAqCYXFgY3gOkRdZGVNK7XDiX8FgexpDmYuK3q
-         eA7569g29IR27sh9oiHVEnX2mnLXRAYw4rg52ApDoL1ZaSaTR/waWgibdwcuan+f4FKQ
-         f/cdVY4kmolmnPZ/xfErHP9srrmo/grF14ASTZqci4iNiXl3gHDvqIEM+VT8sy2se2l7
-         EGoA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=Gsk5R+LhO0VRDdb4i8sgDEvtDqQKCoDLidQ4yYSDCvY=;
-        fh=sxwabz8vzSBT336h1RK3zjoeNMy/3EOEUTwiDtwBgPw=;
-        b=G4qAPBeSmW46oFQMXZ7+SD1T0OZjou73uGcge251gKpSiUsce7p6/ay4+Xotf5A/Di
-         aOgtFdAPVpIZqXVuCQ6xYXgC83qtme1+CCKtQlLl9gYRaAS07VQQOZCYaEPQ3FE9BejC
-         Y9Ati/McsywGn+C3uJN92TVd4AmSSI8teiGaf6SSNNGJMHE5QM3ro8QUboVztPEczOxb
-         D01SQaf1CYnX2o/K2RWIgVAFmtg8jM+xX1ZpEk+CxrzIyIWhf8o9tvzwEw1rU7ep/p8Z
-         J+ZE25Y4hxxckhgqx4/GBq3WMvyfz6BBuFAoJvnnmrb8mLLpU9tEXEGL6VK7P4A4Y9A0
-         zA9w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b1MJbJHk"
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-6d7a9e2eb24so292954eaf.1
+        for <git@vger.kernel.org>; Sat, 10 Oct 2026 03:13:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=thomasbachem.com; s=google; t=1791623389; x=1792228189; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Gsk5R+LhO0VRDdb4i8sgDEvtDqQKCoDLidQ4yYSDCvY=;
-        b=Ro4r830ZbQ1p7fpXCpjmLAN4dCINnPXst/ZyEl4rOns1qFnrndw49ftx0MGEe5XHAQ
-         C9uyaudnn7OsYJ99bKN9U46a7x/a+naGLdlGdFH7FGYyQ3eBG6yNswvlhasM97EL1q1L
-         /FlECmBoXaiK1YjpuOaYROTOJYj45PkDkRAGBXKNCcPXrO/icjbMCiYbXljFru8jcU9P
-         PVs4NdDPzvxJlDn/1WX3N7YXHpkYm/rlE2yBmvUdQV8CgxzYeGQ7zwNWMc/afDYQ4Ajx
-         YR6xNCZyVujXb5dktM0g90GUBogzSpEyzuPPlPTY4iRYYp8HczafUJZkQjx5UQM6Y3n8
-         stxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791623389; x=1792228189;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20251104; t=1791627207; x=1792232007; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Gsk5R+LhO0VRDdb4i8sgDEvtDqQKCoDLidQ4yYSDCvY=;
-        b=IUlb8a5P5jym6qVIcXEhqLz5rx0/kgZ9HSbnLxk9gzvWKhiSmy36pLUw2QNbSaaex9
-         u5VFGL/MAQr7LnNqcWPsXvc8K/5rTi/Pr/ZErKeaSnwrQ5Gza5lgQvy4V6YrHE3LWhgj
-         9jh5Pd0khne3QZeT+at7479OO30CKSHFP6iOnMoptxpcaMXnblG60IF8c++/8qrsKvdh
-         VL2/LQafTG698KLAVKF0uzEq0IX6wdrXfhPMFYVmTAE9wQoxbADcOL3QYADnPpE0fxvC
-         1a6ZbGg8LDf2DDECtR8Vw8tv9bmRQg1NLkF23tNNlBPY9CjPQcFuPL4kTpeZhPWtQaE+
-         AChg==
-X-Forwarded-Encrypted: i=1; AKwUvBybPF8UOQYsSSaCw/PubvirvejDymr73PeRZ+PdKsLhdcr2hiPSbk5kufK+VG41xoZEPtM=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKcbXLjXvPH/3fuhrt3zyBiqTe4r8wIOlMgbquhdkKwHm7ac68B
-	13BDdib2+bOzGXfOfFtb4ZWp8dXlKK89adUoiort8mc1+IMKpbZhY7j6eIaUpCvrhn2Ao7PIjOH
-	07BaKQD13hmG5WvaMU/VM/griHqLzb7VlvuswibUGSQ==
-X-Gm-Gg: AYBFou3UZgDUJ4RA5ZoPgME0vTHgCeBtM9BvgLDeu6oHju6rEk85/MO+kqHQBxIc/AZ
-	OjB3T3SX0fzb7aPLwmW2SjyF/H9+W81KXms4xxa8Semf93k8EV3GjX7zw9xcCHZwK5/kuXmQckT
-	SLmKS9q1rI6ZnMOZtUmgKE4SQZvkBwI5UaZMm6tYc3EYxoCe2Ae9fqp61xU+TiTbGKY3+/Zlfjo
-	NfGhSeoqA+2qgcP429+kiVDL7K0f68uTrFZTZ6VG4gPBrdEvZHByA1dkgQPx9/VScoqvJ26MZup
-	36TnXuZtkwF+YnayrRROxlWdjSpe6cpBC+zniAgv7VHUVPWzALhsjE8KRaCUbMQJAKiRxQQ1Iah
-	1kIzKWe07LG1gO8pGbvfPEfGrwI4P2v7DJaJnWqMcFgWs/w==
-X-Received: by 2002:a05:690e:d50:b0:677:b617:21dc with SMTP id
- 956f58d0204a3-6793602f5d9mr1070051d50.34.1791623389590; Sat, 10 Oct 2026
- 02:09:49 -0700 (PDT)
+        bh=t3bRMsOu8GBCqYuv/84JosOKJBtL/2Dj3N1j4GMPWhk=;
+        b=b1MJbJHk4ii20CbGCQtrrkedu/zUXdNSiEc7EoaBsd60uZ8zqXDPUdJwFAQscNxSio
+         KVuuRRoDePYfwz2l7QteHM33Z6AErouyh8fS3HU1htRp4ePsV+obtx4J0OLud1KLShEi
+         mxn58BdlsilFJXJfjAHlldBGaxb7p+vKyPqj5zl9jMLAbToY9+/MpOnrhUoortxhvW+z
+         9N5kVRmi+LXvPVbGCIYtIk3MsvJb5frmEbX4N4gB+1Gv2/H9PnHNUPWupGDw1cJDleKK
+         6VNJaEDLm0H/GCk+ti87WJcs9M6uMCaOAwfrg0ezShSm0wV0nUF38hPRqB4rwTYsnyHj
+         6uvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791627207; x=1792232007;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=t3bRMsOu8GBCqYuv/84JosOKJBtL/2Dj3N1j4GMPWhk=;
+        b=U00n0Dtt9XWAdG2xJ7TMC0+1HWUk+JFsjs18V8Sp6N1Cc0AlcUUaiX4re48ueMDQx1
+         czKUFrflJHQdTrTs/n9FIokCrcv0P8Gvu06N08xkuzdGzfU9Eea6ICH53jdMxVKPGk9s
+         uI09b3Ch//UQvPTeCVgQtanS+J2jveWNI7UjMoriq0R/hDzZopezB3xyQokFBtlsyCiM
+         dMW1xIS8s9uZYJQDm+rba5rXgXqEMVMb5GLn2tZRQwgJr7iA5AehDho3I7UuFV4wpwR2
+         ehAYX3gbRaL3yNuPFMgIT5pEulmY4uohdICq7cTEGCtf3CHZyYgQy7PyomWb8DiOu5YW
+         YAFw==
+X-Gm-Message-State: AFq9FYJiF7kgUs66rb/0Q9uEXjSTTTPKWKa7xhvE1E+lxHVrI/3j8wnu
+	/9Fj0d3JXcs16Pbli9kpsIO1uNZQyh/MSyHgMUNMzE5k36DMg6G42inRE9KUnNDz
+X-Gm-Gg: AYBFou2VWmzqgbEevPxmeIwv4w5FO6mkZuHMX05KlO+wLVj1qUo65c2Uzx6MSoay2Qt
+	/ygL1arADp4Imi/57al3+xsWlqfvniFcmWea1z5gRuN/k9XYJB8AFsxlpUOmFfVhEPN3f9TQu2s
+	F/WLguB3pWfvGZxaH7VVy59TwnBkR7zUXRdelqGuMJZJbxsnuu7fYrxXV9jJnegZMPddGNzRSKg
+	sdKs0TI4aRktMReWNr6vhfPu7CSIXalbdYaFcrmy0yjuBpDVRZnZd7BoKvHhy7bSv6beDziOLz/
+	eozbl07cAWIJKXsgESgyChKhSojJYBp5fGEkmylSQSYY5wRez8tPydMT5Wl42fVsRC9HIRFw63y
+	nEQ2fhGTXikyyHfvMMii/GrziwLXLKgKCUBVy+hK7zUrrc/GIx11Qrodm91j+Cv2lWOqR9K1Obl
+	FFh/YYG/bDWHezXOj2NWzPDjA7JGWAKFMj0ldJsR5I9I4oksV09ySS6oWEQLsc8UDtR6tXcMdOE
+	DkjRMCBaBbORw==
+X-Received: by 2002:a05:6820:1795:b0:6d8:4e2e:9973 with SMTP id 006d021491bc7-6ef0f99b8b0mr3040972eaf.63.1791627207456;
+        Sat, 10 Oct 2026 03:13:27 -0700 (PDT)
+Received: from [127.0.0.1] ([20.118.239.199])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6eefc38911esm4459475eaf.1.2026.10.10.03.13.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Oct 2026 03:13:25 -0700 (PDT)
+Message-Id: <pull.2214.v7.git.1791627204.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
+References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
+From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 10 Oct 2026 10:13:22 +0000
+Subject: [PATCH v7 0/2] rerere: wait for MERGE_RR.lock, but not in auto maintenance
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
- <pull.2214.v6.git.1790939492.gitgitgadget@gmail.com> <cd018289bbb330753e41a1e5b6156b6e85c12dbe.1790939492.git.gitgitgadget@gmail.com>
- <asiuemA6ouAW9NXy@pks.im>
-In-Reply-To: <asiuemA6ouAW9NXy@pks.im>
-From: Thomas Bachem <mail@thomasbachem.com>
-Date: Sat, 10 Oct 2026 11:09:38 +0200
-X-Gm-Features: AclHuK8t50cyV9Nwuyw4Vi5LD9Vjz3-XHTgR3B9UQMp8MTO7oHuQiPJL8pxmc1Q
-Message-ID: <CAA0xjtpWELRcptFbY4D8f4s1erhHiZeh4xfEC--nYw9fVu_QLw@mail.gmail.com>
-Subject: Re: [PATCH v6 3/3] rerere: go on at a conflict when the lock stays busy
-To: ps@pks.im
-Cc: gitgitgadget@gmail.com, git@vger.kernel.org, phillip.wood@dunelm.org.uk, 
-	gitster@pobox.com, phillip.wood123@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Phillip Wood <phillip.wood@dunelm.org.uk>,
+    Junio C Hamano <gitster@pobox.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Thomas Bachem <mail@thomasbachem.com>
 
-Hi Patrick,
+A rebase dies at a conflict when a background "git rerere gc" holds
+MERGE_RR.lock at that moment. With the first patch, rerere waits for the
+lock instead of dying at once. With the second, the "git rerere gc" started
+by auto maintenance does nothing while the lock is held.
 
-On 09/10/2026 11:06, Patrick Steinhardt wrote:
-> Is this a commit that we maybe want to defer to a later point in time?
-> I'm not yet convinced that it's really necessary with the other changes
-> that you've done, and it feels fishy to me to just skip some operations.
-> So I'd propose that we drop the commit for now, but keep the option open
-> to reintroduce it at a later point in time in case where we have users
-> actually hit the issue in the wild.
+For v7 I took Patrick's suggestions on patches 2 and 3. Changes since v6:
 
-Agreed, I'll drop it in v7. With the wait, a rebase only dies at a
-conflict when another process holds the lock for longer than
-rerere.lockTimeout. And since tb/rerere-lock-grace, a rebase's own
-commits no longer start auto maintenance. If users do hit it, I'll
-bring the patch back.
+ * Patch 3, which let a command that stops at a conflict go on without
+   rerere, is gone. It can come back if users still run into the lock
+   (Patrick).
 
-Thanks,
-Thomas
+ * Patch 2's log message is Patrick's, plus a last paragraph on why the
+   option is hidden.
+
+ * rerere_gc() takes its own flags, enum rerere_gc_flags, with
+   RERERE_GC_NOWAIT (Patrick).
+
+ * The comment in setup_rerere() no longer says who passes RERERE_NOWAIT,
+   and the one on RERERE_NOWAIT now says that setup_rerere() then returns -1
+   as if rerere were disabled (Patrick).
+
+ * "git rerere gc --skip-locked" without a held lock is a test of its own
+   (Patrick).
+
+Thomas Bachem (2):
+  rerere: wait for MERGE_RR.lock before giving up
+  rerere: add "gc --skip-locked" for auto maintenance
+
+ Documentation/config/rerere.adoc | 10 ++++
+ builtin/gc.c                     |  4 +-
+ builtin/rerere.c                 | 10 +++-
+ rerere.c                         | 38 ++++++++++++---
+ rerere.h                         | 11 ++++-
+ t/t4200-rerere.sh                | 79 ++++++++++++++++++++++++++++++++
+ t/t7900-maintenance.sh           | 25 +++++++++-
+ 7 files changed, 165 insertions(+), 12 deletions(-)
+
+
+base-commit: 34f06850c16c7f7ac822b1adc71354f11b0f2ca3
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2214%2Fthomasbachem%2Frerere-gc-lock-v7
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2214/thomasbachem/rerere-gc-lock-v7
+Pull-Request: https://github.com/gitgitgadget/git/pull/2214
+
+Range-diff vs v6:
+
+ 1:  3dc3d02f12 = 1:  3dc3d02f12 rerere: wait for MERGE_RR.lock before giving up
+ 2:  2ef141410a ! 2:  0002881196 rerere: add "gc --skip-locked" for auto maintenance
+     @@ Metadata
+       ## Commit message ##
+          rerere: add "gc --skip-locked" for auto maintenance
+      
+     -    Since the previous commit, "git rerere gc" waits for MERGE_RR.lock
+     -    like every other command that takes it, and fails only if the wait
+     -    times out. That suits a user who runs it by hand and wants to know
+     -    when nothing was pruned. But the user did not ask for the gc that auto
+     -    maintenance starts after a commit, and the next commit starts another
+     -    one.
+     +    Starting with the preceding commit, processes that want to acquire
+     +    the rerere cache's MERGE_RR.lock by default know to wait up to one
+     +    second until that lock has been released. This is a sensible default
+     +    for many commands that happen to write rerere entries, as we would
+     +    otherwise die immediately when the lock is taken by another process.
+      
+     -    So add "--skip-locked", with which "git rerere gc" quietly does
+     -    nothing while the lock is held, and pass it from
+     -    "git maintenance run --auto" and "git gc --auto". Only these two need
+     -    the option, so hide it and leave it undocumented, like the
+     -    "--skip-foreground-tasks" that "git maintenance run" passes to
+     -    "git gc". A run without it, from the command line or a maintenance
+     -    schedule, still waits for the lock and fails if the wait times out.
+     +    But for repository maintenance it's a bit more complicated, as there
+     +    are two cases that we have to care about. When the user explicitly
+     +    asks us to garbage collect rerere entries via `git rerere gc` they
+     +    probably want us to try our best to perform this operation. It's thus
+     +    sensible to wait for the lock and then die if we weren't able to
+     +    acquire it.
+      
+     +    But we also prune rerere entries as part of auto-maintenance, which is
+     +    only executed on a best-effort basis anyway. Delaying the whole
+     +    operation to acquire the lock is somewhat heavy-handed, and neither
+     +    does it make sense to die in case we haven't been able to garbage
+     +    collect rerere entries as that would impede other housekeeping tasks.
+     +    Furthermore, it's totally fine to skip the operation when the rerere
+     +    cache is locked already, as we will retry during the next run anyway.
+     +
+     +    But we do not have an easy way to tell `git rerere gc` to skip the
+     +    operation in case the cache is locked already. Add a new
+     +    "--skip-locked" flag to plug that gap and have auto-maintenance pass
+     +    that flag.
+     +
+     +    Only auto-maintenance needs that flag, so hide it, like the
+     +    "--skip-foreground-tasks" flag that `git maintenance run` passes to
+     +    `git gc`.
+     +
+     +    Helped-by: Patrick Steinhardt <ps@pks.im>
+          Assisted-by: Claude Fable 5.1
+          Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
+      
+     @@ builtin/rerere.c: int cmd_rerere(int argc,
+       	} else if (!strcmp(argv[0], "gc"))
+      -		rerere_gc(the_repository, &merge_rr);
+      +		rerere_gc(the_repository, &merge_rr,
+     -+			  skip_locked ? RERERE_NOWAIT : 0);
+     ++			  skip_locked ? RERERE_GC_NOWAIT : 0);
+       	else if (!strcmp(argv[0], "status")) {
+       		if (setup_rerere(the_repository, &merge_rr,
+       				 flags | RERERE_READONLY) < 0)
+     @@ rerere.c: int setup_rerere(struct repository *r, struct string_list *merge_rr, i
+       		/*
+       		 * Another process may hold the lock for a while, e.g.
+       		 * "git rerere gc" while it prunes rr-cache, so wait for
+     --		 * it instead of dying right away.
+     -+		 * it instead of dying right away.  The gc of an automatic
+     -+		 * maintenance run does not wait, since skipping one of
+     -+		 * its runs costs nothing.
+     + 		 * it instead of dying right away.
+       		 */
+      +		if (flags & RERERE_NOWAIT) {
+      +			lock_flags = 0;
+     @@ rerere.c: out:
+       }
+       
+      -void rerere_gc(struct repository *r, struct string_list *rr)
+     -+void rerere_gc(struct repository *r, struct string_list *rr, int flags)
+     ++void rerere_gc(struct repository *r, struct string_list *rr,
+     ++	       enum rerere_gc_flags flags)
+       {
+       	struct string_list to_remove = STRING_LIST_INIT_DUP;
+       	DIR *dir;
+     @@ rerere.c: void rerere_gc(struct repository *r, struct string_list *rr)
+       	struct strbuf buf = STRBUF_INIT;
+       
+      -	if (setup_rerere(r, rr, 0) < 0)
+     -+	if (setup_rerere(r, rr, flags) < 0)
+     ++	if (setup_rerere(r, rr,
+     ++			 (flags & RERERE_GC_NOWAIT) ? RERERE_NOWAIT : 0) < 0)
+       		return;
+       
+       	rerere_gc_cutoffs(r, &cutoff_resolve, &cutoff_noresolve);
+     @@ rerere.h: struct repository;
+       #define RERERE_AUTOUPDATE   01
+       #define RERERE_NOAUTOUPDATE 02
+       #define RERERE_READONLY     04
+     -+/* Take MERGE_RR.lock only if it is free, and return quietly otherwise */
+     ++/* If MERGE_RR.lock is taken, return -1 as if rerere were disabled */
+      +#define RERERE_NOWAIT       010
+       
+       /*
+     @@ rerere.h: const char *rerere_path(struct strbuf *buf, const struct rerere_id *,
+       int rerere_remaining(struct repository *, struct string_list *);
+       void rerere_clear(struct repository *, struct string_list *);
+      -void rerere_gc(struct repository *, struct string_list *);
+     -+void rerere_gc(struct repository *, struct string_list *, int);
+     ++
+     ++enum rerere_gc_flags {
+     ++	/* Skip the operation in case the MERGE_RR.lock is already taken. */
+     ++	RERERE_GC_NOWAIT = (1 << 0),
+     ++};
+     ++
+     ++void rerere_gc(struct repository *, struct string_list *,
+     ++	       enum rerere_gc_flags flags);
+       
+       /*
+        * Check whether garbage collection for rerere entries is needed, which is
+     @@ t/t4200-rerere.sh: test_expect_success 'old records rest in peace' '
+      +	>.git/MERGE_RR.lock &&
+      +	git rerere gc --skip-locked 2>err &&
+      +	test_must_be_empty err &&
+     -+	test_path_is_file $rr2/preimage &&
+     ++	test_path_is_file $rr2/preimage
+     ++'
+     ++
+     ++test_expect_success 'gc --skip-locked prunes while MERGE_RR is not locked' '
+     ++	mkdir -p $rr2 &&
+     ++	echo Hello >$rr2/preimage &&
+     ++	test-tool chmtime =$just_over_15_days_ago $rr2/preimage &&
+      +
+     -+	rm .git/MERGE_RR.lock &&
+      +	git rerere gc --skip-locked &&
+      +	test_path_is_missing $rr2/preimage
+      +'
+ 3:  cd018289bb < -:  ---------- rerere: go on at a conflict when the lock stays busy
+
+-- 
+gitgitgadget
