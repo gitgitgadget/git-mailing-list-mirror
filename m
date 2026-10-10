@@ -1,175 +1,158 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193A6381AF
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 23:41:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791589303; cv=none; b=Ux6BZ7CU9xKVJZadlw+kGQztELuZ7mlHIZgtPg0xlBjXfaUEIdxuQLfZoYoruOFMX7Ijf90ygzIsQ3E6KsoE7U71iPcgoMdiVsyqhh0HfzDyegKKsK4oypzuUvl4tLetnBJwQKOFAYlzciGfQotUsEwaI1GVQ8BEzjs4FcUkKU4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791589303; c=relaxed/simple;
-	bh=1dKyqa3296OCftm5MdcrSU1ckG0fRJmG/XhrhPZVFMI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KMKVi0rmoO6NdKaM83D1Zv3Bn4CsBS1BefQSnyuO8hM9YIOX2wTglXRr4EXhRdWeUQGsE9Hvln2+KEOoBOTR9IX5WDXUq91iYMQ1AUSB8sPDJsNZXGUOT62FUK5NHF7rOXUfVkP732xTP+pAqM8td9DDM9gJik7WoclQ9bPKyo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HxG4EKTQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wijlrs/G; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF7610F1
+	for <git@vger.kernel.org>; Sat, 10 Oct 2026 00:07:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.175
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791590826; cv=pass; b=FcZa5FksukTXfPdE3joM5/2dORTmbGLyDUqhm08Slm4NqqUrg69XmN7OCbJGiUupJH16/QDbeYGdur4+q5AZ9ZzdTAS0JfpfULE6ftKxL5qB/XFSQ5UO6g6kT/nVfbgBVOL47HLm9Y8uWb1YfA7mPjExx6HyIxCycyEEzBCDYbY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791590826; c=relaxed/simple;
+	bh=l7LNc8gN5VIoApmA/j3eTF31mms7d/h532FW+lxoUN8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=p6KRqZdjnDLaybCKPQjk+v6fWrKP9u4V7yFn0+2lnZmulOfRlTMKu3zPH9zJL06QoWRHOVSWmkTaztsA1tLzjN8iwVgO9sZT+SzNAnl3kqPjzCXcZYOZzfIz+S4NQZ9mYl8D/+F3rBXD5RU3qYld5GYFSN/OTfQyVHWeY8hsWB8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BBJsAa72; arc=pass smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HxG4EKTQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wijlrs/G"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 47ECD7A00B4
-	for <git@vger.kernel.org>; Fri,  9 Oct 2026 19:41:40 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 09 Oct 2026 19:41:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791589299; x=1791675699; bh=2tixwYkSYh
-	8wztvdD2ub5Ovmx9wTFRGkoUS+9KxbDbA=; b=HxG4EKTQ286dxDytzjdzMIePas
-	/Oye4OW9gulnX36qKw1BozlQJiasdcL8e/N+3MPliAwPQseN7s5vRgEtbIfKM3FR
-	9j/TImU4ehIRRCOdSgjQ9o2m/p2Kcn6Ulj+xQRqE3E7LuQrsJhJJ6GySHAuSH1Ua
-	IWCX8XgO635sGq+OJCDKDY8co5n27UR2uAJ5JRj2gO1rGO5bu1FbDE9wzVrMXrpC
-	b+jp4iDaYwAsSjjMj8Q3SwkOSSiVGHWNuguz7jeyT026rNXB8RoXay6S2M8svkwi
-	rlZJuspy4rdZ4zowabaAIHOSfcOhhGpCmW+dwfe4asoLQm7JPQOTNMWbxNHg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791589299; x=1791675699; bh=2tixwYkSYh8wztvdD2ub5Ovmx9wTFRGkoUS
-	+9KxbDbA=; b=Wijlrs/GpY66KucVEaroRnEfpUQYrk7rlrUQ3rvydcHZyk+llFk
-	vAUwxrur60lrjJ3KNZh9F6RGzJXqcV5xuDPLc1e+eZNV9qgQZLtqYNBYB2uxXgQH
-	T7LxBOT0rdWIF/GxBOYUrc02vbgVS02j7JTeC4pTPkMMXDaws9q6keyYc5C+AWR8
-	RfdDLxWumvl2TmV2n4EHIsS2aA8eSY37DFiCUinb79Q0Lrs+UxeTMBJ4gwzLGmGg
-	42REDAM2YHoUSUH6SVgjUpKfH6ilKckOmTi5D/JbDYvqOPZzqn1tp9yQTMDQZwOd
-	tRhFkzoypH8DgsGyNtopAT3yR6tXJqwGeqg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791589299; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:UuIIGEkFP+IwbSBXDJ8DlNN4NzC3Xt9yVcnbiIACiSrpfnm
-	XqN1lwnKFc8x/9z6cFCcwXkfOPoPCxHQFYpNbyT2Zjsks+i8qT2e4ymMfHfWYlcW
-	HnaFQOSha6VJQB97wvSgh7aG/EiV9K7QiSQRBHep0xUjuI4VEpOwLnko12lFt4B2
-	gDJWp0wwSchw8sr9cmSYvJ+De57THRt+qOl/YQ+c1ygQsoNRoLDGUmGenOQc6Vd/
-	1K999jEhle7kGyzHjHQEJvvCogKKnqR5f667zdVBC7fUOip9mE3VEEdZ1XvvtK0G
-	1anIzpLfohub4CmY5KBU/1SgyY8R5jUEC5t5D9Q==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:z4BmoG/eXl0Q/h7rOjcRlmAo5CnPa0J93NWqFtNMf58=:1dKyqa3296OCftm5MdcrSU1ckG0fRJmG/XhrhPZVFMI=;
-X-ME-Sender: <xms:s3vJahoTS3SQ3JwMu37S2OKYjLAkmdoN2jT6It97y152DIcdUOekdg>
-    <xme:s3vJal6C5h3rcBoFKATgGXJ7dzdpWjUzwM1KZfk91RmDf6AyVQ3jX0BqGv2_pxX63
-    PM7ubZJMOjzDtev0TnwRr15vvDeAWVcWhhPzdDV0BN0yHkfs5mifzfs>
-X-ME-Received: <xmr:s3vJagfSMXKJ88voMe_k9RJ8eQ9XSAJ1Mfn_nsQe1eHs8ZeCbq9mOqMxr2oTwauJJwCWKYocjhvJ2V8y6sD6C8PLh3ygh4vDLbCj>
-X-ME-Proxy-Cause: dmFkZTGPYXN3Vr49wiVG0mEBYDgE7GZG93KjxTWYomJlCNDCk94Luuf6JAeSYmQUH21ziv
-    ciXJyC1Io2sjOHvpp2d0cBhBn1HpuZlgjTzq8EmgnmaEzpHYF5LOY0HOZO5pQTKAyvv3Iq
-    Bq8zgnIb2gR/TJ4izoqrl25LkA8WVjwyitYnuKPf8bM1LRNodeFCQqQGDp8dtezXvGN36V
-    2jgfGKG8FxBfJqLWHpr3QJc8kizPyIEcqjCloMgQTJ02OOOff/SkLZ6Au1XNwXr1rLqdyZ
-    FjbMgGFQTN+dr8M5l7D8un8zQNRcKPBYY5gpRLMXU+00Z/9uiGhUCULt+op6WEM8lKKUi7
-    Zd01Eo0yYt1fGzkWl8jcI02uvAcvdzu75w51vazX/Ol5gyu72ZmQByEUVyPbxQo0A4ZONM
-    CLTsZUuGr3G7q/OhqnaJQR7g9F6g/kvMVAEe1ATktTS4iZiARZ68MnOgJsFzBlx6qsqOOa
-    cF9erECKjkAZIxp+irgpRe8qBfj0zi8a20lLvrmVZIltZseKu8VRdT6tkWaOvDAZ/fsST1
-    gLhjcr2d9/a9sPTOyfqdCHUGBBxOIn3+RlRkU8rZDksOCa7JGE4EJfYCUH8bQgIpSJjQb5
-    lMcJYyAvP7THh/whBusXBpE9jpiXHdvB/PHlwrJBxfLPGfuGboEx8rss/vOg
-X-ME-Proxy: <xmx:s3vJai4lDKHlQBnYwQiEey37MG6vGVpdgTN289GLhoCBsnShpuORCQ>
-    <xmx:s3vJavv8r-33E22B4nrEZ_iOqCeuJ_EXHEfG2iJ24UtV0FtqDX--Qw>
-    <xmx:s3vJaqiY6YQxBhST5cF6rHwHdf3vIWUsvPr_8tM0OscGTi3ml6WXhw>
-    <xmx:s3vJaipLV1UNlhMWJPWIFfiv3FvMrUqUt5H5MHJG4HB4d9y_OtHf1A>
-    <xmx:s3vJahrhGZFOtSmnxJg5M1oYsc7OlD9kbrCeegxfeWuLHG0azkmXZbx1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Oct 2026 19:41:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Sam Reis <sam@opencanopy.dev>,  Sebastian Thiel
- <sebastian.thiel@icloud.com>,  Scott Chacon <schacon@gmail.com>,  Scott
- Chacon <scott@gitbutler.net>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/4] faster SHA-1 collision detection
-In-Reply-To: <CALnO6CBbtKomawqc81MPV5Ngtc9J3M1ej4enGD3ZUzWnPSfsgw@mail.gmail.com>
-	(D. Ben Knoble's message of "Thu, 8 Oct 2026 09:25:08 -0400")
-References: <20260929112544.86511-1-scott@gitbutler.net>
-	<xmqq5wzda0h6.fsf@gitster.g>
-	<CAP2yMaL51H1OAG25nQ0NuLQLb0wevd4CicCG1_ezsJfrZDqfUA@mail.gmail.com>
-	<79ae606b-cf99-4867-9db3-bcd7ff03626d@icloud.com>
-	<CA+Te0V+-O3avrvH353KfCDjAEzMa=_H57G4OmiJ8+d1dDzZ6aA@mail.gmail.com>
-	<CALnO6CBbtKomawqc81MPV5Ngtc9J3M1ej4enGD3ZUzWnPSfsgw@mail.gmail.com>
-Date: Fri, 09 Oct 2026 16:41:37 -0700
-Message-ID: <xmqq7bjqjvbi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BBJsAa72"
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-3a595487d43so2509931fa.3
+        for <git@vger.kernel.org>; Fri, 09 Oct 2026 17:07:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791590822; cv=none;
+        d=google.com; s=arc-20260327;
+        b=g21KvsyBtI3/4KnqqQ8eKh0wEyWwJrxVMfYJ0wxFP53xufNJpSaBLu3ge8UKAbQn/L
+         Y2tC/kF7GPW7YvCH17N1bNLytBW2gKWLWwDnKJlrcldV9s6BhT5CSVmvulMcSPezjlMP
+         OkGx3FUC77rSc26qqNsuDTxLCQmXzzI2Vrdi4q3s0yZoK+DWa8iy3Nf+GmKUhM2VcfQF
+         AaP4nqHwUf6bdIPMtBj2botPOvQLuVL+UW8UiKJrWotBXXGpQRUTE2bQLudk5Kjf7qkj
+         83Vm83PVChcVWYdo1yennaKEQZLth061FrLek2pu3XoGVo6dU6R89N0hWXenq33GWBU2
+         C8XA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=9rKGuCFlUpf0oMd05nxVJfn/K4I9jm0n/w+WHoh0jX4=;
+        fh=DJj88G3niu4nMkK8tZs64niV6eC2qKQO7uThuLrQ00A=;
+        b=iIoTGY0PbhVa2WW6d8xmLAI+91/BcJjzoXRUSUYlSMJW/8Dw22So0heUeiiZfLFQQI
+         PSQjncAVWJsOldYrS3uslzQeTxIjE2LYfd4Bx4futYNOHR47Ggow9D8tQ3NgDn5ZWwjP
+         C+qDQj1v+lpa7e2b8iB6enkHwqTfaZmSRvpv0UQ7SrYeml3ouy+WZJNq4EO6Iw8PzQ4x
+         8LkXGk8ecVvPX2tBgmNZ097MuNgXCxguP+EcHQK+EQrtx3ERflk0Tzdg/McGB9qcS9S0
+         q57Jj9osRIX0s0gMDM5s5T/4++HMBi+YJIygNqoLV9LMlHwDDrJ4cnwO51D+lQqy+3mN
+         l5yw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791590822; x=1792195622; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=9rKGuCFlUpf0oMd05nxVJfn/K4I9jm0n/w+WHoh0jX4=;
+        b=BBJsAa728F4OFRUX7mQkdyfBZHsO5+Vncyj/crdHo6fFOAWwmDPDAcXODy+XhyPkn/
+         cpJ5LfKAPvzOHQAy/rO7/q25zCO4JYR+XAQLf56HyJc7ohQGZIo/lkVuvBfqfym3cp5U
+         twJQAhiOdVszLbYQpAxttMAto1GV7d1qgT0Rfca4s7f0VfdRg/7eysriCUTf6Bi0cbqt
+         hCPMMz6r8siXPZ8517SkZ9CZ/n+DDhYcGQ7sBKeZ6ZlDIktOGP22zk2iAOeXlgHjjkny
+         6R2wVATmjFfIcBQQm5W2grbyvKwBCs8QcKmshGqQFGjKbygXlvMBrvsfI7wsJxVGkUL/
+         Osng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791590822; x=1792195622;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9rKGuCFlUpf0oMd05nxVJfn/K4I9jm0n/w+WHoh0jX4=;
+        b=G8iwrszjGn4pcQxtS0PdiY2jNIvikLEsoGOmCqzP3xYaLdDocLzsQliPC00omUWeGO
+         Ukg5PPr9+fjxwl7ic+7auOmqKZUa43O6h1X2FFtKM8hQEw2MdmK308vPJ6Ntnw/3Wzjb
+         cmjFsqc5WTFrfVa2k/6zl48KS0wL/G9PFBRet9Dxfa4mXbd4v8l59BLcXf5JOUuLayMR
+         wWDiNZVNS50DPt406LZfAgf0DWezRhrmLrDVj7+Z0j3QFJ6Qsn4rCncgTDuq5zxWJcK6
+         ORTr2Ut19fBjX3GghgWJCzKh5vNeIFDeFYi7YYp5ezyK4nejt2xyrhDlJpR2qO8MIScM
+         P9xQ==
+X-Forwarded-Encrypted: i=1; AKwUvBw/iGaos2TIHytm5jcsaQAYjzY+2SqFEtc1XLcuwYIz73ipkJNzgBn0xWAs7WBhgp1uZME=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLYNp6USn45huMyQIx1QxdKCnzhDtEDBkmLtt3ZVr1vaNUW6GKU
+	n/r9VP0r4w9EeBOiF6qjJedDc+ko4kI+4PNr0Q8jMdX8w2DC5x42wFR6Jl7PITLD8l6Fd781X3r
+	udZReBz8FbyW9KsUO6p6gQ5huaTuxnHVD1mef
+X-Gm-Gg: AYBFou3V+i9Br46cFIFpZHaaeADSQjl5SOdyyVG8DVnuu2MMVhecBQvkGbFdY6yVHoA
+	M0L78iE/q9SFaMB40Yb1vzQFDiyVB7wKep4a13UAOfop9ptGqknIex7hldaVuEDU9bdUFaXlECI
+	drUBmTHn+eso/IWQaqpPcAXoaDEmCM7/UFoJxnaOTevhzh5531N2c941UTZaZNA5zujkRMxKYBl
+	E4EKP2fOC7pWyitaq7dROIH1JE2vYThZAe5IRD6blxtBBQngrQdCpirgXbLSvaBc4aHcWyQa0OR
+	5wJhwE5MbTeZ/kTXldUpDVTH1Y3vE2MRSTRe21A6gaZNtKelrQwHfE9HHoGTTvcweDzDZZ4fUBF
+	ZVflmPZO+OZMxbKlHTv0uTgke8z/07xh/E3FMHgB0HXdYqvsQBVn0iLBHFZqcNAHeaejsEg==
+X-Received: by 2002:a2e:be91:0:b0:3a3:7682:49a1 with SMTP id
+ 38308e7fff4ca-3a9c53912a7mr8136361fa.22.1791590822260; Fri, 09 Oct 2026
+ 17:07:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260920165037.88524-1-maciej.ciemborowicz@gmail.com>
+ <cover.1791452597.git.maciej.ciemborowicz@gmail.com> <asdsIjNEUOpaAnX5@pks.im>
+ <xmqqece02no9.fsf@gitster.g> <CAOLa=ZTtLcSPop-A3y-kOv5h-0D-Kq2P+QUpKTEcmU5z77eJYg@mail.gmail.com>
+In-Reply-To: <CAOLa=ZTtLcSPop-A3y-kOv5h-0D-Kq2P+QUpKTEcmU5z77eJYg@mail.gmail.com>
+From: Maciej Ciemborowicz <maciej.ciemborowicz@gmail.com>
+Date: Sat, 10 Oct 2026 02:06:50 +0200
+X-Gm-Features: AclHuK9aAhUxpzBInLgdjdn5P8nat59pYV3YVQrETI01eJAx3RssffKejLygO3w
+Message-ID: <CACQ=SRHe_gKjr+-TSvo7F+L=vXeV0TwFGRAYJ52bf+09adBFOw@mail.gmail.com>
+Subject: Re: [PATCH v4 0/4] refs: run copy and rename through transactions
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+> At some point I felt it would've been faster if I used a LLM locally for
+the same task and reviewed its code instead.
 
-> The sha1collisiondetection submodule and the sha1dc code (extracted
-> from that submodule's upstream, if I'm reading 28dc98e343 (sha1dc: add
-> collision-detecting sha1 implementation, 2017-03-16) correctly?) are
-> MIT licensed, too, so there is some precedent for Git here. I skimmed
-> what I could find of the original threads:
+If writing the patches on your end would be more efficient than
+reviewing mine, I'd be more than happy to go with that approach.
+Ultimately, my main goal is simply to get both issues resolved, the
+one discussed here and the one in the thread you referenced. I don't
+want to hold you back.
+
+Thanks,
+Maciej
+
+On Fri, Oct 9, 2026 at 11:21=E2=80=AFPM Karthik Nayak <karthik.188@gmail.co=
+m> wrote:
 >
-> - https://lore.kernel.org/git/20170223195753.ppsat2gwd3jq22by@sigill.intra.peff.net/
-> - https://lore.kernel.org/git/?q=sha1dc%3A+add+collision-detecting+sha1+implementation
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> but I didn't see a discussion of licensing at that time. Perhaps the
-> idea is that we are clear that such code carries a different license
-> from Git?
+> > Patrick Steinhardt <ps@pks.im> writes:
+> >
+> >> On Thu, Oct 08, 2026 at 11:44:15AM +0200, Maciej Ciemborowicz wrote:
+> >>> Changes since v3:
+> >>>
+> >>> * Rebase onto 6de20f6092 (The 4th batch, 2026-10-06), the master comm=
+it
+> >>>   used in Junio's report.
+> >>> * Preserve the packed preparation error in patch 2 as described above=
+.
+> >>> * Register t1425 and t1424 in t/meson.build in the commits adding the=
+m.
+> >>
+> >> Please engage with the reviewers. Just posting new versions without
+> >> replying to them at all will very likely not get you anywhere. This ki=
+nd
+> >> of behaviour is nowadays a red flag and often hints at contributors wh=
+o
+> >> are basically just a meat proxy. And as a consequence, reviewers are
+> >> very likely to disengage and stop reviewing your patch series
+> >> altogether, which is frustrating to everyone involved.
+> >
+> > Thanks for bringing this up.
+> >
+> > A response to reviews on the N-th round must come long before
+> > sending the v(N+1) round of patches.  Some contributors send them
+> > after v(N+1), or immediately before, but the proper time to respond
+> > is soon after receiving the reviews on vN and having had enough time
+> > to understand the comments, before starting work on v(N+1).  Only
+> > after that work is complete would you send the new patches.  Hence,
+> > we expect the time between vN and v(N+1) from real contributors to
+> > be measured in days, not hours.  Whenever I see vN responses arrive
+> > after or immediately before the v(N+1) patches, or worse, no
+> > response at all but just the new patches, it smells fishy.
 >
-> Anyway, I suppose the fair thing would then be for Scott's code to be
-> MIT (and/or Apache2), in which case it would need similar
-> clarifications? (Or are we prepared to take the stance that de nouveau
-> code based on existing code can be license-washed, in this case to
-> GPL-2?)
+> This is kinda why I stopped reviewing the other patches [1] from the
+> author, my reviews were simply met with N+1 version of the series. At
+> some point I felt it would've been faster if I used a LLM locally for
+> the same task and reviewed its code instead.
 >
-> Interestingly, Gentoo claims Git's license is only GPL-2, but I think
-> they compile in the sha1dc code since it's the default in meson.
-> Should we be claiming the Git package (with sha1dc) is actually GPL-2
-> and MIT?
-
-In the abov, Gentoo's mention is about "Git package" as a whole.
-Git package as a whole can be distributed under GPLv2 only.
-
-MIT, BSD-2 or BSD-3 are permissive and essentially says "you can do
-whatever you want with the code (including combining with other code
-or making it proprietary), as long as you keep our copyright notice,
-keep our disclaimer, and (in the case of BSD-3) do not use our names
-for endorsement".  Specifically, they do not forbid us from
-incorporating their ware into our project that is licensed
-differently, as long as we honor their licensing terms on the source
-files we got from them.
-
-Because we have mixed "permissive" code into GPLv2 code to form a
-single "work based on the Program", GPLv2 Section 2(b) dictates that
-the entire combined work must be distributed under the terms of the
-GPLv2 (and again, the permissiveness of "other" licenses is what
-allows us to do so).  You cannot distribute the finished binary or
-the combined sources under a permissive license, because doing so
-would violate the GPLv2's copyleft requirement.
-
-The original "permissively licensed" files (and any modifications
-made purely to those files) still maintain their original copyright
-headers and original "permissive" license text.  This is because the
-original copyright holder of the code granted a license to use their
-files under the original "permissive" licensing terms, which
-requires us to keep their copyright notice.  We do not own the
-copyright to the original "permissive" code.  We are only licensed
-to use them.  So we have no legal authority to strip these
-"permissive" licenses or unilaterally "relicense" those files into
-GPLv2.
-
-So to answer your question in the last sentence, we should say "Git
-package as a whole is GPLv2 only, but parts are borrowed from
-copyright holders who licensed them under different terms, and these
-parts can be used under these different parts.  For example, sha1dc
-can be copied from our source tree to your non GPLv2 project as long
-as you honor their MIT license".
-
+> [1]: https://lore.kernel.org/git/CACQ=3DSRGTTdQ+dHXhN6F52dBv5KxZBRfk_Em2f=
+vmEmGJDoB6oTg@mail.gmail.com/
