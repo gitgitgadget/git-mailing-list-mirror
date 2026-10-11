@@ -1,172 +1,154 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957E245A2AC
-	for <git@vger.kernel.org>; Sun, 11 Oct 2026 14:06:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D013F44C652
+	for <git@vger.kernel.org>; Sun, 11 Oct 2026 14:18:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791727596; cv=pass; b=Yi8o6XzZXSV0acHQ7ArufNHR8WvTyifOCF4evw+zAUBJnwkmXOr40XYrYf++KRLQtXgjFJ1InfyLeeVVStwMLVK9sYivquPFqIavyyYtxsDHo2P5mx8SjIuZT6c1/K+uoI3j5/QUaYIL6pmaQ6w9kyWTXUPe0B+92DRe5Y1XzVs=
+	t=1791728305; cv=pass; b=J1foFHjb9eIlAn5e9AR6KzYWBanexJyTn+XDKW8V/sZS935GwspMecKL5TtbUSvdXm/eiZWB+DEHT60bjOaBCAAu0mzeYXcsxNJV+MJJsdo+AxkUX0Ezc9/f1d4Hf6Gn2yTm1RGNtS80DIiq/qnz+9vuoW16uowGW5Knh6TL0oo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791727596; c=relaxed/simple;
-	bh=xFdM2KWAhPB2xoryyb3wwHaNGyqvjZpvakENyyiQf5g=;
+	s=arc-20240116; t=1791728305; c=relaxed/simple;
+	bh=svFKBbI1u76fBXPeMvXOfkTTSZEONUv+lyo+l/f04p8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TtNhyZ9/81fyHG7sdsSNV+iPc2XEKsZYHFDuuvq5wCYWSzkHdzG4ZO5gIAkxtolyprxIt8HbEF34nqgg4AhbROv7oSgYGuG0xC3SGTxeeU8YPpgJlc0gTFfoZqRCk/BYQ3iIbV47tK7wn8ZaKdaqElfjaRYh4Po00MyTw1W5wpw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MZpHWfjU; arc=pass smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=R0Qx63eAaYGMPQSiKUWlfOtgarBngI3yvRAYdYWdOF44tpgoUH/msOhSTDnY5OnqGmi4wrsPq7BAjxrO2mDprqfOkYDKb5g0BFIFZfZMWjmhXTEQEL94ty7iwlMP4xkHoSaYZBhQsTzZtcWz8OspOH6Zxd0AMB5eGZVh2m0k6dw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com; spf=pass smtp.mailfrom=thomasbachem.com; dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b=Sx9vw54X; arc=pass smtp.client-ip=74.125.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thomasbachem.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MZpHWfjU"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2e4af975346so6686605ad.0
-        for <git@vger.kernel.org>; Sun, 11 Oct 2026 07:06:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791727593; cv=none;
+	dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b="Sx9vw54X"
+Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-677b5148acaso841776d50.0
+        for <git@vger.kernel.org>; Sun, 11 Oct 2026 07:18:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791728301; cv=none;
         d=google.com; s=arc-20260327;
-        b=b4bYFyuYpvhodN/qJfg2HpWRGruajpxoSO3HA57qhtBo0Fa9xfaxUba2nc/hZ/JCw2
-         C0WORMqk+sEcrEmKWeMHwI0KLsDJxsJi3TUWEJnDl+aVWODlFJgsCWGKGCda1YgC2WRQ
-         VKytP4oJIJt22GKJK7t1GddZ5C1wXVLVV7ydSvJy1IjFllb/CHuyaq23oxXfhWBD7Dgs
-         xaq4gc/o+zd4hbImntO70k6YJdanZuxscXNI+Y/0+G01doq34fnvgmR2VI2s8xbRr13/
-         MHik/IUdFGrKN0F0ArGmbjCd+LzeOmCySiHgyRL+xPgl17YqeSOWBmmmpkgkAItX/gm8
-         LW9g==
+        b=foxPcnxaSp68DH6bVHi1R+Hem+jEEgGSRqgyJtpYTHtJT++yWX75X81obyC0OcNHiI
+         YgJLgUcTc10RKlg3qEXrPp4PKSAmBgOADf/0fAyrbEm3gzWV92sz6roezo9LU5Gf2T3o
+         YCQ4kiDBpK9uhAhqCCtpciTKmOTfzJosC/BhevsSBozWt5ZL65iw7oEa8BT35ts4VleL
+         dMnqzSn1XwAxnG48g42mpnPL9jrGQFlg927mrrbNgMu2iq5UAz9pxqQktIO9FlQKz7Hq
+         ASvdo3E/a6c0DJgjlCch9olkCb4Eg+bLzfhgCEehiW4JL8oT32kI8MNB0v/yW2+BGu6S
+         XsIA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=umCeoZZGJ8uhDpeIvY7dHAS9E9CngDXNOhS6AklOqiM=;
-        fh=a40HZkC+XHIaLQqJ1fiSHBHS2WxGSwQYURHT3irPygE=;
-        b=n/aA52Gh9lW+j93KI9otuUXV3ZWkNu+/qZmcZf+AwlthjDzy2DHYhRoRjxOxC7ZsD0
-         3Srt9E1uySylB+Q5twOX7/isYom8agI5oxV/XTaD878Vps87IEsT+ZNDmdkNF3Guueor
-         vKNaVSg7tg94HTLzU6vltmOT/u+5BKlT0wtbrMA4pAy8xK7xgEd38QBPjeW87HvL5usG
-         EFpP6A7mpEOMh8LROM6LP5ejTBSfIeNQ6q+uVmkqF6PLE4vFNpYN40SM97NsSImBOMSY
-         nEBz6ErfyHDOY/SNxYu49Dfr859KELphbG58w4TIETGH7E9Dekew7133PZs8jNyWOaHr
-         usIw==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=yLktEYvr3nXz3AS4oVNU1mey8Gt3MN3KmfcsKsKVvJ0=;
+        fh=Q46tNc3BJj4WIW7wxt2lub70mkt83WZLYGXmsTidru8=;
+        b=dN50HmgrrdSUXqh1jRVwqQA8JsWoS0lTOZutwU1Wm59esfK9WGW8APZBB+dcSbAgsZ
+         a3PbykW7lJpLUJ8HQCW/LiZTURouXmp6BLKNhbNHK1xkwel8C9KuYDFxofkke9YGHZRe
+         n5T4uMVs2htw41QPRjXkyc3LceGbGNQ+YSG0gQJQHRwNwEWvv+0euvPOCA+YoLM8sF5h
+         cyVasObDC73OrewQXnVtIUxnvvXof4oUW2xA3ksaUdkZ/PI49Mz6yw7koaziqhPQ7ILd
+         XVReNsEgJBfrTCdhUGRqEbtDx6WW/naFv8euWvw3eyTD/KQN89OJYz/dTiFNHskCjs9X
+         qR0A==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791727593; x=1792332393; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=umCeoZZGJ8uhDpeIvY7dHAS9E9CngDXNOhS6AklOqiM=;
-        b=MZpHWfjUYu6g2Z3l5nUNKvCZa5ftzrFCt2MnR3d7rop/HJnBtgB+7GOxkVDZF7vkYu
-         CxQUZBmgr59jHgFVwhRQwZr3J+Qvzp+ayQTNBj6I0Mj+4njhU2Mw//trof2ErIQu3kSw
-         P6slZp7fjP2qzS0lmrqGnlyL/HUaPOg+ICAbzqiXS5vKIgEzwv3WNm4UfSsMBDuZn9YU
-         WjHqwd55rav0QrnAGIdgy00ym5GMmPJSjc9E0+OIJGQSpf6yyoz69ITJMk5l0pfwyHEw
-         8uf5CA+j+HTkmS7K+fck6ugdmUyX4h30xeFHjSYpgysj3T90heQIjNFalRUmpn9KSGzC
-         Y25A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791727593; x=1792332393;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=thomasbachem.com; s=google; t=1791728301; x=1792333101; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=umCeoZZGJ8uhDpeIvY7dHAS9E9CngDXNOhS6AklOqiM=;
-        b=Iosqepo1ii1hzzqWX7+J+vzVIdEp1pf3gdFHZBQfeKegPvzpNwvyUcCnkgNbCJBPIu
-         AXl9OJ0w1s9+b8j93sUqyzsJBi1dvmmNZY2VlnwNWfKzVZjn4RKSDF7X9eSDQ9sIbKwU
-         37do17ypKLa7dNPcx6D4go7ywWAhr1RTKtj8jar8TGkLMgxEAFZO0tZyv0leHr3nbJTr
-         5Tr42or1yXdsIfwnmdfkFT+0P1X5HjVHdr6TSHAqib79+naqvO1eXeN0sM30l9dIWRoJ
-         9vLSMAbrZqNI+BpaTA6KWyaWUjiB6lHSF05RpaoC/raL4yUwdJ2QCfUBR0dvXyKTeV9T
-         aCfA==
-X-Forwarded-Encrypted: i=1; AKwUvBzha5mvuUwcL0KHjZHQYT/gFrdEW8M4Oyqj3X3XOirlvFBVgsq756EApeEzTkudKYS69uI=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLR4QcZIl1crXQBQb4NIGKViHPE0QTD/oP16U2onx14uXrE7yo/
-	kIShYES9lpqUnbIfYdGxYVNqjXsSxnDVFUNKLiFTzJfEtO6aS6n98bJJ//6jNU56alTG2PhOcWY
-	+531HiNZWg7fAZqXhG2LAMqmNbBuh6g4=
-X-Gm-Gg: AYBFou2YesGfmPnKGQpPMoUnDTfo7m8HwmtZawrXM1YQ2cc2Lp8ICYXVJyFMq/g0xKK
-	N9W48OaiGEAmUCQ8LiacG6aoGsjnLCIBEY3hPw6gPXbMD/11gTGcwHTbTXVSthTKalZouK4byTV
-	r9IPeATuR1f4D8QhcWo48GD6O65qBU5ppOEHaNSFEdg7BsUmlbpKIPK6Z5cO42NFqbLnHoTizcl
-	COledi1zYdZVtCD2aimxSMNZCdBf/0VIepwrg0zVQaG1Q1j2bhETMy+uaHMjgkCHXW+7i5ZS1GZ
-	p5UkNfcAkHO2cOoMqTMR4Afvf+jr1HoI9xgKyZ7ulelTR8FL7WCsTEeGmja1kWDtAc04MNLyzyi
-	lRf0PdrT/OlxIvqLR0h64CH/zszss32f9Z1K1WLKvx+dyAHDdf0CaLy14UHgNpPFLzWCM7o7h18
-	dyEr5OW+gJp+w1Xd5u7sLYrOTmsxaMVQ==
-X-Received: by 2002:a17:902:f612:b0:2e6:437:bbef with SMTP id
- d9443c01a7336-2e842d03033mr55745755ad.34.1791727592626; Sun, 11 Oct 2026
- 07:06:32 -0700 (PDT)
+        bh=yLktEYvr3nXz3AS4oVNU1mey8Gt3MN3KmfcsKsKVvJ0=;
+        b=Sx9vw54XBg04Us6h9gFnGq+kZ5nj6G+LlHF27aO1RGtVMyC+5jUZCI6fv55FQP7+AU
+         cTQ3PleTWmZPHCQo/EePBsaswgpPZYMtZAosa6T0xfAWJnWJsZiFyUki9GgViKQ3Kaf/
+         nRmJ6SvH1i0fxh4PuBSNsF4tCyyuyjQfrI8XGRYV+B8PKxA8hje1k0XoDjqZxj6a/B7K
+         TSX+UL84Nue3N00kC3w/WYfdOBiryxH14GguqyRytc2IU0zjxm5PjJqYsjBRlJq81inn
+         9gQQHEXGhnSUzrZRhwCkaQ/tcToX4GgqETmbLQig7rypd4aATq/qtjt0xCyIp1JWPu+/
+         y4uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791728301; x=1792333101;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=yLktEYvr3nXz3AS4oVNU1mey8Gt3MN3KmfcsKsKVvJ0=;
+        b=grbI/UW21ZJyPdIyWZJCFaZFWuL338GldXyc1iJucv+4KgGHbQzeoHvphAX15Dcf1c
+         DcHA0JDmY3YobSQPnPfSDN3/uO9ynWYYxOwm9gJ7Z1qt7JAYaNrqjpHLIrc8F3XkCThO
+         wOfmPyEsVQZ6fnm1zDV60/8A6dq5lCOCNrnj5b5/tlCJYH0p4oIEVi3rV6sfBQ1etCf3
+         BuERS9urllyF9s00wR/P9PllpKVkWA/rwedh+0HrA8/fBGiM0nBjLVcIKoIMED4CBW6J
+         FeSr0Xcwj4+4DmjVs4dWsGGSwe3fS/ynjlrKFBWqhfeLWhRDcsjwnIgPubew5tfTm6Ii
+         glCQ==
+X-Forwarded-Encrypted: i=1; AKwUvBykzB7oyWHS5AL0qgcDwKBEXiP15pY7JOqYoZYga+yjBSPi+zNVNELu75omH+Fv9Nc129U=@vger.kernel.org
+X-Gm-Message-State: AFq9FYK3uldgL+75cjts5QM5wOpPg/sOZwrunaPv3XQWT1bz9n7wGDCR
+	TlxuXQe1N19WTlSBLJb/1cp/QxXC8lvyziIqaS8Ornq90NgQBwrw7XUH9WTSHoHbN5947dUPMFT
+	BujgoUP+1oTx7aKeccUBkZX3dyIyXoQtySDOx/ib7eaftD8lbzJ03zp8gfQ==
+X-Gm-Gg: AYBFou3UmXMa7e96TTL0oNRU639qdP/UYGjGpTQj149+3dpNEKb4gpS7oAKr8xBF6dK
+	gn2OKCniOCLJvXCh+qtp/ruZq/WmUCOO9l/44SekvzPKaA7CxrO2BVa2606S7rSnBgYJz/PP+28
+	XxFyOXuK399dCms+sm8N/kmdOwC/LN3q0jCTUMr/3/lwRth6gJfatELH2v3SX/LItJEXt3OFbc1
+	YQ/VEBi88+bBxPG//igyiiaBpRAaxsmnekftUPUO/lxppS+7an+GAzxoTS61rfNRxeU6ZeM7OJg
+	OCzrVnKfENVar1mdoON1PhJmBbAHnNnWKOe++MU39FbrkCa1SJ05R1dgTzT/4UGCMiROWpnBtH+
+	suw3fq2+T/0IawQNB0S8EfPH3v22FTmOSiiaEizpSKh6oOQ==
+X-Received: by 2002:a05:690e:1c1c:b0:676:85ca:71a0 with SMTP id
+ 956f58d0204a3-67936297c42mr2413496d50.112.1791728301474; Sun, 11 Oct 2026
+ 07:18:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260929112544.86511-1-scott@gitbutler.net> <xmqq5wzda0h6.fsf@gitster.g>
- <CAP2yMaL51H1OAG25nQ0NuLQLb0wevd4CicCG1_ezsJfrZDqfUA@mail.gmail.com>
- <79ae606b-cf99-4867-9db3-bcd7ff03626d@icloud.com> <CA+Te0V+-O3avrvH353KfCDjAEzMa=_H57G4OmiJ8+d1dDzZ6aA@mail.gmail.com>
- <CALnO6CBbtKomawqc81MPV5Ngtc9J3M1ej4enGD3ZUzWnPSfsgw@mail.gmail.com>
- <20261009203749.x4V9kN18@teonanacatl.net> <CALnO6CAEcjieW48DkA9Pt1eqZ5hctwihmTXMxZ29YBrmzrp1QA@mail.gmail.com>
- <20261010153721.943RqWnW@teonanacatl.net>
-In-Reply-To: <20261010153721.943RqWnW@teonanacatl.net>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sun, 11 Oct 2026 10:06:21 -0400
-X-Gm-Features: AclHuK-mLGVLgrbFUwu_llzz3MrRO3ZjJgavH2aOwnUWJrjCObyF5d_aZN2JzQc
-Message-ID: <CALnO6CBz5-hgEMPUFEHQ3CyaMgnTLuzWFQ7Yk3ukvGOTwuJ+bw@mail.gmail.com>
-Subject: Re: [PATCH 0/4] faster SHA-1 collision detection
-To: Todd Zullinger <tmz@pobox.com>
-Cc: Sam Reis <sam@opencanopy.dev>, Sebastian Thiel <sebastian.thiel@icloud.com>, 
-	Scott Chacon <schacon@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
-	Scott Chacon <scott@gitbutler.net>, git@vger.kernel.org
+References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
+ <pull.2214.v7.git.1791627204.gitgitgadget@gmail.com> <3dc3d02f12a3118ac9e270c19960815f6b8170cb.1791627204.git.gitgitgadget@gmail.com>
+ <xmqqqzhxf4uo.fsf@gitster.g>
+In-Reply-To: <xmqqqzhxf4uo.fsf@gitster.g>
+From: Thomas Bachem <mail@thomasbachem.com>
+Date: Sun, 11 Oct 2026 16:18:09 +0200
+X-Gm-Features: AclHuK-0yKX3vuXK0F0hqIIhwW-StP9KtxKDdNHPUkDMnOau7Y9Wvlt1MAMFmL4
+Message-ID: <CAA0xjtpuQE1UiQEPjfmsp9BZPROucfXCOpok5ADjMRB-rTZRiw@mail.gmail.com>
+Subject: Re: [PATCH v7 1/2] rerere: wait for MERGE_RR.lock before giving up
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood@dunelm.org.uk>, 
+	Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, Oct 10, 2026 at 11:37=E2=80=AFAM Todd Zullinger <tmz@pobox.com> wro=
-te:
->
-> D. Ben Knoble wrote:
-> > On Fri, Oct 9, 2026 at 4:37=E2=80=AFPM Todd Zullinger <tmz@pobox.com> w=
-rote:
-> >> Fedora's Git package has:
-> >>
-> >>     BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or=
--later AND MIT
-> >
-> > Oh, curious! Where are the (using Gentoo identifiers for the moment)
-> > BSD and LGPL-2.1+ sources? I guess I assume by looking at our COPYING
-> > that the GPL-2+ came from contributions that said they were willing to
-> > be 2+?
->
-> There are various bits of code imported that are under
-> difference licenses, among other things.  The code in
-> reftable/ is BSD-3-Clause (using the SPDX naming), for
-> example, while xdiff/xhistogram.c is BSD-3-Clause and/or
-> EDL-1.0 while most of the rest of it is LGPL-2.1-or-later;
-> ewah/ is GPL-2.0-or-later; compat/obstack.[ch] and
-> compat/regex/ are also LGPL-2.1-or-later.
->
-> I used the perl licensecheck tool=C2=B9 to generate the initial
-> list, then reviewed it and filtered out some bits from the
-> test suite which are not shipped in the binary packages for
-> Fedora.
->
-> The command to do that is (without the filtering of any
-> code):
->
->     find -type f -exec licensecheck --shortname-scheme spdx {} + |
->     grep -v 'UNKNOWN$' | LANG=3DC sort >licensecheck
->
-> A more complete analysis would require reviewing all of the
-> files which are UNKNOWN to ensure none have a copyright that
-> licensecheck simply didn't find (or isn't in the file but
-> can be found from the git history).  I was a bit lazy and
-> didn't do all of that work. :)
->
-> > Anyway, thanks all! I'll assume the Gentoo maintainers knew what they
-> > were doing :)
->
-> Yeah, I've found most distribution packagers try to be
-> diligent about this.  Though it can be a somewhat tedious
-> tasks and can change if the distribution switches from
-> expecting packages to list the "effective" license to some
-> other method.
->
-> Fedora used to do (or allow) that license simplification,
-> e.g.: boiling down our distributing Git to GPL-2-only, but
-> clarified things a number of years ago to not do so.  It
-> ends up slightly easier to just enumerate all the licenses
-> of the code which goes into the binary packages we ship.
->
-> =C2=B9 https://metacpan.org/release/App-Licensecheck
->
-> --
-> Todd
+Hi Junio,
 
-Thanks, very insightful. I should have thought of xdiff, but many of
-the others with their own licenses were new(s) to me!
+Thanks for the careful review.
 
-Best,
---=20
-D. Ben Knoble
+On 11/10/2026 02:39, Junio C Hamano wrote:
+>> +     When the time is up, the command fails as it does
+>> +     for any other lock it cannot take.
+>
+> Is it necessary to say this?
+
+No, I'll drop it.
+
+> The backgrounded unlocker sleeps for a second.  Is the idea that,
+> even in a heavily loaded CI environment, the backgrounded unlocker
+> will have a sufficient chance to sleep for a second and unlock while
+> the 5000-millisecond timeout waits for it?
+
+Yes, the unlocker can be up to four seconds late. t0610 and t1300 use
+the same numbers.
+
+> Is the idea behind this 'wait' that the 'rerere.locktimeout'
+> implementation might break in the future and we could reach this
+> point before the background unlocker has finished sleeping for a
+> full second?  And we want to ensure it has exited before proceeding
+> by waiting for it ourselves.  If that is the case, perhaps a comment
+> is warranted after '&&', such as:
+>
+>         wait && # just in case the background unlocker is still active
+
+It is. Instead of the comment, I'll move the wait into
+test_when_finished, as pack-refs-tests.sh does, so it runs however
+the test ends.
+
+> Or make the string a bit more specific, such as:
+>
+>         test_grep ! "Unable to create.*MERGE_RR\.lock" err &&
+
+I'll use your pattern there and in the other tests.
+
+> Should we ensure that there is no leftover pid file by removing it
+> before creating .git/MERGE_RR.lock, by the way?
+
+I don't think we need to. Git only writes MERGE_RR~pid.lock with
+core.lockfilePid set, and t4200 never sets it. Even a stale one would
+only change the text after the "Unable to create" line, not whether
+git gets the lock.
+
+> I'll stop here, but you can grasp the principles used in reviewing
+> this test and apply them to the remaining tests to ensure they are
+> clearly written.
+
+Will do.
+
+Thanks,
+Thomas
