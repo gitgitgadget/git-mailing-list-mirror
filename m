@@ -1,116 +1,129 @@
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com [209.85.217.71])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA30749BD88
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 15:48:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.71
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791820118; cv=none; b=J+rPWa+dG7tQ9FYUugm3P4ZGvA5fTF9pjzTB7nbkRIxJmasEXsHiUYv94dua9adDgjKeZOz/3IRVmoL7Cxjmr0YpSfy4ZZFjCNYTQM3ThRrc9OIYfywYHUlDGxwCAt7aMD/o8+3GJuijs207Dnamp2dRoOTh1gihNlmkZGaQ9VM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791820118; c=relaxed/simple;
-	bh=HTiH6H32vZvvJLXlMdoAng25SFjnS+pOBzzk4p1ttvk=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Kw2Zt1wqyLFtwv2+kKR0cqcksceTJnMP4DRp9ZDn54DQQ2K/r1n3QaboW0+/IkAV8LsNHcUOSYjaWe2DlwcECAUv2/2T8lmmr26xZcXnx5c5jq83kyCNvLC9qk3WFDqqT2GlyDti5h63xcFP4XyxdQE3BD6pXnxGoocnsTNi3Vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--rmistry.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ufBt3bBq; arc=none smtp.client-ip=209.85.217.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--rmistry.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D8F4A5EA5
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 15:49:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791820153; cv=pass; b=TIhu5P3wVbEkrjWT3e9/SSgw+/1MeohKE//ZcD7Z34v3+ytWDriZlIJRRy63PkTxaehd/lM/TVXkxDxHEwTCvyRSRbRKLYJBCz3eG+m/GzZLoiUDkJp0/eLGhTq7pQNgxpwqw5TrFsIOSBSyga5q86i4V/d53UjLZbfuaCmc8kw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791820153; c=relaxed/simple;
+	bh=np8K2/mxT3qH0z/2v4radxXMigwgZFTQ3D25BtgLI6Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TN2ak3yPdjKIpwnteSzPN9qdraSk/kQO4Bardz1Xz0tI+JlqF6vgHw3rxpJ4biC9I9XuA0w+Jr0I0M+9cR+EslxcLW3wnn8F08IMBtYawkK5gdIKm3H8D+ZW86Kr7JP98wrgtyn48qe0qXKOtipzp3lElPfTbAGVIa9miWmgpHU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rYQAQWds; arc=pass smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ufBt3bBq"
-Received: by mail-vs1-f71.google.com with SMTP id ada2fe7eead31-7c15deb3794so129519137.1
-        for <git@vger.kernel.org>; Mon, 12 Oct 2026 08:48:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rYQAQWds"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-398a5aad413so975681a91.3
+        for <git@vger.kernel.org>; Mon, 12 Oct 2026 08:49:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791820152; cv=none;
+        d=google.com; s=arc-20260327;
+        b=gV4rMB9K2rISh5t1fxXQwn+4DRqkG4RJppgRlS2TKDV9tKq0KLBx8KhfknPF9Ma3pD
+         iUsIuuLjt0XMdGRbEds5m0JdhWzu+vJo73+IDkwKnljf3lJUYZy5gAwb1mb51WPA3hnT
+         M33lFAbcU/wUscMBTqbs9su+v56kZaMHIdpjYNi9aAwBojGM6U1OXI6+5PfMfy2KrFYa
+         oHnDVROOiHXPpccK+hG3rS0xehUj8VxqgfZ0eucMvYTa4/WUy4vcf7LuaPlG+4ROn6V4
+         UA2yY7WbmrbAJPpUux+LsEG0efWeBz+22RjkLtwpkv9IZ1UWe3xznUO9O1lxHTw5Bm2I
+         FnWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=b7dtdkgpBwHriMRBfE2JlbLPVLAMgy36E+Pq+KQuxy0=;
+        fh=E9y2fewsh3vIviLIkvA9JPzAWiNt/TEtUyL2XdzRY7A=;
+        b=dUup740pfF1/L++EvbSUgHsTkHAvrTbV1jFwoz1bCSOpFjV7lnyp5lanYi5mRI3Yhz
+         nD7yPkeCNj3vNGt6TDwc8WnQFrzJLSkXcMJBWzDR6CaKUc97SQw1hxQ9JrEH7YTcyS1Z
+         uZtPBPKnHiz6iN5VJsO71pvPraHl/xufBHseLbUUF4+FVCfn2ditlG3/SOl3BcbM6mHE
+         A264XhaUo7x9k/hM5n5tdAZp5708Ggx5FQijEo+wyfKE4bXN3SCPTNTVRcprJUPeGRLo
+         /yhzem7Td4KYnkZfhdaDfa1RQT16YSzYpNmrGQbdCbrE+tPXuVYYIhRnPaPynXe7twcE
+         H7DQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1791820116; x=1792424916; darn=vger.kernel.org;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=HTiH6H32vZvvJLXlMdoAng25SFjnS+pOBzzk4p1ttvk=;
-        b=ufBt3bBq516hlqGxZU5/t/F2FE7Mp0OQTEEowPC8N9rCDNJtBGDa1M0bnKi76DlFc6
-         JE1u6xf9+36TP0C3Itk+Zx91rGmjyPlTioKFarXf/jass4Z/rV/ODCarsf6wLE+PQ11P
-         WKUCM4yitJpv+8PkqKJS1WWZqlxussKgzUo8qWmkBproUxXi/sAF6EGK40l8IADLgcYB
-         dB3wk/1j57+atFsesKCkRfUjE85ZQqkHUPHylppKZihIfCgjamaPOtQF5GfIczS3ts5G
-         DlrVJsNv9y59Uc2MwwTXlhDMy5UIwNZpXt+pwGd0shuOrc7Aso0MIyWv/Q3HwS5b6fjd
-         gCpg==
+        d=gmail.com; s=20251104; t=1791820152; x=1792424952; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=b7dtdkgpBwHriMRBfE2JlbLPVLAMgy36E+Pq+KQuxy0=;
+        b=rYQAQWdstZpn2jfaQxSbaUIs6u60uKFj0BvIwuguTccV3oUz4WmLI3NYPQbHanPyfN
+         X4TvaBZ7zx+tCG/v1iXhVf5J0MWrc3VU1+3QTujxXnqt2XGkw0eqOyeoMkY5QlazU1g0
+         b+/LSTtms10rkRk2lf4O7WnPEao63EIHSEGNUs+X7Gbk6oYy+hEVPiDrv2LhWhOJSWTb
+         XlfvnVgWD4w7KRw/pu4RJj7MXDaxUcqqHrhGs3EEqn1v2fkgAvyLa8t4JVSOJsEY39Go
+         Lx9dtx+v+uOGGxNEN4dYoCxFb1JKm6dMW191q31y9yRIdyPB/PLda7gUgYMzmjEpefS6
+         Cshg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791820116; x=1792424916;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=HTiH6H32vZvvJLXlMdoAng25SFjnS+pOBzzk4p1ttvk=;
-        b=j1odyhnaVtB4aggUa9jZl2GUqaLZohCSgRmS9mlhB1x7DHDNIaUcbPLWHlCszur6YE
-         Y2/fysrwNkglbidH7fPrLemWtAaMoaOmNkTrQYoM1avPnSJu19NOH6vvwx9vtLZ3fxs4
-         zJl/9RYNCGt6O9uhjP+rvqkDw7VsUr2JSOG7UsrC1SyVUgioc/F34Jr0vfU25AOGRIn1
-         kjVymk3l1EEcvpedFzVxk89d2lkgEjgeOwX8OuWIRMm2irsVHbRlsVibyd8r/M5sKZfJ
-         U1RWDMiSmH8NJBLn8Y1pDSmK0wbRwYJaa2uKvE/H18Y/StgLxjNpRYDjBfVm8BK3NQ+d
-         nN7w==
-X-Gm-Message-State: AFq9FYIuFz2k3K4QIlHQTIk5ztCxAT+pLpVyHNz8dDm2cByfLqh8uzRh
-	QaH7TXaQ304xE/M2uPk2hFVQWQ9fkiz2a8weaufPcHskpdXf8HSZWkuWsR3xcC40ASdmr9XEd5I
-	vj5o1Ek18ew==
-X-Received: from vsve4.prod.google.com ([2002:a05:6102:f84:b0:7c0:6db9:cd8d])
- (user=rmistry job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6102:6894:b0:7cb:288a:b66d
- with SMTP id ada2fe7eead31-7cb37317528mr2235805137.20.1791820115384; Mon, 12
- Oct 2026 08:48:35 -0700 (PDT)
-Date: Mon, 12 Oct 2026 15:48:34 +0000
-In-Reply-To: <e3b68210-7558-4f95-bc3c-eb57b1065790@gmail.com>
+        d=1e100.net; s=20260707; t=1791820152; x=1792424952;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=b7dtdkgpBwHriMRBfE2JlbLPVLAMgy36E+Pq+KQuxy0=;
+        b=xG5YNq8w5djwEZRiYBQL60U7xIq2vCzDL9S9WNpOGi0lZS3R01Bh7e+3MI8g2Nxd/B
+         HQXXdmN3u88ejjOASE18c7rAOQvByHJZAJqOQI793qhaRxCX8GDMq3Ok7QnBsTeHIyjR
+         81No+3F5vvZ2qpdNAyfBIagLGirBDGO3dnjxmV/WvUvN5FEup0642NXhSsIkTnE5gAxX
+         PXxiXKSWfc/JDV1+QW/JuBjbRaCVUNFJ1VsuPyiAuKO3X9GLSmo9zWD1MvYAgFXCqhJJ
+         4+hShHvggO6XLkumXucdg6BQ1VnCCqIDJR4o6UWxwqir4wdwdSN+yFFfxqVZ5HLhr9VF
+         Y8Ww==
+X-Forwarded-Encrypted: i=1; AKwUvBxsFZsDfc4TQRtJdfWqSqvWK3LJO83f2G/RClACqu/TnOkxF6FhafLF5nUtcTumTgB3jZU=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJeD/mTJIuMsfLfaHmtkmwsk8NXjHuyEPz75hX5mJGvTsOjXEz/
+	+l0S2TLJcCWXDRfpKLmWbRA0tTYHsbE2I4LBm6Jip5MW7/8fAaGE9n7VS81Ra20/HYdd+3qV005
+	wekawaZjzWejGdwikolmisSnUaL3UCvA=
+X-Gm-Gg: AYBFou3B89XRViuU+JnKPi/CXZWs+mpllcq3l7fUlz2GohD2w/OeEin2NxX3TRIKrk8
+	F+X5mPhF/thOvJHnL90LwzNvnxNCRoYEOMbugiIdL0mZWnwfMpen5y+MZ75vEo66E4MwVPaFb7M
+	CvjCg+BtWCMKsDEPaURF5jbSUjJLmNEEl+bA+15owfMyX5T7EiyJCu685kwsm+66TKQXjlfEjUM
+	HIyjcQAAJHy8T1bSPH8B64Vo3vcFsKWThiV9oyNOIznTW+UXlilli9BxFFere9zr0sDlrGvGh1u
+	63d2UYBmtRD/hZxy7We1aEHDbjwexpb8wPDEZpvSknY+s6p42FtTMuu2hxNhSURObMRbCqDJofC
+	pYTGacl/WA6t5vGVVt5ySUsxVqHmiTyU5j+iAbSPEPyRo7VRxflUDp6esyItKiU+btuLF5G1HY6
+	xZeGrM7o8=
+X-Received: by 2002:a17:90b:2b50:b0:3a8:609c:7a6 with SMTP id
+ 98e67ed59e1d1-3ab3a8e9100mr7659526a91.44.1791820151863; Mon, 12 Oct 2026
+ 08:49:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.2224.git.1789169384240.gitgitgadget@gmail.com>
- <pull.2224.v3.git.1791757294.gitgitgadget@gmail.com> <72a87d1c34bba81cb760e47436a39cb249e42278.1791757294.git.gitgitgadget@gmail.com>
- <e3b68210-7558-4f95-bc3c-eb57b1065790@gmail.com>
-X-Mailer: git-send-email 2.56.0.rc0.2.g72a87d1c34
-Message-ID: <20261012154834.622130-1-rmistry@google.com>
-Subject: Re: [PATCH v3 2/2] blame: ignore revs in HEAD:.git-blame-ignore-revs
-From: Ravi Mistry <rmistry@google.com>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, gitster@pobox.com, gitgitgadget@gmail.com, 
-	abhijeet040403@gmail.com, code@khaugsbakk.name, sunshine@sunshineco.com, 
-	rmistry@google.com
+MIME-Version: 1.0
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+ <pull.2425.v2.git.git.1791711665.gitgitgadget@gmail.com> <xmqq1p9vdalz.fsf@gitster.g>
+ <CAHwyqnV=SBMwTzC74YN7585u_pd525E=tRArL_5z_uLb-FGnhg@mail.gmail.com>
+In-Reply-To: <CAHwyqnV=SBMwTzC74YN7585u_pd525E=tRArL_5z_uLb-FGnhg@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 12 Oct 2026 11:49:00 -0400
+X-Gm-Features: AclHuK_Xb_0LrBL0y_a0WZLibZnzU1Ow7Q2XMWc1JgHuMBrIohfJUwHlZXsA5Ac
+Message-ID: <CALnO6CDTaXcfDArqT3tj3fY5hReEcAaMmCbTD9fpMJdbCMc-bA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] branch: let --delete-merged find squash merged branches
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Phillip!
+On Mon, Oct 12, 2026 at 8:42=E2=80=AFAM Harald Nordgren
+<haraldnordgren@gmail.com> wrote:
+>
+> > After rebasing, you probably can (re)use the same algorithm as used
+> > in range-diff to match the commits and their rewritten counterparts,
+> > but I wonder how "squash" would go.  Presumably you can locally make
+> > a trial squash merge and probe for a similar commit on the upstream
+> > commit.
+> >
+> > On the other hand, unlike deliberate rebasing done during a patch
+> > iteration, rebase done on the upstream to integrate your changes
+> > would not rewrite the log messages, so matching the commits based on
+> > the log message may work better than a range-diff between iteration
+> > vN and v(N+1) in the submitted patches.
+>
+> Matching on commit messages sounds very brittle to me (GitHub mangles
+> them on squash), and also unnecessary when we can compare the files
+> themselves.
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Well, I think Junio was talking about the rebase cases for log
+messages, but I have been known to cherry-pick and edit the log
+message of small contributions that aren't up to my personal standards
+to help contributors land their changes, in which cases you *would*
+care more about patch ID than log message.
 
-> I can see we'd want to use the committed version in a bare repository,
-> but it seems strange to me to ignore uncommitted changes in a non-bare
-> repository. We don't do that for other special files like
-> .gitattributes. It is rather inconvinient if the user has to explicitly
-> pass the file inorder to test the effect of local modification to
-> .git-brame-ignore-revs. To me it would make more sense to automatically
-> use .git-blame-ignore-revs file from the working tree when that path is
-> tracked by git.
-
-In v1, this patch originally read .git-blame-ignore-revs from the
-working tree in non-bare repositories. I switched to reading the
-HEAD:.git-blame-ignore-revs blob in v2 based on Junio's review and
-suggestions on v1
-(https://lore.kernel.org/git/xmqqse2kma4o.fsf@gitster.g/).
-
-> I did wonder if we wanted to automatically support
-> .git-blame-ignore-revs in the root of a subtree, but I don't think there
-> is an easy way to do that without visiting all the directories
-> containing tracked files which makes it too expensive.
-
-Agreed. By convention across the ecosystem (GitHub, GitLab, and soon
-Gerrit and Gitiles), .git-blame-ignore-revs is read from the root of
-the repository, so only looking at the root keeps it simple and avoids
-the overhead of walking subdirectories.
-
-> One final thought - do we want to limit the size of the blob that we're
-> prepared to parse as we do for .gitattributes? I had a very quick look
-> at the khash code which is used by 'struct oidset' and it seems to use
-> 32 bit integers for the number of entries. I did not spend anytime
-> trying to figure out what happens if you try and store 2^32 entires.
-
-In parse_oidset_line(), peel_to_commit_oid() runs before
-oidset_insert() and skips any OID that is not an existing local commit
-in the repository, and duplicate OIDs hash to the same entry. So the
-oidset (and khash) will not have more entries than the number of local
-commits in the repository. That said, if you and Junio would like a
-blob size cap in parse_default_ignore_revs_blob() (similar to
-ATTR_MAX_FILE_SIZE), I am happy to add one.
-
-Thanks!
+--=20
+D. Ben Knoble
