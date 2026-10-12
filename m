@@ -1,101 +1,102 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7250A3ABD8E
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 18:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9B94D37A0
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 19:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791831327; cv=none; b=ZhxFwzINZvK1TX3YGThYcolR9n9PNPlJ75WIm6hmVK+sm9ayS6GyxP/XOJ/F7B7eAykUjZa8EfwQGgGNCwvQI2My2+zdbpLowKzDsbYqnsrvDiPFIe/EWnp8ZtbMPMQ5h9jsYRkto55u55i/1prpXGZsbq57JABC0gJptd5aVqM=
+	t=1791832282; cv=none; b=RITRsfo/mxIUFPSOpcIwK8ikPon5ieVj8U986bqGAuMDu4BMcrye+MeeV09JXJgNdWG/rR80TdQUftoHKvdN/4owfhEp7HFQkk2TKATpp9n0Ty6KJpe4ErvkRYKM4LU1TVWSLurxMdjaa/OGuHaxEc3420SakrkR8VovE08C7Dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791831327; c=relaxed/simple;
-	bh=xM+4YZUTW9wxXwJWd6ifFhp9BGBsWRRb9YwtRDn1sbk=;
+	s=arc-20240116; t=1791832282; c=relaxed/simple;
+	bh=7vKSiAT36ppkysO8+L/3pDEIy0dKgL/5gZuhkDGQ1NU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KgIO2qrCMJD/bYbXbkcMPbwRT7PhTH1qDEy5h1Vs0PYjkYxlMZsooXqqRQXLsvdHKamRBk9KbVjaT1WnphJCm2G+uVIMamtHf4Ten8UxgZpEt6cE/7CZIrYCZ+wgrmUmdR7GsVKhk1bCtd1/lF31WP/kQyOWiJ8kcSjzagCYY4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VkuKOxng; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=w2RULqBi; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=BXvvm1K2cmcP1ZJT80ZRhpPNkoTKNF9cQ/uheqO2Yflt7bCjHWa3JesPY8z3r0mrjSd3LXeKq/wXDF2WC3zkJW9jB2raXkxgGseydVTsJG+dD++OQlBXWpvhSYwYMEIujNkHkHCn7bq62Fm36utcYc58YnTeqPd8AXYI+CHhj68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=O8PTZ/US; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cBMJ8tEr; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VkuKOxng";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="w2RULqBi"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 944B5EC0845
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 14:55:25 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Mon, 12 Oct 2026 14:55:25 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="O8PTZ/US";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cBMJ8tEr"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4ECC0EC0854
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 15:11:18 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 12 Oct 2026 15:11:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791831325; x=1791917725; bh=xM+4YZUTW9
-	wxXwJWd6ifFhp9BGBsWRRb9YwtRDn1sbk=; b=VkuKOxngVlA0TjM6jwJPi+tOsn
-	KK5SHyi69zZ1jYaav8Kahpr0Eq9KmqijMSfZmP5uVPPaMZnk1PW3ZO0u0Dp3ihjw
-	C02iRDaa14N3hmNQOBiqLvlWpUyQ2EaTB5pjL5Gyb8cTW/9XY5SFCiCZ4AdAmL8W
-	EqZLpKMrg1n7hcAyKyvweG0VKgzZGh1GM2jo8DtWmcEICyEgEV1lwJdhCIABq69z
-	MOgDsEdjIvY+98Fb4U0lg3ahQST0s7BJxZTyye6frNGEx++6549oXe+k/nV5RzgN
-	oEtdyjDjt0EN+fBIH4fnRrLKYhVjGDtD/FgM4eyeoUt34nrXOlyiE/w3pUdg==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1791832278;
+	 x=1791918678; bh=qbKtPaWzh5Lxe1/7qmC9RTU+1BI7VkJ4a/S2gZA3RPs=; b=
+	O8PTZ/UScsr5y29b/xtmRdQ3KCdwb8C75SsLBfwhCHJOR/jdEviYhTK1ckC4MzJd
+	jQYs7z7ge/if5McEWrQ5tSRlO9HOMkIezwnG4b2gao6E5mtjYKOrHSNSiSwIcqQb
+	1tiQSLL43tEYDJCXqO31/tdISSSV61ZerPQ6z/5nO8FB2+138E0UU3d08yhoStm9
+	YNEYoZzMeU6wbtMEtd65SouWOXs0qMt2vNpISeM5ef668CYXoejvqafnM1B5gENu
+	YX2eAP2gq9zcSwlbLMWZ0JrsVYj+0L+X6wRBkK+q6EIQ6irlZA5gekp7xCNflTme
+	NLa+4Ta0PW0nP137cAuozA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791831325; x=1791917725; bh=xM+4YZUTW9wxXwJWd6ifFhp9BGBsWRRb9Yw
-	tRDn1sbk=; b=w2RULqBi+yvwRnddEbxixuWxTbl9KPm9fKgOsiNn+dN9d7SLPTg
-	9pH/tuPkccOij44ZyAIr1gmySo6FiLgMszbSdo+Tu8qAaeqkuxBjhPLZA++AXY87
-	bE83q5Q28k40IwGH181Kmv2yMZyHCiwhatbD6QXgNpuLvNvsafjPTnC9rYkdykSu
-	/GBbgSGTDXG53LdUX0rQRPOyRrDiTYbvg/sJvhRETIYYH5dEOfCvZH+oZvOS3c4F
-	u/em0UYy6pbgzeDhohfaiFvUe+/nu+3FY3rqfWwgkvogBK+mA4Etr2a1lR6v2w42
-	FwBWjuckypdAMjebzWqdro28r5tMFXVw/Aw==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791832278; x=
+	1791918678; bh=qbKtPaWzh5Lxe1/7qmC9RTU+1BI7VkJ4a/S2gZA3RPs=; b=c
+	BMJ8tErD4Ry+4EH6BQWdxekw0MrXXghgXBjcLXzSLNhkoVrp3cVHpk0IyzIdZwON
+	rcxQNCKYj4pYGYLJR4WbyenaS9T3YtF7QYAAex5UAkQqyVANnhOEMcJM1ZppOEb5
+	a8g4OfrxrX9QFGZxXxXpbknJMKUj+sGvidk+HOHl/0zIeCt7cz2d4zw0MPQTQZgu
+	ngo/8MXgfv2+zk5VjpqylRyY90iLYnG4KnRC19i2CxHbx+ro0/noeWOJD3JUktiQ
+	iWfAaBBXwxxyw/MTYDPTLcda/BF349UPzHwyhfW6VyTCP3ar3v03o5idJtDS8PhK
+	FRuGA7lTVH5fq/Wt8s3iw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791831325; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1791832278; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:nL2bGQg7ZKJBAaSzE3FdEUCMuemZVeluyK8vcSVFJskUYm8
-	PMsxCIDFhv5j0KU8IZbIKQkP2mbscx5i01ID5oaROAee2hFNqyJ7lcSFSXb2XsRZ
-	0BSxJnKR4diOGtZrhGZwGBh1g4SymoxXoC5V6em7EDVGEEtkAQED483PHDbuGqjO
-	Ic2J3wS17P0ZtgJzQzv5pnuYCkQ05dzpkUL6SIkFmv51e4N5+u2DdHZFMnFQoywc
-	/6LHWySv/bOLj89ebxD9N5MUOveR0oZxoAAJK40ua1pkcm5s9lOyOr9ejc2XZgAl
-	RU5OtVxgyKsUTPx1Tg0jp09Awbk3RW2tATjy93A==;
+	s=fm1:rsa-sha256:jBLzJlMm59m7TBTuYbVVDdNU/wW+tiyTnyshRE0b4n2oQzF
+	gOI6HlhgQW1zIsEnIp1iyptn1234NtEABXyllRi0F/fkpyPpUFb10gjTPLsG4Kea
+	IXiDbe0lTX5e08RgpxG+m8/T51Js6/v4ibsmavyxw/dVFKC/5+MQbzW4xMekS4A8
+	iv2q4p707QW61zGOER+GG4AuqlGaZGpT6iLMMFuyI4Gxk5axSRJcABT6HVJsP7LS
+	RVrw15ccY0toWSa+B4PwM2mCggKsCJxSyWrQPA5/0iKYF1JewlRlefHTFeHCHtBj
+	kDe2gDkMXVjZ08BXc5m3G/njLq84mu0ff3h7emg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:jeYkx42wHtniPegfbpNHyU36lBR2l7O0FO1FI+AdBhU=:xM+4YZUTW9wxXwJWd6ifFhp9BGBsWRRb9YwtRDn1sbk=;
-X-ME-Sender: <xms:HS3NakKr3FiQMf0AKNiPC2Rj92xG38nnC9FLJZCLbxoYvs886ZqXVQ>
-    <xme:HS3NarAd10-3zdE-jpt8gtilr7uuEBPLTFnxWAeX7mFByH2Xa8yhJZ1WNmQYrxFUl
-    QtrNSFcug15b-SogGUh3AWIMxqvUW_EhVMDzMF7IwVe_J5XEGYBibg>
-X-ME-Received: <xmr:HS3NatBWluRVSi2dZqSSQZ4Ni6-1eyHCVuea0WaPqZZW8l2iUAfGJ8xDtUkJqybzXS1_6utBlkbhrX6ZUehM4CBWwMQGGn6xS4iE>
-X-ME-Proxy-Cause: dmFkZTGhgzHc06Km3xRbWA3KAa2Hm152y3Y9zwRbGuwq1lIiPpSrIdh9b3iGmnKWrRY5kf
-    84P+at2T0VPfv7WbAhmzPlnISZMaHufbu5r8vafhagQb4hOnLhddbfSzWTMEKmMz1QDkLG
-    RNrNQnIeI1jTYaZnBNuhYtIpaivfIAoDk620O7zaib4/PuRiJN2Xw8cRgVd1ws/j8NIoUk
-    5DU7SrFc1jr7exF1av+s6KQcEOvHkjrtTbVZYtKvjblZazhqsiJCLaaFi/Twup49XpML+P
-    53+7fhSRtqEF5+ijFP04mtW1eJbwgUN8x3KCTgGk+Zgq+rFHlTO9DYoPfq739P/NR8zaW6
-    MHHLQk/ckXZor8XH8n3ggr9Cqgmc9Ts69E73Quo+CsSdAE9wo/YZ2X5R3t/Bw0kaCNAtF8
-    hZP+MWykZNnYPAbDhKLJe4uPyxuyxO2JsKMkA7+z+h0ZWqSUYMHzv07GUkwVMU5B3OMooq
-    jQUH5x5XjogJpdlZ7ejx/Hw8jA7l51cqe0ztDo3MWS5b1ZJrBrAf+RrNxrjCaeNzIJ4wee
-    AhE871EePYtxnfyGadDL6QN3lMPgGOGTdfalifYJu+EXE4dixF3iX+TMpflq3SGRcBCX1q
-    7DTLlE8qU+bv6BNXtf6Zx4ndXvKwoivokaIm16Li9cAoWm7y8ZBqh7bSXmdQ
-X-ME-Proxy: <xmx:HS3NatAAY1OoWJ_ji0dG2OJJ_djvQPnSv1IPbM6O0TqFbRLXZOMpyA>
-    <xmx:HS3Naor1t8hyX-9PK-kOznmkhaT4v5hXRM4gkf-WfHD8Dcx659Nkyg>
-    <xmx:HS3NannhIch1G-U_4ZRprjW2vHR77FFkkf7i4rYec80rl0Y8ZOfoXg>
-    <xmx:HS3Naoz-xMZpll5MbWcc07yWeN-fPGFrT-7xQDKdBtFt_xLKru9J_w>
-    <xmx:HS3NarNogDuBvjk-8bHBLxvn4VMGKXdFaNkiDx7LQ7GGtIspLN-HKvBv>
+	action=mi-m=1; hc=13;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to,
+	user-agent;
+Message-Instance: m=1; h=sha256:S+hl9JdTkIbN/evmvoLPMdZsGsOSpU/u+FzzPEpl17s=:7vKSiAT36ppkysO8+L/3pDEIy0dKgL/5gZuhkDGQ1NU=;
+X-ME-Sender: <xms:1jDNauX_hbCL7ElesooL9YV-Cr2TOLx8FykBu7oOf_3xHqfgZL5q8w>
+    <xme:1jDNahlzQG2GPO0oWbhE3E8kbScQVI_dOiqEh9mKxUiwGFuUSWy5Wj_JcRcuAFqPL
+    PQC3EpGiXIyfrFCYRui55704JrpQaKkwRQk6Hui2Y8Vpe_ukzLBaQ>
+X-ME-Received: <xmr:1jDNanaFz6Iss_ZNGlpbLzKhhCEF0D_dYcMvcbRwmwEbLd9dDAbJxhuRn8b239Tn1ETQuAm_948OdiIb-uz1Gj5ZlWlFaK-119BZ>
+X-ME-Proxy-Cause: dmFkZTGkpqEn0WCOfSunoTlw0lh/KEgunIX+lOpgzHCiADhIAYrtp/t4wfcleUOybOW+rq
+    HuAhdO/7/QZCNpen1rU5O0nEuDaWJOQ/b4wzBz465jMvLm/IoEmcNMb1KEA4M4Ix+DM2F1
+    I9CK8r6J3O30Iiwj0uvPqJR4eg/DyJqdN8ME+5ekRAAwY8O15Uw7zrdSpGsBbBDu076x2L
+    POq5XBTTD8uEIMZPL+hrU0fMLvPDmiEnaUA817TVUySMduZZFDqdKOYyYDy3ztxgZtSyw/
+    Ex1eVyQJBWm+7KHZnOV8j+PK2zlFMFRUm4WzUYDc+tIQ/O/2K8dXtfEPWNm3SKc2ObW4pl
+    uQt8UnR4iBRSorRSuiqTOvVNY8be5n4kAdJUKgAcMKEqY6IPxya2UfgDuiUfKRGoTcBur1
+    EV6HI80zepGi8wUViADyAlKXE2O3wGBb+k+K+fAG+ioTzNM+UgQM0K2P2ztxUkVb63Pcxj
+    I57j4RR5Q1tcScNGTBVpH+sdsU6eHRRR839bdgzdgeU6OJ3FzoMme8lWehoLHh9gWAHksZ
+    CxIG+ixjdh9DuRpRVC1IdxU+5BbRf2Es3JeMYIy1sHtj8L1NCoIl3uKMHZegDQSZfAT8XX
+    N9H1rMCqDueuNlJGZNHi1afDuIpgOh8BIUPbEFFa/DC2PD4YkqGERGldLg6Q
+X-ME-Proxy: <xmx:1jDNakPlK_qxGxkl0dEAK0GoRZtRY-xsJDdGgsNrKGFIb3WCtEd6Mg>
+    <xmx:1jDNakYFsBUswQ4GPVADuic-BkNncGdT5xlR_EvHOGR0dbc8uUEwkA>
+    <xmx:1jDNaq1wzT_fGRGw9yiElN0xYTQkqQZLFTGTGEr02rCw8t0UCRX_jA>
+    <xmx:1jDNaid7GytwsNK20yYGjshfC8L_pzUs7POklrOJuGdlIRRhtugsiA>
+    <xmx:1jDNatYp3AHTX3YDzva40oRB_0-xRvyUNxwQ9IapFcEYtBEkmuzRV5QJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Oct 2026 14:55:25 -0400 (EDT)
+ 12 Oct 2026 15:11:17 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristofer Karlsson <krka@spotify.com>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v3 0/4] connected: add incremental connectivity check
-In-Reply-To: <pull.2211.v3.git.1791806877.gitgitgadget@gmail.com> (Kristofer
-	Karlsson via GitGitGadget's message of "Mon, 12 Oct 2026 12:07:53
-	+0000")
-References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
-	<pull.2211.v3.git.1791806877.gitgitgadget@gmail.com>
-Date: Mon, 12 Oct 2026 11:55:23 -0700
-Message-ID: <xmqqzewi695w.fsf@gitster.g>
+To: tboegi@web.de
+Cc: git@vger.kernel.org,  curtis.allen.smith@gmail.com
+Subject: Re: [PATCH v3/RFC 1/1] read-cache: do not trust a size change when
+ conversion is active
+In-Reply-To: <20261012175638.3712-1-tboegi@web.de> (tboegi@web.de's message of
+	"Mon, 12 Oct 2026 19:56:38 +0200")
+References: <xmqqwm1no29m.fsf@gitster.g> <20261012175638.3712-1-tboegi@web.de>
+Date: Mon, 12 Oct 2026 12:11:16 -0700
+Message-ID: <xmqqik3668ff.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -103,36 +104,114 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+tboegi@web.de writes:
 
-> I'll just mention a short summary here, to avoid repeating what's already in
-> the commit message. The incremental mode is faster than the full mode when
-> there are few commits to verify and when the active object tree is large. In
-> the happy case, the work tracks the changed paths and their comparison trees
-> rather than the full reachable object closure, which substantially reduces
-> the dependence on total repository size.
+> From: Torsten Bögershausen <tboegi@web.de>
+>
+> "git status" can report a file as modified while "git diff" and
+> "git add", which both run the clean filter, agree its contents are
+> unchanged:
+>
+> 	git init t && cd t
+> 	printf '* text eol=lf\n' >.gitattributes
+> 	printf 'one\ntwo\nthree\n' >file.txt
+> 	git add . && git commit -m init
+>
+> 	printf 'one\r\ntwo\r\nthree\r\n' >file.txt
+>
+> 	git status --short      # ->  M file.txt
+> 	git diff                # -> empty
+> 	git add file.txt        # -> updates the index
+>
+> Note that "clean filter" here means the "clean filter" and CRLF conversion,
+> and all converting of a file in the worktree into the index.
+>
+> Problems that have been found in real live:
 
-This is exciting.
+"in real life"?
 
-> There are also regression cases in the synthetic fixtures. With long
-> incoming histories, the extra parent-tree scans accumulate; in the synthetic
-> fixture incremental is about 1.5x slower at 10000 commits. Per-commit
-> ...
-> A safety net for this regression could be to dynamically disable the
-> incremental mode if the number of incoming commits is too large, but this is
-> left out of the initial version to avoid overly speculative code.
+>   Tools that rewrites unchanged files in native line endings e.g.
+>     javadoc, code generators, formatters and some editors change
+>     the size of every file it touches.
 
-Hmm, ... OK.
+That is not just size but contents are changed, no?
 
-> Deepening fetches currently fall back to the full check because the full
-> check omits --not --all for deepening -- there is no existing-reference
-> boundary at which the walk can stop. An incremental approach is possible
-> here too -- using the old shallow roots as the trusted boundary and walking
-> the deepened ancestry forward -- but that is a separate change and left for
-> future work. Deepening is also less common than regular fetch and
-> receive-pack, where the speedup matters most.
+>   Editors that insist to replace 4 space with a TAB,
+>     even if the file is changed manually forth and back -
 
-OK.
+"back and forth"?
+
+>     Using a clean filter that changes the TAB back into space when
+>     committing will cause the same confusion.
+
+This also changes size as a result of changing contents.
+
+> `git status` and `git diff` disagree because ie_modified()
+> in read-cache.c concludes that a file is modified
+> as soon as the size has changed.
+
+"when size differs, without looking at the contents"?
+
+> Signed-off-by: Curtis Allen Smith <curtis.allen.smith@gmail.com>
+> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+
+How is the collaboration going here, Have you taken over the series,
+or are you two working together on the topic (or I take that your
+intention to CC Curtis is to work together starting with this
+version)?
+
+I am wondering if we want co-authored-by or similar when we lose the
+RFC status.
+
+> ---
+>  read-cache.c    | 25 ++++++++++++++++++++++++-
+>  t/t0020-crlf.sh | 45 +++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 69 insertions(+), 1 deletion(-)
+>
+> diff --git a/read-cache.c b/read-cache.c
+> index c4cf08a3a3..9aebe4c394 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -9,6 +9,7 @@
+>  
+>  #include "git-compat-util.h"
+>  #include "config.h"
+> +#include "convert.h"
+>  #include "date.h"
+>  #include "diff.h"
+>  #include "diffcore.h"
+> @@ -438,6 +439,27 @@ int ie_match_stat(struct index_state *istate,
+>  	return changed;
+>  }
+>  
+> +/*
+> + * A difference between the size of the file in the working tree and the
+> + * size recorded for it in the index proves that the contents changed
+> + * only as long as the two are byte-for-byte comparable.  That stops
+
+"compatable" -> "identical"?
+
+> + * being true as soon as the path is run through a clean filter:
+> + * rewriting a file with CRLF endings under "text eol=lf", for example,
+> + * changes its size in the working tree without changing the blob Git
+> + * would record for it.  For such a path the only way to tell is to read
+> + * the contents and convert them, which is what we already do when only
+> + * the mtime changed.
+> + */
+> +static int size_change_is_conclusive(struct index_state *istate,
+> +				     const struct cache_entry *ce,
+> +				     struct stat *st)
+> +{
+> +	if (!S_ISREG(st->st_mode))
+> +		return 1;
+> +
+> +	return !would_convert_to_git(istate, ce->name);
+> +}
+
+Wooo, that is surprisingly simple.  Even attribute look-up is not
+free.  How much overhead are we adding to the case where no clean
+filter is involved, I wonder?
+
