@@ -1,98 +1,96 @@
-Received: from smtp83.ord1d.emailsrvr.com (smtp83.ord1d.emailsrvr.com [184.106.54.83])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A1C1C69D
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 02:41:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=184.106.54.83
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735E4135A53
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 04:11:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791772908; cv=none; b=j2qi9itKVRGzYwwqQIXg1Vt6CnrlumcJNmeX0jj7MMwDvHherlBVVNSF0lRmGbJoSGJu2NX29xo1bZZzz6TJe2nquDiRYCwzQrGZR/Qjfb0ZUx2/D0v1nAb2m+wtHCNuGTKFsyfyvXKUwYgQ/V+Xw6SL4zNRbNB0O1hPDFy+wMM=
+	t=1791778294; cv=none; b=dgyayRasR5cYBj023Og/46wuLX736/1gInrspmu0LaBwV3P9FWkcBB4T3p/vaN8jPk4r0wdv+My8rbc0wR9+k2zWVPU3K4ztYFMX2d2v9kuDR1CrNnyTI+RpX9kX9BeIHJnBWJQu5upfQ53uj6N59Fi9keNmK5L+LKsEzbbArns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791772908; c=relaxed/simple;
-	bh=VCRQ0jwTevMgbuMy1gSQHL49nVVnNTLUEm2X25gfNaI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CqTwrFBO1Y8kHgjmKQZOSKr7hO4geRCjRbg83BpIMXrTi7B+tQwpZLXyGSZc+r9DxqHD1HvyTFBrXiELGFvOrcNHTX91GPWjtP/VWkcOkhpic3AkmI7nOaHCwyR0kZDH6Jn/6KzWu2JscTINOOaho5OkGe+UFYoeeYUocI+s0a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=jonsimons.org header.i=@jonsimons.org header.b=VEMuYTEJ; arc=none smtp.client-ip=184.106.54.83
+	s=arc-20240116; t=1791778294; c=relaxed/simple;
+	bh=VGdXMZaFdeTwoj07rZZt0nIxZyZuCdSxh/ExsjCBpqU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CWE8CGtlD6z0UEG+Y6A8HvEfQSFfY1wcdidSb/nuDX/Nm/z+xt5p7a/SQumF0Qw+Cpf7HNm6rsk4lwJtwAw4RJUqH22EyTzW1+eBpcm7kmX+Wh5K9mKW7Ru9QyQhV0OUYBYlK5BFqSngVuNLoBW4rjDYJEnloMvP3Yqm4CCYpBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rK/vJzq0; arc=none smtp.client-ip=74.125.82.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=jonsimons.org header.i=@jonsimons.org header.b="VEMuYTEJ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=jonsimons.org;
-	s=20200911-u7gnnm7o; t=1791769609;
-	bh=VCRQ0jwTevMgbuMy1gSQHL49nVVnNTLUEm2X25gfNaI=;
-	h=Date:Subject:To:From:From;
-	b=VEMuYTEJl+AF8BlyambVnVl1aKnHbyGsgL+wN4/C2QTvyI1Z9J+/rHczdRb0Q5+3s
-	 DGABT/Rcq2yjm/0WnuKki5mHR22G9RsAVqOyK/cvbY+CRtcCbBoyeLMO9QnuKhz2hp
-	 AlUdQCUobk/M/XcXwwz9vVQypkX2d2K5hNSZdbq0=
-X-Auth-ID: jon@jonsimons.org
-Received: by smtp3.relay.ord1d.emailsrvr.com (Authenticated sender: jon-AT-jonsimons.org) with ESMTPSA id 5D95F6029A;
-	Sun, 11 Oct 2026 21:46:49 -0400 (EDT)
-Message-ID: <4978013d-36c4-4441-a93c-68f1f35c06d0@jonsimons.org>
-Date: Sun, 11 Oct 2026 21:46:48 -0400
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rK/vJzq0"
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-33c2520ad38so3279257eec.1
+        for <git@vger.kernel.org>; Sun, 11 Oct 2026 21:11:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791778292; x=1792383092; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=VGdXMZaFdeTwoj07rZZt0nIxZyZuCdSxh/ExsjCBpqU=;
+        b=rK/vJzq0vSmMOty978hn3m5HLl5ToxIWJ5UbUiFHs1cWiLyfF/rWE78eiUsbSgouYk
+         ek0hs3wQE3VMn1fj0lnAdysIMV5Azyk6nJXTxU3M5yB8x1EXNhzCG0n3UvwB5L19XT9f
+         qejrqUoGzXTjMt+l7W5kLR16MykNYCXZcxqZYRQs3uYDX60LvJL0k/qgQXCdiTeH2eou
+         /pTCRLkf0Lbd/49RZlvoaw0BcvtxbHJafi6ernboQsnILlvKX4JaM8DdUmbZtYiXOapQ
+         9GoILPgSmRCqotxZBONgSUpcOGAq78atNWNSD2adiCpOnW0Nn9wUhz1jDE5mSllMeTHE
+         CyeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791778292; x=1792383092;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:sender:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=VGdXMZaFdeTwoj07rZZt0nIxZyZuCdSxh/ExsjCBpqU=;
+        b=wDzIEKpDjTNaWXdY9Jj8hN5WxqOxgcbtTAfyB4J7Drbv2IxPyf90ajMVsgq2B9Nzk8
+         CTfPh4q885l5Rw1P1HwRs2sJR6BazOkPG8UC4AH1IKPhf/eJ3w1b9zeCk79ocU5YgANq
+         HzW0vWFb08b9LtBDPf/D7vEVdOkgF91B+jUwC82j4uKciWxQE9VtMiucjhFISE8xPR+y
+         35Ld0eC6OzGJ8hhqELUOyJar25hy59k3+RLPZUyh31KsM6kEZLMG9PhfOjRz1k8en0Th
+         iBKIBTwGSXc8zGJQyBPpm7j41mAmITtmoM2EIqoDZoXrJlgSN1wNhQbzKsQ60N8qER73
+         lqGQ==
+X-Gm-Message-State: AFq9FYL/os/w9I1YDpQkMweNlGmOZj2AZ6AISFEVIv9uK9ildorCeFVz
+	tIpVQzKQH7NmLVzKZg2m2d7hHhLg/RLPGUYaV8GuDlNPha1wo60pCfT1r9NYcAfaDpZmEw==
+X-Gm-Gg: AYBFou0NaOuRVnZCGti7ysTAql5sC8k7saJwpNeCjeYw7dAnGJxtCNjErGd1YU5WykY
+	JVL4RMxAwt6e/pCijNXvmGSVuGSPM3VrNmK+xSEl8b8Mrptet02wbtIP96SQBCmc9XJcmtTZECX
+	L//zq8IIeGkmZroY6tetUThhcZMDOcoY9cClrviw7fuVE7sVThP+/P/sPpAxEjAr5VGXgauLR+z
+	qvuHu6zPZr/DlOMekvWU6vLI8y8za90u+VM/3L6BWDpg4OPkQkuZJ+XKGAvWOMYD3OEn25HDy+F
+	IuP8IFgio6kluetkfCBYm9g/mT/boRfzweLTVrd7ut17xODgj60Vsj7wVvV4Cvicj90rIKaqqpg
+	Ud/X+sKgweP1uNUeMaOGy46fD8PHX3fjCdw5pimsO0PgO43Gs4xCaLH8H0sjnIMX0YoqSbq/5Ei
+	YRrjEP8e2ZNYlD26f88aUCN+8m1pmXEqiQ7vBKc8lQTgv6OS4DQhX3hs4qpqenyeIcB3YGcQAxJ
+	T7T
+X-Received: by 2002:a05:7301:1807:b0:35b:2942:f79f with SMTP id 5a478bee46e88-35b2942fbe9mr891001eec.19.1791778292404;
+        Sun, 11 Oct 2026 21:11:32 -0700 (PDT)
+Received: from archlinux ([2409:40f4:315b:522:e720:8632:5d56:b752])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-35b690af3easm298233eec.1.2026.10.11.21.11.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Oct 2026 21:11:31 -0700 (PDT)
+Sender: Dilshad <hello.dilshad.in@gmail.com>
+From: Muhammed Dilshad A <dilsheddilu123@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	ps@pks.im,
+	Muhammed Dilshad A <dilsheddilu123@gmail.com>
+Subject: Re: [PATCH v3 1/4] mergesort: move sorting tests to Clar
+Date: Mon, 12 Oct 2026 09:41:18 +0530
+Message-ID: <20261012041118.14682-1-dilsheddilu123@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <xmqqy0c4emvk.fsf@gitster.g>
+References: <cover.1791365181.git.dilsheddilu123@gmail.com> <cover.1791556668.git.dilsheddilu123@gmail.com> <21f46a2c9046d1da68233467bafb4b69226f35e6.1791556668.git.dilsheddilu123@gmail.com> <xmqqy0c4emvk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] SubmittingPatches: avoid add-failing-test-then-fix
- anti-pattern
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Patrick Steinhardt <ps@pks.im>
-References: <20261011153206.72386-1-jon@jonsimons.org>
- <xmqq5wz7dcpx.fsf@gitster.g>
-Content-Language: en-US
-From: Jon Simons <jon@jonsimons.org>
-In-Reply-To: <xmqq5wz7dcpx.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Classification-ID: fc811441-f3c0-4178-bef0-82ce49c56ddb-1-1
+Content-Transfer-Encoding: 8bit
 
-On 10/11/26 7:44 PM, Junio C Hamano wrote:
-> Jon Simons <jon@jonsimons.org> writes:
-> 
->> +When fixing a bug, you may find it useful to first write a test using
->> +`test_expect_failure` to confirm that the test exposes the bug.
->> +However, unless there is a strong reason not to, submit the test as
->> +`test_expect_success` in the same commit as your code change that
->> +fixes the bug.  A separate commit that only changes `test_expect_failure`
->> +to `test_expect_success` can leave the behavior being tested out of the
->> +diff context, making the fix harder to review.  Reviewers who want to
->> +verify that your test reproduces the bug can temporarily undo the code
->> +changes while keeping the test.
-> 
-> This indeed matches what contributors have been told to do.
-> 
-> But do we even need to say the first two and a half lines?  One
-> might find it convenient not to write any tests, or to be satisfied
-> with manual testing, or to send test_expect_failure() separately
-> and early.  None of these is what we recommend.
-> 
-> As you described, adding a test_expect_failure() test with a large
-> body alone in one patch, and fixing the code in another patch would
-> show a change from test_expect_failure() to test_expect_success()
-> without showing much of the body of the test in the second patch,
-> making the review unnecessarily cumbersome.  If the test is trivial
-> and small, it may fit within the diff context and avoid such a
-> problem, but then there is no need to add such a small test as a
-> failing one in a separate patch in the first place, unless the goal
-> is to inflate the commit count.
-> 
-> So, unless we can think of concrete cases that qualify as a
-> "strong reason", I do not think we want to write everything before
-> and up to "a strong reason not to" in your text.
+Hi Junio,
 
-Ack, I think this makes sense.  I do not have a list of concrete cases
-that would fit a "strong reason" and be applicable in the general sense.
+Using more headers would not prevent this move. That first sentence
+doesn't explain the reason, so I'll remove it.
 
-> How about a short and sweet sentence like this instead?
-> 
->     A bugfix patch should include tests in test_expect_success()
->     blocks that demonstrate the breakage when the code change that
->     implements the fix is omitted.
+These tests work on lists in memory and don't need a Git repository.
+Moving them to Clar replaces the helper's hand-written pass/fail code
+with the existing unit-test assertions and reporting. It also removes
+the shell test and the helper's test command.
 
-Much crisper, I will apply this to a v2.
+I'll rewrite the commit message to explain that reason.
 
-
-Thanks,
--Jon
+Regards,
+Dilshad
