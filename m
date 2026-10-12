@@ -1,61 +1,61 @@
-Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
+Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E32C1AA797
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 02:01:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3644E7080D
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 02:02:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791770467; cv=none; b=emaQV9HSmV/RShVRx+8ZU3KWuI3VjJWbB4nDR6HYOCCGQVqUaHJ/jpMkazKtZ7rl37lDMtWbM1+Z699D3Qw71A5KH5C2toPj8d4/KgYia3HQ8ynLHyN/29yeDxTXJMh3NWudQ057aK7ZSOtruSTpTHkbqpse0kXSc2EAkmlhdKY=
+	t=1791770578; cv=none; b=lzXz3v56twbhqpHlwfLOgr4RL/gA51ta8CXe+th5pjvOnRrdIx8XS7OO+tNc8yinLwfHvL8uQ5s/KvW01DpCewMihLfPYS3wvGFxypNny20FwP/yBZCs7Z1IiKNyVUWaaA1tDfV3gtGdqAaWdKdxMNdQh+2DKpc6zqCSxSyyFeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791770467; c=relaxed/simple;
-	bh=IgoF8hHlb46Z1znyYSRuYfFT0+kYr3C3GG5Up6yzVbI=;
+	s=arc-20240116; t=1791770578; c=relaxed/simple;
+	bh=o7vlWi9gATstHNmmYzYkQdTT5HeQEjiI1/4Uoi/AAfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nx+T4wTWI0UeL4BjcmY4BDQAtvlE5zT/xySNBrz6AGoqU+We9DIJm2kbmsDqOj49pk/DfLq9e0PX7K8GJ5uKofxq7Bll2mRQgduIWixCYGi8vOv/7v/IiO53rN6O31T/ZF8Ii3L//DDFHBRnAgntwm1apUhldrYgxzL4JOSHC+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fVDwSFUU; arc=none smtp.client-ip=74.125.82.177
+	 MIME-Version; b=kR06D5pXKQWyde4JI62xRT4H7A2tCXGX5sskeJtvgi9iaa6rXQNEfMN0uxp/y5wjZjtIFbOfiKgotrbvCEzljDaXGnbVIXIO7bpPciGUEjrpNOUoB8U3fIpr7Iv+jqQ64VoF4S0megydIuRnN/LmMcVgevD+VC/bW8Oz+j4OCGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jhqDODWp; arc=none smtp.client-ip=74.125.82.54
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fVDwSFUU"
-Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-3514e7cbbbaso3603732eec.1
-        for <git@vger.kernel.org>; Sun, 11 Oct 2026 19:01:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jhqDODWp"
+Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-1517bda04a0so600967c88.0
+        for <git@vger.kernel.org>; Sun, 11 Oct 2026 19:02:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791770465; x=1792375265; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791770576; x=1792375376; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=8bpbWwXmAznsAhTsq8OyLE0/fv43JDVpOclCNEwStus=;
-        b=fVDwSFUUkm32GDGExUn6E8CSxcdkCcoreCVv89ggcZJPFlt71cHpe6q418imQEVFqW
-         Ka7nB59ee/0Wzf7mp9Fm8JIvPRE1d7nIO1FIBM5kzVHOZfw7SPLJyRJ4CTfOM6fTwiSt
-         Zpt0Uf4t2mhe3p/71DCqznllbv8TXyl5wGXx4TQ4Efi68Y4+8eK0aAXKO/LvaOJAZT/5
-         IQZJDidw3Hz/oeAH1X9ciupzV2Yy5vwlpRT79KRyVADV/9E6+8dRCNpjfCd2/Uq6TJKc
-         G/jwaMNrofXn5voAfylQQko793FoXMR3FQ/ouuuKypyRVOigfjgz89DDx6qgP+caHA6t
-         A3Gg==
+        bh=TXEhZTIr0Tqxp/OfNzrpJRXY0O7wdXva4c68bMrk2pY=;
+        b=jhqDODWpjzUkdu02Blgxg4FRfq3kzcKqMrXLNIVGUrx66zt/JLDMnJ2h25Dp1a3/o/
+         s8HmWPB8Wgy+muPB9efXZP4w5Q9eEtuRb35u+VjMXwsGjboS9/hGz5vJ/BafxG0MPOKY
+         JsLJOyqp0YzCQ71WGyepWq43P4GxamNzFP8EHh3X4ykXdz6FtVB5MR6bEk/s9EOAVcsR
+         TWe6Nm6WM7xXgXeBcQu+kkhv9zzIRlJetFikIX4WjiciDE/LXF/aOpQgG6hsvrd4IlMx
+         zxPDNZZMtJGAraV3QN8Y6TGOzhyJMKt4ptBLZCjovv9s65GzSiMSSpTW//qLPuuGjHi3
+         AI2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791770465; x=1792375265;
+        d=1e100.net; s=20260707; t=1791770576; x=1792375376;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=8bpbWwXmAznsAhTsq8OyLE0/fv43JDVpOclCNEwStus=;
-        b=saH1WXPIfN0ie7fVonvBTgp3HwkFgfuxAu4FUqrxNuXJRisdiwoqtL5Vc73tV9LxHo
-         lOcioE9U0sjAPIMAQloJMThhp+Un83oCP1kZ9AWMbk2qU+cn+HzLEH6hfyPP2+Vcf5Cu
-         SsydQztK0Zjha0RMks+pA/s7sZu3+nO8TVdeb9b3TV7gFzicq5c10++PExBf1ninFgHE
-         c6ZYgVaNClxpzRvqLbulgqREEgDE4D0U7Kx8l44gEAaJ0rgP5Hq6Furq3/XEVQfjCoCg
-         XZauZe2WHXqXpFhTMHsLzdy0K5XVCeuV7DzaNwn9t4a1c48E06h0M/WJI67JbHy4HPNX
-         G3iA==
-X-Gm-Message-State: AFq9FYLwHNmZB8NCDiEebAxR1RMdOLNahC0FFN5EH5C3m4d2kHgwMgRr
-	31TTh+cWCorC8ltvEcM7QHBshSqTd+PvvWFfuzHS6QZe0YLSdh0RhDdkchH9+9zZ/Cw=
-X-Gm-Gg: AYBFou0erIuelg1Tx26M3to2cfdhF0OfgNA5P5wZXk+ZYljuFBlUhb5WI580kExx1oq
-	d48fZJL+yboaK9A7jWYtmItaGy17F5n/gnOSLv9QznNa0sajgewZ/RHQqdn99T/Oy5oSiUWYf7r
-	Ln0TKcruqGSLFP1cnxDyjmV2fYzA8bWS5W2uAy+tKlp366SteTByJaVlIwoHXo8+ngA6+6M8MqG
-	W8aDn69dt4peAtxVB5IVJrSbhdLeiHn49iOMXxglWSMTLOdV6YiOZ+S46zijpfE6EARCPzhDusC
-	pA2fSZCvpZKhJU9qFR5h3XqOFDiji7njIdPTSNfgx63xhGoNHXRLmYctUgR/wQhOSLzzAS3edWw
-	bjdvJffKbXC66EBUuOgXT0j+m9Z6AmBRj+gxFbS/YtGOAU3LR/vvUWx4V0lBrZLqV1cH39c3Pao
-	wQf0YGGlJJ3aobeLg9V9eS/o3PPJCeaWgM/h3AZw4Bawp4KFFMy1Ms7eYFHYnFpKYK/q2tJUnJZ
-	kq5KsRlhOCV9eIuwhOxjVbB5Dr9VmDk
-X-Received: by 2002:a05:7300:e9cb:20b0:358:c707:4c3d with SMTP id 5a478bee46e88-358c7075049mr6669179eec.4.1791770465122;
-        Sun, 11 Oct 2026 19:01:05 -0700 (PDT)
+        bh=TXEhZTIr0Tqxp/OfNzrpJRXY0O7wdXva4c68bMrk2pY=;
+        b=Rx95vcux5gw8bUXZq52wmUWNRMBM8BtSrRQI5hjfEF5Yr5DK2sTVjsGeS2pnGQ9eoz
+         odeNG+/C5tPjRy91zoXiQUgqhZNj/A/PL4SV00yw6wD+wqWPHzisqX/tRn//Cb7p/q1X
+         eeZhIcMUKWHNaH+LYeQkPbt+kzCdy0bop9tCozRGXphHJgJ3sLFmyF2O8JlY8NSN5i79
+         uwwPx2J0hHqykIpAzljFgTFkW1vGozEq7XftrxZnhDRpScG2CXhVy1KNFTfb8n+YTFpt
+         A/hutDM4pwCbmxTRUuvweGvRQGmwZBq5ITR3/AhvloHzxKqxnTpnXCvQS9fk35VnHvBm
+         2dDw==
+X-Gm-Message-State: AFq9FYJt+Cw3ymc54Gbyb79Pi4EUinlcvUiuPnEG0YlXDeAD6I9rnbyi
+	YCcIdXhrg21CE1lDlWfqKaXoUaMQuDTuK6UXydW/qW1I5Z+1KV5Cf28ZmJSttFpV934=
+X-Gm-Gg: AYBFou1mTyqh6vXD8muinKvFFYs7lSF5K4VkL+15ac1xuy58yzOyuBEiBRH98ufj8A5
+	injsF6QzMSCX+xdL0mcZfrLj//OpSEwjHS3zFmX0lZeY6aFhbXcw2TwI36PbTZ7j75xBW29mUQY
+	oX2xG+I6vfzanhkq/O0AXjv2Gsdv3sizx5jOAjbRISUyN+wd40vtEiy8N0jW+BOR8iv/3yWcAF8
+	NgnWDmZm7IDZcA9q+DGz28eWI5nJF5FeYet6wZuCXON/ngzzfWYgrw3XC8FZLM6UaMx7sRPgWIv
+	hkjANMITs8EEpQgb9BeKEr1PUDvpnX/oK69T8UjsJvQvNZY+jBKoTPrwC6Wgtg3U52AD8GNBuRm
+	RKdfWD2/wFBemL/fL/Eas6RMgPmHFGSqkndW+NDnIY5ItmGWwvd6JjLrCireYhQl+GDO/GuxigU
+	8TKWLghBb1Lv0f44zokfdOkxxBHWL07VfyqaC+DlvYiNZHD2cRbAPm+jkel++OvKTAZHtFE7WJk
+	fHs3VAaKqaSefYxsh8UyYYinbrMFz18
+X-Received: by 2002:a05:701b:261b:b0:154:dc96:c1d8 with SMTP id a92af1059eb24-16a54ad2602mr16117731c88.2.1791770575848;
+        Sun, 11 Oct 2026 19:02:55 -0700 (PDT)
 Received: from isabella-caselli-linux.. ([2804:14c:9e:81ad:adb8:bc9f:a8c8:3c2d])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-35a352d4b05sm7196412eec.19.2026.10.11.19.01.02
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-35a352d4b05sm7196412eec.19.2026.10.11.19.02.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Oct 2026 19:01:04 -0700 (PDT)
+        Sun, 11 Oct 2026 19:02:55 -0700 (PDT)
 From: Isabella Caselli <bellacaselli20@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -63,9 +63,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Ignacio Encinas <ignacio@iencinas.com>,
 	Isabella Caselli <bellacaselli20@gmail.com>
-Subject: [PATCH 1/3] var: add GIT_HOSTNAME
-Date: Sun, 11 Oct 2026 22:58:44 -0300
-Message-ID: <20261012015846.2649843-2-bellacaselli20@gmail.com>
+Subject: [PATCH 2/3] t6500: get hostname from "git var"
+Date: Sun, 11 Oct 2026 22:58:45 -0300
+Message-ID: <20261012015846.2649843-3-bellacaselli20@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261012015846.2649843-1-bellacaselli20@gmail.com>
 References: <CAK4AdTSnaAOk649a0GLe1M9C+cYuDa0Nwo54=HT47R53Q4ZdWw@mail.gmail.com>
@@ -78,103 +78,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Git asks the system for the name of the machine it runs on in a few
-places. For example, "git gc" records it in "gc.pid" to tell whether
-the gc holding the lock runs on the same machine. Users have no way
-to see which name Git uses, and depending on how the system is
-configured, it may be a short name ("myhost") or a fully qualified
-one ("myhost.example.com").
+The test "background auto gc respects lock for all operations" simulates
+a concurrent gc by writing our shell's pid and hostname to "gc.pid".
+It gets the hostname from the "hostname" command, falling back to
+"unknown" if the command fails.
 
-This matters more once the config can depend on the hostname, which
-a later commit adds as an includeIf condition. Without a way to see
-the value Git uses, users would have to guess what to write in their
-config file.
+"git gc" gets its hostname from the system and only checks whether the
+pid is alive if the two hostnames match. Otherwise, it assumes the
+lock belongs to a gc running on another machine. Since the test passes
+in either case, a missing "hostname" command or a mismatch between
+its output and the system hostname can cause the test to silently
+exercise the wrong case.
 
-Add a GIT_HOSTNAME variable to "git var" that prints the hostname
-Git sees. If the hostname can't be determined, "git var GIT_HOSTNAME"
-exits with a non-zero status, and "git var -l" omits the variable
-instead of failing.
+Use "git var GIT_HOSTNAME" to get the same hostname as "git gc".
+Keep the "unknown" fallback, which is also used by "git gc" when it
+cannot determine the hostname.
 
-An option to "git config" to show the hostname was also discussed,
-but "git var" was chosen, since the hostname is not specific to
-the configuration code.
-
-The test only checks that a non-empty value is printed. The test has
-no independent way to know the expected hostname, as the "hostname"
-command may not agree with what Git sees on every platform. The
-includeIf tests added later check that the value matches what the
-configuration code uses.
-
-Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
-Suggested-by: Jeff King <peff@peff.net>
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Isabella Caselli <bellacaselli20@gmail.com>
 ---
- Documentation/git-var.adoc |  3 +++
- builtin/var.c              | 13 +++++++++++++
- t/t0007-git-var.sh         |  5 +++++
- 3 files changed, 21 insertions(+)
+ t/t6500-gc.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git-var.adoc b/Documentation/git-var.adoc
-index 697c10aded..e813ab4fd2 100644
---- a/Documentation/git-var.adoc
-+++ b/Documentation/git-var.adoc
-@@ -84,6 +84,9 @@ endif::git-default-pager[]
- `GIT_CONFIG_GLOBAL`::
-     The path to the global (per-user) configuration files, if any.
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index a7142ab815..f928089bf0 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -413,7 +413,7 @@ test_expect_success 'background auto gc respects lock for all operations' '
  
-+`GIT_HOSTNAME`::
-+    The hostname of the machine, as reported by the operating system.
-+
- Most path values contain only one value. However, some can contain multiple
- values, which are separated by newlines, and are listed in order from highest to
- lowest priority.  Callers should be prepared for any such path value to contain
-diff --git a/builtin/var.c b/builtin/var.c
-index cc3a43cde2..b427ebd61e 100644
---- a/builtin/var.c
-+++ b/builtin/var.c
-@@ -115,6 +115,15 @@ static char *git_config_val_global(int ident_flag UNUSED)
- 	return strbuf_detach(&buf, &unused);
- }
- 
-+static char *hostname(int ident_flag UNUSED)
-+{
-+	char buf[HOST_NAME_MAX + 1];
-+
-+	if (xgethostname(buf, sizeof(buf)))
-+		return NULL;
-+	return xstrdup(buf);
-+}
-+
- struct git_var {
- 	const char *name;
- 	char *(*read)(int);
-@@ -166,6 +175,10 @@ static struct git_var git_vars[] = {
- 		.read = git_config_val_global,
- 		.multivalued = 1,
- 	},
-+	{
-+		.name = "GIT_HOSTNAME",
-+		.read = hostname,
-+	},
- 	{
- 		.name = "",
- 		.read = NULL,
-diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
-index 2b60317758..f50c62a25e 100755
---- a/t/t0007-git-var.sh
-+++ b/t/t0007-git-var.sh
-@@ -224,6 +224,11 @@ test_expect_success 'GIT_CONFIG_GLOBAL points to the correct location' '
- 	)
- '
- 
-+test_expect_success 'GIT_HOSTNAME is not empty' '
-+	hostname=$(git var GIT_HOSTNAME) &&
-+	test -n "$hostname"
-+'
-+
- # For git var -l, we check only a representative variable;
- # testing the whole output would make our test too brittle with
- # respect to unrelated changes in the test suite's environment.
+ 	# now fake a concurrent gc that holds the lock; we can use our
+ 	# shell pid so that it looks valid.
+-	hostname=$(hostname || echo unknown) &&
++	hostname=$(git var GIT_HOSTNAME || echo unknown) &&
+ 	shell_pid=$$ &&
+ 	if test_have_prereq MINGW && test -f /proc/$shell_pid/winpid
+ 	then
 -- 
 2.43.0
 
