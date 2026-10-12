@@ -1,153 +1,213 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06900479864
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 09:50:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0F041A4E4
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 12:08:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791798654; cv=none; b=t3/cV77TvX2by6XtoaKx/Je92aVgAMdmvI5J+tzhRW0OsIm+zpR1dg2tWEunjQeXwVHLRsJcJIQOELjzo3/fa1kGr9r6Rnu3ny+qcmHzF8wVJMDu/AnXU7dP1cFCbw9P2HhT5hEPNO6M85tbP0QypBZXjHW/DHoxs+dUOGnn9XI=
+	t=1791806883; cv=none; b=XerZosxi5ke6WeBkQbsIHtlgYZmiXUm8FW1vmEsqn/k9uqqnGXCoIp3+faNA3NhxzhyOp443t/J4+QapbLHyWixNNPlcjPWqxfUY1h4xgsteffuPpYoxGd4lYdvngMhfAb9kXyDqZWohJwt48Rv5OJpImoV9286a6hj9NHVvDIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791798654; c=relaxed/simple;
-	bh=eZB3Qz53zzJVigjnkfSfxSm3xdWncR8e4XAhD36q3BM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SOuN6Vr64DZ8H1QHF7B+TFXnvUG0WSJSoLXB/quUxLMdNgDYcU2UnmCIXBUOrZjByvJswKWJbIhgGvZFHkIpKcUbOtNZICFp64FSn757WZnG2PSr+nOJ5cw/YsL9izA4GFVe2TKhr9MxAi5inSxEmxWbTuLpqhQdnkL3sjrqW/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P+cGDbW/; arc=none smtp.client-ip=209.85.128.43
+	s=arc-20240116; t=1791806883; c=relaxed/simple;
+	bh=8FeJGv9N4YEnQppXS52mkhFufn7uWJg1QsWV++vSk7Q=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=XTjXYY+10sHMIr/C5rId6htmDR9xHYi0CADQJVgWJdvG4j0geyj6IacenBHn6Go+OKTaI0ojp+akB5qHb30H+SoxSPIfcvyB3TXPtJDZlkv3Ja2VHo2OLQZGB2MQxOYOwd44LP9FARGR1cbJ/Q+tu0atv3HAl/ApM/8j8USx6Bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RjbYIi1y; arc=none smtp.client-ip=209.85.160.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P+cGDbW/"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a16af2a232so13680355e9.1
-        for <git@vger.kernel.org>; Mon, 12 Oct 2026 02:50:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RjbYIi1y"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-5350c1b9e0dso25336951cf.0
+        for <git@vger.kernel.org>; Mon, 12 Oct 2026 05:08:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791798646; x=1792403446; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=deaIfYD12DzpnyURffXfU8hPlhmHlEduTsGsxMtLZIg=;
-        b=P+cGDbW/k6+4cp8/QvT6nBctoewbK/KWqEPJFnUzMQZM+vsda2OmOO2adbw8N84QpA
-         5gtuZKH9YxFB6rmpDMBismY1Z77S3YCgWyX3pCTEChAyEja24whZhLTrZm4tObCLyIbR
-         g4oTM+5S7Jrr0tknFHRcqlMOCeoPhuZ2vq2bQv9V9K16v5ZbRYDqIqkmzf+memdUPvQr
-         wgC44DeKwD/BvX1a2gb44h3XJdAoHCKxInRZcGgpoYEIQlrUi93Hm6es9Gbp5/gCt38V
-         VdmT1qmgL4XmCtt7lNYugPiK+WLdm8ae/jtjoxbpts1UkOC3VWMnqFz4/rv2wI/dYmzr
-         6Vkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791798646; x=1792403446;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20251104; t=1791806881; x=1792411681; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=deaIfYD12DzpnyURffXfU8hPlhmHlEduTsGsxMtLZIg=;
-        b=TwcBosc+eg78QlGnDYaHogljcmm9MHyMiN7bASffjJvxoVLO5qnXYWBzD0r2yE/eBi
-         QVCRp0L/5jJb+TWeTCFu2/JKoi4upFKOXqkT/OWqEid3FJXBkjp8OTDowr7CvavSIc7q
-         GUVHcwwncgrfqWz7JWjoTEGIUVJX+VAsl9u+V5aV2OxmK9gE8Edt5G2qw+xYkneUvdr5
-         Pb0MHdgcsUe5Z2/d9r1W0i0XV4tPOsYC1WswuMpWJ9ZqNkGHZXm+pY4Q8LkFlPZfB6Js
-         VbY8C3Pn4lEwzyO9i5/AdVgx3eoO3BUZsGM77/ZwjPlmAI4hLZz9qpfY9Drt4Y4+5vhx
-         iUQg==
-X-Gm-Message-State: AFq9FYKDDmB9asbgQqP2tOVQ3edQceHiviSYeQzSTXVUVxaDBO9HXUpp
-	P1WeqipEoRNlgcS14GwqV9MTS+Wt+l7NTSKE3RPFszPDVoW6Gq/o/cl4Imsu/w==
-X-Gm-Gg: AYBFou0W3BXeCO1SOi6TLc4Z+iaGFkngj/5Ldryo+3/PJTJNpnb2Lr9L+MqcsTdIq+c
-	f1J/DvxJkaHUtHo8cGVHW/ukFXAGPT2jr8DDfOUfLX5UaX3VVNFhiQ+SfKdP2N9myG0Fn6E89wo
-	V0UajlrI5EE1SU24EVm7Rtu9Ree1Z640JeivzKd5uN3hA0q5KxJMYyYSyOo/uNS9qNSukVPuUMF
-	OUUZw02rKcIIs7dtP/Kmizg2RG3nhjma9gw4wYQi9VUJSKTfCsh+14KIHseYMSJmTKquubCwWQC
-	e0OFYMV7jJxL1K81RtgGgJmSjBMWh1mG7gSLoo0nWwjaysmlMZblJix7Z/CZNd7wt8HrFUS6CAG
-	CoHkqLkSy/ZfHn7svq2BcW05OvHnnN4Vi14DpbEXYsGhhqg5XN1ZPoXOr+ioz+xlZUtFLhxsuK4
-	zdJs2tqRbzo6AXfPHYH5YEOgFnIJ4db/B+tevL+HkzdsmW6Zvy9kQdv8hpWwd3JL0HUHOiKYb8p
-	SWxrg0dTJBzvlRv0nJQ3QzX1GrGYAX+2A1EnYmYDg9C/pYsv7fmr8NSQ1TbGMs=
-X-Received: by 2002:a05:600c:3c89:b0:4a1:7703:e52a with SMTP id 5b1f17b1804b1-4a18e493039mr152902275e9.9.1791798645722;
-        Mon, 12 Oct 2026 02:50:45 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a19c71a1d7sm98467965e9.5.2026.10.12.02.50.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Oct 2026 02:50:44 -0700 (PDT)
-Message-ID: <03b187ae-bef2-426f-b6a4-def9f70c4a3f@gmail.com>
-Date: Mon, 12 Oct 2026 10:50:43 +0100
+        bh=zgcms1j0aYpyX5eULPHt3HibaiwhUIc+CPdH/H82ckQ=;
+        b=RjbYIi1yiiIGgQ9WwtQise7EKM+0y8S7XpIWeNFdA5uyWZyWlc7y6LToAKfPARJiWL
+         wWHfD0jKTmBb4XjxU7cD1m0RdwV4hxHSM4Ygx6nzJwcfceBcEJ0glNlVf3lbUiZZ3msg
+         D513h7z+Ml3uOg79STPI2zp0LbaQQBtFooOlG8+FHgzxeQBEi/c0Fv1UQSl6RkDdKxIy
+         gY/tOnctbvCIKrP2/KHB4Wl/aMlPxhhYhxkDuI9lt/bREFdd8RRbvlH25YolV8EhJSox
+         b3y00NQSa6ugzv54vukkcBPiajX35PZRc1dVdzKsfbRsB96BQV3SS/7DvqyzRALyS8IL
+         A0mA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791806881; x=1792411681;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=zgcms1j0aYpyX5eULPHt3HibaiwhUIc+CPdH/H82ckQ=;
+        b=DfUC/GqwvD65DnoYFRKBAADhCSnvY5wMboqeDn1iQMQDbMNHnw0RgXNr/rb1eX+BFX
+         VsUC1fGSb4sq/10FOh2DFkDJZc/sZu/SAJDvcbPYqFKIX2/EaBlKr2LMQaqK7xXbp0VB
+         TZFAMP/t39+6bLDORXBeHNbBSdVylNCCvQezjnUGHMejP1//ooL9l+V9MRsCKZUjSWMU
+         2sAtqkuTt6d62L0jX+UkyJTkYeZL5Ibnkq7q0mph/XhWx6+BUwcZ8t7ZnwnsWkyj2/gz
+         /8/yY3msYxaAfll/cdU/9NU3XVNs1dRCUzvPF7TQizs5/4TK6E2H6lG7XImD1cuV4nmP
+         Nisw==
+X-Gm-Message-State: AFq9FYLB77SUYyEy7M3DzM/bJ8TtltJqlvFaFypVkepiUgbmLAawqcTp
+	LAR42MVXxt8YJ3p+pB1zKN1tUxBLa0tP2wZEpiqmUVGotYo+jF5Bc41nNQorMUpH
+X-Gm-Gg: AYBFou21XPmsZErA93z7zimSK6PyWhoORRHIzNQeYV+lFQI/t3XTcI78mCisY8qTq5n
+	OZ26KnBP9LLRvhQNVDqW5SbmVGuDcuizP+VJ9hkV+CfSwpgm6ZIvMoQhrGecNmWg9qbTHhK7mBm
+	R26H9ml7kYx2kchpido35Ca6z309/x5/dhN2suf8Rm0r1GYUhfFceVlj/0KTwVVVf8vR7sluWvW
+	VplxUk8Y9dCfpFgeisuqkAa63xkT2EACNvuqxrjiYtHjeo5I0a3x/ffT3BDFZ7+AJ+kQ3Z06Grq
+	rSM7f0fg61NpUu6/X0oWa7l+NzG5ZwwGM7wkplrSJAlW58rPpfI9mkJvjAwYSx/4I+lP39VBHWh
+	++NqOt3csfiDmm3OWkWVVGiOg8WlarJHANaLfeWAGDMruIwvnCdhfrM6DybBnX85zs5uC2za8cR
+	CGPYya3ql8DmeM35QFLCfXg6FIJS0Grp2iUBu/sTmQUS9dKk6v+v1Zxl1aoQGfr1fZPdVJFTzgb
+	80Ur7LfYNx3
+X-Received: by 2002:ac8:5f92:0:b0:535:92a6:22e7 with SMTP id d75a77b69052e-5359fb4794cmr153449391cf.42.1791806880747;
+        Mon, 12 Oct 2026 05:08:00 -0700 (PDT)
+Received: from [127.0.0.1] ([172.208.13.57])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5359b6fa173sm77546411cf.7.2026.10.12.05.08.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Oct 2026 05:08:00 -0700 (PDT)
+Message-Id: <19ea8cb534f0aaabdf21f358364ad32295b6bfc8.1791806877.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2211.v3.git.1791806877.gitgitgadget@gmail.com>
+References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
+	<pull.2211.v3.git.1791806877.gitgitgadget@gmail.com>
+From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 12 Oct 2026 12:07:54 +0000
+Subject: [PATCH v3 1/4] Documentation: describe connectivity checking
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/2] branch: let --delete-merged find squash merged
- branches
-To: Junio C Hamano <gitster@pobox.com>,
- Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>,
- Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
- <pull.2425.v2.git.git.1791711665.gitgitgadget@gmail.com>
- <xmqq1p9vdalz.fsf@gitster.g>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqq1p9vdalz.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Kristofer Karlsson <krka@spotify.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Kristofer Karlsson <krka@spotify.com>,
+    Kristofer Karlsson <krka@spotify.com>
 
-On 12/10/2026 01:30, Junio C Hamano wrote:
-> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> Branches merged on GitHub with "Squash and merge" or "Rebase and merge" are
->> never deleted by git branch --delete-merged, because their tips are not
->> reachable from the upstream. This treats such a branch as merged when some
->> upstream commit contains all of its changes, and names that commit in the
->> output:
->>
->> Deleted branch topic (was 1a2b3c4, landed as 9f8e7d6).
-> 
-> Interesting.
-> 
-> After rebasing, you probably can (re)use the same algorithm as used
-> in range-diff to match the commits and their rewritten counterparts,
-> but I wonder how "squash" would go.  Presumably you can locally make
-> a trial squash merge and probe for a similar commit on the upstream
-> commit.
-> 
-> On the other hand, unlike deliberate rebasing done during a patch
-> iteration, rebase done on the upstream to integrate your changes
-> would not rewrite the log messages, so matching the commits based on
-> the log message may work better than a range-diff between iteration
-> vN and v(N+1) in the submitted patches.
+From: Kristofer Karlsson <krka@spotify.com>
 
-I think it would be helpful if the cover letter explained in more detail 
-what this series actually does to detect squashed merges and compared 
-that to other approaches such as using patch ids or test merges. As far 
-as I can see the approach here is, to a first approximation, checking
+Add Documentation/technical/connectivity-check.adoc describing
+the connectivity invariant and the full connectivity check.
 
-	$(git merge-tree B C) == C^{tree}
+Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+---
+ .../technical/connectivity-check.adoc         | 110 ++++++++++++++++++
+ 1 file changed, 110 insertions(+)
+ create mode 100644 Documentation/technical/connectivity-check.adoc
 
-to see if C is a squashed merge of B, only without using merge-ort but 
-by calling merge_ll() on each path instead. That means we're not 
-checking if C is the same as merging B into C^, C may contain additional 
-changes as well. I think it also means we're missing out on rename 
-detection. It would be good to get a clear idea of what the tradeoffs of 
-the various approaches are before any more code is written.
-
-Thanks
-
-Phillip
-
->>   * Diff each upstream commit once and share the result between all branches,
->>     faster than v1.
->>   * Fix a branch merged with a merge commit being reported as "landed as" the
->>     merge when another branch was searched first, and add a test for it. Show
->>     the topic commit itself in "landed as" for work that arrived through a
->>     merge.
->>   * Use git merge --squash as the example in the commit message and mention
->>     GitHub's squash and rebase buttons.
->>   * Add --no-squashed to skip the squash search.
->>
->> Harald Nordgren (2):
->>    branch: let --delete-merged find squash merged branches
->>    branch: add --no-squashed to skip the squash search
-> 
-> This a bit unexpected two-patch organization; I would have expected
-> that the cases where our side and upstream side should correspond
-> one-to-one (i.e., what you call rebase-and-merge) and other cases
-> (i.e., squash merge) to require very different matching algorithm,
-> which would lead to two-patch organization where one adds support
-> for rebase and the other adds support for squash.
+diff --git a/Documentation/technical/connectivity-check.adoc b/Documentation/technical/connectivity-check.adoc
+new file mode 100644
+index 0000000000..abef02debd
+--- /dev/null
++++ b/Documentation/technical/connectivity-check.adoc
+@@ -0,0 +1,110 @@
++Connectivity checking
++=====================
++
++After receiving new objects via fetch, push (receive-pack), clone,
++or bundle, Git verifies that the new reference tips do not leave
++the repository in a state where reachable objects are missing.
++This verification is called the connectivity check.
++
++Connectivity invariant
++----------------------
++
++A repository is connected when every object reachable from its
++references is available locally (with exceptions noted below).
++The reverse does not hold: objects that exist in the object
++database but are not reachable from any reference may be
++incomplete or lack a connected closure.
++
++The connectivity check maintains this invariant when references
++are updated.  It trusts that all objects reachable from existing
++reference tips are already fully connected and verifies that the
++new reference tips do not introduce references to unavailable
++objects.  Verification is permitted to stop when it reaches
++objects already reachable from existing references, since their
++closure is already connected.  These trusted references include
++local references and references from alternate object stores.
++
++Without this check, a truncated or corrupted transfer could leave
++a repository in a state where later history walks encounter
++missing objects.
++
++Exceptions
++~~~~~~~~~~
++
++Gitlink entries (submodule references) are excluded from
++connectivity checking.  Their target objects belong to a separate
++repository.
++
++In partial clones, objects promised by a promisor remote are
++accepted as connected without requiring local existence.  The
++check excludes promisor objects from traversal so that it does
++not trigger on-demand fetches for them.
++
++Full connectivity check
++-----------------------
++
++The full connectivity check runs a `rev-list` subprocess, feeding
++the new reference tips via stdin.  A normal invocation is roughly:
++
++    git rev-list --objects --stdin --not --all --quiet
++        --alternate-refs [--exclude-promisor-objects]
++
++When promisor remotes are configured, a fast path based on
++promisor packfiles is attempted first.  If it falls back to
++the `rev-list` check, `--exclude-promisor-objects` is added so
++that the traversal does not trigger on-demand fetches.
++
++Consider the following graph after a fetch, where all reference
++tips point directly to commits.  For simplicity, only local
++references appear on the already-connected side; alternate refs
++play the same role.  N3 is a merge commit:
++
++            /-------------L2
++           /
++    C1---B1---C2---B2-----L1
++          \         \
++           N1        N3---T2
++            \       /
++             N2-----------T1
++
++    L1, L2:         local refs
++    T1, T2:         incoming tips (new refs)
++    N1, N2, N3:     incoming commits (N3 is a merge)
++    B1, B2:         boundary commits (already connected)
++    C1, C2:         already connected (but not boundary)
++
++The incoming set is the commits reachable from the incoming
++tips but not from the already-connected side.  Boundary commits
++are the already-connected commits at the edge of that set.  Here
++B1 is an ancestor of B2, which happens when incoming branches
++fork at different depths in the existing history.
++
++The `--not --all` arguments establish the trust boundary: the
++incoming set is the commits reachable from the new tips but not
++from any existing reference.
++
++The traversal then walks the trees of the boundary commits and
++marks those objects uninteresting.  Trees of incoming commits
++are verified against these marks, stopping at objects already
++covered.  The cost of marking boundary trees uninteresting
++dominates when the boundary commits have large trees, even when
++the incoming changes are small.
++
++Deepening fetches
++~~~~~~~~~~~~~~~~~
++
++For deepening fetches (where the shallow boundary moves), the
++full check omits `--not --all`.  There is no existing-reference
++boundary at which the walk can stop.  Instead, traversal follows
++the effective shallow boundary supplied for the deepened
++repository.  The new content may be below the old shallow
++boundary even when the tips themselves have not changed.
++
++Non-commit tips
++~~~~~~~~~~~~~~~
++
++When a new reference points to a non-commit object, such as a
++tag, tree, or blob, that object is not part of the commit walk.
++These non-commit tips are verified during the tree and blob
++traversal that follows the commit walk within the same rev-list
++invocation.
+-- 
+gitgitgadget
 
