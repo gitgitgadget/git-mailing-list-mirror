@@ -1,92 +1,353 @@
-Received: from mail-dl1-f53.google.com (mail-dl1-f53.google.com [74.125.82.53])
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12192395DAC
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 22:00:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A542F9C37
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 22:50:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791842446; cv=none; b=sJLyqJCrPLXUVeprDVnneAEkcmFf0LXn7nxijkOvpVXiDLaRWVUhFu/s1x4DrmKvQ2uk7bgi9Op8uzpl63IRfQpBxPQlvpKgj4v5cnKGivNte2Gray7Wj4uSgL4nZI763OAZTGB6eiTozGJsunbuwgvD/532jfa5Lpc5MpNQKfY=
+	t=1791845425; cv=none; b=WrWiIOHo4j1T8ycfRrtntBDwgOTHu6VEch0YM3A2IrqjurWlsEe9Ku/Bc1vtRegtdcQT2g6Du5Hd4vT0CX1c3KNIRAZN+olCkRg2n59l85ORsD9db0KDJOznJSUQsQgqM16ND4DurryHVL1zswBqfxGz4VuizWmNWzJD0p7w/TM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791842446; c=relaxed/simple;
-	bh=AJg7fkUYlqq0Pk69ep8FNt1EuJLMQmYo/+HTO37FbfE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GxTREuakgC6R4M3Z0B4lKDiCyEbkVJk+bfu2btndVEQYTvgQuiD0jYCncbfXAWPKMdZRcafs+7YCLIvCI+Iu1Xji4B9tE4en+pC0NnLTyH42iPugZg5FCq22rgylFfzK9KRk3BNuPhlpgedn/S5W7vfN2Q4lhNgK6MQdVr04/ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mDj8/GZU; arc=none smtp.client-ip=74.125.82.53
+	s=arc-20240116; t=1791845425; c=relaxed/simple;
+	bh=WUQFxFalcWQ+urfET5wg1XtGMRZCnhlWjYIgj/8zo+0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=dNrCLLOdel0TsbTLdi2HlnACeBt8fcndXneIcemx1iuDyrqyuzaqRzwQKjeJchvpslLdcrkgFXBS9XXEWtF9CZYStjD0raFEcTgjSPmpnoa+1+OLjcjL5DSgGaOzM17fhBU5kw+Z0bF33ysqOmHHenAsO69jo5LzctGHy/iRQeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kGojucSm; arc=none smtp.client-ip=209.85.210.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mDj8/GZU"
-Received: by mail-dl1-f53.google.com with SMTP id a92af1059eb24-16079d54c17so2760842c88.0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2026 15:00:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kGojucSm"
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-8249ca723bcso1371985a34.0
+        for <git@vger.kernel.org>; Mon, 12 Oct 2026 15:50:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791842444; x=1792447244; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=pMZyEsJBVSO44H7wx22ld2uQvwVYyXZgALFpPgKjIb0=;
-        b=mDj8/GZU1XPX09Zocfa6XdM+IsYpKCdk5Ysx6vjt9nApXzrSP0SyEXuxpf8jonSr2V
-         ieMz4Oubra24xecd3X8CVRfEuToKleMhSoQNEfERy6iY/fFhpp6LyDRkvOt/u/Og0ya2
-         ClLfdhfCNzAGA9f7S1nfepMq5eKS3qsZXL3QubTStQcaSwu8TAnw2gb/EkBwCAOXpdfX
-         9pRn/a4jJpjdJsN9iv9med7AyL5wq+IUzw6vGF1db74yg1b+CoOfLyPe346LS9BAjo5J
-         p4BKbJXHN4Aazi4yr2H/B6HMgpDKVr0/lwgF8Utgj+eButQxK5nGS5XuPhumJbvKwgVP
-         XPdQ==
+        d=gmail.com; s=20251104; t=1791845423; x=1792450223; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=TenJduVcBRgyGD8ciXTbv9Ba+RCeJlSG/ghXYFCUE3o=;
+        b=kGojucSmcQoZwvYVUGaloT9U92c8eNZqURThZ+R8OsGs/oK7N6zzXgwMXBkuQAYeqV
+         q1HD/H4QXfTSZtneCmq0j4NCSzh8f7MozD3KsP8vCeAXmQKQTPZnHdI9Dmsw9XygGm2r
+         Jtea2aMtcQqqpZc6SSPtH99tLAxwTRzKO837LUbK25oezhmTAF+Xg2G9HeItDQ1ME4ey
+         JylzxBDnJ8pATMiZIYnRxBqKMjd7P1YvJUZ59Aul43euK5U1ow099CwK7+kgVXBqsz92
+         jud3ZKdR+NLWKLg5rttKjyAC+O+oh4KE7Smc3R4fIZjJ/X8OoJBf2iImLrHBD8kE3Da4
+         1O3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791842444; x=1792447244;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=pMZyEsJBVSO44H7wx22ld2uQvwVYyXZgALFpPgKjIb0=;
-        b=SYuRH6+aBfmZE0tdvrRtbrYQAwE5Mz0qs+OQn5aceMqwrN30nLB5RUVgFNZOckhrfA
-         +55SSqZobBeqSV/b1YmgnI476VvYTrr54ATGaaLq441KCvo/204Dap1XRgpfYO6wBhL4
-         +qItySQ7Xf+hhfKLyNI68uQnJMRQHRiAWHQJOcwWjlkSS6I7VoyAqdOdNE32vWJ/ip+y
-         d0yRkTWHx/IslNyM8v31JWEz1oN49nU5xHgMRPG/1oehN3780QbMUhUl6rtqC0t6ATQ2
-         QywWXmly6U8FLx/n+Jtk7e0lyP41zynQsoZwMcZJw3om12qBedgM6BVPX6m53vs0tdcN
-         xT7A==
-X-Gm-Message-State: AFq9FYIm/R/3FIsunlwTKkXC+p0zVHuLglPxTMWR2UTNqKwiIVPQzrzW
-	7J/g8E/B/ON11oGtboqyz/JZNkyfHjjcx/wWyAuON/oubcjKoXBUGG4x+qqbCaOksGA=
-X-Gm-Gg: AYBFou3kDup8vkXC9wDD2MhIdKmRzHZcWu9OwPVYB8ZrUPNpHzXi08pwnUJ3GnSjKhH
-	Ps+1PGP8dZgae2RrMkHD6/EOKrNszEcZg9S2gXr5ypldQsY8a7Lhqoc1BDIBkErrdVA8gGSjFEw
-	UwrWL9Hsnl/7gyde5DvCy132sSwiHfkcZPB0aQx+XXtIRN29ip7tM2vFYAQ4V2Vu4J6/lT4e0gc
-	sa4/zAUasBeNfh69zpE7or0op42u9eU8F9U6EjT/thZOkS+4s+T8wRnLu763rl3yCbiY9EUxc5W
-	2DPzIcMqJ+4vA3/3jUmLaexkGX0W9wLV906nW3rE5So+JhVc3Fkxsc+zYxdlwbsNd/XNVtG9+lY
-	aZINtDbhAYmUUzUFQgnSLIP0rHtFwQjTWdidymdbWjuqfYZjnVg/64Wo/lFC69ryU0XpiGoYI44
-	7DwI6OpFhlEJAj2QVQ4mjLQdskjVE78dtqbE81RnVHA651ZHPJJYpBY5mtoOMB494W07iALPxE1
-	GavnVu2rgf3jqb5GvXogMuqoy52a/3VMPPXPdmooyMmBYGcGlTW+8P6/7+PFggA9W/wE6o=
-X-Received: by 2002:a05:701b:2605:b0:13e:5a50:1e17 with SMTP id a92af1059eb24-16a55487e53mr16411677c88.3.1791842443966;
-        Mon, 12 Oct 2026 15:00:43 -0700 (PDT)
-Received: from LAPTOP-PVRSMPQK.iiitd.edu.in ([103.25.231.125])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-169a442956asm40825874c88.16.2026.10.12.15.00.41
+        d=1e100.net; s=20260707; t=1791845423; x=1792450223;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=TenJduVcBRgyGD8ciXTbv9Ba+RCeJlSG/ghXYFCUE3o=;
+        b=KrGs2FjLBKwaXNkkHrpFkJ2io58hadeTUnzsTtcTO8z91X+tp1cRoCpM6pMuAurf+0
+         QO4VL8PYNNkHiijRmdh7RkFVR9rQlkOxCPbi+tGA3JZoHJbDLpqfs6ezJQcnwiLwAVwS
+         COzVg+61Y8dnM4aoaBMkuHQjQVG4/J2U1DQc/1vw2FUB2wKOpepRQ7NHGb94mpDMTY8J
+         aS1l5DLQWr9A/lDGNv1TPpAM0FasfvA9uvGce4XE4Dn8JRydbEL2rMaQfqRLHhOF+BF5
+         dpOUsYaisoEnAlwIjbRQti+N6+9FCotoG+ieFwezusvnWw/7FYs5ZDDnRwKH5wKCRKOW
+         gYsA==
+X-Gm-Message-State: AFq9FYLrEm246XJs+Zkr6iWRXSHHqnYTssmSsXXugVyrWsL8EN8dBBXa
+	panpQx588VoA+UihPEILjOBwJ5Jmv7rdeF15eCExAh2rBzU/2X+Rgoxxdbn28pGU
+X-Gm-Gg: AYBFou1mJfYYKBHxqfR1kdv/EqA/uGvAWacPQ7teN1aG1jExGZ+KuiAKLJatIFSEbH7
+	3h79wQlYH2FgiisuAL3ccOcS4m8qkbYZaBCGvWJAu1Ry0T59CEQl1t5IrgUfGGgXfOcttkgdSr7
+	uB1F2lfw+Q9gyrSDo51HTeAQOIW+rPnxshq0AyFDWvm7tHICHrwmN9kW22luV3A3SdcB376DZ31
+	oy7OgnlFtqqwwdGNisZywS90f7cfWoebEXAM91//hsMS2eASiJHbl1SEnnd1tUgAhkIPtLjRb1T
+	vDAnWhWcNMZ41I7rXN6wLbmqJ3I24xLF85hicEhltBwXxhZhE9V+zp+TbUToJXw6jparHBgfbZ3
+	CRd3Bx/J4yfT3mPvifPui48LHWw6GJVGJASgNf6P4Tp6QTnI91xjTXtr3MyyDVKjl0te1Ju5R7b
+	dmRByF9r51P2cwudxNtSdvfOnZTq4CN9uNN4u8250HKDQEFo8ueMp407KjL1uVC2/EVrPJ72gUy
+	m6X
+X-Received: by 2002:a05:6830:4104:b0:822:27d6:c28a with SMTP id 46e09a7af769-83090c27934mr11182084a34.4.1791845422900;
+        Mon, 12 Oct 2026 15:50:22 -0700 (PDT)
+Received: from [127.0.0.1] ([135.119.100.146])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-830385b9cb0sm11265635a34.4.2026.10.12.15.50.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2026 15:00:43 -0700 (PDT)
-From: Aniket Gupta <aniketgupta3001@gmail.com>
-To: Beat Bolli <dev+git@drbeat.li>
-Cc: git@vger.kernel.org,
-	sandals@crustytoothpaste.net,
-	Xiangfei Ding <xfding@google.com>
-Subject: Re: [PATCH v2 2/2] imap-send: let OpenSSL do the hostname verification
-Date: Mon, 12 Oct 2026 22:00:39 +0000
-Message-ID: <20261012220039.136932-1-aniketgupta3001@gmail.com>
-X-Mailer: git-send-email 2.56.0.116.g6de20f609.dirty
-In-Reply-To: <20261012203057.969878-2-dev+git@drbeat.li>
-References: <20261012203057.969878-2-dev+git@drbeat.li>
+        Mon, 12 Oct 2026 15:50:22 -0700 (PDT)
+Message-Id: <pull.2252.v2.git.1791845420568.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2252.git.1791653078449.gitgitgadget@gmail.com>
+References: <pull.2252.git.1791653078449.gitgitgadget@gmail.com>
+From: "Marc Becker via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 12 Oct 2026 22:50:20 +0000
+Subject: [PATCH v2] fast-import: fix lookup for new commits and tags
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Aniket Gupta <aniketgupta3001@gmail.com>,
+    Marc Becker <becm@gmx.de>,
+    Marc Becker <becm@gmx.de>
 
-Hello Beat,
+From: Marc Becker <becm@gmx.de>
 
-> +		long res = SSL_get_verify_result(sock->ssl);
-> +		if (res != X509_V_OK)
-> +			return error("unable to verify peer certificate: %s",
+Queries for commits created during the same 'git fast-import' session
+result in a crash:
+    < reset refs/heads/newbranch
+    < from <new-commit-oid>
+    > fatal: not a valid commit: <new-commit-oid>
 
-I don't think this can be reached. With SSL_VERIFY_PEER, SSL_connect()
-already fails, so a hostname mismatch would only print "certificate
-verify failed". It does not name the host like the old code did. Could
-we print the verify result when SSL_connect() fails?
+Getting file content for commit has no issue (working implementation):
+    < ls <new-commit-oid> file-in-new-commit.txt
+    > {file content}
 
-Thanks,
-Aniket
+During import, new objects may not (yet) be reachable via the ODB layer.
+Try to resolve requested tag/commit via object cache first
+to avoid crash.
+Add test to 't/t9300.sh' with references to a pending tag and commit.
+
+Signed-off-by: Marc Becker <becm@gmx.de>
+---
+    fast-import: fix lookup for new commits
+    
+    Changes since v1:
+    
+     * address notes regarding commit message
+     * stick to line length in new code
+     * add test with (fixed) pending references (files for SHA1 and SHA256,
+       no coproc in sh, avoid named pipes)
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2252%2Fbecm%2Ffix-fast-import-commit-from-existing-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2252/becm/fix-fast-import-commit-from-existing-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2252
+
+Range-diff vs v1:
+
+ 1:  4e50f63354 ! 1:  d834e2fc47 fast-import: fix lookup for new commits
+     @@ Metadata
+      Author: Marc Becker <becm@gmx.de>
+      
+       ## Commit message ##
+     -    fast-import: fix lookup for new commits
+     +    fast-import: fix lookup for new commits and tags
+      
+     -    Queries for commits created during the same 'git fast-import'  session
+     +    Queries for commits created during the same 'git fast-import' session
+          result in a crash:
+              < reset refs/heads/newbranch
+              < from <new-commit-oid>
+     @@ Commit message
+      
+          During import, new objects may not (yet) be reachable via the ODB layer.
+          Try to resolve requested tag/commit via object cache first
+     -    to avoid crash and (eventually) improve lookup speed.
+     +    to avoid crash.
+     +    Add test to 't/t9300.sh' with references to a pending tag and commit.
+      
+          Signed-off-by: Marc Becker <becm@gmx.de>
+      
+     @@ builtin/fast-import.c: static void fast_import_state_init(struct fast_import_sta
+       	state->option = option;
+       }
+       
+     -+static struct object_entry *dereference(struct object_entry *oe, struct object_id *oid);
+     ++static struct object_entry *dereference(struct object_entry *oe,
+     ++					struct object_id *oid);
+      +
+       static void parse_argv(struct fast_import_state *state);
+       static void parse_get_mark(struct fast_import_state *state, const char *p);
+     @@ builtin/fast-import.c: static void parse_from_existing(struct branch *b)
+       		parse_from_commit(b, buf, size);
+       		free(buf);
+       	}
+     +
+     + ## t/t9300-fast-import.sh ##
+     +@@ t/t9300-fast-import.sh: test_expect_success 'Y: rewrite submodules' '
+     + 	)
+     + '
+     + 
+     ++cat >Y-reference-pending-sha256 <<\Y_INPUT_END
+     ++commit refs/heads/main
+     ++committer A U Thor <author@example.com> 1712563200 +0000
+     ++data 14
+     ++commit message
+     ++M 644 inline test file
+     ++data 14
+     ++dummy content
+     ++
+     ++tag newtag
+     ++from 17e650f097a4db6fe069c96935360d3ccc9b35c4018728c5f311a4217c2ced3d
+     ++tagger A U Thor <author@example.com> 1712563300 +0000
+     ++data 11
+     ++tag message
+     ++# no emty line after tag data!
+     ++reset refs/heads/other
+     ++from 85edc5eac315bc680677b2fc71622bd77476f057eb8dc8ed6a497803a24f1f46
+     ++
+     ++commit refs/heads/further
+     ++committer A U Thor <author@example.com> 1712563400 +0000
+     ++data 21
+     ++what about 2nd commit
+     ++from 17e650f097a4db6fe069c96935360d3ccc9b35c4018728c5f311a4217c2ced3d
+     ++M 644 inline other test file
+     ++data 19
+     ++more dummy content
+     ++
+     ++done
+     ++Y_INPUT_END
+     ++
+     ++cat >Y-reference-pending-sha1 <<\Y_INPUT_END
+     ++commit refs/heads/main
+     ++committer A U Thor <author@example.com> 1712563200 +0000
+     ++data 14
+     ++commit message
+     ++M 644 inline test file
+     ++data 14
+     ++dummy content
+     ++
+     ++tag newtag
+     ++from 85b46dd918355ff17b4109ec738723d42f235a04
+     ++tagger A U Thor <author@example.com> 1712563300 +0000
+     ++data 11
+     ++tag message
+     ++# no emty line after tag data!
+     ++reset refs/heads/other
+     ++from ec6c4db71feb5f66615214dad2324ce030e777a7
+     ++
+     ++commit refs/heads/further
+     ++committer A U Thor <author@example.com> 1712563400 +0000
+     ++data 21
+     ++what about 2nd commit
+     ++from 85b46dd918355ff17b4109ec738723d42f235a04
+     ++M 644 inline other test file
+     ++data 19
+     ++more dummy content
+     ++
+     ++done
+     ++Y_INPUT_END
+     ++
+     ++test_expect_success 'Y: reference pending tag or commit' '
+     ++	git init reference-pending &&
+     ++	(
+     ++		cd reference-pending &&
+     ++		git fast-import < "../Y-reference-pending-$(git rev-parse --show-object-format)"
+     ++	)
+     ++'
+     ++
+     + test_done
+
+
+ builtin/fast-import.c  | 19 +++++++++---
+ t/t9300-fast-import.sh | 68 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 83 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index fbd919982c..574a03c484 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -292,6 +292,9 @@ static void fast_import_state_init(struct fast_import_state *state,
+ 	state->option = option;
+ }
+ 
++static struct object_entry *dereference(struct object_entry *oe,
++					struct object_id *oid);
++
+ static void parse_argv(struct fast_import_state *state);
+ static void parse_get_mark(struct fast_import_state *state, const char *p);
+ static void parse_cat_blob(struct fast_import_state *state, const char *p);
+@@ -2658,12 +2661,20 @@ static void parse_from_existing(struct branch *b)
+ 		oidclr(&b->branch_tree.versions[1].oid, the_repository->hash_algo);
+ 	} else {
+ 		unsigned long size;
+-		size_t size_st = 0;
+ 		char *buf;
++		struct object_entry *e = find_object(&b->oid);
+ 
+-		buf = odb_read_object_peeled(the_repository->objects, &b->oid,
+-					     OBJ_COMMIT, &size_st, &b->oid);
+-		size = cast_size_t_to_ulong(size_st);
++		while (e && e->type == OBJ_TAG)
++			e = dereference(e, &b->oid);
++
++		if (e && e->type == OBJ_COMMIT && e->pack_id != MAX_PACK_ID) {
++			buf = gfi_unpack_entry(e, &size);
++		} else {
++			size_t size_st = 0;
++			buf = odb_read_object_peeled(the_repository->objects, &b->oid,
++						     OBJ_COMMIT, &size_st, &b->oid);
++			size = cast_size_t_to_ulong(size_st);
++		}
+ 		parse_from_commit(b, buf, size);
+ 		free(buf);
+ 	}
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index d9de2ef0d8..1f52be2c2c 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -3938,4 +3938,72 @@ test_expect_success 'Y: rewrite submodules' '
+ 	)
+ '
+ 
++cat >Y-reference-pending-sha256 <<\Y_INPUT_END
++commit refs/heads/main
++committer A U Thor <author@example.com> 1712563200 +0000
++data 14
++commit message
++M 644 inline test file
++data 14
++dummy content
++
++tag newtag
++from 17e650f097a4db6fe069c96935360d3ccc9b35c4018728c5f311a4217c2ced3d
++tagger A U Thor <author@example.com> 1712563300 +0000
++data 11
++tag message
++# no emty line after tag data!
++reset refs/heads/other
++from 85edc5eac315bc680677b2fc71622bd77476f057eb8dc8ed6a497803a24f1f46
++
++commit refs/heads/further
++committer A U Thor <author@example.com> 1712563400 +0000
++data 21
++what about 2nd commit
++from 17e650f097a4db6fe069c96935360d3ccc9b35c4018728c5f311a4217c2ced3d
++M 644 inline other test file
++data 19
++more dummy content
++
++done
++Y_INPUT_END
++
++cat >Y-reference-pending-sha1 <<\Y_INPUT_END
++commit refs/heads/main
++committer A U Thor <author@example.com> 1712563200 +0000
++data 14
++commit message
++M 644 inline test file
++data 14
++dummy content
++
++tag newtag
++from 85b46dd918355ff17b4109ec738723d42f235a04
++tagger A U Thor <author@example.com> 1712563300 +0000
++data 11
++tag message
++# no emty line after tag data!
++reset refs/heads/other
++from ec6c4db71feb5f66615214dad2324ce030e777a7
++
++commit refs/heads/further
++committer A U Thor <author@example.com> 1712563400 +0000
++data 21
++what about 2nd commit
++from 85b46dd918355ff17b4109ec738723d42f235a04
++M 644 inline other test file
++data 19
++more dummy content
++
++done
++Y_INPUT_END
++
++test_expect_success 'Y: reference pending tag or commit' '
++	git init reference-pending &&
++	(
++		cd reference-pending &&
++		git fast-import < "../Y-reference-pending-$(git rev-parse --show-object-format)"
++	)
++'
++
+ test_done
+
+base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
+-- 
+gitgitgadget
