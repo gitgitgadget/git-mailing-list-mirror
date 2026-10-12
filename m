@@ -1,175 +1,412 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88063955DB
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 14:45:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1A7429825
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 14:53:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791816324; cv=none; b=sWU4U61r/rNB0AM7xFMyzyzz7CmjqUiWvDUlF+eW+6vUqQy/R0ppoda8QpzsPUfhiUdR7RtW8ptmO8nsojf512U7sgVDlHpN0yfJRG6Ic/D56fzhtIdi3nTy5JHunmpYxXjTvdCoBYC5Rafuovv4nn6+Qwk4DEoD2pcXvzL1FPk=
+	t=1791816799; cv=none; b=JgagDBN/5/U3yLink8PClFUNcTfjoFILaWfnf+LSXMyOXgBLJPTmdewi2vgMJEkuhPazcqwjR2pPzSKA8VF9niLXsgNx9eXGvn935MKilMxuDQb9CuQ9zZSOxhhHZuuohKD2QY9+1qCwtLJrduEluZnrw4ltH8ZOHMI9jVdVsJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791816324; c=relaxed/simple;
-	bh=sTo1ruDzDp76jXcCp9riS23zWGzPS6AXkANtZzivHOw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fUB64BFXStd0yN/Eqdo5MQF/ZuBZM73VHlb7tDQHYobs/P5LvVKlZ/d2bwvGbsywFRL7cd+1+BYnGMoUezacz48+SjE+7sr6uXrQMJR0gVGfX/cTE7lo/VldbIaMqWR9b1g13QCBQPT/cZKjBoYjZEsNaHj3Ep+CBkclQBO0CN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=S+kW/EMb; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1791816799; c=relaxed/simple;
+	bh=T+6iFsgT87SPEWgLzu3hCDr8kqGxlENioPeKnZxRMJI=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=U8fdxtbulkbzcbhrN2nZaRzIG23pvfRKVHWoE6Ix4dqS5FxxAXnDWkg/wg2374tzErxtkgaPW/ki5KHZPKA1EA9w3Dkit4Sfy6+eJD34WSFq+ke/yZjJnpj1ana0d4KCRYoEowfox8GHRBQpjDkbDc8IATmSLoIYtReogpuyEyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qXxq/SvD; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="S+kW/EMb"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1791816312; x=1792421112; i=l.s.r@web.de;
-	bh=cHSe8qkjvEETtLDgvdEQRLilDLxUmhDYPY0u7T6nvEs=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=S+kW/EMbpQDUMb9JDNk2CnzOxpm+8lEq9u909AXJFLnZfk3SSSLxxzwJekFAxf7W
-	 uFRHRIFDhI81z/gPuyU0VjGjnpCIyWmSv0zI7zN18VY+FNheFlsf+nCjDBiLD23eo
-	 EoscuJT75hkDPGyHLzT8FeJRRJ5CSYeBsXE+PsM1IqCP3KicniKUz/hNjLKfkTxUi
-	 +kdd4tH3KdOyleKDfThyw+1oPFzxPckSEOw+wwrNUKwQfWXOpR/AwBS7go6DXFtka
-	 1LUsIKhxJmx92Q7kN8h1vxecZfvALFkX/OkC+ddH83yDY4pDCenzHjRBOQV/yJI4m
-	 9HprdeuZrPFycMFnXQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MXoYQ-1x8TDQ3ILs-00Yr40; Mon, 12
- Oct 2026 16:45:12 +0200
-Message-ID: <0334c031-56e3-4c8d-8adc-52051d2e26aa@web.de>
-Date: Mon, 12 Oct 2026 16:45:12 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qXxq/SvD"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-836c8bde2dcso10808307b3.0
+        for <git@vger.kernel.org>; Mon, 12 Oct 2026 07:53:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791816797; x=1792421597; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=FFVWDWczxozE/JKYpiuM/IceiGSggYogyM8+CceBuA4=;
+        b=qXxq/SvDGqur/xUpMbUtK/1QeS1xWDPTnuG5CxuxX65W4dYdN1+xn9GLxXB+u7lVfL
+         2jUBfkPIShLAIluc4iMynjfCTOsB3kxJw+nKBeiRBFnDjaFyj+8avI/nQp3cUVSxQ0QA
+         cRt3d45riwe6T45NFlkJoA2KNPMKDtf7Nl+FyyMnt5wfI6Na9OkHV3SbAJCrgj1RA+Zt
+         2upIjUzntJJbdBaxE7wZ0LRJYpfnIOmOzEgDR74/mnweKJS+icsCprHsDbnS3Nn4/bSR
+         I3Vt06Uwty5GCYtuAMBZiW2Z+VLb8SvrIvwHPcKAZrZT/g+DGEtgIJ/0Kr372YYlLqWY
+         6Q6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791816797; x=1792421597;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FFVWDWczxozE/JKYpiuM/IceiGSggYogyM8+CceBuA4=;
+        b=aKvSUYTnLVK78esf7KF2hTZj16kBnIaaMGFPb0nywqQ7GSNnxl0YisALQMYz0X5dfE
+         Bn/PlCty+FyYEpUntW46TML3yma2v5C/2Xfxgp933cYDWtgSqhb/yAvnU5EUFd8+QFfb
+         3WvGPO19Ag5cNC8c1mbd4LtEFt2daIX/WZumMJhEE0u/xrISe8FxBJ+zgUX+b0oJKCZM
+         7FyEwPQ+a9xOXUFqGt7G1FbGYGivPiJi8Kfcpek/h/TTfg215jPn32jiJsUa5vGmWPQY
+         DoTWVTSJVCuXEZJsb7mDTHPNBOjLvmDsn9lJL2Gwq9eI2ysC/+8VLwBxWtCZmegXhsU0
+         9exA==
+X-Gm-Message-State: AFq9FYKK+Qo+SpPWx65P77E2ksTKMvZYKckys4A8xY6zYDEvv/mhMHpz
+	RVR2T9zHzUbPb1DS3uG3rHhO8hzRYG4Hayqx2Fig92fR00O3ehde5bSPQ1WYFQ==
+X-Gm-Gg: AYBFou08pV+/GDlb2Iu2OssCz7eeTEmopqK3rO5dXnHOX7M0gD6UdQSHhIXY96KjMBP
+	xqQKIM4gu9Mv8xoRe5jUz2Motgjl45bTNLrZaabeG7G5aQvSJPn0nrLezciyojoyTZLtWHOI1bf
+	PiloHeaPsrtcioJrPbYKGGxCgTv3WASTP3K69Z9ri89zCi/7m2QJJavVRXQABGt6xcWNHem18Eq
+	LNKjaAHnF0TJ+yOTiH9lVw5D5riQINHdnDaFF6jgyHa5t1L62GBOQJ3T+4mid7waaTxEUJHIP4h
+	jHCUs5CKNEx8UWCiSWj5qdHz+ZDU3h+xJso7A1HTAH6SfWSP+agqC8Yg50WLXFhUBInoiczNlaD
+	/RtYKsVyH4IYOC96N33i8OqCXfSFfWRo3C21EJWUT3qHCOwlsvGeY7Eai1G/p4ydbIHGd5Ffktu
+	PqZB6jRa7AAEcf+NdNmm8D4RvU1fenJIdnaQqiBcOzVqZtFGHFKU9RDXNocjDSeu25W5HRem+G
+X-Received: by 2002:a05:690c:4006:b0:8a0:5ff3:7ef9 with SMTP id 00721157ae682-8b07edc87aamr28019027b3.50.1791816796327;
+        Mon, 12 Oct 2026 07:53:16 -0700 (PDT)
+Received: from [127.0.0.1] ([20.120.84.82])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b07f21bdb2sm35014507b3.29.2026.10.12.07.53.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Oct 2026 07:53:15 -0700 (PDT)
+Message-Id: <pull.2237.v3.git.1791816795.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
+References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 12 Oct 2026 14:53:09 +0000
+Subject: [PATCH v3 0/6] [doc] Add new page on merge conflicts
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] archive-zip: omit UT extra field if mtime is out of range
-To: m@sph3r3.com
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <CA+h9NxRT-9QzLGihdL_Bp-yyt1AdXJ79YYgpK-OaegUz8e+HcA@mail.gmail.com>
- <595dafac-33c7-4c45-9cac-c868cf1f8bb0@web.de>
- <CA+h9NxRQLP=20kfmSm6B2WtkkmHDCfdRDZEawOpzFF1LoghTEA@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <CA+h9NxRQLP=20kfmSm6B2WtkkmHDCfdRDZEawOpzFF1LoghTEA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Fbq2d8oZ9dEhcPx4POSlaUYQkZlzX6qn3pvzwAlByjPTt7BvC8s
- LGV7ZjoB/6y3aSdwGbUuzq9nxrRNvsimrVMTk/2p0RPfruikjQRHaX7kCQIN7Vd+D3c7Tm3
- JJ8ZgRFLfgm/pgMS7RXpeV49/LKSoKM/TgxeUfKHuI4B2Or7Edo5wxkGn+sHKiTBpQH1ERY
- KPTSwpdAqWR3K/LZrJJuw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Ri847eJBlA8=;TKBlnnqLmKRw0nV2eSFBRYvZu3p
- 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
- t1uRf6+9typQ7iIbM0Ew5/Q2VZDw8=
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+    Jeff King <peff@peff.net>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Julia Evans <julia@jvns.ca>
 
-On 10/12/26 2:56 PM, m@sph3r3.com wrote:
-> Thanks for the patch. I confirmed that it fixes the 2106 case: before
-> the change, UT wrapped to zero and unzip -u retained the existing 2025
-> file; afterward, UT is omitted and the file is replaced correctly.
+Handling merge conflicts is difficult, and currently Git's guidance on merge
+conflicts isn't giving users the information they need to navigate the
+process. As usual, the process I used to write this was to collect comments
+from Git users on the existing documentation, and then address those issues.
+I listed the specific issues we're aiming to solve in the first commit
+message in the series.
 
-Thanks for checking!
+This patch series introduces a new manual page, gitmergeconflicts, which
+explains the process of explaining a merge conflict with examples. It also
+links to that new page from the commands which can cause merge conflicts,
+instead of trying to reexplain the process every time.
 
-> For the i386 failure Junio reported, the beyond-2038 archive test and
-> its dependent omission check should use TIME_T_IS_64BIT. TIME_IS_64BIT
-> checks Git's timestamp_t, which can be 64-bit while time_t is 32-bit.
->=20
-> With that two-line adjustment, all 18 t5004 tests pass on x86-64
-> Linux. Forcing TIME_T_IS_64BIT off skips only those two tests; the
-> other 16 pass, including both INT32_MAX checks. I haven't run a native
-> 32-bit build.
-That would be an easy way out, nice!  I suspect git archive should not
-even use time_t in this context, though.
+Changed in v2:
 
-Ren=C3=A9
+ * Explain what a merge conflict is (thanks to Junio & Ben)
+ * rewrite the "ours" vs "theirs" section (thanks to Patrick for the
+   comments)
+ * add git log --merge (thanks to Ben)
+ * Leave most of the content of git cherry-pick as-is, to make this patch
+   set smaller (thanks to Junio)
+ * remove the SYNOPSIS since hopefully that won't be required anymore by the
+   time this is merged
+ * Fix a typo in git revert (s/reverted conflict/reverted commit/)
+ * 's/the the/the/' (thanks to Patrick)
+ * s/[doc] Thing/doc: thing/ in commit messages (thanks to Tuomas)'
+ * squash the commit fixing the linter error (thanks to Junio)
+ * list reviewers in Reviewed-by
 
+Changed in v3:
+
+Thanks to all the comments from Junio.
+
+ * Add signoff from Marie
+ * In "For example, here's a merge conflict where both sides edited a list
+   of", add a little more detail about how to interpret the merge conflict
+ * When we introduce a merge mention "semantic merge conflicts"
+ * Say "... and any other command that does a merge" when listing commands
+   that can cause merge conflicts.
+ * Reviewed-by is not the right thing, use Helped-by
+ * Adjust phrasing in git revert and git cherry-pick man pages
+ * Reference the "ours" section in "git show :2:filename shows the "ours""
+ * "there's one file left with conflicts in it: fruits.py" isn't precise
+   enough, instead say "the conflicts in fruits.py haven't been marked as
+   resolved"
+ * Delete the explanation of zdiff3 and add a brief warning instead. Don't
+   be too prescriptive, we should tell people what the issue is (ambiguity)
+   instead of trying to impose our opinion.
+ * Explain ||||||| when we add diff3
+ * Fix example in "EXAMPLE OF RESOLVING A MERGE CONFLICT" to make it
+   consistent with the other examples
+ * Replace "configuration option" with "configuration variable"
+ * Mention --skip instead of saying "the most common ways", which is
+   ambiguous
+ * Add a pointer to the extended AUTO_MERGE sentence
+
+some non-changes in v3:
+
+ * didn't add any extra Reviewed-by
+ * "return your branch to its original state": left the same because during
+   a multistep cherry-pick the branch does need to be returned to its
+   original state
+ * leave the explanation of AUTO_MERGE the same since Marie says it's more
+   clear this way
+ * leave contractions alone for now
+ * don't say semantic merge applies to all merges since I think that will be
+   clear to readers
+ * the wording of "When Git merges two commits together" is a bit weird but
+   we don't have a better idea right now
+ * don't explain --left-right. Can be very easily added in the future if we
+   think it's important.
+
+Thanks to Lobo, Adam Svahn, Louis Vanier, David Turner, Ben Zanin, Salih,
+and about 12 others who gave feedback on both the original git merge man
+page, as well as the proposed improvements.
+
+Julia Evans (6):
+  doc: add new gitmergeconflicts man page
+  doc: git-merge: link to new merge conflicts guide
+  doc: git-rebase: link to new merge conflicts guide
+  doc: git-revert: link to new merge conflicts guide
+  doc: git-cherry-pick: link to new merge conflicts guide
+  doc: git-pull: link to new merge conflicts guide
+
+ .gitattributes                       |   1 +
+ Documentation/Makefile               |   1 +
+ Documentation/git-cherry-pick.adoc   |   8 +-
+ Documentation/git-merge.adoc         | 125 +---------
+ Documentation/git-pull.adoc          |   3 +-
+ Documentation/git-rebase.adoc        |  13 +-
+ Documentation/git-revert.adoc        |   5 +
+ Documentation/gitmergeconflicts.adoc | 330 +++++++++++++++++++++++++++
+ Documentation/meson.build            |   1 +
+ command-list.txt                     |   1 +
+ 10 files changed, 357 insertions(+), 131 deletions(-)
+ create mode 100644 Documentation/gitmergeconflicts.adoc
+
+
+base-commit: 3bc0341126508f78f5869cbfc0005e987efdf0c7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2237%2Fjvns%2Fmerge-conflicts-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2237/jvns/merge-conflicts-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2237
+
+Range-diff vs v2:
+
+ 1:  ab0344f947 ! 1:  7aa0ae7ec3 doc: add new gitmergeconflicts man page
+     @@ Commit message
+          place, since it's a really nice example of a place Git has a consistent
+          interface between similar commands.
+      
+     +    Only discuss merge, rebase, cherry-pick, and revert for now even though
+     +    there are other ways that merge conflicts can happen because it's
+     +    awkward to talk about `am`, `apply`, and `checkout -m`.
+     +
+          Co-Authored-By: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
+     -    Reviewed-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+     -    Reviewed-by: Patrick Steinhardt <ps@pks.im>
+     +    Helped-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+     +    Helped-by: Patrick Steinhardt <ps@pks.im>
+     +    Signed-off-by: Julia Evans <julia@jvns.ca>
+     +    Signed-off-by: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
+          Signed-off-by: Julia Evans <julia@jvns.ca>
+      
+       ## .gitattributes ##
+     @@ Documentation/gitmergeconflicts.adoc (new)
+      +-----------
+      +
+      +Merge conflicts can happen during a `git merge`, `git rebase`, `git
+     -+cherry-pick`, `git pull`, or `git revert`. All of those commands use
+     -+the same merge algorithm, and the process for resolving a merge conflict
+     -+is always very similar.
+     ++cherry-pick`, `git pull`, `git revert`, or any other command that does
+     ++a merge. All of those commands use the same merge algorithm, and the
+     ++process for resolving a merge conflict is always very similar.
+      +
+     -+The most common ways to handle a merge conflict are:
+     ++There are 3 ways to handle a merge conflict:
+      +
+      +* Resolve the conflict. (see <<resolve,HOW TO RESOLVE A MERGE CONFLICT>>
+      +  below for details)
+     -+* Or stop the operation and return your branch to its original state
+     ++* Stop the operation and return your branch to its original state
+      +  with the appropriate `--abort` command, for example `git merge --abort`
+      +  or `git rebase --abort`. See <<git_status,EXAMPLE: GIT STATUS OUTPUT>> below
+      +  for how to find the command to run.
+     ++* Or (if you're in a multi-step rebase or cherry-pick) skip the problematic
+     ++  commit with the appropriate `--skip` command
+      +
+      +WHAT IS A MERGE CONFLICT?
+      +-------------------------
+     @@ Documentation/gitmergeconflicts.adoc (new)
+      +  sides' edits in the file, and leaves <<markers, merge conflict markers>>
+      +  that you need to resolve.
+      +
+     ++[NOTE]
+     ++================================
+     ++Even if Git successfully merges both sides with no conflicts, it's
+     ++possible to end up with code that doesn't work. For example, this can
+     ++happen if one side renames a function, and the other side adds a call to
+     ++the old function. This is called a "semantic merge conflict".
+     ++================================
+     ++
+      +[[markers]]
+      +MERGE CONFLICT MARKERS
+      +----------------------
+     @@ Documentation/gitmergeconflicts.adoc (new)
+      +When there's a merge conflict, Git will update the conflicted file
+      +to include merge conflict markers `<<<<<<<`, `=======`, and `>>>>>>>`.
+      +For example, here's a merge conflict where both sides edited a list of
+     -+fruits in different ways:
+     ++fruits in different ways -- one side added "cherry" and the other side
+     ++added "banana":
+      +
+      +----
+      +FRUITS = [
+     @@ Documentation/gitmergeconflicts.adoc (new)
+      +    "apple",
+      +<<<<<<< HEAD
+      +    "cherry",
+     -+    "mango",
+      +=======
+      +    "banana",
+     -+    "mango",
+      +>>>>>>> add-fruit
+     ++    "mango",
+      +    "orange",
+      +]
+      +----
+     @@ Documentation/gitmergeconflicts.adoc (new)
+      +  See also `merge.tool` in linkgit:git-config[1] for a list of
+      +  the mergetools Git supports.
+      +
+     -+* You can set the configuration option `merge.conflictstyle=diff3`.
+     -+  See <<diff3,DIFF3 AND ZDIFF3>> below for more.
+     ++* You can set the configuration variable `merge.conflictstyle=diff3`.
+     ++  See <<diff3,DIFF3>> below for more.
+      +
+      +* `git log --merge -p <filename>`  will list all commits which
+      +  caused the merge conflict for `<filename>`, and the diff
+     @@ Documentation/gitmergeconflicts.adoc (new)
+      +* Look at the original files.  `git show :1:filename` shows the
+      +  common ancestor, `git show :2:filename` shows the "ours"
+      +  version, and `git show :3:filename` shows the "theirs"
+     -+  version.
+     ++  version. See <<ours,"OURS" AND "THEIRS">> below for more on
+     ++  "ours" and "theirs".
+      +
+      +Here are some ways to track your progress while handling a conflict:
+      +
+     @@ Documentation/gitmergeconflicts.adoc (new)
+      +
+      +* Use `git diff AUTO_MERGE` to show what changes you've made so far to
+      +  resolve the conflicts.
+     ++  See <<automerge,EXAMPLE OF USING `AUTO_MERGE`>> below for more.
+      +
+      +[[git_status]]
+      +EXAMPLE: GIT STATUS OUTPUT
+     @@ Documentation/gitmergeconflicts.adoc (new)
+      +  original state
+      +* you should run `git rebase --continue` when you're done resolving all
+      +  the conflicts
+     -+* there's one file left with conflicts in it: `fruits.py`
+     ++* the conflicts in `fruits.py` haven't been marked as resolved
+      +
+      +----
+      +$ git status
+     @@ Documentation/gitmergeconflicts.adoc (new)
+      +
+      +
+      +[[diff3]]
+     -+DIFF3 AND ZDIFF3
+     -+----------------
+     ++DIFF3
+     ++-----
+      +
+      +By default, Git doesn't include the original code when formatting
+      +a merge conflict. To include the original code, you can set the
+     -+configuration option `merge.conflictstyle` to `diff3` or `zdiff3`.
+     ++configuration option `merge.conflictstyle` to `diff3`.
+      +This extra context can make it much easier to understand what's
+      +happening in a merge conflict.
+      +
+      +Here's an example of what a merge conflict would look like when using
+     -+`diff3`. It shows, in order, the "ours" side of the conflict, the
+     -+original code (`"mangoooo"`), and the "theirs" side of the
+     -+conflict. With this view, you can see that both sides fixed the spelling
+     ++`diff3`. There's an extra section (between `|||||||` and `=======`)
+     ++with the original code.
+     ++
+     ++With this view, you can see that both sides fixed a spelling
+      +mistake in "mango", and each added one fruit to the list.
+      +
+      +----
+     @@ Documentation/gitmergeconflicts.adoc (new)
+      +]
+      +----
+      +
+     -+Here's the same example using `zdiff3`. `zdiff3` takes lines that are
+     -+shared between both sides (the `"mango"` line) and moves them outside
+     -+the conflicted area. This makes the conflicted area shorter, but the
+     -+downside is that it's impossible to tell if `"mango"` was part of the
+     -+original list of fruits or not.
+     -+
+     -+----
+     -+FRUITS = [
+     -+    "apple",
+     -+<<<<<<< HEAD
+     -+    "cherry",
+     -+||||||| 1c22e48
+     -+    "mangoooo",
+     -+=======
+     -+    "banana",
+     -+>>>>>>> add-fruit
+     -+    "mango",
+     -+    "orange",
+     -+]
+     -+----
+     -+
+     ++[NOTE]
+     ++================================
+     ++`zdiff3` is an alternative to `diff3` that makes the merge conflict
+     ++shorter by making it more ambiguous.
+     ++================================
+      +
+      +[[ours]]
+      +"OURS" AND "THEIRS"
+ 2:  d5241eb901 = 2:  8bdbd64ca3 doc: git-merge: link to new merge conflicts guide
+ 3:  72b1207045 = 3:  34ba85fcad doc: git-rebase: link to new merge conflicts guide
+ 4:  cfa0a8254a ! 4:  85e117b070 doc: git-revert: link to new merge conflicts guide
+     @@ Documentation/git-revert.adoc: both will discard uncommitted changes in your wor
+       See "Reset, restore and revert" in linkgit:git[1] for the differences
+       between the three commands.
+       
+     -+If there have been new commits since the reverted commit, there may
+     -+be a merge conflict. See linkgit:gitmergeconflicts[7]
+     -+(or `git help mergeconflicts`) for a guide to handling merge conflicts.
+     ++Reverting a commit may result in a merge conflict.
+     ++See linkgit:gitmergeconflicts[7] (or `git help mergeconflicts`)
+     ++for a guide to handling merge conflicts.
+      +
+       OPTIONS
+       -------
+ 5:  62b70e9a02 ! 5:  f99c99f955 doc: git-cherry-pick: link to new merge conflicts guide
+     @@ Documentation/git-cherry-pick.adoc: Given one or more existing commits, apply th
+       
+      -When it is not obvious how to apply a change, the following
+      -happens:
+     -+When it is not obvious how to apply a change, there may
+     -+be a merge conflict. See linkgit:gitmergeconflicts[7]
+     -+(or `git help mergeconflicts`) for a guide to handling merge conflicts.
+     -+
+      +When a merge conflict happens:
+       
+       1. The current branch and `HEAD` pointer stay at the last commit
+     @@ Documentation/git-cherry-pick.adoc: happens:
+       
+      -See linkgit:git-merge[1] for some hints on resolving such
+      -conflicts.
+     --
+     ++See linkgit:gitmergeconflicts[7] (or `git help mergeconflicts`)
+     ++for a guide to handling merge conflicts.
+     + 
+       OPTIONS
+       -------
+     - <commit>...::
+      @@ Documentation/git-cherry-pick.adoc: $ git cherry-pick -Xpatience topic^  <4>
+       SEE ALSO
+       --------
+ 6:  ac77db6762 = 6:  7831b77178 doc: git-pull: link to new merge conflicts guide
+
+-- 
+gitgitgadget
