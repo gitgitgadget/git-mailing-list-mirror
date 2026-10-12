@@ -1,204 +1,154 @@
-Received: from mail-gateway-shared11.cyon.net (mail-gateway-shared11.cyon.net [194.126.200.64])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E2A4EDCDA
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 20:31:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D2B392811
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 20:44:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791837077; cv=none; b=bGQbLbITyKcmxGfWhrnod1tzVbxkzRJ3LCmBio5yHo26JI7xfcAbnWuXlZnZd/GAFxS3nnGzEd+ACaa+hnBEI4EZnllFrDUm1Fa9Sn8fb/DSbvoIFBscknCGhfdxdFDlHULjGAez7AT2M2PK4VO+3cVcRFFoGMkx2M9Z1MBy0RA=
+	t=1791837876; cv=none; b=p6EGPN3EJPb7TkbsIfYXrQKJQi20B0oxEc62FXbEbt4KPXH4nXMxcZVhc2465+o4p4zZuQ0VN0dreGJRtBvkngs9CKZiY9gbU3hMtG70DERKqLgi0Ic1eKA6oy61UHxGSbMqCAtVSOz91F6bRppJSxp4G7zzw3Yb/HlnW8aFxN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791837077; c=relaxed/simple;
-	bh=drrV48kAlx9E1/04xkoUd3NFjM+74LTbR0r5C8XFNWU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lAR9lQiNtOyCH6cgRv4VjPRfQO6TBDan8tx7l8iaM+bAz38EvMaXuRhvJZ7XIh2Utip7CPCf3nKjdtYekjLeNG7YGaGLEGHX8wWwj8QjUy6XhmZ1T6qYk4s9CTb1+nUBKZaugp1EWDKpPLLmKaaUV/b+7031qSDR4qf3hfMWkYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
-Received: from s019.cyon.net ([149.126.4.28])
-	by mail-gateway-shared11.cyon.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim)
-	(envelope-from <ig@drbeat.li>)
-	id 1xGMft-000lKn-14
-	for git@vger.kernel.org;
-	Mon, 12 Oct 2026 22:31:11 +0200
-Received: from [10.20.10.54] (port=65402 helo=mail.cyon.ch)
-	by s019.cyon.net with esmtpa (Exim 4.100.1)
-	(envelope-from <ig@drbeat.li>)
-	id 1xGMfp-0000000DigG-1H9y;
-	Mon, 12 Oct 2026 22:31:04 +0200
-Received: by oh4.internal (Postfix, from userid 1000)
-	id CC0CD40610; Mon, 12 Oct 2026 22:31:03 +0200 (CEST)
-From: Beat Bolli <dev+git@drbeat.li>
-To: git@vger.kernel.org
-Cc: Xiangfei Ding <xfding@google.com>,
-	Aniket Gupta <aniketgupta3001@gmail.com>,
-	Beat Bolli <dev+git@drbeat.li>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 2/2] imap-send: let OpenSSL do the hostname verification
-Date: Mon, 12 Oct 2026 22:30:57 +0200
-Message-ID: <20261012203057.969878-2-dev+git@drbeat.li>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260907211210.2621693-1-dev+git@drbeat.li>
-References: <20260907211210.2621693-1-dev+git@drbeat.li>
+	s=arc-20240116; t=1791837876; c=relaxed/simple;
+	bh=mTTZCU1JWtOcKixup9l1XoFdxKf0omPaWlOvcuhJGj4=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=MHZ2ESO32pKAiJAVP6YEHrjku6csVoepUy9WzHZ//Q+7hd1uyVahZRgAjFeetCPolc1z2amHWdtwO9lU36psxMA0IK7ECRaCMaxYaBmOfHfJhUp0/3kodTAnMZPSW+A7oXbLAz/QMX8L0a5aqLL4Up4NjQgisq6ZUfMcLEPUZYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=Xsg8Z9GT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mwipn57c; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="Xsg8Z9GT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mwipn57c"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 83A97140011E
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 16:44:33 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Mon, 12 Oct 2026 16:44:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791837873;
+	 x=1791924273; bh=737r3dkO+KWfKJWDoZfaGkqryVr+gAedgp6u36uF0rE=; b=
+	Xsg8Z9GTRcCZnc/vwF/wgd3Fs8eL85AkqqKSWYZ7P1gcg3G6Pe9MbdYKqFzwcdES
+	ulmk/hforGGeKuEUEECp/BwmZvJ1Y88usKQH/bEBiCfzDvxzVaceZwNqpUbyt/Wh
+	CQxeVm8SU5q0i+IE2Hz8Bnig/ETvgxwhQLY6NgFUNH7RCDH1dE+WOfcH8M0l0G1+
+	RmJ+JFYGkXm1GlCioj6arjBz4wfoLtD+fVc/ma+g+pvQk2P/Pa0Pe9SOGznVuf3Z
+	LehiQSrNdDo7KkBelMtXQfP9xVHhJgiXyj3GB44D07jNZi3vabwh/vXdQ3NdPW1t
+	08Iv7JLbOcjd+d1acFqdIg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791837873; x=
+	1791924273; bh=737r3dkO+KWfKJWDoZfaGkqryVr+gAedgp6u36uF0rE=; b=m
+	wipn57cEod8tT2GUF/rGSQ6qpTuKXrLwbckWdyvJxhlnraukDmaP7pUOlOg26Jar
+	rctz9th82oTFUOXudEJaJ8yTiSahAXmPPH1q+n8zaJJWSpWdy4jZyXnLNZUC6+gp
+	f2d/iEiSY4sAhdBG/RLEWK6FpS9XTnv0ak8k0kKG+Ffku39gNCze7gGVizyFoGIj
+	4mnPf5aGKXOTpocki9iRo9f0h/myVN5CjLSMzmcSkOfytLtDUTHFYyNsddMN+KEE
+	+ySrYO0QJDrZykHxXVZgSdLRJOm0at2k/E+DAZtd+VzGeJLks9Bs7IJu+r9LnEWl
+	xJNv/uK3EAcdUU7etrN4w==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791837873; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:ApRF9ONdBamvyW6E75orqZrr7AB7ozlNoQVa6zNgP+1MzGF
+	4aFBFW2P78ftTIvs3VSX+7SM7qlBm+g2jwRQnEhMAM7mRsq+k9adymuSnz0Uwji1
+	7BvjvtuE9iF7j2RfwgbIOm3as/eZ3asfVO6SYtZlA6JFaGgAHuFyACPhwxI33cFa
+	oD2nVwNr5VAvnzP/tycIMheLh7PaLF6wGK29gJDp46AW/FIL+OYIKmSWyqvti3uD
+	VqyR7sojX+xF/Ycu7QudIVgoD3WxD4LmJy+seo5fFVc8QziJgyLzYL9EVn6eD+Ko
+	uMSni2bYa+DkZFYoSLLaBZwekwIGjpGSXJddM0w==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:f8t0AiyvnAiSiyuUQa0+72FdrUQGkL6XQ0ItfOy+j/c=:mTTZCU1JWtOcKixup9l1XoFdxKf0omPaWlOvcuhJGj4=;
+X-ME-Sender: <xms:sUbNasAzrUIE9Rll-dxE113V93q5BXBfPbYj7U3eIXKiOxJVCP1rWA>
+    <xme:sUbNapVczBDDPgjXJPeHsQNaiQ0uhWTfKewCJLf5ZRnKjvg1YSZxKbe0kQNnaI9CW
+    FGAzyU3ultg5Sf-ZSzfKqSQfkS2tezEMrltdwhNDvkXFLCh76asgWMT>
+X-ME-Proxy-Cause: dmFkZTGA5yues6Vzw3GbkeBaSxs3NzFjQiK0j/WrJHTayJpeuMyKRyFMIg9KXYxR32OcF3
+    1nXpKDwAAN5rS81ZpyhgqBt3J8xZeJzQQTNDFPFxK775E9AQDLaV1ZZBXx7UF8vyWqd+AA
+    GOFAvvHHoomuE0t3mcJRR8UnsESoJBJ1EGHP1hGFfeFM3hYt0KTil8oo/yk/a3hMTJUiIr
+    LMeRGHIgW+qcjes0IdixAuJHUNbUX2gXbi8RdcfdJcnPInKbmoXC2ZC6joiXPN8KPAr/y/
+    ex7tstfeMoqiad24twzDhbrNKb4f2VdYx7KGidcauy/cy8Hh0hCqkZT1JILVWHNOT5Mes1
+    fPavq28KTkWv98sPhdukWbAf9m9Uyk3W50pUx2QpkqVS/yXU3V/7KZtGBGvMsmCYJ7OSZP
+    nd87y/7sXz3SEMoReQgegW31fLWzksFlIdlX9Gr6td8lYmnvEAPoptCATfaqgF7eyVxKqJ
+    SgTicOyrkQNN4dTU36nYq5pMOObZpKQWa1cMBjFIhOhsqOptA5rSAi+1D9kwT9Unh7whHO
+    c82A+3oo2CaIDzvrUPlKFS1ZPsAyvE8dHVD/kkc5LlWncYwwsRTDnArQaUhL4WmJHeGDm4
+    XqsPuxocx+KNKXf4YCgom6xJmytFhG1NmftIF1InSkGvbFv2pimbwkhiLDLA
+X-ME-Proxy: <xmx:sUbNahEWkGx4gYVC_VNeYXhZvicGy2BtDZoTunzyh2QtpT6Cj4l83g>
+    <xmx:sUbNan3VeUit-mQIjKn07ya_utu4BNeR4jhrUESZB8Dtmc4KBJQnBw>
+    <xmx:sUbNajPx_7sZgYWgm6tsDVaOLiwHsQ-z2f8ZzGLBw_WhYRPs76jxPg>
+    <xmx:sUbNam7erZcE6bqmiFqC9cDWNemneTaXdc7bLUZzfSLsvke9adrcKA>
+    <xmx:sUbNakZtZyVcNCdJSstMqN06WkLfkqM6gpso9D-vhxU_A8IxzY4chGtf>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 4B40678273B; Mon, 12 Oct 2026 16:44:33 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-ThreadId: AWFTbsbb2HAJ
+Date: Mon, 12 Oct 2026 16:44:13 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "Patrick Steinhardt" <ps@pks.im>,
+ "Jeff King" <peff@peff.net>
+Message-Id: <6dac0b01-3411-4999-b336-453efa8b5bcf@app.fastmail.com>
+In-Reply-To: 
+ <CALnO6CAL7ogi5MDRJmzTqNjjG-S39rDn=GTx3nwM5ASz_kRZOg@mail.gmail.com>
+References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
+ <pull.2237.v3.git.1791816795.gitgitgadget@gmail.com>
+ <CALnO6CAL7ogi5MDRJmzTqNjjG-S39rDn=GTx3nwM5ASz_kRZOg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/6] [doc] Add new page on merge conflicts
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-According to the OpenSSL Wiki[1], OpenSSL knows how to verify the peer's
-hostname since version 1.0.2. A simpler interface is available since
-1.1.0, which is what is implemented here.
 
-As a side-effect, we get all present and future improvements done by
-OpenSSL for free. E.g., the old code did not handle IP addresses in the
-subject alternative names, while the new code does.
 
-If the verification fails, print the error message as returned by
-OpenSSL.
+On Mon, Oct 12, 2026, at 11:53 AM, D. Ben Knoble wrote:
+> On Mon, Oct 12, 2026 at 10:53=E2=80=AFAM Julia Evans via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> Range-diff vs v2:
+>>
+>>  1:  ab0344f947 ! 1:  7aa0ae7ec3 doc: add new gitmergeconflicts man p=
+age
+>>      @@ Commit message
+>>           place, since it's a really nice example of a place Git has =
+a consistent
+>>           interface between similar commands.
+>>
+>>      +    Only discuss merge, rebase, cherry-pick, and revert for now=
+ even though
+>>      +    there are other ways that merge conflicts can happen becaus=
+e it's
+>>      +    awkward to talk about `am`, `apply`, and `checkout -m`.
+>>      +
+>>           Co-Authored-By: Marie Claire LeBlanc Flanagan <hello@marief=
+lanagan.com>
+>>      -    Reviewed-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+>>      -    Reviewed-by: Patrick Steinhardt <ps@pks.im>
+>>      +    Helped-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+>
+> Maybe this got lost in the shuffle, but I do prefer to use
+> <ben.knoble@gmail.com> for Git these days, thanks!
 
-[1]: https://wiki.openssl.org/index.php/Hostname_validation
+Oops, I meant to fix that, thanks for pointing it out!
 
-Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
----
- imap-send.c | 86 +++++++++--------------------------------------------
- 1 file changed, 14 insertions(+), 72 deletions(-)
+>>      +    Helped-by: Patrick Steinhardt <ps@pks.im>
+>>      +    Signed-off-by: Julia Evans <julia@jvns.ca>
+>>      +    Signed-off-by: Marie Claire LeBlanc Flanagan <hello@mariefl=
+anagan.com>
+>>           Signed-off-by: Julia Evans <julia@jvns.ca>
+>
+> I don't *think* we need your sign-off twice here, but maybe you
+> intended to communicate something by this ordering? I confess I'm not
+> sure what it would be ':D
 
-diff --git a/imap-send.c b/imap-send.c
-index 9f21705d77..cd9eae15d0 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -222,66 +222,6 @@ static int ssl_socket_connect(struct imap_socket *sock UNUSED,
- 
- #else
- 
--static int host_matches(const char *host, const ASN1_STRING *asn1_str)
--{
--	const char *pattern = (const char *)ASN1_STRING_get0_data(asn1_str);
--
--	/* embedded NUL characters may open a security hole */
--	if (memchr(pattern, '\0', ASN1_STRING_length(asn1_str)))
--	    return 0;
--
--	if (pattern[0] == '*' && pattern[1] == '.') {
--		pattern += 2;
--		if (!(host = strchr(host, '.')))
--			return 0;
--		host++;
--	}
--
--	return *host && *pattern && !strcasecmp(host, pattern);
--}
--
--static int verify_hostname(X509 *cert, const char *hostname)
--{
--#if (OPENSSL_VERSION_NUMBER >= 0x40000000L)
--	const X509_NAME *subj;
--#else
--	X509_NAME *subj;
--#endif
--	const X509_NAME_ENTRY *cname_entry;
--	const ASN1_STRING *cname;
--	int i, found;
--	STACK_OF(GENERAL_NAME) *subj_alt_names;
--
--	/* try the DNS subjectAltNames */
--	found = 0;
--	if ((subj_alt_names = X509_get_ext_d2i(cert, NID_subject_alt_name, NULL, NULL))) {
--		int num_subj_alt_names = sk_GENERAL_NAME_num(subj_alt_names);
--		for (i = 0; !found && i < num_subj_alt_names; i++) {
--			int ntype;
--			GENERAL_NAME *subj_alt_name = sk_GENERAL_NAME_value(subj_alt_names, i);
--			ASN1_STRING *subj_alt_str = GENERAL_NAME_get0_value(subj_alt_name, &ntype);
--
--			if (ntype == GEN_DNS && host_matches(hostname, subj_alt_str))
--				found = 1;
--		}
--		sk_GENERAL_NAME_pop_free(subj_alt_names, GENERAL_NAME_free);
--	}
--	if (found)
--		return 0;
--
--	/* try the common name */
--	if (!(subj = X509_get_subject_name(cert)))
--		return error("cannot get certificate subject");
--	if ((i = X509_NAME_get_index_by_NID(subj, NID_commonName, -1)) < 0 ||
--	    (cname_entry = X509_NAME_get_entry(subj, i)) == NULL ||
--	    (cname = X509_NAME_ENTRY_get_data(cname_entry)) == NULL)
--		return error("cannot get certificate common name");
--	if (host_matches(hostname, cname))
--		return 0;
--	return error("certificate owner '%s' does not match hostname '%s'",
--		     ASN1_STRING_get0_data(cname), hostname);
--}
--
- static int ssl_socket_connect(struct imap_socket *sock,
- 			      const struct imap_server_conf *cfg,
- 			      int use_tls_only)
-@@ -293,7 +233,6 @@ static int ssl_socket_connect(struct imap_socket *sock,
- #endif
- 	SSL_CTX *ctx;
- 	int ret;
--	X509 *cert;
- 
- 	SSL_library_init();
- 	SSL_load_error_strings();
-@@ -313,9 +252,6 @@ static int ssl_socket_connect(struct imap_socket *sock,
- 	if (use_tls_only)
- 		SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3);
- 
--	if (cfg->ssl_verify)
--		SSL_CTX_set_verify(ctx, SSL_VERIFY_PEER, NULL);
--
- 	if (!SSL_CTX_set_default_verify_paths(ctx)) {
- 		ssl_socket_perror("SSL_CTX_set_default_verify_paths");
- 		return -1;
-@@ -325,6 +261,15 @@ static int ssl_socket_connect(struct imap_socket *sock,
- 		ssl_socket_perror("SSL_new");
- 		return -1;
- 	}
-+	if (cfg->ssl_verify) {
-+		SSL_set_hostflags(sock->ssl, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
-+		if (!SSL_set1_host(sock->ssl, cfg->host)) {
-+			ssl_socket_perror("SSL_set1_host");
-+			return -1;
-+		}
-+		SSL_set_verify(sock->ssl, SSL_VERIFY_PEER, NULL);
-+	}
-+
- 	if (!SSL_set_rfd(sock->ssl, sock->fd[0])) {
- 		ssl_socket_perror("SSL_set_rfd");
- 		return -1;
-@@ -352,14 +297,11 @@ static int ssl_socket_connect(struct imap_socket *sock,
- 	}
- 
- 	if (cfg->ssl_verify) {
--		/* make sure the hostname matches that of the certificate */
--		cert = SSL_get_peer_certificate(sock->ssl);
--		if (!cert)
--			return error("unable to get peer certificate.");
--		if (SSL_get_verify_result(sock->ssl) != X509_V_OK)
--			return error("unable to verify peer certificate");
--		if (verify_hostname(cert, cfg->host) < 0)
--			return -1;
-+		/* make sure the certificate was verified */
-+		long res = SSL_get_verify_result(sock->ssl);
-+		if (res != X509_V_OK)
-+			return error("unable to verify peer certificate: %s",
-+				     X509_verify_cert_error_string(res));
- 	}
- 
- 	return 0;
--- 
-2.53.0
-
+Oops yes that was a copy paste error. Obviously I'm having a hard time
+with my trailers as you can see :)
