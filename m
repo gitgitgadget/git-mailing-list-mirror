@@ -1,247 +1,158 @@
-Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0AFF7080D
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 02:03:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328DE3612E2
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 02:08:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791770619; cv=none; b=isuOmtUyPfChyHpGIG6dLHtSAwgVZRxuXtGRTovxix8HlaotXetl2CAPIWmvucOe+eNVRK5PnKNKs//md8LQIa1QFvJPDLIq1LRBncMy0jNH2aD6PV9D3KkBdvsEM7xb/5Cu2MrWsO9MtZo3Xdww6CIZjZVGhjjl14uUBQTn6a8=
+	t=1791770902; cv=none; b=X4MmgOA9iCT8yJ5C2yRM9wp8/o83oM3bsDndVZyyuXnP0rKiJt/ydh2jczX/zTDhiv9VQAUpNXbIYKi5A5+3aMsrELLUUeQArjn+ILhEcT3/4qI75LQNdkgU0IrMeWRsyFD1asfLJ6FCdv34UPBGrpxnFBDHhdVBg0Mv2V1mOWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791770619; c=relaxed/simple;
-	bh=OcL8gaidOJX922f7DnLP1YQyJt4XdOX9V9ZvMefjdXQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5NSLpDKNjIglAJxlbZur57d1yPFM7bsvvibx27Ev5+2YmG6mCW2zEYYlFhU91b8KNX+qMwOrQcDQLUcpUJ/fCXP9MnRpM2pW93pcx2cV67yZ0JHukAmJdU/BO5tTOJvJAoVZvy1Cf06DFqUo0U7Kv7aYes7snh0CDQnljCs7IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XeNS8bjf; arc=none smtp.client-ip=74.125.82.170
+	s=arc-20240116; t=1791770902; c=relaxed/simple;
+	bh=2306DdHzRcuX+ulCfHPVu0iA+sn/H75JR6WmQhXWkmI=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=C+BSzAYiKfeM+Np0zoNaX3wi372DfStyWhmhxHEen1ekEvpIQVX9bLX2E/+bIInLu1tveT+SsmEmeN48IlvgEWZSYGPnpxt/IC3y96NGpJBaBDSU6M73dbPUzzZ/yV/fUqttaoBB95AORNctsXbi1sZliwBpHUDMfp17xtk8dsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q7w7z0zv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VdO2UDm5; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XeNS8bjf"
-Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-3535bf8b3e0so2389547eec.0
-        for <git@vger.kernel.org>; Sun, 11 Oct 2026 19:03:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791770617; x=1792375417; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=LBDrqC39G6M45k3Fl+1eDxqvKANkAR50/i+MWY9Pen4=;
-        b=XeNS8bjfjVfwyVAFuT7NWcbJGMT0FR4ffARxHx9h+FVSenTJvwflRtX5hEzNtqY2O/
-         VF4NvvwJHE6wCxn7JEauedRvquEuE8tLaqjIcrT4u+k9Fhfw7JAm4GTN5aXtVK2dJrRN
-         g8bIOOIXWSeJpwtPaicEQp+4tc80YLXkiBIKKsCCXJdWt+lhLI9B4Q1dxHnFWjp+EpSf
-         r2ZKBg9ALQiiak9SnbGXj8EtwvifhotBHVlxx7zRSmRNz1TXGhOSd9j3WX0e+qsEG7TR
-         FvovTpMV3kTfKkk8pB+8qn2N6P/H01H6FkOBThsYu+++Byu2oPEX89zTrU4s8L6ZkehB
-         Y8BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791770617; x=1792375417;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=LBDrqC39G6M45k3Fl+1eDxqvKANkAR50/i+MWY9Pen4=;
-        b=z2ORx4VJmVcAtDmX8gyA4j0KFLaCszlJBAe0AkfkqPjiR91+mbV65C/YGSfveN/lW9
-         ly9JZY1LyKDsRvGEGYb0pQpMjUt8v6yeh6co7gGcNMvUJit04kiQduonwG8iDL5lcbQN
-         o67vg2JWW2kuuO1S3YBueE3Ax163/j9AC/z/9yaxttP82FfpfLTYdiaBbiFeRkbsxYjS
-         u3yKrJbPTlMR7eCqLVVzds4W0V2YdQTOUwnoGdAbynZjZZnKwtbpi/3v7PwJlSRqYRsS
-         8E0Men2bSzvdRU7lkXN2Su5JG+xJMme+01EG/uReReQVr7rFUxv+yiv4WD3HSWt3lkKZ
-         A9Mw==
-X-Gm-Message-State: AFq9FYK2yHn3etF85i4h9h78+sRJkAHLKbbxW+Ae0tNpc98dnkUlmLtK
-	6D0w/eWxDtAgS8CKG2gOz2tGjQ73zgOMkEzWt+0guGuHsEVcSloX2XPH2x7hxd+S6F4=
-X-Gm-Gg: AYBFou1CKBPxV4wUJOohmnpu287Zy7fjXS+AqlzZZGWfvJUvogbk3qylJufmqeHAdXP
-	sZ0qVWkVS1YteXCN1s6PYdJqCpl+OOt61S6A+dtnaR8+/dp8gYOAko9I0P2Kn56+N0wzKC0yd1x
-	eXSaHiqStm+3kwNz7mZHKGkmtP9Xrw5iHhEtBxLTuNAREeyYKH4XKLS8FEuy2alpG4G7ahnm6hO
-	qXYBC4kFq1vicmWOSPrjI4pjALnLdidRfILfOfFE9Fl8XGiKe+PuKieZ7b0LtMsxdybd46RPf4o
-	a3cXl/H5IDKF5qrQOnDsMsXdFPwhdiKjdHsNN8DD9pogEAFdm0x2DiUi9ZGMT4PTz8cnCaSA9y3
-	r272rbdKA0gNoIGWzYjmBrclxalsgkYW5yYbsqvVsaHRGb+/TwVciIwkJeeR/BLU6aWWK9Pd6fQ
-	SSFgs3bhz91fDzaMGMyERECkHDa1xwe8SeD/YjDQS3EI8XZt7nVuxCjuC8S/gjoEiwIQqWOr3CV
-	p/rw36JZUDeIqGzaIQVe6cLj05We+eU
-X-Received: by 2002:a05:701b:2084:10b0:143:8188:fafe with SMTP id a92af1059eb24-16a63099ec2mr12466877c88.41.1791770616685;
-        Sun, 11 Oct 2026 19:03:36 -0700 (PDT)
-Received: from isabella-caselli-linux.. ([2804:14c:9e:81ad:adb8:bc9f:a8c8:3c2d])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-35a352d4b05sm7196412eec.19.2026.10.11.19.03.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Oct 2026 19:03:36 -0700 (PDT)
-From: Isabella Caselli <bellacaselli20@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ignacio Encinas <ignacio@iencinas.com>,
-	Isabella Caselli <bellacaselli20@gmail.com>
-Subject: [PATCH 3/3] config: learn the "hostname:" includeIf condition
-Date: Sun, 11 Oct 2026 22:58:46 -0300
-Message-ID: <20261012015846.2649843-4-bellacaselli20@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261012015846.2649843-1-bellacaselli20@gmail.com>
-References: <CAK4AdTSnaAOk649a0GLe1M9C+cYuDa0Nwo54=HT47R53Q4ZdWw@mail.gmail.com>
- <20261012015846.2649843-1-bellacaselli20@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q7w7z0zv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VdO2UDm5"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 932837A0072
+	for <git@vger.kernel.org>; Sun, 11 Oct 2026 22:08:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Sun, 11 Oct 2026 22:08:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1791770900;
+	 x=1791857300; bh=/0YBU3BnSg/KLHxFejLf6glcP0akXY5uDZstgbgIMto=; b=
+	Q7w7z0zvbjjIPkLcwj3K6n6vGaSGfVfL+dgLF2WcBM4xII/t+AXnHaOR3Ragdyoq
+	8g/2vnOaZgwHXlti/ZNEvNB2oMM92W7owHnZiebupDHH4W+9kW3LkO/YlYJthRgO
+	MYtfSWrpSqcIhO98hPvvznaWL+QDD1SAhWskf1aA1moA5VZtBpAQcQHEHvlI5l1u
+	J9UMMdh+CodKbbM+he7qD0wWeegaH441el4yr+Csy/hf4guWnZRRpN9+kRuDCWRX
+	eGXw7eAT7JyGH6tfjdEAPgUM3puADkiIahTtDNBEuyKHYwUPm80VViwshRtoh5ia
+	fpv5q6L1HnksrolSmB2Y2g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791770900; x=
+	1791857300; bh=/0YBU3BnSg/KLHxFejLf6glcP0akXY5uDZstgbgIMto=; b=V
+	dO2UDm5A10NApr1IYg5oAdrjSoG8nOUwQjxdb0nwJOfu6T3rLL3zopic1D+VL7EC
+	5r4l0RIZAmL2ztn9e1w+Dib8PwEH1yJCd80rnYhDAXXkjd7cAHVPN7TLNukRwxqV
+	HfiYpHt3PdyiDGNDCpA7NIBQFXEPsLhZpmoLWhm3GQmDSAEnyA7tAGfKQTXpKqZR
+	9kzlTK1wNpwRcEOEwJwEb2+TTTOrT+CoaE/+U3aTeXuGKUUDUOR0U3jLMOXGTHWs
+	A0LJUIz52/wMgjk0iaLF5yMrKwkc+ogRknUyMdx0NwQmrzRgXhLE7Who5rVWQcBd
+	lZhipgc/jvz8Kg8EeoCQg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791770900; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:NGmb6ieNryxwUGrF2PUbHHx/kI1SFoIKqOzohUscq39R8xe
+	h+ciUU/dnMOBAOZ+tzKMFFRXRd2DQGmDv3P2EKBhlvipNylSFSGxUWK5e1R53fax
+	PPGYl263c0tQSV5JOKnCGxqesob4KZ+gKduUrwpmgDyUAVeDvPgSOT5oNdDeeY/F
+	nqk0fk/zx9QBupm8e8NI/Tk/MQqcXLIn5/oOKp2qsJ07VGj6QghCTzA8UNBEoyuL
+	V90Srz1yEU3lZZ6momBGYmRDTTZAUYuaKCidfLn4R69EyZ4jdhjYAbb/K19AGsdC
+	bVMK0FvRNUk+943aFlpk3tDOnzYqA768vma4/lQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=13;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to,
+	user-agent;
+Message-Instance: m=1; h=sha256:esYAy7s+0DialNooBxnkEZSm8S2GtVRMiHXu2wCf/AQ=:2306DdHzRcuX+ulCfHPVu0iA+sn/H75JR6WmQhXWkmI=;
+X-ME-Sender: <xms:FEHManRAeyS3kcEsdsTt2NI8myNLlRa0OlQRnPgQX3g2EJWT52hpCQ>
+    <xme:FEHMavxpgaqCErR8MFKoZCnM8DO9Zadjdz5Pk9jyJeJZQYalW_d8DyIwnlqWgj_Eh
+    OMgtELCSBUK4y0x4Qr7RBx20nsg9Ds1t6QeAvzUoMxnrDU3fjXwCWQ>
+X-ME-Received: <xmr:FEHMah2WjIglkX6155JzjzCcnTKl4pFsJ-cEtoGBoOSWT7QcgFKLy3i1Phc>
+X-ME-Proxy-Cause: dmFkZTGxEUMc3fEoZL4zjMEvt7lTgDF1psKavfdPHmwjSBY7hz6aIK5S9zozEawqanvj9g
+    FLqxNd0mGKpsida6yq/uoQikzJMBacG/A6sD5d2N4pfWPAsmhykOGy2I2G07ol5neXPGws
+    XM+lcPtxVy94EhXwFEMcKVQMA+sgIceX+SpCEOpiHyXiTl3VYHsf49hvZkCjAKLDpxzwtt
+    qSmRygeYcx9wu2tQXopsLX9YscNxDaSJbfNSdsH0Z4R/3xAuGtO5oJxvkYEPs7ISdDKrbF
+    8ym/5VM1pWY03DvbTApQUe+iu62llS8rlvu//UvdKZRpFgYpTWmPVVvBRmm8xXomPjV7as
+    O24VQTOfrQdBv4dihVnXrQ8YPOsFHFvTjpuEr6oIVQIXZ5isqfdpD28VvCDUYilxKz1u7d
+    XAW7Ht9q9bImHJWhSLDOzHpmxikCVWV+2NScfFfFLfJCDtR5C/1Amg4U3+NhjkGirbGcUv
+    EzcCskTM+TIjiFMZgebKO1OGgpQpogwoztA6enPHQeGikWoCUeqmxhjcIWWz7notebnd0c
+    0aQ5Ino8DOaMprYXjUCo+MGknqPrbtfsd3xjbZnox3URZrXwKdmvK5/wfL1Tppw2/fNqvz
+    YS0kcV3nM8EXjTBEpCu8Bu18raDcv1vZK8kaNX8QxYVvYnWcgz781n3u5NNw
+X-ME-Proxy: <xmx:FEHMal4GltQ3ZAdfd1iWmnp_Z7SEFsdfVjyalwBxnCyQXk1nhg0zAA>
+    <xmx:FEHMasVfgl3I-LNGKDgHo--HocFn17x0wy8dhGKsMx9YduJ4PW51yQ>
+    <xmx:FEHMasASwGCVO_Wwbnl6_s3PDnSpcjA_ktJTRxP8GVdFpmT5_vLahA>
+    <xmx:FEHMaj6PixOJRqreO8AjOolZUyzkAYBNGjCb58yZCISaKRatyK-l9Q>
+    <xmx:FEHMannLPj96HKkfD_HZGvuy_JftomDN51rmOZ4WtPw7yt30l7k0MVuX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 11 Oct 2026 22:08:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: "Matthew E. Luallen" <m@sph3r3.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] archive-zip: omit UT extra field if mtime is out of range
+References: <CA+h9NxRT-9QzLGihdL_Bp-yyt1AdXJ79YYgpK-OaegUz8e+HcA@mail.gmail.com>
+	<595dafac-33c7-4c45-9cac-c868cf1f8bb0@web.de>
+Date: Sun, 11 Oct 2026 19:08:16 -0700
+In-Reply-To: <595dafac-33c7-4c45-9cac-c868cf1f8bb0@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Sun, 11 Oct 2026 18:06:04 +0200")
+Message-ID: <87jynn8ycv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-When the same home directory is shared across multiple machines, they
-all read the same ~/.gitconfig. Settings that should differ between
-machines therefore need a way to make that file behave differently
-on each host. The same problem affects people who keep their dotfiles
-in a repository and check them out on multiple machines.
+René Scharfe <l.s.r@web.de> writes:
 
-Add a "hostname:" keyword to includeIf. The value that follows is a
-pattern supporting standard glob wildcards, and the condition is met
-when the machine's hostname matches it. If the hostname cannot be
-determined, the condition is not met.
+> diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
+> index 768b0ff85d..20bab21048 100755
+> --- a/t/t5004-archive-corner-cases.sh
+> +++ b/t/t5004-archive-corner-cases.sh
+> @@ -227,4 +227,32 @@ test_expect_success 'tar archive with long paths' '
+>  	git archive -o long_paths.tar $tree
+>  '
+>  
+> +test_lazy_prereq ZIPINFO_UT_EXTRA '
+> +	"$ZIPINFO" -v "$TEST_DIRECTORY"/t5004/big-pack.zip |
+> +	grep "UT extra field modtime"
+> +'
+> +
+> +test_expect_success TIME_IS_64BIT 'zip archive with 32-bit mtime' '
+> +	blob=$(echo foo | git hash-object -w --stdin) &&
+> +	tree=$(printf "100644 blob $blob\tfile" | git mktree) &&
+> +	git archive --mtime="@2147483647 +0000" -o with_ut_extra.zip $tree
+> +'
+> +
+> +test_expect_success TIME_IS_64BIT 'zip archive with mtime exceeding 32-bit' '
+> +	blob=$(echo foo | git hash-object -w --stdin) &&
+> +	tree=$(printf "100644 blob $blob\tfile" | git mktree) &&
+> +	git archive --mtime="@2147483648 +0000" -o without_ut_extra.zip $tree
+> +'
 
-Depending on the system configuration, the hostname may be either a
-short name or a fully qualified domain name. Making the name fully
-qualified ourselves was considered, but it could require a DNS lookup
-while reading the configuration. Instead, match the name as the
-system reports it, document this, and point to "git var GIT_HOSTNAME"
-as a way to check the value being matched.
+Both Ubuntu/20.02 i386 (which is going away so you do not have to
+deeply care) and Debian/latest i386 (which we plan to use to replace
+the Ubuntu/20.02 i386, so it would be superb to get it work) jobs
+seem to fail this one.
 
-The tests obtain the hostname with "git var GIT_HOSTNAME" before
-writing the configuration, so that a failure to retrieve it makes
-the test fail instead of going unnoticed inside the here-document.
+https://github.com/git/git/actions/runs/38189684665/job/114619579067#step:10:321
+https://github.com/git/git/actions/runs/38189685137/job/114619583658#step:10:337
 
-Based-on-patch-by: Ignacio Encinas <ignacio@iencinas.com>
-Signed-off-by: Isabella Caselli <bellacaselli20@gmail.com>
----
- Documentation/config.adoc  | 14 ++++++++++++
- Documentation/git-var.adoc |  2 ++
- config.c                   | 17 +++++++++++++++
- t/t1305-config-include.sh  | 44 ++++++++++++++++++++++++++++++++++++++
- 4 files changed, 77 insertions(+)
+Thanks.
 
-diff --git a/Documentation/config.adoc b/Documentation/config.adoc
-index f67dcd2f8e..aa6360e230 100644
---- a/Documentation/config.adoc
-+++ b/Documentation/config.adoc
-@@ -232,6 +232,16 @@ As for the naming of this keyword, it is for forwards compatibility with
- a naming scheme that supports more variable-based include conditions,
- but currently Git only supports the exact keyword described above.
- 
-+`hostname`::
-+	The data that follows the keyword `hostname:` is taken to be a
-+	pattern with standard globbing wildcards. If the hostname of
-+	the machine matches the pattern, the include condition is met.
-++
-+Depending on how your system is configured, the hostname used for
-+matching may be short (e.g., "myhost") or a fully qualified domain
-+name ("myhost.example.com"). Run `git var GIT_HOSTNAME` to see the
-+hostname Git uses (see linkgit:git-var[1]).
-+
- A few more notes on matching via `gitdir` and `gitdir/i`:
- 
-  * Symlinks in `$GIT_DIR` are not resolved before matching.
-@@ -315,6 +325,10 @@ Example
- 	path = foo.inc
- [remote "origin"]
- 	url = https://example.com/git
-+
-+; include only if the hostname of the machine matches some-hostname
-+[includeIf "hostname:some-hostname"]
-+	path = foo.inc
- ----
- 
- Values
-diff --git a/Documentation/git-var.adoc b/Documentation/git-var.adoc
-index e813ab4fd2..fc2def16d3 100644
---- a/Documentation/git-var.adoc
-+++ b/Documentation/git-var.adoc
-@@ -86,6 +86,8 @@ endif::git-default-pager[]
- 
- `GIT_HOSTNAME`::
-     The hostname of the machine, as reported by the operating system.
-+    This is the hostname matched by `includeIf "hostname:..."` (see
-+    linkgit:git-config[1]).
- 
- Most path values contain only one value. However, some can contain multiple
- values, which are separated by newlines, and are listed in order from highest to
-diff --git a/config.c b/config.c
-index e0bb29b53d..c891f63e60 100644
---- a/config.c
-+++ b/config.c
-@@ -316,6 +316,21 @@ static int include_by_branch(struct config_include_data *data,
- 	return ret;
- }
- 
-+static int include_by_hostname(const char *cond, size_t cond_len)
-+{
-+	int ret;
-+	char my_host[HOST_NAME_MAX + 1];
-+	char *pattern;
-+
-+	if (xgethostname(my_host, sizeof(my_host)))
-+		return 0;
-+
-+	pattern = xmemdupz(cond, cond_len);
-+	ret = !wildmatch(pattern, my_host, 0);
-+	free(pattern);
-+	return ret;
-+}
-+
- static int add_remote_url(const char *var, const char *value,
- 			  const struct config_context *ctx UNUSED, void *data)
- {
-@@ -411,6 +426,8 @@ static int include_condition_is_true(const struct key_value_info *kvi,
- 	else if (skip_prefix_mem(cond, cond_len, "hasconfig:remote.*.url:", &cond,
- 				   &cond_len))
- 		return include_by_remote_url(inc, cond, cond_len);
-+	else if (skip_prefix_mem(cond, cond_len, "hostname:", &cond, &cond_len))
-+		return include_by_hostname(cond, cond_len);
- 
- 	/* unknown conditionals are always false */
- 	return 0;
-diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-index 507b8ebd06..01069237ba 100755
---- a/t/t1305-config-include.sh
-+++ b/t/t1305-config-include.sh
-@@ -524,4 +524,48 @@ test_expect_success 'conditional include, worktree without repository but explic
- 	test_must_fail nongit git --git-dir=nonexistent config get foo.bar
- '
- 
-+test_expect_success 'conditional include, hostname' '
-+	hostname=$(git var GIT_HOSTNAME) &&
-+	cat >>.git/config <<-EOF &&
-+	[includeIf "hostname:${hostname}a"]
-+		path = bar12
-+	EOF
-+	cat >>.git/bar12 <<-EOF &&
-+	[test]
-+		twelve=12
-+	EOF
-+
-+	test_must_fail git config test.twelve &&
-+
-+	cat >>.git/config <<-EOF &&
-+	[includeIf "hostname:$hostname"]
-+		path = bar12
-+	EOF
-+	echo 12 >expect &&
-+	git config test.twelve >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'conditional include, hostname, wildcard' '
-+	hostname=$(git var GIT_HOSTNAME) &&
-+	cat >>.git/config <<-EOF &&
-+	[includeIf "hostname:${hostname}a*"]
-+		path = bar13
-+	EOF
-+	cat >>.git/bar13 <<-EOF &&
-+	[test]
-+		thirteen = 13
-+	EOF
-+
-+	test_must_fail git config test.thirteen &&
-+
-+	cat >>.git/config <<-EOF &&
-+	[includeIf "hostname:$hostname*"]
-+		path = bar13
-+	EOF
-+	echo 13 >expect &&
-+	git config test.thirteen >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.43.0
-
+> +
+> +test_expect_success TIME_IS_64BIT,ZIPINFO_UT_EXTRA 'UT extra field' '
+> +	"$ZIPINFO" -v with_ut_extra.zip >actual &&
+> +	test_grep "UT extra field modtime" actual
+> +'
+> +
+> +test_expect_success TIME_IS_64BIT,ZIPINFO_UT_EXTRA \
+> +	'UT extra field omitted when mtime exceeds 32-bit' '
+> +	"$ZIPINFO" -v without_ut_extra.zip >actual &&
+> +	test_grep ! "UT extra field modtime" actual
+> +'
+> +
+>  test_done
