@@ -1,121 +1,143 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF49535950
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 00:32:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913C822D4E9
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 02:01:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791765132; cv=none; b=bb3Ix7Mppcc/BmZ8VzWKofe3Gr+GLj1WrvblMb7Fmk4lJTTtiGuypo1yzzcPxQ4PmQIS7Q7clciNdGN+mjBwrsGWpNcpFo90mhnA0Qk+rhG2B/K9EK4OnPd9IjziSpw2gwgj7fiCAiDLBDwOY/6ulDfFOkNr2ZgGOwDMIeb+p5g=
+	t=1791770464; cv=none; b=KK3qzkT3jAG2Q1SyqHQk9qKNm5nake4WkJnFFuIwruzu45mFsYt9eNa9+TJ4g6GkakCXQ5STY6Tpf9avX8uI15TLaYBys1TyDkdAlmLfAibcUPCQJm48T5d8BGoWh/SYnl+ht63Eu3sXbQlcxZAXM9GSUf8dLbDqUBYwX7Q5A+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791765132; c=relaxed/simple;
-	bh=IPqYBjYhXHPzWpE1cba5X8/gwN9ZGq63057wODsuPKU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RYyoPmcLW4oE2EKLwB5KNYydWaY95BUPqWQcWfnSptJEaZh3f03w+46bpzEj/eMuWUQ0QGKwu9xjY89uSG5gHuNMMIzLtbLBBIkGPKMCVJQ5gh94d2W9gwr4WHAJgBGOe11ZTM9k1HWScFf55uZgm//8cZAh/wByZ6OZhCg3WsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hJa+ZCIT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LmgoJxXI; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1791770464; c=relaxed/simple;
+	bh=N9AwabC1yaPLVGHiINDt5Allkvyy6dNsCReZ9LQn7ms=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fBQSu+4G2R8KAllav090HA2JVAFpMiThyJ7SJx6VoEf1AJXoA1IZRWfg/p8+dLSoq9EhqzjYBsZY8iTtKqa+cy/7tuffTWk+ySAEg1icOAwHWP35MeRq3JF/H2qdbOPi6QZ6XdLcYKpe0VcsejdSuC1vveXE1zioyzL2l6yOncU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nddQmsU8; arc=none smtp.client-ip=74.125.82.172
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hJa+ZCIT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LmgoJxXI"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id EC29A1D00046
-	for <git@vger.kernel.org>; Sun, 11 Oct 2026 20:32:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sun, 11 Oct 2026 20:32:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791765130; x=1791851530; bh=Bz1WSUAmyG
-	BXH8w6l1PCs5W5MoprTsi/lT1TQboqj+0=; b=hJa+ZCIT2OmOOjytchEr2pkZUJ
-	ap+YQXIuW50zhG6SOE3KR3Asl+V9paQSt0KARnT8DJ985a4jmuoJ5x0+IgyfKCjI
-	ZE9njr0SuWqafBN3B3sZQ2uVGuQay0wyasv3o2R0c58SqB7CGopYX/FnQlcSQ5IW
-	WdTBm7zmgGd4JW+Z/mI5NsDeDYsGsZt/3xq/pmqNdhCE+7vF5MrQ6kqyzcMBrK+3
-	XRVgQklD76Qty4MIlK5q6EKPD7xEXxxUVmGO/m/IYxZaQor/zMPcA0J3GVT/Jo/5
-	lT08bIlOQTLqCuh2BTplgVwoh5pdA1alNlAIickg4sH6GULhifi99lV9v95A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791765130; x=1791851530; bh=Bz1WSUAmyGBXH8w6l1PCs5W5MoprTsi/lT1
-	TQboqj+0=; b=LmgoJxXI2nggRmhay2p2T3q0KXrxFRkq/xbN0TSNF1RnsKQLnob
-	E0pVbnZaMBaJhsKDrTjgckMg9pzgSHhnhUnzBYmbZiu21xJrD/Eoe8vkWqF+6ALs
-	8RsrfEbK1c9w56tYXjbmqfyh5xnyX4PK/fNuJeXe6KbS37UtFuTqZO8On+S6Rz4n
-	E5hwgLuGhsrSabrK9l5eNhJsOjLjUm1XDpuL2r9yhZfrVqMBBKvwnpuHMvv2D6kn
-	GkQwM5iqpyb8GIFh/QN5xGphz1vxXF7q5qFBfckjVkRWocxoNebKpEr+ZUsSwJlN
-	OWKMB2Vmyui8DIlYDaZloupMBet52hONyYQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791765130; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:adCO3+sxI9wlunUeKamEqP/MRCGadPyeNyNC6nxlAvFOHlL
-	iqdLhnqQxSyt7UYWZLZBZJWu3bn1c6KMZSWe2nu6qKPnTZ2woYbUeqWWamJuvbfk
-	TH5UqdHX/vBnGf/agCAh2zICBIwVFHSmnq605jrclrdO+YhIJuire7QYrETujGjU
-	BNdyojpjRtPknoszZqVP5M7TgnCmIfwM59XE/WFhAC3lF971kPn+C6lQgZJNAJi6
-	g+tZXObeg3jyFYvZe67snEiusvfBTx9qVM7967e7rIufU8ZMYtemErc+XljQ+0R8
-	nhOIsfHLHRL+ZFbhHbTp1u+o80iQDhQ8PSUTzlg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:cQ6H4By0HYAKAMsL/YHbBpmxsU0xnw73FY17ngla6HE=:IPqYBjYhXHPzWpE1cba5X8/gwN9ZGq63057wODsuPKU=;
-X-ME-Sender: <xms:iSrMapMYwIqCNfpHwQMsRIu4Qn5FoAIv_RgbrmTTAo4ZoAYXpfaY-w>
-    <xme:iSrMasr2EVrr-1XJx1sGMLy37Ldm4fNzk70jsGilqbmAIxdRu5hXi7XjDqNqbXnAK
-    FDQwsR78xk7dUb33pE9a-HKgrcLubCWXnxpXeEDCjAaTGLnn9xLFb4>
-X-ME-Received: <xmr:iSrMamdkTHOYrirfizsqrCrzOGptqtU1X04mAr-RO0HA7hGmhEc2bqUydxCaMPQyYP4HQWblYxJ109neSy4ju6HL4c_c-cX8C6KS>
-X-ME-Proxy-Cause: dmFkZTGFeI0807J7BGBHO0YoFlmc2zHfdoe8LqR4qKxyKhA53chWJ8fCyyJA7xG/LL0HiE
-    tD9CV2JHA85E9SlSmuyrn0LGHGXXP0LtfMXDpcSQ8lm6tVAdqE0mNlPWjvEDw3IX1lQJlp
-    Qxnycx0koVt0xlqO1tyxf6A4DvNrpyaqzyg5MDHdjbdfuR6Sj6EG3ChbdXsGQJREljqye2
-    MTFQP2l2yqJI7Gvk1m1+97U1BCA89JKEV6F69clCa4PavgrLvnrtL8Av3TSakIlJVP2VKY
-    PG7RFhDtgPRMXO1Rd61NIGyCF1Pe6P8xjSFGtUchcez9vLNZ0tJoDML3HyWpIAULIkM+st
-    xm2is/A7FUbFLC2DxmLuIofzv2qOK3DjSq12aQ8QczR84DHbJuCvgmXMciSZ3DS29Kid99
-    nQoMimLZNpHIYKH5UmDJBks7AJTVrCQPhGDOWj86qcFRsaXZ0lT9Qh8cNs95MuQ/N0OIQn
-    o+sSzOzW1cLAkGoRb86y77I8HxUX+rVJTz57DQTftEocU/XQDZoQbcgm+E6TrRvyJMa6Xs
-    PoFuEJQhj1byvRVJmWbWoHTxKrK1rIVH35cCEgAkuWOz5CacU1Nz6+jN44dAk4Iy+x61HL
-    QBlP2QEEW45aY+kmr6pow+Sz7aYvdr15oHSc40ACtevJHhAZUhV9LsQ3r9rA
-X-ME-Proxy: <xmx:iSrMaqSp_OxyV1_EUlf3sd1mkZj8O0N9TAA-OX4QxFCDccD8F2H5YA>
-    <xmx:iSrManbuB_eQc8e6UhdKO9unZNWoTUWqvQn62Iua13740fyd5Vg7Gw>
-    <xmx:iSrMaleHzwXXcd5R7i5NQ3EcxfZOADSdYyZLGIXEf2-a94eSbzohBQ>
-    <xmx:iSrMagKItbZ5aJ4CZ3KrIqWKlq0ZP_MhnoEOehXQjSrssvXCiXAP9A>
-    <xmx:iirMaoK1rs3aicnFC5ceEH-LdKz2GjTVaeRESQlMLnDpOfOTfh5D02vW>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 11 Oct 2026 20:32:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Thomas Bachem <mail@thomasbachem.com>
-Cc: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v7 1/2] rerere: wait for MERGE_RR.lock before giving up
-In-Reply-To: <CAA0xjtpuQE1UiQEPjfmsp9BZPROucfXCOpok5ADjMRB-rTZRiw@mail.gmail.com>
-	(Thomas Bachem's message of "Sun, 11 Oct 2026 16:18:09 +0200")
-References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
-	<pull.2214.v7.git.1791627204.gitgitgadget@gmail.com>
-	<3dc3d02f12a3118ac9e270c19960815f6b8170cb.1791627204.git.gitgitgadget@gmail.com>
-	<xmqqqzhxf4uo.fsf@gitster.g>
-	<CAA0xjtpuQE1UiQEPjfmsp9BZPROucfXCOpok5ADjMRB-rTZRiw@mail.gmail.com>
-Date: Sun, 11 Oct 2026 17:32:08 -0700
-Message-ID: <xmqqv777bvxz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nddQmsU8"
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-3282db206d3so1684909eec.0
+        for <git@vger.kernel.org>; Sun, 11 Oct 2026 19:01:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791770462; x=1792375262; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=2IaIIxRHk6r1fUfrKmfH4dAmtAxZ2cBP85R+I+TX6LM=;
+        b=nddQmsU8Rf7hAmN/2o/DNf0CeSWyRc7eUml24qiBUXCpfj2FP/HVnX9hElE0MtPv6m
+         Z9d3a+yDYwdMi8T4nuQP4uRul4hdl94Oj+VySOAe9HDriL9GOXklt4ih6GOaYLQMzkID
+         mZcqnmk31MOtOkWq1ca2PHZi1O34WVrtKVKh+zWKvkX/Ci9kypeaLt9dIlqq4NJ7g02J
+         nuH873jdhhdIBEsrOyxqpJ09wm0+889WBp49xIUUlYci6FjicOQr54gtjlPLfiiyIu4k
+         qAnEzBMT5/aiEOflzioEfFGj6ImWFm2nRhdr8OXUYvTevpyhj6zZGqN652QnttAzn9EX
+         hl0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791770462; x=1792375262;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=2IaIIxRHk6r1fUfrKmfH4dAmtAxZ2cBP85R+I+TX6LM=;
+        b=Kt/OTDapx2zT99/QZPrI/BcB8H1OdTFiSz1oeUmGp9W97dJhtXh7ciWLzqpDrHFrp4
+         n9hKEITSer8t6ADNjVwDJpY7jpiaMvM17RP5IgzByhRHvMxVH80Z7vFK7e30nb7Yggur
+         lEJ4o3h0moAUZ6aNyeHKvg5yOWgdxI/lqU8dVBFDQSfWxA2qQnbIYfzPZlYmqJarIVo4
+         JfbowlYAVXCO4uXWSk3ZrWxIkQf9gZSJvFFq0daxrMIXSVVz04qrqqKQzTuZWUa4gdPP
+         CRanADH8Yd56/TdTW7WUhDNCwrOWP7PKBldu/0jFypVC4yCLGN4kPLb58ldYAF9xUwaS
+         s4hw==
+X-Gm-Message-State: AFq9FYItrcNswtaKsh9HpSoLdSrAtfKGMkCbe8s4pvBtrKCm8Lmryw2v
+	z+CagBJzaitsDp1yIXshP7XOxvfPlwmPfUUAzBobjMklWpkqoBocj9x6lIcLzHKozUY=
+X-Gm-Gg: AYBFou0uknDsR+/PFzx79GtMqBi9GEecXMzdm8yMBZPP2JYAQOb+quU3dWM1ZMTJJVa
+	J8TlwFr+nC4Y1yKY3/K0Pe6doWsQfYcMvRqshQVnYnVveJT+VBTfyjoBL+MzjU4oO+/18C3+JKy
+	haUZ3ADPxfPWFm4Pq+Zz09sFeeAIb8g+Be/r66pGVa+yHSITLq6K9JGAbJHBzejha7TEz4M0Aou
+	4MkDKPeiOxPwnZfjLEKvFpa83bzfSkNcz5zYBdLe2OHdv5/QtFTRaJtOp350tpGxQtxxCnskYYw
+	SzIN+Aeb06pimkYYtQGr8QxcFDSyH4mNd6gu/3fT+Lqd3X+QQlFoB1PzO0cy3FN9IVlR1Ye3YW4
+	Cnjf1O8snbNIoD2gsShisSyRV9bO0MUDOcIDoDfRmegpdwtZ7WiiKuMqYP10kjVr0tBxLlguywE
+	f3f6h0MraWHroj68E+vTofbCd8wNbIlfd8emTE6nAoryVC/sBD3wqJwIIu8oEWfbyVhRLvdXITV
+	ytCcT2P65WrJNRuJKrPJMXL1nvPpMr1
+X-Received: by 2002:a05:7022:3f0c:b0:151:2e62:fe8d with SMTP id a92af1059eb24-16a5dcf817bmr12527077c88.9.1791770462354;
+        Sun, 11 Oct 2026 19:01:02 -0700 (PDT)
+Received: from isabella-caselli-linux.. ([2804:14c:9e:81ad:adb8:bc9f:a8c8:3c2d])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-35a352d4b05sm7196412eec.19.2026.10.11.19.01.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Oct 2026 19:01:02 -0700 (PDT)
+From: Isabella Caselli <bellacaselli20@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ignacio Encinas <ignacio@iencinas.com>,
+	Isabella Caselli <bellacaselli20@gmail.com>
+Subject: [PATCH 0/3] Add hostname condition to includeIf
+Date: Sun, 11 Oct 2026 22:58:43 -0300
+Message-ID: <20261012015846.2649843-1-bellacaselli20@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <CAK4AdTSnaAOk649a0GLe1M9C+cYuDa0Nwo54=HT47R53Q4ZdWw@mail.gmail.com>
+References: <CAK4AdTSnaAOk649a0GLe1M9C+cYuDa0Nwo54=HT47R53Q4ZdWw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Thomas Bachem <mail@thomasbachem.com> writes:
+This series adds a "hostname:" condition to includeIf, allowing a
+configuration file to be included only on machines whose hostname
+matches a pattern. It also adds GIT_HOSTNAME to "git var", so users
+can see which hostname Git uses for matching.
 
->>         wait && # just in case the background unlocker is still active
->
-> It is. Instead of the comment, I'll move the wait into
-> test_when_finished, as pack-refs-tests.sh does, so it runs however
-> the test ends.
+The series is based on Ignacio Encinas's v3 from March 2024 [1].
+Ignacio dropped the series and agreed to let me give it a try,
+so I am sending it as a new series.
+The "hostname:" patch retains his work and credits him with
+Based-on-patch-by.
 
-Ah, that sounds quite sensible.
+Changes since Ignacio's v3:
 
-Thanks.
+ - Drop "test-tool xgethostname". Eric pointed out that exposing the
+   hostname to users would make the helper unnecessary, and suggested
+   adding GIT_HOSTNAME to "git var", which I agree is the best way to
+   make this information available to users. Patch 1 adds it, and the
+   tests use it instead of the helper.
+
+ - Make "git var -l" omit GIT_HOSTNAME when the hostname cannot be
+   determined, rather than failing, as Jeff suggested.
+
+ - Make t6500 use "git var GIT_HOSTNAME || echo unknown", as Jeff
+   suggested and Junio agreed.
+
+ - Document that the hostname may be short or fully qualified, using
+   Jeff's proposed wording, and point to "git var GIT_HOSTNAME"
+   instead of gethostname(2), which Eric noted would not be helpful
+   to users.
+
+ - Use xmemdupz() in include_by_hostname(), as Jeff suggested.
+
+ - In t1305, read the hostname into a variable before each
+   here-document, so that failures are not silently ignored, as
+   Junio pointed out.
+
+One open question is case sensitivity. Matching is case-sensitive,
+like "onbranch:", so "hostname:MyHost" would not match a machine that
+reports "myhost", even though DNS names are case-insensitive. Keeping
+it case-sensitive seems reasonable to me, but I was not sure. Should
+it stay as is, ignore case, or have a "hostname/i:" variant, like
+"gitdir/i:"?
+
+[1] https://lore.kernel.org/git/20240319183722.211300-1-ignacio@iencinas.com/
+
+Isabella Caselli (3):
+  var: add GIT_HOSTNAME
+  t6500: get hostname from "git var"
+  config: learn the "hostname:" includeIf condition
+
+ Documentation/config.adoc  | 14 ++++++++++++
+ Documentation/git-var.adoc |  5 +++++
+ builtin/var.c              | 13 +++++++++++
+ config.c                   | 17 +++++++++++++++
+ t/t0007-git-var.sh         |  5 +++++
+ t/t1305-config-include.sh  | 44 ++++++++++++++++++++++++++++++++++++++
+ t/t6500-gc.sh              |  2 +-
+ 7 files changed, 99 insertions(+), 1 deletion(-)
+
+
+base-commit: 5a7d1e8045ce66c908f62598e26cbb8df7b39a90
+-- 
+2.43.0
+
