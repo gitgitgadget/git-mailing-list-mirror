@@ -1,154 +1,190 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from mail-gateway-shared11.cyon.net (mail-gateway-shared11.cyon.net [194.126.200.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D2B392811
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 20:44:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224D5443315
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 21:05:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791837876; cv=none; b=p6EGPN3EJPb7TkbsIfYXrQKJQi20B0oxEc62FXbEbt4KPXH4nXMxcZVhc2465+o4p4zZuQ0VN0dreGJRtBvkngs9CKZiY9gbU3hMtG70DERKqLgi0Ic1eKA6oy61UHxGSbMqCAtVSOz91F6bRppJSxp4G7zzw3Yb/HlnW8aFxN4=
+	t=1791839107; cv=none; b=Cvb01/52sVyJ0f/63oW//FSQfzy6dXWO3QuJZ3+CjKVDcP/ZPOL7lTAVFXW7h/goTAPFMWM4qwZeDabvCGN8xlwp3sAiXuKZMCvrROU6j8yUVZCfYprkW/Tn7GeDho0cA9xo2hkp9ks06mhLQEn8dfCnFTBwyXLbRzI3AVE/xuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791837876; c=relaxed/simple;
-	bh=mTTZCU1JWtOcKixup9l1XoFdxKf0omPaWlOvcuhJGj4=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=MHZ2ESO32pKAiJAVP6YEHrjku6csVoepUy9WzHZ//Q+7hd1uyVahZRgAjFeetCPolc1z2amHWdtwO9lU36psxMA0IK7ECRaCMaxYaBmOfHfJhUp0/3kodTAnMZPSW+A7oXbLAz/QMX8L0a5aqLL4Up4NjQgisq6ZUfMcLEPUZYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=Xsg8Z9GT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mwipn57c; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="Xsg8Z9GT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mwipn57c"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 83A97140011E
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 16:44:33 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Mon, 12 Oct 2026 16:44:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791837873;
-	 x=1791924273; bh=737r3dkO+KWfKJWDoZfaGkqryVr+gAedgp6u36uF0rE=; b=
-	Xsg8Z9GTRcCZnc/vwF/wgd3Fs8eL85AkqqKSWYZ7P1gcg3G6Pe9MbdYKqFzwcdES
-	ulmk/hforGGeKuEUEECp/BwmZvJ1Y88usKQH/bEBiCfzDvxzVaceZwNqpUbyt/Wh
-	CQxeVm8SU5q0i+IE2Hz8Bnig/ETvgxwhQLY6NgFUNH7RCDH1dE+WOfcH8M0l0G1+
-	RmJ+JFYGkXm1GlCioj6arjBz4wfoLtD+fVc/ma+g+pvQk2P/Pa0Pe9SOGznVuf3Z
-	LehiQSrNdDo7KkBelMtXQfP9xVHhJgiXyj3GB44D07jNZi3vabwh/vXdQ3NdPW1t
-	08Iv7JLbOcjd+d1acFqdIg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791837873; x=
-	1791924273; bh=737r3dkO+KWfKJWDoZfaGkqryVr+gAedgp6u36uF0rE=; b=m
-	wipn57cEod8tT2GUF/rGSQ6qpTuKXrLwbckWdyvJxhlnraukDmaP7pUOlOg26Jar
-	rctz9th82oTFUOXudEJaJ8yTiSahAXmPPH1q+n8zaJJWSpWdy4jZyXnLNZUC6+gp
-	f2d/iEiSY4sAhdBG/RLEWK6FpS9XTnv0ak8k0kKG+Ffku39gNCze7gGVizyFoGIj
-	4mnPf5aGKXOTpocki9iRo9f0h/myVN5CjLSMzmcSkOfytLtDUTHFYyNsddMN+KEE
-	+ySrYO0QJDrZykHxXVZgSdLRJOm0at2k/E+DAZtd+VzGeJLks9Bs7IJu+r9LnEWl
-	xJNv/uK3EAcdUU7etrN4w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791837873; d=jvns.ca;
-	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:ApRF9ONdBamvyW6E75orqZrr7AB7ozlNoQVa6zNgP+1MzGF
-	4aFBFW2P78ftTIvs3VSX+7SM7qlBm+g2jwRQnEhMAM7mRsq+k9adymuSnz0Uwji1
-	7BvjvtuE9iF7j2RfwgbIOm3as/eZ3asfVO6SYtZlA6JFaGgAHuFyACPhwxI33cFa
-	oD2nVwNr5VAvnzP/tycIMheLh7PaLF6wGK29gJDp46AW/FIL+OYIKmSWyqvti3uD
-	VqyR7sojX+xF/Ycu7QudIVgoD3WxD4LmJy+seo5fFVc8QziJgyLzYL9EVn6eD+Ko
-	uMSni2bYa+DkZFYoSLLaBZwekwIGjpGSXJddM0w==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:f8t0AiyvnAiSiyuUQa0+72FdrUQGkL6XQ0ItfOy+j/c=:mTTZCU1JWtOcKixup9l1XoFdxKf0omPaWlOvcuhJGj4=;
-X-ME-Sender: <xms:sUbNasAzrUIE9Rll-dxE113V93q5BXBfPbYj7U3eIXKiOxJVCP1rWA>
-    <xme:sUbNapVczBDDPgjXJPeHsQNaiQ0uhWTfKewCJLf5ZRnKjvg1YSZxKbe0kQNnaI9CW
-    FGAzyU3ultg5Sf-ZSzfKqSQfkS2tezEMrltdwhNDvkXFLCh76asgWMT>
-X-ME-Proxy-Cause: dmFkZTGA5yues6Vzw3GbkeBaSxs3NzFjQiK0j/WrJHTayJpeuMyKRyFMIg9KXYxR32OcF3
-    1nXpKDwAAN5rS81ZpyhgqBt3J8xZeJzQQTNDFPFxK775E9AQDLaV1ZZBXx7UF8vyWqd+AA
-    GOFAvvHHoomuE0t3mcJRR8UnsESoJBJ1EGHP1hGFfeFM3hYt0KTil8oo/yk/a3hMTJUiIr
-    LMeRGHIgW+qcjes0IdixAuJHUNbUX2gXbi8RdcfdJcnPInKbmoXC2ZC6joiXPN8KPAr/y/
-    ex7tstfeMoqiad24twzDhbrNKb4f2VdYx7KGidcauy/cy8Hh0hCqkZT1JILVWHNOT5Mes1
-    fPavq28KTkWv98sPhdukWbAf9m9Uyk3W50pUx2QpkqVS/yXU3V/7KZtGBGvMsmCYJ7OSZP
-    nd87y/7sXz3SEMoReQgegW31fLWzksFlIdlX9Gr6td8lYmnvEAPoptCATfaqgF7eyVxKqJ
-    SgTicOyrkQNN4dTU36nYq5pMOObZpKQWa1cMBjFIhOhsqOptA5rSAi+1D9kwT9Unh7whHO
-    c82A+3oo2CaIDzvrUPlKFS1ZPsAyvE8dHVD/kkc5LlWncYwwsRTDnArQaUhL4WmJHeGDm4
-    XqsPuxocx+KNKXf4YCgom6xJmytFhG1NmftIF1InSkGvbFv2pimbwkhiLDLA
-X-ME-Proxy: <xmx:sUbNahEWkGx4gYVC_VNeYXhZvicGy2BtDZoTunzyh2QtpT6Cj4l83g>
-    <xmx:sUbNan3VeUit-mQIjKn07ya_utu4BNeR4jhrUESZB8Dtmc4KBJQnBw>
-    <xmx:sUbNajPx_7sZgYWgm6tsDVaOLiwHsQ-z2f8ZzGLBw_WhYRPs76jxPg>
-    <xmx:sUbNam7erZcE6bqmiFqC9cDWNemneTaXdc7bLUZzfSLsvke9adrcKA>
-    <xmx:sUbNakZtZyVcNCdJSstMqN06WkLfkqM6gpso9D-vhxU_A8IxzY4chGtf>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 4B40678273B; Mon, 12 Oct 2026 16:44:33 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1791839107; c=relaxed/simple;
+	bh=ktl4bQedDX15r0Fa08aPjdOKbdfAx4m9BHggowsdYxY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kt4Pcnx642h1zL5LQ5jsXj84tfi/HCCLN2uFFYX1Kg0BQzXwIujVELhR6YeUEul5d0JLjKS2V0++PhP1SigY4wDOdmJ0YQ2NS1S5rvZ15zAw363CRn+rvQWn/+kc1S6QM4AoDINXoYS4LN98WLbEnK+q/+tIVT0cZcy9/sEfolY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
+Received: from s019.cyon.net ([149.126.4.28])
+	by mail-gateway-shared11.cyon.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim)
+	(envelope-from <ig@drbeat.li>)
+	id 1xGNCe-000sUs-2B
+	for git@vger.kernel.org;
+	Mon, 12 Oct 2026 23:05:02 +0200
+Received: from [10.20.10.53] (port=46744 helo=mail.cyon.ch)
+	by s019.cyon.net with esmtpa (Exim 4.100.1)
+	(envelope-from <ig@drbeat.li>)
+	id 1xGNCa-0000000E5rZ-2kXJ;
+	Mon, 12 Oct 2026 23:04:55 +0200
+Received: by oh4.internal (Postfix, from userid 1000)
+	id 2B94640610; Mon, 12 Oct 2026 23:04:55 +0200 (CEST)
+From: Beat Bolli <dev+git@drbeat.li>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	Beat Bolli <dev+git@drbeat.li>
+Subject: [PATCH] unicode: update the width tables to Unicode 18
+Date: Mon, 12 Oct 2026 23:04:50 +0200
+Message-ID: <20261012210450.994951-1-dev+git@drbeat.li>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AWFTbsbb2HAJ
-Date: Mon, 12 Oct 2026 16:44:13 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "Patrick Steinhardt" <ps@pks.im>,
- "Jeff King" <peff@peff.net>
-Message-Id: <6dac0b01-3411-4999-b336-453efa8b5bcf@app.fastmail.com>
-In-Reply-To: 
- <CALnO6CAL7ogi5MDRJmzTqNjjG-S39rDn=GTx3nwM5ASz_kRZOg@mail.gmail.com>
-References: <pull.2237.git.1790261062.gitgitgadget@gmail.com>
- <pull.2237.v3.git.1791816795.gitgitgadget@gmail.com>
- <CALnO6CAL7ogi5MDRJmzTqNjjG-S39rDn=GTx3nwM5ASz_kRZOg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] [doc] Add new page on merge conflicts
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 
+Unicode 18 has been announced on 2026-09-16 [0], so update the character
+width tables to the new version.
 
+[0] https://blog.unicode.org/2026/09/announcing-unicode-standard-version-180.html
 
-On Mon, Oct 12, 2026, at 11:53 AM, D. Ben Knoble wrote:
-> On Mon, Oct 12, 2026 at 10:53=E2=80=AFAM Julia Evans via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> Range-diff vs v2:
->>
->>  1:  ab0344f947 ! 1:  7aa0ae7ec3 doc: add new gitmergeconflicts man p=
-age
->>      @@ Commit message
->>           place, since it's a really nice example of a place Git has =
-a consistent
->>           interface between similar commands.
->>
->>      +    Only discuss merge, rebase, cherry-pick, and revert for now=
- even though
->>      +    there are other ways that merge conflicts can happen becaus=
-e it's
->>      +    awkward to talk about `am`, `apply`, and `checkout -m`.
->>      +
->>           Co-Authored-By: Marie Claire LeBlanc Flanagan <hello@marief=
-lanagan.com>
->>      -    Reviewed-by: D. Ben Knoble <ben.knoble+github@gmail.com>
->>      -    Reviewed-by: Patrick Steinhardt <ps@pks.im>
->>      +    Helped-by: D. Ben Knoble <ben.knoble+github@gmail.com>
->
-> Maybe this got lost in the shuffle, but I do prefer to use
-> <ben.knoble@gmail.com> for Git these days, thanks!
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+---
+ unicode-width.h | 36 +++++++++++++++++++++---------------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
 
-Oops, I meant to fix that, thanks for pointing it out!
+diff --git a/unicode-width.h b/unicode-width.h
+index b701129515..c8fcf68668 100644
+--- a/unicode-width.h
++++ b/unicode-width.h
+@@ -5,7 +5,7 @@ static const struct interval zero_width[] = {
+ { 0x05BF, 0x05BF },
+ { 0x05C1, 0x05C2 },
+ { 0x05C4, 0x05C5 },
+-{ 0x05C7, 0x05C7 },
++{ 0x05C7, 0x05C9 },
+ { 0x0600, 0x0605 },
+ { 0x0610, 0x061A },
+ { 0x061C, 0x061C },
+@@ -61,7 +61,7 @@ static const struct interval zero_width[] = {
+ { 0x0B3F, 0x0B3F },
+ { 0x0B41, 0x0B44 },
+ { 0x0B4D, 0x0B4D },
+-{ 0x0B55, 0x0B56 },
++{ 0x0B53, 0x0B56 },
+ { 0x0B62, 0x0B63 },
+ { 0x0B82, 0x0B82 },
+ { 0x0BC0, 0x0BC0 },
+@@ -143,8 +143,7 @@ static const struct interval zero_width[] = {
+ { 0x1A65, 0x1A6C },
+ { 0x1A73, 0x1A7C },
+ { 0x1A7F, 0x1A7F },
+-{ 0x1AB0, 0x1ADD },
+-{ 0x1AE0, 0x1AEB },
++{ 0x1AB0, 0x1AF0 },
+ { 0x1B00, 0x1B03 },
+ { 0x1B34, 0x1B34 },
+ { 0x1B36, 0x1B3A },
+@@ -230,7 +229,8 @@ static const struct interval zero_width[] = {
+ { 0x10D24, 0x10D27 },
+ { 0x10D69, 0x10D6D },
+ { 0x10EAB, 0x10EAC },
+-{ 0x10EFA, 0x10EFF },
++{ 0x10ECB, 0x10ECF },
++{ 0x10EF0, 0x10EFF },
+ { 0x10F46, 0x10F50 },
+ { 0x10F82, 0x10F85 },
+ { 0x11001, 0x11001 },
+@@ -325,6 +325,7 @@ static const struct interval zero_width[] = {
+ { 0x11D90, 0x11D91 },
+ { 0x11D95, 0x11D95 },
+ { 0x11D97, 0x11D97 },
++{ 0x11DF0, 0x11DF0 },
+ { 0x11EF3, 0x11EF4 },
+ { 0x11F00, 0x11F01 },
+ { 0x11F36, 0x11F3A },
+@@ -344,11 +345,13 @@ static const struct interval zero_width[] = {
+ { 0x1BCA0, 0x1BCA3 },
+ { 0x1CF00, 0x1CF2D },
+ { 0x1CF30, 0x1CF46 },
++{ 0x1D127, 0x1D128 },
+ { 0x1D167, 0x1D169 },
+ { 0x1D173, 0x1D182 },
+ { 0x1D185, 0x1D18B },
+ { 0x1D1AA, 0x1D1AD },
+ { 0x1D242, 0x1D244 },
++{ 0x1D25B, 0x1D25C },
+ { 0x1DA00, 0x1DA36 },
+ { 0x1DA3B, 0x1DA6C },
+ { 0x1DA75, 0x1DA75 },
+@@ -438,17 +441,19 @@ static const struct interval double_width[] = {
+ { 0xFFE0, 0xFFE6 },
+ { 0x16FE0, 0x16FE4 },
+ { 0x16FF0, 0x16FF6 },
+-{ 0x17000, 0x18CD5 },
+-{ 0x18CFF, 0x18D1E },
++{ 0x17000, 0x18CDA },
++{ 0x18CFF, 0x18D20 },
+ { 0x18D80, 0x18DF2 },
++{ 0x18E00, 0x19191 },
++{ 0x191A0, 0x191D2 },
+ { 0x1AFF0, 0x1AFF3 },
+ { 0x1AFF5, 0x1AFFB },
+ { 0x1AFFD, 0x1AFFE },
+-{ 0x1B000, 0x1B122 },
++{ 0x1B000, 0x1B128 },
+ { 0x1B132, 0x1B132 },
+ { 0x1B150, 0x1B152 },
+ { 0x1B155, 0x1B155 },
+-{ 0x1B164, 0x1B167 },
++{ 0x1B164, 0x1B168 },
+ { 0x1B170, 0x1B2FB },
+ { 0x1D300, 0x1D356 },
+ { 0x1D360, 0x1D376 },
+@@ -456,6 +461,7 @@ static const struct interval double_width[] = {
+ { 0x1F0CF, 0x1F0CF },
+ { 0x1F18E, 0x1F18E },
+ { 0x1F191, 0x1F19A },
++{ 0x1F1AE, 0x1F1AE },
+ { 0x1F200, 0x1F202 },
+ { 0x1F210, 0x1F23B },
+ { 0x1F240, 0x1F248 },
+@@ -482,22 +488,22 @@ static const struct interval double_width[] = {
+ { 0x1F680, 0x1F6C5 },
+ { 0x1F6CC, 0x1F6CC },
+ { 0x1F6D0, 0x1F6D2 },
+-{ 0x1F6D5, 0x1F6D8 },
++{ 0x1F6D5, 0x1F6D9 },
+ { 0x1F6DC, 0x1F6DF },
+ { 0x1F6EB, 0x1F6EC },
+ { 0x1F6F4, 0x1F6FC },
++{ 0x1F7DA, 0x1F7DA },
+ { 0x1F7E0, 0x1F7EB },
+ { 0x1F7F0, 0x1F7F0 },
+ { 0x1F90C, 0x1F93A },
+ { 0x1F93C, 0x1F945 },
+ { 0x1F947, 0x1F9FF },
+ { 0x1FA70, 0x1FA7C },
+-{ 0x1FA80, 0x1FA8A },
+-{ 0x1FA8E, 0x1FAC6 },
++{ 0x1FA80, 0x1FAC6 },
+ { 0x1FAC8, 0x1FAC8 },
+-{ 0x1FACD, 0x1FADC },
+-{ 0x1FADF, 0x1FAEA },
+-{ 0x1FAEF, 0x1FAF8 },
++{ 0x1FACC, 0x1FADD },
++{ 0x1FADF, 0x1FAEB },
++{ 0x1FAEF, 0x1FAFA },
+ { 0x20000, 0x2FFFD },
+ { 0x30000, 0x3FFFD }
+ };
+-- 
+2.53.0
 
->>      +    Helped-by: Patrick Steinhardt <ps@pks.im>
->>      +    Signed-off-by: Julia Evans <julia@jvns.ca>
->>      +    Signed-off-by: Marie Claire LeBlanc Flanagan <hello@mariefl=
-anagan.com>
->>           Signed-off-by: Julia Evans <julia@jvns.ca>
->
-> I don't *think* we need your sign-off twice here, but maybe you
-> intended to communicate something by this ordering? I confess I'm not
-> sure what it would be ':D
-
-Oops yes that was a copy paste error. Obviously I'm having a hard time
-with my trailers as you can see :)
