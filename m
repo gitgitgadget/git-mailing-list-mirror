@@ -1,137 +1,132 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs2-f4.google.com (mail-vs2-f4.google.com [74.125.227.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427963CAA55
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 19:24:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791833055; cv=none; b=sh/DAD/q8oHIiTdDSWlNRDKKLcbqa0aHNZ45UXYqTiabHyPL8d45KUkH4dXT5nPzdigw4W4ESfG6uWMZN3uxrYyYzm5npnCq8hrCExINsNW23sZhCAHX5V1LRbFa7ofmx6beJPVLi6Xnb5QgyM4RWtLw3uDCS8w0XaK0b7O7AC4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791833055; c=relaxed/simple;
-	bh=Rviq167fdJzyvGJO5wFct3GfO1+tklv1BH4ZMFN4n9w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nwCIId9DydU6bsBuFvBBbkMJcjePebnIdaBQBeI5IF5u9ZGZzCa/n+v2gfufSUPnWec/3bfAuq6hBayfWl7db79UDOdF338ILLMN2cfT7+wwLCQ5CPO6/gNECLafnHHP899Ju3knrbidzYdlmi6y0V8HNtn/No81KL6Q9+6DZn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Yl0Kzd36; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ay8bC8Jh; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00DE4AC156
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 19:35:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.4
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791833735; cv=pass; b=TYs/5+kdOQxu+l1A6bdh7iBL7wALEVyVsgRCaPFBqIS4KQQwqvBNCWq92tcsJX2YKPNP+o0i3iwltIhNTGB4Ew6ezH8wokRLkybGSFAVRZkkcb26s1nkS1NH+5DBJmRy0NerZsoJMOgFBJ6GHtaHChnmOiGrghC6YDosyQ+b2P4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791833735; c=relaxed/simple;
+	bh=z8ryKs5px7xsHkWyrWodvVADBdYtfRhemJ9/uSjlTEY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=thhBRHCaKp+6v0YIlNUt4ABlrlpqRulZTCrTacV1yucsZbZcZa4Md7UhkdV6nZr8v1Qtp3iiIWzZgvPVHVHiWRKZ6I30x/qtS6VCQG7fTsiqqkjC/e4sX/7HP6Z8k5Vsq9Gxad2nGNLcIHyR91DBGumlr11UCtxj/uAoY8RG7hw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UbIsy6B6; arc=pass smtp.client-ip=74.125.227.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Yl0Kzd36";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ay8bC8Jh"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 349C7EC084A
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 15:24:13 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 12 Oct 2026 15:24:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1791833053; x=1791919453; bh=CQjVutDqmn
-	nqocIP30LOJJTanCFueTOnti/NcIU4nTU=; b=Yl0Kzd36QqxXuKZ6qRyPFG84w+
-	iTI3A215TF5rMFuq8jSOsS/wt6XVtDpkGYJLjZyHA6tlG8AF+u+ntUejp/NBwygr
-	NHAISa3MXzOEsSqf8+PKjMaGpmfcUev1drVzQziZF69ovQJa12KlY8TZ/WuTlrLN
-	DWFXCKymMAzY4Nh851HaJcm358uZr+P+B1NWA5C/mSOX61ja4SQCI3CUFmq22wTQ
-	cRlV0glviLs3BcsrlArTp8p3vvgttigeF2B2fS1ynMLKv8FJzUhbJenLp/ADkqIJ
-	jOpjyOCVtO4rXWu8ThNsuD/jN8B4Os5t0Qs8q2+DBExRHeEe+uj63lfM7xcQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791833053; x=1791919453; bh=CQjVutDqmnnqocIP30LOJJTanCFueTOnti/
-	NcIU4nTU=; b=Ay8bC8Jhr2KqACpuupVFnHaE2GMiw5s1RqFFcU4ifwfrhTDkioJ
-	febkFO7fKBj+7RdUoZbjjRovqhJ21FyWOpdJu77ugj4TbnBjVtiiu30Qs569mbGn
-	EFUG3pOK4NtSh9ome7nLkdKBEegDjstiAsqXS7ryFbZxnIlkrxjnq5iUrcteeHoN
-	3YQm0VRi54oqAyulTb/xv3DCRp9JEcHvelw05dKGWMULB6FgYJdIvRBLXZIx4VJa
-	mR7IT7SP3lgcpIhQPBTbBkwRdtgIXJ+CPHvwwvlXyfoOX6T9YcsXMWQ3oFPo5fTL
-	jof7jU5r7v8NxK882Pf9FRhYk82+FIsLKvw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791833053; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:O/8w7ISWQ5NgnS1b++ToOYT8bCGzz9sY1vPRho+E7xunfUg
-	isMJIng7oUX7bY76YYc58FnCSWuWOgf/qzTfgTHYIjC8q26BjeNI+yRa5DBIuERS
-	YXoqYAqUQofjNGx6LWLLB2HcmfDwutAPIXukrwWPi5TlKUF/2frGvFHE13F0ZDBX
-	CN1iOHmx7No1hUgGpfgSnz0IEfEkJAMcaUzpFLOxO0KSa3RzCsKy8uzfgQnhvqUa
-	NArf9knL7beaJ5DzLnxLX/fimyedaP6/5JBUZPVU18BMXQklb52szf/D39ZoHhdV
-	vxgrlj6nTpSmAQU3TbZ94dZwbyCJBdA+TlEy5Iw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:QIJde/n6FLc7Qj0p63B2JeEQ/Orpemu3IG77wl9fliI=:Rviq167fdJzyvGJO5wFct3GfO1+tklv1BH4ZMFN4n9w=;
-X-ME-Sender: <xms:3TPNag2HwbBRua7lbpIqqsT1k1o9NX0YeRh_G7nR0WKtBtjRlKT_Fw>
-    <xme:3TPNauxvKd-EHBnRwgPV3TC08MZ8aDUimmbjLzfppUadoyFEH9jSdVjvD0GkS5Df_
-    NL0ZnehhpZd92ADi0FPNLcpiFIa7sfPYo8i74s5T8HwYtGFqUgIFYM>
-X-ME-Received: <xmr:3TPNaisKhl2d28e35FzGKM8vC7FNTGT9mHIfLRxY-5QB99loLbBkhNxspMeqeEkGTf6SoB6TiW4bo0WlGzdsYOUccaMBr1cjBl9D>
-X-ME-Proxy-Cause: dmFkZTEjqq/7hcbtL/q53nsBua0CeWcnX4a0Z7QUmjUFjfdMXNbV999halqZzIMI+LG1Nq
-    FJRbAkVTibB/09EJKlDDQYDAchvZhe6q3JmxymcvGRe+h3jNrC59wlEEiGV9dh5kxXWp7U
-    eXqzWQaFhDT8x49PupeeoCuqTdLsfdjFz/IgiIoHWjCLnu/VtAm2qyyXV1cOhiUuK/BsQL
-    H/p0I5x9/R90FwhXfkZWTTu/yMus7AxkOGBL1pN6wxJIGszwZdxC3D4YblI2LXWsSgvmE3
-    yeXr1cT+4rdUibjBSfw8lKuNvJCm7joTaCSpJ+b1mikGLzv/gi02bGCKdR2gEEgKWFBuE6
-    1QKTlfqvc588InUC+1j5cm0joME5+Li/ztQPNQcq15D+Sm/KMxC7UpXpGjDb34YziT7HUz
-    extjozv66CaChlGwZwwke7Jly7qtFPJkzysqpiNV0DTYxE8cR90whf7W9oCDe7XkobteI6
-    gFRwLCzzmK4EIg68fV84sGtLi0ZX87ieS1b563nF+zpIN9o+jwWAY8oH1j28Zy7RzskwXE
-    9Kk2NlWj814ZPMDxIbyOQJ4Yv43mu4ITCgXaqjN6+gvyObSrcqCxIBE0lUqimjMVjHTcbA
-    ZDTCOh43kU321bsINCZwuBcWwQzXTvLIgYSjO1l+DbFJcycxXiY0snKiWEKA
-X-ME-Proxy: <xmx:3TPNagxmxsxJXItyU9l8OtzESSPa17EDXzSKk3vLT8NKvJz-4jP8EQ>
-    <xmx:3TPNalAKrlFjSOYUvveeM4DGNX0_NS-HDXQhDBglTQlaonAz3VwrVg>
-    <xmx:3TPNaudiTpXlhSTpKtFyX4ej1tO0Bx7UqcmSBQeeggR9O1tJpUk7TQ>
-    <xmx:3TPNavkcOIytAx5aR2zxe1Y93Sfxrzevd7_p-W0JSL6deVMYj9Ujng>
-    <xmx:3TPNalA0PEnad_JdrgJAmRTnRPeEbwmV4Xb0wwlyR3md8Bqt7eOSNQUq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Oct 2026 15:24:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Isabella Caselli <bellacaselli20@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Ignacio Encinas <ignacio@iencinas.com>
-Subject: Re: [PATCH 3/3] config: learn the "hostname:" includeIf condition
-In-Reply-To: <20261012015846.2649843-4-bellacaselli20@gmail.com> (Isabella
-	Caselli's message of "Sun, 11 Oct 2026 22:58:46 -0300")
-References: <CAK4AdTSnaAOk649a0GLe1M9C+cYuDa0Nwo54=HT47R53Q4ZdWw@mail.gmail.com>
-	<20261012015846.2649843-1-bellacaselli20@gmail.com>
-	<20261012015846.2649843-4-bellacaselli20@gmail.com>
-Date: Mon, 12 Oct 2026 12:24:10 -0700
-Message-ID: <xmqqa4oi67tx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UbIsy6B6"
+Received: by mail-vs2-f4.google.com with SMTP id ada2fe7eead31-7c1103e81c6so320093137.1
+        for <git@vger.kernel.org>; Mon, 12 Oct 2026 12:35:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791833733; cv=none;
+        d=google.com; s=arc-20260327;
+        b=qTb9XO7j4QG0MkHKylLJzs7Yg9tRhoD3++clol6ocq6DQtBY8W0m/V7kLmUFinyAM8
+         Y1pFqS5s985/zxWqF5v9E6Ea2JUuMIFqPXCn8GkPqBEvFQZw/AlveoimqRoF+yEfj1PX
+         sZGocVTliLCA128F4+wbFLUD0P0YAsT99l/WeyjSIog25l6SMWg7SVCNapqSJplTzeRo
+         dXzrOaK2TpfX+nxJx265UKhdxHenaCxYLTcr4ENVKYsNIVZUTnDWZPEbGCqSHAKRqheN
+         9zTHarr01gJeVbRsg+LbMGExKZ/JOh7X6rRKx/Fh2VLY0Q5wYhZufQVnscMRMZcWeP7h
+         jclg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=WBZkJH/9AzE/0pgqyWQG3oqCJ0IZhHZGvPDIhEjcuHU=;
+        fh=VV3oqeA/wKg8E/MQlaee9LdKyybTp/4JbgI2GUt/VRg=;
+        b=A9GFi5HfijNKkl/hMk++pQJXlLXw1dGLbEj9m+ta28deer6iJF4YjU3Me6dKiWFytF
+         8YyI85G9EC+umKqPfAZ9olUUZg+wPu1toUT1QtZChI0GZwj/DWLOl4HRp837ymR/BKFp
+         w03r24WF4cRSwx77x/XJCnD+gzuCH0uv7YQX+DH8YqsGm3g9kkqd6r3U6/v/94rAloQu
+         2tXmV/fesRBO5iKbrGxNUWsExdCZGP+cpKcD6jvzIXbBX6DVx+x9Dzhm6OCULWRBxKBv
+         z8waSIPYhg5KiuI2xXe8YVhEjq0h/U02NgkQ1sc1Qz6QOejzHagxPy7iNgPcjuGQSMaC
+         REAA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791833733; x=1792438533; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=WBZkJH/9AzE/0pgqyWQG3oqCJ0IZhHZGvPDIhEjcuHU=;
+        b=UbIsy6B6YFlrjGky08sNfulXT9KXn8w5/T1b1UPIau5MPVBooxsKdzn5GYNvE1wTEA
+         HrplpmSvXNuzPGK+0QEelX+cZApnfpxWht9r9J1pgwu8HAxa63mS23XtQkSAZu6bxyrB
+         37QGltP723b6HbJVztQBCPbkLeuz9zK/mIXTYx5H5dfZCrPP/iac9UK/vPOaNXhshSxx
+         Di2hqAdBHTkYIfsPKDwCrjVvFFc1osxtqA9R6LT7UcDXvo9LkvmV9zkL9pVU9naEzRpI
+         NnwraiyVB5+79eGTTTJZ+tH/RE9UcsPB7linrgEbTUDhTpoNWbu4kaJafnznIw9DUcPK
+         NX1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791833733; x=1792438533;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=WBZkJH/9AzE/0pgqyWQG3oqCJ0IZhHZGvPDIhEjcuHU=;
+        b=Z3fnK+wVHg4J45iJJu6jALIfaeJEDJVDHl60OJ5p4A/hM5rbP7Y4WTKaxeFHvaOJc1
+         STkwGc8sriO4LDkC8wo7kTHc9RsCmezIuCsv5Epcq2ytmKWzq4PFJVVe4DSdHRLVwKBX
+         C8pRo2Bp9CyIHtnWvLjF0QWjxDR3dkvFeMac2QMyIfkCxntMBaeE6d/u89rXXDrsoJ/C
+         2Z6Oj1zgeGGFRagrtVlGEQEdugYuy6I1xG8jIEbFMTVMIwsAqZBRObMJg2wDfn8xxFYN
+         yvSIbTYM7J8jflMwvOXnMpAp90AmDXoZDc8GKQ3Ol9UcZ4BY3IPYOmlAZaa3OvBdcjNU
+         1hMQ==
+X-Gm-Message-State: AFq9FYJsH4++F+vDQABAPbTxiV8gC0NnMvV/NcdFWeYjpGsiXQMZ4+l8
+	HW6U67A3K+SGLh3LvyjzzsZw0qYeOSDluRezQAtfs11ZvWFx96d8DmC8ji9oV1rMDRsvDAlBT1g
+	o3XZwie9W5eF/GJnWg9x3Epe3Xjp6snRt3GEkPBb9Aw==
+X-Gm-Gg: AYBFou136scliKOr/zT0GVM2KJUKmMiqVnki6riN2qRNiech1W7StKuqSQQBN+7It0i
+	f4oLk3uIBKj+7dj1B0PXTzdbckJxLnkkTn5fTdD7kr8MyZzO4Rr4Q6OInzqRhaQwfLZYSOP4dac
+	o/RWKJmkrpCOcNFqLm7pFVeRFwZButZCQ5KifCBtXB8illrL6dFCaUDp0qrz8myvf5Sd7jBoHWs
+	WraoIQEWYU3orzK40B9pNwuD7lM2uu7+vL5QrGRGjEDdl+avXf9Un20fYEcwXB4iyEtNtL/nXS1
+	OpRrxGoo/QP9ioWmoN8UGy5fsReZEMA04ZVUluA9rC5FqzBoONVGyDzbVXpzJY8dGQQykmONN8z
+	6dPauGvGZCHY=
+X-Received: by 2002:a05:6102:6c7:b0:7be:37d8:1567 with SMTP id
+ ada2fe7eead31-7cb37250478mr2664461137.10.1791833732671; Mon, 12 Oct 2026
+ 12:35:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAKA8Uu30SPCV9uAtn2K_0sVrD=FEt7DzdgYUWfwtbh019xK0MQ@mail.gmail.com>
+ <CAPSxiM8Xjysm7XbXEmtkMkaFnOcb2wWY5-YRUKd4tGsx=DodUw@mail.gmail.com>
+In-Reply-To: <CAPSxiM8Xjysm7XbXEmtkMkaFnOcb2wWY5-YRUKd4tGsx=DodUw@mail.gmail.com>
+From: Joy <cryptocurrencydiva@gmail.com>
+Date: Mon, 12 Oct 2026 20:35:02 +0100
+X-Gm-Features: AclHuK-tRojYMnwMe5jCU9c9Mj54DQ42t6cHQHGsG7vgpjCmVOuaVBKcFgBMvU8
+Message-ID: <CAKA8Uu3d_SuB=USUdoY2Tz+oySAotr1WdvMbpdQ7ejQ+dWyrUA@mail.gmail.com>
+Subject: Re: [Outreachy] Introduction: Joy Gundu, applying for "Reduce Git's
+ global state" project
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Isabella Caselli <bellacaselli20@gmail.com> writes:
+Thank you!
 
-> +static int include_by_hostname(const char *cond, size_t cond_len)
-> +{
-> +	int ret;
-> +	char my_host[HOST_NAME_MAX + 1];
-> +	char *pattern;
-> +
-> +	if (xgethostname(my_host, sizeof(my_host)))
-> +		return 0;
-> +
-> +	pattern = xmemdupz(cond, cond_len);
-> +	ret = !wildmatch(pattern, my_host, 0);
-> +	free(pattern);
-> +	return ret;
-> +}
-> +
->  static int add_remote_url(const char *var, const char *value,
->  			  const struct config_context *ctx UNUSED, void *data)
->  {
-> @@ -411,6 +426,8 @@ static int include_condition_is_true(const struct key_value_info *kvi,
->  	else if (skip_prefix_mem(cond, cond_len, "hasconfig:remote.*.url:", &cond,
->  				   &cond_len))
->  		return include_by_remote_url(inc, cond, cond_len);
-> +	else if (skip_prefix_mem(cond, cond_len, "hostname:", &cond, &cond_len))
-> +		return include_by_hostname(cond, cond_len);
-
-Neat.  With this include_condition_is_true() helper, adding such
-conditional inclusion is made very easy.  Quite nice.
-
+On Mon, Oct 12, 2026 at 7:07=E2=80=AFPM Usman Akinyemi
+<usmanakinyemi202@gmail.com> wrote:
+>
+> > Hello everyone,
+> >
+> Hello Joy,
+> >  My name is Joy Gundu, and I'm applying to the December 2026 Outreachy
+> > internship with the Git project, "Reduce Git's global state to enable
+> > Git's libification".
+> >
+> Thanks for your interested in contributing to the Git project.
+> >  I'm based in Abuja, Nigeria. I'm a software engineer specializing in
+> > Frontend Development (e.g., React/TypeScript and APIs), and I'm
+> > learning C through this project.
+> >
+> >  So far, I have built Git from source and run some of the tests, and
+> > I've started looking at how global variables were handled in past
+> > patches.
+> Good.
+> >  I plan to work on a microproject once chosen and will send a patch to
+> > the list soon. I'd welcome any advice on how to approach it. Thank
+> > you,
+> >
+> Go through this links if you have not already done so:
+>
+> https://git.github.io/General-Microproject-Information/
+> https://git.github.io/Hacking-Git/
+> https://git-scm.com/docs/MyFirstContribution
+> > Joy Gundu
+> >
+> Thanks.
+> Usman.
