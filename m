@@ -1,114 +1,119 @@
-Received: from mail-vs2-f6.google.com (mail-vs2-f6.google.com [74.125.227.6])
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF714C33FD
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 17:50:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.6
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791827454; cv=pass; b=SvRuqrviiUoU+h78PBcd/TOpxNhb7hMjV2sMo9uv0vvi5RcV0xWzOzT9uRkf50siekX0wc9s3hM4w5zlTLBZT3nkX6e4qlBR0GA5+BjZP5QhieE/q39Tp6c1/D9/1RSS2TzCrwqwjPeA/2g0iGsSOMWlK8NPkYGkkrT6cRR7yCs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791827454; c=relaxed/simple;
-	bh=vdOrl8j9alpRzEPRsFYpV7snF/nVcuPjG1aLzOi3wxU=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=XEqrEi+TLjSq3wYYRQvWdKmzgonKMdwh29GPDUf6ZG8BO+OhDbNhRStifIqYWxc2Cvd7Lnc3AHELrwrdqXJ2jzsEhcqaCpnkyHR/fzL3xdhwhd8UqS7UJ7IR8zQOuxVRouXDhma+R/Kdj4lCPfWqynqk5DHWMQNkmDVGbS8dInM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kB56BH8C; arc=pass smtp.client-ip=74.125.227.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A864AA569
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 17:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791827462; cv=none; b=G+5mNPNN2Ysa49UFBrCF2xCJq4bArxqvMq+LEfyf1QSU4we4tn5nXqD+299lLFPC6pyDOwejnTgayXduKktntmECqf77xGJ8OAk6uVhog6UJHyFsHslOXRbNRo+St101/23Hhs5k5rVaCcLP9MoGzZMJhEoF0C311pTVbtiC5io=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791827462; c=relaxed/simple;
+	bh=SztaHAyIkQWOhNnWM8FxRHau5ivKDLiPhWsqCasJImo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jiyCwXgUl/i2YEcRc6vifkfB+dJ3tA1TjK58Fh45MLDranaYFEsCPuqZS8E43RIBuyDlNlne+VWZghLh757cJi26VG1y2X+U9ERoZI38mU/omP/CfAUdobMCHtS0Dv/YiJolcCTc87xO5BKz8Ziczgs2UV6wMFddMv1/xSLTiXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dCcZgNEJ; arc=none smtp.client-ip=74.125.224.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kB56BH8C"
-Received: by mail-vs2-f6.google.com with SMTP id ada2fe7eead31-7c02963ec8aso634475137.0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2026 10:50:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791827450; cv=none;
-        d=google.com; s=arc-20260327;
-        b=AF8DBlf3JuOPuyuP7gHvF68V5AQwJVwdSkB/KP7fEUTYp+QWHpF7lC/3Ac1WMdrSTu
-         ZvU3Y6JJBITomHqex9xX4V3TSLp7TDzaUI7Mx0hhwpBHdXb5/4sLZXBiauDD5dR0mdJ8
-         QjdW1s8uZCiWkjRrKfSuZ9DSmPvmhgstwPbQfWO9iCcBX2u2PkiHSTO59gZpJVdrofRk
-         ZcLni6IDL7r7u2dvM6CJBYjVkV55plMYCi9w1ttucj3UYF/tePNnivduBoUWQBfVig65
-         cSsop0LrSrRhQss5XwSkAdtaykkODPbnkU7Y/8ixwXRNsqitbRsbW1Afa0GczQpOFe1H
-         YaCQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=vdOrl8j9alpRzEPRsFYpV7snF/nVcuPjG1aLzOi3wxU=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=meHFmKgbA5UDEoDZEB+xcEARUee+W7+npdjn+iCzr8cL14kSYZjvGvZZKp1OCzgkOq
-         zVap0/fCPGnnV1PN2/9VtG+5MO1xKxKU6YcjkWdaehF1EgWRd/XnhVrI40wJy4Z556F6
-         sc89gc4bCUxvRU+S+KrNCOVyrI2qPOlslaFkfdhO+f5IIdBvBrCmv8lmiNCdJmm0X8KV
-         3TN7rqkURlXkdjk4+Yj1Ok6RRjE8afNSwJojghf6+/8Gd+PtEvWbRirXLYRNxdFRhaJs
-         bz+rZtG5EQ6ZzpyaGdJOiDgiB+lvgE62urtToAvztCpAk26uhbzrvEXY4uiqnGilXLhy
-         zH2A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dCcZgNEJ"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-677ad9083feso1463703d50.2
+        for <git@vger.kernel.org>; Mon, 12 Oct 2026 10:51:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791827450; x=1792432250; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=vdOrl8j9alpRzEPRsFYpV7snF/nVcuPjG1aLzOi3wxU=;
-        b=kB56BH8C1c7chq8RHa5YzbI309LJHON82/mjbaxxxaGiOyEtHdCCFl4CkkOxG/PrQt
-         RGQGNLikY8mA93feUswywNjojAcidAHsSnFYvidVoQB61ZZnwxlqHjjTmTnL220RsZcG
-         YlqhBbR3S7XGhNrjJEx1QbFNivEzwJBhSsJSHrknDlDAzugaAOigZ0Tg/FFklFOsyHUM
-         JBtOCVgZQmA0AMD9S7f0IpBksTeIJXKYZXRkFRFF0yXS/52npvpbynDHd50REQval5Ns
-         WyDoni70AzdUcnB+W1senw8ZM/4t9d5UlY87HkcX/foS/hCDazAmlH4cy0G4hL5wF75T
-         3p0A==
+        d=gmail.com; s=20251104; t=1791827460; x=1792432260; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=c+UR7EBBJR2ycfX64b4mN2Xa/Lf9R/0ELkcT9D0eF2o=;
+        b=dCcZgNEJS6lkTqM2DLqiRqdv46sFrSlxLzvw1OssVOFXEYT90rW/LKB1svpyfxHzus
+         evUVCdfkntkUw+thwqj5XHxUxcFCLZKJbHbQvH4V2JyurMruguzz40+kd+BHFbFH4BZt
+         IqJBYgoi3m+j4W6VqX/5HOh3hFFKu6msRfLpwuoG8zWD5NcHP+cyWjtdxlcbQEqw3qXd
+         erubuJo306VlRw+h1GwBPkrpDx8vLtWbgp2DDk8sFkH+HCUwVkd4A5Z8Csxo/Yevr2Mj
+         ve0Tev6Ht5X+niv2uxNSAr8OzbynS+Co3FxBgZbd0oMa/f7L5ScDOi4LjcLIlqgmcyRF
+         Q5CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791827450; x=1792432250;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=vdOrl8j9alpRzEPRsFYpV7snF/nVcuPjG1aLzOi3wxU=;
-        b=NTJYhSn/7l49BFGwWB30ik1ZqnRgBxn3QmkxJjCuUdMIsxU6fvDfiZMhUJMVmgEnsM
-         TJZOmudDMK2j8fQSVvbUHMT/P9m37OP9Qj/vcP/28c5ZVaSDfB9MbPsUZKebq6Nq04OS
-         B2zEzSE1MXh/ObOZs/4sauG0osdJoZmcA1vtdQN5Msmr/dGk8MmJznvvKA0a9KToqYKh
-         1dyuqSPFF4L4PpWtRYmCNv+EK7OTrnjc10jnDeGjobti0dMxuU0LDcPwct4AKJhb5J/5
-         iN9L0oJymZ9CCkhbrHzNbBQUZEXTvnKzSm3lNB/tdO/QJxrLP6z7WJRnS2AiYQbYc8C/
-         oX4Q==
-X-Gm-Message-State: AFq9FYLFuKAhmoogRl2ZVT+sNVJgGaP0IBQMQJl+dM0tuAmXgsncsgB3
-	+omFSdFKgcZHRMiTnqRvPKdyG+OCCY75NMCVUWrYd7/NRMKGRXx7etDrlv/KuWDSuIvmzjguy66
-	kzQUMC4odUs3W1ZdJ/KEzlUSuX5ASEYDTU88KgLcpbsOf
-X-Gm-Gg: AYBFou0TItuXT5qzCMAHmUiC0+5Ge2urszmT5z70mTW4/V3/2SKGEObbk/9bnWELYKA
-	Jp5fXXDH+yQYbndDwra3waP7jc5sUTLjbiWIDy4+7OZ4zfpVNxI+lxLcTqk6Yc9MBkGaIaSSD9x
-	4enw5OIQ1Z2PdKGHVLfiYNBB76DvSypc6dVpdKcc7t7Wccnv/uXpHZOOf+DmsmrUXaHNobtwlHl
-	T0ALnhP395v6nPqZOvCQXCvwB6vAzN+ra/n/20KFAvV8a2gILvYX/SauHUpib5HCyavtWiUxSyR
-	eZC0GdmVV0uGxssrH1qmh/Nz/vowu4C8r/vQ1R5+MheenLATd2X/M9S4EZvdmFV8Nh3apHZR8jC
-	RoUnNT/8jq4TL6xf4NQw1Z3c=
-X-Received: by 2002:a05:6102:3753:b0:7c0:b41:145a with SMTP id
- ada2fe7eead31-7cb373b9ac7mr2346123137.30.1791827450435; Mon, 12 Oct 2026
- 10:50:50 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1791827460; x=1792432260;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=c+UR7EBBJR2ycfX64b4mN2Xa/Lf9R/0ELkcT9D0eF2o=;
+        b=VKLMMVRlnbI2C3HqlTXz2ZcI+ZpsJ0PxERrBkrroDHBh40ig/YTIAASBqXtvIOkTWw
+         LFAtNGTcoMPdAovjnKOtYodwNqbcfCaZbrItN1ONQSIwYLR5roLHyhJtYpZIQ/6gucfv
+         21JyDMS7Pf85yFZ5PBzKF6nsFrPMASt7Jky18b0tm6BZek74n8kAmLTT+0vbOAwzKp73
+         kQL669PlI4weYsgMI20vmVKwZnKi7GHNbHzcvfKvKKS0856wEPgGpOqvlepCzHWsg9na
+         jDlwoDWNl5QmZg8EmWwHOnB7StjnY3LhTXpjkM+QIcAXaSr+2LHl7g80QSRQdK/8/mIZ
+         hf9g==
+X-Gm-Message-State: AFq9FYJtpY5MoJuM2PGPSMyOR7NwbbiXmKWwIt1RUfcMshkwV8W9B5+m
+	BFnVhII4CE0jS67X/PpxIElmJM1iWNOMTGfZPeYm3LiE827mZOSFqiQDniXcvB0M
+X-Gm-Gg: AYBFou0RDz7V30Ymp9FPttLVbKUWzIuBH3wX/saKZlEp3a4KCu7kIJ1JaY9M3jWcXO7
+	CBmuAHZlRb9YzJTvvzD7aPIzRImOe97K6wQmMRu7OeYYnTVcU5Key7wrgirxE/x3UY0CYoYUfRe
+	ZutVnBTnAeT4WNsqgtRnpBoix7HWofJ0LJhoXrWyuRwniFK2e4T6DfrSgWH/Ma01jWWn+WZYCwl
+	5YZzOBq32jPkt7rUtW5JpT0roBhkXeNZN7FU734wW2u++ArotnSbyu63PGtwDmzO1Yv4PQttyZv
+	teXNOH75zSX/tTbncV96p9J8SvaIAi+ZcOBwAzy1mfHNK/1xfWfsgCQSs6gmrkeubuTn21Jub9p
+	QdXrHDB9WknDr+/3MAJ6VsZkpWZZ74EVT6NxjDdRP2OKSzyzSuxBXvvfs//SdUT7T1gGK8dLi88
+	y9XJ7ov7NyP6nZr+jsP5r7VMlkGndT2290+YyA4pOIn22tRXz3uw5f2sl+8peStX2eNsZe68ZLB
+	sp5enS/IT8CUa2dL1Ze6jN+0zsLP72DbtadBhRjsT5R67WVOwO8Ik2uv9NBHVkUpjcHV11duU6v
+	120+ADV1EBoVGkmDbaG+jA==
+X-Received: by 2002:a05:690e:16a0:b0:677:d6b1:d9a3 with SMTP id 956f58d0204a3-679369be51cmr3626222d50.56.1791827460366;
+        Mon, 12 Oct 2026 10:51:00 -0700 (PDT)
+Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9092:700::6])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b07ee8603fsm36797127b3.4.2026.10.12.10.50.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Oct 2026 10:50:57 -0700 (PDT)
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
+Subject: [PATCH 1/5] completion: simplify stash subcommand completion
+Date: Mon, 12 Oct 2026 13:48:27 -0400
+Message-ID: <d0e461a14a254cae7d15aa6b62deedb4a0ac6deb.1791827304.git.ben.knoble@gmail.com>
+X-Mailer: git-send-email 2.56.0.184.g5a00b4a6e9.dirty
+In-Reply-To: <cover.1791827304.git.ben.knoble@gmail.com>
+References: <cover.1791827304.git.ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Joy <cryptocurrencydiva@gmail.com>
-Date: Mon, 12 Oct 2026 18:50:20 +0100
-X-Gm-Features: AclHuK8SFffAoKrG51by0--mFN_1U0wpDncTImfxrG-hDP45oBYKStzhkxoI34c
-Message-ID: <CAKA8Uu3f6jfR4fxC+4uBcSw+4E7jG-Vm4E2jd0XHgwTryzA1EQ@mail.gmail.com>
-Subject: Outreachy Introduction and Interest in Git Libification Project
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hello everyone,
+The stash completion helper contains a hard-coded list of commands, but
+git-stash provides a mechanism to list such commands
+(--git-completion-helper). The pattern for using it is wrapped by
+__git_resolve_builtins, so use it, bring _git_stash closer in line with
+other completion helpers.
 
-My name is Joy Gundu, and I=E2=80=99m applying for the December 2026 Outrea=
-chy
-internship with the Git project, =E2=80=9CReduce Git=E2=80=99s global state=
- to enable
-Git's libification.=E2=80=9D
+Note that we maintain the "save" special case, since it was removed from
+default completion in 0eb5a4f911 (completion: stop showing 'save' for
+stash by default, 2018-04-20). We don't have to do anything special with
+the exclude (3rd) argument to __git_resolve_builtins, though, because
+save is already marked PARSE_OPT_NOCOMPLETE.
 
-I=E2=80=99m currently preparing my development environment and learning mor=
-e
-about Git=E2=80=99s codebase, C programming, and the contribution process. =
-I=E2=80=99m
-excited about the opportunity to learn from the community, contribute
-meaningfully, and improve my skills through feedback and
-collaboration.
+Signed-off-by: D. Ben Knoble <ben.knoble@gmail.com>
+---
+ contrib/completion/git-completion.bash | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-I look forward to participating in the community and would appreciate
-any guidance on getting started with the required micro-project.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index c3a49e2e22..d60e85479c 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3553,8 +3553,12 @@ _git_sparse_checkout ()
+ 
+ _git_stash ()
+ {
+-	local subcommands='push list show apply clear drop pop create branch import export'
+-	local subcommand="$(__git_find_on_cmdline "$subcommands save")"
++	local subcommands subcommand
++
++	__git_resolve_builtins stash
++
++	subcommands="$___git_resolved_builtins"
++	subcommand="$(__git_find_on_cmdline "$subcommands save")"
+ 
+ 	if [ -z "$subcommand" ]; then
+ 		case "$((cword - __git_cmd_idx)),$cur" in
+-- 
+2.56.0.184.g5a00b4a6e9.dirty
 
-Thank you for your time and for mentoring applicants.
-
-Best regards,
-Joy Gundu
