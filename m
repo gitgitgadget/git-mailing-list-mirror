@@ -1,71 +1,74 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0CF4B826D
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 17:51:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183F14BD0FD
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 17:51:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791827488; cv=none; b=IOHUMOEfHGG6FxMgnhx60pJ48qM2nVrKQzWUvcoFt2wUHnnfYMTPyu4efIqaZ4vjacPFVuAFWFvsKU+Oo8Y+YUz3WH0TjAWqb3mn348Wncg0+rxxdbyc8R+BWZgBk5WX67ad1J7jmOYA+YDkOHOE1z9kvM/NxOjyurxWuASx9Kg=
+	t=1791827493; cv=none; b=PcjvaZIL40tGz4TCnlxV6nLmsP5CqbUilffnWFOltoBcZDX5vUmV6qm5m4FpR/4DizUj4rZQfyqDUTSyJRGFYIrD8JPKoGab5gBV0oWr2TiTYrHnWpYHrSn5rRUTcwySO3jyzO3ga8JB7vTO8iPVmFj4vOENgh8ZnCcewo6RijI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791827488; c=relaxed/simple;
-	bh=CIxx0baMcQVLUGTq/TjMMY6x7zQtxa4rbkk4f6fFZaE=;
+	s=arc-20240116; t=1791827493; c=relaxed/simple;
+	bh=aV8faWuM27l8tBxkYpToViutMFFqQ8xqgAfIvuOcI8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J++p1CKkg0jqzKMGXMZcA4MgX8uq6ifNwMpiBVb3zqfJpzvZWQ89twV4SBNkigDz/gGAmUzf9K8oVVk6wIy8/myeriBD6heo39OsbPdcNQmVKxVQJwKrM58+mg3hQk343GK/ULDCQfrqM0tBTw75Dl01V9vuK5M+BfLL5mLCyEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rbeCnHGa; arc=none smtp.client-ip=209.85.128.178
+	 MIME-Version; b=SFYxo0I7nk3yH2IllcQwGBfdrLbgMlFeuoeiBT/AS3kpvJvmvcXno4Sgx8Bi8qYwn3fdalH8hxQWGkOo+uWU5W4pKZS6gbKBZaWi8Ac01If8MLAPkR8BpQw3d+JD4TCPIMldoL2gUjjviWYalY1LAyTAB0xtuD6it5P37ZnauJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BDmhBD1g; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rbeCnHGa"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-8aca68653e3so3720647b3.3
-        for <git@vger.kernel.org>; Mon, 12 Oct 2026 10:51:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BDmhBD1g"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-8ae9bc9a2fcso32395117b3.1
+        for <git@vger.kernel.org>; Mon, 12 Oct 2026 10:51:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791827486; x=1792432286; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791827491; x=1792432291; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=65ZYC+BNH8WLjU41wPCuBYgKZmKDjcBX8Ha84MthzOQ=;
-        b=rbeCnHGaxkJUfyJ+rMNiRtNfBwGVp2+wnK+5I6M/4SAFKBoFfB2xud5FxzmRCM1AAm
-         0fFMUGJQfq3W0XBcCRvBina60hbtnlqoKB62FJir8Yb5GBQHp+T6fYm3AzisWncPcDGb
-         yvImluK53fnoTa/eF+yekWvM0FQyCPxbM6X9yyVLbs/cin3s99BxbfutjYbnHo2vSf9q
-         HV1pI1AhlmYSpy4ozt/8N1athmpoiV8Styve1+d88ItS+zLoJ3vR1FOLt1tlxINco6Tk
-         Reu/pqN6xo+wP0ARLYoN/bkT22qBXo7xaUhu6zjjylimtcGlbGRsbGyBaNRUSQhpGK5D
-         xv/g==
+        bh=t1Pda4zvUFL8Dukp/QANXACb3MGfE1jsVSJ6G4x4QxE=;
+        b=BDmhBD1gb3ftwqUgFDLbAiKZF76iQf6ecCOfGRDS4Nx/22OGEoK0pJwILEtnXBQ1C8
+         yvhob3Fgrz4gvvHC29s9w9FsST+N4VcCfPUSblWLmPgGOM3Zz7MtRLeBOWS103+umZrU
+         kp1Las6X2FBf3bFQHxUnMIYYgMJBBOXAckmsB4krFw16qWmQKHKX7Ntb2pHwFFt5pqVd
+         BX2EWVkqHDsAsUXYXoZ51XFZIrr9kikKk7xM0KL0rwo5lVNZYvJmoQ0R3jcXLKrb0VZq
+         hjMfolkKFGSj3qjsJuEs9wcLduwepvZOP/LxRZ7fGqAgJ5r5BqVcZCu/5k4X0Qkriys3
+         NiCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791827486; x=1792432286;
+        d=1e100.net; s=20260707; t=1791827491; x=1792432291;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=65ZYC+BNH8WLjU41wPCuBYgKZmKDjcBX8Ha84MthzOQ=;
-        b=Uw8wyzb8VV8+7GirHKSYGORtBRzsF5f6B8WsdRQrL18l9Nd6Isu2FNG4c/5D7xWjJL
-         riXfVWWAZvIri6uPjLqBlWX+dJGBSQAicMNsmWrxalpfkLxBXWgtRcs75trUG7BgB45c
-         ksiZkeTFw7QCKQZHGAp47akYpWQU+8Zs6eyzORV/Wbsul5/kWWk3PL1jvDsmHcfB3dy1
-         RgPGZ1v0Kj//gWThwjkg6grFHnxIkTHlK1jyL2SWGi7BZkzDFtXgALUjor2i34BbPWUK
-         ofc5yFtQFG1cLN7z0lgtLcYiY8gNgbx6H+d6e7WZagi2jpoZu/HdJKb+iztKLQbt2uzb
-         +z1A==
-X-Gm-Message-State: AFq9FYI17wzJ7qE2SZqnUeeId3VN3OjN3X2mQlOHz/1tnd/Cbcis5Edw
-	HPhFzsWNvnE+xdSvSRZjGIDNyllQQ+WamDI277hMxWUvTs9TDZo9ybZzvkXuFPrm
-X-Gm-Gg: AYBFou2DfzUUIH4djFPwC9ztKBQYggu4nFwipd04DwKBfYHL3l/KZy4JAMAn1lHqJ/a
-	jMjpAr1fRY+ChRAsbukpEyofE7aFRYNiY9J+/hF297tF66unc+507sB93zXv/RF7/ipgq7IGFOW
-	308SbO/J694EokwXysVv6E4Q//L1mL4uvAi8FsqTFCzwyEByY3qHxx494jhlTMAFdkN6WvgZ05t
-	/hQae7Wc/cptCxPiuJq+YaB442JvFqaX9KQf9YplMtASWCDjpedD0geqvN818aojsFx/6qKy/Pp
-	nCbiF++RG0bwC//9zmAyja9z5f2OVehTs72LiWlplaEQBOZDAeH0Sfog03YZhXucw+bphkUFoA9
-	0S7oSpSLfpash+prKhhahpWBhBsCq1B4+E2LXeDZS8c8NGXGThF7aJU3B90gPFAtdKc114WhyEW
-	kDbSKqX7GrQsJSc+cSmmNdHKnkVTNV2VPBm8BFc41WC8OnuDe51QNlEAXg9idYH1DR3XA7qVbWQ
-	FEA3eWsDcCO49MEmUHpJB8n/1AoerG/IiT5G5JJF84/WNSR5+n3cZ7ScYQWbOzU42kH6QWD+HlH
-	EWdIj9Khow9eblmtTriinw==
-X-Received: by 2002:a05:690c:e21a:10b0:8ab:4834:5025 with SMTP id 00721157ae682-8b07ee28eddmr27734647b3.32.1791827485668;
-        Mon, 12 Oct 2026 10:51:25 -0700 (PDT)
+        bh=t1Pda4zvUFL8Dukp/QANXACb3MGfE1jsVSJ6G4x4QxE=;
+        b=YJP0ftVIUaPo271w+3vHz7deTOAoQP4dN2kbCyHtckHFKv9ZVrsK4YZn0B5SdxhJ9S
+         AXv/His63WWeX5jHihB4v1hYorU7KY3/XTZ0347JoxwGgXapfgjas9Sn5pY3L66fD/Sw
+         4CE9Eb7wgdsuA+6WGJcQBVblQm8Q6lE0u6+lqcOq88KoGz1/vfx/2BJZMgUguXx2GDKA
+         /pELkA6i6NiOHDxJ2iCp9E42uoT4nzs2OUuOpsd6hhTAxSnme8K7sv85OShbhVyK+0uO
+         Nvk33AHa0O+If2vLCqgx8+Gii6wNKPXEAkoSouGI5IM2pgeqN72lnjhNuzSmQ+7tVEob
+         ztAg==
+X-Gm-Message-State: AFq9FYLr5bnfZLJtIce6GvojHIx0oD3tO6GImcORNbkE7wvJEASigfWo
+	uUUvmURnIJMyceyjmFme22PClwS5h0Aho+xabDwGrbz/kLwsGVfhTZh8ZwqPyNf+
+X-Gm-Gg: AYBFou1Az2lHzQ6AJPIrTt/JoAwWPpd9v6Aj9p1J3yOEC5NbN1r1FxCjBMjcUHfQj7U
+	l74pi5bHYFki/3Rw+wcmJg1ETG17b9mGxLmn2ZodHR8kwTa34jO0sesshNQOOQ0RnFGCwE9dYkx
+	sMfs5Q0CE4lwTplL63WTYPmehAdLdvwFYNiQ+jhogedSZjaPcXN/oDmdZLwo85FL8j4CP6r0AEh
+	Mf667c1PATJj0sWSKEHZr88D6ycJ7K/RfHJG8y1ezrvO7ugVEetsDtBxO97gezf9HY58ErAiWqB
+	JiTZWlFIh0H/aoy8RBGdJOY4hK9RLsA6BPBkdOYES2IWfQfNOncZNLGi7hqceBqpBWNXBusweK+
+	hqBgkShVDabel/sXNPI8hR4WPiDhJejDT3paIZ3mXMRj9vZh9F/qnUrwl1+o7yf8LWgs/xOK9bL
+	o89Dq2Qw1tZ/9nEziPhyn+YnoDgcFFFzPcbIcjboyuNs3N1i7AQAIwMVLIaKPRmScpU1tGVJd2z
+	M/Z6peyO9v6rlJObtUtaercwns6Ovva3d/gxigg02AZVTg8qJ9/xZDdAWkxQOlFIGCZbPc79OAt
+	Kdfj60n5QbvBKjKCUJHHgEY=
+X-Received: by 2002:a05:690c:4990:b0:8b0:88c7:f184 with SMTP id 00721157ae682-8b088c7f2cemr28364637b3.4.1791827490882;
+        Mon, 12 Oct 2026 10:51:30 -0700 (PDT)
 Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9092:700::6])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b07ee8603fsm36797127b3.4.2026.10.12.10.51.24
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b07ee8603fsm36797127b3.4.2026.10.12.10.51.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2026 10:51:25 -0700 (PDT)
+        Mon, 12 Oct 2026 10:51:30 -0700 (PDT)
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
 To: git@vger.kernel.org
 Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/5] completion: fix Zsh handling of stash names
-Date: Mon, 12 Oct 2026 13:48:29 -0400
-Message-ID: <3d1cd00dd8456aeaf8259767d9e33b7421aef9c4.1791827304.git.ben.knoble@gmail.com>
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	Quentin Bernet <quentin.bernet@bluewin.ch>
+Subject: [PATCH 4/5] doc: drop usage mentions of "git stash save"
+Date: Mon, 12 Oct 2026 13:48:30 -0400
+Message-ID: <5a2ea087bf35a15760206e2c8ea1f8df5a43296a.1791827304.git.ben.knoble@gmail.com>
 X-Mailer: git-send-email 2.56.0.184.g5a00b4a6e9.dirty
 In-Reply-To: <cover.1791827304.git.ben.knoble@gmail.com>
 References: <cover.1791827304.git.ben.knoble@gmail.com>
@@ -77,61 +80,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When Git completes stashes for Zsh, it eventually invokes something like
-this (via our redefinition of __gitcomp_nl):
+Even though we previously deprecated it in fd2ebf14db (stash: mark "git
+stash save" deprecated in the man page, 2017-10-22), the save subcommand
+clings to life. For example, 951ec747d4 (doc txt & -h consistency: make
+"stash" consistent, 2022-10-13) brought back "save" to the git-stash(1)
+synopsis, and 41a28eb6c1 (stash: implement '--staged' option for 'push'
+and 'save', 2021-10-18) gave it new options. But we really discourage
+its use in modern Git, so let's drop mention of it from -h usage and the
+synopsis.
 
-    compadd -Q -S " " -p "" -- 'stash@{0}' 'stash@{1}' && _ret=0
-
-Because of -Q, the braces are unquoted, and Zsh will leave us at (for
-example)
-
-    git stash show stash@{
-                   cursor ^
-
-From here, the list-choices widget (on Ctrl-D by default) will show
-stash@{0} and stash@{1}, but the complete-word widget (Tab) will just
-add another brace. Zsh things we're trying to do a brace expansion, I
-think! Interestingly, using menu-complete (Ctrl-N) does cycle through
-matches, since it's taking a slightly different completion path in Zsh.
-
-We might try to fix this by passing surrounding single quotes (using the
--S/-p arguments of compadd, which we can do via __gitcomp_nl's other
-parameters), and indeed Zsh will generate
-
-    git stash show 'stash@{
-                    cursor ^
-
-but completing here won't find anything, and I'm not totally sure why.
-
-Instead, though, we can let Zsh quote metacharacters (removing -Q) and
-everything "just works." It changes the output format a bit (users see
-stash@\{0\}, for example), but I find this an improvement over not being
-able to complete names at all. menu-complete is unchanged aside from the
-extra backslashes.
-
-So, override stash listing completion in Zsh with a working version.
+It's still described in the manual, since some descriptions talk about
+the "save" command. As we haven't gone ahead with a full deprecation and
+removal, we can leave these pieces for folks whose fingers still type
+"save" and need a reference for its behavior.
 
 Signed-off-by: D. Ben Knoble <ben.knoble@gmail.com>
 ---
- contrib/completion/git-completion.zsh | 5 +++++
- 1 file changed, 5 insertions(+)
 
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index d5c526665b..2aea7770d2 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -135,6 +135,11 @@ __gitcomp_file_direct ()
- 	__gitcomp_file "$1" ""
- }
- 
-+__git_complete_stashes ()
-+{
-+	compadd -S ' ' -- ${(f)"$(__git stash list | sed -n -e 's/:.*//p')"} && _ret=0
-+}
-+
- _git_zsh ()
- {
- 	__gitcomp "v1.1"
+Notes (benknoble/commits):
+    AFAICT there was no discussion of its deprecation when re-adding save to
+    the documentation, so I wonder if that was just an oversight.
+
+ Documentation/git-stash.adoc | 2 --
+ builtin/stash.c              | 1 -
+ 2 files changed, 3 deletions(-)
+
+diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
+index d6e8c4144c..6bf510702b 100644
+--- a/Documentation/git-stash.adoc
++++ b/Documentation/git-stash.adoc
+@@ -18,8 +18,6 @@ git stash [push] [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | -
+ 	     [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]
+ 	     [--pathspec-from-file=<file> [--pathspec-file-nul]]
+ 	     [--] [<pathspec>...]
+-git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
+-           [-u | --include-untracked] [-a | --all] [<message>]
+ git stash clear
+ git stash create [<message>]
+ git stash store [(-m | --message) <message>] [-q | --quiet] <commit>
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 7a9843413b..94869c2429 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -75,7 +75,6 @@ static const char * const git_stash_usage[] = {
+ 	BUILTIN_STASH_APPLY_USAGE,
+ 	BUILTIN_STASH_BRANCH_USAGE,
+ 	BUILTIN_STASH_PUSH_USAGE,
+-	BUILTIN_STASH_SAVE_USAGE,
+ 	BUILTIN_STASH_CLEAR_USAGE,
+ 	BUILTIN_STASH_CREATE_USAGE,
+ 	BUILTIN_STASH_STORE_USAGE,
 -- 
 2.56.0.184.g5a00b4a6e9.dirty
 
