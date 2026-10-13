@@ -1,70 +1,71 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530C9374E5A
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 20:22:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7702352ED20
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 20:22:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791922935; cv=none; b=O/gviT+8MDiWLxGK7UHss7HS3V2nd1x0HFZpzfVrUsB5GUcSKFqyVzpXj0Sns/HNQf8jAM2wRMjt84eiQJkJw2/MkjFG1AmYKjkNLqI8pIiUZ1A16+yqDfrpw2tBVvBgDwd3cRrRerilr/sZaAJUa/gZOjCA3k5UsUIbSHCPFNo=
+	t=1791922936; cv=none; b=bmqYYfe2rfpJSPglCmOHyjrH5R5Ldn5O9FcvBJyJqfLTniH+03vt/yugwMXV14aTAoEb10ML2ynK3lCVBxbnryatVO4jpZnvzAGMar7IQmL8n/jybXNOn3RnJJuwHkqxlVpsEVLCh6XWVfsvqNoNBaMDL7qiPaKFu/awMpGjRLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791922935; c=relaxed/simple;
-	bh=xJ4vYJI3UCJrOd+MNXHiJZ9cLuHOBIWDgeyrPcOHCm8=;
+	s=arc-20240116; t=1791922936; c=relaxed/simple;
+	bh=L5CYe3O1suOe929u8TQuAHm/UXhuDNmIH3cmnNc59Gw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=LaUeGPa7CRQRQDYF7vWi5CS7l210pqDIHA7xpDJV6RlnBWe0UCPoFNAT8IDSbuA7Dv1lcpZiddUFm8A0ADOUuwcrqdv7eLJqUf+7DbMduZxtqWJ1WsnShCYa+Gjefi9/GcsN+AlJafm6bOv/Ve+RbMEUPNQ9EIJUKfoS1tc/7WE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CdiBYT3C; arc=none smtp.client-ip=209.85.210.53
+	 MIME-Version:To:Cc; b=WrXl0K77LwqEWiwmkV894qXx0bkn2RNG3Fvrwiy6b19K7Y7JqpqBDjlEpLCaWea6fdEQcKOR7FbdqC0mTu8zi9HlAEfQpReFTr/Kl2yxSFoopGpxVk72OKZD6XDh6xbaTk5HtuR5Vw7pudvTT2Azn7PpBnfWD/2IOhRcM1EM5tE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dRAWdEbx; arc=none smtp.client-ip=209.85.160.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CdiBYT3C"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-81c5aac8478so2466236a34.0
-        for <git@vger.kernel.org>; Tue, 13 Oct 2026 13:22:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dRAWdEbx"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-490d838b425so1967977fac.3
+        for <git@vger.kernel.org>; Tue, 13 Oct 2026 13:22:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791922932; x=1792527732; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791922933; x=1792527733; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=j73gsV8W9D1D9D5dLxZ3PX783dFG6ml1jvZyWcKAhuA=;
-        b=CdiBYT3CAWiPTyd5F1zv6WtfSoek6pE2kLf/CQQdlorJDGonD7VnVHzqQti9xxHcCF
-         pdGFfHy6RtwrkCDt5/SOTUfNbIGS+Ypc0FAXajezfOxN4ukzf5+W6HcJaP2ALlrlIGUe
-         xypl375XCfInizZNEGLbrFhsJRCRgYQG1pYnHnzKYu6ktiPL8arRZq2zaBjOxEIZxXMM
-         YKXJb/cV648I0YwwBkp5XNjCsBbxASXnQ+wIru8WYpJX90OXGCFA4UWd3LMak1KIl33/
-         9ck38u+lymgonw8Ayh4iogtRlIRCUgA9fKb/Pzs4FEZKpUtmuashOFcX8AHTy2mWmTdj
-         /XJA==
+        bh=9CQSEsqMsStLU6J4arcPuaXlaUHJGbkPDn3yNJ293jM=;
+        b=dRAWdEbxvxLrRQN2puWync//fCksv0Wr/goX3wygL7rFglpvpLA5L8mTuzmG7kOM9d
+         BwDukfPR6hXLESli8yL6tRqEARQySsnoF+XWnOkfXOd/h5WnmeqTjyob6YlZmQ1yJolv
+         cknCjAI9gRkbUcg8X78GrmtG6UpVYouTlPOmhI8tapWCM/rmz1iVY8mMyOonR60+xVGu
+         WaXZsg6MMR+wyT2VG+ewskkFTHDo/HBuWE5i46++qtIo+e7ZewtJ19JEyWZNUuhv/YfT
+         wbAMucHd3fswHIFJrwiEmF16myfPCfK3aeel/J/1MBf+2h2wlBlAz262D8OwnlEMY2Ya
+         5WpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791922932; x=1792527732;
+        d=1e100.net; s=20260707; t=1791922933; x=1792527733;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=j73gsV8W9D1D9D5dLxZ3PX783dFG6ml1jvZyWcKAhuA=;
-        b=oaNXVJ0xx9S1yUuRZl6NZxvAtN1f8eN1+bP3MYaTRMmwedB+Ur34bIgR0dcXv2APaU
-         6PoHNIPFKNhIFEvh8NS+uANDNTtZ7F+HDFjH8LYr+52mIbXksvADdJHeXjjDX9c3vlYS
-         ywpS09lrfhQCNS/Bi0RNSx250AiuyIjoq+sWZtenZwLJbUra+7rKLcEwbjQ1LadhHTPC
-         SQH5AkLbx5U6aaCaTxgSJmBTT5O4C7qGehvOwHcGLKc4SESnjgg/MSALBWjC1bwEwa+M
-         sROjC4ZxKxdKGYg4jQeblTzMhiT+nr0OVKReOIEVjefDYEHgvWz+jR4bAx3ax4Mvtdj4
-         n3Tg==
-X-Gm-Message-State: AFq9FYI4zybgKWUXbqqdx1cXRj/tm1zmo00S7F+fayKzIOyWIqPhcZMu
-	jQOYKvTb8TlCXoqaYtOOGGIf2K7ilcgxBF1pslKk9HDuTnClYyPDmwwT+oVrVw==
-X-Gm-Gg: AYBFou3UmxLQ5e0QR5EfIifdlzZnJpa3YXmukEN74qDJKTc1LIgFDPgSU+PF2vWoIcr
-	Uim4UW7gg2hPIAVTh1y9gHERJAZkRJ5tnA98+YrS87KvmQDn5M8sLuwkrD4DmZN2CHy+efmR19Y
-	hh+Qt3VQyHNQDt3sLPDkT5cLJYvMiWVE70IFJQ4wfJUi43gOKRWJ/4Iox9K0GxKTwwcnBEVFLHE
-	6X5Uno5FNgNcJ0sbHaDepSyoCmDluuaJoJDXLtLtBBo3I09LcdqClLmOfmGr4vQeb8iMPzVka1W
-	I11koV/HU7FufDnPnXaR8SaBuDANgYFuub7l3SrN6OaFBCnJ/yQhAkfyknuk4yTHpyU3JHkvoVM
-	YBa3wtnvcn/IIEk/HGmh9LEZ8gQB6sj2oL07cJuWjIGl8GAMwsmzZyOIkb0WCClk0ElhMwTPBGa
-	OoIoLbJTvOMmcgIYQWw1L+0FTQ6RZpRViTyw9W0xtSNDBrxmL+Emq684gbpRfsqPoVMPEEOBo3e
-	pFDercmQPj6
-X-Received: by 2002:a05:6830:440a:b0:822:e94e:349b with SMTP id 46e09a7af769-8309815d753mr13280602a34.30.1791922930904;
-        Tue, 13 Oct 2026 13:22:10 -0700 (PDT)
+        bh=9CQSEsqMsStLU6J4arcPuaXlaUHJGbkPDn3yNJ293jM=;
+        b=A+HZxsx1SIk4ZmMnDv8QOerBczPe6pbwge8NlMdSC4idWRClZy+t0rD727tTLTXTx9
+         WRNNz/ntfFAmB2MuOcJNQvf6ekRfca+Rk59ApBn4apAtaniJy0uQx1MNyv++yEnsobA+
+         IhtU2a//HHPJ6XHOVae5kavtbbWbCy2npmBdGTRH/C5weIDdfCBAta5xZYC7crtaNjPN
+         B02Q2iAl6tq3lJew81mLwJUmT+JhzkUCtx3TsR6noD+GIEfhO8kipqTtKbGAV3Zqe0m9
+         6HLEu0YD3U43vMpqpZnjgwMbw92RYAh1lGzN19gTsQaBRtXaESIpLJErZr9KVoghCGv5
+         6VGw==
+X-Gm-Message-State: AFq9FYJ3KRbv+k2sSJaTS5uOimo5U05ZiSEX6UGFh44il+x7akFk3Bc0
+	Z47Y2zOfhrbKSJXw4uCMZyu4oUuSJCKSPX2X3q05fy/y/SU9OR/Dm135NgY9bg==
+X-Gm-Gg: AYBFou3+BqZWNHeNTOOfKXnzkc9XdmDJ1BrQQHkLD40O86wfIee2MJV6D//ykgDDycY
+	1yrGYQcKI9ZtLcrQBA/vADDMJ74eZwdxtWtukRJYY8sf5G0yuDB7qqz5AhRDGFf/sBU9k0QCxYp
+	eBXWMkZL+I/5bN31Iwz6FZjsC81O96szku7KPPXANEdTyhBFQ9gXYQ47KmBPldXrDZ7sjzdsIAS
+	KaoyyZLTLvuubDtal51deXTvKbpeWPVQYQLctuUJp78XN8Et6FkQiV8XYT2HxYXo25W2RsQemH8
+	yrRk9YbBBuXU/9Ak1wiCPiP7aa+UrbHU4URi2dIT2/jKepPpQYAqD1Lk65TjgdAXScIyVXwl/Xy
+	1dat7y5O1FxOT7SedWa3N7rLf/uOMnnkSV0JACjSG+/vwKbhex9IZSzFzMYT8auc+lPOwKolPSN
+	CVqCzS4HGK3coOh6dcxtdWtYzMzrFOEEwfkROmbW5V3DJwQ6u7eGJjTnxbTuhaSXWCZKUWuDVQ4
+	A==
+X-Received: by 2002:a05:6808:191e:b0:500:5e36:3a9d with SMTP id 5614622812f47-50c54f02c2fmr14402990b6e.30.1791922932882;
+        Tue, 13 Oct 2026 13:22:12 -0700 (PDT)
 Received: from [127.0.0.1] ([20.15.229.147])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-8367ada5b6fsm6859847a34.21.2026.10.13.13.22.09
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-518a72a6048sm9844967b6e.5.2026.10.13.13.22.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Oct 2026 13:22:10 -0700 (PDT)
-Message-Id: <pull.2224.v6.git.1791922928.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2224.git.1789169384240.gitgitgadget@gmail.com>
+        Tue, 13 Oct 2026 13:22:12 -0700 (PDT)
+Message-Id: <e9b2c1dae2cd11783a66f0afdce53dfad78b43d8.1791922928.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2224.v6.git.1791922928.gitgitgadget@gmail.com>
 References: <pull.2224.git.1789169384240.gitgitgadget@gmail.com>
+	<pull.2224.v6.git.1791922928.gitgitgadget@gmail.com>
 From: "Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 13 Oct 2026 20:22:06 +0000
-Subject: [PATCH v6 0/2] blame: ignore revs in .git-blame-ignore-revs by default
+Date: Tue, 13 Oct 2026 20:22:07 +0000
+Subject: [PATCH v6 1/2] blame: harden ignore-revs parser and tag peeling
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,197 +82,154 @@ Cc: Junio C Hamano <gitster@pobox.com>,
     Phillip Wood <phillip.wood@dunelm.org.uk>,
     Eric Sunshine <sunshine@sunshineco.com>,
     Phillip Wood <phillip.wood123@gmail.com>,
+    Ravi Mistry <rmistry@google.com>,
     Ravi Mistry <rmistry@google.com>
 
-This series teaches git-blame(1) and git-annotate(1) to automatically use
-.git-blame-ignore-revs at the root of the working tree (or
-HEAD:.git-blame-ignore-revs in bare repositories) by default if it exists,
-without requiring manual blame.ignoreRevsFile configuration in every clone.
-This restarts the stalled attempt in PR
-https://github.com/gitgitgadget/git/pull/1809
-(https://lore.kernel.org/git/pull.1809.v2.git.1728707867.gitgitgadget@gmail.com/)
-and addresses https://github.com/gitgitgadget/git/issues/1494.
+From: Ravi Mistry <rmistry@google.com>
 
-Changes since v5:
+Currently, blame.ignoreRevsFile and --ignore-revs-file only read paths
+explicitly configured by the user, which cannot point to an
+attacker-controlled file under Git's threat model. An upcoming commit
+will teach git-blame(1) and git-annotate(1) to automatically read
+.git-blame-ignore-revs by default if it exists, exposing the
+ignore-revs parser (oidset_parse_file_carefully() in oidset.c) and its
+tag-peeling callback (peel_to_commit_oid() in builtin/blame.c) to
+upstream-controlled content at a well-known path.
 
- * Passed i->string from build_ignorelist() into parse_default_ignore_revs()
-   so the item string is used for both the working-tree path and "HEAD:" in
-   bare repositories, and changed cmd_blame() to set ->util = (void *)1 with
-   an explanatory comment instead of passing the scoreboard.
- * Doc update: Changed "config option" / "configuration option" to
-   "configuration variable" in Documentation/blame-options.adoc and the
-   commit message.
+Harden both code paths before enabling the default ignore-revs file:
 
-Changes since v4:
+- In oidset_parse_file_carefully(), strbuf_getline() reads up to the
+  next newline and records the full line length in sb.len, including
+  any embedded NUL bytes. However, strchr(sb.buf, '#') and
+  parse_oid_hex_algop(sb.buf, &oid, &p, algop) treat sb.buf as a
+  NUL-terminated string. If a line contains an embedded NUL byte after
+  a valid object name (such as "<oid>\0garbage" or "<oid>\0# comment"),
+  *p is '\0' and trailing bytes on the line are silently ignored.
+  Reject any line containing an embedded NUL byte via memchr() before
+  stripping comments and whitespace.
+- In peel_to_commit_oid(), odb_read_object_info() is called without
+  OBJECT_INFO_SKIP_FETCH_OBJECT or OBJECT_INFO_QUICK, and deref_tag()
+  calls parse_object() on tag targets without checking whether the
+  target object exists locally first. In a partial clone, any missing
+  commit OID or tag target listed in the ignore-revs file would trigger
+  lazy promisor fetches and pack directory rescans during git-blame(1).
+  Use odb_read_object_info_extended() with OBJECT_INFO_LOOKUP_REPLACE |
+  OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK and peel OBJ_TAG
+  objects one layer per iteration, verifying that each target object
+  exists locally and matches the tag's declared type before parsing it.
 
- * In non-bare repositories, Patch 2/2 now reads .git-blame-ignore-revs from
-   the root of the working tree (using open_nofollow(), S_ISREG(), and
-   IGNORE_REVS_MAX_FILE_SIZE) instead of HEAD:.git-blame-ignore-revs, while
-   continuing to use HEAD:.git-blame-ignore-revs in bare repositories
-   (matching the .mailmap model in read_mailmap()). This makes it ergonomic
-   to test uncommitted or untracked changes to .git-blame-ignore-revs
-   locally before committing.
- * Updated the commit messages and documentation to justify the default
-   lookup and working-tree behavior on ergonomic grounds.
+Signed-off-by: Ravi Mistry <rmistry@google.com>
+---
+ builtin/blame.c              | 20 +++++++++++++++++--
+ oidset.c                     |  3 +++
+ t/t8013-blame-ignore-revs.sh | 38 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 59 insertions(+), 2 deletions(-)
 
-Changes since v3:
-
- * Patch 2/2 caps the size of the default HEAD:.git-blame-ignore-revs blob
-   at IGNORE_REVS_MAX_FILE_SIZE (100MB, matching ATTR_MAX_FILE_SIZE from
-   3c50032ff5 ("attr: ignore overly large gitattributes files", 2022-12-01))
-   via odb_read_object_info() before calling odb_read_object(), skipping
-   oversized blobs with a warning without loading them into memory.
-
-Changes since v2:
-
- * Patch 2/2 uses sb->repo instead of the_repository in
-   parse_default_ignore_revs_blob().
-
-Changes since v1:
-
- * Split the series into two commits.
- * Patch 1/2 hardens oidset_parse_file_carefully() in oidset.c and
-   peel_to_commit_oid() in builtin/blame.c before exposing them to
-   upstream-controlled content at a well-known path:
-   * Reject lines containing embedded NUL bytes via memchr() so trailing
-     bytes after a NUL cannot be silently ignored.
-   * Pass OBJECT_INFO_LOOKUP_REPLACE | OBJECT_INFO_SKIP_FETCH_OBJECT |
-     OBJECT_INFO_QUICK to odb_read_object_info_extended() and peel tags one
-     layer per iteration so missing OIDs or tag targets do not trigger lazy
-     promisor fetches or pack directory rescans in partial clones, and
-     verify that each peeled target matches the tag's declared type.
- * Patch 2/2 reads the committed HEAD:.git-blame-ignore-revs blob (in both
-   bare and non-bare repositories) instead of reading a file from the
-   working tree, matching hosting platforms even when an untracked file is
-   present or a tracked one has local modifications. The tree entry is
-   checked with S_ISREG() so non-regular entries (such as committed
-   symlinks) are skipped, parsed in memory via
-   oidset_parse_buffer_carefully(), and bypassed without reading if cleared
-   via blame.ignoreRevsFile="" or --no-ignore-revs-file.
-
-Ravi Mistry (2):
-  blame: harden ignore-revs parser and tag peeling
-  blame: ignore revs in .git-blame-ignore-revs by default
-
- Documentation/blame-options.adoc |   9 +-
- Documentation/config/blame.adoc  |  10 +-
- builtin/blame.c                  | 122 +++++++++++++-
- oidset.c                         |  81 ++++++---
- oidset.h                         |   9 +
- t/t8013-blame-ignore-revs.sh     | 271 +++++++++++++++++++++++++++++++
- 6 files changed, 467 insertions(+), 35 deletions(-)
-
-
-base-commit: fa7f9290efe2bd22dd736689597b474b93798e11
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2224%2Frmistry%2Fblame-default-ignore-revs-v6
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2224/rmistry/blame-default-ignore-revs-v6
-Pull-Request: https://github.com/gitgitgadget/git/pull/2224
-
-Range-diff vs v5:
-
- 1:  e9b2c1dae2 = 1:  e9b2c1dae2 blame: harden ignore-revs parser and tag peeling
- 2:  605eb049a1 ! 2:  6039d4bc2d blame: ignore revs in .git-blame-ignore-revs by default
-     @@ Commit message
-          blame: ignore revs in .git-blame-ignore-revs by default
-      
-          git-blame(1) can ignore a list of commits specified via
-     -    --ignore-revs-file or the blame.ignoreRevsFile configuration option.
-     +    --ignore-revs-file or the blame.ignoreRevsFile configuration variable.
-          This is useful for skipping uninteresting revisions such as tree-wide
-          formatting changes, large-scale refactors, and code modernizations that
-          would otherwise obscure genuine historical authorship.
-     @@ Commit message
-          .git-blame-ignore-revs, if it exists, as the initial element in the
-          list of ignore-revs files. Similar to how read_mailmap() handles
-          .mailmap, consult .git-blame-ignore-revs at the root of the working
-     -    tree when a working tree is available and fall back to the
-     -    HEAD:.git-blame-ignore-revs blob in bare repositories. Reading from the
-     -    working tree in non-bare repositories makes it ergonomic to prepare a
-     -    new .git-blame-ignore-revs file or add revisions to an existing one and
-     -    immediately test the effect with git-blame(1) before committing, while
-     -    falling back to HEAD:.git-blame-ignore-revs allows bare repositories to
-     +    tree when a working tree is available, and otherwise consult the
-     +    HEAD:.git-blame-ignore-revs blob in bare repositories. Reading only
-     +    from the working tree in non-bare repositories makes it ergonomic to
-     +    prepare a new .git-blame-ignore-revs file, edit an existing one, or
-     +    remove a committed one and immediately test the effect with
-     +    git-blame(1) before committing, while consulting
-     +    HEAD:.git-blame-ignore-revs in bare repositories allows them to
-          respect the committed ignore list as well.
-      
-          To ensure consistent precedence, override semantics, and safety when
-     @@ Documentation/blame-options.adoc: take effect.
-      +	processed after the default `.git-blame-ignore-revs` file at the root of
-      +	the working tree (or `HEAD:.git-blame-ignore-revs` in a bare repository),
-      +	if it exists, and any files specified with the `blame.ignoreRevsFile`
-     -+	config option.  An empty file name, `""`, or `--no-ignore-revs-file` will
-     -+	clear the list of revs from previously processed files, including the
-     -+	default ignore-revs file.
-     ++	configuration variable.  An empty file name, `""`, or
-     ++	`--no-ignore-revs-file` will clear the list of revs from previously
-     ++	processed files, including the default ignore-revs file.
-       
-       `--color-lines`::
-       	Color line annotations in the default format differently if they come from
-     @@ builtin/blame.c: static int peel_to_commit_oid(struct object_id *oid_ret, void *
-      +#define IGNORE_REVS_MAX_FILE_SIZE (100 * 1024 * 1024)
-      +
-      +static void parse_default_ignore_revs_blob(struct blame_scoreboard *sb,
-     -+					   const char *name)
-     ++					   const char *path)
-      +{
-     ++	char *name = xstrfmt("HEAD:%s", path);
-      +	struct object_context oc;
-      +	struct object_id oid;
-      +	enum object_type type;
-     @@ builtin/blame.c: static int peel_to_commit_oid(struct object_id *oid_ret, void *
-      +
-      +out:
-      +	object_context_release(&oc);
-     ++	free(name);
-      +}
-      +
-      +static void parse_default_ignore_revs_file(struct blame_scoreboard *sb,
-     @@ builtin/blame.c: static int peel_to_commit_oid(struct object_id *oid_ret, void *
-      +	free(path);
-      +}
-      +
-     -+static void parse_default_ignore_revs(struct blame_scoreboard *sb)
-     ++static void parse_default_ignore_revs(struct blame_scoreboard *sb,
-     ++				      const char *name)
-      +{
-      +	if (repo_get_work_tree(sb->repo))
-     -+		parse_default_ignore_revs_file(sb, ".git-blame-ignore-revs");
-     ++		parse_default_ignore_revs_file(sb, name);
-      +	else
-     -+		parse_default_ignore_revs_blob(sb, "HEAD:.git-blame-ignore-revs");
-     ++		parse_default_ignore_revs_blob(sb, name);
-      +}
-      +
-       static void build_ignorelist(struct blame_scoreboard *sb,
-     @@ builtin/blame.c: static int peel_to_commit_oid(struct object_id *oid_ret, void *
-      +	for (idx = start_idx; idx < ignore_revs_file_list->nr; idx++) {
-      +		i = &ignore_revs_file_list->items[idx];
-      +		if (i->util)
-     -+			parse_default_ignore_revs(sb);
-     ++			parse_default_ignore_revs(sb, i->string);
-       		else
-       			oidset_parse_file_carefully(&sb->ignore_list, i->string,
-       						    the_repository->hash_algo,
-     @@ builtin/blame.c: int cmd_blame(int argc,
-       	const char *const *opt_usage = cmd_is_annotate ? annotate_opt_usage : blame_opt_usage;
-       
-       	setup_default_color_by_age();
-     ++	/*
-     ++	 * An entry with a non-NULL .util member names the default
-     ++	 * ignore-revs file at the project root; see build_ignorelist().
-     ++	 */
-      +	string_list_append(&ignore_revs_file_list,
-     -+			   ".git-blame-ignore-revs")->util = &sb;
-     ++			   ".git-blame-ignore-revs")->util = (void *)1;
-       	repo_config(the_repository, git_blame_config, &output_option);
-       	repo_init_revisions(the_repository, &revs, NULL);
-       	revs.date_mode = blame_date_mode;
-
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 48d5251c6d..6741a7b9df 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -911,21 +911,37 @@ static int is_a_rev(const char *name)
+ static int peel_to_commit_oid(struct object_id *oid_ret, void *cbdata)
+ {
+ 	struct repository *r = ((struct blame_scoreboard *)cbdata)->repo;
++	enum object_type expected_type = OBJ_ANY;
+ 	struct object_id oid;
+ 
+ 	oidcpy(&oid, oid_ret);
+ 	while (1) {
++		unsigned flags = OBJECT_INFO_LOOKUP_REPLACE |
++				 OBJECT_INFO_SKIP_FETCH_OBJECT |
++				 OBJECT_INFO_QUICK;
++		struct object_info oi = OBJECT_INFO_INIT;
++		enum object_type kind;
+ 		struct object *obj;
+-		int kind = odb_read_object_info(r->objects, &oid, NULL);
++
++		oi.typep = &kind;
++		if (odb_read_object_info_extended(r->objects, &oid, &oi,
++						  flags) < 0)
++			return -1;
++		if (expected_type != OBJ_ANY && kind != expected_type)
++			return -1;
+ 		if (kind == OBJ_COMMIT) {
+ 			oidcpy(oid_ret, &oid);
+ 			return 0;
+ 		}
+ 		if (kind != OBJ_TAG)
+ 			return -1;
+-		obj = deref_tag(r, parse_object(r, &oid), NULL, 0);
++		obj = parse_object(r, &oid);
++		if (!obj || obj->type != OBJ_TAG)
++			return -1;
++		obj = ((struct tag *)obj)->tagged;
+ 		if (!obj)
+ 			return -1;
++		expected_type = obj->type;
+ 		oidcpy(&oid, &obj->oid);
+ 	}
+ }
+diff --git a/oidset.c b/oidset.c
+index c8ff0b385c..90d39204d3 100644
+--- a/oidset.c
++++ b/oidset.c
+@@ -85,6 +85,9 @@ void oidset_parse_file_carefully(struct oidset *set, const char *path,
+ 		const char *p;
+ 		const char *name;
+ 
++		if (memchr(sb.buf, '\0', sb.len))
++			die("invalid object name: %s", sb.buf);
++
+ 		/*
+ 		 * Allow trailing comments, leading whitespace
+ 		 * (including before commits), and empty or whitespace
+diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
+index cace00ae8d..70fe509a64 100755
+--- a/t/t8013-blame-ignore-revs.sh
++++ b/t/t8013-blame-ignore-revs.sh
+@@ -327,4 +327,42 @@ test_expect_success ignore_merge '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'ignore-revs-file rejects lines with embedded NUL bytes' '
++	rev_b=$(git rev-parse B) &&
++	printf "%sQgarbage\n" "$rev_b" | q_to_nul >ignore_nul &&
++	test_must_fail git blame file --ignore-revs-file ignore_nul 2>err &&
++	test_grep "invalid object name:" err &&
++
++	printf "%sQ# comment\n" "$rev_b" | q_to_nul >ignore_nul_comment &&
++	test_must_fail git blame file --ignore-revs-file ignore_nul_comment 2>err &&
++	test_grep "invalid object name:" err
++'
++
++test_expect_success 'ignore-revs-file peels chained tags and skips missing tag targets' '
++	test_write_lines BB L2-modified L3 L4 L5 L6 L7 L8 CC >file &&
++	git add file &&
++	test_tick &&
++	git commit -m D &&
++	git tag -a -m "tag 1" D_TAG1 HEAD &&
++	git tag -a -m "tag 2" D_TAG2 D_TAG1 &&
++	git rev-parse D_TAG2 >ignore_tag_chain &&
++	git blame --line-porcelain file --ignore-revs-file ignore_tag_chain >blame_raw &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 2/s/ .*//p" blame_raw >actual &&
++	git rev-parse A >expect &&
++	test_cmp expect actual &&
++
++	test_config extensions.partialClone origin &&
++	test_config remote.origin.promisor true &&
++	test_config remote.origin.url /nonexistent &&
++	missing_oid=$(test_oid deadbeef) &&
++	bad_tag=$(printf "object %s\ntype commit\ntag bad-tag\ntagger T <t@example.com> 0 +0000\n\nmsg\n" "$missing_oid" |
++		git hash-object -t tag -w --stdin) &&
++	test_write_lines "$missing_oid" "$bad_tag" >ignore_bad_tag &&
++	git blame --line-porcelain file --ignore-revs-file ignore_bad_tag >blame_raw 2>err &&
++	test_must_be_empty err &&
++	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 2/s/ .*//p" blame_raw >actual &&
++	git rev-parse HEAD >expect &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 gitgitgadget
+
