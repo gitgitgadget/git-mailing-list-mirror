@@ -1,179 +1,124 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B883E5EF8
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 13:39:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59086379979
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 13:46:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791898774; cv=none; b=PeEvz/YtL7QnA6UjsVHh8cFnSWFaoTJ2k4hmIrSftgTI246Ybtl/F4WM+DKUGyrPgRg0NU7f3Qf+iv46ppUz/w9xr10GNRrdv3U54a/HwiwtZpyBeui9X3R6seR06l7i3YE7yu/yfvJ+M4e4zlO5jZd4puUn03I2Rn0bLf8qUFg=
+	t=1791899172; cv=none; b=TBG+ekbrIUflhAn7gCom/8voOodldqfMwDKiEiXUMFPMzkg1YprFuD/cdiJkHPxHl5++fHoXVPuYEzlkqFUwqACyN4aCN+UD6HtPV8tftn2Vetje742qboPtqUu3hJcgubroa8CZAjOy04bS4UjZqU6FZFBpT1Gt/LpUr5DAd2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791898774; c=relaxed/simple;
-	bh=EkIWdWettAvUmK2VkkIHcpplw7aVbfDm/53sQcq6q+M=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=G/WCCXgtoA/2eXLPj3728lqYy8PRcFTi83WrFiOjLhBsksDTm5CjksgHORfyJlxngiUGJnfRSF3vgpctFlJ/sn651uRvOKlgQFsDhJsg0jCDO4uWxN1lyNvK1YU2n6aJPF9qw9Sqbp+M3M5mh/kMikmM8J+mIjyGphLKB+ePiSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gWVIHnVb; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791899172; c=relaxed/simple;
+	bh=94Er0FzlIH2b52sPP5xniYL/77jNimnMa++3rLvuHV8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cI+VsOlI2ndTCmQ9dC47BnxA6L44JvBxRL5RYA/hfyry9POsxyxEYHn/vXMX/+Sa+9s4SnaIiMloqW6FgrEElPimIbfdTlGsMoI1B31Od6sTHw8oYrZzwguAGOZc8Me7e7nFsB73IMdtRLPyUtxlv7YUheFpzXrXAPAy47AmXBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ML2U5uQ7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eTQgvraT; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gWVIHnVb"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-3a9a2cfe1d4so19489711fa.2
-        for <git@vger.kernel.org>; Tue, 13 Oct 2026 06:39:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791898771; x=1792503571; darn=vger.kernel.org;
-        h=content-disposition:content-type:mime-version:message-id:subject:cc
-         :to:from:date:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=72tUuuixKVoBlUzsN+yo/CAopuB/4oOYxR4D55xNhwM=;
-        b=gWVIHnVbZKhElrVqJ+uch3AYU12J7I3bSwrpKUvOg2cVE+TQt2jQVpnfHXIaPXdV1n
-         o4RCsVJc1UHcuvBHqPw0rDBIGKa6dZqkWf/+7QMFHr6wKZcWiHpJgBoIep3xxh1X4OKJ
-         y694aiXNVt5lq777yA+UTy0q78pZizcS7aQgUa1rxXEQaCacNYCBhi5MVS4L0eQFM3k9
-         ywZ1eez5GsRG/5FoBTxo6qyzk9x8+BqC22McoBNHTs8R5bUZgwbfLZimZEoNvl4JK+le
-         /1ukfcQ7s5zp914ieqR3HARTwiFAx/ueXwdWu3myxVNSLl/Rz2bwZBGdSlkHKsbqIZUI
-         SJFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791898771; x=1792503571;
-        h=content-disposition:content-type:mime-version:message-id:subject:cc
-         :to:from:date:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=72tUuuixKVoBlUzsN+yo/CAopuB/4oOYxR4D55xNhwM=;
-        b=wyfN3TT+VPoiZUwtCFk9G6ASIIGG5Gk15F3zB5U8fqVWzkecgOdmdmBKb/2mmuuCGi
-         SXwX3EB1rYMLQRlQrqh4THT9/I61YkKyRVipYToLxgfTJFyq1Ga6dG8An2Mb6SqXppXa
-         Mj7/rYFUU9cVqv61TTxMed1sBjxCu8dTn0L/TlYaGsGbMPJK6nUR3wFEyuh3BnYcKlpY
-         G+MtF6LVxV6O3/sj8YO2DduHhfEkKNXzI6ZgI/XPpUnB9R/LW3NLp72AE62mSLKNJ0S5
-         7elnqzBVfnbbk/vydw2ligOPwad4W+xcp12q6PZk8a9mSpSMonRdZxIbtjHr7ZkhE5Po
-         Zd+w==
-X-Gm-Message-State: AFq9FYLvx5MaLdlz8x3ivJ/0XEE1BKDgU+KcVrBkbzQF3i8gTuSsRsPN
-	ZcMjpL7RUFe/G84YkWn0TNsfMtJgkQ5pJB+PoGtY6aV8yU+wJdy6rwDhb3GhB8r2
-X-Gm-Gg: AYBFou1po6fvj4Or0x1HwZBtHw4L9icOQoUb39CJfiCrpF2BdYZ5G8/xvUBXY95X2GP
-	AwDBllr7yRj65Htbbp5Ozw4XbX7NtyLygvq3Kw0RWvr9SJrB4v41OhleZqX92ZWv+JvIY5+J5iV
-	Rc6v7iq6TOLx7Fo9Ztyp8NNrOe6V2S7flOhr/f8WGuWifR3QeyJguHUQFR9Ya/xXEmFv3y4NUeO
-	Rph6M36QIw8Y3pV1jQxBDMQ+NsLnr08kitWuUg0zpxAZ1MswPsCUpe2DIj20IN2NEjKErbHrjDz
-	qZq7jr76nKsL59OMFMTzRYVtRH3Y/Y1k4ur9LT48VK5lX2O8sTgqGi2BQIkfsobcu0cVH0xWbcb
-	pqDbwtt/KJnRusyDoXouN9n7BCqhIP3laCrd2SpKBs1IQXDjB1Oe6ru1seEylUcy90/0yrM4eb2
-	R0jBjNloa/fcbuIC0wbQrMpD+4uOSDTI1zGUR7EbxGbIBvbWyOxy5jGDeo6tF6CA0OSyYF1tdVD
-	wyx/jTQSPR44FNdexgjtRo4igEy2ZYVN3SYevGe6Hc8sMPG7F5Pml1okVQ15/YCyAjo4SpnlvNG
-	LIDHDweixzS5Sg4qaL5wUJdav4A=
-X-Received: by 2002:a2e:a7c1:0:b0:3a7:812b:cec with SMTP id 38308e7fff4ca-3a9c48533fcmr28457021fa.0.1791898770916;
-        Tue, 13 Oct 2026 06:39:30 -0700 (PDT)
-Received: from localhost ([2001:2043:be0a:d700:bd32:e7e3:cfbd:5b51])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3a9c3cd7d6fsm35742201fa.33.2026.10.13.06.39.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Oct 2026 06:39:30 -0700 (PDT)
-Sender: Erik <erik88@gmail.com>
-Date: Tue, 13 Oct 2026 15:39:28 +0200
-From: Erik Cervin-Edin <erik@cervined.in>
-To: git@vger.kernel.org
-Cc: Paul Tarjan <github@paulisageek.com>, Patrick Steinhardt <ps@pks.im>
-Subject: fsmonitor (Linux): edits in subdirectories of a renamed directory
- are missed
-Message-ID: <as4z1SskiPyrSKIa@vader>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ML2U5uQ7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eTQgvraT"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id AA5EB1D00151
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 09:46:09 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 13 Oct 2026 09:46:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791899169; x=1791985569; bh=94Er0FzlIH
+	2b52sPP5xniYL/77jNimnMa++3rLvuHV8=; b=ML2U5uQ7bw10FMsadfJAYnYLCx
+	Q1Gh+dBObGsjla3xsAE3/ElbRJh31AdWM5CARHf7tTgZfzIvPjVo6AvXcjMdXH8C
+	1w8k9Ifoy2jTfmUHaB1AY5Ptrc8KqNlrrY5HHtuoGnTlS/rFaGicc8qqIfQ/5ZIc
+	iDWIFmzUQW8s/vxTq819+Wdn+V+sREjhSmSdiym/PLSsxPG0iOqhbZATaq9qmdNt
+	EPK1xV8IeTLikPL/5H/q1zBTXr6dS/Z5e9rGqhYwAZNK1/A4i88QQBXmeWDmS/bL
+	Ol1SAQ6PpcuxQUPg+NaSlR8T0aVaySuhknPnkreIsTmKIABHmKHH173r8Mtw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791899169; x=1791985569; bh=94Er0FzlIH2b52sPP5xniYL/77jNimnMa++
+	3rLvuHV8=; b=eTQgvraTqDFiSao6OHAGjoIp0etql9KXTsSQIKKNDW27UBFpPF9
+	cQv43VR/H9EVe7bKq8ylRgPHxCBx+z+E2FZmCQqDjMuwexhgzQUJ0q+ou/foaL94
+	9FTiQgfM4KCUlKKPf+uq++HhQBiBCjqzORXQJmLMjKbkEu6QGAy1z7CyX6k8mAEH
+	7ieAf8jr+/Q4wbuxAtBhBzFq+HcKKXZKS/aZxhKK4kBDaX3M8YQon8P8/MLE5sVV
+	fpWiXmYQp9BwpxfgQ4T6vMAvcknd5u24JGkQV7ndl92TnpdBgFl5JBp+WJ/muI0f
+	qGKX2J45sUDjBaF1QdIZ/wg4xxGI5NpaGgQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791899169; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:ePKSXUw1PHwIlT3tVSI9Amokt4Nv7OB9jSjImlK2tkUpAcD
+	BDC3vSiAQB6b7q/5L+TOqK6G3V6/gkLhDqk4UvlcSXGJkN7yWNuoWtE+alSwz5Sx
+	660bWvKNLBvNA4lVbCrsOA5QCjGSDA9bq8ShmlaDPxq/IiPjCc9tBFhKQp16uOiW
+	wqiISIZbVWLna4hOaC4mxgf6+wVd1CUP21XY1GoUh5a285SorP9ccSfw1YKx/No/
+	ZVKWwHiVtss1UuKHvf5zUBvqP3wEgjoogrBVVvPYAPwGew7OCHp5Bf2EgOTaoIOq
+	6whrTypsC1qsxoBH/qa8MJuwTuheq/lPLLLXzHA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:mLawmDBiKKyOG4PpSIdhC/OGUEEvdgpg3teAclalIC4=:94Er0FzlIH2b52sPP5xniYL/77jNimnMa++3rLvuHV8=;
+X-ME-Sender: <xms:ITbOahCggavCmCJkYEeBgtPjbZYyH8ra0Utw4Z9wNoO034Spyrv66Q>
+    <xme:ITbOamZt7AXQT-q29gA23Krl-vC7Mnlbtx8ir94CH72bimME29KS4LRcPGxJ9dazn
+    dLB57vmRKL3iS9KdTS7WEvHDwZD0a_bmdHXMLqoSfJkn7m7zDzBt_Q>
+X-ME-Received: <xmr:ITbOak7LDuE-jK9WaI3PwitK0NOyT-DVPjOd-v1sHa08sw2fp-R1sCtxtfzgf0IFSkxW4GimmqGx1QEEguSwsd43HmRA_6p4gVBg>
+X-ME-Proxy-Cause: dmFkZTF3UuiA0ulsElMPvoBwX7sz+ARCP7sv2QewxEALFa95FEzIX2GClw4ip5KR1/cjR7
+    Llfcz4FgvoguC6BYVXKHW+50xe+wOPEfqbXyZvSx6RuaexvWUS7q+90ovi8Y0qjyq1CcSr
+    aVZCoRI94GMKgFE7pQCyNUKqKcfolpAWH5OxKCPgU19xc1poEHJX+3NY4Zx8Oei4QarzIi
+    fC6pNtUSuXGY/npF0J1aAS54luzn+DA7WkCQDJw6UCj6Xh7eiyIUyWS4NHK6SjiNdOXyyV
+    eAmuK+NZ3xZsY+fTddLQ6giDxOe0EynOEJewzsd6Yd7/gn9vADAVQPl6XvMGe0+YZViKN4
+    9XTtXHmpBer/qQ+Kfd5jNB+CNP1NYQ81//h4upHC0n/+4vM8yXCKKvvg+xaKVk/GZRhX+l
+    05wXinfm1iEiZS+TnXrAmkoTq+b2R3aOMTI2qmEt410bopxTwKptBoubYVRL/gUA+SGhvR
+    jNkhzsOhrrAjnU5wbpONU8YrhJplRpkOIVjfq8RvNJY6AEIoGCwM/9kfjSNwXirY3Ztp2y
+    Ft1f6nyLzActTqDlVxBEJXM4RwR8NEN269vkt9imx8n95KZAkrZDCDFOTx5vynF+okRlax
+    dr1/FCRRvXUSslE6G0LlG/SOdefF7ED5rH3TcyEUloNVFG7dT9KztfC4oTWw
+X-ME-Proxy: <xmx:ITbOanbOfbPWrZRejHnz5ct8---FhnMjqpFBZq9Evz1lxRzQ94AvYA>
+    <xmx:ITbOajip7FGuIaYNl7B_44jrJN1VMkqjEh2FoNhoXM26tqR6rDGUIA>
+    <xmx:ITbOao-2aBXMmEipLGUaKDlKfIP9vQZatcM3z3ys4kC0LFewPhfNSA>
+    <xmx:ITbOaup8p9UceDggq-47ix0czaOWwyDfC-b54Uk9bsRgtj4nMXSljg>
+    <xmx:ITbOatYVTQOYGDW6fBWmLLdTa73LkSVVrXmSIaJDcSo7KWBtRFVywRqA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 13 Oct 2026 09:46:08 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v3 3/4] connected: add transfer.connectivityCheck config
+ and rev-list flag
+In-Reply-To: <CAL71e4MVf6QcFsAdUnW3XGw_g-OLdUZFyopkELVLsCqvM=Qinw@mail.gmail.com>
+	(Kristofer Karlsson's message of "Tue, 13 Oct 2026 09:41:24 +0200")
+References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
+	<pull.2211.v3.git.1791806877.gitgitgadget@gmail.com>
+	<cdf28f1df6cb36b006f367de0e18e23e3aa8d992.1791806877.git.gitgitgadget@gmail.com>
+	<xmqq7bjm7o0r.fsf@gitster.g>
+	<CAL71e4MVf6QcFsAdUnW3XGw_g-OLdUZFyopkELVLsCqvM=Qinw@mail.gmail.com>
+Date: Tue, 13 Oct 2026 06:46:07 -0700
+Message-ID: <xmqqse291zog.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+Kristofer Karlsson <krka@spotify.com> writes:
 
-With the built-in fsmonitor daemon on Linux, I renamed a directory that
-has a subdirectory, then edited a file in each:
+> I could also add a slightly larger patch to fix
+> the entire file and remove USE_THE_REPOSITORY_VARIABLE.
+> I don't think it would be overly messy.
+>
+> I will play around a bit with both these ideas and see
+> where it ends up for the next reroll.
 
-    git init repro && cd repro
-    git config core.fsmonitor true
-    mkdir -p old/pkg/sub new
-    echo a >old/pkg/top.txt
-    echo a >old/pkg/sub/f.txt
-    git add . && git commit -qm init
-    git status --short          # starts the daemon
-    git mv old/pkg new/pkg
-    git commit -qm move
-    echo b >>new/pkg/top.txt
-    echo b >>new/pkg/sub/f.txt
-    GIT_TRACE_FSMONITOR=1 git status --short
+Although I wouldn't mind if we decide to leave it outside the scope
+of the current topic in the end, it is worth considering when we see
+a patch adding new use of the global.
 
-What did you expect to happen? (Expected behavior)
-
-Both edited files listed as modified:
-
-     M new/pkg/sub/f.txt
-     M new/pkg/top.txt
-
-What happened instead? (Actual behavior)
-
-Only the file directly in the renamed directory is listed. The daemon
-reports the edit in the subdirectory under its path from before the
-rename:
-
-    fsmonitor_refresh_callback 'new/pkg/top.txt' (pos 1)
-    fsmonitor_refresh_callback INV: 'new/pkg/top.txt'
-    fsmonitor_refresh_callback CNT: 1
-    fsmonitor_refresh_callback 'old/pkg/sub/f.txt' (pos -3)
-     M new/pkg/top.txt
-
-`git -c core.fsmonitor=false status --short` lists both files.
-
-What's different between what you expected and what actually happened?
-
-Changes anywhere below a subdirectory of a renamed directory are
-missing from status and diff, with no warning. It is not a
-race: later edits in that subdirectory, made well after the rename, are
-missed too. It persists until something invalidates the fsmonitor
-state. I hit it moving a source package: 19 of 56 edited files were
-missing from `git status`, all in subdirectories of the moved
-directory, and a commit made from that status would have left them
-out.
-
-Anything else you want to add:
-
-I believe the cause is in add_watch() in
-compat/fsmonitor/fsm-listen-linux.c. An inotify watch follows the
-directory's inode, so the subdirectories of a renamed directory are
-still watched. When the rename is processed, they are registered again
-under their new paths with IN_MASK_CREATE, inotify_add_watch() fails
-with EEXIST, and add_watch() returns early without updating the
-descriptor-to-path map. Only the renamed directory's own entry gets its
-new path.
-
-Patrick Steinhardt asked about exactly this in review of v5 of the
-Linux listener:
-
-  https://lore.kernel.org/git/aZ1bRQv9Cjke298f@pks.im/
-
-  > In case the watch already exists, can't it be the case that we
-  > have raced e.g. during a rename? [...] If we then see EEXIST we
-  > wouldn't update the hash map and thus keep the old path intact.
-
-As far as I can see that question was not answered on the list, and
-v15 of the series still returns early on EEXIST. It turns out to be
-deterministic rather than a race.
-
-
-[System Info]
-git version:
-git version 2.56.0.rc2.275.gfcaf1f5383
-cpu: x86_64
-built from commit: fcaf1f5383f52c5ebd5e2df3ea023601e2084b10
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-rust: enabled
-feature: fsmonitor--daemon
-gettext: enabled
-libcurl: 8.18.0
-OpenSSL: OpenSSL 3.5.8 25 Aug 2026
-zlib-ng: 2.3.3
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-storage-format: files
-default-hash: sha1
-uname: Linux 7.2.9-200.fc44.x86_64 #1 SMP PREEMPT_DYNAMIC Sat Oct  3 19:59:55 UTC 2026 x86_64
-compiler info: gnuc: 16.2
-libc info: glibc: 2.43
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+Thanks.
