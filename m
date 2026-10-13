@@ -1,98 +1,187 @@
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com [209.85.217.72])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.srv.csmantle.top (mail.srv.csmantle.top [77.93.157.103])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBD4517BB4
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 14:48:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461FB503BDF
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 15:04:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=77.93.157.103
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791902936; cv=none; b=JnM4zcE/iP03eBxON+U3iSnMxvUiuomhtRFVFf9XQWS41N+wW6c/4CiyalE+6hFBDQ0lrZSVNbSk3ff3cZRwwrZ+lOeQCcGyHxKX1P792rVtdQVXzwBN/9oJ9tm1/3hkreCx5ldI7ZXH5n1w5vOcW/yWoQ29jCypAWQxpQmiMEY=
+	t=1791903883; cv=none; b=Zd+AxR0y+5NwqysXSUTUhCeYQ2z0Yg9wxTSVQdbEs/zdTl7Mt9mKzgqO/r1982GDDerraEXpfK+z9CaThB0Wt2zShqOQfhDxVUd1bBpOI6AJC7BvD7f4sYIW35mEDsobNNlUGZdQXMFqXkzMsP3hbldcKEhNx1VZ7P/veq+ThJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791902936; c=relaxed/simple;
-	bh=uRBj8Xttct0t9IArobli3AJkly4tA98v/ymtxtJt1pE=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=fKOKUNYeq+hxY+IyuA6wZlZPsUHq8J/1hkGPE6MUhuh4Sm5ZIR4cW56nw+OoQrLy2+xJM5j2hFIAfPDJalPPAuin+XA3r8REJGnR9cWEA0Y25Q3SQv9txLFGeIQbgfx+cJUKh9d6xai5TMznb1LIm0Etc5GHd9mor679gDlCt4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--rmistry.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LAvO2rQK; arc=none smtp.client-ip=209.85.217.72
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--rmistry.bounces.google.com
+	s=arc-20240116; t=1791903883; c=relaxed/simple;
+	bh=J+VcPBPNzFCMcVfe0jTL7EiImPvP+hR5XSOM12Tn21A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=axw5OqxB8N8Vz4hnV15jSkKdUFx1SYysx9Yxj/aE/kuXRGck1EHd3VTb47AwpFHVbc7bxKMQ1pnkmyZcjQzKQA3uToLsDTXJtBy/IIQniNID6B0V0ROVcfB8dZUmNm7vkS+Haj5CX/Q5E6uyN+g4phRvwARNzTe3cNwcgckLcXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csmantle.top; spf=pass smtp.mailfrom=csmantle.top; dkim=permerror (0-bit key) header.d=csmantle.top header.i=@csmantle.top header.b=n3tPxRuP; dkim=pass (3072-bit key) header.d=csmantle.top header.i=@csmantle.top header.b=buNC8BvH; arc=none smtp.client-ip=77.93.157.103
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csmantle.top
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=csmantle.top
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LAvO2rQK"
-Received: by mail-vs1-f72.google.com with SMTP id ada2fe7eead31-7be93024717so2512925137.2
-        for <git@vger.kernel.org>; Tue, 13 Oct 2026 07:48:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1791902934; x=1792507734; darn=vger.kernel.org;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=uRBj8Xttct0t9IArobli3AJkly4tA98v/ymtxtJt1pE=;
-        b=LAvO2rQKlKedmnnqBPhRoR35UcSsOSSkmfp4LH7/1qV5a4eDThwVGE0Oj6j0094NwJ
-         e2zxaVBwVXWIfJZaOHcaRyfaMGAnGAArnGZPFOaITXqP8x+oj0oqY8+UZMOO4mUkjVbN
-         Ip4jeuiv2j7TZJxRgdPCJvs1rajcAWW2GmzR3P0KIeKzY+Sv6uUUSSa7O7L7IyyEyA9U
-         Twh5jIa8heYZ98eWFyMERvAq1LOCsrL5UJHdJ1ugmxqzCNqTl59VDI7jfkAqM+si0zBn
-         2KBl+GvfXam4q2xs4QA9aqZh6WBCAw+HQJ/hIBOsyTna28EFwciH9qfBR/N7EBmzlEy9
-         lXVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791902934; x=1792507734;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=uRBj8Xttct0t9IArobli3AJkly4tA98v/ymtxtJt1pE=;
-        b=1okT0UB7ugQ+Y7ryqXqFwW3zAld8LCMSlaKxfCG4mfkqGU9ivLnoRWMB6rHvODfo/0
-         ZDmGPxHccX+NMfSMMqb56s3Om1ndsTyknkHjc84OiYFAbZfhP6vdkoozmU20gquacpm1
-         TniSBwHnx1MuPuCBhiUpOSCqO4Ohnb6AF7PEemQ8vC1ZAulxYKPyo/5Oca5/KETkD2aE
-         pOIZ9Up5i10ZoQ3qUn0eDJksbf2jYOMOsQmsCGI0OqYvmvMcmKYgG9JWpJZI0koTshWf
-         xSVc7IO2mBvkiCe9ABb8q1oVL9O7NmUfe0IXZg9JjUJW5KwoMxKT3dZAfKqPzJxeT55/
-         Au0Q==
-X-Forwarded-Encrypted: i=1; AKwUvBzYq6xc7lrnly1c2V04BHiPTf2dnRgBxndAIBVq4z2GFYo9VOynXIQygeDb2+0xwkhOIb0=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLqKFzRxieUK7wTJ/48MA4A9WUyYYsYkjm9csaqHKujT3g9icFd
-	Ej9UVrMWw7NSFnn+8/rtSdWtP4O4J54bUNRaKrgHw2Rw6e++6KShTCALQHBsqzC6RyOThPtVLuN
-	CJwXpSEMeiA==
-X-Received: from vsve28.prod.google.com ([2002:a05:6102:f9c:b0:7c0:cfba:75b])
- (user=rmistry job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6102:50a7:b0:7c3:a114:99a7
- with SMTP id ada2fe7eead31-7cb3a065818mr4231462137.14.1791902933556; Tue, 13
- Oct 2026 07:48:53 -0700 (PDT)
-Date: Tue, 13 Oct 2026 14:48:52 +0000
-In-Reply-To: <xmqqwlrm4o6z.fsf@gitster.g>
+	dkim=permerror (0-bit key) header.d=csmantle.top header.i=@csmantle.top header.b="n3tPxRuP";
+	dkim=pass (3072-bit key) header.d=csmantle.top header.i=@csmantle.top header.b="buNC8BvH"
+DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=csmantle.top; s=self-ed25519; h=BIMI-Selector:Content-Transfer-Encoding:
+	MIME-Version:Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:In-Reply-To:References:BIMI-Selector;
+	bh=qXNT+/0mrxHTC+FyXModhcKD2AnaCkYkIp/EntQ5MrY=; t=1791903882; x=1792508682; 
+	b=n3tPxRuPvOpIR5UVe9ZOzI3Qb09DqfANPwfumDqAbrWaRpNh7/SeXjfE5K+PWSDY/5nR0Z/Ijq1
+	qnjaPsKu7Cg==;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=csmantle.top; s=self-rsa3072; h=BIMI-Selector:Content-Transfer-Encoding:
+	MIME-Version:Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:In-Reply-To:References:BIMI-Selector;
+	bh=qXNT+/0mrxHTC+FyXModhcKD2AnaCkYkIp/EntQ5MrY=; t=1791903882; x=1792508682; 
+	b=buNC8BvHaC9mv252dye549OQ9ufHw6IgBlUxVxJbSwE25SuCKhWfceVvHc9Xiqr76uwQAg4D/vh
+	4kgdJDq7xNgRuyCMCr1T1WNv8sG3wD2GTfgDjnAKatdYmBhMqPDScVgn+D3qkCt2XQL9C742S5dbK
+	+q4N5Y9ntCxLQ6oqaHwQqHAvNvKK6qYLjn8snInArexYuwDMNXzgVhm1a6xtfsfzqKoBB5Wv4n+2H
+	2Qv6RaOscrLhy75wWtxNXjbYEmhAA4AvQoD+eQjHEVokYw5xy5zvWeT0X6lKjsq9B1Z8TYMJX+jLI
+	kdP3TkBLFLy9M6352VZ0Bywa4kaycePAbL3VdPEY4J1zWvQdvbBtOOucm8wWTZFw0cER53lIDOJ8y
+	Zxt4LKojlJEvs61IC28uanUMp0aW3KcZqgHz6nqb1bdPw46APn7TTfpW1XbcNnn8o1yqb6C/BDaZ8
+	APmupqWbVXFwF46KospefJFkOorlOeXErukyDe3JRT79K51siWlE;
+Received: from [203.88.122.33] (helo=loongcatbox)
+	by mail.srv.csmantle.top with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <rong.bao@csmantle.top>)
+	id 1xGdkJ-00000000O7P-3ufV;
+	Tue, 13 Oct 2026 22:44:52 +0800
+From: Rong Bao <rong.bao@csmantle.top>
+To: git@vger.kernel.org
+Cc: Mingcong Bai <jeffbai@aosc.io>,
+	Rong Bao <baorong2005@126.com>,
+	Rong Bao <rong.bao@csmantle.top>,
+	Tamino Bauknecht <dev@tb6.eu>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] fetch: fix --depth= and --unshallow for multi-remote fetches
+Date: Tue, 13 Oct 2026 22:44:39 +0800
+Message-ID: <20261013144441.1632978-1-rong.bao@csmantle.top>
+X-Mailer: git-send-email 2.56.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.2224.git.1789169384240.gitgitgadget@gmail.com>
- <pull.2224.v2.git.1791493644.gitgitgadget@gmail.com> <35e303d65bc378e733b1e9e8d6908a829352e857.1791493644.git.gitgitgadget@gmail.com>
- <xmqqtsmsdpxz.fsf@gitster.g> <20261011222929.2957901-1-rmistry@google.com>
- <xmqq8q43eszt.fsf@gitster.g> <5fcd107d-b620-44d1-91b7-e5f9965171cc@gmail.com>
- <xmqqbj8yan77.fsf@gitster.g> <20261012192157.1835972-1-rmistry@google.com> <xmqqwlrm4o6z.fsf@gitster.g>
-X-Mailer: git-send-email 2.56.0.rc0.2.gd1c5d74986.dirty
-Message-ID: <20261013144852.1155285-1-rmistry@google.com>
-Subject: Re: [PATCH v2 2/2] blame: ignore revs in HEAD:.git-blame-ignore-revs
-From: Ravi Mistry <rmistry@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ravi Mistry <rmistry@google.com>, Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, 
-	Ravi Mistry via GitGitGadget <gitgitgadget@gmail.com>, Abhijeetsingh Meena <abhijeet040403@gmail.com>, 
-	Kristoffer Haugsbakk <code@khaugsbakk.name>, Phillip Wood <phillip.wood@dunelm.org.uk>, 
-	Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Rcpt-Check: Accepted by authentication
+X-42: Don't panic! 
+BIMI-Selector: v=BIMI1; s=me
 
-Junio C Hamano <gitster@pobox.com> writes:
+When running `git fetch --all --depth=<SOME-DEPTH>` or `git fetch --all
+--unshallow` with Git 2.56.0, the fetch isn't really deepened:
 
-> Ravi Mistry <rmistry@google.com> writes:
-> > For v4, I left the behavior as reading from HEAD:.git-blame-ignore-revs
-> > to match hosting sites for now. Maybe consulting the working tree could
-> > be explored in the future in a separate series if desired, or please let
-> > me know if you or Phillip would prefer to change it in this series.
->
-> It needs to be justified in some way other than "match what the
-> forges do (which is to use the one from HEAD)", but other than that,
-> I think it would be more ergonomic to pick up the copy from the
-> working tree (with local modifications) in non-bare case.
+        $ git init remote
+        Initialized empty Git repository in /tmp/test/remote/.git/
+        $ for i in 1 2 3; do echo "$i" >remote/"$i" && git -C remote add -A && git -C remote commit -m "$i"; done
+        [... snip ...]
+        $ git clone --depth 1 --no-local remote local
+        Cloning into 'local'...
+        remote: Enumerating objects: 5, done.
+        remote: Counting objects: 100% (5/5), done.
+        remote: Compressing objects: 100% (2/2), done.
+        remote: Total 5 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+        Receiving objects: 100% (5/5), done.
+        $ git -C local log --format='%s'
+        3
+        $ git -C local remote add origin2 ../remote
+        $ git -C local fetch --all --unshallow
+        Fetching origin
+        Fetching origin2
+        From ../remote
+         * [new branch]      main       -> origin2/main
+        $ git -C local log --format='%s'
+        3
+        $ git -C local fetch --all --depth=3
+        Fetching origin
+        Fetching origin2
+        $ git -C local log --format='%s'
+        3
 
-Makes sense, I did not have a justification for sticking with HEAD other
-than matching hosting sites.
+This is because the parent process doesn't pass the --depth= flag to the
+fetcher subprocess.
 
-I have sent v5, which reads .git-blame-ignore-revs from the root of the
-working tree in non-bare repositories (and HEAD:.git-blame-ignore-revs
-in bare repositories) and updates the commit message to justify the
-behavior on ergonomic grounds.
+        [pid 1622822] execve("/usr/lib/git-core/git", ["/usr/lib/git-core/git",
+        "-c", "fetch.bundleURI=", "fetch", "--append", "--no-auto-gc",
+        "--no-write-commit-graph", "origin"], 0x5555c4b65ae0 /* 54 vars */) = 0
 
-Thanks!
+Fix this by passing it when specified or implied by --unshallow. After
+fixing, both flags would work on shallow trees in conjunction with
+--all, as demonstrated below:
+
+        > ~/workspace/git/build/git -C local fetch --all --unshallow
+        Fetching origin
+        remote: Enumerating objects: 5, done.
+        remote: Counting objects: 100% (5/5), done.
+        remote: Compressing objects: 100% (3/3), done.
+        remote: Total 4 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+        Unpacking objects: 100% (4/4), 345 bytes | 345.00 KiB/s, done.
+        Fetching origin2
+        remote: Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+        > ~/workspace/git/build/git -C local log --format='%s'
+        3
+        2
+        1
+
+Signed-off-by: Rong Bao <rong.bao@csmantle.top>
+---
+ builtin/fetch.c           |  2 ++
+ t/t5514-fetch-multiple.sh | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index b2decc6cfdb8ae86b8b1e92caa85f4961ffc47ff..a110a2dcf09c7e6764eb232bff73286753b27009 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -2247,6 +2247,8 @@ static void add_options_to_argv(struct strvec *argv,
+ 		strvec_push(argv, "--tags");
+ 	else if (tags == TAGS_UNSET)
+ 		strvec_push(argv, "--no-tags");
++	if (deepen)
++		strvec_pushf(argv, "--depth=%s", depth);
+ 	if (verbosity >= 2)
+ 		strvec_push(argv, "-v");
+ 	if (verbosity >= 1)
+diff --git a/t/t5514-fetch-multiple.sh b/t/t5514-fetch-multiple.sh
+index 5d79472c39f67126079da5432938c6d97f08008a..b6568d33d7a6dd725a72584fbad942d6b3f7c39b 100755
+--- a/t/t5514-fetch-multiple.sh
++++ b/t/t5514-fetch-multiple.sh
+@@ -383,4 +383,38 @@ test_expect_success 'git fetch --no-all --all (fetch all remotes)' '
+ 	)
+ '
+ 
++test_expect_success 'git fetch --all --depth=2 (fetch all remotes with depth 2)' '
++	setup_repository test16 &&
++	git clone --no-local --no-single-branch --depth=1 test16 test17 &&
++	(
++		cd test17 &&
++		git remote add remote2 ../test16 &&
++		test_path_is_file .git/shallow &&
++		git fetch --all --depth=2 &&
++		test_path_is_missing .git/shallow &&
++		git log --format=%s origin/side >actual1 &&
++		git log --format=%s remote2/side >actual2 &&
++		test_write_lines Second Initial >expect &&
++		test_cmp expect actual1 &&
++		test_cmp expect actual2
++	)
++'
++
++test_expect_success 'git fetch --all --unshallow (fetch all remotes with full history)' '
++	setup_repository test18 &&
++	git clone --no-local --no-single-branch --depth=1 test18 test19 &&
++	(
++		cd test19 &&
++		git remote add remote2 ../test18 &&
++		test_path_is_file .git/shallow &&
++		git fetch --all --unshallow &&
++		test_path_is_missing .git/shallow &&
++		git log --format=%s origin/side >actual1 &&
++		git log --format=%s remote2/side >actual2 &&
++		test_write_lines Second Initial >expect &&
++		test_cmp expect actual1 &&
++		test_cmp expect actual2
++	)
++'
++
+ test_done
+
+base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
+-- 
+2.56.0
+
