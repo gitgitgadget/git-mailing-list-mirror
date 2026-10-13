@@ -1,192 +1,123 @@
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+Received: from mail-vs2-f9.google.com (mail-vs2-f9.google.com [74.125.227.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7ED5187FF
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 20:46:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791924408; cv=none; b=nfu47k3QdqbXG0YjpVinRP/c19BP7gxHtzC8bSkZCNHqmh1Kvr+lUN5x6jasbLEXXyUN/r8nH7rp/4ExdNpzUW8tm62fpay7nJhkBfaTfziUyMM47YNAJgZ26cQEdnLZHXv3cEEn8UIqDhJaJMW8H85zjTE7zOao/c2L1fjOnX0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791924408; c=relaxed/simple;
-	bh=SqpELeVPwZCQYsha74jD97G7yzo6epixjDyDTze8ZIM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yo8jh3WZ/REpJmy05IUVryiKQPvAIO97BsS78F1mNSBl+qpyqCYtXO03psKi1673YVsqb6ODFxGbUtN7Rc1sDxlDnVEbiANa50HVJwt5C7IPywPa/eiiKonn9QRu96q+r0kjWqXHAXjFlwVKtT0w7Uxne2rvXXrFebPUp1pPeFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CuaSnT4P; arc=none smtp.client-ip=209.85.160.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3195B552922
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 20:49:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.9
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791924571; cv=pass; b=miWmnvmQDOpdVFPzi3x8jMage4ga7rEtbvhVA7tpEvJoHFVMB6lwcvgCJ5+qOMvBNtHQlMOp4EvK4c3Q7b+nU2OFnLN8hqgsnO+dDW4V8ix0DD+pfOXF4U90Xj1azvu9zUW6yhNv+Zex02qw3Q+hL29cxxa/uCMfPToyDm+XFoA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791924571; c=relaxed/simple;
+	bh=kPVtH7hZPKyof0x59KBjeLL40/WV2pxmn7rw6RWfKmw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=G0X8G8S9/OnDjHjWjVBZfBoSauM3MmXIiv+suFG5koPb30Q/9iz0lmsEmnPT7xI03uUDOxpv/t2Pj+wDIfjUTUVXF9ZpxIooFZtX8W979n13zB1pe7hTq/9tpXqv+ovRgZdeSFo4EFP8kMa1IPiSv+E5AAP7/8CvAbQeCHytVk8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NNE8+8/z; arc=pass smtp.client-ip=74.125.227.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CuaSnT4P"
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-4a691d29614so1097399fac.2
-        for <git@vger.kernel.org>; Tue, 13 Oct 2026 13:46:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NNE8+8/z"
+Received: by mail-vs2-f9.google.com with SMTP id ada2fe7eead31-7c8b52135c5so899410137.0
+        for <git@vger.kernel.org>; Tue, 13 Oct 2026 13:49:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791924569; cv=none;
+        d=google.com; s=arc-20260327;
+        b=KeUaD5dZVO806YqfMpG09tippwlspHg41kZz7h7LrTREfm57ZrTuy5b4A9Bw6edHwg
+         +N1S3ZroTy7WP5ZFkcrl4Ldm7N2oMavw/Hl9hf1BqEgla228DtQ1c9Jy4P5Tzr5EqoPL
+         NnCW7wIjR6ptbjSWMjwjtxEzWcu5bYoU3oWC2IXjiKrFqcbynT+CTpJwQniZ0NEvLNse
+         Z+SGUj3Cr8p1k/cRWH3/h77OMm9wFfpc7BB4PbgMRUtVKYIRWxqHHj5DD+kXUGcqP+hd
+         g8MyDh5EMBoZkaiNMlk51w9X7EghVsf79ARDkOMjr6YUL+f+CRjD7joRJ4A2CdBuw7k1
+         eUYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=kPVtH7hZPKyof0x59KBjeLL40/WV2pxmn7rw6RWfKmw=;
+        fh=EScYGoA5ve64/IUy1nagOSXunVqPNNMbTKWZUijkHFA=;
+        b=sDFWBiK8O9zHVl5TvnUfBd2jxLCSRocGQfTCuA50akTZkjfzYAZ6DqXbO3JRKa75o9
+         tdjvSM9qs/KA6pdyzxQecUf6U9sJw8FIzjBC7pTjdV8ZJDjRrHgep/DKoq8CjCKK+lI0
+         s11x1z5xivnio5WQ8GpXQfqgMdJttGjObs7Z1IK3TDXxQohlO6wLMu/l076ksHgI9BeH
+         wx3+oplrshPEEsTcCbtk7ZWHVc7O7bc/+aBqbEcbPWiEuqjU/bluNg/0sD9fypsyFyaq
+         LIyMFGMDmR1+dX1mLIXzBveqy6YG8LxEif8ta9G+bIM+vg6azz6fQq/Y+nEEWQ5Fsits
+         48IQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791924404; x=1792529204; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=u93XUsEoc5YvIPJoXrcc8dPxHcDAIYyZaLStAMO1fEc=;
-        b=CuaSnT4PQKHrNhLJ+8zT4G2XaaxZcJv7PZDvGVMIJc+BKmlVWcw/4EXRRAxjeya97Y
-         5yngY2Okb8sU7XrWpL9qdNyQgtPR/g8WVOmk7n1ixThxDCmZvjvm8FGTfcAdxGi4ykon
-         YV7DgIDimg74rpHj+8krGmR2NZtv+zFWhfaNQsQai9fcOcvnbxwAMm5NRJcFPrkJ+ZPl
-         9XPikwKwk2CFaG8AmkaAdKuWQXlv9UN43yNAvWapLvsbHeBAjKUCyXEjfvpUxhpnSyB4
-         uIpY9ipJdXdr0Ag5RVVVuBK4Un05knGmUB4Gkr/fkvbqFSe4VLWhajxGzrcEu7d3VFP2
-         y/Kw==
+        d=gmail.com; s=20251104; t=1791924569; x=1792529369; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=kPVtH7hZPKyof0x59KBjeLL40/WV2pxmn7rw6RWfKmw=;
+        b=NNE8+8/ztBKohwFCmN1sTL001ALiej34Jp5+erjHRUU1rMRs/9wrh4OvhdY0lMCd8V
+         em5p3wAdXlJH7/Xp+geIxFPej3bJ8xW46VptwwS8HDnAw+E9G9E6kVSiX6h/bNkWgZGE
+         SKPBMcm0GgpBi4U1u3iOxg8fPLWfaAIdwNOxanpKUzEw+rzHR1Lyd68dZmqOnt/VeLsT
+         hT9ER+oaY5LxCFj+ybjES0P95PDueNm7c2MAVyUn7HLNw1cH6fxrMgAYVUkjoqLNB4XW
+         yAUyujDO6uHaLQFlhVzsrLpkaa0Bl21V+lo8a/e/0xYB3+x1Q5P9Fmx8SNDWjDpC0QwL
+         BQew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791924404; x=1792529204;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=u93XUsEoc5YvIPJoXrcc8dPxHcDAIYyZaLStAMO1fEc=;
-        b=gp5zlMdxLWfUzNYeP9kS0uAMtrEpYUU0DC8ZkxxBDsrfx8jpT8reKNIHX1w0kvPLEi
-         peLKtbpbU0+50c5c5bSbaZLjw2dCImIdLiTJMhvWoTQGSoQaIXZg4VYHNXaaVMo/i0HW
-         FTwcYT9UbFmer891VSoW/XT89+uwa9xhGNWIBvV9+NLvLISgzJivAlEtRs8t+2YhyqGO
-         4M0GtB/u0YeKjvJ3Ep03oY1lfH1KJs9GKpaaqBXiCFpupVuTWymsw4Lak7X/kuEXyalv
-         KEL+yG7JfwObk1MZGCRr/XhCp5C+SVCOcLKr9q4LkZpa1mWfGqhgwt0engm0Jy/sk87w
-         zwDA==
-X-Gm-Message-State: AFq9FYLXR5tUglDWbzWtr+BwSWN8RfG6vYOSsDyiZ8Og/AeVnWsx4Cwe
-	KcJFP3PL5b3N4OlyHOGP09dNT0PgsMcRwx1mSkCfQmoVNlwNW9Bx4tWX
-X-Gm-Gg: AYBFou1CMzA7pb7skIf8uC0p3UNtOAjPu9bxy1hEH+Xi8eiSA5Kycf7dXZAE6ekwTwb
-	6/ojnZhbqfmFq9vmzd8nWlLu3Gk8qkkfIg8pN6ffxxa61JtpmbSnSl5T/VQsjM1n+CBdFHTRdvT
-	A+VNAjQiupESNGTYNqsAxa502WN7Ry2WTmDXDXlaPuluWT/KAPeWb2yiRzpxLU7kGhXl9TGM4jO
-	KJEpMZNYbl2G81d08flOtoBnrGm8jVwkuUKb2OMicXYCkCSOTgsHHqyI6/KJdOttfaWonuzsPgs
-	7QoPWmR87C98EQWcCRbMBmgbMkLRkpgBfBtAPOKDEE867CPqtqdjIBTnOlt89lgoHVI9VlDNxNM
-	uNM4hV5ddPa/Z2NS8MlIE6F+jESt496Y+NykpxaS71pisaYepy6uI0EFbVAHkgHkAJmfo9bz+e6
-	Tx0QW4DTbDLDdBpJ5SHV24XR8/6chWDR/mpBJICQPkt083NaJkrPNghI2ZXdB27zTGykIBl5aCl
-	KtqNlSedwFCSO92RznUWGs=
-X-Received: by 2002:a05:6808:1a05:b0:4e6:6079:c33d with SMTP id 5614622812f47-50c532f457fmr12504729b6e.10.1791924404124;
-        Tue, 13 Oct 2026 13:46:44 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-518a72a6048sm9888796b6e.5.2026.10.13.13.46.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Oct 2026 13:46:43 -0700 (PDT)
-Date: Tue, 13 Oct 2026 15:46:40 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	Wolfgang Kritzinger <wkritzinger@atlassian.com>
-Subject: Re: [PATCH 1/5] odb/source-files: fix performance when reading
- objects with alternates
-Message-ID: <as6Vx2ba17tztb2q@denethor>
-References: <20261013-pks-odb-files-alternates-cleanups-v1-0-b7030ff2b26f@pks.im>
- <20261013-pks-odb-files-alternates-cleanups-v1-1-b7030ff2b26f@pks.im>
+        d=1e100.net; s=20260707; t=1791924569; x=1792529369;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kPVtH7hZPKyof0x59KBjeLL40/WV2pxmn7rw6RWfKmw=;
+        b=j5h1YhIe4AyoDLO7h/WoH/SUiwZcC8WEljckfQLrS4dVpUik8pg4kdvH/zTuMFynnv
+         pBo+dSSj3+cU80Zkg5tr8LXW4K2U+XkeELabhJtbUQ0v/HIyaR4IipXd5CxW4m1jOnBE
+         aknVz1LId9vnvHuF4h2EQi11s3AbiSShkHI2KYyZVYAdvVNUGcr/NN2hzNncPwGskre2
+         RUAKIX3y8yDu25+r4NGnBeldh324Yq5P8Ssw/nGWEVHB7xLnf0q1aiixq9LpsSoXoE7A
+         XjPIXUZg5m0iiaMgy68aLdfA8dV8lOKEvgxt9lNTnRgNYtljbiPS8rMZ+jpjSq0Hdiz9
+         em8A==
+X-Gm-Message-State: AFq9FYIXnLOqkhQkX1UHZMkdt2wP3e8PQyAoFKtUujbOFCEIiiqukK/1
+	+kN7MekmXHIqgaj37JkoMv8QeavhEh5JFkZZ3Sd0ZDIlr/GC81M3dPVch1HTlZbZyLrqnaF+1jC
+	QZ50OpsgXKxLXr/QPj2aHZuV1kAF+8Fm3YTzs5tohWQ==
+X-Gm-Gg: AYBFou2TKpa87hNKpG9OwS/ai8uglZBkCU3aiQhLEzMf4Qa3MXnGBHUJgphcDgtdYG4
+	tLA7+cIbDlKe6uPB0xbWOG6wJbFn/in6ZMiEVzQfU7F1yUi5GaLS8hBX+3qPb1aEr3c2k30XQZS
+	/W4PaCG/OfNWxaktTy3bK9MbUZHmSOkXpHgwaI31O9M98jxGCw39rFY3gIo5bdWDpMFIex3QnHv
+	FPwfks5K6tlCvZH8uavR1x2HXe9/l9f2RTR+JquLnt4irWWj/+1PK1VTE8LxlNNgsD4HUoCo07K
+	YNC+yoV4wSF41DUs88Gc2UXilEG37WKk/G3FjxrXsmiHTn9aLI+ncIBCTtoUyOl6Ipqw27ym/Pl
+	GaoPRj1T8nNg=
+X-Received: by 2002:a05:6102:1499:b0:7c3:198d:58b5 with SMTP id
+ ada2fe7eead31-7cb372ddf1amr3720086137.15.1791924568713; Tue, 13 Oct 2026
+ 13:49:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261013-pks-odb-files-alternates-cleanups-v1-1-b7030ff2b26f@pks.im>
+From: Joy <cryptocurrencydiva@gmail.com>
+Date: Tue, 13 Oct 2026 21:48:57 +0100
+X-Gm-Features: AclHuK9cF6xkbtAinymOxXqVWKjM9GPCQbykOQ2gjQNfbzLh3obXmAIdcBVD2IQ
+Message-ID: <CAKA8Uu3P11QcSZA9_cseCXQRG2-AhQDm8NicQ8cVDysOxzrcoA@mail.gmail.com>
+Subject: [Outreachy] Introduction and MyFirstContribution - Joy Gundu
+To: git@vger.kernel.org, christian.couder@gmail.com, 
+	Usman Akinyemi <usmanakinyemi202@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 26/10/13 09:36AM, Patrick Steinhardt wrote:
-> With the move towards pluggable object databases we reorganized how we
-> access alternates. Before the introduction of pluggability, we were
-> reading objects by first scanning through packfiles from all alternates
-> before scanning through all loose object directories. With the change
-> though, we are now iterating through the sources one by one, checking
-> each of them for whether they contain the object either as a packed or
-> loose object.
+Hi everyone,
 
-Ok, ideally we want to go back to checking all the packfiles across each
-source for a given object before looking through the loose objects. This
-would be more performant. Make sense.
+My name is Joy Gundu (she/her/his), and I am excited to introduce
+myself as an Outreachy applicant for the Git project.
 
-> Checking whether an object exists in packfiles is comparatively cheap
-> because the list of packs is cached, and the pack indices are likely to
-> be in the page cache. In contrast to that, checking whether an object
-> exists in loose format always incurs one stat(3p) syscall. So scanning
-> for objects one alternate at a time led to a performance regression in
-> in the case where most of the objects are contained in a packfile of an
-> alternate, as reported in [1].
+I have gone through the Outreachy eligibility requirements and I
+confirm that I meet all required criteria.
 
-Ok.
+As part of getting started with the community and the project
+codebase, I have taken the following steps:
+- Cloned the Git repository.
+- Successfully built Git from source with the DEVELOPER=1 flag enabled
+using GitHub Codespaces.
+- I have completed the MyFirstContribution tutorial as part of my
+onboarding. For this practice exercise, I implemented a custom toy
+builtin command called git psuh in C.
 
-> We could fix that issue by introducing another flag that tells the
-> backends to only search the optimized storage backend. But that is
-> adding more complexity to the object database layers that is ultimately
-> only really required because of the way the "files" backend stores its
-> data. So for an alternate backend, such new infrastructure would not
-> really be a good fit.
+Find here a summary of what I worked on:
+1. Added the core command implementation in builtin/psuh.c and wired
+it into builtin.h, git.c, and command-list.txt.
+2. Updated the Makefile and .gitignore to support building and
+cleaning the new command.
+3. Wrote automated shell tests in t/t9999-psuh.sh.
+4. Created AsciiDoc documentation in Documentation/git-psuh.adoc.
+5. Formatted, signed, and verified a clean patch file.
 
-I completely agree. Introducing a special flag here would really only
-serve the "files" backend and also make the overall interface more
-confusing. It would be best to capture the desired behavior as an
-implementation detail of the "files" backend itself.
+I am very excited to be here and look forward to contributing more to
+the Git project.
 
-> But since then we have moved handling of alternates into the "files"
-> backend itself. One of the consequences of this is that this backend is
-> now having full control over all of its sub-sources, and that also makes
-> it way easier for us to optimize for this access pattern again.
+Best regards,
+Joy Gundu
 
-Yup, now that alternates are controlled/managed by the "files" backend
-itself instead of being discrete sources themselves, it becomes possible
-us to update how objects are read internal to the source.
-
-> Do so by first trying to read objects from packfiles located in any of
-> its object directories before trying to read loose objects.
-
-Make sense.
-
-> The following benchmark demonstrates that this significantly improves
-> performance in some cases. The benchmark uses the Git repository itself
-> and sets up its object directory as an alternate, while the primary
-> object directory is simply an empty object directory. It then reads all
-> commits enumerated via `git rev-list HEAD` with git-cat-file(1):
-> 
->   Benchmark 1: git cat-file --batch-check --unordered (rev = HEAD~)
->     Time (mean ± σ):     179.4 ms ±   2.6 ms    [User: 114.6 ms, System: 61.4 ms]
->     Range (min … max):   177.1 ms … 187.7 ms    16 runs
-> 
->   Benchmark 2: git cat-file --batch-check --unordered (rev = HEAD)
->     Time (mean ± σ):      95.0 ms ±   1.5 ms    [User: 79.8 ms, System: 15.0 ms]
->     Range (min … max):    93.0 ms …  97.9 ms    30 runs
-> 
->   Summary
->     git cat-file --batch-check --unordered (rev = HEAD) ran
->       1.89 ± 0.04 times faster than git cat-file --batch-check --unordered (rev = HEAD~)
-
-Nice.
-
-> [1]: <CAFXJcxvpKHoVDwE5mBOd=w-A5vPdUmehqr8SHLUD7qv1qB00rA@mail.gmail.com>
-> 
-> Reported-by: Wolfgang Kritzinger <wkritzinger@atlassian.com>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb/source-files.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/odb/source-files.c b/odb/source-files.c
-> index 455f409db0..9268f5aa9a 100644
-> --- a/odb/source-files.c
-> +++ b/odb/source-files.c
-> @@ -426,6 +426,7 @@ static enum odb_read_status odb_source_files_read_object_info(struct odb_source
->  {
->  	struct odb_source_files *files = odb_source_files_downcast(source);
->  	enum odb_read_status status = ODB_READ_NOT_FOUND;
-> +	enum odb_read_status ret;
->  
->  	/*
->  	 * Reading an object may fail even though the object exists, for
-> @@ -434,15 +435,15 @@ static enum odb_read_status odb_source_files_read_object_info(struct odb_source
->  	 * prefer the first such error in case multiple reads have failed.
->  	 */
->  	for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
-> -		enum odb_read_status ret;
-> -
->  		ret = odb_source_read_object_info(&dir->packed->base, oid, oi, flags,
->  						  status == ODB_READ_NOT_FOUND ? errmsg : NULL);
->  		if (!ret)
->  			return 0;
->  		if (ret != ODB_READ_NOT_FOUND && status == ODB_READ_NOT_FOUND)
->  			status = ret;
-> +	}
->  
-> +	for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
-
-Ok, now we iterate through each source to look through all the packs
-before looking through the loose objects for each source. This matches
-the behavior desribed above and look good.
-
--Justin
+Best regards,
+Joy Gundu
