@@ -1,362 +1,153 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C904FE2EB
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 12:07:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B146E4F4739
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 12:20:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893281; cv=none; b=XZbXXCop1jco2rtvsSXGiP5nWjNIdXzeFvHlcUVEOYUV5aelIMn7US9z9qacDxo8sIOUpB5QuqbfSxGnvWdgs08hSXlE8fVSgCtNPZ9O/UVZ9fWmjYAkb2CP9dT8PIlVz5c0N+OY4J/0+7UbJdwTnInh/FLH30l9GDuOKysbjkM=
+	t=1791894056; cv=none; b=jsIir0N4wyULGN7MiF+VBbGuZcjosuzM/XEY6ZV/Snd4KzzGq2P5CtGfWlCZc+Okxz8dFlnrr2i+ASa0L8kzXtv+ywIzF5XifxucKAlT2v1TQA0Nc1qQe64YFJdpWBDq4a8cND5e9lPfNcJa9I4Y955HBhl7B9OF7EBz9ARZzYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893281; c=relaxed/simple;
-	bh=NENvHJY4jIkmd+7PS8KK9Tl0XaH2YxG88Mofwdcetck=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=bflzkLnbwwQESx1d11Z4IMuipSkE+t47dLuq+Zwpsx4TgEv7quOufJgCjt72HIg2GRiSDYkyffYvexJduYM0IyOtZekHA/Kd6FAXxjOGVfdXo6wGfp3VnMaWqPBl7SVdgRCMhcURtycsJ55Oz8MN+nwEmbjZglmrnhOu72EwUk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=If72iqB7; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791894056; c=relaxed/simple;
+	bh=cV7SBs4LPpocy2u6cnoDUYyIeQ5WO5tncolUeQECyoE=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=cJcRy97Dp9ZDzuc0VGt6lrEUdlMD23ndHfwEHKTg5M6qO5EgDkRB7s20tc7WsRixV+LJjgnON2rhKFhNuvRfMUoVRpgIRzWq6RZkizgeb5ADxCN2k4TPOoSgw3fELwG4XQKpzosEhML/Pu7ifuipJPyTWK7vNzhSiuACyZ7X2mU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=P4GDuibC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Tt3vF9Jf; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="If72iqB7"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-85377c8bc96so1095887b3a.3
-        for <git@vger.kernel.org>; Tue, 13 Oct 2026 05:07:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791893279; x=1792498079; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=SPKapgf9qBZepV+wwvDGMSlMdEE3vbhX6PAJNXv3gng=;
-        b=If72iqB7qtqxjlZarodxl4u6+bJnrAaQzlTA1W9HmhoorGEO4WsZ4ZgGBMD18/FBSm
-         80bTbTRvixdQ+eorTEYz8ZwuJ5ziNgGs7uceWBq3ry9WJTl5F/0PAnvm13a1iKq9HGaF
-         GArrZWjI1oeMn+h4y1a1tE+DMq7O8G6JPYo/nGauhc/Y36lgXQE57NDMvUNNEjCOKBmv
-         kChNG0mSDAlG8CtCncRbfRspVonbjkSl5q2Rgyo1tWwTfo7ivkuIew0iaXNty6XzsSvs
-         E5gQu701B94A/maoopJrhbwZbueotWBn64p2wSd09JAZlC1mWc1eq7Zw2vIrgjtOAeYJ
-         2+Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791893279; x=1792498079;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=SPKapgf9qBZepV+wwvDGMSlMdEE3vbhX6PAJNXv3gng=;
-        b=qXaWJG0J4eW7axyB3UFfyItSFF59Y8eFhLWrTEUtb7ThkHY75jNfHzI2mvNQZk/eVw
-         eKwOkT6OPys+lWIz+LU7PIR6IlojFdN6Y/P2uC1FqXndpmDUNpMiINTlGYtHtwJAcujV
-         L5jmD4oe+FnN3dES+QukXUN8lm6YkfPoQ9kqbpQb6OJPNR4jBK5AP6tu3cDf3FBGMwqJ
-         qvpxPBUFGe/4nVwEBCxTaRdXCX4md8aL6cNBmAf3bj0Qgrriz3yObuwDSOoGKspSy74F
-         qctLIUO3dL/DP7lb/flV2BCySHcOSg4JeLlsWAnfNGVyz9j+u20EOMfWj7Id5AmF6818
-         fwJg==
-X-Gm-Message-State: AFq9FYILTebO4dglbHJXvqKCUKWS3Os20L2Qb8sP1qO6iwUUyUxJsUz2
-	wj/jVOXVa+Aol9CbqMoLx7HPe9h9aBxxKps2XHz3sq8xEnchAkhkC37PN5O4Ow==
-X-Gm-Gg: AYBFou3w44BnsIf0x9XXTXdd1MFQH21E/dpBL2BuUsQJjP6/F2QMmL2G94modghiAr4
-	edVzblqZ2u81LcDDyaXjJV1B9+VMpR3W/16JlloeKGPbp2si/X0HANgDhKaCdNUIi7QfRjYj++Q
-	HFHJ5L+YvayjSNSJEcnaxlHwqli5RjrFVx/Cqsv1yu5OupuO9r1W0OCWC8ppXudkHwr0udzDb2C
-	b1KOI9wjQbO+1x/sSsn1M06BNxu1HXooCLjaIJm0ZPF+8bsYbsEIFOypxo49/O5JoXgNJVVEY6A
-	e69RrRklbYteE8sxAz2oI53s9HLiYHLePhYjHP9EmiLoeBbkZMjDTfGa6dhjx179yqJzoDPxj7N
-	JSK+mLR98NeeGbqtWKoyup2ZqwXcIqyV4/KaAq6uUn39G9exSkZdXs2xIhEMbKz2Wfjzyp+mupr
-	TH0nHLstJQxVUGnC+j/AsKYyFkqLstTdvB1v3Th/iNwIsmbPdCqsEnJhcGz6V3lwitJo1O48hiL
-	xhYduhcAFUsGw==
-X-Received: by 2002:a05:6a20:e210:b0:3e0:f07d:a66 with SMTP id adf61e73a8af0-3e16bda71d8mr11883232637.23.1791893279239;
-        Tue, 13 Oct 2026 05:07:59 -0700 (PDT)
-Received: from [127.0.0.1] ([52.159.247.232])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-896c3ccf7cdsm4863968b3a.30.2026.10.13.05.07.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Oct 2026 05:07:58 -0700 (PDT)
-Message-Id: <4202361858764ae057874159b9ce2060721dc51d.1791893274.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2214.v8.git.1791893274.gitgitgadget@gmail.com>
-References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
-	<pull.2214.v8.git.1791893274.gitgitgadget@gmail.com>
-From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 13 Oct 2026 12:07:53 +0000
-Subject: [PATCH v8 2/2] rerere: add "gc --skip-locked" for auto maintenance
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="P4GDuibC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tt3vF9Jf"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 876331400152
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 08:20:53 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Tue, 13 Oct 2026 08:20:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791894051;
+	 x=1791980451; bh=nvvfhf83BQ/E71Qf6vShcore6G3he2GPtBQFWl32jmM=; b=
+	P4GDuibCDLnxjWPVR4qwo386unnm8derTHha6JAr8FLXCNZSKBg9Sl4umw/YhM3K
+	r+9iNO52wq9nNuBcoplywQVIPoPho0UdSxY2RsmFokHFa9Ivlu77cD+j2e0aRmPB
+	yGB0pqNlB5RuCUZ0ThdjIdgWWvJgYGuV/PE8Rd3OXggv8e2PYqmXNV9WuPz+xDjR
+	bPI7vQp+C0745bJFZtujmLJRRKMJdXuHaeiNxPfzRDBq6ZMIQpHKF7402VtRNF7q
+	HURpgrQ1Qdv8jnAJZxkxMSfHl6gJ54KPexk+BG7mH7rgfzTbmSm5X+XlQc7F1X0a
+	DVAqOJACLJSREpHclmgbqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1791894051; x=1791980451; bh=n
+	vvfhf83BQ/E71Qf6vShcore6G3he2GPtBQFWl32jmM=; b=Tt3vF9JfPiDtISTzW
+	EymszyxdashDVnhkSCyE0LwtTAAUVFdCxX34MMdORSchdFdBsaKdUcNEl58dreqG
+	IhwCdzENRdL2lQGrRcFR5CPz2s6lrQYGG6FJXCpRHxVEoifx3ksL/mGgX4a82OPu
+	i/IIgwjqs7qHQ/Vf/4mwyNfiIYxzINZkOjjs0T2N598bJqyIRvM/MzwBZ1oPBWRG
+	vPsAsG50ZUgkUFx4858vjpBPSUmvUc24IlWLLRNINf9VEXmxbqtWS2Z3bodD9K1u
+	Pt5575TE8Te3TyfzV5j1PXdwwS+L55Xz7aVnI7HhWRSxwpoTlPp6lpvM+u3TLt4N
+	JHfkw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791894051; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:dPNys1W9pE9bssosiDyWInxj6AbXe5G4NF609NJHFhtiyam
+	tZ78CYAF43nm9wQZnXyVZwizTsM+DQlmTKnKgEws3MWNJkVcg1SaJm5jyG7m16Zh
+	0ZS8i73Px9TBYeaccEmH243Z4mx2AgoJAzYsvhbykV3xKQ8vKIaPVXhoMfDMLkBV
+	MshAYV9VgtO80v4DJwdAxqcDRWf1+EUoNEOcH2V6HsrfNAlK1hb+2O0o/2P0A89G
+	1eM/2QWu/ddrUodBSMtDIY6bGpM5XTy5Zv/P5GSpakhivUSssPNVN8wr3JBL58QA
+	FUlsIduduS81rSmDNWQbfOSE0Rm+SGRnXKAzDsA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=11;
+	hn=content-transfer-encoding,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:CmcRmFV+AWk/wkOrL+kKMq2uAg6OELqNN7LHJh7h+tU=:cV7SBs4LPpocy2u6cnoDUYyIeQ5WO5tncolUeQECyoE=;
+X-ME-Sender: <xms:IiLOamd8DGqC6ROoBOnDzJYlmKOIzizM1LUD6K1q1gXNu6b6VAFJdoU>
+    <xme:IiLOarBVmDvd4GJidcAjabqwDw4liNcpRnpv2JQ8_9PnGXIQh3LOdX8XkRRxinMO7
+    pheoVjHJRD6RNtatg-6AtVUIO4ib_yjelaEtyFDG2whHux7AEVqlW4>
+X-ME-Proxy-Cause: dmFkZTEIwJU1+dmwMcwbB+5sC+NnFCrgt/ymJgxvLS6EQGSVoCbyCzdlAfbjsfJP/FPGf0
+    dF7NCFSJhJVJJHBJt+LGO6RWcP1s/Ej9kshJ/JLostQf5TCGPXvZHpuHYv/NnbkEHbUPj0
+    doL53E5l8PY/hVCtKBPCmLSs/iRUblUtGApcU/wA87fCN/t5Rdb/6Z4P15Yo3LGbE3PggN
+    BodiL9ojZE239/Fy7ElYiWgZmwwGxFc/tbrBYtf2Sdo5lUEcsyg8Yv/q+IH12i/slXNwKu
+    EERXpFQDjyj/+ddWOS7qgw/rjcYvce7qniphd5v5B2l2OTWCZC3Z0dwOSvgw7SCrmWn/M1
+    WHNfiiHyom95MXDljQm6yvqtJNhUPq7/Gx7UY0K0pMLl1++JrJQaLFkpWGeYYC6D5JCBy3
+    yn2kZH7ouMJ8VBTEci96agvGMC0wbVVnj/kDIDEv1KOf+qDSieiFaGTLYh8idY/pOq3rPD
+    +z+RvmygLbmOVBWb21i4uaIp/MxVQ1TVWG4/dsZ9vvAi/xX9zSmKicRz7HzjrJbbeyUUYk
+    HGExNtR7nsjKlxYbPnxB2An9KS24WtEoN3EpXkImiwR9pUm16yMoW3fsbSYDWNasvZKaWS
+    cL52p9PrVLK8fcZkpAjCcOnPx37L5j/ku+yQT6dB8Cp9yZmS7ukqdpvsfmMw
+X-ME-Proxy: <xmx:IyLOakZIipmtcp7fJS7ALspP25y96xJR-7JaYsWrFUEE0Jfff4D5-w>
+    <xmx:IyLOanItItoQOXXX7FjirHwETIe7VQRJTAYlLjaRkEJvtAy-OMTRrA>
+    <xmx:IyLOaiBB28D6Z6y58kCpd0A6OpUt1eEZrvLfCzcnZSIMeQgC2aLLkw>
+    <xmx:IyLOasr77u2YQJkukFuYFS0FHvdE7ipAxahPBGtpQyxZcLfhCAC0_Q>
+    <xmx:IyLOapUBhHNFqK50oGdkxDJHYbs0GixqHsd9EUz1GHu8SVVXPnfw_dH2>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 2DB2922C0095; Tue, 13 Oct 2026 08:20:50 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Junio C Hamano <gitster@pobox.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Thomas Bachem <mail@thomasbachem.com>,
-    Thomas Bachem <mail@thomasbachem.com>
+X-ThreadId: AEXXgXC9MU77
+Date: Tue, 13 Oct 2026 14:20:29 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Julia Evans" <julia@jvns.ca>, git@vger.kernel.org,
+ "Thomas Bachem" <gitgitgadget@gmail.com>
+Message-Id: <2642391e-1cef-4071-ae3f-db6fee3fab74@app.fastmail.com>
+In-Reply-To: <5dad29e9-24e6-494a-9b0f-701af856ae69@app.fastmail.com>
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+ <cb482e6d-0c76-4f34-b72c-03b5234d4f37@app.fastmail.com>
+ <5dad29e9-24e6-494a-9b0f-701af856ae69@app.fastmail.com>
+Subject: Re: [PATCH] doc: checkout: rewrite detached HEAD state explanation
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Thomas Bachem <mail@thomasbachem.com>
-
-Starting with the preceding commit, processes that want to acquire
-the rerere cache's MERGE_RR.lock by default know to wait up to one
-second until that lock has been released. This is a sensible default
-for many commands that happen to write rerere entries, as we would
-otherwise die immediately when the lock is taken by another process.
-
-But for repository maintenance it's a bit more complicated, as there
-are two cases that we have to care about. When the user explicitly
-asks us to garbage collect rerere entries via `git rerere gc` they
-probably want us to try our best to perform this operation. It's thus
-sensible to wait for the lock and then die if we weren't able to
-acquire it.
-
-But we also prune rerere entries as part of auto-maintenance, which is
-only executed on a best-effort basis anyway. Delaying the whole
-operation to acquire the lock is somewhat heavy-handed, and neither
-does it make sense to die in case we haven't been able to garbage
-collect rerere entries as that would impede other housekeeping tasks.
-Furthermore, it's totally fine to skip the operation when the rerere
-cache is locked already, as we will retry during the next run anyway.
-
-But we do not have an easy way to tell `git rerere gc` to skip the
-operation in case the cache is locked already. Add a new
-"--skip-locked" flag to plug that gap and have auto-maintenance pass
-that flag.
-
-Only auto-maintenance needs that flag, so hide it, like the
-"--skip-foreground-tasks" flag that `git maintenance run` passes to
-`git gc`.
-
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Assisted-by: Claude Fable 5.1
-Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
+On Tue, Oct 13, 2026, at 13:48, Julia Evans wrote:
+> On Wed, Oct 7, 2026, at 3:02 PM, Kristoffer Haugsbakk wrote:
+>>>[snip]
+>>>  Documentation/detached-head.adoc   |  43 ++++++++++
+>>>  Documentation/git-checkout.adoc    | 129 +-------------------------=
 ---
- Documentation/config/rerere.adoc |  4 +++-
- builtin/gc.c                     |  4 +++-
- builtin/rerere.c                 | 10 ++++++++--
- rerere.c                         | 23 +++++++++++++++++------
- rerere.h                         |  4 +++-
- t/t4200-rerere.sh                | 26 ++++++++++++++++++++++++++
- t/t7900-maintenance.sh           | 26 +++++++++++++++++++++++++-
- 7 files changed, 85 insertions(+), 12 deletions(-)
+>>>  Documentation/gitdetachedhead.adoc |  14 ++++
+>>
+>> Why in one word instead of hyphenating `detached-head`?
+>> (gitdetached-head(7))
+>
+> Currently the guides are all one word with no hyphens.
+> Happy to use a different style if folks think we shouldn't use
+> the current naming convention for the guides
 
-diff --git a/Documentation/config/rerere.adoc b/Documentation/config/rerere.adoc
-index ab035e2d7d..60e78e499f 100644
---- a/Documentation/config/rerere.adoc
-+++ b/Documentation/config/rerere.adoc
-@@ -16,4 +16,6 @@ rerere.lockTimeout::
- 	lock when another process holds it, typically a background
- 	`git rerere gc`.  Value 0 means not to wait at all; -1 means
- 	to wait indefinitely.  Default is 1000 (i.e., wait for 1
--	second).
-+	second).  A `git rerere gc` run by `git maintenance run --auto`
-+	or `git gc --auto` does not wait and does nothing while the
-+	lock is held.
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 57a3520263..7ad3987b71 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -385,12 +385,14 @@ out:
- 	return should_prune;
- }
- 
--static int maintenance_task_rerere_gc(struct maintenance_run_opts *opts UNUSED,
-+static int maintenance_task_rerere_gc(struct maintenance_run_opts *opts,
- 				      struct gc_config *cfg UNUSED)
- {
- 	struct child_process rerere_cmd = CHILD_PROCESS_INIT;
- 	rerere_cmd.git_cmd = 1;
- 	strvec_pushl(&rerere_cmd.args, "rerere", "gc", NULL);
-+	if (opts->auto_flag)
-+		strvec_push(&rerere_cmd.args, "--skip-locked");
- 	return run_command(&rerere_cmd);
- }
- 
-diff --git a/builtin/rerere.c b/builtin/rerere.c
-index a056cb791b..445f1df032 100644
---- a/builtin/rerere.c
-+++ b/builtin/rerere.c
-@@ -56,16 +56,21 @@ int cmd_rerere(int argc,
- 	       struct repository *repo UNUSED)
- {
- 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
--	int autoupdate = -1, flags = 0;
-+	int autoupdate = -1, skip_locked = 0, flags = 0;
- 
- 	struct option options[] = {
- 		OPT_SET_INT(0, "rerere-autoupdate", &autoupdate,
- 			N_("register clean resolutions in index"), 1),
-+		OPT_HIDDEN_BOOL(0, "skip-locked", &skip_locked,
-+			N_("skip gc while another process holds the lock")),
- 		OPT_END(),
- 	};
- 
- 	argc = parse_options(argc, argv, prefix, options, rerere_usage, 0);
- 
-+	if (skip_locked && (argc < 1 || strcmp(argv[0], "gc")))
-+		die(_("the option '%s' requires '%s'"), "--skip-locked", "gc");
-+
- 	repo_config(the_repository, git_xmerge_config, NULL);
- 
- 	if (autoupdate == 1)
-@@ -94,7 +99,8 @@ int cmd_rerere(int argc,
- 	if (!strcmp(argv[0], "clear")) {
- 		rerere_clear(the_repository, &merge_rr);
- 	} else if (!strcmp(argv[0], "gc"))
--		rerere_gc(the_repository, &merge_rr);
-+		rerere_gc(the_repository, &merge_rr,
-+			  skip_locked ? RERERE_NOWAIT : 0);
- 	else if (!strcmp(argv[0], "status")) {
- 		if (setup_rerere(the_repository, &merge_rr,
- 				 flags | RERERE_READONLY) < 0)
-diff --git a/rerere.c b/rerere.c
-index 64fac07c71..75b99f0f81 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -887,18 +887,29 @@ int setup_rerere(struct repository *r, struct string_list *merge_rr, int flags)
- 
- 	if (flags & (RERERE_AUTOUPDATE|RERERE_NOAUTOUPDATE))
- 		rerere_autoupdate = !!(flags & RERERE_AUTOUPDATE);
-+	if ((flags & RERERE_READONLY) && (flags & RERERE_NOWAIT))
-+		BUG("RERERE_NOWAIT does not apply with RERERE_READONLY");
- 	if (flags & RERERE_READONLY) {
- 		fd = 0;
- 	} else {
-+		int lock_flags = LOCK_DIE_ON_ERROR;
-+		int timeout_ms = rerere_lock_timeout_ms;
-+
-+		if (flags & RERERE_NOWAIT) {
-+			lock_flags = 0;
-+			timeout_ms = 0;
-+		}
-+
- 		/*
- 		 * Another process may hold the lock for a while, e.g.
--		 * "git rerere gc" while it prunes rr-cache, so wait for
--		 * it instead of dying right away.
-+		 * "git rerere gc" while it prunes rr-cache, so by default
-+		 * wait for it instead of dying right away.
- 		 */
- 		fd = repo_hold_lock_file_for_update_timeout(r, &write_lock,
- 							    git_path_merge_rr(r),
--							    LOCK_DIE_ON_ERROR,
--							    rerere_lock_timeout_ms);
-+							    lock_flags, timeout_ms);
-+		if (fd < 0)
-+			return -1;
- 	}
- 	read_rr(r, merge_rr);
- 	return fd;
-@@ -1284,7 +1295,7 @@ out:
- 	return needed;
- }
- 
--void rerere_gc(struct repository *r, struct string_list *rr)
-+void rerere_gc(struct repository *r, struct string_list *rr, int flags)
- {
- 	struct string_list to_remove = STRING_LIST_INIT_DUP;
- 	DIR *dir;
-@@ -1294,7 +1305,7 @@ void rerere_gc(struct repository *r, struct string_list *rr)
- 	timestamp_t cutoff_resolve;
- 	struct strbuf buf = STRBUF_INIT;
- 
--	if (setup_rerere(r, rr, 0) < 0)
-+	if (setup_rerere(r, rr, flags) < 0)
- 		return;
- 
- 	rerere_gc_cutoffs(r, &cutoff_resolve, &cutoff_noresolve);
-diff --git a/rerere.h b/rerere.h
-index feeb0e2c9f..1182ee3fb1 100644
---- a/rerere.h
-+++ b/rerere.h
-@@ -10,6 +10,8 @@ struct repository;
- #define RERERE_AUTOUPDATE   01
- #define RERERE_NOAUTOUPDATE 02
- #define RERERE_READONLY     04
-+/* If MERGE_RR.lock is taken, return -1 as if rerere were disabled */
-+#define RERERE_NOWAIT       010
- 
- /*
-  * Marks paths that have been hand-resolved and added to the
-@@ -37,7 +39,7 @@ const char *rerere_path(struct strbuf *buf, const struct rerere_id *,
- int rerere_forget(struct repository *, struct pathspec *);
- int rerere_remaining(struct repository *, struct string_list *);
- void rerere_clear(struct repository *, struct string_list *);
--void rerere_gc(struct repository *, struct string_list *);
-+void rerere_gc(struct repository *, struct string_list *, int);
- 
- /*
-  * Check whether garbage collection for rerere entries is needed, which is
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index 94165c8417..43795fb7a6 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -242,6 +242,32 @@ test_expect_success 'old records rest in peace' '
- 	test_path_is_missing $rr2/preimage
- '
- 
-+test_expect_success 'gc --skip-locked does nothing while MERGE_RR is locked' '
-+	mkdir -p $rr2 &&
-+	echo Hello >$rr2/preimage &&
-+	test-tool chmtime =$just_over_15_days_ago $rr2/preimage &&
-+
-+	test_when_finished "rm -f .git/MERGE_RR.lock" &&
-+	>.git/MERGE_RR.lock &&
-+	git rerere gc --skip-locked 2>err &&
-+	test_must_be_empty err &&
-+	test_path_is_file $rr2/preimage
-+'
-+
-+test_expect_success 'gc --skip-locked prunes while MERGE_RR is not locked' '
-+	mkdir -p $rr2 &&
-+	echo Hello >$rr2/preimage &&
-+	test-tool chmtime =$just_over_15_days_ago $rr2/preimage &&
-+
-+	git rerere gc --skip-locked &&
-+	test_path_is_missing $rr2/preimage
-+'
-+
-+test_expect_success '--skip-locked is only accepted by gc' '
-+	test_must_fail git rerere --skip-locked clear 2>err &&
-+	test_grep "option .--skip-locked. requires .gc." err
-+'
-+
- test_expect_success 'a held lock is waited out within rerere.lockTimeout' '
- 	git reset --hard &&
- 	rm -rf $rr &&
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 4f65fa9439..9d610a29fe 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -1007,9 +1007,17 @@ test_expect_rerere_gc () {
- 		shift
- 	fi
- 
-+	# An automatic run passes --skip-locked to "git rerere gc".
-+	skip_locked=
-+	case " $* " in
-+	*" --auto "*)
-+		skip_locked=--skip-locked
-+		;;
-+	esac
-+
- 	rm -f "rerere-gc.txt" &&
- 	GIT_TRACE2_EVENT="$(pwd)/rerere-gc.txt" "$@" &&
--	test_subcommand $negate git rerere gc <rerere-gc.txt
-+	test_subcommand $negate git rerere gc $skip_locked <rerere-gc.txt
- }
- 
- test_expect_success 'rerere-gc task without --auto always collects garbage' '
-@@ -1084,6 +1092,22 @@ test_expect_success 'rerere-gc task with --auto honors maintenance.rerere-gc.aut
- 	test_expect_rerere_gc ! git -c maintenance.rerere-gc.auto=0 maintenance run --auto --task=rerere-gc
- '
- 
-+test_expect_success 'rerere-gc task with --auto succeeds while MERGE_RR is locked' '
-+	test_when_finished "rm -rf .git/rr-cache .git/MERGE_RR.lock" &&
-+	# Without "rr-cache", rerere is disabled and never takes the lock.
-+	mkdir .git/rr-cache &&
-+	>.git/MERGE_RR.lock &&
-+	test_expect_rerere_gc git -c maintenance.rerere-gc.auto=-1 maintenance run --auto --task=rerere-gc
-+'
-+
-+test_expect_success 'rerere-gc task without --auto fails while MERGE_RR is locked' '
-+	test_when_finished "rm -rf .git/rr-cache .git/MERGE_RR.lock" &&
-+	mkdir .git/rr-cache &&
-+	>.git/MERGE_RR.lock &&
-+	test_must_fail git -c rerere.lockTimeout=0 maintenance run --task=rerere-gc 2>err &&
-+	test_grep "Unable to create.*MERGE_RR\.lock" err
-+'
-+
- test_expect_success '--auto and --schedule incompatible' '
- 	test_must_fail git maintenance run --auto --schedule=daily 2>err &&
- 	test_grep "cannot be used together" err
--- 
-gitgitgadget
+I=E2=80=99m confused. It doesn=E2=80=99t look like that to me?
+
+    $ git help --guides
+    The Git concept guides are:
+       core-tutorial    A Git core tutorial for developers
+       credentials      Providing usernames and passwords to Git
+       cvs-migration    Git for CVS users
+       diffcore         Tweaking diff output
+       everyday         A useful minimum set of commands for Everyday Git
+       faq              Frequently asked questions about using Git
+       glossary         A Git Glossary
+       namespaces       Git namespaces
+       remote-helpers   Helper programs to interact with remote reposito=
+ries
+       submodules       Mounting one repository inside another
+       tutorial         A tutorial introduction to Git
+       tutorial-2       A tutorial introduction to Git: part two
+       workflows        An overview of recommended workflows with Git
+
+    'git help -a' and 'git help -g' list available subcommands and some
+    concept guides. See 'git help <command>' or 'git help <concept>'
+    to read about a specific subcommand or concept.
+    See 'git help git' for an overview of the system.
+
+What is definitely the case is that there is no hyphen between `git` and
+the first word, maybe in order to distinguish section 1 commands) and
+section 5 and 7 manpages.
+
+>
+>[snip]
