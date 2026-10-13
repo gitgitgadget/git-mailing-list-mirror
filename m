@@ -1,102 +1,72 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51F451813E
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 13:14:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B883E5EF8
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 13:39:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791897295; cv=none; b=ou0QB9gQH9BJkWvbm9tu7DOObsKtepSXksCvgjBLIHBH2nvWmxwcETfA5jQdt7j0XoZmoq6orfnbFoQOkuRnOYtOnmqvsbJkqyR9IMcf+jmB1l3jZqVek/BLdzvA5gh/ZbPbEfKZQ4p5t/VK4amsilkgHl7VM2ey2oRHgHdNvQI=
+	t=1791898774; cv=none; b=PeEvz/YtL7QnA6UjsVHh8cFnSWFaoTJ2k4hmIrSftgTI246Ybtl/F4WM+DKUGyrPgRg0NU7f3Qf+iv46ppUz/w9xr10GNRrdv3U54a/HwiwtZpyBeui9X3R6seR06l7i3YE7yu/yfvJ+M4e4zlO5jZd4puUn03I2Rn0bLf8qUFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791897295; c=relaxed/simple;
-	bh=Grdwlz7BjR6VEVr1Qyga1wj9kBC5Kcg9BhLHjSUN7Z0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a0UHWRsFzRB0hi6ECLHmT0Usaa67mW9Aln7IgyOnjUovIqNlXy284U6BKRiKkakUaWnhj8mhn7zUUtcgVqQvZZIaL4Po8y3SeOu/uq/npG27dkmULP8NN9GusWNlMbPwcirqGE9nq4sCUiCyi66vm6oQq6KZ3ZopRUif4lehPv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H66nc/Aw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wgzdn/Iu; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1791898774; c=relaxed/simple;
+	bh=EkIWdWettAvUmK2VkkIHcpplw7aVbfDm/53sQcq6q+M=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=G/WCCXgtoA/2eXLPj3728lqYy8PRcFTi83WrFiOjLhBsksDTm5CjksgHORfyJlxngiUGJnfRSF3vgpctFlJ/sn651uRvOKlgQFsDhJsg0jCDO4uWxN1lyNvK1YU2n6aJPF9qw9Sqbp+M3M5mh/kMikmM8J+mIjyGphLKB+ePiSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gWVIHnVb; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H66nc/Aw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wgzdn/Iu"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1A5C57A0163
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 09:14:53 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 13 Oct 2026 09:14:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1791897292; x=1791983692; bh=bWJmfc/p9j
-	3GLRdaDGAimwz/vO3TxSjhoJHEa+BT2Aw=; b=H66nc/Aw9ncVILs9Ku7Vzf3NXw
-	sXKgK79eRjKcHMzoPKTTCt4zlZgmqJTYqFcVKmov/i8nNP+6abkIox2tDCcNO+R7
-	tZk9+NjheCQRQx6uBfJQhnDFqq7/3OAGHU4ZhEulHjVkk62W04dLZU9g0ohwPoN/
-	eRJLzDI03jiYyaA5MGCYct1Q3vFzYyS7nwaxIsgFKNXzuGS3+A7Oe/c98GFWmZUx
-	0hUUVGm9DeoD9WhIjgogUZuqnESHVrRQ37vpC+9XdzxfDmpjZk3wx51MYAvEGGpS
-	ll4ADKMCvUPX8o6lA6jx3uEtW+03TBnaH0zXaVd2GNzUZBt50e/LN0siyPFQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791897292; x=1791983692; bh=bWJmfc/p9j3GLRdaDGAimwz/vO3TxSjhoJH
-	Ea+BT2Aw=; b=wgzdn/IuqWdZA/MftJuBL0NpTN0HHEcgYFdgMk7afePK0ctCR6r
-	iGajXIykEJZAfKO559AOJaDhTQSIXxtaN2DN6j6gJXL5Bm1UELKu41z4PjKifN7Q
-	CQxcXIR9DIZkPeFfOvlHbnNx1+Izv6IuURcLtnj5bJ3v59uCBulNJsXnMEDUMxGl
-	ta8LA4zPGHCO/AljZ4y6hf1v+A8QlMEBugc5zU0D648IQZlIxqI1+n8ea4t0TWyJ
-	63UPOzt6wiT9OppSZvTLJAmIxv/ZWLiG+1P2pYBppzn7sQlpKgckV3GdqM2krm4S
-	dQqigCcOWDWID/IKoj2Kjzcgrf9Nnlyk9Aw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791897292; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:sSbZqu2klQj8c8SVU+IxpH3EJyb3hI31sxdrhIw4Hjq1YYh
-	6LDSSpT73gzpK6CgjBKhhbc/1FHZru1l6T/CZXkNCpza75b18qAaeNtDhnKWg7z8
-	++ZBipFbrgrL0g57Q+KmqGeZdUiRmJJ0CYbcHi9w6NuBJzcFS/9sI9+g6BhLNHfW
-	Dq3xqBwZcC1MKs4HtxfVpfgvjEK6b7N46CmnngwgKl841tqFvr6Grz8cA+INWTf9
-	OtwVrqFM/CDR7WPzlQtB3LqAyn/mITY1cT1eo/Qj6krpa16eyt+y1ZnSL7SdMuW2
-	NsaB8GHgJMemBeuz1fLsSdpQrg7UtuIZIwDG8Vg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:CrsPrq4lMj+6MU7SSpNqdkjkpi9XkAuYDyTiLJ5cYqI=:Grdwlz7BjR6VEVr1Qyga1wj9kBC5Kcg9BhLHjSUN7Z0=;
-X-ME-Sender: <xms:zC7OajiPmagdmhS8GGlZtj_8u4BM4WbFoOZe2qjQ8Aplkw-FNTo9pA>
-    <xme:zC7Oam4x23LYE7T2m6Hc-C1kKTSBg7PBQj58KlaL0aLnirXmHz5qFnFXhunvPHMnl
-    4w2XjqxGdtdyfC8_DKjeEMRyqdK6juuDn8X8zKnMVmq3MfLQxSWfOA>
-X-ME-Received: <xmr:zC7OarZyN25suDlgzDchTZ1VcHXVPdHRia-YGukV-9AczkWAEd5Isw>
-X-ME-Proxy-Cause: dmFkZTGkkDeI20tq9AOWac7teIpwaJUDv8tRvZBYFf3pDa8Gv+C611tLcBQCUB2WpcTBi2
-    P28Lg7g1jM5Kp9YdWKZNrlhYoZ0oCvlYwp7+LFkrxnV4u2ugAuFkJoH1wYLBjUSe0I9Rqb
-    1eULG9z+lG7y34DyRKer3rq6o1eInntnx+zjf9+WBwwY3+1bYUIUYfR/aryxQFP0GexU/a
-    MefGGUXH/vPfYgR11l6aAzCprEjVcYfSj5vBzJ/oRxXT1EjgCmnPugEo5Z7/kG04X8JYzH
-    H8JUkuqQCXBdNd+afGgEBe6G/sBP+lbRWHwR1PU69a/4z7d7Aotq1jaqqRrPhYxlfLTdL7
-    7l2O9mmmY38peV09T7r8Erx65+OO+zbP7+EbW4mEM/tDzssyuzCzk/m3WQv6A/X37TgHqt
-    gzMSmT3dw2KjzbZK0ckqiyBdy7TlwsPjd/DpdWTOZTWeAH8tNCAla0UP326HHOTC8To+fq
-    wxFRIDh6dwJSb/0h2QT8DuGFaWS5VRTjBBTvvVafwHMZSgfEc/ftPATdHauNYE5HH+J5u+
-    rBnjgDPaakDfE/lCX+ayG0HdIacqDHKllurxz9VgAYJpQbr9ADcrsM31hxBDr2z4hRtj9z
-    fu6K6FxbXYCUeNbGQOVtup2CX+7ouZ07CN7XzSjSS3YF1Y8otY/y3jihS74w
-X-ME-Proxy: <xmx:zC7Oar6FFNiR1s40sL3STjt4B2xd-5xRluh7t7pHqd56olFhIE0-Iw>
-    <xmx:zC7OauBiI7UylHMQqW-8x-g3HkarCeBBVhVQeko2Vi-u-XrvjVFxog>
-    <xmx:zC7OahezYlVQRnlHk30dJxFE6lYp8l46KB9GlXx3ycGr9A-5WqSlqw>
-    <xmx:zC7OatIyWmnzY4qF-IY2M-TA1hl4guAnACu5XpO3PqFejil2ehF9TA>
-    <xmx:zC7OauI8bpzQSjousiOoYRrlOo06f1VnEOomHXsloIXqPY0DuV5YzHcr>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Oct 2026 09:14:51 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b2be81f5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 13 Oct 2026 13:14:48 +0000 (UTC)
-Date: Tue, 13 Oct 2026 15:14:40 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Beat Bolli <dev+git@drbeat.li>
-Cc: git@vger.kernel.org, Xiangfei Ding <xfding@google.com>,
-	Aniket Gupta <aniketgupta3001@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 2/2] imap-send: let OpenSSL do the hostname
- verification
-Message-ID: <as4uwMflv6qzcoTh@pks.im>
-References: <20260907211210.2621693-1-dev+git@drbeat.li>
- <20261012203057.969878-2-dev+git@drbeat.li>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gWVIHnVb"
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-3a9a2cfe1d4so19489711fa.2
+        for <git@vger.kernel.org>; Tue, 13 Oct 2026 06:39:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791898771; x=1792503571; darn=vger.kernel.org;
+        h=content-disposition:content-type:mime-version:message-id:subject:cc
+         :to:from:date:sender:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=72tUuuixKVoBlUzsN+yo/CAopuB/4oOYxR4D55xNhwM=;
+        b=gWVIHnVbZKhElrVqJ+uch3AYU12J7I3bSwrpKUvOg2cVE+TQt2jQVpnfHXIaPXdV1n
+         o4RCsVJc1UHcuvBHqPw0rDBIGKa6dZqkWf/+7QMFHr6wKZcWiHpJgBoIep3xxh1X4OKJ
+         y694aiXNVt5lq777yA+UTy0q78pZizcS7aQgUa1rxXEQaCacNYCBhi5MVS4L0eQFM3k9
+         ywZ1eez5GsRG/5FoBTxo6qyzk9x8+BqC22McoBNHTs8R5bUZgwbfLZimZEoNvl4JK+le
+         /1ukfcQ7s5zp914ieqR3HARTwiFAx/ueXwdWu3myxVNSLl/Rz2bwZBGdSlkHKsbqIZUI
+         SJFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791898771; x=1792503571;
+        h=content-disposition:content-type:mime-version:message-id:subject:cc
+         :to:from:date:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=72tUuuixKVoBlUzsN+yo/CAopuB/4oOYxR4D55xNhwM=;
+        b=wyfN3TT+VPoiZUwtCFk9G6ASIIGG5Gk15F3zB5U8fqVWzkecgOdmdmBKb/2mmuuCGi
+         SXwX3EB1rYMLQRlQrqh4THT9/I61YkKyRVipYToLxgfTJFyq1Ga6dG8An2Mb6SqXppXa
+         Mj7/rYFUU9cVqv61TTxMed1sBjxCu8dTn0L/TlYaGsGbMPJK6nUR3wFEyuh3BnYcKlpY
+         G+MtF6LVxV6O3/sj8YO2DduHhfEkKNXzI6ZgI/XPpUnB9R/LW3NLp72AE62mSLKNJ0S5
+         7elnqzBVfnbbk/vydw2ligOPwad4W+xcp12q6PZk8a9mSpSMonRdZxIbtjHr7ZkhE5Po
+         Zd+w==
+X-Gm-Message-State: AFq9FYLvx5MaLdlz8x3ivJ/0XEE1BKDgU+KcVrBkbzQF3i8gTuSsRsPN
+	ZcMjpL7RUFe/G84YkWn0TNsfMtJgkQ5pJB+PoGtY6aV8yU+wJdy6rwDhb3GhB8r2
+X-Gm-Gg: AYBFou1po6fvj4Or0x1HwZBtHw4L9icOQoUb39CJfiCrpF2BdYZ5G8/xvUBXY95X2GP
+	AwDBllr7yRj65Htbbp5Ozw4XbX7NtyLygvq3Kw0RWvr9SJrB4v41OhleZqX92ZWv+JvIY5+J5iV
+	Rc6v7iq6TOLx7Fo9Ztyp8NNrOe6V2S7flOhr/f8WGuWifR3QeyJguHUQFR9Ya/xXEmFv3y4NUeO
+	Rph6M36QIw8Y3pV1jQxBDMQ+NsLnr08kitWuUg0zpxAZ1MswPsCUpe2DIj20IN2NEjKErbHrjDz
+	qZq7jr76nKsL59OMFMTzRYVtRH3Y/Y1k4ur9LT48VK5lX2O8sTgqGi2BQIkfsobcu0cVH0xWbcb
+	pqDbwtt/KJnRusyDoXouN9n7BCqhIP3laCrd2SpKBs1IQXDjB1Oe6ru1seEylUcy90/0yrM4eb2
+	R0jBjNloa/fcbuIC0wbQrMpD+4uOSDTI1zGUR7EbxGbIBvbWyOxy5jGDeo6tF6CA0OSyYF1tdVD
+	wyx/jTQSPR44FNdexgjtRo4igEy2ZYVN3SYevGe6Hc8sMPG7F5Pml1okVQ15/YCyAjo4SpnlvNG
+	LIDHDweixzS5Sg4qaL5wUJdav4A=
+X-Received: by 2002:a2e:a7c1:0:b0:3a7:812b:cec with SMTP id 38308e7fff4ca-3a9c48533fcmr28457021fa.0.1791898770916;
+        Tue, 13 Oct 2026 06:39:30 -0700 (PDT)
+Received: from localhost ([2001:2043:be0a:d700:bd32:e7e3:cfbd:5b51])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3a9c3cd7d6fsm35742201fa.33.2026.10.13.06.39.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Oct 2026 06:39:30 -0700 (PDT)
+Sender: Erik <erik88@gmail.com>
+Date: Tue, 13 Oct 2026 15:39:28 +0200
+From: Erik Cervin-Edin <erik@cervined.in>
+To: git@vger.kernel.org
+Cc: Paul Tarjan <github@paulisageek.com>, Patrick Steinhardt <ps@pks.im>
+Subject: fsmonitor (Linux): edits in subdirectories of a renamed directory
+ are missed
+Message-ID: <as4z1SskiPyrSKIa@vader>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -105,92 +75,105 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261012203057.969878-2-dev+git@drbeat.li>
 
-On Mon, Oct 12, 2026 at 10:30:57PM +0200, Beat Bolli wrote:
-> According to the OpenSSL Wiki[1], OpenSSL knows how to verify the peer's
-> hostname since version 1.0.2. A simpler interface is available since
-> 1.1.0, which is what is implemented here.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-What is implicit here is that Git performs its own hostname
-verification. A short introduction explaining the status quo and why
-the status quo is insufficient would help the reviewer.
+With the built-in fsmonitor daemon on Linux, I renamed a directory that
+has a subdirectory, then edited a file in each:
 
-What's also missing is a quick note on the minimum supported version of
-OpenSSL.
+    git init repro && cd repro
+    git config core.fsmonitor true
+    mkdir -p old/pkg/sub new
+    echo a >old/pkg/top.txt
+    echo a >old/pkg/sub/f.txt
+    git add . && git commit -qm init
+    git status --short          # starts the daemon
+    git mv old/pkg new/pkg
+    git commit -qm move
+    echo b >>new/pkg/top.txt
+    echo b >>new/pkg/sub/f.txt
+    GIT_TRACE_FSMONITOR=1 git status --short
 
-> As a side-effect, we get all present and future improvements done by
-> OpenSSL for free. E.g., the old code did not handle IP addresses in the
-> subject alternative names, while the new code does.
+What did you expect to happen? (Expected behavior)
 
-That sounds like it's win-win: less code and more supported scenarios!
+Both edited files listed as modified:
 
-> If the verification fails, print the error message as returned by
-> OpenSSL.
-> 
-> [1]: https://wiki.openssl.org/index.php/Hostname_validation
-> 
-> Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
-> ---
->  imap-send.c | 86 +++++++++--------------------------------------------
->  1 file changed, 14 insertions(+), 72 deletions(-)
+     M new/pkg/sub/f.txt
+     M new/pkg/top.txt
 
-Don't we have any tests for this? If not, can we maybe add some to make
-sure that we indeed still verify the hostname?
+What happened instead? (Actual behavior)
 
-> diff --git a/imap-send.c b/imap-send.c
-> index 9f21705d77..cd9eae15d0 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -325,6 +261,15 @@ static int ssl_socket_connect(struct imap_socket *sock,
->  		ssl_socket_perror("SSL_new");
->  		return -1;
->  	}
-> +	if (cfg->ssl_verify) {
-> +		SSL_set_hostflags(sock->ssl, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
+Only the file directly in the renamed directory is listed. The daemon
+reports the edit in the subdirectory under its path from before the
+rename:
 
-This matches the documentation, but it also points out the
-X509_CHECK_FLAG_NO_WILDCARDS as a second commonly used flag. Why do we
-pick one over the other?
+    fsmonitor_refresh_callback 'new/pkg/top.txt' (pos 1)
+    fsmonitor_refresh_callback INV: 'new/pkg/top.txt'
+    fsmonitor_refresh_callback CNT: 1
+    fsmonitor_refresh_callback 'old/pkg/sub/f.txt' (pos -3)
+     M new/pkg/top.txt
 
-> @@ -352,14 +297,11 @@ static int ssl_socket_connect(struct imap_socket *sock,
->  	}
->  
->  	if (cfg->ssl_verify) {
-> -		/* make sure the hostname matches that of the certificate */
-> -		cert = SSL_get_peer_certificate(sock->ssl);
-> -		if (!cert)
-> -			return error("unable to get peer certificate.");
-> -		if (SSL_get_verify_result(sock->ssl) != X509_V_OK)
-> -			return error("unable to verify peer certificate");
-> -		if (verify_hostname(cert, cfg->host) < 0)
-> -			return -1;
-> +		/* make sure the certificate was verified */
-> +		long res = SSL_get_verify_result(sock->ssl);
-> +		if (res != X509_V_OK)
-> +			return error("unable to verify peer certificate: %s",
-> +				     X509_verify_cert_error_string(res));
+`git -c core.fsmonitor=false status --short` lists both files.
 
-Wait, this feels fishy to me. Take the following from [1]:
+What's different between what you expected and what actually happened?
 
-  In other cases where no peer certificate or raw public key was
-  presented, the returned result can still be X509_V_OK, for example
-  when a server did not request a client certificate during the initial
-  handshake. X509_V_OK alone does not establish how or whether the peer
-  was authenticated. A suitably provisioned external PSK can
-  authenticate a peer without a certificate or raw public key. When
-  certificate or raw public key authentication is expected, applications
-  must also check that the expected credential is present using
-  SSL_get_peer_certificate(3) or SSL_get0_peer_rpk(3).
+Changes anywhere below a subdirectory of a renamed directory are
+missing from status and diff, with no warning. It is not a
+race: later edits in that subdirectory, made well after the rename, are
+missed too. It persists until something invalidates the fsmonitor
+state. I hit it moving a source package: 19 of 56 edited files were
+missing from `git status`, all in subdirectories of the moved
+directory, and a commit made from that status would have left them
+out.
 
-So this here basically allows for a MITM attack in case the intercepting
-adversary simply strips the certificate altogether if I understand
-correctly. And to fix that we must retain the call to
-`SSL_get_peer_certificate()`.
+Anything else you want to add:
 
-That makes me want to have tests even more now.
+I believe the cause is in add_watch() in
+compat/fsmonitor/fsm-listen-linux.c. An inotify watch follows the
+directory's inode, so the subdirectories of a renamed directory are
+still watched. When the rename is processed, they are registered again
+under their new paths with IN_MASK_CREATE, inotify_add_watch() fails
+with EEXIST, and add_watch() returns early without updating the
+descriptor-to-path map. Only the renamed directory's own entry gets its
+new path.
 
-[1]: https://docs.openssl.org/4.1/man3/SSL_get_verify_result/#bugs
+Patrick Steinhardt asked about exactly this in review of v5 of the
+Linux listener:
 
-Patrick
+  https://lore.kernel.org/git/aZ1bRQv9Cjke298f@pks.im/
+
+  > In case the watch already exists, can't it be the case that we
+  > have raced e.g. during a rename? [...] If we then see EEXIST we
+  > wouldn't update the hash map and thus keep the old path intact.
+
+As far as I can see that question was not answered on the list, and
+v15 of the series still returns early on EEXIST. It turns out to be
+deterministic rather than a race.
+
+
+[System Info]
+git version:
+git version 2.56.0.rc2.275.gfcaf1f5383
+cpu: x86_64
+built from commit: fcaf1f5383f52c5ebd5e2df3ea023601e2084b10
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+rust: enabled
+feature: fsmonitor--daemon
+gettext: enabled
+libcurl: 8.18.0
+OpenSSL: OpenSSL 3.5.8 25 Aug 2026
+zlib-ng: 2.3.3
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-storage-format: files
+default-hash: sha1
+uname: Linux 7.2.9-200.fc44.x86_64 #1 SMP PREEMPT_DYNAMIC Sat Oct  3 19:59:55 UTC 2026 x86_64
+compiler info: gnuc: 16.2
+libc info: glibc: 2.43
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
