@@ -1,103 +1,208 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF93B2D73B8
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 14:05:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791900307; cv=pass; b=oQn5AeVtIq8wuCR6pBGzIUWJqHFqPHIVm0JIpB4w8/aJECKOyxjfoD3tB0eidlcs/XyP0MZg8sMFYMc6/0v+qrVLgkq9urSM2OxAmyijD77BEjvrxgCkqrFXgi9X3IdpiX3mMQjYwNRHJZ0GWARiTI7rsoCrykgX+o6gzrSpUX0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791900307; c=relaxed/simple;
-	bh=yTi8nlXmtzd+Yj9i0/bCMCngIKDn6pGGuF438Qaq7Lo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Qb2Xx/36NiTaLVKh1QpYV8WsUVR6+bpUJRhxaU5J0XDv3Mps5k+VcQdLUCLPclo1d3KfMEvKvNppYc6ltQ2KOVaPkHGzkgELnEB7oAi5q+aGHYBLjfNNm+DEZekkv6GG1tohEIQa+VyAOGpZijTnu6sEXSnLFW0VLJFJkZU5Okw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a5AeYyVP; arc=pass smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88A94078E0
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 14:05:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791900359; cv=none; b=WkxxcTs04CNB2dwm2L0t4u7Olk6zPF1aDeDE5CzYE4FTMsM+zqEl0r7c83QiZNMVoaegXdqXsxmyD9v24M+exf+juVxFj0LQMG9b1SvjmtgRdvM1m8Cga3geiKX2MFvotyZs6GxhsGYEGyqghPCN7G17W8r3z0Arvdfi25SebgQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791900359; c=relaxed/simple;
+	bh=Bi8y1mPjuQP9i+0TlmM0IrNwXV6PTOEnwYyvP6ABpJc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oxsG0yJTuc8kqvVqFD9PaeEkc5KarNvJJaxxyJMKhRDtXJHPRD394NwgbaIzXhWWw3Rt2b6ruCDIvEINU0K9y+HiGKhlqw6qm2H4Fiy9A+q8qBNfdaMJO8LozOyVNJolVlnTi1eRBpHV9PyCSyS5Za3INR16ByIO+Pu1AAjTDgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B0l4gGog; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LiqhwVWQ; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a5AeYyVP"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-c2e5e090746so280897066b.0
-        for <git@vger.kernel.org>; Tue, 13 Oct 2026 07:05:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791900304; cv=none;
-        d=google.com; s=arc-20260327;
-        b=adwu67jw0PS5WAQD4j3/Py41BHdpOKKQ17PbShTcYmMqxt7zFR+9pEAzyTmxOwX4Cj
-         dEMz7JH0hl9EvdB9Wzt8qqMtxRwX5oYfuDCyzrfyPW13OctuKlmrroh8dHyBUQC2xrus
-         mLbM6MgxRSOJKjPcFPoRb5ximnnK1pEF7Bpf4dngNuSCo6nYyAdRqbMbDMr5D4FcJ9Y3
-         0HB4xyip25dClF2gtfhGdAt+RZz+PEyjYkFz9kyxEeqGSWJQJ+nZ1QGG67S5Ds4Njdz9
-         wDRJVPN7kF0uVxhWmZl43LGat/WsPZc4mrUWFCRB3sdUmsxTb130g7x5PgLK38fwBpYd
-         ol9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=yTi8nlXmtzd+Yj9i0/bCMCngIKDn6pGGuF438Qaq7Lo=;
-        fh=dN6yqLrW2AhKjbphrjDMUGgim3uiEELP58JAayysshk=;
-        b=W9jX6QlIN+lx2kMRkFyAZhwXh+guYDVjj53wsq0hWDKYVpXcoofJo4S2RI6fnFYNpM
-         4OJNtrJQnvF+zOSx0qRCJ5TQKe37lEtwCpRJsycD2eLFPmipESQpRgXUBguOBWVxGCjB
-         qJBrtiPuizSYxP25K2SDM8ooilfKDbiNJIiZ6Qrviz8Vjqiwb7mO6xJwu8SsaaYy0iNx
-         WswmBxN25x8fSvnjrNPF5hC7k6jzw3V8neU4dUVgqk08EWbKZwSZYyTs3m8g+nN+khE5
-         8hHFNZAa3ZYdbEvlcr/XGTprk0mB89af1DR5rX6phvI2w7QnyD8mTTqm2Zvxng/VRTeW
-         BrUg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791900304; x=1792505104; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=yTi8nlXmtzd+Yj9i0/bCMCngIKDn6pGGuF438Qaq7Lo=;
-        b=a5AeYyVP+rlgASmfHKnd+QRjDTAETxbWWJDAtSr+D6gTImrbAgPCItTTtpSTLKAkYc
-         O8PbJTQ3TXddjYCL3zAMiYOmprMOsAn7OnNbFn6yWijCdd5uY19ViAzaVtdXOGwQB0d5
-         kZNjXY/P88l0VPsy7/A9aKN07GiMt7iYS6ZA8HLgDYvP5TcP6+tT5rH5EPZhWitII3Un
-         qwD1N6eaSF5YWTteidCciAfU9RyEZikG2IMmmFsyfkdsWxr79kNyYhtFr/a1B6srxc2f
-         WMv0V6OJegAui+s6XWX1JFJwrtjknR1yKZyZQH7K2iVV2cFAzLutisT2WqV2PN+g7pTL
-         sfJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791900304; x=1792505104;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=yTi8nlXmtzd+Yj9i0/bCMCngIKDn6pGGuF438Qaq7Lo=;
-        b=ONYz/Gv6WULYLeOuM9pEG3yuD9ux+5AbfXQmm/LcqgwsMw0p/E6fvO3Lg8xBy4LZB6
-         cFV+69348RIXl1DDyDAritSgUCTbH1uuvcGOM+K9ePBgtkm7otfu4WaVjxWqyhj9N7s5
-         mVK94gxXo+tuq8FFp6BypAxVJJvF/PRsugJ2+2Qe1Eu0jjIFY6QEP7ysFDH3ZJ54I1MM
-         2QJLM6S+fxYFA1sDvcvbVfx1yL8KOvSoGSmOMeKtaH/uLzAq3p+g5k//9duWxytEX9Ek
-         4LhTazE2aK9Uv6AYTdRZ4/QDQ92NsDg6hh1OQgrBwsAkkZf9ROhfPIhF6qENux3a2Z2l
-         CAyQ==
-X-Gm-Message-State: AFq9FYKCQSXV5leroe7JUfqEPiYP40VZpJyzY3zj72ZMYfY1Wuffjg4D
-	Dwj/mn1S05Lmnd+ETIYv6W2TjKugoIaiS/oM6mJmQsQE45wFfFtoq0QMNqPouk1kWdtDDeEX1qP
-	9Vg1wf32hTg1LGc3o3WjWQFuK9nin8tQ=
-X-Gm-Gg: AYBFou1sNy5SSb8Y12PlYWOZ+FTLA1hr8sLMXXWck9MDBVe6lY27/IN9IuWl1DMdz3z
-	U8zcsUmZBxm3TLHfc7SL8LJllfALwI6prrrP/4vfpT1lg0xEeoBczxDgMbFqvPGeEd/fUvc5dxu
-	7s4qGyKDt9IHW4a1QMZMHCcEyJtvBuqtoL79X3tMbcPv87aRKu3h7VgqQSrrPa62mRNcigWvvos
-	3Ql67BysNQzM/Wb82hH/KS6QM098ICAtUbxhjqKKZrbmUj4xLellTYm8wL2MWwlpHra7x9Nw0Vs
-	6iugP7Ao0mBPoqHCREj7ZF8E4TT6JKTjI0tYl6i8SKxXUzsH/yFHEN6+RzG4PJnh7k7RiqIGwbM
-	bh51mVzVPw6CgCQ==
-X-Received: by 2002:a17:907:bb49:b0:c2e:378c:8ce3 with SMTP id
- a640c23a62f3a-c31aa0ac445mr1190620866b.32.1791900302268; Tue, 13 Oct 2026
- 07:05:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B0l4gGog";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LiqhwVWQ"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DEF1D7A01CD
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 10:05:56 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Tue, 13 Oct 2026 10:05:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1791900356; x=1791986756; bh=2UJs0kihDQ
+	sHGcAommWE2bVn0nEh6V1qZvpgHBLnons=; b=B0l4gGog/z3WzsnR65qcDHDn5o
+	G7PideeQ/IdWlHL9VtMbnO6P0fOZYT/KKhRAwAUJNSEJkC8ZHHrtzXuC7Dsj7ulO
+	bcdsysSCCYOpXEhaLEHvbNlrBVAR3pSizV6zdgIVBt5g37jxLgpZpX0VOpCwEbH5
+	NL1obnR5SncxnxUkMtagVyGik2kLjOXTtyXY445HMaEIzO5G5uLQKmdZmXV3MoS2
+	brXRiqagoXmx2tDg8R1g26WbU8ls4vuS9Eoq9O5yVAUAwRmGRQ9ynbWeeAFBbKaI
+	CAjntaljjct6uGs9Q5oVsDXb+g6swCyJ+LzBoHFUWerzUI/R3X5/xnznfwgQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791900356; x=1791986756; bh=2UJs0kihDQsHGcAommWE2bVn0nEh6V1qZvp
+	gHBLnons=; b=LiqhwVWQjWcQSSBZwBXD+mPGbpwgy4DikbMSxsAqJHHVXO97P1x
+	PXsAyNYpGInAi1d7ex+4QP66NU45iw7HAMJ1jTCdvXvxYv1isTPjIkEUegfmFEAj
+	CH1xHs+koYKYDmbaWnq7C/5VDGkv10AVhrlLNAkD9YhDscrbioqmqOV0tWlA9DQC
+	Mhwj/YZRcoyjRnnktCcvB6xNpMxZUzyaq6AwWUgAXO4MubSFZsTQ8+E3xU/LA9qY
+	NSD7mlkNgBzhZ/qcrYw7fTGeJHR5F86VkpOwGMKvM3Td/Y5P5tSF6cIx/E3tHlGJ
+	GgTOyiBgrJMg9b32H0HzD4AOyNyK7d7jc4A==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791900356; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:N/uqnMW6abP9D7vLWXtXSeHmKrc2t7+NTfOHEu5Z3hGtMbc
+	Ss3OWMJ3qClYMRxtAjIWaXzNkoSZvBSb8c50xUG+R/zWDFGRs5lQ8By9bLfL9l6v
+	4liYcdv4Y5WJ4IQLQIk6IWaruT+iQC0DXdU7YmcKrviM8m5aO0sQd5n7zIK4W6ev
+	1ZrHsTp9Im7e0mhai82BgjGqAEhNDiQfOZ8Txy/G0b4G6QvKCSmXlyXY+7rMh9wI
+	wLc5t8CGkbzl0vdRCdcGCQWSoMKZR5PnuD5o9vJzZ3avot+WwcEwQM/0096IQjM5
+	sl25uxrdEfqnPjH1tnGZ4BfbFP44y36OtCzqm2Q==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:d8TMlncD77PzS7lYDnpI0WP3yVylXmrZaYGMU6SvN3o=:Bi8y1mPjuQP9i+0TlmM0IrNwXV6PTOEnwYyvP6ABpJc=;
+X-ME-Sender: <xms:xDrOaijNonSPcJQxILBR-bbyQae4XifP5bQpoT9DnAvma-FeMpZmzA>
+    <xme:xDrOaqdBVXB4eBMQyh-gwanbmNrIJeRhWSuc9Twn86X9stBjkeoi_rhIXRwkIM7bb
+    YRZt25BBDt3uRtM6BXiNrBRpgNRx5LkeLPRJLHJR_5RN18fUgIG9g>
+X-ME-Received: <xmr:xDrOancGu_ljA9oMX7T1MCwLRBXemG4XF2ndMQy1_IVnT5dr7fI4EA>
+X-ME-Proxy-Cause: dmFkZTGsvcl5LmgzcyejJ46V12Dgw0LGFIxt6Vlq0PKUP2lyyPN/LY43U720EKljhIFSpZ
+    e6Xv5pRmAPIZkL2m/wakJq5kbREkOg5vcQHZpBv4HwrMPGexkObsb0xt/T4xWAfcRmfJNX
+    tSM6zlJyfPHKJoGTnzSYzZSi0PWVt1sjqk/g8+so0RvpKHdB7xlmh8cqs1gIqY2y884+fu
+    fA72n8u70GKX02CMHaAT22w4Fjsc7hJJ8x0YiS4U/zFQIAGXdqqrA0/glFnL6ZyHHvbfHc
+    BnamKiRwsEiVUN2AY8XbRyRGFd9NHPBqKu89AR5L5wEIzbgmREpYooGeREZ5ujnc40OuTN
+    xmZfERhwdkz1+EGlMXF3V7cDSwtYeXN2XWoUhxMIIR+w9rA/ixdEw/y5su3hxu+TKTJK+I
+    f17LYp6SBMD7Pe6nPo34qZpQ9O91evyRLjiannQHSPYayR/PFERQ3ZFsHEDjAvKCfGEquf
+    l0j6hWZGKywP0/Tq414gMeuAEBfzp3z9bChwyDEUNQCW/pTHbN3HeT0jjcD9dk7FgwQBCt
+    JARIGszR3IPraNkrZpeZCov+S5jEiokJiGvlHdHPGPqU0PX51U4sj0KwT9MSI3FjcSPoeP
+    ZD2kaUW68yo1P2DsRZKUt4aedZkNeeYfhaOMMdba/gNB5Ky+Bh0J828TnBlA
+X-ME-Proxy: <xmx:xDrOak8u72xk65I4TDCIfVCRO56xGHjVcUPzkrydPv9aBuH7w_bwxg>
+    <xmx:xDrOajktp-LMRfO_1QZ9zxWJ3LlFEd-i0iMxgwQKOQb4_-6z0YBz7A>
+    <xmx:xDrOam_47NxSZOc1Qc9pG6p4PTesdH2mkW_KRw5Y6ve5RCxN3qY0Ww>
+    <xmx:xDrOahmLQK4iLdwmhFUvsBXXiWbq3UqCBto1wDTxddynSXmdOKWMnA>
+    <xmx:xDrOaqfi_9CIOWq2CtnAidPaXU-CNa-dg6m5KjpKpNLG5FJEwbwfeM3p>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 13 Oct 2026 10:05:55 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d93cc287 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 13 Oct 2026 14:05:54 +0000 (UTC)
+Date: Tue, 13 Oct 2026 16:05:51 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com
+Subject: Re: [PATCH v4 1/1] repo: add filtering options to "repo structure"
+Message-ID: <as46v5NEne3SKajZ@pks.im>
+References: <20260924164503.119506-2-markchucarroll@fastmail.com>
+ <20261010150539.930614-2-markchucarroll@fastmail.com>
+ <20261010150539.930614-4-markchucarroll@fastmail.com>
+ <as4a7t-NEQi-4Yqp@pks.im>
+ <DM3RGXVFVT35.1EPI4MJB0RDBB@fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANHmUQTa8tLpHjZZ=Fp0m=X5Tb+uFuCcRobX7x05gKamXAgrqQ@mail.gmail.com>
- <CAPSxiM_36hf1r33GQyEMEkCAs5yeEWr2J+gFfgk=rx_-DoTv3g@mail.gmail.com>
-In-Reply-To: <CAPSxiM_36hf1r33GQyEMEkCAs5yeEWr2J+gFfgk=rx_-DoTv3g@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Tue, 13 Oct 2026 15:04:50 +0100
-X-Gm-Features: AclHuK853gYIIDM-pDrmIpI5_MQjO4LkEn-5Sl1VVmKFhPBzODMYdL0EbmFguOM
-Message-ID: <CAPSxiM9eQY8oQVnpiNRqXK8SNqSMy3YcDwkV07Mh1wJzb-n4fg@mail.gmail.com>
-Subject: Re: "[Outreachy]" Intent to work on t0081 : replacing basic shell
- test command to test_path_is_*
-To: Shashank S <shashu8660@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DM3RGXVFVT35.1EPI4MJB0RDBB@fastmail.com>
 
+On Tue, Oct 13, 2026 at 09:56:53AM -0400, Mark C. Chu-Carroll wrote:
+> On Tue Oct 13, 2026 at 7:50 AM EDT, Patrick Steinhardt wrote:
+> > On Sat, Oct 10, 2026 at 11:05:41AM -0400, Mark C. Chu-Carroll wrote:
+> > [snip]
+> >> This implementation makes an awkward trade-off involving
+> >> "setup_revisions". In order to accept standard the standard
+> >> revs parameters, it uses `setup_revisions`, which does a ref
+> >> walk and populates the pending objects list that will be used
+> >> by "repo structure". But this ref walk doesn't count refs in the
+> >> way that "repo structure" requires, and because "setup_revisions"
+> >> doesn't support a custom callback for its ref-walk, that's not
+> >> changeable.
 > >
-> > I'm shashank s , an Outreachy applicant for December 2026 cohort.
-Next time, I will advise you to try to cc the mentors. So, they can
-see your patches.
->
+> > It's a tradeoff indeed, but I think it's a sensible one. I see these as
+> > counting two different things, refs and objects, and the revisions only
+> > filter objects.
+> 
+> I guess my wording wasn't clear. The tradeoff here isn't that
+> the revision filters don't affect refs - it's that when we use
+> setup_revisions, we end up doing the ref-walk twice. 
 
-Thanks.
+Ah, right, that makes sense. I really don't think that's much of an
+issue though. We of course shouldn't be unreasonably wasteful, but it's
+not like `git repo structure` would be on any critical path. Also, in
+most repositories I would claim that the time it takes to enumerate all
+objects is going to significantly outweight the time it takes to
+enumerate all refs anyway.
+
+> >> diff --git a/builtin/repo.c b/builtin/repo.c
+> >> index 84e012f83f..081940a85c 100644
+> >> --- a/builtin/repo.c
+> >> +++ b/builtin/repo.c
+> >> @@ -766,10 +767,12 @@ static int count_references(const struct reference *ref, void *cb_data)
+> >>  	}
+> >>  
+> >>  	/*
+> >> -	 * While iterating through references for counting, also add OIDs in
+> >> +	 * While iterating through references for counting, if we didn't already
+> >> +	 * populate the pending list in setup_revisions, also add OIDs in
+> >>  	 * preparation for the path walk.
+> >>  	 */
+> >> -	add_pending_oid(data->revs, NULL, ref->oid, 0);
+> >> +	if (data->add_to_pending)
+> >> +		add_pending_oid(data->revs, NULL, ref->oid, 0);
+> >>  
+> >>  	ref_count = get_total_reference_count(stats);
+> >>  	display_progress(data->progress, ref_count);
+> >
+> > Right. An alternative would be to simply never call `add_pending_oid()`
+> > here and always let the revision walk handle this by defaulting to
+> > "--all". That'd have the downside of walking references twice, but the
+> > upside of making each of the steps completely self-contained.
+> >
+> > I think ultimately it doesn't matter too much which of these two
+> > approaches we pick. I'd have picked defaulting to "--all" myself, but I
+> > won't insist on it.
+> 
+> I went back and forth on this a fair bit. Both approaches work,
+> and both have their downsides. In the end, I felt like munging argv
+> to add the "--all" was uglier than this. (Plus, when you do the default
+> "--all", the command will always fail on an empty repos, because the
+> "all" logic tries to call "refs_head_ref", but there are no head refs in
+> a newly initialized empty repo.) 
+
+Yeah, that part is a bit ugly indeed.
+
+> >> diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
+> >> index 02cc2b594a..e35b46a277 100755
+> >> --- a/t/t1901-repo-structure.sh
+> >> +++ b/t/t1901-repo-structure.sh
+> >> @@ -21,58 +21,6 @@ object_type_disk_usage() {
+> >>  	fi
+> >>  }
+> >>  
+> >> -test_expect_success 'empty repository' '
+> >> ...
+> >> -	)
+> >> -'
+> >
+> > Huh, why did you drop this test?
+> 
+> When I was floundering about whether to use "--all" default, I found that the
+> command will fail on an empty repos. Even without the "--all" default, it seems
+> strange that some version of "git repo structure" will succeed, and others will
+> fail with a confusing error ("'HEAD': unknown revision or path not in the
+> working tree."). It seemed to me that when you consider that running this
+> command in an empty repo is pointless, I thought it made sense to drop that.
+> I'm happy to either add a line to the documentation, or to reinstate the test.
+
+I think we should ideally know to handle this case alright. It's
+probably fine to abort in the case where the user explicitly asks for
+refs that we cannot parse, including in the case of "--all".
+
+But I really think we should succeed in an empty repository, because
+that's a state that is quite common. So I'd definitely retain that test
+and make sure that at least `git repo structure` without any args works
+alright.
+
+Patrick
