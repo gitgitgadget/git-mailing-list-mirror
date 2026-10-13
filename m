@@ -1,89 +1,89 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8DD4D7D30
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 12:42:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0627E3B19C2
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 12:55:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895350; cv=none; b=Du+tztZXnjr89dMWuDsdThkOF1iNu/AfAlENFiowT5ZVeHTTLxnMch9rTO9dzL0mlk/AFzITfLM78juLLx5YNXppDUcNLRYz+iU4QUjetgUO+TQr3wTXHh2y/AuUsDhqpNk7SutMO9Z26iqMTDjvP8bHT7sirkzscVJODrVKsJI=
+	t=1791896119; cv=none; b=TeV8rCsaMc6Q4XNJFRwuxHdCiuX+35zfljPs8nDUkCnFOhqQLxXWND709AQIErJMgYyVg/54FlH3BW8qLfnUkzQLka2JRxzRwYuHghMC6zz83U64aVLOn/zrYld4bLVdiXB1Za0/3b76vPrG2CKov0YjceStcKtxlRUCeo9YKTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895350; c=relaxed/simple;
-	bh=s8cPVKdBceW+BrCqhQd4t0HFdZnCCcshLs3X9gxX9Ug=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=h6J97VHzvn0ApwfS9y1LzXFe5YrViZJP5V0k83rFmNCR0X3XA4oCEJzWaM/z2iveEb1VPz04vaOmwAoZaffU0AeGzHlH+9bkVCOKYD+3xuXWx4JA1LSDb7iguEZTNXelCgofIfwAJ06Kpi6DAbxu2l2cOchGO54aGCE0bDvOcGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=bZfKvqoh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DrPwBhC3; arc=none smtp.client-ip=202.12.124.146
+	s=arc-20240116; t=1791896119; c=relaxed/simple;
+	bh=dDtio0OKX16rQJSpDkMiwN3g/qJk6GhPo3TVTIguMaY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=vDz8SH6P9EJVc/ZDAvWFE04x824+zV4GHW0zq7AadxIVVfj3Slk1uu6DAHM0A1m2kzKaK7/r7f+0vS3U0ZJRrqZWExf+r9adNLJrjN1gAcPXjVyUDwB898wSAleS4GdaVnXygvxB9mtM1UVOjF+rY1PSyZLjES89/nmt8zkn7uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=WAmoQAhb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lWLRiyNb; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="bZfKvqoh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DrPwBhC3"
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="WAmoQAhb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lWLRiyNb"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id CCB8B1D000BE
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 08:42:27 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E2F6A7A00C0
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 08:55:16 -0400 (EDT)
 Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Tue, 13 Oct 2026 08:42:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc
+  by phl-compute-05.internal (MEProxy); Tue, 13 Oct 2026 08:55:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791895347;
-	 x=1791981747; bh=c2EIhYqAp9lqLhGZlpd2aiuQRYo/LXUoafHevClrTQA=; b=
-	bZfKvqohWcV0a4VopOFtWDj8hgg8Ny1QfQ30Pcuo4keKwNaH1QVeucVsmzaXdWX/
-	qL4UWJjg6JznwTEA/Dq9POs7Cw0ykkKFdI3L/JAa4hA4s2G/X0/0pUIUzTzh1Lb2
-	y/Jlu3Gu1d+CsTxXrC1ww7Stw9LkeqaR26ho7GfuFzWXCtLYytR/Nt4ulJ99BRCw
-	cqqF7reEQeA0tvYGzHW5oSnDCTX8A/OWcAKegfjY4hjj8zOdCLjOb88BZZ/C2L+r
-	+nKj6UuRY2OW7BFFb/MbitvvOg7qTzoRa9xwNKDxENeqECC3zZMzYdOAmKnZWgm2
-	YVEStHGNgrF0e7hQScqgwg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791896116;
+	 x=1791982516; bh=npwer/sDFGJeQSwvmru47qi/KxCRSVYZDxURestyX+o=; b=
+	WAmoQAhb9zCQux1Em/gqd5e5mJ5wDt/FHJFjUMF+xyaEcQAlr8oP2o+URUbAb44l
+	wbgQ+LvYV6yQWJ76pbaK7O1aNYvT+9O3i4VEzk6WBmQ/+EyXoUi0uRRFLwuTDIlY
+	l5PoomSFE8UWtsfgMFzroK0pQh/nlWQTGfno+I6tzPcuxbG1jvT3Jtt2CaaJAQGn
+	u/FHTREybBG5Y3aV91CfQivkRXTotutFWnV0zZquav+KnW9hrdYaVmdXAnOlKCxU
+	iZ7hft316cPrmFmnXxD+qFkazjZij6rz5lDymKmYrVMtHl3VccDetyaAHd4tjbmQ
+	weGpwnQFXNzYqLc96rLl+g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1791895347; x=1791981747; bh=c
-	2EIhYqAp9lqLhGZlpd2aiuQRYo/LXUoafHevClrTQA=; b=DrPwBhC3spi7+aaMJ
-	veOnewxzt0bIAHjM2jEvJIqwvjmQe1PVcLPxSYd4WRlVuF5Qd74ZhCvLnaaS7wU9
-	WIacEvJUOxinwqqrTZCBwvVb0CI+QSL5P84wm4PNtFhLS44V/pOmUlZ91GG9sB/N
-	s7A0StxpxiH36DbOMOuC/6hZ1C5HReLWNsQoHYeXIzVp4ialM14+PkeLOiNHKvhV
-	rsiri9vE2pSAh3dbve/83AIbjCht+M+tSLkeeJfx4dNLMZQCb6EHiACN1D890Hqc
-	dyvgdELU4XRH1uojVYpZ6nf3IAe8bZeco7ePx+Wqvoim1dq+NJ+YO42+D5h7f5ix
-	katPQ==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791896116; x=
+	1791982516; bh=npwer/sDFGJeQSwvmru47qi/KxCRSVYZDxURestyX+o=; b=l
+	WLRiyNbmg35baFvcv9GOSt+VgsKtZ7qGcDLrVTMHXx6xbed1xn/0Qie/hzeNriqJ
+	UbhbsySUPlOsI78F3CykQhYxGarW+5Wrd19CPfoeznBawYifrYL+x08C7qwJQ1MC
+	rRYwNrRBsx0x21nvzN6GorSKFfU8d3WoUAYfhvIfxYXYsLvr9ODwDwMeCXJfNs3R
+	Gc/WUbeE3PMpSYc7OBaP+RhpXxRckhIPr1xazHwKPLcgtFo4vSM2CEcljuExfY+u
+	KVcFw/poUll5meYqkZGUQNp6odZDJGqJV0Z0cUg1isRHEUNVJ21XCOgw4Vtdougt
+	ZLspzhwLW+z751K/8hxNQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791895347; d=jvns.ca;
+DKIM2-Signature: i=1; m=1; t=1791896116; d=jvns.ca;
 	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:XBtVk89Z+lNxzxWcqq7R2Tgy5mNRrDW0maTNGS6b7ThZ/RE
-	yB6K8YVLXRr3JIiLwChHwCPFGn0r4VYKjRxD8idGni3vjI2dNCSBIMldAkwz4HVc
-	pVP7ZprO3aplG875LZw2KC9SEA/gtaVe9SzmJiGHE6aeOY/snEzh7XnRdsGgFJM8
-	re/BItInnAat1q7PVX8Ae4Fr+NDqTaVOORn6qwYok9d6YqG1aN5wDhxQU9h5K8vf
-	OQjpiGi/AdV7k3KcwisxRF73K3UU+vhJBkD/ue3y4rIpAcW0/QuzgLphLY0WvxHo
-	nyF9cFVWCWWtK5BfvaOxZLSgkUwRM/Uywi033+Q==;
+	s=fm2:rsa-sha256:R5VMjJz5eH1V3VzVMpedJxJvXeVSdNhNe53QYv8xcl7CX4K
+	qKoY5WakMfmDpegCOWgBZEZgQo2MQkmtiXuFju2HqbURsJVZ7OQaKU9RWX9Cb6jz
+	WhqzGNaGgF74355VyfPnMed2Kfx77G/w9j1N0mba7tPvvgCuiSXAS4cUW0JQ/iBA
+	nKcq9JPSOOQx2tjkxqSlvbe8df3XWxMMzJJS8tUMcP6RVjJbS5MGn6PB/ZhwWUut
+	bp7C0fdzpWfu7igOFtdOvi4brPeDtm5K9xEVYPrBoSMig0XtKU8CtiHknP31gN5J
+	txcoZ/xieB9UmOydLArs9WRR4zBBB+GT0/K71VA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=11;
-	hn=content-transfer-encoding,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:hUsjf6DSuPoTocjHy78S15YrySNWBN3SwVUyuscQLbA=:s8cPVKdBceW+BrCqhQd4t0HFdZnCCcshLs3X9gxX9Ug=;
-X-ME-Sender: <xms:MyfOamc_reQYINB5ja-_xrmPjcbt8JZDKDT_9RlizNVRMxwV_zgKaQ>
-    <xme:MyfOarBcPaWGw-q3UNN0_AAYGn956EvaBlFjq2K6VEg_fU-Yd5LZHhuetYbDLOt7U
-    Nzu5gyB6M7ITPFk2kwk2isMlHRa2xDTbR8-Xhv-vUVFoHbobD6L91cp>
-X-ME-Proxy-Cause: dmFkZTFGljm4qWf9SiEmGZWNxi/0UW8zzIiqgN0zY5YLQjYEBae/6jx4VC+CKARtpqVf/B
-    kBduZu91cMOWFB3LKl2ptMA7zf44QQiMFdfzLJI72bUiBSw9YCitrvtItoiQtKX2eqaA19
-    ninLOiRxU6yI6579lrReG1WBBHXsjIWT6cs4b4FT4qLGo47ypiNurnphlvtFKqfn+EKMuo
-    433d07YGEFzK2BQx91XR0iaswetnXd1gYeJmhRqF1fULCFs1WwV5sqDc4zyZH5Me9n79+M
-    68hAIuDTVhMtmTmEySQnfI6qwEz7AmODXGT0iNsyfH2Dr7aOXm/zgbeEAPmD0DkzqzaKf/
-    nTmjZJAlg5k24C4h3xcaVOdC+tgCFILpNxP/emmUU2eHOWuxgxUeAWCPPiGebAouAQXpOe
-    Xaz08/Ev3kh79IzKNOAAgiuc5L8WSdvPLnJCHj6OFYDY/Po5E9MyvwsUoC7V5XCrl+ltqY
-    u60dLj76jtYw2dbZJGP8SaJG3sjA2E1WtuIzdJpPTo6hrZDbSIZH16ZaQTNmx3iaQsUCK1
-    zQaccESoBRc6VRbAl5N8qAEhpUc01xtovjl+ZvvfB/KdZ4cvfXVyTC+Ssd/xRGm9HHvYaQ
-    121MqDXTnlvTi4RT/iL5q11r1epyGqvh8vL3o33iCi9f1M6Wods648cof7Ig
-X-ME-Proxy: <xmx:MyfOakazHSB2BmeQbWRsht7p0-Zz6IAx3mEVk4a0A0p4OJYxBhjiJA>
-    <xmx:MyfOanK8CD1xAGW76NN_N2UF9Cij6VeUpbNI0iIP9twSEmwhskszkQ>
-    <xmx:MyfOaiAkgNXFZizk-njinawac9uoe4nJuH1foMLUIeGCyU0AVV0aZA>
-    <xmx:MyfOasqiFSDjs533mC_YKnTCTslr4_Qxp6sfKkc9MffT39iUZb3FvQ>
-    <xmx:MyfOapV0rmfqi0KrqctyMoje6B-Px-oYScerXOAKxDc88_ic-8Cq3xAk>
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:NfrgzumH8HpeJpWvFQ/z3yZev8EDwJVxgLZwCaB0TrA=:dDtio0OKX16rQJSpDkMiwN3g/qJk6GhPo3TVTIguMaY=;
+X-ME-Sender: <xms:NCrOan6-3hP-18KelUbliXdFIWWcqzGWacVVbkCeK_TLNE3iZ8PgTA>
+    <xme:NCrOansjs1CxwyHz-v1oNxp9M3ssjbJx6DHSPNapOxIXEpGXcXZqtwDTWoIUshy30
+    c3bDmNT1rJTuJLdqiwdfEOU2ERYWe4RkoCAXMY1nc0RNMNzUeN7TAvM>
+X-ME-Proxy-Cause: dmFkZTGuMWsFoV+SSxzxcycPx4lSv+8aKBSgZO2BZQ4mkm1nR4jhcgIAOD4g1ISSaSm+O+
+    lc++5rDOkD5AJeyAPXXql0GAHYvtCInwmuc4yUEVwvEyeZmx0klzjaGO/q/dVzTxN6bOYC
+    ZGRx1Pmdh2TGCSyDKLxwTl2p6EhYBbPFnXe2xDDpQeUFirxIYfYd3NdML2Bm4Ibl9ilTic
+    d1gIcS90k9P6S7fFZwagP0JYCqg+25fzO6cKg3Ks6nsqD6bpVIYNf2lO77sPM9mG35VnX3
+    uGSUrKS5vjfP+YJ8ZV/dty3mwut1HwAdJeRkD4hsnvsp/lhfwMImiBQsPT9PXXzBSqJ6Pb
+    Yr65R06sww4688kSFq2RP1ksnAeaqMZhhi1PVG2KIYie8pgmvgzw9wR811LN591lTCs9Bq
+    Z6FBI1ffv7Q96lA2a8DidsbSX2I/r/6zsqg5pR2almAhlQswglW4ZuaOhKRe11o9dCAlUF
+    3E9cifY1ogr98w/D7zkBQDvnLHbKVRwG3uiQq7XiGPUbcw9svC8uS34+TR9QrvQxballe5
+    0G2ZP2wTgAtYj4AQDdNryT7v+qEdGEyvoQ8pq4N/B61OSRdCfLI+JDhede+akXxXl+kwcZ
+    wzOeI8+09rGem/1F1EW7axxDBRdwml6w3XKxWxL28l7EmYNEmhaz51L+axLQ
+X-ME-Proxy: <xmx:NCrOamWn6QCGqT0onzo9PnUuDbWvBkr4q8s97hyV-f3gZ5YzYDYxiA>
+    <xmx:NCrOaqWHxx9Kv9xS04nqj3-0ICuNqMLZkAswlIG4P7u7aZvirQrOyQ>
+    <xmx:NCrOatd6UFhR19oP4CwXsxkfIGt2304-xnwZ0ccfOyX1doDS1n-RNg>
+    <xmx:NCrOarX4ZqMOmNrCqgMhBAeZw5mdgsJBJ-1UdnIB420FT8Zw20iTMA>
+    <xmx:NCrOapycccB4YfPKqscKJBJym1hLxIJWTaXCkzo-PkK5zYQ27kFL0niO>
 Feedback-ID: i2aa947c3:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 38E9D782738; Tue, 13 Oct 2026 08:42:27 -0400 (EDT)
+	id 4F877782738; Tue, 13 Oct 2026 08:55:16 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,52 +92,171 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-ThreadId: A1sfaQj8oK1o
-Date: Tue, 13 Oct 2026 08:42:07 -0400
+Date: Tue, 13 Oct 2026 08:54:56 -0400
 From: "Julia Evans" <julia@jvns.ca>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org, "Julia Evans" <gitgitgadget@gmail.com>
-Message-Id: <5e07d489-ca34-4dcb-8953-c58d30261926@app.fastmail.com>
-In-Reply-To: <1637a8fb-d689-47fe-a008-e8e90d9889b9@app.fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <31f8c254-328b-405f-bc26-b077fa57b5ef@app.fastmail.com>
+In-Reply-To: <xmqqik3da2bs.fsf@gitster.g>
 References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
- <cb482e6d-0c76-4f34-b72c-03b5234d4f37@app.fastmail.com>
- <5dad29e9-24e6-494a-9b0f-701af856ae69@app.fastmail.com>
- <2642391e-1cef-4071-ae3f-db6fee3fab74@app.fastmail.com>
- <1637a8fb-d689-47fe-a008-e8e90d9889b9@app.fastmail.com>
+ <xmqqik3da2bs.fsf@gitster.g>
 Subject: Re: [PATCH] doc: checkout: rewrite detached HEAD state explanation
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
->> What is definitely the case is that there is no hyphen between `git` and
->> the first word, maybe in order to distinguish section 1 commands) and
->> section 5 and 7 manpages.
+Thanks for the review. I'm going to mark comments that I feel are about style issues
+(like "could this be explained in a more clear way?") as just "style comment" to deal with
+later.
+
+In general if we really want to make sure that this is as clear as possible, I
+think it would be most effective to do a second revision later (after merging
+this) where we get feedback from users and find out what folks are confused by.
+
+On Wed, Oct 7, 2026, at 12:43 PM, Junio C Hamano wrote:
+> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Thanks, I'll change the naming, I didn't realize that. For some reason I felt
-> sure it was the other way. Maybe we should rename `gitmergeconflicts`
-> to `gitmerge-conflicts` in the other patch series too.
+>> diff --git a/Documentation/detached-head.adoc b/Documentation/detached-head.adoc
+>> new file mode 100644
+>> index 0000000000..1e00712124
+>> --- /dev/null
+>> +++ b/Documentation/detached-head.adoc
+>> @@ -0,0 +1,43 @@
+>> +`HEAD` is where Git stores your current branch. `HEAD` can either be:
+>> +
+>> +1. A branch, which is your current branch.
+>> +2. A commit ID, when you don't have a current branch.
+>> +   This is called "detached HEAD state".
 >
-> My best guess is that I made that mistake because I (maybe idiosyncratically)
-> always use `man <page>`  to access the Git man pages, and typing
-> `man gitdetached-head` feels awkward to me. 
-> But of course we're recommending that folks use `git help detached-head`,
-> and `git help detached-head` is much nicer than `git help detachedhead`.
+> HEAD is branch which can either be a branch or something else?
 
-Reflecting on this a little more, I think there's a bit of a disconnect between
-how we recommend users use the Git help system (via `git help config`)
-and how we refer to other man pages in the man pages, which is like this:
+Style comment. Probably this is the one I'd prioritize the highest.
 
-> (see git-fetch(1), git-config(1) and gitmodules(5))
+>     HEAD records the state from which your current changes started.
+>     This can be a branch (the "current branch"), or it may not be
+>     associated with any concrete branch (in which case HEAD is
+>     "detached")
+>> +It can sometimes be useful for `HEAD` to be a commit ID.
+>> +For example, it lets you look at an old version of your code
+>> +(with `git checkout COMMIT_ID`).
+>
+> To "look at" an older state is more versatile than simply running
+> 'git show COMMIT_ID:path', as it allows you to do anything you can
+> do on a branch, such as building and testing.  Thus,
+>
+>  	A detached HEAD is useful when you want to tentatively visit
+> 	an old state with 'git checkout --detach v0.1', without
+> 	having to create a dedicated branch for it.
 
-If a user sees a reference like `git-config(1)` or `gitmodules(5)`,
-the most obvious way to look it up is to type `man git-config`, or
-`man gitmodules` and not to deduce that you can run
-`git help config` or `git help modules`: Especially because sometimes
-you need to remove a `git-` from the beginning and sometimes just
-`git`. I'm don't think the `git-help` man page even explains how those
-prefixes work.
+Style comment.
 
-So at some point if we want to really encourage people to use
-`git help` instead of `man` we might want to revisit how we present
-the internal references in the man pages.
+>> +The only problem is that if you create new commits while in detached
+>> +HEAD state, those commits won't be on a branch.
+>
+> I would suggest rephrasing "The only problem" to "One caveat is" or
+> something.  When sightseeing and experimenting, the ability to
+> create throw-away commits without the need to clean them up later,
+> or to invent a unique name for a temporary branch, is not a problem.
+> It is an advantage.
 
-Obviously not something to solve right now, and I don't know
-what a good solution would be.
+Style comment.
+
+>> This makes those new
+>> +commits much harder to find later. Also, Git considers commits that
+>> +aren't on any branch (or a tag or other reference) to be garbage.
+>> +Git will eventually permanently delete those "garbage" commits during
+>> +garbage collection.
+>
+> Correct.
+>
+> Perhaps it is better to clarify this by adding "after you leave
+> the detached HEAD state" after "to find later".  While you are in
+> the detached HEAD state, you can run 'git log' to find the commits
+> you created there, as you can do everything you normally can on a
+> branch, or use 'git reflog @{now}' for that matter.
+>
+>> +There are 3 main ways you can end up in detached HEAD state
+>> +unintentionally:
+>> +
+>> +1. `git checkout COMMIT_ID`, where `COMMIT_ID` is a commit ID
+>> +2. `git checkout v1.3`, where v1.3 is a tag name
+>
+> These I wouldn't call "unintentionally".  They are documented and
+> supported ways to do so, and will remain to be so.  "unknowingly"
+> may be a more fair way to call these gotchas, though.
+
+Thanks, removed "unintentionally".
+
+>
+>> +The easiest way to avoid accidentally ending up in detached HEAD state
+>> +is to use linkgit:git-switch[1] instead of linkgit:git-checkout[1] to
+>> +switch branches. `git switch` won't let you detach unless you explicitly
+>> +pass the `--detach` argument.
+>
+> Correct, but the motivation to 'avoid accidentally ending up' may
+> want to be spelled out.  Most often checking out a tag is to go
+> sightseeing, where you do not want to 'avoid' detached HEAD.
+
+Style comment.
+
+>> +To get back onto a branch, you can:
+>> +
+>> +1. Switch to the branch you want to be on, with `git switch BRANCHNAME`.
+>> +2. Create a new branch at the current commit, with `git switch -c BRANCHNAME`.
+>> +   You might want to do this if you've created new commits, so that you can
+>> +   find the commit later and so that it won't be garbage collected.
+>
+> Very good.
+>
+>> +If you create commits in detached HEAD state that aren't on a branch,
+>> +you can find them later using linkgit:git-reflog[1].
+>
+> This, as you already said, is "much harder to find later" option.
+> There should be a better recovery option described here before
+> resorting to "git reflog HEAD" after you switched back.  E.g.,
+>
+>     If you have created commits in detached HEAD state and then
+>     switched away from the state, all is not lost.  "git checkout"
+>     would have give you a warning message, like this:
+>
+> 	Warning: you are leaving 2 commits behind, not connected to
+> 	any of your branches
+>
+> 	c816689 typofix the previous
+> 	8e1bff5 decsribe detached HEAD state better
+>
+>     You can create branches to keep them, e.g., "git branch saved c816689",
+>     by using the commit object names left there.
+
+Thanks, added a mention of this warning. It's a really nice example of the ways
+Git helps avoid issues.
+
+>> diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
+>> index 2aefea0228..4e9e94e24d 100644
+>> --- a/Documentation/git-checkout.adoc
+>> +++ b/Documentation/git-checkout.adoc
+>> @@ -376,135 +376,8 @@ For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
+>>  [[DETACHED_HEAD]]
+>>  DETACHED HEAD
+>>  -------------
+>> +include::detached-head.adoc[]
+>
+> Losing the diagrams is a bit concerning.  However, if the intention
+> is to have readers learn how HEAD refers to a branch pointing at a
+> commit with history structured as a DAG elsewhere in a more basic
+> concepts guide, I suspect that it would actually work better.  This
+> could even be reduced to a simple "see also" pointer to that other
+> guide.
+>
+> If an existing user only uses 'switch' and never reads 'git help
+> checkout', they are already not seeing these diagrams, or perhaps
+> they learned the concepts elsewhere.  They still manage to
+> understand Git well enough to make use of it, so perhaps this
+> approach is OK.  I dunno.
+
+Thanks, good idea to give people a pointer to more info about HEAD.
+I'll try adding a pointer to `git help datamodel`.
+
+I'm not against adding diagrams, but I think if we want to add diagrams that
+should be a separate project where we actually get feedback from users.
+Similarly for explaining `HEAD` in more detail.
