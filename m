@@ -1,187 +1,114 @@
-Received: from mail.srv.csmantle.top (mail.srv.csmantle.top [77.93.157.103])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461FB503BDF
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 15:04:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=77.93.157.103
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791903883; cv=none; b=Zd+AxR0y+5NwqysXSUTUhCeYQ2z0Yg9wxTSVQdbEs/zdTl7Mt9mKzgqO/r1982GDDerraEXpfK+z9CaThB0Wt2zShqOQfhDxVUd1bBpOI6AJC7BvD7f4sYIW35mEDsobNNlUGZdQXMFqXkzMsP3hbldcKEhNx1VZ7P/veq+ThJk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791903883; c=relaxed/simple;
-	bh=J+VcPBPNzFCMcVfe0jTL7EiImPvP+hR5XSOM12Tn21A=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=axw5OqxB8N8Vz4hnV15jSkKdUFx1SYysx9Yxj/aE/kuXRGck1EHd3VTb47AwpFHVbc7bxKMQ1pnkmyZcjQzKQA3uToLsDTXJtBy/IIQniNID6B0V0ROVcfB8dZUmNm7vkS+Haj5CX/Q5E6uyN+g4phRvwARNzTe3cNwcgckLcXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csmantle.top; spf=pass smtp.mailfrom=csmantle.top; dkim=permerror (0-bit key) header.d=csmantle.top header.i=@csmantle.top header.b=n3tPxRuP; dkim=pass (3072-bit key) header.d=csmantle.top header.i=@csmantle.top header.b=buNC8BvH; arc=none smtp.client-ip=77.93.157.103
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csmantle.top
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=csmantle.top
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6AB501F43
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 15:05:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.177
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791903912; cv=pass; b=m8l6QBzA1nHkb35kzx3ns8PK1fzZiJEkrcqVyi64CnlbD7272Z9uz8F0A0B3BM1GiqTXC4qO4++AzUFWYMWUJU+QNrwcrz0HIxvR8dt+tRZIOqifvbXSSSaT7hmcw5ZXSs8u0Lm6y5g1509JxkVHWYg8PCzo7FUTscqJMM/KWaA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791903912; c=relaxed/simple;
+	bh=+Fg42M11Vk6RRgo9cyK1HMT5sHQzZsKWCk+hNTwsvJM=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=OYYwzWX/ijtfr38lHH2Wb4kEcehQqpAv8E3aGCojcwfjCrv3DsZfMkOgkupGPJVXEgz/TyGItQcUUKTyfO7yETq5RRAbfkA8XDK3QWa8UgMumbQwDfNqfeqV/DjNNnw1xB6F54bLXw3f1sl2bNGukJHuOtocr9i5J/y7jf9DQR4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GK1jS3Cu; arc=pass smtp.client-ip=209.85.128.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=csmantle.top header.i=@csmantle.top header.b="n3tPxRuP";
-	dkim=pass (3072-bit key) header.d=csmantle.top header.i=@csmantle.top header.b="buNC8BvH"
-DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=csmantle.top; s=self-ed25519; h=BIMI-Selector:Content-Transfer-Encoding:
-	MIME-Version:Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:In-Reply-To:References:BIMI-Selector;
-	bh=qXNT+/0mrxHTC+FyXModhcKD2AnaCkYkIp/EntQ5MrY=; t=1791903882; x=1792508682; 
-	b=n3tPxRuPvOpIR5UVe9ZOzI3Qb09DqfANPwfumDqAbrWaRpNh7/SeXjfE5K+PWSDY/5nR0Z/Ijq1
-	qnjaPsKu7Cg==;
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=csmantle.top; s=self-rsa3072; h=BIMI-Selector:Content-Transfer-Encoding:
-	MIME-Version:Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:In-Reply-To:References:BIMI-Selector;
-	bh=qXNT+/0mrxHTC+FyXModhcKD2AnaCkYkIp/EntQ5MrY=; t=1791903882; x=1792508682; 
-	b=buNC8BvHaC9mv252dye549OQ9ufHw6IgBlUxVxJbSwE25SuCKhWfceVvHc9Xiqr76uwQAg4D/vh
-	4kgdJDq7xNgRuyCMCr1T1WNv8sG3wD2GTfgDjnAKatdYmBhMqPDScVgn+D3qkCt2XQL9C742S5dbK
-	+q4N5Y9ntCxLQ6oqaHwQqHAvNvKK6qYLjn8snInArexYuwDMNXzgVhm1a6xtfsfzqKoBB5Wv4n+2H
-	2Qv6RaOscrLhy75wWtxNXjbYEmhAA4AvQoD+eQjHEVokYw5xy5zvWeT0X6lKjsq9B1Z8TYMJX+jLI
-	kdP3TkBLFLy9M6352VZ0Bywa4kaycePAbL3VdPEY4J1zWvQdvbBtOOucm8wWTZFw0cER53lIDOJ8y
-	Zxt4LKojlJEvs61IC28uanUMp0aW3KcZqgHz6nqb1bdPw46APn7TTfpW1XbcNnn8o1yqb6C/BDaZ8
-	APmupqWbVXFwF46KospefJFkOorlOeXErukyDe3JRT79K51siWlE;
-Received: from [203.88.122.33] (helo=loongcatbox)
-	by mail.srv.csmantle.top with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <rong.bao@csmantle.top>)
-	id 1xGdkJ-00000000O7P-3ufV;
-	Tue, 13 Oct 2026 22:44:52 +0800
-From: Rong Bao <rong.bao@csmantle.top>
-To: git@vger.kernel.org
-Cc: Mingcong Bai <jeffbai@aosc.io>,
-	Rong Bao <baorong2005@126.com>,
-	Rong Bao <rong.bao@csmantle.top>,
-	Tamino Bauknecht <dev@tb6.eu>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] fetch: fix --depth= and --unshallow for multi-remote fetches
-Date: Tue, 13 Oct 2026 22:44:39 +0800
-Message-ID: <20261013144441.1632978-1-rong.bao@csmantle.top>
-X-Mailer: git-send-email 2.56.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GK1jS3Cu"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-8a83d2706fdso165417b3.0
+        for <git@vger.kernel.org>; Tue, 13 Oct 2026 08:05:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791903910; cv=none;
+        d=google.com; s=arc-20260327;
+        b=P+TzHDp7bowhWXwCDUlgoSgq2DKCj2TTKhbz9BXB1zXWCgLEEiFwLkKuk7aOcEUIk/
+         g7zFTCAtLbkIkcKO4/AAFU6vfX2j0PH9h9uB2ClJcPWZ7+ezwCQyZFPWOXDVBEU2gbku
+         4pbUIcxVNgZJMrKSLnLMEVPZrqvZ8QC1SCMad6GfGz3adQzyVVo8CeUz/JKgA2uLs5lC
+         7FGim2aPIg757rd7s2EnNs4fW8Hl0X2dTmcbQyuYrKpmqrrLh4ugVDS5PW0I3AEozRdp
+         50h324mxJ0xhwL5mOyowi8b3BiIyIUCAplqOwKpyBjeG27ReXMlbWrM2SKCkBHU5c7qY
+         hMuA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:dkim-signature;
+        bh=+Fg42M11Vk6RRgo9cyK1HMT5sHQzZsKWCk+hNTwsvJM=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=j/TYMPgTPWjhwdG6ukquOremi3Vke9itnyss/AdXQ3IHbB/YI1X1rilrmi6pGn/5uy
+         sgwP9Qen922zPI5tjpNo8ehB4b/s2pBotYFIO9yQP2xVWQKbmegTe4oF2tU6yhRGxZW2
+         ogRMxRQS+T8rQSdGdMauvGUL+n/Sg30Z8W3/CtLpx8Db6ee1nAsTA+eTLw+c6FQGhjHN
+         iA62xgiihp8b8RzaOatUfVrC9T8TvGesf6Gvpm8HLt4KlfXNo1ihcq5R6IJfvXs2njcj
+         LPRTh7NNzZHGb/huc0mZQJVwyxv4O0+oJJLNO/axLJsdchsyQHXNQTmC171qHO2HAhNq
+         X/PA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791903910; x=1792508710; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+Fg42M11Vk6RRgo9cyK1HMT5sHQzZsKWCk+hNTwsvJM=;
+        b=GK1jS3CuJeyhdEPbBFkTkXZEpNm+7oKyAx7OZ0KLjVAD7RJJnwVoXNKAIvyQaqLTfZ
+         MJNI7l+pKhvjTNXjOWTgflswH+9NwQADZyEnAtsCF7CVjS0mfrJywpNYdYwi6DX3SaPh
+         pXDyJPogfbW7ClYtD64F/HBI3kZ10md7tywJfagp8l0JR1xs3gliMKschNLiJHcM3OMz
+         iyt6XRCM72VLjnUbAil56qAIz+ncccAswIG60qZNJcSJvy9ImfajP1HkmoV3tw7GPwBH
+         R6xdgerLXuH7yxGfWSB51f17E4kw/oSfQOEwoK5hwuB1Q06KFA4FOUO3oStSrv1x1lCm
+         tUyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791903910; x=1792508710;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=+Fg42M11Vk6RRgo9cyK1HMT5sHQzZsKWCk+hNTwsvJM=;
+        b=NeakNQ+kPsFw8EWBPFZ1+h6wutJ4MD6e2k9y95ZQu9DFr4dcSZtOUiUoaZoRluVPed
+         0H1um4L1mBcGlI2db/IaaZnxpAEkLminjtNyeyV8IYJsvsXkrhao2lkv4PMpsnFl/F62
+         /IfzeurEgSek1KO/uEynOXhWbGM48KG+IAbGECraruPXtDKlDP6UTUGdAPbbSF7ps+os
+         CFTzj+ZeKrrjzaBb5QFPhV++BZYs6oVOJpDZrIzVjTJ6JtPYKiUY7vepwLpJVzojcT9z
+         NUlFYg29mhKSKfsPIFpB0mmgBLPXmyvD9FVrFpNf+FWv/HCVHiuk8D6wMgw13vGIvoE4
+         v+5w==
+X-Gm-Message-State: AFq9FYLB7VKnb6NXorpeZxQKHx3Mqit6/INAyksxMvN+wMYcG7/3nxEn
+	5C+jTJD5zvUgNJkXyhmhZ7/LAQkSLXaB5FpqkQKCyAChQuXyRvANS9aoHwWVGpuQDVz1F4NCMfi
+	iPycgmBsfmBuPYf2o6pxl0lhV1rpruMLLVkev1L4=
+X-Gm-Gg: AYBFou0qTRnXUbR22f2M4kCiwHPYHjjwSNARtiw6vffNlSVI4ZZbMYIB50XoZMQDa8+
+	a+Y64JhahfT4Tb/gn7V5PMAhMzLxrIGk4S2YtL/1M5eNeVVyV3Ml4s3549xeViv9/QJwekbJm1g
+	pOAhFk9XxKUD9mbrKOPWSrtfkHPr8wPztQQmX6taYPCTDPpGuh0DzRHwl2mi/og7bKznN0cpHr9
+	Ts17KSXSfjVLK6BVIuBtwE994EU1D8uzbyL1xNLWJNozwPnhi6PgUZcqaNl4ppieGglfLV0zgE3
+	K/PJfwCWCOsly1ppw+khJlLIzzyldPSvKotT6LZxr1Zcn+PYZjtzFghYWQ==
+X-Received: by 2002:a05:690c:18:b0:8b0:8e9a:a4d4 with SMTP id
+ 00721157ae682-8b08e9aa983mr33795227b3.6.1791903909591; Tue, 13 Oct 2026
+ 08:05:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rcpt-Check: Accepted by authentication
-X-42: Don't panic! 
-BIMI-Selector: v=BIMI1; s=me
+From: Srujith Poojary <poojarysrujith@gmail.com>
+Date: Tue, 13 Oct 2026 20:34:50 +0530
+X-Gm-Features: AclHuK_dDAU2VOvOVvvX75eqHkuNd04rUrWDdF1rA3sA_B9sF4NNkX-WcpAZRog
+Message-ID: <CABh_KWjjVPGwLPxvUZsFzaSBPBvhMNeaVbTdk1WEZ7bruYWU2A@mail.gmail.com>
+Subject: [Outreachy] Microproject: Modernize a file check in t2030-unresolve-info.sh
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When running `git fetch --all --depth=<SOME-DEPTH>` or `git fetch --all
---unshallow` with Git 2.56.0, the fetch isn't really deepened:
+Hello Git developers,
 
-        $ git init remote
-        Initialized empty Git repository in /tmp/test/remote/.git/
-        $ for i in 1 2 3; do echo "$i" >remote/"$i" && git -C remote add -A && git -C remote commit -m "$i"; done
-        [... snip ...]
-        $ git clone --depth 1 --no-local remote local
-        Cloning into 'local'...
-        remote: Enumerating objects: 5, done.
-        remote: Counting objects: 100% (5/5), done.
-        remote: Compressing objects: 100% (2/2), done.
-        remote: Total 5 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
-        Receiving objects: 100% (5/5), done.
-        $ git -C local log --format='%s'
-        3
-        $ git -C local remote add origin2 ../remote
-        $ git -C local fetch --all --unshallow
-        Fetching origin
-        Fetching origin2
-        From ../remote
-         * [new branch]      main       -> origin2/main
-        $ git -C local log --format='%s'
-        3
-        $ git -C local fetch --all --depth=3
-        Fetching origin
-        Fetching origin2
-        $ git -C local log --format='%s'
-        3
+My name is Srujith, and I am applying for the Outreachy internship.
 
-This is because the parent process doesn't pass the --depth= flag to the
-fetcher subprocess.
+I would like to work on the micro-project =E2=80=9CModernize Test Path
+Checking in Git=E2=80=99s Test Suite.=E2=80=9D
 
-        [pid 1622822] execve("/usr/lib/git-core/git", ["/usr/lib/git-core/git",
-        "-c", "fetch.bundleURI=", "fetch", "--append", "--no-auto-gc",
-        "--no-write-commit-graph", "origin"], 0x5555c4b65ae0 /* 54 vars */) = 0
+I propose replacing the assertion
 
-Fix this by passing it when specified or implied by --unshallow. After
-fixing, both flags would work on shallow trees in conjunction with
---all, as demonstrated below:
+test -f .git/rr-cache/$rerere_id/postimage
 
-        > ~/workspace/git/build/git -C local fetch --all --unshallow
-        Fetching origin
-        remote: Enumerating objects: 5, done.
-        remote: Counting objects: 100% (5/5), done.
-        remote: Compressing objects: 100% (3/3), done.
-        remote: Total 4 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
-        Unpacking objects: 100% (4/4), 345 bytes | 345.00 KiB/s, done.
-        Fetching origin2
-        remote: Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
-        > ~/workspace/git/build/git -C local log --format='%s'
-        3
-        2
-        1
+with
 
-Signed-off-by: Rong Bao <rong.bao@csmantle.top>
----
- builtin/fetch.c           |  2 ++
- t/t5514-fetch-multiple.sh | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 36 insertions(+)
+test_path_is_file .git/rr-cache/$rerere_id/postimage
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b2decc6cfdb8ae86b8b1e92caa85f4961ffc47ff..a110a2dcf09c7e6764eb232bff73286753b27009 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -2247,6 +2247,8 @@ static void add_options_to_argv(struct strvec *argv,
- 		strvec_push(argv, "--tags");
- 	else if (tags == TAGS_UNSET)
- 		strvec_push(argv, "--no-tags");
-+	if (deepen)
-+		strvec_pushf(argv, "--depth=%s", depth);
- 	if (verbosity >= 2)
- 		strvec_push(argv, "-v");
- 	if (verbosity >= 1)
-diff --git a/t/t5514-fetch-multiple.sh b/t/t5514-fetch-multiple.sh
-index 5d79472c39f67126079da5432938c6d97f08008a..b6568d33d7a6dd725a72584fbad942d6b3f7c39b 100755
---- a/t/t5514-fetch-multiple.sh
-+++ b/t/t5514-fetch-multiple.sh
-@@ -383,4 +383,38 @@ test_expect_success 'git fetch --no-all --all (fetch all remotes)' '
- 	)
- '
- 
-+test_expect_success 'git fetch --all --depth=2 (fetch all remotes with depth 2)' '
-+	setup_repository test16 &&
-+	git clone --no-local --no-single-branch --depth=1 test16 test17 &&
-+	(
-+		cd test17 &&
-+		git remote add remote2 ../test16 &&
-+		test_path_is_file .git/shallow &&
-+		git fetch --all --depth=2 &&
-+		test_path_is_missing .git/shallow &&
-+		git log --format=%s origin/side >actual1 &&
-+		git log --format=%s remote2/side >actual2 &&
-+		test_write_lines Second Initial >expect &&
-+		test_cmp expect actual1 &&
-+		test_cmp expect actual2
-+	)
-+'
-+
-+test_expect_success 'git fetch --all --unshallow (fetch all remotes with full history)' '
-+	setup_repository test18 &&
-+	git clone --no-local --no-single-branch --depth=1 test18 test19 &&
-+	(
-+		cd test19 &&
-+		git remote add remote2 ../test18 &&
-+		test_path_is_file .git/shallow &&
-+		git fetch --all --unshallow &&
-+		test_path_is_missing .git/shallow &&
-+		git log --format=%s origin/side >actual1 &&
-+		git log --format=%s remote2/side >actual2 &&
-+		test_write_lines Second Initial >expect &&
-+		test_cmp expect actual1 &&
-+		test_cmp expect actual2
-+	)
-+'
-+
- test_done
+in t/t2030-unresolve-info.sh.
 
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
--- 
-2.56.0
+The goal is to use Git=E2=80=99s test helper for clearer failure diagnostic=
+s
+while preserving the existing test behavior. I will run the relevant
+test and review the patch before submitting it.
 
+Please let me know if this is a suitable micro-project or if you
+recommend a different approach.
