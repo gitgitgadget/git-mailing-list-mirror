@@ -1,539 +1,196 @@
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D8435E1D5
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 13:01:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51F451813E
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 13:14:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791896495; cv=none; b=IpHz9S/sujMjozAEqpPraVMkE9FNsJpkwlnv6GhORzXY8QnTL548a2/iFcN9wDm3U0zvd7yUCseeCpyefSABoGqZTOGMb/iSFtBf25tZ2kN5ds+v+I/DuubifwOCjomzxPEhaKffpDzHM4jbc3jtrHKTDLRd84uxZVT+2eyAEHg=
+	t=1791897295; cv=none; b=ou0QB9gQH9BJkWvbm9tu7DOObsKtepSXksCvgjBLIHBH2nvWmxwcETfA5jQdt7j0XoZmoq6orfnbFoQOkuRnOYtOnmqvsbJkqyR9IMcf+jmB1l3jZqVek/BLdzvA5gh/ZbPbEfKZQ4p5t/VK4amsilkgHl7VM2ey2oRHgHdNvQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791896495; c=relaxed/simple;
-	bh=UZkbK9kis5gwL0ooiXK0R4Fiw2nbWyDBw7L6PV2yJbk=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=FY+8a5jfLH51VpK/4y5a92I0c2dhtb92zfK8gZtZ/91DJDM1/uyxc9ROaw7sPQuAd8u0hk13xVfUO0uwpewxe1cAt8UcCz9R7gkD1EVTVYeVC5i+Ec+QFJpkVhp6FkjKXL3FcifBGbd8j6vY9zrPbDnTbhx6Yj16GcPmq95poGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OW5kWpu6; arc=none smtp.client-ip=209.85.221.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791897295; c=relaxed/simple;
+	bh=Grdwlz7BjR6VEVr1Qyga1wj9kBC5Kcg9BhLHjSUN7Z0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=a0UHWRsFzRB0hi6ECLHmT0Usaa67mW9Aln7IgyOnjUovIqNlXy284U6BKRiKkakUaWnhj8mhn7zUUtcgVqQvZZIaL4Po8y3SeOu/uq/npG27dkmULP8NN9GusWNlMbPwcirqGE9nq4sCUiCyi66vm6oQq6KZ3ZopRUif4lehPv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H66nc/Aw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wgzdn/Iu; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OW5kWpu6"
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-5e4d95e3e55so1011197e0c.2
-        for <git@vger.kernel.org>; Tue, 13 Oct 2026 06:01:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791896492; x=1792501292; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=3agKGslgNzLLvd6jzWa3u/Rtrip/keB7rHxsIi3K8OM=;
-        b=OW5kWpu6NMi/CBZWvgoYGCPlntoAmWEOS6Cc2V0bs8n3pmjfqAS9oK1FqJkYufdAhM
-         o3uZG+mq6LWEk0Yepc6p7cPER35utNgm9YXRpd29NvM33sD127eGMCFcbtEu7zWWkojX
-         16JCRa1s9YjUaS6Axg6eL41nHj9cguJmWA9vxAlYAXEpMy8CK8fqP4ZFkwJNDb3AjY5l
-         XMqN/do+z0qxy1/ixtGSvWbiYsMUrLJBmQ4WqEaSbO7ysd8iZFcSIoc+PfPzDZvIhOP2
-         zqyevHv9Ek7En/9oro4xEVfChAyPyeQPBuhJTh0vlojyEOAZXKiSz1WpNzKRREHrNgUK
-         PPaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791896492; x=1792501292;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3agKGslgNzLLvd6jzWa3u/Rtrip/keB7rHxsIi3K8OM=;
-        b=1XMh3YpWMTieh7MtV0PiTeM+oOMObwJXaq+L7eavtHJDy+0S9/BNz3unNirJ5hoXDu
-         aS1W4gRStX5JSTS55MZ9lfwiIYE3uTnqwKJ/2nMuzJATkG8ou1PL6AdVjbJheOkUcQ+R
-         glX9m/wKb1mvHRbYcuiYWkXE58N8YTRVn351CcSIkJru0M7pWATzXlez+WOmxgOPa/pl
-         3NXOBqUnBdGuxB8Dk3CgsUxbATQR5qKd+2k1n77KMIDEMdINsilNV+Ib3st3WE+AYnyg
-         mqtlEsnhPeWqwxRj3GSKKaa8EqdthuAheEIDWwF9eAGmOglJRnbspyUbsF/USIE20j9o
-         VKvg==
-X-Gm-Message-State: AFq9FYIMOacF3zOMhzahTbYCfgt7Wb4IUgFtXa3DU29y9kaV8ol9udrh
-	0jvN2ARC7Iw1uZDvhuHhYMNPoi8BNRyhQ0qaA6VSHbDtN+SCXmRQstHS+2LhGQ==
-X-Gm-Gg: AYBFou0zG3Zx9WIzSelm8ZFSIVVAzoI4c3IdjSdstIJc92oewS7ISkLFg9Y/YNolnOR
-	NUjd9HgTFn85+K39x9rypaSvPqH/UVO0/dmB+CqXMo4O+78oPojoYsKVteKZOnMckLza5AAeKR3
-	/usMGbejviGmnlTX3E/NDxB01g+FqoJIi95vq74HtgmSeGOQPdjmHIXph5iBNFemToxLTpSFmvo
-	411iAB9XPNkl27LDFZRTT32nZyQU7VfHT40nVfMRoIDg77VWEqX18cFRandjEV9WNxu2vJCYXmP
-	x8yozOotsZkTaQ2ep709r4qP8sIxGMRnPA/ekrQoRaBPk3xj0YgCZC5HwYRWd+N32yTzPkBstY6
-	H9nZX9SsNAQJQxY7dzkAelEpA/zXkc18RWbztbFiZy3A0kZiIWCG6YAV4U1eWY+y5NEg39u/b7s
-	x3KCx9IPEUBGYFactN5j1Uw63CobWQdQ7tnV2dzweWa27rlCTzPcQ6O2rBW3h6Bvh8YT4jZTlN0
-	IGY
-X-Received: by 2002:a05:6122:469f:b0:5da:9b81:1aa4 with SMTP id 71dfb90a1353d-5e91f436139mr3152913e0c.5.1791896487548;
-        Tue, 13 Oct 2026 06:01:27 -0700 (PDT)
-Received: from [127.0.0.1] ([20.106.191.116])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91b97c39482sm24532796d6.45.2026.10.13.06.01.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Oct 2026 06:01:26 -0700 (PDT)
-Message-Id: <pull.2250.v2.git.1791896486100.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
-References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 13 Oct 2026 13:01:26 +0000
-Subject: [PATCH v2] doc: checkout: rewrite detached HEAD state explanation
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H66nc/Aw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wgzdn/Iu"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1A5C57A0163
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 09:14:53 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 13 Oct 2026 09:14:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1791897292; x=1791983692; bh=bWJmfc/p9j
+	3GLRdaDGAimwz/vO3TxSjhoJHEa+BT2Aw=; b=H66nc/Aw9ncVILs9Ku7Vzf3NXw
+	sXKgK79eRjKcHMzoPKTTCt4zlZgmqJTYqFcVKmov/i8nNP+6abkIox2tDCcNO+R7
+	tZk9+NjheCQRQx6uBfJQhnDFqq7/3OAGHU4ZhEulHjVkk62W04dLZU9g0ohwPoN/
+	eRJLzDI03jiYyaA5MGCYct1Q3vFzYyS7nwaxIsgFKNXzuGS3+A7Oe/c98GFWmZUx
+	0hUUVGm9DeoD9WhIjgogUZuqnESHVrRQ37vpC+9XdzxfDmpjZk3wx51MYAvEGGpS
+	ll4ADKMCvUPX8o6lA6jx3uEtW+03TBnaH0zXaVd2GNzUZBt50e/LN0siyPFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791897292; x=1791983692; bh=bWJmfc/p9j3GLRdaDGAimwz/vO3TxSjhoJH
+	Ea+BT2Aw=; b=wgzdn/IuqWdZA/MftJuBL0NpTN0HHEcgYFdgMk7afePK0ctCR6r
+	iGajXIykEJZAfKO559AOJaDhTQSIXxtaN2DN6j6gJXL5Bm1UELKu41z4PjKifN7Q
+	CQxcXIR9DIZkPeFfOvlHbnNx1+Izv6IuURcLtnj5bJ3v59uCBulNJsXnMEDUMxGl
+	ta8LA4zPGHCO/AljZ4y6hf1v+A8QlMEBugc5zU0D648IQZlIxqI1+n8ea4t0TWyJ
+	63UPOzt6wiT9OppSZvTLJAmIxv/ZWLiG+1P2pYBppzn7sQlpKgckV3GdqM2krm4S
+	dQqigCcOWDWID/IKoj2Kjzcgrf9Nnlyk9Aw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791897292; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:sSbZqu2klQj8c8SVU+IxpH3EJyb3hI31sxdrhIw4Hjq1YYh
+	6LDSSpT73gzpK6CgjBKhhbc/1FHZru1l6T/CZXkNCpza75b18qAaeNtDhnKWg7z8
+	++ZBipFbrgrL0g57Q+KmqGeZdUiRmJJ0CYbcHi9w6NuBJzcFS/9sI9+g6BhLNHfW
+	Dq3xqBwZcC1MKs4HtxfVpfgvjEK6b7N46CmnngwgKl841tqFvr6Grz8cA+INWTf9
+	OtwVrqFM/CDR7WPzlQtB3LqAyn/mITY1cT1eo/Qj6krpa16eyt+y1ZnSL7SdMuW2
+	NsaB8GHgJMemBeuz1fLsSdpQrg7UtuIZIwDG8Vg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:CrsPrq4lMj+6MU7SSpNqdkjkpi9XkAuYDyTiLJ5cYqI=:Grdwlz7BjR6VEVr1Qyga1wj9kBC5Kcg9BhLHjSUN7Z0=;
+X-ME-Sender: <xms:zC7OajiPmagdmhS8GGlZtj_8u4BM4WbFoOZe2qjQ8Aplkw-FNTo9pA>
+    <xme:zC7Oam4x23LYE7T2m6Hc-C1kKTSBg7PBQj58KlaL0aLnirXmHz5qFnFXhunvPHMnl
+    4w2XjqxGdtdyfC8_DKjeEMRyqdK6juuDn8X8zKnMVmq3MfLQxSWfOA>
+X-ME-Received: <xmr:zC7OarZyN25suDlgzDchTZ1VcHXVPdHRia-YGukV-9AczkWAEd5Isw>
+X-ME-Proxy-Cause: dmFkZTGkkDeI20tq9AOWac7teIpwaJUDv8tRvZBYFf3pDa8Gv+C611tLcBQCUB2WpcTBi2
+    P28Lg7g1jM5Kp9YdWKZNrlhYoZ0oCvlYwp7+LFkrxnV4u2ugAuFkJoH1wYLBjUSe0I9Rqb
+    1eULG9z+lG7y34DyRKer3rq6o1eInntnx+zjf9+WBwwY3+1bYUIUYfR/aryxQFP0GexU/a
+    MefGGUXH/vPfYgR11l6aAzCprEjVcYfSj5vBzJ/oRxXT1EjgCmnPugEo5Z7/kG04X8JYzH
+    H8JUkuqQCXBdNd+afGgEBe6G/sBP+lbRWHwR1PU69a/4z7d7Aotq1jaqqRrPhYxlfLTdL7
+    7l2O9mmmY38peV09T7r8Erx65+OO+zbP7+EbW4mEM/tDzssyuzCzk/m3WQv6A/X37TgHqt
+    gzMSmT3dw2KjzbZK0ckqiyBdy7TlwsPjd/DpdWTOZTWeAH8tNCAla0UP326HHOTC8To+fq
+    wxFRIDh6dwJSb/0h2QT8DuGFaWS5VRTjBBTvvVafwHMZSgfEc/ftPATdHauNYE5HH+J5u+
+    rBnjgDPaakDfE/lCX+ayG0HdIacqDHKllurxz9VgAYJpQbr9ADcrsM31hxBDr2z4hRtj9z
+    fu6K6FxbXYCUeNbGQOVtup2CX+7ouZ07CN7XzSjSS3YF1Y8otY/y3jihS74w
+X-ME-Proxy: <xmx:zC7Oar6FFNiR1s40sL3STjt4B2xd-5xRluh7t7pHqd56olFhIE0-Iw>
+    <xmx:zC7OauBiI7UylHMQqW-8x-g3HkarCeBBVhVQeko2Vi-u-XrvjVFxog>
+    <xmx:zC7OahezYlVQRnlHk30dJxFE6lYp8l46KB9GlXx3ycGr9A-5WqSlqw>
+    <xmx:zC7OatIyWmnzY4qF-IY2M-TA1hl4guAnACu5XpO3PqFejil2ehF9TA>
+    <xmx:zC7OauI8bpzQSjousiOoYRrlOo06f1VnEOomHXsloIXqPY0DuV5YzHcr>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 13 Oct 2026 09:14:51 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b2be81f5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 13 Oct 2026 13:14:48 +0000 (UTC)
+Date: Tue, 13 Oct 2026 15:14:40 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Beat Bolli <dev+git@drbeat.li>
+Cc: git@vger.kernel.org, Xiangfei Ding <xfding@google.com>,
+	Aniket Gupta <aniketgupta3001@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 2/2] imap-send: let OpenSSL do the hostname
+ verification
+Message-ID: <as4uwMflv6qzcoTh@pks.im>
+References: <20260907211210.2621693-1-dev+git@drbeat.li>
+ <20261012203057.969878-2-dev+git@drbeat.li>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261012203057.969878-2-dev+git@drbeat.li>
 
-From: Julia Evans <julia@jvns.ca>
+On Mon, Oct 12, 2026 at 10:30:57PM +0200, Beat Bolli wrote:
+> According to the OpenSSL Wiki[1], OpenSSL knows how to verify the peer's
+> hostname since version 1.0.2. A simpler interface is available since
+> 1.1.0, which is what is implemented here.
 
-The current explanation has the following issues:
+What is implicit here is that Git performs its own hostname
+verification. A short introduction explaining the status quo and why
+the status quo is insufficient would help the reviewer.
 
-- Says detached HEAD state is useful but doesn't explain why
-- Takes many paragraphs before explaining what detached HEAD state is
-- It's common for users to accidentally end up in detached HEAD state,
-  but it doesn't explain why that might happen
-- One of the UI improvements in `git switch` is to make it harder
-  to detach accidentally, but that isn't advertised.
-  See 7968bef06b (switch: only allow explicit detached HEAD, 2019-03-29)
-- Too many confusing diagrams
+What's also missing is a quick note on the minimum supported version of
+OpenSSL.
 
-Write a new explanation addressing these issues, and put it in a
-standalone guide so that we can easily reference it from advice
-("see `git help detachedhead`").
-The result is a shorter guide that covers more material.
+> As a side-effect, we get all present and future improvements done by
+> OpenSSL for free. E.g., the old code did not handle IP addresses in the
+> subject alternative names, while the new code does.
 
-The framing that "Git considers commits that aren't on a branch/other
-reference to be garbage" is taken from Steve Klabnik's tutorial
-https://steveklabnik.github.io/jujutsu-tutorial/branching-merging-and-conflicts/anonymous-branches.html.
-It's funny and it's consistent with the way Git uses the term
-"garbage collection".
+That sounds like it's win-win: less code and more supported scenarios!
 
-Co-authored-by: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
-    doc: checkout: rewrite detached HEAD state explanation
-    
-    This is a pretty quick rewrite where we didn't get any user feedback. If
-    we really want to make sure it's clear to users as possible, we should
-    IMO do a second stage later where we ask users which parts are unclear.
-    
-    Changes in v2:
-    
-     * Make the meson.build and Makefile changes (thanks to Kristoffer)
-     * Rename to gitdata-model (thanks to Kristoffer)
-     * Mention commits will be deleted after 90 days to make it seem less
-       scary (thanks to Kristoffer)
-     * Add an "easily" qualifier to "it lets you look at an old version of
-       your code", to avoid implying that this is the only way (thanks to
-       Junio)
-     * Mention that Git will warn you when switching branches if you're
-       leaving commits behind (thanks to Junio)
-     * Remove "unintentionally" (thanks to Junio)
-     * Mention git help datamodel (thanks to Junio)
-    
-    Left the style comments alone (ideas for how to make it more clear) to
-    be potentially addressed in v3, after we finalize the information
-    content.
+> If the verification fails, print the error message as returned by
+> OpenSSL.
+> 
+> [1]: https://wiki.openssl.org/index.php/Hostname_validation
+> 
+> Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
+> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> ---
+>  imap-send.c | 86 +++++++++--------------------------------------------
+>  1 file changed, 14 insertions(+), 72 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2250%2Fjvns%2Fdetached-head-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2250/jvns/detached-head-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2250
+Don't we have any tests for this? If not, can we maybe add some to make
+sure that we indeed still verify the hostname?
 
-Range-diff vs v1:
+> diff --git a/imap-send.c b/imap-send.c
+> index 9f21705d77..cd9eae15d0 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -325,6 +261,15 @@ static int ssl_socket_connect(struct imap_socket *sock,
+>  		ssl_socket_perror("SSL_new");
+>  		return -1;
+>  	}
+> +	if (cfg->ssl_verify) {
+> +		SSL_set_hostflags(sock->ssl, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
 
- 1:  efe0f9db36 ! 1:  83139be46f doc: checkout: rewrite detached HEAD state explanation
-     @@ Commit message
-          Co-authored-by: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
-          Signed-off-by: Julia Evans <julia@jvns.ca>
-      
-     + ## Documentation/Makefile ##
-     +@@ Documentation/Makefile: MAN7_TXT += gitcore-tutorial.adoc
-     + MAN7_TXT += gitcredentials.adoc
-     + MAN7_TXT += gitcvs-migration.adoc
-     + MAN7_TXT += gitdatamodel.adoc
-     ++MAN7_TXT += gitdetached-head.adoc
-     + MAN7_TXT += gitdiffcore.adoc
-     + MAN7_TXT += giteveryday.adoc
-     + MAN7_TXT += gitfaq.adoc
-     +
-       ## Documentation/detached-head.adoc (new) ##
-      @@
-      +`HEAD` is where Git stores your current branch. `HEAD` can either be:
-     @@ Documentation/detached-head.adoc (new)
-      +   This is called "detached HEAD state".
-      +
-      +It can sometimes be useful for `HEAD` to be a commit ID.
-     -+For example, it lets you look at an old version of your code
-     -+(with `git checkout COMMIT_ID`).
-     ++For example, it lets you easily look at an old version of your code
-     ++(with `git checkout COMMIT_ID` or `git switch --detach COMMIT_ID`).
-      +
-      +The only problem is that if you create new commits while in detached
-      +HEAD state, those commits won't be on a branch. This makes those new
-      +commits much harder to find later. Also, Git considers commits that
-      +aren't on any branch (or a tag or other reference) to be garbage.
-      +Git will eventually permanently delete those "garbage" commits during
-     -+garbage collection.
-     ++garbage collection. Those commits will be deleted after 90 days by
-     ++default, see linkgit:git-gc[1] for more.
-      +
-     -+There are 3 main ways you can end up in detached HEAD state
-     -+unintentionally:
-     ++There are 3 main ways you can end up in detached HEAD state:
-      +
-      +1. `git checkout COMMIT_ID`, where `COMMIT_ID` is a commit ID
-      +2. `git checkout v1.3`, where v1.3 is a tag name
-     @@ Documentation/detached-head.adoc (new)
-      +   You might want to do this if you've created new commits, so that you can
-      +   find the commit later and so that it won't be garbage collected.
-      +
-     -+If you create commits in detached HEAD state that aren't on a branch,
-     -+you can find them later using linkgit:git-reflog[1].
-     ++If you switch branches after making commits in detached HEAD state, Git
-     ++will warn you that you might be about to "lose" those commits and print
-     ++out the commit ID. You can also always find those commits later using
-     ++linkgit:git-reflog[1].
-     ++
-     ++Here's what that warning looks like:
-     ++
-     ++-------------------------
-     ++Warning: you are leaving 1 commit behind, not connected to
-     ++any of your branches:
-     ++
-     ++  48c09f6 3
-     ++-------------------------
-     ++
-     ++For a more in-depth explanation of how `HEAD` works in Git,
-     ++see linkgit:gitdatamodel[7] (`git help datamodel`).
-      
-       ## Documentation/git-checkout.adoc ##
-      @@ Documentation/git-checkout.adoc: For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
-     @@ Documentation/git-checkout.adoc: For more details, see the 'pathspec' entry in l
-       [[ARGUMENT_DISAMBIGUATION]]
-       ARGUMENT DISAMBIGUATION
-      
-     - ## Documentation/gitdetachedhead.adoc (new) ##
-     + ## Documentation/gitdetached-head.adoc (new) ##
-      @@
-     -+gitdetachedhead(7)
-     -+===============
-     ++gitdetached-head(7)
-     ++===================
-      +
-      +NAME
-      +----
-     -+gitdetachedhead - How detached HEAD state works
-     ++gitdetached-head - How detached HEAD state works
-      +
-      +DESCRIPTION
-      +-----------
-     @@ Documentation/gitdetachedhead.adoc (new)
-      +---
-      +Part of the linkgit:git[1] suite
-      
-     + ## Documentation/meson.build ##
-     +@@ Documentation/meson.build: manpages = {
-     +   'gitcredentials.adoc' : 7,
-     +   'gitcvs-migration.adoc' : 7,
-     +   'gitdatamodel.adoc' : 7,
-     ++  'gitdetached-head.adoc' : 7,
-     +   'gitdiffcore.adoc' : 7,
-     +   'giteveryday.adoc' : 7,
-     +   'gitfaq.adoc' : 7,
-     +
-       ## advice.c ##
-      @@ advice.c: void detach_advice(const char *new_name)
-       	"\n"
-     @@ command-list.txt: gitcore-tutorial                        guide
-       gitcredentials                          guide
-       gitcvs-migration                        guide
-       gitdatamodel                            guide
-     -+gitdetachedhead                         guide
-     ++gitdetached-head                         guide
-       gitdiffcore                             guide
-       giteveryday                             guide
-       gitfaq                                  guide
+This matches the documentation, but it also points out the
+X509_CHECK_FLAG_NO_WILDCARDS as a second commonly used flag. Why do we
+pick one over the other?
 
+> @@ -352,14 +297,11 @@ static int ssl_socket_connect(struct imap_socket *sock,
+>  	}
+>  
+>  	if (cfg->ssl_verify) {
+> -		/* make sure the hostname matches that of the certificate */
+> -		cert = SSL_get_peer_certificate(sock->ssl);
+> -		if (!cert)
+> -			return error("unable to get peer certificate.");
+> -		if (SSL_get_verify_result(sock->ssl) != X509_V_OK)
+> -			return error("unable to verify peer certificate");
+> -		if (verify_hostname(cert, cfg->host) < 0)
+> -			return -1;
+> +		/* make sure the certificate was verified */
+> +		long res = SSL_get_verify_result(sock->ssl);
+> +		if (res != X509_V_OK)
+> +			return error("unable to verify peer certificate: %s",
+> +				     X509_verify_cert_error_string(res));
 
- Documentation/Makefile              |   1 +
- Documentation/detached-head.adoc    |  57 ++++++++++++
- Documentation/git-checkout.adoc     | 129 +---------------------------
- Documentation/gitdetached-head.adoc |  14 +++
- Documentation/meson.build           |   1 +
- advice.c                            |   1 +
- command-list.txt                    |   1 +
- 7 files changed, 76 insertions(+), 128 deletions(-)
- create mode 100644 Documentation/detached-head.adoc
- create mode 100644 Documentation/gitdetached-head.adoc
+Wait, this feels fishy to me. Take the following from [1]:
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index f8dea4b395..5892f48b06 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -54,6 +54,7 @@ MAN7_TXT += gitcore-tutorial.adoc
- MAN7_TXT += gitcredentials.adoc
- MAN7_TXT += gitcvs-migration.adoc
- MAN7_TXT += gitdatamodel.adoc
-+MAN7_TXT += gitdetached-head.adoc
- MAN7_TXT += gitdiffcore.adoc
- MAN7_TXT += giteveryday.adoc
- MAN7_TXT += gitfaq.adoc
-diff --git a/Documentation/detached-head.adoc b/Documentation/detached-head.adoc
-new file mode 100644
-index 0000000000..712074c0ef
---- /dev/null
-+++ b/Documentation/detached-head.adoc
-@@ -0,0 +1,57 @@
-+`HEAD` is where Git stores your current branch. `HEAD` can either be:
-+
-+1. A branch, which is your current branch.
-+2. A commit ID, when you don't have a current branch.
-+   This is called "detached HEAD state".
-+
-+It can sometimes be useful for `HEAD` to be a commit ID.
-+For example, it lets you easily look at an old version of your code
-+(with `git checkout COMMIT_ID` or `git switch --detach COMMIT_ID`).
-+
-+The only problem is that if you create new commits while in detached
-+HEAD state, those commits won't be on a branch. This makes those new
-+commits much harder to find later. Also, Git considers commits that
-+aren't on any branch (or a tag or other reference) to be garbage.
-+Git will eventually permanently delete those "garbage" commits during
-+garbage collection. Those commits will be deleted after 90 days by
-+default, see linkgit:git-gc[1] for more.
-+
-+There are 3 main ways you can end up in detached HEAD state:
-+
-+1. `git checkout COMMIT_ID`, where `COMMIT_ID` is a commit ID
-+2. `git checkout v1.3`, where v1.3 is a tag name
-+3. `git checkout origin/main`, where `origin/main` is
-+   a remote-tracking branch
-+
-+Checking out a tag puts you in detached HEAD state because `HEAD` can
-+only be a branch or a commit, not a tag or any other reference.
-+So `git checkout TAG` will set HEAD to the commit for that tag.
-+
-+The easiest way to avoid accidentally ending up in detached HEAD state
-+is to use linkgit:git-switch[1] instead of linkgit:git-checkout[1] to
-+switch branches. `git switch` won't let you detach unless you explicitly
-+pass the `--detach` argument.
-+
-+To get back onto a branch, you can:
-+
-+1. Switch to the branch you want to be on, with `git switch BRANCHNAME`.
-+2. Create a new branch at the current commit, with `git switch -c BRANCHNAME`.
-+   You might want to do this if you've created new commits, so that you can
-+   find the commit later and so that it won't be garbage collected.
-+
-+If you switch branches after making commits in detached HEAD state, Git
-+will warn you that you might be about to "lose" those commits and print
-+out the commit ID. You can also always find those commits later using
-+linkgit:git-reflog[1].
-+
-+Here's what that warning looks like:
-+
-+-------------------------
-+Warning: you are leaving 1 commit behind, not connected to
-+any of your branches:
-+
-+  48c09f6 3
-+-------------------------
-+
-+For a more in-depth explanation of how `HEAD` works in Git,
-+see linkgit:gitdatamodel[7] (`git help datamodel`).
-diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
-index 2aefea0228..4e9e94e24d 100644
---- a/Documentation/git-checkout.adoc
-+++ b/Documentation/git-checkout.adoc
-@@ -376,135 +376,8 @@ For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
- [[DETACHED_HEAD]]
- DETACHED HEAD
- -------------
--`HEAD` normally refers to a named branch (e.g. `master`). Meanwhile, each
--branch refers to a specific commit. Let's look at a repo with three
--commits, one of them tagged, and with branch `master` checked out:
- 
--------------
--           HEAD (refers to branch 'master')
--            |
--            v
--a---b---c  branch 'master' (refers to commit 'c')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--When a commit is created in this state, the branch is updated to refer to
--the new commit. Specifically, `git commit` creates a new commit `d`, whose
--parent is commit `c`, and then updates branch `master` to refer to new
--commit `d`. `HEAD` still refers to branch `master` and so indirectly now refers
--to commit `d`:
--
--------------
--$ edit; git add; git commit
--
--               HEAD (refers to branch 'master')
--                |
--                v
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--It is sometimes useful to be able to checkout a commit that is not at
--the tip of any named branch, or even to create a new commit that is not
--referenced by a named branch. Let's look at what happens when we
--checkout commit `b` (here we show two ways this may be done):
--
--------------
--$ git checkout v2.0  # or
--$ git checkout master^^
--
--   HEAD (refers to commit 'b')
--    |
--    v
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--Notice that regardless of which checkout command we use, `HEAD` now refers
--directly to commit `b`. This is known as being in detached `HEAD` state.
--It means simply that `HEAD` refers to a specific commit, as opposed to
--referring to a named branch. Let's see what happens when we create a commit:
--
--------------
--$ edit; git add; git commit
--
--     HEAD (refers to commit 'e')
--      |
--      v
--      e
--     /
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--There is now a new commit `e`, but it is referenced only by `HEAD`. We can
--of course add yet another commit in this state:
--
--------------
--$ edit; git add; git commit
--
--	 HEAD (refers to commit 'f')
--	  |
--	  v
--      e---f
--     /
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--In fact, we can perform all the normal Git operations. But, let's look
--at what happens when we then checkout `master`:
--
--------------
--$ git checkout master
--
--               HEAD (refers to branch 'master')
--      e---f     |
--     /          v
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--It is important to realize that at this point nothing refers to commit
--`f`. Eventually commit `f` (and by extension commit `e`) will be deleted
--by the routine Git garbage collection process, unless we create a reference
--before that happens. If we have not yet moved away from commit `f`,
--any of these will create a reference to it:
--
--------------
--$ git checkout -b foo  # or "git switch -c foo"  <1>
--$ git branch foo                                 <2>
--$ git tag foo                                    <3>
--------------
--<1> creates a new branch `foo`, which refers to commit `f`, and then
--    updates `HEAD` to refer to branch `foo`. In other words, we'll no longer
--    be in detached `HEAD` state after this command.
--<2> similarly creates a new branch `foo`, which refers to commit `f`,
--    but leaves `HEAD` detached.
--<3> creates a new tag `foo`, which refers to commit `f`,
--    leaving `HEAD` detached.
--
--If we have moved away from commit `f`, then we must first recover its object
--name (typically by using git reflog), and then we can create a reference to
--it. For example, to see the last two commits to which `HEAD` referred, we
--can use either of these commands:
--
--------------
--$ git reflog -2 HEAD # or
--$ git log -g -2 HEAD
--------------
-+include::detached-head.adoc[]
- 
- [[ARGUMENT_DISAMBIGUATION]]
- ARGUMENT DISAMBIGUATION
-diff --git a/Documentation/gitdetached-head.adoc b/Documentation/gitdetached-head.adoc
-new file mode 100644
-index 0000000000..a477060db2
---- /dev/null
-+++ b/Documentation/gitdetached-head.adoc
-@@ -0,0 +1,14 @@
-+gitdetached-head(7)
-+===================
-+
-+NAME
-+----
-+gitdetached-head - How detached HEAD state works
-+
-+DESCRIPTION
-+-----------
-+include::detached-head.adoc[]
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index cfa9c67609..6b3141647f 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -197,6 +197,7 @@ manpages = {
-   'gitcredentials.adoc' : 7,
-   'gitcvs-migration.adoc' : 7,
-   'gitdatamodel.adoc' : 7,
-+  'gitdetached-head.adoc' : 7,
-   'gitdiffcore.adoc' : 7,
-   'giteveryday.adoc' : 7,
-   'gitfaq.adoc' : 7,
-diff --git a/advice.c b/advice.c
-index 401d047391..43f86c2eaf 100644
---- a/advice.c
-+++ b/advice.c
-@@ -291,6 +291,7 @@ void detach_advice(const char *new_name)
- 	"\n"
- 	"  git switch -\n"
- 	"\n"
-+	"Run `git help detachedhead` to learn more.\n"
- 	"Turn off this advice by setting config variable advice.detachedHead to false\n\n");
- 
- 	fprintf(stderr, fmt, new_name);
-diff --git a/command-list.txt b/command-list.txt
-index 63ae2a67c9..922a1dbd84 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -218,6 +218,7 @@ gitcore-tutorial                        guide
- gitcredentials                          guide
- gitcvs-migration                        guide
- gitdatamodel                            guide
-+gitdetached-head                         guide
- gitdiffcore                             guide
- giteveryday                             guide
- gitfaq                                  guide
+  In other cases where no peer certificate or raw public key was
+  presented, the returned result can still be X509_V_OK, for example
+  when a server did not request a client certificate during the initial
+  handshake. X509_V_OK alone does not establish how or whether the peer
+  was authenticated. A suitably provisioned external PSK can
+  authenticate a peer without a certificate or raw public key. When
+  certificate or raw public key authentication is expected, applications
+  must also check that the expected credential is present using
+  SSL_get_peer_certificate(3) or SSL_get0_peer_rpk(3).
 
-base-commit: 5a7d1e8045ce66c908f62598e26cbb8df7b39a90
--- 
-gitgitgadget
+So this here basically allows for a MITM attack in case the intercepting
+adversary simply strips the certificate altogether if I understand
+correctly. And to fix that we must retain the call to
+`SSL_get_peer_certificate()`.
+
+That makes me want to have tests even more now.
+
+[1]: https://docs.openssl.org/4.1/man3/SSL_get_verify_result/#bugs
+
+Patrick
