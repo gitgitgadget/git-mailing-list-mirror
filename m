@@ -1,139 +1,167 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2694F93B1
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 12:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2D93B059F
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 12:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894171; cv=none; b=pcI/OgkXMFUji+OSHpV8pDuTzeNuaRFlkWGcBdXfbPv8JSAZhcTosvULZFiAp4/aIZcdh/FEScJIAGqBPSDY6L6FBbYCaWBB5wvPdKSV0pzd+uXhlVAun0ceeo2NjN6nRgvBfWwb+2VpWBaOXd+UGWal1xnUqhljMWbSVMQj37Q=
+	t=1791894462; cv=none; b=Gl84FbhFFqnFjbNMTlHHpB9QenPv24cNC5M29rYvElNFPNWVs2GqCSAGF9HczJsGJT8Zz62Dui3ZOuMaIpD2Dv+GoWIEVIdkO7B7cHMZQOPpd0Ugf/Vfc+/AK/UFCTvMviG5RQg7LUlecGHNq0LerEbbZfluWaNVk6wpIUaSnac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894171; c=relaxed/simple;
-	bh=2d+/EZLyeX0fToQ4Nn9UrkxhpAenoqJa8nbr889vMrU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=evf1KPrUT060iQby5GPBNF/GiOF3K3bM95Po7Zy94WqCkeBnK1gv7SS1jjnQ9Uy7BLuS29IF6ZCBrvq77v5C8rdnY01/2IULxl1DD+btEvegRwI6oeGM8ywR1h+rch9yI5hr3GLSP4idcCnoeCcm8gpvPyq60hsK8HwHf9WBf2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SgBexP18; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RPBQUhJw; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1791894462; c=relaxed/simple;
+	bh=7OydOpMVsQMOj60mBkLOF+1qE/yJ0DwVxxb48FI7o68=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=JLHIVd2w0uN3xW35CSeuEPEgYMwA9x8quAwl2XvxJerRicODxBR/0OzRdopnqaGMp/vawsuOxfC5AKFk0gOZAqX6DHyzJsUbm9pOIwK/wxJDq/1DeDYY/MBJCXPXcitc+tyvI2ohlFOy5KrBmPozxMql577CYNVb6+R/U3o0gvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=FxLhqhib; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wzgLytbq; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SgBexP18";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RPBQUhJw"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id BF36C1D000B1
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 08:22:48 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 13 Oct 2026 08:22:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1791894168; x=1791980568; bh=3j4IyeM/M1
-	P2Sv6dyNqI1kHs2ZO9pAT68qbujL7TY0k=; b=SgBexP18qGFdm4YDPfV3dks9b7
-	w6oDSZE5fHiAuJhOajLC6fvmDzRoGm/6wp5Nx8hdaPJZwirYkbgWeeImW5lLyx88
-	goppoj2Ix9o9eZTp4MqkU2eXzcXkGCR2Nd1JA0F1HRemnwHEqAQ9ILPCA6RpJK1N
-	Q182nwSBjxEl2XEarde+3I9WyUEkp6VFP2k0ttYYpYMPjqN96yjvzwV1ZOibfTDm
-	6/Wcf2FWlI8zdO1StZ5f0hhhzXTpe1wEm2eepCoc91QJEvjycY0gb2wvClKAEPNB
-	5/u425NAy3+7qTkVs6Whvof4NOcBVmtFKTJv8dbZtyTZcvfDyf+OpjGaLtUA==
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="FxLhqhib";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wzgLytbq"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id DFE321D000D8
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 08:27:39 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Tue, 13 Oct 2026 08:27:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791894459;
+	 x=1791980859; bh=5eqZ5Zg+xq/3I8fOv1/skCKpuFOcY5f+1sQXgC77Eo8=; b=
+	FxLhqhibkTilfDuLICUSrM1Kih5Cl8AtBM7H4yIaXwzT2jTjSMuVOIonPhTnpnSP
+	b0gnNgH5kWsfL1LmMlNsyTNOJvpkJ8zar3afoYmOWg3jxZa7XaQ9dOieeslslnh8
+	IT5HRk62jIHF164azzzJIvAfo+Iu4cbiSvHL+4QfdFxN+qTeTSzFsysvOyQiDmSr
+	T8VJDq3+wdpK5t5kKMm9NrpmAgs0kb+rM1E0cytOAT5A03nPcPropb2oZYF1cU9v
+	i6HBNS83ijEXq5h5LUuc50QgD979LzYH9CrlU0HFDsM22U6pyYVBsZKDhaBQ/+PL
+	MaENOh6A2JZDBaoMpE8RaQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791894168; x=1791980568; bh=3j4IyeM/M1P2Sv6dyNqI1kHs2ZO9pAT68qb
-	ujL7TY0k=; b=RPBQUhJw0nZ6FsFFRmADX+rHJj5Lk/yYct0XX6YkqryhHUKq2LU
-	qZGY2DJl9VbyG9yFxKyh4CetsZm1z7Ya43rB7W0OyZpKJ8B6k4b5nGfL/lwQsIoy
-	S1XoCxAoRF+BOL59/dTDw6YJf9So/GFfwWUpf8A5iTMj9h/A7+RhTCAoa3s5/xzz
-	lX/lQnUz+W4Vw6+5KoPn3pnly1+yiJ1RFGhxvluQNQkBM3ly8kYbQZvfEo+ecoK6
-	6pBpfAgMvVtCc1oC6PZsd8RpXifLGF0ZAmInTI8y8f5CKJ40wEtJDZaUzu7OuRF7
-	9jxBMuAdHFW3RTYwLoyBQia/ltoSyG+IRbg==
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1791894459; x=1791980859; bh=5
+	eqZ5Zg+xq/3I8fOv1/skCKpuFOcY5f+1sQXgC77Eo8=; b=wzgLytbqCZYfxfxYK
+	iKz0El9xXXQzvmVnnogaNZxL6DZgdE6SneZ+UPf/K/6XMc64NVNIn9w9Yup9Qvqg
+	xr2Axrv0vmB/cKRQ6BPyqx/ADRM0m858p1hHCIbVneoryAJOneqYe5u9+6GXXMP3
+	xemTIPcT8EvKkfrZF595PV3ymOdRg6AmA2SfVnC03S94qSDn+3qTFl6NDN0IExYT
+	vAqrOgyiXb9B3I8x+NgtcSIu3TnNHAYA8/SKE8m/d2w42qJLU044mmhoVxxrTBLY
+	MWh2Af3oK8yXbU48JDN8Hd+rfTdgdCp467tDFqir1Oj+BhFbJxAyUzHwimuDq24g
+	cO7KA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791894168; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Q+2pAu5FviO2/2YBKuWdc8z/CwG+t4LFhBx2wkM4wN1wrm4
-	ZDbtz/8sVjl5NfAI1Ac4QDZa1+yQVHT4qyZBMn5v0iHpOPtHI/Is52MEnCGStWL/
-	exnapxE7LB0OdcdIU54LA/i0qmb5Xsno5Nyxd5YqSwXl/uoWAWmt5FYV0Vk7zvjI
-	gfsHDfb/ZBBCQztlS9IRzbQOOu329zbdrJ7RDvjFn5VoYp74QQ6PxVliwjvyhAzs
-	SrIWlZoMKD2Fr3tnpCGoEixX/5/fQQOTqmu4uxd1XZFrF0xhwV72nA8ecjaDRaBL
-	ucadqhJwB9ncFdwevTa6lggJBPG8mIkSzcvpgEQ==;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791894459; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:QseaARX/+iChXWqPnbf/cAc8UrU82t6ipzGWy66fkpJWhjl
+	lQNuQkxaDjOb2QprG3m7ocETCidLqnmqlpT1EiYwvtIXtZjGenwotoNkAVtyOVGn
+	4yEFXCbpalosHSJtSSMPAdixrn0eObBCJ7blDi2sgYGD4rNDXpqMA+G7b/9PbSCK
+	ARS318WlQieRNJBL/GM5yXhqK1Yk0R857z7BMd0H/vhQdp1i4f7dKOmb746MaG/L
+	FLFxE9cRSsWXPTdWii2dIo9jqdGcUDOD2n2CFF+sYbS3mgv65zbUmRlvKxwHR5NS
+	XVPmlq0J3TgSydW8skHLthbXtTGq826DUUNeaYQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	action=mi-m=1; hc=11;
+	hn=content-transfer-encoding,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:SpDOLFJcfBWSSihudCfdeQf3P5sX42FEcdU/m7gU4CI=:2d+/EZLyeX0fToQ4Nn9UrkxhpAenoqJa8nbr889vMrU=;
-X-ME-Sender: <xms:lyLOaiylayuYY28R1iQPXgoYNEM1xpbyvNRCKCqCm53j5FT_fs9BNw>
-    <xme:lyLOanlLuIMYXospO2E75rFVMxhHsb6l6vZWMJ7Rcrx0ICvqbg-r0fF0gK0YZzMmX
-    t4zDeGQszdtrSjjN_DF-LlIkLSXusxknlUqfVEs9OVhF59vydhy62Is>
-X-ME-Received: <xmr:lyLOarmnSJHTNqq24P8QfhWrfTPSo9MB4z6pynT0UMlsfdteXVZjuA>
-X-ME-Proxy-Cause: dmFkZTFXKr+mdviivPPAOJwA9IFoK70aFIjFgrb6JPK+zzSyIuanO3DN2cCAc9I/809Uid
-    uVWtKmGkIvbL0DNeW00PRYYlMn2Nq9FRK8FDXcw91+JYMJ/+Ml3BLS+P6Y6RkEuAhFmM8x
-    hs4VPgHoPQPSddDN8XjmlvUddFo9756MEs8buYeuVvbUreSXHW+yXERv4qsGEGgJdcZrXO
-    +YTvfrlpAyZ6k7GUmryaEImDZ1WPSmnUjTKdNRsoZaR3QqLuRytGJs4XXPdjWshriO4+uQ
-    LGwOroyCn9KJ8cEOT/mI3rT+CJNTDDsOOn6DlDRFKtZvdtB9vdODqJJL+nL1KygVkvC9OL
-    Cs0utZuU7GOMSiC5cuwTIRCfdW7UXRxoVZAqrdXL1pEz8U7J5P3n34v8f9sleXCMiGCc9K
-    uUv1dS4KhqMcHzzIgVNELaqkZx2CIdv2oScK9eYXhyrqutm04uLLyq0UkmtSSQRwrPJZ2M
-    DbG6wz2wlVuEZB8j67m2qf9WvaB2sWZ5+/s0jZg0btpIllNqH1s1rZ1XJoXbWTxJJdTyIu
-    3BFtBGA3zHjV2EqdnM3ji8oqJw08oyvE0xDl12nVTJZORPVyOmoqlC9+0gdlqW2CKqfuBL
-    DXyUdG4mx9JHfaFUn5FYuJHawjm32iE2awP1vaOlJQ9WitSzT5QfXwJYgxQQ
-X-ME-Proxy: <xmx:lyLOapy-W76g3zK5_x-3Uz-TzJRYK2BmYVpe2MJNskiehRlVXushyQ>
-    <xmx:lyLOagrHKIh-qtgsG8tn8VdGMKTX91-5JHlWe8GcXLdXervrtbwp2Q>
-    <xmx:lyLOao6_NcQSRRzGajiBZIYlSSCOyPbv_Fn7UG96myPIANX3xKy0cA>
-    <xmx:lyLOanf_J3vvgcP3MjRQ74_5avgmN-zHw5bxt6sAQ9CP6-9GkqkX-g>
-    <xmx:mCLOansFc__r9YVg-AudGJNe0Q5a8NRKckOqbyP5TcDnyA9jglkjuUf4>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Oct 2026 08:22:46 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d5d4f264 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 13 Oct 2026 12:22:44 +0000 (UTC)
-Date: Tue, 13 Oct 2026 14:22:41 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Thomas Bachem <mail@thomasbachem.com>
-Subject: Re: [PATCH v8 0/2] rerere: wait for MERGE_RR.lock, but not in auto
- maintenance
-Message-ID: <as4ikRUi0NZv_jKr@pks.im>
-References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
- <pull.2214.v8.git.1791893274.gitgitgadget@gmail.com>
+Message-Instance: m=1; h=sha256:I9+lcUR6degjOQIqwxRrIAC+i6iKReF5oEu0gj84RAc=:7OydOpMVsQMOj60mBkLOF+1qE/yJ0DwVxxb48FI7o68=;
+X-ME-Sender: <xms:uyPOagQAez-Gy0hzd1SaS-xcL6bTumYtesDFcICDO-awTo2_4LHaMA>
+    <xme:uyPOaoltoeDNJVIZHVoRdXKDJ_bst3p6DUnkO34qv751uS9Ig8ya14Wrj4DHg0Klp
+    Q1lfSyPIuQFoCktKhmyAsdeX1dDH8xdC2MGhzsM92bp6RoVuWjZdJ5U>
+X-ME-Proxy-Cause: dmFkZTEJlfH/bKjF0th09WrAuI0IrAor9MA+hrlRF9dmKUyODpj/Q2JewtEvVLZppc1yta
+    Lk1aJUhHet6kL9I/ZqQBP9ms+CVtq5HkgNLV+Hb57nKwIVe6yFY0ap0qquTQnzYGm5Xi4m
+    NsLbv3x3PC1LSIdQHDvwNSs+OuXZ0qcfrA50OvKigXTL/or8ym9QTkc/p4J37ajrqHJdXl
+    eIk5/Uv+R8ioIr9gQ41lySkFe0f5ydK3heVynt33Zsfbbc7VZVqupgPq7ioOoJNNmf5XTk
+    njmCgIUj1ndPubaXCDYwTYJoZxmZ6lXftbnqH3sjNdETVTMRPUFODvXOlXhghRH07zbMGa
+    qEbL+h+loFVDgVKzjRrkL61pRqreFJHaSQwjixujHpYFyvkJOiwX0rjzUTXUOvLoFbh7il
+    VpeqiKOlSdLo2PmybRmsl1S94IcARISSt71czVcsOuXG6qBjedE0ClVdwV8tA+do6fgFfn
+    KpnHzksbCS35sYd/5MiXtkIxGlPRjXXAwNCpV4fmnznTTQQVw8lju+2HrzCKBbp6+jNmjI
+    Ugx5nseMhdH8uXLx9yAM9nlqec4Nw64jCSB9xwlZkRs/AAbN8FWp2Af4kIcUPuXlGbDV3O
+    JGhQAku01lCKsp7Z62P4yKbhBfO6pnbVd2drmRHCQiIT5ceQdcTnLkoPBkFw
+X-ME-Proxy: <xmx:uyPOajvOJZs4ID8VhYc5lTVraNFKCECzgJnhC4iD6Gj6d37wXQhsmA>
+    <xmx:uyPOasNUkDe9J7BHeAj3POrZjHtGOl3PAzNEw4vwJH8TUcded55zWA>
+    <xmx:uyPOap3EwPwy0ENe9m9AVxMKEQ9mWwtCYq0SfY1pKLVzCCF2coYCVg>
+    <xmx:uyPOagNGBkA-76XbXVWx8Ub860w65Bnl4H4F0OsIuvRyM5nRk9gOtg>
+    <xmx:uyPOaoLx8HziYjglb14UUa8-q72TwX8HpM9W1OQDI1lMe9CryFbrmA8C>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 3A92878273B; Tue, 13 Oct 2026 08:27:39 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2214.v8.git.1791893274.gitgitgadget@gmail.com>
+X-ThreadId: A1sfaQj8oK1o
+Date: Tue, 13 Oct 2026 08:27:18 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
+ git@vger.kernel.org, "Julia Evans" <gitgitgadget@gmail.com>
+Message-Id: <1637a8fb-d689-47fe-a008-e8e90d9889b9@app.fastmail.com>
+In-Reply-To: <2642391e-1cef-4071-ae3f-db6fee3fab74@app.fastmail.com>
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+ <cb482e6d-0c76-4f34-b72c-03b5234d4f37@app.fastmail.com>
+ <5dad29e9-24e6-494a-9b0f-701af856ae69@app.fastmail.com>
+ <2642391e-1cef-4071-ae3f-db6fee3fab74@app.fastmail.com>
+Subject: Re: [PATCH] doc: checkout: rewrite detached HEAD state explanation
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 13, 2026 at 12:07:51PM +0000, Thomas Bachem via GitGitGadget wrote:
-> Changes since v7:
-> 
->  * The rerere.lockTimeout entry no longer says that the command fails when
->    the time is up (Junio).
-> 
->  * The lock tests grep for the "Unable to create" message about
->    MERGE_RR.lock (Junio).
-> 
->  * The wait for the background unlocker is now in test_when_finished
->    (Junio).
-> 
->  * The rebase --abort test aborts its rebase in test_when_finished, so a
->    failed check cannot break later tests.
-> 
->  * The test "merge fails once rerere.lockTimeout is up" never waits, so it
->    is now called "merge fails on a lock it cannot take".
-> 
->  * In patch 2, rerere_gc() takes RERERE_NOWAIT again instead of its own enum
->    rerere_gc_flags (Patrick).
-> 
->  * The comment about waiting in setup_rerere() now says "by default", and as
->    in patch 1 it sits directly above the call that takes the lock.
-> 
->  * A comment in t7900 says why the tests with a held lock create rr-cache.
 
-I think this is in a good enough state by now. Thanks!
 
-Patrick
+On Tue, Oct 13, 2026, at 8:20 AM, Kristoffer Haugsbakk wrote:
+> On Tue, Oct 13, 2026, at 13:48, Julia Evans wrote:
+>> On Wed, Oct 7, 2026, at 3:02 PM, Kristoffer Haugsbakk wrote:
+>>>>[snip]
+>>>>  Documentation/detached-head.adoc   |  43 ++++++++++
+>>>>  Documentation/git-checkout.adoc    | 129 +------------------------=
+----
+>>>>  Documentation/gitdetachedhead.adoc |  14 ++++
+>>>
+>>> Why in one word instead of hyphenating `detached-head`?
+>>> (gitdetached-head(7))
+>>
+>> Currently the guides are all one word with no hyphens.
+>> Happy to use a different style if folks think we shouldn't use
+>> the current naming convention for the guides
+>
+> I=E2=80=99m confused. It doesn=E2=80=99t look like that to me?
+>
+>     $ git help --guides
+>     The Git concept guides are:
+>        core-tutorial    A Git core tutorial for developers
+>        credentials      Providing usernames and passwords to Git
+>        cvs-migration    Git for CVS users
+>        diffcore         Tweaking diff output
+>        everyday         A useful minimum set of commands for Everyday =
+Git
+>        faq              Frequently asked questions about using Git
+>        glossary         A Git Glossary
+>        namespaces       Git namespaces
+>        remote-helpers   Helper programs to interact with remote reposi=
+tories
+>        submodules       Mounting one repository inside another
+>        tutorial         A tutorial introduction to Git
+>        tutorial-2       A tutorial introduction to Git: part two
+>        workflows        An overview of recommended workflows with Git
+>
+>     'git help -a' and 'git help -g' list available subcommands and some
+>     concept guides. See 'git help <command>' or 'git help <concept>'
+>     to read about a specific subcommand or concept.
+>     See 'git help git' for an overview of the system.
+>
+> What is definitely the case is that there is no hyphen between `git` a=
+nd
+> the first word, maybe in order to distinguish section 1 commands) and
+> section 5 and 7 manpages.
+
+Thanks, I'll change the naming, I didn't realize that. For some reason I=
+ felt
+sure it was the other way. Maybe we should rename `gitmergeconflicts`
+to `gitmerge-conflicts` in the other patch series too.
+
+My best guess is that I made that mistake because I (maybe idiosyncratic=
+ally)
+always use `man <page>`  to access the Git man pages, and typing
+`man gitdetached-head` feels awkward to me.=20
+But of course we're recommending that folks use `git help detached-head`,
+and `git help detached-head` is much nicer than `git help detachedhead`.
