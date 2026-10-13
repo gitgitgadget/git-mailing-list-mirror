@@ -1,353 +1,242 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A542F9C37
-	for <git@vger.kernel.org>; Mon, 12 Oct 2026 22:50:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D590C17C203
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 00:08:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791845425; cv=none; b=WrWiIOHo4j1T8ycfRrtntBDwgOTHu6VEch0YM3A2IrqjurWlsEe9Ku/Bc1vtRegtdcQT2g6Du5Hd4vT0CX1c3KNIRAZN+olCkRg2n59l85ORsD9db0KDJOznJSUQsQgqM16ND4DurryHVL1zswBqfxGz4VuizWmNWzJD0p7w/TM=
+	t=1791850097; cv=none; b=PQpnYa/i/S1OdhcWyhCp9n/IgMs2lSeIuXfyT7oqXleIWtvm8+STes32u1pOUoMGUJ5VGAxZZAjbLJmcq01NpIDntl14vXkvw/gRPAuH/10XylHTEWK0eKFzLHz+T8bcSscYphZwNgVrMYfoMCXWO0G5GGI78nj5Em8gP43IHQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791845425; c=relaxed/simple;
-	bh=WUQFxFalcWQ+urfET5wg1XtGMRZCnhlWjYIgj/8zo+0=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=dNrCLLOdel0TsbTLdi2HlnACeBt8fcndXneIcemx1iuDyrqyuzaqRzwQKjeJchvpslLdcrkgFXBS9XXEWtF9CZYStjD0raFEcTgjSPmpnoa+1+OLjcjL5DSgGaOzM17fhBU5kw+Z0bF33ysqOmHHenAsO69jo5LzctGHy/iRQeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kGojucSm; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791850097; c=relaxed/simple;
+	bh=Gx+2N3pX64SMFMd7oj94l6KXrJIx/aXZ1Kmo3CIoKYU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XP1XOsNr8kfMu13nDhB0JqjX/Z0RhJzacA/lk6LfXw04DMqQ1bIsJpdLiywiakh4/9UhsitDfyIlTg5zZfsmBhfXnl2+7wnL9/28zicCwUqrqJJlv4WKQy3JT3mp9YT0SQVa5OUgvStMLOfKGaduu4agFGxIh4LSEYV3JZx3OLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=p7f4Bu0Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WZ5CapoC; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kGojucSm"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-8249ca723bcso1371985a34.0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2026 15:50:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791845423; x=1792450223; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=TenJduVcBRgyGD8ciXTbv9Ba+RCeJlSG/ghXYFCUE3o=;
-        b=kGojucSmcQoZwvYVUGaloT9U92c8eNZqURThZ+R8OsGs/oK7N6zzXgwMXBkuQAYeqV
-         q1HD/H4QXfTSZtneCmq0j4NCSzh8f7MozD3KsP8vCeAXmQKQTPZnHdI9Dmsw9XygGm2r
-         Jtea2aMtcQqqpZc6SSPtH99tLAxwTRzKO837LUbK25oezhmTAF+Xg2G9HeItDQ1ME4ey
-         JylzxBDnJ8pATMiZIYnRxBqKMjd7P1YvJUZ59Aul43euK5U1ow099CwK7+kgVXBqsz92
-         jud3ZKdR+NLWKLg5rttKjyAC+O+oh4KE7Smc3R4fIZjJ/X8OoJBf2iImLrHBD8kE3Da4
-         1O3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791845423; x=1792450223;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=TenJduVcBRgyGD8ciXTbv9Ba+RCeJlSG/ghXYFCUE3o=;
-        b=KrGs2FjLBKwaXNkkHrpFkJ2io58hadeTUnzsTtcTO8z91X+tp1cRoCpM6pMuAurf+0
-         QO4VL8PYNNkHiijRmdh7RkFVR9rQlkOxCPbi+tGA3JZoHJbDLpqfs6ezJQcnwiLwAVwS
-         COzVg+61Y8dnM4aoaBMkuHQjQVG4/J2U1DQc/1vw2FUB2wKOpepRQ7NHGb94mpDMTY8J
-         aS1l5DLQWr9A/lDGNv1TPpAM0FasfvA9uvGce4XE4Dn8JRydbEL2rMaQfqRLHhOF+BF5
-         dpOUsYaisoEnAlwIjbRQti+N6+9FCotoG+ieFwezusvnWw/7FYs5ZDDnRwKH5wKCRKOW
-         gYsA==
-X-Gm-Message-State: AFq9FYLrEm246XJs+Zkr6iWRXSHHqnYTssmSsXXugVyrWsL8EN8dBBXa
-	panpQx588VoA+UihPEILjOBwJ5Jmv7rdeF15eCExAh2rBzU/2X+Rgoxxdbn28pGU
-X-Gm-Gg: AYBFou1mJfYYKBHxqfR1kdv/EqA/uGvAWacPQ7teN1aG1jExGZ+KuiAKLJatIFSEbH7
-	3h79wQlYH2FgiisuAL3ccOcS4m8qkbYZaBCGvWJAu1Ry0T59CEQl1t5IrgUfGGgXfOcttkgdSr7
-	uB1F2lfw+Q9gyrSDo51HTeAQOIW+rPnxshq0AyFDWvm7tHICHrwmN9kW22luV3A3SdcB376DZ31
-	oy7OgnlFtqqwwdGNisZywS90f7cfWoebEXAM91//hsMS2eASiJHbl1SEnnd1tUgAhkIPtLjRb1T
-	vDAnWhWcNMZ41I7rXN6wLbmqJ3I24xLF85hicEhltBwXxhZhE9V+zp+TbUToJXw6jparHBgfbZ3
-	CRd3Bx/J4yfT3mPvifPui48LHWw6GJVGJASgNf6P4Tp6QTnI91xjTXtr3MyyDVKjl0te1Ju5R7b
-	dmRByF9r51P2cwudxNtSdvfOnZTq4CN9uNN4u8250HKDQEFo8ueMp407KjL1uVC2/EVrPJ72gUy
-	m6X
-X-Received: by 2002:a05:6830:4104:b0:822:27d6:c28a with SMTP id 46e09a7af769-83090c27934mr11182084a34.4.1791845422900;
-        Mon, 12 Oct 2026 15:50:22 -0700 (PDT)
-Received: from [127.0.0.1] ([135.119.100.146])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-830385b9cb0sm11265635a34.4.2026.10.12.15.50.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2026 15:50:22 -0700 (PDT)
-Message-Id: <pull.2252.v2.git.1791845420568.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2252.git.1791653078449.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="p7f4Bu0Z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WZ5CapoC"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 02D9C7A012B
+	for <git@vger.kernel.org>; Mon, 12 Oct 2026 20:08:13 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Mon, 12 Oct 2026 20:08:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791850093; x=1791936493; bh=tUhHOc4y2e
+	JzlkVd+D5hNX5X3PATXRhUwzJVhrKTvoE=; b=p7f4Bu0ZQxHeh9TtTkkFD5ULcV
+	ARZKR+4CuF8du4JwO9XTGf5ZewsTRXXjJ+SiC45tvhZm9siEA9VBk2enZkOfqThs
+	32BSqoxH7h+c0c2yuAd/jSyjyIRRspN8c3BzLj+kk36lEU6kwzXMbInpUkcYfCBr
+	PZW1PDU+ikIrHf27InasLakAgykYW4xjK4vrkGfMharbI3tpAvm4281ULOYYqAU4
+	DSVFqAYwCrF+2MMoGJ6k2Ia2Sgka/LHtXWQIxLFic/V0e8KhWeTyjKihFutPcFco
+	ZUI7rUYPm/1mag46n8Mt6LZ7uX9sytqxm9FSnoNJySh1lU2zUAx9sw3sUteQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791850093; x=1791936493; bh=tUhHOc4y2eJzlkVd+D5hNX5X3PATXRhUwzJ
+	VhrKTvoE=; b=WZ5CapoCAQ2+Xc3QEybeWOUqXg8/ge5xdz2uugMsU+w9t6rQMcQ
+	pUL4chJVnVeeFp+xFvuf9TFV+f3y5TWfOu1QuaCI0tbR1DeNvAtfjy/pGcmm56zH
+	TUsA99mYhfK+pr6bmkAFN+sgrG0cneGV0M2LeOrjKylTy1UeBVu4RwwHv6tntj91
+	U6qD/8QS4b69wpexIHGSmGRvRnxSvyTUzo/qX5cHi/tnzCGuGE1Ja6WzlgkeJbfL
+	cdG9/MFTyYQT/ImG15dPWbThNBR3Sy9CPHCTbuTNFgGLUwhNvFIvtVxvkmsWGzI1
+	Vew9TQCDcSYLapuIAPXkU7BojaISzxlITjA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791850093; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:gG2kkOz+3Y5GCSBlBMC+Z31QTj3FdZi49sG4hO/PnZ79Z79
+	hNrk8jnngcFEsSkXATWDU5lI8GWofdYM+Yyf1aH+JCs8/wIsoz0voEo/hr/AvyPx
+	E62jJfbGGDNEg3eljzo0dkRaDrD3Q5fog+iyY5rIwFOrIsLIwJR0B4+1peUpWVhE
+	PsR7SWL1c30dPp/e0Myj1k8J1upk3oyzEZUsUJv4on6L03RpJmpvfvW8sYy//Dq6
+	Y/yGT8kw62pPmxhB4Dprq/MW2I79naP5qpJiEDNY60EiIarFtJaNIC8Q1vwmFatk
+	NptIMrZRolaIEbh7Vr2jn3lMHyye/GRtk02Fypg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:37CGZj0igBKuyhC+PbJSldPJNeEmvRhoOwt9BI27ksA=:Gx+2N3pX64SMFMd7oj94l6KXrJIx/aXZ1Kmo3CIoKYU=;
+X-ME-Sender: <xms:bXbNamfU5fOqiTH4QL_v-JfihUTjVgwKaJZyUSKh0c2dX0xxJ_RTiw>
+    <xme:bXbNanHg0JFcj-m3OLJe6TojYRco0uihJst35276lWFdPxO08tvbY9WXu7hYCuBKe
+    Sv_o1Y29X0Fi9VTH6SDe1uK15xcvi1LPlNyySqGCWNW1KaDGRqmooDy>
+X-ME-Received: <xmr:bXbNav2o00il0bq2vIMAeceCJxtsUSn1lt6z6O4s3RNYLLDDe8PMvuR2j-clKeOObrhlTF389xmOjA7p4KPUrZCpBfLpv2Nx7szx>
+X-ME-Proxy-Cause: dmFkZTECUlcoS0LvJLD0m9cBg27nxvphk/PBO+1Ln/WBFzqvDiyC48Nx/fhVCvbqQO3k6y
+    Zk1IVGTeKDn2U36DZEu9FdrnTSg3fmiOGhjZVCz2FagdMSXxeeLoT2WCT+lLRpXP8gAv5Q
+    TrGHHriNt9DhMfjvoOV0KU9uB6JTyt75VAJJsdt4rWHr2kkwaNf/Td+lJzW8+CoTBWLPwD
+    7yjJ1vd9pp++dgi3TU7/uyr/gu9sDT+zb6aWnHBxRRgAk8pa9XLQT08BovgwxVy1uGRw28
+    n15qQ98mPpghwWM4wZdXrDxyrtai68hVy5Wj+OKgDhljH3KhMQpCin6Hj83ZvPlU6nZnnT
+    esjWd1Bg5I0w5pETI4UFFuVxUo8XEkU5SQqCe6haxgRc9SLGHjWTBuwLkdZwj2nqmVnFMJ
+    u3Wa+sF3H4LgEqkcBfc55RjMSswAylb1LSpSIJHEsWG8Zxa4cS/EXhK8nat4pY9gdUcfDx
+    VSaq6lCQ3lqLN0RlRCjnJZtelCaQVPzVP7uvd+uxH6Fan9mGOopj43NuM56WqH+QDL0/eO
+    +A746EK/TVP3mmzGbdWs2tq2vXaQkDHKVlKrsFxxTCpuD5bOkgW1pz1qhtjLAqBNuOEJP8
+    0wfjCuPYNm5pA0dvU5KFh/rC6qNbuuHbqop2duXeFX+Eh+5CnaAW/WUar1oQ
+X-ME-Proxy: <xmx:bXbNavlrz-Ct_kQQV7tzHRKV6BBMTOFe_Dxzec98lm3jtZESloDkkA>
+    <xmx:bXbNav9r9L_Rn8Xy3xDJUoZV8giMjI3PXL_InRhRJxfpbLuRhzec9Q>
+    <xmx:bXbNakpvKQkAs0u9G0hSg6AnhOz-oxWvJWzZcwGXuZqXcWSCY_GdtQ>
+    <xmx:bXbNaokmEjvv7EeZ1yD6mRDuKZXIORVu104W5efXnRh1SBkPYiW10Q>
+    <xmx:bXbNat9ndftmiDGyhvlhCqDty6iUSqs6xIX9vMCrQk3yQUaQ2XzCgC27>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 Oct 2026 20:08:13 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Marc Becker via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Aniket Gupta <aniketgupta3001@gmail.com>,  Marc
+ Becker <becm@gmx.de>
+Subject: Re: [PATCH v2] fast-import: fix lookup for new commits and tags
+In-Reply-To: <pull.2252.v2.git.1791845420568.gitgitgadget@gmail.com> (Marc
+	Becker via GitGitGadget's message of "Mon, 12 Oct 2026 22:50:20
+	+0000")
 References: <pull.2252.git.1791653078449.gitgitgadget@gmail.com>
-From: "Marc Becker via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 12 Oct 2026 22:50:20 +0000
-Subject: [PATCH v2] fast-import: fix lookup for new commits and tags
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	<pull.2252.v2.git.1791845420568.gitgitgadget@gmail.com>
+Date: Mon, 12 Oct 2026 17:08:11 -0700
+Message-ID: <xmqq1p9u4g44.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Aniket Gupta <aniketgupta3001@gmail.com>,
-    Marc Becker <becm@gmx.de>,
-    Marc Becker <becm@gmx.de>
+Content-Type: text/plain
 
-From: Marc Becker <becm@gmx.de>
+"Marc Becker via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Queries for commits created during the same 'git fast-import' session
-result in a crash:
-    < reset refs/heads/newbranch
-    < from <new-commit-oid>
-    > fatal: not a valid commit: <new-commit-oid>
+The patch text seems to make sense, but ...
 
-Getting file content for commit has no issue (working implementation):
-    < ls <new-commit-oid> file-in-new-commit.txt
-    > {file content}
+> From: Marc Becker <becm@gmx.de>
+>
+> Queries for commits created during the same 'git fast-import' session
+> result in a crash:
 
-During import, new objects may not (yet) be reachable via the ODB layer.
-Try to resolve requested tag/commit via object cache first
-to avoid crash.
-Add test to 't/t9300.sh' with references to a pending tag and commit.
+Should it say "sometimes results in a crash"?  It is not like that
+no queries for commits can ever be made before the session gets
+closed, right?
 
-Signed-off-by: Marc Becker <becm@gmx.de>
----
-    fast-import: fix lookup for new commits
-    
-    Changes since v1:
-    
-     * address notes regarding commit message
-     * stick to line length in new code
-     * add test with (fixed) pending references (files for SHA1 and SHA256,
-       no coproc in sh, avoid named pipes)
+>     < reset refs/heads/newbranch
+>     < from <new-commit-oid>
+>     > fatal: not a valid commit: <new-commit-oid>
+>
+> Getting file content for commit has no issue (working implementation):
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2252%2Fbecm%2Ffix-fast-import-commit-from-existing-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2252/becm/fix-fast-import-commit-from-existing-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2252
+... what do you mean by "(working implementation)" here?  Do you
+mean that without your patch applied, neither commits nor blobs can
+be read, and with the patch applied we get a "working
+implementation" and blobs can be read?  Or do you mean that objects
+other than commits do not have such a problem?
 
-Range-diff vs v1:
+>     < ls <new-commit-oid> file-in-new-commit.txt
+>     > {file content}
 
- 1:  4e50f63354 ! 1:  d834e2fc47 fast-import: fix lookup for new commits
-     @@ Metadata
-      Author: Marc Becker <becm@gmx.de>
-      
-       ## Commit message ##
-     -    fast-import: fix lookup for new commits
-     +    fast-import: fix lookup for new commits and tags
-      
-     -    Queries for commits created during the same 'git fast-import'  session
-     +    Queries for commits created during the same 'git fast-import' session
-          result in a crash:
-              < reset refs/heads/newbranch
-              < from <new-commit-oid>
-     @@ Commit message
-      
-          During import, new objects may not (yet) be reachable via the ODB layer.
-          Try to resolve requested tag/commit via object cache first
-     -    to avoid crash and (eventually) improve lookup speed.
-     +    to avoid crash.
-     +    Add test to 't/t9300.sh' with references to a pending tag and commit.
-      
-          Signed-off-by: Marc Becker <becm@gmx.de>
-      
-     @@ builtin/fast-import.c: static void fast_import_state_init(struct fast_import_sta
-       	state->option = option;
-       }
-       
-     -+static struct object_entry *dereference(struct object_entry *oe, struct object_id *oid);
-     ++static struct object_entry *dereference(struct object_entry *oe,
-     ++					struct object_id *oid);
-      +
-       static void parse_argv(struct fast_import_state *state);
-       static void parse_get_mark(struct fast_import_state *state, const char *p);
-     @@ builtin/fast-import.c: static void parse_from_existing(struct branch *b)
-       		parse_from_commit(b, buf, size);
-       		free(buf);
-       	}
-     +
-     + ## t/t9300-fast-import.sh ##
-     +@@ t/t9300-fast-import.sh: test_expect_success 'Y: rewrite submodules' '
-     + 	)
-     + '
-     + 
-     ++cat >Y-reference-pending-sha256 <<\Y_INPUT_END
-     ++commit refs/heads/main
-     ++committer A U Thor <author@example.com> 1712563200 +0000
-     ++data 14
-     ++commit message
-     ++M 644 inline test file
-     ++data 14
-     ++dummy content
-     ++
-     ++tag newtag
-     ++from 17e650f097a4db6fe069c96935360d3ccc9b35c4018728c5f311a4217c2ced3d
-     ++tagger A U Thor <author@example.com> 1712563300 +0000
-     ++data 11
-     ++tag message
-     ++# no emty line after tag data!
-     ++reset refs/heads/other
-     ++from 85edc5eac315bc680677b2fc71622bd77476f057eb8dc8ed6a497803a24f1f46
-     ++
-     ++commit refs/heads/further
-     ++committer A U Thor <author@example.com> 1712563400 +0000
-     ++data 21
-     ++what about 2nd commit
-     ++from 17e650f097a4db6fe069c96935360d3ccc9b35c4018728c5f311a4217c2ced3d
-     ++M 644 inline other test file
-     ++data 19
-     ++more dummy content
-     ++
-     ++done
-     ++Y_INPUT_END
-     ++
-     ++cat >Y-reference-pending-sha1 <<\Y_INPUT_END
-     ++commit refs/heads/main
-     ++committer A U Thor <author@example.com> 1712563200 +0000
-     ++data 14
-     ++commit message
-     ++M 644 inline test file
-     ++data 14
-     ++dummy content
-     ++
-     ++tag newtag
-     ++from 85b46dd918355ff17b4109ec738723d42f235a04
-     ++tagger A U Thor <author@example.com> 1712563300 +0000
-     ++data 11
-     ++tag message
-     ++# no emty line after tag data!
-     ++reset refs/heads/other
-     ++from ec6c4db71feb5f66615214dad2324ce030e777a7
-     ++
-     ++commit refs/heads/further
-     ++committer A U Thor <author@example.com> 1712563400 +0000
-     ++data 21
-     ++what about 2nd commit
-     ++from 85b46dd918355ff17b4109ec738723d42f235a04
-     ++M 644 inline other test file
-     ++data 19
-     ++more dummy content
-     ++
-     ++done
-     ++Y_INPUT_END
-     ++
-     ++test_expect_success 'Y: reference pending tag or commit' '
-     ++	git init reference-pending &&
-     ++	(
-     ++		cd reference-pending &&
-     ++		git fast-import < "../Y-reference-pending-$(git rev-parse --show-object-format)"
-     ++	)
-     ++'
-     ++
-     + test_done
+Or do you mean the current code does not allow reading commits but
+everything else it does allow reading?  If so, such a description
+should be followed by why commit alone is so special, or put it
+differently, why blobs can be accessed just fine.  Otherwise, saying
+that getting file content would work fine only confuses readers
+without adding much value to them.
 
+> During import, new objects may not (yet) be reachable via the ODB layer.
 
- builtin/fast-import.c  | 19 +++++++++---
- t/t9300-fast-import.sh | 68 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 83 insertions(+), 4 deletions(-)
+This "may not (yet)" is very believable; I would be very surprised
+if we were holding any and all object data we were fed in core
+without flushing to the ODB, but depending on the timing of your
+query, necessary objects may or may not have been flushed.  Is that
+what you meant by "may not (yet)" here?  If so, that confirms my
+"sometimes results in a crash" above, right?
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index fbd919982c..574a03c484 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -292,6 +292,9 @@ static void fast_import_state_init(struct fast_import_state *state,
- 	state->option = option;
- }
- 
-+static struct object_entry *dereference(struct object_entry *oe,
-+					struct object_id *oid);
-+
- static void parse_argv(struct fast_import_state *state);
- static void parse_get_mark(struct fast_import_state *state, const char *p);
- static void parse_cat_blob(struct fast_import_state *state, const char *p);
-@@ -2658,12 +2661,20 @@ static void parse_from_existing(struct branch *b)
- 		oidclr(&b->branch_tree.versions[1].oid, the_repository->hash_algo);
- 	} else {
- 		unsigned long size;
--		size_t size_st = 0;
- 		char *buf;
-+		struct object_entry *e = find_object(&b->oid);
- 
--		buf = odb_read_object_peeled(the_repository->objects, &b->oid,
--					     OBJ_COMMIT, &size_st, &b->oid);
--		size = cast_size_t_to_ulong(size_st);
-+		while (e && e->type == OBJ_TAG)
-+			e = dereference(e, &b->oid);
-+
-+		if (e && e->type == OBJ_COMMIT && e->pack_id != MAX_PACK_ID) {
-+			buf = gfi_unpack_entry(e, &size);
-+		} else {
-+			size_t size_st = 0;
-+			buf = odb_read_object_peeled(the_repository->objects, &b->oid,
-+						     OBJ_COMMIT, &size_st, &b->oid);
-+			size = cast_size_t_to_ulong(size_st);
-+		}
- 		parse_from_commit(b, buf, size);
- 		free(buf);
- 	}
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index d9de2ef0d8..1f52be2c2c 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -3938,4 +3938,72 @@ test_expect_success 'Y: rewrite submodules' '
- 	)
- '
- 
-+cat >Y-reference-pending-sha256 <<\Y_INPUT_END
-+commit refs/heads/main
-+committer A U Thor <author@example.com> 1712563200 +0000
-+data 14
-+commit message
-+M 644 inline test file
-+data 14
-+dummy content
-+
-+tag newtag
-+from 17e650f097a4db6fe069c96935360d3ccc9b35c4018728c5f311a4217c2ced3d
-+tagger A U Thor <author@example.com> 1712563300 +0000
-+data 11
-+tag message
-+# no emty line after tag data!
-+reset refs/heads/other
-+from 85edc5eac315bc680677b2fc71622bd77476f057eb8dc8ed6a497803a24f1f46
-+
-+commit refs/heads/further
-+committer A U Thor <author@example.com> 1712563400 +0000
-+data 21
-+what about 2nd commit
-+from 17e650f097a4db6fe069c96935360d3ccc9b35c4018728c5f311a4217c2ced3d
-+M 644 inline other test file
-+data 19
-+more dummy content
-+
-+done
-+Y_INPUT_END
-+
-+cat >Y-reference-pending-sha1 <<\Y_INPUT_END
-+commit refs/heads/main
-+committer A U Thor <author@example.com> 1712563200 +0000
-+data 14
-+commit message
-+M 644 inline test file
-+data 14
-+dummy content
-+
-+tag newtag
-+from 85b46dd918355ff17b4109ec738723d42f235a04
-+tagger A U Thor <author@example.com> 1712563300 +0000
-+data 11
-+tag message
-+# no emty line after tag data!
-+reset refs/heads/other
-+from ec6c4db71feb5f66615214dad2324ce030e777a7
-+
-+commit refs/heads/further
-+committer A U Thor <author@example.com> 1712563400 +0000
-+data 21
-+what about 2nd commit
-+from 85b46dd918355ff17b4109ec738723d42f235a04
-+M 644 inline other test file
-+data 19
-+more dummy content
-+
-+done
-+Y_INPUT_END
-+
-+test_expect_success 'Y: reference pending tag or commit' '
-+	git init reference-pending &&
-+	(
-+		cd reference-pending &&
-+		git fast-import < "../Y-reference-pending-$(git rev-parse --show-object-format)"
-+	)
-+'
-+
- test_done
+Here is what my assistant produced trying to guess what the commit
+wanted to say.  I do not know how close it is to what you wanted to
+say, but if the change were explained like this, it may have been
+easier to understand.  At least, failures for commit vs success with blobs
+you hinted at is explained sufficiently.
 
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
--- 
-gitgitgadget
+Of course, my assistant may be totally off the mark and the following may
+not explain what you wanted to do at all.  I dunno.
+
+    fast-import: allow 'from' to reference new commits and tags by oid
+
+    During a 'git fast-import' session, newly created objects are written
+    to an in-progress packfile and recorded in fast-import's internal
+    object table.  Until a 'checkpoint' command or the end of the session
+    finalizes and indexes that packfile, these objects are not visible to
+    the repository's object database via odb_read_object_peeled().
+
+    Commands such as 'ls' (via parse_treeish_dataref() and dereference())
+    and 'cat-blob' already account for this when given a hex object name:
+    they look up the object in fast-import's internal object table with
+    find_object() first and read it from the in-progress packfile with
+    gfi_unpack_entry() when its '.pack_id' is not MAX_PACK_ID.
+
+    By contrast, when 'from <committish>' (in a 'commit' or 'reset'
+    command) is given a hex object name instead of a mark or branch name,
+    parse_objectish() parses the hex string into 'b->oid' and calls
+    parse_from_existing(), which unconditionally looks up the object via
+    odb_read_object_peeled().  If the object is a commit or tag created in
+    the current pack cycle, odb_read_object_peeled() returns NULL and
+    fast-import dies with "fatal: not a valid commit: <oid>".
+
+    Teach parse_from_existing() to look up 'b->oid' with find_object()
+    first, peel any tag objects in the object table using dereference(),
+    and unpack the target commit with gfi_unpack_entry() if it resides in
+    the in-progress packfile, before falling back to
+    odb_read_object_peeled() for objects in the repository's object
+    database.
+
+> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+> index fbd919982c..574a03c484 100644
+> --- a/builtin/fast-import.c
+> +++ b/builtin/fast-import.c
+> @@ -292,6 +292,9 @@ static void fast_import_state_init(struct fast_import_state *state,
+>  	state->option = option;
+>  }
+>  
+> +static struct object_entry *dereference(struct object_entry *oe,
+> +					struct object_id *oid);
+> +
+>  static void parse_argv(struct fast_import_state *state);
+>  static void parse_get_mark(struct fast_import_state *state, const char *p);
+>  static void parse_cat_blob(struct fast_import_state *state, const char *p);
+> @@ -2658,12 +2661,20 @@ static void parse_from_existing(struct branch *b)
+>  		oidclr(&b->branch_tree.versions[1].oid, the_repository->hash_algo);
+>  	} else {
+>  		unsigned long size;
+> -		size_t size_st = 0;
+>  		char *buf;
+> +		struct object_entry *e = find_object(&b->oid);
+>  
+> -		buf = odb_read_object_peeled(the_repository->objects, &b->oid,
+> -					     OBJ_COMMIT, &size_st, &b->oid);
+> -		size = cast_size_t_to_ulong(size_st);
+> +		while (e && e->type == OBJ_TAG)
+> +			e = dereference(e, &b->oid);
+
+This would mean we would peel down a tag that points at a tree or a
+blob to tree or blob.  And that object is not a commit, so we would
+continue going down the other "read from odb_read_object_peeled()"
+code path.  That is the same behaviour as the original (in happy
+case, when the objects are flushed to the odb layer).
+
+> +		if (e && e->type == OBJ_COMMIT && e->pack_id != MAX_PACK_ID) {
+> +			buf = gfi_unpack_entry(e, &size);
+> +		} else {
+> +			size_t size_st = 0;
+> +			buf = odb_read_object_peeled(the_repository->objects, &b->oid,
+> +						     OBJ_COMMIT, &size_st, &b->oid);
+> +			size = cast_size_t_to_ulong(size_st);
+
+And the code inside this "else" clause is the same as the original.
+
+> +		}
+
+So the change itself makes sense.  It is that it is not clear if the
+"makes sense" I just said matches what you described in your proposed log
+message.
+
+>  		parse_from_commit(b, buf, size);
+>  		free(buf);
+>  	}
