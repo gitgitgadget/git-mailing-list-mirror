@@ -1,154 +1,171 @@
-Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AAD55D88A
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 21:48:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585523ACF14
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 22:05:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791928109; cv=none; b=CnCjz9PotzXgcSxIrCxEtu8aMIJtxOl8VtrZdwappsw/j3PmktJU1kAYElBUZ5EBOgE8pMAMCuxfZcTVMRRWiAaDBgD/Wswk5ADreVgj3ff8SXt0cVy24bPgWTTg9R+cyFTJ9PsF2Mwif8f3Q7ytMs7TbwcAd8al9N+NHh9yMfk=
+	t=1791929132; cv=none; b=AAWLLORQMBMqejYtrSStUPyEkQ7C4/WZaaCyDhx8zxQnuJ3MHY/gkqrGxHCB2KlhtyCMBs98asfK4F9F4vVJzeAcJikJetloL9/vvglqR2toG3aPxfjxlOdzqh2MyuznJWrNUeJ4DQ1GDe6Py0dlvg4DDVH4JGn3EhNoQ3fgHms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791928109; c=relaxed/simple;
-	bh=9guKryHv9lH8/76knaMrBc8J6tmX+KBDXjaOicp6N2Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Cp6BeGrILv78xkUg5Ft00DiBi5gkAGL9ajveixupvV5SKka/F0DakffFgIyXN/220f3WdBqIhoALvKHUSDY6br8pCBF/Id9SDiTqbZQlMpnXtp5z1KKupD1Ui+pYmGgjDl+PLgxHoV1uMySC/k24IFbJ8Sh5PBdB/JA4C65KgM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fXV2ED3m; arc=none smtp.client-ip=209.85.161.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791929132; c=relaxed/simple;
+	bh=Rc+xsyHAucL96le5sDYCZyKfb0koAcTh/bFu8S9zjYM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GIN++WNON4kTTNBVAhQbDRLAhPCrngRMWgAxuINHs8i+jJKia/4VllrukyAren6mbmwQdvlBAGxrP0gM3jRY8wmOyYlEFywpUuG/Sp7+ESVG0sHihdaDE73sRX+wCik0B9jdhzkOr0HTfmyrG4EV63RQfgQMlkkIxoCuJgTXqUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JlzqU1gZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r9GyJZqv; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fXV2ED3m"
-Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-6aa9606ddadso286879eaf.0
-        for <git@vger.kernel.org>; Tue, 13 Oct 2026 14:48:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791928107; x=1792532907; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=XvUVULnVsnCCDDgn+SMnph/KnbAVty1hbv7nZ9NG/g0=;
-        b=fXV2ED3mia0Yc/EVDeeYV1xDb81Gh5/BzC8ZSBcDyPDTNxQmrNO5TfhPvlaiktbsbD
-         I+QSja+5rPk4pLz+BHud8xdEZoHLTX14SBU5+quhK1ihQAWpR50zueR95Mh7LJaiylje
-         98dtqp5p1YOQw9ycR1B+L1R+ity7ZHLmxlLYyj9rchwZLVyrgqxglo9efdnzfdWKZ6NP
-         rJxUZLqOA2W0H8xxmzfD9/XplJenjm2VC+3k6+WbovAB9/y00d4atfAeC9JX1G7XG1xF
-         EhoYtfWobodh1Cx5SKh79eYp8oGi/dj6hL4ts2jvC0TqTiyVPHdiSCkFFai76P3sdvr6
-         94tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791928107; x=1792532907;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XvUVULnVsnCCDDgn+SMnph/KnbAVty1hbv7nZ9NG/g0=;
-        b=P76w9NfP1dcVuhlt2AfBRy7HffljaXHk313k9LbdgEofa4Jf8Wq7yp/2HaChu5QQFl
-         0QN9DRw070L6tY7AJocozaCo4vMLL3Qukp8FzfeszJJae7zb6xGVJXkbHAOWzok6Bgac
-         JwL9u42Ikh5NSb22kAijh5sjF9eQdLzHmR9rChkhuGfrA7B41cm+n7gRIwgO0TsD8t88
-         H0JZsp3l9AtGVEWZgRUupXphhcUiqrG0Z0h1cQ2IbZr0UxKiG2D0tERjzI8AHfESz6xh
-         xaP/S2g875pp9RKhmsQAF3N9f0wYE75G8PnK5lA9g8YSmVP+iAqs6o4V/Z/UlRnjuP92
-         sE+g==
-X-Gm-Message-State: AFq9FYLSBlr+rHgQxJUylMWq7qmBqWFwInGh+4sKy6/CAB5pExskDstM
-	6nkNgR768ebbQ5eLb1XNJUdJgAgsvVZ3mmhRBSmuQ9UIZ/PU2xVmB5tKQHl0xw==
-X-Gm-Gg: AYBFou2UpGEJGW2VKFla2HcMJN1SpWEavgMyzQEZIiEiIReAO893aybeQoTnF/2ExXn
-	xfTgU9H5qb+6b7V/0kw4wi5YwuTvLRMp5asD7LszuiJzpWrj8epQAp7azTpDouD7L9BnmAu9inb
-	fC+rfSxboUlsEkPJsd81JJTxwZF8cnMIwanH+Gx2MW1h1Jds5c/UW5jFEW+WfB2weC9nVV2PnJn
-	fPD9oPKhUj3neK86PVCs5swrG/vlHfKacQDUZir8aMBqw3sNeEMt2FQjXXiJs5hFcLNYElQA+eN
-	TBJ0pEiVjaxfCERmffOaDBeg/d+R5qkvzuPJ7c45AlxFgOAZDdEcfSzAHgY/GNt5Z3/spteNvci
-	wo9AP9Ajh1xyApaSJfDdEUFqSfix0qcMOFJ0Y2pQ7a/xgW5vv3EnnJoYdGEpdiYiM+ZlvUTk5Jf
-	MLyELNXpnP1ZvBpiyldwrOg2dgf5+mFGdHFytVJF8YH8pyZZ5KBekm0WmDnjxo6KUE/4pxxHx6V
-	v4IRoqS7lFDktmlg3ySNi/NxAIFNvIyWw==
-X-Received: by 2002:a05:6820:2088:b0:6cd:3fec:de83 with SMTP id 006d021491bc7-6ef1115c9camr9792054eaf.89.1791928106809;
-        Tue, 13 Oct 2026 14:48:26 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-830384c4985sm12722593a34.8.2026.10.13.14.48.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Oct 2026 14:48:26 -0700 (PDT)
-Date: Tue, 13 Oct 2026 16:48:23 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	Wolfgang Kritzinger <wkritzinger@atlassian.com>
-Subject: Re: [PATCH 4/5] odb: remove read loop for found objects
-Message-ID: <as6kNufOqLFeBoNh@denethor>
-References: <20261013-pks-odb-files-alternates-cleanups-v1-0-b7030ff2b26f@pks.im>
- <20261013-pks-odb-files-alternates-cleanups-v1-4-b7030ff2b26f@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JlzqU1gZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r9GyJZqv"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 85E7B1D00209
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 18:05:29 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 13 Oct 2026 18:05:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791929129; x=1792015529; bh=/lnHVSPQR1
+	R1t4PZKajGGwVFYH6T9EjvtOJZ4QmEy2g=; b=JlzqU1gZQKPOf+QWlemG0ieujd
+	ZhrMAv0Owlj0IdA2RLMY078WF/S7fzwHwP7bQTFdZuqtDjq0G6JiOHCfavjQcsXa
+	BtmsXVX76ca85RDWoonp4SqZeC1uyt+M2WMT/xpvIKpCTjTmMgxqej90HhI1QYxS
+	oCsRw0WRkTBhEc4/K/HeNJ79LcBl53Nz+eMLJOf+4iB0SUfYuwECUg0BxDQ4rdhL
+	Om3JrWRFqsdDdPpWlZyqmJULFwbXBEwbowRHusAorcsLy8kg+2XYwjOQEifh3Saf
+	0vgu/VaQVMRWYqrFjT9RQBlGpmRimNwyGcCUZJTMck+WX4FLdRPSB3cCRliw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791929129; x=1792015529; bh=/lnHVSPQR1R1t4PZKajGGwVFYH6T9EjvtOJ
+	Z4QmEy2g=; b=r9GyJZqvd2e5Ml7yCwdKb4znJ+7Xp9i7BWPbAdtwAxXCfiuZ7dq
+	6fUvnVjgKSA/HrfHCnYmsfN7Mu4GU2CDckQLd1mD8p3uiWz4DtO3p/v1lO6Gii+F
+	vp9lVXgC761EJvMoSyKZVCcCGi7JvCLy67qrZ6aSiGko7fUmPrDsE8NJ0zRMxMlH
+	mz4IPmnFBuDRVsJjoVfABrR0uXBcGfToea8xWDSUTbNv38LqWA4Wx6lezAyEHjPs
+	IN9HmuR8gHwoWKZutfiaGpoeUPMyPy64p5FkBEJksplKgCXncYqPT5hxwNBfFahc
+	8My63nU4kTauenO6TDO9ZEde5qL08Ta1TQQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791929129; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:c1DSrlUxNnJCLQAe5BAvyAHgGgUwup/fMafjjdjD3ht8+qt
+	W84HAoMk3cnKxESPpjYge88wghNxWOyfWa9s0iW8yt5AzBKBUzHgPGCP+E3C/mEl
+	hSobeRC3Nsv58olnbv/bZUSlB0yxAO/d+6AiL8f7RcFFQfWbqLGjQOrLeOtYqh8w
+	Mvk+xp/gTpCiVJ4QcFFIv67/5S15FtEizMtLMrGTFbx/Lr+niPS7ynIAYn7OQtv9
+	Bp2LpTC1bRhojoMZEHKwQZcxUIc5FGH0BNzKy/pBwYU7myWe5qtGYifTR0nJgc9w
+	I0eG0ccbiWnzBltACTSpRGbEvO5i5HwDVMkZFiw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:mLPefZ6ky0gqrTdI+XZ1r4t+Nnicieuw1xvUJVjbmws=:Rc+xsyHAucL96le5sDYCZyKfb0koAcTh/bFu8S9zjYM=;
+X-ME-Sender: <xms:KKvOaiKYJVfK1RU75ijlvAwud60F5Az8W76UxuJDAEedC1RPe-r_Rg>
+    <xme:KKvOat2TeZRzqeJuxDUS2_XAHYm7FzEvg0W3bqtfBNErgZUwHby-DR3_wRwxw9ywf
+    vXIdhvSdgOF9xftG8jI9KHcpxjs4bGMIiAeDxwOjpF1wIas6A40Fw>
+X-ME-Received: <xmr:KKvOasjdG7Fyz6sMK-iakeFbnVWvOXdq-U0jUI4V-fAO2yJLyDJi29TlivyGHVXPRMCUOG6puc_BAWFqH8EQf66D0UtqM-Y5tMtC>
+X-ME-Proxy-Cause: dmFkZTE5exZoNbQhmG96uZOYesndBhGJEjpdvMBwEZASIPH8zIRDuYRLY80XEQLHNKw07P
+    TrF07DvsCL1cVpNao33Zjnhd/pnoieRp2EABIwm56sCCCJQZUx8sgepzk44VUr/Q+c1LoO
+    /xz1cdR95mjCy0egyrw/jXnAT9Z+96ILIzL6G4pT+MTMgqrGE5WuPgG9x6pWOBK/6GRK+e
+    x0ghM9II/Hi2SfOTRCHYYBdyd6ioaL3NGUwjmc7mE77gwr2Th1RT/5RzhfeK3Genpx/XoT
+    NGsBmmquJpJZiSOUQ0UQL4GGHsWYiQ6n1P0+34yLcTdTkEV21fPbzMFK/jVTas4U6apDUk
+    aHRXjCZdyQYvTYgfhyMl4K6jHEqEklnK6ipFI06yleRNsiLyepZSVOP+RBZcvJvLIn/7SW
+    3QUn44KjvEnPQIZKgD43vTPK6dCs9P4iOsXF286AK3x23jyUNLoujznhfJoUXEhRK4zFsX
+    OXJmwULamHIfKP0bw33w91oqjIXRB1z5nwZaEAnwowaYjxTktwH/E0TNPHSyU6UPN9zS/V
+    J+DK+zd8q31szKrUS/pAMKuIbPJ10ud0TLpCAU2ndxpCCp6HROcr1iWhiAmtPOVOz6IWyc
+    T1BUWJhled2eXHXYZqRqjaogstmy5Ds68jq5zJ9tJ9J1FB+7C0LaSNwlsxJQ
+X-ME-Proxy: <xmx:KavOauWNbDqRJRbDFCo7AxOmod6oMz2d8Oh1G28mmpkA6N_rEwUaRQ>
+    <xmx:KavOarX3RTNu0bhAm-_sToTnhZsAcew4bxpJTHBHePfSxfJOJtmN5w>
+    <xmx:KavOaug0Y5HdlRJZWuyW0VnnsjmhIebMUbIeMerEEWbPJDXSRqv2MA>
+    <xmx:KavOamZtrgxVYINDBPtHu8nMLUUGW9nm1gXnjVrcLv1JhEeZzB3HkA>
+    <xmx:KavOaitNhbWw3r57t0gk1C0EXRbdH6ZfQ_Z8ND6r-DymP7CTS6j8maIJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 13 Oct 2026 18:05:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jun Wu <quark.zju@gmail.com>
+Cc: git@vger.kernel.org,  peff@peff.net,  ps@pks.im,  Jun Wu <quark@meta.com>
+Subject: Re: [PATCH 0/2] Add a way to wait for index lock
+In-Reply-To: <20261013172315.2997446-1-quark.zju@gmail.com> (Jun Wu's message
+	of "Tue, 13 Oct 2026 10:23:13 -0700")
+References: <20261013172315.2997446-1-quark.zju@gmail.com>
+Date: Tue, 13 Oct 2026 15:05:27 -0700
+Message-ID: <xmqqh5ipuuhk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261013-pks-odb-files-alternates-cleanups-v1-4-b7030ff2b26f@pks.im>
+Content-Type: text/plain
 
-On 26/10/13 09:36AM, Patrick Steinhardt wrote:
-> Before moving alternates into the "files" backend we had to handle
-> alternates in `do_oid_object_info_extended()`. This made the retry logic
-> somewhat complex, as we had to juggle reloading of the sources, the
-> second read and fetching missing objects. And to handle the potential
-> retries we loop around that logic multiple times.
-> 
-> Nowadays though, the reload and retry logic are located in the "files"
-> backend itself. Consequently, using a loop is a bit on the heavy side
-> and makes the code harder to reason about.
+Jun Wu <quark.zju@gmail.com> writes:
 
-The "files" backend is now responsible for retrying a read if it need to
-reload its packfiles. IIUC, this means that we should only expect
-missing objects from partial clones. Only if we want to fetch these
-missing objects from the promisor remote do we need to retry.
+> From: Jun Wu <quark@meta.com>
+>
+> An IDE that runs `git status` periodically in the background has 2
+> choices. Both are suboptimal:
+> - with `--no-optional-locks`: `status` becomes slower over time.
+> - without `--no-optional-locks`: conflicts with other commands like
+>   `add`, `commit`, often run by a user from the IDE terminal.
 
-> Simplify the logic by removing the loop. Instead, we explicitly re-read
-> exactly once after having fetched objects from a promisor remote.
+It is unfair to expect that the readers would guess what you left
+unsaid here, which probably is "we will introduce the third choice,
+which does such and such things, and it improves the situation in
+such and such ways because ...", before listing ...
 
-Make sense.
+> Patch 1 adds index lock timeout so `add` can wait instead of fail.
+> Patch 2 adjusts the read/lock order so `commit` can also wait.
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb.c | 46 +++++++++++++++++++++++-----------------------
->  1 file changed, 23 insertions(+), 23 deletions(-)
-> 
-> diff --git a/odb.c b/odb.c
-> index 69a4c203bc..095183aec0 100644
-> --- a/odb.c
-> +++ b/odb.c
-> @@ -265,7 +265,6 @@ static enum odb_read_status do_oid_object_info_extended(struct object_database *
->  	struct strbuf corrupt_err = STRBUF_INIT;
->  	const struct object_id *real = oid;
->  	enum odb_read_status ret;
-> -	int already_retried = 0;
->  	bool corrupt = false;
->  
->  	if (flags & OBJECT_INFO_LOOKUP_REPLACE)
-> @@ -277,38 +276,39 @@ static enum odb_read_status do_oid_object_info_extended(struct object_database *
->  	if (!odb_source_read_object_info(odb->inmemory_objects, oid, oi, flags, NULL))
->  		return 0;
->  
-> -	while (1) {
-> +	ret = odb_source_read_object_info(odb->source, real, oi, flags,
-> +					  &corrupt_err);
+... these.
 
-Here is try to read the object, the backend is responsible for handling
-any retries internally that it cares about.
+> To minimize write race, if the index is read before locking, the
+> wait will be skipped, as if timeout is 0. Depending on the read/lock
+> order, some commands (e.g. add, rm, mv, checkout, restore, read-tree,
+> apply, update-index) respect the timeout. Some (e.g. reset, stash,
+> merge, rebase, cherry-pick, am) do not. I started with the simple and
+> common commands. If there is interest in other commands I can take a
+> look too.
 
-> +	if (!ret)
-> +		goto out;
-> +	if (ret != ODB_READ_NOT_FOUND)
-> +		corrupt = true;
+Is the above supposed to be the description of the proposed solution?
 
-If the repsitory is correct, does it even make sense to continue to try
-and fetch the missing object? I wonder if we should set `ret =
-ODB_READ_ERROR` and `goto out`?
+There are multiple parties (i.e., `git status` that needed to
+discard the result with "--no-optional-locks" and other end-user
+actions that do need to safely update the index) involved, and it is
+unclear whose actions many of verbs in your writing refer to in the
+above.  E.g., "if the index is read before locking, the wait will be
+skipped" for whom?  "git status" that wants to opportunistically
+write out the result of refreshing?  End-user actions like "git add"
+that wanted to register new contents to the index?  Both?
 
-> +
-> +	/* Try to fetch the missing object from a promisor remote. */
-> +	if (odb->repo->fetch_if_missing && repo_has_promisor_remote(odb->repo) &&
-> +	    !(flags & OBJECT_INFO_SKIP_FETCH_OBJECT)) {
-> +		promisor_remote_get_direct(odb->repo, real, 1);
-> +
->  		ret = odb_source_read_object_info(odb->source, real, oi, flags,
->  						  corrupt_err.len ? NULL : &corrupt_err);
-
-Here we read the missing object after it has been fetched. This is only
-case the ODB layer needs to care about retrying itself. Makes sense.
-
-The rest of this patch is functionally the same just without the loop.
-Looks good.
-
--Justin
+> The default timeout is 1s (reasoning in patch 1). I'm happy to change it
+> to 0 if people prefer no behavior change.
+>
+> Related context:
+> - (2017-9-22) https://lore.kernel.org/git/20170923033425.6ilykxl5pi7unlj6@sigill.intra.peff.net/
+>   proposed index lock timeout.
+> - (2017-9-27) Commit 27344d6a6c (git: add --no-optional-locks option, 2017-09-27)
+>   introduces `--no-optional-locks` for the same issue.
+> - (2019-5-3) https://lore.kernel.org/git/CACsJy8BcBk6Fsfy7o1aBTQAPeH-w+rBwLZrzw4jJ-OM_jhkxMQ@mail.gmail.com/
+>   mentioned `update_if_able` and "gap" between read and lock, mitigated
+>   in patch 1 with the `index->initialized` check.
+>
+> Jun Wu (2):
+>   repository: add core.indexLockTimeout
+>   commit: lock index before reading
+>
+>  Documentation/config/core.adoc |  6 ++++++
+>  builtin/commit.c               |  9 ++-------
+>  repository.c                   | 17 +++++++++++++++-
+>  t/meson.build                  |  1 +
+>  t/t0031-lockfile-pid.sh        |  4 ++++
+>  t/t0032-index-lock-timeout.sh  | 37 ++++++++++++++++++++++++++++++++++
+>  t/t7400-submodule-basic.sh     |  1 +
+>  7 files changed, 67 insertions(+), 8 deletions(-)
+>  create mode 100755 t/t0032-index-lock-timeout.sh
+>
+>
+> base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
