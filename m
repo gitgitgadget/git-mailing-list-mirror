@@ -1,162 +1,156 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E473101A7
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 06:45:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3470837A83D
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 06:48:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.176
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791873960; cv=pass; b=gXzK1UsQHgUBtV0Nj5wrdQMBsn9Grl5VPTpRa4ki6oeZFPefZhzQ7jprF6pgmfeBsivoBtEojwq8iDUIv+2Y8emUUfRxvCHnVPryj0XrTu0ImNRWVtBG6zHsLbAEaM/035LHGyJ4o5mJcbL2xFrQitZYAciCvZiWJoYnmkOIS9Q=
+	t=1791874118; cv=pass; b=CDMUwoAXhL4ad2peROuY3l63xVsqUL02gVK2KHBWVeAP3QNaPdpNZkSnhRFPypg0ysn3zClZuABy2YLbW8WVISDU9EcHr/2gaM27DItv4uJzsBodpjeX4/ASwSShUTzQfgA9uKTBZNPZWroRj3BUxRRcJq2TcDHDqs2uWiAFyEg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791873960; c=relaxed/simple;
-	bh=ckR/gfsNotNQO6D531WXpE7p+hSfDJXihDcCHtFugD4=;
+	s=arc-20240116; t=1791874118; c=relaxed/simple;
+	bh=ds2lpvBs6HDcATpb/Wx5HpksY4Fqk0lJUTb6Gqt4pRs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uClwUGTX6G/Ld1hlaARBSeDAg9uczXVGiToqkx0QLR5yrsCoQJ0viOo4cVR6zLBc5ghmQH5Qwm0ybgki8M1Rz0Lu73HBGcuCmDd/VQlwGdSLKcnqm4LFvHWDawTbnWzdBIci8oOKCdN4RM8QALE+TUxQDWoiVaBs5kniadnHhuA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KbfqJipb; arc=pass smtp.client-ip=209.85.222.182
+	 To:Cc:Content-Type; b=MnZM8IYYDVb1XlPEEb1lj/CE+QrIKh7ThKOUUWqM/gtfowbcmviyi0oKkPg7yaT4FkClosUCDxtgjMih876qvYHn6LMuTQizbl9VhlfWzHFoVx6T+Ap6FF0RRN6mV4vOECRYOZ2liSxAQ6NammxWy6iFEo9+UzMrTfm2+DNt0WI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RWYgV4+s; arc=pass smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KbfqJipb"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-93cc19d8d40so14848585a.2
-        for <git@vger.kernel.org>; Mon, 12 Oct 2026 23:45:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791873958; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RWYgV4+s"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-939a5f8d16aso19241085a.3
+        for <git@vger.kernel.org>; Mon, 12 Oct 2026 23:48:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791874115; cv=none;
         d=google.com; s=arc-20260327;
-        b=BaKQbl6zg/W6jYVbIVNbEEuJ/h6IvXv18C+9fVeBPY4145jui7uExfWtTUpbG3QYkK
-         yQorF3i4T5/OBBfelq4foNnZmxjOEIZfHE/xfSyooEnlrhxbdKZmxErXZI4Z615T2sQn
-         ZMg4gkuUDCZU/QAqeZ1e6USSBT1y/9rYEVWh9dxrFp21m1BsJDLPoH9Ju0Nml+o21DzJ
-         WdHDtNaJFK2hss5a+ojTLlDSYbJ1xFV5nqUa2mI5eAUKmg4nncW6Kg1lS/zSES7iXCwz
-         CCOtrl0Cal6gnWyFFd1Mu06Nz0uo6xLjPlaqpEx/OkDmJmTsjGj5feToZ48uv2ulCnox
-         YYJw==
+        b=GyMH8dqZBjo89Do10p3aPXhIrOpzoFU8qAW+9E9X5zLo9e1z3rjed4SkeURwR4lC0v
+         x+zFjRtBeWLXfdDCscAQb9jraatfBTeALj4Q3Ro4WCUUGDmYJUU7/7orkLSK5FsbWcyT
+         8B8aSt1tFmyvIc8m1vP3FTuhKxNcc+PX3XsURId1hmn8N+Izm7x6IgaiaH1QvS0LLCEH
+         S49zImyCJzruXokmliFaK9FRIvwOX2x4SijDEDpDGkf63R9UzI5aLFWEyLZMez2+k3yE
+         z2r2ailWcf9xymMNM2krUQMn2EuM5ETaNY+XfkxeEVJSNo7vc5U4IS+DEBWGlJYvoH6H
+         wx1A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=0gRPe9CJbm5VrbnV/fmHIC0Lv455DNdRbAv+ACG0IpA=;
-        fh=GXNYqO2WufVttdr60JNmAXkE5Clt1o/AhPQ6w0DkCmA=;
-        b=Ua9ObsRTeQHy7LWZtx7lQwsMGgJNmbs9/olbdkCaFXM/fuaCvNaITKvGnbwpc6ncyx
-         LaB04iV9j9592heQbOqyHVVdYFqlKqGBPdvQ4XvhSftVzLf37KcR60+t2VSq7s0r53rI
-         V/C0jjUKt4IeV88XiY7203rRzv4EKP3MnaXoiZvm6/ppcSrTgSHfW2lgzMtYPzPxT0XU
-         yL5o1oP/PWBZ90OB5WpsRIJYX0LfAZVFeCpZmcTXVQB5cGjAdaUWl2//O/ywDjH91Mo9
-         nS7D2k3PMEbPX6/b5s4QJPBhdij+kumTwtG2bjc3+XWYWpuTwYewY7wWLjsPc7Yhpt7O
-         p6Gg==;
+        bh=VcBktbr07qjhzJjlErI+y8u0nvgdzB420+YiUJj0J8I=;
+        fh=ikU2VsQpBzZ6Sss+F2hX2lvH8rE3tAgaLv/m0mcqPEs=;
+        b=lvoNvUzqMh0EHoGcQZvwu/EBd02+p82bod/QysP+4P7MvEpa5A/ilZOy1ftaQApXvD
+         G6OqBt/5VufS0ez+TNxlvkTUSVHdpTg/cPju8eXKH0zfL8ZWDukRHj+wObn+d1gcpgeV
+         SLB0felC/rpaZfg2bLZf/357T9vhY9UvWsZA5VZfzBctldczpA519ui+eaK3Vhgr8XTJ
+         Wb/f1XAGhf7s1aGKhu8P+A1KYJgs3AG4qS//IWeZZmtRRq5t+SJdj5+qoxQUZVNSHEgm
+         GX4E7mZSEKXBXsHWc98yTt0FxxWPFY07/+NT2eTx3GDqLii5w71F0WWpYArBBVlS94PG
+         nKuQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791873958; x=1792478758; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791874115; x=1792478915; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=0gRPe9CJbm5VrbnV/fmHIC0Lv455DNdRbAv+ACG0IpA=;
-        b=KbfqJipbSWlOICqcCBf0EHKkO0NDctU5VxK+n24nAJ7zNEvETTSWdFSGjO1P/GeV19
-         6XzPuNvofwZOBLOQnBO4CBzhhQVtFsTl5uSnhpbQ4EfR94IBXWkFXi39ng1f/CIqMuOd
-         xlRPM57XPOraseboTstWlV1fQWqJBf34H04WEVFQGzBuX3A/6Brii3pbzBUMw/w45HHd
-         pytnsAWuhoHFUzKwacmio3OZwbVRtqxX04/aOJW0nMRPb4a8+596nENk8RwiiNiJ6Ai5
-         F4H2uANs6bOrEpLnZKHYYtN2BrFumqBYiDWABPBmtdzbbuYIARTnHBkp2K2xtoHbObUl
-         yo7w==
+        bh=VcBktbr07qjhzJjlErI+y8u0nvgdzB420+YiUJj0J8I=;
+        b=RWYgV4+s6hwDK/MNzpD2wrII7pBvwGhzbZoUH6njeOLpgxwBSpcB2dIyEpfjXANzvy
+         LkXRQq5oK15zn1mOvhE3+UBaEyOT0+9afwiKruJmh7xES4+8sBoXwycOHiM0os2UGqqh
+         UBkE2Zs8twGb87sTHijtn/bEc+mHJf4uXfoklshCLBaTmY2VhNBMmd5EuetlXnd1DZcu
+         SsrvUeCxadfp/cLQ+Y6N0L0xoB755wrRaHl9QR01Rryqyykt4W/FfpbTuNWNtkTUYMgJ
+         Vz+j1ckMcdL0CyYGX5aW/XjHVrkI+CFM0ANq+obzMomLHhp2D7MEk3uk8MNs1Qyu+bi9
+         e6Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791873958; x=1792478758;
+        d=1e100.net; s=20260707; t=1791874115; x=1792478915;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=0gRPe9CJbm5VrbnV/fmHIC0Lv455DNdRbAv+ACG0IpA=;
-        b=T6ut4XWmy2GaZR2S0GjQm/Bjqpw6S/uNb10C3zjSBMLlytAZEONT2eaAOBNwzRZIae
-         /yk8J+uK0ZTsmfrgFQPgASH+WvzWzundBhJYMV09z+EX+KUfPg1SPoAM2YUILTX27zHb
-         dCvXEwPUeYTgyzHJmOz1FixX+2B3Blx9grUqHn/ZrZ3Ws7P0g8M6gA/nKODbPyA3hVn+
-         Kar2MeO9PPbluQFu1ItxtybdS9xy8i43OAuWFb9brS9Cr5ue236vQgettNtlgqkikYPB
-         pUMEgDwY+bBYfszydhQQgRpkhlG/f02UQ0/V1PmEOgbbenA89rubVcYzuJ9+net4Sr7K
-         s6vg==
-X-Forwarded-Encrypted: i=1; AKwUvByFb+8e7N9290nhpu/WURR/yGc4gG0VK9yPvD2UXPEVuEnn+WiGHz2S6fcr4HpEkQY+UwE=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLVztOdNmNqjs/g2W0eY84MwjJmp+zJaLbgrzHxohDPDk20RudP
-	1gbVgVh+WS1ZxEPrEQPurKS5mzCCX7Yogkdv2bXUOXtk6zjrNh4w96Gv+s4kbbwxluU80ZLh7NT
-	hBur5AhGGIFT8fHhGYB4fLedsm8An+ZY=
-X-Gm-Gg: AYBFou1T0/FVCgtjRaJs3c5mGLRJX93YDj1DFp8EcOXgtigVn8BuFidU/61txFeJIzU
-	QkgVsTT6BF+VVGrnxTCN48hvtYoGzDmVCyomVpoRCuvOqOkDW8put4qaGfpXQ/Y4I+ay6r4djLj
-	Hvwi9fIxWSpK6f74pjpGnn5CbRTnz5dLzlSyiJsIA0ol4tkcbdAask3Mq2sD6SymUJ1FDnLNl5g
-	038P++sRVdzl9ggCAS0t25+y0vuf4IkIOng9Rj4Zv9cG7oVvm4P/rIgu00uwtLKTGx+UpNn0oKH
-	CeQcQ4INOTlQ26qoqs6UZHvkO4+gWbCv+wKouj60wmXuFn/9oqT0AMpCcaiqErVu3Nef8AC8tQ0
-	PQyShumg3uZRi223Are3Ke5yVj2nz5YxvJSfPspxuzMPShg==
-X-Received: by 2002:a05:620a:254a:b0:93e:5ee9:ca87 with SMTP id
- af79cd13be357-93ebd29bf3bmr2180912885a.6.1791873958206; Mon, 12 Oct 2026
- 23:45:58 -0700 (PDT)
+        bh=VcBktbr07qjhzJjlErI+y8u0nvgdzB420+YiUJj0J8I=;
+        b=YjXAzaPaxcpSejt3hijwPZJy0sGqdox5el9Tb6F8mC48zwh6jRTJGQnF6A17qHcMTu
+         E2Ltrd9XHQJne+z8C1z6ct94OeUJiSei3cc/IvgH0drcxDwZIybcw8w1zmxZ3W6qtQFF
+         OGiVRfV8+WlKgZN1triMlJ6KfjfQaqQ1E6buiDPQh4TKKXqkafvD2a0CE/Brc/Z97bTA
+         MejNYqjiZas4VOdV0X4FQU89bhqoAoKt8A+fcppIHRhkRUk+PJqHyIBP7tAvxDoJ6A5F
+         xky+YhE8rXiFUuMphshQHekTWqLhh/eDPjmIl5gEBKm1qsfNcGGsgYvdLBS8Cu4oU+Nu
+         yqXg==
+X-Forwarded-Encrypted: i=1; AKwUvBx46C9qFpAlNqyvAZqXnFavSRg/I5F1Rygq4eyOrW9Y2Ae+eMBP5gtr/Q0HY3VzqGuJTQ0=@vger.kernel.org
+X-Gm-Message-State: AFq9FYI811fFtaFejF7r6fm3/Z70Q7vly1aXu0J/nKnwIAY7DgoDovIF
+	N6IX4ROtVfbMFlzQtNW9tk1kB2E+tjz7jWKazCxylzOHrEkUqrKHosCiDac9em1syKFfuu+TuJ9
+	Rt2XpPrDGCw4CobZul3iT8B7lkyfbo14=
+X-Gm-Gg: AYBFou3V9ynoZ0x7do93ojUqUnjgPMSPGgpjVQeitwUOk2zI58lI6XOEBTx2OneBjzk
+	/lHHqZQe8RtvfdvH9ZU5YGrWYT8LMi5KMk41CHBln/GMF3Ov9UOAgRpVZJz4sB7hPuq7EnG24J5
+	JWvIW1WlVQC90n7jh7O/Ndwi8M2Jct4pzm1KLfsfCI5FN5H+AxbrhbOcjqO8gdb7H57UNR0t2fr
+	Px0sCA65Pwl5CoYW+4NrxZRXkj6eaVvYBFc+S2POv/dTnjmbYoir7Jc/M2FPZLda8tRKSyoayeg
+	IIBvS0ljsT9C/SYK9dI1Cdf9LfBg0X2WyYhqDtCx6ZXijWh/GBftg8hAywH0GJt7vJYWScDj3Tn
+	aODLdsI53NVyQ0qZviAj5EymkkD0XZvl4Rl6AumSsHNqZ3Q==
+X-Received: by 2002:a05:620a:3186:b0:939:8bc:8826 with SMTP id
+ af79cd13be357-93ebd10c0e2mr2308610985a.2.1791874114874; Mon, 12 Oct 2026
+ 23:48:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqwm1no29m.fsf@gitster.g> <20261012175638.3712-1-tboegi@web.de>
- <xmqqik3668ff.fsf@gitster.g> <xmqqqzhu2xre.fsf@gitster.g>
-In-Reply-To: <xmqqqzhu2xre.fsf@gitster.g>
+References: <xmqqwm1no29m.fsf@gitster.g> <20261012175638.3712-1-tboegi@web.de> <3b36c428-6d67-45ef-9f6f-e78da33646ac@kdbg.org>
+In-Reply-To: <3b36c428-6d67-45ef-9f6f-e78da33646ac@kdbg.org>
 From: Curtis Smith <curtis.allen.smith@gmail.com>
-Date: Tue, 13 Oct 2026 00:45:45 -0600
-X-Gm-Features: AclHuK9IKnnFqTZ2iXVq01po00HjmXLwpm4TM10BhA-zRw9wVWhKqnePW6BbKAY
-Message-ID: <CACnh8r+gBPJMF6kGdzpM8guEp_UiVh_P6qpvKi8uLCx6MFFoRQ@mail.gmail.com>
+Date: Tue, 13 Oct 2026 00:48:22 -0600
+X-Gm-Features: AclHuK_D0Z2Ffi-NfJp5DS3BRLCs69PceYdS8oh8VC7P6NGj6EpFXB8Ha00MxvY
+Message-ID: <CACnh8r+=nRvCbJYj7=M9BiK=ac94xLOVPhcKbPNpjnfr50U_ZA@mail.gmail.com>
 Subject: Re: [PATCH v3/RFC 1/1] read-cache: do not trust a size change when
  conversion is active
-To: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
 Cc: tboegi@web.de, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> If you two are collaborating outside the mailing list, that would be
-> fine and I would have no reason to complain.  But such collaboration
-> is invisible to others, of course, so I would like to double-check
-> that you are not unilaterally taking over the topic.
+> I cannot agree with this reasoning. The index is a cache of the stat
+> information. The size recorded in the index is only used as a clue
+> whether the file was changed or not. It does *not* record the size of
+> the data that the object database holds for the blob.
 
-We are not collaborating off the list, and Torsten did not ask me
-before sending v3.  v3 is my v1 patch 1 with the optimization taken
-out, but it keeps the size_change_is_conclusive() helper.  In my
-reply to you on Saturday I proposed the fix inlined into the
-condition in ie_modified() instead, with no new function.
+Agreed, and that comment is worded badly.  The size in the index is
+correct here: it is the size of the LF file as it was checked out or
+added.  The tool then rewrites the file with CRLF endings, so the
+size on disk really does change.
 
-I would like to keep the topic.  v4 follows in this thread: that
-inlined fix, my tests, a short log message, and Torsten credited with
-Helped-by.  Thanks, Torsten, for the review.
+The problem is what ie_modified() concludes from that.  A size change
+proves that the bytes in the working tree changed.  Without
+conversion, that means the content Git would record changed too.
+With conversion it does not: the CRLF file converts to the same
+blob, which is why "git diff" shows nothing.
 
-From your earlier message:
+v4 has no such comment, and its log message says it this way.
 
-> Wooo, that is surprisingly simple.  Even attribute look-up is not
-> free.  How much overhead are we adding to the case where no clean
-> filter is involved, I wonder?
-
-The lookup is the last test in the "changed & DATA_CHANGED"
-condition, so it runs only for a path whose size changed.  A clean
-tree never reaches it.  With no conversion configured, "git status"
-on 10000 files with a size change takes 26ms on stock git and 24ms
-with the fix.  The full numbers are below the "---" in v4.
-
-On Mon, Oct 12, 2026 at 7:29=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Mon, Oct 12, 2026 at 11:34=E2=80=AFPM Johannes Sixt <j6t@kdbg.org> wrote=
+:
 >
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > tboegi@web.de writes:
+> Am 12.10.26 um 19:56 schrieb tboegi@web.de:
+> > @@ -438,6 +439,27 @@ int ie_match_stat(struct index_state *istate,
+> >       return changed;
+> >  }
 > >
-> >> From: Torsten B=C3=B6gershausen <tboegi@web.de>
-> >> ...
-> >> Signed-off-by: Curtis Allen Smith <curtis.allen.smith@gmail.com>
-> >> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> >
-> > How is the collaboration going here, Have you taken over the series,
-> > or are you two working together on the topic (or I take that your
-> > intention to CC Curtis is to work together starting with this
-> > version)?
-> >
-> > I am wondering if we want co-authored-by or similar when we lose the
-> > RFC status.
+> > +/*
+> > + * A difference between the size of the file in the working tree and t=
+he
+> > + * size recorded for it in the index proves that the contents changed
+> > + * only as long as the two are byte-for-byte comparable.  That stops
+> > + * being true as soon as the path is run through a clean filter:
 >
-> If you two are collaborating outside the mailing list, that would be
-> fine and I would have no reason to complain.  But such collaboration
-> is invisible to others, of course, so I would like to double-check
-> that you are not unilaterally taking over the topic.  Can you
-> confirm that you are working well together, or say something
-> similar, before we proceed to other technical points?
+> I cannot agree with this reasoning. The index is a cache of the stat
+> information. The size recorded in the index is only used as a clue
+> whether the file was changed or not. It does *not* record the size of
+> the data that the object database holds for the blob.
 >
-> This is a tangent, but it is the reason why my mailer settings
-> drop into the trash all incoming Git-related messages that are
-> addressed only to me without CC'ing the list.  This forces me to
-> resist the temptation to collude with selected others behind
-> closed doors.
+> If your analysis found that, after the content was `git add`-ed, the
+> size in the index is *not* identical to the size taken from the
+> filesystem, then the problem is that an incorrect size was put into the
+> index, and not that the size between the blob data in the database and
+> the filesystem's file are different (and unusable).
 >
-> Thanks.
+> > + * rewriting a file with CRLF endings under "text eol=3Dlf", for examp=
+le,
+> > + * changes its size in the working tree without changing the blob Git
+> > + * would record for it.  For such a path the only way to tell is to re=
+ad
+> > + * the contents and convert them, which is what we already do when onl=
+y
+> > + * the mtime changed.
+> > + */
+>
+> -- Hannes
+>
