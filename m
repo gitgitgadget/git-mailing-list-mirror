@@ -1,262 +1,539 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0627E3B19C2
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 12:55:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D8435E1D5
+	for <git@vger.kernel.org>; Tue, 13 Oct 2026 13:01:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791896119; cv=none; b=TeV8rCsaMc6Q4XNJFRwuxHdCiuX+35zfljPs8nDUkCnFOhqQLxXWND709AQIErJMgYyVg/54FlH3BW8qLfnUkzQLka2JRxzRwYuHghMC6zz83U64aVLOn/zrYld4bLVdiXB1Za0/3b76vPrG2CKov0YjceStcKtxlRUCeo9YKTA=
+	t=1791896495; cv=none; b=IpHz9S/sujMjozAEqpPraVMkE9FNsJpkwlnv6GhORzXY8QnTL548a2/iFcN9wDm3U0zvd7yUCseeCpyefSABoGqZTOGMb/iSFtBf25tZ2kN5ds+v+I/DuubifwOCjomzxPEhaKffpDzHM4jbc3jtrHKTDLRd84uxZVT+2eyAEHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791896119; c=relaxed/simple;
-	bh=dDtio0OKX16rQJSpDkMiwN3g/qJk6GhPo3TVTIguMaY=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=vDz8SH6P9EJVc/ZDAvWFE04x824+zV4GHW0zq7AadxIVVfj3Slk1uu6DAHM0A1m2kzKaK7/r7f+0vS3U0ZJRrqZWExf+r9adNLJrjN1gAcPXjVyUDwB898wSAleS4GdaVnXygvxB9mtM1UVOjF+rY1PSyZLjES89/nmt8zkn7uA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=WAmoQAhb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lWLRiyNb; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1791896495; c=relaxed/simple;
+	bh=UZkbK9kis5gwL0ooiXK0R4Fiw2nbWyDBw7L6PV2yJbk=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=FY+8a5jfLH51VpK/4y5a92I0c2dhtb92zfK8gZtZ/91DJDM1/uyxc9ROaw7sPQuAd8u0hk13xVfUO0uwpewxe1cAt8UcCz9R7gkD1EVTVYeVC5i+Ec+QFJpkVhp6FkjKXL3FcifBGbd8j6vY9zrPbDnTbhx6Yj16GcPmq95poGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OW5kWpu6; arc=none smtp.client-ip=209.85.221.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="WAmoQAhb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lWLRiyNb"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E2F6A7A00C0
-	for <git@vger.kernel.org>; Tue, 13 Oct 2026 08:55:16 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Tue, 13 Oct 2026 08:55:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791896116;
-	 x=1791982516; bh=npwer/sDFGJeQSwvmru47qi/KxCRSVYZDxURestyX+o=; b=
-	WAmoQAhb9zCQux1Em/gqd5e5mJ5wDt/FHJFjUMF+xyaEcQAlr8oP2o+URUbAb44l
-	wbgQ+LvYV6yQWJ76pbaK7O1aNYvT+9O3i4VEzk6WBmQ/+EyXoUi0uRRFLwuTDIlY
-	l5PoomSFE8UWtsfgMFzroK0pQh/nlWQTGfno+I6tzPcuxbG1jvT3Jtt2CaaJAQGn
-	u/FHTREybBG5Y3aV91CfQivkRXTotutFWnV0zZquav+KnW9hrdYaVmdXAnOlKCxU
-	iZ7hft316cPrmFmnXxD+qFkazjZij6rz5lDymKmYrVMtHl3VccDetyaAHd4tjbmQ
-	weGpwnQFXNzYqLc96rLl+g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791896116; x=
-	1791982516; bh=npwer/sDFGJeQSwvmru47qi/KxCRSVYZDxURestyX+o=; b=l
-	WLRiyNbmg35baFvcv9GOSt+VgsKtZ7qGcDLrVTMHXx6xbed1xn/0Qie/hzeNriqJ
-	UbhbsySUPlOsI78F3CykQhYxGarW+5Wrd19CPfoeznBawYifrYL+x08C7qwJQ1MC
-	rRYwNrRBsx0x21nvzN6GorSKFfU8d3WoUAYfhvIfxYXYsLvr9ODwDwMeCXJfNs3R
-	Gc/WUbeE3PMpSYc7OBaP+RhpXxRckhIPr1xazHwKPLcgtFo4vSM2CEcljuExfY+u
-	KVcFw/poUll5meYqkZGUQNp6odZDJGqJV0Z0cUg1isRHEUNVJ21XCOgw4Vtdougt
-	ZLspzhwLW+z751K/8hxNQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=jvns.ca a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791896116; d=jvns.ca;
-	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:R5VMjJz5eH1V3VzVMpedJxJvXeVSdNhNe53QYv8xcl7CX4K
-	qKoY5WakMfmDpegCOWgBZEZgQo2MQkmtiXuFju2HqbURsJVZ7OQaKU9RWX9Cb6jz
-	WhqzGNaGgF74355VyfPnMed2Kfx77G/w9j1N0mba7tPvvgCuiSXAS4cUW0JQ/iBA
-	nKcq9JPSOOQx2tjkxqSlvbe8df3XWxMMzJJS8tUMcP6RVjJbS5MGn6PB/ZhwWUut
-	bp7C0fdzpWfu7igOFtdOvi4brPeDtm5K9xEVYPrBoSMig0XtKU8CtiHknP31gN5J
-	txcoZ/xieB9UmOydLArs9WRR4zBBB+GT0/K71VA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:NfrgzumH8HpeJpWvFQ/z3yZev8EDwJVxgLZwCaB0TrA=:dDtio0OKX16rQJSpDkMiwN3g/qJk6GhPo3TVTIguMaY=;
-X-ME-Sender: <xms:NCrOan6-3hP-18KelUbliXdFIWWcqzGWacVVbkCeK_TLNE3iZ8PgTA>
-    <xme:NCrOansjs1CxwyHz-v1oNxp9M3ssjbJx6DHSPNapOxIXEpGXcXZqtwDTWoIUshy30
-    c3bDmNT1rJTuJLdqiwdfEOU2ERYWe4RkoCAXMY1nc0RNMNzUeN7TAvM>
-X-ME-Proxy-Cause: dmFkZTGuMWsFoV+SSxzxcycPx4lSv+8aKBSgZO2BZQ4mkm1nR4jhcgIAOD4g1ISSaSm+O+
-    lc++5rDOkD5AJeyAPXXql0GAHYvtCInwmuc4yUEVwvEyeZmx0klzjaGO/q/dVzTxN6bOYC
-    ZGRx1Pmdh2TGCSyDKLxwTl2p6EhYBbPFnXe2xDDpQeUFirxIYfYd3NdML2Bm4Ibl9ilTic
-    d1gIcS90k9P6S7fFZwagP0JYCqg+25fzO6cKg3Ks6nsqD6bpVIYNf2lO77sPM9mG35VnX3
-    uGSUrKS5vjfP+YJ8ZV/dty3mwut1HwAdJeRkD4hsnvsp/lhfwMImiBQsPT9PXXzBSqJ6Pb
-    Yr65R06sww4688kSFq2RP1ksnAeaqMZhhi1PVG2KIYie8pgmvgzw9wR811LN591lTCs9Bq
-    Z6FBI1ffv7Q96lA2a8DidsbSX2I/r/6zsqg5pR2almAhlQswglW4ZuaOhKRe11o9dCAlUF
-    3E9cifY1ogr98w/D7zkBQDvnLHbKVRwG3uiQq7XiGPUbcw9svC8uS34+TR9QrvQxballe5
-    0G2ZP2wTgAtYj4AQDdNryT7v+qEdGEyvoQ8pq4N/B61OSRdCfLI+JDhede+akXxXl+kwcZ
-    wzOeI8+09rGem/1F1EW7axxDBRdwml6w3XKxWxL28l7EmYNEmhaz51L+axLQ
-X-ME-Proxy: <xmx:NCrOamWn6QCGqT0onzo9PnUuDbWvBkr4q8s97hyV-f3gZ5YzYDYxiA>
-    <xmx:NCrOaqWHxx9Kv9xS04nqj3-0ICuNqMLZkAswlIG4P7u7aZvirQrOyQ>
-    <xmx:NCrOatd6UFhR19oP4CwXsxkfIGt2304-xnwZ0ccfOyX1doDS1n-RNg>
-    <xmx:NCrOarX4ZqMOmNrCqgMhBAeZw5mdgsJBJ-1UdnIB420FT8Zw20iTMA>
-    <xmx:NCrOapycccB4YfPKqscKJBJym1hLxIJWTaXCkzo-PkK5zYQ27kFL0niO>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 4F877782738; Tue, 13 Oct 2026 08:55:16 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OW5kWpu6"
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-5e4d95e3e55so1011197e0c.2
+        for <git@vger.kernel.org>; Tue, 13 Oct 2026 06:01:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791896492; x=1792501292; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=3agKGslgNzLLvd6jzWa3u/Rtrip/keB7rHxsIi3K8OM=;
+        b=OW5kWpu6NMi/CBZWvgoYGCPlntoAmWEOS6Cc2V0bs8n3pmjfqAS9oK1FqJkYufdAhM
+         o3uZG+mq6LWEk0Yepc6p7cPER35utNgm9YXRpd29NvM33sD127eGMCFcbtEu7zWWkojX
+         16JCRa1s9YjUaS6Axg6eL41nHj9cguJmWA9vxAlYAXEpMy8CK8fqP4ZFkwJNDb3AjY5l
+         XMqN/do+z0qxy1/ixtGSvWbiYsMUrLJBmQ4WqEaSbO7ysd8iZFcSIoc+PfPzDZvIhOP2
+         zqyevHv9Ek7En/9oro4xEVfChAyPyeQPBuhJTh0vlojyEOAZXKiSz1WpNzKRREHrNgUK
+         PPaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791896492; x=1792501292;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=3agKGslgNzLLvd6jzWa3u/Rtrip/keB7rHxsIi3K8OM=;
+        b=1XMh3YpWMTieh7MtV0PiTeM+oOMObwJXaq+L7eavtHJDy+0S9/BNz3unNirJ5hoXDu
+         aS1W4gRStX5JSTS55MZ9lfwiIYE3uTnqwKJ/2nMuzJATkG8ou1PL6AdVjbJheOkUcQ+R
+         glX9m/wKb1mvHRbYcuiYWkXE58N8YTRVn351CcSIkJru0M7pWATzXlez+WOmxgOPa/pl
+         3NXOBqUnBdGuxB8Dk3CgsUxbATQR5qKd+2k1n77KMIDEMdINsilNV+Ib3st3WE+AYnyg
+         mqtlEsnhPeWqwxRj3GSKKaa8EqdthuAheEIDWwF9eAGmOglJRnbspyUbsF/USIE20j9o
+         VKvg==
+X-Gm-Message-State: AFq9FYIMOacF3zOMhzahTbYCfgt7Wb4IUgFtXa3DU29y9kaV8ol9udrh
+	0jvN2ARC7Iw1uZDvhuHhYMNPoi8BNRyhQ0qaA6VSHbDtN+SCXmRQstHS+2LhGQ==
+X-Gm-Gg: AYBFou0zG3Zx9WIzSelm8ZFSIVVAzoI4c3IdjSdstIJc92oewS7ISkLFg9Y/YNolnOR
+	NUjd9HgTFn85+K39x9rypaSvPqH/UVO0/dmB+CqXMo4O+78oPojoYsKVteKZOnMckLza5AAeKR3
+	/usMGbejviGmnlTX3E/NDxB01g+FqoJIi95vq74HtgmSeGOQPdjmHIXph5iBNFemToxLTpSFmvo
+	411iAB9XPNkl27LDFZRTT32nZyQU7VfHT40nVfMRoIDg77VWEqX18cFRandjEV9WNxu2vJCYXmP
+	x8yozOotsZkTaQ2ep709r4qP8sIxGMRnPA/ekrQoRaBPk3xj0YgCZC5HwYRWd+N32yTzPkBstY6
+	H9nZX9SsNAQJQxY7dzkAelEpA/zXkc18RWbztbFiZy3A0kZiIWCG6YAV4U1eWY+y5NEg39u/b7s
+	x3KCx9IPEUBGYFactN5j1Uw63CobWQdQ7tnV2dzweWa27rlCTzPcQ6O2rBW3h6Bvh8YT4jZTlN0
+	IGY
+X-Received: by 2002:a05:6122:469f:b0:5da:9b81:1aa4 with SMTP id 71dfb90a1353d-5e91f436139mr3152913e0c.5.1791896487548;
+        Tue, 13 Oct 2026 06:01:27 -0700 (PDT)
+Received: from [127.0.0.1] ([20.106.191.116])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91b97c39482sm24532796d6.45.2026.10.13.06.01.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Oct 2026 06:01:26 -0700 (PDT)
+Message-Id: <pull.2250.v2.git.1791896486100.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 13 Oct 2026 13:01:26 +0000
+Subject: [PATCH v2] doc: checkout: rewrite detached HEAD state explanation
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A1sfaQj8oK1o
-Date: Tue, 13 Oct 2026 08:54:56 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-Message-Id: <31f8c254-328b-405f-bc26-b077fa57b5ef@app.fastmail.com>
-In-Reply-To: <xmqqik3da2bs.fsf@gitster.g>
-References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
- <xmqqik3da2bs.fsf@gitster.g>
-Subject: Re: [PATCH] doc: checkout: rewrite detached HEAD state explanation
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Julia Evans <julia@jvns.ca>,
+    Julia Evans <julia@jvns.ca>
 
-Thanks for the review. I'm going to mark comments that I feel are about style issues
-(like "could this be explained in a more clear way?") as just "style comment" to deal with
-later.
+From: Julia Evans <julia@jvns.ca>
 
-In general if we really want to make sure that this is as clear as possible, I
-think it would be most effective to do a second revision later (after merging
-this) where we get feedback from users and find out what folks are confused by.
+The current explanation has the following issues:
 
-On Wed, Oct 7, 2026, at 12:43 PM, Junio C Hamano wrote:
-> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> diff --git a/Documentation/detached-head.adoc b/Documentation/detached-head.adoc
->> new file mode 100644
->> index 0000000000..1e00712124
->> --- /dev/null
->> +++ b/Documentation/detached-head.adoc
->> @@ -0,0 +1,43 @@
->> +`HEAD` is where Git stores your current branch. `HEAD` can either be:
->> +
->> +1. A branch, which is your current branch.
->> +2. A commit ID, when you don't have a current branch.
->> +   This is called "detached HEAD state".
->
-> HEAD is branch which can either be a branch or something else?
+- Says detached HEAD state is useful but doesn't explain why
+- Takes many paragraphs before explaining what detached HEAD state is
+- It's common for users to accidentally end up in detached HEAD state,
+  but it doesn't explain why that might happen
+- One of the UI improvements in `git switch` is to make it harder
+  to detach accidentally, but that isn't advertised.
+  See 7968bef06b (switch: only allow explicit detached HEAD, 2019-03-29)
+- Too many confusing diagrams
 
-Style comment. Probably this is the one I'd prioritize the highest.
+Write a new explanation addressing these issues, and put it in a
+standalone guide so that we can easily reference it from advice
+("see `git help detachedhead`").
+The result is a shorter guide that covers more material.
 
->     HEAD records the state from which your current changes started.
->     This can be a branch (the "current branch"), or it may not be
->     associated with any concrete branch (in which case HEAD is
->     "detached")
->> +It can sometimes be useful for `HEAD` to be a commit ID.
->> +For example, it lets you look at an old version of your code
->> +(with `git checkout COMMIT_ID`).
->
-> To "look at" an older state is more versatile than simply running
-> 'git show COMMIT_ID:path', as it allows you to do anything you can
-> do on a branch, such as building and testing.  Thus,
->
->  	A detached HEAD is useful when you want to tentatively visit
-> 	an old state with 'git checkout --detach v0.1', without
-> 	having to create a dedicated branch for it.
+The framing that "Git considers commits that aren't on a branch/other
+reference to be garbage" is taken from Steve Klabnik's tutorial
+https://steveklabnik.github.io/jujutsu-tutorial/branching-merging-and-conflicts/anonymous-branches.html.
+It's funny and it's consistent with the way Git uses the term
+"garbage collection".
 
-Style comment.
+Co-authored-by: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
+Signed-off-by: Julia Evans <julia@jvns.ca>
+---
+    doc: checkout: rewrite detached HEAD state explanation
+    
+    This is a pretty quick rewrite where we didn't get any user feedback. If
+    we really want to make sure it's clear to users as possible, we should
+    IMO do a second stage later where we ask users which parts are unclear.
+    
+    Changes in v2:
+    
+     * Make the meson.build and Makefile changes (thanks to Kristoffer)
+     * Rename to gitdata-model (thanks to Kristoffer)
+     * Mention commits will be deleted after 90 days to make it seem less
+       scary (thanks to Kristoffer)
+     * Add an "easily" qualifier to "it lets you look at an old version of
+       your code", to avoid implying that this is the only way (thanks to
+       Junio)
+     * Mention that Git will warn you when switching branches if you're
+       leaving commits behind (thanks to Junio)
+     * Remove "unintentionally" (thanks to Junio)
+     * Mention git help datamodel (thanks to Junio)
+    
+    Left the style comments alone (ideas for how to make it more clear) to
+    be potentially addressed in v3, after we finalize the information
+    content.
 
->> +The only problem is that if you create new commits while in detached
->> +HEAD state, those commits won't be on a branch.
->
-> I would suggest rephrasing "The only problem" to "One caveat is" or
-> something.  When sightseeing and experimenting, the ability to
-> create throw-away commits without the need to clean them up later,
-> or to invent a unique name for a temporary branch, is not a problem.
-> It is an advantage.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2250%2Fjvns%2Fdetached-head-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2250/jvns/detached-head-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2250
 
-Style comment.
+Range-diff vs v1:
 
->> This makes those new
->> +commits much harder to find later. Also, Git considers commits that
->> +aren't on any branch (or a tag or other reference) to be garbage.
->> +Git will eventually permanently delete those "garbage" commits during
->> +garbage collection.
->
-> Correct.
->
-> Perhaps it is better to clarify this by adding "after you leave
-> the detached HEAD state" after "to find later".  While you are in
-> the detached HEAD state, you can run 'git log' to find the commits
-> you created there, as you can do everything you normally can on a
-> branch, or use 'git reflog @{now}' for that matter.
->
->> +There are 3 main ways you can end up in detached HEAD state
->> +unintentionally:
->> +
->> +1. `git checkout COMMIT_ID`, where `COMMIT_ID` is a commit ID
->> +2. `git checkout v1.3`, where v1.3 is a tag name
->
-> These I wouldn't call "unintentionally".  They are documented and
-> supported ways to do so, and will remain to be so.  "unknowingly"
-> may be a more fair way to call these gotchas, though.
+ 1:  efe0f9db36 ! 1:  83139be46f doc: checkout: rewrite detached HEAD state explanation
+     @@ Commit message
+          Co-authored-by: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
+          Signed-off-by: Julia Evans <julia@jvns.ca>
+      
+     + ## Documentation/Makefile ##
+     +@@ Documentation/Makefile: MAN7_TXT += gitcore-tutorial.adoc
+     + MAN7_TXT += gitcredentials.adoc
+     + MAN7_TXT += gitcvs-migration.adoc
+     + MAN7_TXT += gitdatamodel.adoc
+     ++MAN7_TXT += gitdetached-head.adoc
+     + MAN7_TXT += gitdiffcore.adoc
+     + MAN7_TXT += giteveryday.adoc
+     + MAN7_TXT += gitfaq.adoc
+     +
+       ## Documentation/detached-head.adoc (new) ##
+      @@
+      +`HEAD` is where Git stores your current branch. `HEAD` can either be:
+     @@ Documentation/detached-head.adoc (new)
+      +   This is called "detached HEAD state".
+      +
+      +It can sometimes be useful for `HEAD` to be a commit ID.
+     -+For example, it lets you look at an old version of your code
+     -+(with `git checkout COMMIT_ID`).
+     ++For example, it lets you easily look at an old version of your code
+     ++(with `git checkout COMMIT_ID` or `git switch --detach COMMIT_ID`).
+      +
+      +The only problem is that if you create new commits while in detached
+      +HEAD state, those commits won't be on a branch. This makes those new
+      +commits much harder to find later. Also, Git considers commits that
+      +aren't on any branch (or a tag or other reference) to be garbage.
+      +Git will eventually permanently delete those "garbage" commits during
+     -+garbage collection.
+     ++garbage collection. Those commits will be deleted after 90 days by
+     ++default, see linkgit:git-gc[1] for more.
+      +
+     -+There are 3 main ways you can end up in detached HEAD state
+     -+unintentionally:
+     ++There are 3 main ways you can end up in detached HEAD state:
+      +
+      +1. `git checkout COMMIT_ID`, where `COMMIT_ID` is a commit ID
+      +2. `git checkout v1.3`, where v1.3 is a tag name
+     @@ Documentation/detached-head.adoc (new)
+      +   You might want to do this if you've created new commits, so that you can
+      +   find the commit later and so that it won't be garbage collected.
+      +
+     -+If you create commits in detached HEAD state that aren't on a branch,
+     -+you can find them later using linkgit:git-reflog[1].
+     ++If you switch branches after making commits in detached HEAD state, Git
+     ++will warn you that you might be about to "lose" those commits and print
+     ++out the commit ID. You can also always find those commits later using
+     ++linkgit:git-reflog[1].
+     ++
+     ++Here's what that warning looks like:
+     ++
+     ++-------------------------
+     ++Warning: you are leaving 1 commit behind, not connected to
+     ++any of your branches:
+     ++
+     ++  48c09f6 3
+     ++-------------------------
+     ++
+     ++For a more in-depth explanation of how `HEAD` works in Git,
+     ++see linkgit:gitdatamodel[7] (`git help datamodel`).
+      
+       ## Documentation/git-checkout.adoc ##
+      @@ Documentation/git-checkout.adoc: For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
+     @@ Documentation/git-checkout.adoc: For more details, see the 'pathspec' entry in l
+       [[ARGUMENT_DISAMBIGUATION]]
+       ARGUMENT DISAMBIGUATION
+      
+     - ## Documentation/gitdetachedhead.adoc (new) ##
+     + ## Documentation/gitdetached-head.adoc (new) ##
+      @@
+     -+gitdetachedhead(7)
+     -+===============
+     ++gitdetached-head(7)
+     ++===================
+      +
+      +NAME
+      +----
+     -+gitdetachedhead - How detached HEAD state works
+     ++gitdetached-head - How detached HEAD state works
+      +
+      +DESCRIPTION
+      +-----------
+     @@ Documentation/gitdetachedhead.adoc (new)
+      +---
+      +Part of the linkgit:git[1] suite
+      
+     + ## Documentation/meson.build ##
+     +@@ Documentation/meson.build: manpages = {
+     +   'gitcredentials.adoc' : 7,
+     +   'gitcvs-migration.adoc' : 7,
+     +   'gitdatamodel.adoc' : 7,
+     ++  'gitdetached-head.adoc' : 7,
+     +   'gitdiffcore.adoc' : 7,
+     +   'giteveryday.adoc' : 7,
+     +   'gitfaq.adoc' : 7,
+     +
+       ## advice.c ##
+      @@ advice.c: void detach_advice(const char *new_name)
+       	"\n"
+     @@ command-list.txt: gitcore-tutorial                        guide
+       gitcredentials                          guide
+       gitcvs-migration                        guide
+       gitdatamodel                            guide
+     -+gitdetachedhead                         guide
+     ++gitdetached-head                         guide
+       gitdiffcore                             guide
+       giteveryday                             guide
+       gitfaq                                  guide
 
-Thanks, removed "unintentionally".
 
->
->> +The easiest way to avoid accidentally ending up in detached HEAD state
->> +is to use linkgit:git-switch[1] instead of linkgit:git-checkout[1] to
->> +switch branches. `git switch` won't let you detach unless you explicitly
->> +pass the `--detach` argument.
->
-> Correct, but the motivation to 'avoid accidentally ending up' may
-> want to be spelled out.  Most often checking out a tag is to go
-> sightseeing, where you do not want to 'avoid' detached HEAD.
+ Documentation/Makefile              |   1 +
+ Documentation/detached-head.adoc    |  57 ++++++++++++
+ Documentation/git-checkout.adoc     | 129 +---------------------------
+ Documentation/gitdetached-head.adoc |  14 +++
+ Documentation/meson.build           |   1 +
+ advice.c                            |   1 +
+ command-list.txt                    |   1 +
+ 7 files changed, 76 insertions(+), 128 deletions(-)
+ create mode 100644 Documentation/detached-head.adoc
+ create mode 100644 Documentation/gitdetached-head.adoc
 
-Style comment.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index f8dea4b395..5892f48b06 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -54,6 +54,7 @@ MAN7_TXT += gitcore-tutorial.adoc
+ MAN7_TXT += gitcredentials.adoc
+ MAN7_TXT += gitcvs-migration.adoc
+ MAN7_TXT += gitdatamodel.adoc
++MAN7_TXT += gitdetached-head.adoc
+ MAN7_TXT += gitdiffcore.adoc
+ MAN7_TXT += giteveryday.adoc
+ MAN7_TXT += gitfaq.adoc
+diff --git a/Documentation/detached-head.adoc b/Documentation/detached-head.adoc
+new file mode 100644
+index 0000000000..712074c0ef
+--- /dev/null
++++ b/Documentation/detached-head.adoc
+@@ -0,0 +1,57 @@
++`HEAD` is where Git stores your current branch. `HEAD` can either be:
++
++1. A branch, which is your current branch.
++2. A commit ID, when you don't have a current branch.
++   This is called "detached HEAD state".
++
++It can sometimes be useful for `HEAD` to be a commit ID.
++For example, it lets you easily look at an old version of your code
++(with `git checkout COMMIT_ID` or `git switch --detach COMMIT_ID`).
++
++The only problem is that if you create new commits while in detached
++HEAD state, those commits won't be on a branch. This makes those new
++commits much harder to find later. Also, Git considers commits that
++aren't on any branch (or a tag or other reference) to be garbage.
++Git will eventually permanently delete those "garbage" commits during
++garbage collection. Those commits will be deleted after 90 days by
++default, see linkgit:git-gc[1] for more.
++
++There are 3 main ways you can end up in detached HEAD state:
++
++1. `git checkout COMMIT_ID`, where `COMMIT_ID` is a commit ID
++2. `git checkout v1.3`, where v1.3 is a tag name
++3. `git checkout origin/main`, where `origin/main` is
++   a remote-tracking branch
++
++Checking out a tag puts you in detached HEAD state because `HEAD` can
++only be a branch or a commit, not a tag or any other reference.
++So `git checkout TAG` will set HEAD to the commit for that tag.
++
++The easiest way to avoid accidentally ending up in detached HEAD state
++is to use linkgit:git-switch[1] instead of linkgit:git-checkout[1] to
++switch branches. `git switch` won't let you detach unless you explicitly
++pass the `--detach` argument.
++
++To get back onto a branch, you can:
++
++1. Switch to the branch you want to be on, with `git switch BRANCHNAME`.
++2. Create a new branch at the current commit, with `git switch -c BRANCHNAME`.
++   You might want to do this if you've created new commits, so that you can
++   find the commit later and so that it won't be garbage collected.
++
++If you switch branches after making commits in detached HEAD state, Git
++will warn you that you might be about to "lose" those commits and print
++out the commit ID. You can also always find those commits later using
++linkgit:git-reflog[1].
++
++Here's what that warning looks like:
++
++-------------------------
++Warning: you are leaving 1 commit behind, not connected to
++any of your branches:
++
++  48c09f6 3
++-------------------------
++
++For a more in-depth explanation of how `HEAD` works in Git,
++see linkgit:gitdatamodel[7] (`git help datamodel`).
+diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
+index 2aefea0228..4e9e94e24d 100644
+--- a/Documentation/git-checkout.adoc
++++ b/Documentation/git-checkout.adoc
+@@ -376,135 +376,8 @@ For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
+ [[DETACHED_HEAD]]
+ DETACHED HEAD
+ -------------
+-`HEAD` normally refers to a named branch (e.g. `master`). Meanwhile, each
+-branch refers to a specific commit. Let's look at a repo with three
+-commits, one of them tagged, and with branch `master` checked out:
+ 
+-------------
+-           HEAD (refers to branch 'master')
+-            |
+-            v
+-a---b---c  branch 'master' (refers to commit 'c')
+-    ^
+-    |
+-  tag 'v2.0' (refers to commit 'b')
+-------------
+-
+-When a commit is created in this state, the branch is updated to refer to
+-the new commit. Specifically, `git commit` creates a new commit `d`, whose
+-parent is commit `c`, and then updates branch `master` to refer to new
+-commit `d`. `HEAD` still refers to branch `master` and so indirectly now refers
+-to commit `d`:
+-
+-------------
+-$ edit; git add; git commit
+-
+-               HEAD (refers to branch 'master')
+-                |
+-                v
+-a---b---c---d  branch 'master' (refers to commit 'd')
+-    ^
+-    |
+-  tag 'v2.0' (refers to commit 'b')
+-------------
+-
+-It is sometimes useful to be able to checkout a commit that is not at
+-the tip of any named branch, or even to create a new commit that is not
+-referenced by a named branch. Let's look at what happens when we
+-checkout commit `b` (here we show two ways this may be done):
+-
+-------------
+-$ git checkout v2.0  # or
+-$ git checkout master^^
+-
+-   HEAD (refers to commit 'b')
+-    |
+-    v
+-a---b---c---d  branch 'master' (refers to commit 'd')
+-    ^
+-    |
+-  tag 'v2.0' (refers to commit 'b')
+-------------
+-
+-Notice that regardless of which checkout command we use, `HEAD` now refers
+-directly to commit `b`. This is known as being in detached `HEAD` state.
+-It means simply that `HEAD` refers to a specific commit, as opposed to
+-referring to a named branch. Let's see what happens when we create a commit:
+-
+-------------
+-$ edit; git add; git commit
+-
+-     HEAD (refers to commit 'e')
+-      |
+-      v
+-      e
+-     /
+-a---b---c---d  branch 'master' (refers to commit 'd')
+-    ^
+-    |
+-  tag 'v2.0' (refers to commit 'b')
+-------------
+-
+-There is now a new commit `e`, but it is referenced only by `HEAD`. We can
+-of course add yet another commit in this state:
+-
+-------------
+-$ edit; git add; git commit
+-
+-	 HEAD (refers to commit 'f')
+-	  |
+-	  v
+-      e---f
+-     /
+-a---b---c---d  branch 'master' (refers to commit 'd')
+-    ^
+-    |
+-  tag 'v2.0' (refers to commit 'b')
+-------------
+-
+-In fact, we can perform all the normal Git operations. But, let's look
+-at what happens when we then checkout `master`:
+-
+-------------
+-$ git checkout master
+-
+-               HEAD (refers to branch 'master')
+-      e---f     |
+-     /          v
+-a---b---c---d  branch 'master' (refers to commit 'd')
+-    ^
+-    |
+-  tag 'v2.0' (refers to commit 'b')
+-------------
+-
+-It is important to realize that at this point nothing refers to commit
+-`f`. Eventually commit `f` (and by extension commit `e`) will be deleted
+-by the routine Git garbage collection process, unless we create a reference
+-before that happens. If we have not yet moved away from commit `f`,
+-any of these will create a reference to it:
+-
+-------------
+-$ git checkout -b foo  # or "git switch -c foo"  <1>
+-$ git branch foo                                 <2>
+-$ git tag foo                                    <3>
+-------------
+-<1> creates a new branch `foo`, which refers to commit `f`, and then
+-    updates `HEAD` to refer to branch `foo`. In other words, we'll no longer
+-    be in detached `HEAD` state after this command.
+-<2> similarly creates a new branch `foo`, which refers to commit `f`,
+-    but leaves `HEAD` detached.
+-<3> creates a new tag `foo`, which refers to commit `f`,
+-    leaving `HEAD` detached.
+-
+-If we have moved away from commit `f`, then we must first recover its object
+-name (typically by using git reflog), and then we can create a reference to
+-it. For example, to see the last two commits to which `HEAD` referred, we
+-can use either of these commands:
+-
+-------------
+-$ git reflog -2 HEAD # or
+-$ git log -g -2 HEAD
+-------------
++include::detached-head.adoc[]
+ 
+ [[ARGUMENT_DISAMBIGUATION]]
+ ARGUMENT DISAMBIGUATION
+diff --git a/Documentation/gitdetached-head.adoc b/Documentation/gitdetached-head.adoc
+new file mode 100644
+index 0000000000..a477060db2
+--- /dev/null
++++ b/Documentation/gitdetached-head.adoc
+@@ -0,0 +1,14 @@
++gitdetached-head(7)
++===================
++
++NAME
++----
++gitdetached-head - How detached HEAD state works
++
++DESCRIPTION
++-----------
++include::detached-head.adoc[]
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index cfa9c67609..6b3141647f 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -197,6 +197,7 @@ manpages = {
+   'gitcredentials.adoc' : 7,
+   'gitcvs-migration.adoc' : 7,
+   'gitdatamodel.adoc' : 7,
++  'gitdetached-head.adoc' : 7,
+   'gitdiffcore.adoc' : 7,
+   'giteveryday.adoc' : 7,
+   'gitfaq.adoc' : 7,
+diff --git a/advice.c b/advice.c
+index 401d047391..43f86c2eaf 100644
+--- a/advice.c
++++ b/advice.c
+@@ -291,6 +291,7 @@ void detach_advice(const char *new_name)
+ 	"\n"
+ 	"  git switch -\n"
+ 	"\n"
++	"Run `git help detachedhead` to learn more.\n"
+ 	"Turn off this advice by setting config variable advice.detachedHead to false\n\n");
+ 
+ 	fprintf(stderr, fmt, new_name);
+diff --git a/command-list.txt b/command-list.txt
+index 63ae2a67c9..922a1dbd84 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -218,6 +218,7 @@ gitcore-tutorial                        guide
+ gitcredentials                          guide
+ gitcvs-migration                        guide
+ gitdatamodel                            guide
++gitdetached-head                         guide
+ gitdiffcore                             guide
+ giteveryday                             guide
+ gitfaq                                  guide
 
->> +To get back onto a branch, you can:
->> +
->> +1. Switch to the branch you want to be on, with `git switch BRANCHNAME`.
->> +2. Create a new branch at the current commit, with `git switch -c BRANCHNAME`.
->> +   You might want to do this if you've created new commits, so that you can
->> +   find the commit later and so that it won't be garbage collected.
->
-> Very good.
->
->> +If you create commits in detached HEAD state that aren't on a branch,
->> +you can find them later using linkgit:git-reflog[1].
->
-> This, as you already said, is "much harder to find later" option.
-> There should be a better recovery option described here before
-> resorting to "git reflog HEAD" after you switched back.  E.g.,
->
->     If you have created commits in detached HEAD state and then
->     switched away from the state, all is not lost.  "git checkout"
->     would have give you a warning message, like this:
->
-> 	Warning: you are leaving 2 commits behind, not connected to
-> 	any of your branches
->
-> 	c816689 typofix the previous
-> 	8e1bff5 decsribe detached HEAD state better
->
->     You can create branches to keep them, e.g., "git branch saved c816689",
->     by using the commit object names left there.
-
-Thanks, added a mention of this warning. It's a really nice example of the ways
-Git helps avoid issues.
-
->> diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
->> index 2aefea0228..4e9e94e24d 100644
->> --- a/Documentation/git-checkout.adoc
->> +++ b/Documentation/git-checkout.adoc
->> @@ -376,135 +376,8 @@ For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
->>  [[DETACHED_HEAD]]
->>  DETACHED HEAD
->>  -------------
->> +include::detached-head.adoc[]
->
-> Losing the diagrams is a bit concerning.  However, if the intention
-> is to have readers learn how HEAD refers to a branch pointing at a
-> commit with history structured as a DAG elsewhere in a more basic
-> concepts guide, I suspect that it would actually work better.  This
-> could even be reduced to a simple "see also" pointer to that other
-> guide.
->
-> If an existing user only uses 'switch' and never reads 'git help
-> checkout', they are already not seeing these diagrams, or perhaps
-> they learned the concepts elsewhere.  They still manage to
-> understand Git well enough to make use of it, so perhaps this
-> approach is OK.  I dunno.
-
-Thanks, good idea to give people a pointer to more info about HEAD.
-I'll try adding a pointer to `git help datamodel`.
-
-I'm not against adding diagrams, but I think if we want to add diagrams that
-should be a separate project where we actually get feedback from users.
-Similarly for explaining `HEAD` in more detail.
+base-commit: 5a7d1e8045ce66c908f62598e26cbb8df7b39a90
+-- 
+gitgitgadget
