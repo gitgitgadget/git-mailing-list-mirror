@@ -1,123 +1,232 @@
-Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147DB31F99C
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 15:04:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF51C55820F
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 15:32:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791990262; cv=none; b=HlFGpI+e5gLHXHDuwqclCmkW6UTA6GLmO9i9CaLnPG26Tn3VG12v311b1G+PXx7oUxMbXzVw7w4HHYGj14yMQiLipY6KwWsTULi2C7hGzRw/t7jk+6ACyIj4TwPaaQa1YpGQYPkzlzAS72zx/432kVuR4F/0zlvS5uL3bgiXq+I=
+	t=1791991958; cv=none; b=D2FfFWL9RU8oiB582fvZgebkGhSlqbTDZ9uhnsc/HWM0PYLjp+qZg+Xehavxgq1WFyZpjDEit2rL+LL68wZQxbFaBtNqdrGbLSTqA2lo3PlpCwMWKlVU1jDa1Du4GU1o63HBcYTYc70tDC/HGrSyxM1V8IzrYkT0MM/9XcQyk/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791990262; c=relaxed/simple;
-	bh=kowHBgOby2mzvqrn5rqjG5vT3VkLnjmErms9enNRIJ4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bdrwEBI8k2jW3/EOxaLBQ1uoAv2TIdL1vGah2X/zVoNQj2pkvIOaJ8vZeeSTjjF+MlbkWyOAtDIVzYwrXdofWlWCAej8hTnHXjum0ct3SG4k3X1tV24G3O3oB3rxf5LIyMvap1uhVDsz/zehsRX9UGxeeQpHZostxpTPwLT7Z9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LROWraDM; arc=none smtp.client-ip=74.125.82.174
+	s=arc-20240116; t=1791991958; c=relaxed/simple;
+	bh=Uk4ZsTSuU/zHwGPRvvJofXc7tDVNOQ6+bwUVHtganSE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SsQwGGJfbxX0DJ8veW9kxjxr4f45i94aY3Z1XMlSkyNeK0/AvY4lFHY5rngGfD55xWntPoBObD9dUAlzicYIRfO4MS+GSSMXe/Zxfk1NOBBc1NzO8BIHyReXURvJD5n6Y8dHUO3bXkMnT5/XrN5yQJRxIzAgOtEdvkKJJNRdtWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P8A++Rqo; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LROWraDM"
-Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-35b2c599f43so5203431eec.0
-        for <git@vger.kernel.org>; Wed, 14 Oct 2026 08:04:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P8A++Rqo"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a018dc1f98so34588905e9.3
+        for <git@vger.kernel.org>; Wed, 14 Oct 2026 08:32:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791990256; x=1792595056; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hPjr1By/uOLljGFgKU31RSwNKFE41dipIjP7TVykMRA=;
-        b=LROWraDMpXjz5Qj57ttzBa+Vpw3guoM6R7jifktAaCNDf2+0zThy0e1cIfMNewO9KF
-         RfA5DxOZRtnsBGZRnHTp1vfmIjJw1sYJlLZcHl+GB0HehI/124Hes7kjyj/Ythkkv1CJ
-         viC135u8ws4OquJ3/rcv2cSpSmpc7wMZEHBMPeMEj80xXOf27OOJrynv2XQXDTNe48Zf
-         koN6e1FLQvaX9Noh6oAVl7n1yA6uEaLQj+io/J1wV5QuixH3qvstPx4RKqD7Uyl7+c8W
-         KJQ/cjhLe0FWdEiNoQtnUCY9UaJgTWvPdUud9MuZdcjFyIJxyh89TP1AQooflzB32O43
-         1Ltg==
+        d=gmail.com; s=20251104; t=1791991954; x=1792596754; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=KPKhv1lH4GEHzSPz7Uwtfx7sImRc6TwR5ybM9CD6Nf8=;
+        b=P8A++RqoBZ622rov8Mf3hxeb41/sJZA+iuxlKoQq48oDw2ehyoIaL+PbWmBcSRQIg6
+         LEJZi35mnRTuNKmEUACgqIvf9kc7gAYobq6JKEKhWo7OayEsxmQYXzAdle5YVBzLtxZd
+         uy1ro9zxE6ta3b48A/GAXX3/7yrknjiuFwK8AapJtDnmew3F5o09PQFTTVsbVkz1iqxg
+         TZUmd+bGzXoUfO4rtnRF8FK5dcN7zBc1e/k5nIKK0K5u2fDxcTNRBwPUz8gf85s3guU5
+         R0gbwRBDmfGAgzLbkoZspS85RE8wzWRpgOC+v1/weovIYwQiduwQ9XRfluWL2KFlpL19
+         IqNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791990256; x=1792595056;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20260707; t=1791991954; x=1792596754;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=hPjr1By/uOLljGFgKU31RSwNKFE41dipIjP7TVykMRA=;
-        b=eZ7zgwgrFZkUWaBP9Q944Z3hRnvYDa5EnB+bGf2WGJVpCVP7/ojQ+bkYp4INk4Qdqh
-         lFWJIE0Sus3aazLYZL7++PCraTShhHVUWJlOFzs9p62l6g97Q8h0KiIj9UhXyRD30eDP
-         SlMMUzpNng/tFWQqZj0BPi2YjUtCrbVOAQd21sJeKSwxH2mKErgMvP8ObPsHaibGKk7y
-         UcpuoTV/CSeICqjVEDIwplooPQEdPEktuCcZSytZsB0/1C1A/KpYHDX+fmszu3XD2JkD
-         /10ABRNjV42jgM+mehBhVluoYcxwBVrqp10ild3rrcEvvGNYl2TT05d5zvzNNwXHREdt
-         7/wA==
-X-Gm-Message-State: AFq9FYK9CeZtxC5VVXl3iZ1ezPMSncR04AyurHc/rwp2ioV/QpqdcgAL
-	EbScckebYhGNXBEIXMJMPPOAwd8t561FFl5GFET5L2SLxGfU9XtHyrZC
-X-Gm-Gg: AYBFou2lC+UOeL09SsCZbJA1CHA31chHqmNHBny9AnU7EimAFqDlcV4RPjUTEp5UfDw
-	iVdiRi7f4jVbY2kb6CV5A+RBXwlkkf5pesuCaVGepIz1YY9DkvtkLTp6quDccWLS3+OgebPuL7m
-	eLQH6CRahJu4+ZScGMt32PuJAN+sh/p2HWdv2m8TXznTNL7+Phqd4EQCfMXK4bCLKhF74Rbyzrz
-	Z6DI7B9p/FDRdjup0ryPSnAanOY1d3PmVIclXFTLO70OMNIOmNVTfGHHHpkrtrbLvLhej/o2xGJ
-	XdrFVhtaF0u4tuXPuRZxjVkRI8gLfgeLiplb2AuvYaCzWrUYGWXag/SoWpylo+Cwpdx2/CajIub
-	Au6mmhqXmDEQy8pcan/dr9LfUHt3+IVdoRCKJ+8EUbgRGBEy/cxNcrdmRQmmM69B6JvEGk0yxxw
-	XxOY9GtvsxzpdG00igngqRLO/r30ddn20QLB2CYirVrloj7yilUSjZIRPWO6ZlXgIP63WwDcMLv
-	88qG9hKgsh7zow=
-X-Received: by 2002:a05:7301:77cb:b0:356:b370:a0ee with SMTP id 5a478bee46e88-356b370a395mr19267488eec.20.1791990255445;
-        Wed, 14 Oct 2026 08:04:15 -0700 (PDT)
-Received: from [192.168.25.219] ([115.108.41.154])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3537ca0e64csm59010725eec.10.2026.10.14.08.04.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Oct 2026 08:04:15 -0700 (PDT)
-Message-ID: <3888af48-339f-4b6a-ae84-88d0ad9caf07@gmail.com>
-Date: Wed, 14 Oct 2026 20:34:09 +0530
+        bh=KPKhv1lH4GEHzSPz7Uwtfx7sImRc6TwR5ybM9CD6Nf8=;
+        b=rTZ6HujRlLIRT0u31ZifCdfBTNpgqq+gHfthGdJ2aj7rjrT5leuiK4jYkgpTgByYsM
+         +9Yq77OJnxSl+ERViIJNMmDGrin/b5Wd1zQQG0MdA+fos+614iemKiIEwRY6HCBu1xLS
+         XvVeasqEF19uZZ8ZxJBp2oxh6npzQqVUrli509mSnqsEfp5hIkjsm034dxffSWpDPmo1
+         6r+qogWMejZbFPEXsXrqlHHJEQfsw6pyqSRC0Anh2znZnIZygBQwT5lZvmbK5+eDJZTP
+         zGjm3EIEv2dImmzTLUS5xhDSeG8+k5izL4ex6COG4nSABvFk407LqBXQq2LjnJ4o+3af
+         T7kA==
+X-Gm-Message-State: AFq9FYKObLS4cGIivqiI0RyW5walcw1W1w0uQjUTSxR0NZSCtDAHL13j
+	c4wb69jzhxIAqTo9SYhRw4+bQ1l2bXpAdEOZgBlPhDEL7hIB5kdi5+AQ0t692VPv
+X-Gm-Gg: AYBFou0s+y/rmUAwh+vG4Olp1iGNvTVBbRbAThmS7yzxzBfov5S2JReWruzr2J839xT
+	p/VbMS8eCo+yY5NapxVxpyKRfa3snFPIld7tgOf3yA9MqoeVy4o1+pOwOtp88oLOvoeak7Ds6TK
+	yXFpjWvMnT07AnIt9esSmlZb5C4YDOO0zEpRl2ZSKAjGtWd+FZ1I0Qg3NIcTWRMC4pkUFfoNW9r
+	6L/ht0Kscv9i+tydW/ONOyRRhXPSKC+IZnnGve8fkntYXrzS5vMCkB3TckCbSnv4+MoX5LntOoc
+	Vd9dOE1Bjng5F7HIbBqm1kFTxLtIwpmCHftJpR5T9MJlnt22+hQMwobbPTuQhCtTMHAiixblLPK
+	R/gPH0SWGke9mhhNu8zAqRQ627w5CHnKrjyLh6AJqg0Atf/Lg4WHxtqT9yDcUpvJZPIUHL9lx3i
+	6ey3IiCjo6fzE4zslAvKyw6x858VRWEsmXfFi0jHs4CWR4KIeBiArMYDa9AEG5NbFicieqiRla8
+	XkBW5CPW8dlSymwjVSDw85hM7mKF6ZlaYh0bZr3npZlveJgRHwdY3/rug==
+X-Received: by 2002:a05:600c:3e0a:b0:4a0:1c10:1419 with SMTP id 5b1f17b1804b1-4a18e4cd667mr321528115e9.26.1791991953710;
+        Wed, 14 Oct 2026 08:32:33 -0700 (PDT)
+Received: from u.ad.analog.com (dynamic-078-054-209-001.78.54.pool.telefonica.de. [78.54.209.1])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1bd1a0d2esm5775495e9.10.2026.10.14.08.32.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Oct 2026 08:32:33 -0700 (PDT)
+From: Andy Koppe <andy.koppe@gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Andy Koppe <andy.koppe@gmail.com>
+Subject: [PATCH] refs/files: keep root refs out of loose ref cache
+Date: Wed, 14 Oct 2026 16:32:08 +0100
+Message-ID: <20261014153208.2194727-1-andy.koppe@gmail.com>
+X-Mailer: git-send-email 2.56.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] t5004: skip SHA-1-only test in SHA-256 repository
-To: Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- Todd Zullinger <tmz@pobox.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?=
- <szeder.dev@gmail.com>
-References: <20261014-pks-ci-housekeeping-v3-0-04c24e1f480d@pks.im>
- <20261014-pks-ci-housekeeping-v3-1-04c24e1f480d@pks.im>
- <20261014090746.GA1341124@coredump.intra.peff.net> <as9a0znMFrbOm5s1@pks.im>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <as9a0znMFrbOm5s1@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 10/14/26 16:04, Patrick Steinhardt wrote:
-> On Wed, Oct 14, 2026 at 05:07:46AM -0400, Jeff King wrote:
->> On Wed, Oct 14, 2026 at 10:30:27AM +0200, Patrick Steinhardt wrote:
->>
->>> We're about to fix that typo in the next commit, but this will also
->>> uncover that the above test case is broken when running in SHA-256
->>> repositories. The extracted objects are SHA-1 objects, so extracting
->>> them into a SHA-256 repository is not going to yield anything good. So
->>> once we fix the Fedora-based job to enable breaking changes, which will
->>> make tests use SHA-256 by default, the test will break.
->>>
->>> Fix this issue by adding the SHA1 prerequisite.
->>
->> Does that mean we'll basically never run the test once Git 3.0 shifts to
->> sha256 by default? I guess we'll have a sha1 ci job (like we have sha256
->> today), but would that job actually hit all the other prereqs?
->>
->> If we instead teach it to use its own repo, independent of the defaults,
->> then we could run it everywhere (that allows all of the other prereqs).
->>
+With the files backend, root refs such as HEAD or ORIG_HEAD are only
+added to the loose ref cache if REFS_FOR_EACH_INCLUDE_ROOT_REFS is
+passed to the iteration that creates the cache. If the cache has already
+been created by an earlier iteration, root refs are silently omitted.
+Conversely, once they have been added, any later iteration also yields
+them, whether or not it asked for them. This has been the case since
+d0f00c1ac17 (refs: introduce `refs_for_each_include_root_refs()`).
 
-That indeed sounds like a good idea.
+For example, `git for-each-ref --include-root-refs --merged=main` omits
+root refs that are merged into main, because looking up the given commit
+loads the replace refs, which populates the loose ref cache first. The
+reftable backend is not affected.
 
-I also wonder, though. How many CI jobs actually satisfy the 
-prerequisite after the change? From a quick look and guessing via the 
-time it took the t5004 jobs to run[1] it seems only the macOS jobs and 
-on AlmaLinux 8 jobs run the test. The linux jobs don't seem to run it. I 
-suppose this is expected behaviour.
+Fix this by keeping the root refs out of the shared loose ref cache.
+Instead, read them into a separate ref cache whenever an iteration asks
+for them, and overlay its iterator on the loose ref iterator. The cache
+is freed when the iteration finishes.
 
-I wonder if it is worth mentioning in the commit message or not. FWIW, 
-the "not a lot of jobs even exercise this." in the commit message made 
-me want to confirm if this job runs at all after the change.
+Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
+---
+ refs/files-backend.c           | 38 +++++++++++++++++++++++++++-------
+ t/t6302-for-each-ref-filter.sh | 12 +++++++++++
+ 2 files changed, 42 insertions(+), 8 deletions(-)
 
-[1]: https://github.com/git/git/actions/runs/38526140649?pr=2445
-
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 71628550f2..74409878b6 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -481,8 +481,21 @@ static void add_root_refs(struct files_ref_store *refs,
+ 	for_each_root_ref(refs, fill_root_ref, &data);
+ }
+ 
+-static struct ref_cache *get_loose_ref_cache(struct files_ref_store *refs,
+-					     unsigned int flags)
++/*
++ * Create a separate ref cache containing only the root refs. These are kept
++ * out of the loose ref cache, which may already exist and is shared by
++ * iterations that should not include them.
++ */
++static struct ref_cache *create_root_ref_cache(struct files_ref_store *refs)
++{
++	struct ref_cache *cache = create_ref_cache(&refs->base, NULL);
++
++	cache->root->flag &= ~REF_INCOMPLETE;
++	add_root_refs(refs, get_ref_dir(cache->root));
++	return cache;
++}
++
++static struct ref_cache *get_loose_ref_cache(struct files_ref_store *refs)
+ {
+ 	if (!refs->loose) {
+ 		struct ref_dir *dir;
+@@ -499,9 +512,6 @@ static struct ref_cache *get_loose_ref_cache(struct files_ref_store *refs,
+ 
+ 		dir = get_ref_dir(refs->loose->root);
+ 
+-		if (flags & REFS_FOR_EACH_INCLUDE_ROOT_REFS)
+-			add_root_refs(refs, dir);
+-
+ 		/*
+ 		 * Add an incomplete entry for "refs/" (to be filled
+ 		 * lazily):
+@@ -1004,6 +1014,7 @@ struct files_ref_iterator {
+ 	struct ref_iterator base;
+ 
+ 	struct ref_iterator *iter0;
++	struct ref_cache *root_refs;
+ 	struct repository *repo;
+ 	unsigned int flags;
+ };
+@@ -1053,6 +1064,7 @@ static void files_ref_iterator_release(struct ref_iterator *ref_iterator)
+ 	struct files_ref_iterator *iter =
+ 		(struct files_ref_iterator *)ref_iterator;
+ 	ref_iterator_free(iter->iter0);
++	free_ref_cache(iter->root_refs);
+ }
+ 
+ static struct ref_iterator_vtable files_ref_iterator_vtable = {
+@@ -1068,6 +1080,7 @@ static struct ref_iterator *files_ref_iterator_begin(
+ {
+ 	struct files_ref_store *refs;
+ 	struct ref_iterator *loose_iter, *packed_iter, *overlay_iter;
++	struct ref_cache *root_refs = NULL;
+ 	struct files_ref_iterator *iter;
+ 	struct ref_iterator *ref_iterator;
+ 	unsigned int required_flags = REF_STORE_READ;
+@@ -1094,9 +1107,17 @@ static struct ref_iterator *files_ref_iterator_begin(
+ 	 * disk, and re-reads it if not.
+ 	 */
+ 
+-	loose_iter = cache_ref_iterator_begin(get_loose_ref_cache(refs, flags),
++	loose_iter = cache_ref_iterator_begin(get_loose_ref_cache(refs),
+ 					      prefix, ref_store->repo, 1);
+ 
++	if (flags & REFS_FOR_EACH_INCLUDE_ROOT_REFS) {
++		root_refs = create_root_ref_cache(refs);
++		loose_iter = overlay_ref_iterator_begin(
++				cache_ref_iterator_begin(root_refs, prefix,
++							 ref_store->repo, 0),
++				loose_iter);
++	}
++
+ 	/*
+ 	 * The packed-refs file might contain broken references, for
+ 	 * example an old version of a reference that points at an
+@@ -1118,6 +1139,7 @@ static struct ref_iterator *files_ref_iterator_begin(
+ 	ref_iterator = &iter->base;
+ 	base_ref_iterator_init(ref_iterator, &files_ref_iterator_vtable);
+ 	iter->iter0 = overlay_iter;
++	iter->root_refs = root_refs;
+ 	iter->repo = ref_store->repo;
+ 	iter->flags = flags;
+ 
+@@ -1490,7 +1512,7 @@ static int should_pack_refs(struct files_ref_store *refs,
+ 	if (limit < 16)
+ 		limit = 16;
+ 
+-	iter = cache_ref_iterator_begin(get_loose_ref_cache(refs, 0), NULL,
++	iter = cache_ref_iterator_begin(get_loose_ref_cache(refs), NULL,
+ 					refs->base.repo, 0);
+ 	while ((ret = ref_iterator_advance(iter)) == ITER_OK) {
+ 		if (should_pack_ref(refs, &iter->ref, opts))
+@@ -1530,7 +1552,7 @@ static int files_optimize(struct ref_store *ref_store,
+ 
+ 	packed_refs_lock(refs->packed_ref_store, LOCK_DIE_ON_ERROR, &err);
+ 
+-	iter = cache_ref_iterator_begin(get_loose_ref_cache(refs, 0), NULL,
++	iter = cache_ref_iterator_begin(get_loose_ref_cache(refs), NULL,
+ 					refs->base.repo, 0);
+ 	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
+ 		/*
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index 7f060d97bf..a2fc257f98 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -96,6 +96,18 @@ test_expect_success '--include-root-refs omits dangling symrefs' '
+ 	)
+ '
+ 
++test_expect_success '--include-root-refs with --merged' '
++	cat >expect <<-\EOF &&
++	HEAD
++	ORIG_HEAD
++	EOF
++	test_when_finished "git update-ref -d ORIG_HEAD" &&
++	git update-ref ORIG_HEAD main &&
++	git for-each-ref --format="%(refname)" --include-root-refs \
++		--merged=main "*HEAD" >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'filtering with --points-at' '
+ 	cat >expect <<-\EOF &&
+ 	refs/heads/main
 -- 
-Sivaraam
+2.56.0
 
