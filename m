@@ -1,96 +1,96 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114F04A3D5D
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 08:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0885F4AB3CC
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 08:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791966656; cv=none; b=l1tYquS4v7m6QK1Eu9pgI6yQRdPM+Ro8e1aujwg2lfGTdY6yEAycYirW6dCUbKmMhzzIp9xY1RErWDhgoPcgY2XCBP3Uw5RGzisJMTvEfORoS/ruS7rMq3G2N3gAs6ih+6CUBKKoDv48zg3/kjJhGF7pAxibeK4YMFqP6AAwba0=
+	t=1791966658; cv=none; b=I5WKHpC2a4a6sMsRAIhwP/E0QqpE3HGrT7Czk6UvmUrIAHDaX1TJrTeIzvyr3x3foeP2ysxOD1+wNOdJO2TKZZwo3uLf8G3rPbBqh/56RJJmro54t/GJ6InUHriEj4uwGpNeVOBRe3l/KRWWl/cej2GjS/Nr0D7OJCYh1mc7WLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791966656; c=relaxed/simple;
-	bh=R+0GK7TKnwm5QJs7vKaOspHxyXY8m7yTOsUUSpbkVpk=;
+	s=arc-20240116; t=1791966658; c=relaxed/simple;
+	bh=krjcGhQ0ghWqR8sHxbwsyFXqjsg09nRm/p0F3MhKIAA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rFGIaX9BNB4N1YpBxdrNVJeMvMho7/9p7Q6RjURbWhlq2i6P6MZsXf67aESyuGN5VTzt/F4FFfOO/E2xVqofN60GU9cVelJ7OdLtantGdkpL10/oTZ0VA6XEXDjlw6X8VjCzMqLdHOlJxbm9xvkP+Z81JtbH4OCaIg1uKL0GCl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SIVhvOmH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DUKdXGQU; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=nH5kEbGFVQ+7399DxDFeWo84avSW0g4t9M0VQzA6VcYd3D7hFb8+TMTpV8aVLwb36cwTB3F7gpf6E8clq33x9kAPo81XrwOgwPEJ7l6f6/LfGZGrMkiPUPVgK1sbp0HEQ/hRjKkP2uUPa+oDlgsVCoQfetgMrOVBuyMNS4DLkgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qvk6JjC9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TjtjxKD9; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SIVhvOmH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DUKdXGQU"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 40C4C1400144
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 04:30:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qvk6JjC9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TjtjxKD9"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 73E8C1400140
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 04:30:56 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Wed, 14 Oct 2026 04:30:54 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 14 Oct 2026 04:30:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791966654;
-	 x=1792053054; bh=D0YKT16gBACNrffq5OoIFx/5eeIrBSpPom+i/MVDFDE=; b=
-	SIVhvOmHan7JsdKr8yZ7EnRegTtmf0edGA7J01J9RChsy1aWNEvD0rxaC833ix98
-	lEN/NzWwQmUC0HEyTIZwEf4reEEEaiZsT8j8WCCt0Nf+UYSqNxugJUh8OKFmG0j0
-	r7Lo5H2KnROq7LoR5t+cbmo5gJodIBO40MLO7GiA1AldorybcV8ppAFo9Q2fKqDP
-	8BLZPtofL7JGCaAtILDWZdryMMja4d+fFmFfZuZo2NS2htvdAZOSz2y8uwrx1nUX
-	TKBL1nQtwkpbocgaPCBWU8JftIBG44rq1ruaJ2zV4ezO6NDq1BrgMcFizcyh92YH
-	ViXvX7Vmbv4TPsg3VbOmOA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791966656;
+	 x=1792053056; bh=1982burEPFJadcQkPHdq9dRPfDXwyNRtn6u63060MIc=; b=
+	qvk6JjC9GsjBoqo1GjnvgsHpgolb5ZWXXj5zKeMxv/3BMhYtxQWWgdBte5Ruy+Ks
+	ncq4ScIObXHlXLaVxZC7+VIPYeUBNlPelc638JE5B7/1de2ap3/ZZzNvShfVrfqI
+	7YXBIToiGY3yk5KbJ0JwFSypzTX8qn/C2n0qErdh4j116CPIT/ZFPvls6wWfwjYT
+	QFQnSD8ejI9Bl7MU7jtUFtIQMl8PJn7hv0+GL+U/a8pSqxqcHgaO7Ohrb4bcmyGy
+	Uu+n6BgnaMGFCvVifDFiTMAEUtlphBRkm8jqwnCpi8sQZfOA/WRHndMDAgwgx+Y2
+	qPMTPnvI1HjB0z8wU0axvQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791966654; x=
-	1792053054; bh=D0YKT16gBACNrffq5OoIFx/5eeIrBSpPom+i/MVDFDE=; b=D
-	UKdXGQUTDU6yKbPZFCeffZkK055RUgpc+08LNepCn8w5xYJlVu/jwOh1DJasSu6o
-	oYDDmcLLDCOh2g2iea8E2jAyU0B7lt5rfGo/zcRsHnqv4rxif83+2R9k5BU1bs59
-	kN3JMrPzJSRYBPUzRtSAmBsf9yBvvnn3u7yYcIp5QiP8QW/JvKK6l4J4Q1IcdBlu
-	ymY6IcLn5BVztct/UmKswJ15aLV0cwLp9p0NqAQer4CkwyUQ0BWgicab4ZVkKfyZ
-	8agIUp2+LN5akUX6WgrEhUvqDPRlsxb0yfVmgXTctX2EHi2jQjDE3S63JK8sCdO+
-	uPaVtLTx0SvrbuSl036rA==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791966656; x=
+	1792053056; bh=1982burEPFJadcQkPHdq9dRPfDXwyNRtn6u63060MIc=; b=T
+	jtjxKD96NEMcSLpNYVsnP4TvdJtoxICzVqFdpIoyeJ/3md6MhqoeDyPaIa9wleqZ
+	xSYobYC/GmRgN1tnQrL/wHiw0PoWvj6es5B6xg+D4Z9ON+JCxZJzeu8k+i30zo+J
+	tIFYKmsewWSXmdcUV/VlkOdjYNdzVUxSKvPdmD1FrQ0A72O7nZtjCs+II8WTaolL
+	5kpB02kRGkVW4+zDwWiqEoHjBmNcb/rmEzVh7bUseTcD7wFsh0l8LMy5vX6CGxqw
+	O9f3vmuvPGdCjAVRAC6q9hrdQCh1G14ECYJ1GJIhwjrQ+D4e3Zf0w9drKWGdIP+d
+	iza6gNZnqKouiGv7AwsXQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791966654; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1791966656; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:LHUu+TU9VCEfqOuh45bTt21BRp6QTtgKGHaTcaWbvKNdXnz
-	whkOekVqxgUdqRbC9EWCcH30az6INcHBpvclMWuqqxWqpgJa3md3fjHVlnA3gNxk
-	geQi+YNCbFtCGlcmUrR3tTNtHQAdzTff0B3tHmk0jWbIka4478xXL95wyK1f0Zgx
-	khBTEVP0AvnRg3grIPkM/rthqsRcVeQRakB/8vy+0e4NSxyFZlQc1d6O2SNo28i7
-	ziB7TdnR2iU0jDlstaig3JdoMa2kuAqCrQqP+al1VqqFc8vGa12lYXz6QrKhKbB4
-	x8d4+8g2Pa9GfIhdSxGTxkHZy97EOwhVQ7RBiiw==;
+	s=fm2:rsa-sha256:YOn8JjTiAmKI+pf+JqHA1rhk23ni/4oeC7S+57jGq/T3KPT
+	C4L2fzYBObl2jgzFUqdIAwp7PM4zfr7nj/FAThWmn7kEwQpC+VdTfWy8WzPVoU/f
+	ztiHFPRBssULWDI8HMtMAMPiD7BOT3AcpTBcOusrXwyEP0PCF0dp1zqJ9/qzesJm
+	8B4rPqi9xhGY+ad6BHJ25AZ1amNXsebnHSO5X2sMREBYM7R2HT2VkUixlOoepGcN
+	v1fOqwa4JBkiXpRT4s0L3q4QJtspErN3RgcdTQ3nLl3qiPhR5e4M21EWpJ8reo4F
+	TpeAq2vWhrzAiDjn5oMmQayb9VSarzLNwIxOL6A==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:J4HFVJok9SC31EW0KKKB62C+NU3vdsj1KmD6Om9/H8w=:R+0GK7TKnwm5QJs7vKaOspHxyXY8m7yTOsUUSpbkVpk=;
-X-ME-Sender: <xms:vj3Pajk_BvWEO1l5_fq370HeGZS1uPWLSfYUYEVlVkS7_E59r0gzCg>
-    <xme:vj3PatsHL8KFht18El11zxz5-F9VVBWkKm7K4QdIACG46WpxrkXIl_I036J4XMLzu
-    MoRfPwsqOImV0xGRLr0vrS9ou_Mwb0ob__WtFXusBBJl1Szw-EZk_s>
-X-ME-Received: <xmr:vj3Pah-tC7q1F7PPDFjgowooicQV1PSd-dYIJJ-bRu0KFz3ZsXC0jw>
-X-ME-Proxy-Cause: dmFkZTEtIdS0SDrKqRBbGkMiBj7IYtYgkry3u6YGR8PVQtgXAUrOpE3LU3kbf8lnhzM4qe
-    tDYxR/pkwWHOxWgysKl0tWoalBEtfNecBO6KOpS28KMaa+040r1EpxHZBZmQv5GL9sEG5o
-    hyeINSTJ1UaptmD0zaHHuAY5E63Mh/DVOvgKPvqap2fxwOCmYQKSLm5PTkNU8tLSnysX8J
-    gC6EPQbmnZB+smbTpcyqWIjRYXgPfG6KhVLdYxiYVwwtzPKhwCHiztOxg88hp9nGZZ74w4
-    nWVRKOkdg5auz9tzk5CdYXOjnquk5c0DYbI9yo6WgnpCzTld/1+g9jKRcB7y0sxVoiirGW
-    KyCC/lbYA8Bilcrk2YDuJHlj9ShBj4bttMOUJ7sT+SN6ZyvFD6u3eG2jVaGhSkcaGjlAed
-    NWlzuZh1A6vNvDMV25/RRwmg8eF7PQ8+RZXQZbqXttq+0g8kWs/aMQR56D0oG6GiYp4eWg
-    LQ08+qwkk/1JjZ7ofd+kF4Uxg+et/3uSl5JWbz6IWxelW2aSQPvSZAgFNBErtgBPvLoGc7
-    64hJWJoY/HDZAzybABCSuiFPm3N2KPskIDpaQgCPXmkz/3pzXZmqzTTGY8hCXmaPrWvNL8
-    YHV+Cd4rX3K6nTxvcQII85R8/y7CHta0XcPmlB8Qs53swvt0yjznIY7gp+xA
-X-ME-Proxy: <xmx:vj3PanO6t7S1CM2WjkgF0l49hBhWcOwgnJl42fW7drcNtIry_Fc22A>
-    <xmx:vj3PavFx19RJEDv27vwOnYAbFI1UkgOYN47-IgxXN-Waz5Yx3MlMkQ>
-    <xmx:vj3PalRjQjw_kEadLlLzf9mO0JUzoYouK5L6YJ-PRF-nc_8NfX_A7g>
-    <xmx:vj3PassKKw29rTybL5XQtsiIld1BXquHQQ7vryP-aW1TEwiz3LJIig>
-    <xmx:vj3PapsVb-5KEHxbU4Re7aXMQVHXOHoC4MK1V6Dq-z0hIOMQefoMG0LT>
+Message-Instance: m=1; h=sha256:cgpfa0NNx+lS+p5ydy0j1MXjyV0GBndhLeiUx2C3mto=:krjcGhQ0ghWqR8sHxbwsyFXqjsg09nRm/p0F3MhKIAA=;
+X-ME-Sender: <xms:wD3Parxu3qLK6RVq6Hx-PYvpirrJ__YfGt9aBRLWa1pMRlnFUMhPvA>
+    <xme:wD3Pakw4I9NuN90rdl20iwDouVAXFLohka6wOGc0-yTPwodDfQ8xsjs2Cw-O1lhCU
+    TX1IM8M3WUIF3mkbMPZ2C5TNMrEvi9s38fydqNIapTtMRYLJwqhOkQ>
+X-ME-Received: <xmr:wD3Palb9uI0LDD3yHFq46sdTTKcNgWtL293JAYYbd0kWgWDKBARDjw>
+X-ME-Proxy-Cause: dmFkZTE6SzrF/RMjrmroRJrOmjW541t97+9JkKtEXWPcIIQocVBp29e6gPvHrq4uuFZIVA
+    sYdO+KaespEORtvjgMDFuZZlQMj0loh7+rLLPES4l9f5ZQLP0iA6HOyWN/23cqUpZ0F4K5
+    39e1I8XadGc0Qccr2ydzopoEWTLpJ6aVkJSniN+W1kjmLLuLIQnRVNdeIknZfnc68BPmOa
+    m/5ibopfbb3L9YFNS06OyKJahMcnn6J06N7Jy1f2LLF/BeI0oXwWJU6MOF9yfkvXDhLdbA
+    pqJEno+/VKPhKuRrgC1gnfvwFLxaXk88ptmFA4jT5DpJk/0g6rOg/zbzCs29gZAz9zl1pf
+    VX11AFm/QnLGRKY/CGNiLvttl0p95c2IsS4OOACpfZVtmp7VwLYqe5MKekILRfT2T+DmlI
+    TputGcFVa+Q+N0S5RLBrwdk7rv9ScOnMznAKnVWfVesv0DVkNC0Z8AUin930cfu/53+qbB
+    FbvvAgyABwaGTSGL0ed8ZyUWKUMUB/vHMzxM2mMUkAb9U3dnDbmEO9/zkEkNfQQTri4cB5
+    sIS4csDunQD/3l3IXJccl7pFchHXio0iw3Uof7DhIO6cVSpoKHNUBDUvFxxNMALJmN8UaN
+    lOMEc5X8ZzvX66f9uIscNuqwrOvR3BRyoaWSGdp9/9LDpQmcP6MFDntgiFMQ
+X-ME-Proxy: <xmx:wD3PalV7o67ZeWpOPBNgKE--2qGCHGx4AYNVZYTbe6LmjiZweSbx2w>
+    <xmx:wD3Pajgp__oQxS6Lmqehabu5DWMyTmTf6BtVPvHBxZmNptVywosFMQ>
+    <xmx:wD3PajsevqQ5tgnR_p0FU-PhBXhq2RacMfbonaBO6lNEPo7BENvPLg>
+    <xmx:wD3Pas47Q0VLJJolyVP7Qi3VUKWvAKRyrbavP80mSo-tm5TwxSb7gg>
+    <xmx:wD3PauNLjXC6n-V4wJHjbw8KD-OYvvMAytN6wct87i1_a8qOfJa3Ix0d>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Oct 2026 04:30:53 -0400 (EDT)
+ 14 Oct 2026 04:30:55 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 44856e7f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Oct 2026 08:30:52 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id b5c28b90 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 14 Oct 2026 08:30:55 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 14 Oct 2026 10:30:33 +0200
-Subject: [PATCH v3 7/8] ci: drop now-dead Python 2 coverage
+Date: Wed, 14 Oct 2026 10:30:34 +0200
+Subject: [PATCH v3 8/8] ci: improve reftable test coverage
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -99,7 +99,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261014-pks-ci-housekeeping-v3-7-04c24e1f480d@pks.im>
+Message-Id: <20261014-pks-ci-housekeeping-v3-8-04c24e1f480d@pks.im>
 References: <20261014-pks-ci-housekeeping-v3-0-04c24e1f480d@pks.im>
 In-Reply-To: <20261014-pks-ci-housekeeping-v3-0-04c24e1f480d@pks.im>
 To: git@vger.kernel.org
@@ -108,59 +108,70 @@ Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
  =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 X-Mailer: b4 0.15.2
 
-In the preceding commit we've dropped the last job that still used
-Ubuntu 20.04. We still had some conditional logic for that specific
-image that made us use Python 2 instead of Python 3, but this is dead
-code now.
+The "linux-reftable" job exercises Git with reftables as its default
+backend. But this job is arguably redundant because we already have the
+"linux-reftable-leaks" job that exercises reftables with the leak
+sanitizer enabled, and it is unlikely that we will catch any extra bugs
+with the leak sanitizer disabled.
 
-We could of course exercise Python 2 in any of our other CI jobs. But it
-reached end of life in 2020 already, and none of the distros that we use
-have it packaged anymore. Furthermore, it seems like the world has
-finally adapted to Python 3. So it doesn't feel all that useful to still
-exercise it.
+One may thus be triggered to just drop the "linux-reftable" job in favor
+of the leak-checking variant. But the latter disables a couple of other
+tests that exercise git-p4, git-svn and other tools. Those tools may not
+be an essential part of Git nowadays, but I don't quite feel comfortable
+with reducing test coverage.
 
-Drop the logic and instead use Python 3 unconditionally.
+Instead, adapt the job to run reftables together with SHA256. which is
+an area that we don't have test coverage for.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/install-dependencies.sh |  2 +-
- ci/lib.sh                  | 11 +----------
- 2 files changed, 2 insertions(+), 11 deletions(-)
+ .github/workflows/main.yml | 2 +-
+ .gitlab-ci.yml             | 2 +-
+ ci/run-build-and-tests.sh  | 6 +++++-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 8783b48951..4b1733ad15 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -61,7 +61,7 @@ ubuntu-*|i386/debian-*|debian-*)
- 		tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl \
- 		libemail-valid-perl libio-pty-perl libio-socket-ssl-perl libnet-smtp-ssl-perl libdbd-sqlite3-perl libcgi-pm-perl \
- 		libsecret-1-dev libpcre2-dev meson ninja-build pkg-config cargo \
--		${CC_PACKAGE:-${CC:-gcc}} $PYTHON_PACKAGE
-+		${CC_PACKAGE:-${CC:-gcc}} python3
- 
- 	# Starting with Ubuntu 25.10, sudo can now be provided via either
- 	# sudo(1) or sudo-rs(1), with the latter being the default. The problem
-diff --git a/ci/lib.sh b/ci/lib.sh
-index d99e7b9da1..3ec10488d4 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -335,16 +335,7 @@ esac
- 
- case "$distro" in
- ubuntu-*)
--	# Python 2 is end of life, and Ubuntu 23.04 and newer don't actually
--	# have it anymore. We thus only test with Python 2 on older LTS
--	# releases.
--	if test "$distro" = "ubuntu-20.04"
--	then
--		PYTHON_PACKAGE=python2
--	else
--		PYTHON_PACKAGE=python3
--	fi
--	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/$PYTHON_PACKAGE"
-+	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python3"
- 
- 	export GIT_TEST_HTTPD=true
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 47f174ed0e..fe8155772a 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -405,7 +405,7 @@ jobs:
+         - jobname: linux-sha256
+           image: ubuntu:rolling
+           cc: clang
+-        - jobname: linux-reftable
++        - jobname: linux-reftable-sha256
+           image: ubuntu:rolling
+           cc: clang
+         - jobname: linux-feature-testbed
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index 3e2e6083cb..9b7698a003 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -39,7 +39,7 @@ test:linux:
+       - jobname: linux-sha256
+         image: ubuntu:rolling
+         CC: clang
+-      - jobname: linux-reftable
++      - jobname: linux-reftable-sha256
+         image: ubuntu:rolling
+         CC: clang
+       - jobname: linux-feature-testbed
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 611bf6e56d..1c549634e0 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -40,7 +40,11 @@ linux-feature-testbed)
+ linux-sha256)
+ 	export GIT_TEST_DEFAULT_HASH=sha256
+ 	;;
+-linux-reftable|linux-reftable-leaks|osx-reftable)
++linux-reftable-sha256)
++	export GIT_TEST_DEFAULT_HASH=sha256
++	export GIT_TEST_DEFAULT_REF_STORAGE_FORMAT=reftable
++	;;
++linux-reftable-leaks|osx-reftable)
+ 	export GIT_TEST_DEFAULT_REF_STORAGE_FORMAT=reftable
+ 	;;
  
 
 -- 
