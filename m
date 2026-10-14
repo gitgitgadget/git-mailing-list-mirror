@@ -1,99 +1,102 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355913CAA53
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 19:24:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219505650E7
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 19:36:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792005896; cv=none; b=QEq/gTXeGsvgaXzsURQqNJRNFPXrJ74iXVZqVFPSnHiry4xfusTx0cJwzVy2VXvLIQONDP+p9wc1QlDh74dwUZxjbEvGuWeqI0abYZ7H0ZjC3liJfnpETfLlze0M2IEhhb8hoUQ/u/r27yjVLx61na1m96hmLOdOc1Z6Py1M6Rg=
+	t=1792006585; cv=none; b=KiNgNfCV3CA2y6lAVSVQtm467S3hUJb+aF9ZLcJxEWWOR/rnOOsQDNulDmj7bpSAfGJX/Tl7yKMedzUdDgFMyKrjMbr/2oQmuZwn82IFHq1awvA5sXtKnvhMz8hFVj5TiZzyVXAOxq8AcWxYYjwXa9K+WmwDWLMBrYhEOWIHyuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792005896; c=relaxed/simple;
-	bh=7aXS0q7VSvxwUGYOV4u4lxRTUm9FelBwG06Ay0ievzM=;
+	s=arc-20240116; t=1792006585; c=relaxed/simple;
+	bh=T0D5uxJd2S24o03Dvb6UPilnsVIJglV7No1Nhoy55qA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IjtLNblOqPUwDPKwjvvhhzRPCAq1gUQwpT0zhEZSGmWdjyXu8JldeXj5JN/nWc6U6LRNtt8zHpWubFkiB5uRe4rvYBUmZzDBmToKTqfg4+7b4uRmYFepHUWDmfAsLHxMrB6UbzcjgeNr8Apf1o7rqX2zyqsBxdY8m+bGTOKdXfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TySSHVcu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aSyjkTip; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=HrXwS6dLp0BTTaLJLONtqCNhab5Bs6RExtNqBJc6n7O67UfJx+vdTRcvx4QrYcZUH+a6Oui1vVhToy2RGYuJuXOcEaJBd8I8AUswV219fdKCm8Kgw+Ruj8EZXd/8B+28mYYiq+V8ao5q5R61QSHHi9LDz9ENzl7E36hD6MXLDWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=a7CpiXy0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EHzUKMHJ; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TySSHVcu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aSyjkTip"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 382531400102
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 15:24:54 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 14 Oct 2026 15:24:54 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="a7CpiXy0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EHzUKMHJ"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 31425EC04C9
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 15:36:22 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 14 Oct 2026 15:36:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792005894; x=1792092294; bh=GbTR/kiIUv
-	lgxp0YWGkigxQt+wxpwAtDK6K6PcRo6Ho=; b=TySSHVcublk2Hcyz6IETsEFDq+
-	Q9ZcvdrbXXR6OkuWQs+2SE5pKpCnFhqyr8eNJQeMNPAv8zgLDEvMCWGGEX6oSlvB
-	nOT6WBFZaEwCQpJQ2bAtdLH9rmb96IFHGobCufA+nS0QuAJ5rs51KJJiwWtAIzEH
-	B0tzQRf8xq1zSunqlY2xhd0OiLRINnWxOS4OmYIJnMy31mGOFe+LFAytF+GIALhS
-	0J4+Wc4Pf9iH44rHyz6i4rK+nFTppHbkW8iUACpcA/Mw5aFxTKk2XMzqGh3I+Oxs
-	cR89+WYAJ6HlB9NxdKXI0C8rp7/33EF+8GSj1nE0OfSx6kYa5IVQc3bVFesA==
+	:subject:to:to; s=fm1; t=1792006582; x=1792092982; bh=v1F8DcgZCX
+	n//ERSONTjiFHWcZtiimZhCP9pMW9tM/0=; b=a7CpiXy0ZCFJ27nPkpa/5rqnjz
+	4De7HO5+2c6slKqD0M21KTbevv9Ry9aZdtmaNgNLgRvqEfWe1DyVsRHe+6EerntZ
+	c3z0LLjRWCceRLY9vIBEOutt4gGaCSsDQFYegeVZJ0rRFUEiEvqALYIVnvw3lU16
+	Zk7/tAiU4LMw8VPrZHzuVb3kDF1jevDP2Yiz5WnE9OmIPIeUTMU+ykZ2l+Qhw0Ia
+	ife10Su0cfs50aOgQs5LAgXKizCVMIQRxF3fl8FrvwnDIA8lSrl/u9Nmqdz82s2Y
+	sC0AcPbFWkT6U+NcXtpjyex0K775vU535rrDu1bKba6VKz8GRaIiH9ZdqA6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792005894; x=1792092294; bh=GbTR/kiIUvlgxp0YWGkigxQt+wxpwAtDK6K
-	6PcRo6Ho=; b=aSyjkTipTEv4gak1WcpBRp4yTYt9x/0sLcMPZ5ouvoMQaTF5Y1s
-	9L47ipW8C3ZUAIxzJXw+iIbtosM064rvUhOdzt/Rj9DYJI1kqn8li96jignQlbSk
-	CSruMCWBQeLJD2CEyJ9uHiHD2clfskSAkPOo5+AjeuMx7gxVDOr6kqd+KW6FQthJ
-	GYAXXSr1wfwKsf9BQqIYNh/ObYl1nblVy9pW+5I0lA9Q/+3anFYVgPS+MeBtSaTm
-	KdIH3W9EtlQukN1iFQVfjMuDnJcmJDL/5x4yivwxXNJB+S3JLOMr7vSclvniCKyk
-	2sFjz4dB5nakYAtthuPWxX2TbSekq1LS0zg==
+	1792006582; x=1792092982; bh=v1F8DcgZCXn//ERSONTjiFHWcZtiimZhCP9
+	pMW9tM/0=; b=EHzUKMHJ1gXoH5AogIperf1MYqTx1ZHgWLh0nojiCgtCp85FkFx
+	fEValcgIn3jjEJCEZaOsqCiiLFqct0+Nzz3Zh1KVi4+tlkiD4+bfuGXugzJKWv32
+	vzHtX0YyPzvEVFxlkRcLQZgQPebBqZ9uR++L+ov8cQzn8fWGy6zRLbVh3hL2+D3P
+	l8XJRT34c3mVw+GLKkFZ8vLqP3FRDxTFyCVqn3aMObKTxbrZn6iAGw3RrJVJLDVx
+	S5A3EOfsj2SF6auAtUM+wEwbMsoqIpDEjygjT5y6gPUGnHSX6uObrG/tcmjxQcWO
+	en9aP8eGXM7LGaqkR3eRz89MoX9wn7rpbyQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792005894; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1792006582; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:Wn7ONYGjVna8gPAh0PqoP2CWqr9B6XUrBhTzH+apz/baYIO
-	Ib0XCwv4M61UzfM1+BhPA1V8caXSGKozRgWR7kxGBSNafuT6lkLEbC2OHIgv8NZx
-	uIawXNSdiMWxdTI3zFmqwI7wL+whjajxPz10/r1loYXIUYbDD26cTfSdxs48Prsv
-	wApWatzUzZchwnmllK6fpVEjy/o4vC35otXNnx41f1ExVtIHkTUoI85zvzsL6SHY
-	3swPIei3o2e7g1/EWYFKFhSqK+5PjwvuPxwoetyb4Zl5C+8cmNZxaX6cHK3AVwj3
-	bD+3S344GAzpTXM1fn7/BTdYx1fxuY+l6thvZJw==;
+	s=fm1:rsa-sha256:HWF/uPMQHDa8xg38taASJnyx9rz1CeCnFa1SJ4CsIy1t2q0
+	fC49KbMCAk0bAraetyGi7IxokyuX7F/g2xnAZ79zwMPrLs/qoJ+2grS/872c64cM
+	iKg3DJB/4xgEudJtS4EjD3WDvPVS7Bla/YuPFMpQ6fuvgrwpKGvHUQSHnvZ5UaeD
+	wcFxjiQEr3KeWH+Xgs2gU56VBiWLrXmnlnscR1bK4W0xg/Et5Epg9sTpNGWPrb4t
+	a72LoPiahdJ5gjofizKrcHHe8tcLbsS8U2sPZdVLVPd/VuqOvcJBajvNFzPno/L8
+	E3WFup0cK8y9Asp+UeL3wYGwUttYFhIgjRxYqrA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:lcO/VwtRZuB/UgMRaHW0TiouSuFLNhPlz3UBE7Mq3EM=:7aXS0q7VSvxwUGYOV4u4lxRTUm9FelBwG06Ay0ievzM=;
-X-ME-Sender: <xms:BtfPavTim3PkkpWk27If7cRI4L3_9suvWv-K-APMGhZJqj_3mz4Big>
-    <xme:BtfPanyaZXsd6ZyycBWt2tpacx93w1tBSP9419i0mZgenSGwiefUmFNdJ-o8bRf1J
-    NEcCvjw40mypVeuXF9lTfR7ZsiNU4wk3LyqqLD3z1-EdoGw0j6X5Q>
-X-ME-Received: <xmr:BtfPap08SDMFA3z_I7RGBFGQmO9mkw-sIXdAIC4qBUrJH-62jdL_3Jc7HfuRpu7qeYxPx6q4kVVPxmX2PkDsAcBvuwlFRgru6jcS>
-X-ME-Proxy-Cause: dmFkZTE2BU4y9SgH7HZc+zvfq/7c9WuUZj5BYCmQhPdiv8dhEQ24/u9akL2663rEB6LpLC
-    LRC60h2K97kKr2IaVCFei/PaIezX2FFcoNOk8i9oHmyyH68yZmCoDRkUjRiRkbfBFxxUcW
-    LNVov07ayw+L1fwyGm2VadSGEUvJGOdTRES+ag0VMLDlifqqt6YJiysl4X2IQQMgD9SBE7
-    EyLCYb/LagBwVACAMfF9gV3p2naLNq4ezo1MosUs/CZ0FUu7tBFdjBEpxXN7PHs/Kp2vNZ
-    bsilqS5GW7f0SGhQHJjOo310qdU9JGexHeW/QQrHU+6MjZEbkHbvsSiJOm5iLTyTUFiPUu
-    uI3LyFLINH0Cy2vfB9IGLPAsIpm0vs8UtubnPfXvoB8n1YZvnSUFKvpANUp7rEJdS24O79
-    WszGU/1j4Cx39r+ngIRQ8R8NVo842+Y256Ce5894eedtBWP7QXd5Dr5P3qNev+/IsfdZSc
-    z26k0vVjvOu7zJ3jg4M/9ZWup0CMdmp5122/YKIcSiPmBpnVBqcDYJurRE6l2iA1sZnHf1
-    8gFQv1c4C7OsvWJQXFG2ckO2oGCEYwIN+RYWlgPCFC6+A0yEA/TEv1rW9W8jF8XmfvjcM+
-    XwRXohsV2p3HcltQrBoVOs6G2G5lDkaeq9NGTRMeT9LP21onPoKkZpIdBIOQ
-X-ME-Proxy: <xmx:BtfPat7qEpxpbYPuA9jLtktfs9eg32fCTqtWOt1Tg4PSCrl_lulLQw>
-    <xmx:BtfPakWq-ii4A0_gnLxbf50u7SGaTw7POXkY3s2ERtEwE_1Ub5ztZQ>
-    <xmx:BtfPakDL5sOas9KT1FB9qu0xk6foSce3X4wl5EIJ6qTB4N9HzzXADQ>
-    <xmx:BtfPar4dyyrLE-bXr9vhn3OR7-rekZGoy98WYiCSLtKlhzCxorE8sw>
-    <xmx:BtfPahVpHSsuTvwmjzh-7x5QQVjfxgIzMr7NqgF8c6r5Lm22stdieC4c>
+Message-Instance: m=1; h=sha256:OEiICrRfIlq2gkWGxaM71abdVWA0RyT16YrPxYNSMa8=:T0D5uxJd2S24o03Dvb6UPilnsVIJglV7No1Nhoy55qA=;
+X-ME-Sender: <xms:ttnParMY7VAOX6LykZ5Hn3Za-BrW_4w3AtdZ8RgvWeEoxT_NDW_bQQ>
+    <xme:ttnPas08VZORGNSMdkeSKlVxHDxIa9YgN2fh0SUjXHCkbkexB_uKPQ6sT-peKtef_
+    cNero8-BforXjU-UyzO9NJdSPWeLVImo_yTdSVvtGgGzfH0G8yqhHg>
+X-ME-Received: <xmr:ttnPaimk-cViRTewj8-mDzPNnE2eLoC1X8mcr23RjV6VMDFnG6WyGBFtv7jhXlSC59PsNKH9X7VmSwzYipoK8Esc59kDX-oSrlgo>
+X-ME-Proxy-Cause: dmFkZTENO+74k4HVeCoeCGUZQQKQ4LxUmOELKBieqTN1kXMpTp6FoqcztRmleR6uMd+mrw
+    xHqQz25wU4sfXwagvNl5WINabTx7GA+mM7Q65eZYDR0qQ7PQNY5YqCo28E8FQUBDwD157j
+    OyfHTGXGEWaPeDKD/2KZCvFXP34GNxyKom3MFa/R8/M/V+xjMvKcwjY3wAX5+pnKOwE7Y0
+    iktsccesUdsCGzyj88RQGsRmZnA6V6de43XuwCeBfj+kGRrQFLBuXVvwdwmZ6LJDUeInLP
+    reG/91ztSSfHeDHCIhlU8kjg9UregDGeBYq9SLvJC4JkC25Nuvr7xCpmI35MN65usQFgop
+    uxplTHiDYPJkQGhRCGyrKCH7zcxGVQ7/hAOW0Kw/1J0uAUBZc6aoVtmnrqGMXwY3dRVo/3
+    ifJ7In1D70E1wOL2hj7+kvo5FNI3gsSx9MtxCIj1+KgDAiFLsBwG6UFFAS/37z+ZJZWwD9
+    rIYXaiFfYyWN2GG/6CTcBeDBWsRmvOnO1NMplAkFt4wUtypYJVGeI/qm4Mebrnv1BwkFJ6
+    rga8zi4k4wbKr6Jun0yaR+pFNmhlg2ntxQBHMrk1SovnMkFpSKCHZ2hcrmpwgJtmERhoIk
+    sMcyBS6s8Bc/Pf/H+CKPV0/VIwEi6tbcSaeJelXmqqvUc2AfOPslxSMdbJJA
+X-ME-Proxy: <xmx:ttnParXlNP4u3zGCLqb_9N62PrFN_HM1VFRbb_5wkzGubzOmMb7uYg>
+    <xmx:ttnPagsp2LBi-pdUeeEJ3siiMv0FzDwi9nS5OizMwl4c3qNS345JLQ>
+    <xmx:ttnPama1CeWrBUFS1bzhnSWUqfGvA_5kUJy_JV-jGl7uV_fGW5kkDw>
+    <xmx:ttnPanUoXULZb3Tx4XAS6WGGt-7kA2uHbN26OR5F6UUjsDQIlqg6LQ>
+    <xmx:ttnPapuL2v6B3PseAJFA-jB2veMMVIOsKGtmDRNRDl0-d9w6FWMtTV5B>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Oct 2026 15:24:53 -0400 (EDT)
+ 14 Oct 2026 15:36:21 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: Victor Okafor <vua.okafor@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] t0200: use path checking helpers
-In-Reply-To: <CAPSxiM-VB_JUexggYTMmYcHe7W7pw=XNuMrENB4gZoq2Zo8J7Q@mail.gmail.com>
-	(Usman Akinyemi's message of "Wed, 14 Oct 2026 15:45:00 +0100")
-References: <20261014105613.49334-1-vua.okafor@gmail.com>
-	<CAPSxiM-VB_JUexggYTMmYcHe7W7pw=XNuMrENB4gZoq2Zo8J7Q@mail.gmail.com>
-Date: Wed, 14 Oct 2026 12:24:52 -0700
-Message-ID: <xmqqtsmoqe4b.fsf@gitster.g>
+To: "Marc Becker via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Aniket Gupta <aniketgupta3001@gmail.com>,  Marc
+ Becker <becm@gmx.de>
+Subject: Re: [PATCH v3] fast-import: allow 'from' to reference new commits
+ and tags by oid
+In-Reply-To: <pull.2252.v3.git.1791995252623.gitgitgadget@gmail.com> (Marc
+	Becker via GitGitGadget's message of "Wed, 14 Oct 2026 16:27:32
+	+0000")
+References: <pull.2252.git.1791653078449.gitgitgadget@gmail.com>
+	<pull.2252.v3.git.1791995252623.gitgitgadget@gmail.com>
+Date: Wed, 14 Oct 2026 12:36:20 -0700
+Message-ID: <xmqqmrsgqdl7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -103,44 +106,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+"Marc Becker via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->>
->> Replace direct directory and file checks with the corresponding
->> test helpers in t/t0200-gettext-basic.sh.
-> This is a little bit more confusing. The commit message does not
-> really show why you did what you did. Along the line of
->
-> "Modernize the code testing whether a file exists in "filename"' seems
-> better. Also, your patches is doing two things, i.e modernizing the 'test -f'
-> and 'test -d'. Ideally a patch should only focus on one thing but,
-> since this is
-> simple patch. It is okay.
->>
->> Instances were located using:
->> git grep -n -E 'test -[efds]' -- 't/t[0-9]*.sh'
-> This part is nto necessary.
+> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+> index d9de2ef0d8..9001e2572a 100755
+> --- a/t/t9300-fast-import.sh
+> +++ b/t/t9300-fast-import.sh
+> @@ -3938,4 +3938,47 @@ test_expect_success 'Y: rewrite submodules' '
+>  	)
+>  '
+>  
+> +test_expect_success 'Y: reference pending tag or commit' '
+> +	test_oid_cache <<-EOF &&
+> +		pending_commit sha1:85b46dd918355ff17b4109ec738723d42f235a04
+> +		pending_commit sha256:17e650f097a4db6fe069c96935360d3ccc9b35c4018728c5f311a4217c2ced3d
+> +		pending_tag sha1:ec6c4db71feb5f66615214dad2324ce030e777a7
+> +		pending_tag sha256:85edc5eac315bc680677b2fc71622bd77476f057eb8dc8ed6a497803a24f1f46
+> +		EOF
 
-Since many candidates are working on similar microprojects (which is
-fine) and making the same mistakes (which is expected), perhaps mentors
-should tell them to read the review exchanges on other candidates'
-patches and learn from them.
+Looking at the output from
 
->>
->> Signed-off-by: Victor Okafor <vua.okafor@gmail.com>
->> ---
->>  t/t0200-gettext-basic.sh | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/t/t0200-gettext-basic.sh b/t/t0200-gettext-basic.sh
->>  test_expect_success GETTEXT 'sanity: Icelandic locale was compiled' '
->> -    test -f "$TEXTDOMAINDIR/is/LC_MESSAGES/git.mo"
->> +    test_path_is_file "$TEXTDOMAINDIR/is/LC_MESSAGES/git.mo"
->>  '
->>
->>  # TODO: When we have more locales, generalize this to test them
->> --
->> 2.55.0
->>
-> Thanks
->>
+    $ git grep -A4 'test_oid_cache <<' t
+
+tells us that here-doc used in the above is indented by one level
+too deep.  I will leave checking how the "git fast-import <<-EOF"
+should be written as an exercise to the reader ;-)
+
+Thanks.
+
+> +	git init reference-pending &&
+> +	(
+> +		cd reference-pending &&
+> +		git fast-import <<-EOF
+> +			commit refs/heads/main
+> +			committer A U Thor <author@example.com> 1712563200 +0000
+> + ...
+> +			done
+> +			EOF
+> +	)
+> +'
