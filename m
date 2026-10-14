@@ -1,148 +1,176 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0E44BF949
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 11:19:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16597440627
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 11:38:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791976742; cv=none; b=U+gFRLfndaLqY6/EuNUXicLg7vYnUM0uRV7Om9zR9D2Nz2+0zxY9M9S3ZbJSwlI5aTobAMh/dQcz+3E2DgwL8IqFVBHjWeYo/26QLw5EAJEGaNtyscFXRzCR8E6FrEkK/DLpEBg9AaK4WI24KPX668Gdm+StOaru9RNr1ngdCTU=
+	t=1791977886; cv=none; b=EejzTcPhQvJ1PQWHVQccvWZ3Vzc/E2mMZr6HJegtkXcwo5CjsokUCqrU9GT+hswsqg/fnXjgvLsUbAzs7S22GvoxBH68xp5etWGwoLuGbLojTA7yTN9HEwFGRedF7bSCJGs0S2tzwXMhsCOuO7gX6A0/CGzi0I9g0cq4fzfjAgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791976742; c=relaxed/simple;
-	bh=c/OXJ1CvC45UXRn6QPz4tC3hCIuk3Cb8DwD80lOb3LU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r3umOJ7Ay6VISfV8owoHNYqekFWZN6IrUmJZqmqNbm3irxlTVqNZyK7f7+hjSJszwZbIr+Wj5V4ioH5Tv5bkWAqlAECVpMZmmjUd2RZoAOUOeiFc+96+1jepKTv99ALPo28Fknb/9kdD1SssR8Lasw1IoTIUASl9fTB8dEVh+7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=epD1sMZO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lLbozZ5E; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1791977886; c=relaxed/simple;
+	bh=Z6LN/kWNcZ2XAy320IuBCNxkN69rvnyZrIjL8G90VaI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iaEeSzeYaejeyykHb1Mq1zHLoJ1D+24kw+eigLgqgFLB2Ve97qS2V5xs/4sGOHHza6rFI9odsTZUhXgswxJTRG3OoM1g2Y/O37Hw3mwn/i1HJdY+c2IvJe/ZAWtSTlc23b4jX5H5GQxFQLYiZogOFdFZDMU+GDHZVhrVfmg8GMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lFv1esJH; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="epD1sMZO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lLbozZ5E"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id B581BEC032F
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 07:19:00 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Wed, 14 Oct 2026 07:19:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1791976740; x=1792063140; bh=3YGD8CLhyH
-	lbGhvCczz/DD5ykVhjcaXjzzUBRsBQabc=; b=epD1sMZObIm2iAf6l7rBgw87V2
-	Nox8mb2qYVStDo9oeZXhGWgf+Lio3jYVhUJNmpaKeTyFInIEIu0bo7bi7GOZCC4F
-	bspWo3kASNpUoPwhN7ChpKzGd5vdUwG8aclDPAptVU5Gx7Vw3ZVtP87GfprrlGjp
-	nDqmfBf5c9SBEIF1t9qUGxcaDvx4gze0QMsjGWjtozEjIW4ftoCRh7rILPAt8S3x
-	3QuHtwqwB9NzRVDnZF56whFopURtVkDJQiCDmgWo9z/ZDFEskSxMClgQB9cPMCxH
-	t5FUd9Mh1x1Vu9ZyfEuXLrrBrNM/bjdtqp+IJFCce0uNlMv5V5TI06FyyoGw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791976740; x=1792063140; bh=3YGD8CLhyHlbGhvCczz/DD5ykVhjcaXjzzU
-	BRsBQabc=; b=lLbozZ5EiArTohDhYzu+U5YWdOv2B7Fnq91xqERBJBUghmsrkby
-	/1GOFDS7qizGm2z3W4HRM448krnpGXTb+uprFcNMoahrm2UOLMaBi4XWxloWHOE3
-	Feom+c/uZM86yorAHrEMhzDssqg3YPDhDgCWtQhIAI0i3CaBq7bLc3nqC+iczlgF
-	sZH4Zbt7iu/T7VAwzgLpfDsAKmKzcw2B1CNrYGsO9s7Er0VOv47uuucByajBLpVJ
-	2Q2zRyhObIsd7LWgBFWRPLA6Qu+vfwnza9owpmr/8aDgfBg5j7wvMMntdv4qCrl+
-	A2QkGNxVkg6DsdQIOjGKhXGYro2VvI4QrCQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791976740; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Wccv0/iQaMDVOHxV/3B8gw1sor6hat1kB4OGYofDAaR9J4u
-	WQb+mO/OIyoX3r5neYmpQYM/SrGQ24IXr1Hq1fh5Ff7S8oiIUaOerVGyhOmGQmTq
-	HrBLPhbCk+cfZB9dh+ezrUBQx2r8+LLXkuJ3RaxQdBPxHw0SmiSr402oIhT5OJwF
-	v00X734jJ4EIe3C49O0m1aH+pMND3BNZo+MMDqZDhow8jJRw0wTMOiWmYNlvBeuX
-	t92r06AtdkpxLN6fHpdQZkgRxV+d5CrB89xkzxWw8kvm69XK1cyV+Uc4Bg0BpwcP
-	+tpY6Xo9VRpS2S4QrEia9rLvt91T35JMdgypy9g==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:Dheogt/BQv/7HfIlNB7CFPxkdxe61ugyoNRbeVychCA=:c/OXJ1CvC45UXRn6QPz4tC3hCIuk3Cb8DwD80lOb3LU=;
-X-ME-Sender: <xms:JGXPal9_l3IxPiYC4OGiPAF2oMLjZddfzXf5ddx2up_pbny_J-7HNQ>
-    <xme:JGXPagl8sc_SS00DrI03ub_W-0uezjq60b7C8oWZCQy4_fgs7V289zbmLiUNeWBdW
-    kEHQswXfY530l8FFEx1exRvYFXk5W_Ju50ty-jH_dTe6lIWr6bq5-c>
-X-ME-Received: <xmr:JGXParV4YK1wKpdMvs9QVBUpADZeDalPN2gBNJDrbRZRVJ2YXD0-YQ>
-X-ME-Proxy-Cause: dmFkZTEGVDpWiEabkUZ5hHuZ4+r1L36xmHM8vlOsVhusXoThnf40p2vOhTDEbx0q98aO8G
-    7jbkl+3Q2SEIKTZSDy1hYG2tcAT2mxFqHeeGD6oOvMMrkK8g+hQEikBYUxdDLUHCyTrZDy
-    FTQHwhNBZlHKEIs9uUBpCELP7AiqW8YHynaYw2dDOczf+85mGhXICSFe7ejJpw14U+whed
-    ALEQ43EXSRCddr37YTsadIF4E3kogT5J+7qgWmeGV8/rjxwqffReNg/4nrHEJ+nNkMVqxg
-    jk8olwwfySD+SgKFe45/ITG58C0DNOxnwpPfUtk9Ga8bdw5kjyGZ5NXvf8bFX5xFJq6CrT
-    fd1+y2OFfe1ZqF+Wr3MHM+uzocQ2jJHcCuAhYuqgiyAr8yujWLajqycwS2Xlo3GDB543Iw
-    X8oAk0m6FS0t8tdfMKd+Y7ZIeAl0ekTzzj3e5aXMRnrABtYdggo+bumltzVKRmmSsPFaFi
-    sljgj5m/MOa0kdlA9n2dStS2LZqDkzVX86e3iklvZeDMkqhF0y+jLLSHBYBWrSKDwp3Qoc
-    4BeILX8cI1jufic3S1g+miAzlXJWezw1iPmNgR6YVVKpYxaa+UXi93IOs7rnb3+woZ2YqL
-    na9zNZjmknOkPqGaZa76pGej9MSjsLV2ILxmHJ2SAokBSjHoZNyam4r5TEyw
-X-ME-Proxy: <xmx:JGXPalEtA0Gc8cE5ZDV2FRRF1rHZ8LN4fee0iUzlWZhYeN0zAwNbkg>
-    <xmx:JGXPanfO0sIqiofrqk-O9jbkwgpQS-CUwP-7LoQmeSd0An4Xkaks8w>
-    <xmx:JGXPamIs8eTCP5XObRzjk-5ZJEiOiDDR5TXjLWSIqtiGuLYN4LzCLw>
-    <xmx:JGXPasE5IWVkaBot8RgMh_zQSPGdZk3n3RDJK2K4pH_ZEnI-p5_CTg>
-    <xmx:JGXParl3gCmyMROp9z9KSeu_DoWTkz6X0-kxDgbxV-8biAq_NEkFLDJT>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Oct 2026 07:18:59 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 64a97587 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Oct 2026 11:18:59 +0000 (UTC)
-Date: Wed, 14 Oct 2026 13:18:56 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Todd Zullinger <tmz@pobox.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 2/8] ci: fix "fedora-breaking-changes-meson" job
-Message-ID: <as9lIJK2YzbWOOE8@pks.im>
-References: <20261014-pks-ci-housekeeping-v3-0-04c24e1f480d@pks.im>
- <20261014-pks-ci-housekeeping-v3-2-04c24e1f480d@pks.im>
- <20261014091037.GB1341124@coredump.intra.peff.net>
- <as9a3E6NeR_sQeYd@pks.im>
- <20261014110716.GC1356555@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lFv1esJH"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4a16c399641so39466675e9.2
+        for <git@vger.kernel.org>; Wed, 14 Oct 2026 04:38:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791977883; x=1792582683; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=6Zl7rQpxFB2Von9tjOt1y2p6zQ6e/TGAIede+D+soY8=;
+        b=lFv1esJHOALyAv220Ywtwx5hRzCs1g6P5uZCs+9BePMjU9PJWyc796waGJk8U6mMRc
+         FaMOfgR2SqwD5GGPkGb1fR2+ozLu52AFcKAAM0mTgbGvLv+Gzef9aDmtOm5XV9l6zg/3
+         McOB81J7R7u7g8KaTfOQGUJxMOfVmKvPe7xFrS/JZQunk4YHzyFO2m7YjhMPZDKwTB/8
+         25bx5pOFZbCw/xSGK3HHxbzPfWjsVZlLcv5FsaYu72xOrMZL/FOSIvdsxDim+3UzFkTZ
+         YtPKrzkujFPbgsHkHX4T1t0m4afIL79KRLW3yqDg4RZ7OKFXEgpHDJyiDZyztueY2Loi
+         2wjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791977883; x=1792582683;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=6Zl7rQpxFB2Von9tjOt1y2p6zQ6e/TGAIede+D+soY8=;
+        b=URbKahB0XZHVdAQrQXxvoPO3dl+1lzCN6V1neRceBEAmSnV4vXiAQD/TLTyy9zilOp
+         5JxMCDjEDTK8ce4KE1jLyUcLnJJQTb8MpvzWF/nscm6Zje5iLcsPO15ptDx6zOGcw2nC
+         D6Fgc+jhN1ts+98Hb/Xs9gj5uVM+rGNQ8w2Ko2rikd+PEBLbkwpBjF1226W5pufO/Ig4
+         TAbXAvmp4NcH6SOGmjB5BXMpfGKfBj+efbt94QIaJwiJAmbVrKKyDjJTKKZvqnrGG2pt
+         JhspiDHzagYtoyS+wpqgcARF7kKmlHPOc7pxkWkxSOUYZoQwaK+SLyh6A4Yzn8mkuFg1
+         6vqg==
+X-Forwarded-Encrypted: i=1; AKwUvBzv1rW8XhIQpMdpn1KzwcffRKm4Ov60w5bcavs2Mx1QRHOvkaOaJAZCJkpWxYyjAYozRhU=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJAkypRmsVqvHuQIEx/x1gtTLLf7zJoqmZd7MUIimiwHOd/GvuF
+	3wP9xqwAyVIGioS0thsnkMk8oM0KEvb6guQzofsT/YWopGHPX5+fBuMNw6I0Bw==
+X-Gm-Gg: AYBFou01P2MbTYvmcp1DWdTz3KhzVIObqnSQxXGwFc6COqlTT5Q5KyN4Swez/TgybI+
+	5RJfC3GNFR3GYzj1/eroeSaJOMLTW4E7kNmlL/l7jEBcamd1eYhppH/Y060RS43Un1hV729AY7n
+	/nNSsDQsnRc6CF5Ru1faG45lUKOyDqwmsTBIlrxEUSZqoA53pPPpOHNuuK1NlNQDAGzp7kntouF
+	+7cuS0eKGxPu1UShv0Pu6bWFmBXyGmNo5ioS+gJDgXHACbjnAtJ6vkKIZzi5RDEeFzG0z/ZOee/
+	8zMLP25TQOQFHSS0CB4kWEXYKrPhE66ssJDSQL4e4UPgzYbDBFOyvNqruEHtudJla8vYdVumleB
+	2VhAEgi7jVor6qFAzCntgaKl4Hs7n5zsNp9IdfAv7V2DEmpEWCaIRpKokCyuAHYkqOAgjIrZUl0
+	ZzNMv2oVp/tOcGZxGjKq0B6jwZPtr6j35aMWaZzejZF9hPfj23p15hgM8ipTD94kl8mcr7x2kvF
+	xvzEq49ha6Pgj2r8aC+nZtpttfFAfk4oraNEJFYXcQds9Bv8OdY
+X-Received: by 2002:a05:600c:46cf:b0:499:b65e:49c9 with SMTP id 5b1f17b1804b1-4a18e47ad5fmr340972725e9.10.1791977882882;
+        Wed, 14 Oct 2026 04:38:02 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a199e5db12sm347118375e9.2.2026.10.14.04.38.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Oct 2026 04:38:02 -0700 (PDT)
+Message-ID: <96c1d112-1b05-4663-90c6-33374dccd764@gmail.com>
+Date: Wed, 14 Oct 2026 12:37:59 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261014110716.GC1356555@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 3/5] wrapper: reject insanely large byte counts when
+ reading/writing
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+ "Randall S. Becker" <rsbecker@nexbridge.com>
+References: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
+ <b1ed701935027a83574fae753e5cc11d23f0ea4b.1791958171.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <b1ed701935027a83574fae753e5cc11d23f0ea4b.1791958171.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 14, 2026 at 07:07:16AM -0400, Jeff King wrote:
-> On Wed, Oct 14, 2026 at 12:35:08PM +0200, Patrick Steinhardt wrote:
-> 
-> > > Seems obviously correct, but I wonder if just:
-> > > 
-> > >   *breaking-changes*)
-> > > 
-> > > would fix this and prevent any issues for possible future jobs. The
-> > > downside of a loose pattern is false matches, but it seems like a small
-> > > risk given our universe of jobs.
-> > 
-> > In general I think the way we structure these is somewhat lackluster:
-> > 
-> >   - I never really understood the split between "ci/lib.sh" and
-> >     "ci/run-build-and-tests.sh".
-> > 
-> >   - There is a bunch of duplication that could be avoided.
-> > 
-> >   - And your suggestion makes sense, too.
-> 
-> Yeah, I think there is a combination of organic growth and the fact that
-> nobody really cares about ci unless it's failing. It is probably ripe
-> for cleanup if somebody cares to spend time on it.
-> 
-> > I originally carried a patch that merges all of this into "ci/lib.sh",
-> > and it also did changes similar to what you propose. We could probably
-> > revive that patch, but if so I'd propose to do that as a follow-up.
-> 
-> I'm OK with doing it later. I noticed some other similar spots in the
-> context while reading your patches. E.g., anything with *-sha256* could
-> set the default hash, and so on. I expect you might have found them for
-> your patch, too. ;)
+Hi Johannes
 
-Yes. sha256, breaking-changes, reftables, meson all fall in the same
-category.
+On 14/10/2026 07:09, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> Both the `read_in_full()` as well as the `write_in_full()` function
+> accumulate the bytes transferred count in a variable of type `ssize_t`,
+> but accept a `size_t` count parameter. When count exceeds `SSIZE_MAX`,
+> that total count overflows after processing `SSIZE_MAX` bytes, producing
+> a negative return value that callers interpret as an error (or worse, a
+> small positive value after further wrapping).
+> 
+> In practice, git never passes such large counts because file sizes and
+> buffer allocations are bounded well below SSIZE_MAX on all target
+> platforms. 
 
-Patrick
+Are we sure about that? In the past we've had bug fixes such as 
+c14e5a1a50 (transport-helper: use xread instead of read, 2019-01-03)
+on platforms where ssize_t is narrower that size_t (POSIX does not 
+require them to be the same width). I've cc'd Randall to see if ssize_t 
+is still narrower than size_t on the NonStop platforms git supports.
+
+Thanks
+
+Phillip
+
+> The POSIX specification for `read()` and `write()` also
+> limits single operations to `SSIZE_MAX` bytes, and git's
+> `xread()`/`xwrite()` wrappers further clamp to `MAX_IO_SIZE`. But the
+> accumulation in the `*_in_full()` wrappers means that even with per-call
+> clamping, total can exceed `SSIZE_MAX` when count does.
+> 
+> Reject a total count that exceeds the range of `ssize_t` upfront with
+> `EINVAL` rather than silently producing wrong return values, matching
+> the POSIX convention for invalid arguments.
+> 
+> Pointed out by Coverity.
+> 
+> Assisted-by: Claude Opus 4.6
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   git-compat-util.h |  4 ++++
+>   wrapper.c         | 10 ++++++++++
+>   2 files changed, 14 insertions(+)
+> 
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index a0f901ce79..afce8b85b8 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -740,6 +740,10 @@ static inline uint64_t u64_add(uint64_t a, uint64_t b)
+>    */
+>   #define DEFAULT_IO_BUFFER_SIZE (128 * 1024)
+>   
+> +#ifndef SSIZE_MAX
+> +# define SSIZE_MAX ((ssize_t)(((size_t)-1) >> 1))
+> +#endif
+> +
+>   #ifdef HAVE_ALLOCA_H
+>   # include <alloca.h>
+>   # define xalloca(size)      (alloca(size))
+> diff --git a/wrapper.c b/wrapper.c
+> index 05a9cd369c..ea9c14f834 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -288,6 +288,11 @@ ssize_t read_in_full(int fd, void *buf, size_t count)
+>   	char *p = buf;
+>   	ssize_t total = 0;
+>   
+> +	if (count > SSIZE_MAX) {
+> +		errno = EINVAL;
+> +		return -1;
+> +	}
+> +
+>   	while (count > 0) {
+>   		ssize_t loaded = xread(fd, p, count);
+>   		if (loaded < 0)
+> @@ -307,6 +312,11 @@ ssize_t write_in_full(int fd, const void *buf, size_t count)
+>   	const char *p = buf;
+>   	ssize_t total = 0;
+>   
+> +	if (count > SSIZE_MAX) {
+> +		errno = EINVAL;
+> +		return -1;
+> +	}
+> +
+>   	while (count > 0) {
+>   		ssize_t written = xwrite(fd, p, count);
+>   		if (written < 0)
+
