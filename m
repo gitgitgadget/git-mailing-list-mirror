@@ -1,97 +1,97 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28AE2F7EF4
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 08:53:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94B94AA599
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 08:54:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791968041; cv=none; b=hmv1sExInZeRj6PT2lbJCEu3IWVaim+K/hKJqRzjs0SbvufPpHstku+ZpPQepir3F9mEZN5NuTDwXbZ6QOvX9pfOiiON9yKLLBqyFm6WQjemehnuC/gbB5t5teYcRc156x64bbMbaeRQjqQV7mtbh9FZGMjmujmWBDq9f3cBK4o=
+	t=1791968042; cv=none; b=Lleb4n5drutawl/wVwO08NIbX6nKOi6NKadb0bF2WOW/nxabujrkl4t/AM423SEINavMDvDiNFap2vOiTL3vObJljZFIDdmw30ievsJm3JL9cV2JgLdpLmLQeSnWkvnI4J7e+CRX2Bm2pAaisVfSb+R/s7QC3++zSw5y1Y9XrHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791968041; c=relaxed/simple;
-	bh=HNOEZdSmYg0p2ipsGlI/HubYtM78MeWirjPyE4nUxtA=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=MLkViFQXQjiL2pJsf1LncLayg+EmSeMhXuPqfbJPUIXtCkiMVne1ixOAidcsJLqGd3d8qaUffRLp9BtnTQEilq3YvioifRgCbihCB7H0xiOvB8O5842ZN/TdOhHRBZevwSQyVrbSz/BR2gqgMZcBmp3Q2TQ4x8c+sBVwmvTLBIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FB52U5i3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vtmiDv+o; arc=none smtp.client-ip=103.168.172.159
+	s=arc-20240116; t=1791968042; c=relaxed/simple;
+	bh=ZwDFdXdQmfgZGa/yFdySOHAwgxRrj1yd9nD3yjQ/EZ4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=YPFSVW/iaPTsNbdf5RMqPj4KpZclsa3JsFJukytMzFWbrInGk9zrwV1SBr1dUz3DKsTzGJ1V7iyuRn/wjRxLEbF2BWfs2O9VJG49Bo35bwumxrrnUYMcwtW+RvxToOsGxQDyr0hmc8ER6aYBDn6lUvI8VisZCpffrjE+adgj/1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eZ0VjSlG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O8/Mc1WL; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FB52U5i3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vtmiDv+o"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0BF5A1400101
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 04:53:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eZ0VjSlG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O8/Mc1WL"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1618BEC01E8
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 04:54:00 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 14 Oct 2026 04:53:59 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 14 Oct 2026 04:54:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791968039;
-	 x=1792054439; bh=z4E0FygAevGku0ctPndEAh17+MEEO6WFmVdIqlNxtT4=; b=
-	FB52U5i3XpHnokUmZiDHFyZYMpJdWFj4YmvjwYIkcB3xaESe4uyeIwJsVAvskNZh
-	Zdv2iR3UKUPBl1LmbVptUsepcQyhvmzrg76nrcMoNJorWT/26tI0N+jbHxnUM1Nx
-	G2hVN0thkrMF1XwfVYpzx3oLZhPWT2mtuhmWPI+5HCjUNToRETcujkXf2g59fUJ4
-	vhsqemlMUDUSPsooeNCkez5QsO5tf4xdvkwO4+bH84iv9zM6mFxePq2nmH2yC4P0
-	VDOpAmFS/VAOjYT1BAvC0H6s4zMgpeDxoQx6kfsxYyn94dZBvWk2z64RemMgTJh7
-	F7CdAbsKIJXKsVMrl+YmXQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1791968040;
+	 x=1792054440; bh=821CI42Onq5IF4IEKBW3qs5z8AP+bLCB5m3pMQh5e5s=; b=
+	eZ0VjSlGIXnS7RdcEVKJBg/QWuKHAi0S/13P8vLk78q+zNnKhgcQys+mPOH0ZsnM
+	PsGpfGv6XQFJ+eS3mauSq17MPufyIrKCiNSc356NVumjAdNhcLOChrFRkIBPBn2c
+	x1zGff8ZAA5udg2HQjFx6ShauGFahtgKYce1/EiFPlI5yOsDnG4ImZp2ZoK5SvPX
+	oskxrI2kmi/j0nNor4lvlsy0OnLspOOF5yFukxp6WGl5n80zNNlQE0SaLGTGzP60
+	Kfo+5cR6fXVgOkYx5UK+KO1Ib37Eeq985W9xkuKPBAttkal766YGGq4JhHPIL/1T
+	CdeIzZ4ds70/HYJgKhe69A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791968039; x=
-	1792054439; bh=z4E0FygAevGku0ctPndEAh17+MEEO6WFmVdIqlNxtT4=; b=v
-	tmiDv+oeStTJccqNdptP2xqRDi1hsizadzXm4JTzRvcH2m6nLKkHQpXeiFgwt2b6
-	fkdRuCUuPQm0iZZKoLDmeJgX9o1hWfJ+ppfQNmWjvN73Nm98eTaPOFa3KSnhP+ns
-	ZDQh/CbaKvHqlLZnqZmtU1/X0Fvdw1bYvBnlY4BXuJ2GTnmFQcQ3DVPSFX3xRkVu
-	fIQHuU0rsEew9onOUS9ML4ImnF7NdPnjjCrv3eMW2CHmO+5Hb49CihIbppdfHGdJ
-	kyeq944PO69rFVZ9au9ICVLbZ/Mcf897yFau3ZPOpppmzXgkytzME5bM257ucH/W
-	QEj+LMFKLnzzeh2J5rT6A==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791968040; x=
+	1792054440; bh=821CI42Onq5IF4IEKBW3qs5z8AP+bLCB5m3pMQh5e5s=; b=O
+	8/Mc1WLlRTZoRWQqM1H70WoCkG+R8Km3U0quRiuxLVgYXD8JE7sII1KMxf2QTSP6
+	1GdIwoV6/iWH7BQXz1X6E5feXhcf2oHJReXfZ8jRha5RnFIquiDi7MAjPjicvAKa
+	rnxnBSmlh4Wxhn6GDYJM4L8H5wPXR+YthjSLfYCpWaKAHM2HmoMkMd0YuClCI+Hw
+	A+QjQ9fSSwxbKoyS8/JOZtTdqECLQNqJyu60Y1le/b9RK5TzQR0x6LeiqCcSicVw
+	R6HqbqRFlKrRka7griF9wtqHrR8zBOXJJkVTMSWA7misK9J7InLc6qRt6XA601na
+	R5GlCVlDjreZyTiQ1SiNQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791968039; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1791968040; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:nG8PSeVSkvMfhFDHzTkjRzXpqm2gT8mWzcGwX2hgo3uX78M
-	saCPX6KJtacoW1Ll8j6v08wPi5POXDjVJzidI++4BKBymUH8SXi9DicTlnM7Nu6J
-	GTynCE4DlRzh7flL7ZdH8m8bZcf0H8F82G+eddP82/2k5K/EVt9ypA+az0pBA3+g
-	Xfxq2tmEe9wM8lTQRje/PWZtu3JDcEr49rzB+mztno74FJo/rJcxG8KAgeHGTcRF
-	gv1Xb/kY1KEJ/iHl6APLwNpk6ruzUaN4MOXfneqbu4K9N9f5Lk2xCF6IA8/LKgJF
-	NQ9vI1gNFO9reKA3bq1cC545X+epUGBWQXuI6nQ==;
+	s=fm2:rsa-sha256:ANx8JpMn140JhOf0pR8I0f4dyNvK0SLS9hPusj69YWjJBh6
+	C1fba/JN3eApPf6orUiO32A9AKukTGGkUD/UpJM7hxjIVeFH4dPPzKITnqYQ7+O9
+	5IBRzeMGfIMliCExu8emfmx+8gEP9LsBa8G8ar+Ffvs7VKKN/FvDcywmtNzririL
+	kzib+oAtXqCWeuAngoh6G2qwkPeika61UluaV1g44VFWqk525z0SWcPSQ5TlRX9P
+	h/qfAgRon5emtGSVPnZn5TbgMPw6wXwaQY0WTlMxGZjKaii6L7atnpW1LpUmzf7H
+	qDD9pq6J+lNZpX2bpahydNJ1aOVlfuRH21Gyj2Q==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:uRzMQ3ip6t5N+MSw6SoQXQNEaJXmRXBGFGvSrGcfu0Q=:HNOEZdSmYg0p2ipsGlI/HubYtM78MeWirjPyE4nUxtA=;
-X-ME-Sender: <xms:JkPPagbMv1TMGHrtzoHyGao48VEs8hF4JATpEErJ56F3bakewMN4og>
-    <xme:JkPPaiYDrhNP3lwwpGl11lYYYPmb6zg7XbDb7sM078lApXT6mDxAJ_uykTt0atZk7
-    FIrF5WHMNNYFXLLIFvH5AjxVdQuq8Mn6DXjXspeuNmnv8TRlOrOlw>
-X-ME-Received: <xmr:JkPPav-I3QDIUBahmpK5mHna8nn5id9ZzyD4rQatvwSyYa_2b53DYg>
-X-ME-Proxy-Cause: dmFkZTENRB+GSLQmB9zhIG7qZ2i3pKaOpkm6GR/B+mY2gd2cXkt3WFD+Ha/cj9Fer1CK7A
-    iMkm+2MN7mSB4fgLERLaCLZ2WcesLHcAVPmapYoot9rD8aS/TUxAliyBzQys2+RLIXEuYj
-    NQ4ifpfZvyAfpI/JSkIBf/y5c0W78LYO2ON3RMEQP54H9UKefGyQSQ9gG8g90ld2PZAGFu
-    4EZpG9lfer7w09FemOElkquZp3eytj1qN2EjYqQLpqiqPX7uDQ3g+tmHjSsAnXP4B8sKx1
-    bshwaRO+l2E2wdQDo4iZxqu8+4gwyhTO6Sg639NccfH7bxQ5aaO/vJ9vKiUamDt5D188f7
-    KwxbfSx/pAtpM/u+4y9mc/MVWm9oG266NdR2t4ERhqcNrd2SpfWvfdIIOgj6nyaYYs1Iyv
-    /0Ue4seGcCvmJzoOiwVvGvy8RpXEoWY6n1Zuz7zSpLDngFxrWZ4hWIgUEaBIB8TWWfUsuo
-    9KMMSLESvnwWCtt0/NUcyYMz/tOH/QyxJ9+l3w/UGzNZf7bgwl/BjfYNBJ/by6zSEqwZfy
-    9X5ET5mJ9OCymxTj289RIbE96ovXWnpqFqnlL9huGhRGz0tWDXjogAbVMtIXta1vG820oc
-    Z3Vg0IjiO2DU0YzT+k6bRtI+eJ3pO/52hvVXuQPUi77MRW1oEuBE5zpwveOg
-X-ME-Proxy: <xmx:JkPPaph8nK0mFT-dj3rqWEd4iVknCM2H2ef_mRbIcsx_CXx9oiBzmQ>
-    <xmx:JkPPanfS8tzu4Z6lQ12bndyHaSBtlSjTSr_AwtzzHKdSks47N5d0sQ>
-    <xmx:JkPPaorUxMI7gQrNHECMUFh5QWwtH63KKDqQGU8t_50ujV37HSBZtQ>
-    <xmx:JkPPakCO5efMc_jNlf_TyPXuC1DKWcZnBSZnFfgBEkeE0XGOEpPAMQ>
-    <xmx:J0PPaj0qNs77yVxlXtjdYkpGoTTEL7LZwIj5FGPzwZqRaamyrUmwl7jq>
+Message-Instance: m=1; h=sha256:0vBNUpXafQ38E8uHhXphn6p7of17CrOSHUH6JEh2AFM=:ZwDFdXdQmfgZGa/yFdySOHAwgxRrj1yd9nD3yjQ/EZ4=;
+X-ME-Sender: <xms:KEPPaiucISiLPb4hyqITkNa1jyX3iGhQ-98ASRJR6nvUUsQMbCvPSQ>
+    <xme:KEPPaufgcO0aaDc41q_gVduJBhrv2CtLVyapFD0Gahwjd1wjhe0s000lzWKRe2BwG
+    HantxXMKw1sgzju3uIk-jmA8AJoETBULuJpqpIB4C35vdc9s6xbTg>
+X-ME-Received: <xmr:KEPPaixa_ZelZNQSPmSbGfa4gs_5VqcHfW3DV8S_s1_5zoPWM1TwPw>
+X-ME-Proxy-Cause: dmFkZTGberXrCizqextxcbDt5sHh6BxVwcDdcRbPAEJ1/Aqn94NmQdM2kQMTj5L0Gwer/w
+    WI3c+kkTcHL1y05i5u3sR9tzhirdV19GM73Yxk3ixFax5wpBnQW7DEYyLR482oyl3Y8W2m
+    NlU9N19taCeeEdWVh48KL9jgGhlsNwbAE1+uDJBOHMBS7WfGixH5g7/zd8GBrSa3nGpTS9
+    a0Hmjru3Uf4Di2F2XvDIKq5FnRIRIBSj5cOaxGvLiAC4JIVKzBhWsqkoGSX5azj2uP1dLM
+    tKVburdL+yGwDIme09nthcDc+q4tSQZK2imU81v4qstnm4X14zYowXhGUUvtTBqAvTHwEM
+    mjLV7+QKkadQkUHBJAY3wOMzw+0vTrvEv9diWZWBbTx8U7k0M27Nl/1yFt2fBW4LH231fF
+    /ZY/uUxQtOxAymd7QYS6O3wy1yBPAI5mMHXXRWa/fzb8+dasNBZwp1QDBl0qZX47fqxsx8
+    2Rho+Jcgi3Mx5FErexYrI9GpnktaAvdWWB9s4HcYMGb6003MFj0u+Ka/ZBhfzpWfRQmnZO
+    EDL97T7wqL4P2ix9L6ID1B6p516397dr1UofSBgeiVndYEujO5Y+K+lV7wu/cwrvzRUTTK
+    BL1bA842brsxeYaY5CIgve2pwUHgXxB5ZJPJhDS9y4osyaCnvkRfIWSi27VQ
+X-ME-Proxy: <xmx:KEPPasH6knfVXhtYi9uvQhywgJEzxseTwrT_RwVttCWPbTrKe45KIQ>
+    <xmx:KEPPauxfCyzGbDWIhqS_FGbV3x3ecmO5vThG3QpaGHadud8w-n9rgg>
+    <xmx:KEPPalstLF0Tu_U4JGVrBDA9-J556cGhfbAz3tM7qVcmBoQOS8ZDmw>
+    <xmx:KEPPaj0lXp5wmewZKnk4T2rVU6vbSLy0ND10IYBJQJXY2JJGqZSohw>
+    <xmx:KEPPahhitmwnWHbVxpdKVcRgZ998vwJDbdpCZfsRYhSZoKHVbjyQBttB>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Oct 2026 04:53:57 -0400 (EDT)
+ 14 Oct 2026 04:53:59 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6cd36376 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Oct 2026 08:53:56 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id a2740a2f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 14 Oct 2026 08:53:59 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/6] odb/files: cleanups and improvements for alternates
-Date: Wed, 14 Oct 2026 10:53:44 +0200
-Message-Id: <20261014-pks-odb-files-alternates-cleanups-v2-0-fed9b2caa3be@pks.im>
+Date: Wed, 14 Oct 2026 10:53:45 +0200
+Subject: [PATCH v2 1/6] odb/source-files: fix performance when reading
+ objects with alternates
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -99,72 +99,104 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42OTQ6CMBCFr0K6tqYtpP6svIdh0ZapjGIhnUI0h
- Ltb0AO4my95730zM4KIQOxczCzChIR9yKB2BXOtCTfg2GRmSigthdB8eBDvG8s9dkDcdAliMCm
- frgMTxoG4lF4ftXPVqVIs7wwRPL42x7X+Mo32Di6tw2uiRUp9fG9PTHLN/Xyy/MM3SS64PYhSe
- K+s0v6SO3t8snpZlg8lKWEz4QAAAA==
-X-Change-ID: 20261006-pks-odb-files-alternates-cleanups-11f686cc4942
-In-Reply-To: <20261013-pks-odb-files-alternates-cleanups-v1-0-b7030ff2b26f@pks.im>
-References: <20261013-pks-odb-files-alternates-cleanups-v1-0-b7030ff2b26f@pks.im>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261014-pks-odb-files-alternates-cleanups-v2-1-fed9b2caa3be@pks.im>
+References: <20261014-pks-odb-files-alternates-cleanups-v2-0-fed9b2caa3be@pks.im>
+In-Reply-To: <20261014-pks-odb-files-alternates-cleanups-v2-0-fed9b2caa3be@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
  Wolfgang Kritzinger <wkritzinger@atlassian.com>, 
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.2
 
-Hi,
+With the move towards pluggable object databases we reorganized how we
+access alternates. Before the introduction of pluggability, we were
+reading objects by first scanning through packfiles from all alternates
+before scanning through all loose object directories. With the change
+though, we are now iterating through the sources one by one, checking
+each of them for whether they contain the object either as a packed or
+loose object.
 
-this patch series contains a couple of follow-up cleanups and
-improvements that are now possible after having migrated alternates into
-the "files" backend.
+Checking whether an object exists in packfiles is comparatively cheap
+because the list of packs is cached, and the pack indices are likely to
+be in the page cache. In contrast to that, checking whether an object
+exists in loose format always incurs one stat(3p) syscall. So scanning
+for objects one alternate at a time led to a performance regression in
+in the case where most of the objects are contained in a packfile of an
+alternate, as reported in [1].
 
-The series is built on top of 6de20f6092 (The 4th batch, 2026-10-06)
-with ps/odb-files-alternates at 0ba59c8453 (odb/source: drop
-`read_alternates` callback, 2026-10-08) merged into it.
+We could fix that issue by introducing another flag that tells the
+backends to only search the optimized storage backend. But that is
+adding more complexity to the object database layers that is ultimately
+only really required because of the way the "files" backend stores its
+data. So for an alternate backend, such new infrastructure would not
+really be a good fit.
 
-Changes in v2:
-  - Add another refactoring on top to only fetch objects from a promisor
-    remote in case they are missing.
-  - Link to v1: https://patch.msgid.link/20261013-pks-odb-files-alternates-cleanups-v1-0-b7030ff2b26f@pks.im
+But since then we have moved handling of alternates into the "files"
+backend itself. One of the consequences of this is that this backend is
+now having full control over all of its sub-sources, and that also makes
+it way easier for us to optimize for this access pattern again.
 
-Thanks!
+Do so by first trying to read objects from packfiles located in any of
+its object directories before trying to read loose objects.
 
-Patrick
+The following benchmark demonstrates that this significantly improves
+performance in some cases. The benchmark uses the Git repository itself
+and sets up its object directory as an alternate, while the primary
+object directory is simply an empty object directory. It then reads all
+commits enumerated via `git rev-list HEAD` with git-cat-file(1):
 
+  Benchmark 1: git cat-file --batch-check --unordered (rev = HEAD~)
+    Time (mean ± σ):     179.4 ms ±   2.6 ms    [User: 114.6 ms, System: 61.4 ms]
+    Range (min … max):   177.1 ms … 187.7 ms    16 runs
+
+  Benchmark 2: git cat-file --batch-check --unordered (rev = HEAD)
+    Time (mean ± σ):      95.0 ms ±   1.5 ms    [User: 79.8 ms, System: 15.0 ms]
+    Range (min … max):    93.0 ms …  97.9 ms    30 runs
+
+  Summary
+    git cat-file --batch-check --unordered (rev = HEAD) ran
+      1.89 ± 0.04 times faster than git cat-file --batch-check --unordered (rev = HEAD~)
+
+[1]: <CAFXJcxvpKHoVDwE5mBOd=w-A5vPdUmehqr8SHLUD7qv1qB00rA@mail.gmail.com>
+
+Reported-by: Wolfgang Kritzinger <wkritzinger@atlassian.com>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (6):
-      odb/source-files: fix performance when reading objects with alternates
-      odb/source-files: fix performance when streaming objects with alternates
-      odb/source-files: make the second read an implementation detail
-      odb: remove read loop for found objects
-      odb: don't try re-fetching corrupt objects
-      odb/source: drop `local` flag
+ odb/source-files.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
- midx.c                |  2 +-
- odb.c                 | 63 +++++++++++++++------------------------------------
- odb.h                 | 12 ----------
- odb/source-files.c    | 26 +++++++++++++++++----
- odb/source-inmemory.c | 10 +++++---
- odb/source-loose.c    | 17 ++------------
- odb/source-loose.h    |  3 +--
- odb/source-packed.c   | 20 +++++-----------
- odb/source-packed.h   |  7 ++++++
- odb/source.c          |  4 +---
- odb/source.h          | 20 +---------------
- repack.c              |  2 +-
- 12 files changed, 66 insertions(+), 120 deletions(-)
+diff --git a/odb/source-files.c b/odb/source-files.c
+index 455f409db0..9268f5aa9a 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -426,6 +426,7 @@ static enum odb_read_status odb_source_files_read_object_info(struct odb_source
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+ 	enum odb_read_status status = ODB_READ_NOT_FOUND;
++	enum odb_read_status ret;
+ 
+ 	/*
+ 	 * Reading an object may fail even though the object exists, for
+@@ -434,15 +435,15 @@ static enum odb_read_status odb_source_files_read_object_info(struct odb_source
+ 	 * prefer the first such error in case multiple reads have failed.
+ 	 */
+ 	for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
+-		enum odb_read_status ret;
+-
+ 		ret = odb_source_read_object_info(&dir->packed->base, oid, oi, flags,
+ 						  status == ODB_READ_NOT_FOUND ? errmsg : NULL);
+ 		if (!ret)
+ 			return 0;
+ 		if (ret != ODB_READ_NOT_FOUND && status == ODB_READ_NOT_FOUND)
+ 			status = ret;
++	}
+ 
++	for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
+ 		ret = odb_source_read_object_info(&dir->loose->base, oid, oi, flags,
+ 						  status == ODB_READ_NOT_FOUND ? errmsg : NULL);
+ 		if (!ret)
 
-Range-diff versus v1:
-
-1:  c576112f90 = 1:  bd071672be odb/source-files: fix performance when reading objects with alternates
-2:  f4065cfc43 = 2:  3092e588e9 odb/source-files: fix performance when streaming objects with alternates
-3:  7d10934490 = 3:  2a347fcc0c odb/source-files: make the second read an implementation detail
-4:  e4b41bd118 = 4:  b5080890d7 odb: remove read loop for found objects
--:  ---------- > 5:  fd362349fa odb: don't try re-fetching corrupt objects
-5:  bafbc979e9 = 6:  8384fcc65b odb/source: drop `local` flag
-
----
-base-commit: ea99757de7d4ef6c7727431bfd7b6726614102e0
-change-id: 20261006-pks-odb-files-alternates-cleanups-11f686cc4942
+-- 
+2.56.0.212.g129ede20d9.dirty
 
