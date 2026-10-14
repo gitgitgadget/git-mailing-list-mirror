@@ -1,182 +1,193 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C769341687B
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 18:12:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF26F563280
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 18:16:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792001528; cv=none; b=TcXJto4y4Tot1EuVw8ckn6HbsafvQ6g3lqrSg9rYrhND/I8tL5cutUZyVtWZsQvx3hyfYcytoXCOxMFofpHvxvlAS9PJKrTeDQ32SdksFskhHpO6XYdvNoOhtQMKbPa87WbmWjsjsedzah3T5L7xqUM20RacZ+cn7/cD6kniqcY=
+	t=1792001786; cv=none; b=HqTWcy8/amtTGPgELEtcEyZ6mYBpzlO0VlunW0SEfjWdJzK8/bft6f2CGh6y3YWIv6JkmwmmVqM4tVNNSCVL8gDSZVtQi4BHPW6M/EPoO1/6PDGbigsKye0dUe2eBje0kHxUwv+DlUIcpQrcmsBaZIl34V8hhsjXMFuzPVbwtwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792001528; c=relaxed/simple;
-	bh=281Kmr57zbEPmVT5hMdnJsLkNU/m8Peni2uHCGE9UQ8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ajya3xKJaRwfJUciDtO7JxHrxvkJz2ndqF/t/VbrOMc+utfLl6G2U+qX1uiGaXsgpsAVTWf5yW1eXaYUC5xzETZIsjW0nqk0UVSOeqCKJtR1kDD3DXMqpqvRxiJmg1EniG4cCjOUO4n0jb9hkMv1QyxRqfydtFeQ6meeNXTTlTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gitlab.com; spf=pass smtp.mailfrom=gitlab.com; dkim=pass (1024-bit key) header.d=gitlab.com header.i=@gitlab.com header.b=dcELiU+a; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gitlab.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gitlab.com
+	s=arc-20240116; t=1792001786; c=relaxed/simple;
+	bh=8SkwE1t0iPcITGpe+9KVBdG+swDOKXSPH0LXnDCZOxU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QKd07Jcjofj8ciIpYQmYtDcz/4pFLaU1dV7MF2GC5sxIB3mQXdeUzK9OgvTeKQ2Urn2mZob6mAn3WaXSseUAAC32lO4mYQpXKr9GrIxDcRMYn15UNC8mbHe02J99WS1Z4Uim4aN+vZGmex0uMcKufD3RNwlDVycLxtpwwzVe/90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FWg/Gg6Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HbuBlWd+; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gitlab.com header.i=@gitlab.com header.b="dcELiU+a"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-48afbd2c386so2644502f8f.3
-        for <git@vger.kernel.org>; Wed, 14 Oct 2026 11:12:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitlab.com; s=google; t=1792001525; x=1792606325; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=/PGZdV20Ne2Rx+H3Ne52u/i5FTm8l6IJDF4y/G/HfCU=;
-        b=dcELiU+amlVY3YFEwuPzB53WKOI8OKDWwNNJPKjhfRkJCz7aWb8uBAXXIQpBTO7Egz
-         Jcs+PhQC7IQdvXuj0GXRmVi3FU1xFIlsgA0OCnZfYdCJgCtnoJxLaV4idPigTsjKfXMx
-         GqvvjWhqinAIMJIKSNBFkZE4e0M1LrHV5OQJI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792001525; x=1792606325;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=/PGZdV20Ne2Rx+H3Ne52u/i5FTm8l6IJDF4y/G/HfCU=;
-        b=jbAw+EMjeu+/ULbmxjhSkeahaMwWQltjYE2VLNVSSa1oTYY6zUTxDAiVOkWbKhvfIV
-         E6mYjMq6LPMFAbBonA1UKbEqO2PHo9ItvbVu36TOqCMz6FBDvd/HfiTi3Y7CsYgWo157
-         RuJWztY9QYSSBSHS+1N2Fo3a6ffqUdlM40VpMT/RKyr3T+YQQtIyJo7vBuYaBGYjeEw/
-         ds3r6VdMS1RILV0Gj+5oedTRL4TT4LLVRyz/yGei8OVziWy6vQK1ix8T31PCdnB7RvyK
-         /MjSjKlD4XHT7zeszMZ1ULkL36lW+EOAesOBSDFOcpYxHM5/o5m8nDprAYI9mhMNQUsW
-         RTcg==
-X-Gm-Message-State: AFq9FYJaw7E3KdJ7b0PWJwUt7WNmQsYZAzOqhej901IFfY+nTvDm2NXW
-	pQ1mysnkw5qmT+tFRkxRQOAr00sPEs84LJaHNn0eV6oJU/bnRu5zXLUczm5kgrd8M/hy9SgIKVh
-	v+q8kL/pFSQ==
-X-Gm-Gg: AYBFou0jP095kl7VAA/eyCVkTUR72jBb/MQ17gR1kGxY2rAsauuc1hmRxK3Den/HfHW
-	ajUL5tZYvkuoKHVFs4iPR6IlKJbbQFmgXaQJiZoHAJwfYpJCZu83NtSSmeO1IgbOaFiGe+8Flqa
-	fWb6vgJM0vMWBssiPhD12S4so4Xgnj/R1rLi5IpCctAnkx8Q1XOcVMTqg8/Vnf90Ji1vUJwRIl+
-	Vr1Qrlr1/zLpOzVdSoEKhfgDdMj1pIIc210X5SZHrKu6sUYVs2S0tL6D4miYeP9gE3FYAphO5qj
-	nwxRCync1JcxGBZvevKLQ24uCDMxPfM1KYat3DZUx9t3OqsKC6JmszeGPykXs/qSYfe9Vc76h5u
-	aj4DJHA87YQxkd1XoSzy2Rgvjld3wYi3eXywYFfPXUQ7A7hSAsapCtXFq0w8RWSZrbORoK+bnEF
-	LPUq7XkVwT/3ttLtbyl6g/10ciGv5qwjDEioW0EwSUhJGKv7dUkv/aY11Y+lIpylubv8u1WrOir
-	nXP2q2E01rBIx80DQPdd1n31tzfE+hybPXioA==
-X-Received: by 2002:a05:6000:98b:b0:48d:ee3d:101b with SMTP id ffacd0b85a97d-48dee3d107fmr5183089f8f.25.1792001524827;
-        Wed, 14 Oct 2026 11:12:04 -0700 (PDT)
-Received: from iwiedler--20220823-X3P9M ([2001:9e8:a86:1382:f12e:5410:6774:61fc])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48de0ab4f34sm13806721f8f.28.2026.10.14.11.12.03
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 14 Oct 2026 11:12:03 -0700 (PDT)
-From: Igor Wiedler <iwiedler@gitlab.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	gitster@pobox.com,
-	jltobler@gmail.com,
-	Igor Wiedler <iwiedler@gitlab.com>
-Subject: [PATCH v2 2/2] odb: ignore refs of shallow and grafted alternates
-Date: Wed, 14 Oct 2026 20:11:34 +0200
-Message-ID: <20261014181134.56220-3-iwiedler@gitlab.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261014103507.35317-1-iwiedler@gitlab.com>
-References: <20261014103507.35317-1-iwiedler@gitlab.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FWg/Gg6Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HbuBlWd+"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 05F0D14000A4
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 14:16:24 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 14 Oct 2026 14:16:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792001784; x=1792088184; bh=9lfor7lcq+
+	KxzB7CeMv6+E+uR0HEi7s3mnXy397B//A=; b=FWg/Gg6YSoS+n9zklc2c0aNouZ
+	Y+cHc8Ofx1r1VPvNNXizUkFjXns0m3iFcbqqRA4hkcStbK+abSrt6UnJ6tEUZ+TS
+	M1BD+Y9sapRDglWlk1c4IPpG8oo60L4azeZdu6ynTXWpeP1irIsctw/upp3Qq5YR
+	wRmmByINXVapkUJP4DsvKtsPvtc4wUQ4/aaoc150f3pBa2EJRRf+kApm3wGRjI8J
+	xjQoUly2sojISvrc63ds4XrKg6qCrcnwS24CUGz15G0laEv2Ew3di0aeCgICfn9P
+	m3L/5QdGMVPFjBFjTUA/Tud9z3Gl0fn50YJwCdnygjbR5MXBgqFaRsHclROQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792001784; x=1792088184; bh=9lfor7lcq+KxzB7CeMv6+E+uR0HEi7s3mnX
+	y397B//A=; b=HbuBlWd+c17YVvsPDED7v0O1N0WNjvrgaiHka33AfjQUxu00n6v
+	sDV3HG+vr9mSH9MLttqdpfJicPnfX0VbvefzDOH0eOpuApXp4i7TVMed3kFV1Ntz
+	CnjugVfH7xgqO24qCUvut77DgIKIANRrsvGQNV4iyTzC3rxAx4Zm5+7mRN9PriC7
+	Dxju+RpECsHYsGklUzIOLuokK01NEdzxy9tkbVcFg1VqDwwCI1dbFWNH5AiwkdVd
+	szGFEDJXFxpA1Lc6mSxJkbiX1cceokG/tn1BQdZxHFPzWLNC/VCl+wL07/Mxc8MD
+	4kMp8xTflsdp+pqndXMSctboR8MfZFBdqXw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792001784; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:B94PMf0VmDYTJpQKLygYVahI69t5FAyo97Akdu7L2CmUtN/
+	xhiI1rzQhiNrYqAO97k+mEQeS3VVLV7uM9mprLMgw/7HmyqK47+IK2WAwRO0bNgs
+	v0DfM6L3zABOzdSxGKQ6Y6AtOH4SqvLApb9RxNXhHvUdWpmcF+9ypjmdydx2gHKz
+	Wl4h/UfCmsX22LXwY0VQ7Yy4Kw68OrX/bSin45IDn2kncVsqKKxJjZALtbmtd4W1
+	7LprPRTMBBcEDpQcXmigYxXcKTxI6Zy4h8RN4O8IfI3eN0m9a0Ry/JuLtbr1bJEx
+	1RsWMagaMFpavvIY9gXxhFvwRxn81rcTuM1dZ1Q==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:CCHlANvTLoFQodSS3YekfliPjDJBq/cICpamxbe2ADo=:8SkwE1t0iPcITGpe+9KVBdG+swDOKXSPH0LXnDCZOxU=;
+X-ME-Sender: <xms:98bPausNrk3ncGn9j4erbv2TUfmDQJEbYJoXaKDKgT4VUUXOe5iSQg>
+    <xme:98bPaqfPb3UMzcJild5wRQu3lu8aQrVEGvPJnV9ck4q_durMYLhCZ9QCzsCumnnEo
+    ndQk0Zdod0JAYhjVSlS2ePliPSS5c8n_r8l4qyQGYsPmRe842-A>
+X-ME-Received: <xmr:98bPauyBCSNCFMGFFiSPdbZ6j-XqCyBbMt8zXAN1L8ssKYZCsVCcWq0NTprQzQk_2oQVzjmkdt1AQBwJiK83F9Ey9c_RY-At3Yu7>
+X-ME-Proxy-Cause: dmFkZTELRZ5BKuWu1unXmDoDvR2E0qGd9MtPuHBemCD/cv1wVdC9Vpi/pJ3wv3xVneEJuF
+    6jU0AWkfX07HombR2IUnqkU2X0R4RoKzt6TyvNBu7AOMObjxG3hiMu0Y/HLmsGS0aOWvrO
+    cfXAaxc8Jn+3Ckgo+frxc7s2UG1tFO7GOw8kVgSgzV3dj7bFM4fgtrwY/Hc7CKM+yeJ0Cw
+    tssJrz9ZjrOuWZKEe5ST1BW7Z4M8QBJfmBCRjdnaVARKV6oLI48oXJa6Lo8XgeQlMWY8sU
+    gKw/K3hsdl7TQN59f0I+6BIvDk6LvHLZTroxAhw2cLNkFVSoqnKC6h5qA0NzJ3L8kE5KS8
+    wpfN9w3SFKktw0hZ3kVQ9+S59p9V/EvUtI7gSHoqBFKYXNVmpU0M8uTKVDaNlCN/P/6iuj
+    ynS8A6fH/c8gJV6WBwIT3+YkYiZRz69q94oUj3hNCE02LN4yrJvKXktzY5bi22oVJyqX0s
+    zbe+0eJyp509a8KPbMaO/OWUN3smqqi2SA3UyutnLNtViJXu7FYqA2nzolLLkRKhL5pUiZ
+    C77NgmyjtPvwa1acXzh7C1xSEeaC9YeUcYcmK3NYIdqy8yXbwGc9Ckd/rQR+TMEUU9wYII
+    2Tu0Ggxc4qwncc8epgLef2URZszjmLdgeqScbjPWyqnmEAsvhIutv+TgedXw
+X-ME-Proxy: <xmx:98bPaoFndryCVS-RJeBBCGYO_Ed9QCx-q0fDoy1zLLLMGUzH-SPpoA>
+    <xmx:98bPaqwtlZU-4DWRGAwV3E_pYZzzGC24639-S0k1k2Eu6TzegnjN4w>
+    <xmx:98bPahtIs0h0M7-fBQsARuaU2xADv-i_zYFFOq_Zn6wBNV9NXwFT5Q>
+    <xmx:98bPav0I7XGx0mzUJP3LHfwLQVFDhrB6zC1i1hXagyga-W0B7gFSZg>
+    <xmx:-MbPapQcs6htj7N8F9whUF09bxWpx2Z5Sa-IKHow7clReIlqfWkJbwdW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 Oct 2026 14:16:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?B?6YeN55Sw5LiA6IGW?=
+ <kazumasa.shigeta@kanamei.com>
+Subject: Re: [PATCH v2 5/7] stash create: rework temporary index creation
+In-Reply-To: <f799d86f52796cc1b83788460568cc0d9849bed9.1791992404.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Wed, 14 Oct 2026 16:40:17 +0100")
+References: <cover.1791218125.git.phillip.wood@dunelm.org.uk>
+	<cover.1791992404.git.phillip.wood@dunelm.org.uk>
+	<f799d86f52796cc1b83788460568cc0d9849bed9.1791992404.git.phillip.wood@dunelm.org.uk>
+Date: Wed, 14 Oct 2026 11:16:22 -0700
+Message-ID: <xmqqtsmorvux.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-odb_for_each_alternate_ref() reports the refs of every alternate
-object store that is a repository. Its three callers use them as
-commits whose history can be assumed to be present: "rev-list
---alternate-refs" (and through it the connectivity check after a
-fetch), fetch-pack, which sends them as "have"s so that the server
-does not resend what the alternate has, and receive-pack, which
-advertises them as ".have".
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-That assumption does not hold for a shallow repository, whose refs
-point at commits with no history behind them below its shallow
-boundary, nor for a grafted one. A repository borrowing objects from
-such an alternate does not see the alternate's shallow file, so the
-history that is missing there is missing here as well. The fetch then
-succeeds, the connectivity check stops at the alternate's refs, and
-a later "git log" fails with "Could not read <oid>".
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> Use create_index_from_tree() instead of reset_tree() when we create a
+> temporary index file to stash the working tree changes. This matches
+> what we do for "git stash push -p" and means we can avoid messing with
+> set_alternate_index_output(). Add a new parameter to control whether
+> the index is reset, as we need to merge the index rather than reset
+> it so that we still detect intent-to-add entries. We do not alter the
+> in-memory index so we can remove the call to repo_read_index_preload()
+> which saves one lstat() call per changed path.
 
-"git clone --reference" already rejects a shallow or grafted
-reference repository for this reason, but nothing prevents such a
-repository from being added via objects/info/alternates or
-GIT_ALTERNATE_OBJECT_DIRECTORIES, or from being made shallow after
-other repositories started borrowing from it.
+It is unclear what problem we are trying to solve.  Obviously we can
+enhance create_index_from_tree() and replace reset_tree() just fine,
+but the proposed log message should make it clear why we are doing so.
 
-Skip the refs of an alternate that has a "shallow" file or an
-"info/grafts" file, the same checks clone uses. Its objects are still
-available through the object store. Only its refs are no longer used
-as a boundary.
+Please follow the usual pattern to state "observation" (e.g., "we
+use reset_tree() when we do X"), "problem" (e.g., "use of
+reset_tree() is undesirable because ..."), and "solution" (e.g, "we
+can improve by replacing reset_tree() with create_index_from_tree()
+because the latter has these desirable characteristics") in this
+order, perhaps in separate paragraphs for extra readability.
 
-Partial clones have the same problem for the objects they lack, but
-detecting one requires reading the alternate's config, so this
-patch does not handle them.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Igor Wiedler <iwiedler@gitlab.com>
----
- Documentation/rev-list-options.adoc |  7 ++++---
- odb.c                               | 11 +++++++++++
- t/t5618-alternate-refs.sh           | 13 +++++++++++++
- 3 files changed, 28 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index bd9f345690..982a53c694 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -223,9 +223,10 @@ explicitly.
- 	Pretend as if all objects mentioned as ref tips of alternate
- 	repositories were listed on the command line. An alternate
- 	repository is any repository whose object directory is specified
--	in `objects/info/alternates`.  The set of included objects may
--	be modified by `core.alternateRefsCommand`, etc. See
--	linkgit:git-config[1].
-+	in `objects/info/alternates`.  The refs of shallow and grafted
-+	alternate repositories are ignored, as the history behind them
-+	may be missing.  The set of included objects may be modified by
-+	`core.alternateRefsCommand`, etc. See linkgit:git-config[1].
- 
- `--single-worktree`::
- 	By default, all working trees will be examined by the
-diff --git a/odb.c b/odb.c
-index 0200e26f21..e6bb7ce6e6 100644
---- a/odb.c
-+++ b/odb.c
-@@ -458,6 +458,17 @@ static int refs_from_alternate_cb(struct odb_source *alternate,
- 		goto out;
- 	strbuf_setlen(&path, base_len);
- 
-+	/* A shallow or grafted repository may lack the history behind its refs. */
-+	strbuf_addstr(&path, "/shallow");
-+	if (!access(path.buf, F_OK))
-+		goto out;
-+	strbuf_setlen(&path, base_len);
-+
-+	strbuf_addstr(&path, "/info/grafts");
-+	if (!access(path.buf, F_OK))
-+		goto out;
-+	strbuf_setlen(&path, base_len);
-+
- 	read_alternate_refs(alternate->odb->repo, path.buf, cb->fn, cb->payload);
- 
- out:
-diff --git a/t/t5618-alternate-refs.sh b/t/t5618-alternate-refs.sh
-index 4cc39af0f0..9c3862709a 100755
---- a/t/t5618-alternate-refs.sh
-+++ b/t/t5618-alternate-refs.sh
-@@ -70,4 +70,17 @@ test_expect_success 'connectivity check of a deepening fetch excludes alternate
- 		--alternate-refs --quiet <deepen.trace
- '
- 
-+test_expect_success 'refs of a shallow alternate are ignored' '
-+	git clone --depth=1 "file://$TRASH_DIRECTORY" "$TRASH_DIRECTORY/shallow" &&
-+	test_commit -C "$TRASH_DIRECTORY/shallow" shallow-only &&
-+	git -C "$TRASH_DIRECTORY/shallow" rev-parse HEAD >shallow-tip &&
-+	cp .git/objects/info/alternates alternates.bak &&
-+	test_when_finished "mv alternates.bak .git/objects/info/alternates" &&
-+	echo "$TRASH_DIRECTORY/shallow/.git/objects" >>.git/objects/info/alternates &&
-+	git cat-file -e $(cat shallow-tip) &&
-+	git rev-list --remotes=origin >expect &&
-+	git rev-list --alternate-refs >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.56.0
-
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  builtin/stash.c | 15 ++++-----------
+>  1 file changed, 4 insertions(+), 11 deletions(-)
+>
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index b4fe7465e4..ddeb5a5d2a 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -374,7 +374,7 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
+>  }
+>  
+>  static int create_index_from_tree(const struct object_id *tree_id,
+> -				  const char *index_path)
+> +				  const char *index_path, bool reset)
+>  {
+>  	int nr_trees = 1;
+>  	int ret = 0;
+> @@ -403,7 +403,7 @@ static int create_index_from_tree(const struct object_id *tree_id,
+>  	opts.src_index = the_repository->index;
+>  	opts.dst_index = &dst_istate;
+>  	opts.merge = 1;
+> -	opts.reset = UNPACK_RESET_PROTECT_UNTRACKED;
+> +	opts.reset = reset ? UNPACK_RESET_PROTECT_UNTRACKED : 0;
+>  	opts.fn = oneway_merge;
+>  
+>  	if (unpack_trees(nr_trees, t, &opts)) {
+> @@ -1399,7 +1399,7 @@ static enum create_result stash_patch(struct stash_info *info,
+>  		goto done;
+>  	}
+>  
+> -	if (create_index_from_tree(head_tree, stash_index_path.buf)) {
+> +	if (create_index_from_tree(head_tree, stash_index_path.buf, true)) {
+>  		ret = CREATE_ERROR;
+>  		goto done;
+>  	}
+> @@ -1458,22 +1458,15 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
+>  	repo_init_revisions(the_repository, &rev, NULL);
+>  	copy_pathspec(&rev.prune_data, ps);
+>  
+> -	set_alternate_index_output(stash_index_path.buf);
+> -	if (reset_tree(&info->i_tree, 0, 0)) {
+> +	if (create_index_from_tree(&info->i_tree, stash_index_path.buf, false)) {
+>  		ret = -1;
+>  		goto done;
+>  	}
+> -	set_alternate_index_output(NULL);
+>  
+>  	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+>  	rev.diffopt.format_callback = add_diff_to_buf;
+>  	rev.diffopt.format_callback_data = &diff_output;
+>  
+> -	if (repo_read_index_preload(the_repository, &rev.diffopt.pathspec, 0) < 0) {
+> -		ret = -1;
+> -		goto done;
+> -	}
+> -
+>  	add_pending_object(&rev, parse_object(the_repository, &info->b_commit),
+>  			   "");
+>  	run_diff_index(&rev, 0);
