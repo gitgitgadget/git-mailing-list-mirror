@@ -1,37 +1,37 @@
 Received: from smtp113.iad3a.emailsrvr.com (smtp113.iad3a.emailsrvr.com [173.203.187.113])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58F12F12AB
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 03:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197A43AFCFD
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 03:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.203.187.113
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791948104; cv=none; b=hgZOuWaMrbav/NzFwjAx6dHXSc4TEQNnISKm4BlGot1q3GV0M7CrphYvXRsZT5TXQyAVio39PN1ct/nMZIkA/7CQGqyXsyVZyp5wAZ8BFm3SfSALpjv59WJar0mV4X9wjuXdB2Im51mNXUs9dIZrg3qmNj/kDsJMibPFPieB9Rk=
+	t=1791948106; cv=none; b=JNYhG70eOLvieA9SnvVSYhE8mb0Y7K/crlMBvGfyBAnIFtNEY92zBFdeJ5GECQ35qWhs0kwJNq6g4TGhA1gdXo8CLsR5JeK+IJtkqkgoVCtDvioosvr3C1wy2DyPwp5WIvs/QJHiph0MhHmQvy5f46zQFsuLENIp/KTUooJqpuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791948104; c=relaxed/simple;
-	bh=4MkxXEBU+GOd1BGLa9V3cB2Ekk80Gjfzf3Oaqh9GXLY=;
+	s=arc-20240116; t=1791948106; c=relaxed/simple;
+	bh=riq5w9+vnw5uLO00pkkfas/9oSXvuBhx5Jf+M9MGyBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QOl+OQ60NmsEameFMhz8zwcjL557CcbQLafn89zy+vZR9ahj1KRtU0eMKfyW2B9f8je3wKOk894yJBTv1uJn5nqBoOID/tXOeIAWJWfR+jvLz8BaFu/UfaB9WWVeua4/BcX6Jux+7BfOa+VZGd1cyWckMk4JIxAAaKX3NesMoC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jonsimons.org; spf=pass smtp.mailfrom=jonsimons.org; dkim=pass (1024-bit key) header.d=jonsimons.org header.i=@jonsimons.org header.b=ZYnBWZAN; arc=none smtp.client-ip=173.203.187.113
+	 MIME-Version; b=D+haCevruBNd1CIR+Gq0Bzi1ggqAQbaecHOyfNSSqGWcDKWw6AT4zVfAzAKD8OQQmWLPWF+Qr53ZWx25oVhl1oZ4KaBBGK32HvuGrFFbBILw13Q4w8eO3rB9jlYtK595svg4VUNxIBV37mqAh5DV1tWYts/kru+kpqcqX+Pxzxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jonsimons.org; spf=pass smtp.mailfrom=jonsimons.org; dkim=pass (1024-bit key) header.d=jonsimons.org header.i=@jonsimons.org header.b=g0+iM1yH; arc=none smtp.client-ip=173.203.187.113
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jonsimons.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jonsimons.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=jonsimons.org header.i=@jonsimons.org header.b="ZYnBWZAN"
+	dkim=pass (1024-bit key) header.d=jonsimons.org header.i=@jonsimons.org header.b="g0+iM1yH"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=jonsimons.org;
-	s=20200911-u7gnnm7o; t=1791947648;
-	bh=4MkxXEBU+GOd1BGLa9V3cB2Ekk80Gjfzf3Oaqh9GXLY=;
+	s=20200911-u7gnnm7o; t=1791947661;
+	bh=riq5w9+vnw5uLO00pkkfas/9oSXvuBhx5Jf+M9MGyBw=;
 	h=From:To:Subject:Date:From;
-	b=ZYnBWZAN0vsxraESPCYWWnCIuiZdPRxVrV/o1zxa911gpaHap4Sdw78O6AcW7nY/a
-	 3hvI4OYkwNDXeIA2wduxCqsG3W2BPZ1KNqwVHOiWZA7RXAyvtth+50b41eG8EkwYF9
-	 5pNJfkbap8w4Z0QHR5vxk1uvQorEIjLoNsHjHhN8=
+	b=g0+iM1yHGitIEtTFBLYyk39nQtFMgUdAuXJ7L2e0bOLwdnhv7zTKASteK7FZp77t8
+	 wVOugdw1E8rfVq0CwESfAYMwiEuRo2OMEZ4AkrRzHvh7X6jCqDvqAUGeuzm3ALAJ6y
+	 rU2H4iH9rV5Rq2MyEybYKvt89AiSNZr0I/svBo+w=
 X-Auth-ID: jon@jonsimons.org
-Received: by smtp23.relay.iad3a.emailsrvr.com (Authenticated sender: jon-AT-jonsimons.org) with ESMTPSA id 2695A252EE;
-	Tue, 13 Oct 2026 23:14:08 -0400 (EDT)
+Received: by smtp23.relay.iad3a.emailsrvr.com (Authenticated sender: jon-AT-jonsimons.org) with ESMTPSA id 374A72535B;
+	Tue, 13 Oct 2026 23:14:21 -0400 (EDT)
 From: Jon Simons <jon@jonsimons.org>
 To: git@vger.kernel.org
 Cc: Jon Simons <jon@jonsimons.org>
-Subject: [PATCH v2 04/12] remote: use strmap for check_push_refs()
-Date: Tue, 13 Oct 2026 23:13:39 -0400
-Message-ID: <20261014031347.50433-5-jon@jonsimons.org>
+Subject: [PATCH v2 11/12] remote: restructure apply_push_cas() loops
+Date: Tue, 13 Oct 2026 23:13:46 -0400
+Message-ID: <20261014031347.50433-12-jon@jonsimons.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014031347.50433-1-jon@jonsimons.org>
 References: <20261009192953.81794-1-jon@jonsimons.org>
@@ -43,304 +43,131 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Classification-ID: 20ae8d58-78b7-4215-81c6-d8119c94fa7d-5-1
+X-Classification-ID: 20ae8d58-78b7-4215-81c6-d8119c94fa7d-12-1
 
-Optimize check_push_refs() by replacing a linear traversal of all
-local refs with strmap lookups.
+Restructure the apply_push_cas() loops to prepare for replacing
+a linear remote_refs traversal with a strmap lookup.
 
-Before this change, matching R explicit refspecs against N local refs
-in check_push_refs() entails O(R * N) calls to refname_match().
+Before this change, apply_push_cas() loops:
 
-After this change, we build a strmap of local refs O(N) and use it
-for O(R * rules) lookups of the refspecs.
+    for each advertised remote ref,
+      apply_cas(ref):
+        for each explicit lease entry until first match,
+          refname_match(entry, ref)
+        else if use_tracking_for_rest,
+          stamp from tracking
 
-The new count_refspec_match_in_map() is equivalent to the previous
-count_refspec_match():
+After this change the loops are inverted and apply_cas() is split
+into apply_one_cas() (one explicit entry, stamp every matching
+still-free ref) and apply_cas_tracking() (shared by the explicit
+use_tracking path and use_tracking_for_rest):
 
- - count_refspec_match() for 'pattern' iterates every local ref,
-   adding a match for each 'refname_match(pattern, refname)',
-   which searches against the six ref_rev_parse_rules.
+    for each explicit lease entry,
+      apply_one_cas(entry):
+        for each advertised remote ref not yet stamped,
+          refname_match(entry, ref)
 
- - count_refspec_match_in_map() for 'pattern' generates the six
-   possible matches with expand_ref_prefix(), and then issues
-   one strmap lookup for each one.
+    if use_tracking_for_rest,
+      apply_cas_tracking() on remaining refs
 
-match_explicit() still works on the ref list, so temporarily introduce
-match_explicit_lhs_map() alongside match_explicit_lhs().  These two
-functions are recombined in a subsequent commit that converts
-match_explicit().
-
-Timings show benefit for the case where the client has many local refs
-and specifies multiple refspecs:
-
-  Test                           HEAD~1            HEAD
-  -----------------------------------------------------------------------
-  5516.3: empty:refspecs:1       0.14(0.07+0.11)   0.13(0.07+0.10) -7.1%
-  5516.5: empty:refspecs:10      0.16(0.10+0.10)   0.16(0.10+0.10) +0.0%
-  5516.7: empty:refspecs:100     0.47(0.41+0.10)   0.47(0.41+0.10) +0.0%
-  5516.9: mirror:refspecs:1      0.16(0.09+0.11)   0.16(0.10+0.11) +0.0%
-  5516.11: mirror:refspecs:10    0.26(0.19+0.11)   0.22(0.16+0.11) -15.4%
-  5516.13: mirror:refspecs:100   1.19(1.13+0.10)   0.82(0.75+0.11) -31.1%
+In the next commit, apply_one_cas() is updated to use a strmap.
 
 Signed-off-by: Jon Simons <jon@jonsimons.org>
 ---
- remote.c | 186 ++++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 129 insertions(+), 57 deletions(-)
+ remote.c | 66 ++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 38 insertions(+), 28 deletions(-)
 
 diff --git a/remote.c b/remote.c
-index 114d4d983c..91d35b37fe 100644
+index 8074750601..8dd163038d 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -21,6 +21,7 @@
- #include "dir.h"
- #include "setup.h"
- #include "string-list.h"
-+#include "strmap.h"
- #include "strvec.h"
- #include "commit-reach.h"
- #include "advice.h"
-@@ -1056,60 +1057,95 @@ void free_refs(struct ref *ref)
- 	}
+@@ -2978,33 +2978,10 @@ static void check_if_includes_upstream(struct ref *remote)
+ 	free_one_ref(local);
  }
  
-+struct refspec_match {
-+	struct ref *matched_weak;
-+	struct ref *matched;
-+	int weak_match;
-+	int match;
-+};
-+
-+static void add_refspec_match(struct refspec_match *m, const char *pattern,
-+			      struct ref *ref)
-+{
-+	size_t patlen = strlen(pattern);
-+	size_t namelen = strlen(ref->name);
-+
-+	/* A match is "weak" if it is with refs outside
-+	 * heads or tags, and did not specify the pattern
-+	 * in full (e.g. "refs/remotes/origin/master") or at
-+	 * least from the toplevel (e.g. "remotes/origin/master");
-+	 * otherwise "git push $URL master" would result in
-+	 * ambiguity between remotes/origin/master and heads/master
-+	 * at the remote site.
-+	 */
-+	if (namelen != patlen &&
-+	    patlen != namelen - 5 &&
-+	    !starts_with(ref->name, "refs/heads/") &&
-+	    !starts_with(ref->name, "refs/tags/")) {
-+		/* We want to catch the case where only weak
-+		 * matches are found and there are multiple
-+		 * matches, and where more than one strong
-+		 * matches are found, as ambiguous.  One
-+		 * strong match with zero or more weak matches
-+		 * are acceptable as a unique match.
-+		 */
-+		m->matched_weak = ref;
-+		m->weak_match++;
-+	} else {
-+		m->matched = ref;
-+		m->match++;
-+	}
-+}
-+
-+static int finish_refspec_match(const struct refspec_match *m,
-+				struct ref **matched_ref)
-+{
-+	if (!m->matched) {
-+		if (matched_ref)
-+			*matched_ref = m->matched_weak;
-+		return m->weak_match;
-+	}
-+	if (matched_ref)
-+		*matched_ref = m->matched;
-+	return m->match;
-+}
-+
- int count_refspec_match(const char *pattern,
- 			struct ref *refs,
- 			struct ref **matched_ref)
+-static void apply_cas(struct push_cas_option *cas,
+-		      struct remote *remote,
+-		      struct ref *ref)
++static void apply_cas_tracking(struct push_cas_option *cas,
++			       struct remote *remote,
++			       struct ref *ref)
  {
--	int patlen = strlen(pattern);
--	struct ref *matched_weak = NULL;
--	struct ref *matched = NULL;
--	int weak_match = 0;
--	int match = 0;
-+	struct refspec_match m = { 0 };
- 
--	for (weak_match = match = 0; refs; refs = refs->next) {
--		char *name = refs->name;
--		int namelen = strlen(name);
-+	for (; refs; refs = refs->next) {
-+		if (refname_match(pattern, refs->name))
-+			add_refspec_match(&m, pattern, refs);
-+	}
-+	return finish_refspec_match(&m, matched_ref);
-+}
- 
--		if (!refname_match(pattern, name))
--			continue;
-+static void ref_map_init(struct strmap *map, struct ref *refs)
-+{
-+	strmap_init_with_options(map, NULL, 0);
-+	for (; refs; refs = refs->next)
-+		strmap_put(map, refs->name, refs);
-+}
- 
--		/* A match is "weak" if it is with refs outside
--		 * heads or tags, and did not specify the pattern
--		 * in full (e.g. "refs/remotes/origin/master") or at
--		 * least from the toplevel (e.g. "remotes/origin/master");
--		 * otherwise "git push $URL master" would result in
--		 * ambiguity between remotes/origin/master and heads/master
--		 * at the remote site.
--		 */
--		if (namelen != patlen &&
--		    patlen != namelen - 5 &&
--		    !starts_with(name, "refs/heads/") &&
--		    !starts_with(name, "refs/tags/")) {
--			/* We want to catch the case where only weak
--			 * matches are found and there are multiple
--			 * matches, and where more than one strong
--			 * matches are found, as ambiguous.  One
--			 * strong match with zero or more weak matches
--			 * are acceptable as a unique match.
--			 */
--			matched_weak = refs;
--			weak_match++;
--		}
--		else {
--			matched = refs;
--			match++;
--		}
--	}
--	if (!matched) {
--		if (matched_ref)
--			*matched_ref = matched_weak;
--		return weak_match;
--	}
--	else {
--		if (matched_ref)
--			*matched_ref = matched;
--		return match;
-+static int count_refspec_match_in_map(const char *pattern,
-+				      struct strmap *refs,
-+				      struct ref **matched_ref)
-+{
-+	struct refspec_match m = { 0 };
-+	struct strvec names = STRVEC_INIT;
-+	size_t i;
-+
-+	expand_ref_prefix(&names, pattern);
-+	for (i = 0; i < names.nr; i++) {
-+		struct ref *ref = strmap_get(refs, names.v[i]);
-+		if (ref)
-+			add_refspec_match(&m, pattern, ref);
- 	}
-+	strvec_clear(&names);
-+	return finish_refspec_match(&m, matched_ref);
- }
- 
- void tail_link_ref(struct ref *ref, struct ref ***tail)
-@@ -1178,12 +1214,12 @@ static char *guess_ref(const char *name, struct ref *peer)
- 	return strbuf_detach(&buf, NULL);
- }
- 
--static int match_explicit_lhs(struct ref *src,
--			      struct refspec_item *rs,
--			      struct ref **match,
--			      int *allocated_match)
-+static int match_explicit_lhs_count(const int count,
-+				    struct refspec_item *rs,
-+				    struct ref **match,
-+				    int *allocated_match)
- {
--	switch (count_refspec_match(rs->src, src, match)) {
-+	switch (count) {
- 	case 1:
- 		if (allocated_match)
- 			*allocated_match = 0;
-@@ -1203,6 +1239,24 @@ static int match_explicit_lhs(struct ref *src,
- 	}
- }
- 
-+static int match_explicit_lhs(struct ref *src,
-+			      struct refspec_item *rs,
-+			      struct ref **match,
-+			      int *allocated_match)
-+{
-+	return match_explicit_lhs_count(count_refspec_match(rs->src, src, match),
-+					rs, match, allocated_match);
-+}
-+
-+static int match_explicit_lhs_map(struct strmap *src,
-+				  struct refspec_item *rs,
-+				  struct ref **match,
-+				  int *allocated_match)
-+{
-+	return match_explicit_lhs_count(count_refspec_match_in_map(rs->src, src, match),
-+					rs, match, allocated_match);
-+}
-+
- static void show_push_unqualified_ref_name_error(const char *dst_value,
- 						 const char *matched_src_name)
- {
-@@ -1265,6 +1319,20 @@ static void show_push_unqualified_ref_name_error(const char *dst_value,
- 	}
- }
- 
-+static bool refspec_item_is_explicit(const struct refspec_item *item)
-+{
-+	return !item->pattern && !item->matching && !item->negative;
-+}
-+
-+static bool any_refspec_item_is_explicit(const struct refspec *rs)
-+{
-+	for (int i = 0; i < rs->nr; i++) {
-+		if (refspec_item_is_explicit(&rs->items[i]))
-+			return true;
-+	}
-+	return false;
-+}
-+
- static int match_explicit(struct ref *src, struct ref *dst,
- 			  struct ref ***dst_tail,
- 			  struct refspec_item *rs)
-@@ -1275,7 +1343,7 @@ static int match_explicit(struct ref *src, struct ref *dst,
- 	const char *dst_value = rs->dst;
- 	char *dst_guess;
- 
--	if (rs->pattern || rs->matching || rs->negative) {
-+	if (!refspec_item_is_explicit(rs)) {
- 		ret = 0;
- 		goto out;
- 	}
-@@ -1564,17 +1632,21 @@ static void prepare_ref_index(struct string_list *ref_index, struct ref *ref)
-  */
- int check_push_refs(struct ref *src, struct refspec *rs)
- {
-+	struct strmap src_map;
- 	int ret = 0;
 -	int i;
- 
--	for (i = 0; i < rs->nr; i++) {
--		struct refspec_item *item = &rs->items[i];
-+	if (!any_refspec_item_is_explicit(rs))
-+		return 0;
- 
--		if (item->pattern || item->matching || item->negative)
-+	ref_map_init(&src_map, src);
-+	for (int i = 0; i < rs->nr; i++) {
-+		struct refspec_item *item = &rs->items[i];
-+		if (!refspec_item_is_explicit(item))
- 			continue;
- 
--		ret |= match_explicit_lhs(src, item, NULL, NULL);
-+		ret |= match_explicit_lhs_map(&src_map, item, NULL, NULL);
- 	}
-+	strmap_clear(&src_map, 0);
- 
- 	return ret;
+-
+-	/* Find an explicit --<option>=<name>[:<value>] entry */
+-	for (i = 0; i < cas->nr; i++) {
+-		struct push_cas *entry = &cas->entry[i];
+-		if (!refname_match(entry->refname, ref->name))
+-			continue;
+-		ref->expect_old_sha1 = 1;
+-		if (!entry->use_tracking)
+-			oidcpy(&ref->old_oid_expect, &entry->expect);
+-		else if (remote_tracking(remote, ref->name,
+-					 &ref->old_oid_expect,
+-					 &ref->tracking_ref))
+-			oidclr(&ref->old_oid_expect, the_repository->hash_algo);
+-		else
+-			ref->check_reachable = cas->use_force_if_includes;
+-		return;
+-	}
+-
+-	/* Are we using "--<option>" to cover all? */
+-	if (!cas->use_tracking_for_rest)
+-		return;
+-
+ 	ref->expect_old_sha1 = 1;
+ 	if (remote_tracking(remote, ref->name,
+ 			    &ref->old_oid_expect,
+@@ -3014,14 +2991,47 @@ static void apply_cas(struct push_cas_option *cas,
+ 		ref->check_reachable = cas->use_force_if_includes;
  }
+ 
++static void apply_one_cas(struct ref *remote_refs,
++			  struct remote *remote,
++			  struct push_cas_option *cas,
++			  struct push_cas *entry)
++{
++	struct ref *ref;
++
++	for (ref = remote_refs; ref; ref = ref->next) {
++		if (ref->expect_old_sha1)
++			continue;
++		if (!refname_match(entry->refname, ref->name))
++			continue;
++		if (entry->use_tracking) {
++			apply_cas_tracking(cas, remote, ref);
++		} else {
++			ref->expect_old_sha1 = 1;
++			oidcpy(&ref->old_oid_expect, &entry->expect);
++		}
++	}
++}
++
+ void apply_push_cas(struct push_cas_option *cas,
+ 		    struct remote *remote,
+ 		    struct ref *remote_refs)
+ {
+ 	struct ref *ref;
+-	for (ref = remote_refs; ref; ref = ref->next) {
+-		apply_cas(cas, remote, ref);
+ 
++	/* Apply each explicit --<option>=<name>[:<value>] entry */
++	for (size_t i = 0; i < cas->nr; i++)
++		apply_one_cas(remote_refs, remote, cas, &cas->entry[i]);
++
++	/* Are we using "--<option>" to cover all? */
++	if (cas->use_tracking_for_rest) {
++		for (ref = remote_refs; ref; ref = ref->next) {
++			if (ref->expect_old_sha1)
++				continue;
++			apply_cas_tracking(cas, remote, ref);
++		}
++	}
++
++	for (ref = remote_refs; ref; ref = ref->next) {
+ 		/*
+ 		 * If "compare-and-swap" is in "use_tracking[_for_rest]"
+ 		 * mode, and if "--force-if-includes" was specified, run
 -- 
 2.55.0
 
