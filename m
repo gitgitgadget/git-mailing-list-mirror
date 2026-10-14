@@ -1,124 +1,348 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8DB3BE162
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 15:38:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E62E499F24
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 15:40:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791992334; cv=none; b=hII9sEhT5H34ASydwijhc7tSHgowwR2esh/ORW3emETVoV+YCR3U5oaZmkDCnyGy5pea7c3JsaKDWYQv0BKA4pPy7N8TnSPStTMvY0hV1jz1WG9kd9FdpbKdeF+w8EaVzh6s7ox3rZeLKqhWdLgpS9VeX30pH8R8dEIQ6waNnZA=
+	t=1791992439; cv=none; b=bfr69aU3bg4mzPCCkRCIMRRGFRMLy/D+PUaYj9Z07rLo3oJ/D9i8Bs3Es8O23cl+gHwte5E9J1Fnja7EBMDcZuoXTDJjU92V1jSCYcDk5p+LLRSZqmdUuvApU4M25muX+XMa0nbuNWq6vW+Z2yg0gf45cVMtg7iAzNaquiMWFyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791992334; c=relaxed/simple;
-	bh=ptzK577H71vIeflNmi7qCLAOKp84jWQgHadT7rrxFNs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u+JSe9joSB//v9uFcVEchlyTrVS/bx3hv6wsBw/y6tsH8sxem53K7TdgcZywA7aXBC2oxhIpQvSCAJg58dq3iSuVAirGCwD8PCXk/crgHtcuJAH6o1yWafnKUP1akkpTlLH9NUdmoGs+OGh5ZXHnaITkQhEWe2BthHpLaSQKyUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kK2Ky7sA; arc=none smtp.client-ip=209.85.160.47
+	s=arc-20240116; t=1791992439; c=relaxed/simple;
+	bh=ZGgCl/CRP449ppHyIqoo+Gh+Q+M127iGuWdTk5fiS04=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Vaa5CvAU8p2WOcc5nvI6OtSK02EZK3v1FNIGntqqWGGE0US5hcTjFyDiMETqPU67KNt2Y3YDAAgFMKCo58q//FgDqaXGp2PB60okZD2G8GdiT+dyvpFcf4+0dfEWNQV+NMdL3e2d1OrQjLxCacjK4P95cTnXX+07pMu+xtVgyOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dGfv0t3H; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kK2Ky7sA"
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-483a66818edso287922fac.0
-        for <git@vger.kernel.org>; Wed, 14 Oct 2026 08:38:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dGfv0t3H"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-48b060ec084so2828483f8f.0
+        for <git@vger.kernel.org>; Wed, 14 Oct 2026 08:40:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791992332; x=1792597132; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1791992434; x=1792597234; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=GWQpLXOBjqAZY8n5gK7qljICNtfSg3HYbWW46d4Xiis=;
-        b=kK2Ky7sAsSChW295Ved1UAy1r0ffSBtG2qnitqg0fZncNEkG8wudXAFussxuWGHh+2
-         KSA+WdX5iBvs6/Hm0OFfOz7qkUx8hBn3zlAALaXfeY8Fb18TUXLVgTS8hxZACTAlb9iK
-         iKtWYogpO3iQa/4cdVC1e4rV7bDg6y9LHkwWO8RCOUZX6umWe36cEpD2CnZQvQDRtIwX
-         7yO4WRo9fkawHdQTxAUXhx9pEcZlw5ZRuMoHQ3mla0C9dyP37xkjYg5kTqYeez1rzYtI
-         hmYMw6WrII9ZQnn4nHFDYgANvblkEvbfCueO/8PjGSOgX6AxLp8QJTKSGlVsM52xUA6b
-         bnRQ==
+        bh=JgkTtrYPgcoDvRB7x1eCtbqluwwPk99e41S7ZikhXoo=;
+        b=dGfv0t3Hy703Y4bnENjCRyTC5nRaGZ7bmO+xN77V24SjSdYGArZmZTkyhR8Vi0+3V8
+         OsEYf7lh4pvMWt48yrq9oHNTvtLXvikaKjNytaUXS3qeIMg+pmevlVKsbX044eSL4U2b
+         Tl7VmJcn/7GkjpplgMxWQJcc4b5uT1kYOtX95QWYBgIn0wiEbmId2/wTumW02vMk0CIU
+         SlUxhzxjDo7PMeJ1J1MjvNUKnSxSur3rliAQL11P/Q7WMan7XDdfn01HxY8y7YDV2xeu
+         VH2JZzuVTRoMmV4VsiXQc/+X/ZDT2vyEhAuTqrwFKuXOxj5Y8a1laBGcRLH7bvI6SyvS
+         H4kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791992332; x=1792597132;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20260707; t=1791992434; x=1792597234;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=GWQpLXOBjqAZY8n5gK7qljICNtfSg3HYbWW46d4Xiis=;
-        b=DjRhv0CLZ8lD6JfadzQSWUxQkd1dfqiujytPHr+Y7IBub09XJnARZ86u3ENsjEGig8
-         rdHR3tfSeax8JbIzRI35KPd7AYEIUo3hbEGD1L0e+R8pevwSeKWWCusQVtlqOYgOp8qe
-         es6+xuaMKYHA98fJoYG1+hRPrzPS7EjVf0i1f4Ns9mLbTRDim6mfEzVAAK1IeXnnACex
-         ZoWlqndGAbqLy6ZUGMoeHoUDkQLGrMrpFPKI9YlXs1Z8LzlXi6cr4qxHNv8Nzomr1PeU
-         4ppGV5zaovxJzhWBUATI1xdeMDpj3F/Fo2J39es8UmyqkceFeivARojlvCzaQsS5ogM/
-         V3ng==
-X-Gm-Message-State: AFq9FYKay3P4SNz9p0y1rntGz94P4IjDrBcnCrPw+OIY7AbQY2fileOq
-	bacD0JTgd55Y4hTT6Tvu6LweD/XtIEqHYmLpntP7KwORnvjB6Iacu6rc
-X-Gm-Gg: AYBFou2Wu2dvMsqZYm4VwCbjDrbdMIJKwcErCqDzytHZKWQJvSL8+G4Appch3rPINzH
-	CmiVaRNjdlbBJcUFBCZLIr0J2d+gvFoZwPje+m4o0/mf5dBp2+6vx6RwMqvdZsyl9mzkmMdMsNM
-	X6uwyBR/BQYhKWOnJLmYKLD8tEt1rdZHPRoJNhDgnDl+Ef9Ga8H1wZ2BkuNa/S12l6QRcdwH0Le
-	/P8YbZ1tjiZYKa6MgoMmPaWLZuhC7nxKgQfLIip4MeV5WyXJj4avQJnfCDEblCeoaZvzODxaChq
-	C8yPzHPThaSf7nWwLpOd59u2+UseqORa9Yb7YG+AnEJL+eZUPf5zIXGSoDw0VUx1kJCMJzcgEfV
-	qZBebM8hi2Uwsexcfc59BwMfFlIYFfeIb7DCZrJtgyEk1KpOZw/Syh0J+YJaEQSIxnS5tJ/fvKO
-	RkkNk5iGDj0y5oy4l5L4UB+BPb/FHR01wOjmBUASK3sFa886sjrPJTecBU+zbPbA5eWr3RMEdvu
-	QlKNeRpkhzc0vDWLERh6fhLsu/hPd8tMA==
-X-Received: by 2002:a05:6871:28b:b0:465:2bde:8b5e with SMTP id 586e51a60fabf-4a2a86aece5mr14599118fac.1.1791992331861;
-        Wed, 14 Oct 2026 08:38:51 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4a6dfc44a5csm2485318fac.12.2026.10.14.08.38.51
+        bh=JgkTtrYPgcoDvRB7x1eCtbqluwwPk99e41S7ZikhXoo=;
+        b=foDP0D1vBacP8YckmE4SSJzc4HZQGThD3Of8z9nGkVmCBVVvkSo47wUHuJHc47saw0
+         6Jk3qvf4oUm3G/P4AuVo5ox3Dn3YnqUdwNXnRuZZAXDrwoTkYK0JHF2tGc2zuam9DSV8
+         b6xDjA+lhC7/EDjyLEtW/pyYvfGmNzunoWcNa+o3N5AlaaAsi6CCbuTCtyv1Ve30khx6
+         ETBB1/6yqWdHD59x8P4UKPQQs2up5hOmQtnkb+oRSdUJB8vLJPH4xL4OZ+JTesDkoSzb
+         HDDBupp2x0yqCdopzx7RZ4XWOrDuwe+KVFd2sMj47d87R9Tmm0r7p3h8hNEMsc0MlcUI
+         HiRQ==
+X-Gm-Message-State: AFq9FYLq/X9UViZzI/LWqVfci793OFGblIiEacK8JCK99n3xL2KTA0vB
+	eQu3//vhvp9SDY20GrZinDQAdB35a1SHKe6AWbE/4SUtbni1JaKu/uqrP49SaQ==
+X-Gm-Gg: AYBFou04S1mu5vPtNeipJlueitmz7Qo1CDSPc0zZ4J8zocjQUT0vbKgfEsvAMidecuU
+	mevy69HT48S8Lw+SaV3Vno+Dkh9fKwD1FM1ZSRjXYiaIjM7X0F1Qecc0kHXDfGDlLpAahc64Dvn
+	o8PIaGDKpfSxwiz+WOHy5PSvtZJzAa/PEM+hs+J71VFd3d2D+OhZmNtMBWSEBsXsyD83B+MSd4u
+	/cKR8YboEBfC0WcId5NzmykwA/ZsiiQIeSyUFfHcNW1GWeFaGOdsxJME8Xu1e/KYxydiiCACpr5
+	t5LqnYuIyQ5GsQ1zORYm1DL/QixQxHiOehYvn/xWihoDJCJKKQoU9qnF9XjwLephuOLVUWYaeqO
+	TDX7811A3/7Cnon4UeiltuWwZ0aPwYF9hFNXqQ3Q85LN2TQiRgskXG76mb5ITeSr0NGF+4YTOga
+	o769sFUX+AO5qhcVI3CQKmsU04eNCQOujdLdDStxY5raFBG92a/iSLCi0WmVo35L1SaSnV9mt/i
+	A==
+X-Received: by 2002:adf:e19a:0:b0:486:f6dc:52c8 with SMTP id ffacd0b85a97d-48dbace511cmr28791547f8f.37.1791992434007;
+        Wed, 14 Oct 2026 08:40:34 -0700 (PDT)
+Received: from berwick ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48de0967acasm10324829f8f.2.2026.10.14.08.40.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Oct 2026 08:38:51 -0700 (PDT)
-Date: Wed, 14 Oct 2026 10:38:50 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	Wolfgang Kritzinger <wkritzinger@atlassian.com>
-Subject: Re: [PATCH 4/5] odb: remove read loop for found objects
-Message-ID: <as-h25nkGNYVvea7@denethor>
-References: <20261013-pks-odb-files-alternates-cleanups-v1-0-b7030ff2b26f@pks.im>
- <20261013-pks-odb-files-alternates-cleanups-v1-4-b7030ff2b26f@pks.im>
- <as6kNufOqLFeBoNh@denethor>
- <as8niG1LrNqxfRzV@pks.im>
+        Wed, 14 Oct 2026 08:40:33 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: =?UTF-8?q?=E9=87=8D=E7=94=B0=E4=B8=80=E8=81=96?= <kazumasa.shigeta@kanamei.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v2 1/7] stash: use an enum for create status
+Date: Wed, 14 Oct 2026 16:40:13 +0100
+Message-ID: <9e27bcd676ee763ed499fb337b1497f3fe2405b2.1791992404.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.56.0.134.g299a3c16181
+In-Reply-To: <cover.1791992404.git.phillip.wood@dunelm.org.uk>
+References: <cover.1791218125.git.phillip.wood@dunelm.org.uk> <cover.1791992404.git.phillip.wood@dunelm.org.uk>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <as8niG1LrNqxfRzV@pks.im>
+Content-Transfer-Encoding: 8bit
 
-On 26/10/14 08:56AM, Patrick Steinhardt wrote:
-> On Tue, Oct 13, 2026 at 04:48:23PM -0500, Justin Tobler wrote:
-> > On 26/10/13 09:36AM, Patrick Steinhardt wrote:
-> > > diff --git a/odb.c b/odb.c
-> > > index 69a4c203bc..095183aec0 100644
-> > > --- a/odb.c
-> > > +++ b/odb.c
-> > > @@ -265,7 +265,6 @@ static enum odb_read_status do_oid_object_info_extended(struct object_database *
-> > >  	struct strbuf corrupt_err = STRBUF_INIT;
-> > >  	const struct object_id *real = oid;
-> > >  	enum odb_read_status ret;
-> > > -	int already_retried = 0;
-> > >  	bool corrupt = false;
-> > >  
-> > >  	if (flags & OBJECT_INFO_LOOKUP_REPLACE)
-> > > @@ -277,38 +276,39 @@ static enum odb_read_status do_oid_object_info_extended(struct object_database *
-> > >  	if (!odb_source_read_object_info(odb->inmemory_objects, oid, oi, flags, NULL))
-> > >  		return 0;
-> > >  
-> > > -	while (1) {
-> > > +	ret = odb_source_read_object_info(odb->source, real, oi, flags,
-> > > +					  &corrupt_err);
-> > 
-> > Here is try to read the object, the backend is responsible for handling
-> > any retries internally that it cares about.
-> > 
-> > > +	if (!ret)
-> > > +		goto out;
-> > > +	if (ret != ODB_READ_NOT_FOUND)
-> > > +		corrupt = true;
-> > 
-> > If the repsitory is correct, does it even make sense to continue to try
-> > and fetch the missing object? I wonder if we should set `ret =
-> > ODB_READ_ERROR` and `goto out`?
-> 
-> I think I tend to agree. I don't want to do it as part of this commit
-> though, which is a plain refactoring that shouldn't change semantics.
-> I'll add a commit on top though.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Ok, sounds good to me!
+Change the return type of do_create_stash() to an enum in preparation
+for adding a separate value for "there are no changes to stash" in a
+future commit. There is a small change to behavior here which fixes
+an anomaly with the exit status of create_stash(). That function calls
+check_changes() without refreshing the index and exits 0 if there are
+no changes. However, because it does not refresh the index, that check
+is unreliable which means do_create_stash() can return 1 when there
+aren't any changes, and then create_stash() exits 1 rather than 0.
+This commit fixes that anomaly.
 
--Justin
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ builtin/stash.c | 83 ++++++++++++++++++++++++++++---------------------
+ 1 file changed, 47 insertions(+), 36 deletions(-)
+
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 7a9843413b..3e50ccfb40 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1336,16 +1336,23 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
+ 	return ret;
+ }
+ 
+-static int stash_staged(struct stash_info *info, struct strbuf *out_patch,
+-			int quiet)
++enum create_result {
++	CREATE_ERROR = -1,
++	CREATE_SUCCESS,
++	/* No changes were stashed */
++	CREATE_EMPTY,
++};
++
++static enum create_result stash_staged(struct stash_info *info,
++				  struct strbuf *out_patch, int quiet)
+ {
+-	int ret = 0;
++	enum create_result ret = 0;
+ 	struct child_process cp_diff_tree = CHILD_PROCESS_INIT;
+ 	struct index_state istate = INDEX_STATE_INIT(the_repository);
+ 
+ 	if (write_index_as_tree(&info->w_tree, &istate, the_repository->index_file,
+ 				0, NULL)) {
+-		ret = -1;
++		ret = CREATE_ERROR;
+ 		goto done;
+ 	}
+ 
+@@ -1354,26 +1361,26 @@ static int stash_staged(struct stash_info *info, struct strbuf *out_patch,
+ 		     "--no-color",
+ 		     "-U1", "HEAD", oid_to_hex(&info->w_tree), "--", NULL);
+ 	if (pipe_command(&cp_diff_tree, NULL, 0, out_patch, 0, NULL, 0)) {
+-		ret = -1;
++		ret = CREATE_ERROR;
+ 		goto done;
+ 	}
+ 
+ 	if (!out_patch->len) {
+ 		if (!quiet)
+ 			fprintf_ln(stderr, _("No staged changes"));
+-		ret = 1;
++		ret = CREATE_EMPTY;
+ 	}
+ 
+ done:
+ 	release_index(&istate);
+ 	return ret;
+ }
+ 
+-static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+-		       struct strbuf *out_patch, int quiet,
+-		       struct interactive_options *interactive_opts)
++static enum create_result stash_patch(struct stash_info *info,
++		const struct pathspec *ps, struct strbuf *out_patch, int quiet,
++		struct interactive_options *interactive_opts)
+ {
+-	int ret = 0;
++	enum create_result ret = 0;
+ 	struct child_process cp_diff_tree = CHILD_PROCESS_INIT;
+ 	struct commit *head_commit;
+ 	const struct object_id *head_tree;
+@@ -1384,17 +1391,17 @@ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+ 
+ 	head_commit = lookup_commit(the_repository, &info->b_commit);
+ 	if (!head_commit || repo_parse_commit(the_repository, head_commit)) {
+-		ret = -1;
++		ret = CREATE_ERROR;
+ 		goto done;
+ 	}
+ 	head_tree = get_commit_tree_oid(head_commit);
+ 	if (!head_tree) {
+-		ret = -1;
++		ret = CREATE_ERROR;
+ 		goto done;
+ 	}
+ 
+ 	if (create_index_from_tree(head_tree, stash_index_path.buf)) {
+-		ret = -1;
++		ret = CREATE_ERROR;
+ 		goto done;
+ 	}
+ 
+@@ -1416,7 +1423,7 @@ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+ 	/* State of the working tree. */
+ 	if (write_index_as_tree(&info->w_tree, &istate, stash_index_path.buf, 0,
+ 				NULL)) {
+-		ret = -1;
++		ret = CREATE_ERROR;
+ 		goto done;
+ 	}
+ 
+@@ -1425,14 +1432,14 @@ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+ 		     "--no-color",
+ 		     oid_to_hex(&info->w_tree), "--", NULL);
+ 	if (pipe_command(&cp_diff_tree, NULL, 0, out_patch, 0, NULL, 0)) {
+-		ret = -1;
++		ret = CREATE_ERROR;
+ 		goto done;
+ 	}
+ 
+ 	if (!out_patch->len) {
+ 		if (!quiet)
+ 			fprintf_ln(stderr, _("No changes selected"));
+-		ret = 1;
++		ret = CREATE_EMPTY;
+ 	}
+ 
+ done:
+@@ -1499,13 +1506,13 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
+ 	return ret;
+ }
+ 
+-static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_buf,
+-			   int include_untracked, int patch_mode,
+-			   struct interactive_options *interactive_opts,
+-			   int only_staged, struct stash_info *info, struct strbuf *patch,
+-			   int quiet)
++static enum create_result do_create_stash(const struct pathspec *ps,
++		struct strbuf *stash_msg_buf, int include_untracked,
++		int patch_mode, struct interactive_options *interactive_opts,
++		int only_staged, struct stash_info *info, struct strbuf *patch,
++		int quiet)
+ {
+-	int ret = 0;
++	enum create_result ret = 0;
+ 	int flags = 0;
+ 	int untracked_commit_option = 0;
+ 	const char *head_short_sha1 = NULL;
+@@ -1531,14 +1538,14 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 		if (!quiet)
+ 			fprintf_ln(stderr, _("You do not have "
+ 					     "the initial commit yet"));
+-		ret = -1;
++		ret = CREATE_ERROR;
+ 		goto done;
+ 	} else {
+ 		head_commit = lookup_commit(the_repository, &info->b_commit);
+ 	}
+ 
+ 	if (!check_changes(ps, include_untracked, &untracked_files)) {
+-		ret = 1;
++		ret = CREATE_EMPTY;
+ 		goto done;
+ 	}
+ 
+@@ -1565,7 +1572,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 		if (!quiet)
+ 			fprintf_ln(stderr, _("Cannot save the current "
+ 					     "index state"));
+-		ret = -1;
++		ret = CREATE_ERROR;
+ 		goto done;
+ 	}
+ 
+@@ -1577,37 +1584,37 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 			if (!quiet)
+ 				fprintf_ln(stderr, _("Cannot save "
+ 						     "the untracked files"));
+-			ret = -1;
++			ret = CREATE_ERROR;
+ 			goto done;
+ 		}
+ 		untracked_commit_option = 1;
+ 	}
+ 	if (patch_mode) {
+ 		ret = stash_patch(info, ps, patch, quiet, interactive_opts);
+-		if (ret < 0) {
++		if (ret == CREATE_ERROR) {
+ 			if (!quiet)
+ 				fprintf_ln(stderr, _("Cannot save the current "
+ 						     "worktree state"));
+ 			goto done;
+-		} else if (ret > 0) {
++		} else if (ret != CREATE_SUCCESS) {
+ 			goto done;
+ 		}
+ 	} else if (only_staged) {
+ 		ret = stash_staged(info, patch, quiet);
+-		if (ret < 0) {
++		if (ret == CREATE_ERROR) {
+ 			if (!quiet)
+ 				fprintf_ln(stderr, _("Cannot save the current "
+ 						     "staged state"));
+ 			goto done;
+-		} else if (ret > 0) {
++		} else if (ret != CREATE_SUCCESS) {
+ 			goto done;
+ 		}
+ 	} else {
+ 		if (stash_working_tree(info, ps)) {
+ 			if (!quiet)
+ 				fprintf_ln(stderr, _("Cannot save the current "
+ 						     "worktree state"));
+-			ret = -1;
++			ret = CREATE_ERROR;
+ 			goto done;
+ 		}
+ 	}
+@@ -1630,7 +1637,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 		if (!quiet)
+ 			fprintf_ln(stderr, _("Cannot record "
+ 					     "working tree state"));
+-		ret = -1;
++		ret = CREATE_ERROR;
+ 		goto done;
+ 	}
+ 
+@@ -1660,12 +1667,13 @@ static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
+ 
+ 	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, NULL, 0, &info,
+ 			      NULL, 0);
+-	if (!ret)
++	if (ret == CREATE_SUCCESS)
+ 		printf_ln("%s", oid_to_hex(&info.w_commit));
+ 
+ 	free_stash_info(&info);
+ 	strbuf_release(&stash_msg_buf);
+-	return ret;
++	/* Do not return an error if there are no changes */
++	return ret == CREATE_ERROR ? -1 : 0;
+ }
+ 
+ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int quiet,
+@@ -1674,6 +1682,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 			 int include_untracked, int only_staged)
+ {
+ 	int ret = 0;
++	enum create_result create_res;
+ 	struct stash_info info = STASH_INFO_INIT;
+ 	struct strbuf patch = STRBUF_INIT;
+ 	struct strbuf stash_msg_buf = STRBUF_INIT;
+@@ -1741,8 +1750,10 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 
+ 	if (stash_msg)
+ 		strbuf_addstr(&stash_msg_buf, stash_msg);
+-	if (do_create_stash(ps, &stash_msg_buf, include_untracked, patch_mode,
+-			    interactive_opts, only_staged, &info, &patch, quiet)) {
++	create_res =  do_create_stash(ps, &stash_msg_buf, include_untracked,
++				      patch_mode, interactive_opts, only_staged,
++				      &info, &patch, quiet);
++	if (create_res != CREATE_SUCCESS) {
+ 		ret = -1;
+ 		goto done;
+ 	}
+-- 
+2.56.0.134.g299a3c16181
+
