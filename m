@@ -1,100 +1,98 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08EA3BCD3A
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 18:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF7E3FC5A1
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 19:07:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792003958; cv=none; b=nDadLaAnWPliMyFxw8Cen/TAGo0kmHMID/9n4nGM0pW2SAxIbjC3XWHIxns1lbFrXJqIg0JmsQYM3mDzfjUTZqQIDS4XLy/VxU0DPCzq9fUhQX4ufsO+NYM/B3RvrFGfd+NIsT98XBr6kjQHeoqIGYMxOQYRUOZawXIVjNlskOw=
+	t=1792004866; cv=none; b=CnXGeWEITujA1h1KSvOxw9irykHbeoocF7gcaZCIrsjKFgLZXaLrpUa4eh6Gq5S/0F9LYyVPJG/COdPyqzYf4ABFuEa6hNhVsPg+xpepqbl5zkxVRfHwag89uMi7fsbg0nklQFIRLZJdZIjQyX93rFJNxQ8+ud7OafbyE54umEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792003958; c=relaxed/simple;
-	bh=/p2YEBcR+uW+XzBV4B9fPdZihUrPFTYOpBvtVjgAz0k=;
+	s=arc-20240116; t=1792004866; c=relaxed/simple;
+	bh=3raiHIhWG8CKXPBsLr5jkQHnRLM0xRCZia3258CBszg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PIgvjOSzNDbCvB/bETlSo+/H33Is4JrBAKdT3PGEbG7Yvd2zp7eck6I43t8bGN3V0ThQn1TdrTsadWLNpU5opD0gRcFjP5Lb5JsbaaNZ5wBN+Z1cQLNOb1O9hrfuPdbtdFiZKnM8K66zs6lPyWyhrdxAGK3qrtfe6F7lk+VmMMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YPhjhhtL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E6N1w2NZ; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=mkk2j2iK9r6ceSu0uvH4Lr2pCLQfdSkCtIpUDZAZFWQ2OwRotPjM7brVRKSFuLPN/fv4QNKjdcQocz0FFyAxRy1Ymf59NocmWGlrWEi9Qbx3P55iHqNHyYFER/zAOG9dzgkd6v1ZVIB1o3i3GacNBHhCRjFRGZlvf1TDhZxGD68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=agYw28wY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CkPs4/ID; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YPhjhhtL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E6N1w2NZ"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id E0EEFEC03B3
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 14:52:35 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 14 Oct 2026 14:52:35 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="agYw28wY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CkPs4/ID"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 55F9D140008F
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 15:07:44 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 14 Oct 2026 15:07:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792003955; x=1792090355; bh=ZiWXQDsJ9A
-	S4L0Yhq9KojYdm49xsgAmRNTJd7dP3qxc=; b=YPhjhhtLc9kFfNc8DbRVJj0VuA
-	XhG2+UvlXWzawmjWbhjdY6wdX0Ggrs2sU1vXmLTlRIfhOyLFYbyJ3hlFb/bIln/V
-	p9EIibwyi39JXE58TYx8bQTyxraO+7uWEIybSY0jBeo2NK2UFYnBnfKFEjWudD1t
-	04LjuRWg43GBHfqoYybkF+DbwdxPgQcJ3ET+XB/xxGVEqTr2kApxSVzDjgW0gWpv
-	g1E8Mfv5ZTlWifs7Q55wHL32ln40XW9FZ1hZ45q2aeKCHa5PZNjdT4/FheBo/jge
-	KBfNtGWxoODgDXwdR5ET7Ma9lHXyQaKtnEWaNk1WfyYwgqKKyrJE1YKPDOig==
+	:subject:to:to; s=fm1; t=1792004864; x=1792091264; bh=dgipVy8RHW
+	IOeUiXjmDgBQHijRa8H53TgKz81Blk1tI=; b=agYw28wYlxcpEfohC4kctwWYX4
+	nHRTkGAIeQtHWL57RouA88cSO+bv33PMMJrd14HcfN9tmb8pjW0mCPqsZqmYyNfS
+	j9klJsyhqr//NZtgQlOzH6xuKKWF0wk1LIkoUrcbsa8Q3kvnXEj+twxZpmoQAiDH
+	0uvw4Dpnhpbz8nwntm8h+pFnA3AeggKxwz7Mw8c2xy0WHxdf1BODXatKkbPnHLfG
+	LCHzzydfOonTW0oSl+w4NGYIW66vXScLsBInmMxnwewGPjhJd/pY5eaXSvddsTV1
+	XsWYjOrauaM7wR+idwHmHYJorZ8j8w45FzmWab8qme9yOzjkS5wYPdvoXcxQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792003955; x=1792090355; bh=ZiWXQDsJ9AS4L0Yhq9KojYdm49xsgAmRNTJ
-	d7dP3qxc=; b=E6N1w2NZVd2Z6zFh9GVPcuaXhAQsG+/moRffJi45ibhfaGUquZ0
-	ZMC3YFlHkTY8Z0rB4GInnkEQ7UBu1LYAXGHvbDEmIRaEc6zu98xFDKSAckRuqN58
-	k1bjLPp1bUCdYaXnnDXtxGTFsCeXTrKVLqXWaqY6y43bk0fnVPefI4lECOR4MqCh
-	pO8IsElckm8zTkCqZ+rcpTdABzvrvYtBB8o5gOgQOYPoNodCVWjpS1ObawnI5PBc
-	xIIr/AlVWUULb2ymTrFXAaFrOE1Zx8/b46EARgEOgSMDpUkpS3kjN6O5dFUlGwJt
-	eWgORtzY0boxCCgj0NFOnrMd7TUNN6ECewQ==
+	1792004864; x=1792091264; bh=dgipVy8RHWIOeUiXjmDgBQHijRa8H53TgKz
+	81Blk1tI=; b=CkPs4/IDvUtLlz/w+FgcawJFbnIt0F7nXNyhNHbjo4vfFZdX2ZW
+	rebq83hx57u4IKXLSKpVPO43an4LAkIayXQo6xX30YdTSPGt5j57tjJ65prOdjHM
+	EWUpy/QRHHcyk1zWh2H2Ci86AZJknFWG7UnFGY/AjpFW2l1jqURxkfQWGN7BcWzj
+	d/SV/0XwO339gY1yrCe6IdAjrHUByqL9I3qRfbmiF3+uF/uPm6sF/p4pBpw3bNdI
+	jwZEZHRXZO+PG2eCyBfoqy2yY7csb/0LJUV4epF6YZ2LTQfnMOuORc8wAuZDL8Ms
+	ZNUShw2dGDym/uOeZMnJkZfdAHmXGv9rg9g==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792003955; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1792004864; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:Jh8VflqtRXswD/w2vUqEx7EnCbhlScUrqOJMD+U53vhlnWY
-	iue5aYT76CsEKfoEnlxnFXrzUvzlfCcw4G4EDjNnSEVa4Lh6d0Q2TLf5lYXlUjEr
-	Fj+97iiNy9aMyLOms0UHY8WiHcPQleoGxuAnd7t4cEQ+3OQ13pSgAX42oZ6yaxig
-	FwLwDJvioFfVVwx6miSKEfd17Vb18K7xpvx1sqsPcsSqGu+r87/2jDZEAg6pH/Tv
-	wAZ4646e9DGbmiVn4Doa6AKgiAKtAixekokojP5zftgzJ3fMaFtux2tj1Edp7f09
-	8E5pzeYgzbM73EGCy8SAlpHcCD1SRFWhmz+GU7Q==;
+	s=fm1:rsa-sha256:o1aWqMQ0l0tA0rsPlqOIuQrqYeSjMhfB9g8CMUUKZ6OCk+x
+	/6aqE7Xz2NFQlBDpECn2KqAz7f+6DwgYeDPDQNd41dV+/I43wSk2tf5LGWrK4m37
+	H0D/5iYfcSsQ+LFx1WelIba1bDGTZ8aurVLNHg28nkBIsafiHId3J1YTkmEi1U3p
+	G6gC9Zw22ZJyxQa73XDdcw0VVSddt7pbXutauEUJ6qAihaQi9egU0sesr4S5boz1
+	udmpyrtzQClSgyZlkQCP0iMH4cAgOnKJNqiMlVJqSQPGC3BjNpyb8QYsZpdJECiz
+	LxPv4LaqK7QS/O3qa2rEa548AVdJrV50AbhQfRw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:CvwplKbUjo38G2XJ23pQk7aBpA1KF/FAe+XwzqlOoi8=:/p2YEBcR+uW+XzBV4B9fPdZihUrPFTYOpBvtVjgAz0k=;
-X-ME-Sender: <xms:c8_PahVCVqM7EWxMXbPQ3AwfroBTAbXmzlj6LCbFqCBOD7qW-lEZlw>
-    <xme:c8_PaofnoUetcUqPAvUInafpkoYB31dU1k2IxlgN_6xb9Eq_bQ4mV0ZcyT5T9GuU7
-    PJa2_0iXkJNysBQjKz_eNo_Ili2tfO6czPIBpQXuocQ3POH83jD>
-X-ME-Received: <xmr:c8_PaltxeRuBj7fwyA9S8DUtrdrm7bAttdy_w5BYbdbao5uf7YtBuzO_Z9fPtIPnUqh3DI-mS8Ch5UsQVlQQHmIoHn1aSTTUVtLu>
-X-ME-Proxy-Cause: dmFkZTGfAfy6wLQBgzH8XRzf6ro3Q269GcpiHbSvw4ucDbTjeDQyvBLq+Rv8CipYlK01wJ
-    8KkS5/IOLAyRyC1J0gL5wXbAo22TpUC2H/Wg5R0xy5rxkPiCqekuaPRBcKNBSloxUlpjr8
-    DCF2E4FxqquRvyx7C49JhTEWYy/2pnAzrUMFBgA0V4zwMJ+8CvqHzs2P2smuC5b4hrZM/J
-    3S+PUcr98UdlQUJKd+WVQ0N3hzBOgOrosYip7nN+HRh1Qkc347delx/uaxbZ14vLdBGTFB
-    K0qWjXrvpKpVT9D1dcUFDNdIdAhsyE7xpT8xe/HqaDY322tHZbImlKnWr2JTytn+7c3oDE
-    SF2adtqB3Zl16Avx9wtSJ6j+NUehQC17UghK5jx2DnwygzloVVUdcrQXY+vqgNl6ulx7kO
-    CDCtjR/CH2N33sac6umGbAFZ/G8WfxsSnTbtFTiQCyu/JlkcIMRQkKE/GeLBcrBBdKqIE4
-    BdS7O7l9DGrLbWdPSOoT6EPsCHCwRexmLAp7N/2CAONoke55goHYS6NjDTbm5tTS28+wVO
-    vBE/eCKpXPahLspqyxMaZwTgokxikJTuII9bCuvpY0mslYsPM9Pznq6kWi3TslhTvez8HM
-    HBugBQRUMx1IgLjTstUQL+H6HIX7UT5SlKQZjxqXn391CLiqHxwjmHN7QVKA
-X-ME-Proxy: <xmx:c8_Pav8vEr57uoFTIl1r0A_-lzq9_8JHXamUVnbotscMk3QuxhESwA>
-    <xmx:c8_Pao1GB9u2d_x8KlE9UmpToMJJTz9LxT3NK7j9Ydt8M2xVgxaY2g>
-    <xmx:c8_PasARdB_gkzKuHmw9JBgZjlcOGiCWLoDoUmMHhCUirCMux6kWFQ>
-    <xmx:c8_PasdWl99_AxsWOAWsyJWCO9IetupvvE9Orgb_WU2dQ56gzU70GQ>
-    <xmx:c8_PavPmbSZ9Ri-RMW4sAHvFfepgBZ7mIXuEM9k8vxFVZ_EhGjaDX6q9>
+Message-Instance: m=1; h=sha256:9WG9csdxZIz+vjNl0Dcjkbwmu+GRdNcwN6pNh0fyAw0=:3raiHIhWG8CKXPBsLr5jkQHnRLM0xRCZia3258CBszg=;
+X-ME-Sender: <xms:ANPPaglG8c-9ekMkfws-zsjZtoTeOImzHM0mcVx92SestdNEoswVHA>
+    <xme:ANPPam2oIRDGMXOeNmLUx5zFFaqJrrV3var3JVd9DOQa8mZrQbKpIxE8LoYGOTsV8
+    MXHeJcq1G7fh_bEgtHiiVYvHVoGuXJtcLXdchtUbmyC03jw_OrcpKk>
+X-ME-Received: <xmr:ANPPajqyDFSFHnhs4eRd1qmQMgHczzpm5sPVA9E0swcTWnS4W0gEC8OdRhvRwubrSalynXtYHGuGVdeGL_ekyVJzHL7WG2ixIG4m>
+X-ME-Proxy-Cause: dmFkZTEfnQ/by1yunkCHj0uvwkm0ElZ5JkpSVpemWF6kX4BBnJXN+ZIFiBZ3QIkL0eY6PK
+    f227E8xXve1Hfoh5EfRndQ6wYlmnWwOx7XERjTDuriawbUhpI/eAFtPkqZxi4UhQI/n5hp
+    c+ewQ+vP9SPeZG1U5PME1+BzLplIZvmr79dj4RaB0FFA2jDWeBqZt4AQH0O/o3RB6svubd
+    Hab7BeW3znNOBjHxFb7SPMPoiRQlmn4LFI4F0zUSiQ4rATAaNuXRobRBFv8CmH1+sWK8U7
+    oNOfHUtc1H9vYXFaG0LI/H0mViPvAa9B4IqAsrka+HLm1dN3wyqC6Mj/nWo2utSugXYVni
+    3yg6WBpRi/n9tzVsuh+hlcfsChTaHoplPNDFgi0cHK8bgu5m0llWVP/XLKR6siVrH6Tjjn
+    fsuQ/HC7HS9wJYiNu1cUYu1n3lDELQi5NCSE9Ydeq50V2Irc3PN4phW7WKwGVYHF0dFKoS
+    lvyPe+zRNQQREZzcxPcGKgSpfi0XGfFdXT0MjgmW/S3Uu57DuY+8zk8Fp8v9i3u4Sh56ea
+    m7F+7scxgqnjEhKQ83Xh2oWuRrbUK9addHIgKbt3Xt3FOlg1lnMsW6n2Jl9j05BlkO8lCN
+    IltJNRtIJTg8ilaDCstC3fscspyaQbkwCasWwl4Q7hBw8NW4H92O+OBYV+zA
+X-ME-Proxy: <xmx:ANPParcMIKTbWBouLM0M4AzpYtbBLLQexsy_inh9nYi3oZ3Hq5pU8Q>
+    <xmx:ANPPaqoJB8WR7YgM90dEpiSqt6B-x7ULmd4X8AdUFfTwEOhExFsNqw>
+    <xmx:ANPPakEn_NlgofRl6v4pixJIJwsMzWykkM4ZE8WJAmo9_HyLDA337g>
+    <xmx:ANPPaisweHFEhyhZPFiACFknB1oDHKxOQ6MEdD31F4Vh2ZJJiqFWhw>
+    <xmx:ANPPakGlIm3KR13KYsIB_Ein7gjYfvuF_vjmaFVluV9-0x6wcq2Zv1gF>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Oct 2026 14:52:35 -0400 (EDT)
+ 14 Oct 2026 15:07:43 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH v2] doc: checkout: rewrite detached HEAD state explanation
-In-Reply-To: <pull.2250.v2.git.1791896486100.gitgitgadget@gmail.com> (Julia
-	Evans via GitGitGadget's message of "Tue, 13 Oct 2026 13:01:26 +0000")
-References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
-	<pull.2250.v2.git.1791896486100.gitgitgadget@gmail.com>
-Date: Wed, 14 Oct 2026 11:52:34 -0700
-Message-ID: <xmqqecdsru6l.fsf@gitster.g>
+To: jyotish kumar <jyotishkumar725015@gmail.com>
+Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [RFC] pull: custom fetch refspecs and fork-point lookup
+In-Reply-To: <CAGjZMyTQt2XEF69pJWHA=diRjoidixGs48E1vA0ytGUgZYOZNQ@mail.gmail.com>
+	(jyotish kumar's message of "Tue, 13 Oct 2026 21:31:09 +0530")
+References: <CAGjZMyTQt2XEF69pJWHA=diRjoidixGs48E1vA0ytGUgZYOZNQ@mail.gmail.com>
+Date: Wed, 14 Oct 2026 12:07:42 -0700
+Message-ID: <xmqq5wz4rthd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -104,69 +102,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+jyotish kumar <jyotishkumar725015@gmail.com> writes:
 
-> Write a new explanation addressing these issues, and put it in a
-> standalone guide so that we can easily reference it from advice
-> ("see `git help detachedhead`").
+> While reading `builtin/pull.c`, I came across a FIXME in
+> `get_tracking_branch()` concerning the assumption that remote branches
+> follow the default mapping from `refs/heads/<branch>` to
+> `refs/remotes/<remote>/<branch>`.
+> ...
+> Does this analysis sound correct? I would appreciate feedback on
+> whether this is a real issue and whether resolving the configured
+> fetch mapping would be the right direction to address it.
 
-Isn't it 'git help detached-head' in this edition?
+The reason the "FIXME" you noticed exists is that the assumption the
+code makes is broken.  Assuming that refs/remotes/<remote>/<branch>
+tracks <branch> from <remote> would break when a customized fetch
+refspec is used.
 
-> Co-authored-by: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
-> Signed-off-by: Julia Evans <julia@jvns.ca>
+I vaguely recall mentioning a similar "map between a remote-tracking
+branch and a branch at the remote" issue while discussing a recent
+work by Harald to narrow a "git fetch" that does not specify what to
+fetch, but I cannot find a mailing list archive reference, sorry.
 
-Can the other author also sign it off?
-
-> +Git will eventually permanently delete those "garbage" commits during
-> +garbage collection. Those commits will be deleted after 90 days by
-> +default, see linkgit:git-gc[1] for more.
-
-Does this say 90 days because that is the gc.reflogExpire retention?
-
-If you create a commit, change your mind, rewind the tip of the
-branch (e.g., with "git commit --amend"), and then keep working, the
-original commit before amending would be unreachable from the tip of
-that branch.  Its reflog entry would then expire after
-gc.reflogExpireUnreachable, which defaults to 30 days.  If your
-commit were created on a detached HEAD, I am not sure offhand how
-the thresholds for gc.reflogExpire and gc.reflogExpireUnreachable
-come into play for HEAD, as HEAD by default flips back and forth
-regularly across branch tips that are not reachable from each other.
-When "gc" kicks in, the commit HEAD currently points to is unlikely
-to reach the abandoned commit.
-
-It might be safer to either say "after 30 days by default" or
-generalize it to "after a few weeks by default" to avoid being
-overly prescriptive.
-
-> diff --git a/advice.c b/advice.c
-> index 401d047391..43f86c2eaf 100644
-> --- a/advice.c
-> +++ b/advice.c
-> @@ -291,6 +291,7 @@ void detach_advice(const char *new_name)
->  	"\n"
->  	"  git switch -\n"
->  	"\n"
-> +	"Run `git help detachedhead` to learn more.\n"
-
-"git help deatched-head" here, too.
-
->  	fprintf(stderr, fmt, new_name);
-> diff --git a/command-list.txt b/command-list.txt
-> index 63ae2a67c9..922a1dbd84 100644
-> --- a/command-list.txt
-> +++ b/command-list.txt
-> @@ -218,6 +218,7 @@ gitcore-tutorial                        guide
->  gitcredentials                          guide
->  gitcvs-migration                        guide
->  gitdatamodel                            guide
-> +gitdetached-head                         guide
->  gitdiffcore                             guide
->  giteveryday                             guide
->  gitfaq                                  guide
-
-This seems to be manually aligned with SP, so compensate the
-addition of "-" between detached and head by removing one SP before
-guide on the same line.
-
-Thanks.
