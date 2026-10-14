@@ -1,131 +1,127 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17031548578
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 14:36:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC36734D92C
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 14:45:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791988606; cv=pass; b=g0ttWKi80oNoy8BGXGNfyRr/iY+p14ndhNCn1wf+nlNW6fhytDRXGveVab0Hck4NI0ngmOxGBW8R7hMpRSsTCZmTj/bJ70yF5oUSM0+TFDRjR4w+IXsOY2WtMMAdTlfAcb+u+W1VzHR2Ce7zuioog6mxgIutnzjqBOI1P+fp5Lg=
+	t=1791989116; cv=pass; b=Wvx+moazUaqGbEErLC6Cxr7Dljto6L/3HWqNQGqHsM/KK7J0+CqoiJZXZUnqeYnkSwX1Hde0ONyc3L3Kca0pcJUzBqxwn5EuSUnYPbD//DqqT8PsaAe1TYgDXYcm7A2vQVESTcWxxMMwFqV6yFPr26Urz6ZOK/AMop4c7Am7a2E=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791988606; c=relaxed/simple;
-	bh=ZW9xAkJQqQILMjXa1RwW9zxFjKMM6LyQ92FxuWc/FlQ=;
+	s=arc-20240116; t=1791989116; c=relaxed/simple;
+	bh=7fesRzZns/KZrpIA7FwVZIgPPI8dDCpxsFTEwE/cQLs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UOr0B+0EUDQp/qXJFeWQSPoEVkvgIQ0C1vJF8y9dyZNwf7AgQptdOqDDiEFaU4SdyonXWRs9P0LxLXU6FGXY4+sQ14emUf3xqtocNp0kLaA57y2U/5yw2SW23JgRl76pH0OhK2HPA1Bv4AAveGtoABsKcu6jimwd6K1pk+LUSAQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O3BZPbTJ; arc=pass smtp.client-ip=209.85.218.50
+	 To:Cc:Content-Type; b=Db8nByn6pknn49RVmqXyZv1kF4xUQyTJyHmSyoBkR82FS976dC+NEY9OZEnHx6CWY5McnC+zv+1U4tiFyGLXtlOWQb4nG/s/6ZgLFqqdNyYLJAaXEdoX7GSiqED98KI5Lld9FrwtEYUGoluNa/TwetNepgrV1WSCEBMISS+GVew=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=irBl9lei; arc=pass smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O3BZPbTJ"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c2e3846d1caso679348466b.0
-        for <git@vger.kernel.org>; Wed, 14 Oct 2026 07:36:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791988603; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="irBl9lei"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c2dcbcc546fso520785666b.3
+        for <git@vger.kernel.org>; Wed, 14 Oct 2026 07:45:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791989113; cv=none;
         d=google.com; s=arc-20260327;
-        b=RCN0g0zzvSWghTpJY/65EmJmhe/GkmtZWe0wr+4yPcdQHYKQoD5q7gUMgafInwXOR7
-         YNEVoMwNx5EybzKde8IPuive5qjy3VQs9f3+MLQxHmzHxrRl82xw4lFclLCNWm1rTs3P
-         pyuAjB7uSichCHq3zpjYXPHYu3izETqhVf1IRoLZW81CjaFEPaN5wxopJeLKcNaB7Wob
-         lq3iVwm2MTf4m2AoeMcGr9d9K25u9Bw6WYAbmJiPd0ArUWi9KGJ4RbKUFgxczukfAxxM
-         OSsAKzDtUKSY9IqIZBmh6FP8vjLpjVGBk79DFoFCOMIG8hnIyDDAzlot5jLlfMfVJjrA
-         rOXw==
+        b=aZ/cod2M/loOdOpItEDMjw5Ezj//68nXJusdDCKugp1ch2SCbsjUdv7hGvBu6uWxLX
+         gJCpr0VG4CKz+V9/uhwL2n5KYLHPcSpmhIPFQOdv+GD2U/4r7lUIWa+mc+qtTNCVN2R7
+         H0YgrlZgRJQyU7UG28tJdanRmzvxTgt2StnTVzLoXTyJGtn3JaVnRfo2uR2EHmLlZ0KA
+         fdLTanWy15neBfU5KXWKe7b7WLOliHhJqXIOqoX+uIuXSN7u6GoDYW+CkxluBIpv0KLU
+         AzjESfDQAA4dG78eZtNlYDkVQsopmWRnmXw77AdrYO04MPk0LJByCOFfNRa6saB3GA1T
+         En/Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=2ubB5xpnEvF3U9nJs2kCCvYVkXruabhKPG6/6lG10l0=;
-        fh=GmKTMWABzlxAbd0/XaVHd8A5XxjcNba3tHmY2F+YyIk=;
-        b=q+qmDS/fk0Im08bC/8E/wlcEqeykmS48lRx8fYgErvrAsddvaC8b8+7xnWq0JZD5oE
-         X7w9yPqSmEHPXfjEHMlqtp4FjfwUHYdXeqCrP7gDCU0i5cWrfrMk+I9mtKkV1RI1dLr1
-         qW6limqyFBkdgz9ogyMpQEAeJBC/WAx6T0aaP19bal40EdEq1idv0dU3/pL0TJOn+BHm
-         SiEytEYLzjnsvjfhpMklN/zoE9LDIEzz+JfSwQS4EShZ2QMUENggH5+Azx4u4b3KypKI
-         ewumY6ItrQtzv5LIlB5uimTB8fcMRmy13FFTPCiv+qIST3XlfYWhcwJ+uy2Daix5UPvR
-         j4cg==;
+        bh=GrjksLd1hHL9TcLOuOiKDFBURupGbDBXMwGSMOsyD4I=;
+        fh=vSj9PFhPeljTYt/cuRUiB4FEthFjf/0nTmE6dJoyn0Q=;
+        b=RGCdsQnE1dOWuXJ7EKZoHu5XnJ46n1hSQLOHClpHKWW6dP9jNFtJ6lOcdT8KpaRCYh
+         nffgYx9Fm3Jk72rQ+xNk2fymzx0WkR/qlrMzvHIaNGJE5ptzJdcSs6+2fkCvClsLv/4t
+         8mx8YPJaz++4Saau115tEG//92qG1aGxwbsCJ+ULsVFdpV64gWejThvb1GBFZJmlS1oO
+         F+ZagiALmeH7CnFDtegC0O3vK18CaREqgk9fpxJIk2b17krrVpuXAmHLYPOHsf06tBbD
+         +w10nOrH51cm+Fhj61ePu4J2/lfZYptiaZKfcj8lF9uZx2AmPjbxgVM/C/I8aGiQWvRf
+         b1Bw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791988603; x=1792593403; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791989113; x=1792593913; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=2ubB5xpnEvF3U9nJs2kCCvYVkXruabhKPG6/6lG10l0=;
-        b=O3BZPbTJslsJfcQarY4X4TdxuFgIYTQp36pi9b7zgiGNyd7cumrFWKT/cqgaocFUeA
-         VL3+uUCxdZXNDbdz/KzvkFStuIvR2YdJmKjaRFx59HMzbT1JYkXhXtBDjY/YSAbQPSix
-         ZpkcpnDQLMnxR6hnrZOvZTp4V4LOKA37cjjwN+aDpH7kk2k0TcS/ogBlKyR1SgsmNBRY
-         E3+S+qO+TMDdddXQObOah/Rvl6288WjaU8O5tRuj2Bi3rLPkW/g1deizWPisQZObopH5
-         fv+xpM179ClE/On7/x23i909XPphlWeS7IPeLWsGqok0pSrS5cg2PmkzmaQTP8geh6T4
-         wDwQ==
+        bh=GrjksLd1hHL9TcLOuOiKDFBURupGbDBXMwGSMOsyD4I=;
+        b=irBl9leiUrljJGbh8tl8jG5MSPIhdAqj1qwvAQ5PmUUgVZRQFCKUHooLLeqLPwENkP
+         bN30taVWGFxM32GTgqS+E9s4uaT8p34EIgRd5iW9InXKXM/3hX1ZAZzlqVMJrQ+4wy1R
+         yoyGSIXJoqY1MfO7l4Nwb6UQrn8ID3NmP3K585o53NxcJ+kDMVBQA1EnxlmQ2sg04ceq
+         CEfQ1vWfAP+YRRSYQNPp/6573pmE/vmu+OV43Fohxazb1hqMTe6gN/nupwQSXmDcg+8u
+         PPxFHXMwYhVteTJeo0RhoBYARuxIWh8yXJYL65H1UUW/23P8eMCaQBEg0dm5zzONGcjQ
+         TdYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791988603; x=1792593403;
+        d=1e100.net; s=20260707; t=1791989113; x=1792593913;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=2ubB5xpnEvF3U9nJs2kCCvYVkXruabhKPG6/6lG10l0=;
-        b=FUEWuEtCx8buqSDbMSlcR1+FZ6xFol+EuoYRxmEW3IPN9EmWVpsn1Y4e4u3s/4GI+Z
-         K/tv/M4kgCqNuInl2twSMYNAcXFQ0ORDvhK+zNjG/qZ9dTzZAbgAU0bqTrUGSStwAs4d
-         6FSUlfWpysvN0fZFaHypori0DCZR7nCioLFbNyZicoeybPVMaIhsjZRrEyLKn9Zx4Vu1
-         f425u5G7/OB2vVOtQ0/uHE9fx4gBV9Rxz2k6w8OggKihsszwJhHFMF/ZzaN5XTHbjsIC
-         gOUxf9Wp4c+rpJBLmt0MqM5M9YJLhCzB6WoTzbRQCVQFrsYIjPaGItvRlse3wirExY+S
-         RiKQ==
-X-Gm-Message-State: AFq9FYIum+P5IruIXpX1K1pB9LAphIRzx0TJtlpPhCrbrcd51G32nnrt
-	vAjnxlvtsz30P22zmVqNtOpndpi39cysa1KURkeGSra0RFq+PrFHpeEyXlIOWvr4I/zwizSfJ6p
-	f0W6KPAKz0jTgj6I6LdBC6JE4zCVOe94=
-X-Gm-Gg: AYBFou24BB0yiluhOylHZ9wyglkGss1S856YiqYa2lKg/4uykQAYXMWmx1I/+l43S+u
-	0tDh3pVgWXEOypW/Psje/BOYbZntFjq8gjt5CfoSo0qQOeR9sfatitaI3X5KzAT76K4cosT4diF
-	u6JnqX1HAal6K91Phec6BtNhuT2g50CrIt6QzdC4d/LFnyLyMMl9PxqIH6IA80nLA1eu0zSEah5
-	BBkd5qh4Hpk86kOEm8OMZaNgfn0F9o5jiq6dwDkAbq8wc3pNx7QUtXuGoVim7rIdP+B4BUxfq5F
-	q2DQp7LGl8Ae2Ebdj6rHPDOg8KJ5g36LAHBFukYY9+9y1fyaAvmRkpEHNkEH5K0iyDq8AWrL0M0
-	BEcY7mhMynlwbiw==
-X-Received: by 2002:a17:907:3ea2:b0:c26:1691:b369 with SMTP id
- a640c23a62f3a-c31a9f6ba9dmr1707090366b.34.1791988602694; Wed, 14 Oct 2026
- 07:36:42 -0700 (PDT)
+        bh=GrjksLd1hHL9TcLOuOiKDFBURupGbDBXMwGSMOsyD4I=;
+        b=rvICKnvjEQjlwivuVUS0SLOKXpAWjJPBnjgAhPb9elWDGqNXxT/x3gGFVHLmqxRHLX
+         qBTTIkTm6wsjaiAwQJLJJXbO1x0uJXBZAllyzbP8iiR+0yJ2AJrAw0dtjy6jeuf4WtQi
+         NrUWcKWrolmSJd+YemwZMFkcDn8lXQ44gYOl8jPkrcmmWfT90cKMo0NPXAO/r5e3MeKz
+         oaKOF15/h/MkbS4p52iWd/JdKHIsw5byrctDVkOUk75CL1vV1KX+OY5fAlvw5G4lDvf2
+         TV58wkDOSC66uqgSEuSkQur3Mbj23ZQY0CsJXVSxUrw3yUh9zbP6RLNvkZN3CeLZ983u
+         hFzw==
+X-Gm-Message-State: AFq9FYKZdwMGUDXMPa5kvQLFiuW76glbzJ/iz/KOUsft1JJl5ela3OHT
+	GlfRYmC+1q2FlXDQjLXC2z9nkwKV9y3fYnasquGLXQSpbUUaIzo5s9jGxnRD7tWexYerp4/DWi6
+	ovtlr10U80YwDWIjQ17cgr83qaa6Gj3AbIP0GSdgM3Q==
+X-Gm-Gg: AYBFou2EoMLuMwnKGP13gYHfpogMvI8MuFUHO+1Wp/u4igLOHb1sQxR5w7w0rpS2XD0
+	Z/AliSdZqyT87ldapNDFJn6SVIkwl1g3J449Ad6LSVaOlEZwRfAv6vvwS3ZMg4DMcyZqzX4WcJc
+	ZORLZCqs8biQSCBOUIu1zIu3uuNIO4WhlWEobewszSOHfUH0KI0ZszgJhlAX0WR3gcIFFRrJDlj
+	C6Z4u2snL61JIwJcD8zPBqMI7yg3d1M/FfiPubbGpG/Bhyis41HoyM7RDTl63S1KtZCBQT8acJ/
+	RfNlB77PQDsIngXcN+wDwhTZo3O5wQ+C/QAWo609sA//6y2QCK8frW78sa9v/sGkyacnkMjQ2HU
+	=
+X-Received: by 2002:a17:907:1c85:b0:c29:f5d8:9c75 with SMTP id
+ a640c23a62f3a-c31aa091abemr1557612566b.36.1791989112615; Wed, 14 Oct 2026
+ 07:45:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+ew3JuatNJ_bQkormLgm2O1DVQ4ZBTXnXnJPjOMcfcKZZ+Ang@mail.gmail.com>
-In-Reply-To: <CA+ew3JuatNJ_bQkormLgm2O1DVQ4ZBTXnXnJPjOMcfcKZZ+Ang@mail.gmail.com>
+References: <20261014105613.49334-1-vua.okafor@gmail.com>
+In-Reply-To: <20261014105613.49334-1-vua.okafor@gmail.com>
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 14 Oct 2026 15:36:30 +0100
-X-Gm-Features: AclHuK8Bmub7vQj41rHnxsxwF4zyN0frh4ntjapkAZw-wh8DeOCJD3-_iYlyPmU
-Message-ID: <CAPSxiM-2=s3rLFVMGWtmj=U2ufQ87NrkEBoWPLsVRjL8iT9vxg@mail.gmail.com>
-Subject: Re: : Interested in "Implementing promisor remote fetch ordering" as
- Outreachy Internship
-To: Wasswa Edson <edsonwasswa54@gmail.com>
-Cc: git@vger.kernel.org, kaartic.sivaraam@gmail.com
+Date: Wed, 14 Oct 2026 15:45:00 +0100
+X-Gm-Features: AclHuK8UAd2fPpzDwb9DTnMSGIljmaNCxDTCpBWqjeNVf4xakKhNjjlT-gx8csk
+Message-ID: <CAPSxiM-VB_JUexggYTMmYcHe7W7pw=XNuMrENB4gZoq2Zo8J7Q@mail.gmail.com>
+Subject: Re: [PATCH] t0200: use path checking helpers
+To: Victor Okafor <vua.okafor@gmail.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
 >
-> Hi everyone,
-Hello Edson,
+> Replace direct directory and file checks with the corresponding
+> test helpers in t/t0200-gettext-basic.sh.
+This is a little bit more confusing. The commit message does not
+really show why you did what you did. Along the line of
+
+"Modernize the code testing whether a file exists in "filename"' seems
+better. Also, your patches is doing two things, i.e modernizing the 'test -f'
+and 'test -d'. Ideally a patch should only focus on one thing but,
+since this is
+simple patch. It is okay.
 >
-> I'm Edson Wasswa, an Outreachy applicant for the December 2026
-> round. I'd like to work on the "Implementation of promisor remote fetch
-> ordering" project mentored by Kaartic during this Internship Cohort.
+> Instances were located using:
+> git grep -n -E 'test -[efds]' -- 't/t[0-9]*.sh'
+This part is nto necessary.
 >
-Thanks for your interest in the Git project.
-> I am a second year technology enthusiast student pursuing a Software
-> engineering Degree with an interest in C Programming and Shell usage .
-> I have more that enough exposure  in this language  from both Open
-> source contributions and  personal projects. I also happen to be one
-> of the contributors on the OpenMRS Distro where I have utilized Shell.
+> Signed-off-by: Victor Okafor <vua.okafor@gmail.com>
+> ---
+>  t/t0200-gettext-basic.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> I am more that happy to be part of this profound work and ready to
-> take on the skills while I learn and from the Community. I am a fast
-> learner who loves innovation and science.
+> diff --git a/t/t0200-gettext-basic.sh b/t/t0200-gettext-basic.sh
+>  test_expect_success GETTEXT 'sanity: Icelandic locale was compiled' '
+> -    test -f "$TEXTDOMAINDIR/is/LC_MESSAGES/git.mo"
+> +    test_path_is_file "$TEXTDOMAINDIR/is/LC_MESSAGES/git.mo"
+>  '
 >
-> I will be glad if I am added or invited to the communication channel
-> for introduction and Open questions.
+>  # TODO: When we have more locales, generalize this to test them
+> --
+> 2.55.0
 >
-Git uses mailing so, you are already here. The link to check all the activities
-going on is https://lore.kernel.org/git/. All the emails and patches
-which you and
-others will be shown on that site. You can also ask any question on
-it. It is advisable
-to cc'ed the mentors when sending the patches or when asking question.
-> I am just a text away from starting my journey to learn and meaningful
-> solutions to substantial issues
+Thanks
 >
-> Thanks,
-> Edson Wasswa
-Thank you.
->
-Usman Akinyemi.
