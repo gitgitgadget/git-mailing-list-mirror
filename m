@@ -1,302 +1,186 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1971A37CD42
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 21:22:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14823E5EFA
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 21:44:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792012961; cv=none; b=dkuIYfT2Vg5wlpv7TiqhmwtgyXkIdH+8tOK6DWA8bHL+VF58/rx0Mvh1NGRpbo+XMQNte5fkVTcGenQHn1cnAcG+kx8/kixHcFSTpX2PKCMUpU1SpcnP9MNrbgfn9P2vRydlUkVP94whHzBrJC7nzb2kOdUavYLypNVSnLQFcRA=
+	t=1792014295; cv=none; b=Pj94w47hYbkVYBQaRLu7c1JBpU9F+JocnkpVUZOFOGK8L4m+UCMDFxM3pXvJk7l9Opd3oQ90uLl2MnLPC70DaC/Y55Jik1jdbvqcJCQQuZ/FWG9dvR5AUXKURzLi6HQJxjuETJSBPeIpkrbECE/t0hLns6QE3nHxGAAwGfxoY98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792012961; c=relaxed/simple;
-	bh=r6ucId/1kAfGfyBjIsGoz4hX/jFGimiE8mPAdn6usPA=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=cezl26QUBhgeFYGfiBKtFlv5BQlcL1TYuZ9e2lRgdwrNwVlu+qIYP79wi+OQCghby1/zYuhAk6xm0SUe0YHCQ+CwWeWpW9tzrivuVaOuQo74zxtjAEQG/kxwAqkcSh5qj2/U23++GvzLzcxragxVdxpGXPIhf8E2qdY9uGl0nIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CnwkfI+U; arc=none smtp.client-ip=209.85.160.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1792014295; c=relaxed/simple;
+	bh=KsHkEuocJT9Xx7VEzQqYztmsQKL1LDKDXLcAS+oyCQM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ncVuZYgq0bV191AZo1fMqfBWH7XYttluDtC4RVtznUKN46QV6fR9+y0XB85omG+w7jOMV0Puyz3TNKQmBaC96j5F+pKwBDxuPlvVBBIi1fCjE9VklAcf4LtWxTdKica7RBfOb1niHv4S4DpemQaOxgfedeTnfao6LH7bdJ/6ngI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WWYdWmnd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BOqbhsvK; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CnwkfI+U"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-49e08af5fd4so403174fac.1
-        for <git@vger.kernel.org>; Wed, 14 Oct 2026 14:22:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792012959; x=1792617759; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=r/GHaov8mpBd+ssmehry7fT6d8OjYJvEl5qPHYnRbpo=;
-        b=CnwkfI+UHkYZEyjiZPzLSLr/N1kI/SWf2q90FxgxIZHBXK0OpmQ7+CdZyziUm/GW0n
-         zINTas+tnuNxQP9v/xlp1rORX7XP0CTK9kvgUkxkMD0bzbKbA8mSViTHaU1wCR5WB2Ja
-         BErK+NJM5mmgqqg4/aFK8SQNMmuaY/K2AP8qm1PxL1kTpjPytuTca7xOa/+AUjn80xnq
-         VkKX7XvY5/DExBSqnnok313mn6WgxvErCzQJ5PX/oaPE5A1xMo/nQ11q+LHYQbW1jmSa
-         Sh+G6dcf0Won60kiq7yhtwskYATqgNbPgLOvP/E35VkQUl/fmUbzvQygnOC88SMWlHhn
-         1ukQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792012959; x=1792617759;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=r/GHaov8mpBd+ssmehry7fT6d8OjYJvEl5qPHYnRbpo=;
-        b=zYXvrP15HJQAN5v7RcYEnXPZCMT3qglNybg0q/zILeoxC/zlENwMuZGfag6HJpW3sV
-         /NA8c1s+HZrR4GmNuK+IEIyYgdPyjqKvYxc9fIevqueUeNcdJ+lA/aKv0AAaIF+GR714
-         jCrMSt5suEMhwx5cg2JRIzzpvwfbiDHaInEor948P6leVHT4cf+2gtS3qP9EYOpPbcOj
-         mIhEKcdxkMebFUj9JMuXerudwa7JVNtQadfRyzUukgGY3lbwZx8Fj33z4sKausaAcUKw
-         FyEN00toVgINV+Clpy69bD1Vnn1OPNzpIXczivWcciB0BDo48Rz4thUrozx5nyfM1Krn
-         Fxmw==
-X-Gm-Message-State: AFq9FYL2qM0aWyZEvHR+O276icX+xT8bn9ewqyoEZfKQrTe0yMYwxiK7
-	D56is3rgO+Hg7FRjDEDGslV8QLCPeW7jlWsUf7PwpghyXAHJghI8kB0s7mSbB/WyCRE=
-X-Gm-Gg: AYBFou3PcD70V86Q8CWMj+biNM428e8ge1DRQRFdGOYkVcprTmC2LLXiA4TK7Db2rex
-	6/hO6ZU60or/Tf4HhnbjZ6EfvC95rCson63YA4oobiPLvfBFAmKezG36uf/snqvWWnWUvwWtq56
-	W1E8BjENW6wSHwgs6QL+TBSS9o0i/7sgoWJe+PTJIDP9+p5znKyktoRQdtNYlSq2t3SWRtIty12
-	ORVFQ34U/u0p6pnYzO7Pwk2LUYo0flYTySJ7HScn0gqNJR6/qKmqjclSxSyYoUUbgTmB5mLU/6K
-	9eaIKccGFAavhaRnRI3gR7dVXqtPlNoL3SWFLaGyAkEfDwgII7UIJ/fUpkPwBo9jLnQRBO78BgG
-	BY5ehjio1BbkkMSwdki1s9O9s2ySFDIWjpVeC3YQltyiB9jbhPK42SeG1NYFAcWkdXBiofNpTDz
-	/6+7b5hLKUh8t+lUbNBUXNpSVz4ZIEUhilD6Cz2PGA9S2xo4sMgtTKXqDhqIFwtxWk5Tn3RIsXI
-	g==
-X-Received: by 2002:a05:6870:d14b:b0:48f:e107:9092 with SMTP id 586e51a60fabf-4a2a8b4c2f7mr14043242fac.59.1792012958853;
-        Wed, 14 Oct 2026 14:22:38 -0700 (PDT)
-Received: from [127.0.0.1] ([172.171.7.194])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4a6dfb41355sm2889219fac.5.2026.10.14.14.22.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Oct 2026 14:22:37 -0700 (PDT)
-Message-Id: <pull.2252.v4.git.1792012956734.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2252.git.1791653078449.gitgitgadget@gmail.com>
-References: <pull.2252.git.1791653078449.gitgitgadget@gmail.com>
-From: "Marc Becker via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 14 Oct 2026 21:22:36 +0000
-Subject: [PATCH v4] fast-import: allow 'from' to reference new commits and
- tags by oid
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WWYdWmnd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BOqbhsvK"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 24005140012F
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 17:44:53 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Wed, 14 Oct 2026 17:44:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792014293; x=1792100693; bh=XOIXXouPe2
+	UCxc4O85mjAdI0wKdYkk9bPG3ZNjvCwYY=; b=WWYdWmndjzu+KGCw7jiBw9ZSlY
+	4uycOpyuIVKNJDTIsAj4pTIZ2u4oaHW34jc9lYMCH0qfoVgffIT0DWA61pANVOI7
+	gb8XjWjs3dV2cdla1KjxwuV8QSvCLY3usePmqvC8OfnUQ+yCVllD+103k516X1aj
+	n40DUBQ407pBx+XLAiby1dOfBt3ueFyZXnqu5R4O70syHTRidMiL/KG0DLmyWbrj
+	q1/Ur7pPu9PaqW/J8w63/Hn0pV5JHePF6GAuahFtiF2hwFpLsvTb+Yi7atZuYVnC
+	kz77q3+oIGJI3DW1kCDHgWUzFIZn0eJ3NuTE9UmCycwMALxDSaBgKgPQv/tw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792014293; x=1792100693; bh=XOIXXouPe2UCxc4O85mjAdI0wKdYkk9bPG3
+	ZNjvCwYY=; b=BOqbhsvKrTeI/bm5DSMLj60MhGdjW25H2R9dmbFPaV7rIMvLFhy
+	TfLYXKbFmozMk0tTDHz5pLrHiyG0DSfTK6jSfFKbxcrDK57Z9+182IhsjkemvJPz
+	TeYIpYjrJDKhnDvKKMjf4rftmrYBkmeWj9LbKD+lhmvXhpYngKvl9UNmyXrVfgTf
+	dk9eXFu6iHWDcHVSh6wT/4/GPuTO5VBAn89p+9iVDdBokRR+JhBnJVvTyjqgoi8M
+	xiFuBErYbuaXSP3gS5zm/h2soP9pwRJxt+IQZVD4e8wWwyeW0cu9+i+Tu8Lnkhx1
+	CONi2/5J7NDywU7J+NoGEHP0hrdiKLRQJ5Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792014293; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:TDyF5OHALkaTuyu74l3wh487T+DINOryMEe7ub+Nl0elYb7
+	kGv338ZYJIVXClQEGpsIFHnJzT0zDzktH40huq2QAUvF2f0ThbXhabJwlKFXUOmd
+	X55FshKX3V2yTnuhnfLg+Q015U/XYCRxXUE5wxmqdf5+yMN/37AtehwIXmh3gXGa
+	LfyNVSlAJ59cYDm9Fi9N4zDeowGjlLa1JEIqDkwGOwI6/S6i47d4dRxVIvuBWe1V
+	paxLy0qNYwQElv411oNIQtF4ETF4wsdDnG/59ehPlGZ8l9czUhR8XzL1ZdtXH/ue
+	yCx7QlFSEO15Pdqt4mzZZ23EMetLTOdfIePymeA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:oW8KdTlbQad4ueiLFA1LMiDBQXMl1UlF3OnzYjPJuVA=:KsHkEuocJT9Xx7VEzQqYztmsQKL1LDKDXLcAS+oyCQM=;
+X-ME-Sender: <xms:1PfPavNiTfF5pntPMbDfJRuH91PYd_vjYhS93EPMElDSEOSvj3cgyg>
+    <xme:1PfPag80DJqg3TUWcUVIh6ff5sbgIn83eHNP6lXhdmD2OXB4JhkQLi9_aiddPIYQf
+    0_Jh6oAsATiAeILwJD316uWlPrXIc-eSF3raoTdXBUKhOscLSTTRtk>
+X-ME-Received: <xmr:1PfPajSytftFNlU4BxQX1aoi1FAhqnoHdGTR5a9yA-jcaXXk51Y6iV85on0q0KbmDggNwNime5YO0_LeWhBL8IiiALrIm80jBMyb>
+X-ME-Proxy-Cause: dmFkZTFsQfYeCaWWkCT8M5VOyI8YRvkgYq8PBqAz3LUzFFGuHePxAl6ILvqpcSoOl+PUpU
+    U+p1GYPYXhuaXryeKufrF1DnVvVZUCe9+lJbzvombmJM4diWnqGUAgcdy0/WmmMG2dE8H8
+    EPHYr3OF0F12MVU2tst4xliUhJkYye6A35eLwYGOdlmE7BgcaH+kNMSMx07RJNpZiu9tre
+    oXD9iDyoPqVTeHrJuVGnLIHIMSWygitw+BQWpTbI6NjqUFtvCVW37XJyeGUd5mwY8ywvbN
+    GDvaLdFyw2hJSC2NmozToOZED01I0wl1pDSbX5ajQwYC/BEbSUPK+I/tptlPv63XkD+nZC
+    iwUVBw0oewlgiNyn7NQOZ0R3CHJJTgfRfo0tE2JtQfL9OfSuvUxjb5EE8Dh9oL7jJ9tfma
+    9BqYgh5ACPU4rNQsVjov9gtlzv8ux6/stlnhNPB+Uu1u/Fac2g5+EO8uy8Ji8kHePiAFQr
+    dGKG58+50KcZwnUDjJkuzWoVxBnD+8qY+o3XnnC0+2STvH+rq1nzluklu3JwkzLve/WIOT
+    UH61pD/KYLzR8cuWH05Z5Ztnw1SrJ3LvlioIp4prsLOGI0RbO/8VlnIivbxuvObz5yUSt1
+    VaoKVpIsuKHFejAwPbaea64YofhITWWKx8pDbJi5K4M8SKtT64QpW8+Ybydw
+X-ME-Proxy: <xmx:1ffPaimmh6PDLfGz0wlsq6x7yXZvDK3jFG7EmDknj6RdkbG4i3O9CA>
+    <xmx:1ffPajTLF-m2NIAcU2OehQBbj1oFksavpJW-_wlxhDcFd_MJJdOS0Q>
+    <xmx:1ffPagOLOFpyBVg2XmcpsAKa_6ibvbg6v8uPC3U08VRScQxzfTVJmw>
+    <xmx:1ffPasX1pn8RMY4qKXyXv0wPmX32VVthrjjKPok74K7yXtBY0se4HQ>
+    <xmx:1ffPagrvaav_s6K6ShRKqx4p_u9ia15IY8aYn4GDAoiGanpoqBr_2SvQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 Oct 2026 17:44:52 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 5/5] date: avoid overflow in approxidate relative-time
+ multiplication
+In-Reply-To: <a4e602b9e726081aaaf73c627548b823a4d35477.1791958171.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Wed, 14 Oct 2026
+	06:09:31 +0000")
+References: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
+	<a4e602b9e726081aaaf73c627548b823a4d35477.1791958171.git.gitgitgadget@gmail.com>
+Date: Wed, 14 Oct 2026 14:44:51 -0700
+Message-ID: <xmqq4ieoq7n0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Aniket Gupta <aniketgupta3001@gmail.com>,
-    Marc Becker <becm@gmx.de>,
-    Marc Becker <becm@gmx.de>
+Content-Type: text/plain
 
-From: Marc Becker <becm@gmx.de>
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-During a 'git fast-import' session, newly created objects are written
-to an in-progress packfile and recorded in fast-import's internal
-object table.  Until a 'checkpoint' command or the end of the session
-finalizes and indexes that packfile, these objects are not visible to
-the repository's object database via odb_read_object_peeled().
+> On platforms where `time_t` is unsigned (and where the pre-processor
+> allows us to determine this fact), reject counts that are too large and
+> report a parse error. Narrowing them first could otherwise produce
+> negative or truncated values that become bogus offsets. Leave signed
+> `time_t` count parsing unchanged.
 
-Commands such as 'ls' (via parse_treeish_dataref() and dereference())
-and 'cat-blob' already account for this when given a hex object name:
-they look up the object in fast-import's internal object table with
-find_object() first and read it from the in-progress packfile with
-gfi_unpack_entry() when its '.pack_id' is not MAX_PACK_ID.
+Does this mean that "git log -p" in a project that were made on
+reasonably sized platforms and then cloned to my box may cause the
+history traversal to stop with an error when a commit has author or
+committer timestamp that would not fit the time_t on my box?
 
-By contrast, when 'from <committish>' (in a 'commit' or 'reset'
-command) is given a hex object name instead of a mark or branch name,
-parse_objectish() parses the hex string into 'b->oid' and calls
-parse_from_existing(), which unconditionally looks up the object via
-odb_read_object_peeled().  If the object is a commit or tag created in
-the current pack cycle, odb_read_object_peeled() returns NULL and
-fast-import dies with "fatal: not a valid commit: <oid>".
+It would have been horrible regression than showing the entire
+history with patches with bogus timestamp if it were the case.
 
-Teach parse_from_existing() to look up 'b->oid' with find_object()
-first, peel any tag objects in the object table using dereference(),
-and unpack the target commit with gfi_unpack_entry() if it resides in
-the in-progress packfile, before falling back to
-odb_read_object_peeled() for objects in the repository's object
-database.
+But I do not think that is what happens.  approxidate_careful() is
+only used to parse input by local user (e.g., "git commit
+--date="...", "git log @{...}"), and the changes in this patch would
+not affect behaviours of other uses of timestamps, so we are safe.
 
-Signed-off-by: Marc Becker <becm@gmx.de>
----
-    fast-import: fix lookup for new commits
-    
-    Changes since v3:
-    
-     * align here-doc indention in test with expected style
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2252%2Fbecm%2Ffix-fast-import-commit-from-existing-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2252/becm/fix-fast-import-commit-from-existing-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/2252
-
-Range-diff vs v3:
-
- 1:  25113432c6 ! 1:  0daef81925 fast-import: allow 'from' to reference new commits and tags by oid
-     @@ t/t9300-fast-import.sh: test_expect_success 'Y: rewrite submodules' '
-       
-      +test_expect_success 'Y: reference pending tag or commit' '
-      +	test_oid_cache <<-EOF &&
-     -+		pending_commit sha1:85b46dd918355ff17b4109ec738723d42f235a04
-     -+		pending_commit sha256:17e650f097a4db6fe069c96935360d3ccc9b35c4018728c5f311a4217c2ced3d
-     -+		pending_tag sha1:ec6c4db71feb5f66615214dad2324ce030e777a7
-     -+		pending_tag sha256:85edc5eac315bc680677b2fc71622bd77476f057eb8dc8ed6a497803a24f1f46
-     -+		EOF
-     ++	pending_commit sha1:85b46dd918355ff17b4109ec738723d42f235a04
-     ++	pending_commit sha256:17e650f097a4db6fe069c96935360d3ccc9b35c4018728c5f311a4217c2ced3d
-     ++	pending_tag sha1:ec6c4db71feb5f66615214dad2324ce030e777a7
-     ++	pending_tag sha256:85edc5eac315bc680677b2fc71622bd77476f057eb8dc8ed6a497803a24f1f46
-     ++	EOF
-      +
-      +	git init reference-pending &&
-      +	(
-      +		cd reference-pending &&
-      +		git fast-import <<-EOF
-     -+			commit refs/heads/main
-     -+			committer A U Thor <author@example.com> 1712563200 +0000
-     -+			data 14
-     -+			commit message
-     -+			M 644 inline test file
-     -+			data 14
-     -+			dummy content
-     ++		commit refs/heads/main
-     ++		committer A U Thor <author@example.com> 1712563200 +0000
-     ++		data 14
-     ++		commit message
-     ++		M 644 inline test file
-     ++		data 14
-     ++		dummy content
-      +
-     -+			tag newtag
-     -+			from $(test_oid pending_commit)
-     -+			tagger A U Thor <author@example.com> 1712563300 +0000
-     -+			data 11
-     -+			tag message
-     -+			# no emty line after tag data!
-     -+			reset refs/heads/other
-     -+			from $(test_oid pending_tag)
-     ++		tag newtag
-     ++		from $(test_oid pending_commit)
-     ++		tagger A U Thor <author@example.com> 1712563300 +0000
-     ++		data 11
-     ++		tag message
-     ++		# no emty line after tag data!
-     ++		reset refs/heads/other
-     ++		from $(test_oid pending_tag)
-      +
-     -+			commit refs/heads/further
-     -+			committer A U Thor <author@example.com> 1712563400 +0000
-     -+			data 21
-     -+			what about 2nd commit
-     -+			from $(test_oid pending_commit)
-     -+			M 644 inline other test file
-     -+			data 19
-     -+			more dummy content
-     ++		commit refs/heads/further
-     ++		committer A U Thor <author@example.com> 1712563400 +0000
-     ++		data 21
-     ++		what about 2nd commit
-     ++		from $(test_oid pending_commit)
-     ++		M 644 inline other test file
-     ++		data 19
-     ++		more dummy content
-      +
-     -+			done
-     -+			EOF
-     ++		done
-     ++		EOF
-      +	)
-      +'
-      +
-
-
- builtin/fast-import.c  | 19 +++++++++++++++----
- t/t9300-fast-import.sh | 43 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 58 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index fbd919982c..574a03c484 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -292,6 +292,9 @@ static void fast_import_state_init(struct fast_import_state *state,
- 	state->option = option;
- }
- 
-+static struct object_entry *dereference(struct object_entry *oe,
-+					struct object_id *oid);
-+
- static void parse_argv(struct fast_import_state *state);
- static void parse_get_mark(struct fast_import_state *state, const char *p);
- static void parse_cat_blob(struct fast_import_state *state, const char *p);
-@@ -2658,12 +2661,20 @@ static void parse_from_existing(struct branch *b)
- 		oidclr(&b->branch_tree.versions[1].oid, the_repository->hash_algo);
- 	} else {
- 		unsigned long size;
--		size_t size_st = 0;
- 		char *buf;
-+		struct object_entry *e = find_object(&b->oid);
- 
--		buf = odb_read_object_peeled(the_repository->objects, &b->oid,
--					     OBJ_COMMIT, &size_st, &b->oid);
--		size = cast_size_t_to_ulong(size_st);
-+		while (e && e->type == OBJ_TAG)
-+			e = dereference(e, &b->oid);
-+
-+		if (e && e->type == OBJ_COMMIT && e->pack_id != MAX_PACK_ID) {
-+			buf = gfi_unpack_entry(e, &size);
-+		} else {
-+			size_t size_st = 0;
-+			buf = odb_read_object_peeled(the_repository->objects, &b->oid,
-+						     OBJ_COMMIT, &size_st, &b->oid);
-+			size = cast_size_t_to_ulong(size_st);
-+		}
- 		parse_from_commit(b, buf, size);
- 		free(buf);
- 	}
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index d9de2ef0d8..73c6e3d448 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -3938,4 +3938,47 @@ test_expect_success 'Y: rewrite submodules' '
- 	)
- '
- 
-+test_expect_success 'Y: reference pending tag or commit' '
-+	test_oid_cache <<-EOF &&
-+	pending_commit sha1:85b46dd918355ff17b4109ec738723d42f235a04
-+	pending_commit sha256:17e650f097a4db6fe069c96935360d3ccc9b35c4018728c5f311a4217c2ced3d
-+	pending_tag sha1:ec6c4db71feb5f66615214dad2324ce030e777a7
-+	pending_tag sha256:85edc5eac315bc680677b2fc71622bd77476f057eb8dc8ed6a497803a24f1f46
-+	EOF
-+
-+	git init reference-pending &&
-+	(
-+		cd reference-pending &&
-+		git fast-import <<-EOF
-+		commit refs/heads/main
-+		committer A U Thor <author@example.com> 1712563200 +0000
-+		data 14
-+		commit message
-+		M 644 inline test file
-+		data 14
-+		dummy content
-+
-+		tag newtag
-+		from $(test_oid pending_commit)
-+		tagger A U Thor <author@example.com> 1712563300 +0000
-+		data 11
-+		tag message
-+		# no emty line after tag data!
-+		reset refs/heads/other
-+		from $(test_oid pending_tag)
-+
-+		commit refs/heads/further
-+		committer A U Thor <author@example.com> 1712563400 +0000
-+		data 21
-+		what about 2nd commit
-+		from $(test_oid pending_commit)
-+		M 644 inline other test file
-+		data 19
-+		more dummy content
-+
-+		done
-+		EOF
-+	)
-+'
-+
- test_done
-
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
--- 
-gitgitgadget
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  date.c | 26 ++++++++++++++++++++++++--
+>  1 file changed, 24 insertions(+), 2 deletions(-)
+>
+> diff --git a/date.c b/date.c
+> index 014065b419..0d65804d2f 100644
+> --- a/date.c
+> +++ b/date.c
+> @@ -1298,7 +1298,18 @@ static const char *approxidate_alpha(const char *date, struct tm *tm, struct tm
+>  	while (tl->type) {
+>  		size_t len = strlen(tl->type);
+>  		if (match_string(date, tl->type) >= len-1) {
+> -			update_tm(tm, now, tl->length * *num);
+> +			time_t length = tl->length, num_t = *num;
+> +			time_t seconds;
+> +#ifndef is_unsigned_type
+> +			seconds = length * num_t;
+> +#else
+> +			time_t max_val = is_unsigned_type(length)
+> +				? maximum_unsigned_value_of_type(length)
+> +				: maximum_signed_value_of_type(length);
+> +			seconds = mult_overflows(length, num_t)
+> +				? max_val : length * num_t;
+> +#endif
+> +			update_tm(tm, now, seconds);
+>  			*num = 0;
+>  			*touched = 1;
+>  			return end;
+> @@ -1368,8 +1379,15 @@ static const char *approxidate_digit(const char *date, struct tm *tm, int *num,
+>  	}
+>  
+>  	/* Accept zero-padding only for small numbers ("Dec 02", never "Dec 0002") */
+> -	if (date[0] != '0' || end - date <= 2)
+> +	if (date[0] != '0' || end - date <= 2) {
+> +#ifdef is_unsigned_type
+> +		if (is_unsigned_type((time_t)0) &&
+> +		    (number > INT_MAX ||
+> +		     number > maximum_unsigned_value_of_type((time_t)0)))
+> +			return NULL;
+> +#endif
+>  		*num = number;
+> +	}
+>  	return end;
+>  }
+>  
+> @@ -1398,6 +1416,10 @@ static timestamp_t approxidate_str(const char *date,
+>  		if (isdigit(c)) {
+>  			pending_number(&tm, &number);
+>  			date = approxidate_digit(date-1, &tm, &number, time_sec);
+> +			if (!date) {
+> +				*error_ret = 1;
+> +				return 0;
+> +			}
+>  			touched = 1;
+>  			continue;
+>  		}
