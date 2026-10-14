@@ -1,136 +1,117 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72623C2774
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 09:49:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6973ACF0F
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 09:57:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791971374; cv=pass; b=F3vdn4oxxKMfUAcXzo+oA8vXJjQgSzWkU+qdCCirPLU98QQkv98UvwLzlJnpYJgOUNWu6RS+OP6dctA+QcFCtcJTfIFD1HtVum/XmGainJREYkzU2MzQpTNK48R+04gyN6kJuG5CoNX61zIs1rLP+kHaq14YN+JdU8wHCeUS6dM=
+	t=1791971831; cv=pass; b=THh8Rr/LcJayUCMUlPXQeMpYWwZXRkrN/FKpK9TlKQmz/hn/64ELQ6mkV6ntAsn1lBUWzQcw9CfbvKHKvE301yveHo2Dmlz2X3NI6qytJCBnZfW3XuasIKXDcauBcZTqM0tlJeDVj1FJZ/Tdghe2QJztR7pnweWz29aWNAuA1Sk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791971374; c=relaxed/simple;
-	bh=oykgin6LGQM1NKN/OJRzz/zunyxqjaceVoOd+iTxccw=;
+	s=arc-20240116; t=1791971831; c=relaxed/simple;
+	bh=E7Of84j9Rwi9hAVcz0gYYZjbOXRWOX3sAeFTzd8XIWY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HRNtblYj0jryO9xbTF7txJ4iW5zsc4SBf4EbCWxGVqNwO2NwQ59BtFRNHsOxwn6Oq0tZOuMEmBHkmJTlT85PRxkrN2k+iXZpLMd1MKu99rL+W1aA41AO3uqWT/Vx+sgkp/e4gzhB1oRuwsGAE3Szj/LFgQZSB+fmItdUZY69ayQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hl7OufbL; arc=pass smtp.client-ip=209.85.218.50
+	 To:Cc:Content-Type; b=a1sNicTTwbQLfjZyHmXOQaTOp3GIr2/6fopTqB0hw03/+zpo0HsFlYHTxJ+GZJG8o4YVNBGEvsdoqmZla8Z1gIzzzm3ZlEW0g8/G4Owq2pxLjF0p165OAAdUlBusdF/heNE3gWTlQp9g7ie95Le7TX5BSo9SwxJfM6zD+s7/LCE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i2CyFd8V; arc=pass smtp.client-ip=74.125.224.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hl7OufbL"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c315a445752so598894966b.3
-        for <git@vger.kernel.org>; Wed, 14 Oct 2026 02:49:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791971371; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i2CyFd8V"
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-679334baa1fso3261948d50.2
+        for <git@vger.kernel.org>; Wed, 14 Oct 2026 02:57:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791971827; cv=none;
         d=google.com; s=arc-20260327;
-        b=efP2ZofFFjMAft9Gn0G2Dmid/ascD35R6UzNrPYtTilu1dF49M09GGlqglrjaWBUO6
-         zEnyDGLeV2NZVEtd1/OoArhc9pMtbnHVmYD+vg9hOGjhj4EN0DZXx7TFo67/HGP30YcA
-         G6MfqEYbmvY9R+C59OaGVzyGrV0DH8nsFSAlYGPFpyu90URRu9c0EbDURAcmEBlLO5KT
-         lDDxFWGQ2PXXs3i0GnTc5vTHrpUaUuJxamAO+9CCA26sYdm0TryXkYhkQz3Ms9rUBQ1h
-         G01iutJt60rSGbziG4oxAKGQVFx/SbVp/rSyt/Xy0kwhwP+0IgAmiuq/BqEWc7t6FcQK
-         ++PQ==
+        b=ea66u+IXAW1JOtGGkzuVOqg3ZyGgPRE9p+avvANXTR5t1V3CSBYRrsKzIFNelmUMwr
+         d4ziMIws1HYoE+NvSFcGv/zmjc93553bVu4If9MxlZv7ExwNZFj2ENI5VzhhUaXD0/fu
+         WxbgYiXQEBa45vqlQWJOVDBqJJZmaIUFPnp55qsHmQxTFrR+jnjyxpHUjKVVz3eW0CE3
+         sZ0Io9u4/c0WxmZM6HdE2dQhq2Als2c08Jsdj31/72L2Bd19KP7EQyjnJhtS1NBMb5pM
+         8MPhHMyGPqavY0OHboS1bDRgDJKlzaJSiP8uuku7z4FnAKOurQuhzYIcIKk52wOvxCYW
+         LGQQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=VvvOm5G5uKKD5UN4UDqO2qi6CfliioNvS696bFsU/n8=;
-        fh=e2cPc0WAaF6GjhAJR2HEinNqem51qJjd6nRuNMdi0ok=;
-        b=cZwNjW9LkfmPWgsm1ZhW1607bjlXlerya1m7iDr7dB2MRSNbKguZqhQ3tB1Tg4LLOK
-         mRU8n57oRdXo8YhV+eILF+vsX+mK2W9zK35EqFNLV01AJTiQ7Z+ICgG5hkh7pSkC/NGr
-         OnOHD4cQYpd5+KLcfPTrMWM9SGr35P1V4jyr9lA7TjklIUiWH+dz5uBQ4JYtDN+JVqju
-         nLpaaPaPpxDwl1Z6rE4ko4revETaYRhO5O48cSjbgEfWy3m2dohTiR5A2qvk4leF1qSd
-         4QZvsurcFF+iOpX1C47a9D/V5D7DUPsNAgp5n5G8WgXvdRlsEQbVUbKROmnBM7lvf2Yx
-         6cCw==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=E7Of84j9Rwi9hAVcz0gYYZjbOXRWOX3sAeFTzd8XIWY=;
+        fh=vSj9PFhPeljTYt/cuRUiB4FEthFjf/0nTmE6dJoyn0Q=;
+        b=S3dX+cm1AEH+tvLzhYAaqiJH1BT2Mp1IZBpos5KaQyNdcGpRqfOD1VpCgXkqdboSDt
+         gxpOufmrlQ8MFy+T+LrfddPEm4PqeMUvwdmUBVtJEDxQeOprvvakafKNrIxHZ8xPG6gQ
+         NetQNHBIrS2F7zhryeCApSun6NOvcSkDhi46ZVXdiCG6AHn0bnz+3Oz10Sa6zxCqlJY+
+         QB7hRjHKn/jkx8Mz3WbuyGMWJd3suadQbnPFWZ7AIedurVt8PJE8ckYtSPzHwm9lVmXk
+         iVe1GcYmPfqCbVGr4P6CjR0vYTDwHpviDtxauvjgSkO2TWGUo5ERgoX/PCHipQdN2Y0/
+         /eeg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791971371; x=1792576171; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=VvvOm5G5uKKD5UN4UDqO2qi6CfliioNvS696bFsU/n8=;
-        b=Hl7OufbLJ3xzosJBut9Mx7uflVHRnb9jayb4HSekbL4HTgzqZCAGJ6YZqWT06xn6Ip
-         CWK/4dVeu6iAt2nc/Tbee7faktKJTytngx302AyNgbtqCHMFlcL8PAWQfOjSXnuY9rcn
-         xyJYgn0rUVAnbvBa7pCGQYrSurQT88DgQGz1yZ8Ig53WAe4aR1oLW9TV43VIqvOZsW2D
-         u2ufhckNHf+vNBOCdrjnd1qh45ubjMo88hXzbRegpHtCQHu2fomJzZHSc70dcXeYRtwl
-         +huCevoXhyP6pqkTveR3v1oR7/BRLK5hU5Avxo3tfgL9eovb3FI16BQtzf1bxrXsKJuD
-         4fTg==
+        d=gmail.com; s=20251104; t=1791971827; x=1792576627; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=E7Of84j9Rwi9hAVcz0gYYZjbOXRWOX3sAeFTzd8XIWY=;
+        b=i2CyFd8Vt3JOztFfhujVYlXrusu3Rm9l0a1b5WkBHL0ZQ8EiryF9V7Nl3tHiDESFSw
+         lci7tdorR12V0EKmuegsX5whs+Ai34F3dgGe3RA4FWooHTCgbkXYZxBcsUN/kdNGZmIt
+         +CoayFhIKFk49tf7U99L/T6AMEWCk47F5NCBUvqBS+cBXvH+jw9WDjs1eqJ8CEwVVCNZ
+         zdtqMXjs/Dod4JmU2v5t+Oj5qzwNw1NXA/X4Bcgw1U+ZYshaNfgOCNSr9yQwkYEFJuh6
+         +bf1aPEu4TIbiJao7xko+DO9l59zTzbDDdpqGe09C/C/MQKg3SThxVX8AangKTlZp9gY
+         GzBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791971371; x=1792576171;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=VvvOm5G5uKKD5UN4UDqO2qi6CfliioNvS696bFsU/n8=;
-        b=YvDNQdkTuQ+1EF/LocQm2WjuUQcxs2jWFOcIEMHM1tCSXhWHP4oB6NvBi9yO1nTs+y
-         yUrds8XPG95GplBQ5ZM7EQbSsI8b3RYO/X3assaZRJah2wsKYDDxM6+9gskvgPXg/lxS
-         6DYcAUY2c8ckDDfl5xQXTETI6dc8euq77pOq0Z0EiDDH/O9GSB3f0kcdzfpJlkv9I+ER
-         7LB3cZJqr2GcqPmFPQYkPtu2JRYLlIRVnSsud/VXULwiIY6GcDg6p0bTnGjgeRbmhb4J
-         5AamfpZmuqTfyqVwfzoJ5Uxe8U2s5cu4GlmHlY7tpavg3PhQXLYYnksP/xadBHUdqVuQ
-         jMRw==
-X-Gm-Message-State: AFq9FYKuI7imEjNaGh9UR1DeJN9jioU5h4M7Cuyy/6pD+8mKPbYMS/cZ
-	goEDZnvd/CnAgOu6um+MGjJnfgRB6AguYWXkphiJtUSwGP7/Q24vv2oSD1fF044Y4xo8OWAY4i2
-	BGus9atyQnqG4/Ipkm8Gp40IVv5/kFvxM80+p4RM=
-X-Gm-Gg: AYBFou0LdgAr4i+6TeENlqqfifggInMEfstUUILL6LiOl+24j+m47ZMDso6WzD2hdlG
-	57PA+d+lnfW47UEMb6iNpBfwwckBvJbBOF0MMuiRZ7rHjq1jjzWhYu+aOWmWXzi7xY6RSuY8Rg2
-	qIoYIHiPhpfEEVV4+Dv6CDKhRJhAZ1agBuqNMAYRLH7ThPMMd5yGdls8+cQw/LZDWyTZZ7igE9I
-	EFduRn9j3GSqJW8RcGFsbCzJHHZ59iJAm1NRf5fxbwtTPmjUt4LrU3pVVkv4JgI0qYajyAYyQ3W
-	Bbh9jr81jqtomx0Q3mqQoSG+MbAiQZqY2kDtQmSTVxooyt0RM/RpYyBCcdBNBOAdqXrDPIjCJbJ
-	17YaI/2HAoQ4=
-X-Received: by 2002:a17:907:ea8a:b0:c26:2eee:ffc7 with SMTP id
- a640c23a62f3a-c31a9f784f2mr1376119466b.35.1791971370836; Wed, 14 Oct 2026
- 02:49:30 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1791971827; x=1792576627;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=E7Of84j9Rwi9hAVcz0gYYZjbOXRWOX3sAeFTzd8XIWY=;
+        b=1RbAhVlILIMYxglD/GEv/XVDCLbCxtSGxXyk64IIzFesooaxnbijh+152lVvFki7Nr
+         AT7SsTyuYKoZQXPRDoFuqiSnaeHl3XRP61+EIHDWvo/eT+h4kWQeZA5H/JSf+OdPEYtU
+         CPk8D3s+kV6mmuCWHqtCBZT4TtGGRmY7snko7oKFma7HgZ3i6rvhcaQf6oMHn7bBa86A
+         4FFb7S0E7LjOMzgE946jxsnziRtkpbZTWg6DcMCWUfE+gxpaSUG9vwn9G7P7tz4tY2HX
+         u3f0vTxvu14RYG1fuAtiR8gXbN3U+ZUslPIPkTgEDDaBjXzzDvNJeoXJTAXGIiTuypCh
+         fTYA==
+X-Gm-Message-State: AFq9FYI+sxZvfCTCqUg64jfWgzNOdDD67bNoo5bBES3faf3EZAtYVZnF
+	NoL7Up7jMSja7q0dqn3u3FzCKkE6/Xf7BCaKhtbX/i0ds4upl3h/0SaliAIr6juXumj1pPWzqfZ
+	THO9BSY4WLQyK1XeOgXprQ4DK4/Rkb5g=
+X-Gm-Gg: AYBFou3YBvBQA+Y1ResulyForvZ4S3Kx6+j+WlOuoLmU4wgfSTYrfTHHQoB02RN3a2Q
+	AgwUaMab2b+7+ufzJaEbwdj/Qnep9l27P2zk07Zu8m3UCViDaVvyCp0nDcM0Bkjk0eu/7r2CsTw
+	E+BsZcU7hf2NcuS0SKRjgwoFz9jqLDpmNjU7kC9C3g9Mj+LfH0CuZumRgLqO7NnbQcmqaodP0ES
+	BAdxxjsHxAKHK3Wveg5L9sUkZMhFMefnfNCBnrMk362MhTB8sQrj41Fxjo7EiEtOfP6aE4Z0opO
+	FPxBuAUz+XDUvqLpEG3RTdVguCXyDJifIkwV9IrOfRNyZg6SC5hVNWyTHMnzLMf8vqBjOtCVTez
+	eXbGoO90J19g=
+X-Received: by 2002:a05:690e:4399:b0:677:ceec:5eb8 with SMTP id
+ 956f58d0204a3-67936347021mr2506329d50.153.1791971827422; Wed, 14 Oct 2026
+ 02:57:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2254.git.1791962806807.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2254.git.1791962806807.gitgitgadget@gmail.com>
+References: <CAJoPjcM9s8s9+0Pgyw=dnQXcg=kXuHQ7dKZWx8OaJswo+a1viA@mail.gmail.com>
+In-Reply-To: <CAJoPjcM9s8s9+0Pgyw=dnQXcg=kXuHQ7dKZWx8OaJswo+a1viA@mail.gmail.com>
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 14 Oct 2026 10:49:19 +0100
-X-Gm-Features: AclHuK-HYk_FVY6sVEwigXgxWdJ9RWLkR99XtzPGG7VB3okTTBdB6zwsbUnhjLo
-Message-ID: <CAPSxiM9-F-1XKvWeEnBk=_FyKyev5pfnid4fiN-OjLYLnCTWVw@mail.gmail.com>
-Subject: Re: [PATCH] t0081: modernize the code testing whether a file exists
-To: Shashank S via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	Christian Couder <christian.couder@gmail.com>, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>, Shashank S <shashu8660@gmail.com>
+Date: Wed, 14 Oct 2026 10:56:52 +0100
+X-Gm-Features: AclHuK-Spi31dY6Lb6ynBRzcF-I7xAzRxETleLSqh3_SNhIF3ElLqJxGjhUJw_E
+Message-ID: <CAPSxiM-xssgWJaY+x0xgHDvWfTzw6Xgg3_YYiwh6XVerTxyG2g@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_Subject=3A_=5BOutreachy=5D_Interest_in_Modernize_Test_?=
+	=?UTF-8?Q?Path_Checking_in_Git=E2=80=99s_Test_Suite?=
+To: Victor Okafor <vua.okafor@gmail.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> From: Shashank <shashu8660@gmail.com>
 >
-> Replace the old-style shell `test -f` command with Git's modern
-> `test_path_is_file`.
+> Hi everyone,
 >
-> This instance was found using:
-> `git grep "test -[efd]" t/'
-This is not necessary, remove it.
+> My name is Victor, and I'd like to contribute to Git through Outreachy.
+Hello Victor,
+
+Thanks for your interest in contributing to the Git project.
+
 >
-> Signed-off-by: Shashank <shashu8660@gmail.com>
-> ---
->     [outreachy] t0081: Replace the old style 'test -f' to new
->     'test_path_is_file'
+> I've built Git from source and am starting to explore the codebase and
+> its contribution process. I want to work on =E2=80=9CModernize Test Path
+> Checking in Git=E2=80=99s Test Suite.=E2=80=9D
+> I look forward to learning from the community and contributing to Git.
+Looking forward to your learning and contribution.
 >
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2254%2Fshashu8660%2Fupdate-t0081-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2254/shashu8660/update-t0081-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2254
+> Best regards,
+> Victor
 >
->  t/t0081-find-pack.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t0081-find-pack.sh b/t/t0081-find-pack.sh
-> index ff9d56fbf1..7d5082c487 100755
-> --- a/t/t0081-find-pack.sh
-> +++ b/t/t0081-find-pack.sh
-> @@ -32,7 +32,7 @@ test_expect_success 'repack everything into a single packfile' '
->                 ".git/objects/pack/pack-"*".pack") true ;;
->                 *) false ;;
->         esac &&
-> -       test -f "$head_commit_pack" &&
-> +       test_path_is_file "$head_commit_pack" &&
-looks good to me.
->
->         # Everything is in the same pack
->         test "$head_commit_pack" = "$head_tree_pack" &&
->
-> base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
-> --
-> gitgitgadget
 Thanks.
+Usman.
