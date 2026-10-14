@@ -1,71 +1,71 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A76555C316
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 15:40:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1103555D861
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 15:40:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791992448; cv=none; b=cNKcRK9JxiykWjkCM5HSnseeMaEr7U6S5LKG57pDqCdBfT32sG+hqG631fp6rw0fINHIdkJ4iNEPGhIaxOokUSTQgh6ANtf1ph9DQgdOxCo4BF60lWLznfxWegxuOF8CK7hXkSR57wfsIYSrqmU+JVdL4Q7/x5Y0HXvbrgHP+oo=
+	t=1791992448; cv=none; b=d5XTTSqzsvrZcItc+Z+o0V5pFwzs04H7Ax0NpdOyD68PArvBHDXaaX9BpRds0VT5Bz0gHHiHChFyvXsUlAP90FzvawKdiOgJaIiO1yWPQfqeDO5gvi+SgoG6zKGXwvTqbhc4sNZ6D635u15d60aD+aqeLZdRZao9DtRSrAx1V50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1791992448; c=relaxed/simple;
-	bh=Umok2u1Q1oKtOY9QSiRGA7Mzv1OUoh8BC4iXMfQwi9g=;
+	bh=M/T0O4WFm7werbpQZft8dShuNcxcqEHYgu+hNtWs3G4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N8rTSwfHxfOMg34ZSbGs7EIGjZVZh9oZAEevUlcS0PzTIisGw1u+l//fAJRhwD8iRdwZXroR5WgfnWzmX/z8sGvRG1jdl0EaGLqhXoTaVwBR6jnM//rWotmfVehlyaGsLM93k4fV3CCi35tIQfwcxbehowMrV7/1lnSYOOKZnVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A2ka4mU6; arc=none smtp.client-ip=209.85.128.44
+	 MIME-Version; b=jCpA9pkabqD5X1VNyykNtV/mqYaqakfCaasu0wLwouq3USVTAcHiQYgN0TeIReVFZGt9rcTEW9eKD+IIJG+VWf5MicvDrvjQ5B1Kj7akjC9lcDy8fEozAsnT6Hq5GYX2loQ9t6ypDyaucjGS8+RflZTeRRQ/6nmwtmKCpb7p5so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nk+RI1ZH; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A2ka4mU6"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a1635f7c89so11643975e9.2
-        for <git@vger.kernel.org>; Wed, 14 Oct 2026 08:40:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nk+RI1ZH"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-48afe75f055so595682f8f.2
+        for <git@vger.kernel.org>; Wed, 14 Oct 2026 08:40:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791992441; x=1792597241; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791992444; x=1792597244; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=/vWwFfwAM3yQoT6XA+yzvPOPcbYCknX1WqvqDMgFrXo=;
-        b=A2ka4mU6wsNFg9e2WUGLTuAupq8LURTe72eh7+Vfb1KioSfRa06MdziWA0g/4PDa8K
-         Ti4+cEpxGDG0+CHOF8xYHg3oHA0m8oROK5n63b9rJjFgWh8vE6e8HzcF9PKO9LrRGTZc
-         gOcMhoWdE0sp5HhllDc1AO6luW87bY/J5ffqhK4Ekm9XMxLBr8MqvqzjGDTF0UneiWG2
-         Wb74qdyXJ6qOzIMdFml6pV/qFCGxeaijL50J4bpslS6BIHbnvUnGXe/c5eD1qU+aPjft
-         kiNAtfBDsJLVwJh7pK1+kKR0DhCeg5w7TE7T6feDCaQCW/1nhhGNml/DxxeUJEQwhvUH
-         8osw==
+        bh=YmBMpzBjUGW8YNW8Rn0paVufGdRLWO7YVdcWv5LCpzw=;
+        b=nk+RI1ZH7Pdw+MHXzAb5n+Bz9HaZEkgmLAq29/lkkaygtaXK6RE1oUOg897zhuA5UK
+         bIsr5G4jbC25G+vBi3nNAmltyVKAcnuRhVTugwPjVmEFGdwqghME9AW8PMyMqklg3FdZ
+         k/xqQL81Wo1P8n58npQ0IaawPl8xO/BtzGQkWKiSADFQgXpdk6/qAnAgxvfWN8RnZRKE
+         j24m6lKD+MeBDcHGwgO/LRaf2mkKRQq5miZU50SK1riJclWcdFIl83rAM27VJWNgqS73
+         35k+7a5cEbDLikI2gprKc+OBdjJI4cGgWcnLfKyxeHNGbKYVKK0PrGFMrlO1i2O+h2gc
+         YVMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791992441; x=1792597241;
+        d=1e100.net; s=20260707; t=1791992444; x=1792597244;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=/vWwFfwAM3yQoT6XA+yzvPOPcbYCknX1WqvqDMgFrXo=;
-        b=JUcL8YTS9tprQAZrnvyqD+U5uw12wsmpcc1SIgIGg0VgVxnuONVrxuYnR4pFV8szb5
-         T0ejMYeU0XXS6zHQqgS4xqNfhDOJclkq28Cd3tNID37iNsiA8M+iuJRu9poI+JpVEoSv
-         HfG3wpluJq0Ueehma1l4ltFBVcY1RVRTnWy9nGnkGew0ufZMB42PQm0w/8WU65PgsWFY
-         xicnqdMr+9tvvW9QKY5l8BfOvUMpGmE8a819vJvZkLS9X0dc746RL0oLXh7K63Ly3sZP
-         Zgl4whd8+vzfwdCQY7boXieMHmDwzdgjAzmA4TKoHubDRDWn+hhGIJZFfmk27+LcZNk4
-         62kA==
-X-Gm-Message-State: AFq9FYLjMniCqD1Ih6Z2S82aMAwZUv6nWKpPweCsZXEiRWT1v/3KAqum
-	IDaeZxFDL+kO29RWfNSGQInG35wMBwgfBWq53A14euFHrxKsCj4HiwuNN3guFg==
-X-Gm-Gg: AYBFou0oKGaGmCVZd0yMxHTiSL+XXBhAg8n3Br2ok6LyPYM3XuzMWJAMuJZPrpEsuKf
-	3/h//k5U4Ozu4BAobxLNdMcDGnraNMItvj5Y8rLMgaR4PfyHXhbzF+FgpbjSVNRXAHwKWhWqpYz
-	HyBVnrMVU4+6EQ9T7M3udPjx99Kgb/3IxWJWwOq7cn9q0TKU2m/8x5uCW5EB+HL7D2U90VXfGcq
-	tTFdeVMZy0SxXB8YIzrkCrPFg5Gv5GkbPqZWzf+n8bf1D77h9hM5vjHMq2kTQS0XqNHdqpHDG3S
-	NWxMKjG/Cijad98w/8pE87iFx+xRff5ALwhIZJPcuQaM+qel8QVf01hr6r//zrZuiU198B0SNKO
-	pcMgk6dlJGoGf1i54S59l7ZoDAqy8BOaLVS7/hBq8f/gKmupAPRvMncDi/K7Qt5acodZW9aWlBq
-	sZ0o64zMen0+4X0JNU34uaKzXsLQ6nZi9GmEItEXSg+uMdPeUAkgpiNTjPLaBkoz+YhowkOzFL2
-	JOSfhSL8YJVsA==
-X-Received: by 2002:a05:600c:6099:b0:4a0:1feb:de6a with SMTP id 5b1f17b1804b1-4a18e4e7a85mr309775845e9.30.1791992441092;
-        Wed, 14 Oct 2026 08:40:41 -0700 (PDT)
+        bh=YmBMpzBjUGW8YNW8Rn0paVufGdRLWO7YVdcWv5LCpzw=;
+        b=enLNor50YZMGcqcbJxqcw38L01DJ6318Tfa1JJ6/81cWS2dSKEXFrLiYihCn7MiRCA
+         1OVjNBkP5qzR2FrBj/kMusnh1oRe4KabHO7/2nPjR4xlm/T7Hg6G6FHz2o0z0/bdqBHU
+         K0bIqr90lMOGJrO5YGHcQ5X6dOrEQBuQ4rgC9Dfbf2/AauyHbPr47zkbKXB2biuFMPvO
+         l1CSdR8RKlejltEzmZ9PlPJsqhUmnROtYQl/FpLrdjvdtFIjDO5XVJQdykS11KkwBqhK
+         VQZ16bJmJ+9x6qkw8K49PSvhj9QJdJPFCtaNjHq9DVEI0Vax8bSbdgSimyUWL62Jclfv
+         j81Q==
+X-Gm-Message-State: AFq9FYIRipm7uWFI/dyrElkW8PZ/ig9PWbhk9PhcXOYTRVVTzz6ZLi6W
+	Giqm+uJaKYlSqG9A5nNs5434l3eY1HH4v4TzYv3MEiA8H2mhWtD28zhFvgMTFA==
+X-Gm-Gg: AYBFou1ONtKNky5QOQuMbf+Eu2smwJX8JmDSRcIM/cWDctW6jP0yCHIsPluHnMismMV
+	K4dG3QHA9knlf9fcPRoMioYQEKgaGghR4tA4+jSYimF/xq+dggM09jC4Y0Ck/GbsFyJvEMJxdrX
+	xSuN1EZxjZ3W5G44nFm72JIdAXGsRZLDsd7Qgw6/oVCNhadwk42izJ/2LH+IkWFHu1OseS5H3N4
+	Og7V2wqSwZitr1WKhp19RGHk6V3upCGvOMDklHG/LE97/58udIVRf9SeXI4y/voJIR5ZRkrFEHB
+	aY2ybtZsV6Jp79iDC8u3nYgkIV0KxwouJtFr1X7Hs+GIgz3OZ3c8WXH/oZv/dFupcaIZ4FySGH1
+	MkB2hj7BWfC7TmBatqisuBVh6KWzYO5uisDXmciUpaUzmsfQJan5ekU9420l5IYfh6apS2RwBFu
+	mtUUR0mzEjwk3U5Od1rOOfpzjhaSXpehhFBVXpm1e7n6ESWgRBJ7CRvL3e461W+VSyV9E/5X458
+	e6k/XA7jJWJ
+X-Received: by 2002:a5d:588e:0:b0:48d:c186:dcc6 with SMTP id ffacd0b85a97d-48dc186dd62mr26779575f8f.57.1791992443914;
+        Wed, 14 Oct 2026 08:40:43 -0700 (PDT)
 Received: from berwick ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48de0967acasm10324829f8f.2.2026.10.14.08.40.39
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48de0967acasm10324829f8f.2.2026.10.14.08.40.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Oct 2026 08:40:40 -0700 (PDT)
+        Wed, 14 Oct 2026 08:40:43 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: =?UTF-8?q?=E9=87=8D=E7=94=B0=E4=B8=80=E8=81=96?= <kazumasa.shigeta@kanamei.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 5/7] stash create: rework temporary index creation
-Date: Wed, 14 Oct 2026 16:40:17 +0100
-Message-ID: <f799d86f52796cc1b83788460568cc0d9849bed9.1791992404.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2 7/7] stash: simplify reset_tree() function signature
+Date: Wed, 14 Oct 2026 16:40:19 +0100
+Message-ID: <db53bf3b57e2bef504ad137fc1d896a2bc840e14.1791992404.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.56.0.134.g299a3c16181
 In-Reply-To: <cover.1791992404.git.phillip.wood@dunelm.org.uk>
 References: <cover.1791218125.git.phillip.wood@dunelm.org.uk> <cover.1791992404.git.phillip.wood@dunelm.org.uk>
@@ -80,75 +80,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Use create_index_from_tree() instead of reset_tree() when we create a
-temporary index file to stash the working tree changes. This matches
-what we do for "git stash push -p" and means we can avoid messing with
-set_alternate_index_output(). Add a new parameter to control whether
-the index is reset, as we need to merge the index rather than reset
-it so that we still detect intent-to-add entries. We do not alter the
-in-memory index so we can remove the call to repo_read_index_preload()
-which saves one lstat() call per changed path.
+There is only one caller and it does not want to update the worktree or
+reset the index so remove those unused parameters.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/stash.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ builtin/stash.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/stash.c b/builtin/stash.c
-index b4fe7465e4..ddeb5a5d2a 100644
+index 55916259c3..bc1252790b 100644
 --- a/builtin/stash.c
 +++ b/builtin/stash.c
-@@ -374,7 +374,7 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
+@@ -332,7 +332,7 @@ static int clear_stash(int argc, const char **argv, const char *prefix,
+ 	return do_clear_stash();
  }
  
- static int create_index_from_tree(const struct object_id *tree_id,
--				  const char *index_path)
-+				  const char *index_path, bool reset)
+-static int reset_tree(struct object_id *i_tree, int update, int reset)
++static int reset_tree(struct object_id *i_tree)
  {
  	int nr_trees = 1;
- 	int ret = 0;
-@@ -403,7 +403,7 @@ static int create_index_from_tree(const struct object_id *tree_id,
+ 	struct unpack_trees_options opts;
+@@ -358,10 +358,6 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
  	opts.src_index = the_repository->index;
- 	opts.dst_index = &dst_istate;
+ 	opts.dst_index = the_repository->index;
  	opts.merge = 1;
--	opts.reset = UNPACK_RESET_PROTECT_UNTRACKED;
-+	opts.reset = reset ? UNPACK_RESET_PROTECT_UNTRACKED : 0;
+-	opts.reset = reset ? UNPACK_RESET_PROTECT_UNTRACKED : 0;
+-	opts.update = update;
+-	if (update)
+-		opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
  	opts.fn = oneway_merge;
  
- 	if (unpack_trees(nr_trees, t, &opts)) {
-@@ -1399,7 +1399,7 @@ static enum create_result stash_patch(struct stash_info *info,
- 		goto done;
+ 	if (unpack_trees(nr_trees, t, &opts))
+@@ -738,7 +734,7 @@ static enum stash_apply_result do_apply_stash(const char *prefix,
  	}
  
--	if (create_index_from_tree(head_tree, stash_index_path.buf)) {
-+	if (create_index_from_tree(head_tree, stash_index_path.buf, true)) {
- 		ret = CREATE_ERROR;
- 		goto done;
- 	}
-@@ -1458,22 +1458,15 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
- 	repo_init_revisions(the_repository, &rev, NULL);
- 	copy_pathspec(&rev.prune_data, ps);
- 
--	set_alternate_index_output(stash_index_path.buf);
--	if (reset_tree(&info->i_tree, 0, 0)) {
-+	if (create_index_from_tree(&info->i_tree, stash_index_path.buf, false)) {
- 		ret = -1;
- 		goto done;
- 	}
--	set_alternate_index_output(NULL);
- 
- 	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
- 	rev.diffopt.format_callback = add_diff_to_buf;
- 	rev.diffopt.format_callback_data = &diff_output;
- 
--	if (repo_read_index_preload(the_repository, &rev.diffopt.pathspec, 0) < 0) {
--		ret = -1;
--		goto done;
--	}
--
- 	add_pending_object(&rev, parse_object(the_repository, &info->b_commit),
- 			   "");
- 	run_diff_index(&rev, 0);
+ 	if (has_index) {
+-		if (reset_tree(&index_tree, 0, 0))
++		if (reset_tree(&index_tree))
+ 			ret = -1;
+ 	} else {
+ 		unstage_changes_unless_new(&c_tree);
 -- 
 2.56.0.134.g299a3c16181
 
