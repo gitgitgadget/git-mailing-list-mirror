@@ -1,112 +1,120 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A474BA1E1
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 11:50:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C324F0539
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 11:52:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791978638; cv=none; b=Zple7kOtaYrQt3nO8KXTD8vUAVl/6jCfOQ7EqhC/uLz+ZQD7Icn//WGmhZcpnBwPeAEPsXGbf2c87gehsnqzWOoAP09n8/iKjW0XShOVMneFahUD03TGvYBzljdqn6E3mkxX6HaRQX0LIbG3PJqxVEQQWiFZ5kO4nNtyARmnLTM=
+	t=1791978781; cv=none; b=O6J+3mxySX7dySIlalmiAlJ/f158d650MAo/olMseZ46QAl6/diSP9ghpMKGmmDSnjz8Ic495rcSsI/s55YyReBIwrzN2hDCVYqj5LvMCgB7OEQPYNFa1OxLmU3f0YcXwwql/dKyOAuCIos4YYl4smKT9uULwQUaNcSghaQCTWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791978638; c=relaxed/simple;
-	bh=lqdUEr0uJpicoTDwjg9wVUCJq5FJr9z3OzIKhUzVGUs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nzQ9UiJuyZBaEEVAEvQcR73x9wAwGL7WRZJk5W5SOpvGWrb3mDJPB/7VXYE9tXBIFuOkrR0fwJR7WexI8a0o8C5e/musvFea6xT/cq9f9nhMA2jF/x1eaX/Q7DRvA8yr1yUTCl/4pkdnZptqogtW8ecVtCuVwbVGnQfAvpyJb+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PhOSopQX; arc=none smtp.client-ip=209.85.208.51
+	s=arc-20240116; t=1791978781; c=relaxed/simple;
+	bh=gtm3Il+GxuGzqaS5DaZwhJGsDOVObtf0CA25/XR7/aE=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=h3PIafjsPZp9Ew2MNLoXQP2v5D5d0QWLdYoURS1kJDERd0rdqhRyQTLHqAA253Nybij3L9oh2S07D0GYWeIwt0/3fBPxMXWoaPoJ36Hrnj0EqyygtAXsaLoGF3IINUuRz36ty7wvp0sUw2WAL4zbRDOQFGIevu2qneWrf50fV9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m6BH8KF3; arc=none smtp.client-ip=209.85.161.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PhOSopQX"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6af8620a7d2so4807317a12.0
-        for <git@vger.kernel.org>; Wed, 14 Oct 2026 04:50:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m6BH8KF3"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-6df1eeb43feso1693611eaf.1
+        for <git@vger.kernel.org>; Wed, 14 Oct 2026 04:52:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791978630; x=1792583430; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=iv/bRCuogdosv5cF8ViFYTbQpVvWmELmTeOXQgFa24I=;
-        b=PhOSopQXrt2wnsgImBxTFtv+zASiaI/RhgXFG0XEg41ZqmH/DfONuIcANY3ckCYxxG
-         0oEokD04L6DPM5Y3tm3DREOa12afS0xi6Ew+GxZ/K/53Uq2oiQLsXiFfkNLiQzSIKPmM
-         4gqtLevyXd1sI6iyzXgVGkojnnd9miQb2iKEo0dkf241QwOXtQ7eKmSV1jlMA3StpmG5
-         ORXiMlyAT+x4866wMNHp+W/ZR5OmZPBQjfagx1oCe2rG4by3Y54CcA44z4JeAWv2I48D
-         W8cwypCReOgZBfvt859bI/3Ntt/x+sGEWxEt2odObODnYn/PCh6QXEQ30+lnvxEz2NvT
-         jQlQ==
+        d=gmail.com; s=20251104; t=1791978771; x=1792583571; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=QtZRTxmJueNVzY+VlFaTRvlHY0Z/ZHbvXl3G0h2wBQM=;
+        b=m6BH8KF3L/4kzRwmAtt6slSbZfKV+D7TdFeZZkE0CwWu0bNgbnA0/qdHhmwyKkWbi7
+         Y8m3xOSeboEcpqZFrsPllQBxSARefk2utzXA944h+KY7RzHfGmdAdQokMEHRMwC4JVdv
+         KV1+cEGX3ahPZW0kiw4U1pbBIq6nWYFNv1WGuOCoTTi0429MaW9KyNJYZHt5miOg9J1r
+         A1LaPWc96u83Rong3o8HRc4PySVcQ089v5GDOWGKRelMHv7mPEYAO4GjDg65Cip9gNhT
+         /CG7zsINz+zi/QICHAiw4akDL6DvobtN9BL3vNu3iAJPRRTlqd4Dnp7jrhyJxUQhjmgb
+         2hAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791978630; x=1792583430;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=iv/bRCuogdosv5cF8ViFYTbQpVvWmELmTeOXQgFa24I=;
-        b=XdlB0TVlQiokcnUVF5A4MK+6S/+WW8I5XE4YLMFMvtApZYuB4ze/x01U38/Ey8RlBn
-         R6LrpF+BmdmF6zkR6m8WRkz6OA8B96cjq3+eWcO4mzUptRR4907oxH2MtQ6NW3BoAH24
-         6Jw2qlJ6vGykTISeSELgaUkeYeMqA+SraI6eCpSDpUfx2BZaWBXnGEj6tGr/hozdsQtT
-         xIrrf5DKRdUWrmTz/tgcdr7oWGSk2oQxTJ9RgFFFxO5HqaOvos/rpK66ft3pnw9VcpdQ
-         wnzWo4mOuyol622sXTgDwEsV3vZKKbXCOq7mT26C+tgLI2IBL9pRCeVQjC88Sq5to8+B
-         U5wQ==
-X-Gm-Message-State: AFq9FYK6U21l6a7yvexaXuPa7bw4lhPyyvimJafPZTpJROM75AZ9Y9XE
-	4//Dm5x7xzOrrLBz8k7My6n0C8RUbEen3aRnCP+z+2ZW8OvmVjMrJxr+ptuMKE66p/USjA==
-X-Gm-Gg: AYBFou07DRCwlxrprEU4C9zam8RxXUWkLn1KNIXW8M0L07r5lSUUVg7wb6pLxqmscTH
-	bDbosDS9tMIO/sQWu6O1wF3MX5uKHFEj56b/IeBJnx9+EWW6a/EqTqf4Ugk4iFeRrIkRmLFkYU6
-	XsugiDPHu241lYjP890rG9H9HVjpgAj4O11/REOZNMQFXqTEQ60695Bjzs98xoi6+ToIAa9DGUh
-	viPyeYDOU/tyS8nX7jjuvxmsZFt2dvGdN17q6monS7UzJ5FIa09KpBzf0nY8hjO0fk1I2Nn6rYQ
-	JpE8t+A9ZHd2mMXzsJUO7iIJXyf0S8KaCQikCDdmDa774nJWA0b4i13FCT0NGuKGgH1Lz6NB3Fb
-	E04Lo7Z7ahWXbQMinDnTPOZRs7DVwEGjdA9YhNQLAWP5cOywu2D/3et0AAG1LcNKlGTxkOPGq8O
-	b5/s8KtBEMwKQI7Jyef5lvVv32Iy4bvnkr5DgQM6VwyXO2OY7aK9vEd1ud/TaDZh7k5CUEtBW/b
-	1dqc4ZMbg7xhb0L/OQEXp8nWErT2E96+RQTIEw7hTEuK1SSXmIhpuBt0X2XUMqoosez0I7w6Z81
-	AF6jrF5Eo6XPWTi6VwVjiINisRahy31+MHpI2uTq9SPz/fCRS87ERYtB8tQHgHCBCoxEDEt7bA=
-	=
-X-Received: by 2002:a05:6402:a252:10b0:6b1:e87d:5b60 with SMTP id 4fb4d7f45d1cf-6b1e87d5d99mr3325979a12.15.1791978629934;
-        Wed, 14 Oct 2026 04:50:29 -0700 (PDT)
-Received: from localhost.localdomain ([104.28.251.98])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b203865008sm1007222a12.19.2026.10.14.04.50.20
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 14 Oct 2026 04:50:29 -0700 (PDT)
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Subject: [Outreachy PATCH v2] diffcore-break: remove USE_THE_REPOSITORY_VARIABLE
-Date: Wed, 14 Oct 2026 12:49:04 +0100
-Message-ID: <20261014114904.85300-1-okhuomonajayi54@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261014081209.61966-1-okhuomonajayi54@gmail.com>
-References: <20261014081209.61966-1-okhuomonajayi54@gmail.com>
+        d=1e100.net; s=20260707; t=1791978771; x=1792583571;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=QtZRTxmJueNVzY+VlFaTRvlHY0Z/ZHbvXl3G0h2wBQM=;
+        b=NqiCWqro0PjPZMywGZcHKyT8bKZLmSmRCjskqVxlF2wDHQUsppxnlNssNEoKGX1k6z
+         UmmnvuwAZ5B+QNUBDMi8a5wWex5eqmr5U0lJC6YcwnlrMha+LJkbhgwAM4vSoQEoCtNP
+         /CNXXkR3UB4v5cLBwv5wFpSS998QgDkI0ZO2Q0b94MiXwnDQBKuzGFd8JvK1vV8413wG
+         kQDuDkzIVq0dXSASEJmwoDNICEux7dqDVFS0KM+OdZIpm++EwBEc/2j1YwaC4Ck4o1UR
+         +3KnXWznP7LzdCbbyMu+zUx0PHfjboUUpNN/mbbz2WL9WD65UBT4BWNdioA+2Oztv6U/
+         0RXw==
+X-Gm-Message-State: AFq9FYLC7ahxKn5ofiVOLARiNajqJ/+r7nH1OZDY1FFwupSOmTnoALSI
+	C7ZIUFjStKiRstfgjyL0sbGA/EYHKX2Ga8UAQz5RXsz9Q6N4A63t9i0gFD/jqQ==
+X-Gm-Gg: AYBFou1ojZH/9rFBegB3N4/o2HTi4e+x+nlc33ldTPP8lEzR5wKKZgrCSgdvlent4Vf
+	ADowlaSqmoCwpQuRG92tpxApqtr8Zea0nRcpxU0Eas1eX8dKBnpb8mVL185x/ecP7clHLmRwzSn
+	xJJAVXLcfEnkgYYUx+jtlhMFuWELkJ88Tw/o9PVCC+lC0kqOy3LXWbXlRChl7rqY+ISV08Zx4Ig
+	AYvYa8k2yVgRZcS63iXL7yOC6CSXICeH+phPRPn23DQgpR9lR3cNPMo9oa8myQkFzeSXTihVxkV
+	+xPrsNQACywqDJQ4ok1kot/4bjVbtHRU5QaO3PYiYrzvlE9X8ZsHPxJWekDyiB3YMZS7VFaOPtz
+	OxckypSWhmQ9Lr2afOZC6nczSIdmrL2YDIFBt+wx+O1IynFW44LP72tWkupDda+rM4ZdZCk1BPC
+	le26A7paXtUB3WAaVhwVEAlBdlqDPRPQYWo+0XNPxDwlumLjdjvMqh4tgQD5DG9f9kpgIjWp6VR
+	Z31
+X-Received: by 2002:a05:6820:4d09:b0:6c0:7620:fccf with SMTP id 006d021491bc7-6ef0f3ada9cmr10367474eaf.57.1791978771332;
+        Wed, 14 Oct 2026 04:52:51 -0700 (PDT)
+Received: from [127.0.0.1] ([135.232.232.22])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6fa292f6ad6sm3344821eaf.9.2026.10.14.04.52.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Oct 2026 04:52:49 -0700 (PDT)
+Message-Id: <pull.2256.git.1791978767497.gitgitgadget@gmail.com>
+From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 14 Oct 2026 11:52:47 +0000
+Subject: [PATCH] t2030: modernize test path checks
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Srujith A Poojary <poojarysrujith@gmail.com>,
+    Srujith Poojary <poojarysrujith@gmail.com>
 
-Since 84325f0730 (merge,diff: remove the_repository check before
-prefetching blobs, 2026-02-21), diffcore-break.c no longer references
-the_repository, so it does not need USE_THE_REPOSITORY_VARIABLE.
+From: Srujith Poojary <poojarysrujith@gmail.com>
 
-Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Replace old-style file checks with test_path_is_file and the helper
+test_path_is_missing for clearer failure diagnostics in test output.
+
+Search with: git grep "test -[efd]" t/
+
+Signed-off-by: Srujith Poojary <poojarysrujith@gmail.com>
 ---
-Changes since v1:
-- Removed the last paragraph of the commit message, as suggested by
-  Usman. No code was changed.
+    t2030: modernize test path checks
 
- diffcore-break.c | 2 --
- 1 file changed, 2 deletions(-)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2256%2Fpoojarysrujith%2Fmicroproject-modernize-path-check-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2256/poojarysrujith/microproject-modernize-path-check-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2256
 
-diff --git a/diffcore-break.c b/diffcore-break.c
-index b5bcc956cc..71d0e48beb 100644
---- a/diffcore-break.c
-+++ b/diffcore-break.c
-@@ -2,8 +2,6 @@
-  * Copyright (C) 2005 Junio C Hamano
-  */
- 
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
- #include "diffcore.h"
- #include "hash.h"
+ t/t2030-unresolve-info.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t2030-unresolve-info.sh b/t/t2030-unresolve-info.sh
+index 9af24b1204..56a7f849d6 100755
+--- a/t/t2030-unresolve-info.sh
++++ b/t/t2030-unresolve-info.sh
+@@ -170,7 +170,7 @@ test_expect_success 'rerere and rerere forget' '
+ 	git rerere &&
+ 	rerere_id=$(cd .git/rr-cache && echo */postimage) &&
+ 	rerere_id=${rerere_id%/postimage} &&
+-	test -f .git/rr-cache/$rerere_id/postimage &&
++	test_path_is_file .git/rr-cache/$rerere_id/postimage &&
+ 	git checkout -m fi/le &&
+ 	echo resurrect the conflict &&
+ 	test_grep "^=======" fi/le &&
+@@ -182,7 +182,7 @@ test_expect_success 'rerere and rerere forget' '
+ 	check_resolve_undo kept fi/le initial:fi/le second:fi/le third:fi/le &&
+ 	test -z "$(git ls-files -u)" &&
+ 	git rerere forget fi/le &&
+-	! test -f .git/rr-cache/$rerere_id/postimage &&
++	test_path_is_missing .git/rr-cache/$rerere_id/postimage &&
+ 	tr "\0" "\n" <.git/MERGE_RR >actual &&
+ 	echo "$rerere_id	fi/le" >expect &&
+ 	test_cmp expect actual
+
+base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
 -- 
-2.54.0
-
+gitgitgadget
