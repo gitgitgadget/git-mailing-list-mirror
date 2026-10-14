@@ -1,140 +1,149 @@
-Received: from smtp118.iad3a.emailsrvr.com (smtp118.iad3a.emailsrvr.com [173.203.187.118])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB623AA1BA
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 03:31:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.203.187.118
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE801D9A66
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 05:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791948705; cv=none; b=MHSsjQu9ZS2IFBVaTBPpBGjBI2ryjIkK73Lq8qhofMFkpvV9W0z1XF2vqRKIt6I3Kqiz6rbMO6ot4l9b8ccpzr8+ql/6+fqSRZoUkPIP6hCbkgiF2qYUxdgUAUTTbWd9K4beYo5m0Q3HxGBvGM7Yez5okhdjECpJxXJk5FCAsOg=
+	t=1791956193; cv=none; b=OUx5LEzFy84mtdAggaefkGvnhlqePwcBoCdrEuBs97DE7MyvOlbNdchRrIJIi3Ebi5jfhprpPIgr2DGUZ2gN0SChVtLvQqqekVut9Z0wlQT+mDNME2VfuAWGF6sM7LHF/CbH08/6/Tm6CKpBsixoPWOjPW8byjEW2RoUd1TsQwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791948705; c=relaxed/simple;
-	bh=AOni52puZc9fZ+yFX2ZrEkRvI2ifRX8kqH77gs9BpNk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cp9xaJZfvPZIra95+bEFZUzkFses8SRgJHPJDOyQi3xBhsV1ue7lerfu21r0zdtVVSC1H9YRHJknnSYNrDgtuxN4qSb6fYFaOzBcx9No/c0PK/6nbvfEjVWmbmoCKPIiRQKcqMRs+6M/pcO+hV62wATQmZIndpxTsnkV3ftQnkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jonsimons.org; spf=pass smtp.mailfrom=jonsimons.org; dkim=pass (1024-bit key) header.d=jonsimons.org header.i=@jonsimons.org header.b=S4M4mHDC; arc=none smtp.client-ip=173.203.187.118
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jonsimons.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jonsimons.org
+	s=arc-20240116; t=1791956193; c=relaxed/simple;
+	bh=sp9Y03GCMpsoHwRmzn5v8etwaJQeSVqydu5FBHCeNpg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AO3mwxn7Byyvs7jNNUrC6tIafXvnsizEgTjRa4B+KHj5x2FXGTo3cIg1JZ9PCqEjm5yRMne0bMlAdjIIrdLtmD/20/ZVszfR4u/BdlapRTjLdgNQ6q4PrirUH3XYcibO//zYoB4P3G7lB0eb/+HyRYr5iXYLd8AUMlIbFnmTuag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BIjpLnyq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sipPD1q8; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=jonsimons.org header.i=@jonsimons.org header.b="S4M4mHDC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=jonsimons.org;
-	s=20200911-u7gnnm7o; t=1791947651;
-	bh=AOni52puZc9fZ+yFX2ZrEkRvI2ifRX8kqH77gs9BpNk=;
-	h=From:To:Subject:Date:From;
-	b=S4M4mHDC45QiQaeO8/wtnagcLl80RwUM0OmFZgPzmXbT60LCL/ARfwK+iaXxToRgP
-	 JRArzRo+3pTGseayqlk8veKnfi1R7V5S8QBOnw6zh0O5bQBFyGugWovs82SaP1T/V5
-	 4FMFBVJjWFTLWEUrSq6L9F0PwKv5K8Blm+Ol4zt4=
-X-Auth-ID: jon@jonsimons.org
-Received: by smtp23.relay.iad3a.emailsrvr.com (Authenticated sender: jon-AT-jonsimons.org) with ESMTPSA id 92E0D25309;
-	Tue, 13 Oct 2026 23:14:11 -0400 (EDT)
-From: Jon Simons <jon@jonsimons.org>
-To: git@vger.kernel.org
-Cc: Jon Simons <jon@jonsimons.org>
-Subject: [PATCH v2 06/12] t5408, t5410: test duplicate updates without relying on the client
-Date: Tue, 13 Oct 2026 23:13:41 -0400
-Message-ID: <20261014031347.50433-7-jon@jonsimons.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261014031347.50433-1-jon@jonsimons.org>
-References: <20261009192953.81794-1-jon@jonsimons.org>
- <20261014031347.50433-1-jon@jonsimons.org>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BIjpLnyq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sipPD1q8"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1E17B7A00D4
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 01:36:31 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Wed, 14 Oct 2026 01:36:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1791956190; x=1792042590; bh=KQnnhG4swp
+	bpMjl+CAbECZ9IJZc+AZb3bPBw6euzS3k=; b=BIjpLnyqjie8jCJPeZTdzBBBr5
+	/tBZPnMHE16M/vHc+FbNQb+2Fj5HY+3uGWAWv4cj1hAyLi3mTl8WbaOxMAp0slKf
+	kbYdeaOWHMORmrE6lgCD2nHSc/hHXW0BryRLO9DdnA/eb8GxbNeKvg7tCqhnocGj
+	Dilc2nAA6+1l3+3BaQuwF6nCPX9tTdqVEkoYBltMyXLwIWOD+zmarBHLQUPOkvvO
+	DnQDlOhUWd/cJzRnJhfSFQ78TJ46nzGRqiBYdUSguz+4/cJm60DuLZzM28DywZWZ
+	31oxLRqMW+TdHJzFWUCFBERgipay4T1eDAUEkQmM8zr7jFfvhLsTd/X/MgvA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791956190; x=1792042590; bh=KQnnhG4swpbpMjl+CAbECZ9IJZc+AZb3bPB
+	w6euzS3k=; b=sipPD1q8VfZ9XWr5wJSb5maOZLC5VwqudYERXfbrnjkHNfFc7Y1
+	YAwRD49lJsMSvWTYq9vw/qtVJnmnKFNBFnCQi7widtJLE4e2zPym2n+PsjXHj4hs
+	f7O88jWvZTsx8R7rRZslV8QPvXTBuaD3jXfBIEonvk1XOLBGB2oUW4AFY6B2yx+9
+	g8V6X5e1Wnk/HVWINZWJ5CBC0ZlSo/yWX9Qdwu1azM/kOzZNqyw4BMqQbOggDyEa
+	bI+psjCuPxH2Rnlb61U002zDhwQFi1ypN4tMpJXtfOfBwXq/h6UqG9XErghVAv8d
+	IckiYh2PYj/sF18rL6qzVG3UuWCLyLkS4yA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791956190; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:GDxsVUzE8LPdGsimhsLcVsGj08gHaE/Ms3d8KtSdPGyysju
+	Qg/pv60UUikjynWI4GMQcZMyZbSKjLizc057gOJnOV5YGmvFCGBh1QpCm9GzpTXK
+	5rovn20FVdes/ni+IZbCvReEiPC3ojZtqeSKj/umTRv/a6GuSm5FVNJMYyL+reH5
+	3pS5tcW0CFH3+ncB1TLVPEXju8/bxLG0En4lU66/Cu66xV8vq1CrCInOuCMCANuh
+	GdM1E2qIKf3sIfl9aDWUpZiBbgxmbYRQUKFbuox9GOc6/sutZ91a/6Mioeyf+Zfa
+	YGWme54d5FvCw5zWZyRdudfwIZRpYSkqfuaa5HQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:J6akP/ycdzqLnSIM7y2S4CdA5/GMgO/EYaQvJWfMDFk=:sp9Y03GCMpsoHwRmzn5v8etwaJQeSVqydu5FBHCeNpg=;
+X-ME-Sender: <xms:3hTPagzl7SblP6kSK1lLw9g4HiQ2aXYpaG8PjLTH8EhGDntd4f7hLA>
+    <xme:3hTPatm9EMIDGjw8viDszmJlh6SMm76X2bwR7ANr1yLsWfmFLGguk1dz685IU-Yy6
+    2Li-mRicI2q0Dby4iCGLk6k_pXofubnoG7ZCSt2qw6mNrdwb3cT18Q>
+X-ME-Received: <xmr:3hTPapmaM0SrPL_4CI7SDPNyA_FZbcK1PJL8FInPrh4zLZo-OLdDFg>
+X-ME-Proxy-Cause: dmFkZTGoDuhgiBEfKY3EcfYLdkSn3kM8cXa/NprLTw6v2KVbsHjIgX6LWgbGl5oYXR+gqQ
+    gTUav0CEyzMcfI+azVn9awjZqArGRjzh7sB/Tl+9N2LmYa8xxcvYN+zBgnMSgUCgwMEzID
+    7h+XUAk9Vng/XgNpTECJvCQepv65t+SB//WYVvVTEpfU3J+wEtgZKFqzkU8jqIsGAtE80Y
+    Txy7uJZqYOR1Qo39JpoGuepyhDJtMa/83jqb8ybJgRpf7pRJHorJ74kMy4OFrwmiTxpKmk
+    K6Jwo58cYrl9PVV3m9z4vSl+e3R900nFr06ai65aHPZrifszeYhJfYNwQRfl/tUC7l2oEu
+    l8LCqPjEd6n2hZWZgNZ3AkowwLY3QcrozxJl03v7SlkxbAboHxsVblHKereID5qmHSEla1
+    OMz0Pjj+qSfGFrGhYtMCcQJRqcAZEc1RLNHKbW8iHmbV0A33Twmg/xJAKcoS5FjvMdLnDf
+    miLjYoFHpPRg+uKVpfhV0VSs/978ix/ItFqZlIx5H8ez5r9jccJGZ0ew+8e0OQK7TeNoNw
+    sRtk3wXFfcxnIgZxG4QsmT3MkJ87ZSlKlfCgEzhP0SQb9ujYB3QGK/OOVMVivwuwSj6xg8
+    zdwoodmFCB6EACk2cOA0reboDuZNnBstdTfzyY/pQCrrtr9aHp0vCCel6saA
+X-ME-Proxy: <xmx:3hTPavxnGiljuhQh8F94lNEcmyY9sTvoqq2AzD56WWJukqCuPsDV4w>
+    <xmx:3hTPauokA6zPYvybNMAx_BGvwHs1rz_wz5j1ma0FBzVkIIl6LS-1_g>
+    <xmx:3hTPau73BgMcUOkzf-JgZDFBp4FqeLNlT4hjR3WLnc_oEy5oWAdktQ>
+    <xmx:3hTPaldAY2tX1g1Fi62uzBzdYsrMW5lhG1rhWZTTe3ZWTiv6ciBccQ>
+    <xmx:3hTPaltSCQp3jUZ42W975oyNOS96kaN1XpNXFRLBeBvjF8Ck44b99FII>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 Oct 2026 01:36:29 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 6b9132d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 14 Oct 2026 05:36:26 +0000 (UTC)
+Date: Wed, 14 Oct 2026 07:36:24 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Thomas Bachem <mail@thomasbachem.com>
+Subject: Re: [PATCH v8 0/2] rerere: wait for MERGE_RR.lock, but not in auto
+ maintenance
+Message-ID: <as8U2Ao_oX5KsI1b@pks.im>
+References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
+ <pull.2214.v8.git.1791893274.gitgitgadget@gmail.com>
+ <as4ikRUi0NZv_jKr@pks.im>
+ <xmqqy0c1zi6j.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Classification-ID: 20ae8d58-78b7-4215-81c6-d8119c94fa7d-7-1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqy0c1zi6j.fsf@gitster.g>
 
-The existing t5408 tests that use send-pack to transmit duplicate
-updates for the same destination happen to rely on the client not
-recognizing the duplicates when the remote is empty.
+On Tue, Oct 13, 2026 at 09:20:04AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > On Tue, Oct 13, 2026 at 12:07:51PM +0000, Thomas Bachem via GitGitGadget wrote:
+> >> Changes since v7:
+> >> 
+> >>  * The rerere.lockTimeout entry no longer says that the command fails when
+> >>    the time is up (Junio).
+> >> 
+> >>  * The lock tests grep for the "Unable to create" message about
+> >>    MERGE_RR.lock (Junio).
+> >> 
+> >>  * The wait for the background unlocker is now in test_when_finished
+> >>    (Junio).
+> >> 
+> >>  * The rebase --abort test aborts its rebase in test_when_finished, so a
+> >>    failed check cannot break later tests.
+> >> 
+> >>  * The test "merge fails once rerere.lockTimeout is up" never waits, so it
+> >>    is now called "merge fails on a lock it cannot take".
+> >> 
+> >>  * In patch 2, rerere_gc() takes RERERE_NOWAIT again instead of its own enum
+> >>    rerere_gc_flags (Patrick).
+> >> 
+> >>  * The comment about waiting in setup_rerere() now says "by default", and as
+> >>    in patch 1 it sits directly above the call that takes the lock.
+> >> 
+> >>  * A comment in t7900 says why the tests with a held lock create rr-cache.
+> >
+> > I think this is in a good enough state by now. Thanks!
+> 
+> OK, thanks for writing and reviewing.  Shall we mark the topic ready
+> for 'next' now?
 
-As a result, they are the only push tests that exercise each of:
+Yeah, let's. Thanks!
 
- - receive-pack rejection of multiple updates for the same ref, from
-   9d2962a7c4 (receive-pack: use batched reference updates, 2025-05-19)
-
- - send-pack's receive_status() handling of a ref reported twice by the
-   remote, from 77188b5bba (send-pack: fix memory leak around duplicate
-   refs, 2025-05-19)
-
-Add explicit tests for each of those paths, in preparation of an
-upcoming commit that fixes the client to reject such pushes before
-sending any update.
-
-Signed-off-by: Jon Simons <jon@jonsimons.org>
----
- t/t5408-send-pack-stdin.sh | 12 ++++++++++++
- t/t5410-receive-pack.sh    | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
-
-diff --git a/t/t5408-send-pack-stdin.sh b/t/t5408-send-pack-stdin.sh
-index ec339761c2..3c47be1af8 100755
---- a/t/t5408-send-pack-stdin.sh
-+++ b/t/t5408-send-pack-stdin.sh
-@@ -89,6 +89,18 @@ test_expect_success '--stdin refs come after cmdline' '
- 	test_must_fail git --git-dir=remote.git rev-parse foo
- '
- 
-+test_expect_success 'send-pack handles repeated status for the same ref' '
-+	clear_remote &&
-+	test_hook -C remote.git receive-report <<-\EOF &&
-+	cat >/dev/null &&
-+	printf "%s\n" "unpack ok" "ng refs/heads/foo first" \
-+		"ng refs/heads/foo second" 0000 |
-+	test-tool pkt-line pack
-+	EOF
-+	test_must_fail git send-pack remote.git A:foo 2>err &&
-+	test_grep "remote rejected.*A -> foo (second)" err
-+'
-+
- test_expect_success 'refspecs and --mirror do not mix (cmdline)' '
- 	clear_remote &&
- 	test_must_fail git send-pack remote.git --mirror $(cat refs)
-diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
-index 09d6bfd2a1..8fbc0c6bc9 100755
---- a/t/t5410-receive-pack.sh
-+++ b/t/t5410-receive-pack.sh
-@@ -97,4 +97,39 @@ test_expect_success TEE_DOES_NOT_HANG \
- 	test_must_fail git -C remote.git rev-list $(git -C repo rev-parse HEAD)
- '
- 
-+test_expect_success 'receive-pack rejects multiple updates for the same ref' '
-+	test_when_finished "rm -rf repo remote.git" &&
-+
-+	git init repo &&
-+	git -C repo commit --allow-empty -m A &&
-+	git -C repo branch A &&
-+	git -C repo commit --allow-empty -m B &&
-+	git -C repo branch B &&
-+	git init --bare remote.git &&
-+	git -C repo send-pack ../remote.git A B &&
-+	A=$(git -C repo rev-parse A) &&
-+	B=$(git -C repo rev-parse B) &&
-+	{
-+		printf "%s %s refs/heads/foo\0report-status object-format=%s" \
-+			$ZERO_OID $A "$(test_oid algo)" |
-+		test-tool pkt-line pack-raw-stdin &&
-+		printf "%s %s refs/heads/foo" $ZERO_OID $B |
-+		test-tool pkt-line pack-raw-stdin &&
-+		printf 0000 &&
-+		git pack-objects --stdout </dev/null
-+	} >request &&
-+	git receive-pack remote.git <request >response 2>err &&
-+	test_grep "multiple updates for ref ${SQ}refs/heads/foo${SQ} not allowed" err &&
-+	test-tool pkt-line unpack <response >report &&
-+	sed -n "/^unpack /,\$p" report >actual &&
-+	cat >expect <<-\EOF &&
-+	unpack ok
-+	ng refs/heads/foo failed to update refs
-+	ng refs/heads/foo failed to update refs
-+	0000
-+	EOF
-+	test_cmp expect actual &&
-+	test_must_fail git --git-dir=remote.git rev-parse --verify refs/heads/foo
-+'
-+
- test_done
--- 
-2.55.0
-
+Patrick
