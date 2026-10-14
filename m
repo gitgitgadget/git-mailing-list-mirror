@@ -1,65 +1,70 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E8C348465
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 06:09:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254573C09F3
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 06:09:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791958175; cv=none; b=fUsPDWOAE5k2Z7VR1wA+q0S/h4P0fFLt/ANgKIK3aBxzCp+1KuqrW1Zvy0+8AMYmcdeoSFKhOh3oAG3UgeGI1E4H7uPxO41QWiFEQqFVA137IsdBi2X+vjG2mHwSeBA0e4ZFvfAhUnTrjuTdm+/NPz/jO1ZhwWmgtl+waJG9hZg=
+	t=1791958177; cv=none; b=VW7H+/4qtaDqbCBmDT9wnC74JYBKcWEcB65DgPAM3KJBhQ47v0lGKyQ62RRJ7wuUi3jQsh3cnp6GXlg4BYSmrWCc4MVf1psHLAKOfr7VzSPMSrA0SPpYLwGYkn9W2AaLWO3cGwohCeCz8xpMdbvYZqbaxoYuNzuwoVANgutQbZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791958175; c=relaxed/simple;
-	bh=9+NOAMXmY2WAdiTvPBzvBaZWX+KbPYeOeUpzz9+mIcA=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=OJHDhVzrn9uxkgFpPlbTGet6kp5Dq6tCNzIHgit4ChsTeKm7slKVkeA6EjpdFYLr5niRmCinF5lbUDdxQs/HhH164Vvz/sWUoWQ0J8XpZDvZx9KNOIaj0OyvWflKepuFCltpIpAefEr2NRUht1XFduFv0P9MlaBgJNI7KKP0ZTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m2f9OzpI; arc=none smtp.client-ip=209.85.160.181
+	s=arc-20240116; t=1791958177; c=relaxed/simple;
+	bh=4w9H36caIe4h2JLhXPhTODlyYKGAP/zRRLqDnN8ahjQ=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=nAU4XvYQKHZaA4zX9N2aW7vQIlLC5VFql6rQNfFAYeTOWAg1xeEy0dfERvoHtkgxVq4QEljwW1WVbGsJAOyGiJC4iQkuBjaTgFuvdNRRiGCkSv3S8q+VecWtwxmYw/Fro2jGykfb3xnqFxDU4+7jUgNISWsafUEfrXZLTktojVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RvCQpaJf; arc=none smtp.client-ip=209.85.219.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m2f9OzpI"
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-53397554beaso142451cf.3
-        for <git@vger.kernel.org>; Tue, 13 Oct 2026 23:09:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RvCQpaJf"
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-91b52ba422cso42299776d6.2
+        for <git@vger.kernel.org>; Tue, 13 Oct 2026 23:09:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791958172; x=1792562972; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791958175; x=1792562975; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=j7E8OZ6V2kFSqL6LbxnYviZftFPa79U63csUFSmQK84=;
-        b=m2f9OzpIZI7QoeIlFf8cZygh6hZdbP4zzLw97nFIEKIARWAUYlRuyRkqwBPjV/POmw
-         4jYIS4kRjMqn8VJs6exq8tMixiio3iV1DAEC0QZllG/aAC3Ei7KFacEIKBM0rpVcEzZt
-         f38//lEG5YZzBTnuDyP5sXkpLRP2iDwVm9WVLM7JYqx/BgcUa6x0DBd7N4TtZ+n3KgWN
-         RmKPG+5utY6FBeJrraIZxouynRmBQ0YXhxLeqXGOPhOa1YU4J4hQDBppa49J6n8VR1iP
-         YrU2I9D+GCjS3WcIMq9JA72BAoykzqDSqoFb1PBrFTVOJtMkS6p9LwI0ZH1d8inWn/nl
-         qAaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791958172; x=1792562972;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=j7E8OZ6V2kFSqL6LbxnYviZftFPa79U63csUFSmQK84=;
-        b=VM8yOYLFpmQdPZoK/174d1bvMtg3tt8Ck1YpC6WUm7jVw0QAQ5/imGFEoGyCavZU8s
-         DEcrBc6vGwVZGQJ+GiPrBdNebFcNQ4HqDY9ZrcuIfu6LHwQLOHs8lb6MeKQuqJKGwEL7
-         waPYM/ws/ADTXTtLFD+Iil0GmOqRkTe0EibPbs6tTASjUc/mnUR+5rtvwHbUdIwH9uYP
-         WDNGJvWkqp+cWIWrxn9b4jZ3D5Ergg0tUiPZwk9xxdfYqe4vFLcO/E0zeYc8VWp1VsNb
-         Ip0cBYgpJ2cn/8pTfHHK4Y62ax5f1C7Z1PDWwNVynHuV/VBlbg9jWwcsh8MNJiaQi9h7
-         BFgQ==
-X-Gm-Message-State: AFq9FYJLik+dPpC09gMKCeXMxsictvxn66KagGagA4BY9MouOlYnLbvY
-	XZPARIVb1S2kfmQVJPURjJN2scHxZ2mUynEGh87zw0w1drRoz3QcUeUkiTi8+g==
-X-Gm-Gg: AYBFou3aO9qkpzWQBNCRP7fO45TcbGh1q3K4DQ7BZ2ZHgDPa1mgRXe6XLbq9pRgfhHu
-	HlxEVChF6eKPsYnw3FfnKCaDKw4jGmnUt6/aZloV3v2Y7cbfVSZTsJiqoacG7k8eDA/hutuKgSY
-	yKGeCeCLDQUzWu5I5HmkQi5rP1Ui2HF09LdfuJInJV8LgkQvrlqxUa9hq5CLrpyWOjWan5x+y3Q
-	rZZ5ZYGOLxPD20IPD8H4PDpfMtYX5uw/ffsH0vHJbL2Y5Ju9VZp0LBmgic9wLma8m3gk5VGd1Yl
-	0TpXrLs7jm37VNLxoCLJfbh8gIHpxU+TJ+rbGXHgrPNT5mC+nvBsVMlFoCgk5U1LUxhqZKjWPEL
-	3mqIyHdJR6O6/q2x/aAFXJ2u1NZgWu3pA7t35+VStTfLB8yqXv4HUQu/33myNiaqrrIfp/cNXjT
-	zg7bTDzWo7ZDkXslKL8IiFnrpOkIRN/vNdhpN9Zab8F5VKYkSvpKzzOWalRPDsV3LDJNvA8pkp
-X-Received: by 2002:a05:620a:1a03:b0:93c:ba44:673d with SMTP id af79cd13be357-93ebd1b7173mr2631866285a.23.1791958172220;
-        Tue, 13 Oct 2026 23:09:32 -0700 (PDT)
+        bh=qAvJ5grP30AbSfEdZCtUcAfr1EYbGfMSU8/ycn0unQI=;
+        b=RvCQpaJfpBYRhhcdRDyYzz61CSa8OJMrp0/XVS8nXj+PSsnghaZBbLMnGV/2H5cJDV
+         xbAS5MFfE+/6NBECMvmIIpg8f2G07VFGo7f+hHgJYW/J5/nwY6a2ZS72HHq0NQmIW7gf
+         R9BdnsFlILuqz5ASWB/6HP6ZzY0R4U5RBIGvUVU3Gr4MCKhmWaZtfGEw1sTNP8MzQpeP
+         5lxKAGyJNkmNsvlBBati0wbhmSVxr6D84VR+1YdX18CTErpw6/0XXUV8J+qrWdeCwOGT
+         Khlks7wlHQ2mh2YIoC88QQkTJDJOval7r/emzymVyFYLx05ThVJMSuR/O/AVq0Hb7AMj
+         3kFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791958175; x=1792562975;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=qAvJ5grP30AbSfEdZCtUcAfr1EYbGfMSU8/ycn0unQI=;
+        b=Q7U6Y6TBKoKMwMInvfJFy7iIG2T9wv/xJMYihLuwFY5eKW2KIGAHbRHIuiaX0LU4CA
+         S+RdDtBtoDq7s7G2VQts5lw3BReM5XUYi/pfNGq/2vAjOPlnM9GsyXY4zifX/60RhOS1
+         ifI8+PbuOj1233gBqO5GlTUHMbReTn5ob6m32cvpLqyCvwAWy46sCCg3db33Ni57CXTS
+         EDAX72WpSdPc+dhSpYRr6o++v13YyXpbmD++31SQ//OofBoVhrS0X33tJ9VaWFwR3NQ7
+         xX0pU0yUT+nxNy5ERSuc9W3qZ2FY8m99Zcx8yr1eTtfsJNU8EkxFSy3a5pk8IiUG31+D
+         M7BA==
+X-Gm-Message-State: AFq9FYKhTz6moaE0JqFrPDQWpNkW8ibl3aCBNWRB2KTWfIt5kHBN73ui
+	2ZAxbtA3Rh9oanS8PoaUynk59PqhvD18QgJp0KG/B62Rnho+iTdT5/qFoPTeRw==
+X-Gm-Gg: AYBFou09KSf8LWSDtU9rAT9HIpnKFpy4ppYV9q/HaRpHagJ21+Y5akmc6YrLTBuFmUh
+	9RA7C7ri3lyq8FdvVMr53CCNz6UmRcOEL2r3KIXMWjpDatQd2y+pcY5wFKlwUn95dQGpFZYYg34
+	FUfeslAgxWDGeo7ciVr1jyuqbP+OBdH1KS/ez4VgwwXA3joCzvDEu/OYhSncw2lmnu4UuiuW4Aq
+	SOQZ/PUujW5pwUXkRxwDgD0q+wmU04cdt5w48Tak6nThFSVN9oW7kdyPOFfZf8bzyk6vCDv1FUO
+	sIPqRdV5wTvr7p4auMSmlr5Tv7fD2OUNkIcJ2WqeQ8LklP7BIMq5FUtvPjmzJ5CqP88FrDJZI5K
+	BL3eCHyB9/vrF6pHmrjRGeqDPrQaDeI9EGWF/LqN3kq7FKwC29sGfteFWqPwBRz2+D8ZxnDaBDk
+	Id9Fc3f+QDxEOM03Ha7WwUip/al1V2mERJHnv86o+qFh0Ihu1/UPr/rlxP8yvBjIQTN0vfSa5dB
+	C6jWKxkLYY=
+X-Received: by 2002:a05:622a:2483:b0:51c:1590:8e13 with SMTP id d75a77b69052e-5359f4892a6mr250491831cf.4.1791958175092;
+        Tue, 13 Oct 2026 23:09:35 -0700 (PDT)
 Received: from [127.0.0.1] ([9.234.149.85])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93ef500643bsm419457085a.13.2026.10.13.23.09.31
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5359b6fbdcasm118051261cf.5.2026.10.13.23.09.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Oct 2026 23:09:31 -0700 (PDT)
-Message-Id: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
+        Tue, 13 Oct 2026 23:09:33 -0700 (PDT)
+Message-Id: <70a909de18e8cd8d282439fb51a9399baa8c7be8.1791958171.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
+References: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 14 Oct 2026 06:09:26 +0000
-Subject: [PATCH 0/5] Address overflows pointed out by Coverity
+Date: Wed, 14 Oct 2026 06:09:28 +0000
+Subject: [PATCH 2/5] http: use `size_t` for byte position in fwrite_sha1_file
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,34 +75,51 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This patch series is part of my effort to bring Git for Windows' Coverity
-reports down to zero; Previous patch series have been merged in 347fe8a91b5
-(Merge branch 'js/coverity-fixes', 2026-07-16), 0b75ef5168c (Merge branch
-'js/coverity-fixes-null-safety', 2026-07-19), fcc8c931b53 (Merge branch
-'js/coverity-unchecked-returns-fix', 2026-08-24) and 8bc9c7fcfd8 (Merge
-branch 'js/coverity-fixes', 2026-10-03).
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Johannes Schindelin (5):
-  archive-tar: guard get_path_prefix against zero-length input
-  http: use `size_t` for byte position in fwrite_sha1_file
-  wrapper: reject insanely large byte counts when reading/writing
-  git-compat-util: add `signed_mult_overflows` and `mult_overflows`
-    macros
-  date: avoid overflow in approxidate relative-time multiplication
+The `fwrite_sha1_file()` function tracks the number of bytes written via
+an `int` variable, but the total size to write is of type `size_t`. When
+the HTTP response body exceeds INT_MAX (~2GB), this causes an overflow
+and a heap under-read, then writes that data to the local object file.
 
- archive-tar.c     |  2 ++
- date.c            | 26 +++++++++++++++++++++--
- git-compat-util.h | 54 +++++++++++++++++++++++++++++++++++++++++++++++
- http.c            |  2 +-
- wrapper.c         | 10 +++++++++
- 5 files changed, 91 insertions(+), 3 deletions(-)
+The hash check afterward would reject the corrupt object (so no bad data
+enters the object store), but the under-read itself could leak adjacent
+heap contents to the temporary file. In practice this is unlikely
+because curl delivers data in small chunks (typically 16KB per callback
+invocation), so in practice, the total size is far below INT_MAX in a
+single call. However, the function interface accepts arbitrary sizes,
+and the accumulation across the loop means that the `int` variable grows
+across calls within a single invocation, not across callbacks.
 
+Change the type from `int` to `size_t` to match the type of the total
+size. This is a hardening fix: the attack surface (a malicious HTTP
+server triggering a >2GB single-callback delivery) is theoretical under
+normal curl configurations, but the type mismatch is a genuine defect.
 
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2253%2Fdscho%2Fcoverity-fixes-overflow-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2253/dscho/coverity-fixes-overflow-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2253
+Pointed out by Coverity.
+
+Assisted-by: Claude Opus 4.6
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ http.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/http.c b/http.c
+index 4af3c29c76..809471f436 100644
+--- a/http.c
++++ b/http.c
+@@ -2848,7 +2848,7 @@ static size_t fwrite_sha1_file(char *ptr, size_t eltsize, size_t nmemb,
+ {
+ 	unsigned char expn[4096];
+ 	size_t size = eltsize * nmemb;
+-	int posn = 0;
++	size_t posn = 0;
+ 	struct http_object_request *freq = data;
+ 	struct active_request_slot *slot = freq->slot;
+ 
 -- 
 gitgitgadget
+
