@@ -1,117 +1,107 @@
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881622FE05C
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 07:26:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6174A1E1A
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 08:12:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791962813; cv=none; b=Q69QAWNakawjmB5hl42EDWad3+RLDWADIvNsXUNMy1WU8YWBmXnZ5aKEfi2tWbLwl5SwwPIO7rnWF2+djxWCXnobUizcmZ6SxRgOHcQHG+WPLS7V+4G5b1LuUB/mrJ5Praj8jmOo6kdSSdlah5IN2JUeSA6YsEsoIJhuqduOtiI=
+	t=1791965544; cv=none; b=nAs9JLT8HGppWi9GqGVKY6A43fk4tp1PWCY09MDFsBrrcFLoCKXq1B+uxb79Dos4XJrAihLkUQhdWfz0NTPufa/8t42luFV6MqS5FnY3g0nD4y16SeIUosgRWAnMtjwxx7HWOqjsYdW3AIZBOap32/IqVXwm63SdMweYFGnUN5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791962813; c=relaxed/simple;
-	bh=WxrhuwS8C4xz4oEM/Tbd0s2ghNTr8BcpMqNK7/AIj2w=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=eu9hV8vgiQDG42OvpX3G7R2VjR3wbf+bwvroA3xiPCvdeQ/Kn8DtsQ5H57rmvLiWhEwZK92lFRSsCc1ZQ0hZ1JVQGtuvJ8CUby6y9AVKrx2K6bzXgrdrqxVhGXQUDuT7CgzZk/9dAY8SPqzBZCKZwsb58s4tL94g4nJs2YB/hGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R7s2nLiO; arc=none smtp.client-ip=209.85.160.48
+	s=arc-20240116; t=1791965544; c=relaxed/simple;
+	bh=sR5aLYugcSYdKFbRxDpBdqA1ng6avOHirsE1bg/BIiY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iC8gFe5DMZH/5yrhBZh7KZd5Enakpz5oLDMvlnwCQudZGSKeCs3ed3DuJCoSnZlgdQnteg2vt1jDbMoN3G3LjtWQPKSh3Axvq6euQ/fy93IVK39C8SfHjy4aLtAwoV4FGwmeKzDg3TNKs2Z4o/yItg2ifGwzrALVivIJu7ajOJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iN82zw4X; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R7s2nLiO"
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-49e1d10ccbdso871853fac.1
-        for <git@vger.kernel.org>; Wed, 14 Oct 2026 00:26:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iN82zw4X"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c350db5a761so478002466b.1
+        for <git@vger.kernel.org>; Wed, 14 Oct 2026 01:12:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791962811; x=1792567611; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=BGWC5XEdRAvfnDgE87fR1GozKYOeZYncAM8/S7sx03g=;
-        b=R7s2nLiO/x666oYqn/eFzMKkak90AMnkaXbTdTeaSdm7kCM7SIcQmj9Af+EryfGR7z
-         MM/7wwuWEpwmYmcJv0ngNwV1P5ukqPfXp9M5ZPFkP9/kMr8g9yTZNrrE+oXjrUqU/uAU
-         1/bMuAYklIVlsaL0HkuAKt0bFZ0Gqmteglumaox5ukZ7vz0f50Fu2ZakSEhOlCrOp7uy
-         oJy7Cmb6N6+zhq9iqghNdskXkfLFQEU8EOHBu+3f2KP4O3aEQ19Ojjf6akNavlWy3vD4
-         uN8jEo0RlRk0TGlEXc6UcNPAXmLEgutJTR2BBhUt8upGsSmo0IBXzPRsc0HBd6FWjJyB
-         V64Q==
+        d=gmail.com; s=20251104; t=1791965540; x=1792570340; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=6PS716uT1etz4we5MxgMw0MioDYoQaXsvUDecDohmL0=;
+        b=iN82zw4XBzvLA+Xs00Sn/E0kHtmE9vk1jKKN0IFKkdXN9n99Lgi38QZP9+BNvoGYcm
+         Fcg9IPUvFzNVqnNmB5ELmL2eXmlE6HNSljRewiBmVLQCTmjY6S25bHWqyxK/uvXkTAd8
+         5jo/zKQq5uT2bLjjBs5VBitCe76wD5jVFZVASpOcCDpArcpOPlQ9/agcj10/CuNLaQsj
+         L2Ql4Wg+3Fammf+OGK5tPTN8L9noZ4q6g3QM11u0BcrW91ib58u9Br8Rkt3gmFdUENbo
+         /fh0ELk5KEGHG/xk4outofU8TpOiLm5Qm/nJhYp3YtmDvdymAp7nFIJReVncQI/cy9R/
+         /Gxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791962811; x=1792567611;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=BGWC5XEdRAvfnDgE87fR1GozKYOeZYncAM8/S7sx03g=;
-        b=KKvEhee0vxM6b/a3iy+sWiqInpkWu55kZuB057jBIC8W6GDt2A+Y2HDRjyax8i8l7L
-         IYqqDaiRv30PkU3PH5FQ8tRb13Mqdq+wNPzlb0r0FStnsTQgc/QIjPBJkiIY7oKcSgvj
-         +GcIzHvE2nO9KcPk+JsDJQwyUd2s81grCvRZ3d9yDCf9pSHPtmJxf0fqOx6EWsR+XWtb
-         USpUvQfLkfRWFIyRD6l2WrsSrrVSX0tEBO8fOQBqtuRXZIMRvXifm5G3nKs1uZ7+uC65
-         lla7D7Scm4kqgPX09Sv4nrzR4ZMQVNHScEEp+u1pTAyOdFLwK+au0+ePLjJi0X7xo+k/
-         l3Jw==
-X-Gm-Message-State: AFq9FYJg8Wwq0WZv+QPQIqZciDr6C1v3a/rKXYIGQ6+D231issIaGwRp
-	b4is79iu1c5953ZQv5oNhnpRuOwzxGmjdKZAAdF+u1R7llc3hx9AXP6WESvL+V0b
-X-Gm-Gg: AYBFou1MGQ26w09/1EhWgFI0uG6V/yG7LXVq7eIV5S9O5JOxMcWQTsA35v1v9Y9L80Q
-	Oh5O51DITa+/gS/QYxmMFEV8QveegmFg5KDFSPtlsCK+zZSqBeqr0/TOlqYGcROwX+oQ0JOR2RK
-	BXZaiPBfLNTXSaOWG5iIwNEcS2s/q+Sgz5CFd6tnnIW2ggnNCNfLjGnBZGxpXqE3//dAYkswdQ+
-	akbfIP71VO+n8xQj7PmkiUbmPnowHKg+W2vKtkfFrZtUtV9revekRW0UQ1hvY1zU55beoBfwkfO
-	HASIKvNTihAEJ7w52Hq9PZC7+2fXslOYMSXpoP65zF/TJB1tIkdYepAIGa51QliqsXJj3eNoVcp
-	/35y3BF4d6LKSCVUm7JNLf0dAjDBQNSCySxFe8ib0qyCzZuD8yLlxy69+zsOAAnVF/mcExRkEec
-	O/uvGj29JtTV59d5rA+4oQaQe0Pbf1aDnC0yst7LGZ+KWravXwMjypbomSADQAR6iZG0I3SIeYL
-	n65H/Vrx5Nx
-X-Received: by 2002:a05:6871:721:b0:475:e0a7:9f2f with SMTP id 586e51a60fabf-4a2a89387c4mr12356337fac.29.1791962810004;
-        Wed, 14 Oct 2026 00:26:50 -0700 (PDT)
-Received: from [127.0.0.1] ([74.249.133.165])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4a6dfcc3671sm1525556fac.17.2026.10.14.00.26.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Oct 2026 00:26:48 -0700 (PDT)
-Message-Id: <pull.2254.git.1791962806807.gitgitgadget@gmail.com>
-From: "Shashank S via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 14 Oct 2026 07:26:46 +0000
-Subject: [PATCH] t0081: modernize the code testing whether a file exists
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20260707; t=1791965540; x=1792570340;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=6PS716uT1etz4we5MxgMw0MioDYoQaXsvUDecDohmL0=;
+        b=oCShbVBgMuSn1cWOsZNyPIbaeC6houFCTUo18dqqN2Jn0Xbi9RJb35VoDLkcvNIe0V
+         J/rAnlvNp2lHmq8R9KR6xD2OoWdIM/MCKoAG1EDQeEX8SVKjKoPQtxIV0nnwr0pM4s2k
+         RMY5HjkVEO8sogO32G4w11Cyw0B74AtcATGYPy84xoxMSaPyqVJLv7lIvnLsPIW3rSDD
+         TDfAOl2lWLvAh/BLv0hM74vuF8uuEgXeDzoONcIaEbMTp5Agi3FKAD5ROGnTfbtAcxCg
+         gAOuzkmFVyXZwubiZ/fIRd8Ni2CRNNiuBC97swEy4N3lYTM6cQ9XXx1/UShW5Pvi+kxh
+         dOtQ==
+X-Gm-Message-State: AFq9FYLU95ct2c28bHW4WsWzbolgEefiy3qIHhHuFP098L70UXdpWu8k
+	cF+VgdUYaWFSoGi5ZjCammaC1me1mhZ/sPaZkW0vnSTtVhzAQCBIKs5CL2m0dmLygHecGw==
+X-Gm-Gg: AYBFou1FjoYJvROyBnnpCYEPHHigXE9tn9HNaxXDHBQRsC+sMji5AL0jE+6IH/vtZbN
+	rQ/y4SdAFS0k4L9yjUsulw/NzLyRkpWAX9xybAQBOj+3KM8EtpJMNkoyttWfdGfi6wbylq6LMzP
+	DK/eWW/1PNtLg71PNUiX3IhauTwdJCGJdFijcpD9sRhYLiwVxqt3jQtKVIRj2WycpJZzHNdyzYe
+	6DPTNwl0FZ7I3tYEETq9aiwEkI00zwmjn2Q1kqAjAPZPAQjgYTM6TgZ5Ui/diEVIAZ7A0j17o2N
+	RoijUw3mwzY3/LUpFFMju+ljoytsOomdJfSuipR09xim9oc+87oRjoYfJx3q0huqiZfM9m26crN
+	N7h4rj/vlKNRrC6qKeWdkTT2k1Wsw8UTKzqxp+xIrRhmLAZHq4h9Wo2U14/rff9eGLkhMLRTpjF
+	I7YSFOhaydeBvLWwn/u6TFU9wxYzFTvFBrZYHyg0UtV/ArpCZaSTPFjN4NZY7SzjwXu9qhqDz0J
+	s1Ke5eR+M/N6O1dkznpvvZ1NU+Z+/EIRnfufr/+qh39BzjIA0erK7uZZT0Jq2x45hpHD7Yw3cOX
+	Edv8upzKTJyx0ALa+gNJRF86dJXpA2JeTf5n3eMybHqtCc2ldnpVOgvuAOniB0iMtlZfTq76ECE
+	=
+X-Received: by 2002:a17:907:e109:b0:c31:e19c:fc4f with SMTP id a640c23a62f3a-c31e19cfeb2mr960093166b.14.1791965539727;
+        Wed, 14 Oct 2026 01:12:19 -0700 (PDT)
+Received: from localhost.localdomain ([104.28.219.100])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b2038abf24sm826370a12.37.2026.10.14.01.12.15
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 14 Oct 2026 01:12:18 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Subject: [Outreachy PATCH] diffcore-break: remove USE_THE_REPOSITORY_VARIABLE
+Date: Wed, 14 Oct 2026 09:12:09 +0100
+Message-ID: <20261014081209.61966-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-    Christian Couder <christian.couder@gmail.com>,
-    Siddharth Asthana <siddharthasthana31@gmail.com>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>,
-    Shashank S <shashu8660@gmail.com>,
-    Shashank <shashu8660@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Shashank <shashu8660@gmail.com>
+Since 84325f0730 (merge,diff: remove the_repository check before
+prefetching blobs, 2026-02-21), diffcore-break.c no longer references
+the_repository, so it does not need USE_THE_REPOSITORY_VARIABLE.
 
-Replace the old-style shell `test -f` command with Git's modern
-`test_path_is_file`.
+Without this, new use of the_repository in this file would fail to
+compile.
 
-This instance was found using:
-`git grep "test -[efd]" t/'
-
-Signed-off-by: Shashank <shashu8660@gmail.com>
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 ---
-    [outreachy] t0081: Replace the old style 'test -f' to new
-    'test_path_is_file'
+ diffcore-break.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2254%2Fshashu8660%2Fupdate-t0081-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2254/shashu8660/update-t0081-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2254
-
- t/t0081-find-pack.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t0081-find-pack.sh b/t/t0081-find-pack.sh
-index ff9d56fbf1..7d5082c487 100755
---- a/t/t0081-find-pack.sh
-+++ b/t/t0081-find-pack.sh
-@@ -32,7 +32,7 @@ test_expect_success 'repack everything into a single packfile' '
- 		".git/objects/pack/pack-"*".pack") true ;;
- 		*) false ;;
- 	esac &&
--	test -f "$head_commit_pack" &&
-+	test_path_is_file "$head_commit_pack" &&
+diff --git a/diffcore-break.c b/diffcore-break.c
+index b5bcc956cc..71d0e48beb 100644
+--- a/diffcore-break.c
++++ b/diffcore-break.c
+@@ -2,8 +2,6 @@
+  * Copyright (C) 2005 Junio C Hamano
+  */
  
- 	# Everything is in the same pack
- 	test "$head_commit_pack" = "$head_tree_pack" &&
-
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+ #include "git-compat-util.h"
+ #include "diffcore.h"
+ #include "hash.h"
 -- 
-gitgitgadget
+2.54.0
+
