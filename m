@@ -1,117 +1,108 @@
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6973ACF0F
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 09:57:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791971831; cv=pass; b=THh8Rr/LcJayUCMUlPXQeMpYWwZXRkrN/FKpK9TlKQmz/hn/64ELQ6mkV6ntAsn1lBUWzQcw9CfbvKHKvE301yveHo2Dmlz2X3NI6qytJCBnZfW3XuasIKXDcauBcZTqM0tlJeDVj1FJZ/Tdghe2QJztR7pnweWz29aWNAuA1Sk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791971831; c=relaxed/simple;
-	bh=E7Of84j9Rwi9hAVcz0gYYZjbOXRWOX3sAeFTzd8XIWY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a1sNicTTwbQLfjZyHmXOQaTOp3GIr2/6fopTqB0hw03/+zpo0HsFlYHTxJ+GZJG8o4YVNBGEvsdoqmZla8Z1gIzzzm3ZlEW0g8/G4Owq2pxLjF0p165OAAdUlBusdF/heNE3gWTlQp9g7ie95Le7TX5BSo9SwxJfM6zD+s7/LCE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i2CyFd8V; arc=pass smtp.client-ip=74.125.224.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654A248FF71
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 10:04:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791972276; cv=none; b=DC5HwAVsmu072TEVs3VP6zFL/0lUbRwMx4WLe+PbxWS0hpyUjmocu6Ir/KK0jqUAdXGnkvQ88ygUZWvMVsinmQLMpewQIM/2SjsNTZPPjSQm+VSr3dtfvxyPT1GAZx/USsgxHbyJT5Sl1TBsayssnTEchjetYayUbBzSoq3DKdY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791972276; c=relaxed/simple;
+	bh=DiXM12C30hbAHwgJawtVkGR/X0TycAqnfn5H7vkgV9U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=flvTnLGJmY1qhItJbVUKaXuaGthqzVDY8VA5FZbHuyFXkQpPMo0rvSEWhSNyJwVGpdEMlBes6CMLKTDdnqenBhtFUQd6D2upWioCMdtCdt93wJ2BtifLXxwx65KApcjeRvtJzag5JcOOZ1CZEjVQeS51EaNrYFsLLxTE1MT4Iss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WidS+xes; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i2CyFd8V"
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-679334baa1fso3261948d50.2
-        for <git@vger.kernel.org>; Wed, 14 Oct 2026 02:57:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791971827; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ea66u+IXAW1JOtGGkzuVOqg3ZyGgPRE9p+avvANXTR5t1V3CSBYRrsKzIFNelmUMwr
-         d4ziMIws1HYoE+NvSFcGv/zmjc93553bVu4If9MxlZv7ExwNZFj2ENI5VzhhUaXD0/fu
-         WxbgYiXQEBa45vqlQWJOVDBqJJZmaIUFPnp55qsHmQxTFrR+jnjyxpHUjKVVz3eW0CE3
-         sZ0Io9u4/c0WxmZM6HdE2dQhq2Als2c08Jsdj31/72L2Bd19KP7EQyjnJhtS1NBMb5pM
-         8MPhHMyGPqavY0OHboS1bDRgDJKlzaJSiP8uuku7z4FnAKOurQuhzYIcIKk52wOvxCYW
-         LGQQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=E7Of84j9Rwi9hAVcz0gYYZjbOXRWOX3sAeFTzd8XIWY=;
-        fh=vSj9PFhPeljTYt/cuRUiB4FEthFjf/0nTmE6dJoyn0Q=;
-        b=S3dX+cm1AEH+tvLzhYAaqiJH1BT2Mp1IZBpos5KaQyNdcGpRqfOD1VpCgXkqdboSDt
-         gxpOufmrlQ8MFy+T+LrfddPEm4PqeMUvwdmUBVtJEDxQeOprvvakafKNrIxHZ8xPG6gQ
-         NetQNHBIrS2F7zhryeCApSun6NOvcSkDhi46ZVXdiCG6AHn0bnz+3Oz10Sa6zxCqlJY+
-         QB7hRjHKn/jkx8Mz3WbuyGMWJd3suadQbnPFWZ7AIedurVt8PJE8ckYtSPzHwm9lVmXk
-         iVe1GcYmPfqCbVGr4P6CjR0vYTDwHpviDtxauvjgSkO2TWGUo5ERgoX/PCHipQdN2Y0/
-         /eeg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791971827; x=1792576627; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=E7Of84j9Rwi9hAVcz0gYYZjbOXRWOX3sAeFTzd8XIWY=;
-        b=i2CyFd8Vt3JOztFfhujVYlXrusu3Rm9l0a1b5WkBHL0ZQ8EiryF9V7Nl3tHiDESFSw
-         lci7tdorR12V0EKmuegsX5whs+Ai34F3dgGe3RA4FWooHTCgbkXYZxBcsUN/kdNGZmIt
-         +CoayFhIKFk49tf7U99L/T6AMEWCk47F5NCBUvqBS+cBXvH+jw9WDjs1eqJ8CEwVVCNZ
-         zdtqMXjs/Dod4JmU2v5t+Oj5qzwNw1NXA/X4Bcgw1U+ZYshaNfgOCNSr9yQwkYEFJuh6
-         +bf1aPEu4TIbiJao7xko+DO9l59zTzbDDdpqGe09C/C/MQKg3SThxVX8AangKTlZp9gY
-         GzBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791971827; x=1792576627;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=E7Of84j9Rwi9hAVcz0gYYZjbOXRWOX3sAeFTzd8XIWY=;
-        b=1RbAhVlILIMYxglD/GEv/XVDCLbCxtSGxXyk64IIzFesooaxnbijh+152lVvFki7Nr
-         AT7SsTyuYKoZQXPRDoFuqiSnaeHl3XRP61+EIHDWvo/eT+h4kWQeZA5H/JSf+OdPEYtU
-         CPk8D3s+kV6mmuCWHqtCBZT4TtGGRmY7snko7oKFma7HgZ3i6rvhcaQf6oMHn7bBa86A
-         4FFb7S0E7LjOMzgE946jxsnziRtkpbZTWg6DcMCWUfE+gxpaSUG9vwn9G7P7tz4tY2HX
-         u3f0vTxvu14RYG1fuAtiR8gXbN3U+ZUslPIPkTgEDDaBjXzzDvNJeoXJTAXGIiTuypCh
-         fTYA==
-X-Gm-Message-State: AFq9FYI+sxZvfCTCqUg64jfWgzNOdDD67bNoo5bBES3faf3EZAtYVZnF
-	NoL7Up7jMSja7q0dqn3u3FzCKkE6/Xf7BCaKhtbX/i0ds4upl3h/0SaliAIr6juXumj1pPWzqfZ
-	THO9BSY4WLQyK1XeOgXprQ4DK4/Rkb5g=
-X-Gm-Gg: AYBFou3YBvBQA+Y1ResulyForvZ4S3Kx6+j+WlOuoLmU4wgfSTYrfTHHQoB02RN3a2Q
-	AgwUaMab2b+7+ufzJaEbwdj/Qnep9l27P2zk07Zu8m3UCViDaVvyCp0nDcM0Bkjk0eu/7r2CsTw
-	E+BsZcU7hf2NcuS0SKRjgwoFz9jqLDpmNjU7kC9C3g9Mj+LfH0CuZumRgLqO7NnbQcmqaodP0ES
-	BAdxxjsHxAKHK3Wveg5L9sUkZMhFMefnfNCBnrMk362MhTB8sQrj41Fxjo7EiEtOfP6aE4Z0opO
-	FPxBuAUz+XDUvqLpEG3RTdVguCXyDJifIkwV9IrOfRNyZg6SC5hVNWyTHMnzLMf8vqBjOtCVTez
-	eXbGoO90J19g=
-X-Received: by 2002:a05:690e:4399:b0:677:ceec:5eb8 with SMTP id
- 956f58d0204a3-67936347021mr2506329d50.153.1791971827422; Wed, 14 Oct 2026
- 02:57:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WidS+xes"
+Received: (qmail 69253 invoked by uid 106); 14 Oct 2026 10:04:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=DiXM12C30hbAHwgJawtVkGR/X0TycAqnfn5H7vkgV9U=; b=WidS+xesPopbnt7c3A1ckMrSlyIG5IxAtR9WvULKRn7ZGesg6ITBWjOTBs+sHH5i/4mCGNupOHEd8Aoifezzxc7xBjaiBmmj65YvedHC+N+BVXEQgGx1mE9a/5b/ZxfnI84K4EqugPQObgGIIB7XHo7GLxpFkhA+3vISJasqNsMwf7TPA3UQ3fjkcWZXGLk0gGtvAbm4vYjOAltuyUudD2dUem9fC/J9IgO7s/17WrIA9VCsQFYXx/cwHEimDqfg4YechLU2qNOtrBTq4ypkVs1NA4zKHroevFcoRNAhuugnwAsDS14D5U84Xe+wSk0jvJ+pvUlyyxOTaRkZu7WfbQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Oct 2026 10:04:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 36098 invoked by uid 111); 14 Oct 2026 10:04:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Oct 2026 06:04:38 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 14 Oct 2026 06:04:32 -0400
+From: Jeff King <peff@peff.net>
+To: Jun Wu <quark.zju@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im,
+	Jun Wu <quark@meta.com>
+Subject: Re: [PATCH 2/2] commit: lock index before reading
+Message-ID: <20261014100432.GB1344504@coredump.intra.peff.net>
+References: <20261013172315.2997446-1-quark.zju@gmail.com>
+ <20261013172315.2997446-3-quark.zju@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAJoPjcM9s8s9+0Pgyw=dnQXcg=kXuHQ7dKZWx8OaJswo+a1viA@mail.gmail.com>
-In-Reply-To: <CAJoPjcM9s8s9+0Pgyw=dnQXcg=kXuHQ7dKZWx8OaJswo+a1viA@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 14 Oct 2026 10:56:52 +0100
-X-Gm-Features: AclHuK-Spi31dY6Lb6ynBRzcF-I7xAzRxETleLSqh3_SNhIF3ElLqJxGjhUJw_E
-Message-ID: <CAPSxiM-xssgWJaY+x0xgHDvWfTzw6Xgg3_YYiwh6XVerTxyG2g@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_Subject=3A_=5BOutreachy=5D_Interest_in_Modernize_Test_?=
-	=?UTF-8?Q?Path_Checking_in_Git=E2=80=99s_Test_Suite?=
-To: Victor Okafor <vua.okafor@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261013172315.2997446-3-quark.zju@gmail.com>
 
->
-> Hi everyone,
->
-> My name is Victor, and I'd like to contribute to Git through Outreachy.
-Hello Victor,
+On Tue, Oct 13, 2026 at 10:23:15AM -0700, Jun Wu wrote:
 
-Thanks for your interest in contributing to the Git project.
+> Take the index lock before reading the index, in one place, instead
+> of separately in each `if` branch.
+> 
+> `commit` now respects the `core.indexLockTimeout` config.
+> 
+> History suggests no particular reason for reading before locking:
+> - f5bbc3225c (Port git commit to C., 2007-11-08): lock before reading
+> - 2888605c64 (builtin-commit: fix partial-commit support, 2007-11-18):
+>   seems to accidentally move reading to before locking
 
->
-> I've built Git from source and am starting to explore the codebase and
-> its contribution process. I want to work on =E2=80=9CModernize Test Path
-> Checking in Git=E2=80=99s Test Suite.=E2=80=9D
-> I look forward to learning from the community and contributing to Git.
-Looking forward to your learning and contribution.
->
-> Best regards,
-> Victor
->
-Thanks.
-Usman.
+Hmm. We may do a lot more work under lock than we used to, running
+stat() on the whole repo.
+
+But I think there's a deeper issue here. We're reading the index, _then_
+taking the lock, but not necessarily discarding what we read earlier. So
+it feels like two processes could race here, with git-commit discarding
+some update by another process (like git-add).
+
+If we instrument git-commit like this:
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 840b6b4083..2a78cb473a 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -392,6 +392,8 @@ static const char *prepare_index(const char **argv, const char *prefix,
+ 	if (repo_read_index_preload(the_repository, &pathspec, 0) < 0)
+ 		die(_("index file corrupt"));
+ 
++	sleep(5);
++
+ 	if (interactive) {
+ 		char *old_index_env = NULL, *old_repo_index_file;
+ 		repo_hold_locked_index(the_repository, &index_lock,
+
+that widens the race window. And then something like this:
+
+  echo new content >old-file
+  git commit -am foo &
+  sleep 1 ;# commit is sleeping in race window
+
+  git add new-file
+
+will clobber the index change from git-add.
+
+And that is true with today's code, not using any timeouts. Adding a
+timeout doesn't really change anything, though if you _do_ see lock
+contention it is a good sign that you are about to hit the race and
+clobber something. ;) So it is widening the window. But the correctness
+problem is already there.
+
+I do think your patch fixes the problem. But we probably want to discuss
+that in the commit message as a motivation (and likewise, discuss the
+fact that we may be holding the lock for longer).
+
+There's probably some kind of hybrid world where we optimistically read
+without the lock, then take the lock, and then check (cheaply-ish) that
+the index didn't change since what we read. But I don't think we do that
+in this code path.
+
+-Peff
