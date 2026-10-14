@@ -1,163 +1,124 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126163E024B
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 17:25:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F333271A94
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 17:36:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791998708; cv=none; b=Cd50QC2wbFG7DcQe9Mzj1ecz/YdZ+lr71SlhcAdrkrkZDD4KZi6AJyfM3J1ynLZWYmzFwS7wZKS6uowwONqtLDdG6GaRL+Y9QVFponXofoBggUTBg9pMNcv1WIS7WMGF4JbiMdw/puHHc1Tn++ePr6rUBdY0TxJhCipB42jeBPs=
+	t=1791999392; cv=none; b=lvWJKQ4ZYsZLyAM749z72a4FzuxiohV4lkLFMpTGlbN72SLd8l8O/KT2TZy8AbHDGwTYKh6PFZ4gz2koy8/aIiHyK0ANH+pWcH2uy6NmQvRd9As4bHW/12HPKF29ZKUFX68LHsKEskgSCcE+Kv3HEXpxjc/IfjGuAWivg4nYEhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791998708; c=relaxed/simple;
-	bh=NcQa0pXlPGN/yrxYIcIPL4416s/PKYggwFIDqZ12ZEI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Jr8zS/rEqJBRgUgjeQMK+ydC9OoSTbSJOieVCowa6RuXTQZy/D+6u72u2dt0j/VPmYtp1x+KVFlXtQk66kIsdZZGYG2EjRqNvy3ysC1EDd/2MbaZIO0MzodxT/ivdCybl05qT47+GpPVggvVu6SVwDZEsaECiOJJfXInR4V9hpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k2ecZvBp; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791999392; c=relaxed/simple;
+	bh=scO05FG5n9VRfVkTIv5/QvthNmE4j9FKBc8HsynhWhg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rn2+BRIt7k28aVbriJ5p2mrc3krJn3wsuiUcvpzBMGOshCO90aQGz2g16PcZm6Dg8kx9tDeEjJsnNjLtgbfE4C3l+Q9UJwo0U/KNe5zeEsuz2/ev1iKrbn9rp4GqoJqaKlokDWyvydb33GqQRp9ZeZJBIOXNGbewu6euZF8rGUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QvwahhAQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YAqhdp8y; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k2ecZvBp"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-48b042c0759so3297312f8f.2
-        for <git@vger.kernel.org>; Wed, 14 Oct 2026 10:25:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791998705; x=1792603505; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ExqWh9eWv6TicI092moE7SX2IVhbVL/RSB62YgyrWFs=;
-        b=k2ecZvBpfGXXjNpXXba3Vj6p4eFcaM2QKDyF7231JtsN/FXpDOyDJlYCbCSODrktF6
-         xV+3ZjCwRLGcR5Y76SE7tvTBuacY6yz5yaCf2TDCtIv/1XU0FQDEvOPN/e66Jda3Ffz3
-         kclXd8RqFLPq48z7sJ3cM+EskelyD9Q6cZR0+cWCO9qEQZpr1zZlRG4w3jW8pc4fRIeh
-         8Kn0Gw1BK84PDv9EAq3Iog/I3H1htdrbzb5D+giZCF5Sz7Ob/EB9VknCf3Xj0v5R8ZwF
-         y8RbAdNG1DVEk8spkbl4tDmvRWC8Kgul5toNrXmsoAX2H9Sal5qjFJizLJUB5nPgqRrd
-         9gog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791998705; x=1792603505;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ExqWh9eWv6TicI092moE7SX2IVhbVL/RSB62YgyrWFs=;
-        b=HIK8UUmUR0cTqMcxEulwBZg2VeuPBOL/GyIv1wRekiSI3+Sg78oG8sFf0/AXkUZah0
-         Ln+pw9XfhTGWhnRaG1qCHkgzRNzKwtsO7J/3pLttWDqeGAOxO6hCKPH2TCUrQhEojX5C
-         zpXEe/PFIgwL5SMMMWOPxol3rZIJlzrcpvJNqwtqYH7DmPDqVYZ8hC+GrwCrmvsdWeJ4
-         w+UiVMT70uRncGeIn0bVaKS1Q+fpblmZ7qIJzdwTZhWm0HXBGWXmC0KJdOD7+wstY0mj
-         EwvdptTXNtHovks3DUS92UgqaoFvECiaW32BV0KI1xgEbtJSXRVd4Sarq/P3KHmwppDk
-         vw3g==
-X-Gm-Message-State: AFq9FYIxbeMBXc+ooBPL79boNNTD+tgnMDOLQcOWP0pVnzJrm8Utt33/
-	j/7tRM4YmyNEDF1Ysl7dN09ua7iMNozcY4bGV18oD3+vSx18T8DHNo7vZdUWVHhJruQ=
-X-Gm-Gg: AYBFou39Yy+AQgUQKqkRRqCGofJCgqhDBgbGnIAt9q6RTlae7TG5YvLuHBWWxzQxakZ
-	yPA2oLyZ6oCHDSG6OuIuxtGm99tzvIBS1XL9idTdKDNUuE/2FIN0svz82Y6JbOadFXRz4tBGHr0
-	Ei6eeb03EP4sFBJRQzxoi+hDLBrvZ9708c+4yVLmdSaVOZQR7Tug0k9sEnVFxFWbYeAlGpqhR3i
-	e1ZhuFsfrq8/pfyWNr0kNbCXE/CqmM+8XMgSb1iVkZUUdqWIrDEPBM5Oo6SQ3v5dLWyZA7+AOX3
-	NAfhBc7T+L6h7UJXdCImWP/NOS9FLmJM2W0XSaHc5VbMNS+gywEnu3NQgxvTQ+dwZPvtDmlh3vy
-	TGWUQsGqglA66Jbk4J/vVQUnjmZ90J+7DmV6YrfQgRtJzJY906zgzLMAvzEZhDLxL5fophE0HNq
-	vtBNGEQKkyXI12+1N+/KkhaMCJmsSvW+MHmizB+iJZDyMJHvsuo978++U0LA0Su789mSfCoz+z+
-	MAXpEHSzlKyX8cPkdNlqNqQPaq3yn8auYHrkmJGIUblklufMusqOV4R
-X-Received: by 2002:a05:6000:4a14:b0:487:15a3:1cab with SMTP id ffacd0b85a97d-48dbaadb081mr31235053f8f.18.1791998704979;
-        Wed, 14 Oct 2026 10:25:04 -0700 (PDT)
-Received: from u.ad.analog.com (dynamic-078-054-209-001.78.54.pool.telefonica.de. [78.54.209.1])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48de0bc506asm13658916f8f.47.2026.10.14.10.25.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Oct 2026 10:25:04 -0700 (PDT)
-From: Andy Koppe <andy.koppe@gmail.com>
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andy Koppe <andy.koppe@gmail.com>
-Subject: [PATCH] pretty: fix lost indent after newline in %w()
-Date: Wed, 14 Oct 2026 18:23:33 +0100
-Message-ID: <20261014172333.2224123-1-andy.koppe@gmail.com>
-X-Mailer: git-send-email 2.56.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QvwahhAQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YAqhdp8y"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id F377FEC03D1
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 13:36:28 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Wed, 14 Oct 2026 13:36:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1791999388; x=1792085788; bh=scO05FG5n9
+	VRfVkTIv5/QvthNmE4j9FKBc8HsynhWhg=; b=QvwahhAQVeECXH9oHpAcnVY47M
+	1S5deK8wq42qxdCcuCNFdb4XETNyRxIaBj+M6RO/hw60VqjYgS9Y5zQx9Wi/N6ok
+	aPeLqme622yhC5g4fvKlMyjfdDX0mqmlEOlhHRmwQzVPuykNW9rwTKF1vcOgUoJd
+	ViWPK+ldyOzg3azLjRcfBKOHTdDvo4TPwtqb/rMF1DqCzGz5IQ/i8CeJz44VaJOn
+	etn5fT1JIYMT/yjnvznlliwChZxaQyS7pjyZmZ28pyeczhGQoe7KH4WUMLLyuHA5
+	rv1xuMau0poXvrZomNbYLdYyIHX8IwCjIld7eU1NcLLgmBWn9C69e/W4odAQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791999388; x=1792085788; bh=scO05FG5n9VRfVkTIv5/QvthNmE4j9FKBc8
+	HsynhWhg=; b=YAqhdp8yolm04W8OtaiDWtztAEiuPJYXEApcvnnhTmRskxGpD12
+	xve4gEdMxvkqKbj2989QgSgFpCdHNn9MibMXXXsmOCyc/tIp4BoX8OFxoMCmrcoS
+	MTtx2wZNAqmNn/kyKdDppHRbzmCLmrjZ1O/5YXhvcvTUW4jxsvNbYkcMyKCaZTBC
+	OTKKtgR3Cnbr+o1xtsO5znNaiQfWenovh+UBHvgUVMOh7/UiOdvnerM97WdiBt1A
+	/Mh0LNmctUQh81Rn9Q6Xh4vEgwI9cv6GZX6mzshnITnXu5swYzViFIM4AYPyCZTz
+	1e5eSQ9CPE5OcZAgwK0TgLjC6yj0fbkSUNQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791999388; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:aijdJSf7SDo5D1d0jIoyN9DGVaZDypX+Dbrj6ojbeUbk76W
+	beYt+KQgeABXTEnjLGwxEWObBA+3a53+euAETST9nTqucX3xzPgbf4z4UX6rlYee
+	KBUYYTd7LqK+X4c53L2vDce+6y4jtlO4KGkeSV49O2Kp29dJac0OX3EUyo+uGC6S
+	QL2qN1sTf3XiyEr1CyMtgmozcOg51TSH77GU2/WnzI3kR0RCT8IxqlLp81KTlvdQ
+	oxr/pxSuKnUv1vbMdEBbyaJt2Y8x/18f/OSSrPe8AAZPKKyMRopVXd7I6galegMu
+	J6KiR8AiXqQy+TXGy317q0OLoUb7sOO0Ht9cfzQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:RWACX/j7Nl67YqgD20/KZuvBLfh19+LgA08EpweJHVI=:scO05FG5n9VRfVkTIv5/QvthNmE4j9FKBc8HsynhWhg=;
+X-ME-Sender: <xms:nL3Pak0dfsAcsX9y4WPJ7HM8DPwcMnXLXxH0rzV5v79WQxn5Vge1qQ>
+    <xme:nL3Pal-OLiiB1wXIIKPusxaHSB0TZBa0q46sEdhdm4CB_K8L16qecnOSsDvSaRx5G
+    kJEEsog7HpauIHDux2HEymqRdFwpFWyEbRe-4IP7bBDr_vfReOQHDw>
+X-ME-Received: <xmr:nL3PalOLYjSD7JP3j7MBrTP2KspjBL3J-__PC28UsmUi_Xj9cJ4FTV52hGONKDVj5f87FEvf8XGbIHs0N9lxBeBWqwDHg6XVDV8z>
+X-ME-Proxy-Cause: dmFkZTGlDYpbK6vBxwc3xn01JrPDYbkLY7ElKADAcWcPwzE3djChJ+YwwMGsCgH0wuQzmA
+    5wJUX7L3Sy6r8VxO31qE4aTDI6iPoyENyUfjWQYCXM1B/JL1wCflOKbw05PadZeo/cwv4+
+    qbUpoqiAMmjel4PXp8Bok7flySIt7Ct6N3Geo13rmkDBzTlxCC7l8KlogOsjYb8EodMM2u
+    URhVXhg9qbT8tkB5yBxBJn6WBReR0sr0t8BQzAlPJgVKPpMag2sRcgKy6V8VGnknj6doo6
+    l5n0nJL5VGD6/tZJ7oHtbyIv4EqDRqG8DY3VvQY63702FIHmS7AbF5+uEl4pWrvDNhjZtn
+    3Yj0KvmnUy6Lu8dGhMJTMz7JWAzTWPO+qXHr8xiG/eKJ+g+jf4cSNF/c7XyKCbSolsbMxN
+    j60wdEi0hXIRbGIwJHgAeDpGoMzdHeRw4mjSC5gS5qUMViQOHObcjlzhjY/cwUzFjcgBjE
+    mFTgBzFCiTqWpY/Ye9HRAYDDlIAwHsqRfsjrfkBporDc0LkAyxKvf0E7VmazT6SXiObW+2
+    6qNozYMoYiHaTaHMIwItOj/l6rFRT93gx/U7A6uu6f9IP75khGpPSfRG4Fha15WLRPL19Q
+    udbSO/0nprX5SL4GicD0hK6dJIFepjl9TW6n5b4Ot8/V/seL16mqWmoIhuaw
+X-ME-Proxy: <xmx:nL3PapcOR8f-osKmFedkhjIY9ir78p4PzDyaYB3oIqC5WS7r6CYPyQ>
+    <xmx:nL3PakWdpkoWKuJx-oBwnsR7cdL1u2TlmN2gQQ4tuZoZ4ABxyg7wbA>
+    <xmx:nL3PahhO1U9JDCFPwusb-C7YgyGtqT3GtdESe2dBgPicXd_1yHmGug>
+    <xmx:nL3Paj8YVcbjoIBFkOKDJNyVeHZb4InODtK1gow_QUsSUVK78kRfvQ>
+    <xmx:nL3PaqVbFqj6sBIvtlM6wBbiRK4Gm9YITUn7AATfCERmINCmFtxD1hXA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 Oct 2026 13:36:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Antoni Borowski <antekborowski11@gmail.com>,  git@vger.kernel.org,  Josh
+ Poimboeuf <jpoimboe@kernel.org>
+Subject: Re: [Microproject] describe: pluralize tag/commit count messages
+In-Reply-To: <20261014092923.GA1344504@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 14 Oct 2026 05:29:23 -0400")
+References: <20261013204351.428800-1-antekborowski11@gmail.com>
+	<20261014092923.GA1344504@coredump.intra.peff.net>
+Date: Wed, 14 Oct 2026 10:36:26 -0700
+Message-ID: <xmqq4ieotc9x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-When strbuf_add_wrapped_text() meets a newline followed by a
-non-alphanumeric character, it treats it as a hard line break and jumps
-to the new_line label. That code was written for the case where a line
-gets too long. It moves past the space where the line was broken by
-setting the next line's start to 'space + isspace(*space)'.
+Jeff King <peff@peff.net> writes:
 
-After a hard line break, 'space' already points to the first character
-of the next line. If that character is whitespace, it was wrongly
-skipped, so the line lost one column of indentation. For example,
+> OK. The patch looks obviously correct, though I do find it a little
+> funny that we bother to translate these debug messages in the first
+> place.
+>
+> I wonder if there is even really value in keeping "--debug" here at all.
+> But that is a somewhat bigger change.
+>
+> The patch here seems OK to me in the meantime (and totally fine for a
+> microproject).
 
-  git log --format="%w(11) This is%n  the %s%n  commit."
+Yeah, but a microproject that convincingly argues that output from
+the "--debug" option should not even be translated and undoes _()
+would make a much better case to see how a new person works well ;-).
 
-printed " the ..." and " commit." rather than "  the ..." and
-"  commit.".
 
-Fix this by skipping the space only in the line-too-long case. In the
-double-newline case, skip the second newline explicitly, because that
-case relied on the old skipping.
-
-Add a test for this, and update the expected output of the "magical
-wrapping directives" test in t4205. There, %+d emits a newline followed
-by " (tag: ...)", and that leading space is no longer lost. With a wrap
-width of 1, the space now causes an extra line break.
-
-Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
----
- t/t4202-log.sh                | 6 ++++++
- t/t4205-log-pretty-formats.sh | 2 +-
- utf8.c                        | 4 +++-
- 3 files changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 06552a6271..5895780e8f 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -94,6 +94,12 @@ test_expect_success 'format %w(,1,2)' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'format %w(11)' '
-+
-+	git log -2 --format="%w(11) This is%n  the %s%n  commit." > actual &&
-+	test_cmp expect actual
-+'
-+
- cat > expect << EOF
- $(git rev-parse --short :/sixth  ) sixth
- $(git rev-parse --short :/fifth  ) fifth
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 4be5c51489..0733f22d58 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -1139,7 +1139,7 @@ test_expect_success 'log --pretty with invalid padding format' '
- test_expect_success 'log --pretty with magical wrapping directives' '
- 	commit_id=$(git commit-tree HEAD^{tree} -m "describe me") &&
- 	git tag describe-me $commit_id &&
--	printf "\n(tag:\ndescribe-me)%%+w(2)" >expect &&
-+	printf "\n\n(tag:\ndescribe-me)%%+w(2)" >expect &&
- 	git log -1 --pretty="format:%w(1)%+d%+w(2)" $commit_id >actual &&
- 	test_cmp expect actual
- '
-diff --git a/utf8.c b/utf8.c
-index 96460cc414..bb55bf357f 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -322,6 +322,7 @@ void strbuf_add_wrapped_text(struct strbuf *buf,
- 					space++;
- 					if (*space == '\n') {
- 						strbuf_addch(buf, '\n');
-+						space++;
- 						goto new_line;
- 					}
- 					else if (!isalnum(*space))
-@@ -333,9 +334,10 @@ void strbuf_add_wrapped_text(struct strbuf *buf,
- 				text++;
- 			}
- 			else {
-+				space += isspace(*space);
- new_line:
- 				strbuf_addch(buf, '\n');
--				text = bol = space + isspace(*space);
-+				text = bol = space;
- 				space = NULL;
- 				w = indent = indent2;
- 			}
--- 
-2.56.0
 
