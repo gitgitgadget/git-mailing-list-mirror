@@ -1,71 +1,65 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB4C352C34
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 06:09:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E8C348465
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 06:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791958175; cv=none; b=jL3psfuXYB7Jx+6tlQrsRciKpYJzzVhE1gkIdPeQnx/Y6atnF7uP0jOcVFtfQ1IhLD7iyZ9aN+jGp8dAxkGPr7rLovCTq4kihnv4Xva0S0p+lMeTPGYaYxUCm8AHsIwdCq03qJEdm8scqD0npHnyFCklsmoxFPrGHfbOpoHLOFw=
+	t=1791958175; cv=none; b=fUsPDWOAE5k2Z7VR1wA+q0S/h4P0fFLt/ANgKIK3aBxzCp+1KuqrW1Zvy0+8AMYmcdeoSFKhOh3oAG3UgeGI1E4H7uPxO41QWiFEQqFVA137IsdBi2X+vjG2mHwSeBA0e4ZFvfAhUnTrjuTdm+/NPz/jO1ZhwWmgtl+waJG9hZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1791958175; c=relaxed/simple;
-	bh=ChtOMmQbPG3yLrMwa5AYiB0/WcIObhe/IAw9qT60PVE=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ek3RUtwhDxOYQmlj8zb1E9GxROzjEsvlNFnns1p0lqlewsRUcDa/lFIsA7qPMDrZXN2UKFmEyro+YEzAoNZoJo4WN6wWTskIc42w5dIFs+vkNXXmuiwDZseirkVv4vzG4EnX2M570G7y+Ym9mFc+CYYKQ96fulfqUsKWNg8oirw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ggDOx5WE; arc=none smtp.client-ip=209.85.219.49
+	bh=9+NOAMXmY2WAdiTvPBzvBaZWX+KbPYeOeUpzz9+mIcA=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=OJHDhVzrn9uxkgFpPlbTGet6kp5Dq6tCNzIHgit4ChsTeKm7slKVkeA6EjpdFYLr5niRmCinF5lbUDdxQs/HhH164Vvz/sWUoWQ0J8XpZDvZx9KNOIaj0OyvWflKepuFCltpIpAefEr2NRUht1XFduFv0P9MlaBgJNI7KKP0ZTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m2f9OzpI; arc=none smtp.client-ip=209.85.160.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ggDOx5WE"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-91b813ac020so41425076d6.3
-        for <git@vger.kernel.org>; Tue, 13 Oct 2026 23:09:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m2f9OzpI"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-53397554beaso142451cf.3
+        for <git@vger.kernel.org>; Tue, 13 Oct 2026 23:09:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791958173; x=1792562973; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791958172; x=1792562972; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=PJcTXIs9jpH6Hx3PBoC3bJmAq5OM/TGSjulDwj4/AM4=;
-        b=ggDOx5WEHaKNaYyN224bXWml51PALinBGeLpEy4WHqmYceqnwnx1Y/MWCjfpydUhlJ
-         sghvuCsf7+fDS2cs4XUHTfRBhHYqLSac3QogWcStGGDN2extR35no1e2Rgu/1ARzY7YG
-         pxBOPHjAwGewjgVBPtiSlLzQdMS9Xv6xO+I4oZxB/KgOK0RIRH3NCWpjNDYHBsn2Kdop
-         kN8CIVOhkM7toZFynzdBoH+LBh4E8YxzoyvF7R01bmJJnwADbFdP1CxTbIFN/vWBeXo0
-         uDK8HzDFbzAJX8ogk+G87GHBHvKX0q3zfd5Xzahkz5aw5glFaCEbYrl3YUZ7SCin7Erh
-         HRig==
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=j7E8OZ6V2kFSqL6LbxnYviZftFPa79U63csUFSmQK84=;
+        b=m2f9OzpIZI7QoeIlFf8cZygh6hZdbP4zzLw97nFIEKIARWAUYlRuyRkqwBPjV/POmw
+         4jYIS4kRjMqn8VJs6exq8tMixiio3iV1DAEC0QZllG/aAC3Ei7KFacEIKBM0rpVcEzZt
+         f38//lEG5YZzBTnuDyP5sXkpLRP2iDwVm9WVLM7JYqx/BgcUa6x0DBd7N4TtZ+n3KgWN
+         RmKPG+5utY6FBeJrraIZxouynRmBQ0YXhxLeqXGOPhOa1YU4J4hQDBppa49J6n8VR1iP
+         YrU2I9D+GCjS3WcIMq9JA72BAoykzqDSqoFb1PBrFTVOJtMkS6p9LwI0ZH1d8inWn/nl
+         qAaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791958173; x=1792562973;
+        d=1e100.net; s=20260707; t=1791958172; x=1792562972;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=PJcTXIs9jpH6Hx3PBoC3bJmAq5OM/TGSjulDwj4/AM4=;
-        b=Mqhi+ROWpRE5qak8xPh7Vf9UvlM+vDjaLVQ8wM0aRps2NsOopBQR5fLAQVbo9F56rp
-         F1vzXfquUpVsvEpFIkD3rCpage0bL9f2IvhorhzKlETtC/qUlP4oficR7+aqqAPsbHqI
-         OupAMWqzX1odmxif5/veORopuTi39wh+Cf8C98cXNJS9GSXa0wc1MMgktbcp8RD/wJhO
-         BYY65Dr297XnUiCUNRNJ7FiY+rSAjXFAYMsmrDpXsjQ0g1qO39poJu/T3Z3eybQ5hx8/
-         NgxDHPSVKyVvRsec5VKIG9687LNC798+NDLDH3qNn9KYEzwmnPl9bjlUp1jI8sFrgpMd
-         twqA==
-X-Gm-Message-State: AFq9FYJskG2G8N5m+2EQV+lyq+c8IKGHwPpeH7c5kg9LOtH/8hPlxhJe
-	86GQyCsJAX4TrcH7s5k3QBbehfmcmz2rCQxMPOPDIQPT/Jweo5TKN6xhhupvNQ==
-X-Gm-Gg: AYBFou3GBbwTzXQOq+oo3nrmzuMdyrI367tGvBvLtktFyyUQw1Ka23/O0AbfHHKRKQq
-	3G+pO/rrpnJk5m2eaV7OZfDWAOvP8lyGr3nHfPtO4v45C8D8ZnCPrIwsCKFxIIRqx4z3cdf9uwn
-	Gsvoin6ZTK3zuVBqdynf6VaZV/Db8ky/s9njExrSvciVTSOpNY2yIDSPuiS29yFIqgXJ6l40zBZ
-	lLZ1ufXRRdK9Wb1BdgfOy7yqedTN7GGeOCCtlSz4IYLekARGCkMQlQnFnq7uLjZIbASvHmClUb7
-	JB5ua6kRV1WGxxrhz7wJA/s8tKAuOi3tjw+B2X5AEZOzEqLjwHDkqiU67yv9ikojU/4RpGAFb5t
-	VUhAmbb305A6mpin9xACqiqwz4gqSTAxKTQAlLrOSG5/msL0AeHw+8vYAweErqmVfBmob7VprOy
-	i1H4L4aKgnIDo9+z2ub3TAzqBCpQJe9Muz6vaHsZukvsyE7uYgmMp5dJeYk6+b0JbkRzbXRe9YG
-	CZLU0uw6cFB
-X-Received: by 2002:ad4:5d61:0:b0:91b:b26a:9783 with SMTP id 6a1803df08f44-91bb26aa385mr2882686d6.55.1791958173161;
-        Tue, 13 Oct 2026 23:09:33 -0700 (PDT)
-Received: from [127.0.0.1] ([9.234.149.85])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91b97c39482sm44399616d6.45.2026.10.13.23.09.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=j7E8OZ6V2kFSqL6LbxnYviZftFPa79U63csUFSmQK84=;
+        b=VM8yOYLFpmQdPZoK/174d1bvMtg3tt8Ck1YpC6WUm7jVw0QAQ5/imGFEoGyCavZU8s
+         DEcrBc6vGwVZGQJ+GiPrBdNebFcNQ4HqDY9ZrcuIfu6LHwQLOHs8lb6MeKQuqJKGwEL7
+         waPYM/ws/ADTXTtLFD+Iil0GmOqRkTe0EibPbs6tTASjUc/mnUR+5rtvwHbUdIwH9uYP
+         WDNGJvWkqp+cWIWrxn9b4jZ3D5Ergg0tUiPZwk9xxdfYqe4vFLcO/E0zeYc8VWp1VsNb
+         Ip0cBYgpJ2cn/8pTfHHK4Y62ax5f1C7Z1PDWwNVynHuV/VBlbg9jWwcsh8MNJiaQi9h7
+         BFgQ==
+X-Gm-Message-State: AFq9FYJLik+dPpC09gMKCeXMxsictvxn66KagGagA4BY9MouOlYnLbvY
+	XZPARIVb1S2kfmQVJPURjJN2scHxZ2mUynEGh87zw0w1drRoz3QcUeUkiTi8+g==
+X-Gm-Gg: AYBFou3aO9qkpzWQBNCRP7fO45TcbGh1q3K4DQ7BZ2ZHgDPa1mgRXe6XLbq9pRgfhHu
+	HlxEVChF6eKPsYnw3FfnKCaDKw4jGmnUt6/aZloV3v2Y7cbfVSZTsJiqoacG7k8eDA/hutuKgSY
+	yKGeCeCLDQUzWu5I5HmkQi5rP1Ui2HF09LdfuJInJV8LgkQvrlqxUa9hq5CLrpyWOjWan5x+y3Q
+	rZZ5ZYGOLxPD20IPD8H4PDpfMtYX5uw/ffsH0vHJbL2Y5Ju9VZp0LBmgic9wLma8m3gk5VGd1Yl
+	0TpXrLs7jm37VNLxoCLJfbh8gIHpxU+TJ+rbGXHgrPNT5mC+nvBsVMlFoCgk5U1LUxhqZKjWPEL
+	3mqIyHdJR6O6/q2x/aAFXJ2u1NZgWu3pA7t35+VStTfLB8yqXv4HUQu/33myNiaqrrIfp/cNXjT
+	zg7bTDzWo7ZDkXslKL8IiFnrpOkIRN/vNdhpN9Zab8F5VKYkSvpKzzOWalRPDsV3LDJNvA8pkp
+X-Received: by 2002:a05:620a:1a03:b0:93c:ba44:673d with SMTP id af79cd13be357-93ebd1b7173mr2631866285a.23.1791958172220;
         Tue, 13 Oct 2026 23:09:32 -0700 (PDT)
-Message-Id: <dcd319476add64e892e517faa71966f09010029a.1791958171.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
-References: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([9.234.149.85])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93ef500643bsm419457085a.13.2026.10.13.23.09.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Oct 2026 23:09:31 -0700 (PDT)
+Message-Id: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 14 Oct 2026 06:09:27 +0000
-Subject: [PATCH 1/5] archive-tar: guard get_path_prefix against zero-length
- input
+Date: Wed, 14 Oct 2026 06:09:26 +0000
+Subject: [PATCH 0/5] Address overflows pointed out by Coverity
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,45 +70,34 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+This patch series is part of my effort to bring Git for Windows' Coverity
+reports down to zero; Previous patch series have been merged in 347fe8a91b5
+(Merge branch 'js/coverity-fixes', 2026-07-16), 0b75ef5168c (Merge branch
+'js/coverity-fixes-null-safety', 2026-07-19), fcc8c931b53 (Merge branch
+'js/coverity-unchecked-returns-fix', 2026-08-24) and 8bc9c7fcfd8 (Merge
+branch 'js/coverity-fixes', 2026-10-03).
 
-The `get_path_prefix()` function uses a `do ... while()` loop that
-unconditionally decrements the `size_t` index variable before checking
-the loop condition. When that variable is 0 on entry, the decrement
-wraps to `SIZE_MAX`, and `path[SIZE_MAX]` is an out-of-bounds read.
+Johannes Schindelin (5):
+  archive-tar: guard get_path_prefix against zero-length input
+  http: use `size_t` for byte position in fwrite_sha1_file
+  wrapper: reject insanely large byte counts when reading/writing
+  git-compat-util: add `signed_mult_overflows` and `mult_overflows`
+    macros
+  date: avoid overflow in approxidate relative-time multiplication
 
-The current caller (`write_tar_entry()`) only invokes this function when
-`pathlen > sizeof(header.name)` i.e. when `pathlen` is at least 100.
-Therefore, the bug is unreachable in practice.
+ archive-tar.c     |  2 ++
+ date.c            | 26 +++++++++++++++++++++--
+ git-compat-util.h | 54 +++++++++++++++++++++++++++++++++++++++++++++++
+ http.c            |  2 +-
+ wrapper.c         | 10 +++++++++
+ 5 files changed, 91 insertions(+), 3 deletions(-)
 
-However, the function's interface accepts arbitrary pathlen and maxlen
-values, and a future caller or a maxlen of 0 could trigger the wrap, so
-let's add a check for that.
 
-Pointed out by Coverity.
-
-Assisted-by: Claude Opus 4.6
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- archive-tar.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/archive-tar.c b/archive-tar.c
-index a1c66024d4..2da6e55484 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -210,6 +210,8 @@ static size_t get_path_prefix(const char *path, size_t pathlen, size_t maxlen)
- 		i--;
- 	if (i > maxlen)
- 		i = maxlen;
-+	if (!i)
-+		return 0;
- 	do {
- 		i--;
- 	} while (i > 0 && path[i] != '/');
+base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2253%2Fdscho%2Fcoverity-fixes-overflow-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2253/dscho/coverity-fixes-overflow-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2253
 -- 
 gitgitgadget
-
