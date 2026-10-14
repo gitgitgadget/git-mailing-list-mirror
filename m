@@ -1,101 +1,103 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424B2415F07
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 06:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52F0480356
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 07:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791960978; cv=none; b=Tp6Kwx9pvrLaGV3aRf3FeSTsTD9EW1hkknhPHHGhlOvEsNNzE5NFV3WJa6q3QRbcZ8oa6gDUFHQs2Wvz3wKqQc1U5jmah50Ff+bxMaTkGK/dGXqYbJzwvmUzQnc18WRsYHX/dkNKfGiVKtOVRLvZ6YestceOkfSivmkSYktRarE=
+	t=1791961393; cv=none; b=uoTiC6uIXxPDlVfBqrL+NP7HEEKglW3pgxSbFyLy/j+L3cwgcvkPhjkdS26X95NuuKyn4Zam3A7SPIDd8K/fQ5ZsGQU+lb9N7jbDYl0DYm9XEBMhA+7aJt7leRdm9IPtCq0RgNxC3p8bNvSKCVB6tn1w2Bfip6EmxkTgwp/NVVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791960978; c=relaxed/simple;
-	bh=Puwpjg09qmFHlXbrBM2lhx7RshhOv7p+6cC0jqGOOmg=;
+	s=arc-20240116; t=1791961393; c=relaxed/simple;
+	bh=le/0IyAINg0brE+nT7PuOqHyI3jps1I2I2+WTAsYNMQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GepYgzshvsVd3M76hhQ4Z6tLnDPVcSmMjfUUguRJ5H0rZ8dADFTC7ZxzXPza0/LG2gaxuojOA1gSfugGcPTnAWwXI3WasWM5IEg046fU2jW5OjWmGx6FzcqJh+1Ljqx2grOOWKLIC8zIAtlajQEy+6If/oVdl3iqLN1Xb7gc0/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Uee7JXfi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A8cR/llC; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=gAGL3eczZdjXdgdgi4DvvhE8Y20U8FfKCV9AXShcNUJR9YPY9+Q+yUogRGMR1JdOdVTE3byZm/6jMesnSAgbuQxtOtVCBoHTVB6Cfp0/qBwoMm6H2FPBWaoGeDyChalWOhpGjyuh1i5MSj5gCcuipK362qKr9IGDgNueWFc0rwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iqGm/txo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sdci4qkX; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Uee7JXfi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A8cR/llC"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6FB1EEC0259
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 02:56:16 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 14 Oct 2026 02:56:16 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iqGm/txo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sdci4qkX"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id C85B8EC01F5
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 03:03:10 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Wed, 14 Oct 2026 03:03:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1791960976; x=1792047376; bh=77Ca1duhfP
-	lmzKz804O3LlMgb5Rg1Vc8x7F6ny/LffU=; b=Uee7JXfi1ycMUUOJkyPjG1PcmZ
-	8eIpLcPfVKM6r6NoFrc8MKMt+j5j4+vGGenuqglXHKl0MraAFRSMu+DDX2kZ9XmV
-	8MrSBmWIWDnH9VPVCBLpZsyCP82kwPV6/4WwFDwcqpcyt7pc0GMwtJMBlkCpmHXU
-	93D3oPJ5jiHxFxceQeLUqFAXhNl5YoI66Dzfz+u5MqNJ53nl79jkhnf7lOIwmMzt
-	ZLBOBiqE8RgbM6ZSdDXLlkYek36HZbNWi48BxlOKrTjBSq9RAKWkyDug1lc+vc+m
-	5WvtJvIajeVGODqq7ZdVbKwX2c20aq58i1l8Tk6cL7b/3XNqGHb+Vr5WeGXA==
+	:subject:to:to; s=fm2; t=1791961390; x=1792047790; bh=LUTzkMjkjd
+	NJosJNfceVzDxPijWjReHVDNiOznBT1Zk=; b=iqGm/txoaMKfWNL3flKWfLHaXu
+	Co0vvN+8/3xM4cZ3QZ8YIJmdeWKod/jb73/gtDx774ZwLT1s/PbYnfuWlyGvqW8W
+	L4DyaIPMxTDEC3F1lX73HeeGxbhWdUInBNy0Da2eXEvKtLQJrEmgDtcG1z2Prx4L
+	+sjRlMDO47+rjUfKEvgjIso5QsdliKx1u+ubKoExVlC+NhbxNfL3VV74VJpsXlAL
+	GbndMcqQv2hpox70fYXKHuComAZdp9hfsGcKQupmtDRAJsh8HWzbHTPGGWlcGd+l
+	kvtyzQK/pRB5CiAsz3JekJpI449vM+qPNWK2YyY3Kb7Tk/tky2Cmh2Ok0MUw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791960976; x=1792047376; bh=77Ca1duhfPlmzKz804O3LlMgb5Rg1Vc8x7F
-	6ny/LffU=; b=A8cR/llCjaMT1ZNouG5b/aZILSUaxxPbGwxQ5IilpDhGXxdvm4K
-	W6ZN0kFtzEftnLi+YVM5cuoIFvhd4az5GQUXxBOJWMtwhM/kXf+iKgEpJj6S3oiN
-	ltxv9xNgACcVHY4jn8RxwIuQN41TM0PP0hWrZGBxfxKaqaj6U+ApPS8gabMRK5ky
-	3ZBLoAMrg4s7kutC+7hulym0Tx2pgtd0lUu9H/ttEs/UfiSG5GErzEwW90gppzU9
-	irZSIQg+S5ejDA1XKMN6MK6rZRQcBd4GdmUgcr71//5EbTCIgtNbbarhxAnH0BIF
-	wCgBBvRFUVvtAnqFY+5jzCVTDItZkdWGm9w==
+	1791961390; x=1792047790; bh=LUTzkMjkjdNJosJNfceVzDxPijWjReHVDNi
+	OznBT1Zk=; b=Sdci4qkX2C5+i7xrlXoXemjVfaICWr2xZ8dVCX3ACi40Z6aMuML
+	91gNECUcjeYVsiRHY3TXzfpg5ulnTt46nXLz2ZXnQGwm3lZINASXpqKhjyTp14kl
+	ontgcBi/+0afJxygFd4Aa+I6e6hkQFUYmslWmV4VmyarGHxQXSHMsJIWxSREOE0j
+	tb6ECsnoPaZ5cGc2fJzHXD1wQ8pfLYTI/IL6SClGANtGw+dgwyXJAH8Dv5FvRGk4
+	+GB2eC7Q5H47htvahSkSeIHuEbLbaRwQx+h1W6E1vTRrlSGZwpEFBDFO3/VUcidk
+	L1Ut+j99B7faVLS+VSAeivMtvAy94JBXaZw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791960976; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1791961390; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:mSW8S1I/AY4U05YHRmqtszfyD8DUdccN/1PCqS/Uvxt4Kwu
-	huxeVhj4XKHZj/lq0oZfl2BtrlQv9B9scS9kXcx2SMslfFRJevB9bhovm9g1q9Xt
-	qDbKJ5ZjKIESRjCSqFZd6YPTsEwtg3wEvUowf+yjV05VNTITC+BLBPyEAefrk9iA
-	DyOG2mlQ0ZltnPudmYOZdQ0n4MF9rc7WptyVusw+fNkYnmuyfuRySRiB2XK7kUMi
-	BAfX6ZocNBrg0UM/Kx18++NoFzxqwonW0b4C0gE/C46wMPaqdbhPLdtHgy5KmToZ
-	YbEgAaQSg8ZiCBFw8Nbrt7aggxfMeZr8fzbKqJQ==;
+	s=fm2:rsa-sha256:BV5dH1LjdDg+GEcMxifrt9faljR5uo3z3kd8oBfK5PbbUUB
+	vE835C0A+jbZtsbNxzQU1UY1RW8aIPklyspmDxF7JpRfITov+66JZkAiuImASHzi
+	KfRSSmJgLhtDNwSIqM6+hKyikGsfd0VQQYoinRq72w6mrum4Y1qYtZREzkP2Qr02
+	Hq9EYltwYqc5etI3vgHYJ1xHxvlfyL9+lK7PTKta0vMMMPdxLxR+SHoeS2sGIO+1
+	kYB6+BZpfFWE6DKh3hgaVA09F8ZBc9NYvhSmrNepmczPuTO+XXjhAlNYC3D2nOAK
+	m3+HDm8CJCL0r7h3qvKOX4ZzfKAgzIB1WggMQTg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:7mz967M8cybHHm+3UjaK2MhswCh0H+3MZ7fMLdZkGlQ=:Puwpjg09qmFHlXbrBM2lhx7RshhOv7p+6cC0jqGOOmg=;
-X-ME-Sender: <xms:kCfPagpdyEQTaYK5Lu2GHqCmpkD1gYvhYtQcUFOQZ0lGpybcaHcnrg>
-    <xme:kCfPatpZTSEgqKEk4rFiz-qKJhuJqi7KL93Je9u3VpnaMHFLl4fzwG8IF9D9meQX3
-    qLid8h_30S-Fr1pojxBWSQZcYnEm1fBTc98aKbKQ5osdOtPAQRY2w>
-X-ME-Received: <xmr:kCfPaqMri_vH25uyw_MziBAel7LPXTFadAvZoUpSGIP6hwWyV4TTYw>
-X-ME-Proxy-Cause: dmFkZTFON8dSSZH2/U5G9GPL1LNK+zo2t5xauwS/+yR+BbFodLZpc8hxDm/MfNbaO53PVH
-    Q42Dftq50cWbslfxnCGVTXz3YT9BemSGiXS/zVpBxzwBlwYXAEwBJIPDeWo1R0DbFkERvb
-    Yp1NrBgaPSDPmgsKt1qGhiTUXAAMuRLzDU9sw6O4taQvZQL2h60H1GBAQY8oXl0v7+LzO4
-    e6F0MF2TIHjaJEMUzkUrLsyrVLwjB8A9ZW1dbZk3/k01atC6VpWtuLCrsDun5I+w/kiWrZ
-    Lbs8to1RCwr+Za54hAyzsahzSbNfMPMMRoqhunyUMsYl2XfAzjAVV63hNt75FHhlkjmlr8
-    eQ0sy1vHuxnIsEzTiLjORG7Cem/DRbEu592iCE0eIai76tjwSM10dTmqSB16tsd3vkQSWh
-    CE0q1fmR49qnJvlnL9cftn31rQcuHp1UGKY94eOrUqaZErCI59qmklatDFyg5y0qRVemWl
-    oaIQZs4TaCZXA4habJXDBOqHB+PR7qUkI6skcGDeLNTBMtQe4VhgKejzrFE/16QjUPFv2G
-    SsUVE7nAirx+wBgp81WPKCdAoiTBFkNQysKraV2+Ke9ENAwZEU1nHuAJ92MP0w4HpPEORr
-    7VUVndmim8lUJLcHaHrrTd6HwfCTvXfZ0wnp9PEu6bmAEuj6QhGQiUp9nNrA
-X-ME-Proxy: <xmx:kCfPamwU2pA603FJ0AlrBWIxw77m5kzvy2uPYPPfisw31Tf02yh9ag>
-    <xmx:kCfParvvBMTOwR3bbRMCVq7nxaMlPWjMJG-B7BD5afsc7S886BshcA>
-    <xmx:kCfPan5idl6koG2oU3m9BgsxLFL4jmjFzawmfDBSpNdf8rRpvt4dFA>
-    <xmx:kCfPaiQ3-Cz5DJZQ1jAMxXTJZL9MKOZCfsc7w1eD88HwB87q9AL6XQ>
-    <xmx:kCfPavMnztNSo2r-j8xZ8IpidBYStKPxHhxj8ectzjJnnGN2qsWzkROO>
+Message-Instance: m=1; h=sha256:XOmFZD41J88x5vLa2sAZKY40zd1aTbX8GfQkObT/rfY=:le/0IyAINg0brE+nT7PuOqHyI3jps1I2I2+WTAsYNMQ=;
+X-ME-Sender: <xms:LinPalQ2tuYtwLCwk3cIJN3XiAOCENoUmp4RHeovotYSR0-tXW7vfg>
+    <xme:LinPalqAAfny5wEPKqYGSxid0EiLSxNo2SKQ2KnMNHf1zAaelsIixqd_ccD4KK3f6
+    jtRs-iayx9W_f9LRIhNfEDULqKeNR6w3MmmmnVsfL1hwdrVXo6_RA>
+X-ME-Received: <xmr:LinPajIV_2AFGTrOEzQNmUrGjccVQRg1gvJLJrLPj_bIoPZQnz44xg>
+X-ME-Proxy-Cause: dmFkZTGoeiSZS0vzMY4SpiAJ8JUjangUU54iRhE8xWzAdr2hHl2h8cPyVAcbKYHaajngUR
+    zQDzU7V8RYWrGtxsn7yhfeUE8qgzHlekmajk7A46et5Ciu/B43WNoJWvYK+wDc3KQj6K0p
+    YrBjLrx9Gsrj5QIVIcztQ69uUBSTD971TSkr5rO81LnFmAUbkLsduQA1eIqejJpTisNZhB
+    z6+x49be7+1iJHFFRIbfTv3PLLNrjvJailvMat2izLaDXQkgq8Er1nVyYSMWoJdO8h9XZy
+    dbjkihn2EZWX53Kh6jukmQ2elG7+485eELR8P56D1W3QH15xVXPtkmb7cGz/Rg677C0uYx
+    ZpolPFL2zlwKobrcgbzS1dMU/KaOh6lOeMzPKCJGwV6nDV/tfLnVRx/c1sJjmqBOACyUkr
+    5uM25elzBgIebp+PGq/I2Revca/3IfSjX5amEygqIYvdbL7gOweyH6bcsg/PMPxF43bAJP
+    hXDx4imPBT1k4Yv15Fq9KBL+fR4PcP0SH4Q4xl/d7SILBl+u8pUgkKXSEB5UDJoWrLEYFq
+    5/8jpCeGJBiHryFNFriW2IsBS7rTyYLA2F3gKgYOBbBFSGcXMES0UdxiRfP0mlirOr3Zjr
+    WtJiD7ZsNBK0GoiP/DkY/9uinIyllRtbZgI0+RUcieqi+BDuuPfBhcjGZ5/w
+X-ME-Proxy: <xmx:LinPaoocYOUXjCvKCTfVZDciq9H7XddylkdIjM9GEtfE0L3rwTdzKw>
+    <xmx:LinParzf3TPhp6pyv75dpILB1RDv4jwOuIL8Xq9RQwJtltwQb-bcwg>
+    <xmx:LinPasOEx7lS3JMYe9JAqQQs10IbjJ0RouoRwFgVL1QV5C22GSmb9A>
+    <xmx:LinPag4BOC8FeDTDbrpTPU4qxED03qkWbs5IgFLws_ycGIPdenUqPQ>
+    <xmx:LinPalJ-BEisVg2GdmCxuCCdveMpu0P57gnaiys87C2v68KKsKQX14GX>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Oct 2026 02:56:15 -0400 (EDT)
+ 14 Oct 2026 03:03:09 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 95921521 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Oct 2026 06:56:15 +0000 (UTC)
-Date: Wed, 14 Oct 2026 08:56:12 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 8e6f4691 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 14 Oct 2026 07:03:08 +0000 (UTC)
+Date: Wed, 14 Oct 2026 09:03:05 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Wolfgang Kritzinger <wkritzinger@atlassian.com>
-Subject: Re: [PATCH 5/5] odb/source: drop `local` flag
-Message-ID: <as8njPHSZVabmb4Q@pks.im>
-References: <20261013-pks-odb-files-alternates-cleanups-v1-0-b7030ff2b26f@pks.im>
- <20261013-pks-odb-files-alternates-cleanups-v1-5-b7030ff2b26f@pks.im>
- <as6palGWxRlky0bS@denethor>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Todd Zullinger <tmz@pobox.com>
+Subject: Re: [PATCH v2 5/8] ci: rename linux-TEST-vars job
+Message-ID: <as8pKXTBC33_iQxu@pks.im>
+References: <20261009-pks-ci-housekeeping-v2-0-6863d58ef691@pks.im>
+ <20261009-pks-ci-housekeeping-v2-5-6863d58ef691@pks.im>
+ <askI1DGldZx8ElIN@szeder.dev>
+ <as3b-u7SzE3uPwQx@pks.im>
+ <xmqq33u91wu0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -104,84 +106,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <as6palGWxRlky0bS@denethor>
+In-Reply-To: <xmqq33u91wu0.fsf@gitster.g>
 
-On Tue, Oct 13, 2026 at 05:44:11PM -0500, Justin Tobler wrote:
-> On 26/10/13 09:36AM, Patrick Steinhardt wrote:
-> > The `local` flag indicates whether a given `struct odb_source` is a
-> > local source or not, where "local" is defined as being the object
-> > directory that is directly attached to the current repository. But now
-> > that alternates are handled in the "files" backend, this property is not
-> > something that even makes sense anymore to have on the generic source.
-> > 
-> > In fact, we already have a partial replacement for this field in `struct
-> > odb_files_dir`. The only other site that requires it is the packed
-> > object database source, because it propagates the bit into the packfiles
-> > it is opening.
-> > 
-> > Drop the flag from `struct odb_source` and instead move it into the
-> > packed source.
-> > 
-> > Note that we stop considering the `local` bit when iterating through all
-> > loose objects with the `ODB_FOR_EACH_OBJECT_LOCAL_ONLY` flag. This is
-> > fine though, as we already handle the flag in the "files" backend
-> > itself, where we skip over any object directory that is not marked as
-> > local.
+On Tue, Oct 13, 2026 at 07:47:35AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> I do wish we could also drop ODB_FOR_EACH_OBJECT_LOCAL_ONLY. This flag
-> also feels rather leaky to me. I guess though we still need a way to
-> ignore objects from certain sources when iterating over all sources such
-> as the inmemory source.
+> >> Seeing "linux-exotic", I would think of a job running tests on an
+> >> exotic Linux distro, or on an exotic platform...  but it wouldn't
+> >> occur to me that it intends to set a bunch of GIT_TEST_* variables,
+> >> simply because there is nothing in its name to indicate that.
+> >> 
+> >> I think this patch makes things worse.
+> >
+> > ... I think it's still a fair point. The question is whether we can come
+> > up with a better name then that is not an eyesore and that gives you a
+> > clue what the job is doing without you having to know about the
+> > underlying mechanism.
+> >
+> > A couple of names that come to my mind would be "linux-nondefault",
+> > "linux-optional-features"... and not much else. Do you have any
+> > suggestions?
 > 
-> Overall, I happy to see the `local` field dropped from the generic ODB
-> source structure, but IMO is does make each `for_each_object` callback
-> handling of the ODB_FOR_EACH_OBJECT_LOCAL_ONLY flag a bit ambiguous and
-> awkward.
+> Among the following, my current favourite is "feathre testbed".
 > 
-> Naive question: Do all odb_for_each_object() call sites that use the
-> ODB_FOR_EACH_OBJECT_LOCAL_ONLY flag have "files" backend specific
-> reasons to do so?
-
-It does make it awkward, I agree. There's only two callers that use the
-flag right now:
-
-  - git-pack-objects(1) with its "--local" flag. I consider this command
-    to be too specific to the "files" backend anyway though, so arguably
-    we could just let it handle this directly.
-
-  - "reachable.c" via `add_unseen_recent_objects_to_traversal()`. This
-    is invoke by git-prune(1) to mark reachable objects that are recent,
-    and it's dubious that we only enumerate local objects here.
-
-So we might be able to get rid of that flag altogether. But I'm inclined
-to go one step at a time and leave this for a future patch series.
-
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> [snip]
-> > diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
-> > index 868e723c81..75cf29fa9d 100644
-> > --- a/odb/source-inmemory.c
-> > +++ b/odb/source-inmemory.c
-> > @@ -161,8 +161,12 @@ static int odb_source_inmemory_for_each_object(struct odb_source *source,
-> >  	};
-> >  	struct object_id null_oid = { 0 };
-> >  
-> > -	if ((opts->flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY) ||
-> > -	    (opts->flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY && !source->local))
-> > +	/*
-> > +	 * In-memory objects are neither promisor objects nor do they live in
-> > +	 * the local object directory, so there is nothing to iterate over.
-> > +	 */
-> > +	if (opts->flags & (ODB_FOR_EACH_OBJECT_PROMISOR_ONLY |
-> > +			   ODB_FOR_EACH_OBJECT_LOCAL_ONLY))
+> == Feature & Capability Focus ==
 > 
-> So for the inmemory source, we don't want to iterate over the objects at
-> all if we are only interested in "local" objects.
+> * linux-experimental-features / linux-experimental
 > 
-> Naive question: Are there any scenarios where we even would iterate over
-> an inmemory source and only be interested in "local" objects?
+>   Directly states that the job enables experimental features.  This
+>   is clear, standard industry terminology, and avoids any ambiguity
+>   about the Linux distribution itself.
 
-Not that I'd know of.
+Not all of the features are experimental though, so I feel like this is
+a bit misleading.
+
+> * linux-feature-testbed
+> 
+>   Positions the job as a testbed specifically for experimental
+>   features, which aligns perfectly with its testing nature.
+
+I like this one, will adopt the naming. Thanks!
 
 Patrick
