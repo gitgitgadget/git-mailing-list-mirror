@@ -1,183 +1,106 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329C24E01E4
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 13:44:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2317152E073
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 13:45:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791985484; cv=none; b=lzkg/w1rXPdDCKeNILUDEEOZ5iyztYodAi1nHVqJA5FXy/Jl5W68YW6XueZkmRER56dFds0vJYrvM7YI+ALfN9OiaaTgE26fBH6pk3YOL3qv6512qgCTNJ4j6Z0X3ETtXpRd43EKxsnJLuEDBrmiX26lF26N5tqjinJd/g0WR3I=
+	t=1791985524; cv=none; b=YXpYdXUqnar5viba0VXfC+Ss1jHmVtAyhg+fQOrwbZXJmWl7s/VYlP1N/Yeb5qrj7VU8nUD+v38AlaqPdCqkhG1Y7b8m2bK/pKQeHBkL2cPtR3CCLcNRK+8skvxi88ymQtJ5Y6FO7COzy2WEMeTxJSO4LNfFNer03eqy0tu31L4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791985484; c=relaxed/simple;
-	bh=Xupkd8GJcEmUrw1XLmK+TMIA+8ktQ3COiPeQfzJh5JM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MvQgrA8E8JuuUGijHVxkCMAepzrf3qbFTCqdRNdSUcgVzbALq3Sgd8SuXimJ8AAKO+A/BcHojyAFetN2ymgKCVbJbUz3LfStvNgvuN1Nb5PD5CNRcu45DaKzr436Qrz6jnectyFO+QfnBbUC8/juiJm+ECliKFnLqA0RUntulSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aflZfj/O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TgqDvhxO; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1791985524; c=relaxed/simple;
+	bh=3wu3hDEXjhaONGba9jjcYQK11hcN3zua3siOdSJ4oLE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=C0M/MvyIj0wHBYd+WTJe3WOnO2Dh8oxUkvxvv6O3XcYz7asIL2hDOPQl+V0WaY6eZajgxydYvmN4BeQk0nXNf+hUO0WniudYbKDGo2ew02VlR+8zHlK4lGVh8NXQ5i1sR6toyL+hDloIhMjdWVlb1JAqjWQctP8hpyePaNyHfAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=POOYoa4X; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aflZfj/O";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TgqDvhxO"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5D127EC00BE
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 09:44:42 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 14 Oct 2026 09:44:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1791985482;
-	 x=1792071882; bh=KUeb0nHfh/ohTOiNY+qpjuodJ/53mZUy/UiaRhUuwnM=; b=
-	aflZfj/ONQHFgAvvsMpNaNRn1rxRZtb0OJGMBdKh5sre6GQklbMaC1pIlnbK43mG
-	QBirYKMFMX9O7ZzLJuyGo1itzUhUNAseXTyEUDkCKrdHR6cekNHyUX8Q3Rq9OLC1
-	mo2GXcYbHfRSSuIfNr6Q9SOy+4F7TZ7/0QPHP21QV4BBHZmnhvZoylkS0gvpoqNU
-	XiF5kEz23q4UlYGk8qaEkwxKnsvnCU6fPES7NZn9v5VY5dgLMu8ZFC3ucD0Trz4X
-	3Xe5uJQY26BhEfZBWULyU5GKs6/L7CkS1ollHt1jGUt9pPjZJTlGSb7UdLjp+rTi
-	/aMOLn4ZS2amlyT1SwZv1w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791985482; x=
-	1792071882; bh=KUeb0nHfh/ohTOiNY+qpjuodJ/53mZUy/UiaRhUuwnM=; b=T
-	gqDvhxO7aNK4gWqT621m/mH5ejypZSfdP0GocjI9R/dFH1GUxFHmvIaCAz/5Hvvj
-	NPHdRV0jgJmMbFwmRLVSjUW8ewjpNCmvS405TSQh5ML8ZAkh85esHZ92Y/dsEyFP
-	/7vjosYykl1j3AFrjFJAE/+m8cvlwzjJzXct0K5m/8CsKm7TpsdKjtWGFtl9jZ7H
-	VqIzGiCxTzzQCLvmjWVP1NH9AHPoheEm6DZPmMFRaXBl2gUFLPkGcptCY8eARTkz
-	dHEwpfHs5Awlw/YRYUFqmVZ+TuA2AyESdCGgNu+Lq/wc38Pm3LRM22+KJ09Oh5jr
-	5soHrtZyR4v9gSETJIDGA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791985482; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:pksjaFQKRoZqDqq+b3pEAIF2pjRIEA4puvbqe8OczxnzLO7
-	g7EjNnx0Wdmudjy8BligcvcM3vS0EDzXadodliu00ufkgIdfaEYSH+z0Rctwdipg
-	kRgIudvAyEGXs6sSQgEJX49Ur1dZdOV2dIT6+TxSb4Pskc8e3stLbobF7NMVU8Vw
-	9vRHVd7CgVp59NAGObCZ8L0cgUjidYB/RGGVKhlA/ghUEX2qqki/j9STolYaP7rs
-	axK2cTHenHpecj/X85NIVIcAHef/WC+Z85eaOoZM2wi0EVGC1qDgV/iPqkX5Lx9V
-	F/Ibfz+eTXvPZ8xiAHCbAQP3z3uKu8xk4mIMrzA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-disposition,content-transfer-encoding,
-	content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:pj76DRyDz2/iLLuBxPotKmOzyoTWDS0U5r5NqcHN6jQ=:Xupkd8GJcEmUrw1XLmK+TMIA+8ktQ3COiPeQfzJh5JM=;
-X-ME-Sender: <xms:SofPaoUMxebcH8Sv80NYFyXOV-jv6aEu5QfXY2Jafnh6ULRnv14YJg>
-    <xme:SofPajmT8I7rC2HZEGLPTZnwdVEEI5Ntbb8f6xl60EKLcSXw8iSGxDnIqII1xTYQI
-    GMAR-6ltxFZ28LSBqACEwmTdFDWu2Fi3yRaeOcoc0LNIw1MKpJa3rI>
-X-ME-Received: <xmr:SofPahbzKZXc8FWzfKUdMl2cXg93PgguWnycFsZxM4IeTR-tzNcfQw>
-X-ME-Proxy-Cause: dmFkZTGWChzRsuA0t0UaIzf8W2W7a7kdANYn12Gs7y/skt5k7F9ZtpSrqnetHPfD4WuJAB
-    btlLTrT0Nfoje6zShcJDhLbGFJRPtNa1Mx91EF9Ltvq994+BMh7KDEcdhMRNYMDNZdWCII
-    My86EfXnlg5OcGbaqp5BPYL7zSb78XegI99AmvqryoBfRoemHqVG2o2sN1oaLyvaJDT/iU
-    CBzGxp1G8TU2x2vNL8JrUPiFYvUQnDeOi3Q8xjQB8834xJW+VbQldz4NQgQ2mSv1bxnk9J
-    6tjNcFEubJiZBsDUBdKNwTZ6xg2K3zfL2cRejZk0EkbTGyPa2bZA6dz7CBKxxFZJMXiVJ7
-    2H7TcVUbr72nHj/Qz8PPoQMdalxCJvQaBMHqaHUh4jLfr95ozgGK5i1EodeC1pnoMmJ8VT
-    VOOHtFxYrhqS4BXjZSI9i6T7zHoRf9fp5RqMD10LKa0jlGrqbEvmJhST2ioD/RuMABq31f
-    JbEMmyRZQImAP3sGgyO4cSS6UprarqwYxlbHXSTL1rFtMZI1aHSyrC7/jGS9158Q1I8UTK
-    t/sTqVW1UkcN96kYF/AaORKR3Rtpb3nsjgHhFk0sJ5Pptg6Ggz7PLss12m9OOX7KmlpneJ
-    Hnd9lrqVMw09y9P9wZsYSf4nMHxVd2qSDdOZGzRKXcWlq2ciZKMqO2LljbuQ
-X-ME-Proxy: <xmx:SofPamNSqjioBfRXfimNXOd3MReQ7WWphZNCzKllxyPADvnBf8fKMw>
-    <xmx:SofPauY7D6FEslL2__vbInnzVZzVSSD6EkFeCHeBqpSPsncwqp9bRg>
-    <xmx:SofPas1y6z0Oht-tbHBmzO04fRdu07EvrWnlYmUV9aJr7Tl5lswD0w>
-    <xmx:SofPasciSwk1r7I5dje6UHyBqZlt5DKjsJPR6L6CsJdQsiQkMeskyQ>
-    <xmx:SofPakRtdJ4hZRLpl3pJCu1x3tdJaT7iswtDKUx2YKMAE_ndHJcy0BGN>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Oct 2026 09:44:41 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7622fa96 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Oct 2026 13:44:38 +0000 (UTC)
-Date: Wed, 14 Oct 2026 15:44:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org, Wolfgang Kritzinger <wkritzinger@atlassian.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 1/6] odb/source-files: fix performance when reading
- objects with alternates
-Message-ID: <as-HRIokfGK555yo@pks.im>
-References: <20261014-pks-odb-files-alternates-cleanups-v2-0-fed9b2caa3be@pks.im>
- <20261014-pks-odb-files-alternates-cleanups-v2-1-fed9b2caa3be@pks.im>
- <332d341e-0a1b-790f-4b0f-55a7ebb80f3f@gmx.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="POOYoa4X"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a01933b584so36474395e9.0
+        for <git@vger.kernel.org>; Wed, 14 Oct 2026 06:45:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791985521; x=1792590321; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=SPr6+F+nDp2vD7N6F+VoJDH4AMsF+rElpWLwkAn4xk4=;
+        b=POOYoa4XUKBwE77rAWpHlp2Yv9eOFC54Ay5uQ9aZm9o4pC2yUvOfyjKkrTOhPyKRej
+         j+lYuu3/GbjbwRm92O66ixv7GeBZMVSZPOGxdeU/N060Kj9671/2CK1P0XP6TF83p4iH
+         Ttt2dm1OId5uCSZyiia4tN/lh2XkYuuKfG0ZmixEhDNZjl9E4hqkT4BpoFgH1z3gfcS3
+         Ad1VaGfgaHJXWglWAua74fVnlIJbhxC4Yp2yLsTWrPUQJ3KdCPdD3IuFBoGvSMIddrTU
+         kMecxgEaTUleTdCN3ecckiMawyUWjTZCFTogoi3pQr+lyIEXAxdgWAjttLbmzfvuTAK1
+         gzoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791985521; x=1792590321;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=SPr6+F+nDp2vD7N6F+VoJDH4AMsF+rElpWLwkAn4xk4=;
+        b=2p3nwHwOPDVcEJ5YxfErhvJZsrdk0uaIKL58dUuzQH2fH88FBQ4xhkirAFptM1w7Rc
+         5Ckkul+zbGgpCM8qvZ+z7iWYaANtyNuOh+yFE7YyXvluAHBaO8GJwrdBZ3C5Ogla1wxS
+         wgYVQBHb4KEVgz4h0KLu8RfYML1aogc3wz9Rrzlmav9yDx/HiZpyRUp8UVycnSVEfet8
+         0tozmwJjeklazTPJjaeE0Q93GfMYiE/R7XZVfqzffrBow18dVOOYuukp9dbuaGwbLu3E
+         S2355vagYSSQCUXcNbnQYqq1lNkZoEqv5yH0LZkAhocw/3UlhIrjGN7VIEEYC90TCY4P
+         eSjA==
+X-Gm-Message-State: AFq9FYK+xm/HqnNqn2ZDgJpUo7DOxCvj04LB/eNFDVpsi/6qd3P7EyLw
+	S+GgRXBrKjpNmRK9oP5sQmYqSq/Mox5uDEPm2OyL2P369Lqh6r39VmHkbljjCQ==
+X-Gm-Gg: AYBFou3KE9gbvz67gGEAPqUxPwGbTyspmZnIEPjsrvYL9PuqDJ+deGOVvy+dMrW7qNP
+	K0e0jd6tOEUfRy8QPM/EO/PxI70CM1xadr3E8jzvx1tV1wzaotJDnM1+4FXtzf6JGz3kSdF7uEz
+	bUdEohoO9MB1cASqn4de1GC48tg9E6q36AbBoWROPZ2QDy3AXhSBtgsK4cmXPHSf2kaEUuEJinV
+	vo/yzlhEp69WRKJdOA7O6qml4Fi6fY3Z884K+Wonp/032cjohhFCrU+tHMn9QHyVROYlWrKo4mf
+	L1KG+xeeerBaAu1meuteS65RQW7jaWdVSMICwoIKEnbaaTqSVJIwWqRA57robrE2LC+GrGakHW4
+	DzpTDA93oJVett0ph96nKWMdDdJai8oweJdI+xTy5jSwYBLvHBWtTbW9DR3H1mz3wHsJKXlItz9
+	qWtbBHEqDuimSPDbIcw5/uwo7mVgtqdHTBmP4aFNdY/erflS+pgRSzp33xStcH30fWClBAlM9S+
+	8MMBNHpGEJTdNF00okSk5T/cAj9OXJziBw3HEeL1tXz
+X-Received: by 2002:a05:600c:548c:b0:4a1:a7f8:c11f with SMTP id 5b1f17b1804b1-4a1a7f8c1cfmr120952705e9.9.1791985520605;
+        Wed, 14 Oct 2026 06:45:20 -0700 (PDT)
+Received: from Stealth.zuku.co.ke ([197.237.143.156])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48de7003982sm9334303f8f.8.2026.10.14.06.45.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Oct 2026 06:45:20 -0700 (PDT)
+From: Dorine Tipo <dorine.a.tipo@gmail.com>
+To: git@vger.kernel.org
+Cc: kaartic.sivaraam@gmail.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	usmanakinyemi202@gmail.com,
+	Dorine Tipo <dorine.a.tipo@gmail.com>
+Subject: [Outreachy PATCH 0/2] t0410: fix exit code and hash assumptions in the missing-tree test
+Date: Wed, 14 Oct 2026 16:45:02 +0300
+Message-Id: <20261014134504.1152225-1-dorine.a.tipo@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <332d341e-0a1b-790f-4b0f-55a7ebb80f3f@gmx.de>
 
-On Wed, Oct 14, 2026 at 03:35:56PM +0200, Johannes Schindelin wrote:
-> Hi Patrick,
-> 
-> On Wed, 14 Oct 2026, Patrick Steinhardt wrote:
-> 
-> > With the move towards pluggable object databases we reorganized how we
-> > access alternates. Before the introduction of pluggability, we were
-> > reading objects by first scanning through packfiles from all alternates
-> > before scanning through all loose object directories. With the change
-> > though, we are now iterating through the sources one by one, checking
-> > each of them for whether they contain the object either as a packed or
-> > loose object.
-> > 
-> > Checking whether an object exists in packfiles is comparatively cheap
-> > because the list of packs is cached, and the pack indices are likely to
-> > be in the page cache. In contrast to that, checking whether an object
-> > exists in loose format always incurs one stat(3p) syscall. So scanning
-> > for objects one alternate at a time led to a performance regression in
-> > in the case where most of the objects are contained in a packfile of an
-> > alternate, as reported in [1].
-> > 
-> > We could fix that issue by introducing another flag that tells the
-> > backends to only search the optimized storage backend. But that is
-> > adding more complexity to the object database layers that is ultimately
-> > only really required because of the way the "files" backend stores its
-> > data. So for an alternate backend, such new infrastructure would not
-> > really be a good fit.
-> > 
-> > But since then we have moved handling of alternates into the "files"
-> > backend itself. One of the consequences of this is that this backend is
-> > now having full control over all of its sub-sources, and that also makes
-> > it way easier for us to optimize for this access pattern again.
-> > 
-> > Do so by first trying to read objects from packfiles located in any of
-> > its object directories before trying to read loose objects.
-> > 
-> > The following benchmark demonstrates that this significantly improves
-> > performance in some cases. The benchmark uses the Git repository itself
-> > and sets up its object directory as an alternate, while the primary
-> > object directory is simply an empty object directory. It then reads all
-> > commits enumerated via `git rev-list HEAD` with git-cat-file(1):
-> > 
-> >   Benchmark 1: git cat-file --batch-check --unordered (rev = HEAD~)
-> >     Time (mean ± σ):     179.4 ms ±   2.6 ms    [User: 114.6 ms, System: 61.4 ms]
-> >     Range (min … max):   177.1 ms … 187.7 ms    16 runs
-> > 
-> >   Benchmark 2: git cat-file --batch-check --unordered (rev = HEAD)
-> >     Time (mean ± σ):      95.0 ms ±   1.5 ms    [User: 79.8 ms, System: 15.0 ms]
-> >     Range (min … max):    93.0 ms …  97.9 ms    30 runs
-> > 
-> >   Summary
-> >     git cat-file --batch-check --unordered (rev = HEAD) ran
-> >       1.89 ± 0.04 times faster than git cat-file --batch-check --unordered (rev = HEAD~)
-> > 
-> > [1]: <CAFXJcxvpKHoVDwE5mBOd=w-A5vPdUmehqr8SHLUD7qv1qB00rA@mail.gmail.com>
-> > 
-> > Reported-by: Wolfgang Kritzinger <wkritzinger@atlassian.com>
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> 
-> Thank you so much for this! This fixes the bug we had to patch
-> independently in dc305fc33833 (odb: scan all sources’ packfiles before
-> loose objects), via https://github.com/microsoft/git/pull/975, first
-> contained in Microsoft Git v2.55.0.vfs.0.7. Would you kindly include (my
-> colleague) Tyrie Vella's regression test in the next iteration of this
-> patch series?
+This series cleans up the 'rev-list stops traversal at missing and
+promised tree' test in t0410:
 
-Yeah, makes sense. I'll fold the test into this patch with a Helped-by
-trailer. Thanks!
+ - Patch 1 replaces the 'git ls-tree | grep | head | cut' pipeline that
+   finds the OID of a_dir with 'git rev-parse HEAD:a_dir'. The pipeline
+   drops git's exit code, and its cut assumes a SHA-1 length, so it
+   yields an abbreviated OID under SHA-256.
 
-Patrick
+ - Patch 2 stores the output of 'git rev-parse' in variables before
+   passing it to test_grep, so a failure in git stops the && chain.
+
+I ran the full test suite with both SHA-1 and SHA-256, and it passes.
+
+There are more places in t0410 that pass "$(git ...)" directly as an
+argument. If this approach looks good, I'm happy to convert the rest
+in a follow-up.
+
+This is my microproject for Outreachy.
+
+Dorine Tipo (2):
+  t0410: use rev-parse to get the subtree OID
+  t0410: keep git's exit code in test_grep calls
+
+ t/t0410-partial-clone.sh | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+-- 
+2.34.1
+
