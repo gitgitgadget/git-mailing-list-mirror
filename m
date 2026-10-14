@@ -1,80 +1,82 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0599E4F68C8
-	for <git@vger.kernel.org>; Wed, 14 Oct 2026 11:11:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF9C37BE7F
+	for <git@vger.kernel.org>; Wed, 14 Oct 2026 11:13:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791976266; cv=pass; b=sOrmwXRAj80FcbouY1jpkJCTlKXl7MFUzlDSoKcGRahtPz+WTiRIoerAhbSXSwxzRog8zH7tXnY37M7tjLuXXFJvUrY9smCgBG2SwpK4cd3UKm5RICpJT9Ns4Vr93GMW2OUurcEAH1bPSIAtrwsrNnHOs/P51fQWuXjH9M5xvlI=
+	t=1791976397; cv=pass; b=RB/Ef1b1hOKBigQNOwHqEDylq67Z4C2R6B5HnEIRknxenubPmh3WQE1n7+Gsq+Mb3nwNFXATBfVycW41T848ZjqHrhUW7mZWkAJESUN+RG/y07BKB1QVOlEgn0BnKpgwIJrRLXb+J9ehQCgyEUiTRrSWbZKoX9sOdErOsHrZGAs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791976266; c=relaxed/simple;
-	bh=ULn2o9KaUPNe5R4tfBQwA9JltUcmDEjQXBwpGXOOtWs=;
+	s=arc-20240116; t=1791976397; c=relaxed/simple;
+	bh=cfw3+94mQpoMP+0VoIislLphzB4BW6+nlf5oFZdUSr8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Grjvz2Q10sqiBRb3wbUoZtdxqZfFbLX1o6VZskBH61DPOYjW1vOGHihqkgZmmNAWfx5vklfysxwtMCwPn3Yc1n/ryMMR2IfTVpfRqyBPyga0b+1ifftkXuzlDbjySp1bCDr+SWwKqeUewEM1HA7LwevhABqv4a3xne1DzvfAtgI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j1AasKh3; arc=pass smtp.client-ip=209.85.218.46
+	 To:Cc:Content-Type; b=E0LkHSUY7GesF8mbV5XVglMTtaBSa7Wzq+yXxl5LjER5cEAqtW+zt5RpglAJkcoNKnznTmH4sx9z5mozdIxdeEkqEdsz5DsGvV4qvFj6jR9BG2JArdVhRYkMZw6Ro4iJoaPcE+ZvVJurpvRlsN2A4IQ44Dt1mU7ZVRLMGevW9sg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ctVUtwOH; arc=pass smtp.client-ip=209.85.210.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j1AasKh3"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c2e62319cfaso89228966b.2
-        for <git@vger.kernel.org>; Wed, 14 Oct 2026 04:11:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791976262; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ctVUtwOH"
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-8244537ab76so1794111a34.2
+        for <git@vger.kernel.org>; Wed, 14 Oct 2026 04:13:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791976395; cv=none;
         d=google.com; s=arc-20260327;
-        b=LcXCvR3FO33K1z/DI0b+kWiR9XVs4+wEH5i2vbmaCvUVTV2mDxlOBxjktA3iMltzs3
-         7bB3JJLo3k0osk47IR/C9pYHa4jd0vvVQnkKSDDjxZadHl/s3tr0vAaOWd+AWir7NZA9
-         HBgf1L7C5b9FOjaqo1Clc16SQlmBitZA4evuimHAbCp2d0IFtHBVcN+9gNNF1PoVnebN
-         woxLh4UKncdiFwg2OmDHAPdR6X1+D0vVYvy+UJJJ5fMdkF8cZcYS5ykIAn+cSyK7cLRa
-         wlq5Hx6uaQ6LAT/tRZPr65XE52pndpE55cfbzwwwGcD3upfNSj5D0AZ3iXVuL/9t2I0H
-         9fKg==
+        b=En76JkyMkpSgWQAYReKqXvplGyj/LjGIdch6n4zZ+eHziMWPGhDLJyksw2av14jBwb
+         UR9spC+CPwvptO1Mx+MLyq7cgPVEiLrOEEXsYFDtP3mLAEdK8KRX1rOH3BSfxrbSAIn+
+         5oy3Q6+s0++9x0jFg/qTr3yOc5gLujgTCkKRVHtMqHMMxMvhJONulgHEg9qI0zgvKe+2
+         MC+fFnlJLw3OcWQN0MP5Gm3sQ7fyNjBAfBB9AW21Fey3zqVB+4y4hWYJRYeG3XLK/YIV
+         2EPtgusB/ZEU4tgD37FgkLANx+IFDB4WQSIkW8EuW1neVrPh0LWF7vZsFysbd1k9iov4
+         p0Sw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=0gEKSZkm5uGP+43GQdoXHAtKzrFq/cGnLPpvVU/cY1c=;
-        fh=xEwNemFXS4bNjoQJ/u99Eqj9SfdLR39dP7gdi9L7gCU=;
-        b=QF4HJJuJRNFnX4hXdOGPqepXvZYueXik1ybbdFQuj1ZR0fosuy3GPnWXeqyXAnjiE8
-         PRpfracGJpfoBZ/1EeRcGeGISp6Q2+EoCSSModeaiLJqCqC7XtKO+F9fQCoYAb67Ccfb
-         reIxNTR2swG81RtxQkELh7khMTd/QW3GnyyNGPywDqMCpGJIHrossbG9w1Y8g64tKOHp
-         NT9c9O/xx39BGPSE3hlRSPtmoWqZbUcUew0SQNMtOmRGV1dCrNm5GGTqTiHi1bejbKY2
-         GTXy7XPx+ggL5Yk94PH7L7m9L9jNN9SY5NiifiJ/14Cw+TD117cmcLBzirjdNG/FiaLl
-         oKdg==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=87Wo2KlkpLwxbCtZDQ7uva5Tt7SXFRn7Nkk0J74H9h4=;
+        fh=xct+iGG4b1LwuXoxK5VB4+y71YE7hTgcJFCPJmdmGL8=;
+        b=LNJ9lWGlHuJRGYGzgqbWFXgjZk1jCZCt37fRxlGaggynuUFrtkwca1WHoX+xh/7HLO
+         lourBHDvFGfR+JMwI6ZsClz4kuhqcTRPF1mvRpYgMG8X/nE5XhYae7BNGpapHRY7Su9a
+         5Ws1fX3OVgKpLgwaqfZIBwytOlVZgCKqpM5HOJ2bM8rWbGjYyBMQZkJNawLoCnaCRRFv
+         54xqcSCT0oNhU21G7SdyP6Y5z5x5/3PLEFQ9NiuI+lkKDFIXcu06nZUqqd78zP32wCHe
+         1D5ORvXwZFHgSL9YSTczNEHK3Zpv4BpYwCXnRmyeO6BA2UYiJe5C8s3ADPPzz+IuwvHQ
+         yanQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791976262; x=1792581062; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0gEKSZkm5uGP+43GQdoXHAtKzrFq/cGnLPpvVU/cY1c=;
-        b=j1AasKh3NSfFODvd24xicNW16N0IX4Yg/GkLH2CXl2Enbl6t9WfL4BhRNyWr2u5XDW
-         IC/rFZcF2rAr21bxCcNVwGmAW0l8dUp8rrZs88LG73i2M6k/RBSPKMeJlaiJUOwTBDlC
-         ax9kCPbca18s+KQFN0bgymAc/2m7nqhR2mmDon/Co1qJa6SN8dHlaLbsMQZBUiAZezQ9
-         C7QDUkytCNhKhkbTLTMhiMsqw3Js4yWslFy9Wn7adWPqCNshVIDs4F8lBXvoR1IRkqyo
-         06DA6+DyJdqNbjeTLhIRZRQ3pvS723fMrtlCM2FEY0JtFF07kCXo44wPxiM/k66sKXyj
-         SgbQ==
+        d=gmail.com; s=20251104; t=1791976395; x=1792581195; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=87Wo2KlkpLwxbCtZDQ7uva5Tt7SXFRn7Nkk0J74H9h4=;
+        b=ctVUtwOHvprOnhWQpPE0reo7VtxpFflfcOLkISO++N/8GIIZTGlDe3OvWWA5l3QzpZ
+         7ZDosJQCo6BNXSLCdomTZogNJO8aWSEsiNDsrQ1Pj8Dteimk2PbFdEb7tvipTQreGwhX
+         DN0hCHPd9mMIOSrm8m2go0iG9Ts/32NNvOiKIgm3tbksCtmG59lxm2gbCTgvBEY4Qo6Z
+         cTb5OiM/VQ0PpeW3Nax7hJL/un9FlJCkUhkZQfKJL1Bcrg6V0M6HgUHtIs7P0ijVCbJu
+         nfkOkbOFvPV/efMQajcQmW0RaxBmleN37M/8uMyREgZhMS7seQwGNN8hkuF0IARzS51Q
+         f+Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791976262; x=1792581062;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=0gEKSZkm5uGP+43GQdoXHAtKzrFq/cGnLPpvVU/cY1c=;
-        b=E6+Gs+0ykSR3ehzSQIZWay5oq6FwrCFqbLSwS/1cXwUuRmJJYrH3/6rol4tsFExZjl
-         K7eCoq5GnrY2NGkBEYp3StS/WprckQduv0QlLSNlV3QxfytUjhG6frzZy8uWsrHG8FWM
-         SWSFtYsY6hUeVSZbehmoTMGLVR/hxjtrONqj3OA6luQ3Od6ILhiyYsDlDCBDUW4LozRz
-         E2jxA3lePtOfDdAER5GrWsOERCILFyjaG+SzZUo4l4aJtJvPe2KEEz99W+cwx8XOa1nW
-         tUkwwRE7CSeBXKYDLd4uomvHqcSPSut4/ERnTrdhpd5bnGAWx7FRt4YkqYeJABZbjU+K
-         zl+A==
-X-Gm-Message-State: AFq9FYI+3Ws1iC3O344/NvyVo4mDFkSt4ClgHEB1CQ0MzaQdJ+M/RUF+
-	g/bDVaY9S/jFdzYenU+7hmNVtMc0IBgJmvMjMnpAYgyeouZvJRTity2B7skXfqyX5AdtS75aF9b
-	qIeGPKHXnLRIft7tAV2fP8VgpoqATjko=
-X-Gm-Gg: AYBFou2OOXIEWmNXH8vklV9S+A+KxAvUF7h4zIR63eakJElbyoL6MRwYY/uF0TUVpoz
-	XA30I303cKTYMbQy3bhGDzLmF96FL0z3EGIIIUDVDM2LBZuID5L4ARnnxJJ5W8MrEb6bLQ7QxMD
-	l+OOPiUu44y1Esa5kri3we4Xi38Yxq+Vx2xgRHIXBtRBIycJnbzLMG6k0CqKF9kC6nBWpRZUCAK
-	kdn/p2jMYPevTZkfZjeRsr4dldWJrU1RJi5K14KnxhzznFBxLGTRg7zEv4VvYVOzb+QtiA8/dgS
-	OpHYkYaszRfKRE8mEJrdsbT9dENIhtnPNaz06tPK5Evz5xNoaYeTyywNycLCX1bRXJjRXwJSc/f
-	mmiHMTgFLcNU=
-X-Received: by 2002:a17:907:3e8d:b0:c26:19de:9126 with SMTP id
- a640c23a62f3a-c31aa00dd11mr1433303566b.25.1791976261911; Wed, 14 Oct 2026
- 04:11:01 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1791976395; x=1792581195;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=87Wo2KlkpLwxbCtZDQ7uva5Tt7SXFRn7Nkk0J74H9h4=;
+        b=0o3jZY45xvI4B+L7cdKQ14+616uGEMBCCT9gJm4kqqa92hdqipd1gjzCMubU0sF6yA
+         OfuRyWgtVtpJgxU6rVbN3tUhlt02PoGA7bgOLFckXidCwXmWxQhDF8uk3rLrmfCIyCkQ
+         1kr8oek82msJi/IIyCPK3hFJ7sYQ4Tc4U/g2sx44YQyj66UJsNsQ3YktEW+/IEJYVFN6
+         +KPDbIXkyfaUkN/IHPPQE9dkHM4rlK/+ZprjBVS1GaZ1hipuXY93/nhTlyiap9TqYANx
+         6ke9LzwUI9KnvBV2skVTJEHV7ZYhK85VwSSIR/4+hB2xG8vR379sRGOqofRm2Ksi9TNJ
+         +pIQ==
+X-Gm-Message-State: AFq9FYJxWcdu8pLpyQybM4wW2+NXChp8Bl6uq6YmeOJbV9Ett1VF/iiN
+	p3AFNoOxjiUWGXHaIQnw0vDKDzSLZU1BGF5qw48pxGNVzV12jqSouTiskkHN1SeDjF4F6TI+09/
+	eSPKmfyMB0ii7LfuqkylnDOFwuE2onTQ=
+X-Gm-Gg: AYBFou2PfYoqxF3ijsr7ARsXFdkJiNEg2eEAeTlKWUQM9UTNEO9Papr1vcFS9xqbwcr
+	S/8PKRvuQFFw8XrtJQpT4xSxzuinlcBfnEnnZX/blqo6Dq99ibsu53qHp2hS2xQ2g0CcK15QBqT
+	b6rCoIo5QtAeQ4fkLg7Q5kXitgqpDfy8sQI3FktNVDmOcEa5LXmsFRqaz/M1hWesoTqMDr1L0b+
+	H+jxG7YBUfif5tsmUOo9Jtb5usVkoFQ1m3B31arDy5s6SKANFPJCeSbhlO+A8FU0HL28Q723Ynw
+	avH/WISM8sdYkVnDYw7flS+DBhcCkfXRUhmpXpGMr/Me1E+C57XJpkD7wrs5eRxwPIiaSK+bt50
+	nxkuezj7J09wM1HlIfr6XEikxEapjTdtzI5TG8Yrm0Ut15/JnHVvu7Ansq+kk+XjnYTDIta8DQ0
+	yV/uSNZoGyTAxg6kFbcwSSp1b4j0WlmCmxiMMmDgyZyY8josDIAHq7mdA=
+X-Received: by 2002:a05:6808:4495:b0:4d6:9293:9bc3 with SMTP id
+ 5614622812f47-50c592a3a14mr12287365b6e.61.1791976394747; Wed, 14 Oct 2026
+ 04:13:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,27 +84,34 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20261014081209.61966-1-okhuomonajayi54@gmail.com>
- <CAPSxiM8xEA5zAUb_Wd0M0=PGD44XeS7=NX0vsdMcyid8-EOV+g@mail.gmail.com> <CAFpMFfBVSaGSoFfw9pfOcDWMKnLwnpMSyT51Nu7f-ZXE2NyxZA@mail.gmail.com>
-In-Reply-To: <CAFpMFfBVSaGSoFfw9pfOcDWMKnLwnpMSyT51Nu7f-ZXE2NyxZA@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 14 Oct 2026 12:10:50 +0100
-X-Gm-Features: AclHuK-nYWHySv6VQ132OJfSP8iGj1SmKTMNPj_z__jlzSb_9WfKBp-mwY0zoSQ
-Message-ID: <CAPSxiM8NTdJo8TeSYNis20F0JNkTDwXn0hu_ukMkz0uQrsJW+w@mail.gmail.com>
+ <CAPSxiM8xEA5zAUb_Wd0M0=PGD44XeS7=NX0vsdMcyid8-EOV+g@mail.gmail.com>
+ <CAFpMFfBVSaGSoFfw9pfOcDWMKnLwnpMSyT51Nu7f-ZXE2NyxZA@mail.gmail.com> <CAPSxiM8NTdJo8TeSYNis20F0JNkTDwXn0hu_ukMkz0uQrsJW+w@mail.gmail.com>
+In-Reply-To: <CAPSxiM8NTdJo8TeSYNis20F0JNkTDwXn0hu_ukMkz0uQrsJW+w@mail.gmail.com>
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Date: Wed, 14 Oct 2026 12:12:52 +0100
+X-Gm-Features: AclHuK-syWVifbndzr7CyLKZqBp48Y91kyURMsxy6X4LlmaG93CdTK8InJQ8CLw
+Message-ID: <CAFpMFfB57cWn5WWjeRwKEDsAOSfs18HD99mZanKED0_YL6yVyw@mail.gmail.com>
 Subject: Re: [Outreachy PATCH] diffcore-break: remove USE_THE_REPOSITORY_VARIABLE
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
 Cc: git@vger.kernel.org, christian.couder@gmail.com, 
 	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Oct 14, 2026 at 12:11=E2=80=AFPM Usman Akinyemi
+<usmanakinyemi202@gmail.com> wrote:
+> > Thanks for the review.
+> > I meant that since the USE_THE_REPOSITORY_VARIABLE has been removed, an=
+y
+> > future use of  the_repository without adding the
+> > USE_THE_REPOSITORY_VARIABLE macro would fail to compile.
+> > I see that my statement above is not clear, I would modify the
+> > wordings and send in a v2.
+> You do not need to add that. That is literally like explaining if and
+> else statements
+> in the commit message. It is not needed.
 >
-> Thanks for the review.
-> I meant that since the USE_THE_REPOSITORY_VARIABLE has been removed, any
-> future use of  the_repository without adding the
-> USE_THE_REPOSITORY_VARIABLE macro would fail to compile.
-> I see that my statement above is not clear, I would modify the
-> wordings and send in a v2.
-You do not need to add that. That is literally like explaining if and
-else statements
-in the commit message. It is not needed.
+> Thanks.
 
-Thanks.
+Yeah, i would take it out of the commit message in my v2
+Thanks
