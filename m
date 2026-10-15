@@ -1,156 +1,146 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB8E530DE1
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 14:25:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28CB637DAA9
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 14:36:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792074348; cv=none; b=CXihCl8ibivEMJGO9Cyd7kfh4r44rOhS5hyHCQVBDtTDWtf4bTeUqL6hR+PVI10cKk288KbyGjuESR7BxGUNU/ym5MBXemBFoBlSw5t32tjLaZZrqtNifTYMYyUwtMbFawEyAcJ+XLnCZ1vmbstU3LtyEp1Nn9EDDT78LYo+GpQ=
+	t=1792074989; cv=none; b=kJadne1WusddlWJWbYLFA236Y5tSbczFVZf22v4UrZwT8KbN16hW9+pnPjNzYvDWqqzgCvSAon9Y6WGwu0lVj8DOtQVyzglaQgDVHiO5eeKNvR3tdEUg/ialsi4h7UpruWK59gq1ok5lhvgrT4+lljgbfy66X6pYOAqM4DB2T9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792074348; c=relaxed/simple;
-	bh=pQDSf3F8de3zNwQ8fGiiJjdIrnDRXZzlZYk+TL2snrE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MUNMNQ21pxPKyyeVrHkZYWh2Wzovhwy2l6VxSrXqHgs4KT3HxYl+mBf37kerGAXVvBsJ+3jWdvVDp7dG3sycL2mxTIgHcc2pqCUrNiWPdPxV2uzUBjGAKNa4NI2HHKJnL40UTTcqRYCcvRC2paB+HbuKHoqMSiokOgL85Rf3XEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GGlsl7sW; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1792074989; c=relaxed/simple;
+	bh=t/0q6uYOt2N3PILdE1rdbbUOHpWHRwDhVBgP6ixO/gc=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=T9XrlWS9EF0Qjn9+6vcxFVV07hneNQzWByW3AyQ1BuR6Jwg/KYq15a0uqfxPuf4owrmtbAMHjj8RgJ+fIOD86YjddUzPI7xGV2PH6Ag/GirJQY685Al5kNwB6Uorf73TFqPtg+KlKnrtB0BXNodXBcNHMjySAJ078Nqoe1x4NJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=W/BPnlND; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JLlJyTz4; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GGlsl7sW"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c2e69aa07c3so333147866b.1
-        for <git@vger.kernel.org>; Thu, 15 Oct 2026 07:25:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792074341; x=1792679141; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=y1ZwdeUh226bSuX/lFH8esK1j0ZdyZnvfyMT/XS0LTY=;
-        b=GGlsl7sWS3RobzytkGOlkTMTxbaMaZAFQf9a9rHM9v1ekXKmxvU9qtGaDdJye892Hy
-         xRDocT5bIZ8NlYTNgYPnQx0mYkMjKdFZrRc0wf+mUxLoWHvd+zM6AlNN6A4rfTWF7tHZ
-         45U/C/2QNsipx28Qtk7NWfMxRsPjCfktdJRcFIR3V7U5YtfY/FgI8e98VxXCWR+WWJbH
-         OklergaSN1gJaNV+KL6/QwD7v9oA+0+NJ1D00mOP0dGSuAtFVBmuOlXtVY6MBWF+E0JB
-         lnl/n2tvtrXInL5QRHrTbMwTDe80oz7KCJyS2gljwqNP4lU1Pw/fBaxwxSRDKPBlKa49
-         NEsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792074341; x=1792679141;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=y1ZwdeUh226bSuX/lFH8esK1j0ZdyZnvfyMT/XS0LTY=;
-        b=DEWeaVUTrl4TulyL1VVMXpPpEIHci9/lvvrNFGg5aY4gqmVl5GV/ImTtObGHhmh7es
-         0eDG53w8qyQ2v2xbdzXFUTOUPlCs8cWiPxZkwM7riJAe9FJolhzt8FK6B1NiT9mqARAG
-         3bzvh3qlV6pIaZfQP7hWOI663bcFyYPLTOy5nwLvC8Q7LxUkNpw5yNxvssZKKqlvLMYm
-         KaLbZDZrlmB7jBJsZBlLJpHX857eimRlRas9XbAoFRDbEME9QZ+HmRcBPT9/8sfABbt/
-         HHGgixQzE2zbEeMnfmuLbLrQmVQR9QWhb++8HATWuiXzO/UcocsaZLzN5zKa0XSCKbbe
-         vV5Q==
-X-Gm-Message-State: AFq9FYLaosF8e0QRDhdnodD5z1SW0uvob3yZJftcOWbvnOJe7WCae8oK
-	Spsnx3JuSZWNX/4+Nu4TM/1WBVaFc9xP+oPmsDvuxk6c4v1HkvfuD8z5
-X-Gm-Gg: AYBFou2JPxwJWQ9hELeWZxmN4EHJeXl9lA68dnR03YZaz6/1RtIuDR3QynTr6BIuMsV
-	vuplOTtJgbqtmvSyfd5xkRG/KUsLoseounGMoOnS+OaFFN83cCG4qLw/LL8eFe8QioS/BUa3y/x
-	JBJ++cwLomeWl7EwajGdWrsGIoa/EV3SRZoW39Hf6C2gAYs8ymKJRlOYfMKh8jfA7BMWcy8Z37p
-	BGIYWwwnKQ0rU3stw50ntzl9DSgxiHhNbm1dpwGarVWjMwwLIcPmm5pjvkQ0JP0dR1YiC+OI0rF
-	61g7FtUoqrQOPE9rb/TOeo0PbBApkovFt6eKAr6OdUqrpOi2Fu00wdtf9bgXE3vWiD9o6tcL4q2
-	TS4WdOG7K2o7l1Y93Td2+8W8h/XaZtrKh9+MRiEqVEOQ4lYE/MougdD09FWpg2cPp2OFPfNnLq1
-	0Ni9Sm1sIAY6aPJFtVa3A5fYGRUKVdSNQu1c3NUxQf7RsqONjtG0XB4uC229UtpI0aM2io2DQI8
-	8UNYhXafgUaKMUfSQzEyFzOviqadD6S9vJvulnTzLpIHbBLud/3olx2sCJ2AWWHEd9FrczG9F2E
-	2eFJs6/Hjd8YX24lwYNrjyHSeguf5BD3N/6HF9z3odQS0CiTidzT4IOkXXFc/qLlvPx8hmQbrff
-	EyPcSXEDFfg==
-X-Received: by 2002:a17:906:dc8e:b0:c29:4513:f6fd with SMTP id a640c23a62f3a-c31aa081b78mr1852813766b.35.1792074341175;
-        Thu, 15 Oct 2026 07:25:41 -0700 (PDT)
-Received: from localhost.localdomain ([104.28.251.99])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c3f8557c767sm68631766b.50.2026.10.15.07.25.37
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 15 Oct 2026 07:25:40 -0700 (PDT)
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Subject: [Outreachy PATCH] merge: stop using the_repository
-Date: Thu, 15 Oct 2026 15:25:32 +0100
-Message-ID: <20261015142532.48175-1-okhuomonajayi54@gmail.com>
-X-Mailer: git-send-email 2.54.0
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="W/BPnlND";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JLlJyTz4"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0707D7A01AA
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 10:36:23 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Thu, 15 Oct 2026 10:36:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792074981;
+	 x=1792161381; bh=t/0q6uYOt2N3PILdE1rdbbUOHpWHRwDhVBgP6ixO/gc=; b=
+	W/BPnlNDP1RgV2IPUZj8j6mA0//PYwclUXACzUrI95fRlS7rAW5XboY6AeJuaiG2
+	oiN4sD6pzUKdvsqz5TP5jKcS6W6SitgYXLCuUCl1tLgslqsfoy03brb8t/UpmA81
+	kfQHoSkbj9RVOtxDAuKSbYcxTUQWZ5KgqVHhr00c67gB3WVYaETGo4cvpde7q5vQ
+	yUp5fGYIalLE/iE3UuYi0uiaVLgx8HZVaXMYcpu16nyk5Q6mJwWT5eumJooAwGmz
+	QwsVqlMUCqCx23dDbjygMMFBaVYaLu/7/xmq5TcUrPpzU/wl7Ha/GnFwpT7khdf+
+	fpadR6cr4RBX42hK7p/xJQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792074981; x=
+	1792161381; bh=t/0q6uYOt2N3PILdE1rdbbUOHpWHRwDhVBgP6ixO/gc=; b=J
+	LlJyTz4SNonlySNJ4/ZdX8d3MAoTZ0u+Vq5N7i3UBP1husrCo3emCLJSBeYwiiDP
+	5d35RfYVwzs1lUU6ODZyFugqXZ1duUNUsy5JadVkU9YYh/CI7+83lVPFFpOnIAXa
+	YS5wGocn2qCajxKW8TTmub1mTaKyWA6fV8TdgNLHQdXzNNhHWifNUEMKxm3TLXAc
+	PgRrkNf5WhJQsjLxt13s7yNOR+DiBUkzCLSF5CzuWRDLUNmeeKJX0tTiCV5XPX+G
+	SwwGeRZfmnEYPGvQYszzUTqfheejiqpxHAVTTQpr/38orb2l5337d9eq9nQpE8/g
+	ITEvPqY0DYcxRQA2KEW5g==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792074981; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:vkYtQpXbO4whZzHwjWz/n84UYk3rGObdhKdt4HwcsxSd28k
+	nV16vMKvnWTH4XULidfQJckAelbai5r6YW7U6GikhIB9RQgeajdDi9qIK3JYQOnZ
+	WRwtXTd9P5RCQj0zM0WWP0x980elCVNlBcNkAuKS5WGVpji/jnxvc/qhlVM8EDmR
+	5I4RjMJsGnBckO4phCYtVFj4h/PFFjyamJoLOtTeWdo2IWiJKoHLLPr73Nlg4/Zn
+	SsuuEPD09HSEF0VSAotTCHuStaR+AWyo2p7XwuHxHVRfp3wAE9RAupd1TJP7j5IE
+	DpL8ySxdJPb3d+uyJip71HBvLnvAtCDDXBRYpnw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:useG6E4rjEOwtKugVurtTxVH4XOev1cW64xHd7U5m2c=:t/0q6uYOt2N3PILdE1rdbbUOHpWHRwDhVBgP6ixO/gc=;
+X-ME-Sender: <xms:4-TQara0vDxeHCMr3CVvK3nktM_Cjf6ikwVyMb05O2u8ecRhXQKOQNs>
+    <xme:4-TQalNJC64-kS_PyjfsI2NPmxDkl7iCuIQeSOYU2WKJiHx4WefDjpU4ruESkFJAb
+    Hru7wXjnGYga6e5LxEs84sd6FcemMLKmS--510zG0KGT3Wpn_NIrg>
+X-ME-Proxy-Cause: dmFkZTFwARr1oyyTe0TrwwVFxI1b+fEOvyAVGaL1Nmg5GBavIPDhqmCF90svibdIY+vM13
+    reZmvCR6bQnH31h7HH3OnGaY+71BfgqJR4K5LoOaeEk/zZDT0H3CDpLLzkJyk13IP2ZmUc
+    1wWSk+7YyrQ0pZIE091xC6VrPn3kbKNQwgGxgVRTIU4QXvFg52WokUDYO4sFKAZHL/zpph
+    FIJvDinfQuN3RrM/lkTBlJQVThf+tidFFMwxjQhd3L2wYuSo49yLcZetbpi9Xym4Tc0r94
+    EVhSl/cqaEtSPjHkRSjjd2FYMyNpNH9EnmL2p2Zkv0q3E/CkmxoSiOua2wuMh33iLT7Qma
+    TYX0RwUHHwOd5tdnmCWe18ARq34aoSRGRli4jqK503a9rgig93zEDJA+N7RnRTm40ODfTx
+    1HslNlPCaSAeSFVKUPyFqp63nSwRVxHSAPGOvm8a0bA0x2Witp52IU6usep2JNMORVY+j2
+    F7VwfNe38mO/A+4G8SpvSf5QOfqsQ74UCs5uG9b8mBCaNwugeSX3F8Hnsi5fS4u5Rrr2g1
+    foXuXuJbDWw32j+JGO4qQZRUSUF1qQdmKUiP6kg5PQ2OZrwnknDFuSh+i7N4yzt7WZJWFx
+    Mwoxy0qJG1N4d1zwYJJOa/SM4xXZh4oE5W9PHkKIOGPKXjvKIr0j1x0QMNMw
+X-ME-Proxy: <xmx:5OTQat25jiVdE6g5PHjKEm2akVtKkM2fFMGU_akkfClgA_wBi-wc4g>
+    <xmx:5OTQar00SB_YL9AHRXPI20AsudNVuoJiprVNHtP0cYdo5Q7G838Z3Q>
+    <xmx:5OTQag--vR9ZQSMPoHzNhG7STa9NFdsF1OoFRKzCHiCvE7g-Nh1k3Q>
+    <xmx:5OTQao3n8D4kJygPLVXm-2kvsSzOhMKb3m0axo6b1QvfNdeNcnH6Gg>
+    <xmx:5eTQamWti1e024c6r-uIp_G_VpoFe5OBCDKBcKlNCOCW7Cu0l-W9yZPD>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id CDBAA22C00A1; Thu, 15 Oct 2026 10:36:19 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-ThreadId: Acg_JYlhWR3s
+Date: Thu, 15 Oct 2026 16:35:59 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: git@vger.kernel.org, GGG <gitgitgadget@gmail.com>
+Cc: "Harald Nordgren" <haraldnordgren@gmail.com>
+Message-Id: <b55b6643-b9a2-4e41-8100-2de545004845@app.fastmail.com>
+In-Reply-To: 
+ <d95ed5bd679cea41320c39824b969377e8c88e09.1792070038.git.gitgitgadget@gmail.com>
+References: <pull.2448.git.git.1792070038.gitgitgadget@gmail.com>
+ <d95ed5bd679cea41320c39824b969377e8c88e09.1792070038.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 1/3] reflog: name the strings that mark switches, renames and
+ rebase steps
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-try_merge_command() and checkout_fast_forward() already receive a
-repository, so use it instead of relying on global variables.
+On Thu, Oct 15, 2026, at 15:13, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+>
+> "git checkout" records a move of HEAD in the reflog as "checkout:
+> moving from <old> to <new>", "git branch -m" records a rename of the
+> current branch as "Branch: renamed <old> to <new>", and "git rebase"
+> marks where it starts and ends with steps like "rebase (start)" and
+> "rebase (finish)". "@{-<n>}" and "git status" read the switch message
+> back, each with its own copy of the prefix,
 
-Add a repository parameter to merge_argument() and pass it
-from try_merge_command(). Use the repository in
-checkout_fast_forward() when parsing trees.
+Here it feels like we are thrown into an enumeration without knowing
+what for. What is the problem to solve?
 
-Remove the now-unnecessary USE_THE_REPOSITORY_VARIABLE
-definition.
+> and a later commit adds a
+> reader for all of them.
 
-Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
----
- merge.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+This clause at the end of the six-line sentence seems to reveal why: we
+are about to use these strings in more than one place, so we want to
+introduce constants in order to not duplicate anything (no drifting
+apart). But the why here should have been put at the start. And the
+phrasing is also so passive that I had to do a double-take as to what
+=E2=80=9Ccommit=E2=80=9D meant. A commit in the reflog under discussion?=
+ Or a commit
+that *we*/*I* are about to make?
 
-diff --git a/merge.c b/merge.c
-index 0f5e823e63..85dad63a94 100644
---- a/merge.c
-+++ b/merge.c
-@@ -1,5 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
- #include "gettext.h"
- #include "hash.h"
-@@ -14,9 +12,9 @@
- #include "tree-walk.h"
- #include "unpack-trees.h"
- 
--static const char *merge_argument(struct commit *commit)
-+static const char *merge_argument(struct repository *r, struct commit *commit)
- {
--	return oid_to_hex(commit ? &commit->object.oid : the_hash_algo->empty_tree);
-+	return oid_to_hex(commit ? &commit->object.oid : r->hash_algo->empty_tree);
- }
- 
- int try_merge_command(struct repository *r,
-@@ -32,11 +30,11 @@ int try_merge_command(struct repository *r,
- 	for (size_t i = 0; i < xopts_nr; i++)
- 		strvec_pushf(&cmd.args, "--%s", xopts[i]);
- 	for (j = common; j; j = j->next)
--		strvec_push(&cmd.args, merge_argument(j->item));
-+		strvec_push(&cmd.args, merge_argument(r, j->item));
- 	strvec_push(&cmd.args, "--");
- 	strvec_push(&cmd.args, head_arg);
- 	for (j = remotes; j; j = j->next)
--		strvec_push(&cmd.args, merge_argument(j->item));
-+		strvec_push(&cmd.args, merge_argument(r, j->item));
- 
- 	cmd.git_cmd = 1;
- 	ret = run_command(&cmd);
-@@ -68,18 +66,18 @@ int checkout_fast_forward(struct repository *r,
- 	memset(&trees, 0, sizeof(trees));
- 	memset(&t, 0, sizeof(t));
- 
--	trees[nr_trees] = repo_parse_tree_indirect(the_repository, head);
-+	trees[nr_trees] = repo_parse_tree_indirect(r, head);
- 	if (!trees[nr_trees++]) {
- 		rollback_lock_file(&lock_file);
- 		return -1;
- 	}
--	trees[nr_trees] = repo_parse_tree_indirect(the_repository, remote);
-+	trees[nr_trees] = repo_parse_tree_indirect(r, remote);
- 	if (!trees[nr_trees++]) {
- 		rollback_lock_file(&lock_file);
- 		return -1;
- 	}
- 	for (i = 0; i < nr_trees; i++) {
--		if (repo_parse_tree(the_repository, trees[i]) < 0) {
-+		if (repo_parse_tree(r, trees[i]) < 0) {
- 			rollback_lock_file(&lock_file);
- 			return -1;
- 		}
--- 
-2.54.0
+The context is that you are about to use these prefixes in more than one
+place. And the principle you are following is no duplication. Then the
+details follow. If the details of exactly what they say is worth stating
+in the commit message.
 
+>
+> Name these strings in reflog.h and use them where the messages are
+> written and read, so they cannot drift apart.
+>
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+>[snip]
