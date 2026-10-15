@@ -1,126 +1,89 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D2436215B
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 17:25:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D827223DEA
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 17:27:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792085132; cv=none; b=P6YLhpxRcljhmTsW1OEWI58QO7LfHncEwy5z7degMrBVBSFppKoyq0QJkeEYIThSiJfLtzvqJ5qV1R5Cgoj3fn9sClfghfOUa6Z0hqgbTO5wEgyFvo7bRfi7EfLxuSDyLyp/rs2eP8UdUwnkeZAwCPPxcbgr7Xw+a06rc5ddRyI=
+	t=1792085233; cv=none; b=ZnoUqCVlRg1Rs72IwxK0yUKA3JD2SGFkGkeqCITtn1lh6WnG5Lf5MFeu3VW7XYQn4FoNfQIy5sDsqBa05qPnqL+LbKpKukZ9z7zRfngMT7NMeD6ZOdtaJZriNW9CrwG2YnxQu50PXW+Hp/1N1cdX2Yk+egwXjDJ6YNutFaGx6XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792085132; c=relaxed/simple;
-	bh=DPYZ2wYDJeecldeMoP1tYCSK5YQ9C5bNapUlIclZUUg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CAdEAKFaKrpRz82KjMmTfjPsB6nzagcCi344cxF+15/FQ5NGChvK/zGVEmel002qofW8vTX8OeN+sDSoXLRcnL4Je/KDLXo/Qljy5IcF/EuUuv+h011reDmnkHXhX2gZA2Sd/RVvyF/ArJRjc8UBUPe4Qk4dsFsik4A+Nw7QK6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fIIRbQBD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UX5T6VQj; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1792085233; c=relaxed/simple;
+	bh=tMVp2Do1L+ZMUu8opDt1S/YUYbmXCaEBt3fXdoro9WA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XcCLAQllg5OzZzCXpVlMRRpTF9O37R1DaEXFzl5+6YO9YASa14gQWdlBS+Qm1wJh42EuDDtA8ytjM5DJcV4vwjCZGW2PImJgD26VRT0pCaIOGEnlmDD2YSuRJvCrq8VaTdeMgIYa5Af+yaO0fx+F9nWZQVCAeRkhbo/TVvJNRYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aXkf7zQd; arc=none smtp.client-ip=209.85.160.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fIIRbQBD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UX5T6VQj"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3903F1D000DE
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 13:25:23 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 15 Oct 2026 13:25:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792085122; x=1792171522; bh=2lA23n7asu
-	OiIfLeF2O0YtuSFDgIgCopEKlhjcpMnhI=; b=fIIRbQBDjRG70CbOPa8knQeQBI
-	x87i+Zt4TuwTUVM5rEmgW4nK4rpdww3j/nqBpHPH5gOUbdFtY2eztEM+a9EeliWe
-	hVnQhpbpfrq4U74Zq8CrSP7CwcYYfAI5qVPz2gAvLW9gLb//3On+eqAtUHf/0WFU
-	0l7PAPgZC133fB1jS578p3AMqXXRpM4XksbAFynN53bjJjsk6smD2C8Xkd3bPcEh
-	UYElERTtU/ini2T6z8fkm7UKj9IpbJvSyF8NRkICZ2ZlbGAwSwn+c+zo6/f+uwsL
-	Z5zm+EFCglJPNjvY/tE8Uc9a8CAFliXNNj/rBWo4joIF7Q9cXcQnoNlNgfDw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792085122; x=1792171522; bh=2lA23n7asuOiIfLeF2O0YtuSFDgIgCopEKl
-	hjcpMnhI=; b=UX5T6VQj+BRwG/Gfb4rjRysJbOd6/ckmTwebpeh1vwKvdn1AWX/
-	d3GEJTANUVBoY30F03W8Yk+kjHNIUhbFsnnxfMOqHv91pASFqzRPU+GWms9FnAVI
-	MtVoDghlZgALQTXBYupXjAzAXDb4AsD7o//rVRxGOmFfsjfPYHOAl+47+/yjaP64
-	KBZbiQOysG3XJT6kJYE05A2sDBkfKxPT9AVTk/K8L6ZH50IJMTAqpvYJVALNyTMp
-	bQM54uzceNd0uPOW0u9nyfiSygDxcCi50PdaqOJy71BMzAfTlhFlgrZSaFU0dp5K
-	yrG64jIkvaEYZ1Q1pryxn2eKwfhzUiaWZWA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792085122; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:IvxiK+z8rab7h/krymYfmQRuVOpvjyd+77xc6CWfTgUJ4Pd
-	n5S9hKhbtq9nacY2A1jAzsoBTVqlFPNqWwjvNm1WuuxmE9Va6F1pTv/sMQVRIvTt
-	GmQ8zfl1atlCBMWrmY8qJ+G3lIedMZotqAk0TPxckCTTbxoXQUJX2DQR/6+QeD5q
-	sxQzFUmJ8v36i3Wyh7Q5RLs32zk9KRIohHgkG1yh+Q18dgyM18K9vslRV8I3wr1h
-	MPA71KXnyV695nLqWxu7qBEYcMDkvchXuow3bv/EaVDftIcJxcEwYvC94pSoF8Fs
-	UtorRulVAehpDTmM6PMxX0e1uRFDPffultjadEQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:cLvXML1+/gB23LynQgiqBGv+MhlSoJc9bAlo7vj5jPY=:DPYZ2wYDJeecldeMoP1tYCSK5YQ9C5bNapUlIclZUUg=;
-X-ME-Sender: <xms:ggzRaoACQflk5sF5T14NYyFgBfIab88w_QpGaXVQhODw9q_HWN_NrA>
-    <xme:ggzRauNRXs7UVV4UJnKPrV_UP6zSXRLpeHZwDL2rCdyOFWSOSbi36LypZSWjdRSnu
-    B2BpC0Wo4YDb-9KBrYwkoBGkaR1NQue0iG80yXgQiBR2HA-Nf0KMsk>
-X-ME-Received: <xmr:ggzRalYqwjvz-ubSWyGsePIr9sjPtktv7US8URRDDN6G9abqNi-A9hu6WCJ_xpgZDoG0SQ4007maK2AAEHCboDOCZqWGb0GhRZYC>
-X-ME-Proxy-Cause: dmFkZTEWvWGm874kbUz/48c4v2C51ItbchpgkU4mEYtG3x7DyPhIWx1dgpQTEvcTFxgvr3
-    muTeC1USVRCfBLGx5ctOGJGe9kQSzym7BEKbPk3vaYo7ygdlBFxWUmo2L2jI3FYFUcgBcv
-    pJ/JS4msPSF0vAmPUmgvyyGNoGfCGb0833Dd1ZentpArogwArRi+6KdRMYseucU7rXMvmZ
-    HZyUfo3unJnCUHNRLUNVIyrh98Oca/tOSIYp9aacA4PSIp25zg7BZOizDpjIN/CBrftNxt
-    PcHNeDPQ9X0Nj0ShAQbCwEyY1AN4kVktg2lnl0MTiesUQUxrve3GGWaJ4+Wpdo79o5xRSB
-    7Nnd6pPsjxffmyxsxI8IJV2BjDCTi5LQdniNqTBi4FP27lfUigSd5fJBaj0gIeoa5DPq24
-    MOv+Miou0QzL1t7chpLoxdJvJrM9Cu/2mK4QuFKk2cyjl9ZE6b6rgKb1LvKTu1zTGItZBY
-    3cNvGGGqYkVPt+BxXzDdd7QfEQxEiHBvfPVhu2A31fXX2ZOQt/awomGRlUXtockelv8AB3
-    ZAB6tquDuHwpAph4Uu0J6+gz1Ka/WWdDsjuhzppO88S23AJzssaeP+7v433+U6lNcskJ6I
-    wix3P0whyUOB7M363HjELCQcJXARkLtW/JMYQiLziZ+FVlc2DYc9iP1OGvSw
-X-ME-Proxy: <xmx:ggzRalu66mK9fe9GAgE8MhtPo-rujqdXvDeJoqw1nUmzZqRLiBcKgg>
-    <xmx:ggzRavPpuB1-lA3RgVtGUnUR8_aXIKQ3TBXlbn-78kl9HXrI-DiybA>
-    <xmx:ggzRak4NIL9P9eMDRGLFDINEck1k8rEkNP33oRTI5y-_Ji1l2kFExQ>
-    <xmx:ggzRatQ0iiI1RLoxuZ-dEGjyWXATHdvEzBulrNnqKxDYeM68Eb2J6Q>
-    <xmx:ggzRatrpMAISFs1-VW5S9oNn0S1dN1ajg1g8hu6SmrVSlTXPRZKbp4Vn>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Oct 2026 13:25:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Igor Wiedler <iwiedler@gitlab.com>,  git@vger.kernel.org,  ps@pks.im,
-  jltobler@gmail.com
-Subject: Re: [PATCH v2 2/2] odb: ignore refs of shallow and grafted alternates
-In-Reply-To: <20261015065754.GB1979109@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 15 Oct 2026 02:57:54 -0400")
-References: <20261014103507.35317-1-iwiedler@gitlab.com>
-	<20261014181134.56220-3-iwiedler@gitlab.com>
-	<20261015065754.GB1979109@coredump.intra.peff.net>
-Date: Thu, 15 Oct 2026 10:25:20 -0700
-Message-ID: <xmqqqzhqoozj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aXkf7zQd"
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-48e94879f02so1799056fac.0
+        for <git@vger.kernel.org>; Thu, 15 Oct 2026 10:27:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792085225; x=1792690025; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=xkA8I9LMatE/KdnJ8LjJ06ONvF7vsmqP0jl09JcRL9U=;
+        b=aXkf7zQd0TPmRSNrDmO+QYBpvq4wbcsMVjxn8KYvZ1uGeJ9A/YSNOLyzZCgf/7Dxq5
+         xmISB1VmL7AMNC+Z2v1EO4zzX+3hZs6bcpv7TkDL72x9OIGamReqRK+fBdd0Xrm5h4l7
+         +2vB1RnD8tuATHAYSxtf7swhREEb2DOqu+cHCJvdcJKkKTztJvVlQ+XDBCwj8Se+UfKg
+         GWVRXQ0VL6MrvUqFuSaJKubb1GA93x+x/57Ty8WCadwvu5I/Px5IM9t+oxdo9X4ffNxC
+         kt12deIcGnnXRdNA2arIjK05XG24NEjAWD+xeUS0NR4Ye54utIdpx8Gl+JqldGmIKZSK
+         EVGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792085225; x=1792690025;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=xkA8I9LMatE/KdnJ8LjJ06ONvF7vsmqP0jl09JcRL9U=;
+        b=hCnI++KGru9peBClSMgndZGyiw7Vi1meDz6DVMprsuiA4dVW4UDd1IleFHexnXcOm3
+         rs6Kxw2WVOq3dlyUB7fFfM/FBnIE7A3s5opwElZe1378UBZosZzITn+vTRUMzImYPyvP
+         AMz9QFEzIkNL3De8IJbCCI/DJJXBOvhTCx3FmwLe+RkHLMLXWWEYdn9fIE+/YTb6wKAi
+         sbmBOlIC65RTJ3XGv/tWk4BEaliGKK3ceUYFVap1FNwKvAfHs+scNqPnvDG0X2LUsGJD
+         HE0TU/5QWsRKW6LzChJqzbBVN+ZdeTlF0aBZlaly0dvk1QCfcKPuCdL0WiG2aEY2zqCC
+         5p7Q==
+X-Gm-Message-State: AFq9FYLVEXkagTXyzp0EtF7XoWadpg1NowZfAEcJC1OxMFnZG9CDUvHV
+	HJxkVAPVf+PNOzkqACnGYA5n1PQGNvH3YR5bB9LljXMlDEcVbtf20sjV
+X-Gm-Gg: AYBFou2H/mYJwOfh4vVzmY25pStR5Utk6+f1/upJClse2RPQy1zNuWz6v/V/pebtRtT
+	KEj09P5EcoRX2P9Yaj88VUG1Z9UoddM5d8PI4itgUlIXrWhAyyYTan4V2gDMGzXVFCI/uHm61KO
+	ABypiT81AOFffC6M5M7OKm0TC64aRjgmD+52rV/CynjI0i8TXG3+hUo3CpfhU7tEe+1U0QAP0+E
+	bTIrA/bhP5A9OLEkzrTkeDUrorO9cUBZxbsbDNQDp7pVwejwYXhA9Oar7l81hs+toYDT9GtiOZu
+	WW8V+uKiVv3TY4o/yfB7u0953R+tDJd/a91K52EW65CFoAiSFlIWL7ETUz0kpsUiJq1l5LJF0Gb
+	vbPoMr+xH+B+BlN7SspaSV3VvrxeCWfp2gsxGDTuonoSeQo9wGjcjGApyAEfMhDq6xfe4hKCExB
+	1aK6SEAM9p/yuH8AxAlCMy7NvIVXFkk4N3ANRHPJ4k0q5BLpPok/wBTbMHLiMzpZ3cIejKSKy7z
+	bnWWOUgGdG8PNWMdol5dz3j
+X-Received: by 2002:a05:6871:b21:b0:48f:e0f6:c46a with SMTP id 586e51a60fabf-4a2a8a64998mr18198588fac.56.1792085224585;
+        Thu, 15 Oct 2026 10:27:04 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4a6dfcb1714sm4674103fac.16.2026.10.15.10.27.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Oct 2026 10:27:04 -0700 (PDT)
+Date: Thu, 15 Oct 2026 12:27:00 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	Wolfgang Kritzinger <wkritzinger@atlassian.com>, Tyrie Vella <tyrielv@gmail.com>
+Subject: Re: [PATCH v3 0/6] odb/files: cleanups and improvements for
+ alternates
+Message-ID: <atEMt5wgfblCiv5a@denethor>
+References: <20261013-pks-odb-files-alternates-cleanups-v1-0-b7030ff2b26f@pks.im>
+ <20261015-pks-odb-files-alternates-cleanups-v3-0-bfc62fd780eb@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261015-pks-odb-files-alternates-cleanups-v3-0-bfc62fd780eb@pks.im>
 
-Jeff King <peff@peff.net> writes:
+On 26/10/15 07:27AM, Patrick Steinhardt wrote:
+> Changes in v3:
+>   - Add a regression test, supplied by Tyrie.
+>   - Link to v2: https://patch.msgid.link/20261014-pks-odb-files-alternates-cleanups-v2-0-fed9b2caa3be@pks.im
 
-> The thread has been talking about check_connected(), but the same
-> problem applies to advertising alternates for transfer. But your fix
-> here takes care of both, because it works at the lowest level. Good.
+Thanks. This version of the series looks ready to me.
 
-;-)
-
-> This is a direct test of --alternate-refs, which is probably reasonable
-> and the simplest way of doing it. I think you could also construct a
-> case where a fetch or push causes the recipient repo to be corrupted (it
-> claimed to have object X because of the alternate, so the other side
-> didn't send it, but since _we're_ not shallow, now fsck, etc, fails).
-> But I don't think there's a particular need to construct that full case
-> for the tests.
-
-Yeah, thanks for thinking it through thoroughly.  I appreciate it
-very much.
-
+-Justin
