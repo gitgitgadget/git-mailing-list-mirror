@@ -1,322 +1,178 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CC8288C96
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 21:25:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3D13C0601
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 21:43:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792099503; cv=none; b=EIgB7keVvNbsm/nqf5iJ2GyKOcZiXxSrnLJJ/cGvbU8rcMlL/cz3ZxXroyA/eiUAE1aSFFXQ03gc5MPPQ9dOGv4Amx1qWcSBZ7EJ385TBE+8Hen2zbZ9r3DpXjok3Aith/0TS5oFgmeNN8TMTFJtSeHkAwf8Mix1NebCNm0RmJM=
+	t=1792100631; cv=none; b=NhQAYa4zDzs+sRraiXuHF1/n85xmS1olQJCf/Xi+TO7XiBxYOqQHvqmKz68/cZ5UKkLndKTW/rj1c8jw1/3vdJURlU05Y+uEN/uw37Tq2ZrZ1X3pEk3QNgNUm3WqltpxKyuBy9pmxkB74Iu0hOkRObk/VDZO76TjF+v273iJqto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792099503; c=relaxed/simple;
-	bh=lgJWH+UkKTV7iEcU8kIiYBTR/0p065VzdD/U+pyZwYs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
-	 In-Reply-To:References:To:Cc; b=QL0qgvkbJXsvudx9mBbURKut8wgkEQYN441pMY9j6uArzBkbJtIkcGSvDjJCP3jsHEEy7iLxJj/uyoVoAyNQnEHg2HI84IbQFu9/SBTJKEcFgQBERDB/EEkQMLPivL1SJnpU+kEvA5CXc8Cvi+rZmWtSwH5TSPmAlChjA7H9Zeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=izsM8DIH; arc=none smtp.client-ip=209.85.128.44
+	s=arc-20240116; t=1792100631; c=relaxed/simple;
+	bh=hNRDzrl+nnMV8mvrefwn4tSbD5reY+tHYQsTNo8fTdo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EpMCmGH4LX0tL3zXNa0sSL7Jf29idkvP11QCrEk/K6AurNLS7CB1KaMoQea9e86w/oLK/mcZKouGoOePOiuxMG3OE5UHE37zYUB6QhpmaXpkInvNpbTCJRvI0EJhyMDpYmVdNpBHaQ4pckOwDMIa/BB8Yx6TfvOJK0PryOrTALU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QA417waG; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="izsM8DIH"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a0286c981dso24264465e9.2
-        for <git@vger.kernel.org>; Thu, 15 Oct 2026 14:25:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QA417waG"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c2dc63f8d8aso1014878266b.0
+        for <git@vger.kernel.org>; Thu, 15 Oct 2026 14:43:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792099500; x=1792704300; darn=vger.kernel.org;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=xBs86k+YPKoVZuNJqjSgetd+TVpPvFEeLZwCTxS2dHE=;
-        b=izsM8DIHCuIaBOGyjP8MjzMEH8iInOC37maDCVYG9Hq/FE8G81U+LUrK6XumuiS3NY
-         ZhqeeT/T2hW0tCSuzWDWyPCqzTr8cYrJMJLorU2l/t209RaDs+UYfD533rqrV8RyGMXm
-         wkemJOl9E/3AynFciZA2BWRLMGMpBAJ+amX0XCleRVuW+/v3jFWnmrJuj641ulQZU1WO
-         yAxIqyK8oismLKJZmRAaq09cGC5O57Uqkn/c2A2dc/kXnok2tE8rU1gJK704CYvMLUuH
-         MyBF3U02fxo+u5Hd+AthvCJH0OscZqSGGaVZ4U7EIE4pFD8pal5YEkilbWEC72ACUMPL
-         RfaQ==
+        d=gmail.com; s=20251104; t=1792100628; x=1792705428; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=K574x24Lt53EaOHFyyCemxToXX9+YVxh7N05ey+AxSw=;
+        b=QA417waGOzjpClReVUxXWo1NeYCDg/CMj5jtpihfOF9wa2jdDU4q2RDS2dnb5pW0gr
+         LAXmGPrBism+UZbtykpImFh9f3dVb2mFPM2BUy85izCh/fn9l/bcqX0CHQiMpl2VFHcn
+         r+XE1NnARzOQHbHFVDl4Zrd4aNwwIrWLBvdJ8AQafnkl/0x/gXg9ngK5jT4U779J7Wx4
+         avsfHAXUqhq0YK/YxdVqRfYKiKJUPTRMit8DPDE9Qy+TqK0sh8dZ/Z2wfbfiHfXxbxCJ
+         DDA6CjCMSK1g/ANXHcPVip3tdK7wpiZlTc/DtxUraXOD0H2nMbt2P9+VZfxSlw7kSFyd
+         gdQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792099500; x=1792704300;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xBs86k+YPKoVZuNJqjSgetd+TVpPvFEeLZwCTxS2dHE=;
-        b=yKIHgh7QoirS20J9u1G1oxoSjBTR/zsjP6th4MPKvZUAUCEyMHs9zuPpWNbH2ili91
-         +QW6L3YMs5E3xp4VKNgbI0LAs2K+MoQG/BPk4721cglX4kbxPqIuEy0QcDsc1v9gGyOA
-         QyhDtmOcwS+bWBZpUO5gzEKtPSKHTg3Pmu7MyMClgB0+NesquIzpP3DPPHt2446sAoCP
-         +5bWnqqBoArYxNWoDJu3kSIaMtprAPp+K845iEQRfdNBAUsxHVRweulWw2HglF4UdxAM
-         jqRRvTp2gcbQZyy4Uq7qOdA0A/Ne8rUrnOrjGnk3CXJpF1dlFQSLVqM1pdcWqA1fzOdS
-         dWYA==
-X-Gm-Message-State: AFq9FYIpX9l38U61EAHx7T8WCBurHMeubK/zty+UiWUJVw0twzyVHYa2
-	d3x7H2lVRO2L3g2KjaU1uNLnKoSWMRwhpIQnbQwWQ7VXfkowdx/Qtt3kwoULIA==
-X-Gm-Gg: AYBFou1AyTajJYXvhwejW9nOY6JPXVzORVKwDPLSe5wLBYSLBzcFcesctuTszQMwFjK
-	icNM1i3l+C5hiuhtw2AhPnMO0miyVel7dH6JFk4YjviPFOGscxQFKyzN55WijhIEH63v9FCO1z8
-	+TQ6ixXVLEhTvvP5jSTjhogPHcayK8MjWel8IVULhomwTcP9vP7LnleQmaW0zJX4qlHjXpw9dTc
-	tR2wvvgIojX5GZ9HY9OgmsFhgXKUoatpP1+cQ7Dbkvl+4uYS1nNcBdXVDN2EOtM4t7Rzn+bz/zF
-	uJFm72pZJnJ6jmwF3x1Nkkf90mFoF1fki0fOecE3WNiSqzS6NfJEHzsIpTff3idlPAZMThMq8IR
-	fgrcNVK3Q03TjhpIgLa1NWKJ3P3vpV7M9KQFulgKCBtgjzP39poBUOtORZybiPJ5Th/zetSBEq1
-	ZbEgXMkciZZNlAXbR9gtE8EiWJzJ+AFaOL01cAbyJBi0h1vGIvnZRHDGtk/t09mAAcTEPJyltWK
-	ODBxSbQ9tT4w2Mv4WIKYUeMupVYL/AYQbCKqw==
-X-Received: by 2002:a05:600c:e557:10b0:4a1:8efb:c9ae with SMTP id 5b1f17b1804b1-4a18efbcae9mr262212875e9.23.1792099499975;
-        Thu, 15 Oct 2026 14:24:59 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:8109:d906:4e00:5f7f:3a9f:80bc:18d3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1bd9c001dsm95750635e9.12.2026.10.15.14.24.59
+        d=1e100.net; s=20260707; t=1792100628; x=1792705428;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=K574x24Lt53EaOHFyyCemxToXX9+YVxh7N05ey+AxSw=;
+        b=2ePQ13pIEg1kLGRD9oc0DjsfPawd/adCJ5lOpuxiM4SMvuokiHHnpF2EvZboGBKfjG
+         BvGQWIwhwwl9Zp4Gcqy7gAdI7kLBQBRqTCSh+xxoFCb8R+RAmRFXNyHbryBqc4a2Q89U
+         UPjB5uKMed0f4BjlIVZ2J1C/0xTECsJ7xyDxvrlshJ0NzQ/eP1yO9O+CXn9SwKprmAds
+         NnSisRgAP0GvavPNuIuc1/modfsFnLqrPVTvH5GZLoxC2LTtxODU9+ZvNzwB+VMSvTKY
+         I22Uynfpf3mVbsvH4a4JohrRqROkqYKkPeT6S+PdKwRkJvW0fH66OH+bDOhtFKkzaWeQ
+         595A==
+X-Gm-Message-State: AFq9FYIxEKXY69W/PDk4XnpaqbjMLgEJWvVIttxghTsSNpXPMxB5a2VP
+	2wAfWqylptmtBZtEUsUT8HHDw9vUDD9m6OaXW+2UlcaCVqB0ZfhObtzJ1JuM4Q==
+X-Gm-Gg: AYBFou0jhAwl1rxabc6esod7ufFQiPFJRDX4/LqhCmXBYWR+V9juUWgutO5LDVhER0R
+	jacnePka0hsfVnPq+Xv79Dkf2UoRs/SeP05ER3+M4pjD5hYtlCZZAXnUICFQoYxdO5O9qzoFp/s
+	3lsN3UIOSq5xYfPJJ/HUyfgwVsopUQBYMlQALRo9w93Md0LYpNnzHuuDNYe2p58qPRopk1l4zwo
+	oiXtCwN/X9fhIzavy6jnpbDuqjCTbmp/bc2ZPzT2Vrlw2YNpdDuRIzOFbxo51zt9q9EMZLJLaNE
+	f4m+NhJydjyGc/Y7g3baGjzcGgNgXVJVzfD0sZHJZMK3L9ufl4hYdPZJkwlPDedMtEZdidx0ZiW
+	ufQoadPRi0Rr0/WKfNDjt5hBzaT1lnVaEiISsi57Popj2cFmGvLlkgxuMVBbADz5t80FBocglvo
+	NllpAqJ3qTPDjWoiXzPKPVREco7aGnjBnYrIE7BZfncHEjf//8z1/IxVNSeb/7rvIGonjQ/VCkS
+	ibbSoXP73bcQeZu5cNlv9zj8E0kmpYScorNRoyj
+X-Received: by 2002:a17:907:6e90:b0:c2d:ca32:2176 with SMTP id a640c23a62f3a-c31a9fd2ca0mr1968030166b.8.1792100628355;
+        Thu, 15 Oct 2026 14:43:48 -0700 (PDT)
+Received: from prometheus.tail8f5cca.ts.net ([85.11.110.37])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4091eb4896sm4402266b.80.2026.10.15.14.43.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2026 14:24:59 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Thu, 15 Oct 2026 23:24:46 +0200
-Subject: [PATCH v3] fetch: commit references fetched before backfilling
- tags
+        Thu, 15 Oct 2026 14:43:47 -0700 (PDT)
+From: Szymon Wilczek <swilczek.lx@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Szymon Wilczek <swilczek.lx@gmail.com>
+Subject: [PATCH] cache-tree: do not die when the index is locked
+Date: Thu, 15 Oct 2026 23:42:42 +0200
+Message-ID: <20261015214242.1196722-1-swilczek.lx@gmail.com>
+X-Mailer: git-send-email 2.56.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261015-799-shallow-fetch-with-tags-v3-1-90b6e38b98d2@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33NQQ6CMBCF4auQrh3TaRFSV97DuChlSmuAGlpBY
- 7i7oDFxxfIlL9//YpEGT5EdsxcbaPTRh34Zcpcx43TfEPh62UxwUSDnJZRKQXS6bcMElpJxMPn
- kIOkmQl2ISpKthLKcLcJtIOsfH/18+e54r65k0kquD+djCsPzkx9x/f1KarM0IiDIUtUFHniu7
- eHUdNq3exM6tpZG8Weh2LbEYuUCkZRGWUvzb83z/Abz9YiEJAEAAA==
-X-Change-ID: 20261007-799-shallow-fetch-with-tags-d62b3efb29f0
-In-Reply-To: <20261009-799-shallow-fetch-with-tags-v1-1-379d61504af5@gmail.com>
-References: <20261009-799-shallow-fetch-with-tags-v1-1-379d61504af5@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com, 
- =?utf-8?q?Mitja_Bezen=C5=A1ek?= <mitja.bezensek@login5.org>, 
- Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
- Justin Tobler <jltobler@gmail.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8785; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=lgJWH+UkKTV7iEcU8kIiYBTR/0p065VzdD/U+pyZwYs=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGrRRKqOQZ6WTPVJByp39XchE7YSVVkaVJBuN
- B+zpiWstLO1wYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJq0USqAAoJED7VnySO
- Rox/clkMAKQswfnTEyAWey9RrChsia3G6odkXg80Wm2VKw7+yAxbTnej3kLIRnn7wt9xEhCs43b
- fqLMXAHaBkOZhTgrppgdQKeZNgR13jQ9lcSAdxQz2pVSdS52HpNGAUofTJUazaa+enVBoYBTTTl
- WULIeK7GHVm7GkGwUMog51KsTBloc3DfYPkMsQvmfdGyqX8NDzqglCyZCm7eIkno+xfxQnF9lyR
- sWqQ+8m8uplWMhzStZroDqunW03/u0PMRRn496cd4UTcPQq0fTVRmh7JqpK1DlRGTCAUj0zGhJy
- 5fbECGzq0wVAd2yGt4zlLREjwb2e1DNUZPTrveVGObT0qFmqrjMQIll2tdyR4UR9fu1/aLHX81Z
- ii6p3jt5/4xbirgY1T6tB3nt0ndPJyg/lLMPv1Ubh0uqheXKxqeUFxIru+gtTuTqyenEv9LaQfg
- XCL7o602Zfcb/wp8GfRupRx1g/JOuGxgc/JKVc25+99cLOrARyL4GspVeXdzFO6YYiYvnEZU/46
- nA=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-In 0e358de64a (fetch: use batched reference updates, 2025-05-19), the
-fetch code was modified to use batched updates to provide a good
-performance improvement. Batched updates are used both for the fetched
-references and to backfill tags.
+`write_index_as_tree()` locks the index with `LOCK_DIE_ON_ERROR`, even
+though we only need the lock for the optional write-back of the updated
+cache-tree. As the comment next to `write_locked_index()` already notes,
+failing to write the index here is fine.
 
-When using batched updates, the references aren't yet committed to disk
-when we start backfilling tags. This means in situations such as shallow
-fetching the negotiation during backfilling tags, the newly fetched refs
-are not available for advertisement in the 'haves' section. This can
-cause the server to send all objects the client already has.
+Since 356ee4659b (sequencer: try to commit without forking 'git commit',
+2017-11-24), `try_to_commit()` calls `write_index_as_tree()` in-process
+right after the pick has updated the index and written
+`CHERRY_PICK_HEAD`. Before that commit the `die()` happened in a `git
+commit` child process, and the sequencer stopped cleanly with its state
+saved. Now, if a background `git status` holds `index.lock` at that
+moment, we die before writing `rebase-merge/message`, and a subsequent
+`git rebase --continue` refuses to run:
 
-The issue always existed when the '--atomic' flag was used, as both the
-regular ref updates and the tags need to be part of the same
-transaction.
+    error: you have staged changes in your working tree
 
-Fix this by committing the previous batched update and initiating a new
-one for backfilling tags. Use a separate error variable for tracking the
-reference updates: One, it ensures that errors from the regular ref
-updates don't cause a total failure. Two, if starting the transaction
-for backfilling tags fails, only those updates are not made to disk. The
-initial error is now printed straight away to clear the buffer for
-further errors.
+Drop `LOCK_DIE_ON_ERROR` so that we take the lock gently, just like
+other callers that only refresh the index, and skip writing the index
+when the lock is held by someone else. This also lets `git write-tree`
+and `git am` proceed while another process holds the lock.
 
-Add two tests, one which validates that the 'haves' are filled when
-backfilling tags. The other, to test that upstream is still set and tags
-are backfilled even if the main ref update is rejected.
-
-While this does make it a little slower than master, due to two
-transactions:
-
-Benchmark 1: fetch: many refs (refformat = reftable, refcount = 10000, revision = master)
-  Time (mean ± σ):      82.1 ms ±   3.3 ms    [User: 60.2 ms, System: 24.4 ms]
-  Range (min … max):    77.4 ms …  89.4 ms    33 runs
-
-Benchmark 2: fetch: many refs (refformat = reftable, refcount = 10000, revision = HEAD)
-  Time (mean ± σ):      82.6 ms ±   2.4 ms    [User: 59.3 ms, System: 25.2 ms]
-  Range (min … max):    78.1 ms …  88.7 ms    31 runs
-
-Summary
-  fetch: many refs (refformat = reftable, refcount = 10000, revision = master) ran
-   1.01 ± 0.05 times faster than fetch: many refs (refformat = reftable, refcount = 10000, revision = HEAD)
-
-It is still faster than not using batched updates:
-
-Benchmark 1: fetch: many refs (refformat = reftable, refcount = 10000, revision = 0e358de64a9e014575d11ef884bfc9beb931e37f~1)
-  Time (mean ± σ):      1.468 s ±  0.041 s    [User: 0.839 s, System: 0.587 s]
-  Range (min … max):    1.427 s …  1.558 s    10 runs
-
-Benchmark 2: fetch: many refs (refformat = reftable, refcount = 10000, revision = HEAD)
-  Time (mean ± σ):      84.4 ms ±   1.7 ms    [User: 60.9 ms, System: 25.8 ms]
-  Range (min … max):    81.4 ms …  88.6 ms    29 runs
-
-Summary
-  fetch: many refs (refformat = reftable, refcount = 10000, revision = HEAD) ran
-   17.38 ± 0.61 times faster than fetch: many refs (refformat = reftable, refcount = 10000, revision = 0e358de64a9e014575d11ef884bfc9beb931e37f~1)
-
-Reported-by: Mitja Bezenšek <mitja.bezensek@login5.org>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
 ---
-The issue was reported by Mitja Bezenšek on GitLab's Git repo [1].
+I ran into this while rebasing a ~120-commit branch with Magit open,
+which runs `git status` in the background. To recover from the
+half-picked state, I had to commit the pick manually with
+`git commit -C CHERRY_PICK_HEAD` before running `git rebase --continue`.
 
-[1]: https://gitlab.com/gitlab-org/git/-/work_items/799
----
-Changes in v3:
-- Fix the early exit, so a failed transaction_begin() only skips the
-  backfill.
-- Keep the first commit's result separately, so rejections don't skip
-  the upstream and remote-HEAD setup.
-- Test that the backfill advertises the fetched tip as a have, instead
-  of checking that the root object isn't fetched, which passed even
-  without the fix.
-- Add a test for the upstream setup when a main ref is rejected and a
-  tag is backfilled.
-- Link to v2: https://patch.msgid.link/20261012-799-shallow-fetch-with-tags-v2-1-4211e9a13d3c@gmail.com
+This can be reproduced within a few tries by rebasing a long branch
+while running `git status --porcelain` in a loop, or triggered every
+time in gdb:
 
-Changes in v2:
-- Add benchmarks between master and this branch to show perf regression.
-- Instead of checking the trace file, simply check that we didn't fetch
-  older objects in the test.
-- Link to v1: https://patch.msgid.link/20261009-799-shallow-fetch-with-tags-v1-1-379d61504af5@gmail.com
+    break try_to_commit
+    run
+    shell touch .git/index.lock
+    continue
 
-CC: Patrick Steinhardt <ps@pks.im>
-CC: Justin Tobler <jltobler@gmail.com>
----
- builtin/fetch.c  | 38 +++++++++++++++++++++++++++++++++++---
- t/t5510-fetch.sh | 42 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 77 insertions(+), 3 deletions(-)
+If the lock is taken slightly earlier, during `do_recursive_merge()`,
+the pick still fails, but that path reports an error and reschedules the
+pick, so `git rebase --continue` works there.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b2decc6cfd..34fc37b58a 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1923,6 +1923,7 @@ static int do_fetch(struct transport *transport,
- 	struct strmap rejected_refs = STRMAP_INIT;
- 	int summary_width = 0;
- 	int follow_remote_head;
-+	int commit_ref_ret = 0;
+ cache-tree.c          | 10 +++++++---
+ t/t0090-cache-tree.sh | 13 +++++++++++++
+ 2 files changed, 20 insertions(+), 3 deletions(-)
+
+diff --git a/cache-tree.c b/cache-tree.c
+index b8cbb5da22..1bea880912 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -809,11 +809,15 @@ struct tree *write_in_core_index_as_tree(struct repository *repo,
  
- 	if (tags == TAGS_DEFAULT) {
- 		if (transport->remote->fetch_tags == 2)
-@@ -2076,6 +2077,30 @@ static int do_fetch(struct transport *transport,
- 		struct ref *tags_ref_map = NULL, **tail = &tags_ref_map;
+ int write_index_as_tree(struct object_id *oid, struct index_state *index_state, const char *index_path, int flags, const char *prefix)
+ {
+-	int entries, was_valid;
++	int entries, was_valid, fd;
+ 	struct lock_file lock_file = LOCK_INIT;
+ 	int ret;
  
- 		find_non_local_tags(remote_refs, transaction, &tags_ref_map, &tail);
-+
-+		/*
-+		 * As negotiation only reads references from disk, commit the references
-+		 * fetched so far, so that the backfill negotiation can advertise them as
-+		 * 'have's. Otherwise the server may re-send objects.
-+		 */
-+		if (tags_ref_map && !atomic_fetch) {
-+			commit_ref_ret = commit_ref_transaction(&transaction, false,
-+								transport->remote->name,
-+								&rejected_refs, &err);
-+			if (err.len) {
-+				error("%s", err.buf);
-+				strbuf_reset(&err);
-+			}
-+
-+			transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
-+								  REF_TRANSACTION_ALLOW_FAILURE, &err);
-+			if (!transaction) {
-+				free_refs(tags_ref_map);
-+				tags_ref_map = NULL;
-+				commit_ref_ret = -1;
-+			}
-+		}
-+
- 		if (tags_ref_map) {
- 			/*
- 			 * If backfilling of tags fails then we want to tell
-@@ -2099,9 +2124,16 @@ static int do_fetch(struct transport *transport,
- 	if (verbosity >= 0)
- 		summary_width = transport_summary_width(ref_map);
- 
--	retcode = commit_ref_transaction(&transaction, atomic_fetch,
--					 transport->remote->name,
--					 &rejected_refs, &err);
+-	hold_lock_file_for_update(&lock_file, index_path, LOCK_DIE_ON_ERROR);
 +	/*
-+	 * The transaction may have failed to initialize, meaning there is nothing
-+	 * to commit. Carry forward with other operations in such cases.
++	 * The lock only protects the cache-tree write-back below; if somebody
++	 * else holds it, compute the tree without updating the index.
 +	 */
-+	if (transaction)
-+		retcode = commit_ref_transaction(&transaction, atomic_fetch,
-+						 transport->remote->name,
-+						 &rejected_refs, &err);
-+	retcode |= commit_ref_ret;
-+
- 	/*
- 	 * With '--atomic', bail out if the transaction fails. Without '--atomic',
- 	 * continue to fetch head and perform other post-fetch operations.
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 300bd5396d..0baf18e01e 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -1942,6 +1942,23 @@ test_expect_success "backfill tags when providing a refspec" '
- 	test_cmp expect actual
++	fd = hold_lock_file_for_update(&lock_file, index_path, 0);
+ 
+ 	entries = read_index_from(index_state, index_path,
+ 				  repo_get_git_dir(index_state->repo));
+@@ -828,7 +832,7 @@ int write_index_as_tree(struct object_id *oid, struct index_state *index_state,
+ 
+ 	ret = write_index_as_tree_internal(oid, index_state, was_valid, flags,
+ 					   prefix);
+-	if (!ret && !was_valid) {
++	if (!ret && !was_valid && 0 <= fd) {
+ 		write_locked_index(index_state, &lock_file, COMMIT_LOCK);
+ 		/* Not being able to write is fine -- we are only interested
+ 		 * in updating the cache-tree part, and if the next caller
+diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
+index 0964718d7f..4b7547e108 100755
+--- a/t/t0090-cache-tree.sh
++++ b/t/t0090-cache-tree.sh
+@@ -286,4 +286,17 @@ test_expect_success 'cache-tree is used by write-tree when valid' '
+ 	test_grep ! region_enter.*cache_tree.*update trace.output
  '
  
-+test_expect_success 'backfilling tags after shallow fetch advertises fetched refs as haves' '
-+	test_when_finished rm -rf source target trace &&
-+
-+	git init source &&
-+	test_commit_bulk -C source 10 &&
-+	git -C source tag -a tag -m tag HEAD~2 &&
-+	HEAD_OID=$(git -C source rev-parse HEAD) &&
-+
-+	git init target &&
-+	git -C target remote add origin ../source &&
-+	GIT_TEST_PROTOCOL_VERSION=2 GIT_TRACE_PACKET=$(pwd)/trace \
-+		git -C target fetch --depth 5 origin &&
-+
-+	test_grep "fetch> have $HEAD_OID" trace &&
-+	git -C target rev-parse --verify refs/tags/tag
++test_expect_success 'write-tree succeeds while the index is locked' '
++	test_when_finished "rm -f .git/index.lock" &&
++	test_commit locked &&
++	>uncommitted &&
++	git add uncommitted &&
++	>.git/index.lock &&
++	git write-tree >actual &&
++	test_path_is_file .git/index.lock &&
++	rm .git/index.lock &&
++	git write-tree >expect &&
++	test_cmp expect actual
 +'
 +
- test_expect_success REFFILES "FETCH_HEAD is updated even if ref updates fail" '
- 	test_when_finished rm -rf base repo &&
- 
-@@ -2005,6 +2022,31 @@ test_expect_success REFFILES "upstream tracking info is added even with conflict
- 	)
- '
- 
-+test_expect_success REFFILES "upstream tracking info is added with conflicts and backfilled tags" '
-+	test_when_finished rm -rf base repo &&
-+
-+	git init --initial-branch=main base &&
-+	test_commit -C base one &&
-+	test_commit -C base two &&
-+	git -C base branch foo &&
-+	# Backfilling only takes place for tags which are not pointing at tips.
-+	git -C base tag -a annotated -m annotated HEAD~1 &&
-+
-+	git init --bare --initial-branch=main repo &&
-+	(
-+		cd repo &&
-+		git remote add origin ../base &&
-+		mkdir -p refs/remotes/origin &&
-+		>refs/remotes/origin/foo.lock &&
-+		test_must_fail git fetch origin --set-upstream main \
-+			"+refs/heads/*:refs/remotes/origin/*" &&
-+		git config get branch.main.remote >actual &&
-+		echo "origin" >expect &&
-+		test_cmp expect actual &&
-+		git rev-parse --verify refs/tags/annotated
-+	)
-+'
-+
- test_expect_success REFFILES "HEAD is updated even with conflicts" '
- 	test_when_finished rm -rf base repo &&
- 
+ test_done
 
----
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
-change-id: 20261007-799-shallow-fetch-with-tags-d62b3efb29f0
-
-
-Thanks
-- Karthik
+base-commit: f57c9a73884400380bddd172acc88b569834f909
+-- 
+2.56.0
 
