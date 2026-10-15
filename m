@@ -1,100 +1,101 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580E6381AE7
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 17:31:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950A33DC4AB
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 17:50:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792085521; cv=none; b=LKTpZfZOPDMjB8V9czkWp0PcUPcUkhG6dJDv9tUZfyUExdKXS/eoUsi9sdVfn6Qfe9EoKxaSTo+5HII7l7BRAnhAl5Abc3/SNkLU82EvG/g38XpZeQ5alMzM2Em+mkNU4Cxq3I4yStU9yM/4pUE27Ra4R3ijZOzJ4sqF4tFRjA4=
+	t=1792086626; cv=none; b=GwVMcjXzxb3GhV/E3dIiU5sOtnccieujV3tIhA1hQe6nEtTOEFg7K8ysEOM8rtjmPW3NOKteUmIfmXKqXqNN5esEfK/ELUWQfSBW3s1EMUwvH+oPeLQq6sHeAMXp+eop9OFZASKBVXY3hpNYDcycIUVZ8YIVH281gRn76zJIKoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792085521; c=relaxed/simple;
-	bh=J6o6PZk6O8dF+7micBRn1tbRDyI8OTyVfYeQKVsRoVc=;
+	s=arc-20240116; t=1792086626; c=relaxed/simple;
+	bh=zxMWzWLEKnvxkx8qNc+7dSbZMmndeUo1LyUbIz49GDg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QbQihKoKee0m1SvC1IaQM3E7ZMGGKIdbqfT0QjlWj+WycaPnrhdkV1NdCfwfOXIaqi4TFDqu5Na3mLUj6f4hZ88gt6xu/ArRBuHQOeeSMSdjub1aLP5dNfuSvUm9tLAvh+GqhxIeK7QGq+64rQajOEsU99ZiidDlZt6z/ldiQlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nMmeIY2V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CzWFQSKc; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=sbahLuWY7MXHq6f27txVoOKTzrMV5squEkDa0klETaAcZopbVYMYlOj4Lkso/YYniQ3vKA1aJWhBnQp6S12FZDeSLFPzg2E2Hb17f3QRCHcgGDwPbn39gkslMLAmtp3Dn/sbGo9QKlt/Il+XDqrM0A5q7hwaSs28qQPN+QCjArg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aquiL/p1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nnuu4brB; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nMmeIY2V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CzWFQSKc"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 517547A011F
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 13:31:50 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 15 Oct 2026 13:31:50 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aquiL/p1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nnuu4brB"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id BD5D71D00124
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 13:50:15 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 15 Oct 2026 13:50:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792085509; x=1792171909; bh=mBguA//S2k
-	/RDT9KDLBRbNGjXgU5PrfkY6VQAl4Z7dc=; b=nMmeIY2V0D8uXIN/f2R15mFVJm
-	gdjKF/iWgsa6lkWYDY2r38JX/wLaNCPDgg6Mf6UfvuIg6EuMPUCTOuzkNsxwolXi
-	eXCOY1feppsG/qNPcxjb+Iuu6ixT3oau70bNGfLsg4Fa16h3hKhDnz735a5h+iaP
-	OcxBF+BA6spu0+xIQasaQCt+AcoId1cn+WxK7nWO86yEcLQcAH8Sw3pYZddg7GPL
-	TwuR8Fn5uI9mTUAXkyxchKUz3aA0d89nnnPmXbg9ZaP1WZixX45HJKc2k4c7Qq1c
-	07LzpKNdDWKTnLY/HFOzTxzFv5tUK8za8SW20dXCWHIsZ6uvUwFjZ/IYNnWQ==
+	:subject:to:to; s=fm1; t=1792086615; x=1792173015; bh=sLUz31nYLV
+	0jg8oeMOc41/kE5XVVclcd5snNDunq7k4=; b=aquiL/p1Q7mxPkbbOqAb4PrgS8
+	kqH81msDNkYBlTtnXSx+Vy2KPOn7+XMI5Kh6mFWuEegOIqJ13fCFoFlfVAeozSc/
+	tNnELkLk/+aCtGuY02ttMLb+SHRE2b4Fnff5OMrOZArZL+ctW79UwZLh8jywXHn1
+	rHGifrcpY8vD+eln/UOzXTS2gZgao9Ly7FhdGgfWN4J93vpemd3ep1IYs+3AoVKC
+	s8TessiPjgyGkwBdEc3sXDsA00+AWw1XBVuoG8SilRKpIHHduo1S+zOzJVLcAkAB
+	VQSpK7xftB9SuqcwLWgn9F9/6YX8j/D6ggrkQ8+PR62Ptrsv4doOwjYB9w1w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792085509; x=1792171909; bh=mBguA//S2k/RDT9KDLBRbNGjXgU5PrfkY6V
-	QAl4Z7dc=; b=CzWFQSKc6xYES+eUMLbZjZthgkHiqAf6duDOabELHbkLdqxSWVY
-	ZZ8K2kGMcaHoySPbn/QHTcUPpNo5Rl98VOarCKUdDBTZ4LAJdobfbnMo0MjmPk4v
-	t5VOaNwimEzaV68khI6V3QweMJCyAG4JGZt7wGMpt5GgsB5jZ1mC+D0xFB+MboPZ
-	bzsMq3v6lkHYY5L4klMvwr5aZUBdngaDPLZLahc0jAFWbF7FMC2Amjf4rLKGCxj9
-	jmZu3KvCg+snBqbbdNMbzeV5lJPaYG6GJCxax2MlnV/uP4tEMMx9FhYjuD77Tzuj
-	XRRmeqOm7DNIS1Jfs6zPtczpyW3AhpXBX6A==
+	1792086615; x=1792173015; bh=sLUz31nYLV0jg8oeMOc41/kE5XVVclcd5sn
+	NDunq7k4=; b=Nnuu4brBKnSV50t/yTCNNtz038vmrXKm6r+ecc9j6vhyvUA3v2s
+	rqAcZfSxVzro4eaENslvPsHnfBwgRp+xl7zWhYFs5dv/Q3wMasrZT5pApddI4o7D
+	PGYmhMeL0VB9f+zTMKxXqSE9FkqVFt4PIAhPqzKX/BBHP6fJwoxVaT5pYk6hn4pO
+	uYQLiDv3tUsdeTtU67jsXsEhln5khxu1yLgD8KZTPWqjndnJBS8zo2NEitNfFAu7
+	+Yh+G2pJMjNCdwQJM2jKtmhGlRJko/IT6QUppiT2u7nNuB3PeZ6gjYe/y/l31vMP
+	+aMCf+8NH/Q5cyiWGn72OcD8CYr4vWzHBmw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792085509; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1792086615; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:kz9iMrvJDdRmL5phwCYMTlYEXI7PINRVtxT01mUhzAAvLWZ
-	YR8kehxg+bOBVDR6O83DWr8tE5z+u8szOPLqGmRsWlbl9XBJvpHCIYwejI538He5
-	9LH8gVczHHhllPhTVDehhYxwuz8QPq6lrtBjXq0sPQFbhA+XK+TR7CpUp4eEcUMe
-	oFG0qKQPB35N5upJKaIzod7DdiG95Y8UOpj9tqSjVNOXGFvh8x17K1e1XgFD97TR
-	9aF+unFrx6AwzQpRm+14yX4s7BV7W1oE/YNblHtbGPJio4Da5rw6tIDnK6mtl0t4
-	tKxIzRJtNEH4+rLHmLPekmVhRtLY0hg3YPHhTqw==;
+	s=fm1:rsa-sha256:ZUAFR8nujQdlEvNIP+A8eeTgvze0sVATaT6W2hNQYpo9jf2
+	6+kkecu/XDowxIua5EvD4sBQtChOBMfUz55vaQ+HaRG8eMDDHoUrVNuNiKgcLuoc
+	IKv716wYhCXpy2rGKrJOuupNXatw8WR3yaElC1tyi2U2cD+U5jDZ5SY96Tw3b8of
+	OXRKM+tf49VSNeZfbGwzFNHSnrwiBvII7W72BmOQzRVojBPBm/OwY2MkwhoZwkuy
+	VkxFlfLz7bOzbIp3i61Y3q0giOrxiOu7wfkUlsfMnyWK2AlDeau6Q17RY0TBBLVL
+	i1wUjvm34zlkL5nHhqYx65U8pj/5iSn8i7jwIDw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:EPW4Qta0L4Mwomzy7bCcgIDh1L9Xsh8qfnx/cap/xsc=:J6o6PZk6O8dF+7micBRn1tbRDyI8OTyVfYeQKVsRoVc=;
-X-ME-Sender: <xms:BQ7RakkmmSiPIGd9vZNNtK5gg4yICGLaM0DHH9H37vIW8myLqgSReQ>
-    <xme:BQ7RaqvJE5aZJEc-8GBdjjVbcuZXwJ3kWPpZUz9deZhg_pLvAntZVfITVwJG-toJ_
-    ms66zjopMKDEro667Xlo8hMUzyQn5-5j7fjaElPVzZPgCS-ag2WfI0>
-X-ME-Received: <xmr:BQ7Raq8SU4Q9j0PiwEzbv1-uVvXSTKxjHC4f3ZDeILoPR-aysleHMDbp11xJkqrVxhCmUdYCslHJGfVRVYy60XZ8XEAFZmSPupzo>
-X-ME-Proxy-Cause: dmFkZTGKblyiYwGNS4d3crV2c1iQWTtv87F9qrH7yg89lIjLvsh7mLJ/39KWpa2UTPAt/f
-    Di16UcxyPsF6TjrJA9Q9h0ZuVJJKiIZ7SkDadFy7T66KLkbWDqCbwmbfcVG3Eh3NIWr90t
-    XRrNFgne/CyOkqTFdKFw82W+htp3EUB58MBWQNvqYi4ZT3uA583uShzlpG1H/Se6URjyRs
-    eUQyjTzVBOCzTADH4ewopvi0IO+9SdtWEhE7WJk4WMDqUvNIPotSf5sKv7MA9hA4VP3apd
-    KnCKLZwfZgbuUKo7Nv8edvN/7Sy0TnWjP4LxV8bEINxwUq/CzfnYLk6dyz1VQeIMjoyCDF
-    nq42+hqRUBX1dqlYHu2EchJxUZxClu7MZoxtD1/xILsuy0BiU5rw8RTeO1Kq8Yvh+EkZbj
-    WwUY65JLQrNua28oRgG89PRBv3OruubLDrAVLIH/Qikv15Peiu6qW6/nLvyO5UZweWOh2O
-    28HNO9UAZ4xGP65g7hpIWzqeyJoi7k/Eq2TKv/XG5RMCAZJXGDwdd0EAYsQEKimpa+utDC
-    7x2d3F8CQjNGvGK6BAGymDXWONDrLrhjIRG0suzNlFMuKwg6J5mSffUP0L5N/wZbb6jruT
-    j4MFnV6OueePX0AjwhhQde1sfR8XERRIq77hZV48kD2wXuqgpf43lf9Vzn2Q
-X-ME-Proxy: <xmx:BQ7RasNYHXs0d5OChm-ptatWGmrTRI7e1UGN5UPweIikXS2uTgMhrA>
-    <xmx:BQ7RagG6F-zVtk1S_jgTQjbtbtWPYAZzZXSXHS9FMx9uxZpR_0NgKQ>
-    <xmx:BQ7RaiRyHzIdhHntGANQ1aKqYLk4JlyEG0VAPduvrE6nfY_S_J-Low>
-    <xmx:BQ7Rals5WV8_EZ9niwFpUdQes44_zY_GvtvqZTW-i1BYh3KqcNj2mw>
-    <xmx:BQ7Rarcsdsad-z03TzxWks2XeHsYVA-6khonVNwNXTbWEx-0mlWvtiZ_>
+Message-Instance: m=1; h=sha256:tswGTjebhNWKKnv9AMoGA4MjCa0p6RpCHp2knuy6YoU=:zxMWzWLEKnvxkx8qNc+7dSbZMmndeUo1LyUbIz49GDg=;
+X-ME-Sender: <xms:VxLRatCh64EvsmPDU3hsouSpYbfNWkdcH0a-t88rFWmlOmLrzPzpJg>
+    <xme:VxLRatzJQo_poSjqnp6UG5sZEgO1m-9aHLZ3LamHaZ9qK4-l-eS9s0tmhEWzv8XpP
+    2D_axebumvOVEPete2Smjum2pXKb0yGN3C96dmNSEeNPfXvMsI7Zp8>
+X-ME-Received: <xmr:VxLRaq1238rMwn5b_98ZkOnD6i5_KPOuTECOR9x8D4bduieZOykih5RcsFZKg49ff65nb8O4_vfigKrIs7DTQl2U3Fn3iNvtDlWk>
+X-ME-Proxy-Cause: dmFkZTGCGIZ0BUEj/e8NvoWpAPkAUMrBBQCjM0eZlfPQggHKdPPD72N9FZ3ZH9AQgR0FFu
+    +e8BkidJEI9YkC/9by3lt08ygXN640S4NJUhY6A09YvZD/x0BY2r/RckTY2cGLMtN+NvqG
+    ySHQRt4ks0u+r11YQoEAD7IUM2lY8e0IK3jtaA+PFY5uqy5ZUDRRZd68wgEFso3EeKWK8v
+    Y769z/dp9EsRQywzAX2RKpU8Svtx+DB9GLCeLDGbeGWCWE9r97zdZvxRhxKAD25F+fkmbP
+    /dFxqXMeX7A7UO/JdcaDvBAzeoI3VO2m6Q8ArVA4jhwyrMGsU5gJih7LZb6ko6BH6P1BY5
+    90sa87Kg+fT0dTZTrhrUyKJ0Dgel6QIT6dmXzolgDP4AafRPolZSE2lLHVs34HlWVhkrtc
+    Ed1gp4ddipOY+TSNBLvj9supY48N8nrMZUO16HyL+8jcfxqp6V3A0xbIMafE6dPhrcy/lK
+    jnWb6cgpz9gjsFuCH5M8MlfTyYtkrPir2hTytnlkQL+PmFoM2RZAPu23vvt+lzMoMdUF99
+    Yj8G7t6/ShzZwAHzeFDNjqBcwtjuaHcrEQ/s2jXhQ5s0A3H/B3dk1DOoqaF56sUjQw4zE0
+    b5Rohwz4d6auePTKbEw9LQcdXjAtmKmNEqQHChKuoKxS0TinBeaztBXeAXuw
+X-ME-Proxy: <xmx:VxLRatxj8CGW3OzYdiOnNcFrGdDDxEf5etnzIxG59ubKyGaLoMXBWg>
+    <xmx:VxLRahEBl4s4EE_9eB6MF80L1BQ58_rybnbKwpnxdlY9W-enXQTgIQ>
+    <xmx:VxLRagYaOiZ8cFmNy07JIoSKle-8xD7Z37PmZVQaDUA1cR2zPjhWjQ>
+    <xmx:VxLRajDUgB9dncCxd-IcxKlRFV4xfbllK-BfgsXKooOuqwYmJMzk2g>
+    <xmx:VxLRaslRodw-Q0UxncKmOGM_V250k2EYV5b5JyyVNtjG-I2faSWdPWQJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Oct 2026 13:31:49 -0400 (EDT)
+ 15 Oct 2026 13:50:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Andy Koppe <andy.koppe@gmail.com>,  git@vger.kernel.org,  Karthik Nayak
- <karthik.188@gmail.com>
-Subject: Re: [PATCH] refs/files: keep root refs out of loose ref cache
-In-Reply-To: <atBraYoY1SVwnezN@pks.im> (Patrick Steinhardt's message of "Thu,
-	15 Oct 2026 07:58:01 +0200")
-References: <20261014153208.2194727-1-andy.koppe@gmail.com>
-	<atBraYoY1SVwnezN@pks.im>
-Date: Thu, 15 Oct 2026 10:31:48 -0700
-Message-ID: <xmqqmrseooor.fsf@gitster.g>
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  usmanakinyemi202@gmail.com,  siddharthasthana31@gmail.com,
+  kaartic.sivaraam@gmail.com
+Subject: Re: [Outreachy PATCH] credential-store: add lockTimeout config option
+In-Reply-To: <20261014232739.23021-1-okhuomonajayi54@gmail.com> (Okhuomon
+	Ajayi's message of "Thu, 15 Oct 2026 00:27:39 +0100")
+References: <20261014155529.84134-1-okhuomonajayi54@gmail.com>
+	<20261014232739.23021-1-okhuomonajayi54@gmail.com>
+Date: Thu, 15 Oct 2026 10:50:13 -0700
+Message-ID: <xmqqcxtaonu2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -104,39 +105,129 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
 
->> +/*
->> + * Create a separate ref cache containing only the root refs. These are kept
->> + * out of the loose ref cache, which may already exist and is shared by
->> + * iterations that should not include them.
->> + */
->
-> This raises the question whether an alternative fix could have been to
-> teach the cache itself to skip over root refs in case the caller is not
-> interested in them. The answer may very well be a "no", but I would be
-> curious to learn why you settled on the proposed fix instead.
-> ...
->> -	loose_iter = cache_ref_iterator_begin(get_loose_ref_cache(refs, flags),
->> +	loose_iter = cache_ref_iterator_begin(get_loose_ref_cache(refs),
->>  					      prefix, ref_store->repo, 1);
->>  
->> +	if (flags & REFS_FOR_EACH_INCLUDE_ROOT_REFS) {
->> +		root_refs = create_root_ref_cache(refs);
->> +		loose_iter = overlay_ref_iterator_begin(
->> +				cache_ref_iterator_begin(root_refs, prefix,
->> +							 ref_store->repo, 0),
->> +				loose_iter);
->> +	}
->
-> It's a bit weird that we recreate the root ref "cache" for every single
-> ref iterator we create that asks for root refs. Is there a reason why
-> you have decided to not actually cache the root refs the same way as we
-> cache the loose refs?
+> diff --git a/builtin/credential-store.c b/builtin/credential-store.c
+> index bc1453c6b2..9fef54d218 100644
+> --- a/builtin/credential-store.c
+> +++ b/builtin/credential-store.c
+> @@ -67,7 +67,9 @@ static void rewrite_credential_file(const char *fn, struct credential *c,
+>  {
+>  	int timeout_ms = 1000;
+>  
+> -	repo_config_get_int(the_repository, "credentialstore.locktimeoutms", &timeout_ms);
+> +	/* lockTimeoutMS is a deprecated synonym of lockTimeout. */
+> +	if (repo_config_get_int(the_repository, "credentialstore.locktimeout", &timeout_ms))
+> +		repo_config_get_int(the_repository, "credentialstore.locktimeoutms", &timeout_ms);
+>  	if (hold_lock_file_for_update_timeout(&credential_lock, fn, 0, timeout_ms) < 0)
+>  		die_errno(_("unable to get credential storage lock in %d ms"), timeout_ms);
 
-Curious.
+Around this point the file is already full of overly long lines, but
+the patch is making it even worse.
 
-So an alternative would be to have two caches, the primary one for
-things under refs/ hierarchy and the other one for those outside,
-and callers can choose to use only the primary one or use both of
-them?
+> diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
+> index c1cd60edd0..408f26bb10 100755
+> --- a/t/t0302-credential-store.sh
+> +++ b/t/t0302-credential-store.sh
+> @@ -210,4 +210,60 @@ test_expect_success 'get: store file can contain empty/bogus lines' '
+>  	EOF
+>  '
+>  
+> +# Holding creds.lock makes the next store fail. The error reports the
+> +# timeout that was actually used, so "in 0 ms" means that name won.
+> +test_expect_success 'credentialStore.lockTimeoutMS=0 gives up immediately' '
+> +	test_when_finished "rm -f creds creds.lock" &&
+> +	>"creds.lock" &&
+> +	test_must_fail git -c credentialStore.lockTimeoutMS=0 \
+> +		credential-store --file=creds store 2>err <<-\EOF &&
+> +	protocol=https
+> +	host=example.com
+> +	username=store-user
+> +	password=store-pass
+> +	EOF
+> +	test_grep "unable to get credential storage lock in 0 ms" err
+> +'
+> +
+> +test_expect_success 'credentialStore.lockTimeout=0 gives up immediately' '
+> +	test_when_finished "rm -f creds creds.lock" &&
+> +	>"creds.lock" &&
+> +	test_must_fail git -c credentialStore.lockTimeout=0 \
+> +		credential-store --file=creds store 2>err <<-\EOF &&
+> +	protocol=https
+> +	host=example.com
+> +	username=store-user
+> +	password=store-pass
+> +	EOF
+> +	test_grep "unable to get credential storage lock in 0 ms" err
+> +'
+
+As it is necessary to keep the above two in sync forever, it may
+make sense to do this instead:
+
+	for v lockTimeout lockTimeoutMS
+	do
+		test_expect_success "credentialStore.$v=0 gives up immediately" '
+			...
+			test_must_fail git -c credentialStore.$v=0 \
+			credential-store --file=creds store 2>err <<-\EOF &&
+			...
+			test_grep "unable to get ..." err
+		'
+	done
+
+It is a common mistake to use double-quote in an attempt to have $v
+expanded before it is passed to text_expect_success function, but
+the variable $v is dereferenced correctly inside the body of the
+test that is quoted with single-quote as it is eval'ed, so the way
+the above is written is right.
+
+> +test_expect_success 'credentialStore.lockTimeout wins when both are set' '
+> +	test_when_finished "rm -f creds creds.lock" &&
+> +	>"creds.lock" &&
+> +	test_must_fail git \
+> +		-c credentialStore.lockTimeout=0 \
+> +		-c credentialStore.lockTimeoutMS=500 \
+> +		credential-store --file=creds store 2>err <<-\EOF &&
+> +	protocol=https
+> +	host=example.com
+> +	username=store-user
+> +	password=store-pass
+> +	EOF
+> +	test_grep "unable to get credential storage lock in 0 ms" err
+> +'
+
+This is understandable.  The presense of locktimeout=0 hides
+whatever locktimeoutms is set to, so it should fail the same way as
+the earlier two tests.  Wait, nobody unlocks creds.lock, so what
+should happen if the line that sets locktimeout=0 is removed?
+
+Ahh, the key to this test is that we make sure "in 0 ms" part of the
+error message does not say "in 500 ms" to ensure which of the two
+variables are being used.  It is not like the credential-store command
+would fail with 0ms timeout but succees with 500ms timeout.
+
+> +test_expect_success 'credentialStore.lockTimeout allows a store' '
+> +	test_when_finished "rm -f creds" &&
+> +	git -c credentialStore.lockTimeout=1000 \
+> +		credential-store --file=creds store <<-\EOF &&
+> +	protocol=https
+> +	host=example.com
+> +	username=store-user
+> +	password=store-pass
+> +	EOF
+> +	echo "https://store-user:store-pass@example.com" >expect &&
+> +	test_cmp expect creds
+> +'
+
+This one I I am not sure what it is trying to test, though.  Would
+the test start failing as the machine is loaded more and 1000 ms
+becomes insufficient?  No.  The thing is not locked, nobody takes a
+lock competing with our test, so with any value of the timeout we
+should succeed, no?  Or would it fail if the timeout is set to 0ms?
+
+Assuming that there is a reason to run this test, should it also be
+testing locktimeoutms to ensure both variables behave the same way
+when set independently, similarly to the two tests I rewrote into a
+for loop?
+
+Thanks.
