@@ -1,142 +1,156 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EFA2F7ACE
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 13:41:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792071676; cv=pass; b=p9aFtwx5n4S1j+7JnyFJNWRYsUucd0/BkVW7MY+6zxiXTeY0GzKfQETuB0Ikws2Me4qPJ7xPD5XfsTl4WbzZIlfeqx8toL24m8Yu74aDqsKf3YIuyD/x1CB8P513sit8etmIaFD8EsSDg/9HwdyHZmLwafpH1SwyxQ7V73Wt868=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792071676; c=relaxed/simple;
-	bh=vbQuUtmHV2z+wS0ZqF7K6lYrubh9pEBOHNdzrenHmJ8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Xnj6MiLo0iqV9vdZs9aU2PmfmXKHJOIQC9t5L7JXkp9OsX29q1bQyYmwNIGwB7QQxzGjRl3ixQnp6/rAAAzAyqbAloY+dbNWL1XnANbXEprslzzPA+Bhw61hgZJxAvdZYs7mkkjBWAC9cNgseZpX3N23IhrKOhVYaQv+/M6KKzI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iM0q873P; arc=pass smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB8E530DE1
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 14:25:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792074348; cv=none; b=CXihCl8ibivEMJGO9Cyd7kfh4r44rOhS5hyHCQVBDtTDWtf4bTeUqL6hR+PVI10cKk288KbyGjuESR7BxGUNU/ym5MBXemBFoBlSw5t32tjLaZZrqtNifTYMYyUwtMbFawEyAcJ+XLnCZ1vmbstU3LtyEp1Nn9EDDT78LYo+GpQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792074348; c=relaxed/simple;
+	bh=pQDSf3F8de3zNwQ8fGiiJjdIrnDRXZzlZYk+TL2snrE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MUNMNQ21pxPKyyeVrHkZYWh2Wzovhwy2l6VxSrXqHgs4KT3HxYl+mBf37kerGAXVvBsJ+3jWdvVDp7dG3sycL2mxTIgHcc2pqCUrNiWPdPxV2uzUBjGAKNa4NI2HHKJnL40UTTcqRYCcvRC2paB+HbuKHoqMSiokOgL85Rf3XEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GGlsl7sW; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iM0q873P"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-917ad52d7b6so16736876d6.2
-        for <git@vger.kernel.org>; Thu, 15 Oct 2026 06:41:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792071674; cv=none;
-        d=google.com; s=arc-20260327;
-        b=dlqRkJhVzclqI1qTefSySlMfUf+MxAiNct7eZJNdE7IdA60dqZ4SJpObZKCbsy9688
-         3LsRRq+ph0zMPW7weHvQXg/g1kYnqZ/ihbZRj1+Qtf3eEJ2D9wxwqMA+y+2T+HKFmYNT
-         KL/r/8eLhXgWRQ33fcjm3dLFNJhCo4wsltBus84CEWUGNS9VRwuglVAJ4UcXUgmgSbii
-         9+l2aB/UWj6xd8jsFi4/+xcgReycjJ+quCkEPHztcbFiySz5zbSE3YBubTbNtJ125w1C
-         N2IJ9D4034yumsW1N/BdB901hxgGmFcMGKLqIMKxCy4GxUKo6z/4g9ljt0BLjtlhUE0I
-         il1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=YOXYGMC9YDLGufXnpNUT9sIoj2gHUhzL0rqISJtSs/A=;
-        fh=eGiqeW1dgT/8qRSthAMHdk7gh8+8tP90n3beR7tXtNI=;
-        b=l4S4eV0M6D3T+x61F1lRBwCqtgHoMcFwI2vBpAXZ6J1sKki1nK8ohvUkOViPLQutcl
-         mQFhWGYq4bRmOcdIXaKOcb9SS51h5YZ7mHZh2pN1/07u6ozNvzt7alQUJkcZ5HTKu0bj
-         HR4skw9gFcF0LweILNpF6T5h6oAmuvY5Bpj/g3GcrDmjk5PwHpG4cZxavZpqX9MCTuMF
-         qG5dJU7/S13Duvd+JWnHDhOjyLd8AeuF8r49qz/SckCjXpuKnQ2Dvvr4U5IlZDeRki7e
-         n77s0dc1rdSlUJ8rw9L+jOm2gFPK7e26UGSbfQFXQDnywpYBvRLT+ecNEfOsxlIexkuJ
-         mAsg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GGlsl7sW"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c2e69aa07c3so333147866b.1
+        for <git@vger.kernel.org>; Thu, 15 Oct 2026 07:25:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792071674; x=1792676474; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=YOXYGMC9YDLGufXnpNUT9sIoj2gHUhzL0rqISJtSs/A=;
-        b=iM0q873PWNclyPpN8u5/eGHkZMHe5nEtfxLKc8zgG3Vw/KuY7tecxueD2598Pm3xDj
-         WhkZJiBpTJgUJgosN7MdPb5Vv30UaxrwhngxT5o+YjYw3HeLpRJhAFqWNG8wzyQcBFs7
-         7YdOtCpzdn+ht6rDJPC/DEK1pKOP/FyGP8ymfIjXHUbvv60+j9L42nWVUM+4gvs/lAFO
-         33k6HdQSzD9nrFy/viN58WKhuxozCkRo6vVd8e07CV/qxzyKl/W4NmuuHOILmeUvhQqQ
-         fX8XZjfNUFDThwfHrPL8S7f4+zYgGtaKasoEkG6LPYcToUycKgsEUcovmEGgq2xrNMe+
-         p/oA==
+        d=gmail.com; s=20251104; t=1792074341; x=1792679141; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=y1ZwdeUh226bSuX/lFH8esK1j0ZdyZnvfyMT/XS0LTY=;
+        b=GGlsl7sWS3RobzytkGOlkTMTxbaMaZAFQf9a9rHM9v1ekXKmxvU9qtGaDdJye892Hy
+         xRDocT5bIZ8NlYTNgYPnQx0mYkMjKdFZrRc0wf+mUxLoWHvd+zM6AlNN6A4rfTWF7tHZ
+         45U/C/2QNsipx28Qtk7NWfMxRsPjCfktdJRcFIR3V7U5YtfY/FgI8e98VxXCWR+WWJbH
+         OklergaSN1gJaNV+KL6/QwD7v9oA+0+NJ1D00mOP0dGSuAtFVBmuOlXtVY6MBWF+E0JB
+         lnl/n2tvtrXInL5QRHrTbMwTDe80oz7KCJyS2gljwqNP4lU1Pw/fBaxwxSRDKPBlKa49
+         NEsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792071674; x=1792676474;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=YOXYGMC9YDLGufXnpNUT9sIoj2gHUhzL0rqISJtSs/A=;
-        b=AOYySk3SWuyKdh4ZTY1uzwCrlTgdKvpTsLKeV0TYQB5c45a/u0wJu6mjTYeXslEkoR
-         zSXW8KZsJ6RYFsuv/1z70vtct4Mpj462H1V1wUZrBk5+020oliUhuq7EBzSX/gWKpfWR
-         jkl705R1hMDd2hZ8OBFRBk4QMXbCycXGTHA+vsGtn/nYt0iYaLKF1oZpY9X61f3/Wirj
-         dxDcUXXxJ3ngb0RYQ9qOOvkhCmSQ7VWKEYG+bHyCO0YW/Hv9Ppz4K7QKULISyEGIZTOo
-         205QqJcKEB5XWwi87cVQuUSg0ypwQ8smRZ8CNy5iNoHaSxFk6L4Qx0EYNPTilJyH2Aao
-         4gPQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxpscmdad/CVl2EoCKqtUwpZZHuDLIOe6oM6y2T7n+uHdN+5fwBuCmibe1fWHBLofp74m0=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKiZLLmnWZA/eOvm9kEiv/vrDEScU4mIhV94Mbqx9svxD9fai1/
-	E3Gwii/wC05PUwaWZ8gpd11Tr5IpPS2lcSlcISNe1uuB8bAdlGhdz4PYuC8jnO6si7v4Dpasm4D
-	mFclLtkrLlVK/cTvs+Ar0mgxS5dsGi1M=
-X-Gm-Gg: AYBFou1hV6KX/YCAPmPGU0yZf5FkJO24+Zba7DsgyW5iyToSo06FwnnHOrOKzHg9bL+
-	/nAD81HF9CaqJHayN2yo9MktNfMeD8lgQHPnX/i8wvgLECBB77YDIRN42MSt2Z/dOXmqGEaWRRR
-	Vtp2hTn3XdCtN9KEaF0JX3jXa59WyvNQjTclQOwpT7iFvuRlakY8TC/ICu2n1yjGFUyiFYQNwLa
-	xFG/3V+5k9wAmPhWJDOOJqi146Vzr654yOUNCu2OZ4Zfd4+/rA/Spm2mm7KK2AeRNDS0ej0BQLx
-	ENJSlWDKhme+wRa+5A5YgzZWz+WHfrwpD4jP0v9AOZBWiWzSBHz+guE7+hc6n4MmTHOKzmvbkmb
-	+6rH/+xe3UH9WmM3lMQDtSUQisChmpAsMjSxEL6xg7V/P
-X-Received: by 2002:a05:6214:ca6:b0:914:2c9d:b376 with SMTP id
- 6a1803df08f44-91b55806013mr339986206d6.46.1792071673800; Thu, 15 Oct 2026
- 06:41:13 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792074341; x=1792679141;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=y1ZwdeUh226bSuX/lFH8esK1j0ZdyZnvfyMT/XS0LTY=;
+        b=DEWeaVUTrl4TulyL1VVMXpPpEIHci9/lvvrNFGg5aY4gqmVl5GV/ImTtObGHhmh7es
+         0eDG53w8qyQ2v2xbdzXFUTOUPlCs8cWiPxZkwM7riJAe9FJolhzt8FK6B1NiT9mqARAG
+         3bzvh3qlV6pIaZfQP7hWOI663bcFyYPLTOy5nwLvC8Q7LxUkNpw5yNxvssZKKqlvLMYm
+         KaLbZDZrlmB7jBJsZBlLJpHX857eimRlRas9XbAoFRDbEME9QZ+HmRcBPT9/8sfABbt/
+         HHGgixQzE2zbEeMnfmuLbLrQmVQR9QWhb++8HATWuiXzO/UcocsaZLzN5zKa0XSCKbbe
+         vV5Q==
+X-Gm-Message-State: AFq9FYLaosF8e0QRDhdnodD5z1SW0uvob3yZJftcOWbvnOJe7WCae8oK
+	Spsnx3JuSZWNX/4+Nu4TM/1WBVaFc9xP+oPmsDvuxk6c4v1HkvfuD8z5
+X-Gm-Gg: AYBFou2JPxwJWQ9hELeWZxmN4EHJeXl9lA68dnR03YZaz6/1RtIuDR3QynTr6BIuMsV
+	vuplOTtJgbqtmvSyfd5xkRG/KUsLoseounGMoOnS+OaFFN83cCG4qLw/LL8eFe8QioS/BUa3y/x
+	JBJ++cwLomeWl7EwajGdWrsGIoa/EV3SRZoW39Hf6C2gAYs8ymKJRlOYfMKh8jfA7BMWcy8Z37p
+	BGIYWwwnKQ0rU3stw50ntzl9DSgxiHhNbm1dpwGarVWjMwwLIcPmm5pjvkQ0JP0dR1YiC+OI0rF
+	61g7FtUoqrQOPE9rb/TOeo0PbBApkovFt6eKAr6OdUqrpOi2Fu00wdtf9bgXE3vWiD9o6tcL4q2
+	TS4WdOG7K2o7l1Y93Td2+8W8h/XaZtrKh9+MRiEqVEOQ4lYE/MougdD09FWpg2cPp2OFPfNnLq1
+	0Ni9Sm1sIAY6aPJFtVa3A5fYGRUKVdSNQu1c3NUxQf7RsqONjtG0XB4uC229UtpI0aM2io2DQI8
+	8UNYhXafgUaKMUfSQzEyFzOviqadD6S9vJvulnTzLpIHbBLud/3olx2sCJ2AWWHEd9FrczG9F2E
+	2eFJs6/Hjd8YX24lwYNrjyHSeguf5BD3N/6HF9z3odQS0CiTidzT4IOkXXFc/qLlvPx8hmQbrff
+	EyPcSXEDFfg==
+X-Received: by 2002:a17:906:dc8e:b0:c29:4513:f6fd with SMTP id a640c23a62f3a-c31aa081b78mr1852813766b.35.1792074341175;
+        Thu, 15 Oct 2026 07:25:41 -0700 (PDT)
+Received: from localhost.localdomain ([104.28.251.99])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c3f8557c767sm68631766b.50.2026.10.15.07.25.37
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 15 Oct 2026 07:25:40 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Subject: [Outreachy PATCH] merge: stop using the_repository
+Date: Thu, 15 Oct 2026 15:25:32 +0100
+Message-ID: <20261015142532.48175-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2225.git.1789269613.gitgitgadget@gmail.com>
- <pull.2225.v2.git.1792012836.gitgitgadget@gmail.com> <xmqqmrsfq4rm.fsf@gitster.g>
-In-Reply-To: <xmqqmrsfq4rm.fsf@gitster.g>
-From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-Date: Thu, 15 Oct 2026 22:41:02 +0900
-X-Gm-Features: AclHuK_UwFQ6FdRNk__W_IHkCBGok_COoCK-XILkHvBCTcqSAMD3U5YgpgpF-Cw
-Message-ID: <CAF5D8-uzTe2qm8MdoADkSunrKhc_qSLzjBG9CGR5tDAS32Xh5A@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] worktree repair: avoid breaking unrelated .git
- file and gitdir
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Sorry, I sent the previous email in HTML. I'm resending it as plain text.
+try_merge_command() and checkout_fast_forward() already receive a
+repository, so use it instead of relying on global variables.
 
-On Thu, Oct 15, 2026 at 7:46=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > 'git worktree repair' does not sufficiently validate the cross-referenc=
-es
-> > between a linked working tree and its administrative data before repair=
-ing
-> > them. This can cause the repair to modify the wrong .git file or gitdir=
- in
-> > certain situations.
-> >
-> >
-> > v2 (0156021)
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >
-> > Split the first commit of v1 to make the changes easier to understand. =
-Fold
-> > long lines.
-> >
-> >  * [1/5] align .git file handling with repair_gitfile()
-> >  * [2/5] centralize inferred backlink selection
-> >  * [3/5] use read_gitfile_raw() in infer_backlink()
-> >  * [4/5] reduce .git file reads
-> >  * [5/5] avoid breaking unrelated .git file and gitdir
->
-> Makes more sense to have this series as a logical progression of
-> smaller pieces compared to v1.
->
-> What is "0156021" by the way?
+Add a repository parameter to merge_argument() and pass it
+from try_merge_command(). Use the repository in
+checkout_fast_forward() when parsing trees.
 
-It is the first 7 characters of the commit hash
-in https://github.com/gitgitgadget/git/
-(Creating a commit from an email changes the
-commit hash, so the identifier was meaningless.)
+Remove the now-unnecessary USE_THE_REPOSITORY_VARIABLE
+definition.
 
-Thanks,
---
-Yoichi NAKAYAMA
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+---
+ merge.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
+
+diff --git a/merge.c b/merge.c
+index 0f5e823e63..85dad63a94 100644
+--- a/merge.c
++++ b/merge.c
+@@ -1,5 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+ #include "git-compat-util.h"
+ #include "gettext.h"
+ #include "hash.h"
+@@ -14,9 +12,9 @@
+ #include "tree-walk.h"
+ #include "unpack-trees.h"
+ 
+-static const char *merge_argument(struct commit *commit)
++static const char *merge_argument(struct repository *r, struct commit *commit)
+ {
+-	return oid_to_hex(commit ? &commit->object.oid : the_hash_algo->empty_tree);
++	return oid_to_hex(commit ? &commit->object.oid : r->hash_algo->empty_tree);
+ }
+ 
+ int try_merge_command(struct repository *r,
+@@ -32,11 +30,11 @@ int try_merge_command(struct repository *r,
+ 	for (size_t i = 0; i < xopts_nr; i++)
+ 		strvec_pushf(&cmd.args, "--%s", xopts[i]);
+ 	for (j = common; j; j = j->next)
+-		strvec_push(&cmd.args, merge_argument(j->item));
++		strvec_push(&cmd.args, merge_argument(r, j->item));
+ 	strvec_push(&cmd.args, "--");
+ 	strvec_push(&cmd.args, head_arg);
+ 	for (j = remotes; j; j = j->next)
+-		strvec_push(&cmd.args, merge_argument(j->item));
++		strvec_push(&cmd.args, merge_argument(r, j->item));
+ 
+ 	cmd.git_cmd = 1;
+ 	ret = run_command(&cmd);
+@@ -68,18 +66,18 @@ int checkout_fast_forward(struct repository *r,
+ 	memset(&trees, 0, sizeof(trees));
+ 	memset(&t, 0, sizeof(t));
+ 
+-	trees[nr_trees] = repo_parse_tree_indirect(the_repository, head);
++	trees[nr_trees] = repo_parse_tree_indirect(r, head);
+ 	if (!trees[nr_trees++]) {
+ 		rollback_lock_file(&lock_file);
+ 		return -1;
+ 	}
+-	trees[nr_trees] = repo_parse_tree_indirect(the_repository, remote);
++	trees[nr_trees] = repo_parse_tree_indirect(r, remote);
+ 	if (!trees[nr_trees++]) {
+ 		rollback_lock_file(&lock_file);
+ 		return -1;
+ 	}
+ 	for (i = 0; i < nr_trees; i++) {
+-		if (repo_parse_tree(the_repository, trees[i]) < 0) {
++		if (repo_parse_tree(r, trees[i]) < 0) {
+ 			rollback_lock_file(&lock_file);
+ 			return -1;
+ 		}
+-- 
+2.54.0
+
