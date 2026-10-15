@@ -1,147 +1,151 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B402E06ED
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 19:32:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792092764; cv=none; b=RlXTqKjjbyk1lVA3TD2LMYVHGXjSbBn9zBPiigU8XMLhN3HWK5wfhG09scCOdj9P3HA6pDmQBHDtWrHncOtKnRCIT22Xf/KI5iazTYAd2zD6toaOhdYniKtbbdwOmz1Y88yHlLDe8/2xfIIpZDXMNlF4LXYhGv1ZhG2fAqWiaCI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792092764; c=relaxed/simple;
-	bh=yh28FOgsepMmBm0BNAw9BOOH9Yr4MMZqZjzHCUG3wrU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=C8wFiDV+ampU1Jf6KYwefd87/QzKxvlFGcWiHeIiINRIxXE7EXduPHB1O3X2tQtNjJUKUX7WaGzKMVketMMl4uK9a3roQ/CovoJe2QZ2Zr3D0LV4DK3wJgtN1+4pGuQ4HaEZTdRNy/1gVIVK6C7Yc2b3nY//DCcwik38BhLMON4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LM1HibyB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QQbpqVlI; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEC33E7640
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 19:43:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792093401; cv=pass; b=Nd0ttsbVl+ygbuYpaDBn6CvMBijc9PPRK2zhgIG1MQghmqTTOY/soGHBnAxL1KykOD6mm2cRYBknkA6iG7pdwVUKt2JUEMxw218jPVlj6W/RGf8Dq35f7vNA7aDM0xC5uB8EJYjjvtJwyQtQDeGLDpQUrZBIRIqkarVBHeJpNlU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792093401; c=relaxed/simple;
+	bh=t8DPzbjSzZh5PNJyLUMAaIkwjJn8uM/67cW4jXSNEPA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AMdLIimbC3CZzhSOiZCbLlTtuqO2UWvJGMJ0TXEaBC4T43pJvgDLiNFaT9uG9bJIdn6sUe4CkbQR6J22VYZmJCTpaLHY8DfsMQlORPgptGFpPf30DnTsLy6cpsxSZ9kvNXU/zR/9BNdVh8rZzlyPMuDz2L26BGi5oI2AIg4NPd0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bfa0o3fM; arc=pass smtp.client-ip=209.85.161.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LM1HibyB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QQbpqVlI"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id D48891D000FE
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 15:32:42 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 15 Oct 2026 15:32:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792092762; x=1792179162; bh=TEHVvLyIzd
-	9wIjIdLTpSDUA6GFit/dhaK4G6M/okWOU=; b=LM1HibyBgJ/6VTBscSQU0xU8Km
-	n50riJzgc2MR9C7FofZlKmxtOvx/p8ZXuwrT/SHwLBq27tdBYHJn8sZHHtRU1hn5
-	bnZAVP4tmME/9qkppbqQRr+JZZQIChu1b9zF/WZgX6zidIXHA7RGiGkBsz16Olok
-	HsoInbJPRRNr4AX+uK9B3qku5K/QWnOB7ua96EUmFgCV4en2dONOP50mVm9rC2NA
-	nuAJ8XO6DlPHt8TAWdGK7KMfc09AmzeAb8npgQwd4963rA+JsbX4GIRxXy9DUYf1
-	MoCQn3JpWNryna655N7ug08blguAI88rdPUTkYJI66eFCn0NcN9pHfGbQ4Cw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792092762; x=1792179162; bh=TEHVvLyIzd9wIjIdLTpSDUA6GFit/dhaK4G
-	6M/okWOU=; b=QQbpqVlIreJ8xmWth6QN9anZfmbfoVh5+yxIVHc0dqJmVtPylMg
-	yg+sgAJ0FShfZjut09pNxYIP7s58E3Vt9OVdqV/SS7lYGOeCiff1LUdjGu7ApLsV
-	2nleVsa6lJ+Dik6IydDMdJGCKX6atZQrTFekY5WtW+9+gHBwoEq6cFOU1NBO68kR
-	cbFsZjvWeEweqiLQJ/DuR0H8CbWBCn2YB34jyWoyNsD7rePT39goxy4NXx4+nIwB
-	kWmnpUHxOM7CYcj3JR6BoMpMYJ7E1xWOLoXWZXYNBoWhlsrfPR2WRIVspw9wLrkC
-	hmaS93GXWq/cDBUeHxeKSl6S4H6UdU7d5Vg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792092762; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:evQ9tUP11d4mQ1jeE2n0PVaUf8ORQUEZVyxQjd8YK5FsubV
-	PylxXZg6NBaszVk8CiQknRre6sNrZYej1wQ3WUF3PJaDqKVw11tcZNO36SrOwL/C
-	bzo9M5mv1j9MTE1zTbU1ef2cafNjziHVjkuSVrLDrMuc1l/4YJBfePZL2BCB3N3v
-	ctuAe4nRb/BRtHYuWSkoVs9qOJWLxbptp5GlU7AwWbIvQQtoEltvVetOy8Zxcx38
-	K3syNf4q3+9rdJ7QtSeoxijPB1CjFBK4taRGNSKEhTrymN2awudagw9ztCbD7hhN
-	G9aj/Qyxgr7esJIDSHfu8HhVJ/XcMSK40u3/7aw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:UwKpHyQFApZx3l249zHs54C8x+T0wJGCHjOMhZUk16I=:yh28FOgsepMmBm0BNAw9BOOH9Yr4MMZqZjzHCUG3wrU=;
-X-ME-Sender: <xms:WirRaqAGpPTAycl608Uth_6zgkBO4c9U_vNA11S2O1_M8nSATqNyJg>
-    <xme:WirRaoPTu1obnlq0LJGP0OM6wfuf2Zvp3Jy15a-IsHlRtIEwzR43Pr1PaZm6BFw9h
-    QoASRZiOVOdUNdxZpq0u1DoKZ1ZbD-O4g2d5Nf2zhII4Lj6up4M_ygW>
-X-ME-Received: <xmr:WirRanYbiEEgouVLii-m2_mYQ-nzHsQia9hCBSZp_Uyvn3QqBS4rYFFynhtPxsdXr5gR5mkHI4x1PWeioRSFReT3DYJJiyVWj3s2>
-X-ME-Proxy-Cause: dmFkZTFBbP+D6am80sqVZ1RHSGnZ1sytI1FZcFuRt0kZ7Qd/D4Y2I4VG+hpP7HDsrpYu2R
-    Z8NZ3l5gZZJ12UF8XyIceSalzle4CyVUmE0FRm+IKEDiq1glPS4g+OiViUMGhFxkOb7FZq
-    RdKrGB+LSB9SLuXRzlD9PZdWW0sPInNtbEIktzyjXPc12utJNXtWJtt3IRkiqa/Vc6pNTV
-    g48VPvGbKCZNJPprJP0d9eQfSK47fGL1Q090ibq4Fpt4/dcMaxYzmVOfOWzz11dmIf7dKV
-    NudooXvBOuNkXkZEsC6i6lmalgqIiF3p8jU9mLEbAlT3ndnwzoI5CVdLEgfqeuccAv+Okk
-    +FvYpTjC7rHTeXbilOs7Nnuz6EO1JckdMgkylkjyi5lEHK06IiHXCyg6Vqc/zz0yuGdA1m
-    O8KdoIkU+uuDEoux0aJ4EQrH0TZBUgVQVx4Anfi3IFi2/zQCL5Uw3XhfS+gGD4Ubz1FvMj
-    KzB4j8RuOz1Ut66wQo52ITYRYo9FGyWt8LyitgQTjaVKlRcpuQ9XnFlP8PlvPYFkW3z8oL
-    hLSM3yb9EVzU9uYebidKGenKj+23R9PJlaf60lFML8/eY+xW/TCm3FoxRVbzDVjM+gh+7W
-    Ip5+hckmhY83nYynx+LcFcpaSa99q+euKqPfTgD6e1FOMm/bcpuPCdFc5atQ
-X-ME-Proxy: <xmx:WirRavskVbghdkRu922SI4O-3gdQ4nYYc6NEdX-W3MR70viGpVqIaA>
-    <xmx:WirRahMQVCM2u44KlKBAwOvf6cfRuIZCgPPAPB8ydaIhcjzQvQmilg>
-    <xmx:WirRau4I8GvI8MSe9ZIF4pw9KgVTralAPpvfKlIhR6tnAR44B_Vqcw>
-    <xmx:WirRavQXqkpnyTVdniFsVyLDvvqxR_n0d_MkqKmuFusLz7aeJq-IaA>
-    <xmx:WirRaisQ1OpYMYpFY1wek61QBMvuR7CjCONWxIeNCXL3cTDcFkiy9oxd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Oct 2026 15:32:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Isabella Caselli <bellacaselli20@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Ignacio Encinas <ignacio@iencinas.com>
-Subject: Re: [PATCH v2 1/3] var: add GIT_HOSTNAME
-In-Reply-To: <20261015105859.3184108-2-bellacaselli20@gmail.com> (Isabella
-	Caselli's message of "Thu, 15 Oct 2026 07:58:57 -0300")
-References: <20261012015846.2649843-1-bellacaselli20@gmail.com>
-	<20261015105859.3184108-1-bellacaselli20@gmail.com>
-	<20261015105859.3184108-2-bellacaselli20@gmail.com>
-Date: Thu, 15 Oct 2026 12:32:40 -0700
-Message-ID: <xmqqjynin4iv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bfa0o3fM"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-6de1ca1b05aso3760568eaf.0
+        for <git@vger.kernel.org>; Thu, 15 Oct 2026 12:43:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792093399; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Qwp0+SbfoJLwH+zH6o4i9Wq7/KB0zRdx063LC7uAAJXBDvLA0vQctmAZjEMKyGXtgZ
+         HpeTvGSOxmijXyVmJW02BjOC5YshacrawuhQRRYkgxD7mDQlLVY3RbEwwlcBvhaWObKy
+         ysDCIupcvI0BlZmou89COQQp1vNJmFGHYWaDd3ARfn0mABvRosP9GiVgoVKkih+nKw+f
+         wJnTmYj8tfdwtyryIhNuquv+1T08MI8fAQZ2OCNkRT/W620WmdRhiqTli1ZmUFVr9Pi4
+         kEZW0PWTIJmC2pKI663uCDk4SAOR5L/0aJm/VJY6UP+zIE5JTp4nufFyaKPsa3VOv8rO
+         8tug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=utlTfKViyjBzy8R8woSxA1BTcHpgztw0a668U3yPORk=;
+        fh=G0JnDLNJP0BpiWLSj76ohlq/MxrD0p4yG2Eg1RehNyo=;
+        b=ERSd0fcEkAnGij7D4EcATQVgXyFXqSQMW9brmgESo20WVxlmJYVVo/okp1eTESnp1n
+         791WxO1YgCFxUM3hxiWZf0tH2mYroLjjliQyZr8eHRJRGXOsvPJZd9n5Pv+O1BBGLeh8
+         q1adG0GmyaxlixXgcapPgWW/CGQfwM4mH+Vpe8g9V7x/r6ECMdOtjzW1M46chTKgUODI
+         N071+yc0Kud2xoTPvgY94OjlXxPgnxHCQKVYkp9pgdWqf+47jIK54ohrQKOIWH0xGTK3
+         b/wrQubBsvOT6vHca2+tU3TNTuZjKc0henxBWLZHBtxJ7zjBYoSs566VPxvtdkIemjMo
+         ADSw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792093399; x=1792698199; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=utlTfKViyjBzy8R8woSxA1BTcHpgztw0a668U3yPORk=;
+        b=Bfa0o3fMY7ASB1bSACv1tNhkLDesM/CM7E3jhnbpIVckFgAVQ5bxAsLLk6yIZdjpg+
+         DyHVc9QD9AfXSr94wwj6EMLhH4l9gWSoZbnPXdUtL6SoU+d//l+l4qWbBXIyqEqM4SIM
+         MXDYUbF918A8q9suWeJL06OFEVHB4DFEB1eIzqodMFhlJbzIzfObMLUjCmP9Kngxq3wL
+         7SnhJcvREjOPHDNBMIHGoInM2qykwvuDA52tYIOdDUFDiDZBdgCYuY2C0OTiXa2TCUH9
+         ykVvbIrX7nV6NOCuIEh83xStSDA7GLlI8VjkvJ0q/kqbPmAZuHHHhuXDMjAhCgY/flRf
+         89jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792093399; x=1792698199;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=utlTfKViyjBzy8R8woSxA1BTcHpgztw0a668U3yPORk=;
+        b=HcY2tXeRrQtaJZ7wWuTaQMMRj6nXSu8lwvPPCq5sTfdPp1g9KwZ2ZfhR+Q1nxEt/Pp
+         gxHm8rAeAAJCdzSqCULQy75n+hcUz1IAIY+gF0CcgPKTZDBIr3sQE1tUxlGjwQtUi8gD
+         /jko3oqFI/I8uf0yzzLSUDL6i6PEhWfqPIm6PiZ9dsKDemcqgveXrCeOd2wSiTcjX1iU
+         Lau+vPyQCNhFsYiJcB8xaT13O0SOvRAH6q2pgBfyVenpsfU1W9jQIoaxiAnk7ONQv0Xw
+         EKkDMpts3qDGW/dJl9yBHABmA5c1r3Is9wGBkARCnqpw0xmELWtBztUnlXf7PqYCbig/
+         tDAQ==
+X-Forwarded-Encrypted: i=1; AKwUvBzLxHzYVa+qDCi2UxB3fdFUVSOPAbYbNtiEmwOeyx7eAaZ+Gll0dGU1Gd6tI8EieGVJ1jg=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKZDqfZeesGrygozS7g3f6NjD5xdnmbFrNPJ0x3aSJU+SfpqJaG
+	V0/tlpFTlAlrpaAq30mPejZtQ8wenBaRlXEv55X36SeBk99/WTPJyRRcwBpoC2unolUoDrJfqfP
+	0ydoh2E1ib6tWFYgjHUz64++hVjFGTdQ=
+X-Gm-Gg: AYBFou32dD6P5o9vgXyveFEKEXtvF5rKd+cwrIUnCEIETvVLMVNBKJkNw3tyNvOo9IO
+	9GNvh+NOQI8L8YX37Njn4qDg8+60YoZI4nZa23AYDp3GKlJWUY12ikyvBi8ZzcLn7Un5IVeHAGX
+	5UqogsHCmliomSQzPeqfx0DpdDgwmio8Qa6KZtPt59eoOiJWJ6zy+QTBpQc0v+4os7iYJ3iNabO
+	I5HBZrJ7s2X+EAAa11iFyzqTqlzIy5tPxM4v1FWOdNQdDiNUH+hdPxdeFOB3i1Q/V8een4H04kX
+	doLKA5OI1ZgsxcWRzl5AysGqutN6eWRVbUS8WxFRI+VFK6XErdqXEg==
+X-Received: by 2002:a05:6820:1986:b0:6de:ba4f:af00 with SMTP id
+ 006d021491bc7-6ef10295693mr16200260eaf.63.1792093398378; Thu, 15 Oct 2026
+ 12:43:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20261014153208.2194727-1-andy.koppe@gmail.com>
+ <atBraYoY1SVwnezN@pks.im> <xmqqmrseooor.fsf@gitster.g>
+In-Reply-To: <xmqqmrseooor.fsf@gitster.g>
+From: Andy Koppe <andy.koppe@gmail.com>
+Date: Thu, 15 Oct 2026 20:43:06 +0100
+X-Gm-Features: AclHuK-3KqvlG_xs4lairvuSURD8bPLsXEeNVrRJUL5CrDvKHPXmjHY21qs9pbM
+Message-ID: <CAHWeT-Z4n=txTGaBNuGPj3jcOou91owB59gvaPvF=2_p50eFHA@mail.gmail.com>
+Subject: Re: [PATCH] refs/files: keep root refs out of loose ref cache
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Isabella Caselli <bellacaselli20@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>>> +/*
+>>> + * Create a separate ref cache containing only the root refs. These are kept
+>>> + * out of the loose ref cache, which may already exist and is shared by
+>>> + * iterations that should not include them.
+>>> + */
+>>
+>> This raises the question whether an alternative fix could have been to
+>> teach the cache itself to skip over root refs in case the caller is not
+>> interested in them. The answer may very well be a "no", but I would be
+>> curious to learn why you settled on the proposed fix instead.
+>> ...
+>>> -    loose_iter = cache_ref_iterator_begin(get_loose_ref_cache(refs, flags),
+>>> +    loose_iter = cache_ref_iterator_begin(get_loose_ref_cache(refs),
+>>>                                            prefix, ref_store->repo, 1);
+>>>
+>>> +    if (flags & REFS_FOR_EACH_INCLUDE_ROOT_REFS) {
+>>> +            root_refs = create_root_ref_cache(refs);
+>>> +            loose_iter = overlay_ref_iterator_begin(
+>>> +                            cache_ref_iterator_begin(root_refs, prefix,
+>>> +                                                     ref_store->repo, 0),
+>>> +                            loose_iter);
+>>> +    }
+>>
+>> It's a bit weird that we recreate the root ref "cache" for every single
+>> ref iterator we create that asks for root refs. Is there a reason why
+>> you have decided to not actually cache the root refs the same way as we
+>> cache the loose refs?
+>
+> Curious.
+>
+> So an alternative would be to have two caches, the primary one for
+> things under refs/ hierarchy and the other one for those outside,
+> and callers can choose to use only the primary one or use both of
+> them?
 
-> Git asks the system for the name of the machine it runs on in a few
-> places. For example, "git gc" records it in "gc.pid" to tell whether
-> the gc holding the lock runs on the same machine. Users have no way
-> to see which name Git uses, and depending on how the system is
-> configured, it may be a short name ("myhost") or a fully qualified
-> one ("myhost.example.com").
->
-> This matters more once the config can depend on the hostname, which
-> a later commit adds as an includeIf condition. Without a way to see
-> the value Git uses, users would have to guess what to write in their
-> config file.
->
-> Add a GIT_HOSTNAME variable to "git var" that prints the hostname
-> Git sees. If the hostname can't be determined, "git var GIT_HOSTNAME"
-> exits with a non-zero status, and "git var -l" omits the variable
-> instead of failing.
->
-> An option to "git config" to show the hostname was also discussed,
-> but "git var" was chosen, since the hostname is not specific to
-> the configuration code.
->
-> The test only checks that a non-empty value is printed. The test has
-> no independent way to know the expected hostname, as the "hostname"
-> command may not agree with what Git sees on every platform. The
-> includeIf tests added later check that the value matches what the
-> configuration code uses.
->
-> Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
-> Suggested-by: Jeff King <peff@peff.net>
-> Signed-off-by: Isabella Caselli <bellacaselli20@gmail.com>
-> ---
->  Documentation/git-var.adoc |  3 +++
->  builtin/var.c              | 13 +++++++++++++
->  t/t0007-git-var.sh         |  5 +++++
->  3 files changed, 21 insertions(+)
+Thanks for considering this.
 
-Nicely written, and the implementation looks sensible.
+I think it makes for a simpler change with less overhead to not
+actually cache them, as there are only two uses of the
+REFS_FOR_EACH_INCLUDE_ROOT_REFS flag: in builtin/for-each-ref.c for
+`git for-each-ref --include-root-refs`, and in builtin/refs.c for `git
+refs migrate`. And both only invoke it once.
 
+I considered keeping the root refs in the loose ref cache but skipping
+them during iteration if the flag is unset. But that would mean more
+impact on that much more common case.
+
+A cleaner approach might be to drop the flag and change all call sites
+that currently ask for all refs without setting the flag, so that they
+explicitly ask for "refs/" only. That way root refs wouldn't need as
+much special handling. But of course that would be a much bigger and
+more risky change.
+
+Andy
