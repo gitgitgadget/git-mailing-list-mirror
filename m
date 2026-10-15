@@ -1,187 +1,130 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E14953C3AB
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 15:24:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B588953D9E6
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 15:35:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792077911; cv=none; b=W1JmsH2sdEvTu0We8CPB770WpZO6ib7ATDBZLotLWdUlKuVXNyktKoF3Vu51ezVlR2bKPIgla/sM4GCiaVIIdCOxc/3+H4pbt871/nSDnDV0pVyqOfh0mxXTghOW5T2y81Pko8jGGMMBgWVyo1DeqJfAth4SO5GsDbuaR+6AMwo=
+	t=1792078538; cv=none; b=ZRJJ9LMCOqzOkL9OSJjN4dePlrhxp8cjtMluS22ZqTpxiaIsMzQ0MzyefodagSpRf8gRR4Uo4ReUOQLOQkoqoYJhWY2uuhq+5TeWk4J3V/Tk/9OEDJnKpnddujJSy/R1r8+hZML6Zt/jiqWYsRI3HDBxO0RR2sDeitnL8dgh/Xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792077911; c=relaxed/simple;
-	bh=PT4Ye+r1hz2pav7CCVm5eBRzl+1vJrCIJwPskYQKvwg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=J2p0jjV43PNyqFdKh8nRacdzs+lpmhXPuJbOy+jpI77wcrgjhRoVD/077w3GQK6EIlmC5kTf57jKtdbWRz+P29jUAp7n23GL26z1Bt3iF2G2rsI1ol1e8c2PtVUmEImtt4XJc+Vh3GYt4/CG7rOVIlwX2+bmd/gDJ+A4JDXP2W8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uj60S5n9; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1792078538; c=relaxed/simple;
+	bh=Eu5psYn76U6KY18ZRIr3OEWCUo1ec3LSVvthyAREpDI=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=CDBafYXib5wz77fRiu//8v6oi4GFrXnJtl8deFJ06Q2feKUKOCq6sztOh77QWf2p642WFRyhPPhNCAchFOhUSOcJqLls1GNKGCpWTBCgi4SVCcJ2ANaH0ZRegJvOm9Lk8SnF7pEb3guRyzIcnMMuDJjGDifpozpFoTKpH7KfT5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=arLXMbZY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OW6ztbX6; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uj60S5n9"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-48afe75f055so570225f8f.2
-        for <git@vger.kernel.org>; Thu, 15 Oct 2026 08:24:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792077893; x=1792682693; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=0brlfXDmRkl3id9Jx6R7ythRb9rKfLFkZSJ3JIgHt6U=;
-        b=Uj60S5n9UcALcNQP8gXPQ0ZjOvVKy7VemFjkj1vWpFuVrm0XCphfTrWFYtL9F5yjMp
-         BkpUzU1Jxvxi7QxJZ8eZofebAYvf+6WA/YWOLFs1wE4+JiPZfS7XoHtwUxQnuHogG21d
-         LG6oUM9dcNe9iLjZf5gd3SOMZ1FTJCTFZSF/FpcdQ2fR18KzZESQb1+3/Gfpi/iOt9iv
-         TbzN7ImKiJwrRT4IsVMTmz6/WCiiv9mMaheXLdkeEmFNtmIxubm6zZCC3V3XR0Xk4s1o
-         gGuTn8U9W0mzcZUdFLamnc5r8y7RyUfHwVMYc3W+IoFbUlZRxXuquL+h8LK5REpnSFmk
-         9n6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792077893; x=1792682693;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=0brlfXDmRkl3id9Jx6R7ythRb9rKfLFkZSJ3JIgHt6U=;
-        b=D89pWyTVfHd1lWcwmwoYbbnQ6rPmjrWaQ9yu1Ie6QauV8gV+gDUVCEd1AQHlqDQ1Mz
-         Mwan9OpwYOG94NEyAupjOv9auFvh1Tx3WyRRUllK/uR4F2P6Hz8p0/pOZq4SlGy5C8Ya
-         BfjKPsWofz1a00vx25LQExEi+BWG0QF9oZT9q4ZY7LaLbT2z8geRac3ZM50QGyxgk4uU
-         jGOtKCbAnJhKXXylFxOBBddlwh7CCbiAAW0LsMBqHDA/YM5P6HKatVucijjwkp3WCpon
-         TNj2IJb2Py63fosmdXKdldgkyjA/oDFA+YeoS7jY8F5n7xWccGxWdqfFOUud8FAxQDoF
-         GZpw==
-X-Gm-Message-State: AFq9FYLVlaZfeTukjTSmSkuqxXPhIuZCDbpEz+j40ZADA1j3OzRnQen/
-	pKWNnR3AOiiAjMwogXVlszvcoy8tzFYozJW5TwYD968o0YoqclUyc6ne+FOx4A==
-X-Gm-Gg: AYBFou2fvscj5KIscaZOftGJWjQVQbsuzE4jz4Tunb7+BKibWgxXG8InBrz6xavu9GS
-	fwbSoCUaq7G1Yv+bKWFTgU9za1NJFKxZnA8EhGb/6RP3sDncWw6/bx6fNqig5mLQEgFJ4GIJtMI
-	o73yVzm/uEoffgb8xnuWDH1hqCi75Xyc6DZBrBsLyFnQ+D6jtU8vkaQTeyaTIXJDsMybE0jT6Rg
-	dNEew7Uwe6K3hcKQIeMdGrM9k4C6XAPwdccTx/oxI41w+aE5mp6rDzgL+N7dn69W+O39S5tdinD
-	mLWphWJDOaC9ENtSqjspQIDtOMFfFWIzuTJswuX9twiAOtjBF3SBpdmXQ7xDSHrTiN++OQv4WxE
-	3uoRKORWAxevigrbY0eOocGXuRiErfrWl7JSRR9JSf1d0CFgXUyXbIPzM25zxVUDhYjUyO5gufA
-	103M6c9kpFSypEynLySyR4q4Oi2wipovaLsVmTF6CT6OM63sC3Cf1EkQVaC4+5/0EtaJ+VQwi1M
-	d0WstASWFUVSK1MDD164hDaUsueqBuYcqoAIyE7t2laGZNMxY2X
-X-Received: by 2002:a5d:6312:0:b0:48b:b6:6a92 with SMTP id ffacd0b85a97d-48dbaae701amr28563021f8f.26.1792077893083;
-        Thu, 15 Oct 2026 08:24:53 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48de0bc6b82sm19962755f8f.51.2026.10.15.08.24.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Oct 2026 08:24:52 -0700 (PDT)
-Message-ID: <837b7d72-a767-4c51-9693-8fd95d14a58d@gmail.com>
-Date: Thu, 15 Oct 2026 16:24:51 +0100
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="arLXMbZY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OW6ztbX6"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B2CEB7A010E
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 11:35:29 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Thu, 15 Oct 2026 11:35:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792078527;
+	 x=1792164927; bh=GVd3p5UO+DlRErvtXaJlIz+4/UaQokxh/vMCyYfP4gk=; b=
+	arLXMbZYcQu3b/FRYmRLfejhR4UrnlRvfMOI/TzZI1WBR1UXgqk2MNV3D+DpfJxI
+	UhiltnWeABxq44B2pSxkEEIlaTZFD2IJxbcLpA8KzZduDGF5H0MBQe68JAPkT9g4
+	fOVPv3R5IGY5bn3ZkgC9RHeJE1YqjHcmEdXwJrvc80RCOj1UvgeBTOVclKntiA3c
+	uuDkDUaSYrwAtgDeGfrq2KmeArLyLd24/42pHfkUvoaBfrjwiwRX6oPKNebxw51L
+	5ivoDwc4Uq31vXyPQLa/YG9J2ElnJ7MqWZsJekhVY18vlcDEW8Z0bgDlE1ssCbCn
+	/X9kYIGhG41bZZAzbXVuPQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792078527; x=
+	1792164927; bh=GVd3p5UO+DlRErvtXaJlIz+4/UaQokxh/vMCyYfP4gk=; b=O
+	W6ztbX6sutSsGvLnigbjbuTxHdMulSCwC3ARm00TCvPHx3IjmA3GYUjmebxwyHul
+	Afjh53p8SSDVFQ8sG+EZlnkN1wHzv8LgzyiM91K3iQurj+QAFn+gn3u1GnK+rbrU
+	fpEijjI4Lla6FFDNMEQl18GV0CuzARH1hL01GMbjQzFZE8VZ/FjRstPwb6Kpl2Nr
+	lUSRzjXDK3K8Qw8tsWeEiy9xjOcm36NJgJCOAee7eIrVFoMIND7fPyceM9hmRHnE
+	qirjSTlAZcLpwurDadMIv4R62wnHTk5C5FUK//i7mSXB/z2QhoWZORTRUJ529jcH
+	If6uMJFlcOYbWGPvdkIFA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792078527; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:KVc/aTphTKo2KBexjqFnJVlvmk1pIZTpge1FPCwuesMimCh
+	lQegEx8o6CQbcqvLFwCIp2FPK8umx1NrrsobhvPdga68QLkh6FsXgHhgIlSo+25I
+	Z9WST/r9u4+VB1AFAq5XWfrliXR1p9260tHVJugbJYFhGecI6HCiz3ztS0i7JXt/
+	knA3KI0fzhtAMqgah4mxOp8ljm9o+U/NSnM8w6pRZPCdgfkPhyKlV16eiKChRPnx
+	qNDmTfAtRPquJCbR2W3lYqYVQmXaHQEWplQD25xA/SJZlC+UOFge11YEckzjKL+6
+	zOmVdfCS2jrF3dC0fzuzWFRBd+DWhuksBdlnDCQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:NK1A6GEp9N/waCM88+7Tv9IzXUOwwq9YIGyc29U2Umk=:Eu5psYn76U6KY18ZRIr3OEWCUo1ec3LSVvthyAREpDI=;
+X-ME-Sender: <xms:vfLQairslaxCK67D5KwcVmNSjBr7J7CaCW7ALbeWrkuf8XtKya7uoic>
+    <xme:vfLQarcdSix8TfMvR4kF6LiSmw_LxKW5kmucWFf8jclSVc2BCqE33m6hEGiRRS4Ej
+    ceZcpCgXju2gGO1BMrA2DRQ24gjfT4E5-R0eb3dZK9Eef2xMXN8-g>
+X-ME-Proxy-Cause: dmFkZTG2cSNN4e9L1ipSC7DjPBxE7YYKnZZwXktgQMmNRGzeibEjanKV8dPZx3Fb5YAv9W
+    SCC4tYM5IUxDrCmcWCpeutg7z3TBTQ6A5UIR2vkStl8AsMhqa5Q+OF2aNqW2GKWO1wDj7r
+    HJep0J2G2WiO8eUs1S7kjj2LByYZ2lW3wLhXS1HnAXRIN++VlPO9Mg6pvTZzEPIZSirazl
+    PK7q4dQlQ1STlODy/Nq/WETszEvxSalE/KhUiDSgx//B8ZYpEyQQJcH/a20vHbjQECVtGr
+    JoRdlCdme7UShHyeEEAQ9rrzk20l7cVjduYnIORzNFaVGli3Amns1VK50eaLpHKVlLPmYp
+    stZxaT7oV6QafGSEuC0Rk+DuW+OcyHlkJ9RvL/4yuVT78N6/g1RcdNSoBrGOo5indhfEce
+    JvNblMgchziLHG49+eEdWhiFFbpRRpH726xA4wvtm4fa9Xmoug2jdD2ww2lsWeSxQgLohw
+    L+XTnOqZd0pAdnGJmqFtmkYbnpP1bexMmHCvKOq85FJuo9rrS6THif9xsfvq8+9+r0iuj9
+    wmk5FmkRbp85b8boukXu2wdReuUosdUuPhZlY7BdCA8+rWkaRkl42FqHH+hpgfpxsWsjEm
+    13gCGU2Fz/RbX8Dk8phbo7fGg70e8E4HC/boL3pq+oXZqvKkktuSjZaJNdwg
+X-ME-Proxy: <xmx:vvLQarHyROyMVVn6yRzwzcECKM98awuj1Db1gklYQxIUOuCxaQ3ZyQ>
+    <xmx:vvLQagHfXK2d0Ta0YUW-WtCpZ04r0jPxCWHWGImQ8uUlHBo5XFtDPg>
+    <xmx:vvLQagNVMx6Y-n570Q4TfYGr5zE6JJf2Sk9WkfC5N6ABjrlgScuLqg>
+    <xmx:vvLQanFlkf2UHzhJLT7j7UJFFdOJnO7Z4gdJ0SaVTajKUEQcKWb3tw>
+    <xmx:v_LQallYA00CuGUUt51sTBDa93DApkHynP2CsIfNjq15UxrLi9t7f0G8>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id AD6DB22C00A1; Thu, 15 Oct 2026 11:35:25 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] sequencer: don't clobber HEAD ref name in worktree lookup
-To: Junio C Hamano <gitster@pobox.com>, Andy Koppe <andy.koppe@gmail.com>
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20261014165824.2214234-1-andy.koppe@gmail.com>
- <xmqqik34qd6s.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqik34qd6s.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+X-ThreadId: AgdWeLtCs7o3
+Date: Thu, 15 Oct 2026 17:35:05 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Harald Nordgren" <haraldnordgren@gmail.com>
+Cc: git@vger.kernel.org, GGGGGG <gitgitgadget@gmail.com>
+Message-Id: <f06c7de7-f9d5-4c7b-8c65-fc2cec1ee698@app.fastmail.com>
+In-Reply-To: 
+ <CAHwyqnWyYhRZ0=byi3_yqT2phmVa2DY8XtxA8bQT=pwcetkMAg@mail.gmail.com>
+References: <pull.2448.git.git.1792070038.gitgitgadget@gmail.com>
+ <fbbbabee-c586-4305-bdfe-3f7cb46b7191@app.fastmail.com>
+ <CAHwyqnWyYhRZ0=byi3_yqT2phmVa2DY8XtxA8bQT=pwcetkMAg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] reflog: add --operations and --historical-branch
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-On 14/10/2026 20:44, Junio C Hamano wrote:
-> Andy Koppe <andy.koppe@gmail.com> writes:
-> 
->> add_decorations_to_list() skips the branch that HEAD points to, because
->> the rebase updates it anyway, as per aa37f3e1d89 (sequencer: ignore HEAD
->> ref under --update-refs, 2022-07-19).
->>
->> However, it keeps the name of that branch in the static buffer returned
->> by refs_resolve_ref_unsafe(). If another branch on the same commit is
->> checked out in a different worktree, branch_checked_out() overwrites
->> that buffer. If the current branch comes after the other branch in the
->> list of decorations, it gets a "checked out" comment in the todo list
->> instead of being skipped, and the branch whose name ended up in the
->> buffer is skipped in its place.
-> 
-> So obviously broken original, so cleanly corrected.  I very much
-> like it.
+On Thu, Oct 15, 2026, at 17:24, Harald Nordgren wrote:
+>> This sounds very useful. That you rebase many commits and then the reset
+>> points (where each one started and ended) get obscured in the reflog is
+>> classic for me. And I think many have had the same issue. This is why I
+>> sometimes use `ORIG_HEAD` instead, or maybe make a backup ref.
+>
+> Yes! I love the reflog. But I'm also endlessly confused by it.
+>
+> Sometimes I'll just pick all the commits one by one and do 'git show'
+> on them to figure out which one to actually pick. Not a great
+> experience.
 
-Yes, this is nicely explained and I appreciate the new test
+:)
 
-Thanks
+I got a bit curious about this forced workflow now. I tried the first
+terminal navigate-and-click Git tool I could think of, tig(1), and it
+turns out that you can do this:
 
-Phillip
-
-> Will queue.  thanks.
-> 
->>
->> Decorations are processed in reverse alphabetical order, so this depends
->> on the branch names. The test added in 94304b9f48e (sequencer: comment
->> checked-out branch properly, 2024-11-25) happens to trigger the problem
->> and expects its result.
->>
->> Fix it by using refs_resolve_refdup(), correct that test's expectation,
->> and add a test with checked-out branches sorting both before and after
->> the current branch.
->>
->> Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
->> ---
->>   sequencer.c       | 11 ++++++-----
->>   t/t3400-rebase.sh | 21 ++++++++++++++++++++-
->>   2 files changed, 26 insertions(+), 6 deletions(-)
->>
->> diff --git a/sequencer.c b/sequencer.c
->> index 6dae43e4db..c672b6e127 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -6577,11 +6577,11 @@ static int add_decorations_to_list(const struct commit *commit,
->>   				   struct todo_add_branch_context *ctx)
->>   {
->>   	const struct name_decoration *decoration = get_name_decoration(&commit->object);
->> -	const char *head_ref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
->> -						       "HEAD",
->> -						       RESOLVE_REF_READING,
->> -						       NULL,
->> -						       NULL);
->> +	char *head_ref = refs_resolve_refdup(get_main_ref_store(the_repository),
->> +					     "HEAD",
->> +					     RESOLVE_REF_READING,
->> +					     NULL,
->> +					     NULL);
->>   
->>   	while (decoration) {
->>   		struct todo_item *item;
->> @@ -6633,6 +6633,7 @@ static int add_decorations_to_list(const struct commit *commit,
->>   		decoration = decoration->next;
->>   	}
->>   
->> +	free(head_ref);
->>   	return 0;
->>   }
->>   
->> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
->> index accaaba4d4..0e7ef33eb1 100755
->> --- a/t/t3400-rebase.sh
->> +++ b/t/t3400-rebase.sh
->> @@ -483,7 +483,26 @@ test_expect_success 'git rebase --update-ref with core.commentChar and branch on
->>   	GIT_SEQUENCE_EDITOR="cat >actual" git -c core.commentChar=% \
->>   		 rebase -i --update-refs base &&
->>   	test_grep "% Ref refs/heads/wt-topic checked out at" actual &&
->> -	test_grep "% Ref refs/heads/topic2 checked out at" actual
->> +	test_grep ! "Ref refs/heads/topic2" actual
->> +'
->> +
->> +test_expect_success 'git rebase --update-refs ignores current branch with branches on worktrees' '
->> +	test_when_finished git branch -D base current a-topic z-topic &&
->> +	test_when_finished git checkout main &&
->> +	test_when_finished git worktree remove z-topic &&
->> +	test_when_finished git worktree remove a-topic &&
->> +	git checkout -b base main &&
->> +	git checkout -b current &&
->> +	test_commit msg4 &&
->> +	git worktree add a-topic &&
->> +	git worktree add z-topic &&
->> +	git checkout base &&
->> +	test_commit msg5 &&
->> +	git checkout current &&
->> +	GIT_SEQUENCE_EDITOR="cat >actual" git rebase -i --update-refs base &&
->> +	test_grep "# Ref refs/heads/a-topic checked out at" actual &&
->> +	test_grep "# Ref refs/heads/z-topic checked out at" actual &&
->> +	test_grep ! "refs/heads/current" actual
->>   '
->>   
->>   test_done
-
+    $ tig reflog
+    $ # navigate up/down j/k
+    $ # See the commit message and diff with `d`
