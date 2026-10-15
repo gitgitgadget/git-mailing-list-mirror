@@ -1,139 +1,159 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DE03F7895
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 19:05:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792091105; cv=pass; b=svQkdmTVf0IVDzi3D14BOTGNPOVX3pFsa/uhjdwy3D1wIfevt7KvNm7LUn8L744hN8XEkY8E1siiWbRUTQ3kC2UFKbqhXf20t2GgpfelIYpRvbVPl/iQ9dLb8fdhDhnIVX6+bNMpqdq9kqie3TF8AwDazoNX4d5Ew3ILPK4SefU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792091105; c=relaxed/simple;
-	bh=CkY7UBhyN3W2ApLgrj9OLeRxjRtATTsK4mXgRSTlryk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HnyR7Yh6u4w4nJ2yPmFpCA2GKHQAK6ifMt1wMXyt2aP7UcfZesBncCo1YMottb1DrX2LjWoZxChRZFGSw3JxBrX88/xixbFEZeZ+og4lNNGoajN94E0caLzkIe/LTUox2025d2yhFFe0IlCuIzRfBKDc9qnboRBgj0jRKI4iSy4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QV308HPm; arc=pass smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F7B3F9A1E
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 19:13:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792091598; cv=none; b=Aiy1qQG9GYSxrvNYIoXAap6+/Bqq4KKiGJ3iZittsaCR93GOTCZs0sYddLlY1NwbWejyTPS/AIcHiPTVBLxKaFZ5zLSZrridIFCjAw33L8hoe8hWSD3goDkgNexbf8nQPGIMMO+sBYAP0+71Bc8cbgRYiZ44InBIwIsVOK/XvB4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792091598; c=relaxed/simple;
+	bh=ugy335izvFmzBD4akHNNEDuaL2Czt8kkPzM26UdwHbY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NLv/lWt+A2wVbXWK4+i/IEtCDxQNxA//vNCzWWfVrVUa3GSs7fYRLStRb7sYezppFqAVGuKWvu18OFh26CmRpjGG7UvNccDI7uhw9PdGeS7Y8QrXan/Zi+S+nCH4zWBHoklAvKw/7Du44a6VH37auSI0aRqtn2E31WTnmAq+WIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nBAvBHWr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mQTH+zMR; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QV308HPm"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2e49fbf92aaso33816045ad.0
-        for <git@vger.kernel.org>; Thu, 15 Oct 2026 12:05:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792091103; cv=none;
-        d=google.com; s=arc-20260327;
-        b=XNy4UdKEG1eFzTf2DjYLL36eVm7+DD9p7gplFZxEnsxShH+l9YIrKMQDInsHjlN9Cp
-         VyUiDg3meBKCnInyqOVSjqVAhxYVZCh9tOAxX6PsHweOQSC7iz8T837aH+fX6OdJeIme
-         ZtxWY3vQlwcAid8esM8RQidZdTGCjSaV1jGwCEmV4DWjTZ2xcVN+9FjpgVmTNpiIqjRy
-         bVMsBFdOEjdoDrCZwVcQcz8fU9OxJ5H+45J25ULuKga/OU2rgp8RZB+5OkFD0oxPUlLi
-         qt0USACfy8q/GZLZ7hHHFZLPZ3eaCEj7JH3yAn7aqKH47BUR/HO28IMyakSKew8/pflh
-         1K9g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=efhFGq7/HXix+Ma7vsHMfvBBkuGm/qPztzAX+KsRrwc=;
-        fh=ftd+A7OIHlEkxUogFH89xDM+2in623JxrHhqikVMV/c=;
-        b=gFW8veI0O2mvpM6fF63ZAX0BYIUiLvuxO78vru3HTMiV3dXbJx1C0pukDMH5i4JK9X
-         yYN38PtD8eqyc9QQeL645+GKK+K+ebNfEOKmxvp74X92o46YQUQutqFlQoC9SLnG81CQ
-         exj/4QQqfq2CB0ruHzItvCtEi6t49jimoB4S8equYiMbw3Pi1g6JZl0h8pOTJppusMIH
-         4IUAQeEkQXeUx1g4DZbmVBfPqE/OxyYXFztxXOuDi1KNp3cMVSTASAFBeoW46NYmuKdy
-         tz1w4TL2Xy1QqMUXv5LkvkxZmqe0GJ2eopdUy16xpsAltXOkQFWf4uEAhhekcLMswh5p
-         toOw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792091103; x=1792695903; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=efhFGq7/HXix+Ma7vsHMfvBBkuGm/qPztzAX+KsRrwc=;
-        b=QV308HPm6yl9Bu9QccLGOa3NOOr7On0yNaM4BB17BjWgEDJpcHJrmb/uKn1i+ojtA7
-         V5GmEbzgXsscrs+pzfZV0HnUC+DFGKmJcW42tOvq7XHDT1npe8WR0iBRjyrkYqt8gYjr
-         F0QAVbn8l48/nZVybpTC2EcZFKp2Tft65ULXRlyR1bjwoqIkawzgn1VWj2DrzirwIkEg
-         QsAkFQyXfWIESdGD38KmFbiwgiFjwPmSEw7dB2BCusSsTa1jUTKDVFZkFzPKho9grD+9
-         TAtyMzZIrR3uMM7kCupGNzfZNQIgX7v9hcnnC0wirWUc7Sq9iXffqkh3FBW/Dq4eW1Kj
-         PnNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792091103; x=1792695903;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=efhFGq7/HXix+Ma7vsHMfvBBkuGm/qPztzAX+KsRrwc=;
-        b=lEy7wKdWK2BaYF7MNwPW0Bg4zgCdcBKNPhG021810LjKN9BxfC/0/9PzoxcCKSY4Qx
-         lKteBU47JdoOqQqNORZj3pmDoWozHXs9PN4yOE3DL5MTtj6GdLpcBO1oXiLmCgPzDL7N
-         1fNJ/XsLd63n3NFjzsOlu3pc1WKjDixwOjgc554pDO+rqocRpO8r3quZ++apQScDXJom
-         bH4op6ZVQaExrLwI0dLowQLrlnGFjtkcSpHM4pTFWwFvs9WeKHIa6JCA5u2TSyD3ST4J
-         cSuhEFHpjxxge66ad9TvCw+9TJL5LbmoxEw5vbE4Qh76ZMygR2HHxxNEBmmM5tXIsF0w
-         5KHw==
-X-Forwarded-Encrypted: i=1; AKwUvBzclIgZoSVyaJ+omVq+cRua0yHZFe3zs+jEJ7dzaCsj04cpQxK+ylrqWR+RJ0yML/vh18E=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJ0C6a9SzDzy97zNYccAhVXDaB7zc10BmyVBfRX1zcGqYn+59GP
-	OITMg6wRUviSWj2WiJXIGhq1EpdgvqyhP+qks/kwyAeXVJZldTUyECv/sEwO/8m/7/msUW1MG3T
-	UKlW9II5hj32pff86Grjk4mqXqlAVQAk=
-X-Gm-Gg: AYBFou3227VJuZEAcmKDdYXKNtOaGiC85wwtNVfuEyLX+M6y8RSsvAOJcx3xOYOPLpH
-	0j/G3Ejh82uwsOr1wtkDsPl4ZVNoHoT2kH1NWSS1NW3+2payTh9dkRn1LCdcEGelsvoSE6BjWgj
-	h2qbCmRIfywpjID3FXguaTl5SC3ccLT0vnPMWUUAVqVNeY6O6BgPgLC1RlydFwbGt49TzWlW7vb
-	AH5UC2Vtd/QfFIoqPwWU3PF/AF/ZWjQDCqJGVSSkdCQ6OGjaGDfyTPQ0JjWfaNu4t7NJGXkg8US
-	qFSJUh0SNr2gqWtXE36wsmhdsOpUUbIDWS0ensEbHoBcsC0wyIqc5M8MaoRXOMkRKBc8mZhA5n1
-	vpl7lozXfmg99J4JgV8gbEF8chl7GSyp1gVSu01qIBGzv5zd/UhtUfb2p6I8/5bZliIvLC9PnYL
-	Izt32txdhWaihQUTjGFhJ2q4G92HdKsA==
-X-Received: by 2002:a17:902:ce07:b0:2dd:ad73:5b6c with SMTP id
- d9443c01a7336-2e8429ad1d4mr174591435ad.28.1792091103423; Thu, 15 Oct 2026
- 12:05:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nBAvBHWr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mQTH+zMR"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 428067A0121
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 15:13:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Thu, 15 Oct 2026 15:13:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792091595; x=1792177995; bh=s/Book7A+W
+	/nakofFrYWgbw1IhinjuxWKgoMzYoNkN0=; b=nBAvBHWr9G/dffuwNEL8BMTzMh
+	b/D3dSOupWBj7wY/7Lck00HCCGeeE/oZPtOaA3Sib8jCfWF80RdQdJfM3LBWvH1M
+	+I2vp7nZh17RKLDuqIe7GpTBGpBTZj7qbApQW9p0Hj4HsVYVXgW3mGSMJ/KcP1dP
+	rDjUL0aaFG1t9CXlJ0LUz9SVOptL+JQ3cw/658uNt3hc+ed7MFyU8GTww/1MhIY4
+	F/bviXIfy0bWF9uZnwpUEDZc9Y/c43K1X6U4hs/Jg+6KmukpHtmz+PKemk8ZjmbR
+	eTB4EpLXODhIUR17pEmXR4AoVnOYbwQT7D+AHSvsBjFu7qeFJ7BxLlXXU6Wg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792091595; x=1792177995; bh=s/Book7A+W/nakofFrYWgbw1IhinjuxWKgo
+	MzYoNkN0=; b=mQTH+zMRbR0i3jnzP4im5g8uJG/HZPb2NkvA9x2ho2e5+U6H4UQ
+	bm3fY4/Y71Ha9BbjxDGBl6GwY6IBphAifHd1yGP97xgr6YWwmpC9IViMweOSr6FO
+	iTODEysg1vskzKGhytKhfCA7t8yIYlMkZwiq+uIwQzu8ZO6TqOKqo16mFz3iVTwM
+	ohr6uZS5xttUoWj0fm9xA8rruxarLBprySuS4zUR/za3lZCZ+mbHSyjZthI5/3rB
+	HQVFjESVs4USuJ3yq0hUgXnCIQjMsH2ivu4mHE1BCzD32MWrFdJNT+LHGww6DgMM
+	pcsULXFDEjhTFcqeWyTZ6KzcEaJ71j68yUg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792091595; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:YHB4cnO5qeh7wCVro1EbG9/SJE8Agp981HTSbd0R7bNiExP
+	wcJdrKBAGMSB4Oo3K8d7hw6R5LoF1h9QTRSuzRwo+MYvkK0+NYT9e5qsM08IQRNN
+	b8MeXCh6j2htAWe4ssrlddtUF0lwUE+niOlgu8UyL0q6gXl5PmRamFt4FaqzdsMt
+	Zl07xXsozXzSqP/XiVAzfS3tBjfrdcDpuRtyx1tVYNofhv09spjU1B9aR+62HsGD
+	bSWP1PhePiMewg4R1SHL1MUfdKn6JHP/0t2blH0up2e6TnsMcNksZKkAQDMoj5aJ
+	PK/L6SfHNieBcv2iAZNYXx9JXO04NBG+zu5BZPQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:NCMwv2uLMAQRcHj1d53/2Y4sfKh3y0uaD9ZIXK1x0YA=:ugy335izvFmzBD4akHNNEDuaL2Czt8kkPzM26UdwHbY=;
+X-ME-Sender: <xms:yyXRan30SLNh1XDP6EaKzQMHPMk7hkphHMDVod2_DMHXqvqJKsxUcA>
+    <xme:yyXRaoVrwqmE_SAwv4ThsKzMNJpG2ytFn2bBjP3t4SibhrpUJwOssDezb7C0sw46n
+    9-I0dZJSUljh0qMyLWmVhzvBKAySUi-stwj6CZlnJx351EeUSjYRA>
+X-ME-Received: <xmr:yyXRaqIhQVQmuP1Jfhc9l1-JCjy1EMvBH_bK-j16ysCYKsOc5xpzwQuMx35kef_cgalBxZilPXj8dQHC134vkNtlhz9jHi9-Udnu>
+X-ME-Proxy-Cause: dmFkZTGmnbajsMS7PGK6KfQyoESBKwP7LPmIaCPpgYa1H6Td7udS/3flB4mhM4G6RTIJDv
+    jC+7+nJbiOpkj+B7dAGC1wcKqL4OX/gTc/AnBywBR0RtatzfenbgmYpvMkHBtFLSDeYn7m
+    fZv6+8jVF2pF1U3bn39TA0FUShQJVXgfFSW4IdRoGBWzBFMewYznFwByLMssaTMGzzckp0
+    HtBKiFwcWT4OEHNww4n2v4fzswNz+2I+qN70evXysdF6v5leFa0gB8rlQlHTT4M1wdKeP/
+    BzG5hl96Nn/geD5uSA7D1BSExZlBiSPcZKHSJnlXfNHr5QYE/RIraF/3Sf69rJuTK+WsjK
+    4GXATPoPfDn1QMHEeN628OyP5dvUqe2fnxvb9/3cBV9kOMqs9PBfD3IkTVcLMCH6QCf+h8
+    w1AlS9eTqBNk3uC89n0tZOh5kniQzmq2DEHfC5OSGNrRLYV3p4xd2+YxGWoets0WuyJOIp
+    9KHVqXDiJaCpa8/qoBZh39H1bmC276FIjJUHnyUKlCEAcNv/1bFPTFq/l5jPQTimnw234t
+    cxtf1CFABBKLkj6QVNrz/V+BuVU5E1w4T2eaIp0/5jvsxTN+wKoy26CyKrZaLTCQPSPCDB
+    Vf1ncUnfYL82/nVGd6DOBz+59nEZQ1YcMA1rQ/QdAbxlyVFMH56sxf4WzhuQ
+X-ME-Proxy: <xmx:yyXRai1M-m_bQqoVXzgReM2D6LTUbP6JRl36DQRnEyO5yiunMWPeJw>
+    <xmx:yyXRao6xMxUi348THui2RftS3TvkC14nU0jvJ5P7fJ1Ck7GL0PMiOg>
+    <xmx:yyXRaj-NvZ0RbsR22n9xl2bqHb5U9hUQ8c6WvI5Nujvv5isnxoDX6w>
+    <xmx:yyXRanUZisICJyQJGi4y187FIG9zt6VjEe02ASGFLrU6NbsNk197zA>
+    <xmx:yyXRakKm5kbcYJb6Lm3FGH7Y4XKrdyoJoTgITo43GBp0Zj_2FCatnscl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 15 Oct 2026 15:13:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: gitgitgadget@gmail.com,  git@vger.kernel.org,  karthik.188@gmail.com,
+  mail2venkat21@gmail.com,  ps@pks.im
+Subject: Re: [PATCH] refs: fix loose-ref seeking across directory boundaries
+In-Reply-To: <20261015133624.82112-1-haraldnordgren@gmail.com> (Harald
+	Nordgren's message of "Thu, 15 Oct 2026 15:36:23 +0200")
+References: <pull.2258.git.1792067455341.gitgitgadget@gmail.com>
+	<20261015133624.82112-1-haraldnordgren@gmail.com>
+Date: Thu, 15 Oct 2026 12:13:13 -0700
+Message-ID: <xmqqse26n5fa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2258.git.1792067455341.gitgitgadget@gmail.com>
- <20261015133624.82112-1-haraldnordgren@gmail.com> <CALnO6CAi_rh_JMOhL0wrHSYZQYCZZstVNFuTxCGCavBnBPe+oQ@mail.gmail.com>
- <CAFuK-oaFyp7QdA=Nrc68cNx1iu803pQSUOZ=f947rRjWbJ7Z5w@mail.gmail.com>
-In-Reply-To: <CAFuK-oaFyp7QdA=Nrc68cNx1iu803pQSUOZ=f947rRjWbJ7Z5w@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 15 Oct 2026 15:04:52 -0400
-X-Gm-Features: AclHuK9WKUf19WLC9b2TIt3VvI5SaGvTEEB5IEUhgEfbN9u0alMuy_jaxUYbybM
-Message-ID: <CALnO6CDH==atdV5tfHSiTuF6MFNebbjyVEzxBU09=xmU75LYQQ@mail.gmail.com>
-Subject: Re: [PATCH] refs: fix loose-ref seeking across directory boundaries
-To: Venkat Ragavan <mail2venkat21@gmail.com>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>, gitgitgadget@gmail.com, git@vger.kernel.org, 
-	karthik.188@gmail.com, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-[resending with corrected plain-text ':D]
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
-> On Thu, 15 Oct 2026 at 10:38=E2=80=AFPM, D. Ben Knoble <ben.knoble@gmail.=
-com> wrote:
->>
->> On Thu, Oct 15, 2026 at 10:20=E2=80=AFAM Harald Nordgren
->> <haraldnordgren@gmail.com> wrote:
->> [snip]
->> > > +                     if test "$storage" =3D mixed
->> > > +                     then
->> > > +                             git pack-refs --all || return 1
->> > > +                     fi &&
->> >
->> > I don't see any reason why a test would need an if block, we know what=
- data we
->> > expect, no?
->>
->> I didn't examine too closely, but this test is wrapped in a loop over
->> the storage variable that appears to determine whether and when we
->> pack-refs, so I think the conditional makes sense for that?
-
-On Thu, Oct 15, 2026 at 1:13=E2=80=AFPM Venkat Ragavan <mail2venkat21@gmail=
-.com> wrote:
+> The general idea looks sound.
 >
-> Yes it does, I interpreted Harald=E2=80=99s suggestion was to write separ=
-ate tests instead of looping over a variable outside the test block, either=
- ways the logic of the test is going to remain the same.
+>> +			if test "$storage" = mixed
+>> +			then
+>> +				git pack-refs --all || return 1
+>> +			fi &&
+>
+> I don't see any reason why a test would need an if block, we know what data we
+> expect, no?
 
-[we bottom-post here]
+This is three tests implemented as a single test with a for-loop
+around it.  The variable instructs the single test_expect_success
+to behave slightly differently depending on its setting.
 
-I don=E2=80=99t mind the loop, personally; it might be worth looking around
-for other tests and see how they approach it.
++for storage in loose packed mixed
++do
++	test_expect_success "start after respects directory boundaries ($storage)" '
++		test_when_finished "rm -rf repo" &&
++		git init repo &&
++		(
++			cd repo &&
++			test_commit --no-tag base &&
++			git update-ref refs/tags/packed HEAD &&
++			if test "$storage" = mixed
++			then
++				git pack-refs --all || return 1
++			fi &&
++			git update-ref --stdin <<-\EOF &&
++			create refs/tags/a-leaf HEAD
++			...
++			EOF
++			if test "$storage" = packed
++			then
++				git pack-refs --all || return 1
++			fi &&
++			... real test in the repository begins ...
++		)
++	'
++done
 
-You can also extract shared sections into functions if that makes
-writing separate tests easier.
+It creates a tag "packed", and packs when storage is "mixed".  Then
+we create many other refs, and packs the whole refs when storage is
+"packed".  So during these three runs of the for-loop, the preparation
+part quoted above behaves this way:
 
---=20
-D. Ben Knoble
+    storage=loose	no 'git pack-refs' run and every ref is loose
+    storage=packed	the later 'git pack-refs' packs everything
+    storage=mixed	'packed' tag is packed, everything else is loose
+
+and the test checks what happens in this repository with refs packed
+in three different ways.
