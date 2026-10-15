@@ -1,116 +1,237 @@
-Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A07A146A66
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 00:19:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3F03D47CF
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 05:28:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792023584; cv=none; b=JtNfNnzO44DFfhA/JrbVrF3mSXXvG6xz2/7o6NqQAINuOxz/9Zq84G4x3YK0fwnD3Y/r85udqKxTHutm0o1e6WuIPv2vq3l5OMNeAU6g4Bma0bWqDSYKOsaJosHZ6Hz6uMx9t5vQNNl/JutiDagX0If00l5xxi5J4slVTI/dfGE=
+	t=1792042086; cv=none; b=LJVtD1AuHQcilERF6u1VYLovT/45JD+MA1FEabqnbbtIFxzaH/k/iePJFZmzSYfa0ilrlmqeT/cT6UEPyqLHPJBbcAY33/DL3GsgQ4uBK4hA9k6ZXrg6OBsR5E+t4a0GV75TZ14/VUQfhhByFD0iUlYK0wVk+sroMI8tsQcUK38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792023584; c=relaxed/simple;
-	bh=Wrz3/r0L5AiZ/0Cc4iMDWbFGxwRFiGkpoiJCTAZiCXw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MIcDcaQb6XtbIcrfkURG1sG4Os3E+/ffdTJ9T956acQY5fgUN/+J7DfpTnZz5aLOBx9zyf3/pBt52cMfw6jcWSBeA4bxDnIrksv2LM8TM5VrPHvKUBEy+4NQv73ODApnJ99MB6xUc0Z6fKV0uqC49qV46YFEbtcA32wnsX21/M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fpNuA1G3; arc=none smtp.client-ip=74.125.82.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1792042086; c=relaxed/simple;
+	bh=WdI0qxe3AUH1wY5F8a7FdpH/Mze5zX4fNnM8dgoVvEU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=cF20oJH1hM9U8n9RgjOKs9qQlwIQ1SMARaIiY8xq2QwVbSohsS48VKjJIfcIJPv6PYl5yHou4oGm7Nm6bRFAjrLL/asZoHxMe2ooCGYvRwKs6aRNmx927qTjdHWHldSTbLsYoO6vD2PKD+KS0ebShtbQESo54BhhKVYUBa+QJxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tICFd9is; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KdhhyWJS; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fpNuA1G3"
-Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-170135e43c7so2240545c88.0
-        for <git@vger.kernel.org>; Wed, 14 Oct 2026 17:19:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792023582; x=1792628382; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Wrz3/r0L5AiZ/0Cc4iMDWbFGxwRFiGkpoiJCTAZiCXw=;
-        b=fpNuA1G3YZ88OEVuDzkmxuV4UD8P680eoJGS6zUTvk9yJcY4KjjZbtdUvN6BOt36H/
-         o87kb7GoY93rgIu6Mgwx2f0P8iADyzPP4n/trbIcmEwMPQl56WRR9V4Flz77bD/owATx
-         o7Ou8VR8z+HBWPBrO9uC10Vo2JJq/xaQ+0FeJhZ0BgWpIEk2S1wKk9NcCuz10K/koxEC
-         /X9XBjJTuG6XvQWIBTXKB7Zyp+adeVqEvH+E9RDdPVtrRSmyQMSIcdd5aPp5sBXBTN89
-         oS6fD0zP1QhbtKjAPP3Fb2DczZfyWSGJ6rTnU6LtHysqq8OvVx8zkhthwEU6EaiggBaH
-         2YkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792023582; x=1792628382;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Wrz3/r0L5AiZ/0Cc4iMDWbFGxwRFiGkpoiJCTAZiCXw=;
-        b=vM0cpXyJNc7AEjS4P2G8itn2gExrtzI+TIS0zuQOdINBJuuHsPrOphzK8M4Bsp2LEx
-         ehvKji1RJL7Y/y9t6XS/iFx8mdXY2Tckv3HAZiWRHES1Zafk/UED4QgKDfKqZ7Vfm1tT
-         uLGmOKxnxz37KPH53uTqHMW3kSSfFZ0sEBkMP4UH3ut5Qtiox+2MyX6mCfr5A29DA3G2
-         CM2hMdSj/OhYKh8puvhuF3XhxTGZbjQa4c8ZNSj1vJXbjHNvg8fnPqjn9/pLd40HEtKZ
-         eCcMPba/XbVNpK3D4ffl06oLZP/lAh9t/koZICDZszpX0yWhqcY2Jj4RkW/tNrk9tjQU
-         ux9A==
-X-Gm-Message-State: AFq9FYIOikeXYUR3V4mOhmhrMGzy6Oenu+ErV6OmiYrW4l/VlY/aKnRm
-	MtwgsTHeP0H1XU6VAM9XQcKIxqiA/SwjBze4yss56deHF/+z+Q2jE66v
-X-Gm-Gg: AYBFou2HFDVLedLgX8W5V1t5FDm2tECzcqc6ARSqbD0K5e03pDku6LMVPViJ2Sk+WMB
-	0xjJrme2niC3lEPK4szg+/sFq+1jpANBRYWpoGAbjo2BwOj7zVQ7cMZnMmjE7spOUgwh0WtIdl9
-	wvcge7CQAt+USNPQI/Msj/6cdlxpR/A20Lvxh12WezgdSO8viAZ7TB+z1RzM3Xc/xBAuQd/vP3J
-	AxdTpkpENgPtANBQ5F8qfxB2NXWARFqqK64RsbeDhLY/73aE6I/OYBbelMZ31D3OpsJCoQve/TG
-	FiCh+eoy9KBUzycr+Ge1L5v3vxR2Aj6wXd+luFcrrek2kuFu1crmji1Ud/RsAadmvcuROcisk/E
-	QAHzLb+M0KvNqgojjM5OxQpXNcI8qBdjIazm6Gui2wXOic91ellrPFxnX6abBqSZsr1+cApYF3l
-	Q2tWJD+wM7eCgjDv4PsZBsA8Vip8caHbauy6CJ09BMFZ6VnbgYCWrBhHe6HL+GscGIj958RD5Kn
-	ovSNHnwbIkO0sy0x1954KYPhQ7jGFUAbdT5ORIYhLpUeBIXMGRcu8JKU38f1v9joARVtrxNRTjB
-X-Received: by 2002:a05:7022:5f07:b0:168:6ad8:e8ae with SMTP id a92af1059eb24-16a6187f492mr22566579c88.11.1792023582302;
-        Wed, 14 Oct 2026 17:19:42 -0700 (PDT)
-Received: from quark-fedora-PF5F60VQ (162-199-88-188.lightspeed.sntcca.sbcglobal.net. [162.199.88.188])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-169a442956asm64288057c88.16.2026.10.14.17.19.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Oct 2026 17:19:41 -0700 (PDT)
-From: Jun Wu <quark.zju@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	ps@pks.im,
-	Jun Wu <quark@meta.com>
-Subject: Re: [PATCH 2/2] commit: lock index before reading
-Date: Wed, 14 Oct 2026 17:19:37 -0700
-Message-ID: <20261015001938.2092523-1-quark.zju@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261014100432.GB1344504@coredump.intra.peff.net>
-References: <20261013172315.2997446-1-quark.zju@gmail.com> <20261013172315.2997446-3-quark.zju@gmail.com> <20261014100432.GB1344504@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tICFd9is";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KdhhyWJS"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 610061D00142
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 01:28:03 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Thu, 15 Oct 2026 01:28:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792042082;
+	 x=1792128482; bh=mUkoeaezjiijbB9mCXfxYyvkvzLBOgtOv2q++WCUdvc=; b=
+	tICFd9istqIh+xZgNmIESk/wAlPbF1GuUIRUs+sjaQTWiHiSsMt3lL1qdLaeMlJz
+	axN5xHRToNN7iGF7us6ESeL96ntMifBn+kS27o4exBQd8cFKE8KH6olfrcF4+pVY
+	EXbpkpUj8qFpAwEAnk3ifVGAeDabDWUH1AI/0hCrJt7CN9G6OmSBD0RSrXtLXDxq
+	xc1sYXaJW4//gLUOxRheCFM3uu/zrjJcMxmXLjcC/Ztcn20dSj7YqoGmj3dv92p1
+	S42/7StHHcC2X8sHc95+U0PIUn/E7QUE+/ObK9HmfukZem4ubfuR89ltnUzuv9hR
+	LBaUb1CTeU/eJ7BrouGOuA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792042082; x=
+	1792128482; bh=mUkoeaezjiijbB9mCXfxYyvkvzLBOgtOv2q++WCUdvc=; b=K
+	dhhyWJSBWz3+Sl0IsIks+AdqWjgbXhi48ig8XsxOILuHtyT2jT8NmPa4N6OurhQE
+	kPOTv3GlL400ynPoK2Z92RBWnO2boV/P8G6hJdZfEGfE+d/1tIC1Mrduo08fPvrS
+	b/sQ0QlcuiNDF1p7gTS2gHBYoG+MwNGp96B+lVVcTB4Znv5CiHIWvr8yPXIQ8MlE
+	o9Pd1c7NqiznKw4IJSPtT7LuCE+dLOxQYQcHvDds84MDKleGyVTnS6Ypgf5ndOGK
+	CkkW8K4pny/vtol6Ey75QWwvROiEr4aom7P+abSUua42MbZm9y1+Ze38pQn/Dj4C
+	MatPoa8PerjVAIizBsfeQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792042082; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:aa60C8fMJGNVeaIkTRKzrN2WC1gWCeGj65KP3APpSyVoaDB
+	abwlWIBmIWRhSjuCmtLGauB5ho4G1jbxoOZmuvISgXCmO7AOTCtsJuLgVbCAt9N/
+	mKZWXmSMqz2RAYhF63nwjXaxxYi7Tatlx8jPgCV0vTd0cW+XFvd6TJn+sNgRlfqA
+	m8UX1Fm6hewZN9GcVj4yfileK6nGOaQ8CejAz/YPrdcSVMNKQKyJWxlJMTduawVz
+	YD9PR08NLN2h4SQQ2UUjF8647RZitX6/Feb70L/shVEllAG1CDFb3pSLcvXbKkqD
+	2L5f09pb5BzXvsfgBweFhe8tdCtdbtQ/9VpbtyQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:UksElk4sKvCLCBfqpVtwgy2M6JKfLRFgtUtgzwA4Ilo=:WdI0qxe3AUH1wY5F8a7FdpH/Mze5zX4fNnM8dgoVvEU=;
+X-ME-Sender: <xms:YmTQasWPFt0-vmCXZhP2maWEcZ4GTY-6e1Jah-Hzs9Tj-kpmoSnCLw>
+    <xme:YmTQancbj-LYsVpU3pzX2sPMLNgR9ZgrZYHYqUHmKtzUMAugEK6x5uSUc5-nC7n-k
+    TivG5oa4oG7DWy4aWjJINBPmxrhU4hKzNoNp_n0EBLJUMqtO3z7KXQ>
+X-ME-Received: <xmr:YmTQaosuYjDGeQTnTztZ_HusQalaCGtoHzmkIRMTn1QzWafOU7w2Gy5T0XaTnJTs3uWbNNg>
+X-ME-Proxy-Cause: dmFkZTGdUGdnxLzyQhkH66riaGssIJS8KYBEmr52Pi1ic2E9/5kABeSCVNpD7NeYHTdHi9
+    kzWXxwmgfVkKhxz8EwY5JSPrwyg+sTilWuzij/IXjOuAhp71DXafEFd/XRCnj2wGBEfk6G
+    ZMtCu081S05RswoibrZF5S4W12SPGs5WZQjH+IBy/w/2sDkk3SvkAQSPLGu2E2g8n9LgtO
+    n+7AiZTnROlT8cdpb68yvA1WPpdYkm093Uae7jc9QXGB+xim3yVZGyp7VSlabtZLygFEIW
+    9c/B3fumQQLyQLH0KfwGQMe/9qHYylCYHKnYZ5RC1J46JxNp4k4eOmmraRi4oOuDw3lVFV
+    H4AyasD7/lHQ1lqRrHiMm7cVWVJvwax3pjgzNUfct5mpdGiODmZGmRrk8eOzIyPS/pp1YC
+    /Q15ubxBpXQYphAdclPxN7TJl3DiBZHWjilRs7aC26DFFCQ1CwmAr2gdTya60xkEZ/190E
+    iU3CKcQU2c3XP/WBGjCPQSzW/RMPR3bfIt/+W9Hz5gXBNormXbNg1tyalzKccjxuA1aLce
+    uk6LrR9VOdzTgLOWjVtSVQ7p4oAuRB4n55gX9n11+lYEBP3GvYQnTM/esY7p5MagFRfB2l
+    /pWZ9foKEvqWlbdSdhk8Ke8UTZ+S8vg653uegA+qQHGnGil6jdebMiXOCiAQ
+X-ME-Proxy: <xmx:YmTQam_dY8fFcB-0-1eKFQw5rhj9EayNmYgX8Jh3tJ8nwjlwFq_q4g>
+    <xmx:YmTQaj2_4DeBvbIhJbkQMD26_82oldYtaq-U9Ks3MLi9ned7u3LgYQ>
+    <xmx:YmTQarCUuuwUCcMh64JTpromwEB3OKdQQurwhSqhv6DCMvbKzqWiyQ>
+    <xmx:YmTQave2gHXtb5jMA7j56jwnufyaicVP5Z7RFbgcX1nHTTKh0Dx97w>
+    <xmx:YmTQapY0La2amI7lQf_cR_eXlFNTa2omoN1p-53ET6gAze4PBuHvu0c->
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 15 Oct 2026 01:28:01 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 206a79b9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Oct 2026 05:27:59 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v3 0/6] odb/files: cleanups and improvements for alternates
+Date: Thu, 15 Oct 2026 07:27:54 +0200
+Message-Id: <20261015-pks-odb-files-alternates-cleanups-v3-0-bfc62fd780eb@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42Oyw7CIBBFf8WwFsOjQevK/zAugA4WrbQBSjRN/
+ 12oxrjsbm5y7zkzoQDeQkDHzYQ8JBts73Lg2w3SrXRXwLbJGTHCBCVE4OEecN8obGwHAcsugnc
+ y5lN3IN04BEypEQehdVVXDGXO4MHY5+I4Xz45jOoGOhZwabQ2xN6/licSLb2vj/IVvkQxwWpPO
+ DGGKSbMKW929oGKLLF/XLUGxzLOQFMrpqXkCn64eZ7fMogiqDABAAA=
+X-Change-ID: 20261006-pks-odb-files-alternates-cleanups-11f686cc4942
+In-Reply-To: <20261013-pks-odb-files-alternates-cleanups-v1-0-b7030ff2b26f@pks.im>
+References: <20261013-pks-odb-files-alternates-cleanups-v1-0-b7030ff2b26f@pks.im>
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+ Wolfgang Kritzinger <wkritzinger@atlassian.com>, 
+ Justin Tobler <jltobler@gmail.com>, Tyrie Vella <tyrielv@gmail.com>
+X-Mailer: b4 0.15.2
 
-Hi Peff,
+Hi,
 
-On Wed, 14 Oct 2026 06:04:32 -0400, Jeff King wrote:
-> I do think your patch fixes the problem. But we probably want to discuss
-> that in the commit message as a motivation (and likewise, discuss the
-> fact that we may be holding the lock for longer).
+this patch series contains a couple of follow-up cleanups and
+improvements that are now possible after having migrated alternates into
+the "files" backend.
 
-Will do in v2: describe the race as motivation, and mention the longer hold
-trade-off.
+The series is built on top of 6de20f6092 (The 4th batch, 2026-10-06)
+with ps/odb-files-alternates at 0ba59c8453 (odb/source: drop
+`read_alternates` callback, 2026-10-08) merged into it.
 
-I'd like to note 'commit' is just one command with the read/lock order issue.
-There are many others, like: reset, rebase, stash, am, merge, etc.
-Some are easy to fix, some seem tricky (e.g. merge).
+Changes in v2:
+  - Add another refactoring on top to only fetch objects from a promisor
+    remote in case they are missing.
+  - Link to v1: https://patch.msgid.link/20261013-pks-odb-files-alternates-cleanups-v1-0-b7030ff2b26f@pks.im
 
-Do you think that I should fix all order issues before adding the timeout?
+Changes in v3:
+  - Add a regression test, supplied by Tyrie.
+  - Link to v2: https://patch.msgid.link/20261014-pks-odb-files-alternates-cleanups-v2-0-fed9b2caa3be@pks.im
 
-Note Patch 1 alone does not hurt - if a command has the read/lock order issue
-and is therefore racy, then the timeout feature is automatically disabled
-(by the 'initialized' check) so the racy command behaves exactly the same as
-before, not worse.
+Thanks!
 
-My plan is to add the timeout support first, then incrementally fix order
-issues, starting from the easy/more common ones (e.g. commit).
+Patrick
 
-> There's probably some kind of hybrid world where we optimistically read
-> without the lock, then take the lock, and then check (cheaply-ish) that
-> the index didn't change since what we read. But I don't think we do that
-> in this code path.
+---
+Patrick Steinhardt (6):
+      odb/source-files: fix performance when reading objects with alternates
+      odb/source-files: fix performance when streaming objects with alternates
+      odb/source-files: make the second read an implementation detail
+      odb: remove read loop for found objects
+      odb: don't try re-fetching corrupt objects
+      odb/source: drop `local` flag
 
-For reference, 'status' is such an example, although its write is optional.
-'add -i' could be another example - it avoids locking when waiting for user
-input, although it lacks the "didn't change" check right now.
+ midx.c                   |  2 +-
+ odb.c                    | 63 ++++++++++++++----------------------------------
+ odb.h                    | 12 ---------
+ odb/source-files.c       | 26 ++++++++++++++++----
+ odb/source-inmemory.c    | 10 +++++---
+ odb/source-loose.c       | 17 ++-----------
+ odb/source-loose.h       |  3 +--
+ odb/source-packed.c      | 20 +++++----------
+ odb/source-packed.h      |  7 ++++++
+ odb/source.c             |  4 +--
+ odb/source.h             | 20 +--------------
+ repack.c                 |  2 +-
+ t/t5615-alternate-env.sh | 43 +++++++++++++++++++++++++++++++++
+ 13 files changed, 109 insertions(+), 120 deletions(-)
 
--Jun
+Range-diff versus v2:
+
+1:  3a7f78fc94 ! 1:  dea38443a4 odb/source-files: fix performance when reading objects with alternates
+    @@ Commit message
+         [1]: <CAFXJcxvpKHoVDwE5mBOd=w-A5vPdUmehqr8SHLUD7qv1qB00rA@mail.gmail.com>
+     
+         Reported-by: Wolfgang Kritzinger <wkritzinger@atlassian.com>
+    +    Helped-by: Tyrie Vella <tyrielv@gmail.com>
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+      ## odb/source-files.c ##
+    @@ odb/source-files.c: static enum odb_read_status odb_source_files_read_object_inf
+      		ret = odb_source_read_object_info(&dir->loose->base, oid, oi, flags,
+      						  status == ODB_READ_NOT_FOUND ? errmsg : NULL);
+      		if (!ret)
+    +
+    + ## t/t5615-alternate-env.sh ##
+    +@@ t/t5615-alternate-env.sh: test_expect_success !MINGW 'broken quoting falls back to interpreting raw' '
+    + 	EOF
+    + '
+    + 
+    ++test_expect_success 'packs across sources are checked before loose objects' '
+    ++	# Regression test for a performance issue in which an object that
+    ++	# resides in an alternate as a packed object caused a spurious loose
+    ++	# object lookup (a filesystem stat) on the main object store before the
+    ++	# alternate packfile was consulted. Reading such an object must resolve
+    ++	# to the alternate packfile, never to a loose copy in the main store.
+    ++	#
+    ++	# Build an alternate whose object "B" is stored as a delta in a
+    ++	# packfile. git deltifies successive versions of a tracked file, so the
+    ++	# older, shorter blob "B" becomes a delta against the newer, longer
+    ++	# blob "O". A loose object has no delta base, so %(deltabase) tells us
+    ++	# which store answered the read: the alternate pack (O) or a loose copy
+    ++	# (the zero oid).
+    ++	git init alt-src &&
+    ++	test_seq 1 200 >alt-src/file &&
+    ++	git -C alt-src add file &&
+    ++	git -C alt-src commit -q -m base &&
+    ++	B=$(git -C alt-src rev-parse HEAD:file) &&
+    ++	git -C alt-src cat-file blob "$B" >b-content &&
+    ++	test_seq 1 210 >alt-src/file &&
+    ++	git -C alt-src add file &&
+    ++	git -C alt-src commit -q -m more &&
+    ++	O=$(git -C alt-src rev-parse HEAD:file) &&
+    ++	git -C alt-src repack -adf --window=10 --depth=50 &&
+    ++
+    ++	# Precondition: in the alternate, B is a delta based on O.
+    ++	echo "$B" >in &&
+    ++	echo "$O" >expect &&
+    ++	git -C alt-src cat-file --batch-check="%(deltabase)" <in >actual &&
+    ++	test_cmp expect actual &&
+    ++
+    ++	# Main repo: write B as a loose object, before any alternate is active.
+    ++	git init main &&
+    ++	git -C main hash-object -w --stdin <b-content >/dev/null &&
+    ++	test_path_is_file "main/.git/objects/$(test_oid_to_path "$B")" &&
+    ++
+    ++	# With the alternate active, B must resolve to the alternate packfile
+    ++	# (deltabase O), not to the main store loose copy (deltabase zero oid).
+    ++	GIT_ALTERNATE_OBJECT_DIRECTORIES="$PWD/alt-src/.git/objects" \
+    ++		git -C main cat-file --batch-check="%(deltabase)" <in >actual &&
+    ++	test_cmp expect actual
+    ++'
+    ++
+    + test_done
+2:  23d8dcfcdf = 2:  374cbda799 odb/source-files: fix performance when streaming objects with alternates
+3:  406228ce0f = 3:  635d9ce86e odb/source-files: make the second read an implementation detail
+4:  c8f4c96b77 = 4:  832852bad5 odb: remove read loop for found objects
+5:  e4af3300af = 5:  a0eebb1225 odb: don't try re-fetching corrupt objects
+6:  7658903430 = 6:  b4a76c5651 odb/source: drop `local` flag
+
+---
+base-commit: ea99757de7d4ef6c7727431bfd7b6726614102e0
+change-id: 20261006-pks-odb-files-alternates-cleanups-11f686cc4942
+
