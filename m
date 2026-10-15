@@ -1,103 +1,102 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919FB3E9F93
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 05:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBE63EC831
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 05:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792042189; cv=none; b=iU36OzHZ2BHClU+l8qWV3TQA6geZORyas4cDc8C35/THxbuI3jlFX7+eDwpE9BQsQuia8yTsNvUdahuwwqE0S1Ni5s7r8uSjspnwk1bUaQF/5LluXsAbITBPcSmvHAQz9TMdBJ8OVJnjtPvSh26hC/0iT8xCx+auxuMiT5Zf+Uc=
+	t=1792043034; cv=none; b=JSgHjN0b+oScNgUdBDbkxR6D4sAmQf7dxUJjrG8io2JfZRh6fnwubcfyKRuHNoi6KQX+TbgVRPUvqSynY1jkY526ycHOQXQ5VI2NWHeS1oJGnCRBM7y8GYxPjrjWX8vir64n9O190bI++Uk5kxMseLyi8P9e0w2Xd9nefT81338=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792042189; c=relaxed/simple;
-	bh=ubiVRha1tSAyxQ+ifuHXK09UBzkzpRbq9ZHIhS+nrK4=;
+	s=arc-20240116; t=1792043034; c=relaxed/simple;
+	bh=8iRlF0v4LixwKyHAz6pvtqGjF0SvDag+hwW/nC+/b8k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QuotcNQbgfkkgPWoNQn/DtSLElVc7UrAq67BdNYim6+h0CxEt8FAWztY2iMRZ0djUudgAn9qH+glOyMk/KoyA9KZASt3Vw7JeRdt4LQ/cx9928rwQZLI/rstweeNu2tjtReRP/ufyu0iUXX+lyVU4ZY1jO+44jXLMXMRkKEJtfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pfWxYhbI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nevm8dR5; arc=none smtp.client-ip=202.12.124.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=mkgpWwOdcFPx1eDFMJHjZz0lzUnGFKzLEwem//ygAHUAABPS6k4f705PV6b1kc5j1RLCTkXpBFFrGfAUYRJnIM19f+OCVanDKQUYLJUp/UbZwijfQeQkfpconyuy0YkQnSDWeq4VttJfF62DrS35JIppk4J5LXugqnONMKEDMrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lI0udxTx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NgPVj9oB; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pfWxYhbI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nevm8dR5"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lI0udxTx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NgPVj9oB"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C693D7A0195
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 01:29:47 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D36CE7A0182
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 01:43:52 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 15 Oct 2026 01:29:47 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 15 Oct 2026 01:43:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792042187; x=1792128587; bh=K5L5Z5WT6L
-	vtMHt0+uu3K60dGbrQTgkqPkTJJGDSRcY=; b=pfWxYhbIRj01afO5x4vkBLFj1D
-	x5dNZMu5AqokHjPzq6+OrJAyjbyiFAp4/GXkLFkjXeWRYu/xjqk7c9IP7vnKapDl
-	mfoNRpcuXMZMFN9ODeB9JV92JwhXEzJEegSxnper0ASFcKVdJVQVRsNJhXZjdl2G
-	abZiY6f0QmQNLVthC5O3uEOrPnz1tK/TfzdTMElG3k2LjMEDDm3SXgxv0oAibKFZ
-	UnoUjkzIYnhFkQRRLdr/WRHN3zBGxtXQuEI3UVR41W5K47X4vkg0G387hnoeDIm4
-	hLq4qNiOI7Y/Kp+a2a5NBGKCitZu66ccSJoKUBDa9XKaSyhf/Q5YueB5hGlA==
+	:subject:to:to; s=fm2; t=1792043032; x=1792129432; bh=M7mnECv7ZB
+	DLCZ7Ga7hT+tUn/kDudvO9t/v32kekE+I=; b=lI0udxTx03mgrWLEjHCbNo7IqC
+	Qfr3GUskIlUZpZ4M0Wx6g1s/CCx9qlW4uPPehaM/CZAI2vv25kWSdpBiHpkZviaJ
+	xxLot5rU22oFfz8kKbCpSHsffL8RVH3fD6Gn0ogXC1oWGmB0/7b6v3051uOaPtE2
+	WaIUnFnL8WuAjYnu/CvVU+Ha69lZRBXh4+4QXGiVSF4j7AoqW3R0qXou8D0u761e
+	UZPkpuFdDJNK7vIxucuorUa9VNtjp0ygTZdZGVwmoTJx66ENHXdnekpH6PWL1pGj
+	+Z9hWSjH54dY+UdRtk0HWIFmSfFwVHh3KURn56mDirAAqyehJ0WwMZ2Tfj4Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792042187; x=1792128587; bh=K5L5Z5WT6LvtMHt0+uu3K60dGbrQTgkqPkT
-	JJGDSRcY=; b=Nevm8dR5Qa0Jknw5eEAKD80ilNYGj5p6Vn2AXKxD8ADErQ7GcTo
-	FhBVpaRMAXh1/dXT0lycjd13us1Htcxz7J+OETSV7pxja7pX20UywILABCEV3GJw
-	PAh7DkYO+tIqJl0d+kaoYFiy92P3v0PInUIXdMELg1/2jUIeTY4rSsuxF8GYkJNn
-	ZVlfBz9HpIc7p6zlHoQ40P1dUmNtPEGcW7JEOra71hsMCM2H6cvWxSJ9SwC9d/3T
-	gC+qTH1F0DVqQnwF3/IGGgiuLpe7LVgKc/ZiHeR/aHoUCqNs6HzKeIY6foIzH/d4
-	JU1xCq/fURM6TEIRHLbRv5dHoqJsj7LpAFA==
+	1792043032; x=1792129432; bh=M7mnECv7ZBDLCZ7Ga7hT+tUn/kDudvO9t/v
+	32kekE+I=; b=NgPVj9oBx2bZYAaR6soz2gDlvB9N3EwoLg9dRTahSYNMLEa8YJf
+	9qqD4b/PvqhWkbPBpEy8o9vdMhbG0OFellxXr6Qot2zQEFssb7wtcY4aADRdDVOE
+	vAIXpzyhmSpHt8p+OPDIIPdpgKmNqvbzS8WboMrOn+B4BPiXSeQhBdbFFN+2HWgl
+	6VWHUZCNCVcpRYtU0kl0QzNK11x1CcyXeaSpIC+A4J67aTxusJOG5Zmz+Bjzj7Wn
+	gW6e0ALXygWDwjbDCYvi4PQ70O919Qk1EkpAVQgpsJXIt/V7uDlLIo47STj3cDNs
+	pPC1T67m80OUStY57IR79YOI16w1+eCpjmA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792042187; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1792043032; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:ERItmdt+tBDNyK9qvHWTtLrgL7ww/eNCaSBMmCPec7ygIC6
-	o68mg66+mt7S2CvwwwI6OJbvrywMNlvg7JBYUa1mDIe5CvL9z1jJAiwqLEqhX7b2
-	f1VI9CKRWkctohTM9ojfCU9p5+CVEFpYtkOoCpODRLRChPvHxL1YQ58SgGdyW4/g
-	j+wbtTogbn7wpW5QjzK3RvP1ITNU36EjnuTnUXywfNYLhfsey6uC9IFppJPsSEYI
-	mYaJyhhy7uZ43Had+BKz9KLypxYrwu2VG/IC1ue2bGIGIHxfflsCIZ9DZnPWYHZA
-	OCfF2ZKeorymjYxmMEO+pzxSoJ9IURXHFJzth+A==;
+	s=fm2:rsa-sha256:rOQ2LD3upOXF6xegcLrSVxfKC4Aq3CIf/FoFXz2uBON7GqZ
+	nCzj96ov9oRuNJhs6FpHdFquIuosOoRpb9DcWvnc1SwvF0tP4FoJC7EaFbZh4tM0
+	OlH3VQ+W6HnAJjB/gI+RToS7rylERXEg+cYYBdm5i9mKhP6GuzOng38AEhQ6HlcI
+	gVemOizkJToZ70fBPDVwLkpJicj1onjrWQYev6iu32zqzq/FyQL+TuXe0XV0ot5z
+	B/jelK0xm3TMEXXxGZ70Tk85vZx0pKAZmu2Wh5MwUKZRZug4RroIMrWgk/EZXzjb
+	rjW9Ty3kLWeMw9/Ei6/QbGZUiPovwELNMY0NcYw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:gqt6Yq8yQqWO0N4FPdn6NfJc0ir9WYMkR4uD4lpoA5s=:ubiVRha1tSAyxQ+ifuHXK09UBzkzpRbq9ZHIhS+nrK4=;
-X-ME-Sender: <xms:y2TQanJDcVUKMo35ian7ccji9o5-Vx2tKmLEVCNpaUvK9N9bgez6iw>
-    <xme:y2TQaiLkGJACSXxjHLbmCpm5cA-DL8wbJY7P2hDiq9pdoY8b7lO-ymBLvaSRWmNnF
-    zsYoJXH02JO_kQMTW3oa29nE5rnGqTCzEeSaOUZt3A3tZiCu8yEOg>
-X-ME-Received: <xmr:y2TQaku80fAcWz5sF8G2LGIxqUopfjStZHfdbE1b6rMdJRvwPkF3Fym_GyHJNl8hcc8UviA>
-X-ME-Proxy-Cause: dmFkZTFJV1nltFEmAqB7LI2zs2JK8NzI7U/CBIQdWdvesL3aXnEgUXZzz9jdA+Mou61BKS
-    NIckmUE70Jz3RQjdoMyKenUf/5Whc4RJDevbyIzY12wf90g6iBGzCfOGyQtQCFCgNQ87gx
-    wW/D4O+nWCcJpLYCJvp56f+LdCNF1tCuNC6npo4XmQacgmksOl2ImH/SMf+ihITLDCWPja
-    1Sw4vC6hPAyo9PqvhzTZwYwtru09fWRyE4FsKkGSXiOT4VRlG1iEjz7GuXkmOOF4eT3v5G
-    d08SLVri8d8sE2bze3XENdbbZwX25h6wh882NANvsl9cmGPPs7xImh6gvsA5aN4Q8EjCES
-    iI7XdMfa6H5FyQyc5i91REe17WNTRQwIcjfJD2NpE7/iS8hOIIg3Epo43DKmQSD/FEHwa5
-    vDlGqwvhb22Jzeo87azXrKC6qwceLH524NWtP1qLFVH6hGuERCLiIWBxCMpxJ73aFWMSiq
-    rSVXoVX88KOEGkeq0f6Q/Cg95jyJSahO8GHJA5xyfWyp0oUBgveV0CgX7zD+TVPDydU5/3
-    EaJVKtO6stM9cA0B7+NdU9/dVMv4lf0ojr/QjzVAd1JxzmkW3KxsqnRDfxob9wrRTNZjZ+
-    OATyse3rX9zorfuZoeKrzMg1011mGcN77w1hQWg5wjXYzk8uRkFDvq8H8gEA
-X-ME-Proxy: <xmx:y2TQavSbvHADDUs7YUhlzISIBI4cIdcJtgV1UlUfSJvADHv5cLpRCQ>
-    <xmx:y2TQaqPUnH5U_Q2HuqyyoiHN46Lyc28zZgWlOgRK_pwWDmX7xNYH-Q>
-    <xmx:y2TQakZJq37W2y6DEh0btX-5kuhQSNZxuG2YR0vdaV9jrs9dewrbCA>
-    <xmx:y2TQakwqNptaoJN4gYgupy33J00440fKWgBPN-WH-PYAOiXI7YX9Rg>
-    <xmx:y2TQavuL-LvkzQkZJNuiELj55ZRJgeH4vCVfnR7_EGR6Nyln4PCcUpEt>
+Message-Instance: m=1; h=sha256:WpYUN19yfn1PyEvMX99BJztT6CFjxddbXQaK6OaGA+c=:8iRlF0v4LixwKyHAz6pvtqGjF0SvDag+hwW/nC+/b8k=;
+X-ME-Sender: <xms:GGjQakgNzXqgCumEupKmkiHypc5VXEDxMtXWoVjHn01l33VG03WlzA>
+    <xme:GGjQaojqr9SiBBHsOhkKdoyceV_gnLlXmJjCddtOhH21VpWW6EYEdigx-pFW-11lQ
+    oK1kaQJXxOpRSgMP1Km7f5scET_yCv0L5qWRN6KDL-j-Q2dQlaR>
+X-ME-Received: <xmr:GGjQaig2nkYWJK3BbEczdnROlEeU3rikoeJ0yGbEqUWi2ifj1o92D-8Cb5kL6V3Q_Yp8g4E>
+X-ME-Proxy-Cause: dmFkZTE2UUk8eXrbAhmNzhH2Thl9d7VvQGGHsdhLkltInzkiIK2LvZLi0vtfkqyO42ICDb
+    PUsVmzrbDMbVIo/vyovC4rQcxvHrP9Q2lDjAB0DKOeMelwem1CQYBTu8DRkO5adX+o6Kno
+    ueQCvbX3VsyPaFBmvms1JgcjF6IPXrsAh+TAFnsfOJtPyQaSdjFNSw+jMZfAWWrU9ZNMHn
+    9JG7c7Mhe5Vu3+I7AHD5rqqW7aPe7Dkr7Bp4cPwB1PZpZ/nUhKPh3QNOlR3mBgCxm2xIgP
+    PMPh1BAqaalXkDwpKIM2jIbqT8smWxfu0774KH30b/jWKQcq3/e1ACNCRz2EkpMyLmI5od
+    nOtAWQluXjd4nhAc6jv7Q3eAJ+o0sQb2QdWJXXuN/zhuKm8uF3WPtW2nI4jLkgADMLtp+t
+    toLhswJkbKPj+DBfJUKh1kQ2gGjlHugV0FLuZTQiyLFBmugPiwH/ABGW811Qu3K+e5CBOV
+    g3zd/6HkpidZXyySRA5LgfbbXzlJ4gCCrDFR0g57UjIBSgNyCfpY/566YxjepTwMqwqXFE
+    K/KwIGB0k/hEp9uPb/usHXcXRckD2S6nqaCrD7iWgROckMyp5mvuzSY5z1RQG1z/yz0h2T
+    t9lkt3yZy7WdSFrKIypSJCd/h7Z5eRo6t7xG22/RYG5r/nJ5nyHsFK3q1yvA
+X-ME-Proxy: <xmx:GGjQagK8-gfPoKx-YvXXheX4rS7IqcyKmcTdAnOrJU-iJ25Lin4FIw>
+    <xmx:GGjQapEygLwaxwDK97IH-CJ91mmk9uzqmaRm5uZC-gTWOxdycu73SQ>
+    <xmx:GGjQasQV6SH87K74Maoy3Sy_v1XH3wCNRjLRNeb0IMtLyObz2bBTKg>
+    <xmx:GGjQated7dnw02QX-XdggzuBUWPF1I1CZo-2LOKCsrC9H4AXXACLvA>
+    <xmx:GGjQaq9pORGfuUPjde-T-Uwm_iAobxw2k_iH6lGYcPM3jlOkHfwlpB4q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Oct 2026 01:29:46 -0400 (EDT)
+ 15 Oct 2026 01:43:51 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bad87157 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Oct 2026 05:29:45 +0000 (UTC)
-Date: Thu, 15 Oct 2026 07:29:42 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 0b2fae21 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Oct 2026 05:43:49 +0000 (UTC)
+Date: Thu, 15 Oct 2026 07:43:47 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Wolfgang Kritzinger <wkritzinger@atlassian.com>
-Subject: Re: [PATCH 5/5] odb/source: drop `local` flag
-Message-ID: <atBkxlGbTfm1g_e8@pks.im>
-References: <20261013-pks-odb-files-alternates-cleanups-v1-0-b7030ff2b26f@pks.im>
- <20261013-pks-odb-files-alternates-cleanups-v1-5-b7030ff2b26f@pks.im>
- <as6palGWxRlky0bS@denethor>
- <as8njPHSZVabmb4Q@pks.im>
- <as-iH9JtWaKacK4T@denethor>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Todd Zullinger <tmz@pobox.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v3 0/8] ci: some housekeeping and modernizations
+Message-ID: <atBoE11OSvlFIKis@pks.im>
+References: <20261008-pks-ci-housekeeping-v1-0-baf015c589c0@pks.im>
+ <20261014-pks-ci-housekeeping-v3-0-04c24e1f480d@pks.im>
+ <xmqqwlrktkzz.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -106,68 +105,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <as-iH9JtWaKacK4T@denethor>
+In-Reply-To: <xmqqwlrktkzz.fsf@gitster.g>
 
-On Wed, Oct 14, 2026 at 10:43:23AM -0500, Justin Tobler wrote:
-> On 26/10/14 08:56AM, Patrick Steinhardt wrote:
-> > On Tue, Oct 13, 2026 at 05:44:11PM -0500, Justin Tobler wrote:
-> > > On 26/10/13 09:36AM, Patrick Steinhardt wrote:
-> > > > The `local` flag indicates whether a given `struct odb_source` is a
-> > > > local source or not, where "local" is defined as being the object
-> > > > directory that is directly attached to the current repository. But now
-> > > > that alternates are handled in the "files" backend, this property is not
-> > > > something that even makes sense anymore to have on the generic source.
-> > > > 
-> > > > In fact, we already have a partial replacement for this field in `struct
-> > > > odb_files_dir`. The only other site that requires it is the packed
-> > > > object database source, because it propagates the bit into the packfiles
-> > > > it is opening.
-> > > > 
-> > > > Drop the flag from `struct odb_source` and instead move it into the
-> > > > packed source.
-> > > > 
-> > > > Note that we stop considering the `local` bit when iterating through all
-> > > > loose objects with the `ODB_FOR_EACH_OBJECT_LOCAL_ONLY` flag. This is
-> > > > fine though, as we already handle the flag in the "files" backend
-> > > > itself, where we skip over any object directory that is not marked as
-> > > > local.
-> > > 
-> > > I do wish we could also drop ODB_FOR_EACH_OBJECT_LOCAL_ONLY. This flag
-> > > also feels rather leaky to me. I guess though we still need a way to
-> > > ignore objects from certain sources when iterating over all sources such
-> > > as the inmemory source.
-> > > 
-> > > Overall, I happy to see the `local` field dropped from the generic ODB
-> > > source structure, but IMO is does make each `for_each_object` callback
-> > > handling of the ODB_FOR_EACH_OBJECT_LOCAL_ONLY flag a bit ambiguous and
-> > > awkward.
-> > > 
-> > > Naive question: Do all odb_for_each_object() call sites that use the
-> > > ODB_FOR_EACH_OBJECT_LOCAL_ONLY flag have "files" backend specific
-> > > reasons to do so?
-> > 
-> > It does make it awkward, I agree. There's only two callers that use the
-> > flag right now:
-> > 
-> >   - git-pack-objects(1) with its "--local" flag. I consider this command
-> >     to be too specific to the "files" backend anyway though, so arguably
-> >     we could just let it handle this directly.
-> > 
-> >   - "reachable.c" via `add_unseen_recent_objects_to_traversal()`. This
-> >     is invoke by git-prune(1) to mark reachable objects that are recent,
-> >     and it's dubious that we only enumerate local objects here.
-> > 
-> > So we might be able to get rid of that flag altogether. But I'm inclined
-> > to go one step at a time and leave this for a future patch series.
+On Wed, Oct 14, 2026 at 07:28:00AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> That's fair. I don't think we need to get rid of this flag as part of
-> this series, but it seem like it would be something nice to eventually
-> remove.
+> > Changes in v2:
 > 
-> Do we want to leave a TODO comment to mention this?
+> This one is v3.
 
-I think I'd rather keep it in the hive mind. It's a bit more intricate
-to get rid of this, and TODO items often invit rather mindless
-approaches to fixes.
+Oops, no idea what happened here. The state I'm in right now with b4 is
+somewhat broken. v2 and v3 are almost the same 
+
+> >   - Improve commit messages.
+> 
+> OK.
+> 
+> >   - Rework the "linux-reftable" job to be more useful instead of
+> >     dropping it.
+> 
+> Happend in v2, IIRC.
+> 
+> >   - Rename "linux-exotic" to "linux-feature-testbed".
+> 
+> This did happen in this v3 iteration.
+> 
+> This was built on the current master, but I backported to make it
+> apply directly on top of v2.56.0 so we could use ot when we need to
+> update 'maint' and run CI on it later.
+
+Makes sense. I'll keep the base as-is for now. I assume it's less work
+for you this way with a primed rerere cache.
 
 Patrick
