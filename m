@@ -1,119 +1,138 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from flow-a4-smtp.messagingengine.com (flow-a4-smtp.messagingengine.com [103.168.172.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E77B5476D0
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 17:05:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6ACF3EB0FF
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 17:05:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792083947; cv=none; b=HBpfKNobGCChKBMssXds+aWdnUdDTINw76EiXZXRgePL1NVF+vnGA+6QDWShfN4bw2dunF7nr/TiKkd2/kchgvwJ3NbQWi0qr1R7wVd4s+4fzszqS9ElTrBB2oNiNd8JuVS87YyOmvGKbBt8ZEalLKeA2C5x0UCKJ8K/weql+uk=
+	t=1792083947; cv=none; b=bMjf8MVWAnIVGsX3/0f4uXl3LWso6/jsfwu5hhZvhVQLavuPHLALhyinfWB1SvaErCwh9PxLHOih320VS9B4lb43ar+Xi5rHOqPbJQJF5NlLNcUh67fklYgBUCCXQNxfVM8ordh/NWr10wdyvJiO1PuwbZo/nTHMqasfghfSk4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792083947; c=relaxed/simple;
-	bh=7XLi3IlqKSDWGvNn4SCzO7Eb+Qp9VsC1rUeBrJNnV+8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=C6lOPomEG4qJkMe5DJlX/J86uXTZb17CpgDx/CUW5l5nzRO/ZBLUA7RT+IP+yIFb96zZaGTCQ1B4r2c+/FNJBfOjdfrMuGuYWTGLOgc5ciBa8LCf/c9khZYI91ddgbrLbXxoYUnQI9Iv8lSDbzyNwJY6zxCucjcB7IbRzotGYUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gVVuQGlb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZopSD82S; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	bh=4wFK5FmJOJhqgfCuDlJURvJwnL1C3Jh9ELtQRlHXPa8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=l7Dqu6U2Ed6DXyDeEjzl7ALULsltz8u+A5rACHHZKWRyRPO1svtpTkX/c9m9/J7n2tGKshrgiMpPJ0k7At4zESujrOgKOOx1Hxef1hQd8JHNNabkXjxsF49O+JNKhstuDvUQQKCBjR2981z5+nEV708diID24Oh6OIFfEhs+tiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=fshTNlXN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nMYnfg4a; arc=none smtp.client-ip=103.168.172.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gVVuQGlb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZopSD82S"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 17C627A00CA
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 13:05:36 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 15 Oct 2026 13:05:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792083935; x=1792170335; bh=Li5kgOxy6k
-	ApGHcy/NSiYEFHZp7efl2BtBwNftuRk6E=; b=gVVuQGlbMQX/8e8Qiy8+Ki3QTv
-	ON+8iLre6TZqXVR/eNdqoMKfP+E8lOEo0DRX7MTOXcQ3ePyPxI9I58x99AC1o82m
-	o1TN8iTYfeE8s9xl3IO9WJoSA3dRt9jN59q6mmMh6+q37DsEQV/0lWmRjt0hNe1e
-	G694osyT/wdGjJgiIhCkyV9bUJxq1MzlgXU0iewcSnhJFUQGbxjmUYNx5sBpwWj6
-	sJaePs533qShlNs3QBHozTnyiBy89uh7m4ZFMauVCCPYiHi2PCISfrePy1G7H5P0
-	C/msP2y8zTPaUiFTjShRKE8Hh40ZFMSl8BSsYORJOAB65BWF/+pjhYjlPBpw==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="fshTNlXN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nMYnfg4a"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailflow.phl.internal (Postfix) with ESMTP id F041113800D9
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 13:05:30 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Thu, 15 Oct 2026 13:05:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1792083930; x=
+	1792087530; bh=BkRjzu+bos/I3PFGM9TLtQHtPT6OmO9LZt+9Xo2Yq6w=; b=f
+	shTNlXNA/LahUePwE4mkG54zhaQmzrIT2C6pkNqaO2aaRluegbx7eVl3Q06u/kri
+	AzwXAr6akqRHMnMNTDfcs7nEk2akjqZcU3wlKuFyhPq/1CFyhli9CR3sA/5rMupx
+	GpuQPgkpsC8OYhR4UtSPnEAvthq4D5QTG57q0d6hHBRtFhiWD/FVpdm571domD8f
+	XVYISfJpobDoPKS7I4dPxPvmkRd4i7FZGl9IhMsBwhFjLOnw6TXR7CX+jCBlrSnL
+	SQDGYU5x/UTL6NbpSp5rn3G9Bm046A21BcpzbOx5Uz5Q/q4di+xNTQld7Fbu64af
+	TwkUG6OrayKbTwr1+SV5Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792083935; x=1792170335; bh=Li5kgOxy6kApGHcy/NSiYEFHZp7efl2BtBw
-	NftuRk6E=; b=ZopSD82SCHWP0J3UdqAJ5QMSvItO2ihPpnxXqNVQGX7hGT0V+0+
-	HonSOZZT1e5LQq1wyeaHlL0yC0awfnLokh3+HK2IUsDReKzLqsLzFPCRWaB9iu7e
-	LjcxLobIZBU+X6OCb0M60NthhtyMIbPhDPPMDyRxyA9H0/EenjNV4qrusbuCW2ou
-	HTKqqABa1bvsRVsjyvHfAQyPgTbkmpEYm02DslM7vs9BPgFjrGdgupNg/wAaIF/w
-	8W3ikudbp8lemoCzEs55dn5jNWzEqnVSAnn8RXEYl0sSICv9iM7KiBMUSG45HDAg
-	rE4s4RbVWkePOlMaqrXl+fhGHwOajgqu99Q==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1792083930; x=1792087530; bh=B
+	kRjzu+bos/I3PFGM9TLtQHtPT6OmO9LZt+9Xo2Yq6w=; b=nMYnfg4aQmC2B3/8m
+	JlTyTwryIDJGdy9w1CAnZ0mS83arZulS25Tcr+IHVyTfs4cL3Si2ScILmx48FCPG
+	Nq+fJIt1L7QH5Om95WKRQfwpLQPz8iVO/llu5VE1gHVYEwY8Capd+TSz9gbeoDhg
+	NvkbvYYW4Scmr6wPpThVv49QtvSJN7j/ff5iIgPzGNpp26nDpNf5OOxb4q8pojWQ
+	NSUTa5RVS5gX3+5UgxPwgktBMU7kleN7g/GeZWovSnnhR61cGbxlK4uFiHkADQAG
+	cpNxZZH+g/w0mai1+C8ywmCqKQJrrUL/dOyR1ESqWtL33E+1SSLnQH43dRolmQh6
+	jxA+Q==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792083935; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792083930; d=fastmail.com;
+	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:NrtiUPgV99F+7bsBQDY9PVU1OEZ7usuXjd8pGM5O0zfqiNX
-	lpIVhdyG7Xec3PfVsQS7xxUgEOLb/5MpinPHeVkYGwo24UzpaTtOP278tN7wi9oY
-	w3Zk/PRGJR6ilXszsxlDywynQ1crQC5HOnN2vlxPOXFyOUfSsDhxfSDqgojmwZm+
-	+9VrBaylX3rFtYf8sd/vAEVDTmSOAyYqynci+C4lXyWXc/CN3+akqxCvwZ6tKrrc
-	UHksh5QNYtg18x5+NyDXlaT+1ZqG/phJTTuO+Bb7hXBMwma3JuvhMgnrXpaMormH
-	8i2gxCPAI7Et0hPNuBMiglFSkc7/wJnMgGJNTbw==;
+	s=fm2:rsa-sha256:JtHg0D1F7rdLiY/U4Ifhr9Dc1y5f5hy7ne/Z5tbn9ZRKjq1
+	YIVaFTbrSOFgz0QGJii/nQ/oRr6LNm9J0XZ3tPYupCBnFiYPMQCDbQpd++unNksO
+	ec9VzUcBmDCXXVSjZwNm0wqKh+D73XCGWpM5CTrMyJmf2QlWNU7L/qpKt75MfuUn
+	VXDcAqco1P+J9WEiNJP+40lvSehUaYYuyRnFTBev4L+iqjUcNlyZIWw00CBJ0YUu
+	NZEfxBdBWc/LUo5P9szQznMhsYvWS7DKVyeWLNQwwx8GZUe5dk2IFRlBlQOGCWiN
+	SqJjOVqyEV4DV6X6cjpZkK4ObhbK8bh2ngLEC9A==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:umlaZUfQgs9SXSBmjKlCCdprk7TLskdUEooLSJzw0VQ=:7XLi3IlqKSDWGvNn4SCzO7Eb+Qp9VsC1rUeBrJNnV+8=;
-X-ME-Sender: <xms:3wfRamlj0NkFzqgiNCN3QGKkPaIOMR3v8ssGNcqzjG-7ChnJX494CQ>
-    <xme:3wfRak1qBQ1DKAgk6jsnUVVYUJxzuHHUxYjtpYnPEjG1Rh2UtbPAdh8KkLnsPXEBj
-    pPveqrZGS4JvFuyYekazjf9vV62PW3GNpaVjrMo-Jc4gNHujLs4P6k>
-X-ME-Received: <xmr:3wfRapp-tZtG1SF13KApS3z_pBzhVzsalPsFyhUsTZDR_pdcLaQOtclLdvfzj7eDNmKjL22faZltQ59c7OzYELV5F-NyjQFgXDNE>
-X-ME-Proxy-Cause: dmFkZTEpVb7O+G2Q/LccZdfQfsLC6+gbCPjrhGhRZWrCWKqxQsWU/cbUwsjvg+i0AVgNzb
-    CTOzwv7rAsEH2hwNGggh+te1hkZKbRkrFEih+/12JK+At5gVJDnBezwARJRhujHqQthUUX
-    RPIEFY5zWGt/St1uzmMGiGCmuntWCVKT1vuZAPJOt/+jn9LIhH/Om3lsUD2h2/MnTFc0lb
-    fBA5R7peUETFDEygC1QIezkjPjidbtkZ2xzaaPsCiZ87h6foPIz58mpcEA7Oy8RGCcZ+lp
-    mOQAL5LMHVPy8l5Td3RLgHZaWjIiBAEoa8ANxkxTexjYlmzV6mLc9eZ5TTkWMKSy+iHzBI
-    zTJIbmM8ccQrzSCB7zgQbBID3PUNJtMPfESoddAIeFJWDrioCWif2VxrRzMB0zckgLBpAm
-    7OcBmX/aFka6T6lQnTI9957/BHzfhvYbaduym7JIAZDX7oQqgRd4u7aJls88qGJMJGfZ2F
-    LnR3EkVmiGYc4u4CFEnUif9S17MU15b9onHnRy+SvEz7jBkjy90s2gVUKuYFRFH+mkiDnf
-    0pc+iofd/YoXo2U43z5XIN1MxecQ+zhx25xdL9dg1gruE8jHYIWHBkt037Hz3vfqEzDvcV
-    mxQuwCMVa/C15+7AASSXBOiKXa34pKrSX/Y8rIdq9DkijzZLrd+tTQb+iMVA
-X-ME-Proxy: <xmx:3wfRapdRHXfQLgIbrkF2RCLCGwg6jUNEobyRjy2QzFVWNO9Jdp7yNQ>
-    <xmx:3wfRagqdPuWxvASrMmNV8B-krCqf5pap_o_zr063Ww6fDIv6LDBoSw>
-    <xmx:3wfRaiEnjpwFWXhNrNseWes9zBDps46NtUb_WuwO0PkuMsC7S00RWA>
-    <xmx:3wfRaotiBZjDrCxY2Onx07YtSt-T20PVbVGjdIyl_hH0YM92sElUoQ>
-    <xmx:3wfRalIp1Q0Lv4G344hq8AMdRE7d1FAsvq47gO-F5I69WVxJq43gqCBo>
-Feedback-ID: if26b431b:Fastmail
+	action=mi-m=1; hc=11;
+	hn=cc,content-transfer-encoding,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:4kZ4Oy5L3hi3ICRyiHb98SnU8TKuynre+dYVtFHAVqI=:4wFK5FmJOJhqgfCuDlJURvJwnL1C3Jh9ELtQRlHXPa8=;
+X-ME-Sender: <xms:2gfRaqNRC8sz_obGNiknZQWxdNkaogEV9hoF9HjVh4Fpb-59yMdCcg>
+    <xme:2gfRav_0nJ7QgBDGyagBbaofDQHqPKBZavK8ID4Dohlx6a5Mk0wKimn9iEuCyDKZb
+    W_LdiVnM-KGsWVqmNmqj6vPyBlU8ZooyiJxt157SUupf50goLwfW-c>
+X-ME-Received: <xmr:2gfRamR47_fQIFd7kv6RMDBQU3QnzJ315aNzdaW_6_RWqNMDW0uUsoWtAkaBihPIdFzlb3HioXGkg3YmNqMBDgSqdBZCAUJOOIWAdyiqZArdRg>
+X-ME-Proxy-Cause: dmFkZTEtYMB1OcofFJrVInDqbRPuIfpyHXgLzMmRCE7glDupcXCSEirG+XGlE3eHNhY9Zs
+    uqnnAnU6DT3+jSkom/pjCP/H02BE942mlfjHWMkzDQNFB+jYfi2kwpSQ09X4UYM93t5DDl
+    Nh5xKhmkJPf6ol736Qi5lsMthsVeZP/poVvopzMmmq+/WAGpUjuhWmON5jE0LcFbWGYYhM
+    SDY/FFrEKBUdCO7A41hfOwyg01lnL8fSwuSI9Hk6K7vD/ZrG3cR/gB4ASAimA8+WpV5rFJ
+    vvCwhjaRerCrsAzj/RLFiUxx1sCcWTjzeNreleNZjQuPj49YDiTvHfl4jzpr5Ks6C2MMDg
+    m5MUVAH06Cpdc5jKKEDwgBr1yaVE/VnX0/ILmkE41b50qAXHoYF7GkqRjUoXlI/af2QLlu
+    5rXKUMrRWMENvDkmmfBkP7+UZF1Tel+QICDdIhnQjSEvK3IkppBDybvNnFOpg2UcGcPoF1
+    GARJBZZeDPXPtqXgtYeKugjpQ+K1u1ARq6Ov2zit1w9xUlEdUWhGGL5DLG4pDvS15cWnBP
+    npt9pueFGl1CLLi9WdllNT5PmjpfkJv2Z3DswDZmEid4nWTae8gOu6U8dpJs28jz4rlrA4
+    Isi6YEC7QVxtGtKTxO+ySKkm+4VHSLAJyHsRDT44m0KnMOt2nPZPOYnzqejw
+X-ME-Proxy: <xmx:2gfRapkocEQgVXPCSJEHg6Gi-KOR6lfnbrSowUn6c7kVKf1OOzH9uA>
+    <xmx:2gfRauT0h7CuYMccNPtZ5foaWS1URYy3iikeQtha4xnNbLpEdCf3vA>
+    <xmx:2gfRavNqrhg5X2gVrWUCXLvqIGbX3nRL8OtSaeQKzqtEQGYC3ZVv7Q>
+    <xmx:2gfRavXuSBCpOdnoEcv3Cqn90HSDxvDPdksDBh8_RuhhldReiGHxGg>
+    <xmx:2gfRaiXYt5LOCTeYcPGQbUJGoom6w_FJ24PC9qOMSnnLkUe6Kv3k5VDu>
+Feedback-ID: id2564aa6:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Oct 2026 13:05:35 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: jyotish kumar <jyotishkumar725015@gmail.com>,  git@vger.kernel.org
-Subject: Re: [RFC] pull: custom fetch refspecs and fork-point lookup
-In-Reply-To: <CAHwyqnVX+FBbihdXA2jxDoweKv6wnqr_rtb110uqLrzNVRAZfw@mail.gmail.com>
-	(Harald Nordgren's message of "Thu, 15 Oct 2026 09:17:10 +0200")
-References: <CAGjZMyTQt2XEF69pJWHA=diRjoidixGs48E1vA0ytGUgZYOZNQ@mail.gmail.com>
-	<xmqq5wz4rthd.fsf@gitster.g>
-	<CAHwyqnVX+FBbihdXA2jxDoweKv6wnqr_rtb110uqLrzNVRAZfw@mail.gmail.com>
-Date: Thu, 15 Oct 2026 10:05:33 -0700
-Message-ID: <xmqq4iemq4gy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 15 Oct 2026 13:05:30 -0400 (EDT)
+From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+To: git@vger.kernel.org
+Cc: jltobler@gmail.com,
+	ps@pks.im,
+	"Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+Subject: [PATCH v7 0/1] repo: add revision filtering options to "repo structure"
+Date: Thu, 15 Oct 2026 13:05:18 -0400
+Message-ID: <20261015170518.48395-2-markchucarroll@fastmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261015144559.3652143-3-markchucarroll@fastmail.com>
+References: <20261015144559.3652143-3-markchucarroll@fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
+"git repo structure" provides a collection of useful information
+about the information stored in a repo. In particular, it's
+valuable for diagnosing performance issues caused by large objects
+stored in a repo.
 
-> Yes, seems like a hardcoding bug.
->
-> Is this for an in-flight topic that Jyotish is working on, or
-> something already in master?
+The current implementation of "git repo stucture" provides summary
+information about everything in the repository - all of the
+branches, remotes, tags, stashes, and notes. But sometimes
+to properly diagnose a problem, it's useful to be able to get
+information about the specific part of the repo that's exhibiting
+a problem.
 
-The former.  You can see the thread in all its glory at
+Add the option to specify a set of revs. If revs are included,
+then the set of objects processed will be limited based on the
+rev specification; otherwise, all objects will be processed.
 
-https://lore.kernel.org/git/CAGjZMyTQt2XEF69pJWHA=diRjoidixGs48E1vA0ytGUgZYOZNQ@mail.gmail.com/
+Differences from v6:
+- Fix word duplication in commit message.
 
-which is (still) quite short.
+
+Mark C. Chu-Carroll (1):
+  repo: add filtering options to "repo structure"
+
+ Documentation/git-repo.adoc |  31 +++++-
+ builtin/repo.c              |  32 ++++--
+ t/t1901-repo-structure.sh   | 197 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 247 insertions(+), 13 deletions(-)
+
+-- 
+2.53.0
 
