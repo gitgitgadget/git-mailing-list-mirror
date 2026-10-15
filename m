@@ -1,164 +1,179 @@
-Received: from loire.is.ed.ac.uk (loire.is.ed.ac.uk [129.215.16.10])
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013012.outbound.protection.outlook.com [40.107.162.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F90C47606D
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 07:50:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=129.215.16.10
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792050610; cv=fail; b=PIguhuV0X/ahwtJm108kcA0BprwTiGJdBn9DtfoeWuHDFNZ+O7/7pNyiwDVoG3gqVFhSs6YPgj8WA3r7V4+eBQc1Cn0QiVCPj27FS0ju/71BsDeWLqNA0hA7/SobkAUoZs1EOcSiKMWHydH36/odJ1keiS0yPYrVGMMFV5Ep1gc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792050610; c=relaxed/simple;
-	bh=UWpeBhgudcwURbtWl7Km+2ha9sjfT0w3hFRzy6nj9vM=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=NBMUqErEfJnttpekcXIYCnViAodrbNfzt7won+BwFY6jx/E4F7dGn4Gw63aRPrVK5Q2oDKgOEqUiWHI+s88oPyK28zqgPV8nywF1+vOy0HuDRQ1dc6kfSP4Xgl6A1VX7r0W9TPxRrTgjFXNAO4UxsfA/wXUOEGSR4yhboGIg3xQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ed.ac.uk; spf=pass smtp.mailfrom=ed.ac.uk; dkim=pass (2048-bit key) header.d=ed.ac.uk header.i=@ed.ac.uk header.b=Krvxn6n9; dkim=pass (2048-bit key) header.d=ed.ac.uk header.i=@ed.ac.uk header.b=sCzkaBIg; arc=fail smtp.client-ip=129.215.16.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ed.ac.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ed.ac.uk
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A2E352C51
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 07:59:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.12
+ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792051153; cv=fail; b=Aha+iwXQwN7YP+2dJ2BYzdKknhbqtIoeSvI0Nrz/zai0mowGMQ6djLoMg1TErI/YtaZmJUENJ0AJumBm4xfjuR8/fQE6Dnkk1K/xG+wolJecsbd2zrhsQouCySBk6RZMHzLBBh1/J3zzUXC8ynQvN2/KAHUezyR4jtPwcpY7s/8=
+ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792051153; c=relaxed/simple;
+	bh=1ZfD53LxF8UFTo2EtL/07PziX/CorzBnF7IAZnFnpM0=;
+	h=Message-ID:Date:From:Subject:To:Cc:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=A5W/RE4SeWuL9iBTnL/eVcskUunczGLPVykh4IXhqruQrB4RZ+I5D0fBw7yo9NYdJPeI92/20VYe8M6EtT4Pb/JPPWVhICsCrrsaOFkrGBXVJm4tTqMXVmudhvy4ZEgqZU1Jc6yG0MxrmPos8VBY7k8HgipszRu+YYb7feW378c=
+ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=BeZc1Gbm; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=BeZc1Gbm; arc=fail smtp.client-ip=40.107.162.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ed.ac.uk header.i=@ed.ac.uk header.b="Krvxn6n9";
-	dkim=pass (2048-bit key) header.d=ed.ac.uk header.i=@ed.ac.uk header.b="sCzkaBIg"
-Received: from exseed.ed.ac.uk (hbdat4.is.ed.ac.uk [129.215.235.40])
-	by loire.is.ed.ac.uk (8.15.2/8.15.2) with ESMTPS id 69F7H7gU2942437
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 08:17:16 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ed.ac.uk; s=relay2;
-	t=1792048636; bh=UWpeBhgudcwURbtWl7Km+2ha9sjfT0w3hFRzy6nj9vM=;
-	h=From:To:Subject:Date:From;
-	b=Krvxn6n9YWQ4rJUf8TXiwCIi+xX/8u9yZQufdG3BPLquo84Qp1UUGm5xu4S88OqYf
-	 VRI/4UlHPAdjYt3ff7dU2+nw2Jz8hxoTTaxIh2aJBYy6HJ32rUoXExjUnCftmW/j3q
-	 66MpdjreXvXOeSVrYju+8G/UiST0ZpD9mUYHNLNbV1WRUj0hbKi9EykvILHsmeyDgO
-	 1SYtFOQ4FgMaDss0ZiWEXse+Si7kL4QxqshOUBabdyMBZa2DxkOFGqgoSPjAk5Sc3c
-	 4WJi9cBCQ31ca8sGMY+KgNtLlBWvtZy+pb1MTii17KJo8NjHzpw2SIG0Ph8zJI8d2v
-	 1kO11STM4cJsA==
-Received: from hbdat4.is.ed.ac.uk (129.215.235.40) by hbdat4.is.ed.ac.uk
- (129.215.235.40) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Thu, 15 Oct
- 2026 08:17:12 +0100
-Received: from DB6PR07CU003.outbound.protection.outlook.com (40.93.64.90) by
- hbdat4.is.ed.ac.uk (129.215.235.40) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49 via Frontend Transport; Thu, 15 Oct 2026 08:17:12 +0100
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="BeZc1Gbm";
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="BeZc1Gbm"
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=dlv+YtgRatvkPCF0rj3e/j4wcvKlOxePcMlivV32N7vkIoU38RXtiWMEngTJjHDl75HVP7s1ZV+AQiJICScB5jmkN2pgWz6QQjjjk+Tp8jDjz4w0y0eYnAoNkkJthQhQFbcdtt56xe4TKT9oNfDtR2QjeuhFIpqFo86dDwbDEr8HadOzVGx8PMWd8f6pQW4TGYavK0gulHn1/uzIZq8f6w1VwScXrSf+xLSMC40BxXuJUipKXgkYzvNx8ZfWlTBjmVyBy5mY+S6J/Kjiz7Arw40JxJUJwFUzk4doMlb6iumy6qpTq/AhNBw7sDa5kvX9yAKUvNBFmqvFZRv3d38VVA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Rcjg4RN34bpZdZc4EYspD+g+09yxvbQ177NkswHyVTE=;
+ b=apwYhKT3b9q4yJoEKjbmzs6rm1AaBubJ+qtY0xuHZRUxZ+fEfw+TaoV793velLaKiN646nMGRP/DfFrnupxpDW1ZoqcTjXy8OJNEDY/Q3CEo9QoEmNVGVUUNf+k/tY01tmLWHXQwO2o2JlNA3kY1FbLQbEvCtYBlvjpKzdyRdAUKoHFt5k/RQ6jzI6zUjcIF2LDdBjCgbdD77EYsa0gxcUWPMvBicfsE0Zu7Ex0qyuffxP9HpFYX2UEYa8zKwobnE8VieTP6hV64OMaDIQ+hjKWLdDkcxrWrL/4zxxGEww/zUrtEr7a5oH0ySHB8WZDDUsOiVFvITxTb8FyHpmiX7A==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 4.158.2.129) smtp.rcpttodomain=fastmail.com smtp.mailfrom=arm.com; dmarc=pass
+ (p=none sp=none pct=100) action=none header.from=arm.com; dkim=pass
+ (signature was verified) header.d=arm.com; arc=pass (0 oda=1 ltdi=1
+ spf=[1,1,smtp.mailfrom=arm.com] dkim=[1,1,header.d=arm.com]
+ dmarc=[1,1,header.from=arm.com])
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Rcjg4RN34bpZdZc4EYspD+g+09yxvbQ177NkswHyVTE=;
+ b=BeZc1Gbm/qMRkTZmQONaNUEvq7OIwMrnM3KX8GBekZNZXhuL5NztfDd5bBlo5IwvBW1D492NB9C2HYMtDiVnMT5izzsOETy+Td/dBhNjxZl2BYXE6NCNC6hKalFutZqjS2Gl1kywvmSC7EdqPs0/Kz/yx9by95cv3uKicz9hunM=
+Received: from PA7P264CA0082.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:349::16)
+ by AMDPR08MB11334.eurprd08.prod.outlook.com (2603:10a6:20b:717::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.8; Thu, 15 Oct
+ 2026 07:59:07 +0000
+Received: from ZR1PEPF0000E461.eurprd04.prod.outlook.com
+ (2603:10a6:102:349:cafe::82) by PA7P264CA0082.outlook.office365.com
+ (2603:10a6:102:349::16) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.4 via Frontend Transport; Thu, 15
+ Oct 2026 07:59:07 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 4.158.2.129) smtp.mailfrom=arm.com; dkim=pass (signature was verified)
+ header.d=arm.com;dmarc=pass action=none header.from=arm.com;
+Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
+ 4.158.2.129 as permitted sender) receiver=protection.outlook.com;
+ client-ip=4.158.2.129; helo=outbound-uk1.az.dlp.m.darktrace.com; pr=C
+Received: from outbound-uk1.az.dlp.m.darktrace.com (4.158.2.129) by
+ ZR1PEPF0000E461.mail.protection.outlook.com (10.167.241.59) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.6
+ via Frontend Transport; Thu, 15 Oct 2026 07:59:06 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=h6PGjuIxL0wbwgDcvrzTlByLr0l3gP2YW6dXadEQpS9YgG2sJiW1SME7tjPLaZfe+s2c9eKjjUnHZHyXIDpeq/nJIFAZzL+jYeTLZMP3qG6AFVzVVAGzrnQWMp8QaP1Exb1Rfjt3gXCzOQ/TnsryIuSiUWLelrNYZqZ68TODmcNBDdWnCttLHxKT4aaNccDKwFfr1xbIndzWTIws6uGo9VFINxwdckVYmNIJT7pLzWTnc+05eV/zRitlCvb1iPaIY1Z1jom8RSagagAdyJxjlujOcoyL/DzrEQrZWLqunmnBQnAM3xSPQwZrj47eKTT3pp5RrtlCyJuo/AwRDHH33w==
+ b=CoedG7LOA/rDu5Y9fjVqRGfkaoafGrCKP20ZcUFdpIpTu2PyK/H5mnOPxPvmLy37ld9Ag7dN6pc16bTfJbKN9TsdrFi6sxk5okatRZIWjmcD+sQjAe378ox+ZFuYHuoBBuEdqcL/SKNMjdAUE6smUdT7YLUtlCIZNyJxB23/EkrpxDb18XddCHrf3K+kvEd9K2xDK1NIpcblJW0ul6nUiOFytYsrixWZua+XEHQWV8nCPM+whhkyTNc+CGJdIMLcLZ/o9zKPnIvhRQ6hhDrJL+AL4b7QhTJ524cD6YkFvWg1xlIILSKKAIslQF/dCzWvYRYIskMXtzOFPftHJRuYKQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UWpeBhgudcwURbtWl7Km+2ha9sjfT0w3hFRzy6nj9vM=;
- b=F83gjKOGzFgjvKXigksahzwjI46zerg1hf+mfrGjs985A5ch3s5UXT9NH2E58wfWdgyS9J14KPpyjL5P05MlOeKhnsJTfeAd0rv9h+dlRPyDFrFIyt0zdXHlXxyLGmnL4rAqLHQQot5M2RHrZM+EGZmyNh2z5jRFI6FrhNg6xkvlRHfPbJZPqbdxH70uesUbgBi4pAORHL5J4vV4LLZV4/agfWD2EbEQtFr1uLPgBdBsv7LCZrRvYEk90sFEMX6EQxLgH4tQ8f+/xyZwz3QAmN8Qt6EzthsSGlkmh5mFS078odYHHV2/RYlDfnDazuGrv4vJCS5I4m0egyeHaKb2EQ==
+ bh=Rcjg4RN34bpZdZc4EYspD+g+09yxvbQ177NkswHyVTE=;
+ b=b036BtDfyWdJAAD1IQVU7GZcH6KExbwiHCw1dqMhKyOQlyGKt/hAwg/3fOOY3O79VRQbs2mdE4XemfWYgN/kgwNtOGb3F/pNxe2y4/Yzq2pAEBgkaKiLXGYgnyJAQv4yzhsm23w5NzbgojkP7e2xUGVmrmtwIVWG++efPhQLOmYn5gMvk0TIRs18j5VIku+8BUD6/DHBswroafu+4SohhFKDucsyHGSwIieqBsnFg4VM7EACNOCxwBA51Uw7Mv7St627oOezMu9aZDmPtOAqw2Udsk2pvAMwSMZIno5Z9oM4eTcQ/NFbuOQxOySIOGNAlh1DjH52n+9MzZtIm7RRDQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=ed.ac.uk; dmarc=pass action=none header.from=ed.ac.uk;
- dkim=pass header.d=ed.ac.uk; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ed.ac.uk; s=selector2;
+ smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
+ header.d=arm.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UWpeBhgudcwURbtWl7Km+2ha9sjfT0w3hFRzy6nj9vM=;
- b=sCzkaBIg++/37KT0wGOPk4C0yhEtp6UKeE8GY09l57m3Ke+RDk2bZ2wWZXplPHfpEgXTzZG9gkgskXOep2y+l2NMyRtfaTPcgUc0BFnQvpV9Hju1jCt2Osy4apZtwSLxczfOUWRzRwVl9OiP6Azuxa/bvE9n6D5JhY3eXObkUaUjkFIdPvwTg7UrG7NUGygNVY3ueyLICSSQW7EFT5JDXPw1b+PUSwX1JYq5Pio8xzoIcuhgkUqaWzqS1KAWPzdeUHpNT1YFmFUuUZUTs/Cud5KMZteGwg6sQhBSYDBxNWKsYfMDAAd31DqcyLQFmDxL3bN+LYmB6U0Jc0b1r3Q63Q==
-Received: from VI0PR05MB12991.eurprd05.prod.outlook.com
- (2603:10a6:800:30d::24) by GV2PR05MB976980.eurprd05.prod.outlook.com
- (2603:10a6:150:38d::5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Thu, 15 Oct
- 2026 07:17:11 +0000
-Received: from VI0PR05MB12991.eurprd05.prod.outlook.com
- ([fe80::7671:d4e9:39cb:880]) by VI0PR05MB12991.eurprd05.prod.outlook.com
- ([fe80::7671:d4e9:39cb:880%6]) with mapi id 15.21.0522.012; Thu, 15 Oct 2026
- 07:17:03 +0000
-From: John Wilson <jwilso3@ed.ac.uk>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: git help user-manual looks for incorrect filename
-Thread-Topic: git help user-manual looks for incorrect filename
-Thread-Index: Ad1WOgADR9NtCKftRCymJ2vja6mnog==
-Date: Thu, 15 Oct 2026 07:17:03 +0000
-Message-ID: <VI0PR05MB12991467F7BD29308AE8D5F4ED09C2@VI0PR05MB12991.eurprd05.prod.outlook.com>
-Accept-Language: en-GB, en-US
+ bh=Rcjg4RN34bpZdZc4EYspD+g+09yxvbQ177NkswHyVTE=;
+ b=BeZc1Gbm/qMRkTZmQONaNUEvq7OIwMrnM3KX8GBekZNZXhuL5NztfDd5bBlo5IwvBW1D492NB9C2HYMtDiVnMT5izzsOETy+Td/dBhNjxZl2BYXE6NCNC6hKalFutZqjS2Gl1kywvmSC7EdqPs0/Kz/yx9by95cv3uKicz9hunM=
+Authentication-Results-Original: mx.microsoft.com 1; dkim=none (message not
+ signed) header.d=none;dmarc=none action=none header.from=arm.com;
+Received: from GV1PR08MB10455.eurprd08.prod.outlook.com
+ (2603:10a6:150:16f::10) by BR2PR08MB999934.eurprd08.prod.outlook.com
+ (2603:10a6:2c8:19::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.8; Thu, 15 Oct
+ 2026 07:58:33 +0000
+Received: from GV1PR08MB10455.eurprd08.prod.outlook.com
+ ([fe80::af66:6019:a08:d04]) by GV1PR08MB10455.eurprd08.prod.outlook.com
+ ([fe80::af66:6019:a08:d04%5]) with mapi id 15.21.0546.006; Thu, 15 Oct 2026
+ 07:58:33 +0000
+Message-ID: <fc3de093-a051-415c-b40e-f9df5c914704@arm.com>
+Date: Thu, 15 Oct 2026 09:58:31 +0200
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?B?QmVuY2UgQ3PDs2vDoXM=?= <bence.csokas@arm.com>
+Subject: Re: [Bug] Porcelain allows creation of '@' branch
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+References: <4e8d8b75-ddf4-4602-a2a8-26e5214c65f0@arm.com>
+ <CALnO6CCph_xC394v_BetLPyoriYc9dLZY42LsXhjVNdvt2e-cQ@mail.gmail.com>
+ <958622c0-e0a5-4e27-9815-cd1fff2ed111@app.fastmail.com>
+ <2006115b-bcf2-486a-ac7a-681caae686b4@arm.com>
 Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=ed.ac.uk;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: VI0PR05MB12991:EE_|GV2PR05MB976980:EE_
-x-ms-office365-filtering-correlation-id: b8759fa6-53ec-4327-847d-08df2a8c4fb5
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|376014|366016|10070799003|23010399003|786006|38070700021|56012099006|11063799006|261009223027099003|10067099003|18002099003;
-x-microsoft-antispam-message-info: vENO2Etfwd+taoLM5K26c/sLKjcSUJgWOhrxBgruDi6jof8DJNVQMNfZprYQ36jLSfNSrO4M2fEs+XMhDPfYtGKeJZ6JyuaW/D+SSfiKn0Wkkt0c3j3lL2vBzAJy0ELn+00/6o/RQuh5CFGrhYuxRVCWjDcHoKcfwsQfmu79qzff6RWjcgSkCsZ9Hog8ltDhllfUmbQ+TjFId9jSe1hpe2TKzNtFvaAXaXZaPxoL8GFAKlw06buutmSsixyy1+kzfu3BW4BLbgHaTHtJdjDCnXphVHYmu+Ysh2zBffkqRJ24evWTR00MW4N0fU7BwiDEO36+QA6QFHWYF0jRwgs0wtn4z91fC2cSJ/JtPUIOqpZYWFmhdEcsOUCJVtzs/CvTSiNgaiqhiNn3OFWRoQykOU0jFy1R5HQbToJ1lvkjraY3EMVo7b5jWEzmWXFDkCaBhqQZtOZI4zCjt7LYH8ToOKhnl+tsmdMq0crPXoDIzoREGbHNwg4EzAW6UQ9RuvT/JwbUEClQ7AWDImmQWhUplz2BULhiZNoMLGjO7sioTK72UHw+NIrYnY1w7u1kyDHggEKlcKersC9nMAhQrMg0O0ACkE0lA4eH0n1Tc6pZqvitnQJ4ZCp5pr9oZHZYcmsrsf/VzJILufiQh53jgNKUiQh0sLFa+1Y1g+EDUC3T5oU8ET1RUKaIwYGj6imUDqMmvsLHAgzhsUjlCdnBRHTp2NvuSu0Mxn/iyFshIwqAPBw=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI0PR05MB12991.eurprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(10070799003)(23010399003)(786006)(38070700021)(56012099006)(11063799006)(261009223027099003)(10067099003)(18002099003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WjVESG5XWHBrMTA5MDA5NHhESlh4VDZFaERqUnBkRWU4SHRLUm51d0xIOUZv?=
- =?utf-8?B?ZnRFNlNyKzhyL2VOOWFoeG5NUHViT0RxcUhESDZFMEVsN3g1VDlUSTFvT21m?=
- =?utf-8?B?ZGVUSjFTUmpySkRxUEltS3BVSnFHVGdLdjVWVVBLZ2R4WmRRMjhEK1IwYjB6?=
- =?utf-8?B?a0tuQjdnRlNwSHgrOXA0RUw2M1UzWXBjQ05pcktKSWJ3ekttRitNbzQzS3BE?=
- =?utf-8?B?YlVQU1BIeE1BczFRSFhRWTlBNFdhL3M4dWdTclUraFFReWp6QmFYSG9MUXgr?=
- =?utf-8?B?Smt5TFFvWFlWakVlT0w2NFBnSUJKZXJnaVNVMDBnSGpFVzRKZUVFMi83YkVK?=
- =?utf-8?B?Y0xXS3lmeDRIeWVCNERWTXV5emJNTDNYVWxYNlRNQnZMVGpSQmFKSDZHZU5n?=
- =?utf-8?B?L0Y5U2EwTU85dGc0bklSeWMzVUJlOTNTcndFeDFKU1ZueVphc0M2bmxxcUZZ?=
- =?utf-8?B?ZHZITWcxOG92VHdDUm5BQkExTFFHbWMzSXdzQ01aUURXSE1CZlk0VkhwOUww?=
- =?utf-8?B?V1JJSFNpOHVpaEZmUjl5L0E4SEtEQWx3WEQ2cjhnVmZld2VORXA3bUhGeVdr?=
- =?utf-8?B?NzdKblB5bGRqZE4wQmRCOVdKRHNYNlFzUlgwK0xEcUM2MUVpMXlVallLVFRD?=
- =?utf-8?B?ajZFaHIzK2dsdjdxTkZWTTNrenhHdjhuMTBBdHBXRkg0QkMyN1hsSldXOHRI?=
- =?utf-8?B?bDZpUnpab2hWUzU2anZZL045UFZZWm1hbFdKdnZwVDNSa3lXN2xUZ3EyeVJB?=
- =?utf-8?B?MGZiaTdnanJ3emRUQXFBYThKNmpBRXF3RGhLZzM2cE9GY1ovWEIvS05QYkh1?=
- =?utf-8?B?N1dBblFmcWFzbTU5WDF6S0RnTmNCMDJ2bkFRMHZhTzRqVFg0YmxLaXpVOUZR?=
- =?utf-8?B?T0tQT3B3N081ejlDUkliRGVSZGhxM2t0V05UcVJUOGx0RE1TczFjVk83cTV0?=
- =?utf-8?B?WmtJVkl2QlJiV0J6eG9ueEwxRVpLN1JsU3dDRHgxRG9jeXBncjJrbWJ6dUMx?=
- =?utf-8?B?bUlCYmtiZE9TbnliSmpSSTFUSlVWUEFSTDZ1aDdvTDcvdEhlOGZ4TXZjWWMz?=
- =?utf-8?B?dkRIVTMycVhFK3lKNzZRRVRtZjdpNS9iZGxNRXlOYXdTZEJoZ0FSOW52bWNa?=
- =?utf-8?B?K1lVc3NTS05PMWpiK29uSTFnRmNCYUszS2ZpRUZnWm9FeFdGalhnL1R0N25H?=
- =?utf-8?B?alljT2VCaHJmNS81Q2JsdUJZT0ZYODdnQlBWTmt3Mlkrc1RtV1hvMFZOSzB2?=
- =?utf-8?B?MjlNaGF0UEtSQnZlbHE0RWZFc0pkelNDQXJ3TVBrd21ET1lscjQ5NEd2a0JR?=
- =?utf-8?B?MjN4NmErS3BjNjlhMVIxZG1oNm5paFBIcnljZkhmelM4SVp0QzdyZ2QrT0Vu?=
- =?utf-8?B?YjdkaGNicWRzNFVNTDNxMDRhdXBVekszTFdwUXdETnNsWGlZNjg4cmtTTTl6?=
- =?utf-8?B?TVc2amV6Zjh0ZEJENTVBLzNVNWpSMnUxeXZEck1VRlBpZFpmMzIySE9ENWlG?=
- =?utf-8?B?cUVsRGJDMTBRb3dydzBnb2NJeXJrS1hQNk5Wd1J0UG5pbXpJQW9pV3lYUlds?=
- =?utf-8?B?VmJVWGs1L09jQ1hhdHU3eitiajZHdWVVWnN3V1B3WTgzVFZPV2FFVStuYWhw?=
- =?utf-8?B?K3dwYjlqeWo3NjBnQm1XejU5L2NuSkdzZUtqU0pSOFhUYlU0dVRIUkEzOGND?=
- =?utf-8?B?V3k5VVBhZ2N1TFZLMzhoblRxRCtXeDNWL1lVamFZWXh5ZFV5U3FnSlh1Uk5Z?=
- =?utf-8?B?YmsvY3pIKzB0TFdyeDNIUTA3UGl6Tkg1S283SmEwZURESmZwZndHVGFpaE84?=
- =?utf-8?B?RXFpc1RSczRtT3dGTEo0ajZvWENiM3hYdG41ejcrRTVwZnNJam1INWdlb21L?=
- =?utf-8?B?QllkK1d2Q1lPamJjcEsxckdoT3ExQ2xURXZLbUVtdXQrUEdaQnlXRFlRZ1V4?=
- =?utf-8?B?MlNBWjZSZDA1MHlPd285Z1lQbWFmbmN1eTRITU0zbmVVRkdreE84NG9oWFMx?=
- =?utf-8?B?TEsxeEtCZlIyTXdhdUdyc1NkcjY4cmdSc1d4YXNsSTdrT200V3FadXcrMHdR?=
- =?utf-8?B?ZEl0RjBpNENkN1hVTnlLUkFWei9Mb3NKWjVpajFqMmRyWXN1bGJuSUZDalRV?=
- =?utf-8?B?SEJpRjVYYUJOc3hwc3cwN3RPUloyVVhQZ2piVkZ4UVExVFdUR3FlVXUvbWpn?=
- =?utf-8?B?K043WWlwc2RZeW5BSHhoTlpiSWdPVzdCcWFBNGVsS2cwMWZMdTU0WDhjM2Fv?=
- =?utf-8?B?cnUxZHkzS29XejJKZVR1Q3BRZlRNN08xTmQyWTl3R1RLcE9QMkZBZ2x1aExs?=
- =?utf-8?B?UVg2aWdZSHNDaFFoc0U5RGMzUnZjUVZjZVpHQ0ZnV3o0Z2pTeUFVM2phRjYz?=
- =?utf-8?Q?Xk9UD1Ww9OO+U3Yg6I14A8M2IaWW+dL90x2mI?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+In-Reply-To: <2006115b-bcf2-486a-ac7a-681caae686b4@arm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-ClientProxiedBy: LO3P123CA0014.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:ba::19) To GV1PR08MB10455.eurprd08.prod.outlook.com
+ (2603:10a6:150:16f::10)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: kv13zX+oNRUXB1LWa6TJMjjgR9Wj8LXAyFEaDOgc1BYSdjaJxKPGmPsFDBjejeTEDIeYbqjVefv8Y737GcCwmILUBPKeyRXGj8AAbLd32h8er60EbieowDmSRhvEzresYl5k94sefkZf1/6S14rpH/xEpQ8GIyo4Bw0MvV6tIPPtPdjHd+5Y31MW/4b/VjX1/jyuzXPKEXaVEUR5J3giyWKDdK+uMC5orPR0W0CBYLboym2uRHkigaUUP1poAdzZHDBmLE+Qs1UeNj3DXIqnznF6Wkdatcwe21LVeyYjg23oCW1EuiFLhXi7wi4i/eTd97n+Ze3O6cNHDuHGtkN+tQ==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR05MB12991.eurprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b8759fa6-53ec-4327-847d-08df2a8c4fb5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Oct 2026 07:17:03.0510
+X-MS-TrafficTypeDiagnostic:
+	GV1PR08MB10455:EE_|BR2PR08MB999934:EE_|ZR1PEPF0000E461:EE_|AMDPR08MB11334:EE_
+X-MS-Office365-Filtering-Correlation-Id: 35e7a47d-a6f7-4df0-f45f-08df2a922fde
+x-checkrecipientrouted: true
+NoDisclaimer: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted:
+ BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|56012099006|11063799006|4143699003|261009223027099003|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info-Original:
+ vQ/70nJJxC6jr3qtV696lAG9dW/S64w6T+U+5y2040DpOlt28QIsSHMSylPUUeZDkCkXGQMYljfnMXYAKNoTRZYfX8Xy1/egjjtA6Fk+rUNMSZ3g/Z5uFRyf47UlqbdMAvjV7RcGnGmJBNSdP5QVDYi2PuDCu5HZGmyHOYSKUpFqrnTCHMcQ+99VYiTNzvuG75JiiUWiARcLKf2PWHAisT6xvGOtpxGxd2ja3Z0Gp/pdniGm6HEkThNw59ZZ4c5PAGxblYC13gXx0Nvcaa0SryCq0QHxkbVk8PbJ/ll1AnC1R+w31ZWGW488+MiSCHMNNYNSxe93WS8Zbx3DJNhnmy1WicslHRn7U74Ax238CXR0swBwoWe9GE17tQdDtYIN2KCcw92Ht3lF5yd3MhhCa4Lyap/gUIEiijqXYI8LYFpnPe1yToDVghnGj7jBiVHLPPzx6IUgJkXdZImoNWykhr92BtClOlpmPg78jj+8rSKDj+qxfm2X99fwCEdFvv15jhHm0buNArZfFTRD1+flGSn8lu/Zj1w3+5ra4Ydaj8pjMzh5v6qJYOse3an36wtzSUaLcQE0tKnwO/hCP4WcCTFl849NV1xJ3Bqz46qclg8xJQ97Xi7fslfb01rBZQky
+X-Forefront-Antispam-Report-Untrusted:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV1PR08MB10455.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(56012099006)(11063799006)(4143699003)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+X-Exchange-RoutingPolicyChecked:
+ 5sbnArLkbwMm8QX0OVs7/VIefz/6DyB0L03f7glDcn2eZhtfZfPP0lmkuSs+ogRo2TrWp8+Lv+Y9v4OQbDScdl0YA1gsDkfwZl0MhqvgkkEnrMhY02S0eKGLcDXgjT5O8IzU1a1NcdQUSGaWXDxON2guvQug5TIer3RHTUdfu8/Wnq5WvVLvX3KP302xrpRm20stkfpV1znttI954I/SRarRQFKBR0HT9CqPoKliP46sJxiIw+PfbNHfxj3wZElh/Vki0ISZS2tG4k3+yAyoOGDCEAsaMRWQKdR1IluqR7NVwn0evZmLNb8ONScXvAA+c+152o5XRcRQmJ6OqWjNHg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BR2PR08MB999934
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ ZR1PEPF0000E461.eurprd04.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+	b826651e-eb66-41bd-3ce4-08df2a921b93
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|35042699022|376014|1800799024|14060799003|36860700016|82310400026|23010399003|56012099006|11063799006|4143699003|261009223027099003|10067099003|18002099003|22082099003|6133799003|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	OPrLeo6ACoggTCCPbizICJe+XwpU0cvdYoUGER895vBBTKB2cVMXJxivtIO5xUmuqtK+CLoNa2U6apaWNd/pojuNfzw0Sg9VM5kpPIhgCDG7x7Rn7/OIbdd+3/2mDAdIbtU4VlTn+qPEu0pbXyA31YlqNaCfSvN2wjlGFNIx2gwEaVBVKZ2a8TdaRfN8sbgGChXqUSVu+2rzhIGZlQcCI5E2kmqfR1fM9p9zABYsCuDzK0mJET4MNsVCTFcTyyx5nyrsyQSVDpYxLmOwngulYBS04kbn6HLELDFEolSvUl7gfzr6ZER1XreFVNuQQipg+z4EMg9vWUcoPv4SlhxwuWL6u8ld5VER3uXj4KzE/HqnluNrYD/z5c/kIi8JdPBg7TFgd0KpP72P7RbOy2htc6RWvzNLdsgYKDkdAOR34O3HPCCkDmgt1KAQBiEf9xcOYExtHhFu6PhPCCUiDcNa41dRwjB55LRwtFUhduIWhdDTAMl4ZeTx6v5UKQdJ+cIqyT52NfvfV4s/etjW19eKAAoywcQELjqYLaUUOPe30rbYxI7NA4Ir8bJl/zLNQeyscjD8qfxGzuNISqtMkymuwhvvEmATUVoXXQeB8UGxPdZrl0u2KSfkV9YXBq1GaWcuOz9YY7Svm+29DXT3fPS7LnAqX5LervVk+Mw+5vfnvyo=
+X-Forefront-Antispam-Report:
+	CIP:4.158.2.129;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:outbound-uk1.az.dlp.m.darktrace.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(35042699022)(376014)(1800799024)(14060799003)(36860700016)(82310400026)(23010399003)(56012099006)(11063799006)(4143699003)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003)(13003099007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	CuJnuagRLC1KsQ+RfrWvyh7WRVt5zo+qa317dZ0kU6JGAg6XmcV/uZb/jfJ8zXKVbJgp3+0/ovBFjOEuL4rhRmZYw9DX4H0nW+56+rhTCTebQI/y/NJmCCwdidtF2SvvoxIH2Z+AWs0/fzo13WkPcQi+PiKomwxjeAEmtX8Qg9e6C6a/FWuWoBjO+Vzu0V3l6nyR5RIoVNh4YawE+xgMSBvRFIkUBaQTZHWwtRoR6mBfcO3yNjhhA6WoYFGmzzlKRkFEnQmJF/KvRwqJPoO7LJOd+/D7zBMhgxwylc9/cg1CcW8LSbVjpMQaVb1MzMIKYgEfPVL2KrznEoquOsLIhLhvUJNYZiaX8seySqyEfc3tHHvLddKQ6wFYl+VaYfHvy8J98fdQ2ug0nqu8jo20bH9QV+gNIb7nW8yehZA9+HNsUnCK3mrBwPhcaNlTP3GV
+X-OriginatorOrg: arm.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Oct 2026 07:59:06.5120
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 2e9f06b0-1669-4589-8789-10a06934dc61
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: HFk8Cur2o1USGYblEgIwdT9HK+G4qTUqgW058O9Y/MZaZ+alX1OqV4zR2XBJRXoOugced1iyfEAm8pl+7zDXwg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR05MB976980
-X-OriginatorOrg: ed.ac.uk
-X-Edinburgh-Scanned: at loire.is.ed.ac.uk
+X-MS-Exchange-CrossTenant-Network-Message-Id: 35e7a47d-a6f7-4df0-f45f-08df2a922fde
+X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d;Ip=[4.158.2.129];Helo=[outbound-uk1.az.dlp.m.darktrace.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	ZR1PEPF0000E461.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMDPR08MB11334
 
-SGksDQoNCkkgd291bGQgbGlrZSB0byByYWlzZSB0aGlzIGlzc3VlLCBhcyBzdWdnZXN0ZWQgd2hl
-biBJIGVycm9uZW91c2x5IHBvc3RlZCBvbiB0aGUgZ2l0LWZvci13aW5kb3dzIHJlcG8gKGh0dHBz
-Oi8vZ2l0aHViLmNvbS9naXQtZm9yLXdpbmRvd3MvZ2l0L2lzc3Vlcy82NDY2KQ0KDQojIyBJc3N1
-ZQ0KDQpPbiBHaXQgZm9yIFdpbmRvd3MgZ2l0IGhlbHAgdXNlci1tYW51YWwgbG9va3MgZm9yIHRo
-ZSB3cm9uZyBmaWxlLg0KR2l0IGxvb2tzIGZvciBnaXR1c2VyLW1hbnVhbC5odG1sLCBpbnN0ZWFk
-IG9mIHVzZXItbWFudWFsLmh0bWwuDQoNClRoZSBHaXQgVXNlcidzIE1hbnVhbCBpcyBpbnN0YWxs
-ZWQgYXM6DQpgQzpcUHJvZ3JhbSBGaWxlc1xHaXRcbWluZ3c2NFxzaGFyZVxkb2NcZ2l0LWRvY1x1
-c2VyLW1hbnVhbC5odG1sYA0KDQpIb3dldmVyLCBnaXQgaGVscCB1c2VyLW1hbnVhbCBmYWlscyB3
-aXRoOg0KYGZhdGFsOiAnQzovUHJvZ3JhbSBGaWxlcy9HaXQvbWluZ3c2NC9zaGFyZS9kb2MvZ2l0
-LWRvYy9naXR1c2VyLW1hbnVhbC5odG1sJzogZG9jdW1lbnRhdGlvbiBmaWxlIG5vdCBmb3VuZC5g
-DQoNCiMjIEFjdHVhbCBiZWhhdmlvdXINCg0KJCBnaXQgaGVscCB1c2VyLW1hbnVhbA0KZmF0YWw6
-ICdDOi9Qcm9ncmFtIEZpbGVzL0dpdC9taW5ndzY0L3NoYXJlL2RvYy9naXQtZG9jL2dpdHVzZXIt
-bWFudWFsLmh0bWwnOiBkb2N1bWVudGF0aW9uIGZpbGUgbm90IGZvdW5kLg0KDQpNYW55IHRoYW5r
-cywNCg0KSm9obg0KVGhlIFVuaXZlcnNpdHkgb2YgRWRpbmJ1cmdoIGlzIGEgY2hhcml0YWJsZSBi
-b2R5LCByZWdpc3RlcmVkIGluIFNjb3RsYW5kLCB3aXRoIHJlZ2lzdHJhdGlvbiBudW1iZXIgU0Mw
-MDUzMzYuIElzIGUgYnVpZGhlYW5uIGNhcnRoYW5uYWlzIGEgdGjigJkgYW5uIGFuIE9pbHRoaWdo
-IERow7luIMOIaWRlYW5uLCBjbMOgcmFpY2h0ZSBhbiBBbGJhLCDDoGlyZWFtaCBjbMOgcmFpZGgg
-U0MwMDUzMzYuDQo=
+On 2026. 09. 03. 14:35, Bence Cs=C3=B3k=C3=A1s wrote:
+> On 2026. 09. 03. 10:38, Kristoffer Haugsbakk wrote:
+>> Not a bug (2024) https://lore.kernel.org/git/xmqqy12z7eti.fsf@gitster.g/
+>>
+>>      I suspect that it is much more productive to deprecate and remove
+>>      "@" that is a built-in synomym for HEAD (but "refs/remotes/origin/@=
+"
+>>      does not act as a synonym for "refs/remotes/origin/HEAD"). [...]
+> I would not want to see @ removed, I have abandoned using HEAD years
+> ago, too much typing (especially if you want to express more complex
+> things, e.g. `git range-diff long-branch-name{^..otherbranch,..@}`, to
+> pick an example out of my bash-history).
+>
+> Bence
+
+P.S.:
+
+$  history | grep 'git .*@' | wc -l
+74
+$  history | grep HEAD | wc -l
+0
+
+;)
+
+Bence
+IMPORTANT NOTICE: The contents of this email and any attachments are confid=
+ential and may also be privileged. If you are not the intended recipient, p=
+lease notify the sender immediately and do not disclose the contents to any=
+ other person, use it for any purpose, or store or copy the information in =
+any medium. Thank you.
