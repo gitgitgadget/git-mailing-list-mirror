@@ -1,115 +1,157 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9184EBAEE
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 09:15:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792055704; cv=pass; b=TpGLyUq8UQhBpZduaaSREPEWKNqyxyepy2tIFGnpS6jIFjqE/M6XWKJua7ACZijJ+0Sph+iXUVFH2TPk/BRDR6aaMp7FXg0h8fVJACzJqBvTlrb/Sr8BcFDp9NEfJr2js4McMHvMcLHd4yZP6RmdVRGiYWPruf7K3rjJV7l7/Ow=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792055704; c=relaxed/simple;
-	bh=yqnS6IEaZQS6JOGMUgYHJSj+xNeuDlB1XlL4mGc11/c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bDXOmKCoSlM5PC0RLmTqzR1sdZxtWOXUhdhvTRDLE+8ZwEXOg95zeYwp3t62ETiS0zZnsYBTR7FB+srCV4TRG2waiiIm17Tbof61zUHIeHRnC0iilzThZlYIdPZzO/cYmbQMxaPsw/2dfgBD1AgYD7fh+PpKDaRTtmSZv6IZgEs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=IRbNcEBR; arc=pass smtp.client-ip=74.125.224.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605CF4E8E0D
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 09:27:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792056468; cv=none; b=Mo/ZDIBZLhXOK4j3yOsz8knZdMwRYKh5nWn0VXFlNN1ui1YjK3Xc2H8uQD0rDJCcyzsA1qQFys7jHEcvCfLaKsRGTUQTJiBhTsHhn+ECaeKHEvyW2TWBeZYgOh5D7mG81OaY0un0m9YAXJOo/mHAcULbeUzf2rasJeDrcHasYzY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792056468; c=relaxed/simple;
+	bh=psCsGRYOz69JjRVoc4WCFAGBIBW0QIon/qnOSW6Wahk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CLMtvqVHTsqAoWsEs1l2lCxzbQII6uAxw0rYqKou3+AMjtC+ix37Ba/DR6ks1EuQ38LL6jWS+7kPTHNE7cwoSz64+8fXa8AWp/58wa1muGg2sjeJSZ045Z3ocB+ki1/Mxnle2Xuyh7K255vn9OWcfq/k2AQK7ypm0RVZzvKwDlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gyYF9ACW; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="IRbNcEBR"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-66fca0709caso1223980d50.1
-        for <git@vger.kernel.org>; Thu, 15 Oct 2026 02:15:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792055699; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YBCo71s1q9/zhjQV6yVA2UqYII1DNqc2DMCc5VuhbFOQ+c5mZ5vn7HObFw0YxQ5fou
-         mICY7hGyPX2Baacznk+wdEsU0HX7BqcJRT8YwlmRdVGQ0g+RC4r8bCHis4rsCCffeJsU
-         L0kS0CqaslqFAAzI8u5BSONOVx4WpSFZznic94f9+mNuvPLOsH5XCBkqbAHo8yVegXhh
-         gdXe6I4IaRlCDmXTlDeGDBH5xCp6Jn/qbA1CDJrhBWUw0wY49CVaFt17h6hNZ/kMhoha
-         L1UQqYo9o4zweB6irRvjYhdXqpmmFQ+sGhe5yU9tgteSQGJ4h54FiS0H3AkXrRCZNk34
-         NLJA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=foHcT042Z0Dpx8Cq7TY9pHE96DBWKG55Fnqgml2Aw6c=;
-        fh=nPxZy9flPIb7Jrl3Tj1AIgk96qb5gmvPxZNaFkymegA=;
-        b=eWqckCs6dHiCB8jd/xzME9qlgv25Avs0l3IsltGXgXQ3+7OgAs5A5Cajvu5mKuLGS1
-         2KJpXyGhur6PH8buo1EOsGz7EVFXn23axP/BvLB3OFjuCkWFJa3shDObw/q8qerKJlyh
-         JUSi+8df68c6p4E0R3s+GaXRhDn+st0KM9RH377FHyViVqviAG+ebZtLXIXOYesulLOR
-         mxxTsJW8YSA5Tgib+FmJo8CtZ1q21w2k/IHrCRbdj+Q4JAVOPu1Iay305y2+INB/c9bl
-         75uPAZzs0EZCWXZrQ4lua5f4XPZ1pfSk4zqDyfzY5+iHdlHyhqzz7HLnH7+k8HWVG9rf
-         QMWg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gyYF9ACW"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a1af482519so22125845e9.1
+        for <git@vger.kernel.org>; Thu, 15 Oct 2026 02:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1792055699; x=1792660499; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=foHcT042Z0Dpx8Cq7TY9pHE96DBWKG55Fnqgml2Aw6c=;
-        b=IRbNcEBRKHULLm1JP3gcVyD8DAPtUKKeAORfmPbJ7Mq0S6M69eAgjIcFy7bmxhbqiT
-         1OcF01asEFkJNRiZ/4+42/bBqune3kzJT3HoZ8kLDfuwuNyrOnFU7T0b9ma6c4KUwFdi
-         SssFdy1c1r/M4B7iabs343ikV40FXVXh1+u/U=
+        d=gmail.com; s=20251104; t=1792056464; x=1792661264; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=sb8nw4qEXuffKiMUILDbcerCNsHuMwBkSEWEqNV613U=;
+        b=gyYF9ACWjVGNLTSc7XtpEGjqv2JaK9CuXp9bIIgxiJ1liqPa/q0Bh8ralvYBn4lIJF
+         /ChhQkNSaZ+tmhEHkM/HUCDvuSleZTPr36n0OQJdl4Rs2IOzyGGUZqC/58XeaJGQk9Rb
+         6yHC0IjZ8/1sahkHwxUAgzymP2OFq3XB27W8Qwk8ferjeRt0DVzCRvWA0tFBBfBmNyHL
+         tE2sMVeYOBuo0pLGIRlW+90kwCbgie1z+yAKg2kgd08oZCNKXBmhRaDFRPY+DieYHtMF
+         N1Epgi66p1EahwqjjbH8yBfxFiNgPpN9YH2MgUfwdxdi3fdPtLl1E2Qk1V7Wz48x1pE7
+         L/dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792055699; x=1792660499;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20260707; t=1792056464; x=1792661264;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=foHcT042Z0Dpx8Cq7TY9pHE96DBWKG55Fnqgml2Aw6c=;
-        b=DK6Famvhpv/HDQ5iO3OhDq/ntu8zqg4J/t6cwfjc6jt3/VF/FrwG4mnPQDLnSPD1OJ
-         m1GI30CprbwfidQvAa/pYVbQBQlNKqbkSUinDInCnwOE/7rdPY0ir6Mj2HOpKD46VNAN
-         AN+ZTDh5ih0VLBBhaUkVVvVa3PnyoDPeLwDop91fvnPxZRz11DE/koqXm99B6NA0CfRy
-         btxfR1oWYO498aV+QWvBVUrhk7TNP9NJCAhDqk625DWUdxR3IpjPEWSMj8g6OPfno+DJ
-         N/9x9fg0F3BJ+HrM3wCUzPaWEN+lWEaL37RlWvvTSTtNlV1cR7kX8+CwnyaeNUfwk5vO
-         M1hA==
-X-Forwarded-Encrypted: i=1; AKwUvBz9gAA/HOLEZsKnI43fVasCnZoc66d+NApIxUiZ1BW8B9pki2T2JZurkqCpcWbAAaVzvoI=@vger.kernel.org
-X-Gm-Message-State: AFq9FYK5AiePB9LA47QzNJYHZYj5Eu4N5mwsicstFSoqf+SEzSrl1813
-	LhpTsArQtuLrVm5Q7gfGqPCT6hxirXnE5fg5hVmNGdydeAIg4RHQNLahZBAuG4dorwBMnJQrJT7
-	+DsviU55dZxHnnRY7SgV6RknzzKs2uMPcDqG6FxdWxA==
-X-Gm-Gg: AYBFou0ETyFSQtolTBVEgwyig32uzaV54O1bSPLZokhzYhphGXWrNl9IG860ezjpGZM
-	2zZnAXPt+wBd7TEv2X9AFpfRa0u3w8h8toIU1qarnsH3uKW3hez5s7JwJLXSvfiLjzJ+Qlr7LCB
-	vHJUzxFD7Mr/lX365STxMAJX7Lnf7HwqflvuyCmeg4s0eLY8mgztNgS3V1ydeo+jcqPGIrotF4K
-	bxM7IoSOTko/TkAhkWxYPadfperk+UL2079+ulUW0kUZ1CpDwiJ+9wItpx+0peG32uJFuxBiLcB
-	U/sxCaxixfmDySQiZJawilj1clc7BSz5gu+Yus/qGs3wJzidSYrBwk8d
-X-Received: by 2002:a05:690e:4403:b0:674:cc60:9aac with SMTP id
- 956f58d0204a3-67936297c4dmr4913333d50.38.1792055699412; Thu, 15 Oct 2026
- 02:14:59 -0700 (PDT)
+        bh=sb8nw4qEXuffKiMUILDbcerCNsHuMwBkSEWEqNV613U=;
+        b=azBGpQ5XYiwoWs7TWFc7wGSD5BJ31RvX3/ohmNijq/yT9n0nYbPT4xn0fMqIC4qYNx
+         d1LBOo3N7Bckpjrc7Rb4BkIYnSnUEJA3VR266QUDmF8nkr5AGsEDjYlv3b0HfJ4YTPx+
+         cGOri3wwRF8MRptGqvoN2xoYDjtIO1ZlBqV6NQX/R4iz+7k0vIQFpwNoZ8DthwrD+VRT
+         nJYRWxF3xZPDKuJuZiNclsyQ91Y6wPSzNdPJ3I5NjwhsvVmZkxOjywzxO105vx+h4B6L
+         sd7741L7AH9RVUf4ovWgi5OG9yrNex4zZ8S6v8/XacTIdbcPmIoG3VdXiA56bUaOSGRH
+         F04Q==
+X-Forwarded-Encrypted: i=1; AKwUvByxtfvh6BXspqN9x83BM0o2FnhHQecXwye4MQw5DXnytU2DjysW4Ef/MyFgZvoeW1gqyho=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJFci0qtvHrXmD1emWbvepON/Kum4ckXuLtG9w7rAjTcoPuVCGh
+	ODKA05UYrI1cJXOaY4TpNj1/9l4yTgw8YVfu00C0/oGHPz0EAqF8x3ka
+X-Gm-Gg: AYBFou2czEgu1pjyExOLB3V6uCunmVGgZas/dBX7ToZ8wlKBNcRhS0CaZ+FnjZrO7qG
+	iKvBsedZhGXrzgUsTFb17fgSGlNbhHUV90uiquDX/VmI3x2ll2Ys0unzgHj3mq4kYgDhw5jq794
+	LEBRyZhXtDgYySEdc3gcGOz/rLarbNqmSN6DsjVzT5aMM5BHh4vrlbFN2LyprDX1eQ2FK5VYvHR
+	txVh3FvPdTegt4HaaEAdWqZkkMUM3usRgDsdxWDndEquQEcNWv0dhbPbiWy/1uEh4dhGuu0++QW
+	R8dQ321VRMfak69eLqlaQwLtb7dJ1fQ18k9B+MBOS/qUD2BdgyIuRfCBEUSdENzoZTO7xMSZB1W
+	/n0nEYZGnCKzXdobXk0Cl0E0i3vYj7CFbuiXbM7AnF6uO5X4ZjGcHaz7HTPnTjWyZBFyscKpOWR
+	H4zJCDKQmmxl+2HXGendkvBNM5uN7Jg8jSj/3WCYUSn7dGuoL4F3ca5dzmaQFWe255tMTJ+RX55
+	1RxDH3I2q3ROCX1YVzaJt9lYYnmUYbxv8Mv5bRp+liEjNaRYAIWtpQmm0IlI4s=
+X-Received: by 2002:a05:600c:8b78:b0:49e:65f2:db64 with SMTP id 5b1f17b1804b1-4a18e4837f2mr358342055e9.5.1792056464260;
+        Thu, 15 Oct 2026 02:27:44 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1bd993caesm115243535e9.12.2026.10.15.02.27.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Oct 2026 02:27:43 -0700 (PDT)
+Message-ID: <373f7186-3da6-4715-a4ce-cd5f56895176@gmail.com>
+Date: Thu, 15 Oct 2026 10:27:42 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
- <pull.2211.v3.git.1791806877.gitgitgadget@gmail.com> <211794c9252181fa0c31fcd968379c189d001a8c.1791806877.git.gitgitgadget@gmail.com>
- <atB468yrVqsp9Eg6@pks.im>
-In-Reply-To: <atB468yrVqsp9Eg6@pks.im>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Thu, 15 Oct 2026 11:14:48 +0200
-X-Gm-Features: AclHuK-LBbTQKYDieVy0QisSUt5jHJ0IeJYiNCa_4iJ0BLaSzsXCKjRejPWvRyw
-Message-ID: <CAL71e4OJGW5uLax2nAZ=XPgbDwXEe1vE-6pf=L_Ka9MQo6NrUg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] p5413: add perf tests for connectivity check
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 4/5] git-compat-util: add `signed_mult_overflows` and
+ `mult_overflows` macros
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
+ <3dcc3d97570ea7f96628d02941d7424f84f7bf39.1791958171.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <3dcc3d97570ea7f96628d02941d7424f84f7bf39.1791958171.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, 15 Oct 2026 at 08:55, Patrick Steinhardt <ps@pks.im> wrote:
->
-> All of the benchmarks will need to be marked with the PERL prerequisite.
+Hi Johannes
 
-Ah good catch, will add.
+On 14/10/2026 07:09, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> `unsigned_mult_overflows()` does not cover signed arithmetic, but types
+> such as `time_t` can be signed or unsigned. Add signed and type-generic
+> guards so callers can check multiplication overflow in either case.
 
->
-> > @@ -0,0 +1,44 @@
-> > +#!/usr/bin/perl
-> > +#
-> > +# Generate a fast-import stream for p5412 connectivity check benchmarks.
-> > +#
-> > +# Usage: generate-repo-p5412-connectivity-check.perl
-> > +#            <dirs> <files_per_dir> <commits> [<hot_dirs>] [<files_per_commit>]
->
-> These still say p5412, but it's p5413.
+It would have been nice to mention that the type-generic macro is gcc 
+only so we cannot rely on this for safety checks.
 
-Oops, I fixed the file collision but forgot to go back and
-clean up text references, will fix.
+>   #define maximum_signed_value_of_type(a) \
+>       (INTMAX_MAX >> (bitsizeof(intmax_t) - bitsizeof(a)))
+>   
+> +/* Account for the extra negative value on two's-complement targets. */
+> +#define minimum_signed_value_of_type(a) \
+> +    (-maximum_signed_value_of_type(a) - (INTMAX_MIN < -INTMAX_MAX))
 
-Thanks,
-Kristofer
+Do we support any platforms that do not use two's complement arithmetic? 
+C23 makes it mandatory so presumably there are not may contemporary 
+platforms out there that do not use it.
+
+> +/*
+> + * Returns true if the multiplication of "a" and "b" will
+> + * overflow or underflow a signed type. The types of "a" and "b"
+> + * must match and must be signed. Note that this macro evaluates
+> + * both "a" and "b" twice!
+
+At least twice I think
+
+> + */
+> +#define signed_mult_overflows(a, b) \
+
+As the macro relies on both operands being the same width, can we use 
+BUILD_ASSERT_OR_ZERO() to ensure sizeof(a) == sizeof(b) here?
+
+> +    (((a) > 0 && (b) > 0 && (a) > maximum_signed_value_of_type(a) / (b)) || \
+> +     ((a) < 0 && (b) < 0 && (a) < maximum_signed_value_of_type(a) / (b)) || \
+> +     ((a) > 0 && (b) < 0 && (b) < minimum_signed_value_of_type(a) / (a)) || \
+> +     ((a) < 0 && (b) > 0 && (a) < minimum_signed_value_of_type(b) / (b)))
+
+Thanks
+
+Phillip
+
+> +
+> +/*
+> + * Returns true if the product of "a" and "b", after the usual arithmetic
+> + * conversions, cannot be represented in the multiplication expression's
+> + * type. The operands must be integers and may be evaluated more than once.
+> + */
+> +#if GIT_GNUC_PREREQ(3, 1)
+> +#define mult_overflows(a, b) \
+> +    (is_unsigned_type((a) * (b)) \
+> +     ? unsigned_mult_overflows((__typeof__((a) * (b)))(a), \
+> +			       (__typeof__((a) * (b)))(b)) \
+> +     : signed_mult_overflows((__typeof__((a) * (b)))(a), \
+> +			     (__typeof__((a) * (b)))(b)))
+> +#else
+> +/*
+> + * This implementation needs GNU `typeof` to convert both operands to the
+> + * multiplication's type. Skip the check without that extension.
+> + */
+> +#define mult_overflows(a, b) 0
+> +#endif
+> +
+>   /*
+>    * Returns true if the left shift of "a" by "shift" bits will
+>    * overflow. The type of "a" must be unsigned.
+
