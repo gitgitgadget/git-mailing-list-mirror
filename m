@@ -1,97 +1,96 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF3446983E
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 06:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125864A2058
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 06:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792047459; cv=none; b=GDGFAfrsAuZXmo+HXIKmoOIMKDHuzMr67XQDUNF/uh5nctQk+vuXXtudcYkJEN87xVAhF0gDR5SxyhkMFQ+MqZJcf+k2MLnk5IryvdQrMG/izWl4ZpHKdVI4Ms0tQV/aJNbCheW21nRMivn3ertkJtYqisO0VPGwzbxUDtuw6vk=
+	t=1792047461; cv=none; b=tGWjuWlhn6jh6roytTWo0t78OWwjDkVzFSId8TyJF8rcN6mf2bLIwtV4RjoOuQFmeGsaOS6QRI6TIgZnm/Tv+c/TK3mO08jMvh4WKUCPRZ2ivXZRHIsaeYT/rBMePQ+8XEfTJ1Xbc+FD9VdB8SL+h3LzkcTxM19AZaBcRDxjR7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792047459; c=relaxed/simple;
-	bh=/uSXuqH4oO8uS0lqlWqgrcej4oF5+C8hgGNW6OyLmrM=;
+	s=arc-20240116; t=1792047461; c=relaxed/simple;
+	bh=pNgXAi5qS7XuDS3F8sASfLAy4CZFmWAn3UYw5f00Igc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YbToUGp8Vzvk3emgwzu6TjkSrFYbIoMuK1wqPBmUPBSYdQuw6L9HFc+G+eRJKiak20oYAPTG39hY3777bXIeKk3JJ0NjgxU4Titjl0FCD5RvcmYjskalopyeNjsQ6TOUQI4+FrwB8XryPP6nGjj8fgUXXI0I0MXwMAvxhMOfgL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=p9Q+qBhS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h0HecwV0; arc=none smtp.client-ip=202.12.124.154
+	 In-Reply-To:To:Cc; b=Hx4S8cygMi5TV4oZL71eb0tTEu5sk6fxHtypQdziMhRz3yc5+WeCKpqrNn0s7WowD8SSwwjJguWadkcdnmArvAerhc9GY+9N7Fw2TrHcWCaUeRB2io9Ud+cCJdNy8Djc+iXD4oQo1bzbp9UH66SJUYsx08Qs+lFc3c2i5A/yekY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DEjyBSdL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IgdJcs9M; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="p9Q+qBhS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h0HecwV0"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CFCC77A01AB
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 02:57:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DEjyBSdL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IgdJcs9M"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5677A7A01A0
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 02:57:25 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Thu, 15 Oct 2026 02:57:31 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 15 Oct 2026 02:57:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1792047451;
-	 x=1792133851; bh=bJuZtdK8P5w80Fi5i9ZRUP1wYcUwXO99yzQMMVoM3eQ=; b=
-	p9Q+qBhSv+/WgFT659RtWerpn1eMIEDz1wIypwINBC9v6yvTJBHUYx+6sDeL+3xa
-	wFLuwIpHeQAbewX/wW8FLeHDb0c0pyoh7cPUiztuMmQpLd6JwGRbeCMdOs7H221x
-	FnnL6G4+lDVz7p7rwqA9DRmY2Y6lpLddI2ve6tMnL2/KafFK3HVwdbGczWzj64dm
-	KXW6AmVtMoAgmBkIYJDVJ8QSxIlqzphuBpHVp72RaVFny5o476zh741t3BS3u9mD
-	qi/ODk1W+AGiU8IkACWkYHnvr3amQ1fJvsmvqNdm9YTzhMeamK7oO8LbsU1WdA0b
-	xj7Ul5m5F7O4PzasUaWtyQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792047444;
+	 x=1792133844; bh=tfyKsQSkDfantok2TpjBJFE0VSF828pT0LTTB7Z/LmY=; b=
+	DEjyBSdLCFXgvVnRcs43Z3WnXQW9/S2YhugKqhuW9AGUCEnlGgCK2J7hiJGj4E9v
+	8yt+V2YIvGeqwIuX/Xg75cvfa0v1brL/gSCFeDLH8u68dPrHdw25eRjbjMwRzLZe
+	Shsn6ZfeMfOeZoAa1zEtWzpX8gk4PcaZ3danDgKdsVlD40Zft+qPLquVZfacGQmD
+	FM731XQHeoexHwxWCz21P54K3JZonqa+b+MjSnaNq1v/Gk+YZyVVnlNDDoQUnSxy
+	a286t25uGgtZkjOtfQBEyyHkOMqisuP2sk0L8qAhLAJOreU4HIyN1nEWXjh7x3/l
+	+L5iSccYoFYQ4vskbDE5Rw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792047451; x=
-	1792133851; bh=bJuZtdK8P5w80Fi5i9ZRUP1wYcUwXO99yzQMMVoM3eQ=; b=h
-	0HecwV0V6CP5O6bQFoS4J6azczPreDHeCAzKCjzmuZQRpLBmZlUGxMxrm9+0wp8Q
-	WYsi+4IiuA7OMPqwqreVzETVxs487vlK5SUdazd3jP0+2rq9xxsjzTCNUYdUaiAM
-	LEJGOsJujEriObb4KVtoD5TwdYFRXB6xn+yL1chSgy/40jxREBfTJyOzX/dTZOJJ
-	vF/6yeFwE73fezsrY1stuwRvYCrMGevJ6tnl/sWohMti8mitAJtJJO1UOnLI08Af
-	7ooOD55/OAOuCNsWat0f/ykXZa7+vf70WurVscaRiJhK18Drbn1yVWMVqU7lyAeY
-	ZsfDLJ6VOWiM7N1+Y3gYw==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792047444; x=
+	1792133844; bh=tfyKsQSkDfantok2TpjBJFE0VSF828pT0LTTB7Z/LmY=; b=I
+	gdJcs9MoKjtD1c6hNcFkGReuGePpWgQJuCJhjhPzF56pTpRglhzNdPjTcDC59TJY
+	nzxRBKR3GD3iFKiR9JrC9hY5J5/mKaeJNTVnpNzkOracRnxEhdUX+RR1q7ZaWnCk
+	TOuv7NtkRuFcJNt+rf2gimrZJzQOKBatrKnxBu6D/8FN4JZc+nyKKa4McOUFVgXy
+	F6t4kdrucpKZMkacpacxjNdFl/kZMtcx2VG9/LQQCoFZ6L9Pl2eLXBkki7voXGIQ
+	x5QxQlSjeuDq9WexCdcX7Gf5t6tuneGV8lhbkevtMtO2ThW1FS60NTwIMVHhvaUb
+	3ogdjt8tqCDpWN2VsTpvA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792047451; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1792047444; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:YKkZVYL/BE7YR7WVF0157HSaSLjseRJOE+a4Edhu9il4JhY
-	GkzzzZNzHpyV3FN7hDr6WFYWqOIryGg7ZuMp3xNRlIZ/sDTlACZ+dkw6n6m4odFk
-	890j+PlQyD2F/RywqnQwHMA7NKQrJGug/NVahx8icv6YLKNBb1k1VE0b5CZTXMXr
-	eefUcRG7ufMMu9cBRGn2lZgmv2BQ6grAYACB9h1S9YwVuxjdZT35vob9YuOFV9Jl
-	2FqZpIymMp/8lhchmOTL4U9bnGxb2ewLSyFALfAAJnyVufnlnhOLRiX9zV8nnicl
-	TNw/Yvrk3xDel5caoSjEdcvtUEL1oYFPEdA2lyw==;
+	s=fm2:rsa-sha256:OYGfinU3xNl/OWw5o3GUL1l60HbbD+GnhnBRwoOR94br2oI
+	cx31Zz4ANjB8JkOFOErRLfX0LZ/G7LLJQl/0/OQRh6iFqo0nGyfVGVOxJsiF/tGu
+	O3Ri+ux94Uiiwy3aWeONVbHsqhdQfFYNpnDePM8/nftJLGq3kGrH7Wi32KUCC7DM
+	PIvNjS8yNTjB0HurLxIX2UOvLxUXvz4Kwd4dM/KSEw1SgD4Y6R0iE9vmGwbxPXWs
+	umSwiDjWIxmY2NsTf3xJG2C8g4XOLIFiPsy8IffS6aYy2r4+S5JRWgUjt6UHsHAp
+	nUkj0w9xaa6HOxjldivp8DlZlvN3cSvt8Fe1Z7g==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:WRrEP9r12WrX4O2vwQYfkM1d40pt2wzDUznKWX/dzJo=:/uSXuqH4oO8uS0lqlWqgrcej4oF5+C8hgGNW6OyLmrM=;
-X-ME-Sender: <xms:W3nQaq-_sUhIHeia06KKZ2vgM1b_uiYSle0B5o3S0PXUTlioPccZ0Q>
-    <xme:W3nQauYYqxT7oR8VQf5E6mOYa_miY4yNYe1eZZcmghuhiftr-NYUbgknu8y3Pr98T
-    yeRHDpYh9WCJHMzB7fo-fmTR4nD4-k1krS6S_ujIFnCCC2l4wzN>
-X-ME-Received: <xmr:W3nQap2YAzZywwY-HIn1bQbzUZYj8J9vy-GeTZgVqZRVf3cXgl-TRb5Berl6W7pSjbak814>
-X-ME-Proxy-Cause: dmFkZTEtUvAGxsLJTUwND9VYUlYlcfzw4leHbfFICa9Zbzi8Ve0xk99hOMrC8JWgyMNjpL
-    d8OU2RGTcaPEzrBKb4q0VSV6wqeZkD07LkmT9JDuWFN84fpWt5K8Q+GRvd1lcDDbz/LoOV
-    kwt6oy4K98UcTaAIFJE2C70gLxy6yrO6zgASwulP2/gUH3qV0wZ6mPTL8dHHme0JzPWTgK
-    HUq21r/Zut+zgaXkWH60B3u6v4T/jnwvKyPxQ7Rlghx4TlScz7P3jdjipOCLu+qNDnQzX3
-    18xZCH1OxjLia46gLGM0s2D2lumAHp9sZQUiVmTTqNhG04DcMBQQ8yDrd85c+15nCEhKHu
-    KZHGV5QRJkTp7Y5/W6LepDxJ7iRPl9CbEHoor6TUT1H/gp5qg3AemeW+Z0W7ZL4LDQWVqx
-    kzpVIEeh+mIQfRX0VnKq6ccPgIskoV/uMll0sR9438rXPPl00GwNv5ndhlPDJbWjE4ubhO
-    Z5YX3Mflqah7i5XHTKDyW8jxqkRCLoJ6FfORBR9u8IUGhfOHgZtAP6wYvfIFWGjdRJqqNN
-    TrxIxj125mICO7s01U0ykPJTc+CfNslq5/im9gjjZEa2AWEqg17BoTMZRHgOGHw1vafvIm
-    l7FNCfetHFmctbu/DUXs53pkI6yDPXns8HmYJFj3HygnRBlmovZH/XtCvnPg
-X-ME-Proxy: <xmx:W3nQapZ4TvURgGTmSRQo3J6n_gs0QHzdXz988ymgZsxpbGTAQF6T5g>
-    <xmx:W3nQahLrfZegM0wnwqL02UMYdvUVnp5C5wUZx95Vouc2Onu0WVPI6Q>
-    <xmx:W3nQaoFhl4Hf5mCzhYzCnR9JuRoWxDkB6bbRM7cE-LRIP1SF_HVZ5g>
-    <xmx:W3nQaovgAv4lR87dRYHAHH5W2wovffZwYFGm-t3lJ6s-Kx0buE6cNQ>
-    <xmx:W3nQajsqF5SgiNy2KYtC3uBDRuetxEwiGMpknDyTc0YyDhosckP_wJJQ>
+Message-Instance: m=1; h=sha256:2BJKNqtZxoRugbVlF6Ijoo8z1vpt8ZZAMtPQeUz+OWU=:pNgXAi5qS7XuDS3F8sASfLAy4CZFmWAn3UYw5f00Igc=;
+X-ME-Sender: <xms:VHnQarjpyXcO2I0F0IyxJ7ZUxsvySp9XbpbY1UZm10BKAJKnCYCzWg>
+    <xme:VHnQagcuV7dIwm0U7-2r8gau-gCqq2wDqCvaJZ3eqvEJm13D496JJD2y-uocx0UMJ
+    kv_sNVuyZwLSjB8dUBVgK9PRzOFNeW3idvqH9AiU0OsTIu3Yy0pyw>
+X-ME-Received: <xmr:VHnQarhS2sd17onbDrEx0k5n7YVLlU-oD0Mll1zYVwjCPhT4vXV4ppFVWHJZ2EMNDCue5sU>
+X-ME-Proxy-Cause: dmFkZTFpmkZOF7C7SXGoHVZ+ysJCnuUwQTIn1DaUrGmj/6paOzC5Lnr00Q/xxoBzHr7LSJ
+    +5siuB4uaF4Uv9QmJOuNKb5lS8/ThYN0f00mPIBVq0Wvsr4/TaONWuoTw6V4rGF40oQfrZ
+    vVzRLg3L8fcWLnCbzN5ts1UgW1UQwbOlxl/gpozn14frlovLjPe+G2aqYflaJtHOPp2R7A
+    Lsf7KkELCJws171AfGzIC/WzOPhU5gje5oC9zLdqoruLjeVFBUjohD8Dp/dKB1vGuV9BsM
+    6pEO2mOsRbM072o+HhxvYGcG4VDRVvF+NEr2ylmIuz6DZCntgRZ3RqPkQvnHpuSoY+ktaJ
+    jQxIZz6a6QO/SIjPje68Tl2a2Lnoy4HdKmj4JLuyANlApHL+nyt5qRhbxLPt0P7UVDunwM
+    53evlyiAjmVemhLOiQUA+cwt4+FMkzMgixX+3xgKzBbcL93RwU+HqOqbd8gG4zhEOiLnfe
+    B0RmOeRve/K6TVBE3492FcCvVU6Ytc8vHu+ZoAlWKz8oMCOrsmj4RvDr0JCTm7YvI7UoSa
+    z8QFnXZp3WAfYSNY/FUfNuzzrpK0DaygHc3N3MuXFgkNq0b5wSFXfloYk/oGHS1UdPtudk
+    +UjY70hoVor0YKyabkWqJO+t3LwrT4w+AfGbgj2AHBhMvWnT8MO7x6DVNYtA
+X-ME-Proxy: <xmx:VHnQaoxXXHZMa5Nm2Ba482_DFoYdG3JCSQFc3aGLEcvHRWfhoi9-2w>
+    <xmx:VHnQanMtOQg1IR0Z3xUhW2l8D0rrE9d7-bS3HJMPKfPqGhxNrmVwCA>
+    <xmx:VHnQapUiOo2Sfc1nlvoDlivd2utTbTID4bNt70QAt1U0YdLPYGvENA>
+    <xmx:VHnQar2b_HIfowYjywR86wy7n2p9b2AwmIowFXeADPIC5F0QYkuFCw>
+    <xmx:VHnQat_xUHz26baW49jjKBbaWE77jfZOtA9-msjEEs5S86otrAwy6SmY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Oct 2026 02:57:30 -0400 (EDT)
+ 15 Oct 2026 02:57:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bcd972bb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Oct 2026 06:57:30 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 84090a21 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Oct 2026 06:57:22 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 15 Oct 2026 08:57:15 +0200
-Subject: [PATCH v4 6/8] ci: switch away from EOL'd Ubuntu version in
- linux-feature-testbed
+Date: Thu, 15 Oct 2026 08:57:12 +0200
+Subject: [PATCH v4 3/8] ci: drop unused "linux-clang" logic
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -100,7 +99,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261015-pks-ci-housekeeping-v4-6-c2c88f1b198e@pks.im>
+Message-Id: <20261015-pks-ci-housekeeping-v4-3-c2c88f1b198e@pks.im>
 References: <20261015-pks-ci-housekeeping-v4-0-c2c88f1b198e@pks.im>
 In-Reply-To: <20261015-pks-ci-housekeeping-v4-0-c2c88f1b198e@pks.im>
 To: git@vger.kernel.org
@@ -110,61 +109,33 @@ Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
  Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 X-Mailer: b4 0.15.2
 
-The "linux-feature-testbed" job still uses Ubuntu 20.04, which is end of
-life nowadays and starting to show some cracks. Switch it over to use
-the "latest" tag instead so that we don't have to constantly update it
-anymore.
+In d88d727143 (ci: drop linux-clang job, 2023-06-01) we have dropped the
+"linux-clang" job because another job already uses Clang anyway. But we
+forgot to also drop the logic in "ci/run-build-and-tests.sh", so we now
+have some unused logic in there.
 
-Now arguably, this reduces test coverage for old versions of Ubuntu.
-But "latest" at least points to the most up-to-date LTS release of
-Ubuntu, compared to the "rolling" tag that uses the latest release
-regardless of the LTS status. So while "latest" and "rolling" are the
-same right now, that's not always the case.
-
-Furthermore, we have other jobs that test with ancient versions of
-Linux, like for example the one that uses AlmaLinux 8 (2021, originally
-tracking RHEL 8 from 2019) or Debian 12 (2023).
-
-Note that this also requires us to switch away from GCC 8, which is not
-supported by Ubuntu 26.04 anymore. Instead we simply use the default
-version of GCC.
+Drop it.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .github/workflows/main.yml | 4 +---
- .gitlab-ci.yml             | 4 +---
- 2 files changed, 2 insertions(+), 6 deletions(-)
+ ci/run-build-and-tests.sh | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 60f262db39..47f174ed0e 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -409,9 +409,7 @@ jobs:
-           image: ubuntu:rolling
-           cc: clang
-         - jobname: linux-feature-testbed
--          image: ubuntu:20.04
--          cc: gcc
--          cc_package: gcc-8
-+          image: ubuntu:latest
-         - jobname: linux-breaking-changes
-           cc: gcc
-           image: ubuntu:rolling
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index 726c1c1865..3e2e6083cb 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -43,9 +43,7 @@ test:linux:
-         image: ubuntu:rolling
-         CC: clang
-       - jobname: linux-feature-testbed
--        image: ubuntu:20.04
--        CC: gcc
--        CC_PACKAGE: gcc-8
-+        image: ubuntu:latest
-       - jobname: linux-breaking-changes
-         image: ubuntu:rolling
-         CC: gcc
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index bc5058c917..23e87cbbd6 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -37,10 +37,6 @@ linux-TEST-vars)
+ 	export GIT_TEST_CHECKOUT_WORKERS=2
+ 	export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1
+ 	;;
+-linux-clang)
+-	export NO_RUST=UnfortunatelyYes
+-	export GIT_TEST_DEFAULT_HASH=sha1
+-	;;
+ linux-sha256)
+ 	export GIT_TEST_DEFAULT_HASH=sha256
+ 	;;
 
 -- 
 2.56.0.212.g129ede20d9.dirty
