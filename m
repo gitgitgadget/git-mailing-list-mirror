@@ -1,212 +1,219 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744EF51A743
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 11:50:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B383509F19
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 12:30:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792065059; cv=none; b=PYrc0Ukl9BzH6pehFNVhGs6iynkY66NRvWSkXF+NOUoun7UrdQJq1eJBp9otVkzCXRwnf2L2ritOcQ5t3CWR4NaEFIKFaCn2DYV8VRyI+y3FVhsgqzKSLYkmAIM2H5K3zMD+uQpvPkxXY5zai2JZfSEDOFM841nzds/lnknZX1c=
+	t=1792067458; cv=none; b=NQNmgkdvOejox19GCQjIgYcxQ7YGStiEz112D2Tp0u6AHKK9RuC2qtx0FVvdP9z0gXYQZT8r8TRTntaWIUqo19noX29slyuiD+/+wCmw17pVKoihZHZvSltDJOSv21TVm0JVolpjpx4norieq/CDPIWzcmPc8XkWtWamXHlNoBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792065059; c=relaxed/simple;
-	bh=/Ezmy0HMF1Xd87GnUC4Y+z6a1/m54SVCdr39lysYfzY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R43MPgK+j6FHCGG+vp4BJAsBW1ZUfI5NVYQXrLEj8S73zfL0FxODrm1fPJTjUzM2krnSYTCCyZtd2pGrpvoZCXcf/obLA3aAUqJ5vG1RiYznAcnMN6QHj30QHMEUjP7VkQOoNmR9HTPnLuCZQkjj0N+6IvXSMpqDW7hv3OXzBPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HkB33N1d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=u4+SjFyu; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1792067458; c=relaxed/simple;
+	bh=u6dsC0LKQrQ9snNHTMgvb/HzjClqGR8OtiUEX0U1lW8=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=qmbxcRy6p9BfOUwPJLwc8uGXdzqjD4+U/JZ9UbAsS7ifHe30/iW6yyDZfVSiTtZ2ZhNwXtBPqrY/F3R+pIl0FQ98dBc0H12aJdLUpUelSVmrKnUVZdaWhtgRUT48Be6mMCqcf1xoW8LjOoRLasOZcFjI9aiNT3FmFz6e+UIJdsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GDQljEeT; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HkB33N1d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="u4+SjFyu"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 925111D00199
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 07:50:55 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 15 Oct 2026 07:50:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792065055; x=1792151455; bh=ZQurJu1ma1
-	HOgUHJjo5NfASaHELzvlRXxQbyy5PLBq8=; b=HkB33N1dApYfscSHf0wN/vEdmY
-	rJuj4qKNqENsjnT0ujRXVmc1nC56XczEe8Pz+TPI+6Cqtv1Vh7JLhqIRAzQrU13N
-	1xH9zPZcTIuj/5IZ4ir00g8ghW81m8GyrtH54l8kyTtmhFlLmd6al7pE/xzYMxzv
-	M/W6IYarBrfRvtuOFKfDP+FWUnFdhOHfxiVFUnThiLpzo+gSI0rXs879eRVj9Yee
-	Xq4M526pSKpqPNj1BE5Wz6rScaXfwGA6mu+U3xyN21plY0Opq8hx+Hu3ses8rNXz
-	nWmlOSs6uygOQWNQEe9xXaFuMQ4e73osQCrRfA/YJb3Uz0nYxmyMXX3Drzcw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792065055; x=1792151455; bh=ZQurJu1ma1HOgUHJjo5NfASaHELzvlRXxQb
-	yy5PLBq8=; b=u4+SjFyuPhHTo9O9+MO/mBY8CTx2t2WaYVj+5ObpIYMYn3PA33a
-	7wS2Uovo/auw58Ax1mZhvP1U7IwukJzZ/87qhISM8kNiAC4Dg+qa19rx7EJqLEHe
-	BzrhwimZ9pfIgHw+XzyoSpudfQW053vnnfB8aX1pj85bQ0czIf0YNHyclst992My
-	dWnIlvMHaNXMlnm0aQxhR0HfZZ8xweZfHrjpPlFVb60fGrFsJpoi5szuum0jskAR
-	gDZiv/z7oqkiACM1wRxs2DT1KXo34pIqxFhK1sQbT4/0IrUsnI+B+3EfG++R988p
-	6bxr6owXlun2ONqVx3501vxM68aKCfevH4A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792065055; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Yk2c/1tYh0HjnP/cRrObnvsCfU7iMNPcpmLSQ/jBNkd/pAF
-	d9gAb3Y/aOIEEmQM7iEZLmfqXP+OwqanOmk9G1VhU+BViDkmnzThyWyHDRryr/lJ
-	37qQJYub208fRNbmH0Fj3xJC86o2wPfoUHrioozpUnryPXEBc5wnpLR/K5RElMGU
-	SGPaHt8jjTUqyKdj1RZkq11cPeSQ/0jM+hTGmjIzUyU7328WqNAOi9G4QEGjY6jN
-	xOSbCWt29cxPzjOpagB9QeTSedg/UTyZ8hk3/fJ6j8QyIpVtl1vUSgtoXav+/Y6i
-	3gg0nanUOyb9AnZlQZ9+blHGyKi98snFMmD4Z0g==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:wKqxSxftz+n8awZJPvI4wZqOesdMNjNdCMuaqUKzXRU=:/Ezmy0HMF1Xd87GnUC4Y+z6a1/m54SVCdr39lysYfzY=;
-X-ME-Sender: <xms:H77QavBkF8MJrNY-uiKlMXa2WGeKEQeiiZ30KLINhbyfndnlhw2e9g>
-    <xme:H77Qas-Rt_SLROQJOwYceAOo1GAP_msZw7tL_OjvgJkIjvhlVlhve-gUDJKUHd-sZ
-    H0B83NX97gA9inBqNikX-vtVC4jD7XDKVi6M2M-zm4QlhNQH2uYs7A>
-X-ME-Received: <xmr:H77Qan8Xe0CEx3xT8EL2DoR13g6E80vWEz-EfmmS_l8Vp3l4t7zw_nqh3i0qHz-jXPyRGOA>
-X-ME-Proxy-Cause: dmFkZTF6mWP4Se9drzlYQbE07oLwgiDdMcAmqi1y2reZxydxYL7S3yVRb5jn0V/gqYjZzF
-    RuVnPFkaXq8BO+bCQbXJUGf/S9P2gZ5xNAgHK2hJtL/7I/5iS72oiCyN8FFXvfGsmEXvKV
-    dMkpzcPU4Hb8Qi/bNLDaFbugHX84TA5lllMIhRw9Jb3r6Lzy9u8/tbLGX5bYS96tte3e5M
-    bkZyEKWAxFZOlDwvgUC35W9ImPiCbBR4+YKvqC8nBavqJlO+vdVJU9eAM0xK+jIKgZXW6W
-    t+Ew9WoqkjqbX6Tf0UNMz9/PIEPtPFV5b07amgH97APXccGEEdOYppIfw4hoHljcA0cslR
-    Vwjqg4zhKrdYDLI5pgGqp4VWY+CkQXjJ4GOzY2eq9F6j2vyXd+6565Jn8XNzd1lYtsVuSZ
-    zQe4mLb5yc8xffkjS02D9Hihfd8sHueoGXbqTqWwNOAjgMrNjK8WT5O2whzlFM24HI6L+T
-    6HBso7Q7jMeR6M7mtbEuHABzBPCCSEncW48VFYmLhOx4o/W/GdMRKIxp0Xv3A9ACZ9wslo
-    hfS+kIHOCk9CTCY7py0vx5rLO9kAHgAHUGpPMw4JmFj7PAQQjN2M4bAQGJ+8/QMUaLpzVa
-    SGfoWAwAo5H7ID5ItfIWtQ6czXwlrqeyVZtaGsxThRtY0a/C6XzUmHKPYK0A
-X-ME-Proxy: <xmx:H77QareeY79CJA8hXoRZdp0ws_m9kP54KECWIp8cQVBola4Vp-3vqg>
-    <xmx:H77QaoF5GGuIBIJw_U03zxIYSzcfFZqx2Tk547N_45gxhOKV0-DUmg>
-    <xmx:H77QahcjE4IlNuAKC0TR7V7r0Sd39d0ZJF4BAyxOU6N2ZLMfVjC4Pw>
-    <xmx:H77QaqGks0xfVHG-n2svU9ih5M0MRZH2Ge7COkmBqKqcttCIMoc_8Q>
-    <xmx:H77QasPV1wyAQ8OE197ltz-nbghuGWTKja65-wcfOgA8LZo4SGsbA2nN>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Oct 2026 07:50:54 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fe5f4fb6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Oct 2026 11:50:52 +0000 (UTC)
-Date: Thu, 15 Oct 2026 13:50:49 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristofer Karlsson <krka@spotify.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH v3 4/4] connected: add incremental connectivity check via
- rev-list
-Message-ID: <atC-GVBnQrfr3cQ0@pks.im>
-References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
- <pull.2211.v3.git.1791806877.gitgitgadget@gmail.com>
- <efaada0b6a8ffdb4d1c01d7f34a0d6596a99c149.1791806877.git.gitgitgadget@gmail.com>
- <atB48HLgZr3ssOfx@pks.im>
- <CAL71e4Meuv1KXTX9HeQzmyVdmtYDCrd4M6VNcRRt5HZ-DKzbQA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GDQljEeT"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3ac77270fbfso1027671a91.2
+        for <git@vger.kernel.org>; Thu, 15 Oct 2026 05:30:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792067457; x=1792672257; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=bP097IaFVg+ee8qcuCUPV4BYG3UfgGA0OapDc5inZ7w=;
+        b=GDQljEeTf8vtjbIiPTFqhCIiIHPdYQDTW/4FiKJLjv7cbkg8zA4DmOuTY9VF7NB1+5
+         8YlC1uYLa0vd5WOT89QE8GqPUNwTi8+jAikAFy46uUrkj/HpIJjQesndjK4jpQp4YTU/
+         kGs+6Yqs/AjE323xv17JtIlcTfT8GIqI7PuACFo+E9eaw05FMc62ziaK674xlsDluLrb
+         vxIGL9h2fTfg+yctKAVzrv6yollTYF8A6qmsBqzlSH+1M79B8aFpvYNGMVs/QZBuyXkV
+         v4mt0CxXKV7E+ZB/wrk+eQinkC62Q/AkXBHzn5aTpi3ksjTaTRnDdD5ybz9vxnnchJYD
+         CM+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792067457; x=1792672257;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=bP097IaFVg+ee8qcuCUPV4BYG3UfgGA0OapDc5inZ7w=;
+        b=DMAE9nGUppF6OEdzxuWJIRWDUMO2or7032QYIKsGDuOOxRp0YoQCGKT42ZLQu8eF8S
+         ++M/tNHaZiZoeIrgF4wgBD6WPPtCi9GIkfWtJsin9AEokCfQcwPvaUnr0rtppPVDZKbw
+         SLJsZbaQZnIiAnQazggliprfruPu89+W8TQ5JsNz7k3yWdCLmOPbb//eSK/L1Ay22kGg
+         gQMdRRSrKPbsEFuSWNi22eEvYPccqIMpsERI9eC7OHzsEQ2HUqSLAHs2dcyyzsivNWf/
+         IOFTKx7jYbuY2hy/wAxIDnmAFuug13SQlS8LKy61d2RvDlgTOWQH11D+SAHJqSlsKxjP
+         osoA==
+X-Gm-Message-State: AFq9FYK7zcGu/AG18kftDJxkx9M7Maoe9ouFdV80s6IB+mWBdA0tScWa
+	o/vCZVX9+ypfRUVJQoajab7C1aQoLZdefg/3K5wmPb6+llHCZHREz446C98rYwWE
+X-Gm-Gg: AYBFou3xOecrjKIqkCHEmwSwkWTY9Z3ldGcIXffWYIudLIAxaLAfzS4LaYu/T/9xMN/
+	npyWyJ49NZ7IKRjTnmN6eSa6Il8anAP+oRznDGFso9E4mnHY9rGQR15pg3tvajJOPwKN0BGpdAa
+	qnOXRqcU1PudxxAuYsDKS38+dlyxtfamnWo1wV0f2ZisEiCFEcCmTT/hmo9GzLDTW1FPCqf2rXf
+	7eQ9r0JKtgyDd/B7wBYowUcJOUGfm0wJpvkhfUcLKD46n1RaVWxWJRx6QSO57sDmOIebqkeiKNT
+	JKBkpqjccRy33/mqEz1JCZL5BzHdWtjTBSyzQw7usg2xyG3qa7/1AF1LlLbjCN2I2rhhu7PHCzI
+	pM9+OOTOP3P4zVwiHK2HpA4DhpEWpKgc1qkLx7xy6DR76FZT2z14T+vQYzSlt9H2nLNaty5YeLK
+	VIcc2kVDy/bDJ8RoRPEQLA9rTqdln3aXfO+xDKPvMONx3v2IO9MhMoO68iPo7NmjrI00wcH4s=
+X-Received: by 2002:a17:90b:534e:b0:3ac:7f4c:a690 with SMTP id 98e67ed59e1d1-3ac7f4cbb76mr3119425a91.35.1792067456780;
+        Thu, 15 Oct 2026 05:30:56 -0700 (PDT)
+Received: from [127.0.0.1] ([20.169.94.65])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ac945e7320sm4218700a91.6.2026.10.15.05.30.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Oct 2026 05:30:56 -0700 (PDT)
+Message-Id: <pull.2258.git.1792067455341.gitgitgadget@gmail.com>
+From: "Venkat Ragavan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 15 Oct 2026 12:30:55 +0000
+Subject: [PATCH] refs: fix loose-ref seeking across directory boundaries
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAL71e4Meuv1KXTX9HeQzmyVdmtYDCrd4M6VNcRRt5HZ-DKzbQA@mail.gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Venkat Ragavan <mail2venkat21@gmail.com>,
+    Venkat Ragavan S <mail2venkat21@gmail.com>
 
-On Thu, Oct 15, 2026 at 11:51:46AM +0200, Kristofer Karlsson wrote:
-> On Thu, 15 Oct 2026 at 08:55, Patrick Steinhardt <ps@pks.im> wrote:
-> > On Mon, Oct 12, 2026 at 12:07:57PM +0000, Kristofer Karlsson via GitGitGadget wrote:
-> > > From: Kristofer Karlsson <krka@spotify.com>
-[snip]
-> > > Scaling incoming commit count (200K files, 10 files/commit):
-> > >
-> > >     commits    full  incr.  full/incr
-> > >           1    0.14s  0.01s   14.0x
-> > >          10    0.15s  0.01s   15.0x
-> > >         100    0.19s  0.05s    3.8x
-> > >         500    0.32s  0.27s    1.2x
-> > >        3000    1.23s  1.52s    0.8x
-> > >        5000    1.88s  2.43s    0.8x
-> > >       10000    3.72s  5.36s    0.7x
-> > >
-> > > With many commits the per-commit overhead of scanning both
-> > > the new and parent root trees accumulates and incremental
-> > > becomes slower.  Breakeven is between 500 and 3000 commits
-> > > and the ratio stabilizes near 0.7x for this fixture.
-> >
-> > And worse the more commits we have. So the new mode is only really
-> > applicable in scenarios where you know what your typical workload looks
-> > like. The big question is of course whether we can have the best of both
-> > worlds, where Git knows to switch between the two modes once it crosses
-> > the threshold.
-> 
-> I think this is where it gets tricky to reason about.  The win
-> from from larger trees pays off without bound -- the larger
-> trees you have, the larger the win.
-> 
-> Scaling with commits on the other hand we have ceiling of how
-> much it can regress.  I am thinking that could be reasonable
-> that anyone who enables the config flag for this mode could
-> simply accept that it would likely speed things up in most
-> cases but in other cases they could see a ~1.5x regression.
-> 
-> I am hoping that this tradeoff would then be acceptable,
-> otherwise we would indeed need to add some way of switching,
-> though I don't think there's a single good indicator value
-> for when it's better to switch.
-> 
-> I could add a new config flag like
-> transfer.connectivityCheckIncrementalMaxCommits to control it
-> perhaps.
+From: Venkat Ragavan S <mail2venkat21@gmail.com>
 
-Yeah, making this configurable may be reasonable. The way I understand
-it, the new connectivity check is most likely to be usable for smaller,
-incremental pushes. And based on the above table you have, we see that
-up to 1k commits the new algorithm is faster. Sure, it's an artificial
-benchmark, but maybe this is a good enough cutoff for now?
+When seeking through loose refs, cache_ref_iterator_seek() compares
+each directory component without its trailing slash. This can confuse
+a directory with a similarly named ref that sorts before it.
 
-> > > diff --git a/Documentation/technical/connectivity-check.adoc b/Documentation/technical/connectivity-check.adoc
-> > > index abef02debd..a1d2e9709c 100644
-> > > --- a/Documentation/technical/connectivity-check.adoc
-> > > +++ b/Documentation/technical/connectivity-check.adoc
-[snip]
-> > > +struct verify_state {
-> > > +     kh_oid_tree_t *trees;
-> > > +     struct oidset trusted_blobs;
-> > > +     int trees_loaded;
-> > > +     int blobs_checked;
-> >
-> > These probably should be `size_t`.
-> 
-> Sure, I can change that.  Or intmax_t since we'll need to cast
-> to that later anyway for the trace2 output?
+For example, with these refs:
 
-Hm, okay. Not a fan of using signed integers as counters, but so be it.
+    refs/tags/releases-z
+    refs/tags/releases/v1
+    refs/tags/releases/v2
 
-> > > +     if (type >= 0)
-> > > +             die(_("object %s is a %s, not a %s"),
-> > > +                 oid_to_hex(oid), type_name(type), "blob");
-> >
-> > I'd love not having all these calls to `die()`, as this logic is
-> > essentially part of a library, and dying inside a library is a bad
-> > smell. We do this everywhere else in Git, too, but we're slowly getting
-> > rid of this as part of our libification efforts.
-> 
-> I think this would be a bigger refactor in general --
-> the existing connectivity check also dies as the way to
-> report problems.  This works since it's running as a subprocess.
-> 
-> If this is something we want to change, I think it would be
-> good to do that refactoring separately and make the connectivity
-> check subprocess only die() at the very edge, and making all of
-> the internal library code support not dying.  My first prototype
-> tried to do this but the amount of changes to internal code got
-> out of hand, so this version was the simplest I could make it.
-> 
-> But I'm happy to take a step back and revisit that approach if
-> this is a blocker.
+Starting after refs/tags/releases/v1 can position the iterator at
+releases-z instead of descending into releases/. Iteration then
+returns v1 again, even though it should return only v2.
 
-I mostly aim at not making _new_ library code die anymore. In any case,
-I don't think it's a blocker, but I nowadays consider this to be a code
-smell.
+Include the trailing slash when comparing directory components so
+that the seek follows the correct directory.
 
-It would be great if we eventually deny-listed `die()` completely for
-anything compiled into libgit.a.
+Also handle two related positioning errors. If every entry in a
+directory precedes the cursor, stop searching that level rather than
+descending into its last entry. If a leaf sorts after the cursor,
+leave the iterator positioned to return it, even when the cursor has
+remaining path components.
 
-Patrick
+Add regression tests for shared-prefix names, missing nested markers,
+and markers beyond the end of the ref listing, using loose, packed,
+and mixed refs.
+
+Signed-off-by: Venkat Ragavan S <mail2venkat21@gmail.com>
+---
+    refs: fix loose-ref seeking across directory boundaries
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2258%2Fvenkatr21%2Fvenkatr21%2Ffix-loose-ref-seek-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2258/venkatr21/venkatr21/fix-loose-ref-seek-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2258
+
+ refs/ref-cache.c               |  6 ++--
+ t/t6302-for-each-ref-filter.sh | 55 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 2 deletions(-)
+
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index ffef01a597..a3bc2dc11b 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -506,7 +506,7 @@ static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
+ 			sort_ref_dir(dir);
+ 
+ 			slash = strchr(slash, '/');
+-			len = slash ? (size_t)(slash - refname) : strlen(refname);
++			len = slash ? (size_t)(slash - refname + 1) : strlen(refname);
+ 
+ 			for (idx = 0; idx < dir->nr; idx++) {
+ 				cmp = strncmp(refname, dir->entries[idx]->name, len);
+@@ -520,6 +520,8 @@ static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
+ 				slash = slash + 1;
+ 
+ 			level->index = idx;
++			if (cmp > 0)
++				break;
+ 			if (dir->entries[idx]->flag & REF_DIR) {
+ 				/* push down a level */
+ 				dir = get_ref_dir(dir->entries[idx]);
+@@ -532,7 +534,7 @@ static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
+ 				level->prefix_state = PREFIX_CONTAINS_DIR;
+ 			} else {
+ 				/* reduce the index so the leaf node is iterated over */
+-				if (cmp <= 0 && !slash)
++				if (cmp < 0 || (cmp == 0 && !slash))
+ 					level->index = idx - 1;
+ 				/*
+ 				 * while the seek path may not be exhausted, our
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index 7f060d97bf..826fc1b9f2 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -746,6 +746,61 @@ test_expect_success 'start after used with a pattern' '
+ 	test_cmp expect actual
+ '
+ 
++for storage in loose packed mixed
++do
++	test_expect_success "start after respects directory boundaries ($storage)" '
++		test_when_finished "rm -rf repo" &&
++		git init repo &&
++		(
++			cd repo &&
++			test_commit --no-tag base &&
++			git update-ref refs/tags/packed HEAD &&
++			if test "$storage" = mixed
++			then
++				git pack-refs --all || return 1
++			fi &&
++			git update-ref --stdin <<-\EOF &&
++			create refs/tags/a-leaf HEAD
++			create refs/tags/a/nested HEAD
++			create refs/tags/a0 HEAD
++			create refs/tags/b HEAD
++			create refs/tags/releases-z HEAD
++			create refs/tags/releases/v1 HEAD
++			create refs/tags/releases/v2 HEAD
++			EOF
++			if test "$storage" = packed
++			then
++				git pack-refs --all || return 1
++			fi &&
++			echo refs/tags/releases/v2 >expect &&
++			git for-each-ref --no-sort --format="%(refname)" \
++				--start-after=refs/tags/releases/v1 >actual &&
++			test_cmp expect actual &&
++			cat >expect <<-\EOF &&
++			refs/tags/a0
++			refs/tags/b
++			refs/tags/packed
++			refs/tags/releases-z
++			refs/tags/releases/v1
++			refs/tags/releases/v2
++			EOF
++			git for-each-ref --no-sort --format="%(refname)" \
++				--start-after=refs/tags/a/next >actual &&
++			test_cmp expect actual &&
++			tail -n 5 expect >expect-later &&
++			git for-each-ref --no-sort --format="%(refname)" \
++				--start-after=refs/tags/aa/missing >actual &&
++			test_cmp expect-later actual &&
++			for marker in refs/tags/zzzz refs/zzzz zzzz
++			do
++				git for-each-ref --no-sort --format="%(refname)" \
++					--start-after="$marker" >actual &&
++				test_must_be_empty actual || return 1
++			done
++		)
++	'
++done
++
+ test_expect_success 'start after used with custom sort order' '
+ 	cat >expect <<-\EOF &&
+ 	fatal: cannot use --start-after with custom sort options
+
+base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
+-- 
+gitgitgadget
