@@ -1,178 +1,223 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3D13C0601
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 21:43:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BF04AB3C8
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 22:39:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792100631; cv=none; b=NhQAYa4zDzs+sRraiXuHF1/n85xmS1olQJCf/Xi+TO7XiBxYOqQHvqmKz68/cZ5UKkLndKTW/rj1c8jw1/3vdJURlU05Y+uEN/uw37Tq2ZrZ1X3pEk3QNgNUm3WqltpxKyuBy9pmxkB74Iu0hOkRObk/VDZO76TjF+v273iJqto=
+	t=1792103969; cv=none; b=W4nN9rbeT+9bVFr1v/WgRONTHtKs4WYpNMKg0aE3gAeG3V+hjg8VDvdi3TSglxRW+37jWTjfFaVRhjqVExpGMlu+SPM9ooH82s/Os8QVAb/KJNbFtIf6aHzxwvECLDjopHhhJ30lfu22AGZxmvIsk6lmFN3JvqfjpIXjtILlchs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792100631; c=relaxed/simple;
-	bh=hNRDzrl+nnMV8mvrefwn4tSbD5reY+tHYQsTNo8fTdo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EpMCmGH4LX0tL3zXNa0sSL7Jf29idkvP11QCrEk/K6AurNLS7CB1KaMoQea9e86w/oLK/mcZKouGoOePOiuxMG3OE5UHE37zYUB6QhpmaXpkInvNpbTCJRvI0EJhyMDpYmVdNpBHaQ4pckOwDMIa/BB8Yx6TfvOJK0PryOrTALU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QA417waG; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1792103969; c=relaxed/simple;
+	bh=rKQEjRcIJxK6+oZPCnmq3nuWZURERQrdP5aa+s6zEMg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bCQWkeGWBV0Lcxgmrt5UfkJa3q/mpvQktg22FrtDDNGNc3P0jMcKMadg9AH6dIlplnwv/26WoLl77KuH4lLHEr/g9CAAdxB0h1JSYFnFZAS/rovtkwCR7CQwDIiBIWVOESrpP71FHD7IgYrD3t/pv5kb4lxy5Y88E35B+J6icIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Njx4Hpri; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t0XYbhj3; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QA417waG"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c2dc63f8d8aso1014878266b.0
-        for <git@vger.kernel.org>; Thu, 15 Oct 2026 14:43:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792100628; x=1792705428; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=K574x24Lt53EaOHFyyCemxToXX9+YVxh7N05ey+AxSw=;
-        b=QA417waGOzjpClReVUxXWo1NeYCDg/CMj5jtpihfOF9wa2jdDU4q2RDS2dnb5pW0gr
-         LAXmGPrBism+UZbtykpImFh9f3dVb2mFPM2BUy85izCh/fn9l/bcqX0CHQiMpl2VFHcn
-         r+XE1NnARzOQHbHFVDl4Zrd4aNwwIrWLBvdJ8AQafnkl/0x/gXg9ngK5jT4U779J7Wx4
-         avsfHAXUqhq0YK/YxdVqRfYKiKJUPTRMit8DPDE9Qy+TqK0sh8dZ/Z2wfbfiHfXxbxCJ
-         DDA6CjCMSK1g/ANXHcPVip3tdK7wpiZlTc/DtxUraXOD0H2nMbt2P9+VZfxSlw7kSFyd
-         gdQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792100628; x=1792705428;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=K574x24Lt53EaOHFyyCemxToXX9+YVxh7N05ey+AxSw=;
-        b=2ePQ13pIEg1kLGRD9oc0DjsfPawd/adCJ5lOpuxiM4SMvuokiHHnpF2EvZboGBKfjG
-         BvGQWIwhwwl9Zp4Gcqy7gAdI7kLBQBRqTCSh+xxoFCb8R+RAmRFXNyHbryBqc4a2Q89U
-         UPjB5uKMed0f4BjlIVZ2J1C/0xTECsJ7xyDxvrlshJ0NzQ/eP1yO9O+CXn9SwKprmAds
-         NnSisRgAP0GvavPNuIuc1/modfsFnLqrPVTvH5GZLoxC2LTtxODU9+ZvNzwB+VMSvTKY
-         I22Uynfpf3mVbsvH4a4JohrRqROkqYKkPeT6S+PdKwRkJvW0fH66OH+bDOhtFKkzaWeQ
-         595A==
-X-Gm-Message-State: AFq9FYIxEKXY69W/PDk4XnpaqbjMLgEJWvVIttxghTsSNpXPMxB5a2VP
-	2wAfWqylptmtBZtEUsUT8HHDw9vUDD9m6OaXW+2UlcaCVqB0ZfhObtzJ1JuM4Q==
-X-Gm-Gg: AYBFou0jhAwl1rxabc6esod7ufFQiPFJRDX4/LqhCmXBYWR+V9juUWgutO5LDVhER0R
-	jacnePka0hsfVnPq+Xv79Dkf2UoRs/SeP05ER3+M4pjD5hYtlCZZAXnUICFQoYxdO5O9qzoFp/s
-	3lsN3UIOSq5xYfPJJ/HUyfgwVsopUQBYMlQALRo9w93Md0LYpNnzHuuDNYe2p58qPRopk1l4zwo
-	oiXtCwN/X9fhIzavy6jnpbDuqjCTbmp/bc2ZPzT2Vrlw2YNpdDuRIzOFbxo51zt9q9EMZLJLaNE
-	f4m+NhJydjyGc/Y7g3baGjzcGgNgXVJVzfD0sZHJZMK3L9ufl4hYdPZJkwlPDedMtEZdidx0ZiW
-	ufQoadPRi0Rr0/WKfNDjt5hBzaT1lnVaEiISsi57Popj2cFmGvLlkgxuMVBbADz5t80FBocglvo
-	NllpAqJ3qTPDjWoiXzPKPVREco7aGnjBnYrIE7BZfncHEjf//8z1/IxVNSeb/7rvIGonjQ/VCkS
-	ibbSoXP73bcQeZu5cNlv9zj8E0kmpYScorNRoyj
-X-Received: by 2002:a17:907:6e90:b0:c2d:ca32:2176 with SMTP id a640c23a62f3a-c31a9fd2ca0mr1968030166b.8.1792100628355;
-        Thu, 15 Oct 2026 14:43:48 -0700 (PDT)
-Received: from prometheus.tail8f5cca.ts.net ([85.11.110.37])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4091eb4896sm4402266b.80.2026.10.15.14.43.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2026 14:43:47 -0700 (PDT)
-From: Szymon Wilczek <swilczek.lx@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Szymon Wilczek <swilczek.lx@gmail.com>
-Subject: [PATCH] cache-tree: do not die when the index is locked
-Date: Thu, 15 Oct 2026 23:42:42 +0200
-Message-ID: <20261015214242.1196722-1-swilczek.lx@gmail.com>
-X-Mailer: git-send-email 2.56.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Njx4Hpri";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t0XYbhj3"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0E6C91D00163
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 18:39:26 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 15 Oct 2026 18:39:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792103965; x=1792190365; bh=H7CepotfLV
+	DCurLuoTMPoi82WcAecdz8YlMQ84z5+eg=; b=Njx4Hpri+IAI4D731A2ciD1Jva
+	H9DS3MCsvu/SVFb6hmXDha9HplQFqMBuqhxiqQLEKYIwW48SV4YEuNaqDYqJqpan
+	JWw+a1Y2nuRQ4qotoIVmxGD9XX+6BWE30d034tfZeosh5/ioTboDXauAUd0jdXRy
+	QKmbKXay/fa9bcij9qZ4Pwb3XzkO5LqaXn+POlFPekxzIEGbU6d4DUAAAV2pzk2e
+	as2RPNfJpOyACpCQ/5dgJBJIGboebzMDGNH9tUleyfzf1iy+C+nb35WmjZ1UeLbZ
+	wChxdQuY/Z3ks7XtOQ7CqNdgc/RFQcJuSq+allqsOpDHA/28JH7ornropq7A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792103965; x=1792190365; bh=H7CepotfLVDCurLuoTMPoi82WcAecdz8YlM
+	Q84z5+eg=; b=t0XYbhj3KF21X7rSp3RloksSg/5amYaDsii0WWDpKvRhGelZ6n/
+	aANc1qZjziCtRrkh843bZ1ODavr9YZuKF8KE7XjtOYgMMSzGh4/VAKg/I/ZTTLfh
+	Gdg/ZgffKNG3ryfsVR78KFai38RJYtxEbGutvVfoBinpssy+Mk0w78yWmDrZgWbC
+	palY38WCy+BeaNYF+4kogdlS2X5ZKHMVk8E3QFVdTLxOWwQRUtKyOngWnFtKq2Y0
+	ZpshsTyPpdsepTQVbQCm8oxK3WOsZ2mphSL3M1NiFbdbDhXzGPb8eL4jJei4kE5K
+	8/fKgdq6JSYbDi3PILrDrpwfXMOAIFEeXNA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792103965; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:FYDGeRqaFH++NCkyyt4MFzUWKQsGXsryIbXtDsIxxpBnBNB
+	dj4+5z9UoiMDdAlo5RP6EBCFssnT+oWRE/PB82gNmRic8WFe52wL+b3LScNP+WYy
+	IUIiEJcDVo4ZHRPpAKng6xYizKrYMncMoSx7wu3aBvVmmCxixKkftyQl1AU+odlB
+	QKtM9w5+4gzzEoXzoV+bZJO5OL6TTJcCCC+gY5k7Uw3Ayiki6OIAqDXUivgSgqqt
+	XOa8Rv3P6XbNRaNONR1NMHN5OhzSe2jtvJaPLLAN5/Y+D0Wzv/k4GojE3xBfQjtg
+	THMg3wfYuiqPxDw0IfznMLn98IA2l27oVsdSxkw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:i5QcYgQ4BSEo7O+7okAkLXZsVoASfy8Ykk1s7p2wHFM=:rKQEjRcIJxK6+oZPCnmq3nuWZURERQrdP5aa+s6zEMg=;
+X-ME-Sender: <xms:HVbRahewka0hTApHmqbcETOomNNHuYB_ehOtUGnXNdMpU3o-lZVt5w>
+    <xme:HVbRamGKnS2z5silWvjLCXXr_lQT_uQDUE0vnpSWdxIQEAqjS-Ov1z-qhluAA4zIk
+    ry7GfuKe4Aop87oY8Jz7xWOB1LIj8HaF3SmuSmgtgXcbAPP1342rX8>
+X-ME-Received: <xmr:HVbRai2k5UhWtJ53wfMqIwoPI46xB3ol8PeCgFHsx5e_-93fvpqyh3FHRUJekdIa17H8yM4OkjFWgNTe6jMEmNkQJQNKW4xrzN8f>
+X-ME-Proxy-Cause: dmFkZTGDiViIXr7ewpxqmLwggDZaIYldpgRSx6/qfeyuT/K2Ntba/r94yTC55gdmKuRt91
+    PqfqB6q/3ItV1mcuYq8BU81Q0MkmWs1mAx8kXwONjpuj4apHoGktWoi7VM0cMcG4sm+qdJ
+    j/dJTR5xLUOGf+sLJLkbkzZ7K2d3r91UYiJSQfaBRN712G3KJC39ptgtf9FF/xq459OQfk
+    5nb+uwMzqaChHzGt6wHKOPQVAq/q7iwaQErYUWKakfxflMR0aA8Iz5+04MxrAfzU57TZ87
+    ilGP+uXcHRzSF7cnm9LAcqrzo0Tn+3fuIqRD2xaq0aVDPlPikLGuNTdsvpluEOsL8iSFZq
+    2NVwyQ69X0lSyEDiPy8RP3rf80BEkzBG+0L0Iug0W9l5drjUQa28edXK1Xp+Jbk6e65PLu
+    wrNh0g7w4AMFnkZbx+5R3LfFIxwa03rQGo89xFyXP6xdOGThURAZOAHR9ZzOvX68VpRUdy
+    SkNZq2tvF3B10+5XZC/Q/DDrge0qFI4E7Sjl2YMxw02Zg16CFRkmgM5qhtgsfeaWaNcvfs
+    mdq3OBkVyWxFjDoH0gayZfBbF71kjlxh+Fokb+1PpZTeEwwYvW4lHoE0N33K6tBZbOYu7j
+    hnVcKt/MT/HhUTQv+NwGGJ5sUHGdC5aCWieHVZHABWvx4qi9C+S/Psf7yuzA
+X-ME-Proxy: <xmx:HVbRaml_ZEDBVoArZb_Q06wSN8aYQOsjaY3Lj9sPcN_1jmIvl66rYw>
+    <xmx:HVbRaq9SJG3ZW-ly0W9D9_OxlJGBc1sIEbxQJoSphl-ibqFJglo-Ew>
+    <xmx:HVbRajrIEBqto-pzbWTOmm6kayaCOl8srntssuIgCnWf6fpZGbwolA>
+    <xmx:HVbRarmkumRXsDRisTtUbSUPjT-mNk7omKtW4KUh8zFI-XqWcmdbAg>
+    <xmx:HVbRauUkBJiUZiJG3fS_srUMGHKGu8OdrJNGZf7XccLlqJWNfVDuqSlp>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 15 Oct 2026 18:39:25 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v3] doc: checkout: rewrite detached HEAD state explanation
+In-Reply-To: <pull.2250.v3.git.1792097882327.gitgitgadget@gmail.com> (Julia
+	Evans via GitGitGadget's message of "Thu, 15 Oct 2026 20:58:02 +0000")
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+	<pull.2250.v3.git.1792097882327.gitgitgadget@gmail.com>
+Date: Thu, 15 Oct 2026 15:39:24 -0700
+Message-ID: <xmqqecdqk2qr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-`write_index_as_tree()` locks the index with `LOCK_DIE_ON_ERROR`, even
-though we only need the lock for the optional write-back of the updated
-cache-tree. As the comment next to `write_locked_index()` already notes,
-failing to write the index here is fine.
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Since 356ee4659b (sequencer: try to commit without forking 'git commit',
-2017-11-24), `try_to_commit()` calls `write_index_as_tree()` in-process
-right after the pick has updated the index and written
-`CHERRY_PICK_HEAD`. Before that commit the `die()` happened in a `git
-commit` child process, and the sequencer stopped cleanly with its state
-saved. Now, if a background `git status` holds `index.lock` at that
-moment, we die before writing `rebase-merge/message`, and a subsequent
-`git rebase --continue` refuses to run:
+>     non-changes: Left these phrases alone because I don't think the proposed
+>     changes would make it more clear.
 
-    error: you have staged changes in your working tree
+Those who contributed their time to review this document did so
+believing they were suggesting improvements.  Simply dismissing
+their feedback as "style" in 'v2' without explaining what you
+disliked about their suggestions is unhelpful.  It is hard to know
+what to make of a dismissal that lacks any supporting reasoning,
+other than "I don't think".
 
-Drop `LOCK_DIE_ON_ERROR` so that we take the lock gently, just like
-other callers that only refresh the index, and skip writing the index
-when the lock is held by someone else. This also lets `git write-tree`
-and `git am` proceed while another process holds the lock.
+> diff --git a/Documentation/detached-head.adoc b/Documentation/detached-head.adoc
+> new file mode 100644
+> index 0000000000..d8e59e10c6
+> --- /dev/null
+> +++ b/Documentation/detached-head.adoc
+> @@ -0,0 +1,57 @@
+> +`HEAD` is where Git stores your current branch or commit. `HEAD` can either be:
+> +
+> +1. A branch, which is your current branch.
+> +2. A commit ID, when you don't have a current branch.
+> +   This is called "detached HEAD state".
 
-Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
----
-I ran into this while rebasing a ~120-commit branch with Magit open,
-which runs `git status` in the background. To recover from the
-half-picked state, I had to commit the pick manually with
-`git commit -C CHERRY_PICK_HEAD` before running `git rebase --continue`.
+Differences between v1 and v3 did not make much improvement in this
+area, though.  The phrase "branch or commit" highlights the
+distinction, but it fails to clarify what is common to both, which
+is equally important.
 
-This can be reproduced within a few tries by rebasing a long branch
-while running `git status --porcelain` in a loop, or triggered every
-time in gdb:
+Perhaps restarting from something along this line
 
-    break try_to_commit
-    run
-    shell touch .git/index.lock
-    continue
+    HEAD records the state from which your current changes started.
+    This can be a branch (the "current branch"), or it be a commit,
+    (in which case HEAD is "detached").
 
-If the lock is taken slightly earlier, during `do_recursive_merge()`,
-the pick still fails, but that path reports an error and reschedules the
-pick, so `git rebase --continue` works there.
+and polishing further may take us to a better end state.  An
+important distinction that is not captured in the above (or your
+version) that we may want to cover is that when you are on a branch,
+your changes will grow that branch, and when you are not on a
+branch, your changes will not affect any branch and stay temporary.
 
- cache-tree.c          | 10 +++++++---
- t/t0090-cache-tree.sh | 13 +++++++++++++
- 2 files changed, 20 insertions(+), 3 deletions(-)
+> +It can sometimes be useful for `HEAD` to be a commit ID.
+> +For example, it lets you easily look at an old version of your code
+> +(with `git checkout COMMIT_ID` or `git switch --detach COMMIT_ID`).
 
-diff --git a/cache-tree.c b/cache-tree.c
-index b8cbb5da22..1bea880912 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -809,11 +809,15 @@ struct tree *write_in_core_index_as_tree(struct repository *repo,
- 
- int write_index_as_tree(struct object_id *oid, struct index_state *index_state, const char *index_path, int flags, const char *prefix)
- {
--	int entries, was_valid;
-+	int entries, was_valid, fd;
- 	struct lock_file lock_file = LOCK_INIT;
- 	int ret;
- 
--	hold_lock_file_for_update(&lock_file, index_path, LOCK_DIE_ON_ERROR);
-+	/*
-+	 * The lock only protects the cache-tree write-back below; if somebody
-+	 * else holds it, compute the tree without updating the index.
-+	 */
-+	fd = hold_lock_file_for_update(&lock_file, index_path, 0);
- 
- 	entries = read_index_from(index_state, index_path,
- 				  repo_get_git_dir(index_state->repo));
-@@ -828,7 +832,7 @@ int write_index_as_tree(struct object_id *oid, struct index_state *index_state,
- 
- 	ret = write_index_as_tree_internal(oid, index_state, was_valid, flags,
- 					   prefix);
--	if (!ret && !was_valid) {
-+	if (!ret && !was_valid && 0 <= fd) {
- 		write_locked_index(index_state, &lock_file, COMMIT_LOCK);
- 		/* Not being able to write is fine -- we are only interested
- 		 * in updating the cache-tree part, and if the next caller
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index 0964718d7f..4b7547e108 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -286,4 +286,17 @@ test_expect_success 'cache-tree is used by write-tree when valid' '
- 	test_grep ! region_enter.*cache_tree.*update trace.output
- '
- 
-+test_expect_success 'write-tree succeeds while the index is locked' '
-+	test_when_finished "rm -f .git/index.lock" &&
-+	test_commit locked &&
-+	>uncommitted &&
-+	git add uncommitted &&
-+	>.git/index.lock &&
-+	git write-tree >actual &&
-+	test_path_is_file .git/index.lock &&
-+	rm .git/index.lock &&
-+	git write-tree >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
+We should use a verb stronger than "look at" to emphasize the
+primary advantage of having the entire state visible in the working
+tree.  If a user merely wants to read or inspect a single historical
+file, they can do so easily without moving their HEAD by running
+'git show COMMIT_ID:path/to/file'.  Checking out a commit allows
+something much more powerful.  It restores your entire working
+directory to that exact state.
 
-base-commit: f57c9a73884400380bddd172acc88b569834f909
--- 
-2.56.0
+    In the detached HEAD state, you can safely build, run, and
+    experiment with any historical version of your codebase, without
+    having to worry about clobbering your branches, and you do not
+    have to clutter your repository with temporary branches.
+
+I said "safely build, run" because you had "old version of your
+CODE" in the paragraph, but if you can give examples outside the
+programming area, that would be even better.  E.g.,
+
+- Writers may able to rebuild and locally preview a complete
+  historical version of a book or documentation site to see how
+  cross-references and formatting rendered at that time.
+
+- Game Designers may open an entire historical scene in an editor
+  (like Unity or Blender) where assets, textures, and coordinates
+  must all exist in a precise, interconnected state to load
+  correctly.
+
+- Data Scientists may execute and reproduce a specific historical
+  data pipeline or model run using the exact combination of scripts
+  and datasets that existed on that day.
+
+
+> +There are 3 main ways you can end up in detached HEAD state:
+> +
+> +1. `git checkout COMMIT_ID`, where `COMMIT_ID` is a commit ID
+> +2. `git checkout v1.3`, where v1.3 is a tag name
+> +3. `git checkout origin/main`, where `origin/main` is
+> +   a remote-tracking branch
+> +
+> +Checking out a tag puts you in detached HEAD state because `HEAD` can
+> +only be a branch or a commit, not a tag or any other reference.
+> +So `git checkout TAG` will set HEAD to the commit for that tag.
+
+A more standard phrase for "the commit for that tag" is "the tagged
+commit".
+
+Because we will recommend "switch" to be a way to require to be more
+explicit when users mean to go into the detached HEAD state soon
+below, I think we would want to move the "checkout <COMMIT>" and
+"switch --detach <COMMIT>" description to here from the earlier
+"sometimes useful" paragraph, to complement the above list of ways
+to detach your HEAD.
+
+> +If you switch branches after making commits in detached HEAD state, Git
+> +will warn you that you might be about to "lose" those commits and print
+> +out the commit ID. You can also always find those commits later using
+> +linkgit:git-reflog[1].
+> +
+> +Here's what that warning looks like:
+> +
+> +-------------------------
+> +Warning: you are leaving 1 commit behind, not connected to
+> +any of your branches:
+> +
+> +  48c09f6 3
+> +-------------------------
+
+Your readers can guess that the 7 digit hex may probably be the
+commit object name you are about to lose, but you should use a bit
+more realistic descriptive title, not "3", to avoid confusion.  I
+know many users do not write a good log message, but even a single
+word "bugfix" is better than "3" ;-)
 
