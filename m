@@ -1,96 +1,96 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35F0427F9C
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 06:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B741F4A2617
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 06:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792047461; cv=none; b=A7i187NR9+zI0wpU+HHkua1ubzRqdm5QjEnbgRmUkvY7a6VlXPOP+0pdbqkPavqaPWoarB/SnFJGqjFPpbGFgztBT2f4oMpxYBB2nbbPqHKp9R03bKS49DuzG0cw+ueCIh10WifYCuUqfxQwAwHSYAEsOm3+S4x8Z4kiZLRw1oY=
+	t=1792047462; cv=none; b=S3w2N26hCIG/QMkWknOZoHgRwhm+h0RapHlEueD8nFkOHgHDGJfeSMz9OvX2Un/vslhUVWVQ1YLmgcTKcFxzhLyfwOF1+y9A7NCLPruJkzwmFlFqJ++nX4iYDNeV+7UouzruqA2AyDUCUm8+2ZWTPz5S8X4bGS+EgWn5j1pEw/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792047461; c=relaxed/simple;
-	bh=7mlERE066nWjwU1P47dd3zAdqDqfqrLX1/0HxkYb+kA=;
+	s=arc-20240116; t=1792047462; c=relaxed/simple;
+	bh=R+0GK7TKnwm5QJs7vKaOspHxyXY8m7yTOsUUSpbkVpk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JTsLkUYcKLUSu2eV0KoISeI1Uh1rMEtXsl95SA9TKXZqEZzta2nz4VS8VkbTUqg4iiXa9+e3JOj/W79PjaBrrTa6U9w1jK54R9n6agqZ1Sk/IhGavxEPVA5ObHFWpNLQV78Rd1VLQUiJp36WAra3oeZYCVfRtXxB3IBSWHf4r78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N4ltIklv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ltzUA8rD; arc=none smtp.client-ip=202.12.124.148
+	 In-Reply-To:To:Cc; b=TzjsuLjv44SPc4HZIKMfvdSIDghlKGkeR0rBN03oi3cwfMkgX+db7+yiszCQDihsEmPebZ+qza/WklHe57+Wxf4NE1L4QnSvKcxPA5IqbPHop2PERQhB8ZF0QCl3UaEE+7TUwWTZjr87l2XrhydGaGDKccTSUYMszr+rB1O1aI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Q8aJQ/g1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I7C0mVgy; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N4ltIklv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ltzUA8rD"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id E58C81D00132
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 02:57:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Q8aJQ/g1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I7C0mVgy"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 01D6A1D000FE
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 02:57:34 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 15 Oct 2026 02:57:29 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 15 Oct 2026 02:57:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1792047449;
-	 x=1792133849; bh=QDPAwsrvRmFwTwnttqhGpi8RwfmfDe7ZffaQAQeCNEI=; b=
-	N4ltIklveVGCaqiC9U1DKFBNdkWbOYLrX8B2yj4fcwypylti9DPD0Od8xMsJYPwy
-	FGIJphTFeFP1bQZI8znT/dVplvR/va26YAUb9UzHGD8lwp9+9gMtdqx2rQacM0LT
-	K6KkQEnGvGd1OhCEuCH6YvtHTJYOUyl5Dc+PaQlChVtYgKPnhl0dtgMn0+WdqMOs
-	F1NSOMaHD5gNp3OX2H1RyE5pjiGkNWrER6kOoe6ABpUhZHkfku/jE40w8ZL0NQ7T
-	nfM/kQBwNrNBlKE7h1umoKnaOVJ4T0yDbIiTIwc53lTEG5E2x/Rp3XiuCYpgbj+4
-	i6PawDWC3E7rZDKMXMK+AA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792047454;
+	 x=1792133854; bh=D0YKT16gBACNrffq5OoIFx/5eeIrBSpPom+i/MVDFDE=; b=
+	Q8aJQ/g12RKAtPBPcG/kEbDPaRpn/z37ZLftlMexvDCwus6fISvddHvEtdEGvarg
+	ofmp+yyGP22qkHEQxXQXIFK1sarvZ5b8yQuRY4ti8D0XTXgEOFLaMxG94Twj6l6x
+	PaXZ1Dgkgolqh9vVbsM1o9v4DTclHCFNUzxurCnlRD2o0CQDhprE7iClU3W6Ykzn
+	G0xsIioa4poBN9VZfNcpDMDnGrY/VxiUjfx5L7nRIUcRY3i8RkBz5wv/+b7uonrh
+	lqcLIXJiezMb0as6gQyeyaj5g5paqiiKNP68oa5co/XZkAh/3xPtMo1dWuK0hK+Q
+	iiLpMv2zcNvTucbYirzjJw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792047449; x=
-	1792133849; bh=QDPAwsrvRmFwTwnttqhGpi8RwfmfDe7ZffaQAQeCNEI=; b=l
-	tzUA8rDfPv6slPAJ8K7l0gHj7ZBe4CB3Yh5eqw3OLwSdsjktHJKAuuo7CEr4R50/
-	ASFoJtawzy2MQI8OLPU7jonScyFoRjk4XRKeoExhzRbAxf7sPeaQCThjQI1RqCiv
-	W4kmlLx33MENcX13w5UqMk9C7ol6q9kL17gvSsD1aXw54R18uoKR3RU3LR+Zgy7J
-	C26bzEzxAoCgA9LI6c984g3RZ/yxyBJqOJwKBgdeFcK9RGa2e8BqATENJkjGA7fj
-	SV7aPP704Yngpdm2lIqJK8bRoYuJGkv6/QEdbTdYQviLa+3GZcdehLIvo/5K33AO
-	23vA/GseWXy2YnOGCiQXg==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792047454; x=
+	1792133854; bh=D0YKT16gBACNrffq5OoIFx/5eeIrBSpPom+i/MVDFDE=; b=I
+	7C0mVgy84PKZlQSMdTRtq5MkkQM3kLEkVGsodi7ta3OEystSZlTuVPC5cpUObwsE
+	B7MnmfJr2r9Pn6bMRuJtMrua5W0+vXk4Kgu8Q/PXHlQEpGG7uD4d+Bd2jRPGbczh
+	rRGiyJmengbDRxwVcnEQJyk2MPeFddVzLO3uRAw+k7yIvaO573iP3OXlUiuKYwaQ
+	/UAsq4C83qvNKED7nI1PUBPwo+0SMKk0b7eNo7Fwza9HJ3jfqfl78vWBY7eJ3yE9
+	/ooBDsjNdY+ENsKU0I5QXoXHgFKwaug4GRPGM1B+ZpuElHeVome3rclQcHOvir5I
+	7DlY1WvG18f+BWywInVZA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792047449; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1792047454; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:tnqDEKOYyE6o/fYkMb0mDkveBuJRtpSiULvWJ4m4Cx0799p
-	vm/QwFKfk0Csroy4tPIVAYKcZYcJwVhpM7USE1VbO/tiuuHmelWXdTvrjiOEBaPi
-	wgoWdXwSpBkdlvX+tZhyVzekvUWoqKNKfhRWCUFkC7a9rTEVHtS0u85tkiZlppx4
-	5a9PwWtxEnkCCDVwQ/B5mf+mLXmQJ2M6iD2EQqADCpmk1yZbltrwGrUDBusjgOEH
-	PndY6K131ob71+wXRH7Q61zTJqJuQcScxKdrRtzaz0NSM6k539RPdNlrG3S+xI3j
-	MfzIg2BNw+Aq95ZTGTVrE9r98bA5gBkjlZcWPUg==;
+	s=fm2:rsa-sha256:i8AK+bdB5nV6vEZ1ZCW3qKFban35COLODTbtDOUjCTVI1aY
+	hUJiQYUfjtAupw04hnmw4YhfFHoCwK1A7c3d757/Oadq+JY1U+TIg35/O4eD53wa
+	jbCuPl7tINl4kdaw6aBDY6WYMirPyCNPJryTrYpDt55ZXq4zX8o09jzDqJG0W+E+
+	PR5XbJniqsSFEr09dWVXkRvnyCUkt0sAxPPWzigAuAvwn0ygRd9WsbpZZEZJ6Ifb
+	chhsNdLD0Cj9MuO/kgaNRLkbUZIeJC4bD8dnIQtBopwEaQOhlbk36k5JaMK9ytDs
+	StDOR6m2qARXBvOu76bn3cozujoA/t9b9XwrtMQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
 	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:yL93i6meWIkErStrmD7Sl4BUJcOcof3vXu1z0FNG8AY=:7mlERE066nWjwU1P47dd3zAdqDqfqrLX1/0HxkYb+kA=;
-X-ME-Sender: <xms:WXnQaomEGGZwyaxug7EOkfwfu3pqNC1YZQCGLqXn5DFkUpAWzkKGrw>
-    <xme:WXnQarjFQHP6Ly88yRRswOt2-eFtxqhlGlDX39dJZv0iER3fugr9gJDiVQoGQvwVg
-    yzmNpN5UIMReLQ0-Qsb4yOjyGd39KFIFAPV9K7-iNEt-_GyX_ENGNQ>
-X-ME-Received: <xmr:WXnQagfammKnD4zVomzTB_wcENy56nDs9CJEhGMB88Uz20qvSvpPk22JRkH8C_dCO76FjB0>
+Message-Instance: m=1; h=sha256:zM6wdL70tfUjuO+GretM/D+fseuChuyqrTz2hOzzThw=:R+0GK7TKnwm5QJs7vKaOspHxyXY8m7yTOsUUSpbkVpk=;
+X-ME-Sender: <xms:XnnQaqDeuKuLTrhh6Hj-8PecqPd2O_zUFnivdEH41Vl9kohgkliEKw>
+    <xme:XnnQaoPLqygxf1UzZyoYTy-f3VMgMnNFJ273mwXGl0BQwttVsdU_ZaNhcBFKW0Bn2
+    81rFj00MMWaBzWXzBAIm7h8Mfhogav2nKJ2NWXo5EMUHf-HFQ7k1zg>
+X-ME-Received: <xmr:XnnQanazhCk8ubH8F1ZCVooKvtEDTqpKrNioNxv7yZWasldq5lWSQICvRl2B7-uHkrWHRws>
 X-ME-Proxy-Cause: dmFkZTEtUvAGxsLJTUwND9VYUlYlcfzw4leHbfFICa9Zbzi8Ve0xk99hOMrC8JWgyMNjpL
     d8OU2RGTcaPEzrBKb4q0VSV6wqeZkD07LkmT9JDuWFN84fpWt5K8Q+GRvd1lcDDbz/LoOV
     kwt6oy4K98UcTaAIFJE2C70gLxy6yrO6zgASwulP2/gUH3qV0wZ6mPTL8dHHme0JzPWTgK
     HUq21r/Zut+zgaXkWH60B3u6v4T/jnwvKyPxQ7Rlghx4TlScz7P3jdjipOCLu+qNDnQzX3
-    18xZCH1OxjLia46gLGM0s2D2lumAHp9sZQUiVmTTqNhG04DcMBQQ8yDrd85c+15nCEhKUx
-    lfwELo9OrpFlLHpvkUTTAlH6d5IfZx7mMKlA3NVAOJvnVL/zXCmFAhhroFxxyJflkJ2Zx2
-    8MdS27RwJpvORQsGt3iz72JjBYxFmtumehY4SpIDiCCA5lcwf8uQy6he3Vzo7nfxcaBK5D
-    btO8JhKdor0yIF0Nx6D0rfXMvKuViAkSt5ut5zjnLY8MrLBufoVMpQNEIVYXhqK8OgRxSQ
-    abLwwsfDzUAeSw+yqfW7JyMvqGtgPE17qXgBWwsRgVof+ywcUXbFiS1Vge3byBdD6KtX+v
-    BwnTjrA7AA6HlyaUpwNws5BXxHJ2lCiF2lssvI6kcPokKBYgjgV/K7h5yIDg
-X-ME-Proxy: <xmx:WXnQariOMhCD4b-hZveVkD871j7lZSMF8uLZAO91PGAdNS5h-Hj7UA>
-    <xmx:WXnQaozj1dlf-FfCIlU6e2brYmj3A1W8zCLnF8_RQhZxYxG1k3tOtA>
-    <xmx:WXnQanPJwabc6HMjUARtl_9S6k7Zvi8UqHVoqPGDoMmw36Fw9UNvuA>
-    <xmx:WXnQapWOjJleD1f_quv2QGyIvfWzngNf4N1NhngWagXUolH4Aw9tEQ>
-    <xmx:WXnQanWkTnHs83G_qgISj3CXb2_POFY-AFrpEr7G3yyGRq1toaIdu3Na>
+    18xZCH1OxjLia46gLGM0s2D2lumAHp9sZQUiVmTTqNhG04DcMBQQ8yDrd85c+15nCEhKlS
+    YE0npMVEbtFRpH0sTRC9mSJCTO/XoOuVHZ0WQPNf4pymiXdHbwDdrS/9Ya2BxvcPQx4B6h
+    648gt+IPfUNncYDqsDMWGBIKPN+MvfYq0SD8lVUetSfVjdkZqWzjj0h/Yr80KGfDDgwgbX
+    PHS8ifDFEXolDzfcxmx450q3Qw61yI8qy8Gw8XVvZYJU0Lki2iL81NcGndubYSzS0S3zmJ
+    2ewzsWTYTtlM3fqCdE0w2GqH9qP0AWhFr4kqEeheD9QjB14vP6Uu41U3sp2K7UyNAaWTgt
+    5D+7PUDEDaKDKJw+QbM8j/8VwdBJ2fNl5B/QdjHoGn6u8NpvZoy6ezjXj/Vw
+X-ME-Proxy: <xmx:XnnQavvccY8CWDzndO2k6B-fdNfOHIqLSAHGf0x7k8ODTTt4fptSIg>
+    <xmx:XnnQahNo3ic-eTluNLxSVLJfSE_g2I0OHy0oXuzyVSppq0vDwtpyvQ>
+    <xmx:XnnQau6A58UrVxVgniUQfZNqtIcprBfTrP45Zc8kLzjY2LEVgF7t7w>
+    <xmx:XnnQavQv2I6W0L1V5i02xzCT9RroQkRW4WtRHNpJ6DDdINNrSPX-yw>
+    <xmx:XnnQapz5RpPr-kcoIfIwR4qR9T2H5X8Bem6P6jVvILoW8wfEwXj_6DOh>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Oct 2026 02:57:27 -0400 (EDT)
+ 15 Oct 2026 02:57:33 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0addc990 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Oct 2026 06:57:27 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 570e67a5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Oct 2026 06:57:32 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 15 Oct 2026 08:57:14 +0200
-Subject: [PATCH v4 5/8] ci: rename linux-TEST-vars job
+Date: Thu, 15 Oct 2026 08:57:16 +0200
+Subject: [PATCH v4 7/8] ci: drop now-dead Python 2 coverage
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -99,7 +99,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261015-pks-ci-housekeeping-v4-5-c2c88f1b198e@pks.im>
+Message-Id: <20261015-pks-ci-housekeeping-v4-7-c2c88f1b198e@pks.im>
 References: <20261015-pks-ci-housekeeping-v4-0-c2c88f1b198e@pks.im>
 In-Reply-To: <20261015-pks-ci-housekeeping-v4-0-c2c88f1b198e@pks.im>
 To: git@vger.kernel.org
@@ -109,60 +109,60 @@ Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
  Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 X-Mailer: b4 0.15.2
 
-The "linux-TEST-vars" job exercises Git with a bunch of non-default
-options enabled. The name of that job makes you want to cry though due
-to the weird upper-casing and because it doesn't really tell you what it
-even intends to do.
+In the preceding commit we've dropped the last job that still used
+Ubuntu 20.04. We still had some conditional logic for that specific
+image that made us use Python 2 instead of Python 3, but this is dead
+code now.
 
-Rename the job to "linux-feature-testbed" instead.
+We could of course exercise Python 2 in any of our other CI jobs. But it
+reached end of life in 2020 already, and none of the distros that we use
+have it packaged anymore. Furthermore, it seems like the world has
+finally adapted to Python 3. So it doesn't feel all that useful to still
+exercise it.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
+Drop the logic and instead use Python 3 unconditionally.
+
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .github/workflows/main.yml | 2 +-
- .gitlab-ci.yml             | 2 +-
- ci/run-build-and-tests.sh  | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ ci/install-dependencies.sh |  2 +-
+ ci/lib.sh                  | 11 +----------
+ 2 files changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 6d1e37c8f1..60f262db39 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -408,7 +408,7 @@ jobs:
-         - jobname: linux-reftable
-           image: ubuntu:rolling
-           cc: clang
--        - jobname: linux-TEST-vars
-+        - jobname: linux-feature-testbed
-           image: ubuntu:20.04
-           cc: gcc
-           cc_package: gcc-8
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index 7d972f0c8b..726c1c1865 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -42,7 +42,7 @@ test:linux:
-       - jobname: linux-reftable
-         image: ubuntu:rolling
-         CC: clang
--      - jobname: linux-TEST-vars
-+      - jobname: linux-feature-testbed
-         image: ubuntu:20.04
-         CC: gcc
-         CC_PACKAGE: gcc-8
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 23e87cbbd6..611bf6e56d 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -22,7 +22,7 @@ fedora-breaking-changes-meson|linux-breaking-changes)
- 	export WITH_BREAKING_CHANGES=YesPlease
- 	MESONFLAGS="$MESONFLAGS -Dbreaking_changes=true"
- 	;;
--linux-TEST-vars)
-+linux-feature-testbed)
- 	export OPENSSL_SHA1_UNSAFE=YesPlease
- 	export GIT_TEST_SPLIT_INDEX=yes
- 	export GIT_TEST_FULL_IN_PACK_ARRAY=true
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 8783b48951..4b1733ad15 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -61,7 +61,7 @@ ubuntu-*|i386/debian-*|debian-*)
+ 		tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl \
+ 		libemail-valid-perl libio-pty-perl libio-socket-ssl-perl libnet-smtp-ssl-perl libdbd-sqlite3-perl libcgi-pm-perl \
+ 		libsecret-1-dev libpcre2-dev meson ninja-build pkg-config cargo \
+-		${CC_PACKAGE:-${CC:-gcc}} $PYTHON_PACKAGE
++		${CC_PACKAGE:-${CC:-gcc}} python3
+ 
+ 	# Starting with Ubuntu 25.10, sudo can now be provided via either
+ 	# sudo(1) or sudo-rs(1), with the latter being the default. The problem
+diff --git a/ci/lib.sh b/ci/lib.sh
+index d99e7b9da1..3ec10488d4 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -335,16 +335,7 @@ esac
+ 
+ case "$distro" in
+ ubuntu-*)
+-	# Python 2 is end of life, and Ubuntu 23.04 and newer don't actually
+-	# have it anymore. We thus only test with Python 2 on older LTS
+-	# releases.
+-	if test "$distro" = "ubuntu-20.04"
+-	then
+-		PYTHON_PACKAGE=python2
+-	else
+-		PYTHON_PACKAGE=python3
+-	fi
+-	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/$PYTHON_PACKAGE"
++	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python3"
+ 
+ 	export GIT_TEST_HTTPD=true
+ 
 
 -- 
 2.56.0.212.g129ede20d9.dirty
