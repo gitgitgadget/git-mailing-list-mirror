@@ -1,113 +1,62 @@
-Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C024249480B
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 07:02:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.176
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792047774; cv=pass; b=HiciE07W5XfQTiRQ9x47nsycu833dj6dLuAmlnWgMuaMW3ftkv1nX4YYZNxc4rsuXy/xtv6YCMqLgOXjno+rttJhlKWkz4Sgk3OTUcJE1vrQVoW3rNKn3po/ONeJsRzzrDC1DML99N3ylLTjAOmZxDmhzJFgkbo9E53kvH8t9Wg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792047774; c=relaxed/simple;
-	bh=uWdo1dlc+QYlC5/ArC+eCkRr5tVDUliyhws7E9EbUUM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MtQZZ2tD96T6LnOgV2hRzcepprbONjTvaNFjKdDUXooyZ9AkicYvH5i0YtYlFeyUgLhQn3KWtyaz98uP+/tAxiMrZWZ3CTgTi3lz5I8euTEVJN0Fcc+TakgDUP9jqH1R5AD68lMHrfie2ZRWcJhKD3ZiEkPGaydC2MwURiJ5LtM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mm/Eub0g; arc=pass smtp.client-ip=209.85.221.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C394A5C57
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 07:06:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792047975; cv=none; b=g6pInnrcv8juysMvtEM7cDDuQGNx8XiQlvzEcmEg1nfcckMvCIwz6nUjP9Xsu2RhkhUln0Yk2ggH7y8eXtu08WBHrqK/WtIlZHUcCzZ2JU1NRdfN3UKOBJ7maVwfZ0Y9hMcsgB4xEPIysSyJZbrvSp9RW3BQW9iAsCKx3fOjjZU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792047975; c=relaxed/simple;
+	bh=S2FAU2wPBNEWUMYfg18p+uhg1Wb/wW5bK7dQdcymKDk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FBRb0c81H5g2AcichOdEya76gNZJ58uAQQbO1w7P743K3CSebfKu36crISHPHR7uvuAJJNUo7Rt4MtZXuSe6zV4KJlHa+57QXghJ35qCM7xU7BlnYzNvJLqbzdpqOpmV5WMASj4Exul0TIzwqtW5asfvGxnSbBi71xbZDCkRCvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dL4WFEZL; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mm/Eub0g"
-Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-5ea63f01606so121923e0c.1
-        for <git@vger.kernel.org>; Thu, 15 Oct 2026 00:02:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792047768; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YALOehOWeW9IxWZytJSTZkZVywd15mEBZMAyqcWz/M87m0RdqDTxjKQCd7MRrNy5Sr
-         XfJQAJJ6PyNu+HaZRJAYOaN4ucVHMCon1Uec0/xgAnG6Ja6z/h7Zcna51evQHBsC/YIn
-         eBUImtQM05o3QjV6RZ0GsePf/2nlpi941j2f5U89JPIcsT2EVuvWxidQgMhAaZSfXNS6
-         5zulgozNCJ4HO56MWrZncgqRwmlGhScIXXfZW2l3zAnokOHRwN/LE7BG/6kX3zZlPkRf
-         QjdQ45+7cbVZUsKOChTpaxpm9yfYenXxQ20/XKg2+sMDlQDlGAQtbRjG0rblq2YIPziO
-         918w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=5ImeTwfSRWzgVjk4g2S09ldxM5TelpNvUtxrV/OVwPc=;
-        fh=hQQG8E13DbOPT8+z3ynd+cYIwOJpJsi3zJnzB+tANps=;
-        b=gOGNTl31e/tNdHeKnYWkQ15rw2QRqeoMrl6ABIHKL3+OCh667kO3efbgtFNBG/Lcj0
-         B2mzngMwyqfCVJY74OIBn9DspUZa0ekkcMGyMsYRAwCnaAF5HuMY4BIqAn5vPxuEWNG4
-         NyxHCJ5WmqGJCGiJeB9YW5gchacnk0/PwNujcxKLWlkJHBiS2m2p8p3jKhDeo6G2PxQf
-         sskElKING9xV6gDcvrQ4sj2KmlsAwfRJL/iz/ifABpa3ak5BB8k6ZNU1+GpPvQvEnLNw
-         TA5NucGQ9j2HSgefW7rE55fNSiV2Q1SemoRQUh5ev7xzUPYY7RyGj2OKz5B5iqO14GdW
-         nXTg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792047768; x=1792652568; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5ImeTwfSRWzgVjk4g2S09ldxM5TelpNvUtxrV/OVwPc=;
-        b=Mm/Eub0g3qnfVYnu+QfOLEeHtpmLvdObyT5TEapDrLp/ARqCACmfnFpmaXbMuNiYku
-         w076r5xRSbFuBHV6zB5HCs2+NA0aLaN6fIYXpArdiuXtCoh1UA8H1DOYPBOecuKnFD+r
-         6e0KFK5C40PN2fswrxigM35A/H8oeD2/XsWW2cvNwsz7nV3HPoZE8mIVMq0jrxlN5Nci
-         Kn4hqF0uUYyQXJStu/1sI+iWVDfIbxoz2fjMShJ0iGfg3IBt+IYujedmlI87K+DrurO4
-         zaTinVexESD72/BPqQrzhldTzJXzh2XeTSH5oBeVTJClsJ3SIohyGgQ2r4knWfM30kBw
-         HZLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792047768; x=1792652568;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=5ImeTwfSRWzgVjk4g2S09ldxM5TelpNvUtxrV/OVwPc=;
-        b=B7rPOqgPKaHlNN/0zf3LZGzncvUMc6Y9rofzuhpKJpVCY08lqjR132oQy26NTFHmTR
-         IWY0pH2vJXweeTprKpIrmUlX26TvKz3Ys90cOXRnBaKwoFGbTUoijawkRl9YJYm597Fu
-         dzmcslB5c208BhsNf+kw00PB6gbowCdE1MEo3MFhjTpLlZhbLWl6PlM1UWj7buNBcmOx
-         YYFgs6qagoS2FR2BmtZAyozFqf59pQWkEetFDeSqmXGx5KfH7Tnh5t+/To/AuZFyZhbU
-         X3NOs1TxZNEssL0TDFlDwmFnCtPuBtYoZ2nGFA0Y7fOsp8kJ+z9MoBQiIVZW3F4CrkO/
-         fyHg==
-X-Forwarded-Encrypted: i=1; AKwUvBzyqJMa4TSpWhgH79Ts7Zpr5woNuOoPlySNShDn1maFUxl0qQzQw/VnN55ILBlnvLfd47s=@vger.kernel.org
-X-Gm-Message-State: AFq9FYI6YTNVE0icN53oJ1Qt9G8gXMk7Kyfw2bfeN8NrKdgjJZNd1Xkz
-	epjU4gHhKV/+7uagjeKfBxjet48nXJ59ticprW8qHY/UkCIzaypVL+W8XrqCwBZ5C6NKR5gqSKt
-	HsBZKSzMrvPpj1ldRKp0CMOKOxYi7Q+0=
-X-Gm-Gg: AYBFou0VFUbbO4lg2fuw0cHbfFbnFwTK+jMZo30AxIdQqqZQ6dXMPbHlhCdoFOQpPMV
-	58abfHWeMNqpJw2fiLikkjknTZZyS0xAk1bw8tuTlVk1VDJ7iemWOuctOqXgL65ply0NGOIjzI1
-	HUim3ACzNn1IA5a7FmoszO7lEzvnWoXaZd9Yz69YUltQiYSfAkvXfjEFvtI7mu0Ue6iiF+nbRYg
-	R1Nlhes8ivVVF8izVfCfhTOA3YwG73nDy6rrb7Mkb7Q78Q54GdKPVM3VSzJswSsmhO48MWp5CO/
-	6pVj02WnYFcfijHa6tHuVgt8j71FKsmJAxFse6c8wo3AO+DBr43C3Z9z
-X-Received: by 2002:a05:6102:f8b:b0:7a7:5355:7fb6 with SMTP id
- ada2fe7eead31-7cb3737be51mr3791131137.24.1792047768349; Thu, 15 Oct 2026
- 00:02:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dL4WFEZL"
+Received: (qmail 75295 invoked by uid 106); 15 Oct 2026 07:06:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=S2FAU2wPBNEWUMYfg18p+uhg1Wb/wW5bK7dQdcymKDk=; b=dL4WFEZLpk4qLZsriLbewicS5upW07aShM9cToS4kgVfjYf3BhcKGOJMDlRVcluI6kn1j504I1c31gzyWbHO/yMLAVrCoZG8N6ZU0TXty4hTw2Y2c5yqZ/AGoP7huRndbZquk3Oy8os88bd+uZepOFhw4yW+q7yMAvjvm7J7JUz8q7lvPfvpMdM/6icqf0O1Huxsm/ckD+IiknmDpCUZN0HVnQKCzVft07grp1dwHWLZMW/e1eu612d0Zl88/3mqAFW5XSDEUXKunIZWIM20Oeq72F5WHPC6NX4AlVuMMDTsT7rxD/FCGnLem4+onajgV0x4VpdWxlO9CXzkCELXwQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 Oct 2026 07:06:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 48807 invoked by uid 111); 15 Oct 2026 07:06:10 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 Oct 2026 03:06:10 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 15 Oct 2026 03:06:05 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Todd Zullinger <tmz@pobox.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: [PATCH v4 0/8] ci: some housekeeping and modernizations
+Message-ID: <20261015070605.GA2556608@coredump.intra.peff.net>
+References: <20261008-pks-ci-housekeeping-v1-0-baf015c589c0@pks.im>
+ <20261015-pks-ci-housekeeping-v4-0-c2c88f1b198e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2254.git.1791962806807.gitgitgadget@gmail.com>
- <CAPSxiM9-F-1XKvWeEnBk=_FyKyev5pfnid4fiN-OjLYLnCTWVw@mail.gmail.com> <xmqqzewgosyw.fsf@gitster.g>
-In-Reply-To: <xmqqzewgosyw.fsf@gitster.g>
-From: Shashank S <shashu8660@gmail.com>
-Date: Thu, 15 Oct 2026 12:32:37 +0530
-X-Gm-Features: AclHuK8_fDbqHLtcO2Nv-sBrhxZHcd8PcjD49j8_oKPX_fttWvofYY_VsZFV7kM
-Message-ID: <CANHmUQR7TJ7VQJVnxMpJ3KNL5DLoMcJFR_jcg_64Vn31EVgJLQ@mail.gmail.com>
-Subject: Re: [PATCH] t0081: modernize the code testing whether a file exists
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>, 
-	Shashank S via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Christian Couder <christian.couder@gmail.com>, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261015-pks-ci-housekeeping-v4-0-c2c88f1b198e@pks.im>
 
-On Thu, 15 Oct 2026 at 03:17, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
->
-> >> From: Shashank <shashu8660@gmail.com>
+On Thu, Oct 15, 2026 at 08:57:09AM +0200, Patrick Steinhardt wrote:
 
-> Since many candidates are working on similar microprojects (which is
-> fine) and making the same mistakes (which is expected), perhaps mentors
-> should tell them to read the review exchanges on other candidates'
-> patches and learn from them, instead of or in addition to giving the
-> same advice repeatedly.
+> Changes in v4:
+>   - Make the test in t5004 work both with SHA1 and SHA256 by forcing the
+>     repo to SHA1.
+>   - Link to v3: https://patch.msgid.link/20261014-pks-ci-housekeeping-v3-0-04c24e1f480d@pks.im
 
-thank you for the explanation and the review , from now on i will go
-through the other candidates patches and look in to them and  mentor
-reviews in them and learn from that
+Thanks, the updated patch 1 looks good to me. I think all of my other
+comments on v3 were things that were either non-issues, or things we
+decided to address outside of this series.
+
+So v4 looks good to me.
+
+-Peff
