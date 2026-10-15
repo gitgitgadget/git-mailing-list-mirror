@@ -1,151 +1,113 @@
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEC33E7640
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 19:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77AB045D903
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 19:56:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.176
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792093401; cv=pass; b=Nd0ttsbVl+ygbuYpaDBn6CvMBijc9PPRK2zhgIG1MQghmqTTOY/soGHBnAxL1KykOD6mm2cRYBknkA6iG7pdwVUKt2JUEMxw218jPVlj6W/RGf8Dq35f7vNA7aDM0xC5uB8EJYjjvtJwyQtQDeGLDpQUrZBIRIqkarVBHeJpNlU=
+	t=1792094215; cv=pass; b=UjuCoXcRn/C3QX0HhrN8towTXi69VHXC6ZSqyY+3DNjs0cAYFndSv0Xbjduhch/QOj3w6Y7FDYLuh11bKz4exfO0TFkdz5X00I/61UCAqcUFaFElG27HfbdT+H69XHJg+owVRbpDtfcSk9W09G2rxaGStukcEiCdHT/OzhqnQxA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792093401; c=relaxed/simple;
-	bh=t8DPzbjSzZh5PNJyLUMAaIkwjJn8uM/67cW4jXSNEPA=;
+	s=arc-20240116; t=1792094215; c=relaxed/simple;
+	bh=XNNTzqx9UggZ62Rp6aptR4R0tkM+JdjAH/9+NiqWW34=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AMdLIimbC3CZzhSOiZCbLlTtuqO2UWvJGMJ0TXEaBC4T43pJvgDLiNFaT9uG9bJIdn6sUe4CkbQR6J22VYZmJCTpaLHY8DfsMQlORPgptGFpPf30DnTsLy6cpsxSZ9kvNXU/zR/9BNdVh8rZzlyPMuDz2L26BGi5oI2AIg4NPd0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bfa0o3fM; arc=pass smtp.client-ip=209.85.161.43
+	 To:Cc:Content-Type; b=OpEbc0AXjWCihz5Svvl5WR4pvuvzcpQLnYwP7J8RmyipCdFglSPRUMduw/GZLKmnFLK8yoYYgMch+C2vI9qMyW+1GxuRPvkIXJ13nnCgxb8/8ZhWCSMoijXwdR85IkGbGhQoLSodb4kp3yUtJe5spzYplDzlb+gdz9kWyB1bjIo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ql1VU/+9; arc=pass smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bfa0o3fM"
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-6de1ca1b05aso3760568eaf.0
-        for <git@vger.kernel.org>; Thu, 15 Oct 2026 12:43:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792093399; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ql1VU/+9"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-8b09e07e149so25826267b3.1
+        for <git@vger.kernel.org>; Thu, 15 Oct 2026 12:56:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792094213; cv=none;
         d=google.com; s=arc-20260327;
-        b=Qwp0+SbfoJLwH+zH6o4i9Wq7/KB0zRdx063LC7uAAJXBDvLA0vQctmAZjEMKyGXtgZ
-         HpeTvGSOxmijXyVmJW02BjOC5YshacrawuhQRRYkgxD7mDQlLVY3RbEwwlcBvhaWObKy
-         ysDCIupcvI0BlZmou89COQQp1vNJmFGHYWaDd3ARfn0mABvRosP9GiVgoVKkih+nKw+f
-         wJnTmYj8tfdwtyryIhNuquv+1T08MI8fAQZ2OCNkRT/W620WmdRhiqTli1ZmUFVr9Pi4
-         kEZW0PWTIJmC2pKI663uCDk4SAOR5L/0aJm/VJY6UP+zIE5JTp4nufFyaKPsa3VOv8rO
-         8tug==
+        b=l8LOsvPv86YYoFoDZ2e4EwsR/sUhwQU/F+1KB7Iih0cqHUxyb19goHfvLP7Ce2SfVd
+         qNKtBYAV7r9kHzBejTm9KNtkZagliEK98sIGzL4WbKwCqreL/pHFIlrTn2RYLZ8luSmE
+         oMAF/7HyLGbMrfRjaUuPwn8zbyVakp1HzexwYWaRSGiPiC5r258/H241on/Ghr3mvJhQ
+         JN8PkVSYs6QKDoY1Dw34PPfvxWANbypg6JG7B6Z3a7YOnsFKOLwWu7Zlp3liZrv+8xzi
+         NBCxBcT859b2qN7dq3UVBV0RgMwM/wKrbtz/4eC/mmu1bL+Q781PLh2l9QvNQyzMRFKe
+         hikw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=utlTfKViyjBzy8R8woSxA1BTcHpgztw0a668U3yPORk=;
-        fh=G0JnDLNJP0BpiWLSj76ohlq/MxrD0p4yG2Eg1RehNyo=;
-        b=ERSd0fcEkAnGij7D4EcATQVgXyFXqSQMW9brmgESo20WVxlmJYVVo/okp1eTESnp1n
-         791WxO1YgCFxUM3hxiWZf0tH2mYroLjjliQyZr8eHRJRGXOsvPJZd9n5Pv+O1BBGLeh8
-         q1adG0GmyaxlixXgcapPgWW/CGQfwM4mH+Vpe8g9V7x/r6ECMdOtjzW1M46chTKgUODI
-         N071+yc0Kud2xoTPvgY94OjlXxPgnxHCQKVYkp9pgdWqf+47jIK54ohrQKOIWH0xGTK3
-         b/wrQubBsvOT6vHca2+tU3TNTuZjKc0henxBWLZHBtxJ7zjBYoSs566VPxvtdkIemjMo
-         ADSw==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Oqzi4UlYLIrjPVG8j64TTybKs1a84neglaT0HAjz2d4=;
+        fh=IeFnzBTmwIJp8Dv/+kFoBDJb3gHqZ7ypCOUNkSvfZ40=;
+        b=ExlN0TB5F4nvKbzBhtld+Xu2NMas9LCojSgGDn4dDYchFgyQg9u3/JpCBk79BZc6Li
+         jily6XkWntH+izjvgyiZn9CldQiG12V/oX3rfbrnbSwLc6BzTcxImCYuSY86yat/e4RC
+         ukuA1vtqOhJyvtzPt1c00/ZMGzV+J8BJ8rohTJl5ZyZ0sUKt2qBLwTfDriFlUTfMGiBA
+         by0HGGwnafFgMVbEdHp8tK0A1DSu2lK6SfDYDa8U8qJM213TbO3qaQ4YEbJCnBk68EjN
+         4lJTLsZG7zRhzcLLpy96RrG7oWdPBgAm01XbWkGkBcyMtotPuVH5Wxwy9u71doTOIiKS
+         uUUg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792093399; x=1792698199; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=utlTfKViyjBzy8R8woSxA1BTcHpgztw0a668U3yPORk=;
-        b=Bfa0o3fMY7ASB1bSACv1tNhkLDesM/CM7E3jhnbpIVckFgAVQ5bxAsLLk6yIZdjpg+
-         DyHVc9QD9AfXSr94wwj6EMLhH4l9gWSoZbnPXdUtL6SoU+d//l+l4qWbBXIyqEqM4SIM
-         MXDYUbF918A8q9suWeJL06OFEVHB4DFEB1eIzqodMFhlJbzIzfObMLUjCmP9Kngxq3wL
-         7SnhJcvREjOPHDNBMIHGoInM2qykwvuDA52tYIOdDUFDiDZBdgCYuY2C0OTiXa2TCUH9
-         ykVvbIrX7nV6NOCuIEh83xStSDA7GLlI8VjkvJ0q/kqbPmAZuHHHhuXDMjAhCgY/flRf
-         89jg==
+        d=gmail.com; s=20251104; t=1792094213; x=1792699013; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Oqzi4UlYLIrjPVG8j64TTybKs1a84neglaT0HAjz2d4=;
+        b=Ql1VU/+9O8ZWzbs/VfBoU+wvj/2Bd602hluGi7O9ih3iDb+a8ln5uhszvgwKqh9qQg
+         8aJHJPDKRyEPgmy+gCZ+o/yixJmsyzHYlN22HP9uA9oY/JPv2ZoLPpxcugqEbKT7UJBE
+         TPbo9VaLSZ3luedMxt0yG1BCO28m0fGJWDO8kMiKQ/QrO0fcQMhztJ98CXLAZLOkHl5y
+         4XHLLe5AqYVgF74EqWZrTdb6dvymo0UUXAzRMS1tEaIgRN3SKdxF50J3ZFYfyr9Ojacu
+         XOkkds04AGPoxa4x4TcYm6Jz58zCR6UyRGnhwnJQAiBWgDVbh6Anu0CndhFYIcrdzrYX
+         qY7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792093399; x=1792698199;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=utlTfKViyjBzy8R8woSxA1BTcHpgztw0a668U3yPORk=;
-        b=HcY2tXeRrQtaJZ7wWuTaQMMRj6nXSu8lwvPPCq5sTfdPp1g9KwZ2ZfhR+Q1nxEt/Pp
-         gxHm8rAeAAJCdzSqCULQy75n+hcUz1IAIY+gF0CcgPKTZDBIr3sQE1tUxlGjwQtUi8gD
-         /jko3oqFI/I8uf0yzzLSUDL6i6PEhWfqPIm6PiZ9dsKDemcqgveXrCeOd2wSiTcjX1iU
-         Lau+vPyQCNhFsYiJcB8xaT13O0SOvRAH6q2pgBfyVenpsfU1W9jQIoaxiAnk7ONQv0Xw
-         EKkDMpts3qDGW/dJl9yBHABmA5c1r3Is9wGBkARCnqpw0xmELWtBztUnlXf7PqYCbig/
-         tDAQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzLxHzYVa+qDCi2UxB3fdFUVSOPAbYbNtiEmwOeyx7eAaZ+Gll0dGU1Gd6tI8EieGVJ1jg=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKZDqfZeesGrygozS7g3f6NjD5xdnmbFrNPJ0x3aSJU+SfpqJaG
-	V0/tlpFTlAlrpaAq30mPejZtQ8wenBaRlXEv55X36SeBk99/WTPJyRRcwBpoC2unolUoDrJfqfP
-	0ydoh2E1ib6tWFYgjHUz64++hVjFGTdQ=
-X-Gm-Gg: AYBFou32dD6P5o9vgXyveFEKEXtvF5rKd+cwrIUnCEIETvVLMVNBKJkNw3tyNvOo9IO
-	9GNvh+NOQI8L8YX37Njn4qDg8+60YoZI4nZa23AYDp3GKlJWUY12ikyvBi8ZzcLn7Un5IVeHAGX
-	5UqogsHCmliomSQzPeqfx0DpdDgwmio8Qa6KZtPt59eoOiJWJ6zy+QTBpQc0v+4os7iYJ3iNabO
-	I5HBZrJ7s2X+EAAa11iFyzqTqlzIy5tPxM4v1FWOdNQdDiNUH+hdPxdeFOB3i1Q/V8een4H04kX
-	doLKA5OI1ZgsxcWRzl5AysGqutN6eWRVbUS8WxFRI+VFK6XErdqXEg==
-X-Received: by 2002:a05:6820:1986:b0:6de:ba4f:af00 with SMTP id
- 006d021491bc7-6ef10295693mr16200260eaf.63.1792093398378; Thu, 15 Oct 2026
- 12:43:18 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792094213; x=1792699013;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Oqzi4UlYLIrjPVG8j64TTybKs1a84neglaT0HAjz2d4=;
+        b=B33b9F17HLV8CoKHIqEVvbmqNl0Px6kx2fIYOBmoIeoEU5fEe2SjyoVoeg9mbzZ/r1
+         8CTCrgik+m/6aBFO8ABmGMH6EdXnsMoDFubdv52k4ab82aoeWGs4snNp556ZQQbhh5s5
+         7WH4lU+metaquPsyKGEf2hfnzcBc6cNilgv7JQ3GbMiuv16BF19wrF6zwzs0NhEjC0AF
+         d3VQm2uXAsW5kldGoEDSG5enzkQrfrq9UPux+tzTQzUH5IexindQQX9cCqKr3FfO0LFA
+         99vXcACFwN1lVtZR6BbJpVBKSNl++engkHEB3ytgM1nVMUoN09zvtCZP9tSztej8jXnd
+         cQIA==
+X-Gm-Message-State: AFq9FYJognbpm/h0L5Cxg41AYwr3d9rRwL0N1vCzjtqug+H/+3a4u6hz
+	4dEjYJtDHEqDTdN4047z+W/X2G/oXyRk2EHqPZdN6PbLmUe15/hN+yn/YbED8xmmqC55J+gMQwt
+	Hf/owOWdS4NmJDJPR4IVETvTBSmRH7tI=
+X-Gm-Gg: AYBFou3Okg2GdMVMSL90P7jI9Ahqkn01SGaNMmaytFXsG/WfEa6AeHWn/YuXHshN+i2
+	GjYdA0yuCYTRuU2ip7AlHOOFt4w4mLSnlAuNOXVvmj6rfKJ3Kg3c2RD0CtaPKnmYeb+GpDz92UI
+	NB4BmnnViNp597G+6kaEebsXuUP9OkArcdBC1XPSyyuc1Xb7LtcbjRnbw4mQVSkshQpRKiVAzqO
+	PjqIjRVn3jv+jvaikDCez4eDcGaQX4WJPnhyHlNFU93wTqwH7Ui4tKeRd4Q/AA6Iflk1h7H3m61
+	YL9JgXApdJvsVIjH5pXpg0OJPSTQstm1YoH24SzNu5hiMo+z6kpaSEKkURCvr+6Ah74tnYgBLYx
+	yviQgPi31hvIzuGJYOsu2IQghW827OEByuu/9pFoR410lKSYTFaHP0Hftt2vBC+ERa5mbqD9MtG
+	HzpByPBMHpUJxezTM0lt+a8LP/DbZzZCanEoHS
+X-Received: by 2002:a05:690c:fd1:b0:8b0:db26:88be with SMTP id
+ 00721157ae682-8b0db268d0amr7666377b3.19.1792094213339; Thu, 15 Oct 2026
+ 12:56:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20261014153208.2194727-1-andy.koppe@gmail.com>
- <atBraYoY1SVwnezN@pks.im> <xmqqmrseooor.fsf@gitster.g>
-In-Reply-To: <xmqqmrseooor.fsf@gitster.g>
-From: Andy Koppe <andy.koppe@gmail.com>
-Date: Thu, 15 Oct 2026 20:43:06 +0100
-X-Gm-Features: AclHuK-3KqvlG_xs4lairvuSURD8bPLsXEeNVrRJUL5CrDvKHPXmjHY21qs9pbM
-Message-ID: <CAHWeT-Z4n=txTGaBNuGPj3jcOou91owB59gvaPvF=2_p50eFHA@mail.gmail.com>
-Subject: Re: [PATCH] refs/files: keep root refs out of loose ref cache
+References: <20261015142532.48175-1-okhuomonajayi54@gmail.com> <xmqqo6cun53j.fsf@gitster.g>
+In-Reply-To: <xmqqo6cun53j.fsf@gitster.g>
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Date: Thu, 15 Oct 2026 20:56:41 +0100
+X-Gm-Features: AclHuK9smxGh677bEtj5ZjdManma1DXt6t2nwkdLhqNBdZTPAuwRH_h32T7LsJA
+Message-ID: <CAFpMFfAg2aMuUsyLz-YZC6T1VXgtBjv75v9hAFzKJVgrBOL2Vw@mail.gmail.com>
+Subject: Re: [Outreachy PATCH] merge: stop using the_repository
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, 
+	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com, 
+	kaartic.sivaraam@gmail.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->>> +/*
->>> + * Create a separate ref cache containing only the root refs. These are kept
->>> + * out of the loose ref cache, which may already exist and is shared by
->>> + * iterations that should not include them.
->>> + */
->>
->> This raises the question whether an alternative fix could have been to
->> teach the cache itself to skip over root refs in case the caller is not
->> interested in them. The answer may very well be a "no", but I would be
->> curious to learn why you settled on the proposed fix instead.
->> ...
->>> -    loose_iter = cache_ref_iterator_begin(get_loose_ref_cache(refs, flags),
->>> +    loose_iter = cache_ref_iterator_begin(get_loose_ref_cache(refs),
->>>                                            prefix, ref_store->repo, 1);
->>>
->>> +    if (flags & REFS_FOR_EACH_INCLUDE_ROOT_REFS) {
->>> +            root_refs = create_root_ref_cache(refs);
->>> +            loose_iter = overlay_ref_iterator_begin(
->>> +                            cache_ref_iterator_begin(root_refs, prefix,
->>> +                                                     ref_store->repo, 0),
->>> +                            loose_iter);
->>> +    }
->>
->> It's a bit weird that we recreate the root ref "cache" for every single
->> ref iterator we create that asks for root refs. Is there a reason why
->> you have decided to not actually cache the root refs the same way as we
->> cache the loose refs?
->
-> Curious.
->
-> So an alternative would be to have two caches, the primary one for
-> things under refs/ hierarchy and the other one for those outside,
-> and callers can choose to use only the primary one or use both of
-> them?
+On Thu, Oct 15, 2026 at 8:20=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 
-Thanks for considering this.
+> Please do not put me on "To:" alone unless the patch has been fully
+> reviewed and reviewered acked it.  Placing reviewers on Cc: line (or
+> To: line) as "area experts" asking for review is fine, and if the
+> patch is in the area where I happen to be an area expert, my address
+> may appear there together with other reviewers, but the default
+> "To:" address on this list for a brand new patch should be the list
+> address itself.
 
-I think it makes for a simpler change with less overhead to not
-actually cache them, as there are only two uses of the
-REFS_FOR_EACH_INCLUDE_ROOT_REFS flag: in builtin/for-each-ref.c for
-`git for-each-ref --include-root-refs`, and in builtin/refs.c for `git
-refs migrate`. And both only invoke it once.
 
-I considered keeping the root refs in the loose ref cache but skipping
-them during iteration if the flag is unset. But that would mean more
-impact on that much more common case.
-
-A cleaner approach might be to drop the flag and change all call sites
-that currently ask for all refs without setting the flag, so that they
-explicitly ask for "refs/" only. That way root refs wouldn't need as
-much special handling. But of course that would be a much bigger and
-more risky change.
-
-Andy
+Thanks for pointing that out, i'll address new patches to the list
+from now on , with reviewers on the Cc
