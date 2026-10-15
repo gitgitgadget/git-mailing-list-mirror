@@ -1,193 +1,120 @@
-Received: from sender5-op-o12.zoho.com (sender5-op-o12.zoho.com [165.173.182.12])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB36737F8CA
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 14:49:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.182.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792075742; cv=pass; b=uaq693MYcI4msVLSR/VYmpd4UT2pKDw0eZQ/qzPTQw5F886+hegVvvxsYftNIGME4s5Dl9ZQTVw6/h5OULn4kyWfXErM3Jzd9mHsF3VJ5vO/n71wPwzNQv8qaAJZ8uWq0ChvrZ4A26bXjG/Zf8WeRdFK5iBx2DP09UlZq176VA4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792075742; c=relaxed/simple;
-	bh=vnFEh0LLtDfPRVueaj2zWGuiqoldrwNKPjN7MRGiJFk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X0Cc8cPGdhtkbPIDKb3amUMSlfeY/iE097xV061GIknIqv/OONFsoe1bByseu4XaapPN4ymDGMJXyYRr6RRGHDyaz/7o0RbhuoTg8GmphPvt1x+bAYqRorDu9CYXukXvJUY/iiYu7AOdNpireAb3fsotI4+FkZ+lTpKKTS8yO8A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b=bd8j0kQK; arc=pass smtp.client-ip=165.173.182.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E9E517BB5
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 15:13:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792077203; cv=none; b=qSwZpYHMJ2DrNYIEmIFM4ZnVcmR7uflbigp5sxSZ5equagbdBiKqALpsMSfynrXpfdsOybpSsXs5xMpapCuZ8gtlGjWNm88Tc3lsEDmr8QMMbZ4K4M3URbf68fTGBa3KB6oazED7Tpe+H4HPhjOLGNR2KVCye40zPXtvrF8Ndrc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792077203; c=relaxed/simple;
+	bh=SXmoLXwEohzYmRZIwrbH24G4iTaKZXuEUfOPUr9R2Zc=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Aie9RfahuUjtZddvy8Hz/XCJtNQCu2SvyAfYLIsEzs8wFOEgSfwqDyvNnvOXo41Rc/vVt4GZ6Sd+QjgLmY5gBzZK0cc0L3NoZlL4qQzbHk3QmhQb1Bn6vixTq/vSj07ib/6u2RYeNLXCOqn7gblJVHyPmXNSlbIXdxOd/o30/pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=O91xG1lN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xsa9mslO; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b="bd8j0kQK"
-ARC-Seal: i=1; a=rsa-sha256; t=1792075732; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=hvlNwKBPH8GDKm7N3LIc2MmjDCYp/Beiorwg9WQBHNEPwmKjmPY/9IlRmpLleSTTd7enOndDDKc9bRYF3iE8zenWD4n6K9ytzGpOfDvXfoAQWV3cYYo6d+ckfXHA3BvXLaRtwVKEf9J+5VjZakfvTED8N/n3n9nTFCLtrsNJDMQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1792075732; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=hdRnLjulGdpBA5PxJ0cmL+N7HNBpJNa17+vWfj4S2g4=; 
-	b=JV+/9a84AbBjD62ZUcOINrAUwxFBG2f4nBufJFQQI2rMhuUpGIWGpr/+n5lHCoN4ndyX1JGtMUbrJgJv4gyW+w7LETOjhjTN59BWDe5l34TVHx3EMnR1Y4O0/IHJxJHjwnESdnuj6kDGDpICyLpXsAfsbuNjJ4JoFaf9zEr7APk=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
-	dmarc=pass header.from=<vmiklos@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1792075732;
-	s=zohomail; d=collabora.com; i=vmiklos@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:Message-Id:Reply-To;
-	bh=hdRnLjulGdpBA5PxJ0cmL+N7HNBpJNa17+vWfj4S2g4=;
-	b=bd8j0kQKiA2+MAg29hU4qj9c+oHkwGf1e5Z+RugBBh3DbsKZc52Btpdb1kkDGJNp
-	RpZLvTpxp0/Fd/wgDzQm76HHCWv/9XCPuvVm4JHEdhjPMvt2XvGe5kDeAfwW8VAH2KF
-	oEDLNOgeFJh+fyTgfefK3Nyc8A0q6u/7xKCfepqo=
-Received: by smtp.zohomail.com with SMTPS id 1792075728287687.6580488587766;
-	Thu, 15 Oct 2026 07:48:48 -0700 (PDT)
-Date: Thu, 15 Oct 2026 16:48:43 +0200
-From: Miklos Vajna <vmiklos@collabora.com>
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: [PATCH] log: speed up --follow following renames for non-linear
- history
-Message-ID: <atDnyzC_2oaLF0Wo@collabora.com>
-References: <as44NVKZA9C9S5ae@pks.im>
- <as6hmUG5AaL5iLbO@szeder.dev>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="O91xG1lN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xsa9mslO"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.stl.internal (Postfix) with ESMTP id B9CC41D00157
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 11:13:20 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Thu, 15 Oct 2026 11:13:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792077198;
+	 x=1792163598; bh=SXmoLXwEohzYmRZIwrbH24G4iTaKZXuEUfOPUr9R2Zc=; b=
+	O91xG1lNE8lRy+pH6KOgOMMFzGk8jsWf69fLr49g5GaqUpWYlOLpjvrI5w8GxIaL
+	9RyCqlL31pyYKqO9MoTS5tcBYPJuSpwLmK21YQLaXuQ9BRSSnmfPAWH/ByIMuDMd
+	hzx7AKXPjll+7wIYepihpNi9tNyuvW+fuF6CfLsm/S6BHO8omaUrUynkYM7abGsi
+	9OYhS/9Mmvp1sLW/xsA7KK8yZ7BcL8N24/q+wLVTXXNkSWoADXTJwgKn9OKFHHDM
+	j+GkNzS8/pkV7PeHpL6hdNKJjHf9xHObRQ/WFYtHbNHUILxPA7hYVI+HeVa3XH0I
+	+G4bfMokenK1jCsGWaXQow==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792077198; x=
+	1792163598; bh=SXmoLXwEohzYmRZIwrbH24G4iTaKZXuEUfOPUr9R2Zc=; b=X
+	sa9mslOmMJiCC0MhzrbchmVJY27vtXzHIXA2PZdNo3ei0sqZ0rmZu+CbEX/kLpLt
+	apFqdHzX0qtspB+KERUXlT53kc70FdnX7gCbdo7UsfxcJpse70aBsPtSZlvv/oMk
+	/FhfsJNNGySVFd3wr71BBep+b0M5k27KsjRRLE8r4rUyl4itq3PVr28mlBgBnInr
+	F0zMSquA6DVAmoaD+7ZuXcWrFHbKnjoaJvbfwuq8FLyKQcWbA+2/mHq28JZ9Cmpa
+	Yyooj4de6DJkzWIBpKlPD3nuGkLAnLaaSUJLRmssH+CZ6BmkKV+3shRE+r68MAoa
+	8l3Ld3Kl8A2WSXFRHPuaw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792077198; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:QKcb3J0ICdWa5Vg1ltbLegBt4uqPAh6esrvv/yBuUvmzXjh
+	GmUzvFWXF08EMBz1fMIUaU0aAMneX3N+sBwZAFqUr+TWqKwiPokvxYHrIW9GiWHQ
+	4c2q+/D202+Ahq7lIRQZnoc6hIJPKWlotAYSKahYzk1sRVJFqR71cRFwwsfkqRx6
+	MuWY7lBz/O448uWcvHH02Hfh481UUHUpomSeOC+xteZAdcjkywPelmF/atJXPVaQ
+	NrRieWXp2E7C41Frpu6i4z1lf20LmaaVIWfOuFkPdrsXVc9LhVntfqA1hdVMjQzb
+	TycR+wPNC9PiRC9ZVdbwTbYK80vEVkl5tc7kaIQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:DhZ43dlvNqRGjbGzF8Uvsd1iVqlrifIehifAiaiUfdU=:SXmoLXwEohzYmRZIwrbH24G4iTaKZXuEUfOPUr9R2Zc=;
+X-ME-Sender: <xms:jO3QaklFiw59TZQeFQixRN7Gw-aWzTvrJVyoUvmsnKE56oSafJsZc6k>
+    <xme:jO3QaurpZlq4R-ooVi8vp9YqOLGbstmO7lvPWJJht66QJ1R48vXWeOOso7iOhP_KO
+    oCVoNRt5_KB-HscYnUi4Z0hVlsW5Za0sYVYPdURdOHqg3UFEG6bjuI>
+X-ME-Proxy-Cause: dmFkZTGUD1bTKDrqo8l0rIa/paAUehbYPx4iJycQLpyvCL1HrzkEgQ1CNJdjdmgft5hETp
+    5YFU3430IhLazdsWHce9WogExtTRLeZu/W1bvyU2SfmhRzl0FBkvn6M1ulJtF157hlkD//
+    z0+7Ui3nmEhTvGEU2eqQ4jcA3pF7cI3gUjX3DuR71JRb4nnnsdDk+xiaRu4UVaCSYzP99v
+    Pevswsb+MSL3R1cmCQ0LA4krqWCASd7FOHP0kEzlrCCzsLcmm5gOo2TmmlyWQJ+mQTLHs7
+    tcv6ijS/bPeRAS7jvmb/+YjPLNUIojSGpjChK19Aaak3OaIxpkWM6Kfs/qbGiFK+iBwWaI
+    gZHN5mGoi7m+I2tdem/0IQH4v5ZjLATdTSo5sp6tX2Q+5b4r2yxM6kjdNYQXMraLJk8rRJ
+    jm6Tm2sjIBVvksaRgJXh9JKSrR3fbksOm9gw93JeVdD+sFwdxvwWtUIu2IXZCmkdkToeo5
+    WydC0QBMqNKd73E5omTLx1Mz/Z1KdYxaNdpEuYqiU9qJBWW5+K6BW17+LdIhW/GKHi4zj7
+    B74AJ3zifKtkycEP4OLRvpvglcJ2UvzsZqCyA9zKMPI18/0DSUOeqAhCA6Cpk1aQ7HeAjv
+    a8BCt434PER5hY7if6W86O/D9iNXUxSAX9qFAFwHwMEt+7NG2qIvdsFno8xg
+X-ME-Proxy: <xmx:je3QauMYzhDCO1BcIow0z-Ye9i3OsBzStbj5VdeVlK7n9O3OJD4gsw>
+    <xmx:je3QaqyYgPbXQlc9E-511TCQeVF19qFA1Nh7-Dtara8J9obHEcPR_w>
+    <xmx:je3Qavu-vBEAhjWy68Fa5M7LhKBM6jVnavYJIu-he1Z11Wl5yY6Hyw>
+    <xmx:je3Qar4g7SgAgG6yD3oEVj7OC006lfqyiw4ntxEWhfq1SWafyKLPkA>
+    <xmx:ju3QagBnrDo6IFFd7112Cyrtlql0YHpfVoSrYHil6xNTheIDK57Kdiye>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 72C3922C00A4; Thu, 15 Oct 2026 11:13:16 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <as6hmUG5AaL5iLbO@szeder.dev>
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/292.52.33
-X-ZohoMailClient: External
+X-ThreadId: AlOAx_7OTDuF
+Date: Thu, 15 Oct 2026 17:12:47 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>, git@vger.kernel.org
+Cc: "Justin Tobler" <jltobler@gmail.com>, "Patrick Steinhardt" <ps@pks.im>
+Message-Id: <85a904ec-a478-4d47-b4ab-37817c5f67c7@app.fastmail.com>
+In-Reply-To: <20261015144559.3652143-5-markchucarroll@fastmail.com>
+References: <20261013172849.1109478-2-markchucarroll@fastmail.com>
+ <20261015144559.3652143-3-markchucarroll@fastmail.com>
+ <20261015144559.3652143-5-markchucarroll@fastmail.com>
+Subject: Re: [PATCH v6 1/1] repo: add filtering options to "repo structure"
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Test the performance of 'git log --stat --follow --
-include/linux/rsc_table.h' on linux.git, it used to take about 28
-seconds, and since commit 304812ed33 (log: improve --follow following
-renames for non-linear history, 2026-06-22), it takes 6m43s.
+On Thu, Oct 15, 2026, at 16:46, Mark C. Chu-Carroll wrote:
+>[snip]
+> revisions are specified on the command line. In order to accept standard
+> the standard revs parameters, it uses `setup_revisions`, which does a
 
-What happens is that propagate_follow_pathspec_to_parent() does a
-somewhat expensive rename detection of the current commit vs all of its
-parents, and this slows down 'git log --follow'.
+s/standard the standard/the standard/ ?
 
-Fix the problem by introducing two shortcuts:
-1) Only do that when the path is added relative to a parent and
-2) If the path is the same as in one of the parents, then just follow
-   that history
-
-These shortcuts keep all the uses-cases in t4219-log-follow-merge.sh
-working, but now the above use case takes 29s, close to the original
-cost.
-
-Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Miklos Vajna <vmiklos@collabora.com>
----
-
-Hi Gabor, Patrick,
-
-Here is my suggested speed-up patch. I think it's correct to take these two shortcuts since the
-original use cases continue to work, and then we're almost back to the original performance.
-
-Let me know what you think; if you don't see problems with it, then a bit later I would send the
-patch to Junio.
-
-Thanks,
-
-Miklos
-
- log-tree.c | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 70 insertions(+), 4 deletions(-)
-
-diff --git a/log-tree.c b/log-tree.c
-index 83a3c4bf9b..0d7bf001f0 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -1180,6 +1180,74 @@ static void propagate_follow_pathspec_to_parent(struct rev_info *opt,
- 	diff_free(&diff_opts);
- }
- 
-+enum follow_path_change {
-+	FOLLOW_PATH_SAME,
-+	FOLLOW_PATH_ADDED,
-+	FOLLOW_PATH_OTHER,
-+};
-+
-+/* How does the followed path change from parent to commit? */
-+static enum follow_path_change get_follow_path_change(struct rev_info *opt,
-+						      struct commit *commit,
-+						      struct commit *parent)
-+{
-+	struct diff_options diff_opts;
-+	enum follow_path_change ret = FOLLOW_PATH_OTHER;
-+
-+	parse_commit_or_die(parent);
-+	repo_diff_setup(opt->diffopt.repo, &diff_opts);
-+	copy_pathspec(&diff_opts.pathspec, &opt->diffopt.pathspec);
-+	diff_opts.flags.recursive = 1;
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&diff_opts);
-+	diff_tree_oid(get_commit_tree_oid(parent),
-+		      get_commit_tree_oid(commit),
-+		      "", &diff_opts);
-+
-+	if (!diff_queued_diff.nr)
-+		ret = FOLLOW_PATH_SAME;
-+	else if (diff_queued_diff.nr == 1 &&
-+		 !DIFF_FILE_VALID(diff_queued_diff.queue[0]->one))
-+		ret = FOLLOW_PATH_ADDED;
-+
-+	diff_queue_clear(&diff_queued_diff);
-+	diff_free(&diff_opts);
-+	return ret;
-+}
-+
-+/* Compute a path to follow in each parent of a merge */
-+static void propagate_follow_pathspec_to_parents(struct rev_info *opt,
-+						 struct commit *commit,
-+						 struct commit_list *parents)
-+{
-+	const char *path = pathspec_single_path(&opt->diffopt.pathspec);
-+	struct commit_list *p;
-+	enum follow_path_change *changes;
-+	int nr = commit_list_count(parents), i;
-+	int has_same = 0;
-+
-+	if (!path)
-+		return;
-+
-+	ALLOC_ARRAY(changes, nr);
-+	for (p = parents, i = 0; p; p = p->next, i++) {
-+		changes[i] = get_follow_path_change(opt, commit, p->item);
-+		if (changes[i] == FOLLOW_PATH_SAME) {
-+			has_same = 1;
-+			break;
-+		}
-+	}
-+
-+	for (p = parents, i = 0; p; p = p->next, i++) {
-+		if (!has_same && changes[i] == FOLLOW_PATH_ADDED)
-+			/* Never the same, added here: expensive rename detection */
-+			propagate_follow_pathspec_to_parent(opt, commit, p->item);
-+		else
-+			remember_follow_pathspec(opt, p->item, path);
-+	}
-+	free(changes);
-+}
-+
- /*
-  * Show the diff of a commit.
-  *
-@@ -1303,10 +1371,8 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
- 	if (opt->diffopt.flags.follow_renames) {
- 		struct commit_list *parents = get_saved_parents(opt, commit);
- 		if (parents && parents->next) {
--			struct commit_list *p;
--			for (p = parents; p; p = p->next)
--				propagate_follow_pathspec_to_parent(opt, commit,
--								    p->item);
-+			propagate_follow_pathspec_to_parents(opt, commit,
-+							     parents);
- 		} else if (parents) {
- 			remember_follow_pathspec(opt, parents->item,
- 				pathspec_single_path(&opt->diffopt.pathspec));
--- 
-2.56.0
-
+> ref walk and populates the pending objects list that will be used by
+> "repo structure". But this ref walk doesn't count refs in the way that
+> "repo structure" requires, and because "setup_revisions" doesn't support
+> a custom callback for its ref-walk, that's not changeable.
+>[snip]
