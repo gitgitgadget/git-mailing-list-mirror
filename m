@@ -1,157 +1,372 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147F836A370
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 09:31:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792056679; cv=none; b=u5Kg7xSxGAFO2boYHc9rRByYD/OVchzZw4Q+7HdccrZ2mMZYTXpAm1rXPV46r0+tlgPEv0BnApD3iCnXzlBnsAuWWgRciplacUqLEmTGWvnTVBTc03trw3Cumd6vovsflNCt49qpo8wr74M9br/Qt+ScrIuHV5lg3BirI2Okut4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792056679; c=relaxed/simple;
-	bh=pGOrbjHNo1uKz2hKidkAy+7PUmuxdV6LSi88TOK/q/E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=icot9JYVTuIfGPKjXk3oBZpdBBdg8QoV//A+NRoH+X18fmx/xBaGM4OX06u6/WKMsLgzoIsydh6F96k6H/8U7/IF2ia6VEiTgf5WxY5IVm2Pc/tB+W0S9+h2bh13plBZgXZDVmqjcehMDaVS9aweASNFaJd8A5LLQytU2KzEA0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VnwDT7Mh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cyX1btA3; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C535B322B8F
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 09:51:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.180
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792057921; cv=pass; b=s3s9JoaKUJOUTS2QRSksZaSLJO58DnVDetRolgICUJDSN2iZmiOAyy6DyQvwOJ25jBha0nTlBEhyJ1fbnuLgiYEv/kEpjpxOiPVX2K4fCobuCtnFgAQS/vlgmUn5kZj9+YICBzuDH/gswlf6pRlna6Imt6vanwik6OYfUXFLVtA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792057921; c=relaxed/simple;
+	bh=+7V+5TJu33pZIjzwiP8juoacW9TFzWO4c3jkyf4Q/X4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sK/jhyzCgSdnsib1G3wHouJptXhFlorKZ9b/th+935KTU6mw+lpM+5vHSbLhoQdRKbrciZ26EGi/dSRiNIaj4qwR9Wfs0jQ4JxFg1T0KQsR2g5dRwa2LTH3DRd3a3ImvH9XruTDKHXKslhyR39OVK+yaE61lCWf+gTVc9kNbVn0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=jPKrS1u3; arc=pass smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VnwDT7Mh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cyX1btA3"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E7A057A0149
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 05:31:11 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 15 Oct 2026 05:31:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792056671; x=1792143071; bh=n/4OLMWoFB
-	VFAAexIk8SllgIbKQJanIlnue3TN1f2DE=; b=VnwDT7Mh6UzTboC9XMHv/9KpWo
-	tD7uqg7/3yw7FRRCMjYb6laRTjOKh7uWExxN7RePTyjbB5TLU/qh7+6yhli25MeU
-	uipQ6UIGPg1RansWfEu+ojf0xkEtF1S5NAPvbdUXtqGblEdDDYW8QSMktkhJ7ksP
-	hwOt4mGwUTcPvQY+P5nlrfAJu9548QdROnQzhFoi4ebK/FuBZnsHWNMOb79/XF+L
-	zmtFqnpCtumhex3jaeQGwln/AOGtbc2fdH8erH0upASjuel0NeTBaZn1Z1umCnQw
-	xGr4NKTFVKw0cqHAjuE68dc+bAbJ+hCLlZH3NZtnxi7b26qirAJQiY/RsbJg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792056671; x=1792143071; bh=n/4OLMWoFBVFAAexIk8SllgIbKQJanIlnue
-	3TN1f2DE=; b=cyX1btA3eXCHxdTFNYlDhZqtEleZPzC5fUBplOiEeoov/fGqw2V
-	8JMCmY6uRqlh+hfUW7/+rt3drAHITJgaFAo72sC6d6aMhzAf73q29bQASou0HveJ
-	GlGc18fIqBY9YnHw9Wsse5oCizDGGrNvNjnlf9X4KKML82B5at7z6IMEEow22cRj
-	ZAqiIiFrDLz9y2M/3Qg/AnfuE0AAcZ0NmIULQr/Imqm1O4Bl6HCxAo4xh/LuxfJb
-	47z0px76z3aIOlZeLbd5gVhodOZz7WecICG6/eEEgKieYXlE0cFIx2+LrKzQKUVT
-	K+vZrMcnXrJoLzjUBgy7jwKMCetXP6C78ow==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792056671; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:azdJXrr39fv3EE8lQKTFTruXe5ZVbqJ5FBp6Aza4CJ6NDcM
-	W8/s96mceNRG9umrXcHFua1unxXSYSuq0xLf4XOMLtnpHUB4MV9MaPXB/U1lwZU+
-	w4BrAtuOUsBmxfP5iMzsPvP45utp8H2oxslJubtK7OxBSEx6ZFsYJwyVlcdF+9J+
-	tOEcf6D/nCDl8vXi2DSp6lnCCQk7/2I2PFkBe/CRr5cDu1+mBBy4heLOtE1yk/Gh
-	FdebgIfpEGA3i226ocRK23nm/MzT3ZPai0xI1TYOAYbjFZ+wv6AcniivR6kZhNTW
-	AhMiGCUcXaE+ctR/HDlCyiYcsEEcgxVvN/yAsBQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:AcsSGT775PNkHbN+KfbaCG/ja9lX3x2bcodW4yINQjs=:pGOrbjHNo1uKz2hKidkAy+7PUmuxdV6LSi88TOK/q/E=;
-X-ME-Sender: <xms:X53QagGk79Pi-xaJW49hP4JqnMmx5UbPRVMAWXjid0t7vnFo6d-W9A>
-    <xme:X53QatD7vpAnkjx9J4jv1vEkSUTub_sivn_bsgqXJspJ8fTGrX3JJI9o6sRG995jW
-    AukQvf96jxD7tTYUT6BLKzx3rML5PY46IwUDIUPFPkAwmVqCm1_Rko>
-X-ME-Received: <xmr:X53Qaj9yEQQ1WWif23Eh76-0d7LX7ij35eO9By0rajSXP8wxgWOE8aXnzXL39WI-qmhKkuw>
-X-ME-Proxy-Cause: dmFkZTEv0KufCanDZUAcKXZ9swopVEQPrg9mEbBrd9MbE1Jda4kTv2Xo6rwQZwdxzw2uh2
-    a+6JahP0hhwdy2TfLDyPSTKaIqCCFoztP1SSg60tkXZL9Y2fOlBOxO4WKB/J/DS48xX/kb
-    QWOPDBXhSl7YX0GERM5JF1GP3sCGGhOVN6V3Kp167QmdVrUW5FsdDgSg1QgvXyg2/PuPeN
-    GHH2Q6F0ORfIttfunkmiwjQbaK4Wdc9Hu9ZFHIA6rYCtTM1d043tHE0NzNRHQn0GBbtPu3
-    ZBMeBqwrm5CrBiJ7h7XpUPuOjJmaL8K+tgo/AOALJNfJo2DJC6ahnuvNQH+D2mNi0fJyLS
-    ypnojOIkCDr9xnNPwDGdNH47Ldz8AhA6L+KIUzoaSYmgBLCU+WeaZ5uHqTm+58uBzMEaCJ
-    wHiMRTSKYk2abuAMs8QImu6l+N0aKwDNAXOMze8Y4yzy0YxBOLbhCDwWKZKeAh0qcjHkUo
-    JolDtEe0fk5/Y6b4boQU+iWU0KSiziR/OA+46cEquKceElFql3Df0RGYaksLssrNXjCpUD
-    1XBVpjr0OsAEKsdwl6jil/elf5vR/8Ulf8WnztXhCTSX1oSn3x7O/9cZe1szz+4ZUhTvvP
-    jpS5Bv/raWYL4TJg5zMrPDx8GoahelLYIP/jqQIBszk51SREPhY3t3hKrP+g
-X-ME-Proxy: <xmx:X53QapCuE0CuRn-Ibc4SRCcc_V1wpi0Oux1mU11SZfjvO1KaToKYJQ>
-    <xmx:X53QaoSCbCozw5GVrfUEkx4kgwTTvfOYJs_wZA7K36drVtkfyMGMHQ>
-    <xmx:X53QagtJVuau_AA7IETwv8i7NecXJxcPjS1a6p54vhE_4MWBT2kQRg>
-    <xmx:X53Qak1yiYbgwm2D5x5gtCEY6HxrLp5XRUi-fT0N5WmIEUWXY9ITGw>
-    <xmx:X53Qam1Qey_HzCbphKuKLK2I4xwJpIFV6FAt7rpdxfNIymEJwTyHGmIG>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Oct 2026 05:31:10 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3851ac22 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Oct 2026 09:31:07 +0000 (UTC)
-Date: Thu, 15 Oct 2026 11:31:05 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>, Todd Zullinger <tmz@pobox.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v4 3/8] ci: drop unused "linux-clang" logic
-Message-ID: <atCdWdE74-4K5aWc@pks.im>
-References: <20261015-pks-ci-housekeeping-v4-0-c2c88f1b198e@pks.im>
- <20261015-pks-ci-housekeeping-v4-3-c2c88f1b198e@pks.im>
- <e6550ed3-351c-451e-8740-f9f449e98402@gmail.com>
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="jPKrS1u3"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-8871ada1a26so16604277b3.1
+        for <git@vger.kernel.org>; Thu, 15 Oct 2026 02:51:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792057917; cv=none;
+        d=google.com; s=arc-20260327;
+        b=arh3lAQ0BoN4p9W5WP7TfagYl1fzEI6niIDuPSsKyPefoFEgoNyLVLIkT1TSn/Lu9Y
+         lWkG0ntjQ61HuG5ugPX2DOSxA51WD6J09ULSLBOGaqLI5uJSLf1IA8SZu9hvLBBAB4h6
+         BuPkCYbOdiaGCFkylNRvrzaZOq9pMnPCVGgRZNyMXfXXHI3gqgk7/InYPLcyZFKpkAIE
+         V0Hu5qtL2ngewho2KQr/KJ1rMA0VxRQIppe8gr+7Sgt+a+AC/Szr7aichkvF+lOGtUE7
+         g3QoaDl5XKdrt3ipRsqx75V5IgAvcMOP2LwJc00T47B6VkLsOiO9Eqky7eQLfvRnPLW/
+         yu5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=aLHST5ofgpJtO6BVDd158OevcKhrilVtWVhK7aonmFc=;
+        fh=1KCEsa8gg7qfJWGpmmOPSHkhlKkpDMxNQwJqnDMACfg=;
+        b=nZro/X8UArNha6a6fJiVOSGZSqVgEPtsDdoFibTmjEjQbGj3haWeQ8fiuWvisUnqSU
+         56mk3OukGGjDYY5o5PUc0upnQ4eabuFy6jy+IiEJMZwPD+N14pd4hxpYEo0wFZNA4N7k
+         FgMBXayT/+lB3+Ac4EokO/wfw4j8P2kL1Q0VvGhAEbiETNWwmCpCy6kKy8vKxkGhpAPW
+         5x0RBPydPQ1QwyZPNQgAttssfkhIm2rfwJByLr5KcxorJE7F4s7JPsyb98XzdAscnUD4
+         pllG/HYlXvBfk7dvINMIcuWiJRFkzuPP19QU1ullTsYieyb8rKI8F/5TQ4WuOw2Ir8sN
+         ZQNg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1792057917; x=1792662717; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aLHST5ofgpJtO6BVDd158OevcKhrilVtWVhK7aonmFc=;
+        b=jPKrS1u3agjf+bVROnSmsHy2CsTZwRFlTjjyndM7/hoFVAYQUVbwXHKwM97O/dYCqp
+         5WqMad+YuXSeKh4QUtt9Je+5Tve09/StuBrcTbzNi+cMS97qlVlTgE1notSZQGC/mXRz
+         qZA1FHYS3hKSKae11HpuBTauHmIiqgcJhAs7A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792057917; x=1792662717;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=aLHST5ofgpJtO6BVDd158OevcKhrilVtWVhK7aonmFc=;
+        b=zWWXa4fRXRoNoPvEEWSuYWcUigFMreQ2CmhDbOj/RsEmhf1Uz+cKYzJ7yfnCwD/PSZ
+         PGWCXuM2Jj3eGsV0CKoqT9HEFyGpBJ1pkS68he+OX9VCPDA4xrzrDWm+5UAoQX9NWDtA
+         eNWFnneAq9sUgB9+j1Ozy42MKdMgqBa62kLHpBOoaV8iHhB7GiAhOSCcGgEqtueydOrs
+         szXQDp5WeVhXpUkCoFluq8TwYgtwsmTE0L1NxU7JYz8G3eAhSl3iIsFn7Uxr5ynZd8c1
+         z/+l3ZZJ/KyCGnLql6EHFKvuPIM3jDgWv5xt/vCv7QT/KMd5wG9F05YJ+X7RXSrPg/8X
+         lL+Q==
+X-Forwarded-Encrypted: i=1; AKwUvBxwKplnFxSZOi55A/LA3yk+ZJRQWEtqnqmzQUME+8k8/OPCK4l0jrYk1HqQoMkV8DEEN6c=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJKX7Oml4Jxr5KcmLaSbj1uh5+fKMUTEbBrKwHKWdfxZ087RSPa
+	Cj5OIuH7avpXQj/rq5YWSy/Nk4p4oHeEpHQLXN5EjA9gW0yARjIkZWl8TA7oAoEbKfAloueZG7l
+	Vkpz1FXxOlUbdQsfqF8h+lU6EhYlX59W+O77E+WjDrQ==
+X-Gm-Gg: AYBFou39Xvkx7VW4dnZ0J2/5xiYsvxCSUVFz2PD8dtmHyA3XT/qcbpKxir8sZ5mDt0l
+	xgKI00JsTUtHkLjjXsIhe/uPZH6Bhi2xNE26402pezhsofaEoyeZ6SmQpyYLQrEWpVYsDLVVT9t
+	yc0HzHFV6asw7qUmLECScXijecywwcBpnB81nt1CXs9pauzpWY137vrCCEs6TKURftRszdGv6Eo
+	oa4zdpEKVeeJb6e0/G6ZUaBXRuhkb2LsZvkWKNPTTGvUVKmukwAzL9ik8n8GmXBr6toqF/Yq0Aa
+	hslk6dX6hAZ89bxrFbSZyrRTrZqdtXJoYRi2k6FxExBzGVw0p66otMs=
+X-Received: by 2002:a05:690e:4088:b0:679:9a92:5d58 with SMTP id
+ 956f58d0204a3-6799a926d7dmr784408d50.8.1792057917361; Thu, 15 Oct 2026
+ 02:51:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e6550ed3-351c-451e-8740-f9f449e98402@gmail.com>
+References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
+ <pull.2211.v3.git.1791806877.gitgitgadget@gmail.com> <efaada0b6a8ffdb4d1c01d7f34a0d6596a99c149.1791806877.git.gitgitgadget@gmail.com>
+ <atB48HLgZr3ssOfx@pks.im>
+In-Reply-To: <atB48HLgZr3ssOfx@pks.im>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Thu, 15 Oct 2026 11:51:46 +0200
+X-Gm-Features: AclHuK9ZtZlhCW1TKobjf3z54Z7d41xGq9VLXDUZNh2cZ_ogTXI_ACKu-U9iOoc
+Message-ID: <CAL71e4Meuv1KXTX9HeQzmyVdmtYDCrd4M6VNcRRt5HZ-DKzbQA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] connected: add incremental connectivity check via rev-list
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Oct 15, 2026 at 02:06:30PM +0530, Kaartic Sivaraam wrote:
-> On 10/15/26 12:27, Patrick Steinhardt wrote:
-> > In d88d727143 (ci: drop linux-clang job, 2023-06-01) we have dropped the
-> > "linux-clang" job because another job already uses Clang anyway. But we
-> > forgot to also drop the logic in "ci/run-build-and-tests.sh", so we now
-> > have some unused logic in there.
-> > 
-> > Drop it.
-> > 
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >   ci/run-build-and-tests.sh | 4 ----
-> >   1 file changed, 4 deletions(-)
-> > 
-> > diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> > index bc5058c917..23e87cbbd6 100755
-> > --- a/ci/run-build-and-tests.sh
-> > +++ b/ci/run-build-and-tests.sh
-> > @@ -37,10 +37,6 @@ linux-TEST-vars)
-> >   	export GIT_TEST_CHECKOUT_WORKERS=2
-> >   	export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1
-> >   	;;
-> > -linux-clang)
-> > -	export NO_RUST=UnfortunatelyYes
-> > -	export GIT_TEST_DEFAULT_HASH=sha1
-> > -	;;
-> 
-> I know we're removing this only because we lost the job already 3 years ago.
-> I just wanted to check a bit more on seeing the job had a NO_RUST flag on.
-> 
-> On some digging, it seems that 32d5b90590 (Enable Rust by default,
-> 2026-04-09) flipped Rust flags of CI jobs and retained NO_RUST only for this
-> job and the linux-musl-meson jobs. That means, we've been having the NO_RUST
-> flag on a Makefile based job that never existed in the first place which is
-> a bit sad. I wonder if we need to fix the intention at least now and slip
-> the NO_RUST flag into one of the other Makefile based jobs?
-> linux-feature-testbed? Or have a separate job for this?
-> 
-> Of course, this is not really a problem with this series per se. So, we can
-> handle it separately if that's preferred.
+On Thu, 15 Oct 2026 at 08:55, Patrick Steinhardt <ps@pks.im> wrote:
+>
+> On Mon, Oct 12, 2026 at 12:07:57PM +0000, Kristofer Karlsson via GitGitGadget wrote:
+> > From: Kristofer Karlsson <krka@spotify.com>
+> [snip]
+> > Scaling tree size (10 incoming commits, 10 files/commit):
+> >
+> >     files    full  incr.  full/incr
+> >       5K    0.01s  0.01s    1.0x
+> >      50K    0.04s  0.01s    4.0x
+> >     200K    0.15s  0.01s   15.0x
+> >     800K    0.61s  0.03s   20.3x
+> >
+> > The full mode must walk the trees of boundary commits, which
+> > grows with overall tree size.  Incremental still scans the
+> > root trees, but avoids descending into unchanged subtrees,
+> > so it grows much more slowly with repository size.
+>
+> Okay, so this is getting better the larger the trees.
+>
+> > Scaling incoming commit count (200K files, 10 files/commit):
+> >
+> >     commits    full  incr.  full/incr
+> >           1    0.14s  0.01s   14.0x
+> >          10    0.15s  0.01s   15.0x
+> >         100    0.19s  0.05s    3.8x
+> >         500    0.32s  0.27s    1.2x
+> >        3000    1.23s  1.52s    0.8x
+> >        5000    1.88s  2.43s    0.8x
+> >       10000    3.72s  5.36s    0.7x
+> >
+> > With many commits the per-commit overhead of scanning both
+> > the new and parent root trees accumulates and incremental
+> > becomes slower.  Breakeven is between 500 and 3000 commits
+> > and the ratio stabilizes near 0.7x for this fixture.
+>
+> And worse the more commits we have. So the new mode is only really
+> applicable in scenarios where you know what your typical workload looks
+> like. The big question is of course whether we can have the best of both
+> worlds, where Git knows to switch between the two modes once it crosses
+> the threshold.
 
-Yeah, we probably should fix this. But same as with the other things
-that we could do while at it I'd prefer to do those in a subsequent
-patch series.
+I think this is where it gets tricky to reason about.  The win
+from from larger trees pays off without bound -- the larger
+trees you have, the larger the win.
 
-Thanks!
+Scaling with commits on the other hand we have ceiling of how
+much it can regress.  I am thinking that could be reasonable
+that anyone who enables the config flag for this mode could
+simply accept that it would likely speed things up in most
+cases but in other cases they could see a ~1.5x regression.
 
-Patrick
+I am hoping that this tradeoff would then be acceptable,
+otherwise we would indeed need to add some way of switching,
+though I don't think there's a single good indicator value
+for when it's better to switch.
+
+I could add a new config flag like
+transfer.connectivityCheckIncrementalMaxCommits to control it
+perhaps.
+
+>
+> > diff --git a/Documentation/technical/connectivity-check.adoc b/Documentation/technical/connectivity-check.adoc
+> > index abef02debd..a1d2e9709c 100644
+> > --- a/Documentation/technical/connectivity-check.adoc
+> > +++ b/Documentation/technical/connectivity-check.adoc
+> > +Algorithm
+> > +~~~~~~~~~
+> > +
+> > +At a high level:
+> > +
+> > +    verify(commits):
+> > +        sort topologically (ancestors first)
+> > +        for each commit:
+> > +            mark parent root trees as trusted
+> > +            verify_tree(commit.tree, parent root trees)
+>
+> So based on this, `verify()` already knows which commits it will be
+> checking for connectivity. So wouldn't it be possible to fall back to
+> the original algortihm here in case we see more than N commits?
+
+Yes, but which N? I think it would depend on the shape of the
+repository too -- size of object tree, merge-heavy vs linear.
+
+> > +enum tree_state {
+> > +     TREE_UNTRUSTED = 0,
+> > +     TREE_TRUSTED   = 1,
+> > +     TREE_EXPANDED  = 2,
+> > +};
+> > +
+> > +KHASH_INIT(oid_tree, struct object_id, unsigned char, 1,
+>
+> The values are `enum tree_state`s, right? Why don't we use that type
+> here?
+
+I tried that first, but the natural size of enum is larger than unsigned char,
+so this reduces the memory usage.
+
+> > +struct verify_state {
+> > +     kh_oid_tree_t *trees;
+> > +     struct oidset trusted_blobs;
+> > +     int trees_loaded;
+> > +     int blobs_checked;
+>
+> These probably should be `size_t`.
+
+Sure, I can change that.  Or intmax_t since we'll need to cast
+to that later anyway for the trace2 output?
+
+> > +     if (type >= 0)
+> > +             die(_("object %s is a %s, not a %s"),
+> > +                 oid_to_hex(oid), type_name(type), "blob");
+>
+> I'd love not having all these calls to `die()`, as this logic is
+> essentially part of a library, and dying inside a library is a bad
+> smell. We do this everywhere else in Git, too, but we're slowly getting
+> rid of this as part of our libification efforts.
+
+I think this would be a bigger refactor in general --
+the existing connectivity check also dies as the way to
+report problems.  This works since it's running as a subprocess.
+
+If this is something we want to change, I think it would be
+good to do that refactoring separately and make the connectivity
+check subprocess only die() at the very edge, and making all of
+the internal library code support not dying.  My first prototype
+tried to do this but the amount of changes to internal code got
+out of hand, so this version was the simplest I could make it.
+
+But I'm happy to take a step back and revisit that approach if
+this is a blocker.
+
+>
+> > +     if (vs->exclude_promisor_objects &&
+> > +         is_promisor_object(repo, oid))
+> > +             return;
+> > +     die(_("missing blob object '%s'"), oid_to_hex(oid));
+>
+> Maybe the object is missing, but it may just as well be corrupt. So this
+> should probably say "unable to read".
+
+Hmm yes, perhaps.  I will need to dig into that more.
+
+>
+> > +}
+> > +
+> > +static void *read_tree_object(struct object_database *odb,
+> > +                           const struct object_id *oid,
+> > +                           size_t *sizep)
+> > +{
+> > +     enum object_type type;
+> > +     void *buf = odb_read_object(odb, oid, &type, sizep);
+> > +
+> > +     if (buf && type != OBJ_TREE) {
+> > +             free(buf);
+> > +             die(_("object %s is a %s, not a %s"),
+> > +                 oid_to_hex(oid), type_name(type), "tree");
+> > +     }
+> > +     return buf;
+> > +}
+> > +
+> > +static void verify_tree(struct repository *repo,
+> > +                     const struct object_id *new_tree_oid,
+> > +                     const struct oid_array *base_trees,
+>
+> I think `base_trees` is a bit of a confusing term, as I think those
+> always are the parent's trees, right? Should we maybe name it
+> accordingly?
+
+Technically you could use any base, as long as it's trusted.
+That said, the trees here _do_ come from parent commits
+(not necessarily direct from the parent commit, it goes
+deeper down into the object tree).
+
+I could rename it, though I think it would leak semantics that
+verify_tree() does not require.
+
+
+> > +     int need_subtree_bases = 0;
+>
+> Nit: this should be a `bool`.
+
+True, will fix.  I think I got confused because the code base
+use both styles in different places.
+
+> > +
+> > +     if (!nr_work) {
+> > +             free(tree_buf);
+> > +             goto done;
+> > +     }
+> > +
+> > +     for (i = 0; base_trees && i < base_trees->nr; i++) {
+> > +             const struct object_id *base_oid = &base_trees->oid[i];
+> > +             int expanded = tree_map_get(vs->trees, base_oid) >= TREE_EXPANDED;
+> > +             struct tree_desc base_desc;
+> > +             struct name_entry scan_entry;
+> > +             size_t wi = 0, base_size;
+> > +             void *base_buf;
+> > +
+> > +             if (expanded && !need_subtree_bases)
+> > +                     continue;
+> > +
+> > +             base_buf = read_tree_object(repo->objects, base_oid,
+> > +                                         &base_size);
+> > +             if (!base_buf) {
+> > +                     if (vs->exclude_promisor_objects &&
+> > +                         is_promisor_object(repo, base_oid))
+> > +                             continue;
+> > +                     die(_("bad tree object %s"),
+> > +                         oid_to_hex(base_oid));
+> > +             }
+> > +
+> > +             vs->trees_loaded++;
+> > +             init_tree_desc(&base_desc, base_oid, base_buf, base_size);
+> > +
+> > +             while (tree_entry(&base_desc, &scan_entry)) {
+> > +                     if (S_ISGITLINK(scan_entry.mode))
+> > +                             continue;
+> > +
+> > +                     if (need_subtree_bases)
+> > +                             wi = collect_subtree_bases(work, nr_work,
+> > +                                                        wi, &scan_entry);
+> > +
+> > +                     if (!expanded) {
+> > +                             if (S_ISDIR(scan_entry.mode))
+> > +                                     tree_map_add(vs->trees,
+> > +                                                  &scan_entry.oid,
+> > +                                                  TREE_TRUSTED);
+> > +                             else
+> > +                                     oidset_insert(&vs->trusted_blobs,
+> > +                                                   &scan_entry.oid);
+> > +                     }
+> > +             }
+> > +
+> > +             if (!expanded)
+> > +                     tree_map_add(vs->trees, base_oid, TREE_EXPANDED);
+> > +
+> > +             free(base_buf);
+> > +     }
+>
+> Then we expand all of our parent trees to exand the trust boundary. I
+> think this part is rather non-obvious though, and could really use some
+> code comments to explain what's even going on here.
+
+Yes, this is the trickiest part of the code.  I tried to add
+comments here in a local draft but it became messy and did not
+help enough.  I will make a new attempt at it though.
+
+>
+> > +     for (i = 0; i < nr_work; i++) {
+> > +             if (S_ISDIR(work[i].entry.mode))
+> > +                     verify_tree(repo, &work[i].entry.oid,
+> > +                                 &work[i].parent_trees, vs,
+> > +                                 depth + 1);
+>
+> And here we then recurse. The recursion isn't unbounded, but we may go
+> up to 2048 layers deep here. We already do this recursively in other
+> places, but I do wonder whether we can maybe avoid the recursion and
+> instead use a work queue so that we don't bust the stack.
+
+Hm, initially I was thinking it would get very messy with a
+manual stack or queue here, but maybe it would not be so bad.
+I will investigate if I can rework it nicely, but otherwise I
+think this version is reasonable, and aligns with other
+tree-walking code.
+
+> > +     for (p = commit->parents; p; p = p->next) {
+> > +             parse_commit_or_die(p->item);
+>
+> This part here may die in case the repository is a partial clone with
+> missing commits because we enforce that `fetch_if_missing` is disabled.
+
+I think it would be unreachable, since we first collect the
+commits via the regular boundary walk.  But now I started to
+doubt myself, I will try to re-validate this with a test that
+puts the boundary exactly at such a problematic commit.
+
+Thanks for the detailed review!
+Kristofer
