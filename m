@@ -1,166 +1,150 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9294F57F727
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 18:21:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65F3380FEA
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 18:43:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792088470; cv=none; b=Oqzx3lS9mmy4xXnqGcMqFJHwQEzFAaOdNMd+sY4813vRcpWax4LrrHWzA7DdE5ie1/hPXN5+lM+BwF3JMqWO3p22B2X+XoSnoQOBZ1x98xNP8VB6i1u3WPREYkv3uC9F8jHbPtfdO3vPC1MtJElaa97Lhxd3rvv88MIVZiD9b4k=
+	t=1792089787; cv=none; b=QoZi1Rbyw/peLZ+2sShlaKXX+Hqa/5/LE4Cl5Dq5vTslHYWx6wuknpFKWVt++amaPVPa0WhiUbole95pD+ZgiG0tyoLJ3ColY26RAslWD3fLdX+QEtDZm2xTEIzeRFcVXBlaA4zuhWNzmd8sYSy5Ou8fWe6uR4Oyg6GbllI4AX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792088470; c=relaxed/simple;
-	bh=+SuhsVuFTzgadieyXevcblQ3NeyDrdnE/U4612s3wwE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=a0ft8ESxPVUh515nWs5CbrDEGVBmbyo3eXGFocC8XnrqgX1n9g9VLNpspJoFjcxHNBtZJ051h3O83EQaiPkmov8197LiOiqhHWg4tyasRwjiKIDbR/7YFVrycEf3U8brYAj0W3bNzKRhI2/SIjVzqVwgSBZrQtjKsmzl8RPu8+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d5MalQNu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QocydxWU; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1792089787; c=relaxed/simple;
+	bh=vchulz360xqRyTbCJLlsUnXGH0mUTdMBz8UxWl0u/Gc=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=dA2959+SYnrjYBPCYabWNJbBMd4DocGCHnKVDRnZXm0Z0+OuhfStWsJcZonHROx0UiZe61nWMGnbWNYOzKtcbloNSL8A73xYlZD4rlQwkE33qzeNJ1ibSYXDBXi5JBKKu0H/Ye/UkgY0ub0SymgpimRyD20wgib+Ywip6VNpRLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=f6k1KSNa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KPe8JdcF; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d5MalQNu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QocydxWU"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 874D47A011C
-	for <git@vger.kernel.org>; Thu, 15 Oct 2026 14:21:01 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 15 Oct 2026 14:21:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792088461; x=1792174861; bh=sJYnD7HhJq
-	6VJC+kYNwBUK2yT7Z4RjCuY6WB7aDe69Y=; b=d5MalQNuA9E06ed2b0KXZERAYi
-	/2u8FAimsmpBOWppC42UJmk+c8zUX7SnkfROGSNaxuF7ZWEzDeMbAuuwBUOL4rfi
-	zjyGHrClP1iCyI7o8VXLiLxzL+Dvh9EHIq3AbLco4aBBa8aWHJi1PXgNfuCyHl/S
-	u+wJnABgmzqf9Ux7N2baqxAs1pmkEynYu7Vewv5tcKF2no3BYKjtrYq9L2cDmUrt
-	VUQja3o2QlnW3a5okdA36G4J/8SjePa4Ar3hlT2PnB+A/gINf2pE2bdZZ0Nis/WN
-	UwbijBMCO5u/MEspAjaL3k81q4EnQkK4xjVnKYpNGSiOH2EJj2JD0aeBCrhQ==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="f6k1KSNa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KPe8JdcF"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.stl.internal (Postfix) with ESMTP id 979581D0014B
+	for <git@vger.kernel.org>; Thu, 15 Oct 2026 14:43:03 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Thu, 15 Oct 2026 14:43:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792089782;
+	 x=1792176182; bh=KBdjruLDH7AGZGXN9oVW8GclKy/5zcszR+G1LJz+ACI=; b=
+	f6k1KSNa4Fe10Bs2hacmL+AaHmKxrZ2f9m5AMOcvvknEVGgq3cAEChNnDdQOCSku
+	r9YMPteUTaSaqkZGqTI187LM7uR9NVLSWJnc7n7/WW1rI8M+EDtq5bgdyyZJD3rZ
+	jZL+YK9WA57cGO35ADVS5l291q6btIXc2BU4l+y1bDspgsVuCZGZJ0PoZJ61S9lB
+	ladpRPK5FUOAWc93BV5dkw3vg4ltTdMkiONA/7zJZnB4ZRD156zUgBhfK58TVK00
+	0GMk9lBhU3rIv4U+6EoHPrdRqjmNgXYinsPigeFfqro+LvHJhLxfMAe/gQrRtVIv
+	HGDI7bRI2fSHTAz9GtFoFA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792088461; x=1792174861; bh=sJYnD7HhJq6VJC+kYNwBUK2yT7Z4RjCuY6W
-	B7aDe69Y=; b=QocydxWU/5W+8z9PEn45taK80SiPn+GPwTNVDUQF+hj+hL5dxLT
-	JUqFaqCvFbGSmMXWkunVbwTjYLydyZXqrFv0WprOLJcFvmiDRtHrt0eltasLNshK
-	rZHyuP9wjkv9SqT/gckxP5J5JTRwBoaplFq6IQRvikxq6n8cGGoSzK6/AFBq4fuB
-	todHko56fAMbTbQGSAh7zUY6CVIuCj8ZFRaJvLAYLP6QHXmnBfAWr/ubtWVV/KyO
-	NzymMovAV0XV41t/lfnFqBSUpkc90tQcG1GxfG6lBakIeTen7vl/w/fpau6grmUY
-	NfzunlRSA/BxX1aSr5MlzlqmzyhPqduZClQ==
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1792089782; x=1792176182; bh=K
+	BdjruLDH7AGZGXN9oVW8GclKy/5zcszR+G1LJz+ACI=; b=KPe8JdcFfMGyA4ucj
+	YXhMHEKF5ypn3vvcgT+ChZgONE7Pm7vJWKwUK0CeMcks3OkU5AwSzdGjkIKS+67C
+	ZQ5fgjmmqPSclLLu3VPOK8hi7roO0K6XJKEsj/dmd8icsGenl6zY0Cqgx3TxrfBH
+	nxI88CPwKi/7K/+GSdNxV7EtWlTdNz35LwULW+zyViaD6VCbasp+8p6ZDY29qDEu
+	Myy590m6Ugz6FNXuP7xXIUqcR59CI4ZSlT3wRClPOZkln4ZmpcO8wmL4lldR1Mrl
+	VZ6qwg8P/ko/Z29nog4xl3se8jtB0bpGXOr8Xb/O1uXcUHtI/am+rjn99RHVwcsz
+	FSdtQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792088461; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792089782; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:CnsyI6+OMDaNDAlP3TXPRDJw8kysD839Q+yf6DuWCq5utMX
-	3JoT7a1GtFimmteASbHnPHskb4iyUz/xGaMV0+pS6LubLZB3UAkM9mdeXqEUYT7Y
-	VlvphA67oquGYLPrZ7oI13LnlubrgeKR2z0eQLgO19N5Fl0BEKHuowkMO3grCkit
-	gQtvLGS2sKVoebqWkNWIOFAlx8YAOYhSsVrKC2L0eQkP/Rk8L40vzVId1Phlk7RT
-	uiATJQPOq7G4QI91fYchMYvOyAymflRHoQNmXxq520YzsNGmoJ8HNjox6E3RwD1N
-	C+Ed4ac8z0ukcFyrDIJPEKQmU4bb3zd8rS7hNnA==;
+	s=fm2:rsa-sha256:Q8MgAJckLAsar7KqHBApPWDtyI65xZnbYmUFfDeYixQSFaF
+	trgiYBGpTIzV99i7OMgHlrevLPmj3v8D22kMaGeMfECN8hrtnj4yz0h1OLgmPw5v
+	Gc3zINbyb/pg6u8m4iXDTWmmlKnxVU90Hy0+iMGCWSxQ5ZM7DCC6NsGYF1zqhfUH
+	oOiWr/dPRflu5u/9eY9i23XVlB0rcX2rJrhOeWLNJtYtqf2TG38kJ++gWMFvLFno
+	ot7EegmaCMipU8qpCqyczSVLelD/v6o3EQGI5Nohci1XJbLd1BH7jf3aHgK0Y6cn
+	B7RLG180pBoJxVfrKco4L2MKoqT0UybE0NU5NzA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:8v+ccvnc+X70/Yt58Le2zryeFYYZeIcQoBmBfRqyC/0=:+SuhsVuFTzgadieyXevcblQ3NeyDrdnE/U4612s3wwE=;
-X-ME-Sender: <xms:jBnRahjkVkdfdLGbGWmg0HLrNmHfN_c8Gj2QQOXLi8PaWSwT3oA-5A>
-    <xme:jBnRatwx12-9HXdwpDkGtkaxaiSmv8sgWIx_u6ce5ijpcBAIRpx4q9L-DpEisF3cG
-    -KNs2zmVVI-Wdj8IZoCKcFYj___8ooYLCckrgTv4O2WHK1LMKzt3-Y>
-X-ME-Received: <xmr:jBnRakJenR4y4yBv6qLkP9_4Xq2mZCw7PPLfc-xPEBZmy8MRPfbGEqXvv-K-Ez2mZYaNPMW7VUpbQ6UpjgnCOWguRryqkl-K-CFC>
-X-ME-Proxy-Cause: dmFkZTG3rTR9I7RB0gcRrjEe3jmGoTqt/hIDobs3oMfmy+6F365Zy3QRsAeV/eXSi6HySI
-    i/rf7ioerSkxfpbtIKzOtMFT5SFzOYsbRWlvTOXTCRHekpj923TPOnqeKpSpssxmOAIpBj
-    jTn/xWuBJdlYyHWrBnty+z1s9oXUH8pkVQo/q38W6OTT0CcON/k/+NnTQK59mVKir430tT
-    Z1csFs8X8kW+x98T7EZvptPCLbaio732WoAI5xI0EZCXbk2PtHGrcWeMyWeyyPImJfxoz9
-    WREfTiJZLutNICV9QEyzQlz8klxAcRJnv5b44Q+daLpLG0OgvJ+qSvHTIZEaNSDZfIOmaf
-    Kjbe+1ZLi5/G2twKwMnhi0CtpZm0AtT/b0/OvMdAiJIILDG2//DzvTIsW7shJM2LvLKpFW
-    avHWz1sBzmxZTONIvBOhMxnQ2kurBfEHWFMhmWpcInMvgwRzNVux4LZY1GsYGuzIaIAWhk
-    +kqHAGAHh+6auwrGONdw9Wd22sTuXMtRei/eck+aEPkRuuybeXNAbgzUqwlRQnYuo8RIlt
-    a6lbWVM3XpGXTNaqAbqOf48r8kgpecJq0bwADpD3lI75gsMw1CRRAMVeaBWR9EPoLz/48x
-    ya5/94CQKoyGHaZi+PTMKYfFqVcSczM5/B5p15tyZKo6gRIWpDNDZDuJHOiA
-X-ME-Proxy: <xmx:jBnRakTvGZe53t8vSyWCtH-oeyasVV2ncM1aeoChUcRDHpvU9oUOzg>
-    <xmx:jBnRasoBhZsHMeUok_eCXfhL01tiQq5GXit8iyaE7CnftYCSNc7-ow>
-    <xmx:jBnRapr_o-zJsIbKU3GdzKCOrmf6eFB9S_l1ELRpSymaz0e7qHcupw>
-    <xmx:jBnRamM-WrUM9pTCx0U-ZqLKPPJWSoNjc-fYT-6cWlNTGA4ZYBD3Vg>
-    <xmx:jRnRas_ppgdAntkPLtTS0rZ4UKoNeOMzdUMf_9rtp_E0b2zDAcU_Kk3v>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Oct 2026 14:21:00 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: John Wilson <jwilso3@ed.ac.uk>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git help user-manual looks for incorrect filename
-In-Reply-To: <VI0PR05MB12991467F7BD29308AE8D5F4ED09C2@VI0PR05MB12991.eurprd05.prod.outlook.com>
-	(John Wilson's message of "Thu, 15 Oct 2026 07:17:03 +0000")
-References: <VI0PR05MB12991467F7BD29308AE8D5F4ED09C2@VI0PR05MB12991.eurprd05.prod.outlook.com>
-Date: Thu, 15 Oct 2026 11:20:59 -0700
-Message-ID: <xmqqzewen7uc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	action=mi-m=1; hc=11;
+	hn=content-transfer-encoding,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:N7oqN5hbGXh9fT7lwJ07fvnewuXwyOabW+NscWn99As=:vchulz360xqRyTbCJLlsUnXGH0mUTdMBz8UxWl0u/Gc=;
+X-ME-Sender: <xms:tR7RalN9UtC-nW0lFWkmYDMMpVwa8MsGk_zizbaDJxo1wGYTykEcOQI>
+    <xme:tR7RaizCyi2BHK3ryeNtksGtNFT9XFwkwojwhn-Oxu_kp1fBLObOV1bAJtm2Lsvmn
+    7Acpfdnl12XN3dBrFlnCNMpNwCXdsb0adDHY9l5j1SYfyiVvn-5B9g>
+X-ME-Proxy-Cause: dmFkZTEyhh/brPhozvEg85aIcvVR+fUy+OH+XUj5v3ieCBbd/INHShsJGqS9OHkszJEYy1
+    z60yVMioKIcDsxn8qzBODlFsRPS/HaaEv8ozVArPrwXUJ0LzyhPrRTI3/ND179ooN5t2BR
+    4YaJiI/zO+ayLgUdiLFvGYOavsatPFrnPe8Tfsxb2kotR0XyhsyB+b3SVRBKxv95YfY8Zu
+    d1PZMBx4G/K77FBb92T0K6n/l2QjeKagVmKceiCnjDankcmBO1OLv07qTguZI0/eNoPex+
+    hT6/SPFDlHZOyi5Q6fXP9gOyJFbkWb9lG1O8ogW2QhsAVl/zZwklV5RpKINYHDVcdXtYgX
+    PKy+LdWzTUhJis9RFe/mHbeZZkK6z/Xs1Rlvyb3aHwVKeqwlwnyeHlZP1LNOFK0czlen9p
+    AOtmXd/n+omIkOcj+Xl39VDqrT13fpSQBv4eCFYtrDlmCXFdtTXMyYu3CU8luGX05oRq99
+    idVb+G6h8oe7oP7NXHz4Pac8Md2lAQ1dmvvswOkdA0O+T13NEx2IEe+ySZsqaloa81C/a9
+    SyUQbqjiyaP3YfvZQ57MwyahgjZmsOb4Y/8YWJU+e4LaXw4bzth7y5VZAhvJp1vDkjZfaK
+    s9yXBGLhL1qzkBWfphgpFLcM4z913BObw0spKPoN/fdG3c8rglFPPyyufjNQ
+X-ME-Proxy: <xmx:th7Raj88DsVTmIoxuSEYfF1eHINdUTLEhas8FV2qxpS9ag5SWfCxDg>
+    <xmx:th7RavrBuUVTF-2WuaxYHrY3na7n8oOcQwVeym0CzV1k9l6vVgg2OA>
+    <xmx:th7Rat4o-9PIX7sd_jC8PvyjRXnarvUZmL28srgo0j-JuxFTBLZWvQ>
+    <xmx:th7RanPH-tqbKrEaS-2tnS0BwMAMMjctBnx5bV9wJhsJi9HFiESKHA>
+    <xmx:th7RaiRMLxCVyPCEMemu5Oe78G63EWJBVFCpcwEL1I94YRtzO2DzVB-v>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 75F0F22C00A2; Thu, 15 Oct 2026 14:43:01 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: A-pxXllTXubF
+Date: Thu, 15 Oct 2026 20:42:36 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: git@vger.kernel.org
+Message-Id: <2c1656e2-a054-43c2-94cc-31625f8c69e9@app.fastmail.com>
+In-Reply-To: <ce69d94e-7329-449d-b3c3-47d4f3aa608c@app.fastmail.com>
+References: <ce69d94e-7329-449d-b3c3-47d4f3aa608c@app.fastmail.com>
+Subject: Re: git-diff-tree(1) can already do the important parts of git-format-rev(1)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-John Wilson <jwilso3@ed.ac.uk> writes:
-
-> Hi,
+On Thu, Oct 15, 2026, at 12:35, Kristoffer Haugsbakk wrote:
+> git-format-rev(1) is an experimental command from Git 2.55.0. It was
+> introduced because no command was found for the use case of pretty
+> formatting one revision at a time from standard in (stdin). See
+> [Discussion] on the doc.
 >
-> I would like to raise this issue, as suggested when I erroneously
-> posted on the git-for-windows repo
-> (https://github.com/git-for-windows/git/issues/6466)
+> =F0=9F=94=97 Discussion: https://git-scm.com/docs/git-format-rev#_disc=
+ussion
 >
-> ## Issue
+> But yesterday someone was reading through all of git-rev-list(1). And
+> this is one of the examples:
 >
-> On Git for Windows git help user-manual looks for the wrong file.
-> Git looks for gituser-manual.html, instead of user-manual.html.
+>     git rev-list HEAD |
+>     git diff-tree --stdin --format=3Dmedium -p
 >
-> The Git User's Manual is installed as:
-> `C:\Program Files\Git\mingw64\share\doc\git-doc\user-manual.html`
+> And if one turns on merge display and off patch display.
 >
-> However, git help user-manual fails with: `fatal: 'C:/Program
-> Files/Git/mingw64/share/doc/git-doc/gituser-manual.html':
-> documentation file not found.`
+>     git rev-list HEAD |
+>     git diff-tree --stdin --format=3Dmedium --no-patch -m
+>
+> You have =E2=80=9Con-demand pretty formatting=E2=80=9D
 
-Thanks for reporting.  I can see that this is not GfW specific.
+But for multiline pretties you need NUL termination. And this is what
+`-z` says:
 
-    $ git help --guides
-    The Git concept guides are:
-       core-tutorial    A Git core tutorial for developers
-       credentials      Providing usernames and passwords to Git
-       cvs-migration    Git for CVS users
-       datamodel        Git's core data model
-       diffcore         Tweaking diff output
-       everyday         A useful minimum set of commands for Everyday Git
-       faq              Frequently asked questions about using Git
-       glossary         A Git Glossary
-       namespaces       Git namespaces
-       remote-helpers   Helper programs to interact with remote repositories
-       submodules       Mounting one repository inside another
-       tutorial         A tutorial introduction to Git
-       tutorial-2       A tutorial introduction to Git: part two
-       workflows        An overview of recommended workflows with Git
+    When --raw, --numstat, --name-only or --name-status has been given,
+    do not munge pathnames and use NULs as output field terminators.
 
-    'git help -a' and 'git help -g' list available subcommands and some
-    concept guides. See 'git help <command>' or 'git help <concept>'
-    to read about a specific subcommand or concept.
-    See 'git help git' for an overview of the system.
+    Without this option, pathnames with "unusual" characters are quoted
+    as explained for the configuration variable core.quotePath (see
+    git-config(1)).
 
-Any of the documents that are listed above can be seen correctly
+So `-z` only applies to some primitive and name-centric diff
+formats. And that=E2=80=99s why my later footnote is wrong:
 
-    $ git help -w everyday
-
-But user-manual is not even listed among the above.
-
-A few things probably needs to happen.
-
- * user-manual and any other "missing" documents need to be
-   identified and added to the above list of --guides.
-
- * any of these "missing" documents are not installed with "git"
-   prefix (e.g., "user-manual" becomes "gituser-manual"), their
-   install path may need to be adjusted.  The old paths for them
-   may also need to be retained if users have been accessing them
-   via the old pathnames.
-
-
+>[snip]
+>
+> =E2=80=A0 1: git-format-rev(1) also supports NUL-terminated input in o=
+rder to
+>      deal with multiline revision expressions.[3] And `-Z` for
+>      git-cat-file(1) does that too (both input and output), so the pair
+>      git-cat-file(1)/git-diff-tree(1) is equally expressive.
+>
+>      =F0=9F=94=97 3: https://lore.kernel.org/git/e8bb57a2-8eff-4f72-96=
+ca-72d8880901e0@gmail.com/
