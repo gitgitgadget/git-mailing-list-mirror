@@ -1,89 +1,119 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D80212564
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 21:35:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0BA39EF12
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 21:37:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792186546; cv=none; b=MeSAvEHGFMJqE+jhMaTW8rO/nLXVlJFiX1mTt8wxI4SiZCNKOOVV26FZrzjRCtCH9wFxypU2dMS3ODel1+b0tc6ame2rhxYIj6er7di28//Ulv3h/6BixN5+JmXbq1daVA/ebcaKJPH3+vaw49ej/cmVvFG8e3hLnLS/cSpJNdQ=
+	t=1792186651; cv=none; b=D6uA+2dqXrHq5VEO5QrgMwn8Oq5OZ0FAZniYeQHwXz5DXNvROUBZaE5k9Ra4LxPupihICUhcGF/4YqJyg7bXEhVkaQBHZ3qW6AIj6SzMucvJsYgf0CsG/c7PJ48EATmGE1dLkC6Bi1TOwV94w+z0fVjDPSYi46C1Dmzws8m+wNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792186546; c=relaxed/simple;
-	bh=/mHrGUhX+ry+uVi/n65Go7I434Ovtq3wqFzArpyj3jc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=fx9ZRCf5T9Nio/uZwhmvFsvKGlQg2BnaOu8f54M6U90V0qdonmoam2YpzIPQU/ilPfdBkuq68b3NXhs75+ypzhjxi+d1mmHxC0Klss0+Od7baKUcEOgRWLApuRoXbYS2I7+5hGQlXDlFa+pptidUSJiYcrusfWKCI/CBSFeFDZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=an6Bjl7I; arc=none smtp.client-ip=209.85.221.47
+	s=arc-20240116; t=1792186651; c=relaxed/simple;
+	bh=hgMZJZT5L6w4MYBgKFo1s4m5nxdztedSQDwRG3wRwrQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NA7y5AGpTtSEredB04aZ+3hkmXL+gW+Rn65j916GSnXKXv4W5UiJNsXdVCCCCS9ED2QagGc5Mi6+ZAvZtNGGFRm4olY/nRxB1N25b+VffyF1E0spXz7er3Pv4zkfnm28NUpDPWT8e3a7IIK69ieRR9Bs8GGNH4+MbhgCzBT7mGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=asDo+Esw; arc=none smtp.client-ip=209.85.210.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="an6Bjl7I"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-486e8faff03so111961f8f.1
-        for <git@vger.kernel.org>; Fri, 16 Oct 2026 14:35:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="asDo+Esw"
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-825b40f8a26so111067a34.1
+        for <git@vger.kernel.org>; Fri, 16 Oct 2026 14:37:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792186543; x=1792791343; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=WJZ+H8PaVuwIaWIdzYPzmc1qLr0tOahe7aZsIJS9z8w=;
-        b=an6Bjl7Iv90DcbimBKn7szGWTYX/TcRvOSqNTHpMuzjYGCGB+OlQHlOz0izsKLrOIu
-         BoivuKABPwMztX1cW0juX/JNlEoCFwRZTGDwUUrhlU8V7gl/60Y5eXWNEXVTD8/Q5mNh
-         Pep6sjWM5tkORfMJKNmSRYSvvPi5zZAGa/2PetnJr3Y3g0LifUTA8Aa9xfianMEzK4Tz
-         sW3Lg16XqFaawBP3EWjdw0djBIcUsS264P/MGRgFOyHHwKVxHVMVXne7D2D0zTQwuwFb
-         F29DnW6ja7Vv2m6XuQdyenkdR5obG8LU9tOXKixViRRjM79c1K2Z1UVm1tHtXPozUazL
-         g7fQ==
+        d=gmail.com; s=20251104; t=1792186649; x=1792791449; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=mZ0GtOicRbRUKr5sSRH/XM5f0SvV2ByRoT2VB811qgY=;
+        b=asDo+EswhLAbbhOmWTiKK8U2h6t7i+ZYAA3llhK+rWgXmeWCR4w2uewy6s0ecwKMzN
+         gWJkc7GnUu3zi/6PpNZCWRyOYrPg/TrsOXJ/sS4vj7bFR/1NhoAojRMRZAnEo7SvJ4SP
+         Ok9e5oCXfTMvv+IQ6MhlVauBjCj+1EcTcLnK/ldFSOpnjDJ/PBrLqlCT5kodTOoDH5zX
+         Sq0WHdc4PByYlWirwGMo27HyWmT6NtJSWXfAhFr6fvEONqhuwoVI40g+5Il2DgHcqgjl
+         ZeieW3n8z6BTa8Jrq5WmLJpig+FX6kqwMlr/eWY+F3wIsYAv1+4cIf07cl9tSgofnFA2
+         Hr2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792186543; x=1792791343;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=WJZ+H8PaVuwIaWIdzYPzmc1qLr0tOahe7aZsIJS9z8w=;
-        b=FE/MQ8yLXqVyyWJfTOECpB0qrpF/9MXAjl5Azk3z5eHyCb2eBhLm5Z3iu/EnFpOOBz
-         i6sLK20qUJ1vEfVBEpZrvjG40lH17bvu/vJAHPNw+CaAT9JhlwBm+szXNVmm8edmyNf0
-         +PUD1UgaZyW6CWFP2deZ/9xU9pOP5XM+kgQH7jwO3+sfLHDL7mJKawWwwEevSXAVOV7L
-         R+g1ImNPMQ6LiQ7FtZlscxD+wgGPIGfkyDDXbFzfABaHQUMUxzIJgobbBrXOyXu/DxFc
-         q4OndEejp8NYLaP6ixAjvUrwqF/Po6tVs/PXgW+jNCggSiMUUF1JMfWvJCzEq2Rio5mW
-         P6Lw==
-X-Gm-Message-State: AFq9FYJJD4jZv0GGbLfIiWvwCzwtm9JtOGAVtvRip+yReKwlyitj9DQu
-	81icjXcGOpKk9YCarvLrggTGCqhq4x6uIXOgvKi2BZnSkyjRQ0JLXzV9RAqOwqQB
-X-Gm-Gg: AYBFou0FKi/cou1CodVAK08pIIeGMbG7rIKddIAG6Moa25850KK5vr3CL1qxbfDEC/o
-	pGpyuv4cINAvuH/4I2rTqk+gGTs256EMppnFnhiRCeCr1zR+1Pd7CyYd+pey8IOI5Mxiqw72rEE
-	Rbcj2ysbGt7UhTFU9hz+crY6Y1Tko4kpHWOYen1r2g9sfwE4QQTrQ1/WJ5srznMHfEOAxRF3fHm
-	a7K8HF5lFDWDFdw7cadjsPPkfCkOlGkhfVMT/t2VKH1CMFUVFoAUea8IisZ1uZ7PpXZCbWb+9qr
-	eBjP5+6gxuC9lSJoiHgeb/CLPN6thE0PeV4yDoUEbkHKVYsxFwAuYSQE4GF5rRojg13Cp4XrJi6
-	e0lZEixOnpKS+UTmu57akJaXoX2quSE43AKFr8GdfE9szdSOURo2btQh/75H4jQBO0GYs2O4gNI
-	BQ7Oyw7MWpEsWY/+m94gJkO9bUGh94ehxjdJZOzJZR0R1trgAZK0zDJPnML4Ig0wcB8XgZpZCee
-	LgKgR9l4vTd8YVJM8tS5nE=
-X-Received: by 2002:a05:6000:b48:b0:48d:f491:3517 with SMTP id ffacd0b85a97d-48e07fe394emr1116061f8f.52.1792186542757;
-        Fri, 16 Oct 2026 14:35:42 -0700 (PDT)
-Received: from DESKTOP-0SUCFI3.localdomain ([129.0.81.255])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48dfd4d4978sm6826664f8f.21.2026.10.16.14.35.38
+        d=1e100.net; s=20260707; t=1792186649; x=1792791449;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=mZ0GtOicRbRUKr5sSRH/XM5f0SvV2ByRoT2VB811qgY=;
+        b=scPCtpzZA1C9lHmXU2clDZSwRuim6m65Dxx3AvGYpc6AGranAkyVRrYpNvwUAiYlCE
+         4E785kG4xc4nLW/dqSB9L6e3FyiddaSOSLxNcAaiR8D0mHXQzdfzsQ/90Y8oyqDCrnPR
+         T45He2owPQ7+Cxn/Kj1Dzek9PhCU0h5/NHrDgRKSbLr0PXhLkCBpQJeg2BrfIPQxT4Kg
+         S1cFNRdBYMroJMteuMePgwzuDqT+dPGT28JarwKAUtc67sUSHBVqA6QeZS9J8bYpGEF8
+         XMsraG+d1pQkOWPyPWqjIBCqPyVAAzzlbO/ESj/nEeOQvdVZYDFKYiG4IjH4PA+uChnn
+         BdlA==
+X-Gm-Message-State: AFq9FYIvhn5mE05C1khqoCRwu/+mYk16Gs3ncjez094AQBT54PXM1vw1
+	50yV2W+FOyJVEolUNTLeGHYBYX/G2VSZY/VjsMcjaaYL/5w7VVPmzPUiklyutg==
+X-Gm-Gg: AYBFou389Fxiv02zITGysY51esc/5Uq3di+GKAihSg5kn3HVWLvLe/QUTDqEOSHQ1kH
+	v0woa8iGrBtkx2C3kXjt7ORH5XZksQJwYeTUI2bMzwCX07M+HVO3HvJLxFXMsMslWz6kxDQ3FWe
+	SNoBjmQwDZsDBHXiirRCTW3lC4EJwaob9JBPk7h5CQMlYpnDb6mMUdhQ7IRUefysL3SDSkbU2kw
+	zV8PBsR+5OCr8p6ywwKhsENsBEXO03T5nDnXXuGl1kXBd/7FYN0L2O0+UwriWvbidG65C3TeV1q
+	09QZnHq/ix178SD3aWq6JtP9ltGSN76uypeuHL7UIRcYArfIjtTnOSwVje3KPtz7o/VeWTzvYYL
+	g9699i8riMs9twAJ82EM4saDPSfVTDOCgK7NmVl2jvL9CrnoYLgj0KeMqjo/Vc1iiho1vQS72UF
+	t91id6GVfbLF6Qu2E6H7bagTdULvQLQSHx5Bvly2qnk0V0Fy0kqXnfUiDXYq/WUJ9VmTt3PHbCP
+	8HJizI4GTmtJL5VE4HTp0DLCF0SogTc/9We5w==
+X-Received: by 2002:a05:6830:2643:b0:81b:9d18:75c with SMTP id 46e09a7af769-844ffcdc21emr770964a34.20.1792186648832;
+        Fri, 16 Oct 2026 14:37:28 -0700 (PDT)
+Received: from denethor.localdomain ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-844d2ffbf71sm834395a34.4.2026.10.16.14.37.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Oct 2026 14:35:41 -0700 (PDT)
-From: kerylefondji7@gmail.com
-To: irungujane613@gmail.com
-Cc: git@vger.kernel.org,
-	christian.couder@gmail.com,
-	siddharthasthana31@gmail.com,
-	kerylefondji7@gmail.com
-Subject: Re: [Outreachy] - Jane Introduction
-Date: Fri, 16 Oct 2026 22:35:05 +0100
-Message-ID: <20261016213506.4534-1-kerylefondji7@gmail.com>
-X-Mailer: git-send-email 2.53.0
+        Fri, 16 Oct 2026 14:37:28 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v2 1/4] pack-write: make index-pack output comment hash agnostic
+Date: Fri, 16 Oct 2026 16:37:13 -0500
+Message-ID: <20261016213716.593278-2-jltobler@gmail.com>
+X-Mailer: git-send-email 2.56.0.173.gf57c9a7388
+In-Reply-To: <20261016213716.593278-1-jltobler@gmail.com>
+References: <20261016022901.3838402-1-jltobler@gmail.com>
+ <20261016213716.593278-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi Jane,
+The code comment in `index_pack_lockfile()` explains the expected format
+of output from git-index-pack(1). As written it explicitly mentions
+SHA1, but both the git-index-pack(1) output and the parsing are not
+specific to SHA1 and also support SHA256.
 
-Welcome to the Git community and welcome to Outreachy! 
+Update the comment explanation to be hash agnostic accordingly.
 
-It's great to see your introduction here. Going through "My First Contribution" is a wonderful way to start. Don't worry if the codebase feels new or overwhelming at first—take it step by step, and you will get the hang of it very quickly. 
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+ pack-write.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-Wishing you the best of luck with your first microproject and your contribution journey!
+diff --git a/pack-write.c b/pack-write.c
+index 85674e4b72..b1311c9923 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -476,11 +476,15 @@ char *index_pack_lockfile(struct odb_source *source, int ip_out,
+ 	const int len = source->odb->repo->hash_algo->hexsz + 6;
+ 
+ 	/*
+-	 * The first thing we expect from index-pack's output
+-	 * is "pack\t%40s\n" or "keep\t%40s\n" (46 bytes) where
+-	 * %40s is the newly created pack SHA1 name.  In the "keep"
+-	 * case, we need it to remove the corresponding .keep file
+-	 * later on.  If we don't get that then tough luck with it.
++	 * The first thing we expect from index-pack's output is
++	 * "pack\t<name>\n" or "keep\t<name>\n", where <name> is the hexadecimal
++	 * name of the packfile it has just written. The line is therefore five
++	 * bytes of prefix, `hexsz` bytes of name, and a trailing newline. A
++	 * "keep" prefix tells us that index-pack has also created the
++	 * corresponding ".keep" file.
++	 *
++	 * In the "keep" case, we need it to remove the corresponding ".keep"
++	 * file later on. If we don't get that then tough luck with it.
+ 	 */
+ 	if (read_in_full(ip_out, packname, len) == len && packname[len-1] == '\n') {
+ 		const char *name;
+-- 
+2.56.0.173.gf57c9a7388
 
-Kind regards,
-
-Keryle
