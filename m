@@ -1,118 +1,160 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82BE64C9579
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 13:31:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7390537B01F
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 14:30:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792157506; cv=none; b=jCFf/oJv78+bH5dYFezBi5emHMEgYvd3OU8q0hns94lE6X7163sXWcwuCXqAILd6UpNkCxlFmTpfa1tUloEpex36D9gjSz0qFy80m8OiBKb45l9hxY3Sjy2Udg10OAx8F8A/rCq2YTkHDl5x4xgpnDk+P/pVVbyUbZ5KrtD+thI=
+	t=1792161046; cv=none; b=k2JAuobCU7sfaUpyylYY0PldBpS50cRj9BAbs9HLVI1mKsp+TOB/B3hHBC6V1p3tj3bMEl2qcFWyF42z9SpdupNOVsLSJb0R2VEFtJTSABk2DWZrFB7MWFwz0WB5l1LppPvUuTlBP9vFVw8MBQHue3SVGXzgBJkYMJdmI9FX+rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792157506; c=relaxed/simple;
-	bh=/0s+Ci8/K3Q1QBRrB/YV8tkw9B9ElI9I/9GtPM+bvls=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d5eQXSS8YlP3soLZYjmSOl+Cj+8PvyvqScJkOvz5/uyEo7vI/g3wHO2eFlx1kYpSuhKZqZW1MfRPymvUVwzt4cu9biFyWXhM4g7dMDqRyKTp/eCu+yl3dVQO+FJmKQ5SHjVi182gLTXLIMlFWlDyk2gv5OcKWsCrSLeCHo1onO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=UA7Y5XId; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1792161046; c=relaxed/simple;
+	bh=OLSDSMzhr0opQ4w84jm9o7xVKed6tQ73BfHGClwSUGY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=niwm5o0aTpDOPMdYMFS6iLWO1EjMoF/3LG3f31mro+wO+RAxAq9U84WRLnXsEeIGiuRSKBF9K9c1boMgrw19yKdY46qyaLjPIP4AJr+abBpvwfXn7jOrv7GknXjEEmQtaMOQBMY8iwyRxbL/p7dAPh6p6ngYd1QYt+lrGV0ZQQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f2NXKn4z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L737wViR; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="UA7Y5XId"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6ac76a02368so6252209a12.2
-        for <git@vger.kernel.org>; Fri, 16 Oct 2026 06:31:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1792157504; x=1792762304; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=0/BkWjko5yPpUclHa+cvN3JDX/26+XmSrCN9UvMX7qg=;
-        b=UA7Y5XIdMJ+N9fmXNI/YovsYciE5WQVcqUP/8BTfEOMuz64yM/poXisSuxEAa/o6an
-         Txipkxqs/+N3GNpD9GXSEkofaleXQFZIqCjb1UZwJMmLh/V7KPxkrtcA6jSTD34RIUPV
-         zYyxb1xnoP/PeOPDx6FSfJRT9XtkYaKMXdatVX8OkqRtQBni2o/OXhEskA44OTveNGux
-         lScwmsJ8kcpCRnjLXfq1y/Yq9vf0Xqo3TpdOD9Mzw83CBkXOSTsc3KUNAzGG+/ycrAYS
-         F6thw/fkW2lhCERHvKaVAj2FJ4jinXTaf/fC9w7HO7A4OSWFFdbQicZpWytlOZtQGI8f
-         tBXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792157504; x=1792762304;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0/BkWjko5yPpUclHa+cvN3JDX/26+XmSrCN9UvMX7qg=;
-        b=vFSe4UKMiomrJ0Lvna+MKgLfWQSqx/ZvAsEzaJWaBheom0agZxgfZ5QxXqU0AyQwbZ
-         bE1o7jGA5HJbtPkfqmLnok/gB4tPkkF82u4gxMPaJUurGG5jt3BFBivsti7FazBHo3c0
-         kSxSO+Tnusn3taezOQ78Zghz6h4WJIaFGcTBdFuav606TDjmPps4QNQqzSYWo+/zPDD6
-         CJHFBHUqHJ5DCMwTDrBM7ds6okCTI2uxqAOwbLV7EfhSK7gX29Wwl0IQ93viQmNVGwvV
-         uNDJswghSgJ5wrGqjEZtcWgyvv/OQS3O90RnrU5sActPf/v4G3cSdJlfklFX4VhcWpxp
-         t2jQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxaDRRxU6V5xge7UOVl3Hz+RfrZCRNN1dvOX5WYlOMuK324yCUwlpXDQRdMdQkSDhSZXjI=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKQsIk8M7ztdBRAA1DizSuVMYtfk4foQ//fTsZqs7T0tIqXi+6X
-	E9WdxLghg/h6EH3g0jblIeNDgpu01udcR2xCb71aqBSo+se6kjyOT8ZkgVpr5Ymd1cH3q3u08+k
-	PbWEWEGA=
-X-Gm-Gg: AYBFou0S+dYS4XRCcBJ8KTuOYxGE58tlfRnaovoP6fLqc2CNUEUco5M5/m6xU08fKJt
-	jqin4BM+hkSsbJ6isO/+m05fauH1FM5wEjvm+zt9KMfHtfO15z8oo3E+K9QngcHJQ4p6GqxTo/7
-	mP0e2tE3kjMnhFIxSeXOm12Iy0PnoDnnTMg1wqk8XOmDYd9WG/VlK6vG4cI8/KMEkbFvbhZnlKV
-	70PJXeU8o49JwasjHllDlWs9DK/ALyRG5uLYbQW+MGsYDX0Hfh6DyrLazeoJ06dyuF/25pvNnhw
-	BzpODK0h9IrYAI89SJaY7OdXQsyiKZlBEc7Wat/DT+ZJOjPAev2bFbhLh2izBqOOX8wzg8H+g6C
-	Acdhjc8OfV7UXGmARI7qBI29ofURwfNtTc9cf91s3k7JxJvrS8PAfXg/VO2nADe+qsKgfabsRg6
-	JFbMwyrVLSp6JLqlMcrxSmtv9FK0Scg2dyopyfRJg/WeHUImgXV/f3z1VS4wG6WU1mqSKT9Vlyk
-	w==
-X-Received: by 2002:a05:6402:518d:b0:6af:f8c6:7859 with SMTP id 4fb4d7f45d1cf-6b17c28bef2mr17656364a12.41.1792157501863;
-        Fri, 16 Oct 2026 06:31:41 -0700 (PDT)
-Received: from localhost.localdomain ([2001:af0:8000:1409:193:86:92:181])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48dfd4c4fc4sm4576494f8f.15.2026.10.16.06.31.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Oct 2026 06:31:41 -0700 (PDT)
-Date: Fri, 16 Oct 2026 15:31:39 +0200
-From: Michal =?utf-8?Q?Koutn=C3=BD?= <mkoutny@suse.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, 
-	Jean Delvare <jdelvare@suse.de>, Elijah Newren <newren@gmail.com>, 
-	Usman Akinyemi <usmanakinyemi202@gmail.com>, Taylor Blau <me@ttaylorr.com>, 
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v3 2/2] merge-ll: use tempfile API for external driver
- files
-Message-ID: <20261016-faceless-demise-8e4678750d2b@there>
-References: <20260929051200.GA1100000@coredump.intra.peff.net>
- <20260929051312.GB1100669@coredump.intra.peff.net>
- <xmqqcxtwhufq.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f2NXKn4z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L737wViR"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9F75CEC01D8
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 10:30:43 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 16 Oct 2026 10:30:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792161043; x=1792247443; bh=ZdZWw/Mcq3
+	Wgn6K9v+1L4r8IUcFsPJ4P0wKPi3Hdaz4=; b=f2NXKn4zwHqyVVE+QhylDMtk5j
+	GwXpmwBvSYtpmKKsxC7YOwqo7Waaz+5EU241qxKjUKSCBe+mpWiO/YZP6LhKq7Cc
+	Dt2ILOM2/xH+SH2FNWUb6WLfGjNA6LCeAAbh28wPyfMZnYrqwEQiX3TjlydStkYV
+	wD68Drd+PwuM05bhasOwBKSrs5PdHKBoVENnwBdvlOtH3wpLY5hbBsHUpn2dSORa
+	7T8iqX68nNBv9Y+locxQHretXSojfKvysjfuN11oONGHm3kBxgu8LgxCg9WVWbMA
+	TH5muEAvZf2r2KYXIhteOUZeuXhjKhtZ3V/1dCsO4BPi4bCI6RjwzAJ+03hA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792161043; x=1792247443; bh=ZdZWw/Mcq3Wgn6K9v+1L4r8IUcFsPJ4P0wK
+	Pi3Hdaz4=; b=L737wViRQDmbY6oM4ILvrSCiZODY4sYSBJQ5OPT8UUCdvrRvJIt
+	vvNBWXV0latCjt5z+WGF6IyWn0JCwnILV4nEpJ6YGs7zrMhFoC2Q9wbCtyuzFm95
+	raAhI79AoMZXsCzfaLoXiqjntBM5GrRxt/swLV2GQ/gspPcrpEgefuCKlW6pfkbq
+	pLxPJYQFwQk9gbo5YVaC5JyrAiWP8r2QQsOeBJInVB6DL4NCVWi0TcVq7V5ntCdy
+	6SynzJfLpWXzeyt88O2ja2eGRFlH4uJizcPP0BtPADBKd/43JlqOK7O6gOiOXU9h
+	5oA/tdR2OfEppZKzKEeOPrKFx72TNve0IpA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792161043; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:CYa+fVy8Bu9wTRKm0HbSGVu7GpxYYRj2TNEaiIfrLN/TbhT
+	Hp9HdJoHC5a3zKOYOKyHXaKXhCqmkry+MiEtZxIAJwweusptKUgl3lyOgJljpILt
+	BBA2gRLOcXBjulzqejydk9nGos4Y2dt20llWRDhuoA7trudd2Wt/dNv5lAfJHhUX
+	hhTNMQRkDDI8NSm1gSCBNbcQs5t1hJLOukG6tU09LJoGUk6m7lcdRJVTfWSMdkul
+	J+MB6ANMOtQrkffHnZ3goseHdTeRWM2IX9ztmr0OCgSVShyjC0rhljMIYzjcvF1Q
+	APJ46giDyrSLyhBP/srxWb+F975IWLw/BoqjSUg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:FlZuf+oKAQnejrCMn+Tb8x+5GbyMYSgjq+M20OvquJo=:OLSDSMzhr0opQ4w84jm9o7xVKed6tQ73BfHGClwSUGY=;
+X-ME-Sender: <xms:EzXSarNBuKwMN3DqFdHekwL8jw0dLDSn88WLpnnlEA96oRihyCIVEA>
+    <xme:EzXSas2xq_t0saIlk1wl-s7TW_4eqb2zoawztUeKGkTfMGPCnGt9GfdcZ4hB9DnOx
+    _SFQS2JwwlOmq4OZpBzGPLuTDbFHbiZxnVgdAppCK1m5IQ4Sv0lh2Y>
+X-ME-Received: <xmr:EzXSail157udo_u87_wAr09ar9v31Jk8WG-xfUWWo0G1FTKD19t4NCLaetptYU554obFyRtYrmbnIQr1L4jxF59siry_FU7DAnbC>
+X-ME-Proxy-Cause: dmFkZTF1xHFyD1FcLOQm6TQF0705msCV7xI3HvaaUNK88yaZQ3zGNMIua5d74/BS6nSIqY
+    8w69jGeciCZoSfs36VUaZayvRUSDIO96dk1iMkz2e5KGPNyKaRO07NV63743k3L4VVQ2G8
+    rcVFHSuVQMXt/7iNMsn3GM8F+O5AsAer4oSUDuBG9BkdRc9w3A7tcnMwDj/6b8JQ19tV2c
+    Y1+xpmfCinD0Jg9ppW4r7OMyNeZE1EUrVs8y+Q7PNT4VTFKie5c4AIV5xQltBJCWrTHDw6
+    gpyXznaOj0282QmxgxFioUycJmmmgR9V0cJ+gqyVmlCe9sZtpu/tFZDdALIoHiE+r05dH2
+    m1Fwcn+fz4CJ+skLdZ2KzNuAZEigUulJD/nfN1AaYlQ2aOms+8EiRKUi1I5Bn1R9+1b75W
+    x580dLWsimJ++xSWnPk0v7KEmVCLIfNBMaDqsXiZh6fPS6jDOhPo2Wm3YyRCMVS0z0CAsN
+    oK2iR/X6kVhCPkH5HWxDJDRaclqUm9GRygwTyYH8Z1XFL83due7uEoNaMQTGr2Ip2yFprt
+    v/dQwKj5eLlQ6tuQKjSKpJv1NMQrejOQwfOihA0FpbY4VdafhLKTDH2figGN3e+RUx/gE0
+    81ZLaiXK0Jcpf/UCFSHXmOQpk7Q03s6ZrwwRE7I0QGY2Pv3sDNuYQwBVvTBw
+X-ME-Proxy: <xmx:EzXSarXiPAqadRuTe3wij_DBsWYszyxhWOxJLZSG9YdO2lWXuZNeGw>
+    <xmx:EzXSagvijDnX6iSvwW_k7bJ_Pc7QBBRDUT5tEVyoL-eFzDuetqMzNQ>
+    <xmx:EzXSamZ6MgSmyeOmikRQQfVu_tyy-D7zDzXAmb9IC5CYgh0QyKP0-w>
+    <xmx:EzXSanUJt8Op__RgpCs57toAGxT76jV23rBwsEZh1QxH6rvHiyC6-Q>
+    <xmx:EzXSapsI6nrYOtpAa5S6pP4xxXvbaj4wL6k2HiFZ-7wPqW8pc0K-8ZsB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 Oct 2026 10:30:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/5] http: use `size_t` for byte position in
+ fwrite_sha1_file
+In-Reply-To: <atHiiye4oi_lF5FP@pks.im> (Patrick Steinhardt's message of "Fri,
+	16 Oct 2026 10:38:35 +0200")
+References: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
+	<70a909de18e8cd8d282439fb51a9399baa8c7be8.1791958171.git.gitgitgadget@gmail.com>
+	<atHiiye4oi_lF5FP@pks.im>
+Date: Fri, 16 Oct 2026 07:30:41 -0700
+Message-ID: <xmqq1p9pk99q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yxkksifpfd5ib4jb"
-Content-Disposition: inline
-In-Reply-To: <xmqqcxtwhufq.fsf@gitster.g>
+Content-Type: text/plain
 
+Patrick Steinhardt <ps@pks.im> writes:
 
---yxkksifpfd5ib4jb
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Subject: Re: [PATCH v3 2/2] merge-ll: use tempfile API for external driver
- files
-MIME-Version: 1.0
+> On Wed, Oct 14, 2026 at 06:09:28AM +0000, Johannes Schindelin via GitGitGadget wrote:
+>> diff --git a/http.c b/http.c
+>> index 4af3c29c76..809471f436 100644
+>> --- a/http.c
+>> +++ b/http.c
+>> @@ -2848,7 +2848,7 @@ static size_t fwrite_sha1_file(char *ptr, size_t eltsize, size_t nmemb,
+>>  {
+>>  	unsigned char expn[4096];
+>>  	size_t size = eltsize * nmemb;
+>> -	int posn = 0;
+>> +	size_t posn = 0;
+>>  	struct http_object_request *freq = data;
+>>  	struct active_request_slot *slot = freq->slot;
+>
+> Right. This is how we access the variable:
+>
+> 	do {
+> 		ssize_t retval = xwrite(freq->localfile,
+> 					(char *) ptr + posn, size - posn);
+> 		if (retval < 0)
+> 			return posn / eltsize;
+> 		posn += retval;
+> 	} while (posn < size);
+>
+> So it's clear that it doesn't have to be signed either, as we only ever
+> add positive values to it.
 
-On Tue, Sep 29, 2026 at 09:51:53AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> Will replace.  Let's mark it for 'next' (unless somebody notices
-> what I overlooked, which is not a very high bar to cross).
+I agree that changing the type of posn from int to size_t is the
+right move.
 
-I see this landed in next.
-It'll make our users happy.
+But I wondered what happens when (size - posn) is larger than half
+the range of the ssize_t type early in the loop.  After all, the
+proposed commit log message worries about the case where HTTP
+response body exceeds 2GB.
 
-Thank you!
-Michal
+Shouldn't the loop clamp the bytecount passed to xwrite() below
+whatever would fit in ssize_t when successful?  It may end up making
+two calls of xwrite, writing 1.5GB each, to write out 3GB payload,
+but that would be better than attempting to write 3GB, succeed, and
+be fooled by ssize_t that is narrower by size_t by at least one bit
+that we got a negative return from xwrite() and return an error from
+here, when in reality we have written them all?
 
---yxkksifpfd5ib4jb
-Content-Type: application/pgp-signature; name="signature.asc"
+    ... goes and looks ... 
 
------BEGIN PGP SIGNATURE-----
+Ah, nevermind.  The big comment in git-compat-util.h before
+MAX_IO_SIZE clarifies all of the above.  In short, xwrite() takes
+care of clamping, so its callers including this code do not have to
+worry about it.
 
-iJEEABYKADkWIQRCE24Fn/AcRjnLivR+PQLnlNv4CAUCatInNxsUgAAAAAAEAA5t
-YW51MiwyLjUrMS4xMiwyLDIACgkQfj0C55Tb+Aiw9AD/QqxOzOB6s8INvoUGWdiS
-gLOH7euqNde0JezbKitc5/kA/1JdiYwqZZNVS5lEq5lQx8naQ8r8Eno/VxSRYH/q
-/24N
-=S2T3
------END PGP SIGNATURE-----
-
---yxkksifpfd5ib4jb--
