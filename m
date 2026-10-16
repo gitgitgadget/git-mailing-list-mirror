@@ -1,180 +1,141 @@
-Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E272E5B2D
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 12:39:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E598B4A49AB
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 13:31:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792154378; cv=none; b=rNtpt+Iz2t+PXPM9edAUVBhNk76RBAYFazW4GhJ68RAd0jVWDhtn4c0DE3xvk8aKVK+zs7v0CQrsR93QKsRQ7XSbV6PlqVfK8aEq27utFg6j8YRP1MGn/mvfrImVVJw4WPUQU+6Hdt/aGOhoxdaoHF0kCwAxCGkk60i8eN0xNzY=
+	t=1792157485; cv=none; b=ZWe1YyXRW97pOdetzHGgBs2MLV+XfoBNki/kurzgOgx+SUTXSeVcbfcyMan3eaFUbpXXFu97DSVLtUprxRgeE0WJqPOIKjOwGbsSfc/9YFIMVfgmxqhirlKF5wVLzWHdCQ7ewO2wmVQMoy+zxVbGFaD871eRu4EzCZoruJPu74Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792154378; c=relaxed/simple;
-	bh=b8xx0nVcyHHmlFv5SVsYvXuooxa9fF5NmOuYqBifhTE=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=O0gPU7tD5UESVd5cLp2+rYaej5DM5XcqYcxYooBmiZyfMpepqdImfM4ltx+4OTCoWipTeqSXNZtVCoDpPbhzicLAYqUafh7Jubu6TFmuBoz2CnDaCC/VPvKCJQ85mxSkmIbP7g6BdCJSeJNwY4WpRTAHplVrfKlqcj6NxeITeIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ylegcz7z; arc=none smtp.client-ip=74.125.82.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1792157485; c=relaxed/simple;
+	bh=4wFK5FmJOJhqgfCuDlJURvJwnL1C3Jh9ELtQRlHXPa8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=H2dcQGmRdBRzJ/q1XiTM2/YSyBwDQDmpzqVePA76ULo2Hyj0DxGa7Xo5i/WYQfcMpM+RgF0oNbKXPtzakrBCjV5hlF7/xO4+yRIFcYvtI26EhbdBHhSCgQTr6kd0kYY8Gsw8DzT1mBjUwznlZJytjGcpyAeZ0SBSXMQ7L6SaYbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=hTxCZTzU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=crhAhUSg; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ylegcz7z"
-Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-35f1f76ea84so3525253eec.1
-        for <git@vger.kernel.org>; Fri, 16 Oct 2026 05:39:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792154376; x=1792759176; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=gTfifuPfZKV+a7zzeBEKjP5aBaCMnP5SUDABhJStk7A=;
-        b=Ylegcz7z/1f5JlDqG2AzefxWQZrxRcYhR2N4xE3naMCerg4eTXvgz+nYvQ7ZViVVrh
-         JPAZZ45YE8a72VMIT3bqhF2VmBvnMc1s6bXRW4oD+vZmQ+HXVEMsrOtbTmK0RaQe3CTa
-         SqtzCDxU446vjpfEq2CidubifhsfMLWC+yYsXPIfRz45IsDXyrCdzpcDONzjNsas4D+l
-         S5mMMB7tRq6N8gNKzGKcTcicqaj9w015BN6krGBsB2XYlZjkxLiK/wA37vWCtdrMmKDz
-         NDuiFeT7FQHoXmDZwlF2IOkIOhUW3d8dQ5bP7NZMKDsllDRn7ipQb7asag8K/rkIRQAl
-         spHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792154376; x=1792759176;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=gTfifuPfZKV+a7zzeBEKjP5aBaCMnP5SUDABhJStk7A=;
-        b=u8AHftbPQrTrUmzyEbz400TyeSBYmlWSc34sgEpdERG5v5JlnlkYgrBs+m+6LiVpWk
-         YPkmD9H9Ef3J3x2fArDS4c39fXdCPiRwfZqHrqYmCAOwPH0/61HPaG+NEXOSDg95zfyk
-         44t2vEksR9SdSFeZrJ+sdRCcOnUK/mz5xMy/VXASzt4w7kiKiWSPjVqNesj6qd5uI/0y
-         OXcDXgThLNWZtNwSNN1NcDAuYGEvjXJjusbU8UI3buGUxWlkK470SZxTOoLU3JpNseFW
-         fH3YucXbe4GxQLuLE7ipYSNAFIHhlYYBfuoiCVndGiKJvuNVlIypDqIZ9ikHbn4aRyPE
-         p6EQ==
-X-Gm-Message-State: AFq9FYIohqKMb9lNNTxyMFcsFHLBm7EecjirT8yVNM8tsusPs6wtQtWS
-	gEKW3gftbUFDbBBcmBIgq+QTNZS5d8/m61euVKd6vGU0ueeDsSxqCxFhSfXtnQ==
-X-Gm-Gg: AYBFou2IA6yoCjRm7qzk8noY/6IjN1NHACaezejO7D1ohe/E9E1Jak17408ljY8BQVv
-	iwjpbL6TqG8gL+L9Y/kWi6Hm9672BLp8HufWp1rN3196HPsC9izMu2Vo8x/uh5tW06T4NWZw4SL
-	O2DbJox+AhRjwat+PkkXxOiCAGxw1EjHHvdPPnf6tAvTE7taPbgAmPui7coK1QFHqNSRc8DGPeH
-	yOUFlzTfiJcoUt19o2PMCVH2ajyTCK3tYnpDQn8GcJeHijmozQ3LdUqRYcETSoa4A7sYsVYXFAU
-	+DmT7npUJuqJ3cCy0r0mJiVA2uWVAwEitBuc0DQfC+IuZgIm516hnemeKAPx7tFG4oh0I61xV0K
-	ZyzN6G/mUaeRJGPTKt14boiOxkG85y7ze8XMCJ2/WTvkRB+HuR5gvZDHrMoy3CLFaZU37yH2yYT
-	oJah2UGrUi2FmK6OeZOA8eFmL7HzOwcvt4YS8DUaqDf6eXyf8VcUZVWm5sk2lUkYgI5PXR40iUV
-	YBHuYuaPB1F2Jw=
-X-Received: by 2002:a05:7022:282:20b0:181:5cac:8f27 with SMTP id a92af1059eb24-1815cac907cmr5610247c88.35.1792154375973;
-        Fri, 16 Oct 2026 05:39:35 -0700 (PDT)
-Received: from [127.0.0.1] ([172.215.209.243])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1831ba424a6sm5927624c88.17.2026.10.16.05.39.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Oct 2026 05:39:35 -0700 (PDT)
-Message-Id: <pull.2261.git.1792154374653.gitgitgadget@gmail.com>
-From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 16 Oct 2026 12:39:34 +0000
-Subject: [PATCH] sideband: skip unrecognized allowControlCharacters keywords
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="hTxCZTzU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="crhAhUSg"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2BB4A7A015B
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 09:31:23 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Fri, 16 Oct 2026 09:31:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1792157482; x=
+	1792243882; bh=BkRjzu+bos/I3PFGM9TLtQHtPT6OmO9LZt+9Xo2Yq6w=; b=h
+	TxCZTzUlu7on0cdzZIkMiBRFCkj4dsg9DQd3nSepF/VdnE2kvA/QpNuirZTgsKD+
+	E5F9x3lVyALbbYBV/lFC+h9JCF+TVZjABnKR1BG4buSNXEp9SXvmmWBOA0Rp6/YE
+	rH4xGUwunkWqSV4AzHxarbUEDjo0LFiySIizHgHbeESxNQmuehWELiQbWbc2ezxj
+	Ncz094FVdEdkedJpqiT5dvRDbYKdkOAS1ayk/NDQracuJ/ttelWmfx4oPJEjy8li
+	UIsR4DSc7sieqX8kGHiCEbt92+fpl7xVgfzFb+TmVC4NOl9BrDrvDbwfOqve0yF/
+	jwwVHf6iKXrLfdzoNB12w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1792157482; x=1792243882; bh=B
+	kRjzu+bos/I3PFGM9TLtQHtPT6OmO9LZt+9Xo2Yq6w=; b=crhAhUSgLxBwv7tma
+	rJZEa4h8oDrnQDr4d+2EpMMX4tKxSnb+oGOIlKaWhpkQxDC66RQF2V5KD7BlvNvH
+	4w/ISMsXHcP2PhQi6iEqhsEJzJZnqOrbjOl2aAaNwFBKKYLxiHlVwLbTrbYDFxTm
+	R7Ofp3k8A3fun4eW1Vws1DPyMyiaBZ2+op2rdY8HXGsn7es0M35EixpzlWgq839H
+	ZadjA6LoSzx+KdG+47W9TYh9pJ5EklKAugAD5N4XqJX0ql/x8UmaF8PpoDh2HDZn
+	qRcTGGie3TnALNmsGD287fHSHp+hj7atso4A96F7401UiX24s9+n5JbBV2lhWbb+
+	xMgVw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792157482; d=fastmail.com;
+	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:Wq2jhCA8j3UvpgrA94P4fBPyTj0Q0IkBATNYAKVvV7MsrSo
+	dGy9+hbj/aPiK5OMGlQhBzQW6OblTYjEOrWvw4seauQyVrfHzxz0RiwfF0PiQQwL
+	oJ2nsQRIQUA2MpxdfQ/azMrNKMGMPEKYVU1W+XNGyG3m1wTkc5gUIhy/2pJVSgyg
+	Hm0B++UmHnPLsqdil/+/LnAsXIjSu5qFna1NMXKRdq3VOKAd/PkYRwkB0CR+7cGH
+	sWHilmjdqrP4/bgpeLtj5GWKYcimTbPJoqErKD+2Cdw0Pz5n7mjxJWEjDIu4Rm1c
+	NW6AH0GvcVCPcBbL3PCPvk0p1ocX8k40+lYjpjw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,reviewed-by,
+	subject,to;
+Message-Instance: m=1; h=sha256:Hho0Pp/jeEZwBz+UdMfE3NA6MM+uJt+znlSUtp7Ie1Y=:4wFK5FmJOJhqgfCuDlJURvJwnL1C3Jh9ELtQRlHXPa8=;
+X-ME-Sender: <xms:KifSaoUeTSlj7Pj0mtHHgZJH_i6TWhnoKA6qlpqWqEs8N-fnyaOPTQ>
+    <xme:KifSajdjCnN_tkBx_O_SHHkcSAAeyIeMgBPDJdQnKIKkHnlMEzX9rh5EraUH7nXD2
+    5RZS8n-JqG5cmaPrxo7BcsnCEKTfzm-v_GBq3fO4CP9fozmYf_amlM>
+X-ME-Received: <xmr:KifSaks7Vhy4KADqA78Bmk_FchRYEKHdMIPWH80haBMuTZ4liuT7_sRCkj8IH5oUTCUuovNbOoMsMgDpheIfIxmFv0JYV_E9aQs-3hUbgpsP_g>
+X-ME-Proxy-Cause: dmFkZTF6m93v0iAVst1k9RCWZWM9b8ltsvtmKqnmjEqGaV74Kbbtltsw6gjIbSkGHD3afy
+    WOgwCntXpyj/8sf6mLAjAWxe13DROOWLOQh8kHMRMUpoTOYcW3HFtAs8FYY0nPWXfYqDiY
+    8SlxjAdMj7tCFkxQ7njCg3xOl2mbJVI7mr7shVJa+IgLyqoGNOiyFM+sS3C7lxWBvQ+ITI
+    v0pFbbCCgY0i5LZQfuczOldwvLgBSMZkUjA08rRWyRMp7mwARi1+zaMde+hOb3lAulK1zv
+    1VuAXL8VxGERvxt5a7LnE1KyeiRLm39nEvspmZI+QslZ0fobtdpIFkB+t8csDW2usf8efC
+    xA/r1fPFBMsHe2chVNXrbq3J+B59qDich9sPMfFQ4vmN95TIbDrvQndtRcEvNIpVKeB+2a
+    z2E2l6bZ59WwUDtSWCHVvLlTaspDjMLbV39YQWOHvOTGRbVTHZYyuGf1+hxytDJmPlZFZR
+    1bMTFH/etGWy1+pZm4NRtsaFPMr5szzlSEp4ALvEW/Wki2w9SvlZc6EIT94vvT0eCZPHU7
+    ChaTHnC5CQRgR8N0ps7YvifZWvvZACobhIYLxnpRhv5lw/4CjByXi9EGr9LTkWPDHCMZB1
+    FgjvkhGO5bxwUKLeK2yngDFBUhLMrHBIx6mMu2ZMCzZ+/ep17QXsujhx+rEw
+X-ME-Proxy: <xmx:KifSai_LwcIZhTFt7kq8AtqHdih-cFP7pDSGgPPdikq5Vjb9Q06fJQ>
+    <xmx:KifSav15eU988uMzuJCQiQf6E5WsajjDkJ5lCQhdhkKnMQQdMWEUfQ>
+    <xmx:KifSanCYitlyKhhftEZheWHyU-0brsSvXiUwlcSJUUUUnYikbezG7w>
+    <xmx:KifSarfPcCLwhbNcwo7cpM2XJuR17yDBa5Y4s7NMOkBVTNEF1jx92g>
+    <xmx:KifSaiNeTQ_YylIP98hPPAXVxHmcA6idPvMkevlVi0jA_CrgggOu_DMv>
+Feedback-ID: id2564aa6:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 Oct 2026 09:31:22 -0400 (EDT)
+From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+To: gitster@pobox.com,
+	git@vger.kernel.org
+Cc: jltobler@gmail.com,
+	ps@pks.im,
+	"Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+Subject: [PATCH v7 0/1] repo: add revision filtering options to "repo structure"
+Date: Fri, 16 Oct 2026 09:31:17 -0400
+Message-ID: <20261016133118.3659793-1-markchucarroll@fastmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261015144559.3652143-3-markchucarroll@fastmail.com>
+References: <20261015144559.3652143-3-markchucarroll@fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-    Junio C Hamano <gitster@pobox.com>,
-    Thomas Bachem <mail@thomasbachem.com>,
-    Thomas Bachem <mail@thomasbachem.com>
+Reviewed-by: ps@pks.im
+Content-Transfer-Encoding: 8bit
 
-From: Thomas Bachem <mail@thomasbachem.com>
+"git repo structure" provides a collection of useful information
+about the information stored in a repo. In particular, it's
+valuable for diagnosing performance issues caused by large objects
+stored in a repo.
 
-Since 128914438a (sideband: add options to allow more control
-sequences to be passed through, 2026-03-05), the value of
-sideband.allowControlCharacters is a comma-separated list of
-keywords. When the parser meets a keyword it does not know, it warns
-but stays on that keyword, so the warning repeats forever.
+The current implementation of "git repo stucture" provides summary
+information about everything in the repository - all of the
+branches, remotes, tags, stashes, and notes. But sometimes
+to properly diagnose a problem, it's useful to be able to get
+information about the specific part of the repo that's exhibiting
+a problem.
 
-As the setting is read whenever a transport is set up, a typo like
-"colour", a list written as "color, cursor" with a space, or a
-keyword that only a newer version of Git knows is enough to make
-every fetch, push, clone and ls-remote hang this way.
+Add the option to specify a set of revs. If revs are included,
+then the set of objects processed will be limited based on the
+rev specification; otherwise, all objects will be processed.
 
-Move on to the next keyword after the warning, and name only the
-unrecognized keyword in it, not the rest of the list.
+Differences from v6:
+- Fix word duplication in commit message.
 
-Assisted-by: Claude Opus 5.5
-Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
----
-    sideband: skip unrecognized allowControlCharacters keywords
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2261%2Fthomasbachem%2Fsideband-control-characters-loop-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2261/thomasbachem/sideband-control-characters-loop-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2261
+Mark C. Chu-Carroll (1):
+  repo: add filtering options to "repo structure"
 
- sideband.c                          | 19 ++++++++++++-------
- t/t5409-colorize-remote-messages.sh | 25 +++++++++++++++++++++++++
- 2 files changed, 37 insertions(+), 7 deletions(-)
+ Documentation/git-repo.adoc |  31 +++++-
+ builtin/repo.c              |  32 ++++--
+ t/t1901-repo-structure.sh   | 197 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 247 insertions(+), 13 deletions(-)
 
-diff --git a/sideband.c b/sideband.c
-index 374187402e..ed6840bf89 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -62,18 +62,23 @@ int sideband_allow_control_characters_config(const char *var, const char *value)
- 
- 	allow_control_characters = ALLOW_NO_CONTROL_CHARACTERS;
- 	while (*value) {
--		if (skip_prefix_in_csv(value, "color", &value))
-+		if (skip_prefix_in_csv(value, "color", &value)) {
- 			allow_control_characters |= ALLOW_ANSI_COLOR_SEQUENCES;
--		else if (skip_prefix_in_csv(value, "cursor", &value))
-+		} else if (skip_prefix_in_csv(value, "cursor", &value)) {
- 			allow_control_characters |= ALLOW_ANSI_CURSOR_MOVEMENTS;
--		else if (skip_prefix_in_csv(value, "erase", &value))
-+		} else if (skip_prefix_in_csv(value, "erase", &value)) {
- 			allow_control_characters |= ALLOW_ANSI_ERASE;
--		else if (skip_prefix_in_csv(value, "true", &value))
-+		} else if (skip_prefix_in_csv(value, "true", &value)) {
- 			allow_control_characters = ALLOW_ALL_CONTROL_CHARACTERS;
--		else if (skip_prefix_in_csv(value, "false", &value))
-+		} else if (skip_prefix_in_csv(value, "false", &value)) {
- 			allow_control_characters = ALLOW_NO_CONTROL_CHARACTERS;
--		else
--			warning(_("unrecognized value for '%s': '%s'"), var, value);
-+		} else {
-+			const char *end = strchrnul(value, ',');
-+
-+			warning(_("unrecognized value for '%s': '%.*s'"),
-+				var, (int)(end - value), value);
-+			value = end + !!*end;
-+		}
- 	}
- 	return 0;
- }
-diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
-index 5da8b0ad64..6117579eb1 100755
---- a/t/t5409-colorize-remote-messages.sh
-+++ b/t/t5409-colorize-remote-messages.sh
-@@ -190,4 +190,29 @@ test_expect_success 'allow all control sequences for a specific URL' '
- 	test_grep ! "\\^\\[\\[K" decoded
- '
- 
-+test_expect_success 'unrecognized keywords in allowControlCharacters are skipped' '
-+	write_script .git/eraser <<-\EOF &&
-+	printf "error: Ohai!\\r\\033[K" >&2
-+	exec "$@"
-+	EOF
-+	test_config_global uploadPack.packObjectsHook ./eraser &&
-+	test_commit unrecognized-keyword &&
-+
-+	# Cap the output, so that a parser stuck on the unrecognized
-+	# keyword fails the test instead of warning forever.
-+	git -c sideband.allowControlCharacters=bogus,erase \
-+		ls-remote . 2>&1 >/dev/null |
-+	head -n 2 >warnings &&
-+	test_line_count = 1 warnings &&
-+	test_grep "allowcontrolcharacters.: .bogus.$" warnings &&
-+
-+	rm -rf throw-away &&
-+	git -c sideband.allowControlCharacters=bogus,erase \
-+		clone --no-local . throw-away 2>stderr &&
-+	test_decode_color <stderr >color-decoded &&
-+	test_decode_csi <color-decoded >decoded &&
-+	test_grep "CSI \\[K" decoded &&
-+	test_grep ! "\\^\\[\\[K" decoded
-+'
-+
- test_done
-
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
 -- 
-gitgitgadget
+2.53.0
+
