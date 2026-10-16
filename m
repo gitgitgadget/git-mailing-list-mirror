@@ -1,99 +1,100 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A553E0258
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 06:58:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9FC39794A
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 06:58:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792133910; cv=none; b=WOH7PDMtpsH4vWjpB2y1QHKPuVO9MXyvIojGVGAj+noh6H02fK8YN3xWdFjQ/oBbcpTNh7ZFmWCQys3yxDohFLUK7K4KN/+cYlQj7ntTlQkBZ6O9pTOOgm9YtlLVXYKtBLdrjz6JK0kYFtA/RiEJLGTHg3OH310OXffIuCpLRaE=
+	t=1792133915; cv=none; b=hO19zP59asQOjl7PpMeEjJo83Iu8m3pHTGLoWBDzqQErEdMsrtmh0fegagD1S+mthp5343HGduskesSVWz8tFwjwhDwchpq1W5GHKnPcIEJTV9ikkY20sXLg8qBQnuCrH37/8/SrT9c5b7g2gnDWLID3JxtsNZz82BHdpLffQyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792133910; c=relaxed/simple;
-	bh=H5OwvkzS6iIuZy0PnnYg9LgJKT6QzD9BBGDs3tbUmRM=;
+	s=arc-20240116; t=1792133915; c=relaxed/simple;
+	bh=l3TjV3pOO4wyWAJhnC+uLw/9hy3o3Dibdc7lxOL8Jo0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ePB/pjofigEbIN3+XdpiL/Gd8VJAXtJc0KTkLbex6vkyV/05+/OjORH+AtvwLFHHrDUkxjNkMMd6Ck/mGjCH0G6ch1XV+SCgZ60pi7UkeZQvA3l4M+hgN745MALnQ7tdXbZ6+hjGnTQlSSyqp4fFXpgsUSeGDROEAUo2YZ9BdhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jyQ0UMdW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GbCcsVNl; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=n0CBACaVT6P4jOfhgSMEIk0Rzg92KNVumrdux8CTyB2WYvSxfZ3vArx1guiMThTPd355ZiKt6HXSyDfS5tbYmiDHW1CMsMvTjNmNLNb5vxX7yyn/GEIpnOXF3FjUPELAFvBGpkqcDbHmkmekV3ywG3dGARBjQWi33zCeDXlMyOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OOSwvDnD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GgMPKIsa; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jyQ0UMdW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GbCcsVNl"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E0BD714000E3
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 02:58:27 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OOSwvDnD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GgMPKIsa"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id E413BEC00B8
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 02:58:32 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 16 Oct 2026 02:58:27 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 16 Oct 2026 02:58:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792133907; x=1792220307; bh=An9uHj55i1
-	EaPYcE5+fbORBwvtMP1ZR7T/WyXXnbjjM=; b=jyQ0UMdWOZU2kNrpYgvkLg9iqL
-	ssEvYyJaMfFGAn1Mcr6kyOzer7wYrp61Hz2eRIVIdwLdC/8Eh2AvjzEi0NFJGgYC
-	4xEYFvZ3swc/s40x9Mv5ujreHlO3LGZWOR4OOxWvfCsKhAlGKJpfk6zBnmpb2hwv
-	hg2lNoThOjuga3gEmw4sSAKgdZBC1XgSjeVuvkBrqztvktV3A9VxCBxuxkX2zXo2
-	EerKy3FFLEwttJf+/vfjx9bwRCJK5aF40Te9yAt1Zxc4eGP+zvJGMPKbwpcsPJRJ
-	/yBmKgrNJYebswXmJ6V3Ii3BRalJbUKrzK0oJuLG9U3riINjpqGkpQxOgjVQ==
+	:subject:to:to; s=fm2; t=1792133912; x=1792220312; bh=mMecyhLSvo
+	w5R9BYww7Bat7k4Z3VImSKmbnsC0BBcLE=; b=OOSwvDnDv8UCkooZ1oyd6bF+02
+	PfrEVhckEoIiIAn/25qMo1822Ioa4T+EvYYmHjW0mqELeNWjLWK43TJv9+XGX5Aw
+	jVlWYbP0T3bfcHicJC60a4z5LiVg2dI36S/Pw4lJ7Kwtos64yx/7E19yG/77lfja
+	rXQOCjFKh0kq5LhhKZFcmkoiJsqa0lfDpK6VPqR4ntvfRvSHRzImqY0QXhWZE/bL
+	nqKrqwIRNp/n81eEEwVY7XtGRb9xpOzyT7NJuzL/lDUd0kFWMp5VOX0SxsOp8sP2
+	LttDuKpWbWEnRd/kAg4blFIgjNAPDb6TlzdMDGY0BeJO9/Vlv9x0t6rwYIIA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792133907; x=1792220307; bh=An9uHj55i1EaPYcE5+fbORBwvtMP1ZR7T/W
-	yXXnbjjM=; b=GbCcsVNlLaDXw/cX74fAOoZx786V5XJtE+JpsY6XluJrgxy23h+
-	l9kN0EImykBS18y3gbdn8VCBdaczD9QfAeD3GuPfk0VZSWqX0fWgGU2kofOaxnJR
-	z+h9qMMVZqfuVrw3/7AwN4nDk5b0VZrKpjLMpVt6LOzs+PVZtVarSyAIUgRvMSG/
-	QJO6kFrdljjubkJJanydifsqsscb9prtqa5yatCOUjoN4VCbT855QajgtBPMeVWk
-	/xSdGyUDQdpcl2XrsVcLMTZjckdCpay0afAAfa2RVsPUfJlez0KswgYKju5ZJ5IE
-	yiJieC8Yyl2ayP15Ax4wluMaK14PqSUHrDw==
+	1792133912; x=1792220312; bh=mMecyhLSvow5R9BYww7Bat7k4Z3VImSKmbn
+	sC0BBcLE=; b=GgMPKIsaoXaUZ7cwBKOoYJUUVEdtUJd7Z3QLXSiHCqIFSJmTxzo
+	PjInGe2lfcTAQPknVKwMKrBIeVYjTlcGt32NNbez3Rn/wIS5seiucq7ok5hv7SV4
+	sKKX/OfLGw4hxRcxiJtImJNgAygB5h/EmonE3ILWFunOn7tUW2Q1l+ClFegvKqbw
+	5A3Z4L18l484ijJbtOK3LX55wiWrhC0M642KseQoKkRnWvB0esSLXI/bOjNv7huT
+	J+JCgNJXMpAV54GvTmCgPaER6JiU1jhKvRHKTNxhaUf7Cv6rsLz8MFE0hq/Gouu+
+	zUoR24GFunOPunrYZ41fiSHRy5x7+3bQSWQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792133907; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1792133912; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:AJGXdDlWFUHoCaCHs2Z/zRc122hzkQkfc/zsALiLmAagcwT
-	3o4e/KdBcyCY9VdJKs3QOZjDBts13zGrcVZ4gmyNo4FsbJdMubreb4GTE5y2gBTD
-	D7eMtZXOlRwvATA6CpEhxRAQx3NG56D+vo0Esn5BfMKusY92BpX/Gb0JaLH7I4vE
-	dGTLs1LggpZX0Fu8IevBaG+GChMqYzP+f8ZTdz93x6hDiRBFIU/jDK+62eZGnMYX
-	DhJw9oYlwbGZd+udZ0Af4jwqh0OPhz4vHIbuLdxMRm/Zi8EQfF1yW1Dy0D9ptTWp
-	AbbjyhCwEcJaBRGuH4Y9J4LaHJQk1tdL7EjaMdQ==;
+	s=fm2:rsa-sha256:GpVrGxlNqovScHwUzDhB84ciiH0ZYkDtUo/SDzswAo5ghrm
+	IpwX58MFmt0HWu0fa6r5FrU8r0uCJ/pVFuDhbQHqExYeqgIGlHOFdQOae54qx5f/
+	dnLXv7F20LDASPdEyehP20C8a21vblYRF5IakZUiWnt1YQPoPYj6KWqDBnocbXWk
+	OU5t67sjMsobcpkWkMGF2oSEAC0c7qiHletirWuNR1z2UmMiiHa60R9+pwSlpRl8
+	RfUlvjwDFy0dnad1hqLWHRCbzlN4iEeckHsONbP/OYW7xbpQuyu/nClKaJBZbpLE
+	25p+PYUd3H9xZI3Mti0P7E6vYHxPON3zVEITszA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:3Pcu8wbfdCZBXDV2P2NYQOUu5rKpG74XM8dFNoDb/Hs=:H5OwvkzS6iIuZy0PnnYg9LgJKT6QzD9BBGDs3tbUmRM=;
-X-ME-Sender: <xms:E8vRau8H_-4twEtixZSAZDtzcJKCCbVEtte3n1ZYuIYzvmLSmckr6w>
-    <xme:E8vRaku6nk4QChT8kNch65_dqlvJkorxxeKLfKEHudWVJaojnRAIuv74dlPz63t_L
-    BkBlfgJGaauQdW1sI3VuC_twBoGM-C6u3yB2VjktoCjlaifc6wjWCk>
-X-ME-Received: <xmr:E8vRahqqYRDbfofcwRlyUvPQNNO_TWhjPO7OBux3c6V1PaeYO_Ej-g>
-X-ME-Proxy-Cause: dmFkZTFGoFjsx/d+3hw8CfhsT/b0+6zumOST0Dxk8obmKWjvcgc6uFR7RPyk4qNQP6cDUN
-    V8wExRHZNwtTW/fPtnq3A9iunZx5/ji2neNmsihFjcHFWOMXpRA6UqjPZvOBNh0cbpSnkT
-    Y1Zs86NuuWiGbATFTgjLi4s7w8XFk6TlWbtDJVuQ8tx022VXBfo/DZ/WcnDRRqF5Z1kQFp
-    Sq0nDCBKbwA/xLcbgcb/Ooppm4Vj/0gLmw8Dzf1+oUJFxiHb4MlH3p+dI48UQSTYMQ+STJ
-    aw1jOV3YgSsugdC62ayJTatG76SzBb9cF4vBazERq1xzoPcwgux2mhSiomKbx07hs6DZtF
-    GYAayH9KSdoBhN5ggQeBY56AQxHF9GLh/9UgMIs5gBBRgQIQKRzOCLXtVumpyzWnt/2aSS
-    qhrBdKd1M+xVxsOPfo8s5rbP+ssl9ZOrPdDWdVTqm5q1lsWO+H9CRjZJhHFN0Dp3FBukDG
-    8L16hczp1qLFfXnKTt3CDPj06B3mr/IFh2A1mLfaXw11WukFVIkouId6gvBWo7eeHOMPnX
-    3+mU0BOEGu6zWJg02OKW9ayF5eead27RQIwrhTfvviyjOCBikY5xNx0Ssa02smuRsjyHV4
-    DqBp6EzG/UYkKtypMQMVHpaPPG/XC0Fj4eKBXaWJsolOlB2N+5CoCkiq5hhQ
-X-ME-Proxy: <xmx:E8vRahkSOzyN7MBD9oR32Uq5rWuwBUQfgv83gu06_CegSUBj_8y7og>
-    <xmx:E8vRalyoO_48l5VTTKlQbK9aYU8u4d81vQXT1XjNQpxrwG4lhrEwxA>
-    <xmx:E8vRaplCEXOKz-HLs9t-Jd4jomNDXeuhzbagqlRguf8xE4o1moUrYw>
-    <xmx:E8vRaueDz25sxkpiwr2NFK3WXfeB1PYoLhEWMnvPuE3q_wzM9kzT-w>
-    <xmx:E8vRatupuAslv0eqI4WEub3DsyqDF_8BncoP1891ZIEGdzHENrOQQfkM>
+Message-Instance: m=1; h=sha256:6ZHZrvMaGMEPZHJaqxw+iyy/9fVcDD67b5B8tVYuuvg=:l3TjV3pOO4wyWAJhnC+uLw/9hy3o3Dibdc7lxOL8Jo0=;
+X-ME-Sender: <xms:GMvRamv2-gO0oDOr7NkNVhmvysfm4Mm-aMPH2WQVLS5yO8OHKsF8qA>
+    <xme:GMvRai4FtdHcySQBIyeo9hMUWVlsUlIx_gQ1LW1z_TMZYsjkS1eFxp7Qcx7fPwXlS
+    kxcePG1RNk54u_SwWjYiYK2xI-cGqPNxiHv_YYrV1r0SGIOKPUWRJAa>
+X-ME-Received: <xmr:GMvRavKQoMuPnUEb8AjftT21AyPIPj9M72lnG5S0g1KebCHJncptVw>
+X-ME-Proxy-Cause: dmFkZTGHvgxDFnImlGop40KwU3bRUSEKLoiD9eWJihBrXakBN0JANQyDupg8Xzey+84UHk
+    h883Q17uBUpUMnn9Bbs/1azxo0H1cSpzf78CQLuS//jnYD/0zXqeiHQ/Wpwyu5fHrGvP68
+    OucZEj6H02rkDN4++14y1zlW4m/DmQutB2EXmK5GxDIdCeNN3Wtse+lxFWOz0/Xidf71IX
+    xb5KYj+XTph1yy1yx3tlt5DMrM3eSUAqnMVmR0aEHUnXsTM0ZVdcQ5gYoT4eMEB2JfG+mF
+    77IKjdc/1pSDxuIJuL+uwSa6RHMx4cIlOVxzvMzY04qx8TugEcIYa4s9bhbpZGvCqYtpAx
+    J1nNXbV4RkBamAR/egN2zopZ7e3d9cPoz1qUP9oql7WGJZ05QvrfNp6Z7pfW9GeBP4cOml
+    end85wweSuP+Hc3ynnrHiskkUCj77Pjy8kfOpu4OPnaZGqKqTonMv+l7zt0ewx15LKXfnf
+    0yx0e1PvmcNE+B3t6dVM+aWgLgQdMVyGRF86ZcPmtXOufsybKypGPq1gzOXeLJwiyYRzXm
+    oV/VGvoLf0myhulPWLdE8+em+IO5ng04eArKRBcc/OFoKlFWltBD816W6Zq7Ktur1/7wNS
+    EfUNXLmSZNkpTtSQ21kfC816jL//crq+8eS4y78sO/EE0t2brJMAN95paYOQ
+X-ME-Proxy: <xmx:GMvRaq6meVnugk_tcmN5RLlAndqQlVAO15znBzMkLj-El4b7kUW9pw>
+    <xmx:GMvRaqzHVVtmlkzLLtmY287NsUmBdcKhq1UitPSgaEFMdcAcYUfWwg>
+    <xmx:GMvRamYNDDqIK5zUKnunol-NXGHPVNWds7Ht41pyTGMUucvi0NF28A>
+    <xmx:GMvRakRiBscwkBzlNisvlQYc_yiYfnxHg9dBh4IQLA_H0meBN-Fgfw>
+    <xmx:GMvRaouFUu0-KccWMkNXY8tmvsau0uGiXzYhn18gVkt0GfH_9a-UWKr6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Oct 2026 02:58:27 -0400 (EDT)
+ 16 Oct 2026 02:58:32 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a9263494 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 16 Oct 2026 06:58:26 +0000 (UTC)
-Date: Fri, 16 Oct 2026 08:58:23 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 3dc90190 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 16 Oct 2026 06:58:31 +0000 (UTC)
+Date: Fri, 16 Oct 2026 08:58:28 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] object-file: explicitly write ".keep" lockfile
-Message-ID: <atHLDysZmYGyMiKk@pks.im>
+Cc: git@vger.kernel.org, Qin ShiCheng <qeesung@live.com>
+Subject: Re: [PATCH 3/3] object-file: write ".keep" lockfiles during
+ transaction commit
+Message-ID: <atHLFIp8MI729ZkP@pks.im>
 References: <20261016022901.3838402-1-jltobler@gmail.com>
- <20261016022901.3838402-3-jltobler@gmail.com>
+ <20261016022901.3838402-4-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -102,147 +103,123 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261016022901.3838402-3-jltobler@gmail.com>
+In-Reply-To: <20261016022901.3838402-4-jltobler@gmail.com>
 
-On Thu, Oct 15, 2026 at 09:29:00PM -0500, Justin Tobler wrote:
+On Thu, Oct 15, 2026 at 09:29:01PM -0500, Justin Tobler wrote:
+> The "files" ODB backend writes a ".keep" lockfile into the transaction
+> quarantine directory via `odb_transaction_files_write_pack()`. When the
+> ODB transaction is committed, the ".keep" lockfile is migrated to the
+> primary ODB alongside its packfile. Writing the temporary lockfile in
+> this manner has a couple of downsides:
+> 
+>   - Failing to migrate the lockfile during transaction commit due to a
+>     concurrent process already acquiring the same lock still allows the
+>     rest of the transaction to be migrated into the primary ODB. This
+>     dirties the primary ODB with new objects even though no references
+>     were updated and the operation failed.
+
+I'm not fully sure I understand this downside. Are you saying that we
+fail to migrate the lockfile, then continue migrating everything else
+only to then fail the whole transaction?
+
+... skipping ahead a bit...
+
+Oh, I get it now. You propose to first acquire all lockfiles before
+migrating anything so that we cannot conflict with a concurrent process
+that aims to claim the same locks.
+
+That will of course mean that we will fail the transaction for any
+concurrent process that happens to write the same packfiles. But based
+on what you claim that was already the case anyway, but now we notice
+early and thus won't commit parts of the transaction. Makes sense.
+
+>   - Even more concerning, the ".keep" tempfile atexit(3) handler tries
+>     to remove any lockfile of the same name regardless of whether it was
+>     created by the same process. If the ".keep" lockfile of the same
+>     name for a concurrent process gets deleted prematurely, its packfile
+>     becomes at risk of being deleted by concurrent housekeeping.
+
+And this is the other issue that you've already been hinting at.
+
 > diff --git a/object-file.c b/object-file.c
-> index 210984f825..ebe46d35de 100644
+> index ebe46d35de..39e6299be1 100644
 > --- a/object-file.c
 > +++ b/object-file.c
-> @@ -1256,6 +1256,43 @@ int read_loose_object(struct repository *repo,
->  	return ret;
->  }
+> @@ -1321,6 +1357,9 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
+>  		delete_tempfile(&temp);
+>  		strbuf_release(&temp_path);
 >  
-> +static int write_pack_lock(struct odb_source *source, const char *pack_name,
-> +			   const char *keep_msg)
+> +		if (write_pack_locks(transaction))
+> +			return error(_("unable to lock packfiles"));
 
-Nit: I'd have called this `write_pack_keep()`, but I see that we refer
-to the files as "lock" in `index_pack_lockfile(), too. Should we align
-those two functions and call this `write_pack_lockfile()`?
+Okay, we'll now write lockfiles before migrating any of the data. So if
+any of the files already happens to exist, we'll bail out here. It would
+have been great to maybe also provide a proper failure message via errno
+for example, but okay.
 
-> +{
-> +	struct strbuf lock_path = STRBUF_INIT;
-> +	struct strbuf contents = STRBUF_INIT;
-> +	int ret = -1;
-> +	int fd;
-> +
-> +	strbuf_addf(&lock_path, "%s/pack/pack-%s.keep",
-> +		    source->path, pack_name);
-> +	strbuf_addf(&contents, "%s\n", keep_msg);
-> +
-> +	fd = safe_create_file_with_leading_directories(source->odb->repo,
-> +						       lock_path.buf);
-
-The command has just written its packfile, so can't we assume that
-leading directories have already been created?
-
-> +	if (fd < 0)
-> +		goto out;
-> +
-> +	if (write_in_full(fd, contents.buf, contents.len) < 0) {
-> +		close(fd);
-> +		unlink(lock_path.buf);
-> +		goto out;
-> +	}
-> +
-> +	if (close(fd)) {
-
-`if (close(fd) < 0)`, just to be consistent.
-
-> @@ -1389,18 +1426,17 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
->  			return -1;
->  		}
->  	} else {
-> +		struct strbuf final_path = STRBUF_INIT;
-> +		struct strbuf pack_name = STRBUF_INIT;
-> +		struct strbuf keep_msg = STRBUF_INIT;
->  		char hostname[HOST_NAME_MAX + 1];
-> -		char *lockfile;
-> +		int ret;
->  
->  		strvec_pushl(&child.args, "index-pack", "--stdin", NULL);
->  		push_header_arg(&child.args, &hdr);
->  
->  		if (xgethostname(hostname, sizeof(hostname)))
->  			xsnprintf(hostname, sizeof(hostname), "localhost");
-> -		strvec_pushf(&child.args,
-> -			     "--keep=receive-pack %"PRIuMAX" on %s",
-> -			     (uintmax_t)getpid(),
-> -			     hostname);
-
-Okay. So instead of asking git-index-pack(1) to write the ".keep" file,
-we now...
-
-> @@ -1424,31 +1460,54 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
+> @@ -1477,37 +1510,12 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
 >  			return -1;
 >  		}
 >  
-> -		/*
-> -		 * The lockfile filepath is expected to be the final location of
-> -		 * the ".keep" file after being migrated to the main ODB source.
-> -		 * This ensures the lockfile can be found and removed later
-> -		 * after the ODB transaction has been committed.
-> -		 */
-> -		lockfile = index_pack_lockfile(base->source, child.out, NULL);
-> -		if (lockfile) {
-> -			ALLOC_GROW(transaction->pack_lockfiles,
-> -				   transaction->pack_lockfiles_nr + 1,
-> -				   transaction->pack_lockfiles_alloc);
-> -			transaction->pack_lockfiles[transaction->pack_lockfiles_nr++] =
-> -				register_tempfile(lockfile);
-> -			free(lockfile);
+> -		strbuf_addf(&keep_msg, "receive-pack %"PRIuMAX" on %s",
+> -			    (uintmax_t)getpid(), hostname);
+> -
+> -		if (write_pack_lock(transaction->quarantine, pack_name.buf, keep_msg.buf)) {
+> -			strbuf_release(&pack_name);
+> -			strbuf_release(&keep_msg);
+> -			strbuf_addstr(err_msg, "lockfile write failed");
+> -			return -1;
 > -		}
-> +		ret = read_index_pack_report(repo, child.out, &pack_name, NULL);
-> +
 
-... read its stdout to figure out where the packfile was written to
-and...
+And here we stop writing lockfiles when writing the pack.
 
->  		status = finish_command(&child);
->  		if (status) {
-> +			strbuf_release(&pack_name);
->  			strbuf_addstr(err_msg, "index-pack abnormal exit");
->  			return -1;
->  		}
+> diff --git a/t/t5547-push-quarantine.sh b/t/t5547-push-quarantine.sh
+> index 1b7097179e..cf349eee2c 100755
+> --- a/t/t5547-push-quarantine.sh
+> +++ b/t/t5547-push-quarantine.sh
+> @@ -77,10 +77,9 @@ test_expect_success '.keep file is removed after push' '
+>  	git -C keep.git config set receive.unpackLimit 0 &&
 >  
-> +		if (ret) {
-> +			strbuf_release(&pack_name);
-> +			strbuf_addstr(err_msg, "index-pack failed to report pack name");
-> +			return -1;
-> +		}
+>  	# While incoming objects are still quarantined, validate that the
+> -	# ".keep" lockfile is present in the quarantine directory.
+> +	# ".keep" lockfile is not present in the quarantine directory.
+>  	test_hook -C keep.git pre-receive <<-\EOF &&
+> -	keep="$(ls "$GIT_QUARANTINE_PATH"/pack/pack-*.keep)" &&
+> -	test -f "$keep"
+> +	test ! -e "$GIT_QUARANTINE_PATH"/pack/pack-*.keep
+>  	EOF
+>  
+>  	# After quarantined objects are migrated, validate that the ".keep"
+> @@ -101,4 +100,28 @@ test_expect_success '.keep file is removed after push' '
+>  	test_path_is_missing "$keep"
+>  '
+>  
+> +test_expect_success '.keep file created outside of process is not removed' '
+> +	test_when_finished rm -rf keep.git &&
+> +	git init --bare keep.git &&
 > +
-> +		strbuf_addf(&keep_msg, "receive-pack %"PRIuMAX" on %s",
-> +			    (uintmax_t)getpid(), hostname);
+> +	git -C keep.git config set receive.unpackLimit 0 &&
 > +
-> +		if (write_pack_lock(transaction->quarantine, pack_name.buf, keep_msg.buf)) {
-> +			strbuf_release(&pack_name);
-> +			strbuf_release(&keep_msg);
-> +			strbuf_addstr(err_msg, "lockfile write failed");
-> +			return -1;
-> +		}
-
-... then write the lockfile ourselves.
-
-By the way, the error handling here starts to become unwieldy. Can we
-maybe have a common exit path that releases all resources for us?
-
-> +		ALLOC_GROW(transaction->pack_lockfiles,
-> +			   transaction->pack_lockfiles_nr + 1,
-> +			   transaction->pack_lockfiles_alloc);
+> +	# Create a ".keep" lockfile matching the packfile to simulate a
+> +	# concurrent git-receive-pack(1) that was already written its lockfile.
+> +	test_hook -C keep.git pre-receive <<-\EOF &&
+> +	pack="$(ls "$GIT_QUARANTINE_PATH"/pack/pack-*.pack)" &&
+> +	pack="${pack##*/}" &&
+> +	echo "baz" >"objects/pack/${pack%.pack}.keep"
+> +	EOF
 > +
-> +		/*
-> +		 * The lockfile filepath is expected to be the final location of
-> +		 * the ".keep" file after being migrated to the main ODB source.
-> +		 * This ensures the lockfile can be found and removed later
-> +		 * after the ODB transaction has been committed.
-> +		 */
-> +		strbuf_addf(&final_path, "%s/pack/pack-%s.keep",
-> +			    base->source->path, pack_name.buf);
-> +		transaction->pack_lockfiles[transaction->pack_lockfiles_nr++] =
-> +			register_tempfile(final_path.buf);
+> +	test_commit bar &&
+> +	test_must_fail git push keep.git HEAD &&
+> +
+> +	# The ".keep" lockfile of the concurrent git-receive-pack(1) should be
+> +	# left in its place.
+> +	keep="$(ls keep.git/objects/pack/pack-*.keep)" &&
+> +	test_path_is_file "$keep" &&
+> +	test_grep "baz" "$keep"
 
-So here we retain the status quo, which is to record the lockfile in the
-final location even though it doesn't exist there yet. And that can lead
-to us pruning a pack lockfile from a different process.
+Also, there should be no corresponding ".pack" file, right? Do we want
+to assert that, too?
+
+Thanks!
 
 Patrick
