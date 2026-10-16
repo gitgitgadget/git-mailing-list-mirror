@@ -1,213 +1,232 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4942D5932
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 11:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792151436; cv=pass; b=ul7kIYlqeFk2dgs1ZBXeqgjwrVuYuNILOXiN/M/ZuVOmKW6rfM0dbmzCZXVA77YwJ011RmGykLCYwNvXv8SCTn57VDEtnWtRcXnMm3EekjIwQbXfUaabeT0fC/FF4cFUXcFnmqVDi+YcDlJPOBJbZARiCcHq9jeK9kaGrk9rIqI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792151436; c=relaxed/simple;
-	bh=fP1sxYyDeyPJRnJdgYHqqksXyVniPD7YsYnPzYm3OTM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=f2qBi4NkD8odH7HQKLpqn7b+gF1smes6pLhrH5mmCPzUk3PpQdSeQk/yVj5hlGvZnK7QWBuQO8PFIFTMDIniPLIPSu3MXwgYHiqNG52qUrofCVAEcjQoaSTHTNzGXlgLSTXNVNmo2Ja/rDOBSenUdfgc1+iPZhacIP+KCOCaWm0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=QBtNrSW8; arc=pass smtp.client-ip=209.85.160.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2B7384CED
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 12:37:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792154280; cv=none; b=Uzzx1bo0USoYdzAE8mYyDaaoyigGXIbKsvuLafqmh2GwFkhOI6QGJEECO9Tgp10CM9YGfWZFhox6QvRPX6pHG3xav4eNMZfSjaYDrXKmPdmm6w8ty3olE5vckEic1l1qGwLPqWK+I92fvCPujRaemYXAbyjLff+9sFD2kz/tEKo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792154280; c=relaxed/simple;
+	bh=XT485SeVCmyuqmGMRO5OANj8/ycEi0mf2GlmOi2ylDk=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=PTgZPM4nJY0jo6EntVx2po1FlrYCi/baEVpM3rNkO6pYo7qVOEKdpxA310+WBySnM6/l4FGUCmTXp7hxzY6Gz7zFVtWA/WzbRAeRjw8Ksa9kigVHA+mXkqSnAXLCAxL0SZQswSsi1LNFqNdayvm9KvSLOtQfZobMm9qHaaEiDxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WFp3HIEV; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="QBtNrSW8"
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-49e13495e5cso836283fac.0
-        for <git@vger.kernel.org>; Fri, 16 Oct 2026 04:50:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792151433; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Z+NN007fVHldWmT/Xraf+IE/DGws7bQ8QF4lhVU9MQ/A15taL8/0C4+I6LoerP/LRX
-         g4YMuK8+8eK1lH71v8PHUyD4TX8gY1wXM3YRzmf14YaAZrk66mIykFx3bFzR0Ha8lhsG
-         0tkeXEeAaVgyPVWGdZ05OLlRNYB5UKmrDp83vUidtqYvT8XJIvPfsPYpBEOoL/i1UpCS
-         14IPQRBwnAFbOvHTuIDN1/waapRTpQql93hGtlKDR/F8iXJXzaOwNsrhcJgpx6CGy9FJ
-         S5fvGryb4APusQYEjjNadGxmzZ94hNeC63AkbnOkmyjMczNQodDp/La7B62gh/V7N0SB
-         BMfQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=6/qA7V3DG7kQAgqrGFawElxThnGIIK1Qs8DRsIsxVf4=;
-        fh=3XqWVWJQBO6v2hvdho+RNmkNefQ0LBvNC0vnOgA1fqs=;
-        b=D+iTRF54Yy4jSFzfIJfn0glo0/RaJ4ziPENvBmPsoKbhhii9tPGOmP4maRQ6nFs8Ht
-         /5CTmgGcFFuZ7lgmjlVaLG3FuEOva7JXw92WA7vNCHXmG/8tu+ucLWiMTM0cejvWqu8r
-         ZEmat4jkPdx+GUC1R+8Gk+T/TajGv+1haUCrwL5IXKDVFZNlsJ7icAvAKInEZbURDSgi
-         ZmaN4wDYDA9mixvIRY+ekPqd/tZbiGhmCDuOkP/HWdRP5MCreYGpFCCzSfKsww52hEF2
-         P8cU8X3LlYgyKwfVcMTU0OOU/zeWnzWMWAgl4ni1WbMBnphe3grdZuUZGOLt+i6+8MiC
-         O3eg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WFp3HIEV"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8874539bccbso1719853b3a.1
+        for <git@vger.kernel.org>; Fri, 16 Oct 2026 05:37:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1792151433; x=1792756233; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6/qA7V3DG7kQAgqrGFawElxThnGIIK1Qs8DRsIsxVf4=;
-        b=QBtNrSW83UXuAeyZPBsIWQODodtyzPnnNgpk+EFZW3l8EemV7BaH1S20qSACG8Fyiu
-         +01tsjr4I6sewU+KBpk55b8l4UzTPRFCOfzhnNtG1SJcVecu35LUjgF35KOIfeiAjS0P
-         PKi/MUkfHYKayxzQIdGv5dCsZOhNcUq1DRJnw=
+        d=gmail.com; s=20251104; t=1792154278; x=1792759078; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=dyptWKE6+L4gGztz98gHie+QcW2ONV4qzr/eI5lFHB0=;
+        b=WFp3HIEVrBnL+nvJFQInRIuMejuvo3T9pCZBSPnZ3DVfotVEM/lM2eajeLo9XbJf3D
+         fLZxmqphK/BJJd5tjeVPCk1nJxs78ix03isDiS07D9Gw7yc/hGDOqHHjcQHtmDdYx8FV
+         EjMugzxO6dAtqtTSgG+Zl+q507nrMP6KLQCWpGEsiB4cDUjDzB2Mk1xrolf8xpJT+B9B
+         nlRuWv6+YcWsxKF4oXSBxh2GAF+lx74bAto7ScWe6bHe0UFXVOEMbMrfhpyK8NA5vC7L
+         ZpoxhRMtuyaxQadm/X2ltYStONu/Pb+lLG2so72o2H7OdzSpsHgiL4rUKYRjpT7K9jko
+         Jucg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792151433; x=1792756233;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20260707; t=1792154278; x=1792759078;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=6/qA7V3DG7kQAgqrGFawElxThnGIIK1Qs8DRsIsxVf4=;
-        b=mvJUtx8Hm5hFYlFsi0w5gOawfr5Ti6eb27FpyP6KJE98mwPzslONA6g1HxC+esR/o5
-         FkCduSLaCG3xmKBiANh/Wue5gtrMRRU6l1g6miVXlJVHrmoyRVy896r9yLULFRwzEpMj
-         5DH7c7QV2jtyEj8pqVN24BE03AZqWvd6z2+bRA0+XpATBG6VJPomdw/nECIyAs48zLJX
-         q4dDE7XnugvwXiGt1cSxNqfTLYGEjMtCX4sBrmyTm61iKVJHM6Hoz/+sPNx+SV+/Nvg8
-         NIfWjSM35FIo/a0ZKkLAmIqOfjbp7TOaWdAZV1Ly8ipgpLAfHS/vf/umq40IHUJtJFPX
-         d+Nw==
-X-Forwarded-Encrypted: i=1; AKwUvByyzPt1Erw3ewteTQjY382Hc7ETp9pI49sE/XcuDCy+X8tFnzTutRf3s8eqwOVAK6x5IyA=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIPhyi/MIjQF3tTXmyRco1I1mTLzJoXDRXZeLM75W1Ak4lbsY81
-	aD1z4f4prRN3Vo2+epVDR28gbpzsUngknF34RXEKQxzfjF9WGW5hy6sUEwVL6B5PGoTEOhFWZAx
-	xNPQav1GKbkc/bTEuBXNi0eFFBwHsphWh2D0/JkoXOw==
-X-Gm-Gg: AYBFou1SFDgh94vduilFN+c/6I5sTIHbm+SOM3WCxY7P3h1a8YC3kMJOMRVK5agjuJx
-	oFZfKG5/KX1q5Me9HgTydbWvTpXq0m/Lv2dmUxYu4qj7iOIrY0MDOt9P66JtpzjJUizCxOIurW3
-	tH+sB323tdtFjypzDn1pMZxAHurferYOAdP4r49G8pI+PmeQfpj8t4YUeMEy+gIaJHbWYeeYVet
-	70AnjxL7cGU5JVzaBnRoI+ceDS7HJDTy9EpDTOTIEH0vuK9TMtOk8enoTLXt4uvDWbTgz8W3XYp
-	YgJNAdIgUudSWb58ZhQx8C35L8tGaXXvfw45QvicUI038Hsm/Yz7GXDY
-X-Received: by 2002:a05:6808:3518:b0:4c2:e32c:1ee2 with SMTP id
- 5614622812f47-536fda8949dmr2059029b6e.22.1792151433406; Fri, 16 Oct 2026
- 04:50:33 -0700 (PDT)
+        bh=dyptWKE6+L4gGztz98gHie+QcW2ONV4qzr/eI5lFHB0=;
+        b=vFh8fG4psB+TKE+NKBI+1msZSHEu7/tL1mQ7fBlowfoxcpHyUMTU5yiudO2zJaveQo
+         kiUwRqh/3XdKZhUtmLIHx+hoAi8W6uSzwGG5dKxyUPM29WHwHKHAkHY713DgTTaY6Xwv
+         1eP4XwM9Q0rIJveqkJxf3IUgmz5kR5a2rgcCP1yfN7y5FzSxd/nFRvxbYwaBykinaPtc
+         5+qwQdT2WyrrCVQEQM/T/GFqJzwztGdxt7G1xWV7VV8BY6x+zEAaNifau/hGJOFNpOFO
+         auJFnZpoeHH7dhyVH/KKkqUnlDMUubRKF+5FRrKeYgycq82gghVdjcJlzvZ4REB/8m2z
+         zq5g==
+X-Gm-Message-State: AFq9FYKjJdMTgPbEYF8L7+0To+E0Gh8u8yhHVkfUIpgFFSpMWuO/tcQ2
+	ZhHpaJsXdB4A+09BFm6GcSgVcJWNjddeqsycOe/CgU0iBLkGmuXFAiS0uy5Sp8S5
+X-Gm-Gg: AYBFou21Bmvl8XL0GZaheIxNuxDBSipT1DCocK2Lbjvq8REm1hyej4+ldQ3/LM5hTgn
+	AUaRklkYzolncGVqZ+3Mzx1Pe76G3X8dirip7m4vNPnmOIELZA576Mm3UaEdpd1EXHwi/vsqXzD
+	0ak04FdWNlF8Sz8FBv07BCcry5YejXzwFr+720bbxiQzlH1oYLLZzegSs7f4vKm81l9UQkk5Lke
+	i76b1YGd/N6drwqGmGtrUJa+hP8ZyqjAHVams+0y9hqe0v4PNRDr+HQf3rqsaLAupdkbblOjzeD
+	K6DW5lmYpRMf+Py6kr1nx7GA2eQJgRq0kMjA7KtWpOGiFnKBDsvlmOEre74G9vdyHzBrMoRxDR1
+	DufJ5jAPvpR39+Jmtjde9l5EFgWdQlkkM127vxXefjD9p0/sT0n/nWQcDV4+fiRkH7lPD0CF5Lx
+	FnWvBf8NA8DHHR4XHKJ4eTvJlIDWvv/UJ0s1pmEas1dduhkw7FcLyRGd40nwy0749cYLsATGOHM
+	Ns=
+X-Received: by 2002:a05:6a00:a01:b0:886:bb44:631f with SMTP id d2e1a72fcca58-897c6e1c80emr22352747b3a.10.1792154277782;
+        Fri, 16 Oct 2026 05:37:57 -0700 (PDT)
+Received: from [127.0.0.1] ([52.250.243.97])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-89f57944b5dsm1028571b3a.36.2026.10.16.05.37.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Oct 2026 05:37:54 -0700 (PDT)
+Message-Id: <pull.2263.git.1792154272296.gitgitgadget@gmail.com>
+From: "Ian Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 16 Oct 2026 12:37:52 +0000
+Subject: [PATCH] sigchain: recover from concurrent double-pops of the same
+ signal
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2211.git.1789379276.gitgitgadget@gmail.com>
- <pull.2211.v3.git.1791806877.gitgitgadget@gmail.com> <efaada0b6a8ffdb4d1c01d7f34a0d6596a99c149.1791806877.git.gitgitgadget@gmail.com>
- <atB48HLgZr3ssOfx@pks.im> <CAL71e4Meuv1KXTX9HeQzmyVdmtYDCrd4M6VNcRRt5HZ-DKzbQA@mail.gmail.com>
- <atC-GVBnQrfr3cQ0@pks.im>
-In-Reply-To: <atC-GVBnQrfr3cQ0@pks.im>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 16 Oct 2026 13:50:21 +0200
-X-Gm-Features: AclHuK_iHRCRDAbBTuItQCm4rsmRAyw2ZlqhnSdtibHZjgYzfZhJqygcCERbS_0
-Message-ID: <CAL71e4NA3SH8V_haxJFeYCBmKk8+96j7ckxLDZA7+XMNcVfdKg@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] connected: add incremental connectivity check via rev-list
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Ian Hu <hu2008yinxiang@163.com>,
+    ian4hu <hu2008yinxiang@163.com>
 
-On Thu, 15 Oct 2026 at 13:50, Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > I think this is where it gets tricky to reason about.  The win
-> > from from larger trees pays off without bound -- the larger
-> > trees you have, the larger the win.
-> >
-> > Scaling with commits on the other hand we have ceiling of how
-> > much it can regress.  I am thinking that could be reasonable
-> > that anyone who enables the config flag for this mode could
-> > simply accept that it would likely speed things up in most
-> > cases but in other cases they could see a ~1.5x regression.
-> >
-> > I am hoping that this tradeoff would then be acceptable,
-> > otherwise we would indeed need to add some way of switching,
-> > though I don't think there's a single good indicator value
-> > for when it's better to switch.
-> >
-> > I could add a new config flag like
-> > transfer.connectivityCheckIncrementalMaxCommits to control it
-> > perhaps.
->
-> Yeah, making this configurable may be reasonable. The way I understand
-> it, the new connectivity check is most likely to be usable for smaller,
-> incremental pushes. And based on the above table you have, we see that
-> up to 1k commits the new algorithm is faster. Sure, it's an artificial
-> benchmark, but maybe this is a good enough cutoff for now?
+From: ian4hu <hu2008yinxiang@163.com>
 
-I looked into this a bit more and I have two main notes:
+sigchain_push()/sigchain_pop() update signals[sig].n and the handler
+stack non-atomically.  When two copies of the same signal are delivered
+in quick succession to different threads, both instances of the handler
+run the usual "cleanup; sigchain_pop(sig); raise(sig)" pattern
+concurrently, and both read the same s->n before either one decrements
+it.  Each then installs s->old[s->n - 1], so a two-entry chain unwinds
+both entries while the dispatcher keeps pointing at a handler that was
+already popped: n ends at 0 while the effective disposition is still
+old[1].
 
-First of all, I benchmarked multiple repos, both with small
-object trees (such as git.git), medium (linux.git) and some
-really big ones (proprietary).
+The surviving dispatcher then runs that popped handler, whose own
+sigchain_pop() hits the "n < 1" guard and does nothing, and the raise()
+at the end redelivers to the same stuck dispatcher forever.  The process
+neither dies nor continues; every signal-handling thread spins at 100%
+CPU and only SIGKILL recovers it.
 
-    repo          files   commits   full    incr.  full/incr
-    internal A    552K       1000   1.69s   0.66s    2.6x
-    internal B    331K       1000   1.48s   0.57s    2.6x
-    linux          95K        609   0.34s   0.12s    2.8x
-    linux          95K      13965   1.86s   1.90s    1.0x
-    git.git        4.9K       356   0.09s   0.13s    0.7x
-    git.git        4.9K       976   0.23s   0.31s    0.7x
+This is reachable in practice: "git clone --depth 1" over ssh holds two
+SIGTERM entries in the chain at the index-pack parking point (clone's
+remove_junk_on_signal, then tempfile's remove_tempfiles_on_signal from
+the first lockfile), and two SIGTERMs a fraction of a millisecond apart
+land on two threads and corrupt the chain.
 
-So for large and medium repos the cutoff of 1000 is
-conservative. Incremental mode is faster but the full mode
-is also good enough here.
+Rather than serializing the chain mutation, teach the "n < 1" guard in
+sigchain_pop() to repair the damage.  Track how many pushes were ever
+performed for the signal; when a pop finds the chain empty but the
+chain bottom is known, reinstall s->old[0], the disposition that was
+in place before the chain was built.  The stuck handler's raise() then
+lands on that disposition -- typically SIG_DFL -- and the process dies
+by it, exactly as a single delivery would have.
 
-For small repos like git, the incremental mode is slightly
-slower, but since the number of files is so small, both modes
-are still fast enough that it does not matter.
+The repair is inert on every legitimate path to the guard: if the
+signal was never pushed, nothing is installed; if the chain was fully
+unwound by regular pops, s->old[0] is already installed and
+reinstalling it changes nothing.  The push/pop fast path is untouched.
 
-(I could not get an exact 1000 commit test synthetically by
-looking back in the history for all repos, since it depends
-a bit on the shape of the graph of commits.)
+A fault-injected A/B run of the minimal reproducer, compiled from
+identical sources with and without this change (the gap between the
+"read n" and "decrement n" steps of pop widened so both racing pops
+reliably read the same value; 300 interleaved pairs per arm) froze the
+unpatched arm 121 times out of 300.  The patched arm never froze: all
+300 runs reinstated the pre-chain disposition and died by it, and
+20/20 single-delivery control runs never reached the repair code.
 
-Thus, I think having a cutoff of 1000 is indeed a valid
-strategy here.
+Signed-off-by: ian4hu <hu2008yinxiang@163.com>
+---
+    sigchain: recover from concurrent double-pops of the same signal
+    
+    During git clone --depth 1 over ssh (or any transport that parks the
+    client with an in-flight packfile), two SIGTERMs delivered a fraction of
+    a millisecond apart can corrupt the sigchain unwind: both fetch threads
+    end up looping inside remove_junk_on_signal() at ~200% CPU, the process
+    survives both signals, and further SIGTERMs have no effect (only SIGKILL
+    recovers it).
+    
+    Mechanism (git 2.56.0):
+    
+     1. clone pushes two SIGTERM handlers: remove_junk_on_signal
+        (builtin/clone.c:1134), then on the first tempfile activation (e.g.
+        shallow.lock) remove_tempfiles_on_signal (tempfile.c:117):
+        old[0]=SIG_DFL, old[1]=remove_junk_on_signal, n=2.
+     2. Two deliveries that land on two threads run the top handler
+        concurrently; both sigchain_pop() calls read the same s->n and both
+        install s->old[s->n - 1]: the chain unwinds two levels for two
+        deliveries, ending at n=0 while the dispatcher still points at
+        old[1].
+     3. The surviving dispatcher then chains to a handler that was already
+        popped, whose own sigchain_pop() hits the n < 1 guard (a silent
+        no-op), and whose raise() redelivers to the same stuck dispatcher
+        forever.
+    
+    This patch takes the "repair after the fact" route instead of
+    serializing the chain mutation: sigchain_pop() remembers how many pushes
+    were ever performed for the signal, and when it finds the chain empty
+    while the chain bottom is known, it reinstalls s->old[0] -- the
+    disposition that was in place before the chain was built. The stuck
+    handler's raise() then lands on that disposition (typically SIG_DFL) and
+    the process dies by it, exactly as a single delivery would have.
+    
+    The repair is inert on every legitimate path to the n < 1 guard: if the
+    signal was never pushed nothing is installed, and if the chain was fully
+    unwound by regular pops, s->old[0] is already installed so reinstalling
+    it changes nothing. The push/pop fast path is untouched -- no locking,
+    no signal-mask manipulation, no Windows-specific code.
+    
+    Validation: a minimal reproducer (two threads parked in read(), the same
+    push/pop chain, first handler entry doing real close()+unlink() work),
+    compiled from identical sources with and without this change. With a
+    fault injector widening the gap between the "read n" and "decrement n"
+    steps of pop so both racing pops reliably read the same value (300
+    interleaved pairs per arm), the unpatched arm froze 121/300 runs while
+    the patched arm never froze: all 300 runs reinstated the pre-chain
+    disposition and died by it. 20/20 single-delivery control runs never
+    reached the repair code.
+    
+    An alternative fix that serializes sigchain_push()/sigchain_pop() with a
+    per-signal spinlock exists as well; both eliminate the freeze. The lock
+    prevents the corruption, this patch heals it; they are independent and
+    either one suffices.
 
-Second of all (and with the previous in mind), I think I would
-want to change the configuration into three modes:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2263%2Fian4hu%2Fsigchain-recover-from-concurrent-pops-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2263/ian4hu/sigchain-recover-from-concurrent-pops-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2263
 
-  - full (default): work as it does today.
-  - incremental:    only use the incremental mode
-  - auto:           decide on full or incremental depending
-                    number of commits to process.
+ sigchain.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-This would make things safe to roll out and start gaining more
-real life confidence before potentially changing the default
-to auto instead.
+diff --git a/sigchain.c b/sigchain.c
+index 66123bdbab..f6da68ce4d 100644
+--- a/sigchain.c
++++ b/sigchain.c
+@@ -7,6 +7,7 @@ struct sigchain_signal {
+ 	sigchain_fun *old;
+ 	int n;
+ 	int alloc;
++	int pushed;
+ };
+ static struct sigchain_signal signals[SIGCHAIN_MAX_SIGNALS];
+ 
+@@ -26,6 +27,7 @@ int sigchain_push(int sig, sigchain_fun f)
+ 	if (s->old[s->n] == SIG_ERR)
+ 		return -1;
+ 	s->n++;
++	s->pushed++;
+ 	return 0;
+ }
+ 
+@@ -33,8 +35,21 @@ int sigchain_pop(int sig)
+ {
+ 	struct sigchain_signal *s = signals + sig;
+ 	check_signum(sig);
+-	if (s->n < 1)
++	if (s->n < 1) {
++		/*
++		 * We are unwinding a chain that is already empty.  If we
++		 * got here from a signal handler, two concurrent pops of
++		 * the same signal both decremented "n", leaving the
++		 * dispatcher stuck on a handler that no longer has a
++		 * chain entry: its raise() would re-enter it forever.
++		 * Reinstall the disposition that was in place before the
++		 * chain was built so the raise() that follows lands on
++		 * that instead.
++		 */
++		if (s->pushed)
++			signal(sig, s->old[0]);
+ 		return 0;
++	}
+ 
+ 	if (signal(sig, s->old[s->n - 1]) == SIG_ERR)
+ 		return -1;
 
-We could also make the cutoff configurable, but I am not sure
-that is needed in practice.
-
-> > > These probably should be `size_t`.
-> >
-> > Sure, I can change that.  Or intmax_t since we'll need to cast
-> > to that later anyway for the trace2 output?
->
-> Hm, okay. Not a fan of using signed integers as counters, but so be it.
-
-No worries, I will switch to size_t instead.
-
->
-> > > > +     if (type >= 0)
-> > > > +             die(_("object %s is a %s, not a %s"),
-> > > > +                 oid_to_hex(oid), type_name(type), "blob");
-> > >
-> > > I'd love not having all these calls to `die()`, as this logic is
-> > > essentially part of a library, and dying inside a library is a bad
-> > > smell. We do this everywhere else in Git, too, but we're slowly getting
-> > > rid of this as part of our libification efforts.
-> >
-> > I think this would be a bigger refactor in general --
-> > the existing connectivity check also dies as the way to
-> > report problems.  This works since it's running as a subprocess.
-> >
-> > If this is something we want to change, I think it would be
-> > good to do that refactoring separately and make the connectivity
-> > check subprocess only die() at the very edge, and making all of
-> > the internal library code support not dying.  My first prototype
-> > tried to do this but the amount of changes to internal code got
-> > out of hand, so this version was the simplest I could make it.
-> >
-> > But I'm happy to take a step back and revisit that approach if
-> > this is a blocker.
->
-> I mostly aim at not making _new_ library code die anymore. In any case,
-> I don't think it's a blocker, but I nowadays consider this to be a code
-> smell.
-
-I have spent some more time thinking about this and I have
-changed my mind -- I think I was too stuck in the idea of
-all-or-nothing here, but I agree I can make this work in a
-mixed way -- not introducing any new die() but accept the
-cases where it already dies.
-
-I will include this in the reroll (likely next week, don't
-want to rush things).
-
-Thanks,
-Kristofer
+base-commit: f57c9a73884400380bddd172acc88b569834f909
+-- 
+gitgitgadget
