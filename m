@@ -1,99 +1,99 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F3B31197C
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 06:58:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A553E0258
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 06:58:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792133907; cv=none; b=slW/g91JH6dXWDsXu4aWjffZIm1KjBEz9G138TXVhqNvbvlJ3sQFKAx2XrU2H6ebNDkXLoyjcV5W+e9V8B198bkNdc/kIuJ9UiQh6jNcNBB0UizxMKJ/4lQdcMeCZnyvjlfzOwzbb5eppcEPXRaigFu1uy1TBRN4uQdrQrVxSsc=
+	t=1792133910; cv=none; b=WOH7PDMtpsH4vWjpB2y1QHKPuVO9MXyvIojGVGAj+noh6H02fK8YN3xWdFjQ/oBbcpTNh7ZFmWCQys3yxDohFLUK7K4KN/+cYlQj7ntTlQkBZ6O9pTOOgm9YtlLVXYKtBLdrjz6JK0kYFtA/RiEJLGTHg3OH310OXffIuCpLRaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792133907; c=relaxed/simple;
-	bh=2muWFmNDAr0t1xw+ZR51YzluiGkc50rnUbGY6A8P4zk=;
+	s=arc-20240116; t=1792133910; c=relaxed/simple;
+	bh=H5OwvkzS6iIuZy0PnnYg9LgJKT6QzD9BBGDs3tbUmRM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fkACR35RM93cUbIE+vVOY05ElJEVKahAn2hJsrXSQMf+OeBFR7e+r4+jppJRSzxs8CgKBdADH2lBbKrumsEkDymtfHF8BhOiXOKgJvht1GmJv9pXtAlmyBMFq1AvOW2mmMQl5XeUrUh8hH6AEWmMWjA7jI+wIItIedu385wL14k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dDJfr3EF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cHEJ6bRg; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=ePB/pjofigEbIN3+XdpiL/Gd8VJAXtJc0KTkLbex6vkyV/05+/OjORH+AtvwLFHHrDUkxjNkMMd6Ck/mGjCH0G6ch1XV+SCgZ60pi7UkeZQvA3l4M+hgN745MALnQ7tdXbZ6+hjGnTQlSSyqp4fFXpgsUSeGDROEAUo2YZ9BdhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jyQ0UMdW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GbCcsVNl; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dDJfr3EF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cHEJ6bRg"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jyQ0UMdW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GbCcsVNl"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 15777EC00BE
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 02:58:24 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E0BD714000E3
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 02:58:27 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 16 Oct 2026 02:58:24 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 16 Oct 2026 02:58:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792133904; x=1792220304; bh=6jftChUDx5
-	eAl5xkgvakUa2UY370wZfQj/MMj5IC4zk=; b=dDJfr3EFRKRliR3RlPEbrusZ9O
-	++2+TSV3fjQtL2VfVPuFdP02oEmcSNxUqswcx3PUZKieZll6PxDkswZ1dfHlpgzy
-	Vq+Nkdr3vqkWt/Bgn7Q6wDGVMQq3vbY8/lIYOUjORSa/HLJ6VyhW/DoWClIaR/jB
-	wZ4Y9xxirRy5Do1BQe87R8KSJ6x9IWdXTT22B5VLJBNz7JPc5xkUM1VceCCd2CNf
-	uIjK4b8NxNlqWvkQfvNlHPh3oVrLa1+FEa6AVC+9nRr0ixyZ2n0RXqOr2Wm/vrBv
-	PP4ifuNCnApWK6KiiOg0PE1+h6dujjLugI6tLVbAORBvqFyjrXDVnrBD4guQ==
+	:subject:to:to; s=fm2; t=1792133907; x=1792220307; bh=An9uHj55i1
+	EaPYcE5+fbORBwvtMP1ZR7T/WyXXnbjjM=; b=jyQ0UMdWOZU2kNrpYgvkLg9iqL
+	ssEvYyJaMfFGAn1Mcr6kyOzer7wYrp61Hz2eRIVIdwLdC/8Eh2AvjzEi0NFJGgYC
+	4xEYFvZ3swc/s40x9Mv5ujreHlO3LGZWOR4OOxWvfCsKhAlGKJpfk6zBnmpb2hwv
+	hg2lNoThOjuga3gEmw4sSAKgdZBC1XgSjeVuvkBrqztvktV3A9VxCBxuxkX2zXo2
+	EerKy3FFLEwttJf+/vfjx9bwRCJK5aF40Te9yAt1Zxc4eGP+zvJGMPKbwpcsPJRJ
+	/yBmKgrNJYebswXmJ6V3Ii3BRalJbUKrzK0oJuLG9U3riINjpqGkpQxOgjVQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792133904; x=1792220304; bh=6jftChUDx5eAl5xkgvakUa2UY370wZfQj/M
-	Mj5IC4zk=; b=cHEJ6bRge9OanNw97bxtSPoTk5uTcaIrpCESdfAAMqnJWGNyGWd
-	ShAedIgb1hiY56J6/l8CMblKC/xBHBxbJZwj5W8HllVni+KXU5GuOnxZCpuduEuq
-	GPvkDh7qoYnK28/AihuGjH+sznPmlBS0v8lCY7LXbdgfjufvEqgwgw1NKFwhQE21
-	e2WY5JZrwiYRbGI4rtqY6WsL56uzD3rnQv8/rbAGjXvMxM4eizcoHVanVu8fifTR
-	hZFngAnUMCP7+f9UwVkfOTdQHqvUBkS2om3FGEoaJEsWTeaE488NPtw6vES+fiXP
-	SjFlLP3C591rUeIV+p6W5Fuafy6eJJgFNSA==
+	1792133907; x=1792220307; bh=An9uHj55i1EaPYcE5+fbORBwvtMP1ZR7T/W
+	yXXnbjjM=; b=GbCcsVNlLaDXw/cX74fAOoZx786V5XJtE+JpsY6XluJrgxy23h+
+	l9kN0EImykBS18y3gbdn8VCBdaczD9QfAeD3GuPfk0VZSWqX0fWgGU2kofOaxnJR
+	z+h9qMMVZqfuVrw3/7AwN4nDk5b0VZrKpjLMpVt6LOzs+PVZtVarSyAIUgRvMSG/
+	QJO6kFrdljjubkJJanydifsqsscb9prtqa5yatCOUjoN4VCbT855QajgtBPMeVWk
+	/xSdGyUDQdpcl2XrsVcLMTZjckdCpay0afAAfa2RVsPUfJlez0KswgYKju5ZJ5IE
+	yiJieC8Yyl2ayP15Ax4wluMaK14PqSUHrDw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792133904; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1792133907; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:lk1EMkT7poTaJ6k4IDf2b0VvjVfp79ET99Y480E9yCCR4IT
-	u2wAOCNEV/8Ezu+2HtfV5R0pak4z3PF6TzG5DqdW1nq0RLNVb6f14FIBVuMp9jWB
-	AFSTnyYBsoboURyQoNwU/ly1JHEuHahEn4X8At912Z8htxwk8hyHvT073EynKAiD
-	Y99wr5rMl5lMdwGRaxVJB8q0LeT2aZfaDCvxamynwxTvscyU6HNEVbKy4GYO/o0j
-	zj2/H1/6KLhsh/8a6H/elhMkiaSkvDWRsZfc02y7Z0sz4FHk1/sXMcZ7AV4e/HQ/
-	R8ZFIknCwf06AAd17qqokHL76+ilVtlrwyuClvA==;
+	s=fm2:rsa-sha256:AJGXdDlWFUHoCaCHs2Z/zRc122hzkQkfc/zsALiLmAagcwT
+	3o4e/KdBcyCY9VdJKs3QOZjDBts13zGrcVZ4gmyNo4FsbJdMubreb4GTE5y2gBTD
+	D7eMtZXOlRwvATA6CpEhxRAQx3NG56D+vo0Esn5BfMKusY92BpX/Gb0JaLH7I4vE
+	dGTLs1LggpZX0Fu8IevBaG+GChMqYzP+f8ZTdz93x6hDiRBFIU/jDK+62eZGnMYX
+	DhJw9oYlwbGZd+udZ0Af4jwqh0OPhz4vHIbuLdxMRm/Zi8EQfF1yW1Dy0D9ptTWp
+	AbbjyhCwEcJaBRGuH4Y9J4LaHJQk1tdL7EjaMdQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:ebPmoPc2mwpKx4Ho2kk/37vb36iMGFBOiVPg4WRiHWs=:2muWFmNDAr0t1xw+ZR51YzluiGkc50rnUbGY6A8P4zk=;
-X-ME-Sender: <xms:D8vRaonnTZlmBYb9OP0NeAt7rJ0AsMNAAUYJYTy2pcTJRJr8G-RtJQ>
-    <xme:D8vRat1KEF3bQIXPtl6h9okEK8c1LH4OxQFVq6auX21rWMJg60EdRmdxiuHQNFA84
-    TyVGROqBFXjRQ-jYxkJe79yK5YSsX3YxBJC74IUl1q97hXjwj3zh20>
-X-ME-Received: <xmr:D8vRakRkNyF4pgbR0FO2uMAYtR21wHz093Rrf7TfZsKUIufykorHew>
-X-ME-Proxy-Cause: dmFkZTGHvgxDFnImlGop40KwU3bRUSEKLoiD9eWJihBrXakBN0JANQyDupg8Xzey+84UHk
-    h883Q17uBUpUMnn9Bbs/1azxo0H1cSpzf78CQLuS//jnYD/0zXqeiHQ/Wpwyu5fHrGvP68
-    OucZEj6H02rkDN4++14y1zlW4m/DmQutB2EXmK5GxDIdCeNN3Wtse+lxFWOz0/Xidf71IX
-    xb5KYj+XTph1yy1yx3tlt5DMrM3eSUAqnMVmR0aEHUnXsTM0ZVdcQ5gYoT4eMEB2JfG+mF
-    77IKjdc/1pSDxuIJuL+uwSa6RHMx4cIlOVxzvMzY04qx8TugEcIYa4s9bhbpZGvCqYtpQB
-    mwnubmKev9oKI5XJzEAnFHIAfDZzbjOv3t34X/WOY6pEUujSM3A3/FZ8Qes39f3030mac4
-    SgfSaW91HQ8TY8T10HVm9OvuSKF6AnOF3AcO7y/Jjqm+ka1X0jOzWo+nQ4DYNA7cdl2Snj
-    W09uCPPMUmmRNQqyEErg37qFNxYMCbvAnfLarunoPvzeECaU3/dxoRyNfzG7QvAz7+GfoM
-    FRBovE01Ha+O54JC24q9INqGPvzZv3A0wOhdNJzpVaYipwaR0wmFswbF51AR3v896TMmie
-    xa+ZW4yCZIjYHsA4e0gLAclEI6PuwYjGmpr9BgnpePImLdQKhu9ONoVKvmZA
-X-ME-Proxy: <xmx:D8vRavsRNXcXyO6L11sP68vH6-ND3YqRfUfDu0MvJOIPedZlw1aBpw>
-    <xmx:D8vRapan6pY7onOKZSdpOeK8h_gYCIsGEeRe0SKCn7eoWRHa7JpS6Q>
-    <xmx:D8vRaksKWkTTNYO6tMkCvK_XZU_VwgUHsuEklnrj7LY7AD5gufJ9Uw>
-    <xmx:D8vRarF2TmLeIIkS3LrHf_AZCnLySyw_iXbh3FoBeIsIMKb_UCQmfg>
-    <xmx:EMvRahVzosFSH1RVYe-fUhdxl8Eebw8ORn849U_OEGF6jyqZ3URfD8VM>
+Message-Instance: m=1; h=sha256:3Pcu8wbfdCZBXDV2P2NYQOUu5rKpG74XM8dFNoDb/Hs=:H5OwvkzS6iIuZy0PnnYg9LgJKT6QzD9BBGDs3tbUmRM=;
+X-ME-Sender: <xms:E8vRau8H_-4twEtixZSAZDtzcJKCCbVEtte3n1ZYuIYzvmLSmckr6w>
+    <xme:E8vRaku6nk4QChT8kNch65_dqlvJkorxxeKLfKEHudWVJaojnRAIuv74dlPz63t_L
+    BkBlfgJGaauQdW1sI3VuC_twBoGM-C6u3yB2VjktoCjlaifc6wjWCk>
+X-ME-Received: <xmr:E8vRahqqYRDbfofcwRlyUvPQNNO_TWhjPO7OBux3c6V1PaeYO_Ej-g>
+X-ME-Proxy-Cause: dmFkZTFGoFjsx/d+3hw8CfhsT/b0+6zumOST0Dxk8obmKWjvcgc6uFR7RPyk4qNQP6cDUN
+    V8wExRHZNwtTW/fPtnq3A9iunZx5/ji2neNmsihFjcHFWOMXpRA6UqjPZvOBNh0cbpSnkT
+    Y1Zs86NuuWiGbATFTgjLi4s7w8XFk6TlWbtDJVuQ8tx022VXBfo/DZ/WcnDRRqF5Z1kQFp
+    Sq0nDCBKbwA/xLcbgcb/Ooppm4Vj/0gLmw8Dzf1+oUJFxiHb4MlH3p+dI48UQSTYMQ+STJ
+    aw1jOV3YgSsugdC62ayJTatG76SzBb9cF4vBazERq1xzoPcwgux2mhSiomKbx07hs6DZtF
+    GYAayH9KSdoBhN5ggQeBY56AQxHF9GLh/9UgMIs5gBBRgQIQKRzOCLXtVumpyzWnt/2aSS
+    qhrBdKd1M+xVxsOPfo8s5rbP+ssl9ZOrPdDWdVTqm5q1lsWO+H9CRjZJhHFN0Dp3FBukDG
+    8L16hczp1qLFfXnKTt3CDPj06B3mr/IFh2A1mLfaXw11WukFVIkouId6gvBWo7eeHOMPnX
+    3+mU0BOEGu6zWJg02OKW9ayF5eead27RQIwrhTfvviyjOCBikY5xNx0Ssa02smuRsjyHV4
+    DqBp6EzG/UYkKtypMQMVHpaPPG/XC0Fj4eKBXaWJsolOlB2N+5CoCkiq5hhQ
+X-ME-Proxy: <xmx:E8vRahkSOzyN7MBD9oR32Uq5rWuwBUQfgv83gu06_CegSUBj_8y7og>
+    <xmx:E8vRalyoO_48l5VTTKlQbK9aYU8u4d81vQXT1XjNQpxrwG4lhrEwxA>
+    <xmx:E8vRaplCEXOKz-HLs9t-Jd4jomNDXeuhzbagqlRguf8xE4o1moUrYw>
+    <xmx:E8vRaueDz25sxkpiwr2NFK3WXfeB1PYoLhEWMnvPuE3q_wzM9kzT-w>
+    <xmx:E8vRatupuAslv0eqI4WEub3DsyqDF_8BncoP1891ZIEGdzHENrOQQfkM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Oct 2026 02:58:23 -0400 (EDT)
+ 16 Oct 2026 02:58:27 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b339c6c4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 16 Oct 2026 06:58:21 +0000 (UTC)
-Date: Fri, 16 Oct 2026 08:58:13 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a9263494 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 16 Oct 2026 06:58:26 +0000 (UTC)
+Date: Fri, 16 Oct 2026 08:58:23 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/3] pack-write: lift and expose index-pack report parsing
-Message-ID: <atHLBS0GGxf_cPmT@pks.im>
+Subject: Re: [PATCH 2/3] object-file: explicitly write ".keep" lockfile
+Message-ID: <atHLDysZmYGyMiKk@pks.im>
 References: <20261016022901.3838402-1-jltobler@gmail.com>
- <20261016022901.3838402-2-jltobler@gmail.com>
+ <20261016022901.3838402-3-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -102,165 +102,147 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261016022901.3838402-2-jltobler@gmail.com>
+In-Reply-To: <20261016022901.3838402-3-jltobler@gmail.com>
 
-On Thu, Oct 15, 2026 at 09:28:59PM -0500, Justin Tobler wrote:
-> Once git-index-pack(1) finishes writing a packfile, it reports the
-> hexadecimal name of that packfile on stdout prefixed with either "pack"
-> or "keep" depending on whether a ".keep" file was also created alongside
-> it. Callers that are required to manage the lifecycle of ".keep" files
-> parse this report via `index_pack_lockfile()`, which provides the path
-> to the temporary ".keep" file.
-> 
-> In a subsequent commit, the "files" ODB transaction begins staging
-> packfiles in a transaction without eagerly creating a ".keep" file and
-> must instead read git-index-pack(1) "pack" output to get the packfile
-> name. Extract the generic parsing logic for the git-index-pack(1) output
-> into `read_index_pack_report()` in preparation accordingly.
-
-So if I understand correctly, the intent is to eventually stop creating
-the ".keep" file in the quarantine directory? I assume that instead,
-you'll then manually create that file in the final location before
-moving around the pack itself.
-
-If so that makes sense -- it's kind of pointless to create ".keep" files
-in quarantines anyway, nobody but the current process should be touching
-it anyway.
-
-> diff --git a/pack-write.c b/pack-write.c
-> index 85674e4b72..5f5bb894a5 100644
-> --- a/pack-write.c
-> +++ b/pack-write.c
-> @@ -469,33 +469,68 @@ void fixup_pack_header_footer(const struct git_hash_algo *hash_algo,
->  	fsync_component_or_die(FSYNC_COMPONENT_PACK, pack_fd, pack_name);
+On Thu, Oct 15, 2026 at 09:29:00PM -0500, Justin Tobler wrote:
+> diff --git a/object-file.c b/object-file.c
+> index 210984f825..ebe46d35de 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1256,6 +1256,43 @@ int read_loose_object(struct repository *repo,
+>  	return ret;
 >  }
 >  
-> -char *index_pack_lockfile(struct odb_source *source, int ip_out,
-> -			  int *is_well_formed)
-> +int read_index_pack_report(struct repository *repo, int ip_out,
-> +			   struct strbuf *pack_name, int *is_keep)
->  {
-> +	const int len = repo->hash_algo->hexsz + 6;
->  	char packname[GIT_MAX_HEXSZ + 6];
-> -	const int len = source->odb->repo->hash_algo->hexsz + 6;
-> +	const char *name;
-> +	int keep;
+> +static int write_pack_lock(struct odb_source *source, const char *pack_name,
+> +			   const char *keep_msg)
 
-Suggestion, please feel free to ignore:
+Nit: I'd have called this `write_pack_keep()`, but I see that we refer
+to the files as "lock" in `index_pack_lockfile(), too. Should we align
+those two functions and call this `write_pack_lockfile()`?
 
-    int is_keep_ignored;
-
-    if (!is_keep)
-        is_keep = &is_keep_ignored;
-
-Then you can unconditionally use `is_keep` further down, which I think
-is a bit less awkward.
-
->  	/*
-> -	 * The first thing we expect from index-pack's output
-> -	 * is "pack\t%40s\n" or "keep\t%40s\n" (46 bytes) where
-> -	 * %40s is the newly created pack SHA1 name.  In the "keep"
-> -	 * case, we need it to remove the corresponding .keep file
-> -	 * later on.  If we don't get that then tough luck with it.
-> +	 * The first thing we expect from index-pack's output is
-> +	 * "pack\t<name>\n" or "keep\t<name>\n", where <name> is the hexadecimal
-> +	 * name of the packfile it has just written. The line is therefore five
-> +	 * bytes of prefix, `hexsz` bytes of name, and a trailing newline. A
-> +	 * "keep" prefix tells us that index-pack has also created the
-> +	 * corresponding ".keep" file.
->  	 */
-
-Okay. I originally thought you only reflow this comment, but you fix it
-to no longer assume that packfile hashes use SHA1. I would have either
-pointed this out in the commit message or done this as a preparatory
-commit.
-
-> -	if (read_in_full(ip_out, packname, len) == len && packname[len-1] == '\n') {
-> -		const char *name;
-> +	if (read_in_full(ip_out, packname, len) != len || packname[len-1] != '\n')
-> +		return -1;
-> +
-> +	packname[len-1] = 0;
-
-Missing spaces around `-`.
-
-> +	if (skip_prefix(packname, "pack\t", &name))
-> +		keep = 0;
-> +	else if (skip_prefix(packname, "keep\t", &name))
-> +		keep = 1;
-> +	else
-> +		return -1;
-> +
-> +	strbuf_addstr(pack_name, name);
-> +	if (is_keep)
-> +		*is_keep = keep;
-> +
-> +	return 0;
-> +}
-> +
-> +char *index_pack_lockfile(struct odb_source *source, int ip_out,
-> +			  int *is_well_formed)
 > +{
-> +	struct strbuf pack_name = STRBUF_INIT;
-> +	char *lockfile = NULL;
-> +	int is_keep = 0;
->  
-> +	if (read_index_pack_report(source->odb->repo, ip_out, &pack_name, &is_keep)) {
->  		if (is_well_formed)
-> -			*is_well_formed = 1;
-> -		packname[len-1] = 0;
-> -		if (skip_prefix(packname, "keep\t", &name))
-> -			return xstrfmt("%s/pack/pack-%s.keep",
-> -				       source->path, name);
-> +			*is_well_formed = 0;
->  		return NULL;
->  	}
+> +	struct strbuf lock_path = STRBUF_INIT;
+> +	struct strbuf contents = STRBUF_INIT;
+> +	int ret = -1;
+> +	int fd;
 > +
->  	if (is_well_formed)
-> -		*is_well_formed = 0;
-> -	return NULL;
-> +		*is_well_formed = 1;
+> +	strbuf_addf(&lock_path, "%s/pack/pack-%s.keep",
+> +		    source->path, pack_name);
+> +	strbuf_addf(&contents, "%s\n", keep_msg);
 > +
-> +	/*
-> +	 * If there is no ".keep" file, then there is no lockfile to return.
-> +	 */
-> +	if (!is_keep) {
-> +		strbuf_release(&pack_name);
-> +		return NULL;
+> +	fd = safe_create_file_with_leading_directories(source->odb->repo,
+> +						       lock_path.buf);
+
+The command has just written its packfile, so can't we assume that
+leading directories have already been created?
+
+> +	if (fd < 0)
+> +		goto out;
+> +
+> +	if (write_in_full(fd, contents.buf, contents.len) < 0) {
+> +		close(fd);
+> +		unlink(lock_path.buf);
+> +		goto out;
 > +	}
-
-Can we maybe have a single exit path responsible for releasing
-`pack_name`?
-
-    /* If there is no ".keep" file, then there is no lockfile to return. */
-    if (is_keep)
-        lockfile = xstrfmt("%s/pack/pack-%s.keep", source->path, pack_name.buf);
-
-    strbuf_release(&pack_name);
-    return lockfile;
-
-> diff --git a/pack.h b/pack.h
-> index ada506b5c5..ddf2d52934 100644
-> --- a/pack.h
-> +++ b/pack.h
-> @@ -106,6 +106,16 @@ off_t write_pack_header(struct hashfile *f, uint32_t);
->  void fixup_pack_header_footer(const struct git_hash_algo *, int,
->  			      unsigned char *, const char *, uint32_t,
->  			      unsigned char *, off_t);
 > +
-> +/*
-> + * Read the report that git-index-pack(1) writes to its standard output after
-> + * the packfile is written. The hexadecimal name of the packfile is appended to
-> + * `pack_name` and, if `is_keep` is non-NULL, set it to indicate whether a
+> +	if (close(fd)) {
 
-s/set it to/it is set to/
+`if (close(fd) < 0)`, just to be consistent.
 
-> + * ".keep" file was written. Return 0 on success and a negative error code on
-> + * failure.
-> + */
-> +int read_index_pack_report(struct repository *repo, int ip_out,
-> +			   struct strbuf *pack_name, int *is_keep);
->  char *index_pack_lockfile(struct odb_source *source, int fd,
->  			  int *is_well_formed);
+> @@ -1389,18 +1426,17 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
+>  			return -1;
+>  		}
+>  	} else {
+> +		struct strbuf final_path = STRBUF_INIT;
+> +		struct strbuf pack_name = STRBUF_INIT;
+> +		struct strbuf keep_msg = STRBUF_INIT;
+>  		char hostname[HOST_NAME_MAX + 1];
+> -		char *lockfile;
+> +		int ret;
+>  
+>  		strvec_pushl(&child.args, "index-pack", "--stdin", NULL);
+>  		push_header_arg(&child.args, &hdr);
+>  
+>  		if (xgethostname(hostname, sizeof(hostname)))
+>  			xsnprintf(hostname, sizeof(hostname), "localhost");
+> -		strvec_pushf(&child.args,
+> -			     "--keep=receive-pack %"PRIuMAX" on %s",
+> -			     (uintmax_t)getpid(),
+> -			     hostname);
+
+Okay. So instead of asking git-index-pack(1) to write the ".keep" file,
+we now...
+
+> @@ -1424,31 +1460,54 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
+>  			return -1;
+>  		}
+>  
+> -		/*
+> -		 * The lockfile filepath is expected to be the final location of
+> -		 * the ".keep" file after being migrated to the main ODB source.
+> -		 * This ensures the lockfile can be found and removed later
+> -		 * after the ODB transaction has been committed.
+> -		 */
+> -		lockfile = index_pack_lockfile(base->source, child.out, NULL);
+> -		if (lockfile) {
+> -			ALLOC_GROW(transaction->pack_lockfiles,
+> -				   transaction->pack_lockfiles_nr + 1,
+> -				   transaction->pack_lockfiles_alloc);
+> -			transaction->pack_lockfiles[transaction->pack_lockfiles_nr++] =
+> -				register_tempfile(lockfile);
+> -			free(lockfile);
+> -		}
+> +		ret = read_index_pack_report(repo, child.out, &pack_name, NULL);
+> +
+
+... read its stdout to figure out where the packfile was written to
+and...
+
+>  		status = finish_command(&child);
+>  		if (status) {
+> +			strbuf_release(&pack_name);
+>  			strbuf_addstr(err_msg, "index-pack abnormal exit");
+>  			return -1;
+>  		}
+>  
+> +		if (ret) {
+> +			strbuf_release(&pack_name);
+> +			strbuf_addstr(err_msg, "index-pack failed to report pack name");
+> +			return -1;
+> +		}
+> +
+> +		strbuf_addf(&keep_msg, "receive-pack %"PRIuMAX" on %s",
+> +			    (uintmax_t)getpid(), hostname);
+> +
+> +		if (write_pack_lock(transaction->quarantine, pack_name.buf, keep_msg.buf)) {
+> +			strbuf_release(&pack_name);
+> +			strbuf_release(&keep_msg);
+> +			strbuf_addstr(err_msg, "lockfile write failed");
+> +			return -1;
+> +		}
+
+... then write the lockfile ourselves.
+
+By the way, the error handling here starts to become unwieldy. Can we
+maybe have a common exit path that releases all resources for us?
+
+> +		ALLOC_GROW(transaction->pack_lockfiles,
+> +			   transaction->pack_lockfiles_nr + 1,
+> +			   transaction->pack_lockfiles_alloc);
+> +
+> +		/*
+> +		 * The lockfile filepath is expected to be the final location of
+> +		 * the ".keep" file after being migrated to the main ODB source.
+> +		 * This ensures the lockfile can be found and removed later
+> +		 * after the ODB transaction has been committed.
+> +		 */
+> +		strbuf_addf(&final_path, "%s/pack/pack-%s.keep",
+> +			    base->source->path, pack_name.buf);
+> +		transaction->pack_lockfiles[transaction->pack_lockfiles_nr++] =
+> +			register_tempfile(final_path.buf);
+
+So here we retain the status quo, which is to record the lockfile in the
+final location even though it doesn't exist there yet. And that can lead
+to us pruning a pack lockfile from a different process.
 
 Patrick
