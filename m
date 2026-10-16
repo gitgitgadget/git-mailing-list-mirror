@@ -1,326 +1,214 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E354D3B8BCB
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 21:37:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEE7242D67
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 21:47:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792186653; cv=none; b=itRrN9i0ZDy/5ju2Jjh6tbVCdIFwg+Ig9m9ops7XG+7+D++lAINt72oeWIGH7Dptq1VtYGaLkc0sEp9d3v9RplokWF+fjuKShPOxu1ClQ8WjMNLjrmiecpKFV4Y7XNawG1cdBKCNT+AQt9l0L6b352Zc1JL0VuNUcqZbht0GWi4=
+	t=1792187265; cv=none; b=uBQrgIR6p552x7GV9EXWIzdx7jEvf8GJ9gdJIJ4lPL2SaHRBBEB9BuXKBDA+BCfBX+qxrbMVseSQEXOZV5XGxevb2/UiMVXEGFTc2w6XD0fH0B2DtoXULzw4JnrBS/Tk8hGhj1IAKdmZy9AVHak6okyd40hGWFTp3n75nj6fEFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792186653; c=relaxed/simple;
-	bh=BDsufEsSpKaNE0xplPXhj+SzTeCUoDTTZ1FcMMYW0L4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f90TjaBWxjkC0MZA/h+9hzfK/Hx9oQRPGNcnoFUX5BNB9hq0RXs+fBM41rHfdWdXewxyRwUu9nwxE81sM0er3wRikYs6VWN4n6hGVzyUxHtLUU1uTsXAkdFBnyqVoia7yvbZ2/IMQRixAN9lBOZ2jhUjZZ/4/Hz5oqnbWL3AyFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ox5FH2Wi; arc=none smtp.client-ip=209.85.210.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1792187265; c=relaxed/simple;
+	bh=TbdUOvnIyHqW8pIb6Nx542pPCFQBYSAT1E+rPlngTVo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mUyn3AzdWnOkItALVrt0iskqbjAoKk+JqJ7NA+5vMTd+MPEhuL3hRH+JGldVjG+/1Bq/y9mKBJpZARrnOuBmzxzbsnh5+GsYi+l+gxg69knks78qFoZG49+lTHWn0t9XFqRPWmGr3JHkDJEoSk0pwG/hZRREwyc4WucM8ywscbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=o9FO7KPo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dDY+0bvd; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ox5FH2Wi"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-82478760557so183922a34.3
-        for <git@vger.kernel.org>; Fri, 16 Oct 2026 14:37:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792186651; x=1792791451; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=AIvrh2K0fH3mHWeevYfzyQGssIc66lRJSv3dkgOgAgs=;
-        b=ox5FH2WiR6zYMQahRC8pE7b8uacu4dcdR+TjvSrDl3FyJfXLHq7N9KCY3wf21NfBxz
-         GiJS/xvNmqvGVwbNJZOnhj9t5i+TyPGT5jEVnCwo8P6+e1i21wRpT7cyWH+5wsuBwByB
-         Y7kAX51aUZmqzjXy3XDZrYyTlsHD8AWA+BOOS7jPUAP/d82VxDGQwpm7LzkhX0RmyRdc
-         U5AFQWBH5qAzmRWzOq0Bhc3uUkHggvRLXzjQOuWboAwSpbwGbozm9JnPNDKE4vBPbns/
-         8NYmMmgI1pNfvz48awqK4RwAk1aYQ6Ae953ospmdDO0kDo5IObvYQ6EXoVL797au1Apq
-         MGbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792186651; x=1792791451;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=AIvrh2K0fH3mHWeevYfzyQGssIc66lRJSv3dkgOgAgs=;
-        b=QWhnAzkMfwQbKzuW/BIY3yDSFQGLodIF/7Wm4VjViVY4FwQJmsCTZZ5uLiybeTRhDe
-         mva8zxXzIPs9YLkBzPw4TQVlWCl0blbzGVEEWnu7iPYu2y2JlqWXetCt3wbtkAJMsw1R
-         3LjMXve2aFEecOkQrS/iWCSy+9ph6bxC0ebc02P26mIZNaN2AVCaYQlqdgOwGRxwNrMw
-         GheUEgM3UY4cUsP0VVVIF6qcJ2ak/yysMC4qUL0xV7EEu6JOkf0JgU6vrosP9v5EhZB7
-         8rGOVxcS31I07Hqo9mLHDwgtN4sj/MZESY9ZgAqpxnZUl6yx1T92QKmPXO5dGliww9AA
-         yw8A==
-X-Gm-Message-State: AFq9FYI49DJCrzUbskZLEfivZE2ApjZLftm1q0BveW9OzYZyQx1GC0xb
-	Nna0rWFmJosW7EpltDgGjNTDp1d2nZWorpEEtJ0ZN1HG2DaQRY/IDj6wmperww==
-X-Gm-Gg: AYBFou2I4e9HL9oq5cgtJNWmKcZfqkhlW7ms6ISphugFzvY2X1hE9TWLpnBQYyhp/qJ
-	oOvhZDqaWIK7FMgqOhm/+tj1pmN5PCj4nJng8NRgXoF0Rzlrm0eRW2ZmN6nJ5si9G/VsLARcTIJ
-	1gDqRsvsFdJPr1+f0f0arbaGwV8TK/5wEpFY8eDwHzsD8tqONGjggK4RegWkPCCyXyu5OG7fJRf
-	OQbeAvPJuBpAL5q8jajG9L4Y5nXKn4IpGOZc5u1eBGCJeSVdq7LDt4bP5ig9W4gGs37ZjGcp5aU
-	YBNoOXrgv21wNpns+7OHlMiR+OOav3ADfQL9RSUkeFHsCJ37sraD3dERJvsVQNJRgIgjHXbHvb3
-	apwuNgHvhvQSY1W+3SoLATdORxIvKF0AZ4tFpXA3uqW1cMXOVpU0WtjJNX3EGlsQkKz3sDqATvc
-	2AKdu07oSLiotx4gwrc0PWKRjKDW+jlrOUVXam3tH/YcqBMJXstSV/RaZSbfLqwkkh3J+S8l29v
-	VXqvUUZ4scRqDr6PmCfQVhxYHaDmvpGRZ6g4EG8XUiWR4yO
-X-Received: by 2002:a05:6830:82f5:b0:81e:b506:592d with SMTP id 46e09a7af769-84501a03d61mr838988a34.27.1792186650848;
-        Fri, 16 Oct 2026 14:37:30 -0700 (PDT)
-Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-844d2ffbf71sm834395a34.4.2026.10.16.14.37.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Oct 2026 14:37:30 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	Justin Tobler <jltobler@gmail.com>,
-	Qin ShiCheng <qeesung@live.com>
-Subject: [PATCH v2 4/4] object-file: write ".keep" lockfiles during transaction commit
-Date: Fri, 16 Oct 2026 16:37:16 -0500
-Message-ID: <20261016213716.593278-5-jltobler@gmail.com>
-X-Mailer: git-send-email 2.56.0.173.gf57c9a7388
-In-Reply-To: <20261016213716.593278-1-jltobler@gmail.com>
-References: <20261016022901.3838402-1-jltobler@gmail.com>
- <20261016213716.593278-1-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="o9FO7KPo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dDY+0bvd"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7BDA2140010D
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 17:47:42 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Fri, 16 Oct 2026 17:47:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792187262; x=1792273662; bh=fvwtIo1uk6
+	LZK2PtG5W2It5Kkf4UNlhaRcBZdiIxWHI=; b=o9FO7KPoyxkLk+2dmFHk+MCRn5
+	yEguGcg4XVEGXa6qSFvPzq4YKY54DRATEogO5TF6axu/j6tCP1eUh+XZKGJUvpNm
+	p9rXg+fStl8LCkKpZh9sOMt0Y+xPIlbbnhRkIhlyLKatix0QowZ0XN6qwBRM07ap
+	qYtp5XLqC34KMFO1/vKVztzBipQUqMvupbGCzC1OKWnrCtKPOVan0Xk774DlnoHt
+	yQd5NrqBCYyLjBy8NjpylHkwk3mQpnTnR41hyyP4/hhE0JTaFvRWOVUJs8RuVeZx
+	+ceWAYZ8+QOlpJVdnsT6qtCxd1iQOFRGJ8A2zV9GoGsKE9n7ZFjmYrW1hw9Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792187262; x=1792273662; bh=fvwtIo1uk6LZK2PtG5W2It5Kkf4UNlhaRcB
+	ZdiIxWHI=; b=dDY+0bvdhsAauJ9GvLcRRrS244JdPEienI4YmoZP6nCjwXOR45Y
+	+iFORgTWKakcP2TSOhXtRfW7REdFGYYs25FBx+KBNSVI/iJofzvEEooAGPzANzaA
+	RA5y4N0zFUHwSNnwV9kEHjx0JIjVXVTYS3YO5jX6D837gFcLWsNaEyuUAN7xTb4g
+	lPOakXnTMz9FCiPSOyA71Ye/Tr2vCwUjoOTbo3FHeN6lcT7vypzZAWtqj4bJ5RNr
+	cLscmRDk5NolYdsyeJMIa+z/UKlHRQtzwF1uvMwq64RIL/2c4GpnkSCVHBamUsXi
+	PKyxQHdJunKJBSxPiTmAtp1LHmM+5MUdTBQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792187262; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:aOvmqT9V/EzsRDQt6t2r2I3h83kPgzIZs0ABswvwifQayF0
+	6NzR/TtNfyXtAYWGyMypmZDecEAT1xTLa+ZviMRHlFnFPeoePl73O5y4o/9jOVkl
+	HIKslK+7xxDe6FeAbwH3OhooIRq4rBhYaZ7C3XSHp/u/zqLnFX2SqW1zjDYBj63q
+	EH/ad7iFKPEn9a5ySvD/nKrW3nBtn0vwPNO9SRNtJKQBF7EHD0CLczky/vM1aql4
+	sMqTNazZzjfyBJ3poITpuTKZpCMOpp52IVDjdTEOF9aKmK5FKFy9JMsBBzV9BrLL
+	buXJTkfI5tL0DZ+vHPpW4z+smYlnm0/aMyXyndg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:+Ge6dB3lMzGHr0HDvk4/rRhqosp4BcRKFk8XQc7ynjo=:TbdUOvnIyHqW8pIb6Nx542pPCFQBYSAT1E+rPlngTVo=;
+X-ME-Sender: <xms:fpvSan76O8V7Tr8yXYw4pA6daTmq1OzKq0P7GMq_SvakQqnAiKavGg>
+    <xme:fpvSajzC6ygydLYSgYx6-Q6L2YbRi5PVRvdzskrwdo_44XhGwEP0tuhKC2mjQ45mH
+    Cu3JnQYkFleAiHzFyqICsnsA97LsLvewCloSloD2b5AwOKDsmmJRA>
+X-ME-Received: <xmr:fpvSamwuRvdlzMAIiN0vGk11qhZxmFjinMc1WcRARxw9h3lm10K9-cqVh_wW-y3P06eKLycvjNOu4B-yNSkzGs6x1lJJYKVd_lEo>
+X-ME-Proxy-Cause: dmFkZTEk0ZTLzdrBxua++GYI9SsToEopZPyRMacC8dQSwIXy551p6563G3xnBZBtBedF6z
+    dipt7Hju1x6TZDdDCx/Wi4F1l9HusvcvHMMaw0IKxTp2Nl2xRgxrVBZcWWteHI4QTcy8K1
+    oVtKlTSV80pzuV2fb7ahC4ukc0YsAf6WFrePI6zH9nZ7NV6VqSLq9FCsKZvRxBfWtE3EvD
+    sTTg1jzPjQsxgoUufbPBSegz3WDrq6IH5vBT8Ze4Fo+2zJD7cEyqi4lj6JVFVysQ1blJSw
+    bdpTGmSRsbRfyylDlsensQ9M20555yo2Cv8pg4avz6s2xWq5f6Jj1SSyG+kl2U+5H5uxFl
+    qKDGy+LYvocGYctoZSEZ+wWs3AQHHESu6nD778MlOThdDsZqjw4TOVCjYkqFypGSaPs6rc
+    sPbNrZgwViB2J2aWGJuaeXULMMJvGe0hrnwua6V63HemLx63fkiTz1q1mQdYT7/qHxxMn9
+    w1YwA0yoxnm1iUid8vJ6DHxpgWTGZdyBk89ybjaI/LOZCrqEMRogYFvBbg3IX/owDe9NAm
+    u+Fp6d0ZLtNcCxohdTziPxUROFoT6FduX+cIxkKDOrix5qtJ7o/Elu6Wh0etUo/Q3byS67
+    JFV2CgcZGmFkfp3cBYnwH77yrUwX9AhHiyqSXvJJ+G/nsO62BmYybKSsfzQg
+X-ME-Proxy: <xmx:fpvSajz2x08nL_qviGrrJgSL6zwrtR8lRZ_c_RoSWdUF1t2KKbdsYg>
+    <xmx:fpvSaoZ8w9t3FBOI0NTTqgr_5SJ1FYfWe5_lp0kz5jhAFIdsVoJYmA>
+    <xmx:fpvSasXCoDc6j7arfQvA901_N2s0Imz3_FSXAbGpC6dlLDxl3k49WA>
+    <xmx:fpvSaugzRdiOL4Egidok6KqPma2yN08_awl1O4EUdstn6n7gPVyhQA>
+    <xmx:fpvSanD7ZcQVB7V5npauiG0tOZIrCOh5tQjTxizZEx-dAcU9uy7Ioz6s>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 Oct 2026 17:47:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kerylefondji7@gmail.com
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  siddharthasthana31@gmail.com
+Subject: Re: [Outreachy PATCH] var: refactor to use parse-options API
+In-Reply-To: <20261016205659.4417-1-kerylefondji7@gmail.com>
+	(kerylefondji7@gmail.com's message of "Fri, 16 Oct 2026 21:56:59
+	+0100")
+References: <20261016205659.4417-1-kerylefondji7@gmail.com>
+Date: Fri, 16 Oct 2026 14:47:40 -0700
+Message-ID: <xmqq1p9pe2rn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The "files" ODB backend writes a ".keep" lockfile into the transaction
-quarantine directory via `odb_transaction_files_write_pack()`. When the
-ODB transaction is committed, the ".keep" lockfile is migrated to the
-primary ODB alongside its packfile. Writing the temporary lockfile in
-this manner has a couple of downsides:
+kerylefondji7@gmail.com writes:
 
-  - Migrating quarantined objects via `tmp_objdir_migrate()` doesn't
-    immediately stop if a ".keep" lockfile already exists for the same
-    packfile in the primary ODB and instead allows all the remaining
-    objects to be migrated. So even though `odb_transaction_commit()`
-    ultimately returns an error here, the objects are needlessly written
-    to the primary ODB anyways.
+> From: kerylefondji <kerylefondji7@gmail.com>
+>
+> Refactor 'git var' command handling to use an existing API (parse-options API)
+> instead of ad hoc code for argument parsing.
+>
+> Previously, the ad hoc code lacked proper validation for option
+> combinations. Specifically, listing all variables (-l) and requesting a
+> specific variable name are mutually exclusive operations, but the code
+> did not enforce this restriction, causing test failures.
 
-  - Even more concerning, the ".keep" tempfile atexit(3) handler tries
-    to remove any lockfile of the same name regardless of whether it was
-    created by the same process. If the ".keep" lockfile of the same
-    name for a concurrent process gets deleted prematurely, its packfile
-    becomes at risk of being deleted by concurrent housekeeping.
+Everything below this line up to the three-dash line should be moved
+below the three-dash line, and replaced with your sign-off, I think
 
-Stop creating/registering the temporary lockfiles when writing the
-packfile to the transaction and instead do so when committing the
-transaction. This ensures the lockfile is properly acquired prior to
-migrating objects and that only the owning process can delete its own
-lockfiles.
+> This change:
+> - Includes the parse-options.h header and defines builtin_var_options.
+> - Adds an explicit check to ensure that combining '-l' with additional
+>   positional arguments correctly triggers a usage error.
+>
+> All 27 automated tests in t0007-git-var.sh pass successfully.
+> ---
+>  builtin/var.c | 50 +++++++++++++++++++++++++++++++++++---------------
+>  1 file changed, 35 insertions(+), 15 deletions(-)
+>
+> diff --git a/builtin/var.c b/builtin/var.c
+> index cc3a43cde2..20ea4e0489 100644
+> --- a/builtin/var.c
+> +++ b/builtin/var.c
+> @@ -18,8 +18,11 @@
+>  #include "path.h"
+>  #include "strbuf.h"
+>  #include "run-command.h"
+> -
+> -static const char var_usage[] = "git var (-l | <variable>)";
+> +#include "parse-options.h"
+> +static const char * const var_usage[] = {
+> +	N_("git var (-l | <variable>)"),
+> +	NULL
+> +};
+>  
+>  static char *committer(int ident_flag)
+>  {
+> @@ -220,22 +223,39 @@ int cmd_var(int argc,
+>  	    struct repository *repo UNUSED)
+>  {
+>  	const struct git_var *git_var;
+> -	char *val;
+> +        char *val;
+> +        int list = 0; /* Flag to track if -l/--list option is used */
 
-Reported-by: Qin ShiCheng <qeesung@live.com>
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- object-file.c              | 77 +++++++++++++++++++++-----------------
- t/t5547-push-quarantine.sh | 30 +++++++++++++--
- 2 files changed, 70 insertions(+), 37 deletions(-)
+Useless comment that is too obvious from a properly named variable
+with its use in a "struct option" array.
 
-diff --git a/object-file.c b/object-file.c
-index 07a61c610a..b7465adf04 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -492,6 +492,7 @@ struct odb_transaction_files {
- 	struct transaction_packfile packfile;
- 	const char *prefix;
- 
-+	struct strvec pack_names;
- 	struct tempfile **pack_lockfiles;
- 	size_t pack_lockfiles_nr;
- 	size_t pack_lockfiles_alloc;
-@@ -1257,7 +1258,7 @@ int read_loose_object(struct repository *repo,
- }
- 
- static int write_pack_lockfile(struct odb_source *source, const char *pack_name,
--			       const char *keep_msg)
-+			       const char *keep_msg, struct tempfile **out)
- {
- 	struct strbuf lock_path = STRBUF_INIT;
- 	struct strbuf contents = STRBUF_INIT;
-@@ -1288,6 +1289,7 @@ static int write_pack_lockfile(struct odb_source *source, const char *pack_name,
- 		goto out;
- 	}
- 
-+	*out = register_tempfile(lock_path.buf);
- 	ret = 0;
- 
- out:
-@@ -1297,6 +1299,40 @@ static int write_pack_lockfile(struct odb_source *source, const char *pack_name,
- 	return ret;
- }
- 
-+static int write_pack_lockfiles(struct odb_transaction_files *transaction)
-+{
-+	struct strbuf keep_msg = STRBUF_INIT;
-+	char hostname[HOST_NAME_MAX + 1];
-+	int ret = 0;
-+
-+	if (!transaction->pack_names.nr)
-+		return 0;
-+
-+	if (xgethostname(hostname, sizeof(hostname)))
-+		xsnprintf(hostname, sizeof(hostname), "localhost");
-+	strbuf_addf(&keep_msg, "receive-pack %"PRIuMAX" on %s",
-+		    (uintmax_t)getpid(), hostname);
-+
-+	for (size_t i = 0; i < transaction->pack_names.nr; i++) {
-+		struct tempfile *lock;
-+
-+		ret = write_pack_lockfile(transaction->base.source,
-+					  transaction->pack_names.v[i],
-+					  keep_msg.buf, &lock);
-+		if (ret < 0)
-+			break;
-+
-+		ALLOC_GROW(transaction->pack_lockfiles,
-+			   transaction->pack_lockfiles_nr + 1,
-+			   transaction->pack_lockfiles_alloc);
-+		transaction->pack_lockfiles[transaction->pack_lockfiles_nr++] = lock;
-+	}
-+
-+	strbuf_release(&keep_msg);
-+
-+	return ret;
-+}
-+
- static int odb_transaction_files_commit(struct odb_transaction *base)
- {
- 	struct odb_transaction_files *transaction =
-@@ -1325,6 +1361,9 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
- 		delete_tempfile(&temp);
- 		strbuf_release(&temp_path);
- 
-+		if (write_pack_lockfiles(transaction))
-+			return error(_("unable to lock packfiles"));
-+
- 		/*
- 		 * Make the object files visible in the primary ODB after their data is
- 		 * fully durable.
-@@ -1389,9 +1428,7 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
- 		container_of(base, struct odb_transaction_files, base);
- 	struct repository *repo = base->source->odb->repo;
- 	struct child_process child = CHILD_PROCESS_INIT;
--	struct strbuf final_path = STRBUF_INIT;
- 	struct strbuf pack_name = STRBUF_INIT;
--	struct strbuf keep_msg = STRBUF_INIT;
- 	struct pack_header hdr;
- 	const char *hdr_err;
- 	int err_fd = opts->err_fd;
-@@ -1434,14 +1471,9 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
- 			return -1;
- 		}
- 	} else {
--		char hostname[HOST_NAME_MAX + 1];
--
- 		strvec_pushl(&child.args, "index-pack", "--stdin", NULL);
- 		push_header_arg(&child.args, &hdr);
- 
--		if (xgethostname(hostname, sizeof(hostname)))
--			xsnprintf(hostname, sizeof(hostname), "localhost");
--
- 		if (!opts->quiet && err_fd)
- 			strvec_push(&child.args, "--show-resolving-progress");
- 		if (err_fd)
-@@ -1479,41 +1511,16 @@ static int odb_transaction_files_write_pack(struct odb_transaction *base,
- 			goto out;
- 		}
- 
--		strbuf_addf(&keep_msg, "receive-pack %"PRIuMAX" on %s",
--			    (uintmax_t)getpid(), hostname);
--
--		if (write_pack_lockfile(transaction->quarantine, pack_name.buf,
--					keep_msg.buf)) {
--			strbuf_addstr(err_msg, "lockfile write failed");
--			goto out;
--		}
--
--		ALLOC_GROW(transaction->pack_lockfiles,
--			   transaction->pack_lockfiles_nr + 1,
--			   transaction->pack_lockfiles_alloc);
--
--		/*
--		 * The lockfile filepath is expected to be the final location of
--		 * the ".keep" file after being migrated to the main ODB source.
--		 * This ensures the lockfile can be found and removed later
--		 * after the ODB transaction has been committed.
--		 */
--		strbuf_addf(&final_path, "%s/pack/pack-%s.keep",
--			    base->source->path, pack_name.buf);
--		transaction->pack_lockfiles[transaction->pack_lockfiles_nr++] =
--			register_tempfile(final_path.buf);
-+		strvec_push(&transaction->pack_names, pack_name.buf);
- 
- 		odb_source_prepare(transaction->quarantine,
- 				   ODB_PREPARE_FLUSH_CACHES);
--
- 	}
- 
- 	ret = 0;
- 
- out:
--	strbuf_release(&final_path);
- 	strbuf_release(&pack_name);
--	strbuf_release(&keep_msg);
- 
- 	return ret;
- }
-@@ -1528,6 +1535,7 @@ static int odb_transaction_files_finalize(struct odb_transaction *base)
- 		ret |= delete_tempfile(&transaction->pack_lockfiles[i]);
- 
- 	free(transaction->pack_lockfiles);
-+	strvec_clear(&transaction->pack_names);
- 
- 	return ret;
- }
-@@ -1560,6 +1568,7 @@ int odb_transaction_files_begin(struct odb_source *source,
- 	transaction->base.write_pack = odb_transaction_files_write_pack;
- 	transaction->base.env = odb_transaction_files_env;
- 	transaction->flags = flags;
-+	strvec_init(&transaction->pack_names);
- 
- 	transaction->prefix = "bulk-fsync";
- 	if (flags & ODB_TRANSACTION_RECEIVE) {
-diff --git a/t/t5547-push-quarantine.sh b/t/t5547-push-quarantine.sh
-index 1b7097179e..6c14dfc42b 100755
---- a/t/t5547-push-quarantine.sh
-+++ b/t/t5547-push-quarantine.sh
-@@ -77,10 +77,9 @@ test_expect_success '.keep file is removed after push' '
- 	git -C keep.git config set receive.unpackLimit 0 &&
- 
- 	# While incoming objects are still quarantined, validate that the
--	# ".keep" lockfile is present in the quarantine directory.
-+	# ".keep" lockfile is not present in the quarantine directory.
- 	test_hook -C keep.git pre-receive <<-\EOF &&
--	keep="$(ls "$GIT_QUARANTINE_PATH"/pack/pack-*.keep)" &&
--	test -f "$keep"
-+	test ! -e "$GIT_QUARANTINE_PATH"/pack/pack-*.keep
- 	EOF
- 
- 	# After quarantined objects are migrated, validate that the ".keep"
-@@ -101,4 +100,29 @@ test_expect_success '.keep file is removed after push' '
- 	test_path_is_missing "$keep"
- '
- 
-+test_expect_success '.keep file created outside of process is not removed' '
-+	test_when_finished rm -rf keep.git &&
-+	git init --bare keep.git &&
-+
-+	git -C keep.git config set receive.unpackLimit 0 &&
-+
-+	# Create a ".keep" lockfile matching the packfile to simulate a
-+	# concurrent git-receive-pack(1) that has already written its lockfile.
-+	test_hook -C keep.git pre-receive <<-\EOF &&
-+	pack="$(ls "$GIT_QUARANTINE_PATH"/pack/pack-*.pack)" &&
-+	pack="${pack##*/}" &&
-+	echo "baz" >"objects/pack/${pack%.pack}.keep"
-+	EOF
-+
-+	test_commit bar &&
-+	test_must_fail git push keep.git HEAD &&
-+
-+	# The ".keep" lockfile of the concurrent git-receive-pack(1) should be
-+	# left in its place.
-+	keep="$(ls keep.git/objects/pack/pack-*.keep)" &&
-+	test_path_is_file "$keep" &&
-+	test_grep "baz" "$keep" &&
-+	test_path_is_missing "${keep%.keep}.pack"
-+'
-+
- test_done
--- 
-2.56.0.173.gf57c9a7388
+Either the patch is heavily whitespace damaged, or you indented
+incorrectly with spaces, or perhaps little bit of both?
 
+> -	show_usage_if_asked(argc, argv, var_usage);
+> -	if (argc != 2)
+> -		usage(var_usage);
+> +        /* Define the accepted command-line options */
+> +        struct option builtin_var_options[] = {
+> +                OPT_BOOL('l', "list", &list, N_("list builtin variables")),
+> +                OPT_END()
+> +        };
+
+We did not take "git var --list", now we do and in addition we
+probably take "git var --lis".  That is notable enough change.
+
+> -	if (strcmp(argv[1], "-l") == 0) {
+> -		repo_config(the_repository, show_config, NULL);
+> -		list_vars();
+> -		return 0;
+> -	}
+> -	repo_config(the_repository, git_default_config, NULL);
+> +        /* Parse options using the standard API */
+> +        argc = parse_options(argc, argv, prefix, builtin_var_options,
+> +                             var_usage, 0);
+> +
+> +        /* If the user requested to list all variables (-l) */
+> +       
+> +if (list) {
+> +    if (argc > 0)
+> +        usage(var_usage[0]);
+> +    repo_config(the_repository, show_config, NULL);
+> +    list_vars();
+> +    return 0;
+> +}
+
+Again, the indentation, or lack thereof in this case, is
+problematic.
+
+> +        /* Ensure only one positional argument (the variable name) remains */
+> +        if (argc != 1)
+> +                usage(var_usage[0]);
+> +
+> +        repo_config(the_repository, git_default_config, NULL);
+>  
+> -	git_var = get_git_var(argv[1]);
+> -	if (!git_var)
+> -		usage(var_usage);
+> +        /* Retrieve the specific git variable (note: now at argv[0] after parsing) */
+> +        git_var = get_git_var(argv[0]);
+> +        if (!git_var)
+> +                usage(var_usage[0]);
+>  
+>  	val = git_var->read(IDENT_STRICT);
+>  	if (!val)
