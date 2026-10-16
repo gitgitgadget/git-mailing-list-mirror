@@ -1,111 +1,146 @@
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E60E515880
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 16:29:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792168145; cv=pass; b=Z7YdICIWCGMEeyXSSZHbfnjjTIeY7ZkTlERr94WXaZDQcV4ZAFD4ar87bO7FUyaWHSnduE18w2+PgMbEZuNQ3dSKhCVlm3GUoHmLSHqEp3v3ya4xMHQzFhztDRxYy2GkLzBAlCORY41nBdGTfoLx4+EE2ECe19iGfLKAcWtuL4I=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792168145; c=relaxed/simple;
-	bh=rtww9fZ3WG6t5BsnB5xcMdNyckN5REjUHgtzkwoym8M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d8SjzD9TDAbKsP48pavRd7DU39p6NEIhM79ZTId42yyQlrVlLDpdwk6RWIdPklc9Yfvy5ESNYwBJ77tYgN3IlzBWclyc8g+mf46g5UWZo7NSPQZlELx3AJXGPxh4Uidriw7nfzeb9htve9RbZnMs986+MaM+RS5ngQRHL040gH0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com; spf=pass smtp.mailfrom=thomasbachem.com; dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b=1cGikrNu; arc=pass smtp.client-ip=74.125.224.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thomasbachem.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039015304AD
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 16:55:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792169710; cv=none; b=PWkm4ah1fzlAK8j4o+honH0QIZrHiBbD3kv6KhiARE6qMI93bnWFINrpp64jBXpJRsGnfaYcirSMXO17oWLwTBfqJPI89z0dWV5aklCu1n6CpJ2PoEVAwDjqXjK+AHQ5l6ljlMptI+S1U2lMbS0vgg5kXpTRBtIOblwhmDJOd7A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792169710; c=relaxed/simple;
+	bh=gUniX/Ir11qi8mBTdNrnqTeA8p+cb4GNEntgISPEzyA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mlB05HNGE4wguJJ6YRUWuAjr2rb9Ag4gO/4EqrbRLTgm0UcuJfZcM3nS9rYcHDzgMnwkWPXcUOt/2BFsOujsUjKlmL5feIvuViKCb+6z6nWR5p9fKcpLlc18yhVEGPjs64R8vUlhMPEZkPIonKL8f+LzJvd7q49x0SiFXasOLIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TYtg7rF1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iQY3b5X0; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b="1cGikrNu"
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-6740e7ae219so189424d50.1
-        for <git@vger.kernel.org>; Fri, 16 Oct 2026 09:29:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792168140; cv=none;
-        d=google.com; s=arc-20260327;
-        b=imoei1BBTydaJuEAoi7i7Cxs8Ic0ywWSPIHbeAFV0jpzItNr8+dPH+LtlLnr6FSdMt
-         q6g6turkGUjtSvkXx5ObD2fjbv5KNl/xs/pZnSQKTdVaKLjROMlynx6WppBboo7T308L
-         8gYlATNN49nPsdXTI52hGKND5IImxUkHvgyghZCYE7T5BrV13NOjIK7lUDpPwCFY8pSl
-         ZCl4ET9oy8y9cYdoOvhjuSahHAK0IYADh6/SwgaDc6AFIUgNJlwMkN0tvThiKg0UKACy
-         Gw4FW1RliOhJfBFIvigWX+4AOaST8AKR1ocJxQdbTKZ/Uewp4G0ZG0rY1VVGg18GUshB
-         KVIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=rtww9fZ3WG6t5BsnB5xcMdNyckN5REjUHgtzkwoym8M=;
-        fh=jK7UZZpofpIKspIH3Ol31ZfjyJBrqyFlX/67pVjLfUE=;
-        b=Rpa1OL8g6pvUu6rHqttGOxHEU6s73y0lF7C5KKEkiXAVbH0UaBjPnkfo4x3NX7eYVt
-         ZDHvN8cFPzcZl3dzhswUyGwcr29Y5f7a1TW+e3bpIyDOqn/BcQh4d9jvyBVcz4lYtP3n
-         2ePSfIlyeYKsGc4LgjaFpLXu3ID1ylUZZ2Ysze6cI7L7BGXKn9FCFtyDd+Lddf3u+47F
-         13Ea+wibkqNr5fg8SY/M/Ig0zk6v2LcmFI3IDDsO2g59ld0g2TB4fLRK7VaoIeehHu+Q
-         NE/3tacwl9tl/WrEm8XiIWNd0KVnoXC8VENTSMFFvL4w0XI9yjIk6mhWbwkYrpsnpB42
-         uuCw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=thomasbachem.com; s=google; t=1792168140; x=1792772940; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rtww9fZ3WG6t5BsnB5xcMdNyckN5REjUHgtzkwoym8M=;
-        b=1cGikrNuU5Ku5SKAhD4xMxqsO5N0PRWNpouDdJZ6aELIHo4P4HBef3U9dPFsqHiVH3
-         HBCdaUp+Ifa54CvZ/CwtBu3ib6ZV8F7pqa9agkqsx+SNGZH3MTf+L0XlnvVoayaGgaan
-         dbV4PLIRTEOMLtSnFatIg2folmvpyw5rZx2BwBc7F0fa8FNOWlj44+Fa7yHVksmB4SlX
-         gXnU/4/YoSelUE3DgApXaT3WkmgwMCqXcPSoomho2dfpYNWVIzrvTKlZyaB+OQB7xmQ5
-         zlaPmofmu4cm8yWMjcNJwGgTRGAZrBCjsUzvBLltH4Ws2r2KYw4ItJD2qTqsvouwlOOL
-         jCAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792168140; x=1792772940;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=rtww9fZ3WG6t5BsnB5xcMdNyckN5REjUHgtzkwoym8M=;
-        b=LOTm++1MVA8DiyUidJLwJD8M+R/bzaNQJ/GLIawVLnkWnx0ADhWi6Dmr+JTE0fdsvl
-         MqRgd2ITcPPBog7xVj/kPWuJIDSjLJWrts3oxVpTHu9niF5VgS6mTAVt91gKW68rNkQj
-         Ivldju1aLHfEvPCFhlB6GNgArMFmjx7Gb9Pu+IW6XapP1R2TJCHR4bIllYYu3OQy7fIW
-         T/jKqEo7JrRH5XilcVGRIODB+5wBnW18QukdfSK/cC0WdeHyDU/Hk7Y71U6MdVMDOKzc
-         uQHjL0hcE+ChMQIxEQ8SYygMFSB1Hz9T9t0NJ4RVfJmGRxgiijVBTYsy10J4ZRX60/IX
-         DP2w==
-X-Forwarded-Encrypted: i=1; AKwUvBwcwpjkAuX3kx4Uc0VI/yiOhAL46z4tpiz6ZeyMlrf/lvhNaqhYHCZxKX/CZeS83AaX+Ug=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLxfK9y5p2RS6GwdSzgV0OzgNreoUjQfxwdKhOipDQ6CFD4cdKI
-	wLSK3BLAx8LUfBSwP7ASoo1CPHPYiLSJwrJeSqWszlhGgjZaWV+1+LOfW7ipmQX/8/4NH3YKhMA
-	j8jn93U5KM3oFmnhWkUPaF9AG2zkRnotxl75vpuExy3WZXAUNgJUbENLNKA==
-X-Gm-Gg: AYBFou2pHfE7zWMCqLF3fbwr+M6oCnvF6LRV+B9YtxKsQ99ywygzYoJQw1PrEjQmjWN
-	v/HufKt3RFycBqyV+/ulTR4tPqiEwa0FP51Afgp6GeaYtV+BrkQ4l8LC4wgIXYEDIXxAeXr5I76
-	sJWe8rUdUNpr6mx+O+yafGJioyoGaAi6UN/ycF6Gs9CS+leI6hwgOFrft6tpOUUz0bwQQuMKqdh
-	3vxseTMFqQg6FKRJqzvdxo0HWvrdVVvGSjyO5K2OiH+uHGknboh1Sb30VsbQe0Ei54QDCSCwPNz
-	4FfXbOhTxyWI0EtLZXt715zrwjNziFLtifuGtc5GqBqH6g+8MJM3DOMU01nO6DOV6hBMorZE8wC
-	rM6lsrZXuA3g1vECxcwXBDgj9luEcGk+pW/FOiiQJQQoB/g==
-X-Received: by 2002:a05:690e:1519:b0:677:af43:e258 with SMTP id
- 956f58d0204a3-6793629ea83mr5222802d50.117.1792168139676; Fri, 16 Oct 2026
- 09:28:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TYtg7rF1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iQY3b5X0"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 285B814000FC
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 12:55:07 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 16 Oct 2026 12:55:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792169707; x=1792256107; bh=xzlfnZ2qXA
+	p7wvCw5oFauBJFKEsK00cfIJ59jsxTG8k=; b=TYtg7rF1sDQqUyZHbjz8UJuPRe
+	evJc2RLwEC5E/ItVdx5DRgUSfIv2RKw7UYfHqtr861TMpjaVwE0eVDToRqhDyPYQ
+	+lx/Bnk7+ZJwrIF+o1EOFWeVSs/cLOgVbYTmFKi+XecVthSt0Qj49OabqdjHpyGN
+	dM4dpdGOY56a7TG6KVE5X7jmTErBG9KMjYcUp2pomNGECogzx/DFP3ENrGk6QEyR
+	jsaHmEqkQ4iIiYA1Mun0HOlrBhYESFB7fQIWhU+LwIubtbPnJr9YnK8p/SxEutmS
+	65gGVqKMuMoMz+6o+dGSDgBT8ojFm/SKDv3ZQFUdTw8sstnFLvg+3v6cpHPg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792169707; x=1792256107; bh=xzlfnZ2qXAp7wvCw5oFauBJFKEsK00cfIJ5
+	9jsxTG8k=; b=iQY3b5X0yT3Jw+uwLoOhozRw/IC9TNvxp+86WuOoG31lgaRd7Hn
+	J0DVRm0FtCSTEgXmD0rgZAT7FTp/8phCcNSfq/KiXP2nL1sibyGIhYWp9yZcwLUQ
+	o/iXbQ89rn7+yaOcs9rmMl8h+V1DlGi7DWRa5CxfveSXsv5U25uc49Jj2I2UFvtN
+	mH2CywbFr57mDoEASFUpHucbuuJNlEB9Y0yjbrdlbS9r4TGd3AdoOe/XYBjMj+4k
+	DZgCfeDvGW3Kli6V7CsFY+RYh4yH6I2frO8m9sIe0rr2tEnn1hAJDxba8D4Zxls0
+	ZHYopzt2kR2oeGOAq9uF+N1wj4PNWNANxWg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792169707; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:YbjeL15g2PJlw4k75Brta6C2JdDe4tcx6Qmt9ou6aiRsIMj
+	dzBFhOROw7YmSdx732AuK99X7lX1aUA7zfe7AUQhi0hTDI8LvS5ZvAPJXAYN2GKm
+	KwXDjrYD2fbxfO8pczE5khxrJJCZOWiX3g1l1RwEBSfbeSGh9KwqXkjxFnyq5oco
+	Uq604I3N+xch9dYF2OE35njq/wdHi99e/CXA9cviUlRLqjmLw3XkmfDd5uxMktQ7
+	6WDZFY6KruBSodoAUrJ1vF8MgCgb2GoPB5HvgfMet+QqfSjQuXhwyRSkBCsZfiK4
+	lqIJv8zJrn7rvGMZWbk6Rafo4fCU/JRT48knX1g==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:ryuHpgsqiYyv1LD65lqOJku7gTME1YnqMlaJpKbx964=:gUniX/Ir11qi8mBTdNrnqTeA8p+cb4GNEntgISPEzyA=;
+X-ME-Sender: <xms:61bSamX2n2iiIUFl6Ub_N6R9vM5HX2Zi8lnx8WbKXkVQhWaaHFppVw>
+    <xme:61bSapeNwxk5DaC0fUAZV7JeB5EbwjD3pSEpTiChQkmYYFzl6vxbyL9PYowgJRvaB
+    tjsBkrQJfjBfh2zG-y1BOyhuvUQgh93x1v0z6VJchfqjIXEKHej5Eb3>
+X-ME-Received: <xmr:61bSaiuGv8WfJ9pGFE9SWb8zaTR6be_qO4GFz1c51-6k8Nk5dyjMFoIva9Kn-o4Z7_gqIAbwntb0bd57-1lsO4FeGzWhqi94gbN2>
+X-ME-Proxy-Cause: dmFkZTEsonrPpcRdPqXvbbSJmUx0rFAE9rGP+zfUuGklUSOmX9nbXS57LHC+OILSfMr+rm
+    j47AcaHz5Bw9mzjf9n6UUcriikHLMIwjGwECsnHmjHEJ+w2GLBOLgBO6uvJQTxosqQr+im
+    +kCUt7Nx6dM8iH+gDLR8nZsZ2Wtp2SzTPfA/5l+P2oFQX2YFXrCuZXBzDZKfKKsvRMD9tl
+    ZwyaarRzGK18THBu+9cxgQAkcUTC/u3x/PJrfWBWiwsqR5sxebaapv03e0mEIhMy1wpkES
+    /gcgIEY73YbfIW11XYty9mScCEJhQsswLHeKGcvFx8Zj+3Ps8EaydqHG2Nn3LTIEtgNDE4
+    tSryox/RZGtEVFr7+PBdgx11sPFE/QQKp/pqQf70OntC5A5q7+TR3vepBAm6juOFC3GrXo
+    OjP3dqUhs9OTAHawA2qax4lNrukr4oxnBx4UfieO/2CWqIY8PkGHsdfSUXWdedF1oP3W4q
+    zgcrcW7XgWvFeL/LGD9OQdMpMT7coid2mLhnWF00wfP5NKnZAVhc9rWbt+VfNLVJND7opE
+    R2yw7r+wOXJsSPC14qyeZ4M/klz1uxcsvUPFaGcfFQ5Dw0tujMWMUUzVi5a1mLrPJb3pYa
+    VElHnY4ZIBOn9ME6nv8rTBdGRnSFrVdu1SsDAjF9UCWTAO93alXYkwP3c3ug
+X-ME-Proxy: <xmx:61bSao_sW8QN9iYIOxSb1tRcAkMi3kWbUpwIbGQtAO_N_pGeApq9hg>
+    <xmx:61bSat3vlXzoFY9dR1L1tKCbS3OcpEDsvsmBXDmY_LWFy95gL5wpFQ>
+    <xmx:61bSatAIEIvBWqZTBLDKbRQA5jmtNuk5fh2q3KQs4SWLIeakkhq1wg>
+    <xmx:61bSapfot3NSFYRJo7jOppkuFGrB7rUq7UHakcU7UPQE-bXWKT23vA>
+    <xmx:61bSamtq6TZy-_-aHgPZmNp2Pp2Tq5Maekkz4M4B0VzKajNu67UTFISx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 Oct 2026 12:55:06 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>,
+    Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH] branch: let inherit track a remote-tracking start point
+In-Reply-To: <pull.2450.git.git.1792134165785.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Fri, 16 Oct 2026 07:02:45
+	+0000")
+References: <pull.2450.git.git.1792134165785.gitgitgadget@gmail.com>
+Date: Fri, 16 Oct 2026 09:55:05 -0700
+Message-ID: <xmqqcxt9h9g6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2261.git.1792154374653.gitgitgadget@gmail.com> <20261016142515.T1gr4%taahol@utu.fi>
-In-Reply-To: <20261016142515.T1gr4%taahol@utu.fi>
-From: Thomas Bachem <mail@thomasbachem.com>
-Date: Fri, 16 Oct 2026 18:28:48 +0200
-X-Gm-Features: AclHuK-DP0SteqKLOtBgvdvlqrFsAZgqkfmW7MEsgYsnDo-SmhafoIPRPGgpB24
-Message-ID: <CAA0xjtoyCjzjzNnoGdoA_o-TK9=nKK98mXEpE0y_jWJfah_Xow@mail.gmail.com>
-Subject: Re: [PATCH] sideband: skip unrecognized allowControlCharacters keywords
-To: Tuomas Ahola <taahol@utu.fi>
-Cc: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Tuomas Ahola <taahol@utu.fi> wrote:
->> + value = end + !!*end;
->
-> Reading CodingGuidelines, it seems that `!!` is a construct we would
-> like to avoid:
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I wrote it this way to match skip_prefix_in_csv() a few lines above,
-which steps past the comma the same way:
+>  `inherit`;; if the starting point has a tracking configuration, it is copied to the new
+> -	branch
+> +	branch. A remote-tracking starting point is tracked directly, as with `true`.
 
-*out = value + !!*value;
+That is "A remote-tracking branch given as a starting point", not "A
+remote-tracking starting point".  Don't abbreviate and drop "branch".
 
-so the two places in this parser read alike. Happy to spell it out as a
-conditional in a v2 if that's preferred, though.
+If a starting point is not a remote-tracking branch, shouldn't the
+same thing happen, by the way?  IOW, shouldn't the updated text and
+behaviour be more like
 
-Thomas
+	`inherit`;; if the starting point has a tracking
+	configuration, it is copied to the new branch.  Otherwise,
+	the new branch is set to track the starting point itself.
+
+I am not sure if it is the users of `inherit` want that forking a
+new branch from something that they know is *not* tracking anything
+suddenly starts to track the starting point (whether it is a
+remote-tracking branch or something else).
+
+Looking at the originating commit d3115660b4 (branch: add flags and
+config to inherit tracking, 2021-12-20), it only talks about what
+they want to do when the starting point does track something, and
+forgets to say what they want when it does not track anything (the
+author CC'ed in case he retains the memory of the motivation from 5
+years ago), but if you ask me _now_, not doing anything, i.e., the
+behaviour the old commit happened to have implemented without
+explanation does sound like the right thing to do.
+
+What we should do if this change of behaviour turns out to be
+undesirable?
+
+Perhaps `inherit` should gain a synonym `inherit-or-ignore` for
+those who prefer the current behaviour, and we want two extra
+behaviours, `inherit-or-fail` that complains and dies if the
+specified starting point does not have anything for the new branch
+to inherit, and `inherit-or-direct` that uses the fallback
+definition, or something?
