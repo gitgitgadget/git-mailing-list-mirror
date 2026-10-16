@@ -1,65 +1,69 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801E741A4E7
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 07:02:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3935D30E0F2
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 07:25:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792134169; cv=none; b=Yp1PQXa5Uw2ijO1HqHyGQKbtrRHE+qOmk7rzm0ITh+Couh+JU+WFjq7PkJ0eiWw9pUtYCsd+nFHQ/6dx7MofIE3iwPpMaOA9VN2MQOCnoev7P06bjVS9yrhkzamBySI++pW4ftDOzkAY/RNsLnyAVa2b+6hc0LHblmPER9nWGGI=
+	t=1792135555; cv=none; b=a1wcoMDj+vhFvI1iYN+1fmFAne8fwzFu639I7ntoyR0iUqVWOy44rWWgsNTz7Q/xkKgQTDY+K0wwjZgETQqPp+sYkjvWhs+bs2pdTESOcmQRg6W33i0gbHpJoliTwRNuYxNsuUr7k7DqSrhkA9iJUqGxSlsyMV132HCDGJ5Y2rU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792134169; c=relaxed/simple;
-	bh=TXel3Ne/oeAPjb1TkbJREw329zPVnaWLyUTU35VC2qs=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ukwpQKb2OvibmqVfF9YNwV0H7Q2taHciQrHX572gkgGNxEyMAATQRYmb0hfATicXeVLLzwUcxabrFc8CxiMShMq5bJ7glPyWtrcy4cNbdh3SRR1cS1xelVpwKLirVqz3Fy9g0s/dzWER8B/wrRFGR3y0pnWdER3DHt7EsBhX3Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eCMZGJzZ; arc=none smtp.client-ip=209.85.222.180
+	s=arc-20240116; t=1792135555; c=relaxed/simple;
+	bh=H5n1XQFNzNe8dsvBKtZ6MeDQ5HQG0/pzUEeJUf2VUGs=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=U+gp/LWG9SrXZqtIEQW2kxwpJrEyXtWpHi9yFkLX8d94mtFpgdceny0vP6xAOERUPfVx0jothXZ9eumknwhiGzugrH4SoT+bjTZ2n5x6bdqxlMe+Zz7rcUg69ODgD850q3PtJMLFF4uFQqKulWfgGJZEB3tB/XbHRqioEUPnliM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eDMWrz0B; arc=none smtp.client-ip=209.85.210.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eCMZGJzZ"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-93e63ee7b4cso515019285a.2
-        for <git@vger.kernel.org>; Fri, 16 Oct 2026 00:02:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eDMWrz0B"
+Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-82621039b6bso1980895a34.1
+        for <git@vger.kernel.org>; Fri, 16 Oct 2026 00:25:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792134167; x=1792738967; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792135552; x=1792740352; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=ovr9lQYpw1rWqIQnUWU3DNmb3YCEiWTGO0IREjva2Jk=;
-        b=eCMZGJzZPeOUpBsw2CYA5QVlZLPaDUKJm0WqacSDlc7aqbLTU7LBqa6gB9bgdvCzDl
-         XkhLaE4ZAo1RoylP0GxOu35kfwGKcDPufJYR+FCcK4XMPhzySvsh3GlOy7To1M6Kmyba
-         h/Hng9twSgBlBuyAG3B4zM0YOAJ43MakFEQS9VDopkrvUev9o29PKUzOgSY1/0jtHGX4
-         V3BpqyYbU+Ndi+bzfbbUHnR32Upz7l7wlmkM4YlFeX43YfPUUbgjhv/Gb8MBLGbeQKIC
-         wcL3g2vcJYuD8bS+KIWgBgs463dkoC/Iq1pMsALGPoCFboaPibFRWdJkNklAU/EBb3YJ
-         Fw8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792134167; x=1792738967;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=ovr9lQYpw1rWqIQnUWU3DNmb3YCEiWTGO0IREjva2Jk=;
-        b=MYgciqHW2xEdTUxGfRputxLLHqXK8Uv1azXUoCJ1cnDyw1cVXUqCrqliBAMevMsZsG
-         KWK9dGlkJoJmsZAx9/+fuvvb26/nxIEwhE7Ue67CVfxwldu1oJsF1w/FKZBHJNFmAb7s
-         Ls+bJzNU/HYeVwtqqO6Ox41leqGOoXMK79Z/gNuHvZrx52MIJpZTH/f/q30z66BqYpLT
-         AUjLiRSBVGwdVKaFIUD+jKSwf1uL0zK3fsgy6y/VyGOmwDTQW/jJfuUHWRHA7kBnu6NF
-         ehNdw6Fks2v/55rLda6kzDmJCs+csnRdCZ17SMI3w1t5pBmdsXpZ+GSjz4eP4W3mcJe1
-         PzLA==
-X-Gm-Message-State: AFq9FYJ1pnlAbfTLo5NfX+Vkf5kMuVi12eTqr1n1vYlOoIO3I0CRCHOg
-	t94e00H9xNNb+Ob6AlhSLmXK1B6RIyMQ/GinRusOpbCAr1G4DTbKuSqd85aMkQ==
-X-Gm-Gg: AYBFou1CuNtaCArb+bfW1UcADIvoL5eulhL/EACs8d5xZx4gUadtb78kXRKA0Tt6tjC
-	vwjHg+bsWjsOb/MjR2OjW/kbjlqFYjSHILRNP3FS2h2hmvMMnH6DkDEttoJkeBvFXIPm1JINzuM
-	xTfY6sacjAzgIZqr3lEQjjleyezI2q3FsETJzWxf37RxMgHBpAbh7DLD1Us/ZYOoAOFzP5OgIrr
-	wPDAD7Wo9Hjl6vZv6fuABca0t/jvabhVjdkb+hhzDg9tKPBZr2+5sd/XFGjbdVo80bFmZJP/jNE
-	5dgCNZ6QIQifwb0Lt+IsNjrBZORrBUkGciKNz99dNgFgLPu3PHxyrET5429XHt2294GeH7ID5z2
-	uk6Rtjv6qc31gyjCVR3744zWKke2xPcCXQ/oSCY0dcWoSxsiRzsi96+fbfR8dJleHTxAzX4Jk2/
-	YPPl6EX6O5NGHbT0wqE//U2DOBMgwaWZzujlLlCtqLxGm+mLSi8+0VpPH6k/V/ishbG71Sw9w=
-X-Received: by 2002:a05:620a:3705:b0:93c:c27f:961b with SMTP id af79cd13be357-93ebd20b8fbmr3513706085a.44.1792134167000;
-        Fri, 16 Oct 2026 00:02:47 -0700 (PDT)
-Received: from [127.0.0.1] ([4.246.135.3])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93f1a17f226sm138346685a.17.2026.10.16.00.02.46
+        bh=tiY27Vn0pc3/nyxJodWF6QqSYyxrzWM6maTWw9Yi92I=;
+        b=eDMWrz0BhaGnJ05N4V26DfOgT/H6m64a7GO7YMW0VfpaGM0riLid8rZ20RTSzKOfBE
+         FCaV5qIfPZNJNu9LJu3qeUTWE9RCJozLyD2PRfqawhKu37Cnlmnp3rB0hQvGlZ6e5JD7
+         kOmMn2lm66x4wliaO8F6+6SgKLL8PMMVnbSM0dlLpC6zKl3/yj2gNccJ1+lECbP7e/QA
+         Myj36ki/dtYOGlvi+3tRa4VT/Xcj0rMyBcweO0dmOMntXU7naTnxHDCXvtn6ad5BzWDA
+         qI/RublwsBq/AEaJ3wr9nIF0kCAidPWrT0qRAnoCaWAwEvyjWCg7K61hsZ13rSyAc4tw
+         p+yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792135552; x=1792740352;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tiY27Vn0pc3/nyxJodWF6QqSYyxrzWM6maTWw9Yi92I=;
+        b=kRTJEAAEAcKGty8wGdkJm8HZAmqxZzuEbyLlzrG/RUrQ/zcjRYK6sMBWPEezLgxeEV
+         LgwAsR2Hbsy6K83+QTOZlfIRrsjo9npInQdJRaWlAnIkMmbG2UasZr9pzd9yUZ4fs+1s
+         t86XfyGI0L2ULnek3dYupqNsXhcLB6GB4MdiqHpfpRhBq8oOm89sdWJmoESn0oJrGdSp
+         LisXg034QBBONGNKsEXHwiCzHrpPFoPhDFKU2mVOVnfDJ5L/0DiJE+fK8IVwwtErMk/z
+         IXn4p/S6WW7g39/zq7IE1IAQec6Bm8UElcWO7929aIynq8RqXIax54TB/rG0qELUc5Ky
+         7Jeg==
+X-Gm-Message-State: AFq9FYIcWhaHtVfXbU5bCtpIE4RtMKzrmv4qjbcrDsksxZ2QcW6xitRI
+	nBY8pm/yCNPQW7YBCtxhqQL4MO+nN3r2np9g9TTVp/ePQ+eNZmEnLtzem2rKIw==
+X-Gm-Gg: AYBFou0e3Jlt3ynGqPTTKDF+d2NGdky3LOPEJkQiMVPgvWtLQ0sx0zP5CV00N8B1lS4
+	xlRXPTMLO/fdstmefJMYhgF9105k/7preGnwEc+Md/V/A5+3iCyr9Vdj0sX/FngNsbgWddGRmTO
+	zW67aL8kU1YH4cJ2N2JsRAbq7hWMhnCsJj+9UQVVcWvE2J13O7cSDnrBY6UcceBXDOhGEF6VNK+
+	oU020V3t65JBCPEXuNGBWhFV0PHj4UI5Y9wwDV6nS1SEWBByz4aAbMh9WeE1wx0Rh71IdEK6Bup
+	MDh9WCBF9GEXoQIgqKGjVDkj7wO2HaEustVL7Wtn73S1cbQvoP0yLjcs+A0RHmEW7W956I+Ed7O
+	chy25c252SmRJcA/MWjpRy5o5Z16/7t+cksbe9rbZa3BZxCNi90//eNTsvD92NZwHp65aeNNhuQ
+	Wmnx4K4EDgXcp8D0W4BtWxptNN1uJlFtOmjcaivL10C8gTLcYYDbr8O8WZeA3F7gX59P+sqjll
+X-Received: by 2002:a05:6830:258a:b0:811:a535:60 with SMTP id 46e09a7af769-83094a8b66cmr21801525a34.9.1792135551795;
+        Fri, 16 Oct 2026 00:25:51 -0700 (PDT)
+Received: from [127.0.0.1] ([20.169.94.165])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-8429b57870fsm1206809a34.0.2026.10.16.00.25.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Oct 2026 00:02:46 -0700 (PDT)
-Message-Id: <pull.2450.git.git.1792134165785.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 16 Oct 2026 07:02:45 +0000
-Subject: [PATCH] branch: let inherit track a remote-tracking start point
+        Fri, 16 Oct 2026 00:25:50 -0700 (PDT)
+Message-Id: <pull.2256.v2.git.1792135548923.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2256.git.1791978767497.gitgitgadget@gmail.com>
+References: <pull.2256.git.1791978767497.gitgitgadget@gmail.com>
+From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 16 Oct 2026 07:25:48 +0000
+Subject: [PATCH v2] [Outreachy PATCH] t2030: modernize test path checks
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,109 +74,68 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Srujith A Poojary <poojarysrujith@gmail.com>,
+    Srujith Poojary <poojarysrujith@gmail.com>
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+From: Srujith Poojary <poojarysrujith@gmail.com>
 
-With branch.autoSetupMerge=inherit, "git switch topic" creates a local
-topic branch from origin/topic with no upstream, and warns that no
-remote is set. "git switch -c topic origin/topic" and an explicit
-"--track=inherit" do the same.
+Replace old-style file checks with test_path_is_file and the helper
 
-A remote-tracking branch has no upstream of its own to copy. Make
-inherit use it as the upstream directly, as the default "true" does,
-so that inherit sets up tracking in every case the default does.
+test_path_is_missing for clearer failure diagnostics in test output.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+Search with: git grep "test -[efd]" t/
+
+Signed-off-by: Srujith Poojary <poojarysrujith@gmail.com>
 ---
-    branch: let inherit track a remote-tracking start point
-    
-    With branch.autoSetupMerge=inherit, make git switch -c new_branch
-    upstream/master work without a warning, and sets the remote branch
-    upstream/master as the upstream.
+    t2030: modernize test path checks
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2450%2FHaraldNordgren%2Fhn%2Fbranch-inherit-remote-tracking-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2450/HaraldNordgren/hn/branch-inherit-remote-tracking-v1
-Pull-Request: https://github.com/git/git/pull/2450
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2256%2Fpoojarysrujith%2Fmicroproject-modernize-path-check-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2256/poojarysrujith/microproject-modernize-path-check-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2256
 
- Documentation/config/branch.adoc |  2 +-
- Documentation/git-branch.adoc    |  4 +++-
- branch.c                         |  3 +++
- t/t2060-switch.sh                | 17 +++++++++++++++++
- 4 files changed, 24 insertions(+), 2 deletions(-)
+Range-diff vs v1:
 
-diff --git a/Documentation/config/branch.adoc b/Documentation/config/branch.adoc
-index c2acd89c99..6d9fbe5353 100644
---- a/Documentation/config/branch.adoc
-+++ b/Documentation/config/branch.adoc
-@@ -10,7 +10,7 @@
- `always`;; automatic setup is done when the starting point is either a
- 	local branch or remote-tracking branch
- `inherit`;; if the starting point has a tracking configuration, it is copied to the new
--	branch
-+	branch. A remote-tracking starting point is tracked directly, as with `true`.
- `simple`;; automatic setup is done only when the starting point
- 	is a remote-tracking branch and the new branch has the same name as the
- 	remote branch.
-diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index bfdf459329..238d99fd27 100644
---- a/Documentation/git-branch.adoc
-+++ b/Documentation/git-branch.adoc
-@@ -280,7 +280,9 @@ remove it anyway.
- The exact upstream branch is chosen depending on the optional argument:
- `-t`, `--track`, or `--track=direct` means to use the start-point branch
- itself as the upstream; `--track=inherit` means to copy the upstream
--configuration of the start-point branch.
-+configuration of the start-point branch. A remote-tracking start-point
-+has no upstream of its own, so `--track=inherit` uses it as the upstream
-+directly.
- +
- The `branch.autoSetupMerge` configuration variable specifies how `git switch`,
- `git checkout` and `git branch` should behave when neither `--track` nor
-diff --git a/branch.c b/branch.c
-index 22f4f46b96..2c23179775 100644
---- a/branch.c
-+++ b/branch.c
-@@ -263,6 +263,9 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
- 	if (!track)
- 		BUG("asked to set up tracking, but tracking is disallowed");
- 
-+	if (track == BRANCH_TRACK_INHERIT && !starts_with(orig_ref, "refs/heads/"))
-+		track = BRANCH_TRACK_REMOTE;
-+
- 	memset(&tracking, 0, sizeof(tracking));
- 	tracking.spec.dst = (char *)orig_ref;
- 	tracking.srcs = &tracking_srcs;
-diff --git a/t/t2060-switch.sh b/t/t2060-switch.sh
-index cec2fe6876..da9d01ab84 100755
---- a/t/t2060-switch.sh
-+++ b/t/t2060-switch.sh
-@@ -146,6 +146,23 @@ test_expect_success 'tracking info copied with autoSetupMerge=inherit' '
- 	test_cmp_config "" --default "" branch.main2.merge
- '
- 
-+test_expect_success 'autoSetupMerge=inherit tracks a remote-tracking start point' '
-+	git clone . downstream &&
-+	(
-+		cd downstream &&
-+		git config branch.autoSetupMerge inherit &&
-+		git switch -c new_branch origin/main &&
-+		git status >../actual &&
-+		cat >expect <<-EOF &&
-+		On branch new_branch
-+		Your branch is up to date with ${SQ}origin/main${SQ}.
-+
-+		nothing to commit, working tree clean
-+		EOF
-+		test_cmp expect ../actual
-+	)
-+'
-+
- test_expect_success 'switch back when temporarily detached and checked out elsewhere ' '
- 	test_when_finished "
- 		git worktree remove wt1 ||:
+ 1:  641b9330c9 ! 1:  93cf6c12f4 t2030: modernize test path checks
+     @@ Metadata
+      Author: Srujith Poojary <poojarysrujith@gmail.com>
+      
+       ## Commit message ##
+     -    t2030: modernize test path checks
+     +    [Outreachy PATCH] t2030: modernize test path checks
+      
+          Replace old-style file checks with test_path_is_file and the helper
+     +
+          test_path_is_missing for clearer failure diagnostics in test output.
+      
+          Search with: git grep "test -[efd]" t/
 
-base-commit: f57c9a73884400380bddd172acc88b569834f909
+
+ t/t2030-unresolve-info.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t2030-unresolve-info.sh b/t/t2030-unresolve-info.sh
+index 9af24b1204..56a7f849d6 100755
+--- a/t/t2030-unresolve-info.sh
++++ b/t/t2030-unresolve-info.sh
+@@ -170,7 +170,7 @@ test_expect_success 'rerere and rerere forget' '
+ 	git rerere &&
+ 	rerere_id=$(cd .git/rr-cache && echo */postimage) &&
+ 	rerere_id=${rerere_id%/postimage} &&
+-	test -f .git/rr-cache/$rerere_id/postimage &&
++	test_path_is_file .git/rr-cache/$rerere_id/postimage &&
+ 	git checkout -m fi/le &&
+ 	echo resurrect the conflict &&
+ 	test_grep "^=======" fi/le &&
+@@ -182,7 +182,7 @@ test_expect_success 'rerere and rerere forget' '
+ 	check_resolve_undo kept fi/le initial:fi/le second:fi/le third:fi/le &&
+ 	test -z "$(git ls-files -u)" &&
+ 	git rerere forget fi/le &&
+-	! test -f .git/rr-cache/$rerere_id/postimage &&
++	test_path_is_missing .git/rr-cache/$rerere_id/postimage &&
+ 	tr "\0" "\n" <.git/MERGE_RR >actual &&
+ 	echo "$rerere_id	fi/le" >expect &&
+ 	test_cmp expect actual
+
+base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
 -- 
 gitgitgadget
