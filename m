@@ -1,257 +1,182 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552DA45A29E
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 19:15:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0678A34250E
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 19:22:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792178108; cv=none; b=Z2Iq75azdG9n7Agv1yCIZgDtAF+4tOcK/pvD3oC+K7qCPienReIMAP11hEHvuLQ+ILtTJ3xk1WYkjDdMwwrle81a9lkcEX2yt/ULmqMmcIpkGLkWTNfK3rHQaUO3hoBJta8EHnWznnCaG0z3v+k0wPUAeaMGW7CVHe82B6RO9YU=
+	t=1792178565; cv=none; b=AEbKbrsXhl9gyNtZ5r40sgPe/T437oQP7PpuEQgV/iklg2ZjCfknDjCueua5tR/BwJYj3RQ3SKGRbHxSKSGbwNgsYmo+rjRvXF+foQPbAyHvRYnHiWB4ofWM4G+1NWyKWEH9V3T3e6q7GMPptlOGrlW9lpl0RQ//U6isrwF5i7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792178108; c=relaxed/simple;
-	bh=ivxbIHCA1N2BL081aXYkP+qJFG/luO4jSHd1G1CaOQI=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=FF1FbHt3rl9+7Y35BGl0siHzCY4QXFJZAtTnsGHDtteGh2PxtbUTxCEJ2O+OrI/q+V8IJBYFnMTL3h7XkkOhQweyUOTMtVXDVqMD4cn4zxkdXKElKSveK9XTAvUHrtNceK/7tUCOuLM1ko6OuqvimQ6bL1RW3p8MF05FAxZa23w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TMeB+fLb; arc=none smtp.client-ip=209.85.219.42
+	s=arc-20240116; t=1792178565; c=relaxed/simple;
+	bh=5Emp9X3/uiCPK1vbUL2ZR/YivxzJFrrMa07h7+H4Rgs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qyshV8ciG+3dJzuecFmIK0D//TGUcSjdaNb949KP+AWmpXyX2jgCb88hPgsLKbxeIftcEoUIlFoRH9kC5aMvQ6JDJREEBkPW+pZgIZ+wrtkQgGpPxSt05Cfd9ZEj11Npk1F3eDZ7XNe74DhQHIblVVWoEheGyOc0q1kFrleKV28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FlGDmQAS; arc=none smtp.client-ip=209.85.167.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TMeB+fLb"
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-917c04630c2so3492196d6.3
-        for <git@vger.kernel.org>; Fri, 16 Oct 2026 12:15:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FlGDmQAS"
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-4b28d9537bcso267020b6e.0
+        for <git@vger.kernel.org>; Fri, 16 Oct 2026 12:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792178106; x=1792782906; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=zhA7vYDd7tqPsbzWipZhCcyMAjoEBLaHbTVIDGyjzXU=;
-        b=TMeB+fLbUd9yQOLbEUBd8AL6MFa0sxsdxGB4DM6jKYpreUpc6yfRy4z3t7is967phD
-         dT8CAD6obgDPo3fcs35oJyzS7/90NbPG1y9lxTEpXebuPeBDGl/5yBOfK3Mqg5dKmrTk
-         1g6xM46G2CLPwKAYjo7IGOFpQFfPVKg0cseRZLhgtyrVzrZ6VxpUVYxVwm0Eoi1ELHuY
-         LrgmSYR3IqdXmppW0aZ2rPFcnK0biburFZ1RtaWYrlqM3IAeOyqqCA0XxjtN6TbT5Qhx
-         Va5NNhi7S4KyHOX4n64FDqqTnCMx9BWNcWBLqwmaPV8gPHcJ3S7lf0k7zzkXls3tYstJ
-         5hWg==
+        d=gmail.com; s=20251104; t=1792178563; x=1792783363; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=8en138+V80Fu0VI0GQYKh+QAZjIhOPeWWgp/E7PjN0E=;
+        b=FlGDmQASpaWxWnwp5D+x3dURsKSMRWgoXGlNgGrN69T91Aw1c0v5rHHj/nMa1dbhqY
+         B549t6v4pUN52j2PYBaWFr1stV2kLqfYHz0cNXWeB+Q8hlws32/E7CMtO4IMeJG/UTh3
+         CoNq88qLWE87u2Iv4uAIGZ1o1bQWH3EIL+d79nXwhyLsKmhc/n+KhLZozZCyIKRGVw5w
+         klLoa6YvCVLNx61LFc4Pr8nEBaTU5NrV034OUhYM8qspI5z+6fs60lrltrT/C+0ZGtee
+         y78jbTJpofxKU0vAkdlxaDiM5qz99gLUANTUBRkAiOkFKaT8i/7SAox4dp/3ZiX3Qp3E
+         PmSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792178106; x=1792782906;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+        d=1e100.net; s=20260707; t=1792178563; x=1792783363;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zhA7vYDd7tqPsbzWipZhCcyMAjoEBLaHbTVIDGyjzXU=;
-        b=g9DjyClwU9lAXRmw3TaafKXczbJT1HEZYhnCU9a+L5lNc86g6AmIQfb++nY8ti2KVl
-         zIEhnpX7aioMoiPtKtmma+l78FFcSzQuimSq8cyT1xASofooVh74V2FW0wnHxljobitg
-         kPl+ph9zk0EbvaSSpiV5rQjs+Ccttr7/zeQ2eK0hgJSSqf7eIC4V5+1uwLN1a52T87US
-         yVowsNmoGEtEiY98x4uyXaA0seHmfGgm68kx4ywM3iTxmqufzenm42hpgsrPbYalRE1B
-         LILqVYvVCP/6A/bff5gwmUq4FevyAuSrlyR9Vw0jGchZ4EyMJF1xGg/i2JAtLzdpCFn2
-         d/Yw==
-X-Gm-Message-State: AFq9FYJBsoaHJ5kZvMIMwt5+G3i/YUbhcGc/7lHKTBashyQZCy1sJi5C
-	8GbdefdIshsUKArSjF2n/+TlUVMT9h9zWLfQfSDFFy4Fw0D99UG6clnRNz2CLw==
-X-Gm-Gg: AYBFou3e42f8qUipGysTp6jaIuB/ot2WcvKOE+PFQBaawTcBW7GhsdpFL1jaZ8t1Vum
-	zd3yCmwu5eotoF2dFPeTEqKuOoAj4ZAj/VPX5OaFy5+1cPKtJ0iMipI5VIZPiPjajeThLFpJtWN
-	hEUsJWyaK2Bhs8+R++DGmB50q0O0tYCTact1O7UyzLYv1NUg6u3ls7pedrOaGRVU1AAUqcWzBeH
-	nmFBI3g8lAgihtl5U3Cjd3UHHMOogr6RWrIhq2Aw6QdbV2LdQ9HfwAkxDAKqQhvIc2m/6uMj9Wk
-	LaCNsFQDqr6KLmd7R9OCOqR7GvEP2SrmOCvj4pH5Hsnfke8V47Le+DlhIJ8ztDTVKi2IrqHHYYr
-	RMott6Goah7KQM52yyC5HaHQd3ylhPmeJ8aCfs1tgwZ/vyIqpTxUNC5i9ag+nzGDYTdssz+QRig
-	gYdPT0tK39dg7eKLDKzjFflsyh03NYWYFu+GkfJOXTRgmf7ByfDAiYWPJ8bLintygv9Jd0BtbiL
-	Bk=
-X-Received: by 2002:a05:620a:17a2:b0:93e:f9ba:690e with SMTP id af79cd13be357-93f29b632c6mr149861485a.3.1792178106064;
-        Fri, 16 Oct 2026 12:15:06 -0700 (PDT)
-Received: from [127.0.0.1] ([20.127.215.179])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93f1a185ea6sm284342385a.21.2026.10.16.12.15.04
+        bh=8en138+V80Fu0VI0GQYKh+QAZjIhOPeWWgp/E7PjN0E=;
+        b=AJSRFJThQpHzZ5Abhi0JryD6oENQqeZjpm2EtChZmbX0xYMRabnem3a703BN1HgMrT
+         ac4aBbpzviYcZtFzEyylqWuaou9Z8JqmEzCLf8o5uOXI8S7CINlNbf6SJirCW+HPO0GA
+         QtB23/S6Or8wbkfEGqFbBNVISJQEiM08bLA5Ab17xnlAmzQ/T1rK0cPGd1s/Yl8cR0Nc
+         TSpVTJD/KUFg7Zl5uoCpwT2Jd9Tu4Nhpf8TRZBUG9S2S3f/59MgFI8VnEZ7OEI15xFaI
+         pJ8BxGeNNNYsh+nmmYLk8R1bc1EXfE+T30ilACG+5CddrDOLr8XMhe9Q6oWvujyudlgp
+         f+Ug==
+X-Gm-Message-State: AFq9FYKTa72JwPxfqOm8gkp8khin6p8qNFTRi437VnonnGZc8YHLg83E
+	qIrF0U5Ns7yTXJxbLeg9lzHjX9SSvpdnkQwa9a5ey5fbbIsLf4HMdxkB
+X-Gm-Gg: AYBFou155cqgeL6PmW4cZ7pU1hz70K1O8DWMaz+lbfcCk0SpBgMX9BuViIyHhIW9k1w
+	QzFhSHRkqHlVg/fNktnTtDCSTI2UbwvDHkYzGCRgbFuBfds95LjwJy7GQk+WQgjdYRhrUo5dy/Z
+	FCnWFIQzW27+yfoKJXdZrrRA/ERjR2g4eHXrA7t4hEzum4T6iMWnqQiQ9MewvXdzI1L8xvW2V4J
+	Ke4kUBJPnDDcDA5jg6ou37RciS+AAfszAf7vCwL8jMdq0A/K6JEj2eo8NsjNjLLh7fyPiWiu0Gc
+	4ClnF2F2wTgQWwSCwamooWXkuz9v+YCmTg6w49Mx8B400JQ+u4Ve+WGYxMY/AKA3wbcmwMY6SnP
+	0dQHRdkjfhQ/8E4A/impwUcY/MjnoMGJr2nCWE3VIn/zBjEfCGm2NPH0tuNsGtfW2rDthice0ei
+	bE7fvLvHBwvI1wsTew++xE8KrYURRjcCnLiq6LW50VpWGLv3mUf+r12IrwCO71P9a0zMyUjYz+8
+	y8+Y9R0xPuzNUrLF8iJxNQ=
+X-Received: by 2002:a05:6808:1a1e:b0:4c4:a040:958b with SMTP id 5614622812f47-53cb7d0b332mr435745b6e.0.1792178562767;
+        Fri, 16 Oct 2026 12:22:42 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-5388c16d862sm2165852b6e.9.2026.10.16.12.22.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Oct 2026 12:15:04 -0700 (PDT)
-Message-Id: <pull.2242.v3.git.1792178103727.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2242.git.1790627574093.gitgitgadget@gmail.com>
-References: <pull.2242.git.1790627574093.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 16 Oct 2026 19:15:03 +0000
-Subject: [PATCH v3] doc: use `man git` to teach users how to navigate the docs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Fri, 16 Oct 2026 12:22:42 -0700 (PDT)
+Date: Fri, 16 Oct 2026 14:22:39 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Qin ShiCheng <qeesung@live.com>
+Subject: Re: [PATCH 3/3] object-file: write ".keep" lockfiles during
+ transaction commit
+Message-ID: <atJxHsn_OxJ_HtWW@denethor>
+References: <20261016022901.3838402-1-jltobler@gmail.com>
+ <20261016022901.3838402-4-jltobler@gmail.com>
+ <atHLFIp8MI729ZkP@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Ben Knoble <ben.knoble@gmail.com>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <atHLFIp8MI729ZkP@pks.im>
 
-From: Julia Evans <julia@jvns.ca>
+On 26/10/16 08:58AM, Patrick Steinhardt wrote:
+> On Thu, Oct 15, 2026 at 09:29:01PM -0500, Justin Tobler wrote:
+> > The "files" ODB backend writes a ".keep" lockfile into the transaction
+> > quarantine directory via `odb_transaction_files_write_pack()`. When the
+> > ODB transaction is committed, the ".keep" lockfile is migrated to the
+> > primary ODB alongside its packfile. Writing the temporary lockfile in
+> > this manner has a couple of downsides:
+> > 
+> >   - Failing to migrate the lockfile during transaction commit due to a
+> >     concurrent process already acquiring the same lock still allows the
+> >     rest of the transaction to be migrated into the primary ODB. This
+> >     dirties the primary ODB with new objects even though no references
+> >     were updated and the operation failed.
+> 
+> I'm not fully sure I understand this downside. Are you saying that we
+> fail to migrate the lockfile, then continue migrating everything else
+> only to then fail the whole transaction?
+> 
+> ... skipping ahead a bit...
+> 
+> Oh, I get it now. You propose to first acquire all lockfiles before
+> migrating anything so that we cannot conflict with a concurrent process
+> that aims to claim the same locks.
+> 
+> That will of course mean that we will fail the transaction for any
+> concurrent process that happens to write the same packfiles. But based
+> on what you claim that was already the case anyway, but now we notice
+> early and thus won't commit parts of the transaction. Makes sense.
 
-Rewrite `man git` to give a more realistic view of what the
-documentation actually provides.
+That is correct. Previously when migrating the quarantined objects, if a
+matching ".keep" file was already present in the primary ODB,
+`check_collision()` would detect the preexisting ".keep" lockfile and
+bubble up the error to `tmp_objdir_migrate()`, but still let the
+migration continue. This ultimately causes `odb_transaction_commit()` to
+also return an error.
 
-Explain how Git's help system works in `man git`
-(`git push -h` gives a short help, `git push --help` is the full docs),
-since it's a slightly unusual approach.
+For git-receive-pack(1), an error during ODB transaction commit already
+aborts the operation. The main change here is that by manually creating the
+lockfiles during transaction commit, we can avoid the migration step
+entirely if the lockfiles are not able to be created first.
 
-Remove the direct references to all the guides, for the following
-reasons:
+I'll try rewording the commit message here to be a bit more clear about
+this.
 
-* gittutorial and giteveryday are unlikely to help new users learn
-  Git. Currently they feel very aspirational (it would be nice to have
-  a tutorial and a guide to everyday Git commands!), but we should give
-  users a realistic view of what the documentation actually provides.
+[snip]
+> > diff --git a/object-file.c b/object-file.c
+> > index ebe46d35de..39e6299be1 100644
+> > --- a/object-file.c
+> > +++ b/object-file.c
+> > @@ -1321,6 +1357,9 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
+> >  		delete_tempfile(&temp);
+> >  		strbuf_release(&temp_path);
+> >  
+> > +		if (write_pack_locks(transaction))
+> > +			return error(_("unable to lock packfiles"));
+> 
+> Okay, we'll now write lockfiles before migrating any of the data. So if
+> any of the files already happens to exist, we'll bail out here. It would
+> have been great to maybe also provide a proper failure message via errno
+> for example, but okay.
 
-  The goal is to mention the tutorial again when when we have a tutorial
-  we're happy with.
-* gitcli is not very useful for users. A lot of it is about scripting
-  and internal details about the option parser.
-* the user manual is outdated. The chapter on "Sharing development with
-  others" explains how to use `git format-patch` which is not how most
-  Git users collaborate with git.
-* mentioning the data model feels out of place once everything else is
-  removed
+Ya, good suggestion. I think I'll update the `write_pack_lockfile()`
+helper in patch 2 to provide this additional context. There I can also
+print the specific lockfile causing the issue.
 
-Mention `git help` instead of `giteveryday` for now, which does a better
-job of giving an overview of everyday commands.
+[snip]
+> > @@ -101,4 +100,28 @@ test_expect_success '.keep file is removed after push' '
+> >  	test_path_is_missing "$keep"
+> >  '
+> >  
+> > +test_expect_success '.keep file created outside of process is not removed' '
+> > +	test_when_finished rm -rf keep.git &&
+> > +	git init --bare keep.git &&
+> > +
+> > +	git -C keep.git config set receive.unpackLimit 0 &&
+> > +
+> > +	# Create a ".keep" lockfile matching the packfile to simulate a
+> > +	# concurrent git-receive-pack(1) that was already written its lockfile.
+> > +	test_hook -C keep.git pre-receive <<-\EOF &&
+> > +	pack="$(ls "$GIT_QUARANTINE_PATH"/pack/pack-*.pack)" &&
+> > +	pack="${pack##*/}" &&
+> > +	echo "baz" >"objects/pack/${pack%.pack}.keep"
+> > +	EOF
+> > +
+> > +	test_commit bar &&
+> > +	test_must_fail git push keep.git HEAD &&
+> > +
+> > +	# The ".keep" lockfile of the concurrent git-receive-pack(1) should be
+> > +	# left in its place.
+> > +	keep="$(ls keep.git/objects/pack/pack-*.keep)" &&
+> > +	test_path_is_file "$keep" &&
+> > +	test_grep "baz" "$keep"
+> 
+> Also, there should be no corresponding ".pack" file, right? Do we want
+> to assert that, too?
 
-Mention `git help --guides` and `git help --user-interfaces`,
-since there are some important guides in there (like `submodules`) that
-are hard to discover.
+That is correct. I'll add an assertion in the next version to make sure
+the packfile is not migrated too.
 
-Do not mention `git help --developer-interfaces` since it's not relevant
-to users.
-
-Remove https://git.github.io/htmldocs/git.html since it points to the
-`master` version of the documentation. https://git-scm.com/ has the
-version from the latest release which is more likely to be useful.
-
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
-    [doc] Use man git to teach users how to navigate the docs
-    
-    Changes in v2:
-    
-     * mention the git help push form too
-     * mention you can get HTML docs with git help --web push at the end to
-       advertise git help's great features, and remove
-       https://git.github.io/htmldocs/git.html since
-       https://git-scm.com/docs has a nicer view and 3 different options is
-       a lot.
-     * some minor wording changes
-     * fix commit message style (doc: not [doc])
-    
-    Changes in v3: (just updates to the commit message)
-    
-     * Add a sentence summarizing the goals "give a more realistic view of
-       what the documentation actually provides."
-     * Explain why we're removing https://git.github.io/htmldocs/git.html,
-       gitcli, and the user manual, and the data model
-     * Mention the plan to include the tutorial again here once we have one
-       we're happy with
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2242%2Fjvns%2Fupdate-git-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2242/jvns/update-git-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/2242
-
-Range-diff vs v2:
-
- 1:  18f373a8f3 ! 1:  6cb4390e53 doc: use `man git` to teach users how to navigate the docs
-     @@ Metadata
-       ## Commit message ##
-          doc: use `man git` to teach users how to navigate the docs
-      
-     -    Many existing users of Git don't know how Git's documentation is
-     -    structured, and a lot of folks have expressed frustration that `man git`
-     -    doesn't make it easy to find out how to get help with using Git.
-     +    Rewrite `man git` to give a more realistic view of what the
-     +    documentation actually provides.
-      
-          Explain how Git's help system works in `man git`
-          (`git push -h` gives a short help, `git push --help` is the full docs),
-          since it's a slightly unusual approach.
-      
-     -    Remove the references to gittutorial and giteveryday since they're
-     -    unlikely to help new users learn Git. Currently they feel very
-     -    aspirational (it would be nice to have a tutorial and a guide to
-     -    everyday Git commands!), but we should give users a realistic view of
-     -    what the documentation actually provides.
-     +    Remove the direct references to all the guides, for the following
-     +    reasons:
-     +
-     +    * gittutorial and giteveryday are unlikely to help new users learn
-     +      Git. Currently they feel very aspirational (it would be nice to have
-     +      a tutorial and a guide to everyday Git commands!), but we should give
-     +      users a realistic view of what the documentation actually provides.
-     +
-     +      The goal is to mention the tutorial again when when we have a tutorial
-     +      we're happy with.
-     +    * gitcli is not very useful for users. A lot of it is about scripting
-     +      and internal details about the option parser.
-     +    * the user manual is outdated. The chapter on "Sharing development with
-     +      others" explains how to use `git format-patch` which is not how most
-     +      Git users collaborate with git.
-     +    * mentioning the data model feels out of place once everything else is
-     +      removed
-      
-          Mention `git help` instead of `giteveryday` for now, which does a better
-          job of giving an overview of everyday commands.
-      
-     -    Also mention `git help --guides` and `git help --user-interfaces`,
-     -    since those parts of the documentation are useful and hard to discover.
-     +    Mention `git help --guides` and `git help --user-interfaces`,
-     +    since there are some important guides in there (like `submodules`) that
-     +    are hard to discover.
-      
-          Do not mention `git help --developer-interfaces` since it's not relevant
-          to users.
-      
-     +    Remove https://git.github.io/htmldocs/git.html since it points to the
-     +    `master` version of the documentation. https://git-scm.com/ has the
-     +    version from the latest release which is more likely to be useful.
-     +
-          Signed-off-by: Julia Evans <julia@jvns.ca>
-      
-       ## Documentation/git.adoc ##
-
-
- Documentation/git.adoc | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
-
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 6f0075f918..6dfb829a7e 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -22,21 +22,21 @@ Git is a fast, scalable, distributed revision control system with an
- unusually rich command set that provides both high-level operations
- and full access to internals.
- 
--See linkgit:gittutorial[7] to get started, then see
--linkgit:giteveryday[7] for a useful minimum set of
--commands.  The link:user-manual.html[Git User's Manual] has a more
--in-depth introduction.  See linkgit:gitdatamodel[7] if you want to
--learn about the data model and important terminology.
-+There are two ways to get help with any Git subcommand (replace "push"
-+with the command you want help with):
- 
--After you mastered the basic concepts, you can come back to this
--page to learn what commands Git offers.  You can learn more about
--individual Git commands with "git help command".  linkgit:gitcli[7]
--manual page gives you an overview of the command-line command syntax.
-+- `git push -h` for a short help
-+- `git push --help` or `git help push` for the full documentation
- 
--A formatted and hyperlinked copy of the latest Git documentation
--can be viewed at https://git.github.io/htmldocs/git.html
--or https://git-scm.com/docs.
-+There are also guides explaining Git's concepts and more:
- 
-+- `git help` shows the most frequently used Git subcommands
-+- `git help --guides` lists Git's concept guides
-+- `git help --user-interfaces` lists guides for various
-+  special files you can use to change Git's behaviour
-+
-+You can view an HTML version of the documentation with `git help --web`
-+(for example `git help --web push`) or at https://git-scm.com/docs.
- 
- OPTIONS
- -------
-
-base-commit: 0f8e75abebff0877cae681a3d5ff31ac47f54220
--- 
-gitgitgadget
+Thanks for the review,
+-Justin
