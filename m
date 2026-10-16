@@ -1,120 +1,186 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEAE3DE451
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 21:12:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7033C10A9
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 21:23:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792185162; cv=none; b=Kfsoi4WRtmO6ZmI8G7WDwsjEsF5izSexOPk2UgzxdINIA37chIV7R58pygQDuYdkZqtKyzbJ78meY92ETYv52l55cORurFiuRxaFH9tFA1IcvOUF+If7jJIgh9qq9O6I4KXhRKaYqB8H9mwAx07o1JThs95JiuFqOsHA4AchOX0=
+	t=1792185793; cv=none; b=SLi09JiJ+tYc9xaHis9xrQkDHrb52Zdk/PKTNOdHps0KuPNv+fDcI/N7GM5D9cnc6Q9OjCBU2hbLDR9drUPRe9BqpLKfR7EdKxI1LEBJJHNLipMfwLGk/HyyzBwqGvbopK4pn7wxqEnNmuG/oQSo1vgjcGwm3/m3igS4V+lyZ3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792185162; c=relaxed/simple;
-	bh=W0SKAHbame1zxXXPn9PC/o42G/0b/aSCoX9O/zUnl6g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=n7Rn+FD60aufQDfGe/Y+hB0Vq66wvIbGD0wRFJ5eIxEQ6UD/5/KFKXUxDIIyoHUMn7T3wncndHUf612jWaWf/NkQx0c9g/xbo4rvhdirnGnDoJnr8qVkaZ+LTZenKecsvsEKo3NgAxhd/HEpbyuQskrLnu4LWVhPpCpLwqzfjLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IUe5Hyta; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cc5H9RgW; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1792185793; c=relaxed/simple;
+	bh=lr6G2nbPtA+uh6zCCepfQCLB65jl8LFaj/yD+feh+SU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=E4AIqOxWNkZbcWrt062CZVa3N+ELvXG2ZBi/1Eg6If3xj/OKmeNMMfv2vgSsXyeHpXR1Ul659fDv6v86Y4q22NmyHWWjsjdQfuVQTBm4Mr9H+YaCKbFEAp4oQbB5Qsnvk+qnS0DFzLsFUDI08J2oSI/Y4U9OZ1pLUrl9Kne86BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y90fafEu; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IUe5Hyta";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cc5H9RgW"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1876EEC010B
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 17:12:40 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 16 Oct 2026 17:12:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792185160; x=1792271560; bh=2KP1K60gUD
-	kvZ3HvsdGzpHdTxxDMxAnbXokiC6ygiRg=; b=IUe5Hytai6lA3zSvY3cwNZuIP+
-	TOwwV3rmxNXO+24t0rnWbMSmZHHbCJbg5wVmgfWYhbjGx66lTfpfPffqlOOQEE0e
-	QpqEyxctl6XnwxJjdJ66IsI4Y5DEoPNmtteBa6aRl8851GFVnyF74cJ6riSCc22J
-	DjktCtIxaxpoB7gwC5vo4wgu93xEgNFpNqzdXWbrrCl5EhSYa6eg9jPLJnbXW/CN
-	iqVtuHf5gqf7dWOQGd13vPEYSnL8XHvZ+pVP3lCdcejRB83SlmqtJmAbiDy/uHLh
-	tjeXI/X9aJ5JDIvB6KNvbMwjUVVspp1d8qZkMC9XJpJV31wANe927vUYFEhw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792185160; x=1792271560; bh=2KP1K60gUDkvZ3HvsdGzpHdTxxDMxAnbXok
-	iC6ygiRg=; b=Cc5H9RgW4UVsqwj1NYfUcMAW+E/S6WDuEF4aZPsBSth/sCzZ8XL
-	KW41SJVTJq0QpoKsgsUBE4FgTkSF7p2T/3GZdpJ0IioLF6LoBtngdMczCt92jmB7
-	tNXxD6xPek8rogj6RFUEDg/9l3u1JFxfa6xOmNV9iG3QKLJK6nOoKOIJPpAOz/af
-	e/lWOja7VKblw9xF54/dt25vYiH+N0wDjsUXRlPpV//zSa6b5yTvXDOHfjKeaI3U
-	az1O9zLafWWqLHypG08y46rATyl/VWzc4/lO/VzdBsiyGjBOMfnnPD4mOlVpNv5y
-	QtkI4cJYVibRI2/RdlLCPdf2vnmKjXejxqg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792185160; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:Ay5VnL4UCPHN+vYRdCWuyqwv5v3OFw5BxI7oJae5cTeqmuc
-	HauruvM9Ymwa7TI8JUxyqjpzXshVSjndyw4+nQBvnRgbfGXkAT7h8eD5PKpkwEWp
-	yzbK6Z+G0js7dLq+ok0shb74hiJal+ZJkLfePHSR8QpqiLTtZyxhFDJCm8WmbsOm
-	s/ov9LsW6D3b84xp6NE+jqRmebVrmAg5qzpiFHluFngBC1+unqkUnHpX3R9D2lZF
-	FZZQ0/bkQT/XhBKuspGoRD9OphJ3ASG2JNGebtlcls9FJwQ8cYvRwURlJeVUj0hw
-	NPOCedNZFoIqfHUQdsbUrOzvLGbesn1AfsLmjvw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:WRkJ/xK62qF68LSCpH26JmZdDmX/dNHnUoqXWKMbrhA=:W0SKAHbame1zxXXPn9PC/o42G/0b/aSCoX9O/zUnl6g=;
-X-ME-Sender: <xms:R5PSagbnza-8nZv3GK-oCC2oYHEkLqwF77WNiUo1HoCc23IClRhkwg>
-    <xme:R5PSavECNP0gcgX6ervXkpzcY1K1D-czpseIqq-y6qCQVN0JO8P3Ay5-euMf5Ncb1
-    phK06X9IMo011inZI87q_JXunczta7fWSmuUm7IeTks40cDfWBr9Eo>
-X-ME-Received: <xmr:R5PSakwhuYZWY3HWNG-ZleEEw96KViRT8gSYOR_vNbyR_9lCaH-3ioCEH5xXo6G2l3LdGRjhaVjUSk0fFFMmPCkON7PK3voBAmep>
-X-ME-Proxy-Cause: dmFkZTF98ngdNF874fRdw2SRngsAFZRBhYfyhANOAw/qjqk5Hgxk2Dd9LoaCcFSJQ7Z+gN
-    NuZzGYgTbME36HEzzUe88r4qeR19EWlcTLjoy3j9kztlBm8H0DU3onQOm6Yh3ZiPg6e6Hy
-    rzGGWixndyZhy4lAnOn8UHXX7ZEAT2BI0V2AqAal2Cl9AeahnN6LKBgDIguzy34rn1CeiN
-    QMnoIRC2C3ub5ZqGmBNZVTjvzZGKaUzJUv8igew7LbVul2VfBui7wFUnys+H/J1nvygi8X
-    KJc9Ldvj2GdCux4cdjDKFbWPNYHC/xUGJYFE1eTXyG4Djun8vb7CkBcnxBoa6wux9FfVBd
-    nViUpmZB+17/g0Ucr/ZZwwQOqC9pGazJBFvl8SJzAcyfE9o1kMGRvZbO+cUoVTZ4+xLplY
-    OPSvufL0Il9X+3CvKSeJZ9zqrmuT8vvszNWgcR5ud4okhdLWXNAe8onV37wxXaHGZ0ey1j
-    +8nLcs7n9s0mhJEP3KzavxzV40tqbQillqNfKZnU9x/TzOewIobo3K7P+WQBN2L28mO9HU
-    eM28vcH3vpUW/Usr6x4cxo4hhMbZh4emk4yoveCxLASj+UrcD4BHRcNOXv0X4aWXKZqqDz
-    SlIEMKVGzT5zXz9wpZ0yEMl9aTc+Z5Z9PIbbSFvx10IPO52mxy4OJEqUbhrQ
-X-ME-Proxy: <xmx:R5PSahnlui4BUZa_-zEh1n26vpy2wf7m1x_dqSOAdXs1x3en2QDkCA>
-    <xmx:R5PSatnQ6RZXwUhM_aLo60X_3NqACANtYI-y9oQL05Uaj1CPtiu-Jg>
-    <xmx:R5PSajwBbRiJ_p4npOw-_ze49MCDncUdm4tv72C-nbN5AL0HZ6MxAw>
-    <xmx:R5PSairl3Y42qZn8TqCzL-gXR7witPsBXvvpWAisjScyh3RpwpZnkg>
-    <xmx:SJPSaj-eVnl0Ez7RLumxQuqvvxOa5acAtoqee2B5en37Qm-aFnzOaDYW>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Oct 2026 17:12:39 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>,
-  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH v3] doc: use `man git` to teach users how to navigate
- the docs
-In-Reply-To: <pull.2242.v3.git.1792178103727.gitgitgadget@gmail.com> (Julia
-	Evans via GitGitGadget's message of "Fri, 16 Oct 2026 19:15:03 +0000")
-References: <pull.2242.git.1790627574093.gitgitgadget@gmail.com>
-	<pull.2242.v3.git.1792178103727.gitgitgadget@gmail.com>
-Date: Fri, 16 Oct 2026 14:12:38 -0700
-Message-ID: <xmqqcxt9e4e1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y90fafEu"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6b1ab2ad719so425574a12.3
+        for <git@vger.kernel.org>; Fri, 16 Oct 2026 14:23:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792185791; x=1792790591; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=EbdMz9xxRnFLm3AQuI2IglTSFX9VmjfNzdQlwKSTxEE=;
+        b=Y90fafEuoqK3SJGeVYa8NUKUZVZg842dDv/y9ZNCauU14sBDxRCECau3hlj13zrkAm
+         E2uaN/KZCitv67SZyeHRzul0G65rpZsVRftp8/BX4OJ5sHrhcab5g3iQgHpDzJ2ut1Ce
+         knJH+KFh9YI/VAcPX3re5Iy2mxQ4MQ8koeLLfp2nwUdgugM0ya9KtS/uVpM/AtBnB7NV
+         Re65xSbO6HeqvPTWFbj7TRdAungymC/MyWdLQx/57shTEJUTWkWB69pJRhzxz/oeZi90
+         XL5gP/GepC5/IyDTRDlfWpg50qvJoFE7wUkcWfbdbgXuFT+AXDbntfHn6mtA06rwyymp
+         M2oA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792185791; x=1792790591;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=EbdMz9xxRnFLm3AQuI2IglTSFX9VmjfNzdQlwKSTxEE=;
+        b=m9ASjbRN0StUwoaUr1lbD/jxEjez6ZXRXfaV6zDYTYV4HIVByugpCnd6/3k4DxbAxR
+         W2kdqGxBK0ua6B7FfjbaSM/fh5ETQ1AB/3fOCZ38af7StuTHfnOlOD68TH1w59Q6uXNV
+         gL3c79ZyG6bO0BQrhOWqRzwvfL/gqM3DVYvDMp/eNsp3o4XV1CbSBdi+xhkeCM5ikgqx
+         D/K2vZnvZfw0vI45j53J++H5N7T4y8VmVT9wnTBtH07NiCyM94gellrzIsbDVEvXlqdM
+         +oCO+/pch/0CB2Y5ebxFXibwDqSDHVlKd3k8SI3DDexAoxECMEYmQZEKfvF0pR0jnnsO
+         fusw==
+X-Gm-Message-State: AFq9FYKEJDBjyaqf5tJFHMOHWg2ldK3ycyM6fzV4nMQN0bLG/8w3tAtS
+	ALjY808rFYLEZADfzHBUNnYCplPLWyxNIZDkPRJEn+b2IL3Ul/1zwdbIUiNe+yLykJY=
+X-Gm-Gg: AYBFou1lHxpMGmkPQWLDDxzROTuduQIEWZfz0vsShaFtMYscwna+pWmNE+6oeN3t2kY
+	zjfZ/bbk3qza/2aFIbPMtJiFtzHR0XphZLBZnbLNgDvLrW/C9h6/+bZBXMvlqho2Ma6GKOrv9i4
+	E3HUp9mqF02aNQfq7gAQdPGANkQPGF/XvTW3+gYEG8+/zpK75/xhc86CldgPUjyzljPRIxz0Vuq
+	3hWdExJooh5zLq7B1lTyRqpi9RhSCq7+wbui1nsm1kcguYYVsmyh5e+qRUWbwz8yQbufaoCx63t
+	uvQTYhDHAixehd8xK3OTq1Pq2BlCFR9+JJJPla9aTdbcIpFmWjJwGsKoN5eDptKaUTB2OE94piK
+	kvTxxsDkzeH5PQvToFsGlPOpw6ya7pTVwj7d5N7YiKwAxoqhhmPdAJgG0K1ICaXs+QNnSRg3eT7
+	CtujtqekN/gHCwKPYQQPswrYc+sZ/NT8g5SRL1iiIJ6Pc+mIC9SuIO5R5G2AQJjhvgdkHcKwTnm
+	KOoPNbDzbCwQwW1RUKXMouah6sBCAaTA4XklIMp4mHee2ZgFeQQ/TCH5zvXkS6MmAyK1L9EMWCL
+	0Ra1qSCZz6+yyQBKjO0lVzK6/2UoHPXW8rm7f3Gwda4YgmLd2FmnUazgjuFF86dof6k70lwKyg=
+	=
+X-Received: by 2002:a17:907:6e87:b0:c29:59ea:5bf9 with SMTP id a640c23a62f3a-c419d05f7demr75381766b.14.1792185790464;
+        Fri, 16 Oct 2026 14:23:10 -0700 (PDT)
+Received: from localhost.localdomain ([104.28.251.98])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c40918c5f47sm110089766b.51.2026.10.16.14.23.07
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 16 Oct 2026 14:23:09 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Subject: [Outreachy PATCH v2] credential-store: add lockTimeout config option
+Date: Fri, 16 Oct 2026 22:22:16 +0100
+Message-ID: <20261016212216.58000-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20261014232739.23021-1-okhuomonajayi54@gmail.com>
+References: <20261014232739.23021-1-okhuomonajayi54@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Support credentialStore.lockTimeout as the preferred setting
+for credential lock retries, retaining lockTimeoutMS as a
+deprecated alias.
 
->     Changes in v3: (just updates to the commit message)
->     
->      * Add a sentence summarizing the goals "give a more realistic view of
->        what the documentation actually provides."
->      * Explain why we're removing https://git.github.io/htmldocs/git.html,
->        gitcli, and the user manual, and the data model
->      * Mention the plan to include the tutorial again here once we have one
->        we're happy with
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+---
+Changes since v1:
+ - Turned the two "lockTimeout=0" and "lockTimeoutMS=0" tests into a
+   single loop over both names, so they cannot drift apart.
+ - Wrapped the long lines the patch added in credential-store.c.
+ - Added a comment explaining that the "both are set" test checks for
+   "in 0 ms" rather than "in 500 ms".
+ - Dropped the "lockTimeout allows a store" test: nothing holds the
+   lock there, so it passes with any timeout.
 
-Thanks, queued.
+ Documentation/config/credential.adoc |  5 +++-
+ builtin/credential-store.c           |  7 +++++-
+ t/t0302-credential-store.sh          | 35 ++++++++++++++++++++++++++++
+ 3 files changed, 45 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config/credential.adoc b/Documentation/config/credential.adoc
+index 80a7c77772..6fa40560be 100644
+--- a/Documentation/config/credential.adoc
++++ b/Documentation/config/credential.adoc
+@@ -48,8 +48,11 @@ credential.<url>.*::
+ credentialCache.ignoreSIGHUP::
+ 	Tell git-credential-cache--daemon to ignore SIGHUP, instead of quitting.
+ 
+-credentialStore.lockTimeoutMS::
++credentialStore.lockTimeout::
+ 	The length of time, in milliseconds, for git-credential-store to retry
+ 	when trying to lock the credentials file. A value of 0 means not to retry at
+ 	all; -1 means to try indefinitely. Default is 1000 (i.e., retry for
+ 	1s).
++
++credentialStore.lockTimeoutMS (deprecated)::
++	This is a deprecated synonym for `credentialStore.lockTimeout`.
+diff --git a/builtin/credential-store.c b/builtin/credential-store.c
+index bc1453c6b2..afd2e4f3ce 100644
+--- a/builtin/credential-store.c
++++ b/builtin/credential-store.c
+@@ -67,7 +67,12 @@ static void rewrite_credential_file(const char *fn, struct credential *c,
+ {
+ 	int timeout_ms = 1000;
+ 
+-	repo_config_get_int(the_repository, "credentialstore.locktimeoutms", &timeout_ms);
++	/* lockTimeoutMS is a deprecated synonym of lockTimeout. */
++	if (repo_config_get_int(the_repository, "credentialstore.locktimeout",
++				&timeout_ms))
++		repo_config_get_int(the_repository,
++				    "credentialstore.locktimeoutms",
++				    &timeout_ms);
+ 	if (hold_lock_file_for_update_timeout(&credential_lock, fn, 0, timeout_ms) < 0)
+ 		die_errno(_("unable to get credential storage lock in %d ms"), timeout_ms);
+ 	if (extra)
+diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
+index c1cd60edd0..e1bbca3fcc 100755
+--- a/t/t0302-credential-store.sh
++++ b/t/t0302-credential-store.sh
+@@ -210,4 +210,39 @@ test_expect_success 'get: store file can contain empty/bogus lines' '
+ 	EOF
+ '
+ 
++# Holding creds.lock makes the next store fail. The error reports the
++# timeout that was actually used, so "in 0 ms" means that name won.
++for v in lockTimeout lockTimeoutMS
++do
++	test_expect_success "credentialStore.$v=0 gives up immediately" '
++		test_when_finished "rm -f creds creds.lock" &&
++		>"creds.lock" &&
++		test_must_fail git -c credentialStore.$v=0 \
++			credential-store --file=creds store 2>err <<-\EOF &&
++		protocol=https
++		host=example.com
++		username=store-user
++		password=store-pass
++		EOF
++		test_grep "unable to get credential storage lock in 0 ms" err
++	'
++done
++
++# lockTimeout=0 must win over lockTimeoutMS=500: the error says
++# "in 0 ms", not "in 500 ms".
++test_expect_success 'credentialStore.lockTimeout wins when both are set' '
++	test_when_finished "rm -f creds creds.lock" &&
++	>"creds.lock" &&
++	test_must_fail git \
++		-c credentialStore.lockTimeout=0 \
++		-c credentialStore.lockTimeoutMS=500 \
++		credential-store --file=creds store 2>err <<-\EOF &&
++	protocol=https
++	host=example.com
++	username=store-user
++	password=store-pass
++	EOF
++	test_grep "unable to get credential storage lock in 0 ms" err
++'
++
+ test_done
+-- 
+2.54.0
+
