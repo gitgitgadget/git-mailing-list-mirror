@@ -1,167 +1,193 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A39D3BBA0B
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 22:02:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792188164; cv=none; b=mIQeUfHfKUFzWWkn/qLuMnTw+Drs9LkQohlDd+IEXjRFvqirhCt+fYq8yxcF65HG7gfvOEj8shYTbguyg6c0rDTkWrwv+h+3zEa2QUzYuSI44ICN9LGDSt2A12UhzjKmBboIdtAPS3Hfxkjh1qIvIu3Bu8J5Nmwp5gTPUULcI6Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792188164; c=relaxed/simple;
-	bh=d95QkDu89UoG08FjEO5Wsowc0Ieepz5x5GT4DhAWgaM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EZtRVUI1vN8xtW76X9Lb+yYWZ2R/tnotWYOJlMJWE4jxGZr1sxknq2a+TY7vxVb9RDKjj0dbVTGzhMmRDzXXXSJou4AL9vA+XvCn8c5SRHFaUC+ahwYxmLAc2hfgEPqJ0smHXjQ2wgwGjMmGSS3gsyw5PvVVcsdOH0vIqG5palc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hYnX4Dya; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JwjPPQSk; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8C730567F
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 22:37:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792190227; cv=pass; b=qCc+zsDajOr3QxIKgy5xn7++JmYzn0LLPBpioW+hZzrb1+C0k/9Izsbr0oGF5jvV2QYduPJhjb0h57vWPx7hAAMZC3d//m1b847gBX7yC0PlOIFwbspnOGYcKusbcnPfaa3viQ/iw65Wp5lf735hVh3cQF8EAFZ6z7B/3Msg8c0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792190227; c=relaxed/simple;
+	bh=wBe/L+JaXCcrBHRCpF4cyQ8v6D9+0d0b8nl7hSnh9ys=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=WujL1mEeAbI8ps9BTxM8xsZl8Kk1bMzrW1P8ievAsU4MDdZmXebZLls5USTKJoMlsVwsawAbO9+uPwP3HGKgvJ9gHVMb0ZN2aMapxlLRE51Cv1u05Nr5/kYjr0kBOfo5VfvP96mj4KO66M25NpNm8AMI8WioZvDfqomzTkZxrF0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pSLwMT+0; arc=pass smtp.client-ip=74.125.224.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hYnX4Dya";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JwjPPQSk"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9FF3A140014D
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 18:02:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 16 Oct 2026 18:02:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792188162; x=1792274562; bh=zopd88XzVJ
-	WzZ6ZzmlhjeK89iZn0rtpdSRbxZ9sQX9w=; b=hYnX4DyaWQyoX725N3hwlrQKnm
-	HlbylpRKy/CP5LqI2h7MrbwdosS8kkbbQ46os0DWNYyfk4E1BHPUsNM318qy04pR
-	W5RjdnFri1rgSHv8X9YVSUumqfArYJHBMVQZ+I3LQsQk8MEZ1lmexeS4fOBv/w2r
-	94ugnKDadzVZ04ODryYCFFOE8NGJRiLwQKkOyo/YZQdAr9QHW+M1kP0n47B3GH7j
-	AHzqENCxrNOvC2Mm1Wdvp78LV2fZFAAfF/9xxT6NSgnHN59Am+ZJwViRiexr1fTV
-	cc2g5st1IsmKaGO2MNOGpudjpEEOCfaDOLwwsS6CiTdM+9y9jGTCwWX7Rh7Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792188162; x=1792274562; bh=zopd88XzVJWzZ6ZzmlhjeK89iZn0rtpdSRb
-	xZ9sQX9w=; b=JwjPPQSkQiSXsBqlodRDLeSft9o4Cf6L5CIo6vo2ZUFpqQmBDvn
-	SyUxutWxhNv3YbZoYQ5SGxvfEi+ZgHvSkqUsp9KysnDrd3aVmJUqdxg8/AV9WYdV
-	Q5xNqUBPTBae5e74B8mBVtUPnk3hF/dsOKQRekTlCBJypzi2obHXC0h5mdmIRGp8
-	dXXq8SXAFfooljLJtD16VT7V8M6S1SfeYv8sREg3vAd/d7k9CAKlpZgAPVGLxP/O
-	3FCpNO0e8XYMsFX5dCT5uyrN1m5sP4SMxxYlIuL5EbznxBqkKdyo49AUR8h3pMiG
-	W9Edoqo24XIawyfdX/n1fj5fmCpIUa+GPwQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792188162; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:ipN2S6WKC+XM1Zb3C1Z3yzASh/y1+E1BVd2b62PvVD/ertt
-	d3BBywU7PLKgLs9UJmLK30Z0OB+f1cHa3rr8SmiHBOq30PO6YQ9O1KMME6LMCjv+
-	YNEW1CM7BF+Sf1BKmr2nwE9XC2ZA3KKojdcIcgJKkhDiE8BE80NDuMxZfnT8rRmB
-	dozuhD4hoUpwNSngikfUKF69IESs2zqD16YG1whh6SN1oCe4HLecYcOiTiWPrPUz
-	iDgQLrMbpE9expt/3cEm3B2NrD5EbnpWiwOgJwDH4EEElIuQI3zahBiNxQPsVT9T
-	dUf1p/uoK+QE18Tx+EZ6lrMmzV9R0/ppA/LAusw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:ZWX1GTN3yzpuTNnMgwQwdUDCEZfefl1mDo5A7jvE6Ds=:d95QkDu89UoG08FjEO5Wsowc0Ieepz5x5GT4DhAWgaM=;
-X-ME-Sender: <xms:Ap_SalQS4V60ltsOVCjKCRTYx4KRPZB7xcbtjHurJex6-q_6XcLkOg>
-    <xme:Ap_Salos6XRtLk3YEfdZh2FrA_2fNelwnAJI7-A0V-WKlnO6H5qJnzrH7Cl7vaGFk
-    X0kZzPF0mCLSXnvkDeKob70xU__WZSDXUlQb1YtAbnOFNzFud5QS8s>
-X-ME-Received: <xmr:Ap_SajJRK9fz1DpMFppJ43G6zyIpfXZyBNtZUXRZE0xGfwP33sIe-2GeyME3-Nr2E0kNO9zTnFq0PNzPT2ypPu3PvvnJv5FCX4Ph>
-X-ME-Proxy-Cause: dmFkZTEbzQVja77NX3qNNQlsJd/CmANLXIIGyhlCbY73G6WbSensdZCPGNuR7WZWQ0lhmv
-    Mg2Py/XRKDKZSh1xQ6W8dD+1Z4ODUPluRbHbpbEvNAv0Mfsoy8l0db7BnngfXfs5LkkTgU
-    sgZIaBXT1O8LWBwv7WCe3E1DmdqKacM+agnzDEAgAnTXPqpVTknKkM9sbri2v7djrObJ29
-    DW7RyFSze2wywzJyUz3VIa29Jk4umh6HjENj9oHJYQOAYcci16vRR2RdwVtNRhD4JkSYI2
-    kwnx/eT6uDa5bpfIJHxGj88mtmt1uBId5KWSdgPcn5HPKnLGjhDdyi/om06XMjYb9Kr/NM
-    zLcwE1/Tipiw7u45QVqsv1341TGxsHFxlfm//lgYU/4pIuJVOLZcpQN4ZYT9JWJUk913gt
-    bc8E4JPzLEwtKj/l4l9f0+PHOZQBxo6+mq+j8TLiKp76AhC/zwTs+sOHYff009OnU3dfe1
-    bDrog2ACUa45nt+ftPY/hCfiMSXMf7BayrTEgzTIzZ5ymlbWQHZH/cFvk5PCBMQ+QHiKNp
-    MbHKC58xSyH7LiLWCNhoDEe92lZ9L9Do3yw9s2OEF9KDn4yrvNiKbIQy3pixdw56nu6t+e
-    G6UoyazBaNP0A0plkNwRDXrQ28cLlFXmQmq3IDaMm5HCLeccw8ti6SYxFERg
-X-ME-Proxy: <xmx:Ap_SaoqoHUTUDLI7L0x70Gg0Qdm8VtU3VonKIGf5cLzvIWD7ZUBBjw>
-    <xmx:Ap_Sarx7WuZGSOvFKecTsC0s62QQ6Lj8TdZVjh_In1JQz4oeAJIoiw>
-    <xmx:Ap_SasPw_Xwdkdb2B-_EGg6Dawii936YvzrZGIxf7S4LIOuGMsMXMw>
-    <xmx:Ap_Sag79a8KHDaLdnv8XLS-JxPbv4ImhAwrFRBI8HJVltqC127imrQ>
-    <xmx:Ap_Saj5b5lqaciOStetJSyge9kZbHcG3e3kIo8Nux40m3Yekc-fj3IbA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Oct 2026 18:02:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH v4] doc: checkout: rewrite detached HEAD state explanation
-In-Reply-To: <pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com> (Julia
-	Evans via GitGitGadget's message of "Fri, 16 Oct 2026 19:03:29 +0000")
-References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
-	<pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com>
-Date: Fri, 16 Oct 2026 15:02:40 -0700
-Message-ID: <xmqqse25cni7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pSLwMT+0"
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-6798d4ab549so525293d50.0
+        for <git@vger.kernel.org>; Fri, 16 Oct 2026 15:37:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792190225; cv=none;
+        d=google.com; s=arc-20260327;
+        b=BYNsgIZ1cBXVSLeF/SQxLMczR8la1PP2fKX08fNSCcNFlAgRGolMAogVCF3i4Qc1Yu
+         aIDUwcFNa9JfdJt1QXj5cdc4wCaJK46Awn8gv25AF1NXE9gB7Fw4xT79oB62Wzj8q5Co
+         nmBrkiTDnXybiFw98scwqvk/R5MYWZvkr0vVlN1Bt1A/f038xiG57g9G3lO+1TXSA2ot
+         mI6McrObZbrUMOXa1gRM4urbQfWBAjxpKxePb5a+72xlRNQbXSp+Vj7YTkwbICHZwBBn
+         acpVIGnZFqiJ0Q0W2Dy8nFIGNCfV8BVvS6yhjeH6LkugVMPwbbKYAFAuTmseAYBYXRDP
+         wS8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=bS7VHuaRsThcUIC1nmC9uQfOshuNUL6XQGCv/bkFsFc=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=PHoVsQJJseEzZymaxqHHLgLwwOzwOijN8wKXL6C2DyTTW2FxcReuOTlj+N2ckVk4OL
+         QwHK5JUEhXKGt+JmVWnlQnTCUmPyCiXA0wuMedZQ89HgSNqB+N2YhPMgAqVLXHyQQLF8
+         vvNM2m7JL85vkDRJ3NVuHctYZIVoyFmkKuYjyoJ4DlIo3Onqwbgs5DZC6Xl1sfk3e0t3
+         sUpf7KYfoIVCUGq6LvnATzVIDmyfuwS3g+g4NDiA2iqiBw8c0MenYznszsC8SAauDjph
+         l3eB7rq45XI2s9aE8cQv4JbbpdqIfwSr0ZeVjvxMR+yJPm9fnoF6aMWKColY6hDA1yQI
+         Gepw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792190225; x=1792795025; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=bS7VHuaRsThcUIC1nmC9uQfOshuNUL6XQGCv/bkFsFc=;
+        b=pSLwMT+0SrcjtYtlIJidA9e9hRWwK+Xq7BDcnzSY9aAfMWWftN6bqAqssacS0a3A14
+         t10tQz7s2OKMbAMW8IthyZtRSpkNqkqJv308rDCpEhX22JQMKOL/3KUsnFnEnVxMCPsZ
+         iS9rpfVDJBBE7WpCBwHJavilm4OHrl4pXJ4YZg/uPRHZ+zV22j2DSBCEujrfh/NCjZet
+         pQRtU9apglNcLuIIozRDh7FsLucDZ8sipnuoX2xCq+GFFMCaJyLYOM2eUjBluxQTaGd8
+         OWCTTke3v/h7cTcWstRhvr+bAqMyESjD2Ylt/gOYyp6xQ76Zhxh/dhyMYlLfH4M0tp7J
+         FhyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792190225; x=1792795025;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=bS7VHuaRsThcUIC1nmC9uQfOshuNUL6XQGCv/bkFsFc=;
+        b=cFlZSisgardYfk8VkJtfsIw1vHHjwH9Wk47KHhj6M6IYJmuNYhl7YiL2Xh9HO+gsnT
+         pHxpKAnJTuEoCqVmhSM4GOm6xOBoLwD0bS75eceNvFtGYlANU0TRm94QGz9pq9S3lqlY
+         NObYIO4sfdvh8FPQyRbrVrKf2SZs8ukjfv+fwwlrT4Gkv0WH2t1QQRw6rr6XibOC2QTa
+         RLlAT1aKToJIWZq0Y+6/TIML42ZyD4jBxWIjnxkeSXt3EMwglPFdNrXtfLibXRBP/Xc4
+         WooYcD95JZXmSz2wNhYd83Xq97O075yBYqT3sEpaAPczKhGHyWYrGvqXjTe/1elAoOf7
+         Pm5Q==
+X-Gm-Message-State: AFq9FYLU7ZDzTCLHGK3coiDDIwYCQqvVG2+pagnWIY6dADC8ktvUtUWf
+	Jh/X06zZCuytK6lI3SqGBXhtZdBEkGQ3IgW3Ctb8z5d33GFsjGE4P7bOHGfDPDJYE4BeC5N75dV
+	YKg3rAMoUXyM3SkyGTtvOcwEhyWPDoEpBiroNJIg=
+X-Gm-Gg: AYBFou33vdGj8xIXKVe82CTZMDRJK7yixUf0xD3N2h3Fnue01+7E3TmboBHJ8+NGLeD
+	sjuizvZQCJ8j0POiyfc6soxMJD3NAOH6/+RW5om7FQxvJxQpQt9vAAnkIVA5t9SmgSo7V/WuqYe
+	W+ylBh7sCZnry6MtkHlgTEASMYR+FTqCFGW8z9g+e+QTasPQZYlJnqVv9AMs/QKgzcIs59auH4x
+	OCnfKzckV3OqS+GKHi+EspnItgS1jH4cT5pN3LHwNTs+q7VCN62rUChc6iT7pekdHCEiM1tMe0M
+	0tLxboP4QL8/CR0Walrp5VzVJV512xqeEC4C2ymnD/5Ybe0+QiRsGIY=
+X-Received: by 2002:a05:690e:1486:b0:679:985a:3fc3 with SMTP id
+ 956f58d0204a3-679ca8c48f0mr345389d50.85.1792190224574; Fri, 16 Oct 2026
+ 15:37:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Dan <timelord@gmail.com>
+Date: Fri, 16 Oct 2026 15:36:53 -0700
+X-Gm-Features: AclHuK-Qq9qi6kWYhXoGtEA5XGJ31HGShUcO4YGlvdem_QJ3R4FqLpuN1p6r1dQ
+Message-ID: <CALGWHBdx0V95RoZJvyC7G4t4RpXpQm3ycv+huTQcPunOCm7hBw@mail.gmail.com>
+Subject: [BUG] http: push with token-only URL userinfo fails after libcurl
+ strips creds from CURLINFO_EFFECTIVE_URL
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi,
 
->  advice.c                            |   1 +
-> ...
-> diff --git a/advice.c b/advice.c
-> index 401d047391..8d2c1ff1ee 100644
-> --- a/advice.c
-> +++ b/advice.c
-> @@ -291,6 +291,7 @@ void detach_advice(const char *new_name)
->  	"\n"
->  	"  git switch -\n"
->  	"\n"
-> +	"Run `git help detached-head` to learn more.\n"
->  	"Turn off this advice by setting config variable advice.detachedHead to false\n\n");
->  
->  	fprintf(stderr, fmt, new_name);
+(Please note this was done with the assistance of Claude, I apologize
+if there are inaccuracies here, Ive tried to go over this and verify
+as much of it as I am capable of. I tried looking at the mailing list
+archives to see if this has already been reported and I didnt see
+anything that looked like it had yet. I can verify that the new
+libcurl behavior absolutely seems to be causing issues from at least
+my own limited vantage point. -Dan)
 
-This breaks t2020 without an accompanying change.
+Since libcurl stopped returning credentials in CURLINFO_EFFECTIVE_URL
+(curl 8.23.0, commit 7a6bd027d0de "getinfo: make sure
+CURLINFO_EFFECTIVE_URL does not contain creds", CVE-2026-94266; also
+backported to Ubuntu 24.04 as curl 8.5.0-2ubuntu10.16, USN-8932-1),
+pushing over smart HTTP fails when the remote URL carries a username
+but no password, e.g.
 
-You can squash in the attached patch to unbreak the test.
+    https://<token>@forge.example/owner/repo.git
 
-Since nobody's terminal talks markdown or asciidoc, let's use the
-vanilla single quote instead of backquote while we are at it.
+which is a common way for CI tools to pass an access token (Renovate
+does this for Gitea/Forgejo). Fetch/clone keep working; push does not.
 
- advice.c                   | 2 +-
- t/t2020-checkout-detach.sh | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+Versions
+--------
+  git 2.55.0 (1:2.55.0-0ppa1~ubuntu24.04.2)
+  libcurl3t64-gnutls 8.5.0-2ubuntu10.16    -> fails
+  libcurl3t64-gnutls 8.5.0-2ubuntu10.15    -> works (same git build)
+  Server: Forgejo 16.0.6 (answers the first unauthenticated request
+          with 401 + "WWW-Authenticate: Basic realm=...")
 
-diff --git c/advice.c w/advice.c
-index 8d2c1ff1ee..3238e9b866 100644
---- c/advice.c
-+++ w/advice.c
-@@ -291,7 +291,7 @@ void detach_advice(const char *new_name)
- 	"\n"
- 	"  git switch -\n"
- 	"\n"
--	"Run `git help detached-head` to learn more.\n"
-+	"Run 'git help detached-head' to learn more.\n"
- 	"Turn off this advice by setting config variable advice.detachedHead to false\n\n");
- 
- 	fprintf(stderr, fmt, new_name);
-diff --git c/t/t2020-checkout-detach.sh w/t/t2020-checkout-detach.sh
-index 28bbbe6c05..804dc2a67f 100755
---- c/t/t2020-checkout-detach.sh
-+++ w/t/t2020-checkout-detach.sh
-@@ -228,6 +228,7 @@ test_expect_success 'describe_detached_head prints no SHA-1 ellipsis when not as
- 
- 	  git switch -
- 
-+	Run ${SQ}git help detached-head${SQ} to learn more.
- 	Turn off this advice by setting config variable advice.detachedHead to false
- 
- 	HEAD is now at \$commit three
-@@ -310,6 +311,7 @@ test_expect_success 'describe_detached_head does print SHA-1 ellipsis when asked
- 
- 	  git switch -
- 
-+	Run ${SQ}git help detached-head${SQ} to learn more.
- 	Turn off this advice by setting config variable advice.detachedHead to false
- 
- 	HEAD is now at \$commit... three
+Reproduce
+---------
+  git clone https://<token>@forge.example/owner/repo.git && cd repo
+  git commit --allow-empty -m test
+  GIT_TERMINAL_PROMPT=0 git push origin HEAD:refs/heads/test
+
+Expected: push succeeds (it did with the previous libcurl).
+Actual:
+
+  Pushing to https://forge.example/owner/repo.git
+  warning: redirecting to https://forge.example/owner/repo.git/
+  POST git-receive-pack (815 bytes)
+  fatal: could not read Username for 'https://forge.example': No such
+device or address
+  send-pack: unexpected disconnect while reading sideband packet
+  fatal: the remote end hung up unexpectedly
+
+No redirect happens on the server side; the server log shows
+GET info/refs 401 -> GET info/refs 200 -> POST git-receive-pack 401.
+
+GIT_TRACE_CURL (abridged, credentials redacted):
+
+  => Send header: GET /owner/repo.git/info/refs?service=git-receive-pack HTTP/2
+  <= Recv header: HTTP/2 401
+  <= Recv header: www-authenticate: Basic realm="Gitea"
+  == Info: Issue another request to this URL:
+'https://<cred>@forge.example/owner/repo.git/info/refs?service=git-receive-pack'
+  == Info: Server auth using Basic with user '<redacted>'
+  => Send header: GET /owner/repo.git/info/refs?service=git-receive-pack HTTP/2
+  => Send header: Authorization: <redacted>
+  <= Recv header: HTTP/2 200
+  warning: redirecting to https://forge.example/owner/repo.git/
+  == Info: [HTTP/2] [5] OPENED stream for
+https://forge.example/owner/repo.git/git-receive-pack
+  => Send header: POST /owner/repo.git/git-receive-pack HTTP/2
+     (no Authorization header)
+  <= Recv header: HTTP/2 401
+
+Analysis
+--------
+In http.c, http_request_reauth() calls update_url_from_redirect() with
+the URL git asked for and CURLINFO_EFFECTIVE_URL. The asked-for URL
+still contains "<token>@", but libcurl now returns the effective URL
+without userinfo, so the strcmp() differs and git treats an ordinary
+200 as a redirect: it prints "redirecting to ...", rewrites base_url to
+the credential-less URL and calls credential_from_url(&http_auth, ...)
+on it, which credential_clear()s http_auth.
+
+With a username-only URL, http_auth.password was never set, so
+init_curl_http_auth() never put CURLOPT_USERNAME/PASSWORD on the handle;
+the only auth curl had was the userinfo in the URL. Once the URL is
+rewritten, the POST goes out with no credentials, gets 401, and
+credential_fill() has nothing to fill from (http_auth was cleared,
+no helper, no terminal), hence "could not read Username".
+
+With "user:password@" in the URL the same false redirect happens, but
+the push still succeeded in my test - presumably because
+init_curl_http_auth() had already set CURLOPT_USERNAME/PASSWORD on the
+reused handle before http_auth was cleared.
+
+Possible fix
+------------
+Compare the URLs without userinfo in update_url_from_redirect() (strip
+"user[:pass]@" from the asked-for URL, or from both, before the
+strcmp/skip_prefix), so a credential-free effective URL that is
+otherwise identical is not treated as a redirect. For a real redirect
+on the same origin, keeping the existing http_auth instead of
+re-parsing it from a credential-less URL would also avoid losing the
+username. I haven't written or tested a patch.
+
+Workaround for users: use "user:token@" instead of "token@" in the URL,
+or provide the token through a credential helper.
+
+Thanks,
+Daniel Spisak
