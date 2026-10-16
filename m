@@ -1,183 +1,142 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502655349A7
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 18:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D2C49BB5A
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 18:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792175724; cv=none; b=PumHNpGwpcHFhHN9lFd8bLs8pwGPQg0TpwuFnzbwpu18Z/4H68fbd9c0d5alGIV6fdbqTFPnKPWx5pCaneuPjGiacrnF9+Eajg3mNJ1T2lI5j++em2chkK6Rt3vyLOJhStYvnyNTtHEaN10qpDzO6IEbbYAfUznaVKapyu9AIP8=
+	t=1792175744; cv=none; b=LjlzXnu5J0w277PM//qWw38ze7aVnDWood2jaTkpMIAJFwXWjZJsD6uSN5ubaou8OQSKNewhrhDynh5rHsq5QM4Au3GjqIL5rbJHb1MPVVuAC/hi+HvpaaYPUKgtiHXT7iANXdsLCVFGDJN6iEYVZpEy8hH/avqMo7Njh4P7ODU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792175724; c=relaxed/simple;
-	bh=0mJAqaKleivMyCdJWRZre6xTv/LLnOp6Q/PPTxg6i0M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fjDZUpQY8BXgKZ9i/EjUtKmPtvA9jNBi11Fmdrxmdz0QKtjMoHzaPMlcoMTagwhWHboeP6WWvhS8T9FVr4+JEak4ByhNWDpXUDCgL6yK76Fw9VPy7fbKU6RSnyvmvq/eTauP4FfaJRzPQ5SwPy4UIrpl1iml4vDZKPWhI9yt5Uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aY93VQd/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iXK6GVyc; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1792175744; c=relaxed/simple;
+	bh=eP+Bex6WuUPP/Xoary5Hm9U23xK+6yMoplv+YlAKcxo=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Ld93805h2GLlwg3FcSrjIf/v/rYH1X1T19EI6hv802TuTa7vndg+pJMZ8qe95oNTAcbOdQoncAraIy2cSvs/+vV3C9pDDrVr/wk0CoZJJVRif5fVkt4nAi4rHX/SC7UTcVvyNbnnhZm7q6YcLiDESmkb0HoIpnXVwO4eRxvZxr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=eLKOObkp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O1uUSGal; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aY93VQd/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iXK6GVyc"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 69B9F140012D
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 14:35:21 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 16 Oct 2026 14:35:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1792175721;
-	 x=1792262121; bh=JpGUJZDot0j6AtCYwUStElFTvGptXIqCzY1QEeYl2ug=; b=
-	aY93VQd/1qrKrHm45uVPoiGtdWYxdH4d6HD/gWmnUhf2toN6I/rus10pLr8zZxJz
-	eIg4JT8XU8pOgmvaSbRoNxobSXsH3TKo2cnVVjiaMWIzvuErSdS/Qjx2qU9BlCiL
-	JInaUreyN5m8qWi5phIO+ntPz4vv0/NZSmzlX5aw/WQ0SHtBSkrEbc+eu6x7Fz0U
-	YE3t7N08uxy+Xh5MMVRD7uSBGvCF49elQJnS79c2MlQWcnm5hjbOF7i37dCSkyyG
-	7fYelkm+W6Hc3tg5k5azTvDnRvxrKUQtXI7JaspxZDfBEOr1yPyKjvQBTlZlCZ9Y
-	PbDoGvbpZBPHHEdtNgGeUg==
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="eLKOObkp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O1uUSGal"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0D319140012D
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 14:35:40 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Fri, 16 Oct 2026 14:35:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792175740;
+	 x=1792262140; bh=2H7JuzbJnXEQjMONsJT6tK0SSLkraKNmgkpJEyddBVE=; b=
+	eLKOObkpmr3TJZKtDoVfGkevQuOP4J9OmXtUXkfhgRcXtrC2fhaCRaMrVFFl2aXx
+	oz5TzBEGUUZxsEsOjQspGLl9MEZq1+kqxD8UEhSKahrljwalvteVxMB59ANfQdZ3
+	MgElaRF3rKF+jOp/98tLkaKYYY+LDEwp1S6uGhpn2+9xZXfjZ1GwgtDd8hhWdCez
+	HFjKE1JGYEyJRhvJiKEld/KxvgJ3LVPjqm7dIqYFs+lMrBir9Q/MlMbeapkVVbld
+	BVOW5wwL7v9AamXPgrbxeyp83vTfT2bHCvjsBBwqUXPGxLjyu7YqCPxlNJWP+z61
+	r2RZJfAZwSHVOxzVZJJb/Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792175721; x=
-	1792262121; bh=JpGUJZDot0j6AtCYwUStElFTvGptXIqCzY1QEeYl2ug=; b=i
-	XK6GVycC1mNlpCIyE7pQNZlzPyNVU8ktx8hGVN1wxsqhO+CXqSFGMtWtr+V60cTH
-	bzdO/6DdXdx24sgRna3uE0JusmuSW9KCc8WQ5slpzwDbLJHaam1WeO+JBNVDoFcP
-	7xy1kCUpFF0AE92l2SJaqeQrFjEXIsZKLjbb16Yw5d3JVYa6e0yrKqHZPEIlKFl5
-	+8NMnqVFKJIJmqZPZllCj7TrDBGJjaCTMa/Dp6bt5xXh2WciI+rlJXkw31enFMG3
-	SPMIRsG3cN+hH2wrZGTmnVOv5IPbpUpqELYmZLPg14om+bwtw7Y/n6t92NIG30aV
-	+UJtOXZEycQF9u1vf87lw==
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792175740; x=
+	1792262140; bh=2H7JuzbJnXEQjMONsJT6tK0SSLkraKNmgkpJEyddBVE=; b=O
+	1uUSGalcJ8TLhoZjTRLDcbQH4+5dIag87toJyIGdk7LXyW1x9S4buWCdNyauGKqo
+	WICuOuHvgwuw+j5qUrF1TwkAxDucHuYhPzkFrUMoawoPOPuqIECaU/eznO3ooQH/
+	T65kBUCMV5wQIv03kn5vyMQdPKTod+jTyMalZmxAPiPLqRPfM4LvZ8O7eVzvlN7p
+	EPVOEj0vcSjYyGHbtzZTCpzFtqdPdfVU2WyW4ndrLul5AKUOMy4agdfYh0ufaj9K
+	R/MWHAxyc634khVmzY5hxQDrsTOHRF6Qof984klJUc1aabXNzUu2cs8V7IPujkss
+	xHXwEPpsuzvOCa4ZOFNdw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792175721; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:XjdAdQ3P8yh0bufSUI3Cv5W9fuAQByREgK3CrlVtHkI54kf
-	Cl0SHOsa5f+V1pv8iCjGQbF6unHn2ZVNfIIWq4L946ocbl9/+hpSzYM1AfveV1gK
-	VezFerv4hgbvaFU7lla1rcZnTUvKF+MFKHXpttzN1zCwXwYpZEsUxnyAIhyWn9rE
-	4SPcJMHXBkSSdd+ZXy120Cc18EUHgnUQQsUDi0tirdi48A36jS27xaHx8aqANGlp
-	K4z/TGyTzsX6CNQrFmOvdjmhKuqXKb7xth2x0OZUgSn/yOeuW7xz8Rv5yfIkAfXa
-	r6/Sb2C2rFiZGgRzUqHSGt5poCYKc+HHtentjLA==;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792175740; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:mLMnIiBfmHKVx1mNhtp9b4047Ozt8QReyDQ7rcB6wI/6qr9
+	KLowppzvVrs6zXbAm2z5p9V43C7o9asAj/dDMexLGxyvBg9hnMkUKqVDLoTl5nLd
+	0OsF1C6kT21b27H8lJtZBB+TKYoLct9x0RThIe6mBG6NN8CiNKx8+XrKXB4GXVxe
+	4zLvNR3ESpqUMXoXG2CMoTMPECzxGE+5d9xyQckHtFZ4fV8mzQI/trRQPz1s4Obh
+	xlRkB53l7boNzPq1JgQYVdAjE+95je4O5GKToeAnE5cxLbCHbhzqUnA9NoI4F0CL
+	fd0ghFM8Zdi5CuMtyljP/3/CpY9GYdRtf0zfGCA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=mi-m=1; hc=13;
+	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to,
-	user-agent;
-Message-Instance: m=1; h=sha256:5q+6eNTy0c5ohdyBTdm9Z/+Gesav7fDAfyhA1geuyxs=:0mJAqaKleivMyCdJWRZre6xTv/LLnOp6Q/PPTxg6i0M=;
-X-ME-Sender: <xms:aW7Sak12kzcTfpGdPf3ICluxz7x2FNzoswHFx9MO1O3z8feUtmVJbQ>
-    <xme:aW7Sal9zOxZKu9dkJYNoqaP5maJkgbLBP9ahEWHSfbsNPFGdVzB8VH4H8ojg2Taf7
-    3FAvNuV-WU2FEOWKWYed5se-Z_sPMknd-zfQ3i1sMUswi8oURv6daY>
-X-ME-Received: <xmr:aW7SalMMnkHv8OnZJqFUgBUP7VUrGIv4Lql9dirXddm8Iu5g4CMnlw2nBQTg19cSstYKj6ul6K4A98NXY9PgswwIe0vAdNLdi0tb>
-X-ME-Proxy-Cause: dmFkZTGPZJyfzAAft7A4dD+ZoseXHcsT12e0r3N51QqCHxaT0YPIanEh9Nxu+NKvN6mlFz
-    n8yxuvu0PGHTL1v1VHfOzCD0MFPAIDA30S+vtK5esjJvoVO5MjLsNfri7N6FHPYJEuro8z
-    0dbf4NE/ecnU/vuH+2sXKK5MkW3Ro+ZbwC/SdbVRqfPgXbdLlAJgzNsLnqyRkt8ofiHFpL
-    rj9srFzHCmp0GVQ+xpOLQz+/DjMwM20r+X2h3qbUlnTLsSEw8oZM+McvW7IobOZ8fpn5nV
-    e9YkJ8G3ormZRTOoULiYWEk5pChB8vm3F7W1qPwPsFqgu09h8p1Nv8g+Sk0gbeKKZTn9K1
-    LSRE7kMYPII2aTDnr2LMjD0/Cdrs2l66vCqZknIumVzREBT4cSnpF9JCwvNQnzrHd85Soo
-    FOjVB8MtHeuopzFdXRMR5inYzMpPFPgGSRCWl1isxgVs8E7gVRF2ydr4kfoiiaSU5lbbWc
-    vXvy9nbZIQmOeG7Nu1V7X0LzrbU7moqQNMOwY5e+ioQkmUKIDIJ49TzmOIxaYAzO9x/zeZ
-    F1b6w/KnJ7tbJbV9kQV5Ou1sx8rOuZQ8ZRTIEC/DdC/61jC35vO437UPxPlXTXRZeeSbU6
-    fK+/gc7mMk9HCKxeKKdMi6At1Dx77lsL4OCRXlCI1mWYh7ekRNhNrm+fjttQ
-X-ME-Proxy: <xmx:aW7Sapf7gstAb3bJR1jsxhY1mJ7sBsBV1fASoCkvKA1X6lu-T8Y7yQ>
-    <xmx:aW7SakWGGGuBI_bgj0iIInf6pdrUgfe66hrx3SM-ft_c_4XcWGOBsg>
-    <xmx:aW7SahiDq0NVTQ14ZFo0Zo72FI5ZP5BuBxoiYJLoIK-tOLFgDvRSOA>
-    <xmx:aW7Saj-pJ-iRpFtabKtFCqJSni7qwgHwY_CyAZy11SWDJklPWW43HA>
-    <xmx:aW7SaqWwCdslKYOeVrelH8gwIzS4-90cteKKkeBuF2Bubjj_0cB-0k-A>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Oct 2026 14:35:20 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Antoni Borowski <antekborowski11@gmail.com>
-Cc: peff@peff.net,  git@vger.kernel.org,  jpoimboe@kernel.org
-Subject: Re: [Microproject] describe: do not translate --debug output
-In-Reply-To: <20261016171835.90420-1-antekborowski11@gmail.com> (Antoni
-	Borowski's message of "Fri, 16 Oct 2026 19:18:35 +0200")
-References: <xmqq4ieotc9x.fsf@gitster.g>
-	<20261016171835.90420-1-antekborowski11@gmail.com>
-Date: Fri, 16 Oct 2026 11:35:19 -0700
-Message-ID: <xmqqpkx9fq8o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:cw49xxm3PzoHjWPLlBFCyipk9PIIAVY0PYoXITSirfQ=:eP+Bex6WuUPP/Xoary5Hm9U23xK+6yMoplv+YlAKcxo=;
+X-ME-Sender: <xms:e27SatvU8mORPcOzfbDQ9YYworhB-3QdF0WOt397N6fm82pI5Uz3Zg>
+    <xme:e27SahQ3FLk2ZfiLHWpOs05VAOPDA0jflDkttUHP97TCs_vxnzRNjR9hmpgD7u8-X
+    Gzx8BdcA58OnnrH5bWz7poFJ3fbd16odS2IGfahX52uuoi-csrhH9Kp>
+X-ME-Proxy-Cause: dmFkZTFQGmPZRSTc/qvA5Ey9elQcMpjT4scuDnoxu1FdcUtNqCZ+oXzpIK5QWsAQ2xuq5e
+    YFdpAcsw8N1MVHUlFJAbCSF69hSP/unFIRe3rchywyNFSEfiLBGPZBetlMklxkOlwiiZn9
+    Omkb9Yo9+Y4TYVhO76R7ttRCJaob/eUfgV/hDB6CqM9/1A5rvTxqbQn1uPvLrRmsNpuB46
+    Oq0h9JodGFlIXpAD2dtqxkjdSdnyVXsdFa0rTJpgG87OmpVcXQMU2+XhmirxwvdKBqWRWE
+    PafniUTpfAERwIFL3SHhvVMyxpWm1ryzBDJrgRAK4TdvSy/6o1dNCFt7PhuGRog73Yrson
+    ymARLvcGBFd7TOdFezZIRk+78JP5tvfIs7jmzaLnYP8tWXeSEXL0DLHeMY6GXLJUhDFnWL
+    ec6y7eYsnlJ6UV5Y3uWWeZaGrsbBJfNq9qoqrHlYlrpke2FNeQ/FfOznFcut+GUdp+kO5N
+    UF7B6BD+XMiasslARZFKAMPYduhAohp21LgvfV3ClBzUS4gofGFIuEtG3kctrAk0acKd+G
+    kBmNNOziwS00Sae+AIn1Bf9iJPuJ7JLRT//ovwrRy+ow6d9tMKZHnkZbCjDq6ulu4MEbi4
+    JQM1aVoG7LUUaQLaPzCQIEs1yeQ+MVwpLr0k7SdyON3/fpOVRw5er+qCApdA
+X-ME-Proxy: <xmx:e27SalXUWwgJDXKhqAdaTgPD3Q0zH6nrGamZJJIDvns-6rpRR_eFwA>
+    <xmx:e27SajbUWV1iVVJ9pI4tnc8i3dAk-PCEufkGUhzHhepTgENVI-geRQ>
+    <xmx:e27Sar0U8ZYofbCOqm3WpMoffhHoSyqQyBkZ_5Gb1xaTYoJU6QTf1A>
+    <xmx:e27SaljwGTAj-RW9g-d8jcfZopnwE5JjqfCTlZSI5vRNiJRRVVXA4g>
+    <xmx:fG7SanpNFyOpfMnWLQqsTNHb_iIfFWoxhPInm5_ElZHhpaNrPxGsH074>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id D4C0F782738; Fri, 16 Oct 2026 14:35:39 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+X-ThreadId: A1sfaQj8oK1o
+Date: Fri, 16 Oct 2026 14:35:19 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Message-Id: <7e888746-4220-494d-b8ab-00bdd5da5876@app.fastmail.com>
+In-Reply-To: <xmqqzewdfuhm.fsf@gitster.g>
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+ <pull.2250.v3.git.1792097882327.gitgitgadget@gmail.com>
+ <xmqqecdqk2qr.fsf@gitster.g>
+ <01232f89-6f57-48d2-b6de-d51c91b6fdb3@app.fastmail.com>
+ <xmqqzewdfuhm.fsf@gitster.g>
+Subject: Re: [PATCH v3] doc: checkout: rewrite detached HEAD state explanation
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Antoni Borowski <antekborowski11@gmail.com> writes:
-
-> The --debug flag is aimed at developers debugging describe's search
-> strategy, not at end users. Translating this output makes it harder
-> to grep for known strings, compare logs across locales, or paste
-> output into upstream bug reports written in English — all things
-> developers routinely need to do.
+On Fri, Oct 16, 2026, at 1:03 PM, Junio C Hamano wrote:
+> "Julia Evans" <julia@jvns.ca> writes:
 >
-> transport-helper.c already follows this convention: its "Debug: ..."
-> messages are plain C strings with no gettext wrapper.
+>> This is a case where if we really want to make sure it's clear, we need
+>> to go get feedback from users. There's likely a better way to explain it
+>> but I don't think that this conversation will result in an improvement.
+>> Really doing a good job of explaining HEAD is a pretty big project.
+>>
+>> It's not clear to me if you think the current wording is unusable
+>> or if you just think it could be better.
 >
-> Drop the _() and Q_() wrappers from describe_commit()'s debug-only
-> fprintf() calls accordingly, and prefix them with "Debug: " to match
-> transport-helper.c's style.
+> Then let me make it clear.
+>
+> I do not know if your version is unusable or good enough, but if you
+> are going to take one version to guinea-pig readers to test and
+> polish starting from that version, I think what I gave you would
+> give us a better starting point.
 
-Nicely described.  One nit in the proposed log message is that you
-are not removing any Q_() at all ;-).
+I'm not planning to test this version on readers right now, no.
 
-> Signed-off-by: Antoni Borowski <antekborowski11@gmail.com>
-> ---
->  builtin/describe.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+Here's what I wrote in the first email in this thread:
 
+    Often when rewriting these explanations I go through a process where I
+    ask users' feedback on the old explanation. Here I didn't do that
+    basically because that process takes a long time and I'm working on a
+    bunch of other time consuming docs projects so I did a quick rewrite
+    based on my previous experience explaining detached HEAD state to folks.
 
-
-> diff --git a/builtin/describe.c b/builtin/describe.c
-> index c0abc931a5..775f9f27f1 100644
-> --- a/builtin/describe.c
-> +++ b/builtin/describe.c
-> @@ -351,7 +351,7 @@ static void describe_commit(struct commit *cmit, struct strbuf *dst)
->  	if (!max_candidates)
->  		die(_("no tag exactly matches '%s'"), oid_to_hex(&cmit->object.oid));
->  	if (debug)
-> -		fprintf(stderr, _("No exact match on refs or tags, searching to describe\n"));
-> +		fprintf(stderr, "Debug: No exact match on refs or tags, searching to describe\n");
->  
->  	if (!have_util) {
->  		struct hashmap_iter iter;
-> @@ -419,7 +419,7 @@ static void describe_commit(struct commit *cmit, struct strbuf *dst)
->  			}
->  			if ((c->object.flags & best_within) == best_within) {
->  				if (debug)
-> -					fprintf(stderr, _("finished search at %s\n"),
-> +					fprintf(stderr, "Debug: finished search at %s\n",
->  						oid_to_hex(&c->object.oid));
->  				break;
->  			}
-> @@ -477,14 +477,14 @@ static void describe_commit(struct commit *cmit, struct strbuf *dst)
->  		}
->  		for (cur_match = 0; cur_match < match_cnt; cur_match++) {
->  			struct possible_tag *t = &all_matches[cur_match];
-> -			fprintf(stderr, " %-*s %8d %s\n",
-> +			fprintf(stderr, "Debug:  %-*s %8d %s\n",
->  				label_width, _(prio_names[t->name->prio]),
->  				t->depth, t->name->path);
->  		}
-> -		fprintf(stderr, _("traversed %lu commits\n"), seen_commits);
-> +		fprintf(stderr, "Debug: traversed %lu commits\n", seen_commits);
->  		if (gave_up_on) {
->  			fprintf(stderr,
-> -				_("found %i tags; gave up search at %s\n"),
-> +				"Debug: found %i tags; gave up search at %s\n",
->  				max_candidates,
->  				oid_to_hex(&gave_up_on->object.oid));
->  		}
-> @@ -565,7 +565,7 @@ static void describe(const char *arg, int last_one)
->  	struct strbuf sb = STRBUF_INIT;
->  
->  	if (debug)
-> -		fprintf(stderr, _("describe %s\n"), arg);
-> +		fprintf(stderr, "Debug: describe %s\n", arg);
->  
->  	if (repo_get_oid(the_repository, arg, &oid))
->  		die(_("Not a valid object name %s"), arg);
+    I thought this could be a nice quick docs win on a topic which many
+    users find quite confusing. If the changes here are too controversial I
+    can drop it for now.
+    
