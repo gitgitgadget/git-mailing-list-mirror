@@ -1,116 +1,265 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3A83BE17E
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 09:18:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792142319; cv=pass; b=LUmCw94S22aMU2Ef3cqwj1bXiCX4XJ+U63xvxQbL2iyN3v/Ct/XF/khySZK7bSqC/IQ8Y4o+dSSmcXczu0Q+GN/XAcDRgVWvy/ZCpHALggYehd054CwlPIeX4Js9NiaA5/MDvpYwtSTXLGUz/F0Um8+VIL26q+wadX3K2laelqk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792142319; c=relaxed/simple;
-	bh=8d6yY0zombhpdW5xhE6AEVn/0fMu5YKNuHqg0uVxSmE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=N9WHz3FWwevaoq4iV7CgxcGIxdCHMJNXH9zJKD8sm5UmoUHKYJBR8QTChG/mAqEkANUoqaUJCFWn9jMWvN3ymxEYRWknO1XSHUj9/BeY1Z41wFt5boXwcnj91Gmt7PPHGAg/eKmtIQl8FRwoNnELybGgWtZNtq2gWVkeg5gc9nE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oFjHQRHJ; arc=pass smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BD64611E5
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 09:18:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792142334; cv=none; b=tiUPXjGEQ51bFWNcUbFUng7g6qN9F6GI16WkIqXTzkFQq1X2stsfFu15NuuYmmHVl5tYHzTVmWZdZGvdrV8qOF51ZEZfUOMcivAstpOedtYfdHKBsM8P4/C5VuBBeAAo4cMCvc09BJ9WTGtjNBXkfvtKQldyCoyb1dloG1rEQTg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792142334; c=relaxed/simple;
+	bh=Mw5cDoQaZWlUUamabmkC0tnSmqf8bYiQ0axaiXUOkRs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qynHXaOHAdt8RnnpxWoWXSUhOGr0XS3fhlsLjz02vg9V5yKL96X7yUl/oa664QdtXhIiDDKN2ibRbdVAS3wqxhI9nUzMqDwEDkPy7BOQEwLOkYTkjSj6Cs2Xvy6/7KVCSyChjzS47ahZJ7JfFVzP1J5A9q+nP/m6TJeCogmLg54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ke3gkiDo; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oFjHQRHJ"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6b167ffd132so10069498a12.1
-        for <git@vger.kernel.org>; Fri, 16 Oct 2026 02:18:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792142317; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ejcSEanzF0bXjdl2M430CMpJVRx+PyJmEFSnQ1+h//Lr8+NU1Q0rjEfjX29/IOfoGM
-         1sZXFE3unVqf7swRNIfXTX7TP/w/rLU4As85S2pUmjDoCmlmflg7/x/1zmJiYw4W6kgw
-         rAKI3WSyr+MuydnmblWN8SkQvfpooCX4tE1HARDx0vUDv8eca4R8T6XDboMoDFDFdEMw
-         1iGUMbQW7oS2A0I1KR6PyL4wd3oWpxkvB5Uow3H523IPRaks1x1C9Y33Dyf5er7Bn5/p
-         JizCvLOvibYqKwStWDFBf/kDHm4T1St6wqeW8DmbR6WxrLqecA3o6Ub2gLpfIvr0H1TO
-         4D0Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=f4ENMpy8qWxaveD24VNd83NaVXTkMSCJ2wXjKu1Nlek=;
-        fh=GV+q3+xoptdzTjdo/fAURyeoLF5hkow4oLuqL90b9Bg=;
-        b=k0W7R3aSFCuSCYaEVJutrmcs9mIa5jxpIWVUMRfq7UNpSfpqKeY9QN48xoD9Q3ClHZ
-         pYubHyBf4vi4gl4xeYSlrh4rVoJfGJ/3NYDGsjoEeBRPT0HxRY5v/uvbZsQMr709LVam
-         cphT079on5lml21IIl97fLmwuZFZxx9ZKy5cnmHkF62WSva2gyn++R9pgazuc/ZG132B
-         lB+mUyUyakR8UkI+9kawyJMx1LzfPvJJwJ/0cb4+MFxy3rRATxF+f9+HvjbPrDAC+kOW
-         xMEcRHXUTzzLaT/I48VSFozBavwrssOlzIg0Z39uvKmZKbfsrEA+2vo+EipehNVW8hIC
-         o9Bw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ke3gkiDo"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c2e3846d1caso998597266b.0
+        for <git@vger.kernel.org>; Fri, 16 Oct 2026 02:18:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792142317; x=1792747117; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=f4ENMpy8qWxaveD24VNd83NaVXTkMSCJ2wXjKu1Nlek=;
-        b=oFjHQRHJEUH5CcgXkPQpzIXfJVH7li0wz7kYBCGibuTv/uil7Rv1ENihwzc4fbPBL9
-         IrfLrAx3SOecQXGGBjW9Jyw8u7J840AQ5IrN/geDZRsxkLC9n7KGmt0NxK++LSp5TcAb
-         AZ2PwKT3AOBkxQldTKtO6KBGkjDZWBOUggC4TrPVxAN2pj4+urE+DHwcCXJLWf4VuQG1
-         iIZJkweCyjG9yoes4d4jB2cKqWd8/xvxIFmtfTGPuKR6sjisjIsujH3tBGAR5bXnmDOM
-         5uI16RS3dkpIhz0GwvqvfLSPRaoAlyL/zJ+lWWTh+hrQbbIxD4gwD9kflEE7KQCSZr9g
-         I3rw==
+        d=gmail.com; s=20251104; t=1792142331; x=1792747131; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=6ECVr6mkK7/zGW4naUsrJp5FsWnZ6Fb5O5VRzuLRUYk=;
+        b=ke3gkiDo3BeAxuLiWkSMMNNNzSPsVrK/J2MpeFf8bUXjJp67ldIgvSlNFPYfcYMYiv
+         rjtMGyhQ1lOtN1R4p0PbY7irdVz1hH5oDAtHgSjcOe69dW6MwafQWOYShC5cZPrC+ES3
+         gpGbp4jkiF5XQvzc/ox1JC6lDtPhYJv6wkczO8Gw2c6/z7cXlBcdbr81dPwbni0PVIhN
+         VP/9B/4eSW81RM3NYFrTZ6OSEBARU379qhjUHGm5n/CVqe4U2cmSeakhqz7Ukhx9gffw
+         RMOoucD4veyX74CIm+z0ge9j7gmQlwK1sqM9/flZu3Dw03b20DrfIhFMXZH1k5LHMxEA
+         HRWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792142317; x=1792747117;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=f4ENMpy8qWxaveD24VNd83NaVXTkMSCJ2wXjKu1Nlek=;
-        b=NygW5VpXG0rxGrZ44OLh8J6gr6DFYwAipmUqY0fhNttRsame1tjiCZU1D7jDy/aGlv
-         WIN7GSAd8xJWTdyc2B2fv/do3+xvOJYs/ax5PkrUASbhgpet5tC9zrmTnImAI6XLSdbm
-         vczCsEQ9EF0Y3t7lYTZmMyrzdJld0w7aknzV1ESjIyl1GQK67898tfLgqkgl08bsvS3Q
-         0EzWImqX/tlo9yQ561U8TlsXfDGuGxeRPq5apqFeZ+P82PxrevXBY3st+PrNEcWQPFY6
-         c2K5AcjUJgZ7xJNt5u4KjB1ARODvtFXIPtFyt2EtC+EeECHx+yyHrYyij4h+5XB9TL3x
-         chZQ==
-X-Gm-Message-State: AFq9FYIwkz6csZeKJoOH+iGL2iN2YQMZIF0f/ZFDbLCDcraC6mEow19x
-	oAaDORx1DtixKj2HBG3p7rAuGbn68iyHahioa3jWneuHfjCYGcXaYTMNtYylZxxdIUlbwtdcNR3
-	2sKzpGNSlc2AS9bKsoGIOM1KAiFuEY/4=
-X-Gm-Gg: AYBFou0FEBCS8NQPD0kXEoalkwT4osWNmvzz/+igswlCIF1E1ALiHFobWkD2TTkQKv+
-	LO0tv7kIra7ubUQvDHYtiBNohjtg2me1jjc+uHq7zQ3PR2+ByRQetQ/F+0jNVgREq9Vz3vEoE2S
-	rgy1qend4YwzW6veiwjeSEvdyClasERy0oI7DjjG6QQooGdrsZrfT6qgouwPTNBrBhz0vyGA3Fn
-	Xw2MiB0BdGQGDM7BeV4tTKdiJgxfydtLfv5kPhpQJ4B6E2bdiF8zT9UnIvUjJuNq0Y0oNglXRAm
-	ueFStUPt+cvh1fYVl6Kc0gB887/Ovvz6fxDBtBvstne3GWB9GW+p3aSZMJp1XxjfU22biotuLR2
-	ta9lVapRaeyQWY2aYNYRG4CK9
-X-Received: by 2002:a17:907:9801:b0:c2d:be57:f73a with SMTP id
- a640c23a62f3a-c31a9fcedffmr2157906466b.13.1792142316723; Fri, 16 Oct 2026
- 02:18:36 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792142331; x=1792747131;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=6ECVr6mkK7/zGW4naUsrJp5FsWnZ6Fb5O5VRzuLRUYk=;
+        b=Qug5xWNbCgXqDZSV4314vaQLf824sO1cYQeQSCYXwj3BC0wggBcHox66JuFETcw2h/
+         y9a6Z5ZNVTdzDKQF0kkNddrnh/H1+w/Rt1Ok1Eurb1ki/qUYn/fA0QxE6msoS348VO8s
+         SOQbvX8bVuR7FaptnHEjfXhRN0HvCStzWpe3UsyYTIEYZ7GQX1YKQMLq+0oUicy+eIpB
+         uFJ1m9yjYRz6fsCWFn/asRTq2aYX7cf6wbUmebtOVQ1wHG2gOnPBdQcyqacvGd2il6bh
+         wG5LROEcvN88a3h0gAU0XdcYMBLFjowIRxWr68aP8F2tac2UbOhsyrd1jV68+SpsN6+R
+         OfkQ==
+X-Gm-Message-State: AFq9FYLiYdeQzU5Z77YQ5orGwC20gVLNz2SKXIKO128plIjUC2UHQrcF
+	zUGLGu6PN9doazdc8ovU8mqPCdJMcD+z0kYAn75TBGtTF8f0MwGT8pNdZf9wBw==
+X-Gm-Gg: AYBFou1RuP4wq46H7117K9pyY0BrP73HrlMyL2YovX061/IaDwNhn8PtVSPzqJXWO6w
+	ugYfl4nYD9nZpdjLr8rLYGwZ+3JQtM5FRV9OiCkrXio2vme0cL43PetUjYEqfi4QlCY2HTmKg5c
+	/ZU1+2LgzuodLifKK96okOydqocn26MM/NWhkQH3kRjaWBB6tkM/Z64+Iz9fJ4jtCzQTUVsdRv1
+	i5J4tyQKbnlHktO7Z8bQ0jbvkAgA1pv9dvyyXl0qd6pQvrE+Q3JirWFwZH0u+wkWDYhXhetcS9l
+	4hTUfly9F45W1QnRWeRet6fBAfrtG02tmjKJrTVTdTfXPrQRZttHQKLAfNo64E9dAsiU9OeEQHa
+	fY2e+NToIV57gWw6r+EM1YSDdcsTPUc1LPK9GKoJPHOE1vtI32OP43SAK/y6McO9XYjToDnNpMt
+	lDYwRfywj2YGitmdkteQvJxoDqVNVh8zxbYIRDIYJrLfCQNVdkB61CpVUDaZuHFlH8YMek2zfzi
+	3/p6mTUY6k6TW/5HA0qWc2mWPFjbg==
+X-Received: by 2002:a17:906:e10a:20b0:c33:cc6e:105a with SMTP id a640c23a62f3a-c33cc7d5804mr997260166b.23.1792142330965;
+        Fri, 16 Oct 2026 02:18:50 -0700 (PDT)
+Received: from prometheus.tail8f5cca.ts.net ([85.11.110.37])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4090dd3190sm55269766b.23.2026.10.16.02.18.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Oct 2026 02:18:48 -0700 (PDT)
+From: Szymon Wilczek <swilczek.lx@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Patrick Steinhardt <ps@pks.im>,
+	Szymon Wilczek <swilczek.lx@gmail.com>
+Subject: [PATCH v2] cache-tree: do not die when the index is locked
+Date: Fri, 16 Oct 2026 11:16:47 +0200
+Message-ID: <20261016091647.1332692-1-swilczek.lx@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261015214242.1196722-1-swilczek.lx@gmail.com>
+References: <20261015214242.1196722-1-swilczek.lx@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2256.git.1791978767497.gitgitgadget@gmail.com> <pull.2256.v2.git.1792135548923.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2256.v2.git.1792135548923.gitgitgadget@gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Fri, 16 Oct 2026 10:18:24 +0100
-X-Gm-Features: AclHuK8S-8TwpAVcepmCI39ri7Wb_M_9AbBq3dDhFoUBlWuQqhl1Y44RYwwVgPQ
-Message-ID: <CAPSxiM9rW9mLdUVjMF9dVYNAPj+FFRShqFrbikqXmbPxd+RSxQ@mail.gmail.com>
-Subject: Re: [PATCH v2] [Outreachy PATCH] t2030: modernize test path checks
-To: Srujith A Poojary via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Srujith A Poojary <poojarysrujith@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
->
-> test_path_is_missing for clearer failure diagnostics in test output.
->
-> Search with: git grep "test -[efd]" t/
-Please, remove this, it is not needed and kindly go through other
-comments on other Outreachy applicant patches.
->
-> Signed-off-by: Srujith Poojary <poojarysrujith@gmail.com>
-> ---
->     t2030: modernize test path checks
+When a background process such as `git status` holds `index.lock` while
+`git rebase` picks a commit, the rebase can die in the middle of the
+pick and leave the sequencer in a state from which `git rebase
+--continue` refuses to run:
 
-> Range-diff vs v1:
->
->  1:  641b9330c9 ! 1:  93cf6c12f4 t2030: modernize test path checks
+    error: you have staged changes in your working tree
 
-I will also advise that whenever you are sending your patches or
-sending any query, kindly cc'ed
-the mentors for visibility purposes.
+This happens because `try_to_commit()` calls `write_index_as_tree()`
+right after the pick has updated the index and written
+`CHERRY_PICK_HEAD`, and `write_index_as_tree()` dies when it cannot
+take the index lock. We then die before writing `rebase-merge/message`.
+Since 356ee4659b (sequencer: try to commit without forking 'git commit',
+2017-11-24), this call happens in-process. Before that commit the
+`die()` happened in a `git commit` child process, and the sequencer
+stopped cleanly with its state saved.
 
-Thanks for your interest in the Git project.
+`write_index_as_tree()` does two different things:
 
-Usman
+  - It turns the index into a tree object. This part must succeed.
+
+  - When that succeeds, it also rewrites the index to populate the
+    cache-tree extension. This part is allowed to fail without
+    impacting the result; as the comment next to
+    `write_locked_index()` already notes, failing to write the index
+    here is fine.
+
+Yet the function locks the index with `LOCK_DIE_ON_ERROR`, even though
+we only need the lock for the optional second part.
+
+Drop `LOCK_DIE_ON_ERROR` so that we take the lock gently, just like
+other callers that only refresh the index, and skip writing the index
+when the lock is held by someone else. This also lets `git write-tree`
+and `git am` proceed while another process holds the lock.
+
+Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
+---
+Changes in v2:
+
+  - Reordered the commit message to describe the symptom first, then
+    its cause, and the fix last, and explained the two things that
+    `write_index_as_tree()` does (thanks, Patrick).
+
+  - Spelled the lock check as `fd >= 0` instead of `0 <= fd`.
+
+Notes from v1:
+
+I ran into this while rebasing a ~120-commit branch with Magit open,
+which runs `git status` in the background. To recover from the
+half-picked state, I had to commit the pick manually with
+`git commit -C CHERRY_PICK_HEAD` before running `git rebase --continue`.
+
+This can be reproduced within a few tries by rebasing a long branch
+while running `git status --porcelain` in a loop, or triggered every
+time in gdb:
+
+    break try_to_commit
+    run
+    shell touch .git/index.lock
+    continue
+
+If the lock is taken slightly earlier, during `do_recursive_merge()`,
+the pick still fails, but that path reports an error and reschedules the
+pick, so `git rebase --continue` works there.
+
+ cache-tree.c          | 10 +++++++---
+ t/t0090-cache-tree.sh | 13 +++++++++++++
+ 2 files changed, 20 insertions(+), 3 deletions(-)
+
+diff --git a/cache-tree.c b/cache-tree.c
+index b8cbb5da22..671d4165bf 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -809,11 +809,15 @@ struct tree *write_in_core_index_as_tree(struct repository *repo,
+ 
+ int write_index_as_tree(struct object_id *oid, struct index_state *index_state, const char *index_path, int flags, const char *prefix)
+ {
+-	int entries, was_valid;
++	int entries, was_valid, fd;
+ 	struct lock_file lock_file = LOCK_INIT;
+ 	int ret;
+ 
+-	hold_lock_file_for_update(&lock_file, index_path, LOCK_DIE_ON_ERROR);
++	/*
++	 * The lock only protects the cache-tree write-back below; if somebody
++	 * else holds it, compute the tree without updating the index.
++	 */
++	fd = hold_lock_file_for_update(&lock_file, index_path, 0);
+ 
+ 	entries = read_index_from(index_state, index_path,
+ 				  repo_get_git_dir(index_state->repo));
+@@ -828,7 +832,7 @@ int write_index_as_tree(struct object_id *oid, struct index_state *index_state,
+ 
+ 	ret = write_index_as_tree_internal(oid, index_state, was_valid, flags,
+ 					   prefix);
+-	if (!ret && !was_valid) {
++	if (!ret && !was_valid && fd >= 0) {
+ 		write_locked_index(index_state, &lock_file, COMMIT_LOCK);
+ 		/* Not being able to write is fine -- we are only interested
+ 		 * in updating the cache-tree part, and if the next caller
+diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
+index 0964718d7f..4b7547e108 100755
+--- a/t/t0090-cache-tree.sh
++++ b/t/t0090-cache-tree.sh
+@@ -286,4 +286,17 @@ test_expect_success 'cache-tree is used by write-tree when valid' '
+ 	test_grep ! region_enter.*cache_tree.*update trace.output
+ '
+ 
++test_expect_success 'write-tree succeeds while the index is locked' '
++	test_when_finished "rm -f .git/index.lock" &&
++	test_commit locked &&
++	>uncommitted &&
++	git add uncommitted &&
++	>.git/index.lock &&
++	git write-tree >actual &&
++	test_path_is_file .git/index.lock &&
++	rm .git/index.lock &&
++	git write-tree >expect &&
++	test_cmp expect actual
++'
++
+ test_done
+
+Range-diff against v1:
+1:  d16173cf1c ! 1:  cdfdd81c3f cache-tree: do not die when the index is locked
+    @@ Metadata
+      ## Commit message ##
+         cache-tree: do not die when the index is locked
+     
+    -    `write_index_as_tree()` locks the index with `LOCK_DIE_ON_ERROR`, even
+    -    though we only need the lock for the optional write-back of the updated
+    -    cache-tree. As the comment next to `write_locked_index()` already notes,
+    -    failing to write the index here is fine.
+    +    When a background process such as `git status` holds `index.lock` while
+    +    `git rebase` picks a commit, the rebase can die in the middle of the
+    +    pick and leave the sequencer in a state from which `git rebase
+    +    --continue` refuses to run:
+     
+    -    Since 356ee4659b (sequencer: try to commit without forking 'git commit',
+    -    2017-11-24), `try_to_commit()` calls `write_index_as_tree()` in-process
+    +        error: you have staged changes in your working tree
+    +
+    +    This happens because `try_to_commit()` calls `write_index_as_tree()`
+         right after the pick has updated the index and written
+    -    `CHERRY_PICK_HEAD`. Before that commit the `die()` happened in a `git
+    -    commit` child process, and the sequencer stopped cleanly with its state
+    -    saved. Now, if a background `git status` holds `index.lock` at that
+    -    moment, we die before writing `rebase-merge/message`, and a subsequent
+    -    `git rebase --continue` refuses to run:
+    +    `CHERRY_PICK_HEAD`, and `write_index_as_tree()` dies when it cannot
+    +    take the index lock. We then die before writing `rebase-merge/message`.
+    +    Since 356ee4659b (sequencer: try to commit without forking 'git commit',
+    +    2017-11-24), this call happens in-process. Before that commit the
+    +    `die()` happened in a `git commit` child process, and the sequencer
+    +    stopped cleanly with its state saved.
+     
+    -        error: you have staged changes in your working tree
+    +    `write_index_as_tree()` does two different things:
+    +
+    +      - It turns the index into a tree object. This part must succeed.
+    +
+    +      - When that succeeds, it also rewrites the index to populate the
+    +        cache-tree extension. This part is allowed to fail without
+    +        impacting the result; as the comment next to
+    +        `write_locked_index()` already notes, failing to write the index
+    +        here is fine.
+    +
+    +    Yet the function locks the index with `LOCK_DIE_ON_ERROR`, even though
+    +    we only need the lock for the optional second part.
+     
+         Drop `LOCK_DIE_ON_ERROR` so that we take the lock gently, just like
+         other callers that only refresh the index, and skip writing the index
+    @@ cache-tree.c: int write_index_as_tree(struct object_id *oid, struct index_state
+      	ret = write_index_as_tree_internal(oid, index_state, was_valid, flags,
+      					   prefix);
+     -	if (!ret && !was_valid) {
+    -+	if (!ret && !was_valid && 0 <= fd) {
+    ++	if (!ret && !was_valid && fd >= 0) {
+      		write_locked_index(index_state, &lock_file, COMMIT_LOCK);
+      		/* Not being able to write is fine -- we are only interested
+      		 * in updating the cache-tree part, and if the next caller
+
+base-commit: f57c9a73884400380bddd172acc88b569834f909
+-- 
+2.56.0
+
