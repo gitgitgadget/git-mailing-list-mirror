@@ -1,147 +1,200 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DCD49BB52
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 18:36:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792175799; cv=pass; b=I1aOL6/Ep+zNmIQRY4kLeSOXyXoaLElK/GlkBByUt9ijq445VdElW5czfa6EH+lAxOJ0Z+NfgfyWUcOnwVtwu3Te5dQ99E91e6xt768N618SiqF+UOQYbBye9GjWGX0ogMp5f00etS4bFVpr1kZ4ztxZJBihzoylkk+QTPyMuaQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792175799; c=relaxed/simple;
-	bh=i+dhXyRxiNie+BvMUAX9iNj3lrqA6qd3N013Z/YTXVY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=A5/vKDL4KiERkGgPAVgJWeJeZ0Z/says0bWAc4/oFpnzaGYHJiGr12cOwQtILOjdpvTjl6FH2rP3gSBcvkVJAEzo4puB9LRz8x/qj+IWAVpPrMQ1yec+OgfRoHty0zk3mM2mHmFQYoWJz8CUbbIllgmVpGleIlI+yYBbFOylmDo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ru9Q4KZ5; arc=pass smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BA1494287
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 18:37:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792175877; cv=none; b=k3jLCKYbo8AnRPDfeoJe4OQ8SJRH0OcVwEe+KbjDhQds4+SHHXq0Lf0S0YivjjPtlJwoVyNLi8+tJsN4LJg3/TlccJuQY5UF9rskqSP1mwDnxlX+24oBYmg1fGB9KV+oLw2YuQzCp+35HSPNle0PVVLcMmF+/qJccdouTux1y+A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792175877; c=relaxed/simple;
+	bh=pLZcWpwIedfx73qXa1Y8ekalkr0W9HG1xs/XgokO/zQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JsfjUx1QlcVRXMhiNi20Nyqv902Cp7DLIl/K6YA+Sm5tkfkaxjTe+XFXtA9ARn3LLMdVEkP7qbiZpO06UGBSNlXpAEroGtMmjcvrwQvbWdHarZYm32NRWLgw7V/V3UutbjkAkD04ofA+aOeoxDMUcK6wjm3bWyT5e5/Q41jkfVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b6Ipwh7a; arc=none smtp.client-ip=209.85.161.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ru9Q4KZ5"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-89f81643121so146416b3a.2
-        for <git@vger.kernel.org>; Fri, 16 Oct 2026 11:36:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792175797; cv=none;
-        d=google.com; s=arc-20260327;
-        b=iyEqHpTJFKCwjqAHc6L0axzmoQnROgfIeEq9KUIFTahl21cTlzQvy5CZy6K5I7ZoVs
-         tZV/32MFqYS8dfI1TsNpx35cvGqHkkiOAo1nUuBO9vEI05tZufJYelnLfABSafmkZBUT
-         1kgov1n0MqTgAutxvDboNsLSV6JmktpJNel+Qgmtl7EP7kH3bTTnxtCZCgQP0gAPe5eI
-         MZXNLdJz2Fdn1D18mPpe5c9X13xSdLZUhxxAU3rDs+nuXLAg0MxDbGxkYkRcpdYVxedW
-         Rk3Yhy0JqwOl6L6iAF8NKO8hkjJ5TvPr2MILhKnEXEvujABCa+c0ZlCLtZKw+XpVQpFu
-         hh1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=F0FcUXGK5lo6xWcyJRd8zS76vdKZ13UpPzXMYR8tOSg=;
-        fh=Ox4D5aCb0Wm3NuWmIZhbrD5IUgm6JPtaEE6xbKungY4=;
-        b=OLYE0gMKxXjpQlpFxecVEJB7bCX7Oq0Uvm4ExYN+Z6gzW65/W71VCMRz+1vjsnQQi2
-         EF8Ljvy96Yfr8w9fyjMx4Xkn74UExMqww29YBHAxmsj+NZeaT/pyIWiBsh4HFWzIiQxU
-         YPk4yY4nlE+lJUAgYBd+qXE2rc7fYAvhaV6lddFWPtcA2uLU/a+gvF8kG4smOzvSUOei
-         qg04sFJZ/zRlMhlk20a+zZrkmzf8m2hzx6Dm9wq7Nv34+QANNMGP0r6xRZCbb4r88gs4
-         HZQvXX0mVQdslxv/JK3XCPwLCeOfE/gx+WHAtpl6RNyew4bEqXnl8UpfAjQ30Aw0qSa/
-         DMHw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b6Ipwh7a"
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-6df5e315bd1so176707eaf.2
+        for <git@vger.kernel.org>; Fri, 16 Oct 2026 11:37:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792175797; x=1792780597; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1792175875; x=1792780675; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=F0FcUXGK5lo6xWcyJRd8zS76vdKZ13UpPzXMYR8tOSg=;
-        b=ru9Q4KZ5AmG6sRXu0G8lwHhJXKPk8xp0zyqrtdjIyxujIX5lB+oESXwgrXpt+7jxH9
-         8TgYgdVPdVQPwmvmAKJRtwprErKSnGRpjRrTx2wRyvkcespYr6XA/NFQTJSw6GbYFI/G
-         F0Aqdve5yElET9tP2TpMcO0HvRrorj40sn9T8bOUL3OJf+XjjPU5C4kLAGypz9B8TDC0
-         i3VGoA8g53/uhZG6fOFj/ZVDT1kzGo5RdfiS85ARABYSICZxx8HP2rsIqluL2UcHrBPm
-         Epkhc9P2Lr3tjERJb4V3Bm3m7cRHpi//50VextDJxmPed9AiL7ws0ei/6MxQT401HZY4
-         iqjA==
+        bh=KsVmjN3DyuAGfPhngjenm4ePwCaQtPk22xtGC9iTuSA=;
+        b=b6Ipwh7an3mSCZS6XojMvGtLiNdeu5jrE/U1w3XTEpHS8kSCtFPa6stozU0TD1NRvM
+         D86OdPrbOAOI86eZOXEpAG6cmZs6B2DNMSAcQuKGNF5xdkiS8E6QDiRkBClTdbq1g3c0
+         lQbcGDil+C2VZqWLH7DvUUGN+vBLtPIyxIt69oYutGipMPHzzVWFkWqAdFmGssIXUPjQ
+         YnSG/AEh4dBPne+DYDEAEs9Wyu/fWZ4OFMxcsksJB3ID2nqe0bkwxTbZebQno92253DT
+         YHLiEzpR0/NtP8ci1vk7xdBsefL9HnZwuTNudX6+Ft4bIlY3f3WCVqTqutf8o3E4OsmO
+         w6vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792175797; x=1792780597;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1792175875; x=1792780675;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=F0FcUXGK5lo6xWcyJRd8zS76vdKZ13UpPzXMYR8tOSg=;
-        b=zafdzh2yVpwO67Lhi0yAgKwZuBIxwFgnXdJTiylDKZMk1DqatUyeM7k7us4zIBTFXi
-         m6Qi7/rt6x7Or3bJPcQBiJZj40+HEtFCO1DLX3Oa7HXl1b6RUg9kcvm0KjW3cJRpe5eG
-         7X9j0DCjEIkJ6mcaa0xqpJ/0hJASO4GSCWxr8Y8Eo/jx2hPi61cdia6c2M+ZVXe9Emup
-         G3/Qkc81ANI63p8B4Jl3TTaV6J0fCYWmHIY8OYNb5Q33RNzTvR1OUfo8FlM3yDVGL7iQ
-         +yMR+EQMmRdU+j3aLBU454uInZ2noOJ8gnDObkSVyMwom4//fLrZzxh6VD5HyqT/vtmu
-         Ayjg==
-X-Gm-Message-State: AFq9FYKX3rW094o9a7E2UOLjPYkMJS5kGDLATWQ0HKLr87vFy1IvNKWK
-	EcTpx4GAeD64khDG2xU45pPqrloJMIuuOQB+Mm1jGTvbVISgxFSeehC8REUg00NMfvrax7B5Srq
-	jlTilVIQVgINizAsnXuVq20J45YHGMIzuQsKT
-X-Gm-Gg: AYBFou3fKAYE7fPMGae5mmdZwaHOVzUzcsWFQRF99bhefGto1vgTW+C2FLPK2F8sNLW
-	L9b1eu6zDC9khal5tRQW5WCefaXe0O6yLr+kwNqDfNSVphWLQtaTr0N7FRf6WvlKd2AWvzh/h8Q
-	i+pcoblyMjVOSUU2bv9flM6zc5WF7aPbCVGQtrxw9LCoVyodvxdIy+bdZ4bYeVlpt1eQ/gcvAQT
-	U3+gzZFqB9Tl4x8FbpPutfOQeSq8kuxSm1St6KkTEh2OZHMY2uXzplINaUnp8uBFL6ngwCfzrfF
-	aD2v+20JYyPy1gPEYJNXUscbdOPK6YktvSHckKua2SvjFHtEycA4/PBTM+h9Wz5Ca8v07ia21o0
-	u11R7NX4W+Aw4uuyKVI6juto4eUf14d+LlS/TOl0Gt/gUywHxKgRav4qAqXhCt5NvEJbYKodjH7
-	7eSJTvDCDtnR3taevYOn0kEgJ6z18IXw==
-X-Received: by 2002:a05:6a00:1394:b0:87d:3894:197b with SMTP id
- d2e1a72fcca58-8a04cb1ed84mr345417b3a.59.1792175797564; Fri, 16 Oct 2026
- 11:36:37 -0700 (PDT)
+        bh=KsVmjN3DyuAGfPhngjenm4ePwCaQtPk22xtGC9iTuSA=;
+        b=DkB/mIE3zSA3a4qBWZtKaBKSiIv2fFdwLwgBA9tdZHyhyhq/2BXjyjLq6Rm9VrthTj
+         nLKwn6Lz3lstSrrTeUPgg00Gvq55SYoTA36nl/UI3dzM82iI1WnvQPVBwzP1MZu26IJx
+         /bGwtrE9k8Rzj5e6+CdEeIvZ3w3g8TVeY9RjTmXYX4WHdO8/RS+7l4CQ4lp9Jo2jLK54
+         YPGJu0DAOFeXI1K3WVNFltrVNRpihYH1nZEubtU/CUHr0pjfDP6DFmXLzCeGemSptjAg
+         rJXxX/yhPjEjBB4gvX+DC1x6bFZC5bxe7/Kscw2uO2QffefhqcDIMmeP5tXPAjgTQB5M
+         AvVw==
+X-Gm-Message-State: AFq9FYJx3kCOy10zfWnX3DAEc4TxxCLrrKzB6VVDYn+Bj6A9GJmIADLL
+	n5Yh4ZcCVowH34wqshxFf+J3mLsNEC2M1n08gcnnt5NeqPYIEhN6s9bQx8Iwsw==
+X-Gm-Gg: AYBFou2tnGl0/jteJopYB/tDF6zgCwD0VH+tlvuxP9W33vCBZU6JfKA8Y1+ybXYpNdg
+	TsuQqGGbOzK/xWvcUOXw1yuZP420mXHklYUAaZ9sZkZoXWg+XzWmd7f52ou3mTvm6zJdQ7o4eXK
+	puHg27bjRfbpEamH9v+gFX0LBr+8bB3F9QHK5Brifx/YnSFb86p93BwOlxql0icAmS7w7G1Nv7/
+	bRoBt0rq38OHjv4HUYuJE/D7ulXtBrUQeeX1USR4RJKAVz2C8o62NoU2pG531Fh46yFTXhDtiYt
+	G5vcAIoIqZ/H7xyMOR2n92JSruHBSox2jd6m9SrqLLqFQD64SZf9hSojphmaA1cVzPVOQ03Wkm+
+	33YF/mPEYiOilBJunbvLHO023wp6jVoUakq+hC9QIAez/syJcG6ilkK6ozdlKZFhLpZYAgGssdK
+	DH0ap1/B2HFYpG3y0pYVY5LFVoxeKsi08c6dwXPwFgPg4OCw6V13+kX1lX61JRpzADX9DAno08n
+	BknsMEAWAm59XiTtq0pcuha
+X-Received: by 2002:a05:6820:82c:b0:6f9:6bb7:1818 with SMTP id 006d021491bc7-7035649823bmr233923eaf.39.1792175874969;
+        Fri, 16 Oct 2026 11:37:54 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-8443782295fsm1138060a34.14.2026.10.16.11.37.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Oct 2026 11:37:53 -0700 (PDT)
+Date: Fri, 16 Oct 2026 13:37:50 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/3] object-file: explicitly write ".keep" lockfile
+Message-ID: <atJhElOsxd1KaZJ_@denethor>
+References: <20261016022901.3838402-1-jltobler@gmail.com>
+ <20261016022901.3838402-3-jltobler@gmail.com>
+ <atHLDysZmYGyMiKk@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2448.git.git.1792070038.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2448.git.git.1792070038.gitgitgadget@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 16 Oct 2026 14:36:25 -0400
-X-Gm-Features: AclHuK8gGKwFedrvk0_2-z_zG_tQk1GBCwERCJ9pGBT-IHnUiuaAaWNd3cgfLTw
-Message-ID: <CALnO6CDOh1NCp4Y9euLbhVFJJnOc1jSk7q0ekdUeGniG8LTCGQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] reflog: add --operations and --historical-branch
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <atHLDysZmYGyMiKk@pks.im>
 
-[Apologies for replying in the wrong chain; it appears I haven't
-received 3/3 yet and it's easier for me to reply to a message I have
-than one I can only see in lore.]
+On 26/10/16 08:58AM, Patrick Steinhardt wrote:
+> On Thu, Oct 15, 2026 at 09:29:00PM -0500, Justin Tobler wrote:
+> > diff --git a/object-file.c b/object-file.c
+> > index 210984f825..ebe46d35de 100644
+> > --- a/object-file.c
+> > +++ b/object-file.c
+> > @@ -1256,6 +1256,43 @@ int read_loose_object(struct repository *repo,
+> >  	return ret;
+> >  }
+> >  
+> > +static int write_pack_lock(struct odb_source *source, const char *pack_name,
+> > +			   const char *keep_msg)
+> 
+> Nit: I'd have called this `write_pack_keep()`, but I see that we refer
+> to the files as "lock" in `index_pack_lockfile(), too. Should we align
+> those two functions and call this `write_pack_lockfile()`?
 
-On Thu, Oct 15, 2026 at 9:20=E2=80=AFAM Harald Nordgren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->   reflog: add --historical-branch to name the branch of each entry
+Ya, that's probably a bit better. Will rename to `write_pack_lockfile()`
+in the next version.
 
-> Teach "git reflog" and "git log -g" a "--historical-branch" option
-> that decorates each entry with the branch it was made on, in place of
-> the refs that point at the commit now. The name is colored like a
-> branch decoration:
->
->   $ git reflog --historical-branch
->   4e5f6a7 (topic) HEAD@{0}: commit: add tests
->   1a2b3c4 (topic) HEAD@{1}: checkout: moving from main to topic
->   8c9d0e1 (main) HEAD@{2}: commit: fix typo
+> > +{
+> > +	struct strbuf lock_path = STRBUF_INIT;
+> > +	struct strbuf contents = STRBUF_INIT;
+> > +	int ret = -1;
+> > +	int fd;
+> > +
+> > +	strbuf_addf(&lock_path, "%s/pack/pack-%s.keep",
+> > +		    source->path, pack_name);
+> > +	strbuf_addf(&contents, "%s\n", keep_msg);
+> > +
+> > +	fd = safe_create_file_with_leading_directories(source->odb->repo,
+> > +						       lock_path.buf);
+> 
+> The command has just written its packfile, so can't we assume that
+> leading directories have already been created?
 
-Notice how the "HEAD@" column is now not aligned? I find it really convient=
- to
-have fixed-width data at the front of the line so that I can visually pick =
-out
-pieces in columns.
+Yes, with how the function is used currently we can make that
+assumption. The lockfile is always being written into the quarantine
+directory after the packfile is written.
 
-So I'd suggest an alternat end-of-line format:
+I would like to keep this function a bit more generic though because it
+gets reused in the subsequent commit to write the lockfile directly into
+the primary ODB during transaction commit and there I don't think we can
+assume that the leading directories have already been committed. Using
+`safe_create_file_with_leading_directories()` doesn't really cost us
+anything either because it always tries to immediately create the file
+first before creating the leading directories. Ultimately, this is just
+a bit more defensive and I was hoping to reduce the changes overall.
 
-    $ git reflog --historical-branch
-    4e5f6a7 HEAD@{0}: commit: add tests (topic)
-    1a2b3c4 HEAD@{1}: checkout: moving from main to topic (topic)
-    8c9d0e1 HEAD@{2}: commit: fix typo (main)
+I'll leave it as-is here unless others feel strongly it should be moved
+to the last patch.
 
-That might make picking out the branch name a little harder, so I suppose y=
-ou
-could try right before the messages?
+> > +	if (fd < 0)
+> > +		goto out;
+> > +
+> > +	if (write_in_full(fd, contents.buf, contents.len) < 0) {
+> > +		close(fd);
+> > +		unlink(lock_path.buf);
+> > +		goto out;
+> > +	}
+> > +
+> > +	if (close(fd)) {
+> 
+> `if (close(fd) < 0)`, just to be consistent.
 
-    $ git reflog --historical-branch
-    4e5f6a7 HEAD@{0}: (topic) commit: add tests
-    1a2b3c4 HEAD@{1}: (topic) checkout: moving from main to topic
-    8c9d0e1 HEAD@{2}: (main) commit: fix typo
+Will update in next version.
 
-or (since the "operation" prefixes" are useful)
+[snip]
+> >  		status = finish_command(&child);
+> >  		if (status) {
+> > +			strbuf_release(&pack_name);
+> >  			strbuf_addstr(err_msg, "index-pack abnormal exit");
+> >  			return -1;
+> >  		}
+> >  
+> > +		if (ret) {
+> > +			strbuf_release(&pack_name);
+> > +			strbuf_addstr(err_msg, "index-pack failed to report pack name");
+> > +			return -1;
+> > +		}
+> > +
+> > +		strbuf_addf(&keep_msg, "receive-pack %"PRIuMAX" on %s",
+> > +			    (uintmax_t)getpid(), hostname);
+> > +
+> > +		if (write_pack_lock(transaction->quarantine, pack_name.buf, keep_msg.buf)) {
+> > +			strbuf_release(&pack_name);
+> > +			strbuf_release(&keep_msg);
+> > +			strbuf_addstr(err_msg, "lockfile write failed");
+> > +			return -1;
+> > +		}
+> 
+> ... then write the lockfile ourselves.
+> 
+> By the way, the error handling here starts to become unwieldy. Can we
+> maybe have a common exit path that releases all resources for us?
 
-    $ git reflog --historical-branch
-    4e5f6a7 HEAD@{0}: commit: (topic) add tests
-    1a2b3c4 HEAD@{1}: checkout: (topic) moving from main to topic
-    8c9d0e1 HEAD@{2}: commit: (main) fix typo
+That's fair. I'll clean this up a bit in the next version. Thanks.
 
-? Obviously the misalignment in all the examples (except the EOL format) ge=
-ts
-worse when you have some short and some long branch names.
+> > +		ALLOC_GROW(transaction->pack_lockfiles,
+> > +			   transaction->pack_lockfiles_nr + 1,
+> > +			   transaction->pack_lockfiles_alloc);
+> > +
+> > +		/*
+> > +		 * The lockfile filepath is expected to be the final location of
+> > +		 * the ".keep" file after being migrated to the main ODB source.
+> > +		 * This ensures the lockfile can be found and removed later
+> > +		 * after the ODB transaction has been committed.
+> > +		 */
+> > +		strbuf_addf(&final_path, "%s/pack/pack-%s.keep",
+> > +			    base->source->path, pack_name.buf);
+> > +		transaction->pack_lockfiles[transaction->pack_lockfiles_nr++] =
+> > +			register_tempfile(final_path.buf);
+> 
+> So here we retain the status quo, which is to record the lockfile in the
+> final location even though it doesn't exist there yet. And that can lead
+> to us pruning a pack lockfile from a different process.
+
+Yup, that is exactly right. :)
+
+-Justin
