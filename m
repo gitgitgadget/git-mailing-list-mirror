@@ -1,100 +1,100 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEE7242D67
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 21:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A39D3BBA0B
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 22:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792187265; cv=none; b=uBQrgIR6p552x7GV9EXWIzdx7jEvf8GJ9gdJIJ4lPL2SaHRBBEB9BuXKBDA+BCfBX+qxrbMVseSQEXOZV5XGxevb2/UiMVXEGFTc2w6XD0fH0B2DtoXULzw4JnrBS/Tk8hGhj1IAKdmZy9AVHak6okyd40hGWFTp3n75nj6fEFw=
+	t=1792188164; cv=none; b=mIQeUfHfKUFzWWkn/qLuMnTw+Drs9LkQohlDd+IEXjRFvqirhCt+fYq8yxcF65HG7gfvOEj8shYTbguyg6c0rDTkWrwv+h+3zEa2QUzYuSI44ICN9LGDSt2A12UhzjKmBboIdtAPS3Hfxkjh1qIvIu3Bu8J5Nmwp5gTPUULcI6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792187265; c=relaxed/simple;
-	bh=TbdUOvnIyHqW8pIb6Nx542pPCFQBYSAT1E+rPlngTVo=;
+	s=arc-20240116; t=1792188164; c=relaxed/simple;
+	bh=d95QkDu89UoG08FjEO5Wsowc0Ieepz5x5GT4DhAWgaM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mUyn3AzdWnOkItALVrt0iskqbjAoKk+JqJ7NA+5vMTd+MPEhuL3hRH+JGldVjG+/1Bq/y9mKBJpZARrnOuBmzxzbsnh5+GsYi+l+gxg69knks78qFoZG49+lTHWn0t9XFqRPWmGr3JHkDJEoSk0pwG/hZRREwyc4WucM8ywscbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=o9FO7KPo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dDY+0bvd; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=EZtRVUI1vN8xtW76X9Lb+yYWZ2R/tnotWYOJlMJWE4jxGZr1sxknq2a+TY7vxVb9RDKjj0dbVTGzhMmRDzXXXSJou4AL9vA+XvCn8c5SRHFaUC+ahwYxmLAc2hfgEPqJ0smHXjQ2wgwGjMmGSS3gsyw5PvVVcsdOH0vIqG5palc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hYnX4Dya; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JwjPPQSk; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="o9FO7KPo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dDY+0bvd"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7BDA2140010D
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 17:47:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hYnX4Dya";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JwjPPQSk"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9FF3A140014D
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 18:02:42 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Fri, 16 Oct 2026 17:47:42 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 16 Oct 2026 18:02:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792187262; x=1792273662; bh=fvwtIo1uk6
-	LZK2PtG5W2It5Kkf4UNlhaRcBZdiIxWHI=; b=o9FO7KPoyxkLk+2dmFHk+MCRn5
-	yEguGcg4XVEGXa6qSFvPzq4YKY54DRATEogO5TF6axu/j6tCP1eUh+XZKGJUvpNm
-	p9rXg+fStl8LCkKpZh9sOMt0Y+xPIlbbnhRkIhlyLKatix0QowZ0XN6qwBRM07ap
-	qYtp5XLqC34KMFO1/vKVztzBipQUqMvupbGCzC1OKWnrCtKPOVan0Xk774DlnoHt
-	yQd5NrqBCYyLjBy8NjpylHkwk3mQpnTnR41hyyP4/hhE0JTaFvRWOVUJs8RuVeZx
-	+ceWAYZ8+QOlpJVdnsT6qtCxd1iQOFRGJ8A2zV9GoGsKE9n7ZFjmYrW1hw9Q==
+	:subject:to:to; s=fm1; t=1792188162; x=1792274562; bh=zopd88XzVJ
+	WzZ6ZzmlhjeK89iZn0rtpdSRbxZ9sQX9w=; b=hYnX4DyaWQyoX725N3hwlrQKnm
+	HlbylpRKy/CP5LqI2h7MrbwdosS8kkbbQ46os0DWNYyfk4E1BHPUsNM318qy04pR
+	W5RjdnFri1rgSHv8X9YVSUumqfArYJHBMVQZ+I3LQsQk8MEZ1lmexeS4fOBv/w2r
+	94ugnKDadzVZ04ODryYCFFOE8NGJRiLwQKkOyo/YZQdAr9QHW+M1kP0n47B3GH7j
+	AHzqENCxrNOvC2Mm1Wdvp78LV2fZFAAfF/9xxT6NSgnHN59Am+ZJwViRiexr1fTV
+	cc2g5st1IsmKaGO2MNOGpudjpEEOCfaDOLwwsS6CiTdM+9y9jGTCwWX7Rh7Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792187262; x=1792273662; bh=fvwtIo1uk6LZK2PtG5W2It5Kkf4UNlhaRcB
-	ZdiIxWHI=; b=dDY+0bvdhsAauJ9GvLcRRrS244JdPEienI4YmoZP6nCjwXOR45Y
-	+iFORgTWKakcP2TSOhXtRfW7REdFGYYs25FBx+KBNSVI/iJofzvEEooAGPzANzaA
-	RA5y4N0zFUHwSNnwV9kEHjx0JIjVXVTYS3YO5jX6D837gFcLWsNaEyuUAN7xTb4g
-	lPOakXnTMz9FCiPSOyA71Ye/Tr2vCwUjoOTbo3FHeN6lcT7vypzZAWtqj4bJ5RNr
-	cLscmRDk5NolYdsyeJMIa+z/UKlHRQtzwF1uvMwq64RIL/2c4GpnkSCVHBamUsXi
-	PKyxQHdJunKJBSxPiTmAtp1LHmM+5MUdTBQ==
+	1792188162; x=1792274562; bh=zopd88XzVJWzZ6ZzmlhjeK89iZn0rtpdSRb
+	xZ9sQX9w=; b=JwjPPQSkQiSXsBqlodRDLeSft9o4Cf6L5CIo6vo2ZUFpqQmBDvn
+	SyUxutWxhNv3YbZoYQ5SGxvfEi+ZgHvSkqUsp9KysnDrd3aVmJUqdxg8/AV9WYdV
+	Q5xNqUBPTBae5e74B8mBVtUPnk3hF/dsOKQRekTlCBJypzi2obHXC0h5mdmIRGp8
+	dXXq8SXAFfooljLJtD16VT7V8M6S1SfeYv8sREg3vAd/d7k9CAKlpZgAPVGLxP/O
+	3FCpNO0e8XYMsFX5dCT5uyrN1m5sP4SMxxYlIuL5EbznxBqkKdyo49AUR8h3pMiG
+	W9Edoqo24XIawyfdX/n1fj5fmCpIUa+GPwQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792187262; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1792188162; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:aOvmqT9V/EzsRDQt6t2r2I3h83kPgzIZs0ABswvwifQayF0
-	6NzR/TtNfyXtAYWGyMypmZDecEAT1xTLa+ZviMRHlFnFPeoePl73O5y4o/9jOVkl
-	HIKslK+7xxDe6FeAbwH3OhooIRq4rBhYaZ7C3XSHp/u/zqLnFX2SqW1zjDYBj63q
-	EH/ad7iFKPEn9a5ySvD/nKrW3nBtn0vwPNO9SRNtJKQBF7EHD0CLczky/vM1aql4
-	sMqTNazZzjfyBJ3poITpuTKZpCMOpp52IVDjdTEOF9aKmK5FKFy9JMsBBzV9BrLL
-	buXJTkfI5tL0DZ+vHPpW4z+smYlnm0/aMyXyndg==;
+	s=fm1:rsa-sha256:ipN2S6WKC+XM1Zb3C1Z3yzASh/y1+E1BVd2b62PvVD/ertt
+	d3BBywU7PLKgLs9UJmLK30Z0OB+f1cHa3rr8SmiHBOq30PO6YQ9O1KMME6LMCjv+
+	YNEW1CM7BF+Sf1BKmr2nwE9XC2ZA3KKojdcIcgJKkhDiE8BE80NDuMxZfnT8rRmB
+	dozuhD4hoUpwNSngikfUKF69IESs2zqD16YG1whh6SN1oCe4HLecYcOiTiWPrPUz
+	iDgQLrMbpE9expt/3cEm3B2NrD5EbnpWiwOgJwDH4EEElIuQI3zahBiNxQPsVT9T
+	dUf1p/uoK+QE18Tx+EZ6lrMmzV9R0/ppA/LAusw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:+Ge6dB3lMzGHr0HDvk4/rRhqosp4BcRKFk8XQc7ynjo=:TbdUOvnIyHqW8pIb6Nx542pPCFQBYSAT1E+rPlngTVo=;
-X-ME-Sender: <xms:fpvSan76O8V7Tr8yXYw4pA6daTmq1OzKq0P7GMq_SvakQqnAiKavGg>
-    <xme:fpvSajzC6ygydLYSgYx6-Q6L2YbRi5PVRvdzskrwdo_44XhGwEP0tuhKC2mjQ45mH
-    Cu3JnQYkFleAiHzFyqICsnsA97LsLvewCloSloD2b5AwOKDsmmJRA>
-X-ME-Received: <xmr:fpvSamwuRvdlzMAIiN0vGk11qhZxmFjinMc1WcRARxw9h3lm10K9-cqVh_wW-y3P06eKLycvjNOu4B-yNSkzGs6x1lJJYKVd_lEo>
-X-ME-Proxy-Cause: dmFkZTEk0ZTLzdrBxua++GYI9SsToEopZPyRMacC8dQSwIXy551p6563G3xnBZBtBedF6z
-    dipt7Hju1x6TZDdDCx/Wi4F1l9HusvcvHMMaw0IKxTp2Nl2xRgxrVBZcWWteHI4QTcy8K1
-    oVtKlTSV80pzuV2fb7ahC4ukc0YsAf6WFrePI6zH9nZ7NV6VqSLq9FCsKZvRxBfWtE3EvD
-    sTTg1jzPjQsxgoUufbPBSegz3WDrq6IH5vBT8Ze4Fo+2zJD7cEyqi4lj6JVFVysQ1blJSw
-    bdpTGmSRsbRfyylDlsensQ9M20555yo2Cv8pg4avz6s2xWq5f6Jj1SSyG+kl2U+5H5uxFl
-    qKDGy+LYvocGYctoZSEZ+wWs3AQHHESu6nD778MlOThdDsZqjw4TOVCjYkqFypGSaPs6rc
-    sPbNrZgwViB2J2aWGJuaeXULMMJvGe0hrnwua6V63HemLx63fkiTz1q1mQdYT7/qHxxMn9
-    w1YwA0yoxnm1iUid8vJ6DHxpgWTGZdyBk89ybjaI/LOZCrqEMRogYFvBbg3IX/owDe9NAm
-    u+Fp6d0ZLtNcCxohdTziPxUROFoT6FduX+cIxkKDOrix5qtJ7o/Elu6Wh0etUo/Q3byS67
-    JFV2CgcZGmFkfp3cBYnwH77yrUwX9AhHiyqSXvJJ+G/nsO62BmYybKSsfzQg
-X-ME-Proxy: <xmx:fpvSajz2x08nL_qviGrrJgSL6zwrtR8lRZ_c_RoSWdUF1t2KKbdsYg>
-    <xmx:fpvSaoZ8w9t3FBOI0NTTqgr_5SJ1FYfWe5_lp0kz5jhAFIdsVoJYmA>
-    <xmx:fpvSasXCoDc6j7arfQvA901_N2s0Imz3_FSXAbGpC6dlLDxl3k49WA>
-    <xmx:fpvSaugzRdiOL4Egidok6KqPma2yN08_awl1O4EUdstn6n7gPVyhQA>
-    <xmx:fpvSanD7ZcQVB7V5npauiG0tOZIrCOh5tQjTxizZEx-dAcU9uy7Ioz6s>
+Message-Instance: m=1; h=sha256:ZWX1GTN3yzpuTNnMgwQwdUDCEZfefl1mDo5A7jvE6Ds=:d95QkDu89UoG08FjEO5Wsowc0Ieepz5x5GT4DhAWgaM=;
+X-ME-Sender: <xms:Ap_SalQS4V60ltsOVCjKCRTYx4KRPZB7xcbtjHurJex6-q_6XcLkOg>
+    <xme:Ap_Salos6XRtLk3YEfdZh2FrA_2fNelwnAJI7-A0V-WKlnO6H5qJnzrH7Cl7vaGFk
+    X0kZzPF0mCLSXnvkDeKob70xU__WZSDXUlQb1YtAbnOFNzFud5QS8s>
+X-ME-Received: <xmr:Ap_SajJRK9fz1DpMFppJ43G6zyIpfXZyBNtZUXRZE0xGfwP33sIe-2GeyME3-Nr2E0kNO9zTnFq0PNzPT2ypPu3PvvnJv5FCX4Ph>
+X-ME-Proxy-Cause: dmFkZTEbzQVja77NX3qNNQlsJd/CmANLXIIGyhlCbY73G6WbSensdZCPGNuR7WZWQ0lhmv
+    Mg2Py/XRKDKZSh1xQ6W8dD+1Z4ODUPluRbHbpbEvNAv0Mfsoy8l0db7BnngfXfs5LkkTgU
+    sgZIaBXT1O8LWBwv7WCe3E1DmdqKacM+agnzDEAgAnTXPqpVTknKkM9sbri2v7djrObJ29
+    DW7RyFSze2wywzJyUz3VIa29Jk4umh6HjENj9oHJYQOAYcci16vRR2RdwVtNRhD4JkSYI2
+    kwnx/eT6uDa5bpfIJHxGj88mtmt1uBId5KWSdgPcn5HPKnLGjhDdyi/om06XMjYb9Kr/NM
+    zLcwE1/Tipiw7u45QVqsv1341TGxsHFxlfm//lgYU/4pIuJVOLZcpQN4ZYT9JWJUk913gt
+    bc8E4JPzLEwtKj/l4l9f0+PHOZQBxo6+mq+j8TLiKp76AhC/zwTs+sOHYff009OnU3dfe1
+    bDrog2ACUa45nt+ftPY/hCfiMSXMf7BayrTEgzTIzZ5ymlbWQHZH/cFvk5PCBMQ+QHiKNp
+    MbHKC58xSyH7LiLWCNhoDEe92lZ9L9Do3yw9s2OEF9KDn4yrvNiKbIQy3pixdw56nu6t+e
+    G6UoyazBaNP0A0plkNwRDXrQ28cLlFXmQmq3IDaMm5HCLeccw8ti6SYxFERg
+X-ME-Proxy: <xmx:Ap_SaoqoHUTUDLI7L0x70Gg0Qdm8VtU3VonKIGf5cLzvIWD7ZUBBjw>
+    <xmx:Ap_Sarx7WuZGSOvFKecTsC0s62QQ6Lj8TdZVjh_In1JQz4oeAJIoiw>
+    <xmx:Ap_SasPw_Xwdkdb2B-_EGg6Dawii936YvzrZGIxf7S4LIOuGMsMXMw>
+    <xmx:Ap_Sag79a8KHDaLdnv8XLS-JxPbv4ImhAwrFRBI8HJVltqC127imrQ>
+    <xmx:Ap_Saj5b5lqaciOStetJSyge9kZbHcG3e3kIo8Nux40m3Yekc-fj3IbA>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Oct 2026 17:47:41 -0400 (EDT)
+ 16 Oct 2026 18:02:41 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: kerylefondji7@gmail.com
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  siddharthasthana31@gmail.com
-Subject: Re: [Outreachy PATCH] var: refactor to use parse-options API
-In-Reply-To: <20261016205659.4417-1-kerylefondji7@gmail.com>
-	(kerylefondji7@gmail.com's message of "Fri, 16 Oct 2026 21:56:59
-	+0100")
-References: <20261016205659.4417-1-kerylefondji7@gmail.com>
-Date: Fri, 16 Oct 2026 14:47:40 -0700
-Message-ID: <xmqq1p9pe2rn.fsf@gitster.g>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v4] doc: checkout: rewrite detached HEAD state explanation
+In-Reply-To: <pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com> (Julia
+	Evans via GitGitGadget's message of "Fri, 16 Oct 2026 19:03:29 +0000")
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+	<pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com>
+Date: Fri, 16 Oct 2026 15:02:40 -0700
+Message-ID: <xmqqse25cni7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -104,111 +104,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-kerylefondji7@gmail.com writes:
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: kerylefondji <kerylefondji7@gmail.com>
->
-> Refactor 'git var' command handling to use an existing API (parse-options API)
-> instead of ad hoc code for argument parsing.
->
-> Previously, the ad hoc code lacked proper validation for option
-> combinations. Specifically, listing all variables (-l) and requesting a
-> specific variable name are mutually exclusive operations, but the code
-> did not enforce this restriction, causing test failures.
-
-Everything below this line up to the three-dash line should be moved
-below the three-dash line, and replaced with your sign-off, I think
-
-> This change:
-> - Includes the parse-options.h header and defines builtin_var_options.
-> - Adds an explicit check to ensure that combining '-l' with additional
->   positional arguments correctly triggers a usage error.
->
-> All 27 automated tests in t0007-git-var.sh pass successfully.
-> ---
->  builtin/var.c | 50 +++++++++++++++++++++++++++++++++++---------------
->  1 file changed, 35 insertions(+), 15 deletions(-)
->
-> diff --git a/builtin/var.c b/builtin/var.c
-> index cc3a43cde2..20ea4e0489 100644
-> --- a/builtin/var.c
-> +++ b/builtin/var.c
-> @@ -18,8 +18,11 @@
->  #include "path.h"
->  #include "strbuf.h"
->  #include "run-command.h"
-> -
-> -static const char var_usage[] = "git var (-l | <variable>)";
-> +#include "parse-options.h"
-> +static const char * const var_usage[] = {
-> +	N_("git var (-l | <variable>)"),
-> +	NULL
-> +};
+>  advice.c                            |   1 +
+> ...
+> diff --git a/advice.c b/advice.c
+> index 401d047391..8d2c1ff1ee 100644
+> --- a/advice.c
+> +++ b/advice.c
+> @@ -291,6 +291,7 @@ void detach_advice(const char *new_name)
+>  	"\n"
+>  	"  git switch -\n"
+>  	"\n"
+> +	"Run `git help detached-head` to learn more.\n"
+>  	"Turn off this advice by setting config variable advice.detachedHead to false\n\n");
 >  
->  static char *committer(int ident_flag)
->  {
-> @@ -220,22 +223,39 @@ int cmd_var(int argc,
->  	    struct repository *repo UNUSED)
->  {
->  	const struct git_var *git_var;
-> -	char *val;
-> +        char *val;
-> +        int list = 0; /* Flag to track if -l/--list option is used */
+>  	fprintf(stderr, fmt, new_name);
 
-Useless comment that is too obvious from a properly named variable
-with its use in a "struct option" array.
+This breaks t2020 without an accompanying change.
 
-Either the patch is heavily whitespace damaged, or you indented
-incorrectly with spaces, or perhaps little bit of both?
+You can squash in the attached patch to unbreak the test.
 
-> -	show_usage_if_asked(argc, argv, var_usage);
-> -	if (argc != 2)
-> -		usage(var_usage);
-> +        /* Define the accepted command-line options */
-> +        struct option builtin_var_options[] = {
-> +                OPT_BOOL('l', "list", &list, N_("list builtin variables")),
-> +                OPT_END()
-> +        };
+Since nobody's terminal talks markdown or asciidoc, let's use the
+vanilla single quote instead of backquote while we are at it.
 
-We did not take "git var --list", now we do and in addition we
-probably take "git var --lis".  That is notable enough change.
+ advice.c                   | 2 +-
+ t/t2020-checkout-detach.sh | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-> -	if (strcmp(argv[1], "-l") == 0) {
-> -		repo_config(the_repository, show_config, NULL);
-> -		list_vars();
-> -		return 0;
-> -	}
-> -	repo_config(the_repository, git_default_config, NULL);
-> +        /* Parse options using the standard API */
-> +        argc = parse_options(argc, argv, prefix, builtin_var_options,
-> +                             var_usage, 0);
-> +
-> +        /* If the user requested to list all variables (-l) */
-> +       
-> +if (list) {
-> +    if (argc > 0)
-> +        usage(var_usage[0]);
-> +    repo_config(the_repository, show_config, NULL);
-> +    list_vars();
-> +    return 0;
-> +}
-
-Again, the indentation, or lack thereof in this case, is
-problematic.
-
-> +        /* Ensure only one positional argument (the variable name) remains */
-> +        if (argc != 1)
-> +                usage(var_usage[0]);
-> +
-> +        repo_config(the_repository, git_default_config, NULL);
->  
-> -	git_var = get_git_var(argv[1]);
-> -	if (!git_var)
-> -		usage(var_usage);
-> +        /* Retrieve the specific git variable (note: now at argv[0] after parsing) */
-> +        git_var = get_git_var(argv[0]);
-> +        if (!git_var)
-> +                usage(var_usage[0]);
->  
->  	val = git_var->read(IDENT_STRICT);
->  	if (!val)
+diff --git c/advice.c w/advice.c
+index 8d2c1ff1ee..3238e9b866 100644
+--- c/advice.c
++++ w/advice.c
+@@ -291,7 +291,7 @@ void detach_advice(const char *new_name)
+ 	"\n"
+ 	"  git switch -\n"
+ 	"\n"
+-	"Run `git help detached-head` to learn more.\n"
++	"Run 'git help detached-head' to learn more.\n"
+ 	"Turn off this advice by setting config variable advice.detachedHead to false\n\n");
+ 
+ 	fprintf(stderr, fmt, new_name);
+diff --git c/t/t2020-checkout-detach.sh w/t/t2020-checkout-detach.sh
+index 28bbbe6c05..804dc2a67f 100755
+--- c/t/t2020-checkout-detach.sh
++++ w/t/t2020-checkout-detach.sh
+@@ -228,6 +228,7 @@ test_expect_success 'describe_detached_head prints no SHA-1 ellipsis when not as
+ 
+ 	  git switch -
+ 
++	Run ${SQ}git help detached-head${SQ} to learn more.
+ 	Turn off this advice by setting config variable advice.detachedHead to false
+ 
+ 	HEAD is now at \$commit three
+@@ -310,6 +311,7 @@ test_expect_success 'describe_detached_head does print SHA-1 ellipsis when asked
+ 
+ 	  git switch -
+ 
++	Run ${SQ}git help detached-head${SQ} to learn more.
+ 	Turn off this advice by setting config variable advice.detachedHead to false
+ 
+ 	HEAD is now at \$commit... three
