@@ -1,134 +1,146 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82313F58F0
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 21:09:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792184969; cv=pass; b=gWEM693Vz5e9o8/qQzrWDEC1q0kWZhRnNeieSgB6DHJSdVMxdJRdG8GR2WRwbBfg+7tw/ZpRlMdH7FCF0hw6++9LY59KDRb0AFwDJGWoRkjoDjKQIYZd7RvDhT17Bemrpw0kDk2BmDP5L0kQKb2GRkJd2zYls5iNkB+eR4IiUBQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792184969; c=relaxed/simple;
-	bh=n8cbLrnIDe7NMnLjsq/H7WS4nj4L64hB0Lt3/iurToQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=J9hUoGUytAazyeNpewUrLu7ZchrH9Bl6MYiXRT4aY2z58wdyNPXUAoRGJvrlL8t6Ls9j165xTxYayPZysFnT3NArK8V3qe/Kqd2DxBJRaWKlfxoHRZlk1GOr/iZ81RO3CP2kHsWdP9EIG/fFEEfqxFPP2Zht4ZLei28dJ3hGYsE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L/jtbQqT; arc=pass smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A291FCFFC
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 21:10:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792185052; cv=none; b=u6LsFoQrgGEEdrm8UZ6aRbOF7+2yC/pHhIweIfve6/AwjsfMhrky2YyZUZ/kVcFYqaSayBooKXLld3Laj/b6oX/eUsVhb/A9NbHIM5STGTjTaUFJwQGB/KNrJ74PmgWT+SiAMPahq+N5pU9CzJzTwe1mhU+vZRN86z+WPC+GJJk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792185052; c=relaxed/simple;
+	bh=JjQiJVUurs10zA1fylbjxBFfV3/kBM2FQaVslAlUPic=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=T0PfwXSYB4yJU7e45a15F05RK1bunDt8ydRDaL6+0/NzbQcCZFfo3+2mquKDWXrl8X+dzRP/bGNgcSl+76i5uCbYMO3sBJ6/JwTZGyvG4hn9xg1Lyp7+dHO2mX1Iqt4uZRyH2fa3KSrNNgJWUgZnjc0rjetXMn4pajuD4I303yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dk6n4GRu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pjHMiHuH; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L/jtbQqT"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-8ac9d666d4eso3334977b3.3
-        for <git@vger.kernel.org>; Fri, 16 Oct 2026 14:09:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792184967; cv=none;
-        d=google.com; s=arc-20260327;
-        b=MRcPKUlVBm9eVD2IFZhZdgfNoKfN4DqBNEl0/V3Kddh2Ik4Jw1PhQSiIinxWalp3kC
-         TH3JiKjgAGRAr4f6cBJpYdeiMySXQkJew2uy8n3lQvK++gyp4EgTR51Ru23E1HvHSaGI
-         qestM4jsDFu97rUtJcJy5lWAv0r/lSAwjVinxhE0U8zM7g+D7KD0iMNllGAxxEK2nP9d
-         ajJpbZuy+w9dBuqCGKMkkFUuqWE3oL7N09rOgGa90GL46n2tKMDsKRuJ9OQDFjIFziaf
-         4jvF0p2VVLCeLo9uQD/3mbMpz4ws33wON8kOMF65lHz2ODvXYOwhlZLxnyBe4xsFqjQj
-         PKHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=hW08u/Psuw3DOdZ72g0XfNEl85ka0YqkN/w5P3ASBfg=;
-        fh=DZFxOA+pvaBfvZamJDlXjlOUUS9X/BEuyaMm9Od2VNk=;
-        b=JckR9nX7PWvD6ZYuzXhmUP0a7FbAeacvTs+tHTrfkZgSfy43xoUNBdYPyP7b0saXsv
-         LU58wAZGdyNiOFKw/dpotpqNs3XM8CEPa7bC7VqA7BJKEL5hHhoEeqkrIJm3Gn+GhQXy
-         ZhRij99ndXWcwj5+xblEW9kEat3uq9+wD2+MJQ7dXPI2S8DPgZhW0T9b8LymElQYkUnx
-         /biTnJ8evdXYar/z/L0RiWBD15JlpvbfOm+zbRK5kX2tA7QhGu0bYmc74vQ5EUJeJCPM
-         DsWV/oLeXEIEGsPTJqbyzsjp3E4FrD+ESByjW53o2NvsuXhE0X459vIIMKcn6l90J5NH
-         qIsQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792184967; x=1792789767; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=hW08u/Psuw3DOdZ72g0XfNEl85ka0YqkN/w5P3ASBfg=;
-        b=L/jtbQqTZki5slbpKH24oAMPVg3WyY18OrSA6HUITaDLPS3LfU+/RoLbn87NCN27li
-         CXoxVVdSYt6olBuHaaYN8cZ+P2SD6x8zMa0hQA5RAmrB95wsOyAzw8L3L+RVQNam1Fe6
-         ty3YHhjczWpNalGcX7LIrNx5LVLB35FW4aV+1z5r7kYKziGiZ+7X0P4Wv6R/obdicjig
-         8I1gnb2lb/TXVsqF+qe3yweIL1oFZssrlIT+4J6V+BENenSSoGDb81JuMKNRakco55WV
-         izPCAGiTjvGj5/b5wPImEn+g7n1kIVhbtBWYMmyd5s01s4sBWt02MVLEfviv5Sp1wM2m
-         +yBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792184967; x=1792789767;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hW08u/Psuw3DOdZ72g0XfNEl85ka0YqkN/w5P3ASBfg=;
-        b=PTGWoJQGYNtlZtfsGw7U/GNgh+ziZcBEwwvK0xj5O+vB//pwU13KSOYHVpUmiufGxc
-         4JhWPTntKLewCFMcDzI15cKbpQFH08Tq1hEwzp+fUAzbciRC5fUcGS5R2KALJFR9idWH
-         yv4EKRwGwTBYwlYB6vM2RNK566veCDA/b77NEDTEandP/X7WCVl8jzSjiWAeWbT5VtFJ
-         f5GZ7s4aX+KT+Kbrk9ww5Z3G/9KQiO8kp62UnEn21YZQdYmcPXJgDK1q1zTv8dU/tXQ6
-         GiNd2f+/J48E/d+KEbws7Eodk8KWJdFMgofblovkXkrSY9GYDQ501r9e+yBy/PJYpeit
-         KjTA==
-X-Gm-Message-State: AFq9FYLpeZfawo0dW+Ry9/hsoT9/pCX9URWLUQQ1GuWq6z3ympNf/urx
-	90p5aJN1y1IrM698blhVCfp1/X9Bpu3WarAqMlwzwdiSLkou20AUR5yz+Ti+dTNUTSNNnPtycOc
-	8Uy9pYkBS7t8DCrXTRcx5PocobU7lFXC4oKR8pbAXORf3
-X-Gm-Gg: AYBFou2GZXeQ8DERT3l0oNHUn9qcGJb4E/DjaXq4zc8Z++02eDWowgQFVkl5licURa6
-	jEwcNwQm4QfYGL7QBpkrOsCC26q/Guu3cTbYk7Ejj6EpvvVDCU5GuTVbdzRU++Yo1F9yU1CYwwl
-	1S14npAZGMKYQ/Fk7aESZCTHEIl4V2c1Ci3VLY2UIGxMmoohXDa7Kjg1FVxSoOlrLuAudL6m2CH
-	hMr94W4esDkcs9zEma5g5HXynKX6YPygRAVJmcVToDE7eB9kco8Mk+31Zys5dVssEmKMpnXFwBn
-	//Rii7G3z1ZibpQbUnkcgl6MIpgve750soGbUsHyJ+aXf54ZNli8hTRsHqO7yZGHV6JxJbtGCoN
-	eltdXU0MjfVHqlikw2AMd5r2hbWJM3XFqt2LaWBSOzD6TXlCRcyn0lvVX0QMeymg8wrslWAdNOf
-	SvrKQ1+8zEGHeI75N/OX/Rdf9LCP8Cp3XP+RoHd+sFnJPKVyrwtplOMPw=
-X-Received: by 2002:a05:690c:c509:b0:8b0:a8cf:f447 with SMTP id
- 00721157ae682-8b0f2189847mr4520937b3.46.1792184967519; Fri, 16 Oct 2026
- 14:09:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dk6n4GRu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pjHMiHuH"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 973141400133
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 17:10:49 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 16 Oct 2026 17:10:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792185049; x=1792271449; bh=oKUAuEzFGt
+	YXE5wl2d3F/u6EgMg1PztPj7H6zMD4LNs=; b=dk6n4GRuR6QTTaBAHcZzvTRtfi
+	CTM2Zow5LU2GRR2YXZwQWQeNHN6hDVRWQRQ+ObQi69+IxnCqA7HhZFzsC1LcyTdT
+	sdpPp1fOUXrtpaCkxXdIou6kC+wQ2s29PMfi/LlANTPG9/Y7T7Tbey98rQrefVbC
+	ID3963qp5JzEkrouEOFd+N82RMrXimvM+juvRm6t+fePd57UmkZmq6tGsaLrLlwe
+	Z2BhQl3e/LYrZWvlc0T2o1/+TJVbuxoJaSQJp83zS/muCOMkuL3qoGD1NKxn45Ba
+	VFZCQYJi9fKW3wAvQgjon3L/3NIPhdI9jmt1iG5VyEaOjB+L2qMwilaFbing==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792185049; x=1792271449; bh=oKUAuEzFGtYXE5wl2d3F/u6EgMg1PztPj7H
+	6zMD4LNs=; b=pjHMiHuHjG0J0xuR8dbzFPe9PE6yYqOwl4+NyVCeT+8lvOZxUCI
+	SawxhXo+sp+wiwiUOjv7h6KQiOVVwikxIFEdJhTKyGpEUss1qO6edYByn6/AVs0V
+	2PDTL1KCzsA0z+Q3m+Mb6dwxm3/kKEsmXDcvdCyA9sMJkWpkAat21WCWwc5nCCBc
+	dUIT+xrn51pxNg87bnC1ouKzPu0OOEqqfx1o4FFQYu82tmUwwvBbLelg6tL1J8Bn
+	f2JZdsdJsixVr/ZRMs459KlJ6/T/aX4jpB58KOJhTThFvHJUnytNlZUaV/N8wmyD
+	yqkGFDDOdwr37Uwo62zt0DsbrJ71O8sR84w==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792185049; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:k4ufmpUJsWYovwHbKnkMa8HWuce06X46l78o+VlVyhqQ+Q7
+	v5Jdcx7025LfBuXeAa7InRX32cZYXjBQoW+9lSQ2gd0B3JjxS8/XunsOvRHBJY6i
+	7arU/qvzayvJeaH7Bb3CY+aQXB+qxul9jT0W9Xw68R+d2ZgHkp13GK+Qpcvv6xiF
+	ZIO+NxxOfR+UaPIK03QvudVxj3eSjInoGv0d0Qy0HX+2bRZV5hWvxLf+ILRtrX/G
+	SExCTM0yhWTmnhZitjBbe4JO/23+krNtOGdOZx+zUjRE5ulAKVyoLiLFiZR8F/B4
+	FI3b+l1bd6ptBRnj3SyGpDoTucNNY9U/1Z0Nr5A==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:p5isSvFVAdbUQreI1oEl+dhSV5XQllzJYyo/xxddBgc=:JjQiJVUurs10zA1fylbjxBFfV3/kBM2FQaVslAlUPic=;
+X-ME-Sender: <xms:2ZLSahv9l68_H_VPOQ9-ahDEddpv2_1i5Lv1Fp21lwzYz4sq8mi-KQ>
+    <xme:2ZLSahXtLSui0icA4wdq0rjAdyQlIYMdjTRfB1ITFIDLLgSZJckMOISbT7PMFAYfQ
+    X4qtZ6OHU5d1dk0PJTrvtqJHz7pm0dazeXXLQkhlQUY_GNjBck4O8I>
+X-ME-Received: <xmr:2ZLSatFi_Q342qmg4YaiLfCP_r6BewYFFFeRx4LBF1boIYUgofhSH9B6TthhOHp1ms28TLvNjYuSkuxl3axi1-uql7FMdSOlHcoq>
+X-ME-Proxy-Cause: dmFkZTGxv6O5vj16zbhbfwSRYL1OJU6N6nQEaRkpXnUNC7IUiSPGtfGG1sVi96vK2Tj2/9
+    mFcG7iXoXfEaGmR0HsWagQkCJb5/LJ4peqZMia+312FGjdCkxDIW6Pa2kLP+tAujZXiEQJ
+    LGhi3hRAKTwzMChv5nRE2yAz35XnpSs1bebWRcj/g0Eiai39+c9nnv3OkpwagAxiKAt4Fz
+    /NMONt+fImNBG2OHIItwdmqb1rToPl4/PyLGKM7tQLUA1YtOirot/oLBqZDQpM6a2cer9G
+    +kwUPTfKTLgRMDTbn2iPZt3xDsJls4/ukPF/RfY+kTUbZLjaB5nDnKqzJ2x8NEszLyHfjB
+    81yMbuxi3tj39oa6HcODDMCHqxF5liUg6yh75Fj3DqRCmEe/ZoRWXfzl/vn8n3qD4tU3uY
+    z/Q3Tg07ThvqoW5UMRzPWheMVrUWo/cGcWtz/XITD+jmjZ45nSSPKE+5NLocwwfVf/BBOT
+    xj7RUYZ1IXLX+Hqz8lFHR00yaqG/w6Avasfwl2h4WWYpFWdNcy+1IdRIwX5z4M9EMVZVAe
+    93btzP8okf6Pz1kM3vrK8hcH7nSL2WuQpu3LFkmLf5ATHLWBq+P1t4Wj/mjvGqDLHOgqjX
+    nIINAoZ5jMn0hh5jnY+J75x+XbnCmCjFVSZFyZeJPewq4jZBPz2LAt/Ikp8A
+X-ME-Proxy: <xmx:2ZLSaj0D-HfBJH3f-qcdi8IsFt644qBjKNMfn_bM2Z4Zmr4vjhOe_g>
+    <xmx:2ZLSavPr0_6pSESslMns9eSk3pRF9wv96uDOwg232skP5C5We4JZhQ>
+    <xmx:2ZLSai4iOCiJ5AFQXSwcOFqbwcG-2GlSOelAPqXKWRFNrslIkpFfdw>
+    <xmx:2ZLSap0pPUsPIQfOFhM3opNm2mu2YF7QB4ijkeQXrqB-WBEbc2Yg5w>
+    <xmx:2ZLSarHzpnRR5UQ0B0gc44LcrvWsODB_ltHbedekfdNqZC9udh0QlPP1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 Oct 2026 17:10:49 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v4] doc: checkout: rewrite detached HEAD state explanation
+In-Reply-To: <pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com> (Julia
+	Evans via GitGitGadget's message of "Fri, 16 Oct 2026 19:03:29 +0000")
+References: <pull.2250.git.1791384721919.gitgitgadget@gmail.com>
+	<pull.2250.v4.git.1792177409868.gitgitgadget@gmail.com>
+Date: Fri, 16 Oct 2026 14:10:47 -0700
+Message-ID: <xmqqh5ile4h4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20261014155529.84134-1-okhuomonajayi54@gmail.com>
- <20261014232739.23021-1-okhuomonajayi54@gmail.com> <xmqqcxtaonu2.fsf@gitster.g>
-In-Reply-To: <xmqqcxtaonu2.fsf@gitster.g>
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Date: Fri, 16 Oct 2026 22:09:15 +0100
-X-Gm-Features: AclHuK9OFzd8KS9oOS2LIubaJCf-y_9h2dqwRHOg-0qWbcBd2rPZptis2KQC47o
-Message-ID: <CAFpMFfB5muJzEit4sGa5iuQBSvBsKS6gC4xALKV8F8bpvpx5ZQ@mail.gmail.com>
-Subject: Re: [Outreachy PATCH] credential-store: add lockTimeout config option
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com, usmanakinyemi202@gmail.com, 
-	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Oct 15, 2026 at 6:50=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> As it is necessary to keep the above two in sync forever, it may
-> make sense to do this instead:
->
->         for v lockTimeout lockTimeoutMS
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Thanks, I've turned the two tests into a loop like this for v2, and
-wrapped the long lines in credential-store.c.
+>     This is a pretty quick rewrite where we didn't get any user feedback. If
+>     we really want to make sure it's clear to users as possible, we should
+>     IMO do a second stage later where we ask users which parts are unclear.
 
+OK.
 
-> Ahh, the key to this test is that we make sure "in 0 ms" part of the
-> error message does not say "in 500 ms" to ensure which of the two
-> variables are being used.  It is not like the credential-store command
-> would fail with 0ms timeout but succees with 500ms timeout.
+>      * It's probably possible to explain HEAD better. That seems like a big
+>        project to me since HEAD in Git is a very tricky topic. I think it
+>        would be better to address in a separate patch series to have more
+>        time to think it through. Or if we think it's not possible to merge
+>        this without explaining HEAD better then I guess it shouldn't be
+>        merged.
 
+I do not understand why you need to draw a "take it or leave it"
+with this topic here.  If you feel that the explanation of HEAD is
+iffy, you know what we have here will not be the final version, and
+you think we lack the capacity to reach the best possible
+description with the usual review exchange, then I do not see why
+you have to insist keeping what you initially have written.  You can
+replace it with anything that is better than your initial version
+and then still record that we will further polish it later in the
+proposed log message and we will be in a better place, no?
 
-Yes, that is the point of it. I've added a comment above the test to
-say so.
+Just to leave a record, so that we have better chance remembering
+the suggested improved text, here are what I think the first two
+paragraphs should be replaced with.
 
-> This one I I am not sure what it is trying to test, though.  Would
-> the test start failing as the machine is loaded more and 1000 ms
-> becomes insufficient?  No.  The thing is not locked, nobody takes a
-> lock competing with our test, so with any value of the timeout we
-> should succeed, no?  Or would it fail if the timeout is set to 0ms?
+    HEAD records the state from which your current changes started.
+    This can be a branch (the "current branch"), or it be a commit,
+    (in which case HEAD is "detached").
 
+    In the detached HEAD state, you can safely build, run, and
+    experiment with any historical version of your codebase, without
+    having to worry about clobbering your branches, and you do not
+    have to clutter your repository with temporary branches.
 
-You're right. Nothing holds the lock there, so it passes with any
-timeout and does not test lockTimeout at all. I've dropped it in v2.
-
-I'll send v2 shortly.
-
- Thanks,
-Okhuomon
+Having said all that, the changes between v3 and v4 look OK to me,
+so let me update the previous copy I have with this version.
