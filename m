@@ -1,187 +1,111 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2D14DAF90
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 15:51:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792165878; cv=none; b=AuxdMh/orJmL0zqV4IGrMkcYf1Kx20L/OZ79gwG2y6IfxYpd2zUO6W7Otnr7guJAtQaDG9KsMnz/9SbOZKNvEKi6969Vs2VsXZEQYesI9cPKNB2J5GIk0E2MrFWKp4kgYz2XER64fgAz4+VlKbBcVNLsf/3DZmefkqxWYaPm4zQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792165878; c=relaxed/simple;
-	bh=JuxLaPtGJMxPWmN4uGQH9RgMf6+q/20Z7z6FkTWzA6k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qjHStXjnDH6603GRVuwe8z2hqibhiohPb0LZlhAXjvYP4wTAMvQWYCchy61YsUQnjfSbvGbZ7l1fqwGkyWYXv8l6RXpuem6fIsTmA6Lyc2ccmT3X2JcdavQGiNdYMrxzMwvLWrtO1iw8+9/H3Og9ywUt2Op6BHMdUhomtxQnpwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L41aj0Fd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=byLFS2OT; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E60E515880
+	for <git@vger.kernel.org>; Fri, 16 Oct 2026 16:29:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792168145; cv=pass; b=Z7YdICIWCGMEeyXSSZHbfnjjTIeY7ZkTlERr94WXaZDQcV4ZAFD4ar87bO7FUyaWHSnduE18w2+PgMbEZuNQ3dSKhCVlm3GUoHmLSHqEp3v3ya4xMHQzFhztDRxYy2GkLzBAlCORY41nBdGTfoLx4+EE2ECe19iGfLKAcWtuL4I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792168145; c=relaxed/simple;
+	bh=rtww9fZ3WG6t5BsnB5xcMdNyckN5REjUHgtzkwoym8M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=d8SjzD9TDAbKsP48pavRd7DU39p6NEIhM79ZTId42yyQlrVlLDpdwk6RWIdPklc9Yfvy5ESNYwBJ77tYgN3IlzBWclyc8g+mf46g5UWZo7NSPQZlELx3AJXGPxh4Uidriw7nfzeb9htve9RbZnMs986+MaM+RS5ngQRHL040gH0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com; spf=pass smtp.mailfrom=thomasbachem.com; dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b=1cGikrNu; arc=pass smtp.client-ip=74.125.224.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thomasbachem.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L41aj0Fd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="byLFS2OT"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4FD821400131
-	for <git@vger.kernel.org>; Fri, 16 Oct 2026 11:51:16 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 16 Oct 2026 11:51:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792165876; x=1792252276; bh=V53hHwuTqk
-	SZ+N9QhFeqiJsd5yifyHpjkkQ/WPMsEWY=; b=L41aj0FdDoTY9rqbqpyExoqiiP
-	bGQ6YN7cZRmMhFq/BaNckKF0ZqLHBCtW83O1UFentkc4aWE+qLkC9uHym9GNG/5F
-	9+k3h9/Fcey/gnt3qQn/7GZp/t7kqf/reRMpXkNYZa96mzscD/I0fdLvlcOS/DOV
-	lg7ubqUT++co3ZJZxpKgEt/NVTZD/VInCoFOWw9UG4ue+y1doqFjJCiIvq3/X5gY
-	nVQBM1moubICB9tpD/0SYykuA5hE5TUSIPt/PMBj5InKdb6i6gC0CanipfPY+jd+
-	kuwNmamMgENDQzGn42Jz+djHc4Kkt2Wq0xwQGwOmdu1ySXfenb+00cnw8KqA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792165876; x=1792252276; bh=V53hHwuTqkSZ+N9QhFeqiJsd5yifyHpjkkQ
-	/WPMsEWY=; b=byLFS2OTs1bd8ta2F6siyDM/xW7VjZaeZD88dkh6175H5SNFURE
-	55Hw9hfezGD1kgmCqnO4Lk+f7uWzIjG9UW1gjQkkgQdEmOCuGe84JpQcPiLBX0jG
-	XY/dy64AbUNzLr5PWlVleZ/zkeQSIdSIEG2FESaKGSGAcFdwEGURHVkKDoiPF6Gu
-	H7WU1Ked+WnKooSlstwpC7ixZQGeccu6EOUDsRLklN88033fCZqGel9CixyGuAzb
-	nFK2bD8vN2s5f/r2PPUYleTkO3Tl46tZLJaaIOe+KmrC7+gz+UBpcWrW6yONnUMp
-	EsdrOGhm/eXwVMwsW8ZemVomrS/gSg/ioyw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792165876; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:k+unjn40YgZz2IFxU6qkFiIA3fCC+h8J9lGzvC3l0HVSwko
-	m3Z5+gWzt77X7G0R6Cv6yGTWBoWDmWwlPAzw12dZcIfEhURqASCL/VFwyRx3GO+o
-	G5al/lZY9HnS+6kZwf8DuBSrXkbm/FPAZ4Ck9P4gEuznZpH1LxVUvmmv3MA4yuJl
-	488MTnNwdw3GG3oF3FD6Gi2j8E9Xe8YVz5upvHXbuUu1RbMr0LcwliI6ofQXEAxW
-	VR3b08cflpcqFqDhbFAmG/Zge5308f8sglIbVCx+A1TgVxSsoVojlwGp8374vjRQ
-	I11BRW6mZvtvrgFAWHDjk24QiphmIoxGjC3K1iQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:bX/znUne7Nz/fVa7vJr/jRIwBVwPcnX27i5ObL3V4BU=:JuxLaPtGJMxPWmN4uGQH9RgMf6+q/20Z7z6FkTWzA6k=;
-X-ME-Sender: <xms:9EfSalFqEMEWWs-4jkah0hA-RbFfBFaYTNCFSDkbscyDcA3zrlDlDA>
-    <xme:9EfSahXLXJe8KOiYwNZigZEjr6Y07zMQfHUYA28T9cGPjlmoaBd2VxQmyOBi4hoWo
-    mZKxkwARFRh2fR5y7gsNKuRR9WJl_1o-93xF1Ot8YEg_xnroIN-0VA>
-X-ME-Received: <xmr:9EfSasJjPazhF9I6Eaxmv3NJFZFn615Vne21z8sLGgb6iwlek-J9OWomkLh7AfboEAadymGBv1QHue1hzQjwloO5xL6AfW1DwHUi>
-X-ME-Proxy-Cause: dmFkZTGcfaZDuf7wKBzmcw7BCuKnmrpnOTwzW/5EyO74noJiVlIEnPIgYCfVH4sLYoRNH6
-    8JnK+Pyk5MvmLOG8QwoQs4kkrnXIqDbY/HVimRu/x2tZQwLQCGzdHeikxsGMIgNRGRhNX7
-    PcCVmKrwY8uK9VOBVbEvAhkebYyyt0rsMnSHLzsvfv4FAdIB57uj24OpeJnlPDi8WA/cXI
-    TLBfdl1jxPIaMvsUBQKQkpygx7gp3XpwwCO0FpuL8IB6res2wNsE/pvx5M3tz6WEv2fIkg
-    ER+PBOKZMZ4OBpvUtzQOUY6cD4HRh5fQUAqLuLk1dCiFze0pjuEAR/dtKK7RqicS2wGnQu
-    anvJPbHI/9jkgxcfCSB2t3uCbqRnZL3n5N5qF6NwCOoMsy6fq5XQD7mDgJ3zSgoZjnTxkX
-    c+UW6n87HQ4eLvUkRWh7h241nApuyATKy+iQ0C+MKPEphmFOS5LVvR4KbiekeJYOWgeBwt
-    7Z+hI0YfEVgSczMs6rFwKs6rwyHktm0ahaYAFsGsQ5jW7ook/KwQeIxPkInSHlC/hagNre
-    fuAG5F8YsQa1+ty5l4xMsjMTa6VQBqjnnF1zXZ1qHpNCINDoH+tWySAZKaxXWa6tnEQvRR
-    /uZS1iS6xLLYtMBVtfPJMfVoXuKmPasNu222T48cXzPdfKCZiLMClkyTMCfA
-X-ME-Proxy: <xmx:9EfSap_Tu4kIEJPqBDhDT2Ik4AFKB5UV462Ww_9oEGE0D91CHD-uOw>
-    <xmx:9EfSanIq7woYQmB81OwwJBSo3dkxLGNSHTlZcoS7yMj_4GgE04noRA>
-    <xmx:9EfSamnMpdPwWGFdKbz2N3j3jh6bRNH8OUr6rV4H7ckVUZfnvqlc5Q>
-    <xmx:9EfSajNy9RkgMJhPkYtYRAremFdJ7TrlHtOuW21viGD008r3akLaRA>
-    <xmx:9EfSanoQGLOGNCRxwzkooavk-CGa2PzUfcop2cyctZoqJAWXnjMPJ1PA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Oct 2026 11:51:15 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Raj Ojha via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Raj Ojha <rajojha047@gmail.com>
-Subject: Re: [PATCH] describe: use Q_() for pluralization of commit and tag
- counts
-In-Reply-To: <pull.2257.git.1792058069306.gitgitgadget@gmail.com> (Raj Ojha
-	via GitGitGadget's message of "Thu, 15 Oct 2026 09:54:29 +0000")
-References: <pull.2257.git.1792058069306.gitgitgadget@gmail.com>
-Date: Fri, 16 Oct 2026 08:51:14 -0700
-Message-ID: <xmqqzewdhcel.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b="1cGikrNu"
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-6740e7ae219so189424d50.1
+        for <git@vger.kernel.org>; Fri, 16 Oct 2026 09:29:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792168140; cv=none;
+        d=google.com; s=arc-20260327;
+        b=imoei1BBTydaJuEAoi7i7Cxs8Ic0ywWSPIHbeAFV0jpzItNr8+dPH+LtlLnr6FSdMt
+         q6g6turkGUjtSvkXx5ObD2fjbv5KNl/xs/pZnSQKTdVaKLjROMlynx6WppBboo7T308L
+         8gYlATNN49nPsdXTI52hGKND5IImxUkHvgyghZCYE7T5BrV13NOjIK7lUDpPwCFY8pSl
+         ZCl4ET9oy8y9cYdoOvhjuSahHAK0IYADh6/SwgaDc6AFIUgNJlwMkN0tvThiKg0UKACy
+         Gw4FW1RliOhJfBFIvigWX+4AOaST8AKR1ocJxQdbTKZ/Uewp4G0ZG0rY1VVGg18GUshB
+         KVIA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=rtww9fZ3WG6t5BsnB5xcMdNyckN5REjUHgtzkwoym8M=;
+        fh=jK7UZZpofpIKspIH3Ol31ZfjyJBrqyFlX/67pVjLfUE=;
+        b=Rpa1OL8g6pvUu6rHqttGOxHEU6s73y0lF7C5KKEkiXAVbH0UaBjPnkfo4x3NX7eYVt
+         ZDHvN8cFPzcZl3dzhswUyGwcr29Y5f7a1TW+e3bpIyDOqn/BcQh4d9jvyBVcz4lYtP3n
+         2ePSfIlyeYKsGc4LgjaFpLXu3ID1ylUZZ2Ysze6cI7L7BGXKn9FCFtyDd+Lddf3u+47F
+         13Ea+wibkqNr5fg8SY/M/Ig0zk6v2LcmFI3IDDsO2g59ld0g2TB4fLRK7VaoIeehHu+Q
+         NE/3tacwl9tl/WrEm8XiIWNd0KVnoXC8VENTSMFFvL4w0XI9yjIk6mhWbwkYrpsnpB42
+         uuCw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=thomasbachem.com; s=google; t=1792168140; x=1792772940; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rtww9fZ3WG6t5BsnB5xcMdNyckN5REjUHgtzkwoym8M=;
+        b=1cGikrNuU5Ku5SKAhD4xMxqsO5N0PRWNpouDdJZ6aELIHo4P4HBef3U9dPFsqHiVH3
+         HBCdaUp+Ifa54CvZ/CwtBu3ib6ZV8F7pqa9agkqsx+SNGZH3MTf+L0XlnvVoayaGgaan
+         dbV4PLIRTEOMLtSnFatIg2folmvpyw5rZx2BwBc7F0fa8FNOWlj44+Fa7yHVksmB4SlX
+         gXnU/4/YoSelUE3DgApXaT3WkmgwMCqXcPSoomho2dfpYNWVIzrvTKlZyaB+OQB7xmQ5
+         zlaPmofmu4cm8yWMjcNJwGgTRGAZrBCjsUzvBLltH4Ws2r2KYw4ItJD2qTqsvouwlOOL
+         jCAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792168140; x=1792772940;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=rtww9fZ3WG6t5BsnB5xcMdNyckN5REjUHgtzkwoym8M=;
+        b=LOTm++1MVA8DiyUidJLwJD8M+R/bzaNQJ/GLIawVLnkWnx0ADhWi6Dmr+JTE0fdsvl
+         MqRgd2ITcPPBog7xVj/kPWuJIDSjLJWrts3oxVpTHu9niF5VgS6mTAVt91gKW68rNkQj
+         Ivldju1aLHfEvPCFhlB6GNgArMFmjx7Gb9Pu+IW6XapP1R2TJCHR4bIllYYu3OQy7fIW
+         T/jKqEo7JrRH5XilcVGRIODB+5wBnW18QukdfSK/cC0WdeHyDU/Hk7Y71U6MdVMDOKzc
+         uQHjL0hcE+ChMQIxEQ8SYygMFSB1Hz9T9t0NJ4RVfJmGRxgiijVBTYsy10J4ZRX60/IX
+         DP2w==
+X-Forwarded-Encrypted: i=1; AKwUvBwcwpjkAuX3kx4Uc0VI/yiOhAL46z4tpiz6ZeyMlrf/lvhNaqhYHCZxKX/CZeS83AaX+Ug=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLxfK9y5p2RS6GwdSzgV0OzgNreoUjQfxwdKhOipDQ6CFD4cdKI
+	wLSK3BLAx8LUfBSwP7ASoo1CPHPYiLSJwrJeSqWszlhGgjZaWV+1+LOfW7ipmQX/8/4NH3YKhMA
+	j8jn93U5KM3oFmnhWkUPaF9AG2zkRnotxl75vpuExy3WZXAUNgJUbENLNKA==
+X-Gm-Gg: AYBFou2pHfE7zWMCqLF3fbwr+M6oCnvF6LRV+B9YtxKsQ99ywygzYoJQw1PrEjQmjWN
+	v/HufKt3RFycBqyV+/ulTR4tPqiEwa0FP51Afgp6GeaYtV+BrkQ4l8LC4wgIXYEDIXxAeXr5I76
+	sJWe8rUdUNpr6mx+O+yafGJioyoGaAi6UN/ycF6Gs9CS+leI6hwgOFrft6tpOUUz0bwQQuMKqdh
+	3vxseTMFqQg6FKRJqzvdxo0HWvrdVVvGSjyO5K2OiH+uHGknboh1Sb30VsbQe0Ei54QDCSCwPNz
+	4FfXbOhTxyWI0EtLZXt715zrwjNziFLtifuGtc5GqBqH6g+8MJM3DOMU01nO6DOV6hBMorZE8wC
+	rM6lsrZXuA3g1vECxcwXBDgj9luEcGk+pW/FOiiQJQQoB/g==
+X-Received: by 2002:a05:690e:1519:b0:677:af43:e258 with SMTP id
+ 956f58d0204a3-6793629ea83mr5222802d50.117.1792168139676; Fri, 16 Oct 2026
+ 09:28:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2261.git.1792154374653.gitgitgadget@gmail.com> <20261016142515.T1gr4%taahol@utu.fi>
+In-Reply-To: <20261016142515.T1gr4%taahol@utu.fi>
+From: Thomas Bachem <mail@thomasbachem.com>
+Date: Fri, 16 Oct 2026 18:28:48 +0200
+X-Gm-Features: AclHuK-DP0SteqKLOtBgvdvlqrFsAZgqkfmW7MEsgYsnDo-SmhafoIPRPGgpB24
+Message-ID: <CAA0xjtoyCjzjzNnoGdoA_o-TK9=nKK98mXEpE0y_jWJfah_Xow@mail.gmail.com>
+Subject: Re: [PATCH] sideband: skip unrecognized allowControlCharacters keywords
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
-"Raj Ojha via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Raj Ojha <rajojha047@gmail.com>
+Tuomas Ahola <taahol@utu.fi> wrote:
+>> + value = end + !!*end;
 >
-> In `describe_commit()`, debug messages print the number of commits
-> traversed and the number of candidate tags found using basic `_()`
-> localization format strings:
->
->     _("traversed %lu commits\n")
->     _("found %i tags; gave up search at %s\n")
->
-> Because these messages display an integer count of items, using `_()`
-> fails to account for languages whose pluralization rules differ from
-> English (such as languages with multiple plural forms).
->
-> Replace these calls with `Q_()` to allow gettext (`ngettext()`) to choose
-> the grammatically appropriate singular or plural string depending on the
-> integer count.
->
-> Signed-off-by: Raj Ojha <rajojha047@gmail.com>
-> ---
+> Reading CodingGuidelines, it seems that `!!` is a construct we would
+> like to avoid:
 
-Is this convergent evolution or something?  The similarity to
-https://lore.kernel.org/git/20261013204351.428800-1-antekborowski11@gmail.com/
-is striking.
+I wrote it this way to match skip_prefix_in_csv() a few lines above,
+which steps past the comma the same way:
 
-It's not like anybody who sent a change on a piece of code
-automatically owns the area to be improved, but we would love to see
-more collaboration and a better use of the lore archive to find
-similar effort being made before people send patches.
+*out = value + !!*value;
 
-  https://lore.kernel.org/git/?q=describe+Q_
+so the two places in this parser read alike. Happy to spell it out as a
+conditional in a v2 if that's preferred, though.
 
-
->     describe: use Q_() for pluralization of commit and tag counts
->     
->     In describe_commit(), debug messages print the number of commits
->     traversed and the number of candidate tags found using basic _()
->     localization format strings:
->     
->     _("traversed %lu commits\n")
->     _("found %i tags; gave up search at %s\n")
->     
->     
->     Because these messages display an integer count of items, using _()
->     fails to account for languages whose pluralization rules differ from
->     English (such as languages with multiple plural forms).
->     
->     Replace these calls with Q_() to allow gettext (ngettext()) to choose
->     the grammatically appropriate singular or plural string depending on the
->     integer count.
-
-You do not want to repeat your log message below the three-dash
-line.  It wastes everybody's time.
-
-> diff --git a/builtin/describe.c b/builtin/describe.c
-> index c0abc931a5..1a7317c811 100644
-> --- a/builtin/describe.c
-> +++ b/builtin/describe.c
-> @@ -481,10 +481,16 @@ static void describe_commit(struct commit *cmit, struct strbuf *dst)
->  				label_width, _(prio_names[t->name->prio]),
->  				t->depth, t->name->path);
->  		}
-> -		fprintf(stderr, _("traversed %lu commits\n"), seen_commits);
-> +		fprintf(stderr,
-> +			Q_("traversed %lu commit\n",
-> +			   "traversed %lu commits\n",
-> +			   seen_commits),
-> +			seen_commits);
->  		if (gave_up_on) {
->  			fprintf(stderr,
-> -				_("found %i tags; gave up search at %s\n"),
-> +				Q_("found %i tag; gave up search at %s\n",
-> +				   "found %i tags; gave up search at %s\n",
-> +				   max_candidates),
->  				max_candidates,
->  				oid_to_hex(&gave_up_on->object.oid));
->  		}
-
-Both the log message and patch text look cleanly done.
-
-Thanks.
+Thomas
