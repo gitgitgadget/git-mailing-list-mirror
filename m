@@ -1,116 +1,145 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C1847ACE2
-	for <git@vger.kernel.org>; Sat, 17 Oct 2026 09:35:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C448C3D3492
+	for <git@vger.kernel.org>; Sat, 17 Oct 2026 09:54:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792229714; cv=pass; b=JnrSz7rryFj/0wTfjvSRn3rtN0eI+EI0hNkXEu92ULigWbeacNQZiILHacapcl1wdO5QB/hBwaZigoFmPpRmdlFV0Rh3Es2xEIi6gpulUyXf+/Z1aLRtb1mElAWlWLW6Wn4v8zAWDCwi+jVt0h3cFHoj3lJMo+KvO8zqV3oyX70=
+	t=1792230896; cv=pass; b=h0TO7/Pyu+JGEkPCp1BxlSilHDV3oEVTWe6sUYNIoo2ZPxHARRJEPfAU1xqjrkaQATDr552qyuacTK1GVOF1PNvWYQLs3qb3St3HOvdOfwgVYaDlv08FonLLCObGVXPJM6ZT4ZV8Yj3Pv08N2BMiPuG3IHhChBw2jq/83F8MFKk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792229714; c=relaxed/simple;
-	bh=sKwBIwvkr/zsyL450jMjqn+mioZm7h3bj4HHg/U18Hw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=S+r3vnxCFpfqQLr0kUlk+yoIFGr16WaYsdv/hV3lLivq8zfcpRbJO9ZgmhowRetMWxtqmK7zmN5KOm6P+psYjtfb6QEm4dBVzGi4AjzOYArFEOYMLXvIwdhIYpQ27QIZCvFBilCjx+W8G6RiBfFYof9gyChbjp9r8qOq+i9qTEA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y6uzRhqd; arc=pass smtp.client-ip=209.85.208.52
+	s=arc-20240116; t=1792230896; c=relaxed/simple;
+	bh=fdGNo4D/LIBTE5KYXedgpShfGpTsfPf3SXGlZCdAnJM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OLeDAyIQsuFMBhqEgGrBH2Oackk0ho8/UZX+niCHGcV66b+S2UFRSAJ5S2Y8Wz1FBXaPzqqFoeVxgFj9P2MDzsVLhX0Lrb6eWreVGaLx0jSSyT5MbRxs5YZ8Q/StAEQzHvMDhVZdMtf73VBuE9tKn8nvcod9XA6qPUktijxa5nI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IhrxtgcE; arc=pass smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y6uzRhqd"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-6b2237b596cso898538a12.0
-        for <git@vger.kernel.org>; Sat, 17 Oct 2026 02:35:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792229712; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IhrxtgcE"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-6afbc363efeso936055a12.3
+        for <git@vger.kernel.org>; Sat, 17 Oct 2026 02:54:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792230893; cv=none;
         d=google.com; s=arc-20260327;
-        b=ovTHPqSbHhm0Nw/KOE2F0fFhTMcG5GCmrPhvp6z+dlE1KPYrA/F0ASwYRhstfIajz6
-         qzrqz1wvhZ/8b4Huh/G+6ulCLdhOpasbKDZtX2aa3UY+2rQIX+XtykKiDIbtAu9iQNHN
-         wt4nLSzjflJMFHBiDV972TuVQzWDaV3bKlOpuMjJXuCEDrAroOAzSZsg08+C4k7Tk/91
-         sBlIiYOLPUbIJkD0Gn6yrACfM9pMOtJh4xcAuUFbXZaXjPFIZOfDp+xVtFGqEhC3vzzm
-         eNdqkR8CnBvJnZYLmxxOyAhbisJAoO1vj/0GiW5kqq1mJJ6w/KTp8TC2CYd5dY0+UMJX
-         3HDw==
+        b=XEBRGr0NwMxUW2BhKiTpmYbC8lvUjLNsbsTY37P/dw8vjUSHZZHuCcVxngrsgUjUl5
+         Dw+Ks6QIxREdIChZRcLL+THW8umBf7VnP+bVyLIyTizqnOC6cmZ6FyQD5odARafGsXz6
+         KWkeV1RWOy5avOabPlyjWzv7/BG5vJG/v9XkpgDDa0D2JhGBwE37kvoYInN1Ho2VYi9V
+         VR7IErTIepDIpgL+yRaDhfvcxB0xEZZOhj/DWDVRodlkxYjp9E3nmYTFfNCLprRvC34w
+         wHIlFawVhZ3ZXm+tO3NK5f7jU04G+FRJTDrTzXlmI5kpRt5k0rJ2FX2OjKKg29z4uOnA
+         Drrg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=sKwBIwvkr/zsyL450jMjqn+mioZm7h3bj4HHg/U18Hw=;
-        fh=fGSJMDFrkkEDNS6+QfBczVJpie+hBE0ZP2ZqquOXZKM=;
-        b=hVrbPsR8GB+ijfNxOUxy5gQ0Lm4ufHBOq1TFJ3HzXj2cTBHG/MVis31BSzDMpFBd4t
-         b9Tm2EycY4rUWH1QjL4waE3Jw8j7gJZgrN4jtU8vBdaWBfItT8ZkYVgDCm89RUSeBCs9
-         Su9MK3ytKelUp0aqNe19MiHEAn/Ga6EGMkxo8UGYuPR0GF+lAA7Xt+OyYaqk+LiaAukE
-         0n0nlY8gtmcU2X2JCP7WMt1OZlgetI967U/osi6UuJQS1WPIi0ozj6EwY6UX1DW4YepS
-         /ME70V241L+ZX/xxWTXrfZqbFLOoJfv5hKfvSvPq0F2OY7aDga9jP/W7Y0UhYEUvO1Tz
-         LlEA==;
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=IAZNXhpJ7fBGFbY0VAYMxcJDOJfzfn6RZe7qgrh4Ulg=;
+        fh=GSq18hkr7iAJ8JItEZ59lA8cS5tjsvz+6wTQ3n0p6K0=;
+        b=K2+x7bSEif9n2nnyBGz1OK9B3tpE6eLx3y9y//nescg8Sg3acF9MxxFzNkAvzPvNnv
+         /gl5TcCR6CpkmxaY96WVapm52kgECyGbNdGYt/RHlyNhr26sSmTIvwR16uf/YT18dHMY
+         t0j7tGtfvH/9+DAVIwmTkt3LcDRF6bks1BM6HZRCGaYxcdCZYkvv5Y5NJlLjPX3j9bnV
+         sN2NoeTlJLxb8NMNHLfwDcE9ZpjFAARqs37EOqp9bGVgM0XZGpaST9Iy4bVYEz3YaiPH
+         sWBwPgLzadQvGcQMw76TD7XHL/+xdUUGOEpQ8qwqKKny7bhSNbTRFknYNXhi1ti1mtRb
+         4jdg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792229712; x=1792834512; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792230893; x=1792835693; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=sKwBIwvkr/zsyL450jMjqn+mioZm7h3bj4HHg/U18Hw=;
-        b=Y6uzRhqdqCwSs97ZJSuEcwN0sTEZtuG2mTxgg1rSLWRyrtYipNvCFSoB22nq/pkpX4
-         zPXMjeAMq8B+7BBAFMJuExPL4MLtXEocwOzj5aaemOcC87aLiGhipAjfL7L57vS2ITw+
-         WgXetyocGNSqKAl89yo7sy+jk3OVVdBCZ/Dg5pLa+RhPQBAT/IN0/CmU9RjUNoQscKr1
-         BHGU54r+XeJD09TLVWz8TQnQS3SiW6ysFzvrtiAtWD5/Y46Rd8bOnsvGRmR3yJJ1glVr
-         wKYbhmXUV/fMkBPKbCwU920hWdBj9lm8sv7MKKUAFA9up3L8oWmwl+2CvH1DLLc1zBp8
-         9mTw==
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=IAZNXhpJ7fBGFbY0VAYMxcJDOJfzfn6RZe7qgrh4Ulg=;
+        b=IhrxtgcE6PEZIQq9Hu7cpCPvRN7Qspt3eSRRHvOApJRoh+tI9KBt+2wDE3eN7HQ4Hs
+         tqVKE5ztEbXFuVVV9JI62Z4WAfhR9cBZuKHHylqHH+kUmxqJDGhRil4r7CZS710XGNr1
+         NzfA/QLslWrxlpz9SWWCMpVz9zWbJXpBPPEAUc+RKAz2YpyIBWFAypMph0hUu3Ofv/Qr
+         kmesNnWM+1Q0SWt4u/x2ERf/ZEw0YrMDDAm/AXeXOVV8pcTO7xmuvFRvzEQ82phPrIKN
+         yjQOZY5THzCJb+i/1uazJKzfGuGOTR1Lxu1g0auevSVJdGTXnjKyvWbzmIApw0W6njTD
+         qNTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792229712; x=1792834512;
+        d=1e100.net; s=20260707; t=1792230893; x=1792835693;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=sKwBIwvkr/zsyL450jMjqn+mioZm7h3bj4HHg/U18Hw=;
-        b=d1O0IsbFyrdjZrDJuOnoc98obBUzC3iPoYRctWwMiNM/IDt88FrBOykwDTDzRBVr8n
-         eicNWhg3RXl9jc6BknbDnNlRG9Cz7frSRt6eDNxZbImMXFj36Z0wLiwhvw48DRj7oNWV
-         40Iy9wWMHzRcBn20wciHvIcLacFhIuu0ECMrf6r/BjcbLnKKFfzeaE0bC27U4u0czbw1
-         ZR4JvN8tOVS3F+cjjF8lhZGPC2IpUMbkhj1e3PisaOVMjK3pnSbIj0fC5rXbSsjFtVmb
-         /DJ9o0UFzsEsoHJEjxyuNDz9QAgVgCBB1kHZCYOEaYWg7pEv2ZkX2LDLadhuoMNiWfFs
-         GkGg==
-X-Gm-Message-State: AFq9FYL67/asSKUK+d7nALinWx/Kmr0qrKm4RQcXCQI0upMb47acOjG1
-	n28tPj+MJAVG55kLCE0IIuJ+BiOnNSxhEPG/ByC9ALFsdJEabqHCMYrQaK+AjgyFiTvApSPNh4A
-	6V9Ob7G6JcPuf5R8McFb3DSwSbWNdlIET4qRILOpCkg==
-X-Gm-Gg: AYBFou1k7l+fGoi+ehzGuLLNRbqswZFBNl2/Iqy3MfdAZDDdBs7uRVb/yfwHyGM7PQQ
-	BqJixUHrArZ5BGfHdaRG23ZpqrAZZ+8Ae+86ErCzUjTOlst6crl/kD4anIB73dhBerLEz2qqaBU
-	zvfq1DcxPyg+rRhSE3XYTnNuLByPvc1AJTn/C88vzN96eWD0PcTaa09DB9I8ZHvE+L6SXHpybTM
-	PIL+35FYoHWNevorZAxiuGmxDgQuzI+3t7zO4zmm7f0bl1uJRyLiIcyWSIWINFciT6N/5DQqkmn
-	7WIddAuLIenGMBYZ4m9y1xz42PQie7AINz7Y/xdIY7CDYX++V5ds77Ug2xNfKjqwUs5CxvnBgdl
-	5/G1fGkgvss0=
-X-Received: by 2002:a05:6402:2b90:b0:6af:80c4:8981 with SMTP id
- 4fb4d7f45d1cf-6b3a81d3128mr1327771a12.26.1792229711564; Sat, 17 Oct 2026
- 02:35:11 -0700 (PDT)
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=IAZNXhpJ7fBGFbY0VAYMxcJDOJfzfn6RZe7qgrh4Ulg=;
+        b=ZmRUXIr42WbUrvT+dpV2wMeqxD4EWObG3N4eaRergkUPygPo4Tza9QbDPKR227NGgs
+         NnqHK0eoRVWnXRBHElJazTwz8IvuX/VyhHxK8V7rkAPs+CycVOmcoQ8qc3WDALzvabk2
+         /SFfj8KOFloVrJwEwcWqE8JmnOMBMWR9wVgungZBfQ2jhEtYuh1ZBGsTXtEUEbBB8Uvj
+         K7/Urx3rIX4isPIA1rOcFXcPxmhI2iU23g8YUC/XXNPOd9jRM91gBZJ6rV6Y5ORFhEZh
+         F6jAKGdeMeQoakKEUZX5GW2V0W4uFxnTTN1bakZJyg3gjCb0ovPPE5HwzszSorncVczd
+         ctPg==
+X-Forwarded-Encrypted: i=1; AKwUvBzY4pJc3hY5HzauDlFmnTcSI+wZPWRfsBLGctHMXGthClE/JMCPkjy/D+kSra20QWseSzA=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJiSGaUZJKbd5vp/NcBBaT35xtiVWGpD7kamorZYzf1oRFrm152
+	GTYEOKPTn66cM0425kj0+1kuWoperOAHMUgeivF6t4GCnLTRZ9EoyQP6hCCwUvVwyxqgrBs5Gw1
+	qQ9RUi+ew9nzEbJgQDoggwccHDDlelno=
+X-Gm-Gg: AYBFou1y3a6Shy6V+jYhT3kCx2e0P3OuI76iGsZ2Ldvx0OtKMSurENIiG+qqsZuekY5
+	QQKxG0TKNkqEQBj3mPy03GsDANtNc6y7wsJT1mY5dFMGYm2DrP04z4aIo/gGxRNjA5Rv/CIP2Ol
+	Wh+2CG3U/wUhJid+ZIe8MQCMP8+sqBOvhESgGEVc0DGWG6UrBPAWaUi4txy3eXYqU+4hNP4rFfp
+	40etVRLHaLA5K+gUoqP1I/97L+QTQE0SYEL1T9xRdcZ09Qpn0nlgsHkTllf9r47d5wAcUCqZdLT
+	7H0MNNXMpYPS4fG/gp3u4okLNT36FhlLjFqI2HAjJbENEzCSMgr8i0Y=
+X-Received: by 2002:a05:6402:1ed4:b0:6a9:a3df:e4f1 with SMTP id
+ 4fb4d7f45d1cf-6b3a81a70ffmr1426906a12.25.1792230892810; Sat, 17 Oct 2026
+ 02:54:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Muritala Mudi <ibnmuhyideen95@gmail.com>
-Date: Sat, 17 Oct 2026 10:34:59 +0100
-X-Gm-Features: AclHuK976cCtSpMg45soarmzrsHPgcx43ooAMg-CP1pMHLjt6DgMdNVGa4HIWmo
-Message-ID: <CAO=0-S4jSCbYvLPVdL9U=6PPn2w-apMaGpQaOF_AuDN7n1v3JQ@mail.gmail.com>
-Subject: [Outreachy] Introduction: Muritala Mudi
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>
+References: <pull.2450.git.git.1792134165785.gitgitgadget@gmail.com> <xmqqcxt9h9g6.fsf@gitster.g>
+In-Reply-To: <xmqqcxt9h9g6.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Sat, 17 Oct 2026 11:54:15 +0200
+X-Gm-Features: AclHuK_mSRmp7gbO8cpxWdxjm_QndVTd-bNNRARiNql8y_ueTCNEYZzIJTRO9ug
+Message-ID: <CAHwyqnVwnMi+DzQDvS6mgUzg-CWACUviVkYv-UiYJT+Yq83QLg@mail.gmail.com>
+Subject: Re: [PATCH] branch: let inherit track a remote-tracking start point
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Josh Steadmon <steadmon@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi everyone,
+On Fri, Oct 16, 2026 at 6:55=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> >  `inherit`;; if the starting point has a tracking configuration, it is =
+copied to the new
+> > -     branch
+> > +     branch. A remote-tracking starting point is tracked directly, as =
+with `true`.
+>
+> That is "A remote-tracking branch given as a starting point", not "A
+> remote-tracking starting point".  Don't abbreviate and drop "branch".
 
-I am Muritala Mudi, you can call me Mudi and my pronouns are he/him.
+Thanks!
 
-I am an Outreachy applicant for the December 2026 round, I meet the
-Outreachy eligibility rules and received an email approving my
-application on October 14. After looking at the projects available I
-got interested in the =E2=80=9CImprove how command arguments and options ar=
-e
-scanned and parsed=E2=80=9D under Git.
+> I am not sure if it is the users of `inherit` want that forking a
+> new branch from something that they know is *not* tracking anything
+> suddenly starts to track the starting point (whether it is a
+> remote-tracking branch or something else).
 
-I first learned C when I started learning to code with ALX Africa and
-that made me want to go back and learn how low-level languages like C
-work.
+For me it's simple, only tracking when the starting point is a remote branc=
+h.
 
-I built Git from the source, I ran the parse-options tests (t0040) and
-worked through MyFirstContribution up to the parse-options section.
-I=E2=80=99m now looking for a microproject related to option parsing and I
-will share my plan moving forward. I=E2=80=99m happy to be part of this Git
-community.
+> Looking at the originating commit d3115660b4 (branch: add flags and
+> config to inherit tracking, 2021-12-20), it only talks about what
+> they want to do when the starting point does track something, and
+> forgets to say what they want when it does not track anything (the
+> author CC'ed in case he retains the memory of the motivation from 5
+> years ago), but if you ask me _now_, not doing anything, i.e., the
+> behaviour the old commit happened to have implemented without
+> explanation does sound like the right thing to do.
+>
+> What we should do if this change of behaviour turns out to be
+> undesirable?
+>
+> Perhaps `inherit` should gain a synonym `inherit-or-ignore` for
+> those who prefer the current behaviour, and we want two extra
+> behaviours, `inherit-or-fail` that complains and dies if the
+> specified starting point does not have anything for the new branch
+> to inherit, and `inherit-or-direct` that uses the fallback
+> definition, or something?
 
-Regards,
-Mudi
+Seems quite overkill for the relatively small problem this is solving.
+But it would be interesting to hear the original author's POV.
+
+
+Harald
