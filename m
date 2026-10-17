@@ -1,135 +1,119 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABFB18D62A
-	for <git@vger.kernel.org>; Sat, 17 Oct 2026 04:11:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AA02AD0C
+	for <git@vger.kernel.org>; Sat, 17 Oct 2026 06:40:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792210316; cv=none; b=RYuH2rXdTqUD23WE7zANQ/o4mloan7A7zedZP5agnbEZkb/KAq5oJXjkeBDmlsitKtvrH52frNyqEm4CDQdIjQli5q6rpp5+5+xmVyoD8pyaD0v75ijf1E35jAnelqHcBRvrnyP3vQgqu8L/ttf3NyNcBgmxIJYEIO7HCW1Xois=
+	t=1792219245; cv=none; b=lFmj0rKLVdw/9HbitmUhRmXNksBSgkjwMV9y0O+HC5Z4qCdSxVhCMiCmHpP/cRN8q1epMH9oLuxG+3e/JGpxNFOQeRo/YWsY10pHnahQ/SaWlMOJyT1oKBFS25RkacDhrqHOg1X2otIldJ1fvm3x11tBWBlpDdBqvmzv0qx1pUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792210316; c=relaxed/simple;
-	bh=H2sXScczpp1S8vdlVbAOZy27uUSDJB92S0p/vRJyZBo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=k07uJ7yslX4KJN8QY0vFeOg/FLJ32xHLe+lqRGtI78tIwmfxTQpcepGY9OB49Pq/OkHDTcN1Hv2mFdNzIkDiVUgxZebNiNRNAfzJbfkH3wgfrVO2Sm0SE26X+gvi7vaelIbWYlg8ORFSFJI4cPpsnLejSKprXL2jLhhbV+9S38Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BGD9hY/i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fZVWAnn/; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1792219245; c=relaxed/simple;
+	bh=Fa6ENnsj4BevhocNgyqGxO7Mipu3NGEvrEujAAnB4ws=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=goPLqyFHUX2HLt3TD4i0+yN7ndSPKUYerHLhU9L8NY0rJEBkWqYO6pQdNAEs8cIkWhEtxpf9mLbn7EShAYq4pje8/8g9fsK/ZOYuhu4JONlaEyCfBxPVg5g3Io/+E6r1DDeScHNQuT0HuaCfT5quo1g0+lLlhdBwEqdtpsdl8LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZqUN0EcD; arc=none smtp.client-ip=209.85.160.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BGD9hY/i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fZVWAnn/"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5C6F77A0156
-	for <git@vger.kernel.org>; Sat, 17 Oct 2026 00:11:54 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Sat, 17 Oct 2026 00:11:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792210313; x=1792296713; bh=OIBGJt1PFq
-	2wGG1ejt/+zPPB3NV4t3SxJAR710TqGag=; b=BGD9hY/ibGD/LT5fdxO1UbWeb/
-	USN1Zgpba4xIdPSgFmUM4QhM9j35dynKx1EnXZIwn9z8+Q3kienmD5DI8MMzNmTA
-	OmvgXL6Fn7t/sexmjLvxoBKVLKkvSKvIurRHyw0EgjYIJNeaEiIAu8MJGVxhwlRQ
-	KcGF20CwzGxXY9/rDGt1z1BWkd/SWoV8i9+i4ULxbcKl7a5GZX35qk841f0WhELV
-	TNKZg+uohm8+PzoNHum0+YnhMXcrBOliigRLAx3KqCCAiapgzf7JvMjD3FSzk8m0
-	ilNb9cYfZaZb4KPG86v3ZM7zJll0SI3/4g5apEG+ZBxb81MoGsGWd5sNjaWg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792210313; x=1792296713; bh=OIBGJt1PFq2wGG1ejt/+zPPB3NV4t3SxJAR
-	710TqGag=; b=fZVWAnn/SBrXolzJZb7Nzo3khv7hLcpDf8Yy9xRQIGhWz5PWyjA
-	UQWzqcm380DCt0Yq/hdKWrzNoEKBPUWlgNF6X+5uG877+P3BzH/Iw28JK9LDF+zS
-	bQ517Qs+K1XG4gFVGWRKqd58mDpN11wnrl7/bF0ydSYV+PHTdvHQ2Nw7zI+VQdJC
-	LxOYxquF4Je198xyd1QKQE720HrX013i6T5OVf5TKk5/r3jDTmHIUF/EzYYn8tnR
-	INneNCxkDGknMCGLZJJ+1wYOz/UkPW+oAjjp9PMCf24qDYc3ewagYzEQNR5nsehm
-	YDkmMRcmHQTqun41f0OPRK5PLdgTR/lbeMg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792210313; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:iQ4O43VFrFT61TpuuFa5u0Bd5X5tVpGSi0zlz0z66np8yTs
-	3zpPgk05tzBfuhUJUesu/KqR9wj5P7QsLa9sLqT48TXwao74kXKApuZ72dHRGNO/
-	cxJh+VVUwM7zeIA8gOA7JNVKXWzBFCcMMaRwBYCrX3ydkk4NSXFUqkZrXulNRJVm
-	IO+M/ZynDxIbfBwP1E1BFc/hbS3m0xe13c0f0j6RajRc/848RsXRa34vM/PfZeR0
-	ytTQ9Fuz0jPS8EOCBpgkV59wCKJa2OAIzqiNlkZHL5EvcaiXvViV63i5Y23+90Qv
-	dpkvP9Cduoe//Cun0LM99X4FsYOwSvUUaEhGq6w==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:ZABGK+m/g177UJQYYGY7ZWS8ewYZ8/uT8Q7az6AaqoE=:H2sXScczpp1S8vdlVbAOZy27uUSDJB92S0p/vRJyZBo=;
-X-ME-Sender: <xms:ifXSasmwWWXcEv-aGIlg2MkN_0CVVia-tkePENiwuUPcSZ0eWGoiug>
-    <xme:ifXSavgcwvrphIdLY3f-nF8wsqHC2PExOCpj8mxO4IA8jmBqjxOHxDCpOWHPsLv8v
-    D-3t5rz8nLGJwfqSzOmY071oj9CUiDLb7az7rsJ7tUWgsphNwBeRos>
-X-ME-Received: <xmr:ifXSakeAEDgpXgQdmvjzPlPBCtlBApm0Zj2mXQh53RGx_FBfPvHKbcg6z_ag-qDXYBB3oIECCJoNYdga5XXcCjpGqki4XvPtxZqU>
-X-ME-Proxy-Cause: dmFkZTELMn2o4KoA2cHMaL5K8fKuQY8M+6mcEff3S93JbGaqf/5Q5eVNWepNy74NzRi1Sy
-    yqbLJrA9x9ks4SwfXC4NU3ILEAetPwe34alc2b9xjij3W/b9UgG9kyd/k4U5vUhCIujPdm
-    wDvJApX91udRmAkHYl3zjj61z19VKloSAGXeL+LrvEHWVb5YnvLw4J9US64v+DekLimEzq
-    94o377zIMYOP62u8P1Wmu6iVwJSLPS2dxruqHECHVwNzs8cftr/TVK0xlq9eqoD8WnoaQP
-    a214sL5GWMD8f4ui2t4Vl/LYHzqZrh30eUtsdCdlq9Bd6Un4QyavQSDsFLX5TPVn+wI+Sn
-    lehywjC+DTBpvcwRT2Hjg++1JoadVBPwYi02SS3NyFeXc/ad/aScwmKeIGgEpSS9P0s5jG
-    dGmlHr3ZhZeivx0V/ik9TSiwhcnm7km77h5JLM0ff2SokNczGDvizseULtLdJTf8Lnhaxb
-    kAyuuPGEBulNdWVUJjyqMzPZba7+5H8tCP6Npimn/dORtmgs5e4CTE7HCxDQ2Pp/0rPGTE
-    AjhVP22mvQ/TFXWuigybCXzKbga7UbF06sH8fYOkSOW1qf6Vzj7waYslkS8r72B+rlqx+U
-    EBjYPpwv8AAtLwlZbEf34T2AuBxLIKIcKfd2YKzD19nl4kmn10dmyDWMWe4w
-X-ME-Proxy: <xmx:ifXSavjXp2m3lAuu-2hfjD3qOZurQWJmydS3wK-_Ux9S6-E0kyYk5w>
-    <xmx:ifXSasyTlVfRcN3D6dJ3ityEFGQH9M2WHl3by3JCzmr0NemQP3dhDg>
-    <xmx:ifXSarNUuWR1hfplUyWwYsX_Yykmxj1bj1UQGuathzhBwCT8d7wjQw>
-    <xmx:ifXSatVYDsKfy8AtuGW-8B6fBnhc88JkUguS71l_gUcg9tbaZVyyvQ>
-    <xmx:ifXSaqdHAc2UDX2qnlv5J00J6EBz-3zw20Peqv4Lm1nW7DfsH8FYXPgS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 17 Oct 2026 00:11:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Simon Richter <Simon.Richter@hogyros.de>
-Cc: Patrick Steinhardt <ps@pks.im>,  Johannes Schindelin via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Johannes Schindelin
- <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/5] http: use `size_t` for byte position in
- fwrite_sha1_file
-In-Reply-To: <395b47c0-6dc7-4a1b-b547-e5e68e7356f5@hogyros.de> (Simon
-	Richter's message of "Sat, 17 Oct 2026 09:18:41 +0900")
-References: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
-	<70a909de18e8cd8d282439fb51a9399baa8c7be8.1791958171.git.gitgitgadget@gmail.com>
-	<atHiiye4oi_lF5FP@pks.im> <xmqq1p9pk99q.fsf@gitster.g>
-	<395b47c0-6dc7-4a1b-b547-e5e68e7356f5@hogyros.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Fri, 16 Oct 2026 21:11:52 -0700
-Message-ID: <xmqqv771aruf.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZqUN0EcD"
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-53648215f9dso3356961cf.2
+        for <git@vger.kernel.org>; Fri, 16 Oct 2026 23:40:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792219243; x=1792824043; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=m1WPQrQLzlW8Stcgb0aVPSVP/Cblhar/0XFkMnUQLn4=;
+        b=ZqUN0EcD3A0PVBPNRrROk5nYARU9gVqemBeabcpn8B/+PDuvimCqP0JqImBlkuhkcF
+         D2kbckeEFtsbiBCNSWT5eIR8JiRSlJlJgJMKZClyEpY41G8VnlZFZiEBr+WKoXiUomWp
+         VaTWfehcPTBcEn1ePNwuWvtaOCxfGdtcOPpTvLH1xwtWBoYkeao1TTzigZOUOysV8Gg4
+         IU3uhbgke+EF7RVEoQ0UqqcCBOraV0LvyEbTHRQ7B71adfNv5I3XELmiThKalZdqsFzS
+         44Omu5EfuQqBTybJ4pJkZhmCgRI91C3HQQLrIa60Ra2Eo8zXm2dBreZHH+i6KseL3+66
+         ETyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792219243; x=1792824043;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=m1WPQrQLzlW8Stcgb0aVPSVP/Cblhar/0XFkMnUQLn4=;
+        b=Fk/5NL6WtP6YhYR0zdN7J2Iq1GkMA8Z4fbGWyVtFNEnOF8Y9G9LGzlSwmRBsrhZstg
+         Zly08ajwbQVJZmfn2OEIyTfo3hksNe6Ep85l+nPHHV1NkjOVklUi1q7aIO7fCMfyqbTX
+         mJvQr92PFjrEmzJeLalJRBIECC6O+tsyDdyTDainjvNMgme99JflwwVN7pqp8dFaPjat
+         Ow109XeiMe7DqckbwvwkjvqHttMcpx3RNRy/gsA+CI6lAFzunzTUIgfyvJBQF/ELl3qv
+         cZxIhXd9gbfwxvM5zauL64Twx+gYuRRFEvfKzQ8ZbvfG4kbyIgQ1QdVo9CgLuWPFv6Hg
+         ck0A==
+X-Gm-Message-State: AFq9FYLmteBUqrKnx+8vvGTMS4sQ6iCTFTHNusycU9iIFvBR5nWhch9R
+	0jPIutIGvCLkPhYILfPmXVtI01ZY/wanI8kb5mNcO8iM86R5EMvMXsJRh/QTP6Iv
+X-Gm-Gg: AYBFou0IOqbmcihe0FrjvbC7U/ebHsF3a5LGNdaTyAC/mVKwr0t7cTKtNc60AgJ/fBK
+	Vo+3M5rnDDoXU0cAc7LzS8Om8AaiE8w+4PKqPoprKAH/jAjWnk8V+0SAVA47USHAK+Yg4T8W8jB
+	/tiR0PlDIuYOb/mG2EEem4lgMemOsOWebKygmg7NCPILH7Fp4EcudqOhj7HBTamSa4XxwTQfjSZ
+	Lx0fQ7NOco9cDyLloAidnMUDDDCG/e6cOVJsf/t/atl6wilK9N9fvSWgSjOpwG0UYIs+OXdbI77
+	Tmp+vArtzPKzuCNYHv2w5uY9ywgDSAQHSv09jpqN8nkX2LGISY70NTWGJYp7YcG+03M3uxinalN
+	9KNoONecpqDO4dI1Yi9n0xI5eN9ruPBrUMw1k5FeoYjPlbov1vCHp0w30olPSrLb9V9bDRwFRjp
+	7Cim9RpLu98WaI9fi+6BX2wM6tjThpcPQIbAnBgN97+Z4uuMdMKKOHDTfh1f2phYfeE17Pia2Uv
+	/jP
+X-Received: by 2002:ac8:5707:0:b0:536:4221:e3bb with SMTP id d75a77b69052e-53645fa9996mr26887341cf.21.1792219242706;
+        Fri, 16 Oct 2026 23:40:42 -0700 (PDT)
+Received: from [127.0.0.1] ([172.203.254.212])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5363455e7b0sm31817321cf.11.2026.10.16.23.40.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Oct 2026 23:40:40 -0700 (PDT)
+Message-Id: <pull.2447.git.git.1792219239440.gitgitgadget@gmail.com>
+From: "Ammaar Bakshi via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 17 Oct 2026 06:40:39 +0000
+Subject: [PATCH] difftool: translate "combined diff formats" error message
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Ammaar Bakshi <the.ammaar.ic@gmail.com>,
+    AMMAAR-IC <the.ammaar.ic@gmail.com>
 
-Simon Richter <Simon.Richter@hogyros.de> writes:
+From: AMMAAR-IC <the.ammaar.ic@gmail.com>
 
->> I agree that changing the type of posn from int to size_t is the
->> right move.
->
-> It is a position in a file that is being read as binary data[1], so 
-> off_t would be the best choice I think.
+The error shown when "git difftool --dir-diff" is given a combined
+diff format ('-c' or '--cc') is wrapped in N_(), which only marks the
+string for extraction by xgettext and does nothing at runtime. As the
+string is passed straight to die(), users always see it in English,
+even though it already has translations in the po files.
 
-Interesting.
+Use _() instead, and adjust the indentation of the continuation lines
+to match.
 
-The function writes out eltsize * nmemb bytes (both of type
-size_t), which means the product could theoretically exceed the
-range of size_t.  However, posn is used in xwrite() to offset
-into a contiguous in-core buffer starting at ptr:
+Signed-off-by: AMMAAR-IC <the.ammaar.ic@gmail.com>
+---
+    difftool: translate "combined diff formats" error message
 
-        ssize_t retval = xwrite(freq->localfile,
-                                (char *) ptr + posn,
-                                size - posn);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2447%2FAmmaarBakshi%2Fdifftool-i18n-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2447/AmmaarBakshi/difftool-i18n-v1
+Pull-Request: https://github.com/git/git/pull/2447
 
-Because we are indexing into an allocated in-core region, any
-valid offset must fit within size_t.  If posn were to exceed
-the bounds of size_t, the pointer arithmetic ptr + posn would
-already be invalid.  As posn only runs up to the allocation
-size of the region, it indeed should be measured in size_t, no?
+ builtin/difftool.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index bc7b2ea443..13b3d3ce47 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -450,9 +450,9 @@ static int run_dir_diff(struct repository *repo,
+ 		const char *src_path, *dst_path;
+ 
+ 		if (starts_with(info.buf, "::"))
+-			die(N_("combined diff formats ('-c' and '--cc') are "
+-			       "not supported in\n"
+-			       "directory diff mode ('-d' and '--dir-diff')."));
++			die(_("combined diff formats ('-c' and '--cc') are "
++			      "not supported in\n"
++			      "directory diff mode ('-d' and '--dir-diff')."));
+ 
+ 		if (parse_index_info(repo, info.buf, &lmode, &rmode, &loid, &roid, &status))
+ 			break;
+
+base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
+-- 
+gitgitgadget
