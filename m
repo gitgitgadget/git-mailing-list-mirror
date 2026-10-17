@@ -1,143 +1,138 @@
-Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F50743DEAC
-	for <git@vger.kernel.org>; Sat, 17 Oct 2026 22:11:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792275110; cv=none; b=Yc8z1tGMDXwkKJGVNPNcU4KSJ4SfZJ36uTLJcyRj15+UA1BG6MLUFG3Gcu/21HYjsdVqPw7IYWkljk53UFtMOIKYqwbAX834+2bTsBhI0cY62Z2jqIqfvK+lhfQtdCjZgVL5bpz8s7k0w48MShrfSUDHL7U3zwyTnT3ju3PuNHU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792275110; c=relaxed/simple;
-	bh=aYCEkvxLkraEWgaCYYyTmGlQSoCSIJUP2FdkaBLz5IU=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=rbrjzm3q37trnhmemPnJ2tIZWnsPBz1OWK2Iz5v5QcWzdCz87TpfEiPefjJNr2qx5IILU+vFMhHmkzlsScNf1E67pTR8F4nLuAVyEs67/KwSSioX4p94aF+zZ+OIDAa3iek38sR8z3WoXenRhMVOwYwu0vaAnorqLF+k+Q3UtlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oS+RpcY5; arc=none smtp.client-ip=74.125.82.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF1A3BFAF2
+	for <git@vger.kernel.org>; Sat, 17 Oct 2026 22:23:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792275831; cv=pass; b=B32c/DvhCcwBmeW9gpwPrk5p5CY8iYBkomIx4Oe2iFT0rZgjx93fMG56xkPm8XC9zTSm5kfzIY4UcKS4OhF2Erhq3uo38YP3Gg34UuYjydeKaKS6dF0gC7h0oIQfXrB51nhZAXCc0q7yW01C7PPl7Q2LiiB/pYYnMJezsOhN57g=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792275831; c=relaxed/simple;
+	bh=CTaYN04FnD6GTV3I5zyij8nqq6HhJKPOilhO0YHfU68=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=e6BUduvjrlED9Ljq590rLwSK9oKMD2yREaGDBpvtiapLAlqkJIINa0BWHjKmyqXjC6t89Y3RExNN27xUxWfRaxQLasJ1UqFYAVV18oc5IXUIVjgeVSDPpLpujYRtS0R0lEYRkc1oNJyWjkzi2ONsLNi7pjYrX5MttYQj0S+L4Ow=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lXhDrqtT; arc=pass smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oS+RpcY5"
-Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-3514b90bb89so2579496eec.1
-        for <git@vger.kernel.org>; Sat, 17 Oct 2026 15:11:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lXhDrqtT"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6b21cf1a580so1025752a12.1
+        for <git@vger.kernel.org>; Sat, 17 Oct 2026 15:23:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792275828; cv=none;
+        d=google.com; s=arc-20260327;
+        b=dAnDR5l3jv43VTN4Au16kxk4S0axhRfq/o6QWZ38FVmNyHczF13hDhexm4ox9LCo8n
+         2Jh4SJqgsKa91fFiErRLKvmd7XjS+tLQDDZVT2glJMYsq1No3KqMMzsfc/rmJnpXPZrk
+         sWc1Uq2xi6e2Gtmg3XT3bLGuVcO/pJ7IdLH2h1f14OJ6fYpHYLgdqqFbt70nLHvKFf6r
+         rcQEO0Dek8iMJbdHYWwGwqXHS5MIZxH5bsoMtZ3zP9jt/hyiRoeC93hVGPBVw1Bb0IIv
+         ayGGpNiy3V1U4EuTWyEDz8OQ+RSwVUI6d4z3+cJHwtdM8IjcmTj10brd+cyiW4foTukd
+         j3OQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=2brMeTb4hjTZT575/sEfXgQbVMyMyoVAI53DVM1LjAU=;
+        fh=SEsZhzwiiCb1GZa1suDZY4E+eeRRCFrDiFiilDXDfPs=;
+        b=Pd2GF6yWGCoc2+X+yxfdJ34F61MLGuyTdGBRVM9BNk3dBbTvr49TCS/KQqnSS9btSb
+         /58hQfHRCkQPxubR9oRQ+pDTaGb2ymwKFl1QtmVinfwFXSEq/DNZIlOYfg6AyLABOQkL
+         bCa7CSxcKhCNlMUnPnPQqSiduaAyf0xuiViegI0KIlv2uvrnu1Xzb4lhtT3sXB+YUc8g
+         RYtfJi2szzH10OwHt8RzC9t72lDOfecCk7UpySFW7qrwD0PHOWqdIFZzMgRoWYTtgR5M
+         ZlnD4gISLH2/otKPItQsP/LWt4zNg50FKHl9tbigxR02IsA/sMN/cCgF3t+t2J8RNV3N
+         9hUw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792275108; x=1792879908; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=v+HlR+I8lODrRV4k5UNVO1Clv05kAqIMtf9qDFfWTj8=;
-        b=oS+RpcY515dj21em3uakhSnpwdBoTOg7SRu7N/aD8sWXugBVMrsqjU3G6Ohcvg+Pxa
-         uet8GIb/A+sjvT6xIsXl7Flp+Cla+uNz7nPaJypdFMzPEmFLTJmYWuIFGhNad+HrcpAF
-         l1N/opO/2/2NWKLw1DwkIZgICcFVw7j6EaNOKguVeS442G060QpVhS7mm3Hpx/NDKq2O
-         Pe5HA3vRCETeWtIMJ5KS7AaGB93VXGCOoL5fa20ErKWAAwv9o5UtuJ/y6Xv59b5rP/Ib
-         lPHQCFu26p0LOgfv39d4FIGgTBW2pEv9wuKBY5ZuHN3AiC7maCEeJdn5+cvhtemP/lvA
-         XEpg==
+        d=gmail.com; s=20251104; t=1792275828; x=1792880628; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=2brMeTb4hjTZT575/sEfXgQbVMyMyoVAI53DVM1LjAU=;
+        b=lXhDrqtTm8HAa6KQ/kaa0w3YWBEFp+a4AvoSgmYZqHlS5us6jTHEPZzarw6ax2EHyB
+         awMeecyp6M/8zAiTOJEwRnE1QLTusziiwPWlveK4+fo7fciJVsi7W2UYr/4hKyxre1mV
+         O949+blx06yPFGqmo6soJa9WzfHk+Em97j1ojJIeJLUKyV4x7DCMDut+0J0wtCjiclVI
+         XcyOtlslaGwF9KIxGtmpWXgjcq0VYPBMnwuOmZJoA9JRK9DRJBfwExSzycnvYavx5U6f
+         aKDyGFXKD2yflGM+5zlQeG/yvipQjQRlVqIVuzV8OXku8iKwYXGBWwd8kFKWjbBBWODI
+         77oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792275108; x=1792879908;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20260707; t=1792275828; x=1792880628;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=v+HlR+I8lODrRV4k5UNVO1Clv05kAqIMtf9qDFfWTj8=;
-        b=bkaiH/0KRR1ExOU7wvc47RenljyEtbIL6zBNjCNejWpz72g7Z0J6r38qEuO6E/d9yp
-         xwUiyfQJsWfjyfaka4BDn0vhokO2t4TutcgBtGlWHDtxXdU468h+UvcGn6FOzEgHlFeK
-         uGhsCMKieBev7JkYUB8+tsIxbBa2KcWIhRbpw88OCG7HQSO9mQ1waUofWhx8XYWk4mRx
-         6Ykb5CxfIwJRc249XaCdE2xYpkQHkgCA8OiGO+lGyZbKte+MblrnGgFcvsScLnFDrC5h
-         aqD32eRMfWh99rfhM95SSCt3puV0Wr8jNipjhRZm9YhnQPF8u0AUwAdY3PL+BYlKWgik
-         mCxA==
-X-Gm-Message-State: AFq9FYKEu28ZYmQPj5gHKXKnaeHox8lo5jwr1p2uqeJBor5JZiXEy8ME
-	VIntrR1mWV2UnvuXqWzuiVT/T0SrZxhsSNaU6sBCIlGZ7R2c1StgOtSjUmzkJCj6
-X-Gm-Gg: AYBFou3GpK6vGqul1SPDpa/BR/jGxg880OCelGpc6spO8xROOunShDd+W6ap9S4ZgYo
-	QrYSLn7NxMs7v92YYzPNy6UUttLXX0MS3OwnAJAER5aVQraigT4NDHy4pHH7dj4oCJIMkL2Ef11
-	JfckBvJ0QTrBsT+9RfelminUsiODFEfRNRxOjmuFdDSsjSDr0BM8a+/V+ncARMS27Eu4FVZYG5H
-	qsTU0+DZYy2xBvI1lRoE746o4a3Zo0C85Wi2blLn/P86wCcgV2kYYn6QEKowmWH5QwjKqPFtJoT
-	1KcS2d37U+juNn8fwL6Zftqo0nls6V4B3YcIHGoxGTGZszBZdGliDsgb2GYMGDxdKL3wvljsuKa
-	gS5pLhPE7NBi0F8mxGmVIgJbkDC7SjZs2wTpSy0aVKGqwNqTVS9uFoqXaxb3G6bgrN0MBdojiiG
-	246F/Lc9NNq/LQgI+1JlyoHfMdcUgLot9QUO6SzHI/fQB05q7snDmUuev5nml+DhteKS9Qucc=
-X-Received: by 2002:a05:7300:e9cc:10b0:361:167c:2364 with SMTP id 5a478bee46e88-361a146d9dfmr5687926eec.8.1792275107975;
-        Sat, 17 Oct 2026 15:11:47 -0700 (PDT)
-Received: from [127.0.0.1] ([4.236.92.177])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36082a7b33bsm34249504eec.24.2026.10.17.15.11.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Oct 2026 15:11:47 -0700 (PDT)
-Message-Id: <pull.2455.git.git.1792275106640.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 17 Oct 2026 22:11:46 +0000
-Subject: [PATCH/RFC] upload-pack: fix slow fetches from a shallow repository
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=2brMeTb4hjTZT575/sEfXgQbVMyMyoVAI53DVM1LjAU=;
+        b=0wy6tpZyvV81tblO+jsO4zR5pc/RypEs/bmJYx6L7gBIDWObkRJDwKcSjDbehKdZsq
+         Nhho7SSujzS5jT+7JNjjaD9dcCV3nwVdWjGg7xYGCVAA5G6EKQm2JbVs7A2cTTdzSmgm
+         RM76uPWTUmy3MGb/zv2j0ANl32UBpYWb66MfkePbpq1TP2IYgvxGHL4d7WK/s1S2pwaA
+         1Ev//QRi4/rSsceBzynsJaMzu/Vx6GjyL8YH0RAi2O3L6fpY+yT/bZNhIRzvk+VH++GF
+         4J8enZQvTgHJr4Db//tAijetCsBIrWYNkA19++CGZ1LnioEAmbBWzrBSocrU+3G0WPG1
+         CdyA==
+X-Forwarded-Encrypted: i=1; AKwUvBz5wodsViy8npXbu4hB2546CG0GA+UuW9fMa48j0cD6A3rhnWBkfm4TxWoszKWMS58jwX4=@vger.kernel.org
+X-Gm-Message-State: AFq9FYK+4QT1uJvkVMX+pwsaS0sGZGdXIWQoJhP09oQ/UuAN56umfEcT
+	wwVsbnbanJ8I1VkNoddFHAzP1AhTuLAvWwWaTgkjOyXZTHG9ouexSKCLXc5+Tvh8nai4DB8Pg+N
+	MW3cW9mdkLp5q7Dcm9cP56kzQDjDqhgc=
+X-Gm-Gg: AYBFou1Egs4uoiddWQeaR27OiVC0bfyY9YouIv19+w+1xb0EiWqiec1a7e+UYeL02Lp
+	10Fd0MBVIsMDlNhsSBLLyaJ4UYr64nUCa3achy4W//gjawo06y8Ec3fK0Kl7MHU+JIEqAnanfIq
+	5WBdvcjurB2c2s9y/sNDfyqwKemwx4N1sn37tvodfkAoDw7GyvAh0VizhbUIEsugZqS2JJJPLH0
+	r5kybHneINoQqlckoYqPO40HvgMJ6jsU8WqQkNgOPYU5wpaAcLCppZqYSv3Dn+mqTRQJTSYIGas
+	2vMNvPmohO9lwiuLmyYoqq5YOiG0ljvN1xP5+I5RXzxszu7xFfXIBwCn
+X-Received: by 2002:a05:6402:510c:b0:6b1:c2cd:dafc with SMTP id
+ 4fb4d7f45d1cf-6b3a8159b7emr2152248a12.20.1792275827544; Sat, 17 Oct 2026
+ 15:23:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
-
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+ <pull.2425.v2.git.git.1791711665.gitgitgadget@gmail.com> <xmqq1p9vdalz.fsf@gitster.g>
+ <03b187ae-bef2-426f-b6a4-def9f70c4a3f@gmail.com> <xmqq4ieqamn0.fsf@gitster.g>
+ <CAHwyqnUP72njKKap16u+kShHmhssiUXFUVRhURPP_wzwZsvtdg@mail.gmail.com> <xmqqy0c21gq1.fsf@gitster.g>
+In-Reply-To: <xmqqy0c21gq1.fsf@gitster.g>
 From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Sun, 18 Oct 2026 00:23:11 +0200
+X-Gm-Features: AclHuK_pkHs2XfnRwj5nhWh5tg74T1oHNRVrmByIjNCgZHdJHSDgM3T1Whx2uD4
+Message-ID: <CAHwyqnUv_HDHobwSMuK5vxFBZT9zstyyQJpqTv_=o_XhA7TJZw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] branch: let --delete-merged find squash merged branches
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, 
+	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Fetching from a shallow repository with a long history can hang. In a
-homebrew-core clone with 900k commits, fetching one new commit into
-another clone took 7 minutes. The same fetch over protocol v0 takes
-about a second.
+> You might have instructed your agent to write a two patch series and
+> asked upstream to pull.  Somebody else used the same AI-gen and
+> created one patch that solves the same problem, which happened to
+> have landed first.  Or that somebody may have sent their solution in
+> two patches similar to yours.  In either case, your two patch series
+> is now irrelevant.  You would want to drop your branch that is no
+> longer relevant, regardless of whose work made it irrelevant,
+>
+> They may be textually similar enough that we can tell mechanically
+> that there are already the same or similar code in the place you
+> were trying to touch.  "--delete-irrelevant" would remove your local
+> copy.  There may be salvageable bits (e.g., yours may have updates
+> to documentation and tests that theirs lacks), so if we can detect a
+> case where only some parts of your work has become irrelevant, that
+> would be very useful, too.
 
-Over protocol v2, the server goes through all of its history to work
-out which of its shallow commits to tell the client about, and a
-history with many merges makes it go over the same commits again and
-again. Protocol v0 lists all shallow commits and lets the client sort
-them out.
+I would be very surprised if my branch gets deleted because someone
+else wrote *almost* the same code in parallel.
 
-Do the same in v2 when the client does not ask for a depth. This also
-makes `git clone --reject-shallow` refuse a shallow repository over v2
-in every case, as it already does over v0. For `git fetch --unshallow`,
-which still needs to go through the history, visit each commit only
-once.
+I think we can achieve a lot here just by focusing on the use case of
+my own work being slightly mangled (squashed or merged).
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
-    upload-pack: fix slow fetches from a shallow repository
-    
-    Fix git fetch hanging for minutes when the remote is a shallow
-    repository with a long history.
+> Stepping back a bit, perhaps "--delete-merged" should not be
+> modified to touch anything that was rebased, cherry-picked, or
+> squash merged.  It is good to have one stable and strict "if my
+> commits were merged and safely saved there, delete them from here",
+> regardless of how much looser definition of "the same patch" is used
+> for "--delete-irrelevant".
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2455%2FHaraldNordgren%2Fupload-pack-shallow-walk-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2455/HaraldNordgren/upload-pack-shallow-walk-v1
-Pull-Request: https://github.com/git/git/pull/2455
+If my branch gets picked up by the mainline, my work there is done. I
+see no reason to keep the branch around anymore. How it gets picked up
+(squash, merged, or preserved commit hash) is not relevant then
+anymore.
 
- shallow.c     | 3 ++-
- upload-pack.c | 5 ++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+Besides, I can easily find the work again if I want, since by
+definition it's now in the mainline :)
 
-diff --git a/shallow.c b/shallow.c
-index 8e244a5669..921db5e17a 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -209,7 +209,8 @@ static struct commit_list *get_shallows_or_depth(struct object_array *heads,
- 				*depth_slot = xmalloc(sizeof(int));
- 				**depth_slot = cur_depth;
- 			} else {
--				if (cur_depth >= **depth_slot)
-+				if (depth == INFINITE_DEPTH ||
-+				    cur_depth >= **depth_slot)
- 					continue;
- 				**depth_slot = cur_depth;
- 			}
-diff --git a/upload-pack.c b/upload-pack.c
-index 197bcfa279..844bf80575 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1718,9 +1718,8 @@ static void send_shallow_info(struct upload_pack_data *data)
- 
- 	packet_writer_write(&data->writer, "shallow-info\n");
- 
--	if (!send_shallow_list(data) &&
--	    is_repository_shallow(the_repository))
--		deepen(data, INFINITE_DEPTH);
-+	if (!send_shallow_list(data))
-+		advertise_shallow_grafts(1);
- 
- 	packet_delim(1);
- }
 
-base-commit: c51408889c3b372814bc20b9431c3b74d0d268eb
--- 
-gitgitgadget
+Harald
