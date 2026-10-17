@@ -1,70 +1,72 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21410332EBD
-	for <git@vger.kernel.org>; Sat, 17 Oct 2026 12:55:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25B147F3B3
+	for <git@vger.kernel.org>; Sat, 17 Oct 2026 12:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792241706; cv=none; b=aoOJogDsNz0vKOhff+jKD9TSd1CcAmG4w4vwb0FD/H+FXIZwkNnk/7R2Q+sSb4Qwmktcmnw4q8Z+GeBXPaAwyRe+udY1OyNfLDzOpA9WF+KokOSLvG2VwvwSJiUegDU3Le0S6w8ajypolPqvzi0+flSOpHpP+2RGzVxEpj7z1Uc=
+	t=1792241707; cv=none; b=Ek3CqWGEvZLGcpmZwAywefs+HnxCiWyW3xqlw34/6QuenUnya7ap/04zW5z7oCFMfLXLjfqD0rW0lXwEMVu0IoAsdwnv/gc4kPdO3JBZZ26j3y0S/QtVXT1qzOq5nmRc4T6vgAEdnPsnirFLRW1AR/kCNTfYKJ6EfMow31cLabs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792241706; c=relaxed/simple;
-	bh=5guW0C7/uCcF4SDHjyIahuJZ/e/L0WqNorLlRf6/vbY=;
+	s=arc-20240116; t=1792241707; c=relaxed/simple;
+	bh=z35Wx7semWt29C11Yq0qQBgAQeiotPruzmdh/SBQo4E=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=sQ+gfNzsaoDg8GwlMXd+0AHNKdzAgOKYADPnz6kQEUE7ZWECuPAVxAV9tOk5M+Pggg1D2L2xaU7ZcjTS/7W/Bigba6N4XyBozkq5kYR1MlahSRGdynU1OUQySW5bVBD24Tie9aNcM5+8o52CUCT8BXsAS4xSTq+3wagGy1nXEnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZlpwBv8V; arc=none smtp.client-ip=209.85.160.173
+	 MIME-Version:To:Cc; b=athRkVnA7LNKWTFYEahL6ho4SyyTgkkPo5l3pcYwHTYMSKFF+lEZtYqM+4Ya7p3juh3Ure8ksL15lxJuUDqiNPuln5pD3PWDJ/62OW5Pb4rQ7pydoSZq2KJoQL8nIh2FFV/W2oEvdD2NpMJ0F718gn86+Sj6s79MMfBNodU/y3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jHcCr+Vt; arc=none smtp.client-ip=209.85.160.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZlpwBv8V"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-53653e30353so3691061cf.2
-        for <git@vger.kernel.org>; Sat, 17 Oct 2026 05:55:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jHcCr+Vt"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-530e75d1ba1so7086871cf.2
+        for <git@vger.kernel.org>; Sat, 17 Oct 2026 05:55:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792241704; x=1792846504; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792241705; x=1792846505; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=oqNTRHKeWy973kqNIDKlL9QGVmhtHgyOWiRVMjN8W2Q=;
-        b=ZlpwBv8Vl5+LU8lpN0GcDDGMNt/Xfl+DowieTArXxpEge//dkCiqdgL5A2bvNetSYB
-         rpMvV+dAxYycij5H9ntK28lkeExRp0+jKKUoEAug9H+c4aCNDMsD62uGzmXcL45IaQ6V
-         XUY8m8X6ThuoP5DDGF2E/tSseNSH+7FlrNz8aq6HT0fLW0lDWsNubwsiGlQQyhsSu6PW
-         eHtVpm/zX3Yvp4hhS8h3b4xsOvKA8CoDwqu+xQOq0cNutfjAsfRgwWbEbiu3Dy9FnzMV
-         R0CbrxGkXK/5MN8l1ZomGxHctfVjRsTDdZOZO6ek1aK478y8QggGk4f8eM++dGl4btXw
-         6gcA==
+        bh=5gaIh/JHtphdvwHA8UXktSPDIZrBmDqB9dgEzHUu1LM=;
+        b=jHcCr+VtTmxK7o8pkBOFPXDbxqwT/oB2RcSijmIbH92aL/yF8mPHFHsXNfAoMIDF8j
+         Hh3GcbTV50DA9V46joKhfzHcqMwB7/l5wUp3P6MK/t/j5vNZ9JW1xFDV1MBY80iJquZJ
+         zbOE/HR6Fzk3iOh8jGSzLBZJcNEpmnycJWzukoXNmFB2HxyZgd5WGCxqV6Ael4ELilpZ
+         Ce/aktPMoLlGXwnwbE6hNw6uEEGoUNj3fXLH4ZFfU1I51ZvQGhxxUNS3rPi9yGZfedeg
+         X2BBfnUjZto8Gcq51bZBBK8yY+fYquXbYNZmCVDYY6uhAAXHINvyjXMaEtOE59QiCDgw
+         CT+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792241704; x=1792846504;
+        d=1e100.net; s=20260707; t=1792241705; x=1792846505;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=oqNTRHKeWy973kqNIDKlL9QGVmhtHgyOWiRVMjN8W2Q=;
-        b=CSOkA87vJZ5S5amTIZPzGJjo3HD2Exw0ygYGuuvbJ/GaWoqjWgU7iPc+TNgk5xyHyb
-         ZdqSsMCDkMEvDMkfWz+jxa4jcHa0PRhs83zvpKJc90zy93nysvENySI5xfdKRsE0gUsI
-         vwylKrMcn96Ay4Ici5T0qt/Pal9yECbxJHCWi5xlbcfoc+YozOr4ZIHnA/Qeh06921kW
-         my/ggEAJDyi60dlQY4vv3TFPvGsxASP75m5Ptp2OIi/vvQu0Ong6OOCeFRIKWbX9011v
-         cp5AafcGhFRO3bLEoS/QxJe5iiZNitfFrNjE9LZc30SsvycV5eKKnNeCF7u0TWu2p5ek
-         MpoA==
-X-Gm-Message-State: AFq9FYKiHvuHUHv78z4tuSrFnuFfmLsL9rkdVL5kqVtzLDxZzS3GbxsG
-	BTqxKi3ro1+ajszQCNeZGuVmAX6E9bX3uEbUuV4Yc0Mmjfke3VMQq2bs7JuSzw==
-X-Gm-Gg: AYBFou1XT6DiGKyd3MT1LfFmwp31l9gD7ruqEq72gNVBGXvBB3eg6vzI1El5OmFT6dW
-	WC/v4/c3WKklCKWKaZbGSem9G0HzBabhPBHbaWfqHavQ/9wY4CZeKz82WDVPFBlAY3w2bViTay+
-	gGFHnfyYFIgGacYGzOW4JQR8L1amC2yyeWDE/6+XiIaK30QTMWUoImE0VlUT0RjAnUPNvBz9E9f
-	UWLSPEtV2TLdlpcybR1P0OpmFpzIukx8SIV91oRwL87mJCBzkspXSOCqLtPkQ9o7W4EIGaCWXHj
-	sc1ZGYGmRcZovHN4UNCLjI0RK0ke9gQqRrhe6NHRtY/do0RykH1sRz7t0krCZ+mZkK/xk5RsGiZ
-	5TZEJMtlVfKdn2H7VLiSruZ37mCz8QAahYkb/4EUmu9SqJanpcgmGO6M3fe9NwwuZtkdgXkMHQI
-	iuYOyDppe2UwKjo1c9miNhkL0dTSqAFVYJGjAUZN2iGrJfs9C11eBnUm2ttsxedayraDjKjyZdw
-	C5xG76l0l5hBg==
-X-Received: by 2002:a05:622a:e607:20b0:535:1a83:124e with SMTP id d75a77b69052e-53645feb1e1mr24282781cf.28.1792241703936;
-        Sat, 17 Oct 2026 05:55:03 -0700 (PDT)
+        bh=5gaIh/JHtphdvwHA8UXktSPDIZrBmDqB9dgEzHUu1LM=;
+        b=CWYJUWRx45olI0gX3pWKS0jPfyEF44RWOkrfyi2P03czrtin3CwunyxaINzK2YGhaT
+         al4nXAE+Grd76SgiZ+6qPstFTMzyTR9nbYzIb/bRTRYSa6pCT9xacrYbsqSeW9pFttxp
+         yNap+JEuT19xH1XKBVM6okJyretAP+f8SiTKtq4PoAzwmaZW9yU2wHLesBOpp8o+d5yV
+         CEVs3PIWFcFiJba3O2xpBRydLMNo6/PFuhc30kJIPPJuF/1qY8KHbBCBtiJh8hYrdStR
+         7HdhnQkiOcDTS0+nLnZnocPFMHvLUaSGrJn5Rk8q/JuvAgmY0dCg2DnDSBAPHh7fnoR1
+         aY0A==
+X-Gm-Message-State: AFq9FYLqNT+8nNeTqD5C6nI9QmDYuGS5WDqngqGXXd2Kr119LFV/MXlV
+	CV3MQzvYSkQHORiR0KajxCbS1JNJwuRJO8FDvpehkeLccXM5TSEKcHbSrXmglw==
+X-Gm-Gg: AYBFou1lUiyNojSpyDOGktr++tUiZlsylJKScG2Y/220nCqvL7jqU81VEFEEu6fs3ka
+	Yp24TDiOqMoPND4GXZhyLQb19jriWWJCu5Hc8rwoUgxW/0MvQ+OcyeNTyM03lTjg/prEZj8ymHp
+	zDMb2vQ23dK6LGcGPb6nGQSN2WJWxPOXBcoAbT3aH+V2btuBofQoqxsyaVEXpx+weUdMkaBz00c
+	o8CmIc5mRwNQ/P4OTkdLdI4a2h1hOTXkkaEkTQM2EjyyKLTi+6rFPvkZoRgG1zZhIxoV0IBxrAe
+	V6ORSC4A8AOecUui5J7Y5CafxHZfqzifyEfXBBgJIofK+iNFtnzKEAns7DqB6Mx8gCAcgD6+jZu
+	LIltbphtfYGCpl9h//QK+8LU1HRBFHVRS6KoHl/AkgD3SpxO9bUvXe4Jw9YQVdTAHBXrsTEZfwd
+	JdCCYuxkOuqX4Qaf9mytD3qf87EkZRMU8cAnrQaP1qfXLiRMDM6TCp8eL6ULPzkvusm5p+A0AIG
+	jo=
+X-Received: by 2002:a05:622a:1aa5:b0:535:bf6:3213 with SMTP id d75a77b69052e-53645e4dc4dmr36146511cf.28.1792241704847;
+        Sat, 17 Oct 2026 05:55:04 -0700 (PDT)
 Received: from [127.0.0.1] ([52.152.180.199])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5362a8e5831sm48779191cf.10.2026.10.17.05.55.03
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5362a9dbdb5sm48717661cf.22.2026.10.17.05.55.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Oct 2026 05:55:03 -0700 (PDT)
-Message-Id: <pull.2225.v3.git.1792241702.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2225.git.1789269613.gitgitgadget@gmail.com>
+        Sat, 17 Oct 2026 05:55:04 -0700 (PDT)
+Message-Id: <e336afa0296abd3e7e7e0e99b4e6b1b33649e274.1792241702.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2225.v3.git.1792241702.gitgitgadget@gmail.com>
 References: <pull.2225.git.1789269613.gitgitgadget@gmail.com>
+	<pull.2225.v3.git.1792241702.gitgitgadget@gmail.com>
 From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 17 Oct 2026 12:54:57 +0000
-Subject: [PATCH v3 0/5] worktree repair: avoid breaking unrelated .git file and gitdir
+Date: Sat, 17 Oct 2026 12:54:58 +0000
+Subject: [PATCH v3 1/5] worktree repair: align .git file handling with
+ repair_gitfile()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,228 +79,105 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
     Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
+    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
     Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-'git worktree repair' does not sufficiently validate the cross-references
-between a linked working tree and its administrative data before repairing
-them. This can cause the repair to modify the wrong .git file or gitdir in
-certain situations.
+From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
+Use read_gitfile_raw() instead of read_gitfile_gently() in
+repair_worktree_at_path(), moving path resolution and repository
+validation to the caller. This makes .git file handling consistent
+with repair_gitfile() and avoids using the non-reentrant
+read_gitfile_gently().
 
-v3
-==
+A subsequent commit will update infer_backlink() to use
+read_gitfile_raw() as well.
 
-Make the separator check in get_worktree_id() more lenient.
+Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+---
+ worktree.c | 40 ++++++++++++++++++++++++++++------------
+ 1 file changed, 28 insertions(+), 12 deletions(-)
 
- * [1/5] align .git file handling with repair_gitfile()
- * [2/5] centralize inferred backlink selection
- * [3/5] use read_gitfile_raw() in infer_backlink()
- * [4/5] reduce .git file reads
- * [5/5] avoid breaking unrelated .git file and gitdir
-
-
-v2
-==
-
-Split the first commit of v1 to make the changes easier to understand. Fold
-long lines.
-
- * [1/5] align .git file handling with repair_gitfile()
- * [2/5] centralize inferred backlink selection
- * [3/5] use read_gitfile_raw() in infer_backlink()
- * [4/5] reduce .git file reads
- * [5/5] avoid breaking unrelated .git file and gitdir
-
-
-v1
-==
-
-This series first refactors the code to read the .git file once and extract
-the worktree ID, then uses that information to validate the repair target
-before modifying the cross-references.
-
- * [1/2] Refactor the code without changing functionality before making the
-   fix
- * [2/2] Validate the worktree ID and inferred gitdir path before repairing
-
-Yoichi NAKAYAMA (5):
-  worktree repair: align .git file handling with repair_gitfile()
-  worktree repair: centralize inferred backlink selection
-  worktree repair: use read_gitfile_raw() in infer_backlink()
-  worktree repair: reduce .git file reads
-  worktree repair: avoid breaking unrelated .git file and gitdir
-
- t/t2406-worktree-repair.sh |  57 ++++++++++++--
- worktree.c                 | 153 ++++++++++++++++++++++++-------------
- 2 files changed, 152 insertions(+), 58 deletions(-)
-
-
-base-commit: c51408889c3b372814bc20b9431c3b74d0d268eb
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2225%2Fyoichi%2Fworktree-repair-keep-unrelated-gitfile-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2225/yoichi/worktree-repair-keep-unrelated-gitfile-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/2225
-
-Range-diff vs v2:
-
- 1:  21b2878aa5 = 1:  e336afa029 worktree repair: align .git file handling with repair_gitfile()
- 2:  30ac7acad3 = 2:  86021f31af worktree repair: centralize inferred backlink selection
- 3:  2cc7b817ee = 3:  7087e829bb worktree repair: use read_gitfile_raw() in infer_backlink()
- 4:  8c80b9ae05 = 4:  e35285a4ea worktree repair: reduce .git file reads
- 5:  015602168c ! 5:  f1d5c7b5f7 worktree repair: avoid breaking unrelated .git file and gitdir
-     @@ t/t2406-worktree-repair.sh: test_expect_success 'repair .git file from bare.git'
-      +	test_cmp expect corrupt/.git &&
-      +	test_grep "unrelated .git file" err
-      +'
-     ++
-     ++test_expect_success 'repair moved worktree whose .git file has extra separators' '
-     ++	test_when_finished "rm -rf side sidemoved && git worktree prune" &&
-     ++	git worktree add --detach side &&
-     ++	mv side sidemoved &&
-     ++	cat sidemoved/.git >expect &&
-     ++	sed s,/,//,g sidemoved/.git | sed s,$,//, >sidemoved/.newgit &&
-     ++	mv sidemoved/.newgit sidemoved/.git &&
-     ++	git worktree repair sidemoved 2>err &&
-     ++	test_cmp expect sidemoved/.git &&
-     ++	test_grep "gitdir incorrect" err
-     ++'
-     ++
-     ++test_expect_success WINDOWS 'repair moved worktree whose .git file uses backslash' '
-     ++	test_when_finished "rm -rf side sidemoved && git worktree prune" &&
-     ++	git worktree add --detach side &&
-     ++	mv side sidemoved &&
-     ++	cat sidemoved/.git >expect &&
-     ++	sed s,\/,\\\\,g sidemoved/.git >sidemoved/.newgit &&
-     ++	mv sidemoved/.newgit sidemoved/.git &&
-     ++	git worktree repair sidemoved 2>err &&
-     ++	test_cmp expect sidemoved/.git &&
-     ++	test_grep "gitdir incorrect" err
-     ++'
-      +
-       test_expect_success 'invalid worktree path' '
-       	test_must_fail git worktree repair /notvalid >out 2>err &&
-     @@ t/t2406-worktree-repair.sh: test_expect_success 'repo not found; .git not refere
-      
-       ## worktree.c ##
-      @@ worktree.c: int other_head_refs(struct repository *repo,
-     - static const char *get_worktree_id(const char *dotgit_contents)
-     + 	return ret;
-     + }
-     + 
-     +-static const char *get_worktree_id(const char *dotgit_contents)
-     ++static int get_worktree_id(struct strbuf *worktree_id,
-     ++			   const char *dotgit_contents)
-       {
-     - 	const char *slash = find_last_dir_sep(dotgit_contents);
-     +-	const char *slash = find_last_dir_sep(dotgit_contents);
-      -	if (!slash)
-     -+	const char *prefix = "/worktrees";
-     +-		return "";
-     +-	return slash + 1;
-     ++	const char *id_end;
-     ++	const char *id;
-     ++	const char *prefix_end;
-     ++	const char *prefix = "worktrees";
-      +	int prefixlen = strlen(prefix);
-     -+	if (!slash ||
-     -+	    slash - dotgit_contents < prefixlen ||
-     -+	    strncmp(slash - prefixlen, prefix, prefixlen))
-     - 		return "";
-     - 	return slash + 1;
-     ++
-     ++	id_end = dotgit_contents + strlen(dotgit_contents);
-     ++
-     ++	/* skip trailing separators */
-     ++	while (dotgit_contents < id_end && is_dir_sep(*(id_end - 1)))
-     ++		id_end--;
-     ++	if (id_end == dotgit_contents)
-     ++		return 1;
-     ++
-     ++	id = id_end;
-     ++
-     ++	/* find the last separator */
-     ++	while (dotgit_contents < id && !is_dir_sep(*(id - 1)))
-     ++		id--;
-     ++	if (id == dotgit_contents || id == id_end)
-     ++		return 1;
-     ++
-     ++	prefix_end = id - 1;
-     ++
-     ++	/* skip repeated separators */
-     ++	while (dotgit_contents < prefix_end && is_dir_sep(*(prefix_end - 1)))
-     ++		prefix_end--;
-     ++
-     ++	/* check for "/worktrees" */
-     ++	if (prefix_end - dotgit_contents < prefixlen + 1 ||
-     ++	    strncmp(prefix_end - prefixlen, prefix, prefixlen) ||
-     ++	    !is_dir_sep(*(prefix_end - prefixlen - 1)))
-     ++		return 1;
-     ++
-     ++	strbuf_add(worktree_id, id, id_end - id);
-     ++	return 0;
-       }
-     + 
-     + /*
-     +@@ worktree.c: static void repair_gitfile(struct worktree *wt,
-     + 	struct strbuf repo = STRBUF_INIT;
-     + 	struct strbuf backlink = STRBUF_INIT;
-     + 	struct strbuf contents = STRBUF_INIT;
-     ++	struct strbuf worktree_id = STRBUF_INIT;
-     + 	const char *dotgit_contents = NULL;
-     + 	const char *repair = NULL;
-     + 	char *path = NULL;
-      @@ worktree.c: static void repair_gitfile(struct worktree *wt,
-       	if (err == READ_GITFILE_ERR_NOT_A_FILE ||
-       		err == READ_GITFILE_ERR_IS_A_DIR)
-     @@ worktree.c: static void repair_gitfile(struct worktree *wt,
-      -	else if (err || !is_git_directory(backlink.buf))
-      +	else if (err)
-       		repair = _(".git file broken");
-     -+	else if (strcmp(get_worktree_id(dotgit_contents), wt->id))
-     ++	else if (get_worktree_id(&worktree_id, dotgit_contents) ||
-     ++		 strcmp(worktree_id.buf, wt->id))
-      +		fn(1, wt->path, _("unrelated .git file"), cb_data);
-       	else if (fspathcmp(backlink.buf, repo.buf))
-       		repair = _(".git file incorrect");
-       	else if (use_relative_paths == is_absolute_path(dotgit_contents))
-     +@@ worktree.c: done:
-     + 	strbuf_release(&gitdir);
-     + 	strbuf_release(&backlink);
-     + 	strbuf_release(&contents);
-     ++	strbuf_release(&worktree_id);
-     + }
-     + 
-     + static void repair_noop(int iserr UNUSED,
-      @@ worktree.c: static ssize_t infer_backlink(struct repository *repo,
-     - 	if (!*id)
-     + 			      const char *dotgit_contents,
-     + 			      struct strbuf *inferred)
-     + {
-     +-	const char *id;
-     ++	struct strbuf worktree_id = STRBUF_INIT;
-     + 
-     +-	id = get_worktree_id(dotgit_contents);
-     +-	if (!*id)
-     ++	if (get_worktree_id(&worktree_id, dotgit_contents))
-       		goto error;
-     - 	repo_common_path_replace(repo, inferred, "worktrees/%s", id);
-     +-	repo_common_path_replace(repo, inferred, "worktrees/%s", id);
-      -	if (!is_directory(inferred->buf))
-     ++	repo_common_path_replace(repo, inferred,
-     ++				 "worktrees/%s", worktree_id.buf);
-      +	if (!is_git_directory(inferred->buf))
-       		goto error;
-       
-     ++	strbuf_release(&worktree_id);
-       	return inferred->len;
-     + error:
-     + 	strbuf_reset(inferred); /* clear invalid path */
-     ++	strbuf_release(&worktree_id);
-     + 	return -1;
-     + }
-     + 
-      @@ worktree.c: void repair_worktree_at_path(struct repository *repo,
-       		   cb_data);
-       		goto done;
-
+diff --git a/worktree.c b/worktree.c
+index 8cb8637b18..4492ca835d 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -840,7 +840,7 @@ void repair_worktree_at_path(struct repository *repo,
+ 	struct strbuf inferred_backlink = STRBUF_INIT;
+ 	struct strbuf gitdir = STRBUF_INIT;
+ 	struct strbuf olddotgit = STRBUF_INIT;
+-	char *dotgit_contents = NULL;
++	struct strbuf contents = STRBUF_INIT;
+ 	const char *repair = NULL;
+ 	int err;
+ 
+@@ -858,14 +858,26 @@ void repair_worktree_at_path(struct repository *repo,
+ 
+ 	infer_backlink(repo, dotgit.buf, &inferred_backlink);
+ 	strbuf_realpath_forgiving(&inferred_backlink, inferred_backlink.buf, 0);
+-	dotgit_contents = xstrdup_or_null(read_gitfile_gently(dotgit.buf, &err));
+-	if (dotgit_contents) {
+-		strbuf_addstr(&backlink, dotgit_contents);
+-	} else if (err == READ_GITFILE_ERR_NOT_A_FILE ||
+-			err == READ_GITFILE_ERR_IS_A_DIR) {
+-		fn(1, dotgit.buf, _("unable to locate repository; .git is not a file"), cb_data);
++	err = read_gitfile_raw(&contents, dotgit.buf);
++	if (!err) {
++		const char *dotgit_contents = contents.buf;
++		if (is_absolute_path(dotgit_contents)) {
++			strbuf_addstr(&backlink, dotgit_contents);
++		} else {
++			strbuf_addbuf(&backlink, &dotgit);
++			strbuf_strip_suffix(&backlink, ".git");
++			strbuf_addstr(&backlink, dotgit_contents);
++			strbuf_realpath_forgiving(&backlink, backlink.buf, 0);
++		}
++	}
++	if (err == READ_GITFILE_ERR_NOT_A_FILE ||
++	    err == READ_GITFILE_ERR_IS_A_DIR) {
++		fn(1, dotgit.buf,
++		   _("unable to locate repository; .git is not a file"),
++		   cb_data);
+ 		goto done;
+-	} else if (err == READ_GITFILE_ERR_NOT_A_REPO) {
++	} else if (!err && !is_git_directory(backlink.buf)) {
++		strbuf_release(&backlink);
+ 		if (inferred_backlink.len) {
+ 			/*
+ 			 * Worktree's .git file does not point at a repository
+@@ -876,11 +888,15 @@ void repair_worktree_at_path(struct repository *repo,
+ 			 */
+ 			strbuf_swap(&backlink, &inferred_backlink);
+ 		} else {
+-			fn(1, dotgit.buf, _("unable to locate repository; .git file does not reference a repository"), cb_data);
++			fn(1, dotgit.buf,
++			   _("unable to locate repository; .git file does not reference a repository"),
++			   cb_data);
+ 			goto done;
+ 		}
+-	} else {
+-		fn(1, dotgit.buf, _("unable to locate repository; .git file broken"), cb_data);
++	} else if (err) {
++		fn(1, dotgit.buf,
++		   _("unable to locate repository; .git file broken"),
++		   cb_data);
+ 		goto done;
+ 	}
+ 
+@@ -926,12 +942,12 @@ void repair_worktree_at_path(struct repository *repo,
+ 					     gitdir.buf, use_relative_paths);
+ 	}
+ done:
+-	free(dotgit_contents);
+ 	strbuf_release(&olddotgit);
+ 	strbuf_release(&backlink);
+ 	strbuf_release(&inferred_backlink);
+ 	strbuf_release(&gitdir);
+ 	strbuf_release(&dotgit);
++	strbuf_release(&contents);
+ }
+ 
+ int should_prune_worktree(struct repository *repo,
 -- 
 gitgitgadget
+
