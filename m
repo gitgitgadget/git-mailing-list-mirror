@@ -1,97 +1,167 @@
-Received: from psionic.psi5.com (psionic.psi5.com [185.187.169.70])
+Received: from hermes.quinlan.cloud (hermes.quinlan.cloud [185.53.57.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008844CF477
-	for <git@vger.kernel.org>; Sat, 17 Oct 2026 00:18:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.187.169.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9581431E831
+	for <git@vger.kernel.org>; Sat, 17 Oct 2026 00:41:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.53.57.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792196342; cv=none; b=gIksrOk0aDg6eXHSQNIDrCKSGHyibG1T302mCBNKef0KjzHd5vFf0AmsngEY14whl4pvfRv0cvl/LmbN35pcOqQz969xymNKUi6NTwo1U4O6q8eBxqw8QdxC0nkB0Czc8Ajx2ETaGkori2QBI/NEVgDExUmxXHkR2+H9f6Ezt/E=
+	t=1792197686; cv=none; b=C9uIo86LM31TYtF2EPfqtDf8531H/Wsdzi0UfszM3AwGyeh9l7qtufAu1m18csg1ayvHxQ07UgAT9jytnfglE0KIgpDHfSxTRtNYuPFwtg1CjfmoXWUXrxPBwLzfV3aP2UtG0ixhru6N/bgCRZpHRJ11oLAGiL4Wjj0e1ifIwzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792196342; c=relaxed/simple;
-	bh=Db1uLvafZSz9nXHrr+COPT/yxZeUbVN9knnEYpHBoJM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I0pTiD1vwAsGHeZ4ZPkk6ZDn1Fg8p1Ci8yRrQir8F4Hv6Y0phV9esQ0Ft42NrOLszFspVLNMFU57cnG33zwhLfCA9SgWj7w7DMnK+m7V1SolQgf2QUA6YjboAUC1n8sIRkCsqQn1pC0RmHYiA8CwhaF4hYPUDMxpEgQ3mGcGUrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hogyros.de; spf=pass smtp.mailfrom=hogyros.de; arc=none smtp.client-ip=185.187.169.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hogyros.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hogyros.de
-Received: from [IPV6:2400:2410:b120:f200:9e5c:8eff:fec0:ee40] (unknown [IPv6:2400:2410:b120:f200:9e5c:8eff:fec0:ee40])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by psionic.psi5.com (Postfix) with ESMTPSA id CFA193F11B;
-	Sat, 17 Oct 2026 02:18:47 +0200 (CEST)
-Message-ID: <395b47c0-6dc7-4a1b-b547-e5e68e7356f5@hogyros.de>
-Date: Sat, 17 Oct 2026 09:18:41 +0900
+	s=arc-20240116; t=1792197686; c=relaxed/simple;
+	bh=78DGprY0+Ko3Ny182ivUpYdAgQxXOAa369WtLbNFKqY=;
+	h=MIME-Version:Date:From:To:Cc:Subject:Message-ID:Content-Type; b=AlU1wQ3nJ1JBr5ak+fjD9Y1Mml3u8c1LM6rEH946NjXVXRnJTHBYdT9LjYWjvVY+OzZHkUiF4YlwP9UPGY/mzW481Fs4mgFMZrWGUWf8whXXaHdrJuf77pbej8ZbAsm8up8f5EqEUuYn7yachuXrooSxxrY726LTQlbcyfKFni4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=donquinleone.com; spf=pass smtp.mailfrom=donquinleone.com; dkim=pass (2048-bit key) header.d=donquinleone.com header.i=@donquinleone.com header.b=Bpr74QrM; arc=none smtp.client-ip=185.53.57.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=donquinleone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=donquinleone.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=donquinleone.com header.i=@donquinleone.com header.b="Bpr74QrM"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPA id 2F3B942320;
+	Sat, 17 Oct 2026 01:35:26 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=donquinleone.com;
+	s=hermes; t=1792197326;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding; bh=yqMisASVJMvsXw/v845SXsB/R5LjySUPSyQ4T2myDz0=;
+	b=Bpr74QrMuRQN9O0/vBtjOOyimwtPTDqX6CjfVISUCoOOLWFOolm0mTcAMhCYuH1hofDejD
+	KmHYy/A3PeHRxNe5Z3V1fJ7devC46UbhQZtEtaPTDh0YiBSDYgH8K4CjRzCacpJfF2/n8p
+	a2YE5HhT6Tg0/3Ex9Gb5iPPNDqAbNzyvPQk+mxWr92OxgFDGvY5QZsjzv7mswruzWWJw7g
+	sb4A7SvBkLdMYR0kqWFvotBRNKbkCvejQ/gt4FJGKXz+6bTb0AxthzEJx0WcgWM0sbWH/6
+	edS2uW+jJ1MHKhNuw6vAN57cuxJBJg6TWLGoUOgmQVhI9XsDmgyhMZfR0dKowQ==
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] http: use `size_t` for byte position in
- fwrite_sha1_file
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
- <70a909de18e8cd8d282439fb51a9399baa8c7be8.1791958171.git.gitgitgadget@gmail.com>
- <atHiiye4oi_lF5FP@pks.im> <xmqq1p9pk99q.fsf@gitster.g>
-Content-Language: en-US
-From: Simon Richter <Simon.Richter@hogyros.de>
-In-Reply-To: <xmqq1p9pk99q.fsf@gitster.g>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------d6HyPzE1wxC7HAskGebqiWes"
+Date: Sat, 17 Oct 2026 01:35:25 +0100
+From: DonQuinleone <don@donquinleone.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Harald Nordgren
+ <haraldnordgren@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: [RFC] branch: delete gone-upstream branches only when proven merged
+ into a named ref
+Message-ID: <a8561fb7c2da446e7f7acc7e2a443991@donquinleone.com>
+X-Sender: don@donquinleone.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: None
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------d6HyPzE1wxC7HAskGebqiWes
-Content-Type: multipart/mixed; boundary="------------9h0Xaa0Sb3exy2wOuYpDAxZ0";
- protected-headers="v1"
-From: Simon Richter <Simon.Richter@hogyros.de>
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Message-ID: <395b47c0-6dc7-4a1b-b547-e5e68e7356f5@hogyros.de>
-Subject: Re: [PATCH 2/5] http: use `size_t` for byte position in
- fwrite_sha1_file
-References: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
- <70a909de18e8cd8d282439fb51a9399baa8c7be8.1791958171.git.gitgitgadget@gmail.com>
- <atHiiye4oi_lF5FP@pks.im> <xmqq1p9pk99q.fsf@gitster.g>
-In-Reply-To: <xmqq1p9pk99q.fsf@gitster.g>
+Hi all,
 
---------------9h0Xaa0Sb3exy2wOuYpDAxZ0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+This is my first time posting to the list, so good to meet everyone,
+and thanks in advance for bearing with me.
 
-SGksDQoNCk9uIDEwLzE2LzI2IDIzOjMwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToNCg0KPiBJ
-IGFncmVlIHRoYXQgY2hhbmdpbmcgdGhlIHR5cGUgb2YgcG9zbiBmcm9tIGludCB0byBzaXpl
-X3QgaXMgdGhlDQo+IHJpZ2h0IG1vdmUuDQoNCkl0IGlzIGEgcG9zaXRpb24gaW4gYSBmaWxl
-IHRoYXQgaXMgYmVpbmcgcmVhZCBhcyBiaW5hcnkgZGF0YVsxXSwgc28gDQpvZmZfdCB3b3Vs
-ZCBiZSB0aGUgYmVzdCBjaG9pY2UgSSB0aGluay4NCg0KVGhhdCBpcyBzdGlsbCBzaWduZWQs
-IGJ1dCBpdCBjYW4ndCBvdmVyZmxvdywgYmVjYXVzZSBvcGVuaW5nIGxhcmdlIGZpbGVzIA0K
-cmVxdWlyZXMgT19MQVJHRUZJTEUsIHdoaWNoIGlzIGF2YWlsYWJsZSBvbmx5IGlmIGxhcmdl
-IGZpbGUgc3VwcG9ydCBpcyANCmVuYWJsZWQsIHdoaWNoIGNvbnZlbmllbnRseSBtYWtlcyBz
-dXJlIHRoYXQgb2ZmX3QgaXMgNjQgYml0Lg0KDQogICAgU2ltb24NCg0KWzFdIHRvIG1ha2Ug
-YSBkaXN0aW5jdGlvbiBmcm9tIHRoZSB1c2UgY2FzZSBmb3IgZnBvc190DQo=
+I've just noticed that "git branch --delete-merged" is now available,
+and that it never deletes a topic in the workflow that hosting
+services (e.g. GitHub) encourage. Before writing a patch, I wanted to
+ask how the list might consider closing that gap.
 
---------------9h0Xaa0Sb3exy2wOuYpDAxZ0--
+In that workflow, the topic tracks and pushes to a branch of its own
+name; when the pull request is merged with a merge commit, the server
+deletes that branch. With master as of c51408889:
 
---------------d6HyPzE1wxC7HAskGebqiWes
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+  $ git push -u origin topic
+       ... merged on the server, and origin's topic deleted ...
 
------BEGIN PGP SIGNATURE-----
+  $ git fetch origin
+  $ git branch --dry-run --delete-merged 'origin/*'
+       ... spared, as pushing would update the upstream ...
 
-iQEzBAEBCgAdFiEEtjuqOJSXmNjSiX3Tfr04e7CZCBEFAmrSvuEACgkQfr04e7CZ
-CBHPQwf+PKgesEduADPihwJzjlemixek7bkGfDm5atReoXaLvCnp5/pnLYUT0w+v
-irfwrAaiitqCSALnNndyfYeSiR6dtF6Q8TUJZhD51FMeZlZHFlX5G66WkQL5kzFl
-4yn/ECjeR6pCuv46h6YQlNLzKyIUP8QjF7ddEcpH0WsP/Ewaw8uNlz+MB9cNgdQA
-qvvNSdVdccl6SBn5fyplPB1dZ96b03WTS3HfGtfT8RpDolZiT9qgVujlNXyiKPZE
-TZ4Ggc3xYBI/M+4/8t0Y00Y4hmkEsTc4FqPhHczjf+6BRyQyYUbkfClpuyS2ccfl
-x3iXcy9dq3jDqwsLFR9qCUx6nNhPVQ==
-=OzBB
------END PGP SIGNATURE-----
+  $ git fetch --prune origin
+  $ git branch -vv
+  * master 61e9886 [origin/master: behind 2] base
+    topic  87d0c48 [origin/topic: gone] topic work
+  $ git branch --dry-run --delete-merged 'origin/*'
+       ... skipped, because the upstream is gone ...
+  $ git merge-base --is-ancestor topic origin/master && echo merged
+  merged
 
---------------d6HyPzE1wxC7HAskGebqiWes--
+So the branch is provably merged, but at no point in this workflow
+will --delete-merged remove it. A script reproducing this is at the
+bottom.
+
+From reading back through the archives, this is deliberate. When v7
+of the series fell back to the remote's default branch for a gone
+upstream, Junio wrote [1]:
+
+> If the upstream itself is gone, removing anything based on some other
+> criteria cannot by definition a "safety check".
+
+I agree that a vanished upstream proves nothing, so I would like to
+propose separating selection from proof:
+
+"Upstream gone" may select a candidate, but it is never proof. The
+only proof is that the branch tip is reachable from a ref the user
+names explicitly, so nothing is inferred: neither HEAD, nor the
+remote's default branch.
+
+I can see two possible shapes.
+
+(A) A modifier on --delete-merged:
+
+  $ git branch --delete-merged 'origin/*' --into origin/master
+
+Branches whose upstream matches the pattern but no longer exists would
+become candidates, and would be deleted only if their tip is reachable
+from the named commit. check_branch_commit() would be handed that
+commit in place of HEAD, as suggested on v7 [1]. Branches whose
+upstream still exists would be judged exactly as today, and the
+worktree, stacked-branch and deleteMerged=false exclusions would still
+apply.
+
+(B) Composable filters on -d:
+
+  $ git branch --upstream-gone --merged=origin/master      # preview
+  $ git branch -d --upstream-gone --merged=origin/master   # delete
+
+--upstream-gone would be useful on its own for listing (today the
+usual approach is to grep "git branch -vv" for ": gone]"). But it
+turns -d into a second bulk-delete mode beside --delete-merged, and
+--merged defaults to HEAD when it comes last, so a forgotten argument
+would quietly bring back HEAD as the proxy.
+
+I lean towards (A) because it is small and keeps every existing
+protection, but I'd rather settle the shape here than assume anything.
+
+So:
+
+ 1. Is "selection is not proof" an acceptable basis for touching
+    gone-upstream branches?
+
+ 2. (A), (B), or something else? If (A), is there a better name than
+    --into (--merged-into?), and should it stay limited to branches
+    whose upstream is gone?
+
+I would leave squashing and rebasing out of scope, in keeping with
+--delete-merged staying "one stable and strict" operation [2]. I've
+Cc'd Harald, as this relates closely to his in-flight --delete-merged
+topics [3][4], and Phillip, who reviewed the series.
+
+Thanks in advance. Look forward to hearing what people think.
+
+~ Don
+
+[1] https://lore.kernel.org/git/xmqq5x4sn393.fsf@gitster.g/
+[2] https://lore.kernel.org/git/xmqqy0c21gq1.fsf@gitster.g/
+[3] https://lore.kernel.org/git/pull.2428.v2.git.git.1791102886740.gitgitgadget@gmail.com/
+[4] https://lore.kernel.org/git/94a6d23f8b96d4a07fb58c71f4a2f7dc4d3055bc.1791711665.git.gitgitgadget@gmail.com/
+
+-- >8 --
+#!/bin/sh
+set -e
+export GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1
+export GIT_AUTHOR_NAME=A GIT_AUTHOR_EMAIL=a@example.com
+export GIT_COMMITTER_NAME=C GIT_COMMITTER_EMAIL=c@example.com
+cd "$(mktemp -d)"
+git init -q --bare -b master origin.git
+git clone -q origin.git work 2>/dev/null && cd work
+git commit -q --allow-empty -m base && git push -q origin HEAD:master
+git switch -q -c topic && git commit -q --allow-empty -m "topic work"
+git push -q -u origin topic 2>/dev/null && git switch -q master
+git clone -q ../origin.git ../server && (cd ../server &&
+	git merge -q --no-ff -m "Merge topic" origin/topic &&
+	git push -q origin master :topic)
+echo "after fetch:";         git fetch -q
+git branch --dry-run --delete-merged 'origin/*'
+echo "after fetch --prune:"; git fetch -q --prune
+git branch --dry-run --delete-merged 'origin/*'
+git merge-base --is-ancestor topic origin/master && echo merged
