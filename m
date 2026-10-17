@@ -1,105 +1,103 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-gateway-shared11.cyon.net (mail-gateway-shared11.cyon.net [194.126.200.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B749460
-	for <git@vger.kernel.org>; Sat, 17 Oct 2026 10:04:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792231478; cv=pass; b=aY2lXh6a68J2lucIArWgeKokYGf+l0zoFAvEFzXU659ufj+ycG5Im9fzkfWbIzPaqwCUf8+WIrr5LnGjAwVCGApMlF6i4e6P5lCfYLD+7zpJ6kLlk5oP45Odk/Cu3IhUc0Y3Uc162iCQ5kzYd9ZsW72z26Wcmwapqe3rhMg3wbs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792231478; c=relaxed/simple;
-	bh=WgdhjKOtCpMDf8ojiunfCJHTfM1c9SdbG2tKQVZ1N1I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=detRVjEb2xbcxevC5UZsjQyiMr/ki3xt0XMyTUgIiA2cIyCf/yneOXTfVZNIrgRRNGfeMue2XnxlE0MxxYCGcwYUzaszPkyHAp9NIydWh03qLaoMPD3V5cVOmEj6yBuXdW9KiOGqBj+r2zFd3/Ii8bitW50Md5SLgN4sorgFmsM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rwaY368c; arc=pass smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rwaY368c"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6ae14eecc64so684298a12.1
-        for <git@vger.kernel.org>; Sat, 17 Oct 2026 03:04:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792231475; cv=none;
-        d=google.com; s=arc-20260327;
-        b=jw2ltpYvCZE1pHr0dGC2JPZtOotOza0wwlIeTrA6nt+HqdBFMhaksT9aKN7GTdOAM3
-         RMkY/lu5vAmJA8MOU9ZjvBWtlMeao/8YOKkeS32rlbWJWpzyC0MlS0JKQyZA5pK7lbBK
-         VZOeNlBAHnSGlXZ38u8/Z24cQJHqATOWcPLL9onoL/lqapAJ/eaKEHJnEr7ZrCMp7TKA
-         8uUOQ6tJilK0WbEqsA7xGg+IgC1MIiOuyQrKtW5uMZDwaGx0a6/21WMtckCKoQJBc2iI
-         4ec7FQ3qFknrd09LcASsCUqckoHUX0cqqNr/Nh68ISDtiGzTw5ppcK6UpMVF4C8SiwVf
-         1i3g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=j7JMqqk8lh2mnWL02uYzqxHUbXHBR3U9ld2f4ZKjeso=;
-        fh=MfKE5BKBgni+Pd7PLNyQ4LFOjLoHhRpBFxMIddJ68yA=;
-        b=VRFkIAvk7RGZgGU6ycMh2ccBRX631Nlt6hRfhqEa7u/+TzlxHPii38Sh5S5+7O+OzU
-         pknYxmYQFtBINrEJj7npMArClFJwmm8Iqg64XzCK+CszknUA9yltXI2rlnP13vpF30zD
-         0gPB/jtzv87pRqs0Ju+P2xnP0LfcA4OIoZlgGxSikZ854kBa7dgSzamc3T9/5L1efqCZ
-         fUS+WJo8XVP24aZ2v4MW/Y4f5lyMReyvOO7YqTYyPcvAEzIqaru3oy9jtVm7TJqLuzja
-         dHFPxrRPjErI7gG0hW6xnYbHgs8Bo27kEPLaT8UNRbJNPORKJ8lSqf8qNr/9D7ziRZmQ
-         hfwg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792231475; x=1792836275; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=j7JMqqk8lh2mnWL02uYzqxHUbXHBR3U9ld2f4ZKjeso=;
-        b=rwaY368c8uABNOc7kJMJnbwqEf5+ELO/Qmr7bATQrVOfd4rqWHbg65d2bBddWQegUv
-         MCbHBPeRCX+j6eVp23qu97SznI+P+z9PGdq5hMOPz2NrFT9CbGfxBl1M+irvCrlmNmsY
-         cV9+HVq6faRXgOeKWWRQz+u6HI51iOIEU0Tj+XBfJvSE6wZbY+vz2DD/GR5AyX2l2aOy
-         c/1fLcYwlS2zIm9eerE3UYQTTQ7Xu7hqP2jSduHlvNGd7wqbYFq70prR3pkM7wCyJNN5
-         Ajgvtpo+Ulu2BS9lok25Wo+QrHCYFM76VmJnGNMidnggmSfyNBnD0hapuW0pt9DwE1kT
-         xgWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792231475; x=1792836275;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=j7JMqqk8lh2mnWL02uYzqxHUbXHBR3U9ld2f4ZKjeso=;
-        b=GBnonrWF+G4AhfuSCQCceUzvE1o4zDLufvxMky8WoKCWgXnB4BGZeLHGOFxR6PE3Ie
-         a7m8CQNkJUwqUzruFi059V225inc7IOy3hE62SUX4iSxCGDIRSazqFA+gSUEMryuC93h
-         NM9wmT3fiVGTNFLJp7RcDl+aQR/12SKmWYTSmWYTN+KdZq6eAltNtYxSuHRQ1T6osDgr
-         RH9jGeAg2l0Gzls0TQvREcF7C1W0eGJ9dOGMN5rQDc0Gh0CiA2Uvv6kZznIGxS7vdnZQ
-         5vyGK/8Y9WVhgZ5tfqQy5FYynDiTjPA0XxB/R4QfeCyksyY1VMIvjLFgPXHtRGYjTWsL
-         d1GA==
-X-Forwarded-Encrypted: i=1; AKwUvBxOAs2HbK4kDNnSRj9d0GpJQHePpgI1SACcHQdPkD8Q84CoOGI28eQmD+EfJmkbAENIAho=@vger.kernel.org
-X-Gm-Message-State: AFq9FYK2blt28wU73suiPUl+LCwoP42jy3SMqdFp1mtd8/c68ns7Q2gp
-	D3szJ2sa5yOgMG5IG7bvU9p1DTUJPTqi1cq3FdthF55Bz/+0Dkl9YI+ax+5FKj9xWKfmV2mOiEh
-	Nphz1tEio7g8BTo1Qg2A/u2cvJjgoD4E=
-X-Gm-Gg: AYBFou2npRf6v9ITjQXz03P9aEkCiFWgGQd1kmK1CHXc0w7o3M0a6BbT7d2sE6Abum1
-	EbccsSByTYzPkCJQ6x81nkXwdRuPEawnzCt+M/YxGBeCJlZTpdxFPtoAtPZLewidBy04iDynp/G
-	Xy2DEVj8voc2oISTZp7rnTKmQkN1ram7+F1wsfijrq1fAFrUmjx0jlEcNT5NH9CaN33aqcm0QFH
-	4cOfFmTbfo1EOSivw9GDyDRGJ8RwPETAcYKpADralanmCazMrzAek7tsLZA5XDXKQ//AvqPK4jZ
-	Nk5NLgje7Pgej6JsQRXA9hERGEP8T9atOyv3wh0GDWnwjZRkDyq6kME=
-X-Received: by 2002:a05:6402:4344:b0:6b1:c774:58c0 with SMTP id
- 4fb4d7f45d1cf-6b3a81995e4mr1304016a12.31.1792231474841; Sat, 17 Oct 2026
- 03:04:34 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3350D47D44D
+	for <git@vger.kernel.org>; Sat, 17 Oct 2026 10:10:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.64
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792231822; cv=none; b=qMCKO5M+kP0StBxxfQkewaeqtNLTaEtd9Maol31lcbiNH5R2ZpDCttCIecy/b7t9AzGhT7m7acdjXayTeMSfUwBRj22TCwP5ihRQ2jGuab3Lm5sDVRa8cFkBGazs/zAihGAtKyZR3OipRQayVLUZ52fxRK9NKx8KhHpl+1zOGEY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792231822; c=relaxed/simple;
+	bh=ktdgCucIRiSfUH+L9p7Ufy/Koi/5/tLWQL1lK/m2Ji4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=knYy1+X2GDjAbbtYly9f1IejioUAikKOz6rUdWOQIy9zo4Dza6f/K3Febi/rHJHGyTihRJm+7m1LVZxHY47HfpnNGW8cMZgDI+nLJkykaZqCizWQ8k6fQAuYZlGLSzRwczt967j3POa2ZeMQB5Tw1xMd77zuqMszzv8qvyEsd+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
+Received: from s019.cyon.net ([149.126.4.28])
+	by mail-gateway-shared11.cyon.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim)
+	(envelope-from <ig@drbeat.li>)
+	id 1xI1Me-007OV3-2h
+	for git@vger.kernel.org;
+	Sat, 17 Oct 2026 12:10:10 +0200
+Received: from [10.20.10.52] (port=32722 helo=mail.cyon.ch)
+	by s019.cyon.net with esmtpa (Exim 4.100.1)
+	(envelope-from <ig@drbeat.li>)
+	id 1xI1Md-0000000DUop-1n4i;
+	Sat, 17 Oct 2026 12:10:03 +0200
+Received: by oh4.internal (Postfix, from userid 1000)
+	id 109DC40058; Sat, 17 Oct 2026 12:10:03 +0200 (CEST)
+From: Beat Bolli <dev+git@drbeat.li>
+To: git@vger.kernel.org
+Cc: Xiangfei Ding <xfding@google.com>,
+	Aniket Gupta <aniketgupta3001@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Beat Bolli <dev+git@drbeat.li>
+Subject: [PATCH v3 3/3] imap-send: prepare for OpenSSL 4.0
+Date: Sat, 17 Oct 2026 12:09:56 +0200
+Message-ID: <20261017100956.529225-3-dev+git@drbeat.li>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261017100956.529225-1-dev+git@drbeat.li>
+References: <20261012203057.969878-1-dev+git@drbeat.li>
+ <20261017100956.529225-1-dev+git@drbeat.li>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2448.git.git.1792070038.gitgitgadget@gmail.com> <CALnO6CDOh1NCp4Y9euLbhVFJJnOc1jSk7q0ekdUeGniG8LTCGQ@mail.gmail.com>
-In-Reply-To: <CALnO6CDOh1NCp4Y9euLbhVFJJnOc1jSk7q0ekdUeGniG8LTCGQ@mail.gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Sat, 17 Oct 2026 12:03:57 +0200
-X-Gm-Features: AclHuK_5g9NX5g295GNRvS0LTPOvEaR1Y_ilcymNAugNc-CMTWyTWcOh1SO5z1I
-Message-ID: <CAHwyqnUd5NwZMGYQeFhYB=PiJ-0peA8hSJezJGyNorDM1hzehw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] reflog: add --operations and --historical-branch
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 
->     $ git reflog --historical-branch
->     4e5f6a7 HEAD@{0}: (topic) commit: add tests
->     1a2b3c4 HEAD@{1}: (topic) checkout: moving from main to topic
->     8c9d0e1 HEAD@{2}: (main) commit: fix typo
+OpenSSL 4.0 deprecated the SSL_set1_host function if favor of the new
+function SSL_set1_dnsname, which fortunately takes the same parameters.
 
-Thanks!
+Add compatibility #defines for the function and its string variant for
+the error message.
 
-This is my favorite then.
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+---
+ imap-send.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
+diff --git a/imap-send.c b/imap-send.c
+index ec4e28e423..526bde2f55 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -248,6 +248,13 @@ static int verify_peer(const SSL *ssl, int did_connect)
+ 	return 0;
+ }
+ 
++#if (OPENSSL_VERSION_NUMBER < 0x40000000L)
++#define SSL_set1_dnsname(ssl, host) SSL_set1_host((ssl), (host))
++#define SSL_SET_DNSNAME_FN "SSL_set1_host"
++#else
++#define SSL_SET_DNSNAME_FN "SSL_set1_dnsname"
++#endif
++
+ static int ssl_socket_connect(struct imap_socket *sock,
+ 			      const struct imap_server_conf *cfg,
+ 			      int use_tls_only)
+@@ -290,8 +297,8 @@ static int ssl_socket_connect(struct imap_socket *sock,
+ 	if (cfg->ssl_verify) {
+ 		/* follow RFC 9525 section 6.3: no partial wildcards */
+ 		SSL_set_hostflags(sock->ssl, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
+-		if (!SSL_set1_host(sock->ssl, cfg->host)) {
+-			ssl_socket_perror("SSL_set1_host");
++		if (!SSL_set1_dnsname(sock->ssl, cfg->host)) {
++			ssl_socket_perror(SSL_SET_DNSNAME_FN);
+ 			return -1;
+ 		}
+ 		SSL_set_verify(sock->ssl, SSL_VERIFY_PEER, NULL);
+-- 
+2.53.0
 
-Harald
