@@ -1,167 +1,177 @@
-Received: from hermes.quinlan.cloud (hermes.quinlan.cloud [185.53.57.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9581431E831
-	for <git@vger.kernel.org>; Sat, 17 Oct 2026 00:41:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.53.57.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39DB1326951
+	for <git@vger.kernel.org>; Sat, 17 Oct 2026 00:54:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792197686; cv=none; b=C9uIo86LM31TYtF2EPfqtDf8531H/Wsdzi0UfszM3AwGyeh9l7qtufAu1m18csg1ayvHxQ07UgAT9jytnfglE0KIgpDHfSxTRtNYuPFwtg1CjfmoXWUXrxPBwLzfV3aP2UtG0ixhru6N/bgCRZpHRJ11oLAGiL4Wjj0e1ifIwzQ=
+	t=1792198451; cv=none; b=dxON7jG5+h28pcDsORJTNy2Rbw9mkl0SOz9/oijKX0JOnQ9fi5k7CCBaGiVeLhOtWmxuOtbdQX0eLwBY9130g6RYAp6NyF2Wm/DzavpvO91fIS1m2gR/7bWB8b1KGs8frOt2fIUCKFvlk8vls+T7uyFoCD7ZwpujWXFgWpFaBAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792197686; c=relaxed/simple;
-	bh=78DGprY0+Ko3Ny182ivUpYdAgQxXOAa369WtLbNFKqY=;
-	h=MIME-Version:Date:From:To:Cc:Subject:Message-ID:Content-Type; b=AlU1wQ3nJ1JBr5ak+fjD9Y1Mml3u8c1LM6rEH946NjXVXRnJTHBYdT9LjYWjvVY+OzZHkUiF4YlwP9UPGY/mzW481Fs4mgFMZrWGUWf8whXXaHdrJuf77pbej8ZbAsm8up8f5EqEUuYn7yachuXrooSxxrY726LTQlbcyfKFni4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=donquinleone.com; spf=pass smtp.mailfrom=donquinleone.com; dkim=pass (2048-bit key) header.d=donquinleone.com header.i=@donquinleone.com header.b=Bpr74QrM; arc=none smtp.client-ip=185.53.57.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=donquinleone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=donquinleone.com
+	s=arc-20240116; t=1792198451; c=relaxed/simple;
+	bh=WxNq+Lj/5yd8FrM6GPW30HtW/PhHJKuGAysFrhdp4UQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=kiz5BKDYu889I4/Rp9MYOJT1bg5MakGE/z6+PWXyszrwmc2bt2wq1DatJap6X8F5a3G5NE1Moca7LrvwtKi81XiX8U97fKw0MIgJo++qikboXpGr7DG2ARGPUbwEoi2WV+qV/cmON5Ke/OgJs+gY1nZ/Hh3xUe1PplC/naznf9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YB5kN7QO; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=donquinleone.com header.i=@donquinleone.com header.b="Bpr74QrM"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPA id 2F3B942320;
-	Sat, 17 Oct 2026 01:35:26 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=donquinleone.com;
-	s=hermes; t=1792197326;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding; bh=yqMisASVJMvsXw/v845SXsB/R5LjySUPSyQ4T2myDz0=;
-	b=Bpr74QrMuRQN9O0/vBtjOOyimwtPTDqX6CjfVISUCoOOLWFOolm0mTcAMhCYuH1hofDejD
-	KmHYy/A3PeHRxNe5Z3V1fJ7devC46UbhQZtEtaPTDh0YiBSDYgH8K4CjRzCacpJfF2/n8p
-	a2YE5HhT6Tg0/3Ex9Gb5iPPNDqAbNzyvPQk+mxWr92OxgFDGvY5QZsjzv7mswruzWWJw7g
-	sb4A7SvBkLdMYR0kqWFvotBRNKbkCvejQ/gt4FJGKXz+6bTb0AxthzEJx0WcgWM0sbWH/6
-	edS2uW+jJ1MHKhNuw6vAN57cuxJBJg6TWLGoUOgmQVhI9XsDmgyhMZfR0dKowQ==
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YB5kN7QO"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4a1880e1bf1so4159895e9.1
+        for <git@vger.kernel.org>; Fri, 16 Oct 2026 17:54:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792198448; x=1792803248; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=o/LNXDXE8XVLO1Y0QjVHikymoiLT7g3w4WYbuUCIxAQ=;
+        b=YB5kN7QO1ooM48tLncyAlo/qaj2IVoqvU9tCTgcgoz3eklyInGGSHch/yTJGfH60HH
+         9T2wUEvTeKS6Mcj6c0bI85PwdABI018n3BFTYFMHWRud6N0isR/+bNfXtvKxuz0IwX+v
+         WonL8HcsJ5ivEZIjcr5XDu1WpZqlKvpbRdbkoRKWWV+nwO8oOD1LUlvERW77WbjYaOrx
+         FqNKOtHW1ndXrceEH/534xwqx2LDRhsjn63BauvX+ZZbqUILTch+XqsVhNu1K9vwCU3c
+         0emWyWIiaWowbaZF+NajxgZ3hsqmLF4IbvBouA/vyXAGYvuO031yHYgWhpKoPoRne4Uu
+         KBug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792198448; x=1792803248;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=o/LNXDXE8XVLO1Y0QjVHikymoiLT7g3w4WYbuUCIxAQ=;
+        b=atCC3E/7uBN1uyQLQB4gvwBhNIOhKjoCSYu6/8k8ZULvWtKBW1bJBgC/3+u2XWyw/4
+         cuZbJNnf/CuRvT4xyLBM2QCf5fwLZkCIwnsm0pGwMAaANKLAXY8lYhq4LibvRz0DwJxh
+         cKk2/oxixngFLbovkg9K0BUKDxLcQnmxInrZL4zRsdyhVVYB8J9yxZr3hLIEclIgHbXm
+         ZUchQvcK6nP91tvf/bFspXzoxVGg7iqgP2S4Tqa1XxzqJSX2PQlrZCBzF5Yugg/BRT6A
+         3ocA3RyKYEBb9XtPVnNa5KLS56BJM0PJzLKwhxH4aYsE1tBqqD4rdyhAyrtzNYi8pKBP
+         8bNQ==
+X-Gm-Message-State: AFq9FYLCJUkql3zfsuOigMKb80SDg8OwXOoW055jTubHNpEuG5fXriiy
+	NuA1eIULaRcYaLpFvdAERaF/o1VFugOSuIsiAoUGQcHLyZpZuCg0ncfB91o/n5MZ
+X-Gm-Gg: AYBFou2/ZkSWJxSjhoJneqG4+VmRxGFrgcJ2uyq/r7fO+AxyHDvwxx4LY/B2anZjPa3
+	oY4S6BrYREK94sPTEv1Pqe5rqGn0f/zRGTl/pUbaDIT1QhF9oLfkE0E4iSC6jGKV/E4gMaAiDBD
+	Ul6GirJqIVpwgvf3ZWfbR2IXhj7Vw2uxD2wTNh/YJ2P6DdNjgzSMhkivLq7o/W8DPzFgcVRTENq
+	b5LCex3Uo81ho8NlImQYBwbGTuMXEWqxD+5WHE08/d3pALl7vsp7dw7I8k7IXFzU87pbnWkJ42u
+	ziQCgPnBPRxCAIQYnTXfAFUZyuGemwVl96UMUWXyPW0WreuiyjVtynE7xRt2vhRJn0p40qPwKN2
+	QvwTuCXc5o+BPhPap9YpfJcN26dUVgXQ92rwwhiJVOkWOsk1tIoe5iChINA29HoxvmthKSDh8zq
+	UCfXlNdrmnQ+23TyhFkP7Shvi8TEYAuST/Hum+REj+46JZcBLQOzAlxBUO/PvdBEpI+XYqCIPlM
+	4/hJnIsHmsymnQd2xmhs7w=
+X-Received: by 2002:a05:600c:8518:b0:4a0:159b:d2a9 with SMTP id 5b1f17b1804b1-4a1d7628ad1mr28070975e9.24.1792198448154;
+        Fri, 16 Oct 2026 17:54:08 -0700 (PDT)
+Received: from DESKTOP-0SUCFI3.localdomain ([129.0.81.255])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1ce33155fsm61544875e9.4.2026.10.16.17.54.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Oct 2026 17:54:07 -0700 (PDT)
+From: Keryle <kerylefondji7@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	christiancouder@gmail.com,
+	siddharthasthana31@gmail.com
+Subject: [Outreachy][PATCH v2] builtin/var: refactor to use parse-options API
+Date: Sat, 17 Oct 2026 01:54:03 +0100
+Message-ID: <20261017005403.5397-1-kerylefondji7@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <1a146af667a8bcd4>
+References: <1a146af667a8bcd4>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 17 Oct 2026 01:35:25 +0100
-From: DonQuinleone <don@donquinleone.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Harald Nordgren
- <haraldnordgren@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: [RFC] branch: delete gone-upstream branches only when proven merged
- into a named ref
-Message-ID: <a8561fb7c2da446e7f7acc7e2a443991@donquinleone.com>
-X-Sender: don@donquinleone.com
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: None
+Content-Transfer-Encoding: 8bit
 
-Hi all,
+From: keryle <kerylefondji7@gmail.com>
 
-This is my first time posting to the list, so good to meet everyone,
-and thanks in advance for bearing with me.
+Migrate option handling in 'git var' to the parse-options API.
+This update also aligns variable resolution with current Git configuration
+and attribute handling.
 
-I've just noticed that "git branch --delete-merged" is now available,
-and that it never deletes a topic in the workflow that hosting
-services (e.g. GitHub) encourage. Before writing a patch, I wanted to
-ask how the list might consider closing that gap.
+Signed-off-by: Keryle <keryle@DESKTOP-0SUCFI3>
 
-In that workflow, the topic tracks and pushes to a branch of its own
-name; when the pull request is merged with a merge commit, the server
-deletes that branch. With master as of c51408889:
+---
+Range-diff against v1:
+- Fixed whitespace damage and replaced space-indentation with proper tabs.
+- Removed redundant inline comments as suggested.
+- Enforced mutual exclusivity between '-l' and positional arguments.
+- Aligned variable resolution with Git configuration and attribute handling.
 
-  $ git push -u origin topic
-       ... merged on the server, and origin's topic deleted ...
+ builtin/var.c | 32 +++++++++++++++++++++++---------
+ 1 file changed, 23 insertions(+), 9 deletions(-)
 
-  $ git fetch origin
-  $ git branch --dry-run --delete-merged 'origin/*'
-       ... spared, as pushing would update the upstream ...
+diff --git a/builtin/var.c b/builtin/var.c
+index cc3a43cde2..b9234a55eb 100644
+--- a/builtin/var.c
++++ b/builtin/var.c
+@@ -3,11 +3,9 @@
+  *
+  * Copyright (C) Eric Biederman, 2005
+  */
+-
+ #define USE_THE_REPOSITORY_VARIABLE
+ 
+ #include "builtin.h"
+-
+ #include "attr.h"
+ #include "config.h"
+ #include "editor.h"
+@@ -18,8 +16,12 @@
+ #include "path.h"
+ #include "strbuf.h"
+ #include "run-command.h"
++#include "parse-options.h"
+ 
+-static const char var_usage[] = "git var (-l | <variable>)";
++static const char * const var_usage[] = {
++	N_("git var (-l | <variable>)"),
++	NULL
++};
+ 
+ static char *committer(int ident_flag)
+ {
+@@ -120,6 +122,7 @@ struct git_var {
+ 	char *(*read)(int);
+ 	int multivalued;
+ };
++
+ static struct git_var git_vars[] = {
+ 	{
+ 		.name = "GIT_COMMITTER_IDENT",
+@@ -221,21 +224,32 @@ int cmd_var(int argc,
+ {
+ 	const struct git_var *git_var;
+ 	char *val;
++	int list = 0;
+ 
+-	show_usage_if_asked(argc, argv, var_usage);
+-	if (argc != 2)
+-		usage(var_usage);
++	struct option builtin_var_options[] = {
++		OPT_BOOL('l', "list", &list, N_("list builtin variables")),
++		OPT_END()
++	};
+ 
+-	if (strcmp(argv[1], "-l") == 0) {
++	argc = parse_options(argc, argv, prefix, builtin_var_options,
++			     var_usage, 0);
++
++	if (list) {
++		if (argc > 0)
++			usage(var_usage[0]);
+ 		repo_config(the_repository, show_config, NULL);
+ 		list_vars();
+ 		return 0;
+ 	}
++
++	if (argc != 1)
++		usage(var_usage[0]);
++
+ 	repo_config(the_repository, git_default_config, NULL);
+ 
+-	git_var = get_git_var(argv[1]);
++	git_var = get_git_var(argv[0]);
+ 	if (!git_var)
+-		usage(var_usage);
++		usage(var_usage[0]);
+ 
+ 	val = git_var->read(IDENT_STRICT);
+ 	if (!val)
+-- 
+2.53.0
 
-  $ git fetch --prune origin
-  $ git branch -vv
-  * master 61e9886 [origin/master: behind 2] base
-    topic  87d0c48 [origin/topic: gone] topic work
-  $ git branch --dry-run --delete-merged 'origin/*'
-       ... skipped, because the upstream is gone ...
-  $ git merge-base --is-ancestor topic origin/master && echo merged
-  merged
-
-So the branch is provably merged, but at no point in this workflow
-will --delete-merged remove it. A script reproducing this is at the
-bottom.
-
-From reading back through the archives, this is deliberate. When v7
-of the series fell back to the remote's default branch for a gone
-upstream, Junio wrote [1]:
-
-> If the upstream itself is gone, removing anything based on some other
-> criteria cannot by definition a "safety check".
-
-I agree that a vanished upstream proves nothing, so I would like to
-propose separating selection from proof:
-
-"Upstream gone" may select a candidate, but it is never proof. The
-only proof is that the branch tip is reachable from a ref the user
-names explicitly, so nothing is inferred: neither HEAD, nor the
-remote's default branch.
-
-I can see two possible shapes.
-
-(A) A modifier on --delete-merged:
-
-  $ git branch --delete-merged 'origin/*' --into origin/master
-
-Branches whose upstream matches the pattern but no longer exists would
-become candidates, and would be deleted only if their tip is reachable
-from the named commit. check_branch_commit() would be handed that
-commit in place of HEAD, as suggested on v7 [1]. Branches whose
-upstream still exists would be judged exactly as today, and the
-worktree, stacked-branch and deleteMerged=false exclusions would still
-apply.
-
-(B) Composable filters on -d:
-
-  $ git branch --upstream-gone --merged=origin/master      # preview
-  $ git branch -d --upstream-gone --merged=origin/master   # delete
-
---upstream-gone would be useful on its own for listing (today the
-usual approach is to grep "git branch -vv" for ": gone]"). But it
-turns -d into a second bulk-delete mode beside --delete-merged, and
---merged defaults to HEAD when it comes last, so a forgotten argument
-would quietly bring back HEAD as the proxy.
-
-I lean towards (A) because it is small and keeps every existing
-protection, but I'd rather settle the shape here than assume anything.
-
-So:
-
- 1. Is "selection is not proof" an acceptable basis for touching
-    gone-upstream branches?
-
- 2. (A), (B), or something else? If (A), is there a better name than
-    --into (--merged-into?), and should it stay limited to branches
-    whose upstream is gone?
-
-I would leave squashing and rebasing out of scope, in keeping with
---delete-merged staying "one stable and strict" operation [2]. I've
-Cc'd Harald, as this relates closely to his in-flight --delete-merged
-topics [3][4], and Phillip, who reviewed the series.
-
-Thanks in advance. Look forward to hearing what people think.
-
-~ Don
-
-[1] https://lore.kernel.org/git/xmqq5x4sn393.fsf@gitster.g/
-[2] https://lore.kernel.org/git/xmqqy0c21gq1.fsf@gitster.g/
-[3] https://lore.kernel.org/git/pull.2428.v2.git.git.1791102886740.gitgitgadget@gmail.com/
-[4] https://lore.kernel.org/git/94a6d23f8b96d4a07fb58c71f4a2f7dc4d3055bc.1791711665.git.gitgitgadget@gmail.com/
-
--- >8 --
-#!/bin/sh
-set -e
-export GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1
-export GIT_AUTHOR_NAME=A GIT_AUTHOR_EMAIL=a@example.com
-export GIT_COMMITTER_NAME=C GIT_COMMITTER_EMAIL=c@example.com
-cd "$(mktemp -d)"
-git init -q --bare -b master origin.git
-git clone -q origin.git work 2>/dev/null && cd work
-git commit -q --allow-empty -m base && git push -q origin HEAD:master
-git switch -q -c topic && git commit -q --allow-empty -m "topic work"
-git push -q -u origin topic 2>/dev/null && git switch -q master
-git clone -q ../origin.git ../server && (cd ../server &&
-	git merge -q --no-ff -m "Merge topic" origin/topic &&
-	git push -q origin master :topic)
-echo "after fetch:";         git fetch -q
-git branch --dry-run --delete-merged 'origin/*'
-echo "after fetch --prune:"; git fetch -q --prune
-git branch --dry-run --delete-merged 'origin/*'
-git merge-base --is-ancestor topic origin/master && echo merged
