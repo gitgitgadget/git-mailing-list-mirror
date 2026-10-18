@@ -1,137 +1,165 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB541374A08
-	for <git@vger.kernel.org>; Sun, 18 Oct 2026 15:20:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792336831; cv=pass; b=klSpsy393UrYLgOgTIrGLZDKP3MCbZaqrAXkwcEipz4LX+GqHo9A4G5XDiM124ETq9rmN1m3yzS007TtBDxZgOyD1PtIgreNn4DMflTJPj9hOWB3lvZqJXE+XOCNH29Apt7esT9j812+U7vjK4EvWGNUjHvLam9MwpLU/LrS1uo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792336831; c=relaxed/simple;
-	bh=xP4wgycTBIkt8c6sVkj+Z6gor+uRbN/SxwXhPjWur1U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uWfD/FMNP/FaHU+6/M+USICXezUjtT6gggR4XI0p7VPPkqQRRXSv1+NDQJ6j8gogPjNZg7SVyW4sUVSjiDq3UFSuKIQlVN2SXxHXVMjkSOpf6qyCyrC1ApY6oTeslcnz/ayKEDeoao99xZhUqebhuxTME+fJP/ovRsOrF8ec0X0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qLJg/4JM; arc=pass smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3034D0CC7
+	for <git@vger.kernel.org>; Sun, 18 Oct 2026 15:24:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792337080; cv=none; b=tMTmu01yXZxQWSJ/dStNQTncRcKZZiVtL2HK8jLWxoKXQLVqjhKXtWPPuei1oTls/04IICt+9ajR8/GSdtB/Ef2mhg4brcBEoBZYL5h1k4e5IQleuvVggZt1tm/S3hIVZsGcCQfeB/11jogD7I/O3yKr2vKczR5qLOCe+3NRVLA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792337080; c=relaxed/simple;
+	bh=B9Ubekv2QTpX8w7yS0cxYO9gNeslWf4s4cc2Gpq6fUc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HeuRSsZLoJA+BeRUgAKzUI6Pid3Bbc8kEiDhQ8RDOpK3e0Xvb8h0wDu+FUzfrCN7oQ7EeGP02v3Gw3uoOyS3Yp2ukK+n+rBQROm79clhPAs9QeQWFRYlRCNjKi1qtQnpR4x96wWKUvtfDtLnENGO19GsbXuCVE3bsBCpZcHaw7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lBaefqxH; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qLJg/4JM"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c3f04e0e65fso182520166b.2
-        for <git@vger.kernel.org>; Sun, 18 Oct 2026 08:20:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792336828; cv=none;
-        d=google.com; s=arc-20260327;
-        b=q66OxGskgnRf1a2pqV5gnl06esv2VSTYDsb+VJCNRYFHeIz4YpcdDhKzisXC8iOA+S
-         Ns4LpMqIaQ0EZNpGXhhQlrErq/kHOy02+bwEdmhyQf3YGlmjN1MWG2BXpzSx4tBtHexX
-         J4wkW0Tj2zn+BZIXh4sv6Jd+IhZmCwKw1ji+CAy21MvbkLPaoB/Q1jEIAgxg7iFSv/3B
-         /kby4+0knIHBCZNTf/Gg1WybydFHbRu+Z0mkzNbPFDPGlGZIi9HgjntYrEBYiFeCX3/O
-         XaCW/aeL/yZO44yIH8ef7pyz/phZtMQ+/fYfDmsyJx/p3r0kZ1w8rG9MDw7/lQq+PShj
-         pS/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=xY+XbxjdXKSX5SrgS6tbTG04dRCh2I8Bt6Y5M0wr/og=;
-        fh=6b4Qzxpe7vOCxdSipzihDsIevbuuxZlUr+ip4NeWDp0=;
-        b=MBQL58AKMF/CVRid5i2RG4Oq1GxKp4pmVVVz0hlG1ZnzHoO6xX3wvpxcMnly6lKUsX
-         Fn8WzzJZB44KFq+xDrAwKkVAgxqVO2OlMhJHjngWwgoLT+X47HvFcWjlwxt+cszmyUtv
-         uwmFEOARUrK+Pa4CM08SJlCgcH6/+z2bTsH5qgBLAVR1AJP++YcSw+UjKxg1ys+KYEZl
-         R5V/0Km95pDo5QQcCOcPAQnvoYrh/3y4X89HmEiNYkNOhiXG+jHL6IUHWPLM5K9EaukF
-         jikFthwng8cwhWJ7b9BDq7y5UF+pMv75Rq2Hiuaikki7C2exDD8bX+rFEVcGFn01m7Kr
-         qHPQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lBaefqxH"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-3ab1a37faaeso1962841fa.0
+        for <git@vger.kernel.org>; Sun, 18 Oct 2026 08:24:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792336828; x=1792941628; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xY+XbxjdXKSX5SrgS6tbTG04dRCh2I8Bt6Y5M0wr/og=;
-        b=qLJg/4JMWHdlhgJcz6304kzqwxK1ur/NZCLXZ+LFqch4XUM5Py3Ih4/pBbJA+tjUN2
-         dRlgfrDcswtjWCzy5/YPBoqDkrqZmYSpgjoBvGMUO+jaH6hoQKdgut93uz+9Fplnscwi
-         F0Ae7C+UxlSqAlk0Gw4cFvnoou3VOQLk4WF+ER8ABQjEitelUlGjElvWCwXDQ6Feugyx
-         EzyJ/vHHILLjq0Xf2RBjFBW9FVUis130u1MruJ781IouJpquCjqOSTg+aNRGL0hRzPd/
-         CWSTNidLSrXnxR1mXaIjZee5K2T4gPFMqIPqG9EMxyBs8HsxLizv3Q3FMtcrP4NLiIXy
-         TDVA==
+        d=gmail.com; s=20251104; t=1792337075; x=1792941875; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=wKBO35TTYhQRByiH9MuB6ioAbFHKLdCW4cjUUx8OU3k=;
+        b=lBaefqxHdUBpDoXoAdtVBCF2EIXx2vT/lmMpcFiI9gzIjgWS3sAqdkNeu8y/dHUSX2
+         cBvWzpCL2Spf1Cb2rgqrS8ZhwoljVdPU/4AE4bh1NbhOtMk26HHrHLVE7brK5E4LgpPb
+         AcpTnlTt88N7RxeMxwtf8t7MbU9UkoEPdhyEh/iMD2fZykyREWjRAYPxKb3B01cNC5Jw
+         KoUHiMDcsaR11yWXYXvPjb/EqOXvBehfa5VwulxYBxxDvEwcbiJ5Me4s7xxnTj1ivS9Q
+         tud3VzmRaj3GESFIhsbp4lSYcPjAulx4h3/79UwMGv7QRoHCIHztMqjTWuo92XA84aKC
+         mr7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792336828; x=1792941628;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=xY+XbxjdXKSX5SrgS6tbTG04dRCh2I8Bt6Y5M0wr/og=;
-        b=u8AqEPEFwj3LdF0cZRGu3obVgoNYYT91nMf7B/eKE/cMoLyBTYYvp/MWg7ZprGm8Zi
-         gUnifR2DS1ttY7GmWZWFaZtT6tXJ+tQxQ/vSRPYOTEGDTjdH004oaf4vttTxlFZ5McDk
-         uX05kRD0XCYha52EVNBN4Ol9xwZKIPGxA4477Q4vYc5PV72XKjUqTG5rsYdkj+0tGhlA
-         TNnRpEfl7kACbTu6OwZWlZ4iSXaTJDLd+keckRVoJAqz2EpSmfwmlMVBm0r58GtuGFn1
-         TgGmUmUlpAPcGoxn7tHUimIZE+oZIEVSXyElc4BjN18JpF4dW5xPpgD6a3k/s0omgGif
-         jZBA==
-X-Forwarded-Encrypted: i=1; AKwUvBylVVNCS4SU6I727Q9VXihnAaJcnS9w6iL4mh574rPHKFEQvP1VYrdkN4JQ3gvDXLkb3vk=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJxUUPCWBDq+mcjRmZaJPjZnBI4spF6xgIacFk3c44vYoBTGTvE
-	YnHuaL0GYrCRUida29Zby029mL9lUCbyxf67udnylMcqMpijDlxrPZ2j/mzSYlJ59qu2F5afTki
-	jRjsW7pHYVb0BOOkxpa9WaIpIwpMpt7QxlNVW
-X-Gm-Gg: AYBFou1eK40zBfetW0ylfsDeQU9Y+v/l/gV13W3aagx/Ziaq/ZRAspC/c0yafPuKiBY
-	C0vX8vYG3lITdjwrFLE6O5NcR1SBe2NF38QIg4PQoDFu+DgbTNcpFj0hTrXItLnxy5oSDeLCyak
-	mkI6Ufdp+dhJK8sPoPPjkqE00wQ/I9zZxbHKPTe72oXHmNl0pBNHB9ajmsRic1Xv0iXFUqJH1NM
-	kAqRCUKur15GbkqQMUHXpF8YG8npW32MtzS28mlpMb+yzFwFiU/DEhPIfLX8DBsrEBXqVeT3ccL
-	Z/PeWSPVK8rFIAZpbFKxY4UUH9bvj55mDrfY1s4HPyBurORoNIcMjBt5ojRsGV0wZl0=
-X-Received: by 2002:a17:907:8e88:b0:c33:9fab:5f61 with SMTP id
- a640c23a62f3a-c419f60c256mr331873966b.29.1792336827940; Sun, 18 Oct 2026
- 08:20:27 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792337075; x=1792941875;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=wKBO35TTYhQRByiH9MuB6ioAbFHKLdCW4cjUUx8OU3k=;
+        b=c6MPIee3RHkGStCoQ0x1dbmG2IyXtpVTzVk4HosTY3DtTxK1ugQdFuvK1KerhHOyrZ
+         p6KH+Z89qw3zchP/rSs1quccCVDc1UAIFp6YV/pT/2ICa7d1DSLeO2E0lKOdFopcogoF
+         baR9+ILO5Fml/nda8muduOXE6D/NscBiYtBK2kRGFlvn3Xu5236xfDlgiBNKboowdOyN
+         E6dzD8eVBCGFdI7NtOyEcoucfraxeq5RHFrjAM4qgVNTw5cisiZOZaRhJ2x/YDZxLwmB
+         UOQfsEZ38wEpA4vqMxHp/mKLBlQ5YS/RwzLBjtDOoVegXrZPPYa5m3fa/prY16bA55yZ
+         wWtQ==
+X-Gm-Message-State: AFq9FYL2jWTdmso1KKJxSLXsdwz2wfJsbS5l50aq4T/vu9HxNhYY3ISH
+	QOHD0lBa2hp2F9f1fAx4SRv002t4JAoXXJmm0T0HrezW+0P/dmKzYAUjsaCaA2ZZk9s=
+X-Gm-Gg: AYBFou2eOmyAYuxHJmDR8PEEvAiLULISDo3edLVZkSOUiBsG03N93kQPHbsC6OZlMzB
+	uscsKkyunBQRiMJ5GpnTgitglV+G5PnSaE4Ww2LY8iPoWSA8a3IVBUDB5VPg4v+qmB/0IQ+Tc1w
+	gfyT3L2nsZlyTY3lVP/PiCeB40Q4r61phX0XAjyG4nLuBMquT2EpxE2GqN7GBBNjVtivBdSPj83
+	nFsL3A+japoqaOUbusNM4E6AzZZDX9LejJZZkjktoPaJLXd3OVNgMWUAa8hQ6Zh/Gwt6KmuWLKW
+	W7BOi6C2gUMU47b9kRwJUE62xmlJsbgWaOvt72SrEa/bP5Qcs+ZPl/3304lGbp8iYms9AShUJIn
+	wPDptRgBy9s3LJxPU1gSizNnGjpV2JXFENvj5+WDXmIWH5pHUtm+y+d1H5DSTBMSAFNtQyNTsl+
+	2ozVGLfM94Q9VLklQQlzzROnHG81456tCMheNfbg7+2hIeVao3S0nSNQySoP8aNZeFK1aaDBgjK
+	Kg+s9q070mvsl938r//fkfqWRw2tCCZBzm82kEIUg==
+X-Received: by 2002:a05:6512:3f20:b0:5ba:3579:3673 with SMTP id 2adb3069b0e04-5be50a88e2emr1512541e87.5.1792337075053;
+        Sun, 18 Oct 2026 08:24:35 -0700 (PDT)
+Received: from Iris-HRQ6HW3.. (78-71-217-218-no600.tbcn.telia.com. [78.71.217.218])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5be4a3fd03dsm1483225e87.11.2026.10.18.08.24.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Oct 2026 08:24:34 -0700 (PDT)
+From: Olof Fairbrook <olof.fairbrook@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Jeff King <peff@peff.net>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Olof Fairbrook <olof.fairbrook@gmail.com>
+Subject: [PATCH] config: read the bytes of a blob as unsigned characters
+Date: Sun, 18 Oct 2026 17:24:26 +0200
+Message-ID: <20261018152426.2716899-1-olof.fairbrook@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2450.git.git.1792134165785.gitgitgadget@gmail.com>
- <xmqqcxt9h9g6.fsf@gitster.g> <d2264240-1530-48a2-ac3e-ae46f855872f@gmail.com>
-In-Reply-To: <d2264240-1530-48a2-ac3e-ae46f855872f@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Sun, 18 Oct 2026 17:19:46 +0200
-X-Gm-Features: AclHuK_1Ba1qRsEgGzT3XQV0qM6aijB4FmL_syRlf6_sMmiQSX_0NFW3a3tZULo
-Message-ID: <CAHwyqnV=iiocV2FA32-X8LTgYwWmzQguPtkykFKM-t7B7ttNOw@mail.gmail.com>
-Subject: Re: [PATCH] branch: let inherit track a remote-tracking start point
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Josh Steadmon <steadmon@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-> For me it depends on what I'm forking from. If I create a branch on my
-> desktop, push it to my server and then create a local branch from that
-> on my laptop, I normally want the new branch to track something like
-> origin/master rather than the starting point. However, if I create a new
-> branch from origin/master then I do want to track the starting point. So
-> it is not clear to me that the behavior proposed here is better than the
-> current behavior, but equally I don't think it is any worse. Having some
-> way of saying "set up tracking when the starting point matches one of
-> these patterns" might be useful, but I find the tracking options to "git
-> switch -c" so confusing I normally just run "git branch
-> --set-upstream-to" afterwards to set the upstream I want.
+"git config --blob" and the other readers of config from memory get
+each byte from config_buf_fgetc(), which returns it as a plain "char".
+Where "char" is signed, as on x86, a byte 0xff comes back as -1, which
+is EOF, and any byte from 0x80 up as a negative number.  So the parser
+stops at a byte 0xff and silently ignores the rest of the blob:
 
-I don't actually use 'git switch -c', I just used that in the example
-because it's the *modern* way to do things. In reality I always run
-'git checkout -b'. I agree about `set-upstream-to`, there is probably
-no single terminal command that I run more than
+  $ printf '# caf\377\n[some]\n\tkey = value\n' >config
+  $ git config --blob=$(git hash-object -w config) --list
+  $
 
-    git branch --set-upstream-to=origin
+and a blob that starts with a UTF-8 byte order mark is a "bad config
+line 1", because the code that skips the mark compares with unsigned
+bytes.  A config file has neither problem, as getc() returns unsigned
+bytes.  ".gitmodules" read from a commit goes through the same reader.
 
-Your example got me thinking. Maybe we should go the other way? If we
-can inherit from the branch we are coming from, should we do that as
-first prio? Because of the `--set-upstream-to=origin` usage, we will
-likely already be tracking the right one. So
+This has been so since config_buf_fgetc() was added in 1bc888193e
+(teach config --blob option to parse config from database,
+2013-07-12).
 
-    git checkout -b first_branch
-    git branch --set-upstream-to=origin/master
-    git checkout -b new_branch origin/another_branch
+Return the byte as an unsigned char, as getc() does.
+config_buf_ungetc() checks that it is given back the byte it read; it
+now compares with the byte as an unsigned char too, or a CR followed
+by such a byte would hit its BUG().
 
-could give us a 'new_branch' that tracks what 'first_branch' tracked,
-i.e. 'origin/master'. Maybe as a fallback, we could have the new
-behavior from my v1, so if 'first_branch' has no tracking branch, then
+Signed-off-by: Olof Fairbrook <olof.fairbrook@gmail.com>
+---
+ config.c               |  4 ++--
+ t/t1307-config-blob.sh | 21 +++++++++++++++++++++
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
-    git checkout -b first_branch
-    git checkout -b new_branch origin/another_branch
+diff --git a/config.c b/config.c
+index d9019e7e6c..fbe873274e 100644
+--- a/config.c
++++ b/config.c
+@@ -92,7 +92,7 @@ static long config_file_ftell(struct config_source *conf)
+ static int config_buf_fgetc(struct config_source *conf)
+ {
+ 	if (conf->u.buf.pos < conf->u.buf.len)
+-		return conf->u.buf.buf[conf->u.buf.pos++];
++		return (unsigned char)conf->u.buf.buf[conf->u.buf.pos++];
+ 
+ 	return EOF;
+ }
+@@ -101,7 +101,7 @@ static int config_buf_ungetc(int c, struct config_source *conf)
+ {
+ 	if (conf->u.buf.pos > 0) {
+ 		conf->u.buf.pos--;
+-		if (conf->u.buf.buf[conf->u.buf.pos] != c)
++		if ((unsigned char)conf->u.buf.buf[conf->u.buf.pos] != c)
+ 			BUG("config_buf can only ungetc the same character");
+ 		return c;
+ 	}
+diff --git a/t/t1307-config-blob.sh b/t/t1307-config-blob.sh
+index 5cb546dd00..e2c0883350 100755
+--- a/t/t1307-config-blob.sh
++++ b/t/t1307-config-blob.sh
+@@ -72,6 +72,27 @@ test_expect_success 'can parse blob ending with CR' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'a byte 0xff does not end a blob' '
++	test_commit --printf FF config "# caf\\377\\n[some]\\n\\tkey = value\\n" &&
++	echo value >expect &&
++	git config --blob=HEAD:config some.key >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'a byte 0xff after a CR in a blob' '
++	test_commit --printf CRFF config "# a\\r\\377\\n[some]\\n\\tkey = value\\n" &&
++	echo value >expect &&
++	git config --blob=HEAD:config some.key >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'can parse blob starting with a byte order mark' '
++	test_commit --printf BOM config "\\357\\273\\277[some]\\n\\tkey = value\\n" &&
++	echo value >expect &&
++	git config --blob=HEAD:config some.key >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'config --blob outside of a repository is an error' '
+ 	nongit test_must_fail git config --blob=foo --list
+ '
 
-falls back to 'new_branch ' tracking 'origin/another_branch' instead?
-Or not, maybe this fallback is just bad?
+base-commit: a018953688f1b10bddf91bff8747068f5f4746a4
+-- 
+2.43.0
 
-
-Harald
