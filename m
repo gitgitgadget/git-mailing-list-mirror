@@ -1,71 +1,72 @@
-Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
+Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADB741A776
-	for <git@vger.kernel.org>; Sun, 18 Oct 2026 18:27:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5D7409620
+	for <git@vger.kernel.org>; Sun, 18 Oct 2026 18:27:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792348050; cv=none; b=SyahDp8R8nx9cc9f4INh+NcfpuHuqmlLnIrnOov0zV+J5TaRi7Yj45I1y+n/75RUvESbYhw5h2pRgdQkJFF4v1S8kJletvnxGkjD5RIYZ3A3zlps7O8vAGqjAaFVBN6OWz6IAITeQsiVIagFcLNf/uLcW8wW3OKRJH1Hcz4xSRY=
+	t=1792348053; cv=none; b=hKilu0BdsNvtudbnY/GIQ5jh2mPOdIIorciqywsih0DLR/qwRMSxfS5JnFBG6EeNlOkvWUctjTdErVlV/lOWAaU5I7bvWM1nANHhoE4luLPMmYT0CX+OFjkRANpbScuwVTb3z5AzSV/4563ugvmO/gc0/EjYEiFkpJRVmcG2CH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792348050; c=relaxed/simple;
-	bh=TB6KBrMY4/zXySXb/XiZfqJM9HTuQxFKQbb/yo09Spg=;
+	s=arc-20240116; t=1792348053; c=relaxed/simple;
+	bh=4FvOndeZlbkZq4nPQt3WuDqOXvoet0jHo3SmjQQdR04=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=V2LTQntN0gcpQ7LTHYKTTChGtA5y3v70T34rmpzsQsDkRhqkg1iA/g2bR/PzWwpYY+skurAnW8ntJmuLH6XOJOVhFoGuCjUreW0Y9hge+zHFni+YRXTbNdh/lYeB+JivAz3nu3tU58v9rBgutt4PUWfFpU4b+jBzSlb22mbUFtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fp+HFG+B; arc=none smtp.client-ip=74.125.82.52
+	 MIME-Version:To:Cc; b=H5XApzoec2QguadvHHvNOHuCuLE9DeJwj5Y0ngLpnTnF/BTQZyQcqR1q+wPklfyOhB3LRado6K/jZKc823pyy25Pb6PvjWSrjfyAtGO3GR5LGqSrXZOwzDC+Gy75e8nlOQXOT/1wS1YCha2Ddjq8tZVvrpbWSS0GrB0IFhJOaPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TMOzIaiJ; arc=none smtp.client-ip=74.125.82.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fp+HFG+B"
-Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-17bc533fda3so1566318c88.1
-        for <git@vger.kernel.org>; Sun, 18 Oct 2026 11:27:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TMOzIaiJ"
+Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-35a31bb9fb6so3449898eec.1
+        for <git@vger.kernel.org>; Sun, 18 Oct 2026 11:27:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792348042; x=1792952842; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792348044; x=1792952844; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=JZXmfppFHu7QwGteKZpUySPOABAaUItBEkRkguo2HJI=;
-        b=Fp+HFG+BLaznQzlo2DnvSIYgp35a+ICWqeHAdZqhWsw08QbFeBhLhJ6fel8opc732+
-         WMWjUipetQ83n98Vbdi/xFoEY3biFa0xJciIHuR2oiFinsUL/WoUi+aL/sgl7eijhvtG
-         rS6r2XBcWydcz+T6kfX2UtXncFP0grib0fA1QDz2lxCsmI17HLR/w9vl1i3/9rKFOANh
-         iAXMIqZUu6JprPBiwUhhN1FM9vDKw6XWn4UYIptgRVG5LQ2KYYmew3Gltx2hpZl7Z2DB
-         JbdDFH12+R6us1HLB0+UAiMCl9Qrv2rSfftjPL0I+DwvJJ0vKiH4WIJEjuZbwe64PU97
-         D8Og==
+        bh=8XgQ5eXHRaKhTcLSpIngWGk+o5E/1FzNMIIoZ63hG7w=;
+        b=TMOzIaiJ5L3PfFgjwf6Dyu3pN0uFirSIeRiAJMYpI6AxpZ4kC3lX/9DTSWSdxWQujM
+         xOoqgOy80hKVJFZoj3NJIIw03oDDXKNmJWYVmBvoI0fiRHaBr8lbz1wdf68xUEhupu0g
+         QWyz1zbP2AKIA8Y88hPBMUOpNBuztxSBQ8Ml4u25zyv9iL/pG3bahDu5jTnArwk/Ik1D
+         jYOninsxmn93mmfHsGnj7wQVuQesKdX5u0zbm6VymZe2gSMfwUDMekbhVqUOBp1qtRrs
+         NND9m7KPEbxKvGHDDODcdpXoXuuAFh9W63bHQ18sNRox+fDF8L25mDbH8EuM8awLR/Re
+         LGbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792348042; x=1792952842;
+        d=1e100.net; s=20260707; t=1792348044; x=1792952844;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=JZXmfppFHu7QwGteKZpUySPOABAaUItBEkRkguo2HJI=;
-        b=lif0BuKjkzqMQChfB36QQANQC5h64SO0535C4zj9T8h3Kg4zFlwzA5s1BqdWPcss3v
-         gL1t6qS7wng6ura5WfslsGjM//rHvj6ux+8KFSpxpO2NqlugTIR06/AwLQBXf0Dko/z+
-         K4GLZI89nFmU9dbzBuRtrQOcDE5fhDQ/VotD4/Sh1TL47htT616aJIu5P1g8/qcV6qGu
-         5VRAg9ybXdp4Mbqvozf/+SbIjndD96knK/v2Euaus3izB5tM7jPihDbJs0B4pGpHsubB
-         QLgbWNTkq9+GhO5BB4T4LnK7SI2kRxrCiaO+o6l4VtGUCgBUiSfnVUHssOsbAKlr/yuq
-         6tEg==
-X-Gm-Message-State: AFq9FYIbp4SCaDZ2hMvGoOl1DvHiUVmALoR+7T4GXWTykdyRnraQ5Uo5
-	e72281MhCQawiBWzjE7NBxaaStb+feZC2zffvGhtLrn0cg8agzF2Fj0nb7kDKtHW
-X-Gm-Gg: AYBFou24lS7J+delbLZkg0T2NBsndZPymN+E0VMDV5IlmDpBWBDy9KqsSS9FU6WLWOb
-	sKV5lIVx59ESapnXS5o5beqeunXZQpuRtqnzYFPfwL5z1vqCkuMq25nz1I9XYF6HnMHxPj0aJJH
-	ZPv95dDWp3sEbdxa0eb2qrDp5RRgojPkwjSlpz7v1dOnjoNz/ZDEeY//D2L7yCU4DVKYjvqfDCQ
-	zync171kQoX6cy0FU0bgI1Nu+E65PK6GfTP4rWGVi91kSAUv5Jl5xD1GDHxFke4f1J8fU/lQzYA
-	Opvu+j1IUVPAESWTXjcoPPUWv2gQ2L697pmRzz0ztV9bU3tZBxB4mj2vD9gKt/9EceRzQt3ukrz
-	GGQeXzC5v2Um9eG0duxhTxacDbKNXrTvYKyQvVkfX94q64aOtJlw3ST0Pz+FT2MORzHgeqXkWog
-	nIyUL9UWZt3u1uZRo6Ho1k8+UERh2UHN3YeuiTDPtCq2uxB2cl5pvDcW0pKQgqNPkwHn8IGRBIL
-	hOPI8yc6mjR
-X-Received: by 2002:a05:701b:2059:20b0:144:fa57:c617 with SMTP id a92af1059eb24-18513e7b77fmr8665374c88.34.1792348042391;
-        Sun, 18 Oct 2026 11:27:22 -0700 (PDT)
+        bh=8XgQ5eXHRaKhTcLSpIngWGk+o5E/1FzNMIIoZ63hG7w=;
+        b=MiiSuVAd8tTkqjWwUqPMWuGwvan7aTet/H/XPad2EbNhzuJRJNnli5mVN2mUf4yr7c
+         anhWtTOxlePGQYBA3wRP9JPpuBz18jiq0DOetLPqB2f57M4yo65lB4u2iHQ3lXrdvzQb
+         2/g74EFE9zg7UzJRp1V1wnlb9awy4owVBpGPuLAa0TH7XqepicUgPmtqe8gYWSMt6V7R
+         Bq3Z2JtVuBYk/LtGtBwFv7gKCOQIqt5z6pqPZJeoSiW1CYzD/pAemYIqyQDm5ccrmf8L
+         6janGvj8GZ8oyUPON1r5Mc5CDho0p11teUnZxBdk2A/xW+LaIEB648AVMlTy2jJfXOXn
+         Ro8Q==
+X-Gm-Message-State: AFq9FYKowLLcDHMpvDZBjxmgKJmb1O7vvKk77yFGbK4h0WLrXdiPDIL+
+	a/2Lt3cG3ZXkoTqHSCJawLgMTxoNGrUoHqKy9SxYrTtyae4cdf241VnZpXEHfTCo
+X-Gm-Gg: AYBFou03YaseUkDa09fBRbQZvCTvD9DASwF1Ur2swGj/b5iS50V+FQexfmVxnJFPTk+
+	fApdOWTK1CQ8sva3cImIu2+RffUIb97XAaoEu7G3rP+7Hoyq1Mz3qrfubSxggPvNYffD0KZ6YA7
+	ApTxJx1W9tYgufvmHbHIerx122CL3MG8q1y/LM+OfgLrZyXJFzvbBP5Gn4wTU8/Qk+NkZ0Rjd+7
+	IBLpXtfJDty7UyG6Fv8ErgRyHz/Ya4nVjbsxLnmTeInwKckj9uWd3fzvcYCMQCfMl5AQ4FexqE4
+	C6XlG9YGVQ2PWz+S/45TIo3nMzAW6qUuXOzCD7zW7G44fS5RKX7hcUyO8fPwAsqLP+pFwDGXx2Z
+	M4e0SbTrDPzNb3x0Hug6jXZFPB2AulTwDY+O7ASXkEvC4WO5wiUDA6KLP+h7bIJNzVf8cpQToEt
+	aEWWiTkE1kt8MEfn3mTNAehhXmORgLAeaQ6N5tbSVV1dDkJ7Hvbcnu3joVrAQCWLJnomlzbubDu
+	klFMso/zc5xsA==
+X-Received: by 2002:a05:7300:768c:b0:35e:a117:8fd8 with SMTP id 5a478bee46e88-361a18603d7mr11964558eec.17.1792348043911;
+        Sun, 18 Oct 2026 11:27:23 -0700 (PDT)
 Received: from [127.0.0.1] ([20.189.179.91])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-185aaea8b24sm15671099c88.19.2026.10.18.11.27.21
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3607ee0cc23sm30241702eec.2.2026.10.18.11.27.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Oct 2026 11:27:21 -0700 (PDT)
-Message-Id: <1c47ba225e221a35e4df3057dbf47cea37a83fe5.1792348037.git.gitgitgadget@gmail.com>
+        Sun, 18 Oct 2026 11:27:23 -0700 (PDT)
+Message-Id: <aa5a98b80d2682cc0fa321c091c76e483fb6810f.1792348037.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2448.v2.git.git.1792348037.gitgitgadget@gmail.com>
 References: <pull.2448.git.git.1792070038.gitgitgadget@gmail.com>
 	<pull.2448.v2.git.git.1792348037.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 18 Oct 2026 18:27:16 +0000
-Subject: [PATCH v2 2/3] reflog: add --operations to show one entry per command
+Date: Sun, 18 Oct 2026 18:27:17 +0000
+Subject: [PATCH v2 3/3] reflog: add --historical-branch to name the branch of
+ each entry
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,358 +84,530 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-After a rebase, "git reflog" shows one entry for every commit the
-rebase replayed, plus one for its start and one for its end. Together
-with an entry for every branch switch, finding where a branch was
-before the rebase means reading past all of them.
+"git reflog" does not say which branch HEAD was on when an entry was
+recorded. After switching between a few branches, telling which
+commits and rebases belong to which branch means reading back to the
+last "checkout: moving from" entry for each of them. Commit
+decorations do not help either, since they only name branches that
+still point at that commit, and a rebased or amended commit has none.
 
-Teach "git reflog" and "git log -g" an "--operations" option that
-shows each rebase as the single entry that finished or aborted it, and
-leaves out entries that change no branch, like branch switches and the
-"reset: moving to HEAD" that "git stash" and "git merge --abort" leave
-behind:
+Teach "git reflog" and "git log -g" a "--historical-branch" option
+that shows the branch each entry was made on before its message, in
+place of the refs that point at the commit now. The hashes and
+selectors stay lined up in their columns, and the name is colored like
+a branch decoration:
 
-  $ git reflog --operations
-  4e5f6a7 HEAD@{0}: rebase (finish): returning to refs/heads/topic
-  8c9d0e1 HEAD@{5}: commit: fix typo
-  1a2b3c4 HEAD@{7}: commit: add tests
+  $ git reflog --historical-branch
+  4e5f6a7 HEAD@{0}: (topic) commit: add tests
+  1a2b3c4 HEAD@{1}: (topic) checkout: moving from main to topic
+  8c9d0e1 HEAD@{2}: (main) commit: fix typo
 
-The HEAD@{<n>} numbers keep their usual values, so the previous entry
-on the same branch can be used to undo the rebase:
-
-  $ git reset --hard HEAD@{7}
-
-Commands run while a rebase is stopped, such as an amend after an
-"edit", are folded into that rebase, and a "git pull --rebase" is shown
-as one entry the same way.
+Every entry gets a name, including ones whose commits are no longer on
+any branch. Entries from before a branch was renamed show its old name,
+and entries made on a detached HEAD show "detached at <commit>".
+Combined with "--operations", which leaves out the branch switches
+themselves, it lists what was done to each branch.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- Documentation/git-reflog.adoc       |   3 +
- Documentation/rev-list-options.adoc |  11 +++
- reflog-walk.c                       |  61 +++++++++++++++-
- reflog-walk.h                       |   1 +
- revision.c                          |   8 +++
+ Documentation/git-reflog.adoc       |   3 +-
+ Documentation/rev-list-options.adoc |  10 +++
+ log-tree.c                          |  28 ++++++-
+ reflog-walk.c                       | 124 +++++++++++++++++++++++++---
+ reflog-walk.h                       |   7 +-
+ revision.c                          |   8 +-
  revision.h                          |   1 +
- t/t1414-reflog-walk.sh              | 105 ++++++++++++++++++++++++++++
- 7 files changed, 188 insertions(+), 2 deletions(-)
+ t/t1414-reflog-walk.sh              |  95 ++++++++++++++++++++-
+ 8 files changed, 258 insertions(+), 18 deletions(-)
 
 diff --git a/Documentation/git-reflog.adoc b/Documentation/git-reflog.adoc
-index 38af0c977a..672b9ea72e 100644
+index 672b9ea72e..04ed7849c2 100644
 --- a/Documentation/git-reflog.adoc
 +++ b/Documentation/git-reflog.adoc
-@@ -41,6 +41,9 @@ command-line (or `HEAD`, by default). The reflog covers all recent
- actions, and in addition the `HEAD` reflog records branch switching.
- `git reflog show` is an alias for `git log -g --abbrev-commit
+@@ -43,7 +43,8 @@ actions, and in addition the `HEAD` reflog records branch switching.
  --pretty=oneline`; see linkgit:git-log[1] for more information.
-+With `--operations`, branch switches and other entries that change no
-+branch are left out, and a rebase is shown as a single entry instead
-+of one entry for each commit it replayed.
+ With `--operations`, branch switches and other entries that change no
+ branch are left out, and a rebase is shown as a single entry instead
+-of one entry for each commit it replayed.
++of one entry for each commit it replayed. With `--historical-branch`,
++each entry shows the branch it was made on before its message.
  
  The "list" subcommand lists all refs which have a corresponding reflog.
  
 diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index bd9f345690..a40ba2641b 100644
+index a40ba2641b..8c0010695b 100644
 --- a/Documentation/rev-list-options.adoc
 +++ b/Documentation/rev-list-options.adoc
-@@ -348,6 +348,17 @@ See also linkgit:git-reflog[1].
- +
- Under `--pretty=reference`, this information will not be shown at all.
+@@ -359,6 +359,16 @@ Under `--pretty=reference`, this information will not be shown at all.
+ 	rebase started. It is an error to use this option unless
+ 	`--walk-reflogs` is in use.
  
-+`--operations`::
-+	Show one reflog entry for each command that changed a branch.
-+	A rebase is shown as only the entry that finished or aborted it,
-+	including any commands run while it was stopped, such as
-+	`git commit --amend`. Switching branches is not shown, and
-+	neither is a reset that left `HEAD` where it was, such as the one
-+	`git stash` does.
-+	The previous entry on the same branch is the state before the
-+	rebase started. It is an error to use this option unless
-+	`--walk-reflogs` is in use.
++ifndef::git-rev-list[]
++`--historical-branch`::
++	Show the branch `HEAD` was on when each reflog entry was
++	recorded, such as `(topic)`, before the reflog message, in
++	place of the refs that point at the commit now. When `HEAD` was
++	detached, the entry shows `(detached at <commit>)`. For the
++	reflog of any other ref, the name of that ref is shown. It is
++	an error to use this option unless `--walk-reflogs` is in use.
++endif::git-rev-list[]
 +
  `--merge`::
  	Show commits touching conflicted paths in the range `HEAD...<other>`,
  	where `<other>` is the first existing pseudoref in `MERGE_HEAD`,
+diff --git a/log-tree.c b/log-tree.c
+index 83a3c4bf9b..b2d9a954e7 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -421,6 +421,24 @@ void format_decorations(struct strbuf *sb,
+ 	}
+ }
+ 
++static void format_historical_branch(struct strbuf *sb,
++				     struct rev_info *opt)
++{
++	const char *branch = get_reflog_branch(opt->reflog_info);
++	enum git_colorbool use_color = opt->diffopt.use_color;
++	const char *color_commit, *color_reset;
++
++	if (!branch)
++		return;
++
++	color_commit = diff_get_color(use_color, DIFF_COMMIT);
++	color_reset = decorate_get_color(use_color, DECORATION_NONE);
++	strbuf_addf(sb, "%s(%s%s%s%s%s)%s ",
++		    color_commit, color_reset,
++		    decorate_get_color(use_color, DECORATION_REF_LOCAL),
++		    branch, color_reset, color_commit, color_reset);
++}
++
+ void show_decorations(struct rev_info *opt, struct commit *commit)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -431,7 +449,7 @@ void show_decorations(struct rev_info *opt, struct commit *commit)
+ 		if (slot && *slot)
+ 			fprintf(opt->diffopt.file, "\t%s", *slot);
+ 	}
+-	if (!opt->show_decorations)
++	if (!opt->show_decorations || opt->historical_branch)
+ 		return;
+ 	format_decorations(&sb, commit, opt->diffopt.use_color, NULL);
+ 	fputs(sb.buf, opt->diffopt.file);
+@@ -834,16 +852,22 @@ void show_log(struct rev_info *opt)
+ 			graph_show_oneline(opt->graph);
+ 		}
+ 		if (opt->reflog_info) {
++			struct strbuf branch = STRBUF_INIT;
++
+ 			/*
+ 			 * setup_revisions() ensures that opt->reflog_info
+ 			 * and opt->graph cannot both be set,
+ 			 * so we don't need to worry about printing the
+ 			 * graph info here.
+ 			 */
++			if (opt->historical_branch)
++				format_historical_branch(&branch, opt);
+ 			show_reflog_message(opt->reflog_info,
+ 					    opt->commit_format == CMIT_FMT_ONELINE,
+ 					    opt->date_mode,
+-					    opt->date_mode_explicit);
++					    opt->date_mode_explicit,
++					    branch.buf);
++			strbuf_release(&branch);
+ 			if (opt->commit_format == CMIT_FMT_ONELINE)
+ 				return;
+ 		}
 diff --git a/reflog-walk.c b/reflog-walk.c
-index 4dbeaa93a7..82528f5b66 100644
+index 82528f5b66..0cdca76efd 100644
 --- a/reflog-walk.c
 +++ b/reflog-walk.c
-@@ -3,6 +3,7 @@
- #include "git-compat-util.h"
- #include "commit.h"
+@@ -5,6 +5,8 @@
  #include "refs.h"
-+#include "reflog.h"
+ #include "reflog.h"
  #include "diff.h"
++#include "hex.h"
++#include "object-name.h"
  #include "repository.h"
  #include "revision.h"
-@@ -18,6 +19,7 @@ struct complete_reflogs {
+ #include "string-list.h"
+@@ -19,6 +21,7 @@ struct complete_reflogs {
  		timestamp_t timestamp;
  		int tz;
  		char *message;
-+		bool user_operation;
++		char *branch;
+ 		bool user_operation;
  	} *items;
  	int nr, alloc;
- };
-@@ -38,6 +40,7 @@ static int read_one_reflog(const char *refname UNUSED,
+@@ -40,6 +43,7 @@ static int read_one_reflog(const char *refname UNUSED,
  	item->timestamp = timestamp;
  	item->tz = tz;
  	item->message = xstrdup(message);
-+	item->user_operation = true;
++	item->branch = NULL;
+ 	item->user_operation = true;
  	array->nr++;
  	return 0;
- }
-@@ -65,6 +68,46 @@ static void complete_reflogs_clear(void *util, const char *str UNUSED)
- 	free_complete_reflog(array);
+@@ -55,6 +59,7 @@ static void free_complete_reflog(struct complete_reflogs *array)
+ 	for (i = 0; i < array->nr; i++) {
+ 		free(array->items[i].email);
+ 		free(array->items[i].message);
++		free(array->items[i].branch);
+ 	}
+ 	free(array->items);
+ 	free(array->ref);
+@@ -108,6 +113,80 @@ static void mark_operations(struct complete_reflogs *array)
+ 	}
  }
  
-+static bool has_rebase_step(const char *message, const char *step)
++static char *branch_label(const char *name, size_t len)
 +{
-+	size_t end = strcspn(message, ":\n");
-+	size_t len = strlen(step);
++	struct object_id oid;
++	const char *short_name;
 +
-+	return end >= len + 3 && message[end - 1] == ')' &&
-+	       !strncmp(message + end - len - 3, " (", 2) &&
-+	       !strncmp(message + end - len - 1, step, len);
++	if (len == the_hash_algo->hexsz && !get_oid_hex(name, &oid))
++		return xstrfmt("detached at %s",
++			       repo_find_unique_abbrev(the_repository, &oid,
++						       DEFAULT_ABBREV));
++	if (skip_prefix(name, "refs/heads/", &short_name))
++		len -= short_name - name;
++	else
++		short_name = name;
++	return xmemdupz(short_name, len);
 +}
 +
-+static void mark_operations(struct complete_reflogs *array)
++struct branch_move {
++	const char *from, *to;
++	size_t from_len, to_len;
++};
++
++static bool parse_branch_move(const char *message, struct branch_move *move)
 +{
-+	int start = -1;
++	const char *to;
 +
-+	for (int i = 0; i < array->nr; i++) {
++	if (!skip_prefix(message, REFLOG_SWITCH_PREFIX, &move->from) &&
++	    !skip_prefix(message, REFLOG_RENAME_PREFIX, &move->from))
++		return false;
++	to = strstr(move->from, " to ");
++	if (!to)
++		return false;
++	move->from_len = to - move->from;
++	move->to = to + strlen(" to ");
++	move->to_len = strcspn(move->to, "\n");
++	return true;
++}
++
++static void mark_branches(struct complete_reflogs *array)
++{
++	char *branch = NULL;
++
++	if (strcmp(array->ref, "HEAD"))
++		return;
++
++	for (int i = array->nr - 1; i >= 0; i--) {
 +		struct reflog_info *item = &array->items[i];
-+		const char *msg = item->message;
++		struct branch_move move;
 +
-+		if (has_rebase_step(msg, REFLOG_STEP_FINISH) ||
-+		    has_rebase_step(msg, REFLOG_STEP_ABORT)) {
-+			if (start >= 0)
-+				for (int j = start; j < i; j++)
-+					array->items[j].user_operation = false;
-+			start = -1;
-+			item->user_operation = true;
++		if (!parse_branch_move(item->message, &move)) {
++			item->branch = xstrdup_or_null(branch);
 +			continue;
 +		}
-+		if (has_rebase_step(msg, REFLOG_STEP_START))
-+			start = i;
 +
-+		if (starts_with(msg, REFLOG_SWITCH_PREFIX))
-+			item->user_operation = false;
-+		else if (starts_with(msg, REFLOG_RENAME_PREFIX))
-+			item->user_operation = true;
-+		else
-+			item->user_operation =
-+				!oideq(&item->ooid, &item->noid);
++		if (!branch)
++			for (int j = i + 1; j < array->nr; j++)
++				array->items[j].branch =
++					branch_label(move.to, move.to_len);
++		item->branch = branch_label(move.to, move.to_len);
++		free(branch);
++		branch = branch_label(move.from, move.from_len);
 +	}
++
++	if (!branch) {
++		struct ref_store *refs = get_main_ref_store(the_repository);
++		const char *head = refs_resolve_ref_unsafe(refs, "HEAD", 0,
++							   NULL, NULL);
++
++		if (head && skip_prefix(head, "refs/heads/", &head))
++			for (int i = 0; i < array->nr; i++)
++				array->items[i].branch = xstrdup(head);
++	}
++	free(branch);
 +}
 +
  static struct complete_reflogs *read_complete_reflog(const char *ref)
  {
  	struct complete_reflogs *reflogs =
-@@ -135,6 +178,16 @@ void init_reflog_walk(struct reflog_walk_info **info)
+@@ -178,13 +257,16 @@ void init_reflog_walk(struct reflog_walk_info **info)
  	(*info)->complete_reflogs.strdup_strings = 1;
  }
  
-+void reflog_walk_mark(struct reflog_walk_info *info, bool operations)
+-void reflog_walk_mark(struct reflog_walk_info *info, bool operations)
++void reflog_walk_mark(struct reflog_walk_info *info, bool operations,
++		      bool historical_branch)
+ {
+ 	struct string_list_item *item;
+ 
+ 	for_each_string_list_item(item, &info->complete_reflogs) {
+ 		if (operations)
+ 			mark_operations(item->util);
++		if (historical_branch)
++			mark_branches(item->util);
+ 	}
+ }
+ 
+@@ -287,6 +369,16 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
+ 	return 0;
+ }
+ 
++static const char *short_ref(struct complete_reflogs *reflogs)
 +{
-+	struct string_list_item *item;
++	struct ref_store *refs = get_main_ref_store(the_repository);
 +
-+	for_each_string_list_item(item, &info->complete_reflogs) {
-+		if (operations)
-+			mark_operations(item->util);
-+	}
++	if (!reflogs->short_ref)
++		reflogs->short_ref =
++			refs_shorten_unambiguous_ref(refs, reflogs->ref, 0);
++	return reflogs->short_ref;
 +}
 +
- void reflog_walk_info_release(struct reflog_walk_info *info)
- {
- 	size_t i;
-@@ -342,8 +395,12 @@ static struct commit *next_reflog_commit(struct commit_reflog *log)
- {
- 	for (; log->recno >= 0; log->recno--) {
- 		struct reflog_info *entry = &log->reflogs->items[log->recno];
--		struct object *obj = parse_object(the_repository,
--						  &entry->noid);
-+		struct object *obj;
-+
-+		if (!entry->user_operation)
-+			continue;
-+
-+		obj = parse_object(the_repository, &entry->noid);
+ void get_reflog_selector(struct strbuf *sb,
+ 			 struct reflog_walk_info *reflog_info,
+ 			 struct date_mode dmode, int force_date,
+@@ -300,12 +392,7 @@ void get_reflog_selector(struct strbuf *sb,
+ 		return;
  
- 		if (obj && obj->type == OBJ_COMMIT)
- 			return (struct commit *)obj;
+ 	if (shorten) {
+-		if (!commit_reflog->reflogs->short_ref)
+-			commit_reflog->reflogs->short_ref
+-				= refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
+-							       commit_reflog->reflogs->ref,
+-							       0);
+-		printed_ref = commit_reflog->reflogs->short_ref;
++		printed_ref = short_ref(commit_reflog->reflogs);
+ 	} else {
+ 		printed_ref = commit_reflog->reflogs->ref;
+ 	}
+@@ -340,6 +427,18 @@ void get_reflog_message(struct strbuf *sb,
+ 	strbuf_add(sb, info->message, len);
+ }
+ 
++const char *get_reflog_branch(struct reflog_walk_info *reflog_info)
++{
++	struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
++
++	if (!commit_reflog)
++		return NULL;
++
++	if (strcmp(commit_reflog->reflogs->ref, "HEAD"))
++		return short_ref(commit_reflog->reflogs);
++	return commit_reflog->reflogs->items[commit_reflog->recno+1].branch;
++}
++
+ const char *get_reflog_ident(struct reflog_walk_info *reflog_info)
+ {
+ 	struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
+@@ -365,7 +464,8 @@ timestamp_t get_reflog_timestamp(struct reflog_walk_info *reflog_info)
+ }
+ 
+ void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
+-			 struct date_mode dmode, int force_date)
++			 struct date_mode dmode, int force_date,
++			 const char *branch)
+ {
+ 	if (reflog_info && reflog_info->last_commit_reflog) {
+ 		struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
+@@ -375,11 +475,13 @@ void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
+ 		info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
+ 		get_reflog_selector(&selector, reflog_info, dmode, force_date, 0);
+ 		if (oneline) {
+-			printf("%s: %s", selector.buf, info->message);
++			printf("%s: %s%s", selector.buf, branch,
++			       info->message);
+ 		}
+ 		else {
+-			printf("Reflog: %s (%s)\nReflog message: %s",
+-			       selector.buf, info->email, info->message);
++			printf("Reflog: %s (%s)\nReflog message: %s%s",
++			       selector.buf, info->email, branch,
++			       info->message);
+ 		}
+ 
+ 		strbuf_release(&selector);
 diff --git a/reflog-walk.h b/reflog-walk.h
-index 989583dc55..1d86795f84 100644
+index 1d86795f84..8951251f8a 100644
 --- a/reflog-walk.h
 +++ b/reflog-walk.h
-@@ -7,6 +7,7 @@ struct date_mode;
+@@ -7,13 +7,16 @@ struct date_mode;
  
  void init_reflog_walk(struct reflog_walk_info **info);
  void reflog_walk_info_release(struct reflog_walk_info *info);
-+void reflog_walk_mark(struct reflog_walk_info *info, bool operations);
+-void reflog_walk_mark(struct reflog_walk_info *info, bool operations);
++void reflog_walk_mark(struct reflog_walk_info *info, bool operations,
++		      bool historical_branch);
  int add_reflog_for_walk(struct reflog_walk_info *info,
  			struct commit *commit, const char *name);
  void show_reflog_message(struct reflog_walk_info *info, int,
+-			 struct date_mode, int force_date);
++			 struct date_mode, int force_date,
++			 const char *branch);
+ void get_reflog_message(struct strbuf *sb,
+ 			struct reflog_walk_info *reflog_info);
++const char *get_reflog_branch(struct reflog_walk_info *reflog_info);
+ const char *get_reflog_ident(struct reflog_walk_info *reflog_info);
+ timestamp_t get_reflog_timestamp(struct reflog_walk_info *reflog_info);
+ void get_reflog_selector(struct strbuf *sb,
 diff --git a/revision.c b/revision.c
-index a83e499047..88785651fe 100644
+index 88785651fe..0367ad9b5e 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -2458,6 +2458,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		commit_list_insert(c, &revs->ancestry_path_bottoms);
- 	} else if (!strcmp(arg, "-g") || !strcmp(arg, "--walk-reflogs")) {
- 		init_reflog_walk(&revs->reflog_info);
-+	} else if (!strcmp(arg, "--operations")) {
-+		revs->reflog_operations = 1;
- 	} else if (!strcmp(arg, "--default")) {
- 		if (argc <= 1)
- 			return error("bad --default argument");
-@@ -3247,6 +3249,12 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+@@ -2622,6 +2622,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->show_signature = 1;
+ 	} else if (!strcmp(arg, "--no-show-signature")) {
+ 		revs->show_signature = 0;
++	} else if (!strcmp(arg, "--historical-branch")) {
++		revs->historical_branch = 1;
+ 	} else if (!strcmp(arg, "--show-linear-break")) {
+ 		revs->break_bar = "                    ..........";
+ 		revs->track_linear = 1;
+@@ -3249,11 +3251,15 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
  	if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
  		die(_("the option '%s' requires '%s'"), "--grep-reflog", "--walk-reflogs");
  
-+	if (!revs->reflog_info && revs->reflog_operations)
-+		die(_("the option '%s' requires '%s'"), "--operations", "--walk-reflogs");
++	if (!revs->reflog_info && revs->historical_branch)
++		die(_("the option '%s' requires '%s'"), "--historical-branch", "--walk-reflogs");
 +
-+	if (revs->reflog_info)
-+		reflog_walk_mark(revs->reflog_info, revs->reflog_operations);
-+
+ 	if (!revs->reflog_info && revs->reflog_operations)
+ 		die(_("the option '%s' requires '%s'"), "--operations", "--walk-reflogs");
+ 
+ 	if (revs->reflog_info)
+-		reflog_walk_mark(revs->reflog_info, revs->reflog_operations);
++		reflog_walk_mark(revs->reflog_info, revs->reflog_operations,
++				 revs->historical_branch);
+ 
  	if (revs->line_level_traverse &&
  	    (revs->full_diff ||
- 	     (revs->diffopt.output_format &
 diff --git a/revision.h b/revision.h
-index e5dabd18ce..c4f5e06698 100644
+index c4f5e06698..6a0fd120e5 100644
 --- a/revision.h
 +++ b/revision.h
-@@ -221,6 +221,7 @@ struct rev_info {
- 			exclude_first_parent_only:1,
- 			line_level_traverse:1,
- 			tree_blobs_in_commit_order:1,
-+			reflog_operations:1,
- 
- 			/*
- 			 * Blobs are shown without regard for their existence.
+@@ -269,6 +269,7 @@ struct rev_info {
+ 			show_notes_given:1,
+ 			show_notes_by_default:1,
+ 			show_signature:1,
++			historical_branch:1,
+ 			pretty_given:1,
+ 			abbrev_commit:1,
+ 			abbrev_commit_given:1,
 diff --git a/t/t1414-reflog-walk.sh b/t/t1414-reflog-walk.sh
-index be6c3f472c..e15f6f2381 100755
+index e15f6f2381..6d5272aacf 100755
 --- a/t/t1414-reflog-walk.sh
 +++ b/t/t1414-reflog-walk.sh
-@@ -5,6 +5,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-rebase.sh
- 
- test_expect_success 'set up some reflog entries' '
- 	test_commit one &&
-@@ -131,6 +132,110 @@ test_expect_success 'walk prefers reflog to ref tip' '
- 	test_cmp expect actual
+@@ -159,6 +159,52 @@ test_expect_success '--operations shows a rebase as one entry' '
+ 	)
  '
  
-+test_expect_success '--operations shows a rebase as one entry' '
-+	git init operations &&
++test_expect_success '--historical-branch names the branch of each entry' '
 +	(
 +		cd operations &&
-+		test_commit base &&
-+		git switch -c topic &&
-+		test_commit A &&
-+		test_commit B &&
-+		test_commit C &&
-+		git switch main &&
-+		test_commit upstream &&
-+		git switch topic &&
-+		git rebase main &&
 +
 +		cat >expect <<-\EOF &&
-+		HEAD@{0} rebase (finish): returning to refs/heads/topic
-+		HEAD@{6} commit: upstream
-+		HEAD@{8} commit: C
-+		HEAD@{9} commit: B
-+		HEAD@{10} commit: A
-+		HEAD@{12} commit (initial): base
++		HEAD@{0}: (topic) rebase (finish): returning to refs/heads/topic
++		HEAD@{1}: (topic) rebase (pick): C
++		HEAD@{2}: (topic) rebase (pick): B
++		HEAD@{3}: (topic) rebase (pick): A
++		HEAD@{4}: (topic) rebase (start): checkout main
++		HEAD@{5}: (topic) checkout: moving from main to topic
++		HEAD@{6}: (main) commit: upstream
++		HEAD@{7}: (main) checkout: moving from topic to main
++		HEAD@{8}: (topic) commit: C
++		HEAD@{9}: (topic) commit: B
++		HEAD@{10}: (topic) commit: A
++		HEAD@{11}: (topic) checkout: moving from main to topic
++		HEAD@{12}: (main) commit (initial): base
 +		EOF
-+		git log -g --format="%gd %gs" HEAD --operations >actual &&
++		git reflog --historical-branch >out &&
++		cut -d " " -f 2- out >actual &&
 +		test_cmp expect actual
 +	)
 +'
 +
-+test_expect_success '--operations shows a stopped rebase as one entry once it finishes' '
-+	set_fake_editor &&
++test_expect_success '--historical-branch takes the place of decorations' '
 +	(
 +		cd operations &&
-+		FAKE_LINES="edit 1 2" git rebase -i HEAD~2 &&
-+
-+		cat >expect <<-\EOF &&
-+		HEAD@{0} rebase: fast-forward
-+		HEAD@{1} rebase (start): checkout HEAD~2
-+		EOF
-+		git log -g --operations --format="%gd %gs" -2 >actual &&
-+		test_cmp expect actual &&
-+
-+		git commit --amend -m "B amended" &&
-+		git rebase --continue &&
-+
-+		cat >expect <<-\EOF &&
-+		HEAD@{0} rebase (finish): returning to refs/heads/topic
-+		HEAD@{5} rebase (finish): returning to refs/heads/topic
-+		EOF
-+		git log -g --operations --format="%gd %gs" -2 >actual &&
++		hash=$(git rev-parse --short HEAD) &&
++		echo "<YELLOW>$hash<RESET> HEAD@{0}: <YELLOW>(<RESET><BOLD;GREEN>topic<RESET><YELLOW>)<RESET> rebase (finish): returning to refs/heads/topic" >expect &&
++		git reflog --historical-branch --decorate --color -1 >out &&
++		test_decode_color <out >actual &&
 +		test_cmp expect actual
 +	)
 +'
 +
-+test_expect_success '--operations shows an aborted rebase as one entry' '
++test_expect_success '--historical-branch names the ref of other reflogs' '
 +	(
 +		cd operations &&
-+		FAKE_LINES="edit 1 2" git rebase -i HEAD~2 &&
-+		git rebase --abort &&
-+
-+		cat >expect <<-\EOF &&
-+		HEAD@{0} rebase (abort): returning to refs/heads/topic
-+		HEAD@{3} rebase (finish): returning to refs/heads/topic
-+		EOF
-+		git log -g --operations --format="%gd %gs" -2 >actual &&
++		echo "main@{0}: (main) commit: upstream" >expect &&
++		git reflog -1 main --historical-branch >out &&
++		cut -d " " -f 2- out >actual &&
 +		test_cmp expect actual
 +	)
 +'
 +
-+test_expect_success '--operations leaves out the reset done by git stash' '
-+	(
-+		cd operations &&
-+		echo change >>C.t &&
-+		git stash &&
-+
-+		echo "HEAD@{1} rebase (abort): returning to refs/heads/topic" >expect &&
-+		git log -g --operations --format="%gd %gs" -1 >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success '--operations shows a pull --rebase as one entry' '
-+	git clone operations downstream &&
-+	(
-+		cd operations &&
-+		test_commit upstream-change
-+	) &&
+ test_expect_success '--operations shows a stopped rebase as one entry once it finishes' '
+ 	set_fake_editor &&
+ 	(
+@@ -231,8 +277,55 @@ test_expect_success '--operations shows a pull --rebase as one entry' '
+ 	)
+ '
+ 
+-test_expect_success '--operations requires --walk-reflogs' '
++test_expect_success '--historical-branch names the current branch when HEAD never switched' '
 +	(
 +		cd downstream &&
-+		test_commit local-change &&
-+		git pull --rebase &&
-+
-+		cat >expect <<-\EOF &&
-+		HEAD@{0} pull --rebase (finish): returning to refs/heads/topic
-+		HEAD@{3} commit: local-change
-+		EOF
-+		git log -g --operations --format="%gd %gs" -2 >actual &&
++		echo "(topic)" >expect &&
++		git reflog --historical-branch >out &&
++		cut -d " " -f 3 out | sort -u >actual &&
 +		test_cmp expect actual
 +	)
 +'
 +
-+test_expect_success '--operations requires --walk-reflogs' '
-+	test_must_fail git log --operations 2>err &&
-+	test_grep "requires .--walk-reflogs." err
++test_expect_success '--historical-branch follows a renamed branch' '
++	(
++		cd operations &&
++		test_commit D &&
++		git branch -m topic renamed &&
++		test_commit E &&
++
++		cat >expect <<-\EOF &&
++		HEAD@{0}: (renamed) commit: E
++		HEAD@{1}: (renamed) Branch: renamed refs/heads/topic to refs/heads/renamed
++		HEAD@{3}: (topic) commit: D
++		EOF
++		git reflog --historical-branch -3 >out &&
++		cut -d " " -f 2- out >actual &&
++		test_cmp expect actual
++	)
 +'
 +
- test_expect_success 'rev-list -g complains when there are no reflogs' '
- 	test_must_fail git rev-list -g
++test_expect_success '--historical-branch shows where HEAD was detached' '
++	(
++		cd operations &&
++		git checkout --detach &&
++		test_commit F &&
++		git checkout renamed &&
++
++		cat >expect <<-EOF &&
++		HEAD@{0}: (renamed) checkout: moving from $(git rev-parse F) to renamed
++		HEAD@{1}: (detached at $(git rev-parse --short F)) commit: F
++		EOF
++		git reflog --historical-branch -2 >out &&
++		cut -d " " -f 2- out >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success '--operations and --historical-branch require --walk-reflogs' '
+ 	test_must_fail git log --operations 2>err &&
++	test_grep "requires .--walk-reflogs." err &&
++	test_must_fail git log --historical-branch 2>err &&
+ 	test_grep "requires .--walk-reflogs." err
  '
+ 
 -- 
 gitgitgadget
-
