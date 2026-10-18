@@ -1,86 +1,256 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56624D09ED
-	for <git@vger.kernel.org>; Sun, 18 Oct 2026 15:29:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0ED33ADAE
+	for <git@vger.kernel.org>; Sun, 18 Oct 2026 16:31:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792337359; cv=none; b=bXwOBLJFe5lZDCnxzuYG2L/edg7oUKyQM5sp1BhUFFA/vkpz75GRqSjBU6S3te0cfAUCG08JBi88IEv4oTNswCZbTSJO26w70H5FOMw/NO8+krmDX3E5FwS3IHr6rhb9EoO1anYRpBeuX4SaP7UyFBntiq5HcztwTe2m/M84cWA=
+	t=1792341077; cv=none; b=YgU0d5tcYHqnzWyw6bfsGDTo74LqHadrtVAvMWvWaY1lggDbWT8o3+hKuPvMPQSnoG4UaeW/SpDhllLuglHphoHlK+cDrNZUVICNK4DRlIr0xCp6U35kFwPjXnxfEWCBfJa/pAv5VGTfDDumteBnhYM3ZDsqdT0CGNkzFFueXJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792337359; c=relaxed/simple;
-	bh=DJrK+zWObHG9aVYAOR09XJsHw/U0ixtA2AQHbjfSOaA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EPfTMAEp3WaxxCTlBPzWq56oQYvCZ15P/5DpuN6i1dy4WS1U5WtP2RTsT+YZV5fGDplRz4/JhFCgOsEdOJABI4gNts9lKHGh5qkAL2IukAsUoU7cdzxFkqKAtUomzdlS1ieHmdZriCDq+kg0T19eqb1NWfQzCEI4hQIamF4/nkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J6Xm/uKY; arc=none smtp.client-ip=209.85.221.52
+	s=arc-20240116; t=1792341077; c=relaxed/simple;
+	bh=bshAta04k0Il0D1cAHGFrl0qh2gobW1OmEXyuJd4etw=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=LxM3h206y7oeEdeOvOwgBj/y7fYi+egacS8/HLR1+z67XkPIZLeOvi+FrtEexd0GVTuDAuX1oQmjUr7ZGuIAfYtQalrOGDLTANJOldnXDrBjJyL/Qboi55jKKEBpw2nBfmsFNWj53efpqJC3tAYLs5a6nLu1MEQ5XJ4Q1/IdR/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QJwv/anW; arc=none smtp.client-ip=74.125.82.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J6Xm/uKY"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-48df54150dfso910536f8f.0
-        for <git@vger.kernel.org>; Sun, 18 Oct 2026 08:29:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QJwv/anW"
+Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-16079d54c17so3336403c88.0
+        for <git@vger.kernel.org>; Sun, 18 Oct 2026 09:31:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792337355; x=1792942155; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=x8JeXy0Kix1LWAyohZe2axoPgv4kiCPUk85HySi8V9M=;
-        b=J6Xm/uKYgTuC/nHyrbMCOrpZLBmybXBtamMsvfmLtChx8qtV+1bfqemtKznIn7NQOL
-         e6HNh2gXT475aOWBgCMC6xeo0BVhAg49w43g8imVKtnYe2HAniU4FPYUEikyLt0vU08O
-         /c3voAbEsNPLFDzLgKFFEqa+Ue+7F6115/K20Kg2v+VCXzOIC+d93kGLXl8XD5REqZOd
-         h6ZvheMhm2H5DjL7PhDEKiEYWxc+7gWm1BhiyHLwVavWypjRY8kJ21YQrL0Ny663ldsu
-         +76Z9lhlwtKmIYxAXeZQcvNi8xS24cOqCZ2JN/hzfPtHH9CgK/iA0v5OXlubC6nmMUMO
-         wD3w==
+        d=gmail.com; s=20251104; t=1792341075; x=1792945875; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=MoFd/7ExLOeUzxutDpmed4IXttBJ7rDIfEoTQSvIBIY=;
+        b=QJwv/anW1MtfnQUHYnGDdB03fxBqv2BiCVG+H37BudOv9y2hagmSZLL7CDqHYeNmnb
+         gulz/G+RkGviMZrcCAkXrmxLNp1aVNnB/K7grJxtFtqflQkXuDji1/Sfd6KqJHU5dc3y
+         pedKfpViw8UVeg2ZeWF48Wb82F8NrermBfsuXulb9LxtWabe1q6q68zv1lR7WRPcANVl
+         zTHVmS6g+tHBwMaR/iYSYn22vqZnpr8zrbk4M0Jx2cUnGtFPfyrWIr/le4ZuL0bniXTk
+         o+QLNu0FWefZix1zgBzqt5CYIHgiXMUMpVHvo2FILCoIVhMAvKKlE2jvTW8lXPtYzZm1
+         B74w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792337355; x=1792942155;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=x8JeXy0Kix1LWAyohZe2axoPgv4kiCPUk85HySi8V9M=;
-        b=Ze/f8ymTe0rs1vlOzrcm1b155xGT0j0kigATwjBk+zIt5E7p3nrS91wfxrufh98JvI
-         p68BpoBgGkInqVI2DJFhu49EAyWTrhRTjCN1UXOfXPnmsZDJj1RExRVMzvtiwmj8rLKW
-         mS4gkG5l8B3jzQQXyAMAFpUo42WYN8JsrzSNifIzuLl8QfgREY7YVtcLRMQE5LDsgXEU
-         3NhTMFFntgr9Jeryr1cJj2BNnXlqIKxm4IRh2Z3G56lINd8Zm4/zYswbk170Qczq0aD0
-         k/eAFrya8fWjMrYugjNE9ullj0NnFDZM7QkY9N6V2DD9imaRLyESHviQMheD30vNORBK
-         reRA==
-X-Gm-Message-State: AFq9FYLilvX6UOQ0SYhIa43fIlaOukmgTg+19rKy+WxkF0I7dGCEXX0L
-	ux7RXMxP06EYiDIcTfabVac0WHKJ/V/D1lOdZLXrFFxdv4gKzvUelA1p
-X-Gm-Gg: AYBFou0OZlNC3fF4BWOAUML5DNjmlbrlLXqKKX3Nc+f3tAp0htuSiJykWBwQMcWMs9w
-	udnji4eukYhLDrbpmY5+mq4ziMLXnEJFRld2rqVHItdWw5jDsNgZKyFKeO5YPMQf5Dbs6g7CQKK
-	E5wm80DFrdRM3OJx5kEnmh1+OYIsSLDGA8FSYGXICqqBYQPFCWD4jw/0jPiy8Y+XeFjSVyqlKbQ
-	uXwVITQMvAcaIYP/jM7lvmdwhucHWr7ixeata6jaIUDGl8BF0xkVkT6xrBd1O++Keyp2Hx4K1Bv
-	d4CJZkBT96Atajjvsh2n7JBIOKNDYODIDGAWl601h+ScIb8XTwUAcHvtjjyeZZ30DBSxqZahlSD
-	C67RvUg3J/tkA1Ff+tioVLY5MtYhPiOhtrMukeHOwjndvmCCbq203eNox7yMtTU3LxFpNQehYi7
-	MobALiqs/qmLbCFURTBNiY14G5+ZJOEB0dw7e4U6heQ8vCcB+jb2wllg0rAotzDqk7wFdFgAvwD
-	vSAYaPpilk7FY6iMYZbTOJE
-X-Received: by 2002:a05:600c:6749:b0:4a1:e51d:9244 with SMTP id 5b1f17b1804b1-4a1e51d93f4mr29513935e9.25.1792337354749;
-        Sun, 18 Oct 2026 08:29:14 -0700 (PDT)
-Received: from DESKTOP-0SUCFI3.localdomain ([102.244.156.213])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1bd9b8b5fsm331643825e9.9.2026.10.18.08.29.12
+        d=1e100.net; s=20260707; t=1792341075; x=1792945875;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=MoFd/7ExLOeUzxutDpmed4IXttBJ7rDIfEoTQSvIBIY=;
+        b=JEEhrDAJoTFEJ/h6LTe0ZTHiYiYM8kdmonCix9tG7dr+8flCus78FfMWahlveNnJZq
+         dCIpuvswfi6s81XdboaTm/axKjHXfcAxmOzGz9HwqrYtLFkx0HbFTXb7gZjpuU944GUM
+         A9uswsdTspgbagxn8TA5n+GuFPQRG/MfYwSIAKmAtIrp3XTXhIDJWbTFzpr/btBsje0d
+         R556MXpDcJHMCT4NMr70dG7oO3gWhKFmPbt4kIVX272Db0030LdGVYtMZDIjnPahAZED
+         NDL8nAO0KfMBq2+WLr9ao5PY23Tab7QfkSMhijfZYt7/YAH8wQsKKYAFXVJnPvrnHhTL
+         FJOw==
+X-Gm-Message-State: AFq9FYJs4QjPoPcen9Xf9crEiudMRSoWENxC9nPXQFaddjMVmmhZm44n
+	75ZOKbhCiOTT3PeI+IkMzCgcAB2LypY28Ep9QUewHLcOD4NzTXuO6bKWdwZd6Q==
+X-Gm-Gg: AYBFou3I9MBLsNVIuRuWaern9KPkkACKCMlj7DkoYprl2fXW5vXz5Q3H69n+EDYcUg4
+	dWy1DwCILbDzyUur3Ya2DCE6/cGRh6vqtBXRLoSJ7YAKYviPFaU+OB9RJ8BeXsN1ZaSV/swY72M
+	nrqKB/yQy7uo2VpX0B5dqSuln9Bo+Crp9VTRErjcgMnPMqkYC1cJfncITlP9Lp8JK9WLoR9ArS0
+	QH7a5TsMF0C+FhyZTL7Lo7cnnDcOu40d2z/5diBu/Ai+DGKjkjvjrBEPBqSsgmx6PYdg46IheM6
+	gDQThmbuGJfuhtGFV3RDPczT670DZFp1n7yLwPyqz+55B6oLLVtZ1cRk/KOu6v7ipiE0TvsRioR
+	JZIjwCVtsKj1UWpQ/8NwzVVwczj3zXlnHs//DKkLUpSsAeigUZL15Mmvu1uZB71CyjT/YBPEPHr
+	PzUQGlWkFcmgrXCywO/ibu+uNWaAm5CglUhOx2zA93hLiyXonqQT5ePWZOS8hR63ccWqqjeSJB
+X-Received: by 2002:a05:7022:f213:b0:144:c122:6cc6 with SMTP id a92af1059eb24-185139aea8amr9394833c88.32.1792341074802;
+        Sun, 18 Oct 2026 09:31:14 -0700 (PDT)
+Received: from [127.0.0.1] ([57.151.128.96])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1831996071csm22701010c88.9.2026.10.18.09.31.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Oct 2026 08:29:14 -0700 (PDT)
-From: kerylefondji7@gmail.com
-To: phillipwood123@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	christian.couder@gmail.com,
-	siddharthasthana31@gmail.com
-Subject: Re: [Outreachy][PATCH v3] builtin/var: refactor to use parse-options API
-Date: Sun, 18 Oct 2026 16:29:10 +0100
-Message-ID: <20261018152910.754-1-kerylefondji7@gmail.com>
-X-Mailer: git-send-email 2.53.0
+        Sun, 18 Oct 2026 09:31:13 -0700 (PDT)
+Message-Id: <pull.2266.git.1792341073005.gitgitgadget@gmail.com>
+From: "Shashank S via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 18 Oct 2026 16:31:12 +0000
+Subject: [PATCH] prune-packed: remove USE_THE_REPOSITORY_VARIABLE
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+    Christian Couder <christian.couder@gmail.com>,
+    Siddharth Asthana <siddharthasthana31@gmail.com>,
+    Usman Akinyemi <usmanakinyemi202@gmail.com>,
+    Junio C Hamano <gitster@pobox.com>,
+    Shashank S <shashu8660@gmail.com>,
+    Shashank <shashu8660@gmail.com>
 
-Hi Phillip,
+From: Shashank <shashu8660@gmail.com>
 
-Thank you so much for your kind words and encouragement! It is very reassuring to hear that, and I really appreciate you taking the time to share these useful links and advice.
+Right now, the prune_packed_objects() function uses the global
+the_repository variable. To help with the libification effort,
+change this function so it takes a 'struct repository' pointer
+as an argument instead.
 
-I will check out the microprojects list and the archives carefully before picking my next task. 
+The function for_each_loose_file_in_source() uses a callback
+that only takes a single 'void *data' pointer. This means we
+cannot pass both the repository pointer and the 'opts' integer
+at the same time. To fix this, create a new 'struct prune_data'
+to hold both of them together, and update the prune_subdir() and
+prune_object() callbacks to read from this new struct.
 
-Thank you again for your patience and guidance!
+Update the builtins that call this function (builtin/prune-packed.c,
+builtin/prune.c, and builtin/repack.c) to pass their local `repo`
+variables. Because we are now actually using the 'repo'  parameter
+in these files, we can safely remove the UNUSED macro from them.
 
-Best regards,
-Keryle
+finally, drop the USE_THE_REPOSITORY_VARIABLE macro from
+prune-packed.c.
+
+Signed-off-by: Shashank <shashu8660@gmail.com>
+---
+    [Outreachy PATCH] prune-packed: remove use_the_repository_variable
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2266%2Fshashu8660%2Foutreachy2-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2266/shashu8660/outreachy2-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2266
+
+ builtin/prune-packed.c |  4 ++--
+ builtin/prune.c        |  2 +-
+ builtin/repack.c       |  2 +-
+ prune-packed.c         | 32 ++++++++++++++++++++------------
+ prune-packed.h         |  4 +++-
+ 5 files changed, 27 insertions(+), 17 deletions(-)
+
+diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+index 4d63f26b0a..d44e7f81d4 100644
+--- a/builtin/prune-packed.c
++++ b/builtin/prune-packed.c
+@@ -11,7 +11,7 @@ static const char * const prune_packed_usage[] = {
+ int cmd_prune_packed(int argc,
+ 		     const char **argv,
+ 		     const char *prefix,
+-		     struct repository *repo UNUSED)
++		     struct repository *repo)
+ {
+ 	int opts = isatty(2) ? PRUNE_PACKED_VERBOSE : 0;
+ 	const struct option prune_packed_options[] = {
+@@ -30,6 +30,6 @@ int cmd_prune_packed(int argc,
+ 			      prune_packed_usage,
+ 			      prune_packed_options);
+ 
+-	prune_packed_objects(opts);
++	prune_packed_objects(repo, opts);
+ 	return 0;
+ }
+diff --git a/builtin/prune.c b/builtin/prune.c
+index a7e4678d11..4eee5a2e27 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -201,7 +201,7 @@ int cmd_prune(int argc,
+ 	for_each_loose_file_in_source(repo->objects->sources,
+ 				      prune_object, prune_cruft, prune_subdir, &revs);
+ 
+-	prune_packed_objects(show_only ? PRUNE_PACKED_DRY_RUN : 0);
++	prune_packed_objects(repo, show_only ? PRUNE_PACKED_DRY_RUN : 0);
+ 	remove_temporary_files(repo_get_object_directory(repo));
+ 	s = mkpathdup("%s/pack", repo_get_object_directory(repo));
+ 	remove_temporary_files(s);
+diff --git a/builtin/repack.c b/builtin/repack.c
+index c4360382c1..e8970e8eb7 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -757,7 +757,7 @@ int cmd_repack(int argc,
+ 						       wrote_incremental_midx);
+ 		if (show_progress)
+ 			opts |= PRUNE_PACKED_VERBOSE;
+-		prune_packed_objects(opts);
++		prune_packed_objects(repo, opts);
+ 
+ 		if (!keep_unreachable &&
+ 		    (!(pack_everything & LOOSEN_UNREACHABLE) ||
+diff --git a/prune-packed.c b/prune-packed.c
+index d49dc11957..a53b7031b5 100644
+--- a/prune-packed.c
++++ b/prune-packed.c
+@@ -1,5 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+ #include "git-compat-util.h"
+ #include "gettext.h"
+ #include "object-file.h"
+@@ -8,40 +6,50 @@
+ #include "prune-packed.h"
+ #include "repository.h"
+ 
++struct prune_data {
++	struct repository *r;
++	int opts;
++};
++
+ static struct progress *progress;
+ 
+ static int prune_subdir(unsigned int nr, const char *path, void *data)
+ {
+-	int *opts = data;
++	struct prune_data *d = data;
+ 	display_progress(progress, nr + 1);
+-	if (!(*opts & PRUNE_PACKED_DRY_RUN))
++	if (!(d->opts & PRUNE_PACKED_DRY_RUN))
+ 		rmdir(path);
+ 	return 0;
+ }
+ 
+ static int prune_object(const struct object_id *oid, const char *path,
+-			 void *data)
++			void *data)
+ {
+-	int *opts = data;
++	struct prune_data *d = data;
+ 
+-	if (!has_object_pack(the_repository, oid))
++	if (!has_object_pack(d->r, oid))
+ 		return 0;
+ 
+-	if (*opts & PRUNE_PACKED_DRY_RUN)
++	if (d->opts & PRUNE_PACKED_DRY_RUN)
+ 		printf("rm -f %s\n", path);
+ 	else
+ 		unlink_or_warn(path);
+ 	return 0;
+ }
+ 
+-void prune_packed_objects(int opts)
++void prune_packed_objects(struct repository *r, int opts)
+ {
++	struct prune_data cb_data = {
++		.r = r,
++		.opts = opts
++	};
++
+ 	if (opts & PRUNE_PACKED_VERBOSE)
+-		progress = start_delayed_progress(the_repository,
++		progress = start_delayed_progress(r,
+ 						  _("Removing duplicate objects"), 256);
+ 
+-	for_each_loose_file_in_source(the_repository->objects->sources,
+-				      prune_object, NULL, prune_subdir, &opts);
++	for_each_loose_file_in_source(r->objects->sources,
++				      prune_object, NULL, prune_subdir, &cb_data);
+ 
+ 	/* Ensure we show 100% before finishing progress */
+ 	display_progress(progress, 256);
+diff --git a/prune-packed.h b/prune-packed.h
+index 936fa9df23..9ec7ff0d60 100644
+--- a/prune-packed.h
++++ b/prune-packed.h
+@@ -1,9 +1,11 @@
+ #ifndef PRUNE_PACKED_H
+ #define PRUNE_PACKED_H
+ 
++struct repository;
++
+ #define PRUNE_PACKED_DRY_RUN 01
+ #define PRUNE_PACKED_VERBOSE 02
+ 
+-void prune_packed_objects(int);
++void prune_packed_objects(struct repository *r, int opts);
+ 
+ #endif
+
+base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
+-- 
+gitgitgadget
