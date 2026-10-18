@@ -1,120 +1,123 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31EFD1E1A3D
-	for <git@vger.kernel.org>; Sun, 18 Oct 2026 15:09:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792336160; cv=none; b=F/2K9iZaULTUEeyOVtrLMdnZJIGhV/bV3FDrrkhOLVf30+SrU2DG6r0sZRBmIPSBfHAQLRPMwnQvFfztJax4hfGBkWlq4aZw9kACRgIxD9G6oxt+DUAXk9Hv6i64nj6lROYrIe+KgnRgDxIuLAENRDleXJxApmYsFdAtis+OrOQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792336160; c=relaxed/simple;
-	bh=SiGR6GEd5R3sCEAGBDlVJx88F5eQxZuvtSxQD8S9KQ4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iJRqAldvFEVOaz4QR6XBMtXB7nI1OPSTv1RvXl3IUlRJLmsIu8/QcXCMKnExhbeRt3/+C1jBkMLXVHlqQYyOqMA0pctGnwc5tLcMwg75t9CYQE9Z9XKiRFDyZlCP9NhDL8pq18wGybuJZLyXFtTUq5hKAFnk8LbABvZD6NlSKrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jAJ7jR8d; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A964337BBD
+	for <git@vger.kernel.org>; Sun, 18 Oct 2026 15:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792336231; cv=pass; b=BXOZiud90XgiEwiEOKtY8Vsxvc6wHvIzs6XQ3gCnRwviIqfhb2Vh0X/jHXOpG8U/upNeTktSD2ck1Tr5wD0sqm2S07jRu1+QW7AQJpoQ8jf3NuqR7IVg5qXd3BA1gUTOF3Ql7LIJ7v3UrsKAQZVleBB6oEyBwHgROKDsh6+rZDk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792336231; c=relaxed/simple;
+	bh=gtW2iuErxkL8GQrsDSvS7w49dbaySolbLbgUPdbTbFM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CNQL4mEgxEooK7AwXAOaPxpTYIOfk+80IKTPIs8U/Yu3ctjIvWodaBjMVIWxBL7dSj11k/Kd53hZj2gjXyjl3yPvK5skLjpNGw8oQVr7Zaqo7r9ErI91L4Iue1kWuXE/lqsQCKzIOhALlmoh1svXogEkkzDRane2C6lsQDE+//M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pIJQkv7M; arc=pass smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jAJ7jR8d"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-48e0d885929so769529f8f.3
-        for <git@vger.kernel.org>; Sun, 18 Oct 2026 08:09:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pIJQkv7M"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6b1aa29e06bso2139354a12.2
+        for <git@vger.kernel.org>; Sun, 18 Oct 2026 08:10:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792336228; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Y23NMkQO22u3wJw5WH+2tKVMX8oNyS4PzNb50r8SQfgEUSjsIF1AkVCklrZl9UjkjH
+         w0rWarinsLOm+3OGEOiK7GA4OEYejx8gSX7ZOKjM8v/PMpJyxyX62oGGwK1vcv9ilwgA
+         f8nfZikcGCmmUWJVMOBaNWQDVYtBdf1ceEfxhB1Lni6H75NesKFWq+v8/DRYzK9qbDOC
+         3re12tDuZV5aCLQXZp7h4UIIYX7wyQ4QRuU0JK6dnbS/Y+xhrz4qMSQQiAPi8/ezv643
+         of/p6gx1Wq92d4OetjrfuxggR6EJCnrjAS8MpjdowMcPCLrIqgJ6QTAPRrJjWyoSI32I
+         p54g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=Xwlt6/QcW6d9DC6mM7RR9kFOj6+ZpdYFbNeKGcC+WOM=;
+        fh=Fv6pr+IvrKmUTBW5O0zdoD28xI0Fkr/BReBrER09lRs=;
+        b=dDYd4crv/z5gKLVXSVf4+WN169teSbmFtrLuVOdF1c7Vowry5m2A53axWpDuQt+zYM
+         KgUplfDnM68dVc8EVnFyGy1jgpigrCt7uZUKNZwcz1XbouGti1Sb9HjbGHyRPsPtQ0hp
+         +rNj2qhqNMA8AT45/QOEn9EgPrvDZYFbv9tK/z1rx5NHsbmXzPy8Axtbkb9S7airqs4b
+         iEQeqw3j+iaK0rdz0X/1JvTQtQao6Xgqbsapj/UD7JoPolDHBvN6KarrpDijX660unYJ
+         zKY+S3r2PZjUay0PPmJbxU6oqNo4No89XJ4EmTT6WE6YYKJX94Ln0x7Qt1W9dt7pjGig
+         uVtg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792336157; x=1792940957; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=FV0LNwyLxqetLy6Xnu45w4ZUQljlxkUNMmvkdMyDF5Y=;
-        b=jAJ7jR8du9rP4NjktwdOYbUy0MgiTvhcpakEYXJpFxdjfYyQgfemmv5xIEl/Az65wq
-         5itQcVkXjERIFdbAGwBjMuGPXq/pQvoggcC+/RgXa4FoURmv0VsxhRMl5YCNRtlggggC
-         pj/Mgm5iLUwDNl+QEi8lSSDElazgIgBaAZ9ZcXYzSm2TVdkSKqiGjBP+wbYelrviOuDt
-         vICw4fHM4IdI69zH5vSB/ZRZyVacqnzTe48vEjNCsqtw/KBU5ngu81vbz2yqjjkEsuh+
-         2tRCqRktFHFqt7FIBPv1fN/CjDN9oGxW1c0oZplw7RaNZkIKRSsog0Nr8Lnhg0tOFLnf
-         4JcQ==
+        d=gmail.com; s=20251104; t=1792336228; x=1792941028; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Xwlt6/QcW6d9DC6mM7RR9kFOj6+ZpdYFbNeKGcC+WOM=;
+        b=pIJQkv7MQK2gP1pxbsbixgPZLQC5zAFLSDRB6YJ0VcBXlnxf3kKCgxprWTHhmpGPyb
+         eX1OAQZNTjSQgdEoMnqNQ5pe6qgYnmlRFyVxNVyayFybjfxOxwTrsVApJdExL7VgkIqq
+         BlwuVtGvS9m4Mp9Gvb8njJm7UEPLULLR3+OoxoKdsrM9R0ud9BajSsbJBE+dOgd/veQK
+         9QhBIzGy0K5GRAUicr5OgaibnzqtCbaWVK/pYPEcyPm/4KQXYk+FrJrZbJRybX2Dw1yn
+         /fP3Dk7sC/YJjcbXAtNslFgnredtEr+0WND39T8WYq88GkzyRGKshfyTIBQ+h1x3Za90
+         /nPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792336157; x=1792940957;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=FV0LNwyLxqetLy6Xnu45w4ZUQljlxkUNMmvkdMyDF5Y=;
-        b=ZtFCJkJTBvv+S0uzWJD86vATlripnuK74z4p7RBS2jIQUf3imnd8Nm5bICG8Itpv1l
-         mbHnMPGOmxjofGWPSWlZM45NZ66adNDdrS/Etlb1ahVAKkbvyf9dYUOZYUxSGdBjwVC5
-         CVUsFHH3xohLUkKkwPa0jhQUAEUGmqIDIF6lxpiVnEWgW+NQNK/3J6qmSaWA2swfrysO
-         015AQQfRJu+cDiTTbZCLb0uu5hz6edamyyeKVM4yTQVRzzU4eWS3gxwEH0kffPcUEi7e
-         LL+QV30Yjd2Ovjg/sOoJfdCm5+fx4r9Rnd8iDaaE3L6C7KSKGp1GU01QI862u7va3hPo
-         T49Q==
-X-Gm-Message-State: AFq9FYIUfxuG0pgtVgLxSq/wUBCU4SO6iGV+SpKm2YlvipElwOFC/CxR
-	1emM7zuKf5l7Qs4coDDSbfwi+WQD8hi42TeLAFo51RCDdREzHksdFU1G
-X-Gm-Gg: AYBFou0G83f843sZ3fhywGC2+olV8JuEB9+C6lKwPsemC01qlsWuPtsiMBJAqVjLMCK
-	YWgqxu6fX0EgIFB8h5SIFaL0WVFIJRR2Q9ZFan6iQVMNzSLj3meDvluQEWpRKt00DgRPeVZszn+
-	ptDnbtICBc1STwYZPvI7wcx31rDeUS6yehxfIR1HkC4wC0OJoPHiyfSumReASRyfH0Nt52sSRR4
-	+t+VRq/EHp+670VTiTogkRIaHj1HwdMbsxDMxcIezax/d1at9ueLuaVFyN8f57QJSmn68Ul5oo0
-	D85PMbARR4BGae953Al4eMgeqoQzUDDo2fGo63Gy5UVgvs95krLZrhnNcYRNeGsMblHciMCTOr6
-	RgnrDXpBk4l6tbo12hByw1eR35UcX6y9AgdUHt36owJfjTGlok+cvfKIje6BNFvqnJ2R9xHeU+2
-	gnzPUBmri9Z26qeThN6fpzu062vW1Fau6ZPQRSL3f69Gk52TkpUhJQIlXlA0+G+L0JvQSzj3cCm
-	p0+/0qnt9y4gMT3E/GONhne08uwqpTUrHC7thvv0bEpH64ba1DA
-X-Received: by 2002:a05:600c:1394:b0:4a1:7bd4:d07d with SMTP id 5b1f17b1804b1-4a1d7628895mr110673245e9.34.1792336157187;
-        Sun, 18 Oct 2026 08:09:17 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1c8af2fcesm225260765e9.8.2026.10.18.08.09.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 18 Oct 2026 08:09:16 -0700 (PDT)
-Message-ID: <e7719810-0e47-4031-a35a-9e1fd5727be4@gmail.com>
-Date: Sun, 18 Oct 2026 16:09:15 +0100
+        d=1e100.net; s=20260707; t=1792336228; x=1792941028;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Xwlt6/QcW6d9DC6mM7RR9kFOj6+ZpdYFbNeKGcC+WOM=;
+        b=iqvRM+QOrt1hvgwDj9CwbXPbyLBQUDb80dKDR2fOlIYH2eWm0tUtykX6O1UDOMMK/g
+         9dxKGFZL+WVwx1XMeQWQKCmUC9e5JYdeah1IZNnQaI1gerT2axJtI60fJ1mgTaBlQv4G
+         EETB3cwb0TZvl9aRQTyB0qtb9bf2+kj2Z9PoOvhQiC7dS5T+DyzIgclGif8uSQAb0AUB
+         Ul30wn/Wx/NRFqPXeiqh5D2m7a1B3H9uDFzYVokST8+UAOFcEkza/+ZQlG8DftfIKVx4
+         IE4Q0o3xJndSdkkGDJMy78HiupegCkIHKSHHcEtqwZ67Dysubw3hVPlxBwQgZHmM5WaA
+         HoXA==
+X-Forwarded-Encrypted: i=1; AKwUvBwMbV9hqroA5Cxfw3UUFYukWEk7aF4MAZvmOMSCZiTSnBBtdXjgv1QiiIwfEMsAhlSsS7s=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKCHUeEHqbf/6fTQI16UwMsnm2OxE0/npaHm05aM7iWcjaB6Bvm
+	WpbWfMn3XjWZvoeCjB+fRHbH+4DJlF3nZFLHCOdGzeNZlu0DNpPnAm5fRdBnsrx45H559OaAL0A
+	cx/vWFKJY1zQl7dayyxajxV1IV6Q22EI=
+X-Gm-Gg: AYBFou2ssw0WO6tj70y2HKuTAGmQ2RPSda9Qk73D9HRjaDEFuEbOfAm6IhwcG/uLeXu
+	ly8Dm0I1IMKxFCWvyd/qqmF5fSOblbpvedztb0nAbVx18gpmiYgAYszvIVfPpTbTxMHlIeuGHvw
+	LutIlsyvKLPNt+tBJfmeRdfCeVX2JckIatCdMOY3OGP4QFsPPEYXACxYHRB2jISWT+T5zwl9STO
+	OwxU8q62oUsMtdhj/HoHS4bFLPi2Nsrtp0tbUxRZCH+YYK2kDhJChWQRQXm72FlrqC4t7aWPbO2
+	7WJFsf4Zr8lS93ULXVdG0gCByEzqWb0N826CdndR8G1TguGetOZW8Q8=
+X-Received: by 2002:a05:6402:3217:b0:6ac:765e:def6 with SMTP id
+ 4fb4d7f45d1cf-6b3a80e3881mr2993962a12.2.1792336227681; Sun, 18 Oct 2026
+ 08:10:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [Outreachy][PATCH v3] builtin/var: refactor to use parse-options
- API
-To: kerylefondji7@gmail.com
-Cc: git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com,
- siddharthasthana31@gmail.com
-References: <20261018145222.579-1-kerylefondji7@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20261018145222.579-1-kerylefondji7@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+ <pull.2425.v2.git.git.1791711665.gitgitgadget@gmail.com> <xmqq1p9vdalz.fsf@gitster.g>
+ <03b187ae-bef2-426f-b6a4-def9f70c4a3f@gmail.com> <xmqq4ieqamn0.fsf@gitster.g>
+In-Reply-To: <xmqq4ieqamn0.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Sun, 18 Oct 2026 17:09:51 +0200
+X-Gm-Features: AclHuK8L0GIIX1D0XFMRIOXYXcrbu1oqLavWXaTE2up1__vCXq3obBKE1NS8H6A
+Message-ID: <CAHwyqnXNyM+qaxggQOiW+jE5U6B=jOOcv=KGz-2XS7jnB2j-uw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] branch: let --delete-merged find squash merged branches
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, 
+	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Keryle
+> At least the one-to-one part of the operation should learn from what
+> Dscho did in range-diff, especially the part that does take
+> similarity of the log messages and authorship information, instead
+> of paying attention only to patch IDs.  I am not convinced that
+> one-to-one rebase implemented as a subset of squash merge would
+> perform sufficiently well, either.  From the user interface angle,
+> it also is not clear to me if a single --delete-merged that enables
+> all variants by default with individual knob to optionally disable
+> one variant (squash) would be a good extensible one, when we may
+> need to deal with the third (and other) kinds of ways to integrate
+> your work without preserving the commit identity, like selective
+> cherry-picks.
 
-On 18/10/2026 15:52, kerylefondji7@gmail.com wrote:
-> From: Keryle Fondji <kerylefondji7@gmail.com>
-> 
-> Hi Phillip,
-> 
-> Thank you very much for reviewing my patch and for pointing this out!
- > I didn't realize that `git var` had already been converted.>
-> I am new to open source and to this ecosystem, so I am still getting
- > familiar with how everything works. Could you please advise on where I
- > can find a list of available microprojects or files to work on, to
- > make sure I don't pick something that is already done?
-There are suggestions for microprojects at [1] and some additional 
-guidance at [2]. The test conversions are a good way to get familiar 
-with our test suite. To check you're not working on the same thing as 
-someone else you should scan the mailing list archives [3] and/or see 
-what is in the "seen" branch. In many ways the main point of a 
-microproject is to get candidates familiar with sending patches to the 
-mailing list and interacting with reviewers. You've shown that you 
-understand how to send patches, respond to comments and ask for help 
-even if this particular patch (which looked very sensible) did not end 
-up being merged.
+I tried a range-diff solution locally, pairing commits with range-diff
+for rebases (and moving the squash search behind an opt-in flag). As
+far as I can tell range-diff pairs commits on the diff alone, and the
+log message and author only show up in its output, so it didn't help
+with matching here.
 
-Thanks
+On speed it went the other way. On my clone with 65 branches, v2 takes
+about 0.5s and finds 14 branches to delete. The range-diff version
+takes about 10s, finds the same.
 
-Phillip
 
-[1] https://git.github.io/SoC-2026-Microprojects/
-[2] https://git.github.io/General-Microproject-Information/
-[3] https://lore.kernel.org/git
-
-> Thank you again for your guidance and patience.
-> 
-> Best regards,
-> Keryle
-
+Harald
