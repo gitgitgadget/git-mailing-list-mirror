@@ -1,178 +1,183 @@
-Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3123955CB
-	for <git@vger.kernel.org>; Sun, 18 Oct 2026 05:05:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34976426438
+	for <git@vger.kernel.org>; Sun, 18 Oct 2026 09:45:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792299947; cv=none; b=QNWZdoGAU9Qr1OGc/EQbpsTJE4rY7rPfMhHiYTr4Vc+FfJyDuA14CVu/sUaLPalHIO5+IrryE/GGpnLsM0kx/sq+YQQrEyEWOXGLY2PIC9xOaOHpPAIYcJRygdgwasvX2ZuL2RzMa1TtcwdQZ0aDBl5U5IBQHeZedyyc3hTtPtY=
+	t=1792316749; cv=none; b=UvXIzYaMjYxF5ZqpESIyl9Hwe4QfXVuEziSXvHC2qoBxtK71oExfcWMTX1pvk4STvmiBC3zZ6a/uaNuh77ZqZgaRXfzsNu4JojpY3lX7oKICl3qQDutqEzRLBAIkf0GgbYaWV4WAm9WcqatwJtvBB/rmzohRQ2FfGdmsXLvw72g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792299947; c=relaxed/simple;
-	bh=GhvrTD8yuVPuc6Uve+e19bdSFNHcdiC4V+asgZy+xoQ=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=f3BEcFyiwBTuwXoqm2ZKVkaqkp0WElfPVmR+6CzcJjHWwJzoiPZ8kJaddDzjfg7o4sxag/c+NJzTbIwWNIhkcJJAP8LdMdZfkWYMdjh+HDGIrUSvHTmZgp/5QjpDljmStM3XqytGpe5O977/01xvEQ4sSL32ptU/fdsZ6y13/Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GxFNTpKr; arc=none smtp.client-ip=74.125.82.178
+	s=arc-20240116; t=1792316749; c=relaxed/simple;
+	bh=lJ/29aacsUpSHVkMTTZVSFxtrsD1f71PW7ZyqKvd3Rs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YT2AQLxzGAGsrdf9wy4Bw8933nFaSxw9IYSTe8iB0sHbfYwKeaUMWhwAjqNqQRmkLZYn2l8XKtTNIIuR/Byy/Xxe+pNKm/2dKq8Du0yCy2r8nstgTGLAwQ/URQ1C0y0IeD+6gaTH3klf3v3d1OUuFljP105YnbyxRhxUdpXFHGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B+qxWddb; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GxFNTpKr"
-Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-35ef6b49813so2156744eec.0
-        for <git@vger.kernel.org>; Sat, 17 Oct 2026 22:05:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B+qxWddb"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-48afbd2c386so485703f8f.3
+        for <git@vger.kernel.org>; Sun, 18 Oct 2026 02:45:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792299945; x=1792904745; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=rf0BBZGvtd7v2fBEEuD+D110G6LcweqiLNq/pPqst1c=;
-        b=GxFNTpKrq/lgQpZSGWywE4lGMHV6sKK+SneIm0bsGS8PcGz+AyECsq8ex7KC/g+FMn
-         JTilWtvBjqkQyPtEr3Ge6LYEevKq1yuawIMQmlC6MIto8OJoh2c51V7hzl5eUAgn/mjt
-         d5qC6AF5BwxFWkqIpd1J0c9e87ke/1ZF/HbUkNyA/e1ki0gD/v42scFOkyZ64aqHfK+C
-         LZ7S9NadcEVnURTQfQrOetAXmrv41qAyTmIJaBIDCEd9r7rko6WLrYtXc3YPtk0wUTi0
-         NLWpA8XioeNbnYnFAaDhwtFnTeAJFwIJ6n9KvRWevRKYXupOhkafoAMipCOWwSBIfvJe
-         yQiQ==
+        d=gmail.com; s=20251104; t=1792316743; x=1792921543; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Vd4ju+fIkvXfWF2NOU57i+fC9yG4bfN2y+Ii8nGkvI0=;
+        b=B+qxWddbQ3UcPTekHy8SNyfyN1Ra8eIS7dquElmA6OIgGs+CshAmDi6vxo4JMuI0K6
+         h5AWePvZnIKcPOEepj2Ow2ngds/wdLd9/lpXn2jnfDK2Gvhx5g0wXPyWRwkLwf8JvYzb
+         b7vxoBPPn/TWka55JCUrmQ/4/hdpWfsIz8tbyjtEd8jWrxGei5BMEVy1G6J9jfUlo7QA
+         dnigYzxI3bK8c8UIm+9lWDm/PwAQOCJ038/fkOTc6ioJN3k4py4eKRiS4E9+xvl7BIdG
+         MWAWueMH35HXdIYFnZWAl0Mm1KMBgBQcink8B7pRc6DpnBTnWUyK9WiyyM39PlESc0yN
+         P6jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792299945; x=1792904745;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rf0BBZGvtd7v2fBEEuD+D110G6LcweqiLNq/pPqst1c=;
-        b=mgDaFWa3DNu0ToMZ47pFA5UKAAAWG7jzAJpvrX5mIInFk/j3gERdQCUnnUoXqn6o/2
-         leTJ5DCBjgq/rEN7Xc+KvBffkVQHGxqq/3MPDaOCBGtYQIStEYbrFWO8PYSPkEdJTkiH
-         nP1TzIFa1dqkxdEMOZHrmHwQB/jg3wuyh5aenFFPaMqqeukG2s9L71WqPvubD6NzWGNr
-         Z2R1thDRxTQl4aS3h1bOdX78CeaqaS7reyRNTF4x9V0RwWTVNm32RmfaE6SVcSUjOfU/
-         ZlX6+kDU7xqe3sczYKryZXWVv98f578HTv5wNuKDesCCZnEkKG2lGJd+LjxD3A9cIGgW
-         kTIw==
-X-Gm-Message-State: AFq9FYLSNNOdCjoCMDMtIdsau/fogsbIPRT1r+vZXKZOua8yx9lEeYqO
-	TX2cmlSpWJIhnAwU7bXV79VmD2WP9NtolkCBIohaDngrxmEi1YqrplSXsWbSzQ==
-X-Gm-Gg: AYBFou3dp4qBjjuraLVz8AzNnTWD2LFK7O5Zt+fqqee8U2atpoJugi9vup5UatuwKPO
-	bfSKjKdHQo5s30jslZxlFgJmgjpPJu1TTO7T5IGI3itNk96cG7n5pLQAQMWRjM4/L7XKfDi5VTd
-	/QzpfaWMc0EX29PULj7cElGTJffEKexXtVpTEyfEeS0iGUYfyogc7TpgavU6XrNT7ZxoAznvggr
-	yv7diR32ybUuuzEEwEAmax6XmZdpRGrGHidvRDXfq8Td8sWMx7lAFYUY++lqgTHLmPH5v7W1JwH
-	wlmejk+olNFjVSsocRmvLv36yo83HLc72XNhkzwvSqixlQL6dMB756oaiyEV9lfhfr+ULeGo6n7
-	QXiTtGUwWvXohXsulTezDJEtEN4+fVgDQMFfjrvBtSbDcS2OJtyregDNiPfQxPsYFtpRNH1F8Mf
-	CyUPBJVyBE600UvkJjTyd9H+axTrWwyKmcLNVo6rW/wkqDyBjJDmCrXaBPsHNxF6Kv8SFPejUD
-X-Received: by 2002:a05:7301:1884:b0:35a:4ad6:d215 with SMTP id 5a478bee46e88-361a2343db8mr6091415eec.22.1792299945118;
-        Sat, 17 Oct 2026 22:05:45 -0700 (PDT)
-Received: from [127.0.0.1] ([134.33.99.229])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3608308a87csm35115651eec.28.2026.10.17.22.05.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Oct 2026 22:05:44 -0700 (PDT)
-Message-Id: <pull.2256.v3.git.1792299943380.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2256.git.1791978767497.gitgitgadget@gmail.com>
-References: <pull.2256.git.1791978767497.gitgitgadget@gmail.com>
-From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 18 Oct 2026 05:05:43 +0000
-Subject: [PATCH v3] [Outreachy PATCH] t2030: modernize test path checks
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20260707; t=1792316743; x=1792921543;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Vd4ju+fIkvXfWF2NOU57i+fC9yG4bfN2y+Ii8nGkvI0=;
+        b=15cMFzb1vUWiHiIi/KWPG5HWLfJ5+FhQz02Ph6bCGxIbC9cODjf7iyKeVxl6XauCyw
+         xn4aVAHPfzdjp/Lq89qJ+8IfxptYI/MQcxl/4j9hnybrDfczXd0dUIJO42soCotyIXnc
+         qEjU7LdWYgMr1zyfzpy5nG6JuV+milioeIHOmEf8ryalT+1d0X1K0eBDMI8UNseX2JCh
+         PgpCer6kxSbt7vMep3utFobj//Bss85gsivXwkHrPVSHeDCYBtAjVzwL8AaV88AQUm+k
+         GBurqW6jf7uctBX2/vvtIAoHqrrBe3RYGMDsQRmv8aUiGlQnJzSb0TMqmlohgFTKfRXr
+         f6zg==
+X-Gm-Message-State: AFq9FYICBnwtOGIlZw8BHsJMmfCulSH00ZDOb0KkOaRuM0IOdEqNctHa
+	rDzE5Lhua+0CrqBZ4VoG9aXgtkkNGXdOXJovRwo/4BKCs9hjG9i2YZQl
+X-Gm-Gg: AYBFou2FrHvsillgtdNq++BsGjyd+lfjRJWHO31i4S65um2/EK/usGvTHCsRDwN+2gf
+	dzOreTgS5WoeuXaqBFbbaKxrJQLv3l+idrXLwD1SOCuSpTU4IO48CuaeGFbPhUomCl80eVC/iod
+	dTKwrdT3zdK4jFNHpwy4+f0jPkxabdjT0RI6GuwgJ9EbTKM0UU6cFJzpp34l4qhE6s+vP+Zu9Md
+	C75n/Rb2XLD0KteSjzwAGvM3354khua0BGAXrtf40UyAdTyEDjj7Gecaw7yaTx4JlIpzB5oNL4b
+	WjGHiAD/Gs1EbCZrXzFfAK/oeV/E5PgslxPktBEVDNbELJL3395YT75Y97XKIfXnMd+RnOusDOb
+	tkOlwjRSBtHEz+ZRp8Fb/nAa06R4o3uw2x/dvhtUcHOC8/ZKhh6TkczWMtC63lCnC6jcqhBT3e4
+	9B9kZTyBWxoNYv7J9nxgjEaFKYoDBq67b2RKSeyFrsDWow3Revqo8J38vJ0EEYGFYaLj+IayERA
+	NGWqdhQdpjxe+9g23t88bUOeLCEixMIhZqZ9DvKBwSdK/Q8w0MM
+X-Received: by 2002:a05:6000:15de:b0:48d:faa6:cedf with SMTP id ffacd0b85a97d-48e07fb8463mr6115873f8f.56.1792316742689;
+        Sun, 18 Oct 2026 02:45:42 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48dfd409989sm16726014f8f.0.2026.10.18.02.45.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 18 Oct 2026 02:45:41 -0700 (PDT)
+Message-ID: <d748915d-c50c-4143-8140-ae885a6ba604@gmail.com>
+Date: Sun, 18 Oct 2026 10:45:36 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>,
-    Srujith A Poojary <poojarysrujith@gmail.com>,
-    Srujith Poojary <poojarysrujith@gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [Outreachy][PATCH v3] builtin/var: refactor to use parse-options
+ API
+To: kerylefondji7@gmail.com, kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com,
+ siddharthasthana31@gmail.com
+References: <20261017131730.642-1-kerylefondji7@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20261017131730.642-1-kerylefondji7@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Srujith Poojary <poojarysrujith@gmail.com>
+Hi Beryle
 
-Replace old-style file checks with test_path_is_file and the helper
+On 17/10/2026 14:17, kerylefondji7@gmail.com wrote:
+> From: Keryle Fondji <kerylefondji7@gmail.com>
+> 
+> Migrate option handling in 'git var' to the parse-options API.
+> This update also aligns variable resolution with current Git configuration
+> and attribute handling.
 
-test_path_is_missing for clearer failure diagnostics in test output.
+This all looks very sensible, but "git var" was recently converted to 
+use the parse_options() api in e19f0779c67 (var: add "-z" output mode, 
+2026-09-26) which has been merge to master.
 
-Signed-off-by: Srujith Poojary <poojarysrujith@gmail.com>
----
-    t2030: modernize test path checks
+Thanks
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2256%2Fpoojarysrujith%2Fmicroproject-modernize-path-check-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2256/poojarysrujith/microproject-modernize-path-check-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/2256
+Phillip
 
-Range-diff vs v2:
+> Signed-off-by: Keryle Fondji <kerylefondji7@gmail.com>
+> ---
+>   builtin/var.c | 32 +++++++++++++++++++++++---------
+>   1 file changed, 23 insertions(+), 9 deletions(-)
+> 
+> diff --git a/builtin/var.c b/builtin/var.c
+> index cc3a43cde2..b9234a55eb 100644
+> --- a/builtin/var.c
+> +++ b/builtin/var.c
+> @@ -3,11 +3,9 @@
+>    *
+>    * Copyright (C) Eric Biederman, 2005
+>    */
+> -
+>   #define USE_THE_REPOSITORY_VARIABLE
+>   
+>   #include "builtin.h"
+> -
+>   #include "attr.h"
+>   #include "config.h"
+>   #include "editor.h"
+> @@ -18,8 +16,12 @@
+>   #include "path.h"
+>   #include "strbuf.h"
+>   #include "run-command.h"
+> +#include "parse-options.h"
+>   
+> -static const char var_usage[] = "git var (-l | <variable>)";
+> +static const char * const var_usage[] = {
+> +	N_("git var (-l | <variable>)"),
+> +	NULL
+> +};
+>   
+>   static char *committer(int ident_flag)
+>   {
+> @@ -120,6 +122,7 @@ struct git_var {
+>   	char *(*read)(int);
+>   	int multivalued;
+>   };
+> +
+>   static struct git_var git_vars[] = {
+>   	{
+>   		.name = "GIT_COMMITTER_IDENT",
+> @@ -221,21 +224,32 @@ int cmd_var(int argc,
+>   {
+>   	const struct git_var *git_var;
+>   	char *val;
+> +	int list = 0;
+>   
+> -	show_usage_if_asked(argc, argv, var_usage);
+> -	if (argc != 2)
+> -		usage(var_usage);
+> +	struct option builtin_var_options[] = {
+> +		OPT_BOOL('l', "list", &list, N_("list builtin variables")),
+> +		OPT_END()
+> +	};
+>   
+> -	if (strcmp(argv[1], "-l") == 0) {
+> +	argc = parse_options(argc, argv, prefix, builtin_var_options,
+> +			     var_usage, 0);
+> +
+> +	if (list) {
+> +		if (argc > 0)
+> +			usage(var_usage[0]);
+>   		repo_config(the_repository, show_config, NULL);
+>   		list_vars();
+>   		return 0;
+>   	}
+> +
+> +	if (argc != 1)
+> +		usage(var_usage[0]);
+> +
+>   	repo_config(the_repository, git_default_config, NULL);
+>   
+> -	git_var = get_git_var(argv[1]);
+> +	git_var = get_git_var(argv[0]);
+>   	if (!git_var)
+> -		usage(var_usage);
+> +		usage(var_usage[0]);
+>   
+>   	val = git_var->read(IDENT_STRICT);
+>   	if (!val)
 
- 1:  93cf6c12f4 ! 1:  75086e1db0 [Outreachy PATCH] t2030: modernize test path checks
-     @@ Commit message
-      
-          test_path_is_missing for clearer failure diagnostics in test output.
-      
-     -    Search with: git grep "test -[efd]" t/
-     -
-          Signed-off-by: Srujith Poojary <poojarysrujith@gmail.com>
-      
-       ## t/t2030-unresolve-info.sh ##
-     @@ t/t2030-unresolve-info.sh: test_expect_success 'rerere and rerere forget' '
-       	tr "\0" "\n" <.git/MERGE_RR >actual &&
-       	echo "$rerere_id	fi/le" >expect &&
-       	test_cmp expect actual
-     +@@ t/t2030-unresolve-info.sh: test_expect_success 'rerere and rerere forget (subdirectory)' '
-     + 	(cd fi && git rerere) &&
-     + 	rerere_id=$(cd .git/rr-cache && echo */postimage) &&
-     + 	rerere_id=${rerere_id%/postimage} &&
-     +-	test -f .git/rr-cache/$rerere_id/postimage &&
-     ++	test_path_is_file .git/rr-cache/$rerere_id/postimage &&
-     + 	(cd fi && git checkout -m le) &&
-     + 	echo resurrect the conflict &&
-     + 	test_grep "^=======" fi/le &&
-     +@@ t/t2030-unresolve-info.sh: test_expect_success 'rerere and rerere forget (subdirectory)' '
-     + 	check_resolve_undo kept fi/le initial:fi/le second:fi/le third:fi/le &&
-     + 	test -z "$(git ls-files -u)" &&
-     + 	(cd fi && git rerere forget le) &&
-     +-	! test -f .git/rr-cache/$rerere_id/postimage &&
-     ++	test_path_is_missing .git/rr-cache/$rerere_id/postimage &&
-     + 	tr "\0" "\n" <.git/MERGE_RR >actual &&
-     + 	echo "$rerere_id	fi/le" >expect &&
-     + 	test_cmp expect actual
-
-
- t/t2030-unresolve-info.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/t/t2030-unresolve-info.sh b/t/t2030-unresolve-info.sh
-index 9af24b1204..f6f5dd7cb8 100755
---- a/t/t2030-unresolve-info.sh
-+++ b/t/t2030-unresolve-info.sh
-@@ -170,7 +170,7 @@ test_expect_success 'rerere and rerere forget' '
- 	git rerere &&
- 	rerere_id=$(cd .git/rr-cache && echo */postimage) &&
- 	rerere_id=${rerere_id%/postimage} &&
--	test -f .git/rr-cache/$rerere_id/postimage &&
-+	test_path_is_file .git/rr-cache/$rerere_id/postimage &&
- 	git checkout -m fi/le &&
- 	echo resurrect the conflict &&
- 	test_grep "^=======" fi/le &&
-@@ -182,7 +182,7 @@ test_expect_success 'rerere and rerere forget' '
- 	check_resolve_undo kept fi/le initial:fi/le second:fi/le third:fi/le &&
- 	test -z "$(git ls-files -u)" &&
- 	git rerere forget fi/le &&
--	! test -f .git/rr-cache/$rerere_id/postimage &&
-+	test_path_is_missing .git/rr-cache/$rerere_id/postimage &&
- 	tr "\0" "\n" <.git/MERGE_RR >actual &&
- 	echo "$rerere_id	fi/le" >expect &&
- 	test_cmp expect actual
-@@ -196,7 +196,7 @@ test_expect_success 'rerere and rerere forget (subdirectory)' '
- 	(cd fi && git rerere) &&
- 	rerere_id=$(cd .git/rr-cache && echo */postimage) &&
- 	rerere_id=${rerere_id%/postimage} &&
--	test -f .git/rr-cache/$rerere_id/postimage &&
-+	test_path_is_file .git/rr-cache/$rerere_id/postimage &&
- 	(cd fi && git checkout -m le) &&
- 	echo resurrect the conflict &&
- 	test_grep "^=======" fi/le &&
-@@ -208,7 +208,7 @@ test_expect_success 'rerere and rerere forget (subdirectory)' '
- 	check_resolve_undo kept fi/le initial:fi/le second:fi/le third:fi/le &&
- 	test -z "$(git ls-files -u)" &&
- 	(cd fi && git rerere forget le) &&
--	! test -f .git/rr-cache/$rerere_id/postimage &&
-+	test_path_is_missing .git/rr-cache/$rerere_id/postimage &&
- 	tr "\0" "\n" <.git/MERGE_RR >actual &&
- 	echo "$rerere_id	fi/le" >expect &&
- 	test_cmp expect actual
-
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
--- 
-gitgitgadget
