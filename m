@@ -1,156 +1,131 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A0244F57A
-	for <git@vger.kernel.org>; Sun, 18 Oct 2026 12:32:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5314B99D8
+	for <git@vger.kernel.org>; Sun, 18 Oct 2026 13:26:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792326741; cv=none; b=HWLuyf9hF5CvTYC5GzTyUdv2qm6aMMQSY9UHPPjMcaZkf1ZQon8UT9QaHPj0DlRTziPFCA/4VpRFmZHw8gajfipOpt37SlPhCRoekRJ2//tv5OXK0FwumLCYHEABX8b5vpj+evsmwvAO4fHDwIbbdmQVC/JT4Td+d+7Kk5mMwzk=
+	t=1792329976; cv=none; b=ssaK69yUttjykZ6qcEOiTt8miPp0nU4oIoGLU1/KzoEB8CPGhKHsPq8CdTR8qrZmNFSTMdwc6WlNmEjQDxkM0pnlln89seN2YEL8t38QQUFwwRtVOQprAnrydI5+iCFAiUWqpW1YrQNtfFFH2MAyDWWYwc/up7bYVk5IHBzC7H8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792326741; c=relaxed/simple;
-	bh=yOY/Ynfl7OtEh/dQ1a2zHYKflUrEEWsZwIRw3bIcZPk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tuc+UWvrw8XoOUjdZzuQ9K94TJBlYIwanxrlRA4CdrbeM7QVaIg0i90a7T3ExJ7uQluaOyXuqIVBZK5rGwJ69350q6awFDWhgG2fwiHBOLq3VQJXqQxYUeXjs1kSc9BDKzECfxlaSL8E2JdlUaky6Rqa3o7AmDmtXiXB2DTLM30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QmNZDOvw; arc=none smtp.client-ip=209.85.221.54
+	s=arc-20240116; t=1792329976; c=relaxed/simple;
+	bh=YG2TbqBlG6R2LlchOVZeH9s2CAk5OuUOsaLVqsiHWbI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PrTNiCwnSaSLywkYNLVW2avVjk4GJvbH5oaDuZ4rgRdyd+N+pqwTfRyu6KZaLRrqYabJmWtWB1SqKA/34TmaJQULioag5M/ivt3ERalEpb3DO9KGQ5ZHPnVMoeVO3zjwyX0/+Ocb92K9JBaQH2m0fsVpzECBFCG1NvRdEAZBjSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h32hWUfh; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QmNZDOvw"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-48df4e9d2d4so676178f8f.3
-        for <git@vger.kernel.org>; Sun, 18 Oct 2026 05:32:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h32hWUfh"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c434376dbebso65205566b.1
+        for <git@vger.kernel.org>; Sun, 18 Oct 2026 06:26:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792326738; x=1792931538; darn=vger.kernel.org;
-        h=content-type:content-transfer-encoding:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=E8zwn/9SAl0KsrUI0mq6ftAPHEOyE4rQLCzl3DdXUaI=;
-        b=QmNZDOvwHNFkRIWKVuXEXt9DDgYU6IwDjTdOAT/4f988KMiZ5X1hYbt7fY1oICCMV1
-         ghGv+rzGYEfjUz4HIA9wDxuaYFcdenZYn2VmGAXRH6Ce7knBCCb+o5iHthS3f3JFtD01
-         v5iKR1+o6MWLgQEDECKQ99QDTpojyNzVDdJvbMHQIbbqwgo9I1WpcXU2cPbHZtrxciIM
-         aqK2v4hFb+NVkBVt8Z6meSAbafycvMGH1PKPAc/ttEMxf9YYcWh3eRcfjFXcHsNJz9sG
-         xY8JVZ6CcuJteps2tAh54PP4JsM1J6QLHP1AO2qrsvZmOmxLGQn9tLd+1tJMnsQEYyKo
-         bK8g==
+        d=gmail.com; s=20251104; t=1792329973; x=1792934773; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=X6FuOB0zNsZhlgZ4+imDL53icjTydUlZQCX/VwvnW3o=;
+        b=h32hWUfhC4/cmlVWiSQEqds7EQstXuF7s6L+L3Y47nbrLnkiHK/M0TRwHDpMN5OMAI
+         8HlsUzpSjGXjLNqsEqqjDr1ljiccEQmyiPcb+ZJ96MwUndcTGyHOcxYo7QYEmYJG7UOt
+         HoYq18jP3fkZ7Cd6bPqQIwQk2ZPbpQ6xes/WJc2nlrpGutWSeweyS4hQIzQnXTAQRfIS
+         B4yLryzhuceLkZlkGZ9oqkGLF26YCtlsXDc+FzZm4r5tOJzUc9NUwPNfmNzUsc242OAC
+         A22NgNAssjpeWmBFQF+OHgkPPQjtC7TLSVEWCck0MClNKHzBdimEYaHaCiytz1EPdlpA
+         /WhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792326738; x=1792931538;
-        h=content-type:content-transfer-encoding:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=E8zwn/9SAl0KsrUI0mq6ftAPHEOyE4rQLCzl3DdXUaI=;
-        b=xcBP9fk7ZiX3JZ4p2K7lhPy4Ye1E0r3WFiuOUQPbuL2pPTuCvN8T4QdsVanbCqA9NX
-         Otv4PnXsrZFH31MLSAPz6dziB7LgrkPcbHl6jeOR7FYv2kME4UpucDRfxjm/Ux58y7ch
-         7L7nIwjvnJTl7UStKgPLSCsneJgf7ISI0wLrpxBhGjfIMTFfDdK0cp2FnjKIh6IueA5p
-         0EMxpGDSVBhfDK3q2NyVy1HLHrD4ijNrNVHjE5E0U+ngbVnUqaQg0L5b+usCPtEzuNmh
-         Q6N0IZrFkyUI5W1vcEbQdKXOUynGbFb3cQlplBSOaYNgpR7NVE1rEqLr2go2IUp/FyxO
-         BWQA==
-X-Gm-Message-State: AFq9FYIAAlchNQ5UjN8WSMR0TEtkvaTeTI5Lrt/+nW/algNAiOC6mUQ/
-	gmO5O43jv9ZyGo2qfhFWJC7/0jP7VQxZa1Xw7g0SbloxFylIQyKBfrpNCF+VnEg8
-X-Gm-Gg: AYBFou0SNxWZU77S0su4TI+41AsdU/fhakLxZlJVQEw255tFCqcSldZ8GxPQU9BRHxN
-	5KgbsIsYH6M6XI9tU2EPUu/0HHxpkIhkV8x2nyFyo03YXprPPg16Lbtwiwt4PWTsY672rEKuNoH
-	0Ly1IFI6V5JFcPQJkGlnVtPGBd5SV9/Qb2uouqbQyCdooCZ0PoyK8SJv0x1KITOFlZGWvxOihLk
-	AFd6OP7/0oK+A9qVpAB+XjTydAb5MoXbBGMFQySFvGWn56RlMPadDFdf2JxqS9CfZGT1OBekeqR
-	wObbA1hNgDiQPxAJYpNEmByhwz9iynWyBtaMy3zdDjLAY079swRItRtLA6+OfPW9vXOJGtkj4nA
-	9p+CxiQVL4/Uzx2znD/vkQtH1kgIGJWhu6JpPWg8YsYZlHx44E5CDlb9rhnjDOkkDE3D9ezHovH
-	9dMSSl5SOZowwvbPZMD6OM8bojfqNrCavyBVBQA0wl+ZCtSqNA4we8zmrdwRqbjZqPsB0nj2K1E
-	+y7UtI+oFxX5A==
-X-Received: by 2002:a05:6000:2dc8:b0:48c:4d32:ccf8 with SMTP id ffacd0b85a97d-48e07bbe524mr9189533f8f.16.1792326738276;
-        Sun, 18 Oct 2026 05:32:18 -0700 (PDT)
-Received: from piment-oiseau.localnet ([2a01:e0a:1169:f360:6ebe:9fef:71c6:8f8])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48dfd4d4978sm15416688f8f.21.2026.10.18.05.32.15
+        d=1e100.net; s=20260707; t=1792329973; x=1792934773;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=X6FuOB0zNsZhlgZ4+imDL53icjTydUlZQCX/VwvnW3o=;
+        b=iGHPJ35SseLsHhGJSBAhgtdKSHDOgDxLgPp4U4JIlxldKkA5bCgZMOOXR7qrU1A43n
+         SLIIz8IsZBvi23P3jt11MFpIgj1MM8ZVqdBJ3n7wzVLsC0PdS1iZ1bWiazjqe2YmPs4n
+         eh4mbQYPWgKNApo5tWriqvDRZJKkWwXJNIk8DBFZE0lPSh9QZviW8lTzhqhRqvqtOnLA
+         HXGd73rhOuZav7lEXGb8FiHr5AKvYKRBtKRf06TynN2pTrcizXwXAXY/G40CHZNsDLGV
+         t5/YVP6o5bMiRCinvOO47uWqZWpGNf3QIuC0lUi6AfxDwRh/By/g8rgd+nA0ao+1q+OK
+         hUkw==
+X-Gm-Message-State: AFq9FYIeDo8KFLaIlFvQAK9ZviiyFS1lE5trXhDGn2sHA62Dh5bQLPDm
+	pvfLUINlJW8nbrhZ2MyeirCFM1AmBaQJ/dSXMn4Dr9qMEYCs9kjdJCCHSOAJ+fE1Ev0igA==
+X-Gm-Gg: AYBFou1aTd1NBl8GKcwsTbhkaRHqjQGuq26XAdlhhz1hQPC2b9wmMDRqSs3QHhPNtJ3
+	gA4GcMkW+t63aeVa5SAnmG8cFBMrCbUiodWLzaeB9q3IvfLnzYtSefa+6tmBrzHe6zrHW2lgzde
+	w5+/1oF8QVRNDIIwGREC+iS2sDj6rCtNHcyanE3qmlypt37d6PBn/G2/8VhiyibvuATpXO9rRsS
+	cp1KSqbJZxQ4KGG3nzUr5+wTUBgAiHfkQVeCtFZ6ggrsuV0AgqqslE1WJ+C+ZC8K0bpQA/l0nRF
+	7KN3XOGXm17zbFaqR1zA68i3L98IW36zxOa3ZF+oo2s2IdOCr9kDPWawbHYiTq2aA03cW5UsMGT
+	YGwFCCGFYB/AhMP8Q/UDNWEzX7B/T5jd+jN4QZmD7CMOYrNvzW1J7sLD2SipQVYHAk1aRi7EMBs
+	SmM7I1nD4d79tuFcflTr5YH10X1ScljbG0LbUD3cbPhtz9R5PzHdN4fZ/QgHllSnYhEYi9FK8=
+X-Received: by 2002:a17:907:72cf:b0:c2e:22f7:59c5 with SMTP id a640c23a62f3a-c40206fb12emr661591466b.7.1792329973209;
+        Sun, 18 Oct 2026 06:26:13 -0700 (PDT)
+Received: from omris-tuxedo ([217.71.1.73])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c40918c5f47sm269119366b.51.2026.10.18.06.26.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Oct 2026 05:32:16 -0700 (PDT)
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <avila.jn@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>, Julia Evans <gitgitgadget@gmail.com>,
- Julia Evans <julia@jvns.ca>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] doc: add more AsciiDoc cross-references
-Date: Sun, 18 Oct 2026 14:32:15 +0200
-Message-ID: <meK9MCd0TPmi4tPMhh-XUA@gmail.com>
-In-Reply-To: <665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
-References:
- <pull.2416.git.git.1790105342890.gitgitgadget@gmail.com>
- <xmqq4ifhdon2.fsf@gitster.g>
- <665e8f8d-7bde-449b-a390-10875135cba2@app.fastmail.com>
+        Sun, 18 Oct 2026 06:26:11 -0700 (PDT)
+From: Omri Sarig <omri.sarig13@gmail.com>
+To: git@vger.kernel.org
+Cc: Omri Sarig <omri.sarig13@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Julia Evans <julia@jvns.ca>,
+	Li Chen <me@linux.beauty>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] doc: git-rebase: Update incompatible options
+Date: Sun, 18 Oct 2026 15:25:41 +0200
+Message-ID: <20261018132541.131506-1-omri.sarig13@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Tuesday, 22 September 2026 22:54:17 CEST Julia Evans wrote:
-> > Oh, I love a change that is so sharply focused on a single issue and
-> > describes what the problem being solved is.
-> :
-> :)
-> :
-> >>      * I tested it by running this script
-> >>      
-> >>        (https://gist.github.com/jvns/039c8ed0add092f2179f0dba52ebb896) 
-which
-> >>        builds the previous and current views of all the man pages. I 
-looked
-> >>        at the output to make sure there were no differences. You can see 
-the
-> >>        output in that gist.
-> >>      
-> >>      * I believe that asciidoctor will automatically make sure that there
-> >>      
-> >>        are no broken links.
-> >>      
-> >>      * I also spot checked some of the HTML output to make sure it looked
-> >>      
-> >>        reasonable.
-> >> 
-> >> diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-
-options.adoc
-> >> index 035f780e58..47dea1de8e 100644
-> >> --- a/Documentation/fetch-options.adoc
-> >> +++ b/Documentation/fetch-options.adoc
-> >> @@ -199,7 +199,7 @@ endif::git-pull[]
-> >> 
-> >>  	providing the tag refspec.
-> >>  
-> >>  ifndef::git-pull[]
-> >>  +
-> >> 
-> >> -See the PRUNING section below for more details.
-> >> +See the <<PRUNING,PRUNING>> section below for more details.
-> > 
-> > OK, we already see an example of the <<double,double>> reference
-> > notation.  This needs to be in this form, intead of <<pruning>>,
-> > because it refers to the named section of a different file, namely
-> > git-fetch.adoc (I am just trying to make sure I understood your
-> > explanation correctly).
-> 
-> The reason I explained this in a bit of a confusing way is that I'm not
-> 100% sure in which exact cases we need to use <<double,double>
-> instead of <<single>.
-> 
-> I double checked just now that if in `git-push.adoc`, I change:
-> 
-> 	of a remote (see the section <<REMOTES,REMOTES>> below),
-> 
-> to:
-> 
-> 	of a remote (see the section <<REMOTES>> below),
-> 
-> Then there's a problem where in the HTML version it displays as
-> "[REMOTES]" instead of just "REMOTES".
-> 
-> But in the <<PRUNING,PRUNING>> example, just using <<PRUNING>>
-> seems to work. I started working on this way back in December 2025
-> so I assume that something in this patch was affected by this issue
-> and that's how I came across this problem but I'm not sure exactly
-> what it was.
+Several options in the rebase man page were described as incompatible,
+where this is no longer the case:
 
-I have a strong argument for using <<PRUNING,PRUNING>>, it is that the manual 
-pages are now translated and that the translated term can require changes in 
-the target languages and not be compatible with simply inserting the title, 
-where English is very malleable.
+- Commit 1a66d8c6f658051a02b6d8f024e80e06fccdcd11 removed
+  `--allow-empty-message` for the incompatible option list, but did not
+  update the the documentation of the option itself.
+- Commit a74b35081c51adbde3ef01870ba03e859db33be6 removed the
+  `--preserve-merges` option from rebase, which removes all
+  incompatbiilty references to `--ignore-date, --reset-author-date` and
+  `--signoff`.
 
+Update the description of these option, to no longer reference the
+INCOMPATIBLE OPTIONS section.
 
+Signed-off-by: Omri Sarig <omri.sarig13@gmail.com>
+---
 
+I've also found out that the option `--onto` is now mentioned in the
+INCOMPATIBLE OPTIONS section, but is not referencing it from its own
+documentation. If this is not intentional, I'll happily send another patch/V2
+to address this issue as well.
 
+ Documentation/git-rebase.adoc | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
+index 6536ebdc90..9fd3cf8ce2 100644
+--- a/Documentation/git-rebase.adoc
++++ b/Documentation/git-rebase.adoc
+@@ -334,8 +334,6 @@ See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
+ 	and this option would override that behavior, allowing commits
+ 	with empty messages to be rebased.  Now commits with an empty
+ 	message do not cause rebasing to halt.
+-+
+-See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
+ 
+ -m::
+ --merge::
+@@ -489,15 +487,11 @@ applying (in terms of the author date).
+ 	Instead of using the author date of the original commit, use
+ 	the current time as the	author date of the rebased commit.  This
+ 	option implies `--force-rebase`.
+-+
+-See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
+ 
+ --signoff::
+ 	Add a `Signed-off-by` trailer to all the rebased commits. Note
+ 	that if `--interactive` is given then only commits marked to be
+ 	picked, edited or reworded will have the trailer added.
+-+
+-See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
+ 
+ --trailer=<trailer>::
+ 	Append the given trailer to every rebased commit message, processed
