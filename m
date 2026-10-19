@@ -1,61 +1,61 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A548C4D9F8B
-	for <git@vger.kernel.org>; Mon, 19 Oct 2026 11:09:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0AF24DE711
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 11:09:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792408172; cv=none; b=pvW8KbobQv/UN9Erq1cXNztbcrLSsZfxpmH3+Lr93bXPLsDX+3XUcNbFgStj+OHFjEuUL/KRJ6Sr46XONDUo3kqZvd88JHWn/PyFz6iWcu5fpZtwBrW71D2poFSwTR+qFpb1id+YmLQvK5g0L2/vl+/6XvK+1MtuOQLzazq8UGE=
+	t=1792408174; cv=none; b=Ylhg+GPuj2/b4Hxjs0aKNty9c3qbpbEC8JPui4YT0u9aOYqSZpazJp3aC56o1GPRWa81IgTDvWIAJ5IRTIcAg2oPWia/bit0r0SN82qurgtkV06NruE/ZqMQHx7Bl8qsLpsiuCa+vCNVLq49PmdorYW3gcCXp2sH8q8Vml+9MOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792408172; c=relaxed/simple;
-	bh=1xXdh5Q5YYolzNm4PsHLvKfRfkrby+2R/RyJijvcUVk=;
+	s=arc-20240116; t=1792408174; c=relaxed/simple;
+	bh=EyAQ5+scAYS/qj9Hut/bgNACAmHQTb2M1EC7whwzaO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L01DZgtJ7jansgFmGRPxo4ot4URvJFMRkSszyhp2UiquPbKo9aEimOqu3kwiVrrhdv+sxktP5JzT7wAYK+IB7KH1M8WSgKFE1iNNGqrXGrZzkr58jzrA+065+3DNOO8JxOqAoAAqBtNFWJKGaP70N9ssmbMD/u2NVV2BgIRbcO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gitlab.com; spf=pass smtp.mailfrom=gitlab.com; dkim=pass (1024-bit key) header.d=gitlab.com header.i=@gitlab.com header.b=dagYb6hF; arc=none smtp.client-ip=209.85.221.53
+	 MIME-Version; b=bAvLL7/ELpsWVQjHop+xMc6kTcYTUStxBuHckMlOaGX29OeoLlHHZokc7IQbL/emVXjAZgsZURcMaySmlxL3LWuaKSb+eVKFt9bWtRQzqLeFMvans3mgzKvQMhLZJIUNG5r4ldcNy3p0ABdtxqPEnXUW5L+q1FY2wXrqYmxQl44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gitlab.com; spf=pass smtp.mailfrom=gitlab.com; dkim=pass (1024-bit key) header.d=gitlab.com header.i=@gitlab.com header.b=Dnv1/otZ; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gitlab.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gitlab.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gitlab.com header.i=@gitlab.com header.b="dagYb6hF"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-48df0fa43c5so1439005f8f.0
-        for <git@vger.kernel.org>; Mon, 19 Oct 2026 04:09:30 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=gitlab.com header.i=@gitlab.com header.b="Dnv1/otZ"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-48dfdd0678dso1293398f8f.0
+        for <git@vger.kernel.org>; Mon, 19 Oct 2026 04:09:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitlab.com; s=google; t=1792408169; x=1793012969; darn=vger.kernel.org;
+        d=gitlab.com; s=google; t=1792408171; x=1793012971; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=JfyrS9dEYV2k0iud8YPLXlNgM02vLB98UFtPS/gD/GA=;
-        b=dagYb6hFQca4whDtWV8MNzP0mY7W60SvLGmiwdSfWpr4Syh1OC16aqYYYRnVLWcuYk
-         39DM253rierSJ3ePHR6c7U6/rfwxBthA6zfITVbrSB2X4LOsrSyqnIS/6XrIn+kGFpOp
-         kdlhngkgVC8fA4RIou/yYynwmqz73fIaT/4jQ=
+        bh=N8l6yktrgpDp3zxGyGvOK3xVcd8++eBzfgnniuRC4EM=;
+        b=Dnv1/otZ0XVV/3YpkpeORC4p11ca3wBdNY8HeHrtJ4d3t9an/cS+jC6MoMCd6YyD6E
+         ZO5ryG0B0P7i9kZBBeA8KJ8WhWbK9GHFQ9FOx3utu3s0ClJ7UGhE4m17VNjCzhaoO6Xd
+         I/IpI2joUII/Bc7IjS3uWQGu2eLfuz9rWux2k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792408169; x=1793012969;
+        d=1e100.net; s=20260707; t=1792408171; x=1793012971;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=JfyrS9dEYV2k0iud8YPLXlNgM02vLB98UFtPS/gD/GA=;
-        b=woDukSB6LKAbdS6RplEBrwWhcSCrsU3cvK3Y78YC33N22AwVCKaO9WH8LMXHHLORr6
-         IeCCG0A+J0PhMvtQfDTdmwPC3SIb01JvSc8hjylUyAI8FmFkFgDtHZPEJLobrQpDb+eD
-         yhEpo3kACOpgn8SWM4evEq/Y31aIkNJnFe3MmRbPCWQW8+ve9XDIenBWABx0DDeOt1x0
-         V2YYqwzsjD8yH9RoklIn3o+lXzyUPdfodRGZHHYWyoKumDDKQ/1O08+2mfGeAnh6jtGg
-         klsVpo2WL1w40CCNCR3Nl7C6k/YcCIPDMUJXJ/hVhWT9OUvlYenbgYPwFg7COk4zDx9R
-         s91A==
-X-Gm-Message-State: AFq9FYLu9n8V3UWLPShRwyW4CT1orPnctzOuOSY9AcmTCd5Rr2BLPkHf
-	WRHCUYuf4IcvEfnioAdsi5x3Q1oKSFVeN52dSe9zKQFuI5h3t6GJsMJ7vIfXbzmEJCXvQiKP7ni
-	TUTPtE1vvTg==
-X-Gm-Gg: AYBFou1gwHG2GEl0QOaYOF4xaSeefeXcymsY8HtTOXt+0wWVroZ9SUZWrzxRxkErgx0
-	2vvmN9e5BDvkbRfoLcyF61ROCodrbYoBEwKkUpwMLHPckUcX0Gw2nqaUJo/DlbbP77nK3EAoFAx
-	tj8ufDFvxkftIRI/wFNatFLbydt6rS8fJlAK/OqTKoT4GoTXWsgwOIt8pcfg2EeK0nDImLO6UhK
-	mlyCfKFhUe6CLGouwO3ex253WmCeRsApXPnKW/oHfCPrTGzBNA+HZJSJl6P0oJ41doWpXUmD5WY
-	PY4FoVV+aRBBTiC9hEmKODZ9fBThBE12mSyMwpjD87AHjvbS0jZQEdYgHCfaQXAvYTEDdvWMoCX
-	HIEXqN9WidSZ8w+yjw9j9SXT/CoIYVST9wZPjPm3UAyrsBM6H/D740JF5CJKnFc1Q+ldY/iiBU+
-	DkY5VeJp3/i8iQ9M87v74Tu11pHCDR7osDnvRLwgRg9JzCFAGg8joqQYk4X04qH2sfpmgN1pNMv
-	C+hpdDKhUkVnyK6h1vNI5QutOMyMLPAxqqz/Q==
-X-Received: by 2002:a05:6000:4b1d:b0:48a:fff3:f9c1 with SMTP id ffacd0b85a97d-48dfae76fdbmr24123071f8f.20.1792408168781;
-        Mon, 19 Oct 2026 04:09:28 -0700 (PDT)
+        bh=N8l6yktrgpDp3zxGyGvOK3xVcd8++eBzfgnniuRC4EM=;
+        b=mgsSkjo8Let3+fl1DVVhcC/I4rUP9e2sd4qbEHNZ+twyeVLd+YbzVZXY41rm5spTwM
+         GwMbl+yd58dBTQsxvPskIz9pJlKHZEBPrEeIZSeN7uSGWC8ZNrtbP8BR5+1rl4mAEgLs
+         CmJa8JgvFY6TRXcEJ4MWGHBN+aAh369WxTEle9nsnl2RIUwoJZ3Mtkz/xfNOLU5sPAzf
+         EWTVqmWA56uUg4+s8gkRistRlGmyiC90P9Ck06ZsK6+lwGUrlQ8T9NpBba0bNlSMDSAL
+         2aSK6y5oauQ/wzVUNGafHIEMrtQaOlxzCzzm3aSdaq+WO2Z0I4siLAFTXt9GlBwp0+Jj
+         ri2Q==
+X-Gm-Message-State: AFq9FYIf5xfc+Tl+VfhYPO9Uwrz1fMV0jnHURP/Lw+wctIZTLX5R9Ema
+	UCc0Yx5THFEwWwLATvywU5GZ37Ra82RI4CD685oBywAFwIsd6KpWia9OWIiGdg1BQnUud/ll5Kj
+	oLtwPypItRw==
+X-Gm-Gg: AYBFou2T4E7dlPVPIA5/fQAde4l5j/OM0BsLBLIjteAtDs1iZmzbNoHKY+3ZShNra5t
+	wasikkdRfzRhapmG1BnCGwofB/Axd9FVGmWovTER1Tlt4Z6obOv9eNkhWqG5Gj+P8jjEHN88b1s
+	2ZknCwBFn9WFtAsaKkvY0ume4kF1nrChjLL8sQkyHF+mAYdYBKfIgHwB7Hn9Y/V+K8FK3fgA96A
+	wpG0jB3VVZB7bUXrW4ZdViPzNzbvA5U0ANoD+VLlQrepVPQ6q9Fq0yAPiw5mcy+Xp7nMMdNbe8K
+	CORmhi0NoWJq2n3+eW+sUmdnV1isnRB1LaStxf5necM8+WqdTr5XNCTei6f74DG1vy9CpSQ1zPS
+	lFhmOssyaLBH1owrmEu+UHqnXcKOGx2Tu1vJFWSmmS6AkLscs9JxrzzORAgjwV35cHYWP2JBLbR
+	eBzvHoFZP8r8hSjdSHid4IupgRe6fSVHFiaxedkeaa8QOoktojVau2huX9wDPJFsKbSRY29K0Gq
+	/ax1oI4xXXWx7FAW7bmo9imXEHLCF60stC52iBMh7M9hnc0Vg==
+X-Received: by 2002:a05:6000:230d:b0:48e:1299:663f with SMTP id ffacd0b85a97d-48e1299672fmr7593530f8f.56.1792408170893;
+        Mon, 19 Oct 2026 04:09:30 -0700 (PDT)
 Received: from iwiedler--20220823-X3P9M ([2001:9e8:a97:4482:588f:b276:463d:6918])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48dfd4d4dddsm22208956f8f.22.2026.10.19.04.09.27
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48dfd4d4dddsm22208956f8f.22.2026.10.19.04.09.29
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 19 Oct 2026 04:09:28 -0700 (PDT)
+        Mon, 19 Oct 2026 04:09:30 -0700 (PDT)
 From: Igor Wiedler <iwiedler@gitlab.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -63,9 +63,9 @@ Cc: ps@pks.im,
 	peff@peff.net,
 	jltobler@gmail.com,
 	Igor Wiedler <iwiedler@gitlab.com>
-Subject: [PATCH v3 0/2] connected: fix the connectivity check with alternates in deepening fetches
-Date: Mon, 19 Oct 2026 13:09:16 +0200
-Message-ID: <20261019110918.71193-1-iwiedler@gitlab.com>
+Subject: [PATCH v3 1/2] connected: negate alternate refs in deepening fetches too
+Date: Mon, 19 Oct 2026 13:09:17 +0200
+Message-ID: <20261019110918.71193-2-iwiedler@gitlab.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261014181134.56220-1-iwiedler@gitlab.com>
 References: <20261014181134.56220-1-iwiedler@gitlab.com>
@@ -77,35 +77,105 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In a deepening fetch the connectivity check passes "--alternate-refs"
-as a positive revision and walks the alternate's whole history. With a
-7M-object alternate that takes 227s after a fetch of an empty pack.
+The connectivity check spawned by check_connected() uses
 
-Changes since v2:
+  git rev-list --objects --stdin --not --all --quiet --alternate-refs
 
- * The shallow alternate test wrote $TRASH_DIRECTORY into
-   objects/info/alternates, which git on Windows cannot resolve. It now
-   uses Peff's version with $(pwd) and relative paths.
+where 39b44ba771 (check_everything_connected: assume alternate ref
+tips are valid, 2019-07-01) added "--alternate-refs" so that the walk
+from the fetched tips stops at the refs of any alternate object store,
+on the assumption that the alternate is already fully connected.
 
- * The trace tests use $(pwd) instead of $PWD.
+That only works because "--alternate-refs" comes after "--not".
+cf1e7c0770 (fetch-pack: write shallow, then check connectivity,
+2018-07-02) drops "--not --all" for deepening fetches, since those
+need to verify the whole chain up to the new shallow boundary rather
+than stopping at refs we already had. For such fetches we therefore
+run
 
-No code changes.
+  git --shallow-file ... rev-list --objects --stdin --quiet --alternate-refs
 
-v2: https://lore.kernel.org/git/20261014181134.56220-1-iwiedler@gitlab.com/
-v1: https://lore.kernel.org/git/20261014103507.35317-1-iwiedler@gitlab.com/
+with the alternate's refs as positive revisions, and rev-list
+enumerates every object reachable from them. Unless one of those refs
+happens to lie inside the newly fetched shallow range, where the
+grafts cut the walk short, that is the alternate's entire history.
 
-Igor Wiedler (2):
-  connected: negate alternate refs in deepening fetches too
-  odb: ignore refs of shallow and grafted alternates
+This is slow for setups that attach a large alternate to a fresh
+repository and then do a shallow fetch of a ref that is a few commits
+ahead of the alternate, which is how CI runners share a clone of a
+big repository between jobs. With a 7M-object alternate (a bare clone
+of gitlab-org/gitlab), "git fetch --depth 1" transfers an empty pack
+in under a second and the connectivity check then takes 227s. With
+the alternate's refs negated the same rev-list finishes in 0.0s.
 
- Documentation/rev-list-options.adoc |  7 ++++---
- connected.c                         |  6 ++++--
- odb.c                               | 11 +++++++++++
- t/t5618-alternate-refs.sh           | 25 +++++++++++++++++++++++++
- 4 files changed, 44 insertions(+), 5 deletions(-)
+Pass "--not" in both cases, before the branch that adds "--all" for
+non-deepening fetches, so that "--alternate-refs" is negated for
+deepening fetches as well. Such a fetch still has to reach the new
+shallow boundary from the fetched tips without stopping at our own
+refs, which is what cf1e7c0770 wanted. It stops at the alternate's
+refs, as every other fetch already does. Move "--alternate-refs" up
+next to "--all" so that the arguments that bound the walk are in one
+place.
 
+Add tests to t5618 that check the arguments of the rev-list child via
+GIT_TRACE2_EVENT for a regular and for a deepening fetch. The result
+of the check is the same either way for a complete alternate, so
+there is no behavioural difference to assert on. The difference is
+only in which objects are walked.
 
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Igor Wiedler <iwiedler@gitlab.com>
+---
+ connected.c               |  6 ++++--
+ t/t5618-alternate-refs.sh | 12 ++++++++++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/connected.c b/connected.c
+index 929b9bd28d..cdf103bba5 100644
+--- a/connected.c
++++ b/connected.c
+@@ -121,15 +121,17 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ 	strvec_push(&rev_list.args, "--stdin");
+ 	if (repo_has_promisor_remote(the_repository))
+ 		strvec_push(&rev_list.args, "--exclude-promisor-objects");
++
++	/* define where the traversal should stop */
++	strvec_push(&rev_list.args, "--not");
+ 	if (!opt->is_deepening_fetch) {
+-		strvec_push(&rev_list.args, "--not");
+ 		if (opt->exclude_hidden_refs_section)
+ 			strvec_pushf(&rev_list.args, "--exclude-hidden=%s",
+ 				     opt->exclude_hidden_refs_section);
+ 		strvec_push(&rev_list.args, "--all");
+ 	}
+-	strvec_push(&rev_list.args, "--quiet");
+ 	strvec_push(&rev_list.args, "--alternate-refs");
++	strvec_push(&rev_list.args, "--quiet");
+ 	if (opt->progress)
+ 		strvec_pushf(&rev_list.args, "--progress=%s",
+ 			     _("Checking connectivity"));
+diff --git a/t/t5618-alternate-refs.sh b/t/t5618-alternate-refs.sh
+index 2fb6d549d3..3c5fbef463 100755
+--- a/t/t5618-alternate-refs.sh
++++ b/t/t5618-alternate-refs.sh
+@@ -58,4 +58,16 @@ test_expect_success 'log --source shows .alternate marker' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'connectivity check of a fetch excludes alternate refs' '
++	GIT_TRACE2_EVENT="$(pwd)/fetch.trace" git fetch origin &&
++	test_subcommand_flex git rev-list --objects --stdin --not --all \
++		--alternate-refs --quiet <fetch.trace
++'
++
++test_expect_success 'connectivity check of a deepening fetch excludes alternate refs' '
++	GIT_TRACE2_EVENT="$(pwd)/deepen.trace" git fetch --depth=1 origin one &&
++	test_subcommand_flex git rev-list --objects --stdin --not \
++		--alternate-refs --quiet <deepen.trace
++'
++
+ test_done
 -- 
 2.56.0
 
