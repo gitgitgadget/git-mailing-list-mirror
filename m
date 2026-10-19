@@ -1,87 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.53
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792427035;
-	b=QECtL1ANgGAeBih2WGpU6tD+D6OACOXqTxjMxVgqpsG4uutcL7dMb5ZO62Vg6TCNyfov
-	 darm3kBm4uoki2/lT2OXmp39WSx0859+pWDWvWoKqccKjjyqUGhvgVz5Q4v2r6wJNPrSW
-	 THmDZDbFQyDh0/Yx8DGr0WvKCd+z5ASU6I8NgajTdbBzXF7rreDYaASxwst3M8ThslY/T
-	 MM6gbfSsSlB/e8Xgu4PQ2eIhsXL2FUeIJIkdFg261TyvxWkbC6VyVZHY+s2pmRy1Y+Ic5
-	 hhzqZ0EI6hRYFzxVHLF1RZPKbekgJgonaM9s0TyAW9yKD1ta4P7lKP9lmtvzunsLQ2A==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792427035;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.51
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792427947;
+	b=k3WaIhMjambs26wrjQygA/JZRW8NYn3syrRNTU40ne751tqXcHBoV3Cx8XtgLFpcBxbM
+	 VA/+bs+Wz8mBI+RI5Z3tPtvxpdfpiAMqf0YwjqTH3svCFNcKsBkgLasZjq5cgTIEErP2g
+	 gRRfY6ZD4MMonSCf5Ce2Z2IGu6IRedl1cZ5r1zy7ZEaj6v0Fnq6eWf97orylDCMkjRSnH
+	 9QnRzcYwSu1MDgc0/PWtJ3J4nCEXklMkBzLXgPKdRwSl13Coj+ueBddL5FAPecp8XgLH9
+	 DDEbIvjAkg4CNLV0B7kOz53TKJRDeYrEU3YlSqqr/p+M8FPm3YQsWj7agOC24q/Aedg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792427947;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Content-Type:Content-Transfer-Encoding:From:Mime-Version:Subject:Date:
-	 Message-Id:References:Cc:In-Reply-To:To:X-Mailer;
-	bh=dmXl7c04auBJ186RaDTKZ9YevKHSIdMnvhKKHC6vAp4=;
-	b=Ajc/UM69PZT6uxVQNYCcd8Ho/69KYSyDlEkmP1CVkRPvQ13LW+08XVrE8DlQxsh4wout
-	 DTdRO2qTRGnKYKiVBrjHxrSL7155dmggZiHdALIUrVQsBn55HplzUp+ExIkhh3tBea4kb
-	 X0vc1LoBvRBOYAXRfKYKQZ9AvbgkVP67TZEdeIeRNoATWW/TB4LiEPnpColnSX57uayri
-	 LiHjxccdA2dFgrOOq0aLROVg2R1dCTw5y1YNVuIVZqwcByQzgERXRjJYXykLBb1lnoIXO
-	 5bnWK8Qd+Dyt1oxqr8DA6yn4Gi9Q8QDqa5uFLbIHgC6d8k8//pgi1mVm2A02F1MDV+A==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=wZWj63DDMLOUEKSUDtdpBBVTKcJroiiBMg5XfRaPcDs=;
+	b=nZXhD8DuOjgjXe9NPV6D52Xh9JEuMMGrDveGcVWWF8xhM4wonxm8xRhRgWfvHzx7LrWP
+	 NM+sevucOvM+Aekjmb6eiiMcnyZvlSIV+ZUsIXaJnxDet/Z1yJ9NX4LJwjxh6eJShxgOp
+	 m2LWPZea+JnChW33gsTamXfSMis3WQGCz7vmtxIPVS+5tM5m9dFZj8vxyEUYiBpXBguw5
+	 keAYwwW/iBDMMVHSuWIx+EVE2rx5e6ENHJjQlmXn4t0qMGvqZ43WPk3zcUf/dzun0SFmS
+	 +taNiZmmn1mrjGtvZW7JjGA1gRPs5bPBpLXGjodQi7pbW857nb+U3/t6RMPr3h2TtDQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=DapLdETy;
-	arc=none smtp.remote-ip=74.125.224.53
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=NGtNN7wD;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.51
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C9B606A31C
-	for <git@vger.kernel.org>; Mon, 19 Oct 2026 16:23:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A8C9B606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D154606A31A
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 16:39:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9D154606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=DapLdETy
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-6774639a8a4so1854413d50.0
-        for <git@vger.kernel.org>; Mon, 19 Oct 2026 09:23:54 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=NGtNN7wD
+Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-7c03a445cb8so1661457137.0
+        for <git@vger.kernel.org>; Mon, 19 Oct 2026 09:39:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792427945; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Ukn9ekmnPaAz4ftFqXyv7d/DbddWQNS6fvTfKpql7jnH2ny92hmSFEv8h/m3fwFUsd
+         gBZ9SBCT6RSo/DymVfnENOOsZHq0I3RU9IX57cJjkIJ4GJz0mxK+puQOLX/JXyeunDVt
+         oiV3VxljVwqYi7JLLzSHxEZofvg2aMf+MKwLsw3WGeDwEJpCQjrP+k5+0riOZ5gOhwbB
+         AysnsuI+BQBC3L1cTBCQDRtn/G/VlnI1vKFi+VU6F3C+S7XR7U8Ph+kekJhzVGvkKRsD
+         CeMDOj1bEZ18Hclu9Ap2FY8qcjwdaAbI4y1Hh7kOQ+ENbKvF+nml8h6QFio85D+fiz21
+         sKmg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=wZWj63DDMLOUEKSUDtdpBBVTKcJroiiBMg5XfRaPcDs=;
+        fh=2BH7DRhxtn9nK6Btx+Qbsdd5Rj4kcqHg57UxxPU2FJA=;
+        b=Dabpe8FxXyXhkvjJ5D4ENuRQOPQxnHqXCbBcZx9SIZIKMWsSIrsVNyIXOGlLx5vgQd
+         4fs9e2WqHlL69V2QX/SgX/VCL13Pesm0WFCVT5Wfpyk0xT1EQyzMgXyrs8khUzl4D8c1
+         r09rG5U/oZYKuGje0RXJ360QjHAGj2eAuyAMHDExuS4udzExHRy6t1zf2vUxP6pygU6i
+         i9tOp+RHc7A+tRMdKmE5YIy3tv+tbNq9/tulH7G6KkjlF/Ism2APzAjnaUdzTXkrxFCj
+         8bG8bBnz/BsOBaFtTroQHY7kN1lVNA04G929TRctGBuinFeZKfq2273Xjt9DnXRuonSI
+         pIjg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792427034; x=1793031834; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=dmXl7c04auBJ186RaDTKZ9YevKHSIdMnvhKKHC6vAp4=;
-        b=DapLdETyhBRZjJELiq9stpgCVPyG7GzhNZhlxiR2q0Ru95p4a936r3B8xi9EB93jbS
-         roSu9mdKOCCPdw5hGJHBekl5m0g+Usnup4iqzpCDM4vLhVpfklamzDtCuC7jGZniiL5V
-         KZW7FucWEU69vZdBHJt/vTN357lbI0iEgx/Y8V06JCuclIr3qjccRFjGaEmkhAUEJgsm
-         3gWnm1+1oudpsRxEFShVIzxaRq0TOaI/eb4bGGkUIQBjKjv0RXZOI/cn7sDddh9JdghL
-         y0czopjD5G1vBT4mi8Ak9BvNYcaKX5my7waAXd6WHtO3nNEFW8hsf20u2pa/pvo9UWe2
-         DTgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792427034; x=1793031834;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1792427945; x=1793032745; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=dmXl7c04auBJ186RaDTKZ9YevKHSIdMnvhKKHC6vAp4=;
-        b=IWEyRZiX3FD8e/7BRro94OzB3SLHcYKFo7yVeEhGVM9qIrW92TzDKUG19YwDpK1H3P
-         YC/wMbrYBXp3yowHCI1ri9gtmJYFrL5niajWK6PFwUe4ku2wo3n3b1vxOva9sGj4Dd6s
-         h97J+Dyg8bjKxClwkjD+4jqqkIk1AkCOv05B18Z7dKToguZk2tIQLBsNxHQ0jLHhEWwK
-         UQy+ErLQdNcLWGCUv3eX4VXrn8h1kAZz9mE92Ofltvoo4G2Ma/jjGwHioWpEw9UDJCY2
-         yfC7infc/DFvuwx53Wdau8uqlB5QD3lQBYRUjLJ4YfEPZYJfCVxhWBfqdyzxEGlR46wR
-         BkRg==
-X-Forwarded-Encrypted: i=1; AKwUvBwj7uC1LkD4wWY3hTXsiJ+xLWaEPEIqYLRmxYQ5AjFpCDDqPSNWMjFZlaMfRw/6Fv+zzUk=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKKVvaXTDmR6wdxkojMj/9syPYd8W4lq1BNQFPTOX5yiIHMz9VY
-	iMFOWW4KOxjW87T9uf3NjuMhpYrs/xbEQMHLjs8F0C9zgsIr8GvJJ+jP
-X-Gm-Gg: AYBFou3mB9Rw4edViuyC9jQQUhA/4Cft6UXFbBnFnI6EphzSu2FhbVSX/mHSGebtW5K
-	v0zJjiGFcrt2rocwlDhow1ODgAACnR4NxbcSvyesoCeKeAkzqSOduKvVm388Yu+Nro6SKDkuc+d
-	3PnoWAVRWh+7+g/X20YiUyrlxilGwXX2KGZxEb5Tvpt/sEzjYP4IdyA00enJUhj2B3aEaOS/nmo
-	neLiVc3gFiFjAKlLxtEeSGtlubT2Xg5dalzI6mxQWfOYLj2xhtak7plMjzZqWVtMwEwvG553ZH8
-	OFDy+wmsayNhuA5A+nUxJNx3stgCFofihae5+yTvkFFDF5Sx6gjgmPttcWvMGnTJBGKBaqkAvBz
-	5WForSG2ITI8UEPhRyNZzSb7gPYwAW0GvsZCdpgzAZOnX4pMUH2nN3SBqTlatfRxh3EslC5EDo0
-	sH2cfsg0iXF3Fvw5SYYwNvY/s3WXjQoBs4nFQlGHUxdY5VJJEaumkXSlS/Sj9XfOPg5u7q44/7J
-	+j+fyHNccrBAgzGEPDAEao4TOkekRIEH+Xa5Do/hN0WF1/948beo+tT0NLYccS6lM/z76QJGRbn
-	0C9IV0D6hibuda0JWqOoZgju7dLPnsrGFsxjnJI9Ts6OE2U=
-X-Received: by 2002:a05:690e:d4b:b0:679:c916:46f2 with SMTP id 956f58d0204a3-679ca75a364mr1690184d50.31.1792427033658;
-        Mon, 19 Oct 2026 09:23:53 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:9092:700:1909:b48c:a809:b114])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-679b1e09d42sm4318852d50.4.2026.10.19.09.23.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Oct 2026 09:23:52 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        bh=wZWj63DDMLOUEKSUDtdpBBVTKcJroiiBMg5XfRaPcDs=;
+        b=NGtNN7wDdbPUMV0P9T0o/ijNrWpBNC6ksN7Qe99MNgahlAwY9UigGlhUC4Fhah9Zvn
+         KcNF2kp9dubiKE99GTnti00h/0kJnzapNZjaMjTme268Hm3AIbdpRx9xHK3Uexa2/mmK
+         yKzKUT2uDY/sO8+VpbsQNbZuXnu2CFdZFg0oYDydwWMUsgJkKwt6R0Veh58heKFUyT5e
+         6GVx6fmnwzFkfQn4HXkeCdu6YJScF4B4e4emiYiEEPlrCTElUY+6nbaP3gh/7vd86Q9p
+         xKPJmHZ3h6eeBI0cgrLSubdOVZPGE4Xsehzs2e49x26cIu48LOxmBC+qTKktWs/w01Ll
+         LtWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792427945; x=1793032745;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=wZWj63DDMLOUEKSUDtdpBBVTKcJroiiBMg5XfRaPcDs=;
+        b=oYbus1DlTdnH1OpTSLzKKOYvGd2t94qfNH894Xjk9E8tkqcIG1ETqjWhUJsy44whhl
+         LFkZ+7PWD4S8sSmDCH3zdJmZcOlo7A6i3agn432d5vbnSG+WqK9JufVsJ+W2VzNdIzJv
+         33X3BZ7sQiJH18IcZCFNiOFRvx7EOmWToGfE5vy2aV+RMJwOd13jSpERMW7KtVmK2kXQ
+         NGK1aSSnDap8Xzw1mV9mirwlDEW1J8zLSddiZzr5+DS3o0LCJrJxNdQca9CH7VLl/Eaj
+         sxhXp75UcOKkMu17EwiCyjkLvY3xfv/tOBqJPZneWmA7tbThuLR6DKR62xESTZa8MzPe
+         Blbw==
+X-Forwarded-Encrypted: i=1; AKwUvBxmMD9lvyURWrgpQ9ICmTJMi0kCDsA4f3IzzUxzPzFHrC7T//p4O/8ygwnHjpvT6uie8vw=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKrgUy2fGVVyo9hn8eSiRzZFRGk4pnBJk7/tg2NJWjavcTGykQT
+	inF5u+UPoecRVJt8rP0ADSd1Lg2dNIAnmQfd9grjgB8NxT/QMZim+GChoiFLdgQmdJNewnqSxtz
+	zQd0q2ToADZnffH2RVqiWaeGbcOJ8SnI=
+X-Gm-Gg: AYBFou37iGhOKtcGL8wY9i34WpsLIsh4xBxroA1G4Zd58uSSnsSK8kGSiDgmtcOKuQ5
+	fZ9XJ6JwPdOInzzIYDtGZ+e8R66h48InR9gUt6DZgnUcgUWFnIY3fcLjqKUXgu9jcqcq389cVwG
+	7L1wvyFGb7zymmZod2AU8v9SdJuhdTjpQqlx7Py8yx4RJsg/B+aW29vNF6qXzxQO5LJANiLEssZ
+	rqPFG3D5f/YHV9z5H03EAq/SpXEch/fqFLpQZBkufe0wEKHxd0ZYU/kNL2CWuJd2kFd0LvB+Hql
+	Z5oizDriTeMZLWhK5j1Tm1P6tabbXgTlnLmhPPbw0n8pHwfp+1OQrEB7
+X-Received: by 2002:a05:6102:509f:b0:7c1:62d2:e18a with SMTP id
+ ada2fe7eead31-7cc3697cfb8mr2605239137.16.1792427945478; Mon, 19 Oct 2026
+ 09:39:05 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -90,51 +101,67 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH 1/2] repository: add core.indexLockTimeout
-Date: Mon, 19 Oct 2026 12:23:40 -0400
-Message-Id: <F02EB9EC-E157-49D2-BF27-81DFF625D884@gmail.com>
-References: <20261014221233.1694344-1-quark.zju@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, peff@peff.net,
- ps@pks.im, Jun Wu <quark@meta.com>
-In-Reply-To: <20261014221233.1694344-1-quark.zju@gmail.com>
-To: Jun Wu <quark.zju@gmail.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+References: <pull.2266.git.1792341073005.gitgitgadget@gmail.com> <atXCFxxe3Lg7fV2W@pks.im>
+In-Reply-To: <atXCFxxe3Lg7fV2W@pks.im>
+From: Shashank S <shashu8660@gmail.com>
+Date: Mon, 19 Oct 2026 22:08:54 +0530
+X-Gm-Features: AclHuK9MQY3BXx7eDU6ZuJqK_bvBw3iMrY_RrNr0NrTqvdOJPawKcfCf93Z0sSs
+Message-ID: <CANHmUQTj8nR1GmPD2FW3+yfsgdgNh_vwRCcxRhS8GcY4VHDb8g@mail.gmail.com>
+Subject: Re: [PATCH] prune-packed: remove USE_THE_REPOSITORY_VARIABLE
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Shashank S via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Christian Couder <christian.couder@gmail.com>, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
+On Mon, 19 Oct 2026 at 12:39, Patrick Steinhardt <ps@pks.im> wrote:
+>
+> On Sun, Oct 18, 2026 at 04:31:12PM +0000, Shashank S via GitGitGadget wrote:
+> > Right now, the prune_packed_objects() function uses the global
+>
+> Nit: we typically refrain from saying "now", as it's implicitly clear
+> that you're describing the status quo in your commit message unless you
+> explicitly refer to an older commit.
+thank you for the  review and point the mistakes i have done i will
+correct all the mistake and i will submit the changed commit in the V2
+patch.
 
-> Le 14 oct. 2026 =C3=A0 18:13, Jun Wu <quark.zju@gmail.com> a =C3=A9crit :
->=20
-> =EF=BB=BFOn Tue, 13 Oct 2026 15:05:52 -0700, Junio C Hamano wrote:
->>> Default timeout is 1s, effective but not too long to avoid breaking pote=
-ntial
->>> user expectation (e.g. "an index.lock error means I should check whether=
- a
->>> commit message editor is open somewhere"). Tests that are slowed down by=
- the
->>> default timeout now set the timeout to 0.
->=20
->> I am not sure if the change is making the right trade-off between
->> background tasks and end-user action that expects immediate
->> response.
->=20
-> It seems the trade-off is between command success rate and command duratio=
-n.
->=20
-> I suspect that end-users want commands to work (not fail) first, performan=
-ce
-> comes next. In my experience, high command failure rate escalates to oncal=
-l
-> incidents, occasional slightly slower commands often get unnoticed unless w=
-e
-> look at the metrics explicitly.
+> > in these files, we can safely remove the UNUSED macro from them.
+>
+> The question isn't really whether we can safely remove the UNUSED macro.
+> The question is rather whether we can assume that `repo` always points
+> to a proper repository. And for that you need to research whether these
+> commands can be invoked outside of a repository, because if so the repo
+> may be `NULL`.
+>
 
-I=E2=80=99ve given it some more thought, and acknowledging that=20
-I=E2=80=99m unaffected by the bug being fixed, I would add:
+I have checked git.c file in that file I went through this commands .
+prune , prune-packed and repack which are .
+{ "prune", cmd_prune, RUN_SETUP },
+{ "prune-packed", cmd_prune_packed, RUN_SETUP },
+{ "repack", cmd_repack, RUN_SETUP },
+All this commands are all registered with a special flags '
+RUN_SETUP'. This flags search for .git folder . If it finds a .git
+folder Git successfully initializes the repo struct and passes that to
+valid pointer to your builtin . If it does not find a .git folder (if
+they ran it outside the repository) Git immediately stops and shows
+the error . It never run the code .
 
-It seems like working flows have to become more complex=20
-to handle these broken flows. And that leaves a sour taste for me.
-Folks do notice hangups at a shell that is typically quick to respond.
-
-But, as I said, I=E2=80=99ll bow out since it seems like there=E2=80=99s som=
-e support
-from more experienced folks for this direction.=
+> > finally, drop the USE_THE_REPOSITORY_VARIABLE macro from
+>
+> s/finally/Finally
+i will change this too.
+>
+> > prune-packed.c.
+> >
+> > Signed-off-by: Shashank <shashu8660@gmail.com>
+>
+> We typically ask contributors to spell out their full name, see
+> Documentation/SubmittingPatches [[real-name]].
+>
+> The changes all look sensible to me, thanks!
+>
+> Patrick
+Thank you
