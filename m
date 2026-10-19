@@ -1,106 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792446033;
-	b=kaNDi+7YGDenL7EMLV116r5j1z9GaZO4qNJFBIJ6rLjINmSSr1t7cF4+SB3fPE+fKZ3A
-	 7wqx+xwoe6kLK4fWBeD70hwxS5LOwJoklOaJUCe9sUHpktTlBsXkfldA2iBZSq0MHBvel
-	 717yPoKJ81d10MoHylw7SYQzI3D3EsyGYBFvk+mQeiofEHePf87Si3kkH+sWXCWpCuvf6
-	 yyBPz7wmN6S4M6fh/qplMLt1qn/aY9531n3/rBVeSMhWl7KNw44NYVfr/u55m/+sAJgiV
-	 8he7XUfaL835vWHPWKnMuSBs8pwPksKaCHj9f5zFWIHTLkPfKRx5mijhqJ/FnE+1dYg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792446033;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Received:From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Content-Type;
-	bh=nglreT2V8ftY/KGemUyPbCjHZ8sl2Mzvk/383UiuWKY=;
-	b=J+D/Ex7E/JPy/pERDnH5bO6jU5sVuizuzXA4jVDdbyLswH6EHCEeCg1rNww82litzdLY
-	 90P/3bA+EcgZhyxKYhbYBBJapZCIdxPkQYd0fYhNxCKiyx8iDi5tA04QBw+rni98fqlT9
-	 mcDfVRucFqhWEcq/GSbiSpmYzSEWq89QivbkHr53OnUyhRsQahyJ74TuSZdQ+KvqdFc4T
-	 A9HP/8MVaBBXVCMjZb0zhmZ+bhwPpzyXhxmZPK0uaVuWJqpdkym62oDYJQP8muTQHBhaN
-	 G0AHWoq9HGs/ymM4AtGKL+geCIfbSSDA7YzPe3CFphwBpuq0yCbX/nMD88roS2v820g==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=WwlsYDXc;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.51
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792446175;
+	b=PzuPIDv8W+/8vhb1uGwvfh+bTzAPOPks5QsdLECuqc1BevIdGqhrLIZGuKMWcRnXhUSg
+	 fnumx4Y5zB7QLJTRMGthZ/3GveGcnKAWrezvpNthIREWmSWnTzR0QOuiIyCQz14NXx34H
+	 PndR0ymmr5Z4DpJji54q0Ih6wh/xRwsksazEM0Qebnkv05wH3VheSKkScOPRBv2YcbY+g
+	 4KpXdfuk5HwN/aLuF/S8qp4R+Nk4QLk+Nr0uFFm07FUmchT5F7ILf+a5DG7T5giqgcWI+
+	 vgxEYlegJMcRXdDh6bTF/i4NwgNl1P9eneXLuTDOTdeY7EdjMCX9IAYCz2uzXY0A5Yw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792446175;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=DQMJevJBeMwqzs12TV80pOHKAjv+dj6QPFJcNHw492U=;
+	b=AHGspvkccyFMP700hknu7WLubMTRvdrpRHoO2fNubdthXFMJxhhiBluHALFISNhb4I/Y
+	 7u/6zOLFdtu3tl4+pvTsw8Q5eiMmyKO3hjpCW8N84oeWAnhm/d5hRdYxXu6BTe/I+Fia5
+	 s9dvjsd5YPMYBSyRjJwStjEM793MALNl1MI6lXr4vypCYsGUjYtKnQsVDLpwnccvalQk0
+	 kjpMoJxb1+KbWF4pwJzptF3OLhejXRCJu2Whaxe0+TzdIE8y0wz60ayVZ1pyX7pR2yGAl
+	 vYDaxUFB1x1LRYbh4DrpPlkmllwm7cDZ10DVW5vOenebHgDDQGKi7r74zuqpmgWtmsQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=gznwZoYC;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b="T8bXH/0o";
+	arc=none smtp.remote-ip=103.168.172.155
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69318606A31B
-	for <git@vger.kernel.org>; Mon, 19 Oct 2026 21:40:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 69318606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FED606A319
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 21:42:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 96FED606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=WwlsYDXc
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-74ab6c88052so739977137.2
-        for <git@vger.kernel.org>; Mon, 19 Oct 2026 14:40:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792446032; cv=none;
-        d=google.com; s=arc-20260327;
-        b=WEs6gRO7oCD2M+zv076JCDSUcwGSpSP7dg13XJSV6mbkz0xMhOvXO5tePGVPCcKC6V
-         mMRphbNA3fSRh17XTRAsdXSBsxpUUDnSZop+ZCqpCW45J5AnUsE2du3TIHKsU5z9LKv+
-         lbJ5AdQQD7oE7O5U/nHfFgGE0ZQoAnqlXLmNpPKfHhZGtfYuFtumTznSsOWSPSAL+Mu/
-         2Ckm1UTZW6b2lPp34LlpEAPRxlWSIp4nWJc1uGZq+fRP0GERY9NYZnkfMKxtDbwlbTdf
-         ijzjKMxEZEPijoV13sgqgcLh72DJfOgp2bKDpokt4se4LhuoXPXEw8TEd+D8iPS+iuet
-         PIUA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=nglreT2V8ftY/KGemUyPbCjHZ8sl2Mzvk/383UiuWKY=;
-        fh=ECW4HhYn9vkHnnNAgPRNoQ8x9kt/KXECwpSj7zRratc=;
-        b=cnGsMtKOGzcsXX3qh3x6D4CUVTD7Z1k/wAFjOeiQhNdsh+GT29Uxh0KZCX4JgLIrVi
-         O4ZjV19PMB8gIIiVAbMUdAUzk9rclgrClsSWjG6nMO2GdbnfTdhDVZoatbOleNF2kfY4
-         lPwkbLZd4S50jXFjqOUTS2ulHvv4Aoygtwn0AXJj/jZfeK2SF2Gdb0BT1E3m1azZGroD
-         8TAQZHzaBFKjp0PiaDLleEVAGenHXFZTUr0dlOFeWQzeZH713TaEOVBqGsErcfkKdKOQ
-         Wa2Phg3vQGDYN4BgUZJz9lZWRbP0Y+i4EgM93B6wF4Zc8Bh+w+I6kQwSiz3V46oyrbDd
-         HDNw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792446032; x=1793050832; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=nglreT2V8ftY/KGemUyPbCjHZ8sl2Mzvk/383UiuWKY=;
-        b=WwlsYDXcNP5EYslZAwW/3qfuhZQFaHQNJ5mKHObBdx9w7+oppY95ED374GlSXOAlLB
-         xdZVIj+13d03hoA+n0hFFGPqUR6EYSkbwnEAPEq/jGM02BLNI9Uan/huEXNuyGQMec59
-         16n5mDeSsr2cxfgA7ROJQSpvmy81v+qXrwXaYu5TSrHE3QE/4gWgm7QqHh9aNcf+J1HF
-         R7leNrh2OSEH/n+xg62bp0SBB0w3PEe/m5uKXdEM5jiYUA4zsIHCLBRT4tNYyXueKMt1
-         PLuD+9div0aNiwkAu1wlAjf79bGyVxXwRUFwnFs7Bb4ql6ExOLkH9BgsSVkb4RDLbJrb
-         4HLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792446032; x=1793050832;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=nglreT2V8ftY/KGemUyPbCjHZ8sl2Mzvk/383UiuWKY=;
-        b=rT5ofXi2I7jdL6jnF/nAbRnZbUBubTjpUPAelB8UYRQ/rW9Zt2hZrvfx3SWIyQ5F7D
-         BPxK6+Xebe+cLuUBh6PlCN+6LtG5kK1uvmvhqTRxp/ZV9LHHI0IQcZPs8AdH7wAk747f
-         FXSE3EEKbfJRw4VgB5ZHBWPoA6/imltvpRR5K/gb9czXlldM1yA4LrfPZGIuk88KxYkB
-         tWMXTW3vXMpmGo7A/K8iDEo/W6vJulyf2WEyimsacefStD4rgjp+sx44x7Um/19YazX+
-         hDpzucUaWJ0a7YS9fyncJ0C3oXnpFQNfyLc2i5RMZDeHlN3tyGwdJVaHTiuA48F4k8UI
-         qpEw==
-X-Forwarded-Encrypted: i=1; AKwUvBwgL5lnA1BUBMAD+K/Cl5DC1jYJxorl8nU0MAhZEaJlxksszQ2mgDFpgRj14r3UxS2UtRo=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLgG8DQV65BfA9SxIplWs9bkKd/54vwIhCZmd0DxEpqJbgb8jHh
-	Yv3oViBc+7uP1MU+Aa+5BKt6hzT/OdqQI63leFTCOyEJDsh54b7yr1s8tF/GrE1d0zKktFD3YKy
-	NVif+zaSCQMstJkwHbJIr+k5KgnaJp169Bw==
-X-Gm-Gg: AYBFou3OXZLwQn/85YhPFrJ/rtv4gCXnWJvt3/U0/N9Y8FCD47AgakCjY+LC9a3T13m
-	/GGWlzmzkjJk4V9euJluuWsenfBcrhMjVPRKRPFL++TLo+5CwtyDDeo478Gg5dTnQKqo+lOiaTl
-	vm9LLZKKgkVA2789zR4COJku9z1auRprr4KeZaEjl6zfn4x0iyLxdz+/pkZYoDrFR0E6pH33VCX
-	RN0LLvDjA2joZ2QUzqPGsKP5p1vFo3SAdRSjrcf+A9wLHmA2A8nEBbCTkROOI4SHj+XIh4Y4PhI
-	0FIJunHHr+Y3lhFhTuKaDR7drhgSYZIwdKiIOWTmp9UoZt5bYQybOSWqwlraHdkqQ45jIL9gg8/
-	/3KRTeK+jomki32dBb4R0CyQdID6DPtJ0F/Ld3QB1OsKC4qc=
-X-Received: by 2002:a05:6102:374e:b0:7ca:e2c1:9a09 with SMTP id
- ada2fe7eead31-7cc369e5987mr1886997137.20.1792446032299; Mon, 19 Oct 2026
- 14:40:32 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 19 Oct 2026 14:40:31 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 19 Oct 2026 14:40:31 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20261019-b4-pks-odb-extension-v1-4-143a5963b77f@pks.im>
-References: <20261019-b4-pks-odb-extension-v1-0-143a5963b77f@pks.im> <20261019-b4-pks-odb-extension-v1-4-143a5963b77f@pks.im>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=gznwZoYC;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=T8bXH/0o
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B241F1400093
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 17:42:53 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 19 Oct 2026 17:42:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792446173; x=1792532573; bh=DQMJevJBeM
+	wqzs12TV80pOHKAjv+dj6QPFJcNHw492U=; b=gznwZoYCDlgWD7lg99Gq9iT6Kq
+	7bofFTHQZpKLRsZ7GqvSyhsJMEa1QYkm5cuyRtOEy1ELy9g49IuaAp0bFY3vQQv6
+	lEpx9248WHXkRQm/g433AJW5j60liLvSwH9+v27vCOA+tBx/XpWDONEtrMpDw7f1
+	k/DHks7YOHGVzEhfQ2cAZdI8QmfVUlIRPyvpDRiEbFFizUknk7zi6wOFUiAckGKl
+	0rdpC6MDAy7PFJeHRlZOG3Xer0C3GhGxJhbBY4D4hin3Ub/O71hbOgEZ/DpJMQH2
+	KLAh9NZnm9H8vblJTp2J66E57kIifst00woKzOZiHIGMjuhw9qQ571WVZ6LA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792446173; x=1792532573; bh=DQMJevJBeMwqzs12TV80pOHKAjv+dj6QPFJ
+	cNHw492U=; b=T8bXH/0oS1A70n0W+VjpXc63RUhTdFZjl7zofi55S2z2mJMU6RY
+	pLi0wO0u+vlEF4ZKJ3CZZwBmV3YUWGaHYtd7NRo3Bks/0hPFrjRKaWd9eDEKHOfA
+	9pMUlB2876KhJ/pMOp5FmdCQS4IdcK8lsRzfrcvdW8PRl/9xxzK0yZCh4MQtuYXu
+	qwnryEcpKw9XJJFTCleJE2aD3+doAD6Qon4YBMTX3DMuYNv2YBYP3oC8Eku3XpH2
+	GWZrIfGEA3H2Advel6CH2WohxX0xWeBlgL/9N+XYgCP7U9jKGhzy49/xksghWCH+
+	4ujGi+vEfd/m8iWvjGppqeU15uDpEMU/evg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792446173; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:hFn0LuLVW3M52R/ASNOejowTDACE7QCK48zls1CNl2u3PtL
+	ypw0p3B6eRn3x0u2w1i1/1kg4uqGgq3LAUeQnriDx86b+hjJdA9xwLQSk4CwpO3S
+	TB6Q09WA/9AFmHoIgd9FB+gct2JSggmfJicMooz4hcA4p58kY8s+C9/5z5jnjK5q
+	dJ6NO7Ue2L1xQ6vaXPnKoPQBjUQRTQPj93rh8oK6Firy63cDS6xPFRry6von0YLb
+	+y1O71t3sDFW38XTxOStK35aNIByiQlAk7IOD1HzzXuUiSuU6MpOvzakzv5R1Fad
+	NRDklZFSKOo77/OJ154Ci179kZ/LTPW1H3xPxlg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:qhSo+0T7PXhZOsyatGoUWbt0FBoWht+c5RmgPcISiSE=:1GI6nkRiE2qvpkx8gYFxqzn9QVdM7aDqQ96aL1HFNq0=;
+X-ME-Sender: <xms:3Y7Walnrb2Yl9wbH1qxPxPeY4kL8J0A9bnSR05KVVBL4gbs_A56kZg>
+    <xme:3Y7WansRUmrqd6iWVN_u4somihIq7cWgassUS8DRr2U2irCU2Jc8rmkUkN9gNRDeh
+    xyYnO-LSLrcbyY5F39FTfgXDukbGiWY6ZcB5lEpleA-MD8RUH9AnhI>
+X-ME-Received: <xmr:3Y7Waj-GHGseYOt9LxyN4C8a3g85UF3lH091IQ28VrxMi76F7zJ8Xbsq4K7V_vA_tQGDItJjhzPhl3fUvoh6v3_S5kG_yrEkx9Q6>
+X-ME-Proxy-Cause: dmFkZTETU7WR2V6KPCLm8puxGeMjzllLiLCI3t484TYSsgHkbuvulYsfS9gPkEeQDmBroj
+    e4SKJMBG/YbngYftzccn/Jn/cLR31tp7e/0v2jYNtwAOwZbSHPR1DQzGrk89kJbn6QiIZA
+    TnJcA1JTET7ZL0+iGxZb0iqApVa4gRFhb0lpNmU5ELAmMCEBr/iIvugoy9nrkm73MUzkSv
+    nMwJJbhhQ0G0MVFaareqDhLn+U3Oe3cNJt41+InVRpaHzWpDu3JigOhNvRrAop4gb4OlQ4
+    xRsHPWcaxnorUwjZI2S8jQfyO6gaw85cYBSJgoC1DtNBe+E5wzjR1klcTMQQEFZnjMeVBc
+    sV/NtC6V9oLelLwy0YbClSIxCK3HHjGIhaVLvtQOLG5ENTd9VPNdPfWziY/93ygKTZlETG
+    pd7Dbf3eHeg3JeV7BXORP9lWHwqCVLEgIzTOAZj4WfG7NsXAQd5i9glH0XXpim1ChGXrrt
+    +9oXpin4bbozBkL7lq8URsSAXSJDljDu9FyFc+78akCEAVD1GGU5qvCcZOADSQXFGTotJM
+    iz20trH7QZE8rTMNd5RsMAq7yaSu/lfxtfRRSOhA10R9lrW+7MVKiHJIRyGb+KFrgNZGT3
+    TOkSK/OO4nMEMiO0fwrEwzkPMyp7szOz9g/LtEvpL7LHc8Q1Y0mBM3NOqhVQ
+X-ME-Proxy: <xmx:3Y7WahPtdiVJ_WKF8VrM7wqh_0C091ehX7oQeRMEI8PVt3Y1DJOwww>
+    <xmx:3Y7WahHAOwkYsd9GIEzKK0KFt7ZOIj0z4tMiNKgVhF0xp4cnKxji0g>
+    <xmx:3Y7WavRmqG4Smr7A8WQFIYESkeMmvS07imWbv-Vn2thY9dfOAeIZqA>
+    <xmx:3Y7WautVXEH6S0j_O9AaBumIG2oAJAA_I_Uf-sV2Uw-oQ_JH5kMXYQ>
+    <xmx:3Y7WagdFpmIJbpTWL1JNZ_TAZdu9G4QzoRDteLMBNBIrvrPHKzYxmdXC>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 19 Oct 2026 17:42:53 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elia Pinto <gitter.spiros@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>,
+  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] status: reword message for a missing upstream branch
+In-Reply-To: <20261019175722.5223-1-gitter.spiros@gmail.com> (Elia Pinto's
+	message of "Mon, 19 Oct 2026 19:57:22 +0200")
+References: <20261019175722.5223-1-gitter.spiros@gmail.com>
+Date: Mon, 19 Oct 2026 14:42:51 -0700
+Message-ID: <xmqqzew91i5g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -110,101 +124,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Date: Mon, 19 Oct 2026 14:40:31 -0700
-X-Gm-Features: AclHuK-fnABmAC7TfIlVjLqVM6IHqFeSXCgnu-iKJKdvO44YfX2qqFnZVyPKE9I
-Message-ID: <CAOLa=ZQ1E5sg05++KCXgbM9+=4=vFeCHU-5iMbNEGRuS-8+aPg@mail.gmail.com>
-Subject: Re: [PATCH 4/7] builtin: expose the object storage format
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000008e6dc065e385df9"
+Content-Type: text/plain
 
---00000000000008e6dc065e385df9
-Content-Type: text/plain; charset="UTF-8"
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-Patrick Steinhardt <ps@pks.im> writes:
+> The message was added in f2e087395b (branch: report invalid tracking
+> branch as gone, 2013-08-26), assuming that a configured upstream that
+> cannot be resolved must have been deleted. But "git clone" of an empty
+> repository configures the upstream anyway, and Git has no way to tell
+> "deleted" from "not created yet".
 
-> The ref storage format of a repository can be inspected via both
-> git-rev-parse(1)'s "--show-ref-storage-format" and git-repo(1)'s
-> "references.storageFormat" field. Introduce the equivalent options for
-> the object storage format, as well.
+I am totally with you up to this point.  This is a great issue to
+tackle.  I am curious to learn how you would solve it without
+throwing the baby with bathwater, though.  Let me read on.
 
-[snip]
-
-> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-> index cb8c1e7292..d2dc9b7a69 100644
-> --- a/Documentation/git-repo.adoc
-> +++ b/Documentation/git-repo.adoc
-> @@ -105,6 +105,12 @@ values that they return:
->  `object.format`::
->  	The object format (hash algorithm) used in the repository.
+> Since we cannot tell the two cases apart, change the message for both,
+> including the "deleted" case that has been reported as "gone" since
+> 2013, so that it is correct either way:
 >
-> +`objects.storageFormat`::
-> +	The object storage format used in the repository, as configured via
-> +	`extensions.objectStorage`. The valid values are:
-> ++
+>     Your branch is set up to track 'origin/master', which does not exist.
+>       (use "git push" to create it)
+>       (use "git branch --unset-upstream" to stop tracking it)
 
-The nuance between `object` above and `objects` here is too little and
-can be confusing. But there's nothing we can really do here.
+Ahh, "does not exist".  Clever.  That does cover both cases and
+reads reasonably natural.  If we wanted to have something short that
+we can reuse elsewhere (like inside [] in place of [gone]), we could
+say which is "missing", perhaps.
 
-[snip]
+Do we emit "git push" suggestion unconditionally (meaning, does "git
+push" immediately in this state always create the "upstream" that
+does not exist yet), or do we have to check if "git push" will
+create it before saying so?
 
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index 84e012f83f..da11a56ede 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -128,11 +129,20 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
->  	return 0;
->  }
->
-> +static int get_object_storage_format(struct repository *repo, struct strbuf *buf)
-> +{
-> +	strbuf_addstr(buf, repo->object_storage_format ?
-> +		      repo->object_storage_format :
-> +		      odb_source_type_to_name(ODB_SOURCE_FILES));
-> +	return 0;
-> +}
+> Only suggest "git push" when it would actually create the upstream,
+> that is when the push destination of the branch (what "@{push}"
+> resolves to) is the upstream itself.
 
-Is there a reason why `repo->object_storage_format` won't be set, I
-don't like the fact that we have to expose the default object storage
-format outside the repository and odb subsystem.
+Ah, your flow of explanation exactly matches how I explore the
+possibilities in my head, given the thinking of the author revealed
+so far.  Excellent log message that is very easy to follow.
 
-> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-> index ec33c19bdf..b206944ad9 100644
-> @@ -1138,6 +1139,12 @@ int cmd_rev_parse(int argc,
->  				puts(ref_storage_format_to_name(the_repository->ref_storage_format));
->  				continue;
->  			}
-> +			if (!strcmp(arg, "--show-object-storage-format")) {
-> +				puts(the_repository->object_storage_format ?
-> +				     the_repository->object_storage_format :
-> +				     odb_source_type_to_name(ODB_SOURCE_FILES));
+> This is not the case, for
+> example, with push.default set to "nothing", or when pushing to a
+> different remote (branch.<name>.pushRemote or remote.pushDefault).
+> It is also not the case with push.default set to "matching": it only
+> pushes branches that already exist on the remote, so it would not
+> create the missing upstream. In all these cases only suggest
+> "git branch --unset-upstream".
 
-Same question here.
+Indeed.  That sounds like a good way to go.
 
-> +				continue;
-> +			}
->  			if (!strcmp(arg, "--end-of-options")) {
->  				seen_end_of_options = 1;
->  				if (filter & (DO_FLAGS | DO_REVS))
+> "git checkout" prints the same message, so it changes too. The
+> "[gone]" shown by "git status -sb", "git branch -vv" and
+> "%(upstream:track)" is not changed, as scripts may depend on it.
 
-[snip]
+Does this refer to what wt_shortstatus_print_tracking() says?  It is
+_(translated), so in a sense it is a fair game to be improved.
 
---00000000000008e6dc065e385df9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: ad6f5843be259439_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1yV2prMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mdzNEQy80NXdKMU5TTW5HR1M4TjhkQWNZS0NBUU9GdApxWnowZnhxWllH
-YVdQbXZRUzhHRTBldDlLTGt2clNQZmJhRjcwTXJIV2RvM1k4Q3RNckF6dXIxRHorU1NGMGM3CjlS
-U29rRGFmcnRMY29EcHVOMEFaMEJNOTJqdUhOSVhuSkRncHhZUlNYZ0dDZ2UzZGVRK282b2tGczF0
-UVZUOTkKQnFkSVdmYnhZSDhLS1NEOHcvS2lNV1R2SWNIVmxxMEdoRkd5RnpkazdIQ0dKZktMOGdM
-Rys4eVg3dERMM2VreApWbnRCQTA2UWNYcW9MeTNZZHhQQ3RtaERMVTl0QjVMRDMwYW92Sm1VS0NL
-VnhabGxmd2taT2hHRHBOcWVEZlJUCk5WQ3B2L2hrby9YVUcySThpemF1cy9ZMVh3QmYrdWVma1p4
-bmVBc0NLTjVuZGpqclByeTJyU3FGZ2Iva3J3REsKT1FPSURxMDlFWUZqV1ZpejRwSUx0NU0zOGdy
-UGlRN0RyNE5TSU5iaWxwNlh0SVJoNjVzZWVRZzFxU3FhM1JEdwpLS3gzeXdlcWNTOHNXRDlySytj
-NllyU0Z5NXRCejVHN1Z3d2EzbDBiTEZva1FwTUkweWtMNmYvT1craXpDbVRxCmxMU1B1UnlsVFN0
-cTh3b2hhOEVTYjArN3V2Q3YwK3lmT1VUTGg3bz0KPXZoRDAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000008e6dc065e385df9--
