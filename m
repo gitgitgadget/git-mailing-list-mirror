@@ -1,88 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792425793;
-	b=LaIV80G44GBheBQzCJny9uvRaW1zWSLY4lrr8uCOm0mE7fBgoKcszcdT9QyhDnReH9dg
-	 g4RZcWP5a0SxlnytrtYdpGxP73/l++yeBJrun4lAem+E5VXYVy2uPCQ8dU6Qg2GdlJhcZ
-	 Ffng1vgSb0tzJArgqMO1pL8tTdeX4KPNlBXPaMf71WfzJg7zRCanFv4exrF9uNxa9wrXY
-	 HaxS/ljGrh9qlvaPIpuUKx+XYNdIn1wj4cXMtvyfSby7H2ehuW+zjEu1UD2viFEl3/Qqs
-	 eN3wwaQ2T8UXebCSPeAwMjbqyiJRctznRT+YJleWVv9yuZnjShcPKX3iUPWcv+zmqFw==
+	t=1792426052;
+	b=GG2b9xB7RGI1NeAXUMy0UPf8dLJYYK/dSld9SQmlUgP7tOt50UCwIe/ai/t8/2U2c4lv
+	 AXH336UZpAryNQO38ZOjHuQqk43eMk21crBJr2CI3PCpzT2cOxDdVK1RtcwCojlyPkNnq
+	 qFCDF/S4l5wlffHw02s5svHU8KH+HvvJe4SJxRFWQMp6FCGpHsp2YUJlHg4DsiEsrWfBi
+	 57iGEvB67JdKEAH9z2al5Dlk/+4bUwzbPhVj/zr3BTn3xFOORbsC6trlz//nsgPkhVZis
+	 jFbujF/21M9PPS4DH6cj3gEeVA7L7NJkTJspXPyyF8RDfMTvt9VYrTczM8t4e6SA9xA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792425793;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=pPDzXXtfgWOYmQyHBXeJkuMYD6OYijwKZifBS60yPaE=;
-	b=ITnw5UNb34z3Y06LmNzaPtV8XQDJWS33SmGYMF+yO2IieoZNQAYCvsUpBOTEOdHso5X3
-	 NQYvUWeXigoOUgp13662QnrIFo1+H1cE8Iykx16etDBtT+FkZAEnftXm+5awXi+8SHKhO
-	 VZDSg6Qv01P3BEK7IqIr7ncZHoqZIlfFBjc7wx8rh8KQAzu7nwGeF5mCGJM1rllIx2yqc
-	 9jSUruqqaj0qIDVMNuBVEpyX3Z/URG1GwwCMx3/udVf8aWpv+BAeG/CUjlrssDwh5W/wR
-	 VNcTp2+PV32F9mbzAiu83d2Plkl5Trk/ACxhRtZvfHda5oIBH83VPzCwXuTg3eH/m9A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792426052;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=Rt0bufuQe0Vr0oWVGOmFrYmgIhaYReQ76RgB+DKBkXo=;
+	b=0UfIDvVssouYrcg+eHQJ8db/5CY1DHm+DMafP7Un3gVuKUT60MEVie14eeoC2ikbpnkG
+	 F2CYKDal+Zg1Fy8gNKazy3EcjkUyfYxzEuPBvfaF2zdioptJocsDiftn468z348Cv/or+
+	 fzktyzTF7AwEVsk9SGL29Gks6Ur0FvvAN7DePp8zVCh66IK1VllXTF/LY4tb5tS8Be5vA
+	 wvTTX+HWYEZtJDZGG5obY7lRzkiBVLGSqBIRN0VgFCP44ckyKChA4ZED9HJxWIMHTgR4T
+	 j/sKRh1BnbqKHyxg2YZMTVAXXnF4l7GtWQNLtA0G7jH5E26IWol4OLURAu69IegoHgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=lex.la;
-	spf=pass smtp.mailfrom=lex.la;
-	dkim=pass header.d=lex.la header.i=@lex.la header.a=rsa-sha256 header.s=google header.b=aeY8dmcd;
-	arc=none smtp.remote-ip=209.85.128.43
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b="Gv9Wt/V/";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ECk7bMYo;
+	arc=none smtp.remote-ip=103.168.172.146
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B781F60774F1
-	for <git@vger.kernel.org>; Mon, 19 Oct 2026 16:03:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B781F60774F1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lex.la
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A357D607AF10
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 16:07:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A357D607AF10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=lex.la header.i=@lex.la header.a=rsa-sha256 header.s=google header.b=aeY8dmcd
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a180fbeef5so17506695e9.1
-        for <git@vger.kernel.org>; Mon, 19 Oct 2026 09:03:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lex.la; s=google; t=1792425791; x=1793030591; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=pPDzXXtfgWOYmQyHBXeJkuMYD6OYijwKZifBS60yPaE=;
-        b=aeY8dmcdmjNQhflZHvYnGfE+Fnh/8Z7z/6p0eZoGBZA4dUeADKv083fCEJwPYZOl6a
-         bY/KB1AjNgNakqrG1c1FbJXx+3a+mUs3BrEhvRXimeiV+KKfQ86/579fSzPkCC4/3p8r
-         FyLnbWOTHECG+j1c5dRcp71EVnGFOH8n8pdQ4sRmaDYZlStkv8AfP0aAwsbPwRuEWaJ2
-         8iAOAQfDjPF41t/xvBbitEH38jGMFjFSF6h8xVvlXpmgoWijLWJ0zqTLr5vT0ApHbTUJ
-         5E8Rv+y+8LqMGyg52t+US3qKncEGfpJafPlcim1i1CwTt5TOSGqIbMNAD8QsY9YO17nX
-         UyTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792425791; x=1793030591;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=pPDzXXtfgWOYmQyHBXeJkuMYD6OYijwKZifBS60yPaE=;
-        b=gV9rARV/2jx8lti4Q1nW/q/avDOzh9OEzmjGUlxk+kpvsRNPsLxRa4r1EuB69mY19y
-         9QY12YGQ8FIAv097BbLx8P88boT2ePDpsaAezkehsvUN4nSRpX9IK+ZuK2KA3ePFIOp4
-         5R6xIBsvcsdB1zvujZxWqqyoMYovL3y+UZunXa6zvzmlncEKB59ghWQWQ369zMsUncih
-         sq5jRfLnu2xsNReSgf17mRG5ZmAo8NOrrfNmnJzl2Lw8PN040qEyFMAXMz4tAP15esXe
-         fOfaepEKkASKruYb8016bNpngAJEkwMu7M+OB619umHRwjHZH2fsAY9aVbP3BGg7jwH7
-         oTXg==
-X-Gm-Message-State: AFq9FYJausTmx2l6BUxPurqIe4bp1YXlHhjRtJZ5FBgUxUeRR6wWcpJ1
-	yOmz9iagn//RIECXHA3J2L+KIWhxeLwiDGDZjzVlg0q2V+sGWJ0tRrsI/Pl7elmmsbftXwms+QR
-	elgZltS9hBA==
-X-Gm-Gg: AYBFou3tJ5CplBFAs364F1A/sWZkOS/jfOHdDhUYTiWyvzcDe0Qpd6JTvdLLB4z6OGH
-	wPL1TRJmVXLYV4TP8zoJVD+iFg7xq9kBCv6sQHfFpK9A3RJHth9UjXQhhO103z8JAYvrCH2rPFO
-	0Kw80wm4pxMnhJefy5I1+KLBVzVilQH2Jyzf8WVYOJpqAr0wJbO745PgNejznmEEnpAF9u7R9uE
-	/eT0IiCYsyQhurz/bpUPA26OksTHRG5uttI0LdLbmpZS8N0XJfonvVS2I5lEkKFujJ9tOZEOV+g
-	OZD295vf2Z/WmDsOvSkJiYGbZs38qAMfKqby+ee0si+jAiKs6zdbM0PRFq+16zWnsQLifNF2aCm
-	nVukvicamPzP24yxaUqbCDa6S2f8bhRvQ+J0K7jwYiCsjrRPvtbmS/qeHjzIFuR5UzePVw2LU6x
-	2omA8CCcjeFtzcJKN0B6uO2HbR4ojR+NCwrcBhGTAuzwKMvShfg7SVm9Fi1KKgXCQDcCM=
-X-Received: by 2002:a05:600c:4f95:b0:4a1:7bae:d80a with SMTP id 5b1f17b1804b1-4a1d75e3c9amr181496435e9.9.1792425789588;
-        Mon, 19 Oct 2026 09:03:09 -0700 (PDT)
-Received: from ownbook ([195.181.160.195])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1c8ce32absm196503585e9.1.2026.10.19.09.03.08
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 19 Oct 2026 09:03:08 -0700 (PDT)
-From: Aleksei Sviridkin <f@lex.la>
-To: git@vger.kernel.org
-Cc: Aleksei Sviridkin <f@lex.la>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>
-Subject: [PATCH] technical/partial-clone: narrow the one-at-a-time fetch limitation
-Date: Mon, 19 Oct 2026 19:03:00 +0300
-Message-ID: <20261019160300.15789-1-f@lex.la>
-X-Mailer: git-send-email 2.56.0
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=Gv9Wt/V/;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ECk7bMYo
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id C6981EC00D4
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 12:07:30 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Mon, 19 Oct 2026 12:07:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792426050; x=1792512450; bh=Rt0bufuQe0
+	Vr0oWVGOmFrYmgIhaYReQ76RgB+DKBkXo=; b=Gv9Wt/V/16AIcKQ4cZBKlM7mOi
+	eR5VexfcftuUksYL/ZicltY39rXUApJwUBLIUchdTZS+OM7S44cwCRwRVOLSNh1U
+	eZ2/8jr6hpm6958wMR/TIUKOckSps50/xuA8qir+EXlpcJ3odzy8+PeQ9JdVDCql
+	fv74ZFmNpny10WUF6dLi0XC/3gjrCNtPqo4gZPqme7Y/mG3aARJG2gkG3nQ16PVR
+	dw5F0g8LdOYnAQVNWdPC7STL+jN15Uq+SETDtiV7p+I+mUO0lRIt21PmFV2oZdZQ
+	5G5HV4mUeZtOeSDRGlXk3FIKvXLKFP8n0cRPwlTlvNw3Uil87rpqYfaMgTqw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792426050; x=1792512450; bh=Rt0bufuQe0Vr0oWVGOmFrYmgIhaYReQ76Rg
+	B+DKBkXo=; b=ECk7bMYoevauRNGtN2KjUCd1Q8AH45xX/s4DReQJU8mXNCPwKbW
+	cJi410vRUoPLqvkXYStYUPIb41FiqicHp2XtdZUb3RvV1YKCIKkPGHZwV4PH0Tdq
+	wUqPmRwF1A7AgiX5FMcTrGUeXabHm1PGax9DsBLpEJUkhKv+GqmTdgNf6of9R7zZ
+	mU6jKd/cjYCzP3iYgcNAvYehZKzMV4/9w2PoEIvpHCTODUnlw7EP4orqeFsst3Rc
+	8xNlnAUkr4E7wvpsuffiTo8ksEyVUx9HS6cj6K2IWXY8FZMBtdQIAzQ0RxSOdqtq
+	44z0BUvdPxWIlnxThF3xzaNUfbWe6uVswCw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792426050; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:mOG1R9B33RKknlPdmYNcPjvKPIgVvPEakkY8r0d6R85kaRC
+	SHl6ww0FfDr4YOHen9OUhS9QgjFgEazTFjn//CeYig4/RhbGQHxWruA6E1qcDfBz
+	r+qgKqBYDYFiEF90FHKSsZGHZdBdPVGyl/b0xB9DqydynjrZdLyoCxUX2jglwLjr
+	UWUMFd/7y6IYhFZ09grVi/b+LV+hvtjgUQwSpntSmuq7a4uT93IaM9SlHPiWgUx3
+	xXyd3sqkxnlJOxkm/+5+F/WOFRiJOU9U+ywrWCerJYxHldaPMFV90swSsxMZtKim
+	k1AA84XxILjDZqjm7qZKSOwlqzqKfnKf1Up17pw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:eU34EJIjH1trb8uDuVPKuFi5MP2rtVNeNFRI8FPYB6Y=:LYV5/B1N0flbMkXpHqqQUDPolTl7vMI3+vNvRxuvSLs=;
+X-ME-Sender: <xms:QkDWapFt6_ufCsGajjspRuE0FUj5mhDq8budqcPZJ8kILN7swuUxOQ>
+    <xme:QkDWalWtiOoO-BAO6t1AYYIDigXoJfOXU7_9LzBHjmW1th5Byjrbe9b-bJ428Znkf
+    UEg13pGT3csnUvjNf7xiXXjAUY-QCtobAUS08jX6GS-RCsysOhSog>
+X-ME-Received: <xmr:QkDWagI5MpYr7IqfMYAGMx67az3uyi_H-BtMOWZJUu7BnMuQ-P_b7MT3iYydOKKftqQXgrZoSshTnRUBTYqmRzQtmISjirApA_5y>
+X-ME-Proxy-Cause: dmFkZTFfL5KuugyErn4wTcMjILGldD7u92YUfXfJH/lXvHwbhuna68d2/xesHllZ72qgGc
+    tMKMSe+gn40aWsjsRMrgweh5ihC2Wsc4zI65F9ZtGo03XgDON30f6Z17MLG6KmscuzDCyr
+    qa9R/yAfgVyNZe5GSu1oeixlyZCjr/bXmA3HIdbYlxv8FcW9+IMiDE9DhNOJ/B3XVECXAy
+    sv1r2q3QpTxYTRZCj0pQJPeXaTzbpZGJb7aQZNBznlENGN3/HUK0CvL2x7OPQ1XxjVXqie
+    rTNBZXu2yut7zyMvsTPgXntUWkmicryIfE0wif4fuGpS+sr2FHqfeQKaxNOeq40hWJ2jXz
+    UdGTtMKfxoxLdFGJPoAg4S183+yYXJ6wGoGs4xGrc4qUMpGcJQz6+VtnaVpxATPvzQNXWi
+    HMoS682TC1HX/rEDLEgkwim3CreWF5XwUZl52J4SeeUsSlDjn7xaeyh4rvuehbNbNN7mrW
+    3Qnty9Foj8E6qwNCCyMxh5AwGtne278oHsNvEMI3fTEWvDqiqUWnsz3Z5xnX2BeP5ascXW
+    oWYfaWgqSefSosNQXYksySumPRttbCDVGQzzcPBNgY+BxVWItudumnX6ixvqHF/s9s+7ca
+    YRBqy/5N7+06IQhQNU7jBiU7NbFIG+TVwJ5N7YM53XO1NCjgYcWX66JhvyjQ
+X-ME-Proxy: <xmx:QkDWat8fkjXPNxXkfDi6Kn8ZZjRRInQcMkJ0J5uWBflQJWsw3XxPfw>
+    <xmx:QkDWarIhr4jXPlIIXTWYDXca2Rn1nc56Lnu-78kZhvqTXRRgmV1Ggw>
+    <xmx:QkDWaqmShUWoJF3PsuLiDAMVwUKMWlnn6PASiBDKcrUYleH16TtqLA>
+    <xmx:QkDWanNbWuVAV4w-mWHuzXqLzn01Yc6jxfbqnVap0YM3ReDee8PqXg>
+    <xmx:QkDWarr1MzIbsghqyfDB-5sJQ2TIX-Acn5E1aMKJADmVIxQRjE7SEBs1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 19 Oct 2026 12:07:30 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Olof Fairbrook <olof.fairbrook@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] bundle: do not free uninitialized memory on bad arguments
+In-Reply-To: <20261018142130.2701449-1-olof.fairbrook@gmail.com> (Olof
+	Fairbrook's message of "Sun, 18 Oct 2026 16:21:29 +0200")
+References: <20261018142130.2701449-1-olof.fairbrook@gmail.com>
+Date: Mon, 19 Oct 2026 09:07:28 -0700
+Message-ID: <xmqq7bjd65dr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,80 +123,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The design doc says twice that dynamic object fetching is slow because
-objects are fetched one at a time, without saying which code path that
-describes.
+Olof Fairbrook <olof.fairbrook@gmail.com> writes:
 
-Only the object lookup fallback in odb.c works that way. The other ten
-call sites of promisor_remote_get_direct() collect the missing objects
-first and hand the whole array to one fetch subprocess per promisor
-remote.
+> -	struct rev_info revs, revs_copy;
+> +	struct rev_info revs, revs_copy = { 0 };
 
-The bullet also still names fetch-pack, which 7ca3c0ac37
-(promisor-remote: lazy-fetch objects in subprocess, 2020-08-17)
-replaced with a "git fetch" subprocess.
+Obviously a sane and sensible thing to do.
 
-Signed-off-by: Aleksei Sviridkin <f@lex.la>
----
-Repost of the patch from September 3. Only the log message changed; the
-diff is the same and still applies to master.
-
-I am very sorry about the unreadable message. Your guess is right: it
-was machine-written and I signed it off without reading it as a reader
-would.
-
-Unrelated to this patch, since the subject of messages going unanswered
-came up. I sent a security report to git-security on September 3, a
-follow-up on September 16 with you in To, and one more to you directly
-on September 26. The same day as the follow-up I also filed it through
-GitHub's private vulnerability reporting, where it still sits in triage,
-untouched. Nothing back on any of them, 46 days now. The documented
-process says the list aims for an initial assessment within a few days,
-and that a report judged not to need an embargo comes back as a redirect
-to this list, so silence does not look like one of the expected answers.
-It is not a contrived unreachable path, it is something I ran into doing
-ordinary work, which is why I would like to know if anyone is looking.
-Is that channel working, and if not, where should this go instead.
-
- Documentation/technical/partial-clone.adoc | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/technical/partial-clone.adoc b/Documentation/technical/partial-clone.adoc
-index 18718a3840..d5fd1420e5 100644
---- a/Documentation/technical/partial-clone.adoc
-+++ b/Documentation/technical/partial-clone.adoc
-@@ -141,8 +141,10 @@ remote and then retry the object lookup.  This allows objects to be
- For efficiency reasons, no check as to whether the missing object is
- actually a promisor object is performed.
- +
--Dynamic object fetching tends to be slow as objects are fetched one at
--a time.
-+This fallback asks for a single object per request, so it is slow when
-+many objects are missing.  Code that can name several missing objects at
-+once passes the whole list to promisor_remote_get_direct(), which
-+requests the set rather than one object at a time.
- 
- - `checkout` (and any other command using `unpack-trees`) has been taught
-   to bulk pre-fetch all required missing blobs in a single batch.
-@@ -247,11 +249,11 @@ remote in a specific order.
- - Repack essentially treats promisor and non-promisor packfiles as 2
-   distinct partitions and does not mix them.
- 
--- Dynamic object fetching invokes fetch-pack once *for each item*
--  because most algorithms stumble upon a missing object and need to have
--  it resolved before continuing their work.  This may incur significant
--  overhead -- and multiple authentication requests -- if many objects are
--  needed.
-+- Dynamic object fetching invokes a "git fetch" subprocess once *for
-+  each item* when it goes through the object lookup fallback, because
-+  the object has to be resolved before the work can continue.  This may
-+  incur significant overhead -- and multiple authentication requests --
-+  if many objects are needed.
- 
- - Dynamic object fetching currently uses the existing pack protocol V0
-   which means that each object is requested via fetch-pack.  The server
--- 
-2.56.0
-
+Will queue.  Thanks.
