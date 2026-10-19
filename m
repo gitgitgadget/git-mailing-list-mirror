@@ -1,120 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792440592;
-	b=CYmPs1fR5wIwUS66hsbP97z3o9KURxWBytXtCvHm3jgp59v6lGbmYZMNUHuNYM1X0+25
-	 VczXa5QfkHSnrBKxWpclpFvLb4C2US/XaP6afmEkvlgtxwVAt9FqN9N861pJ+kTrHfkDy
-	 LvUkgiNt0gdNqDUhLlNjQ9pn61dzWi3U/Y+sgtOcKGct54930C01uATBEoEIUHrMDX1Yp
-	 T6en4IcKXM0PZrIfcrg8kYBBkT4kVabqLSh8SN0o+BQh4iVStWJtpUDp7AzOUdZtBzw5i
-	 V5eTfmsKQclDa8yNMu269UkSeKSmSxrTvDK8BgTI4J2/3bj/eFmDW17b96/QWQocmWA==
+	t=1792441037;
+	b=BKCSEE+2nlx3oBM2/Hf/mxlufMSovO34Pcd3LgP9UznASYmG8ywyYoRk+KDuXL1d/39w
+	 8EVZde0DFM/TXovoMIhkYCxP1ctQH8muX/29/28ytNpi3Mt7RsuQHO7kuJITvDJJ8DpGr
+	 tfdDb6eWn64ijjnQFUJIdM1LUyd1odsALRpAOL0uQUM954NQ6IBBGb4JXCCDKavE0KlXu
+	 SpN0qVlTM09AAPu8fUI+gmMeUNUrf7yjIS1Bu7esflAgtPcLzHi/M78+VqEZGxmAGbt9D
+	 v+pW8ynsvD53VhiC3AvYj+d86H9fNvsK9TsX3xJjPenlZmwGPROpCy+EsaszkjqpkiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792440592;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=Rkl/SJtTuyhbUZPuVBC+tHoa2CiY/I4TZnZ1tICOFto=;
-	b=ylx9FUCCbYyE0DsQ2QqBBBYHiBu3E+OxAFi8DfxokKdL9uubLBSrAFkNKa9vHSBiZeDA
-	 FOmsKsHLkVdTEo5GTVBjO6KXBMCuAU3qs0KMn6tKxBJ3S7idE5ew/4cMllas19wKRihR9
-	 MS4+ZP277radfiN7vRAOjt+CZogTvfthThnM/VO4+YpWPRmC0yhFtmjRCTNj0YdlOVahX
-	 bs0a5Svzo0VaxjOc82CJZMNuhWeXz4raKeN094NuUzATEAEJPO1DDP+HFjJZJh0I8nd4x
-	 HHWSg5EJXzMCrnDNa7/8tW2qcSS6H6iYxSHnM94Cky608ea87x87IldYEw6jC2SkfwA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792441037;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:
+	 X-Google-Original-From:Date:To:Cc:Subject:Message-ID:MIME-Version:
+	 Content-Type:Content-Disposition;
+	bh=hqaLOJ4XCEj3IyoKT+SEnlFBnRoLBdtJOoMuPqK4qXM=;
+	b=oVfuUXfd2dsQfemwqn4spPoEDg3En4EK8ktWD+L45MpBXenIPtivana/cO9yKCRXALNQ
+	 kJxt7FJYbfpiwyA+UKXi2C9LHRUYu/FCfVM59mGnReSo1bEmtIhPG1nAmdhjk86yjPD0x
+	 gODLDqAHBytUffOv7s3FT5L5gFc20SRA0jTYTxvLUWVQZOa2jYV8+s/Gf2vzx7sGcitwb
+	 Vl1PWpy3hzTVkAtscLDgwVCCboi1B5jfuBu4W8CwQbk4jMnXzNnqsImyIhspKw5WA+WuQ
+	 04rUiiTm8rQhXq6LXcCYI6Qxv+PAoS5GjhV0qKkrpPUPI8K9EyccdHQbPcAJjbAmIKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b="T/JxZ9T/";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=MvMjtiwl;
-	arc=none smtp.remote-ip=103.168.172.150
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=openai.com;
+	spf=pass smtp.mailfrom=openai.com;
+	dkim=pass header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=JA80pW0Y;
+	arc=none smtp.remote-ip=209.85.161.53
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41590606A31A
-	for <git@vger.kernel.org>; Mon, 19 Oct 2026 20:09:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 41590606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4C2606A31C
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 20:17:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DF4C2606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=T/JxZ9T/;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=MvMjtiwl
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id A85C6EC00A7
-	for <git@vger.kernel.org>; Mon, 19 Oct 2026 16:09:51 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Mon, 19 Oct 2026 16:09:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792440591; x=1792526991; bh=Rkl/SJtTuy
-	hbUZPuVBC+tHoa2CiY/I4TZnZ1tICOFto=; b=T/JxZ9T/DeZYsMIeWcP8k+8MvV
-	A+JgjvFT7Yk2gRwSXIhVgwhKLw6GyoQ3z/srLxcYkoRWj96RH1671z5SjgH9Rfpb
-	c8Qul1jCXG0JEUVmFA8BFI57DF7e9SsTThs8/YAb4yvEo+xuzcDy7L5sbOxtQrIo
-	gigHeYL5Y0p+1IkKwaJKo8V+pJoFN83wb4GFFOv7xDdX66KYfQCEslHd/NAxVrN3
-	12nip06KUA4YqW9PvQ+egcuLNr2HCyE8LD9antw6e2tcW0HkGd3gUQNkdX5uAutN
-	4Qs3q2dWYUHlAYvQku+H+VSEMT05KmOwGR13ytlWqEkpiSs/4kgl+iUBMxwQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792440591; x=1792526991; bh=Rkl/SJtTuyhbUZPuVBC+tHoa2CiY/I4TZnZ
-	1tICOFto=; b=MvMjtiwlBkcaypYHgw8egurGg8IpwXFzVt3VmUDuD5V4V2+N/RY
-	IvVt6yD1r921MZCQEB5HHZLuGQ1XuyzYfiE2rCM508rCFPK4GRO52ziCwZBC2j9T
-	67XSHPrormECipO2fIjtBZfGPncNuOVQNw7s42iWZqtP/fSEW6F4wggzVwNEExt8
-	ylpmqt4O0CklTWmE0BRTxFV7f+p07crRy6UeUjQN8FSrjS5MYTH2ngPQjpsm49sP
-	JDkgs2kCW0r2iuM48CPoK6R0fwljZnJ2yAyQUsD9356IAbk4FWF8qQviZn8IiICT
-	nUE5jBhBJswi3Bt/PMbm0GzGWVl0etNhT1A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792440591; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:eunOdkOLN5tyt/c7uTUWHDKpkSmGVYkpAs1HhNLv1WvK+jg
-	2aXKTrG63kB5uP9i1IoJWhOX1fbzpiwhDQvUH3UUoYm2nD+zK61J5diss81V29oO
-	jeqOS/DY76V/3pMls437Eqrax47FIL9XSfPaNe7pIKRy9xPmJfu+d5mTzKQtLHNC
-	JEJMcQSSo80vFqHr++ApIwzWx9nGnvOTGmaBo3k/xUeUytrI++3Tep6oyTjN2o4m
-	VXC3frl3us9+wOtsAH50JTJBFqBWe6N1EvS3IPoxEF8/WJsSkHF+7UawkLGCxT5H
-	oR+OS/msP3M1wIlvocaVsgcQMeF6bIhP9Uth4HQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:fGWv8sAlptKP+sa6bGNCM5DR1Y1VIXe7ah1FFPfVUHg=:0AcJOq5KuZ2bYSuN9FKZldKOFy2Tyqx6BKBhIv8rknE=;
-X-ME-Sender: <xms:D3nWaq5VocEGOBzSz7cUiD3fCkuqgKEha3RSKMGoSzBqKjiaJUpcTA>
-    <xme:D3nWaq6PQqinhIeCK30L--_kWdhMRlMU8wB0GGiYUzg7bo5mHoh0WgtkiNqnPigcN
-    L-eHGJFY5PuOcjxvZRscwdswkMlTlVrKnCxqfgTLTSo_VZ3mO72yY4>
-X-ME-Received: <xmr:D3nWaueOvzcrBtBSjuA--0hyIPrv5QJalzGsIZLRMuquNCC2wS3o9_uExZt7tdeiXFTq4SaunyVMmgxrNVD_c6xRirXjrNQb7ww5>
-X-ME-Proxy-Cause: dmFkZTGlqZ/1sjnpdLdKDaXZ/NgJUv7feDWo0/xQaetcCfd3GgIpV4JlGTNL8uUD5s5ueU
-    BIuz/yQNhhOhmdLOrp3DCZOnoCjgRMuz85HohOjzo50Jei8LZ2E4hg1/p2k49li2V8q04O
-    rC1+ycskl7bm6fkMw+C0YOv2gIo3C04QeqnGNMsVvVkAaoZvSzoDmtLEluRLqeUYHu78w2
-    AkrepK94BfZXAjfGQ/ASY4npQNF6VAZ+Ak1HYoCi4wQ/A6YyrmhkBdeUQXC1B+6apm23xq
-    jsnrsSgw5fhW+mC3JH/iXcfRRzNOgSfy3SPUnQdlIqgnLHy0r0toluKki8JZk4c18LMxMi
-    JTKJ0twy8a+LMCv+i4pLsdzgp7b1vlkJnsPYTMX+QjWelhlphekBuGmwzHkyh9WBnYeAa5
-    +pRrDzn6L42jKdAXyV0t4kCaIpVtrlnWC+cIcqTlV/g3SzhAWHYk7FRdD8osfDZ4/rwvb4
-    1AKofKYVcwje/op7uc+HAoALVK3GHlxlsTD3yk0tkprG6kPxs6o6PNDHH1jYEEN8lySfTP
-    RHODTYYBka9h0A9DUX2+GW5xyJV09ebUhfT4Mqd4j+UvkaOB8wyoHGiHvGC0GcceJmBO2D
-    bqg9KMDplGJq0PVOTM0Vs3DZXrLR65i1C55Ab9qb0qaMGaXx2iUS1i/+GYOQ
-X-ME-Proxy: <xmx:D3nWamBwB7-G4k0cqjDM94Gq7FO30DWcudvYu77aiKm8mnzP9PIBvw>
-    <xmx:D3nWap9O4ooK6pyq6RwoU2QVj6-ZnAkoaYcSpGIFVCMHM31a2ZH0qQ>
-    <xmx:D3nWapKhKCDo9wSWf0bFaY3aCdfyllF6wm0yydRFLaux5UFY0bkTHw>
-    <xmx:D3nWaqgK-UhwNbBI9iZ_p03BP8DdRS0Qhjj5ddnMBDw8afmrLdJnig>
-    <xmx:D3nWat-7jJrcIkU4DvzpJoJy4wldmcYDsvxxiVVPkAji32ecfVDLBfcz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 19 Oct 2026 16:09:51 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH] gitlab-ci: fix "check" jobs with large merge requests
-In-Reply-To: <atW_BmTQhxFRLc0a@pks.im> (Patrick Steinhardt's message of "Mon,
-	19 Oct 2026 08:56:06 +0200")
-References: <20261016-pks-ci-optional-whitespace-job-v1-1-f5693fbae1a5@pks.im>
-	<xmqqtsmlftwy.fsf@gitster.g> <atW_BmTQhxFRLc0a@pks.im>
-Date: Mon, 19 Oct 2026 13:09:49 -0700
-Message-ID: <xmqqik2x4fle.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key, unprotected) header.d=openai.com header.i=@openai.com header.a=rsa-sha256 header.s=google header.b=JA80pW0Y
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-706113e92f9so712038eaf.2
+        for <git@vger.kernel.org>; Mon, 19 Oct 2026 13:17:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1792441036; x=1793045836; darn=vger.kernel.org;
+        h=content-disposition:content-type:mime-version:message-id:subject:cc
+         :to:date:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hqaLOJ4XCEj3IyoKT+SEnlFBnRoLBdtJOoMuPqK4qXM=;
+        b=JA80pW0Y7WIP7pFOInd9zthnwMmE9NE+OlIVvJnLm2A/PzaemlKTUcVRkNSQ8/ymAF
+         3c+yxlQSH8kCE9p0CAP3Z1AyVOeDa1pONBwRA21eEihLDMLNBKNQVB1lkr8ehMUaW14e
+         UTGxzuI4l7VyObCgBy3OUqoGFSCPNCbIcOh2g=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792441036; x=1793045836;
+        h=content-disposition:content-type:mime-version:message-id:subject:cc
+         :to:date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=hqaLOJ4XCEj3IyoKT+SEnlFBnRoLBdtJOoMuPqK4qXM=;
+        b=OrCcpalHxN/jbDWlu3tkvjbgxski4K+Fr+Dj5Nk/DcE3PVUegOYYUCmS2R5IGDo2tN
+         Ct/zeikv2E+cghEa4jbf931DflW4nx8MYF1cqQEpqReuvLXC3pBTCI7B4qooEuqAsgoC
+         d1qSGnuaIuQHVNMqiPdSs3C0w91MbeY/NEGQ/anL9LQhjtQfePiC3lv+pcRyKsL/d2cg
+         9aCKpD/vMRGby/107VJQRLHbVfdN3zuRonsTEY2vHVGsRgY/ICJQI30dFS80ywvU6JF/
+         WQQ4wNMBKUtZXDkiYGruBmOT3PIpEWozFhUiYC1TTZ1Wtgr2A1muveGr7Mv6EIB1cfWm
+         JqTA==
+X-Gm-Message-State: AFq9FYLvTeFMU0Jo/5NhoenhHYwY01X0gHLjdWSwmHvxHTQZJsOEctw6
+	70XDesqEuYtdOUUJ+qmUo8INQm025AB4MBihzrwPF74DnzO3AoC3cNEMrKoMEEqRQb9IkTYqnht
+	QPWSobxA=
+X-Gm-Gg: AYBFou3HQPQhEtzDDDpvQfptzP3/539tNkpxq9K4l6pvYXSjbFHeZF5bmawll+QbbL1
+	4w4hrxaTrB4iyQ5CqBtDqnLEhZtHoLpnlJabPtWguJRAp4AIISniVMzQq30hw/LFtfvlOgojhoO
+	1F2pvD8zQKXuWRUWFTvCHPOS94yullCTr0Bh04Lnl9dDHXM5x7iIf4ApAs95qxDFvEryteYL0kV
+	WpgkgoCxKXaDhyoRPdzto6igOJu35EDggrWk9C8jcue+5Z7mbSlpxm0Jq6IwmKseuBVimwdTWIG
+	0yR46bcDSQ5CaQT8s/ioC3Ihfc/up9qz592NrT17Fisf9Ey5C198vpagWiLzr0GlziDodRxvwg1
+	axR5F9Y8LgYip59HbHXj+2FFrEBqe7ldxKz6sAHi8KPNxsguuhjonzOySL4sfNDTPc77T+YeThe
+	aUEAjfrDvUsKeVU/4Evq/gh/rswZU03j7LnwSq6BrG1ZifEn27RSamarjuBBS2rMM7igDSKrQM9
+	QiyhRBQNz+VMwT2NsALuTwXUSpkgWUxUfgXxOymTw7GjB9nwGAoy1ULrUk80obfpeQaB8jxDBdX
+	/z11Fe4Z
+X-Received: by 2002:a05:6820:1624:b0:6f4:d9d4:3940 with SMTP id 006d021491bc7-70352297c47mr6169830eaf.6.1792441035736;
+        Mon, 19 Oct 2026 13:17:15 -0700 (PDT)
+Received: from com-79390 (vpn-centralus-02.tradc-corp.com. [20.98.136.114])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-7018f3d5d84sm8321235eaf.8.2026.10.19.13.17.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Oct 2026 13:17:15 -0700 (PDT)
+From: Taylor Blau <ttaylorr@openai.com>
+X-Google-Original-From: Taylor Blau <me@ttaylorr.com>
+Date: Mon, 19 Oct 2026 15:17:07 -0500
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>,
+	Jonathan Tan <jonathantanmy@fastmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Derrick Stolee <stolee@gmail.com>, Ted Nyman <tnyman@openai.com>,
+	Daniel Reynaud <dreynaud@openai.com>,
+	Aaron Friel <friel@openai.com>
+Subject: [PATCH] negotiator/skipping.c: parse parents before queueing
+Message-ID: <dc3dfa3647c42da9170bf3289f4e8a4a8a55c8e2.1792441003.git.me@ttaylorr.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,25 +97,96 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Patrick Steinhardt <ps@pks.im> writes:
+From: Taylor Blau <ttaylorr@openai.com>
 
-> I tend to ignore those myself:
->
->   - "check-style" is not all that useful as we don't fully submit us to
->     clang-format's style, so whatever it generates is not authoritative
->     anyway.
->
->   - "check-whitespace" was quite useless to me because it breaks rather
->     frequently.
->
-> I still think that "check-style" _could_ be useful, but only if we fully
-> commit to clang-format. It would remove a whole class of nitpicks
-> and thus reduce the burden on both newcomers and reviewers. But that's a
-> discussion I don't really want to lead :)
+The skipping negotiator sorts its queue by commit date, but
+`push_parent()` can add a parent before parsing it. Its date is still
+zero, so old ref tips go ahead of it.
 
-Hmph, I haven't seen check-whitespace giving useless false positive
-myself.  I tend to agree that check-style would not be useful as it
-came fairly late to the project after all the code have been written
-long ago.
+For example, suppose a topic branch is one commit ahead of master.
+Skipping offers the topic tip and skips master's tip. Master's parent
+then waits behind old ref tips. With enough old refs, negotiation can
+end before we offer that recent common ancestor.
+
+Parse each unseen parent before adding it to the queue, so the queue
+uses its actual date. If parsing fails, leave the parent out of the
+queue.
+
+Signed-off-by: Taylor Blau <ttaylorr@openai.com>
+---
+ negotiator/skipping.c                |  5 ++++-
+ t/t5552-skipping-fetch-negotiator.sh | 33 ++++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+), 1 deletion(-)
+
+diff --git a/negotiator/skipping.c b/negotiator/skipping.c
+index db90fa77b53..ed6e88b59b4 100644
+--- a/negotiator/skipping.c
++++ b/negotiator/skipping.c
+@@ -125,7 +125,7 @@ static void mark_common(struct data *data, struct commit *seen_commit)
+  * entry has the correct flags and ttl.
+  *
+  * This function returns 1 if an entry was found or created, and 0 otherwise
+- * (because the entry for this commit had already been popped).
++ * (because the commit could not be parsed or its entry had already been popped).
+  */
+ static int push_parent(struct data *data, struct entry *entry,
+ 		       struct commit *to_push)
+@@ -151,6 +151,9 @@ static int push_parent(struct data *data, struct entry *entry,
+ parent_found:
+ 		;
+ 	} else {
++		/* Parse the parent before using its date to order the queue. */
++		if (repo_parse_commit(the_repository, to_push))
++			return 0;
+ 		parent_entry = rev_list_push(data, to_push, 0);
+ 	}
+ 
+diff --git a/t/t5552-skipping-fetch-negotiator.sh b/t/t5552-skipping-fetch-negotiator.sh
+index 96e224168eb..7a0b9b32474 100755
+--- a/t/t5552-skipping-fetch-negotiator.sh
++++ b/t/t5552-skipping-fetch-negotiator.sh
+@@ -223,4 +223,37 @@ test_expect_success 'do not send "have" with ancestors of commits that server AC
+ 	have_sent b2.c1 b2.c0
+ '
+ 
++test_expect_success 'recent ancestors are sent before old ref tips' '
++	rm -rf server client trace &&
++	git init server &&
++	test_tick=2000000000 &&
++	test_commit -C server --no-tag base &&
++	test_commit -C server --no-tag parent &&
++	test_commit -C server --no-tag main &&
++	git clone server client &&
++	test_commit -C server --no-tag to_fetch &&
++
++	git -C client checkout -b topic &&
++	test_commit -C client --no-tag topic &&
++
++	# These old tips have known dates, but the recent parent has no ref.
++	# Without parsing parents before queueing them, its date is zero and
++	# all of these tips are sent first, delaying it past the first batch.
++	for i in $(test_seq 32)
++	do
++		old=$(echo "old $i" |
++			GIT_AUTHOR_DATE="1000000000 +0000" \
++			GIT_COMMITTER_DATE="1000000000 +0000" \
++			git -C client commit-tree HEAD^{tree}) &&
++		git -C client update-ref refs/heads/old-$i "$old" || return 1
++	done &&
++
++	test_config -C client fetch.negotiationalgorithm skipping &&
++	trace_fetch client origin &&
++	git -C client rev-parse HEAD HEAD~2 >expect &&
++	sed -n "s/.*fetch> have //p" trace >haves &&
++	sed -n "1,2p" haves >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+
+base-commit: c51408889c3b372814bc20b9431c3b74d0d268eb
+-- 
+2.56.0.187.gdc3dfa3647c
