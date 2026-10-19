@@ -1,98 +1,99 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A64548488F
-	for <git@vger.kernel.org>; Mon, 19 Oct 2026 06:51:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83734534B7
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 06:56:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792392683; cv=none; b=ihn1Js4KKJeEmxB26jJxkK/b9hdtsyyBR3reMS8jOCMSULgQ7ztThhSodji2jZQlNDak/aLj2LQoFc9Fb1OwfbXIYnHqPmEvOvoQWSHMKc80dqWwU90WDMczS3WDEOP53HrDJW/1MvacRzpdBGEp/UcMRdPX7ffcwsROIVxgJlw=
+	t=1792392974; cv=none; b=M8T4Pg1643Gppfn6Pz2lTwFhNe3CfrJGBKiXPypFte6er6E9yh+aU2JZk3ZCkycpjsRGPjSrAhWNe8AYhwiv1pl8TjVqgzBnf872Yenp4GQS6m3DX2pxiTUZ1Zch0vG5eH89n2qZOIGvyyQAqsFwLhuUzMJhhAQah8Am9ISsIic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792392683; c=relaxed/simple;
-	bh=XvzSEV6XHKZAtWkWF9pv42bPbiFEP9UbjAM+MW3PDc0=;
+	s=arc-20240116; t=1792392974; c=relaxed/simple;
+	bh=z3bpz5+SglA4d7i//s4EvLyzgK7GSjsfYan6EHLzgvA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S9ic3rJn7LbHo3uSYu+wzTxxRMXjxe/P2TCHHAOGlr0ExN/KvsV/Fo+E+N5GZTYShFcZVW0MMI4Q9XzsLsrXwgAO/ZpoGmBdabLu68rgqEUnCuC7CuopgA5MfwRXxbHN8GAV7k3jC53mpPjOAPWhzy8oe+Zm16Wa4YgTrE90xxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZdYv9DbU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rpTmYHCS; arc=none smtp.client-ip=202.12.124.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=sMX9IdWYK5RtszTWMzFFOCFQw7t7sg8LtCH2hsfF+YUcN7thlbh4pa8wd0mvxQkndPfgfEMOewdfKfz7XzHvravsvn9vex5uR9MVDD3GApXmYbLooEAEdpM11q7GFKtq9UmwJFmH0ojj7vHcqUtcDbtOdnyTu73R4Suwo07/Hck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YBs4NzVz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HqQgCoRM; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZdYv9DbU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rpTmYHCS"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YBs4NzVz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HqQgCoRM"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id B75841D000B2
-	for <git@vger.kernel.org>; Mon, 19 Oct 2026 02:51:20 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 058007A0137
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 02:56:11 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 19 Oct 2026 02:51:20 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 19 Oct 2026 02:56:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792392680; x=1792479080; bh=tfaywb0oXZ
-	CzbMoVh9x27gu4HuSlf1q+MuE6M+eN5po=; b=ZdYv9DbUeEfaQfr0BCecE5I+kH
-	z0xusw5t3UpAn5ksiwXlXjxw8vf97+m2uvh7KQwArBwINa82yT1jYoVRM62MZ99p
-	CYgQJzsq0PdD6oahe1hHVp6uDv2WjMaIZMhOks/Mq5OIoz+zZRLRUbEgaNZxdB/m
-	z3LauWnCma9l05fb9OMh16WEgrwRUg69JhZ3TerMpGpHyL6QeZvRNQIk+q058hHB
-	ubn0gXifM16Eo34mQFe/FFMlZUz77BLYnKhamMBfg7Ry/pZl9imjlAx7g5UpRm4X
-	ajQO1cpShWFT+22deFwu78Dv38RdgucLmpGn9iBDn6+HCN5VNA4/GJi+2jxA==
+	:subject:to:to; s=fm2; t=1792392971; x=1792479371; bh=B7NRPcN5kJ
+	BCsZ6S55o/TDDjdfYTjU9suYCSMsxD4Gc=; b=YBs4NzVz+nqEqNDlXRHmRlN9BO
+	srZusTi/i9NwPdx6B29LhwLt22fFPP/8VuiuglNasXWA2HmwYGn8C6xWHCn6W/DR
+	VlLTozgCqwwvD6Ee6wAV90e+X3zvl3a9A4zNzeTT4g2XYjfY8tgc8XwVSw50sar/
+	ZgxWywMwF5wLqkUKuUlbXmHNQQHHl8oVlVWjie++DTDZUm5lEV/0sQVe4mM9EUDa
+	huxYaXF2LpoDs3GY3R/GoxaykS3ysNoI86R1UxTQEs7oezfoII1u84XdLWkI/4Uf
+	AfUA8kOod17ayYcFhSgaAcj+k5UD6+HZrT8QTTFUJdwslpvIZNv/mRvcmGlw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792392680; x=1792479080; bh=tfaywb0oXZCzbMoVh9x27gu4HuSlf1q+MuE
-	6M+eN5po=; b=rpTmYHCSJzlXHPDVLGDJYgQdc0T8QJzGRWckZe13HulKsV3mdr0
-	srku/VSf2tye7oaEnzym2sIQAPJR00ZWGfoSZPNRBqIsSO8fLW0nZPEoTL6ycPeW
-	IpEF0nlhSSp5D5GO0cNiMQJdmHoa7ggC3yVYdqqaWmKfbMZOPVMjKEU+Z9k6AVDk
-	obfxoV8VzL/TO1BZ47dqocU/gyaVd7T+Gl4S54YNVjp1S7qiurMsUkpys6gh1wnM
-	kUKLr0AB20dyY58D272+CGX6ivKx8MGcoFXrGhix1ebbQ//NbN0Y4+BkZqoDT/W3
-	LONKI2SHnuK7ceq1pji3gpkafje5qKlufVw==
+	1792392971; x=1792479371; bh=B7NRPcN5kJBCsZ6S55o/TDDjdfYTjU9suYC
+	SMsxD4Gc=; b=HqQgCoRMm/7QpkrNFBvd4NMP1B0iGC5CBX7tqVk+kP210IVMHPJ
+	6ntTgZBnnPyNspSwCqWcYPlRmV4f8I6hbBDSjHfFxHUayzd+wKULE5m0YSiqNoVJ
+	92bqV03zwZ8FWOX/BKnbaVyYDSsZJ1yTwtNwItoCcGNhGZIRSZxOoCBaKHXXGEJB
+	9D2IRQVcec2oc8gFTjBoNJFSW3ZJENIdCC1DVtW9gue8v4Is+tg02s7dbddRgONj
+	uB54/RetVSxuSMusNUeWtEn/gZTCOxGC8RjR+mw8QwMyHTjg/vMzXAknrYUENnkX
+	TZfuX0iITBffhMq6ce0qCCSDEGAg/8qKtuA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792392680; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1792392971; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:gQ091SuqRHhJzpSnwYVDKnwQSWa30sDaZWIy10mBiPGRJIY
-	L/U6ziDv94WPHQ3futIOcaylsU3iAEQSsTh5whRym1KgETdOgEdV0suUQDVHYsJq
-	Gnjl3laS35AYGiRvAqtTwgPlWV7X6FExtlpGcGR3d6X3fcEK3YEgW8Nub7cm+EjE
-	JOkRT87SZrhrMoQwOmonqmEV5xOlcmzGqP6bEf8CZ85xybTOv8XBI2yC4njvKINX
-	KGubbTw24XAMUb3PzkyQ1FPKM1u1Vl28JJs9eHrtyTj6J+HV/QAdCulpVxs/G7jx
-	3D/ytouum1T5A1Y5CiiNyK+L9CmivXXAhz0avCQ==;
+	s=fm2:rsa-sha256:UaiRUqxkEfGqHBwbtwb8bhB9g8GC0WicNg08hVwB5EZt+ZV
+	zLRDLbzsLoCMgwhwX6ofoCIfjDcq8ncXF6fafj5Ues/A7/OQvkMQY6bGwrXngOnG
+	3bhNW8ALyLdBwXwEMisbyhbgM0o9eYoVmt+kM0Ku3P7iYO6T9bzGoHityrzmRtaM
+	17a/H8Lru5jjAz9Aj71ofKpNYhZL7pSMvwO6yesunFQMcYdgvmjLfRAMcw3y3chs
+	lBSlbbP9UPbWK532vnRDu4CP7eMLCU+ySbgy3nI+EYh4mnGijKh0v/BshnUWIKpA
+	2e8gue5p/ZKAVbr5ChqV7wiL+HjyN+lZK2P0wmQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:EvFFsAwJidu2yk0vHeaHgBZ3SNO759LizUZeOgL0p+4=:XvzSEV6XHKZAtWkWF9pv42bPbiFEP9UbjAM+MW3PDc0=;
-X-ME-Sender: <xms:6L3Varxg6pimN8Mn9aiwFg6uGg2tmzzMMm1Yg8oFa10-LJnkgY5Pvg>
-    <xme:6L3VapS3l7wJGBX6cpMHnOEX46l3DOtxmsyejniY6OzvWj3AYAuCaitUdoCZXBp-c
-    95f_sfGAxvT6tH7O1VF_ekkjcDmI4Sdp9Xq89rwyq_gTmJmU4EuFA>
-X-ME-Received: <xmr:6L3Vai8YQWTzMewteUYf14i3Jl1AkSCjp3Nk7hPDE3DR9aflRaHjTA>
-X-ME-Proxy-Cause: dmFkZTFr3wY7B7zxgppDnPUqtWYFnduig5Eh+pf6m4I0NTf87D+n4Sg1aOrSD/ym3R3726
-    0qi59pabu4kuu9ZwubFTTRvqeubRcKpuMPx+Q5AZ1YqAHchNbkYbCVOv6+W22pwg2WGn1F
-    NiDYa2me7r59rkEZgizhwnk0WhqO6E06UGdYTC2Umh6CgEWkiAmFqGowc/OzknsV25maKX
-    FV3ZeZQ2x+nm66w4OejSTQesVrr/5jbo6NMXO0hM7kfzn2MISt9V3FnpauInrTaQqKEP8t
-    6K2bJ7/qpsE7/7Bli8DbCbiVVK+UJg0PI+6xupfMuK1yYi6K0MhkyJj7nvXP7e6sW/2na5
-    bTzMHv82zfAsAJCfczwvBoxJgGUYMNSguAX77Yu2A2Cu/Y4mzn2jOpxssFPzjUpdZ8mRtJ
-    71e6zoLMEZqW2aNnnl/1bGWgsDU55SJ42JCf2c4kWncHlFOD3aT82eMt22VkBYMKa8IRjR
-    /fdObI3vGF660vlHmO6y/teTokLuTnsRj334Nki86FJ+zcPM9jI60RHiTcV3gJRWkJgmIJ
-    b09WxZK0DlSUUAj6cEQxjTIDnixvHtfpU05IOJTrPkY32heCCem5u/dNmuvJlNP7frj+Qh
-    JVEHzuJuzKJp1PuoTmOXHrW2bh7ftAD4/6BieuYYdi24mXuBFqwpewXVe9ew
-X-ME-Proxy: <xmx:6L3VagrPn2B_3brTzQMad3PiJsXHieYrnsC3daHlVdDbSvwdVzfkNA>
-    <xmx:6L3VavmgDCvXOTMfi2WpJ2Esba6zEurY9i6UarC1kc_z-58LcctvWg>
-    <xmx:6L3VanIrJJ5be3tX1YU630_ST0_P3KUSSBievbmpf-5emtt1-fyAwA>
-    <xmx:6L3VakyeG5nirDkni_XqeMx5SpMRdR6eHwhuuLO8myecAn81qaJQGg>
-    <xmx:6L3VangHyCeemxQ62zhHhhhytrl7FF-VQ15A7lctAyL5dSa1QZI11mRO>
+Message-Instance: m=1; h=sha256:ZMiKDEp2+k4f+HP1ag7A+LUIiwBrmdFGwRKBqK4d4is=:z3bpz5+SglA4d7i//s4EvLyzgK7GSjsfYan6EHLzgvA=;
+X-ME-Sender: <xms:C7_VatYeRDuagWyiNsugF5ULiDBMaOuyV5brZ_ziBHBArdbh08Y7Ng>
+    <xme:C7_Var1czyIu6FCRC2tp6KB8Sp9PPToq3wn_0xJTWpgloAOBr2qid0CfPU-ZtyG3e
+    ZSE3iCJC9IJpDXKHsyJuYrlTxoGiLCUbarY3l0g6CAqGOX53sgaGA>
+X-ME-Received: <xmr:C7_VatVSVrhb3lVQlqXFUxG7nu2lG0AEdTzA0OQniYscvaOqsJF-hA>
+X-ME-Proxy-Cause: dmFkZTE6xWSXN9BtWbHrVOOmrXo4W7hstCLt48FvaUFwvfnqmoK3Zo8Ltjtpqditc9aDpj
+    pfsOYhX8hp7EZY3WJ9avmOPsFwhxeZ6nmsiJcJA7GaM8htVVQponXKW35PPf4UuSgkf4Fz
+    uScjI4zkyKhzNh4jHKKnJy7g1ifC0cQfAbd2uQN0ADxzGXa7br8bHEaqJ7nUmoSDp5gnEi
+    LXkVWuZbZPZTVifQAfXTsLhWVmvLT4ETRlI3hnv6KmwGb/KTwGSFJhoiR1930afYqGRtiu
+    uOG1NOJnOkbv6X2MewvrVF6RS3hau42z2aGBjdnG7aVrljBSsFj753TzOhVQ+rX3IeDzKo
+    8oo6G3aYbn6gNWBgrgz4diw6J/Fi6qo03vJF282dY9Pm0zMc1y7Ph31DwOyu2NL7EqoHwt
+    9RsIAnkIYUGxNGyzOAIa9Hb0BcZsN9KCpPL8MiwnaqlRvt+A68It9XvGAYYXNZwb+Z+z5b
+    ok9ij4NancU8Rz0sLczNHFLomw0Av/V2HlEKKBWFNIB9ERjZP1MJ+T/X4w4Zs+T5jnw+nz
+    P08EssLajSKBAA6bOou1IHtP2RWAxcutKaoWEMLTm8qKP0GBmfRgLbhpWgUlZLKlGo6Uzv
+    X5gRDkXu3DgAKOhr2m0kE6hxv9lIg9IAdXSLJ0JyX66wf+fL67zomORTGsag
+X-ME-Proxy: <xmx:C7_ValUmUwZHZzDSdYyTBv4EkFbtfp3gP-HzKWjvC6-M5AEcNRkhEg>
+    <xmx:C7_VascrldxLIgC_2dWvzoiO-S4Zt6_8qkRTR64T-jyfhhJ3PmLWOA>
+    <xmx:C7_VauXu3eh3_rStWB53pDIgVQ-Db8uArgAb6P5c27lGDC5b4p7o-Q>
+    <xmx:C7_Vald_D8ocZE5FtZw2UmX-Z2p0SIXc03KjNQhMn8-lmSdLPTGuCA>
+    <xmx:C7_Vaj11LCIopSZasQIK7Sr11N0KXj0CwkRv-W602jqf_spotm1bhsKU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 19 Oct 2026 02:51:19 -0400 (EDT)
+ 19 Oct 2026 02:56:10 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cee83913 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 19 Oct 2026 06:51:18 +0000 (UTC)
-Date: Mon, 19 Oct 2026 08:51:16 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 219384ef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 19 Oct 2026 06:56:09 +0000 (UTC)
+Date: Mon, 19 Oct 2026 08:56:06 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Olof Fairbrook <olof.fairbrook@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] bundle: do not free uninitialized memory on bad arguments
-Message-ID: <atW95CyeiQCGtIMX@pks.im>
-References: <20261018142130.2701449-1-olof.fairbrook@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH] gitlab-ci: fix "check" jobs with large merge requests
+Message-ID: <atW_BmTQhxFRLc0a@pks.im>
+References: <20261016-pks-ci-optional-whitespace-job-v1-1-f5693fbae1a5@pks.im>
+ <xmqqtsmlftwy.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -101,70 +102,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261018142130.2701449-1-olof.fairbrook@gmail.com>
+In-Reply-To: <xmqqtsmlftwy.fsf@gitster.g>
 
-On Sun, Oct 18, 2026 at 04:21:29PM +0200, Olof Fairbrook wrote:
-> "git bundle create" gives up with an error when setup_revisions()
-> leaves an argument it does not understand, as in
+On Fri, Oct 16, 2026 at 10:15:57AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
->   $ git bundle create private.bundle main --no-such-option
->   error: unrecognized argument: --no-such-option
+> > The "check-whitespace" and "check-style" jobs verify that the changes
+> > proposed by a merge request don't introduce whitespace errors or style
+> > violations. To do so, both of them compare against the base commit of
+> > the merge request.
+> >
+> > But both GitHub and GitLab use shallow clones to set up the repository
+> > in CI jobs by default. So if the base commit to compare against is
+> > beyond the shallow boundary then these checks will fail. To avoid that
+> > error we thus configure GitHub CI to disable shallow clones via
+> > `fetch-depth: 0`. But we don't do the equivalent for GitLab, so we see
+> > such errors whenever we have a merge request with more than 50 commits,
+> > which is the configured shallowness for gitlab-org/git.
+> >
+> > Fix these issues by setting GIT_DEPTH to 0 for both jobs so that we
+> > always fetch the full history.
 > 
-> Since 11ee9a75e7 (bundle: plug leaks in `create_bundle()`,
-> 2024-06-11), that error jumps to the cleanup at the end of
-> create_bundle(), which clears "revs_copy.pending".  But "revs_copy"
-> is only filled from "revs" further down, so the cleanup reads
-> uninitialized stack memory and may free a garbage pointer.  valgrind
-> reports "Conditional jump or move depends on uninitialised value(s)"
-> in object_array_clear() and in free(); whether the command crashes
-> depends on what happens to be on the stack.
+> Hmph, that is annoying.  In theory, you only need to fetch from the
+> base that the patch series is designed to apply, but I guess that is
+> not a choice offered.
 
-Nit: that last sentence is a bit on the verbose side, as it doesn't
-really give any more useful information. I'd just drop it.
+No, unfortunately it's not.
 
-> diff --git a/bundle.c b/bundle.c
-> index f55a521b2a..aad5f251ca 100644
-> --- a/bundle.c
-> +++ b/bundle.c
-> @@ -492,7 +492,7 @@ int create_bundle(struct repository *r, const char *path,
->  	int bundle_fd = -1;
->  	int bundle_to_stdout;
->  	int ref_count = 0;
-> -	struct rev_info revs, revs_copy;
-> +	struct rev_info revs, revs_copy = { 0 };
->  	int min_version = 2;
->  	struct bundle_prerequisites_info bpi;
->  	int ret;
+> How much help are we really getting from these two jobs, by the way?
+> If we disabled them, would we suddenly start seeing uncontrollable
+> amount of crap patches full of whitespace breakages and style
+> violations?
 
-Right. And for those wondering: we also release `revs` and `lock` on
-exit, but we always call `setup_revisions(&revs)` before any `goto out`
-and `lock` is initialized with `LOCK_INIT`. So both of those are fine.
+I tend to ignore those myself:
 
-> diff --git a/t/t5607-clone-bundle.sh b/t/t5607-clone-bundle.sh
-> index d709bea753..c39db5a955 100755
-> --- a/t/t5607-clone-bundle.sh
-> +++ b/t/t5607-clone-bundle.sh
-> @@ -127,6 +127,13 @@ test_expect_success 'failed bundle creation does not leave cruft' '
->  	test_path_is_missing fail.bundle.lock
->  '
->  
-> +test_expect_success 'an unknown argument after the revisions is an error' '
-> +	test_must_fail git bundle create unknown.bundle main --no-such-option \
-> +		2>err &&
+  - "check-style" is not all that useful as we don't fully submit us to
+    clang-format's style, so whatever it generates is not authoritative
+    anyway.
 
-Wrapping only for the redirect is a bit funny, but oh, well.
+  - "check-whitespace" was quite useless to me because it breaks rather
+    frequently.
 
-> +	test_grep "unrecognized argument: --no-such-option" err &&
-> +	test_path_is_missing unknown.bundle
-> +'
-> +
->  test_expect_success 'fetch SHA-1 from bundle' '
->  	test_create_repo foo &&
->  	test_commit -C foo x &&
-
-I think overall this looks good enough already, and the nits I have
-raised do not really need to be addressed.
-
-Thanks!
+I still think that "check-style" _could_ be useful, but only if we fully
+commit to clang-format. It would remove a whole class of nitpicks
+and thus reduce the burden on both newcomers and reviewers. But that's a
+discussion I don't really want to lead :)
 
 Patrick
