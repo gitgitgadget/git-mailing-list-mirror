@@ -1,184 +1,171 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03FD4D4874
-	for <git@vger.kernel.org>; Mon, 19 Oct 2026 11:09:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DB54EC665
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 13:15:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792408179; cv=none; b=AHxQNGsqkxKse9VNm45y4NmI6lZatUGcupXBTgN12iJJVMKPd77EQQ1AQWyAXFk4rrELBLiV4VEj8mc2fJNR2TRFgkLk+CGf0GucRVA5dHdcHOZRT7CNeyA5ebXV/LhxRl7sAmMSkmaalZaav360Zqr5rWitPKjkT+IXz7etbyA=
+	t=1792415744; cv=none; b=nlHdkBAlTJnCdedVm9BOT7DV92rBNOvd3B4a79dPqbMBNXUYT/O4jsTWBWGF/sAmgd1aB3+etsJ8uNPWM5hdgcTotyw4vXwDrtGEMqcILq5VXe3MZamy0TajXqilGcXAp0YQp7dmQe/xPGpHtQ9XcICjOpz/dASnA3aevCgS6L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792408179; c=relaxed/simple;
-	bh=rj1SvSVV59B71u9I0J7hSV8hsFFTD7WiVRoiv0iBxWI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=esqxUbuS+R82Tbczmi7qdaoNr2V92XLxkiLb28wKNxnNAVGC/uun/blCmKZhInwRwZuKh6yB+v+UWIEsyPDploP+QqdF84nSbdlzDCHJFN7vdv6Fo9qe5RJPfg53NTjckbnAsJZBaMml9gPpjUM+GTjtEI2g/2cfoanVt86Yrvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gitlab.com; spf=pass smtp.mailfrom=gitlab.com; dkim=pass (1024-bit key) header.d=gitlab.com header.i=@gitlab.com header.b=Rqa7Ybpt; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gitlab.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gitlab.com
+	s=arc-20240116; t=1792415744; c=relaxed/simple;
+	bh=+6oIfH9nwjpMWnWvhsq2/TDeCgM1ZuSW2pmyF8iBxZM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uTKC6jOmupTNjOn++83KCIEnaEmwwvWD2Qkro5exl/2E5cf+kQx4ral2rVwwcOIXo7uvkhnSbZIS2sQrf2Kd7P4H7EgFPCR9Bb4QX9+QceD7kpb9nJBZ0IbYJ/v3LxEUJdsaC5JcIjCThOEZNp07uaUjWxcOZgUMvFsBHTpy31w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KtwSVPjP; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gitlab.com header.i=@gitlab.com header.b="Rqa7Ybpt"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-48afbd2c386so940033f8f.3
-        for <git@vger.kernel.org>; Mon, 19 Oct 2026 04:09:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KtwSVPjP"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-48e011d370dso1753306f8f.0
+        for <git@vger.kernel.org>; Mon, 19 Oct 2026 06:15:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitlab.com; s=google; t=1792408176; x=1793012976; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=3y3fAuTKClcr2gqIa6+yLnmjRPpd4Or998soxBZK9Ao=;
-        b=Rqa7YbptLn2KKBQcIvzpqXnnphL+vNQf6VwW4Dei0LZbBDOwDlDiD4tUuhkgquBSoq
-         9e7g+A7rxYj6TeXybKvhq0wtwI175ael0+xg9FXkT51SQzkXSFztMcrEQZ08R1mPsEOF
-         dM09rhknr6eKzmLbjJdIaKrthdHG3tqHEgJHE=
+        d=gmail.com; s=20251104; t=1792415741; x=1793020541; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=WALcbzj0LtHlcM8beHI2DB5I+n6Ao8lPAx8y//YE4dM=;
+        b=KtwSVPjP3pMeax9TtTFUAIFL2OqVT7+0ADWSskm3W4bzU/D7GArr4a5YmzC4QA2I6q
+         Ocp+ot1jEOZoROIhPuIclJDGK1E5rjOJ46IbXiHfD93pt3ggaaU2B+lGaP0aNWpT4/5U
+         J0Zn+u5Ye0u60lzqOnGBBgj0LsJo4VEPylTsOqvJA6hpCTxEBykggGhqx2znUjC0jejV
+         m1lPvF5tZc2ZCmP9WUacHsCB5qRgrlgbEF+dZyQlgzAtQQZISbdVSj4feaCzoOd+sUSl
+         lQsr8PCxZe4k7j0b5Rzr4EbdzDYyFkvJzz3E3HpS5Lg5cl1oyCIS2ihKKGsDOC0rTCZw
+         eqHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792408176; x=1793012976;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=3y3fAuTKClcr2gqIa6+yLnmjRPpd4Or998soxBZK9Ao=;
-        b=xraDUuzKwfFRV6XJpH6a/98EZ4m3ltpyt+1LexgMuood9a2QwwYgjwAAXLyu6zkDHi
-         XxVFgkh3ieTeq2eAqJiPpZ4nNow75Vfpkc+jelqTvPxzimXrf9gOLAAJHVV/RdRJza/3
-         V6G6IScyGLwSugzRy848AqORQk+mU4n20omaZx41oosYUakhXb73MovxW7aYKfjZeVEZ
-         oQqsMd/Y5jP6RRgGmnpyZq5/o8t/S2bPN4KQJG5XP3zfJIJdafVbAJPvprhFr0QSQJsD
-         EKU4Crr52io1AIaOOQcGNuALe+Hk9T4T4wrUgiJqLOa4VEdRsbMlPLvgwY31E/IHEPwQ
-         ebSw==
-X-Gm-Message-State: AFq9FYJW4qL3xw+DVRBmXnMLygXqtIT+vyS5hBLcSl1gAa0X4eqbd/9J
-	eVi0U2WfrzG7eym7IDrdCpi+GMUEtpiIXR8x1bWySinFhjdt13didFHGtcKUgxdVqmwLBqFFPt0
-	EgTmyrQsAXA==
-X-Gm-Gg: AYBFou3OL9odwXkOvneaKUpDOShXrsqGfX6ebjZuNalu4bgSGgiNmsyL3rLDev4vRCB
-	fTpG3a1GlqieO8ViOO8F6ZbNkMvTTNSelC+mAxkD0ZcyXGqBZ4MEcDMpa5jCLFwtfj9f5hbeD7l
-	EY3VBnSOyxoVedKjynSuDZVtVMbqEalZ+Ri4kEe20jmSXky2JjRpYsnIR1dqH8uPtTla2I0HTRR
-	b3l4IenHRq9agA6GgOBl6nwMBwE4prYt6PeUERJV8kKY93l+2e7Hw1onJYAPbhp0Q4sj8zKoS4Q
-	sqjjiYPnrVLw+uStzT6A3RGnmZdBvAZBwPoeKBVi9Ttgea8dWIU8OBbnH06Eq6ca5hIuldbARD6
-	F1FCbqFXjqxj7V7HfWGqbot5C95dRhck6iT1VxMlxBzeEXSQ7uVayivXJDKJDk9rKgpn0Sd29ho
-	DU8BcPL5y4KF9aIzNItIqzsAwz3ZhRs+DShd7WQpGYaaC9CLtsPgT7XeGtHGlUWvj1V6S2BuZQ9
-	QrDjiWlGzMxWn0I+vu3ZEI0rfSp6fC0lG1ExQ==
-X-Received: by 2002:adf:e187:0:b0:48d:ef7d:4b4c with SMTP id ffacd0b85a97d-48e07fa8491mr14496519f8f.44.1792408175712;
-        Mon, 19 Oct 2026 04:09:35 -0700 (PDT)
-Received: from iwiedler--20220823-X3P9M ([2001:9e8:a97:4482:588f:b276:463d:6918])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48dfd4d4dddsm22208956f8f.22.2026.10.19.04.09.34
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 19 Oct 2026 04:09:35 -0700 (PDT)
-From: Igor Wiedler <iwiedler@gitlab.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	gitster@pobox.com,
-	peff@peff.net,
-	jltobler@gmail.com,
-	Igor Wiedler <iwiedler@gitlab.com>
-Subject: [PATCH v3 2/2] odb: ignore refs of shallow and grafted alternates
-Date: Mon, 19 Oct 2026 13:09:18 +0200
-Message-ID: <20261019110918.71193-3-iwiedler@gitlab.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261014181134.56220-1-iwiedler@gitlab.com>
-References: <20261014181134.56220-1-iwiedler@gitlab.com>
+        d=1e100.net; s=20260707; t=1792415741; x=1793020541;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=WALcbzj0LtHlcM8beHI2DB5I+n6Ao8lPAx8y//YE4dM=;
+        b=AiVzIztzWm4I9e6YKi+4bTK7WXpRJXzLN04w8wSi/H8gbAOoAJ6nEly5icDg19TpFM
+         oEu6gIQvuA7GOuRTfe4nL4DaBjTshFxF7sc5cNuiQj3Ik5s6eVMtAESu+hETWlo2R6Ah
+         R8HjuylZch97KVRzS5DXh8tCSYlidIyWzHUGMhDeRkpiuxkEotw1pgzm8QwlbRD2KRgB
+         +OnlfOZod95YDEMY0KyuFEc/MgFKsHTGiLw2ww0JuftBPZ7k6dKCT6DK6FwLdm46BaVi
+         ZerM02ZWzP9ET4AXSzb+cB/l1x14kLkPfnoaP+HjITtdMlfKkCwPwjzwFbbAxaZeSQrL
+         PKFA==
+X-Forwarded-Encrypted: i=1; AKwUvBxKsP56Bb1FjVi8PM+ofILPofkdIy4QUeYQo5uisSS2VgJ0gJAF4kvplfs1P4dADGgcfd8=@vger.kernel.org
+X-Gm-Message-State: AFq9FYIugEAqyNNzhQrsjRc5dPOI6UdLIiDh1YTUXzKUD8TXKEhQdP8K
+	buR844gcHyLqtkj8RSdtmX4kK4gir6TdP4xWBzTShVH5gk9+2JaJ9OH1
+X-Gm-Gg: AYBFou1IWHyVCzz1zabQCkWjhaNdHfD4trhQ9lRtAIr0ZFehKLsjjw/fzJspspD/sfi
+	mcCGP6HCyq+UBE+pYrmjJGHg99xpvnrWKDNNizRWLn25qAg779eP3+DA/CLyGVMafhymPbCX3Ky
+	Mv7vwX/xJ8ckOgEs1/H7T7mhhwO6LRxdGLuIkAMXiI5+D6lh0IOwUkPFlL14Lqz6So0FmpMjxRi
+	iePzHc45hXiK9iPIkOVAyK0ydQ8J0Vrh/TCKs038BgjOJRT3bq+pCuBQhnY8Fm5jHu4eqZ+NhJY
+	RxCTiw6h81eyG3X60gH37zSnTilAAb61CuFUFgFFTH238BcEcj0g9q4A7Ho3eDTRvM9m990zM0U
+	h/CbH/McyTxuEzxWfffwGDBWpafE4dtyDPbD7DETpAS5u2jR3QDZ3m80K/Ruhi6rvNiGl6XkT1z
+	Q41bXWBcqyUbWTEFvCNCZy1DjJgBlt9lUGm4/VFdcrKnomvPuF8qWr/jldg3nsKnkssJ4jnyrbM
+	SrjqatHkh9nJAAiBLBPLoxc6pdEVD7mUD71RL+bUP1JAQtQrkF9
+X-Received: by 2002:a05:6000:4805:b0:48e:10a7:40f with SMTP id ffacd0b85a97d-48e10a70508mr9649687f8f.17.1792415740899;
+        Mon, 19 Oct 2026 06:15:40 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48dfd4c5957sm22823084f8f.9.2026.10.19.06.15.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Oct 2026 06:15:40 -0700 (PDT)
+Message-ID: <921b3a6e-5d3f-4c75-97c6-35da57c6d76f@gmail.com>
+Date: Mon, 19 Oct 2026 14:15:39 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] doc: git-rebase: Update incompatible options
+To: Omri Sarig <omri.sarig13@gmail.com>, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Julia Evans <julia@jvns.ca>,
+ Li Chen <me@linux.beauty>, Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Junio C Hamano <gitster@pobox.com>
+References: <20261018132541.131506-1-omri.sarig13@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20261018132541.131506-1-omri.sarig13@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-odb_for_each_alternate_ref() reports the refs of every alternate
-object store that is a repository. Its three callers use them as
-commits whose history can be assumed to be present: "rev-list
---alternate-refs" (and through it the connectivity check after a
-fetch), fetch-pack, which sends them as "have"s so that the server
-does not resend what the alternate has, and receive-pack, which
-advertises them as ".have".
+Hi Omri
 
-That assumption does not hold for a shallow repository, whose refs
-point at commits with no history behind them below its shallow
-boundary, nor for a grafted one. A repository borrowing objects from
-such an alternate does not see the alternate's shallow file, so the
-history that is missing there is missing here as well. The fetch then
-succeeds, the connectivity check stops at the alternate's refs, and
-a later "git log" fails with "Could not read <oid>".
+On 18/10/2026 14:25, Omri Sarig wrote:
+> Several options in the rebase man page were described as incompatible,
+> where this is no longer the case:
 
-"git clone --reference" already rejects a shallow or grafted
-reference repository for this reason, but nothing prevents such a
-repository from being added via objects/info/alternates or
-GIT_ALTERNATE_OBJECT_DIRECTORIES, or from being made shallow after
-other repositories started borrowing from it.
+Our convention is to use the present tense when describing the current 
+situation so we'd say
 
-Skip the refs of an alternate that has a "shallow" file or an
-"info/grafts" file, the same checks clone uses. Its objects are still
-available through the object store. Only its refs are no longer used
-as a boundary.
+Several options in the rebase man page link to the "INCOMPATIBLE 
+OPTIONS" section when the option is no-longer incompatible with any 
+other option.
+> 
+> - Commit 1a66d8c6f658051a02b6d8f024e80e06fccdcd11 removed
+>    `--allow-empty-message` for the incompatible option list, but did not
+>    update the the documentation of the option itself.
 
-Partial clones have the same problem for the objects they lack, but
-detecting one requires reading the alternate's config, so this
-patch does not handle them.
+It is very helpful to link to the commit that introduced the change like 
+this, but we format commit references in commit messages with "git log 
+--format=reference" so this would be
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Igor Wiedler <iwiedler@gitlab.com>
----
- Documentation/rev-list-options.adoc |  7 ++++---
- odb.c                               | 11 +++++++++++
- t/t5618-alternate-refs.sh           | 13 +++++++++++++
- 3 files changed, 28 insertions(+), 3 deletions(-)
+Commit 1a66d8c6f6 (rebase: remove --allow-empty-message from 
+incompatible opts, 2023-01-25) removed "--allow-empty-message" from the 
+INCOMPATIBLE OPTIONS section, but did not remove the link to that 
+section from the option description.
 
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index bd9f345690..982a53c694 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -223,9 +223,10 @@ explicitly.
- 	Pretend as if all objects mentioned as ref tips of alternate
- 	repositories were listed on the command line. An alternate
- 	repository is any repository whose object directory is specified
--	in `objects/info/alternates`.  The set of included objects may
--	be modified by `core.alternateRefsCommand`, etc. See
--	linkgit:git-config[1].
-+	in `objects/info/alternates`.  The refs of shallow and grafted
-+	alternate repositories are ignored, as the history behind them
-+	may be missing.  The set of included objects may be modified by
-+	`core.alternateRefsCommand`, etc. See linkgit:git-config[1].
- 
- `--single-worktree`::
- 	By default, all working trees will be examined by the
-diff --git a/odb.c b/odb.c
-index 0200e26f21..e6bb7ce6e6 100644
---- a/odb.c
-+++ b/odb.c
-@@ -458,6 +458,17 @@ static int refs_from_alternate_cb(struct odb_source *alternate,
- 		goto out;
- 	strbuf_setlen(&path, base_len);
- 
-+	/* A shallow or grafted repository may lack the history behind its refs. */
-+	strbuf_addstr(&path, "/shallow");
-+	if (!access(path.buf, F_OK))
-+		goto out;
-+	strbuf_setlen(&path, base_len);
-+
-+	strbuf_addstr(&path, "/info/grafts");
-+	if (!access(path.buf, F_OK))
-+		goto out;
-+	strbuf_setlen(&path, base_len);
-+
- 	read_alternate_refs(alternate->odb->repo, path.buf, cb->fn, cb->payload);
- 
- out:
-diff --git a/t/t5618-alternate-refs.sh b/t/t5618-alternate-refs.sh
-index 3c5fbef463..68139a1b3e 100755
---- a/t/t5618-alternate-refs.sh
-+++ b/t/t5618-alternate-refs.sh
-@@ -70,4 +70,17 @@ test_expect_success 'connectivity check of a deepening fetch excludes alternate
- 		--alternate-refs --quiet <deepen.trace
- '
- 
-+test_expect_success 'refs of a shallow alternate are ignored' '
-+	git clone --depth=1 --no-local . shallow &&
-+	test_commit -C shallow shallow-only &&
-+	shallow_tip=$(git -C shallow rev-parse HEAD) &&
-+	cp .git/objects/info/alternates alternates.bak &&
-+	test_when_finished "mv alternates.bak .git/objects/info/alternates" &&
-+	echo "$(pwd)/shallow/.git/objects" >>.git/objects/info/alternates &&
-+	git cat-file -e $shallow_tip &&
-+	git rev-list --remotes=origin >expect &&
-+	git rev-list --alternate-refs >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.56.0
+
+> - Commit a74b35081c51adbde3ef01870ba03e859db33be6 removed the
+>    `--preserve-merges` option from rebase, which removes all
+>    incompatbiilty references to `--ignore-date, --reset-author-date` and
+>    `--signoff`.
+
+The same applies here
+
+> Update the description of these option, to no longer reference the
+> INCOMPATIBLE OPTIONS section.
+
+Excellent
+> Signed-off-by: Omri Sarig <omri.sarig13@gmail.com>
+> ---
+> 
+> I've also found out that the option `--onto` is now mentioned in the
+> INCOMPATIBLE OPTIONS section, but is not referencing it from its own
+> documentation. If this is not intentional, I'll happily send another patch/V2
+> to address this issue as well.
+
+"--onto" is incompatible with "--keep-base" and "--keep-base" links to 
+INCOMPATIBLE OPTIONS so "--onto" should probably do so too.
+
+The changes below all look correct, thanks for improving the documentation.
+
+Phillip
+
+>   Documentation/git-rebase.adoc | 6 ------
+>   1 file changed, 6 deletions(-)
+> 
+> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
+> index 6536ebdc90..9fd3cf8ce2 100644
+> --- a/Documentation/git-rebase.adoc
+> +++ b/Documentation/git-rebase.adoc
+> @@ -334,8 +334,6 @@ See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
+>   	and this option would override that behavior, allowing commits
+>   	with empty messages to be rebased.  Now commits with an empty
+>   	message do not cause rebasing to halt.
+> -+
+> -See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
+>   
+>   -m::
+>   --merge::
+> @@ -489,15 +487,11 @@ applying (in terms of the author date).
+>   	Instead of using the author date of the original commit, use
+>   	the current time as the	author date of the rebased commit.  This
+>   	option implies `--force-rebase`.
+> -+
+> -See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
+>   
+>   --signoff::
+>   	Add a `Signed-off-by` trailer to all the rebased commits. Note
+>   	that if `--interactive` is given then only commits marked to be
+>   	picked, edited or reworded will have the trailer added.
+> -+
+> -See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
+>   
+>   --trailer=<trailer>::
+>   	Append the given trailer to every rebased commit message, processed
 
