@@ -1,162 +1,189 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1AF48FF72
-	for <git@vger.kernel.org>; Mon, 19 Oct 2026 08:49:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792399744; cv=pass; b=Jdon/LJFJplRwh2Knz+gG0nzgB8P0tWtiin37A36BJZ4N8axg/K6XL1mAZD9AEjPIEvzvEgCLNoOdx+slr9HOqXq2FlTRkmZ0xHWSgovVaBnuzDj3wbZvjqL15Qv2lYR2zdmM0suwUvQY6/lUwd4VDUw/qUtXOUcvMQOqlpQXUI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792399744; c=relaxed/simple;
-	bh=TDdmsk8sX2b6TSE5AKjlttKcauE/kkz9BMwVGajFpWY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=seMFyjlFT+vDL36jAaIX5CtRMb1A7n3LrpoB5n5INjIy5/BWTM1hvM4sMacKF5g72NHvOA4r+BEQjtz6kwzgD6uA83xiATOyNBwURLg3HzL6r53eLgHcUb3rsTPjyzUvQMt9URjgs1oyaOJnNKQQWTqH2N11W+c5BR8wSCxXjkE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=oNx9XFzk; arc=pass smtp.client-ip=209.85.160.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187063CAA3B
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 08:56:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792400172; cv=none; b=OTVnUiqUNoOyQ7zMnx6RSHDw2895zYY383PsAwU3U/8Ks9nW3/mnrMqpEl2MwnnsujFkhf89vpYflCE5UyNQNfT+j5ohFY7gHG9bcule07MVbfcuFM9xgr6eKE9gYKciHgMsoYXnJVD45/p8wpMTwAoJR0AhrwAfQW90etvdaEA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792400172; c=relaxed/simple;
+	bh=CE785o1GlW0nDucK4TLl/uaCGKnXGu/HQIyHSNIZyfg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Z98e+2mWvqRLGR81VjnZvVTsWTjILrfKLeJbpcvKf+SQ34gDFBM2pTMy2lhf/FrADgc1DrQiVvPMDMyPqjEqaU9bbDx5EDaRJTu4z924X/aF9TH7jLTqYdEVe53j8bcBRz0pem9W1pIlvCu8wvLX8LYXeQ/wkZbMYlsR1H3bLPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qcamfSOr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bdbYB0V5; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="oNx9XFzk"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-5337c7b9937so380871cf.0
-        for <git@vger.kernel.org>; Mon, 19 Oct 2026 01:49:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792399741; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ARim1fols091UlAoj/siMWvghGxjFoftRlgjmLeey6ox+8mIO9pocmEAsgMl6gY4cD
-         tJSXiVOwAvmavtMbYJXvKFtoHzfgK218py4qbWHIG2AZHpKotoeqsXM7JYORF/WepBZJ
-         JfswItQaxmCpIa/gC8kK8PR7uW2+3T35CEwiiEo5hXeuNQGasJawLxoqo3cn85CyuA2J
-         y0Kv+odmsexdh++6MmnJATDyp10pAgQjB+BChWbUFbAtARf0Sd3Aoqxec0ff4PFaMAlx
-         +K3k1yNvWdkoiGomE+FTtCRYAs2x0tdhIOT5mwxpeOcWdpSBDkH+cl919IQJ6aZ7WkFh
-         NBYw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=cV1cEtoQRu6LaapIP4xneupVJK+2HQWo8hG9J1LMvKI=;
-        fh=WrtltJ/MxkA+Hy47VRmDr2G3MArSYxV3qDTXhnXoEqI=;
-        b=Y64ooZEG7sPKYqv3H/N2rXKWiyk9APDMNpp8PLY+LfWvNfo4vq/NtaeHpIQI0tHXIV
-         Ajer5ULPidMlueMfZOFCrqVj0kAheJ114uvoQrMwHEzElQjk3BZb2p/axOK89BVP2gXm
-         djpwc1/PWwR5P5sqU7Uvsa5eaoUtqR25qwuY5Ag5yA7YvuFn+EQRDWOGgNkV2Y2qoysV
-         PBt+s4hkSvytbhwnh4r61T4Y3uHWiV7+b3EIMlLE4vKhs/9QjLe1XHRQ9NmvpeQ4zfMs
-         bv8jelt85Wd4ozjiSxq87IKFOX8yXB9xRMvvJTgckH1OwpiBJU1uTjHBXfAcBccsGe54
-         MZpA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1792399741; x=1793004541; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=cV1cEtoQRu6LaapIP4xneupVJK+2HQWo8hG9J1LMvKI=;
-        b=oNx9XFzkhOfEoaGc+tI6HcZEXvgi+j8LkpYYyOqCopfbeeRfdQ3uXXxxX5yiYANEvD
-         ZMf1TYm02Lq8gEcwSClrmwXHN7q2AeftCHrNEnairth3TmPYUHfZiVQo0CtIRjdZZ269
-         HBf/W3VIx0+mo8ZmPRguDbP4jSh2ErzBDvcxHYz4TbgX0SRQDTyRrqLfmo25trVkYcWi
-         U2vcU/jzeu1u7F9F3OefIDAujBs8Tc0X4GrHzphjUZ3oUAjWi7K9ZCtw0KZi7D3uHV2o
-         vLXT6BgpCUBLQ3+Y9pRZMMdEyLSPlvmiaTBU7ODlHls3drjiiud56BbqkDA1M0kPXErh
-         A0hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792399741; x=1793004541;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=cV1cEtoQRu6LaapIP4xneupVJK+2HQWo8hG9J1LMvKI=;
-        b=J+BXiFJP19txnPs/b+VrjxmQ/k1kQA+FwpHzXLfHvTF2NXNUI1o3HhLY0I2kDMvVuY
-         H6T8SeEwGNQ5GADnldLFDeVxngZguIWN1DSEjh9jKr1Ey7H+zJmRUhncE6BeZ2Svip8U
-         bpVZx8T/Iqj86LcmzhHTNbpZnguGw/cNB9/047u922u03+hXwLrwhxGo0X9qJ5WvDgUl
-         9CErcRzu8KJVTgykoDMWlDg4/Xs1VrLTYAxJtLjlWk0SsbxcD9/4qfPaoxhTaZyz8Fv7
-         jy+GN0TDwDpVBcu6T9XqPIndVRJsjAOviV3S6/2xiX/M3rBCniKsxwOvI3obxhQgVltD
-         h+uQ==
-X-Forwarded-Encrypted: i=1; AKwUvByzonviqzoBGo7sjI+PV5HwoUWRSxY760sbDJEjgJtK9HoW5HJiUvyR4xW3NX6fxM52XHk=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIkZ8xPkDsNznaL+9ZJMEOZ0TxrO46jAvTxzqhGI75VInowjOxX
-	hyeh6+ZVGm5+sQiNA3c7JQQ+5axP5zrxG70VsicL7OCFLj1sfMKSNc/IugbMzIIEHrj14rGuht+
-	n7BO+1AHCRx5yVb1l6jPxEtwB/CE5jDFHRaMGTmRb
-X-Gm-Gg: AYBFou3dE37zH/TDTTdr4g9JdEgBJ9/Q7Y+0I55zG1uzfXZU5fTCDIYJeITBF1i0gwZ
-	Lgzy7l8npx5NTNXoo8d6o4OCX6xo3jqiS3yINae2an5cpwbJ8adrKTSbwMXGZBileAgwej/NsZt
-	dp1HtQvFrhaAAjxp27cSTXyCUA7mYVfLiBI5kq6sy7hBpR5g4A7jISlELqhagn9YHatXRkJOYhi
-	u5YXhbWUz3oCFXavbqKGinf938p3+D3NyBB/MH8RnbX8eckkPCMptrNJaWDLDLo8IeGgTTqr+ZB
-	zdQD7iGt8Oc4hgktzS5lEpdWkbC/uVEL7KJx3qe41exfrOw7XdBDTyzRL1/wGqpvi6TsaJyNOTH
-	gyXx6ULCPAyuAFqdJPA==
-X-Received: by 2002:a05:622a:2609:b0:536:3ee4:81cd with SMTP id
- d75a77b69052e-53649a12adbmr34084981cf.4.1792399740664; Mon, 19 Oct 2026
- 01:49:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qcamfSOr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bdbYB0V5"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id F339C1D000CC
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 04:56:09 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 19 Oct 2026 04:56:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1792400169; x=1792486569; bh=sQsQpNS5O9
+	DriHD5VM4gteaC90lnVtg+T4GGKldLGFU=; b=qcamfSOrsTWQBsXgrk2+pnnsGK
+	/SwRqhXKrV0B1z+DNVrBXHp3go9vs9w4hDIcDpI1N+5Ys9oXbOLEGRe1FxQqHLTm
+	ESk4mh7ucBrq2e6sRVX/2skJwEG9ZlcHqeIlokJUfeSgOWiMZ/iPOpPmbDjKNe7k
+	zIUgGuD7rIOmcn8tD8mrSLP8Aeh6zJ0Mio4gViXWiH6L5I2DQkgcSgYl/X7lOx7b
+	5LD2ytFurn47kw2TXH23baFwBpYn4EEBpHIpweV+9j65h6Y3V0dq18JY3BEZSW/N
+	kNz/QLRWGSFZhudN8XWdcryNUP8J2hkALWRx3ve4Y1z9UnzMmCz52dNkc9kA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1792400169; x=1792486569; bh=sQsQpNS5O9DriHD5VM4gteaC90ln
+	Vtg+T4GGKldLGFU=; b=bdbYB0V5o8kFPnHIOmyJaJRjIuNGN+5/JaPA8mD+Apcp
+	B0WrJVpp3I4xg4+l+9A4hFqB1n5kSoTqpS1//v4cRdPE3AOn4dqh6demPf/r4ZlE
+	TYJxKd4J9IoJI+mLaI/9N+4WbW2RFJlsrVlaelJnyi0rSNl78ataE7abDCVF8qJC
+	AEHjwUfCL2h94DQRHkJQOWlOuOLEQczrwC9ZAv4Y1n1CLFda5Crlu1oA00kx1AyE
+	CsNCEaOV3o6KqNCz4narIocAgH0mffwZG1TfiFV/6CwcgtVYVVUdHenCPlLB0qkk
+	lEknynbI31yVUU8/CSbEwvv/hHK81AIhu0OBFF7Keg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792400169; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:jK6NFxJXIwg7EtFKulUXUCHGmuD7yf+A9a9AO+jmIVT4/hE
+	D27fv7RHox4wP6CKBM4nuppMUndorym8v02x/mAvAQuYeuUMf1c/kXY+71XYIexz
+	xxrDC5hiXz2NX1jNpTmFxT8HrugDJqABKByfMGDLLlmjRwCD1vmnjLWyef3BpeQ1
+	mfmGmvO5m1APYXk6V1wgk07DMv7Gd8vd2VjONZCnpaX8awJd8tgtsejeqlhpcDca
+	11Y/xalXlQhkI01GQkTD6Fkg2FdpPzxd+Tf05q8M4cJxNYC0M5EKC8ynK16zVKsq
+	/UjxrEgxPGOxQQJOm9KoxI9mLjWKVPHyJ6/JcTg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=mi-m=1; hc=10;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,message-id,mime-version,subject,to;
+Message-Instance: m=1; h=sha256:2rAfLbXiY1w3ZB7YPC4IOyWRMDyUDz9vvTE2DVrvu38=:CE785o1GlW0nDucK4TLl/uaCGKnXGu/HQIyHSNIZyfg=;
+X-ME-Sender: <xms:KdvVas-AGcscwU3siL8JAvuoBuIinFeoiSqnTFwr5WmmwOzvafiXng>
+    <xme:KdvVarrmCUt8r9UHdZGezJ3gVTLRXwDRky1u1DhACQZLhkMWtmCetiElM0epM5qF3
+    Jvklsfj8GQ4KvMSi22e5WTw97GpimmKmMtl6XFdU3nSZx2eZqE2gA>
+X-ME-Received: <xmr:KdvVanrEHFS2ueG7GwP-p-kvM1_gum_TfQUK6z0lQ9-Jn_75CYK_vQ>
+X-ME-Proxy-Cause: dmFkZTG1xZV9DeBhPrHnrkpJfIWMvML9HMqyXPQRM2JIrWMpcTQ6m1qFPuKezZbBBnN9HL
+    kfjchT17z+Gt+7ku/XuZwJ5fPzbAQnj9Lk32IdblBwehDBO1MNU2hH9HvU1RjQlGM873PS
+    3+OTQ4IFonkIuxl8pYaos6V7GsMqj7NGefyOmNnmdjDWTbiy+Ccvn4NOvIVbjLeyFRdl7y
+    9sX769a+oTkJdMRHE+eo0yt05RiqdWVPstOIo736ULITutpeQZ27jpeH8v3W89NaOvn3Rs
+    BY/GPUkWcFw/vFHs3F2qdWRBBWu4yNUPKGma5ZvXonb3Tqg+GyPLtRxB6gngAmkitQVyZe
+    3oHKU0Qhli0pJIEygKfXbHvB2lMdIhHcltAksGZ+TLstSJjNiN8jvO6PIhIg96D61e6++A
+    mKm+l2KO6jw6l/p64TNz2IGcFT8khIJI1ksBhMBj2UpkqX+cThHHwjaXgBuM3dZ4Mut59u
+    I09v/lb9R5IoOfiE8EWQUoKOSbqsiFfb9XyRwUxOV5OrUcngrFicqBJPUDljh/KhyExkTA
+    WuW9cooyhYkJ0U+mn0aGzOKHUuToyTSzc40cD8B2LTgc0L0GQmkFsLOA609r5XcTnK3+6g
+    mWum+etvLpwcO5lBpzHiUIUEiySJhf1vVmyqTFfbCXsgWNdDWq6HsO5rScwg
+X-ME-Proxy: <xmx:KdvVahnFsv2S-6ZJ42JNQ9vD3OuSwdK8vrtp-2BfIE6ycTJm6K9F1Q>
+    <xmx:KdvVahFXY6TkcM7p9ZibZHGgYxKRESBvicLA7fF1LUc6ZWU4RTDVOQ>
+    <xmx:KdvVaipF3AH21Td4B6-zWGoDED2Gu5yUDMPSEe2r_LMc9YZIE4neig>
+    <xmx:KdvVal44pO4LhWUbcJcUIah1lcaH_cVgcGR7dvQPLxE-w818BoVuww>
+    <xmx:KdvVasuMNuFruMnCK91yMm2iSXCPuDPleim5TcG6LOEdQFhpKUJtQGE_>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 19 Oct 2026 04:56:09 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 1834edd5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Mon, 19 Oct 2026 08:56:06 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/7] odb: introduce object storage extension
+Date: Mon, 19 Oct 2026 10:55:55 +0200
+Message-Id: <20261019-b4-pks-odb-extension-v1-0-143a5963b77f@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20261011210928.3900020-1-xfding@google.com> <20261012151748.62723-1-aniketgupta3001@gmail.com>
- <xmqqv77696sf.fsf@gitster.g> <5d5dfa51-abc3-4a8f-badd-48ee398ad73f@drbeat.li>
-In-Reply-To: <5d5dfa51-abc3-4a8f-badd-48ee398ad73f@drbeat.li>
-From: Xiangfei Ding <xfding@google.com>
-Date: Mon, 19 Oct 2026 10:48:48 +0200
-X-Gm-Features: AclHuK87jZcKa3AFrZqG0rQ8nzSPktNhMr9dCp4i3nXFuvxzDr-oVBKKJfR7WwU
-Message-ID: <CABtdbsmUU-J+Ytdno36hBH2acjT_1Ee6dQ2DeCAXhwaZ910Paw@mail.gmail.com>
-Subject: Re: [PATCH] imap-send: use ASN1_STRING_length
-To: Beat Bolli <dev+git@drbeat.li>
-Cc: Junio C Hamano <gitster@pobox.com>, Aniket Gupta <aniketgupta3001@gmail.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, davidben@google.com, 
-	dingxiangfei2009@protonmail.ch
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQqDMBBG4avIrDsQjQTsVUoXHfPbTgtRMloE8
+ e6Ndfkt3tvIkBVG12qjjK+ajqmgvlTUvx7pCdZYTI1rQu1cYGl5+hiPURjrjHQE7ENE6LxI13o
+ q6ZQx6Prf3u6nbZE3+vl40b7/AONsnFV4AAAA
+X-Change-ID: 20261006-b4-pks-odb-extension-36de693bb943
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.15.2
 
-Dear all,
+Hi,
 
-Ah sorry, this is buried in my mailbox. Many apologies for the late reply.
+this patch series introduces the object storage extension. The extension
+is of course similar in spirit and design to the ref storage extension:
+it can be configured via "extensions.objectStorage", has the same syntax
+with "<schema>[://<payload>]", and we have the same mechanisms to
+configure it ("--object-storage-format=", GIT_OBJECT_STORAGE_FORMAT,
+GIT_DEFAULT_OBJECT_STORAGE_FORMAT, "init.defaultObjetcStorageFormat").
 
-> On 12.10.2026 19:18, Junio C Hamano wrote:
+For now, we only support the "files" object storage format, so not a lot
+of stuff really changes. That being said, its optional payload allows
+you to configure a different location for the ".git/objects" directory.
+So if you specify "extensions.objectStorage=files://objs", objects would
+be stored in ".git/objs" instead.
 
->> What are these two separate sign-off lines doing?
+The series is built on top of c51408889c (The 6th batch, 2026-10-16)
+with the following dependencies merged into it:
 
-I contributed to the kernel under the other email address. I shall use
-this email address for future correspondence and sign-offs to avoid
-confusion.
+  - ps/odb-files-alternates at 0ba59c8453 (odb/source: drop
+    `read_alternates` callback, 2026-10-08) merged into it.
 
-I have finished reviewing the patch from Beat. Since I really prefer
-that approach, I will retract this patch.
+  - ps/setup-enforce-repo-passed-to-create-repository-has-no-state
+    (phew, what a mouthful) at 0ba59c8453 (odb/source: drop
+    `read_alternates` callback, 2026-10-08).
 
-Have a nice day, git.
+Note that these two series conflict with one another. The conflict can
+easily be resolved by just deleting the whole conflicting sections.
 
-Best Regards,
-Xiangfei Ding
+Thanks!
 
-Signed-off-by: Xiangfei Ding <xfding@google.com>
+Patrick
 
-On Mon, Oct 12, 2026 at 10:09=E2=80=AFPM Beat Bolli <dev+git@drbeat.li> wro=
-te:
->
-> On 12.10.2026 19:18, Junio C Hamano wrote:
-> > Aniket Gupta <aniketgupta3001@gmail.com> writes:
-> >
-> >> Hello Xiangfei,
-> >>
-> >>> +   int pat_len =3D ASN1_STRING_length(asn1_str);
-> >>
-> >> It seems that with OpenSSL 4.1.0-beta2 this is deprecated
-> >> (ASN1_STRING_get_length() is the replacement), so it warns, and
-> >> fails with DEVELOPER=3D1. The patch adds a second use at the error
-> >> message. Beat Bolli has a series from 7 Sept ("imap-send: future
-> >> proofing and two correctness fixes") that also touches
-> >> host_matches(), maybe we can check how the two can fit together?
-> >>
-> >> Thanks,
-> >> Aniket
-> >
-> > [jch: rewrapped long unreadable lines]
-> >
-> > That topic also needs rework, unfortunately.
-> >
-> >    https://lore.kernel.org/git/20260907211210.2621693-1-dev+git@drbeat.=
-li/
-> >
-> > I guess we can salvage the patches 1 and 2 with fairly trivial
-> > changes, namely with the style fix in [1/3], and pointer arithmetic
-> > that breaks later free() fix in [2/3].  I am not sure how involved
-> > it would be to fix [3/3] in such a way suggested by brian in the
-> > thread.
-> >
-> > Thanks for reminding us of the old thread.
-> >
->
-> I'm working on a new branch that uses OpenSSL's built-in hostname
-> verification. All this low level ASN.1 code will disappear as a result.
->
-> Best regards, Beat
+---
+Patrick Steinhardt (7):
+      loose: drop unused `repo_write_loose_object_map()`
+      setup: introduce object storage extension
+      setup: allow overriding object storage format via environment
+      builtin: expose the object storage format
+      builtin/init: introduce handling of object storage format
+      builtin/clone: introduce "--object-storage-format="
+      builtin/submodule: propagate "--object-storage-format="
+
+ Documentation/config/extensions.adoc       |  23 +++
+ Documentation/config/init.adoc             |   5 +
+ Documentation/git-clone.adoc               |  11 ++
+ Documentation/git-init.adoc                |  10 +-
+ Documentation/git-repo.adoc                |   6 +
+ Documentation/git-rev-parse.adoc           |   5 +
+ Documentation/git-submodule.adoc           |  10 +-
+ Documentation/git.adoc                     |  10 ++
+ Documentation/object-storage-format.adoc   |   6 +
+ builtin/clone.c                            |  58 +++++++-
+ builtin/init-db.c                          |   7 +-
+ builtin/repo.c                             |  10 ++
+ builtin/rev-parse.c                        |   7 +
+ builtin/submodule--helper.c                |  28 ++++
+ environment.h                              |   1 +
+ git-submodule.sh                           |  18 +++
+ loose.c                                    |  46 ------
+ loose.h                                    |   1 -
+ odb.c                                      |   2 +-
+ odb/source-files.c                         |   7 +
+ odb/source-files.h                         |   1 +
+ odb/source.c                               |  48 ++++++-
+ odb/source.h                               |  12 +-
+ repository.c                               |   8 ++
+ repository.h                               |   8 ++
+ setup.c                                    | 116 ++++++++++++++-
+ setup.h                                    |   2 +
+ t/meson.build                              |   1 +
+ t/t0001-init.sh                            | 221 +++++++++++++++++++++++++++++
+ t/t1900-repo-info.sh                       |   3 +
+ t/t5601-clone.sh                           |  68 +++++++++
+ t/t7427-submodule-object-storage-format.sh |  91 ++++++++++++
+ 32 files changed, 788 insertions(+), 62 deletions(-)
+
+
+---
+base-commit: 0d31382da9336683214372ba328fe9ecbc8bcb9a
+change-id: 20261006-b4-pks-odb-extension-36de693bb943
+
