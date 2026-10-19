@@ -1,123 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792426053;
-	b=FfgyvcRtQSNRlRgtZi2wAz3J82zbarZBs4WqNOjyU6mTSU/VHBbhjqtZF/7ug5jMj4sy
-	 sAdXXw03VNxUQlla9L43L/oaKNRo7KMEPo3kO16JpW4NP0gYLIOpZ3Y6VZzjaaxx+5Rgz
-	 mt7YpnIpEYo+DzJjcv0BPO2zjtlKu3WRwkzl4vIumCTzSR0HH9jqaQgmzzc9dkRQN0IY4
-	 V2W4NOl8LrmnybgvCYzxyszuLqUzHQAxOxOPArV6O4KnyeqV7n3iCNLkuh6T+4CS/r1BR
-	 9XZ+jTX7ywj3bqMMazPK+VwtWTSNU29klo4BXnrjf4j4K/90N7Gf+7p1QqyTseYb2LA==
+	t=1792427035;
+	b=QECtL1ANgGAeBih2WGpU6tD+D6OACOXqTxjMxVgqpsG4uutcL7dMb5ZO62Vg6TCNyfov
+	 darm3kBm4uoki2/lT2OXmp39WSx0859+pWDWvWoKqccKjjyqUGhvgVz5Q4v2r6wJNPrSW
+	 THmDZDbFQyDh0/Yx8DGr0WvKCd+z5ASU6I8NgajTdbBzXF7rreDYaASxwst3M8ThslY/T
+	 MM6gbfSsSlB/e8Xgu4PQ2eIhsXL2FUeIJIkdFg261TyvxWkbC6VyVZHY+s2pmRy1Y+Ic5
+	 hhzqZ0EI6hRYFzxVHLF1RZPKbekgJgonaM9s0TyAW9yKD1ta4P7lKP9lmtvzunsLQ2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792426053;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:User-Agent:Date:
-	 Message-ID:MIME-Version:Content-Type;
-	bh=gQQWaeRxs9IbEq9RUIyYM332Oow7dwp/XrDmWSHc86w=;
-	b=2+iS82LT5WoH69R19YArh7H+nPkr3S0sItFanooX7ax1eSxf7bVNqJ+1rxq0ANLIRj3O
-	 8/F/vrbmXRiQ+S3XUdC3hz2IB8EWPChkcyAzoP70wNg3+tnU2du2A4S390TBwoZZfW2+w
-	 axlxgU62db5JTFsPowgjzA3snSP43OnsWwVo5J6Ezhnbly1MrlE3DJFJVhdEb/t3bytme
-	 Yuv3lMHBarIq+7dZfSYCCZSU/qUlICH32ZgYYsW6I1i/HdJq9edHlkYr8tJwuTRARZwz8
-	 qUj96WlngnNiAjX86eJYFgriDLeD7f9g/7fBevfj5PvMHh02KILIuhgWZkcq4HjBP9g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792427035;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Content-Type:Content-Transfer-Encoding:From:Mime-Version:Subject:Date:
+	 Message-Id:References:Cc:In-Reply-To:To:X-Mailer;
+	bh=dmXl7c04auBJ186RaDTKZ9YevKHSIdMnvhKKHC6vAp4=;
+	b=Ajc/UM69PZT6uxVQNYCcd8Ho/69KYSyDlEkmP1CVkRPvQ13LW+08XVrE8DlQxsh4wout
+	 DTdRO2qTRGnKYKiVBrjHxrSL7155dmggZiHdALIUrVQsBn55HplzUp+ExIkhh3tBea4kb
+	 X0vc1LoBvRBOYAXRfKYKQZ9AvbgkVP67TZEdeIeRNoATWW/TB4LiEPnpColnSX57uayri
+	 LiHjxccdA2dFgrOOq0aLROVg2R1dCTw5y1YNVuIVZqwcByQzgERXRjJYXykLBb1lnoIXO
+	 5bnWK8Qd+Dyt1oxqr8DA6yn4Gi9Q8QDqa5uFLbIHgC6d8k8//pgi1mVm2A02F1MDV+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=Ob17RvoF;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=YAJFqHNV;
-	arc=none smtp.remote-ip=103.168.172.146
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=DapLdETy;
+	arc=none smtp.remote-ip=74.125.224.53
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D7B607AF1C
-	for <git@vger.kernel.org>; Mon, 19 Oct 2026 16:07:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 49D7B607AF1C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C9B606A31C
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 16:23:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A8C9B606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=Ob17RvoF;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=YAJFqHNV
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7D5E2EC00E0
-	for <git@vger.kernel.org>; Mon, 19 Oct 2026 12:07:32 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 19 Oct 2026 12:07:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792426052; x=1792512452; bh=gQQWaeRxs9
-	IbEq9RUIyYM332Oow7dwp/XrDmWSHc86w=; b=Ob17RvoFHCC9vUuu79uRUEsJzZ
-	hD1HPsRV6IvLTt1KrOyHIOuEcVCkmiThFdPC+ciEfuBHFtUaYGmnmiIL25REUKW7
-	b7gNo8n701oXsF5IA68CWyw5X0q3qK9UyWrE89G8LdUWdEHbSXbMbKhn2rnjbSki
-	JfxAsKC09jx/IJ9nTdii9bUZGO1Mgv3O9bTtkflIrZvlf4nq7HosS/SGlnFt07ab
-	usSc492kiTeiD36+A5iMI/8ak80yzZMRVOcmB1u1lnYwiYnVQtnNqvvwq6+grWK7
-	VZqkYgmO6TDMvqKH2lV8veFwKX7H2R0ZncjXlpOsa8kPdl0r0E9KTzkhw5FA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792426052; x=1792512452; bh=gQQWaeRxs9IbEq9RUIyYM332Oow7dwp/XrD
-	mWSHc86w=; b=YAJFqHNV3RnGrViWS2Z0Ie3Dj/ZcI6vZReXqg6ZOkgQFvfWxlHL
-	B49+0txCMPSr9aDwRxCGWn9n72ir/KN3w54MXgnM21hUEKnnFCfi7XCb1Xw0CR8o
-	56LTueajAdrtpbVYjwNPiBcYPyuuFQBWz9WFg3jN+1paMT6G+ZEHmYiKtFnlTZcq
-	oAfRnr/Cc0IaoDPjRz773cncgrPHrOx15lEKJaDS3TBQJnnORPr1dgi0QqmXaNYW
-	qS9sfYo1wLl25OJeGARNqv1BE9d5DCDAX81h2zPV45Qz4gNsEULwIdaCQz/8oOps
-	4hXq7pVQrWuuveIO6CssFHaxLpfWdios1gQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792426052; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:kZKtMsnP5ZaiRaOIr1tPqEsDzr/mt9Pf2NNTiOiCTkOjU3S
-	R7xRIlAXd109RvwIitqj+KAt0WfxeLG75CMS9GHnioSb6rx7goHz2DgwigEgewJQ
-	CGPAKBXxLP9ffpRFIcO9p+t/gFmCJvUozpcaJ1h37O2zjZtfO/nKvTiEK6TOdzvG
-	2HOF3gzSNx+DCLA1hy2q7yWaKLkTu+mIpZS3Q6vjH2iDpSW4xKyboYXNgfivlpPt
-	PgAOGBqFhjAQymtlJOqKGVT1g8F65IOPXR71VCSGK1Z2VHjwrMYwixhQRKKElZ3L
-	tS8qmPIPJveOXmixIB0/tCYIEQa30GQRj8uDqhA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:mQ0IOPiI7w8fz/uYvSM3AEphoYA1frnZOYaWCqD5a6M=:QQuQvoTEo6DOPP9eQLFcp+tViJb5h6FNM6RpXfB8JTE=;
-X-ME-Sender: <xms:REDWarj9Kzab8NE603e1EN545IZi3J4QohSfRqIw9hkbTFbOwMkD6Q>
-    <xme:REDWaruYvwMbEbIdmNXxXPS8CEliMCyO7OjeWZN3s8RCzuRY71gZmAcJiQcfO2dTF
-    kKbzMT5IxRMBiMmsgeyVRQPssi14LSsfjKbYRRJJGTUmzVscO_Phg>
-X-ME-Received: <xmr:REDWak5k8_p5T972HCLY-HEa_eGOKO0oYM3pWzplDBlGFdkJiDvRzsiiBbXxs0cPJjP1hnVVXvUarcXj2GOBjINBg1e10ecKYuoD>
-X-ME-Proxy-Cause: dmFkZTFnyAaeeCWI0UE87zH+ztui2+l4vBX1BTazkBjyXM7Vn4Z92OjXed8XkuKxbIBtMV
-    dbW9Q4LbMvJkaliaRVJ9i1nSuSDKSlJ03K1P4Udroj1QbjboDeyvqac/BzIaD3/qKcvbGA
-    tujOz7OxdKrsDZF25GR0grvZvPsclPQQAeJ8X4QzmkvRzYjHdw7d1xBeB7GoFlwvH1YGvT
-    pc7DDOU23U+AJ0yHlTj9GWStWxGAmYC5KRoztp8xdVR1AKbQ9NrohNhQz3St2hxFzEQ48w
-    DFhm8pdt+EX7VF+Mrjiec36Q7sMVfzHagctinbTcE8cN14Iv6M2Hc+wRu29sMACXrYm5Eg
-    m+EK0IwuZ5oOEhx4vT1kqEsgSN/vVzq5PB6NhxPqZ1jGEz48jrG849SQdTF+PpMnWzJjIk
-    3IgV7kLxoLPD4U96ojDcIt2FSoXqVSAeAlW2cabZAtWIPxlnoVj0IAecCTevLVyRJv/3/1
-    M7QAY4KIsNld8gqJ/gWQyses+WuyoAsCgbR+p/5TEd1HCJOoVzcRyu75rywDYEt1ArjITA
-    jJYdjaD9TUaQzGO6kIUQMqwxJUvox0UaRFP9dmbMVOMUxkMI0S36QCoX6g4Id/bvwdrDnT
-    p7fGFHh7ZOgqTCNDkQRxFlSMA1xKea4y/E/a69OxMOe+xJI4ja5K8ddVMWdQ
-X-ME-Proxy: <xmx:REDWavM4lYXx1Iy6ARuCHwsE9_GvcBV9plKErlKxjAzCM28euKmp9A>
-    <xmx:REDWaqtgLZLRjwEK_eeMhchc7JW9cts66AbSCfjGc5MK8THR78Y-eg>
-    <xmx:REDWaqbp__gAKLg5lOXwGKmfYg8epCFFYhDjI8Z26S_F6C1wn6xsLg>
-    <xmx:REDWakwW8ld0-HMm6wYmVFw6LhSJC5oTcj5vy2C6uYXuAo-an31JpQ>
-    <xmx:REDWaknFVkDG7sUBbWxEd27FHSQpDN_k-SfPAGoUkd_qsuhQGjS3kDH5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 19 Oct 2026 12:07:31 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Andy Koppe <andy.koppe@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt =?utf-8?Q?=C2=A0?= <ps@pks.im>,
-  brian m .
- carlson =?utf-8?Q?=C2=A0?= <sandals@crustytoothpaste.net>,  Shardul Natu
- =?utf-8?Q?=C2=A0?=
- <snatu@google.com>
-Subject: Re: [PATCH] Makefile: pin cargo --target-dir to ./target
-In-Reply-To: <20261018205305.2634339-1-andy.koppe@gmail.com> (Andy Koppe's
-	message of "Sun, 18 Oct 2026 21:53:05 +0100")
-References: <20261018205305.2634339-1-andy.koppe@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Mon, 19 Oct 2026 09:07:30 -0700
-Message-ID: <xmqq33u165dp.fsf@gitster.g>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=DapLdETy
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-6774639a8a4so1854413d50.0
+        for <git@vger.kernel.org>; Mon, 19 Oct 2026 09:23:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792427034; x=1793031834; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=dmXl7c04auBJ186RaDTKZ9YevKHSIdMnvhKKHC6vAp4=;
+        b=DapLdETyhBRZjJELiq9stpgCVPyG7GzhNZhlxiR2q0Ru95p4a936r3B8xi9EB93jbS
+         roSu9mdKOCCPdw5hGJHBekl5m0g+Usnup4iqzpCDM4vLhVpfklamzDtCuC7jGZniiL5V
+         KZW7FucWEU69vZdBHJt/vTN357lbI0iEgx/Y8V06JCuclIr3qjccRFjGaEmkhAUEJgsm
+         3gWnm1+1oudpsRxEFShVIzxaRq0TOaI/eb4bGGkUIQBjKjv0RXZOI/cn7sDddh9JdghL
+         y0czopjD5G1vBT4mi8Ak9BvNYcaKX5my7waAXd6WHtO3nNEFW8hsf20u2pa/pvo9UWe2
+         DTgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792427034; x=1793031834;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=dmXl7c04auBJ186RaDTKZ9YevKHSIdMnvhKKHC6vAp4=;
+        b=IWEyRZiX3FD8e/7BRro94OzB3SLHcYKFo7yVeEhGVM9qIrW92TzDKUG19YwDpK1H3P
+         YC/wMbrYBXp3yowHCI1ri9gtmJYFrL5niajWK6PFwUe4ku2wo3n3b1vxOva9sGj4Dd6s
+         h97J+Dyg8bjKxClwkjD+4jqqkIk1AkCOv05B18Z7dKToguZk2tIQLBsNxHQ0jLHhEWwK
+         UQy+ErLQdNcLWGCUv3eX4VXrn8h1kAZz9mE92Ofltvoo4G2Ma/jjGwHioWpEw9UDJCY2
+         yfC7infc/DFvuwx53Wdau8uqlB5QD3lQBYRUjLJ4YfEPZYJfCVxhWBfqdyzxEGlR46wR
+         BkRg==
+X-Forwarded-Encrypted: i=1; AKwUvBwj7uC1LkD4wWY3hTXsiJ+xLWaEPEIqYLRmxYQ5AjFpCDDqPSNWMjFZlaMfRw/6Fv+zzUk=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKKVvaXTDmR6wdxkojMj/9syPYd8W4lq1BNQFPTOX5yiIHMz9VY
+	iMFOWW4KOxjW87T9uf3NjuMhpYrs/xbEQMHLjs8F0C9zgsIr8GvJJ+jP
+X-Gm-Gg: AYBFou3mB9Rw4edViuyC9jQQUhA/4Cft6UXFbBnFnI6EphzSu2FhbVSX/mHSGebtW5K
+	v0zJjiGFcrt2rocwlDhow1ODgAACnR4NxbcSvyesoCeKeAkzqSOduKvVm388Yu+Nro6SKDkuc+d
+	3PnoWAVRWh+7+g/X20YiUyrlxilGwXX2KGZxEb5Tvpt/sEzjYP4IdyA00enJUhj2B3aEaOS/nmo
+	neLiVc3gFiFjAKlLxtEeSGtlubT2Xg5dalzI6mxQWfOYLj2xhtak7plMjzZqWVtMwEwvG553ZH8
+	OFDy+wmsayNhuA5A+nUxJNx3stgCFofihae5+yTvkFFDF5Sx6gjgmPttcWvMGnTJBGKBaqkAvBz
+	5WForSG2ITI8UEPhRyNZzSb7gPYwAW0GvsZCdpgzAZOnX4pMUH2nN3SBqTlatfRxh3EslC5EDo0
+	sH2cfsg0iXF3Fvw5SYYwNvY/s3WXjQoBs4nFQlGHUxdY5VJJEaumkXSlS/Sj9XfOPg5u7q44/7J
+	+j+fyHNccrBAgzGEPDAEao4TOkekRIEH+Xa5Do/hN0WF1/948beo+tT0NLYccS6lM/z76QJGRbn
+	0C9IV0D6hibuda0JWqOoZgju7dLPnsrGFsxjnJI9Ts6OE2U=
+X-Received: by 2002:a05:690e:d4b:b0:679:c916:46f2 with SMTP id 956f58d0204a3-679ca75a364mr1690184d50.31.1792427033658;
+        Mon, 19 Oct 2026 09:23:53 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:9092:700:1909:b48c:a809:b114])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-679b1e09d42sm4318852d50.4.2026.10.19.09.23.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Oct 2026 09:23:52 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,60 +90,51 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH 1/2] repository: add core.indexLockTimeout
+Date: Mon, 19 Oct 2026 12:23:40 -0400
+Message-Id: <F02EB9EC-E157-49D2-BF27-81DFF625D884@gmail.com>
+References: <20261014221233.1694344-1-quark.zju@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, peff@peff.net,
+ ps@pks.im, Jun Wu <quark@meta.com>
+In-Reply-To: <20261014221233.1694344-1-quark.zju@gmail.com>
+To: Jun Wu <quark.zju@gmail.com>
+X-Mailer: iPhone Mail (23D8133)
 
-Andy Koppe <andy.koppe@gmail.com> writes:
 
-> The Makefile assumes that cargo places build artifacts under ./target.
-> That assumption breaks if the user has a custom target dir setting, e.g.
-> in their ~/.cargo/config.toml file or in the CARGO_TARGET_DIR env var.
-> This results in a link error due to failing to find the gitcore library
-> built with cargo.
->
-> To fix this, pass '--target-dir target' to the cargo commands that build
-> gitcore. Add it directly to the recipes rather than to CARGO_ARGS, so
-> that it isn't lost if CARGO_ARGS is overridden.
->
-> Leave the contrib/libgit-{sys,rs} targets alone, as nothing depends on
-> the location of their build output.
->
-> The Meson build of gitcore already passes --target-dir explicitly.
->
-> Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
-> ---
->  Makefile | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> Le 14 oct. 2026 =C3=A0 18:13, Jun Wu <quark.zju@gmail.com> a =C3=A9crit :
+>=20
+> =EF=BB=BFOn Tue, 13 Oct 2026 15:05:52 -0700, Junio C Hamano wrote:
+>>> Default timeout is 1s, effective but not too long to avoid breaking pote=
+ntial
+>>> user expectation (e.g. "an index.lock error means I should check whether=
+ a
+>>> commit message editor is open somewhere"). Tests that are slowed down by=
+ the
+>>> default timeout now set the timeout to 0.
+>=20
+>> I am not sure if the change is making the right trade-off between
+>> background tasks and end-user action that expects immediate
+>> response.
+>=20
+> It seems the trade-off is between command success rate and command duratio=
+n.
+>=20
+> I suspect that end-users want commands to work (not fail) first, performan=
+ce
+> comes next. In my experience, high command failure rate escalates to oncal=
+l
+> incidents, occasional slightly slower commands often get unnoticed unless w=
+e
+> look at the metrics explicitly.
 
-The change might make sense, but these areas are touched by other
-topics in flight.
+I=E2=80=99ve given it some more thought, and acknowledging that=20
+I=E2=80=99m unaffected by the bug being fixed, I would add:
 
-Given that they both appear on the same line as $(CARGO_ARGS)
-appears, I have to wonder if we want to instead just add a single
+It seems like working flows have to become more complex=20
+to handle these broken flows. And that leaves a sour taste for me.
+Folks do notice hangups at a shell that is typically quick to respond.
 
-    CARGO_ARGS += --target-dir target
-
-somewhere early that are unreleated to these individual rules?
-
-> diff --git a/Makefile b/Makefile
-> index c649c93c51..aea99a3639 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -3039,7 +3039,7 @@ $(LIB_FILE): $(LIB_OBJS)
->  ifndef NO_RUST
->  ifeq ($(RUST_TARGETS),)
->  $(RUST_LIB): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
-> -	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
-> +	$(QUIET_CARGO)cargo build $(CARGO_ARGS) --target-dir target
->  else
->  ifneq ($(words $(RUST_TARGETS)),1)
->  ifneq ($(uname_S),Darwin)
-> @@ -3049,7 +3049,7 @@ endif
->  
->  RUST_MEMBER_LIBS = $(foreach target,$(RUST_TARGETS),target/$(target)/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
->  $(RUST_MEMBER_LIBS): target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
-> -	$(QUIET_CARGO)cargo build $(CARGO_ARGS) --target $*
-> +	$(QUIET_CARGO)cargo build $(CARGO_ARGS) --target-dir target --target $*
->  
->  $(RUST_LIB): $(RUST_MEMBER_LIBS)
->  	$(call mkdir_p_parent_template)
+But, as I said, I=E2=80=99ll bow out since it seems like there=E2=80=99s som=
+e support
+from more experienced folks for this direction.=
