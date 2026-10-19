@@ -1,98 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.51
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.51
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792427947;
-	b=k3WaIhMjambs26wrjQygA/JZRW8NYn3syrRNTU40ne751tqXcHBoV3Cx8XtgLFpcBxbM
-	 VA/+bs+Wz8mBI+RI5Z3tPtvxpdfpiAMqf0YwjqTH3svCFNcKsBkgLasZjq5cgTIEErP2g
-	 gRRfY6ZD4MMonSCf5Ce2Z2IGu6IRedl1cZ5r1zy7ZEaj6v0Fnq6eWf97orylDCMkjRSnH
-	 9QnRzcYwSu1MDgc0/PWtJ3J4nCEXklMkBzLXgPKdRwSl13Coj+ueBddL5FAPecp8XgLH9
-	 DDEbIvjAkg4CNLV0B7kOz53TKJRDeYrEU3YlSqqr/p+M8FPm3YQsWj7agOC24q/Aedg==
+	t=1792428011;
+	b=XoO0bM5WB/54pdiLrUZmDGHzcdrpKBlSsyKJU2YoSRXbMR8zJQRi7DFdewTbGlnUkDO1
+	 uMN26o2fXVwTBWArTz3Tk9uegWp9tySTGmrKGs4cy43cMlj/8bsHPvzA1Za3j39LyfoN+
+	 5MkKpzet239Gvhxfy03zq8slRdARM7bsP/muQ+hESAxThwOS0g2ECoiecM1achqpFd4Of
+	 oj6SmiKCeysbB/JfqV5u0ssh7E8QWGbGDwDgKTtsSL3vQSjQ3nK6jRf6Mmymo6ZzoZZZt
+	 6f9IdwAJGck9/MBn4J99GGbX4ztjGf6CZp+mh3blOETAEeUqy6n6Gs3B+d2MvaoKsZg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792427947;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792428011;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=wZWj63DDMLOUEKSUDtdpBBVTKcJroiiBMg5XfRaPcDs=;
-	b=nZXhD8DuOjgjXe9NPV6D52Xh9JEuMMGrDveGcVWWF8xhM4wonxm8xRhRgWfvHzx7LrWP
-	 NM+sevucOvM+Aekjmb6eiiMcnyZvlSIV+ZUsIXaJnxDet/Z1yJ9NX4LJwjxh6eJShxgOp
-	 m2LWPZea+JnChW33gsTamXfSMis3WQGCz7vmtxIPVS+5tM5m9dFZj8vxyEUYiBpXBguw5
-	 keAYwwW/iBDMMVHSuWIx+EVE2rx5e6ENHJjQlmXn4t0qMGvqZ43WPk3zcUf/dzun0SFmS
-	 +taNiZmmn1mrjGtvZW7JjGA1gRPs5bPBpLXGjodQi7pbW857nb+U3/t6RMPr3h2TtDQ==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=2ld4A6b6IxpfKOLN9u6oztIrat5rbf798wjSTS3UAbI=;
+	b=vc1j+1cv7Wo+l5CGfrCPNTb1aDEtp9cIE/seWUvhk6UbS6h+Ja0oV5fJkOEnpRIUJgHz
+	 3/Roc1Diwz9yhJvXYh9w60bqbDhQGuG3NWxhUo8YlzBQ+02p4NvMuJpM9lxSaB+RU+RRY
+	 fDMk9VDpCulowkG/uSSmYP1azC7XQ3DcTFLGovmJdqatEIiK0CnJmtBNezYNxr9q/Ex1I
+	 Yl1xpuK+FEt6AgLpuUkKWaRohZ9/pTPJDpXgCP+4Pe7oKyoDcCKzn5lfGReTTthJ9qvFw
+	 Vjs6++nk5FbicKwo5nSKZSI1KzOR+QdQU0ee8LPpriW/l3GIZi6HiUDTyk+rAAqkHQg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=NGtNN7wD;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.51
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=slTYyPHH;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.51
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D154606A31A
-	for <git@vger.kernel.org>; Mon, 19 Oct 2026 16:39:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9D154606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75213606A31B
+	for <git@vger.kernel.org>; Mon, 19 Oct 2026 16:40:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 75213606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=NGtNN7wD
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-7c03a445cb8so1661457137.0
-        for <git@vger.kernel.org>; Mon, 19 Oct 2026 09:39:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792427945; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=slTYyPHH
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-c2acc1e170cso331198966b.1
+        for <git@vger.kernel.org>; Mon, 19 Oct 2026 09:40:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792428010; cv=none;
         d=google.com; s=arc-20260327;
-        b=Ukn9ekmnPaAz4ftFqXyv7d/DbddWQNS6fvTfKpql7jnH2ny92hmSFEv8h/m3fwFUsd
-         gBZ9SBCT6RSo/DymVfnENOOsZHq0I3RU9IX57cJjkIJ4GJz0mxK+puQOLX/JXyeunDVt
-         oiV3VxljVwqYi7JLLzSHxEZofvg2aMf+MKwLsw3WGeDwEJpCQjrP+k5+0riOZ5gOhwbB
-         AysnsuI+BQBC3L1cTBCQDRtn/G/VlnI1vKFi+VU6F3C+S7XR7U8Ph+kekJhzVGvkKRsD
-         CeMDOj1bEZ18Hclu9Ap2FY8qcjwdaAbI4y1Hh7kOQ+ENbKvF+nml8h6QFio85D+fiz21
-         sKmg==
+        b=OvlRJRUmL5DZD7brqv3CpBglgniOyr8ZdbqRiiEzIzfr4l7z/BsJmKzb3tkwapIsPA
+         brghYwCeA9LFk6zqVJUaGnNZZ9e6k2CQmKt5irtIaSQPFjI5wTsiEV12Yd6qJQAMlios
+         XwritlYzwyZ5I06EEbgKE3YTR6qEK5twSrI4eUNRvI3NvFsMLGFUHELgFuUEP+Bxku/4
+         FKZDgrSLyr4T7UM7BFNcArHKy8CpstJtbi3DPN/0+Kak0NosVuM8skfgh0kM9R5r4SFB
+         X6R5rMEzp+fnb8V9rHPFWFTDjDl/JIsZck84tyPrRYQONBxXO8wG0P3P1nopkZFwVxia
+         48zg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=wZWj63DDMLOUEKSUDtdpBBVTKcJroiiBMg5XfRaPcDs=;
-        fh=2BH7DRhxtn9nK6Btx+Qbsdd5Rj4kcqHg57UxxPU2FJA=;
-        b=Dabpe8FxXyXhkvjJ5D4ENuRQOPQxnHqXCbBcZx9SIZIKMWsSIrsVNyIXOGlLx5vgQd
-         4fs9e2WqHlL69V2QX/SgX/VCL13Pesm0WFCVT5Wfpyk0xT1EQyzMgXyrs8khUzl4D8c1
-         r09rG5U/oZYKuGje0RXJ360QjHAGj2eAuyAMHDExuS4udzExHRy6t1zf2vUxP6pygU6i
-         i9tOp+RHc7A+tRMdKmE5YIy3tv+tbNq9/tulH7G6KkjlF/Ism2APzAjnaUdzTXkrxFCj
-         8bG8bBnz/BsOBaFtTroQHY7kN1lVNA04G929TRctGBuinFeZKfq2273Xjt9DnXRuonSI
-         pIjg==;
+        bh=2ld4A6b6IxpfKOLN9u6oztIrat5rbf798wjSTS3UAbI=;
+        fh=j6AuQClRG69WjQIXF1Mm0aGyVueVpjif1hGP9XW+JIQ=;
+        b=Gi4B6WhxEM8Ia1a0B+Nje13k3Qz6kT75LAh5Cp6aEn+4ucmTvX6BFQa/pADnSlvITm
+         9W9fS3SPg1IxQmqRb9STGWqphQGGy9DxW8gnSbFhVlZvB0jf73FqwHXOZF7dtZrn6WBf
+         0jJ+uBpPGB5KzCw52RBeJETuLNRfQPcF54z4UucN8fsEGTYKH8mj3rgAiMyFDJkFIFlx
+         7atxRw1o4CeQGsrb7cbjPWi+nLStWLRN8j71/tkJm5m/zkUyw1jtzoRDDt+xbwB88pCD
+         ucaNXmZMmhAqLIN480WgU94Jf1I754XqwrrH2nsxhmho1Gc37emRbpYGFRXAWq6NHpXs
+         6mmw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792427945; x=1793032745; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792428010; x=1793032810; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=wZWj63DDMLOUEKSUDtdpBBVTKcJroiiBMg5XfRaPcDs=;
-        b=NGtNN7wDdbPUMV0P9T0o/ijNrWpBNC6ksN7Qe99MNgahlAwY9UigGlhUC4Fhah9Zvn
-         KcNF2kp9dubiKE99GTnti00h/0kJnzapNZjaMjTme268Hm3AIbdpRx9xHK3Uexa2/mmK
-         yKzKUT2uDY/sO8+VpbsQNbZuXnu2CFdZFg0oYDydwWMUsgJkKwt6R0Veh58heKFUyT5e
-         6GVx6fmnwzFkfQn4HXkeCdu6YJScF4B4e4emiYiEEPlrCTElUY+6nbaP3gh/7vd86Q9p
-         xKPJmHZ3h6eeBI0cgrLSubdOVZPGE4Xsehzs2e49x26cIu48LOxmBC+qTKktWs/w01Ll
-         LtWQ==
+        bh=2ld4A6b6IxpfKOLN9u6oztIrat5rbf798wjSTS3UAbI=;
+        b=slTYyPHH07A5QGCqw2g6f5/HqSaoaJILGhVm/zOSMHJGc8rb9dY8ntdjFYbdyAOx+r
+         8SyX6N7r+qcEDEXpwY3lWz8xQ0bZA5GgzYX+tk4z13gXYormwYvjRISvhN4ENZE9BtG5
+         TfOBvacQw2OvHdO3LCqJXtecuD0lLFcEstHOqCvviEUKk78u4kC6/YqngqIQA0qDDttn
+         Drb1uJAIms1hYopXcLGYt+/ncdT1ZJx2+vdIhKXihkOMAnyWRftgaw+MV76Bj61ajcyR
+         yhh6YACZkraRdlyx0vqcLiDKmnOwuEYnmb4AZzBB6afwiaS24Tf6RimHbNmnZBcKQKHj
+         S9jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792427945; x=1793032745;
+        d=1e100.net; s=20260707; t=1792428010; x=1793032810;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=wZWj63DDMLOUEKSUDtdpBBVTKcJroiiBMg5XfRaPcDs=;
-        b=oYbus1DlTdnH1OpTSLzKKOYvGd2t94qfNH894Xjk9E8tkqcIG1ETqjWhUJsy44whhl
-         LFkZ+7PWD4S8sSmDCH3zdJmZcOlo7A6i3agn432d5vbnSG+WqK9JufVsJ+W2VzNdIzJv
-         33X3BZ7sQiJH18IcZCFNiOFRvx7EOmWToGfE5vy2aV+RMJwOd13jSpERMW7KtVmK2kXQ
-         NGK1aSSnDap8Xzw1mV9mirwlDEW1J8zLSddiZzr5+DS3o0LCJrJxNdQca9CH7VLl/Eaj
-         sxhXp75UcOKkMu17EwiCyjkLvY3xfv/tOBqJPZneWmA7tbThuLR6DKR62xESTZa8MzPe
-         Blbw==
-X-Forwarded-Encrypted: i=1; AKwUvBxmMD9lvyURWrgpQ9ICmTJMi0kCDsA4f3IzzUxzPzFHrC7T//p4O/8ygwnHjpvT6uie8vw=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKrgUy2fGVVyo9hn8eSiRzZFRGk4pnBJk7/tg2NJWjavcTGykQT
-	inF5u+UPoecRVJt8rP0ADSd1Lg2dNIAnmQfd9grjgB8NxT/QMZim+GChoiFLdgQmdJNewnqSxtz
-	zQd0q2ToADZnffH2RVqiWaeGbcOJ8SnI=
-X-Gm-Gg: AYBFou37iGhOKtcGL8wY9i34WpsLIsh4xBxroA1G4Zd58uSSnsSK8kGSiDgmtcOKuQ5
-	fZ9XJ6JwPdOInzzIYDtGZ+e8R66h48InR9gUt6DZgnUcgUWFnIY3fcLjqKUXgu9jcqcq389cVwG
-	7L1wvyFGb7zymmZod2AU8v9SdJuhdTjpQqlx7Py8yx4RJsg/B+aW29vNF6qXzxQO5LJANiLEssZ
-	rqPFG3D5f/YHV9z5H03EAq/SpXEch/fqFLpQZBkufe0wEKHxd0ZYU/kNL2CWuJd2kFd0LvB+Hql
-	Z5oizDriTeMZLWhK5j1Tm1P6tabbXgTlnLmhPPbw0n8pHwfp+1OQrEB7
-X-Received: by 2002:a05:6102:509f:b0:7c1:62d2:e18a with SMTP id
- ada2fe7eead31-7cc3697cfb8mr2605239137.16.1792427945478; Mon, 19 Oct 2026
- 09:39:05 -0700 (PDT)
+        bh=2ld4A6b6IxpfKOLN9u6oztIrat5rbf798wjSTS3UAbI=;
+        b=IblK7IbYvMXXZHkJsaTKWKZ3977wY90aMFKyFVpTdWT/thkSolMq+mfeTjKc+vb5gI
+         UYBL1T1Ummhaw6FHj81shAzDcAgW8BL1qxeAcFPSSBe1ozGjqY5v/fKd1tWHuT5GOwG9
+         xQt6su2S36MtVl/C3y+0Mhrsc3OPHR6Aabzkntth13vXljejAKdBeqNOQfrFKwtIkG+3
+         6kbdMD/f5JIdZ0WiiztcrPi676wAOL7cv521lwh6gz9PR3HI4JWoxtLkvy8OO4uesmq7
+         I1hvLyiOi81slpfnb1DhSbUNQfEXrABJiOyfbMZwigE+GAAvXd+qILHCW3Qjcd9jPLDy
+         ND7w==
+X-Gm-Message-State: AFq9FYKK48PieGvsbI21YyrNJJouRLUVk42LSG3rSCb6Jb4jJZBUa8WX
+	YeP71ep4JoFfbIjCWaq2tr+GHGHkXXMX/U9IhOdk1h5AQA3mjA5rE7C4yOcw9Hm3A4Io8YREZaA
+	WxE6cmBfbWDNH/qLsL1mCKAGV8jw10Vs=
+X-Gm-Gg: AYBFou11NMXCjuxIRKtxwR0+fo5AGujrKlzNt/PWXKcQ2m63Qkbr7Shs2paC92ZM89q
+	Yckln+dwKXGCahPB8lTj9BkqjMv83rosTCo48LPwbbBwZXmHQ3SQuTgRT/ddeqDh24ntsmDHaPA
+	k9+dXc9vytESshSiANIkdg4ZVgcth9arpOXjHoFCVAeaGq8IHV1I2ZX+3mjttq93RgruenmaJmb
+	CbrruIp+1hZVB+oZmgNEm5JLcq7c+ul1CZqeF75EFi3FRt7ROIPwHvv9aOLAagKPyzjF57EMGg8
+	D/M9wAjKb//6bzF4BOH33H9FhxdbBjKdWBe3BldBWvxWZXmmXTR9bMwQqTL8zpF2y1yN21/2T2U
+	2c4YLQbX0RU/fNA5nZVxGgQ==
+X-Received: by 2002:a17:907:c1e:b0:c24:87e5:6491 with SMTP id
+ a640c23a62f3a-c4199e5de45mr564511466b.2.1792428009453; Mon, 19 Oct 2026
+ 09:40:09 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,66 +102,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2266.git.1792341073005.gitgitgadget@gmail.com> <atXCFxxe3Lg7fV2W@pks.im>
-In-Reply-To: <atXCFxxe3Lg7fV2W@pks.im>
-From: Shashank S <shashu8660@gmail.com>
-Date: Mon, 19 Oct 2026 22:08:54 +0530
-X-Gm-Features: AclHuK9MQY3BXx7eDU6ZuJqK_bvBw3iMrY_RrNr0NrTqvdOJPawKcfCf93Z0sSs
-Message-ID: <CANHmUQTj8nR1GmPD2FW3+yfsgdgNh_vwRCcxRhS8GcY4VHDb8g@mail.gmail.com>
-Subject: Re: [PATCH] prune-packed: remove USE_THE_REPOSITORY_VARIABLE
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Shashank S via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Christian Couder <christian.couder@gmail.com>, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
+References: <CAKA8Uu1oLhdhNC9hGwMvQSC1+jzJqXnnWPGHLZUm5ZBdPkEM0A@mail.gmail.com>
+In-Reply-To: <CAKA8Uu1oLhdhNC9hGwMvQSC1+jzJqXnnWPGHLZUm5ZBdPkEM0A@mail.gmail.com>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Mon, 19 Oct 2026 17:39:57 +0100
+X-Gm-Features: AclHuK-ehxoaFEd7TrxS_K50w3hr2mML8PA4_eu2SlQYONmIpieNH9OqxJ8pEAs
+Message-ID: <CAPSxiM_5J-LzAx6pkMrH1L08QX2hP5KgqWbmc6b1Oa2thboZBw@mail.gmail.com>
+Subject: Re: Outreachy: request for a focused global-state migration task
+To: Joy <cryptocurrencydiva@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 19 Oct 2026 at 12:39, Patrick Steinhardt <ps@pks.im> wrote:
+> I've set up the Git development environment and studied the available
+> migrations into struct repo_config_values, including push_default and
+> has_symlinks. I also took a look at the abbreviation globals, but
+> found that minimum_abbrev is used across several components, so I
+> don't want to introduce a broad change without guidance.
 >
-> On Sun, Oct 18, 2026 at 04:31:12PM +0000, Shashank S via GitGitGadget wrote:
-> > Right now, the prune_packed_objects() function uses the global
->
-> Nit: we typically refrain from saying "now", as it's implicitly clear
-> that you're describing the status quo in your commit message unless you
-> explicitly refer to an older commit.
-thank you for the  review and point the mistakes i have done i will
-correct all the mistake and i will submit the changed commit in the V2
-patch.
+> Could you recommend a small, well-scoped follow-up task suitable for a
+> first contribution to this project?
 
-> > in these files, we can safely remove the UNUSED macro from them.
->
-> The question isn't really whether we can safely remove the UNUSED macro.
-> The question is rather whether we can assume that `repo` always points
-> to a proper repository. And for that you need to research whether these
-> commands can be invoked outside of a repository, because if so the repo
-> may be `NULL`.
->
+Quoting Philip, this is the best approach and what you should know:
 
-I have checked git.c file in that file I went through this commands .
-prune , prune-packed and repack which are .
-{ "prune", cmd_prune, RUN_SETUP },
-{ "prune-packed", cmd_prune_packed, RUN_SETUP },
-{ "repack", cmd_repack, RUN_SETUP },
-All this commands are all registered with a special flags '
-RUN_SETUP'. This flags search for .git folder . If it finds a .git
-folder Git successfully initializes the repo struct and passes that to
-valid pointer to your builtin . If it does not find a .git folder (if
-they ran it outside the repository) Git immediately stops and shows
-the error . It never run the code .
+"
+There are suggestions for microprojects at [1] and some additional
+guidance at [2]. The test conversions are a good way to get familiar
+with our test suite. To check you're not working on the same thing as
+someone else you should scan the mailing list archives [3] and/or see
+what is in the "seen" branch. In many ways the main point of a
+microproject is to get candidates familiar with sending patches to the
+mailing list and interacting with reviewers. You've shown that you
+understand how to send patches, respond to comments and ask for help
+even if this particular patch (which looked very sensible) did not end
+up being merged.
 
-> > finally, drop the USE_THE_REPOSITORY_VARIABLE macro from
+Thanks
+
+Phillip
+
+[1] https://git.github.io/SoC-2026-Microprojects/
+[2] https://git.github.io/General-Microproject-Information/
+[3] https://lore.kernel.org/git
+"
+
+That above is relevant to you. Also, if you look at [1] above you will
+see good issues
+that are good for the first issue.
 >
-> s/finally/Finally
-i will change this too.
+> I'm happy to investigate the relevant code, implement the change, and
+> run the appropriate tests before submitting a patch for review.
 >
-> > prune-packed.c.
-> >
-> > Signed-off-by: Shashank <shashu8660@gmail.com>
->
-> We typically ask contributors to spell out their full name, see
-> Documentation/SubmittingPatches [[real-name]].
->
-> The changes all look sensible to me, thanks!
->
-> Patrick
-Thank you
