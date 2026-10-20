@@ -1,118 +1,52 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=157.230.60.252
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792470349;
-	b=X7uhdhNboRNRLiCb6d2Mt33e4J7LKslHnQiP8yV8f2P8KguI7/fLPEFAnTcTJvBzfCIr
-	 aOG05Dyc9rxnMdgEa/bPD5j2oqe2moEv1sB9Y4L+0GUm6aHMOgiJ0CZ3YCiC+591bEnlq
-	 17hP+6z7C9Ts/r7ErL3ltUcmIilPPDGv1T1Y87USv/Zy1oEpZOkKwpvOI2TXU9zZa5p0u
-	 vbkcWxsVBFsq9BHqCByb7epN1qTyi+TuINqaMuzMIgo5FRf51jjB+KCc04h1nT3o8Twbd
-	 weRLye4+24M0OmkASip/z+4rJqxITjTKjCvXG0/1HiqFSurasPjQbeLlcVRPCh4DhmQ==
+	t=1792474816;
+	b=h7yF+Fmty/1VXIxm5wQ9k5/kTfoLIjRbfmhLrukFN1Uxpsm863FJmenRalg8nAE+6Klx
+	 jSaqO2UMyGDVyMOsbEVDMkGlJFn25rvp679aGX5yGRo0BqSUxMtjdn7p8Dp73/0VCa+D9
+	 MUNnHTe5CMQGvuE60BLlWU+VLo6ryOSkNvLf8OUgHlNSlDUOqygJ6qd8eaILFe15kbYFl
+	 pBvX23L/5KdJw7HkRtaBEUZZHUdZPP/SUl+xeEhBn3v8nA1ZWD3F24buqQtSbNMqwo1Lc
+	 egG4nVAyo2LCHpUK7aIn7T7ldt1Vev5VF0LcOvC4TuHJSW7+K3/WgmgjmRb8dZZdQXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792470349;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Subject:Date:Message-ID:X-Mailer:In-Reply-To:
-	 References:MIME-Version:Content-Transfer-Encoding;
-	bh=mT1mcWNWvFuFpCn2N/1a+ekgqD++Gr0l03/GOnby9O4=;
-	b=2sKk3ukm8S5IEFuHwB/W1ev+UTei3In3CLB5CpbrQeV6J7mDcV/n5Sx+3xu+TpkJlAu3
-	 mITjGpERSTyhezotwcJ9bzgDtI3k+DSukQER7GdQjBZ6hToHJt1DumeuKIhK1Vr238Y+/
-	 no6KMc4D4atOgYVaF79A6MYyUzhxjbIAsNWAYEnjAOocm1Rkf4YDqjXink5wh+EnyH7NJ
-	 BbK2ia0Lv3eSz1sQdGRoqVTsfR/CGauEtaEgDbo1rjup6l6dPN7xbNPQsGMc8gY6fiBA8
-	 V5mCpm3Y1SlyEFcswSNX1AaJUs3t3nIRchWPjvLUCnLEdf1Qy7/BWK3LGehVQL2JgzQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792474816;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=2+S4poIuayLx8Xg6sBzNCoLOXBtlyYETIxKNzfrSpXk=;
+	b=Rmuz6kCh1LZgh8wJKvsIDyK6WwYw4vxxguvNz0AP1WamLpK1ozTN/JeTMwLcBfm5hF4y
+	 PT+eAoQ8UodDZCl8mqrdo0zOYMBAC03rEWHEontoP3ChuEGgbzanjvscoThnvWKErWeLK
+	 2ESsOv4+kvpMN9107QdwXjf8jDILe9+AizQ6R+V3crmxdH586ABmaTyFq99Lv32SsLZz2
+	 eYCNwqMr+qVb5jDVG9C6NKkLm7otSjrdvoYpCGxRA1e9uXn2YUBN0d+1sQu00WH7C8F+r
+	 ua9Gch4eHWoXvDcWW3pUNfu52IkTYhmAnjvtnTcBo/SxfIwSJFuskfr2lwF3PES0Rhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=poBnQrzP;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=yVy5n6N0;
-	arc=none smtp.remote-ip=103.168.172.154
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	dmarc=pass header.from=lfurio.us;
+	spf=pass smtp.mailfrom=lfurio.us;
+	dkim=pass header.d=lfurio.us header.i=@lfurio.us header.a=rsa-sha256 header.s=default header.b=ewMeR7Xb;
+	arc=none smtp.remote-ip=157.230.60.252
+Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3405D606A319
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 04:25:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3405D606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33965606A319
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 05:40:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 33965606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=poBnQrzP;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=yVy5n6N0
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4CB961400093
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 00:25:48 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 20 Oct 2026 00:25:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1792470348; x=
-	1792556748; bh=mT1mcWNWvFuFpCn2N/1a+ekgqD++Gr0l03/GOnby9O4=; b=p
-	oBnQrzPZSwHIgchW2xsR5JpB4FvXrrNfjUkLLq/8oXKJ2PfNeLmxc770VJ5X4skz
-	TZaXWdIJnAooSyer3QaCgV4Phz8rB7bfqGUuGx7XBGImcdRr7AxFL5MJZWrb7hJg
-	DKvjyAcSNtC3p8QrY2SFIsDHXWuS6sfxU+JLD+yD7ZdY+g2pZGagL+NHI3EY2DKh
-	SYd0xZe8444pz7Xtcp1fh8/eIBtjsNIaDTvMFEnw4xzUzl1hgIWcVMBYv8BTw6li
-	qm8WFQ6d9BfmRJo8V16lsnmUOfkrnjE/v9SaczU2GTso7rezEHKifRAjkgd1xJdV
-	HxMie7xRLyNZ2LgqYcoug==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:date:feedback-id:feedback-id:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1792470348; x=1792556748; bh=mT1mcWNWvFuFpCn2N/1a+ekgqD++
-	Gr0l03/GOnby9O4=; b=yVy5n6N0r7aznLLF3bS4lVWgldtwrGhwe6nnGycHPfeQ
-	noO0gDJhrhNNBdxNgyLB3B0HDoptz9Dz5t+UYTjN/P93bMbqFUGFcYtN+82ckJu1
-	q4UpDFB6zOkTwva9D2leTezE+saMrza7JJZHLCLTkkXhMSNqRtiQ3Avt8C/j0kua
-	9CzpOpP8LDyPvvD4aStlX0ycTpA2N7z/ZcIkF3BoM/wMbMSSebYrHipAq6329hp5
-	hgXnYLt0GDhqhncO/GHK6iaX4XR0TNXfc5vwhq6CRyB2Lrnx/TPFm5q2t1Kv6RPE
-	0BOvw2td6DKjGh6RR+PNTRZNep7cTLDVmt0PoGwJwQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792470348; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:liXKgXHWcSvVWDXUsqtKZOb7h+NoIaFLgGhOa/bGq8FSk8K
-	M5bI8Dulm8bS3fPjD6FMwvKpigTJGXwVSBD0jM5E4SQI9eQW2WskujGAeTsZdUZZ
-	JBQFoPGGkag4e2WWER3N4soYTJ1pAz8UDFLj3NxKgWHx30J8Rpxpirq9NhlndVtj
-	/6zDFPDnV8gzn4kUHRpNwk6b/eNAjuC7ao9e59LHWFprDWg+DpYowoIgfNGCepcq
-	JvgVepvjek5EN9N/J1eNtMkJLfbRJv8VebHdFYJa7SpL+YDiyXG6jpzsuJcDQW+h
-	CU8h28ddXuNZYdXQaasU4xzbrJGp5ET+eAd97OA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=mi-m=1; hc=10;
-	hn=content-transfer-encoding,date,feedback-id,from,in-reply-to,
-	message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:NyAPAheHpkyvD5B2JvbTRE4ckNRFBJffnjWeWZIjU5o=:XLxAK78tCrY8gP/wJmSD5j4TNsam5w/D+B6yKFQRSMw=;
-X-ME-Sender: <xms:TO3WaoOPYq9T2sBk9rrmi_2cGA0kZ75ltqqd5QJ1lABeGLj-wmPe9g>
-    <xme:TO3Wak9sPvlA_ABe0oELNdrJcWl2dbncMS1CGphxp3pn5VqsJyrOxY1fhuDd3ARn8
-    _fMHqkOzbtLe3Ybdq5_xV0q1KIJnaBzzH3KP5QZOx4azR6-F4_yBw>
-X-ME-Received: <xmr:TO3Was4NAMSf6o6JEl_KJzcmlGaqeMoYGO475gt-gClOLNBpQrW8JWoHmo0i8y481zZdIapziGoWJddLLAK6k2YxI7FrPWcwDUms>
-X-ME-Proxy-Cause: dmFkZTF6q13sMkQ0AxAmkQyBbUj2Gw84rrnFqLDGNAvgEV4JjQlpdlnT2sxI38ZiYTqvHU
-    Xx2vuPO4+Zcw93X0/0kMJ2XN8yD8b6bD2F43q2wPRHPzJ5qNDZ2MB07Cv6qQZVGS2AidKe
-    SfK/Q6Oa0ysCT89zcaaFc13WxhP57M9etEy0TPTbb0pr5F7SCQGAIMKKgnWsYVu9JBOwLR
-    SalvgFPPLoJUJrV5TvHebyOcqKQlJ+5xevm5wTcHccG98vnCyYliELzEXqEKIfnGZvABgk
-    FhQHN8hJldcDKQhD0hBmDJm76geCo5TDJRZ1TgXL52SC08XAQPok9mtna4E8ml16ya6yO9
-    Ocf8CdsIFEsBM6+q6RZqz2X1cZvD/AZ0dXAfyiLeYFPtpdi+E23NrKAqNTBXB4xSowM3KH
-    juHga3F03mH2kaZeeE09L7Nf2My/Bo5y4VAaN6pRYZQlfsyp7nLDEHU2vHmd7Qf8n3SbnU
-    wmjgtprhpnPZ5xSie6zNiQ/Wlgu2C5tGuPq8ZTWXw2FEmy6lzLMbqjq4LxrnVVldjTCEm4
-    4W0k/uGuTYZUauUtSvi5XXDrN7FAMBCQATX/ORfNZ5xHYbPUwWnVVLUVyvg2v0L9zgVec7
-    FKLhzO8+LvbBg09JR4YbQqGp14KgjaK7aUfSXf9XF01lCwF3iWy4ALuslkxw
-X-ME-Proxy: <xmx:TO3War09Lwa7Q79sHMGnoYYL4S568mfdyY78GYlPWdsF1pertqlvKQ>
-    <xmx:TO3WajCVl82tzcMIdWCVoWAO76ozjbJuGyrri7wesURyoiLTzO1OgQ>
-    <xmx:TO3Wat2Qa38fTW09ImlQIAp1JNB2BuYF7OkcazbQQjZYtCZyAg_LkQ>
-    <xmx:TO3WatvuQ_Ii2krKgyDQxzN5-VbOSlHsF833DIWG3-7NP-747ee9aw>
-    <xmx:TO3WajmbfPTpDZw4_qZjCLfreATM0PuGF88LvuqI_t_iI_kH04jU_cTV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Oct 2026 00:25:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (1024-bit key, unprotected) header.d=lfurio.us header.i=@lfurio.us header.a=rsa-sha256 header.s=default header.b=ewMeR7Xb
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
+	t=1792474815; bh=MvleDe6J10sa5Me7hsE5f6tB6QXqzWK6Y7ZRttzHsKY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ewMeR7XbggIYSxu2upU+n/IjwoeUurIsHRgL9DSUjZaQBMVw7raMCugH4lt3vaaAJ
+	 TZWg2JQRU5X+L9yLNX2AvThz/ljnnvhd29dDyx+bJCtAk9g0Fy/DvQuw0g3aOs9LAZ
+	 nLKx8ldRJNR2Tbd0CG6ARpQhXyYxM9jcbYyJHepM=
+Received: by mail.normalmode.org (Postfix) with ESMTPSA id E9B3E6225B;
+	Tue, 20 Oct 2026 05:40:14 +0000 (UTC)
+From: Matt Hunter <m@lfurio.us>
 To: git@vger.kernel.org
-Subject: [PATCH v3] github-ci: update macos jobs to macos-15
-Date: Mon, 19 Oct 2026 21:25:46 -0700
-Message-ID: <20261020042546.2854586-1-gitster@pobox.com>
-X-Mailer: git-send-email 2.56.0-321-ga7e4057184
-In-Reply-To: <xmqqfqy5clgz.fsf@gitster.g>
-References: <xmqqfqy5clgz.fsf@gitster.g>
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH] init: show absolute path of (re)initialized repository
+Date: Tue, 20 Oct 2026 01:38:47 -0400
+Message-ID: <20261020053932.1274210-1-m@lfurio.us>
+X-Mailer: git-send-email 2.56.0.257.gf7497c7d27
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,88 +58,63 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-GitHub from <no-reply@github.com> address keeps sending
+Since 20e38cba3926 (setup: split up concerns of `init_db()`,
+2026-09-10), git-init produces the message:
 
-  Subject: [Action Required] macOS 14 hosted runner image is closing down
+    Initialized empty Git repository in .git/
 
-and suggests to update to either macos-latest (macos-26) or
-macos-15.  Use macos-15 for two of the four osx-* jobs, and
-macos-latest for the other two jobs, which is very similar to what
-.gitlab-ci does.
+instead of the previous
 
-Because we do not care which exact version we are running, so
-request macos-latest instead of naming macos-26.  If there were a
-similar symbolic name for the oldest-but-still-supported version,
-we would use it instead of explicitly asking for macos-15, but
-because there does not appear to be any, request macos-15.  This
-would require us to update these two lines once every year, which
-is annoying but is manageable.
+    Initialized empty Git repository in /full/path/to/repo/.git/
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Prior to 20e38cba3926, the code producing this message was in function
+init_db (renamed at the time to create_repository).  In that context,
+the git_dir variable was updated by 'git_dir = repo_get_git_dir(repo);'
+earlier in the function, to set the value used in printf.
+
+None of the discussion [1] around the original patch indicates that this
+change was intentional, so address the regression by similarly using
+repo_get_git_dir in this code's new location.
+
+In this case, git_dir is referencing owned memory that is later freed,
+so declare a new variable to hold the used string.
+
+1: https://lore.kernel.org/git/20260825-pks-odb-write-alternates-at-creation-time-v1-0-911513ba95c3@pks.im/
+
+Signed-off-by: Matt Hunter <m@lfurio.us>
 ---
- .github/workflows/main.yml | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/init-db.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index cf341d74db..7e5769f543 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -323,16 +323,16 @@ jobs:
-         vector:
-           - jobname: osx-clang
-             cc: clang
--            pool: macos-14
-+            pool: macos-15
-           - jobname: osx-reftable
-             cc: clang
--            pool: macos-14
-+            pool: macos-latest
-           - jobname: osx-gcc
-             cc: gcc-13
--            pool: macos-14
-+            pool: macos-latest
-           - jobname: osx-meson
-             cc: clang
--            pool: macos-14
-+            pool: macos-15
-     env:
-       CC: ${{matrix.vector.cc}}
-       CC_PACKAGE: ${{matrix.vector.cc_package}}
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 374ed3a74706..a2628568ff6a 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -248,18 +248,19 @@ int cmd_init_db(int argc,
+ 	create_object_database(the_repository, NULL);
+ 
+ 	if (!quiet) {
+-		int len = strlen(git_dir);
++		const char *full_git_dir = repo_get_git_dir(the_repository);
++		int len = strlen(full_git_dir);
+ 
+ 		if (reinit)
+ 			printf(repo_settings_get_shared_repository(the_repository)
+ 			       ? _("Reinitialized existing shared Git repository in %s%s\n")
+ 			       : _("Reinitialized existing Git repository in %s%s\n"),
+-			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
++			       full_git_dir, len && full_git_dir[len-1] != '/' ? "/" : "");
+ 		else
+ 			printf(repo_settings_get_shared_repository(the_repository)
+ 			       ? _("Initialized empty shared Git repository in %s%s\n")
+ 			       : _("Initialized empty Git repository in %s%s\n"),
+-			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
++			       full_git_dir, len && full_git_dir[len-1] != '/' ? "/" : "");
+ 	}
+ 
+ 	free(template_dir_to_free);
 
-Range-diff against v2:
-1:  e28c655dc1 ! 1:  1ac29e72d1 github-ci: update macos jobs to macos-15
-    @@ Commit message
-     
-         and suggests to update to either macos-latest (macos-26) or
-         macos-15.  Use macos-15 for two of the four osx-* jobs, and
-    -    macos-26 for the other two jobs.
-    +    macos-latest for the other two jobs, which is very similar to what
-    +    .gitlab-ci does.
-    +
-    +    Because we do not care which exact version we are running, so
-    +    request macos-latest instead of naming macos-26.  If there were a
-    +    similar symbolic name for the oldest-but-still-supported version,
-    +    we would use it instead of explicitly asking for macos-15, but
-    +    because there does not appear to be any, request macos-15.  This
-    +    would require us to update these two lines once every year, which
-    +    is annoying but is manageable.
-     
-         Signed-off-by: Junio C Hamano <gitster@pobox.com>
-     
-    @@ .github/workflows/main.yml: jobs:
-                - jobname: osx-reftable
-                  cc: clang
-     -            pool: macos-14
-    -+            pool: macos-26
-    ++            pool: macos-latest
-                - jobname: osx-gcc
-                  cc: gcc-13
-     -            pool: macos-14
-    -+            pool: macos-26
-    ++            pool: macos-latest
-                - jobname: osx-meson
-                  cc: clang
-     -            pool: macos-14
+base-commit: c51408889c3b372814bc20b9431c3b74d0d268eb
 -- 
-2.56.0-321-ga7e4057184
+2.56.0.257.gf7497c7d27
 
