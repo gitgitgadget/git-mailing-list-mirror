@@ -1,115 +1,115 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792538567;
-	b=5HgZua6pqxz5NVnc9AchUtT8qsOdAKUaYM8R4pJ6WHN/0j4cEZamJfx9VJaDF02yrqfY
-	 skxvT4gZYtwRcbMtyZig4VsmTkbpMu8fw2U9wSD0haxKEWvmXJkHusQRwXdqSjqNuZjZm
-	 S13FqVZ3Gfvk16JkH/s9abjm5VGCb0z0++/7C7RCYclmynBB+8jkGEt8E4QOovv1+erYY
-	 EvgdfRDMudWTb392zJv0ryBNwugawQa0pS1EAio4wpqeuDqs6xCGjRnoafst0woSMTmuc
-	 AN/dKa8YCruTAX467DBd5gXPSa8hZAbAq0qyvdYV3v9ZZ4yuKci+VwHqd6KEe7mqqsg==
+	t=1792538569;
+	b=TZbQDyt10ZY/SPLHfvyGNjMQ1t09QVdYEQnHe/9LcimbI71ge1ygLoW0MeRxV/eUu8JD
+	 7L3+PWEbNZWmg0JUgITQcyUeFakfms5fzooWBvmokKdgmHZX8Xg5kqxgWJhTc0jHhfDLq
+	 c73nB4lv6sJwyONt8nvEiFxbUAhrHcK1VPJNVm52dQdX2/5jNMNXths9RdDO7NrSbAs4w
+	 DtQ6WTKgQG59Ihu2RabgH4CUo3TAbznVz7URrr0Qte1SdjP1dVwgqepOSrh/18vq8d+wi
+	 b30KhVvkPp8Px/rKcxZJAe67NGWcdME9y+GnjTacu6QzM7LCjwmyGkfo9595n9ayKhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792538567;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792538569;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Subject:Date:Message-ID:X-Mailer:In-Reply-To:
 	 References:MIME-Version:Content-Transfer-Encoding;
-	bh=Ehgsg4O4GeSIuRN2TDB65QUPO5DFmwjBjEoWX+0UI/0=;
-	b=C0taniXzjlJUsnXOIJ+QtSJKiqtSZHETtEf2jJw2FGi3c8TpxgdQKIqdrnob8W8CU53o
-	 QZCK15hRiLohLWDZgEWobN+KJ9BOQX4k0rAFj/3PqU3Q1GuI+ew2miAWnrgCF5B8Y2dFa
-	 7e3sXNJ7h0fkgDNlhMmad44In3dfcV3QQmqZMrPqL7uE5A+nBQ7oMlxi9MLUMwfkCskDj
-	 Ou5o4Ns9fWcBHjIRM+AjaLHqkawnSPebVIQPhOdeahJWL15Li4jSktrXX96P3wsT2B0p6
-	 85ztiETQ2fr640n+kZ+3YuoyV2w9fkJseQU1EafqPYzDRg+eeR/7AxB+XAljgZFDcLg==
+	bh=Z+NHeaUXk5rEkatvzirEMkCS16l5jUCu0O7502KJgDo=;
+	b=eqrN7TyH1kGDKr0Iiqg88twSecxUOia1aqnBWwn89V8yUmK+AdebiRTjRMoqafxR517s
+	 r03VN3o250hhAAmo5f9n2GwzGwhmrnSXOeoEl/GTaSfYKp4oLv7R2cYnK4QI1NfbcPQP7
+	 /taHFx3rc6KYvOfu/sQfsNh98LVt354MBKo/tstLkSoOSw/RYDwgT+NHHyQvC00NUw+Un
+	 tQx+pCJFRvmRZtcy5NDlPph7sKNvGfhAtKplKRHsizo4YTdetSWg+8lXwHmE/N4FrR3vO
+	 ikgxUVRnk6c4RxSYHbh3xOA5fz9QPk+DpdX7oadiVfNDl8wA0IcHdUO0KAlW5Uf2+Gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=JhL39ELc;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=c8uwyVXt;
-	arc=none smtp.remote-ip=103.168.172.153
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=lcvqHwSc;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=qZYoXwzL;
+	arc=none smtp.remote-ip=103.168.172.149
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D5B606A31F
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 23:22:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 47D5B606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D51606A31C
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 23:22:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D6D51606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=JhL39ELc;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=c8uwyVXt
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7D13B14000F8
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 19:22:46 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 20 Oct 2026 19:22:46 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=lcvqHwSc;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=qZYoXwzL
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2E2E0EC00AE
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 19:22:48 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 20 Oct 2026 19:22:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1792538566; x=
-	1792624966; bh=Ehgsg4O4GeSIuRN2TDB65QUPO5DFmwjBjEoWX+0UI/0=; b=J
-	hL39ELcf1e7MUoEikTw1VSQwmo3VuZKZ3Q7FnM7H0/fxURbWfC8OKJHWC47Pr6ce
-	ATlsT1noJKaFcQRWfAY0pvTvLyJfqmEqJONLksuM9tIPQZKEyHuJrZQSD1aaRcIw
-	zzuJuAbg2+J3yBrY5qZ527dvX9jL9qQCcWjXgo48y3iWvoNNpbnE/9uGuG0ewnhi
-	AnOL8KkRT2AY1xhjwIEz0FleCst7pBJdCNeoQetzn9X1qrRCNHAmEdq7hAyC0SsG
-	Ox17ugZgeCdHhLVbJf8yPTiLLHyq7L1fX/gMk2rZwhS5ketjW6WFgiCIeMPC4s3o
-	T6kV3cL/t3E/omQQT/ukw==
+	:reply-to:subject:subject:to:to; s=fm1; t=1792538568; x=
+	1792624968; bh=Z+NHeaUXk5rEkatvzirEMkCS16l5jUCu0O7502KJgDo=; b=l
+	cvqHwScQqxdfMi2wmfawRJ2rnbnMTlKjUcvxboVsuAUiUWXBMG7UuXQNRdG5lZx3
+	8ZG3MDpqdo+jnepN1iGXCqFJp/1YiAVEzBHOcVP72/+N1oRaa9Scmdf/6XRVlEur
+	jPFMfoE77LLqx/h6p3i4uydrrTZlFbSNmEY4KkY1w1Y407weA+gJN/pBMQwPforW
+	qcptvHut9FnAZ8T0ji7cEp+e4+DXr9r1QK45DS2vleWl39aeUTU1UXqjdi6dG+SV
+	mvHb/KrhWT157ZQTwrQ7WwK3arcRXNzP4+KnyUJyksOFsxCUgdidkKdRTz/4Nzst
+	dgiZSxJQYofC0yAJIzY4A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1792538566; x=1792624966; bh=Ehgsg4O4GeSIuRN2TDB65QUPO5DF
-	mwjBjEoWX+0UI/0=; b=c8uwyVXtPdEotwo3aLBZEoOSMvnwWP7tJuCf5uF0pvSi
-	LU+IFrwlC9ieJEag0A14jeP1zkM+TqwW2DCmqHghOKf2m7N2NfI5ADU/yPr2CfW2
-	dVakZbkBqj33MzhjerX3rXfcpp26DYfDFiE5NWhS0ubUT+AA/03ha+bmhBM88m82
-	VYCxHhJ/wkoPt+Vdg+uDr1IV1v45HMmpUikUSmXlfw4wI5gEZghv3HFJsKFmmgGo
-	9uvE337O6gxCdhnI/1+UbE0v51LO+43GTYsU+OkQtdQRQlyRuBOuqHpIl3xA0xfM
-	jX1mBJNI/YllbLn2L3iGIhvUZzJsC/78GpamaD6/kA==
+	fm2; t=1792538568; x=1792624968; bh=Z+NHeaUXk5rEkatvzirEMkCS16l5
+	jUCu0O7502KJgDo=; b=qZYoXwzLRaKaDj0Khsq2DxH4AEdY/w1rhSDyg5oSNAnX
+	0wmwU1Z/cv3GOgtwFeFJA2jxBYGKvpjnk/v2o5r34eH/85ErO3BoC11Vjj3+sUNt
+	RtAI36JeKp7S/f+lakQo0KmSm3y388qwwMA8enW7cSKlHwqVn2UHiJKzHkHeFzPe
+	MADmVo63VyI/5gw2qZWO8zov/tiGfTiwW2lGD6L1TtHn3LluOE1i3rSYbvkc2kIA
+	vJVXYzWu14gbW3bBZQGWDe7EcFgDIRNyShPwADBhHIsbLyJw9xnspRfKqsDHELAY
+	ktKG+H2FUKIRFjoWUffwa5Xhmyp1q3ebv4Uvx8yPCQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792538566; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1792538568; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:LyeGWFoh8g63aMS7PJyFeL9YwQN8BepTDCgxjCaZj4NZp5N
-	0oMGbxZC1/dVrQCaSkR/TlcWn2WfJL8Q6zX5xLlAqVEiCg/hinBxmXMLMT1jWDnc
-	jiq7q4w8fcT4xOVjZklHQtEM/a2OiSEZ05C13djv8OhDnNJeFoCQR7IDE4N/ehcC
-	Ch3+HPubK9GUqmKQ72My/s5yy+JBqD15JHIY/SJ7Gny/bmwMSaCmcv7wGRwUeJxd
-	fWzhfSwDe0+TMxAyQZ0hvXHONCXHixN+Vy5dfUm+tfp2dymDAJ7CPTm333m0CfgI
-	JKJGES2uJoTy1x2x4CtkFeLkA36/dddAJaRJGuQ==;
+	s=fm1:rsa-sha256:DQF7zvjFrD93ZnSmu32ZD9k7qeDRSIozr4eDlQwki77cVDE
+	4TMZ9TiEOdnuM59reexLQtZxlHz5jdh81jL7LKjAkvrOtzqS2XD4N3ZIdxLdVhPD
+	kd/UP/owJ3QwOEJfMNVU0I7Z4/WQ126C+2YMmFH174ux+URGvnqYOnh+Gz8kgN3g
+	5Gy6znqj8qu026+8xdDhcbHQtQz/qrK1u1F9D7ZQYXrimL3DpYXAwtKGVHhdw7Pk
+	ILeiXFbe8/6srRXB3JwLEtK9gMFrqI5yyXmLigP5RNxNWYUiwUo4pFPQBLz+Ux2B
+	hoteiJvWEChxr+f6KbjTwDMv/8ZALQYhPM6oVFQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
 	action=mi-m=1; hc=10;
 	hn=content-transfer-encoding,date,feedback-id,from,in-reply-to,
 	message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:Ltw3xqq47/KvV0KZ2x2Y8yJsJd7wiI6WQqdvnDqMYzU=:cJlP2cx5GNP3Z7YsF64m/v9OxPxkOkqnGXNUhXPgAFo=;
-X-ME-Sender: <xms:xvfXambdwkf8ZKmgIegKNAgtfZBxVf7rrmw_8NlU1MHVvH7tHx7oeQ>
-    <xme:xvfXavaHfQeZQ97ZNi3W6F0i6AEJK9xm-oePM03bYyjimvjSdYuyMA70B3XT_mS_3
-    8ALvETd5dIuq1T8Jj2BG8ASPXTH-CtZjrkMHemd6qOtluBjMUiKQfQ>
-X-ME-Received: <xmr:xvfXaundqtcVuro3psEbCvvjxfg8KvoAkcsnnVW15JGaSWCSEMu4iqGhWhCVOTATUvGrT5DBOeimnmlPKrv0yf_7_BtkbOAy1Xjw>
-X-ME-Proxy-Cause: dmFkZTFn2kAI+4nYpWG3e9KAYFvRAt2+ajepASQVL5bXm80e01mIhKm5qJJ8sA9PiPMqn9
-    FX2JBA98rakelbM96TzUcqY42mUvRPof7Xr5cACJH5XiLO57qHgZziusRaCg/FkX5CoWui
-    6058e4mTDkJy3iJ/XNpxySyef/D0M8y+pZCX27T2rWaF5hzu8sN0HgKZYPH7GCt02bHhMb
-    3wy77J7/AetBRUC/y1iFCFRC04oNP7FwhSOJK7W0ZNJQwXO7Z33Y266Q7cUAbbUwfPpLd+
-    fwa+O3UJ/kJWciOXETxFI7sIX6Ikx6Zk7zZ4aHYleXQlB4jSErcIynTm0Ib5RuPh4pCVOQ
-    9JL22Or6H1rMuADJ8t9W6PN4M1i/b+FcyzT3cyo+iTba6V4oZFmHTKZPUXccFHK5VfMHrk
-    PtZk4MyXp4hxmJzK6VqfZl12jo6Pq/l5LRnmxrfzLmyplC13y0ZYbIudcMcfVAL+B4BmVV
-    jqYk4prlWjb7ozGb7POMdUo2vEzbZIAzfWmCtWYK+cyR81s8IvnajcHsw8ezz9H4ijLkv2
-    hMGuqCO0fgzZDMVdMSYQH+1ooAIxobSE1BkE4AAwLEm27Nznteo/RUdPz/g8FVAbdnlLz/
-    EPN9rPuAADqdRKgO6VRVHS6HRcsQb6RN5qJth+naWH4vvXyjc+YFc/qES30w
-X-ME-Proxy: <xmx:xvfXajwbxh__iwoDxD7uJNCPA3HwM_1fNX0vCDeZLHUq4RyQ1FdQwQ>
-    <xmx:xvfXakP-55BY3ljR-wvd41OK7oJRUw_8evxP_U02glIGImM0Yi_k0g>
-    <xmx:xvfXavRfkz7pU6lFNoeEUzc1lrDhUmyOXj_pLq3gkE2gFUFVsLwZjw>
-    <xmx:xvfXaqbFefVeDdEp-l8eVbaeiFNnOLrTl2k53b3uCa-QqXoKoSdZGQ>
-    <xmx:xvfXapyWQHxzIq5TFM263yPu84Am_2mKgOkZLeAuTelVT2dlDE2bEC-z>
+Message-Instance: m=1; h=sha256:+l6ieoEOMNDLK2Gf00kuV/1hoQAG9kZCwFV8D5ExWdY=:Q8RRI6rXdrHnyxOeNS6/l+NiaAA0BBsZSJYFN6KWW5A=;
+X-ME-Sender: <xms:yPfXajHSRxDyuD3MfAZlZx4h9oq_Drju5iKSIbbOAI7_7BytN3n9rg>
+    <xme:yPfXamUkLJGGGBXv4YvF8cnOwGgZXdAfGFDu-NtmsU_lwAOMUA6zfCtZLt1fZY48p
+    6JZnrxHbdD5YsYAaX7PH2oHuodsH07cxXt3f_92zyLWesfUP6LD5ik>
+X-ME-Received: <xmr:yPfXaiwz48-1x1RmsjPs7hn5urxI-PluyW6SQNI5jD_8OEjUqsbqaEMpI3Nnf7S2Gd8OZspykwp9MDNcaL1I2qFElPzb9Ot1p6QI>
+X-ME-Proxy-Cause: dmFkZTGS9G+VbDQyqWJeggG+U0P5jfalRw0s4wlbKvT3RtC3E/6ZBwWEl0kpGEoRHF9Nrc
+    Rq/XjmVdqnvl41AuRFF/6aABozBQNR8s3c/acq06upR9GIi+O1wOadSXeyTMCxhafeKN5x
+    ZKFZ+xXQwHTYOxKiMwf9Kn+ryaHcq4cPATLWYfYwaClhS/vjPI9CcJ6BPFv1SYhdljGfoB
+    8ZxWBx7zuXwvUvkygCCiFLJ0KKVaP41FAX8DJjcSgtRMiKFF418S81O8suFQM8uGN9eWFC
+    Z+4fZyFJ54SeOT6mRlfhhoFKingjsc/L6LNTyY5bSmgDINDsYSk4qQHnhP7WZehH26xQhH
+    zCckcDvxet6WhuyPT0i7wUHiPbMIU4PjF96zYci97Zotzk/PS1CLhiNrU2lkSSbrLoiXhr
+    a3YWhFUjbbkqWVbnq1JMGHQPASpD57hND+bbodnfpzDDwblMQ/H0vGp4gqFWBIttWCvqjz
+    31gYTMGRLzAQE1AjM9+U0vB3PZumY5RCRhSyuV3Qd0KQ8ZLorASzgtZoNh6WkVBBD2In2z
+    M9D3yZ2dRCEOZpN002C3oZ0FYT+4rLpz+XmQbo/dZoe2CbF4rpZga7TMgdIuHmsgk/KJha
+    kzJjXE6VRRP7Zt66In6h0QOG9RSUNiJDwRuEHSO/eY747693m4NLPgGk7SZA
+X-ME-Proxy: <xmx:yPfXasOaICB7EpXAemSJ08x667HrYvv5FRs5Xa3S3S1bwDi4PfJ5Nw>
+    <xmx:yPfXar6Ud6h2dhYQ39HxjCqH_1-M3g0QQs-KwF9lh9k8-zrC0Cjf5A>
+    <xmx:yPfXalP0TKsxQvKbm3MVymwzqxvll9mSWQ7NlCjSTSe5spzA_vpbYw>
+    <xmx:yPfXahlMXyULfW-3NZvLHMAoL-YXl0co4w9Tl5dFivztUFm3dcAMwg>
+    <xmx:yPfXaufMTrgwmAgl6zVtisKkmgxqvNC9KFwikfPcJ5mQLGZLZxjE5ico>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Oct 2026 19:22:46 -0400 (EDT)
+ 20 Oct 2026 19:22:47 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v2 1/2] MyFirstContribution: move "how to send v2" after discussing reviews
-Date: Tue, 20 Oct 2026 16:22:41 -0700
-Message-ID: <20261020232242.2217109-2-gitster@pobox.com>
+Subject: [PATCH v2 2/2] MyFirstContribution: clarify that "reviewing" is a discussion
+Date: Tue, 20 Oct 2026 16:22:42 -0700
+Message-ID: <20261020232242.2217109-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.56.0-321-g29a826976d
 In-Reply-To: <20261020232242.2217109-1-gitster@pobox.com>
 References: <xmqqa4o94e0r.fsf@gitster.g>
@@ -125,254 +125,116 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The MyFirstContribution document tells readers how to send v1, how
-to send v2, and then how to respond to reviews, in that order.
+The latter half of the "We sent our initial patch.  Now what?"
+section largely duplicates the discussion on what to do after
+getting a review, which is covered in the subsequent section.  Also,
+the "Reviewing" section does not make it clear from the beginning
+that reviewing is a process of discussion with your reviewers.
 
-It is unclear how much blame can be placed on this text, but senior
-community members find themselves more and more frequently having to
-tell new contributors not to send updated iterations of their patches
-before having any review discussion on the current iteration.
-
-As a small first step to rectify the situation, move the description
-of how to send v2 so that it appears after we have told readers to
-expect and respond to reviews on their first iteration.  This step
-contains no text changes.  Only the ordering changes, which are
-friendly to 'git diff --color-moved', are included here.
+Rewrite the "Reviewing" section with stronger language to discourage
+sending a 'v2' iteration before working together with the reviewers
+to prepare for it.  In particular, replace the weak "it is a good
+manners to do so" with a firmer "do not send v2 before you are
+done."
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/MyFirstContribution.adoc | 204 ++++++++++++-------------
- 1 file changed, 102 insertions(+), 102 deletions(-)
+ Documentation/MyFirstContribution.adoc | 78 +++++++++++---------------
+ 1 file changed, 32 insertions(+), 46 deletions(-)
 
 diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index 34bfa2e3a9..682c797e3c 100644
+index 682c797e3c..3fd6587e5a 100644
 --- a/Documentation/MyFirstContribution.adoc
 +++ b/Documentation/MyFirstContribution.adoc
-@@ -1174,85 +1174,6 @@ press `y` or `a` at these prompts your emails will be sent! Congratulations!
- Awesome, now the community will drop everything and review your changes. (Just
- kidding - be patient!)
+@@ -1314,56 +1314,42 @@ previous one" patches over 2 days), reviewers would strongly prefer if a
+ single polished version came 2 days later instead, and that version with
+ fewer mistakes were the only one they would need to review.
  
--[[v2-git-send-email]]
--=== Sending v2
+-This consideration applies not only when going from the initial patch to v2,
+-but also to later iterations of the same series. There is no fixed rule for how
+-long to wait before sending a new version. A useful default is to send at most
+-one new version of the same patch series per day. This gives multiple reviewers
+-time to comment, gives reviewers across time zones a fair chance to
+-participate, lets you batch feedback together, and gives you time to think
+-through the comments you received. Knowing that you should not immediately send
+-another version also encourages you to review the patches more carefully before
+-sending them, catch small mistakes such as typos and off-by-one errors
+-yourself, and let reviewers spend more of their attention on design,
+-algorithms, and other substantial issues.
 -
--This section will focus on how to send a v2 of your patchset. To learn what
--should go into v2, skip ahead to <<reviewing,Responding to Reviews>> for
--information on how to handle comments from reviewers.
+-The right timing depends on the topic and the feedback. Larger series usually
+-need more review time. If the only comments so far are minor, such as typo
+-fixes, it often makes sense to wait a little longer in case deeper reviews are
+-still coming. If the comments call for substantial rework, do not rush out an
+-updated version before you have reviewed the larger changes carefully. Instead,
+-reply to the review that prompted the rewrite, say that you are preparing a
+-substantial rework, and mention which parts of the current series will become
+-obsolete so reviewers can avoid spending time on them until the updated series
+-is ready.
 -
--We'll reuse our `psuh` topic branch for v2. Before we make any changes, we'll
--mark the tip of our v1 branch for easy reference:
--
------
--$ git checkout psuh
--$ git branch psuh-v1
------
--
--Refine your patch series by using `git rebase -i` to adjust commits based upon
--reviewer comments. Once the patch series is ready for submission, generate your
--patches again, but with some new flags:
--
------
--$ git format-patch -v2 --cover-letter -o psuh/ --range-diff master..psuh-v1 master..
------
--
--The `--range-diff master..psuh-v1` parameter tells `format-patch` to include a
--range-diff between `psuh-v1` and `psuh` in the cover letter (see
--linkgit:git-range-diff[1]). This helps tell reviewers about the differences
--between your v1 and v2 patches.
--
--The `-v2` parameter tells `format-patch` to output your patches
--as version "2". For instance, you may notice that your v2 patches are
--all named like `v2-000n-my-commit-subject.patch`. `-v2` will also format
--your patches by prefixing them with "[PATCH v2]" instead of "[PATCH]",
--and your range-diff will be prefaced with "Range-diff against v1".
--
--After you run this command, `format-patch` will output the patches to the `psuh/`
--directory, alongside the v1 patches. Using a single directory makes it easy to
--refer to the old v1 patches while proofreading the v2 patches, but you will need
--to be careful to send out only the v2 patches. We will use a pattern like
--`psuh/v2-*.patch` (not `psuh/*.patch`, which would match v1 and v2 patches).
--
--Edit your cover letter again. Now is a good time to mention what's different
--between your last version and now, if it's something significant. You do not
--need the exact same body in your second cover letter; focus on explaining to
--reviewers the changes you've made that may not be as visible.
--
--You will also need to go and find the Message-ID of your first cover letter.
--You can either note it when you send the first series, from the output of `git
--send-email`, or you can look it up on the
--https://lore.kernel.org/git[mailing list]. Find your cover letter in the
--archives, click on it, then click "permalink" or "raw" to reveal the Message-ID
--header. It should match:
--
------
--Message-ID: <foo.12345.author@example.com>
------
--
--Your Message-ID is `<foo.12345.author@example.com>`. This example will be used
--below as well; make sure to replace it with the correct Message-ID for your
--**first cover letter** - that is, for any subsequent version that you send,
--always use the Message-ID from v1.
--
--While you're looking at the email, you should also note who is CC'd, as it's
--common practice in the mailing list to keep all CCs on a thread. You can add
--these CC lines directly to your cover letter with a line like so in the header
--(before the Subject line):
--
------
--CC: author@example.com, Othe R <other@example.com>
------
--
--Now send the emails again, paying close attention to which messages you pass in
--to the command:
--
------
--$ git send-email --to=target@example.com
--		 --in-reply-to="<foo.12345.author@example.com>"
--		 psuh/v2-*.patch
------
--
- [[single-patch]]
- === Bonus Chapter: One-Patch Changes
  
-@@ -1348,29 +1269,6 @@ Once you are happy with the result, send the series with:
- $ b4 send
- ----
+ [[reviewing]]
+ === Responding to Reviews
  
--[[v2-b4]]
--=== Sending v2
+-After a few days, you will hopefully receive a reply to your patchset with some
+-comments. Woohoo! Now you can get back to work.
 -
--When you are ready to send a new iteration of your series, refine your
--patches as usual using linkgit:git-rebase[1]. Note that you typically want to
--rebase on top of the cover letter. You can configure an alias to enable easy
--rebases going forward:
+-It's good manners to reply to each comment in the mailing list discussion
+-instead of letting the next version of your patch be your only response. Tell
+-the reviewer whether you plan to make the suggested change, keep the original,
+-or pursue a different approach. This way reviewers can respond to your reasoning
+-before you spend time preparing a version they may not agree with, and later do
+-not need to inspect your v2 to figure out whether you implemented their comment
+-or not.
 -
-----
--$ git config set alias.b4-rebase 'rebase "HEAD^{/--- b4-submit-tracking ---}"'
--$ git b4-rebase -i
-----
+-Reviewers may ask you about what you wrote in the patchset, either in
+-the proposed commit log message or in the changes themselves.  You
+-should answer these questions in your response messages, but often the
+-reason why reviewers asked these questions to understand what you meant
+-to write is because your patchset needed clarification to be understood.
 -
--Before sending out the new version you should also update the cover letter with
--`b4 prep --edit-cover` to note the relevant changes compared to the previous
--version. You can inspect the changes between the two versions with `b4 prep
----compare-to=v1`.
--
--Same as with the first version, you can use `b4 send` to send out the second
--version. `b4` automatically bumps the version to `v2`, generates the range-diff
--against the previous iteration, and threads the new series as a reply to the
--cover letter of the first version.
--
- [[configure-b4]]
- === Configure b4
+-Do not be satisfied by just answering their questions in your response
+-and hear them say that they now understand what you wanted to say.
+-Update your patches to clarify the points reviewers had trouble with,
+-and prepare your v2; the words you used to explain your v1 to answer
+-reviewers' questions may be useful thing to use.  Your goal is to make
+-your v2 clear enough so that it becomes unnecessary for you to give the
+-same explanation to the next person who reads it.
++After a few days, you will hopefully receive a reply to your patch
++series with some comments.  Carefully read them to understand the
++reviewers' perspective.  Do not hesitate to ask for clarification if
++you do not understand their suggestions.
++
++Reviewers may also ask about what you wrote in the patch series,
++either in the proposed commit log message or in the changes
++themselves.  Answer these questions in your response.  Often,
++reviewers ask because your patch series needs clarification to be
++understood; use this as feedback to improve the clarity of your
++writing.  When answering, remember to update the patch itself so that
++the next reader will not need to ask the same question.
++
++Do not start coding, much less send the next version of your patch,
++until you have finished discussing the current round of reviews with
++your reviewers.  This saves time for both you and your reviewers.
++They can respond to your reasoning before you spend time preparing a
++version they might reject, and they will not have to inspect your 'v2'
++to check if you addressed their concerns.
++
++Do not iterate too quickly.  Limiting yourself to at most one
++iteration of the same patch series per day is good practice; it takes
++time to fully discuss the current version before working on the next.
++This allows multiple reviewers to comment, gives participants in
++different time zones a fair chance to participate, lets you batch
++feedback, and gives you time to digest comments before coding again.
++
++Knowing that you cannot immediately send another version encourages
++you to review your patches more carefully before sending.  You can
++catch small mistakes like typos and off-by-one errors yourself,
++allowing reviewers to focus on design, algorithms, and other
++substantive issues.
  
-@@ -1501,6 +1399,108 @@ changing history, but since it's local history which you haven't shared with
- anyone, that is okay for now! (Later, it may not make sense to do this; take a
- look at the section below this one for some context.)
- 
-+[[v2-git-send-email]]
-+=== Sending v2
-+
-+This section will focus on how to send a v2 of your patchset. To learn what
-+should go into v2, skip ahead to <<reviewing,Responding to Reviews>> for
-+information on how to handle comments from reviewers.
-+
-+We'll reuse our `psuh` topic branch for v2. Before we make any changes, we'll
-+mark the tip of our v1 branch for easy reference:
-+
-+----
-+$ git checkout psuh
-+$ git branch psuh-v1
-+----
-+
-+Refine your patch series by using `git rebase -i` to adjust commits based upon
-+reviewer comments. Once the patch series is ready for submission, generate your
-+patches again, but with some new flags:
-+
-+----
-+$ git format-patch -v2 --cover-letter -o psuh/ --range-diff master..psuh-v1 master..
-+----
-+
-+The `--range-diff master..psuh-v1` parameter tells `format-patch` to include a
-+range-diff between `psuh-v1` and `psuh` in the cover letter (see
-+linkgit:git-range-diff[1]). This helps tell reviewers about the differences
-+between your v1 and v2 patches.
-+
-+The `-v2` parameter tells `format-patch` to output your patches
-+as version "2". For instance, you may notice that your v2 patches are
-+all named like `v2-000n-my-commit-subject.patch`. `-v2` will also format
-+your patches by prefixing them with "[PATCH v2]" instead of "[PATCH]",
-+and your range-diff will be prefaced with "Range-diff against v1".
-+
-+After you run this command, `format-patch` will output the patches to the `psuh/`
-+directory, alongside the v1 patches. Using a single directory makes it easy to
-+refer to the old v1 patches while proofreading the v2 patches, but you will need
-+to be careful to send out only the v2 patches. We will use a pattern like
-+`psuh/v2-*.patch` (not `psuh/*.patch`, which would match v1 and v2 patches).
-+
-+Edit your cover letter again. Now is a good time to mention what's different
-+between your last version and now, if it's something significant. You do not
-+need the exact same body in your second cover letter; focus on explaining to
-+reviewers the changes you've made that may not be as visible.
-+
-+You will also need to go and find the Message-ID of your first cover letter.
-+You can either note it when you send the first series, from the output of `git
-+send-email`, or you can look it up on the
-+https://lore.kernel.org/git[mailing list]. Find your cover letter in the
-+archives, click on it, then click "permalink" or "raw" to reveal the Message-ID
-+header. It should match:
-+
-+----
-+Message-ID: <foo.12345.author@example.com>
-+----
-+
-+Your Message-ID is `<foo.12345.author@example.com>`. This example will be used
-+below as well; make sure to replace it with the correct Message-ID for your
-+**first cover letter** - that is, for any subsequent version that you send,
-+always use the Message-ID from v1.
-+
-+While you're looking at the email, you should also note who is CC'd, as it's
-+common practice in the mailing list to keep all CCs on a thread. You can add
-+these CC lines directly to your cover letter with a line like so in the header
-+(before the Subject line):
-+
-+----
-+CC: author@example.com, Othe R <other@example.com>
-+----
-+
-+Now send the emails again, paying close attention to which messages you pass in
-+to the command:
-+
-+----
-+$ git send-email --to=target@example.com
-+		 --in-reply-to="<foo.12345.author@example.com>"
-+		 psuh/v2-*.patch
-+----
-+
-+[[v2-b4]]
-+=== Sending v2
-+
-+When you are ready to send a new iteration of your series, refine your
-+patches as usual using linkgit:git-rebase[1]. Note that you typically want to
-+rebase on top of the cover letter. You can configure an alias to enable easy
-+rebases going forward:
-+
-+---
-+$ git config set alias.b4-rebase 'rebase "HEAD^{/--- b4-submit-tracking ---}"'
-+$ git b4-rebase -i
-+---
-+
-+Before sending out the new version you should also update the cover letter with
-+`b4 prep --edit-cover` to note the relevant changes compared to the previous
-+version. You can inspect the changes between the two versions with `b4 prep
-+--compare-to=v1`.
-+
-+Same as with the first version, you can use `b4 send` to send out the second
-+version. `b4` automatically bumps the version to `v2`, generates the range-diff
-+against the previous iteration, and threads the new series as a reply to the
-+cover letter of the first version.
-+
- [[after-approval]]
- === After Review Approval
- 
+ If you are going to push back on a comment, be polite and explain why you feel
+ your original is better; be prepared that the reviewer may still disagree with
 -- 
 2.56.0-321-g29a826976d
 
