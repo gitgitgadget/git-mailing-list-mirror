@@ -1,111 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.179
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792493818;
-	b=wtwpeedcnW6TrvVHTWx2sobrP/9MqS2a27l/JcCrSvU0WCebnFvOk0/4E1g7rX2acEVp
-	 ffKqhKisQrcoFMgvw40YbwrGQLq0wpaeuQwUupexYXOBc+u6Clmwoaodq2Jj7pl/EtzW1
-	 nYj86Bad4D+tGR4sH2Wh0SyDBLIz5dy+AyUHXryZKpa7DiST+tPcW/WZuoCbNT+foS7Ht
-	 XmQdW+AZ4XOEu76CJPxbQ117qXfkW1yjSay7Cr1KrCU2R8ug3sA2ktSXcJenWNf4OFdZU
-	 g03jiQ4KNA+NDhPYt7bk6RXG5Skioy+4J1v8KkVOkUU/j+KKgNtZWdcBc0dyIwuOAGw==
+	t=1792497287;
+	b=eiGLA6Cz1jhtvuRB3QeEsEiVaj2oUuXe1DEovQhP1eMtIIPTwCTKwKoGRj+tUZhyaxpG
+	 ein/+wASVRKfYtkvpaN/8CVwBfZIzFxBYSnQvAaojfaD6IM92BDcHcWclP6DpNIbtfgpo
+	 uTA6VXx3sZCsjS0PcwlrUVuAwXCS51hQXzHlCvAKlZ49dbhNCABBE1Y90ssXtaGQSRWmj
+	 wBPFXnq5W1t4kZ/ABm8Dd/f6eWrHmDs71PWZ7LJAu66CpI1445y6JeotREmBFOxVs/ewx
+	 zgZ6GIo6r5v7KKBJWPBc6akbwV4Sd/LehEhmObWbIyc3Rgl/8wK1vEqevcWFHX9tTiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792493818;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=wFiSTRCn/4Qz9tskczlv4Xpq4jT01FLHTnkdzib8cr8=;
-	b=I4nkBKZm4MyTOwgYM9q+SQXQGZeQ8+UZoCsb1WhMu6i+Se2Ba1WF05vErTzNKIWpMWLP
-	 ionoYsXN2hZvAG5/z4QcgnsdGxkFfZvrZbhhuEyX8Qommy+1RqIlWqgt/tXhUiX/jTN/f
-	 D/dMyo23h3Ke7LrW6PtFdEWd7vWaRWkidqPK+f3sxbrQY7Ix1UOoqPTRrtP8VMwBvIIHm
-	 yvg7iwo5M7lGeNSeI7trSvQXq2TQTw0936F0jAFf51mpMpcHu+CRrvLkeLvOO6youmbqj
-	 GCD27Fzp4sMz4Dwgd/vmfzBTk0CBhxNXIwLSacXqz2aXUxULOy8B4rRHOnRbgiIwFew==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792497287;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=PrNhNdm4kOZvrMoAmZrQgTepay3FkF1gEUiYlYePOUE=;
+	b=KbvD95nU0NYVdm6lOV4qk0eRmo7DWnXXacR9m6WjrXty9RE0+ivy5niB4G6oeUlUQRBh
+	 S9qfQgiEfSY/gY/Yv8ol08RtqbgJ2aD20ftKjuU/+O3OBavrz9k2FKJqqb7phDMeJe8ON
+	 mwVjMV8wG9oanhQR3GzH3LuYa7Pr+8AxXK5tCdj62aSThmfHwxFWoj5gbEmtqwiKFJH8+
+	 KTkPOuVeD2LfTamZq4jRaqi3DOOdwakEgKm9u057h2mrfC6sDzq+ivRyCllcGZiXE5mqx
+	 rXSd8KNKDeHoQzydhZL2S8DAMJCij3nVlEl9qysgnvc23muamo0e3QCnBCW0N3ug6hQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fastmail.com;
-	spf=pass smtp.mailfrom=fastmail.com;
-	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=q2mEr1o6;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=BlaWzaBO;
-	arc=none smtp.remote-ip=202.12.124.155
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=pSq7gYvR;
+	arc=none smtp.remote-ip=209.85.167.179
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B4A606A31A
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 10:56:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 72B4A606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277FC606A31A
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 11:54:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 277FC606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=q2mEr1o6;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=BlaWzaBO
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8E7627A0146
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 06:56:56 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Tue, 20 Oct 2026 06:56:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1792493813;
-	 x=1792580213; bh=wFiSTRCn/4Qz9tskczlv4Xpq4jT01FLHTnkdzib8cr8=; b=
-	q2mEr1o6vYZGBWnvM04ek+wdytiLrCbjqXn8P8rpcUeWC9QfT/oa6SPHhFHNy2+1
-	5nRQdK9FZhcxNO4tcUf83SBnDq0+KjNrqBl0WePWJkHKR9/FQplCxl8GILtkY4qS
-	lElVUApM03efkcAsr9P6Or9OFT4EhBP57sYTyGP3+7ssi22yawMxcbNnj4S8NKwC
-	Kw+x0z5sxFwHg0iYlCHvuEg0uI9bemyaXLJ8r8eyKbWBLd9xV/G6uvXbO8Zs6Z64
-	U1bq2HXBdC7wERoEe6+xQFxXFFTv0JsPURAf6jPCaYVfSH4oBM/y57az67nCn39b
-	dUiyUKoJOjiGrvaIB6JZzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792493813; x=
-	1792580213; bh=wFiSTRCn/4Qz9tskczlv4Xpq4jT01FLHTnkdzib8cr8=; b=B
-	laWzaBOq4QVLQcssG1JcwAGEK1g6LBAG2/X2taIy/Sh7U0GrTaB50dMykxF5RhnI
-	G1s6LzDLeq7s+sSdzj2x+plPfxCwgIp/KTRfb3Fx88fgfirZtY+lwwgu3Tj+FSvm
-	ePsgNOoSKwVdRZ7lc8iEUke3r+4TIo9tmH/c/f8pPTll4bnDhZ0MFV64ZNaLQtgm
-	Xd0DFOIPs5c3GQJY+O4isZ/zQBbn4JzCXz2geja7s0k0tjly2DAEs/JPVcjQWCtJ
-	qzYmnfh3s4wF/QXqsH+5Ezd15Eeuo0cNBDPND0qTzOQn9XOvRoDkoKjkPuj/xic8
-	QmYnyieatM/1CXEalVvFA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792493813; d=fastmail.com;
-	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:aKCuOGgHcINku4IF0iia89GcnhL5t23GrL/FNcbCu2eck8U
-	TVuW07+BLtnv2tQmnryXI6/EVdDLZrsmKiPxj9nqteXe4KthKetF0nPAdDv8d5NN
-	DRNKfZt6heceHxWbLPM4Dg1X1HOL9+t4uSJ4RCubvh0LVE+zWCj0aDx0lg/0fzJX
-	EFHiOEHcqGp5jrdySWBz1onVXRGO8DzojviUnwq3JhugLlzW2gvWrlMFlnywkqmQ
-	7KNgGsMYY1hFP5bgXEw/HmGdNjiFfLtbgdd4CCg3OULnK6CsEkqspwpnVJrw3WEi
-	/u8B04WkMGfm0cd6jL+IDtlLPcOH9DC4pKlh1rg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:9BsLg/hXTdlwDGEDRISBeceLwWVr8gUogT1mSoKMiC8=:wFiSTRCn/4Qz9tskczlv4Xpq4jT01FLHTnkdzib8cr8=;
-X-ME-Sender: <xms:80jXaiok5ANnCYwUxYDBhrIcRzJt-H74TztBJysnVvKqWv72YqW1H5Y>
-    <xme:80jXarf15z7PFPQ03ioCtoimwR51xjuFnvZXfji7sXFQUlXnanBpB0kO0DkN6pXJ1
-    -uo895yMxGoHpRGAWTaEcjxpT4yBFC971AvzujvNMejrAInaw3z3ck>
-X-ME-Proxy-Cause: dmFkZTFOuoIXkz9RKa9MgrTDKsfuKsICw1CAQ8ZDuFOgeK6tKHw5E/ZbWbDr+21ax3g1Jk
-    skltiLKC3DFHnY+YUPV3wLRAEWmzGzEfyTLTevnZdPjCe7hYedPafcg30pqG/PmxRztyOP
-    f6RCZNf3Sw6B2N8dH6hxHjLZ6LQLjm6mzjp7AxG5Ps3B1cBNYehkX8ma9PNoJ8kg/uACSF
-    7eVNnSPDuMv4P5AvTIs/X9QgpVMCVKCKLVPySrINhOxT6ROf8lsjGA+Q9SDavjXvUhoXVp
-    S3xwfmb1tRWM7+c307mkxAyVO6SGmmhEB+qWwCXWahT39faI0z5JfVAAwjnT7e+LQALEKz
-    IwWAA0Qv6zKtDn/wiopuL1wEDN9Q/r+wjLllobndKh5+P4caD46Qf+w9ApRmCfZIkorlES
-    C2eOWkgtdYqug7uPBnf/c1mC3TZrDws8ubqEl3vz9YNtrd6Y5u0sm7As9yQ14yUoYRWgoq
-    zS5NeAGfdH8oel/kAALfI5gtdZQ3KveR6bFhljqwL9/fn00UHEFhLteTtuDl92+05siTmy
-    DjW0bvS9S2eDFXkySfKDdo1aE4AwLgrLPTtBR+OrySzJ/7tk78qiGanN5MDzk9lC0GQp0O
-    AniFK2/BdA0lrxuYPgGYJ/8EVsm970YD/HAvCqqAvjSvsJvvscWliPIY4RKw
-X-ME-Proxy: <xmx:9EjXagMJyO2uDYl_UUQYBSlBGb6DO-czse_W2zTWwlSe3G-RLBz1Eg>
-    <xmx:9EjXasWb82bwWNxlcmbkZWDhWSBauIHj_dKquxzxNq9mr7ksSSxP9g>
-    <xmx:9EjXanc3dT6-u2-i1bpVJzg7TGVMLZ3vWAjplYD4qlGu77xiawD7dQ>
-    <xmx:9EjXaosahN5bgjgilSd5D8kIeE7E_9m7GnjYkOlTCwBVtT-stq9AQQ>
-    <xmx:9UjXas_u4pu1i8rONZanGJeLnbD_L_QTzh0K7uRsgIGosbglENicZmRZ>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 1F5C822C00A3; Tue, 20 Oct 2026 06:56:51 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=pSq7gYvR
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-4af81963f35so1805976b6e.0
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 04:54:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792497286; x=1793102086; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=PrNhNdm4kOZvrMoAmZrQgTepay3FkF1gEUiYlYePOUE=;
+        b=pSq7gYvRtJCbU4xQLSi+3QoHhH6M0joO8wjgzCiDPkmzSpOtRn33DF/IbRJizL96K5
+         3lRcTt6DDI51WBPcOaXgD1Xanh5sRV+pWxI/8JCpyLbSHHLP9YhSCBRlW761+A6zZwVu
+         EaPjs5muw8LidqWoR9tZAgoOUDBzkC99UYPVQPJzM6ubCXcrIXjmNKdxNxnK4hbfjtt7
+         jBOK8x+5xdXxNSv5VftBAKAlQwvCaD9yhre/SaHHs3OvC3CHQyHvNaaCLR7ZoSKqHwaD
+         qxKay4H8qxnHlK8tz2TtVIdiOvl+PnsQ25r0SJjo35tlzaAQX1BbMH7PrdUBfbL2meF4
+         fkPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792497286; x=1793102086;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=PrNhNdm4kOZvrMoAmZrQgTepay3FkF1gEUiYlYePOUE=;
+        b=2cTR8Y9SmR0TL3JdTTZhVR3iTXWHYNoolYAfla9L/qmaQTVdOSlB+rGKN26VJ1U7ly
+         J8U/hDV64+8G7gCOD/6hF7ar1YFw74Lz0ca0Kt4y3DCs9FtM/qd1tRt9djlz8TMK3e+q
+         VfdA+q10zPUjmOwfu0+oEmnqdEFay8wX4BmcDo/H3edJZIC780h3v7EUFp2DlpRQk/vc
+         2G2wgxfmJiUTB1rjV9bbPADvnQp7ASrOvErTyqwIqM3W8BIF1tnNM3EalWMP15cDba0n
+         wG13B0B863xXzwIN6kpq4irYmu1Wj9x+dPl5gKhXJuML+qg9tDXeoUuJAXOECcA2lhIu
+         T5YA==
+X-Gm-Message-State: AFq9FYJlg+VGqmgMdJ72HSNeFmJoFJLvKauQt0T/zI4JwRZuArYP/wVc
+	VtiMxnGVdyQ0Td9Wjxy7qyT4z1a6t6FFXPjOKqC8rbHmdECHN3EfU2ke/1YiaH1u
+X-Gm-Gg: AYBFou3T92AcjN8IcT7+sRVQOPJfX50RZP410zMQQDhmCPEqtaVtSey1ybj1bNBbD6q
+	BLWVqahG3iQztbFQ//9vRLX9nYV0vkBzbtuuy59dGO7KJszFNA4DfDfDCod7hVO1aPFSm3+munk
+	7QjmXppbUIHgoD3YPy0jtRsT7lvjKasTThX57M8GbSN87agyxvrulmZDNLlKY7B64pBI5wrfWdD
+	n2XWyodyEYlR0a5i1wORTJl4+SrCDbHZJQnv/Xo1nAJCGiEDzEkBiojWUpdy/WzflEv3xB2+WXc
+	MDxjQIBV9//dVBmwbyHVi0+ZO+RYgtsDg7ElmyoA8M7lbHK7wTWlAV+8BTwW/gzol7kjt1qhw10
+	ZWzMlskSB8yjx4SKe2UHwQr1JZ1J3xaf+zWs+yfM2UYlRwECjwClJ8KwCSYhRt8h7f3SCF6P/ZK
+	k2FC3VDOQ8yRV+bpwtZvXOhLQaVS0mnFfkcJSRd39t3kmwPVc09Oru+7rFIt1jZe45rE/HbLfpY
+	Q==
+X-Received: by 2002:a05:6808:1585:b0:4e9:4aab:be51 with SMTP id 5614622812f47-53cd63bfbcbmr8287786b6e.67.1792497285993;
+        Tue, 20 Oct 2026 04:54:45 -0700 (PDT)
+Received: from [127.0.0.1] ([40.124.148.98])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-5388a5572a9sm9337530b6e.4.2026.10.20.04.54.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Oct 2026 04:54:44 -0700 (PDT)
+Message-Id: <pull.2270.git.1792497283164.gitgitgadget@gmail.com>
+From: "Roger Koranteng via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 20 Oct 2026 11:54:43 +0000
+Subject: [PATCH] t1010: add basic tests for mktree --batch
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -115,32 +92,131 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AUJkYdbIH3sV
-Date: Tue, 20 Oct 2026 12:56:30 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Harald Nordgren" <haraldnordgren@gmail.com>,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org, GGG <gitgitgadget@gmail.com>
-Message-Id: <d8ac05cc-54e8-4dca-8757-ca48acd600b9@app.fastmail.com>
-In-Reply-To: 
- <CAHwyqnU1NPp3N7Qv3ChEPCo-mL=gASeG334YFg2tczzLomsm6A@mail.gmail.com>
-References: <pull.2458.git.git.1792437798463.gitgitgadget@gmail.com>
- <5030377b-58c8-4193-8d72-79955082269f@gmail.com>
- <CAHwyqnU1NPp3N7Qv3ChEPCo-mL=gASeG334YFg2tczzLomsm6A@mail.gmail.com>
-Subject: Re: [PATCH] status: compare against both upstream and push branch by default
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+    Elijah Newren <newren@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Junio C Hamano <gitster@pobox.com>,
+    Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+    Christian Couder <christian.couder@gmail.com>,
+    Siddharth Asthana <siddharthasthana31@gmail.com>,
+    Usman Akinyemi <usmanakinyemi202@gmail.com>,
+    Roger Koranteng <rogerkorantenng@gmail.com>,
+    Roger Koranteng <rogerkorantenng@gmail.com>
 
-On Tue, Oct 20, 2026, at 12:19, Harald Nordgren wrote:
->> >[snip]
->
-> As a side note:
->
-> I see that you include the whole message in replies, leaving
-> responders to clean it, so more work for multiple people instead of
-> more work for a single person. Isn't the convention to only include
-> the parts that you are responding to?
+From: Roger Koranteng <rogerkorantenng@gmail.com>
 
-That=E2=80=99s generally recommended yes.
+The only "mktree --batch" test in t1010 is the one checking that it
+survives a concurrent repack. Nothing covers basic batch mode, which
+is how the leak fixed in 6272f3bd17 (mktree: plug per-tree leak in
+--batch mode, 2026-08-29) went unnoticed.
 
-e.g. https://lore.kernel.org/git/arz7CNEhQSoDwJ77@pks.im/#t
+Add a few tests for it. Two trees in one batch should get the same
+IDs as running plain "mktree" on each, a trailing blank line should
+not add an extra tree, -z input should work, and a tree that names a
+missing object should make mktree die after printing the trees before
+it. While at it, check that a blank line is rejected without --batch.
+
+One test feeds two blank lines in a row and expects an empty tree in
+between. That is what mktree does today, but the documentation says
+trees are separated by "a single blank line", so I am not sure it is
+intended. The test records the current behaviour.
+
+Suggested-by: Jeff King <peff@peff.net>
+Signed-off-by: Roger Koranteng <rogerkorantenng@gmail.com>
+---
+    t1010: add basic tests for mktree --batch
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2270%2Frogerkorantenng%2Fmktree-batch-tests-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2270/rogerkorantenng/mktree-batch-tests-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2270
+
+ t/t1010-mktree.sh | 73 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
+
+diff --git a/t/t1010-mktree.sh b/t/t1010-mktree.sh
+index cecba55d45..42f72acabc 100755
+--- a/t/t1010-mktree.sh
++++ b/t/t1010-mktree.sh
+@@ -117,4 +117,77 @@ test_expect_success PIPE 'mktree --batch survives a concurrent repack retiring a
+ 	)
+ '
+ 
++test_expect_success 'mktree --batch writes one tree per input block' '
++	{
++		cat top &&
++		echo &&
++		cat top.withsub
++	} >input &&
++	cat tree tree.withsub >expect &&
++	git mktree --batch <input >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'mktree --batch ignores a trailing blank line' '
++	{
++		cat top &&
++		echo &&
++		cat top.withsub &&
++		echo
++	} >input &&
++	cat tree tree.withsub >expect &&
++	git mktree --batch <input >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'mktree --batch: two blank lines give an empty tree' '
++	{
++		cat top &&
++		echo &&
++		echo &&
++		cat top.withsub
++	} >input &&
++	{
++		cat tree &&
++		git mktree </dev/null &&
++		cat tree.withsub
++	} >expect &&
++	git mktree --batch <input >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'mktree rejects a blank line without --batch' '
++	{
++		cat top &&
++		echo &&
++		cat top.withsub
++	} >input &&
++	test_must_fail git mktree <input 2>err &&
++	test_grep "blank line only valid in batch mode" err
++'
++
++test_expect_success 'mktree --batch -z reads NUL-terminated input' '
++	{
++		git ls-tree -z $(cat tree) &&
++		printf "\0" &&
++		git ls-tree -z $(cat tree.withsub)
++	} >input &&
++	cat tree tree.withsub >expect &&
++	git mktree --batch -z <input >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'mktree --batch stops at a tree with a missing object' '
++	missing=$(test_oid deadbeef) &&
++	{
++		cat top &&
++		echo &&
++		printf "100644 blob %s\tmissing\n" "$missing" &&
++		echo &&
++		cat top.withsub
++	} >input &&
++	test_must_fail git mktree --batch <input >actual &&
++	test_cmp tree actual
++'
++
+ test_done
+
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+-- 
+gitgitgadget
