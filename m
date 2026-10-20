@@ -1,90 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792508973;
-	b=QNSAzuNpGR+aNqluGUwgjY86qnClNt6suWQrNKQ05bDtqjYqmbgK+/aP3ZYj4IILt78r
-	 2JrcAdp9Bkz0+fx6vdjb8HbCrmDPqMnqURjLr4ovHtY18DOb64dhyfcmfXWNUV4hLUaWc
-	 /752/95a79DEVf4H7DILDGk9u9UmUHI2pGh18Vz9RlS2QxqLUk7Y7CTLOoI7pLLzkjR7t
-	 w8F1GiBO9erwhxVbRLBfgqlryK06H5pUUKShfySj3LvDnh/uUTO40L8Lqj0rBZyivl0M/
-	 u9AOsvtucrBzwGc3uNxrxWkUIMbgkzaKtxMvVT8Ro2xEMvclUViO85l7+jf1uHjN4Ag==
+	t=1792509065;
+	b=WolWbELfn1p0bTEN5qGUoc+jLAzeue83gFirkhzEchdBh3E7L5dBu6sUyTLe7U8ejfSJ
+	 9xn/7VVTeuMRr4jX9LLB9GmMBE0oD/K/ZjHm/rg1iiNKye2Do6J/ghHvn5a8RLyl0qOWM
+	 mAM6LMPGXH4oMdMzrjo3yre0+Lv3SoSl0LEIY3F+op1z/ypcDdgL+lMOt4rMH/Cszsv1p
+	 WqceKYpRMRVPsv9rTffhaiSAWo2ylX4sJVI4jMtrHWPqe89F3CSqcfqDVd0RgWtBEr8gc
+	 hrt7GFaigDySLfhUs4YZK25eGTJmOqSVm51oPC/PLxE8URr+GyUqkG6ZRqKnSZwQz1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792508973;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=WUQwgPlswGzFg2lszmiABW+6mN/qdxbXibtGWMG38tA=;
-	b=P993rQL9Akiky8Zj/DKNUZCS3l+sCA7ntCN1W/B4Hm+ELyOoHaukA5aHdJDuIcNywpS4
-	 R0dbd4IHilvLEYKHGCXIKpWXPiEBz/OqpcxFQ6hcDD+7Mqq7goXY0ntlHq0kUUPKXCqsY
-	 5WXmf8qSkZuI0KgpWmIs6+hizabENAvoT7h83ilMUp/GB+XNIIZz9+eOq10OcTgLsc+HS
-	 nZKmAyb5VQUUTtM/N3YgTYdAJzm7G/R8V+Lg3i72mq+nML+18E3o6aaNRg9SXAmwbEKwZ
-	 zJYv2Qryw4haAzNeZUVWvClC2oednbu6OxbbL2CgbB/sNf28Tn3CLf0ZC4HTs3StSag==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792509065;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=3FYWQLDaY7jV5j/W9ked+V9bRHI7hPE2uVY10jT5ix8=;
+	b=DCzzAH2qa9nICJ+SCeZ283IFIBIN9rfidSzB1zDf1tpOWKHcHLwpmpy98HmgCZ8snipY
+	 WAI+Ygwp40sx4AFIeG3lhHvJU1JA9Rw/72OA8lxBysYV9PLTDE0kwv+rBOP2Tw2j83lmJ
+	 6l+r8S/BoXOspdKLuP9huA9Fpj/sPVF/ZYLp4VupJs5UPLvl7+AXiAsW9CiD6u5KQWyYi
+	 MnaMik5oOZ/0/l4vDgEFoDCjC/FW5URlQ7K1hd+5gsQy7r8j/ckMBQ+8NKAzvhKiTjvpD
+	 0jLIzqzgRqZf0+CpzU1DS+eSNxDbfsihO8KFvGOiZFe0vA+XG0csFR7gdxTEpsBeazA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=jlcS6mmi;
-	arc=none smtp.remote-ip=209.85.218.52
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=vXRQvH5E;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bTsucb8S;
+	arc=none smtp.remote-ip=202.12.124.154
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0A4606A31C
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 15:09:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8F0A4606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5521E606A322
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 15:11:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5521E606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=jlcS6mmi
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c247f6687dcso318968766b.2
-        for <git@vger.kernel.org>; Tue, 20 Oct 2026 08:09:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792508972; x=1793113772; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=WUQwgPlswGzFg2lszmiABW+6mN/qdxbXibtGWMG38tA=;
-        b=jlcS6mmiMW11G3mlayadWOan8VJcKn5/GcIDKIs2EHTX7nXeTnE2fUlti4XGirpfAc
-         gPrInVvYo7ohlYm6lHsS6YBjWdWOKnyCGqXZ98yivWDszQnJUbmslPZQhubtQIU1fNWD
-         a7xbpHD+w23X/xapxFlQg/E8XU05FJR5zZMfSNgy1ThFhV67qYA/D/nl037FtMctJhiG
-         giq0T9SitolyBzyWKVRFdb8be35uymkSylj+BFktkZgDrMykSsQ7h3vsIWLNhGmo9sXn
-         04AVhaeQGVnjKPZt+79FNKId+wcsvhsC2ZtzkgZHniR2aYq4v//1al3U5CENqN8vK2vO
-         iB+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792508972; x=1793113772;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=WUQwgPlswGzFg2lszmiABW+6mN/qdxbXibtGWMG38tA=;
-        b=H7fiwF4PEw3J37JFLn6FM9TuzUfozA+n/SKIE2P+2eWn2RNLtayxz+9j4+XV+IAIOK
-         ucwyY1lco4Q4DzMFgk08B+Rxv+2gknglTbNh+hSN1Ep7hsUvM5yIgUHNAL81vJ6lJMdA
-         OCaiMGzzgSwKdNteHIsw5G4YHQrOCBC9fx37ABo8BDNAno8Gf3ATSixyPxDNTWPdCOYq
-         nsOzxSzVWEMOnU6RcUedwbKgkutqc8cqx+qAAwyOQMdcyP2ZWVGBDaUluHcyLwY8c8TW
-         S+kG3pSfvPILV2MG1z3zUyD91kOzz24a2Br5gdgBLkmmO00AevO/MjSQwHKfIs3sF679
-         BX+A==
-X-Gm-Message-State: AFq9FYJu2OAkphKgSGvqxNU1YlU4KVBAqBK8+rfX60kKSNjEusT48dm7
-	zWOeyrjr0r9dPYzT6TOYXu3cfq1MnD33Wuy3U9JHtfMSFr7ABk8ZMYbSwtf9C2/YuQk0pA==
-X-Gm-Gg: AYBFou0eCxhkPHUg2zD8xkaiPDdgY3D48DBRWiNAsy2dNiHqkJ0gcFezGi4b9vvOyGS
-	UWCR0qFUDdgF4Wtgw4XiZOBZF6XtpTZIzH9SNdkAMxXSHuH6v87XIpOhkwx5IZUZVDpSK4xifNh
-	oA6FUx6VYFfxBVXcB0ZDPKZVWwcoSGOvrasvzlPp8kZYi7muKePT4/K9Wagpo5ujSTbCue8Zz//
-	q9vcGf9DyKqpCWrQEvqu5/FXTnlgsgqkwYJDHdZCY0JZRnGkymsYg19GGRrpjLVpk5zSOGA2g9T
-	9K3UIXj6JJ0dJ15Vw/EwsNMuVhgQegXj6FpZVxn1TC3HoLPQHxi3re2yeoHnPpo4fAUPdznUD21
-	5uLe1m0qtfoj3ukUJrCZvz/M7vtFnH+zk2lvBUAG5SgXfH121oW/I/WZDKG54Jjl5gXquaeeeJS
-	SoWN6x20Wx2ahF4wn+wn9dAQ59kZXL9fDcl1D3+4EStViIIbRvoNNAWnE6P0rDIHewzm9Uk9Y=
-X-Received: by 2002:a17:907:894f:b0:c33:ae8b:817d with SMTP id a640c23a62f3a-c41a04f6418mr773976866b.46.1792508971599;
-        Tue, 20 Oct 2026 08:09:31 -0700 (PDT)
-Received: from omris-tuxedo ([217.71.1.73])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c40919bc742sm489540466b.54.2026.10.20.08.09.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2026 08:09:31 -0700 (PDT)
-From: Omri Sarig <omri.sarig13@gmail.com>
-To: git@vger.kernel.org
-Cc: Omri Sarig <omri.sarig13@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Li Chen <me@linux.beauty>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Julia Evans <julia@jvns.ca>
-Subject: [PATCH v3] doc: git-rebase: update incompatible options
-Date: Tue, 20 Oct 2026 17:09:23 +0200
-Message-ID: <20261020150923.5595-1-omri.sarig13@gmail.com>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=vXRQvH5E;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bTsucb8S
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9DBF67A012B
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 11:11:04 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 20 Oct 2026 11:11:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1792509064; x=1792595464; bh=3FYWQLDaY7
+	jV5j/W9ked+V9bRHI7hPE2uVY10jT5ix8=; b=vXRQvH5EH9uRx4eZ1+H+BieQbs
+	iV43bZuS4C0m2Rk/ZRi/d13HgTegR/z8LYGwWqRAm/pCiR2WVa6+OFgfRAh3qBcD
+	dXDnIMNOOX2hUc1xQlL7QwjGyTa9GGC6JPHTP0g+6EHdbKsA76gWkOaYAEj4v3on
+	QenCPfgngd9FFm7+BuwCnOtOR16XS1khzy01Aiqjh7SiXVhnwdLJtfpHMO3bc5p3
+	OQQTMoTVVdMZyDh1POuewX+A1K3SrJb173w+Su0c/nDfzHJajRPNA0HwrH9bn0EO
+	p5jUijjpzhH9sdm6BrF+rOsZJ5CUV3Pf7q5eB294G3oF7nDZdkklZ03tREdw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792509064; x=1792595464; bh=3FYWQLDaY7jV5j/W9ked+V9bRHI7hPE2uVY
+	10jT5ix8=; b=bTsucb8SwCnYF4mXZPflwFiYss7YRN6jCwZR/dNS+RAFT1SZMZy
+	FDdv+7IpoGaMDte34qPBQNIMMoxX/RSadI9iV7bNMEr2M6l7J6YMm2ZHI9B3Stb5
+	R90dalhQO6dyARXyTF7aFBz+YLYPOR0vViOaaGAWFOcSTX79C8RMUMt43PGYyMDM
+	2/rdkREhV+METtMrFllxnvfRSKTvwpwicD6YuQMHoqO6vw2+TlE4m8FC4wSl1Z4W
+	3ihQqc4eAkHdHBJQPZmLzXDOjHBYmPSc5Weea7qzhrfP8qssln1/XDxpzgXx+phl
+	m4ukpijIM3tT9dZ+XeIuJYEqb/OXsG8hkFQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792509064; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:pJsyS8Td6u+6RtZG3ySRli4blP/JamuONgg8Hb3O0AdcHik
+	rGNQZT+zuuYCzp/Dpj61Lx1UCa6OGdR0sC9tB06z3j1ECPRKtLs0PVFXzfP/0Cmc
+	1HsFVdfiKT5d04vAF+lIsQblECk0lBTHBl6a30ip2w2LAjK3Hf7hkdTbu6Ml9Ogd
+	cjO0/jTL4cxheqILkbGjZj/7nX65t9dpyYZjlkyydBnk4dmTrJTEKHXwhr5BUin+
+	tnGlWlE1IedQrGXQWKdDRsuhsstE+SgN7+r2i5tPjYzgrl0RL+4F6vFr8v7BrJL5
+	SdvF/fJw7UtzWiGJ8dfvjcXgRcYUG4QDVajYSww==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:2aKEz8AUigKzhR09C2ttMv1KiqByOK/J4/IvRw+dxbY=:WPPDhwkSB3bnOo2Ap8vFpOWAI2kAxzuvAfufHrGQc0w=;
+X-ME-Sender: <xms:iITXaqbw33tJ5NwvXYF993F4hfgOlidyoMCZ89lvIp5AaUW4oWgwJQ>
+    <xme:iITXakSBw9hMJ0-RHsP8S0wqq5d3rvUCESDdCWSSosOhZWsFOFiTjuiodXRW2Xxfd
+    Kc_BdQaWwlMvBLNPso2x8_0YlavTFeI6kucwDEClXIZCnbTycwmdw>
+X-ME-Received: <xmr:iITXatS0I7c6YKn3Sh7Cf2fGOOSdJNnV0LMB96d5KaBRJgq_oC7e5iCWAiTbB1jzVILIyg>
+X-ME-Proxy-Cause: dmFkZTFcPZ/AHN4GaOWAjSot+8cG+l8Yy8wfE+GEZT/oZz79NGzB6I3d3zoPCKHT1iA5Jd
+    RXev5wJeVJS3W3fR5l+TsFOddX9t9ghCVZVc5JAaUfUT1NPRciUvI1N15HynClZNa5xeZ0
+    +B19HuklgVRMuCeD3XjpGeAWj8Egkt/b1YnG0hMkLboXV1wvpsJRXyHJHJUU0khwUWzlde
+    Rg0fSgmmsaJmUledmGpiKKB5s2Y5RY+9L0GPbwYGjROsXxBLtEqZIrI1pwRg8E26ZjQx5h
+    7SyH1g4EHx02f1Y2Ca9piqooI83JQxZr4mWvOvDwfoJbzCo1be/37lZ8QOW35mrQUzweXS
+    +vQTC0R/AuNyP6lzpP62IEAeX9DrFjBnGfskj5CQJFkIB6Z3PvrePA49tzJaYTBe4jWOc8
+    q2nqWPmBQggKQsneTacLBIS3WSA3GkFD6rQSWqLMWxnpBdtF4q58J0phhrjZ3Qg1PgsZt0
+    T3rjOD0NN/Nr4oLQkmy753n5mXf/CVPYYALP4XeypQ8BPC+8SmjstWypw5aZLgv4MsVbmt
+    B5wQdAUGt/UYRxfs/8FgA2EZxXVdujInRR7W0wi98HWQvPSRJcLIJ8nnByrmItIAPKrK8q
+    s9Q6vQ6o4L5HrSwqeXbfSyj58hC52EAvNk8GbXK4hDVp7UE9nudhDVxsAMeg
+X-ME-Proxy: <xmx:iITXaoSgux-gCMIj29wVhHep0Ee_xpp4anHxqPqKShNQKXaKxMVWjQ>
+    <xmx:iITXai6t37u38bzEUy9OeSADnIk5g2lFc8theReFj-7CmkGIfJBz7Q>
+    <xmx:iITXak1qOIJ3raBoCpNPxevKQqKYuGcgIsSdX1sLGcoypl3Lom9F1w>
+    <xmx:iITXatC4uzx7DjTyTNnsJFVyIT4gDuCdEuaYmzYUa4HPH70jhvBl5A>
+    <xmx:iITXatrSI2pzyfLYczrt-ShSnKC1uozBtfX_2mqMufhlDz_YNNKoRtJw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 Oct 2026 11:11:03 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 8e40e724 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 20 Oct 2026 15:11:01 +0000 (UTC)
+Date: Tue, 20 Oct 2026 17:10:58 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: m@suozzo.co, Matthew Suozzo via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>
+Subject: Re: [PATCH] reftable/record: bound an object record's offset count
+ by its length
+Message-ID: <ateEgnW-0M0-O-UP@pks.im>
+References: <pull.2255.git.1791989883899.gitgitgadget@gmail.com>
+ <atXK0ska_v2rFn8W@pks.im>
+ <41edbeff828fcb4a2f3bc903802b14e3aa66f46b@suozzo.co>
+ <atcKOhm0Kd5XryAg@pks.im>
+ <xmqqqzhkxve6.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -94,78 +128,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqqzhkxve6.fsf@gitster.g>
 
-Several options in the rebase man page link to the "INCOMPATIBLE
-OPTIONS" section when the option is no-longer incompatible with any
-other option.
+On Tue, Oct 20, 2026 at 08:08:01AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+[snip]
+> By the way, I cannot help but wonder what happened to the AI policy
+> discussion that the contributors' summit promised we would have
+> soon.  Who is organizing it?
 
-- Commit 1a66d8c6f6 (rebase: remove --allow-empty-message from
-  incompatible opts, 2023-01-25) removed "--allow-empty-message" from
-  the INCOMPATIBLE OPTIONS section, but did not remove the link to that
-  section from the option description.
-- Commit a74b35081c (rebase: drop support for `--preserve-merges`,
-  2021-09-07) removed the `--preserve-merges` option from rebase, which
-  removes all incompatbiilty references to `--ignore-date,
-  --reset-author-date` and `--signoff`.
+I think Emily wanted to kick it off, if I'm not mistaken.
 
-Additionally, `--onto` doesn't link to the INCOMPATIBLE OPTIONS section, even
-though it is incompatible with `--keep-base`.
-
-Update the description of these option, to have correct references to
-the INCOMPATIBLE OPTIONS section.
-
-Signed-off-by: Omri Sarig <omri.sarig13@gmail.com>
----
-
-Thank you for the review!
-
-Changes in V2:
-- Update commit message per the review comments from Phillip (Thanks for the
-  review!).
-- Add `--onto` to INCOMPATIEBLE OPTIONS.
-
-Changes in V3:
-- Downcase "Update" in commit title
-
- Documentation/git-rebase.adoc | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-index 6536ebdc90..6363b1a096 100644
---- a/Documentation/git-rebase.adoc
-+++ b/Documentation/git-rebase.adoc
-@@ -218,6 +218,8 @@ OPTIONS
- As a special case, you may use "A\...B" as a shortcut for the
- merge base of A and B if there is exactly one merge base. You can
- leave out at most one of A and B, in which case it defaults to HEAD.
-++
-+See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
- 
- See <<TRANSPLANTING,TRANSPLANTING A TOPIC BRANCH WITH --ONTO>>
- above for examples.
-@@ -334,8 +336,6 @@ See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
- 	and this option would override that behavior, allowing commits
- 	with empty messages to be rebased.  Now commits with an empty
- 	message do not cause rebasing to halt.
--+
--See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
- 
- -m::
- --merge::
-@@ -489,15 +489,11 @@ applying (in terms of the author date).
- 	Instead of using the author date of the original commit, use
- 	the current time as the	author date of the rebased commit.  This
- 	option implies `--force-rebase`.
--+
--See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
- 
- --signoff::
- 	Add a `Signed-off-by` trailer to all the rebased commits. Note
- 	that if `--interactive` is given then only commits marked to be
- 	picked, edited or reworded will have the trailer added.
--+
--See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
- 
- --trailer=<trailer>::
- 	Append the given trailer to every rebased commit message, processed
+Patrick
