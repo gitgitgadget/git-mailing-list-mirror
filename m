@@ -1,87 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.157
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792508710;
-	b=sNVnNW1qPPUGt5/GLolVNIGpwy7jpx9CB+Exl/VP/XtnnAGLETTdpUI9zSyxNast3Kxz
-	 yL1rPwFZ2YIfDpngjnH0B4l0mazOfWJqjEMTS8rZ8mpXvbs7Cy04fCC08swGBoJAF55Cc
-	 pS8Mucp/bNOPb8eo7pjiRkoazySTJDasgcaAu5/ycHKf2LjiD/ZXR8wqmOe7slWuU63a4
-	 iBQQT/y3vnDHnF7mc1GbPMcl8fkxhvrHQaTn1BPJWUgbyk4604PmjFmZ+lgnVDKnCzVSD
-	 b1NUd+OaBMSgDV2dXjX9Yujt7x3ENuZ+XFm4bqlnsKJcQsWCkVAjrCnhAGV7Tmn9z5w==
+	t=1792508885;
+	b=0mcCuGhgjldPECLspFrRTTiqCYAtz7J+reUcxzgMGBsBjnIcZvk6M78TAf9/hgZkDjKm
+	 FaOx/LRA05ppCTvMezlOHal9E5O+Ge8ZYkWqlqH13c9SdZSUVrtXuQ1Bhf7Ah+7wwLLtI
+	 grfa2dxafbRZu9P42J9dDtiQW8TsKdSnJyfPd0QNrEeFqdYplwzAYLwXd7EP972bEgc+E
+	 nl4PfmvFCaM7Pg0h9CUG5QTwC8Q9zJ192E00MxEexRVjXEJVRBUCh+pJ7orXtHE8diON1
+	 Yj06FR4E+WTsbuzSVFButm/fz+J/2peg3QL1Vf9XxNQLoWQfH7KOXCs7bDQOUFFM0CQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792508710;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=FVO73lO9tiq17NrStBzm1RrKbt0tHSLTkpl8lrvKYOA=;
-	b=xtIHVk1OatELVp4no69g6kS5rWiFfSUdTIXoOsE+2m2LJEAd6fyeTa5lH12JQeJ2+/gU
-	 xe8+BSX4rDbNFLTBO4O48rGdS6rIXKPli1YGITZqihOd8mSttAuPJbXJxwh4xT5T5mgTu
-	 ogdvJ2rlW0aBlAEfnTg4nLNMmR+Eep8ftLIuOuPJw6SK33kYcwPikQ3RU9YHcWPHwj/wD
-	 nfz3Nk1GVHajelh/QIoqBvEEMPkH1z4iibZJZhtrtAkVHUJGM0kZwkXSlTH7YyLGnwmnf
-	 Q06Jv2ctS/t/AfduDGGusl/19hK4/Rk/nnGOMcwjQUo/VeaFQ7rvFyVvvMQ4Bu6X5ww==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792508885;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=hv4YXpRBiFrf6Vg1IlKWeqcoUuw62FAd6fMh/QUgQHo=;
+	b=RsY53PZuF/rAJx+QYxd6h/nbgk09sP8tOEJT0tsaEPHCSIqStHXVHFfxBgVPq9D6PUgN
+	 uXfRh3UHBHKDyoSj499W+zh5CUxRCikgdn6cyRkX3hr03h/fSkArrFom44aLk12I0JhK7
+	 pnWP55EuA/Ebh3k+ZW8QkoJS3L11KesoK2ev1sezuJnKVS+BRiZ8MQrrh54yTu1agcWUz
+	 OEjoP16HRjgy/6hcJ8D9ruXmF7CIK0ZNz4tEx3WL3d+SiGZvJwYsenbXxLKjkrYSEuomX
+	 BF0UboUb55spes/OThr25whNw1aiXC048fs/5AAZeaj4CFlQ0peziMR2J46GbSpJRHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=XQdKtUi8;
-	arc=none smtp.remote-ip=209.85.218.49
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=EabnNh6A;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=v5BofXMY;
+	arc=none smtp.remote-ip=103.168.172.157
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CF7606A31C
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 15:05:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E3CF7606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C58606A31E
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 15:08:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A0C58606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=XQdKtUi8
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c169ae1cb26so139007466b.1
-        for <git@vger.kernel.org>; Tue, 20 Oct 2026 08:05:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792508708; x=1793113508; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=FVO73lO9tiq17NrStBzm1RrKbt0tHSLTkpl8lrvKYOA=;
-        b=XQdKtUi8DO0VAy5wYURcu4mHG5NXJGjwe4XZ4+vOVmkg/9YR5dlbB6zivQzbJ96LuG
-         opKCFDFj5K0SfLfQcM6+etLPkGo0fz4eVuHmmhNRpA1BksH63IPtIo9VkHIW6dYSVvfo
-         HgUHqVAm2AL9VH5BCQwgK4kg9UkOBxI8zBuk5lULX4cvm/GDBRHlYsUQTHzofD7vkIpA
-         vtK09FB/IvsVvMXlm3tjRL3s+sI4+pKfZcFWb6ilbkHuPRxTTw9PSyhnjBJ6TThp8Vat
-         usszG9I1ejPnl11aLMWdCrwsr/dPbzEX6koxPMYPRKTS+idiX6jAGGuGLRtFafPtvnu7
-         MoGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792508708; x=1793113508;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=FVO73lO9tiq17NrStBzm1RrKbt0tHSLTkpl8lrvKYOA=;
-        b=aj1Fg645ebU2sl7hjP4f7PVe9rqx1TpiEzqddtVYlt2ibGFnuKZF7OIDvX3OabTAvV
-         kBkOp9Eyog16TkfuB/wz+8P+wZtZX+VbDmsswhjDWRxsNbq5vcDxo4Q4R0NOcJtetOUp
-         3FJrxTSNd2OS3Tf6dMFRO7qvSfU8SYmVqbAskXx+qhvg6+d8Hbj96eWbprJLY7Sd4BzU
-         II8WRIs7TZk2UlWhE9KLj9ISRsGab0UP++w3rw7oNg8XUqFZL/6JShABGkXkE8gPpf+Y
-         tZRNs1sW2L+wedJQcyLf/11Xr9lFbMl5gJTpDHZrGdtX0G3jfXClJwmTChsuyd+O/S5F
-         +aiw==
-X-Forwarded-Encrypted: i=1; AKwUvByHudjpv7tVLSWeWRBAnG1Dq/LpAZ6GjbESfPMncOzE6BPwTJ8yoNMkuppB7PQlXXwIhs4=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJdcgs9O1o2CoCr6PBR/bMf2uTVzIdY91XQ2SGSRl8lwlfXWx0A
-	KBxEwf+CkVhVLdMsOaF/aWRZTGXGVP7QWR1saRTDzpD1L2zus0vEXnX9uOIQGA==
-X-Gm-Gg: AYBFou3Nmez3/ZF6q5pyKgVWmGszwxlHJtoUUCPHOipCrfGuozXUANEm1yajCaCoSZf
-	TQbKrOy63VAs1zpr21kiemuxIbhlynFvJxrUnWDLdpa0nUtUw2YgQcmHjQ0ll3nT5QnnAienvgq
-	6UCrqOiWGb3ay7m7WYwmLLng2UZWaK6r9FSW8pWg/gP2zqx83Two+uHAy3BszO4kY2fbfKqKPI3
-	Fpy6jeFPmCBI0wxD6t4wxXYMvxrwgU4cQdy3kHo3kQl3Q2PFR8Ce3gs5ag0pCb3mg5q8CLeE2xX
-	YIE7OqnR4QdQ11KuC+29rRhD+K2dqNbHRL0Hze0tITSuWGMcfB4ShKrDhxYsVh6nYpeW1aPyB+s
-	68d/dFe/kGTJ3pbR2F1e33HH55XTPlnSvFx7bC75Kiqb8XR59iJ6aF9kRNUMVUxJxFDf0MigJa4
-	n+HBvKOM97RJgbdxky2TyC3R4ARJ1EieN+pp4lZm43Hy73rBIusSU3ZyigyeKWsLm5uDo9+UIxL
-	/0qq3N5V+uXA+1HQrfjP4rMuvMrJvzMwZW4k7r7UsipL1/uH9Zo
-X-Received: by 2002:a17:907:cd07:b0:c2d:c6e7:9e9a with SMTP id a640c23a62f3a-c4602939f5amr223425666b.11.1792508708042;
-        Tue, 20 Oct 2026 08:05:08 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c40918c5f47sm494012166b.51.2026.10.20.08.05.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Oct 2026 08:05:07 -0700 (PDT)
-Message-ID: <c578557c-c38e-48f3-ba61-fb2e0b139099@gmail.com>
-Date: Tue, 20 Oct 2026 16:05:06 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=EabnNh6A;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=v5BofXMY
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C06601400122
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 11:08:03 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 20 Oct 2026 11:08:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1792508883; x=1792595283; bh=hv4YXpRBiF
+	rf6Vg1IlKWeqcoUuw62FAd6fMh/QUgQHo=; b=EabnNh6Ajtd9CCfWSG6MTKcsJf
+	lAG5ZbdbwuBFC1SI6hv4Q/NYDM/np5BUBCQ7uBHBxX0wxP2/Nht8lSfuY6jIn9dx
+	W487d4SY+8i5uoxQCVFrIEa+X4QjHLcFtyrZhC18gEDjw+NQ+iuKUdAsytL2nN9v
+	ID2BweRt3ybk42ubIfBK3vqPNnbtb82/Pk78CRxMJa9r/mBmV8eoN/nrDI5R0pDY
+	8NpvTm0QePPeSqH60EJ/9V9N64bxqWuBCVMSx2e1YDzJl/NpJSiHLaYCJZhnCvjP
+	cpzxy5+ZJnZONKR5Ru+/BoNtbqazVMTiZz4zmv9EpZIUIFVuQiH9LPEqqbFw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792508883; x=1792595283; bh=hv4YXpRBiFrf6Vg1IlKWeqcoUuw62FAd6fM
+	h/QUgQHo=; b=v5BofXMYub7CY5NI8aX+7yaEu9aHR9xtr6WSprWkdJ5uuEgkLX7
+	xSI05aW1FSaeVljrTAfZ0IHTd4zp9Rd+v2I7U4IIA/EFxKDAp+UucCC7TzpPOmqy
+	RwDq5QKAbdoLbvnLKzVbdL/2ykJhNVIyBpR6GLe+lLbyjgNDA8Xj6dt6BTBdVMnR
+	r+UqL0m5YfodAgpHMUMOAv3f8c9OnkCuDsHAkgOEgB7xHT0URyuNV9jRH4pnqvf7
+	GdHpYRu3nchCl/tZiu+1jtAGG2mtj3bew1McC/DiNer4dqR9PMIlJUNNOm0w5KHF
+	S3gZlt1XWlKoiARkKBxKly6C5ih+57weZ2g==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792508883; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm1:rsa-sha256:dtCSeCOHEj4zwT6ed+h6ECZmlYjbzi1o6HRthXyRcScekpF
+	KT1CXkRtM/tqF75klyc9DE1gVUDMJZfE/XPMWGYYyxcdYoY+dBas64+nJnxSsyeB
+	2omKBYWqkGLTT0GcgbY94/vr3pPUmqHCu5ZDDNj42C2YB/WU2ZZW79FAOWs6CoNV
+	lh578Y2MF2iNFjdhb49ODP/WFdn6asrEoW3T87UhdTe+EOkddo7hBGb+ZyLkA/ve
+	GDSdgPw/OGDvB08A1ZuMAGAaeBuJwVP1kNqJgIrHcLUstus9Bx6kK6RfcErWmNMk
+	g6TQgluntbMvaXGwybKWntK2kH5dZl5NLOIJxvg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:ou90buBlHXuJBqIJSNLiKLmJ2emKxBLmGRF7opo2ukQ=:Owlq9inSSZDB9QE8WYycUrAVCsv4UQcH5QvJvVGlvnk=;
+X-ME-Sender: <xms:04PXajMl2PczC8tckqxmytuyb68VZzvSpQjUnxYxRKe2NbdyciCljA>
+    <xme:04PXak2PpFiDkV7VYkvccajSqvO3lLKDkP9pP8hTFE0ioosD_j6yo76EhTnJcpx9N
+    1mL7a1lO1UUmENUsl0zYmxi4_UOwHtXDcvGXNBdVPMzKi33--gnC68>
+X-ME-Received: <xmr:04PXaqnE3hpN4Z45wth6_6sGMuVnNRhu0628pZGmlomqlIYimhzbYyAIQwKsxlFHi5wfClf9qoj5_clOcWiOo1_Odh_wnlNzNDh0>
+X-ME-Proxy-Cause: dmFkZTFqiLgXAi8htiMWj7PsgUxRY6tvwEmDy78jvla5aQOkhFW7D+tRU3zbEJskshHBfv
+    DA152DX/Rf54VYuARHxqNJRTdN7IgVBzMar6hAACKxPCTAzHmcEKraqf8YcMPiJkUs1/9j
+    peJI1no2R/OvBZMl462Z0dBxeNPuNsulSOr3xipV5zGpGrY92CLdh1WYEdxdpUCiLFc44X
+    6N8H7UxVB+DRK9HODNNV2bxehDRcYhWPy+85AevhdYMKljQSI4gJVXLST543Ftme+CRzOO
+    E5sW7uO/jv04mXynRdQZfDDmbkHZD+sbgsHYsPR2qT2OkwDyA+lghImZ7tVkeibwipiLi9
+    FPJILiAmfuTwBy7oG1z9/P5+SPikXGri4O9pLg8eXR3FOeZduah6CogWriSW6FOrZmBqEP
+    QVc7VEamBEU/mhS5D9XX7bC3g1u3mImD5nFOrZGu51BRHs09EFOzpBg4cIASYNvlU8d4dl
+    WloKGSPj9pVtkOMJgitzu8XqBkBqA6feC/h3Sxg7G2lvrmSqjaiHgGP6FY1to2jjPjwVXb
+    qk31xp4NhzLyANb0V7iJeB4tVIb/Bld69QMlHj3Ick/HkByyMnDQFg6vlnRYMJYUHQYzdX
+    6gGaEU9/7sHDRkTuwvI3cG5IxTfiOT01hVS1MEgtVqK4qk+ImV6skcGE2fMQ
+X-ME-Proxy: <xmx:04PXajW89vQEOulLoEtVcGseRJwmZChQvqsaz_j1PRrnVsg7vJQPsg>
+    <xmx:04PXaot9F6ZcNHnUtsY3U_53LcYsCoMb--pwbirUX3RUykSKUE25rg>
+    <xmx:04PXauav6xzieoTYcE419Gt91seYVikPHvh7k8Sh-EhpDABgpUYrDQ>
+    <xmx:04PXavXQowIM5pFPZQWaZwYyUYMOf79bcRyNx0qu264CC-9yyDMcuQ>
+    <xmx:04PXalwyh32FQCIN6OR-_obR8BxobG5kUo0eFU6OmeA4p1wuZDxoQljl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 Oct 2026 11:08:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: m@suozzo.co,  Matthew Suozzo via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH] reftable/record: bound an object record's offset count
+ by its length
+In-Reply-To: <atcKOhm0Kd5XryAg@pks.im> (Patrick Steinhardt's message of "Tue,
+	20 Oct 2026 08:29:14 +0200")
+References: <pull.2255.git.1791989883899.gitgitgadget@gmail.com>
+	<atXK0ska_v2rFn8W@pks.im>
+	<41edbeff828fcb4a2f3bc903802b14e3aa66f46b@suozzo.co>
+	<atcKOhm0Kd5XryAg@pks.im>
+Date: Tue, 20 Oct 2026 08:08:01 -0700
+Message-ID: <xmqqqzhkxve6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -91,55 +128,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 1/1] archive-zip: refactor 'path too long' error
- message to use Q_()
-To: kerylefondji7@gmail.com, git@vger.kernel.org
-Cc: gitster@pobox.com
-References: <xmqqmrs92y4c.fsf@gitster.g>
- <20261020102210.829-1-kerylefondji7@gmail.com>
- <20261020102210.829-2-kerylefondji7@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20261020102210.829-2-kerylefondji7@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Keryle
+Patrick Steinhardt <ps@pks.im> writes:
 
-On 20/10/2026 11:22, kerylefondji7@gmail.com wrote:
-> From: Keryle Fondji <kerylefondji7@gmail.com>
-> 
-> @@ -328,8 +328,10 @@ static int write_zip_entry(struct archiver_args *args,
->   	}
->   
->   	if (pathlen > 0xffff) {
-> -		return error(_("path too long (%d chars, SHA1: %s): %s"),
-> -				(int)pathlen, oid_to_hex(oid), path);
-> +	 return error(Q_("path too long (%d char, SHA1: %s): %s",
-> +	   "path too long (%d chars, SHA1: %s): %s",
-> +           pathlen),
-> +	       (int)pathlen, oid_to_hex(oid), path);
+> It's hard to say. With AI-generated commit messages you very often have
+> the feeling that you end up understanding everything and nothing. It
+> just feels off in a way that is hard to describe, and consequently it's
+> also hard to say what exactly needs changing.
+>
+> My typical suggestion is to not use AI to write your commit message at
+> all and instead write it yourself. Commit messages have always been the
+> place where you can demonstrate that you understand what you are doing
+> as part of the patch by properly explaining it in a way that another
+> human being understands it. And I think that role is becoming even more
+> important now: in a world where we cannot trust that the contributor has
+> the slightest understanding of what they are contributing, they need to
+> go the extra mile to prove it to us by having a well-written explanation
+> thereof.
+>
+> I know that this is putting more of a burden on contributors, and I'm
+> not a fan of that. But I think it's becoming abundantly clear that AI
+> does not really give open communities much of a choice, at least not if
+> they want to keep standards high.
 
-The indentation seems to have got messed up here, the level is wrong and 
-it seems to contain spaces as well - if I apply the patch I see
+Putting more burden on the user is fine, and the AI output, when
+used correctly, can be not so bad.
 
-Applying: archive-zip: refactor 'path too long' error message to use Q_()
-.git/rebase-apply/patch:17: indent with spaces.
-            pathlen),
-warning: 1 line applied after fixing whitespace errors.
+Having said that, the real problem is that nobody seems to guide
+generative AI machinery well enough to make intelligible output.  In
+order for a user to guide the machinery well enough, they must know
+what they want to discuss, and the output would be different from
+what a clueless and hands-off "here is a bug report from somewhere I
+saw, I do not understand the system well enough, solve it and
+describe the solution" prompt would result in.
 
-The code should be wrapped so that lines are not much longer than 80 
-characters and should be indented with tabs (possibly followed by a few 
-spaces so that the arguments are aligned).
+Writing the first draft manually and having a machine check and
+correct typos and grammar is not a bad practice, as you remain in
+control of the overall structure and contents of the final result.
 
-Thanks
+Going in the other direction?  If you are not familiar with the area
+and are easily fooled by intelligent-sounding nonsense uttered by
+generative AI, correcting such nonsense into a usable shape would be
+difficult, and would make those on the receiving end who have to
+read it miserable.
 
-Phillip
-
-
->   	}
->   
->   	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
-
+By the way, I cannot help but wonder what happened to the AI policy
+discussion that the contributors' summit promised we would have
+soon.  Who is organizing it?
