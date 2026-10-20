@@ -1,120 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792506408;
-	b=N/xoLhds/syki32cDRsJqU4NTN0vRhWlcpD08eMYIOHcsd/YZEaSzqeIhILx7UhrZmtp
-	 /DPABgdsaPwl0WpuNu3+hoWxE5cDlL3gjRSJq8FNPuHxUwl/GM4FlBhVNXePOymKMe6bi
-	 O2VPR41DyBe/Ff1CYKd6htx2UPrExA0rQHmLrYNbStoCnFfexe+MMtKHLNwRItQvAu3R7
-	 yztiDPAQiqh1OF5fDDsHVWJCzOTgyPMGGXlfPsc2Xpf2w9rGTgvRSMBW87rYCHkNMO2my
-	 r9JQnnqyyzK0fxx+MwmlInh6hovG3WS0nDPSDcJ8DxujCl9d+wxG0jPEZsmovCtJuJg==
+	t=1792506828;
+	b=hpikBcPRB232v6dV4yv2CjxvEmKNVW4Gf+F1fsi/T2APQoKyJM4xBLCtMHsvcQw3NVEj
+	 d1WjAfBtn9MENGlv0JQsECazAMLcwv0fbZxUSl0LWCdrO/ezz2oRCY5q3jlu+irtMPKMB
+	 yEJBvGONj1iesNvaAW/AE46yPkc43hZza+/akyRFmQrK6bLu6F4uYJJlBbxyNwKiR8TI9
+	 LKg2mowEzdVN/4fnqbl1gNfO7mEB1txh0JKnH89PrXVuCXWs/95nmmswbqqymjAFSrYGF
+	 +YosCcUmunv9F3bqncrlSjekRT54lS+m4bFlwMLkPhiyKrP/ZZRl45zuOfgFJ2cNDIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792506408;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792506828;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=mqXxNa6IB6It2QyUYOUxR2FajpuAb8W689ukWJuZtrM=;
-	b=ayVK/G1Sne9YQVPBtJK2FB2G7d/sfFwW63nlN1wHoiRffx1SnJ30BK9XplKV2J0SZeqs
-	 87/HKUQcEwW5YueiPuk9ybWjD69j8O0CY3GBBmGLdgY3LDRriSu3dUWqdnghOhFRlZh/8
-	 7Q8vROvGyNv7IT573e42F5kyIAJm0fvKg//Petd4ZmXxTt/i228Y/NEwARfS+oLcx+Lq1
-	 xVEcYL9JwbYkVK7NapV+p0s9wazKV7wp9t+RR0H+l3maTPpLTuBVMulM6Nmx6x310f8rD
-	 ymTobR09GEkjhGZYYBpUty2AhKC1Ra4mZJ2IVKjiHTRv21bpHCvmPyW3qQJYw4F7PIA==
+	bh=2vjJdrGQe0dlq7X9v3IGQJcstY9I9zxGvxd3mOXBH+M=;
+	b=Mq/D2XzRZ68eqROqCb66vqctYty0GTr3jkJjdccnoRIecfIRAxttvgagMzhP2ePebMom
+	 OgZcQvXOcGMj02c4Rrk1AxDqCFh6RI+ru/BnOVUln2UTu9YBufgQpNilumiQPip6WMOg+
+	 Fj2+QMd1Ib+VHMa/uoQrltZ5l5bwfRh45oyvPs4Zpq87uQrbEzFmvhrUN7zVqsY8EZrpP
+	 J9YTvT19fFloeFAcbE/qlJfEATg3wfj61zA0snt+Al/a6SM9bWsoYcntfHsNAf1EudQ0H
+	 /3CxxUjheygusYXvJymJ367V4jryRQpOZjWqRPY+tCd84DcB6pkWiAQdXXs/CmbxT1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=OqHjDzBM;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=hBYzCihf;
-	arc=none smtp.remote-ip=202.12.124.149
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=fbUZksUr;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=u2VwW85c;
+	arc=none smtp.remote-ip=202.12.124.154
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BDD60A2606
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 14:26:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B1BDD60A2606
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3537D606A31B
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 14:33:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3537D606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=OqHjDzBM;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=hBYzCihf
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id ECABF1D000D3
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 10:26:46 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 20 Oct 2026 10:26:47 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=fbUZksUr;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=u2VwW85c
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8A5CF7A00C8
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 10:33:47 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Tue, 20 Oct 2026 10:33:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792506406; x=1792592806; bh=mqXxNa6IB6
-	It2QyUYOUxR2FajpuAb8W689ukWJuZtrM=; b=OqHjDzBM2I5AsYkbF75G/3ARK7
-	5ccFZJzsFFUFknq+U9pjXUmXXUDekNLoAYBXWNoHKwY1NH1jDiK6QOMl/HxkqLfl
-	kMmRdAJfmiGJwvRkI1w1UboKoOKWeAKcutagRn5JgrQkY1lgLAvkSgKx3qhHctMH
-	igGFu9LdfRMayR4kzseF53hsDfybRZYM7xGxdE7dzuqeLDVRKSA+17wjI7TByCNk
-	ASfXmcOeTMsA8T85/BfRzCPb77xo8UUVVtCxUmVKZSUDc3DLK0WtldbkvXHtAIMZ
-	vPziW35gTZ1ibl+YqsOl2iFvLzmlzE/0UgU2b/M+842ZO3UTVwZDnjaZ70YQ==
+	:subject:to:to; s=fm2; t=1792506827; x=1792593227; bh=2vjJdrGQe0
+	dlq7X9v3IGQJcstY9I9zxGvxd3mOXBH+M=; b=fbUZksUrkCdLeOrObNGQGR3EHP
+	c+bOzJKaRK4pPk7CxJ2M8DUJgHSt8HiDLJFJvrUqptIavOKtA4TqwH7lsBZf305N
+	TBWfPakGNE1sXxCwgc5xBGVghgDAKIRgOJvhU4XuhXB8+j4Ar8c1EwEOItWLO3ai
+	pXmhyTgP0X/OUJVCDFLHMW8G5hcTI1t8BTUhE5b5hRgFPGif+hktOAAdprUVUgPm
+	YDi9tgV3UyKQJm/1nMtV229WztA3D3uvi3bSmoK7QGzZNK2/Itd/Sj4KtEntAJVJ
+	geBIYJ1q3kDMaJ+XMoiJ14tJ32LKnZdGwqb8l9oBCQutzkEcw2FYDv7/LonQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792506406; x=1792592806; bh=mqXxNa6IB6It2QyUYOUxR2FajpuAb8W689u
-	kWJuZtrM=; b=hBYzCihfjl9kIFGPHWcBvuaArTixEdXKLs07qKGtKNeV38xTbnU
-	JFZSL3nRyychhzaIGA5uVqJkb8nftsL+q+JH0+vlnc28bL+fvAImInbCaE382gIQ
-	61i1xDr9/RjfiKFGpKCDmgwOxVqUN8/HV1/6pqVjdZw9XCzhvfsPz4FWglcFk5HL
-	z2jEGWg6vPigyOLsCuEYLN7GpfXjOeZGF8mUtIcJTvkBPGQ0Zxt9WLwp03J9JYL5
-	qXhQhZxr9vaLUyO5k07ReIt0S1TBV6PkT/udcahNCZFi3OpUPfCo29wui9oOyNRl
-	0QrN852ykCJU/aruvPOaXFlVJCk092PQWZA==
+	1792506827; x=1792593227; bh=2vjJdrGQe0dlq7X9v3IGQJcstY9I9zxGvxd
+	3mOXBH+M=; b=u2VwW85cxeEq4i1rSNKcOq5PuhAJaNoHdMx3ah7zzx80IHuCAM2
+	aQHbeVt1fbC1XUDW+ao6EDfttsVmYDhckwFBDmIbF99l4Ww3UJ+T4q8h4CuBIOUk
+	R4g41Su4NHjCd7i0KRd+YON5khoBqKAdPh+sHfym7TQ9oO+S1tWdbHbxxw7gjgkw
+	kHg76cqBarJNjhiHOa89MuSbt8Xj/iZ8FSprVCCRDd+9MUUjppIWPjORAy861dsu
+	OVFRxki02G/YsIUZ76OLkaLTmCckt6svtep5PevR0fgDeam07upyldel9Do5nLg2
+	3DTJ1AU91WPC4aMiUXH6NlunzLw2eUtFhbg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792506406; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1792506827; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:AKt6nhGLQVCw/IlwL540UpgRcHFF2lAOsd0+gEHzKsQToTi
-	aQ8kS/XHoqLUFSrUszJeNBW13qPYFw7RSYLXmhdxQMtW2Q5qeUrgo7zsvbg2kPbe
-	5c6GdTkqmOpqtNVCClcLuaNtbc08P0HNQ/4tvsGEXu1mmAF1JZlsqpnNmhG3rDD3
-	EKHF2fkeY+FZhcwCx2R5WZEBcWA2XTrpQd1ofUwsls3a/dfBHB1E2c6H/Gp8ipFw
-	nw/Djze/3BWq8B1NC0AhhtIWr2Vp61H7xrKUohkvaNGFpsX03xf5IONtSjznBiOi
-	xvor4roPXwmTA/cp5btScLkoFbUG9nr5ubdANiA==;
+	s=fm2:rsa-sha256:BqWlJt1JCM/xh6gCwBdG8z8QK16EizEX6s+aLgXnBxPlz64
+	94HaeiJigwfekz3Z//Zsg7QGlX0q4us2XsMZXC6+9UxnTVKpkx5puOre4x2J4Ta0
+	BKxzX1g9gnVTOwSiSUMHf7SgDMhqNls0OPzXP0gumavZd+LBd5mA48/obNNcwjYo
+	Se4Snx3Yh6/q0ZVx0gamaf6CdpVQaHMtmY5eQUofRFXf+iGIpiy5KbHGHwNSzs+T
+	jiYd6s5pMLHbYBFcpe0mUuOIa8Qj0yFlWTIc/of2BOVroW1yWfCYbL62WLhg4Bee
+	a7B3Zu5uFRSbCzC3nrTMLvsjCsvm06QvDHjJDkQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:Ih6GVUkDsnDhlkCMjR+aLp7SLBPWJS0GjH7xsAzscb0=:bv97x63SpwbT8kHeKfqcIgoTl9Weo4d6VGLvHHcoWtg=;
-X-ME-Sender: <xms:JnrXanquRZRKoiIux2DTnVIvucD_MHuXn5xcnWLzuO3JeaxGk110PA>
-    <xme:JnrXanqFeDmVgNWnhjqQX8DcBAzQP0rljY-TSkt8pMPlQrUQQ1fuzOxAeMQPvBajt
-    -IvM8cNveFGSwefcHZDk13vkVDjOS57U9wll0On-jTrEGeHKuUtGm1r>
-X-ME-Received: <xmr:JnrXah1n_cxtBPhxg5MOHBGMs_WYcypMGOYtPAjh9NMMajsKDyZxZxl1AyNJcR_7c0lGNg>
-X-ME-Proxy-Cause: dmFkZTEv4RU0cSoEFIxSVl7IK3yVd5nUQoIPJygRKr57MMMyD/7jIU121t3S6xLWv+ejrR
-    MkccqlkyzaHp7QEi5Y+vF/pfR60axASf/2Y/4ELgu/8ZcpjGDPWlcfYvPb61dA3LzeYm0b
-    q5E2Hvsmc3q1mLgqbOt+/kC7Zy1h8jQ2nh9dD9jzLYZDBLOdhW+UTnAKVKnJSTZd4ot7kU
-    1ufsxW/VLOw9vGJN7l94952q2sDq9Q52BD1nYTnOfNuaXjfzJptpiLqEyjd56UfedeX6I/
-    OfxhA2GsrqXFOT6LJPRrz6orckCuHwGeiG+f3C/GQHCpusp2sTfRedU4Ha3hiKFZVrJin2
-    AFT/g/cqr6UR5TiFhUF/t6TVj4FlXqQJOBXTb0MejzVCNmylc1VGtl4yZ5X9mpcH23iJv3
-    tHU2/FP8IFg/rdyDEqyuWJNUPAzEWT6Nnamqad1gYqy9RbTAUpJeUfWK6FJ+NUtW/n60X7
-    oXw0iisbBf3MAKtYvCZfoerhe/AHxAvaa0fEuhWdk7PCMrthVxZDjGrCRz5BIoDleBAcnH
-    dQNNm5AuoNqhQCYAIiWzXR5VRuliebwMy4XyqRNi/GJoDlEA5cJTS94LGZs/9Y8hvtdmpV
-    RyC/1dbbMcvJRlBzGuqmbczb1i4+3dTz9zczw7NhUEifGrIjCRPbeP1e/OlQ
-X-ME-Proxy: <xmx:JnrXamA-H0_uqqDcL6S9JyF65HKQWCDBI8kx-LgV3OUaD82LKKauaw>
-    <xmx:JnrXapdMnmx538FfxEpUrGDOf5H3JcLsOjBpBE1F6wmlII097MDHcg>
-    <xmx:JnrXargxAqPvKLlWb7fOwVtno9hemhpG38oUzKupzIdltKtHM9-uSQ>
-    <xmx:JnrXahouz6HvFMxN06ZwpmTxGiCLCY8eJ9bNMrlv4OlUY-awLCxh5w>
-    <xmx:JnrXahaBgQjeuGlS8KxFt9QPOqWq0OXKnR4WdOthU499ROvLJ7gpxKx0>
+Message-Instance: m=1; h=sha256:M57OkLBzHLDeHa7oqTNwm0HGpY+7VuPmpeO4EdfVqYA=:NukYOqbAsIstqKj3t5ynHDTe7MWRYa3u8jMa6NwrUdg=;
+X-ME-Sender: <xms:y3vXakj7e14hGS2HhnEYR03CQU9dr6fOxGkQSU0U0Uy6UUCi0X_2ww>
+    <xme:y3vXakelvmbLURSkdMp4y8TzhSIRVQP-izZmsgm3xjbILtRb9nPLtSb_rmpRWFWEG
+    9uku-TD4oWM4EB6mh_F6Lq2SyGmtaVvFS8aPSpal1wx8Q8opZczOT3p>
+X-ME-Received: <xmr:y3vXapcxnCudjcKyR1OvKEZIFFlK5kfhoWr0YMG7ChhDBGFRsOPw7K8d4p9IRLDqiaR8qQ>
+X-ME-Proxy-Cause: dmFkZTEhySPt7G7Os3R5TjlFKGEUUDfgjPMy/QfokM+qMgGS/nmm86b1W+2eofir/EBs7O
+    S1yHUgCol/qXN3uuVYLi3uMG0ZpMzYXFFI2kar+8XDsUcsHusPttVhoB0xcle0xpOGcuhm
+    bY8yM6DScBtNcNXoq47NMycVQQbHma7H/9vAKznuVZIFUqZi6OAvtEahTxkkmk6Ku2NCHN
+    qU/pCCFGLA+WUNy8eosqRRMDyVsAGtTD4Q8rj8GEjuIinp38Fb6v828ZUDl99DJjhGohHI
+    HoB3X5IZpA0DQsjCh8B1KgxrLb/AxbzGXPghExb+vhB5pA/J0zDicyKbnKR30XstnOQqUR
+    y/1XMfcVtqWlypvpSa4pKxInLBVS2FzL+AqfTQypq6Hd8jcoXAQrNKDEYolXMfPiTXHf6i
+    M61d6kXlr4VKgtcqwKiYFymBurS6carhQgVm8ZzKM6X84x4LokOgIs8AudP45v1Ir7ZGdM
+    vdu9Un1zyy0M072QMPQHxBAhP/mTmcAKuP/m43hA0202aOG+2uzBLiwsA/mQfFXey07lU0
+    bfMaynThROD+APCjPidiTk3DSM2grslwgFlcAhZ3c8Ojj5LCozVmbV8jKqQv8TYnbSSpxp
+    +K46CW8vBXzGSb0rnH9xdv+vK+5v0YH7vsxQhom6ps2nenZUDBhVyiB1Q5SA
+X-ME-Proxy: <xmx:y3vXau9KDXgETcDcqRnoV8fxMvzCX8u6OhrovElD4Yq3N4HbtoD4OA>
+    <xmx:y3vXalkdsc-qJ69ljhV-3gI96M2PISw9Aat7ibvRzjcMLNGrAkzVEA>
+    <xmx:y3vXag_2ZNXXZRSPTsEF6D5Y25aI5jDtSZqXerjvUK_EhRG6YQrG4A>
+    <xmx:y3vXajlItdZaW__Gz6F1Pv_VdgdlBtrmRkivkRIUSocsGFezPSy8Cw>
+    <xmx:y3vXakoWHVfG3TULln-1tt12SeHhYGIJ6C7gI2MgFyIF0KSS2Aio0iK4>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Oct 2026 10:26:45 -0400 (EDT)
+ 20 Oct 2026 10:33:46 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 54c0d5e1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 20 Oct 2026 14:26:44 +0000 (UTC)
-Date: Tue, 20 Oct 2026 16:26:42 +0200
+	by mail (OpenSMTPD) with ESMTPSA id dddf09e2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 20 Oct 2026 14:33:45 +0000 (UTC)
+Date: Tue, 20 Oct 2026 16:33:41 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 3/4] object-file: explicitly write ".keep" lockfile
-Message-ID: <atd6IjqH8F_O44gP@pks.im>
-References: <20261016213716.593278-1-jltobler@gmail.com>
- <20261020132900.1208343-1-jltobler@gmail.com>
- <20261020132900.1208343-4-jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>
+Subject: Re: [PATCH] MyFirstContribution: move preparation of v2 after review
+ discussion
+Message-ID: <atd7xT6Vj59omtuN@pks.im>
+References: <xmqqa4o94e0r.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,71 +125,101 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261020132900.1208343-4-jltobler@gmail.com>
+In-Reply-To: <xmqqa4o94e0r.fsf@gitster.g>
 
-On Tue, Oct 20, 2026 at 08:28:59AM -0500, Justin Tobler wrote:
-> diff --git a/object-file.c b/object-file.c
-> index 210984f825..ad55c01198 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1256,6 +1256,45 @@ int read_loose_object(struct repository *repo,
->  	return ret;
->  }
+On Mon, Oct 19, 2026 at 01:43:48PM -0700, Junio C Hamano wrote:
+> The text in the MyFirstContribution documentation tells readers how
+> to send v1, how to send v2, and then how to respond to reviews, in
+> this order.  It is unclear how much blame can be placed on this
+> text, but it somehow seems that senior community members need to
+> tell new contributors not to send updated interations of their
+
+s/interations/iterations/
+
+> patches before having any review discussion on the current iteration
+> more often these days.
+> 
+> Here is an attempt to improve the text by moving "how to send v2"
+> part much late in the text flow, after discussiong what should
+> happen in the review discussion.
+> 
+> Strengthen the language about not sending the v2 out before engaging
+> in the discussion from "It is a good manners to do so" to "Do not
+> send v2 before you are done".
+
+Nit: I think this would have been easier to review if you first moved
+stuff around without changing the language yet and only then changing it
+in a second commit. Like this it's basically impossible to see what was
+moved and what needs reviewing.
+
+> diff --git c/Documentation/MyFirstContribution.adoc w/Documentation/MyFirstContribution.adoc
+> index 34bfa2e3a9..296ff97262 100644
+> --- c/Documentation/MyFirstContribution.adoc
+> +++ w/Documentation/MyFirstContribution.adoc
+[snip]
+
+Now comes the rewritten part, everything above was simply moved.
+
+> +After a few days, you will hopefully receive a reply to your patchset
+> +with some comments.
+> +
+> +
+
+Nit: two newlines.
+
+> +Try to understand the reviewers' points, and ask questions if you do
+> +not understand what reviewers suggested.  Reviewers may also ask you
+> +about what you wrote in the patchset, either in the proposed commit
+> +log message or in the changes themselves.  You should answer these
+> +questions in your response messages, but often the reason why
+> +reviewers asked these questions to understand what you meant to write
+> +is because your patchset needed clarification to be understood.  Make
+> +a mental note that when you send an improved version of the patch,
+> +make sure you explain your patch clearly enough so that the next
+> +person do not have to ask the same question again.
+
+s/do/does/
+
+> +Try to find the best way to improve your patch they are commenting on
+> +together.  Until you are done discussing the current round of reviews
+> +with your reviewers, do not start coding, let alone sending the next
+> +version of your patch.
+
+This may be a bit broad, as quite often I find myself exploring ideas
+before I can properly respond to review feedback. But maybe it's better
+to be this pushy given the recent trend of people not responding at all.
+
+> This way both you and your reviewers will save
+> +time.  Reviewers can respond to your reasoning before you spend time
+> +preparing a version they may not agree with, and later do not need to
+> +inspect your v2 to figure out whether you implemented their comment or
+> +not.
 >  
-> +static int write_pack_lockfile(struct odb_source *source, const char *pack_name,
-> +			       const char *keep_msg)
-> +{
-> +	struct strbuf lock_path = STRBUF_INIT;
-> +	struct strbuf contents = STRBUF_INIT;
-> +	int ret = 0;
-> +	int fd;
+>  If you are going to push back on a comment, be polite and explain why you feel
+>  your original is better; be prepared that the reviewer may still disagree with
+> @@ -1501,6 +1401,115 @@ changing history, but since it's local history which you haven't shared with
+>  anyone, that is okay for now! (Later, it may not make sense to do this; take a
+>  look at the section below this one for some context.)
+>  
+> +After review discussion concludes for the current iteration, you will
+> +work on an improved version of your patch, and you will send the "v2".
 
-Hum, not quite what I meant :P I'd leave the variable explicitly
-uninitialized and then set it on all exit paths. Like that, the compiler
-(or at least most common compilers) would warn for all code paths where
-we don't set the error code. So:
+Makes sense.
 
-        int ret;
-
-> +	strbuf_addf(&lock_path, "%s/pack/pack-%s.keep",
-> +		    source->path, pack_name);
-> +	strbuf_addf(&contents, "%s\n", keep_msg);
+[snip]
+> +Same as with the first version, you can use `b4 send` to send out the second
+> +version. `b4` automatically bumps the version to `v2`, generates the range-diff
+> +against the previous iteration, and threads the new series as a reply to the
+> +cover letter of the first version.
 > +
-> +	fd = safe_create_file_with_leading_directories(source->odb->repo,
-> +						       lock_path.buf);
-> +	if (fd < 0) {
-> +		ret = error_errno(_("unable to create '%s'"), lock_path.buf);
-> +		goto out;
-> +	}
 > +
-> +	if (write_in_full(fd, contents.buf, contents.len) < 0) {
-> +		ret = error_errno(_("unable to write '%s'"), lock_path.buf);
-> +		close(fd);
-> +		unlink(lock_path.buf);
-> +		goto out;
-> +	}
 > +
-> +	if (close(fd) < 0) {
-> +		ret = error_errno(_("unable to close '%s'"), lock_path.buf);
-> +		unlink(lock_path.buf);
-> +		goto out;
-> +	}
 > +
 
-and then:
+This is a lot of empty lines here :)
 
-        ret = 0;
 
-> +out:
-> +	strbuf_release(&lock_path);
-> +	strbuf_release(&contents);
-> +
-> +	return ret;
-> +}
-> +
->  static int odb_transaction_files_commit(struct odb_transaction *base)
->  {
->  	struct odb_transaction_files *transaction =
+
 
 Thanks!
 
