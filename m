@@ -1,111 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.54
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792503101;
-	b=cX63kuuTvhmw3b4rkwV3wJWUl/uDPkg/ZWyHUzFcfQIVXFbtk6xdcSOhMzaIPfkYWHYo
-	 TIJ3r5XJZ4kqHOdlMoOv3yeiecdrEhHytU5ZPcW6Ti9vlgke95ub/JoFF8QoAIcUBsOCw
-	 +YQdRtdeg8HHe+9VEB0RhED3bk3uhde2BEpEskrvjqnwzZg/Q+sqKAncnsLsZPiewRcuj
-	 xzcBmEWlE3mE47B5RPFFkecVWCDtfXFI7aEEf5My0hm4CPKSRK/Al0wOxm07VaWY3GQGz
-	 /0r1fkG3pwmsnBl6hKWliHj+hZEMEa6NkwPlAd1YcjGzo39WnBPICYK2nx41QAW5mlg==
+	t=1792503634;
+	b=Sg8+0rTg3H4BfQeLZ4AWpQT82UU3ZgoTaegsQtahfmg8NAtQbtTkzLExH3pNXHQMxBG+
+	 N19JdYm39OrMFYZf6FMz9D83w/lX6p6JSIk00HNLYl+lG548KczfmHrmflhe8VGQ7eH4H
+	 9NmAlGkGTHoTEP43GDLtv3InBSacEg7lU7T+zdtn7Ea4s8e/y5e5r/PQYTOo7D8GVpW7F
+	 oKf/TUbpIosjTwwFXMIltferneSTgCEl0kR2zGtTmiagr3Qmr0qESTieQHBc08ih+8hyV
+	 q7HvTuXchgtT/+6pCUHmgdK7JJSgiXktnQujiCgpAgJJtp7bCtXiEqw5M7pgxomXEIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792503101;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=s9jr9FGl4Ndf2hzVb0xm4w2Yz21oK8il2YLrbtdF2js=;
-	b=fXfTJWMkHnzf9h3Rwb6D47e9uewzgjYCYzKaEJy9R45kYeJz8rNv+g9xnt8E1ehafc7R
-	 v3rMUj2rE0L/c1Ofs4uecjRhZvX5uFc+j0/KNJtUqu5wsLf2lQxNW+Xe44wcfW4s6sNtV
-	 j9UHXApy2rFvaoPL1DnDuoLOYlzyYdhIoAJruRSl7MMWkOkceX6uh1ynRZGd3xG/pCgG9
-	 EzHodvmh0FluAYDuE/Y34aU5IkEL9hAC/lDx4KdXGM7jbDkj2jbEo6pFT68YtCVcEjKPR
-	 /+jHWcLlrQpgCHQIetXjZr9sZhQvmQStnP++1HzY1/J1HTjgXWHiqn5EF4wfXKW+vcw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792503634;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=v2WeF8pIXcdFBoEywPxbASiM/WiVMyJ1r9o57ZN6uoE=;
+	b=ROzKiCvhdAOCfli1tosApOyyFPHVf13n6iUulo7bO3RyvkmHKovGs1+XXanPZCcikBYM
+	 prLc2Ax532IceOc88xhCTRO3s4r6FX0l66VtL1RJVWwq1YtJZRFv+jgEtvE0kiW0SbdMr
+	 oLHFezmE8tFNMdCspayCQRQlO709UrurDQFGaM0scjeU0LX5h/Gz7n55DL+hGXID/Wtim
+	 Lgi8abRFqKT2emnSnIob+bybXEGwx+8AL5VSq7UAOeLgzsTJf7IPITLN74Y+NLsX/J4g2
+	 smTkAUP5E2aRlrZSv3uxckX4eFNA0a4L3OqrcApQsDaX+gGLq7XQK/07IqB6WmkI9Gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fastmail.com;
-	spf=pass smtp.mailfrom=fastmail.com;
-	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=evQz7DYg;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=BE7LcI4a;
-	arc=none smtp.remote-ip=103.168.172.147
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hxJmpwQi;
+	arc=none smtp.remote-ip=209.85.210.54
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C0B606A325
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 13:31:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 86C0B606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEA2606A32D
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 13:40:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EFEA2606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=evQz7DYg;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=BE7LcI4a
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5845AEC0184
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 09:31:39 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Tue, 20 Oct 2026 09:31:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1792503097;
-	 x=1792589497; bh=s9jr9FGl4Ndf2hzVb0xm4w2Yz21oK8il2YLrbtdF2js=; b=
-	evQz7DYg4qj7LiQTjsGPo6B3mVJGJ6Lel1EbWQIx+nBRNn6x/z6S4qql0MXbCDBP
-	UOyXMEe9HdjtF7p4wZZaSfmulb+yVnNNaDmd2raYOW6lm5HnuRz+vnTvGSBWu+4Z
-	MNPh6bZW1OaOukOwrkVHoa9o1ysdRgRm9gR1WyFRgzSv7xFypOfrXHYwiubzIIKS
-	WayN0iTw4Kcun8lsFGapYTDkdC5jeoffOOliJeJ8+zA7BS7bQcFSU2LY4EcOLvw/
-	4M5SSAb1gSMpphGmP8IRI5gTYKtNvGaBfxw4YeR3cH1cJUivLH6Eq5kxNoT5g1Tp
-	O+GdbJg3b8TKWC0Z2jgs1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792503097; x=
-	1792589497; bh=s9jr9FGl4Ndf2hzVb0xm4w2Yz21oK8il2YLrbtdF2js=; b=B
-	E7LcI4a206ae9Aqh6CM6bHDUvQzU91sxlqdH3ML2JrNlXuYpBRt++ERuBs1/kE2e
-	881+bI138HThQKLfBRkHHvfQK69I1zuA+Q9mb2ac4ut6PfYRHJumSOZ1JQ2qOwvR
-	f+rf7SZDhKC6FPq4Xp9RYZ5NFpB5qGyLkIGGMTHRiBf9Q/PO+Ssjj6HDCxfsY+Wq
-	f9AaumvGoa+oC2Kfp+DGM5ZDgek5mzSgwOVQk1p3OQz/C0uTot9vIctiwPyLVrRZ
-	D70bniWVF+qCHP+7fEdNck9t4GElyLxj4Rx+PvcrGz3c+o6DBBHqFmon7mrgOqDx
-	bTEWjvjDjTokckcI9xvYA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792503097; d=fastmail.com;
-	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:l0ZrX4VXT7WBcGPnDnUJC4pRA8fUvH7UyV0yG7/A5/VzYoQ
-	vI9A+4dSnFGxF8cotz32hFJdvtoDLAlQmj/NAHehoQ6svhaNhViC2FJBRmauosRc
-	u3bAIjiPpkVfYAfNdmdMfbSVKohWU1hcRtHv/Eg+ZB5NcKAnBOExiQGto1mn9twi
-	lA6Allgz8ykO5Qk5mzvlV2tDuBGAAXpKh0fJlpnllo+3/uJgUqiuTXkzEI7HxB9x
-	ADN7Tbpsxk0Z0U6h0WrihwSBwx450EpfzRl70FFlcuu54fyamBtfQraZnpJaWgzK
-	IxABNROeTqmosrKj7duA1JAj2U22zMd30NbjuXg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:KyvNKwQ1dk/kBCzsKMKVc/KEhXd5YMUJTo4sVBkLZpU=:s9jr9FGl4Ndf2hzVb0xm4w2Yz21oK8il2YLrbtdF2js=;
-X-ME-Sender: <xms:N23Xaq36hSzmW8KeUBzGpUSn-K2n4yC1mpodg7Qn2XaiKgq8DJG95YY>
-    <xme:N23Xan79TU1WHhXBilInCxo7JmBt8pP37Fu7dDGZD5BwcEOO-uQ674yvIUWUAGk2A
-    HdFm_xytTn437prnCfXNeAmC39MvUulOLAStTvwt1QGyctzqskZYA8>
-X-ME-Proxy-Cause: dmFkZTGbLVRgWD0YUttL9+/VSVJM4OXtDfjO3+XF9XFX+fnyVddHJxbC6I9Dz27YQcEhik
-    gNqj1rfF3x9M9mifl1rHXlyT8ICgXaGFIvL1IZqlG1aqHMn14S4gBpkTIOX9KtxM1gyyLS
-    IZTwzy39sFVcZJQLCXVAFO0WsP7iWgg5mKQaVZTXzHR9WnqzKMJmro/K6e9P/c4OkhjFTz
-    t//iCBmBOvwIBOLtv/VgUHEg2lGyNRQRT8Un1g7eHAnijBGQe2nIxj4zmdj+dN6Guu8btm
-    Tfp3eyZttzibtZksFLlbDQhhNQ75GDEU1OrHlu8yIjyX7W5Tpnwz9pVCXLev8cP8XinlP0
-    Y7BdCTvp8r9HtRSYm6J/wrb1mEm8MP1Fd0YysPK0c1OfrM5IT8UaVmYh/cpghehzCVI68/
-    1BLbSIm/oiZaec0YK3zFXJO1TDeThriERpqovtXC4Yzq+3cPWpde9aEfBJE9qek2FrCjRP
-    zbN25+79AoanPJy4Ue/b6ZH+2oMrVAYPm0xyM0Z7dIlPGQpN7O7QWm+bOGP6lWSNpMd5r3
-    LakRMncPamASbK0xI3MqJDhpZ0IMl8LPbFEkWSleNMF6AwqFOBav/W3WH5nlu1GqsAfw9Q
-    An/whxZFl6g7KniDpPFNaL6nma2WWTjtY4HslxQ78xfXKUmqeNpLipzy7XUw
-X-ME-Proxy: <xmx:OG3Xatz1WuyS1hyNMAMqGW8K6aQzddHq6orPTzRKyXroQ329fooZEw>
-    <xmx:OG3XalDaOLO-EmfUO3lLfH801gPayN_9LZ2NPQIJQl0tx3-AecDzKg>
-    <xmx:OG3XaqZPem-Vdxs1MSieX_zLWe8hYRiGjqlfTVwKvhtDvL1dvMz6YQ>
-    <xmx:OG3XatiOPMYFrLMx_aW5NRT0nIUtiTwxu66JMz0aqLdsAILYIzx1FQ>
-    <xmx:OW3XamKGS_3iGvkIS2Qn4ZgCvqFbKc1hy-9336NFVjoQ3stIqeB5JImY>
-Feedback-ID: i83a1424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 5E2D722C00A0; Tue, 20 Oct 2026 09:31:35 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hxJmpwQi
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-81ae6aefdceso2899235a34.0
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 06:40:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792503633; x=1793108433; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=v2WeF8pIXcdFBoEywPxbASiM/WiVMyJ1r9o57ZN6uoE=;
+        b=hxJmpwQi9XJiDBg9FEjI6RWnL/Qm9CRRJWDqE3TdpaXwN6UVLxZk0yp3FPoHMztvLZ
+         7iHKXF1AEmR2ZvuBjmzM4Ul2OyVqn6zENzJEDnyQg2BodA0GerMhx2e0BDhBPedsIAZe
+         14F01CDOCf/k5+Ap2I/cnFjB/BobZaZEqSlwV/u8jdVSiijx/XjolqIjwwKz48ilU5UM
+         9dWF+HSmBXHdvJBZNrZKd6cqHd0KEOmPY0Ig++1r/4ZNsxxrw/WLZWehFDtS3I4MwyBe
+         3IqRF6Q3Ys0WDAMaBlfk+Ja/zfY7d8ynbUBbkHeMts8pAuKW2g+ammk0TYByI3tqihla
+         svLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792503633; x=1793108433;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=v2WeF8pIXcdFBoEywPxbASiM/WiVMyJ1r9o57ZN6uoE=;
+        b=QxNAxAz4AJz+SJRKXghfE/FPeLUP9J2419oKAuInciG/gA0lNwNsqXZdzu0+Zef0lC
+         vXbWuVg91VZn8wWhevfYjpqySVhuhH5F94yVwoNo+vQTEXiRJXv/CXgTHDriD5lJIUmG
+         ggIs56mDBq/HH92z6n3Wfs0kbRKnZdqMLuJYjAcIRjY8WZwnXGcJ+FH1EEp/cjwiNkhw
+         ER9nAi6aIFUqI+5o+/hC6e4AG4ZkEx4K+TS59C5S/r+PKHmFQIgqPfsEGBEKA/O0/2y1
+         HG1U35qDU3vUDfoL8uvRAsJ5ou/zAEDOOf2fm8j6BB79OONc95cofTSN9Uqj28xrM0+h
+         6X3Q==
+X-Gm-Message-State: AFq9FYI6u/PumQC77Nf8eGUigt6qY3YOfT4IF3+K7D9d7YDtWQR3P433
+	5wDetC+A/Vhju1QfK2Wd++/vlqNCkQCnM3XFulr5pE/uiRh7kzclArIAtQ2SQw==
+X-Gm-Gg: AYBFou0l/7QwIJme6VfLkuL6N36svwKwR/OF4KskQWiQwbkzk8TfJ9mfEG1APPtqP/A
+	f+W6yFjAWtuK88JreaFCRsqko/6aQ7sZdZ1NpfRTiXCFH6Nf1gcVCLLDtsF9jPePPX62WYMv+dn
+	BZnjvV5kbSzxB/kCKxGsYMEi3NY9EuW5NCFtcw1iYETdVG3dZUxY2Q+mHPrtaEFRRGfS+9i4Jdr
+	t1Ec0cjgoB8gbeksVpEWakKlpMuxTboevTjc9xIY8RIydx3ooHImaz3qntN39ezj5Ii1tPYr3l8
+	xpee/5nFWb5ufoX5WAm4UEuTnTAn7YjbNAsCqM2i70pc8gtNXJYrxzHjuPy/iLrAL04Boc4w3yu
+	lhwBkUrLRlagNiVtniDkaWCyeEnaZMucNdbpBCrcCV4x0A/8dX2rk9//uxZTT88ZTAyDmfw1+WU
+	a1IEcWJaQ93P2x6Jqtz7cDTfzlsNj/tZvRmeGxkBvV9yWgXgBcUG4Mzwmeyi16VvXvog5hFXwCF
+	w==
+X-Received: by 2002:a05:6830:a141:10b0:845:8d86:9f8d with SMTP id 46e09a7af769-8458d86dbcamr6187527a34.8.1792503632652;
+        Tue, 20 Oct 2026 06:40:32 -0700 (PDT)
+Received: from [127.0.0.1] ([40.74.204.255])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-8490e8cfbc8sm5566929a34.6.2026.10.20.06.40.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Oct 2026 06:40:31 -0700 (PDT)
+Message-Id: <pull.2455.v2.git.git.1792503631364.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2455.git.git.1792275106640.gitgitgadget@gmail.com>
+References: <pull.2455.git.git.1792275106640.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 20 Oct 2026 13:40:31 +0000
+Subject: [PATCH v2] upload-pack: fix slow fetches from a shallow repository
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -115,27 +95,182 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AB9N__B7nd93
-Date: Tue, 20 Oct 2026 15:31:14 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
 To: git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <612b6065-9043-425c-83a7-2cfdbe140c4a@app.fastmail.com>
-In-Reply-To: <V2_CV_gitbrchanges7_please.dc4@m5gid.xyz>
-References: <CV_gitbrchanges7_please.d1c@m5gid.xyz>
- <V2_CV_gitbrchanges7_please.dc4@m5gid.xyz>
-Subject: Re: [PATCH v2 0/5] doc: move BreakingChanges to a manpage
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-On Thu, Oct 8, 2026, at 21:27, kristofferhaugsbakk@fastmail.com wrote:
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->
-> Topic name: kh/doc-gitbreaking-changes7
->
-> Topic summary: Move BreakingChanges document to a manpage for easier
-> visibility.
->
->[snip]
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Is there any interest in continuing this series?
+Fetching from a shallow repository with a long history can hang. In a
+homebrew-core clone with 900k commits, fetching one new commit into
+another clone took 7 minutes. The same fetch over protocol v0 takes
+about a second.
+
+Over protocol v2, the server goes through all of its history to work
+out which of its shallow commits to tell the client about, and a
+history with many merges makes it go over the same commits again and
+again. Protocol v0 lists all shallow commits and lets the client sort
+them out.
+
+Do the same in v2 when the client does not ask for a depth. This also
+makes `git clone --reject-shallow` refuse a shallow repository over v2
+in every case, as it already does over v0. For `git fetch --unshallow`,
+which still needs to go through the history, visit each commit only
+once.
+
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+    upload-pack: fix slow fetches from a shallow repository
+    
+    Fix git fetch hanging for minutes when the remote is a shallow
+    repository with a long history.
+    
+    Changes in v2:
+    
+     * Fix fetches with sideband-all by writing the shallow lines through
+       the packet writer. Add a test that clones from a shallow repository
+       with uploadpack.allowSidebandAll set.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2455%2FHaraldNordgren%2Fupload-pack-shallow-walk-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2455/HaraldNordgren/upload-pack-shallow-walk-v2
+Pull-Request: https://github.com/git/git/pull/2455
+
+Range-diff vs v1:
+
+ 1:  4f4192120c ! 1:  8b0cb4c0e0 upload-pack: fix slow fetches from a shallow repository
+     @@ shallow.c: static struct commit_list *get_shallows_or_depth(struct object_array
+       				**depth_slot = cur_depth;
+       			}
+      
+     + ## t/t5537-fetch-shallow.sh ##
+     +@@ t/t5537-fetch-shallow.sh: test_expect_success 'clone from shallow clone' '
+     + 	)
+     + '
+     + 
+     ++test_expect_success 'clone from shallow clone with sideband-all' '
+     ++	test_config -C shallow uploadpack.allowSidebandAll true &&
+     ++	test_when_finished "rm -rf shallow-sideband-all" &&
+     ++	git clone --no-local shallow shallow-sideband-all &&
+     ++	(
+     ++		cd shallow-sideband-all &&
+     ++		git log --format=%s >actual &&
+     ++		test_write_lines 4 3 >expect &&
+     ++		test_cmp expect actual
+     ++	)
+     ++'
+     ++
+     + test_expect_success 'fetch from shallow clone' '
+     + 	(
+     + 	cd shallow &&
+     +
+       ## upload-pack.c ##
+     -@@ upload-pack.c: static void send_shallow_info(struct upload_pack_data *data)
+     +@@ upload-pack.c: static void send_wanted_ref_info(struct upload_pack_data *data)
+     + 	packet_writer_delim(&data->writer);
+     + }
+       
+     - 	packet_writer_write(&data->writer, "shallow-info\n");
+     ++static int send_shallow_graft(const struct commit_graft *graft, void *cb_data)
+     ++{
+     ++	struct packet_writer *writer = cb_data;
+     ++
+     ++	if (graft->nr_parent == -1)
+     ++		packet_writer_write(writer, "shallow %s\n",
+     ++				    oid_to_hex(&graft->oid));
+     ++	return 0;
+     ++}
+     ++
+     + static void send_shallow_info(struct upload_pack_data *data)
+     + {
+     + 	/* No shallow info needs to be sent */
+     +@@ upload-pack.c: static void send_shallow_info(struct upload_pack_data *data)
+       
+     --	if (!send_shallow_list(data) &&
+     --	    is_repository_shallow(the_repository))
+     + 	if (!send_shallow_list(data) &&
+     + 	    is_repository_shallow(the_repository))
+      -		deepen(data, INFINITE_DEPTH);
+     -+	if (!send_shallow_list(data))
+     -+		advertise_shallow_grafts(1);
+     ++		for_each_commit_graft(send_shallow_graft, &data->writer);
+       
+       	packet_delim(1);
+       }
+
+
+ shallow.c                |  3 ++-
+ t/t5537-fetch-shallow.sh | 12 ++++++++++++
+ upload-pack.c            | 12 +++++++++++-
+ 3 files changed, 25 insertions(+), 2 deletions(-)
+
+diff --git a/shallow.c b/shallow.c
+index 8e244a5669..921db5e17a 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -209,7 +209,8 @@ static struct commit_list *get_shallows_or_depth(struct object_array *heads,
+ 				*depth_slot = xmalloc(sizeof(int));
+ 				**depth_slot = cur_depth;
+ 			} else {
+-				if (cur_depth >= **depth_slot)
++				if (depth == INFINITE_DEPTH ||
++				    cur_depth >= **depth_slot)
+ 					continue;
+ 				**depth_slot = cur_depth;
+ 			}
+diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+index f323ceebd2..140d5c2dba 100755
+--- a/t/t5537-fetch-shallow.sh
++++ b/t/t5537-fetch-shallow.sh
+@@ -43,6 +43,18 @@ test_expect_success 'clone from shallow clone' '
+ 	)
+ '
+ 
++test_expect_success 'clone from shallow clone with sideband-all' '
++	test_config -C shallow uploadpack.allowSidebandAll true &&
++	test_when_finished "rm -rf shallow-sideband-all" &&
++	git clone --no-local shallow shallow-sideband-all &&
++	(
++		cd shallow-sideband-all &&
++		git log --format=%s >actual &&
++		test_write_lines 4 3 >expect &&
++		test_cmp expect actual
++	)
++'
++
+ test_expect_success 'fetch from shallow clone' '
+ 	(
+ 	cd shallow &&
+diff --git a/upload-pack.c b/upload-pack.c
+index 197bcfa279..e6dc19526c 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -1709,6 +1709,16 @@ static void send_wanted_ref_info(struct upload_pack_data *data)
+ 	packet_writer_delim(&data->writer);
+ }
+ 
++static int send_shallow_graft(const struct commit_graft *graft, void *cb_data)
++{
++	struct packet_writer *writer = cb_data;
++
++	if (graft->nr_parent == -1)
++		packet_writer_write(writer, "shallow %s\n",
++				    oid_to_hex(&graft->oid));
++	return 0;
++}
++
+ static void send_shallow_info(struct upload_pack_data *data)
+ {
+ 	/* No shallow info needs to be sent */
+@@ -1720,7 +1730,7 @@ static void send_shallow_info(struct upload_pack_data *data)
+ 
+ 	if (!send_shallow_list(data) &&
+ 	    is_repository_shallow(the_repository))
+-		deepen(data, INFINITE_DEPTH);
++		for_each_commit_graft(send_shallow_graft, &data->writer);
+ 
+ 	packet_delim(1);
+ }
+
+base-commit: c51408889c3b372814bc20b9431c3b74d0d268eb
+-- 
+gitgitgadget
