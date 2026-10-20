@@ -1,119 +1,112 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.145
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792516538;
-	b=TppwsbN/iEDwkUNrk2ngMbaJvuS6InSStPBjRqsOZEcRUjhZHnW+T4Byk982IFcaIMfF
-	 7sois6TrHDHnaARCX1OQjb0b2WUIBYXN7PHpBRHgPSjYzbW4xU1lTeQ/xEAPbt6S/HHcY
-	 1U/1Oqw7GNXHaTKiKTw0Ul2Q6ClBjZLrrRxfKGJR2YVcl99uxbMXr8O+fAeqY7KG1JXFx
-	 n105yAKXq8EpzDFL9727/QcsirsIZT7Z1Z7WqSWJrApIo3WPZRcC+gxslAqJwM1WvS9TJ
-	 k2tdQFUUqgo4APT48nTRoL3usSlQgd0R7n+PuiMw6oWyBgzKRu7geBdkOBVh6VhxDqw==
+	t=1792519181;
+	b=ZlQS997RAoslHyGj73FNCW/6UiAyEcHi2qFty1STxhU5PNYknf+eLbhwO5ybO7P1bsgF
+	 Rvmr3LfrBFGRwBsccn+YwAfybmS4HFV+vc/13Je9qKijuXehNrelgue3iqpzoVFjZQkxA
+	 oxScwcO9Pfwu96gAhjvU3Tduf5If0zefirWL7vylAHZT17dUv3s/8FqZVNx6mZWuBl49o
+	 GEYISbRcexjedDHB4ZjrJXdxocio83UMpb1w7/tUsjBun7NzubhFuJZqyZalMKAjXxeFU
+	 xz1yBLlqa2NUYG0ELnWQDE0nY6vRRvf00JTSMJJGc49NGeYITIr5o+iZNX5vXEMxAkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792516538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792519181;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=Ih9qUoln81FsmMQtYh4gyzmVNGGMyT694hFWJJJGxXs=;
-	b=eUs0EYUA0u4sK1+e0QFDDatYLMXiv5XqckDAemIG1JZQtxuiwxaselRVY77RES3JW2HA
-	 8bq02JGDhsdZMGZJRiJeOsGsGk2mKWYjXESLexaJsgfS/kq5NwoQO21pmgatZGbH6zXOJ
-	 pVQBXFHFpBhWupruhwYkeCOrnbzSaQeB96ngmuks0W48c0PNqj37Ad9OpY/Bt1f9b4AQ4
-	 JHKj73KWfwnAEreuWM08X8zIAxOTlc4AmYTjsaGLri6BhXO/IV/eJo3e33mVRs3YdIhpP
-	 B1RFOP0aZxXHx2WPb7S04ZdOf7lusWk1FQjm8p+koy5AqpHABS77svk3HdXrJrlHAmA==
+	 Received:Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Content-Transfer-Encoding:Message-Id:References:To:X-Mailer;
+	bh=1fsPz1FS02D6bSiiFizhpFmHbSqhFoJ1i4vBv1iqrRA=;
+	b=vMUe/Hx9QWLcUslLXLCX3fRYP9UGEsdwpHSYCq1aUf+MfJ9a3VcRhgQx9SqbVIdbzLzX
+	 +1wSqBuR+EAAY5/AMbWsZOCrFLWLSWWe7Y9ihFdBbm2jDlzKULN78aK9NI6wAU9PVumtI
+	 DN3aU80LcUkzwxEnzcmSf9UYtokAVjOmCGkql/aArJ041Z9N8TEbhRXJ9R9HWsnb/PeST
+	 4/Kek1mj2u1/MWuCBZv4U7tcHPvjDoUp9xlZ1BE2GMaf/OKFhjqkhBOI8595rvqD2oKQ9
+	 U6k/m4+HXurFHL6ayUY3PEAhOCGvL1sxDTSP/BZ0v4CeYTtzSkgbvZ+hfkBsAawM2bw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=exF7Guep;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=hWpb9Geh;
-	arc=none smtp.remote-ip=103.168.172.158
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	dmarc=pass header.from=jvns.ca;
+	spf=pass smtp.mailfrom=jvns.ca;
+	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=FSt+IbjF;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=RqKZl5ez;
+	arc=none smtp.remote-ip=202.12.124.145
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC8D606B533
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 17:15:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BAC8D606B533
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF08606A319
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 17:59:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DAF08606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=exF7Guep;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=hWpb9Geh
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F10FD140009C
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 13:15:36 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 20 Oct 2026 13:15:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792516536; x=1792602936; bh=Ih9qUoln81
-	FsmMQtYh4gyzmVNGGMyT694hFWJJJGxXs=; b=exF7GuepPRhyJSQLxQfm+VurvH
-	I/UvokHiU2svLUfrMcu0tZIQm2IbA+0BLbaAH1z8AJWXQzYWWSvJ2ldLaQBJMHiL
-	GrcBv09VCIBjn9FI8c9M9Y0DMJpGgNn5YOh5izgh+gIhn9n+wcpFW99G+Ax+sls8
-	PqVKbog0zXEL6uu3MC2wmvl7C7Pgsls4hcaChYES285TA1oaYcT9IhVDzqPE6Y0T
-	aJx91pbNQ4jwkTaFs3Rc61IvPpj0HxRfC0ju4vCppNFIiRJwmBvI545bGJBXAlz1
-	0ksjgfPdOY4iMO24qEcO3J9PHtWiiI31hsYdZPE6kpCtEhtACp8dgYQPfSDg==
+	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm2 header.b=FSt+IbjF;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=RqKZl5ez
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3D6FB1D000F4
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 13:59:40 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 20 Oct 2026 13:59:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1792519179;
+	 x=1792605579; bh=1fsPz1FS02D6bSiiFizhpFmHbSqhFoJ1i4vBv1iqrRA=; b=
+	FSt+IbjFfB0rzpD+yTCC0Q5Y1O7zY0JZZXYyfbjQUt5jkUIU2WhHpPM7EhylKQi4
+	x1z40JfW3bbBgMvD8drbjsltvmZn9qUMXnnlJ9CVfsP/gyAs5uwjC4FmnRZLWak0
+	itEyverkPxH/X2vN1gvGV7nvGYcwFpmF1RzoO7+t997kuDF+W4wO7CHiksCFY0Io
+	2ISnQtxt+H9NnJ5yHyOCwQfN7ZIGncpeIwMy8GXgr/gKvZLyp6FFnv7NBpxa8prw
+	Bysh8vxwdDFThrCYQRkBvDMSxsy8x/xClBBfmF9s6tHICwOv2xuqWju6wK6RaZYh
+	mCM+LL9jOPeT8+8nCDlAIQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792516536; x=1792602936; bh=Ih9qUoln81FsmMQtYh4gyzmVNGGMyT694hF
-	WJJJGxXs=; b=hWpb9GehAxIrIXIUQNHFE8dt1RUu4siP8j8TqfbRUkzDlepIVX0
-	aiu+rwdiKfsX1ABnTeb7FdGQj+hVukGMBHIE/XBEcDLue89DfZRKQJQkClBBLHd2
-	0WHBiZ8mgIiE+gcg6HSayNEmGin0Shy1LxrbJTqgl/8eazCu2Z7Rlsq46K/CldxR
-	9IX2CL9dtwPtExvHUlamFBKBl3G/xRquekCgIuHPHUXJcbC4Zfgcc5aJwdCZd3zz
-	EFFRWsMR4lEBJN1G3AYCmVI+kp4P/pVTdIfsNpIXn89g+K4SEjx2OdeHsDzJ7b7i
-	5m1EpO0Td0uMQapYd0HFWJB7Z9N7gaz/bVg==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792519179; x=
+	1792605579; bh=1fsPz1FS02D6bSiiFizhpFmHbSqhFoJ1i4vBv1iqrRA=; b=R
+	qKZl5ezonaQLpYzSfxqp+a6vDF99125XBRHAMecnlxGet1G1jyz8N7FRnDJ/m0no
+	rLeamUZWbUyyvGjgtV9at3vT3LXF+fpW/BNFYgG2mLGgKNN0L9FvgnHFKNZGRfDv
+	/FwOfCWhYX/URDFtfgyOwNlLB1Py5AaSZc86Vvs6au0tcoGcnxN9ZqPRBVBxecwo
+	7zRLS9KIVIhouo7KiyNHz2C6o/ssR4ZgTHciiGD5c/UdF5H2ot9skz+wI0zJoGip
+	+ddDkYUAXj+q5XYXhwEvtTXGsFpC6MlOm37HuVxeRFtGVUhUPBI3mQg1//NducBO
+	yirQerUxpIPZe5gNrsB/w==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792516536; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:IZ/yojvdsgDkEq2yJPeFmMeGHa2Iu/z7sItkfeB6NlYbSsR
-	+LOHCzXvLCWAw2ZImv6VPUYEuK6L4fi5kgogLfbekRwFIxr00eUGmFvyhivjnCX0
-	T+anVn2UisnjhibXq6wq8VTuiAeI0Zx3SXq1py/9MqUDGH4xQxe3tIac7N3izvhs
-	4Or6S/RzUdu2SFf58V9Fb7srrYVRE+W25aADu2bdF/3NsuIKdAwPpGA3UoqTWq5S
-	CpXz1cJqzW05GKuWe/ZOXwButE2IY2wbSTPD2RIONu3ZCwHS2Hv0qtezOdoj3uss
-	FtVI/1eMN4o9t0Z5KZofTRPGP3NRXc5s0tlTB+A==;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792519179; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:FGdl/un9bwQti2C/hjBlUN3qCvKb0UCRqOF97kKYfHpAZvI
+	jXeG4PwdRCXOa/ld6SLtUWpidgsHZMMN9rB2RfY0seHEoAW52k0GYhrTxiAn8xfW
+	Qf2tkzb1gkcoebszy4Xots3GhivEjKQEdGeRMfTRbxExLghHMVdO2ahRhXbKfSNK
+	SP1LYZYCvoKSGtu3cClkNqf7ou2sonR/ksRpii6TuMwOF6l77jpT0YDYY8CtNrDU
+	TxLkEiJxH2OcMwbsMYydGGCsQ6vzLnMsnTV8modSlUyZgvqkG3wl6aHAK9dvhjd8
+	VxyESIyWg/NN+5rdgyyY+i9ygL7r4ZTPxXHYjhA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
 	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=mi-m=1; hc=11;
-	hn=content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:G1l9ZBBhUteSsoq8CYwG7cv7pw3C2OEm3HQnR9MjOuw=:QXDxfVSXmTTar5hGLteI1H3KOvRgh2p/xh+Bnnax+mA=;
-X-ME-Sender: <xms:uKHXansbbxynwS7Um4fxIQRtN5bz81EyhZ-pPs_cny9bRQ565j9iyw>
-    <xme:uKHXaufU9sXeR4i3Vtre5w_yN1TOBWCVgW0mb8w_B6dFfyd3Z3oVToMJAy8k2d7Jq
-    8CA1LeqRDXWmPUnnng-uyy0U5dvVF-rjDUXaUpoblVrp9Bkdvfq0A>
-X-ME-Received: <xmr:uKHXaoYmndhyfMcHWNF96s_9k4jhHQDeyLQ31QvYyyYAgS8_x-b3lVZG8h4obFbNDs9vON1EK0MinD0_NsQS2AeqToTzDEj_2wAh>
-X-ME-Proxy-Cause: dmFkZTEG3LtBh1fCxeth0konUR7XyK9lYkXkVsbXUH+6qerFTOoHLk/8ChL2fvww2cgkvC
-    +74MPaOZSA4DNpRUFg4XtLGRtBWWuDu8qJQoaZPIyLIKGxs8FAAD1QiE9Hu4JylfE/q9mI
-    MLhLKENV44ZziCb/OwjnsQHGQTHwe7slVXN42V7Pmka+7gH6kSksCdbqdBsLR7M+aPiQfe
-    uv4LtE9te9FdzdIVgXn9/wYKcNmmKJzAA5yztGTJYR87QFXGj3rqEMDRYTvmKhCAQrdBdg
-    YkfH+dO2ANLqpuL9xdkJbNCbxylIZHRPizbcwJIU9FWDx3Z9htkM2Am87XO58qVYAXJ6RB
-    Aq0PnlukAoLQGm/g6c9Eds/vWQ9p1bzlbLT1THNra7PdzZ5R7g4MKoYGdU3LEbLEGa6vQ5
-    q3Yf6LiR8GQBlNv7Q+eev48nSsoWIKwohwIP2rx2Ow1dHECOi2tAZEDX0/vKPoVRvJGXy8
-    3Y42lLg0Ro+ylvrnume77sCa18alZ+eMZhRV282FWMfOcmszvYs304vH+q/05aM3+tgDp1
-    NIqF1Z9QdG5JcMXS6z+SlXZykcok/jNq67kPPMjt4NZprSBLxkMLFGVUu4UMUuk91KWUIh
-    kcRcUNILYy8wGmo+fPGI78iE8OtXmRuU4JcJqJhrIJdiKOjn0rfaYSXNN26w
-X-ME-Proxy: <xmx:uKHXahUU6Eqe1KBA09SnSHIMrI85USPu58mZCv8cy4FoVyJgvz3zrg>
-    <xmx:uKHXaqjo_Qlszs_ihlOxT264X9bYAaivmfWqdq-wZCXlmPMqzNe4bg>
-    <xmx:uKHXavXqmigEpOVjTprKdRD6U1IDt32Vfq61dqQAd2nbW_IN_e4NOw>
-    <xmx:uKHXahPbfmS-l3bu8bW2oW8i8gLzaKBWrwNz25TqaFBYjhino1VabQ>
-    <xmx:uKHXajGDVidNtezO7NFxsVqmvzZcRhoTyM5r-DLpLtqMbyxf-eaKi7cv>
-Feedback-ID: if26b431b:Fastmail
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:C3Fyq7D4Q8YK6/1iD8z/puegdIIHwb3rPZ8mSBuJ6Co=:TaYGmZm/c0b2bWNUsfAwyu0kngwZOvahLIeUpdvYbDc=;
+X-ME-Sender: <xms:C6zXaq6j1s5pY3b_G44IU9fQWBWTROmXzVIXiupiuI0S5SCy-OMpyQ>
+    <xme:C6zXarX8q2Lhd746j7gfeuNu5s4aJZTP8ft6LHjiZBwgtmHSOvYnAvsJvYpv3GKf_
+    5Qj4RdUYGgae39ZWXecyxyKoDHLEy8JgQfRkhrDqJ3WuTUGm7wrerFYPg>
+X-ME-Received: <xmr:C6zXam0_n6nDwA0_2XbLhzYJ2vv8m3-1I_p-cw8ZKosRc4g5AWR-l7e_HCBScmDaHpvb-VWebfyh5o_LJS9RoWC_hanWkWY9aHJM5n3_PuFl5NM>
+X-ME-Proxy-Cause: dmFkZTE725CciBU9+4QJdaVuqKS2zzypb0EUngksqhdZsd9PmThGDdk+uKRnDVr/cdfx5Q
+    QWffE4d8CiKGdk/hjKPeUrH1wyatMT0vIBEBYUdSnCPcEwvNd5+Nx+iG1NNTgXy6Yu3Q61
+    e1mCcvCMVfIdhcyY0chA5763TLSvHlfw94jTsT3wlvGRv+vnGWM8JHcYNeDHGwhd6mk9Q3
+    mjlPFqlo5LUM/Ce9uKD8uBs3tKz5TQHIcu9A9RO4RYif8QmkGNEiXg1/Z3DtVla5Q4cqDp
+    6wKRSKF7ld6ZaD0Ism4J9658iRlhNtkaNLjcbYrmHzwSM3eK8ywP7TWuqC/aQ14CZGciLv
+    dZ4Pb8dKm1ibjRrm8QgZWF56iuIjs0WsWK8zgrOmWaVBDkas8BKCr2eEx7WmjUTLVbtvN0
+    Q/9MaGDs//tdFTzO9V8Tr6Rr2xPs/zQPifZptd18VePp8lUDOxYt0dVT7Wi4abj0xbpG3M
+    T323VNRjCcCGML/SKQK+1COpQngXGRyNeLyBIIdpPgtarAPk5BtNB/Z+ZvmDWOb+ri+Yto
+    NI6lzCk+zTaUh0QzSSU3R8lw2US2jvHGf8z/H1HA/bSDhEiUisiEQwFzmcTjYdWxrqqPHm
+    aHF6KU2MV+2EYl4IxUHa2cSA3G64+KNP3G0l/06u0eHXFDkVWDkRvD4/pFgA
+X-ME-Proxy: <xmx:C6zXag1zEDPRyOpNIjsCvs8-2Rvna5vajACf8ymDWkRZKER3CMqGJw>
+    <xmx:C6zXah8mvEVwwHkmVGPOse4Ka9nrVAj5MnbOE-NwMIr3-TltgaZoxw>
+    <xmx:C6zXal2WgczHDaHpo2PEzy7BKqQIY-hzK85x_S_Fucnzlp3UlXFqrQ>
+    <xmx:C6zXam-d0zEpbnIHKu4l4o72FXhStjT8G1MrY5ou6Wan4ZwfHbvuxA>
+    <xmx:C6zXajW7G43F9Qwdk8PW7uUWrKO6c91Bhuvl2dmWeeLRLp3BkPTMsioC>
+Feedback-ID: i2aa947c3:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Oct 2026 13:15:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: Re: [PATCH v4] github-ci: update macos jobs from macos-14
-In-Reply-To: <20261020155813.3315813-1-gitster@pobox.com> (Junio C. Hamano's
-	message of "Tue, 20 Oct 2026 08:58:13 -0700")
-References: <xmqqfqy5clgz.fsf@gitster.g>
-	<20261020155813.3315813-1-gitster@pobox.com>
-Date: Tue, 20 Oct 2026 10:15:35 -0700
-Message-ID: <xmqqv76wwax4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 20 Oct 2026 13:59:39 -0400 (EDT)
+Content-Type: text/plain;
+	charset=utf-8
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -122,27 +115,140 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.700.51.1.1\))
+Subject: Re: [PATCH 2/2] doc: add new Git tutorial for beginners
+From: Julia Evans <julia@jvns.ca>
+In-Reply-To: <xmqqzew8wb3g.fsf@gitster.g>
+Date: Tue, 20 Oct 2026 13:59:28 -0400
+Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <CD1E58AB-4884-4433-9AB8-460FE9A882FC@jvns.ca>
+References: <pull.2248.git.1791315422.gitgitgadget@gmail.com>
+ <41dca2e8e0c5fadb8ad9ed8707029356e56cc540.1791315422.git.gitgitgadget@gmail.com>
+ <xmqqzew8wb3g.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3864.700.51.1.1)
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> GitHub from <no-reply@github.com> address keeps sending
->
->   Subject: [Action Required] macOS 14 hosted runner image is closing down
->
-> and suggests to update to either macos-latest (macos-26) or
-> macos-15.  Use macos-15 for two of the four osx-* jobs, and
-> macos-26 for the other two jobs.  Use explicit version number
-> "26" instead of "latest" so that we can more easily tell the
-> differences and similarities between github-ci and gitlab-ci
-> and compare their outcome on the same commit when needed.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->
->  * Hopefully this is the final iteration, and hopefully the later
->    part of the proposed log message explains the reasoning behind
->    the choice between latest and 26 well.
 
-Nah, sorry, this patch was bogus.
+> On Oct 20, 2026, at 1:11=E2=80=AFPM, Junio C Hamano =
+<gitster@pobox.com> wrote:
+>=20
+> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>=20
+>> From: Julia Evans <julia@jvns.ca>
+>>=20
+>> This tutorial covers:
+>>=20
+>> 1. Creating an empty repo with `git init`
+>> 2. Making commits with `git add`, `git commit`, `git diff`, and
+>>   `git status`
+>> 3. Pushing to code to a Git host on the internet, including creating =
+an
+>>   SSH key
+>>=20
+>> Signed-off-by: Julia Evans <julia@jvns.ca>
+>> ---
+>=20
+> The goal is well described, and overall the tutorial is well-paced
+> and avoids common beginner traps.  Since Ben has covered the text
+> fairly well, the remainder of this message has just some leftover
+> nitpicks.
+
+Glad to hear it!
+
+>> +Step 10: Create an SSH key (if needed)
+>> +-------------------------------------
+>=20
+> Even though AsciiDoc implementations are somewhat lenient to allow
+> difference by a char or two, but the number of hyphens there must
+> match the number of chars on the previous line, so add one '-'.
+>=20
+>> +For Git to upload changes to another Git repository, it needs a way =
+to
+>> +login to that repository. One of the most popular ways to do this is
+>> +with an SSH key.
+>> +
+>> +If you don't already have an SSH key, you'll need to create one. On =
+Mac
+>> +or Linux, you can check if you already have an SSH key by running:
+>> +
+>> +-------------------------------------------
+>> +$ ls ~/.ssh/*.pub
+>> +-------------------------------------------
+>> +
+>> +If you don't already have an SSH key, run:
+>> +
+>> +-------------------------------------------
+>> +$ ssh-keygen
+>> +-------------------------------------------
+>=20
+> It may depend on the system settings, but doesn't this by default
+> still create id_rsa.pub?  I wonder if we want
+>=20
+> $ ssh-keygen -t ed25519
+>=20
+> so that it will match what the users will find in the next "Step 11".
+
+I thought so too, but openssh.org says that the default is ed25519 now:
+https://man.openbsd.org/ssh-keygen.1#t
+
+=46rom the release notes it looks like ed25519 has been the default=20
+since 2023: https://www.openssh.org/txt/release-9.5 .
+I=E2=80=99m not sure what the default was before that, though I also =
+thought
+the default was still RSA so maybe it was RSA.
+
+I=E2=80=99m inclined to suggest that people just use SSH=E2=80=99s =
+default, since as we move
+towards post-quantum cryptography, openssh might change its default key =
+type
+again, and if that happens we=E2=80=99d want folks to use the new =
+default instead of
+going back to ed25519.
+
+
+>> +Step 11: Tell the Git host your SSH public key
+>> +----------------------------------------------
+>> +
+>> +First, find your SSH key like this (on Mac or Linux):
+>> +
+>> +-------------------------------------------
+>> +$ ls ~/.ssh/*.pub
+>> +-------------------------------------------
+>> +
+>> +That will output something like
+>> +
+>> +-------------------------------------------
+>> +/home/alice/.ssh/id_ed25519.pub
+>> +-------------------------------------------
+>> +
+>> +Copy the contents of that file to your clipboard. It's important =
+that
+>> +the filename ends in `.pub` ("pub" stands for "public").
+>=20
+> OK.  I hope users won't paste the ls output above instead by
+> mistake, but perhaps giving a command like "cat ~/.ssh/id_ed25519.pub"
+> may make this step harder to make mistakes?
+
+I=E2=80=99ve put it on my list of changes to consider
+
+>> +Then login to your account on the Git host you chose and paste the =
+SSH
+>> +key into the appropriate place. Depending on the Git host, it's =
+likely
+>> +under "SSH keys" in your settings. If it asks you what type of SSH =
+key,
+>> +look for something like "Authentication Key".
+>> +
+>> +Once you've done this, you're done! Git will automatically use your =
+SSH
+>> +key to try to connect.
+>=20
+>> +Step 14: push your changes
+>> +--------------------------
+>=20
+> Upcase "Push your changes" to match other steps.
+
+Will do, thanks.=
