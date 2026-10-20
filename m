@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792509665;
-	b=pRbbX2gDaoG/l9WbfWYEFmGT2UV4O122XZRXH9zu0QsB+AnSh9jtmF+U55atzExqwkBs
-	 JfBDjFsJbF6urUBPIDD9Mgd7pmkBRJTTOwLgZkdfX2szXGTp2AdCoX2RwWJXXehIt9v1T
-	 IVhTIc3L9ozwr0xl9/s0/f5cMdPAHIDxPV58dxY1gN6nTq1oGI3944nISUrEhkLmCARPg
-	 bmPoObl9UE74PBEARV7/Cnwzi7z4DrOUkRzgAsrf8XuSd2o+6KMM5s6GBSggYJFbKRbbu
-	 /SRI4kRC1nlQo2nSk+G5Njo3IQg6N9jBft3Nl2PCE7ST+DV5ipgN2vQpSvySiW8hjMw==
+	t=1792509663;
+	b=ClJTJPtDCCE3pdnCshKoRBS/r2CPhQvyhXfcLVffiUZK3lYpfzc7C4iyN6MXHKTtITUE
+	 PjEGcixBabocG1ZNihGUXcznS4JSwhJW4DSoWy8ARIPqrwF2MYEqM//TKYmcbNRgxRWMb
+	 tzR42MMXcGIYz6qI2umtVZx+WfKNWRBLdzhOiaAa18l9OxH7kZHxcUXuwJ4zOr0jsiCto
+	 SJC3k+M7pyRV4v1peIL3NK7CyKCTPkjT1BtdsVdvYRiGtDvneeBK+Qg4HSSM67ByVUrgj
+	 czjN2pk5idMbBHGhbIU1SZDe2Qq3OAftldPifGOSfKpeKMIedWL0uXVdHsYqvH1298w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792509665;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792509663;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:Reply-To:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=YmBMpzBjUGW8YNW8Rn0paVufGdRLWO7YVdcWv5LCpzw=;
-	b=Q03CqKcw7bTrkmWDyvoh9fbcOkFEP8SMoXemcf+1QX6XA/hwC/fY5wTQs1s794PyawnX
-	 ub5FQ2Oewpoe/CbvCnKpnIbnyzh9Hv06ybYa9rTG9uJDcdm+u7oz8Z2JMr8PEiJO6C0Rq
-	 2ZDKvH8zOJtfoSPndvYMarggjK/9J8edjqHH2m0L4R9RAk/eJJFUsQHO44HQIdCxYpgap
-	 Dp5hBygVNnUqBGAFANJzUSQb3fD7QMTGe36LuyDulyBchV/mo9dR9JUqINGmHidck/kq7
-	 KQOLVT8HYZ/0wldf0GOwZg1gM3s9d0qRkqrdIJg/Cyo8Q7JyQjoWEiqGGjgpf9JW+zA==
+	bh=8gxvILfny4AJqOd+78eY8j1hngOmrkmVucA4OiGoloE=;
+	b=hA89IOl0uCh6b0pzvZm18T3SzLzIRjzFXHMRsI/QiCIrKahxbPvsCdeCW6/XSk8wul8J
+	 zOXnoMMP4oPmZAQDARBf28KzhgsO9bs+5jWRkmRC10A8WsV+ltQvOA384L2eio/PUQlgZ
+	 StlYQZ2X54ndzpf3yNsLsXyGn0y03H3f8N4GzkGdiwhUoXUpW7AUd0GIYrU56wmbyFz0h
+	 T/BD3avCR/1xKR8gJFqgIvQaIfraFp634EzWVFGxdYb72yoyU1Uuq+FaIHJ6YvjQBmerz
+	 gZY5PsomD9XqbIcWf89x1kVYqjGn/fjfG1/1wHLlasq8tnqI+IcqsbPZcENUyXPSFaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=rAZWFs0D;
-	arc=none smtp.remote-ip=209.85.221.53
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="owUI/Um5";
+	arc=none smtp.remote-ip=209.85.128.45
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A546606A33C
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 15:21:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4A546606A33C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C167606A330
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 15:21:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9C167606A330
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=rAZWFs0D
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-48df8fe8513so2936832f8f.0
-        for <git@vger.kernel.org>; Tue, 20 Oct 2026 08:21:05 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=owUI/Um5
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a1dec056ddso19210105e9.1
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 08:21:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792509664; x=1793114464; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792509661; x=1793114461; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=YmBMpzBjUGW8YNW8Rn0paVufGdRLWO7YVdcWv5LCpzw=;
-        b=rAZWFs0DDfW5R766BevygVWBynp0E+848xn9lkvOzcVW7svgNOojGRz1eJDcHpYBbG
-         BvFk+9UrLL7oI3z8VUdYAIs13XgVb5N2k2f2Y0qP+7WpIC59Pg8Lry+WXDlf4XfFwhWv
-         fb7gLSt8nzZ3hgnez4PeibTDvqWIZJFe9Ith3CgeIOJ8WDOm6XWNpNMTDWKenO0RHKtE
-         89tZBT7XZISA3g8Dqr1O/roKCXjY93vG52FCAFQSfAjTk4YJgkGcSZ+s8KQcTkBY3oM2
-         gE2s3kvayJSU2WEK8Zp/9cTILsSCC4p/P2atUaELrLvjoGliXwVM2hG/gJ4XJXt8EPy3
-         JmAw==
+        bh=8gxvILfny4AJqOd+78eY8j1hngOmrkmVucA4OiGoloE=;
+        b=owUI/Um5uciemAA0kHg0eWhGJyd5iqFql9uGMQEak+AG4Bn5ar0oE2KfwBkDHwbrcX
+         rB7OGxAPdiCYnWm7WseAaN3kUPuJr7KSLDqYeD7rfXTxoXMRdKLFEmtdvf49Iv7+lTeJ
+         M0/R1tyctJVZaRpddIiN3WJmsngPvncLJ/WkXkC5B38LFKV/samDfDE7Yn/QbV4kibeE
+         QHna+oG5WZeE8bPxvykvImaK9Nacs55adKO4ioZNqqNQ084C9soxqK4el5YDs5w6CG6Y
+         jXzwaSYFK/tbs34eBUj2SBYXaYcUD9w97VazgHDQ5ylFdrpN/4m3NciOxXrdf3SWhYdj
+         PT7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792509664; x=1793114464;
+        d=1e100.net; s=20260707; t=1792509661; x=1793114461;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=YmBMpzBjUGW8YNW8Rn0paVufGdRLWO7YVdcWv5LCpzw=;
-        b=NaA1MWAD2Obbbyv3WzlwxuHrYNGDw03VTH+jn33k39xl412JA7Mr+O1cJmrZzxdmVb
-         BYo6Gvz7TaE3EV1jRoz8oFWENkfAILHgAJVepaF5XYJ+whw+9mZT6sb1iZqQuYL1l7HR
-         cyTGDrOXWEfmIhek1ZEmkCzjOnk9w6FlOkUmNDbAaMZ6uYoOXYwTBTcQ3Gues3FwXL7m
-         JdnvrrMKFgSi4+EQpJiUD21ebXjFJ1rSvYQhuPJ3UCp0tWDxPyfwEjrJv4EkKNhbytlw
-         IV4/MResV2A0Zt4KSWetUtFsqpzg5p4qlqu/C0c/SKxE9TsJST825quQ40k9SjR0kgUj
-         dN2Q==
-X-Gm-Message-State: AFq9FYJzeKv8KuGTuxQ1GjWWbvIuMz5ueonoA9LZvQ/mKO4Duzu4TYQr
-	bPLWZqpSfZ898sgYeh6yAiK7AdkwjyXc/3UpWgM3qFT4jf/GxRoTiWHhd3PZjQ==
-X-Gm-Gg: AYBFou1LBPriGPncI5BtYhAN3+5mBi3BMVuJTs6ViMlXlPxUUsOlaIe4o1GCY3oqoHd
-	A7b6Kt05kkzJOyX5s9RyxSvtyJUltWx//WSZgU6TSHXD2aj80hTuSGQQhNCxt0ZSj+gN6BC4pTi
-	VlxnzFHufq0/fqCRCOy2ZueRqgr77Cn0eB6KaGBRsad+eXYCG0tH2IVRztkzhyKHWT/oiHcGv9D
-	7J2JDP7FFZaZZq9v7NYpVmJUf21lhJNj57awB2vjvws/VxH0JHHSxjKchhwTcWLnmvb6W5xWuGs
-	d5gzShTkHrLrRwlJ9bFy8GveWzZszo9tYWwAxVKZs+8Uwu7HdWeFODn593T1f/fotRRO++gU5ov
-	pl0pr9mxG+kffkuU8u6fKxP/blDlfn+H8RraKe6qnam0WnkTRw19UF4UrrO7RmL/pHt0SJnhidP
-	cZAe3G09KFRq+vRz0ivmJoIKQyRGxxaJl/qF1dSit67ub5KOLo5BVscuWbE3QLe4+ru6Se5fQQ9
-	g==
-X-Received: by 2002:a05:6000:29ca:b0:48e:a9:9e2e with SMTP id ffacd0b85a97d-48e07bb315cmr16779253f8f.14.1792509663372;
-        Tue, 20 Oct 2026 08:21:03 -0700 (PDT)
+        bh=8gxvILfny4AJqOd+78eY8j1hngOmrkmVucA4OiGoloE=;
+        b=GA1yMQQG4UbTtMeeGgtd6ptfFFMmdducH1yKGI8mQaA5XufEwzVfHXw8hLvOQik2FJ
+         bQhTuw21hNW4i+6AoV4M65rPq8G6isII59b69b7NvNDJ04hk6GNB932EotKCYJ4ObZI5
+         WFI76rCJKeh2Smo6IXNLB1P+b+pq0Kc9NhP1kiHaUhyep54MKtoQ2ORVWAQbjsdgoVRE
+         2ul/oWjeWU3PjfJYCR41/gF/H2ZpvM8Jq4YfmMQZF7oZlt8fG4IgFqegL4yiP3msKHGu
+         YwHRYR76EpmIVJG9WzHTtnNDT5amW9RnbjCz196U0fFdGvj2QglPJnFjb1nKHz/Tf8lb
+         qVDQ==
+X-Gm-Message-State: AFq9FYIkW27CNkt5Ydrok0cvu/yzRVNOzFcXD+nIdp/bveXCsOq8hYah
+	TTCxaaPG7SXk32j0e3pil81rWQdA/WKQDe1LT8QA5r729DzQcTJJ0Ip1D610/A==
+X-Gm-Gg: AYBFou1IY6/gkUKEqKP66zt9ANp5csDMYMDkRcJwYZ4wzpobQclN0AJdBiMR1HOEqED
+	IhxLbhwx4bwLFEIr45znFPD9zoAElaOhscFDpqZa3UqphVwFjEGlN0QFt/rMIIA6nYCe9DW0Spz
+	ZY484333LCy1BmzAmK40mBDeApswRUkmdj98cmAd8ObJ9wrHzoEObhsWbeSGkz7dHRRNbcGJ/DC
+	s72zGpi03DfoxKkQ078Xbb6AQAVGj1nRimO0BnPZSKMFkNPKbhnqkbPsfT42aIKvMzfisqVVOLo
+	NkRryxzIeDk0bKWwNy6BvSTsMsBylr3YqAWRZdml8HqN3CEqbxEpNyKJPlaLBfl4VSOeGyN8HfZ
+	Mj9lJdV+JiWJLHwcjxxlKrd57Z9HSbAr79HiD1p5aj6h9QlVqCKQbK3xOOszEfnXj1zU0lAiD7J
+	JmY8bFYNLnc0QApPrjHcgNSBOhmB4nttg6qXu6wYz0ikd1lQ8/CRBUyAW26yAvvvgqMbKpUtVWq
+	Q==
+X-Received: by 2002:a05:600c:4e8a:b0:4a1:d307:b52a with SMTP id 5b1f17b1804b1-4a1d7628838mr247659565e9.19.1792509660365;
+        Tue, 20 Oct 2026 08:21:00 -0700 (PDT)
 Received: from berwick ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e1d823ca7sm6307355f8f.38.2026.10.20.08.21.02
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e1d823ca7sm6307355f8f.38.2026.10.20.08.20.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2026 08:21:02 -0700 (PDT)
+        Tue, 20 Oct 2026 08:20:59 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: =?UTF-8?q?=E9=87=8D=E7=94=B0=E4=B8=80=E8=81=96?= <kazumasa.shigeta@kanamei.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 7/7] stash: simplify reset_tree() function signature
-Date: Tue, 20 Oct 2026 16:20:42 +0100
-Message-ID: <a486a625c95cd7493e9cae424bb3a4fdc35c9e66.1792509606.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH v3 4/7] stash push: avoid duplicate calls to preload_index()
+Date: Tue, 20 Oct 2026 16:20:39 +0100
+Message-ID: <a9875ba5b3595adde9e830c1ccb641633bab7454.1792509606.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.56.0.134.g299a3c16181
 In-Reply-To: <cover.1792509606.git.phillip.wood@dunelm.org.uk>
 References: <cover.1791218125.git.phillip.wood@dunelm.org.uk> <cover.1792509606.git.phillip.wood@dunelm.org.uk>
@@ -101,47 +101,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-There is only one caller and it does not want to update the worktree or
-reset the index so remove those unused parameters.
+do_push_stash() needs to load the index so it can check that any
+pathspec argument refers to tracked files. To do that it calls
+repo_read_index_preload() which does not just load the index, it also
+calls preload_index() which lstat()s all the files to see which ones
+are up-to-date. do_create_stash() then calls repo_read_index_preload()
+for a second time which lstat()s all the changed paths again and then
+calls repo_refresh_and_write_index() which invokes preload_index() for a
+third time. So we're preloading the index three times when we only need
+to do it once. Avoid this by making the callers of do_create_stash()
+responsible for reading the index and use repo_read_index() rather
+than repo_read_index_preload(). This saves two lstat() calls per
+changed path.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/stash.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ builtin/stash.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/stash.c b/builtin/stash.c
-index 55916259c3..bc1252790b 100644
+index aec79ed473..b4fe7465e4 100644
 --- a/builtin/stash.c
 +++ b/builtin/stash.c
-@@ -332,7 +332,7 @@ static int clear_stash(int argc, const char **argv, const char *prefix,
- 	return do_clear_stash();
- }
+@@ -1526,7 +1526,6 @@ static enum create_result do_create_stash(const struct pathspec *ps,
  
--static int reset_tree(struct object_id *i_tree, int update, int reset)
-+static int reset_tree(struct object_id *i_tree)
- {
- 	int nr_trees = 1;
- 	struct unpack_trees_options opts;
-@@ -358,10 +358,6 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
- 	opts.src_index = the_repository->index;
- 	opts.dst_index = the_repository->index;
- 	opts.merge = 1;
--	opts.reset = reset ? UNPACK_RESET_PROTECT_UNTRACKED : 0;
--	opts.update = update;
--	if (update)
--		opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
- 	opts.fn = oneway_merge;
+ 	prepare_fallback_ident("git stash", "git@stash");
  
- 	if (unpack_trees(nr_trees, t, &opts))
-@@ -738,7 +734,7 @@ static enum stash_apply_result do_apply_stash(const char *prefix,
+-	repo_read_index_preload(the_repository, NULL, 0);
+ 	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
+ 					 NULL, NULL, NULL) < 0) {
+ 		ret = error(_("could not write index"));
+@@ -1662,6 +1661,7 @@ static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
+ 
+ 	memset(&ps, 0, sizeof(ps));
+ 
++	repo_read_index(the_repository);
+ 	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, NULL, 0, &info,
+ 			      NULL, 0);
+ 	if (ret == CREATE_SUCCESS)
+@@ -1707,7 +1707,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 		goto done;
  	}
  
- 	if (has_index) {
--		if (reset_tree(&index_tree, 0, 0))
-+		if (reset_tree(&index_tree))
- 			ret = -1;
- 	} else {
- 		unstage_changes_unless_new(&c_tree);
+-	repo_read_index_preload(the_repository, NULL, 0);
++	repo_read_index(the_repository);
+ 	if (!include_untracked && ps->nr) {
+ 		char *ps_matched = xcalloc(ps->nr, 1);
+ 
 -- 
 2.56.0.134.g299a3c16181
 
