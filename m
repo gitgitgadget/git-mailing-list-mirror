@@ -1,118 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792511896;
-	b=DqJ6q5Z4sMY2d6iN3On1EWTyLbExsP+SxLktlHf5JBLivJh6fmaf/f/OsfgROM6euaBa
-	 ncRDR1pGOQAKyReAmJ4A/cyZXWcuqoRONd9fKbQfiQAmcyozjYif02grUKFoFoornOxfe
-	 ieVLqc1Fyz62OY2eMaxu1zJgJue17Z4y1CG/mQjsVSxH0o48D4gq7AaUOhrfOKET5/Js1
-	 COlC1xoHIColR6t2LgwP7M41ccRDgpfuohx8y+RkagruDQlsjd4B2dLt/QkfA3FHzw5/6
-	 PAlFvb2/TcEc/umf/N9850Uh8TfKSqF5vwyhImWzfVJYTd1PnAKRXXQt4Vh/ebJXTxg==
+	t=1792512111;
+	b=5n56ovvO29TKP2DNLV+skUJXyeXtLyFv5q4wsB8W5zo7ZCxxqCsRiuWTaH5Bs8+BymVo
+	 6GlR2ctgfY+suqCrYd9uCWix4FjEXxnFznidU7latirqKeHZX0tjjVDunxupgYMpUW+TZ
+	 AhTtNk2MAgLp35z7AYQcKYqYRSXU7Omvk34bfHOftaJD+qi7sszNFLb79FmcUqQHmRthp
+	 BmUhiNtCCEHOp33PoLY2g9sQsltUhjifvNhb3xH1DhUF6cpxoWf6uD7sfkNXEFhjxKVJB
+	 THIOthyea4CExZAPbjrV7veFS7aGtJDdUpjQCmuJsg9WnxsNoCEIfWJtcWbhulux0Qw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792511896;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Subject:Date:Message-ID:X-Mailer:In-Reply-To:
-	 References:MIME-Version:Content-Transfer-Encoding;
-	bh=o6eyeg9GCAQldDohtlkHWx09j+cyLuwsmb6ZO8loqP8=;
-	b=rSCfcgqZB4YRIaMQ7NwF6uhkW/+txA3zUmihG0NmX682UHDihZmT7aTuUslwWVBYC+E0
-	 OZK8tDoNo0aLe/BIH6VDxnFFvrdLcyEmx/Tmwkqao+PeG/eTR2qg5JBNndlrE5Mj2FCoM
-	 Wn1eXKFRwu0HSiq68mj2T7YkYLsH2ZS7Tzq4J4+bxBwyVIfLFDn5RHxPOuaz2EUa8f90P
-	 H49UT4yMuFWYL1etNkCAOolzMOY8nKoxIOCXJXXMGSpsJhOqbzV24fYx4qiKS3WDmBIuc
-	 5wRe7m4r9WsI5gDURroD0kApoytZPl6MkyzpQduHLnSr6lL5MSfC4cuMtoL5s4T0n5w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792512111;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-Id:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=V1sf00p4h2qemA8ouSO9REJj3oRiCNUJh+MpUEwaR3s=;
+	b=kj4MuerhIAJ01uSYg7shzmH1NXcPgyyiCpTb/zB8CpEmmXkN5LqX3Urlk52JqamUG8fg
+	 niCvKIOXcE/tfacFMsUqmm0KqUot7oaBRaKIdUCYh/A1Ek/mmx+bCVVKnbPOJKY5sXcMw
+	 VjH2iuYfFUrAT8B6qFuU7/QTs+aOoD2vVNJf3RdncUrMS/1vZWmcTiPrSkSPWZQQvSLYR
+	 OyGU34jNGrTs8cK7lfyM7ICIqVCJEdah2+Rl1LZvl1RWu6INkARRuPR1Y1vLSWKyHP4we
+	 Gpq2syAc76QkY6sCjVtvb04YVCl6N3Y+Iw96cYGBj+PueMNewEPq+K/4Q+bxB1Z0ADA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=prS93EtR;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LsZUz4YV;
-	arc=none smtp.remote-ip=103.168.172.151
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="q9Qig/C2";
+	arc=none smtp.remote-ip=209.85.128.51
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B87606A31E
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 15:58:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 86B87606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFA0606A31C
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 16:01:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BAFA0606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=prS93EtR;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LsZUz4YV
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id CD1E1EC01EF
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 11:58:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Tue, 20 Oct 2026 11:58:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1792511894; x=
-	1792598294; bh=o6eyeg9GCAQldDohtlkHWx09j+cyLuwsmb6ZO8loqP8=; b=p
-	rS93EtRtGNrIVi3aTOLIFuLRjoXODvBDe4PGa+K+vTzIVHcXq9Hjq5ddHh6W6m34
-	BBEhRlVzpcfhn87repmhlGexDnZvTPWZIGy+OVsTMS2t24YPUFon3iHl0JrpOAwU
-	kk4nTn7v7UGR/8/6KCgwg5GPWJnG8SadOmNbAMZ5gex60hxeOGaID3TM2SkYs74+
-	WuaGFAPRh+sEIsvnSYLgql+s6OdyLU8mK7KeUzCGtHyGbpn20wiQp5d0wH6G4t0O
-	Uh9PZAqkrKZsaiPTyrNMde8lUtcI1XrUjbhqKUgd+UGdmK837RXS7rARZuDyHh3n
-	CrUPS43t9jDZoN/KOAvGw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:date:feedback-id:feedback-id:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1792511894; x=1792598294; bh=o6eyeg9GCAQldDohtlkHWx09j+cy
-	Luwsmb6ZO8loqP8=; b=LsZUz4YVPAoSGl4mm68L6MwgiUlfomYHRMxN7dpO9uLB
-	YM0myUj3NLWdABRkvFBQ5tqpzlmYK4A5FFYE6SD7AErL7bFYnAXABalvhzFu3yZ5
-	7gC1wxbl7YgBzo96CMsCf2QRJAySVxF7lSiRcYUSAnVLG6P4/timHpAUbgJCxhrK
-	pmacO5W2p5CZbKn1lVgEEQsnF6HUc/I4h4Y/7eNimIXbubKqlQy4T+tlnKcUz6dt
-	c7cycAX5VLA77vuXEMcq7MnyQ1VCWvlqn0Q3P+ddFE8suC/5dKk0kjcMBDxzd3eK
-	8ZmMt3C0Hv0ciLM1DAGa6Co9vXpf9yRgS6TvAoKCvQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792511894; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:HCAM0/vXkHpLU7QRhQxkKVHM1IPLe5SWiOxTfgK3SuD3i8J
-	VkWjLBvEX9AhF4r/zU9Do1zh5ezG6DwcT5WORC4gqSqhjaboubnh8UshrApHGsdi
-	7WJraUYvaA9FkAA7oj8VRVtTEW4sa/VKAlGXufT1anK9lmywok/6QWFiojKjomHt
-	SJH5cut4gH9FRsf887UvqhCxDMfqk8uhTywwM34sBbdQPlZDmko8LnK0zXIABFII
-	9WRVkKyWIP03id/Xz0yGDQgY/+vtUzeDnkHZ1mMdgwsW9jOul6o08NL1+O4NjVO8
-	Q43Fc92wGwAAyrbyg5t4ZDX7MbyaVLO0VmsI3ew==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=mi-m=1; hc=10;
-	hn=content-transfer-encoding,date,feedback-id,from,in-reply-to,
-	message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:KPTMcoG0dBjEp64AwpRFscGo2acKJQXZtY1L/niiQ9A=:FsuFc2qE50cOGdFCJnZNapcJ30wDd84vEqlCH1TQkdM=;
-X-ME-Sender: <xms:lo_XapBYG1Pc5t7aaJIjcWTUwEKf1GbosrnTS6JWT-AIfTfhZ0niQQ>
-    <xme:lo_Xati0iVGQrfKMXi6QJBaej7b83IyUEJohJWl9koVbmYVyq7MLR5qTDrRQeNV6q
-    pg-ROZcYAZjdgpIgicIrATTAhlgnY6BezqWSJxamADdH6Q1GW8uUKU>
-X-ME-Received: <xmr:lo_XaiMGhavA_KYVMyFOZAhIYyLYiEj6u-ah0ZGlOCiYMy8bu8dad7oTLHKpViCMqaZbbQQz8dYldgcMDTtHEUti-eXxdaAauTdL>
-X-ME-Proxy-Cause: dmFkZTF171MS4ae/6AOljRaU5CcevHyft3wNTsh9Jm4C/IWNz6DMdZt5iwJrZp6QhLrnSW
-    3C77wLNaqrQSDbGWhRvfybdY98dKI4S9Uf5eVQQkQ80Mj1GV/BVhMXcuqhKjOomvr4R/uT
-    WpSM6gzMukRN2MJGEK85wCv+i74msU6ZRh/6GUAvjA7IwRYQvPUitnTR+wPgrFrwx1SfYo
-    SHzqvtcVr1cQIa+9CVGWyPpTMwcY9Fz7pY74JobFpQsp9er3U7dYVO347NhTIGB7T/0rOj
-    zd1tdxKT/f9ri/pvLaOpTirvRGNO6l+m43BxXpfjKKGK01FDD7VPVzqeyCrbQZyThyJ7P4
-    3B0ViT5rAg7v8msiyOxTL7OxdHbyMwnnMgmhaiLYxCT1rUWSpiQnPfk5y9HhbfhGW3c3Eg
-    r818sDJNZ22Ry9GSh3uLO5nU4+ovjdnHp/9Wcr1mfUEe3P6ivylN8JFWZrZrKHi7F/0+Sy
-    l8Rgf1+3tzg9/7Qi0xJTDzSAuVxnl9aFYXyymIqkp/reiIsYlR034NGhmSvz/wxzMdPz0W
-    oYqxCVAFy8jx/utKBTGIEP8PywxZaofBjDzEpqQFIcu+PJUFFkuaYLv0EujsbJyfggeHhT
-    FZphIdz+tdFn2UgiiPLyUWx4X+RaB02+i9uty9rwdiyJi6JdrTIRzdd78Z/A
-X-ME-Proxy: <xmx:lo_Xau5XRbXMeHPm33sIezK5BRjfrZNLTlZHOZivuthcYWl0sEvG6g>
-    <xmx:lo_Xag3CtNiuTWzo90tdZuCG56f3eww1ovqLH7fvQN3Grik7DkTQRw>
-    <xmx:lo_XavY44nJilCMf7VRBhp1VCKDy8ggfZm4svH9ygBvCoZ9cvdSJ6g>
-    <xmx:lo_XaoD329vjzvmMUuhAeN6KH2s1p1NyaxNBhKHCmV2nOeNDmRdHvg>
-    <xmx:lo_XasbuV0e05_PSQJNh7Ew3lIlmelZsuKLfCKmMaKBB51UqavivrhVs>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Oct 2026 11:58:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=q9Qig/C2
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a1fbd52ab6so226485e9.0
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 09:01:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792512109; x=1793116909; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=V1sf00p4h2qemA8ouSO9REJj3oRiCNUJh+MpUEwaR3s=;
+        b=q9Qig/C2D4+tVzbFe+dHxeFdWMc/Hi6aUFCvB4fWZSZGQ+z782NyZPYKNmh1HHfDSK
+         nUbOUmTxq1qpwzvb58/uJDp62Tl6pxPhwj/7h3Ws5tU1wyPrww69BCXERJOdXcib8tON
+         yKG5PEwpNuzddzZCgRaINj+vn9AQhMybQ/O8WQIw7L6+s0CjLORuJiVhCGSo4t+S8ZxG
+         a9MgJOCu1xiKH3e+Dyb2ySmSTTIt2KsdOZ4v9CfjBebwr5PpM4ZdDcTdTsg/5Gdo1VvL
+         hu7WSr/hLN1cC91amle5U4tALB8CtCcpgsakyhdiXUy1NjC4fZEB2d1kvTz0ioal4fuM
+         Iz0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792512109; x=1793116909;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=V1sf00p4h2qemA8ouSO9REJj3oRiCNUJh+MpUEwaR3s=;
+        b=tYLC100iRzbmHgJujorhIiHHplIfjGRqJPsa4le5jcawmL1SUTAKz01/2BXZB6W2rM
+         KgKyMP8NVpISYb1Ko089ndSPgZl8ncWU+vN+9BnyqSvu7QPGF/1r+iAsjeSzZfxzTJHN
+         2Mdl5KI0Z5ZIGHsg6TyLzAIqw4M7zA4lWfJP4Po9e7rR1u7rHOQGwKUObtctCPrP256e
+         AhSvv1wRdT4fXqwmQwFEE8g2bgwJ7tmZWZR0t6Uyz/31tmhxw1l+EzND6LOo2eMLUk68
+         LFr/VZTE2G6R3F07vuExT+tcdVmuPz87SZ17bi16s17MXlamhnrCuzF4+TwqHbX/d6sg
+         fZpw==
+X-Gm-Message-State: AFq9FYJzZJSopXWWW2137An/a+HWXDl3ulID/vDRYFcHOn6d54+/D37T
+	x3h1DkhYbsAxIF8nLPSXt7eZQ80xK+sfgKjcSKQv/NTsfy1pzUsassfKFZUD43Vz
+X-Gm-Gg: AYBFou1rUXUrrtEqZ9z/tHud0A1AT2oIDUsgXmyulGy+xIfUumDQ+5EPVk8ofKNXkum
+	RaRr/tNZkWwGji2r6jSxuwNmU/YGGV+uGEBO+ERDvkZMGwVwqsWFSwM2Eqp3lxjZauKrOgFZzkh
+	RHyBlk71WiMnvNWwcfRUX8iZcUw1Plja8zB8/vRkVFC/T24qPyWxyB5o7cBWh5jaSSOZxItMoPJ
+	mLq3vqt4VA/RW3GqpllmiMNx9L/EHOaV99VOUHoo0Bk3z2tfVhEAitLaUhRwStISRLTrytj6FGb
+	hHahW0m/jrFSWhBq7UMa/iHWS2M45iCWDrHYVZ9g2SZ/EhqPu0NRmVrmPYOgaLE9cUBQsigXwKL
+	7W3CKo/vBuvmKzEaiX5QjCjw/LtrnRh+owg4qvMjrqMgSt13VfAyYY3xRdf3CkIG32NCNFsHXJz
+	lxcIr0HsZMKrHmR94fLj/b5wXSM5bL7fTCuuMejFDn1uQrRfYkMtFhnU/Ld9PYVpV5f1XuRP5OU
+	hNO9q6VjOGF3Hw274g6SNrV87WGogDFur6ddokIxVeH
+X-Received: by 2002:a05:600c:1f87:b0:4a1:fba8:b13d with SMTP id 5b1f17b1804b1-4a1fba8b15bmr3324215e9.9.1792512108835;
+        Tue, 20 Oct 2026 09:01:48 -0700 (PDT)
+Received: from Stealth.zuku.co.ke ([197.237.143.156])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e1d830e91sm7157410f8f.54.2026.10.20.09.01.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Oct 2026 09:01:48 -0700 (PDT)
+From: Dorine Tipo <dorine.a.tipo@gmail.com>
 To: git@vger.kernel.org
-Subject: [PATCH v4] github-ci: update macos jobs from macos-14
-Date: Tue, 20 Oct 2026 08:58:13 -0700
-Message-ID: <20261020155813.3315813-1-gitster@pobox.com>
-X-Mailer: git-send-email 2.56.0-321-ga7e4057184
-In-Reply-To: <xmqqfqy5clgz.fsf@gitster.g>
-References: <xmqqfqy5clgz.fsf@gitster.g>
+Cc: gitster@pobox.com,
+	kaartic.sivaraam@gmail.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	usmanakinyemi202@gmail.com,
+	Dorine Tipo <dorine.a.tipo@gmail.com>
+Subject: [Outreachy PATCH v2 0/2] t0410: fix exit code and hash assumptions in the missing-tree test
+Date: Tue, 20 Oct 2026 19:01:25 +0300
+Message-Id: <20261020160127.29096-1-dorine.a.tipo@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20261014134504.1152225-1-dorine.a.tipo@gmail.com>
+References: <20261014134504.1152225-1-dorine.a.tipo@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,96 +101,51 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-GitHub from <no-reply@github.com> address keeps sending
+This series cleans up the 'rev-list stops traversal at missing and
+promised tree' test in t0410.
 
-  Subject: [Action Required] macOS 14 hosted runner image is closing down
+Changes since v1:
+ - 1/2: expanded the log message to note that the original pipeline
+   silently assumed the first tree in the ls-tree output was the one
+   we wanted, and that naming a_dir explicitly is an improvement.
+   Thanks, Junio.
+ - 2/2: unchanged.
 
-and suggests to update to either macos-latest (macos-26) or
-macos-15.  Use macos-15 for two of the four osx-* jobs, and
-macos-26 for the other two jobs.  Use explicit version number
-"26" instead of "latest" so that we can more easily tell the
-differences and similarities between github-ci and gitlab-ci
-and compare their outcome on the same commit when needed.
+I ran the full test suite with both SHA-1 and SHA-256, and it passes.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Dorine Tipo (2):
+  t0410: use rev-parse to get the subtree OID
+  t0410: keep git's exit code in test_grep calls
 
- * Hopefully this is the final iteration, and hopefully the later
-   part of the proposed log message explains the reasoning behind
-   the choice between latest and 26 well.
+ t/t0410-partial-clone.sh | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
- .github/workflows/main.yml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 7e5769f543..e8f744d069 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -326,10 +326,10 @@ jobs:
-             pool: macos-15
-           - jobname: osx-reftable
-             cc: clang
--            pool: macos-latest
-+            pool: macos-26
-           - jobname: osx-gcc
-             cc: gcc-13
--            pool: macos-latest
-+            pool: macos-26
-           - jobname: osx-meson
-             cc: clang
-             pool: macos-15
-
-Range-diff against v3:
-1:  428ed741e9 ! 1:  2378f810f0 github-ci: update macos jobs to macos-15
+Range-diff against v1:
+1:  b8f514e0a2 ! 1:  dcf6c7da4c t0410: use rev-parse to get the subtree OID
     @@ Commit message
      
-         and suggests to update to either macos-latest (macos-26) or
-         macos-15.  Use macos-15 for two of the four osx-* jobs, and
-    -    macos-latest for the other two jobs, which is very similar to what
-    -    .gitlab-ci does.
-    -
-    -    Because we do not care which exact version we are running, so
-    -    request macos-latest instead of naming macos-26.  If there were a
-    -    similar symbolic name for the oldest-but-still-supported version,
-    -    we would use it instead of explicitly asking for macos-15, but
-    -    because there does not appear to be any, request macos-15.  This
-    -    would require us to update these two lines once every year, which
-    -    is annoying but is manageable.
-    +    macos-26 for the other two jobs.  Use explicit version number
-    +    "26" instead of "latest" so that we can more easily tell the
-    +    differences and similarities between github-ci and gitlab-ci
-    +    and compare their outcome on the same commit when needed.
+         The pipeline goes against t/README which says not to pipe the output
+         of a git command, since only the last command's exit code is kept.
+    -    'cut -b13-52' also assumes a 40-character SHA-1 name, so under SHA-256
+    -    TREE2 holds an abbreviated OID.
+    +    It also silently assumes that the first tree in the ls-tree output is
+    +    the one we want, without checking which path it is stored at.
+    +    And 'cut -b13-52' also assumes a 40-character SHA-1 name, so under
+    +    SHA-256 TREE2 holds an abbreviated OID.
      
-         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    -    Use 'git rev-parse HEAD:a_dir' instead. It returns the full OID in a
+    -    single command, the same way TREE is computed with
+    -    'git rev-parse foo^{tree}' just above.
+    +    Use 'git rev-parse HEAD:a_dir' instead. It names the directory we are
+    +    interested in explicitly and returns the full OID in a single command,
+    +    the same way TREE is computed with 'git rev-parse foo^{tree}' just
+    +    above.
      
-      ## .github/workflows/main.yml ##
-     @@ .github/workflows/main.yml: jobs:
-    -         vector:
-    -           - jobname: osx-clang
-    -             cc: clang
-    --            pool: macos-14
-    -+            pool: macos-15
-    +             pool: macos-15
-                - jobname: osx-reftable
-                  cc: clang
-    --            pool: macos-14
-    -+            pool: macos-latest
-    +-            pool: macos-latest
-    ++            pool: macos-26
-                - jobname: osx-gcc
-                  cc: gcc-13
-    --            pool: macos-14
-    -+            pool: macos-latest
-    +-            pool: macos-latest
-    ++            pool: macos-26
-                - jobname: osx-meson
-                  cc: clang
-    --            pool: macos-14
-    -+            pool: macos-15
-    -     env:
-    -       CC: ${{matrix.vector.cc}}
-    -       CC_PACKAGE: ${{matrix.vector.cc_package}}
-    +             pool: macos-15
+    +    Helped-by: Junio C Hamano <gitster@pobox.com>
+         Signed-off-by: Dorine Tipo <dorine.a.tipo@gmail.com>
+     
+      ## t/t0410-partial-clone.sh ##
+2:  5823e65a88 = 2:  f810625e77 t0410: keep git's exit code in test_grep calls
 -- 
-2.56.0-321-ga7e4057184
+2.34.1
 
