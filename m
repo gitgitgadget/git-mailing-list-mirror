@@ -1,87 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792520173;
-	b=IE5NVJPQVX38YJFhDFf9TK7GarTg7cwkuHIU/eGkTDfVdqXYEjCQamq5qGgmy38ZBvXr
-	 GhviEOkvZ/tborgJ+FHFNnuEd+xvGWfIgU1RCgu3L9MxXTjs9veGw6wX1A+AEk3LytHFl
-	 H8oXQBAWOgNH+hl9EEneUM/RfWkNCjoqPgefiks5JaZeWRBmrWPou9BMHrf1TvGxsR5cV
-	 o6V6Z6PznuinWPBe7VffMoZzYMY0UbdY6oLqC3VRcYC2HnL5tYrScI7d8WAZZdNqZyUkR
-	 ALu4yOryYLx8UjIcoF7bDZugjqshEbnXCB/ayTBpZdmQ8UEZ7noDIX/QQPGhVUquaTg==
+	t=1792520359;
+	b=WA6d2yyaz5yevOCpKfzKM8CJDaMBwkdLlEWo4oAPIhnnYtwDBItrOYytZqKq/uXgNYA5
+	 W6hgDIKK7a/RR6IC1W1c9jqC9+BXYXLFZCV8wMychQwzK1GrNvt7rctQIwTINkZNtgj4D
+	 ujv5MKmb2K7qFuC8IvX+rcpPElVeP/8dTbILRwApgWyj4UulpRT7cS5DWyJR2B47xMqBT
+	 zHmzmhd0rmKF1idVMAtzr6/LbUNdMJEkRZkvgqFzyU5Z1TQVsWA23swYepvdgqGwL5ff/
+	 /lCgEoJo5HCyNoAK1qIQRh9RF/ySpg0dlp91doScDQd5CkrdqVDzGjzk3D/7Kle1snA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792520173;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792520359;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=7R5Z2W+gksXIstTYhmU3Hs+4c1yLvNBGUq4XOfAdXI8=;
-	b=L2Uc6lIw9tnbI43lfnC/Sbw8ZltuHFO1gykLHbuUw4kZukZ8PDsQ5/0R8ReJva3cI7T3
-	 fcHGagJYVoSPma7iTirfXgDUrdCQ7GrampG2QtF/UnOQJzLlyX6N+svDbv0bp3Yf72Zx6
-	 JyW3rGVqVMQeTF0lqqWjp3WI/p3iTc70TNTuRZnfQ8kJvSECwzMXaBLLRVa7npeX5j4TS
-	 Rb1dxTmlgyh8jflgQqnSLyvI61B6qcXftkZh5Z+4PSJslXkRVnouhar45Uk/ZkdZjgNgC
-	 qqbrI4VYNurUTpELpqYItzDrNQS24d1lPEYA9lXyEJspcNVXopv5tFA+CEn5F0gKsBA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=anUtZPGdoaCjKf4Ht/1ETqaA1PoaFAxJqG6pPt1CKvY=;
+	b=smxFCcUtuggf+JOiQ19DEZJtPJGbbAK/yHEzmERkJmr9gOplIjDrfgaROdHJ3tvwUdJ5
+	 NBQVc9pXUHbO7mq2XM89YVaDVkIWH9x2KyXzC41TiFQEJuuqjl3BwWRSpKK2kMzh88AMt
+	 Z9ZpguTs4nprGwETkHGNgeyuFG43Z31IIt8BZNMqAPtipVXAaw4pJmDr+VsG404K8QdCD
+	 ugu+pu235dIf24Y7pjVqJHFn1yJT9qUIc0uVO566smbJNGYmAu9UhycGs3pAzbRTXYuiW
+	 a1XK8gC/cJ9kpjh2R7qauwPtLeaIFIzxaEq0FFnKWf26x/vvf2OwkLyuybXPCcNVbuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="acX/Y7PZ";
-	arc=none smtp.remote-ip=209.85.208.52
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="czdsXK/z";
+	arc=none smtp.remote-ip=209.85.160.44
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A0E606A31A
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 18:16:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 27A0E606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38DF860A262D
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 18:19:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 38DF860A262D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=acX/Y7PZ
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-6b1aa27963eso1408873a12.1
-        for <git@vger.kernel.org>; Tue, 20 Oct 2026 11:16:12 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=czdsXK/z
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-48e94879f02so1122824fac.0
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 11:19:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792520171; x=1793124971; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=7R5Z2W+gksXIstTYhmU3Hs+4c1yLvNBGUq4XOfAdXI8=;
-        b=acX/Y7PZXvOoJGSr55vpPQxgx9osygGbnllbqh8rhSAW2/VAYs5HUy08d3/aRf3EQQ
-         +czkTIvOPQIwDzSxDYcRvdOc7S+sw3RPxoBU8qSAFkKbnBftDUKR42WmiLs6z2v3Q9BF
-         q8QqPPpqNMNF8iGpoEWfyIRAqB1mz1EM+0qroW/+MiQDZSPqOvkbH+qz0uO1G1M70saO
-         8a56gRU2SaO5UQ0KKysQS81eI6vt40PPm8N6NXaC6XkU6ZFCnIeQpV6jAU8givdkMrmM
-         vKF/a2nhCaqoQachkAYMkKdcurrXuxCi8kqqjNpayBoiB5O94QE1pxtb/WsmGwpgyEWg
-         vg/A==
+        d=gmail.com; s=20251104; t=1792520358; x=1793125158; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=anUtZPGdoaCjKf4Ht/1ETqaA1PoaFAxJqG6pPt1CKvY=;
+        b=czdsXK/zG5OiPVvNTIaM9qhJ9K42ZMb0potJkcHXnVC8Srt7UiY2S94KdCpHpkQdSj
+         nhTzws8KM9WsARwnEHBcDVoiayoQktGzOGmw2HO9qEaN3aLaMtJuInt/kbwEaXzhLALb
+         y/vYLHcbvKdLLxtwxdmziI3/43LSyLB1gZiAerggL0G+gUcvM6ErTAdi1/ASHYnmirCe
+         NqiCbll+evjB+rxYAktAcwwnGELXooNkMHlOUcGcg5ooEcNNHqRVaYPgLHYuNatYrj6Z
+         kg53iB6CttTRzEUWZM9zCO23nV+PSB4+H1qXhIRSV631rmnVSXEW93idbShp1kJlNhGR
+         ImCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792520171; x=1793124971;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=7R5Z2W+gksXIstTYhmU3Hs+4c1yLvNBGUq4XOfAdXI8=;
-        b=h46nKxSHXquXcJW96FQH8/nxm1azStqIXtoOVr6vBKaEuWjHvASAGDCfCIynbWcvZX
-         mEGZ941j92SMM6J5xlhEocaxnhkIW4S1SRiZGkEm5o7+Gu4808xlz0GB7dkJXLfTiHp3
-         nGiU0OFQTruVzDddsJ369drQ/7RBlIJGq2aEgNOrEet+AAq+t6Ffkr1IoS752OiGmDJd
-         iXiA7nRATqGsFrtqIyX3FZhioKfWT86560gUUOhNupo9aZVRiagg5CvcEM+DyVx8sTI1
-         ItTFbbgLsc9Y3aODbilCcCaF3Pt8bcSicr6aTVlTWNuOsJ2CAgFkNBPWYG1PGg31dD+R
-         4Gjw==
-X-Forwarded-Encrypted: i=1; AKwUvBxPcwWwWQqcSQ8jLSX86GdS9l5dKY8Y9goksYj59hIMtuXe/8/+ryUjI3OUD5HIBGfFzqU=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJf85KLzVo5Ufr8vqeMMRB5nQ/2K8KhSQTx3o6pR1wBlKSbscvO
-	p4sJ85lSSEwt0zc2yD9COhb4O5WaZO2EaWar8yj3aIRqcMSHSACNi4A6r0pKxg7qcUXajA==
-X-Gm-Gg: AYBFou05uR6xLCb/tMMbMR1E/1DMIF13S8XVRVLR4gyoZcRslgHT7pgV92vdLEhlOoK
-	bNg0aUkgn0LM4lu9iH8G4QbxUOlaYpkXiCwW/BYZ40KsSNtQRXDWaQuwAWc1mzppK7e7gx8FBL9
-	ivDRLEVB2GR9s9AT7O4QMPAdxsxqCqYSiq91Oc+LgtC/Jpo8xHgQ0u6eWsqY6vBum4FuGGb1EjU
-	iqkUEMtsJMlP9fvLyv3gbGzPgsSixaj67PLLbLQlq91UCPbNbZRG7YGMIClJzf+QAoMuDu3NNdJ
-	PDGKTIpn8e2e432ZPG+vQiNYs4kAzp33ruNOl7pWpHUq2xy5ceCp+K0m8kh1aLWOoHGbAomFTih
-	iAAW17E+BLkg1T1l3Z3JHZ/6PWkbtcYtXOyGYQa42BZKsEJNT/dENwdjr270xiTa/cNI6lijC+E
-	Px1FWo7PbWKVCtAfY79X34dTej0VtkxXB1R06mQNX3yxbizgOWc+dPC/3tNW4ASCqa/bH5aetNY
-	DxSpoMuXuQOew==
-X-Received: by 2002:a17:906:478b:b0:c46:7502:db74 with SMTP id a640c23a62f3a-c46799c88c5mr160566b.23.1792520171154;
-        Tue, 20 Oct 2026 11:16:11 -0700 (PDT)
-Received: from [192.168.0.172] ([217.71.1.73])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4678faa02dsm2329366b.40.2026.10.20.11.16.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Oct 2026 11:16:10 -0700 (PDT)
-Message-ID: <fce11abe-6d7e-495a-8729-c3a62c52c113@gmail.com>
-Date: Tue, 20 Oct 2026 20:16:09 +0200
+        d=1e100.net; s=20260707; t=1792520358; x=1793125158;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=anUtZPGdoaCjKf4Ht/1ETqaA1PoaFAxJqG6pPt1CKvY=;
+        b=JCjrNlVvuR+khUp/t/yPHsw7Iqv6bNLmmLMafstBzLFmNS0cZD64tGYHeb5Y2hXL+e
+         +zwAX3OZ2QdOhjvzwcklIfWJNqUH6bfNlnLyaAgzSpjkWkabDBf9FqEiGPQOXOnmVSsh
+         PwOF1MMR2/9iXmhBNx3NPB3sVrEViU5UNqTLo8M/Vuk6pKMWvlCsK5wBEjhgiH8Ts7aN
+         ex+d0YkoyDpKQ6USUD/yh6B44ieL2xdsYgB02IPfbmbCpa+beffeFaC/7jWIRFBgBcZX
+         hrqKOwhj4q/7g4a69rJ147J4OFQOgjTj1WbbUhwl35i/1AQD5g88GZJPb5xnhmK+Ugni
+         j1Zw==
+X-Gm-Message-State: AFq9FYKF5c9uT5okiGdD0EDWj2PIEU+x9NkwcnnsNxfotWig+A99xCCf
+	mCOIFe37f8NZbvyw6voI8EpAfQV775/He+CaNwJCZYlYEnrSODbLSOVhvy1vQ6fD
+X-Gm-Gg: AYBFou37Pb4PlcAamnPmkGD+qBsA/mcl/GDAfout5Zs41CCoq/2G61FXYPSqVvECKkz
+	w6fpHeAC3OJWhewtpad0WGaFMw2j3XoF/TmFlL6vPVtY0Bx2UKezZFed2XCBqR6LXWJifAkqRfQ
+	KIU+VcE2fDbvdwmrqSJlvJlRMCNFJHE0zOYOw8ojw8mfIoOqTQEqr0QwbdfgFAQZu0hibgmHmE4
+	yRQHALdrFLckVCumzvPE64Tyf7N7UAHfpzYrhkDvF9nrqGw5aK640I3RhwFcQqU8F7tMMoY4Ht4
+	7q0cvTZLNYoxhGchzYKH2e/FmgzSSiIOfpIH4Ph4EHzvw0af1g8BHKgzf052Gq3RPtj5P2yf/vo
+	8YHpHoHqaGXNhcOY3ynR+wQ5dLSfOVEI1PZe545S4cRezwVjRlkBq9vlTO6EsfXluprD3Z7RvmA
+	utN0zhsDtN5wXluXLwpu4VH7l0BhpzhUWbDswAhPLfnMd6Rt6V7xgr8aD8aKH9PgdMA2F2WFrlg
+	Q==
+X-Received: by 2002:a05:6871:7b0d:b0:49d:d220:e234 with SMTP id 586e51a60fabf-4a7579a1421mr8157844fac.35.1792520358115;
+        Tue, 20 Oct 2026 11:19:18 -0700 (PDT)
+Received: from [127.0.0.1] ([13.89.125.200])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4a7d5ebc240sm191721fac.2.2026.10.20.11.19.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Oct 2026 11:19:16 -0700 (PDT)
+Message-Id: <1a7d060fae0decbe7dda63ec4ab57e32e0205df0.1792520353.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2272.git.1792520353.gitgitgadget@gmail.com>
+References: <pull.2272.git.1792520353.gitgitgadget@gmail.com>
+From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 20 Oct 2026 18:19:12 +0000
+Subject: [PATCH 1/2] hook: honor hook.<event>.enabled for the hookdir hook
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -91,135 +95,198 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] doc: git-rebase: update incompatible options
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Li Chen <me@linux.beauty>,
- Phillip Wood <phillip.wood@dunelm.org.uk>, Julia Evans <julia@jvns.ca>
-References: <20261020150923.5595-1-omri.sarig13@gmail.com>
- <xmqqjyncxrur.fsf@gitster.g>
-Content-Language: en-US
-From: Omri Sarig <omri.sarig13@gmail.com>
-In-Reply-To: <xmqqjyncxrur.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Adrian Ratiu <adrian.ratiu@collabora.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Emily Shaffer <nasamuffin@google.com>,
+    Junio C Hamano <gitster@pobox.com>,
+    Thomas Bachem <mail@thomasbachem.com>,
+    Thomas Bachem <mail@thomasbachem.com>
 
+From: Thomas Bachem <mail@thomasbachem.com>
 
-On 20/10/2026 18.24, Junio C Hamano wrote:
-> Omri Sarig <omri.sarig13@gmail.com> writes:
->
->> Several options in the rebase man page link to the "INCOMPATIBLE
->> OPTIONS" section when the option is no-longer incompatible with any
->> other option.
-> There are several options listed in the section, but only two of
-> them are "no longer incompatible".  So either:
->
->      Several options in the rebase manual page link to the
->      "INCOMPATIBLE OPTIONS" section, but a few of them are no longer
->      incompatible with any other option.
->
-> or:
->
->      A few options in the rebase manual page link to the
->      "INCOMPATIBLE OPTIONS" section, but they are no longer
->      incompatible with any other option.
-Will do!
->
->
->> - Commit 1a66d8c6f6 (rebase: remove --allow-empty-message from
->>    incompatible opts, 2023-01-25) removed "--allow-empty-message" from
->>    the INCOMPATIBLE OPTIONS section, but did not remove the link to that
->>    section from the option description.
->> - Commit a74b35081c (rebase: drop support for `--preserve-merges`,
->>    2021-09-07) removed the `--preserve-merges` option from rebase, which
->>    removes all incompatbiilty references to `--ignore-date,
->>    --reset-author-date` and `--signoff`.
-> After seeing the explanation for the above two options ...
->
->> Additionally, `--onto` doesn't link to the INCOMPATIBLE OPTIONS section, even
->> though it is incompatible with `--keep-base`.
-> ... readers would naturally want to know when this happened.  It
-> seems that when the '--keep-base' option was introduced at
-> 414d924beb (rebase: teach rebase --keep-base, 2019-08-27), the
-> description for '--keep-base' had the "see incompatible options
-> below" but the one for '--onto' was not updated, and the manual
-> stayed that way ever since.
-That makes sense, I'll add it.
->> Update the description of these option, to have correct references to
->> the INCOMPATIBLE OPTIONS section.
-> "these option" -> "these options".
-Will do!
->
-> Also, notice the commonality across these three commits?  They all
-> predate the latest tagged release Git 2.56, so as a fix, a change
-> like this should be prepared to be applicable to the maintenance
-> track for that release.  When queuing the last round (v2), I wiggled
-> the patch to apply on v2.56.0 while running "git am -3", but perhaps
-> it would be simpler if you prepared your patch on v2.56.0 on your
-> end?
+The documentation added by dcfb5af67e (hook: add hook.<event>.enabled
+switch, 2026-04-10) says that with hook.<event>.enabled set to false
+"no hooks fire for that event", but only hooks defined in the
+configuration are skipped. With hook.pre-commit.enabled=false,
+"git commit" still runs .git/hooks/pre-commit, and "git hook list"
+shows that hook without the "event-disabled" mark.
 
-Sorry, will fix.
-I've read the SubmittingPatches#choose-starting-point documentation now, and
-will know for next time.
+Move the event_disabled flag out of u.configured in struct hook, set
+it for the hookdir hook too, and check it for both kinds of hooks.
 
->
-> FYI, here is what I queued for v2.
->
->
-> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-> index f6c22d1598..b84b14f02e 100644
-> --- a/Documentation/git-rebase.adoc
-> +++ b/Documentation/git-rebase.adoc
-> @@ -217,6 +217,8 @@ OPTIONS
->   As a special case, you may use "A\...B" as a shortcut for the
->   merge base of A and B if there is exactly one merge base. You can
->   leave out at most one of A and B, in which case it defaults to HEAD.
-> ++
-> +See also <<INCOMPATIBLE_OPTIONS,INCOMPATIBLE OPTIONS>> below.
-Given that the maintenance branch predates 2fc11e3382 (doc: add more 
-AsciiDoc
-cross-references, 2026-09-25), none of the other lines have the AsciiDoc
-link.
-I'd expect this change to be:
+The test for hook.<event>.enabled=false looks only at the standard
+output, but "git hook run" sends hook output to the standard error,
+so the test passes even when a disabled hook runs. Add a hookdir hook
+to it and check the standard error as well.
 
-++
-+See also INCOMPATIBLE OPTIONS below.
+Assisted-by: Claude Fable 5.1
+Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
+---
+ builtin/hook.c  |  6 ++++--
+ hook.c          | 14 +++++++++-----
+ hook.h          |  8 +++++++-
+ t/t1800-hook.sh | 29 +++++++++++++++++++++++++++--
+ 4 files changed, 47 insertions(+), 10 deletions(-)
 
-to match the rest of the messages in this file.
+diff --git a/builtin/hook.c b/builtin/hook.c
+index cceeb3586e..1ea698ecc2 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -82,7 +82,9 @@ static int list(int argc, const char **argv, const char *prefix,
+ 
+ 		switch (h->kind) {
+ 		case HOOK_TRADITIONAL:
+-			printf("%s%c", _("hook from hookdir"), line_terminator);
++			printf("%s%s%c",
++			       h->event_disabled ? "event-disabled\t" : "",
++			       _("hook from hookdir"), line_terminator);
+ 			break;
+ 		case HOOK_CONFIGURED: {
+ 			const char *name = h->u.configured.friendly_name;
+@@ -95,7 +97,7 @@ static int list(int argc, const char **argv, const char *prefix,
+ 			 * "disabled" surfaces once the event is re-enabled.
+ 			 */
+ 			const char *disability =
+-				h->u.configured.event_disabled ? "event-disabled\t" :
++				h->event_disabled              ? "event-disabled\t" :
+ 				h->u.configured.disabled       ? "disabled\t"       :
+ 								 "";
+ 			if (scope)
+diff --git a/hook.c b/hook.c
+index d10eef4763..5e756cb353 100644
+--- a/hook.c
++++ b/hook.c
+@@ -115,6 +115,9 @@ static void list_hooks_add_default(struct repository *r, const char *hookname,
+ 
+ 	h->kind = HOOK_TRADITIONAL;
+ 	h->u.traditional.path = xstrdup(hook_path);
++	/* list_hooks_add_configured() has loaded r->disabled_events */
++	h->event_disabled = !!unsorted_string_list_lookup(&r->disabled_events,
++							  hookname);
+ 
+ 	string_list_append(hook_list, hook_path)->util = h;
+ }
+@@ -514,7 +517,7 @@ static void list_hooks_add_configured(struct repository *r,
+ 			entry->command ? xstrdup(entry->command) : NULL;
+ 		hook->u.configured.scope = entry->scope;
+ 		hook->u.configured.disabled = entry->disabled;
+-		hook->u.configured.event_disabled = event_is_disabled;
++		hook->event_disabled = event_is_disabled;
+ 		hook->parallel = entry->parallel;
+ 
+ 		string_list_append(list, friendly_name)->util = hook;
+@@ -559,8 +562,9 @@ int hook_exists(struct repository *r, const char *name)
+ 
+ 	for (size_t i = 0; i < hooks->nr; i++) {
+ 		struct hook *h = hooks->items[i].util;
+-		if (h->kind == HOOK_TRADITIONAL ||
+-		    (!h->u.configured.disabled && !h->u.configured.event_disabled)) {
++		if (!h->event_disabled &&
++		    (h->kind == HOOK_TRADITIONAL ||
++		     !h->u.configured.disabled)) {
+ 			exists = 1;
+ 			break;
+ 		}
+@@ -583,8 +587,8 @@ static int pick_next_hook(struct child_process *cp,
+ 		if (hook_cb->hook_to_run_index >= hook_list->nr)
+ 			return 0;
+ 		h = hook_list->items[hook_cb->hook_to_run_index++].util;
+-	} while (h->kind == HOOK_CONFIGURED &&
+-		 (h->u.configured.disabled || h->u.configured.event_disabled));
++	} while (h->event_disabled ||
++		 (h->kind == HOOK_CONFIGURED && h->u.configured.disabled));
+ 
+ 	cp->no_stdin = 1;
+ 	strvec_pushv(&cp->env, hook_cb->options->env.v);
+diff --git a/hook.h b/hook.h
+index 27bb1aeb2e..6af24cb331 100644
+--- a/hook.h
++++ b/hook.h
+@@ -32,10 +32,16 @@ struct hook {
+ 			const char *command;
+ 			enum config_scope scope;
+ 			bool disabled;
+-			bool event_disabled;
+ 		} configured;
+ 	} u;
+ 
++	/**
++	 * Whether this hook's event is disabled with
++	 * `hook.<event>.enabled = false`. This applies to configured hooks
++	 * and the hookdir hook alike.
++	 */
++	bool event_disabled;
++
+ 	/**
+ 	 * Whether this hook may run in parallel with other hooks for the same
+ 	 * event. Only useful for configured (named) hooks. Traditional hooks
+diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+index 7d4b2982b4..27cb0eb01c 100755
+--- a/t/t1800-hook.sh
++++ b/t/t1800-hook.sh
+@@ -496,6 +496,15 @@ test_expect_success 'disabled configured hook is not reported as existing by hoo
+ 	test_grep ! "pre-commit" git-bugreport-hook-exists-test.txt
+ '
+ 
++test_expect_success 'event-disabled hookdir hook is not reported as existing by hook_exists' '
++	test_when_finished "rm -f git-bugreport-hook-exists-test.txt" &&
++	setup_hookdir &&
++	test_config hook.pre-commit.enabled false &&
++
++	git bugreport -s hook-exists-test &&
++	test_grep ! "pre-commit" git-bugreport-hook-exists-test.txt
++'
++
+ test_expect_success 'globally disabled hook can be re-enabled locally' '
+ 	test_config_global hook.global-hook.event "test-hook" &&
+ 	test_config_global hook.global-hook.command "echo \"global-hook ran\"" &&
+@@ -1110,9 +1119,13 @@ test_expect_success 'hook.<event>.jobs rejects values less than -1' '
+ test_expect_success 'hook.<event>.enabled=false skips all hooks for event' '
+ 	test_config hook.hook-1.event test-hook &&
+ 	test_config hook.hook-1.command "echo ran" &&
++	test_hook test-hook <<-\EOF &&
++	echo ran
++	EOF
+ 	test_config hook.test-hook.enabled false &&
+ 	git hook run --allow-unknown-hook-name test-hook >out 2>err &&
+-	test_must_be_empty out
++	test_must_be_empty out &&
++	test_must_be_empty err
+ '
+ 
+ test_expect_success 'hook.<event>.enabled=true does not suppress hooks' '
+@@ -1147,10 +1160,14 @@ test_expect_success 'git hook list shows event-disabled hooks as event-disabled'
+ 	test_config hook.hook-1.command "echo ran" &&
+ 	test_config hook.hook-2.event test-hook &&
+ 	test_config hook.hook-2.command "echo ran" &&
++	test_hook test-hook <<-\EOF &&
++	echo ran
++	EOF
+ 	test_config hook.test-hook.enabled false &&
+ 	git hook list --allow-unknown-hook-name test-hook >actual &&
+ 	test_grep "^event-disabled	hook-1$" actual &&
+-	test_grep "^event-disabled	hook-2$" actual
++	test_grep "^event-disabled	hook-2$" actual &&
++	test_grep "^event-disabled	hook from hookdir$" actual
+ '
+ 
+ test_expect_success 'git hook list shows scope with event-disabled' '
+@@ -1169,6 +1186,14 @@ test_expect_success 'git hook list still shows hooks when event is disabled' '
+ 	test_grep "event-disabled" actual
+ '
+ 
++test_expect_success 'commit skips the hookdir hook with hook.pre-commit.enabled=false' '
++	test_hook pre-commit <<-\EOF &&
++	exit 1
++	EOF
++	test_must_fail git commit --allow-empty -m blocked &&
++	git -c hook.pre-commit.enabled=false commit --allow-empty -m allowed
++'
++
+ test_expect_success 'friendly-name matching known event name is rejected' '
+ 	test_config hook.pre-commit.event pre-commit &&
+ 	test_config hook.pre-commit.command "echo oops" &&
+-- 
+gitgitgadget
 
-Is this correct, or should my patch include the "final" version of the line,
-with the AsciiDoc link?
-
-In case the line should be without a link, I guess that the link will be 
-added
-during one of the merges? Should I provide any help/support for that in the
-current patchset?
->   
->   See TRANSPLANTING A TOPIC BRANCH WITH --ONTO above for examples.
->   
-> @@ -332,8 +334,6 @@ See also INCOMPATIBLE OPTIONS below.
->   	and this option would override that behavior, allowing commits
->   	with empty messages to be rebased.  Now commits with an empty
->   	message do not cause rebasing to halt.
-> -+
-> -See also INCOMPATIBLE OPTIONS below.
->   
->   -m::
->   --merge::
-> @@ -487,15 +487,11 @@ applying (in terms of the author date).
->   	Instead of using the author date of the original commit, use
->   	the current time as the	author date of the rebased commit.  This
->   	option implies `--force-rebase`.
-> -+
-> -See also INCOMPATIBLE OPTIONS below.
->   
->   --signoff::
->   	Add a `Signed-off-by` trailer to all the rebased commits. Note
->   	that if `--interactive` is given then only commits marked to be
->   	picked, edited or reworded will have the trailer added.
-> -+
-> -See also INCOMPATIBLE OPTIONS below.
->   
->   --trailer=<trailer>::
->   	Append the given trailer to every rebased commit message, processed
-Thank you for the review, it is really appreciated.
