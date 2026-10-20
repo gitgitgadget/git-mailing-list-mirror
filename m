@@ -1,88 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792503798;
-	b=WqYopgVlMmeQ58pE1SPEc8quZXeRiwwPY5EqaPoivsn+OY8BaiRw7rft3K+aFyq8RKa1
-	 DM1Hiz/SvCd7TUOEidDKmRdmaGktJrdgtJea3uLGj08rApXNYG7G7rHlwUdkbwmXlQUja
-	 OtsEtC0maf+8Y0cwpFGuOxy0os/SU4yT6VAhcwC3832Ih3k17YV0jmA2uWB+KVnVgu8fl
-	 XSCYuMn4WmEQnyeKP/MudpD+6oCWD0SBY2PvGo0V1xSizaGsDWDrFdXX2XIj+ydm39fNE
-	 8TsHGnjkFwu/TUJQ8IXLj92Sb8nFEJPO3zXEic5AuzyLpBWdOZjlI8h6CK5p4gve1RQ==
+	t=1792503803;
+	b=ObZQAvRsCw37ISjcPH0+Pk0gv1kDWU1a5CtWTfdyTZdUpmMQPAhcrooGuBwALWF8qmfP
+	 ZI1HkIY0oy8LyhMqb0Fh/izocRDvUk0s8bKf2xL74kfL/FfGmkHTM/tpfv6lcOlcK42Zs
+	 1uGCQiNJIfmar6MQUs5NEOHexwpyR7zCbBlrzjOZ+jExkEgOrwdq3RYKB25YvM/PmL24B
+	 jNJ1MsU+4ZkWeSpLe/Vob+4lkhjK4cVsPqosCxwNvP0a48DIZiLeT3JFIOxc7gde/XwKf
+	 IgjrKjxTGDZp7JpHlvapYKgc05To5AJ16djRfA5CuEEWs5PDjl/sQSY/KSKfJUY0Abg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792503798;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792503803;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=Zc/xoqThglmgye3y964OcBIwAeRBrcc2wQMSaMr9Ucs=;
-	b=TKwoOYJM+20cR+ekQXNwYbzFrDvg4Uf05tOblxIkBNlgV9yosYPlWVd2X/hxkp7jeWEu
-	 j5ubzWiURlw5w6t2L2CW8wVpTT38t19wwBDp6PjcDs5QQA9bY+JnG2qWGQTpRL04kDWQs
-	 IptrWbOXBNNYNe2RHiPFq9YneIxXs+DC6kV0CJlTZV7AxBB1Ik42AiFzA6OueSQSx7ege
-	 vXBYji7GRklp2RxlKP74RiBOXKQ+MCAXPyLfNP6vsM1fEZqhboxeWoHI9cXsMyOpOcgG6
-	 5Zu1lwLbpdCU+su4Wh5m/23s1IEsP6vdhU52BBF5s6i2JJOnk465xHBPJoH6ezC+9rQ==
+	bh=LsCMLYu4DwjDrjTK5hl+KsOSgxzvtbRxYSU6jXWhdBc=;
+	b=g1Kir3J0KWN5w45vNPW9nV9oMCirFRf9j7RfB0/r/t/YQ5aFSX2FiPp1/lLm0uQbfbZQ
+	 P9uLbMrby2qtdUKX1wAulpJSIAr/oQc4mCeI/oh80tKUPgVySEMu0KhIrhvzkYYOitQxp
+	 XM6G7544iHOv4kijzJUpU00odJccGTr7/GgmQhyxDidD4odlSzxG38OB4yppUK18vMTrP
+	 RrRHZeABNrRv8RkGW8m7uswHLULKpB8SahRlwfNCDRXQpfjAXWpgSHKw5FdukWG5y7fpR
+	 9Bn91V9VPIxuT/K8/RvibdivXbrVzwlFzTxB74IwnJ/PiRwt7N7J4l41yvy21gyorQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=JQi3d55K;
-	arc=none smtp.remote-ip=74.125.82.170
-Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CQ67CqAh;
+	arc=none smtp.remote-ip=74.125.82.43
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E840606A325
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 13:43:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9E840606A325
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6817C606A319
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 13:43:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6817C606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=JQi3d55K
-Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-3514b90bb89so8657333eec.1
-        for <git@vger.kernel.org>; Tue, 20 Oct 2026 06:43:17 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CQ67CqAh
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-14fc585291cso680024c88.1
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 06:43:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792503797; x=1793108597; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792503802; x=1793108602; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Zc/xoqThglmgye3y964OcBIwAeRBrcc2wQMSaMr9Ucs=;
-        b=JQi3d55KJBP85NyK4cpCQtBoetG2ksy60PHSSNcy+bqxNm+Uyiz8qWABNAbzZ9KqSO
-         LYGcN0bb93odRwvt9uu1W9pN0Fc/ECLYoRUEplIJIDxztPB9qnYgqo44ka5/NgY0AoEb
-         ps9FHGi9jjiMBlnPP9f9qozaDDndz1W5jb9cklEiVBcToz0N4Z/+Pu5rsAgnK8GNHjyK
-         6rScZ3pjflQoMmengkvM1b3iQoLo5ymprT73f4BrOphWFJ04s5r/SEuckg6B2GNCGe5I
-         aFo+c7mBcH7tgwy8ee3WrJLOr/1DipHoEIOZHKcBNINikwMYNbNL4LbfYf3sNLozcv2g
-         fcLQ==
+        bh=LsCMLYu4DwjDrjTK5hl+KsOSgxzvtbRxYSU6jXWhdBc=;
+        b=CQ67CqAhGcizzICtdtgq0EBY26Vzvc7V0Du+cS+CCqmD4cfKELf3pOhr+hl87nUOhj
+         78CqSpe2uFmvp1ZQ7fqgLmFokkZyrR48jfgv1x8M+dAzRYkTUgkyYy2f/xN5Id1Hy5q5
+         A7PVohfBH/OPA7it9qP4t8kPRrmttGQo5IvTNuge9AcixQHuYU8TcKEj808kFhDvMweS
+         2BRxDlO8jAxFrFz96qR6b7f8xs7iEzNnfYUOqnhKF91iJ6CmEVwMMfZLo2VneoFZRg2A
+         LKVP7UnjcMMsd9x/LU5kRBtMtTVEjynKHUS07/tcce86XhbLOxuCNzgF6IZDvl1DL5pg
+         FUHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792503797; x=1793108597;
+        d=1e100.net; s=20260707; t=1792503802; x=1793108602;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Zc/xoqThglmgye3y964OcBIwAeRBrcc2wQMSaMr9Ucs=;
-        b=xoo4kucQND59CTEe1bjEuBcingFQpPPxJ0xPzWBVFvPIynIwdYhBnfGdaadsmYoj0L
-         g1mk3fOwJhkCJt9/q5I4fH2YlD4KeUIbkrmjkrjiiYTp1fcZyfX73n+vdx3omenuyN0D
-         ZrD0UrLB3D1jIfI7a0zZALoHW+nQlW9kczeW81A5EKd8EAcJphYyd+W1M3yyH4KhNp1I
-         /uWNcQXwzq5yNY7SI9Ddb9d5RU6KlzT6VsuBr4zDIFiZyAkfuxuHM6hNscwy4RwbcsaS
-         rCWeTYoh4WGIc4HHGxpCK5v+VJzO9dN2sL/1+gzWGss7qy1X8iqdAW3hzkcgnV1IpKDC
-         12Wg==
-X-Gm-Message-State: AFq9FYLscmXA03YI2qReWHW9rRymgLIheiGLLjwpLwTFCbTGMd3kGQ0j
-	JiOJYfnBqh1OeGhzUbJFrCW2ybuTPBdd8KVrIpX63Satq/Pb6yIhrz2TOHPutVDK
-X-Gm-Gg: AYBFou2y1HTFiQOsmmHF4K4a42ThUPRRor76s1c9HTUg/aJLieYb9fm88iKup787GuM
-	wpmO1T0Z3P9vbhOHUHiDd6HBv9Dh39E4gsbyTETlOq3L5Zzya8u5BisjtvETKfVVbLoggn70dhg
-	AB2pPAUa0i32FZ7+ux+6SDFh9WtkeyBEHvIgw+LQ+R8lzg99N4ZLkM1mA24XwnmDCN5AAmHJuCc
-	BwLWI14ZPmT1BThOlf5lczYkcdGub/Xo7wwCuVKUJmvIHbcxNNGyJaUqz5Ygc67HpANMPOQZ33d
-	Nc8pTeO0aVCh3TlILHXykMU7zOiV8rz0dz487o///cUMXwOGLAGltLCJmx4pVjzy+xrXVltHgR1
-	UErW66uoEtpT+aohQ6acX8sSCYADxCtZTRQAlVYfO714yhud7/SMrOlT38zqQsU8sw2jbdpXaR2
-	+yLnvfGRbpCdWP1t0/8fReephraRy22p5LtAYaj0ADTCi6jJ0wvmbYZrSwJTj0rWtoyOgTgxo=
-X-Received: by 2002:a05:693c:864c:20b0:366:ae22:a562 with SMTP id 5a478bee46e88-366ae22a7ffmr1330082eec.19.1792503796683;
-        Tue, 20 Oct 2026 06:43:16 -0700 (PDT)
+        bh=LsCMLYu4DwjDrjTK5hl+KsOSgxzvtbRxYSU6jXWhdBc=;
+        b=RhLI87NWjiRjKlc4er3DScghThMvbw+ifzksKg2Lcv63kKD//VxmVI3s6VJA8aUt8g
+         gk7825KxY15s4gVLwEgESeAeJmwGMDJV+/AJp+uK4pMO8PO4u73W28+VBdMYZLlDA5I2
+         qMXD+tqsESZPlKh+/4pLiLtGjeLQGBwKo1SESGz0a/IdXpze0NI7eg3wSnDt34O2w2uO
+         tiwyMGS5OYHj2bVjBy0PwcSy/K/KkotwoSsVQXIOTJLeGcpLUEwEP+tAkDToUGiOwelo
+         NfnWLqx7P8zc2yh4vHS3J3E1/3J7ScaOpESJNWkrG3cyijMJWqcFnu/PF5yWXQcUs98L
+         aC1w==
+X-Gm-Message-State: AFq9FYKxK9n4Gf3sm8QalqzUat26H6uPdT1zejTrR+AdeqR/vxPjhTJQ
+	9yASB+zvskFaSSiB9eDeI1y3lJwiCOaJB7s8jxPyVTwzmEU32zH+qptTmzhoObDU
+X-Gm-Gg: AYBFou2O40btCFp4CJb28q21O0l/KesIwRdcHeQ1/SsRgC3yRXikZvNudPxqfWwhajv
+	ARKATqrCTeM0NDpGpR4G/UTLirxbHOpA8S9Og5gLaSEMPxdOnx32VsL4pkd+XiqdpLwT7qm8kA0
+	+c9fZ1tWOHhcoWI6VFWq+/A7Iu98MaIqgzvT5ivnUUZGBmbj6sF99ojoB+oD2Db4ngitm63c0zB
+	Y3MC908EmvM/6DkWRKyPZ2cjXX/gitU4ajkisFWDELIylWwdNNvp0AL0BBhdbW+1h+iR1J1y5CW
+	wFsX2l8PfEWdm6alYPt9jnxVir8lQWnry82iqMFwdEeA6TMye7kx+jXhALFzaA8fKajtt1S4ac5
+	jj9JCGS45k5TIpwAWKli45P9FbowZtFlizWyfAAwLOfrsmlzEoSd06g6Lvf1Zzaqu10xmH7r9Q0
+	WXhA0Ju1pIq1+hYtObRY157N0SgW3T0acXM2DcR/IvWY9dFoIQleldkqvTsHJ5clRt3/65XaA=
+X-Received: by 2002:a05:7022:7f01:b0:178:d38c:eafa with SMTP id a92af1059eb24-18512579328mr14396930c88.21.1792503801381;
+        Tue, 20 Oct 2026 06:43:21 -0700 (PDT)
 Received: from [127.0.0.1] ([134.33.77.25])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3608258aa66sm51562615eec.20.2026.10.20.06.43.15
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1831c2e7bf4sm32809993c88.20.2026.10.20.06.43.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2026 06:43:15 -0700 (PDT)
-Message-Id: <aa20604144efdcc5ada00d65d538fdb42c2e31d3.1792503778.git.gitgitgadget@gmail.com>
+        Tue, 20 Oct 2026 06:43:19 -0700 (PDT)
+Message-Id: <80028d4f8638f766a73b84a5631d21101a413490.1792503778.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2412.v10.git.git.1792503778.gitgitgadget@gmail.com>
 References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
 	<pull.2412.v10.git.git.1792503778.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 20 Oct 2026 13:42:55 +0000
-Subject: [PATCH v10 2/5] fetch: extract collect_upstream_from_remote() helper
+Date: Tue, 20 Oct 2026 13:42:57 +0000
+Subject: [PATCH v10 4/5] remote: add "git remote add --limited-fetch"
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -103,113 +103,140 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-When a fetch has no refspec to work from, we fall back to guessing
-what to fetch: the remote's configured fetch refspec if there is one,
-and separately, whether the current branch's upstream lives on this
-remote. The latter is independent of the former on purpose: a narrow
-refspec (for example from "git remote add -t") can leave the current
-branch's own upstream uncovered, and we still need to be able to fetch
-it.
+A remote added the ordinary way tracks every branch it has, via a
+wildcard remote.<name>.fetch refspec. That is wasteful for a remote
+whose history is only worth following for the branches actually in
+use locally, and it can make "git fetch" negotiate history for
+branches nobody asked for.
 
-That "does this branch build on this remote" check was inlined for
-just the current branch. Move it into its own function,
-collect_upstream_from_remote(), so the same logic can be reused for
-branches other than just the current one.
+Give "git remote add" a --limited-fetch option that sets up
+remote.<name>.refmap instead of remote.<name>.fetch, so that
+"git fetch <name>" only fetches the branches already tracked, as
+described in the previous commit. It is rejected together with
+-t/--track or --mirror, since those already say explicitly what to
+fetch.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- builtin/fetch.c | 23 ++++++++++++++---------
- remote.c        | 15 +++++++++++++++
- remote.h        |  9 +++++++++
- 3 files changed, 38 insertions(+), 9 deletions(-)
+ Documentation/git-remote.adoc |  8 +++++++-
+ builtin/remote.c              | 28 ++++++++++++++++++++++------
+ t/t5505-remote.sh             | 16 ++++++++++++++++
+ 3 files changed, 45 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index ffcb5ba29a..136a59154a 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1979,7 +1979,8 @@ static int do_fetch(struct transport *transport,
- 	if (rs->nr) {
- 		refspec_ref_prefixes(rs, &transport_ls_refs_options.ref_prefixes);
- 	} else {
--		struct branch *branch = branch_get(NULL);
-+		struct string_list tracked = STRING_LIST_INIT_DUP;
-+		struct string_list_item *item;
- 
- 		if (transport->remote->fetch.nr) {
- 			refspec_ref_prefixes(&transport->remote->fetch,
-@@ -1995,14 +1996,18 @@ static int do_fetch(struct transport *transport,
- 			else
- 				follow_remote_head = BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
- 		}
--		if (branch && branch_has_merge_config(branch) &&
--		    !strcmp(branch->remote_name, transport->remote->name)) {
--			int i;
--			for (i = 0; i < branch->merge_nr; i++) {
--				strvec_push(&transport_ls_refs_options.ref_prefixes,
--					    branch->merge[i]->src);
--			}
--		}
-+
-+		/*
-+		 * The configured refspec may not cover the current
-+		 * branch's upstream (e.g. a narrowed -t refspec), so
-+		 * make sure we can still fetch it regardless.
-+		 */
-+		collect_upstream_from_remote(the_repository, &tracked,
-+					      transport->remote, NULL);
-+		for_each_string_list_item(item, &tracked)
-+			strvec_push(&transport_ls_refs_options.ref_prefixes,
-+				    item->string);
-+		string_list_clear(&tracked, 0);
- 
- 		/*
- 		 * If there are no refs specified to fetch, then we just
-diff --git a/remote.c b/remote.c
-index c9252a90f4..965e42ff52 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1891,6 +1891,21 @@ int branch_merge_matches(struct branch *branch,
- 	return refname_match(branch->merge[i]->src, refname);
- }
- 
-+void collect_upstream_from_remote(struct repository *repo,
-+				   struct string_list *tracked,
-+				   struct remote *remote,
-+				   const char *refname)
-+{
-+	struct branch *branch = repo_branch_get(repo, refname);
-+
-+	if (!branch_has_merge_config(branch) ||
-+	    strcmp(branch->remote_name, remote->name))
-+		return;
-+
-+	for (int i = 0; i < branch->merge_nr; i++)
-+		string_list_insert(tracked, branch->merge[i]->src);
-+}
-+
- __attribute__((format (printf,2,3)))
- static char *error_buf(struct strbuf *err, const char *fmt, ...)
+diff --git a/Documentation/git-remote.adoc b/Documentation/git-remote.adoc
+index 315100409d..f8764394e7 100644
+--- a/Documentation/git-remote.adoc
++++ b/Documentation/git-remote.adoc
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [synopsis]
+ git remote [-v | --verbose]
+-git remote add [-t <branch>] [-m <master>] [-f] [--[no-]tags] [--mirror=(fetch|push)] <name> <URL>
++git remote add [-t <branch>] [-m <master>] [-f] [--[no-]tags] [--mirror=(fetch|push)] [--[no-]limited-fetch] <name> <URL>
+ git remote rename [--[no-]progress] <old> <new>
+ git remote remove <name>
+ git remote set-head <name> (-a | --auto | -d | --delete | <branch>)
+@@ -75,6 +75,12 @@ the `refs/remotes/<name>/` namespace, a refspec to track only _<branch>_
+ is created.  You can give more than one `-t <branch>` to track
+ multiple branches without grabbing all branches.
+ +
++With `--limited-fetch` option, instead of a `remote.<name>.fetch` refspec
++that tracks all branches, `remote.<name>.refmap` is set up so that a
++refspec-less `git fetch <name>` only fetches branches our local branches
++are built on. See the `--refmap` entry in linkgit:git-fetch[1] for
++details.
+++
+ With `-m <master>` option, a symbolic-ref `refs/remotes/<name>/HEAD` is set
+ up to point at remote's _<master>_ branch. See also the set-head command.
+ +
+diff --git a/builtin/remote.c b/builtin/remote.c
+index fb7e5b114f..a7c13946d1 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -179,6 +179,7 @@ static int add(int argc, const char **argv, const char *prefix,
  {
-diff --git a/remote.h b/remote.h
-index ac485a584d..7c86c529b6 100644
---- a/remote.h
-+++ b/remote.h
-@@ -359,6 +359,15 @@ int branch_has_merge_config(struct branch *branch);
+ 	int fetch = 0, fetch_tags = TAGS_DEFAULT;
+ 	unsigned mirror = MIRROR_NONE;
++	int limited_fetch = -1; /* unspecified */
+ 	struct string_list track = STRING_LIST_INIT_NODUP;
+ 	const char *master = NULL;
+ 	struct remote *remote;
+@@ -198,6 +199,8 @@ static int add(int argc, const char **argv, const char *prefix,
+ 		OPT_CALLBACK_F(0, "mirror", &mirror, "(push|fetch)",
+ 			N_("set up remote as a mirror to push to or fetch from"),
+ 			PARSE_OPT_OPTARG | PARSE_OPT_COMP_ARG, parse_mirror_opt),
++		OPT_BOOL(0, "limited-fetch", &limited_fetch,
++			N_("fetch only the branches we build on, instead of every branch")),
+ 		OPT_END()
+ 	};
  
- int branch_merge_matches(struct branch *, int n, const char *);
+@@ -211,6 +214,10 @@ static int add(int argc, const char **argv, const char *prefix,
+ 		die(_("specifying a master branch makes no sense with --mirror"));
+ 	if (mirror && !(mirror & MIRROR_FETCH) && track.nr)
+ 		die(_("specifying branches to track makes sense only with fetch mirrors"));
++	if (limited_fetch == 1 && track.nr)
++		die(_("--limited-fetch does not make sense with -t/--track"));
++	if (limited_fetch == 1 && mirror)
++		die(_("--limited-fetch does not make sense with --mirror"));
  
-+/*
-+ * If refname's branch builds on remote, add its upstream on remote to
-+ * tracked. A NULL refname means the current branch.
-+ */
-+void collect_upstream_from_remote(struct repository *repo,
-+				   struct string_list *tracked,
-+				   struct remote *remote,
-+				   const char *refname);
+ 	name = argv[0];
+ 	url = argv[1];
+@@ -230,13 +237,22 @@ static int add(int argc, const char **argv, const char *prefix,
+ 	repo_config_set(the_repository, buf.buf, url);
+ 
+ 	if (!mirror || mirror & MIRROR_FETCH) {
++		int use_limited_fetch = mirror == MIRROR_NONE && track.nr == 0 &&
++			limited_fetch == 1;
 +
- /* list of the remote in a group as configured */
- struct remote_group_data {
- 	const char *name;
+ 		strbuf_reset(&buf);
+-		strbuf_addf(&buf, "remote.%s.fetch", name);
+-		if (track.nr == 0)
+-			string_list_append(&track, "*");
+-		for (size_t i = 0; i < track.nr; i++) {
+-			add_branch(buf.buf, track.items[i].string,
+-				   name, mirror, &buf2);
++		if (use_limited_fetch) {
++			strbuf_addf(&buf, "remote.%s.refmap", name);
++			strbuf_reset(&buf2);
++			strbuf_addf(&buf2, "+refs/heads/*:refs/remotes/%s/*", name);
++			repo_config_set(the_repository, buf.buf, buf2.buf);
++		} else {
++			strbuf_addf(&buf, "remote.%s.fetch", name);
++			if (track.nr == 0)
++				string_list_append(&track, "*");
++			for (size_t i = 0; i < track.nr; i++)
++				add_branch(buf.buf, track.items[i].string,
++					   name, mirror, &buf2);
+ 		}
+ 	}
+ 
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 5fbfcb0848..0168d5abfe 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -137,6 +137,22 @@ test_expect_success 'filters are listed by git remote -v only' '
+ 	test_grep ! "\[blob:none\]" out
+ '
+ 
++test_expect_success '--limited-fetch works in a full repository too' '
++	test_when_finished "rm -rf full-add" &&
++	git clone --no-local one full-add &&
++	(
++		cd full-add &&
++		git remote add --limited-fetch upstream ../two &&
++		test_cmp_config "+refs/heads/*:refs/remotes/upstream/*" \
++			remote.upstream.refmap &&
++		test_must_fail git config get remote.upstream.fetch
++	)
++'
++
++test_expect_success '--limited-fetch conflicts with -t' '
++	test_must_fail git remote add --limited-fetch -t main upstream ../two
++'
++
+ test_expect_success 'check remote-tracking' '
+ 	(
+ 		cd test &&
 -- 
 gitgitgadget
 
