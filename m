@@ -1,103 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.50
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792476835;
-	b=s3EtWMRjZIqh0eFt2M+sU4OUTLhpjjLF36rDs233IsMNty+0QkzPOGk6S/Cz5XNSJL8x
-	 q7G949jZ88yhrm/CJAe7bC1kIEh7Gfjg8z80EVC1NFqqj2jW6Qy977ABKOQq7wC8+rntl
-	 t//MP9f8U0w0+/OhAowpwyOfQkK3G5wcv3QmZp8FYNXWqwR65Khbc0aX53bCjq3CHXdc/
-	 DEj1c8JBvF7kNCBSSIrBerw9a0tZ3abpv6kU8eICWw06TIVwmC9mJV/dXkvpVDH9jZHOn
-	 MwSZiFSeuOp219K7Qe1+Km656o71qhsJiQuv0YYo6dJyNGtRDi7yznOXxdknC+JGuPA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792476835;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Received:MIME-Version:
-	 From:In-Reply-To:References:Date:X-Gm-Features:Message-ID:Subject:To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=YDCAdJg8uD38HOUjJNqwhN16BORw0wBV1v+82lI0e0c=;
-	b=JkhFDfSs3iu2Ffyf8s/stjIp47m6ApHn5uArrEDT7yYJJTdgyLbSiyHy8uwhaH6swo6M
-	 Y7CWTZkYs+gkCTvD54QIsyG5k3b5tIQrAARH7QQIsGh+a7PqcwBqpBz4h5J8+3Tnh/xZC
-	 5XaPMsgjkrHD/Cr+2Rh4o40f5z9HuALrMsPD+zINOOFWY0sgPM1LENUsoOcTdbahBMF+F
-	 0/vBLfFeVq3cvkFo6iPIQTXa+RcxjTJcS4Dj4RiEI4tNNpq0bjVKurfA7LsRA/EDHpcoh
-	 KPUbWNNrjzfC+DjefoXtfCvWHRStiR2HwJRZ42L9cmD6tyqT4EUKI2F+Edbv8yLLqLA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=sph3r3.com;
-	spf=none smtp.mailfrom=sph3r3.com;
-	dkim=pass header.d=sph3r3-com.20251104.gappssmtp.com header.i=@sph3r3-com.20251104.gappssmtp.com header.a=rsa-sha256 header.s=20251104 header.b=EIZPudZI;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.50
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792477761;
+	b=arqRrH/LAKxjE+3Tn2mzOhGLhSSxS5gyWYCNKWyvPW1/da/Kkn1EXLtuY5kGfJUkOZ9I
+	 vf/r0G3cZ0g9Y2B5fVL/o/ecZ9q/md3RUWa2pYmey6siLqq84T/OsIov8holHxB1zCcpi
+	 /V69bvQUyG+cm93bypE8ZGCZZMDhJwJzxGbcmxfUKe9Gm7OhKMpsL3svhmaV8k17/0QSu
+	 wdg5MGqaj0CFNUvYFIeeQJazQvp7o4V1R1k5GGd1wgWbePWmKXOQntSxdhJ8yGupHnjN0
+	 vDROiUAlcEOL2fTPZ5pJScryceVQdaBjBN4x49/GkinEUzkTSWL8OrjoufPiFjpfAWA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792477761;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=PfllKreIYm+LF6Z2SSSp7onqHC0gnqcBq2bF6tXodS8=;
+	b=W5sbePYCXdayS9nMAM9MtUhevnYqkzTNcSeA59v1RatshCAzq6Axf/l1vz9aBYqm/jl8
+	 Ssu6S/1fLaoNrEPBS0FbSRwNWNvQE/s5xrPCIKe4/sFj/6DfSwGM/FGE8bjZuVA09oigr
+	 v1SgtKxoSFH5XYRjcf14PynbGHFOeeIavi44dVIWmrG9agIr9lS9akvq0Bj7EfG5nktK7
+	 vsNwee6YX3ovZMboU45ZnZjW7rSk4MLulqYr93r6Yhc0SGbaEd7GNn/egIuTzFM9hrGVg
+	 CvVTAo5AD9x9s/X98Km0me+gSho2Dawb706A6pHS4s9EVSOAhGg6Chc1Jo8p/r9MQtg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=Dyfy8QiU;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Ymr8EAf0;
+	arc=none smtp.remote-ip=103.168.172.144
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FE2606A319
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 06:13:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A2FE2606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sph3r3.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=sph3r3.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEC2606A31B
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 06:29:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7AEC2606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=sph3r3-com.20251104.gappssmtp.com header.i=@sph3r3-com.20251104.gappssmtp.com header.a=rsa-sha256 header.s=20251104 header.b=EIZPudZI
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-9178aabd30dso26354476d6.1
-        for <git@vger.kernel.org>; Mon, 19 Oct 2026 23:13:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792476833; cv=none;
-        d=google.com; s=arc-20260327;
-        b=RvZsY7MJrqWpdPpS1RIgktJlWeS0utv+W1ftUCOLK7R1caUkl6redT/H683YLQC1EB
-         cwTe8tRlh/MgrlAvDrp6BW1P1uFGQJMKkl5E2uFGuoDv5Gleuah/++jPBzLi1XHXDpkr
-         NzzuMGZx23oR0LspVjJCDl9agT8XDovOnFzhg1AItqmPJKZHFaySTSvYUh03uy6r6hby
-         PlEggeCsw0Uylr8e9n0lX2HuZyF2Fr3jANt6tv79F/nooVYoS0oqWWzp+iEBkc9DGfxC
-         uMweB+729mVumur/nggqC9+UznEr0Fr7cg0iPtfJ9HWKA9b1pPD6pqo3c1t3qT+WbQE5
-         Tyzw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:references
-         :in-reply-to:from:mime-version:dkim-signature;
-        bh=YDCAdJg8uD38HOUjJNqwhN16BORw0wBV1v+82lI0e0c=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=Nyj80CPr+ilMfDkAr8p2eBso8xr6drTKMOShKYOdr9pY7czUD/9Frgw44mN3jvd9DE
-         2uGe6JgD1xn/XwtF4B/DyD3uLtbmzZoCkcztH24f3XizQa4lotEZ5hrMLiDNh2ZC59eU
-         7BrNuYE4TFQAAg3Sw7XIrVuOQp2hHFybEptL1fdtu9OrO2tNSXxJfGn02GANYK4DVwjE
-         DxCPr+gXgkXl0AnIra3gJ2n+eeH1GRbe/qWm12c9mQVDjhcLLhxR5dQEa1OWf+nYrlZb
-         FNtYUBvbuY/eStBuKv3ia6Vg8Re1/+PYNK85rMqZ8e7u/57F7KA5ox/kPBqx3WEZ9GED
-         8zBw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sph3r3-com.20251104.gappssmtp.com; s=20251104; t=1792476833; x=1793081633; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :references:in-reply-to:from:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=YDCAdJg8uD38HOUjJNqwhN16BORw0wBV1v+82lI0e0c=;
-        b=EIZPudZIfEmOat1OLX8dKaIX0sSNWqKM7hQ9a0bxBdLtzg9a4faZYgktKShtWWaNtd
-         Iy5ZquSZJx1WYdoiXYz1wwokxjqRX0jZcbcTUFKI5XOQMYaBNn4oJ65m1XMD9TVN97La
-         lP2Js/n25eSRSlXkLCagIc/5CkEBtkx2Gcq4nHUa7Phqm0jawGSMeor3rC7W/Z74hLe/
-         FftlZHmC0qByHcSoTrB+CoZ/T11dvvJwZ57/BCh4IoDRJ26529/woyt8eA9ELqEbbvPi
-         onMG6i5fBs1KA8Dv3QaJaJjqlrRrC4npvi9OykXFPTEJh9hvwyt2r2x1jueJkkRFcG9g
-         i0sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792476833; x=1793081633;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :references:in-reply-to:from:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=YDCAdJg8uD38HOUjJNqwhN16BORw0wBV1v+82lI0e0c=;
-        b=viJEupOU1JLMA80Vt3LFLMHfB7fk6g4WVDfWyJtEf9j1TGb1M4eY86Y/1eOGhL92Hz
-         UxhegWvDgtUElZhnuodmkovrxvf6hU11kPiIHf/HZR8Boj5/JcykouVtoROoqPB4VHvE
-         fKnIb3dbAEU0vjxkahxc2EEnPu62rZHBCq/REqSJUdc+1ec0M4gC6NBEKLqAK97EKi8w
-         Op7w4n8+TUC5k8t4s7DAfhOkczE/00LB28BzANloFDFOZg2VecMJ7ZxZ9WhTtjM03uOk
-         b3SIhFbXyk1HrOUEt2Nx9Wa7uDZf13Yqyou409Yo97CTTv1ybMhyjE+8RdMkGHxySZ30
-         FePQ==
-X-Gm-Message-State: AFq9FYKnT7CSeZ1FUz1qw4zAUk2cbNulFqVEbA3i3FhM2W8GzC3s5dX8
-	N9lns5qdVIGSJHKglQyGR1r25A056JmjFeLNlSMVR6CdBitLyByglRLWMIdBv4y60UX9UvpYGLO
-	SYX6pik+Ruawmq9PDEv8KzkhphCsCNzPrbRGGFpuE1QynKUySWhWGtuo=
-X-Gm-Gg: AYBFou1BgoqebqVc0iI1Ukw+ApPLcqVkqLy0kcLgr2VWaviguj5psgT9cDU3K0ek6Ot
-	pmnWgaOF7de8RN0aCQ/WyIXjBKxjWEiJQ6TH1pxRBbIaMN+lZiZqCkN0/EEfwD36Sf4+/VG4M7P
-	qIjkcfayvSzz60QJYY3Grtxa7nO9/EvU/Gv/q4CYhU85VvImeFXWDNj3KeWM0rVonBNe240h9d6
-	eNZjsT2VFyFlR5yyZemt++Yb73D3BsveGSFW0kB4e3iQC5LflUfgspn7nlrTw62fZjOOtS/8L96
-	AnfXSnFhglzipHsArMPswjRRwNk3pzmfrt/3wBKIwj6GrqLYEJTD7K+jkF43vLHeBgUF5oCC37G
-	3DNQnztz2FX/JmASjPSokiUqiaFrIxDhXeU+uCIZ63KtpgFz3OfZR3TofQFNgKp8BpqLW+/pVkr
-	u6kZ5qz18lVY/bLcyi1A2aoiJX+DQf+DcYeX/mGnoldlNR
-X-Received: by 2002:a05:6214:d43:b0:90c:5947:7e60 with SMTP id
- 6a1803df08f44-91bdec2966cmr155574846d6.4.1792476833492; Mon, 19 Oct 2026
- 23:13:53 -0700 (PDT)
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Tue, 20 Oct 2026 02:13:52 -0400
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Tue, 20 Oct 2026 02:13:52 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=Dyfy8QiU;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Ymr8EAf0
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9CF84EC010A
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 02:29:19 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 20 Oct 2026 02:29:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1792477759; x=1792564159; bh=PfllKreIYm
+	+LF6Z2SSSp7onqHC0gnqcBq2bF6tXodS8=; b=Dyfy8QiUKpAoUF8lkvtolJzuqx
+	GxohsI1NuZ1aFbMbe6vjIBp+qJqtLx6DVYfkZnOyblNfen12zy2c6wXGRMB8Q/of
+	uDM+XLo/N42uUXfOZ/Q7CQy8pfVzSPsLQ+Di7vPtg1IztxqPzIeJitCMWXWK9P2c
+	kM6vzKr6B0b6m2BbmnK6tOaz9lh/8B9Z9YMLhaJshzos7V7P6wzSoF6tkuTN4o6q
+	OXKn5BB2ktpz862iJht3T4ponMLtC6MN1h4jb5p48I37C+i4QfREml+ikZ5yzHBJ
+	S46zsjijNRznsD7MXot4ImE7ScBgkI/0sx5FXBf3Azk28HBvpcD0w7Ean8Aw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792477759; x=1792564159; bh=PfllKreIYm+LF6Z2SSSp7onqHC0gnqcBq2b
+	F6tXodS8=; b=Ymr8EAf0LfZ5egqveImWgTa2+cKmaKQPQeLsET5dWNB5PuqUIY8
+	nN5hNwqZfiQIA0uA1vqY4yvsBtlVk41PEwA4pZ8jCeoiN/+fCEEr5GJQm44o3pNk
+	HLFh4MEp8L9sTnJlr0F5idcg+jqyR4NFrDOnagOvkuzzvJw/uSmBsFNG25Qf5pHw
+	Fu5bfaYS76zzOoQ1hHH19Lv+b1CCdhj7YNmjNYYmb/ffVcXwCn8cgVyr+lYZFXRJ
+	6NUebzw2l6x3Db+PvsrAfBl7y06J3ZFN+e1Yh9RviLsjGVxcxCcAwYlpK0WDzZPA
+	JZbcWUnQ0yQ6InmMzTaRxiOyt8VJ5IKg7XQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792477759; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:roVOrQTpET2c1pmQHCc/9cWGhldf1bhILVqOmoE8dAvOXPw
+	w6FyG3oZrkOp+++7C9ziykOWMKLd2wnuGTd30kG+NiIa+cxMNeKjWEdXcOAoYNKb
+	tDUxLzqsIVIIdC7h3z/Yxed+INFU9M6jGrVzpDgc5XjjnmAVuj0zpG4zJWihpJet
+	fUaz0oj74VMcOKsGSzC8/zkqikDEXsO3fm6l6l9mE1QsdsGVvK3R7Ba7rv2QQhfi
+	32xZXnezwS+px9cnc+w0bcHWjq2hSB3OOZdg2hNiQSLJvVJGKim0GmR2SpDGMs+k
+	Moo4HYs8L4Q1dWgJDMbQDRSczqvIG7iqxMgZkZQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:b/kV6lumR7m/0lMqIsEiPfDTWXcZRfGT/GCpu2BBPFg=:C8T4agIMLkUvk1ufQi5mqRHigL2Wn9+OwyrgIjo2ZMk=;
+X-ME-Sender: <xms:PwrXar-ssqPERCYrPNsMQafKZZkXCM0D7eNTjCahHhoG9H35oJg-kQ>
+    <xme:PwrXavIeLc5sB13unH_zrtfFgqKPn7phumpEcfYARyV0p6ChwhsAA9zTzZV5RjFn0
+    BsU_YDvjQT1LYG8wHB-Tl8Gd7-xoY9EjA9MU9crnLvIJVu8fq6_gII>
+X-ME-Received: <xmr:PwrXamahmeoOKuIPwjfiea3MdirMKiUeKiUipA1Ey2JbG39HGiDcOCZy4zZNS5ivNgyp8Q>
+X-ME-Proxy-Cause: dmFkZTEvzUy4iICaimyNp09hix0XqbzvDDTSeZCVuLPurOZd/buXilhznK+rt/WxBs4Zpa
+    ghVy9LToQTQcfNApTOciTAZCF++LX7jPhnLYAIhmEKiPm06Hp2G+qi3qqFzHaqo48Go4fK
+    cuzfudwMQl8HXFKJEXhrQqMnvxa8pN77mKDkWhNDt2nMtE1GCALJvEO/qeO9xaNuf5zIB9
+    1+1SVfVoTF1UFwU1KfBvi9yR4U0nCfSygj0dxqu68XELClcsVG+eENZ+p6Ai9Pa8MH2zSf
+    ntFdn308G/rSs+lKinqviquezYTuh6Bf5ORvdjl9Lj5ylk14fmF0IWGozu2FxXCEUQkKMb
+    aPZ1NG7LPOHXPW8q8FdxlnavKhjZlDcxBosrleujLl4NKcxprLAqNUlFJD0kHqnPz/RuYl
+    +k9ZSaST1iz0I5Aglndawiy05yfAKM1NsXQ2VBsTMCABJqdLBiDE4Rea48Jo26UO8GebgR
+    8QVyzdJx+L992z4wz6aGEigJVnhKN2Df4B8ITYoemvbvwC6tFYiFzcaENCmbv/FlDuBNvf
+    thp+nxgxtmRaCRbonQzactskenQmyL6njsj7QdjymEWk/ReGx5MqYRHxMRdleGco3pDcN5
+    udAIXiq4FMnCCyNV6U5vG/E3G6GoJTGeCOJCL8ofU+LmD+m9rt1TMYAhLg6g
+X-ME-Proxy: <xmx:PwrXahLgPRGEARNHD_tfyxppK18zrbWrs6_dg7jvB-yZ5zeQflCD6w>
+    <xmx:PwrXakAPooWruZqPed-YWJa__1ZZReFn6MPAFk_XfsdVt7-00T2qNA>
+    <xmx:PwrXamp_RRmdE6bH4R-sa-eR9K1HUsbGi_gNrotLESIeomvC_eJv2A>
+    <xmx:PwrXaviFmwIuvGNz7pmMyp60BRotZExt3sxgQcAdcTiqAEqRDzfIaA>
+    <xmx:PwrXarIrKhZAjQGYKjOn1cv-g1uhduSSMvWcq1nKPDtlDlGqq5JrtBh1>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 Oct 2026 02:29:18 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c19be542 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 20 Oct 2026 06:29:17 +0000 (UTC)
+Date: Tue, 20 Oct 2026 08:29:14 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: m@suozzo.co
+Cc: Matthew Suozzo via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH] reftable/record: bound an object record's offset count
+ by its length
+Message-ID: <atcKOhm0Kd5XryAg@pks.im>
+References: <pull.2255.git.1791989883899.gitgitgadget@gmail.com>
+ <atXK0ska_v2rFn8W@pks.im>
+ <41edbeff828fcb4a2f3bc903802b14e3aa66f46b@suozzo.co>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -107,238 +126,109 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-From: m@sph3r3.com
-In-Reply-To: <e25693e2-1e32-46ae-945f-0a83b382e8a2@web.de>
-References: <CA+h9NxRT-9QzLGihdL_Bp-yyt1AdXJ79YYgpK-OaegUz8e+HcA@mail.gmail.com>
- <e25693e2-1e32-46ae-945f-0a83b382e8a2@web.de>
-Date: Tue, 20 Oct 2026 02:13:52 -0400
-X-Gm-Features: AclHuK_7y9wI_-L_6tTILeAKIYAk8F3KSzb8QyiZh1jk_HcIrbaCfWrSzHSgKVM
-Message-ID: <CA+h9NxT1A5fiJ1=B2e9QoYq_8SE9B2erKs+Lh19RPrh6Eq_GKA@mail.gmail.com>
-Subject: Re: [PATCH v2] archive-zip: omit UT extra field if mtime is out of range
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <41edbeff828fcb4a2f3bc903802b14e3aa66f46b@suozzo.co>
 
-Ren=C3=A9,
+On Mon, Oct 19, 2026 at 05:14:08PM +0000, m@suozzo.co wrote:
+> October 19, 2026 at 3:46 AM, "Patrick Steinhardt" <ps@pks.im mailto:ps@pks.im?to=%22Patrick%20Steinhardt%22%20%3Cps%40pks.im%3E > wrote:
+> > On Wed, Oct 14, 2026 at 02:58:03PM +0000, Matthew Suozzo via GitGitGadget wrote:
+> > > From: Matthew Suozzo <m@suozzo.co>
+> > >  
+> > >  An object record's count of offsets is a 64-bit varint from the table,
+> > >  and reftable_obj_record_decode() allocates the offsets array from it
+> > >  through REFTABLE_ALLOC_ARRAY(), which takes a size_t. Where size_t is
+> > >  32 bits, a count of 2^32 + 1 allocates room for one offset, and the
+> > >  loop, which runs to the full count, writes an offset from the table
+> > >  for each varint left in the block past the end of the array. Where
+> > >  size_t is 64 bits, a large count only makes a large allocation that
+> > >  the decode then fails to fill.
+> > >  
+> > >  Nothing in Git reaches this decoder from a repository: a block of a
+> > >  type other than the one wanted is refused before its records are
+> > >  decoded, and the object index, the only reader of object blocks, is
+> > >  used only by the unit tests. The decoder is still wrong.
+> > >  
+> > >  Each offset takes at least a byte, so refuse a count larger than what
+> > >  is left of the record.
+> > > 
+> > Sorry, but this whole commit message reads very AI-generated to me, as
+> > it is both overly verbose and hard to parse. I would welcome it if you
+> > could maybe touch up the message for normal human beings.
+> 
+> yeah it was AI generated and i copy-edited it. it didn't feel too
+> excessive since i wanted to be precise about the issue's mechanism,
+> scope (32-bit only), severity (not really reachable), and describe the
+> fix.
+> 
+> any pointers on how you'd reword? remove the exposition?
 
-Thanks for updating this. I retested v2 and confirmed it fixes the
-original 2106 case. The older file now gets replaced as expected.
+It's hard to say. With AI-generated commit messages you very often have
+the feeling that you end up understanding everything and nothing. It
+just feels off in a way that is hard to describe, and consequently it's
+also hard to say what exactly needs changing.
 
-I also found a separate time-zone issue with post-2038 dates when
-using unzip -u. I don=E2=80=99t think that needs to hold up this fix; we ca=
-n
-track it separately.
+My typical suggestion is to not use AI to write your commit message at
+all and instead write it yourself. Commit messages have always been the
+place where you can demonstrate that you understand what you are doing
+as part of the patch by properly explaining it in a way that another
+human being understands it. And I think that role is becoming even more
+important now: in a world where we cannot trust that the contributor has
+the slightest understanding of what they are contributing, they need to
+go the extra mile to prove it to us by having a well-written explanation
+thereof.
 
-Matt
+I know that this is putting more of a burden on contributors, and I'm
+not a fan of that. But I think it's becoming abundantly clear that AI
+does not really give open communities much of a choice, at least not if
+they want to keep standards high.
 
-On Mon, 19 Oct 2026 19:11:21 +0200, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> We write an Extended Timestamp Extra Field (ID 0x5455 =3D "UT") for each
-> zip entry, like Info-ZIP zip(1) does.  Its time values are signed 32-bit
-> integers (see e.g. https://libzip.org/specifications/extrafld.txt).
-> Stop emitting them when the commit time doesn't fit in.
->
-> Use a strbuf to prepare the extra field up front.  Keep it empty if the
-> time value is out of range.  Like for the central zip directory we only
-> care about the length-limited buffer aspect of the strbuf, not about
-> NUL-termination.  This simplifies the conditional output by avoiding to
-> repeat the condition.
->
-> Reported-by: Matthew E. Luallen <m@sph3r3.com>
-> Helped-by: Matthew E. Luallen <m@sph3r3.com>
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
-> Changes since v1:
-> - skip tests of 33-bit timestamp on 32-bit architectures
->
->  archive-zip.c                   | 37 +++++++++++++--------------------
->  t/t5004-archive-corner-cases.sh | 28 +++++++++++++++++++++++++
->  2 files changed, 43 insertions(+), 22 deletions(-)
->
-> diff --git a/archive-zip.c b/archive-zip.c
-> index 6f73ca6d58..785689584c 100644
-> --- a/archive-zip.c
-> +++ b/archive-zip.c
-> @@ -24,6 +24,7 @@ static int zip_time;
->
->  /* We only care about the "buf" part here. */
->  static struct strbuf zip_dir;
-> +static struct strbuf zip_extra_mtime;
->
->  static uintmax_t zip_offset;
->  static uint64_t zip_dir_entries;
-> @@ -81,14 +82,6 @@ struct zip_dir_trailer {
->  	unsigned char _end[1];
->  };
->
-> -struct zip_extra_mtime {
-> -	unsigned char magic[2];
-> -	unsigned char extra_size[2];
-> -	unsigned char flags[1];
-> -	unsigned char mtime[4];
-> -	unsigned char _end[1];
-> -};
-> -
->  struct zip64_extra {
->  	unsigned char magic[2];
->  	unsigned char extra_size[2];
-> @@ -129,9 +122,6 @@ struct zip64_dir_trailer_locator {
->  #define ZIP64_DATA_DESC_SIZE	offsetof(struct zip64_data_desc, _end)
->  #define ZIP_DIR_HEADER_SIZE	offsetof(struct zip_dir_header, _end)
->  #define ZIP_DIR_TRAILER_SIZE	offsetof(struct zip_dir_trailer, _end)
-> -#define ZIP_EXTRA_MTIME_SIZE	offsetof(struct zip_extra_mtime, _end)
-> -#define ZIP_EXTRA_MTIME_PAYLOAD_SIZE \
-> -	(ZIP_EXTRA_MTIME_SIZE - offsetof(struct zip_extra_mtime, flags))
->  #define ZIP64_EXTRA_SIZE	offsetof(struct zip64_extra, _end)
->  #define ZIP64_EXTRA_PAYLOAD_SIZE \
->  	(ZIP64_EXTRA_SIZE - offsetof(struct zip64_extra, size))
-> @@ -299,9 +289,8 @@ static int write_zip_entry(struct archiver_args *args=
-,
->  {
->  	struct zip_local_header header;
->  	uintmax_t offset =3D zip_offset;
-> -	struct zip_extra_mtime extra;
->  	struct zip64_extra extra64;
-> -	size_t header_extra_size =3D ZIP_EXTRA_MTIME_SIZE;
-> +	size_t header_extra_size =3D zip_extra_mtime.len;
->  	int need_zip64_extra =3D 0;
->  	unsigned long attr2;
->  	unsigned long compressed_size;
-> @@ -315,7 +304,7 @@ static int write_zip_entry(struct archiver_args *args=
-,
->  	const char *path_without_prefix =3D path + args->baselen;
->  	unsigned int creator_version =3D 0;
->  	unsigned int version_needed =3D 10;
-> -	size_t zip_dir_extra_size =3D ZIP_EXTRA_MTIME_SIZE;
-> +	size_t zip_dir_extra_size =3D zip_extra_mtime.len;
->  	size_t zip64_dir_extra_payload_size =3D 0;
->
->  	crc =3D crc32(0, NULL, 0);
-> @@ -381,11 +370,6 @@ static int write_zip_entry(struct archiver_args *arg=
-s,
->  		}
->  	}
->
-> -	copy_le16(extra.magic, 0x5455);
-> -	copy_le16(extra.extra_size, ZIP_EXTRA_MTIME_PAYLOAD_SIZE);
-> -	extra.flags[0] =3D 1;	/* just mtime */
-> -	copy_le32(extra.mtime, args->time);
-> -
->  	if (size > 0xffffffff || compressed_size > 0xffffffff)
->  		need_zip64_extra =3D 1;
->  	if (stream && size > 0x7fffffff)
-> @@ -412,8 +396,8 @@ static int write_zip_entry(struct archiver_args *args=
-,
->  	zip_offset +=3D ZIP_LOCAL_HEADER_SIZE;
->  	write_or_die(1, path, pathlen);
->  	zip_offset +=3D pathlen;
-> -	write_or_die(1, &extra, ZIP_EXTRA_MTIME_SIZE);
-> -	zip_offset +=3D ZIP_EXTRA_MTIME_SIZE;
-> +	write_or_die(1, zip_extra_mtime.buf, zip_extra_mtime.len);
-> +	zip_offset +=3D zip_extra_mtime.len;
->  	if (need_zip64_extra) {
->  		copy_le16(extra64.magic, 0x0001);
->  		copy_le16(extra64.extra_size, ZIP64_EXTRA_PAYLOAD_SIZE);
-> @@ -546,7 +530,7 @@ static int write_zip_entry(struct archiver_args *args=
-,
->  	strbuf_add_le(&zip_dir, 4, attr2);
->  	strbuf_add_le(&zip_dir, 4, clamp32(offset));
->  	strbuf_add(&zip_dir, path, pathlen);
-> -	strbuf_add(&zip_dir, &extra, ZIP_EXTRA_MTIME_SIZE);
-> +	strbuf_addbuf(&zip_dir, &zip_extra_mtime);
->  	if (zip64_dir_extra_payload_size) {
->  		strbuf_add_le(&zip_dir, 2, 0x0001);	/* magic */
->  		strbuf_add_le(&zip_dir, 2, zip64_dir_extra_payload_size);
-> @@ -644,12 +628,21 @@ static int write_zip_archive(const struct archiver =
-*ar UNUSED,
->  	dos_time(&args->time, &zip_date, &zip_time);
->
->  	strbuf_init(&zip_dir, 0);
-> +	strbuf_init(&zip_extra_mtime, 0);
-> +
-> +	if (args->time <=3D 0x7fffffff) {
-> +		strbuf_add_le(&zip_extra_mtime, 2, 0x5455); /* magic */
-> +		strbuf_add_le(&zip_extra_mtime, 2, 1 + 4); /* payload size */
-> +		strbuf_add_le(&zip_extra_mtime, 1, 1); /* flags; just mtime */
-> +		strbuf_add_le(&zip_extra_mtime, 4, args->time);
-> +	}
->
->  	err =3D write_archive_entries(args, write_zip_entry);
->  	if (!err)
->  		write_zip_trailer(args->commit_oid);
->
->  	strbuf_release(&zip_dir);
-> +	strbuf_release(&zip_extra_mtime);
->
->  	return err;
->  }
-> diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cas=
-es.sh
-> index 768b0ff85d..c776387ad6 100755
-> --- a/t/t5004-archive-corner-cases.sh
-> +++ b/t/t5004-archive-corner-cases.sh
-> @@ -227,4 +227,32 @@ test_expect_success 'tar archive with long paths' '
->  	git archive -o long_paths.tar $tree
->  '
->
-> +test_lazy_prereq ZIPINFO_UT_EXTRA '
-> +	"$ZIPINFO" -v "$TEST_DIRECTORY"/t5004/big-pack.zip |
-> +	grep "UT extra field modtime"
-> +'
-> +
-> +test_expect_success TIME_IS_64BIT 'zip archive with 32-bit mtime' '
-> +	blob=3D$(echo foo | git hash-object -w --stdin) &&
-> +	tree=3D$(printf "100644 blob $blob\tfile" | git mktree) &&
-> +	git archive --mtime=3D"@2147483647 +0000" -o with_ut_extra.zip $tree
-> +'
-> +
-> +test_expect_success TIME_IS_64BIT,TIME_T_IS_64BIT 'zip archive with mtim=
-e exceeding 32-bit' '
-> +	blob=3D$(echo foo | git hash-object -w --stdin) &&
-> +	tree=3D$(printf "100644 blob $blob\tfile" | git mktree) &&
-> +	git archive --mtime=3D"@2147483648 +0000" -o without_ut_extra.zip $tree
-> +'
-> +
-> +test_expect_success TIME_IS_64BIT,ZIPINFO_UT_EXTRA 'UT extra field' '
-> +	"$ZIPINFO" -v with_ut_extra.zip >actual &&
-> +	test_grep "UT extra field modtime" actual
-> +'
-> +
-> +test_expect_success TIME_IS_64BIT,TIME_T_IS_64BIT,ZIPINFO_UT_EXTRA \
-> +	'UT extra field omitted when mtime exceeds 32-bit' '
-> +	"$ZIPINFO" -v without_ut_extra.zip >actual &&
-> +	test_grep ! "UT extra field modtime" actual
-> +'
-> +
->  test_done
->
-> Interdiff against v1:
->   diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-c=
-ases.sh
->   index 20bab21048..c776387ad6 100755
->   --- a/t/t5004-archive-corner-cases.sh
->   +++ b/t/t5004-archive-corner-cases.sh
->   @@ -238,7 +238,7 @@ test_expect_success TIME_IS_64BIT 'zip archive with=
- 32-bit mtime' '
->    	git archive --mtime=3D"@2147483647 +0000" -o with_ut_extra.zip $tree
->    '
->
->   -test_expect_success TIME_IS_64BIT 'zip archive with mtime exceeding 32=
--bit' '
->   +test_expect_success TIME_IS_64BIT,TIME_T_IS_64BIT 'zip archive with mt=
-ime exceeding 32-bit' '
->    	blob=3D$(echo foo | git hash-object -w --stdin) &&
->    	tree=3D$(printf "100644 blob $blob\tfile" | git mktree) &&
->    	git archive --mtime=3D"@2147483648 +0000" -o without_ut_extra.zip $tr=
-ee
->   @@ -249,7 +249,7 @@ test_expect_success TIME_IS_64BIT,ZIPINFO_UT_EXTRA =
-'UT extra field' '
->    	test_grep "UT extra field modtime" actual
->    '
->
->   -test_expect_success TIME_IS_64BIT,ZIPINFO_UT_EXTRA \
->   +test_expect_success TIME_IS_64BIT,TIME_T_IS_64BIT,ZIPINFO_UT_EXTRA \
->    	'UT extra field omitted when mtime exceeds 32-bit' '
->    	"$ZIPINFO" -v without_ut_extra.zip >actual &&
->    	test_grep ! "UT extra field modtime" actual
-> --
-> 2.56.0
+> > > diff --git a/reftable/record.c b/reftable/record.c
+> > >  index 1fce441930..96eceddca7 100644
+> > >  --- a/reftable/record.c
+> > >  +++ b/reftable/record.c
+> > >  @@ -589,6 +589,10 @@ static int reftable_obj_record_decode(void *rec, struct reftable_buf key,
+> > >  if (count == 0)
+> > >  return start.len - in.len;
+> > >  
+> > >  + /* each offset takes at least a byte */
+> > >  + if (count > in.len)
+> > >  + return REFTABLE_FORMAT_ERROR;
+> > > 
+> > This check doesn't really seem to match what you're describing. What you
+> > describe is an integer overflow, but you only check for a very specific
+> > edge ecase here. I would have expected for example that...
+> > 
+> > > 
+> > > REFTABLE_ALLOC_ARRAY(r->offsets, count);
+> > > 
+> > ... this line already detects the overflow and then refuses the
+> > operation. Because `REFTABLE_ALLOC_ARRAY()` itself already tries to
+> > check for overflows.
+> > 
+> > That being said, if you take a look at `reftable_alloc_size()` you can
+> > see that the input is both of type `size_t`. And _that_ is indeed broken
+> > on platforms where `size_t` is 32 bits, as we'd potentially wrap. But
+> > that fact is not even mentioned as part of the commit message at all.
+> 
+> isn't that "REFTABLE_ALLOC_ARRAY(), which takes a size_t" in the original message?
+
+Ugh, no idea how I missed that. Probably because my brain was sucked out
+while reading it.
+
+> > So overall I'm not convinced that this fix makes sense, we should rather
+> > fix the source of the problem, which is `reftable_alloc_size()`.
+> 
+> that felt like a pretty disruptive change i was hesitant to put up as
+> my first patch but i'd be happy to make the change.
+
+Hm, I wouldn't call it disruptive but rather holistic. By fixing that
+one function we also implicitly fix all the other callers that may
+currently be wrong. And in the end nothing really changes for callers
+anyway: I'd change the parameters to be of type `uintmax_t`, but the
+return value should probably remain a `size_t`. So we'd continue to work
+just fine in all cases where there is no overflow of `size_t`, but we'd
+properly detect cases where the parameters themselves already overflow
+it.
+
+Patrick
