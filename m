@@ -1,111 +1,107 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.152
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792522969;
-	b=rVXvvRcfVNOa//vGOg9YP990i7ngoFLUkqnCBjszA4sJwrVVBurRi4wuqnR2if/QNOTT
-	 nZWop35Nnuri/HZEcSuMN3ycXExkj2WL0fwtI+cZpF3q8bu4+0U3PrIjMiCRdSjG1ULsh
-	 OfwvT6kFMM6ac7vE2KN4JG4IrlV3dIfXkyLIkk0ggzdw7lopyj+apJdOavTLeF1GShGDd
-	 cHuL2Xxjy6UDjg7rw0eVGPgVg7YNlbivIV+13AS1hUDsjk7wd9ZVEhn+28hkceSDgtb1l
-	 lGOYX89BstLFbwJmHxHQ6gDT/noo/gtM4zW4poLa41Xn6zg7QcXfR3AYT+jwIG4o3fw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792522969;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type:Content-Transfer-Encoding;
-	bh=gVOBVshmOo4FJlp+VmC5NWxRE1TUIqpvXVKsXzjK8JM=;
-	b=vAQp83aOz0csqehhJ/7cVlSOdvs1Z0dtswMZwHWIP0vi8y5E4DWVz+qVHV88dUaGWMwf
-	 Boey5GJNJIAtKgeDu5rT/3XT+0yiDYBrYc+QuqoEiLeS8iLvqGHNGRY8PFvZguUG8wf90
-	 Y4u+rj3O9p1eGifq1PHpWQ8j5eJ9P61+/1Fv64Weh7NDV47AfpBWs2Bcvy8luaLzYwPlr
-	 xZugRNExd86oSgGtCtiXEC+VL82tadA9/V9bW5y7ybrMdvJ+SMJQr/kck9rLd0kMhKsNt
-	 amTnG+x5sBTZYTlVWBJdiTIbN3k1KVIygsR6GYUDqJxqs3bwCINwzkEwVPhOFy/ynSw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fastmail.com;
-	spf=pass smtp.mailfrom=fastmail.com;
-	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=GtM11Kfl;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=OOiI5H7m;
-	arc=none smtp.remote-ip=202.12.124.152
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.42
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792523164;
+	b=S31jg/rhYW4uBl8/7sbYXnMjXvxVWt/RJkL6IO2cnN/WD3+Iifo0/dxyzs60iwJHjRJM
+	 5r64qEhtKStjUjligeMVz7ACToNhdR3aUAle6rWeeq7c3JJlZgQWbYcUkUn9A8tqFe9ZJ
+	 MH6/xCyzceuWSN1Ax/YIKSorfhBbbWhizc+l9O2ew3OI0s7GaLGDKm4VLgyc+whl0JaKw
+	 +Zoely1vZdlKLmAR01Doj0FDSqQC15sHqAV59of2lNFLBk9s+e/AWI7vyHiqCw1SloCuj
+	 x/6GKDY70kEsJbNBrgdNHQ3TcdvihMz5PEJTUDy3zB+HqyMv3YX47wf/ZtohgWsQ/Xg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792523164;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Received:From:
+	 In-Reply-To:References:MIME-Version:Date:X-Gm-Features:Message-ID:
+	 Subject:To:Cc:Content-Type;
+	bh=UNbGRK4PZ+9u8uTQXHDyp9+3qQZZ4mha/4QOx4Z/MdA=;
+	b=OfaarEEgrYfAnoVqaF4d+RKpaS/o85axaDQTyC3/qf72bcxPWzGIaBLu4iCkT5TCuf0w
+	 klS+XXreC3zGqVzSkUI2pv2GGkhxuhVh6OMY2LosN8DKJtEsF85Jjp9GPL+q6DsAkeJja
+	 k6MoJBV7VvJqphkTfgcZKkDV26NEBK42QexYQkhx0i5D0opxIEFLhOBM+x9RCjNHc2nm7
+	 WgrLCeVCaZmCc36pYAgJfNFK7+pWRcqm3f2ULYZy9/Djy1D7EGtfPcfo0CnKNYuexBK6w
+	 tIoHxmaHjpU+/uarH5FvOjTlxoWp4hiYEcWjupgs30w+tT0SFt6a7ZuzNyREMebUj7g==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=qp+WmQHi;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.42
+Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6E3606A31A
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 19:02:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AB6E3606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98B5606A319
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 19:06:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E98B5606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm2 header.b=GtM11Kfl;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=OOiI5H7m
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C4BCB7A00AC
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 15:02:47 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Tue, 20 Oct 2026 15:02:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1792522964;
-	 x=1792609364; bh=gVOBVshmOo4FJlp+VmC5NWxRE1TUIqpvXVKsXzjK8JM=; b=
-	GtM11Kfl7dm+eshHC1JO+KmYtEENvx5EscOPnznFHNI/8LH6wHs/w7SOiMI3DYs9
-	DWrk7kgW8ZUMKN+f8iUVakDAwYZ48yxQF2KBP/GftPJzVhldIG0puW7zt8jW9+kC
-	Qu1XzB44cyvmu/ySf1n8ShCo0fJFCTuMnFNhwyCSH+X0SAt6gkccWLT+B1PzfmhQ
-	IibTj1maeQnzU6sKGjDXPy4bh9oxkyo3lSE3do+DdfD5GGt6r38zZwu968oCezvH
-	WUuqLrYeEb/0O3LQvfEKKN2ivzXj/LZVzkgCXo6p1T1pBN2SH2rxVp7pONl4/nJU
-	M18E4PIR27mnE83mf3uk4w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792522964; x=
-	1792609364; bh=gVOBVshmOo4FJlp+VmC5NWxRE1TUIqpvXVKsXzjK8JM=; b=O
-	OiI5H7mqvk3Lk8pX62ljtkS0ISEv2Qxx3wMdrszcun0sxI/Eo/VskhIRS35ikke1
-	Sgbkb9yqry/eBhlgSSs4JURomziFpVHT9ZGpMUjCKYZJWLPywvw6VdL1C3MAyah2
-	EDT2xOA22MFGnPFxlGw8rlphJI4NpBYORTUiYVCajWGoZvD+NZYAZ9nPE18Plu/L
-	ctn2HiVurMVpepRAivjORA5xdC4ehCzc82ksqPCqI7wm/imCVZi/QZwmhqiKleYq
-	WcX0BxYDhZde0u/rUeLYpRrDXvlWAQJxSRea1nnmURDL0kwKVGpyUib2r9Q/HjrA
-	urINN0cLP9bv4SALyrLgg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792522964; d=fastmail.com;
-	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:PXLbmZi/H0Zbf7hiNeme8l3Z8SK415UOgz4M2x9cq/KutzU
-	VKqlqUSj6xGfQKsFWzJ8U4//nx1DeKhQqM5cItBUnvTA/EN0B1F2cfBY/FP91ltI
-	++z9pa2ktS32LOwxuefhaoFo/PRF7IH1UqPTAzLCS1/Wgn0cmj/hqWXmevRpmVbD
-	iD+Hip0BM5cgZN6p28EoIoM6B5Gm9HwhkqVwn1WD/Wz2fvni6NWgdQjOwOK3D6vZ
-	X+MfKmbfKQ7RT/63xyttMBAS22LTq+dC/ajrGk07uNTi4gBPqA8k9S14CLcicGC8
-	YOZOZS68Qu2r9o0JDDWJFa8W56f0Oq5PPGcsBwA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:niS7Xxdzzppkm2nAY8i6FQ76v8jZlJC2GM/Fteg5QGg=:gVOBVshmOo4FJlp+VmC5NWxRE1TUIqpvXVKsXzjK8JM=;
-X-ME-Sender: <xms:0rrXapU55_hq1KraCsuxy4pwxk-rcBxTKUu1IUCBfWZ__LKgq3eMNkg>
-    <xme:0rrXakY2Gt-q3UpyB8esl_PnB0jiUvd69Igt7aVQGM7ZSukruC2NI6LMnWjVp5Ilt
-    cQGFaFqSdCSYj1CSkF2ErX2DC-BxbuSrWwFY9PZQxE7Bqy8G9cYCYI>
-X-ME-Proxy-Cause: dmFkZTGWh8V6oe0Jv0a5kMu3Vp6IspmccTbMJlJEpaZ5ThDr+nMQKPZpqtpMsnBDYXPc+P
-    jLP7uvUh5TBO9Z2Wyuq80qRsBeRnb6kwYpS1G+oKme/gMf4vRGsb+VK7KYsacE9YW1s4Go
-    95O+/2a0T7Fhc6NyRU+MtGbiPmYrHVZ+b5uszAyQqboEqnCisLPAjg+93QBbyBEe7kRUz3
-    uaPWC7y+6j6Lu271okFeEWJ8gk+dhOluqutbszO110QzG+B2e9WzE3KKiBwADV/SBBSkZq
-    LlbBJ7RhNtTJystYbnh9fBQHqhoV7f/BBd7WSNSAzSSIHwUrcdbf2BxAO6NgqcPv9eoIOW
-    qjKJnUdQbPNQXZKVtu33A7YJSNYLlESdawPIoTXTiAebQtFVyibBZy8OWkhyNKeXzJuEAD
-    DrwSfUaRQU6C9zRqxtPHwyAslFYrKeSjwH5o/FguqYRavgPh/82upNMnF+1EAOzfNLyw0J
-    4aSkEravnPmx2sgskGcHvXRs7j9GktSZvTyA9tWhIUf+d4SRHOn0kjiNpQD8NLc4h7MLCr
-    VsIPwLbRIwn1gxBah8XjmoNhubg1uXSVFzjKquGK6SRRXrqcn7PlmFz2yrZIZ2E/Cbpc0Z
-    PT6hxAu61Vi1eumGqSQQ61HbO4aTF6334VG24cNcunu4VlmLa1UvDDUS2jkQ
-X-ME-Proxy: <xmx:07rXapbJjx2AWoWiD_vBQN1Q5ryBUhe7t9B2qSM_FrJi9z4zL8TMwA>
-    <xmx:07rXathVs-T5Lk24eBdMZP3a3K1pkSsRaRkDn4GsaW0uTYdqlvTK8g>
-    <xmx:07rXaq_2l_ZDtvkN54-pWy7RLXjaxTmVJ2L7LfOp2qk9PpSTnI8nIA>
-    <xmx:07rXaoqK4gc0BLHQymaoqlnNffZ9_oTEC-t3DiZhe2YzdEobdUQLEA>
-    <xmx:1LrXanc-nRFi50t7UdvHUqTaU183_geuVHgFyTyIhbnv_dHOeJJ1cc6c>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id CCB5922C00A0; Tue, 20 Oct 2026 15:02:42 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=qp+WmQHi
+Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-9908346255fso453281241.1
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 12:06:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792523163; cv=none;
+        d=google.com; s=arc-20260327;
+        b=CHrXadoVG3BXfm1JrO4k4GIuKKUkv/QusRbCMy8Ru845WSzJ3JHI4r7GEH/dTy3kxD
+         qgqgDzG+Z/jnJhQZ1ZlTZ8n5zB33x/u8RBRJulI7wekv2dJzP503rbS9LvqEaQnZakH+
+         UEkVIO3+EqSz8AwrxN0PCf5V7WvqiUg3eI1Kgmw1Z3+kF7RNBkzOUopdEe5VSTqqUsn7
+         kaGMtcAVDWbWcgbqwfUk9dhIfN5qM/JrgHlcDtpRL+5evyML2ur26EG8c8IrBQ4EbP3a
+         zlVrWFrOujhj7AtbDcO9hPO6+ii7vBc9AJQr5+0fRBwo57eZgKvzfqGOhbfymnP1FbMH
+         uN/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=UNbGRK4PZ+9u8uTQXHDyp9+3qQZZ4mha/4QOx4Z/MdA=;
+        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
+        b=dn4YPo7F2E5R41zplUQ8qNx1ISU0ryf3SNTe0t/rlTjGMkmjNVK7+LXpKnVt5h2G7F
+         TQn6/WJp6Azq+gCSMocB6fzGjdhyGWcz7Wepgpq+b+8ljGUuHsqybVvCZReP7tRgJboU
+         kQSW2qljCbmwCTfLPnQa5NqZAAf3aOK8ew5y92860r+R6TjiL/xjLxSUzLqHfTAxoguh
+         UMgzvUphUgUYy+baPiWu2NmmMBm8uawfx2oguuENimf/4IHRaDiWhXL9rWkwl/enx6p3
+         BHWqgt5SXMm08+j0GxV9ij5L4pxfEkBInjh5m3Ylrq05le/2Tdqeke7xgfoU0P3AG1Sx
+         Uq3w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792523163; x=1793127963; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=UNbGRK4PZ+9u8uTQXHDyp9+3qQZZ4mha/4QOx4Z/MdA=;
+        b=qp+WmQHisu99apGEQI2l9dV24Jr+FI3qU4QSqZsNXJRd6jEEDxqCpKlu47ULya3UCE
+         +3uZ2RMV6vI6lJc4fbia3P/RWeIoSD8MxOznIp82J5VthPyMnUk8db3e0mQMFXCAx4sV
+         NMOJ8VL6Wmg+Q879APUoLc6hriAsY/ufFcmEdYVaZwJtVo6daHv9DmCCTePRCDbGgtNw
+         g7CdNkFC0wl+HGFfaq3AxRS3UMCAKPZMu8S3Jsr4mZ/XHaVyRzcOvVE2izXxyr+Q7qt0
+         sCSivZWz2nvIapEYrTiLXlOIRaDY21zE32+o/uLNOo35qNuHXElH1hxj+M2XcLdOCHlM
+         QwrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792523163; x=1793127963;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=UNbGRK4PZ+9u8uTQXHDyp9+3qQZZ4mha/4QOx4Z/MdA=;
+        b=pEfmW35Z1Hcw5hgTXBVE3EOd8HLh/CTp0p0kxj867RUYKfRFuBvbXDNcY5+YZpLTj5
+         Nt6blCQ8Z4eF7LvkIkdTJA2LBPcIW4Ess7GAtf+gVv5miuiFLFaZ9BiOdxJ7LEOiBLxt
+         znsdQeaL9Ry/832Ci6QhPyWnwcd6UocNRgAnDdPgxQ6cnX6wHDZI5itQRaE5l7b6Cnex
+         zqKAJH6F7gn65/Gad3k8MK0Gbo3hduAeUvk2TokgCYxG7K5kweZAi0CnOB5J7sCkyQUl
+         TJpQFeAjHJdwzFt1DK6QuXaxQTZ72QOdOEh12bCbwVadYikn475Q1HaP7EurmZRkuK/3
+         mqRQ==
+X-Gm-Message-State: AFq9FYKYkcKkugjgTv4w01m0PH+lBFTUJLxDBiR0OzUvnsXvqE1FgLrL
+	aE5r3OvsGLl64XlcEUkQpnbKMO9DorLQ1i4SbISXGRjXbzM/h/BF2iQhN0kuCOLNoHTUlLxz1x0
+	K/9fsWRWWXx3mBkPdpt/eXGTG3lrjnnZ/PQ==
+X-Gm-Gg: AYBFou28i5mkW1ZtZAnzA7J/tbjbgOoJgzPRrH2v5mdQVR1YmwbrC9cDA2ANdf+PYXF
+	vryTBRjifG+eR0AfifeBb1QCVfMeKDuxyPbqJq2qRGoLtaUvbNkFCYuSFuYy42HTnDoL6We2uV2
+	0FAqEb1/U/eSfwb1XzHxsu0bcOLOsczueP4+3AmtHKzmeZVoq6uCWHapiok+Q9h1WKe3UUFXHdg
+	VqLAWCcOJGVV78T4xjRPpCxlBWCftLr44RzIpiWZX7KeXzwnWMbQECLe1sbqqAuNW6009Tssy5C
+	1uwPq3cKyOjvFwNs0CSYwIejJ22myMpNT84dE26x9nWVfq9Sd97UnIoIgk+lKOqYh7jw/s4uREj
+	vZj6ycOs2CwxC7EuKutebTy/uR2m0kv2skKXH5I++GYLlRw==
+X-Received: by 2002:a05:6102:30c2:10b0:7cb:c08b:f50e with SMTP id
+ ada2fe7eead31-7cc7bb88538mr553074137.10.1792523162812; Tue, 20 Oct 2026
+ 12:06:02 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 20 Oct 2026 15:06:00 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 20 Oct 2026 15:06:00 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <atcrO3y0o-2G8Dpu@pks.im>
+References: <20261019-b4-pks-odb-extension-v1-0-143a5963b77f@pks.im>
+ <20261019-b4-pks-odb-extension-v1-2-143a5963b77f@pks.im> <CAOLa=ZQj0sZu7WRzmvgZx23ZeO1KBtOm6yWOLCzeVP_86zkTPQ@mail.gmail.com>
+ <atcrO3y0o-2G8Dpu@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -115,33 +111,136 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Date: Tue, 20 Oct 2026 21:02:22 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Thomas Bachem" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: "Usman Akinyemi" <usmanakinyemi202@gmail.com>,
- "Christian Couder" <christian.couder@gmail.com>, Joy <soniqjjj@gmail.com>
-Message-Id: <922955e1-8fe3-4e1f-8f5a-4ecdd61b1411@app.fastmail.com>
-In-Reply-To: <pull.2271.git.1792522587065.gitgitgadget@gmail.com>
-References: <pull.2271.git.1792522587065.gitgitgadget@gmail.com>
-Subject: Re: [PATCH] config: move pack size limit into repo config
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Date: Tue, 20 Oct 2026 15:06:00 -0400
+X-Gm-Features: AclHuK_oxHdW4Oj67wqvOQk5ww4lXotd1ST-UP40UOePzmPqoagIw6fgICJ88Rs
+Message-ID: <CAOLa=ZQ9YH43igSivrCTy9ruDsRnTDPu0xipp3XdpNXU2zmtCA@mail.gmail.com>
+Subject: Re: [PATCH 2/7] setup: introduce object storage extension
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000005f2542065e4a5242"
 
-On Tue, Oct 20, 2026, at 20:56, Joy via GitGitGadget wrote:
-> From: Joy Gundu <soniqjjj@gmail.com>
+--0000000000005f2542065e4a5242
+Content-Type: text/plain; charset="UTF-8"
+
+Patrick Steinhardt <ps@pks.im> writes:
+
+> On Mon, Oct 19, 2026 at 02:29:20PM -0700, Karthik Nayak wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> > diff --git a/odb/source-files.c b/odb/source-files.c
+>> > index 455f409db0..4a7cbbfd9b 100644
+>> > --- a/odb/source-files.c
+>> > +++ b/odb/source-files.c
+>> > @@ -1245,6 +1246,12 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
+>> >  		object_dir = xstrdup_or_null(getenv(DB_ENVIRONMENT));
+>> >  		alternates = xstrdup_or_null(getenv(ALTERNATE_DB_ENVIRONMENT));
+>> >  	}
+>> > +	if (!object_dir && payload) {
+>> > +		if (is_absolute_path(payload))
+>> > +			object_dir = xstrdup(payload);
+>> > +		else
+>> > +			object_dir = xstrfmt("%s/%s", odb->repo->commondir, payload);
+>> > +	}
+>>
+>> On the reference side, we use `strbuf_realpath()` to convert the
+>> relative paths to absolute paths, should we be doing that here too?
 >
-> [...]
+> Overall I'd love for the "files" source to only ever use absolute paths,
+> but historically that wasn't the case. We sometimes expose those paths
+> to users, and changing the "files" source thus breaks a bunch of tests.
 >
-> This change removes one piece of global configuration state from Git
-> and helps make Git code easier to reuse as a library component.
-
-It's nice to see a paragraph explaining the
-overall project in plain terms. Not just
-"we are getting rid of globals" or "this is
-libification".
-
+> So I'm retaining that behaviour for now, also with the extension. It may
+> be something to explore going forward though.
 >
-> Signed-off-by: Joy Gundu <soniqjjj@gmail.com>
-> [...]
+>> > diff --git a/odb/source.c b/odb/source.c
+>> > index b25ef14df8..10abe33a26 100644
+>> > --- a/odb/source.c
+>> > +++ b/odb/source.c
+>> > @@ -1,4 +1,5 @@
+>> >  #include "git-compat-util.h"
+>> > +#include "gettext.h"
+>> >  #include "object-file.h"
+>> >  #include "odb/source-files.h"
+>> >  #include "odb/source.h"
+>>
+>> Do we need this import? This commit seems to compile without it.
+>
+> Yeah, we add some translatable strings to `odb_source_new()`. The header
+> is also implicitly included, but as Junio pointed out we should include
+> headers explicitly regardless when we require their declarations.
+>
+>> > diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+>> > index f1d227f271..c7c464d3a2 100755
+>> > --- a/t/t0001-init.sh
+>> > +++ b/t/t0001-init.sh
+>> > @@ -839,6 +839,36 @@ test_expect_success 'init with --ref-storage-format=garbage' '
+>> >  	test_cmp expect err
+>> >  '
+>> >
+>> > +test_expect_success DEFAULT_REPO_FORMAT 'extensions.objectStorage is not allowed with repo version 0' '
+>> > +	test_when_finished "rm -rf objstorage" &&
+>> > +	git init objstorage &&
+>> > +	git -C objstorage config set extensions.objectStorage files &&
+>> > +	test_must_fail git -C objstorage rev-parse 2>err &&
+>> > +	test_grep "repo version is 0, but v1-only extension found" err
+>> > +'
+>> > +
+>> > +test_expect_success DEFAULT_REPO_FORMAT 'extensions.objectStorage with files backend' '
+>> > +	test_when_finished "rm -rf objstorage" &&
+>> > +	git init objstorage &&
+>> > +	git -C objstorage config set core.repositoryformatversion 1 &&
+>>
+>> If we're doing this, do we still need DEFAULT_REPO_FORMAT?
+>
+> We could indeed get away with not having the prerequisite right now. But
+> once we have a second backend we'd need this, because in that case we'd
+> potentially initialize the repository with a different backend here. And
+> then just switching over to the "files" backend would probably not
+> result in anything good.
+>
+> So this is more of a protective measure for the future.
+>
 
-Sent from mobile
+Yeah but this also means that this doesn't run with refs reftable, no?
+It should be okay, I'll leave it to you.
+
+>> > +	git -C objstorage config set extensions.objectStorage garbage &&
+>> > +	test_must_fail git -C objstorage rev-parse 2>err &&
+>> > +	test_grep "invalid value for ${SQ}extensions.objectstorage${SQ}: ${SQ}garbage${SQ}" err &&
+>> > +
+>> > +	git config --file objstorage/.git/config extensions.objectStorage garbage://payload &&
+>> > +	test_must_fail git -C objstorage rev-parse 2>err &&
+>> > +	test_grep "invalid value for ${SQ}extensions.objectstorage${SQ}: ${SQ}garbage://payload${SQ}" err
+>> > +'
+>> > +
+>>
+>> We should add  tests for the files ODB with {valid, invalid} payload. We
+>> should probably also test absolute and relative paths in the valid flow.
+>
+> I add tests for both absolute and relative paths in a later commit. Here
+> I'm basically just verifying whether the object storage extension even
+> kicks in at all, without yet verifying its semantics properly.
+>
+> Patrick
+
+Yeah, I think I saw those after this email.
+
+--0000000000005f2542065e4a5242
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: fda000965869b9b6_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1yWHU1TVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOHRPQy93S3B0ZWhVWnRBM1JMVDVBT2dJNVFZZmNsVAowSVowcmdUQUZD
+bzlwQnVVaDRkSml3MlNHRzE3K0ljeEFtYXlJR2hVcW1VRjBuTWZaMHdTR1B1N2Zna3N2bGc4CkMx
+RUNIdnFxZ28vUzVhOWY0bCtTQlUyeWNvRXFxdzZIaU5TZk83ZzdoczhrSnc3cjVuTzFxaEVIQm5T
+eUMxSE4KZEJtYkcvNGN4aE1nOWpNcFZueVZBK0NoOVBqQ2pDMkRmc0E2ZEF3emFkd3FsOTJ2d2hp
+djEyNDJWWUNYdHRFUApnMDhOTlVSRmhxNE9rVTNDdVA3UlVnVUZlTGFNYWRYQ2dRWDJJa2U1cENq
+aGdiaTFsWVBHNjBNalZDTUpUdng2CnhzNERraHk3VWt4cVJibWtqZFpqT1AyTUZ5cHc2MUpYNUdi
+QzEzRU1lbTlCNlB1RGFCTTgzclU2VERUbVV5ODkKT3kvM3VHMG4xZmlJbjI3L0ZUVmlyeGE2b0hZ
+c1hpWEpxdGhObFZSWmRLV05nTDA1S3dLZmtWdmZIZkJSZzBlZwpXQSt5R3dIQ1JMWVBIKzhXWnpt
+MEU2UWRlRFpuM3RTSE1mK1pzd3lxUWpZRmQvdW1QYXg4cEFGa1lWMTBFendjCkl6Q0hkMTB1SURW
+RExvT0F1bjRKSzlnNi90eGQvNEJKZ0Jma0RHWT0KPW5WK2QKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000005f2542065e4a5242--
