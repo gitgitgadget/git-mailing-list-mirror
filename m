@@ -1,88 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792503634;
-	b=Sg8+0rTg3H4BfQeLZ4AWpQT82UU3ZgoTaegsQtahfmg8NAtQbtTkzLExH3pNXHQMxBG+
-	 N19JdYm39OrMFYZf6FMz9D83w/lX6p6JSIk00HNLYl+lG548KczfmHrmflhe8VGQ7eH4H
-	 9NmAlGkGTHoTEP43GDLtv3InBSacEg7lU7T+zdtn7Ea4s8e/y5e5r/PQYTOo7D8GVpW7F
-	 oKf/TUbpIosjTwwFXMIltferneSTgCEl0kR2zGtTmiagr3Qmr0qESTieQHBc08ih+8hyV
-	 q7HvTuXchgtT/+6pCUHmgdK7JJSgiXktnQujiCgpAgJJtp7bCtXiEqw5M7pgxomXEIg==
+	t=1792503782;
+	b=ddbVoB5KXwdfFyZPXjSElGwKOsszZ0692Bwwr3ft6EKpqQNixHxUxbuQg6gUqbN2zPbw
+	 N7xy13PGhn2qVoWi/5mGSXzkUzAyjfW4mZuuJqGf0qgpQQiD3IRr8smw/hFsHzbxtB8EC
+	 aC6gWpw+CCg/vdNnSG65HEueI7UrZBK1Pmxi7DBSLazuGIsLddJCMxJP8nBXIE6TP0zZG
+	 shAI/8fr1jbnjXcI+JwUkKjpyvNrZPdXuQNrPEZgD4Xet8k98W85nPl7CulgWvvaYnnXa
+	 Zz3g4UPFMBdPbTYgeTB9xB95M+C6Ik8XRUnQn4XBqQGV7JkGRsCpEBJksm+rr7KN+lA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792503634;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792503782;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=v2WeF8pIXcdFBoEywPxbASiM/WiVMyJ1r9o57ZN6uoE=;
-	b=ROzKiCvhdAOCfli1tosApOyyFPHVf13n6iUulo7bO3RyvkmHKovGs1+XXanPZCcikBYM
-	 prLc2Ax532IceOc88xhCTRO3s4r6FX0l66VtL1RJVWwq1YtJZRFv+jgEtvE0kiW0SbdMr
-	 oLHFezmE8tFNMdCspayCQRQlO709UrurDQFGaM0scjeU0LX5h/Gz7n55DL+hGXID/Wtim
-	 Lgi8abRFqKT2emnSnIob+bybXEGwx+8AL5VSq7UAOeLgzsTJf7IPITLN74Y+NLsX/J4g2
-	 smTkAUP5E2aRlrZSv3uxckX4eFNA0a4L3OqrcApQsDaX+gGLq7XQK/07IqB6WmkI9Gw==
+	bh=pQyE6J5UG2eEQ4ZsWMoFs+KUibIxG7fBvqF5nn2OnIw=;
+	b=ayh42VAXPSorC6GdcNiPc/FRlq0mtKpd+wfZgbqmFGqGXEkEsecb4/ObbNiduoG8w0OE
+	 FHkPJCptLAN27DDYwFL3O5ZHKt3VMNRxgxAN07fwYhYTKW3rOtHWIurm2qt26LIbEbtkL
+	 Q2uN8sStF3IMuz6lOQ9HkviXkmz6qpi4iRVlQZDSaybq+rjVpHoRc65qoficyc94k4kDa
+	 djEG544rAhY6ZyHfvwVLOVlONpOJnW0aOZZkiZFWSt37oVxaHtqG4bDQnnr2b+0yDuiSv
+	 X+26Lu8vVzzunLK25qRENkm5L3I7bmVHux6+XBwUODSB0Yio2QDoqGbT2K5eJFOwtOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hxJmpwQi;
-	arc=none smtp.remote-ip=209.85.210.54
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="qnzA/tb2";
+	arc=none smtp.remote-ip=74.125.82.177
+Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEA2606A32D
-	for <git@vger.kernel.org>; Tue, 20 Oct 2026 13:40:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EFEA2606A32D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D05606A319
+	for <git@vger.kernel.org>; Tue, 20 Oct 2026 13:43:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B0D05606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hxJmpwQi
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-81ae6aefdceso2899235a34.0
-        for <git@vger.kernel.org>; Tue, 20 Oct 2026 06:40:33 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=qnzA/tb2
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-35b2c599f43so721017eec.0
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 06:43:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792503633; x=1793108433; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792503781; x=1793108581; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=v2WeF8pIXcdFBoEywPxbASiM/WiVMyJ1r9o57ZN6uoE=;
-        b=hxJmpwQi9XJiDBg9FEjI6RWnL/Qm9CRRJWDqE3TdpaXwN6UVLxZk0yp3FPoHMztvLZ
-         7iHKXF1AEmR2ZvuBjmzM4Ul2OyVqn6zENzJEDnyQg2BodA0GerMhx2e0BDhBPedsIAZe
-         14F01CDOCf/k5+Ap2I/cnFjB/BobZaZEqSlwV/u8jdVSiijx/XjolqIjwwKz48ilU5UM
-         9dWF+HSmBXHdvJBZNrZKd6cqHd0KEOmPY0Ig++1r/4ZNsxxrw/WLZWehFDtS3I4MwyBe
-         3IqRF6Q3Ys0WDAMaBlfk+Ja/zfY7d8ynbUBbkHeMts8pAuKW2g+ammk0TYByI3tqihla
-         svLA==
+        bh=pQyE6J5UG2eEQ4ZsWMoFs+KUibIxG7fBvqF5nn2OnIw=;
+        b=qnzA/tb2EdJforBY4fSSSoj/JBgOyC7avZ+TuxdNXvLxuA3Q1/1rGssxevMZffwkRc
+         q8NwRkZuqodpLOirdk70jtiNkmlA60nZso1OYoQCZfvaSt+UbFNVOC6ThOH3oaex5aHV
+         JyUfadkY13ZFNUTQFSptJkBuA/jyVlj7MeWp6dR1rqllKXWZE1yHoae5YxaQoQNqvDlV
+         c9KfctbIemhXiYos5W/pBFuVNsDvjnhDi7gOBNwR/obcqj1k/7vxhIVRid8OL0qJceo8
+         CN2Rs9e45Ukdi0SL76JEE0GPMR+l6a4H3rKlHLUJdyYrw67+IEJ5PFL7ICsmVpCT3rQA
+         ts2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792503633; x=1793108433;
+        d=1e100.net; s=20260707; t=1792503781; x=1793108581;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=v2WeF8pIXcdFBoEywPxbASiM/WiVMyJ1r9o57ZN6uoE=;
-        b=QxNAxAz4AJz+SJRKXghfE/FPeLUP9J2419oKAuInciG/gA0lNwNsqXZdzu0+Zef0lC
-         vXbWuVg91VZn8wWhevfYjpqySVhuhH5F94yVwoNo+vQTEXiRJXv/CXgTHDriD5lJIUmG
-         ggIs56mDBq/HH92z6n3Wfs0kbRKnZdqMLuJYjAcIRjY8WZwnXGcJ+FH1EEp/cjwiNkhw
-         ER9nAi6aIFUqI+5o+/hC6e4AG4ZkEx4K+TS59C5S/r+PKHmFQIgqPfsEGBEKA/O0/2y1
-         HG1U35qDU3vUDfoL8uvRAsJ5ou/zAEDOOf2fm8j6BB79OONc95cofTSN9Uqj28xrM0+h
-         6X3Q==
-X-Gm-Message-State: AFq9FYI6u/PumQC77Nf8eGUigt6qY3YOfT4IF3+K7D9d7YDtWQR3P433
-	5wDetC+A/Vhju1QfK2Wd++/vlqNCkQCnM3XFulr5pE/uiRh7kzclArIAtQ2SQw==
-X-Gm-Gg: AYBFou0l/7QwIJme6VfLkuL6N36svwKwR/OF4KskQWiQwbkzk8TfJ9mfEG1APPtqP/A
-	f+W6yFjAWtuK88JreaFCRsqko/6aQ7sZdZ1NpfRTiXCFH6Nf1gcVCLLDtsF9jPePPX62WYMv+dn
-	BZnjvV5kbSzxB/kCKxGsYMEi3NY9EuW5NCFtcw1iYETdVG3dZUxY2Q+mHPrtaEFRRGfS+9i4Jdr
-	t1Ec0cjgoB8gbeksVpEWakKlpMuxTboevTjc9xIY8RIydx3ooHImaz3qntN39ezj5Ii1tPYr3l8
-	xpee/5nFWb5ufoX5WAm4UEuTnTAn7YjbNAsCqM2i70pc8gtNXJYrxzHjuPy/iLrAL04Boc4w3yu
-	lhwBkUrLRlagNiVtniDkaWCyeEnaZMucNdbpBCrcCV4x0A/8dX2rk9//uxZTT88ZTAyDmfw1+WU
-	a1IEcWJaQ93P2x6Jqtz7cDTfzlsNj/tZvRmeGxkBvV9yWgXgBcUG4Mzwmeyi16VvXvog5hFXwCF
-	w==
-X-Received: by 2002:a05:6830:a141:10b0:845:8d86:9f8d with SMTP id 46e09a7af769-8458d86dbcamr6187527a34.8.1792503632652;
-        Tue, 20 Oct 2026 06:40:32 -0700 (PDT)
-Received: from [127.0.0.1] ([40.74.204.255])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-8490e8cfbc8sm5566929a34.6.2026.10.20.06.40.31
+        bh=pQyE6J5UG2eEQ4ZsWMoFs+KUibIxG7fBvqF5nn2OnIw=;
+        b=hbDnCRNnXaCepXIWactoBwxv5pTK4MkhI+QJksM17LFVMwKXHkvhyyj4m04WFYtH0s
+         QREFmHQFDJH7jq2DG0LosFpeuPatzC2WAg4vgnQ6zIeaOfx5L42q5PAKamlQlhaWbV1o
+         qYgzDnjpvXuouZkN87tz5+C0GdGi8wZ78pJXe0IjeqwqENuWFqU9Neebk6pcPWwk7K6n
+         CHNWmhvQnCmxpov8B4n+t9u65iWgA4+mau0H7MEH7qedpYYibDGqi96dqOpLC3UFsNI7
+         hyDs9S9CxMqaQ7V8gwkKhchfC1sfw2Sg4HcWoNxpv3CzuuNTDXG2ohMiBr6pjzQx7JhI
+         G6Nw==
+X-Gm-Message-State: AFq9FYKGiciYzi9L6bNlJkEWk+M6t01JrQTJO4ojWCslhPqcuWJqS8ue
+	mvFEDZ6ri0zaguvaVzVHDhMYhvWGdKI4Khy8OCnETn9L63GlZpZWHUzmOCGWxg==
+X-Gm-Gg: AYBFou0qt4cD9s2k24qNG986rc+AsYMYsnMJ0sPW8PHf0LZH1po1TSppO2g0SvqXHHz
+	3eP0IaE7A/DQePhEdm55BCkaMRGWxTdHPw8gukTRFksryvCAhD+KxhF5Xjgxd3cZQLvKGSB+XpR
+	oMg3ubd518J69opgyM0NbHSce18hHYqN7A3hNDhNbrSUt3yXkx/wweLf/cYFGOEELbQF69J+kZP
+	SdHV2SxlG5To4qraOUzwYI3rc0PS78kIUYcesD/Tr6LhVdUmZ0WzzFs4qqwqIeqGkb9UMnzyhq6
+	5Z0AUMwU+1Ab8FkopPzX3i/BARumVwq7mJlfgiLFhYuCO+C2WscjgKMJ2qH459cwkkfV4LhMjCt
+	4PFZGNJh12GpEDLMaSvlRKfazOinE2/ahpacvZuWpUygmMNpktVJm5MMzYnBJ2lFaNMxjagB0y5
+	i/UaIhKxXiaKHZNfr/WlQ++aHZG5UKMNA+Qf4HekTDYtjIO2Drtsq14KITAGwH6/sZrsvDc8U=
+X-Received: by 2002:a05:7300:d405:b0:35c:8d1f:5634 with SMTP id 5a478bee46e88-361a126e38amr15209373eec.12.1792503780407;
+        Tue, 20 Oct 2026 06:43:00 -0700 (PDT)
+Received: from [127.0.0.1] ([134.33.77.25])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36632d8b273sm5467338eec.15.2026.10.20.06.42.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2026 06:40:31 -0700 (PDT)
-Message-Id: <pull.2455.v2.git.git.1792503631364.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2455.git.git.1792275106640.gitgitgadget@gmail.com>
-References: <pull.2455.git.git.1792275106640.gitgitgadget@gmail.com>
+        Tue, 20 Oct 2026 06:42:59 -0700 (PDT)
+Message-Id: <pull.2412.v10.git.git.1792503778.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 20 Oct 2026 13:40:31 +0000
-Subject: [PATCH v2] upload-pack: fix slow fetches from a shallow repository
+Date: Tue, 20 Oct 2026 13:42:53 +0000
+Subject: [PATCH v10 0/5] fetch: avoid fetching every branch of a new remote in a shallow repo
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -96,181 +95,223 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
     Harald Nordgren <haraldnordgren@gmail.com>
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Avoid fetching every branch of a new remote in a shallow repo.
 
-Fetching from a shallow repository with a long history can hang. In a
-homebrew-core clone with 900k commits, fetching one new commit into
-another clone took 7 minutes. The same fetch over protocol v0 takes
-about a second.
+Changes in v10:
 
-Over protocol v2, the server goes through all of its history to work
-out which of its shallow commits to tell the client about, and a
-history with many merges makes it go over the same commits again and
-again. Protocol v0 lists all shallow commits and lets the client sort
-them out.
+ * Resolve merge conflict after master integrated
+   ch/fetch-followremotehead-lazy-validation.
 
-Do the same in v2 when the client does not ask for a depth. This also
-makes `git clone --reject-shallow` refuse a shallow repository over v2
-in every case, as it already does over v0. For `git fetch --unshallow`,
-which still needs to go through the history, visit each commit only
-once.
+Changes in v9:
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
-    upload-pack: fix slow fetches from a shallow repository
-    
-    Fix git fetch hanging for minutes when the remote is a shallow
-    repository with a long history.
-    
-    Changes in v2:
-    
-     * Fix fetches with sideband-all by writing the shallow lines through
-       the packet writer. Add a test that clones from a shallow repository
-       with uploadpack.allowSidebandAll set.
+ * Moved the do_fetch() if/else-if/else split out of the preliminary
+   helper-extraction commit and into the refmap-inference commit that needs
+   it. Preliminary commit is now a simpler refactor.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2455%2FHaraldNordgren%2Fupload-pack-shallow-walk-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2455/HaraldNordgren/upload-pack-shallow-walk-v2
-Pull-Request: https://github.com/git/git/pull/2455
+Changes in v8:
 
-Range-diff vs v1:
+ * Split into a preliminary collect_upstream_from_remote() helper commit
+   plus a simplified refmap-inference commit.
+ * Fixed a regression that could drop the current branch's @{upstream} when
+   remote.<name>.fetch was narrowed.
+ * Threaded struct repository * through instead of hardcoding
+   the_repository.
+ * Minor naming and comment cleanups.
 
- 1:  4f4192120c ! 1:  8b0cb4c0e0 upload-pack: fix slow fetches from a shallow repository
-     @@ shallow.c: static struct commit_list *get_shallows_or_depth(struct object_array
-       				**depth_slot = cur_depth;
-       			}
-      
-     + ## t/t5537-fetch-shallow.sh ##
-     +@@ t/t5537-fetch-shallow.sh: test_expect_success 'clone from shallow clone' '
-     + 	)
-     + '
+Changes in v7:
+
+ * Fixed fatal: --refmap option is only meaningful with command-line
+   refspec(s) firing just from configuring remote.<name>.refmap alone, with
+   nothing else to fetch.
+ * When both remote.<name>.fetch and remote.<name>.refmap are configured, a
+   refspec-less fetch follows .fetch as usual, .refmap only remaps something
+   already being fetched by name. Added tests.
+
+Changes in v6:
+
+ * Remove leftover reference to deleted default-branch logic in commit
+   message.
+
+Changes in v5:
+
+ * Renumber test file from t5585 to t5586.
+
+Changes in v4:
+
+ * Removed the automatic default-branch fetch. A fresh remote fetches
+   nothing until you track a branch explicitly.
+ * Fixed fetch report showing "new ref HEAD" instead of "new branch "
+ * Reworded remote..refmap docs and commit message.
+
+Changes in v3:
+
+ * Replace the special ":"/"+:" fetch refspec with remote.<name>.refmap,
+   reusing git's existing --refmap mechanism instead of inventing new
+   refspec syntax.
+ * Split the change into 4 commits.
+
+Changes in v2:
+
+ * Replaced the opt-in fetch.shallow config entirely with a new special
+   fetch refspec (+:) that git remote add now defaults new remotes to in a
+   shallow repository. The new refspec fetches whichever branches any local
+   branch tracks at that remote, plus the remote's default branch.
+
+Harald Nordgren (5):
+  fetch: add remote.<name>.refmap
+  fetch: extract collect_upstream_from_remote() helper
+  fetch: infer branches to fetch from a refmap-only remote
+  remote: add "git remote add --limited-fetch"
+  remote: default to --limited-fetch in a shallow repository
+
+ Documentation/config/remote.adoc |   8 +++
+ Documentation/fetch-options.adoc |   5 ++
+ Documentation/git-remote.adoc    |  14 +++-
+ builtin/fetch.c                  |  92 ++++++++++++++++++++----
+ builtin/remote.c                 |  31 ++++++--
+ remote.c                         |  51 ++++++++++++-
+ remote.h                         |  19 +++++
+ t/meson.build                    |   1 +
+ t/t5505-remote.sh                |  76 ++++++++++++++++++++
+ t/t5510-fetch.sh                 |  63 ++++++++++++++++
+ t/t5586-fetch-refmap.sh          | 119 +++++++++++++++++++++++++++++++
+ 11 files changed, 456 insertions(+), 23 deletions(-)
+ create mode 100755 t/t5586-fetch-refmap.sh
+
+
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2412%2FHaraldNordgren%2Ffetch-shallow-narrow-refspec-v10
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2412/HaraldNordgren/fetch-shallow-narrow-refspec-v10
+Pull-Request: https://github.com/git/git/pull/2412
+
+Range-diff vs v9:
+
+ 1:  2a48c21bc8 = 1:  ba7f1354cd fetch: add remote.<name>.refmap
+ 2:  50382bce7e ! 2:  aa20604144 fetch: extract collect_upstream_from_remote() helper
+     @@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+       		if (transport->remote->fetch.nr) {
+       			refspec_ref_prefixes(&transport->remote->fetch,
+      @@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+     - 			if (follow_remote_head != FOLLOW_REMOTE_NEVER)
+     - 				do_set_head = 1;
+     + 			else
+     + 				follow_remote_head = BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
+       		}
+      -		if (branch && branch_has_merge_config(branch) &&
+      -		    !strcmp(branch->remote_name, transport->remote->name)) {
+ 3:  9ad8ad3eb4 ! 3:  9fb7e77a86 fetch: infer branches to fetch from a refmap-only remote
+     @@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+       
+       	if (rs->nr) {
+       		refspec_ref_prefixes(rs, &transport_ls_refs_options.ref_prefixes);
+     --	} else {
+      +	} else if (transport->remote->fetch.nr) {
+     - 		struct string_list tracked = STRING_LIST_INIT_DUP;
+     - 		struct string_list_item *item;
+     - 
+     --		if (transport->remote->fetch.nr) {
+     --			refspec_ref_prefixes(&transport->remote->fetch,
+     --					     &transport_ls_refs_options.ref_prefixes);
+     --			if (follow_remote_head != FOLLOW_REMOTE_NEVER)
+     --				do_set_head = 1;
+     --		}
+     ++		struct string_list tracked = STRING_LIST_INIT_DUP;
+     ++		struct string_list_item *item;
+     ++
+      +		refspec_ref_prefixes(&transport->remote->fetch,
+      +				     &transport_ls_refs_options.ref_prefixes);
+     -+		if (follow_remote_head != FOLLOW_REMOTE_NEVER)
+     -+			do_set_head = 1;
+     - 
+     - 		/*
+     - 		 * The configured refspec may not cover the current
+     -@@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+     - 			strvec_push(&transport_ls_refs_options.ref_prefixes,
+     - 				    item->string);
+     - 		string_list_clear(&tracked, 0);
+     -+	} else {
+     ++		/*
+     ++		 * See remote.c's handling of remote.<name>.followRemoteHEAD
+     ++		 * for the analogous, still-unresolved case.
+     ++		 */
+     ++		if (transport->remote->follow_remote_head)
+     ++			follow_remote_head = transport->remote->follow_remote_head;
+     ++		else if (config->follow_remote_head_seen)
+     ++			follow_remote_head = get_follow_remote_head(config->follow_remote_head_raw);
+     ++		else
+     ++			follow_remote_head = BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
+     ++
+     ++		/*
+     ++		 * The configured refspec may not cover the current
+     ++		 * branch's upstream (e.g. a narrowed -t refspec), so
+     ++		 * make sure we can still fetch it regardless.
+     ++		 */
+     ++		collect_upstream_from_remote(the_repository, &tracked,
+     ++					      transport->remote, NULL);
+     ++		for_each_string_list_item(item, &tracked)
+     ++			strvec_push(&transport_ls_refs_options.ref_prefixes,
+     ++				    item->string);
+     ++		string_list_clear(&tracked, 0);
+     + 	} else {
+      +		/*
+      +		 * The --refmap command line option, if given, takes
+      +		 * precedence over remote.<name>.refmap.
+      +		 */
+      +		struct refspec *effective_refmap = refmap.nr ? &refmap :
+      +			&transport->remote->refmap;
+     -+		struct string_list tracked = STRING_LIST_INIT_DUP;
+     -+		struct string_list_item *item;
+     -+
+     + 		struct string_list tracked = STRING_LIST_INIT_DUP;
+     + 		struct string_list_item *item;
      + 
-     ++test_expect_success 'clone from shallow clone with sideband-all' '
-     ++	test_config -C shallow uploadpack.allowSidebandAll true &&
-     ++	test_when_finished "rm -rf shallow-sideband-all" &&
-     ++	git clone --no-local shallow shallow-sideband-all &&
-     ++	(
-     ++		cd shallow-sideband-all &&
-     ++		git log --format=%s >actual &&
-     ++		test_write_lines 4 3 >expect &&
-     ++		test_cmp expect actual
-     ++	)
-     ++'
-     ++
-     + test_expect_success 'fetch from shallow clone' '
-     + 	(
-     + 	cd shallow &&
-     +
-       ## upload-pack.c ##
-     -@@ upload-pack.c: static void send_shallow_info(struct upload_pack_data *data)
-     +@@ upload-pack.c: static void send_wanted_ref_info(struct upload_pack_data *data)
-     + 	packet_writer_delim(&data->writer);
-     + }
-       
-     - 	packet_writer_write(&data->writer, "shallow-info\n");
-     ++static int send_shallow_graft(const struct commit_graft *graft, void *cb_data)
-     ++{
-     ++	struct packet_writer *writer = cb_data;
-     ++
-     ++	if (graft->nr_parent == -1)
-     ++		packet_writer_write(writer, "shallow %s\n",
-     ++				    oid_to_hex(&graft->oid));
-     ++	return 0;
-     ++}
-     ++
-     + static void send_shallow_info(struct upload_pack_data *data)
-     + {
-     + 	/* No shallow info needs to be sent */
-     +@@ upload-pack.c: static void send_shallow_info(struct upload_pack_data *data)
-       
-     --	if (!send_shallow_list(data) &&
-     --	    is_repository_shallow(the_repository))
-     + 	if (!send_shallow_list(data) &&
-     + 	    is_repository_shallow(the_repository))
-      -		deepen(data, INFINITE_DEPTH);
-     -+	if (!send_shallow_list(data))
-     -+		advertise_shallow_grafts(1);
-     ++		for_each_commit_graft(send_shallow_graft, &data->writer);
-       
-       	packet_delim(1);
-       }
+     +-		if (transport->remote->fetch.nr) {
+     +-			refspec_ref_prefixes(&transport->remote->fetch,
+     +-					     &transport_ls_refs_options.ref_prefixes);
+      +		if (effective_refmap->nr) {
+      +			branches_tracking_remote(the_repository,
+      +						  transport->remote, &tracked);
+     -+			if (follow_remote_head != FOLLOW_REMOTE_NEVER)
+     -+				do_set_head = 1;
+     + 			/*
+     + 			 * See remote.c's handling of remote.<name>.followRemoteHEAD
+     + 			 * for the analogous, still-unresolved case.
+     +@@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+     + 				follow_remote_head = get_follow_remote_head(config->follow_remote_head_raw);
+     + 			else
+     + 				follow_remote_head = BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
+      +		} else {
+      +			collect_upstream_from_remote(the_repository, &tracked,
+      +						      transport->remote, NULL);
+     -+		}
+     -+		for_each_string_list_item(item, &tracked)
+     -+			strvec_push(&transport_ls_refs_options.ref_prefixes,
+     -+				    item->string);
+     -+		string_list_clear(&tracked, 0);
+     - 
+     - 		/*
+     - 		 * If there are no refs specified to fetch, then we just
+     + 		}
+     +-
+     +-		/*
+     +-		 * The configured refspec may not cover the current
+     +-		 * branch's upstream (e.g. a narrowed -t refspec), so
+     +-		 * make sure we can still fetch it regardless.
+     +-		 */
+     +-		collect_upstream_from_remote(the_repository, &tracked,
+     +-					      transport->remote, NULL);
+     + 		for_each_string_list_item(item, &tracked)
+     + 			strvec_push(&transport_ls_refs_options.ref_prefixes,
+     + 				    item->string);
+      
+       ## remote.c ##
+      @@ remote.c: void collect_upstream_from_remote(struct repository *repo,
+ 4:  75169f668e = 4:  80028d4f86 remote: add "git remote add --limited-fetch"
+ 5:  9ee090d3d0 = 5:  552bf08971 remote: default to --limited-fetch in a shallow repository
 
-
- shallow.c                |  3 ++-
- t/t5537-fetch-shallow.sh | 12 ++++++++++++
- upload-pack.c            | 12 +++++++++++-
- 3 files changed, 25 insertions(+), 2 deletions(-)
-
-diff --git a/shallow.c b/shallow.c
-index 8e244a5669..921db5e17a 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -209,7 +209,8 @@ static struct commit_list *get_shallows_or_depth(struct object_array *heads,
- 				*depth_slot = xmalloc(sizeof(int));
- 				**depth_slot = cur_depth;
- 			} else {
--				if (cur_depth >= **depth_slot)
-+				if (depth == INFINITE_DEPTH ||
-+				    cur_depth >= **depth_slot)
- 					continue;
- 				**depth_slot = cur_depth;
- 			}
-diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
-index f323ceebd2..140d5c2dba 100755
---- a/t/t5537-fetch-shallow.sh
-+++ b/t/t5537-fetch-shallow.sh
-@@ -43,6 +43,18 @@ test_expect_success 'clone from shallow clone' '
- 	)
- '
- 
-+test_expect_success 'clone from shallow clone with sideband-all' '
-+	test_config -C shallow uploadpack.allowSidebandAll true &&
-+	test_when_finished "rm -rf shallow-sideband-all" &&
-+	git clone --no-local shallow shallow-sideband-all &&
-+	(
-+		cd shallow-sideband-all &&
-+		git log --format=%s >actual &&
-+		test_write_lines 4 3 >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'fetch from shallow clone' '
- 	(
- 	cd shallow &&
-diff --git a/upload-pack.c b/upload-pack.c
-index 197bcfa279..e6dc19526c 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1709,6 +1709,16 @@ static void send_wanted_ref_info(struct upload_pack_data *data)
- 	packet_writer_delim(&data->writer);
- }
- 
-+static int send_shallow_graft(const struct commit_graft *graft, void *cb_data)
-+{
-+	struct packet_writer *writer = cb_data;
-+
-+	if (graft->nr_parent == -1)
-+		packet_writer_write(writer, "shallow %s\n",
-+				    oid_to_hex(&graft->oid));
-+	return 0;
-+}
-+
- static void send_shallow_info(struct upload_pack_data *data)
- {
- 	/* No shallow info needs to be sent */
-@@ -1720,7 +1730,7 @@ static void send_shallow_info(struct upload_pack_data *data)
- 
- 	if (!send_shallow_list(data) &&
- 	    is_repository_shallow(the_repository))
--		deepen(data, INFINITE_DEPTH);
-+		for_each_commit_graft(send_shallow_graft, &data->writer);
- 
- 	packet_delim(1);
- }
-
-base-commit: c51408889c3b372814bc20b9431c3b74d0d268eb
 -- 
 gitgitgadget
