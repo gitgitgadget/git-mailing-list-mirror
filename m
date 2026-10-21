@@ -1,99 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.176
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792593463;
-	b=RkHkWj+Rk/EMSCLn6oIHnfd0MYFL1Bucc6JjxP+RCXQCuJh5rHmf+3FXfy2DZLYwo8RD
-	 OB9vXgKgycaOr0jIA2ICoAfwZ/JWPU4ceFOTIR5016yQxxxNrfP8pz3y1Au7KzXl4RcdI
-	 PsnJFwHEWWmt84NnVlHwU9JKbLh/DCMPxXKfSxhqSkSO4KkyDIEc79rA1zvsW2iIYlgH4
-	 7owiNErZd1wswyrj8u8rEJTg/392O+Vh+cyxXUY5y2Hzc4/LsdHsCfEt1/ygsNArpJwqx
-	 +u4T6PhpmmC0UvPtJ/8Y1PQs7LCaPqOq8bk1WbrMBVDj/FmG8HqM+UJtauygLmUzcZw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792593463;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792595453;
+	b=fvs0Ojf2c5LmHNMPE3ZLYXgDoDk6YaXIChU/Ff8lNEc3HAfXc68Fo54v4d3Q2e6pwh5/
+	 byQhxy4MUGuiFVqGIcL6zsCA8herfdOWQOYZEjahkXZsjHhu1LmCHp6+qNLLHok8UioKh
+	 NXMvEYCyVIXVV165CguElNpMZA2zLMdgfpMPcjqTcazcdhzDXfwRYSOfL+AKQ/DY7V1gm
+	 O/S1MlYhViUgf1hJ/hpxwDSjt0zOYL5XpkaMxfNIHg1u9VWRFipbg7FCZz0dt1Jw43npB
+	 87lLpZOjTRkvznBr3UfjggePINvYrRhoJGNCSBtQXzmI8C0r9yUsjYfsyqReuK26msQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792595453;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=pBUcUnS754Mx9p0eXwNzGW017XwtScrn96pfRA4Unzk=;
-	b=h1dTYM07AwkjdPVjzWK3e0iNKo4GfM3wn/6scVzcv8Uh3ZbnfaATPHEdw2fYPkbFSMUo
-	 UII0jD7Ohk1/4RV3qzPXemPyfmpCjrhZZhkG1PusAJI2dksg1uoL7U4AfYeNferwQ9dSP
-	 JL41ZMsGN1vSt48iezI+LStygpVaxWgnFKYxnh9YCAwksA6ubgIOcRsAv2ODFQ+G/vIh7
-	 /oI6rMuc9d1t/N5S7uDRwDXrWVcRW2bmCMUPqRbqAXtfQ9IoJAezuGkWceSzbDEctyOL6
-	 kfvnN2yGL1FGE9vLPoa2ijMy8dovBTdKOy5coG1QGaZk6bQe+9qKXd0nqloBGi+4uNg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=EmYCOxBd/8JatntUy0A1uG6cIed23gNMNTSKp77WnqM=;
+	b=noAI4F3jwe2rn6k7R++L4j8/2bjHO4lFvauPhynB6wXJBonmA8EKjV4BIzcgYotdvTSY
+	 xrsSCwxbgNOryfTN7bjQCeSgY2ZKoW82zEbaiuk7vz75z1wf09krOdixu6NO56kSHMBF/
+	 5O+5MnAC9Ua7/Km0NOea2MOQMUP8iKFAa7CTyORm5C6GCksHijrSNOSYXsvs42Y7+vhbp
+	 f3Be527h3aI1gGSKIlCNl3eRJHZ6nWDNVGzqOnvatgaUb5N4W+2eNbxbMCNq/pSNoV7Qn
+	 sOSK5TBUPx7I7v99nvJ9A7hjit3iEwgJJXoXzJTucGOw82Gz26D4WPp+KPWo3H6wjSA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hr+XMgEq;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.176
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=St1VcIs5;
+	arc=none smtp.remote-ip=209.85.128.48
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CEF606A31A
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 14:37:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 42CEF606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4717606A31D
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 15:10:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A4717606A31D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hr+XMgEq
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-8ab395abf79so7640047b3.0
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:37:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792593462; cv=none;
-        d=google.com; s=arc-20260327;
-        b=gLoDRSTfY5Y0D49a9gNQI0lda7iLrRGbqZW1gLNEwSvwKsv9B4xpBJSVKQZiaHln8B
-         zx6UK88RynK8wHAX9h8J1xa8yL8S4NDVhgxLZOcLmKVWBRFRHqrJvlhj4Uk66mcYPeY2
-         buALZA6nG1Xv99xXtrM0OPiGXteSMcJxlQKF0b+y65zznB1cz1sdDyxMc4c5bMH0IBfF
-         7a5DhUgBAM/xNCjuSvRU/ALKfi/11VdVP9mfRkXnlbHPuvHxm1G9DK6cvbgGUSjc53Zo
-         WdlTgXEavJ32W1HAN2T/v233FTGMsAiPwb4kbxX9ca4NRRbXTgXdAX/EpYojGZq7D81E
-         WK5g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=pBUcUnS754Mx9p0eXwNzGW017XwtScrn96pfRA4Unzk=;
-        fh=/j+vG27rf687elonHcL0kgOXGizcEL1Ld9TZlUvLLDs=;
-        b=NYUsyYaMTmlzftAF0arlSrD8nV1LgnAtGwzlx1mrY3DSrI4s03A9/v/XvlFr6ESFTM
-         +FvyaJodW72TYNppwJ9PzKGV3X7ptHgX9guVFePeTBVjSdvGi5R8B7TbgmKUpSzCCh3D
-         6lY1eKEX04V6+ZTbpSFvugSVLMteJP+0Mhg3TKq4r3c4aVsfO0dwxSQz+tml4t+jXoeE
-         FEMHFWCdAjKUI8lJIQGoOKg2elYXQ7KoCYmjci0Oh78S6kK/0V/2mONjjqt/w4U8p0xT
-         +uq9m1dL7c+ieoSlZVgQRKHbVFJMYuMiqBXovTOr5QLpSUV8FtZ+8ksanFJIPoHlmL9j
-         tO4w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=St1VcIs5
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4a1e2957d7eso8640745e9.2
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 08:10:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792593462; x=1793198262; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=pBUcUnS754Mx9p0eXwNzGW017XwtScrn96pfRA4Unzk=;
-        b=hr+XMgEqqE8HiMI+Vs3Iuh49WW+ABE1rmRXhagYFO6LsD2VeccSDRDGOS/u+KLY9gn
-         LZj4v38nOiXgE7DDi+bLB7spJzfbQj3jUsqjliXB3fXjUw+nYBywvjNuBhK7iuKJ4nfJ
-         NyXSSTYFTK/gjgvmAAFcLpjAdcTCB4x+WMMGU57qRnSuMvdkSHK7454cGDdR+UYzY14A
-         qfq96ij1LDbD8xNpeqbHTeX92UU9z/OwyRXljHdfqZ+PekopReOUGbCRa9/okxG8zZ1p
-         xCMhLLzJz01YlY8OBAXa2y7jwVlooHwL0hvrGsF6bsbW4L0Jyx6Pcm3m6QtWb5Vpmasf
-         VVhA==
+        d=gmail.com; s=20251104; t=1792595451; x=1793200251; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=EmYCOxBd/8JatntUy0A1uG6cIed23gNMNTSKp77WnqM=;
+        b=St1VcIs5dyR56QgrtX60Lfdh3JrYx4f6bzayMRMPeVOE4qIjCX7tZP3q0aEcCIRB26
+         9no/UOWoSP+0tsV6U6LEmgUt7Bff7WPqrddhMea0YeESgOpp8PVF2zQDpLEHI4bToPLB
+         2hPjaAaIZvnu0d6RImAm4vb0tpQAxvffhEEEvHdR27D4TIrgxFuMMB0mvY/+9AnubY9w
+         U0oD9exs5XSerN6O0ywlFnjg43z7CW3EiUz6q2ktn6YL9BaIR7ZGRsvrEDrsyiIbRdwh
+         huR2+406+dA4DMiav7GUHeTTVm7a6E2nAM7DV520LIQikeKMooGnpd+LBMB1B+uIWU23
+         fQeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792593462; x=1793198262;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=pBUcUnS754Mx9p0eXwNzGW017XwtScrn96pfRA4Unzk=;
-        b=BJ5MAYXVQATg/pB/reohLznboz3uXrUvMbRpuvDIe8cqUDcAjPBZBEpAt9q98augKY
-         TZpaX/ibM3Na3NBf273zwRahHDhZIDFqTWwz6sFic1MjKz/PKvqCNSnoy5ns9slflEJu
-         SXoTOwR7Zr2CfY9mTu2weZf9qPIZeCaRQAkzqtK60mjF5XFSNfgpUvpUx2ZCDcXcDP6X
-         NZwQ91SivIYKCtB7Obac6lpu/rVdByJX90DZEZe0qHesR4CmBT0KHgmqWnZcOOMN3lzj
-         Eh98DajGmcst/9HPI/sBUfyZucncL8PCtK7Rq5aEge/qfQOJtMrdeuw5O/FvCP+oj88F
-         rvsg==
-X-Gm-Message-State: AFq9FYLmgXTHWPwfNn5s++a8mFmR7NOVz5DZRHk+mplm7M4m4692eSMF
-	DHaZsJG3kJE3SBsCKDzuvx9yDu5wHbA5vfVBOhU28VctQcMLj0lGaRW+wJYGcBVe+6NGVRKFkXT
-	GsgQWjTzTNkdcx1EWUm97K1rrV0MaaHE=
-X-Gm-Gg: AYBFou34qkwLAqmqsAUUkFs1TiEq1q/oO3iCmMkgCriSKHcs0YkIDUa/0/mt9pchZSt
-	zYvihftZqhqyN5yjBNT9d3uueRn4JJVPc79e/bfAQEOloq+DgtpP2TLqQJrizuutIhPlYr/Qf+l
-	jpt66NgwRThdYy6hYruuQ9looHQo7apNEbCIyb7Oqz6SszyBl9RjQ1G16izKwQ4IB4e3aH0nhaB
-	NP0EeGnFJnStkaiRKl8JYFEjfkv+iXtURUfcYhHDBp2Vo0RJN/BsF3VuESnXitduUmJXbdwkd5s
-	zEBXYub8x+PAkt3IXc4uE9eMXn5IWFGoyw6s7wGDs0q+IvS1sDFVfQo4fiFpWOsSJVZeMeeqXrC
-	UmqJQwj0khMA5qH6ZVjbwzzLfOoyyJMpn38zYeg1IPam+dliUQs5J6P3DIMlFz5XO0r3j6A==
-X-Received: by 2002:a05:690c:6612:b0:886:70a9:3ad2 with SMTP id
- 00721157ae682-8b133c97934mr13082547b3.15.1792593462349; Wed, 21 Oct 2026
- 07:37:42 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792595451; x=1793200251;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=EmYCOxBd/8JatntUy0A1uG6cIed23gNMNTSKp77WnqM=;
+        b=ECASgvWqhGDdLphRwXOLCOsCm1/SbdxOuYpPk3hpNqXdeDwDyUqxk/RgNfE4cNsOMa
+         BqpoaraLRRNSC25uyESNlmb7tCucUP+2liDf75/+GIOmOsZnJ+jdlOA6ef/VpuvDbDdr
+         W+ppG3hYe7bQh0JnNGVfdOHrrSLTdtn31vgd6ZQPEtiGOgkjJwdcTMgrJAL0Gnofm4+7
+         AOCfqni2WhcF+VhcQVDUthCkNylKzyQUG28wlnODTECHiXQQy3Wkcj16FG5X/2MHjXMk
+         nRTUfxPEAHx2yOVnmeRgX9UWCF6lezkKepDAxW/WTMWXAzg1TdeaNTghzUrp4P6sjjwz
+         z5ZA==
+X-Forwarded-Encrypted: i=1; AKwUvBxYUA4ry3y1cAUseCfO4g2MzuanNGAE5Wo9iKJPfaY6pKJyZ3lcsJkVkN/4fb77hBt+w6U=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKzTnIxUG010oRrfwYdGyHwKXeZD2aJWt7kiG+1ttOqY/JAscDr
+	TSdBH+CHQahbjpUeSak+Ablw4mP8w3pN3Pw0oFuoeWC1Wk+o4wpojUw1
+X-Gm-Gg: AYBFou1WplTQFb9BL1J26i73MgWD2VAM/98bsHgrAUbZYMedjXatBbvkwAzvQvO0nr2
+	mOs4hkdl7SziGVj1uukqVGthXWMU5G3Yj8Gz/t41S0VjSgqykeBRz1TUWztzc3SUoRgigNXMCBr
+	fLoc5ycjJJ6Jiy7kCfVbM8094AhuwAoU48ktf8mOVtlW45C+LSYoBMuCpybdFjZcD/y6vpE1pCB
+	S8R8en2Y5sMB/zEXtwQcsD0DTF5zGg93YPIYpvNLYVfyKUfxjig0BMl+3HVchaUl+JuR7mFGz2o
+	6met3mbiyYBV4B9yGuuwXOqJGQTv+XXgKko5atE+n4Zh8K0dR1SIU773unbwhjqQur6wxXlU9p7
+	bYRqrm8eDEQ30SH3/CvfXSFaHQ3NoQ9xBDa0xCrVSMnjHMhrU6MV2OJvRqzEq7YKLaKfFre60TQ
+	kJDPaaro7PXc5iPWN7ezJndKXKySsSibqRrDkzJUUmVB5BGwHymetsjuNA+NoQ8+JqX/0tb1Nb7
+	xnqJpLWMgsF7n8q3GSf/sto+AO46DgUfsNTqSg9/3z58Sc2yf7ePW1ef9L3XPUvqirbRFinVblb
+	V9nCxkS81d3GsSd8RDuOPr0mf7JEwuEUJA==
+X-Received: by 2002:a05:600d:82c1:b0:4a1:f91a:732e with SMTP id 5b1f17b1804b1-4a1fdb0606dmr54762105e9.12.1792595450768;
+        Wed, 21 Oct 2026 08:10:50 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1fcd25edasm49988125e9.3.2026.10.21.08.10.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Oct 2026 08:10:50 -0700 (PDT)
+Message-ID: <de12af28-a64e-4472-8bd4-b65200772dbe@gmail.com>
+Date: Wed, 21 Oct 2026 16:10:49 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,49 +92,150 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <CAPki72GYsid5DqaP8urq-gVrNEvMZM+sXUaNjir-VXc+qokMfw@mail.gmail.com>
-In-Reply-To: <CAPki72GYsid5DqaP8urq-gVrNEvMZM+sXUaNjir-VXc+qokMfw@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 21 Oct 2026 15:37:29 +0100
-X-Gm-Features: AclHuK8z_5AGV1yOGYM3EyhsOO7XEvXRs3zhrizaGAtII7yNmkFYErngciquTJE
-Message-ID: <CAPSxiM9_7LWD6_L5Wsh9LV60FwQxxgLgOSaHQ4QfraZ1PjjV5w@mail.gmail.com>
-Subject: Re: [Outreachy] Git command argument parsing micro-project
-To: Azuama Odinaka Maximus <azuama69@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 2/2] commit: allow -c/-C for all kinds of --fixup
+To: erik@cervined.in, git@vger.kernel.org
+Cc: gitster@pobox.com
+References: <cover.1779792311.git.erik@cervined.in>
+ <cover.1790082176.git.erik@cervined.in>
+ <39e408e14718f533edc6ed2de6ff41ed961c6e05.1790082176.git.erik@cervined.in>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <39e408e14718f533edc6ed2de6ff41ed961c6e05.1790082176.git.erik@cervined.in>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 21, 2026 at 2:22=E2=80=AFPM Azuama Odinaka Maximus
-<azuama69@gmail.com> wrote:
->
-> Hello Git community,
->
-> My name is Azuama Odinaka Maximus, and I am an Outreachy applicant
-> interested in the project =E2=80=9CImprove how command arguments and opti=
-ons
-> are scanned and parsed.=E2=80=9D
-Hello Azuama, Welcome to the Git project.
->
-> I am a beginner in C and am learning to contribute to Git by studying
-> its codebase, reproducing issues, and writing tests.
-Thanks for your interest in the Git project.
->
-> I have prepared a small patch for builtin/rev-list.c to prevent the
-> early option scan from interpreting the argument to --grep as another
-> option. I also added a regression test in t/t6022-rev-list-missing.sh.
-> The relevant test suite passes locally.
->
-> I would appreciate feedback on whether this is an appropriate
-> micro-project contribution and whether the fix should be improved to
-> handle this class of argument-parsing issues more generally.
-It is a good microproject. Since you already said, you worked on something
-already, send for review and for microproject. We can then see if
-there is a follow up.
->
-> Thank you for your time and for supporting Outreachy applicants.
->
-> Best regards,
-> Azuama Odinaka Maximus
-Thanks.
-Usman.
->
+Hi Erik
+
+On 22/09/2026 14:04, erik@cervined.in wrote:
+> From: Erik Cervin-Edin <erik@cervined.in>
+> 
+> The fixup code path in prepare_to_commit() only knows how to take a
+> message body from -m or -F.  Now that the previous commit allows -m and
+> -F for all --fixup variations, -c/-C are the odd ones out.
+> 
+> Teach the fixup path to look up the ref given to -c/-C and seed its
+> message when preparing to amend the commit, mirroring what --fixup=amend
+> does when no message source is given.  With this in place, -m/-F/-c/-C
+> all behave consistently across the plain, amend, and reword --fixup
+> forms.
+> 
+> The incompatibility check grouping -C, -c, and --fixup can go away
+> entirely, as -C and -c are already rejected together by the check that
+> groups them with -m and -F.
+
+I'm less convinced about there being much use for combining "--fixup" 
+with "-C" but I don't see any reason to prevent it.
+
+> @@ -863,6 +863,11 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>   		} else if (logfile) {
+>   			if (strbuf_read_file(&sb, logfile, 0) < 0)
+>   				die_errno(_("could not read log file '%s'"), logfile);
+> +		} else if (use_message) {
+
+by the time we get here we've copied edit_message into use_message if 
+"-c" was given so this covers "-C" and "-c".
+
+> +			struct commit *c = lookup_commit_reference_by_name(use_message);
+> +			if (!c)
+> +				die(_("could not lookup commit '%s'"), use_message);
+> +			prepare_amend_commit(c, &sb, &ctx);
+
+> diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
+> index 9b2ecb1356..de3221ea52 100755
+> --- a/t/t7500-commit-template-squash-signoff.sh
+> +++ b/t/t7500-commit-template-squash-signoff.sh
+> @@ -492,6 +492,62 @@ test_expect_success 'commit --fixup works with -F' '
+>   	EOF
+>   '
+>   
+> +test_expect_success 'commit --fixup works with -C' '
+> +	commit_for_rebase_autosquash_setup &&
+> +	git commit --fixup HEAD~ -C HEAD &&
+
+It would be nice to see
+
+	GIT_EDITOR=false git commit --fixup HEAD~ -C HEAD
+
+so that we check the editor is not invoked.
+
+> +	test_commit_message HEAD <<-EOF
+> +	fixup! $(git log -1 --format=%s HEAD~2)
+> +
+> +	$(get_commit_msg HEAD~)
+> +	EOF
+> +'
+> +
+> +test_expect_success 'commit --fixup=amend: works with -c' '
+> +	commit_for_rebase_autosquash_setup &&
+> +	test_set_editor : &&
+
+Most of the tests in this file correctly use a subshell when setting the 
+editor so that they do not affect subsequent tests. It would be nice to 
+check that the editor actually ran.
+
+	GIT_EDITOR="echo edited >>" git commit ---fixup=amend:HEAD -c HEAD~ &&
+
+Thanks
+
+Phillip
+
+> +	git commit --fixup=amend:HEAD -c HEAD~ &&
+> +	test_commit_message HEAD <<-EOF
+> +	amend! intermediate commit
+> +
+> +	target message subject line
+> +
+> +	target message body line 1
+> +	target message body line 2
+> +	EOF
+> +'
+> +
+> +test_expect_success 'commit --fixup=amend:HEAD with -C HEAD and without have the same message' '
+> +	commit_for_rebase_autosquash_setup &&
+> +	start=$(git rev-parse HEAD) &&
+> +
+> +	git commit --fixup=amend:HEAD -C HEAD &&
+> +	git commit --fixup=amend:HEAD -C HEAD &&
+> +	git log -1 --pretty=%B >with-c &&
+> +
+> +	git reset --hard "$start" &&
+> +	test_set_editor : &&
+> +	git commit --fixup=amend:HEAD &&
+> +	git commit --fixup=amend:HEAD &&
+> +	git log -1 --pretty=%B >without-c &&
+> +
+> +	test_cmp with-c without-c
+> +'
+> +
+> +test_expect_success 'commit --fixup=amend: with -C copies full subject + body of squash commit' '
+> +	commit_for_rebase_autosquash_setup &&
+> +	git commit --squash HEAD~ -m "inner body" &&
+> +	echo "extra" >>foo &&
+> +	git add foo &&
+> +	git commit --fixup=amend:HEAD -C HEAD &&
+> +	test_commit_message HEAD <<-EOF
+> +	amend! squash! $(git log -1 --format=%s HEAD~3)
+> +
+> +	squash! $(git log -1 --format=%s HEAD~3)
+> +
+> +	inner body
+> +	EOF
+> +'
+> +
+>   test_expect_success 'commit --fixup=reword: works with -F' '
+>   	commit_for_rebase_autosquash_setup &&
+>   	echo "message from file" >msgfile &&
+> @@ -553,9 +609,7 @@ test_expect_success 'invalid message options when using --fixup' '
+>   	echo changes >>foo &&
+>   	echo "message" >log &&
+>   	git add foo &&
+> -	test_must_fail git commit --fixup HEAD~1 --squash HEAD~2 &&
+> -	test_must_fail git commit --fixup HEAD~1 -C HEAD~2 &&
+> -	test_must_fail git commit --fixup HEAD~1 -c HEAD~2
+> +	test_must_fail git commit --fixup HEAD~1 --squash HEAD~2
+>   '
+>   
+>   cat >expected-template <<EOF
+
