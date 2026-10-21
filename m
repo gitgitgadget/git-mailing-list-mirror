@@ -1,107 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.181
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792577153;
-	b=UVmzdYbZwEHzA8UoGsuocJFwUB7QlFpXnPHfnNUSN6M4bnCj77GNuua/X9suTJmaxddj
-	 8tA3Y3tmCbHHmg0f0X5Lsa9UQhITvhJ2gCI+Y4Tgo/cYazaVVQmScnX+uap/zXhByJXW5
-	 qv70RqNjWG3Q/azE1pDGLgtbw9lWviS6t7GchmEuM2/VJ9Gy2IsYYtmF2FGQDvxV1SHBD
-	 qTvI/VhszkwrSrRos3PJ3eT3yMQXyUJIPEYPCfojBPTwyNNHD9I2oMYoDVvPhCGy7noQ4
-	 EErNfdtz/tOc0obqwwMe4+baDUQLr2hJrJgY0fPHMvXKKrhyMXFn/x9ze34SE8R8mIw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792577153;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.179
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792577384;
+	b=pVziBvEt6nY7dCnN30OA9Ft0lK5GaZC9hEqMZSGqYKrwJYn9hqE0KsJ9k+Hc35i6xFBD
+	 c8aVXQr7Tx5A9WxNzCdYOm5cG6k8as73Kp89yT14ANih14LFTMnD5Z7kHQ0hZGfC//5+x
+	 cIPIqGwbDzS9GuhDNsYJc8PO7HV7hp77fzbWBfAmkRtwmAef2fH7zwIWEJs5n33W3ORlh
+	 GJIzZeO8JmTCvTn9tR4TGRQDl9K78gUxFNT+ZPmAwKnwfTNbdb7vfARSKNgx8UJi1MxaB
+	 RHaIfK26aZgCH8u6hejQOZpiBELjVnEzSpkTKHYlychxUoOwdCIk+Io47qFYSO71p0A==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792577384;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Received:From:
-	 In-Reply-To:References:MIME-Version:Date:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type;
-	bh=61Pbf5uqbiD0yI5GuBu+w1pmDat6YlMO/7yBv6F1HSY=;
-	b=xPIOM2EJcIf/MOdVu0GIGuAGLDKdd5p1cQR/WJPqUqdO5/PK+UPenGIyih3nFbcFMzJB
-	 b4mNZQwf8YyILAduPvrIPMMyJjKpo8BQgiGf4PYdRZQgMcfUGt0PxPixqi/kFzCLow2/u
-	 5xotBN5a9bRRgtRQVP/hAK8yp2jgYH02jvu15CDIGo1zn3cye2MQKwJAjmAPNJSzG/X10
-	 LpEuyKvvheaqZM5OXyvMahIKbFUyiM/F58UIx+lQDsCWxOJJvetBeRgT1tULzkjMurDBC
-	 boAesvdQ50Ilm5H5laXC7KiHXDVDeIKUfHnAqfHRocviRRYs3WBAa31WSWJA50ofPog==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=/K8Pt/RJNpvSPOe/CCp5utumwS2UTq37rh26Vdvewws=;
+	b=XYz+CDn4uxqP48+EWtDdlI16J79owyZ/GfOYkQq4gcljnPJUP2qPyt1gE4ovcA5FOIKi
+	 DIwpi1fO33pUCYE3EmlRtn9sE7O9xa+adYxwOqCZVoqntvPwUJvPvgty+q+EjnCQjfGDd
+	 t7/yjNjMIBi/izAx6QVDD9mAdtSqiv+tNQlFLTycHGge1CCEW4lSMqWANk6eMvqAgjhWQ
+	 QX0d0tkqZH/mD48weHxy6VG+ZgSG2t8RIIx5sqs/2hK+t1fhKsmFTpDcfHDpPr5mc90cB
+	 6NHW/NNJyeBugppHpSWolyC/OzyGiFACF+JyEVKde4WjcTQczEBlij2ULl75cUkNoOQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=EqlzP9yB;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.181
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=moUkqtzr;
+	arc=none smtp.remote-ip=209.85.167.179
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D704606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 10:05:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6D704606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BD7606A31B
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 10:09:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81BD7606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=EqlzP9yB
-Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-5ead5ff47caso297543e0c.0
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 03:05:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792577152; cv=none;
-        d=google.com; s=arc-20260327;
-        b=R8dgh+R/LWHjRm9iGv9cLcmA4p7NvYzlQVpGvWN1AJ+Fc/vjiT2xOvrKgcwqPudsQw
-         XQq3jcooiJhW4+7VmRZmoJztoL+4W4/tIGpu8l343xSTqTxLM9dlNta39qCjjf70WJ4q
-         qsjCnP170Wpf9vT0H/4kaaSNsqjgJJC8elI4BXwkG34wZxOvm/4CF/356zQz28dClC/m
-         4EnTjHzapUVvcFOSLcsbt4/eu8uVCIM0lfOMgLj1xe9uhb+oFPfiK03pw97/p2pAvcoa
-         HpKyk+HfFk0VVyKIIw0wo4LuPcWERlY3vXZWPpzKvHE+bcwVs+qlSMaIDylXFN1N+02n
-         junw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=61Pbf5uqbiD0yI5GuBu+w1pmDat6YlMO/7yBv6F1HSY=;
-        fh=9OET9sE+5UxZNi5AuGGv4kYRtgn0LLjWgtV3HLUDCXA=;
-        b=rgyrLVtdLxLQNLkZMJrnoTuABqZHMOX7FHBMYgcsyD4UFVoK9zx/4N94pWZ3rfYe25
-         dB8Ys1/DbhNYYZ8gxgKf28/JPYSyVC7TypAQqtRKNvzs0h5LNGSl+AlhSlqjVmT9z4da
-         5cOKY4ac4gt8LVnO0w5glUFqSnxMOCNRypRcOo3uMBpdAScw7Ys8bbsF4DNiuKSfHHNF
-         ue67zw5xoUPmYqmpF0cvRsZm4jTIv7sPiJF/XAgOHLYcM01cWL4+SRv5FCw3olS6DEvH
-         LViE3UPcB3BopRvmDWTQ/mIVurn4d5vQQf0BX5KELhXeUVnRbCrLpLzN6pGpBBbl2Cpf
-         mkEA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=moUkqtzr
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-53ec2cc397aso381155b6e.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 03:09:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792577152; x=1793181952; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=61Pbf5uqbiD0yI5GuBu+w1pmDat6YlMO/7yBv6F1HSY=;
-        b=EqlzP9yBcz44BvPJjd/sliu4tTcKsbbgUYMVPqElq5lenIYO4tJCz/xPn2pTWV6bbH
-         2U4Gea+BgtNgS8BA457mxU9R3WHVIqWGxcPDg8/fasnZN9ZLq11iZv8L/pwC6gDw2ufs
-         jc6j2R3jhc8q4F1Uq+b5qaVASwsa8Drwa4wM5NvHqu9W1CGogvWZYiUwuibVEx2KhBdM
-         BgWhpD7hRqTGvxjNIszQ8BRDJio4soE4MwDKnbtBzK5gQcrsKYsfMkiaslFiizlTnZQv
-         ZleevHqxEX//q2HLLhEdWurVQnxa6szG4qawiRQquZdyW+kyJcxJKflnfUf58XuR1JAV
-         84mw==
+        d=gmail.com; s=20251104; t=1792577383; x=1793182183; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=/K8Pt/RJNpvSPOe/CCp5utumwS2UTq37rh26Vdvewws=;
+        b=moUkqtzri8f9c9jVE3h755wvVnZkZ7lDMzgbE3M3cmxP5+EU8GGsrVG8b8jp4QjJtI
+         RC6yAvxUzH9Jkr9bdEoG3yqPh4RfP/chfLsbuOvBV0mNKHydbzAr8XHyVsZzVgNh7sfI
+         z/a+Z6ubEAa0nJREZh6jBUlBuIPwqTvFTWqDVZykjaK6aMl0MqW8cV6MdyxSdiDdo1ki
+         T5j95GKe69BeByYjLj5U82PySaUyGWUSNA6p/DqfjneOV4MKey/3tPnG8f673PjiCN+v
+         FGlNZnjn6lgzMhPA6KHocxCLJ+mpC2Q3KFrkkedQdhZrDfUOwiUyLFcC0dvLRmo+oAm/
+         wIDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792577152; x=1793181952;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=61Pbf5uqbiD0yI5GuBu+w1pmDat6YlMO/7yBv6F1HSY=;
-        b=x7IhsIQ/4arDP+vKlzNemuXjW2SqEnAV9hcrQ+8TRvnhxMO+iZzJAUJTV8b1yuwevq
-         y1jaKqGtfM0iEudZhYdw8eGP3QAA7ZUDDwjgZAG73RyJmaAqmRNhx4zmXmqhMlxdCtUW
-         ff7Bh5vSAOJQ0gDhGT3ObGSz+efGP55vr9msraaQJvT496vODYK2hCXcd14SEYAyh/Kd
-         NikYE3RAGxv4FEjAihjtSVC4ghutgVKI5kVIw2s3wm1JVXK7n7AWG06PZ2htON0YL3p9
-         zu54TXBWPL0WoVCqAk8bppHER7lPIUgc7u9D6EbCxbIiRijJs4+FBu591XoNPinOhYDd
-         5XuQ==
-X-Gm-Message-State: AFq9FYJYO7mFOj2GHsCuuUIaPkgka2ZKqRROHcqyCDVSWvQpdzr8NQWN
-	mxCJ1RhZRWlAZ4bguXArFRYVPesrPuTcKaGkxfgaZKMtiP46MuZ3VqiR1ZmzVF9lbqMJ0Hwl6aE
-	5rhh50BVKvxqbyY/JT+HF3jque+yscCM=
-X-Gm-Gg: AYBFou39cP88562k1Az9450nRxCcjvdarVURxx96Xno6YcIZNzbjqwPzGJ7Jv4s1XNf
-	7SY7Xmb3r6Ol1zHbwnvar3vM44z2P5sd3cWmct3GzfZqom/oCIV3FzyvMIcT7QaPOmwYwVYz4H1
-	g/lJ3Ck9ug6Zci8FtnNyNaxVOPUeJVbxWIFU/z23o73y8ab5dVdLXoMBd6d6JTlOuJSxHN3/EIN
-	YQiT7tIiM8z7wJrkIE6jHdSSEmglEiA/XDVnXxxbrRvh/ATaG6n4nbkRAtqVRg2BQgM/APwJGcq
-	wlRwVAqkAbBflJiW037E6BV+AZqLdJgikPh0JEaKJ4CVVd9eyMQ45TWs8NpGsOdUJgAR/s/qIET
-	N4x9KKzAlmfpUwMNhRlBD6IM8hTI9qkB3GvH1Mb3MtgUuHt+c5kOMOgIDjajrOv0E8pcJKM0Wsz
-	ipeqyNkEGZRpt9H5JdgUc2fWLVW/o=
-X-Received: by 2002:a05:6102:91b:b0:7cc:2b48:cb1b with SMTP id
- ada2fe7eead31-7cc927397c1mr563026137.35.1792577152288; Wed, 21 Oct 2026
- 03:05:52 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 21 Oct 2026 06:05:50 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 21 Oct 2026 06:05:50 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <atftdOihoUHTdvfu@denethor>
-References: <20261009-799-shallow-fetch-with-tags-v1-1-379d61504af5@gmail.com>
- <20261015-799-shallow-fetch-with-tags-v3-1-90b6e38b98d2@gmail.com> <atftdOihoUHTdvfu@denethor>
+        d=1e100.net; s=20260707; t=1792577383; x=1793182183;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=/K8Pt/RJNpvSPOe/CCp5utumwS2UTq37rh26Vdvewws=;
+        b=fK5KSIOnQ2bS8ixuDbcLcJ1j+6UODo1N1RzlDyYxeiZPMxGBKDVtNxhvKCGh4girde
+         WIFzOiMmDPwlshkwjKUzF7hO0qW6kS92cCqgJknCUljUdS6wYHnl1RcuQ/WOBkhm5pYN
+         K8q6s7l/1IHdR+78GJ1bs9omG9qMczz/7SkoOjQ2PmaSzT7uPvHxeQHuYdhmsRss7iGj
+         PWMN3YcmOhWRfQxeQDmmx9WRa1g5hp0FguvggNsozsnvv9SIYVLXsrTiRZcgF7Y/avv/
+         z7BFzO+yDlge2k7Oqfp7ohw5apmDhRnooepkHOXlJ1cyrU29O/iw/RdXV0XmoXae+qUJ
+         pujA==
+X-Gm-Message-State: AFq9FYKf7TR7qZuMORAqThPh7XLhQl/I5p0czmGMJG+/BytwqXWnaRpj
+	MpR94WAODIUR9wNL5AeZSkpjYtTMkxK8Y2VxmX0VuIJrwqK1g1gFPR7dcBRK7g==
+X-Gm-Gg: AYBFou3NTVDZo+D7KEb7TXTS0Z7omTisRNxtmX6t57oufMPH2JCGsESg4ItE3MARQAo
+	wsW2LqURmFPKVkhJNCW3Kg44ewpitZookUbU/0gi4vw1spSqVmc1pnKMncgiBu6X6iV/MmZ5s6J
+	Mm9UmN9WQMTXHPeefMcb+kgrKdecabomd/G9QAv91xQcB1crRychtFvCoRC3PfmLaladWMtSOOB
+	to+7nOOEoZ3Vy1HM9mT7TqzAphOADh4+X95Yh6NA2NK4u1Tt/Ca0yucDrs6w2qx+/8qZrntnNRe
+	YhyGaawibetzOu1j5WriymQrLEHFDjBIdA8Eb84A0UL+5KDoWpqDwgFC+19HcEYkKaeLke+KRfq
+	Cr1cCwhd9CQQdB5fFuoF2hxAnX3SSloHnTOWofQIICmww8j/MPe2sD+Wdv81YnBNlIW4milpKsY
+	EBLYNUTN97yyvuM4N3bYYHoNKW5e2sr4RZNWD+irYEp4X8Usirlx6NapZWZGP/cyjb5WabECxbL
+	3NDqM3ByEg1mYIzYwbVwbvbYhyC2bOXqBoq5+h1mrQTnn3YmQ92brb+OUs=
+X-Received: by 2002:a05:6808:1990:b0:4f6:1ef7:6cd9 with SMTP id 5614622812f47-553611f50c5mr1126805b6e.64.1792577383195;
+        Wed, 21 Oct 2026 03:09:43 -0700 (PDT)
+Received: from [127.0.0.1] ([13.86.110.219])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-552b7454fe5sm1689591b6e.13.2026.10.21.03.09.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2026 03:09:41 -0700 (PDT)
+Message-Id: <pull.2273.git.1792577381142.gitgitgadget@gmail.com>
+From: "Nakul V S via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 21 Oct 2026 10:09:41 +0000
+Subject: [PATCH] sequencer: refuse to revert shallow boundary commits by
+ default
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -111,169 +93,171 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Date: Wed, 21 Oct 2026 06:05:50 -0400
-X-Gm-Features: AclHuK96rj7ZtAU7QpIhX8G7wI8zSXEvK8DGdQP92N3Kl8zaHCWCw9wJ2H6Q3Dk
-Message-ID: <CAOLa=ZR-mg6ah4VwStR3SJvT1uWdW5uv7q9x486FN7UawkJYeg@mail.gmail.com>
-Subject: Re: [PATCH v3] fetch: commit references fetched before backfilling tags
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, 
-	=?UTF-8?Q?Mitja_Bezen=C5=A1ek?= <mitja.bezensek@login5.org>, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="0000000000006535e2065e56e4c2"
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Junio C Hamano <gitster@pobox.com>,
+    Nakul V S <vsnakul@gmail.com>,
+    Nakul V S <vsnakul@gmail.com>
 
---0000000000006535e2065e56e4c2
-Content-Type: text/plain; charset="UTF-8"
+From: Nakul V S <vsnakul@gmail.com>
 
-Justin Tobler <jltobler@gmail.com> writes:
+When a repository is cloned with --depth=1, Git records the boundary
+commit in .git/shallow and rewrites its parent links via the graft
+mechanism, making it appear as a root commit. Reverting such a commit
+will therefore delete all tracked files, which is almost always
+unintended by the user.
 
-> On 26/10/15 11:24PM, Karthik Nayak wrote:
->> In 0e358de64a (fetch: use batched reference updates, 2025-05-19), the
->> fetch code was modified to use batched updates to provide a good
->> performance improvement. Batched updates are used both for the fetched
->> references and to backfill tags.
->>
->> When using batched updates, the references aren't yet committed to disk
->> when we start backfilling tags. This means in situations such as shallow
->> fetching the negotiation during backfilling tags, the newly fetched refs
->> are not available for advertisement in the 'haves' section. This can
->> cause the server to send all objects the client already has.
->
-> Ok, without the earlier fetched references committed, the backfill fetch
-> may ultimately ask for objects it already got. Make sense.
->
->> The issue always existed when the '--atomic' flag was used, as both the
->> regular ref updates and the tags need to be part of the same
->> transaction.
->
-> So IIUC, you are saying that this problem already existed prior to
-> 0e358de64a, but only for atomic fetches. Furthermore, this patch doesn't
-> fix anything for atomic fetches as they can only use a single
-> transaction.
->
+Add a check in do_pick_commit() that detects when the target commit is
+a shallow boundary (nr_parent < 0 in the commit graft) and refuses the
+operation by default. A new --allow-shallow-boundary flag is provided
+for the rare cases where the user genuinely intends this behavior.
 
-Yup, there's nothing we can do for atomic fetches with the current
-approach.
+Signed-off-by: Nakul V S <vsnakul@gmail.com>
+---
+    sequencer: refuse to revert shallow boundary commits by default
 
->> Fix this by committing the previous batched update and initiating a new
->> one for backfilling tags. Use a separate error variable for tracking the
->> reference updates: One, it ensures that errors from the regular ref
->> updates don't cause a total failure. Two, if starting the transaction
->> for backfilling tags fails, only those updates are not made to disk. The
->> initial error is now printed straight away to clear the buffer for
->> further errors.
->
-> Naively, I think it would be nice if it were possible supplement the
-> backfill fetch "haves" with the non-committed references in the pending
-> transaction directly. That would avoid having to commit the references
-> in the middle and probably also fix it for atomic fetches too, but I'm
-> uncertain if that would be a simple or reasonable thing to do.
->
-> Committing the intermediate state here does in part fix the issue, so it
-> may be a good first step regardless.
->
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2273%2Fvsnakul%2Fsequencer-shallow-boundary-check-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2273/vsnakul/sequencer-shallow-boundary-check-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2273
 
-I've replied to this with Patrick's email, let's continue there.
+ Documentation/git-revert.adoc | 12 +++++++++++-
+ builtin/revert.c              |  4 +++-
+ sequencer.c                   | 14 ++++++++++++++
+ sequencer.h                   |  1 +
+ t/t3501-revert-cherry-pick.sh | 25 +++++++++++++++++++++++++
+ 5 files changed, 54 insertions(+), 2 deletions(-)
 
-[snip]
+diff --git a/Documentation/git-revert.adoc b/Documentation/git-revert.adoc
+index ffba365e63..4395df62e2 100644
+--- a/Documentation/git-revert.adoc
++++ b/Documentation/git-revert.adoc
+@@ -8,7 +8,7 @@ git-revert - Revert some existing commits
+ SYNOPSIS
+ --------
+ [verse]
+-'git revert' [--[no-]edit] [-n] [-m <parent-number>] [-s] [-S[<keyid>]] <commit>...
++'git revert' [--[no-]edit] [-n] [-m <parent-number>] [-s] [-S[<keyid>]] [--allow-shallow-boundary] <commit>...
+ 'git revert' (--continue | --skip | --abort | --quit)
+ 
+ DESCRIPTION
+@@ -122,6 +122,16 @@ include::rerere-options.adoc[]
+ 	configuration variable can be used to enable this option by
+ 	default.
+ 
++--allow-shallow-boundary::
++	By default, 'git revert' refuses to revert a commit that is a
++	shallow boundary (i.e. a commit listed in `.git/shallow`),
++	because its true parent history is absent from the clone and
++	reverting it would remove all tracked files. This option
++	overrides that safeguard and allows the revert to proceed.
+++
++To restore full history before reverting, use
++`git fetch --unshallow` instead.
++
+ 
+ SEQUENCER SUBCOMMANDS
+ ---------------------
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 52100a20cb..f27397fdec 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -24,7 +24,7 @@
+  */
+ 
+ static const char * const revert_usage[] = {
+-	N_("git revert [--[no-]edit] [-n] [-m <parent-number>] [-s] [-S[<keyid>]] <commit>..."),
++	N_("git revert [--[no-]edit] [-n] [-m <parent-number>] [-s] [-S[<keyid>]] [--allow-shallow-boundary] <commit>..."),
+ 	N_("git revert (--continue | --skip | --abort | --quit)"),
+ 	NULL
+ };
+@@ -128,6 +128,8 @@ static int run_sequencer(int argc, const char **argv, const char *prefix,
+ 		OPT_BOOL('e', "edit", &opts->edit, N_("edit the commit message")),
+ 		OPT_NOOP_NOARG('r', NULL),
+ 		OPT_BOOL('s', "signoff", &opts->signoff, N_("add a Signed-off-by trailer")),
++		OPT_BOOL(0, "allow-shallow-boundary", &opts->allow_shallow_boundary,
++			 N_("allow reverting a shallow boundary commit")),
+ 		OPT_CALLBACK('m', "mainline", opts, N_("parent-number"),
+ 			     N_("select mainline parent"), option_parse_m),
+ 		OPT_RERERE_AUTOUPDATE(&opts->allow_rerere_auto),
+diff --git a/sequencer.c b/sequencer.c
+index efbfd1315b..6de59bf6aa 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -49,6 +49,7 @@
+ #include "rebase-interactive.h"
+ #include "reset.h"
+ #include "branch.h"
++#include "shallow.h"
+ 
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ 
+@@ -2366,6 +2367,19 @@ static enum pick_result do_pick_commit(struct repository *r,
+ 	}
+ 	discard_index(r->index);
+ 
++	if (is_repository_shallow(r)) {
++		struct commit_graft *graft = lookup_commit_graft(r, &commit->object.oid);
++		if (graft && graft->nr_parent < 0 && !opts->allow_shallow_boundary) {
++			return error(_("%s: commit %s is a shallow boundary commit.\n"
++				       "Reverting it will remove all tracked files because its\n"
++				       "true parent history is not present in this clone.\n"
++				       "Use --allow-shallow-boundary to override, or\n"
++				       "'git fetch --unshallow' to restore full history first."),
++				     command_to_string(command),
++				     oid_to_hex(&commit->object.oid));
++		}
++	}
++
+ 	if (!commit->parents)
+ 		parent = NULL;
+ 	else if (commit->parents->next) {
+diff --git a/sequencer.h b/sequencer.h
+index a5d12a1070..f334bc5357 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -57,6 +57,7 @@ struct replay_opts {
+ 	int committer_date_is_author_date;
+ 	int ignore_date;
+ 	int commit_use_reference;
++	int allow_shallow_boundary;
+ 
+ 	struct strvec trailer_args;
+ 
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+index 939e7a16a6..508464004f 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -256,4 +256,29 @@ test_expect_success 'cherry-pick is unaware of --reference (for now)' '
+ 	test_grep "^usage: git cherry-pick" actual
+ '
+ 
++# Tests for shallow boundary safeguard
++
++test_expect_success 'setup shallow boundary tests' '
++	git init src &&
++	test_commit -C src A &&
++	test_commit -C src B &&
++	git clone --no-local --depth=1 src shallow-repo
++'
++
++test_expect_success 'revert of shallow boundary commit is refused by default' '
++	test_must_fail git -C shallow-repo revert --no-edit HEAD 2>err &&
++	test_grep "shallow boundary commit" err
++'
++
++test_expect_success 'revert of shallow boundary succeeds with --allow-shallow-boundary' '
++	git -C shallow-repo revert --no-edit --allow-shallow-boundary HEAD
++'
++
++test_expect_success 'revert in non-shallow repo is unaffected' '
++	git init non-shallow &&
++	test_commit -C non-shallow A &&
++	test_commit -C non-shallow B &&
++	git -C non-shallow revert --no-edit HEAD
++'
++
+ test_done
 
->> diff --git a/builtin/fetch.c b/builtin/fetch.c
->> index b2decc6cfd..34fc37b58a 100644
->> --- a/builtin/fetch.c
->> +++ b/builtin/fetch.c
->> @@ -1923,6 +1923,7 @@ static int do_fetch(struct transport *transport,
->>  	struct strmap rejected_refs = STRMAP_INIT;
->>  	int summary_width = 0;
->>  	int follow_remote_head;
->> +	int commit_ref_ret = 0;
->>
->>  	if (tags == TAGS_DEFAULT) {
->>  		if (transport->remote->fetch_tags == 2)
->> @@ -2076,6 +2077,30 @@ static int do_fetch(struct transport *transport,
->>  		struct ref *tags_ref_map = NULL, **tail = &tags_ref_map;
->>
->>  		find_non_local_tags(remote_refs, transaction, &tags_ref_map, &tail);
->> +
->> +		/*
->> +		 * As negotiation only reads references from disk, commit the references
->> +		 * fetched so far, so that the backfill negotiation can advertise them as
->> +		 * 'have's. Otherwise the server may re-send objects.
->> +		 */
->> +		if (tags_ref_map && !atomic_fetch) {
->> +			commit_ref_ret = commit_ref_transaction(&transaction, false,
->> +								transport->remote->name,
->> +								&rejected_refs, &err);
->> +			if (err.len) {
->> +				error("%s", err.buf);
->> +				strbuf_reset(&err);
->> +			}
->
-> It looks like we log the error and continue even if committing the
-> transaction failed. Is there a reason we would want to still try to
-> start the next transaction?
->
-
-Since we use batched updates, some refs could fail, but we continue as
-we may have still applied some updates and we can continue doing the
-rest of the work.
-
->> +
->> +			transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
->> +								  REF_TRANSACTION_ALLOW_FAILURE, &err);
->> +			if (!transaction) {
->> +				free_refs(tags_ref_map);
->> +				tags_ref_map = NULL;
->> +				commit_ref_ret = -1;
->> +			}
->> +		}
->> +
->>  		if (tags_ref_map) {
->>  			/*
->>  			 * If backfilling of tags fails then we want to tell
->> @@ -2099,9 +2124,16 @@ static int do_fetch(struct transport *transport,
->>  	if (verbosity >= 0)
->>  		summary_width = transport_summary_width(ref_map);
->>
->> -	retcode = commit_ref_transaction(&transaction, atomic_fetch,
->> -					 transport->remote->name,
->> -					 &rejected_refs, &err);
->> +	/*
->> +	 * The transaction may have failed to initialize, meaning there is nothing
->> +	 * to commit. Carry forward with other operations in such cases.
->> +	 */
->> +	if (transaction)
->> +		retcode = commit_ref_transaction(&transaction, atomic_fetch,
->> +						 transport->remote->name,
->> +						 &rejected_refs, &err);
->> +	retcode |= commit_ref_ret;
->
-> hmmm, the error paths here are confusing me a bit. If the transaction
-> failed to be created in the first place, wouldn't we want to stop
-> earlier on?
->
-> Thanks,
-> -Justin
-
-Not really, since we use batched updates, the backfilling tags
-transaction could fail to initialize but we still want to set upstreams
-and set HEAD.
-
---0000000000006535e2065e56e4c2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 3820854acc9b2ce2_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1yWWpud1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNTFEQy85Z0diUjVTT0JJUkExRVRWNldITUhDR2tLVApzYjhjYXAveiti
-dEZuVCtMdXkwdlhLY0hLcVpEcDRQN0V3K2tmVnZuajBuZHBWQy9YMGVWNmxYckpKRjhCajdRCjFh
-U3JybU9RQ3o4RE5jVlNLS2xwVUdKdVdtUUlic3RvbzJQL3JrVUhQajV5WkJHNVBIWTg2a2NQSUtD
-eXY1TXUKV3RtWDBvak5lRVFtaXRVNTA3MHlYOUphY0pBSGlKOUoxWE9xU1hqd3JySUkxMVlZTzZP
-Y2poZjkrMVJ3NGJ3KwpYaUp3QS9sL2gxYjUySU0rQ1crODIzMXhYQVU4MUJoMXlmNTJLbXRMQkpG
-NzVpZ24yc0JIbVFCc3pzRnB6YWNkCkZtaDlpdVo3ZWZ2NmxPUEYya3paTCtQWUhicm52cVVLd2hs
-VHd5Skd5Y3BnSlE0ZXlKRjZOVVFDRmdMc21HSWcKS1QzR21wbmZoWW5md2labWl5M0tkZ1RDNDBF
-emNDMGtHSVhzOFF0S2g5UUJ4VWxYa282YTBsTDBVd0pOWkFCUgpOTlU5NTVJOUZ3MHdzYzNPSm9y
-SjZRYU9BbEtmWnhoL3F3d0xTTEhlVzJYMkF0VkxXVnpnem5KWEVkS3h3elZaCk52Sk12eXZrYkt4
-N3FUc0ZKcTEycDI0UWhENjdrbzM3RmhrWHo0TT0KPWxEMm8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000006535e2065e56e4c2--
+base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
+-- 
+gitgitgadget
