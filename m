@@ -1,88 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.48
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792596046;
-	b=K1jlmu++Z/R/eyiKJW5JcICQQNfKDQsjjxinolGVLxxCSxhji/2rjiavAbjHrAQqYSmP
-	 X/DZnuX4r8fBkHQKUtrQoC3BNEjuO4VGRV19AZMp6OYkK+BZGUbb9+vVIv8Ovc9u6XmH5
-	 370mXmfuQt1wMFIV4fPK8ov1mo1kxd1VcYx47IcZV4v/vsUoOYZZDSdo+Xn5qCSxi/7So
-	 t9KP2Rar+iG1q8HJ6jDJTtgOUywaEAcnV3kjmX9L4XXzKzoyLVynPtIt0SxVmeSgjyZDD
-	 yhWZ1lhn1XC4bNmHGwRkYl56I5IkSAIwOPnzwmzGhfLJ7Yr6odkM3ksX1ouz0Cn41Yw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792596046;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.43
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792597370;
+	b=EQRPQvVHtXxvjsvs0o355gYJQpLuVvTdWgQ7QiHrOW2xFJVMGmEXbeETInEM19aDOGoY
+	 h7KW7ME6K+sghcsqqMq3ahoCTXemq0+R2SvTPfP4tRETP4jAUK5I9bp+o2mzg6O8JAc8H
+	 xVj++mdLre2Tg+VN46R2PkVWCauk2nbgoGL4/Vc3nmZ0HC9m6s/i7PTm4NCd1Rd97e52c
+	 oI0L5Rt2RiW+Mp203SxMI+VQVevZ8LyCtV+JgoOJ6YtKnvRRvTJFTcqO1h5sO/hO0Y3Gc
+	 z39Xiu4v69ZaqoFkKFs0UXH5qdJALyXVbeFmPYL++tbcjYsXApK4Gcn1dmjuuDZ1q8g==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792597370;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=QgcWO6RVZtOBLwr9SFHBf/xBjNn4Y8uBfpLoN+O1EZI=;
-	b=0cebYVJJ4EOY6eDVpUUBRcs4bU/3eB7HKfURiEIuUo/eczpEMmTAsqdn/iP2EcXvxZls
-	 DZkUknR50WNGPHf3cuRuxipSDpsR8vYcBPgpIizPDp7NkBs7BPaRBMmaDW8zkwTFCCiHz
-	 oUU4ctBAT86la/9ku3JQhRyrcXXomhYfFwq4NXOVVi8QgQqVkCrw9wrlyll0P/8GfVsnn
-	 G6H25+9UDAvATPs402ZeS1xxn4QsnZyuU4kXqV+eagusggkSs4YvzauikDu1GE1azjBz3
-	 ASVo3sK2UoanEHNsojGH/VLHs/Pu4sVuXdaFytAVCFChateZkzlRIrjPcYFVeuK6Wig==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=Hwe4wx55Qw3c9y5HfK1Q+FrFdWUJVRvJt2IWUXwMh7I=;
+	b=z2TR9BZNShaUeC8zYpz+yr2FV6VO6GQNn/PLysAWB7mi+9Cn/ErEiD4HLzVt64A8wBsP
+	 bEqESkr5iweBXTj0pEau0+LI1u7DHNtoOvU9iosNLWmBcpjd086ic6Lj/ms9G7pnWsyy2
+	 iaBAFP7wc6H3UtEx7yjq2B47r+V9iGE01ubcC5fuYg45YhU837okvUZTXMJuDSZFLmxXB
+	 UnWvmaPEfmPXIu6wlJ0UaR4jgbNcPnDeGlQMKmmMk8Oza7Ax2Ynh8FyiwAkeKyzQUhgCF
+	 NFRJAWRLu1CeHkg/CjjAR+9WRxS3Fy6MQC+J4jTy1RLvkBJ6P2Q0RNfxSzdb5f0gsug==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=GJoVgaxN;
-	arc=none smtp.remote-ip=209.85.221.48
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=spndHo+4;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.43
+Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B32606A333
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 15:20:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02B32606A333
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F68606A31B
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 15:42:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 19F68606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=GJoVgaxN
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-48afbd2c386so652871f8f.3
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 08:20:45 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=spndHo+4
+Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-6740e7ae219so767081d50.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 08:42:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792597369; cv=none;
+        d=google.com; s=arc-20260327;
+        b=C7evMPAC3hx3SbLEWTIxm5LNDrIvd+2bf0yGHgVl8mpaQ1+vsQifmQjZLl3n6wgXtB
+         i+ATXWDfofxWN+2nqFaXFsnLa6C1rH0rU3WuCgbqweXx0FXxnMejNfiHBnwmAcp4Gl6m
+         rq9Y2XQbXEP2O+zkbDPBMbkkd5EySg5RafvezvJYPZaTGOX2/JqBw7Ar9gBVRE8GZlil
+         nC823etfwJkJjCdxY0hHWZGNbJXTkBIosd7CNBJH5W/1NJ8p+tfd9HnM8Fj6edbeWZaK
+         37L67ab1lo76uIVRAUkewIJ4KJ1Nk3/5l+zphdK2sywctkD4eUxUk9z2KFvp1wbJ8tEV
+         2uuA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=Hwe4wx55Qw3c9y5HfK1Q+FrFdWUJVRvJt2IWUXwMh7I=;
+        fh=/j+vG27rf687elonHcL0kgOXGizcEL1Ld9TZlUvLLDs=;
+        b=FaUFkMWsjQvYxPE0SL4M1CVnVivEnh+93fVlKDgMHwyc4WXQjprhrJbSMBTZmxPAkS
+         ozKbMDW+L6lu38KSj5snA391XS/gnu5QeAxf582GjSy19NahjJuyYxzPjMngq4jRk1+A
+         F3f7WYuACdq95btYHxb0YAhKCpAwLbBFEP9/B8XO4OLCNi6e44G7O7iMIr8gwxLVU6LR
+         WrL/VIMz2mzgnR8RS7boNP/1PiUnm9nRLChDvYKkLZg6y9WHuC+4U1Zus7bC4yrindd5
+         CFgU9AC1groU6UvMORRVa2g1WdWb4UGYHvQ+rsIqGzPUgxUjjxEBlJM3eqLDt6xsnO+O
+         3V+Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792596044; x=1793200844; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=QgcWO6RVZtOBLwr9SFHBf/xBjNn4Y8uBfpLoN+O1EZI=;
-        b=GJoVgaxNTPnomQuvnPZzvd1eF8fjLzpiCOGgTjsI/Xh5nkMyy5eZbfmLCarwGg6FZt
-         mhQaAZvraPY/Tw/L7RkC64iIrmXee60zIbBnzWeMptz6Hz2GOjnDj+uiLUJ5fKiizr3q
-         6jx6/z7EtC/BcvIq8cw3Uhtp1oTgIKK2zrKFsTR/Jn9XVcjP1UkJePC1JG6rz1PVQPOe
-         9fO17OBSZ47prC2fPjvyhIYsB+864tndjNwZ1RxF+xmdjXML82d/ZM7hJrDmpITdWtww
-         1ZDmfrR+UNUHok2pMnon1HB6lSE9tBtWSXjCL6uaCHG1rnGio3EHsw8ecR3Jx6pi9rgf
-         vTPg==
+        d=gmail.com; s=20251104; t=1792597369; x=1793202169; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Hwe4wx55Qw3c9y5HfK1Q+FrFdWUJVRvJt2IWUXwMh7I=;
+        b=spndHo+4kVCb8rHHpLYambzRFEuYGfVHlgJHxgHpWXF+8ifHTwAFOdppPjtY8N0jkV
+         psTc0KCSleTZskCuL6fyR2GgVE6aF76StF93ZMJLgVZrFXC0CnFKRQjqlVnaq1pajlFk
+         +hpMAijF4587hCHHKqq8kqJykYFYSrQfpc8an7Rjfzq4c2WpEWNcrlv5PVyoXDMlNJMT
+         s9+HI3XH7rrbgr7dK6M+ftivdiuOPdB2v1K4MEVrEX02D/LJthfUqoyxIFRY96s92C69
+         +tkwcNtUoN5Ho20c6JKo2lsDHkHfSpUFC52dNGhNhKkzZF8lLMEDWgDolUgOg6/h0Gkt
+         ohUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792596044; x=1793200844;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20260707; t=1792597369; x=1793202169;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=QgcWO6RVZtOBLwr9SFHBf/xBjNn4Y8uBfpLoN+O1EZI=;
-        b=OGtu/MbuRkSMiS67MuCzPEp8RLw5uFaVyE3P+9XLgLDQlccT5qAro+9UZmaEvjwIPv
-         8Bx9qKAoXnrRXNw46wOF4yXQRMmJLoyoCgAEJapEO8sjh12Iqka1rHn5UbbeuUGi6YxF
-         wKSpeh8bujTqJZit1Y8kvMxsHJguPRCbr86VQYwClNXITwfOqmvpwXRSnzMcW/6A2Eu9
-         LlHUp8rBn8jIHr+/asCcABn2/97BVm/g8BYBHLw9a13iR0STqntMaacx4QIfh5NcSsrD
-         fJsrjW7VZ+RlUSpKmQ6nsCAOamfBG4lJytnBym9QCWT2HS+y4LRvPdx37KYQJG3/7it3
-         xrzA==
-X-Forwarded-Encrypted: i=1; AKwUvBzer1jE6XnYi0C2Y6UfXMb20dFacf2lvaydyFN+mV3GCKNz6Ulljd85cXxSbuGZ3kVdkEw=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJZdoT72XNOmyFRULVelDrjEAu7XvM7rSH+2bB730lSCDhoy9q+
-	R2/IkyITxxZomgbipAPC4suNP+YzYOIk8VwGob4AqGjWwRU5vk9hZedH
-X-Gm-Gg: AYBFou2BvkxK+MF56mkAwLdVWZqMyWdUKdwvATtTNci48RgjakSoOx9B9LfcBr4WhYK
-	dJOSl6s6K4N3PGcQK+92agHbCU4z0NJuFVDob88Uq6XEeSFVhiClACQb+miKdWUn2go+j1J+fct
-	AGgP7dGkX1wd9oYXJqIMFwCMIrIKboZAKYr637wXQG/KgfBCYZ1VVTvIwmSxWquRA09Hqwu5HrT
-	hjax4HXHlyYJ0KSk9SK08VuWdSEeBYO8x+zWep5lW8eA5F7xh/nWxDTSmeqUWCbaK3ZjxcEEfoa
-	HJJoEDlg3/mtYqLq/7HXBAaDmvi4KdhaDiW7zUFHwFYI23WNbFjW/4o5zfolDwc9vUk1rVTRld8
-	ce/u74YcZOrBsAAe/UdTdDXTxNPeL8AWmhjP4gTgU2umP2Awi8P0ekwAigaGQ6k19yoarEgr7IX
-	wrOb9SdGYpAOxCeXMC1K94FjuJaIrfsBHe6urQkAEIbCJ81gPrKZB1G/vCTth/011OO564TvuPz
-	oRZm+Wcn0vjvifFytbPP2FHL+4B/ed61g/Zzv4xg74y4T2MJ5188RCxZ1cC/GuLLmH3v0G8F/Uk
-	V1uszOSGEqJjuoS6EimoCpFOCu5YAWarJA==
-X-Received: by 2002:a05:600c:630e:b0:4a1:9078:911 with SMTP id 5b1f17b1804b1-4a1fdd5d9bbmr49956575e9.31.1792596044007;
-        Wed, 21 Oct 2026 08:20:44 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a20230ca3esm24441385e9.15.2026.10.21.08.20.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Oct 2026 08:20:43 -0700 (PDT)
-Message-ID: <7179f371-a709-476f-8e94-807d7b62ce6e@gmail.com>
-Date: Wed, 21 Oct 2026 16:20:42 +0100
+        bh=Hwe4wx55Qw3c9y5HfK1Q+FrFdWUJVRvJt2IWUXwMh7I=;
+        b=JvzcqbTET09d7CL8LGGHehFfXn4GRLaw3XJDKYYlKx0snVqdiRBlXovblzuIRA7XFX
+         3mHOeokMkmn1xLxv24nFztDNRSKofIio/T2fHhQ/OYbqsX5AAt8baOeNntSomzerZR3K
+         n5X3TTgyrnBanYe62s82AIQSvewrz6I2QAlw4yXzUiJeH4VdOIyiSUZV4fBWkS8bY7hk
+         q9oEMWCDWQ6wH22hiUAmAWLTNSLFnk6U0jAdXWW2ga247jT+PRpkpjfv0DQ4Gcf6UZAH
+         BzK5oA7zAWfW7llBV3p/+0R4wKHBQ+EHZtEphQ2EeRduQ/9seNgos0ExeEHJHlIZAr3Q
+         yBbw==
+X-Gm-Message-State: AFq9FYKiyNtOd1oy5INlV8876P0ENJ9R8k9+aql34KiOCFHeEW+rBVbT
+	Y0IzwdPMayBtb9rqAr7iZPDUDDJWefuWzbL7sSuq/Tmqx00KB9CniOWjOl3qogIt2n8w3XdpETC
+	jSVn47sZDM/XE1WdFNM+jzCJSfQ+1Au2YRlvbA/c=
+X-Gm-Gg: AYBFou1g1rVVjleVdLDs1ezO3ZvdgI72ENcchv+UTBk30/yck48CiqBrvk6J8S93pDf
+	1b77SHbFNc8ttq4lC/0Iq4JhnJ9SZjSu3Z42BRFe3Dpo9eY79cETdQZ1ZhJijoVe5FVWFxo58Mj
+	FwGv1hqMzwoL6/lNgAF+g1+MmMhw9VTXWwxcnaJ48swYTFas1W+pNqA7HUO1tOoQ0XxscmKj+Vw
+	YewVxgfeRJHoimYEquK8ZnirWZRiLkxgEUdfJSeMaSYLYz3t7MONTUt56CovbKeiVQ3CyCtItX/
+	/BtvltD4yzh6ok3Ir/1OAZGqYy9zDEVhGeDloSp52bEJOmz+wfaoyvEmJgvLZxaMigVrItvG8Ur
+	6Wn2qOpVmPbF/ODLCW5T6gXpqmSRJnh5YugVcZI8Cj09idvaXGjZzk2MjaG5q8fVVJw3ik7Q=
+X-Received: by 2002:a05:690e:4142:b0:679:2a5f:52d6 with SMTP id
+ 956f58d0204a3-67a1fe8bfe2mr85304d50.91.1792597368849; Wed, 21 Oct 2026
+ 08:42:48 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,137 +102,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] sequencer: refuse to revert shallow boundary commits by
- default
-To: Nakul V S via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
- Nakul V S <vsnakul@gmail.com>
-References: <pull.2273.git.1792577381142.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.2273.git.1792577381142.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20261021151253.3689-1-azuama69@gmail.com>
+In-Reply-To: <20261021151253.3689-1-azuama69@gmail.com>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Wed, 21 Oct 2026 21:12:37 +0530
+X-Gm-Features: AclHuK99JBx2k7YobnEtXjppxBXQJ2FbFjjzt4newj8eLvO5YHvWS2V3y_MgSFE
+Message-ID: <CALE2CrT=D8P6SksOyBudiF1En+mshxw=vdVU6KLApT0AY_ExsA@mail.gmail.com>
+Subject: Re: [PATCH] rev-list: skip --grep argument in early scan
+To: Azuama Odinaka Maximus <azuama69@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Nakul
+Hi,
 
-On 21/10/2026 11:09, Nakul V S via GitGitGadget wrote:
-> From: Nakul V S <vsnakul@gmail.com>
-> 
-> When a repository is cloned with --depth=1, Git records the boundary
-> commit in .git/shallow and rewrites its parent links via the graft
-> mechanism, making it appear as a root commit. Reverting such a commit
-> will therefore delete all tracked files, which is almost always
-> unintended by the user.
-> 
-> Add a check in do_pick_commit() that detects when the target commit is
-> a shallow boundary (nr_parent < 0 in the commit graft) and refuses the
-> operation by default. A new --allow-shallow-boundary flag is provided
-> for the rare cases where the user genuinely intends this behavior.
+Thanks for the patch!
 
-Thanks for working on this, it is a useful and timely improvement as 
-there was some discussion about improving the behavior of git with 
-regard to shallow boundaries at the recent git merge conference. I 
-wonder if it would be better to refuse to cherry-pick and rebase a 
-shallow boundary commit as well. Do you know of a sensible use for 
-reverting a shallow boundary or is the new option added out of caution 
-in case someone wants it?
+One thing I noticed is that the commit message doesn't have a description.
+Could you add a bit of context about the issue you're fixing and why this
+change is needed? It'll make it easier for others to understand the reason
+behind the patch.
 
-> diff --git a/builtin/revert.c b/builtin/revert.c
-> index 52100a20cb..f27397fdec 100644
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -24,7 +24,7 @@
->    */
->   
->   static const char * const revert_usage[] = {
-> -	N_("git revert [--[no-]edit] [-n] [-m <parent-number>] [-s] [-S[<keyid>]] <commit>..."),
-> +	N_("git revert [--[no-]edit] [-n] [-m <parent-number>] [-s] [-S[<keyid>]] [--allow-shallow-boundary] <commit>..."),
+> +               } else if (!strcmp(arg, "--grep")) {
+> +                       i++;
 
-For such a rarely used option I don't think we need to add it to the 
-synopsis (we already omit some other options like --rerere-autoupdate)
+Also, could you check if the first scan needs similar handling? With --grep
+--exclude-promisor-objects, the first scan might treat
+--exclude-promisor-objects
+as an option instead of the pattern argument to --grep. A test for this case
+would help confirm whether the fix covers both scans.
 
-> diff --git a/sequencer.c b/sequencer.c
-> index efbfd1315b..6de59bf6aa 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2366,6 +2367,19 @@ static enum pick_result do_pick_commit(struct repository *r,
->   	}
->   	discard_index(r->index);
->   
-> +	if (is_repository_shallow(r)) {
-> +		struct commit_graft *graft = lookup_commit_graft(r, &commit->object.oid);
-> +		if (graft && graft->nr_parent < 0 && !opts->allow_shallow_boundary) {
+Thanks!
 
-It would be good to extract this into a helper function so that we don't 
-have to copy the code to detect a shallow boundary each time we need to 
-detect one.
-
-Thanks
-
-Phillip
-
-> +			return error(_("%s: commit %s is a shallow boundary commit.\n"
-> +				       "Reverting it will remove all tracked files because its\n"
-> +				       "true parent history is not present in this clone.\n"
-> +				       "Use --allow-shallow-boundary to override, or\n"
-> +				       "'git fetch --unshallow' to restore full history first."),
-> +				     command_to_string(command),
-> +				     oid_to_hex(&commit->object.oid));
-> +		}
-> +	}
-> +
->   	if (!commit->parents)
->   		parent = NULL;
->   	else if (commit->parents->next) {
-> diff --git a/sequencer.h b/sequencer.h
-> index a5d12a1070..f334bc5357 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -57,6 +57,7 @@ struct replay_opts {
->   	int committer_date_is_author_date;
->   	int ignore_date;
->   	int commit_use_reference;
-> +	int allow_shallow_boundary;
->   
->   	struct strvec trailer_args;
->   
-> diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-> index 939e7a16a6..508464004f 100755
-> --- a/t/t3501-revert-cherry-pick.sh
-> +++ b/t/t3501-revert-cherry-pick.sh
-> @@ -256,4 +256,29 @@ test_expect_success 'cherry-pick is unaware of --reference (for now)' '
->   	test_grep "^usage: git cherry-pick" actual
->   '
->   
-> +# Tests for shallow boundary safeguard
-> +
-> +test_expect_success 'setup shallow boundary tests' '
-> +	git init src &&
-> +	test_commit -C src A &&
-> +	test_commit -C src B &&
-> +	git clone --no-local --depth=1 src shallow-repo
-> +'
-> +
-> +test_expect_success 'revert of shallow boundary commit is refused by default' '
-> +	test_must_fail git -C shallow-repo revert --no-edit HEAD 2>err &&
-> +	test_grep "shallow boundary commit" err
-> +'
-> +
-> +test_expect_success 'revert of shallow boundary succeeds with --allow-shallow-boundary' '
-> +	git -C shallow-repo revert --no-edit --allow-shallow-boundary HEAD
-> +'
-> +
-> +test_expect_success 'revert in non-shallow repo is unaffected' '
-> +	git init non-shallow &&
-> +	test_commit -C non-shallow A &&
-> +	test_commit -C non-shallow B &&
-> +	git -C non-shallow revert --no-edit HEAD
-> +'
-> +
->   test_done
-> 
-> base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
-
+- Pushkar
