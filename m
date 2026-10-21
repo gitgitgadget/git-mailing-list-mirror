@@ -1,67 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792581839;
-	b=LtVi5p2DutYKyT9AMQMfHRI+xszDkmwUtkl8HFwW/VQCrEtqHo2C3BZ+1iATUfeojPo4
-	 x5Wg3zie2mQiD0luFSNZFoHCTxKZrK0aIJkgc5f13LXftqDOyFW1kMqEAKanzASc1pWF7
-	 vJY0GyYlSOUghbsPi4cXS1vSj5U+JRdaceqhcb8bYlNBQ5Eh8hBjBuCKer/NXA15LAC8U
-	 w/xoRAKZ6gtvt+Fu6iZZCt8gLt020OK1bo3m0Mgvbm7FVPkNdQz2RbLKInVrKjrcaNBM/
-	 fXjYuXvvlpuTzywSUJNRFDwkQSvt7ckAmfqcY/O9ZHs3byNFS0cdLrSsNGl6y1vb0gw==
+	t=1792581874;
+	b=Mo0AlHFY61amayFXirbxkhAQdN3igwKVWsrKU/acyEP5QIEJSHmR1dRPrxwMEzRhwY7n
+	 1t4dM/4PIWgcU/Ru/xBeAEv0zCK33HrpRqgP0ne4u844apQ6eGP1QxZ+32OtPkm1x/sBO
+	 SB4/1wmjK3ifEAWHqfbZMosg0WGoWQVLvkvIaSMLfdm/r+6uR3JgCHbifVmiuBP4+3gOx
+	 TRPwyj9vRfKNr3hJrICCyj+pc+CM8FMh5fq8iXDnxt0tDt4nDxNv5AYKDSr1UEk82+TTL
+	 nMDpYMd/E2G+GwIMAvevD22MmlSM5HqGIF6Q8eIPllSsZdQ2cXMqtXrzGbhelXf92qQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792581839;
-	h=DMARC-Filter:Received:Received:Received:Received:Date:From:To:CC:
-	 Subject:Message-ID:In-Reply-To:References:User-Agent:MIME-Version:
-	 Content-Type:X-Originating-IP:X-ClientProxiedBy:X-FEAS-BEC-Info:
-	 X-FEAS-Client-IP:X-FE-Last-Public-Client-IP:X-FE-Policy-ID:
-	 X-FE-Hostname:DKIM-Signature;
-	bh=vs1QtHJALFPKXwCL1O8Oh172+Knxh7vsDdYMnfdv6fU=;
-	b=VKAzzd6dpOB3JPEkyJZ7r8h5iBCkovuSPNpjESiPsR2F4rtxoMhJLQN/V+L1sCE0F9Jd
-	 MHo07U74iTZbfpVyedJ7msChcf7CjdhivvtrZ5cmki75zzNgu5DN9jh8h52r46l9S6QvP
-	 TKvx0yv7pf1UKT51O4wjYlH5Rp+5scU4BnyMVeh7dAHM0WTUvFOR8Bv1brc2SzkPool01
-	 qQXYdXHCm9BF1N9fuSXZmtkoOCM3bpDlJJqP08iGuJrW11/c76o6TV4i1HSQ8I4XmwzyP
-	 ef60aVHPl+iLfJ9b2KY0EYoMvxXfcI17WpQ0B8+fTxcbdubYYjcVgqSHJtGeZKHFURw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792581874;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=BAvUb09pJDTcnsYOh7dS5x2Z7lUP7nKQXYU5ExsUeKs=;
+	b=YpRFjHhKPftdC3NtXuibzIsi9VpXPq0QU5D54brEkOSAYK4C8Fm/9D1J92c/ecsPddow
+	 P99gRzVUwGLY/nsSeRVq4+yT7IbUHXgtzHFtFxtSfEACHJYFFEkkpITY+RG04fNUKpPTA
+	 o5Hg5I15dWXWKD4CaWFsjo4nSwtpSIddDgSEhmao9CfbJVqcs8B/fQVbu52ch7LYtmDSm
+	 vj89Y/VYEOQHJQjCpJOIYs4Cqq9iO1kRNw+SDCU3XfXsv8ZZIHSVuVzL4k7f81Hr5x53q
+	 uqw0zzBQyjM25F8KGT6uc5JaqODs9oCGJKIgt9AP2l9Z7SiuXjtbygzYf3E9S3kC4GA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=utu.fi;
-	spf=pass smtp.mailfrom=utu.fi;
-	dkim=pass header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=ekThMaD4;
-	arc=none smtp.remote-ip=130.232.247.4
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=TV1pKJjL;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=UnyuHpOy;
+	arc=none smtp.remote-ip=202.12.124.155
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB17606A31E
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 11:23:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4FB17606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6579A606A319
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 11:24:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6579A606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=ekThMaD4
-Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
-	by fortymile.utu.fi  with ESMTPS id 69LBNsgT020533-69LBNsgV020533
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Wed, 21 Oct 2026 14:23:54 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1xJUQE-001GK5-Na;
-	Wed, 21 Oct 2026 14:23:54 +0300
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Wed, 21 Oct
- 2026 14:23:54 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id d0355052;
-	Wed, 21 Oct 2026 11:23:54 +0000 (UTC)
-Date: Wed, 21 Oct 2026 14:23:54 +0300
-From: Tuomas Ahola <taahol@utu.fi>
-To: Dan <timelord@gmail.com>
-CC: <git@vger.kernel.org>
-Subject: Re: [BUG] http: push with token-only URL userinfo fails after
- libcurl strips creds from CURLINFO_EFFECTIVE_URL
-Message-ID: <20261021112354.S3kbH%taahol@utu.fi>
-In-Reply-To: <CALGWHBdx0V95RoZJvyC7G4t4RpXpQm3ycv+huTQcPunOCm7hBw@mail.gmail.com>
-References: <CALGWHBdx0V95RoZJvyC7G4t4RpXpQm3ycv+huTQcPunOCm7hBw@mail.gmail.com>
-User-Agent: s-nail v14.9.22
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=TV1pKJjL;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=UnyuHpOy
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A30CD7A012D
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:24:32 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Wed, 21 Oct 2026 07:24:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1792581871; x=1792668271; bh=BAvUb09pJD
+	TcnsYOh7dS5x2Z7lUP7nKQXYU5ExsUeKs=; b=TV1pKJjLsOwv2BeLflygPOi1x8
+	cdnw02usygMQni4ubGfk1eMeySp342W63sjaSQHQO9G/UWMW3TzJoLvIyGF9klPn
+	1+9WhlngqjcHXOueCnKEqemAvGsV6czagsBXlTj4znuyD7RywOA7YxzIvyEBMoOU
+	GqtHc9RbVQ5zPY4hsq0boaSelJjeLrZZF9m3+GcLvdB6gZxiP5lECN6vjGfgaFkk
+	7FOx30JUP+fWusclUSm+5hAUjflL4PW3+wLB3ZPI9QQ8PbBg5x09bjcKAKD06oG5
+	YDAmdwLLAFsW5LaJ/pTM9WJV96l8PBpxLNOaZaTkamz0ythProQYu+NTBy9g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792581871; x=1792668271; bh=BAvUb09pJDTcnsYOh7dS5x2Z7lUP7nKQXYU
+	5ExsUeKs=; b=UnyuHpOy7RdUAsLe/wA0kAAT60sC4VnueAMGE9LsqmGWKQahkYl
+	pgH5h3mXRP8l/WR3yu8hhjbjBC+lwDtzI3vvh3llbqTFfWtzWGiiXIrqrmwroqiX
+	FvgB4l7jeJ7WqgwAEjRw84fEcPo492IkgBXhK4PHq/kseo30qCvjx8DtrdF6sbuk
+	di1Q2e7OME+N4qADV6huCXm6SJpH3DCU4gcSSNNTNZCD4/AfKDr3SepFv5/Yyjfr
+	wp3AC0Xm8IMRuv/UGwDazxvcMUToxPqbKht/WTQUHb/oplbLPWs+ELqleLHAs0JK
+	B6gtvHvjoozBRmPgmLtWdi0Pwb83uTEJE2A==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792581871; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:KHblhyyQLJn0j0qUV1/DJNy3FpGsmkiJRlMQ7ExvavbVfdz
+	KzwwftuP1N8lPGwDhQc+4kOh56fzUA8jB4qNRnvi7exQDQ0ePJ3yOFZLWzZwb2O+
+	NLWet/PcoXQsV7n3BYCfG8Ayfk+Uy3hwsiFdml0a0C2LjjxsGZalJV0wL6p7ghtR
+	xhuOaTb8ss/Tlqkj9gZXLGNpt/9U+9v4d9gHutqVZFRLFw5BcRP/uY3zc5MHpCFl
+	uFB43Jh3KhDVl0rthTW5/ZtvFz0VAjgVZKAVPgbvVcoOuKeP1AEj4bXbWxpD7z5a
+	uzwvTPuz1cZgl5u+q9xTi08I2AM2mmKWIa974WQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:2ZsDlbwl6bJ4SwxUK0PfX5ceR8yBPIAZaM71biSM1sw=:PitR5+7XYIeNwDkt8r54Qvowei1Vd/KecS8mzP3zm3c=;
+X-ME-Sender: <xms:76DYatSIKKINoBl0fgr_0HneJcg6rFdrudmxkDwiXvrV7eWG1pdgwg>
+    <xme:76DYatqgzYw7chT5IaaCwFJGU75J21P-5i-PKBYzeORfNzQN0-rfPILO6jdTSXdMg
+    g7Xg6C7TiKrR2ism6HT3qiVWghlLrJQBsO5GgtdVzYEX0OLlqbH1_c>
+X-ME-Received: <xmr:76DYarLrG6ruEusYp7lotRM7U4Wit1saHMsWMc3_FMHAJXUrCp-vmw>
+X-ME-Proxy-Cause: dmFkZTEfCUuF4Qb+27eZhqIByhoUfnIMgRkQWxXGPIEnbuO59Aa9xjSv97tTMVF1y3GNrW
+    dEm1GCoBnz3WnCriv7it1Tb9I/aJfAQ/GJYIzCpvn3CYSsxfop2zY2UEjCYGIIWa5RZ/af
+    +bIuZeR56QSe9PuFsUmxZWgMVpatZP4NngpNJH7nM0TSAR2zOtjFvzs16pEZtkRGcArdA7
+    dJ4j6Pz7gTkAWQbdkhBxa1N2sJZ6MJnI3G05A6YUMeoXT0VsW1HMt1PGGIZxPLEKy59Pq0
+    d+sxmLjmJzq/1h4hCm8HaVX3kppZcfj/0JMvmQjL36btzxaghEfAdo7PtVisDFIkSHXJaS
+    pqtV5QHU2i6KjBg1NsnHY4lpDgDiMig5p0KJyKE40BjocIkGcbXQl1kt79wUeTVsJwP7dt
+    5fxcgK7FCGJ03xwbCT+Db3y8lSOwvJfYX2FyBTHrVO/zJ1zfUgB9MUpqGdk4zWJ3gN6JTu
+    3VP3/tM111KWepkYnIkx8WJUHZ2Yh8+TnDiSy1rJp51fXA2qnoPeF78YGFI5r7yJcGDT/7
+    O774htIqzP/a1mEN8BEP5Akz6XPyfxEO2JnqUnUXKCOe+XIhDaC5kZ4OWpiikWkcvFG0b9
+    BK+TGJxnCeVJhnfHkHRzqim7564TNMGlPWwEUvq+KVZ7w3pdp+xokdZLgLgw
+X-ME-Proxy: <xmx:76DYagpxXq0kzkYAotfoTCNYJOdq__XWyrRNVBxZALis2srn-ED4pw>
+    <xmx:76DYajzaEsEj4itIBxWLITilywcgk8rRN4Y-N0xXf4IDKGEPSjidgw>
+    <xmx:76DYakMtZWDGnmCjfXSYyjBnyQmgKJRkUfAPFRXAnqqb9iZ2bp2ejA>
+    <xmx:76DYao6_uxvIYWWTC7EGq3uK4oCUGn_yY6_lP3k_Gquve6M7ZKysZw>
+    <xmx:76DYagFsQmEqdA2w4ijXpAevTsHjSM0KsM6BucB7QbDySctr3GaFjLqO>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 Oct 2026 07:24:30 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 445c2f10 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 21 Oct 2026 11:24:28 +0000 (UTC)
+Date: Wed, 21 Oct 2026 13:24:25 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Elia Pinto <gitter.spiros@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] odb: use size_t for the length of objects to write
+Message-ID: <atig6fUHbPqYdzXk@pks.im>
+References: <20261021101640.329990-1-gitter.spiros@gmail.com>
+ <20261021101640.329990-2-gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -71,54 +124,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: ex19-03.utu.fi (130.232.247.43) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZUEgcAQUNBAcaDCgPBQkBBEYL
- BwVIWEhaSFlcSFlbWEZaW1pGWlhfRltYSFBIWEhYSFpIWEhYSFhIWVFIDwEcKB4PDRpGAw0aBg0ERgcaD0hYSFlQSBwBBQ0EBxoMKA8FCQEERgsHBUhY
-X-FEAS-Client-IP: 130.232.207.30
-X-FE-Last-Public-Client-IP: 130.232.207.30
-X-FE-Policy-ID: 3:5:2:SYSTEM
-X-FE-Hostname: fortymile.utu.fi
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
- bh=vs1QtHJALFPKXwCL1O8Oh172+Knxh7vsDdYMnfdv6fU=;
- b=ekThMaD4Ab6dEaVVZC05TtrahKCmuqke2BvJm/EU1WI/4jgYmuDt9JMfLhhBeWFqOidKmlo5v//h
-	Hhvl76q57C0S4cVa054c8Yp93F+mDkjYk5Y0e7TFP/rnuNKjhEVXRbTbBSLSEdX5/8gVQhq6rR7z
-	z0o+QHQa908uKMY+onlmi8C1aIKl3LCadP14KAtrvPjr+Jbmxg+o3/OGQwnmIgT4Hm114ZuqdWEz
-	kW0wzXhNZx05/u4bhCwUwoMTQJSig/MEjRZVwlYg1wqaqwE5GD/VTQ3jJraBCbzWlUo+YVi4KLQS
-	PrlWSBuzpPwKJzit1lYkuzEKCgt9/1DIq1LT9w==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261021101640.329990-2-gitter.spiros@gmail.com>
 
-Dan <timelord@gmail.com> wrote:
+On Wed, Oct 21, 2026 at 12:16:37PM +0200, Elia Pinto wrote:
+> c6a4629e32 (odb: use size_t for object_info.sizep and the size APIs,
+> 2026-06-15) widened the read side of the object database API, and the
+> write_object() callback of odb_source already takes a size_t. But
+> odb_write_object_ext(), odb_write_object() and odb_source_write_object()
+> in front of it, as well as write_loose_object() behind it, still take
+> an "unsigned long", which is only 32 bits wide on Windows.
 
-> Hi,
-> 
-> (Please note this was done with the assistance of Claude, I apologize
-> if there are inaccuracies here, Ive tried to go over this and verify
-> as much of it as I am capable of. I tried looking at the mailing list
-> archives to see if this has already been reported and I didnt see
-> anything that looked like it had yet. I can verify that the new
-> libcurl behavior absolutely seems to be causing issues from at least
-> my own limited vantage point. -Dan)
-> 
-> Since libcurl stopped returning credentials in CURLINFO_EFFECTIVE_URL
-> (curl 8.23.0, commit 7a6bd027d0de "getinfo: make sure
-> CURLINFO_EFFECTIVE_URL does not contain creds", CVE-2026-94266; also
-> backported to Ubuntu 24.04 as curl 8.5.0-2ubuntu10.16, USN-8932-1),
-> pushing over smart HTTP fails when the remote URL carries a username
-> but no password, e.g.
-> 
->     https://<token>@forge.example/owner/repo.git
-> 
-> which is a common way for CI tools to pass an access token (Renovate
-> does this for Gitea/Forgejo). Fetch/clone keep working; push does not.
-> 
+Sometimes I wish that C would give us an easier way to detect such
+mismatches. It of course does have optional warnings, but enabling those
+now would probably lead to thousands of warnings.
 
-Thanks.  Please check if 76524c2604 (http: handle curl stripping creds from
-effective url, 2026-09-28) works for you.  The patch is already merged to
-'master', and is described in the release notes as:
+> Most callers hand them a size_t from a strbuf or from odb_read_object(),
+> which silently gets truncated. The most visible case is index_mem() and
+> index_stream_convert_blob(): when "git add" or "git hash-object -w"
+> runs a file over 4GiB through a conversion (core.autocrlf, which is on
+> by default in Git for Windows, an eol or ident attribute, or a clean
+> filter), we write a blob made of the first "size mod 2^32" bytes. The
+> index records it with the stat data of the real file, so "git status"
+> stays clean and nobody notices until the file is checked out again.
+> "git hash-object" without "-w" uses hash_object_file(), which takes a
+> size_t, so the two disagree on the object ID of the same file.
 
- * The HTTP transport has been updated to handle changes in recent curl
-   versions that strip credentials from the effective URL, preventing
-   unnecessary credential prompts during redirects.
+Awesome.
 
+> Use size_t throughout, including for the size kept by the in-memory
+> source.
+> 
+> The existing "hash filtered files over 4GB correctly" test in t1007
+> only hashes. Running the same with "git hash-object -w" on Windows
+> shows the problem, but needs another pass over a 5GiB file, so no new
+> test is added here.
+
+But wouldn't it make sense to add a test? It's a rather serious bug, and
+the existing tests are marked with EXPENSIVE already anyway. So I don't
+think this is a good enough argument to not add another EXPENSIVE test.
+
+> diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
+> index 868e723c81..ab7173cd2d 100644
+> --- a/odb/source-inmemory.c
+> +++ b/odb/source-inmemory.c
+> @@ -10,7 +10,7 @@
+>  struct inmemory_object {
+>  	enum object_type type;
+>  	const void *buf;
+> -	unsigned long size;
+> +	size_t size;
+>  };
+
+I really hope nobody writes 4GB blobs into memory :) But despite that,
+this fix is correct anyway.
+
+Patrick
