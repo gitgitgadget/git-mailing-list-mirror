@@ -1,101 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.54
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.176
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792593167;
-	b=2nLlGr4hmGsNNwdTsoqUdTBNBJ9K+vRWjoa52P9fs/ve52BO56/SSMLQQmlO9DC0bHoT
-	 dp/t/V/qZYOLhhsfxuWEX4RAGklA478Ujlf6hVXy8zv7YxTEL1SkGx5Dq14syejVNUo8O
-	 VrvkbL4DJFika2ZEcaqZIl6sk+wCJ9Vfgu+mc3jIla/IslaQj8qqzSXnJ/B1oQjNeGOgp
-	 uyuLslFr5/oWE9tnBLKTgykAP/J+W1YW7DDQY1SwdrJQzVbooqT+cDbPEErtXfF5LH7hS
-	 QXcPNOuAGf1eqRS5t3R9cUj/mHr/Gs0ORrIzH9uyIBLbo9u8gBrBdnj5bFYvMhGIdMQ==
+	t=1792593463;
+	b=RkHkWj+Rk/EMSCLn6oIHnfd0MYFL1Bucc6JjxP+RCXQCuJh5rHmf+3FXfy2DZLYwo8RD
+	 OB9vXgKgycaOr0jIA2ICoAfwZ/JWPU4ceFOTIR5016yQxxxNrfP8pz3y1Au7KzXl4RcdI
+	 PsnJFwHEWWmt84NnVlHwU9JKbLh/DCMPxXKfSxhqSkSO4KkyDIEc79rA1zvsW2iIYlgH4
+	 7owiNErZd1wswyrj8u8rEJTg/392O+Vh+cyxXUY5y2Hzc4/LsdHsCfEt1/ygsNArpJwqx
+	 +u4T6PhpmmC0UvPtJ/8Y1PQs7LCaPqOq8bk1WbrMBVDj/FmG8HqM+UJtauygLmUzcZw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792593167;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792593463;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=FVTgtHTrRi6tdoklZ5DEITdo+2m6NZ+IebXrN7tlaMQ=;
-	b=ZioNtF1HZSPyMNKw38j3GhF+flTPSiyCGAp7v2RTwhRQWmSkZ1QUspqmXvot70pWcO+8
-	 FfJqQatEhgPf7i00BwJVSN6WDeoylW56Vx2RdaaYNUdv19FGd3mWT77GbY6uD6KQ+CBjb
-	 9ldEkZAsAhJBOwMqUwETmXnNznei6hLTvm6GGYLs4U/MCY+O7Wndxl8Nb3KEE4T1l88HT
-	 iYIgbkFUH62y0efSTln/BoisGW9Fp6jaTllREnPUuC2uuRWFh/rYXYd+08U0+Gm5CHhEw
-	 28aKf3yDhjVSNiCVE75YrcsqiaTFAORCmOwmYhljhfnV+w0/WwFcb1ZtP2QTx0jskKg==
+	bh=pBUcUnS754Mx9p0eXwNzGW017XwtScrn96pfRA4Unzk=;
+	b=h1dTYM07AwkjdPVjzWK3e0iNKo4GfM3wn/6scVzcv8Uh3ZbnfaATPHEdw2fYPkbFSMUo
+	 UII0jD7Ohk1/4RV3qzPXemPyfmpCjrhZZhkG1PusAJI2dksg1uoL7U4AfYeNferwQ9dSP
+	 JL41ZMsGN1vSt48iezI+LStygpVaxWgnFKYxnh9YCAwksA6ubgIOcRsAv2ODFQ+G/vIh7
+	 /oI6rMuc9d1t/N5S7uDRwDXrWVcRW2bmCMUPqRbqAXtfQ9IoJAezuGkWceSzbDEctyOL6
+	 kfvnN2yGL1FGE9vLPoa2ijMy8dovBTdKOy5coG1QGaZk6bQe+9qKXd0nqloBGi+4uNg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Dv+5hpRs;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.54
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hr+XMgEq;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.176
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62194606A31A
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 14:32:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 62194606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CEF606A31A
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 14:37:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 42CEF606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Dv+5hpRs
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-157fe9d771bso1019115c88.0
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:32:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792593166; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hr+XMgEq
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-8ab395abf79so7640047b3.0
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:37:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792593462; cv=none;
         d=google.com; s=arc-20260327;
-        b=f6P3LO4nxurLI1Yii2yrU1eSAoY+evBp8F+ip4EXXEP1DAbHldwSUeiNGYFxPqdzms
-         h4VA9YFvuwgvElMmhUK42KkijyCtN9aTzCN5PEcxZCQU8LB1RKzcfVcQ4j9pUf0hPXeA
-         WXOVBGMpKZQg2LWCwcZhIlcMlyOOJrN+aurKizzGLZFVDXsuEr2TdUJNwxipA7cD+TGC
-         tTz2MymRt8slyaN341hWp/aGx8ezhdiSRuqXTpPw5I3Vu3XUIEIqOre11Urfhrzig4X8
-         dRBm8p8tdJtjBSkcy1nbeFKGAI96SCE8NWj7NpFw5WthT75T3+VHtNJYpJ4ksFs1305D
-         0fOg==
+        b=gLoDRSTfY5Y0D49a9gNQI0lda7iLrRGbqZW1gLNEwSvwKsv9B4xpBJSVKQZiaHln8B
+         zx6UK88RynK8wHAX9h8J1xa8yL8S4NDVhgxLZOcLmKVWBRFRHqrJvlhj4Uk66mcYPeY2
+         buALZA6nG1Xv99xXtrM0OPiGXteSMcJxlQKF0b+y65zznB1cz1sdDyxMc4c5bMH0IBfF
+         7a5DhUgBAM/xNCjuSvRU/ALKfi/11VdVP9mfRkXnlbHPuvHxm1G9DK6cvbgGUSjc53Zo
+         WdlTgXEavJ32W1HAN2T/v233FTGMsAiPwb4kbxX9ca4NRRbXTgXdAX/EpYojGZq7D81E
+         WK5g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=FVTgtHTrRi6tdoklZ5DEITdo+2m6NZ+IebXrN7tlaMQ=;
-        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
-        b=JywpUQLOiyRabJ9A06R5snfhd82JKxi+zxkmC9jQiTxVo6blPE7gaBERyIsiGAPcQk
-         Be91W4g8NyoZMx+00ml+nRxARnRLeATkHu+wWBzVk8KD4Z2ucLalhj2gZioHeYw9lS4u
-         8eaV19S5N6ouq7WVizI8rJuKe8rUSriG6SDaGlq6B2Cg15zLVIugc0m758QC/DanEhLf
-         vIP7WessHBCNdJ5MW94tLH0hFC4BoIzRYXWOKnvvFXq+H3epcoovZma40utNPoC23pjf
-         L16d7VyIMIhJAz1rfd7rdQD84Vc5S5JE+p1Qkl8trpg/ZzgIfoHf48rRQK+Gdhldxq48
-         S7Sg==;
+        bh=pBUcUnS754Mx9p0eXwNzGW017XwtScrn96pfRA4Unzk=;
+        fh=/j+vG27rf687elonHcL0kgOXGizcEL1Ld9TZlUvLLDs=;
+        b=NYUsyYaMTmlzftAF0arlSrD8nV1LgnAtGwzlx1mrY3DSrI4s03A9/v/XvlFr6ESFTM
+         +FvyaJodW72TYNppwJ9PzKGV3X7ptHgX9guVFePeTBVjSdvGi5R8B7TbgmKUpSzCCh3D
+         6lY1eKEX04V6+ZTbpSFvugSVLMteJP+0Mhg3TKq4r3c4aVsfO0dwxSQz+tml4t+jXoeE
+         FEMHFWCdAjKUI8lJIQGoOKg2elYXQ7KoCYmjci0Oh78S6kK/0V/2mONjjqt/w4U8p0xT
+         +uq9m1dL7c+ieoSlZVgQRKHbVFJMYuMiqBXovTOr5QLpSUV8FtZ+8ksanFJIPoHlmL9j
+         tO4w==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792593166; x=1793197966; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792593462; x=1793198262; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=FVTgtHTrRi6tdoklZ5DEITdo+2m6NZ+IebXrN7tlaMQ=;
-        b=Dv+5hpRsyfIjL2cC6xNCAjZKj7aV7bDgP73vQJIcmrqK6xSt1FUD36+xcawtic6CXL
-         Oe2Jd3OyVx/g4MZgu0JNk4WGbo0B+h50NFT07uIxKfkjXnOhzA+J3YTTAxw/uAfFPWd9
-         xb7By0jVDWFk/0Z496v+R4Vqps7W3Y6cp+qT7MlxT6FCGtqMbRm9L+UufJMk2ErXhu6V
-         N1HFXAB4iv5ooWMGiqKzSL3TQI+91vMSesattwmQqALT9X4XOsFtKFMPfTFyESWMAcym
-         T681IhzKSIUPrk1MpIgV4fv42s/liUrHIM8G3S4qCFOmtwBmqJfQ/iVSnNbnCXurX9h7
-         SFFA==
+        bh=pBUcUnS754Mx9p0eXwNzGW017XwtScrn96pfRA4Unzk=;
+        b=hr+XMgEqqE8HiMI+Vs3Iuh49WW+ABE1rmRXhagYFO6LsD2VeccSDRDGOS/u+KLY9gn
+         LZj4v38nOiXgE7DDi+bLB7spJzfbQj3jUsqjliXB3fXjUw+nYBywvjNuBhK7iuKJ4nfJ
+         NyXSSTYFTK/gjgvmAAFcLpjAdcTCB4x+WMMGU57qRnSuMvdkSHK7454cGDdR+UYzY14A
+         qfq96ij1LDbD8xNpeqbHTeX92UU9z/OwyRXljHdfqZ+PekopReOUGbCRa9/okxG8zZ1p
+         xCMhLLzJz01YlY8OBAXa2y7jwVlooHwL0hvrGsF6bsbW4L0Jyx6Pcm3m6QtWb5Vpmasf
+         VVhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792593166; x=1793197966;
+        d=1e100.net; s=20260707; t=1792593462; x=1793198262;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=FVTgtHTrRi6tdoklZ5DEITdo+2m6NZ+IebXrN7tlaMQ=;
-        b=AvAWS1GxRYqiZiFCRlqXcJkdgoqgtK/KPN/IrM+cGThXTIEXV8FXtAg/HSJJybMb2A
-         ST5S3C7FBfmk6Hc4Xh60KuopTb3hql9Yc4HgwkDmCT794vyH/uTESqNZ+zC576+fkS2S
-         z01DZiqGIBgWId5Urxwu6MOur31tZaNvS05jHH+5UkR2xU3DsJ3HaHnEs1nQw7GZ8cPy
-         itd2/NJSbDgKgSagogDFprujI3CKJSv57nFKuNvkBYzXzSQy7dp7kWpQJKkoaXP3gJ+s
-         TWuli4mmjx3RsF/V/L44qkp8OACWyJlULrRQ68edpxhkiUveteH2FLeIA76krH8Arv7Q
-         Z+jA==
-X-Gm-Message-State: AFq9FYJkjK694iEwDt8PJf9/Oz7pocwIS4Gs3agR3ixryF/GUUpl8r7W
-	Qz33uJVMxpKW0gwkP/2jDk78vsmAU9wNGEggaPeDlaLo1LvYukS6IcjzazWOMmnRf3SDbwMP62M
-	MdYq+Jz2lh0jrHDrsAdksMuRtteVCvvNZtyj9
-X-Gm-Gg: AYBFou0hp0vMps3UKzJGF2YXxjYrA+z0IFjqEy5LEl2d1krct083xf6QhNHSsv5mg4J
-	Zv4tYe/Iwuaz91ba0Otr+kqR4q/GTanayOPTej0m4dvhKMFx9ZkbxVHPwfphjId3srNRkYIOKqO
-	hfmnvF3L0aXxlP0Fs8k233u6wBO7mTaY0fm4Z3iU7klmZEoYW7lHZkZQbVXHf59X39Mh7GxXzOQ
-	iy6uJ1R+rEVC+UzDIBQCVrYEsy7o8eImRvE2OWHAnerlNwMn5qhMZnUZrUFgF+AxgyUX3pIuo0O
-	mx6Af9jUyvGtGge/TCkxBVYdIfmvexfQmkDU3tC9GrDommoWn1M4FUx9AKK5sitjrnjJ1BdWBWl
-	pTpwV1uxSiyz/eYpZ4kj22tHCr442IRgrDiLR3k2qEjEGh7JFjtrsX45qOdsDgBK+0DAeLqhSxs
-	sSiTpmWOUcuxjvxZFVvCayR8H3PcxPqwCjZ2ahyY4RQkQdGhKztO3IB1I61s208tosPQ8lNuAlO
-	H/OQT8DWFrmuh1yDJaQ9S6L
-X-Received: by 2002:a05:7022:2507:b0:151:ece6:b16b with SMTP id
- a92af1059eb24-190a4c1fa2emr3920852c88.7.1792593166128; Wed, 21 Oct 2026
- 07:32:46 -0700 (PDT)
+        bh=pBUcUnS754Mx9p0eXwNzGW017XwtScrn96pfRA4Unzk=;
+        b=BJ5MAYXVQATg/pB/reohLznboz3uXrUvMbRpuvDIe8cqUDcAjPBZBEpAt9q98augKY
+         TZpaX/ibM3Na3NBf273zwRahHDhZIDFqTWwz6sFic1MjKz/PKvqCNSnoy5ns9slflEJu
+         SXoTOwR7Zr2CfY9mTu2weZf9qPIZeCaRQAkzqtK60mjF5XFSNfgpUvpUx2ZCDcXcDP6X
+         NZwQ91SivIYKCtB7Obac6lpu/rVdByJX90DZEZe0qHesR4CmBT0KHgmqWnZcOOMN3lzj
+         Eh98DajGmcst/9HPI/sBUfyZucncL8PCtK7Rq5aEge/qfQOJtMrdeuw5O/FvCP+oj88F
+         rvsg==
+X-Gm-Message-State: AFq9FYLmgXTHWPwfNn5s++a8mFmR7NOVz5DZRHk+mplm7M4m4692eSMF
+	DHaZsJG3kJE3SBsCKDzuvx9yDu5wHbA5vfVBOhU28VctQcMLj0lGaRW+wJYGcBVe+6NGVRKFkXT
+	GsgQWjTzTNkdcx1EWUm97K1rrV0MaaHE=
+X-Gm-Gg: AYBFou34qkwLAqmqsAUUkFs1TiEq1q/oO3iCmMkgCriSKHcs0YkIDUa/0/mt9pchZSt
+	zYvihftZqhqyN5yjBNT9d3uueRn4JJVPc79e/bfAQEOloq+DgtpP2TLqQJrizuutIhPlYr/Qf+l
+	jpt66NgwRThdYy6hYruuQ9looHQo7apNEbCIyb7Oqz6SszyBl9RjQ1G16izKwQ4IB4e3aH0nhaB
+	NP0EeGnFJnStkaiRKl8JYFEjfkv+iXtURUfcYhHDBp2Vo0RJN/BsF3VuESnXitduUmJXbdwkd5s
+	zEBXYub8x+PAkt3IXc4uE9eMXn5IWFGoyw6s7wGDs0q+IvS1sDFVfQo4fiFpWOsSJVZeMeeqXrC
+	UmqJQwj0khMA5qH6ZVjbwzzLfOoyyJMpn38zYeg1IPam+dliUQs5J6P3DIMlFz5XO0r3j6A==
+X-Received: by 2002:a05:690c:6612:b0:886:70a9:3ad2 with SMTP id
+ 00721157ae682-8b133c97934mr13082547b3.15.1792593462349; Wed, 21 Oct 2026
+ 07:37:42 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,107 +103,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261020-pks-odb-files-reload-alternates-v1-0-d9e156323836@pks.im>
- <20261020-pks-odb-files-reload-alternates-v1-2-d9e156323836@pks.im>
-In-Reply-To: <20261020-pks-odb-files-reload-alternates-v1-2-d9e156323836@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 21 Oct 2026 16:32:34 +0200
-X-Gm-Features: AclHuK-il5Y2O4RlC_w2D75UpHTnNO0RcFc5_oZwM0L4fYfn_zEgg97gQujh7TQ
-Message-ID: <CAP8UFD0woTHVqy0cXtWJCL9Pt_jqWXT3m0bN=LufOQ_zJaKeAA@mail.gmail.com>
-Subject: Re: [PATCH 2/4] odb/source-files: reload alternates on retry
-To: Patrick Steinhardt <ps@pks.im>
+References: <CAPki72GYsid5DqaP8urq-gVrNEvMZM+sXUaNjir-VXc+qokMfw@mail.gmail.com>
+In-Reply-To: <CAPki72GYsid5DqaP8urq-gVrNEvMZM+sXUaNjir-VXc+qokMfw@mail.gmail.com>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Wed, 21 Oct 2026 15:37:29 +0100
+X-Gm-Features: AclHuK8z_5AGV1yOGYM3EyhsOO7XEvXRs3zhrizaGAtII7yNmkFYErngciquTJE
+Message-ID: <CAPSxiM9_7LWD6_L5Wsh9LV60FwQxxgLgOSaHQ4QfraZ1PjjV5w@mail.gmail.com>
+Subject: Re: [Outreachy] Git command argument parsing micro-project
+To: Azuama Odinaka Maximus <azuama69@gmail.com>
 Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 20, 2026 at 11:01=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
-te:
-
-> diff --git a/odb/source-files.c b/odb/source-files.c
-> index d31da6e5d9..86f3fd1136 100644
-> --- a/odb/source-files.c
-> +++ b/odb/source-files.c
-> @@ -425,6 +425,7 @@ static enum odb_read_status odb_source_files_read_obj=
-ect_info(struct odb_source
->                                                               struct strb=
-uf *errmsg)
->  {
->         struct odb_source_files *files =3D odb_source_files_downcast(sour=
-ce);
-> +       struct odb_files_dir **tail =3D NULL;
->         enum odb_read_status status =3D ODB_READ_NOT_FOUND;
->         enum odb_read_status ret;
->         bool retry =3D false;
-> @@ -448,10 +449,11 @@ static enum odb_read_status odb_source_files_read_o=
-bject_info(struct odb_source
->                         status =3D ret;
->         }
+On Wed, Oct 21, 2026 at 2:22=E2=80=AFPM Azuama Odinaka Maximus
+<azuama69@gmail.com> wrote:
 >
-> -       for (struct odb_files_dir *dir =3D files->dirs; dir; dir =3D dir-=
->next) {
-> -               if (retry)
-> -                       break;
-> -
-> +       /*
-> +        * When we have reprepared alternates then we only re-scan direct=
-ories
-> +        * that were newly added.
-> +        */
-> +       for (struct odb_files_dir *dir =3D tail ? *tail : files->dirs; di=
-r; dir =3D dir->next) {
->                 ret =3D odb_source_read_object_info(&dir->loose->base, oi=
-d, oi, flags,
->                                                   status =3D=3D ODB_READ_=
-NOT_FOUND ? errmsg : NULL);
->                 if (!ret)
-> @@ -461,6 +463,8 @@ static enum odb_read_status odb_source_files_read_obj=
-ect_info(struct odb_source
->         }
+> Hello Git community,
 >
->         if (!retry && !(flags & OBJECT_INFO_QUICK)) {
-> +               tail =3D files->dirs_tail;
-> +               prepare_alternates(files, NULL);
-
-This calls `read_alternates(files->dirs->abspath, ...)`, but when we
-use a temporary primary directory, `files->dirs` is that temporary
-primary directory. The prepare_alternates() call will then quietly
-find nothing new because temporary primary directories have no
-alternates.
-
-Before 5946a564cd (odb/source: make `read_object_info()` function
-pluggable, 2026-03-05), when there was a temporary primary directory,
-reloading the alternates also found nothing new for the same reason
-(no alternates).
-
-So we could think that there is no behavior change, but in the
-meantime there was bdee7b3013 (builtin/receive-pack: stage incoming
-objects via ODB transactions, 2026-07-10) which made the quarantine
-the temporary primary directory in receive-pack. Before that commit,
-receive-pack only passed its quarantine to child processes through
-environment variables, so its own lookups reloaded the repository's
-real alternates.
-
-I wonder if it would be better to always reload the repository's real
-alternates, instead of `files->dirs`'s alternates. This way, objects
-that moved to an alternate would still be found, not only during a
-receive-pack like before 5946a564cd, but whenever a temporary primary
-directory is used.
-
-It looks like with your 4/4 patch this improvement would add no extra cost.
-
-Then `files->dirs` should also likely be replaced by the repository's
-own object directory in the following places inside
-odb_files_dir_is_usable():
-
-- in the hashmap_entry_init() call that seeds the duplicate map, and
-- in strbuf_realpath() when we are supposed to compare against the
-resolved path of the primary.
-
-These are not reachable today when a temporary primary directory is
-installed, as no alternates are read then. But they would become
-reachable if we reload the repository's real alternates, instead of
-`files->dirs`'s alternates.
-
->                 retry =3D true;
->                 goto retry;
->         }
+> My name is Azuama Odinaka Maximus, and I am an Outreachy applicant
+> interested in the project =E2=80=9CImprove how command arguments and opti=
+ons
+> are scanned and parsed.=E2=80=9D
+Hello Azuama, Welcome to the Git project.
+>
+> I am a beginner in C and am learning to contribute to Git by studying
+> its codebase, reproducing issues, and writing tests.
+Thanks for your interest in the Git project.
+>
+> I have prepared a small patch for builtin/rev-list.c to prevent the
+> early option scan from interpreting the argument to --grep as another
+> option. I also added a regression test in t/t6022-rev-list-missing.sh.
+> The relevant test suite passes locally.
+>
+> I would appreciate feedback on whether this is an appropriate
+> micro-project contribution and whether the fix should be improved to
+> handle this class of argument-parsing issues more generally.
+It is a good microproject. Since you already said, you worked on something
+already, send for review and for microproject. We can then see if
+there is a follow up.
+>
+> Thank you for your time and for supporting Outreachy applicants.
+>
+> Best regards,
+> Azuama Odinaka Maximus
+Thanks.
+Usman.
+>
