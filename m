@@ -1,121 +1,127 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.150
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792615481;
-	b=ec3uvD1AaH8UurMyZ+6CIhxw005Pf65rcEYij2wMxurfTDA5wmRXN3x/x4OKnL2zG/FS
-	 vzIhxtY8nzQTwgtaWx/kkOVvdPsUD2xA+KZ+w7QON23vv7kADgIh5khcUdOfK9EIbiTyY
-	 SK3VuedH8t7IX1pqKhssh4Wlp98AjjyA7wVOq8uF+QYTWVWCQ+BkB8BPJ5dWqCTDU+QfO
-	 CwUEoITq3Go2y4eFwLxnqQXDtOZ9VEYB2u9EY+C2Uay3nHOUz4n+Gp+Eb3uqYC/SBv7yG
-	 1nKYhXTPEtPlv3uzC7uSIlF1QiV8DtcwvslgaR8pxS/Xxp3PiRTvT1pwh2Rip8NadjQ==
+	t=1792616460;
+	b=DRooKdkMDTDQH0NyjVOfsEvgEJ+Y3wIZbEAc7lSoiGajbGWFk0PMyz9Wgs19Fym5s49Y
+	 M6XIba5rakbWY48e5JX6qEHVMbOTjtQbG7AgQhEIf33hPGZsipJtASVtx04TDNz/uLymf
+	 FT7ZBMs4iQfFoklGZbIQUZi+N5byJr+llmkjF4oHsEhkOkJZf1X4o+0fEI4QxJcUGlB2y
+	 4jFhJ3UgoFQaqALKbcWviEQN05H64j7aVlMINtjWNwy4/RKstVGSh/9U5pqBzcfGUWpUN
+	 cfwc/1xWfqTaSdX4NqWeKUO8Q0ILJ8l4Ryj3fO+wHJIT9vauVPUQQQevzGclG08PZqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792615481;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792616460;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=UEp+Kg2nWzmPF4lNi/TPVGLq/yVSBo2DBI1bKVz51Iw=;
-	b=Fg+Nbtqf/Wpvrvubjad78qgdO+NztiKHg++j703SMf+lmGZQpLjdHhW4gvTjLKcWFssd
-	 Ribrdqatx9npEi55VJnjyQARfaljBRN/Aq8pvx4lGk8/0GowDv4v40lvfFbwplpLaltud
-	 BHTfA7cjHTKcea2z40YCtrm+5sfNXz9IFgC6tSMm3WaUOhO22cFbHaIwxB58Nzw+9kusB
-	 ziMtpuNtKU99QOC/1V6begx8QZendrUaSyC9NCdQmQ+JwrwluQK7HtLiHemEvbnw5ORAq
-	 igvudTZtInEAUrBnc5jyAbEee79H4Z3Qi+BVE/k1vw3K2aBknz9D8kRpOn6i45HXh6A==
+	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=abTnJERdZ9Qi1M8XjNmkaiLVXqjKkYo9FvfDv8FxyFQ=;
+	b=enNoLmHAd6q4QJ9ozJ2FzaRixwEw1bq+edUcAWdPPidbLzY0CgTN8d3pNrS3+Wjpr2sM
+	 AtlDIu7CQ7ywhVH3oLbUpse8qZIsjm7xd2w/AlOEhuE5SVzjZDM847c0Ctoc9sXwMIK/a
+	 S1J4RDN0MWxl1TW7V50cnERUDvmjoAMvbea51G7pBaNKmF7ekqaaQusTBrFV7UIeMRmVC
+	 qHsFvQDs6ktNWV+haKR29laVql4iATvX3M3zD2+dA8TUd259FSh/Sf3Ro3PxsGlGbCFHV
+	 loxMgS3J3Sl1F7O8BcD6TKtb4UkmswvhCcibUloxktLg5ftoXfAlCmIq7PKL2ltN31w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=Ye85DngG;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=XMrnYqSm;
-	arc=none smtp.remote-ip=202.12.124.152
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=g6NsIqen;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=JixSULIZ;
+	arc=none smtp.remote-ip=202.12.124.150
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2031B606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 20:44:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2031B606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0ADB606A31A
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 21:00:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0ADB606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=Ye85DngG;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=XMrnYqSm
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4F4DE7A0079
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 16:44:40 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 21 Oct 2026 16:44:40 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=g6NsIqen;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=JixSULIZ
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 412481D00133
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 17:00:54 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Wed, 21 Oct 2026 17:00:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792615480; x=1792701880; bh=UEp+Kg2nWz
-	mPF4lNi/TPVGLq/yVSBo2DBI1bKVz51Iw=; b=Ye85DngGYlmprWnsYr4NfOF9sG
-	EGJth9HOXvLNrcAmhSPn5njItrdkxjhdUqHcnEDKB1U53n/8lkgpDvSA/z7NmLUr
-	xagDcMU+it4IzOFnug/SyDukN/gzERwgpXMOSWvzMyyMtFtfDO9lYmUDR4N5tOZB
-	zCHcy+EvKMyi1jRCUdKZ0kgFvNaQCxdUVJXLlLKhx1G2ITIDJfzg7AvDZhlPlRx4
-	jpGUuqGGVTSWGCN9PzKdtpeO6QZYGGLcF4Nw0roG4VScWezs2M26DaA2JH/pKAjU
-	CgRRuFUIaNhKw8l1pUv6fP4RzOhYADCZ+RyIxR3JHtaU4K+2L1ZpbXdE7R7g==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1792616453;
+	 x=1792702853; bh=abTnJERdZ9Qi1M8XjNmkaiLVXqjKkYo9FvfDv8FxyFQ=; b=
+	g6NsIqenN9LWg94nXXbJS3cvoNXYouip1LwaunXVAsZDmR8+/Gnb5Fz6157OFZ1E
+	ADcx5COtnT3NZKfevsGunbZDlXE6209Ey3HTwlQ3L/XxhyDO7Y4LEn9/YRizXY5v
+	EXXOEyIQY9EObXeFz/kNyKWXJLbTiM97l5Fyp7tSL48/Quh3ARbikbKDhXTL9tdA
+	wb7HXJlJed87wTuR1IzFfLCpLV6uDRE8sLMvQit5f5hQG3flrjZveeb8i/eT1/Y4
+	pPTHovUEGE0CQvR/kvlhxFNxwGZ/ewLQ/PD1IY/A49GBVWjs5v/bmWhwydsR+3M2
+	HjZkAGdK8PQEl4wof1pVnQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792615480; x=1792701880; bh=UEp+Kg2nWzmPF4lNi/TPVGLq/yVSBo2DBI1
-	bKVz51Iw=; b=XMrnYqSmyLVvrDJ7VKqFAMbuX/wE7g24QZNf8iWqBYJudbYLJ/b
-	Q3zfyh1NnwRz0AQ8K+bQGXST55mPbPW1G3ZX8eEn1Hqj+ux/RJ3RU6A979zCE2cn
-	HgTF3gnZAkJ9m7UF0Pp4dah6HaLVdOIsLFqwp90I8HdPGmT/51hV8P5miLFx2eYN
-	lY7+Cl3dbq+Al0oxV9bt2Vr443irVdzAOBrDWreNXZTElLegd/50xzHJcH7rWei0
-	ITg9DCfvN8ReD/xFJUniTCzXHXoQKp1VRHeh4wsqWOf9O4efWlipCfgrUzgXspBM
-	yy9wPicTm6tV8PIGefwt5OUXtPYrOFVEfsg==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792616453; x=
+	1792702853; bh=abTnJERdZ9Qi1M8XjNmkaiLVXqjKkYo9FvfDv8FxyFQ=; b=J
+	ixSULIZhU6nvWN9qbiZghvV8SffqgLrDxl0iTvA9pwOeOknGYn1J5oar0Lwqn8tG
+	JRgPqjnSLMN2CKUYTVZmgMDM/noQJyBMDDrwajY385F6RUbjbaITswCwUQqJ8N2e
+	oJB5T+IrWCqmsV+p02XgvfAzsJzUtnE9PmE7pJTCW6kw2cYwh572NJVQ5jLl1dzA
+	1Y5hJRhd+a70yjB/QAGWzDSeDbm8eMP3m9JXcTcvWnv+T+GnGmYTiBxtfLS1bPRk
+	cPVMu2Sd/g5KOFD0IMeh8b7VvzBZASmbZB/5O6DpMx6XWZ62r1ZeTXQH7AQyh/rQ
+	UrpsXVJU1E1K8K+2BZZ/g==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792615480; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1792616453; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:TqwxOtbSw/cNh8gayiMOXbsnChSIzUNa9diHj6jfw+oh44D
-	iBACoY7g+CS2QZAJQ8MP2x4Cak2w5lTZ21K/9Sx446Hc3PiKD7KtRP6vZ1GgKUwq
-	xdmTqxJe/eNXJYidb71xCdclL12G6kXS9SkbCKnIIMTo9H+4AoAC4HIUUAbuqUrP
-	dlxExE/KB8770mBChZnU76RclPkVb3sqM6+zMyhiuX/WLZyNmJtz02le4/60BEtD
-	HHP906cS0AbQC7Fyx/qEZKH7UNVWik4qzibE/9PWaQpOgKt/FmSogal4SwbeBzP4
-	8vzqN46Ru7XqUbZX2xzjBcEWpPcwG9aTNJ7Dsdg==;
+	s=fm1:rsa-sha256:RyVb3Ywiew70+YoKr0b9tLUv9tl55xQKOKMd+adJM4p71bV
+	DGqNkUz/GBbGwz1BzQcIDbp03onGc1Sc6YdRZYjrvtfcOVCukaDZkwMAbdp68VB8
+	j9G5uaZWGrbNgbd9BHDgNw9Ig+C+41HqiIj/mkHqqq4RKzEMr4w2CutzSVJwOB6Q
+	xxOs2QHxCGBS16z7mnR98VBemY5WVZP2CTdjlS76d0cQekjxzngoYZoXKvr3u7PF
+	tOW0ga5hz/duFwwPH0xgZvCyb0LtQf3e9uIJXZzLwSSfNik0m6+04JRJC9tSu7Ag
+	D3mZEzhZvIil1W8DoMolcatvQi6OdJwhtHABBWw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
 	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:AQuUov4u0nT0XQBtrCjxsy7ORdJ7BBiis4HbRqqhEao=:wZfDGRXMNPz9bVdRtC0fIggIfxLtOFCw/xVFxv/zdQE=;
-X-ME-Sender: <xms:NyTZapSMq8UfAyBzd2J6bjntsigq_9v289NEwft3PmcCae110o3KMA>
-    <xme:NyTZalDXlTmPAckeCtSsSI7quoIcoCrwIzHNtAdQOODA-EF5Miehe_AWIEW4wcs6O
-    Igv-6fW0BmCASFnKn1svmVNQYfCmDxOmeOmTJvyGH2Z8dvnqIFnyDY>
-X-ME-Received: <xmr:NyTZahFpQu2jcWzfWPU-FTHZMZdGEI7lPxChxEWOsDqlIAK2LYUWC_Kzv41h7kIoDlNu2MiTgQpAqOkUiXFuUb_io2Co6P6PhW0M>
-X-ME-Proxy-Cause: dmFkZTEpFmzSq554njX9zmuh+JN1XsOQQBrtJwm65QGsUYKFWYllKoo2DtJUJRxBUhCGNm
-    p7CFxi65Z6rXFDstfDccogh2/S/S9ZalQCtPcA/OKcMSa6wZ5zr/ifJhIi4ArSbQTKN510
-    nVPnZxYug5iqIqhXEjLC3iRED8IN/um/dagVNM9wjXdrDU84KO9kZwktey4gJ5A4igREi7
-    m/+ouqxYW2diZH9lofFcNkoLydHW0zAT+/IMkfZajSibndeHh4QzX4FrbNZsAdp2WTW5A2
-    byo8Mkn1oGf3yHWm3dyiatctGy+pFrtFts3UVfgGJPcrZ6I1lj3BMCi8ikn9YaUZVoPZT2
-    t2GgVNhRkiMRgb9ZzLWkksZ8nJIyiaNtRpCKYgGPHcDMwSHsRRA9rf9DQI549WZm6hMWT8
-    fdMJQTiefIrcGHfH4U2wSTkhfsBuKL4s3+r8d22wTri3WP2FQMByl6YYNe7KYyzwCM8XKX
-    UNNAYXjZbjVXToXSDL3rQKx77BYvEqIP5njSckUeh+QtFUft6eLdQGH0GN5IzyMOiNqugQ
-    gYbeCzS283PIO3MMjMHmsI4CSRs0O1hHhsfJMcyL/3f5BJccicgq9p5PRdIVLI0yCff31r
-    3NJ/uiQg7jUi+WLCJWjoEJyNNSKSJudLZhvF1rB9ghB75GzyBgHev9chKf3g
-X-ME-Proxy: <xmx:NyTZanBwB9haeYQbSghwD067e7RElrooMMOyoCHvMSxGZGksekQAUw>
-    <xmx:NyTZahVUJLmQszVQTexK-T8XeaKk6gj8kOMQIt6aVfpdT-Fdb0AP5w>
-    <xmx:NyTZaroKrIOlyuj5_GWRxZ0Nxm4hB0TvjSfNaJ-WoSzrBFvtLrRY9A>
-    <xmx:NyTZatQINkUGEfl0IY035njmZazWPtRMI7yQeqQgM3R_SqOjxdeOrw>
-    <xmx:OCTZan2rb3jLrRRoAiaXgRBW52FeHvECJJFNIKs2b_4qBOxW6P0OuCnH>
+	action=mi-m=1; hc=13;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to,
+	user-agent;
+Message-Instance: m=1; h=sha256:aONhu+eynSFiczk3SXMO8ceawysiLWbC1I5Psbw7Aac=:LUnZAuQKhoVjZgNWd2Qp9P047vmvdgU7vD2duMIcUJ0=;
+X-ME-Sender: <xms:BSjZarSvhx5I0Fqm3gWKQuGTQ2Nlf-2HQGJoTtyBQQ69hWnWj1CE_Q>
+    <xme:BSjZajpuvhQr1F9ErjTM_Fr5FekljGLM6G0P-hxoEvBtMs59xzqd64kMrPDIA1tUR
+    8-ff7mq5CQ-90Ms-844ICvDi3duT7mGI8UdhTNGT2GMqQ3eEO6vWHw>
+X-ME-Received: <xmr:BSjZapKdp3hx5cUOEj9NmhDCd0dTE_Yjzph5h4Ga0vqRg2579aMLwEvH7529Miif361ZtsvPIImdvzlpLaWNHMO1KuFkoSz2-mD8>
+X-ME-Proxy-Cause: dmFkZTFyJI4HhA62Xr1fmX0CrB3ZORVZLjoo7vict1NyEdVo+YYG1WnDncM1hZBzWrDyT/
+    BxEjzsI9qadfsAHVvFkTl5oADjWxNfnUYD7NDGaw+qtDa5NnfM2lhJ+1ax/rUUQPUfgebk
+    JMk73efh5Bkp2A2YBtfzTn2SbTi8VWVq+1Sulk6yqt2om28JAFXsCaAbyhow5R0LekWHAk
+    BCqxx9L36evIlsSDEmqA4uYASYDvynee2mwMOf8grSZaDFYSRGGtqy2Ao6Mg61Zxss8SwF
+    MqUCs4K/Cyp86bH9Agm6YiqJQmtyjzCu+ClyFJ6sdOTnbG5D//Tiqadd6qJS5VDoc44hFs
+    ARPPar9HRoZuPLDVX5oBkq40kZXVbGobdbIsxqDCm9L/jRjUB8LVtiLGxdu6ux5z5akTWk
+    IQPEnGmaS/oper6bP1OUfCdqoekrcbGvARKwKC3S0d3hEx5kiXDsN5dr2z6yun61Qnf4tz
+    GVQpGnMJ0TWnvngwzWOmXLmq9O/mruNvVah3AwRtfysHsXE+4dhFHUW5bHJjKZ+Z+jjY4x
+    ofRZ//2n3OC3UjzthFmYeIIC97B0bpxwPElvcV/kpX/G0X22FeC50RyJs/aDYYECd2k8EZ
+    DuWrcoGTF1eDKeM0lXUb7IK48+r9boZrmck4wpg6YK5NcMjg6NbaX2oes9VA
+X-ME-Proxy: <xmx:BSjZamptKFse0xwxAtG4iHooR_xtN8oKa-iYccKhAEq_I7FXFXuxyw>
+    <xmx:BSjZahyPUSEujdoJkk1Fl90Ef8cvzEhsEaq8UcrEaTAEc8VfDYgsrw>
+    <xmx:BSjZaqNwGbBmbzafqLXX9mklvXa3F_WXOTlR1sUtOd6sif2qGoy8Rw>
+    <xmx:BSjZam6vhFw8268Cmw2HbxzbmvYLT-eLU65gisG-0E-B1XIGTA6_wQ>
+    <xmx:BSjZah74YxAqgEJ_objC5CGWlfUUE5kSnL170TZRWx36I6G_Q1wlGy_8>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 16:44:38 -0400 (EDT)
+ 21 Oct 2026 17:00:53 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  usmanakinyemi202@gmail.com,  siddharthasthana31@gmail.com,
-  kaartic.sivaraam@gmail.com
-Subject: Re: [Outreachy PATCH] environment: move commit_encoding into
- repo_config_values
-In-Reply-To: <20261021155608.58509-1-okhuomonajayi54@gmail.com> (Okhuomon
-	Ajayi's message of "Wed, 21 Oct 2026 16:56:08 +0100")
-References: <20261021155608.58509-1-okhuomonajayi54@gmail.com>
-Date: Wed, 21 Oct 2026 13:44:37 -0700
-Message-ID: <xmqq33tyn5qi.fsf@gitster.g>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  git@vger.kernel.org,  "Patrick
+ Steinhardt" <ps@pks.im>
+Subject: Re: [PATCH v2 0/5] doc: move BreakingChanges to a manpage
+In-Reply-To: <ab05a3c1-9da7-498a-a9bc-d586414ad0ec@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Wed, 21 Oct 2026 20:01:08 +0200")
+References: <CV_gitbrchanges7_please.d1c@m5gid.xyz>
+	<V2_CV_gitbrchanges7_please.dc4@m5gid.xyz>
+	<612b6065-9043-425c-83a7-2cfdbe140c4a@app.fastmail.com>
+	<CALnO6CBuKKF=nCObFCK0coCDqbK=OJTWEshEtj6NaVV6XpWGuw@mail.gmail.com>
+	<xmqq5wyvq9p8.fsf@gitster.g>
+	<ab05a3c1-9da7-498a-a9bc-d586414ad0ec@app.fastmail.com>
+Date: Wed, 21 Oct 2026 14:00:52 -0700
+Message-ID: <xmqqy0bqlqez.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -126,36 +132,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-> Move i18n.commitEncoding from the global git_commit_encoding variable
-> into struct repo_config_values.
+> On Wed, Oct 21, 2026, at 18:50, Junio C Hamano wrote:
+>> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+>>
+>>>> Is there any interest in continuing this series?
+>>>
+>>> For myself, I favor making more of Git's documentation accessible to folks.
+>>
+>> I do not know about "manual pages", but making this available from
+>> "git help" would be good.  It raises a huge question about what to
+>> do when Git 3.0 comes, though.  Are we going to change every section
+>> and rewrite them to say "we used to do this differently before 3.0"?
 >
-> Initialize and release the value with the other repository config
-> values.
+> See me and Patrick’s subthread: <ar0OicAaDipYx-xU@pks.im>
 >
-> Pass the repository to write_commit_tree().
+> You could transform it into a section at the end for “what happened in 3.0” then introduce it with
 >
-> Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-> ---
->  commit.c      | 16 ++++++++++------
->  environment.c | 15 +++++++++++----
->  environment.h |  4 +++-
->  3 files changed, 24 insertions(+), 11 deletions(-)
+>     These things changed in 3.0. They are written in the future tense
+>     [?] is reading about what will happen coming from version 2.98 to
+>     3.0.
+>
+> Then you wouldn’t need to change any of the rest of the text.
 
-I am not sure if this change makes sense.  The 'git_commit_encoding'
-variable is declared in 'environment.h' to be globally available and
-defined in 'environment.c', but its only user is the 'commit.c' file.
+The rewriting effort is not a major concern.  Rather, the question
+is whether keeping such a historical document is worth it.  Do you
+still care about what the major issues were when we transitioned
+from Git 1.x to 2.0, for example?
 
-I do not think it is worth contaminating the repository configuration
-with it.  Instead, shouldn't we allow the functions that use this
-global to take a "const char *git_commit_encoding" parameter (instead
-of a 'repository_config' or a 'repository' structure) and pass it
-through?  The callers may need to query the config subsystem to learn
-the appropriate encoding for the repository they are working with
-before calling these functions, but there is no need to pass the
-entire repository structure down the call graph.
-
-Thanks.
