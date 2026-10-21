@@ -1,124 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.159
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792565376;
-	b=ALGojnXo/pj8kdqUi9yN1CXGRGd7OqA5nhMm5JRtu24hhGP01nZ+AVGHvC2nUaoplVxD
-	 9C2XdU6AXtak5KaFOO+F1tdM+zdhdyyGZ6JXc+nM1DNAiaXuWdadWk4xkF0AsT2ywNMuM
-	 vVpnaStJU/bgY8x1W+2V9YBR/XCOGVsFBF3+oRFNVrksCMPPoRl/OBJwsIGWvWv2bn8H7
-	 8Y9xcYOQUC8QU5yLvJ0c+twLE09Y8AnisIiajUq3pZ8qDi/D0KOMLybQTp8tpgKS/8m9G
-	 0djd+5I9LpNN/NO3gKv9pkYZ8NwzsSwYH0fyxqUaIsEEL97WQUdMMxROyYOGzsvRBsw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792565376;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=BbUEF0tJTLTcAnc8B+rETOehiZYCDamUrh0poromYG4=;
-	b=wUEL/l2U5nImxhpCqf7S84vWbaRzbBeeQM2icvFdCkTUlEYBC4c/zDGLOgRqwIbgYPfk
-	 tZLExd7Bpqj0GLCxJNorvA9C1qHU0Ky46okimDSkzDOXMxBQ0Wgfq4Cvqxmk/tpHJpq/n
-	 1gugcW9E9uY/2GZI9YlobWuge51vaf1QQhvQya0xQ9PkhXDiveoBtWQUMn1PevG2r4DFF
-	 czAFOsssZCD5xN6wcB+w+huhV7ccB9eQ1sSvLnjZyZw5zaaIo3yKImEYI2qc7jCJDO5ub
-	 zGMDEeSGLhaa9Wy6/a2+64t21DaVi62luL69k3UHq2Wt7kmo/GIF+6JO+97WlQa+jBw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=vIZbimtA;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=M5NnwZOr;
-	arc=none smtp.remote-ip=202.12.124.159
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.172
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792565561;
+	b=2HDhIaO5AW9GG4aVldRH0NVg1unoa5/XRkmkvq7HSINJfuUrdyBEpPqs8THad0teCBKF
+	 wb8CSkSEjUN/5xSzyEAv8cKjdqifprsFRxqPUJjQPQ4jLctC82yTnUiMQaVCFBqdt7lHp
+	 bwQm8QI89rPoEv/Vcr0nVnATBOaj5L3hqRjL07pQT/0FcZoT4gcNX5bInXgsHfA8Z/fm5
+	 UiIhbowp2ViWlQb8yAswR8WnwDgYXIHN0o+4KPXgCmQoybF7zoNoxotVHyCH4svyuCrPM
+	 aAnzbtm/+pd73FisQa40jBgabPKcIOjOF/3gGu+Xc/p4UdKnnDjsM3VMJx+yh046C9Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792565561;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Gm-Message-State:
+	 X-Gm-Gg:X-Received:MIME-Version:References:In-Reply-To:From:Date:
+	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=D6OdElzL/s1qqpa4PBtrKfekHHALk78gt6STag272+A=;
+	b=rvvma0qpOUKxFTAz0prJOvGdcGtkxVYuBsT7Lty4V8BML2tFFsjLS4Bo6x0AWdQSMDHO
+	 g3ELq2f7ckreRqqzCdUDg7QJStTq2Db+G3aaLeVxWK0ksYMZZyIak7IdYOjVGjJ6b7PYo
+	 tc3JwUEAoMfdjJz80rdJ0lbVWtBf4w0csoDgipAZbHPBSCl3DHrmRelIXo5mabEBHR3yx
+	 50v+ucEW1lLUpBq3OMnVFcpwrLatEixD4JkB7CclxXjeyqwFco7+4NHHs8tAStPen4Srw
+	 JGO6hYGe2ui1U4B4wW4eDhD/sHheKx9ldzICg+OaN7/xIcBbscMRizWeKDZzYK1vRXg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=fail header.from=sunshineco.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.172
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE71C606A31B
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 06:49:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AE71C606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=vIZbimtA;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=M5NnwZOr
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0BC9A7A00FB
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 02:49:35 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Wed, 21 Oct 2026 02:49:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792565373; x=1792651773; bh=BbUEF0tJTL
-	TcAnc8B+rETOehiZYCDamUrh0poromYG4=; b=vIZbimtAf5uxPCMHAWA9nEabVv
-	Dx8jifII7RZj85cZBzIRNzYiKKbJeA/qCgZKplLL3fGptaL04AicgezZ1hFOPO7r
-	wHE8JvFQcxZYceHxYJTYBcY9SS9Zbx3srFgWybN4cBT/6UTuIwgiDAV89ana9Wkh
-	EaacYtx26vPLtaJgvjhoqveeAYzTxYChrj3ZvvFxnA8oVzx1045PhzQdLpCtCgNe
-	IaBb3KNfCkfGuqCkAPcrvLfJfgLNKyNSVGhqYj7ImM8SiQY9SHMeeQR1SaE8vBDb
-	o0GpiJZf5z4oigDteZ15Yau3jU3SeJiAJ+zzeG51D/7eLlpb2SNFaPj15fyw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792565373; x=1792651773; bh=BbUEF0tJTLTcAnc8B+rETOehiZYCDamUrh0
-	poromYG4=; b=M5NnwZOrm/ahRvLmdYgvtKo2TLxAvFVlBmJvkvYgytpx8tb3CL7
-	FnrucdDUijZ/6rVMFsRc5Ylu9b0RstlxXcqbvIpu4vR68V5iAVBDixsbG/tTM3I7
-	QAiiwTU87PGjEEn5Se4oxG+GvcEd25LqsmjyJFpUiOsIXWDw0G6rp5RmW5JyVjV/
-	MNdGw2XRPJZgx1S8tD0ky6ATdjD0ykkwpaKE9lGerZBMuGTJalQjegL8TUBkNw7Z
-	mR6kLHbcnAuP2emLOCR2z+C90Jrldicqbr6MpQvd7F0mUcZDl1whRKp8T7B/gcAU
-	yoeQMgsc/EnrvT1yLnd8mgKp94soqLOUzsA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792565373; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:AAbvZ38HdKIEx/dVhP904fYvjzJ9FcrvoUPh3WqHFy6AjJ8
-	7OgMZT7X9kN9QIpetaTWTmvUq8FSRw2uyNO7l83dP3knOA0QtP+h7/9T2bGccAcT
-	exWQrWb+dALkzyIG9S6wpIpFQxyA5KAc+jFmb5XTtCuzNCIX+qa7hf62J5PI9hds
-	ayPjmvPrdjm43rfWVC3alqif3Hbb6uACpu5GDfKZObOGT/HpGZN00Z6xxq/RImrQ
-	mPAJJfByOBWSyPMiruXPzMJeaRc6v4VkZJ5frVX6cc15IQQot0ms/M1FT4perR2K
-	OJMkYZHjwJsGwv/cM8zckwpO/DPrW6voNvKpj0g==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:OKqawFCGCAulsVB8QD5uqHY6pmCWG1FX+O3Q42RtUmg=:z2ggqY1COtocoA6ZHrbWiHnx+elt7RqL+IWOqCTR9LM=;
-X-ME-Sender: <xms:fWDYapUjHQn6QbXwlaKdiE8k7He6Y74EK2Gj0hhFEEKPnSldiZ1vYA>
-    <xme:fWDYahwVLtUdmSQou0enHF4ObzT781FTuwwFosPhGwgkbc2aE2XJUUtFG8tnLC91l
-    L7vGNHvBxbCgNbC1ibqJTJ0l4Mqu6CCuVRdMi9LwnBOJTBCcVggrUw>
-X-ME-Received: <xmr:fWDYag_n4HKzuq2DTejN7w7FszS1IfNFMo6qv6W-xYYo1KpEmGZf8w>
-X-ME-Proxy-Cause: dmFkZTF/SVjbVlUOFKM2uc1L9xgYIX55gV99TvPeKGvFhxQs9z0czBmY8dBH7aYeDFLUjq
-    RsYSGtYmI4piVTqo0luEhZR8q2IjykcrrR4ng25QGZslf0falNCCNE/y9M5DM6Csl5TO3P
-    wzqHM6sPc5V2kv7lRurTvCl6J9CCkZwu19BjHBvx5E26TaQNuq1D4wOIUMHvkLvrfXCGiD
-    RiKJJMDF2Qh0z2y12KoC6h7gwMSJ/CWWac8ni8+/AD3P5AYM8/zh57F7lGRahNf6aTOvUb
-    GK83l7Eqa4E5P9Kvhpu+sW/V/iWl/w1lbTXleYsxbSgN6OdCCLKnw/g5agN5vJ8aAd5tWp
-    iXfjfU3CU0GKXR88Nm8WKew5nBBsIPyO6jE3zgm7L60B2Oz3y4vXZaIMoQ50lJq+TCOaZu
-    SCK+sOTg64aYssxc22YjEX0ZMO1emO+k2FP4YjXA2bQH0HSYvKxWwzc0IspH1gb1d5+oXP
-    q94DOSp0KzSbksJuoc+4icClqpym+Ua9z7XWLmhQuVYDQA3buGrMgvconuccsvIP//6gw3
-    YfVjwcl02XRw9dafUKI3+mqItqwr8ipwGaogs9dB3D+Hvw/RjmMrDutuPMvPKM1jrO+bnp
-    szZ+LXOKVBaS1+4KDgVHu+dJUkg2ouZhQ9o3ZqzCyadiyP1XqkegyA/z9ItQ
-X-ME-Proxy: <xmx:fWDYam9hpl_XINbg92JMt-Uyr17k5jh3vahO1KTF3oa5M9SqLFLuFg>
-    <xmx:fWDYavV5A0GlUx7o6egstgZ6fh9Dk_9KJK-5J-0gm0kcvHwQ2oSNdQ>
-    <xmx:fWDYajfezahKVT-x6JZIRNnmlajBMc1yOTOJQPypACJLsxqgw_R5sw>
-    <xmx:fWDYaoYizDFj1DXwH08EpgomLRL0y90hwL3KSTQf3oNAzIpp2AEniA>
-    <xmx:fWDYauiZ6DiH4dJKAsHavVM8MBajBnSjviHmWujVo2w3R57Qp9qDkdgM>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 02:49:32 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bc19c4e9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Oct 2026 06:49:30 +0000 (UTC)
-Date: Wed, 21 Oct 2026 08:49:27 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <ttaylorr@openai.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Jonathan Tan <jonathantanmy@fastmail.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Derrick Stolee <stolee@gmail.com>, Ted Nyman <tnyman@openai.com>,
-	Daniel Reynaud <dreynaud@openai.com>,
-	Aaron Friel <friel@openai.com>
-Subject: Re: [PATCH] negotiator/skipping.c: parse parents before queueing
-Message-ID: <athgd6Ya12zRdIR_@pks.im>
-References: <dc3dfa3647c42da9170bf3289f4e8a4a8a55c8e2.1792441003.git.me@ttaylorr.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4926606A31A
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 06:52:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E4926606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-313bab9cfe7so54910eec.3
+        for <git@vger.kernel.org>; Tue, 20 Oct 2026 23:52:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792565560; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Za+UuS7cHTTUDamYzh9hOa1nRXLjrLpsDxx54M6HoaGq42W+sn7Dl8SAiBcBIFjBka
+         3I6E6GNj/dKTyLxq7bJr5hhUcfQR3TIkBohJwojbTIRlxEwgIxLD9c5DoxD+m13jj8XP
+         LR8GkJKMnSPz98MPRWfTuJ33Vg0uYXwr36KtbhN17pBhLBoyvlkly/bwKLGl5pd7XDQG
+         /He2MWzuv1BQEDP08AtvriIeKjoIxpdM2RHc9q0sXzzaPfoKfnWRI+bLu2i8D/iaf9FU
+         RWzgDJY70n4rdfI6/4kaqU9tHuFsA+53lY0edEPb9B4p6vw3XvNjYk8QDgt+BHz9t6tu
+         ChRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=D6OdElzL/s1qqpa4PBtrKfekHHALk78gt6STag272+A=;
+        fh=0hnH2vYDv6vpcFd43UT7oWMkEdVCy5eROOyZeipDsQk=;
+        b=A8SLitiSzxGk5UDAYT7kKETmQ/OpzBg2BWva0mqlTUrB33HniUEt54u0fstkx7K6LT
+         IpSlWKrk2bWapxl1Byl4rbo/hR9kBMQBsCO6m59msfL1dFtai+aEobuRClN2PHq1C+ch
+         uv0Xaly6MjiXqIpDnLB+v7ny2senq3F01wv5JrUjFdP7I40PGNmwVDvbSPOfQEHetRmD
+         qFB/qnhCwHOI6+XZrVK29jrgs2dicCkKuGy8KSUXvwaA0u0WkckagdE75BRdqiSA/56e
+         Pj6oai5Y7DlWmBoeTdpwEsTPlmiQnv1dOdX1J2SvS++oTMIsSqlIA9B7zfEkvRjSTGex
+         vw8A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792565560; x=1793170360;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=D6OdElzL/s1qqpa4PBtrKfekHHALk78gt6STag272+A=;
+        b=h7De5pjsYaMKc9ntTucXC95ohumQgXdmXMozHTNGvkj+T8KAC9qCkX3ZAvCJ0XKmSO
+         /jhNoZpfkNq2vyVjL59g/IISO4FBQVxwS4yETmubpWLzS57wHsSjFcFcCJQqjwRxa7ju
+         Hr0/eVlt2egsJSFziDWmP0bzQ3rMyDHmfqe+pAy4yR24iFzH+jDdR0beZJxv7od45N7c
+         cgA0dNvxhldbzgmATEnojFqLX8NxVseytWJ6/LPcLJWGGZSx0i7jv+7JsXWlxggrzQcI
+         za30pO4xFoFZUAaeX/b7Sq/fHNLGZi+O05jfBr7edSXjrzG9hGXkJl39XY4/h3Aa/ehG
+         ajxA==
+X-Gm-Message-State: AFq9FYJZhUC/GbhOiL7jhwgLJLM89GeGI+7L9450SASEYPdAeceZh5zk
+	27FBC/4gtOlFEsmDGZGHAJx6UPrqgQf41/z+k6UpUpcvMuMwmzR3C3kyTTQCJ5kQRgZoeY+jJpF
+	0WUK+XZbNmHH86Bbb5K+wf9FUoCMBEAE=
+X-Gm-Gg: AYBFou1RClAR3GFdr6BD6rGPO1eCIj//E/7Ow4q9QEOtk9EFypg+cIW948QU/TzN0VA
+	gZD54xdhxK2jrBD08hQtliyvS0nSikof5zm+PXraFkXHNnIRLpsGCGpwXXyTCeFi7HK8iJkoUXW
+	o5nb5Fhdl9EWnkPFaW5vq+PvbIIRhrSM+uJdbz8jV6EjHQ4/EKtuEXUiO1uwzhu7aNg19kvgcJt
+	kF/9feLVM9e5QfeoWh4WNxU5OulHG5r8l07lI+ZorWOcsfQTCMTWfxuchtrEUa9DSKWBGgiePzw
+	UMUpolLRsnyUQ39Jd40DLkoFEzXorYk5iiEPlj+iei/+Ic/7VCO4GV9Nx8RcDtdbr50rI4/m4St
+	KFN++FyGxGE2ng34LKSS//aErLpqDmTCV+VDbhwE3+h0T2Iybt+YRwBb3TP33B2Z1VWss8Q==
+X-Received: by 2002:a05:7300:e9d3:10b0:35e:d21c:f33e with SMTP id
+ 5a478bee46e88-3674ba26154mr3728542eec.1.1792565559985; Tue, 20 Oct 2026
+ 23:52:39 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,78 +88,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <dc3dfa3647c42da9170bf3289f4e8a4a8a55c8e2.1792441003.git.me@ttaylorr.com>
+References: <pull.2317.git.git.1780685368.gitgitgadget@gmail.com>
+ <pull.2317.v2.git.git.1792512249.gitgitgadget@gmail.com> <6e2acdc5e2578da4e915fd2ac541a776349fb23e.1792512249.git.gitgitgadget@gmail.com>
+In-Reply-To: <6e2acdc5e2578da4e915fd2ac541a776349fb23e.1792512249.git.gitgitgadget@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 21 Oct 2026 02:52:28 -0400
+X-Gm-Features: AclHuK-0wzdlfjAPS29g1qhVzmFnunVL8uJgOSRkiHIhHjIElfQ2U0Kmp6DsU0Q
+Message-ID: <CAPig+cRsSN9gY405MGsCQzLuxzBKcfHo2Oc8Z4WB-U3BGd6m_Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] worktree: reap ephemeral branches created by
+ "worktree add"
+To: Jason Newton via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Jason Newton <nevion@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 19, 2026 at 03:17:07PM -0500, Taylor Blau wrote:
-> diff --git a/negotiator/skipping.c b/negotiator/skipping.c
-> index db90fa77b53..ed6e88b59b4 100644
-> --- a/negotiator/skipping.c
-> +++ b/negotiator/skipping.c
-> @@ -151,6 +151,9 @@ static int push_parent(struct data *data, struct entry *entry,
->  parent_found:
->  		;
->  	} else {
-> +		/* Parse the parent before using its date to order the queue. */
-> +		if (repo_parse_commit(the_repository, to_push))
-> +			return 0;
->  		parent_entry = rev_list_push(data, to_push, 0);
->  	}
+On Tue, Oct 20, 2026 at 12:09=E2=80=AFPM Jason Newton via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> When "git worktree add <path>" is given no branch to check out, it
+> auto-creates one named after the path. Such a branch exists only to back
+> the new worktree, yet it outlives it: removing the worktree leaves the
+> branch behind, so a fleet of throwaway worktrees fills refs/heads/ with
+> dead branches that have to be cleaned up by hand.
+>
+> Treat an auto-created branch as owned by the worktree. Record it in the
+> worktree's administrative directory (worktrees/<id>/owned-branch) at
+> creation time -- the one moment we can know for certain the branch is
+> worktree-private, since we are the one that created it. "git worktree
+> remove" then deletes the owned branch once the worktree is gone and it
+> is no longer checked out.
+>
+> Ownership is recorded only when "worktree add" itself creates the branch
+> via DWIM auto-naming; a branch named explicitly with -b/-B, or one that
+> already existed, is never owned and never reaped. Deletion is
+> unconditional (even for unmerged commits) because an ephemeral branch is
+> disposable by contract: to keep the work, pass --keep-branch, or anchor
+> the commits with an ordinary branch beforehand -- a normal branch can
+> point at the same commits, after which reaping the ephemeral ref loses
+> nothing. "git branch -m" updates the marker so ownership follows a
+> rename, and the branch stays ephemeral.
+>
+> The marker is just another per-worktree administrative file, so older
+> versions of Git simply ignore it (they keep the branch on removal, as
+> today).
+>
+> Signed-off-by: Jason Newton <nevion@gmail.com>
 
-Why do you parse the commit in `push_parent()` instead of parsing it in
-`rev_list_push()`? The latter would also cover the other two callsites
-that call it, and to me it's not clear why they wouldn't want to parse
-the commits before adding it to the queue.
+Sorry, I may be missing something obvious, but this message never
+explains why we should add all this additional complexity for a
+use-case already directly supported by `git worktree add -d <path>`.
+Specifically, worktree's --detach option is exactly what you want when
+creating throwaway worktrees, even "fleets" of them (using terminology
+from this apparently fully or partially LLM-generated message). If
+your tooling or agent is not using -d/--detach for throwaway
+worktrees, then the problem is fixable by modifying the tooling or by
+teaching the agent about --detach, without bulking up the git-worktree
+implementation unnecessarily.
 
-Doing so in `rev_list_push()` would also bring it in line with the
-default negotiator.
-
-There's also another call to `repo_parse_commit()` in `get_rev()`. Once
-we start parsing the commit in `rev_list_push()` we could drop that call
-as we'd know that every commit in the queue is parsed already.
-
-> diff --git a/t/t5552-skipping-fetch-negotiator.sh b/t/t5552-skipping-fetch-negotiator.sh
-> index 96e224168eb..7a0b9b32474 100755
-> --- a/t/t5552-skipping-fetch-negotiator.sh
-> +++ b/t/t5552-skipping-fetch-negotiator.sh
-> @@ -223,4 +223,37 @@ test_expect_success 'do not send "have" with ancestors of commits that server AC
->  	have_sent b2.c1 b2.c0
->  '
->  
-> +test_expect_success 'recent ancestors are sent before old ref tips' '
-> +	rm -rf server client trace &&
-> +	git init server &&
-> +	test_tick=2000000000 &&
-> +	test_commit -C server --no-tag base &&
-> +	test_commit -C server --no-tag parent &&
-> +	test_commit -C server --no-tag main &&
-> +	git clone server client &&
-> +	test_commit -C server --no-tag to_fetch &&
-> +
-> +	git -C client checkout -b topic &&
-> +	test_commit -C client --no-tag topic &&
-> +
-> +	# These old tips have known dates, but the recent parent has no ref.
-> +	# Without parsing parents before queueing them, its date is zero and
-> +	# all of these tips are sent first, delaying it past the first batch.
-> +	for i in $(test_seq 32)
-> +	do
-> +		old=$(echo "old $i" |
-> +			GIT_AUTHOR_DATE="1000000000 +0000" \
-> +			GIT_COMMITTER_DATE="1000000000 +0000" \
-> +			git -C client commit-tree HEAD^{tree}) &&
-> +		git -C client update-ref refs/heads/old-$i "$old" || return 1
-> +	done &&
-> +
-> +	test_config -C client fetch.negotiationalgorithm skipping &&
-> +	trace_fetch client origin &&
-> +	git -C client rev-parse HEAD HEAD~2 >expect &&
-> +	sed -n "s/.*fetch> have //p" trace >haves &&
-> +	sed -n "1,2p" haves >actual &&
-
-Nit: `head -n2 haves >actual`
-
-Thanks!
-
-Patrick
+Moreover, a change like this which makes the new behavior
+unconditional is certainly going to break existing tooling and
+workflows, thus it will not go over well, even with the --keep-branch
+escape-hatch. At minimum, to be acceptable, assuming such new
+functionality is even desirable, to avoid breaking existing setups, it
+would have to be opt-in, not opt-out (via --keep-branch). But if it's
+going to be opt-in, then you may as well just use --detach to achieve
+the same effect.
