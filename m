@@ -1,101 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.50
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792568439;
-	b=CnJxbTDpCekDv2rGThmT1e5Lx14wScIPl+NKx/jMzH2lrEQdj0WtVRyOxJFwPFdfUXGz
-	 xmdJyUjQwqywrO1QpvOcCrrbBPO1vx2kZvcHqEwIvAXX+0Cu7R88Dzs9H756E4jM6+p9c
-	 oJpJGm+CqWlh2/7Xp15S42LYa/8CoixKNlgkgfyzSCFJDeWrQm896l9Vm2fsSDbKCsfvY
-	 7Dli8766XcWCMYLNmqXtTsvHvUrf2JzuVL/qwQIzWIYUOXaivmU1PgIbh3Hgj97aaX/jS
-	 N+Gc//Tlxl5ssxZPFCRBgaXdpRKwBuGadY6St+A1XrsHZknqBsCXfdFnCyQsNyaXOQg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792568439;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=qCKLGwlRJFlYeC5i1qeSb6HP1V14v9NpNT4VP3uaH58=;
-	b=z1uTNLSLwx3a0mHnW9TsHs9qVXnRK3MLZBZrS2IRx7jURxpjoos5W9gE0TdILZj0J6lv
-	 8wV2fXSCGPobOJ7MuBL/79PW2w1QLVjMJlvve3QB4t2gheKaCZB0Abn3qr54cGmUoOQKx
-	 moh4sT6IrzgFiWfwxRZWFYAN5ude/uaniCYChXAzc+kqhoMvNtYy+QNoE0akYRLPbdqWY
-	 jaSfkCAHxCj22iVL/augv7C8ZW9u4HPwk9do7JeWuayOnUBh6thecJzwGbDi3EB88qruu
-	 8nqMs2OKsWurmbwMRuxNwytpf02at4rj+G++BtnEwb/b2bHz4gnQ5nC1q8Zi2lAyj4Q==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="E/2iWoZI";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.50
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.150
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792569466;
+	b=iRzHkQJQ5Ta52WhAot6GSR09+VE1DGotGrHUGRwQPH34cLwDJv+LdQ9YMBcVzqEsvw6L
+	 ObwSp3aHTeCRQe/IsvMKHgu7W24Fr1cR4Tkj9ptHwFujBUf2seX4iAPrcK9860+KHXJ4c
+	 6By32Bi8rfH3DbKzRyZ+Kp2YcRVBDjGmumzkRp5Qz36rTWY1s+ZAKm4HSC/5MNbEV3D8S
+	 3taAtYWtzsp8Fn+jJPoQjBZq5FwyhEpMbTSn8zk+ah9aD6mnqgU9zu8JCo+U/MzZEsWR0
+	 0607dZUgUhG1iKMIZbS5SgLQk6m/+IJgBJO0E+qmJSFc81nz3Mo75yHqQi3VgJf2snQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792569466;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=LwkF+I0Ev1zIajfjJRylDTbgmSdDs7rapyCFrqXwKrU=;
+	b=OJiRJHCNKcxIOPclO3ai6iMdQORsbkgRyN750R6jDceno7pXUtOKIbRJ6iH/ApH11AOf
+	 VmNNz+kRFFHm+L4hElcVByOcrvZ+jSYatsnebvQMGr/flDpHYSMNO70InPfUoGPj2ALGF
+	 yvHalmFWWSaUcBaAp/1Cr9IzFNKNHdSUNQX+mA3KLzGsWxB5UPJCnyMnxXzhz5uG6fixQ
+	 RIEssyvVkGnjglfr2TxZGIca/8rMEjVmU2kK+XRTS5/sLF2mbmfo0ikBfaoz4eUaf4Aw5
+	 xIn88Tbo3YYCdt29xZbuGB10pK3H2wTjkGfXv5HUMsrl6rGIHW6+AolnH0rjqdgPBWA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=FhjVEDHX;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bzTz8T83;
+	arc=none smtp.remote-ip=202.12.124.150
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E9E606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:40:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 97E9E606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9C7606A31C
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:57:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0B9C7606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=E/2iWoZI
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-9178510f3bdso5080436d6.2
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 00:40:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792568437; cv=none;
-        d=google.com; s=arc-20260327;
-        b=R7bNcXrETidvxxjuvJMAK8g8vqfZMhOh0oLCYYWKrNII2Q/3oPDcx8OSLHJppk+9zG
-         tbdbmxgR+A/V5t/M+Ma8zA8e795caSmIeO8xJVL9EE6TdKmrJvihXkq8Plxv1tCHX0w3
-         /YlKaMD6/GSLPtWAe6X4I12ehAE/blV+Hn7EaX9JsJyEcZjCys0lty8RGYbqnp3pWkow
-         KbMmCbuGMRqwnfEE1X2QQeknQWdzBPub7Omm9+8XuAJhXWYOFmhsaivg7Cl7TknsEWtD
-         iSAiFLSThrLTpCfA3mHMFBo5Qi23T/GwdvWYowIU6kpd/t0naOCdYzp9bWwiNhqeQlEW
-         jkYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=qCKLGwlRJFlYeC5i1qeSb6HP1V14v9NpNT4VP3uaH58=;
-        fh=pkj7Lgc+e9u7f9xJrXd+bpYncoiJfMIO1yl1nIjQVcM=;
-        b=atkW4nnwwOO3vDqxQnTGgWL9L3j92+tXfjWcpq5FG3/VSdwr60+dure1dvPdbimx2e
-         mW9339kna8JcrEESnYQ3oqKf4PaXC1tzXuyFmFJv44o788pFNG0AJfxLI3naT5LG6W1i
-         a31g3lp1RLFAHASIuahEbp17/aMLOfG2cpW+Z4QDbd6NTdZKmZjDzVwB5tZ9J8EH7D/z
-         adAUA85rYy5OenwCiA1J5qxMjbFEKDNFUf7VsGRGsUCFrZ96PA0onVI2mYs2RfPxIXGM
-         oW3GKcOJva4U1acM+1yb5EYpt7ofTFLIpA6Z9MygYv7SKDBJfxgJafgLATGhDzifqfxs
-         Fylg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792568437; x=1793173237; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=qCKLGwlRJFlYeC5i1qeSb6HP1V14v9NpNT4VP3uaH58=;
-        b=E/2iWoZITUSWA6MQ956x/8qf13xC10Bo33PtPY/5Bra6m4fab5eC3l9w062dCKRmGG
-         4kR/R//j+AOxcscrAYjlWwacNIbC1qBe0VP2dCaWBKlGxBkDUnbgtICldUa2QHywd+xg
-         QKilHawhFPvlpG+OstLQ7CD29c8qsrz7WZXTOrxR5IJ/3ktdqrokOru2DYLc39Hripi6
-         /t0IbBrvKBCZEP3zl3cRFrpZNnfwMT9RC1YJW3a5vgyz4M4yyYdAsqoj6xuaSjcJfc0c
-         a1b1/E6GqZPXZJ37IpKL4mNA4paiNQKv/OaJKZIPh/40XWusWSVXvYqUyr5aRyRKmK86
-         vLbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792568437; x=1793173237;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=qCKLGwlRJFlYeC5i1qeSb6HP1V14v9NpNT4VP3uaH58=;
-        b=Y1hrIaDIlt8R057DV6xAbSYblWmNbAxRNhdYkvDkG/NLb/zWQnS6rJhoUwXQFnsz7E
-         09jNPeQnp8Ol1MP7kYo0ZJrdvaZuPOl2UgAoU2I1cB3sw7t1lik9SsB5NNVMSOFQizPp
-         6AdBuu9OKJUwHstxwJqlsfB3jHsXlG4dlFW0RMRKIoo1ynf8kxNqVr59/nqQ9y+YqTDI
-         wuErrJ+aAb7I/BXbfD0np2xBNl+YaPY6h1luXhY2qkDtFGnYHFMESz223lqBlYhBLp8P
-         ZKq0QUjKqwgZLY+Fsdyggy6ou76ZRuZ57SK8iyAmQV+GtWJfm4ojVTSjYgpEcce++yER
-         l97A==
-X-Forwarded-Encrypted: i=1; AKwUvBzieKeENbBgqXvYNtclhwWZe+OGbMW9H0P4LeceHEX7FmhC8gUX6rmEvcG8C2RXVwxF+Yc=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJwOU62VBpmaTyzb09jMefJ5Ot/WEq965qU1zaieobkqBJcCuA2
-	HkRNDX+i5hxtV/6TrpGrSmKfQsKpgQ6Np/FgO/3P9/W/uUSIOZqANYZ+t7x/0be231Ol10Ekak6
-	1YZTmeQssz3bFWMub4DBmGZFGycStTRw=
-X-Gm-Gg: AYBFou3Af7i6z23nVgROQei9bNjeNVWkBLvxHiBaQo5gL3S9DETaFZz2FEtyxiJhdtb
-	qQzZ4aiQiT3wfN/e7nwDeW+19D1RzRuPG3aJcgD4yiwE9UfloU4ytTGdWk4skw+MY7BAkEivI7M
-	s0NNaGefaTSxDnYC2X4J8eNLqtAaiqtZ+oan2T6Qg2LQ9rO/EkLlxcS0toOWjw2FyOiIBM/lKKS
-	0JrhtFQGtPk2s8dPy5y4uugTc3q2HR9a4D+OeHyfh0wpTaKEQBDOVRZauIOaivYfsmiR4lOJPf9
-	6DvH/idOznxg9U/yLaDKb3j0RaAuQYgRGqi78i9yzfYwDIH+H9bBJhsz8e1MHYSRw1KWt3gIkfx
-	9NLilZcF07Znq+YfxbD924wOUoDUd2GTE8Ye3EI02q7jg/Ta1leVepQtVt8ktj5PAIl00WBeodn
-	gC8A/UcemB5QPb
-X-Received: by 2002:ad4:4ee5:0:b0:915:eb2c:50d0 with SMTP id
- 6a1803df08f44-91c12ee2afamr21837906d6.27.1792568437352; Wed, 21 Oct 2026
- 00:40:37 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=FhjVEDHX;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bzTz8T83
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2D4901D00009
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 03:57:45 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Wed, 21 Oct 2026 03:57:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1792569464; x=1792655864; bh=LwkF+I0Ev1
+	zIajfjJRylDTbgmSdDs7rapyCFrqXwKrU=; b=FhjVEDHX2H2YS3HI5aVG30p+Di
+	VljQJ5lEbmMPT+hKsDSIcYDNSasffS8SPnp9ql0gaLQehE4cfDGHOjJ97IVVxRnE
+	VO0IjMhPit07y+WoDe05YMoe0ou++PD+teMPxxTdawwLPGo6UWB0TVwKaG+WL2nT
+	za7fdpzsHw8Zhm5ehTVgS95PdpakGsUSb3KzfwzpOq8991mcDePWNhcoJOw2HiSf
+	QWG0RccaB26FMFxMJIvRa/yQKNoyzZQeYmeS9a3oOM0sHq+mKFd7Eog4MH0mSih/
+	cEitMEeo7uymfMq3EALd/Nbvmz7C2EYIv33wjUmVy0+xWUJUhH3QZDsLMNHg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1792569464; x=1792655864; bh=LwkF+I0Ev1zIajfjJRylDTbgmSdDs7rapyC
+	FrqXwKrU=; b=bzTz8T83p642s0DmuhpHJI9vU22xiFT1NzBWgg6oabcEUoYwCGm
+	kuhzNzCyNjqB5NaR4Nm6EU1Eo7nPejBakmpMpYeLDK4MVNm64wJwDeCQ4SomIqXG
+	kz2muS7z2nhVVHfnTfMY9SWDG9r9diHHO358vTz6MRfUyr4u91XdinQ6yZcJi6rf
+	/erx9QJeOt09InZELgxZJWB/WJdepCKTqr6mB4sviLnH7wLO2jWvg+UFS3Wt3QQS
+	3gsuLAO7KQcBS5nI9YSqLxseupGaoEDa/1uI+3KDefaOqQ0gG17RXxrfY1Rll99J
+	q8HTsKe479YHxKFPnQv816yKBSRdTzGQvlw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792569464; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:Rm2s4NI0hzWqkZLP8HkyDjq9U76ykT2AuYSxqk+u8ldAtRR
+	I8lAq8Zv325U83bXxyORxJBITAYYvaJFhd3+hCN/TxUPM6hIAJvcq22IIda+1hTB
+	WBosFZA4dNUXaIctrVj0WnaejypgM+c5mT0GsVEDYUYQtWdre/qX8CY+qNkGxYk5
+	Fza4JFjXVDpNS/OvAF2JzDbQogVBVb6CBaD8ZywuQzGt0l4shGZd1tTCAGlkuvzO
+	W63oMXRUH4MwK3zdJkcJHYGYhEXoslvwXMQlaAOJxPc3DzkUr0hBdOaCLTi8/gi2
+	DYCkWqA9xaVhlM5qQCiWpMx/air1XS4HGxSdBIA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:n8qoKQZY4cB9B61oF/TAmREsDfTRSe8O0khGkZEL+Ig=:WCzvwMbMPaZVR/KwL90fnOXRmPYsye+uI5o67L0hFG4=;
+X-ME-Sender: <xms:eHDYagKkjZS_nzWDe8s2iZ_kCmrwX3lRebla7iW75NlxyV-GwhIiCw>
+    <xme:eHDYamJAFEhaJ9ZiMWdW_QZDWXzXTw28WitNpHAaBA8lkvJlIEJsY_8GG4YxUFucs
+    aQ_3A_tnR1EwBo48s4JcUfpwRzIXAM7NTzeMEZojlePQvhEhLVbRy0h>
+X-ME-Received: <xmr:eHDYauVrGG1xR6REdY6hK_ji58WtYYDiCaS0btbip1zTzU6hfCUOUg>
+X-ME-Proxy-Cause: dmFkZTGiCbiqFtbDRHAmOTwNQA1UduGya9+MKQXb9sS3ShcgOm6uyxOWv8hKiFWbgMchFp
+    JzwLWtrSARUySveMBEZA0R0XG5mhdQaP7kfacCUO5ZyhqATM6TDvFM95spSnpGaAG5oWLY
+    dll4OufnN/z51GrpC0evIu5Xx/lE5P61aaY0u0E0H3COSyOdznA824mhGeilWk+qglXhFf
+    US3/rEY1NCgCpw8cR/a0FW+lQMH4C8JZHinKo2I2+nMaWvEH+ElN1vYs9mvkuXfEE25R4S
+    713c+8quuYberBAYeWQDopY/VR71vGs1gQYomoRg5tOdABI1qCWGJ4HqIgrbbZ3Lm/q0ee
+    tcPS58IK4BBtS8qqZxui4GWG60flKVFwrri1TB18NA9f+XOoTtGGoPFi0ODgz87bZEZy9x
+    213oN3D1heAAbzl+Kfb1t55fKM0oZO9ap5MnTM40QzT46BW9qOZE6PnY3MUvROaTRjjANN
+    TpAc1Pd3jsuyOzBeuGxLLntTQQj1UuGgw9u1W9vII5K7NVkrkL9q01YMibKjcNtpxHP/Sx
+    RfDjbCwbHRF5P9gKP0jA9Bi/T8maJdVEpZEk+QkyQrrR+npUzqORonwpchU6jUtAR5RsHr
+    r5tXmbXwlinTNSHnLjzyIDYYcIe1U5x9C7H0QzGD1yWWLgZ/gbewRtG5OBHg
+X-ME-Proxy: <xmx:eHDYaoj3S5kA9jmpzalbjnOLXbKiQ6tL9LPz_UszU_AyU2WO_nf1oA>
+    <xmx:eHDYap8S45AwXO3w-MXvq1em29rc1CwilwotBFSr6WR1RC9jBdmTHw>
+    <xmx:eHDYaiCzlV1ptdtTo7Q7OwM2rgEanKFkH9FIFSKsf44xA3Zwaqj0rw>
+    <xmx:eHDYamK3wBSDdRFOxlz8j5CBJnSMHD6uX1eiF1EJukW9dPyhbuAUMA>
+    <xmx:eHDYajjbXvxVDNcvc0-f7vI6pZkoUvDQ0CNVXtAOyjeWoAeH6qKvAKmc>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 Oct 2026 03:57:44 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d426b3e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 21 Oct 2026 07:57:41 +0000 (UTC)
+Date: Wed, 21 Oct 2026 09:57:38 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v5] github-ci: update macos jobs to macos-15
+Message-ID: <athwcntchANgnJxD@pks.im>
+References: <xmqqfqy5clgz.fsf@gitster.g>
+ <xmqqa4o7sp0j.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,123 +123,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2317.git.git.1780685368.gitgitgadget@gmail.com>
- <pull.2317.v2.git.git.1792512249.gitgitgadget@gmail.com> <6e2acdc5e2578da4e915fd2ac541a776349fb23e.1792512249.git.gitgitgadget@gmail.com>
- <CAPig+cRsSN9gY405MGsCQzLuxzBKcfHo2Oc8Z4WB-U3BGd6m_Q@mail.gmail.com>
-In-Reply-To: <CAPig+cRsSN9gY405MGsCQzLuxzBKcfHo2Oc8Z4WB-U3BGd6m_Q@mail.gmail.com>
-From: Jason Newton <nevion@gmail.com>
-Date: Wed, 21 Oct 2026 00:40:08 -0700
-X-Gm-Features: AclHuK817-ezTvSxv9PjqBHiA-VCCD-TJ8rd6r3MuXrq9S8bFV70dLY6BcBnC9o
-Message-ID: <CAGou9MgdF_xA+e8YYn8ud8TUSmY3j_q9jbUTy2wLibTz1ObJ7A@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] worktree: reap ephemeral branches created by
- "worktree add"
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Jason Newton via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqa4o7sp0j.fsf@gitster.g>
 
---detach and an ephemeral branch differ while the worktree exists.
+On Tue, Oct 20, 2026 at 08:37:00PM -0700, Junio C Hamano wrote:
+> GitHub from <no-reply@github.com> address keeps sending
+> 
+>   Subject: [Action Required] macOS 14 hosted runner image is closing down
+> 
+> and suggests to update to either macos-latest (macos-26) or
+> macos-15.  Use macos-15 for two of the four osx-* jobs, and
+> macos-26 for the other two jobs.  Use explicit version number
+> "26" instead of "latest" so that we can more easily tell the
+> differences and similarities between github-ci and gitlab-ci
+> and compare their outcome on the same commit when needed.
 
---detach leaves HEAD with no branch, so status, push, rename,
-upstream, and symbolic-ref have nothing to name. An ephemeral
-branch is a normal refs/heads/ ref for the life of the worktree.
-Commits go on it, and another ref can point at them before
-"worktree remove" deletes that branch.
+Thanks, this version looks good to me.
 
-Deleting the branch that "worktree add <path>" creates today
-would change the default, so this has to be opt-in. That opt-in
-is not --detach: the worktree stays on a branch until removal.
-
-These worktrees might be minutes or they might go on for months;
-either way they should be easy to use and not require flags to assist
- in the majority of common case behaviors, moreover detached feels
-ike a degraded halfway state, frequently allowing a gotcha to strike or
- a loss of a safety like a gc based reap.
-
-"git worktree remove" does not delete whatever branch a worktree
-has checked out. It deletes a branch only when this "git worktree
-add" created it by DWIM (the final component of <path>) and recorded
-that in worktrees/<id>/owned-branch.
-
-A branch named with -b/-B, a branch that already existed, and a
-detached HEAD are not owned and are not removed. A worktree created
-by an older Git has no marker, so removing it still leaves its
-branch in place.
-
-"Unconditional" in the commit means that this one owned branch is
-deleted even if it has unmerged commits. --keep-branch turns that
-off. "git branch <name> <tip>" before removal keeps the commits on
-an ordinary branch; only the owned ref is deleted.
-
-The call that changes is "git worktree add <path>" with no branch,
-followed by "git worktree remove". A caller who wants that branch
-to outlive the worktree already has a spelling this series does not
-touch: "git worktree add -b <name> <path>", or "git worktree add
-<path> <existing>". --detach still creates no branch, so it is not
-the same state while the worktree exists.
-
-Ownership is written only when the worktree is created, so I'll confirm
-an older worktree still has no marker after an upgrade.  The branch stays.
-Upgrading does not mark a worktree you already have so no upgrade
-headaches are expected.
-
--Jason
-
-
-On Tue, Oct 20, 2026 at 11:52=E2=80=AFPM Eric Sunshine <sunshine@sunshineco=
-.com> wrote:
->
-> On Tue, Oct 20, 2026 at 12:09=E2=80=AFPM Jason Newton via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > When "git worktree add <path>" is given no branch to check out, it
-> > auto-creates one named after the path. Such a branch exists only to bac=
-k
-> > the new worktree, yet it outlives it: removing the worktree leaves the
-> > branch behind, so a fleet of throwaway worktrees fills refs/heads/ with
-> > dead branches that have to be cleaned up by hand.
-> >
-> > Treat an auto-created branch as owned by the worktree. Record it in the
-> > worktree's administrative directory (worktrees/<id>/owned-branch) at
-> > creation time -- the one moment we can know for certain the branch is
-> > worktree-private, since we are the one that created it. "git worktree
-> > remove" then deletes the owned branch once the worktree is gone and it
-> > is no longer checked out.
-> >
-> > Ownership is recorded only when "worktree add" itself creates the branc=
-h
-> > via DWIM auto-naming; a branch named explicitly with -b/-B, or one that
-> > already existed, is never owned and never reaped. Deletion is
-> > unconditional (even for unmerged commits) because an ephemeral branch i=
-s
-> > disposable by contract: to keep the work, pass --keep-branch, or anchor
-> > the commits with an ordinary branch beforehand -- a normal branch can
-> > point at the same commits, after which reaping the ephemeral ref loses
-> > nothing. "git branch -m" updates the marker so ownership follows a
-> > rename, and the branch stays ephemeral.
-> >
-> > The marker is just another per-worktree administrative file, so older
-> > versions of Git simply ignore it (they keep the branch on removal, as
-> > today).
-> >
-> > Signed-off-by: Jason Newton <nevion@gmail.com>
->
-> Sorry, I may be missing something obvious, but this message never
-> explains why we should add all this additional complexity for a
-> use-case already directly supported by `git worktree add -d <path>`.
-> Specifically, worktree's --detach option is exactly what you want when
-> creating throwaway worktrees, even "fleets" of them (using terminology
-> from this apparently fully or partially LLM-generated message). If
-> your tooling or agent is not using -d/--detach for throwaway
-> worktrees, then the problem is fixable by modifying the tooling or by
-> teaching the agent about --detach, without bulking up the git-worktree
-> implementation unnecessarily.
->
-> Moreover, a change like this which makes the new behavior
-> unconditional is certainly going to break existing tooling and
-> workflows, thus it will not go over well, even with the --keep-branch
-> escape-hatch. At minimum, to be acceptable, assuming such new
-> functionality is even desirable, to avoid breaking existing setups, it
-> would have to be opt-in, not opt-out (via --keep-branch). But if it's
-> going to be opt-in, then you may as well just use --detach to achieve
-> the same effect.
+Patrick
