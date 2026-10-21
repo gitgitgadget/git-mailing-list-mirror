@@ -1,121 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.150
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792571108;
-	b=lUEL05AN/m9HXXAod0awk3DnV0HPCHi3heBkUBv8yAJRflV1VarQXMLWVRVEqEljsWUx
-	 01o4Qrn2BY1qJ/T7adQw0RIJjuK+Z66sTp+Wn9+RIkxyTGJB+CgZaPDweLDLqSpp/UmaP
-	 0GNdWLrz0/nf0EUfhYdXRYhBRoXvZZ3f9R9Qcarq2u/eAHUZ8hTb74VRq+JOK82YloACJ
-	 bEfP+S2Nrk7Xl56IkRRCMx69pBMhfU/Tdpm4r8CGk8zaGsM2F84oNdl+BhyQhgzGd0i8k
-	 iN/eHo1zoy0pkkR15OS4mJWikxvXPL3PGQwKzSoIIrgOvHsoCJaewtkpG9i8Y7ygSHQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792571108;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=jHmuFeCHClENO46PPrL02mc/rwW7SULAInhLFq0OFEY=;
-	b=1HLLxIqZp8kK/kQG15hFhLka7nxIsVnA7QdCj/R9lVyX7werIkNaTfmRdlobuJnqK+K+
-	 42A9AJwAKxo4x3AguakA75hWccgMZ/3FTk+0XmhPRxABswWEjCKyUnZKuIxMQkDBkWfCs
-	 COzS5FSeOPO/XmJ+CmOBFo3PYJkLZTfy4+1BA3cANGfxU669YvjDlZETR2vyGlC9Oowp3
-	 /rXISGWRVB9wxoW20ncQebNurpSHxh+ynfZT+cfy8gZul4ign7eeXoBFSnGv0HuMVbLWr
-	 7J6SlhSaXFYwPHEuT4It5WTDgfFYSvn+aYLLVTFgwqXE9mbjezSnpn5SMeVdIQQw+UA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=BZ5PFM56;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=tWOS9D7z;
-	arc=none smtp.remote-ip=202.12.124.150
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.173
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792571317;
+	b=Iglwk47qN+h7u7fZVXauCPhLSZIMsLWscVhqaKUeRWTmq173mwSaLytIm4uiRwBDU/NR
+	 u8jBULupu+75xvqP3Z2ZjC2CXxxOURECOeDhtr3dNPwZusJc7nEu5IVlD5P7CmGpUYz9A
+	 v3A6MYV6GyebEkLwR27EWpQGPP6gpxwpIe/ZF8+AzoDCJqsL6XG0UangCHECz50cwHqyQ
+	 /Fug9ujvOCUW48Ab4+e7G+QIY/QkbSEGMc1tN00krranPCjyG69F2xAb8SI7zgzGrmby2
+	 +gB90XDg9SdA6Vk44A9+euNDOt86bzyqyP9UwChkUzn67O9qs60NpZAu7uha8NoIZiQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792571317;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=kYo98755DNA8mTsmi/p6gegg5hdb0g9exezu9UX6oRY=;
+	b=kghwbiMs2IFtC/YdlCv8M8IoKJwbXUhZwHv2tIAwwwAe7eaSyUliW+qW2u6qxDwZJ+ed
+	 /YvWxnq8X09p2f5bwltzH8tlSQC5rfJKQVjw24pzuPR0X60EmKFdu6jhnzsB5l73INys6
+	 CHw7ekbRs7gJGR2JTBYnyIjMe82YqK3IraYeGt/FBJMEG+Q5KFB57t5/RrPzE4qak/JZq
+	 0EQPMwXRfi62B9k2n/VSMHCj6gmvJ1eKdzgAdAlvvFsyTVlUS0sf5pvIilLkTKnk5aLkZ
+	 Pz8BBJecRky2biNtzL2kIIqyq7xOfd7xDEtlXMR2El+ZUI9mW867ddIUY+Jv3/yZMuQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Tafdve6f;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.173
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C445B606A31B
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 08:25:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C445B606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F15606A319
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 08:28:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1F15606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=BZ5PFM56;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=tWOS9D7z
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 097FD1D00093
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 04:25:07 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Wed, 21 Oct 2026 04:25:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792571106; x=1792657506; bh=jHmuFeCHCl
-	ENO46PPrL02mc/rwW7SULAInhLFq0OFEY=; b=BZ5PFM56uaWDWbMGz36g6U/9nn
-	FoUWE6a7jNM+DvcZabPf0iMzNm+56ybzOD08JDKentdCaEZfNW6AJ0NJHkfuWaF3
-	SZ6FtWeJaN0S/pHieX01QMo/Hyd3kW3Q+akJG4GPz7vFAr9Syyvjt6YB52bawXUJ
-	l34kMKEO7ywQSE7GQdPpI3qMHRXOm5GTCNoYqLu4U3z4FG74oZye6rgxGAmYAODR
-	G0BV7rARumSabPHAIMqp0ZXuJBbNILvsKQnx9xUCf7Au4TdZhuVMIFU19wx984Uh
-	VW1X/cAoNyGUaTxfPWyl57ttKE/VZPLsP40DK2HezSjxiU5qfuESR1cUfOJQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792571106; x=1792657506; bh=jHmuFeCHClENO46PPrL02mc/rwW7SULAInh
-	LFq0OFEY=; b=tWOS9D7z4XxFFGfk0IwuGkRt0ZiPXNKjW52UMb6H0+DVJjbyEqD
-	BE5XB9OE4nKym1n7ZXfbo4qHW2eerFsw/cB4766ICm4vJhVbIDaWxXztIZTu2s9z
-	OeV0ewhzLwGNXiKOIrdhHOur7yqm4X7tFcyo+D1ot/7Vv4CiZa6b00ANhSQ7KH5N
-	nulMtloRntW330zUKq+aaYdqBnkmiGdCtx9XjU5QUKrVxkPshtIsY45HtigXqWgH
-	/Rxx5ZY2NkKPL0jOnhQAsmFggahoiEqgd6V3g6Bx81Diq3aTXri/C6+dCOYIVpY7
-	/owZs4cWHp7j+fWhn6cSgiXuB9BkhvbTMMg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792571106; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:CN2tHhM9a71N+CCVNvxVc+hDV1xEsTBywNF7tBMBpOBGg/T
-	+SO15+Zoidg6Y4PHoy5aPgAswpDFQC+Lak1dm8vL5R4GNz+fM2rgnGtmM76dROrc
-	dNTPujIYIGL0yjh0Ys5klYxS2dBAe8YrPFDOV81xkK8IHjVhR0yIQMGvQf5OKLYt
-	TbBz0eCz7SqwVYLuPJcJJGL/bltQSWQ9cCQ7D3wa5NfC0TbJnEHR9JGT9bsOIs3y
-	S97h5aFQ6zXBgf6Vf1d2gUbyHxHZ3hWW727vHU473d/rPZ9SGiY7Lwuv2DvAZiW3
-	vy038MSuFxCqmqB/LtQvMuAOfhl5Fbrb9uss+lA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:V68gg2KeScnHeUCHoKE1b//Ky7rRP12LpknQt7N/sdQ=:wB0AvYV4nhb2ffBPPx7G4NMOwzcOaulmuqotAnYf4Fc=;
-X-ME-Sender: <xms:4nbYaiNeu0bv1w_9BOvTF7pWhDxRy-svXSOYNVmQLyAm9_s4ihNSAw>
-    <xme:4nbYaoZ-cEgqDXbeioiTNe1DqHrS5wEed_jRawGLSj9qeNgqUzCGZlNrXoY_-453U
-    nzJNQf2ILyZrLLqZqRI1pcowAzjNmlhe0kNdKARp2B4iQ6RZi8n7do>
-X-ME-Received: <xmr:4nbYampLmPU0fBv23x7RKXw7Kye86sdw0AxLXLh-mUni-WjbbIoMmA>
-X-ME-Proxy-Cause: dmFkZTFGK+BmQVMyww2oT3g1c8x3w58A2sfpOD9BgiqaYkdPlIfFQQvvCX6H/aKWgNwe1a
-    2G7YBhKH8W4h67bdgULip6+GJPbaK1vGJ0uDt4eIi7O77UsQMXj5VoYXqE2PrAzkIoe5cU
-    3KwWrVtoj18lmB3CUgNVa3b8h34GUT/OaW7MXVq37deak8x8TwoRRmEuIRdpxNIvmwAvsS
-    reL1NZoXUonjAFkwHMjtWy9nFycXVZtm31p4ucssuIceq6XXItDXLbyh4wTLNLAN/By1ml
-    +MmRdft+hXKGtYpx/e0XbbJQmmD4BFoPBdCSP/BVC9VY8afbBMvwcKsSZ6CVByLHtdDHGl
-    1GFi8AurUM2alBtsbRa/YpXGu73MqFTX+EzXPss3aHGnUwtqF6cazOMnCXlK2v9kXLVquH
-    VW9svfXmZb0bHKyAJOr4zt9/S0TBm4m0RkFJqwqMyQMIlX1c4p1XFGoeyz2OIX3Gh+p3/t
-    3o6ZvL19jZ35rFlfViEKTw2kR55xpeXUG0vVk2ae5L7byVf/9TlMH5OqhXCNTFaXWXSXoC
-    K3ETT19r6BwAIQr99mJEdLUqIrX9U7kIf7v6S8AGXR7jyMDOKMUnv1iQJ6O3bqXoIrK9Qk
-    Vw6cE+X7GjOnfStyNqBDHpwZoj2Xkr4QLnB71+1joc+oC56WrHTv0gS1UgDg
-X-ME-Proxy: <xmx:4nbYasbbG8C524y7-GQeAayEEvxErbu1Kc2I-jcAKwbkCBTU3GEMUQ>
-    <xmx:4nbYauTyOYyB6AmKgqdG03tOdUbEXI7c1NroYxnPHirAmBf8r0txkA>
-    <xmx:4nbYaj7EpnH15ZLxSGQTtB07brHzrJPwjmWVtnjRKP8gtSm-JhRzbw>
-    <xmx:4nbYajxMTFPJeFp9pgApMKVeX1G3BJ1LB0aqaqTJgyrEd-nU2vxk4A>
-    <xmx:4nbYai1PNpl0ge-z60Epl0N65hZDeCwwEVs6pdUUq0IXqQRXrlmNgVft>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 04:25:05 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 28d229ae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Oct 2026 08:25:05 +0000 (UTC)
-Date: Wed, 21 Oct 2026 10:25:02 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v2 2/2] imap-send: accept messages with Subject before
- Date
-Message-ID: <ath23vYy0n8UFLUB@pks.im>
-References: <pull.2456.git.git.1792437558.gitgitgadget@gmail.com>
- <pull.2456.v2.git.git.1792566469.gitgitgadget@gmail.com>
- <c42827a1225e49db2e0855638e4e76a06f7d9eba.1792566469.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Tafdve6f
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-536605c4d8fso3142071cf.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 01:28:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792571316; cv=none;
+        d=google.com; s=arc-20260327;
+        b=g2NQvTbJFshPHx8/fVwImNBrctSnI2UMATfTKrzTpb7IeDAsrAoWFcn8bUIB0H4pAC
+         IOeCap6czra/0coSWs98enNGaj+TAiYwCNcfgyy5NzHQFah7ghYw8UFW3tHqUbMB3JV+
+         N57hSpwl1kHieZhc9SSzKAe6x+ssc5XKCibVGN4lP36iYcgo9Jp9Whg2dA9LgAILXsLs
+         yhdUTywn6DOrXNY+5bSRTK4pnXSHapNQMQ6TCct2NEKvYqxWXnhl+rkriQOXu8dEb/sM
+         yQ6BBBIe53qsUht96JuzGZSyRrAjwq2xGzSxRzcmvTlHdoSa9rbBLwex7IZpXWEP8PqU
+         dpAg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=kYo98755DNA8mTsmi/p6gegg5hdb0g9exezu9UX6oRY=;
+        fh=JG2YeO1JrFtq0heqU82cygTR+JOgFCyjkbraAzbkMHw=;
+        b=YVPVbonUtyho73xXxZdzt5ZDAD6AeiEM2NtQePebZP4uJ+o54UALqxRUHb1uMJRi/O
+         OjsT+FWohhBTX7vmjtRxuXOn6fLmxl8jx4CfsZO0BPNE8MZcL+bVH+YtJqBdS4gwS5/g
+         bN0yLR4i1nDUO6I1FWO/i1bJT/HhE6TIRveyfzXAQvsoE5SCX4FDA8Y9fUltnGRnTkD/
+         2tRaY2JGNziIhmkhpBU3685fV8yUyiSqepBIDt9oxO7VKi71IY7AvOR+H3j/zUK3sEXz
+         cAIQuHDwmWDfBqfwxaDN8RhkDIfFKheE3oB8aLzqFyldZIOTEYk9yTR0p0EYlr8BoqcM
+         uDUQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792571316; x=1793176116; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=kYo98755DNA8mTsmi/p6gegg5hdb0g9exezu9UX6oRY=;
+        b=Tafdve6fRztJ+il8G9DMKB6t0cTYH8cmIt2Sp/jpqs64mRRFaHtWI5bOpIqxGPJqW6
+         u9sn82RBkqcZ8v6qQCFlzGLFEuAcebScGv4ic+bEaHN8enZffPTY2R/PqtQqGH93amPJ
+         CWnsHE2hg9oJwyxALnlwT4PGKqGPS00djyubnlBkMdtaEvd9WWpRvxSB2hEm9cTZrtDG
+         X76pTzPyetQ2sfUVUQ8bevIzvw/7GBZHqfVWqfPXW9f6t5P1uXZBgIMNgA77t1g6cbhY
+         +VNQarTsokpPp/RpgnktsJ6g36ogk2YGjJhMvz2W79s8VVtoj6uNevB+0XFKhzxfN1pK
+         FkRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792571316; x=1793176116;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kYo98755DNA8mTsmi/p6gegg5hdb0g9exezu9UX6oRY=;
+        b=YeJHdM24peT38W5tea2wKzRfGLZiCNr3C2qJMzduAAer/ZqQaXplvjuOI3Z48Dm9oC
+         yunOJnrZkVbt4aVvw3ruIFAVZ2R/XVofbDzvqqIJI2nTOtdZ/sCwouARqCBOWs64TCYh
+         z88c7bRViCGpwHCtYXKSPC4LY8My1NtABWG7WxF5XHgdkCJK77RgjNRVfqZF6B79Lm6o
+         Cf2ek5vkxCdn+lcvo1PkNRFB/m0MXViWRRKAsbHSyIbve5N38TCDp1+pNU1iXc5WyFjQ
+         Pyk98HRjRkupUVg1z4XJh0U1ngRzYWz8BWpa1Hy9jNQ2t/bNQCMnyuxr0FxmVNa45fhQ
+         zuWg==
+X-Forwarded-Encrypted: i=1; AKwUvBzm9yZRuOQ7vJrWHPloO7pMJK09GZ6bJRBgRAGvySTNnUmH3ZQgX2yUR3VQxluQLiDml3E=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJ098i23m+AQm+dLvncS9s5YyvGOPOXcPTaN9cw46/VwQHzJ5cs
+	VY/YOQA5FieQxV4eztI5Hzequjl/dUec8o+S2NY3pQpCwLlzSJcH1Vm814XMjsPoSOpTuomfIVW
+	tYDUZXpPjYscFuv3g6oahTAnZqosuRB4=
+X-Gm-Gg: AYBFou0lAkBcPHPOXWoeWAKq8gqFSJ0kzexHdp8SfWV0M2ivXJH0OYDnVGdAYqSNwno
+	1TvhYXMvdiVLvHU1E98zmBqbmVgdLsAK3TPi8nn6lb/zgXYuh5yTM/7rqXEoP29wIonlU9SHWiy
+	FsWv+LKCiacoMzKCBCjX3NTzirPHn4Yxn2CtX3g3Ce0wcRqI/S4KibP7Y+d12H/bqdpwVZQXfNY
+	hflyvOYz86eBtcdro1U5vf22rzjGm/VHNW77cayZmIpxoVNir+o/zhLPbt9IOfZhGu6s4ZKaGVb
+	+o3evN9lELUj36/4hUk/vXgxCu7aaUSlScUI/nWrbRN0g1YarSx3Jiwap3NjlWuG+7zQMTI4T4a
+	Op6Jg4h4MbG7W5i6RkKG20tlhG4HqyYXFQ6IoTnwg4/mQvoas+4j4Uq4ldIFYa2A6c3iHr9cKDw
+	b3QwerYod2zvVy
+X-Received: by 2002:ac8:5d04:0:b0:533:3d48:37f0 with SMTP id
+ d75a77b69052e-5369b8ef8b4mr19134011cf.47.1792571315529; Wed, 21 Oct 2026
+ 01:28:35 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,103 +105,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c42827a1225e49db2e0855638e4e76a06f7d9eba.1792566469.git.gitgitgadget@gmail.com>
+References: <pull.2317.git.git.1780685368.gitgitgadget@gmail.com>
+ <pull.2317.v2.git.git.1792512249.gitgitgadget@gmail.com> <6e2acdc5e2578da4e915fd2ac541a776349fb23e.1792512249.git.gitgitgadget@gmail.com>
+ <CAPig+cRsSN9gY405MGsCQzLuxzBKcfHo2Oc8Z4WB-U3BGd6m_Q@mail.gmail.com>
+ <CAGou9MgdF_xA+e8YYn8ud8TUSmY3j_q9jbUTy2wLibTz1ObJ7A@mail.gmail.com> <CAPig+cRCaSmEULP1JpW3fjiJDR0Lee78puq+KRaXiD9ciX3fvg@mail.gmail.com>
+In-Reply-To: <CAPig+cRCaSmEULP1JpW3fjiJDR0Lee78puq+KRaXiD9ciX3fvg@mail.gmail.com>
+From: Jason Newton <nevion@gmail.com>
+Date: Wed, 21 Oct 2026 01:28:09 -0700
+X-Gm-Features: AclHuK9dON4zJze5Xtqw3fiQZtt81fIIvAK8I-HApnQzz6KlyWXKgOwXNfE9ox8
+Message-ID: <CAGou9MirKucUdx8eM-BfqO9sZrDrckwpp9sYDnDVfiqkdZ8wdw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] worktree: reap ephemeral branches created by
+ "worktree add"
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Jason Newton via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 21, 2026 at 07:07:49AM +0000, Harald Nordgren via GitGitGadget wrote:
-> From: Harald Nordgren <haraldnordgren@gmail.com>
-> 
-> Patches sent with git send-email cannot be fed back into git imap-send
-> after fetching them from the mailing list archive, for example with
-> 
->     b4 mbox --single-message -o - <url> | git imap-send
-> 
-> which fails with "no messages found to send". imap-send only counts a
-> message when its From, Date and Subject headers come in that order,
-> and git send-email writes Subject before Date.
-> 
-> Accept the three headers in any order within the header block of each
-> message, and match their names case insensitively as RFC 5322
-> specifies. The copy that git send-email --imap-sent-folder pipes to
-> imap-send then passes the same check, so the special case added for it
-> in 04133f5bc4 (send-email: add ability to send a copy of sent emails to
-> an IMAP folder, 2025-08-12) is no longer needed.
+Please focus on reviewing, I use mixed but you shouldn't assume which
+parts are and are not llms.
 
-Aren't you fixing two different issues at once? I'd argue that this
-should be done in separate commits.
+What you don't realize by working in a silo for a long time is your
+communication skills to external parties gets reduced with jargon and
+nitpicking ; I have the llms both assume you're wrong and right while
+seeing the undesirable behaviors your stances have to the one that I
+know is correct.  You seem overly sensitive to the usage so far. I
+have no tollerance left to give - so stay on point. You should
+consider several harnesses chose not to even go through PRs and work
+around the functionality like grok build did, patching it in
+externally which is kind of nuts - and replicated.  I think it's
+something you should think about the nature of quite a bit.
 
-> diff --git a/imap-send.c b/imap-send.c
-> index 6f76bade35..7ae2eeddc9 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -1453,32 +1453,29 @@ static void wrap_in_html(struct strbuf *msg)
->  	*msg = buf;
->  }
->  
-> +static bool has_required_headers(const char *line)
-> +{
-> +	bool from = false, date = false, subject = false;
-> +
-> +	while ((line = strchr(line, '\n')) && *++line != '\n') {
-> +		if (istarts_with(line, "From: "))
-> +			from = true;
-> +		else if (istarts_with(line, "Date: "))
-> +			date = true;
-> +		else if (istarts_with(line, "Subject: "))
-> +			subject = true;
-> +	}
-> +
-> +	return from && date && subject;
-> +}
-> +
->  static int count_messages(struct strbuf *all_msgs)
->  {
->  	int count = 0;
->  	char *p = all_msgs->buf;
->  
->  	while (1) {
-> -		if (starts_with(p, "From ")) {
-> -			if (starts_with(p, "From git-send-email")) {
-> -				p = strstr(p+5, "\nFrom: ");
-> -				if (!p) break;
-> -				p += 7;
-> -				p = strstr(p, "\nTo: ");
-> -				if (!p) break;
-> -				p += 5;
-> -				count++;
-> -			} else {
-> -				p = strstr(p+5, "\nFrom: ");
-> -				if (!p) break;
-> -				p = strstr(p+7, "\nDate: ");
-> -				if (!p) break;
-> -				p = strstr(p+7, "\nSubject: ");
-> -				if (!p) break;
-> -				p += 10;
-> -				count++;
-> -			}
-> -		}
-> +		if (starts_with(p, "From ") && has_required_headers(p))
-> +			count++;
+As I mentioned, detached IOWs sucks and you shouldn't have bothered
+mentioning it because it fails hard, though it was noted and evaluated
+in earnest for a bad idea - want to go back to the long but more
+neutral form?
 
-In the preimage we special-cased when the line starts with "From
-git-send-email", and in that case we didn't recognize "Subject:" lines.
-So you're not only changing that we now accept the headers in any
-arbitrary order, but you also make us accept "Subject:" lines when we
-saw "From git-send-email". You don't really explain why that change is
-okay to do though.
+-Jason
 
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index d1393ef197..1f77c14315 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -2863,4 +2863,39 @@ test_expect_success $PREREQ '--compose handles to headers' '
->  	test_cmp expect msgtxt2.to
->  '
->  
-> +test_expect_success $PREREQ 'imap-send accepts a sent patch from the list archive' '
 
-Quite weird that every single test carries this prerequisite. Makes me
-wonder why we don't just skip all tests at once.
-
-Patrick
+On Wed, Oct 21, 2026 at 1:07=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.=
+com> wrote:
+>
+> On Wed, Oct 21, 2026 at 3:40=E2=80=AFAM Jason Newton <nevion@gmail.com> w=
+rote:>
+> > --detach and an ephemeral branch differ while the worktree exists.
+> >
+> > --detach leaves HEAD with no branch, so status, push, rename,
+> > upstream, and symbolic-ref have nothing to name. An ephemeral
+> > branch is a normal refs/heads/ ref for the life of the worktree.
+> > Commits go on it, and another ref can point at them before
+> > "worktree remove" deletes that branch.
+> >
+> > Deleting the branch that "worktree add <path>" creates today
+> > would change the default, so this has to be opt-in. That opt-in
+> > is not --detach: the worktree stays on a branch until removal.
+> >
+> > These worktrees might be minutes or they might go on for months;
+> > either way they should be easy to use and not require flags to assist
+> >  in the majority of common case behaviors, moreover detached feels
+> > ike a degraded halfway state, frequently allowing a gotcha to strike or
+> >  a loss of a safety like a gc based reap.
+> >
+> > "git worktree remove" does not delete whatever branch a worktree
+> > has checked out. It deletes a branch only when this "git worktree
+> > add" created it by DWIM (the final component of <path>) and recorded
+> > that in worktrees/<id>/owned-branch.
+> >
+> > A branch named with -b/-B, a branch that already existed, and a
+> > detached HEAD are not owned and are not removed. A worktree created
+> > by an older Git has no marker, so removing it still leaves its
+> > branch in place.
+> >
+> > "Unconditional" in the commit means that this one owned branch is
+> > deleted even if it has unmerged commits. --keep-branch turns that
+> > off. "git branch <name> <tip>" before removal keeps the commits on
+> > an ordinary branch; only the owned ref is deleted.
+> >
+> > The call that changes is "git worktree add <path>" with no branch,
+> > followed by "git worktree remove". A caller who wants that branch
+> > to outlive the worktree already has a spelling this series does not
+> > touch: "git worktree add -b <name> <path>", or "git worktree add
+> > <path> <existing>". --detach still creates no branch, so it is not
+> > the same state while the worktree exists.
+> >
+> > Ownership is written only when the worktree is created, so I'll confirm
+> > an older worktree still has no marker after an upgrade.  The branch sta=
+ys.
+> > Upgrading does not mark a worktree you already have so no upgrade
+> > headaches are expected.
+>
+> Feeding a reviewer's comments into an agent and pasting its
+> LLM-generated response into an email is not a good way to convince
+> project stakeholders that the submission has value. If you can't
+> explain its value in concrete terms in your own words, then you're
+> going to have a hard time eliciting any responses or additional
+> reviewer feedback.
