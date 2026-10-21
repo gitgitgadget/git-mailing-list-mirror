@@ -1,97 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792577816;
-	b=ggS8bieLnamxs2uF87QGrcumGLMvkodiAb7eaehjHGQOoamIwiIjFMoIeNsertA3DjXa
-	 1kpWOk/Il0KcBYWRQBzi6TUI7xvAalnK5NejT4rTE5gdfe3ENGtnc+TuiEG2nXiumPahi
-	 DKt+dhyuR83mPwzZtEgssjKaCAAjKuCZaoXprTvnaIuow11Oi0MeRMNrdlaH4h6H1nzY+
-	 CxGjS7cnsImkoCd9FRLM9xVAWEC9RDWD8whmGzBF4eKOY68rcaeLxhwzsjfa70zKs3+lS
-	 jf7M7kabPCSZ4qWHj5h7cG/EuJyuK0vStb2O51PvK/6CZ7JZi447TgiY0tAsGd7ujiw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792577816;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.44
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792577822;
+	b=pWxT9KdEM8nH1rupqqUN7/xpsOhufcMRfZayv7E2esJhGwF/YcLjkIobYvXBIJiXtXVi
+	 5rD3vhdTQBydkTRCJyahnAJd/thDZ3fxaVFiUuGTqQNPVSJw8uZEvAfUdGE4svbSJRjsQ
+	 rzrwpM/Q7CLoES+T/eizax7vTiHnXDDt1/Q7HkKr+DnNhKopCrQhDmteB1OLRnjJwaulO
+	 oUjXonfKuD+MKx87hjzMiUrvkt+mjliPJlwbXrlp+fantfXseL5+GRlEigCLVjcspiwoH
+	 JQk35LWYtyJ3VWPbu6t4cA1o+HBfZnqdZZ0oBz1vJlxN5Wjn4TeFFagwfjasq+OBnlw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792577822;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=YB/dY1/JncGppmuxvNSdbjIP5bvqd49CyeqBNY5NcXQ=;
-	b=DHlo61lkXWyKGlxm8FQ720wIf5DXuXP9jgP/c6DZ0hFFsf4XFnR1+8bWqMvx7zmsIy8B
-	 0KytuWfZCEg2wbBC+e+gYujL8ZOXxHKJVF2ySysSJPY8ChLuWxS16qFqPODQDXtrLI45E
-	 j34h1wk5tOZJy/Nzjp51/qZqYDidpfzY/y29n0KG2m40xmX/utWH3bTN0PX/GSB2AkW55
-	 TWNAKY8IpMl9qnlJulWSfjywNkC/Vs2VvPorRQRW2PpoRUmVbQAGvhLVar3FRQDz9lmIh
-	 bIaLM4wep5zMMYu3d35rozau1GA9dqFG0c7r+jaVLp8YUysVuOAW6Pohw3IURpioH2A==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
+	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type;
+	bh=s3Fj8YjPSTupXjt++Rpzf/NllSuxV3tkJe41ws9RWGQ=;
+	b=efalYuIMnha7gRzUnrpRh+ZdydjlCZr+vIYu0p0BgQQ+HCHx16oqa0XKfmpJShYZsnPH
+	 KUj7NPmNr8ABrEuiZOk1uOLfuxeNGU/vDRDz6rgeCgzxjYZSoqV/FGHQTItuZwKUqW/Fe
+	 EcwrEsY82H3AYeBcRz31Vhjx5avm9KYHxegpbo4ewdUfztIhTl1G0++ehzF/XsUCmZuZQ
+	 aoh6Pi79SSMsDn05zrOp/kfSoHyXHxq4UU0vvO3IwBBIp3KoBQIXRlv3GtdOScBBvZ28n
+	 4/7AeWX3ZiojlBWjSzKgtNi6lKU28qDxJSM91ayDufdcXfemJYLHsa9TeJgi8qQyQAg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FA6R6IZI;
-	arc=none smtp.remote-ip=209.85.128.49
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=AFLHt23S;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.44
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4364606A31D
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 10:16:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A4364606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA8E606A31B
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 10:17:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6BA8E606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FA6R6IZI
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4a1dede3c2cso6800325e9.2
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 03:16:50 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=AFLHt23S
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-499f20c7054so324789fac.0
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 03:17:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792577821; cv=none;
+        d=google.com; s=arc-20260327;
+        b=FC6BlEHcvEpDcPG40qpNrkW7D62JNQ5jjh0voQwRAh7XuglHgqZbOLGKB5x1YzUylU
+         B+efb+mALg+plp2X7jWcS0xpX6E69oR3l7/zIk+J6mjkMzJCQYYL3uDsL9vCrpYExIIb
+         TjhZe7cCVmuYdSmHQigJnacSyb99A0rb9PvG/0s1Z/WLcE9we7y1rmUI276K+Vbb/E7T
+         YZasC7WofTmFWbCTlVWWCyJtel7/A7xTDuJzwI3JkmEuZT3gUnHNJGNkuSBHO3YVdvfe
+         NDmoNLj9kl2Cx6o0BtuG1o3kqiAmPgbuxsZbcDflfJkGwVHadpmp7mfxZPp6p8zvmfQU
+         yMYw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=s3Fj8YjPSTupXjt++Rpzf/NllSuxV3tkJe41ws9RWGQ=;
+        fh=vZuVgrM2LTXIgjvGDmtDKG97BDUBBwkhOkEbhTFC0+A=;
+        b=TGq4BzaVkluTUnrpBWR5Ch57AX79vQoIS+B0EAYHE3y7NEkyB6JqTI40HDGe9LW/yK
+         aXmizJ7swN30MQwQd1ubxJSyVjsXbuFbGiQCY8oo3VdvefCDX60D3/ojgbk7K+1cOxxo
+         0BDCYCuKrvM+dEJ6DjpAGj1Apq9njUtHLEv46VQcInjyhe+cCO6I4p7g4gF5s7yHrLRE
+         dmlM4e+Ul3PJId4mYes/bvXpYyZO81/+IBvsBrkzo345mvh3pT2xOZ03DAXKLNJk3q4V
+         +mf2h0DQVNc8A8BXn308M5mBRytm+FAQq/EeieBJ261kuIGuxj52AuLse8prLI+QzXvt
+         zOlQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792577809; x=1793182609; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=YB/dY1/JncGppmuxvNSdbjIP5bvqd49CyeqBNY5NcXQ=;
-        b=FA6R6IZIJgJHiTpZsbGnIOFJQPlb25v/r2rijowU9fIxKFZEOgABWA9x79JMMkvFKT
-         1Wt8Ewzq5FMon7g2JJM6H6pZA1uzQeQJWNx/S+VbE+IGrd34fooB/o2wHSqwpFovjdFd
-         gA1O3ZGRMN5LmwLDzwlFsrHgsV7D622wb4ODtoNeR8oV0H7sgzWiG0ZlVQWR1B6ow4vg
-         CZB/7Dvpps0H6ZDYzxUg8TzfNEY7s3Dg4vmGNNKNj2lXoJfpHnE9M78X62jUJVz9FWqW
-         hJuDnnL+P4hHQsKDddccGyyXGuBupzY0tC+hx6248Ww8ZHbL0KWmutTbICsyf4K0BoaE
-         DfZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792577809; x=1793182609;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=gmail.com; s=20251104; t=1792577821; x=1793182621; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=YB/dY1/JncGppmuxvNSdbjIP5bvqd49CyeqBNY5NcXQ=;
-        b=xZM2uzanKWTnktEKbOkIq6O+GZg7XSA1v9EzKavFPez2RtChMYeiKyNv//EoJdUK93
-         sNBV5XMhCeD0e758iLhqrYGQM5N4Div8CDrjNs5kzv6wLP4r0pJX58zSEKRaBJG+lkga
-         2bHTQjxST1FpplHmnQK8lwZJIOXQMyR6HoEx9bkZoavXzbG5lQFH1vd6fr6oC3juejEV
-         0mB2cslXUkEYfDddLVoCFMccbikNjiucsq7e4BURGAJY2SCuHTMwPoHBPgbzSAKz7bqS
-         eVP/2PBna86LctEbvgxhYkyU2TxUrymTMA4t0r+KaX549KbJBFwPeN40lD0LiVuAFyBl
-         uRzA==
-X-Gm-Message-State: AFq9FYKvJ5Vv4wA6A7kXWR/YInXN2vig2QQxN1mlvCGIZ9JrtQrFqYzd
-	nvjtSOS+HesVxWQf8dd3BnQuEKX3XCHPXRU16gC8v606IaE14AbYj9v9ku376qvb
-X-Gm-Gg: AYBFou2vsxTrI90cpcvXBHu9K+VCYSbTMuzb2d9zT2AGPwet7st/uc7bpsKxAc+vW3I
-	ZuEj3aH5I0z+kEKP5S4t7r6L4SD2/SphsLjnAnT+llQEYu4WQOssu9XR36VPPzejamHCXh+QyTa
-	KRnW+AelIQVyo9kdOICZB+QHb5O4mI0TM6DtnKx1DZOFc/6RI8vJMtZmCkOzKzlLViVLxlforaV
-	yZLoEqM2FGXnpndOOqmfQ5O277EUh2+OQJHAlLiIPWMjdOR2sox7GE70jSd2Q5tBM4U1ctw6pQ+
-	3eohIbOO5E4VAJX6+vVeehKo1J6Y8Mc/8mV9fB39AeWXp4+mJoLK3ArrkEQV0B5+lfZZksKEDGg
-	S6ZFkd31RkfrAaLtPOuMhw/J7YdAH0k71yLow8/wSMTX57taL464NyiXk9ek37vlzkoCz+SowMr
-	zv0erC0nUm9fOOjQ8Ci9ll46TkIYLZ6ygjexS4YHTAFNFR05ZiJ4d860NHkwdBHuPBGumM3mIBq
-	QfYcb/onZ/d7mbBIGRg9mamRytNlfFOmm002HFfhsh7/4FI4UkJ0BaYOt/jV79EqaT2b5RFkUNu
-	O8eIAbeIFeUW
-X-Received: by 2002:a05:600d:82c1:b0:4a1:ef9d:1b68 with SMTP id 5b1f17b1804b1-4a1fdd246a1mr32070925e9.10.1792577808859;
-        Wed, 21 Oct 2026 03:16:48 -0700 (PDT)
-Received: from ubuntu26lts1.example.com ([151.28.1.33])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e258427cesm4472602f8f.52.2026.10.21.03.16.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2026 03:16:48 -0700 (PDT)
-From: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	Elia Pinto <gitter.spiros@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shuqi Liang <cheskaqiqi@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Toon Claes <toon@iotcl.com>
-Subject: [PATCH 3/3] convert: use size_t for buffer sizes
-Date: Wed, 21 Oct 2026 12:16:39 +0200
-Message-ID: <20261021101640.329990-4-gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261021101640.329990-1-gitter.spiros@gmail.com>
-References: <20261021101640.329990-1-gitter.spiros@gmail.com>
+        bh=s3Fj8YjPSTupXjt++Rpzf/NllSuxV3tkJe41ws9RWGQ=;
+        b=AFLHt23SaoD8GZPhUl+oXa6dKBY6Tx2gjP4aMDiM1MyRlg3RXQw7wAB3xEXvoGQzDl
+         VFUTH7B0q2DqxpQhqCwbnbzWlAFMHD9Rezzwzactv4p6/w/+j8lhln5sWdoFCIIj/a55
+         XNpYi+f9smer++fQ535ulU1UhMuelubO+DYEaGvdR9rH7ckQqf3WZsiWwa0Ejat1Tld1
+         tOrScj6eSVwCR+oE1SeY+tJQNRVj5Uz8FaHFA4kf4QyhvKmNDQZzTt4o1paF5fpV2V7A
+         Umt6F3JY/o5rABruAO3cbywlXr1ki53e0uP1Oo0NhQ8AW1VjdAHRyHiR6fUmYVYDJaiR
+         wyLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792577821; x=1793182621;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=s3Fj8YjPSTupXjt++Rpzf/NllSuxV3tkJe41ws9RWGQ=;
+        b=etx6lR7z2/FitK90AT+6a/7mWqIk+DVLWqp5ThWJ6o1UPuoE2kCctHAa2yK1ydbF/v
+         LiA+auL1n76LjMbig+c8Kli8PKw9fOSbFtyngwEA8DGCQXmk5FyMyhuu9KOiWrFNLX/m
+         n9MDKgo7Bc5Gt7PJ1ntYpoQrOPQ3KXRA+FRYJxzHOxez+Tiwebfk0/bZEz/6Wpi2F1Wd
+         LZVTYhFHkLBIfLxyEcUKJNyTDyQGneURUUSYcVpkMMo9wTUDAq4VedUP+M56JKYxz/VV
+         aDlF25IF26QiXJRsfLimOaYfPxT73UEpn2tU9+UP8+ab3NgGRIgw1+xg2A+W9FD3cbbU
+         8S1g==
+X-Gm-Message-State: AFq9FYJsHftjCe+yw2pnRX1RoeKeRAwl8Y+F+hundnH1orgvjxyoNZjQ
+	DIU2P6vSOlSPRhPNNH4awezdxeJNZGn9vkbFdOpDrMqzTd1CKjBufn3/TpHtx/mr+LUoUqsBOBi
+	bjwZh/D7VFZbHzw3xmkskrZseDI/whVKPY0O2
+X-Gm-Gg: AYBFou0C8AIvWRG+9bg5nbFjxFH0q0QLFDVa+T/lESygux6FW0mTUB+iTgMDoW39cyl
+	HPomwdIjd51H9jwTFiLlc25cn3Jf44R9pEK2FKIOueVALUcFcOBwYPyzni9AO01KTMHaDV5Cl6E
+	bAFIOwnFYp4+burBd3N9qOJRrf3rcX3YeiJkbXgtN4BS/t4t+hOpOxMCL3+nrPa7KEal/8xTpiG
+	cgfuVt5WV/9vps13otPZXhFZfrK20rk7Jn5xV97rrXjYQhuWrFZ+wIdcZDygPXb6B1PfLbNdD9Q
+	RnhBSbrvxqVLzBZckQZW2mFWcT7vUacNlBAp5+z4vsdCumlpueTfivJr4ahtqnHJjmwkqtIzg8I
+	57b5QassXYxnXLF6xJOjAw8xcK9eSmKxNkM0OUA1aEHdHiXwbpGqs5A98TGwBs+0=
+X-Received: by 2002:a05:6870:334d:b0:48f:e107:3179 with SMTP id
+ 586e51a60fabf-4a7dc27e1a4mr878756fac.44.1792577821133; Wed, 21 Oct 2026
+ 03:17:01 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -101,143 +99,115 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Masaya Kazama <miyaokamiyao@gmail.com>
+Date: Wed, 21 Oct 2026 19:16:48 +0900
+X-Gm-Features: AclHuK9_B4m4fDrrbhzYFe1msweJnkcG_9_o-vdiCwx9eT7EpD0BG3H7QOCGmvE
+Message-ID: <CAEdWB0ChxOZUszwDVqWY3jdvGpNtV9NRTG8_X1-f2PX9QnJQTw@mail.gmail.com>
+Subject: maintenance: stale maintenance.lock after the detached child is
+ killed silently disables auto-maintenance (more likely since 2.55)
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>, 
+	Derrick Stolee <stolee@gmail.com>, =?UTF-8?B?5YiY6ZKf5Y2a?= <liuzhongbo.gg@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-The conversion code receives its buffers with a size_t length, but the
-helpers that scan them, gather_stats(), gather_convert_stats(),
-gather_convert_stats_ascii() and count_ident(), take an "unsigned long".
-On platforms where that is 32 bits wide, like Windows, they only look
-at the first "size mod 2^32" bytes of a file over 4GiB. The decision
-whether a file is binary, or contains CRLF line endings or "$Id$"
-keywords, is then based on that prefix, and we may convert the line
-endings of a file that is binary further down, or not expand keywords
-that appear after the first 4GiB.
+[Resending as plain text; the first attempt was rejected by vger for
+containing an HTML part. Sorry for the duplicate to those on Cc.]
 
-read_blob_data_from_index(), which feeds has_crlf_in_index(),
-get_cached_convert_stats_ascii() and the reading of .gitattributes from
-the index, gets the size of the blob as a size_t, but hands it out
-through cast_size_t_to_ulong(), so on such platforms "git add" of a file
-whose staged version is over 4GiB dies when core.autocrlf is in effect.
+Hi,
 
-Use size_t for all of them.
+Since 6e95b07e5f (builtin/maintenance: fix locking with "--detach",
+2026-05-13), the detached "git maintenance" child owns
+objects/maintenance.lock until its background tasks finish. If that
+child is killed in a way that skips the tempfile cleanup (SIGKILL,
+power loss), the lock stays forever. Every later
+"git maintenance run --auto" then finds the lock and returns without
+running anything and without any message, so auto-maintenance stops
+for good and nobody notices.
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- attr.c          |  2 +-
- convert.c       | 14 +++++++-------
- read-cache-ll.h |  2 +-
- read-cache.c    |  4 ++--
- 4 files changed, 11 insertions(+), 11 deletions(-)
+The stale lock itself was reported in 2024 [1], where Stolee called it
+"unfortunately a common occurrence". What is new is that 6e95b07e5f
+extends the window in which the lock is held from the foreground phase
+to the whole background run, so a kill during the (possibly long)
+background tasks now leaves the lock behind. Before 6e95b07e5f the
+parent removed the lock when it exited right after daemonizing.
 
-diff --git a/attr.c b/attr.c
-index 0e63f1b6de..1acb4ef430 100644
---- a/attr.c
-+++ b/attr.c
-@@ -793,7 +793,7 @@ static struct attr_stack *read_attr_from_index(struct index_state *istate,
- {
- 	struct attr_stack *stack = NULL;
- 	char *buf;
--	unsigned long size;
-+	size_t size;
- 	int sparse_dir_pos = -1;
- 
- 	if (!istate)
-diff --git a/convert.c b/convert.c
-index 036506842c..ca5594cab0 100644
---- a/convert.c
-+++ b/convert.c
-@@ -42,9 +42,9 @@ struct text_stat {
- 	unsigned printable, nonprintable;
- };
- 
--static void gather_stats(const char *buf, unsigned long size, struct text_stat *stats)
-+static void gather_stats(const char *buf, size_t size, struct text_stat *stats)
- {
--	unsigned long i;
-+	size_t i;
- 
- 	memset(stats, 0, sizeof(*stats));
- 
-@@ -102,7 +102,7 @@ static int convert_is_binary(const struct text_stat *stats)
- 	return 0;
- }
- 
--static unsigned int gather_convert_stats(const char *data, unsigned long size)
-+static unsigned int gather_convert_stats(const char *data, size_t size)
- {
- 	struct text_stat stats;
- 	int ret = 0;
-@@ -119,7 +119,7 @@ static unsigned int gather_convert_stats(const char *data, unsigned long size)
- 	return ret;
- }
- 
--static const char *gather_convert_stats_ascii(const char *data, unsigned long size)
-+static const char *gather_convert_stats_ascii(const char *data, size_t size)
- {
- 	unsigned int convert_stats = gather_convert_stats(data, size);
- 
-@@ -141,7 +141,7 @@ const char *get_cached_convert_stats_ascii(struct index_state *istate,
- 					   const char *path)
- {
- 	const char *ret;
--	unsigned long sz;
-+	size_t sz;
- 	void *data = read_blob_data_from_index(istate, path, &sz);
- 	ret = gather_convert_stats_ascii(data, sz);
- 	free(data);
-@@ -223,7 +223,7 @@ static void check_global_conv_flags_eol(const char *path,
- 
- static int has_crlf_in_index(struct index_state *istate, const char *path)
- {
--	unsigned long sz;
-+	size_t sz;
- 	void *data;
- 	const char *crp;
- 	int has_crlf = 0;
-@@ -1077,7 +1077,7 @@ static int read_convert_config(const char *var, const char *value,
- 	return 0;
- }
- 
--static int count_ident(const char *cp, unsigned long size)
-+static int count_ident(const char *cp, size_t size)
- {
- 	/*
- 	 * "$Id: 0000000000000000000000000000000000000000 $" <=> "$Id$"
-diff --git a/read-cache-ll.h b/read-cache-ll.h
-index 066dd8bc3b..d279059b5f 100644
---- a/read-cache-ll.h
-+++ b/read-cache-ll.h
-@@ -416,7 +416,7 @@ int chmod_index_entry(struct index_state *, struct cache_entry *ce, char flip);
- int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
- void set_object_name_for_intent_to_add_entry(struct cache_entry *ce);
- int index_name_is_other(struct index_state *, const char *, int);
--void *read_blob_data_from_index(struct index_state *, const char *, unsigned long *);
-+void *read_blob_data_from_index(struct index_state *, const char *, size_t *);
- 
- /* do stat comparison even if CE_VALID is true */
- #define CE_MATCH_IGNORE_VALID		01
-diff --git a/read-cache.c b/read-cache.c
-index c4cf08a3a3..635dad1ba3 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -3472,7 +3472,7 @@ int index_name_is_other(struct index_state *istate, const char *name,
- }
- 
- void *read_blob_data_from_index(struct index_state *istate,
--				const char *path, unsigned long *size)
-+				const char *path, size_t *size)
- {
- 	int pos, len;
- 	size_t sz;
-@@ -3503,7 +3503,7 @@ void *read_blob_data_from_index(struct index_state *istate,
- 		return NULL;
- 	}
- 	if (size)
--		*size = cast_size_t_to_ulong(sz);
-+		*size = sz;
- 	return data;
- }
- 
--- 
-2.53.0
+Reproduction (git 2.56.0 on macOS; same FIFO trick as Taylor's test in
+the "fix locking with --detach" discussion [2]):
 
+    git init -q repro && cd repro
+    git commit -q --allow-empty -m base
+    git config maintenance.auto false
+    git remote add origin /does/not/exist
+    git config remote.origin.uploadpack \
+        "echo \$PPID >\"$PWD/fetch.pid\" && cat \"$PWD/fifo\""
+    mkfifo fifo
+
+    git maintenance run --task=prefetch --detach
+    while ! test -s fetch.pid; do sleep 0.1; done
+    daemon=$(ps -o ppid= -p "$(cat fetch.pid)" | tr -d ' ')
+
+    kill -9 "$daemon"
+    : >fifo
+    ls .git/objects/maintenance.lock      # still there
+
+    GIT_TRACE2_EVENT="$PWD/trace" \
+        git -c maintenance.loose-objects.auto=1 \
+        maintenance run --auto --task=loose-objects
+    grep -c '"region_enter".*"category":"maintenance"' trace   # 0
+
+    git maintenance run --no-quiet --task=pack-refs
+    # warning: lock file '.git/objects/maintenance' exists,
+    #          skipping maintenance
+
+After "rm .git/objects/maintenance.lock" the same --auto run enters one
+maintenance region. With Apple Git 2.50.1 (before 6e95b07e5f) the lock
+is already gone while the detached child runs, so killing it leaves
+nothing behind.
+
+How I hit it: in one large partial clone (blob:none, ~425 branches)
+the lock was created on 2026-06-30, a few minutes after I upgraded to
+2.55.0, and stayed until I found it on 2026-10-21. I do not know what
+killed the detached child; no git crash reports exist for that day.
+During those four months a GUI tool fetched the repository every
+minute; the pack count grew to 3,550 and the packs to 13.9 GB. Almost
+all of it was duplication: "count-objects -v" reported 94 million
+in-pack entries, but only 1.46 million remained after a manual
+"git maintenance run", which brought the packs down to 0.68 GB (GitHub
+reports about 0.4 GB for the repository). The commit-graph stayed at
+its April state, which made "git log --topo-order" over all refs take
+seconds. Two other repositories on the same machine had the same stale
+lock, created on 2026-09-29 and 2026-10-04; both are regular
+(non-partial) clones, so partial clone is not a condition; it likely
+made the packs pile up faster, since every promisor fetch is kept as a
+pack. Other projects report the same symptom, e.g. [3] (auto gc
+"silently disabled for a week") and [4].
+
+A note on core.lockfilePid: it cannot simply be used to detect a stale
+maintenance.lock. With 2.56.0 and core.lockfilePid=true, while the
+detached child is alive, maintenance~pid.lock contains the pid of the
+parent, which has already exited. A liveness check based on that file
+would treat a live lock as stale.
+
+Some options, roughly from least to most work (I have not tried to
+implement any of them):
+
+ - When "maintenance run --auto" skips because of the lock, leave a
+   trace that a user can find later (for example like the gc.log that
+   a daemonized "git gc --auto" leaves), instead of returning silently.
+
+ - Record the pid and hostname of the actual holder (the detached
+   child) and ignore the lock when that process is gone on the same
+   host, like lock_repo_for_gc() does for gc.pid.
+
+ - Use an OS-level lock that is released when the process dies, as
+   suggested in [1].
+
+Thanks,
+miyaoka
+
+[1]
+https://lore.kernel.org/git/CAN477tHJnVnOKfUsG5G9QAVdzYvmUuC8A8Vxt8mtHB23fd=hAQ@mail.gmail.com/
+[2]
+https://lore.kernel.org/git/20260511201049.GB22912@coredump.intra.peff.net/
+[3] https://github.com/craigoley/remudero/pull/9555
+[4] https://github.com/solidDoWant/vault-sync/pull/115
