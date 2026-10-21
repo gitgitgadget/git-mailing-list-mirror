@@ -1,89 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.54
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792577807;
-	b=lU0B9xwO1uYMotau3HTOJ0n0Na6J5liympyrSjIawF9rICjxA75vD03jFwjfP5ixC2fm
-	 jEY6Dy4SxLuvsI+DqHuGpNEOL6Rxte7rXzUUPRPbXBafzc0Erbe8IhwSDxsAL/AJ623uw
-	 3YsyT3n1ZfHOMPalNJLfvcH1hLGD0wRx3RDNQ0mPXn07SIEvYDQk4wn5PRQcD5uX2S/Nw
-	 LXYOBH9vKtSlQ47KAtifBh4e+6eEvnMpJIFGzPV1Hol8sK4Jkf7lfFyy8ogYz+Lig8SJi
-	 F1i1L+CYDjEfwDfgGjFO/b0HgFwKZ6R3GowSmi/tBqvVG3uONp/YtZhwxx1jQlhy44g==
+	t=1792577808;
+	b=knUoSsEnys8eGM3iBgnmpM0S3l0OLmRoWlV16JHK3HAp3anMO8iSYEo5+OJQjVKbxlBf
+	 5b5+vhxL+Xsmi/qHfs6PlZgJSUQ/QetcLB/9aDC8iUzxhKDr8DexMeWy1fiwn3MJD9Onj
+	 LLdnlSjPZF3CP6rer1gIA1Ib48w+bEGAlmPqDuQJbdYhC1+WbWc+NDCDC9wuUlfclHJEH
+	 YdBbixPSVAGRWiKLp1DUvyZVYGpRW7UUkAzBStEp2SYkXYpV8frOUyeP0zCgvnp5dRgtz
+	 NanANvo0QrSGxcEb94Cvxr1lhwzGHYJSIrt3dyl99Na+5rAUcfrD+H8XADCvXjyPn4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792577807;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792577808;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=dB9wt81Sdc2QQqirhgYyQ2GOsMbmS0kEVmX+mIzzW3g=;
-	b=IMY7Zmus3+y5dzIM+ACiU6yKVNr9R/aFyNFQTUhRSlnMb8a4ddyPeK6h+blWubPNcXBR
-	 dAmnCLhtih/IEO9NOSdv6xHU1Kz08sYh1Noa5PLuthOgJ41flS8WZWnxQkDzMa33X1u/y
-	 tHTDuqcRvCgKrtweopq7hncrCe3baeWndSQxOUGFMn+Y0q8RXPONeNRK4BIgp4C6FSTbH
-	 XgQpF1/499i81hbLE9Jts9tnZCKcbxqMro1GlXI0y9UEQHSnpWDb92P4Q742fx6ntsyzX
-	 Z8kt3pkuvq8lOoJxJ3zFZcDFrZDpCpIDcfwUzAGwwplWy3NGHiabHeCBN95sR74jiDA==
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=iSblbBDgqkcKMmSRcWg4jRgbRAGt0L6bM7ZI9IHU2vg=;
+	b=CCCIRBYjAfEhTk3NaXjR0NEZ4NLpM64ZQEu32LlbNOepSWV37AHmT25chfA0BMt28RIh
+	 BkVLXS8rX+aDpr0FxAHL8pKY6v9S7epYFLeElNnlakWZ/moUIxvkwJMQJePBVaeDlfJwE
+	 Yabm0bBQWwZjtF0f2QfSszOn5voaVfOlOmP6bEyEKOSXzObyhkoBXkxczxRxa4TEvXgws
+	 pD5/zD3y6ibQgCT1BzS+XH3DnAjuHktJdHcCGRVfLxeGYP9NQxhOrde5Oyaq2b4iX/M9B
+	 ZkshQKWOyS6E8A6iIBY6LaivUItC1Lob9Ppe/iOlu6Ft15YI34Or2sHh53gmf+Qgg2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="emdKI5/Y";
-	arc=none smtp.remote-ip=209.85.221.45
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=X+JsAbjo;
+	arc=none smtp.remote-ip=209.85.218.54
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DFF606A334
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 10:16:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 23DFF606A334
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484F3606A320
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 10:16:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 484F3606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=emdKI5/Y
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-48b060ec084so424290f8f.0
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 03:16:46 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=X+JsAbjo
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c45551fa84eso68793366b.3
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 03:16:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792577805; x=1793182605; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=dB9wt81Sdc2QQqirhgYyQ2GOsMbmS0kEVmX+mIzzW3g=;
-        b=emdKI5/YSNN68du1QJccsiVlwOlnV9fwP1u2dME55i8DAIUZkvC5/YVnwccFmVOPyy
-         EnjQhQ0Ov0sadQn3dDo0LQR6ipgixfUG6Gsxeq4U6wFwkVb5zVkkidPLvROlRIuLRwGR
-         kqJLKrh2oehU6yNpu41io63/iZ0M2h1ubOkSsSZHn5fLjHVEg9FAT171s388mYNtNByE
-         UYlar2WS/aWB4rm+eXCNevKs2R4XgEGUwE1Ul66VR9IYGoo+RGjZDJf3iYyCDzbQA0Ge
-         CBaXlbVw4x1MgPwtGBPCetCWXeIgRiOakfu/Ay2GgAFydymG8T4xY+wKMHIIgcPzTODy
-         bukQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792577805; x=1793182605;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1792577807; x=1793182607; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=dB9wt81Sdc2QQqirhgYyQ2GOsMbmS0kEVmX+mIzzW3g=;
-        b=OA72kNXHLyGX11WyotoP4SmuVwz3GK2DoqzUuEPjhqSkb8TnZnAzEFJdNOVPr54dj0
-         RnPLaq2FuCRbwKI0XwEvnrwpZ7b3MsoXXpSHveBXOLnmgS5EbV82ZSCjjOMBcimiESiI
-         yJfGgtAY3gbsLCn/Eo6UaSyt7aF/9K3gMm1Rq7FGnOhadmIgwygpcmCfy1gYdodFVu4K
-         YmPMMH0xN5iAQJrXL3pAwVfdu1BWSazJd8iLVIT2GWZcY0h7cCBbCUNHLQz7EZDKVVhY
-         DjEzO15BdAkz3xLpUQJheltBNKcxSv38mSDGTRPOCoJcgKzwNXPq+QzPC76a/uRg1IqI
-         2oVg==
-X-Gm-Message-State: AFq9FYJShkflOUyLOmDYpVSWHkcPllu6PXFUoHn+TNj6dnnqTJXZToqT
-	h7ndH8mQk3nnZ+jdbRmmQZGYLSXppVcANeotScgEBKVpZihnavUZbmPX9/Km2v/G
-X-Gm-Gg: AYBFou3QrIfZ494G/zRHoylimHMTUitg4LahXWUE2fkJJXQmcmBs2Ux84DuXvfQ8XKG
-	mjemaTJbhngc8Oq+0PEnpex9oGJBDEgH9PzJV7AZMYtc09titbjQJ2zQA9m6t4oTJCDXHo9r+MZ
-	oib8PAFiGEnhtDydE5bAGH4iw31exXmewM0B/+DrfE5huRPOsnQa0xOaH1+lCneBUzk204/MKRG
-	VRPztXsjKul1a2OVGhu4VTKsXMiHbfGO9I68ddZX3TQNwBpVxcW5SOqGtiZ+Kh8T/YgGnHDSYtj
-	EfbWSOMsOZtkZDiycBUuwQ9ibGLDfESspnhdIAU3cpxqv4yo0oseN+qizhagYCGbSpuKEQMDu9V
-	eS/AobHjAujAYvrqTt95xaylOItbss0Rx0fMc0jNN4f7KxO57tyvLq4EYIC4yeiCrS737m7v0Fy
-	iXU33Sgx+sG8LqbTQ2F6asic/CXhGczmdCsZ4uyCoC9W40g5B+GnpM1ewdniIRe6qwK7jHwzrWI
-	IkudbbIcfoCOkj3Zw7FEvkQoQXOYw42VsUorM8N2yCgrcxYzVhlwfzEQytVPN5GiLlkbmu+E+64
-	xivv9ZENB5w=
-X-Received: by 2002:a05:6000:2b04:b0:48d:fe88:ffee with SMTP id ffacd0b85a97d-48e264e20c3mr2118536f8f.53.1792577805156;
-        Wed, 21 Oct 2026 03:16:45 -0700 (PDT)
+        bh=iSblbBDgqkcKMmSRcWg4jRgbRAGt0L6bM7ZI9IHU2vg=;
+        b=X+JsAbjo45gjq8jACjQWPr/yG5vZh4gGzjrbBByVqtCe5AAfZALZhn6d9CnZnOxN9X
+         gSMNxur4OvfR3/aErwiYfll0MTr7R3h+MfMRqCkij4RTRFHeTpOnKOURCNOTroMh/EO9
+         ghAh9XattA9+yETfTcNQtko4aoYOEWStSIolrbcUDxW4LZ/KRTyPtM6XAbGTij/D9DQt
+         oKIqvX3srunbE8SkZqdEOc8B8oc+90FmvJW9TJSx+LfmC00YtidalJQJ41rwMFnOmzI2
+         uul24sV6kAH3DBaDJOfMOnig/em7OzWZHzsShcBoNZncxWmT5nDcvFfMtw/6SyTZMQo6
+         YY4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792577807; x=1793182607;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=iSblbBDgqkcKMmSRcWg4jRgbRAGt0L6bM7ZI9IHU2vg=;
+        b=gw5lLdbIipQnQyTaqyJvunXt2WJptuPXALELfBZMgQQs8FP6Hftka8WbSO5+BLcaF4
+         oiOIPr4prmT1DTvmH6rbnKSKOpaaBKUr25OI8uo76BVFBLDJDPHVla16LRBLpLCVXopV
+         wCRd14ejc+/qfpv5R5WrW/Hby73WiKqEXUeiXs8gcUeCeaHw0IjyeoB/IQI77ENDb2Cn
+         aYp/D/O3e2LqZ3qH5JSB7LwSCy4ALBueWk4o/mdDJ5rjx9DYXM7yycYB2irC79firUct
+         /dyQz0gtydSIpKNiQf35G4eS/PHT53e7GxG7Q/4f34DO8E2ByCX9lUZH1R7dnPjAg++Y
+         SXng==
+X-Gm-Message-State: AFq9FYJf8hVnjnEZ1f0/L4O5QBv+laFq+MIVNST57epJcgSs7hvFl0Xg
+	p66ZUk+LjUKtB5ozG+QwAvVb5EKj3CGzZeEwppOLfdRbJbcfKw7N2N3W4dA5jzxX
+X-Gm-Gg: AYBFou1D5829KhnqFzVBv+kg/vo38zap0HmAaiAFYyNGh6B0bH8fVf5GpLOeVMsL0JV
+	s9pKmdrdDHdgTXQhOMxxoNwuKZK8UOr2ObdWXBenvOS0by6V+iBrwCwygGd4xh5Gf5E1oXCsIJP
+	mNWVEh8rOXxLQklLyfkq/PgQllE90SZb436NSt3u48XO2D5eUt0nYBhL1QBrVlhOOegDLbpA1qJ
+	eS5v8xBavYq1+e4OUrDnHfAgUIZ0BUnKrZgHXspltARWI3fzNLvXbuA29GfLdyxFQ/oISHnJIV4
+	okCPy6QSfVYHcQTrv4fGNMsjW0vKUHlcGHabdbphl+4w1+ocaoZe1+Skeb86N7GfubElwfNb7b4
+	D/APgO639igHUXgGkEpdXNO03ZJ5GBqafB4CpLZsvjuATtiiamhFfYf1mz57zvXhlXtHexfzJRa
+	Du1OFINkna6C1JUryPKdJ+DBZGyRH7KMEd71hw6ucwYkMdDb8wQoV5m3PJwcWH/unPWTi8LLnP5
+	Tb9yQ5qfDyDJYnP45XXi4P6MlnWhGibWJXa7pRVGwls+Z6yo6+/QKW52fyMajhZryt01XjU7nHK
+	dNc91yk1ub8=
+X-Received: by 2002:a17:907:9608:b0:c2d:bf61:24d1 with SMTP id a640c23a62f3a-c4679102581mr130070266b.1.1792577806351;
+        Wed, 21 Oct 2026 03:16:46 -0700 (PDT)
 Received: from ubuntu26lts1.example.com ([151.28.1.33])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e258427cesm4472602f8f.52.2026.10.21.03.16.44
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e258427cesm4472602f8f.52.2026.10.21.03.16.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2026 03:16:44 -0700 (PDT)
+        Wed, 21 Oct 2026 03:16:45 -0700 (PDT)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Jeff King <peff@peff.net>,
-	Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 0/3] use size_t for a few more object and buffer sizes
-Date: Wed, 21 Oct 2026 12:16:36 +0200
-Message-ID: <20261021101640.329990-1-gitter.spiros@gmail.com>
+	Elia Pinto <gitter.spiros@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 1/3] odb: use size_t for the length of objects to write
+Date: Wed, 21 Oct 2026 12:16:37 +0200
+Message-ID: <20261021101640.329990-2-gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261021101640.329990-1-gitter.spiros@gmail.com>
+References: <20261021101640.329990-1-gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -95,126 +101,114 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On 64-bit Windows, "long" is still 32 bits wide. Whenever a size_t
-travels through an "unsigned long", anything above 4 GiB is silently
-lost. Johannes's js/objects-larger-than-4gb-on-windows work fixed the
-read side of the object database, and Peff's jk/xdiff-size_t did the
-same for the diff and merge machinery. This series picks up three
-places that were left narrow.
+c6a4629e32 (odb: use size_t for object_info.sizep and the size APIs,
+2026-06-15) widened the read side of the object database API, and the
+write_object() callback of odb_source already takes a size_t. But
+odb_write_object_ext(), odb_write_object() and odb_source_write_object()
+in front of it, as well as write_loose_object() behind it, still take
+an "unsigned long", which is only 32 bits wide on Windows.
 
- - odb: the write API still takes the object length as unsigned long.
-   A large file that is converted before being stored (for example
-   with core.autocrlf, which Git for Windows enables by default) can
-   reach odb_write_object() with a size_t length above 4 GiB. The
-   blob is then written truncated, with no error, and the index
-   happily records it.
+Most callers hand them a size_t from a strbuf or from odb_read_object(),
+which silently gets truncated. The most visible case is index_mem() and
+index_stream_convert_blob(): when "git add" or "git hash-object -w"
+runs a file over 4GiB through a conversion (core.autocrlf, which is on
+by default in Git for Windows, an eol or ident attribute, or a clean
+filter), we write a blob made of the first "size mod 2^32" bytes. The
+index records it with the stat data of the real file, so "git status"
+stays clean and nobody notices until the file is checked out again.
+"git hash-object" without "-w" uses hash_object_file(), which takes a
+size_t, so the two disagree on the object ID of the same file.
 
- - diff: diff_words_fill() grows its buffer with a signed "long"
-   allocation size. Its output can be twice its input, and on LLP64
-   the growth computation overflows past about 700MiB, which is well
-   within what xdiff accepts. In practice Git dies on a huge
-   allocation request.
+Use size_t throughout, including for the size kept by the in-memory
+source.
 
- - convert: the helpers that decide whether a file is binary, has
-   CRLF line endings or "$Id$" keywords take an unsigned long length.
-   For files over 4GiB they only look at a prefix. In the same area,
-   read_blob_data_from_index() narrows its result with
-   cast_size_t_to_ulong(), so "git add" with core.autocrlf dies when
-   the staged version is that large.
+The existing "hash filtered files over 4GB correctly" test in t1007
+only hashes. Running the same with "git hash-object -w" on Windows
+shows the problem, but needs another pass over a 5GiB file, so no new
+test is added here.
 
-There are no new tests. Each case needs files of several GiB and a
-32-bit "long", and the commit messages explain how to reproduce them.
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ odb.c                 | 2 +-
+ odb.h                 | 4 ++--
+ odb/source-inmemory.c | 2 +-
+ odb/source-loose.c    | 2 +-
+ odb/source.h          | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
 
-How these were found
---------------------
-
-I wanted a list of all the places where a 64-bit size is narrowed on
-Windows, rather than waiting for the next bug report. Linux compilers
-cannot see the problem, because there "long" and "size_t" have the
-same width. So I analysed the tree as a Windows target instead.
-
-The first step is a compilation database from a real MinGW
-configuration. Forcing --target onto a database generated on Linux
-does not work well: Linux-only defines leak in, regex.h is missing
-from MinGW, and the precompiled header is rejected for the wrong
-target. A Meson cross build avoids all of that:
-
-  $ cat mingw64.cross
-  [binaries]
-  c       = 'x86_64-w64-mingw32-gcc'
-  ar      = 'x86_64-w64-mingw32-ar'
-  strip   = 'x86_64-w64-mingw32-strip'
-  windres = 'x86_64-w64-mingw32-windres'
-
-  [host_machine]
-  system     = 'windows'
-  cpu_family = 'x86_64'
-  cpu        = 'x86_64'
-  endian     = 'little'
-
-  $ meson setup build-win --cross-file mingw64.cross \
-	-Db_pch=false -Dsane_tool_path=/usr/bin \
-	-Dcurl=disabled -Dexpat=disabled -Dpcre2=disabled \
-	-Dgettext=disabled -Diconv=disabled -Drust=disabled
-  $ meson compile -C build-win
-
-Two of these options are not obvious. Without -Dsane_tool_path,
-setup stops because meson.build adds "C:/Program Files/Git/bin" to
-the program search path, which is not absolute on a Linux host. And
--Db_pch=false is needed because clang cannot read the precompiled
-header that GCC produces. The build only has to get far enough to
-generate the headers; link errors do not matter here.
-
-The second step runs clang-tidy over that database with
--Wshorten-64-to-32, for the x86_64-w64-mingw32 target, skipping the
-bundled zlib and OpenSSL. One detail cost me a while: with
-"-checks=-*", clang-tidy drops compiler warnings unless
-clang-diagnostic-shorten-64-to-32 is enabled explicitly. I wrapped
-all this in a small script, which also refuses to report "no
-findings" when some translation units failed to parse:
-
-  https://github.com/devzero2000/toyscript/blob/main/check_llp64_portability.sh
-
-It is not meant for inclusion. I mention it so that the numbers below
-can be reproduced, and in case someone finds it useful.
-
-What the scan shows
--------------------
-
-All 569 translation units were analysed, none failed. There are 1432
-64-to-32 truncation warnings, but most of them are not specific to
-Windows: about 1200 narrow a size_t to an int, as they do on Linux.
-Only 237 have "long" or "unsigned long" as their destination.
-
-Most of those 237 sit on API boundaries that are known and that
-commit c6a4629e32 names explicitly: diff, blame, textconv and
-fast-import. Others are in tree walking, object parsing and the pack
-tools, where an oversized object makes Git die rather than misbehave.
-I would like to convert them in later small series, one area at a
-time, in the same style as jk/xdiff-size_t.
-
-Johannes, the first patch continues your write-side work. I hope it
-does not step on a follow-up you already have in progress.
-
-Elia Pinto (3):
-  odb: use size_t for the length of objects to write
-  diff: use size_t for the allocation size of word-diff buffers
-  convert: use size_t for buffer sizes
-
- attr.c                |  2 +-
- convert.c             | 14 +++++++-------
- diff.c                |  4 ++--
- odb.c                 |  2 +-
- odb.h                 |  4 ++--
- odb/source-inmemory.c |  2 +-
- odb/source-loose.c    |  2 +-
- odb/source.h          |  2 +-
- read-cache-ll.h       |  2 +-
- read-cache.c          |  4 ++--
- 10 files changed, 19 insertions(+), 19 deletions(-)
-
-
-base-commit: 47fdf2208c5b94c8cc01c106b8f7c85efb91c926
---
+diff --git a/odb.c b/odb.c
+index 98c5c862f5..6e9daf11e4 100644
+--- a/odb.c
++++ b/odb.c
+@@ -667,7 +667,7 @@ void odb_assert_oid_type(struct object_database *odb,
+ }
+ 
+ int odb_write_object_ext(struct object_database *odb,
+-			 const void *buf, unsigned long len,
++			 const void *buf, size_t len,
+ 			 enum object_type type,
+ 			 struct object_id *oid,
+ 			 const struct object_id *compat_oid_in,
+diff --git a/odb.h b/odb.h
+index 0ccc47ee73..25d02fae75 100644
+--- a/odb.h
++++ b/odb.h
+@@ -633,14 +633,14 @@ enum odb_write_object_flags {
+  * Returns 0 on success, a negative error code otherwise.
+  */
+ int odb_write_object_ext(struct object_database *odb,
+-			 const void *buf, unsigned long len,
++			 const void *buf, size_t len,
+ 			 enum object_type type,
+ 			 struct object_id *oid,
+ 			 const struct object_id *compat_oid,
+ 			 enum odb_write_object_flags flags);
+ 
+ static inline int odb_write_object(struct object_database *odb,
+-				   const void *buf, unsigned long len,
++				   const void *buf, size_t len,
+ 				   enum object_type type,
+ 				   struct object_id *oid)
+ {
+diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
+index 868e723c81..ab7173cd2d 100644
+--- a/odb/source-inmemory.c
++++ b/odb/source-inmemory.c
+@@ -10,7 +10,7 @@
+ struct inmemory_object {
+ 	enum object_type type;
+ 	const void *buf;
+-	unsigned long size;
++	size_t size;
+ };
+ 
+ static const struct inmemory_object *find_cached_object(struct odb_source_inmemory *source,
+diff --git a/odb/source-loose.c b/odb/source-loose.c
+index 0664634938..fe1a298364 100644
+--- a/odb/source-loose.c
++++ b/odb/source-loose.c
+@@ -770,7 +770,7 @@ static int end_loose_object_common(struct odb_source_loose *loose,
+ 
+ static int write_loose_object(struct odb_source_loose *loose,
+ 			      const struct object_id *oid, char *hdr,
+-			      int hdrlen, const void *buf, unsigned long len,
++			      int hdrlen, const void *buf, size_t len,
+ 			      const time_t *mtime, unsigned flags)
+ {
+ 	int fd, ret;
+diff --git a/odb/source.h b/odb/source.h
+index 1867347dfc..8e6ed96399 100644
+--- a/odb/source.h
++++ b/odb/source.h
+@@ -469,7 +469,7 @@ static inline int odb_source_freshen_object(struct odb_source *source,
+  * object ID and the compatibility object ID, if non-NULL.
+  */
+ static inline int odb_source_write_object(struct odb_source *source,
+-					  const void *buf, unsigned long len,
++					  const void *buf, size_t len,
+ 					  enum object_type type,
+ 					  const struct object_id *oid,
+ 					  const struct object_id *compat_oid,
+-- 
 2.53.0
 
