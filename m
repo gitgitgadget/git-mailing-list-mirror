@@ -1,120 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792606636;
-	b=2k3mYrwjLT/sm6R5heyLo2xkY/TqgUakoqfYYulXdoMbbxPVnqDsa8C9y5ujmUbQ0OGz
-	 aL575Vn+lQAR5XbY6pZwvd5gG3v3MFYAAN+B8jfv8Us9Mpr88yQekO20n+NzXZG0Nja46
-	 Eg/01EG3QRiyxfFIPwuo4MUPREiPEoUPghEn/an7mKWn/+SY9AURFgS+eIxEsMeSyJXR+
-	 7gAcqzV/CVEmbIJF3Os8tXUVS5VpM/cwtLQguC0BIOYOE5E1tejqXJIlsOuL5+pNSlzss
-	 vgvlnAziwCxp68OvK7aObKnebQAVzXQnpwf45egQaLvHHg51qV2WgV6/kk1po6xbR8g==
+	t=1792607136;
+	b=AteuItnzx6Agrpdx7Fbd5yzZlghasFE/CoKsqzInmu/ud4cIOMbC3+1XkiNGrqBvYbUe
+	 CoZXaE/x1ciBLTiSOcWvRf+MsnDpUaahkz4NO+5OdaFgnTZPpKaJBYZ476+feyK1Ch+sp
+	 +8xEXm1bnojyGIWtCKkKfdcKGO8GVKfLt+Dxg+N3uNdeabF1SqisWVbWMWn1SMpt2sWBh
+	 duxxtmZy5FUmfG3jrT6m3TihnKYdJ01nnACV2j/EqzXK9kaz4ntY6bwklWK42LGEaoBVC
+	 YwfLjDEZtc9PQfknOKzxHrfIJDXGjkxr0RnRxYpdr+sRMYROifNvfrw/sVserc6dASg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792606636;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=5amngqqdlpfuuEPw41zSD7O6r7ZOsnwGlyMIhR3tQxM=;
-	b=wAco7+UHKG3W7WD0J4Mm0BiZB6WQd3Ny8CwAd/cL5gzNqgysmZOwYy0OUjiq5ltVb4cw
-	 aSQvhWaYCX2nDlUNA3bjm75XqeSr5rGH5hpd5T1ZsjDNglQDZByPNaKsDN/AwyRtg+Huo
-	 /YamuKINmlK8WDP+qG9Qc99/cWyCfMUF6x/mg5IAsAIK2BfhS57jRQJ/oq4u4suEe7J3g
-	 dZtv9ocyJcJKn/Zo/ZuEKyRaEesWggO8VMsNYSKqwOYfjDYKdsFWygi8Zb73wxwEdNvcY
-	 AmnjOSSmUSgyuRA8oLQeNclgcW6cHLSKjO0UPGNP2XPIEkmg1a67TixUS+E1GjJm/ug==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792607136;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=5pPyYDqKMTClFcLbFDbSVWwjT7PcSEtPzWAd1UF8Kik=;
+	b=AwFSDg6aBtNbfROnvI8ypWA8KuSpmDjPNtn77DPq2Qfx2aBUZe1Gwa6DR8yjgT04xsz9
+	 7Ct0UlMqS/T1ikK7jz3ExBKO1RpiXx/q5b0+MX05X3NrVxOliUpQp++rPSNFFykJyuwO0
+	 KBpEM4NTEPOPEOt0/ORTanj4oCphHnmVk+/NsrJJb91SXuoXCPqfRN/4OpLPeFsJlOtav
+	 8PYSsNDILUfeOhLwF9nzkssMP0uDu6B2NEmGyweEd/N/6n0GggdzIQrFwa9eydJSbpUwv
+	 UcCMOatHeXtxlNCcTjZOLhE55c1iGxj6gQoP+dU9Ngb9VNKiq75yfxcKIgevWz1sM/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=iEGoEsQ0;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=x1RRO9ID;
-	arc=none smtp.remote-ip=202.12.124.144
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=WnfvI5yE;
+	arc=none smtp.remote-ip=209.85.210.45
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04041606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 18:17:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 04041606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630E7606A31B
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 18:25:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 630E7606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm1 header.b=iEGoEsQ0;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=x1RRO9ID
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1BDAD1D00089
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 14:17:15 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Wed, 21 Oct 2026 14:17:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792606634; x=1792693034; bh=5amngqqdlp
-	fuuEPw41zSD7O6r7ZOsnwGlyMIhR3tQxM=; b=iEGoEsQ0QYGRM+NYo0fm6I+FOn
-	GhNoJVfNYdJowQlSWct26qBhzTPnS9Digdom39hLXt+/8RqwUK4aF/5od53EuAn1
-	WnxBHIRCY5sigZanYFRp5+ely1hzCTo2GWBj6RvyQGvajXWTdgOdqXiEDXPb/IAM
-	vkNJ/p3M2A/Mbdwixx5gMe9hBBYOpShB2AzX/gX1+Sx3ZJG3Zbo4zzmtdqmxxF/x
-	0lOL6+rG6nbro4gJCAcju8J7Ks3/k1t7A2tTauWKa8e6jIR99UL1EJhhIz70yNZl
-	EJE9bfNkSGXgsdsMpvj4LV5pn4U6q8/ardw62F673VmuksOBAnUl3bd0yW6Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792606634; x=1792693034; bh=5amngqqdlpfuuEPw41zSD7O6r7ZOsnwGlyM
-	IhR3tQxM=; b=x1RRO9IDR2BboOo9khgmYb/GfSl3/4c0N4rCwsLLu4lY/RI5ejY
-	cke031o2cpwRibFqszZn09csqmiaIXauHjRnYHPfm9iJM7IwyB0dTvyn1TOH9T/z
-	ghx7s49T5s+8NU2BhTPDBK5Vi59YehvJFBXqGF9uvS9sk8dqxsP/HYsVSUZFlnF3
-	nYes7a9NIBgGCWC83ZaGNJPzAk/FQauLHMCQQV4EnsPVvUUx74+qQXJoZzAcLVsa
-	KSLhmqRdDt/JvXQYzn5aLS7If3oGqxvdgQWmcTzvc5fzlToGheogJjnMn5szGvCr
-	I/rVQMN1wDRucFnC46yK2nhhLPDuGYA6IPg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792606634; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm1:rsa-sha256:g9Pp5T/OHzh7h+hS8OkAstrWicSNQZY7/dLQZYpTydTILV2
-	IV0Cw6nGqID/jIoNJrBtPdWlbn/BMNRw4VCkCClP52qQ7Zs62xbB5NAVs7KBxRnQ
-	lgkEYZHK8UOLMcWuxWYtE59XqI1NLNubLa1ATOVkK4jRfdwyYnCpUJFRkpnypOZG
-	e2AjT00brVFYyqpcfH2nx6zh9mreuaW6uzXUK5jr8xo5X9BqZkB6Qquuw678qmT3
-	s2edfO04PwH9L3AQWe8mOQeZcplNAjUz5yO8OVx+rcE50FspImR9Pbqsi+LQHKZV
-	kbcUokfqU92G61rtSTOJc2EBE9+hkelb4vfKJHQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:bZBEhdue/I+lY9gEesxgdpaRfG5QJMJsUAXlz/sEGw8=:CzHXLJPdkSyuFcMCz/Yt1zvkPoXQhESw1JqOdir9rkI=;
-X-ME-Sender: <xms:qgHZamwIXgZFUD5PEY2PKJuGKdV34xRkh5cKjv5u4kKBEdm_hYOfGA>
-    <xme:qgHZapuV_E7cIImZdXpy6EVtZYa_JnBOKmxR6S4_mw3EwcCZneCZ8l4iDsOcq2uhk
-    dXK0X2q8p3Cy3m9kJyGcizyT4Cdx7STOCiEOmziwP10MFLShNNHBg>
-X-ME-Received: <xmr:qgHZalv9VhkR3tlWieVr9rChFG2AInqT3fm4vfvjx5YWAICzR2iP2q0lG3BXe8kJflFG5nD5fS6Ccmb6LnVrCasPLCfFfa8KP6VF>
-X-ME-Proxy-Cause: dmFkZTGllSBWHJGO6So2kmKHW5o2/Ea6/DBjDmkKhq2miE+VxAXgWX2S8hwSe+e49Sx4jg
-    S+5qvc611XgaN/il36D0zBranspEMyfXwuw7Z9Z4heGkwnXuy8fRtuW0/GSpejvs3TdlMO
-    RzJPJqXQYgXCvmqmSADvUJamKHgXWq6YDMs9f43ebOzNmNLExBPgnJ3DgugPGQloYecrH8
-    v5dhVeHLVDo6eD+OHlnaoZjpligAp0fOkzHnar/VI34EyoaODewRCJNxughHe6uI8iizoc
-    YgPrl0tvgEWVhxF8Lmq2nLaTQEecvFnlrTScF9saLryJhcxCm2inFcTfp5xoyFjcOA4zpA
-    X/K20fB7PpB45Q9roN5d+9dci1Fq5rWOPBEdk9r5JBRJnupnwKVrBXfeJmphwwy/STZ4b4
-    rX6DaJyPL0/9Gy6w3tUzOOSITUQlgAy7Vk3+lUWVfX5MNZwIP1K4MajLUSQE9w56kNeShg
-    FbOXNPAx0zkfp9m9p3jaZXgElSSp6jDymQHeAEDBMtYJA2z3Yxb+eTLYn9ffUgrJ0tfYrU
-    a/R43C8hXyjG/cEuOGi9Sn9+RnwYBBprUodEnxJAX2fH+CWfebj6+N9T1GE1AnbnBbLz40
-    HT6qDWgaYOJ9UxapRj07Vr/Ys2Gil864jJesBQJJQOMy5JhI/lat1B/BEHwg
-X-ME-Proxy: <xmx:qgHZamMlWFSTolXVWfO6Cgh5x5YjuLSNrvCsf_o84XLAmcnCwiBcvA>
-    <xmx:qgHZar1YxNZpqMLaP04RERQchcxXtVxV5PKqMt1Gf4rhYWYaUb4g0w>
-    <xmx:qgHZaqMXIZhDDJu6pHSNqrGC5rocuvO1YKitshdlRv7xKOO3REwDzA>
-    <xmx:qgHZaj2MahNoaYs3jmIej3A7uwYW0UO9enPjconHHScUA6FSkbrX4w>
-    <xmx:qgHZah3tsftQo5v-hgKTfLtJXtiMsUpPKCbcS9XnqL96TDm8xK068iuC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 14:17:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v5] github-ci: update macos jobs to macos-15
-In-Reply-To: <athwcntchANgnJxD@pks.im> (Patrick Steinhardt's message of "Wed,
-	21 Oct 2026 09:57:38 +0200")
-References: <xmqqfqy5clgz.fsf@gitster.g> <xmqqa4o7sp0j.fsf@gitster.g>
-	<athwcntchANgnJxD@pks.im>
-Date: Wed, 21 Oct 2026 11:17:12 -0700
-Message-ID: <xmqqmrs6or4n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=WnfvI5yE
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-843cf077f10so1139527a34.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 11:25:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792607135; x=1793211935; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=5pPyYDqKMTClFcLbFDbSVWwjT7PcSEtPzWAd1UF8Kik=;
+        b=WnfvI5yEn3hsRxUUDmEMCVasP6NmSwLHloQml48++j9LU9dFgnhzHGneu2Wqmh7s91
+         9UFgRSFkdxnvHwrlr3upKwidfRyHdZH0zp3w4EF+xk22RkmhLi7jnIyf05OalyDrNi4+
+         ARVd5Ae+WuAgxbnsV6vsqEkzadVd5uaicfA8msJ3qk9eOdsD3ypqu3HZt97j9Dz8N0Ed
+         iC0CyxBeZ3FNssy/8koz2AbO5Eh7QUwMZGnyDqD6bCcr9tQmUcsZbf6rdvRoEq4iFihM
+         ccC3MIeTmdiEdDgr/Q9kFGnqJF7acn8H8u1FmMVPkJref/2EGJ3DmKUL5We6SEN0mFND
+         AaIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792607135; x=1793211935;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=5pPyYDqKMTClFcLbFDbSVWwjT7PcSEtPzWAd1UF8Kik=;
+        b=tvPExP90SJw+0Y2zK5ir2VP2EbgS92DIl0c7mN1HgFWBfD4QWAKvns4efUttCPZ3Gq
+         Ne1pW6Gj5T7d+cjJo96gM64xUYmqeXvPkjnL0mXKcbrOuQsUaqZgEvSWTjou67/u70I8
+         QWH5pRWzJTwW6UCD+3LkWGoy+lSTVwnqQpVpXumR1EGl2plOrqs3Rbt73OMWvd5SaANQ
+         qOcQneS+fAckBc1fzQMSYQQNPUfP7Ojr0AJyRBM0sRRjzJ7m5jzL+htZRQod5nEzXZQ6
+         u2jENAhvkzSOMi/+5w4qiREz2t0/2ARL53RieLlH2x2Xid0ziz/MsRdoW/V2efuBPu70
+         wbJA==
+X-Gm-Message-State: AFq9FYJKBZrS+Z5Y5Wuwp8KWPja9hvXbH51SS+jBNo8eiLiCE/J8dnOt
+	GkajagNSpt1KN3fdYXp+RRD+V6xSnbXfSK2r+WUTAnI89OAP8UGpEl1cm5mqOA==
+X-Gm-Gg: AYBFou0T3+lbkuKw2faTQmC/rCRVFw2b2DxrMguVjm2NyvMhdufmWmxizAeCnjcny9p
+	EIPJK+Uj9rUj7GyYZtsKk180qLw2IaOU153z7ZfntOOUqbRPan3dI6UKZhVaQCd3c65pgHAQhrR
+	YhXRd8l9sO933mhnYn+3RzjQOytWF4ErO3O25aKUiTNsBxwq0qfn+Dnbk3uidUm3FrdMsOjSKNJ
+	kFAO/+25IvpralO4y8fvcKDDY0+onTPOsfilHIWXatpuWcVBMqc3AH4qEa+0WVoFhFGExX/nKXr
+	uTV3qeOy6GrAqQ6PtUqGZv210VCLWZq1D1eK3aSQYZGmvsFCjMNoDgpKcpkGKZAZoIF/SM97Mcq
+	j/Q0yVBaII5d66hFzwh1Xkz85TU3C1Fow/JxDuEYuZtw1vYroZjTd57gbgqh4UsxJrcW74D3OpR
+	3hfNML8NRItsdNFJOxIrFiJE2ZDSvS5HwckNq2F6v/XmZ9QhmDXBSYP8p/CyYfSY5BACfVFbhd9
+	ftR9kymwHKMtyN7XmkbdpCjCZwtV3wxOqnaikzTseyTt8XKWwHCwD3Urv3fm1g7YMLEThAgqn7s
+	n6GQWq91efA4Sv+DiLI=
+X-Received: by 2002:a05:6830:2811:b0:83c:1efb:6424 with SMTP id 46e09a7af769-84d05db2f8cmr1904135a34.1.1792607135285;
+        Wed, 21 Oct 2026 11:25:35 -0700 (PDT)
+Received: from denethor.localdomain ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-84cbcdd9d3csm2831887a34.9.2026.10.21.11.25.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2026 11:25:34 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v4 0/4] object-file: fix ".keep" lockfile ownership in ODB transactions
+Date: Wed, 21 Oct 2026 13:25:24 -0500
+Message-ID: <20261021182528.3055494-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.56.0.173.gf57c9a7388
+In-Reply-To: <20261020132900.1208343-1-jltobler@gmail.com>
+References: <20261020132900.1208343-1-jltobler@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,23 +96,122 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Greetings,
 
-> On Tue, Oct 20, 2026 at 08:37:00PM -0700, Junio C Hamano wrote:
->> GitHub from <no-reply@github.com> address keeps sending
->> 
->>   Subject: [Action Required] macOS 14 hosted runner image is closing down
->> 
->> and suggests to update to either macos-latest (macos-26) or
->> macos-15.  Use macos-15 for two of the four osx-* jobs, and
->> macos-26 for the other two jobs.  Use explicit version number
->> "26" instead of "latest" so that we can more easily tell the
->> differences and similarities between github-ci and gitlab-ci
->> and compare their outcome on the same commit when needed.
->
-> Thanks, this version looks good to me.
+This series addresses a bug report[1] regarding a git-receive-pack(1)
+process deleting ".keep" lockfiles of with the same name but from
+another concurrent git-receive-pack(1) process receiving an identical
+packfile. Deleting the ".keep" lockfile for another process leaves its
+newly written packfile vulnerable to deletion by another concurrent
+housekeeping process.
 
-Thanks.  I'll retitle "jobs from macos-14" instead as we update some
-to 15 and others to 26.
+The root of the problem here is that the temporary ".keep" lockfiles are
+generated and registered in the object quarantine prior to being written
+in the primary ODB. This means that even if the ODB transaction never
+commits and exits early, the tempfile atexit(3) handler still runs and
+tries to delete the lockfile at its expected final location. This
+blindly deletes any file matching regardless of whether is was created
+by the process.
+
+The first three patches are some preparatory changes so that
+`odb_transaction_files_write_pack()` is able to start explicitly
+creating the lockfiles without relying on git-index-pack(1). Patch four
+migrates lockfile generation to happen during ODB transaction commit to
+ensure the lockfile is actually able to be written before registering it
+as a tempfile.
+
+Change since V3:
+  - Followed Patrick's suggestion correctly this time.
+
+Changes since V2:
+  - In `write_pack_lockfile()` the error is now explicitly assigned to
+    `ret`.
+  - Removed an added newline that was not needed.
+
+Changes since V1:
+  - Split out comment change into separate commit as suggested.
+  - Improved error handling and logic flow in a couple of functions.
+  - Renamed `write_pack_lock()` to `write_pack_lockfile()`.
+  - Added better error messages and errno reporting to
+    `write_pack_lockfile()` helper.
+  - Adapted tests case to assert that packfile is not migrated.
+  - Clarified some commit messages and fixed some typos.
+
+Thanks,
+-Justin
+
+[1]: <932e8e425aecfbd33c1e5caf66c80a0226abacba.1789385483.git.gitgitgadget@gmail.com>
+
+Justin Tobler (4):
+  pack-write: make index-pack output comment hash agnostic
+  pack-write: lift and expose index-pack report parsing
+  object-file: explicitly write ".keep" lockfile
+  object-file: write ".keep" lockfiles during transaction commit
+
+ object-file.c              | 127 +++++++++++++++++++++++++++++--------
+ pack-write.c               |  64 ++++++++++++++-----
+ pack.h                     |  10 +++
+ t/t5547-push-quarantine.sh |  30 ++++++++-
+ 4 files changed, 184 insertions(+), 47 deletions(-)
+
+Range-diff against v3:
+1:  b9197cbf3b = 1:  b9197cbf3b pack-write: make index-pack output comment hash agnostic
+2:  e27679ac16 = 2:  e27679ac16 pack-write: lift and expose index-pack report parsing
+3:  e7f72aa53d ! 3:  b8ccd78e0f object-file: explicitly write ".keep" lockfile
+    @@ object-file.c: int read_loose_object(struct repository *repo,
+     +{
+     +	struct strbuf lock_path = STRBUF_INIT;
+     +	struct strbuf contents = STRBUF_INIT;
+    -+	int ret = 0;
+    ++	int ret;
+     +	int fd;
+     +
+     +	strbuf_addf(&lock_path, "%s/pack/pack-%s.keep",
+    @@ object-file.c: int read_loose_object(struct repository *repo,
+     +		goto out;
+     +	}
+     +
+    ++	ret = 0;
+    ++
+     +out:
+     +	strbuf_release(&lock_path);
+     +	strbuf_release(&contents);
+    @@ object-file.c: static int odb_transaction_files_write_pack(struct odb_transactio
+      			strbuf_addstr(err_msg, "index-pack abnormal exit");
+     -			return -1;
+     +			goto out;
+    - 		}
+    - 
+    ++		}
+    ++
+     +		if (ret) {
+     +			strbuf_addstr(err_msg, "index-pack failed to report pack name");
+     +			goto out;
+    -+		}
+    -+
+    + 		}
+    + 
+     +		strbuf_addf(&keep_msg, "receive-pack %"PRIuMAX" on %s",
+     +			    (uintmax_t)getpid(), hostname);
+     +
+4:  046ff4741e ! 4:  5fea4b5a36 object-file: write ".keep" lockfiles during transaction commit
+    @@ object-file.c: static int write_pack_lockfile(struct odb_source *source, const c
+      	}
+      
+     +	*out = register_tempfile(lock_path.buf);
+    -+
+    + 	ret = 0;
+    + 
+      out:
+    - 	strbuf_release(&lock_path);
+    - 	strbuf_release(&contents);
+     @@ object-file.c: static int write_pack_lockfile(struct odb_source *source, const char *pack_name,
+      	return ret;
+      }
+
+base-commit: f57c9a73884400380bddd172acc88b569834f909
+-- 
+2.56.0.173.gf57c9a7388
+
