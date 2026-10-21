@@ -1,93 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792567300;
-	b=bUAGdlnswz9DxdVF3MYJvaFAnmW8wdT6doGTPwMcMUOPriJrdKfAX/6Zv224nnUcCo13
-	 ImUPgItFgeI3rQAXOD5p92XfrstFgbqZk+qKEP7GqI2dvbp1hdfqpOnOEWmYPgoVwIqkr
-	 GaPEhbU2bzdzA2N+SA3VM0HSf4d0EuFUt8cW4w2eLptpDoGDt5YnpbdqpMhN8oiHnvCOe
-	 XfzAwMp3Qg+/ddSE7gcycfEdoTz7BbUiSz07j/xVrhq1hlM0RXk44jKBBzUXecXtAnKcv
-	 PLU6adelq5H2dDJ9/9WOAJ2NCv4BqjDWBxR7aQWPo3G4b4qup2l45Eyy11w6Z9bqnMg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792567300;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.50
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792568439;
+	b=CnJxbTDpCekDv2rGThmT1e5Lx14wScIPl+NKx/jMzH2lrEQdj0WtVRyOxJFwPFdfUXGz
+	 xmdJyUjQwqywrO1QpvOcCrrbBPO1vx2kZvcHqEwIvAXX+0Cu7R88Dzs9H756E4jM6+p9c
+	 oJpJGm+CqWlh2/7Xp15S42LYa/8CoixKNlgkgfyzSCFJDeWrQm896l9Vm2fsSDbKCsfvY
+	 7Dli8766XcWCMYLNmqXtTsvHvUrf2JzuVL/qwQIzWIYUOXaivmU1PgIbh3Hgj97aaX/jS
+	 N+Gc//Tlxl5ssxZPFCRBgaXdpRKwBuGadY6St+A1XrsHZknqBsCXfdFnCyQsNyaXOQg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792568439;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=LsPFDFjCgbHmtgd4ECN4kFqh3q72otrn1cL1kH0E34k=;
-	b=g5XtaZvWP8Poo//+JO0OI0FU2R2eEInoGwoBRNTIwvRZWkgZD639RPLoJ44eRub/4C88
-	 AwdUIY68mPx2zO18zvpPFuxFJmqPuciXMmUcp4HK4OlVQHpwWJvB25Qx6WNEvQDAz3fPA
-	 JelR8QGrc9Job32h7Lauv84UejP2ma51Rbcbh1ZDeQfa0xTeAtAbSbO0+NMuTOI/vtOpC
-	 gXUnw74fzFonDqtmHL6hLc21VuwnIwp7DJ6Y2x5uVGl+Lv5akAGbLROjQq6dsOBRRe7sd
-	 8MbX75FrBA7YHrof9JILdyehFIZdm7/Q5j1RMAMagkCEvBnvnvelCYKbtyE2yIvm/Aw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=qCKLGwlRJFlYeC5i1qeSb6HP1V14v9NpNT4VP3uaH58=;
+	b=z1uTNLSLwx3a0mHnW9TsHs9qVXnRK3MLZBZrS2IRx7jURxpjoos5W9gE0TdILZj0J6lv
+	 8wV2fXSCGPobOJ7MuBL/79PW2w1QLVjMJlvve3QB4t2gheKaCZB0Abn3qr54cGmUoOQKx
+	 moh4sT6IrzgFiWfwxRZWFYAN5ude/uaniCYChXAzc+kqhoMvNtYy+QNoE0akYRLPbdqWY
+	 jaSfkCAHxCj22iVL/augv7C8ZW9u4HPwk9do7JeWuayOnUBh6thecJzwGbDi3EB88qruu
+	 8nqMs2OKsWurmbwMRuxNwytpf02at4rj+G++BtnEwb/b2bHz4gnQ5nC1q8Zi2lAyj4Q==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=KxM2lb1B;
-	arc=none smtp.remote-ip=209.85.128.52
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="E/2iWoZI";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.50
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1FB606A319
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:21:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1F1FB606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E9E606A319
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 07:40:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 97E9E606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=KxM2lb1B
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a1e477fe16so1979625e9.1
-        for <git@vger.kernel.org>; Wed, 21 Oct 2026 00:21:39 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=E/2iWoZI
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-9178510f3bdso5080436d6.2
+        for <git@vger.kernel.org>; Wed, 21 Oct 2026 00:40:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792568437; cv=none;
+        d=google.com; s=arc-20260327;
+        b=R7bNcXrETidvxxjuvJMAK8g8vqfZMhOh0oLCYYWKrNII2Q/3oPDcx8OSLHJppk+9zG
+         tbdbmxgR+A/V5t/M+Ma8zA8e795caSmIeO8xJVL9EE6TdKmrJvihXkq8Plxv1tCHX0w3
+         /YlKaMD6/GSLPtWAe6X4I12ehAE/blV+Hn7EaX9JsJyEcZjCys0lty8RGYbqnp3pWkow
+         KbMmCbuGMRqwnfEE1X2QQeknQWdzBPub7Omm9+8XuAJhXWYOFmhsaivg7Cl7TknsEWtD
+         iSAiFLSThrLTpCfA3mHMFBo5Qi23T/GwdvWYowIU6kpd/t0naOCdYzp9bWwiNhqeQlEW
+         jkYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=qCKLGwlRJFlYeC5i1qeSb6HP1V14v9NpNT4VP3uaH58=;
+        fh=pkj7Lgc+e9u7f9xJrXd+bpYncoiJfMIO1yl1nIjQVcM=;
+        b=atkW4nnwwOO3vDqxQnTGgWL9L3j92+tXfjWcpq5FG3/VSdwr60+dure1dvPdbimx2e
+         mW9339kna8JcrEESnYQ3oqKf4PaXC1tzXuyFmFJv44o788pFNG0AJfxLI3naT5LG6W1i
+         a31g3lp1RLFAHASIuahEbp17/aMLOfG2cpW+Z4QDbd6NTdZKmZjDzVwB5tZ9J8EH7D/z
+         adAUA85rYy5OenwCiA1J5qxMjbFEKDNFUf7VsGRGsUCFrZ96PA0onVI2mYs2RfPxIXGM
+         oW3GKcOJva4U1acM+1yb5EYpt7ofTFLIpA6Z9MygYv7SKDBJfxgJafgLATGhDzifqfxs
+         Fylg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792567298; x=1793172098; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=LsPFDFjCgbHmtgd4ECN4kFqh3q72otrn1cL1kH0E34k=;
-        b=KxM2lb1BZVsfTLee9ht9YIsSWn27QXS0kK6UztVEd7OmwWv+bUC7YSU9PdV4TB9RM1
-         LFv2EUKIvpC2lR5gs9AIiMauFJZUesV3gRm1BsivJBChvw5NMYYKRG/LFuKxK9G+XcgI
-         ZWCFoY0+96RxsDcP5k6ilfUQ5A/B8zAP6hD0F+jvEaWZsXdkqHWOBGzDlsoifmjx9cQb
-         JfeT3V0ZrOlHihycKcPXFsjuTHduZ7YXLoHrQGbTdMOb+5Bm2uATKFBCJs+Ki8YIt2KY
-         flHYzttF/JMCMm4QMlUl8q/vNCgeeG8ck6JJF4Y2DAtJstXgxqx7whFfPFhiu2ZQer0D
-         rtXw==
+        d=gmail.com; s=20251104; t=1792568437; x=1793173237; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=qCKLGwlRJFlYeC5i1qeSb6HP1V14v9NpNT4VP3uaH58=;
+        b=E/2iWoZITUSWA6MQ956x/8qf13xC10Bo33PtPY/5Bra6m4fab5eC3l9w062dCKRmGG
+         4kR/R//j+AOxcscrAYjlWwacNIbC1qBe0VP2dCaWBKlGxBkDUnbgtICldUa2QHywd+xg
+         QKilHawhFPvlpG+OstLQ7CD29c8qsrz7WZXTOrxR5IJ/3ktdqrokOru2DYLc39Hripi6
+         /t0IbBrvKBCZEP3zl3cRFrpZNnfwMT9RC1YJW3a5vgyz4M4yyYdAsqoj6xuaSjcJfc0c
+         a1b1/E6GqZPXZJ37IpKL4mNA4paiNQKv/OaJKZIPh/40XWusWSVXvYqUyr5aRyRKmK86
+         vLbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792567298; x=1793172098;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=LsPFDFjCgbHmtgd4ECN4kFqh3q72otrn1cL1kH0E34k=;
-        b=hOuKq987Gyw98Q52OzvK0PKj4MCV8va19C+2NIr9XxH0zl1CtYctF3y8DMiBuWYogt
-         Oa2gz1vgPSZQ7+8VU3BtaAF2+eUNeCU2mseVEFfoE36d9G88Ymk7oxKg4Vkipxt8QbOy
-         GiX7Lst+B1JKyIvF+vjfGprDJoZdd5OKbLBi3DJNsEn625C98sjW1+rd0XK9S8Hdu5uE
-         AoCCyp4fEjUkkfQF2M4NpJEmxWfczyKvLBpU7rYMKEyrfOhfSbjHj5TB/+Csg3F5w8j/
-         JhftXhcSvg0eSbls/j9d3hRgpK/jBkGaqjiCkEq7H4VEHgRSnUgotBdzfvNB18bz7CIq
-         NRtw==
-X-Gm-Message-State: AFq9FYKpbgDpga6EY6Zfkd5n2LI9IAtHBpxwo3luxTGW8LYMwVWa+uuZ
-	M7Fgu4ckrbxaMOOXwwerDqv3NHYnEKLrCpjn0JOVTX2Rq6MOg7Ojg0oOJ0+VPRdW
-X-Gm-Gg: AYBFou1lqLmym6RCFce+kG0bf1yxAl23J4j9B7yguZ4VFRtvQPyV8+nvw7COuqCmnqm
-	JstLTcY6PmfsHb+8TGBWRNYpFl8DPMosq43pAIYIM0GwpJJWJFUGOpewGYqzW9QemOxtbrutQZB
-	tuelRXsaLCtACq3r6TN0S731CVQY3P7TCFprVk3wSPSyLzplrPr4AXB8oM23Xp/uCYyv2EWqPwx
-	grmpz6mSwG9hQ8F6ohHrGvkjj0TE8x+XSwGOtkSDsgu8fyNTdeoCFRF4lL7M8ogJGOzR+WQ0Q1p
-	et5YIzfEX3xegjXUgoei7rdvQmyWFAG5Vm26f1Gzz0JSXiNU5VXQPCoGnQNAud5yMgJAQpk6MVV
-	h5tzCB7/fh3PvwpD0NqJ2kk3Oyqpv62M9SBfeUwa6RNfKhEpoktLKz5maIvwwr5P3/BQTy3dYJb
-	PtOac083+zksCJTH/oNN468QuaSvSR8dehRNA5DcL69V8SscOGDxZWsjVe9bnYKwv/7Mt8SOMdp
-	TtHHcCtzBdNRwOwCTMsAmA3thSyGtyA+xZ/+jvb8khuqHExZ5zgMRsYpZFgpNwNTwoL++NQJ0hW
-	TVtJmjQyiEc=
-X-Received: by 2002:a05:600c:c116:b0:4a1:7659:9b94 with SMTP id 5b1f17b1804b1-4a1fdd15d29mr18295115e9.13.1792567298183;
-        Wed, 21 Oct 2026 00:21:38 -0700 (PDT)
-Received: from ubuntu26lts1.example.com ([151.28.1.33])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a200c1cc03sm1985775e9.0.2026.10.21.00.21.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2026 00:21:37 -0700 (PDT)
-From: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	haraldnordgren@gmail.com,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
-Subject: [PATCH v2] status: reword message for a missing upstream branch
-Date: Wed, 21 Oct 2026 09:21:37 +0200
-Message-ID: <20261021072137.258934-1-gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261019175722.5223-1-gitter.spiros@gmail.com>
-References: <20261019175722.5223-1-gitter.spiros@gmail.com>
+        d=1e100.net; s=20260707; t=1792568437; x=1793173237;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=qCKLGwlRJFlYeC5i1qeSb6HP1V14v9NpNT4VP3uaH58=;
+        b=Y1hrIaDIlt8R057DV6xAbSYblWmNbAxRNhdYkvDkG/NLb/zWQnS6rJhoUwXQFnsz7E
+         09jNPeQnp8Ol1MP7kYo0ZJrdvaZuPOl2UgAoU2I1cB3sw7t1lik9SsB5NNVMSOFQizPp
+         6AdBuu9OKJUwHstxwJqlsfB3jHsXlG4dlFW0RMRKIoo1ynf8kxNqVr59/nqQ9y+YqTDI
+         wuErrJ+aAb7I/BXbfD0np2xBNl+YaPY6h1luXhY2qkDtFGnYHFMESz223lqBlYhBLp8P
+         ZKq0QUjKqwgZLY+Fsdyggy6ou76ZRuZ57SK8iyAmQV+GtWJfm4ojVTSjYgpEcce++yER
+         l97A==
+X-Forwarded-Encrypted: i=1; AKwUvBzieKeENbBgqXvYNtclhwWZe+OGbMW9H0P4LeceHEX7FmhC8gUX6rmEvcG8C2RXVwxF+Yc=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJwOU62VBpmaTyzb09jMefJ5Ot/WEq965qU1zaieobkqBJcCuA2
+	HkRNDX+i5hxtV/6TrpGrSmKfQsKpgQ6Np/FgO/3P9/W/uUSIOZqANYZ+t7x/0be231Ol10Ekak6
+	1YZTmeQssz3bFWMub4DBmGZFGycStTRw=
+X-Gm-Gg: AYBFou3Af7i6z23nVgROQei9bNjeNVWkBLvxHiBaQo5gL3S9DETaFZz2FEtyxiJhdtb
+	qQzZ4aiQiT3wfN/e7nwDeW+19D1RzRuPG3aJcgD4yiwE9UfloU4ytTGdWk4skw+MY7BAkEivI7M
+	s0NNaGefaTSxDnYC2X4J8eNLqtAaiqtZ+oan2T6Qg2LQ9rO/EkLlxcS0toOWjw2FyOiIBM/lKKS
+	0JrhtFQGtPk2s8dPy5y4uugTc3q2HR9a4D+OeHyfh0wpTaKEQBDOVRZauIOaivYfsmiR4lOJPf9
+	6DvH/idOznxg9U/yLaDKb3j0RaAuQYgRGqi78i9yzfYwDIH+H9bBJhsz8e1MHYSRw1KWt3gIkfx
+	9NLilZcF07Znq+YfxbD924wOUoDUd2GTE8Ye3EI02q7jg/Ta1leVepQtVt8ktj5PAIl00WBeodn
+	gC8A/UcemB5QPb
+X-Received: by 2002:ad4:4ee5:0:b0:915:eb2c:50d0 with SMTP id
+ 6a1803df08f44-91c12ee2afamr21837906d6.27.1792568437352; Wed, 21 Oct 2026
+ 00:40:37 -0700 (PDT)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,294 +105,123 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.2317.git.git.1780685368.gitgitgadget@gmail.com>
+ <pull.2317.v2.git.git.1792512249.gitgitgadget@gmail.com> <6e2acdc5e2578da4e915fd2ac541a776349fb23e.1792512249.git.gitgitgadget@gmail.com>
+ <CAPig+cRsSN9gY405MGsCQzLuxzBKcfHo2Oc8Z4WB-U3BGd6m_Q@mail.gmail.com>
+In-Reply-To: <CAPig+cRsSN9gY405MGsCQzLuxzBKcfHo2Oc8Z4WB-U3BGd6m_Q@mail.gmail.com>
+From: Jason Newton <nevion@gmail.com>
+Date: Wed, 21 Oct 2026 00:40:08 -0700
+X-Gm-Features: AclHuK817-ezTvSxv9PjqBHiA-VCCD-TJ8rd6r3MuXrq9S8bFV70dLY6BcBnC9o
+Message-ID: <CAGou9MgdF_xA+e8YYn8ud8TUSmY3j_q9jbUTy2wLibTz1ObJ7A@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] worktree: reap ephemeral branches created by
+ "worktree add"
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Jason Newton via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Clone an empty repository, make a commit and run "git status":
+--detach and an ephemeral branch differ while the worktree exists.
 
-    $ git init --bare empty.git
-    $ git clone empty.git work && cd work
-    $ git commit --allow-empty -m initial
-    $ git status
-    On branch master
-    Your branch is based on 'origin/master', but the upstream is gone.
-      (use "git branch --unset-upstream" to fixup)
+--detach leaves HEAD with no branch, so status, push, rename,
+upstream, and symbolic-ref have nothing to name. An ephemeral
+branch is a normal refs/heads/ ref for the life of the worktree.
+Commits go on it, and another ref can point at them before
+"worktree remove" deletes that branch.
 
-The upstream is not gone, it was never there: the remote is empty,
-so origin/master has not been created yet. The advice is also not
-what the user needs; "git push" creates origin/master and the
-message goes away.
+Deleting the branch that "worktree add <path>" creates today
+would change the default, so this has to be opt-in. That opt-in
+is not --detach: the worktree stays on a branch until removal.
 
-The message was added in f2e087395b (branch: report invalid tracking
-branch as gone, 2013-08-26), assuming that a configured upstream that
-cannot be resolved must have been deleted. But "git clone" of an empty
-repository configures the upstream anyway, and Git has no way to tell
-"deleted" from "not created yet".
+These worktrees might be minutes or they might go on for months;
+either way they should be easy to use and not require flags to assist
+ in the majority of common case behaviors, moreover detached feels
+ike a degraded halfway state, frequently allowing a gotcha to strike or
+ a loss of a safety like a gc based reap.
 
-Since we cannot tell the two cases apart, change the message for both,
-including the "deleted" case that has been reported as "gone" since
-2013, so that it is correct either way:
+"git worktree remove" does not delete whatever branch a worktree
+has checked out. It deletes a branch only when this "git worktree
+add" created it by DWIM (the final component of <path>) and recorded
+that in worktrees/<id>/owned-branch.
 
-    Your branch is set up to track 'origin/master', which does not exist.
-      (use "git push" to create it)
-      (use "git branch --unset-upstream" to stop tracking it)
+A branch named with -b/-B, a branch that already existed, and a
+detached HEAD are not owned and are not removed. A worktree created
+by an older Git has no marker, so removing it still leaves its
+branch in place.
 
-Only suggest "git push" when it would actually create the upstream,
-that is when the push destination of the branch (what "@{push}"
-resolves to) is the upstream itself. This is not the case, for
-example, with push.default set to "nothing", or when pushing to a
-different remote (branch.<name>.pushRemote or remote.pushDefault).
-It is also not the case with push.default set to "matching": it
-only pushes branches that already exist on the remote, so it would
-not create the missing upstream. In all these cases only suggest
-"git branch --unset-upstream".
+"Unconditional" in the commit means that this one owned branch is
+deleted even if it has unmerged commits. --keep-branch turns that
+off. "git branch <name> <tip>" before removal keeps the commits on
+an ordinary branch; only the owned ref is deleted.
 
-push.default is not used when the remote has its own push refspec or
-is a mirror, though, and then "git push" does create the upstream, so
-suggest it even with push.default set to "matching".
+The call that changes is "git worktree add <path>" with no branch,
+followed by "git worktree remove". A caller who wants that branch
+to outlive the worktree already has a spelling this series does not
+touch: "git worktree add -b <name> <path>", or "git worktree add
+<path> <existing>". --detach still creates no branch, so it is not
+the same state while the worktree exists.
 
-"git checkout" prints the same message, so it changes too.
+Ownership is written only when the worktree is created, so I'll confirm
+an older worktree still has no marker after an upgrade.  The branch stays.
+Upgrading does not mark a worktree you already have so no upgrade
+headaches are expected.
 
-Leave the short "[gone]" label alone. It is untranslated in
-"git status --porcelain" and in "%(upstream:track)" of
-"git for-each-ref", where it is documented and scripts may parse
-it. It is translated in "git status -sb" and "git branch -vv", but
-under the C locale it still reads "gone", and recipes like
-"git branch -vv | grep ': gone]'" are common. Rewording it can be
-done separately.
+-Jason
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
-Changes since v1:
 
- - push_creates() suggests "git push" when the push remote has a push
-   refspec or is a mirror, even with push.default=matching, checking
-   things in the same order as branch_get_push_1(); add tests for
-   both cases.
-
- - Correct the log message about the "[gone]" label: it is translated
-   in "git status -sb" and "git branch -vv", and untranslated only in
-   "git status --porcelain" and "git for-each-ref".
-
- remote.c                 |  45 +++++++++++--
- t/t6040-tracking-info.sh | 135 ++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 172 insertions(+), 8 deletions(-)
-
-diff --git a/remote.c b/remote.c
-index 49ee2ea318..5f703b40a9 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2449,6 +2449,39 @@ static void format_branch_comparison(struct strbuf *sb,
- 	}
- }
- 
-+/*
-+ * Would a plain "git push" create the remote-tracking ref "upstream"?
-+ * Not with "matching", which only updates branches that already exist
-+ * on the remote, unless push refspecs or mirroring override it, as in
-+ * branch_get_push_1().
-+ */
-+static bool push_creates(struct branch *branch, const char *push_ref,
-+			 const char *upstream)
-+{
-+	struct remote *remote;
-+
-+	if (!push_ref || strcmp(push_ref, upstream))
-+		return false;
-+	remote = pushremote_get(pushremote_for_branch(branch, NULL));
-+	if (remote && (remote->push.nr || remote->mirror))
-+		return true;
-+	return repo_config_values(the_repository)->push_default !=
-+	       PUSH_DEFAULT_MATCHING;
-+}
-+
-+static void format_missing_upstream(struct strbuf *sb, const char *name,
-+				    bool suggest_push)
-+{
-+	strbuf_addf(sb, _("Your branch is set up to track '%s', "
-+			  "which does not exist.\n"), name);
-+	if (!advice_enabled(ADVICE_STATUS_HINTS))
-+		return;
-+	if (suggest_push)
-+		strbuf_addstr(sb, _("  (use \"git push\" to create it)\n"));
-+	strbuf_addstr(sb, _("  (use \"git branch --unset-upstream\" "
-+			    "to stop tracking it)\n"));
-+}
-+
- /*
-  * Return true when there is anything to report, otherwise false.
-  */
-@@ -2510,12 +2543,12 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
- 
- 		if (cmp < 0) {
- 			if (is_upstream) {
--				strbuf_addf(sb,
--					_("Your branch is based on '%s', but the upstream is gone.\n"),
--					short_ref);
--				if (advice_enabled(ADVICE_STATUS_HINTS))
--					strbuf_addstr(sb,
--						_("  (use \"git branch --unset-upstream\" to fixup)\n"));
-+				bool suggest_push = push_creates(branch,
-+								 push_ref,
-+								 full_ref);
-+
-+				format_missing_upstream(sb, short_ref,
-+							suggest_push);
- 				reported = 1;
- 			}
- 			free(full_ref);
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index e95d420972..7804c84aaf 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -96,7 +96,7 @@ test_expect_success 'checkout (upstream is gone)' '
- 		cd test &&
- 		git checkout b5
- 	) >actual &&
--	test_grep "is based on .*, but the upstream is gone." actual
-+	test_grep "set up to track .*, which does not exist." actual
- '
- 
- test_expect_success 'checkout (up-to-date with upstream)' '
-@@ -123,7 +123,138 @@ test_expect_success 'status (upstream is gone)' '
- 		# reports nothing to commit
- 		test_must_fail git commit --dry-run
- 	) >actual &&
--	test_grep "is based on .*, but the upstream is gone." actual
-+	test_grep "set up to track .*, which does not exist." actual
-+'
-+
-+test_expect_success 'setup clone of an empty repository' '
-+	git init --bare empty.git &&
-+	git clone empty.git empty-clone &&
-+	git -C empty-clone commit --allow-empty -m initial
-+'
-+
-+test_expect_success 'status (upstream not yet pushed after empty clone)' '
-+	cat >expect <<-EOF &&
-+	On branch main
-+	Your branch is set up to track ${SQ}origin/main${SQ}, which does not exist.
-+	  (use "git push" to create it)
-+	  (use "git branch --unset-upstream" to stop tracking it)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	git -C empty-clone status >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'checkout (upstream not yet pushed after empty clone)' '
-+	test_when_finished "git -C empty-clone branch -D tmp" &&
-+	cat >expect <<-EOF &&
-+	Your branch is set up to track ${SQ}origin/main${SQ}, which does not exist.
-+	  (use "git push" to create it)
-+	  (use "git branch --unset-upstream" to stop tracking it)
-+	EOF
-+	git -C empty-clone checkout -b tmp &&
-+	git -C empty-clone checkout main >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status -s -b (upstream not yet pushed after empty clone)' '
-+	echo "## main...origin/main [gone]" >expect &&
-+	git -C empty-clone status -s -b >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup expected output without "git push" advice' '
-+	cat >expect-no-push <<-EOF
-+	On branch main
-+	Your branch is set up to track ${SQ}origin/main${SQ}, which does not exist.
-+	  (use "git branch --unset-upstream" to stop tracking it)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+'
-+
-+test_expect_success 'status (missing upstream, push.default=nothing)' '
-+	git -C empty-clone -c push.default=nothing status >actual &&
-+	test_cmp expect-no-push actual
-+'
-+
-+# "matching" only updates branches that already exist on the remote
-+test_expect_success 'status (missing upstream, push.default=matching)' '
-+	git -C empty-clone -c push.default=matching status >actual &&
-+	test_cmp expect-no-push actual
-+'
-+
-+# but push.default is not used with a push refspec or a mirror
-+test_expect_success 'status (missing upstream, matching with push refspec)' '
-+	git -C empty-clone -c push.default=matching \
-+		-c remote.origin.push=refs/heads/main:refs/heads/main \
-+		status >actual &&
-+	test_grep "use \"git push\" to create it" actual
-+'
-+
-+test_expect_success 'status (missing upstream, matching with mirror remote)' '
-+	git -C empty-clone -c push.default=matching \
-+		-c remote.origin.mirror=true \
-+		status >actual &&
-+	test_grep "use \"git push\" to create it" actual
-+'
-+
-+test_expect_success 'status (missing upstream, pushRemote is another remote)' '
-+	git init --bare fork.git &&
-+	git -C empty-clone remote add fork ../fork.git &&
-+	git -C empty-clone -c branch.main.pushRemote=fork status >actual &&
-+	test_cmp expect-no-push actual
-+'
-+
-+test_expect_success 'status (missing upstream, advice.statusHints=false)' '
-+	cat >expect <<-EOF &&
-+	On branch main
-+	Your branch is set up to track ${SQ}origin/main${SQ}, which does not exist.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	git -C empty-clone -c advice.statusHints=false status >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup upstream deleted on the remote and pruned' '
-+	git init --bare pruned.git &&
-+	git clone pruned.git pruned-clone &&
-+	(
-+		cd pruned-clone &&
-+		git commit --allow-empty -m initial &&
-+		git push origin main &&
-+		git checkout -b topic &&
-+		git push -u origin topic
-+	) &&
-+	git -C pruned.git branch -D topic &&
-+	git -C pruned-clone fetch --prune
-+'
-+
-+test_expect_success 'status (upstream deleted on the remote and pruned)' '
-+	cat >expect <<-EOF &&
-+	On branch topic
-+	Your branch is set up to track ${SQ}origin/topic${SQ}, which does not exist.
-+	  (use "git push" to create it)
-+	  (use "git branch --unset-upstream" to stop tracking it)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	git -C pruned-clone status >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'short formats still show "gone" for a deleted upstream' '
-+	echo "## topic...origin/topic [gone]" >expect &&
-+	git -C pruned-clone status -s -b >actual &&
-+	test_cmp expect actual &&
-+	git -C pruned-clone branch -vv >actual &&
-+	test_grep "^\* topic .* \[origin/topic: gone\] initial$" actual &&
-+	echo "topic [gone]" >expect &&
-+	git -C pruned-clone for-each-ref \
-+		--format="%(refname:short) %(upstream:track)" \
-+		refs/heads/topic >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'status (up-to-date with upstream)' '
--- 
-2.53.0
-
+On Tue, Oct 20, 2026 at 11:52=E2=80=AFPM Eric Sunshine <sunshine@sunshineco=
+.com> wrote:
+>
+> On Tue, Oct 20, 2026 at 12:09=E2=80=AFPM Jason Newton via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> > When "git worktree add <path>" is given no branch to check out, it
+> > auto-creates one named after the path. Such a branch exists only to bac=
+k
+> > the new worktree, yet it outlives it: removing the worktree leaves the
+> > branch behind, so a fleet of throwaway worktrees fills refs/heads/ with
+> > dead branches that have to be cleaned up by hand.
+> >
+> > Treat an auto-created branch as owned by the worktree. Record it in the
+> > worktree's administrative directory (worktrees/<id>/owned-branch) at
+> > creation time -- the one moment we can know for certain the branch is
+> > worktree-private, since we are the one that created it. "git worktree
+> > remove" then deletes the owned branch once the worktree is gone and it
+> > is no longer checked out.
+> >
+> > Ownership is recorded only when "worktree add" itself creates the branc=
+h
+> > via DWIM auto-naming; a branch named explicitly with -b/-B, or one that
+> > already existed, is never owned and never reaped. Deletion is
+> > unconditional (even for unmerged commits) because an ephemeral branch i=
+s
+> > disposable by contract: to keep the work, pass --keep-branch, or anchor
+> > the commits with an ordinary branch beforehand -- a normal branch can
+> > point at the same commits, after which reaping the ephemeral ref loses
+> > nothing. "git branch -m" updates the marker so ownership follows a
+> > rename, and the branch stays ephemeral.
+> >
+> > The marker is just another per-worktree administrative file, so older
+> > versions of Git simply ignore it (they keep the branch on removal, as
+> > today).
+> >
+> > Signed-off-by: Jason Newton <nevion@gmail.com>
+>
+> Sorry, I may be missing something obvious, but this message never
+> explains why we should add all this additional complexity for a
+> use-case already directly supported by `git worktree add -d <path>`.
+> Specifically, worktree's --detach option is exactly what you want when
+> creating throwaway worktrees, even "fleets" of them (using terminology
+> from this apparently fully or partially LLM-generated message). If
+> your tooling or agent is not using -d/--detach for throwaway
+> worktrees, then the problem is fixable by modifying the tooling or by
+> teaching the agent about --detach, without bulking up the git-worktree
+> implementation unnecessarily.
+>
+> Moreover, a change like this which makes the new behavior
+> unconditional is certainly going to break existing tooling and
+> workflows, thus it will not go over well, even with the --keep-branch
+> escape-hatch. At minimum, to be acceptable, assuming such new
+> functionality is even desirable, to avoid breaking existing setups, it
+> would have to be opt-in, not opt-out (via --keep-branch). But if it's
+> going to be opt-in, then you may as well just use --detach to achieve
+> the same effect.
