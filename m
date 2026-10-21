@@ -1,121 +1,67 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=130.232.247.4
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792577879;
-	b=EZlWWL/oYJ8vCGIaO62ffGfONGRu6Zg3Sjg2tkuRoQb6z3JjYdMZvdQGWfPvdGVtnEvF
-	 +IcSEmbgeEB7o4C9lbfic6HwYplH+B3y69eQDoOb6EFjLlDi33gpyw9sc3Jkdidgpi3Lb
-	 /OJocBfV97VUr7omFo8Zs8sz6q3gvk4lMlvqY0sz9rSqxehs0aVeEebKHxoKckGgUW3Nd
-	 j8FU053hIaiKC586ytbhMOcYbh6PedWa5CWsiLluO4L2PGGKm4pb4AGTdiegGzsdDoN39
-	 /2pz44JK/N/HXPT6Ha2JoW1at2Ues24Spq62AXKIRbgPjn3uFLU4Ph6UhZ/rszjAYng==
+	t=1792580783;
+	b=AgqLvkT8pbBROY03cWszeq2aKGICb00HGl1WVBeR0sKC9Zr7knaHYRhetxiZkbYk5RNk
+	 /LEsaX9bXOVpNGZQk9kjSPxAldEulaoiCNpeRNT0CiJef5YZWIy6BYU7ncEbxSwo5sw2A
+	 HJZs5FfnIRGYrpB1MlWlBwb6D0onZzowfcwvzrk3/tp23kW1fYEehpFapyjDTx+bSkDsk
+	 x/F5MARuFMuaVlbFVUsOtGlA9wVkHUljS4pDrJlYd0DjgmoRWGRC4ZUc62vz45eMcLn86
+	 BAtjuSdxwUat7azf90sD05IseXpM12NGbK0nbIEKm1UnubLQAhGOToBwNsnphkf5Vfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792577879;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=VYaO0Uxzy0egRW0HjCwKD3xVImhwm6uwwWaqWtnm+mg=;
-	b=ncOSqeTzTedB81Bgy7qXjcsOeJqdG2lgyFvQIkXWLniVg4dmp/KKLBNpZNVAK7mOpv6g
-	 SS+NATd9doRgzLql6sIs35V6UJqWEMueuaLHbqqLQ0HnBdrBladru/NZizooYGI6zcCBP
-	 9GGT2CilSdWefe+4RPbAulmDyxWfA5V1txpwtphPyjqSJMYARLskwSe9XgtnLjeLUKr1x
-	 hfDRrXNy6mol8tSHq6bxeEfdZtHM3eaZz+/6zUOZtmd5r452RY6xGmVUNot7Ee8Z7m7oj
-	 dOHiDO73OXuPsJ0dapRdDtMe6NVnqp2qkDUV8kJiWPNocDpsEVQ47Ft1d95Uu+/+5eQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792580783;
+	h=DMARC-Filter:Received:Received:Received:Received:Date:From:To:CC:
+	 Subject:Message-ID:In-Reply-To:References:User-Agent:MIME-Version:
+	 Content-Type:X-Originating-IP:X-ClientProxiedBy:X-FEAS-BEC-Info:
+	 X-FEAS-Client-IP:X-FE-Last-Public-Client-IP:X-FE-Policy-ID:
+	 X-FE-Hostname:DKIM-Signature;
+	bh=5eu5BLfZYkWeRNeQ7hnZMkVv5gVQvh+B+6rCg38DW9I=;
+	b=RJ1fMn90/lGHunEvrh2CQKNB8y0UVQHW9FcRF+Dhl7HqeT9iOdYebIU02pibvG7biBzu
+	 4CPNMUNQyVc4i+FiIKwsbkSWwgkSqGZQHa6rVzXkOs7wl3nh6ThPx99rejGAKvjEM3KkI
+	 l19HUkvBQILeByWZXxcRZ0dxdBfE6Ypeg6g7Wphb+Sk+YQhDYAD6xXnzg++UXLwrqy0dz
+	 fz83xOehW65oQv8SKMnZSaKWqy5SffwckOqBXGO83hnIw5kGZnIFQJysARqwiTJDvRZ4u
+	 hBlAq4pbQI97vQBxa4gCTlaAhIC/w3gR5c8rwdOz+GDm82twDgHcVnYDrqSspxADYhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=FNanT0Ww;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LFJIoA7I;
-	arc=none smtp.remote-ip=202.12.124.151
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	dmarc=pass header.from=utu.fi;
+	spf=pass smtp.mailfrom=utu.fi;
+	dkim=pass header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b="UIm/nTVH";
+	arc=none smtp.remote-ip=130.232.247.4
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118A9606A31A
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 10:17:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 118A9606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE2F606A319
+	for <git@vger.kernel.org>; Wed, 21 Oct 2026 11:06:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7FE2F606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm2 header.b=FNanT0Ww;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LFJIoA7I
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 662561D00138
-	for <git@vger.kernel.org>; Wed, 21 Oct 2026 06:17:58 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 21 Oct 2026 06:17:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792577878; x=1792664278; bh=VYaO0Uxzy0
-	egRW0HjCwKD3xVImhwm6uwwWaqWtnm+mg=; b=FNanT0WwVoRPuAuWaZCaEDzqPr
-	6CdxIu20ID9hF8R2FaVuBddgVWoCgfmKNO/DCrRUPnrBya07pHTIYHNPnUdJ4Opf
-	FOFYltmIqYhZ/BQzI1x5iBZfPGGk78rwvJHAUitDNUXBUwIMKG2tC7V0+z3dubp/
-	BEV28vg2RRZgopziVC74Zh1ifGhhyOmLESv7Pb23O2OTycBaY1cGsrGOr02Pxt0g
-	XKYawN5BqPuDwYX6uwGDwDW1OxXDvmVIoqrBbF/WWkYWL0NmSiQ5wPVjcxEEFyd2
-	D0eWGTlZKuVjsnHSt2SRYDwVE3XcJVyXFw9B4GNBVyoTYRPbJaqrQVmk5sFw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792577878; x=1792664278; bh=VYaO0Uxzy0egRW0HjCwKD3xVImhwm6uwwWa
-	qWtnm+mg=; b=LFJIoA7Ixv09F2gxui91r8ldnMC/XbEQXl5DlP2KHNuIpCQ5NWi
-	AQV+SDzk/CBR4XsNJrLrHVTQ4WlBL0bKHWsrYJz1mIjzHB9VxET89IEl0kJm1CD1
-	0pUxc5GE4QQRkWNINw8/O2ijpSx4zpMexKDnuHOvFY/3GoN7t5/rYX4SVAILZQB3
-	F2VAaHpHRz16qs1VsP0xATFShZf97+5EtpCXOouIk+IKacLQrxMRTsh7TcuAZVIl
-	4gV+OMkXVk7SjIms9q4sM3Wzxu1T+aDjVYbVTuQadrRymZF3HIZNhmBijTLAIrcx
-	sPi0jmn7qlzMqfq9KFrF/V+nAP80CbvNnRA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792577878; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:iuqmTPaWhEkohvSqPxPK1aH1G4hTL4TJ6MesVuP/sTZ/zUb
-	4mfF0yffeNwOh+ooZm8/dcbSZshsE0WVgewZy0sBVpVCrOZJg+bGU6vpE77gHJ6U
-	vIZ4qzSQF4KAC867Fpwi2pFDzf4k4Z/a3GTr775gGdIvVaECHJr5s++YdA9na+mB
-	PE2ibI6x5kKSegmjGecezcnD4JoplEG571SDlWBGRmOOXmzE1yxzW6VyGy9/XZss
-	QePfmcEH6e9NxkS6ee5cAQDm9qeT9UwrmQ0RMJ0JOsTOvDjvYqDR4U4MlXu31GWN
-	hXpe6HneehX+kfBisV4mcHp96ZaQUNiOfeWuslA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:DnJh7adzdi6o/Dwe8XaqQtAToGqrPC1G4i4wx9TXHNc=:xRhbBfB+BoRyehtcuCOQIKo9kxSHDgEVWqmINQHRD28=;
-X-ME-Sender: <xms:VpHYasIy8Xu5rhwRUBtPfTa9SPtmyg2R4oq6HMAfCeMijgplQCeEIw>
-    <xme:VpHYaiKIuFj9kh965NO58OT4r9Qcfour2aHm_kNLvgSb8SIk0GitsfajHSiBWUjBG
-    _fbYsmm3kKbp24Fdg8x7t6wXo-H1jmcmHhtpmh7kjyVDBOnL9r0Fa0>
-X-ME-Received: <xmr:VpHYaqV4gcDjSYxZzyccxt-9zBSQvBoMFfWIXtDVcZl4aDTrv0nr3Q>
-X-ME-Proxy-Cause: dmFkZTGVV6pk4l08PaZw37lvuXro1NwnZPvJvQRrGmIKTSq1ZJdB5dsbKl/SKrCJDTcqTn
-    ygRnG22qb+uh5522DlnjviSBrq2jdrG4OY36qOzRK2gwrcfkOMkyCBTbUXsC2ivSMSVjNK
-    xar9M5jcfY6hrhVx0NB3+JzParc5L2/P/yA8S7IXCBqN4+uKu+LwaH3NiXOOSLjCTb4Bzo
-    Fkt5ptP1igSC+aQlHE6USXWwIMKEsGGBwaJ5XuSdDOeHfwTV4qP9TWx92adEnwGgeHa0Bh
-    pU9umJRiZ96yrXlF+VzFUn1h+Ts70cfY2rY+NDHpWHoZ/m1andUJYJ6MfDIRytIa6+hxP4
-    V823D9MZeXz/eOTNRFGlUpeZdi9bdatiQq4XEKLqapsdOKFjTVpcT/87oN60gLkSmEZe7d
-    aW2babeNRIMeU630GvjXoFgz23n7PFIK7aBozN5nzIaGVK08umrP3ZqnILzbFl+O2vMqCW
-    2Xu39tFzC30IST3QqHYvqwaEA+QuZFKaR1I0ycWhA8i/vmfD5n7C1H4qUzoj8CNCDcr2UF
-    C/6MoSDQ9hwE0rWIr+a8snAYG08LqwhP3Bt2MLeniFVgOR5It3b46PNOq9vQzs+pUZBMia
-    4qpPBpLgV4+aRRs3mQyThlnvgyzH8zJqzj2rwoDOIOn3FmLSPQoNazkQF6fw
-X-ME-Proxy: <xmx:VpHYakjler-jzOQJzGkghdiyFEzmR0niPugBzHcYoCFsPnno6xKEgA>
-    <xmx:VpHYal_NeKmLXgb1yaSwZ0HZVno9s26W51oE6EcMjsVHQGMwLM3c3w>
-    <xmx:VpHYauC2HgTngoK5VyC9q_7S1cvyTwW0CypsXDwngA24nvxSD4TQCw>
-    <xmx:VpHYaiLQdQsFD2Yy0Gy4uLVmvSv-uAesd48H3xq0u8aCBx0qCcUqvw>
-    <xmx:VpHYavjJcAT2PVRDfqMnSHLse4AShZpVeJGEW7cvs_A0C0ADPdvamV4C>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 06:17:57 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 87f2280d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Oct 2026 10:17:55 +0000 (UTC)
-Date: Wed, 21 Oct 2026 12:17:52 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/4] odb/source-files: only reload alternates when the
- file has changed
-Message-ID: <atiRUOns9G_j3TVq@pks.im>
-References: <20261020-pks-odb-files-reload-alternates-v1-0-d9e156323836@pks.im>
- <20261020-pks-odb-files-reload-alternates-v1-4-d9e156323836@pks.im>
- <xmqq33u0uoqp.fsf@gitster.g>
+	dkim=pass (2048-bit key, unprotected) header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=UIm/nTVH
+Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
+	by fortymile.utu.fi  with ESMTPS id 69LB6GRi000773-69LB6GRk000773
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Wed, 21 Oct 2026 14:06:16 +0300
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1xJU9A-001EBm-RC;
+	Wed, 21 Oct 2026 14:06:16 +0300
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Wed, 21 Oct
+ 2026 14:06:16 +0300
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id 6433bb99;
+	Wed, 21 Oct 2026 11:06:16 +0000 (UTC)
+Date: Wed, 21 Oct 2026 14:06:16 +0300
+From: Tuomas Ahola <taahol@utu.fi>
+To: Muritala Mudi <ibnmuhyideen95@gmail.com>
+CC: <git@vger.kernel.org>, <christian.couder@gmail.com>, Siddharth Asthana
+	<siddharthasthana31@gmail.com>, <usmanakinyemi202@gmail.com>
+Subject: Re: [Outreachy] Microproject: use Q_() in builtin/checkout.c
+Message-ID: <20261021110616.Wxkhc%taahol@utu.fi>
+In-Reply-To: <CAO=0-S64w=n47n6yfYoKJie2aFi+T88Sp_qPmFe2RW0xWEwcdQ@mail.gmail.com>
+References: <CAO=0-S64w=n47n6yfYoKJie2aFi+T88Sp_qPmFe2RW0xWEwcdQ@mail.gmail.com>
+User-Agent: s-nail v14.9.22
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,71 +71,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq33u0uoqp.fsf@gitster.g>
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-05.utu.fi (130.232.247.45) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhaXkgLABoBGxwBCQZGCwcdDA0a
+ KA8FCQEERgsHBUhYSFpIWVxIWVtYRlpbWkZaWF9GXF9IUEhYSFhIWkhYSFhIWEhaXkgLABoBGxwBCQZGCwcdDA0aKA8FCQEERgsHBUhYSFlRSA8BHCgeDw0aRgMNGgYN
+ BEYHGg9IWA==
+X-FEAS-Client-IP: 130.232.207.47
+X-FE-Last-Public-Client-IP: 130.232.207.47
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
+ bh=5eu5BLfZYkWeRNeQ7hnZMkVv5gVQvh+B+6rCg38DW9I=;
+ b=UIm/nTVHerT9zeOVDWO8mUjwCs1dDKmIltYQ+HjtTH/WN1FKl7mviYK7Li48kwwkOaRd0v9KpXM1
+	epdMfGj4KwoF6Ej+Iwac7o7N72FRdF2JYcI9t3+zXKcdR5Skk3qHnfBi8tPZT+fu42S2vbExBOkg
+	Cpurei31Rr9s86aPYx3qtRtWxrhwA9UUT5vqApgilxNbSmkBZ5/NYlAqX1ksd7Mt6Lf+pfbTWQ25
+	Ozx2yM1VyjKR9gih39u9CIJsIKsUcQUGbKkrcGxgVgsNWbFqEEkwxJNxv/RGjHOMuw9gDQnkKGlP
+	PXC+R3/KBo/w2fzjtpJBbzFZ7M23vKtj617Osw==
 
-On Tue, Oct 20, 2026 at 12:59:58PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > +	if (!validity || !stat_validity_check(validity, path)) {
-> > +		int fd = open(path, O_RDONLY);
-> > +		if (fd < 0) {
-> > +			warn_on_fopen_errors(path);
-> > +			if (validity)
-> > +				stat_validity_clear(validity);
-> > +		} else {
-> > +			if (validity)
-> > +				stat_validity_update(validity, fd);
-> > +			if (strbuf_read(&buf, fd, 1024) < 0)
-> > +				warning_errno(_("unable to read alternates file '%s'"),
-> > +					      path);
-> > +			else
-> > +				parse_alternates(buf.buf, '\n', object_dir, out);
-> > +			close(fd);
+Muritala Mudi <ibnmuhyideen95@gmail.com> wrote:
+
+> Hi Usman, Christian and Siddharth,
 > 
-> When we update validity and then fail to strbuf_read(), say due to a
-> transient I/O error or something that was caused by somebody else
-> mucking with our alternates list at the same time, we warn, but do
-> not roll back the validity update even though we failed to parse.  I
-> wonder if it is safer to run the validity update only after
-> successfully read the alternates file, and if the extra safety is
-> worth it?
+> Thank you Usman for the welcome. I took some time to look into the
+> microproject I want to work
+> on and one that got my interest is the Q_() pluralization
+> microproject. I will like to work on builtin/checkout.c.
+> I searched the list archive and I didn't see anyone working on this file yet.
+> 
+> I noticed two places that can get improved with Q_():
+> 
+> Line 1088, " ... and %d more.\n": this is at the end of the warning
+> Git shows when someone leaves
+> a detached HEAD and so commits might be left behind.
+> Git lists up to four commits and then shows this line for the rest.
+> 
+> Line 1492, "only one reference expected, %d given.": this appears when
+> more than one
+> reference is given before --, e.g. git checkout a b --.
+> In both cases the number is always 2 or more, so in English the plural
+> is always shown.
+> But for languages like Polish, which have different plural forms for
+> 2-4 and for 5 and above,
+> it will be inconsistent to use the same form for all cases.
+> 
+> In po/pl.po, the first message currently has only one translation slot.
+> So using Q_() can let have proper translation.
+> 
+> I noticed that line 1405 in builtin/checkout.c has the same issue.
+> The same message also appears in builtin/worktree.c at lines 812 and 951.
+> 
+> So I have two questions:
+> 
+> 1. Is it OK to convert these messages to Q_(), even though English
+> will always show the plural?
 
-Good question. I doubt that the extra safety would really be worth it in
-the general case as it's rather unlikely that we can open the path but
-then not read from it. But that doesn't feel like a good-enough argument
-to be sloppy, because "unlikely" doesn't mean "impossible".
+Yes, that would be very helpful.
 
-So we could do something like this instead:
+> 2. Should I also include line 1405 in the patch, which will mean
+> changing the same message in builtin/worktree.c
+> as well, or should I keep the patch just limited to the first two
+> messages for now
 
-	if (!validity || !stat_validity_check(validity, path)) {
-		bool successful = false;
-		int fd;
+You can reply to [1], giving a review on the patch.  Perhaps you could even
+nudge the author to take care of line 1492, too, whilst you can write and
+submit patches for the other cases you had found.
 
-		fd = open(path, O_RDONLY);
-		if (fd < 0) {
-			warn_on_fopen_errors(path);
-		} else if (strbuf_read(&buf, fd, 1024) < 0) {
-			warning_errno(_("unable to read alternates file '%s'"),
-				      path);
-		} else {
-			parse_alternates(buf.buf, '\n', object_dir, out);
-			successful = true;
-		}
+That would be a nice exercise about how to coordinate contributions, wouldn't
+it?
 
-		if (validity) {
-			if (successful)
-				stat_validity_update(validity, fd);
-			else
-				stat_validity_clear(validity);
-		}
+Thanks and welcome to Git!
 
-		if (fd >= 0)
-			close(fd);
-	}
-
-I've queued that change locally for now.
-
-Thanks!
-
-Patrick
+Links:
+  1. https://lore.kernel.org/git/20261021022156.119947-1-tangajoris@gmail.com/
